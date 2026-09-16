@@ -6333,3 +6333,261 @@ verify(UP-2). With only one wholly retained digit and no such witness,
 (UP-1) remains an upper bound; equality is not asserted. This separates
 sufficiency for a numerical upper bound from reconstruction of the
 full carrier.
+
+### Uniform35 bounds on a full deletion-profile box
+
+Fix the canonical old45 shape `root1_same_other_column`, its17 old points X,
+and the source deletion profile
+
+    b*=(0,3,0,0,1,0,3,0,0,1,1,0,4,0,0,2,1).
+
+For every actual original-label carrier whose deletion profile satisfies
+0≤b≤b* coordinatewise, use its own uniform probability measure μ: each
+surviving low315 point has mass1/N, where r=6−b and N=Σ_x r_x. The same
+conclusion applies after an allowed old-coordinate map; these preserve
+both named mod3 roots. There are exactly two images of b*.
+
+Every such actual carrier has an untouched nonzero7 digit, since there are
+only five mixed original labels and six available nonzero digits. Thus the
+pure7 upper bound, for each original mod3 root i and every geometric depth z,
+has unnormalized form
+
+    H_i(r,z)=max_(A with original mod3 root i, B)
+             [Σ_x r_x A_x² + Σ_x (2u A_xB_x+u²B_x²)],  u=1+z7.
+
+The layout sets and second sum do not depend on r. Hence H_i is a maximum
+of affine functions of r and is convex. Retaining the canonical270-depth
+box and its entire exact geometric tail gives
+
+    P_i(r)=(1−β)H_i(r,0)+Σ_(z in box)Pr(Z=z)H_i(r,z)
+             +Σ_d η_out(d) C_d(r,1),
+
+where the unnormalized caps are
+
+    C_e(r,f)=max_a Σ_(x≡a mod e) r_x f_x,
+    C_7e(r,f)=max_a Σ_(x≡a mod e) f_x,                  e|45.
+
+All coefficients are nonnegative. P_i is therefore convex. Let V(r,f) be
+the existing UP-1 old-coordinate group upper bound, written with row counts r.
+It too is a maximum of affine functions, since its extra35/E7 contribution
+is independent of r. Put h_i(x)=34−3·1_(x≡i mod3) and retain the canonical
+nonnegative residual coefficients ρ_d. Define the unnormalized slacks
+
+    S(r)=N−V(r,1)/48−Σ_d ρ_d C_d(r,1),
+    M_i(r)=35N−P_i(r)−V(r,h_i)/48−Σ_d ρ_d C_d(r,h_i).
+
+S and both M_i are concave functions of r. At any actual carrier, S/N is a
+lower bound for the same-law higher survival probability and M_i/N is the
+slack in the same original-mod3 signed35 criterion. There is no renormalization
+of h_i μ. The measure and its independent higher-prime lift belong to the
+actual carrier being certified; the convexity argument does not substitute
+a supported measure or a mixture of source laws.
+
+The box6−b*≤r≤6 has eight varying coordinates and256 vertices. At each vertex,
+the retained program evaluates both270-depth moment maxima, all full-tail
+coefficients, all caps, and the UP-1 maximum exactly. All256 vertices satisfy
+S>0 and M_1,M_2≥0. The smallest normalized slacks are
+
+    S/N  ≥ 2357/4176,
+    M_1/N ≥ 159032185718981/43904085750000,
+    M_2/N ≥ 265/3096.
+
+For any constant c equal to one of these minima, S−cN or M_i−cN remains
+concave and is nonnegative at every vertex. Every box point is a convex
+combination of vertices, so the corresponding normalized lower bound holds
+throughout the box. In particular, every actual carrier in the stated
+profile region satisfies the same35 target on its own full-support uniform
+law. This establishes inheritance throughout this source box, not global
+coordinatewise monotonicity of the numerical objective.
+
+Geometry-only enumeration of all165141 actual carrier states for this old
+shape, followed by exact profile membership and old-map orbit reduction,
+gives1339 states in562 orbits with477 distinct profiles. The existing
+original-label resource criterion identifies8 inclusion-minimal orbits.
+The former source-support region821 states/355 orbits is contained in this
+box region. Thus the new region adds518 states/207 orbits and5 minimal
+orbits. Membership uses no numerical query on individual carriers.
+
+The verifier `verify_uniform_profile_box.py` pins the parent
+`uniform_profile_geometry_certificate.json` by SHA-256. It imports only the
+adjacent canonical point, classification and dominance algorithms. Its
+certificate retains the rational corner values and hashes of all270-depth
+root maxima. It reconstructs all actual carrier states and checks both
+containment of former support coverage and the new minimal representatives.
+
+For the moment computation, each old layout consists of a base layout L on
+cofactors1,3,5,9,15 plus an old45 singleton of weight
+s=(1+z3)(1+z5). For fixed base layouts L_a,L_b and A-singleton location i,
+the constant part after eliminating the B-singleton is
+
+    2u<L_a,L_b>+u²||L_b||²+2us L_b(i)
+      +max_j[2us L_a(j)+u²(2sL_b(j)+s²)+2us²·1_(j=i)].
+
+The inner maximum equals the larger of its unmodified maximum and its
+value at i plus2us². The remaining row-dependent contribution is
+Σ_x r_x L_a(x)²+r_i(2sL_a(i)+s²). Maximizing over i and both base layouts,
+with only A's originalmod3 root fixed, computes H_i(r,z) exactly. The source
+corner reproduces both parent270-depth hashes.
+The grouped bound enumerates77760 old A/B pairs, retaining each nonempty
+cylinder and one representative of an empty cylinder when present. It
+precomputes each affine row coefficient and its r-independent extra35/E7
+term, then evaluates every corner. Its nonnegative integer dot products
+are bounded by1692,56856,53796 for1,h1,h2, so binary64 arithmetic is exact
+below2^53; integers are checked before they enter rational calculations.
+The moment calculation itself uses int64 arrays with the present finite
+parameters. All guards use explicit exceptions and remain active under-O.
+
+The two other certified old45 geometries are disjoint from this region.
+Together the three geometries now cover946 carrier orbits and10
+inclusion-minimal orbits at Gamma≤35. Of the56966 minimal orbits,
+56956 remain outside these certified sources. The PG1 bounds retain
+their stronger values on its232 containing orbits.
+
+Replay the certificate from the repository root:
+
+    python3 -I -O docs/reports/erdos7-odd-covering/verify_uniform_profile_box.py
+
+This is finite arithmetic verification plus the concavity argument above,
+not a Lean kernel result. The stated profile region is a hypothesis;
+no bound for another old shape is asserted here.
+
+### Original9 higher hinges and a fixed 11/13 continuation
+
+Keep exactly the PG1 low probability, lift lambda and actual higher
+survival event F from(M9-1)--(M9-10). Let nu=lambda(.|F) and
+H_t=sup_test E_nu(L-t)_+. All original3/5/7 heights remain arbitrary.
+The unchanged square and threshold-two bounds, together with the new
+observations below, hold on this one probability:
+
+    G=492647095380812739054683/14604022456869186140625,
+    H_2<=3,
+    H_4<=2394156525804976633271/1622669161874354015625,
+    H_6<=4106398428533515693477/4868007485623062046875.    (M9C1)
+
+The last two bounds are respectively less than1.475444 and0.843549.
+They use no numerical observation from the different(SH18) probability.
+The meaning of the common-law profile and its interpolation is the same
+as in[SH22--SH24](#a-direct-threshold-two-correction-and-simultaneous-bounds).
+
+#### Fixed original classes and the complete first-moment tail
+
+For every pair i,j of nonempty original3/original9 roots, retain the
+separated A load in(M9-4) and the unchanged B load. In particular, i,j
+are fixed across all auxiliary depths Z; only the higher projected9
+cylinder varies. At each depth use the row relaxation(M9-7), now with
+g_t(l)=(l-t)_+, t=4,6. Write its maximum as H_t,ij(z).
+
+The exact two-singleton elimination(SH21) applies with low weight
+R_x-v_x and high weight v_x. The same convex-increment argument permits
+these unequal nonnegative weights. If1+z_7>=t-1, then
+A+(1+z_7)B>=t, and the high hinge is linear, so its A and B maxima
+separate. Otherwise the two-singleton calculation retains their common
+old layouts. It allows rowwise high-digit concentration only as an
+upper relaxation, and moves no actual forbidden class.
+
+For the true fixed-root maximum F_t,ij(z), the one-Lipschitz property
+of the hinge gives, for each fixed layout and hence after maximization,
+
+    F_t,ij(z)<=F_t,ij(0)+sum_d(w_d(z)-1)m_d(mu).         (M9C2)
+
+This argument uses the true maximum on the left, not increments of a
+maximized row relaxation. For B=[0,8]×[0,5]×[0,4], put beta=Pr(Z in B)
+and eta_out(d)=E[1_(Z notin B)(w_d(Z)-1)]. All eta_out(d) are evaluated
+by the full geometric moments and are nonnegative. Thus
+
+    U_t,ij=(1-beta)H_t,ij(0)
+            +sum_(z in B)Pr(Z=z)H_t,ij(z)
+            +sum_d eta_out(d)m_d(mu)                  (M9C3)
+
+bounds the unconditioned hinge expectation. The last sum is exactly
+2330295100792072343/3063075771441530250000; no physical height or
+omitted auxiliary depth is truncated.
+
+The same independently certified survival lower bound is
+q_0=25428074957/48000000336. Since b_ij=1+I_i+I_j<=3,
+g_t(b_ij)=0 for both thresholds. The signed-deletion criterion therefore
+has R_E((C-g_t(b_ij))mu)=C R_E(mu) and reduces to U_t,ij<=C q_0.
+There is no additional deleted-energy rebate here. Dividing(M9C3) by
+q_0 and maximizing over all ten pairs gives(M9C1); both maxima occur
+at(i,j)=(2,8). Empty original roots are dominated by nonempty roots
+pointwise, as in(M9-6).
+
+#### One actual two-prime consumer
+
+Apply the existing[SH25 consumer](#a-same-law-two-prime-consumer) with
+T_11=4,T_13=5 to(M9C1), using the valid chords
+H_3<=(H_2+H_4)/2 and H_5<=(H_4+H_6)/2. The auxiliary11 multiplier has
+Pr(N=1)=28/33, Pr(N=2)=50/363 and E N=7/6. Its entire N>=3 tail is
+retained: for integers L>=1,
+
+    (2L-5)_+=(L-2)_++(L-3)_+,
+    (NL-5)_+<=N(L-2)_++2N-5  for N>=3.                (M9C4)
+
+The second inequality includes L=1; no unsupported replacement by a
+mean is made. Let h_2=3 and let h_4,h_6 be the rational upper bounds
+in(M9C1), with h_3=(h_2+h_4)/2 and h_5=(h_4+h_6)/2.
+With the actual physical charges of(AP2), the full
+arbitrary-height transfers(AP3)--(AP5), and one final conditioning(AP6),
+
+    b_11<=B_11:=h_4/6,
+    b_13<=B_13:=[131h_2/726+50h_3/363+28h_5/33+2/121]/7,
+    q_13>=1-B_11-B_13
+        =6058911665321144261668772/12369607020968200661109375,
+    Gamma_13<=1+[(1403/630)G-1]/q_13
+        <=83065286271124677944190495859/545302049878902983550189480
+        <152329/1000.                                 (M9C5)
+
+The survival lower bound exceeds0.489822. The11/13 physical exponents
+are the full exponents in the original family's period, including
+moduli assigned to future primes; all residues and finite heights at
+these two primes are permitted. The output is one supported head
+probability for the specified low geometry.
+
+#### Why the resulting square bound does not restart scalar T6 at17
+
+The existing[joint-load transfer(T6)](../../../Problems/erdos-7-odd-covering-systems.md#arbitrary-head-transfer-by-the-joint-load-invariant)
+is a useful explicit boundary for this output. Write its scalar input
+after13 as f. At17,
+
+    R_17(f,delta)=
+      f delta(1-delta+25/128)/(delta(1-delta)-f/1024).   (M9C6)
+
+Every denominator must be positive. The following19 step requires
+R_17(f,delta)<324, because4delta_19(1-delta_19)18²<=324.
+For f<256 this would require
+
+    (324-f)delta(1-delta)-(25/128)f delta-324f/1024>0.
+
+Its maximum even over all real delta is positive only if
+
+    P(f)=(44145/16384)f²-(9477/8)f+104976>0.           (M9C7)
+
+The smaller root r of P lies strictly between123.058769468748 and
+123.058769468749. Exact signs at these rational endpoints, the negative
+derivative there, and P(256)<0 show that this two-step scalar certificate
+requires f<r. For f>=256 the17 denominator already fails.
+
+The particular upper seed in(M9C5) exceeds r by more than29.270176093753.
+Its P value is strictly negative. A second exact quadratic check with
+324 replaced by500 shows that every admissible17 output from this
+supplied scalar seed exceeds500, above the19 necessary limit324.
+Thus changing only the two scalar delta choices cannot repair this
+continuation. This conclusion concerns the stated upper-seed recurrence;
+it is not a lower bound on the actual best head moment or an obstruction
+to retaining a richer convex profile, coupling later blocks, or another
+head probability.
+
+`verify_original9_convex_transfer.py` binds the canonical original9/H2
+and mod3 probability certificates by hash. It recomputes all5400 hinge
+observations, the complete first-moment geometric remainder, the independent
+survival bound, the fixed two-prime consumer, and the exact scalar
+boundary. Eight direct complete-layout pair checks independently
+verify its nonlinear singleton maxima. All comparisons are rational
+or range-guarded integers. The adjacent
+`original9_convex_transfer_certificate.json` retains the exact data;
+replay it from the repository root:
+
+    python3 -I -O docs/reports/erdos7-odd-covering/verify_original9_convex_transfer.py
+
+These are ordinary all-height arguments with exact arithmetic certificates,
+not Lean kernel results or an unrestricted prime continuation for#7.

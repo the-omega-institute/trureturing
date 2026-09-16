@@ -140,8 +140,7 @@ are ordinary all-height proofs with exact certificates for the two
 specified geometries, not a general low-configuration bound or
 unrestricted-prime continuation. Support inclusion transfers them
 to384 distinct carrier orbits, including two inclusion-minimal
-orbits; all384 inherit Gamma≤35. The remaining56964minimal orbits
-are not certified by these two laws.
+orbits; all384 inherit Gamma≤35.
 
 [Separating the original mod9 test from its higher descendants](../docs/reports/erdos7-odd-covering/marked_head_profile.md#separating-an-original-saturated-test-from-its-higher-labels)
 further improves the unchanged PG1 law to
@@ -155,6 +154,18 @@ the mean is at most5, including all original3/5/7 heights.
 This strengthens the232 inherited PG1 carrier orbits, while the
 other configuration and general prime-tail gaps remain.
 
+The [higher-hinge continuation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#original9-higher-hinges-and-a-fixed-1113-continuation)
+retains this same PG1 probability and gives simultaneous bounds
+`H_4<1.475444` and `H_6<0.843549`, together with `H_2≤3` and the
+preceding square bound. Fixed thresholds4 and5 at primes11 and13
+give a supported **Gamma_13<152.329**, with surviving mass greater
+than0.489822 and all original finite prime exponents retained.
+Passing this supplied square upper bound alone to the scalar(T6)
+recurrence cannot continue through17 and19: that two-step certificate
+requires a seed below the exact threshold in
+`(123.058769468748,123.058769468749)`. This is a limitation of that
+scalar continuation, not a lower bound on the actual best head moment.
+
 A [complete uniform 86-point profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
 has **Gamma≤35** on each of its six actual mask states, in three
 inclusion-minimal orbits, at arbitrary original3/5/7 heights.
@@ -162,13 +173,7 @@ An untouched seven digit makes the square relaxation and cylinder
 caps depend only on the common deletion vector. The grouped actual
 deletion costs are checked separately on all three representatives;
 their common survival lower bound is2333/4128, with minimum signed
-margin265/3096. Support inclusion extends the result to355 orbits,
-using a supported law on each containing carrier. Those larger
-carriers are not claimed to have this bound under their own uniform
-laws. These orbits are disjoint from the preceding384, so the five
-minimal sources together certify739 carrier orbits at Gamma≤35.
-The remaining56961 minimal orbits are not covered by these sources;
-the general prime-tail continuation is also unresolved.
+margin265/3096.
 
 The same result includes a general row-count upper bound for the
 grouped deletion cost of any nonnegative measure constant within
@@ -178,6 +183,21 @@ All three 86-point representatives meet that condition, and nine
 explicit original-label witnesses attain the formula. Thus their
 deletion bounds can be recovered from the row profile, even though
 that profile does not reconstruct the actual carrier.
+
+A [full deletion-profile box](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform35-bounds-on-a-full-deletion-profile-box)
+extends Gamma≤35 to every actual carrier with `0≤b≤b*` for this
+source profile or its allowed old-coordinate image. Multiplying the
+same-law signed criteria by the carrier size makes their slacks
+concave; exact checks at all256 box corners therefore cover the
+whole region. Each carrier uses its own full-support uniform law.
+The region contains1339 states,562 carrier orbits,477 deletion
+profiles and8 inclusion-minimal orbits, including the former355
+support-inclusion orbits. Its minimum survival lower bound is
+2357/4176 and its minimum signed margin remains265/3096.
+Together with the disjoint preceding384 orbits, the current result
+certifies **946 carrier orbits and10 minimal orbits at Gamma≤35**.
+The remaining56956 minimal orbits and the general prime-tail
+continuation remain unresolved.
 
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
