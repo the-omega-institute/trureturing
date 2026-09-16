@@ -11345,3 +11345,582 @@ The impossibility of a separately weak-star continuous product on the compact Bo
 [^rro32-ultrafilters]: Neil Hindman and Dona Strauss, *Some new results about the smallest ideal of βS*, New York Journal of Mathematics 25 (2019), 897–913, Section 1, printed pages 897–898, [published paper](https://nyjm.albany.edu/j/2019/25-38p.pdf). The cited construction identifies the compact ultrafilter space, its clopen event basis, its ordered extension of a discrete semigroup operation, and the corresponding membership formula. The finite binary witness and its Zeckendorf transport in this section are proved directly.
 
 ## 追加锚（本行以下为增补区）
+## 33. 几何观察的临界测度、最优相位正则性与时间尺度变换
+
+**定义与前置假设 33.0（载体、两种首差距离及测度归一化）。** 令
+$$
+\mathbb N=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad
+\beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L,\qquad
+s=\frac{\log\phi}{\log2},\quad \kappa=\frac1s.
+$$
+取完整合法数字空间
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},
+$$
+并沿用第 20 条的算术后继 $T$、位置删除 $\sigma$、位置前缀 $q_L$、时间前缀 $v_t$、相位及时间编码
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi],
+$$
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},\qquad f(x)=x_0,\qquad
+\Phi:K\longrightarrow X_\beta.
+$$
+这里使用第 20.2、20.4–20.7 条已成立的精确柱相位区间、全部分裂纤维、等式 $\mathcal Q_L=\mathcal V_{G_L-1}$、时间前缀数 $t+1$，以及 $\Phi$ 为同胚且 $\Phi T=S\Phi$、$HT=RH$。特别地，$X_\beta$ 是 $K$ 的真闭子集；$\sigma$ 在整个 $K$ 上作用，$S$ 只在 $X_\beta$ 上作用。
+
+对不同的 $x,y\in K$ 及不同的 $a,b\in X_\beta$，定义
+$$
+j(x,y)=\min\{j:x_j\ne y_j\},\qquad d(x,y)=2^{-j(x,y)},
+$$
+$$
+n(a,b)=\min\{n:a_n\ne b_n\},\qquad \rho(a,b)=2^{-n(a,b)};
+$$
+相等点的距离均定义为零。圆周使用测地距离
+$$
+d_{\mathbb T}([u],[v])=\min_{k\in\mathbb Z}|u-v-k|,
+$$
+$m$ 表示总质量为一的圆周 Haar 测度。合法字 $p$ 的长度记为 $|p|$，其柱集为 $C_p=q_{|p|}^{-1}(\{p\})$，并约定 $C_{\varnothing}=K$。
+
+对任意度量空间 $(Y,e)$、$q>0$、$\delta>0$ 及任意 $A\subseteq Y$，采用不乘任何归一化系数的外测度定义
+$$
+\mathcal H^q_{e,\delta}(A)=
+\inf\left\{\sum_i(\operatorname{diam}_e A_i)^q:
+ A\subseteq\bigcup_i A_i,\ \operatorname{diam}_e A_i\le\delta\right\},
+\qquad
+\mathcal H^q_e(A)=\lim_{\delta\downarrow0}\mathcal H^q_{e,\delta}(A).
+$$
+覆盖至多可数，覆盖集不要求可测；空集和单点的正次幂直径贡献为零。Hausdorff 维数定义为使该测度为零的正指数之下确界。
+
+附引：本条的动力与分裂端点前置为[第 20.1–20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.1（真实柱直径与相容的非原子概率）。** 存在唯一 Borel 概率 $\nu$ 满足 $\nu(K)=1$ 及
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&L=|p|\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L=|p|\ge1,\ p_{L-1}=1.
+\end{cases}
+$$
+它具有满支撑且无原子。全部非空柱集满足精确等式
+$$
+\operatorname{diam}_d K=1,\qquad
+\operatorname{diam}_d C_p=
+\begin{cases}
+2^{-L},&p_{L-1}=0,\\
+2^{-(L+1)},&p_{L-1}=1,
+\end{cases}
+\qquad
+\nu(C_p)=(\operatorname{diam}_d C_p)^s.
+$$
+
+**证明。** 末位为零时，所有延伸共享前 $L$ 位，而延伸 $p0^\infty$ 与 $p10^\infty$ 恰在第 $L$ 位不同，故柱直径为 $2^{-L}$。末位为一时，第 $L$ 位强制为零，因此 $C_p=C_{p0}$；在强制零之后选择零或一，得到首差为 $L+1$ 的两个延伸，故直径为 $2^{-(L+1)}$。空前缀的直径由 $0^\infty$ 与 $10^\infty$ 达到。
+
+记上述候选柱质量为 $w(p)$。根层满足 $w(0)+w(1)=\alpha+\alpha^2=1$。若 $p$ 以零结尾，则
+$$
+w(p0)+w(p1)=\alpha^{L+1}+\alpha^{L+2}=\alpha^L=w(p).
+$$
+若 $p$ 以一结尾，则唯一子柱是 $C_{p0}=C_p$，两者质量同为 $\alpha^{L+1}$。因此逐层相容。
+
+每个开闭集都是有限个同深度柱集的不交并；在这样的表示上求和定义 $w$，相容性保证定义不依赖深度或表示。若一列不交开闭集的并仍是开闭集 $B$，它们是紧集 $B$ 的开覆盖，故有有限子覆盖；不交性迫使其余成员为空。这证明 $w$ 是开闭代数上的有限预测度。该代数生成 Borel 集，有限测度扩张定理给出唯一 Borel 概率 $\nu$。
+
+每个非空柱质量严格为正，柱集又构成拓扑基，故支撑为 $K$。对每个 $x$，
+$$
+\nu(\{x\})\le\nu(C_{q_L(x)})\le\alpha^L\longrightarrow0,
+$$
+所以没有原子。最后 $2^{-s}=\alpha$，将真实柱直径代入即得质量与直径幂的等式。证毕。
+
+附引：有限预测度的扩张与唯一性见 Scott Sheffield，[18.175 Lecture 2，PDF 第 28 页的 Carathéodory 扩张定理](https://math.mit.edu/~sheffield/2016175/Lecture2.pdf#page=28)。
+
+**定理 33.2（任意集合的质量界、精确临界测度及 Ahlfors 界）。** 令 $\nu^*$ 为 $\nu$ 的外测度。对每个集合 $A\subseteq K$，
+$$
+\nu^*(A)\le(\operatorname{diam}_d A)^s.
+$$
+而且对所有 $\delta>0$ 都有更强的等式
+$$
+\mathcal H^s_{d,\delta}(A)=\mathcal H^s_d(A)=\nu^*(A).
+$$
+特别地，作为 Borel 测度，
+$$
+\mathcal H^s_d=\nu,\qquad \mathcal H^s_d(K)=1,\qquad
+\dim_{\mathrm H}(K,d)=s.
+$$
+对所有 $x\in K$ 和 $0<r\le1$，闭球满足
+$$
+\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s.
+$$
+这两个统一系数分别不能增大和减小。
+
+**证明。** 若 $A$ 为空或至多含一点，第一式由无原子性成立。否则在所有不同点对的首差下标中取最小值 $k$。所有点共享前 $k$ 位，并有两个点恰在第 $k$ 位不同，故 $\operatorname{diam}_d A=2^{-k}$。若 $k=0$，使用 $A\subseteq K$。若 $k\ge1$，共同前缀的末位必为零；否则第 $k$ 位被强制为零，不可能出现该处首差。因此 $A$ 包含于一个质量为 $\alpha^k$ 的柱集，得到
+$$
+\nu^*(A)\le\alpha^k=(2^{-k})^s.
+$$
+这证明的是所有集合的直径控制，而不只是球或可测集合的控制。
+
+任意允许的覆盖给出
+$$
+\nu^*(A)\le\sum_i\nu^*(A_i)
+\le\sum_i(\operatorname{diam}_d A_i)^s,
+$$
+所以 $\nu^*(A)\le\mathcal H^s_{d,\delta}(A)$。反向使用上一条预测度扩张的外测度公式
+$$
+\nu^*(A)=
+\inf\left\{\sum_i\nu(B_i):
+ A\subseteq\bigcup_i B_i,\ B_i\text{ 为开闭集}\right\}.
+$$
+固定 $\delta>0$ 和 $\varepsilon>0$，取右边总质量小于 $\nu^*(A)+\varepsilon$ 的开闭覆盖。将每个 $B_i$ 分成足够深的有限个柱集，使它们的直径均不超过 $\delta$。按定理 33.1，这些柱集的直径 $s$ 次幂之和恰为 $\nu(B_i)$。因此
+$$
+\mathcal H^s_{d,\delta}(A)\le\nu^*(A)+\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 得每个尺度上的等式，继而得到所述 Borel 测度等式。
+
+若 $0<q<s$，所有直径不超过 $\delta$ 的覆盖满足
+$$
+\sum_i(\operatorname{diam}_d A_i)^q
+\ge\delta^{q-s}\sum_i(\operatorname{diam}_d A_i)^s
+\ge\delta^{q-s}
+$$
+当它覆盖 $K$ 时；令 $\delta\downarrow0$ 得 $\mathcal H^q_d(K)=\infty$。若 $q>s$，长度 $L$ 的全部柱覆盖的 $q$ 次幂直径和不超过
+$$
+2^{-L(q-s)}\sum_{|p|=L}\nu(C_p)=2^{-L(q-s)}\longrightarrow0.
+$$
+因此所有 $q>s$ 的 Hausdorff 测度为零，维数恰为 $s$。
+
+对 $0<r<1$，置 $L=\lceil\log_2(1/r)\rceil$。闭球恰是 $C_{q_L(x)}$，且
+$$
+2^{-L}\le r<2^{-(L-1)},\qquad
+\alpha^{L+1}\le\nu(\overline B_d(x,r))\le\alpha^L.
+$$
+于是得到 $\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s$；$r=1$ 时闭球是 $K$。在以零结尾的深度 $L$ 柱上取 $r=2^{-L}$，上界等号成立。取 $x_0=1$ 并令 $r\uparrow1$、$r<1$，闭球质量恒为 $\alpha^2$，故质量与 $r^s$ 的比值趋于 $\alpha^2$，证明下界系数最优。
+
+原加权距离 $d_K$ 满足 $\tfrac12d\le d_K\le d$。对每个正指数，两个距离的覆盖代价只相差固定乘数，故零测度指数的集合相同，得到 $\dim_{\mathrm H}(K,d_K)=s$。本条临界测度的精确系数等式只对明确指定的距离 $d$ 成立，未将它移植为 $d_K$ 下的测度等式。证毕。
+
+附引：任意集合的直径幂质量分布界及所用归一化分别对应[Hausdorff 测度的质量界与直径幂定义](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Hausdorff.lean#L491-L500)；距离比较见 Zeckendorf 卷[第 477.3 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+**定理 33.3（Haar 推前与相位映射的最优 Hölder 定律）。** 有
+$$
+H_*\nu=m,\qquad
+d_{\mathbb T}(H(x),H(y))\le d(x,y)^s\quad(x,y\in K).
+$$
+指数 $s$ 是最大的正 Hölder 指数；在该指数处，统一常数 $1$ 也是最小的。特别地，$H:(K,d)\to(\mathbb T,d_{\mathbb T})$ 不是 Lipschitz 映射。
+
+**证明。** 第 20.2 条的相位柱区间长度，在末位为零和一时分别为 $\alpha^L$ 和 $\alpha^{L+1}$，故恰为 $\nu(C_p)$。同深度的区间内部互不相交并覆盖圆周，重复只可能发生于端点。
+
+给定连续函数 $g:\mathbb T\to\mathbb R$，在每个深度 $L\ge1$ 的柱相位像中取 $\theta_p$。这些弧的长度至多为 $\alpha^L$，因此一致连续性给出
+$$
+\int_K g(H(x))\,d\nu(x)
+-\sum_{|p|=L}g(\theta_p)\nu(C_p)\longrightarrow0.
+$$
+圆周 Haar 测度赋予每条弧的质量等于其长度，且端点质量为零，同一个和式也趋于 $\int_{\mathbb T}g\,dm$。故两种测度对所有连续函数的积分相同。对闭集 $B$，连续函数 $g_n(\theta)=\max\{0,1-n\,d_{\mathbb T}(\theta,B)\}$ 收敛到其示性函数；有界收敛使两个测度在闭集上相同，再由闭集生成 Borel 集及有限测度唯一性得到 $H_*\nu=m$。空闭集另行显然成立。
+
+若 $x\ne y$ 且 $j(x,y)=k\ge1$，两点属于同一个深度 $k$ 的柱；其相位实区间长度至多为 $\alpha^k$，故
+$$
+d_{\mathbb T}(H(x),H(y))
+\le |F(x)-F(y)|\le\alpha^k=d(x,y)^s.
+$$
+若 $k=0$，圆周直径 $1/2\le1=d(x,y)^s$ 给出同一界。
+
+令 $u=(10)^\infty$、$v=(01)^\infty$。对每个 $k\ge2$ 取
+$$
+a_k=0^ku,\qquad b_k=0^kv.
+$$
+两点首差为 $k$；由 $F(u)=-\alpha$、$F(v)=\alpha^2$ 以及前置零的仿射缩放，
+$$
+d(a_k,b_k)=2^{-k},\qquad
+|F(a_k)-F(b_k)|=\alpha^k.
+$$
+由于 $\alpha^k<1/2$，此实差已经是圆周测地距离。于是指数 $s$ 处的比值恰为一。对任意 $\gamma>s$，相应比值为
+$$
+\frac{d_{\mathbb T}(H(a_k),H(b_k))}{d(a_k,b_k)^\gamma}
+=(2^\gamma\alpha)^k\longrightarrow\infty.
+$$
+故不存在更大指数的统一 Hölder 界。因为 $s<1$，Lipschitz 情形亦被排除。证毕。
+
+附引：柱实区间及其端点值使用[第 20.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.4（覆盖维数与观察核的严格区分）。** 以有限开覆盖存在重数至多 $n+1$ 的有限开加细来定义紧空间的覆盖维数，则
+$$
+\dim_{\mathrm{top}}K=\dim_{\mathrm{top}}X_\beta=0,\qquad
+\dim_{\mathrm{top}}\mathbb T=1.
+$$
+同时 $H$ 是商映射，且
+$$
+\ker\Phi=\Delta_K\subsetneq\ker H,
+\qquad
+\Delta_K=\{(x,x):x\in K\}.
+$$
+因此本例中覆盖维数的增大与观察纤维的合并同时发生，而不是与观察核的细化同时发生。
+
+**证明。** $K$ 的任意有限开覆盖被某个共同深度的柱分割加细：先在每个点选包含于某一覆盖成员的柱，利用紧致性取有限子覆盖，再统一增加深度。柱分割的重数为一，故非空空间 $K$ 的覆盖维数为零。由同胚 $\Phi$，$X_\beta$ 的覆盖维数也为零。
+
+对圆周任意有限开覆盖取 Lebesgue 数 $\delta>0$，使直径小于 $\delta$ 的集合都包含于某一覆盖成员。选 $N\ge4$ 使 $3/(2N)<\delta$，以 $j/N$ 为中心、$3/(4N)$ 为半径取 $N$ 个开弧。它们覆盖圆周，每个直径小于 $\delta$，且任一点至多落入两个弧：一个长度为 $3/(2N)$ 的弧不可能容纳三个间隔为 $1/N$ 的中心。这给出重数至多二的开加细，故圆周覆盖维数至多为一。
+
+圆周是区间 $[0,1]$ 的连续像，因而连通。若其覆盖维数为零，取两个不同点 $a,b$，则由两个真开集 $\mathbb T\setminus\{a\}$、$\mathbb T\setminus\{b\}$ 组成的覆盖应有重数一的有限开加细。该加细是不交开分割；连通性迫使唯一非空成员为整个圆周，但整个圆周不包含于上述任何一个真开集，矛盾。因此维数恰为一。
+
+$H$ 是紧空间到 Hausdorff 空间的连续满射，闭集的像紧而闭，故为商映射。$\Phi$ 单射给出 $\ker\Phi=\Delta_K$；$u\ne v$ 而 $H(u)=H(v)$ 给出严格包含。核的这个包含方向正是点被合并的方向。证毕。
+
+附引：满射、同胚与接缝双点使用[第 20.2、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；所需覆盖维数结论已在本条直接证明。
+
+**定理 33.5（两种距离的精确统一模量及全部首差区间）。** 对映射 $A:(Y,e)\to(Z,e')$ 定义
+$$
+\omega_A(r)=\sup\{e'(A(y),A(y')):e(y,y')\le r\}.
+$$
+置
+$$
+\ell(t)=\max\{L\ge0:G_L\le t+1\}\qquad(t\in\mathbb N).
+$$
+则
+$$
+\omega_\Phi(2^{-L})=2^{-(G_L-1)},\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-\ell(t)}.
+$$
+更精确地，若 $x\ne y$ 的位置首差为 $k$、时间首差为 $n=n(\Phi x,\Phi y)$，则
+$$
+G_k-1\le n\le G_{k+1}-2.
+$$
+对每个 $k\ge0$，这个整数区间内的每个 $n$ 都由实际分裂点对达到。对任意 $0<r\le1$，令 $N(r)=\lceil\log_2(1/r)\rceil$，则
+$$
+\omega_\Phi(r)=2^{-(G_{N(r)}-1)},\qquad
+\omega_{\Phi^{-1}}(r)=2^{-\ell(N(r))}.
+$$
+
+**证明。** 首差距离的闭球约定给出
+$$
+d(x,y)\le2^{-L}\iff q_L(x)=q_L(y),\qquad
+\rho(\Phi x,\Phi y)\le2^{-t}\iff v_t(x)=v_t(y).
+$$
+由第 20.6 条，位置前 $L$ 位相同必使时间前 $G_L-1$ 位相同。若位置首差恰为 $k$，位置前 $k+1$ 位不同，又由同一分割等式知时间前 $G_{k+1}-1$ 位不同。于是
+$$
+G_k-1\le n<G_{k+1}-1,
+$$
+即所述首差区间。此处 $k$ 是实际可分叉的位置；若其前一位为一，则该位强制为零，根本不能成为首差，因此未将强制位误作分叉位。
+
+第 20.2、20.4 条给出的实际分裂点满足：对 $m\ge2$，
+$$
+j(x_m^-,x_m^+)=k
+\iff G_k+1\le m\le G_{k+1},
+\qquad
+n(\Phi x_m^-,\Phi x_m^+)=m-2.
+$$
+故给定所述区间中的 $n$，取 $m=n+2$ 即达到它。$k=0$ 时区间只有 $n=0$，由 $m=2$ 达到；接缝的 $m=1$ 点对同样在位置和时间的第零位首差，没有额外的下标平移。
+
+对正向模量，分割等式给出上界；取 $m=G_L+1$，该点对的位置首差恰为 $L$、时间首差恰为 $G_L-1$，给出相同的下界。
+
+对逆向模量，$G_{\ell(t)}-1\le t$，所以时间前 $t$ 位相同必使位置前 $\ell(t)$ 位相同，得到上界 $2^{-\ell(t)}$。另一方面，
+$$
+G_{\ell(t)}\le t+1<G_{\ell(t)+1}.
+$$
+取 $m=t+2$ 的分裂点对，其时间首差为 $t$，位置首差为 $\ell(t)$，恰达到该上界。最后，所有非零输入距离都是二的非正整数次幂，输入距离不超过 $r$ 等价于不超过 $2^{-N(r)}$，证明一般半径公式。证毕。
+
+附引：精确分割与全部分裂点见[第 20.2、20.4、20.6 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.6（任意正指数的正向 Hölder 性与锐利的逆对数模量）。** 对每个 $\gamma>0$，令
+$$
+C_\gamma=\sup_{k\ge0}2^{\gamma k-G_k+1}.
+$$
+则 $1\le C_\gamma<\infty$，并且
+$$
+\rho(\Phi x,\Phi y)\le C_\gamma d(x,y)^\gamma.
+$$
+但 $\Phi^{-1}$ 对任何正指数都不是 Hölder 映射。其逆模量满足
+$$
+\omega_{\Phi^{-1}}(r)\asymp
+\bigl(1+\log_2(1/r)\bigr)^{-\kappa}
+\qquad(r\downarrow0),
+\qquad \kappa=\frac{\log2}{\log\phi}.
+$$
+令 $c=\phi^2/\sqrt5$，则在精确二进尺度上还有
+$$
+\liminf_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=c^\kappa,
+\qquad
+\limsup_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=2c^\kappa.
+$$
+因此对数阶不能改成更快的幂，也不能把这两个极限压成同一个非零渐近系数。
+
+**证明。** 递推或第 20.9 条的闭式给出
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad G_k\ge\phi^k.
+$$
+指数增长支配 $\gamma k$，故定义 $C_\gamma$ 的序列趋于零，其上确界有限；$k=0$ 的项为一。由定理 33.5，位置首差为 $k$ 时，
+$$
+\rho(\Phi x,\Phi y)\le2^{-(G_k-1)}
+\le C_\gamma\,2^{-\gamma k}.
+$$
+相等点的情形显然，因此得到正向 Hölder 界。
+
+再次取 $m=G_L+1$ 的分裂点对。对任意 $\gamma>0$，
+$$
+\frac{d(x_m^-,x_m^+)}
+{\rho(\Phi x_m^-,\Phi x_m^+)^\gamma}
+=2^{-L+\gamma(G_L-1)}\longrightarrow\infty.
+$$
+所以任何有限统一常数都不能给出逆向正指数 Hölder 界。
+
+令 $L=\ell(t)$，则
+$$
+G_L-1\le t\le G_{L+1}-2,\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-L}.
+$$
+由 $\phi^L\le G_L\le\phi^{L+1}$ 得到适用于所有 $t\ge0$ 的界
+$$
+(t+1)^{-\kappa}
+\le\omega_{\Phi^{-1}}(2^{-t})
+\le4(t+1)^{-\kappa}.
+$$
+将 $t$ 换成 $N(r)$，且 $N(r)$ 与 $\log_2(1/r)$ 相差不足一，得到所述对数阶。
+
+为确定锐利振幅，在整个第 $L$ 个台阶上，
+$$
+\frac{G_L}{\phi^L}
+\le\frac{t+1}{\phi^L}
+\le\frac{G_{L+1}-1}{\phi^L},
+\qquad
+(t+1)^\kappa2^{-L}
+=\left(\frac{t+1}{\phi^L}\right)^\kappa.
+$$
+左、右端分别趋于 $c$ 和 $c\phi$。取实际台阶端点 $t=G_L-1$ 与 $t=G_{L+1}-2$，两界分别达到；这些模量值又分别由定理 33.5 的实际分裂点对达到。因此下极限为 $c^\kappa$，上极限为 $(c\phi)^\kappa=2c^\kappa$。这也证明：若把对数衰减指数增大为任意 $\kappa'>\kappa$，便不可能保留统一上界。证毕。
+
+附引：Fibonacci 闭式使用[第 20.9 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；模量与振幅由本条结合实际端点证明，而不是由词数推断。
+
+**定理 33.7（时间首差尺度的零 Hausdorff 维数）。** 对每个 $q>0$，
+$$
+\mathcal H^q_\rho(X_\beta)=0,\qquad
+\dim_{\mathrm H}(X_\beta,\rho)=0.
+$$
+将时间距离拉回为
+$$
+\widehat d(x,y)=\rho(\Phi x,\Phi y),
+$$
+则 $\widehat d$ 与 $d$ 给出相同拓扑，但
+$$
+\dim_{\mathrm H}(K,\widehat d)=0
+< s=\dim_{\mathrm H}(K,d).
+$$
+这些等式不把完整合法位置空间 $(K,d)$ 识别为零维的时间度量空间。
+
+**证明。** 长度 $t$ 的时间前缀只有 $t+1$ 个。它们的柱集覆盖 $X_\beta$，每个 $\rho$ 直径至多为 $2^{-t}$，故总 $q$ 次幂直径代价至多为
+$$
+(t+1)2^{-qt}\longrightarrow0.
+$$
+覆盖直径趋于零；对每个固定允许尺度，亦可任意增大 $t$，因此所有正指数 Hausdorff 测度都为零。由定义，Hausdorff 维数为零。
+
+$\Phi$ 是同胚，故拉回距离给出原拓扑；它又按定义是从 $(K,\widehat d)$ 到 $(X_\beta,\rho)$ 的等距双射，所以二者 Hausdorff 测度及维数相同。与定理 33.2 比较即得严格不等式。这里的变化来自距离，而不是从载体中删除位置序列。证毕。
+
+附引：所需时间词数是[第 20.5、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的既有结果。
+
+**定理 33.8（算术不变概率的唯一性与不变满测度同构）。** $\nu$ 是 $T$ 的唯一不变 Borel 概率，且是 Haar 测度在 $H$ 下的唯一概率提升。令
+$$
+\Omega=\{[n\phi]:n\in\mathbb Z\},\qquad
+\mathbb T_0=\mathbb T\setminus\Omega,\qquad
+K_0=H^{-1}(\mathbb T_0).
+$$
+则 $m(\mathbb T_0)=\nu(K_0)=1$，并有
+$$
+R(\mathbb T_0)=R^{-1}(\mathbb T_0)=\mathbb T_0,\qquad
+T^{-1}(K_0)=K_0,\qquad T(K_0)=K_0.
+$$
+限制映射
+$$
+H_0:(K_0,\nu|_{K_0},T|_{K_0})
+\longrightarrow(\mathbb T_0,m|_{\mathbb T_0},R|_{\mathbb T_0})
+$$
+是保持测度的双可测同构，且 $H_0$ 及其逆事实上连续。相应地，$\Phi_*\nu$ 是 $(X_\beta,S)$ 的唯一不变 Borel 概率。
+
+**证明。** 首先证明 Haar 提升唯一。若 $\eta$ 是 Borel 概率且 $H_*\eta=m$，则对每个正深度柱 $C_p$，第 20.2 条给出
+$$
+H^{-1}(H[C_p])\setminus C_p
+\subseteq H^{-1}(\partial_{\mathbb T}H[C_p]).
+$$
+右侧在 $\eta$ 下为零，因为相位边界是有限集且 $H_*\eta=m$。因此
+$$
+\eta(C_p)=m(H[C_p])=\nu(C_p).
+$$
+柱集生成 Borel 集，两个概率在所有柱上相同，故 $\eta=\nu$。定理 33.3 已给出这一提升的存在。
+
+任意 $R$ 不变概率 $\lambda$ 都无原子：同一旋转轨道上的单点质量相同，而无理性使该轨道无限，正原子质量会违反总质量有限。进一步，对任意连续 $g$，旋转不变性使
+$$
+\int g(\theta+[n\phi])\,d\lambda(\theta)=\int g(\theta)\,d\lambda(\theta).
+$$
+无理旋转的轨道稠密，一致连续性使此式对任意平移 $a\in\mathbb T$ 成立。再对 $a$ 按 $m$ 积分，利用 Fubini 定理及 Haar 平移不变性，
+$$
+\int g\,d\lambda
+=\int_{\mathbb T}\int_{\mathbb T}g(\theta+a)\,d\lambda(\theta)\,dm(a)
+=\int g\,dm.
+$$
+故 $\lambda=m$。
+
+若 $\mu$ 是 $T$ 不变概率，由 $HT=RH$，$H_*\mu$ 是 $R$ 不变概率，因此等于 $m$，唯一提升迫使 $\mu=\nu$。这里也明确得到
+$$
+\mu(H^{-1}(\Omega))=m(\Omega)=0,
+$$
+所以全部分裂纤维及其所需轨道饱和集都不能携带不变概率的正质量。反过来，$H_*(T_*\nu)=R_*m=m$，唯一提升给出 $T_*\nu=\nu$，证明存在性与唯一性。
+
+$\Omega$ 可数且在 $R$ 的正、反向下不变，故 $\mathbb T_0$ 是不变满测度 Borel 集。全部非单点相位纤维都位于
+$$
+E=\{[-m\phi]:m\ge1\}\subseteq\Omega,
+$$
+所以 $H_0$ 双射。$HT=RH$ 立即给出 $T^{-1}(K_0)=K_0$。对任意 $x\in K_0$，$R^{-1}H(x)$ 在 $\mathbb T_0$ 中有唯一提升 $y$，并且 $H(Ty)=H(x)$；该纤维单点，故 $Ty=x$，证明 $T(K_0)=K_0$ 以及限制后继的可逆性。
+
+设 $J=H_0^{-1}$。对每个正深度柱，其相位弧内部记为 $J_p$。边界均已从 $\mathbb T_0$ 删除，因而
+$$
+J^{-1}(C_p\cap K_0)=J_p\cap\mathbb T_0.
+$$
+右侧在 $\mathbb T_0$ 中开，柱集在 $K_0$ 中构成基，故 $J$ 连续。$H_0$ 的连续性继承自 $H$，于是双方均可测。推前恒等式及其双射性证明它保持测度，半共轭恒等式给出所述同构。
+
+仅删除 $H^{-1}(E)$ 不足以得到上述正、反向不变的同构：接缝双点 $u,v$ 都被 $T$ 送到相位为零的 $Z(0)$，而 $0\notin E$。删除整个双向轨道 $\Omega$ 才同时排除这一进入点及其全部轨道。最后，利用同胚共轭 $\Phi T=S\Phi$，任意 $S$ 不变概率经 $\Phi^{-1}$ 推前成为 $T$ 不变概率，故必为 $\Phi_*\nu$。证毕。
+
+附引：全部纤维、接缝合并及算术半共轭使用[第 20.1、20.2、20.4、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；唯一提升和满测度同构在本条直接构造。
+
+**定理 33.9（几何概率的初始律与位置平稳概率的密度）。** 按状态 $0,1$ 排列，令
+$$
+p=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right).
+$$
+几何概率 $\nu$ 是初始律为 $p$、转移矩阵为 $P$ 的单侧 Markov 概率。以 $\pi$ 为初始律、以同一个 $P$ 为转移矩阵的概率 $\mu_{\mathrm{st}}$ 是 $\sigma$ 不变的，并且
+$$
+\frac{d\mu_{\mathrm{st}}}{d\nu}(x)=
+\begin{cases}
+\displaystyle\frac1{\alpha(1+\alpha^2)},&x_0=0,\\[4pt]
+\displaystyle\frac1{1+\alpha^2},&x_0=1.
+\end{cases}
+$$
+因此二者相互绝对连续但不相等，而且
+$$
+\sigma_*\nu\ne\nu,\qquad T_*\mu_{\mathrm{st}}\ne\mu_{\mathrm{st}}.
+$$
+
+**证明。** 初始柱质量为 $\nu(C_0)=\alpha$、$\nu(C_1)=\alpha^2$。以零结尾的任意正质量前缀，其两个子柱与父柱的质量比为 $\alpha,\alpha^2$；以一结尾时唯一下一位为零，条件概率为一。因此所有有限历史的下一位条件律只依赖末状态，且等于 $P$ 的相应行。这证明 Markov 表示。
+
+$P$ 的各行和为一，且 $\pi P=\pi$。有限柱公式
+$$
+\mu_{\mathrm{st}}(C_u)
+=\pi_{u_0}\prod_{j=0}^{L-2}P_{u_ju_{j+1}}\qquad(L=|u|\ge1)
+$$
+相容，按定理 33.1 的扩张论证定义唯一概率。对于任意柱，对所有可能的前置状态求和，并用 $\pi P=\pi$，得到
+$$
+\mu_{\mathrm{st}}(\sigma^{-1}C_u)=\mu_{\mathrm{st}}(C_u).
+$$
+故该概率在 $\sigma$ 下不变。
+
+$\nu$ 的对应柱公式只把初始 $\pi$ 换成 $p$，所以两个柱质量的比值为 $\pi_{u_0}/p_{u_0}$。令 $D(x)$ 为声明中的正函数，则 $D\nu$ 与 $\mu_{\mathrm{st}}$ 在所有柱上的质量相同，因此是同一 Borel 概率，证明密度公式。密度有严格正的上下界，故相互绝对连续。但
+$$
+\nu(C_1)=\alpha^2\ne\frac{\alpha^2}{1+\alpha^2}
+=\mu_{\mathrm{st}}(C_1),
+$$
+所以它们不相等。另外，
+$$
+\nu(\sigma^{-1}C_1)=\nu(C_{01})=\alpha^3\ne\alpha^2,
+$$
+故 $\nu$ 不是位置平稳概率。由于 $T$ 的不变概率唯一且为 $\nu$，不同的 $\mu_{\mathrm{st}}$ 不可能在 $T$ 下不变。证毕。
+
+附引：初始律与平稳化密度的经典结构见 W. Parry，[Intrinsic Markov chains，Theorems 4–5，印刷页 61](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=7)；本条的初始律和密度由柱公式直接确定。
+
+**定理 33.10（位置最大熵概率的完整不等式与唯一等号情形）。** 对任意 $\sigma$ 不变 Borel 概率 $\mu$，
+$$
+h_\mu(\sigma)\le\log\phi,
+$$
+并且
+$$
+h_\mu(\sigma)=\log\phi
+\quad\Longleftrightarrow\quad
+\mu=\mu_{\mathrm{st}}.
+$$
+因此，结合第 20.9 条既有的 $h_{\mathrm{top}}(\sigma)=\log\phi$，$\mu_{\mathrm{st}}$ 是完整位置移位的唯一最大熵概率，而临界 Hausdorff 概率是与它不同的 $\nu$。
+
+**证明。** 全部熵使用自然对数及约定 $0\log0=0$。有限分割 $\mathcal A$ 的熵记为
+$$
+\mathsf H_\mu(\mathcal A)
+=-\sum_{A\in\mathcal A}\mu(A)\log\mu(A),
+$$
+$h_\mu(\sigma)$ 定义为所有有限 Borel 分割的迭代熵率之上确界。置 $X_j(x)=x_j$。
+
+先说明位置坐标确实计算全部测度熵。有限柱代数生成 Borel 集。可在 $\mu$ 测度下由该代数逼近的 Borel 集构成一个 $\sigma$ 代数：补集与有限并的逼近直接成立；可数并先以有限部分逼近，再用有限测度的下连续性控制余项。因此每个有限 Borel 分割 $\mathcal A$ 都能以只依赖有限前缀的标签预测，且错误概率 $e$ 任意小：分别用柱代数中的集合逼近各原子，输出包含该点的第一个逼近集合的标签，无匹配时输出固定标签；错误集合包含于各对称差之并。若 $\mathcal A$ 有 $r$ 个原子，加入预测是否错误的二元变量给出
+$$
+\mathsf H_\mu(\mathcal A\mid\mathcal Q_L)
+\le -e\log e-(1-e)\log(1-e)+e\log r.
+$$
+当无错误时真实标签已确定；错误时至多有 $r$ 个可能标签，这证明该界。因此条件熵随 $L\to\infty$ 趋于零。
+
+链式法则、增加条件不增熵及不变性给出
+$$
+\mathsf H_\mu\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal A\right)
+\le
+\mathsf H_\mu(\mathcal Q_{n+L-1})
++n\,\mathsf H_\mu(\mathcal A\mid\mathcal Q_L).
+$$
+这里使用位置窗口的精确恒等式
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L=\mathcal Q_{n+L-1}.
+$$
+除以 $n$，先令 $n\to\infty$，再令 $L\to\infty$，并对 $\mathcal A$ 取上确界；反向使用分割 $\mathcal Q_1$，得到
+$$
+h_\mu(\sigma)=
+\lim_{n\to\infty}\frac1n
+\mathsf H_\mu(X_0,\ldots,X_{n-1}).
+$$
+极限存在，因为不变性与链式法则使块熵次可加。这同时给出了此处所需的单侧生成分割论证。
+
+现在取允许转移矩阵及正向量
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+v_0=1,\quad v_1=\alpha.
+$$
+直接计算 $Av=\phi v$，且在所有允许边上
+$$
+P_{ij}=\frac{A_{ij}v_j}{\phi v_i},\qquad
+-\log P_{ij}=\log\phi+\log v_i-\log v_j.
+$$
+对长度 $n\ge1$ 且 $\mu(C_u)>0$ 的历史 $u$，令 $q^u$ 为下一位的条件分布。它仅支持于从末状态 $u_{n-1}$ 出发的允许边。定义
+$$
+D(q^u\Vert P_{u_{n-1},\cdot})
+=\sum_{j:q^u_j>0}q^u_j
+\log\frac{q^u_j}{P_{u_{n-1},j}}.
+$$
+这是非负的，且等号当且仅当两行概率完全相等。确实，由 $\log z\le z-1$，
+$$
+\sum_{j:q_j>0}q_j\log\frac{P_j}{q_j}
+\le\sum_{j:q_j>0}P_j-1\le0.
+$$
+若等号成立，所有正质量位置都满足 $P_j=q_j$，且不存在被 $q$ 遗漏的正 $P_j$；反之显然。上述相对熵非负性也证明混合分布的熵不小于分量熵的平均，因而证明前面使用的增加条件不增熵。
+
+令
+$$
+h_n=\mathsf H_\mu(X_n\mid X_0,\ldots,X_{n-1}).
+$$
+相对熵恒等式及相邻坐标具有相同边缘分布给出
+$$
+h_n=\log\phi-
+\sum_{\substack{|u|=n\\\mu(C_u)>0}}
+\mu(C_u)\,
+D(q^u\Vert P_{u_{n-1},\cdot})
+\le\log\phi.
+$$
+其中势差 $\log v_{X_{n-1}}-\log v_{X_n}$ 的期望为零，正是使用 $\sigma$ 不变性的地方。进一步，
+$$
+h_{n+1}
+\le\mathsf H_\mu(X_{n+1}\mid X_1,\ldots,X_n)
+=h_n,
+$$
+故 $h_n$ 单调下降。由块熵链式法则，
+$$
+\mathsf H_\mu(X_0,\ldots,X_{n-1})
+=\mathsf H_\mu(X_0)+\sum_{j=1}^{n-1}h_j,
+$$
+所以 $h_\mu(\sigma)=\lim_{n\to\infty}h_n\le\log\phi$。
+
+若等号成立，单调性与每个 $h_n\le\log\phi$ 迫使所有 $h_n=\log\phi$。每个正质量历史的相对熵因此都为零，故该历史后的条件转移恰为 $P$。于是 $\mu$ 是转移矩阵为 $P$ 的 Markov 概率。其初始边缘 $a=(a_0,a_1)$ 因不变性满足 $aP=a$，即
+$$
+a_1=\alpha^2a_0,\qquad a_0+a_1=1,
+$$
+从而 $a=\pi$。所有柱质量均等于 $\mu_{\mathrm{st}}$，故 $\mu=\mu_{\mathrm{st}}$。这个论证未预先要求 $\mu$ 满支撑。
+
+反之，在 $\mu_{\mathrm{st}}$ 下，每个正质量历史后的条件分布都是 $P$，上述所有相对熵为零，因而 $h_n=\log\phi$ 对每个 $n\ge1$ 成立，得到 $h_{\mu_{\mathrm{st}}}(\sigma)=\log\phi$。定理 33.9 已证明 $\nu\ne\mu_{\mathrm{st}}$ 且 $\nu$ 不在位置移位下不变，所以不能将临界 Hausdorff 概率与位置最大熵概率混同。证毕。
+
+附引：单侧生成分割定理见 B. Solomyak，[Ergodic Theory—Lecture 6 Summary，Theorem 1.6(i)，第 3 页](https://u.math.biu.ac.il/~solomyb/GRAD/15/ET/Lec6.pdf#page=3)；经典最大熵唯一性见 W. Parry，[Intrinsic Markov chains，§4，Theorem 10，印刷页 65–66](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=11)。此处对所有位置不变概率的不等式及等号情形已直接证明。
+
+## 追加锚（本行以下为增补区）
