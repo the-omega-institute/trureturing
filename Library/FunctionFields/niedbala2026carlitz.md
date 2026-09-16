@@ -79,3 +79,154 @@ families in the checked primary sources. The known characteristic19 result
 and its already delivered completeness proof are not counted again. Neither
 absence from indexed search nor an unpublished companion's unknown contents
 establishes worldwide priority. External acceptance remains unconfirmed.
+
+## Applicability audit: the characteristic-selection construction fails
+
+This records a limitation of the proposed transfer inside the same Wieferich
+problem family. It is not a new open-problem entry or an attribution to the
+source author. The attempted construction takes the rational characteristic
+p>5 of a degree-five Carlitz-Wieferich example over some F_(p^s), and uses that
+same p as an integer Fibonacci WSS candidate.
+
+The existing CX characteristic restriction leaves only
+
+$$p=19,\quad263,\quad P_*=519555805809266011.$$
+
+Exact modular Fibonacci evaluation gives, with epsilon=(5/p),
+
+$$\begin{array}{c|r|r}
+p&F_{p-\epsilon}\bmod p^2&q_p=F_{p-\epsilon}/p\bmod p\\\hline
+19&57&3\\
+263&27615&105\\
+P_*&218822702976076845315377336456939760&421172664282398160.
+\end{array}$$
+
+Every quotient is nonzero. The primality of P_* has a recursive Lucas
+certificate. Thus the complete characteristic-selection route produces no
+integer WSS prime. This does not exclude other maps between the two arithmetic
+problems, or invalidate the function-field constructions.
+
+### The unchanged five residuals cannot lift to characteristic p squared
+
+Write R(a,b,c,d)=1-d(1-c(1-b(1-a))) and
+ tau(a,b,c,d)=(b-a,c-a,d-a,-a). The actual source
+`CarlitzFiveCharacteristic.lean` contains the integer identity
+
+$$\sum_{i=0}^4 S(\tau^i(a,b,c,d))R(\tau^i(a,b,c,d))=D,$$
+
+where
+
+$$D=4673196650932024062540600
+=3^2\cdot8\cdot25\cdot19\cdot263\cdot P_*.$$
+
+Its polynomial identity uses only integer coefficients and ring operations,
+even though the public source theorem is stated for fields. Therefore it is
+valid in every commutative ring. If all five residuals vanish in a ring of
+exact characteristic p^e, then p^e divides D. For p in {19,263,P_*}, the
+exponent of p in D is exactly one. Consequently there is no such simultaneous
+solution in any ring of exact characteristic p^e with e>=2. In particular,
+none of the known residual solutions lifts to an unramified length-two ring
+while preserving all five equations. The case p=5 is not covered by this
+first-power obstruction.
+
+This is a statement about the rational constant p squared. The Carlitz
+congruence modulo a polynomial P(T)^2 is in equal characteristic p, where
+p itself is zero. There is no contradiction between the two statements.
+
+### A concrete first-order obstruction and the unique scalar deformation
+
+Fix p=19 and the monic integer lift
+
+$$\widetilde P(T)=T^5+13T^3+3T^2+10T+15.$$
+
+In W=(Z/19^2)[t]/(Ptilde), let sigma be the unramified automorphism lifting
+the 19^3-power Frobenius. In the basis (1,t,t^2,t^3,t^4), its value at t is
+(176,41,237,82,105) modulo361. Polynomial substitution verifies Ptilde(sigma(t))=0
+and sigma^5(t)=t. Put
+
+$$\mathcal E(x)=R(\sigma x-x,\sigma^2x-x,\sigma^3x-x,\sigma^4x-x).$$
+
+For every z in F_(19^5), exact first-order expansion gives
+
+$$\mathcal E(t+19z)/19=e+Jz\quad\text{in }\mathbb F_{19}^5,$$
+
+where
+
+$$e=\begin{pmatrix}10\\8\\1\\3\\11\end{pmatrix},\qquad
+J=\begin{pmatrix}
+0&5&10&16&13\\
+0&6&11&10&0\\
+0&14&5&0&5\\
+0&0&14&2&2\\
+0&13&16&17&3
+\end{pmatrix}.$$
+
+The row w=(4,2,14,15,0) satisfies wJ=0 and we=1. Hence no choice of z
+can make the original residual vanish modulo361. The four nonconstant
+columns have rank four; the minor obtained by deleting the first row has
+determinant8 modulo19. Thus the attainable error vectors form exactly the
+affine hyperplane w y=1, with19 preimages for each error. Constant translations
+are precisely the one-dimensional kernel. This conclusion concerns every
+lift, not a finite sample of z values.
+
+If one changes the equation to E(x)=19c with c in F19, solvability instead
+requires 4c=1, hence c=5. Fixing the constant coefficient of z to zero gives
+one solution z=(0,13,0,18,9). The augmented derivative in the four nonconstant
+coordinates and c has nonzero determinant11. Successively correcting the
+five coordinates therefore gives, in the unramified degree-five extension
+of Z_19, a unique normalized x and scalar kappa in19 Z_19 such that
+E(x)=kappa, x=t modulo19. Its first digit is kappa/19=5 modulo19, so
+v_19(kappa)=1. The same sigma makes all five translated-origin residuals
+exactly equal to kappa. To precision19^4 the constructed scalar is80237.
+The inverse derivative proves existence and uniqueness at every precision:
+at each step the same invertible residual linear map determines the next
+five digits, and completeness supplies their compatible limit.
+
+The corresponding exact calculations for263 and P_* also give rank-four
+linearization and a nonzero augmented determinant. With coefficient lifts
+in [0,p-1] of the canonical polynomials P_263 and P_P* from CX, their unique
+first scalar digits are respectively248 and311747520347328037. The augmented
+determinants are17 and140776401079060105. The constructed scalars have
+p-adic valuation one in both cases. These scalar digits depend on the stated
+integral models and normalization; they are not asserted to be invariant
+under arbitrary changes to the residual equation.
+
+This construction solves a deformed equation E=kappa with kappa nonzero.
+It is not a mixed-characteristic solution of E=0 and not an integer WSS
+construction. Merely allowing a correction parameter can hide the original
+obstruction, so the parameter must remain part of the conclusion.
+
+### Comparison with the fixed golden lift, using the current owner CG.2/CG.6
+
+For p>5 retain the actual golden ring, phi^2=phi+1, d=2phi-1, d^2=5,
+and sigma equal to the identity or conjugation according to epsilon=(5/p).
+For a lift x=phi+pz define, by division before reduction,
+
+$$U(x)=(x^2-x-1)/p,\qquad V(x)=(x^p-\sigma x)/p\quad\bmod p.$$
+
+The existing owner formula for the golden p-derivation gives
+
+$$\Delta_p=(\phi^p-\sigma\phi)/p
+=\frac{5+\epsilon d}{4}q_p\pmod p.$$
+
+Expansion in the actual quadratic ring yields
+
+$$U(x)=dz,\qquad V(x)=\Delta_p-\sigma z,\qquad
+V(x)+\sigma(d^{-1}U(x))=\Delta_p.$$
+
+The coefficient (5+epsilon*d)/4 is a unit: its norm is5/4. Thus simultaneous
+preservation of the original quadratic equation and the Frobenius equation
+is equivalent to q_p=0. If only the Frobenius equation is kept, the unique
+correction is z=q_p(phi+2)/2. It preserves norm minus one but changes the
+trace to 1+5p q_p/2 modulo p^2; the fixed quadratic then has residual
+p*(5q_p/2)*phi. It solves the modified trace-parameter quadratic, not the
+original one unless q_p=0.
+
+This comparison is an explicit consequence of the already recorded CG
+identities. It is not a newly independent constraint on the WSS zero set.
+The useful new boundary is that the five-residual characteristic restriction
+cannot simply be carried through a mixed-characteristic lift. A successful
+transfer must supply the genuine integer lifting equations and preserve
+their fixed parameters, rather than infer integer WSS from an adjustable
+residual or from the existence of some lifted root. Neither a WSS prime
+nor an unbounded WSS exclusion family is proved by this audit.
