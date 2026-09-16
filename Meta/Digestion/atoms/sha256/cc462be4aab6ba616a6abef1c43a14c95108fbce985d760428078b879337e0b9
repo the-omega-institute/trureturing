@@ -1,0 +1,28 @@
+**Proof.** On $U_i$, the shift is injective and satisfies the exact similarity law
+$$
+\rho(Sy,Sz)=2\rho(y,z).
+$$
+For positive $r\downarrow0$,
+$$
+\frac{h_1(2r)}{h_1(r)}
+=\frac{1+\log_2(1/r)}{\log_2(1/r)}\longrightarrow1.
+$$
+Intersect an arbitrary diameter cover of $A$ with $U_i$ and apply $S$. For every $\epsilon>0$, at sufficiently small diameters the image costs are at most $1+\epsilon$ times the original costs. Taking the infimum and then the scale limit gives
+$$
+\mathcal H^{h_1}_\rho(SA)\le(1+\epsilon)\mathcal H^{h_1}_\rho(A).
+$$
+Conversely, intersect any cover of $SA$ with $S(U_i)$ and apply the inverse of the restricted similarity. The same argument, now for multiplication of distances by $1/2$, gives the reverse inequality after $\epsilon\downarrow0$. Zero-diameter sets remain zero-cost sets. This proves equality for arbitrary subsets.
+
+The union of the images is the whole space because $S$ is surjective. Suppose $Sy=Sz$ with $y\in U_0$ and $z\in U_1$. Write $y=\Phi(x)$ and $z=\Phi(x')$. Then $Tx=Tx'$, so the injectivity of the circle rotation in $HT=RH$ gives $H(x)=H(x')$. As $x\ne x'$, they form one of the split pairs $x_m^-,x_m^+$. For $m\ge2$, their images are the distinct points $x_{m-1}^-,x_{m-1}^+$. Thus only $m=1$ is possible, giving $\{x,x'\}=\{u,v\}$ and common image $Z(0)$. Hence the only common shift image is $w$. Conversely $S(0w)=S(1w)=w$, proving the exact intersection.
+
+The restriction of $S$ to each compact $U_i$ is a homeomorphism onto its closed image. Thus it maps Borel subsets of $U_i$ to Borel subsets of $X_\beta$. Singletons have zero gauge measure. For every Borel set $B$, the local equality and the null overlap give
+$$
+\mathcal H^{h_1}_\rho(S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(U_i\cap S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(B\cap S(U_i))
+=\mathcal H^{h_1}_\rho(B).
+$$
+By 35.3 the total mass $c_0$ is finite and positive. Normalizing therefore gives an invariant probability, which is $\eta$ by 33.8. No global inverse of $S$ has been used. $\square$
+
+Reference: the general unique-branch-point formula for a one-sided Sturmian shift is Brix, [Sturmian subshifts and their C*-algebras, §2.1, equation (2.7)](https://arxiv.org/html/2107.10613v1#S2.SS1). The proof above identifies its precise word and verifies the overlap from the specified split fibers.
+

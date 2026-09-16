@@ -11345,3 +11345,1977 @@ The impossibility of a separately weak-star continuous product on the compact Bo
 [^rro32-ultrafilters]: Neil Hindman and Dona Strauss, *Some new results about the smallest ideal of βS*, New York Journal of Mathematics 25 (2019), 897–913, Section 1, printed pages 897–898, [published paper](https://nyjm.albany.edu/j/2019/25-38p.pdf). The cited construction identifies the compact ultrafilter space, its clopen event basis, its ordered extension of a discrete semigroup operation, and the corresponding membership formula. The finite binary witness and its Zeckendorf transport in this section are proved directly.
 
 ## 追加锚（本行以下为增补区）
+## 33. 几何观察的临界测度、最优相位正则性与时间尺度变换
+
+**定义与前置假设 33.0（载体、两种首差距离及测度归一化）。** 令
+$$
+\mathbb N=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad
+\beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L,\qquad
+s=\frac{\log\phi}{\log2},\quad \kappa=\frac1s.
+$$
+取完整合法数字空间
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},
+$$
+并沿用第 20 条的算术后继 $T$、位置删除 $\sigma$、位置前缀 $q_L$、时间前缀 $v_t$、相位及时间编码
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi],
+$$
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},\qquad f(x)=x_0,\qquad
+\Phi:K\longrightarrow X_\beta.
+$$
+这里使用第 20.2、20.4–20.7 条已成立的精确柱相位区间、全部分裂纤维、等式 $\mathcal Q_L=\mathcal V_{G_L-1}$、时间前缀数 $t+1$，以及 $\Phi$ 为同胚且 $\Phi T=S\Phi$、$HT=RH$。特别地，$X_\beta$ 是 $K$ 的真闭子集；$\sigma$ 在整个 $K$ 上作用，$S$ 只在 $X_\beta$ 上作用。
+
+对不同的 $x,y\in K$ 及不同的 $a,b\in X_\beta$，定义
+$$
+j(x,y)=\min\{j:x_j\ne y_j\},\qquad d(x,y)=2^{-j(x,y)},
+$$
+$$
+n(a,b)=\min\{n:a_n\ne b_n\},\qquad \rho(a,b)=2^{-n(a,b)};
+$$
+相等点的距离均定义为零。圆周使用测地距离
+$$
+d_{\mathbb T}([u],[v])=\min_{k\in\mathbb Z}|u-v-k|,
+$$
+$m$ 表示总质量为一的圆周 Haar 测度。合法字 $p$ 的长度记为 $|p|$，其柱集为 $C_p=q_{|p|}^{-1}(\{p\})$，并约定 $C_{\varnothing}=K$。
+
+对任意度量空间 $(Y,e)$、$q>0$、$\delta>0$ 及任意 $A\subseteq Y$，采用不乘任何归一化系数的外测度定义
+$$
+\mathcal H^q_{e,\delta}(A)=
+\inf\left\{\sum_i(\operatorname{diam}_e A_i)^q:
+ A\subseteq\bigcup_i A_i,\ \operatorname{diam}_e A_i\le\delta\right\},
+\qquad
+\mathcal H^q_e(A)=\lim_{\delta\downarrow0}\mathcal H^q_{e,\delta}(A).
+$$
+覆盖至多可数，覆盖集不要求可测；空集和单点的正次幂直径贡献为零。Hausdorff 维数定义为使该测度为零的正指数之下确界。
+
+附引：本条的动力与分裂端点前置为[第 20.1–20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.1（真实柱直径与相容的非原子概率）。** 存在唯一 Borel 概率 $\nu$ 满足 $\nu(K)=1$ 及
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&L=|p|\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L=|p|\ge1,\ p_{L-1}=1.
+\end{cases}
+$$
+它具有满支撑且无原子。全部非空柱集满足精确等式
+$$
+\operatorname{diam}_d K=1,\qquad
+\operatorname{diam}_d C_p=
+\begin{cases}
+2^{-L},&p_{L-1}=0,\\
+2^{-(L+1)},&p_{L-1}=1,
+\end{cases}
+\qquad
+\nu(C_p)=(\operatorname{diam}_d C_p)^s.
+$$
+
+**证明。** 末位为零时，所有延伸共享前 $L$ 位，而延伸 $p0^\infty$ 与 $p10^\infty$ 恰在第 $L$ 位不同，故柱直径为 $2^{-L}$。末位为一时，第 $L$ 位强制为零，因此 $C_p=C_{p0}$；在强制零之后选择零或一，得到首差为 $L+1$ 的两个延伸，故直径为 $2^{-(L+1)}$。空前缀的直径由 $0^\infty$ 与 $10^\infty$ 达到。
+
+记上述候选柱质量为 $w(p)$。根层满足 $w(0)+w(1)=\alpha+\alpha^2=1$。若 $p$ 以零结尾，则
+$$
+w(p0)+w(p1)=\alpha^{L+1}+\alpha^{L+2}=\alpha^L=w(p).
+$$
+若 $p$ 以一结尾，则唯一子柱是 $C_{p0}=C_p$，两者质量同为 $\alpha^{L+1}$。因此逐层相容。
+
+每个开闭集都是有限个同深度柱集的不交并；在这样的表示上求和定义 $w$，相容性保证定义不依赖深度或表示。若一列不交开闭集的并仍是开闭集 $B$，它们是紧集 $B$ 的开覆盖，故有有限子覆盖；不交性迫使其余成员为空。这证明 $w$ 是开闭代数上的有限预测度。该代数生成 Borel 集，有限测度扩张定理给出唯一 Borel 概率 $\nu$。
+
+每个非空柱质量严格为正，柱集又构成拓扑基，故支撑为 $K$。对每个 $x$，
+$$
+\nu(\{x\})\le\nu(C_{q_L(x)})\le\alpha^L\longrightarrow0,
+$$
+所以没有原子。最后 $2^{-s}=\alpha$，将真实柱直径代入即得质量与直径幂的等式。证毕。
+
+附引：有限预测度的扩张与唯一性见 Scott Sheffield，[18.175 Lecture 2，PDF 第 28 页的 Carathéodory 扩张定理](https://math.mit.edu/~sheffield/2016175/Lecture2.pdf#page=28)。
+
+**定理 33.2（任意集合的质量界、精确临界测度及 Ahlfors 界）。** 令 $\nu^*$ 为 $\nu$ 的外测度。对每个集合 $A\subseteq K$，
+$$
+\nu^*(A)\le(\operatorname{diam}_d A)^s.
+$$
+而且对所有 $\delta>0$ 都有更强的等式
+$$
+\mathcal H^s_{d,\delta}(A)=\mathcal H^s_d(A)=\nu^*(A).
+$$
+特别地，作为 Borel 测度，
+$$
+\mathcal H^s_d=\nu,\qquad \mathcal H^s_d(K)=1,\qquad
+\dim_{\mathrm H}(K,d)=s.
+$$
+对所有 $x\in K$ 和 $0<r\le1$，闭球满足
+$$
+\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s.
+$$
+这两个统一系数分别不能增大和减小。
+
+**证明。** 若 $A$ 为空或至多含一点，第一式由无原子性成立。否则在所有不同点对的首差下标中取最小值 $k$。所有点共享前 $k$ 位，并有两个点恰在第 $k$ 位不同，故 $\operatorname{diam}_d A=2^{-k}$。若 $k=0$，使用 $A\subseteq K$。若 $k\ge1$，共同前缀的末位必为零；否则第 $k$ 位被强制为零，不可能出现该处首差。因此 $A$ 包含于一个质量为 $\alpha^k$ 的柱集，得到
+$$
+\nu^*(A)\le\alpha^k=(2^{-k})^s.
+$$
+这证明的是所有集合的直径控制，而不只是球或可测集合的控制。
+
+任意允许的覆盖给出
+$$
+\nu^*(A)\le\sum_i\nu^*(A_i)
+\le\sum_i(\operatorname{diam}_d A_i)^s,
+$$
+所以 $\nu^*(A)\le\mathcal H^s_{d,\delta}(A)$。反向使用上一条预测度扩张的外测度公式
+$$
+\nu^*(A)=
+\inf\left\{\sum_i\nu(B_i):
+ A\subseteq\bigcup_i B_i,\ B_i\text{ 为开闭集}\right\}.
+$$
+固定 $\delta>0$ 和 $\varepsilon>0$，取右边总质量小于 $\nu^*(A)+\varepsilon$ 的开闭覆盖。将每个 $B_i$ 分成足够深的有限个柱集，使它们的直径均不超过 $\delta$。按定理 33.1，这些柱集的直径 $s$ 次幂之和恰为 $\nu(B_i)$。因此
+$$
+\mathcal H^s_{d,\delta}(A)\le\nu^*(A)+\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 得每个尺度上的等式，继而得到所述 Borel 测度等式。
+
+若 $0<q<s$，所有直径不超过 $\delta$ 的覆盖满足
+$$
+\sum_i(\operatorname{diam}_d A_i)^q
+\ge\delta^{q-s}\sum_i(\operatorname{diam}_d A_i)^s
+\ge\delta^{q-s}
+$$
+当它覆盖 $K$ 时；令 $\delta\downarrow0$ 得 $\mathcal H^q_d(K)=\infty$。若 $q>s$，长度 $L$ 的全部柱覆盖的 $q$ 次幂直径和不超过
+$$
+2^{-L(q-s)}\sum_{|p|=L}\nu(C_p)=2^{-L(q-s)}\longrightarrow0.
+$$
+因此所有 $q>s$ 的 Hausdorff 测度为零，维数恰为 $s$。
+
+对 $0<r<1$，置 $L=\lceil\log_2(1/r)\rceil$。闭球恰是 $C_{q_L(x)}$，且
+$$
+2^{-L}\le r<2^{-(L-1)},\qquad
+\alpha^{L+1}\le\nu(\overline B_d(x,r))\le\alpha^L.
+$$
+于是得到 $\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s$；$r=1$ 时闭球是 $K$。在以零结尾的深度 $L$ 柱上取 $r=2^{-L}$，上界等号成立。取 $x_0=1$ 并令 $r\uparrow1$、$r<1$，闭球质量恒为 $\alpha^2$，故质量与 $r^s$ 的比值趋于 $\alpha^2$，证明下界系数最优。
+
+原加权距离 $d_K$ 满足 $\tfrac12d\le d_K\le d$。对每个正指数，两个距离的覆盖代价只相差固定乘数，故零测度指数的集合相同，得到 $\dim_{\mathrm H}(K,d_K)=s$。本条临界测度的精确系数等式只对明确指定的距离 $d$ 成立，未将它移植为 $d_K$ 下的测度等式。证毕。
+
+附引：任意集合的直径幂质量分布界及所用归一化分别对应[Hausdorff 测度的质量界与直径幂定义](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Hausdorff.lean#L491-L500)；距离比较见 Zeckendorf 卷[第 477.3 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+**定理 33.3（Haar 推前与相位映射的最优 Hölder 定律）。** 有
+$$
+H_*\nu=m,\qquad
+d_{\mathbb T}(H(x),H(y))\le d(x,y)^s\quad(x,y\in K).
+$$
+指数 $s$ 是最大的正 Hölder 指数；在该指数处，统一常数 $1$ 也是最小的。特别地，$H:(K,d)\to(\mathbb T,d_{\mathbb T})$ 不是 Lipschitz 映射。
+
+**证明。** 第 20.2 条的相位柱区间长度，在末位为零和一时分别为 $\alpha^L$ 和 $\alpha^{L+1}$，故恰为 $\nu(C_p)$。同深度的区间内部互不相交并覆盖圆周，重复只可能发生于端点。
+
+给定连续函数 $g:\mathbb T\to\mathbb R$，在每个深度 $L\ge1$ 的柱相位像中取 $\theta_p$。这些弧的长度至多为 $\alpha^L$，因此一致连续性给出
+$$
+\int_K g(H(x))\,d\nu(x)
+-\sum_{|p|=L}g(\theta_p)\nu(C_p)\longrightarrow0.
+$$
+圆周 Haar 测度赋予每条弧的质量等于其长度，且端点质量为零，同一个和式也趋于 $\int_{\mathbb T}g\,dm$。故两种测度对所有连续函数的积分相同。对闭集 $B$，连续函数 $g_n(\theta)=\max\{0,1-n\,d_{\mathbb T}(\theta,B)\}$ 收敛到其示性函数；有界收敛使两个测度在闭集上相同，再由闭集生成 Borel 集及有限测度唯一性得到 $H_*\nu=m$。空闭集另行显然成立。
+
+若 $x\ne y$ 且 $j(x,y)=k\ge1$，两点属于同一个深度 $k$ 的柱；其相位实区间长度至多为 $\alpha^k$，故
+$$
+d_{\mathbb T}(H(x),H(y))
+\le |F(x)-F(y)|\le\alpha^k=d(x,y)^s.
+$$
+若 $k=0$，圆周直径 $1/2\le1=d(x,y)^s$ 给出同一界。
+
+令 $u=(10)^\infty$、$v=(01)^\infty$。对每个 $k\ge2$ 取
+$$
+a_k=0^ku,\qquad b_k=0^kv.
+$$
+两点首差为 $k$；由 $F(u)=-\alpha$、$F(v)=\alpha^2$ 以及前置零的仿射缩放，
+$$
+d(a_k,b_k)=2^{-k},\qquad
+|F(a_k)-F(b_k)|=\alpha^k.
+$$
+由于 $\alpha^k<1/2$，此实差已经是圆周测地距离。于是指数 $s$ 处的比值恰为一。对任意 $\gamma>s$，相应比值为
+$$
+\frac{d_{\mathbb T}(H(a_k),H(b_k))}{d(a_k,b_k)^\gamma}
+=(2^\gamma\alpha)^k\longrightarrow\infty.
+$$
+故不存在更大指数的统一 Hölder 界。因为 $s<1$，Lipschitz 情形亦被排除。证毕。
+
+附引：柱实区间及其端点值使用[第 20.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.4（覆盖维数与观察核的严格区分）。** 以有限开覆盖存在重数至多 $n+1$ 的有限开加细来定义紧空间的覆盖维数，则
+$$
+\dim_{\mathrm{top}}K=\dim_{\mathrm{top}}X_\beta=0,\qquad
+\dim_{\mathrm{top}}\mathbb T=1.
+$$
+同时 $H$ 是商映射，且
+$$
+\ker\Phi=\Delta_K\subsetneq\ker H,
+\qquad
+\Delta_K=\{(x,x):x\in K\}.
+$$
+因此本例中覆盖维数的增大与观察纤维的合并同时发生，而不是与观察核的细化同时发生。
+
+**证明。** $K$ 的任意有限开覆盖被某个共同深度的柱分割加细：先在每个点选包含于某一覆盖成员的柱，利用紧致性取有限子覆盖，再统一增加深度。柱分割的重数为一，故非空空间 $K$ 的覆盖维数为零。由同胚 $\Phi$，$X_\beta$ 的覆盖维数也为零。
+
+对圆周任意有限开覆盖取 Lebesgue 数 $\delta>0$，使直径小于 $\delta$ 的集合都包含于某一覆盖成员。选 $N\ge4$ 使 $3/(2N)<\delta$，以 $j/N$ 为中心、$3/(4N)$ 为半径取 $N$ 个开弧。它们覆盖圆周，每个直径小于 $\delta$，且任一点至多落入两个弧：一个长度为 $3/(2N)$ 的弧不可能容纳三个间隔为 $1/N$ 的中心。这给出重数至多二的开加细，故圆周覆盖维数至多为一。
+
+圆周是区间 $[0,1]$ 的连续像，因而连通。若其覆盖维数为零，取两个不同点 $a,b$，则由两个真开集 $\mathbb T\setminus\{a\}$、$\mathbb T\setminus\{b\}$ 组成的覆盖应有重数一的有限开加细。该加细是不交开分割；连通性迫使唯一非空成员为整个圆周，但整个圆周不包含于上述任何一个真开集，矛盾。因此维数恰为一。
+
+$H$ 是紧空间到 Hausdorff 空间的连续满射，闭集的像紧而闭，故为商映射。$\Phi$ 单射给出 $\ker\Phi=\Delta_K$；$u\ne v$ 而 $H(u)=H(v)$ 给出严格包含。核的这个包含方向正是点被合并的方向。证毕。
+
+附引：满射、同胚与接缝双点使用[第 20.2、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；所需覆盖维数结论已在本条直接证明。
+
+**定理 33.5（两种距离的精确统一模量及全部首差区间）。** 对映射 $A:(Y,e)\to(Z,e')$ 定义
+$$
+\omega_A(r)=\sup\{e'(A(y),A(y')):e(y,y')\le r\}.
+$$
+置
+$$
+\ell(t)=\max\{L\ge0:G_L\le t+1\}\qquad(t\in\mathbb N).
+$$
+则
+$$
+\omega_\Phi(2^{-L})=2^{-(G_L-1)},\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-\ell(t)}.
+$$
+更精确地，若 $x\ne y$ 的位置首差为 $k$、时间首差为 $n=n(\Phi x,\Phi y)$，则
+$$
+G_k-1\le n\le G_{k+1}-2.
+$$
+对每个 $k\ge0$，这个整数区间内的每个 $n$ 都由实际分裂点对达到。对任意 $0<r\le1$，令 $N(r)=\lceil\log_2(1/r)\rceil$，则
+$$
+\omega_\Phi(r)=2^{-(G_{N(r)}-1)},\qquad
+\omega_{\Phi^{-1}}(r)=2^{-\ell(N(r))}.
+$$
+
+**证明。** 首差距离的闭球约定给出
+$$
+d(x,y)\le2^{-L}\iff q_L(x)=q_L(y),\qquad
+\rho(\Phi x,\Phi y)\le2^{-t}\iff v_t(x)=v_t(y).
+$$
+由第 20.6 条，位置前 $L$ 位相同必使时间前 $G_L-1$ 位相同。若位置首差恰为 $k$，位置前 $k+1$ 位不同，又由同一分割等式知时间前 $G_{k+1}-1$ 位不同。于是
+$$
+G_k-1\le n<G_{k+1}-1,
+$$
+即所述首差区间。此处 $k$ 是实际可分叉的位置；若其前一位为一，则该位强制为零，根本不能成为首差，因此未将强制位误作分叉位。
+
+第 20.2、20.4 条给出的实际分裂点满足：对 $m\ge2$，
+$$
+j(x_m^-,x_m^+)=k
+\iff G_k+1\le m\le G_{k+1},
+\qquad
+n(\Phi x_m^-,\Phi x_m^+)=m-2.
+$$
+故给定所述区间中的 $n$，取 $m=n+2$ 即达到它。$k=0$ 时区间只有 $n=0$，由 $m=2$ 达到；接缝的 $m=1$ 点对同样在位置和时间的第零位首差，没有额外的下标平移。
+
+对正向模量，分割等式给出上界；取 $m=G_L+1$，该点对的位置首差恰为 $L$、时间首差恰为 $G_L-1$，给出相同的下界。
+
+对逆向模量，$G_{\ell(t)}-1\le t$，所以时间前 $t$ 位相同必使位置前 $\ell(t)$ 位相同，得到上界 $2^{-\ell(t)}$。另一方面，
+$$
+G_{\ell(t)}\le t+1<G_{\ell(t)+1}.
+$$
+取 $m=t+2$ 的分裂点对，其时间首差为 $t$，位置首差为 $\ell(t)$，恰达到该上界。最后，所有非零输入距离都是二的非正整数次幂，输入距离不超过 $r$ 等价于不超过 $2^{-N(r)}$，证明一般半径公式。证毕。
+
+附引：精确分割与全部分裂点见[第 20.2、20.4、20.6 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.6（任意正指数的正向 Hölder 性与锐利的逆对数模量）。** 对每个 $\gamma>0$，令
+$$
+C_\gamma=\sup_{k\ge0}2^{\gamma k-G_k+1}.
+$$
+则 $1\le C_\gamma<\infty$，并且
+$$
+\rho(\Phi x,\Phi y)\le C_\gamma d(x,y)^\gamma.
+$$
+但 $\Phi^{-1}$ 对任何正指数都不是 Hölder 映射。其逆模量满足
+$$
+\omega_{\Phi^{-1}}(r)\asymp
+\bigl(1+\log_2(1/r)\bigr)^{-\kappa}
+\qquad(r\downarrow0),
+\qquad \kappa=\frac{\log2}{\log\phi}.
+$$
+令 $c=\phi^2/\sqrt5$，则在精确二进尺度上还有
+$$
+\liminf_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=c^\kappa,
+\qquad
+\limsup_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=2c^\kappa.
+$$
+因此对数阶不能改成更快的幂，也不能把这两个极限压成同一个非零渐近系数。
+
+**证明。** 递推或第 20.9 条的闭式给出
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad G_k\ge\phi^k.
+$$
+指数增长支配 $\gamma k$，故定义 $C_\gamma$ 的序列趋于零，其上确界有限；$k=0$ 的项为一。由定理 33.5，位置首差为 $k$ 时，
+$$
+\rho(\Phi x,\Phi y)\le2^{-(G_k-1)}
+\le C_\gamma\,2^{-\gamma k}.
+$$
+相等点的情形显然，因此得到正向 Hölder 界。
+
+再次取 $m=G_L+1$ 的分裂点对。对任意 $\gamma>0$，
+$$
+\frac{d(x_m^-,x_m^+)}
+{\rho(\Phi x_m^-,\Phi x_m^+)^\gamma}
+=2^{-L+\gamma(G_L-1)}\longrightarrow\infty.
+$$
+所以任何有限统一常数都不能给出逆向正指数 Hölder 界。
+
+令 $L=\ell(t)$，则
+$$
+G_L-1\le t\le G_{L+1}-2,\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-L}.
+$$
+由 $\phi^L\le G_L\le\phi^{L+1}$ 得到适用于所有 $t\ge0$ 的界
+$$
+(t+1)^{-\kappa}
+\le\omega_{\Phi^{-1}}(2^{-t})
+\le4(t+1)^{-\kappa}.
+$$
+将 $t$ 换成 $N(r)$，且 $N(r)$ 与 $\log_2(1/r)$ 相差不足一，得到所述对数阶。
+
+为确定锐利振幅，在整个第 $L$ 个台阶上，
+$$
+\frac{G_L}{\phi^L}
+\le\frac{t+1}{\phi^L}
+\le\frac{G_{L+1}-1}{\phi^L},
+\qquad
+(t+1)^\kappa2^{-L}
+=\left(\frac{t+1}{\phi^L}\right)^\kappa.
+$$
+左、右端分别趋于 $c$ 和 $c\phi$。取实际台阶端点 $t=G_L-1$ 与 $t=G_{L+1}-2$，两界分别达到；这些模量值又分别由定理 33.5 的实际分裂点对达到。因此下极限为 $c^\kappa$，上极限为 $(c\phi)^\kappa=2c^\kappa$。这也证明：若把对数衰减指数增大为任意 $\kappa'>\kappa$，便不可能保留统一上界。证毕。
+
+附引：Fibonacci 闭式使用[第 20.9 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；模量与振幅由本条结合实际端点证明，而不是由词数推断。
+
+**定理 33.7（时间首差尺度的零 Hausdorff 维数）。** 对每个 $q>0$，
+$$
+\mathcal H^q_\rho(X_\beta)=0,\qquad
+\dim_{\mathrm H}(X_\beta,\rho)=0.
+$$
+将时间距离拉回为
+$$
+\widehat d(x,y)=\rho(\Phi x,\Phi y),
+$$
+则 $\widehat d$ 与 $d$ 给出相同拓扑，但
+$$
+\dim_{\mathrm H}(K,\widehat d)=0
+< s=\dim_{\mathrm H}(K,d).
+$$
+这些等式不把完整合法位置空间 $(K,d)$ 识别为零维的时间度量空间。
+
+**证明。** 长度 $t$ 的时间前缀只有 $t+1$ 个。它们的柱集覆盖 $X_\beta$，每个 $\rho$ 直径至多为 $2^{-t}$，故总 $q$ 次幂直径代价至多为
+$$
+(t+1)2^{-qt}\longrightarrow0.
+$$
+覆盖直径趋于零；对每个固定允许尺度，亦可任意增大 $t$，因此所有正指数 Hausdorff 测度都为零。由定义，Hausdorff 维数为零。
+
+$\Phi$ 是同胚，故拉回距离给出原拓扑；它又按定义是从 $(K,\widehat d)$ 到 $(X_\beta,\rho)$ 的等距双射，所以二者 Hausdorff 测度及维数相同。与定理 33.2 比较即得严格不等式。这里的变化来自距离，而不是从载体中删除位置序列。证毕。
+
+附引：所需时间词数是[第 20.5、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的既有结果。
+
+**定理 33.8（算术不变概率的唯一性与不变满测度同构）。** $\nu$ 是 $T$ 的唯一不变 Borel 概率，且是 Haar 测度在 $H$ 下的唯一概率提升。令
+$$
+\Omega=\{[n\phi]:n\in\mathbb Z\},\qquad
+\mathbb T_0=\mathbb T\setminus\Omega,\qquad
+K_0=H^{-1}(\mathbb T_0).
+$$
+则 $m(\mathbb T_0)=\nu(K_0)=1$，并有
+$$
+R(\mathbb T_0)=R^{-1}(\mathbb T_0)=\mathbb T_0,\qquad
+T^{-1}(K_0)=K_0,\qquad T(K_0)=K_0.
+$$
+限制映射
+$$
+H_0:(K_0,\nu|_{K_0},T|_{K_0})
+\longrightarrow(\mathbb T_0,m|_{\mathbb T_0},R|_{\mathbb T_0})
+$$
+是保持测度的双可测同构，且 $H_0$ 及其逆事实上连续。相应地，$\Phi_*\nu$ 是 $(X_\beta,S)$ 的唯一不变 Borel 概率。
+
+**证明。** 首先证明 Haar 提升唯一。若 $\eta$ 是 Borel 概率且 $H_*\eta=m$，则对每个正深度柱 $C_p$，第 20.2 条给出
+$$
+H^{-1}(H[C_p])\setminus C_p
+\subseteq H^{-1}(\partial_{\mathbb T}H[C_p]).
+$$
+右侧在 $\eta$ 下为零，因为相位边界是有限集且 $H_*\eta=m$。因此
+$$
+\eta(C_p)=m(H[C_p])=\nu(C_p).
+$$
+柱集生成 Borel 集，两个概率在所有柱上相同，故 $\eta=\nu$。定理 33.3 已给出这一提升的存在。
+
+任意 $R$ 不变概率 $\lambda$ 都无原子：同一旋转轨道上的单点质量相同，而无理性使该轨道无限，正原子质量会违反总质量有限。进一步，对任意连续 $g$，旋转不变性使
+$$
+\int g(\theta+[n\phi])\,d\lambda(\theta)=\int g(\theta)\,d\lambda(\theta).
+$$
+无理旋转的轨道稠密，一致连续性使此式对任意平移 $a\in\mathbb T$ 成立。再对 $a$ 按 $m$ 积分，利用 Fubini 定理及 Haar 平移不变性，
+$$
+\int g\,d\lambda
+=\int_{\mathbb T}\int_{\mathbb T}g(\theta+a)\,d\lambda(\theta)\,dm(a)
+=\int g\,dm.
+$$
+故 $\lambda=m$。
+
+若 $\mu$ 是 $T$ 不变概率，由 $HT=RH$，$H_*\mu$ 是 $R$ 不变概率，因此等于 $m$，唯一提升迫使 $\mu=\nu$。这里也明确得到
+$$
+\mu(H^{-1}(\Omega))=m(\Omega)=0,
+$$
+所以全部分裂纤维及其所需轨道饱和集都不能携带不变概率的正质量。反过来，$H_*(T_*\nu)=R_*m=m$，唯一提升给出 $T_*\nu=\nu$，证明存在性与唯一性。
+
+$\Omega$ 可数且在 $R$ 的正、反向下不变，故 $\mathbb T_0$ 是不变满测度 Borel 集。全部非单点相位纤维都位于
+$$
+E=\{[-m\phi]:m\ge1\}\subseteq\Omega,
+$$
+所以 $H_0$ 双射。$HT=RH$ 立即给出 $T^{-1}(K_0)=K_0$。对任意 $x\in K_0$，$R^{-1}H(x)$ 在 $\mathbb T_0$ 中有唯一提升 $y$，并且 $H(Ty)=H(x)$；该纤维单点，故 $Ty=x$，证明 $T(K_0)=K_0$ 以及限制后继的可逆性。
+
+设 $J=H_0^{-1}$。对每个正深度柱，其相位弧内部记为 $J_p$。边界均已从 $\mathbb T_0$ 删除，因而
+$$
+J^{-1}(C_p\cap K_0)=J_p\cap\mathbb T_0.
+$$
+右侧在 $\mathbb T_0$ 中开，柱集在 $K_0$ 中构成基，故 $J$ 连续。$H_0$ 的连续性继承自 $H$，于是双方均可测。推前恒等式及其双射性证明它保持测度，半共轭恒等式给出所述同构。
+
+仅删除 $H^{-1}(E)$ 不足以得到上述正、反向不变的同构：接缝双点 $u,v$ 都被 $T$ 送到相位为零的 $Z(0)$，而 $0\notin E$。删除整个双向轨道 $\Omega$ 才同时排除这一进入点及其全部轨道。最后，利用同胚共轭 $\Phi T=S\Phi$，任意 $S$ 不变概率经 $\Phi^{-1}$ 推前成为 $T$ 不变概率，故必为 $\Phi_*\nu$。证毕。
+
+附引：全部纤维、接缝合并及算术半共轭使用[第 20.1、20.2、20.4、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；唯一提升和满测度同构在本条直接构造。
+
+**定理 33.9（几何概率的初始律与位置平稳概率的密度）。** 按状态 $0,1$ 排列，令
+$$
+p=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right).
+$$
+几何概率 $\nu$ 是初始律为 $p$、转移矩阵为 $P$ 的单侧 Markov 概率。以 $\pi$ 为初始律、以同一个 $P$ 为转移矩阵的概率 $\mu_{\mathrm{st}}$ 是 $\sigma$ 不变的，并且
+$$
+\frac{d\mu_{\mathrm{st}}}{d\nu}(x)=
+\begin{cases}
+\displaystyle\frac1{\alpha(1+\alpha^2)},&x_0=0,\\[4pt]
+\displaystyle\frac1{1+\alpha^2},&x_0=1.
+\end{cases}
+$$
+因此二者相互绝对连续但不相等，而且
+$$
+\sigma_*\nu\ne\nu,\qquad T_*\mu_{\mathrm{st}}\ne\mu_{\mathrm{st}}.
+$$
+
+**证明。** 初始柱质量为 $\nu(C_0)=\alpha$、$\nu(C_1)=\alpha^2$。以零结尾的任意正质量前缀，其两个子柱与父柱的质量比为 $\alpha,\alpha^2$；以一结尾时唯一下一位为零，条件概率为一。因此所有有限历史的下一位条件律只依赖末状态，且等于 $P$ 的相应行。这证明 Markov 表示。
+
+$P$ 的各行和为一，且 $\pi P=\pi$。有限柱公式
+$$
+\mu_{\mathrm{st}}(C_u)
+=\pi_{u_0}\prod_{j=0}^{L-2}P_{u_ju_{j+1}}\qquad(L=|u|\ge1)
+$$
+相容，按定理 33.1 的扩张论证定义唯一概率。对于任意柱，对所有可能的前置状态求和，并用 $\pi P=\pi$，得到
+$$
+\mu_{\mathrm{st}}(\sigma^{-1}C_u)=\mu_{\mathrm{st}}(C_u).
+$$
+故该概率在 $\sigma$ 下不变。
+
+$\nu$ 的对应柱公式只把初始 $\pi$ 换成 $p$，所以两个柱质量的比值为 $\pi_{u_0}/p_{u_0}$。令 $D(x)$ 为声明中的正函数，则 $D\nu$ 与 $\mu_{\mathrm{st}}$ 在所有柱上的质量相同，因此是同一 Borel 概率，证明密度公式。密度有严格正的上下界，故相互绝对连续。但
+$$
+\nu(C_1)=\alpha^2\ne\frac{\alpha^2}{1+\alpha^2}
+=\mu_{\mathrm{st}}(C_1),
+$$
+所以它们不相等。另外，
+$$
+\nu(\sigma^{-1}C_1)=\nu(C_{01})=\alpha^3\ne\alpha^2,
+$$
+故 $\nu$ 不是位置平稳概率。由于 $T$ 的不变概率唯一且为 $\nu$，不同的 $\mu_{\mathrm{st}}$ 不可能在 $T$ 下不变。证毕。
+
+附引：初始律与平稳化密度的经典结构见 W. Parry，[Intrinsic Markov chains，Theorems 4–5，印刷页 61](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=7)；本条的初始律和密度由柱公式直接确定。
+
+**定理 33.10（位置最大熵概率的完整不等式与唯一等号情形）。** 对任意 $\sigma$ 不变 Borel 概率 $\mu$，
+$$
+h_\mu(\sigma)\le\log\phi,
+$$
+并且
+$$
+h_\mu(\sigma)=\log\phi
+\quad\Longleftrightarrow\quad
+\mu=\mu_{\mathrm{st}}.
+$$
+因此，结合第 20.9 条既有的 $h_{\mathrm{top}}(\sigma)=\log\phi$，$\mu_{\mathrm{st}}$ 是完整位置移位的唯一最大熵概率，而临界 Hausdorff 概率是与它不同的 $\nu$。
+
+**证明。** 全部熵使用自然对数及约定 $0\log0=0$。有限分割 $\mathcal A$ 的熵记为
+$$
+\mathsf H_\mu(\mathcal A)
+=-\sum_{A\in\mathcal A}\mu(A)\log\mu(A),
+$$
+$h_\mu(\sigma)$ 定义为所有有限 Borel 分割的迭代熵率之上确界。置 $X_j(x)=x_j$。
+
+先说明位置坐标确实计算全部测度熵。有限柱代数生成 Borel 集。可在 $\mu$ 测度下由该代数逼近的 Borel 集构成一个 $\sigma$ 代数：补集与有限并的逼近直接成立；可数并先以有限部分逼近，再用有限测度的下连续性控制余项。因此每个有限 Borel 分割 $\mathcal A$ 都能以只依赖有限前缀的标签预测，且错误概率 $e$ 任意小：分别用柱代数中的集合逼近各原子，输出包含该点的第一个逼近集合的标签，无匹配时输出固定标签；错误集合包含于各对称差之并。若 $\mathcal A$ 有 $r$ 个原子，加入预测是否错误的二元变量给出
+$$
+\mathsf H_\mu(\mathcal A\mid\mathcal Q_L)
+\le -e\log e-(1-e)\log(1-e)+e\log r.
+$$
+当无错误时真实标签已确定；错误时至多有 $r$ 个可能标签，这证明该界。因此条件熵随 $L\to\infty$ 趋于零。
+
+链式法则、增加条件不增熵及不变性给出
+$$
+\mathsf H_\mu\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal A\right)
+\le
+\mathsf H_\mu(\mathcal Q_{n+L-1})
++n\,\mathsf H_\mu(\mathcal A\mid\mathcal Q_L).
+$$
+这里使用位置窗口的精确恒等式
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L=\mathcal Q_{n+L-1}.
+$$
+除以 $n$，先令 $n\to\infty$，再令 $L\to\infty$，并对 $\mathcal A$ 取上确界；反向使用分割 $\mathcal Q_1$，得到
+$$
+h_\mu(\sigma)=
+\lim_{n\to\infty}\frac1n
+\mathsf H_\mu(X_0,\ldots,X_{n-1}).
+$$
+极限存在，因为不变性与链式法则使块熵次可加。这同时给出了此处所需的单侧生成分割论证。
+
+现在取允许转移矩阵及正向量
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+v_0=1,\quad v_1=\alpha.
+$$
+直接计算 $Av=\phi v$，且在所有允许边上
+$$
+P_{ij}=\frac{A_{ij}v_j}{\phi v_i},\qquad
+-\log P_{ij}=\log\phi+\log v_i-\log v_j.
+$$
+对长度 $n\ge1$ 且 $\mu(C_u)>0$ 的历史 $u$，令 $q^u$ 为下一位的条件分布。它仅支持于从末状态 $u_{n-1}$ 出发的允许边。定义
+$$
+D(q^u\Vert P_{u_{n-1},\cdot})
+=\sum_{j:q^u_j>0}q^u_j
+\log\frac{q^u_j}{P_{u_{n-1},j}}.
+$$
+这是非负的，且等号当且仅当两行概率完全相等。确实，由 $\log z\le z-1$，
+$$
+\sum_{j:q_j>0}q_j\log\frac{P_j}{q_j}
+\le\sum_{j:q_j>0}P_j-1\le0.
+$$
+若等号成立，所有正质量位置都满足 $P_j=q_j$，且不存在被 $q$ 遗漏的正 $P_j$；反之显然。上述相对熵非负性也证明混合分布的熵不小于分量熵的平均，因而证明前面使用的增加条件不增熵。
+
+令
+$$
+h_n=\mathsf H_\mu(X_n\mid X_0,\ldots,X_{n-1}).
+$$
+相对熵恒等式及相邻坐标具有相同边缘分布给出
+$$
+h_n=\log\phi-
+\sum_{\substack{|u|=n\\\mu(C_u)>0}}
+\mu(C_u)\,
+D(q^u\Vert P_{u_{n-1},\cdot})
+\le\log\phi.
+$$
+其中势差 $\log v_{X_{n-1}}-\log v_{X_n}$ 的期望为零，正是使用 $\sigma$ 不变性的地方。进一步，
+$$
+h_{n+1}
+\le\mathsf H_\mu(X_{n+1}\mid X_1,\ldots,X_n)
+=h_n,
+$$
+故 $h_n$ 单调下降。由块熵链式法则，
+$$
+\mathsf H_\mu(X_0,\ldots,X_{n-1})
+=\mathsf H_\mu(X_0)+\sum_{j=1}^{n-1}h_j,
+$$
+所以 $h_\mu(\sigma)=\lim_{n\to\infty}h_n\le\log\phi$。
+
+若等号成立，单调性与每个 $h_n\le\log\phi$ 迫使所有 $h_n=\log\phi$。每个正质量历史的相对熵因此都为零，故该历史后的条件转移恰为 $P$。于是 $\mu$ 是转移矩阵为 $P$ 的 Markov 概率。其初始边缘 $a=(a_0,a_1)$ 因不变性满足 $aP=a$，即
+$$
+a_1=\alpha^2a_0,\qquad a_0+a_1=1,
+$$
+从而 $a=\pi$。所有柱质量均等于 $\mu_{\mathrm{st}}$，故 $\mu=\mu_{\mathrm{st}}$。这个论证未预先要求 $\mu$ 满支撑。
+
+反之，在 $\mu_{\mathrm{st}}$ 下，每个正质量历史后的条件分布都是 $P$，上述所有相对熵为零，因而 $h_n=\log\phi$ 对每个 $n\ge1$ 成立，得到 $h_{\mu_{\mathrm{st}}}(\sigma)=\log\phi$。定理 33.9 已证明 $\nu\ne\mu_{\mathrm{st}}$ 且 $\nu$ 不在位置移位下不变，所以不能将临界 Hausdorff 概率与位置最大熵概率混同。证毕。
+
+附引：单侧生成分割定理见 B. Solomyak，[Ergodic Theory—Lecture 6 Summary，Theorem 1.6(i)，第 3 页](https://u.math.biu.ac.il/~solomyb/GRAD/15/ET/Lec6.pdf#page=3)；经典最大熵唯一性见 W. Parry，[Intrinsic Markov chains，§4，Theorem 10，印刷页 65–66](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=11)。此处对所有位置不变概率的不等式及等号情形已直接证明。
+
+## 追加锚（本行以下为增补区）
+## 34. Convolution powers, exact finite-observation escape, and Haar limits
+
+**Assumption 34.0 (The exact compact carrier, oriented fibers, and multiplication graph).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+The topology on $K$ is its original compact digit topology. Write $Z(a)$ for the finite Zeckendorf expansion of $a\in\mathbb N$, padded by zeros, and put
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+S^\pm=\{x_m^\pm:m\ge1\},\qquad S=S^+\cup S^-.
+$$
+Retain the following exact premises from Sections 20 and 25. The continuous map $H$ is onto, its fibers are
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),
+$$
+$$
+H^{-1}(\{[a\phi]\})=\{Z(a)\}\quad(a\in\mathbb N),
+$$
+and $x_m^-,x_m^+$ have the fixed negative-side and positive-side phase orientation. In particular,
+$$
+x_1^-=(01)^\infty,\qquad x_1^+=(10)^\infty.
+$$
+For
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&x\in S^+,\\
+\{-1\},&x\in S^-,\\
+\{-1,+1\},&x\notin S.
+\end{cases}
+$$
+The graph premise is the full equality
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_{H(x)+H(y)}\},&H(x)+H(y)\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&H(x)+H(y)=E_r.
+\end{cases}
+$$
+It is not replaced by phase compatibility alone.
+
+Let $q_L(x)=(x_0,\ldots,x_{L-1})$, and let $C_p$ denote a nonempty length-$L$ cylinder. For $L\ge1$, retain the precise conclusion of Theorem 20.2: the $G_L$ cylinder images are consecutive closed circle arcs with disjoint interiors $J_p$, their boundary set is
+$$
+B_L=\{E_1,\ldots,E_{G_L}\},
+$$
+and
+$$
+H^{-1}(J_p)\subseteq C_p\subseteq H^{-1}(\overline{J_p}),\qquad
+q_L(x_m^+)\ne q_L(x_m^-)\ \Longleftrightarrow\ m\le G_L.
+$$
+At every boundary the positive-side lift belongs to the following arc and the negative-side lift to the preceding arc, in the positive circle orientation. The lengths are
+$$
+\lambda(J_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1,
+\end{cases}
+$$
+where $\lambda$ is normalized circle Haar measure. At depth zero there is a single cylinder and no phase boundary. All conclusions below are conditional on these premises and use the multiplication specified next.[^rro34-input]
+
+**Definition 34.1 (The actual all-measure algebra and positive powers).** Fix
+$$
+t\in\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+with $\infty$ a separate formal parameter. Use the setwise integrated multiplication $\star_t$ of Theorem 28.7 on the real signed regular Borel measures $M(K)$, not an arbitrary extension agreeing only on atomic measures. Thus
+$$
+(\mu\star_t\eta)(D)=\int_{K^2}P^{(t)}_{x,y}(D)\,d(\mu\otimes\eta)(x,y)
+$$
+for every Borel $D\subseteq K$. Total variation is $\|\mu\|_{\mathrm{TV}}=|\mu|(K)$, without a factor of one half.
+
+For $m\ge1$, put
+$$
+p_m(t)=
+\begin{cases}
+\dfrac{t^m}{t^m-1},&t\ne\infty,\\
+1,&t=\infty,
+\end{cases}
+\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+$$
+\rho_t=
+\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=
+\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+Write
+$$
+\pi^{(t)}_{E_m}=p_m(t)\delta_{x_m^+}+(1-p_m(t))\delta_{x_m^-},\qquad
+\pi^{(t)}_\theta=\delta_{k_\theta}\quad(\theta\notin E),
+$$
+and retain the lift $L_t\nu=\int\pi^{(t)}_\theta\,d\nu(\theta)$ in the setwise sense of Theorem 28.5. The residual coordinate is
+$$
+(R_t\mu)_m=d'_m\bigl((1-p_m(t))\mu(\{x_m^+\})-p_m(t)\mu(\{x_m^-\})\bigr).
+$$
+The imported coordinate isomorphism of Theorems 28.8–28.9 is
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu),\qquad
+\Phi_t(\mu\star_t\eta)=\bigl(H_\#\mu*_{\mathbb T}H_\#\eta,\ R_t\mu*_+R_t\eta\bigr),
+$$
+with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+Here $*_\mathbb T$ is convolution on the original compact circle and $*_+$ is convolution on $\ell^1(\mathbb N_{>0})$. The inverse series converges in total variation. In particular,
+$$
+\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}},\qquad
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+\sup_{x,y}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The measure
+$$
+\mathfrak m=L_t\lambda
+$$
+is the already constructed non-atomic probability of Theorem 28.11, independent of $t$.
+
+For a probability $\mu\in M(K)$, define only positive powers,
+$$
+\mu_t^{(1)}=\mu,\qquad \mu_t^{(n+1)}=\mu_t^{(n)}\star_t\mu\quad(n\ge1),
+$$
+and write
+$$
+\nu=H_\#\mu,\qquad g=R_t\mu,\qquad
+\nu^{(n)}=\nu^{*_{\mathbb T}n},\qquad g^{(n)}=g^{*_+n},
+$$
+$$
+D_{t,n}=\mu_t^{(n)}-L_t\nu^{(n)},\qquad
+\overline\mu_{t,N}=\frac1N\sum_{n=1}^N\mu_t^{(n)},\qquad
+\overline\nu_N=\frac1N\sum_{n=1}^N\nu^{(n)}.
+$$
+Weak-star convergence always means testing against $C(K)$ or $C(\mathbb T)$, as appropriate. Setwise convergence means convergence on every fixed Borel set.
+
+For $f\in C(K)$, define its cylinder oscillation by
+$$
+\omega_L(f)=\sup\{|f(x)-f(y)|:q_L(x)=q_L(y)\}.
+$$
+Compactness and the digit topology give $\omega_L(f)\to0$: otherwise pairs agreeing at arbitrarily large depths would have convergent subsequences with the same limit but a fixed positive difference of function values.
+
+**theorem 34.2 (Exact powers and an n-independent total-variation bound).** For every probability $\mu$, every admissible $t$, and every $n\ge1$,
+$$
+\Phi_t\mu_t^{(n)}=(\nu^{(n)},g^{(n)}),\qquad
+\mu_t^{(n)}=L_t\nu^{(n)}+\sum_{k\ge n}\frac{g^{(n)}_k}{d'_k}v_k,
+$$
+$$
+\mu_t^{(n)}(K)=1,\qquad
+\|g^{(n)}\|_1\le\|g\|_1^n\le1,
+$$
+$$
+\|D_{t,n}\|_{\mathrm{TV}}
+=2\sum_{k\ge n}\frac{|g^{(n)}_k|}{|d'_k|}
+\le\frac{2\|g\|_1^n}{1-\rho_t^n}.
+$$
+Moreover,
+$$
+\boxed{\ \|\mu_t^{(n)}\|_{\mathrm{TV}}\le C_t\quad(n\ge1).\ }
+$$
+In fact, for arbitrary signed $\eta_1,\ldots,\eta_n\in M(K)$,
+$$
+\|\eta_1\star_t\cdots\star_t\eta_n\|_{\mathrm{TV}}
+\le C_t\prod_{j=1}^n\|\eta_j\|_{\mathrm{TV}}.
+$$
+For $n=1$ the product means the single measure. No zero-fold product is specified.
+
+**Proof.** Multiplicativity of $\Phi_t$ proves the coordinate formula by induction. A sum of $n$ strictly positive residual indices is at least $n$, so $g^{(n)}_k=0$ for $k<n$. Absolute convolution gives $\|g^{(n)}\|_1\le\|g\|_1^n$. Since $\mu$ is a probability, Theorem 28.8 gives $\|g\|_1\le1$. The phase component is a probability, and the residual component has mass zero, proving the mass identity.
+
+For $k\ge n$, the explicit denominators satisfy
+$$
+1-\rho_t^n\le |d'_k|\le1+\rho_t^n.
+$$
+The supports of the $v_k$ are pairwise disjoint and each $v_k$ has variation two. This proves both the exact variation formula and its estimate. Already these facts give a uniform bound by combining the residual estimate with $\|L_t\nu^{(n)}\|\le C_t$; the stronger displayed bound follows from the actual point products.
+
+Let
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\delta_{x_1}\star_t\cdots\star_t\delta_{x_n}.
+$$
+If at least one input is nonsplit, its residual coordinate is zero. The coordinate product therefore gives
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\pi^{(t)}_{H(x_1)+\cdots+H(x_n)},
+$$
+whose variation is at most $C_t$. If all inputs are split and have the same sign, the exact same-sign law of Theorem 25.9 gives a Dirac measure at the split point whose index is the sum of the input indices. If both signs occur, let $A$ be the sum of the positive-input indices and $B$ the sum of the negative-input indices. Associativity, commutativity, and that same-sign law give
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=P^{(t)}_{x_A^+,x_B^-}.
+$$
+Both $A,B$ are positive, so this row also has variation at most $C_t$. These cases exhaust all point tuples.
+
+For completeness, the setwise integration of these rows is legitimate. If $r_m$ denotes the bounded Borel coordinate function from Definition 28.1, their explicit formula is
+$$
+Q^{(n)}_{x_1,\ldots,x_n}
+=\pi^{(t)}_{\sum_jH(x_j)}
++\sum_{m_1,\ldots,m_n\ge1}
+\frac{\prod_{j=1}^n r_{m_j}(x_j)}{d'_{m_1+\cdots+m_n}}v_{m_1+\cdots+m_n}.
+$$
+At each tuple at most one correction term is nonzero. Set evaluations are Borel. Variation evaluations agree with those of the base slice off the countable set $S^n$, and are Borel on that countable set as well. The signed-kernel integration theorem 28.4 thus applies with bound $C_t$.
+
+Integrating against $\eta_1\otimes\cdots\otimes\eta_n$ gives a measure of variation at most $C_t\prod_j\|\eta_j\|$. Its phase coordinate is the convolution of the phase measures. For each fixed residual output index, the sum over compositions of that index into $n$ positive indices is finite, so signed Fubini gives the convolution of the residual coordinates. Injectivity of $\Phi_t$ identifies this integral with the algebraic product. This proves the stronger multilinear estimate and hence the probability-power bound.
+
+The estimates do not require positive outputs. For example, put $\theta=E_1+[1/2]$. Irrationality of $\phi$ implies $\theta\notin E$, whereas $2\theta=E_2$. Thus
+$$
+\delta_{k_\theta}\star_t\delta_{k_\theta}=\pi^{(t)}_{E_2}.
+$$
+For every finite admissible $t\ne0$, the coefficient $t^2/(t^2-1)$ lies outside $[0,1]$, so this square of a probability is signed.
+
+Finally, a global identity would have a residual coordinate $h$ satisfying $h*_+e_1=e_1$. The first coordinate of the left side is zero and that of the right side is one. Hence the all-measure algebra has no global identity. $\square$
+
+**theorem 34.3 (Exact finite-prefix disappearance and the boundary-incidence test).** Fix $L\ge1$ and put $M=G_L$. For $1\le m\le M$, write
+$$
+w_{m,L}=\delta_{q_L(x_m^+)}-\delta_{q_L(x_m^-)}.
+$$
+Then
+$$
+(q_L)_\#D_{t,n}
+=\sum_{m=1}^{M}b_m^{(n)}w_{m,L},\qquad
+b_m^{(n)}=\frac{g_m^{(n)}}{d'_m}.
+$$
+The exact vanishing test is
+$$
+(q_L)_\#D_{t,n}=0
+\quad\Longleftrightarrow\quad
+b_1^{(n)}=\cdots=b_M^{(n)}.
+$$
+In particular, for $n\ge2$ this is equivalent to $g_m^{(n)}=0$ for every $m\le M$. If $g\ne0$ and
+$$
+a=\min\{m\ge1:g_m\ne0\},
+$$
+then, for every $n\ge2$,
+$$
+(q_L)_\#D_{t,n}=0\quad\Longleftrightarrow\quad na>G_L.
+$$
+If $g=0$, the residual is identically zero at every time.
+
+Uniformly over all probability inputs, the exact disappearance threshold is
+$$
+\boxed{\ n>G_L.\ }
+$$
+At depth zero the residual is invisible for every $n\ge1$.
+
+The Cesaro residual satisfies
+$$
+\left\|(q_L)_\#\bigl(\overline\mu_{t,N}-L_t\overline\nu_N\bigr)\right\|_{\mathrm{TV}}
+\le\frac{2C_t\min\{N,G_L\}}{N}.
+$$
+
+**Proof.** Theorem 20.2 makes $(q_L)_\#v_m$ zero precisely for $m>M$, proving the finite formula. Arrange the boundary indices in their circular order as $r_1,\ldots,r_M$, with indices interpreted cyclically. Let the cylinder associated with the arc from $E_{r_i}$ to $E_{r_{i+1}}$ be $C_i$. The fixed side convention implies that the coefficient of $C_i$ in $\sum_m b_mw_{m,L}$ is
+$$
+b_{r_i}-b_{r_{i+1}}.
+$$
+Consequently the resulting histogram is zero exactly when all boundary coefficients are equal. This also explains why individual nonzero boundary terms can cancel at time one: the complete boundary cycle has the relation $\sum_{m=1}^M w_{m,L}=0$.
+
+For $n\ge2$, the first residual coordinate is zero, so $b_1^{(n)}=0$. Equality of all the boundary coefficients therefore means that they all vanish. If $a$ is the first nonzero coordinate of $g$, then
+$$
+g_k^{(n)}=0\quad(k<na),\qquad g_{na}^{(n)}=g_a^n\ne0.
+$$
+Indeed, every participating index is at least $a$, and equality of their sum to $na$ forces all of them to equal $a$. This proves the input-dependent equivalence.
+
+The universal upper bound follows directly from the support restriction $m\ge n$. To prove sharpness with actual probabilities, choose the sign
+$$
+\sigma_t=
+\begin{cases}
++,&t\ne\infty,\ |t|<1,\\
+-,&t\ne\infty,\ |t|>1\text{ or }t=\infty.
+\end{cases}
+$$
+For $\mu=\delta_{x_1^{\sigma_t}}$, the explicit residual functions of Theorem 28.2 give $R_t\mu=e_1$. The exact same-sign law gives
+$$
+\mu_t^{(n)}=\delta_{x_n^{\sigma_t}},\qquad D_{t,n}=\frac1{d'_n}v_n.
+$$
+Thus every $1\le n\le G_L$ is detected at depth $L$. In particular, at the claimed endpoint,
+$$
+\left\|(q_L)_\#D_{t,G_L}\right\|_{\mathrm{TV}}=\frac2{|d'_{G_L}|}>0.
+$$
+At depth zero every residual has mass zero and hence has zero pushforward.
+
+For the Cesaro estimate, terms with $n>G_L$ vanish after pushforward. Each remaining term has variation at most $2C_t$, because both $\mu_t^{(n)}$ and $L_t\nu^{(n)}$ have variation at most $C_t$. Pushforward is contractive, and averaging proves the bound. $\square$
+
+**theorem 34.4 (Disappearance relative to the own lift is not parameter independence).** Let $s,t\in\Lambda$, use the same probability input $\mu$, and let $n>G_L$ with $L\ge1$. Then
+$$
+(q_L)_\#\bigl(\mu_t^{(n)}-\mu_s^{(n)}\bigr)
+=\sum_{m=1}^{G_L}\bigl(p_m(t)-p_m(s)\bigr)\nu^{(n)}(\{E_m\})w_{m,L}.
+$$
+In particular, absence of mass at the finitely many phases in $B_L$ implies equality of the two prefix laws. The universal cutoff alone does not imply that equality.
+
+For every prescribed $L\ge1$, every $n>G_L$, and every two distinct parameters, there is a probability input for which the two depth-$L$ laws at time $n$ differ. There is also a single fixed probability input satisfying the strict Fourier-modulus condition whose depth-one laws for $t=0$ and $t=\infty$ differ at every time $n\ge7$.
+
+**Proof.** Theorem 34.3 removes each residual relative to its own lift. The signed atom-correction formula of Theorem 28.5 gives
+$$
+(L_t-L_s)\xi=\sum_{m\ge1}\bigl(p_m(t)-p_m(s)\bigr)\xi(\{E_m\})v_m
+$$
+for every circle measure $\xi$. This series converges in total variation. Pushforward discards exactly the terms with $m>G_L$, proving the formula.
+
+For the first counterexample put $\theta=[-\phi/n]$. If $\theta=E_m$, then $(m-1/n)\phi$ is an integer. Since $n\ge2$, its rational coefficient is nonzero, contradicting irrationality of $\phi$. Thus $\theta\notin E$. For $\mu=\delta_{k_\theta}$, all residual coordinates are zero, and
+$$
+\mu_t^{(n)}=\pi^{(t)}_{E_1},\qquad
+\mu_s^{(n)}=\pi^{(s)}_{E_1}.
+$$
+The coefficient $p_1$ distinguishes the parameters by Theorem 25.10, and $q_L$ separates the two lifts of $E_1$. Hence the two prefix laws differ. Notice that in this example every residual is already zero: the entire difference belongs to the phase lifts.
+
+For a fixed-input example take
+$$
+\theta=[-\phi/2],\qquad
+\mu=\frac12\bigl(\delta_{Z(0)}+\delta_{k_\theta}\bigr).
+$$
+Both support points are nonsplit, so $R_t\mu=0$ for every parameter. The binomial expansion on the circle gives
+$$
+\nu^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{j\theta}.
+$$
+Irrationality shows that $j\theta=E_m$ exactly when $j=2m$. At depth one,
+$$
+w_{1,1}=\delta_1-\delta_0,\qquad w_{2,1}=\delta_0-\delta_1,
+$$
+by the explicit oriented fibers in Theorem 20.2. Since the endpoint lifts have $p_m(\infty)-p_m(0)=1$, the difference of the probabilities of digit one is
+$$
+\bigl((q_1)_\#\mu_\infty^{(n)}-(q_1)_\#\mu_0^{(n)}\bigr)(\{1\})
+=2^{-n}\left(\binom n2-\binom n4\right).
+$$
+Binomial coefficients beyond $n$ are interpreted as zero. For $n\ge7$,
+$$
+\frac{\binom n4}{\binom n2}=\frac{(n-2)(n-3)}{12}>1,
+$$
+so the difference is nonzero. Nevertheless, for every nonzero integer $k$, the two unit complex numbers $1$ and $e^{2\pi i k\theta}$ are distinct. Their average has modulus less than one. This input therefore satisfies the ordinary convergence criterion proved in Theorem 34.7. $\square$
+
+**theorem 34.5 (Weak-star escape and the exact residual norm dichotomy).** For every probability input and every fixed admissible parameter,
+$$
+D_{t,n}\longrightarrow0\quad\text{in }\sigma(M(K),C(K)).
+$$
+More precisely, with
+$$
+\Delta_n(f)=\sup_{m\ge n}|f(x_m^+)-f(x_m^-)|,
+$$
+one has
+$$
+\left|\int_K f\,dD_{t,n}\right|
+\le\frac{\Delta_n(f)}{1-\rho_t^n}\|R_t\mu\|_1^n,\qquad
+\Delta_n(f)\longrightarrow0.
+$$
+Let $S^{\sigma_t}$ be the sign class selected in the proof of Theorem 34.3. Then
+$$
+\|R_t\mu\|_1=1\quad\Longleftrightarrow\quad\mu(S^{\sigma_t})=1.
+$$
+Consequently there is the dichotomy
+$$
+\|D_{t,n}\|_{\mathrm{TV}}\longrightarrow
+\begin{cases}
+0,&\mu(S^{\sigma_t})<1,\\
+2,&\mu(S^{\sigma_t})=1.
+\end{cases}
+$$
+In the first case the bound in Theorem 34.2 gives geometric decay with base $\|R_t\mu\|_1<1$.
+
+**Proof.** For $n>G_L$, every pair entering the supremum defining $\Delta_n(f)$ has the same length-$L$ prefix. Hence $\Delta_n(f)\le\omega_L(f)$, which proves its convergence to zero. Testing the absolutely convergent residual series and applying the denominator bound gives the asserted inequality. Its right side tends to zero, because the residual norm is at most one. This also proves weak-star convergence of the Cesaro residual averages by ordinary scalar averaging.
+
+On the selected sign class, the nonzero residual scalar is exactly one. On the opposite sign class its absolute value is at most $\rho_t$, and it vanishes outside $S$. Therefore, if $b=\mu(S^{\sigma_t})$,
+$$
+\|R_t\mu\|_1\le b+\rho_t(1-b).
+$$
+This is strictly less than one when $b<1$. If $b=1$, then
+$$
+g_m=\mu(\{x_m^{\sigma_t}\})\ge0,\qquad\sum_m g_m=1,
+$$
+so the residual norm equals one. This proves the equivalence.
+
+When that norm is less than one, Theorem 34.2 proves total-variation decay. In the other case every $g^{(n)}$ is a probability distribution on the positive integers, supported in indices at least $n$. The exact variation formula then gives
+$$
+\frac2{1+\rho_t^n}\le\|D_{t,n}\|_{\mathrm{TV}}\le\frac2{1-\rho_t^n}.
+$$
+Both bounds tend to two. This persistent norm concerns the difference from the own phase lift; it is compatible with vanishing against every fixed continuous readout. $\square$
+
+**theorem 34.6 (Continuity at an exceptional-set-null phase target).** Suppose $\xi_j,\xi$ are circle probabilities,
+$$
+\xi_j\longrightarrow\xi\quad\text{weak-star},\qquad \xi(E)=0.
+$$
+For every fixed admissible $t$,
+$$
+L_t\xi_j\longrightarrow L_t\xi=s_\#\xi\quad\text{weak-star in }M(K),
+$$
+where $s$ is the Borel section of Theorem 28.3. The measures $L_t\xi_j$ may be signed, but have variation at most $C_t$.
+
+There is a second assertion requiring positivity rather than a chosen lift: if $\eta_j$ are arbitrary probabilities on $K$ with $H_\#\eta_j\to\xi$ and $\xi(E)=0$, then
+$$
+\eta_j\longrightarrow s_\#\xi\quad\text{weak-star}.
+$$
+In particular, $s_\#\xi$ is the unique positive lift of such a phase probability. The condition $\xi(E)=0$ is weaker than non-atomicity.
+
+**Proof.** For real $f\in C(K)$ define
+$$
+h_{t,f}(\theta)=\int_K f\,d\pi^{(t)}_\theta.
+$$
+This is a bounded Borel function with $\|h_{t,f}\|_\infty\le C_t\|f\|_\infty$, by the setwise kernel results of Section 28. It is continuous at every $\theta_0\notin E$, including with respect to approaches through exceptional phases. Indeed, choose a neighborhood $U$ of the unique point $k_{\theta_0}$ on which $|f-f(k_{\theta_0})|<\varepsilon/C_t$. The compact set $H(K\setminus U)$ does not contain $\theta_0$. For all phases sufficiently close to $\theta_0$, the entire fiber therefore lies in $U$. Since every slice has mass one and variation at most $C_t$,
+$$
+|h_{t,f}(\theta)-f(k_{\theta_0})|<\varepsilon.
+$$
+Thus its discontinuities are contained in $E$.
+
+Apply the positive-measure bounded-Borel testing criterion to the probabilities $\xi_j$, the target $\xi$, and the function $h_{t,f}$. It gives
+$$
+\int_K f\,dL_t\xi_j=\int_{\mathbb T}h_{t,f}\,d\xi_j
+\longrightarrow\int_{\mathbb T}h_{t,f}\,d\xi=\int_K f\,dL_t\xi.
+$$
+This is Proposition 4.9(g) of Tausk, applied on the circle before lifting.[^rro34-port] It is not an application of positive Portmanteau inequalities to the signed measures $L_t\xi_j$. The atom-correction formula gives $L_t\xi=s_\#\xi$ because $\xi(E)=0$. No assertion that $\xi_j(E)\to0$ has been used.
+
+For the second assertion put $\zeta_j=H_\#\eta_j$. Positivity and the exact cylinder inclusions give
+$$
+\zeta_j(J_p)\le\eta_j(C_p)\le\zeta_j(\overline{J_p}).
+$$
+The two endpoints belong to $E$ and have zero $\xi$-mass. The continuity-set part of the same theorem therefore makes both outside quantities converge to $\xi(J_p)$. The middle quantity converges to this value, which is also $(s_\#\xi)(C_p)$. Finite linear combinations of cylinder indicators approximate every continuous function uniformly: choose one function value in each depth-$L$ cylinder and use $\omega_L(f)\to0$. All measures here are probabilities, so these approximations pass to their integrals uniformly in $j$. This proves weak-star convergence. Applying it to a constant sequence of positive lifts proves uniqueness. $\square$
+
+**theorem 34.7 (Necessary and sufficient ordinary and Cesaro Haar criteria).** For a circle measure use the Fourier convention
+$$
+\chi_k(\theta)=e^{2\pi i k\theta},\qquad
+\widehat\nu(k)=\int_{\mathbb T}\chi_k\,d\nu\quad(k\in\mathbb Z).
+$$
+Complex testing means testing the real and imaginary parts. Let $\mu$ be any fixed probability on $K$ and $\nu=H_\#\mu$. For every admissible $t$,
+$$
+\boxed{\ \mu_t^{(n)}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+|\widehat\nu(k)|<1\text{ for every }k\ne0.\ }
+$$
+Likewise,
+$$
+\boxed{\ \overline\mu_{t,N}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\text{ for every }k\ne0.\ }
+$$
+These criteria and the limiting measure are independent of $t$, although the finite-time laws need not be.
+
+For $k\ne0$, failure of the strict-modulus condition means that the support of $\nu$ lies in one level set of $\chi_k$, equivalently a coset of $\ker\chi_k$. Failure of the Cesaro condition means that its support lies in $\ker\chi_k$ itself.
+
+**Proof.** Circle convolution and signed Fubini give
+$$
+\widehat{\nu^{(n)}}(k)=\widehat\nu(k)^n.
+$$
+Positivity gives $|\widehat\nu(k)|\le1$. Haar invariance gives $\widehat\lambda(0)=1$ and $\widehat\lambda(k)=0$ for $k\ne0$: translating by a phase on which $\chi_k$ is not one multiplies the integral by that nonunit character value.
+
+Integer characters have dense complex linear span in $C(\mathbb T,\mathbb C)$.[^rro34-fourier] Hence convergence of their integrals for circle probabilities implies weak-star convergence. Explicitly, if a trigonometric polynomial $P$ approximates a continuous $f$ within $\varepsilon$, the difference between the two measure integrals of $f-P$ has absolute value at most $2\varepsilon$. Convergence on the finitely many characters of $P$ then gives convergence on $f$.
+
+It follows that $\nu^{(n)}\to\lambda$ exactly when $\widehat\nu(k)^n\to0$ for all $k\ne0$, which is exactly the strict-modulus condition. This is the classical compact-Abelian criterion, here used only for the circle component.[^rro34-power]
+
+For the averages put
+$$
+A_N(z)=\frac1N\sum_{n=1}^N z^n.
+$$
+For $|z|\le1$,
+$$
+A_N(1)=1,\qquad
+A_N(z)=\frac{z(1-z^N)}{N(1-z)}\quad(z\ne1),
+$$
+$$
+|A_N(z)|\le\min\left\{1,\frac2{N|1-z|}\right\}\quad(z\ne1).
+$$
+Thus $A_N(z)\to0$ exactly when $z\ne1$. Applying the same finite-polynomial approximation proves
+$$
+\overline\nu_N\to\lambda\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\quad(k\ne0).
+$$
+The averaging convention begins at one, as in the classical compact-group Cesaro theorem.[^rro34-cesaro]
+
+For sufficiency on $K$, Theorem 34.6 applies because $\lambda(E)=0$. It gives convergence of $L_t\nu^{(n)}$, or of $L_t\overline\nu_N$, to $\mathfrak m$. Theorem 34.5 removes the residual, or its Cesaro average. The uniform bound $\|\mu_t^{(n)}\|\le C_t$ ensures that these are genuine bounded signed-measure limits. For necessity, continuous pushforward by $H$ sends the proposed limit to $\lambda$ and the powers or averages to their stated circle counterparts. The already proved circle necessities apply.
+
+Finally, if $z=\int\chi_k\,d\nu$, then
+$$
+\int|\chi_k-z|^2\,d\nu=1-|z|^2.
+$$
+When $|z|=1$, this forces $\chi_k=z$ almost everywhere, hence on the support by continuity. The converse is immediate. The equality $z=1$ forces precisely the level set $\chi_k=1$. These prove the two support descriptions. $\square$
+
+**theorem 34.8 (Natural finite-support walks and all endpoint laws).** Let $D\subseteq\mathbb N$ be finite and nonempty, let $a_d>0$ for $d\in D$, and suppose $\sum_{d\in D}a_d=1$. Put
+$$
+\mu=\sum_{d\in D}a_d\delta_{Z(d)}.
+$$
+For every $t\in\Lambda$ and every $n\ge1$,
+$$
+\mu_t^{(n)}
+=\sum_{s\in nD}\left(\sum_{\substack{d_1,\ldots,d_n\in D\\d_1+\cdots+d_n=s}}
+\prod_{j=1}^n a_{d_j}\right)\delta_{Z(s)},
+$$
+where $nD$ is the set of sums of $n$ members of $D$. This is a probability, its support is exactly $Z(nD)$, and it is independent of the parameter. Furthermore,
+$$
+R_t\mu=0,\qquad \mu_t^{(n)}=L_t\nu^{(n)},\qquad
+\mu_t^{(n)}(\{x_m^\pm\})=0\quad(m\ge1).
+$$
+Ordinary convergence to $\mathfrak m$ holds exactly when $D$ has at least two elements. Cesaro convergence holds exactly when $D$ contains a positive integer.
+
+In particular, the deterministic step $\delta_{Z(1)}$ has powers $\delta_{Z(n)}$, which do not converge to $\mathfrak m$, while
+$$
+\frac1N\sum_{n=1}^N\delta_{Z(n)}\longrightarrow\mathfrak m.
+$$
+The lazy step
+$$
+\mu_{\mathrm{lazy}}=\frac12\bigl(\delta_{Z(0)}+\delta_{Z(1)}\bigr)
+$$
+has the ordinary limit
+$$
+\mu_{\mathrm{lazy},t}^{(n)}
+=2^{-n}\sum_{j=0}^n\binom nj\delta_{Z(j)}
+\longrightarrow\mathfrak m.
+$$
+Its two extreme coefficients, at $Z(0)$ and $Z(n)$, are both $2^{-n}$. Whenever ordinary convergence holds, the exact limiting cylinder probabilities are
+$$
+\mu_t^{(n)}(C_p)\longrightarrow\mathfrak m(C_p)=
+\begin{cases}
+\alpha^L,&L\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L\ge1,\ p_{L-1}=1,\\
+1,&L=0.
+\end{cases}
+$$
+The analogous statement holds for Cesaro averages under their criterion.
+
+**Proof.** The formula follows by induction from the exact natural addition law $P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}$ and finite multilinearity. Every coefficient corresponding to an attainable sum is positive; summing all coefficients gives $(\sum_d a_d)^n=1$. This proves both the exact support and total mass, without appealing to positivity of the full kernel at a signed parameter.
+
+Natural phases avoid $E$: equality $[s\phi]=[-m\phi]$ would make $(s+m)\phi$ an integer. Thus all displayed output points are nonsplit, no split singleton has mass, and the input residual is zero. The coordinate formula gives equality with the own phase lift at every time.
+
+For $k\ne0$,
+$$
+\widehat\nu(k)=\sum_{d\in D}a_d e^{2\pi i k d\phi}.
+$$
+Two distinct $d$ give distinct character values, since $k(d-d')\phi$ cannot be an integer. The equality case proved in Theorem 34.7 shows that the modulus is strictly less than one exactly when at least two support points occur. If there is only one support point, the modulus is one. Similarly, a coefficient can equal one only if every support value is one. The presence of a positive $d$ excludes this for every $k\ne0$; if $D=\{0\}$, all coefficients equal one. The two classifications now follow from Theorem 34.7.
+
+For the lazy step,
+$$
+\left|\widehat\nu(k)\right|=
+\left|\frac{1+e^{2\pi i k\phi}}2\right|
+=|\cos(\pi k\phi)|<1\quad(k\ne0),
+$$
+and counting the choices of the unit step proves the binomial formula and its extreme coefficients. For the deterministic unit step all coefficients have modulus one but none with $k\ne0$ equals one, proving the stated distinction.
+
+Finally, cylinder indicators are continuous on $K$, so the weak-star limits give the cylinder laws. The lift of Haar assigns zero mass to every split point, and its mass on $C_p$ is therefore the Haar length of $J_p$. The exact lengths in Assumption 34.0 give the displayed values. $\square$
+
+**theorem 34.9 (Atomic walks do not converge setwise or in total variation).** Every sequence or Cesaro sequence from Theorem 34.8 that converges weak-star to $\mathfrak m$ nevertheless fails to converge to it setwise and satisfies, at every finite time,
+$$
+\|\mu_t^{(n)}-\mathfrak m\|_{\mathrm{TV}}=2,\qquad
+\|\overline\mu_{t,N}-\mathfrak m\|_{\mathrm{TV}}=2.
+$$
+For the fixed lazy step, define bounded operators on $M(K)$ by
+$$
+P_t\eta=\eta\star_t\mu_{\mathrm{lazy}},\qquad
+\Pi\eta=\eta(K)\mathfrak m.
+$$
+For all $n,N\ge1$,
+$$
+\|P_t^n-\Pi\|_{\mathrm{TV}\to\mathrm{TV}}\ge2,\qquad
+\left\|\frac1N\sum_{n=1}^N P_t^n-\Pi\right\|_{\mathrm{TV}\to\mathrm{TV}}\ge2.
+$$
+Both inequalities are equalities at $t=0$ and $t=\infty$.
+
+There is also no convergence rate uniform over all natural two-point step probabilities, even for a single fixed continuous readout.
+
+**Proof.** The fixed countable Borel set $A=Z(\mathbb N)$ carries every natural finite-time law and every finite Cesaro average. Thus all these measures assign $A$ mass one. The measure $\mathfrak m$ is non-atomic and assigns it mass zero. This one fixed set disproves setwise convergence. Mutual singularity gives
+$$
+|\mu_t^{(n)}-\mathfrak m|=\mu_t^{(n)}+\mathfrak m,
+$$
+and the same identity holds for the averages. Their variation distances are therefore exactly two, as in the atomic-distance identity of Theorem 28.11.
+
+Associativity gives $P_t^n\eta=\eta\star_t\mu_{\mathrm{lazy},t}^{(n)}$. Although $\delta_{Z(0)}$ is not a global algebra identity, the exact natural addition law does give
+$$
+P_t^n\delta_{Z(0)}=\mu_{\mathrm{lazy},t}^{(n)}.
+$$
+This norm-one input and the preceding distance calculation prove both operator lower bounds. At the two positive parameters, the operators $P_t^n$ and their averages are contractions on total variation, because they integrate probability kernels; $\Pi$ is also a contraction. The triangle inequality supplies the matching upper bound two.
+
+For the final assertion take
+$$
+\mu_\varepsilon=(1-\varepsilon)\delta_{Z(0)}+\varepsilon\delta_{Z(1)},\qquad 0<\varepsilon<1,
+$$
+and $f(x)=\operatorname{Re}\chi_1(H(x))$. Every such step satisfies the strict-modulus criterion, while $\int f\,d\mathfrak m=0$ and $f(Z(0))=1$. For each fixed $n$, its binomial law assigns $Z(0)$ mass $(1-\varepsilon)^n\to1$ as $\varepsilon\downarrow0$. Since $|f|\le1$,
+$$
+\sup_{0<\varepsilon<1}\left|\int f\,d\mu_{\varepsilon,t}^{(n)}-\int f\,d\mathfrak m\right|=1.
+$$
+Hence no bound tending to zero can hold uniformly over this class of step laws for this readout. $\square$
+
+**theorem 34.10 (Pure residual powers and a positive full-carrier walk).** For $m\ge1$ define the signed mass-zero element
+$$
+u_m=\frac{v_m}{d'_m}.
+$$
+Then
+$$
+u_m^{\star_t n}=\frac{v_{mn}}{d'_{mn}},\qquad
+\|u_m^{\star_t n}\|_{\mathrm{TV}}=\frac2{|d'_{mn}|}\longrightarrow2,
+$$
+while $u_m^{\star_t n}\to0$ weak-star. It does not converge setwise to zero. Moreover, for the complete submultiplicative norm
+$$
+N_t(\eta)=\|H_\#\eta\|_{\mathrm{TV}}+\|R_t\eta\|_1,
+$$
+one has
+$$
+N_t(u_m^{\star_t n})=1,\qquad
+\lim_{n\to\infty}N_t(u_m^{\star_t n})^{1/n}=1.
+$$
+Thus this weak-star-null power sequence is not an instance of quasinilpotence.
+
+For either fixed sign $\sigma\in\{+,-\}$, the probability
+$$
+\zeta^\sigma=\frac12\bigl(\delta_{x_1^\sigma}+\delta_{x_2^\sigma}\bigr)
+$$
+has, for every parameter, the same powers
+$$
+(\zeta^\sigma)_t^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{x_{n+j}^\sigma}.
+$$
+These converge weak-star to $\mathfrak m$, remain supported on $S^\sigma$, fail to converge setwise, and have total-variation distance two from $\mathfrak m$. If $\sigma=\sigma_t$, their differences from their own phase lifts have variation tending to two; for the opposite sign those differences tend to zero in variation.
+
+**Proof.** The coordinate of $u_m$ is $(0,e_m)$, so positive powers have coordinate $(0,e_{mn})$. The inverse formula proves the power identity and exact norms. Since $|d'_{mn}|\to1$, their total variation tends to two. Every fixed prefix annihilates the pair once $mn>G_L$, and the uniform variation bound extends this vanishing from cylinder functions to all continuous functions. Thus the powers are weak-star null.
+
+On the fixed Borel set $S^+$ their values are $1/d'_{mn}$, tending to one when $|t|<1$ and to negative one when $|t|>1$ or $t=\infty$. This disproves setwise convergence to zero. The exact value of $N_t$ follows from the coordinate $(0,e_{mn})$; its norm-power radius is one rather than zero. The element has mass zero and is not a probability or an identity.
+
+The same-sign multiplication law makes each ordered tuple of indices one and two yield the point with their summed index. Counting tuples gives the binomial formula for $\zeta^\sigma$. Its phase Fourier coefficient is
+$$
+\frac{e^{-2\pi i k\phi}+e^{-4\pi i k\phi}}2,
+$$
+whose modulus is $|\cos(\pi k\phi)|<1$ for $k\ne0$. Theorem 34.7 gives the weak-star limit. The countable set $S^\sigma$ has mass one under every finite-time law and zero under $\mathfrak m$, proving both stronger-topology failures. The last assertions are the two cases of Theorem 34.5. $\square$
+
+**theorem 34.11 (Positive endpoint dynamics, arbitrary starting laws, and switching).** Fix a probability step $\mu$ and put $\nu=H_\#\mu$. Let $\eta_0$ be any probability on $K$, choose any sequence
+$$
+\boldsymbol\tau=(\tau_1,\tau_2,\ldots)\in\{0,\infty\}^{\mathbb N_{>0}},
+$$
+and define recursively
+$$
+\eta_n=\eta_{n-1}\star_{\tau_n}\mu\quad(n\ge1).
+$$
+These are probabilities and
+$$
+H_\#\eta_n=(H_\#\eta_0)*_{\mathbb T}\nu^{(n)}.
+$$
+If $|\widehat\nu(k)|<1$ for every $k\ne0$, then $\eta_n\to\mathfrak m$. More strongly, for each fixed $f\in C(K)$,
+$$
+\lim_{n\to\infty}\sup_{\eta_0,\boldsymbol\tau}
+\left|\int f\,d\eta_n-\int f\,d\mathfrak m\right|=0,
+$$
+where the supremum is over initial probabilities and endpoint sequences.
+
+If $\widehat\nu(k)\ne1$ for every $k\ne0$, the analogous statement holds for the averages $N^{-1}\sum_{n=1}^N\eta_n$. Each criterion is also necessary for its conclusion to hold for every initial probability. It need not be necessary for convergence from a particular initial law, such as $\mathfrak m$ itself.
+
+The displayed uniformity concerns each fixed continuous readout, not the supremum over its unit ball. The varying-parameter recursion is not asserted to be a power in a single algebra.
+
+**Proof.** Theorem 25.12 and the integrated positivity theorem 28.7 show inductively that each $\eta_n$ is a probability. Phase compatibility at each step proves the stated phase identity without requiring a common multiplication parameter.
+
+Put $\xi=H_\#\eta_0$. For a trigonometric polynomial $P=\sum_k a_k\chi_k$,
+$$
+\left|\int P\,d(\xi*_{\mathbb T}\nu^{(n)}-\lambda)\right|
+\le\sum_{k\ne0}|a_k|\,|\widehat\nu(k)|^n,
+$$
+because $|\widehat\xi(k)|\le1$. Under the ordinary criterion this tends to zero independently of $\xi$. Uniform approximation by trigonometric polynomials therefore proves uniform convergence on every fixed continuous circle function. For the averages the same proof replaces $\widehat\nu(k)^n$ by $A_N(\widehat\nu(k))$.
+
+To transfer this uniformity to $K$, fix a cylinder $C_p$. Its probabilities lie between the phase probabilities of $J_p$ and $\overline{J_p}$. Given $\varepsilon>0$, choose continuous circle functions $a,b$ with
+$$
+a\le\mathbf1_{J_p}\le\mathbf1_{\overline{J_p}}\le b,\qquad
+\int(b-a)\,d\lambda<\varepsilon.
+$$
+Such functions are obtained by linearly smoothing the two endpoints inside arbitrarily short arcs. Uniform phase convergence on $a,b$ then implies uniform convergence of $\eta_n(C_p)$ to $\lambda(J_p)$. The same argument applies to the positive averages. There are finitely many cylinders at a fixed depth. Approximating $f$ by a function constant on these cylinders, with error at most $\omega_L(f)$, proves the displayed uniform assertion.
+
+For necessity take $\eta_0=\delta_{Z(0)}$. Its phase is $\delta_0$, so the phases of the resulting laws are exactly $\nu^{(n)}$, independently of all endpoint choices. The circle necessities in Theorem 34.7 apply. Conversely, starting at $\mathfrak m$ gives the constant sequence $\mathfrak m$ for every step probability: its coordinate is $(\lambda,0)$, and $\lambda*_{\mathbb T}\nu=\lambda$. Thus necessity must not be claimed for each particular starting law.
+
+The classical fixed-readout uniformity on the circle is consistent with Kawada–Ito Theorem 9; the cylinder squeeze is the additional full-carrier argument here.[^rro34-uniform] The operator-norm obstruction in Theorem 34.9 shows why the quantifier on the readout cannot be strengthened to its entire unit ball. $\square$
+
+**theorem 34.12 (Exceptional atomic targets and the necessity of positivity in the stronger transfer).** A phase probability charging $E$ need not determine a parameter-independent limiting probability on $K$. In actual endpoint dynamics, even a constant phase sequence can coexist with two different full-carrier limits or with no full-carrier limit.
+
+Furthermore, for signed measures, even the constant Haar phase does not by itself force the Haar lift.
+
+**Proof.** Fix $m\ge1$, start at $\eta_0=\delta_{x_m^+}$, and use the zero step $\mu=\delta_{Z(0)}$. The exact zero-slice law gives, for either split input sign,
+$$
+\delta_{x_m^\pm}\star_0\delta_{Z(0)}=\delta_{x_m^-},\qquad
+\delta_{x_m^\pm}\star_\infty\delta_{Z(0)}=\delta_{x_m^+}.
+$$
+Thus the constant zero-parameter dynamics have limit $\delta_{x_m^-}$ and the constant infinity-parameter dynamics have limit $\delta_{x_m^+}$. Their phase laws are identically $\delta_{E_m}$. Alternating the parameters alternates these two output measures after every step. A digit coordinate separating $x_m^+$ and $x_m^-$ is continuous, so that sequence has no weak-star limit. This example violates the Fourier criteria, since the step phase is $\delta_0$.
+
+More generally, the existing positive lifts of a phase probability $\xi$ include the two Borel-section lifts choosing respectively the negative and positive branches on $E$. Their difference is
+$$
+\sum_{m\ge1}\xi(\{E_m\})v_m.
+$$
+The series converges in total variation, and disjointness of the split fibers shows it is nonzero exactly when $\xi(E)>0$. This is the precise positive uniqueness obstruction excluded in Theorem 34.6.
+
+For the signed assertion take the constant sequence $\eta_j=\mathfrak m+v_1$. It has mass one, bounded variation, and phase $H_\#\eta_j=\lambda$, but is not equal to $\mathfrak m$. A continuous digit readout separating the first split pair detects the difference. Thus the signed power theorem needs its proved residual escape; positivity alone supplies the stronger arbitrary-lift transfer only in its stated positive domain. $\square$
+
+**theorem 34.13 (A finite-depth trigonometric estimate with explicit approximation errors).** Let $\mu$ be a probability, fix $t$, and take a real $f\in C(K)$. Write $F=\|f\|_\infty$. Fix $L\ge1$ and choose one point in each length-$L$ cylinder to define a cylinder-constant function $f_L$ satisfying
+$$
+\|f-f_L\|_\infty\le\omega_L(f),\qquad \|f_L\|_\infty\le F.
+$$
+Choose $\delta>0$ smaller than one quarter of the smallest gap between consecutive members of $B_L$, and put
+$$
+w(\theta)=\max\left\{0,\min\left\{1,2-\frac{\operatorname{dist}(\theta,B_L)}\delta\right\}\right\},\qquad
+A=(C_t+1)F.
+$$
+There is a real continuous circle function $a$ with $\|a\|_\infty\le F$ such that, for
+$$
+h(\theta)=\int_K f_L\,d\pi^{(t)}_\theta,
+$$
+one has
+$$
+|h-a|\le A w,\qquad \int w\,d\lambda\le4G_L\delta.
+$$
+For any $\varepsilon>0$, choose trigonometric polynomials
+$$
+P=\sum_{|k|\le J}a_k\chi_k,\qquad
+W=\sum_{|k|\le J}b_k\chi_k
+$$
+with $\|P-a\|_\infty\le\varepsilon$ and $\|W-w\|_\infty\le\varepsilon$, enlarging $J$ and adding zero coefficients when necessary. Then every $n>G_L$ satisfies
+$$
+\begin{aligned}
+\left|\int f\,d\mu_t^{(n)}-\int f\,d\mathfrak m\right|
+\le{}&(C_t+1)\omega_L(f)+2(1+A)\varepsilon+8A G_L\delta\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+This estimate is valid without assuming the Fourier criterion. For the natural lazy step its final factors are exactly $|\cos(\pi k\phi)|^n$.
+
+**Proof.** Off $B_L$, all points of a phase fiber belong to the same length-$L$ cylinder, even when the fiber itself is split at an index greater than $G_L$. Since each slice has mass one, $h$ there is simply the corresponding value of $f_L$. Thus it is constant on each complementary open arc and is independent of $t$ off the finite boundary set.
+
+On the complement of the radius-$\delta$ neighborhoods of the boundary points, set $a=h$. Across each such neighborhood interpolate linearly between its two endpoint values in the positive circle coordinate. The neighborhoods are disjoint by the choice of $\delta$. This produces a continuous real function bounded by $F$. Outside those neighborhoods $h-a=0$. Inside them $|h|\le C_tF$ and $|a|\le F$, while $w=1$. Hence $|h-a|\le Aw$. The support of $w$ is contained in the union of $G_L$ circle balls of radius $2\delta$, each of Haar length at most $4\delta$, proving the integral bound.
+
+The required polynomials exist by continuous circle Fourier density.[^rro34-fourier] Put $\eta=\nu^{(n)}$. Both $\eta$ and $\lambda$ are probabilities. Character multiplication gives
+$$
+\left|\int P\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|a_k|\,|\widehat\nu(k)|^n,
+$$
+$$
+\left|\int W\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Uniform approximation therefore yields
+$$
+\eta(w)\le\lambda(w)+2\varepsilon+
+\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Together with $|h-a|\le Aw$, this gives
+$$
+\begin{aligned}
+\left|\int h\,d(\eta-\lambda)\right|
+\le{}&2(1+A)\varepsilon+2A\lambda(w)\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+For $n>G_L$, Theorem 34.3 gives
+$$
+\int f_L\,d\mu_t^{(n)}=\int h\,d\eta,
+\qquad
+\int f_L\,d\mathfrak m=\int h\,d\lambda.
+$$
+Replacing $f_L$ by $f$ costs at most $(C_t+1)\omega_L(f)$, by Theorem 34.2 and the unit mass of $\mathfrak m$. Inserting the bound for $\lambda(w)$ proves the estimate. The lazy-step substitution follows from Theorem 34.8. Its finitely many coefficients and approximation parameters remain explicit; no bound uniform over step laws or over all Fourier indices follows from this formula. $\square$
+
+[^rro34-input]: *RECURSIVE_RELATIONAL_OBSERVATION*, fixed revision `da6db9e70387e95fc513039a96bf8e90a9af83de`, Theorem 20.2, Assumption 25.1, Theorems 25.9–25.12, and Theorems 28.2–28.11. These supply the exact oriented fibers and cylinders, the classified finite rows, the actual integrated multiplication, its bounded coordinate isomorphism, and the Haar lift. [Fixed mathematical text](https://github.com/the-omega-institute/trureturing/blob/da6db9e70387e95fc513039a96bf8e90a9af83de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+[^rro34-fourier]: Mathlib contributors, *Fourier analysis on the additive circle*, fixed revision `db584cd6d46c92f209a44c0f1c829460d327499d`, `AddCircle.fourierSubalgebra_closure_eq_top` and `AddCircle.span_fourier_closure_eq_top`, lines 239–248. The mathematical statement is density in continuous complex circle functions. [Fixed source](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircle.lean#L239-L248).
+
+[^rro34-port]: Daniel V. Tausk, *Weak* topology for the space of finite measures on a topological space*, January 17, 2024, Proposition 4.9(a),(f),(g), pp. 11–12, and Example 4.10, pp. 12–13. The bounded-Borel testing and continuity-set equivalences used here have positive incoming measures; the example explains the signed-measure boundary. [Text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+[^rro34-power]: Jean-Pierre Conze and Michael Lin, *Almost everywhere convergence of convolution powers on compact Abelian groups*, Annales de l'Institut Henri Poincare, Probabilites et Statistiques **49** (2013), 550–568, Proposition 2.1, p. 551. Its equivalence concerns strict character modulus, continuous group readouts, and support in cosets of proper closed subgroups. [Article](https://www.numdam.org/article/AIHPB_2013__49_2_550_0.pdf).
+
+[^rro34-cesaro]: Yukiyosi Kawada and Kiyosi Ito, *On the Probability Distribution on a Compact Group. I*, Proceedings of the Physico-Mathematical Society of Japan, third series, **22** (1940), 977–998, Theorem 7, p. 987, with proof on p. 991. The average in the theorem is over powers one through $n$. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+
+[^rro34-uniform]: Kawada and Ito, the same article, Theorem 9, pp. 992–993, especially formulas (50)–(51). The uniformity is over starting group elements for each fixed continuous function, not over a norm unit ball of functions. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+
+## 追加锚（本行以下为增补区）
+## 35. The critical logarithmic Hausdorff measure of temporal Zeckendorf observation
+
+**Definition 35.0 (The space, gauges and normalization).** Put
+$$
+\phi=\frac{1+\sqrt{5}}2,\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L.
+$$
+For the single auxiliary index needed below, set $G_{-1}=1$. All other indices are nonnegative. Let
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad \mathbb N=\{0,1,2,\ldots\}.
+$$
+Use the successor $T$, phase map $H$, coding homeomorphism $\Phi:K\to X_\beta$, and one-sided shift $S$ of Section 20. Thus $\Phi T=S\Phi$ and $HT=RH$, where $R(\theta)=\theta+[\phi]$. The exact cylinder intervals, split fibers, endpoint conventions and temporal cut sets of 20.2–20.7 are standing inputs. In particular, the cuts for a positive temporal length $t$ are exactly
+$$
+\{e_1,\ldots,e_{t+1}\},\qquad e_m=[-m\phi],
+$$
+and the temporal cylinders are the corresponding arc atoms with their assigned split endpoints, not arcs augmented by singleton boundary atoms.
+
+Use the geometric probability $\nu$ and its temporal image $\eta=\Phi_*\nu$ from Section 33. For an admissible positional word $p$ of length $L\ge1$, its cylinder $C_p$ satisfies
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1.
+\end{cases}
+$$
+The measure $\nu$ is nonatomic, has full support, is the unique $T$-invariant probability and the unique probability lift of circle Haar measure $m$ under $H$. The probability $\eta$ is the unique $S$-invariant probability. We also use the established Markov representation of $\nu$, with initial law $(\alpha,\alpha^2)$ and transition matrix
+$$
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+This is not a stationarity assumption for positional deletion.
+
+For distinct $y,z\in X_\beta$, set
+$$
+n(y,z)=\min\{n\ge0:y_n\ne z_n\},\qquad \rho(y,z)=2^{-n(y,z)},
+$$
+and set $\rho(y,y)=0$. All balls in this section are closed balls. For $p>0$, define
+$$
+h_p(0)=0,\qquad h_p(r)=\bigl(1+\log_2(1/r)\bigr)^{-p}\quad(0<r\le1),
+$$
+with the harmless extension $h_p(r)=1$ for $r>1$. In particular,
+$$
+h_p(2^{-n})=(n+1)^{-p}.
+$$
+For a gauge $g$ and an arbitrary subset $A\subseteq X_\beta$, define
+$$
+\mathcal H^g_{\rho,\delta}(A)=\inf\left\{\sum_i g(\operatorname{diam}_\rho A_i):A\subseteq\bigcup_i A_i,\ \operatorname{diam}_\rho A_i\le\delta\right\},
+\qquad
+\mathcal H^g_\rho(A)=\lim_{\delta\downarrow0}\mathcal H^g_{\rho,\delta}(A).
+$$
+The covers are at most countable; their members are arbitrary subsets and need not be measurable. Empty sets and singletons have cost zero. No multiplicative normalization is included. Write $\eta^*$ for the outer measure associated with $\eta$. Unsubscripted logarithms are natural logarithms. The constants used below are
+$$
+A_-:=\frac1{\sqrt{5}},\qquad A_0:=\frac{\phi^2}{\sqrt{5}},\qquad A_+:=\frac{\phi^3}{\sqrt{5}}.
+$$
+Finally, put $u=(10)^\infty$, $v=(01)^\infty$ and $w=\Phi(Z(0))$. The identities $\Phi(u)=1w$ and $\Phi(v)=0w$ are those of 20.7.
+
+Reference: Aedo–Grimm–Short, [Forward limit sets of semigroups of substitutions, §9, pp. 16–19](https://arxiv.org/pdf/2305.00078v2#page=16), uses arbitrary-subset diameter covers and inverse-logarithmic gauges. Its substitution-semigroup forward limit sets are different from the fixed-slope space here; its dimension statements do not determine the normalization below.
+
+**theorem 35.1 (The complete branching clock and actual cylinder diameters).** Let $\mathcal B$ be the set of finite concatenations of the blocks $0$ and $10$, including the empty word. For $p\in\mathcal B$, write
+$$
+L=|p|,\qquad N_p=\sum_{j<L}G_jp_j,\qquad D_p=\Phi(C_p),
+$$
+$$
+M_p=G_{L+1}-N_p,\qquad k_p=M_p-2.
+$$
+Here $C_{\varnothing}=K$. Then
+$$
+D_p=D_{p0}\mathbin{\dot\cup}D_{p10},\qquad
+\eta(D_p)=\alpha^L,\qquad
+\operatorname{diam}_\rho D_p=2^{-k_p}.
+$$
+The empty word has $M_{\varnothing}=2$ and $k_{\varnothing}=0$. For a nonempty block word, define its birth time by
+$$
+b_{q0}=b_{q10}=M_q-1,
+$$
+and set $b_{\varnothing}=0$. The set $D_p$ is an atom of the length-$t$ temporal partition exactly for
+$$
+b_p\le t\le k_p.
+$$
+Every nonempty temporal cylinder occurs in this way, with a unique $p\in\mathcal B$. Its displayed prefix length $t$ can therefore be strictly smaller than its actual splitting depth $k_p$.
+
+The child clocks satisfy
+$$
+M_{p0}=M_p+G_L,\qquad M_{p10}=M_p+G_{L+1}.
+$$
+For every $p$, the diameter is attained by the actual points
+$$
+\Phi(p0v),\qquad \Phi(p10v),
+$$
+whose first temporal difference is $M_p-2$.
+
+**Proof.** A nonempty admissible word belongs to $\mathcal B$ exactly when it ends in zero. At the next free positional digit, its extensions split into the two cylinders $C_{p0}$ and $C_{p10}$; the latter includes the zero forced after the new one. This proves the disjoint decomposition. The mass formula is the cylinder formula of 33.1, including mass one at the empty word.
+
+By 20.2, the internal phase boundary between these two children is $e_{M_p}$, and its two lifts are $p0v$ and $p10v$, in the parity-dependent order stated there. The same result gives, for each $L\ge1$, the bijection
+$$
+\{N_p:p\in\mathcal B,\ |p|=L\}=\{0,\ldots,G_{L-1}-1\}.
+$$
+Consequently the labels at depth $L$ are exactly
+$$
+\{M_p:|p|=L\}=\{G_L+1,\ldots,G_{L+1}\}.
+$$
+Together with the empty label $2$, these labels enumerate every integer at least two exactly once. The recurrence gives
+$$
+G_{L+2}-N_p=M_p+G_L,
+$$
+and
+$$
+G_{L+3}-N_p-G_L=M_p+G_{L+1},
+$$
+which proves the child-clock formulas. Thus every child label is strictly larger than its parent label.
+
+Start at temporal length zero with the single set $D_{\varnothing}$. The first symbol partitions it into $D_0$ and $D_{10}$. Thereafter, passage from temporal length $t$ to $t+1$ introduces exactly the new cut $e_{t+2}$. There is a unique block word $p$ with $M_p=t+2$. Its ancestors have smaller labels, whereas its descendants have larger labels, so $D_p$ is precisely a current leaf of the block-cylinder partition. Its new internal cut replaces it by $D_{p0}$ and $D_{p10}$. The full endpoint conventions of 20.2 and 20.5 identify these as the two entire new atoms; no endpoint singleton is added. Induction therefore identifies every temporal partition with the leaves obtained by processing the labels in increasing order.
+
+A child is born one step after its parent splits, namely at $M_q-1$, and survives through temporal length $M_p-2$. This proves the lifetime formula and the assertion that all temporal cylinders are block cylinders. Distinct block cylinders are either disjoint or related by a strict inclusion, so the representing block word is unique.
+
+All points of $D_p$ agree through the first $k_p$ temporal coordinates. By 20.4 the two displayed lifts of $e_{M_p}$ first differ at coordinate $M_p-2=k_p$. They belong to the two children of $D_p$. Hence the upper diameter bound is attained, proving the exact diameter. $\square$
+
+Reference: the reduction of forced vertices in a weighted cylinder tree is the general construction in Bellissard–Julien, [Bi-Lipshitz Embedding of Ultrametric Cantor Sets into Euclidean Spaces, §2.1](https://arxiv.org/pdf/1202.4330v2#page=5). The arithmetic labels $M_p$ and their endpoint witnesses above use the specific inputs of Section 20.
+
+**theorem 35.2 (Every finite gap and every closed ball).** Let $t\ge1$, and write uniquely
+$$
+t+1=G_L+a,\qquad L\ge1,\qquad 0\le a<G_{L-1}.
+$$
+The masses of the length-$t$ temporal cylinders, equivalently the lengths of their phase arcs, have the following exact multiplicities:
+$$
+\begin{array}{c|ccc}
+\text{mass or arc length}&\alpha^L&\alpha^{L+1}&\alpha^{L+2}\\ \hline
+\text{number of cylinders}&G_{L-1}-a&G_{L-2}+a&a.
+\end{array}
+$$
+An entry of multiplicity zero is absent. In particular, the smallest third length does not occur when $a=0$.
+
+For $0<r\le1$, put
+$$
+t(r)=\left\lceil\log_2(1/r)\right\rceil.
+$$
+For every $y\in X_\beta$, there is a unique block cylinder $D_p$ containing $y$ with
+$$
+b_p\le t(r)\le k_p.
+$$
+For this cylinder,
+$$
+\overline B_\rho(y,r)=D_p,\qquad
+\eta(\overline B_\rho(y,r))=\alpha^{|p|},\qquad
+\operatorname{diam}_\rho\overline B_\rho(y,r)=2^{-k_p}.
+$$
+Thus its radius-gauge ratio is exactly
+$$
+\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}
+=\alpha^{|p|}\bigl(1+\log_2(1/r)\bigr).
+$$
+
+**Proof.** At $t=G_L-1$, the temporal partition is the positional length-$L$ partition by 20.6. There are $G_{L-1}$ words ending in zero, with mass $\alpha^L$, and $G_{L-2}$ words ending in one, with mass $\alpha^{L+1}$. This includes $L=1$ under the convention $G_{-1}=1$.
+
+The next $G_{L-1}$ cuts have labels $G_L+1,\ldots,G_{L+1}$. By 35.1 they split, once each, the $G_{L-1}$ cylinders represented by block words of digit length $L$. Each such split replaces one mass $\alpha^L$ by the two masses $\alpha^{L+1}$ and $\alpha^{L+2}$. The descendants cannot split again in this batch because their labels exceed $G_{L+1}$. After $a$ cuts the displayed multiplicities follow. The number of atoms is $G_L+a=t+1$, as required, but the argument also determines all their masses.
+
+The first-difference metric gives
+$$
+\rho(y,z)\le r\quad\Longleftrightarrow\quad y_j=z_j\text{ for }0\le j<t(r).
+$$
+Thus the closed ball is exactly a length-$t(r)$ temporal cylinder. Apply its unique representation and lifetime from 35.1. The mass and actual diameter then follow from that theorem, and substitution in the gauge proves the final formula. $\square$
+
+Reference: the general rotation-cut partition and its three interval lengths and multiplicities are described in Dong Han Kim, [A note on the return time of Sturmian sequences, §3, pp. 305–306](https://www.kkms.org/kkms/2008/16305.pdf#page=5). The proof here supplies the exact Fibonacci batch and the separate forced-prefix diameter information.
+
+**theorem 35.3 (Arbitrary-set mass control and preliminary measure bounds).** Define the actual-diameter cylinder density by
+$$
+\mathcal D(p):=\frac{\eta(D_p)}{h_1(\operatorname{diam}_\rho D_p)}
+=\alpha^L\bigl(G_{L+1}-N_p-1\bigr),\qquad L=|p|.
+$$
+Then $\mathcal D(\varnothing)=1$, and for every $L\ge1$,
+$$
+\alpha^LG_L\le\mathcal D(p)\le\alpha^L(G_{L+1}-1)<A_+.
+$$
+In particular $1\le\mathcal D(p)<A_+$ for every block word. At each positive depth the lower and upper displayed bounds are attained: the upper one by $p=0^L$, and the lower one by the unique block word with $N_p=G_{L-1}-1$.
+
+For every arbitrary subset $A\subseteq X_\beta$,
+$$
+\eta^*(A)\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+Consequently, at every $\delta>0$,
+$$
+\frac{\eta^*(A)}{A_+}\le\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\eta^*(A).
+$$
+The limiting outer measure is a finite Borel measure, and
+$$
+0<\frac1{A_+}\le\mathcal H^{h_1}_\rho(X_\beta)\le1.
+$$
+
+**Proof.** The density formula uses the exact exponent $k_p=M_p-2$, so its denominator is $k_p+1=M_p-1$. The full range of $N_p$ in 35.1 gives both finite-depth extrema. Induction on the recurrence gives $G_L\ge\phi^L$, hence $\alpha^LG_L\ge1$. The Fibonacci closed form gives
+$$
+G_L=\frac{\phi^{L+2}-(-\alpha)^{L+2}}{\sqrt{5}},
+$$
+and therefore
+$$
+\alpha^L(G_{L+1}-1)
+=A_+-\alpha^L-\frac{(-1)^{L+3}\alpha^{2L+3}}{\sqrt{5}}<A_+.
+$$
+The strict inequality follows from $\alpha^{2L+3}/\sqrt{5}<\alpha^L$. The asserted extremal words exist by the finite value bijection. Their diameter witnesses are the split pairs in 35.1.
+
+If $A$ is empty or a singleton, the mass inequality follows from nonatomicity. Otherwise, among the first-difference indices of its distinct point pairs, choose the smallest index $k$. All points of $A$ have the same prefix of length $k$, and some pair first differs at $k$. Hence
+$$
+\operatorname{diam}_\rho A=2^{-k}.
+$$
+The common length-$k$ cylinder has diameter exactly $2^{-k}$, since it contains that pair. By 35.1 it is a set $D_p$ with $k_p=k$. Consequently
+$$
+\eta^*(A)\le\eta(D_p)=\mathcal D(p)h_1(2^{-k})\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+This argument applies to nonmeasurable sets as well.
+
+For every admissible diameter cover, outer subadditivity now gives
+$$
+\eta^*(A)\le\sum_i\eta^*(A_i)
+\le A_+\sum_i h_1(\operatorname{diam}_\rho A_i),
+$$
+which proves the lower content bound.
+
+For the upper bound, the clopen algebra used to construct $\nu$ in 33.1, transported by $\Phi$, gives
+$$
+\eta^*(A)=\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}.
+$$
+Every clopen set is a finite disjoint union of sufficiently deep positional cylinders transported by $\Phi$. A positional word ending in one can be extended by its forced zero without changing its cylinder, making every member a set $D_p$. These refinements can have arbitrarily small temporal diameter, by 35.1. On each member,
+$$
+h_1(\operatorname{diam}_\rho D_p)=\frac{\eta(D_p)}{\mathcal D(p)}\le\eta(D_p).
+$$
+Refining a clopen cover to diameter at most $\delta$ therefore proves the upper bound.
+
+For completeness, the diameter construction is an outer measure: countable covers can be combined, and the increasing limit as $\delta\downarrow0$ preserves the resulting subadditivity bound. Every clopen set and its complement are disjoint compact sets and, when both are nonempty, have positive mutual distance. At scales below that distance, no covering set meets both. Splitting covers across the two sides proves the Carathéodory equality for the clopen set. Thus all clopen sets are measurable, and their generated Borel sigma algebra is measurable. Finiteness and positivity follow from the displayed bounds with $A=X_\beta$. $\square$
+
+Reference: the corresponding cylinder-tree cover mechanism is Bellissard–Julien, [§§6.1–6.2, Proposition 14 and its proof, pp. 21–22](https://arxiv.org/pdf/1202.4330v2#page=21). The arbitrary-subset mass inequality and its constant are proved above, rather than inferred from the number of cylinders.
+
+**theorem 35.4 (Sharp ball constants and explicit exceptional-point spectra).** Put
+$$
+\mathscr R(y,r):=\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}.
+$$
+For every $y\in X_\beta$ and $0<r\le1$,
+$$
+\alpha^2\le\mathscr R(y,r)\le A_+.
+$$
+Both constants are sharp when all these radii are allowed. At small scales the sharper exact uniform limits are
+$$
+\lim_{\varepsilon\downarrow0}\inf_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_-,
+\qquad
+\lim_{\varepsilon\downarrow0}\sup_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_+.
+$$
+The exceptional points $w$ and $1w$ give the more precise witnesses
+$$
+\liminf_{r\downarrow0}\mathscr R(w,r)=A_0,\qquad
+\limsup_{r\downarrow0}\mathscr R(w,r)=A_+,
+$$
+$$
+\liminf_{r\downarrow0}\mathscr R(1w,r)=A_-,\qquad
+\limsup_{r\downarrow0}\mathscr R(1w,r)=A_0.
+$$
+
+**Proof.** Write a ball as $D_p$ using 35.2. Its diameter is at most its radius, so monotonicity of $h_1$ gives
+$$
+\mathscr R(y,r)\le\mathcal D(p)<A_+.
+$$
+For the lower bound, first suppose $r<1$, so its temporal length $t$ is positive. Write its nonempty block word as $p=q0$ or $p=q10$, and put $d=|q|$. The clock bounds give
+$$
+b_p=M_q-1\ge G_d,
+$$
+including $q=\varnothing$. Since $t\ge b_p$ and $1+\log_2(1/r)>t$, the two cases yield respectively
+$$
+\mathscr R(y,r)\ge G_d\alpha^{d+1}\ge\alpha,
+\qquad
+\mathscr R(y,r)\ge G_d\alpha^{d+2}\ge\alpha^2.
+$$
+At $r=1$ the ball is the whole space and the ratio is one. For $y=1w$ and $r<1$ tending to one, the ball is the first-symbol cylinder of mass $\alpha^2$, whereas $h_1(r)\to1$. Hence the global lower constant cannot be increased.
+
+To establish the small-scale lower limit, use $t+1=G_L+a$ as in 35.2. Since $1+\log_2(1/r)>t$, the ratios in the three mass classes are bounded below by
+$$
+(G_L-1)\alpha^L,\qquad
+(G_L-1)\alpha^{L+1},\qquad
+G_L\alpha^{L+2},
+$$
+respectively. The last bound uses $a\ge1$, which is necessary for the third class to exist. As $L\to\infty$, these three bounds tend respectively to
+$$
+A_0,\qquad \alpha A_0,\qquad A_-.
+$$
+Thus the ratios are uniformly at least $A_--o(1)$ at small scales.
+
+All block prefixes of $0^\infty$ are $0^L$. The lifetimes from 35.1 are
+$$
+b_{0^L}=G_L-1,\qquad k_{0^L}=G_{L+1}-2\qquad(L\ge1).
+$$
+Within this lifetime the ball mass is $\alpha^L$. The factor $1+\log_2(1/r)$ ranges, with the appropriate one-sided endpoint limits, from $G_L-1$ to $G_{L+1}-1$. The closed form for $G_L$ proves the two stated limits at $w$. In particular the actual radii
+$$
+r_L=2^{-(G_{L+1}-2)}
+$$
+give $\overline B_\rho(w,r_L)=D_{0^L}$ and ratios tending to $A_+$, proving sharpness of both upper assertions.
+
+For $u=(10)^\infty$, the nonempty block prefixes are $p_j=(10)^j$, of length $2j$. The recurrence gives
+$$
+N_{p_j}=G_{2j-1}-1.
+$$
+Their exact lifetimes are
+$$
+b_{p_j}=G_{2j-2},\qquad k_{p_j}=G_{2j}-1,
+$$
+and their masses are $\alpha^{2j}$. Therefore the lower and upper limiting ratios along these lifetimes are
+$$
+\lim_{j\to\infty}G_{2j-2}\alpha^{2j}=A_-,\qquad
+\lim_{j\to\infty}G_{2j}\alpha^{2j}=A_0.
+$$
+These are all sufficiently small balls about $1w=\Phi(u)$, which proves both limits there. For example the exact radii $2^{-G_{2j-2}}$ already give ratios $(G_{2j-2}+1)\alpha^{2j}\to A_-$. This supplies an explicit witness for the small-scale uniform lower constant. $\square$
+
+**theorem 35.5 (Local gauge invariance and the exact branch overlap).** Let $U_i=\{y\in X_\beta:y_0=i\}$ for $i=0,1$. For every subset $A\subseteq U_i$,
+$$
+\mathcal H^{h_1}_\rho(SA)=\mathcal H^{h_1}_\rho(A).
+$$
+Moreover,
+$$
+S(U_0)\cup S(U_1)=X_\beta,\qquad S(U_0)\cap S(U_1)=\{w\}.
+$$
+Consequently $\mathcal H^{h_1}_\rho$ is $S$-invariant. If
+$$
+c_0:=\mathcal H^{h_1}_\rho(X_\beta),
+$$
+then, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c_0\eta,\qquad A_+^{-1}\le c_0\le1.
+$$
+
+**Proof.** On $U_i$, the shift is injective and satisfies the exact similarity law
+$$
+\rho(Sy,Sz)=2\rho(y,z).
+$$
+For positive $r\downarrow0$,
+$$
+\frac{h_1(2r)}{h_1(r)}
+=\frac{1+\log_2(1/r)}{\log_2(1/r)}\longrightarrow1.
+$$
+Intersect an arbitrary diameter cover of $A$ with $U_i$ and apply $S$. For every $\epsilon>0$, at sufficiently small diameters the image costs are at most $1+\epsilon$ times the original costs. Taking the infimum and then the scale limit gives
+$$
+\mathcal H^{h_1}_\rho(SA)\le(1+\epsilon)\mathcal H^{h_1}_\rho(A).
+$$
+Conversely, intersect any cover of $SA$ with $S(U_i)$ and apply the inverse of the restricted similarity. The same argument, now for multiplication of distances by $1/2$, gives the reverse inequality after $\epsilon\downarrow0$. Zero-diameter sets remain zero-cost sets. This proves equality for arbitrary subsets.
+
+The union of the images is the whole space because $S$ is surjective. Suppose $Sy=Sz$ with $y\in U_0$ and $z\in U_1$. Write $y=\Phi(x)$ and $z=\Phi(x')$. Then $Tx=Tx'$, so the injectivity of the circle rotation in $HT=RH$ gives $H(x)=H(x')$. As $x\ne x'$, they form one of the split pairs $x_m^-,x_m^+$. For $m\ge2$, their images are the distinct points $x_{m-1}^-,x_{m-1}^+$. Thus only $m=1$ is possible, giving $\{x,x'\}=\{u,v\}$ and common image $Z(0)$. Hence the only common shift image is $w$. Conversely $S(0w)=S(1w)=w$, proving the exact intersection.
+
+The restriction of $S$ to each compact $U_i$ is a homeomorphism onto its closed image. Thus it maps Borel subsets of $U_i$ to Borel subsets of $X_\beta$. Singletons have zero gauge measure. For every Borel set $B$, the local equality and the null overlap give
+$$
+\mathcal H^{h_1}_\rho(S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(U_i\cap S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(B\cap S(U_i))
+=\mathcal H^{h_1}_\rho(B).
+$$
+By 35.3 the total mass $c_0$ is finite and positive. Normalizing therefore gives an invariant probability, which is $\eta$ by 33.8. No global inverse of $S$ has been used. $\square$
+
+Reference: the general unique-branch-point formula for a one-sided Sturmian shift is Brix, [Sturmian subshifts and their C*-algebras, §2.1, equation (2.7)](https://arxiv.org/html/2107.10613v1#S2.SS1). The proof above identifies its precise word and verifies the overlap from the specified split fibers.
+
+**theorem 35.6 (Almost-everywhere upper density and long zero blocks).** For $\eta$-almost every $y$,
+$$
+\limsup_{r\downarrow0}\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}=A_+.
+$$
+More precisely, for $\nu$-almost every $x$, the densities $\mathcal D(p)$ along its block prefixes have upper limit $A_+$.
+
+**Proof.** Fix an integer $k\ge1$. Conditional on any admissible positional history, the probability that the next $k$ digits are all zero is at least $\alpha^k$. If the previous state is zero, it is exactly $\alpha^k$; if that state is one, the first zero is forced and the probability is $\alpha^{k-1}\ge\alpha^k$. The initial history satisfies the same lower bound.
+
+Inspect any consecutive collection of $J$ disjoint blocks of $k$ positions. Successive conditioning shows that the probability all $J$ tests fail is at most
+$$
+(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ and then considering every starting block proves that an all-zero block of length $k$ occurs infinitely often with probability one. Intersecting these full-measure sets over $k$ proves that almost every $x$ has arbitrarily late zero runs of every prescribed length. This uses the transition law of $\nu$, not positional stationarity.
+
+If a prefix $p=x_0\cdots x_{L-1}$ ends in $k$ zeros, then it is a block word and the finite Zeckendorf value bound gives
+$$
+N_p\le G_{L-k}-1.
+$$
+Consequently
+$$
+\mathcal D(p)\ge\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr).
+$$
+For fixed $k$ and $L\to\infty$, the right side tends to
+$$
+A_+-A_0\alpha^k.
+$$
+Almost every point has infinitely many such prefixes for every $k$. Letting $k\to\infty$ and using the universal upper bound $\mathcal D(p)<A_+$ proves the prefix-density assertion. At radius $2^{-k_p}$, the cylinder $D_p$ is exactly the ball about any of its points. These radii tend to zero along prefixes of unbounded length. Therefore the ball upper limit is at least $A_+$, and 35.4 supplies the reverse bound. $\square$
+
+**theorem 35.7 (Finite adaptive covers and the exact normalization).** Under the normalization of 35.0, put
+$$
+c:=\frac1{A_+}=\frac{\sqrt{5}}{\phi^3}=5-2\sqrt{5}.
+$$
+For every subset $A\subseteq X_\beta$ and every $\delta>0$,
+$$
+\boxed{\mathcal H^{h_1}_{\rho,\delta}(A)=\mathcal H^{h_1}_\rho(A)=c\eta^*(A).}
+$$
+In particular, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c\eta,\qquad
+\mathcal H^{h_1}_\rho(X_\beta)=c,\qquad
+\mathcal H^{h_1}_\rho(D_p)=c\alpha^{|p|}.
+$$
+For every clopen $B\subseteq X_\beta$ (in particular, every block cylinder), every $\delta>0$ and every $\tau>0$, there is a finite cover of $B$ by block cylinders of $\rho$-diameter at most $\delta$ and total $h_1$-cost at most $c\eta(B)+\tau$, obtained by stopping different positional paths at different depths. For arbitrary subsets $A$, the matching upper bound is obtained from at most countable covers.
+
+**Proof.** The lower bound at every scale is already proved in 35.3. We construct the matching upper covers, including all exceptional paths.
+
+Fix $\epsilon$ with $0<\epsilon<A_+$, a scale $\delta>0$, and a block cylinder $D_q$. Choose $k\ge1$ so large that
+$$
+A_0\alpha^k<\epsilon/2.
+$$
+By the closed form for $G_L$, choose $L_0\ge k$ sufficiently large that for every $L\ge L_0$,
+$$
+\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr)\ge A_+-\epsilon,
+\qquad
+2^{-(G_L-1)}\le\delta.
+$$
+Hence every block prefix of length at least $L_0$ ending in $k$ zeros satisfies
+$$
+\mathcal D(p)\ge A_+-\epsilon,
+\qquad
+\operatorname{diam}_\rho D_p\le\delta.
+$$
+The latter diameter bound follows from $k_p\ge G_L-1$.
+
+Choose $L_*\ge\max\{L_0,|q|\}$. Along each positional path in $C_q$, inspect in order the $J$ disjoint blocks of positions
+$$
+L_*+(j-1)k,\ldots,L_*+jk-1,\qquad 1\le j\le J.
+$$
+At the first all-zero test block, stop and take the cylinder of the entire prefix ending at that block. Its prefix ends in zero and has length at least $L_0$, so it is a block cylinder satisfying the preceding density and diameter bounds. Different first stops are prefix-incomparable, hence their cylinders are disjoint.
+
+For paths failing all $J$ tests, take their full positional prefixes of length $L_*+Jk$ as fallback cylinders. If such a prefix ends in one, append its forced zero without changing the cylinder. These are again block cylinders of diameter at most $\delta$. There are only finitely many stopped and fallback cylinders, and together they form a partition of $D_q$ after application of $\Phi$.
+
+Let $B_J\subseteq D_q$ be the union of the fallback cylinders. The conditional estimate in 35.6, applied inside $C_q$, gives
+$$
+\eta(B_J)\le\eta(D_q)(1-\alpha^k)^J.
+$$
+Every stopped cylinder has cost at most its mass divided by $A_+-\epsilon$. Every fallback cylinder has cost at most its mass by 35.3. Therefore this finite cover has total cost at most
+$$
+\frac{\eta(D_q)}{A_+-\epsilon}+\eta(D_q)(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ proves
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)\le\frac{\eta(D_q)}{A_+-\epsilon}.
+$$
+Now let $\epsilon\downarrow0$. Together with the arbitrary-cover lower bound, this gives
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)=\frac{\eta(D_q)}{A_+}.
+$$
+In particular, no null exceptional set was omitted from any finite covering argument.
+
+A clopen set is a finite disjoint union of block cylinders, so subadditivity gives its upper bound with the same factor $A_+^{-1}$. Finally take any countable clopen cover of an arbitrary $A$. Applying the clopen bound and then the clopen outer-measure formula of 35.3 yields
+$$
+\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\frac1{A_+}\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}
+=\frac{\eta^*(A)}{A_+}.
+$$
+The lower inequality holds for every arbitrary-subset diameter cover, proving equality at every scale. Taking the scale limit proves the measure identity and shows that the constant $c_0$ in 35.5 is $c$.
+
+Finally $\phi^3=2+\sqrt{5}$, so rationalization gives
+$$
+\frac{\sqrt{5}}{\phi^3}=\frac{\sqrt{5}}{2+\sqrt{5}}=5-2\sqrt{5}.
+$$
+The denominator $M_p-1$ throughout came from the actual diameter exponent $M_p-2$ and the specified additive one in the gauge. $\square$
+
+**theorem 35.8 (Complete same-level covers do not attain the Hausdorff infimum).** Let $\mathcal C_t$ be the partition of $X_\beta$ by temporal prefixes of length $t$, and define its true-diameter cost by
+$$
+J_t:=\sum_{D\in\mathcal C_t}h_1(\operatorname{diam}_\rho D).
+$$
+For $t\ge1$, write $N=t+1=G_L+a$ with $0\le a<G_{L-1}$. Then
+$$
+J_t=\sum_{j=G_L+a}^{2G_L+a-1}\frac1j
++\sum_{j=G_{L+2}}^{G_{L+2}+a-1}\frac1j,
+$$
+where the second sum is zero for $a=0$. In particular,
+$$
+J_{G_L-1}=\sum_{j=G_L}^{2G_L-1}\frac1j\longrightarrow\log2.
+$$
+More generally,
+$$
+\liminf_{t\to\infty}J_t=2\log\left(\frac{1+\sqrt\phi}{\phi}\right),\qquad
+\limsup_{t\to\infty}J_t=\log2,
+$$
+and
+$$
+5-2\sqrt{5}<2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+Thus even the best asymptotic complete same-temporal-level covers have a strictly larger cost than the arbitrary-cover Hausdorff measure.
+
+**Proof.** At $t=G_L-1$, the cylinders are the positional length-$L$ cylinders. For those ending in zero, the numbers $N_p$ run through $0,\ldots,G_{L-1}-1$, so their cost denominators $M_p-1$ run through
+$$
+G_L,\ldots,G_{L+1}-1.
+$$
+For those ending in one, append the forced zero. Their positional values run through $G_{L-1},\ldots,G_L-1$, so their denominators run through
+$$
+G_{L+1},\ldots,2G_L-1.
+$$
+The value statement follows from the finite Zeckendorf value bijection; $L=1$ is immediate separately. Hence the entire denominator set at the checkpoint is exactly $G_L,\ldots,2G_L-1$.
+
+In the next batch, a splitting length-$L$ cylinder with denominator $j=M_p-1$ is replaced by children with denominators $j+G_L$ and $j+G_{L+1}$, by 35.1. The first $a$ such splits remove the denominators $G_L,\ldots,G_L+a-1$. Their first children extend the surviving initial interval through $2G_L+a-1$; their second children add the interval $G_{L+2},\ldots,G_{L+2}+a-1$. This proves the exact formula.
+
+Put $x=a/G_L$. Integral comparison for harmonic sums, uniformly over this batch, gives
+$$
+J_t=\Psi(x)+o(1),\qquad
+\Psi(x)=\log\frac{2+x}{1+x}+\log\frac{\phi^2+x}{\phi^2},
+$$
+where the error tends to zero as $L\to\infty$ and the ranges of $x$ tend to $[0,\alpha]$. Every point of that interval is approached by admissible choices of $a/G_L$.
+
+Direct differentiation gives
+$$
+\Psi'(x)=-\frac1{(1+x)(2+x)}+\frac1{\phi^2+x}.
+$$
+Its unique zero in $[0,\alpha]$ is $x=\sqrt\phi-1$. The derivative is negative before that point and positive afterwards. At the endpoints $\Psi(0)=\Psi(\alpha)=\log2$, while at the minimum
+$$
+\Psi(\sqrt\phi-1)=2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+This proves both limiting costs.
+
+For a direct strict comparison, set $z=(1+\sqrt\phi)/\phi$. One has $z>7/5$: squaring the positive sides reduces this inequality to $\phi>37/23$, which follows from $5>(51/23)^2$. Also $\log z>2(z-1)/(z+1)$ for $z>1$, as follows by differentiating the difference and using its value zero at one. Thus $2\log z>2/3$, whereas $5-2\sqrt{5}<2/3$. The strict gap follows.
+
+The simpler assignment of the upper diameter $2^{-t}$ to each of the $t+1$ cylinders would give total cost one. Neither that upper estimate nor the actual same-level costs compute the adaptive infimum proved in 35.7. $\square$
+
+**theorem 35.9 (Critical index, general gauge comparison and normalization robustness).** Let $g$ be a continuous nondecreasing gauge with $g(0)=0$ and $g(r)>0$ for $r>0$ sufficiently small.
+
+If
+$$
+\lim_{r\downarrow0}\frac{g(r)}{h_1(r)}=a\in[0,\infty),
+$$
+then for every subset $A\subseteq X_\beta$,
+$$
+\mathcal H^g_\rho(A)=ac\eta^*(A).
+$$
+If instead $g(r)/h_1(r)\to\infty$, then
+$$
+\mathcal H^g_\rho(A)=\infty\qquad\text{whenever }\eta^*(A)>0.
+$$
+More generally, if
+$$
+0<a:=\liminf_{r\downarrow0}\frac{g(r)}{h_1(r)}
+\le b:=\limsup_{r\downarrow0}\frac{g(r)}{h_1(r)}<\infty,
+$$
+then
+$$
+ac\eta^*(A)\le\mathcal H^g_\rho(A)\le bc\eta^*(A)
+$$
+for every $A$. In particular, every positive-$\eta$ Borel set has finite positive $g$-measure in this two-sided comparison regime.
+
+For the gauges of 35.0,
+$$
+\mathcal H^{h_p}_\rho(X_\beta)=
+\begin{cases}
+\infty,&0<p<1,\\
+5-2\sqrt{5},&p=1,\\
+0,&p>1.
+\end{cases}
+$$
+For $0<p<1$, the infinity conclusion holds on every set of positive $\eta$ outer measure, not on every nonempty set.
+
+Replacing the additive one in $h_1$ by any fixed positive constant leaves its limiting Hausdorff measure unchanged. Replacing $\log_2$ by $\log_b$, for $b>1$, multiplies that measure by $\log b/\log2$.
+
+**Proof.** If $g(r)\le C h_1(r)$ for all sufficiently small $r$, every sufficiently fine admissible cover satisfies the same cost inequality, including its zero-diameter members. Thus
+$$
+\mathcal H^g_\rho(A)\le C\mathcal H^{h_1}_\rho(A).
+$$
+The reverse gauge inequality gives the reverse measure inequality. These statements concern arbitrary-subset covers, so they do not require measurability of $A$.
+
+For a finite positive limit, apply both inequalities with constants tending to $a$ and use 35.7. For a zero limit, apply the upper inequality with every positive $C$; the critical measure is finite on every subset of $X_\beta$, so the result is zero. For an infinite limit, apply the lower inequality with every finite $C$; positive $\eta^*(A)$ makes the critical measure positive, forcing infinity. The liminf and limsup bounds follow by the same argument with constants approaching their respective endpoints.
+
+Here
+$$
+\frac{h_p(r)}{h_1(r)}=\bigl(1+\log_2(1/r)\bigr)^{1-p},
+$$
+which tends to infinity for $p<1$ and to zero for $p>1$. This proves the exact critical index and all the stated subset qualifications. Every countable set has zero measure for all these gauges, since it is covered by countably many zero-cost singletons; this also shows why the positive-mass condition cannot be suppressed.
+
+Finally, for fixed $a_*>0$ and $b>1$, the gauge
+$$
+g(r)=\bigl(a_*+\log_b(1/r)\bigr)^{-1}
+$$
+satisfies
+$$
+\frac{g(r)}{h_1(r)}\longrightarrow\frac{\log b}{\log2}.
+$$
+The finite-limit comparison proves both normalization assertions. $\square$
+
+Reference: the general small-scale gauge comparison appears in Aedo–Grimm–Short, [§9, p. 16](https://arxiv.org/pdf/2305.00078v2#page=16). Its application here uses the actual finite measure and normalization established in 35.7.
+
+**theorem 35.10 (The arithmetic probability, the logarithmic metric and the two positional laws).** Define
+$$
+d_{\log}(y,z)=h_1(\rho(y,z)).
+$$
+This is an ultrametric with the same topology as $\rho$, and
+$$
+\mathcal H^p_{d_{\log}}=\mathcal H^{h_p}_\rho\quad(p>0).
+$$
+Consequently
+$$
+\dim_{\mathrm H}(X_\beta,d_{\log})=1,\qquad
+\mathcal H^1_{d_{\log}}=c\eta.
+$$
+In contrast, the ordinary Hausdorff dimension of $(X_\beta,\rho)$ is zero, as already established in 33.7.
+
+If $\widehat d(x,x')=\rho(\Phi(x),\Phi(x'))$, then
+$$
+\mathcal H^{h_1}_{\widehat d}=c\nu,\qquad
+(\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=\nu,
+$$
+and
+$$
+(H\circ\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=m.
+$$
+Thus the normalized temporal critical measure is precisely the arithmetic Haar lift, transported by the coding. It is not the stationary Parry probability $\mu_{\mathrm{st}}$ for positional deletion on the full carrier $K$.
+
+**Proof.** A nondecreasing function vanishing only at zero preserves the ultrametric inequality under composition, and $h_1(r)\to0$ exactly when $r\to0$, proving the metric and topology assertions. Every nonsingleton subset of $X_\beta$ has its $\rho$-diameter attained, by the minimum-first-difference argument of 35.3. Therefore
+$$
+\operatorname{diam}_{d_{\log}}A=h_1(\operatorname{diam}_\rho A),
+$$
+with the same identity for empty sets and singletons. Since $h_p=h_1^p$, the cover costs agree, and the admissible scales correspond by the continuous increasing map $h_1$. This proves the measure identity for every $p>0$. Its dimension and critical-measure consequences follow from 35.9.
+
+The map $\Phi:(K,\widehat d)\to(X_\beta,\rho)$ is an isometry by definition, so transporting the arbitrary-set identity of 35.7 gives $\mathcal H^{h_1}_{\widehat d}=c\nu$. The remaining pushforward formulas use $\eta=\Phi_*\nu$ and the existing equality $H_*\nu=m$ from 33.3 and 33.8.
+
+For the original positional first-difference metric $d$, Section 33 instead gives
+$$
+\mathcal H^s_d=\nu,\qquad s=\frac{\log\phi}{\log2}.
+$$
+The stationary positional probability is different, since 33.9 gives
+$$
+\nu(C_1)=\alpha^2,\qquad
+\mu_{\mathrm{st}}(C_1)=\frac{\alpha^2}{1+\alpha^2}.
+$$
+Its positional stationarity must not be transferred to $\nu$, nor confused with the arithmetic invariance of the normalized temporal gauge measure. The preservation result in 35.5 used explicit local similarities and a proved null branch overlap; it was not a claim that Hausdorff measures are preserved by arbitrary homeomorphisms. $\square$
+
+Reference: reciprocal-prefix metrics and bounded-type Sturmian geometry are treated in Bellissard–Julien, [§4.1 and §5.2](https://arxiv.org/pdf/1202.4330v2#page=11). Their metric uses bilateral agreement around the origin; the one-sided metric and exact measure in this theorem are determined by the preceding proofs.
+
+## 追加锚（本行以下为增补区）

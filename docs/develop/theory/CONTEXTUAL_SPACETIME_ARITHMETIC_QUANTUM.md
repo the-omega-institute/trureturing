@@ -35462,3 +35462,444 @@ $$
 结论仅限 $0<\varepsilon<\Delta/2$ 及充分小的正 $r$。本命题不对 $\varepsilon=0$ 或 $\varepsilon\ge\Delta/2$ 作出相同速率断言，不给匹配上界、最优 $a$ 或最优常数、状态成本单调性、关于容差的一致界或有限精度表的位成本。固定 $r$ 后的周期子序列极限与不动点的小 $r$ 位置估计各自独立成立，未交换两种极限。成本对象是观察者的全部演化可读状态数，潜在生成器的状态数始终为二；这不是熵、物理比特或能量下界。即使 $r=0$，每个非空报告分支也已经是测量制备映射，故此成本发散不描述量子到经典的转变。
 
 ## 追加锚（本行以下为增补区）
+
+## 159. 固定证据前缀与全部非平凡精度范围的逆混合率下界
+
+**命题 159.1（低于静态地板的前缀平衡块状态下界，repo-derived）。** 沿用命题153.1、156.1、158.1的二元时间齐次无控制仪器、初态 $I_2/2$ 及观察者记号。固定
+$$
+0<p<\frac12,\qquad d=1-2p,\qquad
+\Delta=\frac d2,\qquad \kappa=\frac{1-p}{p},\qquad
+\lambda=\log\kappa,\qquad
+h(x)=p+\frac d{1+e^{-x}}.
+$$
+旧隐藏位先发射报告，再按 $P(r)$ 翻转；每个报告、旧位、新位三元组对应一个独立秩一 Kraus 项。观察者仍为 $\mathcal O=(S,s_0,T_0,T_1,t)$：$S$ 非空有限，更新 $T_0,T_1:S\to S$ 与读出 $t:S\to[0,1]$ 确定且固定，全部可读的演化记忆均计入 $S$。允许依赖 $p,r,\varepsilon$ 的任意精确实数静态表，同一张表须对包括空词和任意稀有历史在内的全部有限报告词满足
+$$
+\mathcal E_r(\mathcal O)
+=\sup_{w\in\{0,1\}^{*}}|t(s_{\mathcal O}(w))-f_r(w)|\le\varepsilon,
+\qquad f_r(w)=h(x_w^{(r)}).
+$$
+$N_{\min}^{(r)}(\varepsilon)$ 为可行观察者的最小有限状态数，不存在时取 $\infty$。函数的复合迭代一律写为 $F^{\circ n}$，其中 $F^{\circ0}=\operatorname{id}$；词的幂仍表示重复拼接。
+
+固定 $0<\varepsilon<\Delta$，选择固定正整数 $a,b$，使
+$$
+L_{ab}=h(b\lambda)-h\!\left(-\frac{a\lambda}{2}\right)>2\varepsilon.
+$$
+这样的选择存在。对正整数 $j$ 记 $D_j=\kappa^j-\kappa^{-j}$，并置
+$$
+\begin{aligned}
+D_{ab}&=D_{a+b}=\kappa^{a+b}-\kappa^{-(a+b)},&
+C_{ab}&=d\,aD_{ab},\\
+M&=L_{ab}-2\varepsilon>0,&
+K_{ab}&=\frac d4(2bD_b+aD_a)>0,\\
+c&=\frac{M}{2C_{ab}}>0,&
+r_0&=\min\!\left\{\frac14,\frac{M}{2K_{ab}}\right\}\in(0,1/2).
+\end{aligned}
+$$
+则
+$$
+\forall r\in(0,r_0),\qquad
+N_{\min}^{(r)}(\varepsilon)\ge\frac c r.
+$$
+所用历史为 $0^b(0^a1^a)^n$。这里 $p,\varepsilon,a,b$ 先于 $r_0$ 和观察者固定；常数不依赖观察者。命题157.1的显式有限见证与词长界、命题158.1在 $0<\varepsilon<\Delta/2$ 上的陈述各保留原适用范围。
+
+**证明。** 先核对沿用模型的时间顺序与条件化。为避免与前缀长度 $b$ 混淆，将单个报告写作 $\beta\in\{0,1\}$。沿用
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,
+\qquad P_{ii}(r)=1-r,\qquad P_{1-i,i}(r)=r.
+$$
+命题153.1、156.1中的独立 Kraus 项给出的复线性分支为
+$$
+\phi_\beta^{(r)}(X)
+=\sum_{i,j=0}^1c_{\beta i}P_{ji}(r)X_{ii}|j\rangle\langle j|
+\qquad(X\in M_2(\mathbb C)).
+$$
+这是逐项共轭作用后相加的结果，不能把 Kraus 振幅先相加。从 $v_\varnothing^{(r)}=(1/2,1/2)^{\mathsf T}$ 出发，故有既有递推
+$$
+v_{w\beta}^{(r)}=P(r)\operatorname{diag}(c_{\beta0},c_{\beta1})v_w^{(r)},
+\qquad Z_w^{(r)}=\mathbf1^{\mathsf T}v_w^{(r)}.
+$$
+$P(r)$ 的列和为一且 $c_{\beta i}\ge p$，所以 $Z_{w\beta}^{(r)}\ge pZ_w^{(r)}$，从而 $Z_w^{(r)}\ge p^{|w|}>0$。两分量始终严格为正，后验 $q_w^{(r)}=(v_w^{(r)})_1/Z_w^{(r)}$ 及对数赔率 $x_w^{(r)}=\log(q_w^{(r)}/(1-q_w^{(r)}))$ 均有定义。下一零报告概率为 $p+dq_w^{(r)}=h(x_w^{(r)})$，且 $x_\varnothing^{(r)}=0$、$h(0)=1/2$。
+
+旧位发射使对数赔率增加 $(-1)^\beta\lambda$，再由翻转作用更新，因此命题158.1的精确递推为
+$$
+F_{\beta,r}(x)=G_r(x+(-1)^\beta\lambda),\qquad
+G_r(z)=\log\frac{(1-r)e^z+r}{re^z+1-r},
+\qquad x_{w\beta}^{(r)}=F_{\beta,r}(x_w^{(r)}).
+$$
+末次发射后的翻转已包含在 $x_w^{(r)}$ 中。对 $0<r<1/2$，令 $\eta=1-2r$。沿用该证明中的全实轴界
+$$
+0<G_r'(z)=\frac{1-2r}{1+2r(1-r)(\cosh z-1)}\le\eta<1,
+\qquad 0<h'(x)\le\frac d4.
+$$
+分母至少为一，且 $G_r$ 为奇函数、$G_r(0)=0$，故它保号并将实数移向零；每个包含零的闭区间均被 $G_r$ 保持。各 $F_{\beta,r}$ 为 $\eta$-Lipschitz。
+
+先固定所需的 $a,b$。当正整数 $a=b$ 同时趋于无穷时，$h(b\lambda)\to1-p$、$h(-a\lambda/2)\to p$，所以 $L_{ab}\to d=2\Delta>2\varepsilon$。取一次充分大的 $a=b$ 即证选择存在；以下论证适用于任意已经固定且满足所列严格间隙的正整数 $a,b$。
+
+对这个固定 $a$，直接复用命题158.1证明中在成本半径选择之前建立的反射结论。具体地，置
+$$
+I=[-a\lambda,0],\qquad A_r=F_{0,r}^{\circ a},\qquad
+B_r(x)=-A_r(x),\qquad
+H_r=F_{1,r}^{\circ a}\circ F_{0,r}^{\circ a}=B_r^{\circ2}.
+$$
+对每个 $0<r<1/2$，该证明给出 $B_r:I\to I$ 的收缩常数 $\eta^a$、唯一不动点 $x_r\in(-a\lambda,0)$，以及
+$$
+A_r(x_r)=-x_r,\qquad H_r(x_r)=x_r,\qquad
+\left|x_r+\frac{a\lambda}{2}\right|
+\le\frac{arD_a}{2(1-r)}.
+$$
+这些是固定 $a$ 的反射与中心估计，不使用该命题后段的成本精度限制。若按命题158.1开头的参数约束代入，取
+$$
+g_a=\Delta\tanh\frac{a\lambda}{4}\in(0,\Delta),\qquad
+\varepsilon_*=\frac{g_a}{4}.
+$$
+便有 $0<\varepsilon_*<\Delta/2$ 及 $g_a>2\varepsilon_*$，故所选任意正整数 $a$ 都满足该处的前提。这里只取其证明在全部 $0<r<1/2$ 上已给出的上述反射子结论；$\varepsilon_*$ 不替换本命题的 $\varepsilon$，也不把命题158.1的成本结论用于其范围之外。特别地 $x_r\to-a\lambda/2$；没有对 $r=0$ 断言严格收缩或不动点唯一性。
+
+现加入从原始先验实际运行的前缀。记
+$$
+z_r=F_{0,r}^{\circ b}(0)=x_{0^b}^{(r)},\qquad
+J=[-a\lambda,b\lambda].
+$$
+从零出发，每个零报告后的值严格为正，并且
+$$
+0\le F_{0,r}^{\circ j}(0)\le j\lambda\quad(0\le j\le b),
+\qquad 0<z_r\le b\lambda.
+$$
+归纳中第 $j$ 次送入 $G_r$ 的数在 $[0,j\lambda]$，因为上一步在 $[0,(j-1)\lambda]$，加上 $\lambda$ 后再向零收缩。命题158.1的逐步缺陷估计在任意正整数 $j$ 上同样为
+$$
+|G_r(u)-u|\le\frac{rD_j}{1-r}\qquad(|u|\le j\lambda).
+$$
+这里直接用其恒等式 $G_r(u)-u=\log(1-r+re^{-u})-\log(1-r+re^u)$：两个对数自变量均至少为 $1-r$，对数中值界与 $|e^u-e^{-u}|\le D_j$ 给出该式。前缀各步用 $D_j\le D_b$ 并相加，得到
+$$
+|z_r-b\lambda|\le\frac{brD_b}{1-r}\le2brD_b,
+\qquad z_r\longrightarrow b\lambda\quad(r\downarrow0).
+$$
+
+须把整块控制域扩大到 $J$，因为前缀终点 $z_r$ 为正。对任意 $x\in J$，零报告段满足
+$$
+F_{0,r}^{\circ j}(x)\in[-(a-j)\lambda,(b+j)\lambda]
+\qquad(0\le j\le a).
+$$
+$j=0$ 为起点条件；第 $j$ 步之前的值加上 $\lambda$，恰落在此式的第 $j$ 个区间内，而该区间包含零，所以经 $G_r$ 后仍在其中。特别地，$u=F_{0,r}^{\circ a}(x)\in[0,(a+b)\lambda]$。随后的一报告段满足
+$$
+F_{1,r}^{\circ j}(u)\in[-j\lambda,(a+b-j)\lambda]
+\qquad(0\le j\le a).
+$$
+同样，第 $j$ 步将前一界减去 $\lambda$，其区间仍包含零，故被 $G_r$ 保持。这两次归纳同时给出了每次送入 $G_r$ 的参数界，而不只给出块端点界；所有这些参数均在 $[-(a+b)\lambda,(a+b)\lambda]$ 内。第二段的 $j=a$ 界直接是 $[-a\lambda,b\lambda]=J$，故
+$$
+H_r(J)\subseteq J.
+$$
+闭区间 $J$ 非空完备，$H_r$ 在其上为 $\eta^{2a}$-Lipschitz，且 $\eta^{2a}<1$。Banach 不动点定理因而给出从 $J$ 内每个起点的收敛；已有的 $x_r\in I\subset J$ 满足 $H_r(x_r)=x_r$，由唯一性它正是同一个不动点。因此，对每个固定 $r\in(0,1/2)$，
+$$
+H_r^{\circ n}(z_r)\longrightarrow x_r\qquad(n\to\infty).
+$$
+
+整块的 $a$ 个 $+\lambda$ 与 $a$ 个 $-\lambda$ 增量相消。将上述全部中间参数的逐步缺陷相加，得到
+$$
+\sup_{x\in J}|H_r(x)-x|
+\le\frac{2arD_{ab}}{1-r}\le4arD_{ab}
+\qquad(0<r<1/2).
+$$
+现在直接应用[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)：精确状态域取 $J$、精确更新取 $H_r$，摘要为包含映射 $\pi:J\hookrightarrow\mathbb R$，模型更新和实际求值更新均取 $\operatorname{id}_{\mathbb R}$。相应常数为
+$$
+L=1,\qquad \delta_{\rm close}=4arD_{ab},\qquad
+\delta_{\rm eval}=0,\qquad e_0=0,
+\qquad L_o=\frac d4,\qquad\varepsilon_o=0,
+$$
+输出为 $h$，两条轨迹同从 $z_r$ 出发。真实轨迹因 $H_r(J)\subseteq J$ 始终在 $J$，比较轨迹恒为 $z_r\in J$；所有域条件成立。该定理对任意有限块数视界给出
+$$
+|h(H_r^{\circ n}(z_r))-h(z_r)|
+\le\frac d4(4arD_{ab})\sum_{j=0}^{n-1}1^j
+=C_{ab}nr\qquad(n\ge0).
+$$
+$n=0$ 时空和为零。相同代入也直接符合既有 [`output_trajectory_error`](../../../D5/S3/Observer/MetricGeometry/OutputTrajectoryError.lean)：$Y=J$、$Z=\mathbb R$、$\tau=H_r$、$\sigma=\operatorname{id}_{\mathbb R}$、$\pi$ 为包含映射、$q_{\rm out}=h|_J$、$o=h$，一步缺陷为 $4arD_{ab}$、读出不匹配量为零。这个界随 $n$ 增长，不是对所有时间一致的小误差界；比较用的实数轨迹也不是观察者获准额外读取的记忆。
+
+令实际起点与极限的输出间隙为
+$$
+L_r=h(z_r)-h(x_r)>0.
+$$
+由 $r<1/2$ 下的前缀偏差及反射中心界，
+$$
+|z_r-b\lambda|\le2brD_b,\qquad
+\left|x_r+\frac{a\lambda}{2}\right|\le arD_a.
+$$
+再用 $h$ 的 $d/4$-Lipschitz 性，得到
+$$
+|L_r-L_{ab}|
+\le\frac d4(2bD_b+aD_a)r=K_{ab}r.
+$$
+因此陈述中的同一个 $r_0=\min\{1/4,M/(2K_{ab})\}$ 满足：对所有 $0<r<r_0$，
+$$
+L_r-2\varepsilon\ge L_{ab}-K_{ab}r-2\varepsilon
+\ge\frac M2>0.
+$$
+这里的参数选择和间隙估计均在选择观察者之前完成，即使固定容差任意接近 $\Delta$，也只需该严格正的 $M$；未要求对这些容差有共同的正半径。
+
+固定这样的 $r$，再固定任意可行的 $m=|S|$ 状态观察者。对块更新及实际前缀后状态
+$$
+U=T_1^{\circ a}\circ T_0^{\circ a}:S\to S,
+\qquad s_b=T_0^{\circ b}(s_0),
+$$
+直接应用 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)，代入有限集 $S$、自映射 $U$、读出 $t$ 和起点 $s_b$。它给出整数 $n\ge0$、$\ell\ge1$，使
+$$
+n+\ell\le m,\qquad
+U^{\circ(j+\ell)}(s_b)=U^{\circ j}(s_b)\quad(j\ge n).
+$$
+于是对每个整数 $k\ge0$，$U^{\circ(n+k\ell)}(s_b)=U^{\circ n}(s_b)$。记其共同固定读出为 $t_*=t(U^{\circ n}(s_b))$。这些状态对应原先验下的有限词
+$$
+w_k=0^b(0^a1^a)^{n+k\ell},\qquad
+x_{w_k}^{(r)}=H_r^{\circ(n+k\ell)}(z_r),\qquad
+Z_{w_k}^{(r)}\ge p^{b+2a(n+k\ell)}>0.
+$$
+可行性给
+$$
+|t_*-h(H_r^{\circ(n+k\ell)}(z_r))|\le\varepsilon
+\qquad(k\ge0).
+$$
+现在仅在当前 $r$ 和当前观察者均已固定后令 $k\to\infty$。因 $\ell\ge1$，Banach 收敛和 $h$ 连续性给 $|t_*-h(x_r)|\le\varepsilon$。再取 $k=0$ 的约束，便有
+$$
+|h(H_r^{\circ n}(z_r))-h(x_r)|\le2\varepsilon.
+$$
+若 $n=0$，这里使用的第一个词就是实际前缀 $0^b$。起点 $s_b$ 仍是 $S$ 中的一个状态；前缀既未改变允许的初始先验，也未赠送 $b$ 个状态。有限轨道界始终是 $n+\ell\le m$，无需增加 $b$。
+
+结合前面的有限时域误差界与正间隙，有
+$$
+\begin{aligned}
+L_r
+&\le |h(z_r)-h(H_r^{\circ n}(z_r))|
+ +|h(H_r^{\circ n}(z_r))-h(x_r)|\\
+&\le C_{ab}nr+2\varepsilon
+\le C_{ab}mr+2\varepsilon,\\
+m&\ge\frac{L_r-2\varepsilon}{C_{ab}r}
+\ge\frac{M}{2C_{ab}r}=\frac c r.
+\end{aligned}
+$$
+这里 $n$ 计块数，报告词长是 $b+2an$；$2a$ 次更新已计入 $C_{ab}$ 所来自的整块缺陷界，不再额外乘一次 $2a$。对所有可行有限基数取最小值即得陈述；若可行集合为空，$N_{\min}^{(r)}(\varepsilon)=\infty$ 自动满足同一下界。命题153.1已经给出每个正 $r$、正容差下的有限观察者存在性，这与本必要界相容，无须重新构造观察者。
+
+全部取样历史都从 $I_2/2$ 出发且是正质量有限词，包括定义中的空词；证明不要求无限周期报告路径具有正概率。固定 $p,\varepsilon,a,b$ 后的小 $r$ 间隙估计，与固定 $r$、观察者后取 $k\to\infty$ 的步骤各自成立，没有交换极限。若 $\varepsilon\ge\Delta$，命题156.1的恒定读出 $1/2$ 已用一个状态达到要求；本命题排除 $\varepsilon=0$。结论不给匹配上界、优化常数、状态成本单调性，亦不给 $\varepsilon\uparrow\Delta$ 或 $p$ 趋近端点时的一致界。成本是全部演化观察者状态的基数，不是固定表的有限精度位成本、熵或物理比特数；没有外置免费时钟，也没有可读取的隐藏后验寄存器。由命题153.1、156.1，每个非空报告分支即使在 $r=0$ 也是测量制备映射，生成器仍只有两个经典隐藏状态；这里不作量子到经典转变的推断。证毕。
+
+上述通用步骤分别由所引 ML 定理21.2、输出轨迹误差定理及有限轨道定理承担。Banach 步骤使用非空完备度量空间上的收缩映射定理，见钉版 Mathlib 的 [`Contracting.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/MetricSpace/Contracting.lean) 中 `ContractingWith.fixedPoint_isFixedPt`、`ContractingWith.fixedPoint_unique`、`ContractingWith.tendsto_iterate_fixedPoint`；本命题是在所列模型上的普通推导。
+
+相邻文献的量词与损失各有范围。V. Sharan、S. Kakade、P. Liang、G. Valiant，*Prediction with a Short Memory*，[arXiv:1612.02526](https://arxiv.org/abs/1612.02526)，命题1给出有限阶 Markov 预测的平均 KL 或平均 $\ell_1$ 误差界。T. Berg、O. Ordentlich、O. Shayevitz，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)，第I节式(4)–(8)及定理1研究两个独立同分布 Bernoulli 假设下有限确定性状态机的渐近分类错误与状态数指数。P. Chigansky，*Stability of the nonlinear filter for slowly switching Markov chains*，[arXiv:math/0411596](https://arxiv.org/abs/math/0411596)，第1节及定理1.1研究不同初始先验滤波器之差的几乎处处渐近遗忘指数；其二元公式(1.5)及例1.2允许慢切换极限下保持非零负指数。这些平均风险或几乎处处结论不替代本命题逐个有限词的误差约束，也不是本下界的前提；此处不作新颖性或文献穷尽断言。
+
+## 追加锚（本行以下为增补区）
+
+## 160. 局部收缩校准的非均匀对数赔率网格与固定精度状态阶
+
+**命题 160.1（全有限历史的自适应网格上界与固定精度逆混合率阶，repo-derived）。** 沿用命题153.1、156.1、159.1的二元报告仪器、固定先验 $I_2/2$ 与有限确定性观察者。固定
+$$
+0<p<\frac12,\qquad 0<r<\frac12,\qquad
+d=1-2p,\qquad \Delta=\frac d2,\qquad
+\kappa=\frac{1-p}{p},\qquad \lambda=\log\kappa.
+$$
+旧隐藏位先发射报告，再翻转；每个报告、旧位、新位三元组的秩一 Kraus 项分别作用后求和。以隐藏位为一的后验 $q_w$ 定义精确对数赔率 $x_w=\log(q_w/(1-q_w))$，于是
+$$
+x_\varnothing=0,\qquad q_\varnothing=\frac12,\qquad
+x_{wb}=F_b(x_w),\qquad
+F_b(x)=G_r(x+(-1)^b\lambda),
+$$
+$$
+G_r(z)=\log\frac{(1-r)e^z+r}{re^z+1-r},\qquad
+h(x)=p+\frac d{1+e^{-x}},\qquad f_r(w)=h(x_w).
+$$
+这里 $f_r(w)$ 是读完有限报告词 $w$ 后的下一零报告概率。观察者的更新和实数读出表可依赖 $p,r,\varepsilon$，但一经选定即固定；全部演化记忆计入有限状态集，误差上确界取遍包括空词在内的每个有限词，沿用命题156.1的 $N_{\min}^{(r)}(\varepsilon)$。
+
+对任意 $\varepsilon>0$，置
+$$
+E=\min\!\left\{1,\frac{4\varepsilon}{d}\right\},\qquad
+B=\log\frac{1-r}{r},\qquad I=[-B,B],\qquad
+\eta=1-2r,
+$$
+并对 $y\in\mathbb R$ 定义局部校准量
+$$
+L(y)=\frac{\eta}{1+2r(1-r)\bigl(\cosh(\max\{|y|-E,0\})-1\bigr)},
+\qquad \delta(y)=E(1-L(y)).
+$$
+令 $m=\lceil B\rceil$。对 $k=0,\ldots,m-1$，取
+$$
+\ell_k=\min\{k+1,B\}-k,\qquad
+n_k=\left\lceil\frac{\ell_k}{\delta(k)}\right\rceil,
+\qquad
+Q=\bigcup_{k=0}^{m-1}
+\left\{\pm\left(k+\frac{j\ell_k}{n_k}\right):j=0,\ldots,n_k\right\}.
+$$
+在内部有限网格 $Q\subset I$ 上，定义最近点量化器
+$$
+R(y)=\min\left\{a\in Q:|y-a|=\min_{u\in Q}|y-u|\right\}
+\qquad(y\in I),
+$$
+即并列最近时取较小的网格值。取状态标签集 $S=Q$，初态 $s_\varnothing=0$，固定更新和读出
+$$
+T_b(a)=R(F_b(a)),\qquad t(a)=h(a),\qquad
+s_{wb}=T_b(s_w).
+$$
+则这些定义均有意义，且
+$$
+|S|=1+2\sum_{k=0}^{m-1}n_k\le\frac{14}{Er},\qquad
+\forall w\in\{0,1\}^{*},\quad |x_w-s_w|\le E,
+\quad |t(s_w)-h(x_w)|\le\varepsilon.
+$$
+网格只须一次性枚举，令零点标签的编号为零；上述两张更新表及实数读出表随后均为静态表。运行时只演化一个网格编号，不另保存精确 $x_w$ 或演化实数坐标。
+
+因此，对每个固定 $0<p<1/2$ 及固定 $0<\varepsilon<\Delta$，与命题159.1合用可得
+$$
+N_{\min}^{(r)}(\varepsilon)=\Theta_{p,\varepsilon}(1/r)
+\qquad(r\downarrow0).
+$$
+若 $\varepsilon\ge\Delta$，单状态恒定读出 $1/2$ 可行，故 $N_{\min}^{(r)}(\varepsilon)=1$。网格结论的参数域仅为正容差、正混合率。
+
+**证明。** 先在已有仪器上核对本证明使用的分支与时间顺序。令
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P=\begin{pmatrix}1-r&r\\r&1-r\end{pmatrix},\qquad
+K_{bji}=\sqrt{c_{bi}P_{ji}}\,|j\rangle\langle i|.
+$$
+对于任意复矩阵 $A\in M_2(\mathbb C)$，各项分别作共轭作用给
+$$
+\Phi_b(A)=\sum_{j=0}^1\left(\sum_{i=0}^1c_{bi}P_{ji}A_{ii}\right)|j\rangle\langle j|,
+\qquad
+\sum_{b,j,i=0}^1K_{bji}^{*}K_{bji}
+=\sum_{i=0}^1\left(\sum_b c_{bi}\right)
+\left(\sum_j P_{ji}\right)|i\rangle\langle i|=I_2.
+$$
+因此这是原仪器的复线性分支，总仪器保迹；相干振幅并未先相加。从 $v_\varnothing=(1/2,1/2)^{\mathsf T}$ 出发，沿用的未归一化对角向量和 Born 质量满足
+$$
+v_{wb}=P\operatorname{diag}(c_{b0},c_{b1})v_w,\qquad
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w}.
+$$
+列随机矩阵 $P$ 保持总质量，故每个条件报告概率为两个 $c_{bi}$ 的凸组合，落在 $[p,1-p]$。特别地 $Z_w\ge p^{|w|}>0$，空词质量为一，两个分量始终正。下一零报告概率为 $p(1-q_w)+(1-p)q_w=p+dq_w$。旧位发射的 Bayes 乘权把赔率乘以 $\kappa^{(-1)^b}$；随后翻转给
+$$
+q_{wb}=r+(1-2r)\frac{1}{1+e^{-(x_w+(-1)^b\lambda)}}.
+$$
+取赔率再取对数，恰得陈述中的 $F_b$。这仅核对命题153.1、156.1、159.1已经使用的同一模型，并未交换发射与翻转。
+
+对 $G_r$ 直接求导，得到
+$$
+G_r'(z)
+=\frac{(1-2r)e^z}{((1-r)e^z+r)(re^z+1-r)}
+=\frac{\eta}{1+2r(1-r)(\cosh z-1)}.
+$$
+分母至少为一，故 $0<G_r'(z)\le\eta<1$。由表达式，$G_r$ 是奇函数、严格递增、固定零点，且在正负无穷的极限分别为 $B$ 和 $-B$，所以值域恰为 $(-B,B)$。中值定理给 $|G_r(z)|\le\eta|z|\le|z|$；每个 $F_b$ 将整个实轴送入 $I$，而初值零也在 $I$。若记 $\sigma(x)=(1+e^{-x})^{-1}$，则
+$$
+h'(x)=d\sigma(x)(1-\sigma(x)),\qquad 0<h'(x)\le\frac d4.
+$$
+因而 $h$ 在整个实轴上为 $d/4$-Lipschitz。又因 $0<E\le1$，有 $0<L(y)\le\eta<1$ 及 $\delta(y)>0$；$L$ 是偶函数且随 $|y|$ 不增，$\delta$ 是偶函数且随 $|y|$ 不减。
+
+下面把一步误差界校准在量化前的目标位置。固定 $a,x\in I$、报告 $b\in\{0,1\}$，并假设 $|x-a|\le E$。置
+$$
+z=a+(-1)^b\lambda,\qquad y=G_r(z)=F_b(a).
+$$
+从 $z$ 到 $x+(-1)^b\lambda$ 的闭线段中任一点 $u$ 满足 $|u-z|\le E$，从而
+$$
+|u|\ge\max\{|z|-E,0\}\ge\max\{|y|-E,0\},
+$$
+其中第二个不等式用了 $|G_r(z)|\le|z|$。双曲余弦为偶函数且在非负轴递增，因此在线段的每一点均有 $G_r'(u)\le L(y)$。在两端重合时差为零，其余情形对按大小排列的两端直接应用导数有界的中值不等式，即得
+$$
+|F_b(x)-y|\le L(y)|x-a|\le E L(y).
+$$
+此处所用通用段估计可直接取钉版 Mathlib [`MeanValue.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Calculus/MeanValue.lean) 的 `norm_image_sub_le_of_norm_deriv_le_segment'`，代入该闭线段、函数 $G_r$、导数 $G_r'$ 与常数 $L(y)$。若线段跨过零点，则 $|z|\le E$，于是 $|y|\le E$，$L(y)=\eta$；零点处的最大导数仍被包含。这里使用整条线段的导数上界，未用一个端点的导数替代它。
+
+再证内部网格的舍入性质。因为 $B>0$，所以 $m\ge1$，且每个所列 $k$ 都满足 $0<\ell_k\le1$。正数 $\delta(k)$ 使 $n_k\ge1$，每个分箱 $[k,k+\ell_k]$ 被均分成 $n_k$ 段，每段长度
+$$
+\frac{\ell_k}{n_k}\le\delta(k).
+$$
+若 $B$ 是正整数，最后一箱是 $[B-1,B]$，长度为一；若 $0<B<1$，只有 $k=0$ 的一箱，长度为 $B$。非整数 $B>1$ 的最后一箱长度为 $B-(m-1)>0$。这些箱覆盖 $[0,B]$，故 $Q$ 包含零及两端点 $\pm B$，完全位于 $I$ 内。
+
+对任意 $y\in[0,B]$，选一个包含它的箱，再选该箱内一个包含它的小段。该小段的一个端点与 $y$ 的距离不超过整段长度，所以存在 $a\in Q$ 使
+$$
+|y-a|\le\frac{\ell_k}{n_k}\le\delta(k)\le\delta(y).
+$$
+这也适用于箱的共享边界及 $y=B$；无需把整数端点归入一个不存在的下一箱。对负 $y$ 使用反射网格及 $\delta$ 的偶性，得到同一结论。有限非空 $Q$ 上的全局最近点必不比这个端点更远，因此固定的较小值破同距规则给出单值映射 $R:I\to Q$，并满足
+$$
+|y-R(y)|\le\delta(y)\qquad(y\in I),\qquad R(0)=0.
+$$
+这只用整段长度的界，不需要更换为半段常数。
+
+现在在乘积载体 $X=I\times Q$ 上直接使用既有 [`invariant_safety`](../../../D5/S0/Rewriting/Safety/InvariantSafety.lean)。令转移关系 $\mathcal R$ 由同一个报告驱动两侧：
+$$
+(x,a)\mathrel{\mathcal R}(x',a')
+\quad\Longleftrightarrow\quad
+\exists b\in\{0,1\},\quad x'=F_b(x),\quad a'=R(F_b(a)).
+$$
+该关系的两侧确在 $X$ 中，因为 $F_b(I)\subset I$ 且 $R(I)\subset Q$。取初始集、不变量集及安全集分别为
+$$
+\mathcal A=\{(0,0)\},\qquad
+\mathcal V=\{(x,a)\in X:|x-a|\le E\},\qquad
+\mathcal S=\{(x,a)\in X:|h(x)-h(a)|\le\varepsilon\}.
+$$
+它的三个前提逐项成立：初始差为零，故 $\mathcal A\subseteq\mathcal V$；对 $\mathcal V$ 中任一对及任一报告，上一段的 $y=F_b(a)$ 满足
+$$
+|F_b(x)-R(y)|\le|F_b(x)-y|+|y-R(y)|
+\le E L(y)+\delta(y)=E,
+$$
+故一步保持 $\mathcal V$；最后 $h$ 的 Lipschitz 界及 $dE/4\le\varepsilon$ 给 $\mathcal V\subseteq\mathcal S$。既有定理于是给出从 $\mathcal A$ 经 $\mathcal R$ 的自反传递闭包可达的每个状态均在 $\mathcal S$。再将该定理的安全集取为 $\mathcal V$、用恒等包含 $\mathcal V\subseteq\mathcal V$，也直接得到每个可达状态在 $\mathcal V$ 中。每个有限报告词恰指定这样一条同报告路径；自反路径包含空词，此时两侧都是零、读出都是 $1/2$。这就同时给出所列全历史对数赔率界与读出界，无需量化后的 $T_b$ 自身收缩。
+
+最后计数。相邻正箱只共享一个端点；从零开始，每箱增加恰好 $n_k$ 个正点，反射后正负部分只共享零。因此
+$$
+|Q|=1+2\sum_{k=0}^{m-1}n_k
+\le1+2m+2\sum_{k=0}^{m-1}\frac1{\delta(k)},
+$$
+这里用了 $\lceil u\rceil\le u+1$ 及 $\ell_k\le1$。记
+$$
+C_k=\cosh(\max\{k-E,0\})\ge1.
+$$
+直接通分给出所需的精确恒等式与上界：
+$$
+\frac1{1-L(k)}
+=1+\frac{\eta}{2r\bigl(r+(1-r)C_k\bigr)}
+\le1+\frac1{rC_k}.
+$$
+最后一步等价于 $\eta C_k\le2r+2(1-r)C_k$，两边之差为 $2r+C_k>0$。于是，以 $\operatorname{sech}u=1/\cosh u$ 记倒双曲余弦，有
+$$
+\sum_{k=0}^{m-1}\frac1{\delta(k)}
+\le\frac mE+\frac1{Er}\sum_{k=0}^{m-1}
+\operatorname{sech}(\max\{k-E,0\}).
+$$
+当 $m=1$ 时只有首项；一般情形前两项至多为二。对 $k\ge2$，$E\le1$ 给 $\max\{k-E,0\}\ge k-1$，而 $\cosh u\ge e^u/2$，故尾项至多 $2e^{-(k-1)}$。由几何级数及 $e>2$，
+$$
+\sum_{k=0}^{m-1}\operatorname{sech}(\max\{k-E,0\})
+\le2+2\sum_{j=1}^{\infty}e^{-j}
+=2+\frac2{e-1}<4.
+$$
+$e>2$ 可直接用钉版 Mathlib [`ExponentialBounds.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Complex/ExponentialBounds.lean) 的 `Real.exp_one_gt_two`。对正数 $u=(1-r)/r$，用 [`Real.log_le_sub_one_of_pos`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Basic.lean) 的 $\log u\le u-1$，有
+$$
+m\le B+1\le\frac{1-r}{r}\le\frac1r.
+$$
+所以
+$$
+\sum_{k=0}^{m-1}\frac1{\delta(k)}\le\frac mE+\frac4{Er},\qquad
+|Q|\le1+2m+\frac{2m}E+\frac8{Er}.
+$$
+乘以正数 $Er$，再用 $m\le1/r$、$E\le1$ 及 $Er<1/2$，得到
+$$
+Er|Q|\le Er+2E+10<14.
+$$
+因而陈述中的非严格界成立，所有向上取整、最后一段箱长与共享端点均已计入，状态数没有剩余的对数因子。
+
+为明确同阶结论的常数与量词，现固定 $p$ 和 $0<\varepsilon<\Delta$。取命题159.1允许的固定正整数 $a_*,b_*$，使
+$$
+L_*=h(b_*\lambda)-h(-a_*\lambda/2)>2\varepsilon.
+$$
+沿用该命题的常数，只把整数下标改写以区别网格状态和单次报告：
+$$
+\begin{aligned}
+D_j&=\kappa^j-\kappa^{-j},& M_*&=L_*-2\varepsilon,\\
+C_*&=d\,a_*D_{a_*+b_*},&
+K_*&=\frac d4(2b_*D_{b_*}+a_*D_{a_*}),\\
+c_*&=\frac{M_*}{2C_*}>0,&
+r_*&=\min\!\left\{\frac14,\frac{M_*}{2K_*}\right\}>0.
+\end{aligned}
+$$
+命题159.1在完全相同的先验、先发射再翻转顺序、逐有限词下一报告损失以及静态精确实数表约定下，已对每一个有限确定性观察者证明 $|S|\ge c_*/r$（$0<r<r_*$）；其观察者并不限于网格。本命题给出可行网格，因此在同一范围内
+$$
+\frac{c_*}{r}\le N_{\min}^{(r)}(\varepsilon)\le\frac{14}{Er}.
+$$
+$c_*,r_*,E$ 在 $p,\varepsilon,a_*,b_*$ 固定后均不随 $r$ 或观察者变化，这正是所述 $\Theta_{p,\varepsilon}(1/r)$。另一方面，$h(x)\in(p,1-p)$ 给 $|h(x)-1/2|\le\Delta$，一个恒定状态即处理 $\varepsilon\ge\Delta$；非空状态集至少有一个状态，故该范围的最小值恰为一。证毕。
+
+不变量距离关系与量化误差共同闭合的成熟背景可见 G. Pola、A. Girard、P. Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)，定理4.1：它在连续时间控制系统的增量渐近稳定假设下，以 $\beta(\varepsilon,\tau)+\mu+\eta/2\le\varepsilon$ 构造近似双模拟关系。该文参数及时间假设不同，不承担这里的 $14/(Er)$ 计数。W. Ren、D. V. Dimarogonas，*Logarithmic Quantization based Symbolic Abstractions for Nonlinear Control Systems*，[arXiv:2011.12811](https://arxiv.org/abs/2011.12811)，定理1建立控制系统抽象的反馈精化关系；它不直接给出本命题固定的、仅由报告驱动的确定性逐词观察者保证。G. Pagès、A. Sagna，*Improved error bounds for quantization based numerical schemes for BSDE and nonlinear filtering*，[arXiv:1510.01048](https://arxiv.org/abs/1510.01048)，定理6.3在其局部 Lipschitz、分布与矩条件下给出有限视界滤波量化误差，界依赖视界和观测似然归一化因子；不能把它替换为本命题对任意长度、任意稀有有限词的同一误差界。这里的模型专属上界由上述局部校准、内部舍入和计数普通推导给出，不作优先性或文献穷尽断言。
+
+命题154.1讨论固定 $(p,r)$ 时的 $\varepsilon\downarrow0$；命题159.1与本命题合成的是固定 $(p,\varepsilon)$、$0<\varepsilon<\Delta$ 时的 $r\downarrow0$。这两个分开的极限不推出联合 $\Theta(1/(r\varepsilon))$ 定律、参数一致的下界常数或极限交换。本命题不优化常数，不对 $\varepsilon=0$ 或 $r=0$ 给出网格结论，也不提供随 $p$、$\varepsilon$ 同时变化的一致同阶下界。
+
+所计成本始终是全部演化观察者状态的基数；若使用时钟、档案或种子，其全部演化取值都须计入状态。精确 $x_w$ 只出现在证明中的比较轨迹，不是观察者寄存器；有限网格的实数标签、更新表和输出表静态存在。基数与标记状态所需的位数不同，本结论没有给出有限位表编码、精确指数求值算法、最少位数或总实现成本。保证涵盖每一个正 Born 质量的有限词，无论多稀有；它不是典型、平均或几乎处处保证，也不需要某个无限词具有正概率。原仪器在 $r=0$ 时各非空报告分支已是测量制备操作，生成器始终只有两个经典隐藏状态；这里的状态阶不推出物理熵界、量子优势、相干性边界或关于普遍经典实在的结论。
+
+## 追加锚（本行以下为增补区）

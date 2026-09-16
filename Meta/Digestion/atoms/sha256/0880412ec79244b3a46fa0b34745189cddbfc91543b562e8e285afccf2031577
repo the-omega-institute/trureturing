@@ -1,0 +1,2 @@
+这里 $\lambda(p)\mid p$ 等价于“每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$”，是 Novák–Carmichael 数的标准判据，参见 Alexander Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，第 2 节引理 1，[arXiv:1706.07343v1](https://arxiv.org/html/1706.07343v1)。下面证明本条所需的等价及其与观察核条件的联系。
+
