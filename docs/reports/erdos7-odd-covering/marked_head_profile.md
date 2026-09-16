@@ -3782,3 +3782,245 @@ admitted prefix has positive probability of N=1, so that theorem's
 finite-time disappearance cannot be transferred to this recursion.
 The valid reduction is the explicit finite observation above. Neither
 (FL3) nor (FL4) alone proves positive final residual or settles #7.
+
+## Saturated low labels and arbitrary 3/5/7 heights
+
+Fix P={3,5,7}, h=(2,1,1), a nonempty low survivor carrier
+Omega modulo 315, and one probability mu on Omega. Let lambda extend
+mu by independent uniform higher prime digits, up to the original
+family's arbitrary finite heights. The following transfer preserves
+every original modulus and works for nonuniform mu. The separate
+ambient-density estimate below requires uniform mu.
+
+For J contained in P, put
+
+    D_J={d dividing 315 : v_p(d)=h_p for every p in J}.
+
+Every higher original modulus has the unique representation
+
+    m=d product_(p in J) p^e_p,
+    J={p:v_p(m)>h_p}, e_p=v_p(m)-h_p>=1,
+    d=product_p p^min(v_p(m),h_p) in D_J.                 (SH1)
+
+Distinct tuples (J,e,d) remain distinct original labels even when they
+project to the same d. A test block at fixed (J,e) chooses one low
+residue for each d in D_J; different e may choose different low tests.
+The seven nonempty restricted families have 4,6,6,2,2,3,1 labels,
+in the order {3},{5},{7},{3,5},{3,7},{5,7},{3,5,7}.
+
+For their complete low test families define
+
+    M_J=max_A E_mu A,        C_JK=max_(A,B) E_mu AB,
+    H_mu(t)=max_A E_mu(A-t)_+,  A in the empty-J family.
+
+The two choices in C_JK are independent choices from their respective
+families. In particular C_JJ=max_A E_mu A^2: Cauchy--Schwarz gives
+the upper bound and A=B attains it. Include the unit divisor in the
+empty-J family, so every complete low or full test load is at least one.
+
+### The eight-type moment kernel
+
+For each p let
+
+    alpha_p=sum_(e>=1)p^-e=1/(p-1),
+    beta_p=sum_(e,f>=1)p^-max(e,f)=(p+1)/(p-1)^2,
+    a_J=product_(p in J)alpha_p,
+    K_JK=product_(p in J symmetric_difference K)alpha_p
+          product_(p in J intersection K)beta_p.         (SH2)
+
+Here the set K in the subscripts is distinct from the matrix K.
+The matrix is the tensor product over p=3,5,7 of
+[[1,alpha_p],[alpha_p,beta_p]]. Its local pairs (alpha,beta) are
+(1/2,1), (1/4,3/8), and (1/6,2/9). Finite physical heights use
+the corresponding finite sums, which are bounded by these limits.
+
+Write an actual full test load as L=A0+U, where U contains exactly
+the higher labels. Then, for the same lambda,
+
+    E_lambda U <= r=sum_(J nonempty)a_J M_J,
+    E_lambda A0 U <= c=sum_(J nonempty)a_J C_empty,J,
+    E_lambda U^2 <= s=sum_(J,K nonempty)K_JK C_JK,
+    E_lambda L^2 <= C_empty,empty+2c+s.                  (SH3)
+
+To prove this, condition on the low point. Saturation in (SH1) means
+the low class already fixes all h_p low digits at every p in J.
+One higher label therefore contributes its low indicator times
+product p^-e_p. Two higher cylinders at a common prime are either
+incompatible or nested, so their joint probability is at most
+p^-max(e_p,f_p). Different prime coordinates are independent under
+lambda. Sum these bounds over the complete original tuples and use
+M_J and C_JK. This proves (SH3) for every finite height without
+assuming independence between overlapping classes. The square sum
+is ordered. Its different terms need not have simultaneous maximizers.
+
+For every real t and u>0 the elementary pointwise bounds
+
+    (A0+U-t)_+ <= (A0-(t-u))_+ +(U-u)_+,
+    (U-u)_+ <= U,          (U-u)_+ <= U^2/(4u)
+
+give the uniform-in-height profile transfer
+
+    E_lambda(L-t)_+
+      <= inf_(u>0) [H_mu(t-u)+min(r,s/(4u))].            (SH4)
+
+H_mu is defined on all real thresholds. Since A0>=1, its extension
+below one is H_mu(t)=M_empty-t. Since A0<=12, for t>12 the choice
+u=t-12 gives the simpler min(r,s/(4(t-12))).
+
+With the low projected residues fixed, every higher test prefix may
+also be centered at zero. Conditional on the low point and the other
+prime coordinates, the indicators then form a nested family with
+their prescribed probabilities. Such a comonotone coupling maximizes
+every increasing convex cost of a nonnegative weighted sum. Successive
+centering in the three coordinates preserves the preceding centerings;
+CRT realizes each resulting test residue without changing its low
+projection. This comparison concerns lambda. It moves no original
+forbidden class and makes no assertion about concentration after
+conditioning on those forbidden classes.
+
+### Actual deletion and the supported probability
+
+Let F avoid all actual higher forbidden classes, q=lambda(F), and
+nu=lambda(.|F). Completing missing test labels only adds nonnegative
+terms, so their expected forbidden count is at most r and q>=1-r.
+For uniform mu write delta=|Omega|/315. The existing density theorem
+(CM8) in the Problems dossier then also gives delta*q>=53/432.
+Consequently the following valid lower denominators are
+
+    q_* = max(53/(432 delta),1-r)  for uniform mu;
+    q_* = 1-r                    for any mu with r<1.
+
+For the same lambda, F and nu,
+
+    E_nu L^2 <= 1+(C_empty,empty-1+2c+s)/q_*,
+    E_nu(L-t)_+ <=
+      inf_(u>0)[H_mu(t-u)+min(r,s/(4u))]/q_*.            (SH5)
+
+The square uses L^2-1>=0 before conditioning; its numerator is
+nonnegative, so replacing q by q_* preserves the upper-bound direction.
+The density alternative is unavailable for nonuniform low weights.
+If low normalization added a class or moved a redundant class into
+an effective position, nu is uniform on the strengthened family's
+survivors and merely supported on the original family's survivors.
+Only when Omega was the original low survivor set is it the original
+unmodified full survivor law. No step replaces nu's low marginal by mu.
+
+The adjacent certificate gives an explicit conditioning obstruction.
+Choose a class a modulo 9 of positive mu-mass eta in its N=86 head,
+and lift uniformly to period 945. Compare deletion of a modulo 27
+with deletion of a+9 modulo 27. Both have the same low projection
+and q=1-eta/3. For the fixed test 1+1_(x=a mod 27), the conditional
+hinges at one are 0 and eta/(3-eta), and the squares are 1 and
+1+3eta/(3-eta). Thus those compressed observations do not determine
+the conditional cost; the centering comparison cannot be carried
+through an unspecified deletion event.
+
+### Exact low geometry and stronger truncation constants
+
+For a normalized marked head, use its old45 carrier S and actual
+deletion vector b from (DV2). For I contained in {3,5}, let T_I
+be the complete old45 cofactor tests restricted to cofactors saturated
+at the primes in I. Set I=J intersect {3,5} and let
+
+    V_J=T_I times T_I   if 7 is not in J,
+    V_J={0} times T_I   if 7 is in J.
+
+For the uniform low315 law, with N=sum_x(6-b(x)), the globally unused
+seven digit gives the exact finite optimization
+
+    N M_J=max_((u,v) in V_J) sum_x[(6-b(x))u(x)+v(x)],
+    N C_JK=max_((u,v) in V_J,(w,z) in V_K)
+      sum_x[(5-b(x))u(x)w(x)+(u(x)+v(x))(w(x)+z(x))].   (SH6)
+
+Indeed, expand the product at each low45 point. Its seven-containing
+cross terms are at most uz+wv+vz; putting all such tests at the
+common unused digit attains all three simultaneously. This proves
+the product identity directly, without treating a bivariate product
+as convex. For weights w_x common to the surviving digits over x,
+multiply each summand by w_x and replace N by sum_x(6-b(x))w_x.
+Thus (SH6) also supplies costs on that single nonuniform law.
+
+There are useful explicit uniform bounds without optimizing (SH6).
+If Omega avoids a class at each of 3,5,7, every cylinder d dividing315
+obeys
+
+    delta mu(a mod d) <= (1/d) product_(p not dividing d)(1-1/p).
+
+Sum these bounds for D_J and for all ordered lcm intersections in
+C_JK, then apply (SH2). This yields
+
+    delta r<=103/720,  delta c<=7/9,
+    delta s<=713/945,  delta(2c+s)<=2183/945.
+
+The normalized heads also avoid an effective pure9 class disjoint
+from the pure3 class. In cylinders with v_3(d)=0 the surviving
+ternary proportion is therefore 5/9 rather than 2/3. For positive
+v_3(d) the previous worst-case cap remains valid. The strengthened
+result is
+
+    delta r<=97/720,   delta c<=34/45,
+    delta s<=16693/22680,
+    delta(2c+s)<=10193/4536.                             (SH7)
+
+For completeness, these sums have an independent product evaluation.
+For each p set rho_3=4/9, rho_5=1/5, rho_7=1/7 and
+
+    A_inf(p)=p/(p-1)-rho_p,
+    A_low(p)=sum_(a=0..h_p)p^-a-rho_p,
+    B_inf(p)=p(p+1)/(p-1)^2-rho_p,
+    B_low(p)=sum_(a=0..h_p)(2a+1)p^-a-rho_p,
+    D(p)=sum_(a=0..h_p)(a+1+1/(p-1))p^-a-rho_p.
+
+The right sides for delta r, delta c and delta s are respectively
+product A_inf-product A_low, product D-product B_low and
+product B_inf-2 product D+product B_low. This proves (SH7) by
+rational geometric sums. Compared with the previous ambient square
+error 733/252, the error falls by 3001/4536. With the identical
+density denominator 53/432 the saving is 6002/1113. This is a
+truncation-error improvement; it does not by itself improve the
+separate full357 square bound 3849/106 in (SD1).
+
+### Twelve cylinder caps for optimizing the low probability
+
+For arbitrary mu let m_d=max_a mu(a mod d), d dividing315, and set
+
+    gamma_d=product_(p:v_p(d)=h_p)p/(p-1)-1.
+
+For an ordered pair d,e, define gamma_de as the product of the
+following prime factors, minus one:
+
+    1                 if both exponents are below h_p,
+    p/(p-1)           if exactly one exponent equals h_p,
+    p(p+1)/(p-1)^2     if both exponents equal h_p.
+
+Grouping (SH3) by the original labels' low projections proves
+
+    R_high=sum_d gamma_d m_d,
+    Delta_square=sum_(d,e)gamma_de m_lcm(d,e),
+    q>=1-R_high,
+    E_lambda L^2<=Gamma_low+Delta_square.                (SH8)
+
+Here Gamma_low bounds the exact complete low square on this same mu.
+If R_high<1, the supported full357 probability satisfies
+
+    Gamma_nu <= 1+(Gamma_low-1+Delta_square)/(1-R_high).  (SH9)
+
+All twelve cylinder caps are maxima of linear functions of the low
+weights. They can therefore be optimized together with the exact
+low square using epigraph constraints; (SH9) permits a linear
+fractional transformation. The original high residues remain arbitrary.
+This establishes a finite optimization route at unrestricted 3/5/7
+heights, without importing uniform-density bounds into a changed law.
+
+`verify_saturated_height.py` reconstructs the adjacent
+`saturated_height_certificate.json` with exact standard-library arithmetic.
+It checks six finite height boxes and 384 kernel entries by direct
+exponent summation, both product and restricted-family evaluations
+of (SH7), the twelve/144 regrouped coefficients, and three actual CRT
+families of period 33075. The CRT cases check lifted moments, centering,
+hinges and conditioning; a separate period945 case checks the
+relative-position obstruction. The unrestricted-height conclusions
+follow from the ordinary arguments above, not from the finite cases.
+Run `python3 -I -O docs/reports/erdos7-odd-covering/verify_saturated_height.py`
+from the repository root. No new Lean declaration or unrestricted #7
+conclusion is supplied by this transfer.

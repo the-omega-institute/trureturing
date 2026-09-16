@@ -80,6 +80,19 @@ also satisfies `Gamma<=3849/106` by (SD1)--(SD6), using shared cell parameters
 and signed deletion energy. This improves `937/24` by `3473/1272`
 without a new tail cutoff.
 
+A [saturated-label transfer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#saturated-low-labels-and-arbitrary-357-heights)
+now connects finite315 geometry to arbitrary 3/5/7 heights. It retains
+the original exponent labels in seven restricted families and gives
+one eight-type moment kernel, a shifted-hinge bound, and conditioning
+on the actual higher forbidden classes. For normalized heads, the
+effective pure3/pure9 deletions reduce the ambient square error to
+`10193/4536`, a saving of `3001/4536` over the preceding truncation
+error. Twelve cylinder caps also yield a finite optimization route
+for a nonuniform low law, using its own survival bound `1-R_high`.
+These are ordinary all-height arguments with an exact rational
+certificate; the error saving alone does not improve `3849/106`
+or supply the missing generic tail continuation.
+
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family
