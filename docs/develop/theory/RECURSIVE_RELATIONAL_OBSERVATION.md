@@ -8424,3 +8424,734 @@ Finally, the point-mass input map from digit $K$ to coefficient $B$ is not norm-
 [^rro27-topology]: Daniel V. Tausk, *Weak\** topology for the space of finite measures on a topological space*, notes dated 17 January 2024, Definition 3.1, p. 5; Proposition 4.1 and its proof, p. 8; Corollary C.6 and §C.1, p. 55. These distinguish the continuous-test topology from the Banach weak topology and establish continuity of the Dirac embedding in the former topology. [Mathematical text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
 
 ## 追加锚（本行以下为增补区）
+## 28. All Radon measures, signed Borel convolution, and the boundary of uniqueness
+
+**Assumption 28.0 (Fixed carrier and exact finite multiplication).** Retain Definition 25.0 and the exact-fiber and exact-graph hypotheses of Assumption 25.1. Give $K$ its original compact digit topology, and give $\mathbb T=\mathbb R/\mathbb Z$ its original compact group topology. Fix
+$$
+t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+where $\infty$ is a separate formal parameter. Use the finite multiplication of Definition 25.8 and theorem 25.9. In particular, its rows $P^{(t)}_{x,y}$ are finite real signed measures, have mass one, are supported in the exact fiber $\Gamma(x,y)$, and satisfy
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}.
+$$
+Write
+$$
+S=\{x_m^+,x_m^-:m\ge1\},\qquad K^\circ=K\setminus S,\qquad \mathbb T^\circ=\mathbb T\setminus E,
+$$
+$$
+v_m=\delta_{x_m^+}-\delta_{x_m^-},\qquad
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E).
+$$
+The quantities $p_m,c_{m,n},\pi_\theta$ have the values belonging to this fixed parameter. All conclusions below are conditional on these exact carrier and graph hypotheses.
+
+**definition 28.1 (Measure spaces and bounded residual coordinates).** For a compact metric space $X$, let $M(X)$ be the real vector space of all finite real signed regular Borel measures, with
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \varepsilon_X(\mu)=\mu(X).
+$$
+There is no factor of one half in this norm. A Borel map $f:X\to Y$ has pushforward
+$$
+(f_\#\mu)(D)=\mu(f^{-1}(D)).
+$$
+We use the classical compact Riesz representation identification $M(X)=C(X)^*$; in particular, $M(X)$ is complete. Its weak-star topology is $\sigma(M(X),C(X))$, not the Banach weak topology $\sigma(M(X),M(X)^*)$. These conventions are those of [Daniel V. Tausk, *Weak\* topology for the space of finite measures on a topological space*, §2, Definition 3.1, Corollary C.6 and §C.1](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+Define
+$$
+\rho_t=\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For each positive integer $m$, define the Borel scalar function
+$$
+r_m(x)=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}(x)-p_m\mathbf1_{\{x_m^-\}}(x)\bigr).
+$$
+Thus each $r_m$ is supported on its specified two-point fiber.
+
+**theorem 28.2 (Uniform numerical bounds and actual maximizing rows).** For all positive integers $m,n$,
+$$
+1-\rho_t\le |d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+The residual functions are explicitly
+$$
+r_m(x)=\begin{cases}
+\mathbf1_{\{x_m^+\}}(x)+t^m\mathbf1_{\{x_m^-\}}(x),&|t|<1,\\
+t^{-m}\mathbf1_{\{x_m^+\}}(x)+\mathbf1_{\{x_m^-\}}(x),&|t|>1,\\
+\mathbf1_{\{x_m^-\}}(x),&t=\infty.
+\end{cases}
+$$
+The finite-parameter cases in this display exclude the formal parameter. Consequently,
+$$
+\sum_{m\ge1}|r_m(x)|\le1\qquad(x\in K).
+$$
+Furthermore,
+$$
+\sup_{\theta\in\mathbb T}\|\pi_\theta\|_{\mathrm{TV}}\le C_t,
+\qquad
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for finite $t\ge0$, at $(x_1^+,x_1^-)$ for finite $t<0$, and at $(0_K,0_K)$ for $t=\infty$.
+
+**Proof.** If $|t|<1$, direct substitution gives
+$$
+d'_m(1-p_m)=1,\qquad -d'_mp_m=t^m.
+$$
+If $|t|>1$, it gives
+$$
+d'_m(1-p_m)=t^{-m},\qquad -d'_mp_m=1.
+$$
+For the formal parameter these two quantities are zero and one. This proves the formulas for $r_m$. Since the split fibers are pairwise disjoint and the displayed coefficients have absolute value at most one, the sum bound follows.
+
+For $|t|<1$, the coboundary identity follows by substituting $d'_m=1-t^m$. For $|t|>1$, one has $d'_m=t^{-m}(1-t^m)$, and the character factors cancel in the quotient. For $\infty$, the quotient is $-1$. In both finite cases, $|d'_m|$ is of the form $|1-s^m|$ with $|s|=\rho_t<1$, so
+$$
+1-\rho_t\le1-\rho_t^m\le|1-s^m|\le1+\rho_t^m\le1+\rho_t.
+$$
+The formal case has absolute value one.
+
+At a split phase, for finite $t$,
+$$
+\|\pi_{E_m}\|_{\mathrm{TV}}=\frac{1+|t|^m}{|1-t^m|}.
+$$
+For $|t|<1$, the reverse triangle inequality bounds this by $(1+\rho_t^m)/(1-\rho_t^m)\le C_t$. For $|t|>1$, divide numerator and denominator by $|t|^m$ and apply the same argument to $t^{-1}$. All other phase slices are Dirac measures. The formal parameter also gives only Dirac slices.
+
+Rows with at least one non-split input are phase slices, and equal-sign split inputs give Dirac measures. For the remaining mixed row, theorem 25.9 gives
+$$
+M_{m,n}(t):=\|P^{(t)}_{x_m^+,x_n^-}\|_{\mathrm{TV}}
+=\frac{|t|^n|t^m-1|+|t^n-1|}{|t^{m+n}-1|}.
+$$
+The other mixed type has norm $M_{n,m}(t)$. When $r=|t|<1$, triangle and reverse triangle inequalities give the sign-independent estimate
+$$
+M_{m,n}(t)
+\le\frac{1+2r^n+r^{m+n}}{1-r^{m+n}}
+\le\frac{1+2r+r^2}{1-r^2}
+=\frac{1+r}{1-r}=C_t.
+$$
+This includes $t=0$. When $|t|>1$, multiplication by $|t|^{m+n}$ in the formula at $t^{-1}$ gives
+$$
+M_{m,n}(t)=M_{n,m}(t^{-1}),
+$$
+which reduces the estimate to the preceding case. Formal-parameter mixed rows are Dirac measures. This proves the bound for every row without a positivity assumption.
+
+For finite $t\ge0$,
+$$
+\|P^{(t)}_{0_K,x_1^+}\|_{\mathrm{TV}}
+=\frac{1+t}{|1-t|}=C_t.
+$$
+For finite $t<0$, the actual first mixed row simplifies to
+$$
+P^{(t)}_{x_1^+,x_1^-}
+=\frac{t}{t+1}\delta_{x_2^+}+\frac1{t+1}\delta_{x_2^-},
+$$
+whose norm is $(1+|t|)/|t+1|=C_t$. The denominator is nonzero by the parameter restriction. Finally, $P^{(\infty)}_{0_K,0_K}=\delta_{0_K}$. These are actual input pairs, proving attainment. QED.
+
+**theorem 28.3 (The inverse away from the split phases is a homeomorphism).** The restricted map
+$$
+H|_{K^\circ}:K^\circ\longrightarrow\mathbb T^\circ
+$$
+is a homeomorphism for the subspace topologies, and hence a Borel isomorphism. In particular,
+$$
+s(\theta)=\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m
+\end{cases}
+$$
+defines a Borel section $s:\mathbb T\to K$ with $H\circ s=\operatorname{id}_{\mathbb T}$.
+
+**Proof.** The no-adjacent-ones condition defines a closed subset of the compact product $\{0,1\}^{\mathbb N}$, so $K$ is compact and metrizable. The series defining $F$ converges uniformly, because the absolute values of its terms are bounded by a summable geometric sequence. Each partial sum is continuous. Thus $F$, and consequently $H$, is continuous.
+
+The exact-fiber assumption makes the restriction a continuous bijection. To prove continuity of its inverse, fix $\theta\in\mathbb T^\circ$ and an open neighborhood $U\subseteq K$ of $k_\theta$. The set $H(K\setminus U)$ is compact and therefore closed in $\mathbb T$. It does not contain $\theta$, since $H^{-1}(\{\theta\})=\{k_\theta\}$. Hence
+$$
+W=\mathbb T\setminus H(K\setminus U)
+$$
+is an open neighborhood of $\theta$, and $k_\eta\in U$ for every $\eta\in W\cap\mathbb T^\circ$. This proves the inverse continuity; it does not require $K^\circ$ to be compact.
+
+Both $E$ and $S$ are countable Borel sets. For a Borel set $D\subseteq K$, the inverse image of $D$ under $s$ is the union of the Borel subset of $\mathbb T^\circ$ obtained from the inverse homeomorphism and a subset of the countable set $E$. It is therefore Borel in $\mathbb T$. The section identity follows from the fiber definitions. Choosing the other branch at any subset of the split phases also gives a Borel section, although the displayed choice will remain fixed. QED.
+
+**theorem 28.4 (Setwise integration of uniformly bounded signed kernels).** Let $X,Y$ be compact metric spaces. Suppose that $Q_y\in M(X)$ for every $y\in Y$, that
+$$
+y\longmapsto Q_y(D),\qquad y\longmapsto |Q_y|(D)
+$$
+are Borel for every Borel $D\subseteq X$, and that $\sup_y\|Q_y\|_{\mathrm{TV}}\le B<\infty$. For $\eta\in M(Y)$ define
+$$
+I_Q\eta(D)=\int_Y Q_y(D)\,d\eta(y).
+$$
+Then $I_Q\eta$ is a finite signed regular Borel measure, depends linearly on $\eta$, and satisfies
+$$
+|I_Q\eta|(D)\le\int_Y|Q_y|(D)\,d|\eta|(y),\qquad
+\|I_Q\eta\|_{\mathrm{TV}}\le B\|\eta\|_{\mathrm{TV}}.
+$$
+For every bounded real Borel function $f$ on $X$, the function
+$$
+Qf(y)=\int_X f\,dQ_y
+$$
+is Borel and bounded, and
+$$
+\int_X f\,d(I_Q\eta)=\int_Y Qf\,d\eta.
+$$
+All these integrals are scalar signed-measure integrals.
+
+For finite signed measures $\mu\in M(X)$ and $\eta\in M(Y)$, their signed product measure is intrinsic and satisfies
+$$
+|\mu\otimes\eta|=|\mu|\otimes|\eta|.
+$$
+Every bounded Borel function on $X\times Y$ satisfies signed Fubini, with either integration order. The same assertion holds for finitely many factors.
+
+The setwise measurability and measurable Jordan-part conditions are the signed-kernel conditions appearing in [Riccardo Passeggeri, *On the extension and kernels of signed bimeasures and their role in stochastic integration*, Theorem 3.4(d)–(e′)](https://arxiv.org/html/2009.10657v2). The positive-measure Fubini theorem used below is [Stephan Tornier, *Haar Measures*, Theorem 1.11](https://arxiv.org/html/2006.10956v1).
+
+**Proof.** Each defining integrand is bounded by $B$, so it is integrable against every finite signed $\eta$. If $D_j$ are pairwise disjoint Borel sets, then
+$$
+Q_y\Bigl(\bigcup_{j=1}^N D_j\Bigr)\longrightarrow
+Q_y\Bigl(\bigcup_{j\ge1}D_j\Bigr),
+$$
+and all the expressions on the left have absolute value at most $B$. Dominated convergence against $|\eta|$ proves countable additivity of $I_Q\eta$.
+
+The set function
+$$
+R(D)=\int_Y|Q_y|(D)\,d|\eta|(y)
+$$
+is a finite positive Borel measure by monotone convergence, with $R(X)\le B\|\eta\|_{\mathrm{TV}}$. For every finite Borel partition $D=\bigsqcup_i D_i$,
+$$
+\sum_i|I_Q\eta(D_i)|
+\le\int_Y\sum_i|Q_y(D_i)|\,d|\eta|(y)
+\le R(D).
+$$
+Taking the supremum over these partitions proves the variation domination and norm bound.
+
+For completeness, every finite positive Borel measure on a compact metric space is regular. An open set is an increasing union of compact subsets, obtained from positive distance to its closed complement. The class of Borel sets admitting inner compact and outer open approximations is closed under complements. It is closed under countable unions: choose outer open approximations with summable errors; for inner approximation, first retain finitely many members of the union up to a small measure error and then take a finite union of their compact approximations. Thus this class contains the Borel sigma-algebra. Apply this argument to the positive and negative parts of $I_Q\eta$. This also shows why a merely Borel section in theorem 28.3 still produces regular measures here. The standard regularity statement is also [Tausk, Lemma 3.4 and Corollary 3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+For a simple Borel function $f$, measurability of $Qf$ and the integration identity follow by finite linearity. Every bounded real Borel function has uniformly convergent simple approximations $f_j$. Since
+$$
+|Q(f_j-f)(y)|\le B\|f_j-f\|_\infty,
+$$
+the functions $Qf_j$ converge uniformly to $Qf$. Passing to the limit on both sides proves the assertion for every bounded Borel $f$. Linearity and independence of any representation of $\eta$ as a difference of positive measures follow from the intrinsic scalar signed integral.
+
+For the product assertion, the four products of the Jordan parts define a finite signed measure whose value on a measurable rectangle is $\mu(A)\eta(B)$. Finite signed measures on the product sigma-algebra are determined by rectangles, by the pi-lambda theorem applied to their difference. Consequently any other positive-minus-positive decompositions produce the same measure, and this construction is bilinear.
+
+Alternatively, write
+$$
+\mu=h_\mu|\mu|,\qquad \eta=h_\eta|\eta|,
+$$
+where the measurable signs have absolute value one almost everywhere with respect to the corresponding variation measures. The product measure has density $h_\mu(x)h_\eta(y)$ with respect to $|\mu|\otimes|\eta|$. This proves the variation identity. A bounded Borel function is absolutely integrable against that positive product, so positive-measure Fubini applied with these sign densities proves signed Fubini. Compact metric spaces have countable bases, hence their product Borel sigma-algebra is their Borel product sigma-algebra. Repeating the argument proves the finite-factor version. QED.
+
+**theorem 28.5 (The Borel affine lift, including signed atom corrections).** For every Borel $D\subseteq K$, both
+$$
+\theta\longmapsto\pi_\theta(D),\qquad
+\theta\longmapsto|\pi_\theta|(D)
+$$
+are Borel. The formulas
+$$
+L_t\nu(D)=\int_{\mathbb T}\pi_\theta(D)\,d\nu(\theta),\qquad \nu\in M(\mathbb T),
+$$
+define a bounded linear map $L_t:M(\mathbb T)\to M(K)$ satisfying
+$$
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+H_\#L_t\nu=\nu.
+$$
+With the section of theorem 28.3, there is the actual total-variation-convergent formula
+$$
+L_t\nu=s_\#\nu+\sum_{m\ge1}p_m\nu(\{E_m\})v_m.
+$$
+In particular,
+$$
+(L_t\nu)(\{x_m^+\})=p_m\nu(\{E_m\}),\qquad
+(L_t\nu)(\{x_m^-\})=(1-p_m)\nu(\{E_m\}).
+$$
+No positivity of $p_m$ is required.
+
+**Proof.** For every Borel $D$,
+$$
+\pi_\theta(D)=\mathbf1_D(s(\theta))
++\sum_{m\ge1}\mathbf1_{\{E_m\}}(\theta)p_m v_m(D).
+$$
+At each phase the sum has at most one nonzero term, so this is a Borel function. The variation evaluation is
+$$
+|\pi_\theta|(D)=\begin{cases}
+\mathbf1_D(k_\theta),&\theta\notin E,\\
+|p_m|\mathbf1_D(x_m^+)+|1-p_m|\mathbf1_D(x_m^-),&\theta=E_m.
+\end{cases}
+$$
+It is Borel for the same reason. Theorem 28.2 and theorem 28.4 therefore construct $L_t$ with the asserted bound and regularity.
+
+For any finite signed measure, finite partitions give
+$$
+\sum_{m\ge1}|\nu(\{E_m\})|\le\|\nu\|_{\mathrm{TV}}.
+$$
+Also $|p_m|\le C_t$ by theorem 28.2. Thus
+$$
+\sum_{m\ge1}\|p_m\nu(\{E_m\})v_m\|_{\mathrm{TV}}
+\le2C_t\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+The displayed correction series converges in $M(K)$. Absolute scalar domination permits integration of the preceding Borel formula term by term and proves that its sum is exactly $L_t\nu$. Since $s$ chooses the negative branch, evaluating the series on the two singleton sets gives the claimed atom formulas.
+
+Finally, every $\pi_\theta$ has mass one and is supported on $H^{-1}(\{\theta\})$. Hence for every Borel $B\subseteq\mathbb T$,
+$$
+\pi_\theta(H^{-1}(B))=\mathbf1_B(\theta).
+$$
+Integrating proves $H_\#L_t\nu=\nu$. The construction uses setwise integration, not a total-variation Bochner integral. QED.
+
+**definition 28.6 (The original-circle measure algebra and the residual algebra).** On $M(\mathbb T)$ use the ordinary signed measure convolution
+$$
+(\nu*_{\mathbb T}\xi)(B)
+=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\theta+\eta)\,d\xi(\eta)\,d\nu(\theta).
+$$
+This is convolution of Borel measures on the original compact circle. It is not convolution on $\ell^1(\mathbb T_{\mathrm d})$. The usual measure-algebra convention is recalled in [Matthew Daws, *Characterising weakly almost periodic functionals on the measure algebra*, §2](https://arxiv.org/html/0904.0436v2).
+
+Let
+$$
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal C=M(\mathbb T)\oplus_1\mathcal S,
+$$
+with standard sequence vectors $e_m$ and
+$$
+(g*_+h)_k=\sum_{\substack{m,n\ge1\\m+n=k}}g_mh_n,
+$$
+$$
+(\nu,g)\diamond(\xi,h)=(\nu*_{\mathbb T}\xi,g*_+h),\qquad
+\|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$
+Cross products between the two summands are zero. In particular, $e_1*_+e_1=e_2$, and the first sequence coordinate of every residual product is zero.
+
+**theorem 28.7 (The integrated point kernel on all measures, with its sharp norm).** For every Borel $D\subseteq K$, the maps
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}(D),\qquad
+(x,y)\longmapsto|P^{(t)}_{x,y}|(D)
+$$
+are Borel on $K^2$. The exact pointwise formula is
+$$
+P^{(t)}_{x,y}
+=\pi_{H(x)+H(y)}
++\sum_{m,n\ge1}\frac{r_m(x)r_n(y)}{d'_{m+n}}v_{m+n}.
+$$
+At each input pair the sum has at most one nonzero term.
+
+For all $\mu,\eta\in M(K)$, the formula
+$$
+(\mu\star_t\eta)(D)
+=\int_K\int_K P^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+defines a bounded bilinear commutative operation on $M(K)$. Its outputs are finite signed regular Borel measures, and
+$$
+|\mu\star_t\eta|(D)
+\le\int_{K^2}|P^{(t)}_{x,y}|(D)\,d(|\mu|\otimes|\eta|)(x,y),
+$$
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad
+\|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+It satisfies
+$$
+\varepsilon_K(\mu\star_t\eta)=\varepsilon_K(\mu)\varepsilon_K(\eta),
+$$
+$$
+H_\#(\mu\star_t\eta)=(H_\#\mu)*_{\mathbb T}(H_\#\eta).
+$$
+It is the unique operation satisfying the displayed setwise kernel-integration law for every pair of measures and every Borel set. This assertion is not uniqueness from agreement on Dirac measures.
+
+The operation takes every pair of positive measures to a positive measure exactly when $t\in\{0,\infty\}$.
+
+**Proof.** The finite inverse basis formulas give, pointwise,
+$$
+\delta_x=\pi_{H(x)}+\sum_{m\ge1}\frac{r_m(x)}{d'_m}v_m,
+$$
+with at most one nonzero summand. Multiplying these two finite expressions, using the zero cross products and the coboundary identity of theorem 28.2, proves the displayed row formula.
+
+The base term is Borel in every set evaluation by theorem 28.5 and continuity of addition and $H$. Every scalar summand in the correction is Borel, so the pointwise finite countable sum is Borel. In particular, ordinary nonexceptional output phases use their singleton measure, exceptional phases use the specified signed slice, and the remaining corrections occur only on the countable Borel set $S\times S$.
+
+For variation measurability, outside $S\times S$ the row is exactly $\pi_{H(x)+H(y)}$, whose variation evaluations are Borel. On $S\times S$, its variation evaluation is obtained by replacing values at countably many Borel singleton input pairs by the variations of their actual finite rows. Such a replacement preserves Borel measurability. Thus both kernel hypotheses of theorem 28.4 hold, with bound $C_t$.
+
+Apply that theorem to the signed product measure $\mu\otimes\eta$ on $K^2$. It gives countable additivity, variation domination, finite total variation and regularity. Signed Fubini gives both displayed iterated-integral interpretations. It also proves independence from choices of positive-minus-positive decompositions. Bilinearity follows from intrinsic signed integration and bilinearity of the signed product measure. The symmetry of the finite rows, followed by signed Fubini, gives commutativity.
+
+The variation estimate proves the bilinear upper bound. Each attaining pair from theorem 28.2 consists of two norm-one Dirac measures, and their product is its actual row. Therefore the bilinear norm is exactly $C_t$.
+
+Every row has mass one, so integration with $D=K$ proves the mass identity. Every row is supported in the phase fiber of $H(x)+H(y)$ and has mass one; consequently
+$$
+P^{(t)}_{x,y}(H^{-1}(B))=\mathbf1_B(H(x)+H(y)).
+$$
+Integrating, and using the pushforward integration formula in each variable, proves the phase-convolution identity for every Borel $B$. Equality on all Borel sets also proves uniqueness under the stated integration contract.
+
+Finally, a real signed measure of mass one and total variation one is positive: its Jordan decomposition has negative mass zero. When $t\in\{0,\infty\}$, theorem 28.2 therefore makes every row positive, and integration against positive input measures preserves positivity. At every other parameter, $C_t>1$ and an attaining row has mass one but variation greater than one, so it is not positive. Its two positive Dirac inputs disprove positivity of the operation. QED.
+
+**theorem 28.8 (The full phase kernel and the bounded coordinate isomorphism).** The phase pushforward has precisely the kernel
+$$
+\ker H_\#
+=\left\{\sum_{m\ge1}b_mv_m:(b_m)_{m\ge1}\in\ell^1(\mathbb N_{>0})\right\}.
+$$
+Every such series converges in total variation, and
+$$
+\left\|\sum_{m\ge1}b_mv_m\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|b_m|.
+$$
+For $\mu\in M(K)$, define
+$$
+R_t\mu=(g_m)_{m\ge1},\qquad
+g_m=\int_K r_m\,d\mu
+=d'_m\bigl((1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})\bigr),
+$$
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu).
+$$
+Then $\Phi_t:M(K)\to\mathcal C$ is a bounded linear bijection with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+The bounds are
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},
+$$
+$$
+\|\Psi_t(\nu,g)\|_{\mathrm{TV}}
+\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(\nu,g)\|_\oplus.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}
+\le\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}}.
+$$
+
+**Proof.** Suppose first that $H_\#\mu=0$. If $D\subseteq K^\circ$ is Borel, theorem 28.3 implies that $H(D)$ is Borel in $\mathbb T^\circ$, hence in $\mathbb T$. Uniqueness of these fibers gives $H^{-1}(H(D))=D$, and therefore
+$$
+\mu(D)=(H_\#\mu)(H(D))=0.
+$$
+Thus the restriction of $\mu$ to $K^\circ$ is zero as a signed measure, and $\mu$ is concentrated on $S$. On each split fiber,
+$$
+\mu(\{x_m^+\})+\mu(\{x_m^-\})=(H_\#\mu)(\{E_m\})=0.
+$$
+Set $b_m=\mu(\{x_m^+\})$. Countability of $S$ and finite variation now give
+$$
+\mu=\sum_{m\ge1}b_mv_m,\qquad 2\sum_{m\ge1}|b_m|=\|\mu\|_{\mathrm{TV}}.
+$$
+Conversely, every such absolutely convergent series has zero phase pushforward, since $H_\#v_m=0$ and pushforward is a contraction. This proves the kernel description using the Borel inverse, not density of atomic measures.
+
+For arbitrary $\mu$, the simplified formulas in theorem 28.2 give
+$$
+\sum_{m\ge1}|g_m|
+\le\sum_{m\ge1}\bigl(|\mu(\{x_m^+\})|+|\mu(\{x_m^-\})|\bigr)
+=|\mu|(S)\le\|\mu\|_{\mathrm{TV}}.
+$$
+Also $\|H_\#\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}$, by the variation inequality for pushforward, or directly by taking preimages of finite partitions. Thus $\Phi_t$ is well-defined and has the forward bound.
+
+The lower bound on $|d'_m|$ proves absolute total-variation convergence of the inverse series and yields its stated estimate. On the phase lift, theorem 28.5 gives
+$$
+R_tL_t\nu=0.
+$$
+Indeed, each coordinate equals $d'_m((1-p_m)p_m-p_m(1-p_m))\nu(\{E_m\})=0$. Furthermore,
+$$
+H_\#(v_m/d'_m)=0,\qquad R_t(v_m/d'_m)=e_m.
+$$
+Boundedness of these maps permits passage through the absolutely convergent inverse series, proving $\Phi_t\Psi_t=\operatorname{id}_{\mathcal C}$.
+
+For the other composition, put $\nu=H_\#\mu$. The measure $\mu-L_t\nu$ has zero phase pushforward and hence is a split-difference series by the first part of the proof. Its positive-branch coefficient is
+$$
+\mu(\{x_m^+\})-p_m\nu(\{E_m\})
+=(1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})
+=\frac{g_m}{d'_m}.
+$$
+Thus $\Psi_t\Phi_t\mu=\mu$. Applying the inverse bound to $\Phi_t\mu$ proves the norm equivalence. QED.
+
+**theorem 28.9 (Multiplicativity on all measures and associativity).** The coordinate bijection is an algebra isomorphism:
+$$
+\Phi_t(\mu\star_t\eta)=\Phi_t\mu\diamond\Phi_t\eta
+\qquad(\mu,\eta\in M(K)).
+$$
+Consequently $\star_t$ is associative on all of $M(K)$, and
+$$
+(M(K),\star_t)\cong M(\mathbb T)\oplus\ell^1(\mathbb N_{>0})
+$$
+as real algebras with bounded maps in both directions. The norm
+$$
+N_t(\mu)=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1
+$$
+is complete, equivalent to total variation, and submultiplicative. The alternative norm $C_t\|\mu\|_{\mathrm{TV}}$ is also complete and submultiplicative. The unscaled total variation norm is submultiplicative exactly for $t\in\{0,\infty\}$.
+
+Writing $g=R_t\mu$ and $h=R_t\eta$, the full product formula is
+$$
+\mu\star_t\eta
+=L_t\bigl((H_\#\mu)*_{\mathbb T}(H_\#\eta)\bigr)
++\sum_{k\ge1}\frac{(g*_+h)_k}{d'_k}v_k.
+$$
+In particular, $L_tM(\mathbb T)$ and $\ker H_\#$ are closed ideals whose cross products vanish.
+
+**Proof.** First, circle convolution is a contractive associative commutative product on $M(\mathbb T)$. Contractivity follows by pushforward under addition from
+$$
+|\nu\otimes\xi|=|\nu|\otimes|\xi|.
+$$
+For a bounded Borel test function and three input measures, both bracketings of circle convolution are the integral of $f(\theta+\eta+\zeta)$ against the same signed product measure. Its absolute integral is bounded by the product of the three variation norms times $\|f\|_\infty$. Theorem 28.4 therefore justifies all changes of integration order and proves associativity; symmetry proves commutativity. Absolute summation proves the analogous assertions and norm bound for $*_+$. Hence $\diamond$ is associative, commutative and submultiplicative for $\|\cdot\|_\oplus$, and $\mathcal C$ is complete.
+
+The first coordinate of the desired multiplicativity is theorem 28.7. For a fixed positive integer $k$, the point-kernel formula and the identities used in theorem 28.8 give the exact scalar identity
+$$
+(R_tP^{(t)}_{x,y})_k
+=\sum_{\substack{m,n\ge1\\m+n=k}}r_m(x)r_n(y).
+$$
+The left side is a fixed finite linear combination of two singleton evaluations of the output measure. Consequently the defining setwise integration law permits this coordinate to pass through the integral. The sum on the right is finite. Signed Fubini and the product-function identity now give
+$$
+\begin{aligned}
+(R_t(\mu\star_t\eta))_k
+&=\int_{K^2}(R_tP^{(t)}_{x,y})_k\,d(\mu\otimes\eta)(x,y)\\
+&=\sum_{m+n=k}\left(\int_Kr_m\,d\mu\right)\left(\int_Kr_n\,d\eta\right)\\
+&=(g*_+h)_k.
+\end{aligned}
+$$
+This proves every residual coordinate for arbitrary signed measures, including non-atomic inputs. No approximation by atomic measures has been used.
+
+Since $\Phi_t$ is injective and $\diamond$ is associative, both bracketings of any triple product in $M(K)$ have the same image under $\Phi_t$ and are equal. Applying $\Psi_t$ to the coordinate product proves the full product formula. Its series converges absolutely because
+$$
+\sum_{k\ge1}\left\|\frac{(g*_+h)_k}{d'_k}v_k\right\|_{\mathrm{TV}}
+\le\frac{2}{1-\rho_t}\|g*_+h\|_1
+\le\frac{2}{1-\rho_t}\|g\|_1\|h\|_1.
+$$
+The norm $N_t$ is the pullback of the complete submultiplicative direct-sum norm. Its equivalence to total variation is theorem 28.8. The sharp bilinear bound gives
+$$
+C_t\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}}).
+$$
+When $C_t>1$, an attaining pair of unit-norm Dirac measures disproves submultiplicativity of the unscaled norm. When $C_t=1$, that norm is submultiplicative by theorem 28.7. Finally, the two coordinate summands are closed ideals with zero cross products, and their inverse images are exactly the two asserted ideals. QED.
+
+**theorem 28.10 (Atomic and non-atomic signed parts are linear projections).** Let $X$ be a compact metric space. Every $\mu\in M(X)$ has a unique decomposition
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},\qquad
+\mu_{\mathrm{at}}=\sum_{x\in X}\mu(\{x\})\delta_x,
+$$
+where the sum has at most countably many nonzero terms and converges in total variation, while $\mu_{\mathrm{na}}$ is non-atomic. Here non-atomic means that its variation measure has no atoms, not that it is absolutely continuous with respect to Haar measure. The two parts are mutually singular in variation and satisfy
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}+\|\mu_{\mathrm{na}}\|_{\mathrm{TV}}.
+$$
+Both assignments are bounded linear projections of norm at most one. Their ranges $M_{\mathrm{at}}(X)$ and $M_{\mathrm{na}}(X)$ are closed.
+
+On the circle, $M_{\mathrm{at}}(\mathbb T)$ is a convolution subalgebra, $M_{\mathrm{na}}(\mathbb T)$ is a convolution ideal, and
+$$
+(\nu*_{\mathbb T}\xi)_{\mathrm{at}}
+=\nu_{\mathrm{at}}*_{\mathbb T}\xi_{\mathrm{at}}.
+$$
+In particular,
+$$
+a:M(\mathbb T)\to\mathbb R,\qquad a(\nu)=\nu_{\mathrm{na}}(\mathbb T)
+$$
+is a bounded linear functional with $|a(\nu)|\le\|\nu\|_{\mathrm{TV}}$, and vanishes on every atomic measure. It is not asserted to be multiplicative. This classical measure-algebra decomposition is recalled in [Daws, §3, the paragraph immediately preceding Lemma 3.7](https://arxiv.org/html/0904.0436v2).
+
+**Proof.** For every positive integer $j$, there are only finitely many points with $|\mu(\{x\})|\ge1/j$, since any finite collection of them contributes its absolute masses to a variation bound. Thus
+$$
+A_\mu=\{x:\mu(\{x\})\ne0\}
+$$
+is countable and
+$$
+\sum_{x\in A_\mu}|\mu(\{x\})|\le\|\mu\|_{\mathrm{TV}}.
+$$
+The atomic series is therefore a measure in $M(X)$ and equals the restriction of $\mu$ to $A_\mu$. Its difference from $\mu$ is the restriction to $X\setminus A_\mu$. Since $|\mu|(\{x\})=|\mu(\{x\})|$, the latter restriction has zero variation on every singleton. The two restrictions are mutually singular, which proves the norm identity.
+
+On a compact metric space, a finite positive Borel measure with no singleton atoms has no atoms at all. Indeed, construct refining finite Borel partitions whose mesh tends to zero. If a Borel set were an atom of positive mass, in each partition exactly one cell would contain its full mass. These cells can be selected nested. Continuity from above then gives full positive mass to their intersection with the atom, while the vanishing mesh makes that intersection contain at most one point. This would be a singleton atom. Apply this argument to the variation of the non-atomic restriction.
+
+Linearity of the atomic part does not require the sets $A_\mu$ to be fixed as $\mu$ varies. For two measures, work on the countable union of their atomic sets. At every point, singleton evaluation is linear; the corresponding absolutely convergent atomic series is therefore linear as well. The non-atomic part is the difference from the identity and is consequently linear. The norm identity proves contractivity. Uniqueness follows because the non-atomic part has zero singleton masses and an atomic measure is determined by its singleton masses. The projection identities and closed ranges follow.
+
+On $\mathbb T$, the convolution of two atomic measures is the absolutely convergent series of products of their atom coefficients at summed phases, so it remains atomic. If $\nu$ is non-atomic and $\xi$ is arbitrary, signed Fubini gives, for each $\theta$,
+$$
+(\nu*_{\mathbb T}\xi)(\{\theta\})
+=\int_{\mathbb T}\nu(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+Thus this convolution is non-atomic. Commutativity handles the other order. Expanding the two atomic/non-atomic decompositions proves the atomic-part convolution identity. Finally, $a$ is the composition of the non-atomic projection and the mass functional, both contractive linear maps. QED.
+
+**theorem 28.11 (The Haar lift and the proper atomic completion).** Let $\lambda$ be normalized Haar measure on the original circle. Its existence as a regular probability measure follows from the classical Haar theorem; see [Tornier, Definition 2.1, Theorem 2.2 and Proposition 2.9](https://arxiv.org/html/2006.10956v1). Then
+$$
+\mathfrak m=L_t\lambda=s_\#\lambda
+$$
+is a non-atomic probability measure on $K$, independent of $t$ and independent of the branch choices at the split phases. It satisfies
+$$
+H_\#\mathfrak m=\lambda,\qquad R_t\mathfrak m=0,\qquad
+\mathfrak m\star_t\mathfrak m=\mathfrak m.
+$$
+The atomic measures form a closed proper subalgebra
+$$
+M_{\mathrm{at}}(K)\cong\ell^1(K_{\mathrm d})\subsetneq M(K),
+$$
+with the isometric atomic embedding and the multiplication of Section 27. Under $\Phi_t$, this entire atomic subalgebra corresponds to
+$$
+\mathcal C_{\mathrm{at}}=M_{\mathrm{at}}(\mathbb T)\oplus\mathcal S.
+$$
+For every atomic signed measure $\alpha$ on $K$, the exact individual distance is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}}.
+$$
+Consequently,
+$$
+\operatorname{dist}_{\mathrm{TV}}(\mathfrak m,M_{\mathrm{at}}(K))=1.
+$$
+The distance to each atomic probability measure is two. Thus the distance one is a distance to the atomic signed subspace, not the distance to every member of that subspace.
+
+**Proof.** Translation invariance makes all singleton Haar masses equal. For any positive integer $N$, selecting $N$ distinct points bounds this common mass by $1/N$, so it is zero. Hence $\lambda$ is non-atomic by theorem 28.10, and $\lambda(E)=0$. The atom-correction formula of theorem 28.5 reduces to $L_t\lambda=s_\#\lambda$. This is a probability measure. For $x\in K$,
+$$
+\mathfrak m(\{x\})=\lambda(s^{-1}(\{x\}))\le\lambda(\{H(x)\})=0,
+$$
+so it is non-atomic. Changing the section only on $E$ does not change its pushforward of $\lambda$, and the formula has no remaining parameter dependence.
+
+The lift and residual identities have already been proved. Translation invariance also gives, for every Borel $B$,
+$$
+(\lambda*_{\mathbb T}\lambda)(B)
+=\int_{\mathbb T}\lambda(B-\theta)\,d\lambda(\theta)=\lambda(B).
+$$
+The coordinate product then proves the idempotent identity for $\mathfrak m$.
+
+Theorem 28.10 identifies atomic measures isometrically with absolutely summable point coefficients and proves their closedness. For atomic inputs, their signed product measure is itself an absolutely summable atomic measure on $K^2$. Thus the setwise integral in theorem 28.7 is the total-variation-convergent series
+$$
+\sum_{x,y}\mu(\{x\})\eta(\{y\})P^{(t)}_{x,y},
+$$
+whose sum of term norms is at most $C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}$. It remains atomic and is exactly the discrete convolution extension. If $\mu$ is atomic, its phase pushforward is atomic. Conversely, if $\nu$ is atomic, $L_t\nu$ is atomic by its defining slices and absolute convergence, and the residual inverse series is atomic. This proves the assertion about $\mathcal C_{\mathrm{at}}$.
+
+For the distance formula, choose a countable Borel set supporting the variation of $\alpha$. The non-atomic measure $\mathfrak m$ assigns that set mass zero. Therefore $\mathfrak m$ and $|\alpha|$ are mutually singular and
+$$
+|\mathfrak m-\alpha|=\mathfrak m+|\alpha|.
+$$
+Taking total mass proves the individual formula; its infimum is one, attained at the zero atomic measure. Atomic probabilities have norm one, giving distance two.
+
+Finite atomic measures are dense in $M_{\mathrm{at}}(K)$ by truncation of absolutely convergent series, and their closure in $M(K)$ is precisely this closed proper subspace. Hence the total-variation completion of the finite coefficient space is still $\ell^1(K_{\mathrm d})$. Passing to all of $M(K)$ enlarges the permitted measures; it is not that completion. The same conclusion holds for the equivalent norms in theorem 28.9. QED.
+
+**theorem 28.12 (Setwise Borel measurability does not give norm-Borel measurability).** The maps
+$$
+x\longmapsto\delta_x\in M(K),\qquad
+\theta\longmapsto\pi_\theta\in M(K)
+$$
+are not Borel maps when the target is given its total variation norm topology. Nevertheless, their Borel-set evaluations are Borel. Moreover, the map $\theta\mapsto\pi_\theta$ is not strongly measurable for normalized Haar measure in the total variation norm, and $L_t\lambda$ cannot be interpreted as its total-variation Bochner integral.
+
+**Proof.** Distinct Dirac measures have total variation distance two. Also, for $\theta\ne\eta$, contraction of phase pushforward gives
+$$
+\|\pi_\theta-\pi_\eta\|_{\mathrm{TV}}
+\ge\|\delta_\theta-\delta_\eta\|_{\mathrm{TV}}=2.
+$$
+For any subset $A\subseteq\mathbb T$, the norm-open set
+$$
+O_A=\bigcup_{\theta\in A}B_{\mathrm{TV}}(\pi_\theta,1)
+$$
+has inverse image exactly $A$ under the phase-slice map. The circle has non-Borel subsets, so this map cannot be norm-Borel. The same argument applies to the Dirac map on $K$. Indeed, $K$ has cardinality continuum because it maps onto the circle and is a subspace of $\{0,1\}^{\mathbb N}$; its Borel sigma-algebra has cardinality at most continuum, whereas its power set is larger. The scalar set evaluations were proved Borel in theorem 28.5, and are immediate for Dirac measures.
+
+A strongly measurable Banach-valued function is, outside a null set, contained in the closure of the countable union of the ranges of its simple approximations, hence in a norm-separable set. A norm-separable set contains at most countably many members of a family whose distinct elements are separated by distance at least two. Thus strong measurability of $\theta\mapsto\pi_\theta$ would force a full Haar-measure set of phases to be countable. This contradicts non-atomicity of $\lambda$. Since Bochner integrability requires strong measurability, the proposed Bochner interpretation is impossible. The setwise construction of $L_t\lambda$ is unaffected. QED.
+
+**theorem 28.13 (Explicit nonuniqueness despite agreement on the entire atomic algebra).** For each $\tau\in\mathbb R$, define
+$$
+U_\tau(\nu,g)=(\nu,g+\tau a(\nu)e_1)
+\qquad((\nu,g)\in\mathcal C),
+$$
+where $a$ is the bounded linear functional of theorem 28.10. Then $U_\tau$ is a bounded linear isomorphism with inverse $U_{-\tau}$ and
+$$
+\|U_\tau\|\le1+|\tau|,\qquad \|U_\tau^{-1}\|\le1+|\tau|.
+$$
+Define the transported product
+$$
+z\diamond_\tau w
+=U_\tau^{-1}\bigl(U_\tau z\diamond U_\tau w\bigr).
+$$
+This is a bounded associative commutative bilinear product. It agrees with $\diamond$ on the whole subalgebra $\mathcal C_{\mathrm{at}}$, has the same first-coordinate convolution, and preserves the first-coordinate mass character.
+
+The corresponding products on $M(K)$,
+$$
+\mu\star_{t,\tau}\eta
+=\Psi_t\bigl(\Phi_t\mu\diamond_\tau\Phi_t\eta\bigr),
+$$
+are bounded associative commutative extensions of the entire atomic algebra. They preserve mass and the usual phase convolution, and satisfy the same point rows
+$$
+\delta_x\star_{t,\tau}\delta_y=P^{(t)}_{x,y}
+\qquad(x,y\in K).
+$$
+Nevertheless they are pairwise distinct as $\tau$ varies. For $z=(\lambda,0)$,
+$$
+z\diamond_\tau z=(\lambda,\tau^2e_2-\tau e_1),
+$$
+and therefore
+$$
+\mathfrak m\star_{t,\tau}\mathfrak m
+=\mathfrak m-\frac{\tau}{d'_1}v_1+\frac{\tau^2}{d'_2}v_2.
+$$
+For every nonzero $\tau$, this product fails the setwise integration contract of theorem 28.7 and is not a positive operation.
+
+**Proof.** Linearity of $a$ proves linearity of $U_\tau$. Since $U_\tau$ does not change the first coordinate, applying $U_{-\tau}$ subtracts exactly the same correction and proves the inverse formula. The bound follows from
+$$
+\|U_\tau(\nu,g)\|_\oplus
+\le\|\nu\|_{\mathrm{TV}}+\|g\|_1+|\tau|\,|a(\nu)|
+\le(1+|\tau|)\|(\nu,g)\|_\oplus.
+$$
+The inverse has the identical bound.
+
+Transport through a linear isomorphism preserves bilinearity, associativity and commutativity. Explicitly, applying $U_\tau$ to either bracketing of a triple product gives the corresponding bracketing of $U_\tau z\diamond U_\tau w\diamond U_\tau u$. Also,
+$$
+\|z\diamond_\tau w\|_\oplus
+\le(1+|\tau|)^3\|z\|_\oplus\|w\|_\oplus.
+$$
+Thus the transported product is bounded. Its complete submultiplicative norm can be taken to be $\|U_\tau z\|_\oplus$.
+
+For $z=(\nu,g)$ and $w=(\xi,h)$, direct expansion gives
+$$
+\begin{aligned}
+z\diamond_\tau w
+=\bigl(\nu*_{\mathbb T}\xi,\;&g*_+h
++\tau a(\nu)(e_1*_+h)
++\tau a(\xi)(g*_+e_1)\\
+&+\tau^2a(\nu)a(\xi)e_2
+-\tau a(\nu*_{\mathbb T}\xi)e_1\bigr).
+\end{aligned}
+$$
+Only linearity of $a$ is used; no multiplicativity assumption about it is needed. This formula proves directly that the first coordinate remains the ordinary circle convolution. Since its mass is the product of the two input masses, the mass character is preserved.
+
+For every member of $\mathcal C_{\mathrm{at}}$, its first coordinate is atomic and hence has $a$ equal to zero. Thus $U_\tau$ is the identity on this whole subspace. The product of two such elements remains in $\mathcal C_{\mathrm{at}}$, because atomic circle measures form a convolution subalgebra. The inverse shear is therefore also the identity on their product, proving agreement on the full atomic subalgebra, not merely on finite sums or Dirac pairs.
+
+The bounded coordinate isomorphisms transport these properties to $M(K)$. For example, an explicit sufficient total variation bound is
+$$
+\|\mu\star_{t,\tau}\eta\|_{\mathrm{TV}}
+\le\frac{8(1+|\tau|)^3}{1-\rho_t}
+\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+No sharpness is claimed for this estimate. Every Dirac measure belongs to the atomic subalgebra, giving the stated identical point rows.
+
+Finally, $a(\lambda)=1$ and $\lambda*_{\mathbb T}\lambda=\lambda$. Hence
+$$
+U_\tau z=(\lambda,\tau e_1),\qquad
+U_\tau z\diamond U_\tau z=(\lambda,\tau^2e_2).
+$$
+Applying the inverse shear gives the asserted Haar test. Its first residual coefficient is $-\tau$, so distinct real parameters give distinct products, including parameters with opposite signs.
+
+The original setwise integral of the same rows against $\mathfrak m\otimes\mathfrak m$ is $\mathfrak m$, by theorem 28.11. In contrast, for $\tau\ne0$,
+$$
+(\mathfrak m\star_{t,\tau}\mathfrak m)(\{x_1^+\})=-\frac{\tau}{d'_1}\ne0,
+$$
+whereas $\mathfrak m(\{x_1^+\})=0$. Thus the sheared product fails that integration law on an actual Borel set. Moreover, the masses at $x_1^+$ and $x_1^-$ are nonzero opposites, because $\mathfrak m$ has no atoms and the second split fiber is disjoint from the first. One is negative. Therefore two positive input probabilities can have a nonpositive output. These sheared extensions are not probability-kernel integrations, even when their common point rows are probability measures. QED.
+
+**theorem 28.14 (The global joint weak-star obstruction remains).** No globally jointly continuous product
+$$
+M(K)\times M(K)\longrightarrow M(K)
+$$
+for the topology $\sigma(M(K),C(K))$ on each measure space can agree with the prescribed point rows. In particular, neither the integrated product nor any sheared extension can have this global joint weak-star continuity. This concerns weak-star continuity, not total variation boundedness or the Banach weak topology.
+
+**Proof.** The Dirac map from the original compact $K$ into $M(K)$ is weak-star continuous, because
+$$
+\int_K f\,d\delta_x=f(x)\qquad(f\in C(K)).
+$$
+This standard observation is [Tausk, Proposition 4.1 and its proof](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf). A globally jointly weak-star continuous product agreeing on Diracs would therefore make
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}
+$$
+continuous on $K^2$.
+
+The exact graph hypothesis gives
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\}.
+$$
+For each sign $s\in\{+,-\}$, membership of $(0_K,x_1^+,x_1^s)$ in the closure defining $\Gamma$ supplies a sequence of genuine natural-number input pairs with
+$$
+Z(a_j^s)\longrightarrow0_K,\qquad
+Z(b_j^s)\longrightarrow x_1^+,\qquad
+Z(a_j^s+b_j^s)\longrightarrow x_1^s.
+$$
+These are simultaneous approximations of the input pair and its actual finite sum. Finite-core consistency gives
+$$
+P^{(t)}_{Z(a_j^s),Z(b_j^s)}=\delta_{Z(a_j^s+b_j^s)}.
+$$
+Consequently the two output sequences have weak-star limits $\delta_{x_1^+}$ and $\delta_{x_1^-}$. They are distinct: a digit coordinate at which the two points differ is a continuous function separating the limits. Interleaving the input sequences still gives convergence to $(0_K,x_1^+)$, but the corresponding continuous-test integrals have two different subsequential limits. The point-row map is therefore discontinuous there, independently of the parameter and independently of whether its value at that pair is itself a Dirac measure. This contradicts the proposed global joint continuity. QED.
+
+## 追加锚（本行以下为增补区）
