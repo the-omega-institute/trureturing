@@ -56,6 +56,34 @@ unresolved lcm values to 10395, 12285, and 17325 in that finite-certificate
 route. We reuse it as a citation-only boundary and do not add a bind-only
 Lean wrapper.
 
+### Finite lcm bridge through 17325
+
+The external lcm theorem reduces the next finite search to odd abundant or
+perfect lcm values above 10000. Exact integer enumeration of the interval
+`10001 ≤ N ≤ 17325` finds 14 odd abundant candidates. The existing restricted
+theorem (P1) excludes the candidates whose prime support lies in
+`{3,5,7,11}`; the degree-two tail theorem above excludes the candidates with
+one tail prime at least 37. The two remaining capacity rows are direct
+instances of the public source's kernel-checked `capacity_exclusion_int`
+theorem:
+
+\[
+\begin{array}{c|c|c|c}
+N&T&\text{non-}T\text{ capacity}&(N/\prod T)\prod_{d\in T}(d-1)\\
+15015&\{3,5,7,11,13\}&4568&5760\\
+16065&\{3,5,7,17\}&6687&6912
+\end{array}
+\]
+
+The exact candidate list, factorizations, and both strict inequalities are
+checked by the [finite bridge verifier](../docs/reports/erdos7-odd-covering/verify_lcm_10000_bridge.py)
+and its [fixed certificate](../docs/reports/erdos7-odd-covering/lcm_10000_bridge_certificate.json).
+Thus, combining the external theorem, (P1), the sparse-tail theorem, and the
+two public capacity instances, any hypothetical cover has lcm exactly
+`12285=3^3·5·7·13` or greater than `17325`. The residual value `12285` is a
+single finite branch, not an unrestricted proof; its four-prime support is
+outside the current sparse-tail cutoff and outside (P1).
+
 ### Reuse of the 5040 and divisor-sum work
 
 The connection to the project's 5040 work is the same finite prime-power
