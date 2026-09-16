@@ -375,6 +375,7 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
     difference = {}
+    judge_donor = None
     with cache_guard(root, shared=True):
         if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"], difference):
             metrics = {"save_disabled_reason": "unchanged"}
@@ -384,8 +385,22 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             inventory = snapshot_execution(root, layer, keys, staged / "data")
         elif layer == "judge":
             sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
-            from dotnet_producer import stage_seed
-            stage_seed(root, staged / "data", registry)
+            from dotnet_producer import stage_seed, unique_object
+            cached = root / spec["path"]
+            donor = None
+            if cached.exists():
+                try:
+                    previous = json.loads((cached / "manifest.json").read_text(), object_pairs_hook=unique_object)
+                    if (not isinstance(previous, dict) or previous.get("schema") != "lean-actions-seed-v1"
+                            or previous.get("partition") != keys["partition"] or previous.get("layer") != layer
+                            or not isinstance(previous.get("key"), str)
+                            or not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", previous["key"])):
+                        raise ValueError("judge donor identity mismatch")
+                    donor = cached / "data", files(cached / "data", expected=previous.get("files"))
+                except (OSError, ValueError, KeyError, TypeError) as error:
+                    judge_donor = {"status": "miss", "reason": str(error)}
+            retained = stage_seed(root, staged / "data", registry, donor=donor)
+            judge_donor = judge_donor or retained
             inventory = files(staged / "data")
         else:
             inventory = snapshot_files(root / spec["target"], staged / "data",
@@ -399,6 +414,8 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
     if difference:
         metrics["snapshot_reason"] = difference
+    if judge_donor is not None:
+        metrics["judge_donor"] = judge_donor
     (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
     return metrics
 
