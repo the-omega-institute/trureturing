@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bacc265ec62d8a19ced30318e5f2a23f7fbff26e5fbd49d0ae806c7f6e9e693b
+  normalized_sha256: sha256:bacc265ec62d8a19ced30318e5f2a23f7fbff26e5fbd49d0ae806c7f6e9e693b
+cas_ref: sha256:bacc265ec62d8a19ced30318e5f2a23f7fbff26e5fbd49d0ae806c7f6e9e693b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纤维费用常值时 Finset.sum_mul 提取共同指数因子，Real.log_mul 与 Real.log_exp 及正温度的非零条件化简给原有效费用式，再按条件费用定义相加得常值，仓内无冻结 GID。
+    previous_atom_id: 754a2aeffc230c763ea796da38879e10de97fd25350c104a2ea77bccbf9e71c6
+    next_atom_id: a214c7e24b8daabcd0151da6ea9a42f296d0c7ab5949935ac560186d149a4615

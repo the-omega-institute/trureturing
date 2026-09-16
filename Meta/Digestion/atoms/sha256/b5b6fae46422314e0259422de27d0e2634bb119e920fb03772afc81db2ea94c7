@@ -1,0 +1,24 @@
+**Classical valuation theorem.** If r is an odd prime, d,k are positive integers, and r divides F_d, then
+
+\[
+v_r(F_{dk})=v_r(F_d)+v_r(k).\tag{U.1}
+\]
+
+Also `v_5(F_t)=v_5(t)`. For r=2,
+
+\[
+v_2(F_t)=
+\begin{cases}
+0,&3\nmid t,\\
+1,&t\equiv3\pmod6,\\
+v_2(t)+2,&6\mid t.
+\end{cases}\tag{U.2}
+\]
+
+These are Lengyel's formulas as recorded in L. A. Medina and E. Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015), 265-271, Theorem 1.4, https://arxiv.org/abs/0910.2907 . Formula U.1 follows by applying the rank-based formula twice and subtracting the same initial valuation. It does not require that initial valuation to be one. The rank alpha(r) is the least positive d with r dividing F_d; the same source, Theorem 1.2, gives
+
+\[
+\alpha(r)\mid r-\left(\frac5r\right),\qquad r\ne2,5.
+\tag{U.3}
+\]
+

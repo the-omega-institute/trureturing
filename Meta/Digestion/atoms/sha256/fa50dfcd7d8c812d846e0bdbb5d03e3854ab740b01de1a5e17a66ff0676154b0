@@ -1,0 +1,6 @@
+**theorem 22.13 (Measurable genuine randomization and strict regularity distinctions).** For every constant $\lambda\in[0,1]$, the assignment
+$$
+P_\lambda(\xi)=(1-\lambda)\delta_{A_{\min}(\xi)}+\lambda\delta_{A_{\max}(\xi)}
+$$
+is a Borel probability kernel, a Borel map into the weak topology, and Baire one with that target topology. For $0<\lambda<1$, its support is exactly the two-point fiber on $D$. There are also Borel probability kernels that are not weakly Baire one, and admissible assignments that are not measurable for a completed Borel probability on $X$. Nevertheless all admissible probability assignments are Baire-property measurable into the weak topology.
+

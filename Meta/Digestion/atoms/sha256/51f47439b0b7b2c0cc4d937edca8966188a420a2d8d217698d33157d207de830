@@ -1,0 +1,2 @@
+**Proof.** Every prime dividing F_ell also divides F_m. Its exponent is unchanged by ZBD1, so it is at least two. The equality with h_p and the standard initial-quotient criterion prove the final assertion.
+

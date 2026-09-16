@@ -1,0 +1,27 @@
+**定理 16.4（加法闭图的完整输入纤维分类）。** 对任意 $x,y\in K$，置 $\theta=H(x)+H(y)$。则
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ 且不属于上述两种同号情形}.
+\end{cases}
+$$
+第一种情形的纤维恰有一点。特别每个输入纤维非空且至多有两点，且
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}\qquad(n,m\in\mathbb N).
+$$
+但是
+$$
+\Gamma\subsetneq\{(x,y,z)\in K^3:H(z)=H(x)+H(y)\}.
+$$
+更具体地，以 $0v$、$10v$ 表示有限字与 $v$ 的连接，有
+$$
+\Gamma(0_K,u)=\{u,v\},\qquad
+\Gamma(u,u)=\{0v\},\qquad
+\Gamma(v,v)=\{10v\},\qquad
+\Gamma(u,v)=\{0v,10v\}.
+$$
+所以闭图保留全部核心加法，却不满足以 $0_K$ 为单位的集合值单位律 $\Gamma(0_K,x)=\{x\}$。
+

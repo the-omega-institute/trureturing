@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:781b8918f0ef6dbdb4c39253e28d4a77d76a6b088c682e8be48c3c498e8c74aa
+  normalized_sha256: sha256:781b8918f0ef6dbdb4c39253e28d4a77d76a6b088c682e8be48c3c498e8c74aa
+cas_ref: sha256:781b8918f0ef6dbdb4c39253e28d4a77d76a6b088c682e8be48c3c498e8c74aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅指定引用来源、集合解释和各对象的类型边界，不新增有限推前或群作用结论，故无独立命题需要证明。
+    previous_atom_id: 4b1c151dacba16c35aefa29b9f3c2a7bcd18149c93e7995df4ab7f4b027a6db4
+    next_atom_id: f3a67e7cbfa4a4085d61018d43f0db63fd0fdd80d4e3553edc83fcfd930c845a

@@ -1,0 +1,4 @@
+**Proof.** The least index ell is prime by PBC2. Each prime divisor p of F_ell has rank ell and initial depth h_p=v_p(F_ell)>=2. Hence q_p=0. The classical Fibonacci square classification excludes F_ell from the squares, so at least one exponent is odd and therefore at least three. Here ell is the index prime; no assertion that q_ell=0 follows.
+
+PBC2 proves an equivalence and the shape of a least counterexample. It does not assert (A) or (B).
+
