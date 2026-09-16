@@ -10,6 +10,8 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 
+-- Trigger probe (L1 declared-template judge): content-plane byte change with no semantic change.
+
 namespace D5.S1.Digit.ZfcCompatibleRecurrenceCoordinates
 
 variable {A : Type*} [AddCommGroup A]
