@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:54f77fb598f646d5160b6926d07be5943063644c3289ed3a8048cf5d98dee1e1
   normalized_sha256: sha256:54f77fb598f646d5160b6926d07be5943063644c3289ed3a8048cf5d98dee1e1
 cas_ref: sha256:54f77fb598f646d5160b6926d07be5943063644c3289ed3a8048cf5d98dee1e1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxis/RawTableRewriting.finite_legal_words
+    target_statement_id: sha256:5ca474f4b7b8db24ba4b6355a2e68600e9579cf062aa0ac8c36dc4f989dac4b5
 receipts:
   unresolved_subitems: []
