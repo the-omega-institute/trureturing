@@ -1,0 +1,8 @@
+**Definition.** Let a(n)=|D_F(F_n^2+1)| for n>=0, as in FDS. For t>=0 let
+
+$$
+O(t)=\left\lfloor\frac{\lfloor\sqrt t\rfloor+1}{2}\right\rfloor,
+$$
+
+the number of positive odd squares not exceeding t.
+

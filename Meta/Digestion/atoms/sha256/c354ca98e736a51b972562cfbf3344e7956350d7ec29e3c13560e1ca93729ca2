@@ -1,0 +1,2 @@
+**Proof.** At a prime power p^e with e=1 all classes are admissible. For e>=2, precisely p^(e-1)-p^(e-2) classes have valuation one. Subtract them from p^e, divide by p^e and multiply over the independent prime-power factors using the Chinese remainder theorem. Empty products equal one, including M=1.
+

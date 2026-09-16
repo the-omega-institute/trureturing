@@ -1,0 +1,44 @@
+### NP.5 Prime-power primitive orbit counts retain the same depth
+
+Use the two-vertex directed graph with adjacency matrix Q. Its number
+of length-n closed walks with a marked starting position is L_n.
+Let b_n be the number of cyclic orbits whose least period is exactly n.
+Every such orbit supplies n marked walks, so
+
+$$
+L_n=\sum_{d\mid n}d b_d.
+$$
+
+**Theorem.** For every k>=0,
+
+$$
+b_{p^{k+1}}=\frac{L_{p^{k+1}}-L_{p^k}}{p^{k+1}}>0,
+\qquad
+\boxed{v_p(b_{p^{k+1}})=h_p-1.}                         \tag{NP11}
+$$
+
+Furthermore b_(p^(k+1))=5*S_(p,k) modulo p.
+
+**Proof.** Subtract the two divisor sums at successive p-powers to
+obtain the exact integer quotient; positivity follows from increasing
+Lucas numbers at these positive indices. With m=p^(k+1), n=p^k both
+odd, the trace-norm and Catalan identities give
+
+$$
+(L_m-L_n)(L_m+L_n)=5(F_m^2-F_n^2)=5F_{m+n}F_{m-n}.
+$$
+
+NP1 makes L_m+L_n=2 modulo p, a unit. The same valuation argument as
+NP2 therefore gives v_p(L_m-L_n)=h_p+k. Divide by p^(k+1) to obtain
+NP11. For the first digit, take traces in NP7 after multiplication by
+Q^(epsilon*n), using tr(Q^a H)=5F_a and F_(epsilon*n)=F_n. This gives
+
+$$
+\frac{L_m-L_n}{p^{k+1}}
+ \equiv\frac52\epsilon^k q_p\pmod p.
+$$
+
+Together with NP8 this proves the last statement. Orbit integrality
+comes from the actual graph action, not from assuming the desired
+prime divisibility.
+

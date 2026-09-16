@@ -1,0 +1,10 @@
+**Definition.** For primes p other than two and five, let rho(p) be the least positive Fibonacci zero index, h_p=v_p(F_rho(p)), and q_p=F_(p-(5/p))/p modulo p. A prime-index block is the set of prime divisors of F_ell, where ell>=7 is prime. Call the block fully exceptional when every such divisor has q_p=0.
+
+The classical rank and valuation identities, as stated in U.1 and EMW.1, give rho(p)|p-(5/p), q_p=0 iff h_p>=2, and
+
+$$
+v_p(F_{dt})=v_p(F_d)+v_p(t)\quad\text{when }p\mid F_d.
+$$
+
+They retain the unknown initial depth.
+

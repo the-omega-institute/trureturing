@@ -1,0 +1,2 @@
+**Proposition.** Let D_3(X) count distinct prime indices ell in [y,60X+1] for which some p of rank ell has odd h_p>=3. Then H(X)<=D_3(X), and ZBD3 remains true with H(X) replaced by D_3(X).
+
