@@ -275,7 +275,7 @@ L_X=X\otimes1+1\otimes X,
 
 **证明。** 在 V⊗V 上用反对称投影 P=(1-τ)/2 计算迹。
 利用 tr(A⊗B)=tr(A)tr(B) 和 tr(τ(A⊗B))=tr(AB)。
-辛李代数元素迹为零，于是两因子公式为 (n-2)tr(XY)，三因子的一般迹零公式为
+辛李代数元素迹为零，于是两因子公式为 (n-3)tr(XYZ)-tr(XZY) 的三因子对应计算给出下式，而两因子为 (n-2)tr(XY)：
 
 \[
 (n-3)\operatorname{tr}(XYZ)-\operatorname{tr}(XZY).
@@ -1028,7 +1028,7 @@ U_i^*\widehat\ell_bU_i
 
 **证明。** 展开 (a+b phi)(c+d(1−phi))，其 phi 系数为 bc−ad。Tr((2phi−1)/5)=0，Tr((2phi−1)phi/5)=1，所以迹恰提取该系数。r bar r=N(r)∈Q 给出第一等式；共轭改变 (2phi−1) 的符号给出第二等式。矩阵形式为 [[0,−I],[I,0]]，行列式为一。证毕。
 
-所以一次黄金乘法 x↦phi x 是反辛，二次 x↦phi²x 是辛。八维中前者的整体行列式仍为 +1，说明整体定向保持不足以证明辛性。
+所以一次黄金乘法 x↦phi x 是反辛，二次 x↦phi²x 是辛。八维中前者的行列式仍为 +1，说明整体定向保持不足以证明辛性。
 
 ### 命题 30.2. 一次 Fibonacci 乘法不能保持任何非零双线性形式
 
@@ -1272,3 +1272,253 @@ https://arxiv.org/abs/2603.21380
 
 [DGCZ00] Lu-Ming Duan, G. Giedke, J. I. Cirac, P. Zoller. *Inseparability criterion for continuous variable systems*. Physical Review Letters 84, 2722 (2000), arXiv:quant-ph/9908056v2. 本文仅使用EPR方差和的可分离下界；它不是本项目新提出的纠缠判据。
 https://arxiv.org/abs/quant-ph/9908056
+
+## 41. 有界补偿版本：真实双脉冲和耦合无关的读数误差
+
+第36节用两个单位脉冲恢复协方差。另一种实现将第二个强度调到绝对值不超过一，并直接消去叶子耦合对最终系数的影响。记 alpha_i=H_ai，alpha_j=H_aj，均非零；取
+
+\[
+s=\begin{cases}1,&\alpha_j\alpha_iH_{ij}\ge0,\\-1,&\alpha_j\alpha_iH_{ij}<0,\end{cases}
+\qquad t=\frac{\alpha_j}{\alpha_j+s\alpha_iH_{ij}}.
+\]
+
+### 定理41.1. 有界路由、读回与锐误差界
+
+分母非零，|s|=1、0<t≤1，并且实际对偶脉冲满足
+
+\[
+P_j(t)P_i(s)e_a=e_a+s\alpha_ie_i+\alpha_je_j.
+\]
+
+令v0=e_a、vi=P_i(s)e_a、vj=P_j(1)e_a、vij=P_j(t)vi。对任意实对称双线性形式C，
+
+\[
+C_{ij}=\frac{Q_C(vij)-Q_C(vi)-Q_C(vj)+Q_C(v0)}{2s\alpha_i\alpha_j}.
+\]
+
+四个方差记录各有绝对误差≤epsilon时，此估计的误差≤2epsilon/|alpha_i alpha_j|。
+
+**证明。** s的选择使alpha_j与s alpha_i H_ij同号或后一项为零，故分母绝对值是|alpha_j|+|alpha_i H_ij|。实际矩阵乘法给出vi=e_a+s alpha_i e_i，第二次再增加t(alpha_j+s alpha_i H_ij)e_j。代入t后，四个二次读数相减只剩2s alpha_i alpha_j C_ij。四项误差带符号和的绝对值≤4epsilon；取误差依次为(+epsilon,-epsilon,-epsilon,+epsilon)达到代数界。证毕。
+
+用空历史、每个叶子的正负单脉冲及每个叶子对的一次此双脉冲，仍只需第36节的n(n+1)/2个方差设置。均值可从同样的设置取得。读数误差界不含H_ij，但脉冲强度必须准确执行；若第二次有强度误差eta，会产生额外delta e_j，其中delta=eta(alpha_j+s alpha_i H_ij)，方差偏差为2delta C(e_j,vij)+delta² C_jj。因此没有声称总实验噪声与耦合无关。
+
+## 42. 用于校准研究的另一组物理输入
+
+以下两模输入不同于第37节的thermal/EPR实例，不替换原实例。按(q1,p1,q2,p2)及[q_r,p_s]=i delta_rs，取零均值Gaussian态
+
+\[
+V_0=\begin{pmatrix}1&0&7/10&0\\0&1&0&0\\7/10&0&1&0\\0&0&0&1\end{pmatrix},\qquad
+V_1=\begin{pmatrix}1&0&7/10&0\\0&1&0&-4/5\\7/10&0&1&0\\0&-4/5&0&13/5\end{pmatrix}.
+\]
+
+改排为位置块Q和动量块P后，Q=[[1,7/10],[7/10,1]]，P0=I，P1=[[1,-4/5],[-4/5,13/5]]。量子不确定性等价于P-Q^{-1}/4≥0；两个Schur补的首个对角元均为26/51，行列式分别为29/204、4421/5100，均正。因此两态物理。V0由局域纯压缩态方差(1/4,1)的乘积，加上经典相关位置位移制备，噪声Q-I/4正定，行列式29/400，故可分。V1部分转置后的Schur补行列式为-393/1700，故由[Simon00]的必要可分条件知其纠缠。
+
+采用ell0=q1、ell1=p1、ell2=p1+q2、ell3=p1+p2，其实际配对和协方差为
+
+\[
+H=\begin{pmatrix}0&1&1&1\\-1&0&0&0\\-1&0&0&1\\-1&0&-1&0\end{pmatrix},\qquad
+C(c)=\begin{pmatrix}1&0&7/10&0\\0&1&1&c\\7/10&1&2&c\\0&c&c&2\end{pmatrix}.
+\]
+
+c=1对应可分输入，c=1/5对应纠缠输入。其它c在以下代数命题中仅是参数，除非另行证明物理性。两态的对角与锚点行完全一致，所以所有单脉冲、任意实强度的最终homodyne分布一致。新增两个独立真空模给出同样的四模实例。
+
+对偶控制P3(t)P1(s)e0=(1,s,0,t)，所以实际输出方差为
+
+\[
+v_c(s,t)=1+s^2+2cst+2t^2.\tag{42.1}
+\]
+
+标准强度s=t=1时得到6与22/5。H13=0，因此本节选取的这两个脉冲本身对易；这里检测的是输入相关性，不能将这项区别误说成这两个门不对易的证据。这是一组已知输入之间的判别任务，并非任意未知态的通用纠缠见证。
+
+## 43. 固定黄金时钟的二阶递推补充
+
+第38节的至多三维方差空间还满足精确递推。若M²=M+I、T=M²，则T²-3T+I=0。固定传感器b和协方差C，令y_k=Q_C((T^t)^k b)，有
+
+\[
+y_{k+3}=8y_{k+2}-8y_{k+1}+y_k.
+\]
+
+**证明。** T的两个根为phi²与phi^{-2}，方差只含phi^{4k}、1、phi^{-4k}三种模式。其特征多项式为(z-1)(z²-7z+1)=z³-8z²+8z-1。证毕。该递推不给额外独立观察；它解释了第38节的二阶盲区为何不会随等待时间消失。
+
+## 44. 单设置的未知增益：一个精确的可辨识性相变
+
+现在仅使用第42节的一个双脉冲设置，实际s,t未知、在[1-delta,1+delta]内，0≤delta<1。每份备选输入的未知校准都可以是该区间内任一对。这是uniform/composite量词：同一个判别规则必须对两类允许参数同时有效，不预先固定实际增益。此节先假定没有额外未知探测器增益和噪声；第46节另行加入它们。
+
+### 定理44.1. 一般方差族的锐边界及实际碰撞
+
+对0≤cLo<cHi，设KLo=3+2cLo、KHi=3+2cHi、l=1-delta、u=1+delta。存在同一个实数tau使
+
+\[
+\forall(s,t)\in[l,u]^2,\quad v_{cLo}(s,t)<\tau<v_{cHi}(s,t)
+\]
+
+当且仅当KLo u²<KHi l²。条件失败时，两类存在允许的校准对，使实际方差完全相等。
+
+**证明。** s,t均正且c非负，各项单调，精确方差区间为[1+Kc l²,1+Kc u²]。区间分离时取两个最近端点的中点即给统一tau；反向在(l,l)、(u,u)代入tau条件即得必要不等式。失败时令高类校准为(l,l)，低类为(rl,rl)，r=sqrt(KHi/KLo)>1。失败条件保证rl≤u，且rl≥l；直接代入得KLo(rl)²=KHi l²，因此两类的实际实验发生碰撞。证毕。
+
+精确方差的阈值并非有限样本的零误差分类。它给出了统计族是否相交的代数判据。对零均值Gaussian输出，等方差就是等概率律，其任意N次独立重复也相同；于是任何随机化单设置判别器的最坏等先验风险至少1/2。
+
+对cHi=1、cLo=1/5，该条件等价于
+
+\[
+\delta<\delta_*:=\frac{5-\sqrt{17}}{5+\sqrt{17}}
+\approx0.09611796798.\tag{44.1}
+\]
+
+在delta=1/10时，可分输入取s=t=9/10，纠缠输入取s=t=9sqrt17/34，二者均合法且方差同为101/20。这是由未知校准造成的真实观测碰撞；增加该同一设置的shots不能消除它。
+
+## 45. 分离区间内的同一个有限样本最优规则
+
+以下为普通概率证明，未作为Lean概率声明输出。设delta<delta_*，记
+
+\[
+A=1+5(1-\delta)^2,\quad B=1+\frac{17}{5}(1+\delta)^2,\quad B<A.
+\]
+
+可分输入的输出方差至少A，纠缠输入至多B。对N个独立零均值Gaussian观测，令S_N=sum X_r²，采用同一个阈值
+
+\[
+\tau_N^*=\frac{AB\log(A/B)}{A-B},\qquad
+S_N/N>\tau_N^*\Rightarrow\text{可分候选},\quad
+S_N/N\le\tau_N^*\Rightarrow\text{纠缠候选}.\tag{45.1}
+\]
+
+阈值只用已知的校准区间，完全不使用未知实际s,t。下标N仅表示该N-shot规则，数值本身与N无关。
+
+### 定理45.1. 受限测量下的精确composite minimax规则
+
+对风险
+
+\[
+\tfrac12\left(\sup_{\text{可分校准}}P(\text{误判})+
+\sup_{\text{纠缠校准}}P(\text{误判})\right),
+\]
+
+规则(45.1)达到所有基于这N个单设置结果的判别器的最小值。
+
+**证明。** 任意规则的风险至少是两个端点分布N(0,A)、N(0,B)的等先验风险，似然比检验给出其最优阈值(45.1)。对该检验，用X_r=sqrt(v)Z_r耦合，S_N随v单调，故两类最坏误差分别正好在v=A及v=B取得。该同一个检验达到前述下界。证毕。这里的风险定义是两个分别最坏错误率的平均，不是将它们的最大值最小化；两者最优阈值一般不同。
+
+令I(x)=(x-1-log x)/2。Gaussian平方的矩母函数为(1-2t)^{-1/2}，Markov指数界优化得到
+
+\[
+P(\chi_N^2\ge Nx)\le e^{-NI(x)}\ (x>1),\quad
+P(\chi_N^2\le Nx)\le e^{-NI(x)}\ (0<x<1).
+\]
+
+(45.1)使I(tau*/A)=I(tau*/B)=:C_*>0。因此两类的最坏错误率都≤exp(-NC_*)，一个充分预算是N≥log(1/alpha)/C_*。这是经典Gaussian Chernoff计算[Nielsen22]在本明确控制族上的应用，未声称量子最优测量或新的Chernoff理论。
+
+|增益半宽delta|A|B|达到错误率上界1%的充分N|
+|---:|---:|---:|---:|
+|0|6|4.4|767|
+|0.02|5.802|4.53736|1221|
+|0.05|5.5125|4.7485|3312|
+|0.08|5.232|4.96576|27014|
+
+这些是上述指数界的数值，不是实验样本数、精确最小shots或一般纠缠认证预算。区间触碰后C_*趋零；碰撞区间内已无该uniform一致判别目标。
+
+## 46. 四个参考设置消去共享校准：一次真正的协议改进
+
+仍用第42节的两种候选，但增加空脉冲和两个对应单脉冲作为参考，共四个设置。允许实际非零s,t未知，探测器方差增益g>0未知，共同附加方差偏置nu未知。物理噪声解释可取nu≥0；代数消去允许任意实nu。要求同一s,t,g,nu在这个四设置实验组内保持一致。
+
+实际记录为
+
+\[
+r_0=\nu+g,\quad r_1=r_0+gs^2,\quad
+r_2=r_0+2gt^2,\quad r_3=r_0+g(s^2+2cst+2t^2).
+\]
+
+由记录自身计算
+
+\[
+a=r_1-r_0,\quad b=r_2-r_0,\quad d=r_3-r_1-r_2+r_0,
+\qquad F=d^2-ab.
+\]
+
+### 定理46.1. 与实际增益无关的同一分类规则
+
+对所有g>0、s,t非零及nu，均有
+
+\[
+F=2(2c^2-1)(gst)^2.
+\]
+
+故c=1时F=2(gst)²>0，c=1/5时F=-(46/25)(gst)²<0。相同的符号规则区别两类的整个四记录参数族，即使它们在单设置统计族中已经相交。
+
+**证明。** 由实际双脉冲矩阵得到第42节的v_c，再代入四个记录。差分消去nu和公共基线，得到a=gs²、b=2gt²、d=2gcst。平方和乘积给出恒等式；g,s,t均非零保证严格符号。证毕。
+
+本规则没有先知道g,s,t，也没有为每个隐藏校准另选分类器。它通过增加实测参考量使两类的观测像分开。单设置的不可辨识性没有被违反，因为允许实验协议已经扩大。
+
+## 47. 可计算的记录误差证书和统一shots保证
+
+记实际估计z=(z0,z1,z2,z3)，各|zk-rk|≤epsilon，epsilon≥0。用估计值计算a=z1-z0、b=z2-z0、d=z3-z1-z2+z0、F(z)=d²-ab，并定义
+
+\[
+R(z,\epsilon)=(8|d|+2|a|+2|b|)\epsilon+20\epsilon^2.
+\]
+
+### 定理47.1. 不依赖隐藏校准的有效判别证书
+
+\[
+|F(z)-F(r)|\le R(z,\epsilon).
+\]
+
+所以若F(z)>R则输入是c=1，若F(z)<-R则输入是c=1/5；其余输出“未认证”。结论对所有满足前件的共享校准和误差同时成立。
+
+**证明。** a,b,d的误差分别≤2epsilon、2epsilon、4epsilon。一般实数乘积在|u-x|,|v-y|≤eta时满足
+
+\[
+|uv-xy|\le(|x|+|y|)\eta+\eta^2,
+\]
+
+由uv-xy=x(v-y)+y(u-x)+(u-x)(v-y)及三角不等式得到。对d²取eta=4epsilon，对ab取eta=2epsilon，相加正好给R。若观察到的分数区间不含零，其符号与第46节的真实符号一致。证毕。这是允许四项记录误差彼此相关的确定性命题。
+
+要保证固定shots下不仅有效而且不拒判，需另有信号和噪声界。给定
+
+\[
+0<g_0\le g\le G,\quad 0<m\le|s|,|t|\le M,\quad
+0\le\nu\le\nu_{max},
+\]
+
+设Vmax=nu_max+G(1+5M²)，Delta=(46/25)g0²m⁴。实际|F(r)|≥Delta。用真实差分估计可得|F(z)-F(r)|≤22GM²epsilon+20epsilon²，而R(z,epsilon)≤22GM²epsilon+60epsilon²。因此
+
+\[
+44GM^2\epsilon+80\epsilon^2<\Delta\tag{47.1}
+\]
+
+保证所有满足四记录误差界的结果都被正确认证。
+
+若另假定每个设置是独立零均值Gaussian观测，包括独立Gaussian探测器噪声，样本二阶矩hat v=N^{-1}sum X_r²满足，对0<epsilon≤Vmax，
+
+\[
+P\bigl(\max_{k=0,1,2,3}|\widehat v_k-r_k|>\epsilon\bigr)
+\le8\exp\left(-\frac{N\epsilon^2}{8Vmax^2}\right).
+\]
+
+**证明。** 每个设置的方差≤Vmax，将其平方和归一化成chi-square。I(1+r)≥r²/8及I(1-r)≥r²/4在0<r≤1成立，前者由导数或积分下界、后者由-log(1-r)级数得到；r=1的下尾按极限或零概率处理。使用r=epsilon/Vmax和事件包含，再对四个设置作并集界。设置之间的独立性不是并集界所需，但每个设置内的标准chi-square模型需要独立同分布Gaussian制备。证毕。
+
+因此选择满足(47.1)的epsilon和
+
+\[
+N\ge\frac{8Vmax^2}{\epsilon^2}\log\frac8\alpha
+\]
+
+便获得同一个校准无关判别器，以至少1-alpha的概率在整个给定参数盒内正确且不拒判。总样本数为4N。这个充分预算保守，未宣称最优。若g、s或t可趋零，或nu无上界，不存在由此证明的共同有限shots保证；记录组之间任意漂移也会破坏第46节的消去。
+
+## 48. 本轮范围、形式化对象与研究前沿
+
+本轮同步的TwoPulseCovarianceTomography给出实际有界路由及四记录逆误差。GainRobustGaussianDiscrimination中的两个公开声明分别证明一般cLo<cHi的单设置统一阈值/显式碰撞二分，以及c=1或1/5的实际四参考设置误差证书。其对象是实际矩阵、二次方差、任意实增益和有限记录，不预设要证明的同一分类器。
+
+第45节的概率测度最优性与第47节的shots推论是另行给出完整前件的普通数学证明；它们没有被冒充为这些Lean声明已经形式化的概率内容。上述两模物理性、可分/NPT结论是外部Gaussian理论和显式Schur补的应用。不同于第37节的另一组输入，这一组产生9.6118%的具体增益边界；不能把该数值用在没有核对协方差的其它实验。
+
+未知校准下“存在同一个有效判别器”的目标，在这个共享参数、已知候选族和固定控制结构内获得了上述构造与证书。未知H、设置依赖漂移、一般未知态纠缠认证、非Gaussian高阶恢复及原Fano几何比较仍是不同的未完成任务。一般极化、Gaussian态理论、likelihood-ratio检验和Chernoff界均已有文献；没有建立本具体构造的全球新颖性，也未把它登记为解决已发表猜想。
+
+一个有实质意义的后续方向是允许四设置的增益和偏置以同一个低维漂移模型变化，寻找最少额外参考设置及其误差下界；任意独立漂移会重新使两类记录像相交，因此必须明确共享结构或可证的漂移预算。另一路可把当前确定性证书接入库内实际概率测度和有限重复对象，形式化第45、47节的统一风险，而非再创建一套同名风险函数。
+
+[W12] C. Weedbrook et al. Gaussian Quantum Information. Rev. Mod. Phys. 84, 621 (2012), arXiv:1110.3234. 标准Gaussian状态、协方差和homodyne理论，本文使用[q,p]=i约定。
+https://arxiv.org/abs/1110.3234
+
+[Simon00] R. Simon. Peres-Horodecki Separability Criterion for Continuous Variable Systems. Phys. Rev. Lett. 84, 2726 (2000), arXiv:quant-ph/9909044. 这里使用部分转置的必要可分条件。
+https://arxiv.org/abs/quant-ph/9909044
+
+[Nielsen22] F. Nielsen. Revisiting Chernoff Information with Likelihood Ratio Exponential Families. arXiv:2207.03745. 单变量Gaussian及缩放协方差族的Chernoff信息为既有理论；第45节单独推导所用标量公式。
+https://arxiv.org/abs/2207.03745
