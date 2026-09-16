@@ -2986,3 +2986,218 @@ every old survivor:8428exact identities. The new
 `rectangle_hinge_observation_gap` certificate field retains these actual
 inputs and load histograms. This is an ordinary exact-arithmetic result;
 it asserts neither a new hinge upper bound nor a tail continuation.
+
+## Actual rectangle hinge bounds on the same law
+
+The actual law in (SC1), with the same fixed C=40/31, also satisfies the
+following simultaneous full-height bounds. Write
+Theta_nu(t)=sup_test E_nu(L-t)_+, with the supremum over complete divisor
+test layouts. The full original 3/5/7 part must divide 315; both 11 and 13
+may have arbitrary finite positive heights, and all axis and point
+deletions are allowed.
+
+| t | Certified upper bound for Theta_nu(t) | Approximation |
+|---|---|---|
+|4|7407925830803/5142075000000|1.440649122|
+|5|11428702759/10284150000|1.111292889|
+|6|19427/24198|0.802834946|
+|7|87992771107937/137483325000000|0.640025044|
+|8|242331326613/499400000000|0.485244948|
+|9|4663598074519/11236500000000|0.415040100|
+|10|7944529460443/22473000000000|0.353514416|
+|11|9807064477819/33423487500000|0.293418348|
+|12|47555781251/205683000000|0.231209100|
+
+The displayed decimals are rounded upward. These are pointwise hinge
+bounds on the same supported probability as (SC1), rather than a new
+probability comparator. In particular the first p=17 query in (AP2) at
+t=6 has charge at most 19427/241980. This does not establish a complete
+tail continuation.
+
+### Concentrating the test and retaining the actual grid size
+
+At an old survivor x, let a,b,c,d in {1,...,12} be the four complete old
+test-block loads. After the actual axis deletions the carrier is an
+m by n rectangle, where 0<=m<=10 and 0<=n<=12. Let k<=12 be the number
+of distinct mixed point holes inside that carrier, and put Ngrid=mn-k.
+For Ngrid>0 the actual clipping coefficient is
+
+    f/120=1/max(93,Ngrid).                                  (HG1)
+
+An empty fibre contributes zero. Put phi_t(v)=(v-t)_+. For a full
+rectangle, the sum of the Ngrid largest hinge values bounds the sum on
+its actual survivors. It is a convex function of every allocation of
+the row, column and point blocks: it is the maximum of the sums over
+all Ngrid-element subsets, each a sum of convex hinges. Enlarge the
+possible allocations to the full simplices with totals b,c,d. Convexity
+then permits concentration of each block on one row, one column and
+one point. Components outside the carrier may first be moved into it,
+which only increases the nonnegative cell loads. This is a pointwise
+upper bound and does not assert that the concentrating choices arise
+from one common arithmetic test layout.
+
+The point mass can be placed at the row-column intersection. Indeed,
+if two base loads satisfy u>=v, moving d from v to u cannot decrease
+the sum of the Ngrid largest hinges. A selected subset taking neither
+entry is unchanged. If it takes one, select the now larger entry; if
+it takes both, convex increment monotonicity gives
+
+    phi_t(u+d)+phi_t(v)>=phi_t(u)+phi_t(v+d).
+
+The row-column intersection has the largest base load. Its point-loaded
+cell is therefore retained when taking the Ngrid largest entries.
+Consequently the exact concentrated upper envelope is
+
+    K_t=[phi_t(a+b+c+d)+(n-1)phi_t(a+b)+(m-1)phi_t(a+c)
+          +(m-1)(n-1)phi_t(a)-D_k]/max(93,mn-k),            (HG2)
+
+where D_k is the sum of the k smallest nonintersection entries. These
+are first the (m-1)(n-1) entries phi_t(a), then the row and column
+entries ordered according to b<=c or c<=b. Formula (HG2) covers every
+nonempty actual grid, including grids whose original selected
+intersection or point was deleted; taking the largest surviving-count
+subset was already an upper bound before concentration.
+
+### Exact duals, point-load endpoints and empty fibres
+
+The `actual_rectangle_hinge_profile` certificate retains one rational
+dual at each t=4,...,12, of the form
+
+    K_t <= c_t + sum_(i=0)^3 sum_(j=0)^11 w_(t,i,j) phi_j(A_i)
+                 + sum_(j=0)^11 v_(t,j) phi_j(k),           (HG3)
+
+with all w and v nonnegative. Every numerator, common denominator and
+constant c_t is retained; no numerical optimizer or tolerance is part
+of verification. At t=6 the particularly short dual is
+
+    K_6 <= [psiA(a)+psiB(b)+psiC(c)+psiD(d)]/93
+                     +(7/1984)phi_8(k),
+    psiA=phi_1+2phi_2+16phi_3+74phi_6,
+    psiB=phi_1+9phi_3+2phi_4,
+    psiC=phi_2+7phi_3+2phi_4,
+    psiD=phi_2.                                           (HG4)
+
+There are 1372 nonempty triples (m,n,k). The checker uses all 12^3
+values of a,b,c and the positive hinge knots of the point-load cost
+in d. Before its first knot that cost is constant and the left side
+increases, so the first knot bounds that entire interval. Between
+successive knots, (HG2) minus the linear point cost is convex in d,
+so its maximum occurs at an endpoint. Beyond the last knot, the
+left-side slope is at most 1/max(93,Ngrid)<=1/93, while the checked
+point-cost slope is at least 1/93. Thus the last knot bounds the
+remaining d<=12. The endpoint sets, in threshold order, are
+
+    {1}, {1,2}, {2}, {2}, {2}, {2,3}, {3}, {3}, {3}.
+
+Multiplying by the positive common denominator and max(93,Ngrid)
+reduces these checks to 26,078,976 integer inequalities. The endpoint
+argument certifies all 256,048,128 original combinations. For empty
+fibres the left side is zero. Nonnegative weights make the minimum
+right side occur at a=b=c=d=1 and k=0; the checker verifies this
+minimum is nonnegative. This check is essential because the retained
+constants at t=4 and t=5 are negative.
+
+### One arithmetic branch through higher digits and normalization
+
+Use only the existing (SC2)--(SC6) bounds on a fixed branch (S,N):
+
+    theta_0=M_(S,N), theta_1=M_(S,N)-1,
+    theta_2=theta_(S,N)(2), theta_3=the existing shape bound,
+    theta_4=theta_(S,N)(4), theta_5=the existing shape bound,
+    (theta_6,...,theta_12)=(10,7,4,3,2,1,0)/N.              (HG5)
+
+The high-threshold numerators are already checked by the complete
+old profile: the five additional copies of an old load contribute
+zero at every threshold at least 6, so the numerator is independent of N. The
+checker identifies these numerators in all six existing profiles.
+Every complete test load has these bounds on the same uniform old
+law. The number k of distinct surviving mixed holes is at most the
+number of active mixed labels, which is another complete old load.
+Hence E phi_j(k)<=theta_j as well; no independence between deletions
+and the four test blocks is assumed.
+
+Average (HG3) on that branch to obtain B_t(S,N). Restricting further
+to actual survivors of higher classes only decreases the nonnegative
+low-load hinge. Write L=L_low+L_high. The elementary inequality
+
+    phi_t(L)<=phi_t(L_low)+L_high
+
+and the existing higher-exponent reference calculation give
+integral_xi L_high<=C(89/4800)M_(S,N). In fact 89/4800 is the difference
+5809/4800-143/120 between the full-height and first-power auxiliary
+means, agreeing with the coefficient in (VC7). The same branch has surviving mass at least
+
+    s_(S,N)=1-[17theta_2+4theta_4]/93-C(89/4800)M_(S,N)>0.
+
+Therefore the normalized actual law satisfies
+
+    Theta_nu(t) <= [B_t(S,N)+C(89/4800)M_(S,N)]/s_(S,N).    (HG6)
+
+The certificate evaluates (HG6) separately on all 144 existing
+branches and then takes the maximum, yielding the table above.
+It does not combine a numerator from one branch with the mass of
+another. At t=6 the maximum is the first shape with N=81 and equals
+19427/24198.
+
+Since the actual hinge function is convex, linear interpolation
+between adjacent certified knots is also a pointwise upper bound.
+Taking its minimum with another valid pointwise hinge bound remains
+valid. These operations do not assert that the resulting upper curve
+is convex or is the hinge transform of a probability measure; (AP2)
+requires only the pointwise bounds. The certificate supplies numerical
+premises for that existing continuation criterion, with no new Lean
+declaration and no assertion that a full tail schedule succeeds.
+
+## Fixed-count labelled deletion refinement at threshold six
+
+The threshold-six dual can be sharpened on the three branches where the
+coarse joint-cost bound was above four fifths. Consider the first canonical
+old survivor shape, `root1_same_other_column`, which has 17 points. Its five
+mixed-seven labels have old cofactors `3,5,9,15,45`. Group labels that use
+the same nonzero seven digit. A group deletes the union of the selected old
+cylinders for its labels; overlaps inside a group count once, while groups
+with different seven digits delete different lifted points.
+
+For a label subset `T`, let `b_T(u)` be the least cost of a union of
+cardinality `u`, with an empty cylinder allowed. The anchored recurrence
+
+    d_empty(0)=0,
+    d_S(D)=min_{T subset S, min(S) in T, u}
+           (b_T(u)+d_(S\T)(D-u))                         (FD1)
+
+is a lower bound for the cost removed by any actual labelled deletion with
+`D=102-N` deleted points. Enlarging the feasible set by allowing empty masks
+is safe in this direction: it can only reduce the minimum deleted cost and
+therefore can only increase the final upper bound. The five empty residue-zero
+cylinders are available on this 17-point survivor set.
+
+There are 2,164 distinct union masks and 8,919 subset-union entries. The
+4,760 complete old-45 test layouts have old hinge maxima
+`(42,25,11,5,2,1,0)` at thresholds zero through six. A cheap lower bound
+discharges 4,688 layouts for
+
+    psiA=(x-1)+ + 2(x-2)+ + 16(x-3)+ + 74(x-6)+,
+
+and 4,640 for
+
+    psiB=(x-1)+ + 9(x-3)+ + 2(x-4)+.
+
+The exact anchored DP checks the remaining 72 and 120 layouts respectively.
+For `N=80,81,82`, the resulting numerator caps are
+
+    N E psiA <= (1986,1986,1992),
+    N E psiB <= ( 728, 728, 732).                         (FD2)
+
+The other two costs in the threshold-six dual are retained from the certified
+rectangle profile. Replacing only these three branches in all 144 common
+shape/count branches gives
+
+    Theta_nu(6) <= 26114497/32685768
+                 = 4/5 - 170587/163428840 < 4/5.           (FD3)
+
+The unique maximizing branch is `root1_same_other_column` with `N=79`; the
+refinement changes the `N=80,81,82` branches. The corresponding first
+prime-17 query costs at most `26114497/326857680`. This is an ordinary
+exact-arithmetic finite-head result. It does not formalize the DP in Lean,
+extend the result to unbounded 3/5/7 powers, or provide the unrestricted
+tail stopping certificate.

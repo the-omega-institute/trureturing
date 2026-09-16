@@ -2336,6 +2336,334 @@ def rectangle_hinge_observation_gap():
     }
 
 
+def actual_rectangle_hinge_profile(witnesses, shared, old, original_cases):
+    """Check rectangle hinge duals and transfer them on the existing SC branches."""
+    F = Fraction
+    knots = list(range(4, 13))
+    require(len(witnesses) == len(knots), 'nine rectangle hinge dual witnesses')
+    geometries = []
+    for m, n in product(range(1, 11), range(1, 13)):
+        off = (m-1)*(n-1)
+        for k in range(min(12, m*n-1)+1):
+            left = max(0, k-off)
+            geometries.append((max(93, m*n-k), k, off-min(k, off),
+                               n-1-min(left, n-1), m-1-max(0, left-n+1),
+                               n-1-max(0, left-m+1), m-1-min(left, m-1)))
+    require(len(geometries) == 1372, 'complete nonempty rectangle geometry')
+    checks = []
+    for threshold, witness in zip(knots, witnesses):
+        require(set(witness) == {'threshold', 'denominator', 'constant_numerator',
+                                'load_hinge_numerators', 'hole_hinge_numerators'},
+                'rectangle dual witness fields')
+        denominator = witness['denominator']
+        constant = witness['constant_numerator']
+        weights = witness['load_hinge_numerators']
+        holes = witness['hole_hinge_numerators']
+        require(witness['threshold'] == threshold and type(denominator) is int
+                and denominator > 0 and type(constant) is int,
+                'integer rectangle dual scale and threshold')
+        require(len(weights) == 4 and all(len(v) == 12 for v in weights)
+                and len(holes) == 12, 'rectangle dual coefficient dimensions')
+        require(all(type(v) is int and v >= 0 for row in weights+[holes] for v in row),
+                'nonnegative integer rectangle dual weights')
+        costs = [[sum(w*max(x-t, 0) for t, w in enumerate(row))
+                  for x in range(13)] for row in weights]
+        hole_costs = [sum(w*max(k-t, 0) for t, w in enumerate(holes))
+                      for k in range(13)]
+        minimum_rhs = constant+sum(row[1] for row in costs)
+        require(minimum_rhs >= 0, 'empty fibres: minimum full dual RHS is nonnegative')
+        point = weights[3]
+        point_knots = [t for t, w in enumerate(point) if w]
+        require(point[0] == 0 and point_knots and min(point_knots) >= 1
+                and 93*sum(point) >= denominator,
+                'point-load endpoint reduction and terminal slope')
+        # Before its first knot the cost is constant and the target increases.
+        # Between knots the target minus the linear cost is convex in d.
+        # Beyond the last knot its slope is <=1/93, paid by the dual cost.
+        phi = [max(x-threshold, 0) for x in range(49)]
+        inputs = []
+        for a, b, c in product(range(1, 13), repeat=3):
+            dual = constant+costs[0][a]+costs[1][b]+costs[2][c]
+            inputs.append((b <= c, phi[a], phi[a+b], phi[a+c],
+                           [(phi[a+b+c+d], dual+costs[3][d]) for d in point_knots]))
+        checked = 0
+        minimum_slack = None
+        for den, k, base, row_bc, col_bc, row_cb, col_cb in geometries:
+            hole_cost = hole_costs[k]
+            for b_le_c, pa, pab, pac, corners in inputs:
+                row, col = (row_bc, col_bc) if b_le_c else (row_cb, col_cb)
+                rest = base*pa+row*pab+col*pac
+                for corner, dual in corners:
+                    slack = den*(dual+hole_cost)-denominator*(rest+corner)
+                    require(slack >= 0, 'actual rectangle hinge dual integer inequality')
+                    if minimum_slack is None or slack < minimum_slack:
+                        minimum_slack = slack
+                    checked += 1
+        checks.append({'threshold':threshold, 'point_load_endpoints':point_knots,
+                       'integer_inequalities_verified':checked,
+                       'minimum_integer_slack':minimum_slack,
+                       'minimum_empty_fibre_dual_numerator':minimum_rhs})
+    require(sum(v['integer_inequalities_verified'] for v in checks) == 26078976,
+            'complete nine-threshold endpoint-reduced integer checks')
+    high_numerators = (10, 7, 4, 3, 2, 1, 0)
+    require(len(shared['cases']) == len(old['cases']) == len(original_cases) == 6,
+            'same six canonical old shapes for hinge transfer')
+    clip = F(40, 31)
+    require(F(shared['clip']) == clip, 'same clipping constant for all hinge knots')
+    cases = []
+    branches = []
+    for sc, old_case, original in zip(shared['cases'], old['cases'], original_cases):
+        shape = sc['shape']
+        require(shape == old_case['shape'] == original['shape'],
+                'same branch indexing for existing hinge bounds')
+        minimum = original['survivor_count_range_inclusive'][0]
+        require([minimum*F(v) for v in original['profile'][6:13]]
+                == list(high_numerators), 'existing complete-profile high-hinge numerators')
+        old_hinges = list(map(F, old_case['hinge_bounds_at_0_through_5']))
+        rows = []
+        for source in sc['rows']:
+            count = source['survivors']
+            mean = F(source['mean_upper'])
+            theta = [mean, mean-1, F(source['hinge2_upper']), old_hinges[3],
+                     F(source['hinge4_upper']), old_hinges[5]]
+            theta += [F(v, count) for v in high_numerators]
+            require(len(theta) == 13 and all(v >= 0 for v in theta),
+                    'canonical existing same-branch hinge bounds')
+            low_mass = 1-(17*theta[2]+4*theta[4])/93
+            high = clip*F(89, 4800)*mean
+            survival = low_mass-high
+            require(low_mass == F(source['low_mass_lower'])
+                    and survival == F(source['full_mass_lower']) > 0,
+                    'same-branch high-load addition and full normalization')
+            low = []
+            full = []
+            for witness in witnesses:
+                numerator = F(witness['constant_numerator'])
+                numerator += sum(w*theta[t] for row in witness['load_hinge_numerators']
+                                 for t, w in enumerate(row))
+                numerator += sum(w*theta[t]
+                                 for t, w in enumerate(witness['hole_hinge_numerators']))
+                bound = numerator/witness['denominator']
+                require(bound >= 0, 'nonnegative averaged rectangle hinge bound')
+                low.append(bound)
+                full.append((bound+high)/survival)
+            row = {'survivors':count, 'low_hinge_upper_at_4_through_12':list(map(str, low)),
+                   'full_hinge_upper_at_4_through_12':list(map(str, full))}
+            rows.append(row)
+            branches.append((shape, count, low, full))
+        cases.append({'shape':shape, 'rows':rows})
+    require(len(branches) == 144, 'all existing common shape/count branches transferred')
+    low_maxima = [max(row[2][j] for row in branches) for j in range(9)]
+    full_maxima = [max(row[3][j] for row in branches) for j in range(9)]
+    worst = [[{'shape':row[0], 'survivors':row[1]} for row in branches
+              if row[3][j] == full_maxima[j]] for j in range(9)]
+    return {'scope':'ordinary exact-arithmetic hinge bounds for the same actual clipped survivor law; full original 357 part divides 315; arbitrary finite 11/13 heights; no Lean or tail conclusion',
+            'clip':str(clip), 'thresholds':knots, 'witnesses':witnesses,
+            'pointwise_dual_checks':checks, 'nonempty_grid_counts_verified':len(geometries),
+            'integer_inequalities_verified':sum(v['integer_inequalities_verified'] for v in checks),
+            'full_domain_inequalities_certified':9*len(geometries)*12**4,
+            'shared_branches_verified':len(branches), 'cases':cases,
+            'universal_low_hinge_upper_at_4_through_12':list(map(str, low_maxima)),
+            'universal_full_hinge_upper_at_4_through_12':list(map(str, full_maxima)),
+            'full_hinge_maximizing_branches_at_4_through_12':worst,
+            'interpolation':'adjacent certified knots may be joined linearly to upper-bound the convex actual hinge; the resulting upper curve is not asserted to be a probability comparator'}
+
+
+def fixed_count_joint_cost_comparison(old_cases):
+    """Bound two joint convex costs at N=80,81,82 using labelled deletion unions.
+
+    Standard library only. Jbar(A) uses old hinge maxima, never A x B pairs.
+    Every original mixed7 label is inactive or belongs to one of at most five
+    nonzero7digit blocks. A block deletes a union of its old45 cylinders.
+    Anchored partition DP minimizes the deleted cost at its exact cardinality.
+    """
+    from fractions import Fraction
+    from itertools import product
+
+    def require(condition, message):
+        if not condition:
+            raise RuntimeError(message)
+
+    shape, points, _, expected_layouts = old_cases[0]
+    require(shape == 'root1_same_other_column' and len(points) == 17
+            and expected_layouts == 4760, 'first canonical shape for fixed-count costs')
+    moduli = (3, 5, 9, 15, 45)
+    cylinders = [[sum(1 << i for i, x in enumerate(points) if x % d == a)
+                  for a in sorted({x % d for x in points})] for d in moduli]
+    unions = [{0}]
+    for subset in range(1, 32):
+        bit = subset & -subset
+        label = bit.bit_length() - 1
+        unions.append({old | cylinder for old in unions[subset ^ bit]
+                       for cylinder in [0] + cylinders[label]})
+    require(len(unions[31]) == 2164 and sum(map(len, unions)) == 8919,
+            'all labelled cylinder subset unions')
+    mask_indices = {mask: tuple(i for i in range(17) if mask & (1 << i))
+                    for mask in unions[31]}
+    layouts = [tuple(1 + sum(bool(mask & (1 << i)) for mask in choices)
+                     for i in range(17)) for choices in product(*cylinders)]
+    require(len(layouts) == expected_layouts, 'all old45 test layouts')
+    hinge_sums = [tuple(sum(max(v - t, 0) for v in load) for t in range(7))
+                  for load in layouts]
+    maxima = [max(row[t] for row in hinge_sums) for t in range(7)]
+    require(maxima == [42, 25, 11, 5, 2, 1, 0], 'old45 hinge maxima including zero tail')
+    costs = ({1: 1, 2: 2, 3: 16, 6: 74}, {1: 1, 3: 9, 4: 2})
+    survivor_counts = (80, 81, 82)
+    deleted_counts = (22, 21, 20)
+    targets = ((1986, 1986, 1992), (728, 728, 732))
+    max_deleted = max(deleted_counts)
+    cost_rows = []
+    for cost, target in zip(costs, targets):
+        table = [sum(weight * max(v - t, 0) for t, weight in cost.items())
+                 for v in range(7)]
+        screened = exact = 0
+        minimum_exact_slacks = [None] * 3
+        for load, hinges_a in zip(layouts, hinge_sums):
+            values = [table[v] for v in load]
+            joint_upper = sum(weight * min(hinges_a[s] + maxima[t - s]
+                                          for s in range(t + 1))
+                              for t, weight in cost.items())
+            total = 5 * sum(values) + joint_upper
+            ordered = sorted(values * 5)
+            cheap_loss = [sum(ordered[:deleted]) for deleted in deleted_counts]
+            for eta in set([0] + values):
+                positive = [max(eta - value, 0) for value in values]
+                cap = sum(max(sum(positive[i] for i in mask_indices[mask])
+                              for mask in group) for group in cylinders)
+                cheap_loss = [max(loss, eta * deleted - cap)
+                              for loss, deleted in zip(cheap_loss, deleted_counts)]
+            if all(total - loss <= bound for loss, bound in zip(cheap_loss, target)):
+                screened += 1
+                continue
+            exact += 1
+            mask_cost = {mask: sum(values[i] for i in indices)
+                         for mask, indices in mask_indices.items()}
+            blocks = []
+            for group in unions:
+                by_count = {}
+                for mask in group:
+                    size, value = mask.bit_count(), mask_cost[mask]
+                    if size not in by_count or value < by_count[size]:
+                        by_count[size] = value
+                blocks.append(by_count)
+            dp = [{0: 0}] + [{} for _ in range(31)]
+            for subset in range(1, 32):
+                anchor = subset & -subset
+                first = subset
+                while first:
+                    if first & anchor:
+                        for left_size, left_value in blocks[first].items():
+                            for right_size, right_value in dp[subset ^ first].items():
+                                size = left_size + right_size
+                                value = left_value + right_value
+                                if size <= max_deleted and (size not in dp[subset]
+                                                            or value < dp[subset][size]):
+                                    dp[subset][size] = value
+                    first = (first - 1) & subset
+            for index, (deleted, bound, cheap) in enumerate(zip(deleted_counts, target, cheap_loss)):
+                require(deleted in dp[31], 'every checked fixed deletion count is feasible')
+                loss = dp[31][deleted]
+                require(loss >= cheap, 'exact original-label deletion refines the cheap lower bound')
+                slack = bound - (total - loss)
+                require(slack >= 0, 'fixed-count joint convex cost upper bound')
+                old = minimum_exact_slacks[index]
+                minimum_exact_slacks[index] = slack if old is None else min(old, slack)
+        require(screened + exact == expected_layouts and minimum_exact_slacks == [0, 0, 0],
+                'all layouts discharged with active exact comparisons')
+        cost_rows.append({
+            'hinge_weights': {str(k): v for k, v in cost.items()},
+            'numerator_upper': list(target),
+            'mean_upper': [str(Fraction(value, count)) for value, count in zip(target, survivor_counts)],
+            'cheap_screened_layouts': screened,
+            'exact_partition_layouts': exact,
+            'minimum_exact_slacks': minimum_exact_slacks,
+        })
+    require([row['exact_partition_layouts'] for row in cost_rows] == [72, 120],
+            'screened candidate cardinalities')
+    return {
+        'shape': shape,
+        'law': 'uniform on actual complete old315 survivors',
+        'old_test_layouts': expected_layouts,
+        'survivor_counts': list(survivor_counts),
+        'deleted_counts': list(deleted_counts),
+        'maximum_old_hinge_sums_at_0_through_6': maxima,
+        'union_counts_by_label_subset': list(map(len, unions)),
+        'costs': cost_rows,
+    }
+
+
+def fixed_count_hinge_refinement(costs, shared, old, profile):
+    """Use actual labelled deletion costs in the same-law threshold-six dual."""
+    F = Fraction
+    weights = ({1: 1, 2: 2, 3: 16, 6: 74}, {1: 1, 3: 9, 4: 2},
+               {2: 1, 3: 7, 4: 2}, {2: 1})
+    witness = profile['witnesses'][2]
+    require(witness['threshold'] == 6 and witness['constant_numerator'] == 0,
+            'the verified threshold-six rectangle dual')
+    scale = witness['denominator']
+    require(all(F(value, scale) == F(cost.get(t, 0), 93)
+                for row, cost in zip(witness['load_hinge_numerators'], weights)
+                for t, value in enumerate(row))
+            and all(F(value, scale) == (F(7, 1984) if t == 8 else 0)
+                    for t, value in enumerate(witness['hole_hinge_numerators'])),
+            'the joint costs match the verified dual exactly')
+    require([row['hinge_weights'] for row in costs['costs']]
+            == [{str(t): value for t, value in cost.items()} for cost in weights[:2]],
+            'the recomputed labelled-deletion costs match their consumers')
+    require(len(shared['cases']) == len(old['cases']) == len(profile['cases']) == 6,
+            'all six canonical shapes in the fixed-count transfer')
+    branches = []
+    improved = []
+    for sc, previous, geometric in zip(shared['cases'], old['cases'], profile['cases']):
+        require(sc['shape'] == previous['shape'] == geometric['shape'],
+                'same shapes in joint-cost and geometric bounds')
+        old_hinges = list(map(F, previous['hinge_bounds_at_0_through_5']))
+        require(len(sc['rows']) == len(geometric['rows']), 'same survivor-count branches')
+        for source, baseline in zip(sc['rows'], geometric['rows']):
+            count = source['survivors']
+            require(count == baseline['survivors'], 'same actual old survivor count')
+            mean = F(source['mean_upper'])
+            theta = [mean, mean-1, F(source['hinge2_upper']), old_hinges[3],
+                     F(source['hinge4_upper']), old_hinges[5]]
+            theta += [F(v, count) for v in (10, 7, 4, 3, 2, 1, 0)]
+            caps = [sum(v*theta[t] for t, v in cost.items()) for cost in weights]
+            raw = sum(caps)/93 + F(7, 1984)*theta[8]
+            require(raw == F(baseline['low_hinge_upper_at_4_through_12'][2]),
+                    'unrefined joint costs reproduce the canonical rectangle bound')
+            if sc['shape'] == costs['shape'] and count in costs['survivor_counts']:
+                index = costs['survivor_counts'].index(count)
+                for j in range(2):
+                    caps[j] = min(caps[j], F(costs['costs'][j]['numerator_upper'][index], count))
+            refined_raw = sum(caps)/93 + F(7, 1984)*theta[8]
+            high = F(shared['clip'])*F(shared['high_reference_mass_per_old_mean'])*mean
+            survival = F(source['full_mass_lower'])
+            require(survival > 0 and refined_raw <= raw,
+                    'positive same-branch normalization and valid refinement')
+            full = (refined_raw+high)/survival
+            require(full <= F(baseline['full_hinge_upper_at_4_through_12'][2]),
+                    'same-law full-height hinge refinement')
+            row = {'shape':sc['shape'], 'survivors':count,
+                   'old_joint_cost_upper':list(map(str, caps)),
+                   'low_hinge6_upper':str(refined_raw), 'full_hinge6_upper':str(full)}
+            branches.append(row)
+            if refined_raw < raw:
+                improved.append({'shape':sc['shape'], 'survivors':count})
+    maximum = max(F(row['full_hinge6_upper']) for row in branches)
+    require(len(branches) == 144 and len(improved) == 3
+            and maximum == F(26114497, 32685768) < F(4, 5),
+            'complete exact all-height hinge-six bound below four fifths')
+    return {'scope':profile['scope'], 'fixed_count_joint_costs':costs,
+            'shared_branches_verified':len(branches), 'branches':branches,
+            'improved_branches':improved,
+            'universal_full_hinge6_upper':str(maximum),
+            'gap_below_four_fifths':str(F(4, 5)-maximum),
+            'full_hinge6_maximizing_branches':[
+                {'shape':row['shape'], 'survivors':row['survivors']}
+                for row in branches if F(row['full_hinge6_upper']) == maximum],
+            'prime17_threshold6_charge_upper':str(maximum/10),
+            'interpolation':'replace the threshold-six knot in the rectangle profile by this upper bound; adjacent-knot interpolation is valid for the convex actual hinge, without asserting a probability comparator'}
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -2370,9 +2698,15 @@ def verify(expected):
     signed_result = signed_deletion_square_comparison(old_cases, deletion_result)
     lift_result = matching_height_lift()
     variable_head = varying_hole_head(deletion_result, signed_result)
+    shared_head = shared_count_clipped_head(old_cases, deletion_result, signed_result)
+    hinge_profile = actual_rectangle_hinge_profile(
+        expected["actual_rectangle_hinge_profile"]["witnesses"], shared_head, deletion_result, cases)
     result = {
+        "fixed_count_hinge_refinement": fixed_count_hinge_refinement(
+            fixed_count_joint_cost_comparison(old_cases), shared_head, deletion_result, hinge_profile),
+        "actual_rectangle_hinge_profile": hinge_profile,
         "rectangle_hinge_observation_gap": rectangle_hinge_observation_gap(),
-        "shared_count_clipped_head": shared_count_clipped_head(old_cases, deletion_result, signed_result),
+        "shared_count_clipped_head": shared_head,
         "variable_axis_clipping": variable_axis_clipped_head(expected["variable_axis_clipping"]["witnesses"], deletion_result, signed_result),
         "signed_conditioning_obstruction": signed_conditioning_obstruction(),
         "schema": "marked-head-profile-v1",
@@ -2420,6 +2754,8 @@ def verify(expected):
                       "arbitrary_holes12_tail17_Gamma": result["arbitrary_holes12_tail17"]["Gamma_upper"],
                       "shared_count_clipped_Gamma": result["shared_count_clipped_head"]["actual_rectangle_refinement"]["Gamma_upper"],
                       "shared_count_branches": result["shared_count_clipped_head"]["shared_branches_verified"],
+                      "fixed_count_full_hinge6": result["fixed_count_hinge_refinement"]["universal_full_hinge6_upper"],
+                      "actual_rectangle_hinge6": result["actual_rectangle_hinge_profile"]["universal_full_hinge_upper_at_4_through_12"][2],
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 

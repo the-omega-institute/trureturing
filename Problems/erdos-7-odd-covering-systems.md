@@ -1787,9 +1787,47 @@ of `X·N11·N13` as a full increasing-convex comparator, with boundary 3
 and mean `1264886009/229953594`. These stronger bounds preserve the
 full `315·11^H·13^J` scope and do not assert a new tail continuation.
 
+The [actual rectangle hinge profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-rectangle-hinge-bounds-on-the-same-law)
+additionally bounds the complete test-load hinges on this same law at
+all integer thresholds from 4 through 12. In particular,
+
+    Theta_nu(6) <= 19427/24198 < 0.802835.
+
+Convex concentration and the sum of the largest surviving-count cell
+loads give a geometric upper envelope with the actual clipping
+denominator. Nine rational duals are checked by 26,078,976 integer
+inequalities; a point-load endpoint argument covers the full finite
+domain, and empty fibres are checked separately. Their averages use
+only the existing old-shape and survivor-count bounds. The actual
+mixed-hole count is bounded by its old activation load, and the
+higher-exponent contribution and normalization retain the same one
+of 144 branches. The new `actual_rectangle_hinge_profile` certificate
+field stores every dual and the full-height bounds at thresholds
+4--12. The first prime-17 query in (AP2) at threshold 6 therefore costs
+at most `19427/241980`. Adjacent-knot interpolation is a valid
+pointwise upper bound; the resulting curve is not asserted to be a
+probability comparator. This is an ordinary exact-arithmetic result,
+not a new Lean theorem or a completed unrestricted-tail certificate.
+
 These results remove the axis hypothesis for the finite head estimate.
 They do not supply the unrestricted-tail stopping certificate needed
 to remove that hypothesis from the preceding noncoverage theorem.
+
+The fixed-count labelled deletion refinement now closes the finite-head
+threshold-six target. On the first 17-point old shape, the five mixed-seven
+labels are grouped by their nonzero seven digit; each group deletes a union
+of its labelled old-cylinder sets. An anchored partition recurrence over
+these unions gives exact deleted-cost lower bounds. Of 4,760 old-45 layouts,
+only 72 and 120 require the exact recurrence for the two sharpened costs;
+the resulting numerator caps at survivor counts 80, 81 and 82 are
+`(1986,1986,1992)` and `(728,728,732)`. Applying those caps to the existing
+144 branch transfer gives
+
+    Theta_nu(6) <= 26114497/32685768 < 4/5,
+
+with unique worst branch `root1_same_other_column`, 79 survivors. This is
+an ordinary exact finite-head calculation for arbitrary finite 11/13 heights,
+not a Lean theorem or an unrestricted-tail conclusion.
 
 The [signed-conditioning obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-obstruction-for-uniform-conditioning-and-its-signed-bound)
 gives a complementary boundary. An actual family containing all 47
