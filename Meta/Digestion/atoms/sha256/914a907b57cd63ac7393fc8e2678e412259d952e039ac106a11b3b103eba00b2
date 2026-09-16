@@ -1,0 +1,9 @@
+### IP.10 Exact distance between any two layers
+
+Define integer polynomials
+
+$$
+P_0(X)=1,\qquad P_1(X)=X-3,\qquad
+P_{a+2}(X)=(X-2)P_{a+1}(X)-P_a(X).
+$$
+

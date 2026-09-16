@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f7628b1bf4563d5c69ec6cee1a8573e39bf4b7473e160f3e3637146a506adae
+  normalized_sha256: sha256:9f7628b1bf4563d5c69ec6cee1a8573e39bf4b7473e160f3e3637146a506adae
+cas_ref: sha256:9f7628b1bf4563d5c69ec6cee1a8573e39bf4b7473e160f3e3637146a506adae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶与同一父句末尾的连续谓词共同读取；实际合法无限数字空间上的实级数由 continuous_tsum 和 summable_geometric_of_lt_one 的一致几何界直接闭合，仓内无冻结 GID。
+    previous_atom_id: e3ffa9bca668bf48b1887435b24ff508a2eff36bfb888edd933a4a05d45b53ca
+    next_atom_id: 922afef016688f16a6e9df32ef36ce6b469111974752aed898e707f31b99de4e

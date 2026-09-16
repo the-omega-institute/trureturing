@@ -1,0 +1,8 @@
+**量词形式。** 对每个 eta>0 和每个素数界 B，都存在素数 p>B，使
+
+\[
+0<\delta(p)<\eta,
+\qquad \forall k\ge1,\quad D_k(p)<\eta.
+\tag{FD7}
+\]
+
