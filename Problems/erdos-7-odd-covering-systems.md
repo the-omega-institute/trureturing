@@ -137,6 +137,17 @@ same deletion vector but inequivalent carriers. The standalone exact
 classifier rebuilds every state and orbit. This establishes the domain
 and its allowed identifications, not a moment bound on all its members.
 
+The [support-inclusion reduction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#support-dominance-reduces-the-complete-actual315-carrier-task)
+further reduces those 170569 orbits to 56966 inclusion-minimal orbits.
+A five-label resource recurrence exactly maximizes deletions among actual
+carriers contained in each target. It preserves each original modulus
+and uses one common digit permutation. The existing 75-point PG1 law
+therefore certifies 232 containing-carrier orbits, including one minimal
+orbit, at arbitrary finite original3/5/7 heights. The higher forbidden
+family is pulled back through the same coordinate map before applying
+the universal PG1 estimate. Numerical bounds for the remaining minimal
+carriers and a general prime-tail continuation remain open.
+
 On that same77-point law, the [convex extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#convex-costs-on-the-same-arbitrary-height-probability)
 (SH19)--(SH25) adds simultaneous mean `<4.948866` and eight hinge
 bounds, including threshold-six `<0.808228`, with arbitrary original

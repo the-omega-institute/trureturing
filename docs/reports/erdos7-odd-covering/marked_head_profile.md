@@ -5602,3 +5602,102 @@ The exact new contribution and saving are
 The largest integer intermediate bound is8015014558798784, below2^63.
 This compares two upper-certificate formulas; it is not a decrease of the
 actual system's assigned charge or a claim of optimality over all potentials.
+
+### Support dominance reduces the complete actual315 carrier task
+
+Fix one of the six canonical old45 survivor sets S used by the existing actual-carrier classification. The pure7 digit0 is forbidden. The five distinct mixed labels are7d for d in(3,5,9,15,45); each may choose its own old cylinder and7digit. A carrier is encoded by the sorted multiset of its nonempty deletion masks U_y⊆S, y∈{1,…,6}. Repeated masks retain multiplicity and absent masks are empty. Its support is Ω_U={(x,y):x∈S\U_y}. The canonical classification contains965595 such states and170569 orbits under the permitted common CRT root maps.
+
+The following finite reduction leaves56966 inclusion-minimal carrier orbits. It does not claim a moment bound for these remaining cases. The already proved PG1 law certifies232 carrier orbits by support inclusion, including exactly one of the56966 minimal orbits.
+
+#### Support inclusion and the actual higher family
+
+For two carriers A,B on the same S, there exists one common7digit permutation with Ω_A⊆Ω_B after transport if and only if the nonempty masks of B inject into distinct nonempty masks of A, with B_i⊆A_j on each matched pair. Necessity follows by taking complements at each digit. Conversely, use those matched digits and then biject the remaining empty B masks to the remaining A digit positions. Padding to six digits makes this a permutation. A nonempty B mask cannot be assigned to an empty A mask. Duplicate masks remain distinct matching vertices.
+
+Thus a Boolean matching problem on at most five nonempty vertices decides inclusion. The checker represents each target's eligible source digits by a bitmask and exhaustively chooses distinct eligible bits. It also considers the permitted old3/5 root maps. These preserve every cylinder family and extend to every finite higher prime-power depth, as established by the canonical classification.
+
+The moment-bound transfer requires its quantifiers in the correct order. Suppose PG1 supplies a fixed low law μ_A on Ω_A and the stated bound for its uniform higher-digit lift, conditioned on **every** admissible actual higher357 forbidden family. Let T be an allowed coordinate map with TΩ_A⊆Ω_B. Now fix an arbitrary physical height Q and an arbitrary actual higher forbidden family H_B for the larger carrier. Pull H_B back through the extension of T to obtain H_A=T^−1H_B. Each residue cylinder is still a single cylinder of the same original modulus, so the original labels remain distinct and H_A is an admissible higher family.
+
+Apply PG1 to μ_A and this H_A. Push the resulting conditional law forward by T. The pushed law is supported on Ω_B and avoids the actual H_B. It is precisely the uniform higher-digit lift of T_*μ_A conditioned on avoiding H_B. Complete test families pull back to complete test families with the same original modulus labels, so the same moment bound holds. This does not identify higher classes belonging to different carriers: their relation is explicitly the pullback through T, followed by the universal PG1 theorem.
+
+The base law T_*μ_A may give zero mass to the extra points of Ω_B. All cylinder caps, selected higher deletion groups, and geometric-tail estimates are transported with that law. Their dependence is on the law, cylinder families, and original higher-modulus labels; they do not require retaining the source carrier's particular low forbidden residues as the target low family. No ambient uniform-density alternative is used and no geometric tail is truncated.
+
+#### Every carrier contains an essential one
+
+An original mixed label is redundant if its old mask is empty, its digit is0, or its old mask is contained in the union of the other masks at its digit. There is always an unused nonzero digit: only five mixed labels can occupy six available digits.
+
+Move a redundant label to a nonempty old cylinder at an unused nonzero digit. Its old deletion was already supplied by the pure7 exclusion or other labels, so no old deletion is lost. At least one new actual low point is deleted. The original modulus label is unchanged. Repeating strictly increases an integer deletion count in a finite space, so the process terminates. At termination, every label has a private deleted point at its digit. The final carrier is a subset of the original carrier.
+
+For a nonempty label subset J⊆{0,…,4}, enumerate its old cylinder choices. Retain a union U only when every chosen cylinder has a point outside the union of the other cylinders in that block. Partition all five labels into nonempty blocks and collect the resulting sorted union multisets. This enumerates exactly the carriers admitting an all-essential labelled realization. Taking the same old-coordinate quotient yields107695 essential carrier orbits. Any support theorem proved on those carriers applies to all170569 original carrier orbits by the preceding subset transfer. This is a sufficient reduction even when a carrier admits several different labelled realizations.
+
+#### Exact five-label resource DP
+
+The essential reduction is not minimal: a carrier whose five labels are all essential can still contain another realizable carrier obtained by reallocating the coarse and fine original labels. The following DP decides this exactly.
+
+For each nonempty label subset J, let V_J be all old masks obtainable as a union of one cylinder for each label in J. For a required nonempty target mask B define
+
+    c_J(B)=max {|U|: U∈V_J and B⊆U},
+
+with value infeasible if no such union exists. The program retains an actual union and original cylinder assignment attaining every finite maximum. Empty old cylinders need not be added when maximizing c_J: replacing one with a nonempty cylinder only increases its union and remains a valid choice of that original label.
+
+Let B_1,…,B_k be the nonempty target digit masks, k≤5. Assign each B_i a nonempty label subset J_i, disjoint from all the others. The labels in J_i will occupy that target digit. If label j is left over, place it at a fresh unused nonzero digit and choose an old cylinder of maximum size m_j. The total number of occupied digits is at most
+
+    k + (5−Σ_i |J_i|) ≤ 5 < 6.
+
+Thus this completion is always physically realizable. It also handles labels that were originally absent, had empty old masks, or occupied digit0: their original deletion contributes nothing, and the maximization may place them on a fresh surviving digit.
+
+The exact largest deletion count among all realizable carriers whose support lies inside Ω_B, up to one common7digit permutation, is
+
+    D_max(B)=max_(disjoint nonempty J_i)
+              [Σ_i c_(J_i)(B_i)+Σ_(j left over)m_j].
+
+For the upper bound, align any containing-deletion carrier with the k target digits. The original labels occupying those digits form the disjoint nonempty J_i. Its deletion at digit i is at most c_(J_i)(B_i). All remaining digit unions together have cardinality at most the sum of the individual maxima m_j of their labels. For attainment, take a maximizing union for each J_i and place each remaining label at its own unused digit. CRT realizes every chosen old cylinder/digit pair with its original modulus7d. This proves equality, rather than merely an upper bound.
+
+The recurrence uses a remaining-label mask R of size32:
+
+    M((),R)=Σ_(j∈R)m_j,
+    M((B_1,…,B_k),R)=max_(nonempty J⊆R)
+                        [c_J(B_1)+M((B_2,…,B_k),R\J)].
+
+A branch with fewer available labels than required nonempty digits is infeasible. Infeasible c_J terms are omitted. The result is D_max(B)=M((B_1,…,B_k),{0,…,4}). Replacing all c_J realizations by their maximizing union is valid because distinct digits have disjoint physical point sets and the rest of the recurrence depends only on the unused original labels.
+
+Write D(B)=Σ_i|B_i|. The target carrier is feasible in its own maximization, so D_max(B)≥D(B). It is inclusion-minimal exactly when equality holds. If D_max(B)>D(B), a maximizing realization has a strictly smaller support contained in Ω_B. Every maximizing realization is itself inclusion-minimal: a still smaller realizable support would delete more than D_max(B), a contradiction.
+
+Here the initial definition of minimality fixes S pointwise and allows one common7digit permutation. The resulting feasible carrier class is closed under the allowed old3/5 maps. Therefore allowing an old map in the domination relation gives the same minimality criterion: its image is already another feasible carrier in the DP domain. Minimality is consequently well defined on the combined old-map/global7digit orbits. No independent digit relabelling at separate old points is used.
+
+#### Complete finite counts
+
+| Canonical old45 shape | All carrier orbits | Essential orbits | Inclusion-minimal orbits |
+|---|---:|---:|---:|
+| root1, same root / other column |31833|20144|9793|
+| root1, other root / same column |15451|9593|5495|
+| root1, other root / other column |40281|25613|15233|
+| root2, same root / other column |36152|22987|12362|
+| root2, other root / same column |12692|7834|3529|
+| root2, other root / other column |34160|21524|10554|
+| Total |170569|107695|56966|
+
+The essential family has640932 states before old-coordinate quotienting. The resource DP finds strict support dominators for50729 of its107695 orbits. Since every original carrier first contains an essential one, these56966 minimal orbits are a complete sufficient domain for any universally transferable supported-law theorem at these six old geometries. Their numerical target remains to be proved casewise or by further uniform arguments.
+
+For an explicit example in the root2, other-root/same-column shape, the carrier with deletion masks(1,16,16,1160,22866) has83 points and contains a79point carrier with masks(16,16,1160,5155,22866), after a common digit permutation. Its maximizing construction allocates each of the original cofactors3,5,9,15,45 exactly once. The certificate records corresponding actual cylinder masks by digit; their union and label-disjointness are checked.
+
+#### The PG1 law covers232 carrier orbits
+
+The canonical PG1 certificate gives the75point carrier in the root2, other-root/other-column shape and the exact bound
+
+    Γ ≤ 105976769844774468812903/2920804491373837228125 < 3849/106.
+
+Its nonempty deletion masks are(2320,32768,33808,38032,44378), with bit order given by that canonical old45 geometry. All75 supplied point weights are strictly positive. The checker reads the existing PG1 certificate, reconstructs its actual support, verifies the original low modulus set and raw integer weights, pins this inherited bound and target, and pins the canonical JSON representation of the complete published source certificate by SHA-256. The numerical PG1 proof is reused from the existing canonical `verify_point_geometry.py`; this dominance entry does not recompute its two moment oracles.
+
+Considering the12 old-coordinate images and testing the exact digit-mask inclusion matching covers1648 carrier states, or232 combined carrier orbits. The PG1 carrier is itself inclusion-minimal, so exactly one of the56966 minimal orbits is covered by this inherited certificate. The other covered carriers are larger supports to which the quantifier-preserving transfer applies. This does not assert numerical bounds for the remaining minimal orbits.
+
+#### Reproduction and verification boundary
+
+Keep this new entry point separate from the existing classifier and its certificate. With the new files beside the canonical geometry classifier, canonical old-profile certificate, and canonical PG1 certificate, run
+
+```sh
+python3 -I -O verify_carrier_dominance.py
+```
+
+An external canonical directory can be selected with `--canonical-directory`; `--check` selects the small result certificate. The entry uses the canonical geometry module through an explicit adjacent path, which works under isolated Python. It imports only standard-library modules, uses unbounded integers and explicit guards, validates all consumed integer inputs, and pins the geometric domain and inherited PG1 bound.
+
+The checker reconstructs all essential carrier states, verifies root-group orbit closure and accounting, recomputes the six exact resource DPs, verifies label-disjoint constructive witnesses, and hashes the reconstructed state/orbit sets without retaining large lists. For one minimal and one dominated target in each shape, it independently scans every essential carrier using only the injection matcher and confirms the DP's maximum deletion count. It also recomputes all232 PG1-covered orbits. The small certificate retains counts, hashes, and explicit witnesses. These are finite arithmetic results and ordinary support/all-height transport proofs; no new Lean admission or resolution of unrestricted Erdős #7 is claimed.
