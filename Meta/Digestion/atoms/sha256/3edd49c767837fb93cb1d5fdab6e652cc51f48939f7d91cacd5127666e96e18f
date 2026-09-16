@@ -1,0 +1,21 @@
+**theorem 40.6 (Summation by parts with the vector oscillation).** Let $w_0,\ldots,w_m$ be nonnegative weights summing to one, extended by zero at indices $-1$ and $m+1$. Define
+$$
+\mathcal V(w)=\frac12\sum_{j=0}^{m+1}|w_j-w_{j-1}|.
+$$
+Then
+$$
+\sup_x\left\|
+ \sum_{j=0}^m w_j\mathbf e_{\pi_{N,\theta}(x+j\theta)}
+ -\boldsymbol\mu\right\|_1
+ \le\Delta_{N,\theta}\mathcal V(w).
+$$
+For the binomial weights, including $n=0$ and the deterministic parameters,
+$$
+\mathcal V(b_{n,p})=M_{n,p}.
+$$
+Consequently,
+$$
+e_{N,\theta,p}(n)
+ \le\min\{2(1-\mu_{\min}),\Delta_{N,\theta}M_{n,p}\}.
+$$
+
