@@ -8623,3 +8623,303 @@ here nor a quantitative positive residual. In (WD1)--(WD6) and
 is to keep the actual labeled layout and one source event throughout
 the calculation. A uniform extension over the remaining carriers and
 arbitrary later primes is still required.
+
+### Complete integer hinges on the unchanged PG1 survivor law
+
+Keep the PG1 probability, the actual higher357 event \(F\), and its
+positive lower bound \(q_0=25428074957/48000000336\). For a complete
+original test load \(L\), let \(H_t=\sup_L\mathbb E[(L-t)_+]\) on
+this one conditional law. The following simultaneous bounds improve
+the previously supplied interpolation or threshold4/6 estimates:
+
+| Threshold \(t\) | Exact upper bound for \(H_t\) | Decimal upper bound |
+| ---: | --- | ---: |
+| 3 | \(10162026053915069246357/4868007485623062046875\) | 2.087512414 |
+| 4 | \(1433737384346892410897/973601497124612409375\) | 1.472612141 |
+| 6 | \(4033254968714385651877/4868007485623062046875\) | 0.828522755 |
+| 7 | \(9648458629766273805119/14604022456869186140625\) | 0.660671309 |
+| 8 | \(212159150814634558117/417257784481976746875\) | 0.508460618 |
+
+The existing direct unweighted \(n=1\) cost already supplies
+\(H_5\le1093534028247938362241/973601497124612409375\).
+It is reused, not a new threshold5 calculation. The earlier
+\(H_2\le3\), \(\mathbb E L\le5\), and square bound (WD4)
+hold on this same probability.
+
+For each of the ten fixed original3/original9 root pairs, evaluate the
+convex row bound at thresholds3,7,8 on all270 auxiliary depths in
+\([0,8]\times[0,5]\times[0,4]\). Threshold4/6 reuse their existing
+complete arrays. Write \(h_{t,ij}(z)\) for these bounds,
+\(\beta=\Pr(Z\text{ in the box})\), and \(h^*_{t,ij}(0)\) for
+the exact zero-depth maximum over the actual twelve original labels.
+Original-root realizations are retained before identical old loads
+are deduplicated. The six seven-divisible labels have independent
+digits; their maximizers need not use a common digit.
+
+The true fixed-root hinge maximum obeys (M9C2), by its one-Lipschitz
+increment bound. Thus replacing both the inside zero term and the
+outside anchor in (M9C3) gives
+
+\[
+ U^{\rm new}_{t,ij}=U^{\rm old}_{t,ij}
+ -\left(\Pr(Z=0)+1-\beta\right)
+       \left(h_{t,ij}(0)-h^*_{t,ij}(0)\right),\qquad
+ \Pr(Z=0)+1-\beta=\frac{12507116753}{27348890625}.       \tag{IH1}
+\]
+
+The other269 depth terms and the entire first-moment remainder
+\(2330295100792072343/3063075771441530250000\) remain included.
+Since the hinge is nonnegative and
+\((1+I_3+I_9-t)_+=0\) for these thresholds,
+\(H_t\le\max_{i,j}U^{\rm new}_{t,ij}/q_0\).
+This comparison covers every original finite3/5/7 height. It changes
+the observation bounds, not the actual probability or forbidden event.
+
+`verify_pg1_integer_hinges.py` reconstructs the new depth arrays and
+full tail, reuses hash-bound threshold4/6 data, and checks all50 rooted
+zero maxima with the integer oracle. Each maximizing load is replayed
+by the Python digit optimizer and literal twelve-label evaluation on
+the75 source points. Selected nonlinear row values are also checked
+by complete old-layout enumeration. The exact results are retained in
+`pg1_integer_hinges_certificate.json`.
+
+### A complete scalar schedule consumer and its remaining gap
+
+Insert (IH1), the reused \(H_5\), \(H_2\le3\), mean5 and
+\(G=491316187201313799169931/14604022456869186140625\)
+into the existing actual-kernel criterion (SH28). Fix11/4 and13/5,
+and consider all255 pairs \(1\le T_{17}\le15\),
+\(1\le T_{19}\le17\). For any required integer \(j>8\), use
+\(H_j\le\min(H_8,G/(4j))\); the second inequality follows from
+\((L-j)_+\le L^2/(4j)\). Also \(H_1\le4\) since \(L\ge1\).
+
+For each prime, the auxiliary multiplier distribution below \(T_p\)
+is calculated exactly by divisor convolution. Its remaining mass and
+first moment account for all \(N\ge T_p\), where the entire combined
+cost is \(W(NL-T_p)/d_p\). No exponent or auxiliary tail is discarded.
+The integer hinge expansion of (SH27) has nonnegative coefficients at
+the final \(W\); its constant may be negative and is retained exactly.
+
+The existing direct13/5 observation for \((2L-5)_+\) improves the
+\(n=2\) charge term, but cannot simply be subtracted from an arbitrary
+signed expansion. Put \(W_0=f_{13}a_{13}c_{13}\), the convexity
+threshold. The valid decomposition is
+
+\[
+ h_W(2L)=h_{W_0}(2L)
+       +\frac{W-W_0}{d_{13}}(2L-5)_+ .                 \tag{IH2}
+\]
+
+Bound the first summand by its nonnegative integer hinge coefficients,
+and the second by the smaller of the direct cost and \(H_2+H_3\).
+Both coefficients have the required sign because \(W\ge W_0\).
+The resulting total cost has the form \(AW+B\). With
+\(P=\prod_p(1+a_pc_p)\), (SH28) becomes
+\(PG-1+B\le(1-A)W\). The final value must also satisfy every
+prime's convexity condition.
+
+Of these255 schedules,83 give a finite sufficient bound with the
+supplied features. The best is11/4,13/5,17/8,19/8, giving
+
+\[
+ \Gamma_{19}\le
+ \frac{4328407686313602732003920846923406469670769}
+      {3525794087392122703309813353800433137280}
+ <1227.640520.                                         \tag{IH3}
+\]
+
+Here \(P=7367153/1814400\), \(A<0.889741\), and equality holds
+in (SH28). At the fixed17/7,19/8 thresholds the bound is
+\(<1248.112850\). The remaining172 schedules have \(A\ge1\)
+and strictly fail the affine criterion already at their smallest
+convexity-admissible \(W\); increasing \(W\) cannot repair them.
+None of these supplied-feature bounds is below484, the necessary
+input threshold for the scalar23 continuation. This is a limitation
+of this explicitly evaluated upper-bound criterion, not a lower bound
+on actual moments and not an obstruction to other head laws or joint
+observations.
+
+`verify_pg1_scalar_schedule.py` and
+`pg1_scalar_schedule_certificate.json` retain the complete255-case
+calculation. Every successful row is checked at its final \(W\),
+including the discrete feature identity, coefficient signs, full tail
+and (SH28); each unsuccessful row retains its positive affine defect.
+An independent rational convolution and convex-base decomposition
+agrees on all255 outcomes. These are ordinary all-height estimates
+and exact experimental certificates, not new Lean theorems or a
+resolution of unrestricted #7.
+
+### What the latest finite-quotient and observer results contribute
+
+[RRO section45 at devd3774401e0](https://github.com/the-omega-institute/trureturing/blob/d3774401e080a6c4dfc7b73b86e94d4ad782166b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#45-稠密自然数紧半环的有限商强制性与阈值超自然周期分类)
+assumes a compact Hausdorff unital semiring, jointly continuous
+addition and multiplication, and a dense natural core. Under these
+hypotheses it classifies finite natural quotients by a threshold and
+period. Their common refinement takes the maximum threshold and the
+least common multiple of the periods. In particular, the CRT residue
+observations used here belong to a family closed under the required
+arithmetic and finite intersections. The classification does not
+give a uniform finite period sufficient for arbitrary input moduli,
+nor does it attach survivor probabilities to these observations.
+Section45.18 explicitly distinguishes existence of suitable finite
+quotients from sufficiency of an arbitrary chosen finite observation.
+
+[The ML observation companion section44](https://github.com/the-omega-institute/trureturing/blob/d3774401e080a6c4dfc7b73b86e94d4ad782166b/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md#44-精度切换后的严格区间捕获与可重复双轨观察)
+proves finite capture of a valid new interval for its specified binary
+hidden-state model. Its proof uses the same future reports, contraction
+between two exact trajectories, and a strictly positive inward margin;
+output accuracy alone does not supply interval membership. For #7,
+no corresponding contraction or uniform inward survivor margin is
+established. The useful design requirement is to prove that an
+improved observation supports the next actual update, including its
+positivity premise. The new dev increment contains no D5 declaration.
+Neither result supplies the missing quantitative correlation between
+the current test and the actual mixed bad union.
+
+### Equal row charges do not determine the actual test update
+
+For a row's pure-power survivor probability \(m\), mixed bad union
+\(B\), \(\alpha=m(B)\), and clipping parameter \(0\le\delta<1\),
+the actual distortion kernel has density \(g-h\mathbf1_B\), where
+
+\[
+ g=\frac1{1-\min(\alpha,\delta)},\qquad
+ h=\begin{cases}
+ \dfrac{\min(\alpha,\delta)}{\alpha(1-\min(\alpha,\delta))},
+       &\alpha>0,\\
+ 0,&\alpha=0.
+ \end{cases}
+\]
+
+In particular, \(g-h\alpha=1\), the old marginal is preserved, and
+the assigned bad mass is \((\alpha-\delta)_+/(1-\delta)\).
+For every fixed test cost \(Z\), the exact update is
+
+\[
+ \mathbb E_{\rm new}Z
+ =g\mathbb E_mZ-h\mathbb E_m[Z\mathbf1_B].             \tag{PO1}
+\]
+
+This is the actual kernel from
+[BBMST, section2](https://arxiv.org/abs/1811.03547), with its bad-set
+term retained. The following two original arithmetic families show
+why that term cannot be recovered from row charges and test marginals.
+
+Use the existing PG1 low family and source probability \(\mu\),
+and put \(x_0=2\), whose weight is
+\(13119398/1000000007>0\). Add the pure class \(0\bmod17\),
+so \(m\) is uniform on the16 roots \(1,\ldots,16\).
+Index the nine distinct low divisors
+
+\[
+ (d_1,\ldots,d_9)=(3,5,7,9,15,21,35,45,315).
+\]
+
+Family A adds one class for each original modulus \(17d_i\), with
+CRT coordinates \(x\equiv2\pmod{d_i}\), \(y\equiv i\pmod{17}\).
+Family B instead uses \(y\equiv i+1\pmod{17}\), keeping the same
+low residues. Each family has21 distinct odd moduli greater than one
+and full period5355. Because the nine high roots are distinct in each
+family, every low row has the same \(\alpha(x)\), natural cap, and
+assigned charge in both families. Set \(T_{17}=8\), so the (SH26)
+convention is \(\delta=7/15\).
+
+Keep one fixed complete24-label test: for every \(d\mid315\), its
+old class is \(2\bmod d\), and its \(17d\) class has the same low
+residue and high root10. With
+\(A(x)=\sum_{d\mid315}\mathbf1_{x\equiv2\bmod d}\), its load is
+
+\[
+ L(x,y)=A(x)(1+\mathbf1_{y=10}),\qquad
+ Z=L^2-A^2=3A(x)^2\mathbf1_{y=10}.                    \tag{PO2}
+\]
+
+The source probability, all pre-kernel test moments, and the complete
+old test load are identical. In Family A, however, \(B_x\) uses
+only roots1 through9, so \(Z\mathbf1_{B_x}=0\) in every row.
+In Family B, root10 is bad exactly when \(x\equiv2\pmod{315}\),
+namely at \(x=x_0\). At that point,
+
+\[
+ A(x_0)=12,\quad \alpha=\frac9{16},\quad
+ g=\frac{15}{8},\quad h=\frac{14}{9},\quad
+ \text{charge}=\frac{23}{128},\quad c_{\rm actual}=2=c_{17}.
+\]
+
+Applying each family's own kernel to the same test gives row square
+expectations \(1557/8\) and \(1221/8\), respectively. Hence the
+global fixed-test square expectations differ by exactly
+
+\[
+ 42\mu(2)=\frac{551014716}{1000000007}>0.               \tag{PO3}
+\]
+
+Thus row bad densities, natural caps, charges and pre-kernel test
+marginals do not determine the test update. The natural-cap deficit
+also vanishes at the distinguished row. The literal height-one
+good-cylinder multiplier relative to \(17^{-1}\) is \(255/128\),
+not2; the latter is the all-height natural upper cap. This small
+pure-coordinate relaxation is separate from the overlap distinction.
+
+Family A also rules out a universally strictly positive bad-overlap
+bound for the new-coordinate increment \(Z\) without additional
+residue-coupling hypotheses. It does not make the full-square overlap
+zero: the old baseline \(A^2\) still overlaps the bad union. Neither
+family is asserted to cover, and this example does not refute an
+overlap bound with additional global-cover assumptions. It gives no
+lower bound on the supremal \(\Gamma_{19}\).
+
+An exact joint observation sufficient for (PO1) retains both
+\(\mathbb E_mZ\) and \(\mathbb E_m[Z\mathbf1_B]\), along with
+\(\alpha\), on one common CRT refinement. For a fixed finite
+original family and test this is a finite computation. A bound usable
+in the unrestricted continuation still requires uniform control over
+all allowed tests and all heights. In particular, a test-specific
+deficit cannot be subtracted from a uniform supremum unless its
+infimum over the stated test domain is bounded, or that same test is
+retained through the entire expansion. Formula (SH26) uses the valid
+universal floor \(A_eA_f\ge1\) and is unaffected by this distinction.
+
+`verify_pg1_physical_overlap.py` reconstructs both original families,
+their common test and all literal residues modulo5355. It compares
+direct row integration with (PO1), checks normalization and preserved
+old marginals, and records (PO2)--(PO3) in
+`pg1_physical_overlap_certificate.json`. This is a counterexample to
+the specified compressed observation, with an ordinary proof and
+exact arithmetic replay; no new Lean declaration is claimed.
+
+For a finite next-step optimization, the full joint observation can be
+written as a pair matrix. Fix the actual forbidden family and old law
+\(\nu\). For original labels \(\ell,k\), retain their old test
+cylinders \(C_\ell,C_k\) and current-prime test prefixes \(u,v\),
+using the full current cylinder for an exponent-zero label.
+With the actual row base laws \(m_x\), define
+
+\[
+ \begin{aligned}
+ K_{\ell k}(u,v)=\mathbb E_{x\sim\nu}\bigl[
+ \mathbf1_{C_\ell\cap C_k}(x)\bigl(&g_xm_x([u]\cap[v])\\
+                  &-h_xm_x(B_x\cap[u]\cap[v])\bigr)\bigr].
+ \end{aligned}                                         \tag{PO4}
+\]
+
+This is precisely the post-kernel intersection mass, hence nonnegative.
+For one fixed complete test \(\mathcal T\), summing (PO4) over its
+ordered original-label pairs gives \(\mathbb E_{\rm new}L_{\mathcal T}^2\).
+Compatible current-prime prefixes intersect in their deeper prefix;
+incompatible prefixes have empty intersection. A finite forbidden
+family therefore permits exact evaluation from its actual finite
+prefix antichain and a common old CRT refinement.
+
+For a downstream factor \(f\ge0\) and charge weight \(W\ge0\),
+the finite support function to estimate is
+\(\max_{\mathcal T}\{f\mathbb E_{\rm new}L_{\mathcal T}^2+
+W\mathbb E_\nu\operatorname{charge}(x)\}\), with one globally
+legal test retained in every row and every matrix entry. If forbidden
+families are also optimized, each family's kernel, charge and test
+cost must remain together. Separate maximization of the positive
+part and minimization of the subtracted overlap loses that constraint.
+The pair matrix is an exact representation, not a proved compression
+or a newly evaluated upper bound. Physical antichain depth is
+unbounded across input families; no uniform height cutoff or complete
+tail estimate for this new optimization is asserted here.

@@ -204,6 +204,31 @@ requires a seed below the exact threshold in
 `(123.058769468748,123.058769468749)`. This is a limitation of that
 scalar continuation, not a lower bound on the actual best head moment.
 
+The [complete integer-hinge profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-integer-hinges-on-the-unchanged-pg1-survivor-law)
+now gives simultaneous same-law bounds
+`H3<2.087512414`, `H4<1.472612141`, `H6<0.828522755`,
+`H7<0.660671309`, and `H8<0.508460618`.
+Threshold5 reuses the existing direct cost `H5<1.123184416`.
+All ten original root pairs, the exact zero-depth geometry and the
+complete first-moment tails remain in the calculation.
+The [scalar consumer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-complete-scalar-schedule-consumer-and-its-remaining-gap)
+checks all255 integer17/19 threshold pairs after fixed11/4,13/5.
+It gives83 finite bounds, best `Gamma19<1227.640520` at17/8,19/8;
+none is below the scalar23 prerequisite484. This confines that
+supplied-feature criterion, not actual moments or other continuations.
+
+The [actual-kernel overlap counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#equal-row-charges-do-not-determine-the-actual-test-update)
+gives two families of21 distinct odd moduli, each of period5355,
+on the same PG1 source. Their row bad densities, caps, charges and
+pre-kernel moments for one fixed complete24-label test agree, but
+their post-kernel test squares differ by `551014716/1000000007`.
+For one family the new-coordinate square increment is disjoint from
+the actual bad union. Thus these scalar observations are insufficient
+for the exact update; joint test–bad-set incidence is needed. The
+example does not assume either family covers and supplies no actual
+Gamma lower bound. Latest dev RRO45 supplies a common finite CRT
+observation framework, but no uniform positive overlap or survivor bound.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of

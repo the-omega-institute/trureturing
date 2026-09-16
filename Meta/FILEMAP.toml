@@ -791,6 +791,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Complete simultaneous integer hinges with original-root zero geometry and full tails.
+pattern = "docs/reports/erdos7-odd-covering/pg1_integer_hinges_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Joint low/high deletion costs, retained support transports and exact carrier overlap.
 pattern = "docs/reports/erdos7-odd-covering/pg1_joint_carrier_transfer_certificate.json"
 kind = "data"
@@ -811,6 +820,24 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Finite rational dual obstruction for the PG1 termwise price family at reference33.
 pattern = "docs/reports/erdos7-odd-covering/pg1_maxplus_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Actual distinct-modulus counterexample to sufficiency of row charges and test marginals.
+pattern = "docs/reports/erdos7-odd-covering/pg1_physical_overlap_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact all-height scalar feature outcomes for all255 final17/19 thresholds.
+pattern = "docs/reports/erdos7-odd-covering/pg1_scalar_schedule_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1304,6 +1331,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs integer hinge observations, exact zero geometry and complete tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_integer_hinges.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks joint deletion, original-label support transport and new carrier coverage.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_carrier_transfer.py"
 kind = "program"
@@ -1324,6 +1360,24 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Replays original-label witnesses and the exact dual obstruction for PG1 reference33 prices.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_maxplus_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays both physical CRT kernels and their same-test overlap distinction.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_physical_overlap.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Evaluates all255 scalar schedules with complete auxiliary tails and convexity checks.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_scalar_schedule.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
