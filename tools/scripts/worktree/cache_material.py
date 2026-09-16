@@ -60,24 +60,32 @@ def snapshot_files(directory, destination, *, materialize_links=False):
     return result
 
 
+def validate_manifest(expected):
+    """Validate declared transport rows without reading their material."""
+    if not isinstance(expected, list) or not expected:
+        raise ValueError("cache has no registered material")
+    seen = set()
+    for item in expected:
+        if not isinstance(item, dict) or set(item) != {"path", "sha256", "mode"}:
+            raise ValueError("invalid cache material row")
+        name = item["path"]
+        if (not isinstance(name, str) or not name or "\\" in name or ":" in name
+                or name.startswith("/") or any(part in ("", ".", "..") for part in name.split("/"))
+                or name in seen or not isinstance(item["sha256"], str)
+                or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"])
+                or type(item["mode"]) is not int or not 0 <= item["mode"] <= 0o777):
+            raise ValueError("invalid or duplicate cache material identity")
+        seen.add(name)
+
+
 def files(directory, *, expected=_UNSPECIFIED, copy_to=None):
     if copy_to is not None and expected is _UNSPECIFIED:
         raise ValueError("copy requires registered cache material")
     if expected is not _UNSPECIFIED:
-        if not isinstance(expected, list) or not expected:
-            raise ValueError("cache has no registered material")
-        result, seen = [], set()
+        validate_manifest(expected)
+        result = []
         for item in expected:
-            if not isinstance(item, dict) or set(item) != {"path", "sha256", "mode"}:
-                raise ValueError("invalid cache material row")
             name = item["path"]
-            if (not isinstance(name, str) or not name or "\\" in name or ":" in name
-                    or name.startswith("/") or any(part in ("", ".", "..") for part in name.split("/"))
-                    or name in seen or not isinstance(item["sha256"], str)
-                    or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"])
-                    or type(item["mode"]) is not int or not 0 <= item["mode"] <= 0o777):
-                raise ValueError("invalid or duplicate cache material identity")
-            seen.add(name)
             path = directory
             for part in pathlib.PurePosixPath(name).parts:
                 path /= part
