@@ -38,7 +38,7 @@ internal static class InformationTemplateEvidence
         InformationTemplateJson.Fields(value, "schema_version", "compatibility_version", "inventory",
             "records", "registered", "inputs");
         InformationTemplateJson.Version(value);
-        if (value.GetProperty("compatibility_version").GetRawText() != "4")
+        if (value.GetProperty("compatibility_version").GetRawText() != "5")
             throw new FormatException("DTR-Evidence: old report is not current binding evidence");
         var inputs = InformationTemplateDebtStore.ReadInputs(value.GetProperty("inputs"), snapshot);
         if (!inputs.Any(input => input.Path == sourcePath))
@@ -129,6 +129,47 @@ internal static class InformationTemplateEvidence
         return LeanImportClosure.ModuleName(RepoPath.CreateKnown(relative));
     }
 
+    // These are the producer's unconditional policy roots. Import traversal
+    // reads snapshot source bytes, never the report's claimed input inventory.
+    private static readonly string[] PolicyInputs = [
+        "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json",
+        "tools/lean-inspector/native_image.c",
+        "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry/Reifier.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry/Evidence.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry/Enrollment.lean",
+        "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean",
+        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Family.lean",
+        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/State.lean",
+        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Carriers.lean",
+        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Types.lean",
+        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
+        "tools/lean-inspector/LeanInformationAudit/Syntax.lean"];
+
+    private static HashSet<string> RequiredInputs(RepositorySnapshot snapshot, string source)
+    {
+        var required = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<string>(PolicyInputs.Append(source));
+        while (pending.TryPop(out var path))
+        {
+            if (!required.Add(path)) continue;
+            if (!snapshot.TryGetFile(path, out var file))
+                throw new FormatException("DTR-Evidence: missing required producer input " + path);
+            if (!path.EndsWith(".lean", StringComparison.Ordinal)) continue;
+            foreach (var module in LeanSourceCatalog.ParseFileImports(file))
+            {
+                var imported = module.Replace('.', '/') + ".lean";
+                if (module.StartsWith("LeanInformationAudit.", StringComparison.Ordinal))
+                    pending.Push("tools/lean-inspector/" + imported);
+                else if (module.StartsWith("D5.", StringComparison.Ordinal) || module == "Trureturing")
+                    pending.Push(imported);
+            }
+        }
+        return required;
+    }
+
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report)
     {
         var governed = snapshot.Files.Keys.Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
@@ -143,12 +184,12 @@ internal static class InformationTemplateEvidence
             if (!report.Files.TryGetValue(RepoPath.CreateKnown(source), out var module) || module.Error is not null
                 || module.InformationTemplates is not { } evidence)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
-            var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source));
-            if (!requiredInputs.All(path => evidence.Inputs.Any(input => input.Path == path.Value)))
-                throw new FormatException("DTR-Evidence: omitted imported source input");
-            foreach (var policy in new[] { "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json" })
-                if (snapshot.TryGetFile(policy, out _) && !evidence.Inputs.Any(input => input.Path == policy))
-                    throw new FormatException("DTR-Evidence: omitted compiler/policy input " + policy);
+            var requiredInputs = RequiredInputs(snapshot, source);
+            requiredInputs.UnionWith(LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
+                .Select(path => path.Value));
+            foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
+                if (!evidence.Inputs.Any(input => input.Path == required))
+                    throw new FormatException("DTR-Evidence: omitted required producer/source input " + required);
             assessed.Add(source);
             foreach (var key in evidence.Inventory)
                 if (!inventory.Add(key)) throw new FormatException("DTR-Inventory: duplicate occurrence owner");

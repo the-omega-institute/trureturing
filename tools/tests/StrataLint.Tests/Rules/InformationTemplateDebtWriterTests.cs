@@ -18,7 +18,14 @@ public sealed class InformationTemplateDebtWriterTests
         Git("init");
         Git("config", "user.email", "stratalint@example.invalid");
         Git("config", "user.name", "StrataLint Tests");
-        Git("commit", "--allow-empty", "-m", "seed");
+        foreach (var (path, text) in DeclaredTemplateReviewTests.PolicyFiles())
+        {
+            var full = Path.Combine(repository.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+            File.WriteAllText(full, text);
+        }
+        Git("add", ".");
+        Git("commit", "-m", "seed");
         var seed = Git("rev-parse", "HEAD");
         var activationPath = Path.Combine(repository.Path, InformationTemplateDebtStore.ActivationPath);
         Directory.CreateDirectory(Path.GetDirectoryName(activationPath)!);

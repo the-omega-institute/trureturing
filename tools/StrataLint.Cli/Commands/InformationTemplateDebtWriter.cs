@@ -49,7 +49,7 @@ internal static class InformationTemplateDebtWriter
                 ?? Path.Combine(reportDirectory, "information-template-history", revision, "raw-lean-report.json");
             var seedReport = RawLeanReportArtifact.ReadFile(ReportPath("--seed-lean-report", activation.SeedBase),
                 InformationTemplateEvidence.HistoricalInputs(seed, current));
-            var seedUniverse = InformationTemplateEvidence.Collect(seed, seedReport);
+            var seedUniverse = InformationTemplateEvidence.Collect(InformationTemplateEvidence.HistoricalInputs(seed, current), seedReport);
             var baseDebt = InformationTemplateDebtStore.Load(baseline, activation, seed);
             var headDebt = InformationTemplateDebtStore.Load(current, activation, seed);
             ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> retained;
@@ -70,7 +70,7 @@ internal static class InformationTemplateDebtWriter
                 var beforeReport = RawLeanReportArtifact.ReadFile(ReportPath("--base-lean-report", prepared.Revision),
                     InformationTemplateEvidence.HistoricalInputs(baseline, current));
                 var after = InformationTemplateEvidence.Collect(current, currentReport);
-                var before = InformationTemplateEvidence.Collect(baseline, beforeReport);
+                var before = InformationTemplateEvidence.Collect(InformationTemplateEvidence.HistoricalInputs(baseline, current), beforeReport);
                 if (!headDebt.Keys.ToHashSet().SetEquals(baseDebt.Keys))
                     throw new FormatException("DTR-Subset: writer requires the untouched protected row set");
                 retained = Discharge(activation, baseDebt, after);

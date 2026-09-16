@@ -27,12 +27,23 @@ public sealed class InformationTemplateEvidenceTests
     private static string Hash(string text) => InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(text));
     private static object Input(string path, string text) => new { path, sha256 = Hash(text) };
 
-    private static JsonElement Wire(bool declared = false, bool sidecar = false, int compatibility = 4) =>
+    private static RepositorySnapshot Snapshot(params (string Path, string Text)[] entries)
+    {
+        var files = DeclaredTemplateReviewTests.PolicyFiles();
+        foreach (var (path, text) in entries) files[path] = text;
+        return InformationTemplateDebtStoreTests.Snapshot(files.Select(p => (p.Key, p.Value)).ToArray());
+    }
+
+    private static object[] WithPolicy(params object[] inputs) => inputs.Concat(
+        DeclaredTemplateReviewTests.PolicyFiles().Select(p => Input(p.Key, p.Value)))
+        .OrderBy(input => JsonSerializer.SerializeToElement(input).GetProperty("path").GetString(), StringComparer.Ordinal).ToArray();
+
+    private static JsonElement Wire(bool declared = false, bool sidecar = false, int compatibility = 5) =>
         JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
             compatibility_version = compatibility,
-            inputs = sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) },
+            inputs = WithPolicy(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
             inventory = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
             registered = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
             records = new[] { new
@@ -70,7 +81,7 @@ public sealed class InformationTemplateEvidenceTests
     public void registration_owner_uses_lean_source_root(string path, string module) =>
         Assert.Equal(module, InformationTemplateEvidence.ModuleForSource(path));
 
-    private static LeanAxiomReport RawReport(int compatibility = 4)
+    private static LeanAxiomReport RawReport(int compatibility = 5)
     {
         var wire = JsonSerializer.SerializeToElement(new
         {
@@ -99,8 +110,10 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Equal(Key, Assert.Single(Assert.IsType<InformationTemplateModuleEvidence>(module.InformationTemplates).Records).Key);
     }
 
-    [Fact]
-    public void binding_loader_required() => Assert.Throws<FormatException>(() => RawReport(compatibility: 3));
+    [Theory]
+    [InlineData(3)]
+    [InlineData(4)]
+    public void binding_loader_required(int retiredVersion) => Assert.Throws<FormatException>(() => RawReport(compatibility: retiredVersion));
 
     [Fact]
     public void fresh_imported_record_accepted()
@@ -199,13 +212,13 @@ public sealed class InformationTemplateEvidenceTests
         var snapshot = Snapshot((PathA, registrationSource), (PathB, bridgeSource));
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
         var inputs = new[] { Input(PathB, bridgeSource), Input(PathA, registrationSource) };
-        wire["inputs"] = JsonSerializer.SerializeToNode(inputs);
+        wire["inputs"] = JsonSerializer.SerializeToNode(WithPolicy(inputs));
         wire["records"]![0]!["content_inputs"] = JsonSerializer.SerializeToNode(inputs);
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
-            schema_version = 1, compatibility_version = 4,
-            inputs = new[] { Input(PathB, bridgeSource) },
+            schema_version = 1, compatibility_version = 5,
+            inputs = WithPolicy(Input(PathB, bridgeSource)),
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);

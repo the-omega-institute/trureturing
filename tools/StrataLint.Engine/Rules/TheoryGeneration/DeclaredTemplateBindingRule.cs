@@ -65,7 +65,8 @@ internal static class DeclaredTemplateBindingRule
             var changed = context.Changes.Paths.Select(path => path.Value).ToHashSet(StringComparer.Ordinal);
             CheckRouting(baseline, candidate, changed);
             var after = InformationTemplateEvidence.Collect(candidate, context.Lean.Report);
-            if (!activation.Activated && !HasRows(baseline) && !HasRows(candidate))
+            if (!activation.Activated && !HasRows(baseline) && !HasRows(candidate)
+                && !InformationTemplateDebtStore.ReadActivation(candidate).Activated)
             {
                 var canonicalInactive = InformationTemplateDebtStore.WriteActivation(activation);
                 if (!candidateActivation.RawBytes.AsSpan().SequenceEqual(canonicalInactive.AsSpan()))
@@ -78,9 +79,11 @@ internal static class DeclaredTemplateBindingRule
             var evidence = context.Lean.Report.TemplateEvidenceContext
                 ?? throw new FormatException("DTR-Evidence: historical evidence reader unavailable");
             var seed = evidence.ReadHistorical(activation.SeedBase);
-            var seedUniverse = InformationTemplateEvidence.Collect(seed.Snapshot, seed.Report);
+            var seedUniverse = InformationTemplateEvidence.Collect(
+                InformationTemplateEvidence.HistoricalInputs(seed.Snapshot, candidate), seed.Report);
             var protectedEvidence = evidence.ReadHistorical(evidence.ProtectedRevision);
-            var before = InformationTemplateEvidence.Collect(baseline, protectedEvidence.Report);
+            var before = InformationTemplateEvidence.Collect(
+                InformationTemplateEvidence.HistoricalInputs(baseline, candidate), protectedEvidence.Report);
             var baseDebt = InformationTemplateDebtStore.Load(baseline, activation, seed.Snapshot);
             var headDebt = InformationTemplateDebtStore.Load(candidate, activation, seed.Snapshot);
             if (!activation.Activated)
@@ -227,8 +230,12 @@ internal static class DeclaredTemplateBindingRule
                 Add("DTR-Evidence", occurrence.Diagnostic ?? "declared occurrence is unresolved", occurrence.RegistrationSourcePath);
         }
 
+        var firstFreezeSources = changedPaths.Where(path => !baseline.TryGetFile(path, out _))
+            .Select(path => FrozenStatePath.TryToModulePath(path, out var module) ? module.Value : null)
+            .Where(path => path is not null).ToHashSet(StringComparer.Ordinal);
         var delta = after.Occurrences.Values.Where(o => !before.Inventory.Contains(o.Key)
-                || touched.Contains(o.Key) || o.ContentInputs.Any(i => changedPaths.Contains(i.Path))
+                || touched.Contains(o.Key) || firstFreezeSources.Contains(o.RegistrationSourcePath)
+                || o.ContentInputs.Any(i => changedPaths.Contains(i.Path) || firstFreezeSources.Contains(i.Path))
                 || o.BindingSourcePath is { } binding && changedPaths.Contains(binding))
             .Select(o => o.Key).ToImmutableHashSet();
         foreach (var key in SelectDomain(headDebt.Count, after.Inventory, delta))
@@ -264,8 +271,12 @@ internal static class DeclaredTemplateBindingRule
             || before.State != after.State || before.BindingSourcePath != after.BindingSourcePath)
             return true;
         if (after.BindingSourcePath is { } binding && changed.Contains(binding)) return true;
-        var firstPin = "Golden/Frozen/state/" + after.RegistrationSourcePath + ".json";
-        if (changed.Contains(firstPin) && !baseline.TryGetFile(firstPin, out _)) return true;
+        foreach (var path in changed)
+            if (!baseline.TryGetFile(path, out _) && FrozenStatePath.TryToModulePath(path, out var module)
+                && (module.Value == after.RegistrationSourcePath
+                    || row.ContentInputs.Any(input => input.Path == module.Value)
+                    || before.ContentInputs.Any(input => input.Path == module.Value)
+                    || after.ContentInputs.Any(input => input.Path == module.Value))) return true;
         // Judge/compiler/toolchain files do not enter the producer's content slice.
         return row.ContentInputs.Any(input =>
             !baseline.TryGetFile(input.Path, out var old) || !candidate.TryGetFile(input.Path, out var current)
