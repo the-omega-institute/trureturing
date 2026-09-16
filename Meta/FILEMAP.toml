@@ -557,6 +557,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact primal and dual laws for six finite head geometries.
+pattern = "docs/reports/erdos7-odd-covering/finite_head_geometry_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact core congruences and rational dual weights refuting H73.
 pattern = "docs/reports/erdos7-odd-covering/h73_dual.json"
 kind = "data"
@@ -586,6 +595,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Four outside-support coefficients and the exact three-prime continuation.
 pattern = "docs/reports/erdos7-odd-covering/lcm_block_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact whole-profile bounds and a sharp actual survivor family.
+pattern = "docs/reports/erdos7-odd-covering/marked_head_profile_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -737,6 +755,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks exhaustive finite head layouts and rational minimax witnesses.
+pattern = "docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Verifies the H73 dual and correlated-measure fibre-counting factors.
 pattern = "docs/reports/erdos7-odd-covering/verify_h73.py"
 kind = "program"
@@ -775,6 +802,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks actual-layout transport through lcm blocks and the tail beginning at 67.
 pattern = "docs/reports/erdos7-odd-covering/verify_lcm_block_transport.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks all finite head histograms, convex profiles and actual sharpness.
+pattern = "docs/reports/erdos7-odd-covering/verify_marked_head_profile.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

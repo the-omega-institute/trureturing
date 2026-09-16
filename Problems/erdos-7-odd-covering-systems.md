@@ -835,9 +835,14 @@ now realizes these capacities by actual nonnegative leaf weights with total
 mass one. Every forbidden prefix has zero mass, and every depth-\(d\)
 prefix has probability at most \(\beta(d)/\mathrm{combFlow}\), provided
 the comb flow is positive. Its proof constructs actual child measures and
-scales their sums before applying the existing comparison. A rational
-`FiniteLaw` representation and the conditional-kernel application remain
-separate formal obligations.
+scales their sums before applying the existing comparison. Both capacity
+theorems work over any linearly ordered field, including the rationals;
+the normalized rational weights directly form the imported `FiniteLaw`.
+The licensed `ThreePrime/DistortionChain` supplies `PhysicalChain`, its
+covered-probability bound, and `BaseCaps` propagation without a restriction
+on the number of prime factors per modulus. Actual cylinder caps,
+cofactor completion and the numerical stopping bound still have to be
+connected in the end-to-end formalization.
 
 #### Sharp tail profiles of maximal cylinder caps
 
@@ -4800,6 +4805,44 @@ over the finitely many low-head forbidden assignments and test layouts
 therefore gives universal profiles usable in (AP1)--(AP6). This reduction
 retains actual shared-cylinder exclusions. It does not assert that the
 resulting finite optimization already reaches prime 17 or 11.
+
+**Finite supported laws retaining actual exclusions.** The
+[finite head geometry result](erdos-7-finite-head-geometry.md) solves the
+complete independent-layout minimax problem for all original families
+whose moduli divide 45:
+\[
+ \sup_F\inf_{\mu\text{ supported on }S_F}
+       \max_{(b_d)}\mathbb E_\mu
+       \left(\sum_{d\mid45}\mathbf1_{b_d\bmod d}\right)^2
+       =\frac{22570}{3361}.                         \tag{CM14}
+\]
+Completion and symmetry reduce the problem to six actual survivor shapes.
+Exact primal and dual probabilities check all 27720 independent test
+layouts. Extending the same selected law by a uniform pure-7 coordinate
+and conditioning once gives, for every original family with moduli
+dividing 315, a supported law with
+\(\Gamma\le198583/15619<12.715\). This latter upper bound is not
+asserted sharp. The reduction permits shrinking the support because the
+conclusion is existence of a law; it does not assert monotonicity of
+uniform survivor averages. Both statements are ordinary proofs with exact
+certificates, and do not enlarge the prime-13 noncoverage range.
+
+A second [supported-law construction](erdos-7-marked-head-profile.md)
+controls the entire convex profile on the 315 head. One common law,
+uniform on a possibly smaller actual survivor set, satisfies
+\[
+ \mathbb E_\mu h(L)\le\mathbb E h(W),\qquad
+ \Pr(W=2,3,4,5,6,8,12)
+ =\left(\frac37,\frac{15}{77},\frac{18}{77},
+          \frac{15}{2849},\frac{79}{814},\frac1{37},\frac1{74}\right)
+                                                        \tag{CM15}
+\]
+for every complete test layout and nonnegative increasing convex cost.
+Here \(\mathbb EW=37/11\) and \(\mathbb EW^2=41336/2849\).
+Its high-threshold profile is attained by an actual 74-survivor family
+for every real threshold at least six. The mean/profile in (CM15) and
+the smaller moment in (CM14) belong to different selected laws and may
+not be combined as one law. Neither certificate closes the tail from 11.
 
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),
