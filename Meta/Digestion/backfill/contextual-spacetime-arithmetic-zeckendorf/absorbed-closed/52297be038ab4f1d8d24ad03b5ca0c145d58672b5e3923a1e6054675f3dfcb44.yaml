@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:52297be038ab4f1d8d24ad03b5ca0c145d58672b5e3923a1e6054675f3dfcb44
+  normalized_sha256: sha256:52297be038ab4f1d8d24ad03b5ca0c145d58672b5e3923a1e6054675f3dfcb44
+cas_ref: sha256:52297be038ab4f1d8d24ad03b5ca0c145d58672b5e3923a1e6054675f3dfcb44
+coverage_gids:
+  - gid: D5/S1/Digit/Addition.canonicalRaw_toRaw
+    target_statement_id: sha256:0153e5f3abff6a1f4881bbe7d63edbce4feaec3c1bc7fccb9fbdf7079dd00c27
+  - gid: D5/S1/Digit/Addition.rawValue_toRaw_Z
+    target_statement_id: sha256:609b387d30565ed02eb2834dbca4bbbf4d74129d29576cd75c69e36a175e24c8
+  - gid: D5/S1/Digit/Normalize.normalize_canonical
+    target_statement_id: sha256:c7ecbc805125d69e4800ec62f5cb899dbac15561334e1ffe47f738b5053733bd
+  - gid: D5/S1/Digit/Normalize.normalize_eq_rawOfZeckendorf
+    target_statement_id: sha256:37b0a31f617dbe18b76648177239e65c37ff0320d9f8e0e6c27afb899c5f08e1
+  - gid: D5/S1/Digit/Normalize.rawValue_normalize
+    target_statement_id: sha256:1b373b1dd34fc811be37c263466245d84c8870b77b31317cd489255a74aa4fa8
+  - gid: D5/S1/Digit/Raw.rawZeckendorfEquiv_eq_wEncoding
+    target_statement_id: sha256:7beb6e0383e186650d2d17d9ccaed1f0bf63376fe4d457521c316534a263689c
+receipts:
+  unresolved_subitems: []
