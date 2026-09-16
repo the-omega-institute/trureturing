@@ -1,0 +1,22 @@
+**Proof.** Fix an integer $k\ge1$. Conditional on any admissible positional history, the probability that the next $k$ digits are all zero is at least $\alpha^k$. If the previous state is zero, it is exactly $\alpha^k$; if that state is one, the first zero is forced and the probability is $\alpha^{k-1}\ge\alpha^k$. The initial history satisfies the same lower bound.
+
+Inspect any consecutive collection of $J$ disjoint blocks of $k$ positions. Successive conditioning shows that the probability all $J$ tests fail is at most
+$$
+(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ and then considering every starting block proves that an all-zero block of length $k$ occurs infinitely often with probability one. Intersecting these full-measure sets over $k$ proves that almost every $x$ has arbitrarily late zero runs of every prescribed length. This uses the transition law of $\nu$, not positional stationarity.
+
+If a prefix $p=x_0\cdots x_{L-1}$ ends in $k$ zeros, then it is a block word and the finite Zeckendorf value bound gives
+$$
+N_p\le G_{L-k}-1.
+$$
+Consequently
+$$
+\mathcal D(p)\ge\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr).
+$$
+For fixed $k$ and $L\to\infty$, the right side tends to
+$$
+A_+-A_0\alpha^k.
+$$
+Almost every point has infinitely many such prefixes for every $k$. Letting $k\to\infty$ and using the universal upper bound $\mathcal D(p)<A_+$ proves the prefix-density assertion. At radius $2^{-k_p}$, the cylinder $D_p$ is exactly the ball about any of its points. These radii tend to zero along prefixes of unbounded length. Therefore the ball upper limit is at least $A_+$, and 35.4 supplies the reverse bound. $\square$
+
