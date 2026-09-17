@@ -280,7 +280,7 @@ internal static partial class DigestionLedgerAligner
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && inheritedEntries.Contains(CanonicalEntry(source, entry)))
                 && contentWideReplacementObligations.Length == 0
-                && !InheritedSourceRequiresReplay(source, changes);
+                && !InheritedSourceRequiresReplay(source, changes, snapshot);
 
             if (canSkipAfterGenreProjection && !validateGenreProjection)
             {

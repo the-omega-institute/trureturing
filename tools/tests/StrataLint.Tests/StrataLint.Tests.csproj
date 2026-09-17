@@ -4,6 +4,8 @@
     <IsTestProject>true</IsTestProject>
     <RootNamespace>StrataLint.Tests</RootNamespace>
     <AssemblyName>StrataLint.Tests</AssemblyName>
+    <!-- Native adapter fixture host uses the candidate CLI argument consumer. -->
+    <StartupObject>StrataLint.Tests.CurrentDeltaCliContractTests</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
