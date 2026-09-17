@@ -20,7 +20,7 @@ internal static class InformationTemplateHistoryCommand
     private static readonly JsonSerializerOptions Wire = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
     private sealed record PlanFile(string Schema, string Candidate, string Os, string Arch, bool Required,
         string ProtectedBase, string Purpose, string? Producer, ImmutableArray<InformationTemplateHistoryTarget> Targets,
-        InformationTemplateHistoryTarget? Adoption);
+        InformationTemplateHistoryTarget? Adoption, string? JudgeAddress, string? ConfigAddress);
 
     internal static CommandResult Run(string root, IInformationTemplateHistoryRepository repository,
         IReadOnlyList<string> arguments, IGitProcessRunner runner, TimeProvider clock)
@@ -42,8 +42,10 @@ internal static class InformationTemplateHistoryCommand
                 if (!historical.TryGetValue(revision, out var snapshot)) historical.Add(revision, snapshot = repository.ReadHistorical(revision));
                 return snapshot;
             }
-            PlanFile Build(string? requestedBase, string purpose, string os, string arch)
+            PlanFile Build(string? requestedBase, string purpose, string os, string arch, string? judgeAddress, string? configAddress)
             {
+                if (judgeAddress is not null) InformationTemplateJson.Hash(judgeAddress, 64);
+                if (configAddress is not null) InformationTemplateJson.Hash(configAddress, 64);
                 var revision = repository.ResolveBase(requestedBase);
                 var plan = InformationTemplateHistoryPlan.Create(revision,
                     InformationTemplateHistoryInputs.Decode(repository.ReadPredicate(revision)),
@@ -51,13 +53,14 @@ internal static class InformationTemplateHistoryCommand
                 foreach (var target in plan.Targets) Historical(target.Revision);
                 var head = InformationTemplateJson.Hash(repository.CurrentRevision, 40);
                 return new("information-template-history-plan-v1", head, os, arch, plan.Required, plan.ProtectedBase,
-                    purpose, plan.Producer, plan.Targets, plan.Required ? InformationTemplateHistoryPlan.Target(plan.Producer!, head, os, arch) : null);
+                    purpose, plan.Producer, plan.Targets, plan.Required ? InformationTemplateHistoryPlan.Target(plan.Producer!, head, os, arch) : null, judgeAddress, configAddress);
             }
             if (arguments[0] == "plan")
             {
                 var plan = Build(options.GetValueOrDefault("--protected-base"), options.GetValueOrDefault("--purpose", "check"),
                     options.GetValueOrDefault("--os", OperatingSystem.IsMacOS() ? "macOS" : OperatingSystem.IsLinux() ? "Linux" : "Windows"),
-                    options.GetValueOrDefault("--arch", RuntimeInformation.ProcessArchitecture.ToString().ToUpperInvariant()));
+                    options.GetValueOrDefault("--arch", RuntimeInformation.ProcessArchitecture.ToString().ToUpperInvariant()),
+                    options.GetValueOrDefault("--judge-address"), options.GetValueOrDefault("--config-address"));
                 var bytes = PlanBytes(plan);
                 if (options.TryGetValue("--output", out var output)) Write(output, bytes);
                 if (options.TryGetValue("--github-output", out var github))
@@ -69,10 +72,10 @@ internal static class InformationTemplateHistoryCommand
             }
             using var stored = InformationTemplateJson.Read(File.ReadAllBytes(Required("--plan")));
             InformationTemplateJson.Fields(stored.RootElement, "schema", "candidate", "os", "arch", "required",
-                "protected_base", "purpose", "producer", "targets", "adoption");
+                "protected_base", "purpose", "producer", "targets", "adoption", "judge_address", "config_address");
             var saved = JsonSerializer.Deserialize<PlanFile>(stored.RootElement, Wire)
                 ?? throw new FormatException("history plan is empty");
-            var fresh = Build(saved.ProtectedBase, saved.Purpose, saved.Os, saved.Arch);
+            var fresh = Build(saved.ProtectedBase, saved.Purpose, saved.Os, saved.Arch, saved.JudgeAddress, saved.ConfigAddress);
             if (!PlanBytes(fresh).AsSpan().SequenceEqual(PlanBytes(saved).AsSpan()) || !fresh.Required)
                 throw new FormatException("history plan is stale or inactive");
             var revision = InformationTemplateJson.Hash(Required("--revision"), 40);
@@ -155,7 +158,7 @@ internal static class InformationTemplateHistoryCommand
                     InformationTemplateHistoryBundle.Validate(staging, producer, revision, material.Hybrid);
                     InformationTemplateHistoryWorkspace.Publish(staging, outputDirectory);
                     var save = "saved";
-                    try { InformationTemplateHistoryWorkspace.Publish(staging, cache); }
+                    try { if (cache != outputDirectory) InformationTemplateHistoryWorkspace.Publish(staging, cache); }
                     catch (Exception error) when (error is IOException or UnauthorizedAccessException)
                     { save = "save-failed"; producerOutput += "INFORMATION_TEMPLATE_HISTORY cache=save-failed detail=" + error.Message + "\n"; }
                     return Result(adopting ? "adopted" : invalid ? "rebuilt-invalid" : "produced", false, producerOutput, save);
@@ -201,7 +204,7 @@ internal static class InformationTemplateHistoryCommand
         for (var i = 1; i < arguments.Count; i += 2)
             if (i + 1 >= arguments.Count || string.IsNullOrWhiteSpace(arguments[i + 1]) || arguments[i] is not
                 ("--protected-base" or "--purpose" or "--output" or "--plan" or "--revision" or "--work" or "--bundle"
-                or "--report" or "--os" or "--arch" or "--github-output" or "--cache-root" or "--cache-donor" or "--run")
+                or "--judge-address" or "--config-address" or "--report" or "--os" or "--arch" or "--github-output" or "--cache-root" or "--cache-donor" or "--run")
                 || !result.TryAdd(arguments[i], arguments[i + 1]))
                 throw new FormatException("invalid or duplicate history option");
         return result;

@@ -227,6 +227,15 @@ jobs:
       CACHE_SCOPE: ${{ startsWith(github.base_ref || github.ref_name, 'integration-') && format('{0}-', github.base_ref || github.ref_name) || '' }}
     outputs:
       baseline_sha: ${{ steps.base.outputs.sha }}
+      history_required: ${{ steps.history-plan.outputs.history_required }}
+      history_matrix: ${{ steps.history-plan.outputs.history_matrix }}
+      history_producer: ${{ steps.history-plan.outputs.history_producer }}
+      judge_address: ${{ steps.judge-address.outputs.address }}
+      judge_runtime: ${{ steps.judge-address.outputs.runtime }}
+      lean_dependency: ${{ steps.lean-input.outputs.dependency_sha256 }}
+      lean_config: ${{ steps.lean-input.outputs.config_sha256 }}
+      lean_sources: ${{ steps.lean-input.outputs.sources_sha256 }}
+      lean_build_snapshot: ${{ steps.lean-input.outputs.build_snapshot_sha256 }}
     steps:
       - name: Check out candidate with history
         id: checkout-merge
@@ -316,6 +325,26 @@ jobs:
           dependency_sha256="$("$helper" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "dependency_sha256=$dependency_sha256" >> "$GITHUB_OUTPUT"
+      - name: Plan historical template evidence with the candidate
+        id: history-plan
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll information-template-history plan \
+            --protected-base "${{ steps.base.outputs.sha }}" --purpose check \
+            --os "${{ runner.os }}" --arch "${{ runner.arch }}" \
+            --judge-address "${{ steps.judge-address.outputs.address }}" \
+            --config-address "${{ steps.lean-input.outputs.config_sha256 }}" \
+            --output "$RUNNER_TEMP/information-template-history-plan.json" --github-output "$GITHUB_OUTPUT"
+      - name: Upload required history plan
+        if: steps.history-plan.outputs.history_required == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: information-template-history-plan
+          path: ${{ runner.temp }}/information-template-history-plan.json
+          if-no-files-found: error
+          retention-days: 7
       - name: Restore elan and pinned Lean toolchains
         uses: actions/cache/restore@v4
         with:
@@ -389,6 +418,7 @@ jobs:
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-${{ steps.lean-input.outputs.dependency_sha256 }}
       - name: Produce source-bound canonical Lean reports
+        id: candidate-report
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         shell: bash
         run: |
@@ -407,6 +437,34 @@ jobs:
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json"
+      - name: Look up checked push history address
+        id: history-adoption-cache
+        if: github.event_name == 'push' && steps.history-plan.outputs.history_required == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/information-template-cache/${{ steps.history-plan.outputs.history_producer }}/${{ github.sha }}
+          key: ${{ steps.history-plan.outputs.history_adoption_key }}
+          lookup-only: true
+      - name: Adopt the validated checked push report
+        id: history-adopt
+        if: github.event_name == 'push' && steps.history-plan.outputs.history_required == 'true'
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll information-template-history adopt \
+            --plan "$RUNNER_TEMP/information-template-history-plan.json" --revision "$GITHUB_SHA" \
+            --report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
+            --output "$RUNNER_TEMP/information-template-cache/${{ steps.history-plan.outputs.history_producer }}/$GITHUB_SHA" \
+            --cache-root "$RUNNER_TEMP/information-template-cache" --run "${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Save adopted push evidence
+        if: ${{ !cancelled() && steps.history-adopt.outcome == 'success' && steps.history-adoption-cache.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/information-template-cache/${{ steps.history-plan.outputs.history_producer }}/${{ github.sha }}
+          key: ${{ steps.history-plan.outputs.history_adoption_key }}
       # Save the existing native build snapshot after the report attempt. A
       # report failure does not revoke successful Lean-build cache supply.
       - name: Save Lean project build artifacts
@@ -447,14 +505,207 @@ jobs:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
+  information-template-history:
+    name: Historical template evidence (${{ matrix.revision }})
+    needs: lean-inspect
+    if: needs.lean-inspect.result == 'success' && needs.lean-inspect.outputs.history_required == 'true'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix: ${{ fromJSON(needs.lean-inspect.outputs.history_matrix) }}
+    env:
+      CACHE_SCOPE: ${{ startsWith(github.base_ref || github.ref_name, 'integration-') && format('{0}-', github.base_ref || github.ref_name) || '' }}
+      HISTORY_PRODUCER: ${{ needs.lean-inspect.outputs.history_producer }}
+      HISTORY_REVISION: ${{ matrix.revision }}
+    steps:
+      - name: Check out candidate with history
+        id: checkout-merge
+        uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+      - name: Strip checkout remote state
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+      - name: Fail closed when candidate checkout is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: exit 1
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+      - name: Restore candidate judge binaries
+        id: judge-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .judge-binaries
+            candidate/tools/**/bin
+            candidate/tools/**/obj
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ needs.lean-inspect.outputs.judge_runtime }}-${{ needs.lean-inspect.outputs.judge_address }}
+      - name: Build candidate tools on a judge miss
+        if: steps.judge-cache.outputs.cache-hit != 'true'
+        run: make -C candidate/tools dotnet
+      - name: Select the candidate CLI and an empty private execution directory
+        id: cli
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Relocate C intact. W can then use the existing Lean-cache archive paths.
+          test ! -e producer
+          mv candidate producer
+          dll="$GITHUB_WORKSPACE/producer/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+          if [[ "${{ steps.judge-cache.outputs.cache-hit }}" == true ]]; then
+            dll="$GITHUB_WORKSPACE/.judge-binaries/cli/StrataLint.dll"
+          fi
+          test -s "$dll"
+          printf 'dll=%s\n' "$dll" >> "$GITHUB_OUTPUT"
+      - name: Download candidate history plan
+        uses: actions/download-artifact@v4
+        with:
+          name: information-template-history-plan
+          path: ${{ runner.temp }}/history-plan
+      - name: Restore exact historical evidence
+        id: history-cache
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/information-template-cache/${{ env.HISTORY_PRODUCER }}/${{ matrix.revision }}
+          key: ${{ matrix.cache_key }}
+      - name: Validate the restored pair against fresh historical inputs
+        id: history-valid
+        working-directory: producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=miss
+          if [[ "${{ steps.history-cache.outputs.cache-hit }}" == true ]]; then
+            status=invalid
+            if dotnet "${{ steps.cli.outputs.dll }}" information-template-history validate \
+              --plan "$RUNNER_TEMP/history-plan/information-template-history-plan.json" --revision "$HISTORY_REVISION" \
+              --bundle "$RUNNER_TEMP/information-template-cache/$HISTORY_PRODUCER/$HISTORY_REVISION"; then status=hit; fi
+          fi
+          printf 'status=%s\n' "$status" >> "$GITHUB_OUTPUT"
+          printf 'INFORMATION_TEMPLATE_HISTORY cache=%s revision=%s\n' "$status" "$HISTORY_REVISION"
+      - name: Prepare private historical content with candidate runtime support
+        if: steps.history-valid.outputs.status != 'hit'
+        working-directory: producer
+        run: >-
+          dotnet "${{ steps.cli.outputs.dll }}" information-template-history prepare
+          --plan "$RUNNER_TEMP/history-plan/information-template-history-plan.json" --revision "$HISTORY_REVISION"
+          --work "$GITHUB_WORKSPACE/candidate"
+      - name: Restore pinned Lean toolchains for a miss
+        if: steps.history-valid.outputs.status != 'hit'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('producer/lean-toolchain') }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-elan-
+      - name: Install candidate Lean toolchain for a miss
+        if: steps.history-valid.outputs.status != 'hit'
+        run: producer/tools/scripts/workflow/install-lean-toolchain.sh producer/lean-toolchain
+      # Cache archive versions bind their path list. W is named candidate so
+      # these restores seed W directly from the ordinary candidate build caches.
+      - name: Restore private Lean dependency seeds
+        if: steps.history-valid.outputs.status != 'hit'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-${{ needs.lean-inspect.outputs.lean_dependency }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-
+      - name: Restore private Lean project seeds
+        if: steps.history-valid.outputs.status != 'hit'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ needs.lean-inspect.outputs.lean_config }}-${{ env.CACHE_SCOPE }}${{ needs.lean-inspect.outputs.lean_sources }}-${{ needs.lean-inspect.outputs.lean_build_snapshot }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ needs.lean-inspect.outputs.lean_config }}-${{ env.CACHE_SCOPE }}
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ needs.lean-inspect.outputs.lean_config }}-
+      - name: Produce a missing pair with W's candidate inspector
+        id: history-produce
+        if: steps.history-valid.outputs.status != 'hit'
+        working-directory: producer
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PATH="$HOME/.elan/bin:$PATH" dotnet "${{ steps.cli.outputs.dll }}" information-template-history produce \
+            --plan "$RUNNER_TEMP/history-plan/information-template-history-plan.json" --revision "$HISTORY_REVISION" \
+            --work "$GITHUB_WORKSPACE/candidate" --cache-root "$RUNNER_TEMP/information-template-cache" \
+            --output "$RUNNER_TEMP/information-template-cache/$HISTORY_PRODUCER/$HISTORY_REVISION" \
+            --run "${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Save completed historical evidence in this event's cache scope
+        if: ${{ !cancelled() && steps.history-produce.outcome == 'success' && steps.history-cache.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/information-template-cache/${{ env.HISTORY_PRODUCER }}/${{ matrix.revision }}
+          key: ${{ matrix.cache_key }}
+      - name: Validate and stage the complete consumer bundle
+        working-directory: producer
+        run: >-
+          dotnet "${{ steps.cli.outputs.dll }}" information-template-history validate
+          --plan "$RUNNER_TEMP/history-plan/information-template-history-plan.json" --revision "$HISTORY_REVISION"
+          --bundle "$RUNNER_TEMP/information-template-cache/$HISTORY_PRODUCER/$HISTORY_REVISION"
+          --output "$RUNNER_TEMP/history-artifact/information-template-history/$HISTORY_REVISION"
+      - name: Upload complete historical evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: information-template-history-${{ matrix.revision }}
+          path: ${{ runner.temp }}/history-artifact
+          if-no-files-found: error
+          retention-days: 7
+
   baseline-admission:
     name: Content-addressed dev baseline admission
-    needs: lean-inspect
+    needs: [lean-inspect, information-template-history]
+    if: always()
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
     env:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
+      - name: Require the candidate report and every planned history item
+        shell: bash
+        env:
+          CURRENT_RESULT: ${{ needs.lean-inspect.result }}
+          HISTORY_REQUIRED: ${{ needs.lean-inspect.outputs.history_required }}
+          HISTORY_RESULT: ${{ needs.information-template-history.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$CURRENT_RESULT" == success &&
+            ( ( "$HISTORY_REQUIRED" == false && "$HISTORY_RESULT" == skipped ) ||
+              ( "$HISTORY_REQUIRED" == true && "$HISTORY_RESULT" == success ) ) ]]; then
+            exit 0
+          fi
+          printf '::error::report prerequisites failed current=%s history_required=%s history=%s\n' \
+            "$CURRENT_RESULT" "$HISTORY_REQUIRED" "$HISTORY_RESULT"
+          exit 1
       - name: Check out candidate with history
         id: checkout-merge
         uses: actions/checkout@v4
@@ -532,6 +783,34 @@ jobs:
         with:
           name: raw-lean-reports
           path: ${{ runner.temp }}/raw-lean-reports
+      - name: Download planned historical evidence
+        if: needs.lean-inspect.outputs.history_required == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          pattern: information-template-history-????????????????????????????????????????
+          merge-multiple: true
+          path: ${{ runner.temp }}/raw-lean-reports
+      - name: Download the authoritative history plan
+        if: needs.lean-inspect.outputs.history_required == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: information-template-history-plan
+          path: ${{ runner.temp }}/history-plan
+      - name: Validate every downloaded historical bundle
+        if: needs.lean-inspect.outputs.history_required == 'true'
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ steps.judge-cache.outputs.cache-hit }}" != true ]]; then make -C tools dotnet; fi
+          cli="$GITHUB_WORKSPACE/candidate/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+          plan="$RUNNER_TEMP/history-plan/information-template-history-plan.json"
+          revisions="$(python3 -c 'import json,sys; print("\n".join(t["revision"] for t in json.load(open(sys.argv[1]))["targets"]))' "$plan")"
+          test -n "$revisions"
+          while IFS= read -r revision; do
+            dotnet "$cli" information-template-history validate --plan "$plan" --revision "$revision" \
+              --bundle "$RUNNER_TEMP/raw-lean-reports/information-template-history/$revision"
+          done <<< "$revisions"
       - name: Verify report content addresses
         shell: bash
         working-directory: ${{ runner.temp }}/raw-lean-reports
