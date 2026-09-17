@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:d934de1cb1f02862b4395689628278e053febeddaef26d1af468e50b60a0d835
+  normalized_sha256: sha256:d934de1cb1f02862b4395689628278e053febeddaef26d1af468e50b60a0d835
+cas_ref: sha256:d934de1cb1f02862b4395689628278e053febeddaef26d1af468e50b60a0d835
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/PrimePowerNonadaptiveResolution.result
+    target_statement_id: sha256:f12e69723c96352028ce57bffea2d180b147157db4b579923585723210a254e6
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 9a560f35c65bdbce27fd335dc745a8236ccfdeeabe22f13fbff0a5ccb16b9551
+    - feaced67228c53ebba6f2ad00760581e582114afb41641387966ca16258065cb
+    - 5e44390330289c34ac547a4e8cff91eea37726986c6c27e9505ed87f9f29952d
+    - 455e0f1218fae1bb3f5eccf4a744ea39cf3baea3dc89b20e008034525f08fd10
