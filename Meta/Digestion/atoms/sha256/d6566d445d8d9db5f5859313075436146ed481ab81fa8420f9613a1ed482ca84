@@ -1,0 +1,17 @@
+**假设 68.1（有限维线性隐藏实现与已存在的 MF1 消元式）。** 设 $\Bbbk$ 为域，$V,H$ 为有限维 $\Bbbk$-向量空间，
+$$
+A:V\to V,\qquad B:H\to V,\qquad C:V\to H,\qquad D:H\to H
+$$
+为线性映射，且
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n.
+$$
+以下直接复用既有 MF1 消元恒等式，而不把它作为新结论：
+$$
+h_n=D^nh_0+\sum_{i=0}^{n-1}D^{\,n-1-i}Cy_i,
+$$
+$$
+y_{n+1}=Ay_n+BD^nh_0+\sum_{i=0}^{n-1}BD^{\,n-1-i}Cy_i.
+$$
+其中 $BD^jC$ 始终表示 $B\circ D^j\circ C$。仓内出处为 trureturing@e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5 的 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md`，MF.2 定理 MF1；标量专门化见 `docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md` 定理 7.1。
+
