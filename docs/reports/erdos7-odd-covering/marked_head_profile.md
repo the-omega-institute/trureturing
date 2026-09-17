@@ -519,3 +519,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Full linear and quadratic carriers refine the frontier](profile-notes/49-full-linear-and-quadratic-carriers-refine-the-frontier.md)
 - [Sharp source compatibility and the off-diagonal endpoints](profile-notes/50-sharp-source-survival-endpoints.md)
 - [Sharp off-diagonal source costs and a two-baseline Jensen correction](profile-notes/51-sharp-off-diagonal-source-costs.md)
+- [Every high-threshold scalar source envelope is jointly sharp](profile-notes/52-all-high-threshold-source-costs-are-sharp.md)
+- [Allocated seven thresholds sharpen actual survival](profile-notes/53-allocated-seven-thresholds-sharpen-actual-survival.md)
