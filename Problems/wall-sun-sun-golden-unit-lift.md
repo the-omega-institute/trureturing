@@ -717,10 +717,8 @@ $$
 \left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,
 $$
 
-$$
-\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
-\kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}
-$$
+$$\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
+\kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}$$
 
 **Proof.** Subtract THS1 at d=p and d=p^2; the zero-coordinate terms cancel. The zero indices modulo each positive modulus are precisely the multiples of its least zero index, by strong Fibonacci divisibility. This proves the two exact identities.
 
@@ -1129,3 +1127,176 @@ $$\det G_{p,1}=[4p(p-\chi_5(p))\log\phi]^d
 **Proposition.** SGN2-SGN12 give necessary coefficient-field, congruence, residual-representation and norm identities for each member of the finite-order family D_(p,k). None supplies an independent existence or vanishing theorem for that family at a new target prime. In particular positivity of SGN7 does not imply h_p>=k+1.
 
 **Proof.** The field L_(p,k), its primitive character eta, and hence all forms and matrices in those theorems were defined only after choosing eta in X_(p,k). By ROC7 this is equivalent to h_p>=k+1. Chebotarev in SGN2-SGN4 describes auxiliary primes in that already-existing field, rather than creating it. The positive norm in SGN7 is the norm of an already-existing normalized cusp form; it is not a lower bound for the number of such forms. An independent construction satisfying these spectral specifications would, via ROC8, decide a WSS depth, while an independent obstruction would exclude that depth. The displayed identities do not choose either alternative. Estimates in a large archimedean-parameter limit have additional hypotheses to check here, since every form under discussion has parameter zero and varying level.
+
+
+### STL. Saturated spectral trace lattices and exact loss under reduction
+
+#### STL.1 Actual coefficient span and rational descent
+
+**Definition.** Retain an existing character eta in X_(p,k) of ROC, with p>5, k>=1 and actual h_p>=k+1. Put m=p^k, d=p^(k-1)(p-1)/2, zeta=zeta_m, t=zeta+zeta^(-1), and B=Q(t). For each real embedding sigma of B let g_sigma be the SGN-normalized conjugate of g_eta. For a in B define
+
+$$F_a=\sum_{\sigma:B\hookrightarrow\mathbb R}\sigma(a)g_\sigma.$$
+
+Its nth coefficient is Tr_(B/Q)(a A_eta(n)). Let V_Q be the set of these forms, let L_tr={F_a:a in O_B}, and let L_int be the set of rational-coefficient forms in the real span of the g_sigma whose every Fourier coefficient is in Z. All statements below concern this already-existing finite-order family.
+
+**Lemma STL1.** One has O_B=Z[t]. The Z-span of A_eta(n) for n=1 and good split primes is O_B. More precisely, write t_j=zeta^j+zeta^(-j). There are distinct good split primes ell_1,...,ell_(d-1) such that
+
+$$A_\eta(\ell_j)=t_j,\qquad
+(e_0,e_1,\ldots,e_{d-1})=(1,t_1,\ldots,t_{d-1})$$
+
+is an integral basis. No effective bound for these auxiliary primes is asserted.
+
+**Proof.** The classical cyclotomic integer theorem gives O_(Q(zeta))=Z[zeta]. Because zeta^2=t*zeta-1, every cyclotomic integer can be written U(t)+zeta*V(t), with U,V in Z[X]. If it is real, comparison with its conjugate gives (zeta-zeta^(-1))*V(t)=0, hence V(t)=0. Thus the real integers are Z[t]. The degree of t is d. The recurrence t_0=2,t_1=t,t_(j+1)=t*t_j-t_(j-1) makes t_j a monic degree-j polynomial in t for j>=1. The displayed basis is therefore a unitriangular change from the integral power basis.
+
+For each j, Chebotarev in the existing dihedral field L_(p,k) gives a good split prime with rotation Frobenius tau^j or tau^(-j). Its coefficient is t_j. The exponents 1,...,d-1 represent distinct pairs modulo m, so the primes may be chosen distinct. Every other coefficient belongs to O_B by SGN2. This proves the full Z-span, including both containments. The integral-basis fact is classical; see J. J. Liang, *On the integral basis of the maximal real subfield of a cyclotomic field*, J. reine angew. Math. 286-287 (1976), 223-226, DOI 10.1515/crll.1976.286-287.223. The elementary argument above specifies its use here.
+
+#### STL.2 Full integral coefficients require the codifferent
+
+**Definition.** The codifferent is the trace-dual fractional ideal
+
+$$\mathfrak D_B^{-1}=
+\{a\in B:\operatorname{Tr}_{B/\mathbb Q}(aO_B)\subseteq\mathbb Z\}.$$
+
+Let beta_0,...,beta_(d-1) be the trace-dual basis to the e_j in STL1, so Tr(beta_i e_j)=delta_(ij). The underlying trace-dual and discriminant facts are classical; see A. V. Sutherland, MIT 18.785 (2021), Lecture 12, Definition 12.2, Proposition 12.6 and Theorem 12.17, https://math.mit.edu/classes/18.785/2021fa/LectureNotes12.pdf .
+
+**Theorem STL2.** The rational-coefficient part of the real span of the g_sigma is exactly V_Q, and
+
+$$\boxed{L_{\rm int}=\{F_a:a\in\mathfrak D_B^{-1}\}.}\tag{STL1}$$
+
+The forms f_i=F_(beta_i) are a Z-basis of L_int. Their coefficients at n_0=1 and n_j=ell_j are delta_(ij). For arbitrary rational y_0,...,y_(d-1), the unique form in V_Q with these sampled coefficients is
+
+$$\boxed{F_{\sum_i y_i\beta_i}.}\tag{STL2}$$
+
+It has all Fourier coefficients integral if and only if every y_i is an integer. Removing any one of these d independent sample conditions fails to certify integrality.
+
+**Proof.** If f=sum c_sigma g_sigma has rational sampled coefficients y_j, set a=sum y_i beta_i. The embeddings matrix (sigma(e_j)) is invertible because its squared determinant is the nonzero discriminant of B. The sample equations for f and F_a therefore force c_sigma=sigma(a). This proves the claimed rational descent and uniqueness. For this a, integrality of every coefficient is equivalent by STL1 to Tr(a O_B) subset Z, exactly the codifferent condition. An element of the codifferent has its unique coordinates Tr(a e_i) in the trace-dual basis all integral; conversely integral coordinates make every trace coefficient integral. Hence the f_i form the claimed basis.
+
+For the last assertion, after omitting sample i take a=beta_i/2. All remaining selected coefficients are zero, while the omitted one is 1/2. This is an explicit false positive for the punctured test, not a search argument. It proves necessity of each selected coordinate; it does not assert that every possible set of d Fourier samples is independent.
+
+The trace-dual reconstruction used here is already supplied by the pinned Mathlib trace-dual basis API. It is not reintroduced as a separate formal theorem. The explicit prime-layer integral-image construction in STL.4 below is the formal consumer; the automorphic coefficient-span and cyclotomic identifications remain ordinary proofs.
+
+#### STL.3 Exact saturation index at every prime-power level
+
+**Theorem STL3.** Put
+
+$$\delta_k=\frac{p^{k-1}(k(p-1)-1)-1}{2},\qquad
+r_k=\delta_k-(k-1)d=\frac{p^{k-1}(p-2)-1}{2}.$$
+
+Then 0<r_k<d, disc(B)=p^(delta_k), and
+
+$$\boxed{[L_{\rm int}:L_{\rm tr}]=p^{\delta_k},}\tag{STL3}$$
+
+$$\boxed{L_{\rm int}/L_{\rm tr}\simeq
+(\mathbb Z/p^k\mathbb Z)^{r_k}\oplus
+(\mathbb Z/p^{k-1}\mathbb Z)^{d-r_k}.}\tag{STL4}$$
+
+The factors of order p^0 at k=1 are trivial. If Psi_m is the monic minimal polynomial of t, then the precise fractional ideal is D_B^(-1)=Psi_m'(t)^(-1)O_B.
+
+**Proof.** The cyclotomic polynomial derivative gives discriminant exponent p^(k-1)(k(p-1)-1) for Q(zeta). By STL1, O_(Q(zeta))=O_B[zeta], with relative quadratic discriminant t^2-4. Its absolute ideal norm is p: (zeta-zeta^(-1))^2=t^2-4, and the absolute norm of 1-zeta^2 is p, since zeta^2 is primitive. Discriminant transitivity gives disc(B)=p^(delta_k). Only p ramifies, and it is totally ramified of degree d with residue field F_p. Thus the different is l_m^(delta_k), where l_m is the prime in SGN2. Monogenicity and the derivative formula give D_B=(Psi_m'(t)).
+
+The classical trace-dual index identity is [D_B^(-1):O_B]=disc(B). The injective map a to F_a and STL2 give STL3. Locally the quotient is O_(B,l_m)/l_m^(delta_k), because l_m is principal. Multiplication by p raises l_m-valuation by d. Consequently the F_p dimension of the i-th successive p-layer is d for 1<=i<k, r_k for i=k, and zero thereafter. The elementary-divisor theorem for finite abelian p-groups yields precisely STL4. The inequalities on r_k follow from p>5 and d=p^(k-1)(p-1)/2. This is a classically determined coefficient-field lattice; it is not an additional restriction on the unknown existence of eta.
+
+#### STL.4 Explicit integral coefficient basis at the WSS threshold
+
+**Theorem STL4.** Suppose k=1 and d=(p-1)/2. With t_j as in STL1, the trace-dual basis is
+
+$$\boxed{\beta_0=\frac{2-t_d}{p},\qquad
+\beta_j=\frac{t_j-t_d}{p}\quad(1\le j<d).}\tag{STL5}$$
+
+The trace Gram matrix H in the basis e_0=1,e_j=t_j has entries
+
+$$H_{00}=d,\quad H_{0j}=H_{j0}=-1,\quad
+H_{ij}=p\delta_{ij}-2\quad(i,j>0),$$
+
+and
+
+$$\boxed{H^{-1}=\frac1p
+\begin{pmatrix}3&\mathbf1^{\mathsf T}\\
+\mathbf1&I+J\end{pmatrix},\qquad\det H=p^{d-1}.}\tag{STL6}$$
+
+Here J is the all-ones matrix of size d-1.
+
+**Proof.** The sum of all nontrivial pth roots is -1. Hence Tr(t_j)=-1 for 1<=j<p, while Tr(t_0)=2d. The identity t_i*t_j=t_(i+j)+t_(i-j), with t_(-a)=t_a, gives the displayed trace matrix. Multiplication by the asserted inverse gives the identity using p=2d+1. Also 1+sum_(j=1)^d t_j=0, so its columns give exactly STL5. The determinant can be computed by a Schur complement: the lower block pI-2J has eigenvalue3 on the all-ones line and p on its complement; its contribution and the upper Schur factor p/3 give p^(d-1). Alternatively this is STL3 with k=1. This proves the full basis formula, not just linear independence.
+
+**Theorem STL4A.** Write n=d-1 and regard H as a map on Z x Z^n. For an integer vector y, the following conditions are equivalent:
+
+$$\boxed{y\in H\mathbb Z^{n+1}
+\quad\Longleftrightarrow\quad
+p\mid y_i-2y_0\text{ for every }1\le i\le n.}\tag{STL6a}$$
+
+When they hold, put z_i=(y_i-2y_0)/p. The unique preimage is
+
+$$\boxed{x_0=y_0+\sum_{i=1}^n z_i,\qquad x_i=x_0+z_i.}\tag{STL6b}$$
+
+Thus the quotient map y mapping to (y_i-2y_0 modulo p) identifies Z^(n+1)/HZ^(n+1) with (Z/pZ)^n. The image and reconstruction assertions in fact hold for every n>=0 with p=2n+3, without requiring that p be prime.
+
+**Proof.** For s=sum_i x_i the actual matrix action is y_0=(n+1)x_0-s and y_i=p x_i-x_0-2s. Subtraction gives y_i-2y_0=p(x_i-x_0). This proves necessity and forces z_i=x_i-x_0 in any preimage. Summing these equalities and using the zeroth coordinate then forces x_0=y_0+sum_i z_i. Conversely insert this x_0 and x_i=x_0+z_i into the two displayed matrix rows. Their sum is n*x_0+sum_i z_i, and substitution gives exactly y_0,y_i. This proves existence and uniqueness. The residue map is surjective because y_0=0 permits arbitrary residues in the other coordinates; the exact image calculation identifies its kernel. No matrix inverse or determinant is assumed in this proof.
+
+The source `D5/S3/Arith/Lattices/PrimeCyclotomicTraceImage.lean` expresses the two-row template on Z x (Fin n -> Z), defines the reconstruction using integer division, and proves its correctness and uniqueness exactly under the displayed divisibility condition. Its theorem does not assume the image characterization or an inverse. Identification of this matrix with the prime-cyclotomic trace form is the ordinary argument of STL4, and no formal claim about an existing WSS packet is made by the arithmetic template.
+
+**Theorem STL5.** For a good split prime ell, write eta(q)=zeta_p^b and interpret b modulo p. The prime coefficients of the integral basis f_j=F_(beta_j) are
+
+$$[\ell]f_0=\begin{cases}
+2,&b=0,\\-1,&b=\pm d,\\0,&\text{otherwise},
+\end{cases}$$
+
+$$\boxed{[\ell]f_j=\mathbf1_{b=\pm j}-\mathbf1_{b=\pm d}
+\quad(1\le j<d).}\tag{STL7}$$
+
+At good inert primes every coefficient is zero. The first coefficient of f_0 is one; all the other f_j have first coefficient zero.
+
+**Proof.** At a split prime A_eta(ell)=t_b. Apply the trace to STL5 after multiplying by t_b, and use t_i*t_b=t_(i+b)+t_(i-b). The trace is p-1 for a t-index zero modulo p and -1 otherwise. For f_0 this gives the three stated cases; for j>0 subtracting the two trace pairs gives p times the stated difference of indicators before division by p. At inert primes A_eta(ell)=0. The first-coefficient assertions are the trace-dual identities against e_0=1. These f_j are usually not Hecke eigenforms; prime coefficient bounds for them do not turn them into new one-dimensional automorphic representations.
+
+**Corollary.** At k=1 the ordinary trace lattice misses exactly (Z/pZ)^(d-1) inside the full coefficient-integral lattice. Modulo p its inclusion has one-dimensional image. The ordinary trace Gram matrix modulo p has rank one.
+
+**Proof.** STL4 at k=1 gives the quotient, which is killed by p, so the image dimension is d-(d-1)=1. Alternatively, using d=-1/2 modulo p, the displayed Gram matrix is -1/2 times the outer product of (1,2,...,2) with itself. This is not the nondegeneracy statement over Q; ramified reduction has changed the pairing.
+
+#### STL.5 Full Hecke algebra and raw-trace content
+
+**Theorem STL6.** The integral algebra generated by the good Hecke operators on V_Q is O_B acting by a mapping to a*A_eta(ell). It preserves L_int. Its action on L_int/pL_int is the regular action of
+
+$$\boxed{O_B/pO_B\simeq\mathbb F_p[\epsilon]/(\epsilon^d),\qquad
+\epsilon=t-2.}\tag{STL8}$$
+
+A good generator-rotation prime makes T_ell-2 a nilpotent operator of exact index d on this reduction. In contrast reduction modulo l_m gives the one-dimensional residue field F_p.
+
+**Proof.** The Hecke eigenvalue equation shows T_ell(F_a)=F_(a*A_eta(ell)). All eigenvalues are in O_B, and one generator-rotation Frobenius has coefficient t, so the generated ring is exactly Z[t]. The codifferent is an O_B fractional ideal and is principal by STL3, hence is a free rank-one O_B module. Therefore its reduction modulo p realizes the regular ring representation.
+
+In the cyclotomic ring every conjugate of t is two modulo the prime above p, so the monic integer polynomial Psi_m reduces to (X-2)^d modulo p. Its coefficients reduce into F_p, making this an equality of polynomials, not just an equality at a point. Monogenicity gives STL8. Multiplication by epsilon in the truncated polynomial ring has nilpotence index exactly d. This establishes the algebra at the rational modulus p, and distinguishes it from the prime-ideal reduction used in SGN2.
+
+**Theorem STL7.** The greatest common divisor of the Fourier coefficients of the raw trace F_1 is exactly p^(k-1). Its primitive normalization is F_(1/p^(k-1)), whose first coefficient is (p-1)/2. For a good split prime with rotation exponent b, the raw coefficient is
+
+$$\boxed{\operatorname{Tr}_{B/\mathbb Q}(t_b)=
+\begin{cases}
+p^{k-1}(p-1),&p^k\mid b,\\
+-p^{k-1},&p^{k-1}\mid b,\ p^k\nmid b,\\
+0,&p^{k-1}\nmid b.
+\end{cases}}\tag{STL9}$$
+
+**Proof.** The real trace is the Ramanujan sum sum_(a mod p^k,p not dividing a)zeta^(ab). Subtract from the sum over all residues the sum over residues divisible by p. Each complete geometric sum is its length or zero according as the corresponding modulus divides b. This gives STL9. Since 1,t_1,...,t_(d-1) is an integral basis and Tr(1)=d, every trace of an integer of B is divisible by p^(k-1). Conversely Chebotarev supplies a good split coefficient t_(p^(k-1)), whose trace is -p^(k-1). Thus the gcd is exact, and the first coefficient after division is d/p^(k-1). This divisibility is caused by the coefficient-field trace; it supplies no new WSS depth.
+
+#### STL.6 The saturated Petersson covolume and its arithmetic boundary
+
+**Theorem STL8.** Let G_eig be the SGN Gram matrix in the normalized eigenbasis. In any Z-basis of L_tr and any Z-basis of L_int, respectively, the Petersson Gram determinants are
+
+$$\boxed{\det G_{\rm tr}=p^{\delta_k}\det G_{\rm eig},\qquad
+\det G_{\rm int}=p^{-\delta_k}\det G_{\rm eig}.}\tag{STL10}$$
+
+Consequently, with the reflection fields and regulator normalization of SGN,
+
+$$\det G_{\rm int}=p^{-\delta_k}
+[4p^k(p-\chi_5(p))\log\phi]^d
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+{h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.$$
+
+At the WSS threshold k=1 this simplifies to
+
+$$\boxed{\det G_{\rm int}
+=p[4(p-\chi_5(p))\log\phi]^{(p-1)/2}
+ h(M_{p,1})\operatorname{Reg}(M_{p,1}).}\tag{STL11}$$
+
+**Proof.** The change-of-basis matrix from the normalized eigenforms to trace forms F_(e_i) is the embeddings matrix (sigma(e_i)); the square of its determinant is disc(B)=p^(delta_k). The trace-dual basis changes this matrix by the inverse trace Gram matrix, so its squared determinant is p^(-delta_k). Apply the real Gram determinant transformation law. Unimodular changes among Z-bases do not change either determinant. Substitution of SGN12 gives the displayed regulator ratio; for k=1 use delta_1=d-1. The determinant is a real quantity involving regulators. Its explicit scalar p-power is not by itself an integral divisibility theorem about the entire determinant.
+
+**Proposition.** STL constructs and saturates the integer-coefficient structure of an existing golden dihedral packet. It does not change the existence condition h_p>=k+1, and supplies no new actual WSS example or non-WSS prime family. In particular L_int being nonzero was derived from the preselected eta, rather than proved without it.
+
+**Proof.** Every spectral form in STL was defined through the packet in SGN, which by ROC requires that original depth condition. The trace-dual argument constructs elements inside that packet; Chebotarev selects auxiliary primes only in its already-existing field. None of the index, local-algebra or determinant calculations asserts that the field or packet exists at a new target p. These formulas do provide a corrected arithmetic normalization for a future independent lattice or congruence obstruction: it must use L_int rather than mistake L_tr or the normalized eigenbasis for the full integer-coefficient lattice.
