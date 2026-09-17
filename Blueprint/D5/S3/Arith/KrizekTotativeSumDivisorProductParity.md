@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow ((\operatorname{Odd}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/KrizekTotativeSumDivisorProductParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a280246-krizek-totative-sum-divisor-product-parity` (proved) by `D5/S3/Arith/KrizekTotativeSumDivisorProductParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a280246-krizek-totative-sum-divisor-product-parity","declaration_gid":"D5/S3/Arith/KrizekTotativeSumDivisorProductParity.result","resolution_kind":"proved"} -->
+
 *Citation.* Jaroslav Krizek (2016). *OEIS A280246, product of totative sums over divisors*. URL: <https://oeis.org/A280246>.
 
 *Commentary.*
