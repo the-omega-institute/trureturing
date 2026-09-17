@@ -23965,3 +23965,824 @@ $$
 取当前 $G=U$ 并用 theorem 56.2 的轨道识别，即得到上述 $\boxplus$。来源：https://arxiv.org/pdf/1001.4260v2 。与此不同，测度卷积 $\star_b$ 的完整有界复测度代数结构及其精确拓扑合同由 theorem 56.5 给出；概率卷积 $\star$ 是其在凸集 $\mathcal P(I)$ 上的限制。本节的符号约定不另行在 $\mathcal P(I)$ 上引入乘法运算。
 
 ## 56.99 追加锚
+## 57. 树递归的可合成边界、复制障碍、平移完备观察与共同见证语义
+
+**定义 57.1（轨道空间、截断观察、轨道律与粗加法核）。** 记素数集合为 $\mathcal P$，并令
+$$
+E=\mathbb N_0\cup\{\infty\}.
+$$
+给 $E$ 赋如下紧拓扑：每个有限点 $n$ 是孤立点，而 $\infty$ 的一组邻域为
+$$
+E_{\ge L}=\{L,L+1,\ldots\}\cup\{\infty\}\qquad(L\ge0).
+$$
+等价地，对 $L\ge0$ 定义有限截断
+$$
+\tau_L:E\to\{0,1,\ldots,L\},\qquad
+\tau_L(n)=\min(n,L),\quad \tau_L(\infty)=L,
+$$
+其中值 $L$ 表示“$\ge L$”；上述拓扑正是这些截断共同诱导的逆极限拓扑。置
+$$
+R=\prod_{p\in\mathcal P}\mathbb Z_p,\qquad
+U=R^\times=\prod_{p\in\mathcal P}\mathbb Z_p^\times,\qquad
+I=E^{\mathcal P}.
+$$
+对 $x=(x_p)_p\in R$ 定义
+$$
+\rho(x)_p=v_p(x_p),\qquad v_p(0)=\infty.
+$$
+对 $a\in I$ 定义标准代表 $s(a)\in R$：
+$$
+s(a)_p=
+\begin{cases}
+p^{a_p},&a_p<\infty,\\
+0,&a_p=\infty.
+\end{cases}
+$$
+令 $\lambda_U$ 为 $U$ 的归一化 Haar 概率。定义
+$$
+m_a=(u\mapsto u\,s(a))_*\lambda_U.
+$$
+在 $I$ 上定义坐标加法 $\oplus$，约定 $\infty+n=n+\infty=\infty$：
+$$
+(a\oplus b)_p=a_p+b_p.
+$$
+最后定义二元 Markov 核
+$$
+k(a,b)=
+\rho_*\bigl((x,y)\mapsto x+y\bigr)_*(m_a\otimes m_b).
+$$
+本定义只给出对象；$m_a$、$k$ 的 Borel/Feller 性、轨道唯一性以及零坐标稳定子的处理在 theorem 57.3 中证明。
+
+**假设 57.2（概率与常量契约）。** 全文只使用标准 Borel 空间上的 Borel 概率；出现拓扑连续性时，相关空间均取本节指定的紧可度量拓扑。$\lambda_U$ 指紧群 $U$ 的归一化 Haar 概率。普通整数 $n$ 始终按对角嵌入视为 $R$ 中的固定元素；字面常量 $0,1,n$ 从不被替换为轨道上的随机代表。Haar 测度的存在唯一性、紧群 Haar 测度的有限性与双侧不变性，以及闭子群商 $G/H$ 上的不变测度公式采用 Tornier 的 Theorem 2.2、Proposition 2.9、Proposition 3.6、Theorem 4.2 和 Remark 4.4；在紧群情形可归一化为概率：https://arxiv.org/pdf/2006.10956 。正规条件概率的存在与几乎处处唯一性采用 Simmons Definition 1.1 与 Theorem 2.1 的标准 Borel 特例：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。Markov 核的复合、乘积核与确定 copy 的概率语义采用 Fritz Definition 2.1、Example 2.5、Notation 2.8 及 §4：https://arxiv.org/pdf/1908.07021 。
+
+**theorem 57.3（轨道分类、零稳定子与 Feller 核）。** $R,U,I$ 都是紧可度量空间，$\rho:R\to I$ 与 $s:I\to R$ 连续，$\oplus:I^2\to I$ 连续。对每个 $a\in I$，
+$$
+\rho^{-1}(a)=U\,s(a).
+$$
+其稳定子恰为闭子群
+$$
+H_a=\{u\in U:u_p=1\ \text{对每个 }a_p<\infty\},
+$$
+而在 $a_p=\infty$ 的坐标上 $u_p$ 任意。轨道 $U\,s(a)$ 与 $U/H_a$ 同胚，$m_a$ 是该轨道上唯一的 $U$-不变概率。并且 $a\mapsto m_a$ 是 Feller Markov 核，$k:I^2\leadsto I$ 也是 Feller Markov 核。
+
+**证明。** $\mathbb Z_p$ 与 $\mathbb Z_p^\times$ 都是紧可度量空间；可数积仍紧可度量。$E$ 是离散可数空间 $\mathbb N_0$ 的一点紧化，故紧可度量，因而 $I=E^{\mathcal P}$ 亦然。对固定 $p$，
+$$
+v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times
+$$
+是开闭集，而
+$$
+v_p^{-1}(E_{\ge L})=p^L\mathbb Z_p
+$$
+也是开闭集，因此 $v_p:\mathbb Z_p\to E$ 连续；乘积映射 $\rho$ 连续。另一方面，$p^n\to0$ 于 $\mathbb Z_p$，故 $n\mapsto p^n$ 连同 $\infty\mapsto0$ 连续，从而 $s$ 连续。$E$ 上带吸收元 $\infty$ 的加法连续：有限点处因其孤立而显然；若一分量趋向 $\infty$，则对任意 $L$，该分量最终至少为 $L$，从而其和也落入 $E_{\ge L}$。故乘积加法 $\oplus$ 连续。
+
+若 $\rho(x)=a$，则在 $a_p<\infty$ 时唯一写成 $x_p=p^{a_p}u_p$，其中 $u_p\in\mathbb Z_p^\times$；在 $a_p=\infty$ 时 $x_p=0$，任取 $u_p$。所以 $x=u\,s(a)$。反向包含显然，故纤维就是轨道。等式 $u\,s(a)=s(a)$ 在有限坐标上因 $\mathbb Z_p$ 为整环而强迫 $u_p=1$，在零坐标上没有约束，遂得 $H_a$。它是闭子群。标准轨道映射
+$$
+U/H_a\longrightarrow U\,s(a),\qquad uH_a\longmapsto u\,s(a)
+$$
+是紧空间到 Hausdorff 空间的连续双射，故为同胚。$U$ 与 $H_a$ 都是紧群，因此 modular function 恒为 $1$；Tornier Theorem 4.2 的商测度条件满足，归一化后得到 $U/H_a$ 上唯一的 $U$-不变概率。它在轨道同胚下正是 $\lambda_U$ 的推前，即 $m_a$。这同时处理了所有零坐标的非平凡稳定子而不要求作用自由。所用 Haar 与商测度结果见 https://arxiv.org/pdf/2006.10956 。
+
+为证 Feller 性，取 $f\in C(R)$。映射
+$$
+(a,u)\longmapsto f(u\,s(a))
+$$
+在紧空间 $I\times U$ 上连续，故一致连续。于是
+$$
+M_f(a)=\int_U f(u\,s(a))\,d\lambda_U(u)
+$$
+随 $a$ 连续；这正是 $a\mapsto m_a$ 的 Feller 性。特别地，对每个 Borel 集 $B\subseteq R$，$a\mapsto m_a(B)$ 可测：先对连续函数成立，再由函数单调类定理扩张到所有有界 Borel 函数。类似地，对 $g\in C(I)$，
+$$
+(a,b)\longmapsto
+\int_{U^2}g\!\left(\rho(u\,s(a)+v\,s(b))\right)
+\,d\lambda_U(u)\,d\lambda_U(v)
+$$
+连续，因为被积函数在紧空间 $I^2\times U^2$ 上连续。因此 $k$ 是 Feller Markov 核。证毕。
+
+**theorem 57.4（不变律的唯一轨道提升与显式析取）。** 对任意 $\nu\in\operatorname{Prob}(I)$ 定义
+$$
+\mathcal L\nu=\int_I m_a\,\nu(da).
+$$
+等价地令
+$$
+T:I\times U\to R,\qquad T(a,u)=u\,s(a),
+$$
+则
+$$
+\mathcal L\nu=T_*(\nu\otimes\lambda_U).
+$$
+于是 $\mathcal L\nu$ 是 $U$-不变概率且
+$$
+\rho_*(\mathcal L\nu)=\nu.
+$$
+反之，若 $\mu\in\operatorname{Prob}(R)$ 是 $U$-不变的，则
+$$
+\boxed{\mu=\mathcal L(\rho_*\mu)}.
+$$
+故一个 $U$-不变随机元素的完整分布由其 $\rho$-分布唯一确定。进一步，令 $\nu=\rho_*\mu$，则 $a\mapsto m_a$ 是 $\mu$ 关于 $\rho$ 的一个正规条件分布：对任意 Borel $B\subseteq R$、$C\subseteq I$，
+$$
+\mu\bigl(B\cap\rho^{-1}(C)\bigr)=\int_C m_a(B)\,\nu(da).
+$$
+在 $\nu$-几乎处处意义下它唯一。此结论不要求轨道作用自由。
+
+**证明。** theorem 57.3 已给出 $T$ 的连续性和 $a\mapsto m_a$ 的 Borel 性，故 $\mathcal L\nu$ 定义良好。每个 $m_a$ 支持于 $\rho^{-1}(a)$，因此对 Borel $C\subseteq I$，
+$$
+\rho_*(\mathcal L\nu)(C)
+=\int_I m_a(\rho^{-1}(C))\,\nu(da)
+=\int_I\mathbf1_C(a)\,\nu(da)
+=\nu(C).
+$$
+又因 Haar 左平移不变，每个 $m_a$ 对 $U$-作用不变，混合后 $\mathcal L\nu$ 仍不变。
+
+现设 $\mu$ 不变。对 $f\in C(R)$ 定义轨道平均
+$$
+Af(x)=\int_U f(ux)\,d\lambda_U(u).
+$$
+若 $a=\rho(x)$，取 $w\in U$ 使 $x=w\,s(a)$。紧群 $U$ 的归一化 Haar 概率双侧不变，故
+$$
+Af(x)=\int_U f(uw\,s(a))\,d\lambda_U(u)
+=\int_U f(u\,s(a))\,d\lambda_U(u)
+=M_f(a).
+$$
+写 $\nu=\rho_*\mu$，由 Fubini 与 $\mu$ 的不变性，
+$$
+\begin{aligned}
+\int_R f\,d\mathcal L\nu
+&=\int_I M_f(a)\,\nu(da)\\
+&=\int_R Af(x)\,\mu(dx)\\
+&=\int_U\int_R f(ux)\,\mu(dx)\,d\lambda_U(u)\\
+&=\int_R f(x)\,\mu(dx).
+\end{aligned}
+$$
+紧可度量空间上的 Borel 概率由连续函数积分唯一决定，故 $\mu=\mathcal L\nu$。
+
+由于 $m_a(\rho^{-1}(a))=1$，对 $B,C$ 有
+$$
+m_a\bigl(B\cap\rho^{-1}(C)\bigr)=\mathbf1_C(a)m_a(B).
+$$
+将混合恒等式应用于 $B\cap\rho^{-1}(C)$ 即得条件分布公式。若另一 Borel 核 $q_a$ 也满足同一公式，则取 $R$ 的一个可数生成代数 $\mathcal A$。对固定 $B\in\mathcal A$，
+$$
+\int_C q_a(B)\,\nu(da)=\int_Cm_a(B)\,\nu(da)
+$$
+对所有 Borel $C\subseteq I$ 成立，故 $q_a(B)=m_a(B)$ 对 $\nu$-几乎处处成立。对可数个 $B\in\mathcal A$ 取共同满测集，再用单调类定理扩张到全部 Borel $B$，得到一个共同的 $\nu$-满测集，在其上两个条件概率测度完全相同。这与 Simmons Definition 1.1、Theorem 2.1 的存在与共同零集唯一性一致；此处所需条件核本身已经由轨道平均显式给出。来源：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。证毕。
+
+**定义 57.5（一次叶使用的表达式树语义）。** 一个有限二叉表达式树的每个叶 $\ell$ 带标签 $a_\ell\in I$，并采样一次
+$$
+X_\ell\sim m_{a_\ell}.
+$$
+全体叶样本相互独立，每个叶在树中只出现一次。内部节点标记为 $+$ 或 $\cdot$，其代表值 $Y_v\in R$ 由通常环运算递归求值。定义标签概率 $\nu_v\in\operatorname{Prob}(I)$：
+$$
+\nu_\ell=\delta_{a_\ell}.
+$$
+若 $v$ 是加法节点、两个子节点为 $r,s$，则
+$$
+\nu_v(C)=\int_{I^2}k(a,b)(C)\,\nu_r(da)\nu_s(db).
+$$
+若 $v$ 是乘法节点，则
+$$
+\nu_v=\oplus_*(\nu_r\otimes\nu_s).
+$$
+这里“两个子树独立”来自叶集合不交且原始叶独立，而不是由两个边缘标签分布自动推出。
+
+**theorem 57.6（树上的精确递归与条件单位方向）。** 对定义 57.5 的每个节点 $v$，
+$$
+\operatorname{Law}(\rho(Y_v))=\nu_v
+\qquad\text{且}\qquad
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+尤其所有节点代表值的边缘律均为 $U$-不变。若 $v$ 的两个子节点为 $r,s$，则存在一个处处定义的 Borel 条件核
+$$
+(a,b)\longmapsto m_a\otimes m_b
+$$
+给出 $(Y_r,Y_s)$ 关于 $(\rho(Y_r),\rho(Y_s))$ 的正规条件分布版本；它在 $(\nu_r\otimes\nu_s)$-几乎处处意义下唯一。乘法在标签上是 $\oplus$，且在固定输入标签 $(a,b)$ 下代表乘积具有轨道律 $m_{a\oplus b}$。
+
+**证明。** 对树作结构归纳。叶节点由定义即
+$$
+\operatorname{Law}(Y_\ell)=m_{a_\ell}=\mathcal L\delta_{a_\ell},
+$$
+且 $\rho(Y_\ell)=a_\ell$ 几乎处处。
+
+设结论对两个子节点 $r,s$ 成立。因两子树依赖于互不相交的叶集合，而所有叶独立，$Y_r,Y_s$ 独立。因此
+$$
+\operatorname{Law}(Y_r,Y_s)
+=(\mathcal L\nu_r)\otimes(\mathcal L\nu_s)
+=\int_{I^2}(m_a\otimes m_b)\,\nu_r(da)\nu_s(db).
+$$
+核 $(a,b)\mapsto m_a\otimes m_b$ 的 Borel 性可先在矩形集 $B_1\times B_2$ 上由
+$$
+(m_a\otimes m_b)(B_1\times B_2)=m_a(B_1)m_b(B_2)
+$$
+得到，再由 $\pi$-$\lambda$ 定理扩张到乘积 Borel $\sigma$-代数。它支持于
+$$
+\rho^{-1}(a)\times\rho^{-1}(b),
+$$
+故给出所述条件版本；几乎处处唯一性由 theorem 57.4 的同一可数生成代数论证或 Simmons Theorem 2.1 得到。
+
+若 $v$ 为加法节点，则由 $k$ 的定义和 Fubini，
+$$
+\operatorname{Law}(\rho(Y_r+Y_s))
+=\int_{I^2}k(a,b)\,\nu_r(da)\nu_s(db)
+=\nu_v.
+$$
+又对任意 $u\in U$，
+$$
+u(Y_r+Y_s)=uY_r+uY_s,
+$$
+而独立性与两边缘律的 $U$-不变性给出
+$$
+(uY_r,uY_s)\stackrel d=(Y_r,Y_s).
+$$
+故 $Y_r+Y_s$ 的律 $U$-不变；theorem 57.4 随即给出
+$$
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+
+若 $v$ 为乘法节点，则逐坐标
+$$
+v_p((Y_r)_p(Y_s)_p)=v_p((Y_r)_p)+v_p((Y_s)_p),
+$$
+其中含零时按 $\infty$ 吸收解释。因此
+$$
+\rho(Y_rY_s)=\rho(Y_r)\oplus\rho(Y_s).
+$$
+两标签独立，遂得
+$$
+\operatorname{Law}(\rho(Y_v))
+=\oplus_*(\nu_r\otimes\nu_s)=\nu_v.
+$$
+输出律亦不变，因为
+$$
+u(Y_rY_s)=(uY_r)Y_s
+$$
+且 $(uY_r,Y_s)\stackrel d=(Y_r,Y_s)$。再用 theorem 57.4 得代表律 $\mathcal L\nu_v$。若输入标签固定，写
+$$
+Y_r=u_1s(a),\qquad Y_s=u_2s(b),
+$$
+其中 $u_1,u_2$ 独立 Haar；于是
+$$
+Y_rY_s=(u_1u_2)s(a\oplus b).
+$$
+$u_1u_2$ 仍为 Haar，故条件代表律为 $m_{a\oplus b}$。Fritz §4 中 Markov 核的复合与乘积测度公式以及 Definition 2.1 中的 copy 区分了独立张量与同一输入的复制：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.7（固定常量、确定系数、重复变量与共同参数的精确边界）。** 以下各项成立。
+
+甲，字面 $0$ 是例外地兼容轨道语义的固定常量：
+$$
+\delta_0=m_{\boldsymbol\infty},
+\qquad \boldsymbol\infty=(\infty)_p.
+$$
+字面 $1$ 满足 $\rho(1)=\boldsymbol0=(0)_p$，但
+$$
+\delta_1\ne m_{\boldsymbol0}.
+$$
+把固定 $1$ 换成 $m_{\boldsymbol0}$ 是改变实验，而不是同一实验的粗化。
+
+乙，若 $c\in R$ 固定且 $X$ 有 $U$-不变律，则 $cX$ 仍有 $U$-不变律，并且
+$$
+\rho(cX)=\rho(c)\oplus\rho(X).
+$$
+特别地，对 $X\sim m_a$，
+$$
+cX\sim m_{\rho(c)\oplus a}.
+$$
+因此确定乘法系数可作为一元标签平移使用，而无需随机化 $c$。
+
+丙，对固定 $c\in R$，可定义确定平移的标签核
+$$
+t_c(a)=\rho_*(x\mapsto x+c)_*m_a.
+$$
+该核是 Feller；若 $X\sim\mathcal L\nu$，则
+$$
+\operatorname{Law}(\rho(X+c))
+=\int_I t_c(a)\,\nu(da).
+$$
+但 $X+c$ 一般不再 $U$-不变，所以仅知道这一新标签边缘律通常不足以把它继续送入 $k$。
+
+丁，设 $S$ 是标准 Borel 参数空间，$\beta\in\operatorname{Prob}(S)$，$T$ 是一个固定有限二叉 $+$、$\cdot$ 表达式树，叶集合为有限集 $L$。对每个 $\ell\in L$，给定 Borel Markov 核
+$$
+\nu_\ell:S\leadsto I.
+$$
+对 $\theta\in S$ 写 $\nu_{\ell,\theta}=\nu_\ell(\theta,\cdot)$。设随机参数 $\Theta$ 的律为 $\beta$，叶向量 $X_L=(X_\ell)_{\ell\in L}$ 有一个选定的、处处定义的 Borel 正规条件核
+$$
+Q:S\leadsto R^L,
+$$
+并存在一个 Borel 集 $S_0\subseteq S$，满足 $\beta(S_0)=1$，使对每个同一个 $\theta\in S_0$ 都有
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}.
+$$
+则可在所有 $\theta\in S$ 上递归定义 Borel 标签核 $\nu_v:S\leadsto I$：叶上取给定 $\nu_\ell$；若 $v=r+s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}k(a,b)(C)\,\nu_r(\theta,da)\nu_s(\theta,db);
+$$
+若 $v=r\cdot s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}\mathbf1_C(a\oplus b)\,\nu_r(\theta,da)\nu_s(\theta,db).
+$$
+对每个节点 $v$，令 $Y_v$ 是从叶代表按树求值得到的普通算术值，则存在由 $Q_\theta$ 推前得到的 Borel 条件核，使对每个 $\theta\in S_0$ 同时成立
+$$
+\operatorname{Law}(\rho(Y_v)\mid\Theta=\theta)=\nu_{v,\theta},
+$$
+$$
+\operatorname{Law}(Y_v\mid\Theta=\theta)=\mathcal L\nu_{v,\theta}.
+$$
+因此无条件律为
+$$
+\operatorname{Law}(\rho(Y_v))
+=\int_S\nu_{v,\theta}\,\beta(d\theta),
+$$
+$$
+\operatorname{Law}(Y_v)
+=\int_S\mathcal L\nu_{v,\theta}\,\beta(d\theta).
+$$
+$S\setminus S_0$ 上条件版本可以任意修改而不影响这些等式；不能把“几乎处处条件独立”改写成对每个参数值成立。
+
+戊，先遗忘共同参数再把无条件边缘独立相乘一般给出错误的算术输出。具体地，令
+$$
+S=\{0,1\},\qquad \beta(0)=\beta(1)=\frac12,
+$$
+取两个叶 $X,Y$，并规定
+$$
+Q_0=\delta_{(0,0)},
+\qquad
+Q_1=m_{\boldsymbol0}\otimes m_{\boldsymbol0}.
+$$
+于是给定 $\Theta$ 后两叶独立，且它们分别处于零轨道或单位轨道。对乘法输出 $Z=XY$，实际共同参数实验满足
+$$
+\Pr\bigl(\rho(Z)=\boldsymbol0\bigr)=\frac12.
+$$
+然而每个无条件边缘均为
+$$
+\mu=\frac12\delta_0+\frac12m_{\boldsymbol0}.
+$$
+若丢掉 $\Theta$ 后另取独立 $X',Y'\sim\mu$，则
+$$
+\Pr\bigl(\rho(X'Y')=\boldsymbol0\bigr)=\frac14.
+$$
+故共同参数产生的联合信息能够改变一个具体普通乘法门的输出分布。
+
+己，同名变量若每次出现均重新独立采样，则只是多个不同叶；若同名表示同一个已采样代表被多处复用，则是复制，不能用独立叶替代。
+
+**证明。** 甲中 $m_{\boldsymbol\infty}$ 的标准代表为全零元，任意 $u$ 作用后仍是零，故为 $\delta_0$。而 $m_{\boldsymbol0}$ 是 $U$ 自身的 Haar 律并非点质量，故 $\delta_1\ne m_{\boldsymbol0}$。
+
+乙中对任意 $u\in U$，
+$$
+u(cX)=c(uX).
+$$
+所以 $X\stackrel d=uX$ 推出 $cX\stackrel d=u(cX)$。估值乘法公式给出标签等式。若 $X\sim m_a$，输出既不变又具有确定标签 $\rho(c)\oplus a$，故 theorem 57.4 的唯一性给出 $cX\sim m_{\rho(c)\oplus a}$。
+
+丙的 Feller 性与 theorem 57.3 相同：对 $g\in C(I)$，
+$$
+a\mapsto\int_U g\!\left(\rho(u\,s(a)+c)\right)\,d\lambda_U(u)
+$$
+连续。混合公式由 Fubini 得到。为见不变性一般丢失，取 $c\ne0$，选 $p$ 使 $d=v_p(c_p)<\infty$。若 $p$ 为奇数，取 $a_p=d+1$，则
+$$
+X_p+c_p=p^d(c'_p+pU_p),
+$$
+其中 $c'_p$ 为固定单位，括号中的单位恒与 $c'_p$ 模 $p$ 同余；乘以一个模 $p$ 不等于 $1$ 的单位会把该支撑剩余类移走，所以输出不对全部 $\mathbb Z_p^\times$ 不变。若 $p=2$，取 $a_2=d+2$，括号中的单位固定在 $c'_2\bmod4$，乘以 $3$ 后落到不同奇剩余类。故非零加法常量不能普遍保持继续使用 $k$ 所需的不变性。
+
+证明丁。由 theorem 57.3，$a\mapsto m_a$ 是 Borel 核，所以
+$$
+\theta\longmapsto \mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 概率核：对 Borel $B\subseteq R$，其取值为
+$$
+\int_I m_a(B)\,\nu_\ell(\theta,da),
+$$
+这是 Borel 函数。有限乘积
+$$
+\theta\longmapsto\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 核；在生成矩形上其概率是有限个 Borel 函数的乘积，再用 $\pi$-$\lambda$ 定理扩张。Fritz §4 的公式 $(\mu,\nu)\mapsto\mu\otimes\nu$ 给出同一可测性事实：https://arxiv.org/pdf/1908.07021 。
+
+接着对节点作归纳证明 $\nu_v$ 为 Borel 核。叶节点由假设成立。若 $v=r+s$，则对固定 Borel $C$，函数
+$$
+(a,b)\longmapsto k(a,b)(C)
+$$
+Borel，而 $(\theta,da,db)$ 的乘积核 Borel；核积分的可测性可先对指标函数矩形验证，再用有界函数单调类定理扩张，因此 $\theta\mapsto\nu_v(\theta,C)$ Borel。乘法节点因 $\oplus$ 连续，同理可得。于是递归中每个 $\nu_v$ 都是处处定义的 Borel Markov 核。
+
+对每个节点 $v$，从 $R^L$ 到 $R$ 的子树求值映射 $F_v$ 是连续的，故
+$$
+Q^v_\theta=(F_v)_*Q_\theta
+$$
+是 Borel 核；其标签推前 $\rho_*Q^v_\theta$ 也为 Borel 核。固定任意 $\theta\in S_0$。由
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta},
+$$
+不同叶条件独立且各叶律 $U$-不变。完全重复 theorem 57.6 的结构归纳，但把叶上的点质量标签 $\delta_{a_\ell}$ 换成 $\nu_{\ell,\theta}$，可得对该同一个 $\theta$、所有有限多个节点同时有
+$$
+\rho_*Q^v_\theta=\nu_{v,\theta},
+\qquad
+Q^v_\theta=\mathcal L\nu_{v,\theta}.
+$$
+由于 $S_0$ 在归纳开始前已经固定，这里没有为不同节点分别丢弃不同的参数零集。最后用条件概率的全概率公式积分 $\beta$ 即得无条件两式。标准 Borel 空间上正规条件核版本的存在以及不同版本只在参数零集上可能不同，见 Simmons Definition 1.1 与 Theorem 2.1：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明戊。若 $\Theta=0$，则 $XY=0$，故标签为 $\boldsymbol\infty$；若 $\Theta=1$，两输入都是单位，故其乘积也是单位，标签为 $\boldsymbol0$。两种参数各概率 $1/2$，所以实际输出成为单位的概率为 $1/2$。丢弃参数后，每个输入独立地以概率 $1/2$ 为单位、以概率 $1/2$ 为零；乘积为单位当且仅当两者均为单位，故概率为 $1/4$。这给出一个具体算术输出的差异，而不只是假定“联合律可能不同”。
+
+己只是两个概率实验的区分：fresh occurrence 使用乘积耦合；copy occurrence 使用对角耦合。Fritz Definition 2.1 对 copy 的解释正是复制同一输入而不增加随机性：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.8（复制与独立采样的精确局部估值分布）。** 令 $\boldsymbol0=(0)_p\in I$。取 $X,Y$ 为独立的 $m_{\boldsymbol0}$ 样本，即独立 Haar 单位。固定素数 $p$。
+
+若 $p$ 为奇数，则
+$$
+\Pr\!\left(v_p(X_p+Y_p)=0\right)=\frac{p-2}{p-1},
+$$
+并且对每个 $n\ge1$，
+$$
+\Pr\!\left(v_p(X_p+Y_p)\ge n\right)
+=\frac{1}{p^{n-1}(p-1)},
+$$
+$$
+\Pr\!\left(v_p(X_p+Y_p)=n\right)=p^{-n},
+\qquad
+\Pr\!\left(v_p(X_p+Y_p)=\infty\right)=0.
+$$
+而复制同一个输入时
+$$
+v_p(X_p+X_p)=v_p(2X_p)=0
+\quad\text{几乎必然}.
+$$
+所以事件 $v_p(\,\cdot\,)\ge1$ 的概率分别为 $1/(p-1)$ 与 $0$。
+
+若 $p=2$，则
+$$
+\Pr\!\left(v_2(X_2+Y_2)\ge n\right)=2^{1-n}
+\qquad(n\ge1),
+$$
+$$
+\Pr\!\left(v_2(X_2+Y_2)=n\right)=2^{-n}
+\qquad(n\ge1),
+$$
+且无穷估值概率为 $0$。复制时却有
+$$
+v_2(X_2+X_2)=1
+\quad\text{几乎必然}.
+$$
+所以事件 $v_2(\,\cdot\,)\ge2$ 的概率分别为 $1/2$ 与 $0$，而事件 $v_2(\,\cdot\,)=1$ 的概率分别为 $1/2$ 与 $1$。
+
+**证明。** 在独立情形令
+$$
+Z_p=Y_pX_p^{-1}.
+$$
+因 Haar 概率在乘法平移下不变，$Z_p$ 是 $\mathbb Z_p^\times$ 上的 Haar 单位，并且
+$$
+v_p(X_p+Y_p)=v_p(1+Z_p).
+$$
+Haar 概率推前到有限商 $(\mathbb Z/p^n\mathbb Z)^\times$ 后仍是平移不变概率，故是该有限群上的均匀概率。因此
+$$
+\Pr(v_p(1+Z_p)\ge n)
+=\Pr(Z_p\equiv-1\pmod{p^n})
+=\frac1{\varphi(p^n)}
+=\frac1{p^{n-1}(p-1)}.
+$$
+奇 $p$ 时，$n=1$ 的补事件给出
+$$
+\Pr(v_p=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而相邻尾概率之差为
+$$
+\frac1{p^{n-1}(p-1)}-\frac1{p^n(p-1)}=p^{-n}.
+$$
+尾概率趋于零，故无穷估值概率为零。复制时 $p\nmid2$ 且 $X_p$ 为单位，故估值恒为零。
+
+对 $p=2$，同一尾概率公式化为 $2^{1-n}$；所有奇单位都满足 $Z_2\equiv-1\pmod2$，所以估值至少为 $1$。相邻尾概率之差为 $2^{-n}$。复制时 $2X_2$ 恰有估值 $1$。所用 Haar 平移不变性与有限归一化见 Tornier Theorem 2.2 与 compact-group discussion：https://arxiv.org/pdf/2006.10956 。证毕。
+
+**theorem 57.9（边缘标签二元接口不可能同时实现独立与复制）。** 不存在一个 Markov 核
+$$
+K:I\times I\leadsto I
+$$
+同时满足以下两个全称要求：
+
+一，对所有 $a,b\in I$，若 $X\sim m_a$、$Y\sim m_b$ 独立，则
+$$
+\operatorname{Law}(\rho(X+Y))=K(a,b).
+$$
+
+二，对所有 $a\in I$，若 $X\sim m_a$ 且同一 $X$ 被复制到两个输入端，则
+$$
+\operatorname{Law}(\rho(X+X))=K(a,a).
+$$
+因此，一个只看两个输入边缘标签并在 $(a,a)$ 处调用同一个二元核的 Markov 接口，不可能既解释独立重新采样又解释复制。每次出现都重新抽取独立轨道代表是另一个实验。
+
+**证明。** 取 $a=\boldsymbol0$。若 $p$ 为任一奇素数，要求一和 theorem 57.8 强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_p\ge1\}\bigr)=\frac1{p-1},
+$$
+其中 $\infty$ 也计入“$\ge1$”。要求二却因 $v_p(2X_p)=0$ 强迫同一概率等于 $0$，矛盾。若只观察 $p=2$，则要求一强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_2\ge2\}\bigr)=\frac12,
+$$
+要求二强迫其为 $0$，同样矛盾。Fritz Definition 2.1 和 §4 将确定 copy 与独立乘积核严格区分：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**定义 57.10（平移闭观察与有限精度查询）。** 把每个 $n\in\mathbb N_0$ 对角嵌入 $R$，定义
+$$
+\Psi:R\to I^{\mathbb N_0},
+\qquad
+\Psi(x)=\bigl(\rho(x+n)\bigr)_{n\in\mathbb N_0}.
+$$
+若
+$$
+M=\prod_{p\mid M}p^{e_p}>1,
+$$
+定义有限剩余投影
+$$
+\pi_M:R\to\mathbb Z/M\mathbb Z
+$$
+为各 $x_p\bmod p^{e_p}$ 经中国剩余定理合成的类。一次针对 $M$ 的截断平移查询取某个 $n\in\mathbb N_0$，返回有限向量
+$$
+Q_{M,n}(x)=
+\bigl(\min(v_p(x_p+n),e_p)\bigr)_{p\mid M}.
+$$
+这里只要求恢复 $\pi_M(x)$；不把有限截断误称为判定两个任意 $p$-进整数是否相等。
+
+**theorem 57.11（非负平移已分离全部点；有限模数可由有限截断查询恢复）。** 映射 $\Psi$ 连续且单射。因此仅用 $n\in\mathbb N_0$ 的平移估值族就分离 $R$ 中任意两点；不需要负平移。由于 $R$ 紧而 $I^{\mathbb N_0}$ Hausdorff，$\Psi$ 还是到其像的拓扑嵌入。
+
+对有限模数 $M>1$，令
+$$
+N_M=\max_{p^{e_p}\parallel M}(p^{e_p}-1).
+$$
+非自适应地查询
+$$
+n=0,1,\ldots,N_M-1
+$$
+的 $Q_{M,n}$ 足以恢复 $\pi_M(x)$。另有一个显式自适应算法，用至多
+$$
+\sum_{p^{e_p}\parallel M}e_p(p-1)
+$$
+次查询恢复 $\pi_M(x)$。两者均只是已证明的充分界，不主张最优。$M=1$ 时无需查询。
+
+**证明。** 连续性来自每个坐标 $x\mapsto\rho(x+n)$ 的连续性。为证单射，设 $x\ne y$。选素数 $p$ 使 $x_p\ne y_p$，并令
+$$
+k=v_p(x_p-y_p)<\infty.
+$$
+取唯一代表
+$$
+n\in\{0,1,\ldots,p^{k+1}-1\}
+$$
+满足
+$$
+n\equiv-x_p\pmod{p^{k+1}}.
+$$
+于是
+$$
+v_p(x_p+n)\ge k+1.
+$$
+另一方面
+$$
+y_p+n=(y_p-x_p)+(x_p+n),
+$$
+右边两项估值分别为 $k$ 与至少 $k+1$；非阿基米德估值在两项估值不等时取较小者，所以
+$$
+v_p(y_p+n)=k.
+$$
+故 $\rho(x+n)\ne\rho(y+n)$，$\Psi$ 单射。紧空间到 Hausdorff 空间的连续单射是到像的同胚，遂得拓扑嵌入。
+
+现固定 $p^{e_p}\parallel M$。对任何 $n$，
+$$
+\min(v_p(x_p+n),e_p)=e_p
+\iff
+x_p+n\equiv0\pmod{p^{e_p}}.
+$$
+在完整剩余系 $n=0,\ldots,p^{e_p}-1$ 中恰有一个 $n$ 命中。统一查询区间 $0,\ldots,N_M-1$ 包含
+$$
+0,\ldots,p^{e_p}-2.
+$$
+若其中某个 $n$ 的 $p$ 坐标返回 $e_p$，便得到
+$$
+-x_p\equiv n\pmod{p^{e_p}}.
+$$
+若都不命中，则唯一未查询的类 $p^{e_p}-1$ 必命中。故可恢复每个 $x_p\bmod p^{e_p}$，再由中国剩余定理恢复 $\pi_M(x)$。
+
+对自适应算法，逐个素数处理。设在第 $k$ 步已知
+$$
+r_k\equiv-x_p\pmod{p^k},
+\qquad0\le r_k<p^k.
+$$
+依次测试
+$$
+n=r_k+t p^k,\qquad t=0,1,\ldots,p-2,
+$$
+只读取是否
+$$
+v_p(x_p+n)\ge k+1.
+$$
+在 $t=0,\ldots,p-1$ 中恰有一个满足；若前 $p-1$ 个候选都失败，就推断 $t=p-1$。置
+$$
+r_{k+1}=r_k+t p^k.
+$$
+如此每提升一位至多 $p-1$ 次查询，共 $e_p(p-1)$ 次得到 $-x_p\bmod p^{e_p}$。对所有 $p\mid M$ 求和并用中国剩余定理即得所述界。证毕。
+
+**theorem 57.12（任何有限确定标签都不能因子化全部整数平移测试）。** 设 $F$ 为任意有限集合，$\theta:R\to F$ 为任意函数，并令增强观察
+$$
+q(x)=(\rho(x),\theta(x))\in I\times F.
+$$
+则不可能存在一族函数
+$$
+\Phi_n:q[R]\to I\qquad(n\in\mathbb N_0)
+$$
+使得对所有 $x\in R$、所有 $n\in\mathbb N_0$ 都有
+$$
+\rho(x+n)=\Phi_n(q(x)).
+$$
+所以在 $\rho$ 旁再加一个有限确定标签，并只保留该增强状态，不能修复所有固定整数平移测试。此结论不排除保留实际共同代表、完整联合律、无限标签，或为某个固定有限任务设计专用有限状态。
+
+**证明。** 轨道纤维
+$$
+\rho^{-1}(\boldsymbol0)=U
+$$
+是无限集合，而 $F$ 有限，所以存在不同的 $x,y\in U$ 满足
+$$
+\theta(x)=\theta(y).
+$$
+于是
+$$
+q(x)=q(y)=(\boldsymbol0,\theta(x)).
+$$
+theorem 57.11 给出某个 $n\in\mathbb N_0$ 使
+$$
+\rho(x+n)\ne\rho(y+n).
+$$
+若所有 $\Phi_n$ 存在，则由 $q(x)=q(y)$ 应有
+$$
+\rho(x+n)=\Phi_n(q(x))=\Phi_n(q(y))=\rho(y+n),
+$$
+矛盾。这正是既有 framework theorem 2.2 的实际像因子化判据应用于
+$$
+T_n(x)=\rho(x+n)
+$$
+和输入观察 $q$：目标映射能下降到 $q[R]$ 当且仅当它在每个 $q$-纤维上常值。该 theorem 2.2 的精确文本见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。证毕。
+
+**定义 57.13（有类型有限 DAG 与共同见证推前语义）。** 一个有类型有限算术 DAG 的数据为有限顶点集 $V$ 的不交分解
+$$
+V=J\sqcup C\sqcup A\sqcup M,
+$$
+其中 $J$ 是变量输入节点集，$C$ 是零元输入的常量节点集，$A$ 是二元加法节点集，$M$ 是二元乘法节点集。给定常量标记
+$$
+\kappa:C\to R.
+$$
+对每个二元节点 $v\in A\sqcup M$，给定两个有序前驱槽
+$$
+\operatorname{pred}_0(v),\operatorname{pred}_1(v)\in V.
+$$
+要求存在一个严格全序 $<$ 于 $V$，使
+$$
+\operatorname{pred}_i(v)<v
+\qquad(v\in A\sqcup M,\ i=0,1).
+$$
+允许
+$$
+\operatorname{pred}_0(v)=\operatorname{pred}_1(v),
+$$
+因此同一代表在一个二元门的两个槽中重复使用被显式编码；一个顶点也可成为多个后继槽的前驱。$J$ 只包含真正的变量输入，$C$ 中常量虽在底层依赖图中没有前驱，却不属于 $J$，故不从输入概率空间取得任意值。
+
+给定 $z=(z_j)_{j\in J}\in R^J$，按 $<$ 递归定义
+$$
+E_j(z)=z_j\qquad(j\in J),
+$$
+$$
+E_c(z)=\kappa(c)\qquad(c\in C),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)+E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in A),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in M).
+$$
+定义
+$$
+\operatorname{ev}_G:R^J\to R^V,
+\qquad
+\operatorname{ev}_G(z)=(E_v(z))_{v\in V}.
+$$
+给定任意 Borel 联合输入律
+$$
+\mu\in\operatorname{Prob}(R^J),
+$$
+定义共同见证粗语义
+$$
+\mathsf W_G(\mu)
+=(\rho^V)_*(\operatorname{ev}_G)_*\mu.
+$$
+若只关心一个有序输出列表 $o=(o_1,\ldots,o_q)\in V^q$，则相应输出语义为坐标映射
+$$
+z\longmapsto(E_{o_1}(z),\ldots,E_{o_q}(z))
+$$
+再经 $\rho^q$ 的推前。
+
+若只给定变量输入的联合标签律
+$$
+\eta\in\operatorname{Prob}(I^J),
+$$
+定义条件独立轨道方向契约下的规范提升
+$$
+\mathcal L_J\eta
+=\int_{I^J}\bigotimes_{j\in J}m_{a_j}\,\eta(da)
+$$
+$$
+=\Bigl((a,(u_j)_j)\mapsto(u_js(a_j))_j\Bigr)_*
+(\eta\otimes\lambda_U^{\otimes J}).
+$$
+一个变量输入只采样一次；DAG 中所有后续复用都复用该同一代表。这里的有序输入槽和零元常量类型与既有 framework Definition 1.1 的空输入常量、ordered input ports，以及 Proposition 1.4 对重复出现位置的保留完全相容；精确来源为 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。
+
+**theorem 57.14（有类型有限 DAG 的恒等式保持与联合信息层级）。** 对定义 57.13 的有类型有限 DAG 有以下结论。
+
+甲，$\operatorname{ev}_G:R^J\to R^V$ 连续。对任意 $\mu\in\operatorname{Prob}(R^J)$，$\mathsf W_G(\mu)$ 是同一组变量输入代表经过确定 DAG 求值后的精确联合标签推前；常量节点始终取 $\kappa(c)$，重复前驱槽始终读取同一个先前代表。
+
+乙，若两个这样的有限 DAG 或两个有序输出元组在同一变量输入空间上定义连续算术映射
+$$
+F,G:R^J\to R^q
+$$
+且逐点恒等
+$$
+F(z)=G(z)\qquad(\forall z\in R^J),
+$$
+则对每个联合输入律 $\mu$，
+$$
+(\rho^q\circ F)_*\mu=(\rho^q\circ G)_*\mu.
+$$
+因此任何在代表层逐点成立的普通环恒等式在共同见证推前下保持；这不推出任何独立随机核 $k$ 的结合律或分配律。
+
+丙，对每个 $\eta\in\operatorname{Prob}(I^J)$，
+$$
+(\rho^J)_*(\mathcal L_J\eta)=\eta.
+$$
+并且若一个联合代表律 $\mu$ 关于标签向量 $\rho^J$ 具有正规条件核
+$$
+a\longmapsto\bigotimes_{j\in J}m_{a_j}
+$$
+对 $\eta$-几乎处处成立，其中 $\eta=(\rho^J)_*\mu$，则
+$$
+\mu=\mathcal L_J\eta.
+$$
+也就是说，完整联合标签律加上纤维内条件独立轨道方向这一契约唯一确定规范提升。
+
+丁，当 $|J|\ge2$ 时，仅给出各变量输入的边缘标签律不足以确定 $\eta$；即使给出完整联合标签律 $\eta$，若不指定标签纤维内的联合耦合，也不足以确定一般的代表联合律或 DAG 输出律。
+
+**证明。** 证明甲。按定义 57.13 的严格全序归纳。变量投影 $z\mapsto z_j$ 连续，常量映射 $z\mapsto\kappa(c)$ 连续。若两个前驱值函数连续，则其和与积连续；即使两个前驱槽相同，也只是把同一连续函数代入两次。因此每个 $E_v$ 连续，有限乘积映射 $\operatorname{ev}_G$ 连续。定义本身保证 $c\in C$ 的值不来自 $R^J$ 的坐标；若 $\operatorname{pred}_0(v)=\operatorname{pred}_1(v)$，两槽的值都等于同一个 $E_w(z)$，不会产生第二次采样。故 $\mathsf W_G(\mu)$ 正是实际共同输入的确定推前。
+
+证明乙。若 $F=G$ 逐点，则 $\rho^q\circ F=\rho^q\circ G$ 逐点，所以两可测映射对任意 $\mu$ 的推前相等。这一论证发生在代表求值映射上，不需要把某个概率二元核假定为环运算。
+
+证明丙。核
+$$
+a\longmapsto\bigotimes_{j\in J}m_{a_j}
+$$
+Borel；对固定 $a$，它支持于
+$$
+(\rho^J)^{-1}(a).
+$$
+因此
+$$
+(\rho^J)_*(\mathcal L_J\eta)=\eta.
+$$
+若 $\mu$ 具有所述正规条件核，则由全概率公式，对每个 Borel $B\subseteq R^J$，
+$$
+\mu(B)=
+\int_{I^J}
+\left(\bigotimes_{j\in J}m_{a_j}\right)(B)\,\eta(da)
+=(\mathcal L_J\eta)(B).
+$$
+故 $\mu=\mathcal L_J\eta$。正规条件核只需在一个 $\eta$-满测集上满足该等式，零集外的版本修改不影响积分；Simmons Theorem 2.1 给出标准 Borel 情形的这种几乎处处唯一性：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明丁的第一部分。取两个不同标签 $a\ne b$，令
+$$
+\eta_{\rm diag}
+=\frac12\delta_{(a,a)}+\frac12\delta_{(b,b)},
+$$
+$$
+\eta_{\rm cross}
+=\frac12\delta_{(a,b)}+\frac12\delta_{(b,a)}.
+$$
+两者两个边缘完全相同，均为
+$$
+\frac12(\delta_a+\delta_b),
+$$
+但联合律不同。
+
+第二部分取固定联合标签
+$$
+\eta=\delta_{(\boldsymbol0,\boldsymbol0)}.
+$$
+令 $X,Y$ 为独立 Haar 单位，则 $(X,Y)$ 的联合律与对角联合律 $(X,X)$ 都推前到同一个 $\eta$。考虑一个加法门，其两个有序前驱槽分别读取这两个输入；在对角情形也可等价地令两个槽都读取同一个变量节点。theorem 57.8 表明两种联合耦合的输出估值分布不同。因此完整标签联合律仍未确定纤维内耦合。Fritz Definition 2.1 与 §4 的确定 copy、乘积核和联合分布语义提供一般概率背景：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.15（精确的观察与电路契约边界）。** 在本节设定下，以下四层结论同时成立。
+
+一，若计算对象是定义 57.5 的有限表达式树，即每个随机叶只使用一次、不同叶独立、叶律为指定轨道律 $m_a$，内部仅用 $+$ 与 $\cdot$，则仅保留每个子树的 $\rho$-边缘律并用 $k$ 与 $\oplus$ 递归是精确的。若另有标准 Borel 共同参数，则 theorem 57.7 丁给出的正确条件是：选择 Borel 正规条件核，并在一个预先固定的共同参数满测集上具有条件乘积轨道形式；此时逐参数递归再积分是精确的。
+
+二，一旦允许把同一随机代表复制到两个输入槽，仅有两个输入边缘标签便不再足够。theorem 57.8 给出 $x+x$ 与两个独立同轨道代表之和的不同数值分布，theorem 57.9 证明不存在一个边缘标签二元核同时满足独立采样和复制两种全称契约。theorem 57.7 戊进一步给出共同参数被边缘化后，一个普通乘法门的输出单位概率从实际的 $1/2$ 变成错误独立化实验的 $1/4$。
+
+三，确定的任务相对修复可以通过增加观察实现：完整平移族
+$$
+\Psi=(\rho(x+n))_{n\ge0}
+$$
+单射；对任意固定模数 $M$，theorem 57.11 的有限截断查询可恢复 $x\bmod M$。但是 theorem 57.12 证明任何单个有限确定标签都不能让所有整数平移测试同时从 $(\rho,\theta)$ 因子化。这不意味着任意两个 $p$-进数的相等性可由有限测试判定，也不意味着某个固定有限任务没有更小的专用观察。
+
+四，对定义 57.13 的任意有类型有限 DAG，保留实际共同代表或完整变量输入联合律 $\mu$ 并使用 $\mathsf W_G(\mu)$，总能得到精确共同见证推前，并保持所有逐点代表恒等式。变量输入 $J$ 与零元常量节点 $C$ 分离；二元门有两个有序前驱槽且允许重复，因此常量不会变成随机输入，$x+x$ 也确实读取同一个 $x$ 两次。若只保留标签联合律，则必须另行指定纤维内耦合；$\mathcal L_J\eta$ 是条件独立轨道方向这一额外契约，而不是由标签边缘或标签联合律自动推出的事实。
+
+**证明。** 第一项由 theorem 57.6；带共同参数的精确量词、共同满测集和积分公式由 theorem 57.7 丁。第二项由 theorem 57.8、57.9 与 57.7 戊。第三项由 theorem 57.11、57.12。第四项由 definition 57.13 与 theorem 57.14：求值是从 $R^J$ 出发的单一确定连续映射，常量由 $\kappa$ 固定，重复槽在该映射内部复制同一个已算出的值，因此任意输入联合律都通过一次共同代表推前传播。
+
+与本结论相关的既有 framework 陈述只按其原量词使用。theorem 2.2 是任意观察 $q:X\to Q$ 与目标 $T:X\to Y$ 在实际像 $q[X]$ 上的精确纤维因子化判据。theorem 5.1 在有限指标集、有限观察塔和给定关系 $R$ 的假设下，识别共同关系像闭包与有限阶段联合像逆极限条件；它不是“边缘律自动恢复共同代表”的一般定理。§23 中，theorem 23.9 只在 Assumption 23.1 的特定 Zeckendorf 许可支撑契约下分类可容许结合概率核，theorem 23.11 在同一假设下证明许可集合值关系自身的结合律，而 theorem 23.12 对特定常偏置混合 $B^{(r)}$ 计算结合缺陷并证明仅 $r\in\{0,1\}$ 时结合。这些精确结果均见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。本节的 DAG 结论来自实际代表的确定推前，不把 theorem 23.9、23.11 或 23.12 扩张为关于任意概率核的断言。证毕。
+
+## 57.99 追加锚
