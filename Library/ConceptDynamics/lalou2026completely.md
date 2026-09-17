@@ -23,8 +23,9 @@ coloring is panchromatic and has no unique color, equivalently every global
 color class has at least two vertices. The panchromatic and bipanchromatic
 numbers are maxima over feasible color counts.
 
-Section 3.2 defines alpha_k as the minimum number of unique colors among all
-panchromatic k-colorings. Section 5, Equation (5.1), and Conjecture 1 state:
+The Section 3 preamble paragraph immediately preceding Section 3.1 defines
+alpha_k as the minimum number of unique colors among all panchromatic
+k-colorings. Section 5, Equation (5.1), and Conjecture 1 state:
 
 > Every hypergraph H satisfies
 > chi_p^2(H) = chi_p(H) - ceil(alpha_{chi_p(H)}(H)/2).
@@ -50,6 +51,8 @@ below therefore remains the arXiv version used for the exact statement.
 - DOI: 10.48550/arXiv.2512.15486
 - URL: https://arxiv.org/abs/2512.15486v2
 - Checked text: https://arxiv.org/html/2512.15486v2, dated 28 July 2026,
-  especially Section 2 paragraphs 2--3, Section 3.2's definition of alpha_k,
-  and Section 5 Conjecture 1. The checked local HTML has SHA-256
+  especially Section 2 paragraphs 2--3, the Section 3 preamble paragraph
+  immediately preceding Section 3.1
+  (https://arxiv.org/html/2512.15486v2#S3.p6), and Section 5 Conjecture 1. The
+  checked local HTML has SHA-256
 `822afac3cd61ccc97ca2f75cf8ba236538793e54c8b3b21cc7b3e81acb0c776a`.

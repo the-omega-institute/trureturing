@@ -90,3 +90,9 @@ the all-optimal-coloring singleton lower bound. The public conclusion itself is
 the escape witness. Its `admission_basis` is `open-problem-resolution`, and its
 computational utility is the typed `certified-instance` refutation from
 `result` to `claim`.
+
+## ASSUMED-UNVERIFIED
+
+The bounded source and literature search is not exhaustive coverage and does
+not establish worldwide novelty or priority. The journal full text and any
+unpublished answers to the conjecture remain unverified.
