@@ -8,6 +8,36 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void OptionalProducerReceiptTravelsWithItsReportAndRetainsItsHash(bool receipt, bool damage)
+    {
+        using var fixture = Prepare();
+        const string suffix = ".reuse.json";
+        if (receipt) fixture.Write(CommonExecutionEvidence.ReportPath + suffix, "opaque producer-owned receipt\n");
+        var original = FullCurrent(fixture, []);
+        var unit = original.Units.Single(row => row.Id == "SL-001");
+        var path = unit.Report + suffix;
+        Assert.Equal(receipt, unit.Materials.Any(material => material.Path == path));
+        var current = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
+        Assert.Equal(receipt, current.Materials.Any(material => material.Path == CommonExecutionEvidence.ReportPath + suffix));
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        Assert.Equal(receipt, File.Exists(Path.Combine(seed, path)));
+        if (damage)
+        {
+            File.WriteAllText(Path.Combine(seed, path), "replaced receipt\n");
+            Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current"));
+        }
+        else
+        {
+            var accepted = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
+            Assert.Equal(unit.Materials, accepted.Units.Single(row => row.Id == "SL-001").Materials);
+        }
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void SelectedCurrentSnapshotPreservesPreviouslyAcceptedUnselectedUnits(bool selectedInputChanges)

@@ -11,6 +11,8 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
     [InlineData("test_native.NativeTests.test_mapped_image_matches_loaded_bytes")]
     [InlineData("test_streaming")]
+    [InlineData("test_reuse")]
+    [InlineData("test_native.NativeTests.test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
     [InlineData("test_native_support.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     [InlineData("test_native.NativeTests.test_coordinates_reuse_warm_tree_memo")]

@@ -53,7 +53,7 @@ internal static partial class CommonExecutionEvidence
         }
         // Retain can replace selection files; sealing must read fresh bytes after it.
         var selection = plan?.Retain(root);
-        var materials = (reportRequired ? ReportPaths : []).Append(BuildPath)
+        var materials = (reportRequired ? ProducedReportPaths(root) : []).Append(BuildPath)
             .Concat(SelectionPaths(selection))
             .Concat(checks is null ? [] : new[] { ChecksPath("current"), CheckManifestPath })
             .Concat(checks?.Units.SelectMany(unit => unit.Materials).Select(material => material.Path) ?? [])
@@ -101,7 +101,8 @@ internal static partial class CommonExecutionEvidence
             .Concat(expected.Contains("lean-report") ? ReportPaths : []);
         if (required.Any(path => !record.Materials.Any(material => material.Path == path)))
             throw new InvalidDataException("current has missing required materials");
-        if (!expected.Contains("lean-report") && record.Materials.Any(material => ReportPaths.Contains(material.Path)))
+        if (!expected.Contains("lean-report") && record.Materials.Any(material => ReportPaths.Contains(material.Path)
+            || material.Path == ReportPath + ReportReuseSuffix))
             throw new InvalidDataException("unrequested report cannot be current evidence");
         checks = ids.Length == 0 ? null : ValidateChecks(root, "current", build, ids, validation);
         if (expected.Contains("lean-report"))

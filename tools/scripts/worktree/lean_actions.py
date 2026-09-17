@@ -711,25 +711,67 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")
 
 
+def report_seed(root, lake):
+    """Ask the normal producer whether a transported full report can be reused.
+
+    The check manifest declares the report paths; this adapter neither infers
+    producer inputs nor treats a cache hit or prior check as current success.
+    Publication and the second input/material validation belong to inspect.sh.
+    """
+    seed = root / "build/ci/current-check-seed"
+    try:
+        checks = json.loads((seed / "checks.json").read_text())
+        if (checks.get("version") != 2 or checks.get("stage") != "current"
+                or not re.fullmatch(r"[0-9a-f]{64}", checks.get("candidate", ""))
+                or not re.fullmatch(r"[0-9a-f]{32}", checks.get("round", ""))):
+            return None
+        reports = set()
+        suffixes = ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")
+        for unit in checks["units"]:
+            relative = unit.get("report")
+            if not isinstance(relative, str) or not re.fullmatch(
+                    r"build/ci/check-material/[0-9a-f]{64}/[0-9a-f]{32}/[0-9a-f]{32}/report/raw-lean-report\.json", relative):
+                continue
+            declared = {material["path"] for material in unit["materials"]}
+            if all(relative + suffix in declared for suffix in suffixes):
+                reports.add(relative)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        return None
+    for relative in sorted(reports):
+        report = seed / relative
+        result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
+            "--repository", str(root), "--report", str(report), "--lake", str(lake)],
+            cwd=root, check=True, capture_output=True, text=True)
+        outcome = json.loads(result.stdout)
+        if type(outcome.get("needs_lake")) is not bool:
+            raise ValueError("report producer returned no cache resource decision")
+        if not outcome["needs_lake"]:
+            return str(report)
+    return None
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "restore", "snapshot"))
+    parser.add_argument("command", choices=("keys", "restore", "snapshot", "prepare-report"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
-    selection = parser.add_mutually_exclusive_group()
-    selection.add_argument("--layers", choices=ALL_LAYERS, nargs="+", default=LAYERS)
-    selection.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
+    parser.add_argument("--layers", choices=ALL_LAYERS, nargs="+")
+    parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--layer", choices=ALL_LAYERS)
     parser.add_argument("--bounded-cache", action="store_true")
     parser.add_argument("--snapshot-directory", type=pathlib.Path, help=argparse.SUPPRESS)
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
     args = parser.parse_args()
+    if args.command == "prepare-report" and (args.stage != "current" or args.layer or args.layers):
+        parser.error("prepare-report requires --stage current and its registered layer scope")
+    if args.layer and args.layers:
+        parser.error("--layer and --layers cannot be combined")
     if args.layer and not args.stage:
         parser.error("--layer requires --stage")
     if args.bounded_cache and (args.command != "snapshot" or not args.layer or args.stage not in ("build", "engineering", "current")):
         parser.error("--bounded-cache requires snapshot with --stage and --layer")
     if args.snapshot_directory and (args.command != "snapshot" or args.bounded_cache
-            or not (args.stage == "current" and args.layer or not args.stage and len(args.layers) == 1)):
+            or not (args.stage == "current" and args.layer or not args.stage and len(args.layers or LAYERS) == 1)):
         parser.error("snapshot worker requires exactly one explicit layer")
     if args.stage:
         # Routing is required input validation, outside optional-cache failure handling.
@@ -743,7 +785,11 @@ def main():
             plan = ci_plan.validate_plan(root, commit,
                 root / os.environ["CI_PLAN_PATH"], root / os.environ["CI_CHANGES_PATH"])
             requirements = ci_plan.stage_requirements(root, plan, args.stage)
-            args.layers = requirements["cache_layers"]
+            registered_layers = requirements["cache_layers"]
+            if args.layers is not None and (len(set(args.layers)) != len(args.layers)
+                    or not set(args.layers).issubset(registered_layers)):
+                raise ValueError("requested cache layers exceed the registered stage scope")
+            args.layers = registered_layers if args.layers is None else args.layers
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
             print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
             return 2
@@ -755,13 +801,33 @@ def main():
                 if args.bounded_cache:
                     values["save_timeout_minutes"] = 1
                 output(values)
-        if not args.layers:
+        if not args.layers and args.command != "prepare-report":
             return 0
+    else:
+        args.layers = list(LAYERS) if args.layers is None else args.layers
     current = (plan, commit) if args.command == "snapshot" and args.stage == "current" else None
     elan = "elan" in args.layers or args.stage is None
     args.layers = [layer for layer in args.layers if layer != "elan"]
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
     from dotnet_producer import ProjectRegistrationError
+    if args.command == "prepare-report":
+        # Registration/producer errors are required failures, not optional cache
+        # failures. A missing or rejected seed simply keeps the normal resources.
+        try:
+            if "current" in args.layers:
+                restore(args.repository, actions_keys(args.repository), {"current": args.current_key}, ["current"])
+            source = None
+            if "lean-report" in plan["execution"]["steps"]:
+                lake = shutil.which("lake")
+                if not lake:
+                    raise ValueError("the registered Lean toolchain is unavailable")
+                source = report_seed(args.repository, pathlib.Path(lake))
+            output({"needs_lake": bool("lake" in requirements["tools"] and source is None)})
+            output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")
+            return 0
+        except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
+            print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
+            return 2
     try:
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)

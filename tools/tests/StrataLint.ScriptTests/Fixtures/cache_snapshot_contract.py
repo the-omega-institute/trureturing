@@ -24,6 +24,25 @@ class SnapshotContracts(NoopSnapshotCases, CacheFixture, unittest.TestCase):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
 
+    def test_staged_restore_subset_cannot_expand_the_registered_cache_layers(self):
+        owner = self.restore_owner()
+        sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+        plan = importlib.import_module("ci_plan")
+        for layers, accepted in ((["dependency", "project"], True), (["current"], False), (["project", "project"], False)):
+            with self.subTest(layers=layers):
+                with mock.patch.dict(os.environ, dict(self.env, CANDIDATE_SHA=REV,
+                        CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
+                     mock.patch.object(sys, "argv", [str(CACHE), "restore", "--repository", str(self.root),
+                        "--stage", "current", "--layers", *layers]), \
+                     mock.patch.object(plan, "git", return_value=(REV + "\n").encode()), \
+                     mock.patch.object(plan, "validate_plan", return_value={}), \
+                     mock.patch.object(plan, "stage_requirements", return_value={"cache_layers": ["dependency", "project"]}), \
+                     mock.patch.object(owner, "restore") as restore, \
+                     contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                    self.assertEqual(0 if accepted else 2, owner.main())
+                self.assertEqual(int(accepted), restore.call_count)
+                if accepted: self.assertEqual(layers, restore.call_args.args[3])
+
     def test_layer_filter_cannot_expand_registered_stage_scope(self):
         owner = self.restore_owner()
         sys.path.insert(0, str(REPO / "tools/scripts/workflow"))

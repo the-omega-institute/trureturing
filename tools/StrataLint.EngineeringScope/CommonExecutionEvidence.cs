@@ -34,6 +34,12 @@ internal static partial class CommonExecutionEvidence
     internal const string ReportPath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly string[] ReportPaths = [ReportPath, ReportPath + ".sha256", ReportPath + ".input.attestation",
         ReportPath + ".provenance.json", ReportPath + ".materials.zip"];
+    internal const string ReportReuseSuffix = ".reuse.json";
+
+    // The producer owns this optional receipt's meaning. Transport binds its
+    // bytes; older five-member reports remain valid ordinary increment seeds.
+    private static IEnumerable<string> ProducedReportPaths(string root) => ReportPaths.Concat(
+        File.Exists(Path.Combine(root, ReportPath + ReportReuseSuffix)) ? [ReportPath + ReportReuseSuffix] : []);
     internal const string CliPath = "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll";
     internal const string RunnerPath = "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll";
     internal const string LeanProducerPath = "tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll";

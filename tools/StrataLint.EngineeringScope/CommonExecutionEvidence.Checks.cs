@@ -122,7 +122,7 @@ internal static partial class CommonExecutionEvidence
             if (registrations.Single(check => check.Id == id).ReportInputs.Length != 0)
             {
                 report = invocation + "/report/raw-lean-report.json";
-                foreach (var path in ReportPaths)
+                foreach (var path in ProducedReportPaths(root))
                 {
                     var target = Path.Combine(root, report + path[ReportPath.Length..]);
                     Directory.CreateDirectory(Path.GetDirectoryName(target)!);
@@ -131,7 +131,7 @@ internal static partial class CommonExecutionEvidence
             }
             var materials = Materials(root, operations.Select(operation => operation.Log)
                 .Concat(data is null ? [] : new[] { data })
-                .Concat(report is null ? [] : ReportPaths.Select(path => report + path[ReportPath.Length..])));
+                .Concat(report is null ? [] : ProducedReportPaths(root).Select(path => report + path[ReportPath.Length..])));
             var unit = new CheckUnitResult(id, inputs[id], "executed", id == "selftest-pair" ? "equal" : "passed", build.Candidate, build.Round, environment, operations, data, report, materials);
             ValidateCheckUnit(root, root, snapshot, unit, inputs[id], build.Candidate, build.Round,
                 registration.Fresh(successfulReport));
@@ -238,7 +238,9 @@ internal static partial class CommonExecutionEvidence
             throw new InvalidDataException("invalid common check identity/provenance: " + unit.Id);
         var prefix = $"{RootPath}/check-material/{unit.ExecutionCandidate}/{unit.ExecutionRound}/";
         var required = unit.Operations.Select(operation => operation.Log).Concat(unit.Data is null ? [] : new[] { unit.Data })
-            .Concat(unit.Report is null ? [] : ReportPaths.Select(path => unit.Report + path[ReportPath.Length..])).Order(StringComparer.Ordinal).ToArray();
+            .Concat(unit.Report is null ? [] : ReportPaths.Select(path => unit.Report + path[ReportPath.Length..]))
+            .Concat(unit.Report is not null && unit.Materials.Any(material => material.Path == unit.Report + ReportReuseSuffix)
+                ? [unit.Report + ReportReuseSuffix] : []).Order(StringComparer.Ordinal).ToArray();
         if (required.Length == 0 || required.Distinct(StringComparer.Ordinal).Count() != required.Length
             || !required.SequenceEqual(unit.Materials.Select(material => material.Path).Order(StringComparer.Ordinal))
             || required.Any(path => !path.StartsWith(prefix, StringComparison.Ordinal)))
