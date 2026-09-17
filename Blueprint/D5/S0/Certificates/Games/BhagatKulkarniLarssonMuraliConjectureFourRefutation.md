@@ -38,6 +38,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/BhagatKulkarniLarssonMuraliConjectureFourRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bhagat-kulkarni-larsson-murali-conjecture-4-refutation` (refuted) by `D5/S0/Certificates/Games/BhagatKulkarniLarssonMuraliConjectureFourRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bhagat-kulkarni-larsson-murali-conjecture-4-refutation","declaration_gid":"D5/S0/Certificates/Games/BhagatKulkarniLarssonMuraliConjectureFourRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anjali Bhagat; Tanmay Kulkarni; Urban Larsson; Divya Murali (2026). *Tie-breaking in self interest cumulative subtraction games*. URL: <https://arxiv.org/abs/2510.24280v2>.

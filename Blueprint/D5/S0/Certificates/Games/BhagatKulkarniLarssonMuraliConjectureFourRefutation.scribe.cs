@@ -48,14 +48,19 @@ internal sealed class BhagatKulkarniLarssonMuraliConjectureFourRefutationDocumen
                     + "this result settles only Conjecture 4. No global minimality "
                     + "or classification of counterexamples is asserted.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "bhagat-kulkarni-larsson-murali-conjecture-4-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, string prose, string declaration,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimFormula()
     {
