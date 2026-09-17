@@ -23,6 +23,18 @@
 # dispatcher's positional brief argument; a seat whose brief cannot be read (the runner form carries
 # no brief) stays blocking, so the unknown case fails closed.
 #
+# A Stage-B seat that has ALREADY committed its deposit has nothing left to protect either: after
+# the door it only emits, opens the PR and watches CI, and `make pr-open` waits on the remote for
+# 10–20 minutes (case 2026-09-18: two merge-ready PRs waited on a seat whose PR #8522 was already
+# open). That state is read from the seat's worktree, the dispatcher's positional argument 4: a
+# HEAD whose subject starts with `formalize: deposit` is the builder commit the template prescribes
+# for the door's delta, so the ancestry predicate has already been evaluated and committed. The
+# reading is fail-closed: no worktree on the command line, an unreadable worktree, or any other
+# subject keeps the flight blocking. A seat that is still queued at the dispatcher's load gate
+# (no codex process yet) STAYS blocking on purpose: it merges `origin/dev` when it starts, and a
+# merge landing in the minutes between that merge and its door is exactly the race this gate is
+# for — the dispatch has to be withdrawn and re-issued after the window instead.
+#
 # usage: merge-gate.sh            # exit 0 = no implementation seat in flight; 3 = one is
 #        merge-gate.sh --list     # same, and print every in-flight seat with its stage
 #        merge-gate.sh --selftest
@@ -70,14 +82,45 @@ parse_rows() {
              else if (NF>1 && $1 ~ /(^|\/)(bash|zsh|ksh|sh)$/ && $2 ~ /(dispatch\.sh|run-codex-worker\.sh)$/) d=2;
              kind="";
              if (d) {
-               if ($d ~ /dispatch\.sh$/) { flight=$(d+1); stage=$(d+5);
+               if ($d ~ /dispatch\.sh$/) { flight=$(d+1); stage=$(d+5); wt=$(d+4);
                  if ($(d+3) ~ /\.stageA\.md$/) kind="stageA" }
                else for (i=d+1;i<=NF;i++) {
                  if ($i == "--flight-id") flight=$(i+1);
                  else if ($i == "--stage") stage=$(i+1);
+                 else if ($i == "--work-target") wt=$(i+1);
                }
              }
-             if (flight != "") printf "%s\t%s\t%s\n", stage, flight, kind }'
+             if (flight != "") printf "%s\t%s\t%s\t%s\n", stage, flight, kind, wt; wt="" }'
+}
+
+# A row whose worktree HEAD subject starts with `formalize: deposit` gets kind=deposited: the door
+# has run and its delta is committed. Read from the worktree, never from the command line, so a
+# brief or flight name cannot claim it. Anything unreadable leaves the row as it was (fail closed).
+mark_deposited() {
+  # Split by hand: a tab is IFS whitespace, so `read` would collapse the empty kind column into
+  # the worktree column (mutation 2026-09-18: every deposited case read the path as the kind).
+  local line stage flight kind wt rest
+  while IFS= read -r line; do
+    stage=${line%%$'\t'*}; rest=${line#*$'\t'}
+    flight=${rest%%$'\t'*}; rest=${rest#*$'\t'}
+    kind=${rest%%$'\t'*}; wt=${rest#*$'\t'}
+    [ "$rest" = "$kind" ] && wt=""
+    [ -n "$flight" ] || continue
+    if [ "$stage" = implementation ] && [ -z "$kind" ] && [ -n "$wt" ] && [ -d "$wt" ]; then
+      # The builder commit is not always HEAD: after the door the seat merges `origin/dev` again for
+      # the late dedupe, and HEAD becomes "Merge remote-tracking branch 'origin/dev' …" (case
+      # 2026-09-18, bklm-c4: the flight read `deposited`, then went back to blocking for the rest
+      # of its CI wait). The reading is therefore any commit on the branch beyond its merge base
+      # with the protected base — those are the seat's own commits — whose subject starts with the
+      # prescribed builder-commit prefix. A worktree without `origin/dev` (or without git) reads
+      # nothing and stays blocking.
+      subj=$(git -C "$wt" log --format=%s origin/dev..HEAD 2>/dev/null || true)
+      case "$subj" in
+        (*"formalize: deposit "*) kind=deposited ;;
+      esac
+    fi
+    printf '%s\t%s\t%s\t%s\n' "$stage" "$flight" "$kind" "$wt"
+  done
 }
 
 inflight() {
@@ -86,14 +129,16 @@ inflight() {
     | grep -E '(^|/)(dispatch\.sh|run-codex-worker\.sh) ' \
     | grep -v -E '(^|[[:space:]])grep([[:space:]]|$)' \
     | parse_rows \
+    | mark_deposited \
     | sort -u
 }
 
-# Rows are (stage, flight, kind). A flight is a Stage-A seat when any of its rows carries kind=stageA:
-# the dispatcher row has the brief, the runner row it spawns does not, and both name the same flight.
+# Rows are (stage, flight, kind, worktree). A flight is exempt when any of its rows carries
+# kind=stageA (no door in its brief) or kind=deposited (its door already committed): the dispatcher
+# row has the brief and worktree, the runner row it spawns does not, and both name the same flight.
 blocking_flights() {
-  awk -F'\t' '$1=="implementation" && $2!="" { seen[$2]=1; if ($3=="stageA") stageA[$2]=1 }
-               END { for (f in seen) if (!(f in stageA)) print f }' | sort
+  awk -F'\t' '$1=="implementation" && $2!="" { seen[$2]=1; if ($3=="stageA" || $3=="deposited") exempt[$2]=1 }
+               END { for (f in seen) if (!(f in exempt)) print f }' | sort
 }
 
 # A flight can appear on more than one command line at once (a wrapper shell and the script it
@@ -112,20 +157,40 @@ if [ "$MODE" = selftest ]; then
   # the two dispatcher shapes, parsed by the same awk program the live reading uses
   parse() { parse_rows; }
   out=$(echo 'bash tools/scripts/agent/seat/dispatch.sh F1 1 brief.md /tmp/wt implementation 0 2' | parse)
-  [ "$out" = "$(printf 'implementation\tF1\t')" ] || { echo "[FAIL] positional dispatcher shape: got '$out'"; fail=1; }
+  [ "$out" = "$(printf 'implementation\tF1\t\t/tmp/wt')" ] || { echo "[FAIL] positional dispatcher shape: got '$out'"; fail=1; }
   out=$(echo 'bash /p/run-codex-worker.sh --flight-id F2 --attempt 1 --stage implementation --work-target /tmp/wt' | parse)
-  [ "$out" = "$(printf 'implementation\tF2\t')" ] || { echo "[FAIL] named-flag runner shape: got '$out'"; fail=1; }
+  [ "$out" = "$(printf 'implementation\tF2\t\t/tmp/wt')" ] || { echo "[FAIL] named-flag runner shape: got '$out'"; fail=1; }
   out=$(echo 'bash /p/run-codex-worker.sh --flight-id F3 --attempt 1 --stage thinking --work-target /tmp/wt' | parse)
-  [ "$out" = "$(printf 'thinking\tF3\t')" ] || { echo "[FAIL] named-flag runner stage: got '$out'"; fail=1; }
+  [ "$out" = "$(printf 'thinking\tF3\t\t/tmp/wt')" ] || { echo "[FAIL] named-flag runner stage: got '$out'"; fail=1; }
   # Stage A is read from the dispatcher's brief name; Stage B and the runner form carry no such mark
   out=$(echo 'bash tools/scripts/agent/seat/dispatch.sh F4 1 /s/briefs/impl-op-w1-x.stageA.md /tmp/wt implementation 0 8' | parse)
-  [ "$out" = "$(printf 'implementation\tF4\tstageA')" ] || { echo "[FAIL] stageA brief not recognised: got '$out'"; fail=1; }
+  [ "$out" = "$(printf 'implementation\tF4\tstageA\t/tmp/wt')" ] || { echo "[FAIL] stageA brief not recognised: got '$out'"; fail=1; }
   out=$(echo 'bash tools/scripts/agent/seat/dispatch.sh F5 1 /s/briefs/impl-op-w1-x.stageB.filled.md /tmp/wt implementation 0 8' | parse)
-  [ "$out" = "$(printf 'implementation\tF5\t')" ] || { echo "[FAIL] stageB brief must carry no mark: got '$out'"; fail=1; }
+  [ "$out" = "$(printf 'implementation\tF5\t\t/tmp/wt')" ] || { echo "[FAIL] stageB brief must carry no mark: got '$out'"; fail=1; }
+  # deposited is read from the worktree HEAD subject, and only for an unmarked implementation row
+  dep=$(mktemp -d); git -C "$dep" init -q .; git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'base'
+  git -C "$dep" update-ref refs/remotes/origin/dev HEAD
+  git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'formalize: deposit X (case)'
+  out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF7\tdeposited\t%s' "$dep")" ] || { echo "[FAIL] deposited HEAD not recognised: got '$out'"; fail=1; }
+  git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m "Merge remote-tracking branch 'origin/dev' into lane"
+  out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF7\tdeposited\t%s' "$dep")" ] || { echo "[FAIL] a post-door merge commit on top of the deposit must still read deposited: got '$out'"; fail=1; }
+  git -C "$dep" update-ref refs/remotes/origin/dev HEAD
+  git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'formalize: prove X (before the door)'
+  out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF7\t\t%s' "$dep")" ] || { echo "[FAIL] a pre-door HEAD must stay blocking: got '$out'"; fail=1; }
+  out=$(printf 'implementation\tF8\t\t%s/missing\n' "$dep" | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF8\t\t%s/missing' "$dep")" ] || { echo "[FAIL] an unreadable worktree must stay blocking: got '$out'"; fail=1; }
+  out=$(printf 'implementation\tF8\t\t\n' | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF8\t\t')" ] || { echo "[FAIL] a row without a worktree must stay blocking: got '$out'"; fail=1; }
+  rm -rf "$dep"
   # a Stage-A flight seen through both its dispatcher row and its runner row does not block; a lone runner row does
-  out=$(printf 'implementation\tF4\tstageA\nimplementation\tF4\t\nimplementation\tF5\t\nimplementation\tF6\t\n' | blocking_flights | tr '\n' ' ')
+  out=$(printf 'implementation\tF4\tstageA\t/w\nimplementation\tF4\t\t\nimplementation\tF5\t\t/w\nimplementation\tF6\t\t/w\n' | blocking_flights | tr '\n' ' ')
   [ "$out" = "F5 F6 " ] || { echo "[FAIL] blocking set with a Stage-A pair: got '$out'"; fail=1; }
-  out=$(printf 'review\tR1\t\nthinking\tP1\t\n' | blocking_flights)
+  out=$(printf 'implementation\tF7\tdeposited\t/w\nimplementation\tF7\t\t\nimplementation\tF8\t\t/w\n' | blocking_flights | tr '\n' ' ')
+  [ "$out" = "F8 " ] || { echo "[FAIL] a deposited flight must not block: got '$out'"; fail=1; }
+  out=$(printf 'review\tR1\t\t\nthinking\tP1\t\t\n' | blocking_flights)
   [ -z "$out" ] || { echo "[FAIL] review/thinking rows must not block: got '$out'"; fail=1; }
   # a command line that only MENTIONS a dispatcher is not a seat
   out=$(echo 'vim tools/scripts/agent/seat/dispatch.sh F9 1 b /tmp/wt implementation' | parse)
