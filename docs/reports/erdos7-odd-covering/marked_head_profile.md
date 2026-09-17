@@ -542,3 +542,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Global J/K control faces and exact escape gaps](profile-notes/71-global-j-k-control-faces-and-exact-escape-gaps.md)
 - [A linear gap on the entire controlling beta face](profile-notes/72-a-linear-gap-on-the-entire-controlling-beta-face.md)
 - [An explicit neighborhood of both controlling beta faces](profile-notes/73-an-explicit-neighborhood-of-both-controlling-beta-faces.md)
+- [A strict global K gain from the controlling faces](profile-notes/74-a-strict-global-k-gain-from-the-controlling-faces.md)
