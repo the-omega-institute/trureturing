@@ -16970,3 +16970,94 @@ The remaining unresolved step is an outer, all-family constraint sufficient to c
 The repository search for common/shared original labels, star cuts, pair compatibility, marginal polytopes, and message reparameterization found the current KB maximizing-label comparisons, RS signed unary/pair branch envelopes, OBE common-old-block distances, CPI/PT current-prefix incompatibility, and BQX exact four-block optimization. Those results are reused as context, but none of the searched report sections states LC3's old-divisibility profile cut or verifies the nonradial rational message certificate. The repository's `FiniteCompatibleCrt` and `CompatibleResidueJointImage` already provide the CRT compatibility structure; it is not reproved in new Lean. The finite response-law obstruction in `CompleteMediatorCutSharpBounds.three_cycle_complete_mediation_sharp` and the Boolean gluing example in `LocalLawGluingObstruction` are different finite input problems, not this weighted arbitrary-source cut. Text searches in the pinned Mathlib combinatorics and convex-analysis trees did not locate an exact weighted original-residue certificate theorem. This is a searched-scope statement, not a claim that the method is new.
 
 Public source: David Sontag, Talya Meltzer, Amir Globerson, Tommi Jaakkola, Yair Weiss, [Tightening LP Relaxations for MAP using Message Passing](https://people.csail.mit.edu/dsontag/papers/sontag_uai08.pdf), UAI2008, sections2–3. The downloaded author-hosted PDF confirms the local marginal polytope, dual message upper bounds, exact assignment/dual matching, and the cluster gain `sum max b_e - max sum b_e` in equation4. Thus the message relaxation and general incompatibility gain are established methods. LC1–LC7 supply their explicit full-signed-killed-law, original-modulus CRT, factor-capacity, and L1 application here. No new Lean wrapper, claim of an invented LP method, or standalone positive finite-instance formalization is proposed.
+
+### The fixed uniform threshold also fails for the actual extra union
+
+The preceding191-label example separated the labelled gate T from the actual
+residual P. The stronger proposed premise P_Omega<mstar is also false, even
+with the original357 period dividing315 and the same actual AP11/T4,
+AP13/T6 law. The following result is ordinary mathematics with exact rational
+verification, not Lean verification or an unrestricted covering conclusion.
+
+Keep the previous old constraints0 modulo every nonunit divisor of
+Q=315*11*13, the actual uniform17280-unit source, the head masks, the pure17/19
+constraints, and the complete191 forbidden-modulus inventory. Replace only
+the tail current residues by the explicit120-entry color assignment in the
+[certificate](actual_residual_tail_obstruction_certificate.json). Each entry is [stage,d,color]:
+
+* stage0: d|Q, d not dividing315; modulus17d, old residue1 modulo d,
+  current17 residue color, with1<=color<=15;
+* stage1: the same36 cofactors; modulus19d, old residue1 modulo d,
+  current19 residue color;
+* stage2: all48 d|Q; modulus19*17*d, old residue1 modulo d, 17 residue16,
+  current19 residue color.
+
+Stages1/2 have colors1 through18. Thus17 root16 stays globally clean, every
+original modulus is still distinct and odd, and all192 final test labels and
+all48 inherited labels remain independent. These vectors define literal CRT
+classes; they are necessary instance data, not optimization output trusted by
+the verifier.
+
+Reconstructing the actual current bad-root unions and the resulting physical17
+and killed17/19 kernels gives
+
+    eta1 = 9652315153/9853747200,
+    P_Omega = 159510497/9853747200
+            =0.01618780081957045...
+            >mstar=704627631753217/45514648675654535.       (ARO1)
+
+Both stages are genuinely charged:
+
+    b17=23537/2211840,
+    b19 under physical17=35739053/2463436800.
+
+The actual head baseline remains220243/221184, and its difference from eta1
+is exactly P_Omega by CHT4. This calculation uses the actual union masses,
+including overlaps and the actual incoming killed17 measure. It is not a
+labelled union upper bound. The corresponding gate has also been recalculated:
+
+    T_Omega=11329657/656916480.
+
+Although the labelled tail counts are unchanged, this T differs from the
+previous example because the new17 mask geometry changes the19 input.
+
+Let A2 be the complete inherited test centered at2 and E2={A2<=10}. The same
+pointwise support argument applies: a positive tail residual requires A1>=6,
+while A1*A2<=48, hence it lies inside E2. Exact evaluation confirms
+
+    P_E2=P_Omega>mstar,
+    T_E2=T_Omega,
+    nu(E2)=4229/4320.                                  (ARO2)
+
+Thus the fixed generic mstar threshold fails both for the whole-space actual
+residual and uniformly over actual complete-test low-load events. Merely
+replacing the labelled gate by the exact extra union cannot establish that
+particular unrestricted numerical premise.
+
+The head/tail identity itself still yields a positive joint surplus. For E2,
+the actual head cost is1/160 and the intercept is2101/2160, giving
+
+    eta(E2)>=9425083423/9853747200,
+    Delta121>=65975583961/3284582400.                   (ARO3)
+
+There is also a bound uniform over every original test in this same family.
+The unchanged actual source gives E_nu A<=5005/1728 for every independent
+48-label inherited test and head-cell mass at most1/144. Therefore the
+actual-residual version of CHT6 gives
+
+    eta(A<=10)>=14003/17280-1/160-P_Omega
+               =7763974303/9853747200>0,
+    Delta121>=54347820121/3284582400.                   (ARO4)
+
+The required unrestricted estimate must therefore control the joint quantity
+nu(E)-headprice(E)-P_E, or another faithful full-objective bound. A universal
+P_E<mstar is now excluded by ARO1/2. ARO3/4 explain why this exclusion does
+not contradict the successful same-law conditional identity. No bound over
+arbitrary source families, the tau81 KC threshold, or later primes is supplied.
+
+The existing191-family verifier accepts this certificate's complete original
+color assignment, reconstructs all original CRT classes and every actual bad
+root, and checks CHT4 and ARO1--ARO4 exactly under Python -I -O. It continues
+to verify the preceding all-color12 certificate unchanged. An independent
+enumeration of all17280 old units, grouped by their48 complete divisor-incidence
+patterns, gives the same actual mass, P_Omega and T_Omega.

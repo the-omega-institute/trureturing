@@ -319,6 +319,17 @@ over all192 original final test labels. The required unrestricted
 estimate must couple event mass, head weights and actual tail geometry;
 the counterexample does not refute CHT6 or noncoverage.
 
+A [second191-class counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#the-fixed-uniform-threshold-also-fails-for-the-actual-extra-union)
+refutes that fixed threshold even for the exact extra-union residual:
+P_Omega=P_(A2<=10)=159510497/9853747200>0.0154813373772.
+It retains the same actual source and original modulus inventory while
+changing the tail current residues. All real bad-root overlaps and
+killed17-to19 weights are included. The actual joint intercept still
+gives a same-family all-test bound Delta121>=54347820121/3284582400.
+Thus replacing the labelled gate by an exact union alone cannot prove
+the fixed generic threshold; the unrestricted joint surplus remains
+the required estimate.
+
 The [actual-mask square certificate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-mask-weights-and-an-all-height-square-certificate)
 (MW1)--(MW10) bounds the complete killed square by three weighted
 old-test maxima on the unchanged killed17 input. An exact sum-of-squares

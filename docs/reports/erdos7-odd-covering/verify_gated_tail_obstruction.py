@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Refute a uniform CHT7 tail-price premise using literal distinct odd moduli.
+"""Check literal same-law gated-tail and actual-residual counterexamples.
 
 Standard-library rational arithmetic. Reconstructs the actual AP13 unit source,
 physical17/killed17 rows, the full191-class family, both complete inherited tests,
-and the prices from the same original labels. This is not Lean verification.
+and the prices/residuals from the same original labels. A certificate can carry
+the120 current colors of the actual-residual variant. This is not Lean verification.
 """
 from fractions import Fraction as F
 from math import gcd
@@ -33,19 +34,29 @@ def gate(p, headcount, tailcount):
 def exact(v):
     return str(v)
 
-def compute():
+def compute(color_assignment=None):
     head=[d for d in range(1,316) if 315%d==0]
     oldQ=315*11*13
     olddiv=sorted(d*11**a*13**b for d in head for a in (0,1) for b in (0,1))
     unithead=[x for x in range(315) if gcd(x,315)==1]
     period=oldQ*17*19
     headroots={d:i for i,d in enumerate(head[1:],1)}
+    taildiv=[d for d in olddiv if 315%d]
+    variable_labels=[(0,d) for d in taildiv]+[(1,d) for d in taildiv]+[(2,d) for d in olddiv]
+    if color_assignment is None:
+        colors={key:12 for key in variable_labels}
+    else:
+        require([tuple(row[:2]) for row in color_assignment]==variable_labels,
+                "complete ordered tail-color label inventory")
+        require(all(len(row)==3 and type(row[2]) is int and 1<=row[2]<=(15 if row[0]==0 else 18)
+                    for row in color_assignment),"legal nonzero actual current colors")
+        colors={(stage,d):color for stage,d,color in color_assignment}
     family=[(d,0) for d in olddiv if d>1]
     family += [(17,0),(19,0)]
     masks17=[]
     for d in olddiv:
         if d==1: continue
-        current=headroots[d] if 315%d==0 else 12
+        current=headroots[d] if 315%d==0 else colors[0,d]
         residue=crt(1,d,current,17)
         family.append((d*17,residue))
         masks17.append((d,residue,current,315%d!=0))
@@ -56,7 +67,7 @@ def compute():
             tail=has17 or 315%d!=0
             cofactor=d*17**has17
             oldres=crt(1,d,16,17) if has17 else 1%d
-            current=12 if tail else headroots[d]
+            current=colors[2 if has17 else 1,d] if tail else headroots[d]
             residue=crt(oldres,cofactor,current,19)
             family.append((cofactor*19,residue))
             masks19.append((cofactor,residue,current,bool(tail)))
@@ -157,12 +168,21 @@ def compute():
         require(values["survival"]>=surplus,"CHT6 exact-head bound")
         values.update(w1=w1,w2=w2,CHT6_head_price=headprice,CHT6_intercept=intercept,
                       CHT6_surplus=surplus,CT121_loss_lower=21*surplus)
-    require(totals["whole"]["T"]==F(889799,43545600)>threshold,
-            "whole-space universal premise not refuted")
-    require(totals["center1"]["T"]==F(300761,70761600)<threshold,
-            "center1 event certificate")
-    require(totals["center2"]["T"]==totals["whole"]["T"]>threshold,
-            "uniform event-price premise not refuted")
+    if color_assignment is None:
+        require(totals["whole"]["T"]==F(889799,43545600)>threshold,
+                "whole-space universal premise not refuted")
+        require(totals["center1"]["T"]==F(300761,70761600)<threshold,
+                "center1 event certificate")
+        require(totals["center2"]["T"]==totals["whole"]["T"]>threshold,
+                "uniform event-price premise not refuted")
+    else:
+        require(totals["whole"]["P"]==F(159510497,9853747200)>threshold,
+                "actual whole-space residual premise not refuted")
+        require(totals["center2"]["P"]==totals["whole"]["P"]>threshold,
+                "actual same-test residual premise not refuted")
+        for values in totals.values():
+            values["actual_residual_surplus"]=values["CHT6_intercept"]-values["P"]
+            values["actual_residual_CT121_loss_lower"]=21*values["actual_residual_surplus"]
     require(totals["center1"]["mass"]==totals["center2"]["mass"]==F(4229,4320),
             "same event-mass comparison")
     require(sorted(event_heads["center1"].values())==sorted(event_heads["center2"].values()),
@@ -179,7 +199,7 @@ def compute():
     head_upper=F(1,160)
     uniform_surplus=event_lower-head_upper-totals["whole"]["T"]
     require(uniform_surplus>0,"all-original-test CHT6 surplus")
-    return {
+    result={
         "schema":"gated-tail-obstruction-v1", "period":period,"old_period":oldQ,
         "source_unit_count":17280,"source_incidence_groups":1296,
         "forbidden_original_moduli":191,"complete_final_test_labels":192,
@@ -196,6 +216,17 @@ def compute():
             "CT121_loss_lower":exact(21*uniform_surplus)},
         "scope":"ordinary exact arithmetic; refutes uniform CHT7 tail-price premises, not Erdős7",
     }
+    if color_assignment is not None:
+        result["schema"]="actual-residual-tail-obstruction-v1"
+        result["color_assignment"]=color_assignment
+        result["scope"]="ordinary exact arithmetic; refutes uniform actual residual P thresholds, not Erdős7"
+        residual_surplus=event_lower-head_upper-totals["whole"]["P"]
+        require(residual_surplus>0,"all-original-test true-residual surplus")
+        result["all_original_test_actual_residual"]={
+            "actual_source_mean_upper":exact(meanbound),"event_mass_lower":exact(event_lower),
+            "head_price_upper":exact(head_upper),"survival_lower":exact(residual_surplus),
+            "CT121_loss_lower":exact(21*residual_surplus)}
+    return result
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
@@ -203,16 +234,18 @@ if __name__=="__main__":
                         default=Path(__file__).with_name("gated_tail_obstruction_certificate.json"))
     parser.add_argument("--write",action="store_true")
     args=parser.parse_args()
-    result=compute()
+    def unique(pairs):
+        out={}
+        for k,v in pairs:
+            require(k not in out,"duplicate certificate key")
+            out[k]=v
+        return out
+    supplied=(json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+              if args.certificate.exists() else {})
+    result=compute(supplied.get("color_assignment"))
     if args.write:
         args.certificate.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
     else:
-        def unique(pairs):
-            out={}
-            for k,v in pairs:
-                require(k not in out,"duplicate certificate key")
-                out[k]=v
-            return out
-        require(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,
+        require(supplied==result,
                 "certificate differs from exact reconstruction")
-    print("PASS literal191-class same-law counterexample to uniform whole/event tail threshold")
+    print("PASS literal191-class same-law tail obstruction: "+result["schema"])
