@@ -1,216 +1,88 @@
 using System.Collections.Immutable;
-using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
-using static StrataLint.Tests.InformationTemplateDebtStoreTests;
+using StrataLint.TestSupport;
+using static StrataLint.Tests.DeclaredTemplateReviewTests;
 
 namespace StrataLint.Tests;
 
 public sealed class DeclaredTemplateBindingRuleTests
 {
-    private static readonly InformationTemplateActivation Active = new(Seed, true);
-    private static readonly InformationTemplateDebtRow Debt = Read();
-    private static readonly InformationOccurrenceKey A = Debt.Key;
-    private static readonly InformationOccurrenceKey B = A with { Theorem = "Fixture.theorem_b" };
-    private static readonly ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> Empty =
-        ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow>.Empty;
-
-    private static RepositorySnapshot Tree(string source = Source, string? activation = null) => Snapshot(
-        ("Registration.lean", source), (InformationTemplateDebtStore.ActivationPath, activation ??
-            Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active).AsSpan())));
-
-    private static ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> Rows(params InformationOccurrenceKey[] keys) =>
-        keys.ToImmutableDictionary(key => key, key => Debt with { Key = key });
-
-    private static InformationTemplateOccurrence Occurrence(InformationOccurrenceKey key,
-        InformationTemplateBindingState state = InformationTemplateBindingState.DeclaredValidated) => new(
-            key, "Registration.lean", Debt.StatementIdentity, Debt.ContentInputs, state,
-            state == InformationTemplateBindingState.DeclaredValidated ? new string('a', 64) : null,
-            state == InformationTemplateBindingState.DeclaredUnresolved ? "IE-C050 reason=unclassified_form" : null,
-            state == InformationTemplateBindingState.Undeclared ? null : "Binding.lean");
-
-    private static InformationTemplateUniverse Universe(params InformationTemplateOccurrence[] occurrences) => new(
-        occurrences.ToImmutableDictionary(o => o.Key), occurrences.Select(o => o.Key).ToImmutableHashSet(),
-        ImmutableHashSet.Create("Registration.lean"), ImmutableHashSet.Create("Registration.lean"));
-
-    private static ImmutableArray<DeclaredTemplateFinding> Evaluate(
-        ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> beforeDebt,
-        ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> afterDebt,
-        InformationTemplateUniverse before, InformationTemplateUniverse after,
-        string[]? changed = null, RepositorySnapshot? candidate = null,
-        Action<InformationOccurrenceKey>? observer = null) =>
-        DeclaredTemplateBindingRule.Evaluate(Active, Tree(), candidate ?? Tree(), beforeDebt, afterDebt,
-            before, after, (changed ?? []).ToHashSet(StringComparer.Ordinal), observer);
-
-    [Fact]
-    public void new_undeclared_occurrence_blocked()
+    internal static RuleEvaluationContext Delta(bool declared = false, bool added = false,
+        bool changed = true, bool invalid = false, bool missing = false, bool firstPin = false)
     {
-        var findings = Evaluate(Empty, Empty, Universe(), Universe(Occurrence(A, InformationTemplateBindingState.Undeclared)));
-        Assert.Contains(findings, f => f.Code == "DTR-New");
+        var before = Files();
+        var after = new Dictionary<string, string>(before);
+        if (changed) after[Registration] += "-- changed registration module\n";
+        if (added) before.Remove(Registration);
+        var report = Report(after, count: 1, declared: declared);
+        if (invalid)
+        {
+            var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(after), report).AsSpan())!;
+            foreach (var module in wire["modules"]!.AsArray())
+                foreach (var record in module!["information_templates"]!["records"]!.AsArray())
+                {
+                    record!["state"] = "declared_unresolved";
+                    record["certificate"] = null;
+                    record["diagnostic"] = "IE-C050 reason=invalid_template";
+                }
+            report = RawLeanReportArtifact.Read(
+                Trureturing.Truth.StructuredCanonicalWriter.WriteJson(wire.ToJsonString()).AsSpan(), Tree(after));
+        }
+        if (missing) report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+        var changes = new List<string> { Registration };
+        if (firstPin)
+        {
+            const string pin = "Golden/Frozen/state/D5/S0/Carrier/Registration.lean.json";
+            after[pin] = "{\"statement_id\":\"fixture\"}\n";
+            changes = [pin];
+        }
+        return Context(before, after, report, changes.ToArray());
+    }
+
+    internal static void Finding(ImmutableArray<RuleFinding> findings, string name, AdmissionEffect effect)
+    {
+        Assert.True(findings.Length == 1 && findings[0].Message.StartsWith(name + " ", StringComparison.Ordinal)
+            && (findings[0].Effect ?? AdmissionEffect.Block) == effect,
+            "[FAIL] " + name + " expected=" + effect + ": " + string.Join("; ", findings.Select(f => f.Message)));
     }
 
     [Fact]
-    public void new_validated_occurrence_accepted() =>
-        Assert.Empty(Evaluate(Empty, Empty, Universe(), Universe(Occurrence(A))));
+    public void unchanged_undeclared_registration_has_no_findings() =>
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false)));
 
     [Fact]
-    public void equal_count_debt_swap_blocked()
-    {
-        var before = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        var after = Universe(Occurrence(A), Occurrence(B, InformationTemplateBindingState.Undeclared));
-        Assert.Contains(Evaluate(Rows(A), Rows(B), before, after), f => f.Code == "DTR-Subset");
-    }
+    public void unchanged_module_does_not_read_evidence() =>
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, missing: true)));
 
     [Fact]
-    public void true_subset_debt_accepted()
-    {
-        var before = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared), Occurrence(B, InformationTemplateBindingState.Undeclared));
-        var after = Universe(Occurrence(A), Occurrence(B, InformationTemplateBindingState.Undeclared));
-        Assert.Empty(Evaluate(Rows(A, B), Rows(B), before, after));
-    }
+    public void changed_undeclared_registration_blocks() =>
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta()), "DTR-Undeclared", AdmissionEffect.Block);
 
     [Fact]
-    public void touched_debt_without_discharge_blocked()
-    {
-        var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Contains(Evaluate(Rows(A), Rows(A), universe, universe, ["Registration.lean"], Tree(Source + "-- changed\n")),
-            f => f.Code == "DTR-Touched");
-    }
+    public void new_validated_registration_observes() =>
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(declared: true, added: true)), "DTR-Declared", AdmissionEffect.Observe);
 
     [Fact]
-    public void shared_content_dependency_touches_debt()
-    {
-        const string path = "Shared.lean";
-        var input = new InformationTemplateContentInput(path, InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes("old\n")));
-        var rows = Rows(A, B).ToImmutableDictionary(kv => kv.Key, kv => kv.Value with { ContentInputs = [input] });
-        var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared), Occurrence(B, InformationTemplateBindingState.Undeclared));
-        var baseline = Snapshot((InformationTemplateDebtStore.ActivationPath,
-            Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active).AsSpan())), (path, "old\n"));
-        var candidate = Snapshot((InformationTemplateDebtStore.ActivationPath,
-            Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active).AsSpan())), (path, "new\n"));
-        Assert.Contains(DeclaredTemplateBindingRule.Evaluate(Active, baseline, candidate, rows, rows,
-            universe, universe, new HashSet<string> { path }), f => f.Code == "DTR-Touched");
-    }
+    public void changed_unresolved_registration_blocks() =>
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(declared: true, invalid: true)), "DTR-Evidence", AdmissionEffect.Block);
 
     [Fact]
-    public void judge_only_change_preserves_untouched_debt()
-    {
-        var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Empty(Evaluate(Rows(A), Rows(A), universe, universe, ["lean-report-inputs.json"]));
-    }
+    public void delta_missing_evidence_blocks() =>
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(missing: true)), "DTR-Evidence", AdmissionEffect.Block);
 
     [Fact]
-    public void strict_content_discharge_accepted()
-    {
-        var before = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Empty(Evaluate(Rows(A), Empty, before, Universe(Occurrence(A)), ["Binding.lean"]));
-    }
+    public void first_pin_selects_registration() =>
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Block);
 
     [Fact]
-    public void premature_last_row_deletion_blocked()
+    public void deleted_finding_names_cannot_be_emitted()
     {
-        var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Contains(Evaluate(Rows(A), Empty, universe, universe), f => f.Code == "DTR-Residual");
-    }
-
-    [Fact]
-    public void registration_deletion_does_not_discharge()
-    {
-        var before = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Contains(Evaluate(Rows(A), Empty, before, Universe()), f => f.Code == "DTR-Inventory");
-    }
-
-    [Fact]
-    public void zero_debt_selects_whole_tree()
-    {
-        // Independently fixed keys include an unchanged occurrence outside delta.
-        // This observes authoritative consumer invocations, not a returned count.
-        var expected = new HashSet<InformationOccurrenceKey> { A, B };
-        var observed = new HashSet<InformationOccurrenceKey>();
-        var universe = Universe(Occurrence(A), Occurrence(B));
-        Assert.Empty(Evaluate(Empty, Empty, universe, universe, ["Unrelated.lean"],
-            observer: key => observed.Add(key)));
-        Assert.True(expected.SetEquals(observed), "[FAIL] zero_debt_selects_whole_tree");
-    }
-
-    [Fact]
-    public void zero_debt_empty_registry_blocked()
-    {
-        var before = Universe(Occurrence(A));
-        var after = before with { Occurrences = ImmutableDictionary<InformationOccurrenceKey, InformationTemplateOccurrence>.Empty };
-        Assert.Contains(Evaluate(Empty, Empty, before, after), f => f.Code == "DTR-Inventory");
-    }
-
-    [Fact]
-    public void zero_debt_complete_tree_accepted()
-    {
-        var universe = Universe(Occurrence(A), Occurrence(B));
-        Assert.Empty(Evaluate(Empty, Empty, universe, universe));
-    }
-
-    [Fact]
-    public void inventory_hidden_root_rejected()
-    {
-        var universe = Universe(Occurrence(A));
-        Assert.Contains(Evaluate(Empty, Empty, universe, universe with { AssessedSources = [] }), f => f.Code == "DTR-Inventory");
-    }
-
-    [Fact]
-    public void inventory_first_freeze_selected()
-    {
-        var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Contains(Evaluate(Rows(A), Rows(A), universe, universe,
-            ["Golden/Frozen/state/Registration.lean.json"]), f => f.Code == "DTR-Touched");
-    }
-
-    [Fact]
-    public void imported_theorem_first_freeze_requires_discharge()
-    {
-        const string target = "D5/S0/Carrier/Target.lean";
-        const string pin = "Golden/Frozen/state/" + target + ".json";
-        var input = new InformationTemplateContentInput(target,
-            InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(Source)));
-        var row = Debt with { ContentInputs = Debt.ContentInputs.Add(input) };
-        var rows = ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow>.Empty.Add(A, row);
-        var occurrence = Occurrence(A, InformationTemplateBindingState.Undeclared) with { ContentInputs = row.ContentInputs };
-        var universe = Universe(occurrence);
-        var activation = Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active).AsSpan());
-        var baseline = Snapshot(("Registration.lean", Source), (target, Source),
-            (InformationTemplateDebtStore.ActivationPath, activation));
-        var candidate = Snapshot(("Registration.lean", Source), (target, Source), (pin, "{}"),
-            (InformationTemplateDebtStore.ActivationPath, activation));
-        var invoked = new HashSet<InformationOccurrenceKey>();
-        var findings = DeclaredTemplateBindingRule.Evaluate(Active, baseline, candidate, rows, rows,
-            universe, universe, new HashSet<string> { pin }, key => invoked.Add(key));
-        Assert.True(findings.Any(f => f.Code == "DTR-Touched") && invoked.SetEquals([A]),
-            "[FAIL] imported_theorem_first_freeze_requires_discharge: DTR-Touched and selected occurrence required");
-        var validated = Universe(occurrence with { State = InformationTemplateBindingState.DeclaredValidated,
-            EvidenceRef = new string('a', 64), BindingSourcePath = "Registration.lean" });
-        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Active, baseline, candidate, rows, Empty,
-            universe, validated, new HashSet<string> { pin }));
-    }
-
-    [Fact]
-    public void declared_template_mechanism_deletion_rejected()
-    {
-        var universe = Universe(Occurrence(A));
-        Assert.Contains(Evaluate(Empty, Empty, universe, universe, candidate: Snapshot()), f => f.Code == "DTR-Required");
-    }
-
-    [Fact]
-    public void active_candidate_cannot_deactivate_or_retarget()
-    {
-        var universe = Universe(Occurrence(A));
-        var changed = Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active with { Activated = false }).AsSpan());
-        Assert.Contains(Evaluate(Empty, Empty, universe, universe, candidate: Tree(activation: changed)), f => f.Code == "DTR-Activation");
-    }
-
-    [Fact]
-    public void inactive_declaration_migration_rejected()
-    {
-        var inactive = Active with { Activated = false };
-        var bytes = Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(inactive).AsSpan());
-        Assert.Contains(DeclaredTemplateBindingRule.Evaluate(inactive, Tree(activation: bytes), Tree(activation: bytes),
-            Rows(A), Empty, Universe(Occurrence(A, InformationTemplateBindingState.Undeclared)), Universe(Occurrence(A)),
-            new HashSet<string> { "Binding.lean" }), f => f.Code == "DTR-Activation");
+        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs"));
+        var names = System.Text.RegularExpressions.Regex.Matches(source, "DTR-[A-Za-z]+")
+            .Select(match => match.Value).Distinct().Order(StringComparer.Ordinal).ToArray();
+        Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared" }),
+            "[FAIL] deleted_finding_names_cannot_be_emitted: " + string.Join(", ", names));
     }
 }
