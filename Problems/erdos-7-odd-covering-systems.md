@@ -137,16 +137,47 @@ constraints can refine the finite optimization. Neither the new theory
 nor these optimality conditions yet proves a numerical saving or the
 299.398 target. The actual AP probability is not replaced by Haar.
 
-A [genuine AP13 family with288 complete test labels](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-ap13-zero-block-equality-and-a-positive-killed-maximum-gap)
-separates two possible improvements. Its zero-current physical bound is
-attained exactly despite a varying natural cap and positive charge.
-Its full killed maximum is strictly smaller, and a different complete
-test strictly improves on the physical maximizer after deletion. The
-17 and19 maximum-loss lower bounds are49231/13436928 and572299/184757760.
-An explicit normalized physical17 history gives a576-label19 version;
-that history has zero mixed17 charge. These are separate actual examples,
-with ordinary full-domain proofs and independent exact checks, not a
-uniform lower bound on saving or a proof of the joint frontier.
+The [genuine AP13 families with288 complete test labels](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-radial-families-retain-a-strict-common-test-loss)
+have exact killed-square maxima5109223159/246343680 at17 and
+127329253189/6281763840 at19. Their zero-current physical bound is
+attained exactly despite a varying natural cap and positive charge;
+the killed maximizer uses a different complete test. Separately
+maximizing the killed baseline and positive-current frontier loses
+exactly148421/35831808 and221039/61585920, respectively. The integer
+verification covers all131681894400 representative layouts per prime,
+with every original label independent. An explicit normalized physical17
+history gives a576-label19 version with zero mixed17 charge; the separate
+positive-charge17 and19 fixtures cannot be added as one chain.
+
+The same actual radial construction gives (RS1), a strictly positive
+common-test loss for every ternary height H>=2 and prime
+p>max(13,H+1), at threshold T=H. This is a general inequality for
+that explicit family, without claiming a uniform bound for arbitrary
+AP13 geometry. A [27-layout positive radial counterexample](../docs/reports/erdos7-odd-covering/radial_chain_counterexample_certificate.json)
+on Z/9Z also disproves restricting every depth to one nested chain:
+the full maximum is307/109 and the nested maximum305/109. That weight
+is not asserted to arise from an AP law.
+
+The [common-test KC decomposition](../docs/reports/erdos7-odd-covering/marked_head_profile.md#the-common-original-test-and-the-losses-in-the-kc-comparison)
+(CT1)--(CT5) retains five nonnegative losses: removal of the old positive
+hinge, the surviving negative hinge, deletion of the17 increment at19,
+replacement of the killed17 input by its physical input in the19
+increment, and overlapping assigned bad mass. Separately maximizing
+the source hinge and the two frontiers can lose additional information.
+A surviving band A^2<=c<tau would give a quantitative saving, but its
+required uniform conditional bad-mass bounds remain unproved. An actual
+family with Pr(A=1)=2/(3^H+1) rules out a positive height-independent
+unit-load bound. These ordinary proofs and exact checks are not Lean
+verification; the general299.398 KC target and unrestricted #7 remain open.
+
+[RRO58 sparse certificates](../docs/reports/erdos7-odd-covering/marked_head_profile.md#sparse-prefix-certificates-and-the-actual-weighted-objective)
+compress unbranched digit intervals while retaining original vertices
+and binary-encoded depths. They can support complete-candidate prefix
+checks. Using them for the actual weighted optimization additionally
+requires every named mask/test cylinder, the stage projections and
+the same actual law. The complete-array realization algorithm does
+not supply the missing weighted inequality or a search bound over
+all original layouts.
 
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix

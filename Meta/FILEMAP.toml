@@ -530,6 +530,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact complete-domain radial maxima, common-test gaps and integer branch coverage.
+pattern = "docs/reports/erdos7-odd-covering/actual_radial_maximum_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact rational certificate for actual-law bounds or a joint-savings counterexample.
 pattern = "docs/reports/erdos7-odd-covering/actual_zero_block_certificate.json"
 kind = "data"
@@ -1062,6 +1071,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # All27 positive radial layouts refuting a universal nested-chain restriction.
+pattern = "docs/reports/erdos7-odd-covering/radial_chain_counterexample_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact layout distribution and pointwise potentials giving a true Gamma lower bound.
 pattern = "docs/reports/erdos7-odd-covering/random_tail_layout_certificate.json"
 kind = "data"
@@ -1264,6 +1282,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # NumPy experiment rebuilding all actual deletion vectors and exact head costs.
 pattern = "docs/reports/erdos7-odd-covering/verify_actual_deletion_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays pinned actual-family maxima with exact integer bounds and complete branch coverage.
+pattern = "docs/reports/erdos7-odd-covering/verify_actual_radial_maximum.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -1762,6 +1789,15 @@ runtime_disposition = "committed-source"
 
 [[files]] # Recomputes the complete pure-root hinge profile and same-law AP continuation.
 pattern = "docs/reports/erdos7-odd-covering/verify_pure_root_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks every original mod3/mod9 layout and the strict positive-radial chain counterexample.
+pattern = "docs/reports/erdos7-odd-covering/verify_radial_chain_counterexample.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

@@ -14586,7 +14586,7 @@ are represented as a Lean proof. Use `python3 -I -O` with
 
 For a concrete actual AP13 source, zero-current anchoring can give exactly the physical global maximum, even with a nonconstant old test, a varying natural cap and positive mixed charge. The same example has a strictly smaller killed maximum. Thus retaining the original zero block alone need not improve the physical charge-plus-square upper bound; retaining the actual killed overlap addresses a different loss and is quantitatively relevant here.
 
-The full original test domains have288 labels. Their exact physical maxima and rigorous killed-maximum intervals are
+The full original test domains have288 labels. Their exact physical maxima and rigorous killed-maximum intervals are listed below. The later RS calculation proves that each killed lower endpoint is the exact maximum.
 
 | p | physical global square maximum | killed global square maximum, lower and upper bounds |
 |---|---:|---:|
@@ -14748,3 +14748,345 @@ The clean current root makes every positive pair survive; the common centered ol
 The shared-cell source observations alone do not provide the missing general weighted correlations. A generic improvement must control actual mask/test structure, or retain a quantitative relation between the killed baseline and the positive-current frontier; the finite explicit relation here uses special nested geometry and independent other-prime axes.
 
 The [verifier](verify_actual_zero_block.py) reconstructs every old divisor and every literal current CRT class, checks all152 forbidden labels and288 test labels, all row normalizations, source moments, physical global-max formulas, the full-domain killed upper bound and the complete moved-test lower bound. All rational constants and test-inventory digests are compared against its [certificate](actual_zero_block_certificate.json). The global claims are supported by the ordinary arguments above; no Lean declaration or unrestricted endpoint is asserted.
+
+### The common original test and the losses in the KC comparison
+
+The exact killed kernel already retains the zero-block square, as in
+GC2 and ZB3. The following algebra identifies which quantities must
+remain coupled when tightening KC13. It is an optimization interface,
+not a new Lean declaration or a proved uniform improvement.
+
+Use nu=nu13, normalized physical K=K17, killed K-=K17^-, and the
+nonnegative removed kernel D=K-K-. Set
+
+    beta17=D1, mu=nu K, xi=nu K-,
+    beta19=1-K19^-1, eta=xi K19^-.
+
+For a single complete original test L, let B be its literal zero19
+block and A the literal zero17 block of B. Their inherited residues
+are fixed throughout. Define
+
+    R17=B^2-A^2, R19=L^2-B^2,
+    G17=K- R17, G19=K19^- R19.
+
+Both R terms and both G terms are nonnegative. Kernel expansion gives
+the exact identity
+
+    Q_eta(L)=nu(A^2-484)
+       +nu[G17+beta17(484-A^2)]
+       +xi[G19+beta19(484-B^2)].                     (CT1)
+
+The final bracket f19 is signed. Its physical-input replacement is
+xi f19=mu f19-nu D f19. The domination xi<=mu alone does not permit
+dropping the last term. In particular a negative f19 on removed17
+mass reverses the desired comparison.
+
+For0<=tau<=484 set W=484-tau, h=(A^2-tau)_+,
+j=(tau-A^2)_+, b17=nu beta17, b19=mu beta19, and
+d=beta17+K- beta19. Another exact expansion is
+
+    Q_eta(L)=nu h-W+W(b17+b19)+nu G17+mu G19
+                -Delta_tau(L),                     (CT2)
+
+    Delta_tau(L)=nu[d h]+eta j
+       +xi[beta19 R17]+nu D G19+W nu D beta19 >=0.   (CT3)
+
+Indeed eta(A^2-tau)=nu h-nu[d h]-eta j,
+eta R17=nu G17-xi[beta19 R17], eta R19=mu G19-nu D G19,
+and eta1=1-b17-b19+nu D beta19. Substituting proves CT2--CT3
+without a positivity assumption on the final mass or any cutoff of
+original labels. At tau0, the first term and the R17 correction
+together equal nu[beta17 A^2]+xi[beta19 B^2].
+
+For a fixed family one can take the supremum of
+nu h+nu G17+mu G19-Delta_tau(L) over the same original L.
+Separately maximizing its positive terms and subtracting the deficit
+of one selected test is invalid. Even CT3 is not the entire gap in
+KC13: replacing nu h by T13 and the two actual G integrals by their
+separate Xi suprema can introduce further gaps.
+
+KB3--KB7 apply to maxima of the separate positive-current Xi objective.
+They cannot be imposed without proof on maxima of this new joint
+objective. For the full Q objective, every label instead uses the
+full-square replacement score integral_eta J(2(L-I_ell)+1), including
+zero-current labels. Its whole-residue best-response condition is
+
+    m_ell[2 sum_(j!=ell)P_(ell,j)+P_(ell,ell)]
+         >=2 sum_(j!=ell)P_(j,j)+eta1,               (CT4)
+
+where all entries now use the final eta. This is the same elementary
+replacement argument with the correct objective, not a new abstract
+theorem.
+
+A useful task-specific observation is the actual surviving low-load
+band E={A^2<=c}, c<tau. CT3 gives
+
+    Delta_tau(L)>=(tau-c)eta(E),
+    eta(E)>=nu(E)-nu[1_E beta17]-mu[1_E beta19].      (CT5)
+
+Only nonnegative restricted bad masses use xi<=mu here. Thus a bound
+on the bad mass inside the same inherited test's low-load band has
+a quantitative use. The existing21 scalar upper observations do not
+supply those conditional masses, and CT5 has not yet yielded a
+uniform KC bound.
+
+There is no height-independent positive lower bound for eta(A=1).
+For any H>=1 take distinct actual moduli3^n,1<=n<=H, with residues
+a_n=3^(n-1)-1. At those same test moduli choose
+b_n=2*3^(n-1)-1 and retain the unit test. The two classes at depth n
+are the two side children of the common ternary branch whose earlier
+digits are all2. Each family consists of mutually disjoint classes,
+and their combined union leaves exactly -1 modulo3^H.
+
+The actual survivor fraction is (1+3^-H)/2. The test load on its
+uniform survivor law takes only values1 and2, with
+
+    Pr(A=1)=2/(3^H+1) tending to0.                   (CT6)
+
+Absent11/13/17/19 exclusions preserve this observation under the AP
+construction. All original test labels are present. Hence even this
+genuine family rules out a uniform positive unit-load mass, while a
+larger band such as A^2<=4 has full mass. A successful CT5 argument
+must control an appropriate band and its actual deletions, or split
+the families into cases with proved additional hypotheses.
+
+### Actual radial families retain a strict common-test loss
+
+For the two previously pinned actual AP13 fixtures, the complete killed-square maxima are exactly
+
+| current prime | complete killed-square maximum |
+|---|---:|
+| 17 | 5109223159/246343680 |
+| 19 | 127329253189/6281763840 |
+
+These are the earlier literal spur lower bounds, now also upper bounds over every original complete test. Each zero and positive block retains all144 independently selected old labels. The intermediate ternary optimization retains two independently selected labels at each depth; it does not restrict all depths to a single nested chain.
+
+More generally, a positive separation between independently maximizing the killed baseline and positive-current frontier holds for the explicit radial actual families at every ternary height H>=2 and every prime p>max(13,H+1), with threshold T=H. The quantitative statement below does not assert an exact general maximum or a uniform inequality for arbitrary AP13 sources.
+
+#### An actual family at arbitrary finite height
+
+Take Q_H=3^H*5*7*11*13, and forbid0 modulo every divisor d>1 of Q_H. The actual uniform357 source and the prescribed pure-base AP11/T4 and AP13/T6 steps, followed by one final conditioning, give exactly uniform measure mu on the units of Q_H: all mixed classes are inactive, and the pure classes remove only zero roots.
+
+At the current prime p, forbid pure root0 and, for j=1,...,H, one class modulo3^j p whose old residue is1 and current residue is j. These are distinct original moduli; root p-1 is clean on every row. The full original current height is1. No higher original test labels exist or are discarded.
+
+Let R be the number of nested old cylinders E_j={x=1 mod3^j} containing x. Its probabilities under the ternary unit law are
+
+    P_0=1/2,
+    P_j=3^-j for1<=j<H,
+    P_H=1/(2*3^(H-1)).
+
+Choose delta=(H-1)/(p-2), the threshold-H parameter. The physical assigned bad mass is positive only at R=H:
+
+    beta_H=1/(p-1),  beta_j=0 for j<H,
+    b=P_H/(p-1).
+
+Here b is also the full actual charge because the other four coordinates are independent. Put q_j=1-beta_j and let t_j be the probability of the common clean current root:
+
+    t_j=1/(p-1-j) for0<=j<H,
+    t_H=(p-2)/[(p-1)(p-H-1)].
+
+All t_j are strictly increasing when H>=2. The source's other four prime axes contribute the exact square factor
+
+    S=product_(r=5,7,11,13)(1+3/(r-1))=273/64.
+
+The previously established clean-root and independent-axis arguments apply unchanged: replacing current residues by the common clean root maximizes every positive-current pair, and aligning the independent other-prime roots maximizes their pair masses. Grouping by their original other-prime divisor and applying Cauchy-Schwarz then gives an exact factor S, while preserving every original label.
+
+Thus the full killed maximum is S times
+
+    K=sup_(A0,A1) E[q A0^2+t(2A0 A1+A1^2)],
+
+where each A_i=1+sum_(d=1..H)1_(x=a_(i,d) mod3^d) and every a_(i,d) is independently chosen.
+
+For any nonnegative radial weight w write Gamma_3(w)=sup_A E[w A^2], and put
+
+    G3=E(1+R)^2,   Jt=E[t_R(1+R)^2].
+
+Uniform ternary pair caps and the common opposite root2 give
+
+    Gamma_3(q)=G3-b.
+
+The constant label contributes E q=1-b; every positive-depth pair avoids E_H and attains its unweighted cylinder cap when centered at2. Monotonicity of t shows that all weighted t-pair caps are attained by centering every label at1, so Gamma_3(t)=Jt. Consequently
+
+    Gamma_full(q)=S(G3-b),
+    Xi_p^-=3S Jt.
+
+The factor S multiplies b in the first formula. Writing Gamma_full(1)-b would be incorrect for this complete old domain.
+
+#### A general strictly positive common-test loss
+
+For depth a>=1 define
+
+    m_a=1/(2*3^(a-1)),
+    Delta_a=sum_(j=a..H)P_j(t_j-t_(a-1))>0.
+
+The maximal q-prefix mass is m_a, the maximal t-prefix mass is m_a t_(a-1)+Delta_a. A nonspine depth-a prefix has R<=a-1 constant; among these, R=a-1 maximizes its q+t mass. The spine prefix contains the whole charged leaf. Therefore its exact maximal q+t prefix mass is
+
+    max{m_a(1+t_(a-1)),
+        m_a(1+t_(a-1))+Delta_a-b}.
+
+The difference between the sum of the separate q and t prefix maxima and their joint prefix maximum is exactly min(b,Delta_a).
+
+There are2a+1 ordered old-label pairs of maximum exponent a. Gamma_3(q) and Gamma_3(t) attain all their respective pair caps simultaneously. Gamma_3(q+t) is at most the sum of its pair caps; this upper bound does not assume that those caps can be simultaneously realized. Since2A0 A1<=A0^2+A1^2,
+
+    K<=Gamma_3(q+t)+2Gamma_3(t).
+
+It follows that
+
+    Gamma_full(q)+Xi_p^- - sup_L integral L^2 d(mu K_p^-)
+      >= S sum_(a=1..H)(2a+1)min(b,Delta_a)>0.       (RS1)
+
+In particular the depth1 contribution alone is3S min(b,Delta_1)>0. This is a general same-family inequality for the explicit actual radial construction. It proves that independently sharp baseline and positive-frontier estimates need not be jointly sharp. It does not supply a numerical bound for all actual KC layouts.
+
+For H=8,p=17 or19, the right side of RS1 is exactly the difference between the independently optimized baseline-plus-Xi and the previously published ZB killed upper bound. The exact optimization below improves that separation further.
+
+#### First-exit normal form preserves all independent labels
+
+A label selecting residue0 modulo3 has zero mass on the source. Moving that label to a unit cylinder cannot decrease the objective, whose expanded pair coefficients are nonnegative. Hence restrict to unit residues.
+
+For a depth-d label, either its cylinder is the spine E_d, denoted r=0, or it first differs from the spine at a unique depth r in{1,...,d}. Its representative can be chosen as
+
+    a(d,0)=1,
+    a(d,r)=1+3^(r-1) for1<=r<=d.
+
+For r=1 the other unit root is2. For r>=2 the two off-spine children have identical uniform measures and the same radial q and t values. All labels with the same first-exit depth r can be moved to this one representative path. Their individual weighted cylinder masses are preserved and all pair intersections within this group become maximal. Intersections with a spine label depend only on whether that spine's depth is less than r, and are therefore preserved. Labels with different nonzero first-exit depths lie in disjoint branches, and remain disjoint.
+
+Thus this simultaneous replacement never decreases any expanded nonnegative pair contribution. Conversely every resulting collection is an actual legal complete test. This proves an exact reduction to independent choices
+
+    r_(i,d) in{0,...,d}, i=0,1, d=1,...,H.
+
+Different depths may choose different offshoots. No globally nested-chain claim is used; such a claim is false for general radial weights.
+
+For a radial w, the mass of the representative cylinder is
+
+    C_w(d,0)=sum_(j=d..H)P_j w_j,
+    C_w(d,r)=w_(r-1)/(2*3^(d-1)) for r>0.
+
+Two representative cylinders meet precisely when their explicit residues agree modulo3^min(d,e). If compatible, their intersection is the deeper representative cylinder; otherwise it is empty. These are the exact table entries used below.
+
+#### Exact integer optimization and exhaustive branch coverage
+
+For H=8 there are16 independently selected positive-depth labels, with total domain
+
+    [product_(d=1..8)(d+1)]^2=(9!)^2=131681894400.
+
+The two depth0 labels are constant1. Expanding the ternary objective gives a constant E(q+3t), one unary term per label, and one term per unordered pair. For a zero-block label the unary weight is3q+2t; for a positive-block label it is5t. A pair of zero-block labels has weight2q; every other pair has weight2t. The representative-cylinder formulas therefore determine a finite quadratic table exactly.
+
+The verifier multiplies all nonconstant rational coefficients by their common denominator. The integer scales are25219434240 at17 and53591297760 at19. It supplies the literal spur candidate
+
+    r_(i,d)=0 for d<=7,  r_(i,8)=8, for both i.
+
+The integer objective values excluding the constant term are respectively92418259287 and191714857884.
+
+The branch-bound calculation is exact over an arbitrary finite unary/pair table. At a partially assigned node, `current` is the exact contribution already assigned; `adj_i(r)` is the original unary plus interactions with assigned labels. If U is the remaining label set, then every completion is at most
+
+    current+sum_(i in U)max_r adj_i(r)
+           +sum_(unordered i,j in U)max_(r,s)V_ij(r,s).
+
+Conditioning on one candidate i=r gives the stronger valid bound
+
+    current+adj_i(r)
+      +sum_(j in U\{i})max_s[adj_j(s)+V_ij(r,s)]
+      +sum_(unordered j,k in U\{i})max_(s,t)V_jk(s,t).
+
+Every termwise maximum bounds the corresponding term in every completion. If all choices of any selected variable are bounded by the incumbent, the whole node closes. Otherwise every still-viable choice is recursively visited. Every excluded choice and every terminal node contributes its exact product of remaining domain sizes to a disjoint coverage count. The final count is131681894400 for each prime.
+
+The deterministic replay visits9 nodes per prime, computes all screening bounds as integers and reaches no assignment exceeding the literal spur candidate. The [certificate](actual_radial_maximum_certificate.json) includes trace-event counts, a SHA-256 of the recomputed exact bound trace, and the full domain-coverage count. The trace hash identifies the replay; soundness follows from the inequalities and exhaustive branch partition, not from trusting the hash. No external optimization solver is part of this certificate.
+
+#### Exact separation and its two contributions
+
+At the maximizing spur test the killed baseline and Xi losses are both positive:
+
+| p | baseline loss from its own supremum | Xi loss from its own supremum | total split-sup loss |
+|---|---:|---:|---:|
+| 17 | 637/165888 | 10829/35831808 | 148421/35831808 |
+| 19 | 637/186624 | 10829/61585920 | 221039/61585920 |
+
+The old unweighted square is G=S G3=795613/46656. On the charged leaf, the spur's ternary old load is8, so its deleted old square is64S b=273b. Its baseline loss is therefore(273-S)b. Switching the last test cylinder from E8 to one off-spine child of E7 changes E[t A^2] by17 P8(t8-t7); hence the Xi loss is3S*17P8(t8-t7). These exact formulas add to the displayed gaps.
+
+The baseline alone is maximized by moving all positive-depth ternary labels to root2. Xi alone is maximized by centering both old blocks on the spine. The common killed maximizer uses the different spur arrangement. The calculation retains one actual source, one kernel and one globally legal complete test at every stage.
+
+For the pinned explicit normalized17 history in the19 construction, the independent extra17 coordinate multiplies the complete-square maximum and split-sup loss by19/16. It has576 original test labels and zero17 mixed charge. This is a valid same-chain extension of the19 fixture, not a license to add the separate positive-charge17 fixture to it.
+
+#### Correlation is not the only discarded information
+
+The same globally maximizing spur test also has strict losses when a signed old term is replaced by its positive part. Its old source hinge at81 is64423/14580: moving the full centered test to the spur preserves its distribution under the uniform unit source. This is a value of this specific test, without asserting that it maximizes every convex cost.
+
+Write A for this full old load and beta for the actual row charge. The two additional nonnegative terms are
+
+    D=E_mu[beta(A^2-81)_+],
+    N=E_mu[(1-beta)(81-A^2)_+].
+
+Their exact values on the same killed-maximizing test are
+
+| p | D | N |
+|---|---:|---:|
+| 17 | 4283/1492992 | 510347321/7464960 |
+| 19 | 4283/1679616 | 574140853/8398080 |
+
+To compute them, let B be the other-prime old-load factor. Then E B^2=S and Pr(B=1)=33/64. On the charged leaf A=8B, so E(64B^2-81)_+=12849/64 and E(81-64B^2)_+=561/64. Thus D=(12849/64)b and N=H81-G+81-(561/64)b. All values are exact under the same source and kernel.
+
+These terms are distinct from the split-sup mismatch. In particular the positive-part step already loses information even if a later bound manages the baseline/Xi correlation perfectly. The general multi-prime signed telescope must also retain its killing, transport and mass terms; this finite example does not identify any one loss as the only remaining obstruction.
+
+The [radial maximum verifier](verify_actual_radial_maximum.py) hash-pins the already published actual-family certificate and verifier, reconstructs the full finite table, recomputes every integer bound and domain count, checks all new maxima against the literal pinned lower witnesses, and checks the displayed separations and hinge losses. These are ordinary mathematical and exact finite computational results, not a Lean declaration or an unrestricted Erdős #7 endpoint.
+
+### Positive radial weights do not justify a nested-chain restriction
+
+The first-exit reduction above retains different offshoots for different original depth labels. Positivity and radiality alone cannot justify replacing these independent choices by a single nested chain.
+
+On Z/9Z give residues0 through8 the positive weights
+
+    (28,48,28,28,1,28,28,1,28)/218.
+
+This probability is radial about1, with shell weights28 outside1 mod3,1 inside1 mod3 but outside1 mod9, and48 at1 mod9. Select one cylinder at each original depth0,1,2:
+
+    A_(a,b)=1+1_(x=a mod3)+1_(x=b mod9),
+    a in{0,1,2}, b in{0,...,8}.
+
+There are27 original layouts, of which9 are nested. Write w_b for the unnormalized point weight and W_a for the mod3 cylinder weight. Then W0=W2=84, W1=50, and direct expansion gives
+
+    218 E A_(a,b)^2
+      =218+3W_a+(3+2*1_(b=a mod3))w_b.              (RC1)
+
+For a=0 or2, the best nonnested numerator is218+3*84+3*48=614, at b=1; the best nested numerator is218+3*84+5*28=610. For a=1 the largest numerator is218+3*50+5*48=608, at b=1. Hence
+
+    max_(a,b) E A_(a,b)^2=307/109,
+    max_(b=a mod3) E A_(a,b)^2=305/109.             (RC2)
+
+The only global maximizers are(a,b)=(0,1),(2,1), both nonnested. The [27-layout verifier](verify_radial_chain_counterexample.py) independently compares the direct pointwise loads with RC1 and reproduces the [full table](radial_chain_counterexample_certificate.json).
+
+The restriction also fails for two independently chosen blocks. For every epsilon>0, Cauchy-Schwarz and RC2 give
+
+    max_(A0,A1) E[A0^2+epsilon*(2A0*A1+A1^2)]
+      =(1+3epsilon)*307/109,                       (RC3)
+
+attained when both blocks equal a nonnested maximizer. Restricting both blocks to chains gives exactly(1+3epsilon)*305/109 by the same argument. Thus neither independent block choices nor positive coefficients repair the restriction.
+
+The shell sequence28,1,48 is not monotone. This does not contradict the common-center maximum for a nonnegative combination of nested spine restrictions used for Gamma_3(t). It refutes an extension to arbitrary positive radial coefficients, the situation for which the first-exit optimizer must retain independent offshoot choices. This probability is not asserted to arise from the actual AP13 construction; the result is a counterexample to a proposed optimization reduction, not a covering system or an unrestricted noncoverage theorem.
+
+### Sparse prefix certificates and the actual weighted objective
+
+[RRO Section58 at dev11036b0baf](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#58-二进制估值标签下的精度跳跃构造可核验证书与展开输出障碍) constructs sparse ordinary integer witnesses for a complete unit-sum valuation array. Its finite split forest has fewer than n events for n original vertices; binary-encoded jump depths replace traversal through every intermediate digit. Successful witnesses and induced obstructions remain bound to every original input label. The section's polynomial bit bound concerns constructing or checking one complete array, not optimizing over all arrays. This dev increment adds theory and digestion inputs, with no corresponding D5, Blueprint or frozen-state change.
+
+There is an explicit bridge from odd-prime congruence centers to its input language. For each integer center a_i take the two units
+
+    z_i^+=1+p*a_i,  z_i^-=-(1+p*a_i).
+
+Every same-sign sum has valuation0, while
+
+    v_p(z_i^++z_j^-)=1+v_p(a_i-a_j),               (SC1)
+
+with infinity for equal centers. Thus the complete difference-prefix geometry can be expressed using a common unit-sum array. Reconstructing some integer tuple realizing this array does not, by itself, reconstruct the fixed original residues or the actual AP probability.
+
+For the #7 objective, a valid compression must retain all named forbidden and test cylinders, their original depths and identities, and their shared centers across stages. Jump lengths affect mass: a unit cylinder at depth d has uniform unit mass1/[(p-1)*p^(d-1)]. The same unlabelled tree with a different jump depth can therefore have different weighted integrals. Replacing an expanded integer by a sparse digit table neither deletes that factor nor makes its fully expanded rational denominator short.
+
+One sufficient transport contract is a product of measure-preserving prime-coordinate tree isomorphisms that maps every named cylinder to its counterpart and commutes with the stage projections. The physical AP kernels must be transported by those same maps: their row masks, row normalizations and assigned deletion weights then have identical values at corresponding rows. Induction over the stages preserves the complete actual law and the final killed integrals, including every CT loss term. A tree for the test centers alone, or independently chosen witnesses for separate subarrays, does not meet this contract. No such uniform reduction of the full KC optimization is established here.
+
+The sign issue belongs to the objective rather than the sparse syntax. The integer branch-bound inequalities above remain valid for an exact finite unary/pair table with signed entries, because each term is bounded by its own maximum. In contrast, the first-exit consolidation argument uses nonnegative pair coefficients; an intersection-increasing replacement does not justify moving the negative CT correction in the same direction. One must either preserve the full joint integral exactly or supply a valid lower bound for the correction on every branch under consideration.
+
+Equivalently, the direct same-law objective is
+
+    Q_eta(L)=sum_(i,j) integral I_i*I_j d eta-484*eta(1). (SC2)
+
+Its pair entries are nonnegative, but eta is the complete actual killed law. General eta need not have the radial symmetry used by RS1 and the finite first-exit optimization. Sparse realizability certificates do not provide that symmetry or a numerical upper bound on SC2.
+
+Consequently the applicable search improvement is event-based checking of complete prefix candidates and rejection by obstructions whose entire induced input is fixed. Unspecified entries in a partial candidate remain unspecified; Section58 does not authorize filling them independently or applying its small complete-array obstruction claim to arbitrary partial input. The remaining numerical obligation is still the same-test weighted bound, including conditional low-load deletion in CT5 or a complete upper-bound certificate for all KC layouts. Neither the299.398 criterion nor the ASB scalar obstruction is settled by this representation change.

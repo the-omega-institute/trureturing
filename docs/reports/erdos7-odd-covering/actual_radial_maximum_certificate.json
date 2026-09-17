@@ -1,0 +1,255 @@
+{
+  "schema": "actual-first-exit-killed-maximum-v1",
+  "source_pins": {
+    "actual_zero_block_certificate.json": "1c79645e040fc9a54c1b6c9fedac6beeb999f54286826cffccfc4456643ba163",
+    "verify_actual_zero_block.py": "63a72485e833be8fa20f25ba3c38ce0d0cea6988e31ec54403700802714d4751"
+  },
+  "rows": [
+    {
+      "prime": 17,
+      "original_test_labels": 288,
+      "normal_form_labels": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "normal_form_domain_product": 131681894400,
+      "integer_scale": 25219434240,
+      "candidate_objective_integer": 92418259287,
+      "optimal_objective_integer": 92418259287,
+      "maximizer": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8
+      ],
+      "nodes": 9,
+      "whole_node_prunes": 1,
+      "maxdepth": 8,
+      "covered_completions": 131681894400,
+      "trace_events": 135,
+      "trace_sha256": "9e7dc215ca2b81108535ab78cc703c19650a68c23a63d7b2bdd4de591810bbe1",
+      "killed_max_exact": "5109223159/246343680",
+      "split_killed_baseline_plus_Xi": "40881948427/1970749440",
+      "split_sup_gap_exact": "148421/35831808",
+      "Gamma_q_exact": "25459525/1492992",
+      "Xi_exact": "7275375427/1970749440",
+      "general_radial_split_gap_lower": "12103/3359232",
+      "radial_delta_by_depth": [
+        "85126243/25219434240",
+        "6517151/5043886848",
+        "12570331/25219434240",
+        "696013/3602776320",
+        "20641/277136640",
+        "7681/277136640",
+        "227/25194240",
+        "7/5038848"
+      ],
+      "split_baseline_gap_at_maximizer": "637/165888",
+      "split_Xi_gap_at_maximizer": "10829/35831808",
+      "hinge81_at_maximizer": "64423/14580",
+      "deleted_positive_hinge81_at_maximizer": "4283/1492992",
+      "retained_negative_hinge81_at_maximizer": "510347321/7464960"
+    },
+    {
+      "prime": 19,
+      "original_test_labels": 288,
+      "normal_form_labels": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "normal_form_domain_product": 131681894400,
+      "integer_scale": 53591297760,
+      "candidate_objective_integer": 191714857884,
+      "optimal_objective_integer": 191714857884,
+      "maximizer": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8
+      ],
+      "nodes": 9,
+      "whole_node_prunes": 1,
+      "maxdepth": 8,
+      "covered_completions": 131681894400,
+      "trace_events": 135,
+      "trace_sha256": "bb476d8c533a060bf6fc0065c620729edb0379bd1b10744ee573972a842d2423",
+      "killed_max_exact": "127329253189/6281763840",
+      "split_killed_baseline_plus_Xi": "127351799167/6281763840",
+      "split_sup_gap_exact": "221039/61585920",
+      "Gamma_q_exact": "28641977/1679616",
+      "Xi_exact": "249763027/77552640",
+      "general_radial_split_gap_lower": "562289/184757760",
+      "radial_delta_by_depth": [
+        "70191409/26795648880",
+        "26407669/26795648880",
+        "1175149/3152429280",
+        "22271/157621464",
+        "41857/788107320",
+        "2161/112586760",
+        "13/2165130",
+        "7/8660520"
+      ],
+      "split_baseline_gap_at_maximizer": "637/186624",
+      "split_Xi_gap_at_maximizer": "10829/61585920",
+      "hinge81_at_maximizer": "64423/14580",
+      "deleted_positive_hinge81_at_maximizer": "4283/1679616",
+      "retained_negative_hinge81_at_maximizer": "574140853/8398080"
+    }
+  ],
+  "p19_with_explicit_physical17_history": {
+    "original_test_labels": 576,
+    "physical17_mixed_charge": "0",
+    "factor": "19/16",
+    "killed_max_exact": "2419255810591/100508221440",
+    "split_sup_gap_exact": "4199741/985374720"
+  },
+  "scope": "Exact complete-test maxima for the two pinned actual finite families, plus the zero-mixed-charge physical17 extension. All original labels remain independent. This does not give a universal KC frontier bound or permit adding the separate positive17 and19 fixtures as one chain."
+}
