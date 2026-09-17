@@ -453,3 +453,34 @@ EXIT=0
 Erdős 这条线的可结算面就是上表那 41 条,已全部列名。本轮跑掉两条(#458、#699),两条都无反例,
 且两条都没有前人上界可比,故按 §3.6 ③ 都不作进展;#993 仍在预算内未跑。相较之下 OEIS 的 `%F`/`%C` 猜想线本会话产出 8 条已合入的结算。
 **按每小时结算数排序,OEIS 线优先;Erdős 线按上表逐条推进,不再重新普查徽章。**
+
+## R36(2026-09-17):A034448 与 A257750 —— 结算就写在猜想行下一行,而扫描器读不出来
+
+**A034448**(unitary sigma)。猜想行 `%F Conjecture: a(n) = sigma(n^2/rad(n))/sigma(n/rad(n)).
+- _Velin Yanev_, Aug 20 2017`。数值上它是对的:`1 ≤ n ≤ 20000` 零反例,证明也确实简单 ——
+逐素因子 `(p^{2e}-1)/(p^e-1) = p^e+1` 加乘性,`p ≤ 97, e ≤ 8` 全对。
+
+**但它早已被结算,而且就写在紧接着的下一行**:
+
+> `%F This conjecture is easily verified since all the functions involved are multiplicative and
+> proving it for prime powers is straightforward. - _Juan José Alba González_, Mar 19 2021`
+
+**A257750**(Quasi-Carmichael)。`%C Conjecture: It is always smaller than the square root of the
+corresponding Quasi-Carmichael number.`,下一行:
+
+> `%C The conjecture that b < sqrt(n) is false. Look at n = 87061 = 13*37*181, 87365 = 5*101*173,
+> and 96473 = 13*41*181. Their b values are 299, 331, and 351, while the corresponding sqrt(n)
+> values are 295, 295, and 310, respectively.`
+
+两条都被 `oeis-conjecture-scan.py` 报成 `no-marker`,A034448 差一步就被预登记。
+
+**器的两个缺陷,已同 PR 修掉,不是逐例登记**:
+
+1. **词表只认「证明」族**(`proved|a proof|is true|was shown|follows from|counterexample found|…`),
+   收不到「easily verified」「straightforward」这一族,也收不到条目自己用「is false」写下的反驳。
+2. **更深的一层**:结算评论通常会点名它所结算的东西,于是那一行本身含 `conjectur`,被当成**新的一条猜想**,
+   而被它结算的那条的搜索窗口恰好在它之前截断 —— 结果是标记贴在结算句自己身上,真猜想仍报无标记。
+   现在带结算标记的行不再算作新猜想的开始,除非它用显式的 `Conjecture:` 引入一条。
+
+**判据不变**:无标记**不等于**开放,它只是「值得读」的过滤;读全条目、下载每篇 `%H` 论文、数值核对、
+预登记仍然手工。这两条的教训是反过来的那一侧 —— **有标记却没读出来,代价是派席去证一个已经了结的东西**。
