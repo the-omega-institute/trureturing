@@ -1,0 +1,20 @@
+**定义 66.0（禁游程空间、关系空间、补变换与关系编码）。**
+
+固定整数 $k\ge 2$。令
+$$
+K_{k,k}:=\left\{x\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }x_j=x_{j+1}=\cdots=x_{j+k-1}\right\},
+$$
+即同时禁止 $0^k$ 与 $1^k$。令
+$$
+Y_k:=\left\{c\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }c_j=c_{j+1}=\cdots=c_{j+k-2}=1\right\},
+$$
+即禁止 $1^{k-1}$。定义逐位补变换
+$$
+(Cx)_j:=1-x_j
+$$
+以及相邻相等关系编码
+$$
+R(x)_j:=\mathbf 1_{\{x_j=x_{j+1}\}}.
+$$
+两边都取乘积拓扑；$\sigma$ 表示左移位；$\oplus$ 表示 $\mathbb Z/2\mathbb Z$ 中的加法。
+
