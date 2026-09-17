@@ -530,6 +530,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Complete original-label tails and joint-mask stability with arbitrary high residues.
+pattern = "docs/reports/erdos7-odd-covering/average_mask_tails_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Actual eight-class refutation of constant-kernel physical minimax optimality.
 pattern = "docs/reports/erdos7-odd-covering/bad_mass_rearrangement_certificate.json"
 kind = "data"
@@ -1126,6 +1135,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exact transfer saturation with positive actual deletion and distortion.
 pattern = "docs/reports/erdos7-odd-covering/verify_actual_union_saturation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Verifies joint-mask repair, all old/pure/mixed tails and the fixed-second-moment obstruction.
+pattern = "docs/reports/erdos7-odd-covering/verify_average_mask_tails.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

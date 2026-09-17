@@ -10573,3 +10573,376 @@ any directory with:
 ```sh
 python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_pg1_lifted_global_cap.py
 ```
+
+### Joint mask stability permits arbitrary high old and current residues
+
+The old-event hypothesis in (FI8) can be replaced by an averaged joint
+mask budget. This also permits arbitrary high old forbidden residues,
+using one explicitly conditioned old law. The fixed finite core remains
+a hypothesis; this is not a uniform improvement over arbitrary cores.
+
+Retain the finite original inventory, reference old probability \(\nu_0=\nu\)
+and pure17 comb of (FI2). Let \(\ell_H\) be uniform current Haar measure,
+\(\lambda_H=\ell_H(P_H)\ge15/16\) the pure-survivor mass, and
+\(m_H=\ell_H(\cdot\mid P_H)\). For the reference and new mixed masks
+\(B_x,B'_x\subseteq P_H\), set
+
+\[
+ h(x)=\ell_H(B_x\mathbin\triangle B'_x),\qquad
+ d(x)=m_H(B_x\mathbin\triangle B'_x)=h(x)/\lambda_H,\qquad
+ \epsilon=\mathbb E_{\nu_0}h(x).
+                                                               \tag{AM1}
+\]
+
+The old projection of this symmetric difference can have full mass.
+Neither (AM1) nor the estimates below require that projection to be small.
+All budgets are measured using \(\nu_0\), before any old conditioning.
+
+First the BBMST kernel is Lipschitz in its actual bad mask. On any finite
+probability space \((P,m)\), fix \(\delta=7/15\), \(C=15/8\),
+and write its physical and killed densities as
+
+\[
+ k_B=a(\alpha)\mathbf1_{B^c}+b(\alpha)\mathbf1_B,\quad
+ k_B^-=a(\alpha)\mathbf1_{B^c},\quad \alpha=m(B),\qquad
+ a(u)=\frac1{1-\min(u,\delta)},\quad
+ b(u)=\begin{cases}C(u-\delta)_+/u,&u>0,\\0,&u=0.\end{cases}
+\]
+
+Both coefficients are increasing, \(a\le C\), \(b\le1\), and
+\(\int k_B\,dm=1\). If \(B\subseteq B'\), the negative part of
+\(k_{B'}-k_B\) is supported on \(B'\setminus B\), where its absolute
+value is at most \(C\). Equal total masses therefore give the physical
+bound below. For the killed densities, the negative part has mass at most
+\(C(\alpha'-\alpha)\), and the positive part has mass
+\((1-\alpha')[a(\alpha')-a(\alpha)]\le C(\alpha'-\alpha)\),
+as follows directly in the three cases separated by \(\delta\).
+For arbitrary masks, apply the nested bounds through \(B\cup B'\):
+
+\[
+ \|k_{B'}-k_B\|_{L^1(m)},\quad
+ \|k_{B'}^--k_B^-\|_{L^1(m)}
+ \le2C\,m(B\mathbin\triangle B').
+                                                               \tag{AM2}
+\]
+
+In the original current Haar coordinate, integrating (AM2) over old rows
+bounds each physical or killed reference/new BBMST difference by
+\((2C/\lambda_H)\epsilon\le4\epsilon\).
+
+The improving transfer itself can be repaired. Keep \(t=2^{-24}\),
+\(E=\{x\equiv314\pmod{315}\}\) and the roots \(R_H\) from (FI3).
+On a row in \(E\) with \(d(x)\le1/68\), replace each uniform root
+probability \(U_{j,H}\), for \(j\in\{2\}\cup R_H\), by its
+conditioning \(U'_{j,x,H}\) on the new good set. Define
+
+\[
+ q'_{t,x}=q'_{0,x}+tU'_{2,x,H}
+                  -\frac{t}{r_H}\sum_{j\in R_H}U'_{j,x,H}.
+                                                               \tag{AM3}
+\]
+
+Here \(q'_0\) is the new mask's actual BBMST kernel. On all other rows
+use \(q'_t=q'_0\). This rule is fixed before selecting any test.
+Every indicated root was wholly good in the reference row. Its new good
+Haar mass is at least \(1/17-h(x)\ge3/68\). The reference good Haar
+mass on \(E\) is at least \(7/8\), so the new mass is at least
+\(117/136\). Also \(\alpha'\le1/15+1/68<\delta\), and the
+new BBMST row is uncharged. Its good Haar density \(c'\) satisfies
+\(1\le c'\le136/117\). The following strict margins prove feasibility:
+
+\[
+ \frac{136}{117}+\frac{68}{3}t<C,\qquad
+ 1-\frac{17}{3}t>0.
+\]
+
+The first bounds the recipient density below the allowed Haar cap
+\(C/\lambda_H\); the second bounds the remaining donor density, using
+\(r_H\ge4\). The transfer has zero total mass and is entirely good.
+Thus it preserves each old marginal, the new family's actual bad charge,
+and its survivor mass. It does not posit a separate test-dependent law.
+All physical and killed kernels still have Haar density at most2.
+
+Here is the quantitative repair error. If \(h_j\) is the new bad Haar
+mass removed from root \(j\), then
+\(\|U'_{j,x,H}-U_{j,H}\|_1=34h_j\). The roots are disjoint, so on
+retained rows the change in the signed transfer is at most \(34t h(x)\).
+On skipped rows in \(E\) it is \(2t\le136t d(x)\). Combining these
+disjoint row cases gives at most \(136t\mathbb E_{\nu_0}d\).
+The signed transfers are supported on the respective good sets, so this
+same comparison applies to physical and killed kernels. With (AM2),
+
+\[
+ \|q'_t-q_t\|_1,\quad\|(q'_t)^--q_t^-\|_1
+ \le A\epsilon,\qquad
+ A=4+\frac{2176}{15}t=\frac{7864337}{1966080}<5.
+                                                               \tag{AM4}
+\]
+
+These are joint-law norms under the unchanged \(\nu_0\).
+For every complete original test \(T\), (FI6) supplies
+\(\mathbb E_{\nu_0\otimes\ell_H}L_T^4\le K_4^{\rm Haar}\).
+If a density difference has absolute value at most2 and \(L^1\) norm
+at most \(D\), Cauchy--Schwarz bounds its test-square integral by
+\(\sqrt{2D K_4^{\rm Haar}}\). Consequently the two comparisons needed
+to transfer (FI5) cost at most
+\((\sqrt8+\sqrt{10})\sqrt{K_4^{\rm Haar}\epsilon}
+\le6\sqrt{K_4^{\rm Haar}\epsilon}\). This bound is uniform over all
+test residues and all finite heights, with no truncated test domain.
+The new common survivor mass is at least \(4/17-\epsilon\): every
+reference row has good Haar mass at least \(4/17\), the new mask removes
+at most \(h(x)\) of it, and BBMST good Haar density is at least one.
+
+Old high residues may also change. Let \(S\) be the event that the old
+point avoids all new old forbidden classes, set
+\(q=\nu_0(S^c)\), and use the single supported probability
+\(\nu_S=\nu_0(\cdot\mid S)\). Assume \(q\le1/2\).
+For either fixed new row kernel in (AM3), the joint density change caused
+by \(\nu_0\to\nu_S\) has \(L^1\) norm at most \(2q\).
+Its absolute value relative to \(\nu_0\otimes\ell_H\) is at most2:
+on \(S^c\) it is the old density, and on \(S\) it is that density
+times \(q/(1-q)\). This bounds the difference, although the conditioned
+joint density itself can exceed2. Each physical or killed test-square
+comparison costs at most \(2\sqrt{qK_4^{\rm Haar}}\).
+The two maxima therefore lose at most \(4\sqrt{qK_4^{\rm Haar}}\).
+
+Let \(V_{S,0},V_{S,t}\) be the new family's physical maxima under
+\(\nu_S q'_0,\nu_S q'_t\), and let \(V^-\) denote their killed
+maxima. Combining the comparisons gives both inequalities
+
+\[
+ \begin{aligned}
+ V_{S,t}&\le V_{S,0}-\varepsilon_0
+       +6\sqrt{K_4^{\rm Haar}\epsilon}+4\sqrt{K_4^{\rm Haar}q},\\
+ V^-_{S,t}&\le V^-_{S,0}-\varepsilon_0
+       +6\sqrt{K_4^{\rm Haar}\epsilon}+4\sqrt{K_4^{\rm Haar}q}.
+ \end{aligned}
+                                                               \tag{AM5}
+\]
+
+Their actual bad charges agree pointwise, and their common survivor mass
+satisfies
+\(\rho_S\ge(4/17-\epsilon-q)/(1-q)\).
+In particular, the exact constants in (FI5)--(FI6) satisfy
+
+\[
+ \theta=2^{-100},\qquad
+ 400K_4^{\rm Haar}\theta<\varepsilon_0^2.
+ \quad
+ q,\epsilon\le\theta
+ \ \Longrightarrow\quad
+ \Gamma_{S,t}\le\Gamma_{S,0}
+              -\frac{\varepsilon_0}{2\rho_S},\qquad \rho_S>0.
+                                                               \tag{AM6}
+\]
+
+The physical and killed maxima each improve by at least
+\(\varepsilon_0/2\). The conditioning is on actual new old survivors;
+the two laws being compared have the same old marginal \(\nu_S\).
+
+The pure17 residues need not remain fixed above the finite core either.
+For a new pure-survivor set \(P'_H\), its mass is still at least
+\(15/16\): there is only one pure forbidden class at each positive
+17-depth. In this paragraph let \(D_x,D'_x\) be the raw mixed unions
+before restriction to a pure-survivor set, and define
+
+\[
+ \kappa=\ell_H(P_H\mathbin\triangle P'_H),\quad
+ \eta=\mathbb E_{\nu_0}\ell_H(D_x\mathbin\triangle D'_x),\quad
+ \zeta=\kappa+\eta.
+\]
+
+The symmetric difference of the full good sets
+\(P_H\setminus D_x\) and \(P'_H\setminus D'_x\) has Haar mass
+\(h_G(x)\le\kappa+\ell_H(D_x\mathbin\triangle D'_x)\).
+To compare the two actual BBMST kernels, first change the pure probability
+while holding the raw mixed set fixed, then change that mixed set.
+The pure probabilities have \(L^1\) distance
+\(r\le(32/15)\kappa\). For a fixed bad set their bad probabilities
+therefore differ by at most \(r/2\). The coefficients \(a,b\) in
+(AM2) have Lipschitz constants at most \(225/64,225/56\), respectively,
+including the break at \(\delta\). Decomposing the kernel difference
+into a change of probability and a change of coefficients gives, for both
+physical and killed kernels,
+
+\[
+ \|q_{m',D}-q_{m,D}\|_1
+ \le\left(C+\frac{225}{112}\right)r
+ =\frac{435}{112}r\le4r.
+\]
+
+Here \(435/112<4\), and when \(r=0\) the norm is zero.
+Together with (AM2), the joint new/reference BBMST difference is at most
+\((128/15)\kappa+4\eta\le9\zeta\).
+Now apply (AM3) on rows in \(E\) for which \(h_G(x)\le1/68\),
+conditioning each selected root on the full new good set. The same
+\(117/136\) good-mass bound makes the row uncharged, since
+\(\alpha'\le1-117/136<\delta\). The same capacity margins apply.
+The repair difference is at most \(136t\mathbb E h_G\), so the
+candidate physical and killed differences are at most
+\((9+136t)\zeta\le10\zeta\), since \(9+136t<10\).
+Every current row kernel again has Haar density at most2.
+The two current square comparisons cost at most
+\((\sqrt{18}+\sqrt{20})\sqrt{K_4^{\rm Haar}\zeta}
+\le9\sqrt{K_4^{\rm Haar}\zeta}\).
+Combining with the same old conditioning gives
+
+\[
+ \begin{gathered}
+ V_{S,t}\le V_{S,0}-\varepsilon_0
+       +9\sqrt{K_4^{\rm Haar}\zeta}+4\sqrt{K_4^{\rm Haar}q},\\
+ V^-_{S,t}\le V^-_{S,0}-\varepsilon_0
+       +9\sqrt{K_4^{\rm Haar}\zeta}+4\sqrt{K_4^{\rm Haar}q},\\
+ 676K_4^{\rm Haar}2^{-100}<\varepsilon_0^2,\qquad
+ q,\zeta\le2^{-100} \Longrightarrow\quad
+ \Gamma_{S,t}\le\Gamma_{S,0}-\frac{\varepsilon_0}{2\rho_S},\qquad
+ \rho_S\ge\frac{4/17-\zeta-q}{1-q}>0.
+ \end{gathered}
+                                                               \tag{AM7}
+\]
+
+Here both compared kernels use the new full pure-survivor base and the
+same actual old probability \(\nu_S\). This extension changes the
+pure normalization explicitly; it does not silently count pure holes as
+mixed holes on the old base.
+
+This budget holds for arbitrary forbidden residues beyond an explicit
+finite exponent box. For every period in (FI2) and current height \(H\),
+keep the reference forbidden residue on each original label whose six
+prime exponents are all at most65. On every other original label allow an
+arbitrary residue, including old labels, pure17 labels and mixed labels.
+Keep every original test label and its independent test residue.
+
+The reference old probability has density, relative to uniform old Haar,
+at most
+
+\[
+ C_{\rm old}=315\max_x\mu(x)\frac{11}{10}\frac{13}{12}
+ =\frac{49916643777}{8000000056}.
+\]
+
+For a common box depth \(b\), define the complete geometric sums
+
+\[
+ \begin{aligned}
+ S_\infty&=\prod_{p\in\{3,5,7,11,13\}}\frac p{p-1}
+          =\frac{1001}{384},\\
+ S_b&=\prod_{p\in\{3,5,7,11,13\}}
+             \frac p{p-1}(1-p^{-(b+1)}),\\
+ T_{\rm old}(b)&=S_\infty-S_b,\qquad
+ T_{\rm pure}(b)=\frac{17^{-b}}{16},\\
+ T_{\rm mixed}(b)&=\frac{S_\infty-1}{16}
+                    -\frac{(S_b-1)(1-17^{-b})}{16}.
+ \end{aligned}
+\]
+
+These are sums over all original labels outside the box, with old depth
+starting at zero and current depth starting at one; \(d=1\) is excluded
+only from the mixed sum, because its pure labels have their own sum.
+They majorize every finite physical exponent vector by adding nonnegative
+terms. For old labels only the new classes can delete reference mass.
+For current labels, the symmetric difference of the unions lies in the
+union of all removed and added classes. The actual cylinder cap
+\(\nu_0(a\bmod d)\le C_{\rm old}/d\) and CRT therefore give
+
+\[
+ q\le C_{\rm old}T_{\rm old}(b),\qquad
+ \zeta\le2T_{\rm pure}(b)+2C_{\rm old}T_{\rm mixed}(b).
+                                                               \tag{AM8}
+\]
+
+At \(b=65\), exact rational arithmetic gives both right sides less
+than \(2^{-100}\). Their ratios to \(2^{-100}\) are respectively
+less than0.668 and0.084. Thus (AM7) applies to **every assignment outside
+this fixed core**, uniformly over all finite heights, with gain at least
+\(\varepsilon_0/(2\rho_S)\) in the actual conditioned supremum.
+The full tails have been evaluated, not discarded; no enumeration of a
+large but finite height substitutes for this argument.
+
+The stronger joint-mask condition has examples beyond the small-old-event
+condition. For \(H\ge67\), change the two original classes with labels
+\(3\cdot17^{66}\) and \(3\cdot17^{67}\) to old residues1 and2
+modulo3, respectively, and current residue12 at their respective depths.
+Every reference old survivor has residue1 or2 modulo3. Root12 was globally
+clean, so every old row gains a forbidden current point. The old projection
+of the changed mask is therefore the entire old support. Both labels lie
+outside the exponent65 core, so (AM8) still bounds their small joint mass.
+This construction is an illustration of the strict extension, not an
+extra assumption in the arbitrary-tail conclusion.
+
+The remaining restrictions matter. The six allowed primes are fixed and
+the original finite core residues are specified by (FI2); arbitrary cores
+and additional prime support remain outside this result. The supported old
+law is the explicitly constructed \(\nu_S\), not an unspecified prior
+BBMST output. Its quantitative reference cylinder cap is used in (AM8),
+and its reference fourth moment is used in (AM5)--(AM7). No better bound
+for the unrestricted17/19 continuation follows merely from this local
+strict improvement.
+
+The proof reuses the original-label moment expansion (FI6), the actual
+BBMST clipping coefficients, finite conditioning and Cauchy--Schwarz.
+Pinned Mathlib provides `ProbabilityTheory.cond_apply` and
+`MeasureTheory.integral_mul_le_Lp_mul_Lq_of_nonneg`; these standard
+primitives are not presented as new Lean declarations. The repaired
+probability and its full original-label comparison above are ordinary
+mathematical proofs. They have not been formalized in Lean.
+
+### The same complete second moment can hide an unbounded fourth moment
+
+The fourth-moment hypothesis in (AM5)--(AM7) cannot be replaced by a
+bound on the complete original-test second moment alone, even with an
+unchanged exact value. For \(N\ge2\), take every original old modulus
+\(3^j\), \(1\le j\le N\), with forbidden residue1. These distinct
+odd classes have union exactly1 modulo3. Let \(\beta_N\) be uniform on
+the actual survivors \(x\not\equiv1\pmod3\), and define
+
+\[
+ \nu_{N,u}=(1-u)\beta_N+u\delta_0,\qquad 0\le u\le1.
+\]
+
+Every original divisor, including the unit divisor, retains an independent
+test residue. A cylinder at depth \(j\ge1\) has \(\nu_{N,u}\)-mass
+at most \((1-u)/(2\cdot3^{j-1})+u\), attained by the zero cylinder.
+Expanding the kth power of the complete load into ordered original-label
+tuples, an intersection is empty or a cylinder at the maximum depth.
+The coherent zero tests attain all those caps simultaneously. Thus
+
+\[
+ \Gamma_k(\nu_{N,u})=(1-u)B_{k,N}+u(N+1)^k,\qquad
+ B_{k,N}=1+\sum_{j=1}^N
+                 \frac{(j+1)^k-j^k}{2\cdot3^{j-1}}.
+\]
+
+In particular \(B_{2,N}=4-(N+2)/(2\cdot3^{N-1})<4\). Put
+
+\[
+ u_N=\frac{5-B_{2,N}}{(N+1)^2-B_{2,N}}.
+ \qquad
+ \Gamma_2(\nu_{N,u_N})=5,\qquad
+ \Gamma_4(\nu_{N,u_N})>(N+1)^2\longrightarrow\infty.
+                                                               \tag{AM9}
+\]
+
+Indeed \(0<u_N<1\) and \(u_N>1/(N+1)^2\); the atom at zero alone
+supplies the displayed fourth-moment lower bound. These laws give positive
+weight to every actual old survivor. This excludes any height-uniform
+fourth-moment bound depending only on \(\Gamma_2\) for arbitrary
+supported old probabilities. It does not assert that these spike laws are
+produced by the prior BBMST kernels. Their Haar density cap is at least
+\(3^Nu_N>3^N/(N+1)^2\), so they violate the extra uniform domination
+used in (AM8). The original-label base moment formula is the same geometric
+prefix calculation as (FI3); the added spike keeps the second maximum
+exactly fixed while forcing the higher maximum to diverge.
+
+The [joint-mask and complete-tail verifier](verify_average_mask_tails.py)
+reconstructs its [exact certificate](average_mask_tails_certificate.json)
+from the pinned FI inputs. It checks the rational margins and full tail
+sums, all65536 ordered masks on an eight-point space through165 intersection
+types, literal current repair and pure-base comparisons, and the original-label
+full-projection example. For (AM9), it enumerates all27 and729 independent
+test layouts at heights2 and3; the unbounded conclusion follows from the
+ordered-tuple proof above. Reproduce from any directory with:
+
+```sh
+python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_average_mask_tails.py
+```

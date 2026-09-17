@@ -351,6 +351,23 @@ maximum strictly improves as well. This removes the small-inventory and
 clean-root restrictions for this constructed class; arbitrary forbidden
 residues and the unrestricted #7 conclusion remain unresolved.
 
+A [joint-mask stability theorem](../docs/reports/erdos7-odd-covering/marked_head_profile.md#joint-mask-stability-permits-arbitrary-high-old-and-current-residues)
+replaces the small old-event condition by small average joint changes.
+For the full original six-prime inventory, keep the specified reference
+residues only on labels whose exponents are all at most65. Every remaining
+old, pure17 and mixed forbidden residue can be arbitrary, at every finite
+height. Conditioning the reference old law on its new actual survivors,
+and repairing the transfer inside the new good portions of its roots,
+retains at least half the gain above. The compared laws have the same old
+marginal, actual bad charge and positive survivor mass; the true conditioned
+supremum improves by at least `epsilon0/(2*rho_S)`. Complete original-label
+geometric tails bound both perturbation budgets by `2^(-100)`, and the
+fourth-moment error is explicitly absorbed. Two high original labels show
+that the changed mask can project onto every old row. The proof is ordinary
+mathematics with exact arithmetic checks, not Lean. The finite core and
+prime support remain specified; no improved unrestricted continuation
+constant or resolution of #7 is asserted.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
