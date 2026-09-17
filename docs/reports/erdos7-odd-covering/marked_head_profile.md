@@ -524,3 +524,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 - [Sharp positive-seven source costs at the off-diagonal endpoint](profile-notes/54-sharp-positive-seven-source-costs.md)
 - [An actual tensor test bounds every source-only refinement](profile-notes/55-an-actual-test-limits-source-refinements.md)
+- [Exact actual survival limits the fixed-numerator comparison](profile-notes/56-exact-survival-limits-the-fixed-numerator-comparison.md)
+- [A common deleted-measure coupling for numerator and survival](profile-notes/57-common-deleted-measure-coupling.md)
+- [Exact optimal original-seven thresholds](profile-notes/58-optimal-original-seven-thresholds.md)
