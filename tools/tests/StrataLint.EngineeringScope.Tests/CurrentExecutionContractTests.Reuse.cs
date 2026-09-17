@@ -24,7 +24,9 @@ public sealed partial class CurrentExecutionContractTests
         // Exercise the production fingerprint with the real execution registration;
         // only the fixture's compile inputs and test assembly remain synthetic.
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
-            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
+                ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+                : "registered fixture material\n");
         var changes = new[]
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
@@ -46,6 +48,69 @@ public sealed partial class CurrentExecutionContractTests
             Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
             Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
             previous = current;
+        }
+    }
+
+    [Theory]
+    [InlineData("StrataLint.ArchitectureTests")]
+    [InlineData("StrataLint.Tests")]
+    public void RegisteredDigestionContentReusesEvidenceWhileGovernanceInvalidates(string project)
+    {
+        using var fixture = new CandidateFixture();
+        var repository = TestRepositoryLayout.FindRoot();
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(repository, EngineeringRegistrationFixture.Path)))!;
+        var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
+        EditRegistration(fixture, rows =>
+        {
+            foreach (var field in new[] { "execution_inputs", "execution_excludes" })
+                rows[0]![field] = declaration[field]!.DeepClone();
+        });
+        foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
+        // These are authored governance and content examples. The actual execution
+        // registration above decides fingerprints; the test never classifies by IO.
+        string[] governance = [
+            "Meta/Digestion/atomizers.toml", "Meta/FILEMAP.toml", "Meta/FILEMAP.fixture.toml",
+            "Meta/ReportConsumers/lean-report.json", "Meta/ReportConsumers/scribe-content.json",
+            "Meta/ReportProducers/lean-report.json", "Meta/ReportProducers/scribe-content.json",
+            "Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/domains.yaml",
+            EngineeringRegistrationFixture.Path, "Meta/judge-seed.json", "Meta/package-materials.json", "Meta/registry.yaml",
+        ];
+        foreach (var path in governance)
+            if (!File.Exists(Path.Combine(fixture.Root, path))) fixture.Write(path, "registered fixture material\n");
+        fixture.Write("Meta/FILEMAP.toml", "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n");
+        var atom = "Meta/Digestion/atoms/sha256/" + new string('a', 64);
+        var backfill = "Meta/Digestion/backfill/theory/residual-open/" + new string('a', 64) + ".yaml";
+        foreach (var path in new[] { atom, backfill }) fixture.Write(path, "original content\n");
+        fixture.Track();
+        Execute(fixture);
+        foreach (var path in new[] { atom, backfill })
+            foreach (var mutation in new[] { "change", "delete", "add" })
+            {
+                Seed(fixture);
+                var original = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+                if (mutation == "delete") File.Delete(Path.Combine(fixture.Root, path));
+                else fixture.Write(path, mutation + " content\n");
+                fixture.Track();
+                var calls = Execute(fixture);
+                var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+                Assert.True(calls.Count == 0, $"{project}: {mutation} {path} reran {string.Join(',', calls)}; old={original.InputFingerprint}; new={accepted.InputFingerprint}");
+                Assert.Equal(original with { Status = "reused" }, accepted);
+            }
+        foreach (var path in governance)
+        {
+            Seed(fixture);
+            var original = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+            if (path == EngineeringRegistrationFixture.Path)
+                EditRegistration(fixture, rows => rows[0]!["root_namespace"] = "ChangedFixture");
+            else if (path == "Meta/FILEMAP.toml")
+                fixture.Write(path, File.ReadAllText(Path.Combine(fixture.Root, path)).Replace("program", "data", StringComparison.Ordinal));
+            else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
+            fixture.Track();
+            Assert.Equal([CandidateFixture.First], Execute(fixture));
+            var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+            Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
+            Assert.Equal("executed", accepted.Status);
         }
     }
 
