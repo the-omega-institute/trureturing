@@ -40,7 +40,7 @@ public sealed class DeclaredTemplateReviewTests
         files[Judge] = "-- judge implementation\n";
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
-        files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 2\ninclude = [\"FILEMAP.inputs.toml\"]\n";
+        files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 3\ninclude = [\"FILEMAP.inputs.toml\"]\n";
         files["Meta/FILEMAP.inputs.toml"] = "schema_version = 2\nfiles = [\n" + string.Join("\n",
             new[] { ("D5/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
                 .Select(pair => "{ pattern = \"" + pair.Item1 + "\", admission_plane = \"" + pair.Item2

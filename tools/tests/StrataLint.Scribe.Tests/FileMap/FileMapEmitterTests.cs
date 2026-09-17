@@ -9,7 +9,16 @@ public sealed class FileMapEmitterTests
     public void DependencyProjectionIsByteStableAndDerivedFromEveryEntry()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"

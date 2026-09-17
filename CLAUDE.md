@@ -209,7 +209,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 **地址由算法算出,不开会。** GID 是规范地址(F 层为字面路径),地层由 import 偏序算;桶满只裂不迁,历史只追加。算法地址使并行贡献不撞址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树只呈当前最优形态;格式/规则/词表/语料单 PR 全量迁移并机器验证,不留 grandfather、legacy alias、旧格式双读、待晋升隔离区或 deprecated 存根。禁的是为旧状态保留运行时机制;Chronicle/冻结账本/spec 修订等当前审计链不是兼容层,历史归 git,过程材料仍依第 2.10 条不保存。
-**数据居所律**:harness 在 `tools/`,测试在 `tools/tests/`;程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)源码只许类型/逻辑/loader/writer/测试等程序,整个 `tools/` 保护面不得住 `kind=data`。判例、常数、目录条目、文档等声明实例须在程序目录外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml,registry.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或测试项目内部的合成 fixture(非 canonical 数据)。类型/schema 留程序集,实例集合移出;类型内封闭字母表(S0–S4、PLANE)可写死并加一处锚定测试。数据文件的 parse 是 harness,须 fail-closed loader+schema。内容不因重要而进入 SL-022;golden corpus/判例住顶层 `Golden/`,由 strict loader 守。
+**数据居所律**:harness 在 `tools/`,测试在 `tools/tests/`;程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)源码只许类型/逻辑/loader/writer/测试等程序,整个 `tools/` 保护面不得住 `kind=data`。判例、常数、目录条目、文档等声明实例须在程序目录外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或测试项目内部的合成 fixture(非 canonical 数据)。类型/schema 留程序集,实例集合移出;类型内封闭字母表(S0–S4、PLANE)可写死并加一处锚定测试。数据文件的 parse 是 harness,须 fail-closed loader+schema。内容不因重要而进入 SL-022;golden corpus/判例住顶层 `Golden/`,由 strict loader 守。
 **停用边界**:`Meta/StrataLint/` 旧位置不复存在,保守扩展重放/C0/证书机器已退役。旧 accepted 事件账本的 append-only diff 守护属 SL-008 而非 SL-022,仅是 2026-08-13 样本的历史执法归属;当前 SL-008 只判成员状态与当前树一致,无历史单调判官(第 1.3、4.7 条)。
 *成熟锚*:SSOT、事件溯源、内容寻址、mathlib 治理、trunk-based 单版本、expand–contract 必收尾、git 历史库、config outside binary、资产/引擎分离。〔守护:**硬+软**·GID/地层/词表/文件头由 lint 判;兼容垫层靠评审,识别即拆〕
 

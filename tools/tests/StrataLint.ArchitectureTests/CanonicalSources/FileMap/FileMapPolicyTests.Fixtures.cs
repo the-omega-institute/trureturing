@@ -31,7 +31,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void EchoResidualRegistryAndBroadFileMapPatternAreRejectedByTheRedFixture()
+    public void BroadEchoResidualFileMapPatternIsRejected()
     {
         var manifest = Parse(Entry(
             "Generated/**/*.md",
@@ -40,16 +40,13 @@ public sealed partial class FileMapPolicyTests
             "reader",
             "EchoVerifyCommand"));
 
-        var findings = FileMapPolicy.InspectProjectionRegistrations(
-            manifest,
-            ["Generated/echo-residuals/source.md"]);
+        var findings = FileMapPolicy.InspectProjectionRegistrations(manifest);
 
         Assert.Contains(findings, static finding => finding.Code == "FILEMAP-PROJECTION-SHARD");
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-PROJECTION-REGISTRY");
     }
 
     [Fact]
-    public void EchoResidualLiteralFileMapPatternAndAbsentRegistryEntryAreAcceptedByTheGreenFixture()
+    public void LiteralRunLocalEchoResidualPatternIsAccepted()
     {
         var manifest = Parse(Entry(
             "Generated/echo-residuals/*.md",
@@ -61,7 +58,7 @@ public sealed partial class FileMapPolicyTests
                 "runtime_disposition = \"run-local\"",
                 StringComparison.Ordinal));
 
-        Assert.Empty(FileMapPolicy.InspectProjectionRegistrations(manifest, []));
+        Assert.Empty(FileMapPolicy.InspectProjectionRegistrations(manifest));
     }
 
     [Fact]
@@ -286,47 +283,20 @@ public sealed partial class FileMapPolicyTests
 
     private static FileMapManifest Parse(params string[] entries) => Parse(0, entries);
 
-    private static RegistryLoadOutcome.Accepted SyntheticRegistry(string? governanceDocument = null)
+    private static PolicyLoadOutcome.Accepted SyntheticPolicy(string? governanceDocument = null)
     {
-        var governanceDocuments = new[]
-        {
-            "Generated/FILEMAP.md",
-            "Generated/truth-graph.v1.json",
-            "Meta/Digestion/atomizers.toml",
-            "Meta/FILEMAP.toml",
-            "docs/CONTRIBUTING.md",
-            "docs/GOVERNANCE.md",
-            "docs/develop/spec/golden-ledger-repo-spec.md",
-            "tools/Generated/scribe-emissions.v1.json",
-        }.Append(governanceDocument)
-            .Where(static path => path is not null)
-            .Order(StringComparer.Ordinal)
-            .Select(static path => $"  - \"{path}\"");
-        var registry = """
-            schema_version: 1
-            root_files:
-              - "README.md"
-            governance_documents:
-            """ + "\n" + string.Join('\n', governanceDocuments) + """
-
-            agent_files:
-              - "CONTEXT.md"
-            artifact_kinds:
-              json:
-                profile: structured-json
-                selectors:
-                  - "result"
-                path_selectors:
-                  - "formal"
-            """ + "\n";
+        var patterns = new[] { ".codex/skills/**", "Generated/echo-residuals/*.md", "Meta/Digestion/atomizers.toml",
+            "README.md", "docs/develop/spec/*.md", "docs/develop/theory/**", "skills/**" }
+            .Append(governanceDocument).OfType<string>().Order(StringComparer.Ordinal);
+        var manifest = Parse(patterns.Select(path => Entry(path, "program", "none", "reader", "repository-policy")).ToArray());
         const string domains = """
             domains:
               Carrier:
                 stratum: S0
                 definition: Synthetic carrier domain.
             """ + "\n";
-        return RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(registry),
+        return PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            FileMapCanonicalWriter.Write(manifest).AsSpan(),
             Encoding.UTF8.GetBytes(domains)));
     }
 
@@ -334,7 +304,16 @@ public sealed partial class FileMapPolicyTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 $$"""
-                schema_version = 2
+                schema_version = 3
+
+                [evidence.artifact_kinds.json]
+
+                profile = "structured-json"
+
+                selectors = ["result"]
+
+                path_selectors = ["formal"]
+
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"

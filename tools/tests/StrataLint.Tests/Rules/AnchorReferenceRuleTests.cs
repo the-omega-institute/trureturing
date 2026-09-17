@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -247,10 +248,9 @@ public sealed class AnchorReferenceRuleTests
             current[changedPath] += "-- changed\n";
         }
 
-        var policy = RegistryLoadAssert.Accepted(RegistryPolicyCompiler.Compile(
-            new RegistrySyntax(1, [], [], [],
-                [new ArtifactKindSyntax("lean", "lean-module", ["module"], ["formal"])]),
-            [new DomainSyntax("Carrier", "S0", "Synthetic carrier")])).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var changes = RawChangeSet.CreateWithKinds(
             [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
         var context = RuleEvaluationContext.Create(

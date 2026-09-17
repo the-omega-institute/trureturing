@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Tomlyn;
 using Tomlyn.Model;
+using Tomlyn.Parsing;
 
 namespace StrataLint.Engine;
 
@@ -39,8 +40,8 @@ internal static class FileMapDocuments
         if (!names.SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal)
             || names.Distinct(StringComparer.Ordinal).Count() != names.Length)
             throw new FileMapParseException(location, "include names must be unique and ordinally sorted");
-        if (!root.Table.TryGetValue("schema_version", out var version) || version is not 2L)
-            throw new FileMapParseException(location, "include requires schema_version 2");
+        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L))
+            throw new FileMapParseException(location, "include requires root schema_version 2 or 3");
         if (readInclude is null)
             throw new FileMapParseException(location, "include requires a reader for the same repository snapshot");
 
@@ -85,7 +86,9 @@ internal static class FileMapDocuments
     {
         try
         {
-            var table = TomlSerializer.Deserialize<TomlTable>(StrictUtf8.GetString(bytes))
+            var text = StrictUtf8.GetString(bytes);
+            _ = SyntaxParser.ParseStrict(text, location, validate: true);
+            var table = TomlSerializer.Deserialize<TomlTable>(text)
                 ?? throw new FileMapParseException(location, "TOML decoded to null");
             return new(location, ImmutableArray.Create(bytes.ToArray()), table);
         }

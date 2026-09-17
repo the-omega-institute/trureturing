@@ -73,10 +73,10 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         AddFrozenLedger(fixture);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
@@ -109,10 +109,10 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         AddFrozenLedger(fixture);
         var addedEventPath = fixture.Files.Keys
             .First(FrozenLedgerChangeClassifier.IsAcceptedEventPath);
@@ -181,10 +181,10 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
             Snapshot(fixture.Files),
@@ -272,8 +272,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "FILEMAP.toml"), TestFileMap.Canonical, new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestFileMap.Domains, new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(temporary.Path, "manifest.json"),
             "{\"artifact\":\"lean\",\"domain\":\"Carrier\",\"generality\":\"G\",\"module\":\"Probe\",\"plane\":\"F\",\"selector\":\"\",\"tag\":\"\",\"theory\":\"D5\"}\n",

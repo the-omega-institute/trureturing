@@ -17,7 +17,7 @@ public sealed class RepositorySymlinkTests
         var declarations = "schema_version = 2\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..];
         Write(repository.Path, fragment, declarations);
         Write(repository.Path, "Meta/FILEMAP.toml",
-            "schema_version = 2\ninclude = [\"FILEMAP.skills.toml\"]\n");
+            "schema_version = 3\ninclude = [\"FILEMAP.skills.toml\"]\n");
         Commit(repository.Path);
 
         Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadCurrent(repository.Path), ".codex/skills"));
@@ -303,7 +303,7 @@ public sealed class RepositorySymlinkTests
     internal static void Declare(string root, params (string Path, string Target, string Kind)[] links)
     {
         var text = """
-            schema_version = 2
+            schema_version = 3
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"

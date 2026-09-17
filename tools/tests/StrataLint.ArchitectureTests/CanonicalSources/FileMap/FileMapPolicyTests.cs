@@ -11,16 +11,34 @@ public sealed partial class FileMapPolicyTests
     public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
     {
         var root = RepositoryLayout.FindRoot();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
 
         Assert.Null(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("lean-report-inputs.json"), registry.Policy));
+            RepoPath.CreateKnown("lean-report-inputs.json"), policy.Policy));
         var manifest = FileMapLoader.LoadRepository(root);
         var entry = Assert.Single(manifest.Match("lean-report-inputs.json"));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+
+        var reloaded = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            policy.Policy.CanonicalFileMapBytes.AsSpan(),
+            policy.Policy.CanonicalDomainsBytes.AsSpan())).Policy;
+        Assert.Equal(policy.Policy.FileMapSha256, reloaded.FileMapSha256);
+        Assert.Equal(
+            policy.Policy.CanonicalFileMapBytes.ToArray(),
+            reloaded.CanonicalFileMapBytes.ToArray());
+        Assert.Equal(
+            ["csv", "json", "md", "py", "txt", "yaml", "yml"],
+            policy.Policy.ArtifactKinds.Keys
+                .Select(static key => key.Value)
+                .Order(StringComparer.Ordinal)
+                .ToArray());
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("LICENSE"), policy.Policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("unregistered.json"), policy.Policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("agents/unregistered.md"), policy.Policy));
     }
 
     [Fact]
@@ -64,41 +82,32 @@ public sealed partial class FileMapPolicyTests
         Assert.Contains(
             inventory,
             artifact => entry.Matches(artifact.Path));
-        Assert.DoesNotContain(
-            FileMapPolicy.InspectRepository(root),
-            finding => finding.Path == pattern);
+        var findings = FileMapPolicy.InspectRepository(root);
+        Assert.DoesNotContain(findings, finding => finding.Path == pattern);
+        Assert.DoesNotContain(findings, finding => finding.Code == "FILEMAP-PATTERN-EMPTY");
     }
 
     [Fact]
     public void AgentReportsAreAdmittedByRepositoryPathPolicy()
     {
         // Agent-written reports have generated names, cannot be enumerated in
-        // registry.yaml governance_documents. RepositoryPathPolicy admits the
-        // docs/reports/ prefix at the path layer; filemap-conform separately requires
-        // a unique FILEMAP match before a report is usable.
+        // FILEMAP uses a family registration because report names are generated.
         const string value = "docs/reports/diag-lane-a/synthetic-open-report.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy("docs/reports/**/*.md");
         var path = RepoPath.CreateKnown(value);
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy.Policy));
     }
 
     [Fact]
     public void DevelopmentSpecDocumentsAreAdmittedByRepositoryPathPolicy()
     {
-        // Spec drafts have author-chosen names that cannot be enumerated in
-        // registry.yaml governance_documents ahead of time, exactly as theory
-        // volumes and agent reports cannot. Enumerating them there made adding
-        // one document require a harness edit, and that edit could not ship:
-        // the admission-plane gate refuses a PR that touches both the judge
-        // plane (registry.yaml) and the content plane (the document), so the
-        // pair could never land together, while either half alone was rejected
-        // by FILEMAP-REGISTRY-DANGLING or SL-000 respectively.
+        // An explicitly registered source family admits its canonical children.
         const string value = "docs/develop/spec/synthetic-unregistered-spec.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy.Policy));
     }
 
     [Fact]
@@ -108,62 +117,62 @@ public sealed partial class FileMapPolicyTests
         // broader docs/develop/. A sibling directory must still be refused,
         // so widening the prefix by mistake turns this test red.
         const string value = "docs/develop/scratch/synthetic-note.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
-        var issue = RepositoryPathPolicy.Validate(path, registry.Policy);
+        var issue = RepositoryPathPolicy.Validate(path, policy.Policy);
 
         Assert.NotNull(issue);
-        Assert.Contains("unknown top-level artifact", issue!.Message, StringComparison.Ordinal);
+        Assert.Contains("matches=0", issue!.Message, StringComparison.Ordinal);
     }
 
     [Fact]
     public void CodexSkillPackagesAreAdmittedByRepositoryPathPolicy()
     {
         // A Codex skill package is a directory containing SKILL.md, whose file
-        // names cannot be enumerated individually in registry.yaml.
+        // the registered FILEMAP prefix covers each package.
         const string value = ".codex/skills/synthetic-skill/SKILL.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy.Policy));
     }
 
     [Fact]
     public void CodexArtifactsOutsideSkillsAreRefusedByRepositoryPathPolicy()
     {
         const string value = ".codex/settings.toml";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
         var issue = Assert.IsType<RepositoryPathIssue>(
-            RepositoryPathPolicy.Validate(path, registry.Policy));
+            RepositoryPathPolicy.Validate(path, policy.Policy));
         Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal("unknown top-level artifact", issue.Message);
+        Assert.Contains("matches=0", issue.Message, StringComparison.Ordinal);
     }
 
     [Fact]
     public void SkillPackagesAreAdmittedByRepositoryPathPolicy()
     {
-        // A skill package is a directory holding SKILL.md, whose file names cannot be enumerated in registry.yaml.
+        // A skill package is a directory holding SKILL.md, governed by the FILEMAP package pattern.
         const string value = "skills/synthetic-skill/SKILL.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy.Policy));
     }
 
     [Fact]
     public void SkillsPrefixWithoutSeparatorIsRefusedByRepositoryPathPolicy()
     {
         const string value = "skills.md";
-        var registry = SyntheticRegistry();
+        var policy = SyntheticPolicy();
         var path = RepoPath.CreateKnown(value);
 
         var issue = Assert.IsType<RepositoryPathIssue>(
-            RepositoryPathPolicy.Validate(path, registry.Policy));
+            RepositoryPathPolicy.Validate(path, policy.Policy));
         Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal("unknown top-level artifact", issue.Message);
+        Assert.Contains("matches=0", issue.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -272,8 +281,10 @@ public sealed partial class FileMapPolicyTests
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
         Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
         var decision = AdmissionPlanePolicy.Evaluate(
-            Encoding.UTF8.GetBytes("schema_version = 2\n" + entry),
-            [path]);
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(
+                AdmissionPlanePolicy.FileMapPath, "schema_version = 3\n" + entry)]),
+            RawRepositorySnapshot.Create([]),
+            RawChangeSet.Create([path]));
         Assert.True(decision.IsAdmissible);
         Assert.Equal(AdmissionPlaneClassification.ContentOnly, decision.Classification);
     }
@@ -465,21 +476,19 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void RegistryAndTrackedRootDriftIsRejectedByTheRedFixture()
+    public void MissingRegisteredLiteralHasAFileMapReferenceDiagnostic()
     {
-        var finding = Assert.Single(FileMapPolicy.InspectRegistryRootAlignment(
-            ["README.md"],
-            ["Makefile", "README.md"]));
-
-        Assert.Equal("FILEMAP-REGISTRY-ALIGNMENT", finding.Code);
-        Assert.Contains("Makefile", finding.Message, StringComparison.Ordinal);
+        var manifest = Parse(Entry("Makefile", "program", "none", "reader", "repository-policy"));
+        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest, ["README.md"]));
+        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
+        Assert.Equal("Makefile", finding.Path);
     }
 
     [Fact]
-    public void MatchingRegistryAndTrackedRootsAreAcceptedByTheGreenFixture()
+    public void RegisteredPresentRootHasNoMembershipOrReferenceDiagnostic()
     {
-        Assert.Empty(FileMapPolicy.InspectRegistryRootAlignment(
-            ["Makefile", "README.md"],
-            ["README.md", "Makefile"]));
+        var manifest = Parse(Entry("README.md", "program", "none", "reader", "repository-policy"));
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, ["README.md"]));
+        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, ["README.md"]));
     }
 }

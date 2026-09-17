@@ -107,17 +107,17 @@ internal static class DepositHeaderCheckCommand
 
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {
-        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
-            || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
+        if (!snapshot.TryGetFile("Meta/FILEMAP.toml", out _)
+            || !snapshot.TryGetFile("Meta/domains.yaml", out _))
         {
             throw new InvalidOperationException(
-                "current snapshot lacks Meta/registry.yaml or Meta/domains.yaml");
+                "current snapshot lacks Meta/FILEMAP.toml or Meta/domains.yaml");
         }
 
-        return RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
+        return RepositoryPolicyLoader.Load(snapshot) switch
         {
-            RegistryLoadOutcome.Accepted accepted => accepted.Policy,
-            RegistryLoadOutcome.InfrastructureFailure failure =>
+            PolicyLoadOutcome.Accepted accepted => accepted.Policy,
+            PolicyLoadOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
     }

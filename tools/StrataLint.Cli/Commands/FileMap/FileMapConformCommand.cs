@@ -1,5 +1,5 @@
 using System.Text;
-using StrataLint.Scribe;
+using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 

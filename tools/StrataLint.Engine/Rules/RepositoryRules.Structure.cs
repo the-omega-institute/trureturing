@@ -472,7 +472,7 @@ internal static partial class RepositoryRules
             var domain = parts[stratumIndex + 1];
             if (!context.IsBaseFactAffected(path.Value)
                 && !context.IsBaseFactAffected("Meta/domains.yaml")
-                && !context.IsBaseFactAffected("Meta/registry.yaml"))
+                && !context.IsBaseFactAffected("Meta/FILEMAP.toml"))
             {
                 continue;
             }

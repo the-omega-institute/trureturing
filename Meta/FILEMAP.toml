@@ -1,11 +1,8 @@
-schema_version = 2
+schema_version = 3
 include = ["FILEMAP.docs.reports.toml"]
 files = [
-{ pattern = "**/*.props", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "*.lean", kind = "truth", admission_plane = "content", produced_by = "none", consumed_by = ["Lean", "Scribe", "StrataLint"], verified_by = ["lean-build", "lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "*.toml", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = ".claude/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } },
-{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } },
+{ pattern = ".claude/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" }, digestion_source = true },
+{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" }, digestion_source = true },
 { pattern = ".editorconfig", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = ".github/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["GitHub-Actions"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = ".gitignore", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["git"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
@@ -14,8 +11,11 @@ files = [
 { pattern = "Blueprint/**/*.scribe.cs", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["ScribeEmitter"], verified_by = ["ScribeCompiler"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "CLAUDE.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "D5/**/*.lean", kind = "truth", admission_plane = "content", produced_by = "none", consumed_by = ["Lean", "Scribe", "StrataLint"], verified_by = ["lean-build", "lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "D5/**/*.md", kind = "ledger", admission_plane = "content", produced_by = "none", consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"], verified_by = ["FrozenContentAddress", "SL-008"], artifact_id = "none", runtime_disposition = "committed-ledger" },
-{ pattern = "Evidence/D5/**/*.result.json", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "D5/X_Assumptions/REGISTRY.md", kind = "ledger", admission_plane = "content", produced_by = "none", consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"], verified_by = ["FrozenContentAddress", "SL-008"], artifact_id = "none", runtime_disposition = "committed-ledger" },
+{ pattern = "D5/X_Frontier/HeartsAuthorizations.md", kind = "ledger", admission_plane = "content", produced_by = "none", consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"], verified_by = ["FrozenContentAddress", "SL-008"], artifact_id = "none", runtime_disposition = "committed-ledger", digestion_source = true },
+{ pattern = "Directory.Build.props", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Directory.Packages.props", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Evidence/D5/**/*.*.*", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Evidence/D5/values.json", kind = "generated", admission_plane = "content", produced_by = "ValuesEmitter", consumed_by = ["reader"], verified_by = ["ValuesEmitter"], artifact_id = "A-VALUES", runtime_disposition = "committed-source", mode = "100644", history_requirement = "not-required" },
 { pattern = "Generated/DAG.md", artifact_id = "A-DAG", mode = "100644", history_requirement = "not-required", kind = "generated", admission_plane = "content", produced_by = "DagEmitter", consumed_by = ["reader"], runtime_disposition = "run-local", verified_by = ["DagEmitter"] },
 { pattern = "Generated/FILEMAP.md", artifact_id = "A-FILEMAP", mode = "100644", history_requirement = "not-required", kind = "generated", admission_plane = "content", produced_by = "FileMapEmitter", consumed_by = ["reader"], runtime_disposition = "run-local", verified_by = ["FileMapEmitter"] },
@@ -25,31 +25,42 @@ files = [
 { pattern = "Golden/Frozen/accepted/*.json", kind = "ledger", admission_plane = "content", produced_by = "FrozenLedgerCanonicalWriter", consumed_by = ["FrozenLedger"], verified_by = ["SL-008"], artifact_id = "none", runtime_disposition = "committed-ledger" },
 { pattern = "Golden/Frozen/state/**/*.json", kind = "data", admission_plane = "content", produced_by = "FrozenStateWriter", consumed_by = ["BackfillDeltaImpactResolver", "CoverAtomCommand", "CoverageCommand", "CurrentEdgeValidator", "DagLedgerAlignWriter", "DescribeRepositoryValidator", "DigestionCoverageTargetAligner", "DigestionStatusEvaluator", "FrozenStateCatalog", "FrozenStatementIndex", "SL-008"], verified_by = ["FrozenStateRecordLoader", "SL-008"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Golden/Projection/*.json", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["StatementProjectionFixtureLoader"], verified_by = ["StatementProjectionFixtureLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Golden/gate-authority-roots.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["GateAuthorityRootCatalogLoader"], verified_by = ["GateAuthorityRootCatalogLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Golden/gate-authority-roots.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["GateAuthorityRootCatalogLoader"], verified_by = ["GateAuthorityRootCatalogLoader"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
 { pattern = "Golden/values-kernels.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["SL-018", "ValuesKernelDataLoader"], verified_by = ["SL-018", "ValuesKernelDataLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "LICENSE", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["reader"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Library/**/*.yaml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["AnchorReferenceRule"], verified_by = ["SL-017", "YamlSubsetParser"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Library/*/*.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"], verified_by = ["LibraryNoteCatalog"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Makefile", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["developer"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Meta/Digestion/atomizers.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["TheoryAtomizerDataLoader"], verified_by = ["TheoryAtomizerDataLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Meta/Digestion/atomizers.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["TheoryAtomizerDataLoader"], verified_by = ["TheoryAtomizerDataLoader"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
 { pattern = "Meta/Digestion/atoms/sha256/*", kind = "ledger", admission_plane = "content", produced_by = "IngestCommand", consumed_by = ["DigestionCasStore"], verified_by = ["DigestionCasStore"], artifact_id = "none", runtime_disposition = "committed-ledger" },
 { pattern = "Meta/Digestion/backfill/**", kind = "data", admission_plane = "content", produced_by = "IngestCommand", consumed_by = ["BackfillInventoryLoader"], verified_by = ["BackfillInventoryLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Meta/FILEMAP.*.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"], verified_by = ["FileMapLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Meta/FILEMAP.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"], verified_by = ["FileMapLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Meta/domains.yaml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["RegistryLoader"], verified_by = ["RegistryLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Meta/registry.yaml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["RegistryLoader"], verified_by = ["RegistryLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Meta/FILEMAP.toml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"], verified_by = ["FileMapLoader"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
+{ pattern = "Meta/domains.yaml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["DomainsLoader"], verified_by = ["DomainsLoader"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "Problems/*.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["DescribeRepositoryValidator", "agent"], verified_by = ["ProblemCandidateCatalog"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "README.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "agents/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "Trureturing.lean", kind = "truth", admission_plane = "content", produced_by = "none", consumed_by = ["Lean", "Scribe", "StrataLint"], verified_by = ["lean-build", "lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/CONTEXT.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/adversary.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/echo-template.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/gate.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/librarian.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/numericist.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/prover.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/scout.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/scribe.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/theorist.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "agents/verdict-template.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "build/census/**", kind = "generated", admission_plane = "content", produced_by = "lean-inspector", consumed_by = ["reader"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "run-local" },
-{ pattern = "docs/CONTRIBUTING.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["developer"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/GOVERNANCE.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["developer"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/CONTRIBUTING.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["developer"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
+{ pattern = "docs/GOVERNANCE.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["developer"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
 { pattern = "docs/develop/spec/golden-ledger-repo-spec.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/develop/spec/trureturing_engineering_optimization_v1.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/develop/theory/**", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["IngestCommand"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/develop/theory/**", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["IngestCommand"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source", digestion_source = true },
 { pattern = "global.json", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "lake-manifest.json", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "lakefile.toml", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "lean-report-inputs.json", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["lean-inspector"], verified_by = ["LeanReportSelection"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "lean-toolchain", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "skills/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
@@ -67,12 +78,12 @@ files = [
 { pattern = "tools/scripts/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["automation"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/BannedApiCompileFailProof/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-build"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/CompileFailProof/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-build"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "tools/tests/Directory.Build.props", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/StrataLint.*/**/*.cs", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/StrataLint.*/**/*.csproj", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/StrataLint.*/**/*.json", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/StrataLint.*/**/*.trx", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/StrataLint.ScriptTests/lean_report_selection_fixture.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", kind = "data", admission_plane = "judge", produced_by = "none", consumed_by = ["TestRegistry"], verified_by = ["TestRegistry"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "tools/tests/Trureturing.Truth.Tests/**", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["dotnet-test"], artifact_id = "none", runtime_disposition = "committed-source" },
 ]
 [residence_policy]
@@ -80,3 +91,38 @@ case_id = "RESIDENCE-EPOCH"
 desired = "data-must-live-outside-tools"
 known_violation_count = 0
 status = "closed"
+
+[evidence.artifact_kinds."csv"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal"]
+
+[evidence.artifact_kinds."json"]
+profile = "structured-json"
+selectors = ["check", "legacy", "quote", "result", "run"]
+path_selectors = ["experiments", "formal", "kernels", "special", "values"]
+
+[evidence.artifact_kinds."md"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal", "special"]
+
+[evidence.artifact_kinds."py"]
+profile = "opaque-text"
+selectors = ["source"]
+path_selectors = ["formal", "kernels"]
+
+[evidence.artifact_kinds."txt"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal"]
+
+[evidence.artifact_kinds."yaml"]
+profile = "structured-yaml"
+selectors = ["result", "run", "spec"]
+path_selectors = ["experiments", "formal"]
+
+[evidence.artifact_kinds."yml"]
+profile = "structured-yaml"
+selectors = ["result", "run", "spec"]
+path_selectors = ["experiments", "formal"]

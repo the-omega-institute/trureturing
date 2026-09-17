@@ -13,10 +13,10 @@ public sealed class CanonicalSnapshotTests
     {
         var fixture = new RuleFixture();
         var context = fixture.Build();
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
         var first = RepositoryCanonicalizer.Validate(context.Current, policy);
         var second = RepositoryCanonicalizer.Validate(context.Current, policy);
@@ -26,7 +26,7 @@ public sealed class CanonicalSnapshotTests
         Assert.Empty(typeof(CanonicalFixedPoint).GetConstructors());
         Assert.Equal(accepted.Capability.Bytes.ToArray(), acceptedAgain.Capability.Bytes.ToArray());
         Assert.Equal(accepted.Capability.Sha256, acceptedAgain.Capability.Sha256);
-        Assert.Equal(policy.RegistrySha256, accepted.Capability.RegistrySha256);
+        Assert.Equal(policy.FileMapSha256, accepted.Capability.FileMapSha256);
     }
 
     [Fact]
@@ -37,10 +37,10 @@ public sealed class CanonicalSnapshotTests
         fixture.Files[path] = "{\"alpha\":1, \"omega\":2}\n";
         var changes = RawChangeSet.Create([path]);
         var context = fixture.Build(changes);
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
         var outcome = RepositoryCanonicalizer.Validate(context.Current, policy, changes);
 
@@ -48,71 +48,94 @@ public sealed class CanonicalSnapshotTests
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void CanonicalSnapshotWriteGateRejectsNoncanonicalPolicyBytes(bool mutateRegistry)
+    [Fact]
+    public void EquivalentFileMapFormattingRetainsCanonicalPolicyIdentity()
     {
         var fixture = new RuleFixture();
-        if (mutateRegistry)
-        {
-            fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
-                "schema_version: 1",
-                "schema_version: \"1\"",
-                StringComparison.Ordinal);
-        }
-        else
-        {
-            fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains.Replace(
-                "stratum: S0",
-                "stratum: \"S0\"",
-                StringComparison.Ordinal);
-        }
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
+            "schema_version = 3", "schema_version=3", StringComparison.Ordinal);
         var context = fixture.Build();
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
-        var changedPath = mutateRegistry ? "Meta/registry.yaml" : "Meta/domains.yaml";
         var outcome = RepositoryCanonicalizer.Validate(
             context.Current,
             policy,
-            RawChangeSet.Create([changedPath]));
+            RawChangeSet.Create(["Meta/FILEMAP.toml"]));
+
+        Assert.IsType<CanonicalizationOutcome.Accepted>(outcome);
+    }
+
+    [Fact]
+    public void FileMapWriteGateRejectsPolicySemanticMismatch()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
+            "profile = \"structured-json\"", "profile = \"opaque-text\"", StringComparison.Ordinal);
+        var context = fixture.Build();
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+
+        var outcome = RepositoryCanonicalizer.Validate(
+            context.Current,
+            policy,
+            RawChangeSet.Create(["Meta/FILEMAP.toml"]));
 
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains(
-            mutateRegistry ? "registry bytes" : "domain bytes",
-            failure.Message,
-            StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("FILEMAP policy differs", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DomainWriteGateRejectsNoncanonicalPolicyBytes()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains.Replace(
+            "stratum: S0", "stratum: \"S0\"", StringComparison.Ordinal);
+        var context = fixture.Build();
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+
+        var outcome = RepositoryCanonicalizer.Validate(
+            context.Current,
+            policy,
+            RawChangeSet.Create(["Meta/domains.yaml"]));
+
+        var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("domain bytes", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void TrustedPolicyBytesAreNotReplayedForAnUnrelatedCandidateDelta(bool mutateRegistry)
+    public void TrustedPolicyBytesAreNotReplayedForAnUnrelatedCandidateDelta(bool mutateFileMap)
     {
         var fixture = new RuleFixture();
-        if (mutateRegistry)
+        if (mutateFileMap)
         {
-            fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
-                "schema_version: 1",
-                "schema_version: \"1\"",
+            fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
+                "schema_version = 3",
+                "schema_version=3",
                 StringComparison.Ordinal);
         }
         else
         {
-            fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains.Replace(
+            fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains.Replace(
                 "stratum: S0",
                 "stratum: \"S0\"",
                 StringComparison.Ordinal);
         }
 
         var context = fixture.Build();
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 
         var outcome = RepositoryCanonicalizer.Validate(
             context.Current,
@@ -130,10 +153,10 @@ public sealed class CanonicalSnapshotTests
         fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"alpha\":1, \"omega\":2}\n";
         var changes = RawChangeSet.Create(["notes/unrelated.txt"]);
         var context = fixture.Build(changes);
-        var policy = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var metaClear = Assert.IsType<BootstrapOutcome.Clear>(
             BootstrapGate.Evaluate(changes)).Capability;
 
@@ -158,18 +181,18 @@ public sealed class CanonicalSnapshotTests
     public void CanonicalSnapshotWriterEmitsTheCanonicalDocumentBytes()
     {
         Assert.True(RepoPath.TryCreate("scratch/note.txt", out var path));
-        var registrySha256 = new string('a', 64);
+        var fileMapSha256 = new string('a', 64);
         var fileSha256 = new string('b', 64);
         var entries = ImmutableArray.Create(new SnapshotEntry(path, 3, fileSha256));
         var expected = Encoding.UTF8.GetBytes(
-            "schema_version: 1\n"
-            + $"registry_sha256: {registrySha256}\n"
+            "schema_version: 2\n"
+            + $"filemap_sha256: {fileMapSha256}\n"
             + "files:\n"
             + "  - path_utf8_hex: 736372617463682f6e6f74652e747874\n"
             + "    length: 3\n"
             + $"    sha256: {fileSha256}\n");
 
-        var actual = CanonicalSnapshotWriter.Write(registrySha256, entries);
+        var actual = CanonicalSnapshotWriter.Write(fileMapSha256, entries);
 
         Assert.Equal(expected, actual.ToArray());
     }

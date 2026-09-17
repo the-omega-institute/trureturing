@@ -342,15 +342,8 @@ public sealed class TruthReleaseCommandTests
     private static string GitObject(string repositoryRoot, string revision) =>
         ReviewRegressionTests.RunGit(repositoryRoot, "rev-parse", revision).Trim();
 
-    private static string FileMap() => """
-        schema_version = 2
-
-        [residence_policy]
-        case_id = "RESIDENCE-EPOCH"
-        desired = "data-must-live-outside-tools"
-        known_violation_count = 0
-        status = "closed"
-
+    private static string FileMap() => TestFileMap.Canonical[
+        ..TestFileMap.Canonical.IndexOf("[[files]]", StringComparison.Ordinal)] + """
         [[files]]
         pattern = "Blueprint/**/*.md"
         kind = "generated"

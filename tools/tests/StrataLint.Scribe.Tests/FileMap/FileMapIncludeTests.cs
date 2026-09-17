@@ -15,19 +15,52 @@ public sealed class FileMapIncludeTests
         known_violation_count = 0
         status = "closed"
         """ + "\n";
+    private const string Evidence = """
+        [evidence.artifact_kinds.csv]
+        profile = "opaque-text"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.json]
+        profile = "structured-json"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.md]
+        profile = "opaque-text"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.py]
+        profile = "opaque-text"
+        selectors = ["source"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.txt]
+        profile = "opaque-text"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.yaml]
+        profile = "structured-yaml"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        [evidence.artifact_kinds.yml]
+        profile = "structured-yaml"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+        """ + "\n";
+
+    private static string Root(string content = "") =>
+        "schema_version = 3\n" + Include + Residence + content + Evidence;
 
     [Fact]
     public void IncludedEntriesMatchAndEmitIdenticallyToAFlatManifest()
     {
-        var root = Bytes("schema_version = 2\n" + Include + Residence + Entry("z.md"));
+        var root = Bytes(Root(Entry("z.md")));
         var fragment = Bytes("schema_version = 2\n" + Entry("docs/reports/**/*.json"));
         var split = FileMapLoader.Parse(root, "root", path =>
         {
             Assert.Equal(FragmentPath, path);
             return fragment;
         });
-        var flat = FileMapLoader.Parse(Bytes("schema_version = 2\n" + Residence
-            + Entry("docs/reports/**/*.json") + Entry("z.md")), "flat");
+        var flat = FileMapLoader.Parse(Bytes("schema_version = 3\n" + Residence
+            + Entry("docs/reports/**/*.json") + Entry("z.md") + Evidence), "flat");
 
         Assert.Equal("docs/reports/**/*.json", Assert.Single(split.Match("docs/reports/new/nested/result.json")).Pattern);
         Assert.Equal<byte>(FileMapProjectionWriter.Write(flat), FileMapProjectionWriter.Write(split));
@@ -36,7 +69,7 @@ public sealed class FileMapIncludeTests
     [Fact]
     public void RootCanDelegateAllEntriesToIncludes()
     {
-        var manifest = FileMapLoader.Parse(Bytes("schema_version = 2\n" + Include + Residence), "root",
+        var manifest = FileMapLoader.Parse(Bytes(Root()), "root",
             _ => Bytes("schema_version = 2\n" + Entry("docs/reports/**/*.json")));
 
         Assert.Single(manifest.Entries);
@@ -45,7 +78,7 @@ public sealed class FileMapIncludeTests
     [Fact]
     public void MultipleFragmentsAreMergedWithoutFilenamePrecedence()
     {
-        var root = Bytes("schema_version = 2\ninclude = [\"FILEMAP.a.toml\", \"FILEMAP.z.toml\"]\n" + Residence);
+        var root = Bytes("schema_version = 3\ninclude = [\"FILEMAP.a.toml\", \"FILEMAP.z.toml\"]\n" + Residence + Evidence);
         var manifest = FileMapLoader.Parse(root, "root", path => Bytes("schema_version = 2\n"
             + Entry(path == "Meta/FILEMAP.a.toml" ? "z.md" : "a.md")));
 
@@ -65,7 +98,7 @@ public sealed class FileMapIncludeTests
     [InlineData("FILEMAP.*.toml")]
     public void InvalidNamesAreRejectedBeforeReading(string name)
     {
-        var bytes = Bytes("schema_version = 2\ninclude = [\"" + name + "\"]\n" + Residence);
+        var bytes = Bytes("schema_version = 3\ninclude = [\"" + name + "\"]\n" + Residence + Evidence);
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "root", _ =>
             throw new InvalidOperationException("must not read an invalid name")));
     }
@@ -78,7 +111,7 @@ public sealed class FileMapIncludeTests
     [InlineData("[\"FILEMAP.z.toml\", \"FILEMAP.a.toml\"]")]
     public void MalformedOrDuplicateIncludeListsFailClosed(string includes)
     {
-        var bytes = Bytes("schema_version = 2\ninclude = " + includes + "\n" + Residence);
+        var bytes = Bytes("schema_version = 3\ninclude = " + includes + "\n" + Residence + Evidence);
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "root", _ =>
             throw new InvalidOperationException("must not read an invalid include list")));
     }
@@ -86,7 +119,7 @@ public sealed class FileMapIncludeTests
     [Fact]
     public void IncludesCannotBeSilentlyIgnoredWithoutAReader()
     {
-        var bytes = Bytes("schema_version = 2\n" + Include + Residence + Entry("z.md"));
+        var bytes = Bytes(Root(Entry("z.md")));
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "root"));
         Assert.Throws<FileMapParseException>(() => AdmissionPlaneFileMapLoader.Parse(bytes, "root"));
         Assert.Throws<FileMapParseException>(() => FileMapSymlinkPolicy.Parse(bytes, "root"));
@@ -99,7 +132,7 @@ public sealed class FileMapIncludeTests
     [InlineData("[residence_policy]\nstatus = \"closed\"\n")]
     public void FragmentsRejectNestedIncludesAndPolicyOverrides(string extra)
     {
-        var root = Bytes("schema_version = 2\n" + Include + Residence);
+        var root = Bytes(Root());
         var fragment = Bytes("schema_version = 2\n" + extra + Entry("docs/**"));
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(root, "root", _ => fragment));
     }
@@ -108,7 +141,7 @@ public sealed class FileMapIncludeTests
     public void MissingIncludedFileIsAnAttributedParseFailure()
     {
         var exception = Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(
-            Bytes("schema_version = 2\n" + Include + Residence), "root", _ => throw new FileNotFoundException()));
+            Bytes(Root()), "root", _ => throw new FileNotFoundException()));
         Assert.Contains(FragmentPath, exception.Message, StringComparison.Ordinal);
     }
 
@@ -121,7 +154,7 @@ public sealed class FileMapIncludeTests
     [InlineData("\uFEFFschema_version = 2\n")]
     public void InvalidFragmentSchemasAndBytesAreRejectedByAllConsumers(string fragment)
     {
-        var bytes = Bytes("schema_version = 2\n" + Include + Residence);
+        var bytes = Bytes(Root());
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "root", _ => Bytes(fragment)));
         Assert.ThrowsAny<FormatException>(() => AdmissionPlaneFileMapLoader.Parse(bytes, "root", _ => Bytes(fragment)));
         Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(bytes, "root", _ => Bytes(fragment)));
@@ -135,7 +168,7 @@ public sealed class FileMapIncludeTests
         var rootEntry = artifact ? GeneratedEntry("a.md") : Entry("docs/**");
         var fragmentEntry = artifact ? GeneratedEntry("z.md") : Entry("docs/**");
         var exception = Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(
-            Bytes("schema_version = 2\n" + Include + Residence + rootEntry), "root",
+            Bytes(Root(rootEntry)), "root",
             _ => Bytes("schema_version = 2\n" + fragmentEntry)));
         Assert.Contains(artifact ? "artifact_id" : "patterns", exception.Message, StringComparison.Ordinal);
     }
@@ -144,7 +177,7 @@ public sealed class FileMapIncludeTests
     public void FragmentEntriesMustBeSortedBeforeMerging()
     {
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(
-            Bytes("schema_version = 2\n" + Include + Residence), "root",
+            Bytes(Root()), "root",
             _ => Bytes("schema_version = 2\n" + Entry("z.md") + Entry("a.md"))));
     }
 
@@ -174,7 +207,7 @@ public sealed class FileMapIncludeTests
     public void MissingBaseIncludeCannotBeFilledFromCandidate()
     {
         var baseline = RawRepositorySnapshot.Create([
-            Raw(AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + Include + Residence),
+            Raw(AdmissionPlanePolicy.FileMapPath, Root()),
             Raw("docs/retired.md", string.Empty),
         ]);
         var candidate = Snapshot(Entry("docs/**"));
@@ -206,8 +239,21 @@ public sealed class FileMapIncludeTests
             new HashSet<string> { "AGENTS.md", FragmentPath }, entries.Select(entry => entry.Path).ToArray()));
     }
 
+    [Fact]
+    public void ProtectedBaseSchemaTwoRootRetainsIncludedSymlinkDeclarations()
+    {
+        var root = Bytes(Root().Replace("schema_version = 3", "schema_version = 2", StringComparison.Ordinal));
+        var fragment = Bytes("schema_version = 2\n" + Entry("AGENTS.md")
+            + "symlink = { target = \"CLAUDE.md\", kind = \"file\" }\n" + Entry("CLAUDE.md"));
+
+        var declaration = Assert.Single(FileMapSymlinkPolicy.Parse(root, "root", _ => fragment));
+
+        Assert.Equal("AGENTS.md", declaration.Path);
+        Assert.Equal("CLAUDE.md", declaration.ResolvedTarget);
+    }
+
     private static RawRepositorySnapshot Snapshot(string entries, params string[] paths) => RawRepositorySnapshot.Create(
-        [Raw(AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + Include + Residence),
+        [Raw(AdmissionPlanePolicy.FileMapPath, Root()),
             Raw(FragmentPath, "schema_version = 2\n" + entries),
             .. paths.Select(path => Raw(path, string.Empty))]);
 

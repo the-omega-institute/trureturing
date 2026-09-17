@@ -122,8 +122,8 @@ public sealed class ScribeCoverageDeltaTests
             SnapshotDecoder.Decode(repository.ReadCurrent())).Snapshot;
         var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(repository.ReadRevision("baseline"))).Snapshot;
-        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical), Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(current, fixture.Inputs.Report)).Capability;
         var bootstrap = Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes));

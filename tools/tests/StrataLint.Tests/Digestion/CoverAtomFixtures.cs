@@ -93,7 +93,6 @@ internal static partial class CoverWorld
         "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n";
     private const string OtherSourcePath = "docs/COVER_SIBLING.md";
     private const string UnrelatedSourcePath = "docs/CONTRIBUTING.md";
-    private const string GovernanceDocumentAnchor = "  - \"docs/CONTRIBUTING.md\"\n";
 
     internal static readonly string DefaultAtomId = AtomIdFor(DefaultSourceText);
     internal static readonly string OtherAtomId = AtomIdFor(OtherSourceText);
@@ -183,16 +182,10 @@ internal static partial class CoverWorld
             UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
-        var registry = spec.OtherAtomGid is null
-            ? TestRegistry.Canonical
-            : TestRegistry.Canonical.Replace(
-                GovernanceDocumentAnchor,
-                GovernanceDocumentAnchor + $"  - \"{OtherSourcePath}\"\n",
-                StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Meta/registry.yaml"] = registry,
-            ["Meta/domains.yaml"] = TestRegistry.Domains,
+            ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
+            ["Meta/domains.yaml"] = TestFileMap.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
             [targetPath] = Encoding.UTF8.GetString(targetBytes),
             [ScribeEmissionAttestation.DefinitionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(definition),
@@ -202,6 +195,12 @@ internal static partial class CoverWorld
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         if (otherAtom is not null)
         {
+            var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "cover fixture");
+            var sibling = new FileMapEntry(OtherSourcePath, FileMapKind.Program,
+                FileMapAdmissionPlane.Judge, "none", ["reader"], ["repository-policy"], false,
+                "none", null, "committed-source", null, null, digestionSource: true);
+            files[FileMapLoader.RelativePath] = Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+                new FileMapManifest(manifest.ResidencePolicy, manifest.Entries.Add(sibling), manifest.ArtifactKinds)).AsSpan());
             files[OtherSourcePath] = Encoding.UTF8.GetString(otherSourceBytes);
             var (otherCasPath, otherCasBytes) = DigestionTestSupport.CasFile(otherAtom);
             files[otherCasPath] = Encoding.UTF8.GetString(otherCasBytes);

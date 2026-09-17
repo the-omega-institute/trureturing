@@ -121,14 +121,11 @@ internal static partial class BackfillInventoryRule
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath
                 || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
-                || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
+                || path.Value is "Meta/FILEMAP.toml" or "Meta/domains.yaml"
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
-                // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
-                // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
-                // (RuleCatalog 对未命中的规则整条跳过),消化账本检测随之失效。
-                // 实测见 #2462:追加一条可原子化命题、不跑 make ingest,gate EXIT=0。
+                // Theory input changes wake the rule independently of source enrollment.
                 || DigestionOpaquePathPolicy.IsTheoryDocument(path)
-                || context.Policy.GovernanceDocuments.Contains(path))
+                || context.Policy.IsDigestionSource(path))
             {
                 return true;
             }
@@ -242,9 +239,8 @@ internal static partial class BackfillInventoryRule
         IEnumerable<string> declaredPaths,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        // 扫**文件树**,不扫 registry 清单。理论卷已改为按路径规则治理,不再逐个枚举进
-        // governance_documents;若这里仍遍历那张清单,清单一空本检查就静默失效——
-        // 那正是「新增 markdown 无人过问」的旧病换了个方向复发。
+        // Enumerate actual theory files: FILEMAP registers the family through a pattern,
+        // so an undigested volume need not have its own literal manifest entry.
         var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
         foreach (var path in context.Current.Files.Keys
                      .Select(static path => path.Value)
@@ -283,6 +279,8 @@ internal static partial class BackfillInventoryRule
         var seenPaths = new Dictionary<string, string>(StringComparer.Ordinal);
         var changedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validateAllRecords = context.Changes is null;
+        var sourcePolicyChanged = context.Changes?.Paths.Any(
+            static path => path.Value == FileMapLoader.RelativePath) == true;
         foreach (var source in sources)
         {
             var sourceMetadataChanged = validateAllRecords || SourceMetadataChanged(source, context.Changes);
@@ -312,23 +310,21 @@ internal static partial class BackfillInventoryRule
                     $"source {source.SourceId} must contain at least one atomic entry"));
             }
 
-            // 理论卷按**规则**治理(路径在理论根下),不再逐个枚举进 registry.yaml:
-            // 否则第三方 PR 加一个 markdown 就被迫改 harness,而它的名字无法预先枚举
-            // (与 docs/reports/ 同性质;CLAUDE.md 商余结构)。其余治理文档仍按清单。
-            if (sourceMetadataChanged
+            // Source eligibility belongs to the matching FILEMAP entry.
+            // Recheck that dependency when policy changes without reparsing historical records.
+            if ((sourceMetadataChanged || sourcePolicyChanged)
                 && (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
-                || !(context.Policy.GovernanceDocuments.Contains(sourcePath)
-                    || DigestionOpaquePathPolicy.IsTheoryDocument(sourcePath))))
+                || !context.Policy.IsDigestionSource(sourcePath)))
             {
                 // First thing a new volume hits, so the verdict carries its own remedy
-                // rather than leaving the reader to find which registry field is meant.
+                // and names the exact FILEMAP field that owns eligibility.
                 findings.Add(new RuleFinding(
                     BackfillPath,
                     $"source {source.SourceId} has an invalid governance path "
-                    + $"'{source.SourcePath}': add it to governance_documents in "
-                    + "Meta/registry.yaml"));
+                    + $"'{source.SourcePath}': declare digestion_source = true on its FILEMAP entry in "
+                    + "Meta/FILEMAP.toml"));
             }
-            else if (sourceMetadataChanged)
+            else if (sourceMetadataChanged || sourcePolicyChanged)
             {
                 if (source.Atomizer == AtomizerRegistry.NoAtomizerId
                     && !context.Current.TryGetFile(source.SourcePath, out _))

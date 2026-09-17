@@ -24,8 +24,12 @@ public sealed class FileMapSymlinkTests
     {
         var tableBytes = Encoding.UTF8.GetBytes(Manifest(".codex/skills", "../skills", "directory"));
         var inlineBytes = Encoding.UTF8.GetBytes("""
-            schema_version = 2
+            schema_version = 3
             files = [{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
+            [evidence.artifact_kinds.json]
+            profile = "structured-json"
+            selectors = ["result"]
+            path_selectors = ["formal"]
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"
@@ -99,7 +103,12 @@ public sealed class FileMapSymlinkTests
     }
 
     private static string Manifest(string path, string target, string kind) => $$"""
-        schema_version = 2
+        schema_version = 3
+        [evidence.artifact_kinds.json]
+        profile = "structured-json"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
         desired = "data-must-live-outside-tools"
