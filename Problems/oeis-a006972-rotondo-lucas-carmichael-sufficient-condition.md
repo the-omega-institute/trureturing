@@ -21,8 +21,8 @@ Davide Rotondo's COMMENT (`%C`, verbatim) is:
 > Conjecture: if k = p*q*r, p = a*d - 1, q = b*d - 1, r = c*d - 1 are distinct odd primes, with d = gcd(p + 1, q + 1, r + 1) and a*b*c*d divides k + 1, then k is a Lucas-Carmichael number. - _Davide Rotondo_, Dec 23 2020
 
 The full-quantifier reading takes `a,b,c,d,p,q,r,k` in the natural numbers,
-keeps the stated positivity, odd-prime, distinctness, product, gcd, and
-divisibility hypotheses, and concludes that `k` is squarefree, composite,
+keeps the stated odd-prime, distinctness, product, gcd, and divisibility
+hypotheses, adds the derivable positivity hypotheses, and concludes that `k` is squarefree, composite,
 greater than one, and satisfies `s+1 | k+1` for every prime divisor `s`.
 The equations `p+1=a*d`, `q+1=b*d`, and `r+1=c*d` are equivalent to the
 source's subtraction equations under the corresponding prime hypotheses:
