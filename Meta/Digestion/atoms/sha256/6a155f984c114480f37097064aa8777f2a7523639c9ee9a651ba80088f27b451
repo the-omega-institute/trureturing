@@ -1,0 +1,2 @@
+关系连接的成熟背景见 Beeri、Fagin、Maier、Yannakakis，*On the Desirability of Acyclic Database Schemes*，JACM 30(3) (1983), 479–513，[DOI 10.1145/2402.322389](https://doi.org/10.1145/2402.322389)，以及 [IBM Research 的公开摘要](https://research.ibm.com/publications/on-the-desirability-of-acyclic-database-schemes)。先行核实确认书目和摘要，未独立取回 memo 所称 Theorems 3.4、8.8 的精确正文；不以这两个编号承担本节某条精确命题。完整分隔集、联合边界、隐藏约束及结果保持均由本节自给证明承担。
+

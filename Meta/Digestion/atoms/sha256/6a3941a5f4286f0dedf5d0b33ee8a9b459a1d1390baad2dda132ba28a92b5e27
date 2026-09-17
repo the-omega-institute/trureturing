@@ -1,0 +1,8 @@
+若另有非空局部关系及每条边的投影一致
+
+$$
+\{a|_{C_e}:a\in\Gamma_i\}
+=\{b|_{C_e}:b\in\Gamma_j\}\quad(e=\{i,j\}),
+\tag{QI-EDGE-CONSISTENCY}
+$$
+
