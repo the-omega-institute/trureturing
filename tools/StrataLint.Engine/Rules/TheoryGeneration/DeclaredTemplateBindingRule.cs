@@ -121,7 +121,7 @@ internal static class DeclaredTemplateBindingRule
         }
     }
 
-    private static bool HasRows(RepositorySnapshot snapshot) => snapshot.Files.Keys.Any(path =>
+    internal static bool HasRows(RepositorySnapshot snapshot) => snapshot.Files.Keys.Any(path =>
         path.Value.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
         && path.Value != InformationTemplateDebtStore.ActivationPath);
 
