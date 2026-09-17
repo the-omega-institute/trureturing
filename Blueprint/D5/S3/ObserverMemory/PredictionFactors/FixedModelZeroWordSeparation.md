@@ -52,7 +52,7 @@ $$\begin{gathered}(\forall n\in \mathbb{N}, Q\left(\frac{1}{3}, n\right)<\frac{9
 
 *Commentary.*
 
-For emission parameter one third, the positive mass vector remains in the cone 5 v1 < 9 v0. For emission parameter one quarter, the cross determinant of consecutive mass vectors is positive: its first value is positive and each step multiplies it by 3/32. Normalization therefore gives a strictly increasing posterior. Its value at length three and the other model's invariant bound imply separation at every later length. The theorem concerns the common zero-word family and does not assert statistical indistinguishability of the models.
+For emission parameter one third, five times the positive hidden-one mass stays below nine times the hidden-zero mass. For emission parameter one quarter, the cross determinant of consecutive mass vectors is positive: its first value is positive and each step multiplies it by 3/32. Normalization therefore gives a strictly increasing posterior. Its value at length three and the other model's invariant bound imply separation at every later length. The theorem concerns the common zero-word family and does not assert statistical indistinguishability of the models.
 
 ## References
 

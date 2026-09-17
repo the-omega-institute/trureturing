@@ -34,8 +34,9 @@ internal sealed class FixedModelZeroWordSeparationDocument : IScribeDocumentDefi
                     + "model, without a prior over model indices.", DescribeRole.Definition),
             Node("fixed_model_zero_word_separation", "Uniform rational separation",
                 ResultFormula(),
-                "For emission parameter one third, the positive mass vector remains in "
-                    + "the cone 5 v1 < 9 v0. For emission parameter one quarter, the cross "
+                "For emission parameter one third, five times the positive hidden-one "
+                    + "mass stays below nine times the hidden-zero mass. For emission "
+                    + "parameter one quarter, the cross "
                     + "determinant of consecutive mass vectors is positive: its first value "
                     + "is positive and each step multiplies it by 3/32. Normalization "
                     + "therefore gives a strictly increasing posterior. Its value at "
