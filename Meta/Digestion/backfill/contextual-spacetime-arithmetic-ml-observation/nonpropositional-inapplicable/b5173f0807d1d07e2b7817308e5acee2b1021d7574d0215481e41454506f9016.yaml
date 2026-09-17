@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5173f0807d1d07e2b7817308e5acee2b1021d7574d0215481e41454506f9016
+  normalized_sha256: sha256:b5173f0807d1d07e2b7817308e5acee2b1021d7574d0215481e41454506f9016
+cas_ref: sha256:b5173f0807d1d07e2b7817308e5acee2b1021d7574d0215481e41454506f9016
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本节的数学前置是”给出引用范围，“这里的”后继“不取本伴卷”残差输运核是在消除符号歧义；本叶没有声称所引结论已在本仓证明，也没有借模型区分夹入查询复杂度命题。
+    previous_atom_id: 0876bf8b643bce15a0e03e6142e774d59578c52457cd560cd58b01e6eef43b80
+    next_atom_id: 399a6f001ab832d3fc70094587f4b7a9b9d133475ab280529e57e7e5d8d85850

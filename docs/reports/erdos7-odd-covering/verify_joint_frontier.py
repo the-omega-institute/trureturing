@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact certificate retaining one original-five test/deletion event.
+"""Exact certificate charging one original-five event to kept or removed mass.
 
 Python 3.9+; standard library only. Run with -I -O. This checks the
 finite arithmetic in the accompanying ordinary proof, not a Lean proof
@@ -133,7 +133,7 @@ def delta(dat):
 
 
 # joint_weighted mathematical operators.
-G357 = F(5761, 159)
+G357 = F(765767, 21465)
 def rootceil(t):
     n = isqrt(t.numerator // t.denominator)
     return n + int(n * n < t)
@@ -504,7 +504,8 @@ def ap_count_probability(prime, cap, n):
 
 @lru_cache(None)
 def ap_original_block_inputs(caps, cutoff, degree):
-    require(caps == CAP13 and degree in (1, 2), 'Original AP11/13 source and polynomial degree')
+    require(caps in (CAP13, ((11, F(5, 3)), (13, F(12, 7)))) and degree in (1, 2),
+            'Supported AP11/13 schedule and polynomial degree')
     (p, cp), (q, cq) = caps
     records = []
     for e in range(cutoff - 1):
@@ -580,15 +581,15 @@ W5 = ((5, F(1)),)
 
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
-ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': 'f8ba06810c4552e5f6ec022d3762d615751407551ef6f4412bbb0490bb09ece9', 'verify_shared_cell_square.py': '9627bf255470676aec922813c031f2488c9433c7fa1326e735b4965d2ba89ca5', 'verify_joint_source_normalization.py': 'c52ef571da5dc9e6310d4081b85e6fca2786d7ca066cee8b1906abd01e6b3631', 'certificates/pure_root_profile_certificate.json': '64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751', 'certificates/shared_cell_hinges_certificate.json': 'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae', 'certificates/shared_cell_square_certificate.json': '100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef', 'certificates/shared_square_continuation_certificate.json': '1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e', 'certificates/joint_source_normalization_certificate.json': 'd0d5759ec857bdbe8376c593711c2f5f3273d115b134e87d0dc9be64ce5f01f1'}
+ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': '44c89672e97868325e7c7d6bb409a0facc1d158263f379253b4096fbead4fe38', 'verify_shared_cell_square.py': '0a58af421ba54c427b6414caae32880f8b42625d6a43231aea97f69e899c407d', 'verify_joint_source_normalization.py': 'b369bc6e157183fa2145fabdf4bf03274cfb8fa2a1a5ba782d8e6a48bd757d8a', 'certificates/pure_root_profile_certificate.json': 'b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196', 'certificates/shared_cell_hinges_certificate.json': '585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845', 'certificates/shared_cell_square_certificate.json': 'df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d', 'certificates/shared_square_continuation_certificate.json': '5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099', 'certificates/joint_source_normalization_certificate.json': '6d20b947850c8ae3cc08faf72021a71347e16dc6a855907009422257f41c39dd'}
 SOURCE_PINS = {
     **ORIGINAL_SOURCE_PINS,
-    'verify_uniform_gamma_cofactor_coupling.py': 'dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d',
-    'certificates/uniform_gamma_cofactor_certificate.json': 'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'verify_uniform_gamma_cofactor_coupling.py': '4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3',
+    'certificates/uniform_gamma_cofactor_certificate.json': 'bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c',
 }
-TARGET=F(135235148346191272912644779662034152101019,301013392900945745723455169136921801600)
-TARGET_GAMMA=F(2759803303859498317,17626016683279862)
-TARGET_T81=F(40328059447468124566268231594828117,407273507000616495667817513124000)
+TARGET=F(405160558934792762657900543938490087303057,903040178702837237170365507410765404800)
+TARGET_GAMMA=F(74165888355209854559,475902450448556274)
+TARGET_T81=F(120936974732058762228421006729484351,1221820521001849487003452539372000)
 BASELINE=F(118570862466538358475198684157361643465353,248352178520459750383083052623940732800)
 OLD_CELL_BOUND=F(2322308771011317404407279020690922380203,4883651784640915381663610335586092800)
 OLD_ZERO5_BOUND=F(12962561422729019748540463097645271562217,28539940401461137428522682187907859200)
@@ -596,6 +597,7 @@ OLD_ZERO7_BOUND=F(5323534511332833048109272786522049864207,117917428549060746671
 OLD_COMBINED_ZERO_AP_BOUND=F(20841391090341979866125382429441856802801,46309752753991653188223872174911046400)
 OLD_ALL_AP_BOUND=F(270521516350366644094844875118567294436413,602026785801891491446910338273843603200)
 OLD_YOUNG_BOUND=F(1081947977203541447444658369092299900073777,2408107143207565965787641353095374412800)
+PREVIOUS_STRIP_BOUND=F(135235148346191272912644779662034152101019,301013392900945745723455169136921801600)
 HC_TARGETS={3:F(1318076,584325),4:F(94745926,61354125),6:F(578163435166,676429228125)}
 FALLBACK_INPUTS = (
     ('3-absent/5-absent/7-absent', (F(1), F(1), F(1)), F(756,373)),
@@ -787,7 +789,7 @@ def reconstruct():
     require(min(coeff,cg,ct,splitcoef,nofloorcoef)>0,'All continuous-domain coefficient conditions')
     branches=fallback_checks()
     require(all(r['joint_upper']<=splitmax and r['joint_upper']<=nofloormax for r in branches),'Comparison envelopes cover other branches')
-    return encode({'schema':'erdos7-original-five-strip-deletion-frontier-v1','source_commit':COMMIT,
+    return encode({'schema':'erdos7-original-five-kept-or-removed-frontier-v1','source_commit':COMMIT,
         'source_commit_scope':list(ORIGINAL_SOURCE_PINS),
         'source_provenance':'source_commit records the mathematical predecessor of source_commit_scope, not the current source bytes. source_sha256 binds every current Python source or fully reconstructed certificate byte sequence; certificate manifests additionally validate every part hash.',
         'source_sha256':SOURCE_PINS,'input19':'physical mu17=nu13 K17, distinct from killed xi',
@@ -808,7 +810,9 @@ def reconstruct():
         'old_combined_zero_ap_bound':OLD_COMBINED_ZERO_AP_BOUND,
         'common_ap_original_blocks_gain':OLD_COMBINED_ZERO_AP_BOUND-OLD_ALL_AP_BOUND,
         'old_all_ap_bound':OLD_ALL_AP_BOUND,'source_gain':OLD_ALL_AP_BOUND-OLD_YOUNG_BOUND,
-        'old_young_bound':OLD_YOUNG_BOUND,'original5_strip_gain':OLD_YOUNG_BOUND-TARGET,'source_G357':G357,
+        'old_young_bound':OLD_YOUNG_BOUND,'original5_strip_gain':OLD_YOUNG_BOUND-PREVIOUS_STRIP_BOUND,
+        'previous_strip_bound':PREVIOUS_STRIP_BOUND,'kept_or_removed_gain':PREVIOUS_STRIP_BOUND-TARGET,
+        'source_G357':G357,
         'same_cell_split_bound':splitmax,'same_cell_whole_weighted_gain':splitmax-TARGET,
         'same_cell_no_floor_bound':nofloormax,'same_law_floor_gain':nofloormax-TARGET,
         'split_continuous_coefficient':splitcoef,'no_floor_continuous_coefficient':nofloorcoef,
