@@ -1,0 +1,75 @@
+{
+  "schema": "erdos7-nonuniform-root-v1",
+  "balanced_rule": "raw density h_A=v+1, h_B=w+1; normalize",
+  "hybrid_rule": "uniform if refined uniform Gamma envelope <=14; otherwise balanced",
+  "balanced_Gamma_bound": "277/20",
+  "balanced_R_bound": "11/5",
+  "hybrid_Gamma_bound": "14",
+  "hybrid_R_bound": "15/7",
+  "root_density_lower_bound": "1/24",
+  "absent_modulus_3_uniform_Gamma_bound": "215/24",
+  "absent_modulus_3_uniform_R_bound": "17/12",
+  "balanced_polynomial_minima": 360,
+  "fallback_polynomial_minima": 684,
+  "total_polynomial_minima": 1044,
+  "point_evaluations": 3132,
+  "global_minimum_margin": "0",
+  "fallback_multipliers": {
+    "1": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "1/168",
+      "1/21",
+      "0",
+      "0",
+      "0",
+      "0",
+      "8/21",
+      "1/21",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "4": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "1/21",
+      "8/21",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1/21",
+      "1/168",
+      "0",
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "coherent_conditioned_propagation": [
+    {
+      "law": "balanced",
+      "Gamma_35": "277/20",
+      "R_35": "11/5",
+      "removed_mass_7_bound": "11/25",
+      "Gamma_357_bound": "6793/168",
+      "R_357_bound": "71/14",
+      "direct_Gamma_35711_bound": "37283/300"
+    },
+    {
+      "law": "hybrid",
+      "Gamma_35": "14",
+      "R_35": "15/7",
+      "removed_mass_7_bound": "3/7",
+      "Gamma_357_bound": "481/12",
+      "R_357_bound": "97/20",
+      "direct_Gamma_35711_bound": "350/3"
+    }
+  ]
+}
