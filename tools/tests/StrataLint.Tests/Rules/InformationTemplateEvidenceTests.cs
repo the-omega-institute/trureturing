@@ -277,6 +277,24 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(Wire(compatibility: 3), PathA,
             Snapshot((PathA, TextA))));
 
+    [Theory]
+    [InlineData("missing_inventory")]
+    [InlineData("invalid_schema")]
+    [InlineData("unknown_field")]
+    [InlineData("non_object")]
+    public void unrelated_malformed_evidence_keeps_structural_diagnostic(string mutation)
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        if (mutation == "missing_inventory") wire.Remove("inventory");
+        if (mutation == "invalid_schema") wire["schema_version"] = true;
+        if (mutation == "unknown_field") wire["unknown"] = 1;
+        var value = mutation == "non_object" ? JsonSerializer.SerializeToElement(Array.Empty<object>())
+            : JsonSerializer.SerializeToElement(wire);
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA,
+            Snapshot((PathA, TextA))));
+        Assert.StartsWith("DTR-DebtSchema:", error.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void persisted_changed_input_rejected() =>
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(Wire(), PathA,

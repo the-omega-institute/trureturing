@@ -161,7 +161,8 @@ public sealed class DeclaredTemplateReviewTests
         Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_seven: " + error?.Message);
     }
 
-    private static Exception? ReadChangedManifest(string? manifest, int compatibility)
+    private static Exception? ReadChangedManifest(string? manifest, int compatibility,
+        Dictionary<string, string>? historical = null)
     {
         var files = Files();
         var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
@@ -177,7 +178,76 @@ public sealed class DeclaredTemplateReviewTests
                     input["sha256"] = Hash(manifest);
         }
         var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
-        return Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)));
+        var snapshot = historical is null ? Tree(files)
+            : InformationTemplateEvidence.HistoricalInputs(Tree(historical), Tree(files));
+        return Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), snapshot));
+    }
+
+    [Theory]
+    [InlineData(7)]
+    [InlineData(6)]
+    public void historical_evidence_version_matches_current_producer(int compatibility)
+    {
+        var historical = Files();
+        Assert.Equal(6, ManifestVersion(historical));
+        var currentManifest = historical["lean-report-inputs.json"].Replace(
+            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
+        var error = ReadChangedManifest(currentManifest, compatibility, historical);
+        if (compatibility == 7)
+            Assert.True(error is null, "[FAIL] historical_current_version_accepted: " + error?.Message);
+        else
+            Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
+                "[FAIL] historical_old_version_rejected: " + error?.Message);
+    }
+
+    [Fact]
+    public void historical_missing_manifest_uses_current_manifest()
+    {
+        var historical = Files();
+        var currentManifest = historical["lean-report-inputs.json"].Replace(
+            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
+        historical.Remove("lean-report-inputs.json");
+        var error = ReadChangedManifest(currentManifest, 7, historical);
+        Assert.True(error is null, "[FAIL] historical_missing_manifest_uses_current_manifest: " + error?.Message);
+    }
+
+    [Theory]
+    [InlineData("{")]
+    [InlineData("{\"report_semantic_version\":\"7\"}")]
+    public void historical_valid_manifest_cannot_mask_malformed_current_manifest(string currentManifest)
+    {
+        var historical = Files();
+        Assert.Equal(6, ManifestVersion(historical));
+        var error = ReadChangedManifest(currentManifest, 7, historical);
+        Assert.True(error is FormatException && error.Message.StartsWith("DTR-ManifestVersion:", StringComparison.Ordinal),
+            "[FAIL] historical_valid_manifest_cannot_mask_malformed_current_manifest: " + error?.Message);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("null")]
+    [InlineData("true")]
+    [InlineData("\"7\"")]
+    [InlineData("0")]
+    [InlineData("-1")]
+    [InlineData("7.0")]
+    [InlineData("7.5")]
+    public void invalid_evidence_version_uses_named_diagnostic(string? version)
+    {
+        var files = Files();
+        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
+            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
+        foreach (var module in wire["modules"]!.AsArray())
+        {
+            var evidence = module!["information_templates"]!.AsObject();
+            if (version is null) evidence.Remove("compatibility_version");
+            else evidence["compatibility_version"] = System.Text.Json.Nodes.JsonNode.Parse(version);
+        }
+        var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
+        var error = Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)));
+        Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
+            "[FAIL] invalid_evidence_version_uses_named_diagnostic: " + error?.Message);
     }
 
     [Fact]

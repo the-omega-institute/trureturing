@@ -47,6 +47,39 @@ class ManifestVersionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
                 materials.validate_template_evidence(dict(evidence, compatibility_version=6), manifest)
 
+    def test_absent_evidence_version_uses_named_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            evidence = evidence_fixture(manifest)
+            del evidence['compatibility_version']
+            with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
+                    msg='[FAIL] absent_evidence_version_uses_named_diagnostic'):
+                materials.validate_template_evidence(evidence, manifest)
+
+    def test_malformed_evidence_version_uses_named_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            for version in [None, True, '7', 0, -1, 7.0, 7.5]:
+                with self.subTest(version=version):
+                    evidence = dict(evidence_fixture(manifest), compatibility_version=version)
+                    with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
+                            msg='[FAIL] malformed_evidence_version_uses_named_diagnostic'):
+                        materials.validate_template_evidence(evidence, manifest)
+
+    def test_unrelated_malformed_evidence_keeps_structural_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            valid = evidence_fixture(manifest)
+            missing_inventory = dict(valid)
+            del missing_inventory['inventory']
+            for evidence, diagnostic in [(None, 'has unexpected fields'), ([], 'has unexpected fields'),
+                    (missing_inventory, 'has unexpected fields'), (dict(valid, unknown=1), 'has unexpected fields'),
+                    (dict(valid, schema_version=True), 'is malformed'), (dict(valid, inventory=None), 'is malformed')]:
+                with self.subTest(evidence=evidence):
+                    with self.assertRaisesRegex(ValueError,
+                            '^Inspector declared-template evidence ' + diagnostic + '$'):
+                        materials.validate_template_evidence(evidence, manifest)
+
     def test_missing_or_malformed_manifest_version_rejected(self):
         for text in [None, '{}', '{', '[]', '{"report_semantic_version":null}',
                      '{"report_semantic_version":"7"}', '{"report_semantic_version":true}',
