@@ -116,6 +116,38 @@ held fixed. This does not optimize all255 schedules or show that an
 actual congruence family attains the abstract distributions. It identifies
 the limit of tightening just these cost terms with those observations.
 
+A [fixed17/T8,19/T8 scalar countermodel](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-scalar-countermodel-for-every-square-shift-in-the-fixed1719-continuation)
+now satisfies all21 improved source observations, including SQ16 and SQ81.
+It places probabilities7/100 and93/100 at loads1 and11. With the complete
+common17 auxiliary law, its direct functional remains at least
+`67033659073176343/16899387908832000>3.96663236768`
+over every real square shift from0 to484. Every pointwise-majorizing clip
+preserves this obstruction. This rules out closing that particular
+functional from just those21 scalar upper observations; it does not
+assert actual congruence realizability, rule out other schedules, or
+give a lower bound for the actual killed frontier.
+
+[RRO56/57 and actual maximizing-test constraints](../docs/reports/erdos7-odd-covering/marked_head_profile.md#translated-observations-and-shared-inputs-from-rro56-and-rro57)
+give the next joint interface. Truncated translated valuations represent
+each original congruence indicator, with one shared actual point and
+fixed original residues. KB3--KB7 supply linear restrictions on a killed
+pair matrix that maximizes the correct positive-current objective;
+zero-current labels require a different replacement score. These
+constraints can refine the finite optimization. Neither the new theory
+nor these optimality conditions yet proves a numerical saving or the
+299.398 target. The actual AP probability is not replaced by Haar.
+
+A [genuine AP13 family with288 complete test labels](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-ap13-zero-block-equality-and-a-positive-killed-maximum-gap)
+separates two possible improvements. Its zero-current physical bound is
+attained exactly despite a varying natural cap and positive charge.
+Its full killed maximum is strictly smaller, and a different complete
+test strictly improves on the physical maximizer after deletion. The
+17 and19 maximum-loss lower bounds are49231/13436928 and572299/184757760.
+An explicit normalized physical17 history gives a576-label19 version;
+that history has zero mixed17 charge. These are separate actual examples,
+with ordinary full-domain proofs and independent exact checks, not a
+uniform lower bound on saving or a proof of the joint frontier.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right
