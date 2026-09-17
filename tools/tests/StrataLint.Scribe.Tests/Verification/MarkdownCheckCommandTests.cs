@@ -28,7 +28,6 @@ public sealed class MarkdownCheckCommandTests
 
     [Theory]
     [InlineData("markdown-check")]
-    [InlineData("markdown-check", "--report", "report.json")]
     [InlineData("markdown-check", "--report", "report.json", "--paths-from")]
     [InlineData("markdown-check", "--paths-from", "-", "--report", "report.json")]
     [InlineData("markdown-check", "--report", "", "--paths-from", "-")]
@@ -48,7 +47,7 @@ public sealed class MarkdownCheckCommandTests
 
         Assert.Equal(2, exit);
         Assert.Contains(
-            "markdown-check --report <file> --paths-from <file|->",
+            "markdown-check --report <file> [--paths-from <file|->]",
             error.ToString(),
             StringComparison.Ordinal);
     }

@@ -21,9 +21,8 @@ public sealed class TruthReleaseManifestReaderTests
           "trust": {
             "commit_on_protected_dev": true,
             "required_checks": [
-              { "name": "Candidate harness engineering checks", "conclusion": "success" },
-              { "name": "Canonical Lean report production", "conclusion": "success" },
-              { "name": "Content-addressed dev baseline admission", "conclusion": "success" }
+              { "name": "engineering", "conclusion": "success" },
+              { "name": "current", "conclusion": "success" }
             ],
             "blessed_by": "loning"
           },
@@ -54,8 +53,8 @@ public sealed class TruthReleaseManifestReaderTests
         Assert.Equal("the-omega-institute/trureturing", m.Source.SourceRepo);
         Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", m.Source.SourceCommit);
         Assert.True(m.Trust.CommitOnProtectedDev);
-        Assert.Equal(3, m.Trust.RequiredChecks.Length);
-        Assert.Equal("Canonical Lean report production", m.Trust.RequiredChecks[1].Name);
+        Assert.Equal(2, m.Trust.RequiredChecks.Length);
+        Assert.Equal("current", m.Trust.RequiredChecks[1].Name);
         Assert.Equal("loning", m.Trust.BlessedBy);
         Assert.True(m.Producer.ReadOnly);
         Assert.Equal("truth-export.v1.json", m.Artifacts.TruthExport.File);
@@ -181,9 +180,28 @@ public sealed class TruthReleaseManifestReaderTests
     public void RejectsACheckThatIsNotSuccess()
     {
         var bad = ValidManifest.Replace(
-            "{ \"name\": \"Canonical Lean report production\", \"conclusion\": \"success\" }",
-            "{ \"name\": \"Canonical Lean report production\", \"conclusion\": \"failure\" }",
+            "{ \"name\": \"current\", \"conclusion\": \"success\" }",
+            "{ \"name\": \"current\", \"conclusion\": \"failure\" }",
             StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Theory]
+    [InlineData("push / current")]
+    [InlineData("delta")]
+    [InlineData("Canonical Lean report production")]
+    public void RejectsChecksOutsideTheDevPushContract(string otherCheck)
+    {
+        var bad = ValidManifest.Replace("\"current\"", "\"" + otherCheck + "\"", StringComparison.Ordinal);
+
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Fact]
+    public void RejectsMissingOrDuplicatedPushEvidence()
+    {
+        var bad = ValidManifest.Replace("\"current\"", "\"engineering\"", StringComparison.Ordinal);
+
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
 

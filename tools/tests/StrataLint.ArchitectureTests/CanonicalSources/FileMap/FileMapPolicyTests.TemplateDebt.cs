@@ -36,9 +36,9 @@ public sealed partial class FileMapPolicyTests
     public void DebtVerifiersResolveToTheirProductionImplementations(string verifier, string source)
     {
         var program = new FileMapEntry(source, FileMapKind.Program, FileMapAdmissionPlane.Judge,
-            "none", ["compiler"], ["compiler"], false, "none", null, "committed-source", null, null);
+            "none", ["compiler"], ["compiler"], false, "none", null, "committed-source", null, [], null);
         var debt = DebtManifest("Golden/InformationTemplateDebt/rows/*.json");
-        var manifest = new FileMapManifest(debt.ResidencePolicy, debt.Entries.Add(program));
+        var manifest = new FileMapManifest(debt.ResidencePolicy, debt.Entries.Add(program), debt.Resources);
         Assert.Contains(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
             new HashSet<string>(StringComparer.Ordinal) { source }));
         Assert.DoesNotContain(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
@@ -52,10 +52,10 @@ public sealed partial class FileMapPolicyTests
         FileMapEntry Entry(string path, FileMapAdmissionPlane plane) => new(path, FileMapKind.Data,
             plane, producer, ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"],
             ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"], false, "none", null,
-            "committed-source", null, null);
+            "committed-source", null, [], null);
         return new(new("fixture", "no data in programs", 0, "closed"),
             [Entry(pattern, FileMapAdmissionPlane.Content),
-             Entry(InformationTemplateDebtStore.ActivationPath, FileMapAdmissionPlane.Judge)]);
+             Entry(InformationTemplateDebtStore.ActivationPath, FileMapAdmissionPlane.Judge)], []);
     }
 
 }

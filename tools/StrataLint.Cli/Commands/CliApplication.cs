@@ -3,19 +3,15 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record CommandResult(
-    bool Success,
-    string Output,
-    string Error,
-    int? ExitCode = null);
-
-internal sealed record ExplicitCommandResult(int ExitCode, string Output, string Error);
-
 internal interface ICliEnvironment
 {
     ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments);
 
     AdmissionOutcome Check(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments);
 
     AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments);
 
@@ -109,6 +105,10 @@ internal static class CliApplication
                 RenderExplicit(environment.CapacityAudit(tail), console),
             ["check"] = static (environment, tail, console) =>
                 RenderAdmission(environment.Check(tail), console),
+            ["check-current"] = static (environment, tail, console) =>
+                RenderExplicit(environment.CheckCurrent(tail), console),
+            ["check-delta"] = static (environment, tail, console) =>
+                RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
@@ -357,9 +357,12 @@ internal static class CliApplication
         return exitCode;
     }
 
-    private static int RenderExplicit(ExplicitCommandResult result, ICliConsole console)
+    private static int RenderExplicit(
+        ExplicitCommandResult result,
+        ICliConsole console,
+        bool allowProtectedAnnotation = false)
     {
-        if (result.ExitCode is < 0 or > 2)
+        if (result.ExitCode < 0 || result.ExitCode > (allowProtectedAnnotation ? 3 : 2))
         {
             throw new InvalidOperationException("explicit command returned an invalid exit code");
         }

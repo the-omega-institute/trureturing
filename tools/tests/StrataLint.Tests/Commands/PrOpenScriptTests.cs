@@ -9,6 +9,56 @@ public sealed class PrOpenScriptTests
     private const string DeadlineBehaviorTimeoutSeconds = "30";
 
     [Fact]
+    public void PrWatchConsumesNestedBranchProtectionNamesWithoutFlattening()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("push / engineering", "COMPLETED", "SUCCESS"),
+            Context("push / current", "SUCCESS"), Check("delta", "COMPLETED", "SUCCESS"),
+            Check("current", "COMPLETED", "FAILURE"))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=green\n", Text(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PrWatchKeepsNestedFailureEvenWhenDirectChecksPass()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("push / engineering", "COMPLETED", "FAILURE"),
+            Check("push / current", "IN_PROGRESS", null), Check("delta", "IN_PROGRESS", null),
+            Check("engineering", "COMPLETED", "SUCCESS"), Check("current", "COMPLETED", "SUCCESS"))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=red check=push / engineering state=FAILURE\n",
+            Text(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PrWatchWaitsForNestedChecksWhenOnlyDirectChecksExist()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(
+            Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
+                Check("current", "COMPLETED", "SUCCESS"), Check("delta", "COMPLETED", "SUCCESS"))),
+            Ok(Snapshot("OPEN", Check("push / engineering", "COMPLETED", "SUCCESS"),
+                Check("push / current", "COMPLETED", "FAILURE"), Check("delta", "COMPLETED", "SUCCESS"))));
+
+        Assert.Equal(1, fixture.RunWatch42().ExitCode);
+        Assert.Equal(2, fixture.Invocations.Count(IsSnapshot));
+
+        static bool IsSnapshot(string invocation) => invocation.StartsWith("pr view ", StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PrWatchRejectsMissingOrInvalidPullRequestNumber()
     {
         using var fixture = new PrScriptFixture();
@@ -422,11 +472,17 @@ public sealed class PrOpenScriptTests
         private readonly string bin;
         private readonly string invocations;
         private readonly string responses;
+        private readonly string responseEvents;
+        private readonly string clock;
+        private bool delayedSnapshot;
+        private bool useDeadlineClock;
         internal PrScriptFixture()
         {
             bin = Path.Combine(temporary.Path, "bin");
             invocations = Path.Combine(temporary.Path, "gh-invocations");
             responses = Path.Combine(temporary.Path, "responses");
+            responseEvents = Path.Combine(temporary.Path, "response-events");
+            clock = Path.Combine(temporary.Path, "clock");
             Directory.CreateDirectory(bin);
             Directory.CreateDirectory(responses);
             WriteExecutable(Path.Combine(bin, "gh"), FakeGh);
@@ -450,19 +506,58 @@ public sealed class PrOpenScriptTests
         internal ProcessOutput RunOpen(params string[] arguments) => Run(["open", .. arguments]);
         internal ProcessOutput RunWatch(params string[] arguments) => Run(["watch", .. arguments]);
         internal ProcessOutput RunWatch42() => RunWatch("--pr", "42", "--interval-seconds", "1");
-        internal ProcessOutput RunWatch42WithDeadline() =>
-            RunWatch("--pr", "42", "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
+        internal ProcessOutput RunWatch42WithDeadline()
+        {
+            useDeadlineClock = true;
+            Directory.CreateDirectory(clock);
+            WriteExecutable(Path.Combine(clock, "launch"), DeadlineClockLauncher);
+            var result = RunWatch("--pr", "42", "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
+            var errors = Text(result.StandardError);
+            var events = File.ReadAllLines(responseEvents);
+            Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
+            Assert.Contains("snapshot:1:returned", events);
+            if (delayedSnapshot)
+            {
+                Assert.Equal(3, Invocations.Count(invocation => invocation.StartsWith("pr view ", StringComparison.Ordinal)));
+                Assert.Contains("snapshot:2:returned", events);
+                Assert.Contains("snapshot:3:started", events);
+                Assert.DoesNotContain("snapshot:3:returned", events);
+                Assert.Contains("PR_WATCH_PROGRESS pr=42 state=OPEN pending=1 missing=0", errors, StringComparison.Ordinal);
+                Assert.Contains("result=timeout", errors, StringComparison.Ordinal);
+                Assert.Contains("exit_code=124", errors, StringComparison.Ordinal);
+                Assert.Contains("clock:poll:1", events);
+                Assert.Contains($"clock:poll:{int.Parse(DeadlineBehaviorTimeoutSeconds) - 1}", events);
+                Assert.Contains("clock:api-ready", events);
+                Assert.Contains("clock:watchdog-released", events);
+            }
+            Assert.Contains($"clock:deadline:{DeadlineBehaviorTimeoutSeconds}", events);
+            var processes = events.Where(entry => entry.StartsWith("process:", StringComparison.Ordinal))
+                .Select(entry => entry["process:".Length..]).Distinct().ToArray();
+            Assert.NotEmpty(processes);
+            var cleanup = TestProcessRunner.Run("bash",
+                ["-c", "for pid in \"$@\"; do if kill -0 \"$pid\" 2>/dev/null; then printf 'still running: %s\\n' \"$pid\" >&2; exit 1; fi; done", "process-cleanup", .. processes],
+                temporary.Path, BoundedProcessRunner.HangDetectionBudget, 4096);
+            Assert.True(cleanup.ExitCode == 0, Text(cleanup.StandardError));
+            return result;
+        }
         internal void RequiredResponses(params FakeResponse[] values) => WriteResponses("required", values);
-        internal void SnapshotResponses(params FakeResponse[] values) => WriteResponses("snapshot", values);
+        internal void SnapshotResponses(params FakeResponse[] values)
+        {
+            delayedSnapshot = values.Any(value => value.DelaySeconds > 0);
+            WriteResponses("snapshot", values);
+        }
         public void Dispose() => temporary.Dispose();
         private ProcessOutput Run(string[] arguments)
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
+            string[] entry = useDeadlineClock ? ["bash", Path.Combine(clock, "launch"), script] : ["bash", script];
             return TestProcessRunner.Run("env",
                 ["GH_TOKEN=caller-token", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
                     "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
-                    $"PR_TEST_RESPONSES={responses}", $"PR_TEST_FAIL_STEP={FailStep}",
-                    $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", "bash", script, .. arguments],
+                    $"PR_TEST_RESPONSES={responses}", $"PR_TEST_RESPONSE_EVENTS={responseEvents}", $"PR_TEST_FAIL_STEP={FailStep}",
+                    $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", $"PR_TEST_CLOCK={clock}",
+                    $"PR_TEST_DEADLINE={DeadlineBehaviorTimeoutSeconds}", $"PR_TEST_DELAYED_SNAPSHOT={(delayedSnapshot ? "1" : "0")}",
+                    .. entry, .. arguments],
                 temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         }
         private void WriteResponses(string kind, FakeResponse[] values)
@@ -492,6 +587,7 @@ public sealed class PrOpenScriptTests
         private const string FakeGh = """
             #!/usr/bin/env bash
             set -euo pipefail
+            printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
             token="${GH_TOKEN:-none}"
             printf '%s|token=%s\n' "$*" "$token" >> "$PR_TEST_INVOCATIONS"
             respond() {
@@ -501,9 +597,11 @@ public sealed class PrOpenScriptTests
               printf '%s' "$((index + 1))" > "$PR_TEST_RESPONSES/$kind.next"
               (( index <= count )) || index="$count"
               prefix="$PR_TEST_RESPONSES/$kind.$index"
+              printf '%s:%s:started\n' "$kind" "$index" >> "$PR_TEST_RESPONSE_EVENTS"
               delay="$(<"$prefix.delay")"
               (( delay == 0 )) || sleep "$delay"
               cat "$prefix.out"
+              printf '%s:%s:returned\n' "$kind" "$index" >> "$PR_TEST_RESPONSE_EVENTS"
               exit "$(<"$prefix.rc")"
             }
             case " $* " in
@@ -521,6 +619,58 @@ public sealed class PrOpenScriptTests
               *" api repos/"*) respond required ;;
               *" pr view "*) respond snapshot ;;
             esac
+            """;
+        private const string DeadlineClockLauncher = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$$" > "$PR_TEST_CLOCK/main"
+            printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
+            printf '0\n' > "$PR_TEST_CLOCK/now"
+            printf '0\n' > "$PR_TEST_CLOCK/polls"
+            mkfifo "$PR_TEST_CLOCK/watchdog" "$PR_TEST_CLOCK/blocked-api"
+            date() {
+              [[ "$#" == 1 && "$1" == +%s ]] || { command date "$@"; return; }
+              printf '%s\n' "$(<"$PR_TEST_CLOCK/now")"
+            }
+            sleep() {
+              local main polls now signal
+              main="$(<"$PR_TEST_CLOCK/main")"
+              if [[ "$$" == "$main" && "$BASH_SUBSHELL" == 0 ]]; then
+                polls="$(<"$PR_TEST_CLOCK/polls")"
+                if [[ "$PR_TEST_DELAYED_SNAPSHOT" == 0 ]]; then
+                  now="$PR_TEST_DEADLINE"
+                elif [[ "$polls" == 0 ]]; then
+                  now=1
+                elif [[ "$polls" == 1 ]]; then
+                  now=$((PR_TEST_DEADLINE - 1))
+                else
+                  printf 'unexpected deadline-fixture poll\n' >&2; return 1
+                fi
+                printf '%s\n' "$now" > "$PR_TEST_CLOCK/now"
+                printf '%s\n' "$((polls + 1))" > "$PR_TEST_CLOCK/polls"
+                printf 'clock:poll:%s\n' "$now" >> "$PR_TEST_RESPONSE_EVENTS"
+                if [[ "$now" == "$PR_TEST_DEADLINE" ]]; then
+                  printf 'clock:deadline:%s\n' "$now" >> "$PR_TEST_RESPONSE_EVENTS"
+                fi
+              elif [[ "$$" == "$main" ]]; then
+                # This builtin wait lives in the production watchdog itself;
+                # cancelling and waiting for that watchdog leaves no sleeper.
+                IFS= read -r signal < "$PR_TEST_CLOCK/watchdog"
+                [[ "$signal" == ready ]]
+                printf 'clock:watchdog-released\n' >> "$PR_TEST_RESPONSE_EVENTS"
+              else
+                # The third API really remains unfinished until the production
+                # watchdog sends TERM. Readiness, not elapsed time, releases it.
+                printf 'clock:api-ready\n' >> "$PR_TEST_RESPONSE_EVENTS"
+                printf '%s\n' "$PR_TEST_DEADLINE" > "$PR_TEST_CLOCK/now"
+                printf 'clock:deadline:%s\n' "$PR_TEST_DEADLINE" >> "$PR_TEST_RESPONSE_EVENTS"
+                printf 'ready\n' > "$PR_TEST_CLOCK/watchdog"
+                IFS= read -r signal < "$PR_TEST_CLOCK/blocked-api"
+                printf 'blocked API unexpectedly resumed\n' >&2; return 1
+              fi
+            }
+            export -f date sleep
+            exec bash "$@"
             """;
         private const string FakeGhApp = """
             #!/usr/bin/env bash

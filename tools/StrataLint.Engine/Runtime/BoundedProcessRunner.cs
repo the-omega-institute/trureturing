@@ -8,15 +8,6 @@ internal sealed record StreamedProcessOutput<T>(int ExitCode, T StandardOutput, 
 
 internal static class BoundedProcessRunner
 {
-    internal delegate ProcessOutput ProcessRunner(
-        string fileName,
-        IEnumerable<string> arguments,
-        string workingDirectory,
-        TimeSpan timeout,
-        int maximumOutputBytes,
-        ReadOnlyMemory<byte> standardInput = default,
-        IReadOnlyDictionary<string, string>? environment = null);
-
     internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
 
     // Flow the startup seam into Task.Run without sharing overrides between checks.
@@ -29,11 +20,14 @@ internal static class BoundedProcessRunner
         TimeSpan timeout,
         int maximumOutputBytes,
         ReadOnlyMemory<byte> standardInput = default,
-        IReadOnlyDictionary<string, string>? environment = null)
+        IReadOnlyDictionary<string, string>? environment = null,
+        Stream? standardOutput = null,
+        Stream? standardError = null,
+        CancellationToken cancellationToken = default)
     {
         var result = RunStreaming(fileName, arguments, workingDirectory, timeout, maximumOutputBytes,
-            (stream, cancellation) => ReadLimitedAsync(stream, maximumOutputBytes, cancellation),
-            standardInput, environment);
+            (stream, cancellation) => ReadLimitedAsync(stream, maximumOutputBytes, cancellation, standardOutput),
+            standardInput, environment, standardError, cancellationToken);
         return new ProcessOutput(result.ExitCode, result.StandardOutput, result.StandardError);
     }
 
@@ -45,8 +39,11 @@ internal static class BoundedProcessRunner
         int maximumErrorBytes,
         Func<Stream, CancellationToken, Task<T>> readStandardOutput,
         ReadOnlyMemory<byte> standardInput = default,
-        IReadOnlyDictionary<string, string>? environment = null)
+        IReadOnlyDictionary<string, string>? environment = null,
+        Stream? standardError = null,
+        CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         var startInfo = new ProcessStartInfo
         {
             FileName = fileName,
@@ -76,7 +73,8 @@ internal static class BoundedProcessRunner
             throw new InvalidOperationException($"could not start {fileName}");
         }
 
-        using var cancellation = new CancellationTokenSource(timeout);
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cancellation.CancelAfter(timeout);
         try
         {
             var stdout = readStandardOutput(
@@ -85,7 +83,7 @@ internal static class BoundedProcessRunner
             var stderr = ReadLimitedAsync(
                 process.StandardError.BaseStream,
                 maximumErrorBytes,
-                cancellation.Token);
+                cancellation.Token, standardError);
             var stdin = standardInput.IsEmpty
                 ? Task.CompletedTask
                 : WriteInputAsync(
@@ -121,6 +119,7 @@ internal static class BoundedProcessRunner
         catch (OperationCanceledException exception)
         {
             TryKill(process);
+            if (cancellationToken.IsCancellationRequested) throw;
             throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds", exception);
         }
         catch
@@ -149,7 +148,8 @@ internal static class BoundedProcessRunner
     private static async Task<byte[]> ReadLimitedAsync(
         Stream stream,
         int maximumBytes,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        Stream? destination = null)
     {
         using var memory = new MemoryStream();
         var buffer = new byte[8192];
@@ -163,6 +163,11 @@ internal static class BoundedProcessRunner
             }
 
             await memory.WriteAsync(buffer.AsMemory(0, count), cancellationToken).ConfigureAwait(false);
+            if (destination is not null)
+            {
+                await destination.WriteAsync(buffer.AsMemory(0, count), cancellationToken).ConfigureAwait(false);
+                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 
@@ -171,6 +176,7 @@ internal static class BoundedProcessRunner
         try
         {
             if (!process.HasExited) process.Kill(entireProcessTree: true);
+            process.WaitForExit();
         }
         catch (InvalidOperationException)
         {

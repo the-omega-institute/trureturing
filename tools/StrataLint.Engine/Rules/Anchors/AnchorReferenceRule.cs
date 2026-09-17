@@ -4,7 +4,7 @@ namespace StrataLint.Engine;
 
 internal static class AnchorReferenceRule
 {
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current)
