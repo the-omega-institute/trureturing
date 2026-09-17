@@ -19027,3 +19027,160 @@ negative KC criterion and continuation through arbitrary later primes
 remain unproved. The physical19 input, all original labels and the
 complete tails are unchanged; no independent BM, RC or OBE saving is
 added to this estimate.
+
+### Retaining the original zero-seven block across its complete mixture
+
+On the unchanged actual HC/DP source and physical kernel input, the new
+ordinary comparison gives
+
+    F17^-(403;nu13) + F19^-(403;physical nu13 K17)
+      <= 5323534511332833048109272786522049864207
+         /11791742854906074667157193240441043200
+       = 451.46290729346447...,
+
+    Gamma13 <= 5522642653862251759/35214095188281724
+             = 156.83045735901896...,
+
+    T13(81) <= 80660556065861952082417951246296859
+              /814143916251213275694277434123000
+             = 99.07407579395733... .                       (Z7.1)
+
+These follow from the new common zero-five operator, the existing HC6
+pure-seven comparison, and retaining one additional original layout.
+The joint gain over the zero-five bound is2.727299146678829.... The finite
+frontier is still unmet and unrestricted Erdős #7 remains open.
+
+#### One original block, one actual source law
+
+Let lambda35 be the raw actual complete35 survivor measure, with total mass s,
+and the actual pure7 survivor probability. A complete original357 test
+has original complete35 blocks A_0,A_1,..., each including its unit term.
+HC6's comonotone comparison preserves those original blocks and uses
+the complete auxiliary probabilities
+
+    p_1 = 29/35,
+    p_n = 36/(5*7^n), n>=2.                          (Z7.2)
+
+For every increasing convex cost f on v>=1, Jensen gives
+
+    integral_(lambda35 tensor pure7) f(L)
+      <= sum_(n>=1) (p_n/n) sum_(e=0..n-1) integral_lambda35 f(n A_e).
+
+Both sides use the same raw mass s; no normalized expectation is inserted.
+
+The existing comparison applies the zero-five source bound F35 to each
+f(n .) separately, yielding sum_n p_n F35(f(n .)). In that expression,
+the original A_0 was allowed a different comparison maximizer for each
+n. It is valid but avoidable: A_0 is one fixed original block.
+
+Define the centered common cost
+
+    q_f(v) = sum_(n>=1) (p_n/n) [f(nv)-f(n)].
+
+This cost is nonnegative, increasing and convex for v>=1. Applying the
+same F35 operator once to q_f preserves the same A_0 through the whole
+seven mixture. Each positive original block is still bounded separately,
+exactly as before. The resulting valid bound is
+
+    q_n(v) = [f(nv)-f(n)]/n,   J = sum_n p_n f(n),
+    B_new(f) = F35(q_f) + s J + sum_n p_n(n-1) F35(q_n). (Z7.3)
+
+or, using exact constant shifts and positive homogeneity,
+
+    B_new(f) = F35(q_f)
+      + sum_(n>=1) p_n [(n-1)/n F35(f(n .)) + s f(n)/n]. (Z7.4)
+
+No original residues, auxiliary probabilities, incoming source, or later
+conditioning are changed. In particular this is a bound on the product
+of the same actual complete35 law and actual pure7 law; the existing
+actual mixed7 deletion and its retained denominator D apply afterward.
+
+#### The gain and complete analytic seven tail
+
+The common zero-five source operator is positively homogeneous,
+subadditive, and exact on additive constants: F35(f+c)=F35(f)+c*s.
+This follows from its linear initial contributions, running maxima of
+linear increments, nonnegative complete sums, and final maxima. Thus
+
+    B_old(f)-B_new(f)
+      = sum_n (p_n/n)[F35(f(n .))-s f(n)] - F35(q_f) >=0.
+
+For n beyond the polynomial cutoff, every centered q_n is the same
+monomial-minus-one direction multiplied by a nonnegative scalar. Its
+complete geometric tail therefore merges exactly before applying
+subadditivity, leaving only finitely many summands.
+
+For f(v)=A v^j+B above an integer K, with j=1 or2 and K>=2, put
+`T_i = sum_(n>=K) p_n n^i = (36/5) geom_i(7,K)`. Since v>=1, the
+complete tail of the centered cost is exactly
+
+    q_f(v) = sum_(1<=n<K) (p_n/n)[f(nv)-f(n)]
+             + A T_(j-1)(v^j-1).
+
+The other part of B_new has finite sum1<=n<K and complete tail
+
+    A [T_j-T_(j-1)] F35(v^j)
+      + s [A T_(j-1)+B T_0].                           (Z7.5)
+
+All coefficients of source-cost bounds are nonnegative. Constant terms
+are exact. There is no logarithmic1/n tail, truncation of original
+heights, or renormalized finite distribution. The common cost is itself
+eventually affine or quadratic, so the complete zero-five and ternary
+tail proofs remain applicable without modification.
+
+#### Continuous parameters and the numerical consumers
+
+The displayed direct expression for B_new is a positive sum of F35
+costs plus separately affine terms in s. Therefore B_new remains
+separately convex in the same five HC parameter groups. The existing
+seven-deletion denominator D, later eleven/thirteen source, unit-floor
+subtraction, row potentials, and physical seventeen input are unchanged.
+
+Write rho=131/132, Delta=rho D-H, and the weighted numerator as
+Z=K_Z D+Q. The new H and Q remain separately convex and D is separately
+concave. The joint target margin is
+
+    (C-C0)Delta-Z
+      = [(C-C0)rho-K_Z]D-(C-C0)H-Q.
+
+At the new target its coefficient of D is
+
+    2276822305629044790887711236465769668549
+      /5597057671003656854022099457909324800 >0.
+
+The Gamma and threshold81 coefficients are respectively
+
+    85570893162301542772813/739073429811656823312 >0,
+    552829796486351122976435256824925733537
+      /5695750838093488076757164929124508000 >0.
+
+All three margins are therefore separately concave. Exact nonnegative
+vertex margins and the positive minimum of Delta extend the bounds to
+the full continuous parameter domain. All1296 vertices and all eight
+other missing-class branches pass. A joint/Gamma maximizing representative
+is vertex398; all tied indices are398,410,422,616,628,640. A threshold81
+maximizing representative is vertex386; its ties are386,388,590,592.
+These targets are maximized separately; the threshold81 value at398
+is only98.95720643555728.
+
+The [standalone verifier](verify_joint_frontier.py) evaluates the direct
+positive formula and reconstructs all records in the
+[complete certificate](joint_frontier_certificate.json). It extends the
+centered zero-five cost operator to scaled costs and q_f, with analytic
+polynomial tails. A separate implementation starts from uncentered
+zero-five costs and subtracts the rigorously nonnegative common-layout
+gain. Every vertex field and fallback record agrees exactly.
+
+The sufficient finite-frontier allowances are
+
+    403-(T13(81))_upper-0.263
+      =303.66292420604265... [unequal/current6],
+    403-(T13(81))_upper-0.000667
+      =303.92525720604266... [box20/current8].          (Z7.6)
+
+Thus303.662 and303.925 are safe sufficient thresholds. The signed upper
+estimate before finite-core error is147.5369830874218 and remains
+positive. These are ordinary proof and exact arithmetic results, not
+Lean verification or a full covering-system resolution. The required
+uniform negative KC estimate and arbitrary later-prime continuation
+remain unproved.

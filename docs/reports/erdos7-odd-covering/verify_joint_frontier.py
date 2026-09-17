@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact arithmetic certificate for the common zero-five joint frontier bound.
+"""Exact arithmetic certificate for the common zero-five/seven frontier bound.
 
 Python 3.9+; standard library only. Run with -I -O. This checks the
 finite arithmetic in the accompanying ordinary proof, not a Lean proof
@@ -96,12 +96,7 @@ def raw35(t, dat):
 def raw357(t, dat):
     if t < 0:
         raise ValueError('negative hinge threshold')
-    N = max(2, ceilq(t))
-    m0, m1, _ = geom(7, N)
-    out = F(29, 35) * raw35(t, dat)
-    out += sum((F(36 * n, 5 * 7 ** n) * raw35(t / n, dat) for n in range(2, N)))
-    out += F(36, 5) * (m1 * raw35(F(0), dat) - t * m0 * dat[3])
-    return out
+    return zero7_raw(('h', t), dat)
 
 @lru_cache(None)
 def pmf(caps, cut):
@@ -154,9 +149,7 @@ def square35(t, dat):
 
 @lru_cache(None)
 def square357(t, dat):
-    cut = max(2, rootceil(t))
-    m0, _, m2 = geom(7, cut)
-    return F(29, 35) * square35(t, dat) + sum((F(36 * n * n, 5 * 7 ** n) * square35(t / (n * n), dat) for n in range(2, cut))) + F(36, 5) * (m2 * square35(F(0), dat) - t * m0 * dat[3])
+    return zero7_raw(('s', t), dat)
 
 CAP13 = ((11, F(5, 3)), (13, F(2)))
 CAP17 = CAP13 + ((17, F(2)),)
@@ -280,6 +273,18 @@ def zero5_cost_metadata(tag):
         return (1, sum(c for _, c in weights) * dilation,
                 -sum(c * h for h, c in weights),
                 max(2, ceilq(F(max(h for h, _ in weights), dilation))))
+    if kind == 'scale':
+        inner, dilation = arg
+        degree, a, b, cutoff = zero5_cost_metadata(inner)
+        return degree, a * dilation ** degree, b, cutoff
+    if kind == 'zero7':
+        degree, a, b, cutoff = zero5_cost_metadata(arg)
+        tail = F(36, 5) * geom(7, cutoff)[degree - 1]
+        leading = a * (sum(zero7_probability(n) * n ** (degree - 1)
+                           for n in range(1, cutoff)) + tail)
+        constant = (sum(zero7_probability(n) * (b - zero5_cost(arg, n)) / n
+                        for n in range(1, cutoff)) - a * tail)
+        return degree, leading, constant, cutoff
     raise ValueError('Unknown zero-five cost: ' + kind)
 
 @lru_cache(None)
@@ -292,6 +297,14 @@ def zero5_cost(tag, v):
     if kind == 'w':
         weights, dilation = arg
         return sum(c * max(F(dilation * v) - h, F(0)) for h, c in weights)
+    if kind == 'scale':
+        inner, dilation = arg
+        return zero5_cost(inner, dilation * v)
+    if kind == 'zero7':
+        degree, a, _, cutoff = zero5_cost_metadata(arg)
+        tail = F(36, 5) * geom(7, cutoff)[degree - 1]
+        return (sum(zero7_probability(n) * (zero5_cost(arg, n * v) - zero5_cost(arg, n)) / n
+                    for n in range(1, cutoff)) + a * tail * (v ** degree - 1))
     raise ValueError('Unknown zero-five cost: ' + kind)
 
 @lru_cache(None)
@@ -332,6 +345,23 @@ def zero5_common_deep(tag, baseline, availability):
         # not been proved; it never substitutes a truncated depth sum.
         require(i <= 200, 'No proved common zero-five tail')
 
+@lru_cache(None)
+def zero5_convex_pure_deep(tag, n, baseline):
+    """Full ternary tail for a new convex composite cost under pure3."""
+    degree, a, _, cutoff = zero5_cost_metadata(tag)
+    entry = max(0, ceilq(F(cutoff, n)) - baseline)
+    total = sum(F(1, 3 ** (k + 3)) *
+                (zero5_cost(tag, n * (baseline + k + 1)) - zero5_cost(tag, n * (baseline + k)))
+                for k in range(entry))
+    v = baseline + entry
+    require(zero5_cost(tag, n * (v + 1)) - zero5_cost(tag, n * v)
+            == a * n ** degree * ((v + 1) ** degree - v ** degree),
+            'Composite convex pure-cost polynomial tail')
+    z0, z1, _ = geom(3, entry + 3)
+    if degree == 1:
+        return total + a * n * z0
+    return total + a * n * n * (2 * z1 + (2 * baseline - 5) * z0)
+
 def zero5_scaled_pure(tag, n, baseline, pure):
     kind, arg = tag
     if kind == 'h':
@@ -341,6 +371,12 @@ def zero5_scaled_pure(tag, n, baseline, pure):
     if kind == 'w':
         weights, dilation = arg
         return wv(weights, dilation, 'scaled', n, baseline, pure, ONES)
+    if kind == 'scale':
+        inner, dilation = arg
+        return zero5_scaled_pure(inner, n * dilation, baseline, pure)
+    if kind == 'zero7':
+        return (sum(w * zero5_cost(tag, n * b) for w, b in zip(pure, baseline))
+                + max(zero5_convex_pure_deep(tag, n, b) for b in baseline))
     raise ValueError('Unknown zero-five cost: ' + kind)
 
 @lru_cache(None)
@@ -372,20 +408,35 @@ def zero5_raw(tag, dat):
         for baseline in BASES)
     return answer + zero5_positive_with_constant(tag, pure)
 
+def zero7_probability(n):
+    return F(29, 35) if n == 1 else F(36, 5 * 7 ** n)
+
+@lru_cache(None)
+def zero7_raw(tag, dat):
+    """Common original zero-seven cost plus positive-cost block bounds.
+
+    q(v) = sum p_n [f(nv)-f(n)]/n retains one original zero-seven
+    block. The other terms bound its original positive blocks on the
+    same actual complete35 law. Every seven tail is evaluated exactly.
+    """
+    degree, a, b, cutoff = zero5_cost_metadata(tag)
+    s = dat[3]
+    finite = sum(zero7_probability(n) * (
+        F(n - 1, n) * zero5_raw(('scale', (tag, n)), dat)
+        + s * zero5_cost(tag, n) / n) for n in range(1, cutoff))
+    tails = tuple(F(36, 5) * z for z in geom(7, cutoff))
+    monomial = ('h', F(0)) if degree == 1 else ('s', F(0))
+    tail = (a * (tails[degree] - tails[degree - 1]) * zero5_raw(monomial, dat)
+            + s * (a * tails[degree - 1] + b * tails[0]))
+    return zero5_raw(('zero7', tag), dat) + finite + tail
+
 @lru_cache(None)
 def w35(weights, n, dat):
     return zero5_raw(('w', (weights, n)), dat)
 
 @lru_cache(None)
 def w357(weights, n, dat):
-    hmax = max((h for h, c in weights))
-    a = sum((c for h, c in weights)) * n
-    b = -sum((h * c for h, c in weights))
-    if n >= hmax:
-        return a * raw357(F(0), dat) + b * dat[3]
-    cut = max(2, ceilq(F(hmax, n)))
-    m0, m1, _ = geom(7, cut)
-    return F(29, 35) * w35(weights, n, dat) + sum((F(36, 5 * 7 ** k) * w35(weights, n * k, dat) for k in range(2, cut))) + F(36, 5) * (a * m1 * raw35(F(0), dat) + b * m0 * dat[3])
+    return zero7_raw(('w', (weights, n)), dat)
 
 @lru_cache(None)
 def w_ap_base(weights, caps):
@@ -417,11 +468,12 @@ W5 = ((5, F(1)),)
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
 SOURCE_PINS = {'verify_shared_cell_hinges.py': '62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0', 'verify_shared_cell_square.py': '55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4', 'verify_joint_source_normalization.py': '5dadfee0a4a929d6a1f60fa7830f7c824ad92d90a71982baa9449b1a296f2471', 'pure_root_profile_certificate.json': 'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b', 'shared_cell_hinges_certificate.json': '6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29', 'shared_cell_square_certificate.json': 'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1', 'shared_square_continuation_certificate.json': '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32', 'joint_source_normalization_certificate.json': '5bff80b80f880c8de3f9c0ba62bac5536f9672ce86d02fa28e043d1c6bd0acf2'}
-TARGET=F(12962561422729019748540463097645271562217,28539940401461137428522682187907859200)
-TARGET_GAMMA=F(5522463803581385359,35094633753560524)
-TARGET_T81=F(80490856468458306483061934903046859,809780928515534112801584606185500)
+TARGET=F(5323534511332833048109272786522049864207,11791742854906074667157193240441043200)
+TARGET_GAMMA=F(5522642653862251759,35214095188281724)
+TARGET_T81=F(80660556065861952082417951246296859,814143916251213275694277434123000)
 BASELINE=F(118570862466538358475198684157361643465353,248352178520459750383083052623940732800)
 OLD_CELL_BOUND=F(2322308771011317404407279020690922380203,4883651784640915381663610335586092800)
+OLD_ZERO5_BOUND=F(12962561422729019748540463097645271562217,28539940401461137428522682187907859200)
 HC_TARGETS={3:F(1318076,584325),4:F(94745926,61354125),6:F(578163435166,676429228125)}
 FALLBACK_INPUTS = (
     ('3-absent/5-absent/7-absent', (F(1), F(1), F(1)), F(756,373)),
@@ -600,6 +652,10 @@ def reconstruct():
     require(max(r['value'] for r in rows)==TARGET,'Attained exact strengthened frontier')
     require(max(r['Gamma'] for r in rows)==TARGET_GAMMA,'Attained exact strengthened square')
     require(max(r['T81'] for r in rows)==TARGET_T81,'Attained exact strengthened hinge81')
+    require(rows[398]['value']==TARGET and rows[398]['Gamma']==TARGET_GAMMA,
+            'Joint and complete-square maxima at vertex398')
+    require(rows[386]['T81']==TARGET_T81 and rows[398]['T81']<TARGET_T81,
+            'Threshold81 maximum at vertex386, distinct from vertex398')
     require(all(hcmax[h]<=HC_TARGETS[h] for h in hcmax),'Improved same-source HC observations')
     splitmax=max(r['split_value'] for r in rows);nofloormax=max(r['same_law_no_floor_value'] for r in rows)
     coeff=(TARGET-WHOLE_CONST)*F(131,132)-kZ
@@ -609,16 +665,21 @@ def reconstruct():
     require(min(coeff,cg,ct,splitcoef,nofloorcoef)>0,'All continuous-domain coefficient conditions')
     branches=fallback_checks()
     require(all(r['joint_upper']<=splitmax and r['joint_upper']<=nofloormax for r in branches),'Comparison envelopes cover other branches')
-    return encode({'schema':'erdos7-common-zero-five-joint-frontier-v1','source_commit':COMMIT,
+    return encode({'schema':'erdos7-common-zero-five-seven-joint-frontier-v1','source_commit':COMMIT,
         'source_sha256':SOURCE_PINS,'input19':'physical mu17=nu13 K17, distinct from killed xi',
         'bound':TARGET,'Gamma13':TARGET_GAMMA,'T13_81':TARGET_T81,
         'C0':WHOLE_CONST,'KZ':kZ,'continuous_coefficient':coeff,'Gamma_coefficient':cg,'T81_coefficient':ct,
         'DCOEF16':DCOEF,'DCOEF81':DCOEF81,'vertex_count':1296,'branch_count':12,'HC_maxima':hcmax,
+        'maximizer_indices':{
+            'bound':[r['index'] for r in rows if r['value']==TARGET],
+            'Gamma13':[r['index'] for r in rows if r['Gamma']==TARGET_GAMMA],
+            'T13_81':[r['index'] for r in rows if r['T81']==TARGET_T81]},
         'minimum_D':min(r['D'] for r in rows),'minimum_Delta':min(r['Delta'] for r in rows),
         'minimum_margin':min(r['margin'] for r in rows),'minimum_Gamma_margin':min(r['Gamma_margin'] for r in rows),
         'minimum_T81_margin':min(r['T81_margin'] for r in rows),
         'baseline_whole_bound':BASELINE,'old_cell_bound':OLD_CELL_BOUND,
-        'gain_from_cell_consistency':BASELINE-OLD_CELL_BOUND,'common_zero5_gain':OLD_CELL_BOUND-TARGET,
+        'gain_from_cell_consistency':BASELINE-OLD_CELL_BOUND,'common_zero5_gain':OLD_CELL_BOUND-OLD_ZERO5_BOUND,
+        'old_zero5_bound':OLD_ZERO5_BOUND,'common_zero7_gain':OLD_ZERO5_BOUND-TARGET,
         'same_cell_split_bound':splitmax,'same_cell_whole_weighted_gain':splitmax-TARGET,
         'same_cell_no_floor_bound':nofloormax,'same_law_floor_gain':nofloormax-TARGET,
         'split_continuous_coefficient':splitcoef,'no_floor_continuous_coefficient':nofloorcoef,
