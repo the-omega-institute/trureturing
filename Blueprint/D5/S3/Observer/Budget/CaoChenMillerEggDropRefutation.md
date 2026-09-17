@@ -124,6 +124,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Budget/CaoChenMillerEggDropRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cao-chen-miller-egg-drop-conjecture-one` (refuted) by `D5/S3/Observer/Budget/CaoChenMillerEggDropRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cao-chen-miller-egg-drop-conjecture-one","declaration_gid":"D5/S3/Observer/Budget/CaoChenMillerEggDropRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Xiangwen Cao and Zongyun Chen and Steven J. Miller (2025). *Egg Drop Problems: They Are All They Are Cracked Up To Be!*. DOI: [10.48550/arXiv.2511.18330](https://doi.org/10.48550/arXiv.2511.18330). URL: <https://arxiv.org/abs/2511.18330>.
