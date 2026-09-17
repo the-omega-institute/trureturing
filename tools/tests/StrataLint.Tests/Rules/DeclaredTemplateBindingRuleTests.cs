@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed class DeclaredTemplateBindingRuleTests
 {
-    internal static RuleEvaluationContext Delta(bool declared = false, bool added = false,
+    internal static DeltaRuleContext Delta(bool declared = false, bool added = false,
         bool changed = true, bool invalid = false, bool missing = false, bool firstPin = false)
     {
         var before = Files();
@@ -116,7 +116,7 @@ public sealed class DeclaredTemplateBindingRuleTests
         var context = Delta(added: true, declared: true);
         var changes = RawChangeSet.CreateWithKinds(
             [("D5/S0/Carrier/OldRegistration.lean", RawChangeKind.Deleted), (Registration, kind)]);
-        var renamed = RuleEvaluationContext.Create(context.Current, context.Baseline, context.Policy,
+        var renamed = DeltaRuleContext.Create(context.Current, context.Baseline, context.Policy,
             context.Lean, changes, context.MetaEvaluation);
         Finding(DeclaredTemplateBindingRule.Evaluate(renamed), "DTR-Declared", AdmissionEffect.Observe);
     }
