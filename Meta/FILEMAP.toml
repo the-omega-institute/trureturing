@@ -863,6 +863,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Full-original-inventory moment factors, cubic gain and rare-cylinder fourth-moment stability.
+pattern = "docs/reports/erdos7-odd-covering/pg1_lifted_global_cap_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Finite rational dual obstruction for the PG1 termwise price family at reference33.
 pattern = "docs/reports/erdos7-odd-covering/pg1_maxplus_obstruction_certificate.json"
 kind = "data"
@@ -1441,6 +1450,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Replays complete weighted costs, final roots and shared survival denominator.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_tail.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks lifted original-label moments, cap inequalities and rare-family CRT stability constants.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_lifted_global_cap.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

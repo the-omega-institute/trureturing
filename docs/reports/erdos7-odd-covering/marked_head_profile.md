@@ -10301,3 +10301,275 @@ python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_pg1_glob
 These finite arithmetic checks do not enumerate the complete test domain
 or establish the universal height quantifier; those are proved in
 (GC2)--(GC6), including the full geometric tail.
+
+
+### Higher moments retain the full old inventory in a law-changing perturbation
+
+A bounded second moment does not justify replacing the pointwise bound12
+in (GC5) by its square root. To see this on actual original labels, let
+\(M_N=315\cdot3^N\), retain the PG1 low family, and put every additional
+old forbidden class at0. Each new modulus contains27, so these new classes
+lie in the already forbidden class0 modulo3. Lift PG1 uniformly to this
+period, and condition only for this comparison on the slice
+\(E=\{x:x\equiv314\pmod{315}\}\). Its probability \(\eta_N\) is
+uniform on \(3^N\) points. For every old divisor choose test residue314.
+The resulting load is \(A_N=4(3+Z_N)\), where
+\(\Pr(Z_N\ge j)=3^{-j}\) for \(1\le j\le N\). Nested prefix
+intersections simultaneously attain every pair cap, so the exact maximum
+second moment over all complete old tests is
+
+\[
+ \Gamma(\eta_N)=208-16(N+4)3^{-N}\le208.
+ \quad
+ \frac{\mathbb E_{\eta_N}[A_N\mathbf1_{C_N}]}{\eta_N(C_N)}
+ =4(N+3),\qquad C_N=\{x:x\equiv314\pmod{3^{N+2}}\}.
+                                                               \tag{FI1}
+\]
+
+Here \(\eta_N(C_N)=3^{-N}>0\). Thus no constant depending only on
+that second-moment bound controls all these conditional loads. The
+indicator of \(C_N\) is itself an original old label, and multiplying
+it by a current prefix uses the original label \(3^{N+2}17^e\).
+This obstruction concerns the proposed moment substitution, not (GC6).
+
+A third-moment tail supplies a different estimate. Define a full old period
+
+\[
+ M=3^{N_3+2}5^{N_5+1}7^{N_7+1}11^{A_{11}}13^{A_{13}},\qquad
+ N_3,N_5,N_7\ge0,\quad A_{11},A_{13}\ge1.
+                                                               \tag{FI2}
+\]
+
+Keep the eleven PG1 forbidden classes and add0 modulo11 and13.
+Complete the forbidden old inventory to one class for every \(d\mid M\),
+\(d>1\), as follows. For any remaining \(d\) divisible by11 or13,
+use residue0; its class lies in a corresponding pure forbidden root.
+For any remaining divisor using only3,5,7, put
+\(d_0=\gcd(d,315)\) and use the PG1 forbidden residue \(a_{d_0}\)
+also modulo\(d\). It lies in the old forbidden class modulo\(d_0\).
+The old survivor set is therefore exactly the PG1 survivors, arbitrary
+extra3/5/7 digits, and nonzero first11/13 digits with arbitrary suffixes.
+Let \(\nu\) be PG1 times those uniform independent coordinates.
+This is one actual supported probability; in particular
+\(\nu(E)=\mu_*=16622259/1000000007\).
+
+At17, for every \(1\le e\le H\), keep the pure and eleven low-cofactor
+CS2 classes from (GC1). Every other original label \(d17^e\),
+\(d\mid M\), is forbidden at residue0, hence already lies in the pure
+forbidden root0 modulo17. This completes the actual forbidden inventory
+to all divisors greater than one of \(M17^H\), without changing the
+current bad masks from the low comb. All original complete-test labels
+remain independent, including the higher old powers and11/13 cofactors.
+The specified extra forbidden residues are part of this construction;
+they are not arbitrary-residue hypotheses.
+
+Use the same clipping parameter \(\delta=7/15\). Its actual current
+BBMST kernel \(q_0\) depends only on the low point. On every row in
+\(E\), transfer mass \(t=2^{-24}\) from the designated clean roots
+\(R_H\), equally, to the whole root2 as in (GC1). Call the kernel
+\(q_t\). The cap and support checks of (GC1) apply on each such row;
+old marginals, bad masses and survivor normalizers remain unchanged.
+
+For completeness, the higher-moment bound keeps every original label.
+Let \(G_p\) be independent nonnegative geometric variables with
+\(\Pr(G_p\ge j)=p^{-j}\). For11 and13 also use independent
+\(B_p\) of probability \(1/(p-1)\). Conditional on any fixed low315
+point, and with the current coordinate uniform in a specified first root,
+the complete-test moments of orders \(k=2,3\) are bounded by
+
+\[
+ Y_{\rm root}=(3+G_3)(2+G_5)(2+G_7)
+ \bigl(1+B_{11}(1+G_{11})\bigr)
+ \bigl(1+B_{13}(1+G_{13})\bigr)(2+G_{17}),\qquad
+ K_k=\mathbb E[Y_{\rm root}^k],
+\]
+
+where the expectation is of the kth power of the displayed random
+product. To prove the bound, expand the kth power as ordered original-label
+tuples. Compatible prefixes intersect at their greatest depth; incompatible
+ones have zero mass. Conditional on the low point, every tuple is bounded
+by the corresponding product of prefix caps. Nested test residues attain
+all those caps in the enlarged infinite suffix model. Summing gives the
+stated geometric product. Completing finite heights adds only nonnegative
+terms. This comparison is for test moments; the actual forbidden masks
+and law have not been centered or changed. Exact values are
+
+\[
+ K_2=\frac{638455140323}{248832000},\qquad
+ K_3=\frac{104829447952912991}{402653184000},\qquad
+ 17tK_3<\frac3{10}.
+                                                               \tag{FI3}
+\]
+
+Fix an arbitrary complete test \(T\), let \(z\) be the root of its
+original pure17 label, and keep all its old layouts. Their pair-cap upper
+value \(U(T)\), as in (GC2), is still attained by a single nested clean
+path. The size of the old inventory is irrelevant to this attainment,
+since all its additional forbidden classes were placed in the pure root.
+For the killed law use the same baseline replacement
+\((1-\beta)A_0^2\) as after (GC2).
+
+If \(z\notin R_H\), the spoke, pure-root or spine gaps from (GC4)
+remain \(3\mu(2)14/187\), \(3/17\) or \(3/289\).
+The increase under the transfer is at most \(\mu_*tK_2\). Each gap
+exceeds that quantity plus \(3\mu_*t/10\).
+
+If \(z\in R_H\), the donor decrease after canceling the old-only
+baseline is at least \(3\mu_*t/r_H\): use just the original pure17
+label and its two ordered cross terms with the unit label. At the recipient
+write its complete load as \(X=A_0+Z\), where \(Z\) includes all
+positive17-depth labels that hit there. Their first root is2, so each
+is disjoint from the pure17 test on root\(z\). Their missing ordered
+pairs supply a cap deficit at least \((2/p)\mu_*\mathbb E Z\),
+where \(p=17\) and this expectation uses \(\nu(\cdot\mid E)\)
+and the uniform recipient root. The recipient square increment is
+\(\mu_*t\mathbb E(2A_0Z+Z^2)\). Pointwise,
+
+\[
+ t(2A_0Z+Z^2)-\frac2pZ
+ \le tX^2\mathbf1_{X>1/(pt)}\le pt^2X^3.
+                                                               \tag{FI4}
+\]
+
+Indeed the left side is \(Z[t(2A_0+Z)-2/p]\), nonpositive when
+\(X\le1/(pt)\); otherwise it is at most \(tX^2\).
+The final inequality is the elementary third-moment tail estimate.
+Thus the missing pairs pay for the recipient gain except at a cost
+at most \(\mu_*pt^2K_3\). By (FI3), the net decrease is at least
+\(3\mu_*t/5-3\mu_*t/10\). No conditional pointwise old-load bound,
+depth-one alignment assumption, or omission of a high label is needed.
+
+Taking maxima, both the physical and killed complete-test suprema decrease
+by at least
+
+\[
+ \varepsilon_0=\frac{3\mu_*t}{10}
+ =\frac{49866777}{167772161174405120}>0.
+                                                               \tag{FI5}
+\]
+
+This bound is uniform over every finite exponent vector in (FI2) and every
+finite \(H\ge1\). The conditioned maximum decreases by at least
+\(\varepsilon_0/\rho\), with the common \(\rho\ge4/17\).
+The conclusion concerns all original test labels on this explicitly
+constructed family, not a restriction to its low315 tests.
+
+### Rare old cylinders remove every globally clean root without losing the improvement
+
+The full-inventory improvement is stable when the actual current forbidden
+masks change on a sufficiently small old event. Keep \(\nu\), the original
+inventory, and all pure17 classes fixed. Change any of the mixed forbidden
+residues, subject to the requirement that the resulting bad mask on the fixed
+pure-survivor base equals the base mask for every old row outside \(F\). Write \(q=\nu(F)\).
+Let \(\widetilde q_0\) be the new family's actual BBMST kernel and let
+\(\widetilde q_t\) apply the same transfer on \(E\setminus F\),
+with no transfer on \(F\). This is feasible: outside \(F\) the original
+support and capacity checks apply; on \(F\) the new normalized BBMST
+kernel is retained. The pair have equal old marginals, actual bad charge
+and survivor mass, with
+\(\widetilde\rho\ge4(1-q)/17>0\) when \(q<1\).
+
+All four physical kernels have density at most2 relative to the uniform
+current Haar coordinate: the pure survivor mass is at least15/16 and
+the global pure-base cap is15/8. Their killed restrictions also have
+this cap. Each new-versus-base comparison is supported on old rows\(F\),
+and its pointwise density difference has absolute value at most2.
+
+Under \(\nu\) times current Haar measure, the same ordered-tuple
+argument bounds every complete-test fourth moment by
+
+\[
+ \begin{aligned}
+ Y_{\rm Haar}&=(3+G_3)(2+G_5)(2+G_7)
+ (1+B_{11}(1+G_{11}))(1+B_{13}(1+G_{13}))(1+G_{17}),\\
+ K_4^{\rm Haar}&=\mathbb E[Y_{\rm Haar}^4]
+ =\frac{3528039728534972593}{637009920000}.
+ \end{aligned}
+                                                               \tag{FI6}
+\]
+
+As in (FI3), the power is inside the expectation. The current Haar factor
+is \(1+G_{17}\), whose fourth moment is17595/8192; it differs from
+the conditioned-root factor in (FI3). Cauchy--Schwarz gives, uniformly over
+all complete tests, the following bound for each physical or killed
+new-versus-base comparison:
+
+\[
+ |J_{\rm new}(T)-J_{\rm base}(T)|
+ \le2\int\mathbf1_F L_T^2\,d(\nu\otimes\lambda)
+ \le2\sqrt{qK_4^{\rm Haar}}=:\eta.
+                                                               \tag{FI7}
+\]
+
+Apply (FI7) once to the perturbed kernels and once to the BBMST kernels,
+using the same full test domain throughout. Combining with (FI5), the
+new-family physical and killed suprema improve by at least
+\(\varepsilon_0-2\eta\). In particular,
+
+\[
+ q\le3^{-64},\qquad
+ 64K_4^{\rm Haar}<3^{64}\varepsilon_0^2
+ \quad\Longrightarrow\quad
+ \widetilde\Gamma_t
+ \le\widetilde\Gamma_0-\frac{\varepsilon_0}{2\widetilde\rho}.
+                                                               \tag{FI8}
+\]
+
+The same positive \(\varepsilon_0/2\) saving holds before conditioning.
+This estimate uses comparisons with a fully evaluated geometric moment,
+not an assumption that a pair-cap upper bound for the new masks is attained.
+
+There are actual families satisfying (FI8) with no globally clean current
+root. Take \(N_3\ge64\), set \(Q=3^{66}\), and let
+\(F=\{x:x\equiv314\pmod Q\}\). Under \(\nu\), its probability
+is \(\mu\{x\equiv314\pmod9\}3^{-64}\le3^{-64}\), independently
+of the higher physical heights. At current depth one, replace just the
+five previously redundant mixed classes with old cofactors
+
+\[
+ (Q,5Q,7Q,35Q,11Q)
+\]
+
+by the CRT classes with old residues314 and respective17 roots
+\((12,13,14,15,16)\). Every new old cylinder lies in \(F\); the
+removed residue-zero current classes were contained in the pure forbidden
+root, so the masks are unchanged outside \(F\). The five moduli are
+pairwise distinct and present in the full inventory for every allowed
+height. Their old cylinders have positive \(\nu\)-mass, witnessed by
+old point314, whose first11 and13 digits are6 and2, both nonzero.
+Root0 is already pure forbidden; every spoke1 through11 is bad on the
+positive-mass low row2; these five additional classes put forbidden mass
+in each other root. Thus no first-level cylinder is globally clean,
+including at height one, and this remains so for every finite height.
+All original moduli and all their test labels are retained.
+
+This gives a uniform actual-law improvement for a full-inventory,
+arbitrary-height family with no globally clean root. Its extra residues
+and its small old-event budget are specified hypotheses. No improvement
+uniform over arbitrary old/current residues, no improved unrestricted
+continuation constant, and no unrestricted noncoverage theorem follow.
+The arguments are ordinary moment and CRT proofs; no Lean declaration or
+literature-priority claim is made.
+
+The moment estimates reuse the original-label saturated-prefix expansion
+(SH19) and the common clean-path comparison (GC2); (FI7) is the finite
+Cauchy--Schwarz inequality, also supplied by pinned Mathlib's
+`MeasureTheory.integral_mul_le_Lp_mul_Lq_of_nonneg`. BBMST's normalized
+clipping kernel and actual-measure optimization remain the public inputs
+([1811.03547](https://arxiv.org/abs/1811.03547), section2;
+[1901.11465](https://arxiv.org/abs/1901.11465), section5.3). The cubic
+absorption and its full-inventory arithmetic construction are the ordinary
+proof above; no generic moment or conditioning wrapper is added to Lean.
+
+The [exact moment and family verifier](verify_pg1_lifted_global_cap.py)
+reconstructs the [certificate](pg1_lifted_global_cap_certificate.json).
+It checks the PG1 source, rational second/third/fourth moment factors,
+finite original-label tuple sums with their explicit tails, capacity and
+strict-gain constants, and the rare-cylinder CRT witnesses. The symbolic
+proofs (FI1)--(FI8) establish the full height and test quantifiers; the
+finite arithmetic fixtures do not enumerate that domain. Reproduce from
+any directory with:
+
+```sh
+python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_pg1_lifted_global_cap.py
+```

@@ -1,0 +1,999 @@
+{
+  "schema": "erdos7-pg1-lifted-global-cap-v1",
+  "scope": "Every finite old height a3>=2,a5,a7>=1,a11,a13>=0 and current H>=1, for the explicitly redundant stable family and uniform product lift. Every original divisor test remains independently selectable. No arbitrary-residue family claim.",
+  "verification_scope": "Exact source binding, rational moment constants and finite formula fixtures. The all-height and complete-test implication is an ordinary proof, not Lean verification or exhaustive test enumeration.",
+  "source_sha256": {
+    "mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "old_family": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      59
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      89
+    ]
+  ],
+  "old_support_points": 75,
+  "old_weight_denominator": 1000000007,
+  "transferred_low_slice": 314,
+  "transferred_slice_mass": "16622259/1000000007",
+  "all_spokes_witness_mass": "13119398/1000000007",
+  "stable_family": "Keep old d|315; other old classes use residue0 if11 or13 dividesd, otherwise the PG1 residue at gcd(d,315). Current added old cofactors use residue0 modulo d*17^e, redundant inside pure0mod17. Retain every label.",
+  "stable_old_law": "PG1 low law times independent uniform added357 digits and uniform nonzero first11/13 roots with uniform higher suffixes.",
+  "moments": {
+    "factors": [
+      {
+        "prime": 3,
+        "fixed_depth": 2,
+        "law": "fixed-low",
+        "K2": "13",
+        "K3": "209/4"
+      },
+      {
+        "prime": 5,
+        "fixed_depth": 1,
+        "law": "fixed-low",
+        "K2": "43/8",
+        "K3": "447/32"
+      },
+      {
+        "prime": 7,
+        "fixed_depth": 1,
+        "law": "fixed-low",
+        "K2": "44/9",
+        "K3": "421/36"
+      },
+      {
+        "prime": 11,
+        "fixed_depth": 0,
+        "law": "nonzero-root",
+        "K2": "169/125",
+        "K3": "9543/5000"
+      },
+      {
+        "prime": 13,
+        "fixed_depth": 0,
+        "law": "nonzero-root",
+        "K2": "1111/864",
+        "K3": "5965/3456"
+      },
+      {
+        "prime": 17,
+        "fixed_depth": 1,
+        "law": "fixed-low",
+        "K2": "553/128",
+        "K3": "18963/2048"
+      }
+    ],
+    "K2": "638455140323/248832000",
+    "K3": "104829447952912991/402653184000",
+    "finite_sum_fixtures": [
+      {
+        "prime": 3,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "9",
+        "exact_tail": "4"
+      },
+      {
+        "prime": 3,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "34/3",
+        "exact_tail": "5/3"
+      },
+      {
+        "prime": 3,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "37/3",
+        "exact_tail": "2/3"
+      },
+      {
+        "prime": 3,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "28420/2187",
+        "exact_tail": "11/2187"
+      },
+      {
+        "prime": 3,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "44637889663802662300552038160585/3433683820292512484657849089281",
+        "exact_tail": "68/3433683820292512484657849089281"
+      },
+      {
+        "prime": 3,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "27",
+        "exact_tail": "101/4"
+      },
+      {
+        "prime": 3,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "118/3",
+        "exact_tail": "155/12"
+      },
+      {
+        "prime": 3,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "415/9",
+        "exact_tail": "221/36"
+      },
+      {
+        "prime": 3,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "114088/2187",
+        "exact_tail": "731/8748"
+      },
+      {
+        "prime": 3,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "179409979610283777323372614907995/3433683820292512484657849089281",
+        "exact_tail": "27749/13734735281170049938631396357124"
+      },
+      {
+        "prime": 5,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "4",
+        "exact_tail": "11/8"
+      },
+      {
+        "prime": 5,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "5",
+        "exact_tail": "3/8"
+      },
+      {
+        "prime": 5,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "132/25",
+        "exact_tail": "19/200"
+      },
+      {
+        "prime": 5,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "419917/78125",
+        "exact_tail": "39/625000"
+      },
+      {
+        "prime": 5,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "2913793338554793166395029402337968349456787076/542101086242752217003726400434970855712890625",
+        "exact_tail": "267/4336808689942017736029811203479766845703125000"
+      },
+      {
+        "prime": 5,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "8",
+        "exact_tail": "191/32"
+      },
+      {
+        "prime": 5,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "59/5",
+        "exact_tail": "347/160"
+      },
+      {
+        "prime": 5,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "332/25",
+        "exact_tail": "551/800"
+      },
+      {
+        "prime": 5,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "1091237/78125",
+        "exact_tail": "2291/2500000"
+      },
+      {
+        "prime": 5,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "7572474548453445031270803156075999140739437576/542101086242752217003726400434970855712890625",
+        "exact_tail": "106943/17347234759768070944119244813919067382812500000"
+      },
+      {
+        "prime": 7,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "4",
+        "exact_tail": "8/9"
+      },
+      {
+        "prime": 7,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "33/7",
+        "exact_tail": "11/63"
+      },
+      {
+        "prime": 7,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "34/7",
+        "exact_tail": "2/63"
+      },
+      {
+        "prime": 7,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "4026207/823543",
+        "exact_tail": "29/7411887"
+      },
+      {
+        "prime": 7,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "5963273495108530089566361105863417790360785882419387716/1219760487635835700138573862562971820755615294131238401",
+        "exact_tail": "200/10977844388722521301247164763066746386800537647181145609"
+      },
+      {
+        "prime": 7,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "8",
+        "exact_tail": "133/36"
+      },
+      {
+        "prime": 7,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "75/7",
+        "exact_tail": "247/252"
+      },
+      {
+        "prime": 7,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "562/49",
+        "exact_tail": "397/1764"
+      },
+      {
+        "prime": 7,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "1375833/117649",
+        "exact_tail": "241/4235364"
+      },
+      {
+        "prime": 7,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "14264421258185745271064988781639198237169834411923646856/1219760487635835700138573862562971820755615294131238401",
+        "exact_tail": "80005/43911377554890085204988659052266985547202150588724582436"
+      },
+      {
+        "prime": 11,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "44/125"
+      },
+      {
+        "prime": 11,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "13/10",
+        "exact_tail": "13/250"
+      },
+      {
+        "prime": 11,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "74/55",
+        "exact_tail": "9/1375"
+      },
+      {
+        "prime": 11,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "23951503/17715610",
+        "exact_tail": "43/442890250"
+      },
+      {
+        "prime": 11,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "2739591820672281836007082001961829891541226481867520054261290856847/2026325311148137452667960060622655245222800652268875779779061284655",
+        "exact_tail": "164/50658132778703436316699001515566381130570016306721894494476532116375"
+      },
+      {
+        "prime": 11,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "4543/5000"
+      },
+      {
+        "prime": 11,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "17/10",
+        "exact_tail": "1043/5000"
+      },
+      {
+        "prime": 11,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "103/55",
+        "exact_tail": "1973/55000"
+      },
+      {
+        "prime": 11,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "33811991/17715610",
+        "exact_tail": "11123/8857805000"
+      },
+      {
+        "prime": 11,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "3867444488857335142162068571704399801032237324920376313286316367247/2026325311148137452667960060622655245222800652268875779779061284655",
+        "exact_tail": "645533/2026325311148137452667960060622655245222800652268875779779061284655000"
+      },
+      {
+        "prime": 13,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "247/864"
+      },
+      {
+        "prime": 13,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "5/4",
+        "exact_tail": "31/864"
+      },
+      {
+        "prime": 13,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "50/39",
+        "exact_tail": "43/11232"
+      },
+      {
+        "prime": 13,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "24826781/19307236",
+        "exact_tail": "103/4170362976"
+      },
+      {
+        "prime": 13,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "19392397820029874685751691046170035891783479708384316240387781412815045/15081036648520082563896904647966616571107944615701214429968535680172997",
+        "exact_tail": "787/13030015664321351335206925615843156717437264147965849267492814827669469408"
+      },
+      {
+        "prime": 13,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "2509/3456"
+      },
+      {
+        "prime": 13,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "19/12",
+        "exact_tail": "493/3456"
+      },
+      {
+        "prime": 13,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "133/78",
+        "exact_tail": "937/44928"
+      },
+      {
+        "prime": 13,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "7690147/4455516",
+        "exact_tail": "409/1283188608"
+      },
+      {
+        "prime": 13,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "78088874660088795567400205056528531116891397250570958398231176503673279/45243109945560247691690713943899849713323833847103643289905607040518991",
+        "exact_tail": "309697/52120062657285405340827702463372626869749056591863397069971259310677877632"
+      },
+      {
+        "prime": 17,
+        "order": 2,
+        "added_or_nonzero_depth": 0,
+        "finite": "4",
+        "exact_tail": "41/128"
+      },
+      {
+        "prime": 17,
+        "order": 2,
+        "added_or_nonzero_depth": 1,
+        "finite": "73/17",
+        "exact_tail": "57/2176"
+      },
+      {
+        "prime": 17,
+        "order": 2,
+        "added_or_nonzero_depth": 2,
+        "finite": "1248/289",
+        "exact_tail": "73/36992"
+      },
+      {
+        "prime": 17,
+        "order": 2,
+        "added_or_nonzero_depth": 7,
+        "finite": "104281841/24137569",
+        "exact_tail": "9/3089608832"
+      },
+      {
+        "prime": 17,
+        "order": 2,
+        "added_or_nonzero_depth": 64,
+        "finite": "24224015174159263804673539799992814780532441383358657405467704060093513598701316/5607005320601059253161325667991103602003892399764752527847859167616581809464321",
+        "exact_tail": "1065/717696681036935584404649685502861261056498227169888323564525973454922471611433088"
+      },
+      {
+        "prime": 17,
+        "order": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "8",
+        "exact_tail": "2579/2048"
+      },
+      {
+        "prime": 17,
+        "order": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "155/17",
+        "exact_tail": "4931/34816"
+      },
+      {
+        "prime": 17,
+        "order": 3,
+        "added_or_nonzero_depth": 2,
+        "finite": "2672/289",
+        "exact_tail": "8051/591872"
+      },
+      {
+        "prime": 17,
+        "order": 3,
+        "added_or_nonzero_depth": 7,
+        "finite": "3799439561/410338673",
+        "exact_tail": "35171/840373602304"
+      },
+      {
+        "prime": 17,
+        "order": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "51916817331327093075047958321345360158593657996454590910927223337652949635190536/5607005320601059253161325667991103602003892399764752527847859167616581809464321",
+        "exact_tail": "1701395/11483146896590969350474394968045780176903971634718213177032415575278759545782929408"
+      }
+    ],
+    "universal_formula": "Ordered original-label k-tuples use the coordinate cap at their maximum exponent. The full box factors by CRT. Every finite sum equals its displayed infinite rational bound minus its strictly positive exact tail.",
+    "fixed_coordinate": "F_k(p,h)=E[(h+1+G_p)^k]; P(G_p>=j)=p^(-j)",
+    "nonzero_coordinate": "P_k(p)=1+p/(p-1)*(F_k(p,0)-1); absent primes contribute 1"
+  },
+  "family_fixtures": [
+    {
+      "old_exponents": [
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      "current_height": 1,
+      "old_period": 315,
+      "complete_test_labels": 24,
+      "forbidden_labels": 23,
+      "independent_original_test_residues": true
+    },
+    {
+      "old_exponents": [
+        3,
+        2,
+        2,
+        1,
+        1
+      ],
+      "current_height": 2,
+      "old_period": 4729725,
+      "complete_test_labels": 432,
+      "forbidden_labels": 431,
+      "independent_original_test_residues": true
+    },
+    {
+      "old_exponents": [
+        7,
+        4,
+        3,
+        2,
+        2
+      ],
+      "current_height": 3,
+      "old_period": 9587270818125,
+      "complete_test_labels": 5760,
+      "forbidden_labels": 5759,
+      "independent_original_test_residues": true
+    },
+    {
+      "old_exponents": [
+        66,
+        1,
+        1,
+        1,
+        1
+      ],
+      "current_height": 2,
+      "old_period": 154670287685076224871412812226662645,
+      "complete_test_labels": 3216,
+      "forbidden_labels": 3215,
+      "independent_original_test_residues": true
+    }
+  ],
+  "second_moment_linear_bridge_counterexample": {
+    "old_period": "315*3^N",
+    "complete_test": "one label per divisor, all centered at 314",
+    "exact_Gamma": "208-16*(N+4)/3^N",
+    "conditional_ratio": "4*(N+3)",
+    "conclusion": "A uniform second moment does not imply E[A*1_C] <= sqrt(Gamma)*P(C).",
+    "actual_current_statistic": "17^(-e)*1_(314 mod 3^(N+2)), from original label 3^(N+2)*17^e",
+    "fixtures": [
+      {
+        "N": 0,
+        "original_test_labels": 12,
+        "Gamma": "144",
+        "cylinder_mass": "1",
+        "conditional_load": 12
+      },
+      {
+        "N": 1,
+        "original_test_labels": 16,
+        "Gamma": "544/3",
+        "cylinder_mass": "1/3",
+        "conditional_load": 16
+      },
+      {
+        "N": 2,
+        "original_test_labels": 20,
+        "Gamma": "592/3",
+        "cylinder_mass": "1/9",
+        "conditional_load": 20
+      },
+      {
+        "N": 4,
+        "original_test_labels": 28,
+        "Gamma": "16720/81",
+        "cylinder_mass": "1/81",
+        "conditional_load": 28
+      },
+      {
+        "N": 6,
+        "original_test_labels": 36,
+        "Gamma": "151472/729",
+        "cylinder_mass": "1/729",
+        "conditional_load": 36
+      },
+      {
+        "N": 16,
+        "original_test_labels": 76,
+        "Gamma": "8953717648/43046721",
+        "cylinder_mass": "1/43046721",
+        "conditional_load": 76
+      },
+      {
+        "N": 64,
+        "original_test_labels": 268,
+        "Gamma": "714206234620842596808832610569360/3433683820292512484657849089281",
+        "cylinder_mass": "1/3433683820292512484657849089281",
+        "conditional_load": 268
+      }
+    ],
+    "zero_slice_example": {
+      "old_period": 945,
+      "lifted_points": [
+        314,
+        629,
+        944
+      ],
+      "extra_forbidden": [
+        [
+          27,
+          17
+        ],
+        [
+          135,
+          89
+        ],
+        [
+          189,
+          188
+        ]
+      ]
+    }
+  },
+  "transfer": {
+    "delta": "7/15",
+    "global_cap": "15/8",
+    "t": "1/16777216",
+    "target_root": 2,
+    "target_capacity_slack_lower": "41/952",
+    "donor_root_mass_lower": "1/17",
+    "natural_target_density_ceiling": "8/7",
+    "minimum_survivor_mass": "4/17"
+  },
+  "cubic_absorption": {
+    "pointwise": "t*(2*A*Z+Z^2)-2*Z/17 <= t*(A+Z)^2*1_(A+Z>1/(17t)) <= 17*t^2*(A+Z)^3",
+    "pure17_donor_loss_per_mu_t_lower": "3/5",
+    "p_t_K3": "1782100615199520847/6755399441055744000",
+    "margin_below_three_tenths": "244519217117202353/6755399441055744000",
+    "recipient_increase_upper": "3537522234110083219/1391569413644985827328000",
+    "non_donor_root_gaps": {
+      "spoke": "551014716/187000001309",
+      "root_zero": "3/17",
+      "spine": "3/289"
+    },
+    "gap_margins": {
+      "spoke": "766113625882669172876447/260223480351612349710336000",
+      "root_zero": "4174648096025522693039677/23656680031964759064576000",
+      "spine": "4173685777474566069930509/402163560543400904097792000"
+    }
+  },
+  "uniform_comparisons": {
+    "physical_V_decrease_at_least": "49866777/167772161174405120",
+    "conditional_Gamma_decrease_at_least": "49866777/167772161174405120",
+    "sharper_conditional_decrease": "epsilon/rho_H; same positive actual survivor mass"
+  },
+  "rare_family_stability": {
+    "scope": "Keep all pure17 classes, all old labels and old law fixed. Only five mixed classes change; masks coincide off F. No arbitrary-residue conclusion.",
+    "fourth_moment_factors": {
+      "old3": "232",
+      "old5": "1297/32",
+      "old7": "818/27",
+      "old11": "20429/6250",
+      "old13": "28711/10368",
+      "current17_Haar": "17595/8192"
+    },
+    "K4_Haar": "3528039728534972593/637009920000",
+    "fourth_moment_formula": "E[((3+G3)*(2+G5)*(2+G7)*(1+B11*(1+G11))*(1+B13*(1+G13))*(1+G17))^4]",
+    "geometric_law": "P(G_p=n)=(p-1)/p^(n+1); B_p independent with P(B_p=1)=1/(p-1)",
+    "fourth_moment_finite_fixtures": [
+      {
+        "prime": 3,
+        "added_or_nonzero_depth": 0,
+        "finite": "81",
+        "exact_tail": "151"
+      },
+      {
+        "prime": 3,
+        "added_or_nonzero_depth": 1,
+        "finite": "418/3",
+        "exact_tail": "278/3"
+      },
+      {
+        "prime": 3,
+        "added_or_nonzero_depth": 4,
+        "finite": "17725/81",
+        "exact_tail": "1067/81"
+      },
+      {
+        "prime": 3,
+        "added_or_nonzero_depth": 64,
+        "finite": "796614646307862896440620988083985/3433683820292512484657849089281",
+        "exact_tail": "629207/3433683820292512484657849089281"
+      },
+      {
+        "prime": 5,
+        "added_or_nonzero_depth": 0,
+        "finite": "16",
+        "exact_tail": "785/32"
+      },
+      {
+        "prime": 5,
+        "added_or_nonzero_depth": 1,
+        "finite": "29",
+        "exact_tail": "369/32"
+      },
+      {
+        "prime": 5,
+        "added_or_nonzero_depth": 4,
+        "finite": "25016/625",
+        "exact_tail": "10113/20000"
+      },
+      {
+        "prime": 5,
+        "added_or_nonzero_depth": 64,
+        "finite": "21972034651776550795432285667629912495612800656/542101086242752217003726400434970855712890625",
+        "exact_tail": "9519633/17347234759768070944119244813919067382812500000"
+      },
+      {
+        "prime": 7,
+        "added_or_nonzero_depth": 0,
+        "finite": "16",
+        "exact_tail": "386/27"
+      },
+      {
+        "prime": 7,
+        "added_or_nonzero_depth": 1,
+        "finite": "177/7",
+        "exact_tail": "947/189"
+      },
+      {
+        "prime": 7,
+        "added_or_nonzero_depth": 4,
+        "finite": "72540/2401",
+        "exact_tail": "5438/64827"
+      },
+      {
+        "prime": 7,
+        "added_or_nonzero_depth": 64,
+        "finite": "36954225143930133433827904428759664791781233725901765840/1219760487635835700138573862562971820755615294131238401",
+        "exact_tail": "5334338/32933533166167563903741494289200239160401612941543436827"
+      },
+      {
+        "prime": 11,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "14179/6250"
+      },
+      {
+        "prime": 11,
+        "added_or_nonzero_depth": 1,
+        "finite": "5/2",
+        "exact_tail": "2402/3125"
+      },
+      {
+        "prime": 11,
+        "added_or_nonzero_depth": 4,
+        "finite": "21717/6655",
+        "exact_tail": "44749/8318750"
+      },
+      {
+        "prime": 11,
+        "added_or_nonzero_depth": 64,
+        "finite": "6623327965031248003288600972553635840745055124032138128817030821007/2026325311148137452667960060622655245222800652268875779779061284655",
+        "exact_tail": "70584649/2532906638935171815834950075778319056528500815336094724723826605818750"
+      },
+      {
+        "prime": 13,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "18343/10368"
+      },
+      {
+        "prime": 13,
+        "added_or_nonzero_depth": 1,
+        "finite": "9/4",
+        "exact_tail": "5383/10368"
+      },
+      {
+        "prime": 13,
+        "added_or_nonzero_depth": 4,
+        "finite": "6079/2197",
+        "exact_tail": "50995/22778496"
+      },
+      {
+        "prime": 13,
+        "added_or_nonzero_depth": 64,
+        "finite": "41762311266942524160112271349129005437218383281384796247957815192261349/15081036648520082563896904647966616571107944615701214429968535680172997",
+        "exact_tail": "81250435/156360187971856216022483107390117880609247169775590191209913777932033632896"
+      },
+      {
+        "prime": 17,
+        "added_or_nonzero_depth": 0,
+        "finite": "1",
+        "exact_tail": "9403/8192"
+      },
+      {
+        "prime": 17,
+        "added_or_nonzero_depth": 1,
+        "finite": "32/17",
+        "exact_tail": "36971/139264"
+      },
+      {
+        "prime": 17,
+        "added_or_nonzero_depth": 4,
+        "finite": "179345/83521",
+        "exact_tail": "357755/684204032"
+      },
+      {
+        "prime": 17,
+        "added_or_nonzero_depth": 64,
+        "finite": "12042878249020463569259463516638606918610655123762307217710337164821015251092225/5607005320601059253161325667991103602003892399764752527847859167616581809464321",
+        "exact_tail": "577220795/45932587586363877401897579872183120707615886538872852708129662301115038183131717632"
+      }
+    ],
+    "physical_and_killed_density_cap": "2",
+    "single_comparison": "eta=2*sqrt(q*K4_Haar)",
+    "two_comparisons": "loss<=2*eta; 64*K4_Haar<3^N*epsilon^2 gives loss<epsilon/2",
+    "minimum_sufficient_N": 58,
+    "selected_N": 64,
+    "rare_mass_upper": "1/3433683820292512484657849089281",
+    "low_mod9_mass": "164170551/1000000007",
+    "exact_rare_event_mass": "54723517/1144561281442766408901812160628647874989",
+    "squared_stability_margin": "51810933745000240237170378205040970277599794626187/170996050745668205302935649234452480000",
+    "Q": 30903154382632612361920641803529,
+    "moved_original_classes": [
+      {
+        "old_cofactor": 30903154382632612361920641803529,
+        "original_modulus": 525353624504754410152650910659993,
+        "old_residue": 314,
+        "current_root": 12,
+        "CRT_residue": 247225235061060898895365134428546
+      },
+      {
+        "old_cofactor": 154515771913163061809603209017645,
+        "original_modulus": 2626768122523772050763254553299965,
+        "old_residue": 314,
+        "current_root": 13,
+        "CRT_residue": 309031543826326123619206418035604
+      },
+      {
+        "old_cofactor": 216322080678428286533444492624703,
+        "original_modulus": 3677475371533280871068556374619951,
+        "old_residue": 314,
+        "current_root": 14,
+        "CRT_residue": 1946898726105854578801000433622641
+      },
+      {
+        "old_cofactor": 1081610403392141432667222463123515,
+        "original_modulus": 18387376857666404355342781873099755,
+        "old_residue": 314,
+        "current_root": 15,
+        "CRT_residue": 15142545647489980057341114483729524
+      },
+      {
+        "old_cofactor": 339934698208958735981127059838819,
+        "original_modulus": 5778889869552298511679160017259923,
+        "old_residue": 314,
+        "current_root": 16,
+        "CRT_residue": 1019804094626876207943381179516771
+      }
+    ],
+    "old_witness": 314,
+    "old_witness_projections": {
+      "9": 8,
+      "5": 4,
+      "7": 6,
+      "11": 6,
+      "13": 2
+    },
+    "minimum_height_old_point_mass": "5540753/137347353773131969068217459275437744998680",
+    "dirty_root_witnesses": "Root0: pure forbidden; roots1..11: positive-mass old low2; roots12..16: the five old314 cylinders.",
+    "no_globally_clean_current_root": true,
+    "minimum_survivor_mass": "807925604774708819919493903360/3433683820292512484657849089281",
+    "physical_V_decrease_at_least": "49866777/335544322348810240",
+    "conditioned_Gamma_decrease": "epsilon/(2*rho_tilde); same actual survivor mass within the new-family pair"
+  },
+  "exact_height_fixtures": [
+    {
+      "height": 1,
+      "s": "1/17",
+      "pure_survival": "16/17",
+      "donor_roots": [
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "selected_density": "17/15",
+      "actual_survivor_mass": "63652336401/64000000448",
+      "conditioned_Gamma_decrease": "16622259/55620260245012480"
+    },
+    {
+      "height": 2,
+      "s": "18/289",
+      "pure_survival": "271/289",
+      "donor_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "selected_density": "289/253",
+      "actual_survivor_mass": "1076961450561/1084000007588",
+      "conditioned_Gamma_decrease": "4504632189/15057012399779348480"
+    },
+    {
+      "height": 3,
+      "s": "307/4913",
+      "pure_survival": "4606/4913",
+      "donor_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "selected_density": "4913/4299",
+      "actual_survivor_mass": "18303216391281/18424000128968",
+      "conditioned_Gamma_decrease": "38281062477/127948756204692439040"
+    },
+    {
+      "height": 16,
+      "s": "3041324492229179280/48661191875666868481",
+      "pure_survival": "45619867383437689201/48661191875666868481",
+      "donor_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "selected_density": "48661191875666868481/42578542891208509921",
+      "actual_survivor_mass": "181282460417285968234671012321/182479470811107043540255297628",
+      "conditioned_Gamma_decrease": "758305251193153580260525059/2534512496193547352368511885540065280"
+    },
+    {
+      "height": 100,
+      "s": "69306210798798977581631982242193435402251072978117470275173115079930473781335418607026543391000318349328028218941774850500/1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001",
+      "pure_survival": "1039593161981984663724479733632901531033766094671762054127596726198957106720031279105398150865004775239920423284126622757501/1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001",
+      "donor_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "selected_density": "1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001/970286951183185686142847751390708095631515021693644583852423611119026632938695860498371607474004456890592395065184847907001",
+      "actual_survivor_mass": "4131095004136306939126894294880110623695424589962689815820929451899534469514946974736402813831843241343269276811492494492846483157921/4158372677036547190393489518817038665856307247632498867319724420368536760450924104582468418411167325179815399854278342985549437210028",
+      "conditioned_Gamma_decrease": "17280386793093502414456206772697100170339797771052548850080931830431150557791000409391216361799183410274744415218383312270475814759/57756894334096429133358964161976091698027380464596232484189958946066750078748067186415977558887184781796799002691834052071079918984002273280"
+    }
+  ]
+}

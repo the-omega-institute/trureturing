@@ -335,6 +335,22 @@ laws, not the universal quantifiers. This refutes BBMST optimality in the
 larger global-cap class for this family; a gain over unrestricted old
 inventories and an unrestricted #7 conclusion remain open.
 
+The [full-inventory higher-moment extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#higher-moments-retain-the-full-old-inventory-in-a-law-changing-perturbation)
+keeps every original3/5/7/11/13 cofactor and arbitrary finite exponent.
+A third-moment bound absorbs rare high test loads that defeat a direct
+second-moment substitution. For the specified lifted PG1 family, one
+transfer lowers the physical and killed complete-test maxima by at least
+`epsilon0=49866777/167772161174405120`, uniformly in all six prime heights.
+A [fourth-moment stability bound](../docs/reports/erdos7-odd-covering/marked_head_profile.md#rare-old-cylinders-remove-every-globally-clean-root-without-losing-the-improvement)
+retains half this gain when current mixed deletions change only on an old
+event of probability at most `3^(-64)`. Moving five specified original
+classes into the remaining17 roots gives actual families with no globally
+clean root. The old marginal, bad charge and survivor mass agree between
+the new family's baseline and improved laws, so its actual conditioned
+maximum strictly improves as well. This removes the small-inventory and
+clean-root restrictions for this constructed class; arbitrary forbidden
+residues and the unrestricted #7 conclusion remain unresolved.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
