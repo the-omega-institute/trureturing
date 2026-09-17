@@ -90,14 +90,11 @@ internal static class UtilityAdmissionRule
         }
     }
 
-    private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context)
-    {
-        var modules = RepositoryRules.ChangedOrFirstPinD5Modules(context).ToHashSet();
-        return context.Changes.Paths.Where(path => context.Current.Files.ContainsKey(path)
+    private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>
+        context.Changes.Paths.Where(path => context.Current.Files.ContainsKey(path)
             && (FrozenStatePath.IsUnderRoot(path.Value)
                 ? !context.Baseline.Files.ContainsKey(path)
-                : modules.Contains(path) && !IsBaselineFrozen(context, path)));
-    }
+                : RepositoryRules.IsPresentByteChangedD5Module(context, path) && !IsBaselineFrozen(context, path)));
 
     private static bool IsBaselineFrozen(RuleEvaluationContext context, RepoPath path) =>
         IsD5Lean(path.Value)

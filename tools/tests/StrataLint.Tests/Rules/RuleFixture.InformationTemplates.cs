@@ -16,11 +16,10 @@ internal sealed partial class RuleFixture
             .OrderBy(file => file.Path.Value, StringComparer.Ordinal)
             .Select(file => new InformationTemplateContentInput(file.Path.Value,
                 InformationTemplateJson.Sha256(file.RawBytes.AsSpan()))).ToImmutableArray();
-        using var manifest = JsonDocument.Parse(snapshot.Files[RepoPath.CreateKnown("lean-report-inputs.json")].Text);
         var wire = JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = manifest.RootElement.GetProperty("report_semantic_version").GetInt32(),
+            compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
             inputs = inputs.Select(input => new { path = input.Path, sha256 = input.Sha256 }),
             inventory = Array.Empty<object>(), registered = Array.Empty<object>(), records = Array.Empty<object>(),
         });

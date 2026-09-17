@@ -9,14 +9,18 @@ internal static partial class RepositoryRules
                 FrozenStatePath.TryToModulePath(path.Value, out var module)
                     ? !context.Baseline.Files.ContainsKey(path) && context.Current.Files.ContainsKey(path)
                         ? module : default
-                    : context.Current.Files.TryGetValue(path, out var current)
-                        && (!context.Baseline.Files.TryGetValue(path, out var baseline)
-                            || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))
-                        ? path : default)
+                    : IsPresentByteChangedD5Module(context, path) ? path : default)
             .OfType<RepoPath>()
             .Where(path => path.Value is { } value && value.StartsWith("D5/", StringComparison.Ordinal)
                 && value.EndsWith(".lean", StringComparison.Ordinal) && context.Current.Files.ContainsKey(path))
             .Distinct().OrderBy(path => path.Value, StringComparer.Ordinal);
+
+    internal static bool IsPresentByteChangedD5Module(RuleEvaluationContext context, RepoPath path) =>
+        path.Value.StartsWith("D5/", StringComparison.Ordinal)
+        && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+        && context.Current.Files.TryGetValue(path, out var current)
+        && (!context.Baseline.Files.TryGetValue(path, out var baseline)
+            || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()));
 
     private static bool ManagedLean(RepositoryFile artifact, RuleApplicabilityContext context) =>
         LeanClosureValidator.IsManagedLean(artifact.Path.Value);
