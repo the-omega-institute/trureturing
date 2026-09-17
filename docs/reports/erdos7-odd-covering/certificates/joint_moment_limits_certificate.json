@@ -1,0 +1,475 @@
+{
+  "schema": "erdos7-joint-integer-moment-limits-v1",
+  "source_sha256": {
+    "certificates/supported13_hinges_certificate.json": "d484812af981dc55ee0c766f69dcdb0eb3301c18d1f0886b00e9cc726d514e7f",
+    "verify_pg1_scalar_schedule.py": "9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b"
+  },
+  "W": "483",
+  "routes": [
+    {
+      "name": "restart",
+      "schedule": [
+        [
+          17,
+          6
+        ],
+        [
+          19,
+          8
+        ]
+      ],
+      "source_mean": "2621130891614589/246025127976511",
+      "source_square_bound": "6471426752685569/37850019688694",
+      "source_hinge_bounds": {
+        "1": "2375105763638078/246025127976511",
+        "2": "2129080635661567/246025127976511",
+        "3": "1883055507685056/246025127976511",
+        "4": "1637030379708545/246025127976511",
+        "5": "1391005251732034/246025127976511",
+        "6": "1144980123755523/246025127976511",
+        "7": "89666740564947261/22388286645862501",
+        "8": "2583101470464529227/783590032605187535",
+        "9": "79279415852454843789/27425651141181563725",
+        "10": "346968986919953745158589/137265383961613726443625",
+        "11": "10505691452199510291871123/4804288438656480425526875",
+        "12": "931113139744103019321748583/504450286058930444680321875",
+        "13": "12746253477717137311500091419749/7574321045174840626875032953125",
+        "14": "1208748596349568485230178605089729/795303709743358265821878460078125",
+        "15": "111843207453786610835704076820134309/83506889523052617911297238308203125",
+        "16": "1458498204111736193043113401784294954927/1253855946188635057938128033197669921875",
+        "17": "139044554157919045174662041466153764678467/131654874349806681083503443485755341796875"
+      },
+      "abstract_primal_law": {
+        "6": "251759920756781771/783590032605187535",
+        "12": "10864155539642799/111941433229312505",
+        "13": "455781023070906171/783590032605187535"
+      },
+      "primal_mean": "2621130891614589/246025127976511",
+      "primal_square": "13863059832883889721/111941433229312505",
+      "square_slack": "10552369576367361193/223882866458625010",
+      "primal_hinges": {
+        "1": "2375105763638078/246025127976511",
+        "2": "2129080635661567/246025127976511",
+        "3": "1883055507685056/246025127976511",
+        "4": "1637030379708545/246025127976511",
+        "5": "1391005251732034/246025127976511",
+        "6": "1144980123755523/246025127976511",
+        "7": "3114931582312934991/783590032605187535",
+        "8": "2583101470464529227/783590032605187535",
+        "9": "2051271358616123463/783590032605187535",
+        "10": "1519441246767717699/783590032605187535",
+        "11": "197522226983862387/156718006521037507",
+        "12": "455781023070906171/783590032605187535",
+        "13": "0",
+        "14": "0",
+        "15": "0",
+        "16": "0",
+        "17": "0"
+      },
+      "dual": {
+        "constant": "-7/135",
+        "mean_coefficient": "0",
+        "square_coefficient": "0",
+        "hinge_coefficients": {
+          "6": "7/270",
+          "8": "6517/135"
+        },
+        "exact_bound": "687402074233414912337/4317740995987768050",
+        "infinite_tail_start": 8,
+        "infinite_tail_slope": "483/10"
+      },
+      "hinge7_excess_over_neighbor_average": "1800333650786088/60276156354245195",
+      "cost_terms": [
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 1,
+          "probability": "1",
+          "old_bound": "553025399773917609/2460251279765110",
+          "exact_joint_moment_bound": "553025399773917609/2460251279765110",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 1,
+          "probability": "77/85",
+          "old_bound": "4811818774967988062567/30224186971914376350",
+          "exact_joint_moment_bound": "687402074233414912337/4317740995987768050",
+          "weighted_saving": "600111216928696/4705230572550772875"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 2,
+          "probability": "128/1445",
+          "old_bound": "158137134679845447/246025127976511",
+          "exact_joint_moment_bound": "158137134679845447/246025127976511",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 3,
+          "probability": "128/24565",
+          "old_bound": "2847377567448300957/2460251279765110",
+          "exact_joint_moment_bound": "2847377567448300957/2460251279765110",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 4,
+          "probability": "128/417605",
+          "old_bound": "2056691894049073722/1230125639882555",
+          "exact_joint_moment_bound": "2056691894049073722/1230125639882555",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 5,
+          "probability": "128/7099285",
+          "old_bound": "5379390008747993931/2460251279765110",
+          "exact_joint_moment_bound": "5379390008747993931/2460251279765110",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 6,
+          "probability": "128/120687845",
+          "old_bound": "3322698114698920209/1230125639882555",
+          "exact_joint_moment_bound": "3322698114698920209/1230125639882555",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 7,
+          "probability": "128/2051693365",
+          "old_bound": "1582280490009537381/492050255953022",
+          "exact_joint_moment_bound": "1582280490009537381/492050255953022",
+          "weighted_saving": "0"
+        }
+      ],
+      "complete_auxiliary_tails": [
+        {
+          "prime": 17,
+          "threshold": 6,
+          "full_mean": "1",
+          "tail_probability": "0",
+          "tail_mean": "0",
+          "exact_tail_cost": "0",
+          "primal_tail_cost": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "full_mean": "11/10",
+          "tail_probability": "8/2051693365",
+          "tail_mean": "129/4103386730",
+          "exact_tail_cost": "8712032055988845927/593844850226686464175900",
+          "primal_tail_cost": "8712032055988845927/593844850226686464175900"
+        }
+      ],
+      "old_W483_defect": "1425444894002262236319997/5872127754543364548000",
+      "exact_joint_moment_W483_defect": "1425444145063463509307389/5872127754543364548000",
+      "exact_saving": "600111216928696/4705230572550772875",
+      "scope": "Exact optimum for the SH27 cost terms under the listed positive-integer load moments. The separate SH26 physical-square bound is held fixed. The abstract witness is not an actual covering family or BBMST-generated load law."
+    },
+    {
+      "name": "fourstep",
+      "schedule": [
+        [
+          11,
+          4
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          19,
+          8
+        ]
+      ],
+      "source_mean": "3071051/584325",
+      "source_square_bound": "3849/106",
+      "source_hinge_bounds": {
+        "1": "2486726/584325",
+        "2": "1902401/584325",
+        "3": "1318076/584325",
+        "4": "94745926/61354125",
+        "5": "811368634658/676429228125",
+        "6": "578163435166/676429228125",
+        "7": "123701336587/175370540625",
+        "8": "9480670987427/18413906765625",
+        "9": "796298699261467/1933460210390625",
+        "10": "67064983742536307/203013322091015625",
+        "11": "5627311634056139947/21316398819556640625",
+        "12": "442432515511738016387/2238221876053447265625",
+        "13": "40127245873251313981627/235013296985611962890625",
+        "14": "3549011391199088738251667/24676396183489256103515625",
+        "15": "306746539940500036952722507/2591021599266371890869140625",
+        "16": "26099812896205724335951610147/272057267922969048541259765625",
+        "17": "2322498067880713987452337250587/28566013131911750096832275390625"
+      },
+      "abstract_primal_law": {
+        "3": "17702071/61354125",
+        "4": "248058695858/676429228125",
+        "6": "57946545022253/331450321781250",
+        "11": "27321966570811/165725160890625",
+        "12": "112004639147/22096688118750"
+      },
+      "primal_mean": "3071051/584325",
+      "primal_square": "1174538084455936/33145032178125",
+      "square_slack": "58003620778753/66290064356250",
+      "primal_hinges": {
+        "1": "2486726/584325",
+        "2": "1902401/584325",
+        "3": "1318076/584325",
+        "4": "94745926/61354125",
+        "5": "811368634658/676429228125",
+        "6": "578163435166/676429228125",
+        "7": "226976080502513/331450321781250",
+        "8": "9480670987427/18413906765625",
+        "9": "114328075044859/331450321781250",
+        "10": "29002036158016/165725160890625",
+        "11": "112004639147/22096688118750",
+        "12": "0",
+        "13": "0",
+        "14": "0",
+        "15": "0",
+        "16": "0",
+        "17": "0"
+      },
+      "dual": {
+        "constant": "-14/135",
+        "mean_coefficient": "0",
+        "square_coefficient": "0",
+        "hinge_coefficients": {
+          "3": "2/135",
+          "4": "1/270",
+          "6": "1/135",
+          "8": "6517/135"
+        },
+        "exact_bound": "213618372736558/8614900546875",
+        "infinite_tail_start": 8,
+        "infinite_tail_slope": "483/10"
+      },
+      "hinge7_excess_over_neighbor_average": "6819445646917/331450321781250",
+      "cost_terms": [
+        {
+          "prime": 11,
+          "threshold": 4,
+          "auxiliary_multiplier": 1,
+          "probability": "1",
+          "old_bound": "24700143775241/198787365000",
+          "exact_joint_moment_bound": "24700143775241/198787365000",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "auxiliary_multiplier": 1,
+          "probability": "28/33",
+          "old_bound": "114607747378465261/1669813866000000",
+          "exact_joint_moment_bound": "114607747378465261/1669813866000000",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "auxiliary_multiplier": 2,
+          "probability": "50/363",
+          "old_bound": "30315748/83475",
+          "exact_joint_moment_bound": "30315748/83475",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "auxiliary_multiplier": 3,
+          "probability": "50/3993",
+          "old_bound": "43755223/55650",
+          "exact_joint_moment_bound": "43755223/55650",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "auxiliary_multiplier": 4,
+          "probability": "50/43923",
+          "old_bound": "100949921/83475",
+          "exact_joint_moment_bound": "100949921/83475",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "auxiliary_multiplier": 5,
+          "probability": "50/483153",
+          "old_bound": "54506803/33390",
+          "exact_joint_moment_bound": "54506803/33390",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 1,
+          "probability": "28/39",
+          "old_bound": "195787109181038621/4748533181437500",
+          "exact_joint_moment_bound": "195787109181038621/4748533181437500",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 2,
+          "probability": "1322/5577",
+          "old_bound": "30315748/139125",
+          "exact_joint_moment_bound": "30315748/139125",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 3,
+          "probability": "15842/797511",
+          "old_bound": "43755223/92750",
+          "exact_joint_moment_bound": "43755223/92750",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 4,
+          "probability": "2421962/114044073",
+          "old_bound": "100949921/139125",
+          "exact_joint_moment_bound": "100949921/139125",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "auxiliary_multiplier": 5,
+          "probability": "2322482/16308302439",
+          "old_bound": "54506803/55650",
+          "exact_joint_moment_bound": "54506803/55650",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 1,
+          "probability": "2156/3315",
+          "old_bound": "581186659240477771/23438272754531250",
+          "exact_joint_moment_bound": "213618372736558/8614900546875",
+          "weighted_saving": "13638891293834/216227850226171875"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 2,
+          "probability": "13594/48841",
+          "old_bound": "25213422581/169036875",
+          "exact_joint_moment_bound": "25213422581/169036875",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 3,
+          "probability": "12903674/593662355",
+          "old_bound": "34795573/92750",
+          "exact_joint_moment_bound": "34795573/92750",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 4,
+          "probability": "175157920166/4329579555015",
+          "old_bound": "87510446/139125",
+          "exact_joint_moment_bound": "87510446/139125",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 5,
+          "probability": "498025595466/3508402632747155",
+          "old_bound": "49131013/55650",
+          "exact_joint_moment_bound": "49131013/55650",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 6,
+          "probability": "30604457913105454/5117356080125000283",
+          "old_bound": "52714873/46375",
+          "exact_joint_moment_bound": "52714873/46375",
+          "weighted_saving": "0"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "auxiliary_multiplier": 7,
+          "probability": "20616634335507994/20733821051306459479955",
+          "old_bound": "55274773/39750",
+          "exact_joint_moment_bound": "55274773/39750",
+          "weighted_saving": "0"
+        }
+      ],
+      "complete_auxiliary_tails": [
+        {
+          "prime": 11,
+          "threshold": 4,
+          "full_mean": "1",
+          "tail_probability": "0",
+          "tail_mean": "0",
+          "exact_tail_cost": "0",
+          "primal_tail_cost": "0"
+        },
+        {
+          "prime": 13,
+          "threshold": 6,
+          "full_mean": "7/6",
+          "tail_probability": "5/483153",
+          "tail_mean": "61/966306",
+          "exact_tail_cost": "3502316053/161324786700",
+          "primal_tail_cost": "3502316053/161324786700"
+        },
+        {
+          "prime": 17,
+          "threshold": 6,
+          "full_mean": "49/36",
+          "tail_probability": "61359851/16308302439",
+          "tail_mean": "4661396029/195699629268",
+          "exact_tail_cost": "20759959409275909/4188724757217000",
+          "primal_tail_cost": "20759959409275909/4188724757217000"
+        },
+        {
+          "prime": 19,
+          "threshold": 8,
+          "full_mean": "539/360",
+          "tail_probability": "185106120472512627181/62201463153919378439865",
+          "tail_mean": "39635201223181511134589/1492835115694065082556760",
+          "exact_tail_cost": "2321955677028048712966778674697/415381370941873609221418470000",
+          "primal_tail_cost": "2321955677028048712966778674697/415381370941873609221418470000"
+        }
+      ],
+      "old_W483_defect": "906042156617760517512977/7475909744353050000000",
+      "exact_joint_moment_W483_defect": "8154375165573318537878681/67283187699177450000000",
+      "exact_saving": "13638891293834/216227850226171875",
+      "scope": "Exact optimum for the SH27 cost terms under the listed positive-integer load moments. The separate SH26 physical-square bound is held fixed. The abstract witness is not an actual covering family or BBMST-generated load law."
+    }
+  ],
+  "scope": "Two fixed existing schedules, all load moments together and complete unbounded load/auxiliary tails. No repeated255 scan. Exact dual upper bounds and matching abstract primal probabilities certify the limited gain from this moment relaxation; actual joint geometry remains outside it."
+}

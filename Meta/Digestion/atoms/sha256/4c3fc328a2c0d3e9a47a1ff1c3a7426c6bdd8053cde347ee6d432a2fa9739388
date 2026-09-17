@@ -1,0 +1,56 @@
+**definition 64.5（$8\times3$ 的严格正有理反例）。** 取两个非平凡互素素数幂坐标
+$$
+X_A=\mathbb Z/8\mathbb Z,
+\qquad
+X_B=\mathbb Z/3\mathbb Z.
+$$
+在 $X_A$ 上按剩余类 $0,\ldots,7$ 给定
+$$
+\bigl(\mu_A(0),\ldots,\mu_A(7)\bigr)
+=
+\frac1{200}(25,10,23,42,25,10,23,42),
+$$
+在 $X_B$ 上取均匀先验
+$$
+\mu_B(0)=\mu_B(1)=\mu_B(2)=\frac13.
+$$
+两坐标独立，所以联合空间由 CRT 识别为
+$$
+\mathbb Z/24\mathbb Z
+\cong
+\mathbb Z/8\mathbb Z\times\mathbb Z/3\mathbb Z.
+$$
+在 $X_A$ 中记四个模 $4$ 的底层二叶块为
+$$
+P_0=\{0,4\},
+\qquad
+P_1=\{2,6\},
+\qquad
+P_2=\{1,5\},
+\qquad
+P_3=\{3,7\}.
+$$
+它们的质量分别为
+$$
+m(P_0)=\frac14,
+\qquad
+m(P_1)=\frac{23}{100},
+\qquad
+m(P_2)=\frac1{10},
+\qquad
+m(P_3)=\frac{21}{50}.
+$$
+两个奇偶子树为
+$$
+E=P_0\cup P_1,
+\qquad
+O=P_2\cup P_3,
+$$
+且
+$$
+m(E)=\frac{12}{25},
+\qquad
+m(O)=\frac{13}{25}.
+$$
+全部二十四个联合叶的先验都严格为正有理数。
+
