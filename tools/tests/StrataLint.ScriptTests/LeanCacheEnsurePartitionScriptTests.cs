@@ -14,21 +14,13 @@ public sealed class LeanCacheEnsurePartitionScriptTests
     public void SameMathlibMetadataChangesReuseNativeCacheAndIsolateReaderBuilds()
     {
         using var fixture = new LeanCachePartitionFixture();
-        var shared = Path.Combine(fixture.Main, ".git", "stratalint-lake");
-        var supportsShared = OperatingSystem.IsMacOS() && File.Exists("/usr/bin/sandbox-exec");
-        var warmed = fixture.Command(fixture.Main, "warm-cache");
-        if (supportsShared) Assert.Equal(0, warmed.ExitCode);
-        else
-        {
-            Assert.NotEqual(0, warmed.ExitCode);
-            Assert.Contains("Shared cache warming requires", Diagnostic(warmed));
-            Assert.False(Directory.Exists(shared));
-            Assert.Equal(0, fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build").ExitCode);
-        }
-        var sharedBefore = Snapshot(shared);
+        var donorCache = Path.Combine(fixture.Main, ".lake");
+        var warmed = fixture.Command(fixture.Main, "with-cache-writer", "--", "lake", "build");
+        Assert.True(warmed.ExitCode == 0, Diagnostic(warmed));
+        var donorBefore = Snapshot(donorCache);
         var mainSource = File.ReadAllBytes(Path.Combine(fixture.Main, "Fixture.lean"));
         var mainOlean = Path.Combine(fixture.Main, ".lake", "build", "lib", "lean", "Fixture.olean");
-        var mainBuild = File.Exists(mainOlean) ? File.ReadAllBytes(mainOlean) : null;
+        var mainBuild = File.ReadAllBytes(mainOlean);
         var pins = LeanPinSet.TryReadWorktree(fixture.Reader, out var reason);
         Assert.NotNull(pins);
         File.AppendAllText(Path.Combine(fixture.Reader, "lake-manifest.json"), " \n");
@@ -43,14 +35,10 @@ public sealed class LeanCacheEnsurePartitionScriptTests
 
         Assert.True(restored.ExitCode == 0, Diagnostic(restored));
         var restoredOutput = Encoding.UTF8.GetString(restored.StandardOutput);
-        if (supportsShared)
-        {
-            Assert.Contains("\"mode\":\"shared-reader\"", restoredOutput);
-            Assert.Contains("Reused Fixture", restoredOutput);
-        }
+        Assert.True(restoredOutput.Contains("\"status\":\"seeded\"", StringComparison.Ordinal), Diagnostic(restored));
         Assert.DoesNotContain("Built Fixture", restoredOutput);
-        Assert.True(File.Exists(Path.Combine(fixture.Reader, ".lake", "build", "lib", "lean", "Fixture.olean")));
-        Assert.Equal(sharedBefore, Snapshot(shared));
+        Assert.Equal(mainBuild, File.ReadAllBytes(Path.Combine(fixture.Reader, ".lake", "build", "lib", "lean", "Fixture.olean")));
+        Assert.Equal(donorBefore, Snapshot(donorCache));
 
         File.WriteAllText(Path.Combine(fixture.Reader, "Fixture.lean"), "def answer : Nat := 43\n");
         var rebuilt = fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build", "-v");
@@ -58,8 +46,8 @@ public sealed class LeanCacheEnsurePartitionScriptTests
         Assert.True(rebuilt.ExitCode == 0, Diagnostic(rebuilt));
         Assert.Contains("Built Fixture", Encoding.UTF8.GetString(rebuilt.StandardOutput));
         Assert.Equal(mainSource, File.ReadAllBytes(Path.Combine(fixture.Main, "Fixture.lean")));
-        if (mainBuild is not null) Assert.Equal(mainBuild, File.ReadAllBytes(mainOlean));
-        Assert.Equal(sharedBefore, Snapshot(shared));
+        Assert.Equal(mainBuild, File.ReadAllBytes(mainOlean));
+        Assert.Equal(donorBefore, Snapshot(donorCache));
     }
 
     private static string Diagnostic(ProcessOutput result) =>
@@ -103,6 +91,9 @@ internal sealed class LeanCachePartitionFixture : IDisposable
             + "\nrev = " + JsonSerializer.Serialize(revision) + "\n");
         Assert.True(LeanLakeExecutable.TryResolve(out var lake, out var reason), reason);
         RequireSuccess(Run(lake, ["update"], Main));
+        // The tiny dependency has no cache executable. Register its real Lake
+        // checkout as the donor seed using the production stamp writer.
+        LeanCacheStamp.Write(Path.Combine(Main, ".lake"), LeanPinSet.TryReadWorktree(Main, out _)!);
         Git(Main, "add", ".");
         Git(Main, "commit", "-m", "native cache fixture");
         var remote = Path.Combine(temporary.Path, "origin.git");
@@ -113,7 +104,8 @@ internal sealed class LeanCachePartitionFixture : IDisposable
     }
 
     internal ProcessOutput Command(string root, params string[] arguments) =>
-        Run("dotnet", [typeof(WorktreeCommand).Assembly.Location, "worktree", arguments[0],
+        Run("/usr/bin/env", ["STRATALINT_ACCEPT_COLD_BUILD=1", "dotnet",
+            typeof(WorktreeCommand).Assembly.Location, "worktree", arguments[0],
             "--path", root, .. arguments.Skip(1)], root);
 
     private static void Initialize(string root)

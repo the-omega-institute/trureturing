@@ -97,7 +97,7 @@ mkdir -p "$1/output"
         self.prepare("corrupt")
         result = self.run_analysis()
         self.assert_produced(result, "miss")
-        self.assertIn("checksum or size mismatch", result.stdout)
+        self.assertIn("transferred asset digest mismatch", result.stdout)
         self.assertFalse((self.root / ".lake/build/lib/lean/D5/A.olean").exists())
 
     def test_timed_out_seed_reaches_analysis(self):

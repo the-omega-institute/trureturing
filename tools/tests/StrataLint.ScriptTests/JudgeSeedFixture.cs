@@ -298,9 +298,10 @@ internal sealed class JudgeSeedFixture : IDisposable
 
     internal JsonObject CacheKeys() => JsonNode.Parse(Python("print(json.dumps(actions.actions_keys(root)))").Text)!.AsObject();
 
-    internal Invocation RestoreLayer(string layer, string key) => Run("python3",
+    internal Invocation RestoreLayer(string layer, string key, string? outcome = null) => Run("python3",
         [Path.Combine(producerRoot, "tools/scripts/worktree/lean_actions.py"), "restore", "--repository", root,
-            "--layers", layer, "--" + layer + "-key", key]);
+            "--layers", layer, "--" + layer + "-key", key,
+            .. outcome is null ? Array.Empty<string>() : ["--" + layer + "-outcome", outcome]]);
 
     internal void AddUnlistedTransportNeighbor() => Write(snapshotPath! + "/data/data/tools/Neighbor/obj/Neighbor.dll", "not in manifest");
 

@@ -308,11 +308,10 @@ public sealed class JudgeSeedTests
         Assert.NotEqual(consumer, Material("Consumer"));
     }
 
-    [Theory]
-    [InlineData("dependency")]
-    [InlineData("project")]
-    public void SeedTransportUsesOnlyItsMaterialManifest(string layer)
+    [Fact]
+    public void JudgeSeedTransportUsesOnlyItsMaterialManifest()
     {
+        const string layer = "judge";
         using var fixture = new JudgeSeedFixture();
         var keys = fixture.CacheKeys();
         var cache = keys[layer]!["path"]!.GetValue<string>();
@@ -334,6 +333,48 @@ public sealed class JudgeSeedTests
         var missed = fixture.RestoreLayer(layer, key);
         Assert.Contains("\"status\": \"miss\"", missed.Text, StringComparison.Ordinal);
         Assert.Equal("registered material", File.ReadAllText(fixture.PathOf(target + "/registered.txt")));
+    }
+
+    [Theory]
+    [InlineData("dependency")]
+    [InlineData("project")]
+    public void NativeBuildSeedRestoreUsesActionsOutcomeAndKeepsOtherLayers(string layer)
+    {
+        using var fixture = new JudgeSeedFixture();
+        var keys = fixture.CacheKeys();
+        var target = layer == "dependency" ? ".lake/packages" : ".lake/build";
+        Assert.Equal(target, keys[layer]!["path"]!.GetValue<string>());
+        Assert.Equal(target, keys[layer]!["target"]!.GetValue<string>());
+        var key = keys[layer]!["key"]!.GetValue<string>();
+        fixture.Write(target + "/module.olean", "native material");
+        fixture.Write(target + "/neighbor.txt", "native neighbor");
+        var sibling = fixture.Write((layer == "dependency" ? ".lake/build" : ".lake/packages") + "/retained.txt", "other layer");
+
+        var restored = fixture.RestoreLayer(layer, key, "success");
+
+        Assert.Contains("\"status\": \"restored\"", restored.Text, StringComparison.Ordinal);
+        Assert.Equal("native material", File.ReadAllText(fixture.PathOf(target + "/module.olean")));
+        Assert.Equal("native neighbor", File.ReadAllText(fixture.PathOf(target + "/neighbor.txt")));
+        foreach (var (outcome, matched) in new[]
+            {
+                ("failure", key), ("cancelled", key), ("success", ""),
+                ("success", key.Replace(new string('a', 40), new string('b', 40), StringComparison.Ordinal)),
+            })
+        {
+            fixture.Write(target + "/module.olean", "partial extraction");
+            var missed = fixture.RestoreLayer(layer, matched, outcome);
+            Assert.Contains("\"status\": \"miss\"", missed.Text, StringComparison.Ordinal);
+            Assert.False(Directory.Exists(fixture.PathOf(target)));
+            Assert.Equal("other layer", File.ReadAllText(sibling));
+        }
+        foreach (var outcome in new[] { "", "skipped" })
+        {
+            fixture.Write(target + "/module.olean", "independently restored material");
+            var skipped = fixture.RestoreLayer(layer, key, outcome);
+            Assert.Contains("\"status\": \"miss\"", skipped.Text, StringComparison.Ordinal);
+            Assert.Equal("independently restored material", File.ReadAllText(fixture.PathOf(target + "/module.olean")));
+            Assert.Equal("other layer", File.ReadAllText(sibling));
+        }
     }
 
     [Theory]
