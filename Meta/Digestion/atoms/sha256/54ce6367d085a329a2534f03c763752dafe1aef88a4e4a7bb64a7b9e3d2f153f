@@ -1,0 +1,7 @@
+### 17.8 引用
+
+[17-A] NourElHouda Bourguiba and Abderrazek Karoui. *Weighted finite Laplace transform operator: spectral analysis and quality of approximation by its eigenfunctions*. Integral Transforms and Special Functions 29(9), 679–698, 2018. DOI: 10.1080/10652469.2018.1489804. https://arxiv.org/abs/1804.05207 . 有限 Laplace 算子的超指数谱衰减背景；其加权 $L^2$ 算子问题与这里固定端点原子权重的恢复风险不同。
+
+[17-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩的 Wasserstein 恢复背景；本节的支撑端点泛函及有限时间观察条件单独定义。
+
+[17-C] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 无分离条件的稀疏矩恢复背景。
