@@ -243,11 +243,15 @@ public sealed class DeclaredTemplateReviewTests
             var evidence = module!["information_templates"]!.AsObject();
             if (version is null) evidence.Remove("compatibility_version");
             else evidence["compatibility_version"] = System.Text.Json.Nodes.JsonNode.Parse(version);
+            // Preserve the version token: the canonical writer normalizes 7.0 to 7.
+            using var document = JsonDocument.Parse(evidence.ToJsonString());
+            if (version is not null)
+                Assert.Equal(version, document.RootElement.GetProperty("compatibility_version").GetRawText());
+            var error = Record.Exception(() => InformationTemplateEvidence.Read(document.RootElement,
+                module["source_path"]!.GetValue<string>(), Tree(files)));
+            Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
+                "[FAIL] invalid_evidence_version_uses_named_diagnostic: " + error?.Message);
         }
-        var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
-        var error = Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)));
-        Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
-            "[FAIL] invalid_evidence_version_uses_named_diagnostic: " + error?.Message);
     }
 
     [Fact]
