@@ -34,11 +34,13 @@ internal static partial class CommonExecutionEvidence
     {
         if (string.IsNullOrWhiteSpace(environment)) throw new InvalidDataException("missing original execution environment");
         var value = JsonSerializer.Deserialize<CheckEnvironment>(environment, JsonOptions);
+        string? expectedSdk = null;
         if (value is null || value.Os is not ("macos" or "linux" or "windows") || value.Arch is not ("arm64" or "x64")
-            || value.Sdk != DeclaredExecutionSdk(root) || !Version.TryParse(value.Runtime, out _) || value.Options != ExecutionOptions
+            || value.Sdk != (expectedSdk = DeclaredExecutionSdk(root)) || !Version.TryParse(value.Runtime, out _) || value.Options != ExecutionOptions
             || value.Processors is not null && (!int.TryParse(value.Processors, System.Globalization.NumberStyles.None,
                 System.Globalization.CultureInfo.InvariantCulture, out var processors) || processors <= 0))
-            throw new InvalidDataException("invalid original execution environment");
+            throw new InvalidDataException("invalid original execution environment: " + JsonSerializer.Serialize(
+                new { raw = environment, parsed = value, expected_sdk = expectedSdk }, JsonOptions));
     }
 
     internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false,

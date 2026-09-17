@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Xml.Linq;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -288,12 +289,15 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         Assert.True(fixture.Run("build", output) == 0, output.ToString());
         var processes = output.ToString().Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
             .Select(line => JsonNode.Parse(line["STAGE_PROCESS ".Length..])!).ToArray();
-        foreach (var verb in new[] { "restore", "build" })
-            Assert.Equal(new[] { ResourceFixture.Foo, ResourceFixture.Bar }.Order(StringComparer.Ordinal),
-                processes.Where(row => row["arguments"]![0]!.ToString() == verb).Select(row => row["arguments"]![1]!.ToString()).Order(StringComparer.Ordinal));
+        Assert.Equal(new[] { "restore", "build" }, processes.Select(row => row["arguments"]![0]!.ToString()));
+        var projectSet = processes[0]["arguments"]![1]!.ToString();
+        Assert.Equal(projectSet, processes[1]["arguments"]![1]!.ToString());
+        var expectedRoots = new[] { ResourceFixture.Foo, ResourceFixture.Bar }.Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(expectedRoots, XDocument.Load(projectSet).Root!.Elements("Project")
+            .Select(project => Path.GetRelativePath(fixture.Root, project.Attribute("Path")!.Value).Replace('\\', '/')).Order(StringComparer.Ordinal));
         Assert.All(processes, row => Assert.Contains(row["arguments"]!.AsArray(), arg => arg!.ToString() == "-nr:false"));
-        Assert.DoesNotContain(".sln", output.ToString(), StringComparison.Ordinal);
         var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        Assert.Equal(expectedRoots, build.Projects);
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/Foo.dll", StringComparison.Ordinal));
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/Bar.dll", StringComparison.Ordinal));
         Assert.DoesNotContain(build.Materials, material => material.Path.StartsWith(CommonBuildOutputs.PackagesPath + "/", StringComparison.Ordinal));

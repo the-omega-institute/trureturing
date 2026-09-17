@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
@@ -138,13 +139,15 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var logger = Environment.GetEnvironmentVariable("CI_CSC_LOGGER_ASSEMBLY");
         string[] observation = File.Exists(logger) ? ["-logger:StrataLint.JudgeSeed.CscExecutionLogger," + logger] : [];
         if (observation.Length == 0) output.WriteLine("JUDGE_CSC {\"status\":\"unavailable\",\"count\":null}");
-        foreach (var target in roots)
-        {
-            Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
-            Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
-                "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
-                "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
-        }
+        var projectSet = Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx");
+        new XElement("Solution", roots.Select(target =>
+            new XElement("Project", new XAttribute("Path", Path.Combine(root, target))))).Save(projectSet);
+        // Keep references outside this explicit root list in the requested configuration.
+        string[] buildOptions = ["-nr:false", "-m:1", "-p:ShouldUnsetParentConfigurationAndPlatform=false"];
+        Step("restore-StrataLint", "dotnet", ["restore", projectSet, "--locked-mode", .. buildOptions]);
+        Step("build", "dotnet", ["build", projectSet, "--configuration", "Release", "--no-restore", "--warnaserror", .. buildOptions,
+            "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
+            "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
         return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray(), roots, resourcePlan?.Retain(root));
     }
 

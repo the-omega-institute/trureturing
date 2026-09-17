@@ -183,7 +183,7 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps, string[]? projects = null, ResourcePlanBinding? selection = null)
     {
-        RequirePassed(steps, projects is null ? BuildSteps : projects.SelectMany(_ => BuildSteps).ToArray());
+        RequirePassed(steps, BuildSteps);
         if (candidate != Candidate(root)) throw new InvalidDataException("candidate changed during build");
         var round = Guid.NewGuid().ToString("N");
         var record = new CommonStageRecord(2, candidate, round, steps,
@@ -204,7 +204,7 @@ internal static partial class CommonExecutionEvidence
         var record = Read<CommonStageRecord>(root, BuildPath);
         if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
         ValidateRecord(root, record, candidate, round ?? record.Round, validation);
-        RequirePassed(record.Steps, record.Projects is null ? BuildSteps : record.Projects.SelectMany(_ => BuildSteps).ToArray());
+        RequirePassed(record.Steps, BuildSteps);
         if (record.Projects is { Length: 0 }) throw new InvalidDataException("empty build project selection");
         if (record.Selection is not null)
         {
