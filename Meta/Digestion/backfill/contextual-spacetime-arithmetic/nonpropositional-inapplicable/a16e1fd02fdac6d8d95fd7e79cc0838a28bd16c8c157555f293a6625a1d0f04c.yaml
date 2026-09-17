@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a16e1fd02fdac6d8d95fd7e79cc0838a28bd16c8c157555f293a6625a1d0f04c
+  normalized_sha256: sha256:a16e1fd02fdac6d8d95fd7e79cc0838a28bd16c8c157555f293a6625a1d0f04c
+cas_ref: sha256:a16e1fd02fdac6d8d95fd7e79cc0838a28bd16c8c157555f293a6625a1d0f04c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子项只以“令”引入 gamma 的分段记号，空哨兵分支与两个有限整数分支互斥且穷尽指定类型；它不声称档案乘法的更新正确、不声称下降或保域，没有在定义中偷带这些命题，后接“更新为”的断言已留在别的子项，故本叶无待证命题。
+    previous_atom_id: 5cb64f30e02d488911c6d2ef09d9e2c037b4a08fe2fa72e51167aff19cee3abe
+    next_atom_id: 21edc8a0f1711bbf4a2396fd1fcbdd3746353e63a80dc2c9a6a0cd73a04ff42d
