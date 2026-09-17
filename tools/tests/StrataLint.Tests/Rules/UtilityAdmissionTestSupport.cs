@@ -123,9 +123,12 @@ internal static class UtilityAdmissionTestSupport
         string blockCode,
         string observationFields)
     {
-        var block = Assert.Single(
-            diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Block);
+        // Registration evidence has its own fail-closed finding when the same
+        // first-pin module also lacks the report required for utility admission.
+        var block = Assert.Single(diagnostics, item => item.AdmissionEffect is AdmissionEffect.Block
+            && item.Message.StartsWith("UTILITY-", StringComparison.Ordinal));
+        Assert.All(diagnostics.Where(item => item.AdmissionEffect is AdmissionEffect.Block && item != block),
+            item => Assert.StartsWith("DTR-Evidence ", item.Message, StringComparison.Ordinal));
         Assert.Contains(blockCode, block.Message, StringComparison.Ordinal);
         var observation = Assert.Single(
             diagnostics,

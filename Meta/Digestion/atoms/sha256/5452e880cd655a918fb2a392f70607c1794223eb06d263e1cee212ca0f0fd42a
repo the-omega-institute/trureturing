@@ -1,0 +1,35 @@
+**定理 66.11（关系位的二点相关）。**
+
+置
+$$
+p:=\mathbb E[c_0]=\pi_1=\frac{\alpha^2}{1+\alpha^2},
+\qquad
+\vartheta:=-\alpha^2=-\phi^{-2}.
+$$
+则对每个 $n\ge0$，
+$$
+\operatorname{Cov}(c_0,c_n)
+=p(1-p)\vartheta^n.
+$$
+因此 Pearson 相关系数为
+$$
+\boxed{\ \operatorname{Corr}(c_0,c_n)=(-\phi^{-2})^n\ }.
+$$
+等价地，
+$$
+\mathbb E[c_0c_n]
+=p^2+p(1-p)(-\phi^{-2})^n.
+$$
+
+若定义符号关系位
+$$
+g_j:=2c_j-1\in\{-1,1\},
+$$
+则
+$$
+\mathbb E[g_0]=-\frac1{\sqrt5},
+\qquad
+\mathbb E[g_0g_n]
+=\frac15+\frac45(-\phi^{-2})^n.
+$$
+
