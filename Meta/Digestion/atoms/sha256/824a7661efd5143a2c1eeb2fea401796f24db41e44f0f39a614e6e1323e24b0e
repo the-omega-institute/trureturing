@@ -1,0 +1,7 @@
+**定理 IR7。** 对任何 `c∈[a,b]`，若 `λ_min(M(c))≤δ`，则
+
+$$\boxed{\operatorname{dist}(c,\{a,b\})
+\le(b-a)\delta/\kappa.}\tag{IR.8}$$
+
+对“第 `n-m` 个最小特征值不超过 `δ`”的近秩条件，该结论同样成立。
+

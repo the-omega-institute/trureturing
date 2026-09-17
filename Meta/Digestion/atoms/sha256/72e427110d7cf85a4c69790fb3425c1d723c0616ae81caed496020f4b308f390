@@ -1,0 +1,4 @@
+**定理40a.4。** 真实初态对这个带噪声构造的算子满足
+
+$$\|Y_n-(\widehat P_n\Gamma_0\widehat P_n^T)_{21}\|_F\le e_n.$$
+
