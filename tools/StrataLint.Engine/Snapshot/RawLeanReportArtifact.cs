@@ -74,6 +74,7 @@ internal static class RawLeanReportArtifact
         foreach (var moduleElement in RequiredArray(root, "modules").EnumerateArray())
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
+            if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
             RequireProperties(moduleElement, moduleProperties, "raw Lean module");
@@ -105,6 +106,8 @@ internal static class RawLeanReportArtifact
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
                 {
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
+                    InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
+                        ? InformationTemplateEvidence.Read(templates, sourcePath, snapshot) : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -170,6 +173,7 @@ internal static class RawLeanReportArtifact
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),
                         information_registration_errors = fileReport.InformationRegistrationErrors,
+                        information_templates = fileReport.InformationTemplates?.Wire,
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),

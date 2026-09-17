@@ -74,6 +74,9 @@ class NativeInvalidationTests:
         self.assertNotIn('D5.Added', [row['module'] for row in self.report()[0]])
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
+        # The fixed injected driver also governs modules with no registry import.
+        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 2\n')
+        changed(['D5.B', 'D5.A', 'D5.Alone', 'Fixture'])
     def test_reported_module_proof_axioms_invalidate_public_trace(self):
         # Both registered modules use module headers. The public theorem body
         # in B is not exposed to A's ordinary public import, but Inspector reads
