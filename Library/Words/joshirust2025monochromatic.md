@@ -37,12 +37,12 @@ The word convention is the zero-indexed fixed point of `0 -> 01, 1 -> 0`;
 the repository's true letter denotes 0. The mechanical phase is at word
 index plus one.
 
-The exact all-positive-index conjunction is represented in
-`D5/S1/Words/FibonacciMapFirstStart.lean`; its first-start definition
-minimizes starts attaining the existing `goldenMAPMaximum`, not a
-formula-defined maximum. Boundedness, attainment and the exclusion of
-maximal false-letter runs are established in the proof. The published
-Conjecture 4.24 account above remains separate.
+The theorem `D5/S1/Words/FibonacciMapFirstStart.result` proves the exact
+all-positive-index conjunction. Its first-start definition minimizes starts
+attaining the existing `goldenMAPMaximum`, not a formula-defined maximum.
+Boundedness, attainment and the exclusion of maximal false-letter runs are
+established in the proof. The published Conjecture 4.24 account above remains
+separate.
 
 The bounded literature audit through 17 September 2026 found no later
 proof or refutation of Conjecture 3.19. This is not an exhaustive worldwide

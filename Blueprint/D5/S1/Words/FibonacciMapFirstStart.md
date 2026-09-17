@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow (goldenMAPFirstStart\left(fib\
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/FibonacciMapFirstStart.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/joshi-rust-fibonacci-map-first-start` (proved) by `D5/S1/Words/FibonacciMapFirstStart.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"joshi-rust-fibonacci-map-first-start","declaration_gid":"D5/S1/Words/FibonacciMapFirstStart.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gandhar Joshi and Dan Rust (2025). *Monochromatic arithmetic progressions in the Fibonacci, Thue-Morse, and Rudin-Shapiro words*. DOI: [10.1016/j.tcs.2025.115391](https://doi.org/10.1016/j.tcs.2025.115391). URL: <https://arxiv.org/html/2501.05830v2>.

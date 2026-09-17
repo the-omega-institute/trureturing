@@ -63,7 +63,10 @@ internal sealed class FibonacciMapFirstStartDocument : IScribeDocumentDefinition
                         + "than the preceding even record r^(2m-2). These exclusions "
                         + "rule out every earlier start. The boundary n=1 gives "
                         + "first starts 3 at difference 2 and 2 at difference 1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("joshi-rust-fibonacci-map-first-start"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DefinitionFormula()
     {

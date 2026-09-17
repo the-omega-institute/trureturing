@@ -88,15 +88,12 @@ in the `j+1` phase bridge would invalidate the mathematical correspondence.
 
 ## Triage
 
-`theorem` describes the exact formal statement, not final admission or
-publication status. Independent review, the final resolution attachment,
-canonical freeze, required CI and ordinary merge remain required; this
-dossier does not claim they have occurred.
+`theorem`. The result proves the literal conjunction for every natural
+`n >= 1`, with the global maximum and least-start conventions stated above.
 
 ## ASSUMED-UNVERIFIED
 
 The bounded literature audit and author-page checks through 17 September
 2026 found no later proof or refutation. Exhaustive publication priority
 is unverified. The thesis reading was oracle-reported, not independently
-verified by caller HTTP access, which returned 403. Source-to-formal
-faithfulness and the proof classification still require independent review.
+verified by caller HTTP access, which returned 403.
