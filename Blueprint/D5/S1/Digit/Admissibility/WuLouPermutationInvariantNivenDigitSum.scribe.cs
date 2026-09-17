@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Admissibility;
 
@@ -28,6 +30,7 @@ internal sealed class WuLouPermutationInvariantNivenDigitSumDocument
             Node(
                 "result",
                 "Distinct-digit digit-sum bound",
+                ResultFormula(),
                 "For at least two nonzero digit occurrences and at least two distinct digit "
                     + "values, the digit sum is divisible by three, is at least three, and is "
                     + "at most 81. The divisibility-by-three clause is literature-attested by "
@@ -56,4 +59,68 @@ internal sealed class WuLouPermutationInvariantNivenDigitSumDocument
         Blocks(Paragraph(Text(prose))),
         role,
         claim);
+
+    private static DocumentBlock Node(
+        string declaration,
+        string title,
+        Formula formula,
+        string prose,
+        DescribeRole role,
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
+        DescribeId.Create("wu-lou-" + declaration.ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + declaration),
+        H(title),
+        StatementSource.FromAuthor(formula),
+        provenance,
+        Blocks(Paragraph(Text(prose))),
+        role,
+        claim);
+
+    private static Formula ResultFormula()
+    {
+        var d = F.Id("d");
+        var digits = Call("digits", d);
+        var sum = Call("sum", digits);
+        var nonzeroCount = Call("countP", digits,
+            Lambda(F.Id("x"), NotEqual(F.Id("x"), D(0))));
+        var distinct = Existential("a", digits,
+            Existential("b", digits, NotEqual(F.Id("a"), F.Id("b"))));
+        var conclusion = And(
+            Divides(D(3), sum),
+            And(LessOrEqual(D(3), sum), LessOrEqual(sum, D(8, 1))));
+        return Disp(Universal("d", F.Id("DecimalPINN"),
+            Implies(
+                Parenthesized(LessOrEqual(D(2), nonzeroCount)),
+                Implies(Parenthesized(distinct), Parenthesized(conclusion)))));
+    }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula Lambda(Formula variable, Formula body) =>
+        Parenthesized(Seq(variable, Sp, Mapsto, Sp, body));
+
+    private static Formula Universal(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+
+    private static Formula Existential(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula NotEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+
+    private static Formula LessOrEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula Divides(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Divides, right);
 }

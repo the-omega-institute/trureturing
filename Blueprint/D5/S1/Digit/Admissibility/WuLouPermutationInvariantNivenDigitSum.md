@@ -22,7 +22,7 @@ The structure records a nonempty decimal digit list, its nonzero leading digit, 
 
 **Theorem 1.2 (Distinct-digit digit-sum bound).**
 
-Lean statement: `D5/S1/Digit/Admissibility/WuLouPermutationInvariantNivenDigitSum.result`
+$$\forall d \in DecimalPINN,\; (2 \le countP\left(digits\left(d\right), (x \mapsto x \ne 0)\right)) \Rightarrow \left((\exists a \in digits\left(d\right),\; \exists b \in digits\left(d\right),\; a \ne b) \Rightarrow (3 \mid sum\left(digits\left(d\right)\right) \land \left(3 \le sum\left(digits\left(d\right)\right) \land sum\left(digits\left(d\right)\right) \le 81\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/WuLouPermutationInvariantNivenDigitSum.result` (`✓ std3`). ∎
 
