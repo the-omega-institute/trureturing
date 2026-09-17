@@ -5,18 +5,20 @@ namespace StrataLint.Lean.Tests;
 
 public sealed class LeanReportSelectionTests
 {
+    public static IEnumerable<object[]> InspectorPhaseCases()
+    {
+        foreach (var buildProducer in new[] { false, true })
+        foreach (var unavailableClock in new[] { false, true })
+        foreach (var failedPhase in buildProducer
+                     ? new[] { "", "inputs", "utility-input-build", "ensure", "report", "publish" }
+                     : new[] { "", "inputs", "ensure", "report", "publish" })
+            yield return [failedPhase, unavailableClock, buildProducer];
+    }
+
     [Theory]
-    [InlineData("", false)]
-    [InlineData("inputs", false)]
-    [InlineData("ensure", false)]
-    [InlineData("report", false)]
-    [InlineData("publish", false)]
-    [InlineData("", true)]
-    [InlineData("inputs", true)]
-    [InlineData("ensure", true)]
-    [InlineData("report", true)]
-    [InlineData("publish", true)]
-    public void InspectorPhaseTimingPreservesProductionAndFailure(string failedPhase, bool unavailableClock)
+    [MemberData(nameof(InspectorPhaseCases))]
+    public void InspectorPhaseTimingPreservesProductionAndFailure(
+        string failedPhase, bool unavailableClock, bool buildProducer)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -43,6 +45,10 @@ public sealed class LeanReportSelectionTests
               printf 'fixture report published\n'
             fi
             """);
+        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "dotnet"), """
+            printf 'utility-input-build\n' >> "$INSPECTOR_TEST_PHASES"
+            [[ "$INSPECTOR_TEST_FAILURE" != utility-input-build ]] || exit 23
+            """);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(fixture, "tools/scripts/worktree/lean-cache-ensure.sh"), """
             printf 'ensure\n' >> "$INSPECTOR_TEST_PHASES"
             [[ "$INSPECTOR_TEST_FAILURE" != ensure ]] || exit 23
@@ -61,18 +67,29 @@ public sealed class LeanReportSelectionTests
         var phases = Path.Combine(temporary.Path, "phases");
         var report = Path.Combine(fixture, "published.json");
         var logs = Path.Combine(fixture, "diagnostics");
-        var result = TestProcessRunner.Run("env",
-            ["STRATALINT_INSPECTOR_SUPERVISED=1", "STRATALINT_LEAN_PRODUCER_DLL=" + producer,
-                "LAKE_BIN=" + lake, "INSPECTOR_TEST_PHASES=" + phases, "INSPECTOR_TEST_FAILURE=" + failedPhase,
-                "BASH_ENV=" + shellEnvironment, "PATH=" + stubDirectory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
-                "bash", inspector, "--repository", fixture, "--output", report, "--log-dir", logs],
+        var arguments = new List<string>
+        {
+            "STRATALINT_INSPECTOR_SUPERVISED=1", "LAKE_BIN=" + lake,
+            "INSPECTOR_TEST_PHASES=" + phases, "INSPECTOR_TEST_FAILURE=" + failedPhase,
+            "BASH_ENV=" + shellEnvironment,
+            "PATH=" + stubDirectory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
+        };
+        if (!buildProducer) arguments.Add("STRATALINT_LEAN_PRODUCER_DLL=" + producer);
+        arguments.AddRange(["bash", inspector, "--repository", fixture, "--output", report, "--log-dir", logs]);
+        var result = TestProcessRunner.Run("env", arguments,
             temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
         Assert.Equal(failedPhase.Length == 0 ? 0 : 23, result.ExitCode);
-        var allPhases = new[] { "inputs", "ensure", "report", "publish" };
+        var allPhases = buildProducer
+            ? new[] { "inputs", "utility-input-build", "ensure", "report", "publish" }
+            : new[] { "inputs", "ensure", "report", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0, File.Exists(report));
+        var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Equal(failedPhase.Length == 0 ? "fixture report published\n" : "", standardOutput);
+        Assert.DoesNotContain("LEAN_INSPECTOR_PHASE", standardOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("LEAN_INSPECTOR_FAILED", standardOutput, StringComparison.Ordinal);
         var error = Encoding.UTF8.GetString(result.StandardError);
         var observations = error.Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Where(line => line.StartsWith("LEAN_INSPECTOR_PHASE ", StringComparison.Ordinal)).ToArray();

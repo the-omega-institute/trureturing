@@ -113,6 +113,63 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Theory]
+    [InlineData("pr", "delete")]
+    [InlineData("pr", "rename")]
+    [InlineData("push", "delete")]
+    [InlineData("push", "rename")]
+    public void RetiredLiteralRegistrationUsesProtectedEndpointManifest(string mode, string change)
+    {
+        const string oldPath = "retired/old.txt";
+        const string newPath = "docs/renamed.md";
+        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
+        var split = map.IndexOf("[[files]]", StringComparison.Ordinal);
+        var row = map[split..];
+        string Manifest(bool includeOld) => map[..split] + string.Concat(
+            new[] { "*", "Meta/**", "docs/*", "fixtures/*", "retired/old.txt", "tools/**" }
+                .Where(pattern => includeOld || pattern != oldPath)
+                .Select(pattern => row.Replace("pattern = \"**\"", "pattern = \"" + pattern + "\"", StringComparison.Ordinal)
+                    .Replace("require = []", pattern == oldPath ? "require = [\"filemap\"]" : "require = []", StringComparison.Ordinal)));
+        fixture.Write("Meta/FILEMAP.toml", Manifest(includeOld: true));
+        fixture.Write(oldPath, "registered retired input\n");
+        fixture.CommitPlan();
+
+        if (change == "delete") File.Delete(Path.Combine(fixture.Root, oldPath));
+        else
+        {
+            Directory.CreateDirectory(Path.Combine(fixture.Root, "docs"));
+            File.Move(Path.Combine(fixture.Root, oldPath), Path.Combine(fixture.Root, newPath));
+        }
+        fixture.Write("Meta/FILEMAP.toml", Manifest(includeOld: false));
+
+        JsonNode plan;
+        if (mode == "pr")
+        {
+            fixture.PrPlan();
+            plan = JsonNode.Parse(File.ReadAllText(fixture.Plan))!;
+        }
+        else
+        {
+            fixture.CommitPlan();
+            var result = PushPlan(fixture);
+            Assert.True(result.Exit == 0, result.Text);
+            plan = PushSelection(fixture);
+        }
+
+        var old = plan["paths"]!.AsArray().Single(item => item!["path"]!.ToString() == oldPath)!;
+        Assert.Equal(oldPath, old["pattern"]!.ToString());
+        Assert.Equal(new[] { "filemap" }, Strings(old["require"]!));
+        if (change == "rename")
+        {
+            var renamed = plan["paths"]!.AsArray().Single(item => item!["path"]!.ToString() == newPath)!;
+            Assert.Equal("docs/*", renamed["pattern"]!.ToString());
+            Assert.Empty(renamed["require"]!.AsArray());
+        }
+        Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+    }
+
+    [Theory]
     [InlineData("shallow")]
     [InlineData("missing")]
     public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)

@@ -657,8 +657,23 @@ def make_plan(root, commit, changes_file):
     manifest = load_filemap(raw, read, filemap_documents)
     resources = {r["id"]: r for r in manifest["resources"]}
     entries = [(glob(e["pattern"]), e) for e in manifest["files"]]
-    def match(p):
-        matches = [e for g, e in entries if g.fullmatch(p)]
+    before_commit = None
+    if data["mode"] == "pr":
+        before_commit = data["base"]
+    elif push:
+        origin = actual["origin"]
+        if origin["kind"] in {"event-range", "local-range"}:
+            before_commit = origin["before"]
+        elif origin["kind"] == "local-current-input":
+            before_commit = commit
+    before_entries = None
+    if before_commit is not None:
+        def read_before(p):
+            return committed_file(root, before_commit, p)
+        before_manifest = load_filemap(read_before(FILEMAP), read_before)
+        before_entries = [(glob(e["pattern"]), e) for e in before_manifest["files"]]
+    def match(p, registered_entries=entries):
+        matches = [e for g, e in registered_entries if g.fullmatch(p)]
         if len(matches) != 1:
             raise ValueError(f"{p}: FILEMAP match count {len(matches)}; patterns={[e['pattern'] for e in matches]}")
         return matches[0]
@@ -687,7 +702,9 @@ def make_plan(root, commit, changes_file):
             match(p)
     scope, required = [], set()
     for p in sorted(paths):
-        entry = match(p)
+        record = paths[p]
+        removed = record["new"] is None or (record["status"] == "R" and record["old"]["path"] == p)
+        entry = match(p, before_entries) if removed and before_entries is not None else match(p)
         if entry["runtime_disposition"] == "run-local":
             raise ValueError(f"{p}: run-local path cannot be a committed change")
         required.update(entry["require"])
