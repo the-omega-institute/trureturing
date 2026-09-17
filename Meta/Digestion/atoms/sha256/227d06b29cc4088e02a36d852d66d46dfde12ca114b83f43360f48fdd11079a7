@@ -1,0 +1,12 @@
+**Definition 24.3 (Prefix ultrametric and optimal distortion).** For $x,y\in K$, define
+$$
+d_*(x,y)=\begin{cases}
+0,&x=y,\\
+2^{-\min\{j\ge0:x_j\ne y_j\}},&x\ne y.
+\end{cases}
+$$
+Set
+$$
+C(k)=\operatorname{Lip}_{d_*}(T^k)=\sup_{x\ne y}\frac{d_*(T^kx,T^ky)}{d_*(x,y)}.
+$$
+This is the prefix metric on the digit carrier, not the sum metric $d_\Sigma(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$ of [Z, Definition 371.1]. 
