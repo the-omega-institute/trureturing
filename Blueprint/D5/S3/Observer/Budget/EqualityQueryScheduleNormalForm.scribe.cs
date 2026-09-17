@@ -68,7 +68,7 @@ internal sealed class EqualityQueryScheduleNormalFormDocument : IScribeDocumentD
         Seq(Call("idxOf", L, X), Sp, Plus, Sp, D(1)),
         Seq(size, Sp, Minus, Sp, D(1)));
     private static Formula Carrier() => Seq(
-        Forall, Sp, A, Colon, Sp, Call("Type"), Comma, Sp,
+        Forall, Sp, A, Colon, Sp, Seq(Operatorname, Grp(F.Id("Type"))), Comma, Sp,
         OpenBracket, Call("DecidableEq", A), CloseBracket, Comma);
 
     private static Formula ScanFormula() => Disp(new Formula.Aligned([
@@ -83,8 +83,8 @@ internal sealed class EqualityQueryScheduleNormalFormDocument : IScribeDocumentD
     private static Formula NormalFormFormula() => Disp(new Formula.Aligned([
         Carrier(),
         Seq(Forall, Sp, T, Colon, Sp,
-            Call("PassiveProtocol", A, Seq(Open, Underscore, Sp, Mapsto, Sp,
-                Call("Bool"), Close)), Comma, Sp,
+            Call("PassiveProtocol", A, Seq(Open, F.Id("c"), Sp, Mapsto, Sp,
+                Operatorname, Grp(F.Id("Bool")), Close)), Comma, Sp,
             S, Colon, Sp, Call("Finset", A), Comma),
         Seq(Open, Identifies(T, S), Close, Sp, Rightarrow),
         Seq(Exists, Sp, L, Colon, Sp, Call("List", A), Comma, Sp,
