@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:165c719f28005a274af59ea488b8b122ad5212da85d246fb0441650eda9e2846
   normalized_sha256: sha256:165c719f28005a274af59ea488b8b122ad5212da85d246fb0441650eda9e2846
 cas_ref: sha256:165c719f28005a274af59ea488b8b122ad5212da85d246fb0441650eda9e2846
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
+    target_statement_id: sha256:481d77492904c198a2c54ff79d43fd307a21e2361345921eb8be783eafa0314b
 receipts:
   unresolved_subitems: []

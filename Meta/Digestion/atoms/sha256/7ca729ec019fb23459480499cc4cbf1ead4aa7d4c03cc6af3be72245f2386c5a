@@ -1,0 +1,19 @@
+### 85.1 互补记录可以测出纯度，但纯度不是状态本身
+
+在第 84 节的完整互补上下文假设下，仓库已有 `complete_context_purity_identities`。令
+
+$$
+p_{l,j}=\operatorname{Tr}(\rho P_{l,j}),
+\qquad d=\dim\mathcal H,
+$$
+
+并假设 $\rho$ 是正半定且迹为一。该恒等式给出
+
+$$
+\boxed{
+\sum_{l=0}^{d}\sum_{j=0}^{d-1}
+\left(p_{l,j}-\frac1d\right)^2
+=\operatorname{Tr}(\rho^2)-\frac1d.
+}
+$$
+
