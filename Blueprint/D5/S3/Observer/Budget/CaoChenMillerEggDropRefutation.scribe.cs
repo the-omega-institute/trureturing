@@ -70,7 +70,11 @@ internal sealed class CaoChenMillerEggDropRefutationDocument
                 "At d=4, k=5, and constant side length five, paperBound is nine. Correctness "
                     + "makes paddedTranscript injective, but the hidden-point space has 625 "
                     + "elements and the nine-bit transcript space has 512.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "cao-chen-miller-egg-drop-conjecture-one"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -78,10 +82,11 @@ internal sealed class CaoChenMillerEggDropRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + DeclarationName(id)),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static string DeclarationName(string id) => id switch
     {
