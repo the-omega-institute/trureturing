@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6db1cc449cecdd4e7fe34fee2e9eb9418438a5fb7a768199f7f634fdaac2b28e
+  normalized_sha256: sha256:6db1cc449cecdd4e7fe34fee2e9eb9418438a5fb7a768199f7f634fdaac2b28e
+cas_ref: sha256:6db1cc449cecdd4e7fe34fee2e9eb9418438a5fb7a768199f7f634fdaac2b28e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “必须保留各自的固定”参数标签是在规定本节模型族，“逐步或逐分支独立选模不属于此模型族”明确排除另一模型；这里只陈述语义范围，没有从定义推出不可学习性或统计不可区分性。
+    previous_atom_id: 165aad0b832e80fbe99338ba4bd8eecc5502c93498587f0fee276bcf25b65600
+    next_atom_id: 40e58f08a352f3082fe9770e909be35638a06a2a6c0dabf9ef1d12f84f3fa310
