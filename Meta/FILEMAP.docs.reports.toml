@@ -3,6 +3,7 @@ schema_version = 2
 files = [
 { pattern = "docs/reports/**/*.b64", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.c", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.cpp", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.h", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.json", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.lean", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1577fda76ff0d8523686b02f13539ef9166c8f63d894a3798c7d9f7b46729788
+  normalized_sha256: sha256:1577fda76ff0d8523686b02f13539ef9166c8f63d894a3798c7d9f7b46729788
+cas_ref: sha256:1577fda76ff0d8523686b02f13539ef9166c8f63d894a3798c7d9f7b46729788
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本批交付推送分支，不开 PR”及“评审、CI、合入和持续研究目标的完成不由实施收据预先判定”规定交付归属，末尾锚点只作排版；没有数学命题或定义内暗含结论，本子句可按工程边界备注结算。
+    previous_atom_id: a61475bd02c9e1bac6832026ccb49b1d0ef3f7f7e5c27a58e60ed7c7ebac4ab5
+    next_atom_id: 347f6d2a6de153eba2d4b94adac5807fc0016a55509f55a11c27cff3d8c9ccbd

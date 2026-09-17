@@ -19,6 +19,7 @@ from random import Random
 
 from rro_retention import check_rro_retention
 from rro_reading import check_rro_reading
+from static_mixture_horizon import check_static_mixture_horizon
 
 SEED = 20270914
 RNG = Random(SEED)
@@ -951,6 +952,11 @@ def main():
     assert RNG.getstate() == reading_rng_state and COUNTS.keys().isdisjoint(reading_counts)
     for name, count in reading_counts.items():
         record(name, count)
+    horizon_rng_state = RNG.getstate()
+    horizon, horizon_counts = check_static_mixture_horizon()
+    assert RNG.getstate() == horizon_rng_state and COUNTS.keys().isdisjoint(horizon_counts)
+    for name, count in horizon_counts.items():
+        record(name, count)
     result = {
         'schema': 'contextual-spacetime-ml-finite-checks-v1',
         'source': 'docs/reports/contextual-spacetime-ml/finite_checks.py',
@@ -960,6 +966,7 @@ def main():
         'relu_certificates': relu_certificates,
         'rro_retention': rro,
         'rro_reading': reading,
+        'static_mixture_horizon': horizon,
         'configuration': {'seed': SEED, 'arithmetic': 'fractions.Fraction and rational-complex pairs',
                           'regression_steps': 5, 'two_layer_steps': 4, 'momentum_steps': 3,
                           'automata_scope': 'all binary-output partial deterministic machines with 1 or 2 states and 2 actions',

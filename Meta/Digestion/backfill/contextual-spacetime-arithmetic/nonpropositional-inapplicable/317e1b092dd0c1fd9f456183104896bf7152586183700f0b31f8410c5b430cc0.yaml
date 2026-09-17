@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:317e1b092dd0c1fd9f456183104896bf7152586183700f0b31f8410c5b430cc0
+  normalized_sha256: sha256:317e1b092dd0c1fd9f456183104896bf7152586183700f0b31f8410c5b430cc0
+cas_ref: sha256:317e1b092dd0c1fd9f456183104896bf7152586183700f0b31f8410c5b430cc0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “加法双射与差分逆：命题 42 → 命题 52 → 命题 58”使用定理标题定位旧新编号，没有再次陈述双射的量词及证明；不是定义性数学断言，故按引用导航结算。
+    previous_atom_id: 26834c57a4a498342762e99d54182c157ea5741989b7062723ad231e6649629d
+    next_atom_id: ba651bf2ecc2db2114741325368406b0625734538b58a847eef6a41ca3b51bc9

@@ -1,0 +1,648 @@
+[
+  {
+    "prime": 11,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "86/11",
+        "critical_cost": "79/10",
+        "each_full_child_mass": "1/10",
+        "critical_child_mass": "1/10",
+        "equal_child_potential": "9/10"
+      },
+      {
+        "depth": 2,
+        "full_cost": "691/121",
+        "critical_cost": "50199/8681",
+        "each_full_child_mass": "869/8681",
+        "critical_child_mass": "860/8681",
+        "equal_child_potential": "6794/8681"
+      },
+      {
+        "depth": 1,
+        "full_cost": "4684/1331",
+        "critical_cost": "216683355/60665282",
+        "each_full_child_mass": "6074079/60665282",
+        "critical_child_mass": "5998571/60665282",
+        "equal_child_potential": "34687509/60665282"
+      }
+    ],
+    "each_full_root_mass": "288405545505/2879806090433",
+    "critical_root_mass": "284156180888/2879806090433",
+    "potential": "3894750925253/2879806090433"
+  },
+  {
+    "prime": 13,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "100/13",
+        "critical_cost": "31/4",
+        "each_full_child_mass": "1/12",
+        "critical_child_mass": "1/12",
+        "equal_child_potential": "3/4"
+      },
+      {
+        "depth": 2,
+        "full_cost": "945/169",
+        "critical_cost": "27265/4833",
+        "each_full_child_mass": "403/4833",
+        "critical_child_mass": "400/4833",
+        "equal_child_potential": "3100/4833"
+      },
+      {
+        "depth": 1,
+        "full_cost": "7536/2197",
+        "critical_cost": "5472111/1578652",
+        "each_full_child_mass": "131651/1578652",
+        "critical_child_mass": "130491/1578652",
+        "equal_child_potential": "736155/1578652"
+      }
+    ],
+    "each_full_root_mass": "4007409289/48047076003",
+    "critical_root_mass": "3965573824/48047076003",
+    "potential": "20597672945/16015692001"
+  },
+  {
+    "prime": 17,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "128/17",
+        "critical_cost": "121/16",
+        "each_full_child_mass": "1/16",
+        "critical_child_mass": "1/16",
+        "equal_child_potential": "9/16"
+      },
+      {
+        "depth": 2,
+        "full_cost": "1573/289",
+        "critical_cost": "180003/32903",
+        "each_full_child_mass": "2057/32903",
+        "critical_child_mass": "2048/32903",
+        "equal_child_potential": "15488/32903"
+      },
+      {
+        "depth": 1,
+        "full_cost": "16312/4913",
+        "critical_cost": "2779352991/832069424",
+        "each_full_child_mass": "52020867/832069424",
+        "critical_child_mass": "51756419/832069424",
+        "equal_child_potential": "283144719/832069424"
+      }
+    ],
+    "each_full_root_mass": "13654961244783/218397135116033",
+    "critical_root_mass": "13572716444288/218397135116033",
+    "potential": "263733941105225/218397135116033"
+  },
+  {
+    "prime": 19,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "142/19",
+        "critical_cost": "15/2",
+        "each_full_child_mass": "1/18",
+        "critical_child_mass": "1/18",
+        "equal_child_potential": "1/2"
+      },
+      {
+        "depth": 2,
+        "full_cost": "1947/361",
+        "critical_cost": "27775/5129",
+        "each_full_child_mass": "285/5129",
+        "critical_child_mass": "284/5129",
+        "equal_child_potential": "2130/5129"
+      },
+      {
+        "depth": 1,
+        "full_cost": "22524/6859",
+        "critical_cost": "54127449/16403758",
+        "each_full_child_mass": "911525/16403758",
+        "critical_child_mass": "907833/16403758",
+        "equal_child_potential": "4916175/16403758"
+      }
+    ],
+    "each_full_root_mass": "123753390897/2226967060313",
+    "critical_root_mass": "123159415064/2226967060313",
+    "potential": "2633355947405/2226967060313"
+  },
+  {
+    "prime": 23,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "170/23",
+        "critical_cost": "163/22",
+        "each_full_child_mass": "1/22",
+        "critical_child_mass": "1/22",
+        "equal_child_potential": "9/22"
+      },
+      {
+        "depth": 2,
+        "full_cost": "2815/529",
+        "critical_cost": "440055/82469",
+        "each_full_child_mass": "3749/82469",
+        "critical_child_mass": "3740/82469",
+        "equal_child_potential": "27710/82469"
+      },
+      {
+        "depth": 1,
+        "full_cost": "39316/12167",
+        "critical_cost": "3320183703/1024144246",
+        "each_full_child_mass": "46557819/1024144246",
+        "critical_child_mass": "46430047/1024144246",
+        "equal_child_potential": "247750965/1024144246"
+      }
+    ],
+    "each_full_root_mass": "40396675114401/888595432578157",
+    "critical_root_mass": "40265255175736/888595432578157",
+    "potential": "1019131775045305/888595432578157"
+  },
+  {
+    "prime": 29,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "212/29",
+        "critical_cost": "205/28",
+        "each_full_child_mass": "1/28",
+        "critical_child_mass": "1/28",
+        "equal_child_potential": "9/28"
+      },
+      {
+        "depth": 2,
+        "full_cost": "4417/841",
+        "critical_cost": "875715/166451",
+        "each_full_child_mass": "5945/166451",
+        "critical_child_mass": "5936/166451",
+        "equal_child_potential": "43460/166451"
+      },
+      {
+        "depth": 1,
+        "full_cost": "77584/24389",
+        "critical_cost": "65728256871/20620074572",
+        "each_full_child_mass": "736476315/20620074572",
+        "critical_child_mass": "735214067/20620074572",
+        "equal_child_potential": "3868033155/20620074572"
+      }
+    ],
+    "each_full_root_mass": "1603046456826819/44882042199918161",
+    "critical_root_mass": "1599787865594048/44882042199918161",
+    "potential": "49981503280997825/44882042199918161"
+  },
+  {
+    "prime": 31,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "226/31",
+        "critical_cost": "73/10",
+        "each_full_child_mass": "1/30",
+        "critical_child_mass": "1/30",
+        "equal_child_potential": "3/10"
+      },
+      {
+        "depth": 2,
+        "full_cost": "5031/961",
+        "critical_cost": "355933/67887",
+        "each_full_child_mass": "2263/67887",
+        "critical_child_mass": "2260/67887",
+        "equal_child_potential": "16498/67887"
+      },
+      {
+        "depth": 1,
+        "full_cost": "94404/29791",
+        "critical_cost": "32573807745/10261036274",
+        "each_full_child_mass": "342051613/10261036274",
+        "critical_child_mass": "341539497/10261036274",
+        "equal_child_potential": "1790698923/10261036274"
+      }
+    ],
+    "each_full_root_mass": "323468768843765/9703488585939417",
+    "critical_root_mass": "322894289470232/9703488585939417",
+    "potential": "3576173722686359/3234496195313139"
+  },
+  {
+    "prime": 37,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "268/37",
+        "critical_cost": "29/4",
+        "each_full_child_mass": "1/36",
+        "critical_child_mass": "1/36",
+        "equal_child_potential": "1/4"
+      },
+      {
+        "depth": 2,
+        "full_cost": "7113/1369",
+        "critical_cost": "200907/38627",
+        "each_full_child_mass": "1073/38627",
+        "critical_child_mass": "1072/38627",
+        "equal_child_potential": "7772/38627"
+      },
+      {
+        "depth": 1,
+        "full_cost": "159072/50653",
+        "critical_cost": "10377563253/3300404252",
+        "each_full_child_mass": "91680561/3300404252",
+        "critical_child_mass": "91584617/3300404252",
+        "equal_child_potential": "476350497/3300404252"
+      }
+    ],
+    "each_full_root_mass": "175218237151403/6307638935357153",
+    "critical_root_mass": "175000635058048/6307638935357153",
+    "potential": "6857898849284225/6307638935357153"
+  },
+  {
+    "prime": 41,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "296/41",
+        "critical_cost": "289/40",
+        "each_full_child_mass": "1/40",
+        "critical_child_mass": "1/40",
+        "equal_child_potential": "9/40"
+      },
+      {
+        "depth": 2,
+        "full_cost": "8701/1681",
+        "critical_cost": "2455299/473951",
+        "each_full_child_mass": "11849/473951",
+        "critical_child_mass": "11840/473951",
+        "equal_child_potential": "85544/473951"
+      },
+      {
+        "depth": 1,
+        "full_cost": "215464/68921",
+        "critical_cost": "6709557675/2144036296",
+        "each_full_child_mass": "53602047/2144036296",
+        "critical_child_mass": "53556463/2144036296",
+        "equal_child_potential": "277448787/2144036296"
+      }
+    ],
+    "each_full_root_mass": "462429424518675/18496710192709669",
+    "critical_root_mass": "461962636481344/18496710192709669",
+    "potential": "19942378327595869/18496710192709669"
+  },
+  {
+    "prime": 43,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "310/43",
+        "critical_cost": "101/14",
+        "each_full_child_mass": "1/42",
+        "critical_child_mass": "1/42",
+        "equal_child_potential": "3/14"
+      },
+      {
+        "depth": 2,
+        "full_cost": "9555/1849",
+        "critical_cost": "943325/182403",
+        "each_full_child_mass": "4343/182403",
+        "critical_child_mass": "4340/182403",
+        "equal_child_potential": "31310/182403"
+      },
+      {
+        "depth": 1,
+        "full_cost": "248076/79507",
+        "critical_cost": "45755925429/14651077118",
+        "each_full_child_mass": "348841585/14651077118",
+        "critical_child_mass": "348572133/14651077118",
+        "equal_child_potential": "1802694075/14651077118"
+      }
+    ],
+    "each_full_root_mass": "1212638787694501/50929717164516197",
+    "critical_root_mass": "1211526869041656/50929717164516197",
+    "potential": "54713366150091065/50929717164516197"
+  },
+  {
+    "prime": 47,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "338/47",
+        "critical_cost": "331/46",
+        "each_full_child_mass": "1/46",
+        "critical_child_mass": "1/46",
+        "equal_child_potential": "9/46"
+      },
+      {
+        "depth": 2,
+        "full_cost": "11383/2209",
+        "critical_cost": "3689943/715613",
+        "each_full_child_mass": "15557/715613",
+        "critical_child_mass": "15548/715613",
+        "equal_child_potential": "111878/715613"
+      },
+      {
+        "depth": 1,
+        "full_cost": "322852/103823",
+        "critical_cost": "1166836441251/374944606694",
+        "each_full_child_mass": "8151084087/374944606694",
+        "critical_child_mass": "8145822779/374944606694",
+        "equal_child_potential": "42002621169/374944606694"
+      }
+    ],
+    "each_full_root_mass": "121144459840002573/5572552308960487073",
+    "critical_root_mass": "121051616160371288/5572552308960487073",
+    "potential": "5949267787691254925/5572552308960487073"
+  },
+  {
+    "prime": 53,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "380/53",
+        "critical_cost": "373/52",
+        "each_full_child_mass": "1/52",
+        "critical_child_mass": "1/52",
+        "equal_child_potential": "9/52"
+      },
+      {
+        "depth": 2,
+        "full_cost": "14425/2809",
+        "critical_cost": "5281635/1027979",
+        "each_full_child_mass": "19769/1027979",
+        "critical_child_mass": "19760/1027979",
+        "equal_child_potential": "141740/1027979"
+      },
+      {
+        "depth": 1,
+        "full_cost": "461056/148877",
+        "critical_cost": "478119724299/154294069108",
+        "each_full_child_mass": "2967222543/154294069108",
+        "critical_child_mass": "2965719415/154294069108",
+        "equal_child_potential": "15237516975/154294069108"
+      }
+    ],
+    "each_full_root_mass": "71181030194462223/3701370746244231421",
+    "critical_root_mass": "71138206326658048/3701370746244231421",
+    "potential": "3921810713850631165/3701370746244231421"
+  },
+  {
+    "prime": 59,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "422/59",
+        "critical_cost": "415/58",
+        "each_full_child_mass": "1/58",
+        "critical_child_mass": "1/58",
+        "equal_child_potential": "9/58"
+      },
+      {
+        "depth": 2,
+        "full_cost": "17827/3481",
+        "critical_cost": "7275735/1420121",
+        "each_full_child_mass": "24485/1420121",
+        "critical_child_mass": "24476/1420121",
+        "equal_child_potential": "175130/1420121"
+      },
+      {
+        "depth": 1,
+        "full_cost": "633964/205379",
+        "critical_cost": "4536542553531/1468946008562",
+        "each_full_child_mass": "25326833535/1468946008562",
+        "critical_child_mass": "25316497067/1468946008562",
+        "equal_child_potential": "129704527845/1468946008562"
+      }
+    ],
+    "each_full_root_mass": "931710573101643249/54038761554165664961",
+    "critical_root_mass": "931258887371999768/54038761554165664961",
+    "potential": "56914766217572391845/54038761554165664961"
+  },
+  {
+    "prime": 61,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "436/61",
+        "critical_cost": "143/20",
+        "each_full_child_mass": "1/60",
+        "critical_child_mass": "1/60",
+        "equal_child_potential": "3/20"
+      },
+      {
+        "depth": 2,
+        "full_cost": "19041/3721",
+        "critical_cost": "2679233/523377",
+        "each_full_child_mass": "8723/523377",
+        "critical_child_mass": "8720/523377",
+        "equal_child_potential": "62348/523377"
+      },
+      {
+        "depth": 1,
+        "full_cost": "699984/226981",
+        "critical_cost": "1845500540685/598161755044",
+        "each_full_child_mass": "9969425993/598161755044",
+        "critical_child_mass": "9965621457/598161755044",
+        "equal_child_potential": "51015275553/598161755044"
+      }
+    ],
+    "each_full_root_mass": "139631186075073995/8377807864410272137",
+    "critical_root_mass": "139567885980906432/8377807864410272137",
+    "potential": "8808414814567221817/8377807864410272137"
+  },
+  {
+    "prime": 67,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "478/67",
+        "critical_cost": "157/22",
+        "each_full_child_mass": "1/66",
+        "critical_child_mass": "1/66",
+        "equal_child_potential": "3/22"
+      },
+      {
+        "depth": 2,
+        "full_cost": "22923/4489",
+        "critical_cost": "3546301/694251",
+        "each_full_child_mass": "10519/694251",
+        "critical_child_mass": "10516/694251",
+        "equal_child_potential": "75046/694251"
+      },
+      {
+        "depth": 1,
+        "full_cost": "925212/300763",
+        "critical_cost": "3233307116697/1050671752958",
+        "each_full_child_mass": "15919345189/1050671752958",
+        "critical_child_mass": "15914315673/1050671752958",
+        "equal_child_potential": "81291857823/1050671752958"
+      }
+    ],
+    "each_full_root_mass": "324153049446379937/21393979585313954937",
+    "critical_root_mass": "324031371299259032/21393979585313954937",
+    "potential": "7463714811110592175/7131326528437984979"
+  },
+  {
+    "prime": 71,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "506/71",
+        "critical_cost": "499/70",
+        "each_full_child_mass": "1/70",
+        "critical_child_mass": "1/70",
+        "equal_child_potential": "9/70"
+      },
+      {
+        "depth": 2,
+        "full_cost": "25711/5041",
+        "critical_cost": "550113/107827",
+        "each_full_child_mass": "35429/2480021",
+        "critical_child_mass": "1540/107827",
+        "equal_child_potential": "10978/107827"
+      },
+      {
+        "depth": 1,
+        "full_cost": "1099444/357911",
+        "critical_cost": "596496739365/194117594674",
+        "each_full_child_mass": "2773119633/194117594674",
+        "critical_child_mass": "2772339997/194117594674",
+        "equal_child_potential": "14143955343/194117594674"
+      }
+    ],
+    "each_full_root_mass": "213492744482866515/14944420794076550791",
+    "critical_root_mass": "213421424758761256/14944420794076550791",
+    "potential": "15600235555190963851/14944420794076550791"
+  },
+  {
+    "prime": 73,
+    "height": 4,
+    "bottom_up_steps": [
+      {
+        "depth": 4,
+        "full_cost": "9",
+        "critical_cost": "9"
+      },
+      {
+        "depth": 3,
+        "full_cost": "520/73",
+        "critical_cost": "57/8",
+        "each_full_child_mass": "1/72",
+        "critical_child_mass": "1/72",
+        "equal_child_potential": "1/8"
+      },
+      {
+        "depth": 2,
+        "full_cost": "27165/5329",
+        "critical_cost": "1527595/299591",
+        "each_full_child_mass": "4161/299591",
+        "critical_child_mass": "4160/299591",
+        "equal_child_potential": "29640/299591"
+      },
+      {
+        "depth": 1,
+        "full_cost": "1194216/389017",
+        "critical_cost": "359970047307/117223541224",
+        "each_full_child_mass": "1628110751/117223541224",
+        "critical_child_mass": "1627677903/117223541224",
+        "equal_child_potential": "8299423635/117223541224"
+      }
+    ],
+    "each_full_root_mass": "46678155964409073/3360812482975164311",
+    "critical_root_mass": "46663409502120128/3360812482975164311",
+    "potential": "3504106479646756415/3360812482975164311"
+  }
+]

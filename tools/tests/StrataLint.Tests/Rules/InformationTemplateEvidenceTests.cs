@@ -38,11 +38,11 @@ public sealed class InformationTemplateEvidenceTests
         DeclaredTemplateReviewTests.PolicyFiles().Select(p => Input(p.Key, p.Value)))
         .OrderBy(input => JsonSerializer.SerializeToElement(input).GetProperty("path").GetString(), StringComparer.Ordinal).ToArray();
 
-    private static JsonElement Wire(bool declared = false, bool sidecar = false, int compatibility = 6) =>
+    private static JsonElement Wire(bool declared = false, bool sidecar = false, int? compatibility = null) =>
         JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = compatibility,
+            compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
             inputs = WithPolicy(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
             inventory = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
             registered = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
@@ -81,7 +81,7 @@ public sealed class InformationTemplateEvidenceTests
     public void registration_owner_uses_lean_source_root(string path, string module) =>
         Assert.Equal(module, InformationTemplateEvidence.ModuleForSource(path));
 
-    private static LeanAxiomReport RawReport(int compatibility = 6)
+    private static LeanAxiomReport RawReport(int? compatibility = null)
     {
         var wire = JsonSerializer.SerializeToElement(new
         {
@@ -217,7 +217,7 @@ public sealed class InformationTemplateEvidenceTests
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
-            schema_version = 1, compatibility_version = 6,
+            schema_version = 1, compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
             inputs = WithPolicy(Input(PathB, bridgeSource)),
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
@@ -276,6 +276,24 @@ public sealed class InformationTemplateEvidenceTests
     public void old_report_not_current_binding_evidence() =>
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(Wire(compatibility: 3), PathA,
             Snapshot((PathA, TextA))));
+
+    [Theory]
+    [InlineData("missing_inventory")]
+    [InlineData("invalid_schema")]
+    [InlineData("unknown_field")]
+    [InlineData("non_object")]
+    public void unrelated_malformed_evidence_keeps_structural_diagnostic(string mutation)
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        if (mutation == "missing_inventory") wire.Remove("inventory");
+        if (mutation == "invalid_schema") wire["schema_version"] = true;
+        if (mutation == "unknown_field") wire["unknown"] = 1;
+        var value = mutation == "non_object" ? JsonSerializer.SerializeToElement(Array.Empty<object>())
+            : JsonSerializer.SerializeToElement(wire);
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA,
+            Snapshot((PathA, TextA))));
+        Assert.StartsWith("DTR-DebtSchema:", error.Message, StringComparison.Ordinal);
+    }
 
     [Fact]
     public void persisted_changed_input_rejected() =>

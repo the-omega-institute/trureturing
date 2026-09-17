@@ -1,0 +1,78 @@
+[
+  {
+    "last_prime": 17,
+    "threshold": 4
+  },
+  {
+    "last_prime": 23,
+    "threshold": 6
+  },
+  {
+    "last_prime": 31,
+    "threshold": 8
+  },
+  {
+    "last_prime": 47,
+    "threshold": 12
+  },
+  {
+    "last_prime": 67,
+    "threshold": 16
+  },
+  {
+    "last_prime": 71,
+    "threshold": 18
+  },
+  {
+    "last_prime": 97,
+    "threshold": 24
+  },
+  {
+    "last_prime": 101,
+    "threshold": 27
+  },
+  {
+    "last_prime": 137,
+    "threshold": 32
+  },
+  {
+    "last_prime": 139,
+    "threshold": 36
+  },
+  {
+    "last_prime": 199,
+    "threshold": 48
+  },
+  {
+    "last_prime": 277,
+    "threshold": 64
+  },
+  {
+    "last_prime": 293,
+    "threshold": 72
+  },
+  {
+    "last_prime": 307,
+    "threshold": 80
+  },
+  {
+    "last_prime": 443,
+    "threshold": 96
+  },
+  {
+    "last_prime": 449,
+    "threshold": 108
+  },
+  {
+    "last_prime": 613,
+    "threshold": 128
+  },
+  {
+    "last_prime": 673,
+    "threshold": 144
+  },
+  {
+    "last_prime": 1021,
+    "threshold": 192
+  }
+]

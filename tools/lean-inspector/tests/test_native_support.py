@@ -296,7 +296,7 @@ root = "Cache"
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report)
+            rows = publication.validate_bundle(report, manifest=self.root / 'lean-report-inputs.json')
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
@@ -338,7 +338,8 @@ root = "Cache"
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             with self.assertRaises(exception):
                 report = publication.unpack(path, directory, ('', '.materials.zip', '.provenance.json'))
-                publication.validate_rows(report, publication.member(report, '.materials.zip'))
+                publication.validate_rows(report, publication.member(report, '.materials.zip'),
+                    manifest=self.root / 'lean-report-inputs.json')
         self.record_result('damaged', dict(artifact_sha256=publication.digest(path),
             exception=exception.__name__), [path])
         if no_build:

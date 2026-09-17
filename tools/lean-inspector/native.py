@@ -176,7 +176,7 @@ def module(root, name, source, utility_path, executable, output):
         report = directory / public.RAW
         subprocess.run([str(executable), '--output', str(directory / 'spool.json'), '--material-spool', str(spool),
             '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)], check=True, cwd=root)
-        materials.compact(directory / 'spool.json', spool, report)
+        materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
         # Lake returns only canonically validated public facets. Generation is
         # private; the completed artifact gets its full validation at acceptance.
         rows = public.read_json(report.read_bytes())['modules']
@@ -236,7 +236,7 @@ def produce_batch(requests):
             spool_report = row_dir / 'spool.json'
             spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
             report = row_dir / public.RAW
-            materials.compact(spool_report, row_spool, report)
+            materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
             rows = public.read_json(report.read_bytes())['modules']
             row_binding(rows, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
@@ -397,7 +397,8 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
 
 
 def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
-    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
+    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials,
+                                manifest=Path(root) / 'lean-report-inputs.json')
     row_binding(rows, root, name, utility, template_inputs=template_inputs)
     # prepare validated the manifest before any facet could accept an artifact.
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()

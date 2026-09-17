@@ -38,6 +38,8 @@ public sealed class CompressedLeanMaterialTests
         values = ['statement-v1(α,😀)'.encode(), b'statement-v1(' + b'payload,' * 20000 + b')']
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
+            manifest = root / "lean-report-inputs.json"
+            manifest.write_text(json.dumps({"report_semantic_version": 1}))
             compressed = root / ('compressed.json.materials' if mode == 'overlap' else 'compressed')
             framed = b''.join(str(len(v)).encode() + b'\n' + v for v in values) + b'done\n'
             if mode == 'truncated':
@@ -63,7 +65,7 @@ public sealed class CompressedLeanMaterialTests
             if mode == 'corruption':
                 (compressed / '0.statement.gz').write_bytes(b'invalid gzip')
                 result = subprocess.run([sys.executable, str(script), 'compact', str(source),
-                    str(compressed), str(root / 'rejected.json')], capture_output=True)
+                    str(compressed), str(root / 'rejected.json'), str(manifest)], capture_output=True)
                 assert result.returncode != 0
                 assert not (root / 'rejected.json').exists()
                 sys.exit(0)
@@ -77,7 +79,7 @@ public sealed class CompressedLeanMaterialTests
                     return original(path)
                 materials.open_material = change_on_archive
                 try:
-                    materials.compact(source, compressed, root / 'rejected.json')
+                    materials.compact(source, compressed, root / 'rejected.json', manifest)
                 except ValueError as error:
                     assert str(error) == 'statement material changed during compaction'
                 else:
@@ -93,8 +95,8 @@ public sealed class CompressedLeanMaterialTests
                 legacy['modules'][0]['declarations'][i]['material_file'] = f'{i}.statement'
             legacy_source = root / 'legacy.json'
             legacy_source.write_text(json.dumps(legacy))
-            materials.compact(legacy_source, plain, root / 'plain.json')
-            materials.compact(source, compressed, root / 'compressed.json')
+            materials.compact(legacy_source, plain, root / 'plain.json', manifest)
+            materials.compact(source, compressed, root / 'compressed.json', manifest)
             for suffix in ('', '.materials.zip'):
                 assert (root / ('plain.json' + suffix)).read_bytes() == (root / ('compressed.json' + suffix)).read_bytes()
             # Byte identities measured with the pre-compression compactor at 1630e64b0b.

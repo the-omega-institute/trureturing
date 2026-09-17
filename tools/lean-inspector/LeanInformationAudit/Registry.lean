@@ -264,7 +264,7 @@ private def isRecordedModule (name : Name) : Bool :=
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :
-    CoreM (Array TemplateAudit.SourceInput) := do
+    CoreM (Array TemplateAudit.SourceInput × Nat) := do
   let mut seen : NameSet := {}
   let mut pending := [root]
   let mut paths := TemplateAudit.policyPaths
@@ -281,14 +281,14 @@ private def moduleSourceInputs (env : Environment) (root : Name) :
         pure env.header.moduleData[index.toNat]!.imports
       else throwError "incomplete_closure:dtr.module_imports:{name}"
     pending := imports.toList.map (·.module) ++ pending
-  TemplateAudit.readSourceInputs (paths.qsort (· < ·))
+  TemplateAudit.readVersionedSourceInputs (paths.qsort (· < ·))
 
 /-- Complete source inputs for an independently requested module. Batch reports
 use the same source walk inside their union's native-validation boundaries. -/
 def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
   TemplateAudit.NativeCoherence.validate (#[root] ++
     (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
-  moduleSourceInputs env root
+  return (← moduleSourceInputs env root).1
 
 /-- Content touches follow actual constant dependencies, including complete
 arena/realization types, while theorem proof implementations are never entered. -/
@@ -349,12 +349,13 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
       | throwError "incomplete_closure:dtr.final_record"
     recordJson (if selected.bindingOwner == some moduleName then selected else row)
+  let (inputs, version) ← moduleSourceInputs env moduleName
   return Json.mkObj [
-    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (6 : Nat)),
+    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
-    ("inputs", Json.arr ((← moduleSourceInputs env moduleName).map inputJson))]
+    ("inputs", Json.arr (inputs.map inputJson))]
 
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed

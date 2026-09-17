@@ -1,0 +1,6 @@
+**定义 124.5（前缀缺陷、纤维振幅与半径）。** 对定义 124.3 的固定任务，令
+$$
+e_k(T)=\inf_{\Lambda\ {\rm CPTP}}\ \sup_{x\in X_{\rm fs}}
+D\bigl(T(x),\Lambda(E_{k,x})\bigr)
+=\inf_{\sigma\in\mathcal D_d^{W_k}}\ \sup_{x\in X_{\rm fs}}D\bigl(T(x),\sigma_{q_kx}\bigr),
+$$

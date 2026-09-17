@@ -1,0 +1,2 @@
+开工基线为 462d0a4368ba5a890c5eab619c82437baa88966f，fetch 后 origin/dev 仍为该 SHA；merge-tree 退出 0，试合树 c02b4787ce9ff0cf96d03db1357874add67bc2b7。本卷未有并行尾追加，故续接定义 28–30、引理 4、命题 55–57、D15–D16、增补 O，不 rebase。§36 的 242 行提交为 b7fabcc68cde0c366365d239403079529b923a9f；附录初稿提交为 684487f7be64b35e05cc62f8154cd9f541f81fa3，周期饱和对照补充至 6479fb1da62726408424fb68aae2fc6a94ef41ae。
+

@@ -1,0 +1,10 @@
+**定理 46.5（概率盒上的最少线性实坐标；repo-derived）。** 当 $K>0$，固定正原子相位测度
+$$
+\nu_*={1\over K}\sum_{k=1}^K\delta_{E_k},\qquad
+\mu_g=\sum_{k=1}^K\left[g_k\delta_{x_k^+}+\left({1\over K}-g_k\right)\delta_{x_k^-}\right],
+\qquad g\in[0,1/K]^K.
+$$
+若摘要在完整相位之外只保存 $Cg\in\mathbb R^d$，其中 $C:\mathbb R^K\to\mathbb R^d$ 线性，并允许任意确定性解码器精确恢复该盒上全部计划边际，则
+$$
+d\ge\operatorname{rank}F.
+$$
