@@ -543,3 +543,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A linear gap on the entire controlling beta face](profile-notes/72-a-linear-gap-on-the-entire-controlling-beta-face.md)
 - [An explicit neighborhood of both controlling beta faces](profile-notes/73-an-explicit-neighborhood-of-both-controlling-beta-faces.md)
 - [A strict global K gain from the controlling faces](profile-notes/74-a-strict-global-k-gain-from-the-controlling-faces.md)
+- [Forced27 and complete pure3 deletion on both controlling faces](profile-notes/75-forced27-and-complete-pure3-deletion-on-the-k-faces.md)
+- [Exact capacity of the current neighborhood globalization](profile-notes/76-exact-capacity-of-the-current-neighborhood-globalization.md)
