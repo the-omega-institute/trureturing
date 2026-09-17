@@ -121,7 +121,8 @@ internal static partial class BackfillInventoryRule
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath
                 || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
-                || path.Value is "Meta/FILEMAP.toml" or "Meta/domains.yaml"
+                || FileMapDocuments.IsPolicyPath(path.Value)
+                || path.Value == "Meta/domains.yaml"
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // Theory input changes wake the rule independently of source enrollment.
                 || DigestionOpaquePathPolicy.IsTheoryDocument(path)
@@ -280,7 +281,7 @@ internal static partial class BackfillInventoryRule
         var changedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validateAllRecords = context.Changes is null;
         var sourcePolicyChanged = context.Changes?.Paths.Any(
-            static path => path.Value == FileMapLoader.RelativePath) == true;
+            static path => FileMapDocuments.IsPolicyPath(path.Value)) == true;
         foreach (var source in sources)
         {
             var sourceMetadataChanged = validateAllRecords || SourceMetadataChanged(source, context.Changes);

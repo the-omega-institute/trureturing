@@ -439,27 +439,40 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ClassifiableLegacyFileMapIgnoresNonCoreFormattingAndFields()
+    public void AdmissionPlaneRejectsLegacyRootSchemaForFlatAndIncludedFileMaps()
     {
-        var legacy = "schema_version = 1\r\n"
-            + "legacy_metadata = true\r\n"
-            + "[[files]]\r\n"
-            + "pattern = \"docs/**\"\r\n"
-            + "admission_plane = \"content\"";
+        const string files = "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n";
+        foreach (var manifest in new[]
+        {
+            "schema_version = 1\n" + files,
+            "schema_version = 1\ninclude = [\"FILEMAP.inputs.toml\"]\n" + files,
+        })
+        {
+            var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
-        var outcome = EvaluateAdmissionPlane(legacy, "docs/change.md");
-
-        Assert.Null(outcome);
+            var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+            Assert.Contains("root schema_version must be 2 or 3", failure.Message, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
-    public void InlineTableFileArrayIsClassified()
+    public void AdmissionPlaneRequiresRootSchemaBeforeClassifyingInlineFileArrays()
     {
-        var outcome = EvaluateAdmissionPlane(
-            "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n",
-            "docs/change.md");
+        const string files = "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n";
+        foreach (var manifest in new[]
+        {
+            files,
+            "include = [\"FILEMAP.inputs.toml\"]\n" + files,
+        })
+        {
+            var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
-        Assert.Null(outcome);
+            var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+            Assert.Contains("root schema_version must be 2 or 3", failure.Message, StringComparison.Ordinal);
+        }
+
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 2\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 3\n" + files, "docs/change.md"));
     }
 
 

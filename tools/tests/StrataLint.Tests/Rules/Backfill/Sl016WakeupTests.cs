@@ -22,6 +22,8 @@ public sealed class Sl016WakeupTests
 
         Assert.True(context.Policy.IsDigestionSource(RepoPath.CreateKnown("docs/develop/theory/INTERFACE_PAPER.md")));
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+        Assert.True(BackfillInventoryRule.IsAffectedBy(
+            fixture.Build(RawChangeSet.Create(["Meta/FILEMAP.sources.toml"]))));
     }
 
     // CAS bytes can change the atom projection independently of source-document changes.

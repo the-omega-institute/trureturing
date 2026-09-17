@@ -30,6 +30,8 @@ internal static class FileMapDocuments
         var root = Decode(bytes, location);
         var documents = ImmutableArray.CreateBuilder<FileMapDocument>();
         documents.Add(root);
+        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L))
+            throw new FileMapParseException(location, "root schema_version must be 2 or 3");
         if (!root.Table.TryGetValue("include", out var rawInclude)) return documents.ToImmutable();
         if (rawInclude is not TomlArray includes || includes.Count == 0
             || includes.Any(item => item is not string name || !FragmentName.IsMatch(name)))
@@ -40,8 +42,6 @@ internal static class FileMapDocuments
         if (!names.SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal)
             || names.Distinct(StringComparer.Ordinal).Count() != names.Length)
             throw new FileMapParseException(location, "include names must be unique and ordinally sorted");
-        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L))
-            throw new FileMapParseException(location, "include requires root schema_version 2 or 3");
         if (readInclude is null)
             throw new FileMapParseException(location, "include requires a reader for the same repository snapshot");
 
