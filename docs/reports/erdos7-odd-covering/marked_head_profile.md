@@ -15571,3 +15571,204 @@ The strictly increasing c_j make the spine prefix the unique maximal c-weighted 
 Positivity follows from(p-1)(p-9)(p-8)>7p for p>=17. Thus the norm maximum does not maximize B, proving OBE6 is nonvacuous for actual kernels, without assuming repeated positive blocks. This example establishes a strict comparison gain; it is not a new numerical bound for arbitrary AP13 families.
 
 For the final KC objective one can apply OBE3 or OBE4 directly at19 with sigma=nu13 K17^- and R=K19^-; the output is exactly eta and the old domain contains every original17 label. Subtract the test-independent484 integral q d sigma from the bound. This is the actual killed input, with its mass retained; no normalized physical or separately conditioned source is substituted. Uniform numerical control of its norm/Gram profile over the full original family remains open. The identities, envelope computation and strict-gain argument here are ordinary mathematics, not Lean verification.
+
+### Incompatible actual current prefixes give a uniform test correction
+
+Let R be one actual unnormalized killed row on Z/p^H Z, let q=R1, and let M_e be its largest depth-e prefix mass. All original current heights and prefixes remain literal. Define
+
+    Omega_H(R)=min_(v_e at depth e,1<=e<=H) [
+      sum_e(2e+1)(M_e-R(v_e))
+        +2 sum_(e<f)R(v_f)1_(v_f not subset v_e)].  (CPI1)
+
+The minimum is over independent prefixes, including nonnested choices. Omega is nonnegative and equals0 precisely when one nested chain attains all the M_e. For a nonempty row every M_e is positive, so zero cost forces maximality and pairwise compatibility. For an empty row every term is0 and any chain works. Set Omega_0=0.
+
+At a fixed old history, let a0,...,aH be the literal complete-test block amplitudes, and put m=min_e a_e. Each a_e>=1 because its old-cofactor-one label is retained. With
+
+    c_e(a)=2a0*a_e+a_e^2+2a_e sum_(1<=d<e)a_d,
+    U_M(a)=q a0^2+sum_e c_e(a)M_e,
+
+the actual square obeys
+
+    integral L^2 dR<=U_M(a)-m^2 Omega_H(R)
+                  <=U_M(a)-Omega_H(R).             (CPI2)
+
+To prove this, fix all depths except e. The square integral is convex in the nonnegative vector assigning its a_e active labels to depth-e prefixes. A simplex vertex concentrates all of them on one prefix and does not decrease the maximum. Repeat for each depth. This is an upper relaxation within the row; globally consistent choices across different old histories are not assumed.
+
+For concentrated prefixes, direct expansion gives the exact deficit
+
+    U_M(a)-integral(a0+sum_e a_e 1_(v_e))^2 dR
+      =sum_e c_e(a)(M_e-R(v_e))
+        +2 sum_(e<f)a_e a_f R(v_f)
+                                    1_(v_f not subset v_e).
+
+Here c_e(a)>=(2e+1)m^2 and a_e a_f>=m^2, proving CPI2. The list of separate maxima alone does not give the incompatibility terms.
+
+A smaller certificate uses any1<=r<s<t<=H:
+
+    Omega_H(R)>=min_(u at depth r,v at depth s) [
+      (2r+1)(M_r-R(u))+(2s+1)(M_s-R(v))
+       +1_(v not subset u)(2R(v)+2M_t)].            (CPI3)
+
+If u,v are disjoint, a depth-t prefix z can lie below at most one. Its two incompatibility terms cost at least2R(z), and its own mass deficit adds(2t+1)(M_t-R(z)). Their sum is at least2M_t. If u,v are compatible, simply discard the nonnegative depth-t terms. Retain the r,s terms and minimize to obtain CPI3.
+
+#### Integration together with the old-block profile
+
+For a fixed actual old measure sigma and its actual rows R_x, write omega_H=integral Omega_H(R_x)d sigma. This quantity is independent of the original complete test. It can be subtracted from the supremum of the same C1 envelope U_M, and hence from C5 with these actual prefix masses:
+
+    sup_L integral L^2 d(sigma R)
+      <=Gamma(q sigma)+sum_e(2e+1)Gamma(M_e sigma)
+                                                    -omega_H.
+
+It also combines with OBE without counting a loss twice. If M_e<=c p^-e, the explicit chain is
+
+    integral L^2 d(sigma R)
+       <=integral U_M(A)d sigma-omega_H
+       <=Phi_H(A)-omega_H
+       <=U_OBE-omega_H.                            (CPI4)
+
+The first loss concerns current-prefix geometry; OBE2 is an exact identity inside the subsequent cap functional. U_OBE can be either OBE3 or the complete-tail OBE4. In the latter case only the comparison cap is extended; the actual row, height and Omega_H are not padded. At19 take sigma=nu13 K17^- and R=K19^-, then subtract484 integral q d sigma to bound the original signed objective. A CPI3 certificate may replace Omega in the same chain.
+
+CPI4 does not authorize appending a subtraction to CT3 while leaving its exact transported increments unchanged. Nor can the loss of one chosen family be subtracted from a supremum over all families. The corrected envelope and its actual source/mask data must remain together. Clean nested rows from SPF have Omega=0.
+
+#### A literal arithmetic witness and an equal-readout comparison
+
+Take Q=3^4*5^2*7*11*13=2027025 and forbid0 modulo every nonunit divisor of Q. There are120 old test labels and777600 old units. The prescribed actual source construction gives the uniform unit law; all mixed11/13 exclusions are inactive. At17 retain current height3 by the pure classes0 modulo17,17^2,17^3, the latter two redundant. Add the following current residues, assigning them at each depth to distinct nonunit d|Q with old residue1 modulo d:
+
+| depth | current residues | count |
+|---|---|---:|
+| 1 | 3,...,16 | 14 |
+| 2 | 1+17j for6<=j<=16; 2+17j for1<=j<=16 | 27 |
+| 3 | 1+17j+289k for0<=j<=5,1<=k<=16; 2+289k for3<=k<=16 | 110 |
+
+There are119 available nonunit cofactors, so each assignment is possible. Reusing a cofactor at different depths retains distinct original moduli. The actual CRT residue for current y and cofactor d is1+d((y-1)d^-1 mod17^e), modulo d17^e. In total the family has273 distinct forbidden moduli and480 complete test labels.
+
+At old point x0=1 the surviving current leaves are
+
+    S={1,2,18,35,52,69,86,291,580}.
+
+There are4624 pure-surviving leaves before mixed deletion. The AP/T8 killed mass of each retained leaf is w=15/36992, and
+
+    (q,M1,M2,M3)=(9,6,3,1)w,
+    Omega_3(R_x0)=8w.                              (CPI5)
+
+Root1 has six leaves in six distinct depth2 children; root2 has three leaves in one child. For compatible depth1/depth2 choices, their prefix deficits alone are at least9w. For incompatible choices, their deficits plus pair loss are at least6w, and depth3 contributes at least2w by CPI3. Choosing root1, the depth2 prefix2 and any retained leaf attains total loss8w. Equivalently the unit-amplitude envelope is49w and the actual maximum is41w. All126 nonempty-prefix triples reproduce this maximum, with nine maximizing triples. Zero-mass choices cannot improve the maximum of the nonnegative square.
+
+Consequently omega_3>=8w/777600=1/239708160 for this entire family, uniformly over every complete test. Adding pure0 modulo19 and no mixed19 exclusions gives an actual two-stage continuation. Polarization of its two19 blocks gives weights19/18 and1/9, so applying the same bound to each yields a correction7/1438248960 to the corresponding composed envelope. The full signed mass term remains unchanged.
+
+The alternative retained set
+
+    S'={1,290,579,18,35,52,2,19,36}
+
+has exactly the same(q,M1,M2,M3) but Omega_3=0: root1, its child1 and leaf1 simultaneously attain all three maxima. It has the same two occupied roots, seven occupied depth2 children and nine leaves. Delete the other14 roots,27 children and110 leaves using distinct old cofactors at each depth as above. This realizes S' in another actual family with the same source and original label inventory. At x0 its pure mass, assigned charge and all separate prefix maxima agree with those for S. Its unit-amplitude maximum is49w instead of41w. Unit amplitudes are legitimate at this row: center every nonunit old test at2 so only the old unit term is active at x0=1.
+
+Thus the new observation is the ancestry relation between actual maximizing prefixes, which is not determined by their separate masses. This is a row-level distinction, not a claim that the two entire families have identical laws on every old row. The ordinary proof and exact CRT/prefix counts verify the mechanism without a uniform positive Omega bound over unrestricted families or a Lean endpoint.
+
+### A uniform four-block loss in one actual charged17-to19 family
+
+Take the actual uniform144-unit source nu modulo315, from exclusions0 modulo3,5,7. Its ternary height2 is retained by the later original moduli. At each p=17,19 add pure0 and eight mixed classes with old residue1 modulo
+
+    (d_i)=(3,9,15,21,45,63,105,315)
+
+and current root i,1<=i<=8. This is one family of21 distinct odd forbidden moduli, period101745, and48 complete test labels. There are no11/13 exclusions. In particular the19 masks have no17 factor.
+
+Write I_d=1_(x=1 mod d). The number of bad roots is
+
+    k=I3(1+I9)(1+I5)(1+I7) in{0,1,2,4,8}.
+
+For each p put alpha_p=k/(p-1), delta_p=7/(p-2), beta_p=(alpha_p-delta_p)_+/(1-delta_p), g_p=1/(1-min(alpha_p,delta_p)), t_p=g_p/(p-1) and q_p=1-beta_p. Only x=1 has k8, giving beta17=1/16 and beta19=1/18 there. Thus the actual charges are b17=1/2304 and b19=1/2592. The second charge is under the normalized physical17 input, whose old marginal is nu.
+
+The final killed row is the product of the two actual killed rows, because the19 masks depend only on x. Define q=q17*q19, u=t17*q19, v=t19*q17, w=t17*t19. Their exact values are
+
+| k | q | u | v | w |
+|---|---|---|---|---|
+| 0 | 1 | 1/16 | 1/18 | 1/288 |
+| 1 | 1 | 1/15 | 1/17 | 1/255 |
+| 2 | 1 | 1/14 | 1/16 | 1/224 |
+| 4 | 1 | 1/12 | 1/14 | 1/168 |
+| 8 | 85/96 | 85/768 | 17/192 | 17/1536 |
+
+Separate a complete test into independent old blocks A,B,C,D for current exponent pairs(0,0),(1,0),(0,1),(1,1). Pairwise current-cylinder bounds give
+
+    integral L^2 d eta<=E_nu F(A,B,C,D),
+    F=q A^2+u(2AB+B^2)+v(2AC+C^2)
+                      +w(2AD+2BC+2BD+2CD+D^2).    (BQC1)
+
+For each fixed four old layouts this bound is attained by setting their positive current roots to16 and18, respectively. These roots are globally clean. Thus the current-residue optimization is exact, and all four old layouts remain independently variable.
+
+#### Centered-cylinder coefficients retain the actual atom energy
+
+Let Gamma(f)=max_A E_nu[f A^2], and C=sum_(d|315) I_d. Every intersection of a centered I_e and two arbitrary original test cylinders is empty or a residue class modulo their LCM. Under the uniform unit law its mass is at most that of the class centered at1. Expanding the square therefore gives
+
+    E_nu[I_e A^2]<=E_nu[I_e C^2] for every e|315.
+
+For f=u,v,w the table gives the expansion
+
+    f=f0+(f1-f0)I3
+       +(f2-f1)(I9+I15+I21)
+       +(f4-2f2+f1)(I45+I63+I105)+c_f I315,
+    c_f=f8-3f4+3f2-f1,
+    (c_u,c_v,c_w)=(223/26880,67/22848,817/304640).  (BQC2)
+
+All coefficients are nonnegative. Hence C simultaneously maximizes u,v,w and all their nonnegative linear combinations. Its value at the actual atom x=1 is12.
+
+The baseline is q=1-epsilon I315 with epsilon=11/96. If G=E_nu C^2, the complete test centered at2 has unweighted square G and value1 at x=1. All tests have A(1)>=1 and unweighted square at most G, so
+
+    Gamma(q)=G-epsilon/144,
+    Gamma(q)-E_nu[q A^2]
+                          >=epsilon(A(1)^2-1)/144. (BQC3)
+
+#### One positive rational matrix controls all four old layouts
+
+Set A0=A,A1=B,A2=C,A3=D and use the symmetric table
+
+    H=[[0,u,v,w],[u,u,w,w],[v,w,v,w],[w,w,w,w]].
+
+Its row sums R_i are u+v+w,2u+2w,2v+2w,4w. Define
+
+    S=Gamma(q)+sum_i Gamma(R_i)
+     =Gamma(q)+3Gamma(u)+3Gamma(v)+9Gamma(w).
+
+Polarization is an exact identity on these same four tests:
+
+    S-E_nu F=Gamma(q)-E_nu[q A0^2]
+       +sum_i[Gamma(R_i)-E_nu[R_i Ai^2]]
+       +sum_(i<j)E_nu[H_ij(Ai-Aj)^2].              (BQC4)
+
+The atom coefficients of R_i in BQC2 are
+
+    lambda=(12713/913920,10033/456960,733/65280,817/76160).
+
+Every other centered-cylinder deficit is nonnegative, so with a_i=Ai(1),
+
+    Gamma(R_i)-E_nu[R_i Ai^2]>=lambda_i(144-a_i^2)/144.
+
+Retain the same actual atom in the nonnegative squared differences of BQC4 and apply BQC3. This yields
+
+    144(S-E_nu F)>=144 sum_i lambda_i-epsilon+a^T M a,
+
+    M=[[8881/28560, -85/768, -17/192, -17/1536],
+       [-85/768, 50657/456960, -17/1536, -17/1536],
+       [-17/192, -17/1536, 541/5440, -17/1536],
+       [-17/1536, -17/1536, -17/1536, 6847/304640]].
+
+There is an exact rational positivity certificate:
+
+    r=(1,4/3,5/4,9/5),
+    Mr=(17981/548352,7403/2193408,427/391680,
+                                           43703/54835200)>0.
+
+For e_ij=-M_ij>=0 and every real a, direct expansion gives
+
+    a^T M a=sum_(i<j)e_ij r_i r_j(a_i/r_i-a_j/r_j)^2
+                 +sum_i ((Mr)_i/r_i)a_i^2.
+
+Every original old block contains its unit indicator, so a_i>=1. Substitution gives the uniform full-test loss
+
+    Gamma(q)+3Gamma(u)+3Gamma(v)+9Gamma(w)
+       -max_L integral L^2 d eta
+       >=16283037949/284265676800
+        =0.05728105528707995...>0.057281.           (BQC5)
+
+All maxima retain the48 original test labels. There is no assumption that A,B,C,D coincide or that their extrema have a prescribed form. The factors q19 in u, q17 in v and both in q preserve the actual two-stage killing. Subtracting484 eta1 on both sides gives the same loss for the signed objective, but this benchmark is not the separate KC sum of the17 and19 frontiers.
+
+The literal21-class construction,144 source rows, both physical/killed kernels, every cylinder coefficient and the matrix certificate have been recomputed with exact rational arithmetic. The arbitrary-layout conclusion follows from BQC1--BQC4 and the displayed matrix identity. This proves a same-family strict loss with positive charge at both stages; it does not supply a uniform0.057281 subtraction over other original families, the299.398 target, later-prime continuation or Lean verification.

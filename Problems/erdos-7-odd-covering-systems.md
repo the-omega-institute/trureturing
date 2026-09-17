@@ -246,6 +246,28 @@ assigned full-modulus residue; a global bound must also handle
 branches with zero capacities. These additions have ordinary
 proofs and exact arithmetic checks, without new Lean verification.
 
+The [actual-prefix incompatibility correction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#incompatible-actual-current-prefixes-give-a-uniform-test-correction)
+(CPI1)--(CPI5) gives a loss uniform over every complete test of one
+fixed actual family. It measures whether the largest prefixes at
+different depths can belong to one nested chain and combines with
+the OBE bound through an explicit sequence of inequalities. Two
+actual nine-leaf rows have the same mass and the same separate
+prefix maxima(9,6,3,1)w, but losses8w and0. This new observation
+therefore distinguishes data that the old list of maxima merges.
+The first family gives a positive complete-test correction
+1/239708160 at17; it is not a uniform constant for other families.
+
+A [single charged17-to19 construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-uniform-four-block-loss-in-one-actual-charged17-to19-family)
+(BQC1)--(BQC5) retains21 actual forbidden moduli and48 independent
+complete test labels. Its same final killed law has a split-square
+loss at least16283037949/284265676800>0.057281 uniformly over all
+its tests. The proof retains the actual killing factors, expands
+positive old-cylinder weights and certifies a four-variable
+quadratic form by a positive rational vector. It does not identify
+the four old blocks or subtract a selected test's loss from an
+unrelated maximum. This benchmark differs from the two KC frontiers;
+the unrestricted numerical bound remains unproved.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right
