@@ -176,13 +176,17 @@ def validate_manifest(expected):
         seen.add(name)
 
 
-def _verified_file(directory, item, copy_to):
+def _verified_file(directory, item, copy_to, parents_verified=False):
     name = item["path"]
-    path = directory
-    for part in pathlib.PurePosixPath(name).parts:
-        path /= part
-        if path.is_symlink():
-            raise ValueError(f"cache has a symlink: {name}")
+    path = directory / name
+    if not parents_verified:
+        parent = directory
+        for part in pathlib.PurePosixPath(name).parts[:-1]:
+            parent /= part
+            if parent.is_symlink():
+                raise ValueError(f"cache has a symlink: {name}")
+    if path.is_symlink():
+        raise ValueError(f"cache has a symlink: {name}")
     if not path.is_file():
         raise ValueError(f"cache material is not a regular file: {name}")
     if copy_to is None:
@@ -196,7 +200,11 @@ def _verified_file(directory, item, copy_to):
     return actual
 
 
-def files(directory, *, expected=_UNSPECIFIED, copy_to=None, parallel=False):
+def files(directory, *, expected=_UNSPECIFIED, copy_to=None, parallel=False, parents_verified=False):
+    # Only a complete shape pass over privately owned staging can supply this
+    # fact. Leaf types, modes and bytes still undergo their normal validation.
+    if parents_verified and not parallel:
+        raise ValueError("verified parents require declared parallel validation")
     if parallel and (expected is _UNSPECIFIED or copy_to is not None):
         raise ValueError("parallel validation requires declared read-only material")
     if copy_to is not None and expected is _UNSPECIFIED:
@@ -206,7 +214,7 @@ def files(directory, *, expected=_UNSPECIFIED, copy_to=None, parallel=False):
         workers = hash_workers(len(expected)) if parallel else 1
 
         def verify(batch):
-            return [_verified_file(directory, item, copy_to) for item in batch]
+            return [_verified_file(directory, item, copy_to, parents_verified) for item in batch]
 
         if workers == 1:
             result = verify(expected)
