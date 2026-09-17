@@ -1,0 +1,12 @@
+**theorem 60.5（单素数幂的精确非自适应费用与 resolving 几何）。** 设 $S\subseteq X_{p,e}$ 为非自适应查询中心集合。映射
+$$
+a\longmapsto\bigl(h_c(a)\bigr)_{c\in S}
+$$
+为单射，当且仅当每个深度 $e-1$ 的球 $B$ 都满足
+$$
+|B\setminus S|\le1.
+$$
+因此
+$$
+C_{\rm na}(p^e)=(p-1)p^{e-1}.
+$$
