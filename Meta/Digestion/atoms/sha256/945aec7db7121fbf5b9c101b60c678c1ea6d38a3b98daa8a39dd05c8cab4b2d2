@@ -1,0 +1,16 @@
+**定义 52.9（单位三角形的实际联合像）。** 定义
+$$
+\Phi:U^3\longrightarrow I^3,\qquad
+\Phi(x,y,z)=\bigl(\rho(x+y),\rho(y+z),\rho(z+x)\bigr),
+\qquad \mathcal J=\Phi[U^3].
+$$
+局部实际像为
+$$
+J_p=\{(v_p(x+y),v_p(y+z),v_p(z+x)):x,y,z\in\mathbb Z_p^\times\}\subseteq E^3.
+$$
+对 $(a,b,c)\in E^3$，记 $n_j(a,b,c)$ 为三个位置中等于有限整数 $j$ 的位置数；重复值按位置计数。另记
+$$
+D=\rho(2),\qquad \delta_p=v_p(2)=\begin{cases}1,&p=2,\\0,&p\ne2.\end{cases}
+$$
+符号 $E_{\ge m}$ 表示 $\{e\in E:e\ge m\}$，因而包含 $\infty$。
+
