@@ -21,8 +21,35 @@ internal sealed record InformationTemplateEvidenceContext(
 
 internal static class InformationTemplateEvidence
 {
+    private static string ManifestVersion(RepositorySnapshot snapshot)
+    {
+        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_semantic_version";
+        if (!snapshot.Files.TryGetValue(RepoPath.CreateKnown("lean-report-inputs.json"), out var manifest))
+            throw new FormatException(error);
+        try
+        {
+            using var document = JsonDocument.Parse(manifest.RawBytes.AsMemory());
+            var root = document.RootElement;
+            if (root.ValueKind != JsonValueKind.Object
+                || root.EnumerateObject().Count(p => p.Name == "report_semantic_version") != 1
+                || !root.TryGetProperty("report_semantic_version", out var value)
+                || value.ValueKind != JsonValueKind.Number)
+                throw new FormatException(error);
+            var version = value.GetRawText();
+            if (version.Length == 0 || version[0] is < '1' or > '9'
+                || version.Any(c => c is < '0' or > '9'))
+                throw new FormatException(error);
+            return version;
+        }
+        catch (JsonException ex)
+        {
+            throw new FormatException(error, ex);
+        }
+    }
+
     // The historical content is data evaluated by today's producer. Keep its
     // D5 sources and state; bind configuration/toolchain inputs to the current program.
+    // The current manifest is the version authority for historical evidence.
     internal static RepositorySnapshot HistoricalInputs(RepositorySnapshot historical, RepositorySnapshot current)
     {
         static bool ProducerInput(string path) => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
@@ -35,11 +62,15 @@ internal static class InformationTemplateEvidence
     internal static InformationTemplateModuleEvidence Read(
         JsonElement value, string sourcePath, RepositorySnapshot snapshot)
     {
+        if (value.ValueKind == JsonValueKind.Object
+            && (!value.TryGetProperty("compatibility_version", out var compatibility)
+                || compatibility.ValueKind != JsonValueKind.Number))
+            throw new FormatException("DTR-EvidenceVersion: compatibility_version requires a positive integer");
         InformationTemplateJson.Fields(value, "schema_version", "compatibility_version", "inventory",
             "records", "registered", "inputs");
         InformationTemplateJson.Version(value);
-        if (value.GetProperty("compatibility_version").GetRawText() != "6")
-            throw new FormatException("DTR-Evidence: old report is not current binding evidence");
+        if (value.GetProperty("compatibility_version").GetRawText() != ManifestVersion(snapshot))
+            throw new FormatException("DTR-EvidenceVersion: compatibility_version differs from report_semantic_version");
         var inputs = InformationTemplateDebtStore.ReadInputs(value.GetProperty("inputs"), snapshot);
         if (!inputs.Any(input => input.Path == sourcePath))
             throw new FormatException("DTR-Evidence: producer source is not bound");

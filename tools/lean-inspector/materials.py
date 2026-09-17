@@ -209,19 +209,43 @@ def stream_spool(spool: pathlib.Path) -> None:
         print("ok", flush=True)
 
 
-def validate_template_evidence(value: object) -> None:
+def read_manifest_version(manifest: pathlib.Path) -> int:
+    def unique_fields(pairs):
+        fields = {}
+        for key, value in pairs:
+            if key in fields:
+                raise ValueError("duplicate manifest field")
+            fields[key] = value
+        return fields
+    try:
+        data = json.loads(pathlib.Path(manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_fields)
+        version = data["report_semantic_version"]
+        if type(version) is not int or version <= 0:
+            raise ValueError("positive integer required")
+        return version
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
+        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_semantic_version") from error
+
+
+def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
+    version = read_manifest_version(manifest)
+    if isinstance(value, dict) and type(value.get("compatibility_version")) is not int:
+        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version requires a positive integer")
     evidence = require_keys(value,
         {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
         "Inspector declared-template evidence")
     if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
-            or type(evidence["compatibility_version"]) is not int or evidence["compatibility_version"] != 6
             or any(not isinstance(evidence[field], list)
                    for field in ("inventory", "registered", "records", "inputs"))):
         raise ValueError("Inspector declared-template evidence is malformed")
+    if evidence["compatibility_version"] != version:
+        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version differs from report_semantic_version")
 
 
-def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
+def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path,
+            manifest: pathlib.Path) -> None:
     started = time.perf_counter_ns()
+    read_manifest_version(manifest)
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
     if root["schema"] != SPOOL_SCHEMA or not isinstance(root["modules"], list):
@@ -267,7 +291,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 raise ValueError("Inspector registration evidence is malformed")
             information_templates = module.get("information_templates")
             if information_templates is not None:
-                validate_template_evidence(information_templates)
+                validate_template_evidence(information_templates, manifest)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -415,14 +439,15 @@ def main() -> int:
         except (OSError, ValueError) as error:
             print(f"lean-report-materials: {error}", file=sys.stderr)
             return 1
-    if len(sys.argv) != 5 or sys.argv[1] != "compact":
+    if len(sys.argv) != 6 or sys.argv[1] != "compact":
         print(
-            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT | stream SPOOL_DIR",
+            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT MANIFEST | stream SPOOL_DIR",
             file=sys.stderr,
         )
         return 2
     try:
-        compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]))
+        compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]),
+                pathlib.Path(sys.argv[5]))
         return 0
     except (OSError, EOFError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"lean-report-materials: {error}", file=sys.stderr)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09da0cc71325d897ea5218139ffa603cf934c6291a71922e816eb58261de2e0a
+  normalized_sha256: sha256:09da0cc71325d897ea5218139ffa603cf934c6291a71922e816eb58261de2e0a
+cas_ref: sha256:09da0cc71325d897ea5218139ffa603cf934c6291a71922e816eb58261de2e0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “成熟的核与商框架见”给出通用代数的书目地址；“不自动证明它与另行指定的拼接同余”把额外证明义务明确交给 QI-P5，并非声称某一具体拼接满足同余。无定义内暗含结论，此处仅处理文献与证明责任说明。
+    previous_atom_id: 7c224425e326e6bd6d0d3e9c64350534bf24f951b3b6c4ff1a121782601d5478
+    next_atom_id: 6a155f984c114480f37097064aa8777f2a7523639c9ee9a651ba80088f27b451

@@ -274,7 +274,7 @@ class NativePublicationTests:
                     with tempfile.TemporaryDirectory(dir=self.root) as directory:
                         report = publication.unpack(artifact, directory)
                         expected = publication.coordinates(self.root)
-                        publication.validate_bundle(report, expected)  # Includes all material and origin checks.
+                        publication.validate_bundle(report, expected, manifest=self.root / 'lean-report-inputs.json')
                         with self.assertRaisesRegex(ValueError, '^report source binding mismatch$'):
                             publication.validate_bundle(report, expected, self.root)
                 for activity in ['', '{"kind":"extract","count":1}\n']:

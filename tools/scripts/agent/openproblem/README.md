@@ -11,13 +11,13 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 5. **Stage A**(`op-resume-seat.sh … implementation`):模块 + Scribe 镜像 + `make lean`/`lean-report`/`emit`,**在任何门之前停下**(envelope `mirror-ready`)。brief 由 `gen_stage_briefs.py` 从实施 brief 切出;基底模板 `templates/impl-base-brief.md` 带产地类型化、import 最小化、公开面自觉、header 工具校验、emit 前刷新报告等块(`add_base_blocks.py` 可补进旧 brief)。
 6. **判形核对**(只读 codex 席,`templates/judgement-form-check-template.md`):逐声明判 §3.2 的 `content` / `bind-only`,并要求为每条 content 点名逃逸见证。与镜像核对同属**冻结之前**的只读阶段,理由相同:冻结后改 `.lean` 撞 SL-008,只能整条重做。两种最会藏的形状是「沿显然同构传输上游定理」与「把两元素 `decide` 当成内容」。同席顺带核对交付陈述与源句是否同强度(猜想说 `rank = 2`,只证 `∃ 两个生成元` 不算)。
 7. **镜像核对**(只读 codex 席,`templates/mirror-check-template.md` 十二项):括号/合取/绑定变量/强制转换/整除/关系节点/完备性(公开 def 也要镜像或 private)/取值核对/header/定义保真/产地(FromLiterature 须有带 DOI 或 arXiv 的 L 平面注)/import 最小化。
-8. **Stage B**(`fill_mirror_fixes.py` 把核对结果填进 Stage B brief):先修镜像,改过镜像必做渲染检查(发射 md 无 `&&`/`||`/`==`;`make preflight` 中点名本模块的 `markdown red` 行即停),再 deposit + cover(锚 atom 也要 cover)、一个 builder commit、晚期去重、push、`make pr-open`(不挂 auto-merge)。
+8. **Stage B**(`fill_mirror_fixes.py` 把核对结果填进 Stage B brief):**发射次序先于一切**——带 `OpenProblemResolutionClaim` 的 lane,Stage A 只发射不含该节点、也没有 `Problems/` 卷宗的 Phase A 形态(`Library/` 注相反,`FromLiterature` 要求它在树上);冻结前那次 emit 带上结算元数据必 exit 2 `invalid-problem-resolution-source`,且没有任何冻结前状态能满足该校验。deposit 之后才还原两样、二次发射、折进一个 builder commit。然后先修镜像,改过镜像必做渲染检查(发射 md 无 `&&`/`||`/`==`;`make preflight` 中点名本模块的 `markdown red` 行即停),再 deposit + cover(锚 atom 也要 cover)、一个 builder commit、晚期去重、push、`make pr-open`(不挂 auto-merge)。
 9. **三席评审**(`gen_review.py`:tests/quality 走 codex,一席 nyxid 由 `od -An -N2 -tu2 /dev/urandom` 取 raw%2 抽签);正文冻结后再派复审;非阻断即 `op-sync-dev.sh`(合 dev、推、等三门)+ `gh pr merge --auto --merge`。
 10. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停(第 20⁗ 条)。
 
 ## 脚本
 - `op-resume-seat.sh FLIGHT ATTEMPT BRIEF WORKTREE STAGE [STAGGER] [MAX_CODEX]`:fail-closed 负载门(idle ≥ 20% ∧ lean ≤ 4 ∧ codex 进程 ≤ MAX,300 轮 × 60 s,超时不启动)+ sshx runner。
-- `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。
+- `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。唯一从 SCRATCH 读的输入是 `briefs/impl-op-w1-<lane>.md`;基底 brief 与 mirror-check 模板取本目录 tracked 的 `templates/`,scratchpad 被清空不影响它(案号 #6220,与 `gen_review.py` 同形)。缺任一输入即打印路径并 exit 1。
 - `fill_mirror_fixes.py SCRATCH LANE RESULT_JSON`:把镜像核对的 blocking/advisory 填进 Stage B brief。
 - `add_base_blocks.py FILE…`:把基底模板的三个纪律块补进缺失的 brief。
 - `gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEAT`:生成三席评审 brief(在 SCRATCH 目录运行,写到该目录的 `briefs/`)。模板取本目录 tracked 的 `templates/review-template.md`,GoalArtifact 取 `templates/impl-base-brief.md` 的 yaml 段——两者都不依赖 scratchpad,scratchpad 被清空不影响它(案号 #6220)。缺输入、席位名不是 architecture/quality、参数个数不对,一律 exit 1。
@@ -25,6 +25,7 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 - `op-ingest-new-noalign.sh WORKTREE NEW_BRANCH ADDENDUM SUBJ PRMSG PATTERN [VOLUME]` / `op-ingest-noalign.sh` / `op-addendum-ingest-v3.sh`:理论卷增订 ingest(前两者绕开 align)。
 - `op-governance-pr.sh WORKTREE BRANCH COMMIT_MSG PR_MSG [AUTO]`:governance 改动的提交/推送/开 PR。
 - `op-fold-anchor-cover.sh WORKTREE BRANCH ATOM SOURCE_ID`:把漏掉的锚 cover 折进 builder commit。
+- `standing-check.py PR [--round N | --closed]`:派下一轮评审前、或合并前,机器核对 PR 正文的评审 standing——每一轮是否都有三席行与 tally、有没有占位判词、下一轮布局是否点名正确的轮次、`tests` 有没有被派给 nyxid、nyxid 席在相邻两轮之间有没有换位。`--round N` 传「即将派的那一轮」:正文自身无法区分「跑过但没记」与「本来就到此为止」,这一项只有调用方知道。`--closed` 是合并前那一次:要求末轮无 reject 且不再有未闭合的轮次。`--selftest` 19 例。
 
 ## 判据摘要(来自 2026-09-05 一日 40 余席的读数)
 - 产出由选题函数决定:唯一两个真解决出自把判据改为「近期论文明确写出且文献无证明」的那一轮。

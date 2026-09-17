@@ -19,6 +19,8 @@ public sealed class UtilityRefutationProducerTests
     {
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
+        var manifest = Path.Combine(root, LeanReportRegistrationFixture.ManifestPath);
+        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
         const string path = "D5/S0/Carrier/RefutationProbe.lean";
         const string gid = "D5/S0/Carrier/RefutationProbe";
         const string module = "D5.S0.Carrier.RefutationProbe";
@@ -58,7 +60,7 @@ public sealed class UtilityRefutationProducerTests
             "--output", output + ".spool", "--material-spool", output + ".materials",
             "--utility-input", inputs, module, path, sourceHash], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
-        RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output], root,
+        RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output, manifest], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(path, source)]))).Snapshot;
@@ -75,6 +77,8 @@ public sealed class UtilityRefutationProducerTests
     {
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
+        var manifest = Path.Combine(root, LeanReportRegistrationFixture.ManifestPath);
+        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
         var moduleDirectory = Path.Combine(root, "D5", "S0", "Carrier");
         Directory.CreateDirectory(moduleDirectory);
         const string path = "D5/S0/Carrier/Probe.lean";
@@ -147,7 +151,7 @@ public sealed class UtilityRefutationProducerTests
                 "D5.S0.Carrier.Law", externalPath,
                 "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(externalSource)))], root,
                 TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
-            RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output], root,
+            RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output, manifest], root,
                 TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
                 RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(path, source),
@@ -169,7 +173,7 @@ public sealed class UtilityRefutationProducerTests
                     "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,
                     TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
                 RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".subset.spool", output + ".subset.materials",
-                    output + ".subset"], root,
+                    output + ".subset", manifest], root,
                     TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
                 using var subset = JsonDocument.Parse(FixtureFile.ReadAllBytes(output + ".subset"));
                 var modules = subset.RootElement.GetProperty("modules");

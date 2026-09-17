@@ -1,0 +1,5 @@
+对二元预测分布直接计算
+$$
+\operatorname{TV}\bigl((a,1-a),(f,1-f)\bigr)
+=\tfrac12\bigl(|a-f|+|(1-a)-(1-f)|\bigr)=|a-f|,
+$$

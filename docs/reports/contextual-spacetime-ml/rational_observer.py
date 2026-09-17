@@ -574,6 +574,107 @@ def integer_checks():
                 "reachable_fixed_prior": False}}
 
 
+def unknown_checks():
+    """Bounded paired fixed-model checks for observation companion §48."""
+    require(sys.flags.optimize == 0, "unknown-checks requires assertions enabled")
+    ps, r = (Q(1, 4), Q(1, 3)), Q(1, 4)
+    rf = r.fraction()
+    initial = tuple((p, HALF, Fraction(1, 2), Fraction(1, 2)) for p in ps)
+    stack = [("", initial)]
+    words, zero_rows = 0, {}
+    while stack:
+        word, models = stack.pop()
+        require(tuple(p for p, _, _, _ in models) == ps, "fixed parameter identities")
+        readouts, rows = [], []
+        for p, q, v0, v1 in models:
+            pf, qf, mass = p.fraction(), q.fraction(), v0 + v1
+            label = f"p={pf}, word={word!r}"
+            require(pf ** len(word) <= mass <= (1 - pf) ** len(word)
+                    and v0 > 0 and v1 > 0, f"{label}: finite support")
+            require(qf == v1 / mass, f"{label}: scalar posterior versus masses")
+            y = output(p, q).fraction()
+            require(y == (pf * v0 + (1 - pf) * v1) / mass,
+                    f"{label}: current next-zero readout versus masses")
+            readouts.append(y)
+            rows.append({"p": p.pair(), "posterior": Q(qf.numerator, qf.denominator).pair(),
+                         "next_zero": Q(y.numerator, y.denominator).pair(),
+                         "word_probability": Q(mass.numerator, mass.denominator).pair()})
+        if len(word) <= 8:
+            words += 1
+        if word == "0" * len(word):
+            n = len(word)
+            qa, qb = (q.fraction() for _, q, _, _ in models)
+            a, b = readouts
+            gap = (a - b) / 2
+            require(qb < Fraction(9, 14) and b < Fraction(23, 42),
+                    f"zero prefix {n}: invariant bounds")
+            if n >= 3:
+                require(qa >= Fraction(19, 28) and a >= Fraction(33, 56)
+                        and gap > Fraction(1, 48), f"zero prefix {n}: rational barrier")
+            zero_rows[n] = {"n": n, "models": rows,
+                            "half_gap": Q(gap.numerator, gap.denominator).pair()}
+        # All words through 8, followed only by the zero branch through 64.
+        reports = (0, 1) if len(word) < 8 else (
+            (0,) if word == "0" * len(word) and len(word) < 64 else ())
+        for report in reports:
+            successors = []
+            for p, q, v0, v1 in models:
+                pf = p.fraction()
+                a0, a1 = ((pf * v0, (1 - pf) * v1) if report == 0
+                          else ((1 - pf) * v0, pf * v1))
+                u0, u1 = (1 - rf) * a0 + rf * a1, rf * a0 + (1 - rf) * a1
+                successors.append((p, update(p, r, q, report), u0, u1))
+            stack.append((word + str(report), tuple(successors)))
+
+    require(words == 511 and set(zero_rows) == set(range(65)), "bounded coverage")
+    for n in range(64):
+        before, after = (rational(zero_rows[j]["models"][0]["posterior"]).fraction()
+                         for j in (n, n + 1))
+        require(before < after, f"zero prefix {n}: p=1/4 increasing posterior")
+    require(all(rational(row["next_zero"]).fraction() == Fraction(1, 2)
+                for row in zero_rows[0]["models"]), "empty history exact prediction")
+    expected = {2: Fraction(5, 228), 3: Fraction(935, 41328), 4: Fraction(145, 6424)}
+    for n, value in expected.items():
+        require(rational(zero_rows[n]["half_gap"]).fraction() == value,
+                f"zero prefix {n}: exact half-gap")
+    require(expected[2] < expected[3] > expected[4], "finite nonmonotonicity")
+    require(rational(zero_rows[3]["models"][0]["posterior"]).fraction() == Fraction(19, 28)
+            and rational(zero_rows[3]["models"][0]["next_zero"]).fraction() == Fraction(33, 56),
+            "p=1/4 third iterate and readout")
+    require([rational(row["word_probability"]).fraction() for row in zero_rows[2]["models"]]
+            == [Fraction(9, 32), Fraction(19, 72)], "unequal two-report laws")
+    barrier = update(ps[1], r, Q(9, 14), 0).fraction()
+    require(barrier == Fraction(59, 92) < Fraction(9, 14), "invariant endpoint image")
+    require(output(ps[1], Q(9, 14)).fraction() == Fraction(23, 42)
+            and (Fraction(33, 56) - Fraction(23, 42)) / 2 == Fraction(1, 48),
+            "rational readout barrier")
+    # Exact square comparisons enclose the radicals; no floating-point premise.
+    scale = 10 ** 15
+    l3, u3 = Fraction(1732050807568877, scale), Fraction(1732050807568878, scale)
+    l17, u17 = Fraction(4123105625617660, scale), Fraction(4123105625617661, scale)
+    require(0 < l3 < u3 and l3 * l3 < 3 < u3 * u3, "sqrt(3) bracket")
+    require(0 < l17 < u17 and l17 * l17 < 17 < u17 * u17, "sqrt(17) bracket")
+    lower, upper = (3 * l3 - u17) / 48, (3 * u3 - l17) / 48
+    require(Fraction(1, 48) < lower < upper < expected[3], "limiting gap bracket")
+    return {"parameters": {"fixed_p_candidates": [p.pair() for p in ps],
+                "r": r.pair(), "hidden_bit_prior": HALF.pair()},
+            "bounded_history_crosscheck": {"max_length": 8, "paired_words": words,
+                "fixed_models_per_word": 2, "zero_prefix_max_length": 64,
+                "zero_prefixes_including_empty": len(zero_rows),
+                "distinct_paired_histories": words + len(zero_rows) - 9},
+            "zero_word_samples": [zero_rows[n] for n in (0, 1, 2, 3, 4, 8, 64)],
+            "invariant": {"p": ps[1].pair(), "posterior_upper": Q(9, 14).pair(),
+                "endpoint_image": Q(barrier.numerator, barrier.denominator).pair(),
+                "readout_upper": Q(23, 42).pair(), "half_gap_lower": Q(1, 48).pair(),
+                "checked_lengths": [3, 64]},
+            "finite_nonmonotonicity": "half_gap(2) < half_gap(3) > half_gap(4)",
+            "limit": {"expression": "(3*sqrt(3)-sqrt(17))/48",
+                "sqrt3_bracket": [Q(v.numerator, v.denominator).pair() for v in (l3, u3)],
+                "sqrt17_bracket": [Q(v.numerator, v.denominator).pair() for v in (l17, u17)],
+                "half_gap_bracket": [Q(v.numerator, v.denominator).pair()
+                                     for v in (lower, upper)]}}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -588,6 +689,8 @@ def main():
     test.add_argument("--out")
     integer_test = sub.add_parser("integer-checks")
     integer_test.add_argument("--out")
+    unknown_test = sub.add_parser("unknown-checks")
+    unknown_test.add_argument("--out")
     stream = sub.add_parser("stream")
     for name in ("p", "r", "eps"):
         stream.add_argument(f"--{name}", required=True)
@@ -603,6 +706,8 @@ def main():
             return 0 if result["valid"] else 1
         elif args.command == "integer-checks":
             emit(integer_checks(), args.out)
+        elif args.command == "unknown-checks":
+            emit(unknown_checks(), args.out)
         elif args.command == "stream":
             observer = IntegerObserver(*(cli_rational(getattr(args, name))
                                           for name in ("p", "r", "eps")))

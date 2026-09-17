@@ -78,3 +78,35 @@ objects, allocation, and integer algorithms are host details, so the JSON byte
 count or Python timing is not the abstract cost. A verifier of arbitrary input
 must use the actual operand and index lengths. The five-bit persistent label
 of the sample is separate from its static table, certificate, and scratch space.
+
+## Unknown fixed parameter
+
+`unknown-checks` is the bounded paired-model consumer for
+[observation companion §48](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md).
+It fixes `r=1/4`, keeps separate globally fixed `p=1/4` and `p=1/3` filters,
+and gives both the same complete report word. The hidden-bit prior `1/2` is
+not a prior over models. Each target is its own model's conditional probability
+of the next zero report.
+
+```sh
+env -u PYTHONOPTIMIZE python3 -B docs/reports/contextual-spacetime-ml/rational_observer.py unknown-checks --out docs/reports/contextual-spacetime-ml/rational_observer_unknown_results.json
+```
+
+The check reuses `Q`, `update`, `output`, and the JSON writer. Separate
+unnormalized emission-then-flip masses independently check both scalar filters,
+readouts, and positive support on all 511 words through length 8 and the 65 zero
+prefixes of lengths 0 through 64 (567 distinct paired histories). The result
+retains exact samples, the rational invariant endpoint `59/92 < 9/14`, the
+third iterate `19/28`, readout `33/56`, the `1/48` barrier, unequal two-report
+probabilities `9/32` and `19/72`, and half-gaps `5/228`, `935/41328`, `145/6424`.
+Rational square comparisons enclose the limiting expression
+`(3*sqrt(3)-sqrt(17))/48`; no floating-point value is used as a premise.
+
+This finite check does not prove the all-length invariant, convergence, or the
+deterministic full-history and stopping statements. Those follow from the
+recurrences and proofs in §48. Stopping there begins after `000` and requires
+finite completion on every infinite continuation; the result does not exclude
+almost-sure learning, average-risk bounds, or high-probability guarantees.
+The limit is specific to the zero-word witness family, not a sharp global
+minimax value. The command requires assertions enabled, emits no success result
+if a check fails, and retains the failing parameter/history in comparison errors.

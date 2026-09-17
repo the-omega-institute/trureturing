@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac5e387c24d10c68c94781a530def9d4f078c6672ce2091198477c264bcb6529
+  normalized_sha256: sha256:ac5e387c24d10c68c94781a530def9d4f078c6672ce2091198477c264bcb6529
+cas_ref: sha256:ac5e387c24d10c68c94781a530def9d4f078c6672ce2091198477c264bcb6529
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “取前缀距离”后的分段公式只按首个不同坐标指定函数值；本叶没有断言它满足超度量公理、给出乘积拓扑或与另一距离比较，故不把名称当成度量性质的证明。
+    previous_atom_id: 2ab088dc22356e50ce838db9d483f4b906777ccbb3052d4205937d0cabce63a7
+    next_atom_id: 532f2512370809de186eedc8e29cada20eed5f5f60f34909b5f85199bf5eb4a2

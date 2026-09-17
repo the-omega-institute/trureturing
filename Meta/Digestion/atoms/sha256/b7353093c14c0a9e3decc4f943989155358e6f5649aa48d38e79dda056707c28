@@ -1,0 +1,11 @@
+**定理 RK1。** 对任意 q≥1、任意相容读数 W_0,W_1，全部实际初始 Gram 候选至多有 2^q 个。每个候选的 a_i 必须满足显式二次方程
+
+$$\boxed{a_i^2-s_i a_i+c_i=0,\qquad
+c_i=\sigma_i^2-\sigma_i\sum_{j\ne i}\frac{\alpha_{ij}\beta_{ij}}{\sigma_j}.}\tag{RK1}$$
+
+从这些二次根构造 A=α+diag(a_i)、B=β+diag(s_i-a_i)，再检验
+
+$$A\succ0,\qquad A\Sigma^{-1}B=\Sigma\tag{RK2}$$
+
+得到恰好全部实际候选。因此这是完整可行集描述，而非仅必要条件。
+
