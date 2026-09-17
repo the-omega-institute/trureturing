@@ -1,0 +1,68 @@
+{
+  "schedule_count": {
+    "kind": "inline",
+    "value": 255
+  },
+  "finite_sufficient_bound_count": {
+    "kind": "inline",
+    "value": 72
+  },
+  "best_sufficient_bound": {
+    "kind": "inline",
+    "value": {
+      "schedule": [
+        [
+          17,
+          8
+        ],
+        [
+          19,
+          8
+        ]
+      ],
+      "A": "184858772924880169639/213136488868611009520",
+      "B": "-1085226500392507370243/23018740797809989028160",
+      "positive_intercept": "14303216841949840923274283/46037481595619978056320",
+      "minimum_W": "295/576",
+      "residual_at483": "2270611858594457972033863/9207496319123995611264",
+      "physical_square_multiplier": "5251/2880",
+      "minimum_verified_feature_coefficient": "7/4590",
+      "Gamma_upper": "14309324828593686784688579/6107986643845861414296",
+      "W": "14303216841949840923274283/6107986643845861414296"
+    }
+  },
+  "minimum_A": {
+    "kind": "inline",
+    "value": "80663981097256356329/93247213880017316665"
+  },
+  "minimum_positive_intercept": {
+    "kind": "inline",
+    "value": "33829533752549667313/138985272296884368"
+  },
+  "minimum_residual_at483": {
+    "kind": "inline",
+    "value": "1425444894002262236319997/5872127754543364548000"
+  },
+  "least_defect_schedule": {
+    "kind": "inline",
+    "value": [
+      [
+        17,
+        6
+      ],
+      [
+        19,
+        8
+      ]
+    ]
+  },
+  "outcomes": {
+    "path": "content/009-restart17_19/007-outcomes.json",
+    "sha256": "ca4081b29bb5c5fe4537ff6cc4ac9a54ce6faeff375bc62eb4e7e1e76700b233",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Only this fixed complete-profile SH27 scalar-feature upper functional and the255 stated integer17/19 schedules. Failure is not a lower bound on actual moments or a no-covering obstruction."
+  }
+}

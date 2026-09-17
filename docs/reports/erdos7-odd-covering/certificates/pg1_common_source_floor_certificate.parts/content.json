@@ -1,0 +1,129 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-common-source-floor-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/pg1_joint_tail_certificate.json": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff",
+      "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d",
+      "certificates/pg1_signed_g2_certificate.json": "bea46c0f0b687ae6846ddfe905d33ce888e7b66d48d1aceb96760de41a42366c",
+      "certificates/pg1_exact_zero_depth_certificate.json": "06ea453a891b41737b19e20f1b1eb2d43db19c6064e91c67c32f39ab22977427"
+    }
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "physical_floor_reference": {
+    "kind": "inline",
+    "value": "149"
+  },
+  "source_reference": {
+    "kind": "inline",
+    "value": "297/2"
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "zero_head": "4/3",
+      "other_heads": "563/630",
+      "H4": "1/6",
+      "G1": "4/33",
+      "G2": "50/2541",
+      "H2_full_tail": "31/5082",
+      "weight_mass": "2/847"
+    }
+  },
+  "root_pairs": {
+    "path": "content/007-root_pairs.json",
+    "sha256": "fbb690e7c435e6a9157d2192c568c1d4d2ebb00a0b072913fe5f88ba6d37fb25",
+    "kind": "value"
+  },
+  "root_combinations": {
+    "kind": "inline",
+    "value": 10000
+  },
+  "joint_queries": {
+    "path": "content/009-joint_queries.json",
+    "sha256": "728f9b78954ea922e4b0284813e94b2c9b70c747e796289194af4cf7c8d05a32",
+    "kind": "value"
+  },
+  "separate_bound_pruned": {
+    "kind": "inline",
+    "value": 9990
+  },
+  "pruned_bounds_sha256": {
+    "kind": "inline",
+    "value": "9d42a1d67582cd05bbf9a3824851646a5875c6d6d60b85b3c68b8374f3c17b53"
+  },
+  "new_deletions": {
+    "path": "content/012-new_deletions.json",
+    "sha256": "ef82c5f91a42068e195cd0aa5f3ed72a6a3428fcd6e76e527bbdae549f7cd3a7",
+    "kind": "array"
+  },
+  "new_deletion_count": {
+    "kind": "inline",
+    "value": 16
+  },
+  "maximum_source_excess_upper": {
+    "kind": "inline",
+    "value": "-167157392171127017840563/3898857874792004932500000"
+  },
+  "split_Q_coefficient": {
+    "kind": "inline",
+    "value": "-803146/12705"
+  },
+  "split_constant_max": {
+    "kind": "inline",
+    "value": "35204985686553987468638773289/1050742197256445329308750000"
+  },
+  "common_Q_candidates": {
+    "kind": "inline",
+    "value": [
+      {
+        "Q": "25428074957/48000000336",
+        "bound": "153274304267958965095650031/1032713016592892448515625"
+      },
+      {
+        "Q": "19341582772973446474593583/36445882274521174135800000",
+        "bound": "3452976366440462440938598284408403/23265022838471110091964891311550"
+      },
+      {
+        "Q": "1",
+        "bound": "124817581533821279008492648289/1050742197256445329308750000"
+      }
+    ]
+  },
+  "worst_Q": {
+    "kind": "inline",
+    "value": "19341582772973446474593583/36445882274521174135800000"
+  },
+  "Gamma13_upper": {
+    "kind": "inline",
+    "value": "3452976366440462440938598284408403/23265022838471110091964891311550"
+  },
+  "prior_Gamma13_upper": {
+    "kind": "inline",
+    "value": "165486462221025969000254660209/1113264631887138059499843750"
+  },
+  "improvement": {
+    "kind": "inline",
+    "value": "2481547794665485727320778232865419974853615770886611/10766150012934447435603973140826331586380266626328125"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Unchanged PG1 probability and physical11/13 kernels; one actual higher357 event F and survival Q; all original labels and full357/11/13 tails; independent final, other-head, G2-charge and H2-charge roots. Input geometry is a separately verified hash-bound prerequisite."
+  }
+}

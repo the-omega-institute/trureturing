@@ -1,0 +1,148 @@
+{
+  "shape": {
+    "kind": "inline",
+    "value": "root2_other_other_column"
+  },
+  "source_case": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "source_weight_denominator": {
+    "kind": "inline",
+    "value": 1000000007
+  },
+  "source_original_low_family": {
+    "path": "content/002-result/004-source_original_low_family.json",
+    "sha256": "6df3c9bbdfcab21bb35bb8f3a135e494fea1175aaae96648af1d5bc7b55da1ac",
+    "kind": "value"
+  },
+  "source_points": {
+    "path": "content/002-result/005-source_points.json",
+    "sha256": "ebe14689e88f485174314691b6df26a450b0a46d89d042d5225c7e9131c90103",
+    "kind": "value"
+  },
+  "source_weight_numerators": {
+    "path": "content/002-result/006-source_weight_numerators.json",
+    "sha256": "cd0c0a252bedeaeb31e30c7f639e2dce4efff591030ae690d723e9e9d8ab07e7",
+    "kind": "value"
+  },
+  "source_old_points": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      7,
+      8,
+      14,
+      16,
+      17,
+      19,
+      23,
+      28,
+      29,
+      32,
+      34,
+      38,
+      43,
+      44
+    ]
+  },
+  "target_Gamma": {
+    "kind": "inline",
+    "value": 35
+  },
+  "previous_scalar_integer_loss_limit": {
+    "kind": "inline",
+    "value": 20778236
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "tail_divisors": {
+    "kind": "inline",
+    "value": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ]
+  },
+  "remaining_high_deletion_coefficients": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "0",
+      "0",
+      "1/24",
+      "0",
+      "0",
+      "0",
+      "7/24",
+      "0",
+      "7/12",
+      "1/8",
+      "49/48"
+    ]
+  },
+  "grouped_deletion_domain": {
+    "kind": "inline",
+    "value": {
+      "A_layouts": 80,
+      "B_layouts": 448,
+      "extra_layouts": 23,
+      "outer_layouts": 824320,
+      "exact_integer": true
+    }
+  },
+  "joint_criterion": {
+    "kind": "inline",
+    "value": "U'_ij-35+mu((35-b_ij^2)1_S)+R((35-b_ij^2)mu 1_(S^c)) <= 0"
+  },
+  "removed_set_partition": {
+    "kind": "inline",
+    "value": "S disjoint-union (S^c intersect F^c)"
+  },
+  "selected_carriers": {
+    "path": "content/002-result/016-selected_carriers.json",
+    "sha256": "50800add68cf096b98428b0ca25f93ff4cfeaa696092dbebbbb7557283c541e8",
+    "kind": "array"
+  },
+  "selected_orbits": {
+    "kind": "inline",
+    "value": 4
+  },
+  "selected_distinct_digit_quotient_states": {
+    "kind": "inline",
+    "value": 30
+  },
+  "selected_digit_quotient_states_sha256": {
+    "kind": "inline",
+    "value": "fe26c2e1e55523b615953f88dbadb89d0b7cb0163260207730b7b425ad028e3f"
+  },
+  "support_coverage": {
+    "path": "content/002-result/020-support_coverage.json",
+    "sha256": "9b07dafd01cbc2a2aa525072156ae4e0285c8d82fee3b59b763a0925a87d1cca",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Four fixed support-minimal actual low315 carriers, and all12 same-shape old maps for each, under one transported restriction of the PG1 law and the same arbitrary actual high survival event. All ten original test roots, arbitrary finite physical heights, and complete high357 tails. Support containment extends these laws to the enumerated included targets, with old coverage overlap subtracted. No merger of source and target forbidden families, new cross-shape moment result, or unrestricted-prime resolution."
+  }
+}

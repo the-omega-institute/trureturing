@@ -1,0 +1,26 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-integer-hinges-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d",
+      "certificates/pg1_joint_tail_certificate.json": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff",
+      "verify_point_geometry.py": "4896a0d9987c9167c2170994e7447ea0266d8148ed6c9856721acbf7e32b9a24",
+      "verify_original9_convex_transfer.py": "b858aceb4a70b9fd9272d5c782715722dd465a127675b6f131e002eb338607be",
+      "verify_pg1_exact_zero_depth.py": "3a1e8c992f88b3353c393b7ba899a9b0691e3e89f6b4f3b70ee6cf0547ef2f29",
+      "pg1_signed_score_oracle.py": "1b2675c52f4f2994789f3d89dbb9a4468fc09a68a497459d80b1d915a122c5c0",
+      "pg1_signed_score_oracle.cpp": "a2c802870c6260f19c900b7e733ca43356d3131518682c424dd2cf51e8659d2f",
+      "exact_signed_digit_dp.py": "29d364453963581d97face3b65bef8365e7a9ac58788814534f687ecce3c4307"
+    }
+  },
+  "result": {
+    "path": "content/002-result.json",
+    "sha256": "e17ffc11f83e9647187229d09d9d102c4b8104f02b9c2490ab4477e0cf040c87",
+    "kind": "object"
+  }
+}

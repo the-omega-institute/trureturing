@@ -1,0 +1,76 @@
+{
+  "schema": "positive-radial-chain-counterexample-v1",
+  "refuted_claim": "For every positive radial weight on a finite one-prime prefix tree, the maximum weighted square of a load selecting one cylinder at each depth is attained by a nested chain.",
+  "carrier": "Z/9Z",
+  "prime": 3,
+  "height": 2,
+  "center": 1,
+  "original_depth_labels": [
+    0,
+    1,
+    2
+  ],
+  "weights_by_residue": [
+    28,
+    48,
+    28,
+    28,
+    1,
+    28,
+    28,
+    1,
+    28
+  ],
+  "total_weight": 218,
+  "weighted_square_numerators_by_mod3_then_mod9": [
+    [
+      610,
+      614,
+      554,
+      610,
+      473,
+      554,
+      610,
+      473,
+      554
+    ],
+    [
+      452,
+      608,
+      452,
+      452,
+      373,
+      452,
+      452,
+      373,
+      452
+    ],
+    [
+      554,
+      614,
+      610,
+      554,
+      473,
+      610,
+      554,
+      473,
+      610
+    ]
+  ],
+  "full_layout_count": 27,
+  "nested_layout_count": 9,
+  "all_global_maximizers_mod3_mod9": [
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      1
+    ]
+  ],
+  "global_maximum": "307/109",
+  "nested_maximum": "305/109",
+  "strict_gap": "2/109",
+  "scope": "One actual strictly positive radial probability on Z/9Z refutes the universal chain restriction. The first-exit normal form retains all original labels. This is not a covering-system resolution or a Lean proof."
+}

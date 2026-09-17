@@ -1,0 +1,56 @@
+{
+  "r": "3^(-H)",
+  "density": "(1-r)/2",
+  "chi_sum": "2-(H+2)*r",
+  "chi_factor": "5-2*H*r/(1-r)",
+  "cylinder_factor": "2",
+  "base_H0_sum": "0",
+  "recurrence_increment_coefficients": [
+    1,
+    2
+  ],
+  "exact_examples": [
+    {
+      "height": 1,
+      "density": "1/3",
+      "chi_sum": "1",
+      "chi_factor": "4",
+      "cylinder_factor": "2"
+    },
+    {
+      "height": 2,
+      "density": "4/9",
+      "chi_sum": "14/9",
+      "chi_factor": "9/2",
+      "cylinder_factor": "2"
+    },
+    {
+      "height": 3,
+      "density": "13/27",
+      "chi_sum": "49/27",
+      "chi_factor": "62/13",
+      "cylinder_factor": "2"
+    },
+    {
+      "height": 8,
+      "density": "3280/6561",
+      "chi_sum": "13112/6561",
+      "chi_factor": "2049/410",
+      "cylinder_factor": "2"
+    },
+    {
+      "height": 31,
+      "density": "308836698141973/617673396283947",
+      "chi_sum": "411782264189287/205891132094649",
+      "chi_factor": "1544183490709834/308836698141973",
+      "cylinder_factor": "2"
+    },
+    {
+      "height": 64,
+      "density": "1716841910146256242328924544640/3433683820292512484657849089281",
+      "chi_sum": "2289122546861674989771899392832/1144561273430837494885949696427",
+      "chi_factor": "134128274230176268931947230049/26825654846035253786389446010",
+      "cylinder_factor": "2"
+    }
+  ]
+}

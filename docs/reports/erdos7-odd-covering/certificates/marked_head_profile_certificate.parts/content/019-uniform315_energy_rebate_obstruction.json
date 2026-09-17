@@ -1,0 +1,434 @@
+{
+  "scope": "actual ordinary proof plus exact arithmetic, no new Lean theorem",
+  "old_gamma_upper_source": "5506e7f580; marked_head_profile.md sharp uniform315 square1131/86",
+  "head_original_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      52
+    ],
+    [
+      105,
+      4
+    ],
+    [
+      315,
+      142
+    ]
+  ],
+  "complete_head_test_layout": [
+    [
+      1,
+      0
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      15,
+      8
+    ],
+    [
+      45,
+      38
+    ],
+    [
+      7,
+      6
+    ],
+    [
+      21,
+      20
+    ],
+    [
+      35,
+      13
+    ],
+    [
+      63,
+      20
+    ],
+    [
+      105,
+      83
+    ],
+    [
+      315,
+      83
+    ]
+  ],
+  "head_survivors": [
+    2,
+    8,
+    11,
+    17,
+    19,
+    23,
+    26,
+    29,
+    32,
+    34,
+    38,
+    41,
+    47,
+    53,
+    59,
+    62,
+    68,
+    71,
+    73,
+    74,
+    83,
+    86,
+    88,
+    89,
+    92,
+    97,
+    101,
+    104,
+    107,
+    113,
+    116,
+    118,
+    122,
+    124,
+    128,
+    131,
+    134,
+    137,
+    143,
+    146,
+    152,
+    158,
+    163,
+    164,
+    167,
+    173,
+    176,
+    179,
+    187,
+    188,
+    191,
+    194,
+    197,
+    199,
+    206,
+    208,
+    209,
+    212,
+    218,
+    221,
+    223,
+    227,
+    233,
+    236,
+    239,
+    242,
+    244,
+    248,
+    251,
+    257,
+    263,
+    268,
+    269,
+    272,
+    277,
+    278,
+    281,
+    284,
+    293,
+    296,
+    298,
+    299,
+    302,
+    311,
+    313,
+    314
+  ],
+  "head_size": 86,
+  "head_load_histogram": {
+    "1": 5,
+    "2": 38,
+    "3": 14,
+    "4": 18,
+    "6": 8,
+    "8": 2,
+    "12": 1
+  },
+  "minimal_load_centres": [
+    19,
+    124,
+    187,
+    199,
+    277
+  ],
+  "chosen_centre": 19,
+  "mixed11_cofactors": [
+    35,
+    45,
+    63,
+    105,
+    315
+  ],
+  "all_original_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      52
+    ],
+    [
+      105,
+      4
+    ],
+    [
+      315,
+      142
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      385,
+      89
+    ],
+    [
+      495,
+      244
+    ],
+    [
+      693,
+      586
+    ],
+    [
+      1155,
+      334
+    ],
+    [
+      3465,
+      2854
+    ],
+    [
+      31,
+      0
+    ],
+    [
+      93,
+      32
+    ],
+    [
+      155,
+      33
+    ],
+    [
+      279,
+      65
+    ],
+    [
+      465,
+      128
+    ],
+    [
+      1395,
+      1028
+    ],
+    [
+      217,
+      6
+    ],
+    [
+      651,
+      503
+    ],
+    [
+      1085,
+      783
+    ],
+    [
+      1953,
+      1280
+    ],
+    [
+      3255,
+      1343
+    ],
+    [
+      9765,
+      9218
+    ],
+    [
+      341,
+      43
+    ],
+    [
+      1023,
+      230
+    ],
+    [
+      1705,
+      758
+    ],
+    [
+      3069,
+      263
+    ],
+    [
+      5115,
+      4883
+    ],
+    [
+      15345,
+      14618
+    ],
+    [
+      2387,
+      1847
+    ],
+    [
+      7161,
+      6467
+    ],
+    [
+      11935,
+      6313
+    ],
+    [
+      21483,
+      15707
+    ],
+    [
+      35805,
+      27488
+    ],
+    [
+      107415,
+      103718
+    ]
+  ],
+  "class_count": 41,
+  "actual_lcm": 107415,
+  "delta11": "2/5",
+  "delta31": "2/5",
+  "first_hit_histogram": {
+    "0": 78,
+    "1": 6,
+    "2": 1,
+    "5": 1
+  },
+  "first_charge_support": [
+    19
+  ],
+  "first_charge": "1/516",
+  "old_gamma": "1131/86",
+  "weighted_old_gamma": "6785/516",
+  "weighted_old_gamma_proof": "Lower bound by the displayed maximizing layout; upper bound Gamma(rmu)<=Gamma(mu)-b since every complete layout has load>=1.",
+  "prefix_caps_by_hit_count": {
+    "0": "1/10",
+    "1": "1/9",
+    "2": "1/8",
+    "5": "1/6"
+  },
+  "all_actual_positive_depth_prefix_caps_equal": true,
+  "height_checks": [
+    {
+      "height": 1,
+      "class_count": 41,
+      "actual_lcm": 107415,
+      "all_positive_depth_caps_equal": true
+    },
+    {
+      "height": 2,
+      "class_count": 42,
+      "actual_lcm": 1181565,
+      "all_positive_depth_caps_equal": true
+    },
+    {
+      "height": 3,
+      "class_count": 42,
+      "actual_lcm": 12997215,
+      "all_positive_depth_caps_equal": true
+    }
+  ],
+  "same_positive_depth_weighted_gamma": true,
+  "later_charge": "17/15480",
+  "charge_intersection": "0",
+  "later_raw_charge_after_deletion": "17/15480",
+  "later_charge_after_conditioning": "17/15450",
+  "later_charge_head_support": [
+    83,
+    188,
+    293
+  ],
+  "normalized_old_gamma": "1357/103"
+}
