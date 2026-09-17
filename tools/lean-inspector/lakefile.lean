@@ -298,12 +298,14 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let mut members : Lean.NameSet := {}
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
+  try observePhase "lake-prepare-register" "start" catch _ => pure ()
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
+  try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
     let requests := artifacts.filterMap fun request =>
