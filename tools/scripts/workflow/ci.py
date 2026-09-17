@@ -124,6 +124,12 @@ def transport(args):
                "--run-id", args.run_id, "--run-attempt", args.run_attempt]
     if args.command == "pack":
         command.extend(["--archive", str(args.archive)])
+        seed_archive = args.seed_archive
+        if (seed_archive is None and args.stage == "current"
+                and os.environ.get("STRATALINT_CACHE_WRITES") == "true"):
+            seed_archive = args.archive.with_name("ci-current-seed.tar.gz")
+        if seed_archive is not None:
+            command.extend(["--seed-archive", str(seed_archive)])
     # The runner is the upstream candidate runtime. Validation precedes the
     # downstream stage; the non-adversarial runtime bootstrap does not rebuild.
     subprocess.run(command, cwd=args.repository, check=True)
@@ -216,6 +222,7 @@ def main():
     parser.add_argument("--allow-direct", action="store_true")
     parser.add_argument("--dispatch", action="store_true")
     parser.add_argument("--archive", type=pathlib.Path)
+    parser.add_argument("--seed-archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
     args = parser.parse_args()

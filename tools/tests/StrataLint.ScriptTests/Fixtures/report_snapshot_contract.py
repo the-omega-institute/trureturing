@@ -143,111 +143,42 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def test_native_report_is_normal_project_material(self):
         self.prepare_current()
-        readiness, receipts = self.snapshot_result()
-        self.assertEqual({"dependency_ready": "false", "project_ready": "true"}, readiness, receipts)
-        cache = self.root / "build/lean-cache/project"
-        manifest = json.loads((cache / "manifest.json").read_text())
         expected = {p.relative_to(self.root / ".lake/build").as_posix(): p.read_bytes()
                     for p in (self.root / ".lake/build").rglob("*") if p.is_file()}
+        readiness, receipts = self.snapshot_result()
+        self.assertEqual({"dependency_ready": "false", "project_ready": "true"}, readiness, receipts)
         self.assertIn("lean-inspector/report.zip", expected)
-        self.assertFalse(any(path.endswith(".seed.json") for path in expected))
-        self.assertEqual(expected, {p.relative_to(cache / "data").as_posix(): p.read_bytes()
-                                   for p in (cache / "data").rglob("*") if p.is_file()})
-        shutil.rmtree(self.root / ".lake/build")
-        self.env.update(GITHUB_EVENT_NAME="pull_request_target", STRATALINT_CACHE_WRITES="false")
-        restored = self.run_tool(CACHE, "restore", "--layers", "project", "--project-key", manifest["key"])
+        owner = self.owner()
+        with mock.patch.dict(os.environ, self.env):
+            spec = owner.actions_keys(self.root)["project"]
+        self.assertEqual(".lake/build", spec["path"])
+        self.env.update(GITHUB_EVENT_NAME="pull_request", STRATALINT_CACHE_WRITES="false")
+        restored = self.run_tool(CACHE, "restore", "--layers", "project", "--project-key", spec["key"],
+                                 "--project-outcome", "success")
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertIn('"status": "restored"', restored.stdout)
         self.assertEqual(expected, {p.relative_to(self.root / ".lake/build").as_posix(): p.read_bytes()
                                    for p in (self.root / ".lake/build").rglob("*") if p.is_file()})
-        self.assertFalse((self.root / ".lake/report-cache").exists())
+        self.assertFalse((self.root / "build/lean-cache/project").exists())
 
-    def test_current_handoff_accepts_native_five_members_without_preparation(self):
+    def test_current_handoff_accepts_native_five_members_without_directory_scans(self):
         plan, commit = self.prepare_current()
         owner = self.owner()
-        with mock.patch.dict(os.environ, self.env, clear=True):
-            self.assertIn(REPORT, owner.current_lean_materials(self.root, plan, commit))
-            staged = self.root / "snapshot"
-            staged.mkdir()
-            metrics = owner.stage_snapshot(self.root, owner.actions_keys(self.root), "project", staged,
-                                           current=(plan, commit))
-        self.assertNotIn("save_disabled_reason", metrics)
-        self.assertTrue((staged / "data/lean-inspector/report.zip").is_file())
-        self.restore_current_project()
         material = self.root / ".lake/build/lean-inspector/report.zip"
-        original_open, original_glob = pathlib.Path.open, pathlib.Path.rglob
-        for changed in (False, True):
-            with self.subTest(changed_other_material=changed):
-                if changed: material.write_bytes(b"new native material after successful production\n")
-                observed = {"material_reads": 0, "layer_walks": 0}
-
-                def counted_open(path, mode="r", *args, **kwargs):
-                    if path == material and mode == "rb": observed["material_reads"] += 1
-                    return original_open(path, mode, *args, **kwargs)
-
-                def counted_glob(path, *args, **kwargs):
-                    if path == self.root / ".lake/build": observed["layer_walks"] += 1
-                    return original_glob(path, *args, **kwargs)
-
-                with mock.patch.dict(os.environ, self.env, clear=True), \
-                        mock.patch.object(pathlib.Path, "open", counted_open), \
-                        mock.patch.object(pathlib.Path, "rglob", counted_glob), \
-                        contextlib.redirect_stdout(io.StringIO()) as receipts:
-                    owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], current=(plan, commit))
-                self.assertEqual({"material_reads": 0, "layer_walks": 0}, observed)
-                self.assertIn('"reason": "retained-restored-seed"', receipts.getvalue())
-                self.assertNotIn('"reason": "unchanged"', receipts.getvalue())
-                self.assertIn("project_ready=false", receipts.getvalue())
-                self.assertFalse((self.root / "build/lean-cache/project/data").exists())
-
-        for fault in ("no-restore", "failed-restore", "missing-attestation", "different-attestation",
-                      "missing-record", "invalid-record", "stale-record", "changed-manifest"):
-            with self.subTest(fallback=fault):
-                self.restore_current_project(fault=fault)
-                with mock.patch.dict(os.environ, self.env, clear=True), \
-                        contextlib.redirect_stdout(io.StringIO()) as receipts:
-                    owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], current=(plan, commit))
-                self.assertNotIn('"reason": "retained-restored-seed"', receipts.getvalue())
-                self.assertIn('"status": "snapshot"', receipts.getvalue())
-                self.assertIn("project_ready=true", receipts.getvalue())
-                self.assertEqual(material.read_bytes(),
-                    (self.root / "build/lean-cache/project/data/lean-inspector/report.zip").read_bytes())
-
-    def restore_current_project(self, *, fault=None):
-        cached = self.root / "build/lean-cache/project"
-        shutil.rmtree(cached, ignore_errors=True)
-        attestation = pathlib.Path(str(self.report) + ".input.attestation")
-        current_bytes = attestation.read_bytes()
-        if fault == "missing-attestation": attestation.unlink()
-        elif fault == "different-attestation": attestation.write_bytes(b"older registered input\n")
-        created = self.run_tool(CACHE, "snapshot", "--layers", "project")
-        self.assertEqual(0, created.returncode, created.stdout + created.stderr)
-        self.assertIn("project_ready=true", created.stdout)
-        manifest = json.loads((cached / "manifest.json").read_text())
-        if fault == "failed-restore":
-            (cached / "data/lean-inspector/report.zip").write_bytes(b"corrupt seed")
-        if fault != "no-restore":
-            restored = self.run_tool(CACHE, "restore", "--layers", "project", "--project-key", manifest["key"])
-            self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
-            self.assertIn('"status": "miss"' if fault == "failed-restore" else '"status": "restored"',
-                          restored.stdout)
-        if fault == "missing-record": (cached / "restored.json").unlink()
-        elif fault == "invalid-record": (cached / "restored.json").write_text("invalid")
-        elif fault == "stale-record":
-            record = json.loads((cached / "restored.json").read_text())
-            record["snapshot_key"] += "0"
-            (cached / "restored.json").write_text(json.dumps(record))
-        elif fault == "changed-manifest":
-            manifest["key"] += "0"
-            (cached / "manifest.json").write_text(json.dumps(manifest))
-        # Model the accepted producer handoff after normal production, including
-        # cases where its current attestation differs from the restored donor.
-        attestation.write_bytes(current_bytes)
-        self.write_handoff()
+        original_open = pathlib.Path.open
+        def guarded_open(path, *args, **kwargs):
+            if path == material: raise AssertionError("native directory material was read")
+            return original_open(path, *args, **kwargs)
+        with mock.patch.dict(os.environ, self.env, clear=True), \
+                mock.patch.object(pathlib.Path, "open", guarded_open), \
+                mock.patch.object(pathlib.Path, "rglob", side_effect=AssertionError("native directory scan")), \
+                contextlib.redirect_stdout(io.StringIO()) as result:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], current=(plan, commit))
+        self.assertIn("project_ready=true", result.getvalue())
+        self.assertEqual(b"native aggregate\n", material.read_bytes())
 
     def test_current_handoff_rejects_each_missing_or_damaged_member(self):
         plan, commit = self.prepare_current()
-        self.restore_current_project()
         owner = self.owner()
         staged = self.root / "snapshot"
         staged.mkdir()
@@ -267,7 +198,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def test_current_handoff_rejects_wrong_execution_and_skipped_lean(self):
         plan, commit = self.prepare_current()
-        self.restore_current_project()
         owner = self.owner()
         staged = self.root / "snapshot"
         staged.mkdir()
@@ -304,33 +234,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     rejected()
             finally: path.write_bytes(original)
 
-    def test_invalid_dependency_links_disable_only_that_save_with_an_offending_path(self):
-        self.prepare_current()
-        source, _ = self.dependency_files()
-        self.assertEqual({"dependency_ready": "true", "project_ready": "true"}, self.snapshot_result()[0])
-        cached = self.root / "build/lean-cache/dependency/manifest.json"
-        outside = self.root / "outside"
-        outside.write_bytes(b"outside must stay private")
-        link = source / "batteries/docs/bad-link"
-        link.parent.mkdir()
-        peer = link.with_name("cycle-peer")
-        for name, target in {"escape": "../../../../outside", "absolute": str(outside), "broken": "missing",
-                             "self-cycle": "bad-link", "chain-cycle": "cycle-peer", "directory": ".."}.items():
-            before = cached.read_bytes()
-            with self.subTest(link=name):
-                link.symlink_to(target)
-                if name == "chain-cycle": peer.symlink_to("bad-link")
-                try:
-                    readiness, receipts = self.snapshot_result()
-                    self.assertEqual({"dependency_ready": "false", "project_ready": "true"}, readiness, receipts)
-                    self.assertIn("batteries/docs/bad-link", receipts["dependency"]["reason"])
-                    self.assertEqual(before, cached.read_bytes())
-                    self.assertEqual(target, os.readlink(link))
-                    self.assertEqual(b"outside must stay private", outside.read_bytes())
-                finally:
-                    link.unlink()
-                    peer.unlink(missing_ok=True)
-
     def test_snapshot_readiness_and_material_follow_writer_permissions(self):
         self.prepare_current()
         self.dependency_files()
@@ -353,7 +256,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual({layer: "snapshot" if allowed else "save-disabled" for layer in ("dependency", "project")},
                                  {layer: value["status"] for layer, value in receipts.items()})
                 for layer in ("dependency", "project"):
-                    self.assertEqual(allowed, (self.root / "build/lean-cache" / layer / "manifest.json").is_file())
+                    self.assertFalse((self.root / "build/lean-cache" / layer / "manifest.json").exists())
+                    path = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
+                    self.assertTrue(path.is_dir())
 
 
 if __name__ == "__main__":

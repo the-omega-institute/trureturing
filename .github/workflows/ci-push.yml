@@ -402,7 +402,9 @@ jobs:
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY"
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         env:
@@ -425,7 +427,8 @@ jobs:
         continue-on-error: true
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer current --bounded-cache
+          PREPARED_SEED_ARCHIVE: ${{ steps.pack.outputs.seed_archive }}
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer current --bounded-cache --seed-archive "$PREPARED_SEED_ARCHIVE"
       - if: steps.snapshot_current.outcome == 'success' && steps.snapshot_current.outputs.current_ready == 'true'
         continue-on-error: true
         timeout-minutes: ${{ fromJSON(steps.snapshot_current.outputs.save_timeout_minutes || '1') }}

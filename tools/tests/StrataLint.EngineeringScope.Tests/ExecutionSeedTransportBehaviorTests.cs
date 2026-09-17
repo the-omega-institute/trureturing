@@ -7,7 +7,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
-public sealed class ExecutionSeedTransportBehaviorTests
+public sealed partial class ExecutionSeedTransportBehaviorTests
 {
     [Fact]
     public void IsolatedEngineeringArtifactsExportReusableSeedWithoutProducerOrBuildTools()

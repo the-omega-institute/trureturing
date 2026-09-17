@@ -252,7 +252,7 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, out _, out _);
 
-    private static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
+    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
     {
         var candidate = Candidate(root, out var snapshot);
         var validation = new ValidationScope(snapshot);

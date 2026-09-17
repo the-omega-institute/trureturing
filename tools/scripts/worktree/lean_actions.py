@@ -1,8 +1,7 @@
-"""Actions snapshots are optional, integrity-checked inputs to normal producers."""
+"""Native Actions build seeds and strictly verified execution evidence."""
 from __future__ import annotations
 
 import argparse
-import errno
 import hashlib
 import json
 import os
@@ -10,7 +9,6 @@ import pathlib
 import re
 import shutil
 import signal
-import stat
 import subprocess
 import sys
 import tempfile
@@ -19,7 +17,7 @@ import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
-from cache_material import CacheMaterialDifference, files, sha, snapshot_files, validate_manifest
+from cache_material import files, sha
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
@@ -50,9 +48,10 @@ def actions_keys(root: pathlib.Path) -> dict:
     paths = {"dependency": ".lake/packages", "project": ".lake/build",
              "judge": ".judge-binaries"}
     for layer, path in paths.items():
-        prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
+        version = 4 if layer in LAYERS else 3
+        prefix = f"lean-{layer}-v{version}-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
-                         "path": "build/lean-cache/" + layer, "target": path}
+                         "path": path if layer in LAYERS else "build/lean-cache/" + layer, "target": path}
     for layer in EXECUTION_LAYERS:
         prefix = f"lean-{layer}-seed-v1-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
@@ -183,7 +182,7 @@ def clean_current_candidate(root, commit):
             raise ValueError("current snapshot requires the exact clean candidate commit")
 
 
-def snapshot_execution(root, layer, keys, destination):
+def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
     """Export one native execution seed and make its declared members cacheable.
 
     The native runner owns seed selection, validation, provenance, and the
@@ -200,25 +199,47 @@ def snapshot_execution(root, layer, keys, destination):
     if not runner.is_file():
         raise ValueError("native execution transport runner is unavailable")
     destination.mkdir(parents=True, exist_ok=True)
-    descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
-    os.close(descriptor)
-    archive = pathlib.Path(archive_name)
-    command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
-               "--stage", spec["stage"], "--commit", commit,
-               "--run-id", os.environ["GITHUB_RUN_ID"],
-               "--run-attempt", os.environ["GITHUB_RUN_ATTEMPT"], "--archive", str(archive)]
-    try:
+    identity = ["--stage", spec["stage"], "--commit", commit,
+                "--run-id", os.environ["GITHUB_RUN_ID"],
+                "--run-attempt", os.environ["GITHUB_RUN_ATTEMPT"]]
+
+    def verify(directory):
         try:
-            subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
+            subprocess.run(["dotnet", str(runner), "transport-verify", "--repository", str(directory), *identity],
+                           cwd=root, check=True, capture_output=True, text=True)
         except subprocess.CalledProcessError as error:
-            status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
             detail = (error.stderr or error.stdout or str(error)).strip()
-            raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
+            raise ValueError("native execution transport rejected prepared seed: " + detail) from error
+
+    if seed_archive is not None:
+        # Ordinary pack already accepted this execution. Verify its native seed
+        # receipt before reading the companion archive, without exporting again.
+        clean_current_candidate(root, commit)
+        verify(root)
+        prepared_transport_sha = sha(root / "build/ci" / (spec["stage"] + "-transport.json"))
+        archive = seed_archive
+    else:
+        descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
+        os.close(descriptor)
+        archive = pathlib.Path(archive_name)
+    try:
+        if seed_archive is None:
+            command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
+                       *identity, "--archive", str(archive)]
+            try:
+                subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
+            except subprocess.CalledProcessError as error:
+                status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
+                detail = (error.stderr or error.stdout or str(error)).strip()
+                raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
         with tarfile.open(archive, "r:gz") as source:
+            seen = set()
             for member in source.getmembers():
                 path = pathlib.PurePosixPath(member.name)
-                if (not member.isfile() or path.is_absolute() or any(part in ("", ".", "..") for part in member.name.split("/"))):
+                if (not member.isfile() or path.is_absolute() or member.name in seen
+                        or any(part in ("", ".", "..") for part in member.name.split("/"))):
                     raise ValueError("native execution transport contains an invalid member")
+                seen.add(member.name)
                 target = destination / path
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with source.extractfile(member) as stream:
@@ -227,15 +248,26 @@ def snapshot_execution(root, layer, keys, destination):
                     target.write_bytes(stream.read())
                 if os.name != "nt":
                     target.chmod(member.mode & 0o7777)
+    except (tarfile.TarError, EOFError) as error:
+        raise ValueError("invalid native execution archive: " + str(error)) from error
     finally:
-        archive.unlink(missing_ok=True)
-        archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
+        if seed_archive is None:
+            archive.unlink(missing_ok=True)
+            archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
+    if seed_archive is not None:
+        verify(destination)
+        if sha(destination / "build/ci" / (spec["stage"] + "-transport.json")) != prepared_transport_sha:
+            raise ValueError("prepared seed differs from producer transport")
     inventory = files(destination)
     transport = json.loads((destination / "build/ci" / (spec["stage"] + "-transport.json")).read_text())
     if transport.get("commit") != commit or transport.get("run_id") != int(os.environ["GITHUB_RUN_ID"]):
         raise ValueError("native execution transport identity mismatch")
     if transport.get("run_attempt") != int(os.environ["GITHUB_RUN_ATTEMPT"]):
         raise ValueError("native execution transport attempt mismatch")
+    if seed_archive is not None:
+        declared = {item["path"] for item in transport["materials"]}
+        if {item["path"] for item in inventory} != declared | {"build/ci/" + spec["stage"] + "-transport.json"}:
+            raise ValueError("execution seed differs from declared transport materials")
     return inventory
 
 
@@ -297,82 +329,6 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def validate_cache_directory(directory, expected, *, small_files_first=False, observations=None,
-                             private_staging=False):
-    """Validate a complete cache data directory before publishing it.
-
-    ``files(..., expected=...)`` validates the declared bytes and modes but
-    intentionally ignores unlisted neighbours because its copy mode only
-    materializes declared members.  A same-filesystem move would otherwise
-    publish those neighbours, so inspect the regular-file shape separately
-    while keeping the declared member hash pass to one read. Empty directories
-    are permitted because snapshot manifests intentionally register files only.
-    """
-    shape_started = snapshot_phase(observations, "directory_shape", "start")
-    if directory.is_symlink() or not directory.is_dir():
-        raise CacheMaterialDifference("cache data is not a private directory", "invalid-layer-directory")
-    validate_manifest(expected)
-    declared = {item["path"]: item["mode"] for item in expected}
-    actual = {}
-    for path in directory.rglob("*"):
-        relative = path.relative_to(directory).as_posix()
-        metadata = path.lstat()
-        if stat.S_ISLNK(metadata.st_mode):
-            raise CacheMaterialDifference("cache data contains a symlink: " + relative, "symlink-member", relative)
-        if stat.S_ISDIR(metadata.st_mode):
-            continue
-        if not stat.S_ISREG(metadata.st_mode):
-            raise CacheMaterialDifference("cache data member is not a regular file: " + relative,
-                                          "nonregular-member", relative)
-        if relative in declared and metadata.st_mode & 0o777 != declared[relative]:
-            raise CacheMaterialDifference("cache material integrity mismatch: " + relative, "mode-changed", relative)
-        actual[relative] = metadata.st_size
-    if actual.keys() != declared.keys():
-        extra = sorted(actual.keys() - declared.keys())
-        missing = sorted(declared.keys() - actual.keys())
-        detail = []
-        if extra:
-            detail.append("extra=" + ",".join(extra[:3]))
-        if missing:
-            detail.append("missing=" + ",".join(missing[:3]))
-        raise CacheMaterialDifference("cache data members differ from manifest (" + ";".join(detail) + ")",
-                                      "extra-member" if extra else "missing-member", (extra or missing)[0])
-    if small_files_first:
-        expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
-    snapshot_phase(observations, "directory_shape", "finish", shape_started, sizes=actual)
-    hash_started = snapshot_phase(observations, "declared_material_hash", "start")
-    inventory = files(directory, expected=expected, parallel=not small_files_first,
-                      parents_verified=private_staging)
-    snapshot_phase(observations, "declared_material_hash", "finish", hash_started, sizes=actual)
-    return inventory
-
-
-def move_validated_cache_data(cached, staged, expected):
-    """Move a same-filesystem cache payload into private staging.
-
-    The move removes the large second copy used by the old restore path.  The
-    payload is validated after moving, so a byte race cannot publish unchecked
-    data; a validation failure moves it back to the Actions cache directory.
-    Cross-device filesystems retain the old copy-and-hash fallback.
-    """
-    try:
-        cached.rename(staged)
-    except OSError as error:
-        if error.errno not in (errno.EXDEV, errno.EACCES, errno.EPERM):
-            raise
-        files(cached, expected=expected, copy_to=staged)
-        return False
-    try:
-        validate_cache_directory(staged, expected, private_staging=True)
-    except BaseException:
-        try:
-            staged.rename(cached)
-        except OSError as rollback_error:
-            raise ValueError("cache validation failed and source rollback failed") from rollback_error
-        raise
-    return True
-
-
 def replace_restored_directory(staged, target, rollback_root):
     """Atomically publish a validated directory while retaining old target."""
     previous = rollback_root / "previous"
@@ -393,11 +349,11 @@ def replace_restored_directory(staged, target, rollback_root):
             previous.unlink()
 
 
-def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
+def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, seed_archive=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
     observations = ({name: {"status": "not-entered"} for name in
-                     ("current_handoff_validation", "cache_lock_wait", "directory_shape", "declared_material_hash")}
+                     ("current_handoff_validation",)}
                     if layer in LAYERS else None)
     current_materials = None
     if current is not None and layer in ("dependency", "project"):
@@ -409,20 +365,29 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
                        "observations": observations}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
-    difference = {}
+    if layer in LAYERS:
+        target = root / spec["path"]
+        if target.is_symlink() or not target.is_dir():
+            raise ValueError("native cache directory is unavailable: " + spec["path"])
+        metrics = {"transport": "actions-native", "observations": observations}
+        if layer == "dependency":
+            fingerprint = dependency_inputs(root)
+            metrics["dependency_inputs_sha256"] = fingerprint
+            try:
+                restored = json.loads(dependency_restored_record(root).read_text())
+                if (restored.get("snapshot_key") == spec["key"]
+                        and re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", restored.get("matched_key", ""))
+                        and restored.get("inputs_sha256") == fingerprint):
+                    metrics["save_disabled_reason"] = "retained-restored-dependency"
+            except (OSError, ValueError, TypeError, AttributeError):
+                pass
+        (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
+        return metrics
     judge_donor = None
-    lock_started = snapshot_phase(observations, "cache_lock_wait", "start")
     with cache_guard(root, shared=True):
-        snapshot_phase(observations, "cache_lock_wait", "finish", lock_started)
-        reason = (restored_save_reason(root, spec, layer, keys["partition"], difference,
-                                      current_materials=current_materials, observations=observations)
-                  if layer in ("dependency", "project") else None)
-        if reason:
-            metrics = {"save_disabled_reason": reason, "observations": observations}
-            (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
-            return metrics
         if layer in EXECUTION_LAYERS:
-            inventory = snapshot_execution(root, layer, keys, staged / "data")
+            inventory = snapshot_execution(root, layer, keys, staged / "data",
+                                           **({"seed_archive": seed_archive} if seed_archive is not None else {}))
         elif layer == "judge":
             sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
             from dotnet_producer import stage_seed, unique_object
@@ -442,9 +407,6 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             retained = stage_seed(root, staged / "data", registry, donor=donor)
             judge_donor = judge_donor or retained
             inventory = files(staged / "data")
-        else:
-            inventory = snapshot_files(root / spec["target"], staged / "data",
-                                       materialize_links=layer == "dependency")
     manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
                 "key": spec["key"], "files": inventory}
     (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
@@ -454,57 +416,54 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
     if observations is not None:
         metrics["observations"] = observations
-    if difference:
-        metrics["snapshot_reason"] = difference
     if judge_donor is not None:
         metrics["judge_donor"] = judge_donor
     (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
     return metrics
 
 
-def restored_save_reason(root, spec, layer, partition, difference=None, *, current_materials=None, observations=None):
-    """Choose whether to omit an optional save of a successfully restored seed.
+def dependency_restored_record(root):
+    return root / "build/lean-cache/dependency-restored.json"
 
-    An accepted current report with the donor's input attestation can retain a
-    project seed without comparing the whole build directory. This is a save
-    policy, not evidence that its other bytes are unchanged. Otherwise preserve
-    the full shape/mode/byte comparison, checking small files first.
-    """
-    manifest_path = root / spec["path"] / "manifest.json"
-    restored_path = root / spec["path"] / "restored.json"
-    def changed(reason, path=None):
-        if difference is not None:
-            difference.update({"reason": reason, **({"path": path} if path is not None else {})})
-        return None
 
+def dependency_inputs(root):
+    """Small registered save policy; never a cache key or a build verdict."""
+    import tomllib
+    registration = tomllib.loads((root / "Meta/FILEMAP.toml").read_text())
+    rows = [row for row in registration["resources"] if row["id"] == "lean"]
+    if len(rows) != 1:
+        raise ValueError("dependency save requires the registered Lean resource")
+    declared = rows[0]["materials"]
+    required = {"lake-manifest.json", "lean-toolchain", "lakefile.toml"}
+    if not required.issubset(declared):
+        raise ValueError("dependency save configuration is not registered")
+    paths = sorted(required | ({"lakefile.lean"} if "lakefile.lean" in declared else set()))
+    inputs = {}
+    for relative in paths:
+        file = root / relative
+        if file.is_symlink() or not file.is_file():
+            raise ValueError("dependency save input is unavailable: " + relative)
+        inputs[relative] = sha(file)
+    declaration = json.loads((root / "lean-report-inputs.json").read_text())
+    names = declaration["report_execution"]["environment"]
+    if (not isinstance(names, list) or any(not isinstance(name, str) or not name for name in names)
+            or len(set(names)) != len(names)):
+        raise ValueError("dependency save environment registration is invalid")
+    value = {"files": inputs, "environment": {name: os.environ.get(name) for name in names}}
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def write_small_record(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, name = tempfile.mkstemp(prefix=".actions-inputs-", dir=path.parent)
+    temporary = pathlib.Path(name)
     try:
-        if manifest_path.is_symlink() or restored_path.is_symlink():
-            return changed("unsafe-cache-state")
-        manifest_bytes = manifest_path.read_bytes()
-        manifest = json.loads(manifest_bytes)
-        restored = json.loads(restored_path.read_bytes())
-        if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1"
-                or manifest.get("partition") != partition
-                or manifest.get("layer") != layer
-                or restored != {"schema": "lean-actions-restored-v1", "snapshot_key": spec["key"],
-                                "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}):
-            return changed("restore-record-mismatch")
-        if layer == "project" and current_materials is not None:
-            attestation = "stratalint/raw-lean-report.json.input.attestation"
-            current_sha = current_materials.get(spec["target"] + "/" + attestation)
-            validate_manifest(manifest.get("files"))
-            if current_sha is not None and any(item["path"] == attestation and item["sha256"] == current_sha
-                                               for item in manifest["files"]):
-                return "retained-restored-seed"
-        target = root / spec["target"]
-        validate_cache_directory(target, manifest.get("files"), small_files_first=True, observations=observations)
-        return "unchanged"
-    except CacheMaterialDifference as error:
-        return changed(error.reason, error.path)
-    except OSError:
-        return changed("cache-state-unavailable")
-    except (ValueError, TypeError, KeyError, json.JSONDecodeError):
-        return changed("invalid-cache-state")
+        with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+            json.dump(value, stream)
+            stream.write("\n")
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def current_lean_materials(root, plan, commit):
@@ -525,10 +484,12 @@ def current_lean_materials(root, plan, commit):
     return None
 
 
-def bounded_snapshot(root, layer, staged, seconds, *, current=False):
+def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_archive=None):
     command = [sys.executable, str(pathlib.Path(__file__).resolve()), "snapshot", "--repository", str(root),
                *(["--stage", "current", "--layer", layer] if current else ["--layers", layer]),
                "--snapshot-directory", str(staged)]
+    if seed_archive is not None:
+        command += ["--seed-archive", str(seed_archive)]
     env = dict(os.environ)
     env.pop("GITHUB_OUTPUT", None)
     handlers = {signum: signal.getsignal(signum) for signum in (signal.SIGTERM, signal.SIGINT)}
@@ -563,7 +524,7 @@ def bounded_snapshot(root, layer, staged, seconds, *, current=False):
                     signal.signal(signum, handler)
 
 
-def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None):
+def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None, seed_archive=None):
     registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
         ready, committed, save_minutes = False, False, 1
@@ -579,14 +540,14 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
                 continue
             started = time.monotonic()
             spec = keys[layer]
-            target = root / spec["path"]
+            target = root / ("build/lean-cache" if layer in LAYERS else spec["path"])
             target.parent.mkdir(parents=True, exist_ok=True)
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
                 if deadline is None:
-                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current)
+                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current, seed_archive=seed_archive)
                 else:
-                    bounded_snapshot(root, layer, staged, seconds, current=current is not None)
+                    bounded_snapshot(root, layer, staged, seconds, current=current is not None, seed_archive=seed_archive)
                     save_minutes = deadline.save_timeout_minutes()
                     if not save_minutes:
                         raise ValueError("snapshot left no cache save window")
@@ -595,17 +556,22 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
                     receipt(layer, "save-disabled", reason=metrics["save_disabled_reason"],
                             **({"observations": metrics["observations"]} if "observations" in metrics else {}))
                     continue
-                with cache_guard(root), tempfile.TemporaryDirectory(prefix=".snapshot-backup-", dir=target.parent) as backup:
-                    previous = pathlib.Path(backup) / "previous"
-                    if target.exists():
-                        target.rename(previous)
-                    try:
-                        staged.rename(target)
-                    except BaseException:
-                        if previous.exists():
-                            previous.rename(target)
-                        raise
-                    committed = True
+                if layer in LAYERS:
+                    if layer == "dependency":
+                        write_small_record(root / spec["path"] / ".stratalint-actions-inputs.json",
+                                           {"inputs_sha256": metrics["dependency_inputs_sha256"]})
+                else:
+                    with cache_guard(root), tempfile.TemporaryDirectory(prefix=".snapshot-backup-", dir=target.parent) as backup:
+                        previous = pathlib.Path(backup) / "previous"
+                        if target.exists():
+                            target.rename(previous)
+                        try:
+                            staged.rename(target)
+                        except BaseException:
+                            if previous.exists():
+                                previous.rename(target)
+                            raise
+                        committed = True
                 # The job window reserves cleanup time. Filesystem cleanup is
                 # not a hard deadline: late completion disables the remote save.
                 if deadline is not None:
@@ -624,11 +590,11 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
 
 
 def stamp_restored_dependency(root, keys):
-    """Publish the LeanCacheStamp contract after verified dependency installation.
+    """Record the partition after Actions reports a matching dependency seed.
 
     This records partition identity only, just like the C# producer's stamp.
     It does not attest cache completeness or a successful build/report.
-    The restore caller owns the shared cache writer guard through publication.
+    Native Actions owns directory transport; this small record is atomic.
     """
     lake = root / ".lake"
     descriptor, name = tempfile.mkstemp(prefix=".stratalint-lean-cache-stamp.", suffix=".tmp", dir=lake)
@@ -643,7 +609,55 @@ def stamp_restored_dependency(root, keys):
         temporary.unlink(missing_ok=True)
 
 
-def restore(root, keys, matched, layers=LAYERS, registry=None):
+def restore_native(root, keys, layer, key, outcome):
+    spec = keys[layer]
+    target = root / spec["path"]
+    if layer == "dependency":
+        dependency_restored_record(root).unlink(missing_ok=True)
+    # A skipped/missing Action has not written this directory. Preserve any
+    # independently restored current evidence already under the build path.
+    if outcome in ("", "skipped"):
+        receipt(layer, "miss", reason="Actions supplied no cache")
+        return False
+    try:
+        if outcome != "success":
+            raise ValueError("Actions restore did not succeed: " + outcome)
+        if not key:
+            raise ValueError("Actions supplied no matched cache")
+        if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
+            raise ValueError("Actions seed is outside the selected partition")
+        if target.is_symlink() or not target.is_dir():
+            raise ValueError("native Actions cache directory is unavailable")
+        if layer == "dependency":
+            stamp_restored_dependency(root, keys)
+            # The receipt affects only optional saving. Missing/invalid save
+            # metadata does not invalidate a native incremental build seed.
+            try:
+                receipt_path = target / ".stratalint-actions-inputs.json"
+                if receipt_path.is_symlink():
+                    raise ValueError("dependency save receipt is a symlink")
+                previous = json.loads(receipt_path.read_text())
+                digest = previous["inputs_sha256"]
+                if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+                    raise ValueError("invalid dependency save inputs")
+                write_small_record(dependency_restored_record(root), {
+                    "snapshot_key": spec["key"], "matched_key": key, "inputs_sha256": digest})
+            except (OSError, ValueError, TypeError, KeyError):
+                pass
+        receipt(layer, "restored", key=key, partition=keys["partition"], transport="actions-native")
+        return True
+    except (OSError, ValueError, TypeError) as error:
+        # A failed Action may have extracted a partial archive. Remove only
+        # its registered layer before the required producer starts.
+        if target.is_symlink() or target.is_file():
+            target.unlink()
+        elif target.exists():
+            shutil.rmtree(target)
+        receipt(layer, "miss", reason=str(error))
+        return False
+
+
+def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None):
     if registry is None:
         validate_judge_registration(root, layers)
     project_seeded = False
@@ -651,56 +665,34 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
         started = time.monotonic()
         try:
             spec = keys[layer]
-            cached = root / spec["path"]
-            restored_path = cached / "restored.json"
-            restored_path.unlink(missing_ok=True)
             key = matched[layer]
+            if layer in LAYERS:
+                accepted = restore_native(root, keys, layer, key, (outcomes or {}).get(layer, ""))
+                project_seeded |= layer == "project" and accepted
+                continue
+            cached = root / spec["path"]
             if not key:
                 receipt(layer, "miss", reason="Actions supplied no cache",
                         elapsed_seconds=round(time.monotonic() - started, 3))
                 continue
             if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
                 raise ValueError("Actions seed is outside the selected partition")
-            manifest_bytes = (cached / "manifest.json").read_bytes()
-            manifest = json.loads(manifest_bytes)
-            if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1" or manifest.get("partition") != keys["partition"]
+            manifest = json.loads((cached / "manifest.json").read_text())
+            if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1"
+                    or manifest.get("partition") != keys["partition"]
                     or manifest.get("layer") != layer or manifest.get("key") != key):
                 raise ValueError("Actions seed identity or material integrity mismatch")
-            stream_copy = layer in ("dependency", "project")
             target = root / spec.get("target", ".")
             with cache_guard(root):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.TemporaryDirectory(prefix=".actions-", dir=target.parent) as temporary:
                     staged = pathlib.Path(temporary) / "data"
-                    direct = False
-                    if stream_copy:
-                        # Actions puts a manifest beside ``data``.  Consume the
-                        # data directory by rename on the normal same-device
-                        # runner; this avoids a second 25 GB copy before Lake.
-                        direct = move_validated_cache_data(cached / "data", staged, manifest.get("files"))
-                    else:
-                        # Verify the exact bytes copied into private staging.
-                        # Execution seeds then cross their native verifier.
-                        staged.mkdir()
-                        files(cached / "data", expected=manifest.get("files"), copy_to=staged)
+                    staged.mkdir()
+                    files(cached / "data", expected=manifest.get("files"), copy_to=staged)
                     if layer in EXECUTION_LAYERS:
                         restore_execution(root, layer, keys, staged)
                     else:
-                        try:
-                            replace_restored_directory(staged, target, pathlib.Path(temporary) / "rollback")
-                        except BaseException:
-                            # A failed publication must not consume a valid
-                            # same-filesystem Actions payload.
-                            if direct and staged.exists() and not (cached / "data").exists():
-                                staged.rename(cached / "data")
-                            raise
-                if layer == "dependency":
-                    stamp_restored_dependency(root, keys)
-                if stream_copy:
-                    restored_path.write_text(json.dumps({"schema": "lean-actions-restored-v1",
-                        "snapshot_key": spec["key"],
-                        "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
-            project_seeded |= layer == "project"
+                        replace_restored_directory(staged, target, pathlib.Path(temporary) / "rollback")
             receipt(layer, "restored", key=key, partition=keys["partition"],
                     elapsed_seconds=round(time.monotonic() - started, 3))
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
@@ -758,10 +750,19 @@ def main():
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--layer", choices=ALL_LAYERS)
     parser.add_argument("--bounded-cache", action="store_true")
+    parser.add_argument("--seed-archive", help="reuse this execution's native companion seed archive")
     parser.add_argument("--snapshot-directory", type=pathlib.Path, help=argparse.SUPPRESS)
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
+    for layer in LAYERS:
+        parser.add_argument("--" + layer + "-outcome", default="",
+                            choices=("", "success", "failure", "cancelled", "skipped"))
     args = parser.parse_args()
+    args.seed_archive = pathlib.Path(args.seed_archive).resolve() if args.seed_archive else None
+    if args.seed_archive is not None:
+        selected = [args.layer] if args.layer else args.layers
+        if args.command != "snapshot" or not selected or len(selected) != 1 or selected[0] not in EXECUTION_LAYERS:
+            parser.error("--seed-archive requires snapshot with one explicit execution layer")
     if args.command == "prepare-report" and (args.stage != "current" or args.layer or args.layers):
         parser.error("prepare-report requires --stage current and its registered layer scope")
     if args.layer and args.layers:
@@ -832,7 +833,8 @@ def main():
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
         if args.snapshot_directory:
-            stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry, current=current)
+            stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry,
+                           current=current, seed_archive=args.seed_archive)
         elif args.command == "keys":
             values = {}
             values.update({key: keys[key] for key in
@@ -845,13 +847,15 @@ def main():
                 values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
         elif args.command == "restore":
-            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry)
+            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry,
+                    outcomes={layer: getattr(args, layer + "_outcome") for layer in LAYERS})
         else:
             deadline = None
             if args.bounded_cache:
                 from cache_deadline import load_deadline
                 deadline = load_deadline(args.repository, args.stage)
-            snapshot(args.repository, keys, args.layers, registry, deadline=deadline, current=current)
+            snapshot(args.repository, keys, args.layers, registry, deadline=deadline,
+                     current=current, seed_archive=args.seed_archive)
         return 0
     except ProjectRegistrationError as error:
         print(str(error), file=sys.stderr)

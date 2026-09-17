@@ -96,7 +96,7 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
                 self.assertEqual(f"{REV}/{expected}", keys["partition"])
                 self.assertEqual(f"lean-cache-v2-{REV}-{expected}-", keys["release_prefix"])
                 for layer in ["dependency", "project"]:
-                    prefix = f"lean-{layer}-v3-{REV}-{expected}-"
+                    prefix = f"lean-{layer}-v4-{REV}-{expected}-"
                     self.assertEqual(prefix, keys[layer]["restore_prefix"])
                     self.assertEqual(prefix + "12-1", keys[layer]["key"])
 

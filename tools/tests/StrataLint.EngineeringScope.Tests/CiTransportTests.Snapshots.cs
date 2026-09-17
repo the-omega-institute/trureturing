@@ -26,7 +26,6 @@ public sealed partial class CiTransportTests
                     "cache_layers = [\"project\"], cache_activation = {project = \"stage-start\"}", StringComparison.Ordinal) : line)));
         fixture.CommitPlan();
         fixture.Write(".lake/build/new.olean", "new build output");
-        fixture.Write("build/lean-cache/project/manifest.json", "previous accepted snapshot");
         var environment = new Dictionary<string, string> {
             ["GITHUB_EVENT_NAME"] = "push", ["GITHUB_REF"] = "refs/heads/dev", ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2",
             ["CANDIDATE_SHA"] = fixture.Commit, ["CI_PLAN_PATH"] = fixture.Plan, ["CI_CHANGES_PATH"] = fixture.Changes,
@@ -74,8 +73,8 @@ public sealed partial class CiTransportTests
                 try: os.kill(int(marker.read_text()), 0)
                 except ProcessLookupError: pass
                 else: raise AssertionError('timed out acceptance worker remains alive')
-            assert (root / 'build/lean-cache/project/manifest.json').read_text() == 'previous accepted snapshot'
-            assert not list((root / 'build/lean-cache').glob('.snapshot-*'))
+            assert (root / '.lake/build/new.olean').read_text() == 'new build output'
+            assert not list((root / 'build').glob('.snapshot-*'))
             """, TestRepositoryLayout.FindRoot(), root, available.ToString().ToLowerInvariant()], environment,
             TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.Exit == 0, result.Text);
@@ -165,7 +164,8 @@ public sealed partial class CiTransportTests
             "--repository", fixture.Root, "--stage", "current", "--layer", "project"], environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Contains("project_ready=" + ready.ToString().ToLowerInvariant(), result.Text, StringComparison.Ordinal);
-        Assert.Equal(ready, Directory.Exists(Path.Combine(fixture.Root, "build/lean-cache/project")));
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/lean-cache/project")));
+        Assert.Equal("standalone build result", File.ReadAllText(source));
         Assert.Equal(resource == "lean-report", File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath)));
     }
 

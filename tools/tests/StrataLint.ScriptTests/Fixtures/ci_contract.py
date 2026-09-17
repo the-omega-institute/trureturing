@@ -92,7 +92,7 @@ class Contracts(CacheFixture, unittest.TestCase):
     def test_resolver_fixes_merge_and_first_parent_before_merge_ref_moves(self):
         self.env["GITHUB_EVENT_NAME"] = "pull_request"
         self.git("init", "-q")
-        (self.root / "Meta").mkdir()
+        (self.root / "Meta").mkdir(exist_ok=True)
         (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 4
 resources = []
 [residence_policy]
@@ -370,14 +370,14 @@ runtime_disposition = "committed-source"
             "keys", "--repository", str(self.root)], check=True, env=self.env, capture_output=True, text=True).stdout
         keys = dict(line.split("=", 1) for line in key_output.splitlines())
         cached = self.root / keys["project_path"]
-        self.assertTrue((cached / "manifest.json").is_file())
-        shutil.rmtree(self.root / ".lake")
+        self.assertEqual(self.root / ".lake/build", cached)
+        self.assertIn("project_ready=true", result.stdout)
         return cached, keys["project_key"]
 
-    def production(self, key, failure=False):
+    def production(self, key, failure=False, outcome="success"):
         (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit " + ("7" if failure else "0") + "\n")
-        return subprocess.run(["bash", "-euc", '"$PYTHON" "$CACHE" restore --repository "$ROOT" --project-key "$KEY"; make -C "$ROOT" current'],
-            env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root), KEY=key),
+        return subprocess.run(["bash", "-euc", '"$PYTHON" "$CACHE" restore --repository "$ROOT" --project-key "$KEY" --project-outcome "$OUTCOME"; make -C "$ROOT" current'],
+            env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root), KEY=key, OUTCOME=outcome),
             capture_output=True, text=True)
 
     def test_valid_actions_seed_still_enters_production_and_signals_release_skip(self):
@@ -390,8 +390,8 @@ runtime_disposition = "committed-source"
 
     def test_corruption_and_transfer_miss_reach_production_under_set_e(self):
         cached, key = self.seed()
-        (cached / "data/lib/Module.olean").write_bytes(b"corrupt")
-        result = self.production(key)
+        (cached / "lib/Module.olean").write_bytes(b"partial archive")
+        result = self.production(key, outcome="failure")
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertFalse((self.root / ".lake/build/lib/Module.olean").exists())
         self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
@@ -407,19 +407,20 @@ runtime_disposition = "committed-source"
         result = self.production(key.replace(REV, "b" * 40))
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertFalse((self.root / ".lake/build/lib/Module.olean").exists())
-        shutil.rmtree(self.root / "build/lean-cache")
+        shutil.rmtree(self.root / "build/lean-cache", ignore_errors=True)
+        (self.root / "build/lean-cache").parent.mkdir(exist_ok=True)
         (self.root / "build/lean-cache").write_text("unwritable cache path")
         result = self.run_tool(CACHE, "snapshot")
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertNotIn("project_ready=true", result.stdout)
 
-    def test_malformed_actions_manifest_cannot_stop_normal_production(self):
+    def test_missing_restored_directory_cannot_stop_normal_production(self):
         cached, key = self.seed()
-        for malformed in ([], None, "broken", {"schema": "foreign"}):
-            (cached / "manifest.json").write_text(json.dumps(malformed))
-            result = self.production(key)
-            self.assertEqual(0, result.returncode, result.stderr)
-        self.assertEqual(4, len((self.root / "calls").read_text().splitlines()))
+        shutil.rmtree(cached)
+        result = self.production(key)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("producer\n", (self.root / "calls").read_text())
+        self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", result.stdout)
 
     def test_pull_request_cannot_publish_snapshot(self):
         (self.root / ".lake/build").mkdir(parents=True)
@@ -460,7 +461,7 @@ runtime_disposition = "committed-source"
                 return subprocess.CompletedProcess(command, 0)
             return run(command, **options)
         args = owner.argparse.Namespace(repository=self.root, stage="engineering", commit=REV,
-            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz")
+            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None)
         with mock.patch.dict(os.environ, dict(self.env, NUGET_PACKAGES=str(self.root / "absent-packages"))), \
              mock.patch.object(owner.subprocess, "run", side_effect=invoke), \
              mock.patch.object(owner, "extract") as extract:
@@ -477,7 +478,24 @@ runtime_disposition = "committed-source"
                     self.assertFalse((self.root / "build/ci/nuget").exists())
                     self.assertFalse((self.root / "environment").exists())
             extract.assert_called_once_with(self.root, args.archive, args.stage)
-        self.assertEqual(3, len(calls))
+            args.command = "pack"
+            for stage, writable, explicit in (("current", "true", False), ("current", "false", False),
+                                               ("engineering", "true", False), ("current", "false", True)):
+                with self.subTest(stage=stage, writable=writable, explicit=explicit):
+                    args.stage = stage
+                    args.seed_archive = self.root / "explicit-seed.tgz" if explicit else None
+                    os.environ["STRATALINT_CACHE_WRITES"] = writable
+                    owner.transport(args)
+                    command = calls[-1][0]
+                    expected = args.seed_archive or (self.root / "ci-current-seed.tar.gz"
+                        if stage == "current" and writable == "true" else None)
+                    self.assertEqual(expected is not None, "--seed-archive" in command)
+                    if expected is not None:
+                        self.assertEqual(str(expected), command[command.index("--seed-archive") + 1])
+            with mock.patch.object(owner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "dotnet")):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    owner.transport(args)
+        self.assertEqual(7, len(calls))
 
 
 if __name__ == "__main__":

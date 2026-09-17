@@ -106,6 +106,13 @@ internal static partial class CommonExecutionEvidence
         TestExecutionRecord? tests = null;
         _ = stage == "engineering" ? ValidateEngineering(root, out tests, out checks) : stage == "current" ? ValidateCurrent(root, out checks)
             : throw new InvalidDataException("invalid common seed stage: " + stage);
+        checks ??= ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
+        return CopyAcceptedCheckSeed(root, stage, tests, checks, output, destination);
+    }
+
+    internal static bool CopyAcceptedCheckSeed(string root, string stage, TestExecutionRecord? tests,
+        CommonCheckRecord checks, TextWriter output, string? destination = null)
+    {
         // Copying consumes the accepted records, never their source hash scope.
         // Emit notifications only after both copies; output can invoke caller code.
         using var messages = new StringWriter();

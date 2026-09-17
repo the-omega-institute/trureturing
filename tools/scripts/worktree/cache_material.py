@@ -1,12 +1,8 @@
 """Regular-file inventories shared by optional cache transports and producers."""
 import hashlib
-import os
 import shutil
 import pathlib
 import re
-import sys
-from concurrent.futures import ThreadPoolExecutor
-from fractions import Fraction
 
 _UNSPECIFIED = object()
 
@@ -16,93 +12,6 @@ class CacheMaterialDifference(ValueError):
     def __init__(self, message, reason, path=None):
         super().__init__(message)
         self.reason, self.path = reason, path
-
-
-def _cgroup_cpu_limits():
-    """Read applicable Linux CPU quotas, including mounted ancestors."""
-    memberships = []
-    for line in pathlib.Path("/proc/self/cgroup").read_text().splitlines():
-        hierarchy, controllers, member = line.split(":", 2)
-        if hierarchy == "0" and not controllers:
-            memberships.append(("cgroup2", member))
-        elif "cpu" in controllers.split(","):
-            memberships.append(("cgroup", member))
-    if not memberships:
-        return []
-    mounts = []
-    decode = lambda value: re.sub(r"\\([0-7]{3})", lambda match: chr(int(match[1], 8)), value)
-    for line in pathlib.Path("/proc/self/mountinfo").read_text().splitlines():
-        before, separator, after = line.partition(" - ")
-        fields, options = before.split(), after.split()
-        if separator and len(fields) >= 5 and len(options) >= 3:
-            if options[0] == "cgroup2" or (options[0] == "cgroup" and "cpu" in options[2].split(",")):
-                mounts.append((options[0], pathlib.PurePosixPath(decode(fields[3])),
-                               pathlib.Path(decode(fields[4]))))
-    limits = []
-    for kind, name in memberships:
-        member = pathlib.PurePosixPath(name)
-        applicable = [(root, mount) for mount_kind, root, mount in mounts
-                      if mount_kind == kind and member.is_relative_to(root)]
-        if not member.is_absolute() or ".." in member.parts or not applicable:
-            raise ValueError("cache hashing CPU capacity: unresolved cgroup membership")
-        for root, mount in applicable:
-            if not mount.is_absolute() or ".." in mount.parts:
-                raise ValueError("cache hashing CPU capacity: invalid cgroup mount")
-            directory = mount / member.relative_to(root)
-            while True:
-                try:
-                    value = (directory / ("cpu.max" if kind == "cgroup2" else "cpu.cfs_quota_us")).read_text()
-                except FileNotFoundError:
-                    # This controller may be disabled here; ancestors still apply.
-                    if kind == "cgroup":
-                        try:
-                            (directory / "cpu.cfs_period_us").read_text()
-                        except FileNotFoundError:
-                            pass
-                        else:
-                            raise ValueError("cache hashing CPU capacity: incomplete cgroup quota")
-                else:
-                    if kind == "cgroup2":
-                        quota, period = value.split()
-                    else:
-                        quota = value.strip()
-                        period = (directory / "cpu.cfs_period_us").read_text().strip()
-                    period = int(period)
-                    if period <= 0:
-                        raise ValueError("cache hashing CPU capacity: invalid cgroup period")
-                    if quota != ("max" if kind == "cgroup2" else "-1"):
-                        quota = int(quota)
-                        if quota <= 0:
-                            raise ValueError("cache hashing CPU capacity: invalid cgroup quota")
-                        limits.append(Fraction(quota, period))
-                if directory == mount:
-                    break
-                directory = directory.parent
-    return limits
-
-
-def hash_workers(file_count):
-    """CPU-derived concurrency; each sequential worker uses at most one vCPU.
-
-    C_cpu = min(online, affinity, applicable cgroup quotas), R_cpu = 0,
-    r_cpu = 1 vCPU (one executing thread). N = floor(C_cpu), limited only by
-    the declared number of files. Missing/insufficient capacity is an error,
-    never max(1, N). This is not a memory-capacity or peak-memory claim: each
-    worker keeps the existing streaming hash, and no memory/load observation
-    controls its concurrency. No ownership or cache-material selection occurs.
-    """
-    online = os.cpu_count()
-    if type(online) is not int or online < 1 or type(file_count) is not int or file_count < 1:
-        raise ValueError("cache hashing CPU capacity is unavailable")
-    limits = [Fraction(online)]
-    if hasattr(os, "sched_getaffinity"):
-        limits.append(Fraction(len(os.sched_getaffinity(0))))
-    if sys.platform == "linux":
-        limits.extend(_cgroup_cpu_limits())
-    workers = int(min(limits))
-    if workers < 1:
-        raise ValueError("cache hashing CPU capacity is insufficient")
-    return min(workers, file_count)
 
 
 def sha(path):
@@ -125,39 +34,6 @@ def copy_hash(path, destination):
     return value.hexdigest(), destination.stat().st_mode & 0o777
 
 
-def snapshot_files(directory, destination, *, materialize_links=False):
-    """Copy and inventory one registered layer directory in a single read."""
-    destination.mkdir()
-    result, directories = [], [(directory, destination)]
-    for path in sorted(directory.rglob("*")):
-        relative = path.relative_to(directory)
-        target = destination / relative
-        source = path
-        if path.is_symlink():
-            if not materialize_links:
-                raise ValueError(f"cache has a symlink: {relative.as_posix()}")
-            try:
-                source = path.resolve(strict=True)
-                if (path.readlink().is_absolute() or not source.is_relative_to(directory.resolve())
-                        or not source.is_file()):
-                    raise ValueError("link must resolve to an internal regular file")
-            except (OSError, RuntimeError, ValueError) as error:
-                raise ValueError(f"cache link {relative.as_posix()}: {error}") from error
-        elif path.is_dir():
-            target.mkdir(parents=True, exist_ok=True)
-            directories.append((path, target))
-            continue
-        if not source.is_file():
-            raise ValueError(f"cache material is not a regular file: {relative.as_posix()}")
-        digest, mode = copy_hash(source, target)
-        result.append({"path": relative.as_posix(), "sha256": digest, "mode": mode})
-    if not result:
-        raise ValueError("cache has no files")
-    for source, target in reversed(directories):
-        shutil.copystat(source, target)
-    return result
-
-
 def validate_manifest(expected):
     """Validate declared transport rows without reading their material."""
     if not isinstance(expected, list) or not expected:
@@ -176,15 +52,14 @@ def validate_manifest(expected):
         seen.add(name)
 
 
-def _verified_file(directory, item, copy_to, parents_verified=False):
+def _verified_file(directory, item, copy_to):
     name = item["path"]
     path = directory / name
-    if not parents_verified:
-        parent = directory
-        for part in pathlib.PurePosixPath(name).parts[:-1]:
-            parent /= part
-            if parent.is_symlink():
-                raise ValueError(f"cache has a symlink: {name}")
+    parent = directory
+    for part in pathlib.PurePosixPath(name).parts[:-1]:
+        parent /= part
+        if parent.is_symlink():
+            raise ValueError(f"cache has a symlink: {name}")
     if path.is_symlink():
         raise ValueError(f"cache has a symlink: {name}")
     if not path.is_file():
@@ -200,35 +75,13 @@ def _verified_file(directory, item, copy_to, parents_verified=False):
     return actual
 
 
-def files(directory, *, expected=_UNSPECIFIED, copy_to=None, parallel=False, parents_verified=False):
-    # Only a complete shape pass over privately owned staging can supply this
-    # fact. Leaf types, modes and bytes still undergo their normal validation.
-    if parents_verified and not parallel:
-        raise ValueError("verified parents require declared parallel validation")
-    if parallel and (expected is _UNSPECIFIED or copy_to is not None):
-        raise ValueError("parallel validation requires declared read-only material")
+def files(directory, *, expected=_UNSPECIFIED, copy_to=None):
     if copy_to is not None and expected is _UNSPECIFIED:
         raise ValueError("copy requires registered cache material")
     if expected is not _UNSPECIFIED:
         validate_manifest(expected)
-        workers = hash_workers(len(expected)) if parallel else 1
-
-        def verify(batch):
-            return [_verified_file(directory, item, copy_to, parents_verified) for item in batch]
-
-        if workers == 1:
-            result = verify(expected)
-        else:
-            # Bound queued work to N batches; input order determines failures.
-            # Joining before returning/raising keeps rollback free of readers.
-            size = (len(expected) + workers - 1) // workers
-            batches = [expected[index:index + size] for index in range(0, len(expected), size)]
-            try:
-                with ThreadPoolExecutor(max_workers=workers) as executor:
-                    result = [item for batch in executor.map(verify, batches) for item in batch]
-            except RuntimeError as error:
-                raise ValueError("cache material parallel validation failed: " + str(error)) from error
-        return sorted(result, key=lambda item: item["path"])
+        return sorted((_verified_file(directory, item, copy_to) for item in expected),
+                      key=lambda item: item["path"])
     result = []
     for path in sorted(directory.rglob("*")):
         if path.is_symlink():

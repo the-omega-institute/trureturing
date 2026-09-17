@@ -28,10 +28,11 @@ internal static class CiTransport
                 throw new ArgumentException("transport options must be unique name/value pairs");
         }
         var pack = arguments[0] == "transport-pack";
+        var seedArchive = values.GetValueOrDefault("--seed-archive");
         var required = new[] { "--repository", "--stage", "--commit", "--run-id", "--run-attempt" }
-            .Concat(pack ? ["--archive"] : []).Order(StringComparer.Ordinal);
+            .Concat(pack ? ["--archive"] : []).Concat(seedArchive is not null ? ["--seed-archive"] : []).Order(StringComparer.Ordinal);
         if (!required.SequenceEqual(values.Keys.Order(StringComparer.Ordinal)))
-            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE]");
+            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE] [--seed-archive FILE]");
         var root = Path.GetFullPath(values["--repository"]);
         var stage = values["--stage"];
         var commit = values["--commit"];
@@ -41,11 +42,17 @@ internal static class CiTransport
             throw new ArgumentException("invalid transport stage or immutable execution identity");
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
         var seedStage = stage.EndsWith("-seed", StringComparison.Ordinal);
+        if (seedArchive is not null && (!pack || stage is not ("engineering" or "current")))
+            throw new ArgumentException("a companion seed archive requires ordinary engineering or current pack");
+        if (seedArchive is not null && Path.GetFullPath(seedArchive) == Path.GetFullPath(values["--archive"]))
+            throw new ArgumentException("ordinary and seed archives must have distinct destinations");
         if ((!seedStage || pack) && (Git(root, "rev-parse", "HEAD") != commit
             || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0))
             throw new InvalidDataException("transport requires the exact clean candidate commit");
         CommonStageRecord common;
         CommonStageRecord? build = null;
+        CommonCheckRecord? checks = null;
+        TestExecutionRecord? tests = null;
         CommonExecutionEvidence.ValidationScope? validation = null;
         if (seedStage)
         {
@@ -55,56 +62,48 @@ internal static class CiTransport
             common = new(2, seed.Candidate, seed.Round, [], []);
         }
         else if (stage == "current")
-            (common, build, validation) = CommonExecutionEvidence.ValidateCurrentForTransport(root);
+            (common, build, validation, checks) = CommonExecutionEvidence.ValidateCurrentForTransport(root);
         else common = stage switch
         {
             "build" => CommonExecutionEvidence.ValidateBuild(root),
-            _ => CommonExecutionEvidence.ValidateEngineering(root),
+            _ => CommonExecutionEvidence.ValidateEngineering(root, out tests, out checks),
         };
         var manifestPath = ManifestPath(stage);
         if (pack)
         {
-            var paths = ListedFiles(root, stage, common, build).Where(path => path != manifestPath).ToArray();
-            var materials = paths.Select(path => new TransportMaterial(path,
-                MaterialHash(path), Mode(Path.Combine(root, path)))).ToArray();
-            CommonExecutionEvidence.Write(root, manifestPath, new CiTransportRecord(1, stage, common.Candidate, common.Round,
-                commit, run, attempt, repository, materials));
             var archive = Path.GetFullPath(values["--archive"]);
-            if (archive.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
-                throw new ArgumentException("archive must be outside the stage evidence directory");
-            Directory.CreateDirectory(Path.GetDirectoryName(archive)!);
-            using (var file = File.Create(archive + ".tmp"))
-            using (var gzip = new GZipStream(file, CompressionLevel.Fastest))
-            using (var tar = new TarWriter(gzip))
-            {
-                var stored = new Dictionary<(string Sha256, int Mode), string>();
-                foreach (var material in materials)
-                {
-                    var path = Path.Combine(root, material.Path);
-                    var identity = (material.Sha256, material.Mode);
-                    if (!seedStage && stored.TryGetValue(identity, out var original))
-                        tar.WriteEntry(new PaxTarEntry(TarEntryType.HardLink, material.Path)
-                        {
-                            LinkName = original, Mode = (UnixFileMode)material.Mode,
-                            ModificationTime = File.GetLastWriteTimeUtc(path),
-                        });
-                    else
-                    {
-                        tar.WriteEntry(path, material.Path);
-                        stored.TryAdd(identity, material.Path);
-                    }
-                }
-                tar.WriteEntry(Path.Combine(root, manifestPath), manifestPath);
-            }
-            File.Move(archive + ".tmp", archive, overwrite: true);
+            PackArchive(stage, common, build, validation, archive);
             var outputs = new Dictionary<string, string>
             {
                 ["artifact_name"] = ArtifactName(stage, run, attempt), ["archive"] = archive,
                 ["run_id"] = run.ToString(CultureInfo.InvariantCulture), ["run_attempt"] = attempt.ToString(CultureInfo.InvariantCulture),
                 ["commit"] = commit, ["candidate"] = common.Candidate, ["round"] = common.Round,
             };
-            if (Environment.GetEnvironmentVariable("GITHUB_OUTPUT") is { Length: > 0 } destination)
-                File.AppendAllLines(destination, outputs.Select(pair => pair.Key + "=" + pair.Value));
+            // The ordinary pack already accepted these records. Retain optional
+            // materials before exposing output callbacks; imports still validate
+            // them against their recipient's registered inputs and environment.
+            using var messages = new StringWriter();
+            if (seedArchive is not null && checks is not null)
+            {
+                var destination = Path.GetFullPath(seedArchive);
+                try
+                {
+                    if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, stage, tests, checks, messages))
+                    {
+                        var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
+                        PackArchive(stage + "-seed", new(2, seed.Candidate, seed.Round, [], []), null, null, destination);
+                        outputs["seed_artifact_name"] = ArtifactName(stage + "-seed", run, attempt);
+                        outputs["seed_archive"] = destination;
+                    }
+                }
+                catch (Exception exception) when (exception is InvalidDataException or FormatException or IOException or UnauthorizedAccessException or ArgumentException)
+                {
+                    messages.WriteLine($"COMMON_CHECK_SEED_NOT_SAVED stage={stage} reason={System.Text.Json.JsonSerializer.Serialize(exception.Message)}");
+                }
+            }
+            if (Environment.GetEnvironmentVariable("GITHUB_OUTPUT") is { Length: > 0 } destinationOutput)
+                File.AppendAllLines(destinationOutput, outputs.Select(pair => pair.Key + "=" + pair.Value));
+            output.Write(messages.ToString());
         }
         else
         {
@@ -120,6 +119,45 @@ internal static class CiTransport
         }
         output.WriteLine($"CI_TRANSPORT stage={stage} candidate={common.Candidate} round={common.Round} commit={commit} run_id={run} run_attempt={attempt} status={(pack ? "packed" : "verified")}");
         return 0;
+
+        void PackArchive(string packedStage, CommonStageRecord accepted, CommonStageRecord? acceptedBuild,
+            CommonExecutionEvidence.ValidationScope? hashes, string archive)
+        {
+            if (archive.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new ArgumentException("archive must be outside the stage evidence directory");
+            var packedManifest = ManifestPath(packedStage);
+            var paths = ListedFiles(root, packedStage, accepted, acceptedBuild).Where(path => path != packedManifest).ToArray();
+            var materials = paths.Select(path => new TransportMaterial(path,
+                hashes is null ? CommonExecutionEvidence.Hash(Path.Combine(root, path)) : hashes.Hash(Path.Combine(root, path)),
+                Mode(Path.Combine(root, path)))).ToArray();
+            CommonExecutionEvidence.Write(root, packedManifest, new CiTransportRecord(1, packedStage, accepted.Candidate, accepted.Round,
+                commit, run, attempt, repository, materials));
+            Directory.CreateDirectory(Path.GetDirectoryName(archive)!);
+            using (var file = File.Create(archive + ".tmp"))
+            using (var gzip = new GZipStream(file, CompressionLevel.Fastest))
+            using (var tar = new TarWriter(gzip))
+            {
+                var stored = new Dictionary<(string Sha256, int Mode), string>();
+                foreach (var material in materials)
+                {
+                    var path = Path.Combine(root, material.Path);
+                    var identity = (material.Sha256, material.Mode);
+                    if (!packedStage.EndsWith("-seed", StringComparison.Ordinal) && stored.TryGetValue(identity, out var original))
+                        tar.WriteEntry(new PaxTarEntry(TarEntryType.HardLink, material.Path)
+                        {
+                            LinkName = original, Mode = (UnixFileMode)material.Mode,
+                            ModificationTime = File.GetLastWriteTimeUtc(path),
+                        });
+                    else
+                    {
+                        tar.WriteEntry(path, material.Path);
+                        stored.TryAdd(identity, material.Path);
+                    }
+                }
+                tar.WriteEntry(Path.Combine(root, packedManifest), packedManifest);
+            }
+            File.Move(archive + ".tmp", archive, overwrite: true);
+        }
 
         string MaterialHash(string path) => validation is null ? CommonExecutionEvidence.Hash(Path.Combine(root, path))
             : validation.Hash(Path.Combine(root, path));

@@ -70,10 +70,10 @@ internal static partial class CommonExecutionEvidence
     private static CommonStageRecord ValidateCurrent(string root, out CommonCheckRecord? checks)
         => ValidateCurrent(root, out checks, out _, out _);
 
-    internal static (CommonStageRecord Current, CommonStageRecord Build, ValidationScope Validation) ValidateCurrentForTransport(string root)
+    internal static (CommonStageRecord Current, CommonStageRecord Build, ValidationScope Validation, CommonCheckRecord? Checks) ValidateCurrentForTransport(string root)
     {
-        var current = ValidateCurrent(root, out _, out var build, out var validation);
-        return (current, build, validation);
+        var current = ValidateCurrent(root, out var checks, out var build, out var validation);
+        return (current, build, validation, checks);
     }
 
     private static CommonStageRecord ValidateCurrent(string root, out CommonCheckRecord? checks,

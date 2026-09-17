@@ -24,6 +24,12 @@ class CacheFixture:
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))
         (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.33.0\n")
+        (self.root / "lakefile.toml").write_text('name = "fixture"\n')
+        (self.root / "Meta").mkdir()
+        (self.root / "Meta/FILEMAP.toml").write_text(
+            'resources = [{id = "lean", materials = ["lake-manifest.json", "lean-toolchain", "lakefile.toml"]}]\n')
+        (self.root / "lean-report-inputs.json").write_text(json.dumps({
+            "report_execution": {"environment": ["LEAN_OPTS", "ELAN_TOOLCHAIN"]}}))
 
     def tearDown(self):
         self.temp.cleanup()
