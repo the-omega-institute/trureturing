@@ -1,0 +1,50 @@
+/- GID: D5/S3/ConceptDynamics/InformationEscape/CiDeclaredTemplateProbe
+   generality: I
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exercise declared-template admission with a temporary compiler fixture. -/
+
+import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+import LeanInformationAudit.Syntax
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.ConceptDynamics.InformationEscape.CiDeclaredTemplateProbe
+
+open LeanInformationAudit
+open D5.S3.ConceptDynamics.InformationEscape
+open D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+
+register_information_template cutRealization
+
+def arena : PrimitiveLawArena where
+  toArena := Arena.ofFintype Bool
+  signature := cutSignature Bool Bool
+  Law r := ∀ x : Bool, r.readout () x = x.not.not
+
+instance : DecidableEq arena.State := instDecidableEqBool
+
+information_theorem declared in arena
+  readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
+
+open Lean in
+run_meta do
+  let rows ← TemplateBinding.assessJoined
+  let selected := rows.filter
+    (·.occurrence.key.registrationModule == (← getEnv).header.mainModule)
+  unless selected.size == 1 do
+    throwError "DTR probe requires exactly one current-module occurrence"
+  for row in selected do
+    match row.result with
+    | .declaredValidated certificate =>
+        if certificate.evidenceRef.isEmpty then throwError "DTR probe lacks certificate"
+        logInfo m!"DTR_PROBE_DECLARED {row.occurrence.key.theoremName}"
+    | .declaredUnresolved diagnostic => throwError "DTR probe unresolved: {diagnostic}"
+    | .undeclared => throwError "DTR probe undeclared"
+
+end D5.S3.ConceptDynamics.InformationEscape.CiDeclaredTemplateProbe
