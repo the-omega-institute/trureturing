@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ChebyshevEndpointCertificate
    mirror-E: none(waiver:unbounded-symbolic-endpoint-certificate)
    anchors: []
+   utility: none
    digest: A shifted Chebyshev filter converts an actual noisy moment prefix into a dimension-free endpoint certificate. -/
 
 import D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
@@ -41,8 +42,7 @@ private theorem exterior_growth (n : ℕ) (z : ℝ) (hz : 1 ≤ z) :
   let f : ℕ → ℝ := fun k => (T ℝ (k : ℤ)).eval z
   have hrec (k : ℕ) : f (k + 2) = 2 * z * f (k + 1) - f k := by
     dsimp [f]
-    simp only [Nat.cast_add, Nat.cast_one, Nat.cast_ofNat, T_add_two,
-      eval_sub, eval_mul, eval_ofNat, eval_X]
+    simp only [T_add_two, eval_sub, eval_mul, eval_ofNat, eval_X]
   have hp : ∀ k : ℕ,
       1 + (k : ℝ) ^ 2 * (z - 1) ≤ f k ∧
       (2 * (k : ℝ) + 1) * (z - 1) ≤ f (k + 1) - f k := by
@@ -90,12 +90,12 @@ private theorem affine_moment_budget (n : ℕ) :
                 rfl
               have h0 : |F (fun _ : ℝ => (1 : ℝ))| ≤ ε := by simpa using hm 0 (by omega)
               have h1 := hm 1 (by omega)
-              simp only [Nat.cast_one, T_one, eval_X, pow_one]
+              simp only [Nat.zero_add, Nat.cast_one, T_one, eval_X, pow_one]
               rw [he]
               calc
                 |α * F (fun t => t ^ 1) + β * F (fun _ => (1 : ℝ))| ≤
                     |α| * |F (fun t => t ^ 1)| + |β| * |F (fun _ => (1 : ℝ))| := by
-                  simpa only [abs_mul] using abs_add (α * F (fun t => t ^ 1))
+                  simpa only [abs_mul] using abs_add_le (α * F (fun t => t ^ 1))
                     (β * F (fun _ => (1 : ℝ)))
                 _ ≤ |α| * ε + |β| * ε := add_le_add
                   (mul_le_mul_of_nonneg_left h1 (abs_nonneg _))
@@ -106,7 +106,11 @@ private theorem affine_moment_budget (n : ℕ) :
               let A : (ℝ → ℝ) →ₗ[ℝ] (ℝ → ℝ) :=
                 { toFun := fun f t => (α * t + β) * f t
                   map_add' := by intro f g; ext t; simp only [Pi.add_apply]; ring
-                  map_smul' := by intro c f; ext t; simp only [Pi.smul_apply, smul_eq_mul]; ring }
+                  map_smul' := by
+                    intro c f
+                    ext t
+                    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
+                    ring }
               let F' : (ℝ → ℝ) →ₗ[ℝ] ℝ := F.comp A
               have hm' (j : ℕ) (hj : j ≤ k + 1) :
                   |F' (fun t => t ^ j)| ≤ S * ε := by
@@ -124,7 +128,7 @@ private theorem affine_moment_budget (n : ℕ) :
                 calc
                   |α * F (fun t => t ^ (j + 1)) + β * F (fun t => t ^ j)| ≤
                       |α| * |F (fun t => t ^ (j + 1))| + |β| * |F (fun t => t ^ j)| := by
-                    simpa only [abs_mul] using abs_add
+                    simpa only [abs_mul] using abs_add_le
                       (α * F (fun t => t ^ (j + 1))) (β * F (fun t => t ^ j))
                   _ ≤ |α| * ε + |β| * ε := add_le_add
                     (mul_le_mul_of_nonneg_left (hm (j + 1) (by omega)) (abs_nonneg _))
@@ -165,6 +169,7 @@ private theorem affine_moment_budget (n : ℕ) :
                 (show 0 ≤ 2 * S by positivity)
               linarith
 
+open Classical in
 /-- Actual noisy raw moments certify an exterior endpoint without a modal
 count bound. The interval and noise parameters determine the entire budget.
 The polynomial certificate and the n^2 amplification are constructed in the
@@ -176,7 +181,9 @@ theorem noisy_moment_endpoint_certificate
     (hx : ∀ i, a ≤ x i) (hy : ∀ j, a ≤ y j ∧ y j ≤ b)
     (hu : ∀ i, 0 ≤ u i) (hv : ∀ j, 0 ≤ v j)
     (hmu : (∑ i, u i) = 1) (hnu : (∑ j, v j) = 1)
-    (hη : 0 < η) (hweight : η ≤ u i₀) (houtside : b ≤ x i₀) (hε : 0 ≤ ε)
+    (hη : 0 < η)
+    (hweight : η ≤ ∑ i ∈ Finset.univ.filter (fun i => x i = x i₀), u i)
+    (houtside : b ≤ x i₀) (hε : 0 ≤ ε)
     (hnoise : ∀ k : ℕ, k ≤ n → |pronyMoment x u k - pronyMoment y v k| ≤ ε) :
     2 * η * (n : ℝ) ^ 2 * (x i₀ - b) ≤
       (b - a) * (2 * (1 - η) + ε * (2 * ((2 + a + b) / (b - a)) + 1) ^ n) := by
@@ -189,7 +196,7 @@ theorem noisy_moment_endpoint_certificate
   have hw0 : w ≠ 0 := ne_of_gt hw
   have hb : 0 ≤ b := ha.trans hab.le
   have hα : 0 ≤ α := div_nonneg (by norm_num) hw.le
-  have hβ : β ≤ 0 := div_nonpos_of_nonpos_of_nonneg (by dsimp; linarith) hw.le
+  have hβ : β ≤ 0 := div_nonpos_of_nonpos_of_nonneg (by linarith) hw.le
   have hS : |α| + |β| = (2 + a + b) / (b - a) := by
     rw [abs_of_nonneg hα, abs_of_nonpos hβ]
     dsimp [α, β, w]
@@ -253,10 +260,17 @@ theorem noisy_moment_endpoint_certificate
     (le_abs_self (F R)).trans hbudget
   have hmusum : η * (1 + R (x i₀)) ≤ 1 + ∑ i, u i * R (x i) := by
     calc
-      η * (1 + R (x i₀)) ≤ u i₀ * (1 + R (x i₀)) :=
+      η * (1 + R (x i₀)) ≤
+          (∑ i ∈ Finset.univ.filter (fun i => x i = x i₀), u i) * (1 + R (x i₀)) :=
         mul_le_mul_of_nonneg_right hweight (hpositive i₀)
+      _ = ∑ i ∈ Finset.univ.filter (fun i => x i = x i₀), u i * (1 + R (x i)) := by
+        rw [Finset.sum_mul]
+        apply Finset.sum_congr rfl
+        intro i hi
+        rw [(Finset.mem_filter.mp hi).2]
       _ ≤ ∑ i, u i * (1 + R (x i)) :=
-        Finset.single_le_sum (fun i _ => mul_nonneg (hu i) (hpositive i)) (Finset.mem_univ i₀)
+        Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
+          (fun i _ _ => mul_nonneg (hu i) (hpositive i))
       _ = 1 + ∑ i, u i * R (x i) := by
         simp only [mul_add, mul_one, Finset.sum_add_distrib, hmu]
   have hnusum : (∑ j, v j * R (y j)) ≤ 1 := by
