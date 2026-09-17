@@ -23,7 +23,15 @@ m=re.search(r'\n5\. \*\*Deposit / cover\*\*',steps); assert m, 'step 5 anchor no
 stepsA=steps[:m.start()]; stepsB='## Steps (Stage B — doors)\n'+steps[m.start()+1:]
 stepsB=stepsB.replace('\n6. ONE builder commit','\n5′. **Anchor cover (mandatory):** `make deposit` freezes the anchor theorem but does NOT write the anchor atom\'s own coverage edge — run `make cover ATOM_ID=<anchor atom> GID=<anchor GID> BASE=origin/dev` after the deposit and verify every target atom (anchor included) is `absorbed-closed` before committing (`ls Meta/Digestion/backfill/<source>/absorbed-closed/ | grep -c <id>`); a lane whose anchor stays residual-open is incomplete (#5480, #5504 needed orchestrator repairs).\n6. ONE builder commit',1)
 stopA='''
-4′. **STOP HERE (Stage A ends before any freeze).** Do NOT run `make deposit`, `make cover`, `git commit`, `git push` or `make pr-open`. Leave the new `.lean`, `.scribe.cs` and the emitted `.md` as UNCOMMITTED files in the worktree (`git status --porcelain` must list exactly those three new files plus nothing else tracked-modified). A read-only mirror-check seat will now compare the mirror against the Lean statements symbol by symbol; a Stage-B seat will run the doors afterwards. Return the Stage-A envelope now.
+4′. **STOP HERE (Stage A ends before any freeze), and emit in PHASE A SHAPE.** Do NOT run `make deposit`, `make cover`, `git commit`, `git push` or `make pr-open`.
+
+**If this lane's Scribe carries an `OpenProblemResolutionClaim`, that node must NOT be in the tree yet, and the `Problems/` dossier must not exist yet.** Both reference a declaration that has to already be a member of the frozen state, and freezing happens inside `make deposit`. Emitting with them present makes `make emit` exit 2 with `invalid-problem-resolution-source` (host module is not a member of frozen state) and `dangling-problem-slug`; **no Stage-A state change can satisfy that validator**, so this is an ordering contract rather than something to work around. Write the claim node and the dossier in Stage B, after the door has frozen the host.
+
+**A `Library/` note is the opposite case: `FromLiterature` needs it present during emission**, or `make emit` reports `dangling-literature-reference`. Write it in Stage A.
+
+Leave the new files UNCOMMITTED in the worktree. What MUST be present: `<module>.lean`, `Blueprint/<module>.scribe.cs`, the emitted `Blueprint/<module>.md`, and every file any `*Ref.Create(...)` in the Scribe names — a `LibraryNoteRef` needs its `Library/` note on disk. Nothing tracked may be modified. **Do not delete an artifact to satisfy a file count**: emission readings describe the tree they ran on, so removing a note after a green `make emit` leaves exit codes that are no longer true of what you hand over, and the envelope cannot show that.
+
+Verify the handover, not the run: after the second `make emit`, re-read `git status`, confirm each `*Ref.Create` target file exists on disk, and check that the emitted `.md` renders what that reference is for — a `LibraryNoteRef` renders as a `*Citation.*` line carrying the author, year, title and URL, **not** as the note's slug, so grepping for the slug is the wrong check and will read as a failure on a correct delivery. `make emit` must exit 0 on both runs, the second reporting 0 changed blueprints, **at the tree you are leaving**. A read-only mirror-check seat will now compare the mirror against the Lean statements symbol by symbol; a Stage-B seat will run the doors afterwards. Return the Stage-A envelope now.
 
 ## Result envelope (Stage A)
 `conclusion` = {"verdict":"mirror-ready|open|already-landed","module_path":"…","theorem_names":[…],"print_axioms":{…},"exit_codes":{"make_lean":n,"make_emit":n,"scribe_corpus_test":n},"public_statements":[{"name":"…","statement":"<full Lean statement text to := by>"}],"mirror_selfcheck":{"parenthesized_only":true|false,"binder_body_symbols":true|false,"nat_div_not_fraction":true|false,"coercions_mirrored":true|false,"relation_in_group_items":false},"proof_shape":{…},"escape_witness":"…","admission_basis":"…","search_trace":[…],"collision_check":"…","fidelity_gate":{…},"assumed_unverified":[…],"open_reasons":[…],"visible_inputs":[…]}, plus `log_ref`.
@@ -33,6 +41,25 @@ B_head=pre.split('\n',1)[0].replace('(probe-verified; same-PR deposit + cover; o
 B_intro=f'''
 
 You are the Stage-B `implementation_worker` (codex-cli). Worktree `{wt}` on branch `{branch}` already contains the UNCOMMITTED, mirror-checked `{module}.lean`, `Blueprint/{module}.scribe.cs` and emitted `Blueprint/{module}.md` (`git status --porcelain` shows them). Do NOT rewrite the mathematics or the mirror except for the exact fixes listed under "## Mirror-check fixes" below (if that section is empty, touch nothing). Re-run `make lean` (EXIT=0) and `make emit` (EXIT=0) once to confirm the tree, then execute the doors below exactly. Follow `skills/codex-formalize/SKILL.md` Steps 7–8 and `CLAUDE.md` 5⁗. Judge by bare exit codes. Return exactly one result envelope (the original contract, appended).
+
+## Emission order around the door — read this before you touch anything
+
+Stage A left the tree in **Phase A shape**: the module, the mirror **without** any `OpenProblemResolutionClaim`
+node, the emitted `.md`, and the `Library/` note if the lane cites literature. Keep it that way through the door.
+
+- **Phase A (before the freeze).** With no claim node and no `Problems/` dossier in the tree: `make lean` EXIT=0,
+  `make lean-report` EXIT=0, `make emit` twice with the second reporting 0 changed blueprints, then commit the
+  source, then — **in the same command as the door** — verify `git merge-base --is-ancestor origin/dev HEAD`,
+  run the late dedupe, and run the deposit. A stop at the ancestry check writes no frozen state
+  (`frozen_state_written: false`, zero `Golden/Frozen` changes) and is a CONTINUATION at the next attempt, not a
+  lane redo.
+- **Phase B (after the freeze).** Now add the `OpenProblemResolutionClaim` node to the Scribe and write the
+  `Problems/` dossier whose motivation GID names the now-frozen declaration. `make emit` twice again, second run
+  0 changed. Then ONE builder commit carrying the door's delta — the Freeze event, the state pin, the new
+  dossier and the re-emitted mirror — followed by `make preflight`, push and `make pr-open`.
+
+Two commits, in that order. If you find yourself wanting to emit the claim before the deposit, re-read this: the
+validator is asking for a frozen host, and only the door can give it one.
 
 ## Mirror-check fixes
 <<MIRROR_FIXES>>
