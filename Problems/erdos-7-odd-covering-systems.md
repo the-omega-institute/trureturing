@@ -30,16 +30,18 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#joint-source-geometry-sharpens-normalization-on-the-same-actual-law)
-now gives `Gamma13<=2440240269691060633/15032927232998818<162.326354134`
+An [all-height shared-cell bound](../docs/reports/erdos7-odd-covering/marked_head_profile.md#one-original-depth-per-cell-sharpens-the-all-family-joint-frontier)
+gives `Gamma13<=16527355324420230957/102089544055356572<161.890775`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
 actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
-for11 and13, and conditions once. Joint source normalization (JN1)--(JN5)
-retains the same geometry in the cost and survival denominator, checking all1296 continuous-domain vertices
-and all12 original missing-class branches. It sharpens the preceding SQ
-bounds on this same probability, whose HC survival lower bound remains
-`18925009844347/38266567762500>0.4945572846`.
+for11 and13, and conditions once. Each original deep ternary test occupies
+one cell; retaining the number of earlier depths assigned to that cell
+sharpens the nonlinear cost bounds. The same geometry stays in their
+numerators and survival denominator. Exact margins at all1296 vertices,
+positive continuous-extension coefficients and all12 missing-class
+branches give the uniform result. The preceding JN bounds remain valid;
+no actual-family sharpness or Lean endpoint is asserted.
 
 Its [complete supported13 continuation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-continuations-and-the-larger-killed-frontier-allowance)
 gives mean at most10.653915367 and an actual pure-base17/T8 continuation
@@ -79,15 +81,23 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<103.075646`. Expanding the exact killed pair matrices
-therefore gives the sufficient finite joint-frontier bounds299.923 for
-the large core and299.661 for the smaller one, at W403 (JN6). These remain
-unproved requirements. Their strict negative Q conclusion would itself
+`sup E(A^2-81)_+<102.642888`. The sufficient finite joint-frontier bounds
+are therefore300.356 for the large core and300.094 for the smaller one,
+at W403. Row potentials coupled to the actual cap and charge, whole
+weighted original-layout costs and complete tails give the all-family
+upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<475.527101`.
+This improves the depthwise-relaxed477.430330 calculation but remains
+above both required allowances. The19 input of this KC functional is
+the normalized physical mu17; the actual killed input xi in BM/RC is
+not substituted. All these are ordinary inequalities with exact
+rational certificates.
+
+The finite criterion's strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming
-survival in advance. This new Q functional is distinct from the earlier
-APC physical-square-plus-assigned-charge functional. Its pointwise
-HK1024 clip-loss bound13.607 does not bound every later auxiliary or
-layout-supremum relaxation loss.
+survival in advance. That uniform criterion and later-prime continuation
+remain unproved. Its Q functional is distinct from the earlier APC
+physical-square-plus-assigned-charge functional; no independent saving
+from BM, RC or OBE is subtracted from this upper bound.
 
 The [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
 and its [AO finite-core comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-finite-core-approximation-of-the-actual-supported-law-through13)

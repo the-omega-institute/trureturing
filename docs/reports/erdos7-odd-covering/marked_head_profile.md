@@ -18479,3 +18479,300 @@ finite rational samples corroborate them without standing in for that
 proof. The universal comparison, support and domain arguments remain
 ordinary mathematics. No Lean, frozen-state or literature-priority
 claim is made.
+
+
+### One original depth per cell sharpens the all-family joint frontier
+
+On the unchanged actual AP11/T4--AP13/T6 source nu13, the complete
+physical17 input mu17=nu13 K17 and the original KC functionals satisfy
+
+    Gamma13 <=16527355324420230957/102089544055356572
+             <161.890775,
+    T13(81) <102.642888,
+    F17^-(403;nu13)+F19^-(403;mu17)
+      <=2322308771011317404407279020690922380203
+          /4883651784640915381663610335586092800
+       <475.527101.                                      (DP1)
+
+All original finite heights, residue assignments and twelve missing-class
+branches are included. The19 input here is the normalized physical mu17
+specified by KC; RC/BM still have the different actual killed input xi.
+Neither input is substituted for the other. The estimates do not settle
+unrestricted noncoverage or later-prime continuation. The mathematical
+arguments below are ordinary proofs with exact rational certificates,
+not new Lean declarations.
+
+#### 1. A discounted allocation bound retains the actual depth label
+
+Let l range over a finite nonempty set. Suppose r_l(k)>=0 is nondecreasing
+in k>=0, 0<q<1, and every series
+
+    W_l(k)=sum_(j>=0) q^j r_l(k+j)
+
+converges. At each time choose one l and advance only its own counter.
+Starting every counter at0, any finite sequence satisfies
+
+    sum_(t=0..H-1) q^t r_(l_t)(k_(l_t)(t))
+      <=max_l W_l(0).                                  (DP2)
+
+Here k_l(t) counts earlier occurrences of that same l. This is not a
+restriction requiring the sequence to be constant.
+
+Proof. At counter vector k put V(k)=max_l W_l(k_l). Monotonicity gives
+r_l(k_l)<=(1-q)W_l(k_l), and the series identity gives
+W_l(k_l)=r_l(k_l)+q W_l(k_l+1). For a chosen l, if that l attains the
+maximum in the next state, its immediate reward plus q times the next
+potential equals W_l(k_l)<=V(k). If some other arm attains the next
+maximum, its counter did not change, so the next potential is at most
+V(k). The immediate reward is at most(1-q)V(k), giving the same bound.
+Iterate and discard the nonnegative terminal potential. Constant
+sequences approach their corresponding W_l(0), so the infinite upper
+comparison has exactly the stated maximum.
+
+The repository TernaryRootLoadTail.root_load_tail_le is the existing
+two-root affine square-cost specialization of this mechanism. Here the
+comparison is used for five cells and arbitrary nonnegative running
+increments, including the nonconvex correction costs below. No duplicate
+Lean specialization or claim of a new general dynamic-programming
+principle is made.
+
+Use HC's actual five cells, masses m_l and depth caps v_l*3^-a. For fixed
+original root/cell choices, b_l=1+1_(r(l)=r)+1_(l=j). For any nondecreasing
+cost g in this argument define
+
+    d_l(k)=max_(0<=i<=k)[g(b_l+i+1)-g(b_l+i)],
+    Ptilde_g(b;m,v)=sum_l m_l g(b_l)
+                    +max_l v_l sum_(a>=3)3^-a d_l(a-3). (DP3)
+
+Each original ternary depth a>=3 occupies exactly one mod9 cell. On its
+cylinder, the previous active deep count is at most the number of earlier
+depths assigned to that same cell. Telescoping g and using the actual
+cylinder cap bounds its increment by
+`3^-a v_l d_l(k_l)`. Apply DP2 with q=1/3 and first factor1/27 to obtain
+DP3. Inactive or absent original depths may be completed arbitrarily in
+the upper comparison, only increasing its nonnegative bound. No forbidden
+class is changed, no depth is removed, and no nested or centered test
+maximizer is assumed.
+
+DP3 replaces HC/SQ's sum over depths of separate cell maxima by a maximum
+over the cell of the complete depth sum. This preserves information about
+which original depths have previously contributed to a cell. All hinge
+costs have eventually constant d_l(k); square-hinge costs and their
+corrections have at most linear growth. Their discounted series converge,
+and their complete tails are exact geometric sums. The optimal constant
+cell in DP2 belongs to an upper comparison; it need not describe an
+actual maximizing congruence layout.
+
+#### 2. The same source geometry and normalization remain shared
+
+Retain HC's parameter domain, cell masses n_l, availabilities d_l,
+pure masses w_l/9, raw mass s and D=s-T/5. Replace each ternary P_g in
+HC and SQ by Ptilde_g. The positive5 increment still uses
+
+    g_n(x)=f(nx)/n-f(x),
+
+which is nonnegative and nondecreasing for the convex hinge and
+square-hinge costs used here; it need not be convex. DP3 uses its running
+maximum increment, so this distinction is preserved. The original zero5
+root/cell choice stays outside the entire positive5 sum. Subsequent
+positive5 blocks may be separately maximized only as an upper comparison.
+The complete7,11,13 multipliers and all original test labels are unchanged.
+
+Let S_f denote this improved raw357 upper expression. For f(x)=(x-h)+
+write B_h=S_f. The same actual AP11/13 bad-mass argument gives
+
+    Delta=131D/132-B4/6-14B6/99-7B3/132,
+    actual13 survival >=Delta/D.                       (DP4)
+
+The uniform source bound G=3849/106 is retained. For tau16 and tau81,
+construct U_tau exactly as JN4 with the improved raw square costs. Keep
+globally fixed uniform-cap choices:16/9 at tau16, and81/64,81/49
+at tau81. At9/4 the improved raw square cost is used across the whole
+parameter domain. Thus
+
+    Gamma13<=16+U16/Delta,
+    T13(81)<=U81/Delta.                                (DP5)
+
+No pointwise choice between two formulas at different parameter vertices
+is introduced. The coefficient tests in section5 justify the continuous
+domain, not just its finite vertices.
+
+#### 3. A row potential couples actual cap and actual charge
+
+For p=17 or19 put
+
+    a_p=(3p-1)/(p-1)^2, d_p=p-9,
+    c_p=(p-1)/(p-9), k_p=(p-1)/(p-2),
+    kappa_p(z)=(p-1)/(p-1-min(z,8)).
+
+Let alpha be the actual mixed union under the actual pure-survivor base
+of mass lambda, and delta=7/(p-2). The flat killed row has full-Haar cap
+`c_row=1/[lambda(1-min(alpha,delta))]`, row mass q and loss beta=1-q.
+Complete the actual mixed cofactors at each original current depth e
+by a complete old test A_e, including its unit term, and put
+
+    z=sum_(e>=1)(p-1)p^-e A_e.
+
+Distinct original labels and the actual pure lower bound give
+`(p-2)alpha<=z-1`. Consequently the same original mixed load controls
+both quantities:
+
+    c_row<=kappa_p(z),
+    beta<=(z-8)+/d_p.                                 (DP6)
+
+Complete pair expansion and weighted Cauchy-Schwarz give
+`Xi_p^-(sigma)<=a_p sup_A sigma(c_row A^2)`. Its coefficient includes
+every current depth, since a_p=sum_(e>=1)(2e+1)p^-e.
+
+Define P_p at integer knots1,...,8 by
+
+    P_p(j)=16a_p[kappa_p(j)-k_p],
+
+interpolate linearly, and continue after8 with slope403/d_p. Its slopes
+are nonnegative and nondecreasing, including at8. For every z,y>=1,
+
+    403(z-8)+/d_p+a_p kappa_p(z)y^2
+      <=P_p(z)+a_p k_p y^2
+                    +a_p(c_p-k_p)(y^2-16)+.           (DP7)
+
+On each unit interval below8 the left side minus P_p(z) is convex in z,
+so it suffices to check its endpoints. At a knot j its value is
+`a_p k_p y^2+a_p[kappa_p(j)-k_p](y^2-16)`; the endpoint values j=1,8
+bound it. Above8 the z slopes cancel. Jensen on the complete convex
+combination defining z now gives, with M_sigma(f)=sup_A sigma(f(A)),
+
+    F_p^-(403;sigma)<=M_sigma(P_p)+a_p k_p Gamma_sigma
+                                  +a_p(c_p-k_p)T_sigma(16). (DP8)
+
+Forbidden layouts, old square tests and potential tests keep their
+separate globally chosen original residues. No equality of their
+maximizers is used.
+
+#### 4. One whole weighted source cost for both primes
+
+The physical17 multiplier has probabilities15/17 at1 and32/17^n at
+n>=2, mean9/8 and second moment89/64. Since every original old test is
+at least1, its complete comparison gives
+
+    T_mu17(16)<=15T_nu13(16)/17
+            +(89/64-15/17)Gamma_nu13-2496/4913.        (DP9)
+
+For n=2,3 use T_nu13(16/n^2)<=Gamma_nu13-1. For all n>=4, the hinge is
+exactly n^2 A^2-16. The subtracted constant is therefore
+`sum_(n=2,3)n^2 Pr(N=n)+16Pr(N>=4)=2496/4913`; all tails are paid.
+
+Expanding the integer potential knots and bounding hinges below5 by
+`(x-j)+<=(x-5)++5-j` gives
+
+    P17(x)<=40/33+phi17(x),
+    phi17=(5/11)(x-5)++(10/99)(x-6)+
+                  +(5/36)(x-7)++(3577/72)(x-8)+,
+    P19(x)<=1792/1989+phi19(x),
+    phi19=(112/351)(x-5)++(224/3861)(x-6)+
+                  +(112/1485)(x-7)++(39449/990)(x-8)+.
+
+For integer n>=2 and x>=1,
+`P19(nx)<=P19(5n)+(403n/10)(x-5)+`. Its affine tail covers every n.
+Combining this comparison, DP8--DP9 and Gamma13<=16+T13(16) gives
+
+    F17^-+F19^-<=C0+(2371/2880)T13(16)
+                   +M_nu13(phi17)+(15/17)M_nu13(phi19)
+                   +(13299/1360)M_nu13((x-5)+),
+    C0=185694867601/8599322160.                        (DP10)
+
+Each phi is evaluated as one weighted cost, with one original zero5
+root/cell choice outside its whole sum. Splitting it into separately
+maximized hinges would give another, weaker, upper comparison.
+
+There is an additional same-law floor before7 conditioning. For any
+nonnegative increasing convex f, n>=1 and any original test A>=1,
+`f(nA)>=f(n)`. Before actual7 conditioning the raw mass is s; write its
+retained raw mass as u>=D. Removing the actual set therefore leaves
+numerator at most `S_(f(n .))-f(n)(s-u)`. Since
+`S_(f(n .))-s f(n)>=0`, its normalized value is at most
+
+    f(n)+[S_(f(n .))-s f(n)]/D.
+
+This uses the same removed set and actual measure. For the full
+N11*N13 comparison, put
+
+    e_f=E f(N11*N13),
+    R_f=E S_(f(N11*N13 .))-e_f(s-D).
+
+The actual AP11/13 comparison and sole final conditioning give
+`M_nu13(f)<=R_f/Delta`. Substitution into DP10 yields
+
+    F17^-+F19^-<=C0+Z/Delta,
+    Z=(2371/2880)U16+R_phi17+(15/17)R_phi19
+                                      +(13299/1360)R_(x-5)+. (DP11)
+
+No independent-event claim about the actual exclusions is involved.
+
+#### 5. Whole continuous domain, all branches and exact tails
+
+DP3 is the maximum of finitely many functions linear in the cylinder
+caps, plus its original mass term. All raw HC/SQ costs consequently
+remain separately convex in each of the five parameter groups; s is
+separately affine and D separately concave. Constants in the complete
+multiplier tails are retained exactly. Write
+
+    U_tau=K_tau D+U_tau,0,
+    Z=K_Z D+Z0,
+
+where the remainders are separately convex. Here
+`K_Z=(2371/2880)K16+e_phi17+(15/17)e_phi19+(13299/1360)e_(x-5)+`.
+For C equal to DP1's joint bound,
+
+    (C-C0)Delta-Z
+
+is separately concave because `(C-C0)*131/132-K_Z>0`. The exact
+coefficient is
+
+    332775143955618398440929174879310120607
+      /772689867818889658052753870858726400 >0.
+
+The two analogous coefficients for the source square and tau81 targets
+are also positive. The certificate checks all1296 product vertices and
+each of the three individual rational margins; their minima are0.
+Repeated vertex interpolation now proves each target on the whole
+continuous product domain. These are extrema of bounding formulas, not
+claimed actual residue-family extremizers.
+
+For the eight original branches without an effective modulus3/9 pair,
+use their established actual Haar-density and reference pure-mass
+bounds. Complete product hinges, positive survival and the same row
+potentials give bounds below DP1. All four effective9 branches are
+included by the five-cell domain. The source-square and tau81 comparisons
+are also checked in every remaining branch.
+
+Evaluation indices at which a hinge becomes affine or a square cost
+becomes quadratic are not original-height cutoffs. The verifier sums
+all remaining geometric mass, first moments and second moments exactly.
+It retains all original forbidden labels in the mathematical inputs and
+all original test depths in every upper comparison.
+
+The shared-depth improvement lowers the prior depthwise-relaxed weighted
+formula from477.43032967504354 to475.52710009238956. Its source bounds
+improve JN's162.32635413377662 and103.0756457716106 to161.89077419582276
+and102.64288719927612. The specified older separate-cap calculation was
+483.1697176936668; no dominance over every optimized BM/OBE envelope
+is claimed, and no deficit from one is subtracted from another.
+
+The sufficient finite KC allowances therefore become
+
+    F17^-+F19^-<=300.356  [box20/current8],
+    F17^-+F19^-<=300.094  [unequal box/current6].         (DP12)
+
+Their exact available budgets are300.3564458007239... and
+300.0941128007239... . The new all-family upper bound still exceeds both.
+Without a finite-reference error the signed KC upper bound is still
+`T13(81)-403+C=175.1699872916657...>0`. Thus neither the finite target nor
+the later-prime continuation has been proved.
+
+The [standard-library verifier](verify_joint_frontier.py) checks the
+[complete rational certificate](joint_frontier_certificate.json), source
+hashes, all vertex margins, all remaining branches and complete tails.
+A separate implementation using the existing HC/SQ/JN programs gives
+the same per-vertex results. These checks support the ordinary arguments
+above; they are not Lean verification or exhaustive enumeration of
+actual forbidden families.
