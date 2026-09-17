@@ -19184,3 +19184,128 @@ positive. These are ordinary proof and exact arithmetic results, not
 Lean verification or a full covering-system resolution. The required
 uniform negative KC estimate and arbitrary later-prime continuation
 remain unproved.
+
+### Every original seven block and a common AP zero block
+
+On the same actual AP11/T4--AP13/T6 law and prescribed physical17
+input, the complete original-label bounds give
+
+    F17^-(403;nu13)+F19^-(403;physical nu13 K17)
+      <=20841391090341979866125382429441856802801
+        /46309752753991653188223872174911046400
+       =450.04323821499054...,
+    Gamma13<=5523249664714699759/35252033366559724
+            =156.67889586063097...,
+    T13(81)<=80660556065861952082417951246296859
+             /814547014001232991335635026248000
+           =99.02504665708572....                      (CB1)
+
+The common AP cost is evaluated on the strengthened full-original7
+source operator itself. The actual source law, original labels and
+residues, full tails, sole final normalization and physical17 input
+are unchanged.
+
+The general principle of retaining one original label through all auxiliary outcomes is already in the repository's FL1--FL4 (marked_head_profile.md, section "Retaining an original exponent label across the full auxiliary law"), and in its earlier "An original zero label across every auxiliary outcome" application. The present numerical result reuses that principle with the current all-family source and its same-law deletion floor; it is not a new general comparison theorem.
+
+#### Source operator used everywhere
+
+Let F35 be the current common-zero5 raw operator with raw mass s. For a nonnegative increasing convex f on v>=1 and the unchanged pure7 comparator p7(n), define
+
+    c_e(v)=sum_(n>e) p7(n)[f(nv)-f(n)]/n,
+    B(f)=s*E f(N7)+sum_(e>=0)F35(c_e).                  (CB2)
+
+For each fixed original block A_e, Jensen supplies c_e(A_e).
+Nonnegative summation and the F35 bound prove CB2. It keeps every
+original7 exponent block together across all outcomes in which it occurs. The operator handles every such eventually affine or quadratic f, not only a finite list of primitive hinge names. Positive homogeneity, subadditivity and exact constant shifts follow from those of F35. Each fixed-cost B is separately convex in the five HC parameter groups.
+
+For f(v)=a v^j+b once v>=K, the finite blocks e=0,...,K-2 are evaluated as their whole costs. The complete remaining block tail is
+
+    a*[T_j-(K-1)T_(j-1)]*[F35(v^j)-s],
+    T_i=sum_(n>=K)p7(n)n^i.                            (CB3)
+
+Each n>=K contributes to exactly n-K+1 tail blocks, proving CB3.
+The implementation passes every compound AP cost through CB2,
+including both its primitive and composite source costs.
+
+#### AP11/13 original-label bridge and common cost
+
+For each fixed actual357 point x, write A_(e,f)(x) for the globally fixed original complete357 test in exponent tuple (e,f) of11 and13. Apply the existing conditional original-label comparison first to13, whose cylinder cap c13*13^-f holds conditional on the full physical history, and then to11 with cap c11*11^-e. The intermediate set functional stays increasing and supermodular. Since c11=5/3 and c13=2 are constants across histories, the auxiliary depth runs can be sampled independently of each other and of x.
+
+Thus the compared load is
+
+    sum_(0<=e<N11,0<=f<N13) A_(e,f)(x),
+
+where N=N11*N13 is the number of original blocks. This independence belongs to the comparison counts, not to the actual kernels. One original A_(0,0) occurs in every rectangle. Finite original heights can be completed in advance; the added terms are nonnegative and the full count moments are finite.
+
+For increasing convex f put
+
+    q_f(v)=E[(f(Nv)-f(N))/N],  e_f=E f(N).
+
+Use Jensen on each original rectangle, and apply the one common B to its same original zero block before maximizing. Other blocks retain the existing separate comparison. The valid raw expression is
+
+    S(f)=B(q_f)+sum_n p_n[(n-1)B(f(n .))/n+s f(n)/n].    (CB4)
+
+Equivalently,
+
+    S(f)=s e_f+B(q_f)
+           +sum_n p_n(n-1)[B(f(n .))-s f(n)]/n.
+
+All centered costs here are nonnegative. The old expression sum_n p_n B(f(n .)) dominates S by subadditivity. Both sides use the new all_blocks B, so the actual gain is recomputed rather than imported from the weaker zero7 source.
+
+#### Unchanged actual deletion floor and conditioning
+
+Let u>=D be the actual retained357 raw mass after mixed7 deletion. The Jensen contributions are at least their total floor e_f on the same deleted set, and S(f)>=s e_f. Therefore
+
+    [S(f)-e_f(s-u)]/u <= [S(f)-e_f(s-D)]/D.
+
+This is an upper bound under the actual uniform357 survivor law, followed by the proved actual physical11/13 comparison. Nonnegative f and the same final survival lower bound Delta/D give
+
+    sup_A E_nu13 f(A) <= R(f)/Delta,
+    R(f)=S(f)-e_f(s-D).                                 (CB5)
+
+No auxiliary upper moment is substituted for an actual-law upper bound without this comparison. The floor e_f(s-D) is not omitted or charged twice.
+
+#### Complete AP tail and continuous domain
+
+The full N product moments are1,49/36,253/108. For f(v)=a v^j+b above K, put T_i=E[N^i;N>=K]. Then
+
+    q_f(v)=sum_(n<K)(p_n/n)[f(nv)-f(n)]
+                          +a T_(j-1)(v^j-1).
+
+The remaining part of S has complete tail
+
+    a(T_j-T_(j-1))B(v^j)+s[a T_(j-1)+b T_0].             (CB6)
+
+All source-bound coefficients are nonnegative and constants are exact. Every infinite tail is a full geometric moment calculation; there is no original-height cutoff or renormalization.
+
+For fixed f, S is a positive sum of B costs plus separately affine multiples of s, so it stays separately convex. R=e_f D+[S-e_f s] leaves the collected denominator coefficient K_Z unchanged. The joint bound uses the new R(phi17), R(phi19), R((v-5)+), while U16/U81 and Delta are precisely those obtained from the stronger positive7 source. Its signed margin is separately concave if
+
+    (C-C0)*131/132-K_Z>0.
+
+The exact coefficient is
+
+    347521291319402151520483236052982555338213
+      /857272418780792361930100697448363494400 >0.
+
+The [complete certificate](joint_frontier_certificate.json) checks all1296
+vertices and this coefficient; all eight non-effective9 branch bounds
+are below CB1, with margins evaluated at the current targets. The
+Gamma and T81 coefficients are positive by the same separately concave
+margin argument. Thus the three bounds hold throughout the continuous
+parameter domain and cover all twelve original-family branches.
+
+The [canonical verifier](verify_joint_frontier.py) uses centered source
+costs and the direct positive formulas CB2 and CB4. A separate
+implementation uses uncentered source costs and evaluates the AP
+common-layout gain. All1296 records and8 fallback records agree exactly.
+Polynomial tail formulas include every original height and multiplier.
+The source inputs and their eight SHA-256 pins are unchanged.
+
+The sufficient finite allowances become303.7119533429143 for the
+unequal/current6 core and303.9742863429143 for box20/current8. Safe
+sufficient bounds are303.711 and303.974 respectively. The signed
+upper before finite-core error is146.06828487207625, still positive.
+The uniform negative-Q criterion, arbitrary subsequent-prime
+continuation and unrestricted Erdős #7 remain unproved. These are
+ordinary mathematical estimates and exact arithmetic certificates,
+without an actual-family sharpness assertion or new Lean declaration.
