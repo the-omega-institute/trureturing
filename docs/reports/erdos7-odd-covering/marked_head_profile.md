@@ -551,3 +551,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint15/25/75 forces another uniform linear gap](profile-notes/80-joint15-25-75-forces-another-uniform-linear-gap.md)
 - [Complete pure3 deletion sharpens the common square](profile-notes/81-complete-pure3-deletion-sharpens-the-common-square.md)
 - [Joint geometry improves the complete endpoint comparison](profile-notes/82-joint-geometry-improves-the-complete-endpoint-comparison.md)
+- [Common seven hinges on both complete K-control faces](profile-notes/83-common-seven-hinges-on-both-complete-k-control-faces.md)
+- [A complete comparison on both K-control faces](profile-notes/84-a-complete-comparison-on-both-k-control-faces.md)
