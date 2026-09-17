@@ -1,0 +1,794 @@
+[
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 77,
+    "old_joint_cost_upper": [
+      "162713/6237",
+      "6668/693",
+      "45110/6237",
+      "13/11"
+    ],
+    "low_hinge6_upper": "4404997/9280656",
+    "full_hinge6_upper": "25427633/32198472"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 78,
+    "old_joint_cost_upper": [
+      "27403/1053",
+      "1132/117",
+      "7684/1053",
+      "47/39"
+    ],
+    "low_hinge6_upper": "1489975/3133728",
+    "full_hinge6_upper": "1720663/2157408"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 79,
+    "old_joint_cost_upper": [
+      "165961/6399",
+      "6880/711",
+      "46693/6399",
+      "96/79"
+    ],
+    "low_hinge6_upper": "4519301/9521712",
+    "full_hinge6_upper": "26114497/32685768"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 80,
+    "old_joint_cost_upper": [
+      "993/40",
+      "91/10",
+      "23641/3240",
+      "49/40"
+    ],
+    "low_hinge6_upper": "880513/1928448",
+    "full_hinge6_upper": "25602907/32995998"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 81,
+    "old_joint_cost_upper": [
+      "662/27",
+      "728/81",
+      "197/27",
+      "100/81"
+    ],
+    "low_hinge6_upper": "18167/40176",
+    "full_hinge6_upper": "317539/411366"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 82,
+    "old_joint_cost_upper": [
+      "996/41",
+      "366/41",
+      "48379/6642",
+      "101/82"
+    ],
+    "low_hinge6_upper": "4436965/9883296",
+    "full_hinge6_upper": "25890251/33755454"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 83,
+    "old_joint_cost_upper": [
+      "171890/6723",
+      "7241/747",
+      "589/81",
+      "102/83"
+    ],
+    "low_hinge6_upper": "4709029/10003824",
+    "full_hinge6_upper": "27308243/34190262"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 84,
+    "old_joint_cost_upper": [
+      "620800/24381",
+      "52505/5418",
+      "16465/2268",
+      "103/84"
+    ],
+    "low_hinge6_upper": "68118269/145115712",
+    "full_hinge6_upper": "10683601/13415004"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 85,
+    "old_joint_cost_upper": [
+      "15012053/592110",
+      "636971/65790",
+      "49903/6885",
+      "104/85"
+    ],
+    "low_hinge6_upper": "41232091/88105968",
+    "full_hinge6_upper": "239372318/301657689"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 86,
+    "old_joint_cost_upper": [
+      "175871/6966",
+      "7487/774",
+      "50411/6966",
+      "105/86"
+    ],
+    "low_hinge6_upper": "4836421/10365408",
+    "full_hinge6_upper": "28089383/35523522"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 87,
+    "old_joint_cost_upper": [
+      "59003/2349",
+      "2522/261",
+      "16946/2349",
+      "35/29"
+    ],
+    "low_hinge6_upper": "1624279/3495312",
+    "full_hinge6_upper": "9438239/12027636"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 88,
+    "old_joint_cost_upper": [
+      "89033/3564",
+      "1909/198",
+      "51265/7128",
+      "105/88"
+    ],
+    "low_hinge6_upper": "4906661/10606464",
+    "full_hinge6_upper": "28512673/36656712"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 89,
+    "old_joint_cost_upper": [
+      "179123/7209",
+      "7706/801",
+      "51692/7209",
+      "105/89"
+    ],
+    "low_hinge6_upper": "4940485/10726992",
+    "full_hinge6_upper": "28710629/37230516"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 90,
+    "old_joint_cost_upper": [
+      "2002/81",
+      "48/5",
+      "5791/810",
+      "7/6"
+    ],
+    "low_hinge6_upper": "552701/1205280",
+    "full_hinge6_upper": "642413/840096"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 91,
+    "old_joint_cost_upper": [
+      "25891/1053",
+      "7846/819",
+      "4042/567",
+      "15/13"
+    ],
+    "low_hinge6_upper": "385241/843696",
+    "full_hinge6_upper": "29106541/38378124"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 92,
+    "old_joint_cost_upper": [
+      "91147/3726",
+      "1979/207",
+      "52973/7452",
+      "105/92"
+    ],
+    "low_hinge6_upper": "5041957/11088576",
+    "full_hinge6_upper": "29304497/38951928"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 93,
+    "old_joint_cost_upper": [
+      "61090/2511",
+      "2659/279",
+      "17800/2511",
+      "35/31"
+    ],
+    "low_hinge6_upper": "1691063/3736368",
+    "full_hinge6_upper": "393001/527202"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 94,
+    "old_joint_cost_upper": [
+      "92123/3807",
+      "4019/423",
+      "53827/7614",
+      "105/94"
+    ],
+    "low_hinge6_upper": "5104421/11329632",
+    "full_hinge6_upper": "29645653/40128372"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 95,
+    "old_joint_cost_upper": [
+      "185222/7695",
+      "8099/855",
+      "54254/7695",
+      "21/19"
+    ],
+    "low_hinge6_upper": "5135653/11450160",
+    "full_hinge6_upper": "29816231/40716594"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 96,
+    "old_joint_cost_upper": [
+      "31033/1296",
+      "85/9",
+      "18227/2592",
+      "35/32"
+    ],
+    "low_hinge6_upper": "1722295/3856896",
+    "full_hinge6_upper": "9995603/13768272"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 97,
+    "old_joint_cost_upper": [
+      "187174/7857",
+      "8221/873",
+      "55108/7857",
+      "105/97"
+    ],
+    "low_hinge6_upper": "5198117/11691216",
+    "full_hinge6_upper": "30157387/41893038"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 98,
+    "old_joint_cost_upper": [
+      "94075/3969",
+      "4141/441",
+      "55535/7938",
+      "15/14"
+    ],
+    "low_hinge6_upper": "5229349/11811744",
+    "full_hinge6_upper": "6065593/8496252"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 99,
+    "old_joint_cost_upper": [
+      "21014/891",
+      "103/11",
+      "6218/891",
+      "35/33"
+    ],
+    "low_hinge6_upper": "584509/1325808",
+    "full_hinge6_upper": "3388727/4785498"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 100,
+    "old_joint_cost_upper": [
+      "95051/4050",
+      "2101/225",
+      "56389/8100",
+      "21/20"
+    ],
+    "low_hinge6_upper": "5291813/12052800",
+    "full_hinge6_upper": "30669121/43657704"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 101,
+    "old_joint_cost_upper": [
+      "191078/8181",
+      "8465/909",
+      "56816/8181",
+      "105/101"
+    ],
+    "low_hinge6_upper": "5323045/12173328",
+    "full_hinge6_upper": "30839699/44245926"
+  },
+  {
+    "shape": "root1_same_other_column",
+    "survivors": 102,
+    "old_joint_cost_upper": [
+      "32009/1377",
+      "1421/153",
+      "19081/2754",
+      "35/34"
+    ],
+    "low_hinge6_upper": "1784759/4097952",
+    "full_hinge6_upper": "10336759/14944716"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 78,
+    "old_joint_cost_upper": [
+      "81515/3198",
+      "29957/3198",
+      "22489/3198",
+      "89/78"
+    ],
+    "low_hinge6_upper": "734207/1586208",
+    "full_hinge6_upper": "2545627/3344370"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 79,
+    "old_joint_cost_upper": [
+      "82364/3239",
+      "30514/3239",
+      "22986/3239",
+      "92/79"
+    ],
+    "low_hinge6_upper": "2235037/4819632",
+    "full_hinge6_upper": "12919407/16804178"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 80,
+    "old_joint_cost_upper": [
+      "83131/3280",
+      "30907/3280",
+      "11639/1640",
+      "47/40"
+    ],
+    "low_hinge6_upper": "2259581/4880640",
+    "full_hinge6_upper": "13071319/16968506"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 81,
+    "old_joint_cost_upper": [
+      "9322/369",
+      "31300/3321",
+      "23570/3321",
+      "32/27"
+    ],
+    "low_hinge6_upper": "761375/1647216",
+    "full_hinge6_upper": "307517/398438"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 82,
+    "old_joint_cost_upper": [
+      "2065/82",
+      "773/82",
+      "291/41",
+      "49/41"
+    ],
+    "low_hinge6_upper": "56309/122016",
+    "full_hinge6_upper": "326223/421882"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 83,
+    "old_joint_cost_upper": [
+      "3587447/142926",
+      "32086/3403",
+      "2028239/285852",
+      "101/84"
+    ],
+    "low_hinge6_upper": "48986321/106336944",
+    "full_hinge6_upper": "56802479/73385654"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 84,
+    "old_joint_cost_upper": [
+      "86117/3444",
+      "32479/3444",
+      "8135/1148",
+      "101/84"
+    ],
+    "low_hinge6_upper": "2355133/5124672",
+    "full_hinge6_upper": "13665847/17681578"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 85,
+    "old_joint_cost_upper": [
+      "5106/205",
+      "32872/3485",
+      "24656/3485",
+      "6/5"
+    ],
+    "low_hinge6_upper": "792351/1728560",
+    "full_hinge6_upper": "13804639/17901666"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 86,
+    "old_joint_cost_upper": [
+      "43723/1763",
+      "16612/1763",
+      "24907/3526",
+      "103/86"
+    ],
+    "low_hinge6_upper": "2397661/5246688",
+    "full_hinge6_upper": "13929573/18129052"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 87,
+    "old_joint_cost_upper": [
+      "87967/3567",
+      "33535/3567",
+      "25117/3567",
+      "103/87"
+    ],
+    "low_hinge6_upper": "2414333/5307696",
+    "full_hinge6_upper": "4675843/6139832"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 88,
+    "old_joint_cost_upper": [
+      "11061/451",
+      "16923/1804",
+      "25327/3608",
+      "103/88"
+    ],
+    "low_hinge6_upper": "810335/1789568",
+    "full_hinge6_upper": "2825097/3741988"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 89,
+    "old_joint_cost_upper": [
+      "89009/3649",
+      "34157/3649",
+      "25537/3649",
+      "103/89"
+    ],
+    "low_hinge6_upper": "2447677/5429712",
+    "full_hinge6_upper": "14223441/19000384"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 90,
+    "old_joint_cost_upper": [
+      "8953/369",
+      "17234/1845",
+      "25747/3690",
+      "103/90"
+    ],
+    "low_hinge6_upper": "2464349/5490720",
+    "full_hinge6_upper": "4773799/6430276"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 91,
+    "old_joint_cost_upper": [
+      "6927/287",
+      "34779/3731",
+      "25957/3731",
+      "103/91"
+    ],
+    "low_hinge6_upper": "827007/1850576",
+    "full_hinge6_upper": "14419353/19581272"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 92,
+    "old_joint_cost_upper": [
+      "90531/3772",
+      "35049/3772",
+      "26167/3772",
+      "103/92"
+    ],
+    "low_hinge6_upper": "832127/1870912",
+    "full_hinge6_upper": "14503451/19879014"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 93,
+    "old_joint_cost_upper": [
+      "30337/1271",
+      "11773/1271",
+      "26377/3813",
+      "103/93"
+    ],
+    "low_hinge6_upper": "837247/1891248",
+    "full_hinge6_upper": "14587549/20176756"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 94,
+    "old_joint_cost_upper": [
+      "91491/3854",
+      "35589/3854",
+      "26587/3854",
+      "103/94"
+    ],
+    "low_hinge6_upper": "842367/1911584",
+    "full_hinge6_upper": "14671647/20474498"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 95,
+    "old_joint_cost_upper": [
+      "91971/3895",
+      "35859/3895",
+      "26797/3895",
+      "103/95"
+    ],
+    "low_hinge6_upper": "847487/1931920",
+    "full_hinge6_upper": "2951149/4154448"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 96,
+    "old_joint_cost_upper": [
+      "30817/1312",
+      "12043/1312",
+      "27007/3936",
+      "103/96"
+    ],
+    "low_hinge6_upper": "852607/1952256",
+    "full_hinge6_upper": "14839843/21069982"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 97,
+    "old_joint_cost_upper": [
+      "92931/3977",
+      "36399/3977",
+      "27217/3977",
+      "103/97"
+    ],
+    "low_hinge6_upper": "857727/1972592",
+    "full_hinge6_upper": "14923941/21367724"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 98,
+    "old_joint_cost_upper": [
+      "93411/4018",
+      "36669/4018",
+      "27427/4018",
+      "103/98"
+    ],
+    "low_hinge6_upper": "862847/1992928",
+    "full_hinge6_upper": "15008039/21665466"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 99,
+    "old_joint_cost_upper": [
+      "31297/1353",
+      "12313/1353",
+      "27637/4059",
+      "103/99"
+    ],
+    "low_hinge6_upper": "867967/2013264",
+    "full_hinge6_upper": "15092137/21963208"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 100,
+    "old_joint_cost_upper": [
+      "94371/4100",
+      "37209/4100",
+      "27847/4100",
+      "103/100"
+    ],
+    "low_hinge6_upper": "873087/2033600",
+    "full_hinge6_upper": "3035247/4452190"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 101,
+    "old_joint_cost_upper": [
+      "94851/4141",
+      "37479/4141",
+      "28057/4141",
+      "103/101"
+    ],
+    "low_hinge6_upper": "878207/2053936",
+    "full_hinge6_upper": "15260333/22558692"
+  },
+  {
+    "shape": "root1_other_same_column",
+    "survivors": 102,
+    "old_joint_cost_upper": [
+      "31777/1394",
+      "12583/1394",
+      "28267/4182",
+      "103/102"
+    ],
+    "low_hinge6_upper": "883327/2074272",
+    "full_hinge6_upper": "15344431/22856434"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 78,
+    "old_joint_cost_upper": [
+      "81515/3198",
+      "29957/3198",
+      "22489/3198",
+      "89/78"
+    ],
+    "low_hinge6_upper": "734207/1586208",
+    "full_hinge6_upper": "2545627/3344370"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 79,
+    "old_joint_cost_upper": [
+      "82364/3239",
+      "30514/3239",
+      "22986/3239",
+      "92/79"
+    ],
+    "low_hinge6_upper": "2235037/4819632",
+    "full_hinge6_upper": "12919407/16804178"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 80,
+    "old_joint_cost_upper": [
+      "83131/3280",
+      "30907/3280",
+      "11639/1640",
+      "47/40"
+    ],
+    "low_hinge6_upper": "2259581/4880640",
+    "full_hinge6_upper": "13071319/16968506"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 81,
+    "old_joint_cost_upper": [
+      "9322/369",
+      "31300/3321",
+      "23570/3321",
+      "32/27"
+    ],
+    "low_hinge6_upper": "761375/1647216",
+    "full_hinge6_upper": "307517/398438"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 82,
+    "old_joint_cost_upper": [
+      "2065/82",
+      "773/82",
+      "291/41",
+      "49/41"
+    ],
+    "low_hinge6_upper": "56309/122016",
+    "full_hinge6_upper": "326223/421882"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 83,
+    "old_joint_cost_upper": [
+      "3587447/142926",
+      "32086/3403",
+      "2028239/285852",
+      "101/84"
+    ],
+    "low_hinge6_upper": "48986321/106336944",
+    "full_hinge6_upper": "56802479/73385654"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 84,
+    "old_joint_cost_upper": [
+      "86117/3444",
+      "32479/3444",
+      "8135/1148",
+      "101/84"
+    ],
+    "low_hinge6_upper": "2355133/5124672",
+    "full_hinge6_upper": "13665847/17681578"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 85,
+    "old_joint_cost_upper": [
+      "5106/205",
+      "32872/3485",
+      "24656/3485",
+      "6/5"
+    ],
+    "low_hinge6_upper": "792351/1728560",
+    "full_hinge6_upper": "13804639/17901666"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 86,
+    "old_joint_cost_upper": [
+      "43723/1763",
+      "16612/1763",
+      "24907/3526",
+      "103/86"
+    ],
+    "low_hinge6_upper": "2397661/5246688",
+    "full_hinge6_upper": "13929573/18129052"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 87,
+    "old_joint_cost_upper": [
+      "87967/3567",
+      "33535/3567",
+      "25117/3567",
+      "103/87"
+    ],
+    "low_hinge6_upper": "2414333/5307696",
+    "full_hinge6_upper": "4675843/6139832"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 88,
+    "old_joint_cost_upper": [
+      "11061/451",
+      "16923/1804",
+      "25327/3608",
+      "103/88"
+    ],
+    "low_hinge6_upper": "810335/1789568",
+    "full_hinge6_upper": "2825097/3741988"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 89,
+    "old_joint_cost_upper": [
+      "89009/3649",
+      "34157/3649",
+      "25537/3649",
+      "103/89"
+    ],
+    "low_hinge6_upper": "2447677/5429712",
+    "full_hinge6_upper": "14223441/19000384"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 90,
+    "old_joint_cost_upper": [
+      "8953/369",
+      "17234/1845",
+      "25747/3690",
+      "103/90"
+    ],
+    "low_hinge6_upper": "2464349/5490720",
+    "full_hinge6_upper": "4773799/6430276"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 91,
+    "old_joint_cost_upper": [
+      "6927/287",
+      "34779/3731",
+      "25957/3731",
+      "103/91"
+    ],
+    "low_hinge6_upper": "827007/1850576",
+    "full_hinge6_upper": "14419353/19581272"
+  },
+  {
+    "shape": "root1_other_other_column",
+    "survivors": 92,
+    "old_joint_cost_upper": [
+      "90531/3772",
+      "35049/3772",
+      "26167/3772",
+      "103/92"
+    ],
+    "low_hinge6_upper": "832127/1870912",
+    "full_hinge6_upper": "14503451/19879014"
+  }
+]

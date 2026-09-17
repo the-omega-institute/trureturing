@@ -1,0 +1,149 @@
+{
+  "primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "height_3": {
+    "kind": "inline",
+    "value": 31
+  },
+  "height_other": {
+    "kind": "inline",
+    "value": 8
+  },
+  "tree_depth": {
+    "kind": "inline",
+    "value": 8
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 10000
+  },
+  "rows": {
+    "path": "content/005-rows.json",
+    "sha256": "5882d2c2415204d43f40e2b0ae339d1d2dd514fae799ac81786e4efb68aef2a0",
+    "kind": "array"
+  },
+  "branch_a_factor": {
+    "kind": "inline",
+    "value": "1796039511175/124554051584"
+  },
+  "branch_b_lower": {
+    "kind": "inline",
+    "value": "88201253955139641252118098948566841488891779660937472668777730852992559/625000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "mixture_weight_a": {
+    "kind": "inline",
+    "value": "1/100"
+  },
+  "mixture_weight_b": {
+    "kind": "inline",
+    "value": "99/100"
+  },
+  "uniform_gamma_lower": {
+    "kind": "inline",
+    "value": "8731924141558824483959691795908117307400286186432809794208995354446263341/62500000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "comparison": {
+    "kind": "inline",
+    "value": "138877/1000"
+  },
+  "simple_strict_lower": {
+    "kind": "inline",
+    "value": "13959/100"
+  },
+  "small_tree_checks": {
+    "kind": "inline",
+    "value": [
+      {
+        "prime": 3,
+        "side_children": 1,
+        "height": 1,
+        "support": 2
+      },
+      {
+        "prime": 3,
+        "side_children": 1,
+        "height": 2,
+        "support": 5
+      },
+      {
+        "prime": 3,
+        "side_children": 1,
+        "height": 3,
+        "support": 14
+      },
+      {
+        "prime": 5,
+        "side_children": 2,
+        "height": 2,
+        "support": 13
+      },
+      {
+        "prime": 7,
+        "side_children": 4,
+        "height": 2,
+        "support": 33
+      }
+    ]
+  },
+  "small_actual_families": {
+    "kind": "inline",
+    "value": [
+      {
+        "primes": [
+          3,
+          5
+        ],
+        "heights": [
+          3,
+          2
+        ],
+        "period": 675,
+        "divisors": 12,
+        "survivors": 188
+      },
+      {
+        "primes": [
+          3,
+          5,
+          7
+        ],
+        "heights": [
+          2,
+          2,
+          2
+        ],
+        "period": 11025,
+        "divisors": 27,
+        "survivors": 2495
+      }
+    ]
+  },
+  "coherent_gamma_boundary": {
+    "path": "content/015-coherent_gamma_boundary.json",
+    "sha256": "67a886752789b67e36ef03188327c09af98e5f150ec1ac3c29faa311b0635236",
+    "kind": "value"
+  }
+}
