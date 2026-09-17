@@ -69,6 +69,7 @@ public sealed class LeanReportSelectionTests
         var logs = Path.Combine(fixture, "diagnostics");
         var arguments = new List<string>
         {
+            "-u", "STRATALINT_LEAN_PRODUCER_DLL",
             "STRATALINT_INSPECTOR_SUPERVISED=1", "LAKE_BIN=" + lake,
             "INSPECTOR_TEST_PHASES=" + phases, "INSPECTOR_TEST_FAILURE=" + failedPhase,
             "BASH_ENV=" + shellEnvironment,

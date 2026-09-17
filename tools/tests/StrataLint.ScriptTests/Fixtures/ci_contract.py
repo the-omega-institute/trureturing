@@ -197,9 +197,6 @@ runtime_disposition = "committed-source"
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
 
     def test_resolver_reads_schema_two_filemap_only_for_the_immutable_base(self):
-        self.env["GITHUB_EVENT_NAME"] = "pull_request"
-        self.git("init", "-q")
-        (self.root / "Meta").mkdir()
         legacy = '''schema_version = 2
 [residence_policy]
 case_id = "fixture"
@@ -216,30 +213,85 @@ verified_by = ["fixture"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 '''
-        current = legacy.replace("schema_version = 2", "schema_version = 4\nresources = []").replace(
-            'pattern = "**"\n', 'pattern = "**"\nrequire = []\n')
-        (self.root / "Meta/FILEMAP.toml").write_text(legacy)
-        self.git("add", "Meta/FILEMAP.toml")
-        base = self.commit("schema two base")
-        self.git("checkout", "-qb", "topic")
-        (self.root / "Meta/FILEMAP.toml").write_text(current)
-        (self.root / "lake-manifest.json").write_text("{}")
-        self.git("add", "Meta/FILEMAP.toml")
-        head = self.commit("schema four candidate")
-        merge = self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
-                         "commit-tree", "HEAD^{tree}", "-p", base, "-p", head, "-m", "merge")
-        self.git("checkout", "--detach", merge)
-        self.env["GITHUB_SHA"] = merge
-
-        result = self.run_tool(CI, "resolve", "--head", head)
-
-        self.assertEqual(0, result.returncode, result.stderr)
-        plan = json.loads((self.root / "build/ci/plan.json").read_text())
-        self.assertEqual(base, plan["base"])
-        self.assertEqual([], plan["declared_require"])
+        prefix, row = legacy.split("[[files]]", 1)
+        resources = '''resources = [
+{ id = "filemap", stage = "current", owner = "Meta/FILEMAP.toml", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+{ id = "lean", stage = "current", owner = "Meta/FILEMAP.toml", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+]
+'''
         with self.assertRaises(ValueError):
             sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
             importlib.import_module("ci_plan").load_filemap(legacy.encode())
+        for mode in ("pr", "push"):
+            for change in ("delete", "rename"):
+                for match_count in (0, 1, 2):
+                    with self.subTest(mode=mode, change=change, match_count=match_count), \
+                         tempfile.TemporaryDirectory(prefix="ci-schema-migration-") as directory:
+                        root = pathlib.Path(directory).resolve()
+                        def git(*args):
+                            return subprocess.run(["git", "-C", str(root), *args], check=True,
+                                capture_output=True, text=True).stdout.strip()
+                        git("init", "-q")
+                        git("config", "user.name", "Fixture")
+                        git("config", "user.email", "fixture@example.invalid")
+                        for folder in ("Meta", "retired", "docs"):
+                            (root / folder).mkdir()
+                        (root / ".gitignore").write_text("build/\nevent.json\noutputs\n")
+                        (root / "Meta/FILEMAP.toml").write_text(legacy)
+                        (root / "Meta/ci-resources.json").write_text(json.dumps({
+                            "schema": "ci-resource-execution-v1", "resources": [
+                                {"id": name, "projects": [], "checks": [], "steps": [name]}
+                                for name in ("filemap", "lean")]}))
+                        (root / "Meta/engineering-projects.json").write_text('{"projects":[]}')
+                        (root / "Meta/ci-checks.json").write_text('{"checks":[]}')
+                        old = root / "retired/old.txt"
+                        old.write_text("registered retired input\n")
+                        git("add", ".")
+                        git("commit", "-qm", "schema two base")
+                        base = git("rev-parse", "HEAD")
+                        if change == "delete": old.unlink()
+                        else: old.rename(root / "docs/renamed.md")
+                        patterns = ["*", "Meta/**", "docs/**", *("retired/*", "retired/old.txt")[:match_count]]
+                        current = prefix.replace("schema_version = 2\n", "schema_version = 4\n" + resources)
+                        for pattern in patterns:
+                            require = '["filemap"]' if pattern.startswith("retired/") else "[]"
+                            current += "[[files]]" + row.replace('pattern = "**"',
+                                'pattern = "' + pattern + '"\nrequire = ' + require)
+                        (root / "Meta/FILEMAP.toml").write_text(current)
+                        git("add", "-A")
+                        git("commit", "-qm", "schema four candidate")
+                        head = git("rev-parse", "HEAD")
+                        env = dict(self.env, GITHUB_EVENT_NAME="pull_request" if mode == "pr" else "push",
+                                   GITHUB_OUTPUT=str(root / "outputs"), GITHUB_EVENT_PATH=str(root / "event.json"))
+                        if mode == "pr":
+                            merge = git("commit-tree", "HEAD^{tree}", "-p", base, "-p", head, "-m", "merge")
+                            git("checkout", "--detach", merge)
+                            env["GITHUB_SHA"] = merge
+                            arguments = ["resolve", "--head", head]
+                        else:
+                            (root / "event.json").write_text(json.dumps({"before": base, "after": head}))
+                            env["GITHUB_SHA"] = head
+                            arguments = ["push-plan", "--commit", head]
+                        result = subprocess.run([sys.executable, str(CI), *arguments, "--repository", str(root)],
+                                                env=env, capture_output=True, text=True)
+                        changes = json.loads((root / "build/ci/changes.json").read_text())["changes"]
+                        retired_change = next(item for item in changes if item["old"]["path"] == "retired/old.txt")
+                        self.assertEqual("D" if change == "delete" else "R", retired_change["status"])
+                        plan_path = root / "build/ci/plan.json"
+                        if match_count != 1:
+                            self.assertEqual(2, result.returncode, result.stdout + result.stderr)
+                            self.assertIn(f"retired/old.txt: FILEMAP match count {match_count}", result.stderr)
+                            self.assertFalse(plan_path.exists())
+                            continue
+                        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                        plan = json.loads(plan_path.read_text())
+                        self.assertEqual(["filemap"], plan["declared_require"])
+                        self.assertEqual(["filemap"], plan["resources"])
+                        self.assertEqual(["filemap"], plan["execution"]["steps"])
+                        self.assertEqual(base if mode == "pr" else None, plan["base"])
+                        retired = next(item for item in plan["paths"] if item["path"] == "retired/old.txt")
+                        self.assertEqual("**", retired["pattern"])
+                        self.assertEqual(["filemap"], retired["require"])
 
     def test_parentless_checkout_needs_no_base_or_remote(self):
         self.git("init", "-q")

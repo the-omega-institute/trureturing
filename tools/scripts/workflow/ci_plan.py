@@ -714,8 +714,7 @@ def make_plan(root, commit, changes_file):
             raise ValueError(f"{p}: run-local path cannot be a committed change")
         endpoint_require = entry.get("require")
         if endpoint_require is None:
-            candidate_matches = [candidate for candidate_glob, candidate in entries if candidate_glob.fullmatch(p)]
-            endpoint_require = candidate_matches[0]["require"] if len(candidate_matches) == 1 else sorted(resources)
+            endpoint_require = match(p)["require"]
         required.update(endpoint_require)
         scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require})
     roots = [r for r in required if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
