@@ -107,9 +107,16 @@ mark_deposited() {
     [ "$rest" = "$kind" ] && wt=""
     [ -n "$flight" ] || continue
     if [ "$stage" = implementation ] && [ -z "$kind" ] && [ -n "$wt" ] && [ -d "$wt" ]; then
-      subj=$(git -C "$wt" log -1 --format=%s 2>/dev/null || true)
+      # The builder commit is not always HEAD: after the door the seat merges `origin/dev` again for
+      # the late dedupe, and HEAD becomes "Merge remote-tracking branch 'origin/dev' …" (case
+      # 2026-09-18, bklm-c4: the flight read `deposited`, then went back to blocking for the rest
+      # of its CI wait). The reading is therefore any commit on the branch beyond its merge base
+      # with the protected base — those are the seat's own commits — whose subject starts with the
+      # prescribed builder-commit prefix. A worktree without `origin/dev` (or without git) reads
+      # nothing and stays blocking.
+      subj=$(git -C "$wt" log --format=%s origin/dev..HEAD 2>/dev/null || true)
       case "$subj" in
-        ("formalize: deposit "*) kind=deposited ;;
+        (*"formalize: deposit "*) kind=deposited ;;
       esac
     fi
     printf '%s\t%s\t%s\t%s\n' "$stage" "$flight" "$kind" "$wt"
@@ -161,9 +168,15 @@ if [ "$MODE" = selftest ]; then
   out=$(echo 'bash tools/scripts/agent/seat/dispatch.sh F5 1 /s/briefs/impl-op-w1-x.stageB.filled.md /tmp/wt implementation 0 8' | parse)
   [ "$out" = "$(printf 'implementation\tF5\t\t/tmp/wt')" ] || { echo "[FAIL] stageB brief must carry no mark: got '$out'"; fail=1; }
   # deposited is read from the worktree HEAD subject, and only for an unmarked implementation row
-  dep=$(mktemp -d); git -C "$dep" init -q .; git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'formalize: deposit X (case)'
+  dep=$(mktemp -d); git -C "$dep" init -q .; git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'base'
+  git -C "$dep" update-ref refs/remotes/origin/dev HEAD
+  git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'formalize: deposit X (case)'
   out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
   [ "$out" = "$(printf 'implementation\tF7\tdeposited\t%s' "$dep")" ] || { echo "[FAIL] deposited HEAD not recognised: got '$out'"; fail=1; }
+  git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m "Merge remote-tracking branch 'origin/dev' into lane"
+  out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
+  [ "$out" = "$(printf 'implementation\tF7\tdeposited\t%s' "$dep")" ] || { echo "[FAIL] a post-door merge commit on top of the deposit must still read deposited: got '$out'"; fail=1; }
+  git -C "$dep" update-ref refs/remotes/origin/dev HEAD
   git -C "$dep" -c user.name=t -c user.email=t@t commit -q --allow-empty -m 'formalize: prove X (before the door)'
   out=$(printf 'implementation\tF7\t\t%s\n' "$dep" | mark_deposited)
   [ "$out" = "$(printf 'implementation\tF7\t\t%s' "$dep")" ] || { echo "[FAIL] a pre-door HEAD must stay blocking: got '$out'"; fail=1; }
