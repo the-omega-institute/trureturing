@@ -31008,3 +31008,969 @@ $$
 定理 65.4 对任意独立局部策略对给出下界 $121799/46384$，故上述严格不等式对每一对这样的策略成立。证毕。
 
 ## 65.99 追加锚
+
+## 66. 相邻相等关系商、锚定余循环与公平提升
+
+**定义 66.0（禁游程空间、关系空间、补变换与关系编码）。**
+
+固定整数 $k\ge 2$。令
+$$
+K_{k,k}:=\left\{x\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }x_j=x_{j+1}=\cdots=x_{j+k-1}\right\},
+$$
+即同时禁止 $0^k$ 与 $1^k$。令
+$$
+Y_k:=\left\{c\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }c_j=c_{j+1}=\cdots=c_{j+k-2}=1\right\},
+$$
+即禁止 $1^{k-1}$。定义逐位补变换
+$$
+(Cx)_j:=1-x_j
+$$
+以及相邻相等关系编码
+$$
+R(x)_j:=\mathbf 1_{\{x_j=x_{j+1}\}}.
+$$
+两边都取乘积拓扑；$\sigma$ 表示左移位；$\oplus$ 表示 $\mathbb Z/2\mathbb Z$ 中的加法。
+
+**定理 66.1（精确像、两点互补纤维、锚定重构与拓扑商）。**
+
+对每个 $k\ge2$，映射
+$$
+R:K_{k,k}\longrightarrow Y_k
+$$
+连续且满射，并且对每个 $c\in Y_k$，其纤维恰有两个点；若其中一个是 $x$，另一个就是 $Cx$。更精确地，对任意 $b\in\{0,1\}$ 与 $c\in Y_k$，递推
+$$
+x^{b,c}_0=b,\qquad
+x^{b,c}_{j+1}=x^{b,c}_j\oplus(1-c_j)\qquad(j\ge0)
+$$
+给出 $K_{k,k}$ 中唯一满足 $x_0=b$ 且 $R(x)=c$ 的点；两个锚 $b=0,1$ 所得序列互为逐位补。于是
+$$
+\Theta:K_{k,k}\longrightarrow\{0,1\}\times Y_k,\qquad
+\Theta(x)=(x_0,R(x))
+$$
+是同胚，并且
+$$
+\Theta(Cx)=(1-x_0,R(x)).
+$$
+因此 $R$ 在补变换轨道商上诱导同胚
+$$
+\overline R:K_{k,k}/\langle C\rangle\longrightarrow Y_k,\qquad
+\overline R([x])=R(x).
+$$
+
+当 $k=2$ 时，
+$$
+Y_2=\{0^\infty\},\qquad
+K_{2,2}=\{0101\ldots,1010\ldots\},
+$$
+故上述像、纤维、锚定重构和商结论仍成立。
+
+**证明。**
+
+若 $x\in K_{k,k}$ 而
+$$
+R(x)_j=R(x)_{j+1}=\cdots=R(x)_{j+k-2}=1,
+$$
+则
+$$
+x_j=x_{j+1}=\cdots=x_{j+k-1},
+$$
+与 $x\in K_{k,k}$ 矛盾。因此 $R(K_{k,k})\subseteq Y_k$。
+
+反之，给定 $b\in\{0,1\}$ 与 $c\in Y_k$，上述递推唯一确定 $x^{b,c}$。递推式直接给出
+$$
+c_j=1\Longleftrightarrow x^{b,c}_{j+1}=x^{b,c}_j,
+$$
+故 $R(x^{b,c})=c$。若 $x^{b,c}$ 含有长度 $k$ 的常值块，则对应的 $k-1$ 个关系位全为 $1$，与 $c\in Y_k$ 矛盾。因此 $x^{b,c}\in K_{k,k}$，从而 $R$ 满射，并且锚 $b$ 与关系记录 $c$ 唯一确定原序列。
+
+若 $R(x)=R(y)$，令
+$$
+\delta_j:=x_j\oplus y_j.
+$$
+由于两序列在每一步同为“保持”或同为“翻转”，有
+$$
+\delta_{j+1}=\delta_j\qquad(j\ge0).
+$$
+故 $\delta_j$ 恒等于 $\delta_0$。若 $\delta_0=0$，则 $x=y$；若 $\delta_0=1$，则 $y=Cx$。反过来 $R(Cx)=R(x)$，且 $(Cx)_0=1-x_0\ne x_0$，所以 $Cx\ne x$。因此每个纤维恰为两个互补点。
+
+$R$ 的第 $j$ 个坐标只依赖 $x_j,x_{j+1}$，故 $R$ 连续。对每个 $n\ge0$，$(\Theta^{-1}(b,c))_n$ 只依赖 $b,c_0,\ldots,c_{n-1}$，故 $\Theta^{-1}$ 连续；因此 $\Theta$ 是同胚。补变换在锚定坐标中恰为
+$$
+(b,c)\longmapsto(1-b,c).
+$$
+所以 $R$ 在轨道商上给出连续双射 $\overline R$。空间 $K_{k,k}$ 是紧空间，有限群的连续像 $K_{k,k}/\langle C\rangle$ 仍紧，而 $Y_k$ 是 Hausdorff 空间，故 $\overline R$ 为同胚。
+
+当 $k=2$ 时，$Y_2$ 禁止单个 $1$，所以只有 $0^\infty$；重构递推在每一步都翻转，恰给出两个交替序列。证毕。
+
+**定义 66.2（首差度量与补轨道距离）。**
+
+在 $\{0,1\}^{\mathbb N}$ 上定义
+$$
+d(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m(x,y)},&x\ne y,
+\end{cases}
+\qquad
+m(x,y):=\min\{j\ge0:x_j\ne y_j\}.
+$$
+在 $Y_k$ 上记同型首差度量为
+$$
+\rho(c,c')=
+\begin{cases}
+0,&c=c',\\
+2^{-m(c,c')},&c\ne c'.
+\end{cases}
+$$
+由于 $C$ 是 $d$-等距变换，定义
+$$
+\overline d([x],[y]):=\min\{d(x,y),d(x,Cy)\}.
+$$
+
+**定理 66.3（精确商度量与固定锚相似性）。**
+
+$\overline d$ 在 $K_{k,k}/\langle C\rangle$ 上良定义并且是度量。在商同胚 $\overline R$ 下有精确恒等式
+$$
+\boxed{\ \overline d([x],[y])=\frac12\,\rho(Rx,Ry)\ }.
+$$
+因此
+$$
+\rho(\overline R([x]),\overline R([y]))=2\overline d([x],[y]).
+$$
+
+此外，对每个固定锚 $b\in\{0,1\}$，令
+$$
+T_b:Y_k\longrightarrow K_{k,k},\qquad T_b(c):=x^{b,c}.
+$$
+则当 $c\ne c'$ 时，
+$$
+d(T_b(c),T_b(c'))=\frac12\,\rho(c,c').
+$$
+所以 $T_b$ 是从 $Y_k$ 到闭开集
+$$
+K_{k,k}^{(b)}:=\{x\in K_{k,k}:x_0=b\}
+$$
+的比例 $1/2$ 相似双射。
+
+**证明。**
+
+先证良定义。若把 $x$ 换为 $Cx$，则由于 $C$ 是等距且 $C^2=\mathrm{id}$，集合
+$$
+\{d(Cx,y),d(Cx,Cy)\}
+$$
+正是
+$$
+\{d(x,Cy),d(x,y)\}.
+$$
+把 $y$ 换为 $Cy$ 也只交换同一对数，所以最小值只依赖两个轨道。
+
+非负性和对称性显然。若 $\overline d([x],[y])=0$，则 $x=y$ 或 $x=Cy$，故 $[x]=[y]$。对三角不等式，取 $g,h\in\{\mathrm{id},C\}$ 使
+$$
+d(x,gy)=\overline d([x],[y]),\qquad
+d(y,hz)=\overline d([y],[z]).
+$$
+因 $g$ 是等距且群为交换的二阶群，
+$$
+d(x,ghz)\le d(x,gy)+d(gy,ghz)
+=d(x,gy)+d(y,hz).
+$$
+左侧不小于 $\overline d([x],[z])$，故得到三角不等式。
+
+若 $Rx=Ry$，前一定理给出 $[x]=[y]$，公式两边都为零。现设 $Rx\ne Ry$，令
+$$
+m:=\min\{j\ge0:R(x)_j\ne R(y)_j\}.
+$$
+在 $y,Cy$ 中恰有一个与 $x$ 具有相同第零位，记为 $y'$。对 $0\le j<m$，两条关系位相同；从共同锚递推可知
+$$
+x_j=y'_j\qquad(0\le j\le m).
+$$
+在第 $m$ 个关系位处二者不同，所以从位置 $m$ 到 $m+1$ 的“保持/翻转”选择相反，从而
+$$
+x_{m+1}\ne y'_{m+1}.
+$$
+于是
+$$
+d(x,y')=2^{-(m+1)}.
+$$
+另一个补取向在第零位即与 $x$ 不同，距离为 $1$。因此
+$$
+\overline d([x],[y])
+=2^{-(m+1)}
+=\frac12\,2^{-m}
+=\frac12\,\rho(Rx,Ry).
+$$
+
+固定 $b$ 时，对 $c\ne c'$ 作同一论证，但两条重构序列从一开始就有相同锚，所以它们在首个不同关系位 $m$ 之后的第 $m+1$ 位首次不同，得到
+$$
+d(T_b(c),T_b(c'))=2^{-(m+1)}=\frac12\rho(c,c').
+$$
+第一条定理已证明 $T_b$ 双射到 $K_{k,k}^{(b)}$。证毕。
+
+**定义 66.4（有限允许词数）。**
+
+令 $N_k(n)$ 为长度 $n$ 的二进制词中不含 $1^{k-1}$ 的词数，并约定
+$$
+N_k(0)=1.
+$$
+令 $M_k(L)$ 为长度 $L\ge1$ 的二进制词中同时不含 $0^k,1^k$ 的词数。
+
+**定理 66.5（有限词计数与 $k=3$ 的 Hausdorff 维数）。**
+
+令
+$$
+r:=k-1.
+$$
+则
+$$
+N_k(n)=2^n\qquad(0\le n<r),
+$$
+并且对每个 $n\ge r$，
+$$
+N_k(n)=N_k(n-1)+N_k(n-2)+\cdots+N_k(n-r).
+$$
+此外，对每个 $L\ge1$，
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+特别地，当 $k=3$ 时，
+$$
+N_3(n)=F_{n+2},\qquad M_3(L)=2F_{L+1},
+$$
+其中 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。若
+$$
+\phi=\frac{1+\sqrt5}{2},
+\qquad
+s:=\frac{\log\phi}{\log2},
+$$
+则
+$$
+\dim_{\mathrm H}(Y_3,\rho) = \dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d) = \dim_{\mathrm H}(K_{3,3},d)
+=s.
+$$
+
+**证明。**
+
+当 $n<r$ 时，长度不足以出现 $r$ 个连续的 $1$，故 $N_k(n)=2^n$。当 $n\ge r$ 时，全 $1$ 词非法，所以任一允许词存在最后一个 $0$，并且有唯一末尾形式
+$$
+u\,0\,1^j,\qquad 0\le j\le r-1,
+$$
+其中 $u$ 是长度 $n-j-1$ 的允许词。按 $j$ 分类即得
+$$
+N_k(n)=\sum_{j=0}^{r-1}N_k(n-j-1).
+$$
+有限锚定重构给出长度 $L$ 的原位允许词与“一个锚位 $b$ 加一个长度 $L-1$ 的允许关系词”之间的双射，因此
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+当 $k=3$ 时，递推化为 Fibonacci 递推，初值 $N_3(0)=1,N_3(1)=2$，故
+$$
+N_3(n)=F_{n+2}.
+$$
+由 Binet 公式，存在常数 $A_1,A_2>0$ 使
+$$
+A_1\phi^n\le F_{n+2}\le A_2\phi^n
+$$
+对所有 $n\ge0$ 成立。
+
+先证上界。长度 $n$ 的允许关系柱覆盖 $Y_3$，每个柱的 $\rho$-直径至多 $2^{-n}$，柱数为 $F_{n+2}$。若 $q>s$，则
+$$
+\mathcal H^q_{\rho,2^{-n}}(Y_3)
+\le A_2\phi^n2^{-qn}
+=A_2\,2^{(s-q)n}\longrightarrow0.
+$$
+所以
+$$
+\dim_{\mathrm H}(Y_3,\rho)\le s.
+$$
+
+再证下界。置
+$$
+\alpha:=\phi^{-1},
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+$$
+矩阵 $P$ 的各行和为 $1$，直接计算有 $\pi P=\pi$，且 $P_{11}=0$。因此相应柱公式定义一个支撑在 $Y_3$ 上的平稳 Markov 概率 $\mu_{\mathrm{st}}$。对任意长度 $n\ge1$ 的允许词 $u$，令 $N_{ab}(u)$ 为相邻转移 $a\to b$ 的次数。因为 $N_{11}(u)=0$，
+$$
+\mu_{\mathrm{st}}([u])
+=\pi_{u_0}\alpha^{N_{00}(u)+2N_{01}(u)}.
+$$
+又有
+$$
+N_{01}(u)-N_{10}(u)=u_{n-1}-u_0
+$$
+以及
+$$
+N_{00}(u)+N_{01}(u)+N_{10}(u)=n-1,
+$$
+故
+$$
+N_{00}(u)+2N_{01}(u)
+=n-1+u_{n-1}-u_0.
+$$
+上式指数至少为 $n-2$，故例如取
+$$
+B:=\max\{\pi_0,\pi_1\}\alpha^{-2}
+$$
+即可得到对所有允许的 $u$ 与 $n\ge1$，
+$$
+\mu_{\mathrm{st}}([u])\le B\alpha^n
+=B\,2^{-sn}.
+$$
+
+对每个 $n\ge1$，闭球
+$$
+\overline B_\rho(c,2^{-n})
+$$
+正是由 $c_0,\ldots,c_{n-1}$ 决定的长度 $n$ 柱。于是增大常数后，存在 $B'>0$ 使对所有 $c\in Y_3$ 与 $0<r\le1$，
+$$
+\mu_{\mathrm{st}}(\overline B_\rho(c,r))\le B'r^s.
+$$
+这里若 $2^{-(n+1)}<r\le2^{-n}$，则
+$$
+\overline B_\rho(c,r)\subseteq\overline B_\rho(c,2^{-n})
+$$
+并且 $2^{-sn}\le2^sr^s$，故上述统一界成立。
+
+令 $\mu_{\mathrm{st}}^*$ 表示由 $\mu_{\mathrm{st}}$ 产生的外测度。对任意非空子集 $U\subseteq Y_3$，若
+$$
+\delta:=\operatorname{diam}_\rho U>0,
+$$
+取 $c\in U$，则
+$$
+U\subseteq\overline B_\rho(c,\delta),
+$$
+从而
+$$
+\mu_{\mathrm{st}}^*(U)\le B'\delta^s.
+$$
+若 $\delta=0$，则 $U$ 是单点集。该单点是其一列嵌套长度 $n$ 柱的交，而这些柱的质量至多为 $B2^{-sn}\to0$。由概率测度对递减可测集列的从上连续性，该单点质量为零，于是同一不等式在 $\delta=0$ 时也成立。
+
+现在令 $\{U_i\}_{i\ge1}$ 是 $Y_3$ 的任意可数覆盖；这些集合不要求可测。由外测度的单调性和可数次次可加性，
+$$
+1=\mu_{\mathrm{st}}^*(Y_3)
+\le\sum_i\mu_{\mathrm{st}}^*(U_i)
+\le B'\sum_i(\operatorname{diam}_\rho U_i)^s.
+$$
+因此每个允许直径阈值下的 $s$-维 Hausdorff 覆盖代价都至少为 $1/B'$，所以
+$$
+\mathcal H^s_\rho(Y_3)\ge\frac1{B'}>0.
+$$
+于是
+$$
+\dim_{\mathrm H}(Y_3,\rho)\ge s.
+$$
+结合上界得到等号。
+
+上一条定理给出
+$$
+\rho=2\overline d
+$$
+在商空间对应下成立。把度量乘一个正常数不改变 Hausdorff 维数，因此
+$$
+\dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d)=s.
+$$
+同一条定理还给出两个固定锚相似副本
+$$
+K_{3,3}=K_{3,3}^{(0)}\cup K_{3,3}^{(1)},
+\qquad
+K_{3,3}^{(b)}=T_b(Y_3),
+$$
+且每个 $T_b$ 的相似比例为 $1/2$，所以每个 $K_{3,3}^{(b)}$ 的 Hausdorff 维数都是 $s$。对任意 $q>s$，两个部分的 $q$-维 Hausdorff 测度都为零，所以其有限并的 $q$-维测度也为零；另一方面并集包含任一维数为 $s$ 的部分。因此
+$$
+\dim_{\mathrm H}(K_{3,3},d)=s.
+$$
+证毕。
+
+**定义 66.6（锚定移位与翻转余循环）。**
+
+在锚定坐标 $\{0,1\}\times Y_k$ 上定义
+$$
+a(c):=1-c_0\in\{0,1\},
+\qquad
+F(b,c):=(b\oplus a(c),\sigma c).
+$$
+定义平凡直积移位
+$$
+G(b,c):=(b,\sigma c).
+$$
+
+**定理 66.7（锚定动力学的 skew-product 公式、周期 lift 奇偶律与非平凡性）。**
+
+锚定同胚满足
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F.
+$$
+对每个整数 $n\ge1$，
+$$
+F^n(b,c) = \left(
+b\oplus\bigoplus_{j=0}^{n-1}(1-c_j),
+\ \sigma^n c
+\right).
+$$
+
+若 $n\ge1$ 且 $\sigma^n c=c$，令
+$$
+z_n(c):=\#\{0\le j<n:c_j=0\}.
+$$
+则：
+
+1. 若 $z_n(c)$ 为偶数，则两个锚定 lifts 都被 $F^n$ 固定，因此两者都是 $n$-周期点；
+2. 若 $z_n(c)$ 为奇数，则 $F^n$ 交换两个 lifts，因此没有 lift 被 $F^n$ 固定，而两个 lifts 都被 $F^{2n}$ 固定；
+3. 若 $n$ 是 $c$ 的最小正周期，则在偶数情形每个 lifted 点的最小正周期恰为 $n$，在奇数情形恰为 $2n$。
+
+此外，对每个 $k\ge2$，动力系统
+$$
+(\{0,1\}\times Y_k,F)
+\quad\text{与}\quad
+(\{0,1\}\times Y_k,G)
+$$
+不存在任何拓扑共轭。特别地，不存在形如
+$$
+H_h(b,c)=(b\oplus h(c),c)
+$$
+的连续纤维保持 gauge 共轭把 $F$ 化为 $G$。
+
+**证明。**
+
+若 $\Theta(x)=(b,c)$，则
+$$
+(\sigma x)_0=x_1=x_0\oplus(1-c_0)=b\oplus a(c),
+$$
+而
+$$
+R(\sigma x)=\sigma R(x)=\sigma c.
+$$
+因此
+$$
+\Theta(\sigma x)=F(\Theta x),
+$$
+即得共轭公式。连续迭代时，每一步把锚异或当前值
+$$
+a(\sigma^jc)=1-c_j,
+$$
+所以得到 $F^n$ 的公式。
+
+若 $\sigma^n c=c$，则经过 $n$ 步的锚总翻转量为
+$$
+\bigoplus_{j=0}^{n-1}(1-c_j)
+=z_n(c)\pmod2.
+$$
+因此偶数时锚复原，奇数时锚交换；第二次走过同一 $n$-块时再翻转一次，故奇数情形在 $2n$ 步后复原。这证明前两项。
+
+若 $n$ 是 $c$ 的最小正周期，而某个 lift 的正周期为 $m$，则其第二坐标满足
+$$
+\sigma^m c=c,
+$$
+所以 $n\mid m$。偶数情形 $m=n$ 已经可行，因此最小正周期是 $n$。奇数情形走一个 $n$-块会交换锚，走奇数个 $n$-块仍交换锚，只有走偶数个 $n$-块才复原；最小可行倍数因此是 $2n$。
+
+最后，$Y_k$ 的移位不动点只有 $0^\infty$：另一个二进制常值点 $1^\infty$ 含有 $1^{k-1}$，不属于 $Y_k$。所以 $G$ 有恰好两个不动点
+$$
+(0,0^\infty),\qquad(1,0^\infty).
+$$
+而 $F$ 在唯一可能的基底不动点 $0^\infty$ 上把锚翻转，故 $F$ 没有不动点。拓扑共轭保持不动点集合的基数，因此 $F$ 与 $G$ 不可能拓扑共轭。
+
+若进一步假设存在连续 $h:Y_k\to\{0,1\}$ 使 $H_h$ 把 $F$ 共轭到 $G$，则所需 coboundary 方程为
+$$
+a(c)=h(c)\oplus h(\sigma c).
+$$
+在 $c=0^\infty$ 处左侧为 $1$，右侧为
+$$
+h(c)\oplus h(c)=0,
+$$
+矛盾。证毕。
+
+**假设 66.8（Borel 概率结构）。**
+
+以下所有概率均取 $K_{k,k}$ 与 $Y_k$ 的乘积拓扑 Borel $\sigma$-代数。二者都是 Cantor 空间 $\{0,1\}^{\mathbb N}$ 的闭子空间，故紧且可度量，因而是标准 Borel 空间。
+
+**定理 66.9（任意关系律的全部 Borel lifts、唯一补不变 lift 与公平锚平稳性）。**
+
+令 $\mu$ 为 $Y_k$ 上任意 Borel 概率。对任意 Borel 函数
+$$
+q:Y_k\longrightarrow[0,1],
+$$
+定义 $\{0,1\}\times Y_k$ 上的概率 $\eta_q$：对每个 Borel 集 $E\subseteq\{0,1\}\times Y_k$，
+$$
+\eta_q(E)
+:=
+\int_{Y_k}
+\left(
+q(c)\mathbf 1_E(0,c)
++(1-q(c))\mathbf 1_E(1,c)
+\right)\,d\mu(c).
+$$
+等价地可写成
+$$
+\eta_q(db,dc) = \bigl(q(c)\delta_0(db)+(1-q(c))\delta_1(db)\bigr)\mu(dc).
+$$
+并定义
+$$
+\lambda_q:=(\Theta^{-1})_*\eta_q.
+$$
+则
+$$
+R_*\lambda_q=\mu.
+$$
+
+反过来，若 $\lambda$ 是 $K_{k,k}$ 上任意满足
+$$
+R_*\lambda=\mu
+$$
+的 Borel 概率，则存在 Borel 函数 $q:Y_k\to[0,1]$，在 $\mu$-几乎处处意义下唯一，使
+$$
+\Theta_*\lambda=\eta_q.
+$$
+两个 Borel 函数 $q,q'$ 给出同一个 lift 当且仅当
+$$
+q=q'\qquad\mu\text{-几乎处处}.
+$$
+其中 $q$ 可取为正则条件概率的一个版本：
+$$
+q(c)=\Pr_\lambda(x_0=0\mid R(x)=c)
+\qquad\mu\text{-几乎处处}.
+$$
+
+在这些 lifts 中，存在唯一满足
+$$
+C_*\lambda=\lambda
+$$
+的概率，记为 $\lambda_{\mathrm{fair}}$。它由
+$$
+q(c)=\frac12
+\qquad\mu\text{-几乎处处}
+$$
+给出，即若
+$$
+U:=\frac12(\delta_0+\delta_1),
+$$
+则
+$$
+\Theta_*\lambda_{\mathrm{fair}}=U\otimes\mu.
+$$
+
+这一公平锚 lift 满足精确平稳性判据
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}
+\quad\Longleftrightarrow\quad
+\sigma_*\mu=\mu.
+$$
+此外，对每个 $j\ge0$，在 $\lambda_{\mathrm{fair}}$ 下
+$$
+\Pr(x_j=0)=\Pr(x_j=1)=\frac12,
+$$
+并且随机变量 $x_j$ 与整个关系记录 $R(x)$ 独立；但不同位置的原位数字一般并不相互独立。
+
+**证明。**
+
+先证由 $q$ 构造的测度确为 lift。由定义，$\eta_q$ 的总质量为
+$$
+\int_{Y_k}(q(c)+1-q(c))\,d\mu(c)=1,
+$$
+并且它的第二坐标边缘是 $\mu$。又因为
+$$
+R\circ\Theta^{-1}(b,c)=c,
+$$
+所以
+$$
+R_*\lambda_q
+=R_*(\Theta^{-1})_*\eta_q
+=\mu.
+$$
+若 $q=q'$ 在 $\mu$-几乎处处相等，则 $\eta_q=\eta_{q'}$，从而 $\lambda_q=\lambda_{q'}$。反之，若 $\lambda_q=\lambda_{q'}$，对两边施加 $\Theta_*$ 得 $\eta_q=\eta_{q'}$。
+
+现取任意满足 $R_*\lambda=\mu$ 的 $\lambda$，令
+$$
+\widetilde\lambda:=\Theta_*\lambda.
+$$
+定义 $Y_k$ 上有限测度
+$$
+\nu_0(A):=\widetilde\lambda(\{0\}\times A),
+\qquad
+\nu_1(A):=\widetilde\lambda(\{1\}\times A).
+$$
+由于 $\widetilde\lambda$ 的第二边缘是 $\mu$，有
+$$
+\nu_0+\nu_1=\mu.
+$$
+因此 $\nu_0\ll\mu$。Radon--Nikodym 定理给出 Borel 版本
+$$
+q:=\frac{d\nu_0}{d\mu}.
+$$
+它满足 $0\le q\le1$ 在 $\mu$-几乎处处成立；在一个 $\mu$-零测集上修改其值后，可令 $q$ 处处取值于 $[0,1]$。同时
+$$
+\frac{d\nu_1}{d\mu}=1-q.
+$$
+于是
+$$
+\widetilde\lambda=\eta_q.
+$$
+Radon--Nikodym 导数的唯一性给出 $q$ 的 $\mu$-几乎处处唯一性，并且若 $\eta_q=\eta_{q'}$，取集合 $\{0\}\times A$ 可知
+$$
+\int_A q\,d\mu=\int_A q'\,d\mu
+$$
+对每个 Borel $A$ 成立，所以 $q=q'$ $\mu$-几乎处处。由于这里的空间是标准 Borel，正则条件概率存在，因此 $q$ 可解释为所写条件锚权重的一个版本。
+
+在锚定坐标中，补变换对应
+$$
+J(b,c):=(1-b,c),
+\qquad
+\Theta\circ C=J\circ\Theta.
+$$
+若 $C_*\lambda=\lambda$，则 $J_*\widetilde\lambda=\widetilde\lambda$，所以对每个 Borel 集 $A\subseteq Y_k$，
+$$
+\nu_0(A)=\nu_1(A).
+$$
+结合 $\nu_0+\nu_1=\mu$，得到
+$$
+\nu_0=\nu_1=\frac12\mu,
+$$
+即 $q=1/2$ $\mu$-几乎处处。反之，$U\otimes\mu$ 显然对 $J$ 不变，所以补不变 lift 存在且唯一。
+
+再证平稳性。若 $(B,C)\sim U\otimes\mu$，则条件于 $C=c$，随机变量
+$$
+B\oplus a(c)
+$$
+仍是公平位。因此对任意有界 Borel 函数 $h$，
+$$
+\int h\,dF_*(U\otimes\mu) = \int\frac{h(0,\sigma c)+h(1,\sigma c)}2\,d\mu(c).
+$$
+这正是
+$$
+F_*(U\otimes\mu)=U\otimes(\sigma_*\mu).
+$$
+结合
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F
+$$
+可知，若 $\sigma_*\mu=\mu$，则
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}.
+$$
+反过来，若公平锚 lift 平稳，则利用
+$$
+R\circ\sigma=\sigma\circ R
+$$
+得到
+$$
+\sigma_*\mu
+=\sigma_*R_*\lambda_{\mathrm{fair}}
+=R_*\sigma_*\lambda_{\mathrm{fair}}
+=R_*\lambda_{\mathrm{fair}}
+=\mu.
+$$
+
+最后，在锚定坐标中对每个 $j\ge0$ 有
+$$
+x_j = B\oplus\bigoplus_{\ell=0}^{j-1}(1-c_\ell),
+$$
+其中 $j=0$ 时空异或约定为 $0$。条件于整个 $c$，右侧只是公平位 $B$ 与一个确定常数异或，所以
+$$
+\Pr(x_j=0\mid c)=\Pr(x_j=1\mid c)=\frac12
+$$
+对 $\mu$-几乎每个 $c$ 成立。因此对每个 Borel 集 $A\subseteq Y_k$ 与 $a\in\{0,1\}$，
+$$
+\Pr(x_j=a,\ R(x)\in A)=\frac12\mu(A)
+=\Pr(x_j=a)\Pr(R(x)\in A).
+$$
+这既证明每个 $x_j$ 公平，也证明 $x_j$ 与整个关系记录独立。
+
+不同 $x_j$ 不必相互独立。取
+$$
+\mu=\delta_{0^\infty}.
+$$
+公平 lift 在两个交替序列上各给质量 $1/2$，并且
+$$
+x_{j+1}=1-x_j
+\qquad\text{几乎必然}.
+$$
+故相邻原位数字完全反相关，不能相互独立。证毕。
+
+**假设 66.10（平稳黄金均值关系律）。**
+
+令
+$$
+\phi:=\frac{1+\sqrt5}{2},
+\qquad
+\alpha:=\frac{\sqrt5-1}{2}=\phi^{-1},
+\qquad
+\alpha+\alpha^2=1,
+$$
+并令关系过程
+$$
+c=(c_j)_{j\ge0}
+$$
+服从状态 $0,1$ 上的平稳 Markov 律
+$$
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+这给出 $Y_3$ 上的平稳 no-$11$ 关系律 $\mu_{\mathrm{st}}$。
+
+**定理 66.11（关系位的二点相关）。**
+
+置
+$$
+p:=\mathbb E[c_0]=\pi_1=\frac{\alpha^2}{1+\alpha^2},
+\qquad
+\vartheta:=-\alpha^2=-\phi^{-2}.
+$$
+则对每个 $n\ge0$，
+$$
+\operatorname{Cov}(c_0,c_n)
+=p(1-p)\vartheta^n.
+$$
+因此 Pearson 相关系数为
+$$
+\boxed{\ \operatorname{Corr}(c_0,c_n)=(-\phi^{-2})^n\ }.
+$$
+等价地，
+$$
+\mathbb E[c_0c_n]
+=p^2+p(1-p)(-\phi^{-2})^n.
+$$
+
+若定义符号关系位
+$$
+g_j:=2c_j-1\in\{-1,1\},
+$$
+则
+$$
+\mathbb E[g_0]=-\frac1{\sqrt5},
+\qquad
+\mathbb E[g_0g_n]
+=\frac15+\frac45(-\phi^{-2})^n.
+$$
+
+**证明。**
+
+令 $f(i):=i-p$，按列向量写成
+$$
+f=
+\frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^2\\1\end{pmatrix}.
+$$
+直接计算
+$$
+Pf = \frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^3+\alpha^2\\-\alpha^2\end{pmatrix} = \frac1{1+\alpha^2}
+\begin{pmatrix}\alpha^4\\-\alpha^2\end{pmatrix} = -\alpha^2 f,
+$$
+其中使用
+$$
+1-\alpha=\alpha^2.
+$$
+因此由 Markov 性，
+$$
+\mathbb E[f(c_n)\mid c_0]
+=(P^nf)(c_0)
+=\vartheta^n f(c_0).
+$$
+于是
+$$
+\operatorname{Cov}(c_0,c_n) = \mathbb E[f(c_0)f(c_n)] = \vartheta^n\mathbb E[f(c_0)^2] = \vartheta^n p(1-p).
+$$
+因 $0<p<1$，除以方差得到 Pearson 相关公式。
+
+又因为 $g=2c-1$，
+$$
+\mathbb E[g_0]=2p-1
+=-\frac{\alpha}{1+\alpha^2}
+=-\frac1{\sqrt5}.
+$$
+所以
+$$
+\operatorname{Var}(g_0)=1-\frac15=\frac45.
+$$
+仿射变换不改变非退化二变量的 Pearson 相关系数，故
+$$
+\mathbb E[g_0g_n] = \mathbb E[g_0]^2+\operatorname{Var}(g_0)\vartheta^n = \frac15+\frac45\vartheta^n.
+$$
+证毕。
+
+**定理 66.12（公平锚重构位的相关、传递矩阵、递推与精确谱）。**
+
+令 $\lambda_{\mathrm{fair}}$ 是上述平稳关系律 $\mu_{\mathrm{st}}$ 的公平锚 lift，并定义原位自旋
+$$
+S_j:=(-1)^{x_j}\in\{-1,1\}.
+$$
+则对每个 $j\ge0$，
+$$
+\mathbb E[S_j]=0.
+$$
+对任意 $j,n\ge0$，
+$$
+\mathbb E[S_jS_{j+n}]=a_n,
+$$
+其中
+$$
+a_0:=1,
+\qquad
+a_n:=\mathbb E\prod_{\ell=0}^{n-1}(2c_\ell-1)\quad(n\ge1).
+$$
+
+置
+$$
+G:=\operatorname{diag}(-1,1),
+\qquad
+M:=PG = \begin{pmatrix}
+-\alpha&\alpha^2\\
+-1&0
+\end{pmatrix}.
+$$
+则对 $n\ge1$，
+$$
+a_n = \pi G M^{n-1}
+\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+矩阵 $M$ 的特征多项式与特征根分别为
+$$
+r^2+\alpha r+\alpha^2,
+\qquad
+r_\pm=\alpha e^{\pm2\pi i/3}.
+$$
+序列 $a_n$ 对所有 $n\ge0$ 满足
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0,
+$$
+并且
+$$
+a_0=1,\qquad
+a_1=-\frac1{\sqrt5}.
+$$
+其精确闭式为
+$$
+\boxed{\ 
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right)
+\ }.
+$$
+等价地，
+$$
+a_{3m}=\alpha^{3m},\qquad
+a_{3m+1}=-\frac{\alpha^{3m}}{\sqrt5},\qquad
+a_{3m+2}=-\frac{\alpha^{3m+3}}{\sqrt5}
+\qquad(m\ge0).
+$$
+
+由于每个 $x_j$ 都是公平 Bernoulli 位，
+$$
+\operatorname{Cov}(x_j,x_{j+n})=\frac14a_n,
+\qquad
+\boxed{\ \operatorname{Corr}(x_j,x_{j+n})=a_n\ }.
+$$
+因此重构位相关具有角相位 $2\pi/3$ 的三步振荡和指数包络 $\phi^{-n}$；关系位相关则是实特征值 $-\phi^{-2}$ 产生的周期 2 的符号交替和包络 $\phi^{-2n}$。两种相关的相位结构与衰减率都不同。
+
+**证明。**
+
+由重构递推，
+$$
+x_{\ell+1}=x_\ell\oplus(1-c_\ell).
+$$
+所以
+$$
+S_{\ell+1} = (-1)^{x_{\ell+1}} = S_\ell(-1)^{1-c_\ell} = S_\ell(2c_\ell-1).
+$$
+迭代得到
+$$
+S_{j+n} = S_j\prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+由于 $S_j^2=1$，
+$$
+S_jS_{j+n} = \prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+关系律平稳，因此其期望只依赖 $n$，即为 $a_n$。公平锚定理还给出每个 $x_j$ 都公平，故每个 $S_j$ 的均值为零。
+
+对 $n\ge1$，令 $g(0)=-1,g(1)=1$。展开 Markov 路径概率，
+$$
+a_n = \sum_{i_0,\ldots,i_{n-1}}
+\pi_{i_0}g(i_0)
+P_{i_0i_1}g(i_1)\cdots
+P_{i_{n-2}i_{n-1}}g(i_{n-1}).
+$$
+这正是
+$$
+a_n=\pi G(PG)^{n-1}\mathbf 1
+=\pi G M^{n-1}\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+直接计算
+$$
+\det(rI-M) = \det
+\begin{pmatrix}
+r+\alpha&-\alpha^2\\
+1&r
+\end{pmatrix} = r^2+\alpha r+\alpha^2.
+$$
+因此
+$$
+r_\pm = \frac{-\alpha\pm i\sqrt3\,\alpha}{2} = \alpha e^{\pm2\pi i/3}.
+$$
+由 Cayley--Hamilton，
+$$
+M^2+\alpha M+\alpha^2I=0.
+$$
+左乘 $\pi G M^{n-1}$、右乘 $\begin{pmatrix}1\\1\end{pmatrix}$，可知
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0
+$$
+对所有 $n\ge1$ 成立。
+
+现检查 $n=0$ 的递推端点。首先
+$$
+a_1 = \pi_1-\pi_0 = -\frac{\alpha}{1+\alpha^2} = -\frac1{\sqrt5}.
+$$
+其次，由 $\pi_1=\alpha^2\pi_0$、$1+\alpha^2=\alpha\sqrt5$ 与 $\alpha^3=2\alpha-1$，
+$$
+\begin{aligned}
+a_2
+&=
+\pi_0(\alpha-\alpha^2)-\pi_1\\
+&=
+\frac{\alpha-2\alpha^2}{1+\alpha^2}\\
+&=
+\frac{1-2\alpha}{\sqrt5} = -\frac{\alpha^3}{\sqrt5}.
+\end{aligned}
+$$
+又因为
+$$
+\sqrt5=\alpha^{-1}+\alpha,
+$$
+有
+$$
+a_2+\alpha a_1+\alpha^2a_0 = -\frac{\alpha^3+\alpha}{\sqrt5}+\alpha^2
+=0.
+$$
+所以递推对所有 $n\ge0$ 成立。
+
+具有特征根
+$$
+\alpha e^{\pm2\pi i/3}
+$$
+且满足 $a_0=1,a_1=-1/\sqrt5$ 的唯一实递推解为
+$$
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right).
+$$
+按 $n\bmod3$ 代入即得三条分段公式。
+
+最后，
+$$
+x_j-\frac12=-\frac12S_j.
+$$
+因此
+$$
+\operatorname{Cov}(x_j,x_{j+n}) = \frac14\mathbb E[S_jS_{j+n}] = \frac14a_n.
+$$
+又因
+$$
+\operatorname{Var}(x_j)=\frac14,
+$$
+Pearson 相关恰为 $a_n$。证毕。
+
+## 66.99 追加锚
