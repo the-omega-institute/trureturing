@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.ControlledLearning;
 
@@ -14,7 +16,7 @@ internal sealed class RepeatedSpectrumPassiveFiberDocument : IScribeDocumentDefi
                     "D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber."
                     + "two_step_outputs_iff_commuting_difference"),
                 H("Complete two-step output fiber, including resonance"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -43,4 +45,86 @@ internal sealed class RepeatedSpectrumPassiveFiberDocument : IScribeDocumentDefi
                         + "not conclusions of this theorem."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula TheoremFormula()
+    {
+        var sigma = SigmaLower;
+        var eta = F.Id("eta");
+        var tau = F.Id("tau");
+        var s = F.Id("S");
+        var d = F.Id("D");
+        var x = F.Id("X");
+        var aOne = Indexed("A", 1);
+        var bOne = Indexed("B", 1);
+        var aTwo = Indexed("A", 2);
+        var bTwo = Indexed("B", 2);
+        var matrix = Call("Matrix", F.Id("I"), F.Id("I"), RealNumbers());
+        var firstOne = Call("outputStep", aOne, bOne, s, eta);
+        var firstTwo = Call("outputStep", aTwo, bTwo, s, eta);
+        var secondOne = Call("twoStepOutput", aOne, bOne, s, eta, tau);
+        var secondTwo = Call("twoStepOutput", aTwo, bTwo, s, eta, tau);
+        var transportedDifference = Parenthesized(Product(d, x));
+
+        var hypotheses = Conjoin(
+            Seq(Forall, Sp, F.Id("i"), Sp, InMacro, Sp, F.Id("I"), Comma, Sp,
+                D(0), Sp, Lt, Sp, Indexed(sigma, F.Id("i"))),
+            Equal(Transpose(aOne), aOne),
+            Equal(Transpose(bOne), bOne),
+            Equal(Transpose(aTwo), aTwo),
+            Equal(Transpose(bTwo), bTwo),
+            Seq(eta, Sp, Neq, Sp, D(0)),
+            Seq(tau, Sp, Neq, Sp, D(0)));
+
+        var observedEqualities = Parenthesized(Conjoin(
+            Equal(firstOne, firstTwo),
+            Equal(secondOne, secondTwo)));
+
+        var witness = Seq(
+            Exists, Sp, x, Sp, InMacro, Sp, matrix, Comma, Sp,
+            Parenthesized(Conjoin(
+                Equal(Transpose(x), x),
+                Equal(Product(x, s), Product(s, x)),
+                Equal(aTwo, Seq(aOne, Sp, Plus, Sp, x)),
+                Equal(bTwo, Seq(bOne, Sp, Minus, Sp, x)),
+                Equal(Product(transportedDifference, firstOne),
+                    Product(firstOne, transportedDifference)))));
+
+        return Disp(Seq(
+            Forall, Sp, sigma, Colon, Sp, F.Id("I"), To, RealNumbers(), Comma, Esc,
+            Forall, Sp, aOne, Comma, Sp, bOne, Comma, Sp, aTwo, Comma, Sp, bTwo,
+                Sp, InMacro, Sp, matrix, Comma, Esc,
+            Forall, Sp, eta, Comma, Sp, tau, Sp, InMacro, Sp, RealNumbers(), Comma, RowBreak,
+            s, Sp, Eq, Sp, Call("diagonal", sigma), Comma, Sp,
+            d, Sp, Eq, Sp, Seq(D(1), Sp, Minus, Sp, Squared(eta), Sp, Cdot, Sp, Squared(s)),
+                Comma, RowBreak,
+            hypotheses, Sp, Rightarrow, Sp,
+            Parenthesized(Seq(observedEqualities, Sp, Iff, Sp, witness)), Dot));
+    }
+
+    private static Formula RealNumbers() => Seq(Mathbb, Grp(F.Id("R")));
+
+    private static Formula Indexed(string name, byte index) => Indexed(F.Id(name), D(index));
+
+    private static Formula Indexed(Formula value, Formula index) =>
+        Seq(value, Underscore, Grp(index));
+
+    private static Formula Transpose(Formula value) => Seq(value, Caret, Grp(F.Id("T")));
+
+    private static Formula Squared(Formula value) => Seq(value, Caret, Grp(D(2)));
+
+    private static Formula Product(Formula left, Formula right) =>
+        Seq(left, Sp, Cdot, Sp, right);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula Conjoin(params Formula[] values)
+    {
+        var result = values[0];
+        for (var index = 1; index < values.Length; index++)
+        {
+            result = Seq(result, Sp, Land, RowBreak, values[index]);
+        }
+
+        return result;
+    }
 }
