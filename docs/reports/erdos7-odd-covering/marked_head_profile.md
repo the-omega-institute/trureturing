@@ -535,3 +535,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One zero-seven layout and complete pure-three tails](profile-notes/64-one-zero-seven-layout-and-complete-pure-three-tails.md)
 - [The complete endpoint numerator from common cost constraints](profile-notes/65-endpoint-numerator-from-common-cost-constraints.md)
 - [An explicit neighborhood for the linear endpoint improvement](profile-notes/66-explicit-linear-endpoint-neighborhood.md)
+- [Exact endpoint survival and the boundary of its scalar constraints](profile-notes/67-exact-endpoint-survival-and-its-scalar-boundary.md)
+- [An explicit neighborhood for the square endpoint improvement](profile-notes/68-explicit-square-endpoint-neighborhood.md)
+- [Complete positive-five tails in one square layout](profile-notes/69-complete-positive-five-tails-in-one-square-layout.md)
