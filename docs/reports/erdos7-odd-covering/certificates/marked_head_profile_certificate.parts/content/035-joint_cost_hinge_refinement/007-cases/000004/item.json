@@ -1,0 +1,44 @@
+{
+  "shape": {
+    "kind": "inline",
+    "value": "root2_other_same_column"
+  },
+  "survivor_counts": {
+    "kind": "inline",
+    "value": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96
+    ]
+  },
+  "normalized_cost_numerator_upper": {
+    "path": "content/035-joint_cost_hinge_refinement/007-cases/000004/item/002-normalized_cost_numerator_upper.json",
+    "sha256": "c71b16dc8300bbda014cc7670cd8df905c5f3791835ada51458e8c553330328d",
+    "kind": "array"
+  },
+  "rows": {
+    "path": "content/035-joint_cost_hinge_refinement/007-cases/000004/item/003-rows.json",
+    "sha256": "03de7e9db5f249b2a4ed4dc296f36e8bbfb6c42e96da549cbdeeffdd6db112c8",
+    "kind": "value"
+  }
+}

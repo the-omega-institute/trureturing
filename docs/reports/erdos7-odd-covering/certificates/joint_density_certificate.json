@@ -1,0 +1,64 @@
+{
+  "prime_support": [3, 5, 7],
+  "ordinary_profile": {
+    "1": "1",
+    "3": "21/4",
+    "5": "26/9",
+    "7": "21/10",
+    "3*5": "7",
+    "3*7": "63/10",
+    "5*7": "21/5",
+    "3*5*7": "42/5"
+  },
+  "first_ternary_fibre_profile": {
+    "3": "9/2",
+    "3*5": "20/3",
+    "3*7": "27/5",
+    "3*5*7": "42/5"
+  },
+  "variable_order": ["t", "v35", "v37", "v57"],
+  "dual": [
+    {
+      "constraint": "pair_35_survivor_lower_bound",
+      "coefficients": ["2/3", "-1", "0", "0"],
+      "upper_bound": "0",
+      "weight": "31/30"
+    },
+    {
+      "constraint": "adjoin_prime_7_using_R35_at_most_15_over_7",
+      "coefficients": ["0", "4/7", "0", "0"],
+      "upper_bound": "1",
+      "weight": "49/40"
+    },
+    {
+      "constraint": "all_pair_support_budgets_and_triple_support_union",
+      "coefficients": ["-31/15", "1", "1", "1"],
+      "upper_bound": "1",
+      "weight": "1/3"
+    }
+  ],
+  "objective_coefficients": ["0", "0", "1/3", "1/3"],
+  "objective_upper_bound": "187/120",
+  "old_envelope_R": "1663/360",
+  "removed_pure_3_tail": "7/8",
+  "removed_pure_5_sum": "13/18",
+  "remaining_envelope_sum": "136/45",
+  "improved_R_bound": "1649/360",
+  "head_prime_support": [3, 5, 7, 11],
+  "head_R_bound": "5275731/574351",
+  "head_Gamma_bound": "187719326/1723053",
+  "bridge": [
+    {
+      "prime": 71,
+      "delta": "53/200",
+      "survivor_fraction_lower_bound": "639019057627/657790990227",
+      "continued_ratio_upper_bound": "75881970868306/639019057627"
+    },
+    {
+      "prime": 73,
+      "delta": "27/100",
+      "survivor_fraction_lower_bound": "792447136657319791/816160252553665416",
+      "continued_ratio_upper_bound": "102500076255402983598/792447136657319791"
+    }
+  ]
+}

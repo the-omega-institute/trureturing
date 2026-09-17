@@ -1,0 +1,664 @@
+{
+  "schema": "uniform-gamma-cofactor-coupling-v1",
+  "prime_support": [
+    3,
+    5
+  ],
+  "Gamma_bound": "55/4",
+  "same_law": "uniform complete survivor law",
+  "positive_lcm_coefficient": "7/8",
+  "zero_to_positive_coefficient": "1/4",
+  "remaining_Gamma_coefficient": "5/8",
+  "parameter_vertex_count": 18,
+  "affine_branch_count": 72,
+  "minimum_vertex_survivor_density": "1/4",
+  "maximizers": [
+    {
+      "w_v_alpha_beta_z": [
+        "1/2",
+        "1",
+        "0",
+        "1/4",
+        "3/4"
+      ],
+      "pure_branch": "selected",
+      "norm_branch": "other",
+      "value": "55/4"
+    },
+    {
+      "w_v_alpha_beta_z": [
+        "1",
+        "1/2",
+        "1/4",
+        "0",
+        "3/4"
+      ],
+      "pure_branch": "selected",
+      "norm_branch": "selected",
+      "value": "55/4"
+    },
+    {
+      "w_v_alpha_beta_z": [
+        "1",
+        "1/2",
+        "1/4",
+        "0",
+        "3/4"
+      ],
+      "pure_branch": "other",
+      "norm_branch": "selected",
+      "value": "55/4"
+    }
+  ],
+  "absent_modulus_3_bound": "215/24",
+  "absent_modulus_3_denominator": "1/2",
+  "old_budget_extremum": {
+    "old_envelope": "57/4",
+    "coupled_envelope": "55/4",
+    "n": "1/8",
+    "m": "1/8"
+  },
+  "shared_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "937/24",
+    "previous_separate_upper": "1889/48",
+    "strict_improvement": "5/16",
+    "parameter_vertices": 1296,
+    "affine_branches": 103680,
+    "minimum_denominator": "53/360",
+    "minimum_scaled_margin": "0",
+    "relaxation_maximizer": {
+      "deficits": [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "alpha": [
+        "1/4",
+        "0"
+      ],
+      "beta": [
+        "0",
+        "1/4",
+        "0",
+        "0",
+        "0"
+      ],
+      "late": [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "z": "3/4",
+      "cell_masses": [
+        "1/72",
+        "1/36",
+        "1/12",
+        "1/12",
+        "1/12"
+      ],
+      "s": "7/24",
+      "raw_old_square_bound": "191/48",
+      "raw_cylinder_cap": "5/8",
+      "old_square_bound": "191/14",
+      "old_cylinder_cap": "15/7",
+      "branches": [
+        1,
+        0,
+        1,
+        1,
+        2
+      ]
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "55/4",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "2703/73"
+      }
+    ],
+    "scope": "Upper bound from a shared actual-parameter relaxation; no actual-family sharpness or new tail cutoff asserted."
+  },
+  "signed_two_level_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "3849/106",
+    "previous_joint_upper": "937/24",
+    "strict_improvement": "3473/1272",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "parameter_vertices": 1296,
+    "selected_layout_vertex_pairs": 12960,
+    "minimum_scaled_margin": "0",
+    "minimum_unweighted_denominator": "53/360",
+    "two_level_old_square_envelope_maximum": "497/36",
+    "relaxation_equality": {
+      "deficits": [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "alpha": [
+        "0",
+        "1/4"
+      ],
+      "beta": [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      "late": [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "z": "3/4",
+      "selected_root_cell": [
+        0,
+        1
+      ],
+      "cell_masses": [
+        "1/36",
+        "1/12",
+        "1/36",
+        "1/18",
+        "1/18"
+      ],
+      "s": "1/4",
+      "selected_raw_square": "163/48",
+      "global_raw_square": "163/48",
+      "weighted_cap_parts": [
+        "18715/3816",
+        "965/424",
+        "3425/2544",
+        "31673/7632",
+        "3743/1272",
+        "3743/3816",
+        "3743/7632"
+      ],
+      "weighted_cap": "130435/7632",
+      "scaled_margin": "0"
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "scope": "Continuous-domain ordinary proof with exact vertices; no actual-family sharpness, optimal supported-law, or new tail cutoff claim."
+  },
+  "signed_young_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "4351/120",
+    "previous_signed_upper": "3849/106",
+    "strict_improvement": "337/6360",
+    "young_weights_by_root": [
+      "9/8",
+      "1"
+    ],
+    "positive_five_diagonal_coefficient": "1/4",
+    "positive_five_pair_coefficient": "1/8",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "parameter_vertices": 1296,
+    "selected_layout_vertex_pairs": 12960,
+    "minimum_scaled_margin": "0",
+    "minimum_unweighted_denominator": "53/360",
+    "layout_margin_sha256": "9359280878d314d38ea3400b371651b3ed43031d461800092ffef166896cf02d",
+    "relaxation_equalities": [
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      }
+    ],
+    "previous_obstruction": {
+      "vertex": 398,
+      "selected_root_cell": [
+        0,
+        1
+      ],
+      "s": "1/4",
+      "selected_raw_square": "61/18",
+      "global_raw_square": "61/18",
+      "weighted_cap_parts": [
+        "4231/864",
+        "3271/1440",
+        "3871/2880",
+        "11933/2880",
+        "4231/1440",
+        "4231/4320",
+        "4231/8640"
+      ],
+      "scaled_margin": "163/43200"
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "verifier_sha256": "dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d",
+    "scope": "Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution."
+  },
+  "same_original5_deletion_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "5761/159",
+    "previous_signed_young_upper": "4351/120",
+    "strict_improvement": "163/6360",
+    "original_five_mass_endpoints": [
+      "0",
+      "1/5"
+    ],
+    "separately_concave_parameter_groups": [
+      "pure_three_deficits",
+      "mixed_five_root_removal",
+      "mixed_five_cell_removal",
+      "deeper_mixed_removal",
+      "pure_five_survivor_mass",
+      "original_unit_five_test_mass"
+    ],
+    "signed_joint_lower_bound": "eta_l*(h-alpha_1-beta_l)-late_l",
+    "pure_three_root_cap": "max(A_0,A_1-sum_root1 (2*b_l+1)*signed_joint_lower_bound)",
+    "incident_selected_layouts": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "selected_young_weight": "1",
+    "selected_square_strip_gain": "(1/5-h)*sum_l eta_l*(2*b_l+1)",
+    "reduced_five_cap_label": "original unit-cofactor5 only",
+    "positive_five_pair_coefficient": "1/8",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "pure_three_deletion_coefficient": "1/5",
+    "parameter_vertices": 1296,
+    "selected_layout_endpoint_pairs": 16848,
+    "layout_group_counts": {
+      "incident": 7776,
+      "other": 9072
+    },
+    "minimum_scaled_margin": {
+      "incident": "1/10800",
+      "other": "0"
+    },
+    "incident_endpoint_minima": {
+      "0": "5377/10800",
+      "1/5": "1/10800"
+    },
+    "minimum_unweighted_denominator": "53/360",
+    "layout_margin_sha256": "1f8b4522a35ad475a525f552d97478cb2f75a796ea62e82b05f8a1e74b3e79b0",
+    "relaxation_equalities": [
+      {
+        "vertex": 398,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 410,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 422,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 616,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 628,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 640,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      }
+    ],
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "verifier_sha256": "dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d",
+    "scope": "The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
+  }
+}
