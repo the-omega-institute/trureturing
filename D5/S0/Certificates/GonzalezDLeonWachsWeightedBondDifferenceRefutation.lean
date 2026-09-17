@@ -2248,6 +2248,79 @@ private theorem fiberPath_sourceMobiusPolynomial :
       (1 + 3 * Polynomial.X + Polynomial.X ^ 2) ^ 3 := by
   rw [fiberGraph_sourceMobiusPolynomial, pathThree_sourceMobiusPolynomial]
 
+private def obstructionQuartic : Polynomial ℝ :=
+  7 * Polynomial.X ^ 4 + 37 * Polynomial.X ^ 3 +
+    63 * Polynomial.X ^ 2 + 37 * Polynomial.X + 7
+
+private theorem obstructionQuartic_no_real_root (x : ℝ) :
+    Polynomial.eval x obstructionQuartic ≠ 0 := by
+  intro hx
+  let a : ℝ := 2 + 5 * x + 2 * x ^ 2
+  let b : ℝ := 1 + 3 * x + x ^ 2
+  have hsum : (2 * a + b) ^ 2 + 3 * b ^ 2 = 0 := by
+    have heval : Polynomial.eval x obstructionQuartic =
+        7 * x ^ 4 + 37 * x ^ 3 + 63 * x ^ 2 + 37 * x + 7 := by
+      simp [obstructionQuartic, Polynomial.eval_add, Polynomial.eval_mul,
+        Polynomial.eval_pow]
+    rw [heval] at hx
+    dsimp [a, b]
+    nlinarith [hx]
+  have hb : b = 0 := by nlinarith [sq_nonneg (2 * a + b), sq_nonneg b]
+  have ha : a = 0 := by nlinarith [sq_nonneg (2 * a + b)]
+  have hzero : x = 0 := by dsimp [a, b] at ha hb; nlinarith
+  simp [b, hzero] at hb
+
+private theorem obstructionQuartic_not_splits : ¬ Polynomial.Splits obstructionQuartic := by
+  intro hs
+  have hd : Polynomial.natDegree obstructionQuartic = 4 := by
+    unfold obstructionQuartic
+    compute_degree!
+  obtain ⟨x, hx⟩ := hs.exists_eval_eq_zero
+    (Polynomial.degree_ne_of_natDegree_ne (by rw [hd]; norm_num))
+  exact obstructionQuartic_no_real_root x hx
+
+private theorem fiber_source_difference_not_splits :
+    ¬ Polynomial.Splits
+      (sourceMobiusPolynomial (fiberGraph triangleThree) -
+        sourceMobiusPolynomial (fiberGraph pathThree)) := by
+  rw [fiberTriangle_sourceMobiusPolynomial, fiberPath_sourceMobiusPolynomial]
+  have hfactor :
+      (2 + 5 * Polynomial.X + 2 * Polynomial.X ^ 2 : Polynomial ℝ) ^ 3 -
+        (1 + 3 * Polynomial.X + Polynomial.X ^ 2) ^ 3 =
+        (Polynomial.X + 1) ^ 2 * obstructionQuartic := by
+    unfold obstructionQuartic
+    ring
+  rw [hfactor]
+  intro hs
+  have hleft : ((Polynomial.X + 1 : Polynomial ℝ) ^ 2) ≠ 0 := by
+    apply pow_ne_zero
+    intro heq
+    have hev := congrArg (Polynomial.eval (0 : ℝ)) heq
+    norm_num at hev
+  have hparts := (Polynomial.splits_mul' (f :=
+    (Polynomial.X + 1 : Polynomial ℝ) ^ 2) (g := obstructionQuartic)).mp hs
+  exact obstructionQuartic_not_splits (hparts.2.resolve_right hleft)
+
+/-- The literal, all-graphs assertion of Conjecture 4.13(2) in arXiv:2608.08692v1.
+    The source permits disconnected graphs with the same component count. -/
+def claim : Prop :=
+  ∀ (V : Type) [Fintype V] [DecidableEq V] (G H : SimpleGraph V),
+    H ≤ G → Nat.card G.ConnectedComponent = Nat.card H.ConnectedComponent →
+      Polynomial.Splits
+        ((-1 : Polynomial ℝ) ^
+            (Fintype.card V - Nat.card G.ConnectedComponent) *
+          (sourceMobiusPolynomial G - sourceMobiusPolynomial H))
+
+theorem result : ¬ claim := by
+  intro h
+  have hcomponentsG := fiberGraph_component_count triangleThree_connected
+  have hcomponentsH := fiberGraph_component_count pathThree_connected
+  have hs := h (Fin 3 × Fin 3) (fiberGraph triangleThree) (fiberGraph pathThree)
+    fiberPath_lt_fiberTriangle.le (hcomponentsG.trans hcomponentsH.symm)
+  rw [fiberGraph_vertex_count, hcomponentsG] at hs
+  norm_num at hs
+  exact fiber_source_difference_not_splits hs
+
 
 end
 
