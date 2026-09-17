@@ -1,0 +1,7 @@
+证明。任一 CPTP 映射给出密度态 $\sigma_w=\Lambda(|w\rangle\langle w|)$，于是输入 $x$ 的输出只依赖 $q_kx$。
+反向对每个 $w$ 作谱分解 $\sigma_w=\sum_{a=1}^d\lambda_{wa}|v_{wa}\rangle\langle v_{wa}|$，其中 $\lambda_{wa}\ge0$、$\sum_a\lambda_{wa}=1$。取 Kraus 算子
+$$
+K_{wa}=\sqrt{\lambda_{wa}}\,|v_{wa}\rangle\langle w|.
+$$
+则 $\sum_{w,a}K_{wa}^*K_{wa}=I_{\mathcal H_k}$，且 $\sum_{w,a}K_{wa}AK_{wa}^*=\Lambda_\sigma(A)$。Kraus 形式给完全正性，前一等式给保迹性，代入基态即得指定表。这个等价只规定输入族上的行为，不规定一般相干叠加输入上的通道行为。
+
