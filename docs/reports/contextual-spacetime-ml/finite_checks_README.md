@@ -105,3 +105,58 @@ prove the universal sequential lower bound or establish Lean status or novelty.
 Read count and observation index are separate costs. Clock, representation,
 computation, output and static program costs remain charged; no total optimum,
 average-case, randomized, noisy or physical computation-deadline claim is made.
+
+## Static mixture horizon
+
+`static_mixture_horizon.py` supplies the zero-argument deterministic family for
+[observation companion §49](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md).
+The fixed latent Bernoulli parameter is `1/4` or `3/4` with known equal prior;
+reports are conditionally iid. The target is the mixture's Bayesian next-one
+probability. Independent per-symbol joint likelihood masses are compared with
+integer-balance odds and readouts using exact `Fraction` arithmetic, including
+negative powers. This family does not use the positive-mixing certificate API.
+
+The existing command and `--output` writer above also run this family, after
+every old call. The caller compares RNG states without restoring or reseeding
+them and checks that the new count names are disjoint. All 52 actual pre-§49
+count values and all old mathematical result groups are retained. The new block
+binds the helper's bytes separately; the entry's own digest is refreshed.
+
+The six counts have prefix `static_mixture_horizon_` and count these checks:
+
+- `words`: one independent mass/posterior/odds/next-one comparison per binary
+  word of length 0–10, including the empty word.
+- `same_length_pairs`: one shared-suffix comparison per `L=1..6`, `m=1..10`,
+  `0<=i<j<=m`. Both final times, balances, positive masses and half-gaps are
+  checked; the common suffix may be empty. Final times reach 114.
+- `horizon_fenceposts`: one exact count/parity/one-state-radius comparison per
+  layer 0–10, plus one horizon comparison for each `L=1..6`, `T=0..20L`
+  (maximum 120). These check the selected floor against feasible integers,
+  `m=0/1`, the weaker bound, the counter upper bound, and `T<L` exactly.
+- `tolerance_fenceposts`: three rational tolerances per `j=1..6` (between the
+  previous threshold and `c_j`, exactly `c_j`, and between `c_j` and the next
+  threshold), plus `epsilon=0,1/4,1/3` at each horizon 0–10. The strict equality
+  case returns `L=j+1`, reaching 7. Endpoint tolerances do not enter the
+  proposition requiring `0<epsilon<1/4`.
+- `bounded_readout_cases`: for every `K=1..6`, one full-counter readout check
+  for each word through length 10 and each unary balance `-2K-1..2K+1`
+  (absolute balance up to 13). Both signs of `K`, the interior, zero, tail
+  errors and rational encoding bounds are included. Only the output saturates.
+- `clipping_cases`: one iterative-clamping failure on `1^(2K)0^(2K)` for
+  each `K=1..6` (word length up to 24), plus one safe full-horizon-clipping
+  comparison per `T=0..10` and every word of length at most `T`. The failing
+  counter ends at `-K` although the true balance is zero; its error is `1/4`.
+
+The executed family records 2,047 words, 1,320 pairs (180 empty suffixes),
+437 horizon fenceposts, 51 tolerance fenceposts, 12,384 bounded-readout cases,
+and 4,089 clipping cases. Each count is incremented only after its assertions.
+
+The likelihood masses are reference calculations, not part of an observer's
+charged state. The mathematical state includes all persistent history-bearing
+control and scratch; the free clock is the exogenous report index. Dynamic
+labels, fixed tables, output precision, arithmetic and temporary work are
+separate costs. These finite checks do not enumerate all observers or prove
+the universal lower bound. They establish neither exact positive-epsilon
+optimal width, joint epsilon/horizon optimality, total-memory/runtime
+optimality, novelty nor Lean verification. The horizon-aware absorbing upper
+construction is outside this family.
