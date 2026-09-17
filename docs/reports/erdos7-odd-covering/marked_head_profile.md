@@ -15090,3 +15090,134 @@ Equivalently, the direct same-law objective is
 Its pair entries are nonnegative, but eta is the complete actual killed law. General eta need not have the radial symmetry used by RS1 and the finite first-exit optimization. Sparse realizability certificates do not provide that symmetry or a numerical upper bound on SC2.
 
 Consequently the applicable search improvement is event-based checking of complete prefix candidates and rejection by obstructions whose entire induced input is fixed. Unspecified entries in a partial candidate remain unspecified; Section58 does not authorize filling them independently or applying its small complete-array obstruction claim to arbitrary partial input. The remaining numerical obligation is still the same-test weighted bound, including conditional low-load deletion in CT5 or a complete upper-bound certificate for all KC layouts. Neither the299.398 criterion nor the ASB scalar obstruction is settled by this representation change.
+
+### The actual positive-current frontier can approach its weighted cap bound
+
+Fix p in{17,19}, delta=7/(p-2), and a finite current height H>=2. There is a genuine actual AP13 input and current forbidden family, with positive assigned charge, such that the global maximum over every original complete test satisfies
+
+    Xi_(p,H)^-=a_(p,H) J_(g,H)/lambda_(p,H),
+    Xi_(p,H)^-/(a_p J_p)
+      =(a_(p,H)/a_p)(p-2)/(p-2+p^-H) -> 1.          (CSH1)
+
+Here a_(p,H)=sum_(e=1..H)(2e+1)p^-e and a_p=(3p-1)/(p-1)^2. The argument uses one actual probability for each finite family and retains all its original labels. It concerns the positive-current objective Xi, not the full killed square or the signed KC objective.
+
+#### Actual labels and probability
+
+Set Q=3^8. The only old forbidden class is0 modulo Q, so sigma is uniform on the6560 nonzero residues of Z/QZ. There are no5,7,11 or13 labels. The AP11 and AP13 steps are identities at their original height0, and final conditioning changes nothing. For the direct19 family, the absent17 step is likewise an identity. These are legitimate missing-class branches of the actual AP construction.
+
+Use one actual pure forbidden class at each current exponent e=1,...,H. Its least-significant-first digits are0 at e=1 and
+
+    (9, 1,...,1, 0)
+
+at e>=2, with e-2 middle ones. Equivalently its residue is9+sum_(j=1..e-2)p^j. The pure cylinders are disjoint: different positive depths first differ where the shorter prefix ends in0 and the longer one has1. They avoid current roots1,...,8 and p-1. The exact pure-survivor Haar mass is
+
+    lambda_(p,H)=1-sum_(e=1..H)p^-e
+                =(p-2+p^-H)/(p-1).                (CSH2)
+
+For each i=1,...,8 add one actual mixed class of modulus3^i p, with old residue1 and current root i. CRT gives an integer residue for each class. All H+9 actual moduli are distinct; their least common multiple is3^8 p^H. Every divisor3^j p^e, 0<=j<=8 and0<=e<=H, is an independent complete-test label, including those absent from the forbidden inventory. There are9(H+1) such labels.
+
+Let k(x) be the largest j<=8 with x=1 modulo3^j. Its exact multiplicities on sigma are
+
+    (n0,...,n8)=(4373,1458,486,162,54,18,6,2,1).
+
+The actual mixed union in row k is precisely the k whole current roots1,...,k. Under the normalized pure-survivor base m_H its mass is
+
+    alpha_H(k)=k/(p lambda_(p,H)).
+
+This is an equality for the actual union, not a union bound. Set
+
+    g_H(k)=1/(1-min(alpha_H(k),delta)),
+    beta_H(k)=(alpha_H(k)-delta)_+/(1-delta).
+
+For k<=7, alpha_H(k)<delta. For k=8 it exceeds delta: lambda_(p,H)<=(p-1)/p and8/(p-1)>7/(p-2) because p>9. The normalized physical row law has good density g_H relative to m_H and bad total mass beta_H. Its killed restriction keeps the good density and deletes the bad side. Thus the global assigned bad mass is
+
+    b_H=beta_H(8)/6560>0,
+    b_H -> (p-8)/[6560 p(p-9)]>0.                 (CSH3)
+
+The limits are9/892160 at17 and11/1246400 at19.
+
+#### The old weighted maximum and the complete current maximum
+
+Write A=1+sum_(j=1..8)1_(x=a_j mod3^j), with all original old residues independent. For depth m>=1, the spine cylinder D_m={x=1 mod3^m} has exactly3^(8-m) old survivors, each with k>=m. Every other depth-m cylinder has k=t<m constant and at most the same number of survivors. The cylinder containing0 has one fewer survivor. Since g_H is nondecreasing, D_m maximizes the g_H-weighted mass among all depth-m cylinders.
+
+Any pair of old test cylinders is disjoint or intersects in one cylinder of their maximum depth. Their weighted mass is consequently bounded by the corresponding D_m mass. All these maxima are simultaneously attained by the coherent old test A_*=1+k. Therefore
+
+    J_(g,H)=sup_A E_sigma[g_H A^2]
+           =(1/6560)sum_(k=0..8)n_k g_H(k)(k+1)^2.  (CSH4)
+
+The current KC coefficient is exactly kappa_p(alpha)=((p-1)/(p-2))g(alpha), so on this same actual family
+
+    J_p=((p-1)/(p-2))J_(g,H).                      (CSH5)
+
+For an arbitrary full complete test, let A_e be its independently selected old block at current exponent e. Every positive current pair at depths e,f has pure-base intersection mass at most p^-max(e,f)/lambda_(p,H). Killing can only reduce it. Summing the original old-label pairs and using weighted Cauchy-Schwarz bounds its total by
+
+    [p^-max(e,f)/lambda_(p,H)] E_sigma[g_H A_e A_f]
+      <=[p^-max(e,f)/lambda_(p,H)]J_(g,H).
+
+There are2t+1 ordered current-exponent pairs with maximum t>0. Summing gives Xi_(p,H)^-<=a_(p,H)J_(g,H)/lambda_(p,H).
+
+For equality, choose A_e=A_* for every current exponent, including0, and choose the literal nested current prefixes p-1 modulo p^e for all positive original labels. The entire root p-1 avoids both actual pure and mixed classes. Each relevant intersection therefore has exactly its Haar mass p^-max(e,f), divided by the same lambda_(p,H), and survives killing. The old weighted Cauchy-Schwarz inequalities are equalities as well. This is one globally legal complete test attaining every bound; no independence restriction has been imposed on the optimization domain. It proves the first equality in CSH1.
+
+#### Exact limiting boundary and its scope
+
+The complete coefficient tail is
+
+    a_p-a_(p,H)
+      =p^-H[(2H+3)p-(2H+1)]/(p-1)^2.
+
+Combining this with CSH2 and CSH5 proves the ratio formula in CSH1. Also J_p<=81(p-1)/(p-9), uniformly in H, because A_*<=9 and g_H<=(p-2)/(p-9). Consequently
+
+    a_p J_p-Xi_(p,H)^- ->0,
+    (a_p J_p-Xi_(p,H)^-)/b_H ->0.                  (CSH6)
+
+Thus no fixed positive epsilon, absolute rebate c, or charge coefficient c can make any of the following valid for all these actual finite families:
+
+    Xi_p^-<=(1-epsilon)a_p J_p,
+    Xi_p^-<=a_p J_p-c,
+    Xi_p^-<=a_p J_p-c b_p.
+
+The examples already satisfy common-prefix feasibility, have an actual mixed union of original labels, have strictly positive charge, and attain the global Xi maximum with every positive-current pair disjoint from the bad union. A uniformly positive saving from only these hypotheses is therefore impossible.
+
+This uses the existing clean-prefix cap-attainment mechanism and adds the old global maximization and limiting comparison with the stated J_p bound. It differs from the earlier nonmaximizing joint-zero tests and from the height-one ZB/RS examples, whose actual pure mass stays separated from the generic all-height lower bound.
+
+The conclusion does not rule out savings conditional on large J_p, larger charge, specific old geometry or actual joint-energy observations. It also does not remove the killed-baseline and transport terms in CT. At the maximizing test above, A_*=9 on the charged row, so its deleted old square is81 b_H and its total killed excess above the unit floor is80 b_H. Only its positive-current overlap is zero. No assertion about the299.398 joint target or an unrestricted covering-system endpoint follows.
+
+### Mask-energy localization requires a valid actual tail bound
+
+An event decomposition can retain some old-side mask-energy information. On one actual input law sigma, write
+
+    G=sup_A E A^2, T(tau)=sup_A E(A^2-tau)_+,
+    pi_p(r)=Pr_sigma(alpha_p>r),
+    kappa_p(z)=((p-1)/(p-2))/(1-min(z,delta)),
+    c_p=((p-1)/(p-2))/(1-delta).
+
+For0<=r<delta and tau>=0, monotonicity of kappa and splitting at the actual event E={alpha_p>r} give
+
+    J_p<=kappa_p(r)G
+       +(c_p-kappa_p(r))*min{G,tau*pi_p(r)+T(tau)}. (MT1)
+
+Indeed kappa_p(alpha)<=kappa_p(r)+(c_p-kappa_p(r))*1_E, and for every original A, E[A^2 1_E] is bounded both by G and by tau*pi_p(r)+T(tau). Taking the supremum proves MT1. This is a direct application of the existing event and hinge bounds, not a new Lean declaration. It only improves the estimate after its actual tail premise is supplied.
+
+The proposed universal premise pi_p(1/4)<=1/20 is false, including on a single actual17-to19 chain. Reuse the complete315 unit family above: eleven old forbidden classes0 modulo each nonunit divisor of315 give the uniform law nu on144 units. At each of p=17,19, add pure0 modulo p and, for the increasing list d_1,...,d_11 of nonunit divisors of315, the original CRT class
+
+    x=1 mod d_i, y_p=i mod p, at modulus d_i*p.
+
+These35 forbidden moduli are distinct, with period315*17*19=101745. All48 divisor test labels of that period remain present; the missing17*19 mixed exclusions are not fabricated. There are no11 or13 exclusions, so nu is the actual AP13 law. Each current pure base is uniform on its nonzero roots. For the original forbidden load
+
+    C=(1+I3+I9)(1+I5)(1+I7),
+    I_d=1_(x=1 mod d),
+
+the exact current union mass is alpha_p=(C-1)/(p-1), since its active mixed labels use different current roots.
+
+For both primes the event alpha_p>1/4 is exactly C>=6. Among the six ternary units the factor1+I3+I9 has values1,2,3 with counts3,2,1. The factors1+I5 and1+I7 have counts(3,1) and(5,1) at values(1,2). Thus C=6,8,12 have respectively8,2,1 original unit rows, and
+
+    nu(alpha17>1/4)=11/144>1/20.                  (MT2)
+
+The normalized physical K17 preserves the old315 marginal row by row. The19 forbidden masks have no17 coordinate, hence their alpha19 is the same function of x after this actual17 step. Consequently
+
+    mu17(alpha19>1/4)=11/144,
+    b17=53/18432>0, b19=61/25920>0.                (MT3)
+
+This uses one explicitly combined original family and its normalized physical17 law. It does not transfer the assertion to the differently conditioned17 law or to the final killed measure. The charge values follow from the same row1 formulas already established for the315 family; K17's preserved old marginal also preserves the19 charge integral.
+
+For this threshold, kappa17(1/4)=64/45,c17=2 and kappa19(1/4)=24/17,c19=9/5. These constants make MT1 a valid conditional estimate, but MT2--MT3 exclude the1/20 premise on the whole allowed class. Conditional estimates restricted by additional actual geometry or energy remain possible. Existing AP3--AP4 hinge comparisons for upper tails are still valid; they do not supply new joint statistics merely by being substituted into MT1, and the fixed scalar ASB obstruction remains in force.

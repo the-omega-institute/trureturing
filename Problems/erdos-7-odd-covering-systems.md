@@ -179,6 +179,18 @@ the same actual law. The complete-array realization algorithm does
 not supply the missing weighted inequality or a search bound over
 all original layouts.
 
+The [all-height actual frontier family](../docs/reports/erdos7-odd-covering/marked_head_profile.md#the-actual-positive-current-frontier-can-approach-its-weighted-cap-bound)
+attains the true complete-test Xi maximum and approaches its existing
+a_p*J_p bound while assigned bad mass tends to a positive limit.
+Hence uniform fixed proportional, additive or charge-proportional
+rebates cannot follow from prefix feasibility and positive charge
+alone. Its killed old-square loss is still81*b, so this does not
+remove the common-test tradeoff or exclude conditional improvements.
+Separately, the [actual mask-tail boundary](../docs/reports/erdos7-odd-covering/marked_head_profile.md#mask-energy-localization-requires-a-valid-actual-tail-bound)
+has probability11/144>1/20 at both17 and19 in one explicit35-mask,
+48-test chain. A universal1/20 tail target is therefore false;
+mask-energy localization requires another proved bound or a case split.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right
