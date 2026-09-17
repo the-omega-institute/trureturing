@@ -293,15 +293,17 @@ public sealed class DeclaredTemplateDeltaLoadTests
             var loaded = Load(name);
             var evaluation = SnapshotAdmissionCore.Evaluate(loaded.Current, loaded.Baseline,
                 loaded.Lean.Report, loaded.Changes, BootstrapGate.Evaluate(loaded.Changes), null);
-            Assert.True(evaluation.Outcome is not AdmissionOutcome.InfrastructureFailure,
-                "[FAIL] " + name + ": " + evaluation.Outcome);
+            // The test map binds source without Dunet's generated outcome inheritance.
+            object outcome = evaluation.Outcome;
+            Assert.True(outcome is not AdmissionOutcome.InfrastructureFailure,
+                "[FAIL] " + name + ": " + outcome);
             if (!blocked)
-                Assert.True(evaluation.Outcome is AdmissionOutcome.Admitted, "[FAIL] " + name + ": "
-                    + (evaluation.Outcome is AdmissionOutcome.RuleRejected failure
-                        ? string.Join("; ", failure.Diagnostics.Select(d => d.Render())) : evaluation.Outcome));
+                Assert.True(outcome is AdmissionOutcome.Admitted, "[FAIL] " + name + ": "
+                    + (outcome is AdmissionOutcome.RuleRejected failure
+                        ? string.Join("; ", failure.Diagnostics.Select(d => d.Render())) : outcome.ToString()));
             var diagnostics = blocked
-                ? Assert.IsType<AdmissionOutcome.RuleRejected>(evaluation.Outcome).Diagnostics
-                : Assert.IsType<AdmissionOutcome.Admitted>(evaluation.Outcome).Observations;
+                ? Assert.IsType<AdmissionOutcome.RuleRejected>(outcome).Diagnostics
+                : Assert.IsType<AdmissionOutcome.Admitted>(outcome).Observations;
             Assert.Contains(diagnostics, d => d.Path == A && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
             Assert.DoesNotContain(diagnostics, d => d.Path == B && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
         }

@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
-using StrataLint.TestSupport;
 using static StrataLint.Tests.DeclaredTemplateReviewTests;
 
 namespace StrataLint.Tests;
@@ -136,10 +135,16 @@ public sealed class DeclaredTemplateBindingRuleTests
     [Fact]
     public void deleted_finding_names_cannot_be_emitted()
     {
-        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
-            "tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs"));
-        var names = System.Text.RegularExpressions.Regex.Matches(source, "DTR-[A-Za-z]+")
-            .Select(match => match.Value).Distinct().Order(StringComparer.Ordinal).ToArray();
+        var contexts = new[]
+        {
+            Delta(),
+            Delta(declared: true),
+            Delta(declared: true, invalid: true),
+            Delta(missing: true),
+        };
+        var names = contexts.SelectMany(context => DeclaredTemplateBindingRule.Evaluate(context))
+            .Select(finding => finding.Message.Split(' ', 2)[0])
+            .Distinct().Order(StringComparer.Ordinal).ToArray();
         Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared" }),
             "[FAIL] deleted_finding_names_cannot_be_emitted: " + string.Join(", ", names));
     }
