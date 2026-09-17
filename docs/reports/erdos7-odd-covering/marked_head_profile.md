@@ -510,3 +510,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A source-hinge deficit improves actual AP45 survival](profile-notes/41-a-source-hinge-deficit-improves-actual-ap45-survival.md)
 - [Whole-hinge absorption sharpens actual survival](profile-notes/42-whole-hinge-absorption-sharpens-actual-survival.md)
 - [Complete cell costs strengthen whole-hinge survival](profile-notes/43-complete-cell-costs-strengthen-whole-hinge-survival.md)
+- [Constant survival barriers leave a structural gap](profile-notes/44-constant-survival-barriers-leave-a-structural-gap.md)
