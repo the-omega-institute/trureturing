@@ -17,7 +17,7 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 
 ## 脚本
 - `op-resume-seat.sh FLIGHT ATTEMPT BRIEF WORKTREE STAGE [STAGGER] [MAX_CODEX]`:fail-closed 负载门(idle ≥ 20% ∧ lean ≤ 4 ∧ codex 进程 ≤ MAX,300 轮 × 60 s,超时不启动)+ sshx runner。
-- `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。
+- `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。唯一从 SCRATCH 读的输入是 `briefs/impl-op-w1-<lane>.md`;基底 brief 与 mirror-check 模板取本目录 tracked 的 `templates/`,scratchpad 被清空不影响它(案号 #6220,与 `gen_review.py` 同形)。缺任一输入即打印路径并 exit 1。
 - `fill_mirror_fixes.py SCRATCH LANE RESULT_JSON`:把镜像核对的 blocking/advisory 填进 Stage B brief。
 - `add_base_blocks.py FILE…`:把基底模板的三个纪律块补进缺失的 brief。
 - `gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEAT`:生成三席评审 brief(在 SCRATCH 目录运行,写到该目录的 `briefs/`)。模板取本目录 tracked 的 `templates/review-template.md`,GoalArtifact 取 `templates/impl-base-brief.md` 的 yaml 段——两者都不依赖 scratchpad,scratchpad 被清空不影响它(案号 #6220)。缺输入、席位名不是 architecture/quality、参数个数不对,一律 exit 1。
