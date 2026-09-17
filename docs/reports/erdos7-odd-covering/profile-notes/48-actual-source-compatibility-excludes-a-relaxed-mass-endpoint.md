@@ -17,7 +17,9 @@ asserted to cover the integers.
    excluded from the closure.
 4. An explicit sequence has(theta,S)->(theta402,7/45). Consequently
    the infimum of limiting S-values at theta402 is between139/900
-   and140/900. No claim of an exact infimum is made here.
+   and140/900. The sharper two-depth inequality and matching
+   construction in [profile50](50-sharp-source-survival-endpoints.md)
+   determine the exact infimum as233/1500; the bounds here remain valid.
 
 The exclusion in item3 holds for arbitrary residues of every mixed7
 label and every finite exponent height. It uses source exclusions
@@ -459,4 +461,5 @@ original families and the infinite limiting statements.
 No new global K bound follows merely by excluding one endpoint.
 The continuous positive-part constraint needs a valid partition or
 other interpolation argument before entering the fixed-target consumer.
-The exact402 infimum and the unrestricted covering problem remain open.
+Profile50 determines the exact402 infimum as233/1500. The unrestricted
+covering problem remains open.

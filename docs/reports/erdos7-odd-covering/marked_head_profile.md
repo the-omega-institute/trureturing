@@ -516,3 +516,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 - [Six linear tests share the survival carrier](profile-notes/47-six-linear-tests-share-the-survival-carrier.md)
 - [Actual source compatibility excludes a relaxed mass endpoint](profile-notes/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md)
+- [Full linear and quadratic carriers refine the frontier](profile-notes/49-full-linear-and-quadratic-carriers-refine-the-frontier.md)
+- [Sharp source compatibility and the off-diagonal endpoints](profile-notes/50-sharp-source-survival-endpoints.md)
