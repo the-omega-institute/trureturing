@@ -30,27 +30,27 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#shared-actual-cell-hinge-bounds-for-the-uniform357-law)
-now gives `Gamma13<=6471426752685569/37850019688694<170.975518796`
+An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#shared-actual-cell-square-hinges-improve-the-same-ap13-law)
+now gives `Gamma13<=148878188597300778613/914721425816667898<162.757954931`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
 actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
-for11 and13, and conditions once. The shared actual-cell hinge bounds
-(HC1)--(HC9) handle all1296 continuous-domain vertices and all12 original
-missing-class branches. They sharpen the preceding PR bounds on this same
+for11 and13, and conditions once. The shared actual-cell square hinges
+(SQ1)--(SQ7) handle all1296 continuous-domain vertices and all12 original
+missing-class branches. They sharpen the preceding HC bounds on this same
 probability, with survival lower bound
 `18925009844347/38266567762500>0.4945572846`.
 
-Its [complete supported13 profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-hinges-and-actual-continuation-from-supported-ap13)
+Its [complete supported13 continuation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-continuations-and-the-larger-killed-frontier-allowance)
 gives mean at most10.653915367 and an actual pure-base17/T8 continuation
-with `Gamma17<403.658092`. A second construction starts again from supported13,
+with `Gamma17<384.221434`. A second construction starts again from supported13,
 applies17/T8 and19/T8 without intermediate conditioning, then conditions
 once after19. It proves positive actual survival and
-`Gamma19<=14309324828593686784688579/6107986643845861414296<2342.723661`
+`Gamma19<=1947596368885525589065961707/873442090069958182244328<2229.794501`
 for arbitrary finite original families supported on
 `{3,5,7,11,13,17,19}`. This does not use the single17 construction's
 conditioned output. The full comparison tails are included. None of the
-510 checked integer schedules for the two stated SH27 upper functionals
+255 checked integer supported13-restart schedules for the updated SH27 upper functional
 reaches the proposed `Gamma19<=484` intermediate target; this is a limit
 of those upper estimates, not an actual-family lower bound or a refutation
 of richer joint information. No literature-priority or Lean endpoint is claimed.
@@ -79,9 +79,9 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<117.103689`. Expanding the exact killed pair matrices
-therefore gives the sufficient finite joint-frontier bounds285.895 for
-the large core and285.633 for the smaller one, at W403. These remain
+`sup E(A^2-81)_+<103.338868`. Expanding the exact killed pair matrices
+therefore gives the sufficient finite joint-frontier bounds299.660 for
+the large core and299.398 for the smaller one, at W403. These remain
 unproved requirements. Their strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming
 survival in advance. This new Q functional is distinct from the earlier
@@ -106,7 +106,8 @@ is still positive and the tests are provably nonmaximizing. These examples
 do not exclude an improvement using actual pure geometry or maximizing-test
 constraints.
 
-For the two fixed17/T6,19/T8 schedules, an [exact moment-relaxation limit](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-limit-of-the-joint-integer-moment-refinement-at-w483)
+For the two fixed17/T6,19/T8 schedules using the stated pre-SQ source
+observations, an [exact moment-relaxation limit](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-limit-of-the-joint-integer-moment-refinement-at-w483)
 uses rational dual majorants and matching abstract positive-integer
 load distributions. All mean, square and H1--H17 constraints together
 reduce their SH27 costs by only0.000127542 and0.000063077, respectively;
@@ -114,6 +115,15 @@ both W483 defects stay positive. The separate SH26 square estimate is
 held fixed. This does not optimize all255 schedules or show that an
 actual congruence family attains the abstract distributions. It identifies
 the limit of tightening just these cost terms with those observations.
+
+The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
+reuses RRO55's shared-witness construction: each common parent prefix
+has at most p next digits, with separate capacity for left and right
+isolated groups. A six-label mod3/mod9 example passes both independent
+depth checks but has no common realization. Unequal original heights
+remain partial-prefix constraints, and shallow cylinders retain all
+their extensions and masses. These feasibility cuts do not yet bound
+the killed joint objective.
 
 The [fixed-depth root-overlap criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#rro53-and-the-current-prime-root-overlap-interface)
 (CR1) supplies an exact feasibility cut for finite-core overlap matrices:

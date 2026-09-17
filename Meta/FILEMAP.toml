@@ -1034,6 +1034,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact counterexample to independent-depth original-prefix feasibility.
+pattern = "docs/reports/erdos7-odd-covering/prefix_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Twelve actual-pure-geometry branches and complete same-law head and tail bounds.
 pattern = "docs/reports/erdos7-odd-covering/pure_root_profile_certificate.json"
 kind = "data"
@@ -1133,6 +1143,26 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Shared-cell square hinges with complete original-height tails.
+pattern = "docs/reports/erdos7-odd-covering/shared_cell_square_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]] # Same-law scalar continuations and killed-frontier budgets from square hinges.
+pattern = "docs/reports/erdos7-odd-covering/shared_square_continuation_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact prime sums and block budgets for star and three-prime head noncoverage.
 pattern = "docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json"
 kind = "data"
@@ -1693,6 +1723,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact mod3/mod9 obstruction retaining all original prefix labels.
+pattern = "docs/reports/erdos7-odd-covering/verify_prefix_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Recomputes the complete pure-root hinge profile and same-law AP continuation.
 pattern = "docs/reports/erdos7-odd-covering/verify_pure_root_profile.py"
 kind = "program"
@@ -1801,6 +1841,26 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact shared-cell square hinges and full affine geometric tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_shared_cell_square.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]] # Replays complete scalar continuations with the improved same-law square bound.
+pattern = "docs/reports/erdos7-odd-covering/verify_shared_square_continuation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Checks exact sufficient parameters for smoothed finite-height Gamma lifting.
 pattern = "docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py"
 kind = "program"

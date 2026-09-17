@@ -13933,3 +13933,309 @@ the [full-tail certificate](killed_core_continuity_certificate.json). It
 pins the existing HC, PR and APC sources. Default mode compares every
 field; `--write` regenerates. Numeric, duplicate-key and source-hash
 changes are rejected under `python3 -I -O`.
+
+## Shared actual-cell square hinges improve the same AP13 law
+
+For the same actual supported AP(4,6)13 probability used in HC9, SP4 and KC, every complete original test obeys
+
+    E L^2 <= 148878188597300778613/914721425816667898
+          =162.75795493079391...,
+    E(L^2-81)_+
+       <=7950179084001887172777104410541784715667
+          /76933096761156988347518483945560826250
+        =103.33886738868257... .                         (SQ1)
+
+The previous observations were170.9755187952681... and117.10368852318302..., respectively. The probability itself is unchanged: start with uniform actual357 survivors, apply the original pure-survivor AP11/T4 and AP13/T6 kernels, and condition once on all actual survivors. Its same HC lower normalizer is
+
+    r=18925009844347/38266567762500.
+
+All residues, missing classes, complete original labels and arbitrary finite heights remain in the domain. These are ordinary full-tail and continuous-parameter bounds, not exact maxima over actual families or Lean declarations.
+
+### Reuse of the actual five cells
+
+In the effective3/9 case use HC's five cells, roots r(l)=(0,0,1,1,1), and exactly its parameter domain
+
+    w_l=1-D_l, D>=0, sum D<=1/2;
+    alpha>=0, sum alpha<=1/4;
+    beta>=0, sum beta<=1/4;
+    t>=0, sum t<=1/72; 3/4<=z<=1.
+
+Set d_l=z-alpha_r(l)-beta_l, n_l=w_l d_l/9-t_l, s=sum n_l and x=sum w_l/9. The raw complete35 cell masses are n_l; a depth-a ternary query in cell l has raw mass at most d_l 3^-a. The actual pure3 measure has masses w_l/9 and depth caps3^-a. Reuse the same-family mixed7 bound T from HC7, so its retained denominator is s-T/5>0.
+
+For a fixed original root/cell choice c=(r,j), write b_l=1+1_(r(l)=r)+1_(l=j). For any nondecreasing cost g define exactly HC's monotone bound
+
+    Delta_a(g,b)=max_(0<=i<=a-3)[g(b+i+1)-g(b+i)],
+    P_g(c;m,v)=sum_l m_l g(b_l)
+                +sum_(a>=3)3^-a max_l[v_l Delta_a(g,b_l)].
+
+It follows by adding the original depth-a indicator: on its cylinder the previous deep count lies between0 and a-3. This requires neither convexity nor coherent nesting of the original ternary prefixes. Let P^A_g use masses n and caps d, and P^eta_g use masses w/9 and caps1. Constants integrate exactly. Inactive root/cell test choices are completed to active ones, increasing the load; no forbidden residue is changed.
+
+### Square-cost positive5 increment and its complete tail
+
+Let f_tau(v)=(v^2-tau)_+ for tau>=0. It is nonnegative, increasing and convex for v>=1. HC1's actual-zero-block decomposition remains valid for this cost. For a positive5 multiplier n>=2, Jensen gives
+
+    f_tau(A0+...+A_(n-1))-f_tau(A0)
+      <=g_n(A0)+(1/n)sum_(e=1)^(n-1)f_tau(n A_e),
+    g_n(v)=f_tau(nv)/n-f_tau(v).                       (SQ2)
+
+The cost g_n is nonnegative and nondecreasing. Below sqrt(tau)/n it is0, between sqrt(tau)/n and sqrt(tau) it is n v^2-tau/n, and above sqrt(tau) it is (n-1)v^2+tau(1-1/n). Its derivative is nonnegative on each interval, and it is continuous at both endpoints. It need not be convex, so its finite-n terms use the monotone P_g formula, not a convex specialization.
+
+The complete raw35 upper bound is therefore
+
+    F_tau=max_c {P^A_f_tau(c)
+       +sum_(n>=2)4/5^n [P^eta_g_n(c)
+            +(n-1)/n max_d P^eta_(f_tau(n .))(d)]}.     (SQ3)
+
+The same original zero5 choice c stays outside the whole sum. Positive blocks may be maximized independently only as an upper bound. The raw probabilities4/5^n arise from the actual pure5 prefix comparison, with its pure mass canceling exactly as in HC2-HC3.
+
+Put Q_c=P^eta_(v^2)(c), Qmax=max_c Q_c, E_c=P^eta_f_tau(c), and
+
+    N=max(2,ceil(sqrt(tau))+1).
+
+For every integer n>=N and integer v>=1, f_tau(nv)=n^2 v^2-tau. Also g_n has nondecreasing integer increments: every second integer difference of f_tau is at most max(2,2ceil(sqrt(tau))+1), whereas that of n v^2 is2n. Thus the running maximum in Delta_a occurs at its last increment. Since all eta depth caps equal1, the largest b_l maximizes the increments of g_n, f_tau and v^2 simultaneously. Consequently
+
+    P^eta_g_n(c)=n Q_c-E_c-(tau/n)x,
+    max_d P^eta_(f_tau(n .))(d)=n^2 Qmax-tau x.
+
+The complete n>=N portion inside SQ3 is exactly
+
+    5^(1-N)[(N+1/4)Q_c
+       +(N^2-N/2+1/8)Qmax-E_c-tau x].                (SQ4)
+
+It uses the full geometric mass, first moment and second moment. Taking only n>=ceil(sqrt(tau)) would not justify the discrete-convex specialization at the boundary; the finite preceding terms are retained in SQ3.
+
+### Every original ternary height is paid
+
+For f_tau, Delta_a is its last increment because the cost is convex. Once b+a-3>=ceil(sqrt(tau)), that increment is2a+2b-5. At a fixed parameter vertex the tail integrand is therefore the maximum of five affine functions d_l(2a+2b_l-5). Choose its eventual line by largest slope and then largest intercept, and start the tail only after it dominates every other line. This finite crossing calculation proves the entire subsequent envelope, not merely a sampled range.
+
+For a finite g_n term, once the queried integer is above sqrt(tau), its increment equals(n-1)(2a+2b-5). The verifier extends its finite prefix until this current increment dominates every preceding increment for every present b. The later increments strictly increase, so that condition remains true forever. Equal eta caps then select the largest b.
+
+In both cases the remaining exact affine tail uses
+
+    sum_(a>=A)3^-a = 3^(1-A)/2,
+    sum_(a>=A)a 3^-a = (2A+1)/(4*3^(A-1)).
+
+Thus no original height is hard-truncated. The finite checks establish entrance into a proved affine tail; they do not replace an infinite probability law by a normalized finite sample.
+
+### The complete7 comparison and actual conditioning
+
+Use HC6's full pure7 comparator, with probability29/35 at1 and36/(5*7^n) at n>=2. Since f_tau(nv)=n^2 f_(tau/n^2)(v), put M=max(2,ceil(sqrt(tau))). The raw cost before actual mixed7 deletion is bounded by
+
+    B_tau=(29/35)F_tau
+       +sum_(2<=n<M)36 n^2/(5*7^n) F_(tau/n^2)
+       +(36/5)[F_0 sum_(n>=M)n^2 7^-n
+                       -tau s sum_(n>=M)7^-n].       (SQ5)
+
+For the last term tau/n^2<=1 and v>=1, so F_(tau/n^2)=F_0-(tau/n^2)s exactly. This equality follows from SQ3's exact treatment of constants; the positive5 increment of a shifted square is unchanged.
+
+All added costs are nonnegative before expansion. Discarding the mixed7 union therefore gives the valid uniform357 bound B_tau/(s-T/5). This uses the original actual deletion union and the same denominator; it does not replace the conditioned marginal by a product law.
+
+For any proposed constant C, the target margin C(s-T/5)-B_tau is separately concave in D,alpha,beta,t,z. Each branch of P^A is affine separately in those groups. All maxima have nonnegative coefficients. The negative tail term involving E_c in SQ4 is affine in w for its fixed zero5 choice, while the negative multiples of s in SQ5 are separately affine. Repeated vertex interpolation therefore reduces the whole continuous parameter domain to exactly6*3*6*6*2=1296 product vertices.
+
+For each needed tau, the verifier evaluates the infinite-tail expressions at every vertex and takes the largest ratio. These shared-cell bounds cover all four effective9 missing5/7 branches. For each of the other eight branches it uses PR's actual pure-reference product comparator. In every branch that fallback for the square hinge is evaluated from its full second moment plus the finite correction at integer products m with m^2<tau. The resulting twelve upper bounds are all included. Finally the pointwise unit-floor inequality
+
+    (L^2-tau)_+ <= L^2-min(tau,1), L>=1
+
+permits taking the minimum with G-min(tau,1), where G=3849/106 is the established same-law uniform357 square bound. Denote the resulting simultaneous source observation by H357^(2)(tau).
+
+### The same physical AP11/13 chain and one final normalization
+
+Let N=N11*N13 use the unchanged complete comparison factors with caps5/3 at11 and2 at13. They are auxiliary counts, not independent actual forbidden events. For tau=h^2,
+
+    U2(tau)=sum_(n<h)Pr(N=n)n^2 H357^(2)(tau/n^2)
+                  +G E[N^2;N>=h]-tau Pr(N>=h)         (SQ6)
+
+bounds every physical13 square hinge. The high-n formula is exact for its bounding costs because tau/n^2<=1. Both tails are obtained by subtracting finite parts from the full probability1 and
+
+    E N^2=(23/15)(55/36)=253/108.
+
+The same original labelled AP comparison proves SQ6 before the sole conditioning. Nonnegativity then gives T13(tau)<=U2(tau)/r. The pointwise inequality L^2<=tau+(L^2-tau)_+ gives the further same-law observation
+
+    Gamma13 <= tau+U2(tau)/r.                         (SQ7)
+
+At tau16 the exact physical bound is2899096118869109/39943338435000, and SQ7 yields the first result in SQ1. At tau81 the exact physical bound is7950179084001887172777104410541784715667/155559525971351670013360122780046875000, yielding the second result in SQ1. No global optimization over all real shifts is claimed; tau16 is a sufficient witness. The stronger square observation changes neither the underlying kernels nor the HC charge and Haar-density observations.
+
+The adjacent verifier checks both1296-vertex targets, all12 missing-class branches, the complete geometric and AP tails, and exact rational comparisons with the prior constants. It pins the existing pure-root and shared-cell-hinge certificates by SHA-256 and compares its complete output certificate. Run it with `python3 -I -O`, supplying `--source-directory` if its pinned inputs are elsewhere. This result does not prove the finite17/19 joint frontier or the unrestricted covering statement.
+
+### Complete continuations and the larger killed-frontier allowance
+
+The new square observation and the earlier SP profile hold on the same
+actual AP13 probability. For every positive integer h retain
+
+    H13(h)<=min(SP_H13(h),(Gamma13-1)h/(4h^2-1)).
+
+Reuse SP's complete auxiliary first-moment tails and fixed scalar-cost
+formula with this stronger square input. Exact rational evaluation gives
+
+    Gamma17<=9720067404606638015016317/25298087377147529307792
+             =384.22143380637726...,
+    Gamma19<=1947596368885525589065961707/873442090069958182244328
+             =2229.7945004339476... .                 (SQ8)
+
+The first bound uses a single AP17/T8 step. The second starts again from
+supported13, applies normalized physical AP17/T8 and AP19/T8 kernels,
+and conditions only after19. Both give positive survival by the SP
+sufficient criterion. The single17 conditioned output is not inserted
+in the two-step chain. Every original residue and finite height remains
+allowed on the stated prime support.
+
+The255 integer restart schedules1<=T17<=15,1<=T19<=17 still all have a
+positive W483 defect for this upper functional. Its least value is
+228.60653787361616... at T17=6,T19=8. This is a limitation of that
+functional, not a lower bound on actual test moments. No different-law
+PG1 observation is used by the reused generic helper.
+
+The actual AP probability and KC reference constructions are unchanged,
+so the earlier KC safe error allowances remain valid. Substituting the
+stronger T13(81) into KC13 yields these sufficient finite bounds:
+
+    F17^-(403)+F19^-(403)<=299.660  [box20/current8],
+    F17^-(403)+F19^-(403)<=299.398  [the unequal box].   (SQ9)
+
+They are strictly below403-T13(81) minus the respective KC safe allowance.
+The available exact budgets are299.6604656113174... and
+299.3981326113174... . The two finite frontier inequalities themselves
+remain unproved; the extra allowance is not a computed saving in F.
+
+The [shared-cell square verifier](verify_shared_cell_square.py) checks
+the [SQ certificate](shared_cell_square_certificate.json), and the
+[continuation verifier](verify_shared_square_continuation.py) checks
+its [same-law consumers](shared_square_continuation_certificate.json).
+They retain complete tails and pinned source identities. No Lean
+formalization, actual-family sharpness or unrestricted resolution follows
+from these ordinary proofs and exact arithmetic checks.
+
+## Common original prefixes across depths from RRO55
+
+The ordinary cross-difference construction in RRO55.2--55.5 supplies
+an exact extension of CR1 for fully specified finite prefix observations.
+It is reused here for the original-label interface, without a new Lean
+wrapper. The finite criterion excludes joint patterns that independent
+per-depth checks admit; it does not evaluate the killed objective.
+
+### Finite prefix criterion
+
+Fix a prime p and two sets of distinct original labels L,R. First suppose
+all labels are read to a common finite height H. Let
+
+    E_t(i,j)=1 iff a_i=b_j mod p^t, 0<=t<=H.
+
+These bits concern the same a_i,b_j at every depth. E0 is complete and
+E_(t+1)<=E_t. At each t, every component with an edge in the bipartite
+graph E_t must be complete bipartite. For each such component C, let
+c be the number of edge-containing components of E_(t+1) restricted to C,
+and let iL,iR indicate isolated vertices on its two sides. Then
+
+    c+iL+iR<=p.                                       (CR2)
+
+All vertices in C share one p^t-prefix, which has only p next digits.
+Different mixed child components need different digits. Left-only and
+right-only isolated groups, if present, require separate digits outside
+the mixed groups. This proves necessity. Conversely, assign different
+digits to these groups and recurse inside mixed groups. Same-side
+isolated vertices can share all remaining digits because no cross
+condition connects them at greater depth. After H steps this constructs
+one simultaneous mod p^H witness for the complete prefix data. Equality
+at H means only congruence modulo p^H; no infinity label is asserted.
+
+This is the finite-prefix specialization of
+[RRO55.2--55.5](https://github.com/the-omega-institute/trureturing/blob/ba8142cf990037c2af6a709ac82d6769cd0381e2/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L23169).
+Its exactness concerns this free cross-prefix realization problem.
+Pinned residues, activation constraints, old-cofactor compatibility and
+source-law conditions are additional constraints and remain attached.
+
+At depth1 the effective alphabet is p-1 when a pure root is removed,
+and p when it is absent, as in CR1. Inside a specified retained root,
+the generic next-digit bound is p. Further pure restrictions may reduce
+the available set; one cannot automatically use p-1 at every depth.
+
+### Strict separation from independent-depth CR1
+
+Take p=3, six labels L0,L1,L2,R0,R1,R2, each of height2. Require all
+nine cross pairs equal modulo3. At modulo9 require just L0=R0 and
+L1=R1, and require the other seven cross pairs unequal:
+
+    E1 = [1 1 1]       E2 = [1 0 0]
+         [1 1 1]            [0 1 0]
+         [1 1 1]            [0 0 0].                  (CR3)
+
+E1 independently uses one root. E2 independently uses four roots: two
+matched pairs plus one left isolate and one right isolate. Even after
+removing root0, the depth2 alphabet has6 residues, so both independent
+CR1 tests pass. Explicit independent witnesses are all roots1 for E1,
+and L=(1,2,4), R=(1,2,5) modulo9 for E2; all six are nonzero modulo3.
+
+Together E1 forces all vertices into one mod3 root. Inside it E2 needs
+four distinct children although only three exist. Thus CR2 rejects the
+array. In valuation language its diagonal observations are **at least2**
+and all other entries are **exactly1**. It neither requires nor assumes
+an exact valuation2 on the two diagonal pairs.
+
+The [prefix verifier](verify_prefix_obstruction.py) independently enumerates all729 choices
+of the six next digits under the common root1, finding no witness.
+Every one-label deletion has a genuine modulo9 witness, retained in the [prefix certificate](prefix_obstruction_certificate.json).
+The ordinary pigeonhole proof above is independent of that finite check.
+
+For arbitrary p, the analogous obstruction has p labels on each side:
+one common parent, p-1 matched diagonal child pairs, and all remaining
+cross child pairs unequal. It requires p+1 children. This is F_(p,t)
+from RRO55.5; it uses2p labels regardless of the depth t.
+
+For an integer-programming relaxation, write z_ij=E_(t+1)(i,j) and
+x_ij=E_t(i,j). On the selected p-by-p submatrix one valid linear cut is
+
+    sum_(i=1..p-1) z_ii + sum_(other pairs)(1-z_ij)
+       <=p^2-1 + sum_(all pairs)(1-x_ij),             (CR4)
+
+where the first sum contains exactly p-1 diagonal entries. If all parent
+bits are1, the forbidden child pattern cannot have score p^2. If any
+parent bit is0, the right side is at least p^2 and the inequality is
+trivial. All variables refer to the same original labels across depths.
+
+### Unequal original heights and shared contexts
+
+An original label of height h carries a residue only modulo p^h. Two
+labels of heights h,k have actual cylinder overlap according to equality
+modulo p^min(h,k). Prefix observations exist only to this minimum height.
+An observed first split below that height fixes a finite valuation; a
+match at the minimum height gives a lower bound, not equality to infinity
+and not a chosen finite valuation.
+
+For unequal heights the exact feasibility question is therefore an
+**interval/partial-prefix completion** problem. Unobserved deeper entries
+remain unknown. CR2 or CR4 may reject a candidate only when the required
+parent equalities and child equalities/inequalities are actually forced.
+Alternatively, one can seek a full nested prefix completion respecting
+all observed intervals and then apply the constructive finite criterion.
+
+An auxiliary extension of a shallow residue used in such a feasibility
+argument must not replace its cylinder by a single high-level leaf in
+the killed calculation. The original cylinder is the union of all its
+extensions and retains its original mass and AP weight. Distinct
+original moduli stay distinct even when their prefixes coincide.
+
+The2p induced-obstruction bound is for a **complete specified** cross
+array. It is not an automatic bound for arbitrary partial input. For
+example, a long even cycle with equality constraints on all but its
+closing edge and an inequality on that edge is inconsistent, while
+every proper induced restriction of those partial constraints is
+consistent. Missing chords must not be interpreted as nonedges.
+
+For the killed frontier, use one master prefix variable for each
+original label and prime, reused across source cells, masks and test
+blocks. A label may be active in several cells, but its original residue
+cannot be reselected separately in each. The local graph cuts are
+necessary restrictions on that common assignment. They do not by
+themselves compute the same-law killed expectation, preserve all
+test-test/source interactions, or prove the required484 barrier.
+
+The source is RRO55 at devba8142cf990037c2af6a709ac82d6769cd0381e2.
+The compared dev increment adds no D5 declaration for this criterion.
+Dovgoshey--Petrov, [Subdominant pseudoultrametric on graphs,
+Lemma2.1 and Theorem3.3](https://arxiv.org/html/1110.6802v1), supplies
+the repeated cycle extremum condition for pseudoultrametric extension;
+it does not impose the p-child capacity. Bradley,
+[From image processing to topological modelling with p-adic numbers,
+Section2](https://www2.ipf.kit.edu/Personen/bradley/CV/hier2vis.pdf),
+describes the p residue children of a p-adic disk. Neither reference
+supplies a weighted covering-system positivity bound.
