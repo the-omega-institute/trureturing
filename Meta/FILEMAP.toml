@@ -818,6 +818,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact constants and actual CRT laws for the all-height global-cap survivor improvement.
+pattern = "docs/reports/erdos7-odd-covering/pg1_global_cap_improvement_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Complete simultaneous integer hinges with original-root zero geometry and full tails.
 pattern = "docs/reports/erdos7-odd-covering/pg1_integer_hinges_certificate.json"
 kind = "data"
@@ -1387,6 +1396,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Reconstructs all original low-test maxima at zero depth and complete-tail consumers.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_exact_zero_depth.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks global-cap feasibility, unchanged charge, changed survivor law and all-height gap constants.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_global_cap_improvement.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

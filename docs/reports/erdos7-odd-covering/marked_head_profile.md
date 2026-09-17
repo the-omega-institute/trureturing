@@ -10128,3 +10128,176 @@ outside this obstruction. General original inventories with higher
 clean roots. Changing the reference thresholds or the old law is also
 outside this fixed-cap comparison. This is an ordinary finite saddle argument with a complete
 geometric bound, not a new Lean theorem or a literature-priority claim.
+
+
+### A global-cap perturbation improves the actual survivor law at every finite height
+
+The natural-cap obstruction (HC3) does not persist when strictly uncharged
+rows may use the global cap. There is an explicit actual-family construction
+whose physical complete-test square and final supported \(\Gamma\) both
+strictly decrease, with a lower bound on the gain independent of height.
+This is a fixed low315 family, not a bound over unrestricted old inventories.
+
+Use the canonical PG1 probability \(\mu\) on its75 actual old survivors,
+with denominator \(D=1000000007\). In particular,
+\(\mu(2)=13119398/D\) and \(\mu(314)=16622259/D=:\mu_*\).
+For each finite \(H\ge1\), keep its11 original old forbidden classes and
+add the CS2 comb at \(p=17\), with all old forbidden cylinders centered
+at2. The ordered nonunit old divisors
+\((3,5,7,9,15,21,35,45,63,105,315)\) have respective spokes1 through11;
+the spine is15. Thus all \(11+12H\) forbidden moduli are distinct odd
+integers, the period is \(315\cdot17^H\), and all \(12(H+1)\) original
+test labels retain independent residues. Fix \(\delta=7/15\).
+
+Write \(s_H=\sum_{e=1}^H17^{-e}\), \(\lambda_H=1-s_H\),
+\(n(x)=\sum_{d>1,\,d\mid315}\mathbf1_{x\equiv2\bmod d}\), and
+\(c_H(x)=[\max(1-(n(x)+1)s_H,\lambda_H(1-\delta))]^{-1}\).
+This is the BBMST good density relative to current-coordinate Haar measure.
+At \(x_*=314\), only the old divisor3 matches2, so \(n(x_*)=1\).
+The entire current root2, assigned to old divisor5, is good there.
+This row is strictly uncharged for every \(H\), and
+\(c_H(x_*)=(1-2s_H)^{-1}\le8/7\).
+
+Let \(R_H=\{12,13,14,15,16\}\) when \(H=1\), and
+\(R_H=\{12,13,14,16\}\) when \(H\ge2\); put \(r_H=|R_H|\).
+These whole roots are globally clean. Let \(U_{j,H}\) denote the uniform
+probability on current points congruent to \(j\bmod17\). Change only
+row \(x_*\), with \(t=1/8192\):
+
+\[
+ q'_H(x_*,\cdot)=q_H(x_*,\cdot)+tU_{2,H}
+                   -\frac{t}{r_H}\sum_{j\in R_H}U_{j,H}.
+                                                               \tag{GC1}
+\]
+
+Every donor root has mass \(c_H(x_*)/17\ge1/17>t/r_H\).
+The global density cap relative to Haar is
+\(C/\lambda_H\), where \(C=15/8\). The recipient's unused root
+capacity is at least
+\((15/8-8/7)/17=41/952>t\). Thus (GC1) is nonnegative, preserves
+normalization and the old marginal, obeys the global cap, and changes
+no bad mass or bad-subset bound. The final survivor mass is unchanged
+and satisfies \(\rho_H\ge r_H/17\ge4/17>0\), using the globally
+clean roots and \(c_H\ge1\). The two conditioned survivor laws differ on root2 above
+\(x_*\). Keeping the natural cap on this row would forbid this change.
+
+Here is a bound against every complete test, without enumerating its
+residues or identifying its layouts across depths. For a test \(T\),
+let \(A_e(x)\le12\) be its complete old load at depth\(e\), and let
+\(z\) be the first digit of its original pure17 test. Denote by \(U_H(T)\)
+the BBMST pair-cap value with these old layouts, attained by aligning all
+current prefixes along one nested globally clean path:
+
+\[
+ U_H(T)=\mathbb E_\mu[A_0^2+c_HQ_H],\qquad
+ U_H(T)\le V_{{\rm BB},H}:=\max_T\mathbb E_{\mu q_H}L_T^2.
+                                                               \tag{GC2}
+\]
+
+For the restriction to actual survivors, the corresponding value is
+\(U_H^S(T)=\mathbb E_\mu[(1-\beta_H)A_0^2+c_HQ_H]
+\le\rho_H\Gamma_{{\rm BB},H}\). The same aligned test attains that cap value;
+the positive-depth pair caps are unchanged. Every gap used below holds
+for both physical and survivor-restricted square integrals.
+
+First suppose \(z\notin R_H\). A spoke root is entirely bad on the
+positive-mass old row2. On that row the Haar-density difference between
+the good cap and the physical bad density is
+\(\delta/[(1-\delta)11s_H]\ge14/11\). Its pure17 test and its
+cross terms with the old baseline, whose load is at least1, lose at least
+\(G_{\rm spoke}=3\mu(2)14/187\) from (GC2). Root0 is pure forbidden,
+giving \(G_0=3/17\). If \(H\ge2\), the spine root contains the whole
+pure forbidden depth-two cylinder, giving \(G_{\rm spine}=3/289\).
+For the survivor restriction the spoke loses still more, so the same
+lower bounds remain valid. These cases exhaust roots outside \(R_H\).
+
+Next suppose \(z\in R_H\), but some depth-one test label active at
+\(x_*\) has another root. Its intersection with the original pure17
+label is empty, while the two ordered cap terms in (GC2) total at least
+\(G_{\rm split}=2\mu_*/17\).
+
+For either of these cases, a uniform probability inside any one current
+root gives, for every test and every height,
+
+\[
+ \mathbb E_{U_{j,H}}L_T(x_*,\cdot)^2
+ \le12^2\left(1+17\sum_{e\ge1}(2e+1)17^{-e}\right)
+ =\frac{4977}{8}=:M.
+                                                               \tag{GC3}
+\]
+
+Indeed each intersection with maximal positive depth\(e\) has conditional
+mass at most \(17^{1-e}\). Discarding the removed nonnegative square
+cost, (GC1) can increase the integral by at most \(\mu_*tM\).
+Exact rational arithmetic gives, for all four gaps above,
+
+\[
+ G-\mu_*tM>\varepsilon,
+ \qquad \varepsilon:=\frac{3\mu_*t}{5}
+   =\frac{49866777}{40960000286720}>0.
+                                                               \tag{GC4}
+\]
+
+It remains to handle \(z\in R_H\) when every depth-one label active
+at \(x_*\) has root\(z\). Removing donor mass loses a shallow square
+increment of at least
+\(\mu_*t(2A_0A_1+A_1^2)/r_H\ge3\mu_*t/r_H\), since both old
+loads include their unit label. The baseline square cancels because the transferred masses total zero.
+The recipient has only the baseline and possible deeper test hits. Let \(a_e\le12\) count the labels
+active at \(x_*\) whose current prefix starts with2, for \(e\ge2\),
+and put \(S=\sum_{e=2}^H17^{-e}a_e\). All these are original labels.
+For any such nonnegative sequence, grouping pairs by their earlier depth
+and bounding later coefficients by12 gives
+
+\[
+ \sum_{e,j=2}^H17^{-\max(e,j)}a_ea_j
+ \le12\left(1+\frac2{16}\right)S.
+                                                               \tag{GC5}
+\]
+
+Consequently the recipient's extra square cost is at most
+\(\mu_*t\,17[2A_0+12(18/16)]S\le\mu_*t(1275/2)S\).
+But every one of these deeper labels is disjoint from the original
+pure17 test on row \(x_*\). Their missing cross terms already give
+\(U_H(T)-\mathbb E L_T^2\ge2\mu_*c_H(x_*)S\ge2\mu_*S\).
+Since \(t(1275/2)<2\), this gap absorbs the entire recipient gain.
+The remaining donor decrease is at least \(\varepsilon\), as \(r_H\le5\).
+This also covers \(H=1\), when \(S=0\). No infinite-family minimax
+exchange or finite-height truncation is used.
+
+Taking maxima over the original complete test domain in all three cases
+therefore proves, for every finite \(H\ge1\),
+
+\[
+ V'_H\le V_{{\rm BB},H}-\varepsilon,
+ \qquad
+ \Gamma'_H\le\Gamma_{{\rm BB},H}-\frac{\varepsilon}{\rho_H}.
+                                                               \tag{GC6}
+\]
+
+The second statement follows by applying the same argument to the killed
+subprobabilities and dividing by their common positive mass. In particular
+this is an improvement of the true supported test supremum, not merely
+of a bound before final conditioning. Any objective \(fV+Wb\), with
+\(f>0\), improves by at least \(f\varepsilon\), since charge is fixed.
+The entire proof uses one explicitly defined probability before any test
+is chosen. It refutes optimality of the BBMST law in this larger global-cap
+class at every finite height. It does not give a gain uniform over all
+forbidden families, treat unrestricted old3/5/7 and11/13 inventories, or
+prove unrestricted noncoverage. These are ordinary probability and
+original-label pair estimates, not new Lean declarations.
+
+The [exact verifier](verify_pg1_global_cap_improvement.py) binds the canonical
+PG1 source and reconstructs the [certificate](pg1_global_cap_improvement_certificate.json).
+It checks the rational constants, cap slack and gap margins, five exact
+height fixtures, and 22,950 literal supported CRT points across heights1
+and2 under both laws, including unchanged charge and an actual change in
+the conditioned survivor law. Run from any directory:
+
+```sh
+python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_pg1_global_cap_improvement.py
+```
+
+These finite arithmetic checks do not enumerate the complete test domain
+or establish the universal height quantifier; those are proved in
+(GC2)--(GC6), including the full geometric tail.

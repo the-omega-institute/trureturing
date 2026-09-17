@@ -320,6 +320,21 @@ independent old test layouts at each depth. This obstruction does not
 cover the larger global cap on uncharged rows, changes of the reference
 thresholds, or unrestricted old inventories without the clean roots.
 
+The [global-cap survivor improvement](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-global-cap-perturbation-improves-the-actual-survivor-law-at-every-finite-height)
+uses that remaining slack. For the fixed PG1 center2 comb at17, transferring
+row mass `1/8192` at old survivor314 from globally clean roots to the good
+root2 preserves the old marginal, actual bad charge and survivor mass.
+One law, chosen before the test, strictly lowers both the physical
+complete-test supremum and the final conditioned supremum at every finite
+height. The former drops by at least
+`epsilon=49866777/40960000286720`; the latter drops by at least
+`epsilon/rho_H`, where the common survivor mass `rho_H>=4/17`.
+The ordinary proof covers all original labels and independent test layouts
+at every depth. Its exact certificate checks the constants and actual CRT
+laws, not the universal quantifiers. This refutes BBMST optimality in the
+larger global-cap class for this family; a gain over unrestricted old
+inventories and an unrestricted #7 conclusion remain open.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
