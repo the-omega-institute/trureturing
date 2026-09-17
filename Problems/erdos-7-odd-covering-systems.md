@@ -9371,6 +9371,22 @@ This uses domination in its proved direction, not substitution of the
 auxiliary moments into actual-law upper bounds. It does not extend to
 arbitrary original357 heights or complete the remaining frontier.
 
+An [all-seven-height extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-positive-actual-deficit-with-arbitrary-seven-heights)
+now removes the seven-height restriction in that bridge: every original
+357 part may divide `45*7^H`, for any finite H. The supported core is
+lifted, all high-seven forbidden and complete test labels are paid, and
+retained auxiliary mass is at least669289/869464. Hinge-based charges,
+including the full17 comparison tail, total less than0.249864067.
+Transporting capped nonnegative minorants gives, for every complete
+final test on the same actual AP13/killed17/19 law,
+`Delta81>1.721417864` and `Delta121>3.917246877`. The general formula
+keeps distinct budgets for omitted forbidden labels and complete test
+labels; absent forbidden moduli do not remove divisor-test labels.
+All11/13/17/19 heights and cofactors remain arbitrary. Original3-exponents
+above2,5-exponents above1, the unrestricted299.661 joint bound and the
+later-prime continuation remain open. This is an ordinary proof with
+exact rational verification, not a new Lean result.
+
 A [common old-block budget](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-common-old-block-budget-strengthens-the-actual-mask-certificate)
 now strengthens the actual MW interface. Each positive-current old block
 obeys the same G(g) square budget, giving a one-price joint integer

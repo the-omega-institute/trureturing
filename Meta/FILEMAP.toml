@@ -779,6 +779,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Complete seven-height support budgets and same-law positive deficits.
+pattern = "docs/reports/erdos7-odd-covering/high_seven_density_bridge_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Three nonnegative rational weights coupling the small-prime survivor densities.
 pattern = "docs/reports/erdos7-odd-covering/joint_density_certificate.json"
 kind = "data"
@@ -1637,6 +1647,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Pinned hinge consumer with complete high-seven and comparison-factor tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_high_seven_density_bridge.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Verifies the shared-density dual and the resulting four-prime head bound.
 pattern = "docs/reports/erdos7-odd-covering/verify_joint_density_certificate.py"
 kind = "program"
