@@ -76,6 +76,26 @@ def receipt(layer, status, **fields):
     print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True), flush=True)
 
 
+def snapshot_phase(observations, name, boundary, started=None, *, sizes=None):
+    """Best-effort snapshot costs; never used for reuse, budgets or verdicts."""
+    if observations is None:
+        return None
+    try:
+        if boundary == "start":
+            observations[name] = {"status": "entered-without-completion"}
+            return time.monotonic_ns()
+        now = time.monotonic_ns()
+        fields = {"status": "unavailable"}
+        if started is not None and now >= started:
+            fields = {"status": "completed", "elapsed_seconds": round((now - started) / 1_000_000_000, 6)}
+        if sizes is not None:
+            fields.update(file_count=len(sizes), material_bytes=sum(sizes.values()))
+        observations[name] = fields
+    except Exception:
+        pass
+    return None
+
+
 def accepted_current(root):
     """Consume the current producer's accepted handoff without rerunning it."""
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
@@ -277,7 +297,7 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def validate_cache_directory(directory, expected, *, small_files_first=False):
+def validate_cache_directory(directory, expected, *, small_files_first=False, observations=None):
     """Validate a complete cache data directory before publishing it.
 
     ``files(..., expected=...)`` validates the declared bytes and modes but
@@ -287,6 +307,7 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
     while keeping the declared member hash pass to one read. Empty directories
     are permitted because snapshot manifests intentionally register files only.
     """
+    shape_started = snapshot_phase(observations, "directory_shape", "start")
     if directory.is_symlink() or not directory.is_dir():
         raise CacheMaterialDifference("cache data is not a private directory", "invalid-layer-directory")
     validate_manifest(expected)
@@ -317,7 +338,11 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
                                       "extra-member" if extra else "missing-member", (extra or missing)[0])
     if small_files_first:
         expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
-    return files(directory, expected=expected, parallel=not small_files_first)
+    snapshot_phase(observations, "directory_shape", "finish", shape_started, sizes=actual)
+    hash_started = snapshot_phase(observations, "declared_material_hash", "start")
+    inventory = files(directory, expected=expected, parallel=not small_files_first)
+    snapshot_phase(observations, "declared_material_hash", "finish", hash_started, sizes=actual)
+    return inventory
 
 
 def move_validated_cache_data(cached, staged, expected):
@@ -369,21 +394,29 @@ def replace_restored_directory(staged, target, rollback_root):
 def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
+    observations = ({name: {"status": "not-entered"} for name in
+                     ("current_handoff_validation", "cache_lock_wait", "directory_shape", "declared_material_hash")}
+                    if layer in LAYERS else None)
     current_materials = None
     if current is not None and layer in ("dependency", "project"):
+        handoff_started = snapshot_phase(observations, "current_handoff_validation", "start")
         current_materials = current_lean_materials(root, *current)
+        snapshot_phase(observations, "current_handoff_validation", "finish", handoff_started)
         if current_materials is None:
-            metrics = {"save_disabled_reason": "current did not execute a successful Lean build"}
+            metrics = {"save_disabled_reason": "current did not execute a successful Lean build",
+                       "observations": observations}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
     difference = {}
     judge_donor = None
+    lock_started = snapshot_phase(observations, "cache_lock_wait", "start")
     with cache_guard(root, shared=True):
+        snapshot_phase(observations, "cache_lock_wait", "finish", lock_started)
         reason = (restored_save_reason(root, spec, layer, keys["partition"], difference,
-                                      current_materials=current_materials)
+                                      current_materials=current_materials, observations=observations)
                   if layer in ("dependency", "project") else None)
         if reason:
-            metrics = {"save_disabled_reason": reason}
+            metrics = {"save_disabled_reason": reason, "observations": observations}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
         if layer in EXECUTION_LAYERS:
@@ -417,6 +450,8 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     metrics = {"file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
                "largest_files": [{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
+    if observations is not None:
+        metrics["observations"] = observations
     if difference:
         metrics["snapshot_reason"] = difference
     if judge_donor is not None:
@@ -425,7 +460,7 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     return metrics
 
 
-def restored_save_reason(root, spec, layer, partition, difference=None, *, current_materials=None):
+def restored_save_reason(root, spec, layer, partition, difference=None, *, current_materials=None, observations=None):
     """Choose whether to omit an optional save of a successfully restored seed.
 
     An accepted current report with the donor's input attestation can retain a
@@ -460,7 +495,7 @@ def restored_save_reason(root, spec, layer, partition, difference=None, *, curre
                                                for item in manifest["files"]):
                 return "retained-restored-seed"
         target = root / spec["target"]
-        validate_cache_directory(target, manifest.get("files"), small_files_first=True)
+        validate_cache_directory(target, manifest.get("files"), small_files_first=True, observations=observations)
         return "unchanged"
     except CacheMaterialDifference as error:
         return changed(error.reason, error.path)
@@ -555,7 +590,8 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
                         raise ValueError("snapshot left no cache save window")
                     metrics = json.loads((staged / "metrics.json").read_text())
                 if "save_disabled_reason" in metrics:
-                    receipt(layer, "save-disabled", reason=metrics["save_disabled_reason"])
+                    receipt(layer, "save-disabled", reason=metrics["save_disabled_reason"],
+                            **({"observations": metrics["observations"]} if "observations" in metrics else {}))
                     continue
                 with cache_guard(root), tempfile.TemporaryDirectory(prefix=".snapshot-backup-", dir=target.parent) as backup:
                     previous = pathlib.Path(backup) / "previous"
