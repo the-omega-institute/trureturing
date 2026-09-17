@@ -30,6 +30,12 @@ public sealed class DeclaredTemplateReviewTests
             """,
     };
 
+    internal static int ManifestVersion(Dictionary<string, string> files)
+    {
+        using var manifest = JsonDocument.Parse(files["lean-report-inputs.json"]);
+        return manifest.RootElement.GetProperty("report_semantic_version").GetInt32();
+    }
+
     internal static Dictionary<string, string> Files(string seed = Seed, bool active = false)
     {
         var files = PolicyFiles();
@@ -72,7 +78,7 @@ public sealed class DeclaredTemplateReviewTests
             var own = path == Registration ? keys : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = 6, inputs,
+                schema_version = 1, compatibility_version = ManifestVersion(files), inputs,
                 inventory = own.Select(InformationTemplateDebtStore.KeyJson),
                 registered = own.Select(InformationTemplateDebtStore.KeyJson),
                 records = own.Select(key => new
@@ -139,6 +145,67 @@ public sealed class DeclaredTemplateReviewTests
                 && diagnostics.Any(d => d.Message.Contains("DTR-Inactive complete producer", StringComparison.Ordinal)),
             "[FAIL] same_version_changed_judge_bytes_preserve_binding_evidence: "
             + string.Join("; ", diagnostics.Select(d => d.Message)));
+    }
+
+    [Fact]
+    public void manifest_only_bump_accepts_seven()
+    {
+        var files = Files();
+        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
+            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
+        var error = Record.Exception(() =>
+        {
+            var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
+            Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
+        });
+        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_seven: " + error?.Message);
+    }
+
+    private static Exception? ReadChangedManifest(string? manifest, int compatibility)
+    {
+        var files = Files();
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
+        if (manifest is null) files.Remove("lean-report-inputs.json");
+        else files["lean-report-inputs.json"] = manifest;
+        foreach (var module in wire["modules"]!.AsArray())
+        {
+            var evidence = module!["information_templates"]!;
+            evidence["compatibility_version"] = compatibility;
+            // Keep source binding current so only version validation can reject.
+            foreach (var input in evidence["inputs"]!.AsArray())
+                if (manifest is not null && input!["path"]!.GetValue<string>() == "lean-report-inputs.json")
+                    input["sha256"] = Hash(manifest);
+        }
+        var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
+        return Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)));
+    }
+
+    [Fact]
+    public void bumped_manifest_rejects_six()
+    {
+        var manifest = PolicyFiles()["lean-report-inputs.json"].Replace(
+            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
+        var error = ReadChangedManifest(manifest, 6);
+        Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
+            "[FAIL] bumped_manifest_rejects_six: " + error?.Message);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("{}")]
+    [InlineData("{")]
+    [InlineData("[]")]
+    [InlineData("{\"report_semantic_version\":null}")]
+    [InlineData("{\"report_semantic_version\":\"7\"}")]
+    [InlineData("{\"report_semantic_version\":true}")]
+    [InlineData("{\"report_semantic_version\":0}")]
+    [InlineData("{\"report_semantic_version\":-1}")]
+    [InlineData("{\"report_semantic_version\":6.5}")]
+    public void invalid_manifest_version_rejected(string? manifest)
+    {
+        var error = ReadChangedManifest(manifest, 6);
+        Assert.True(error is FormatException && error.Message.Contains("DTR-ManifestVersion", StringComparison.Ordinal),
+            "[FAIL] invalid_manifest_version_rejected: " + error?.Message);
     }
 
     [Theory]
