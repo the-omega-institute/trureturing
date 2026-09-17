@@ -61,8 +61,8 @@ internal sealed class EqualityQueryScheduleNormalFormDocument : IScribeDocumentD
         Call("runPassiveProtocol", F.Id("equalityReadout"), tree, x);
     private static Formula Depth(Formula tree) => Call("length", Run(tree, X));
     private static Formula Identifies(Formula tree, Formula set) => Seq(
-        Forall, Sp, X, Sp, In, Sp, set, Comma, Sp,
-        Forall, Sp, Y, Sp, In, Sp, set, Comma, Sp,
+        Forall, Sp, X, Sp, InMacro, Sp, set, Comma, Sp,
+        Forall, Sp, Y, Sp, InMacro, Sp, set, Comma, Sp,
         Run(tree, X), Sp, Eq, Sp, Run(tree, Y), Sp, Rightarrow, Sp, X, Sp, Eq, Sp, Y);
     private static Formula Position(Formula size) => Call("min",
         Seq(Call("idxOf", L, X), Sp, Plus, Sp, D(1)),
@@ -76,7 +76,7 @@ internal sealed class EqualityQueryScheduleNormalFormDocument : IScribeDocumentD
         Seq(Forall, Sp, L, Colon, Sp, Call("List", A), Comma, Sp,
             Call("Nodup", L), Sp, Rightarrow),
         Seq(Open, Identifies(Scan, L), Close, Sp, Land),
-        Seq(Open, Forall, Sp, X, Sp, In, Sp, L, Comma, Sp,
+        Seq(Open, Forall, Sp, X, Sp, InMacro, Sp, L, Comma, Sp,
             Depth(Scan), Sp, Eq, Sp, Position(Call("length", L)), Close, Dot)
     ]));
 
@@ -90,9 +90,9 @@ internal sealed class EqualityQueryScheduleNormalFormDocument : IScribeDocumentD
         Seq(Exists, Sp, L, Colon, Sp, Call("List", A), Comma, Sp,
             Call("Nodup", L), Sp, Land, Sp, Call("toFinset", L), Sp, Eq, Sp, S, Sp, Land),
         Seq(Open, Identifies(Scan, S), Close, Sp, Land),
-        Seq(Open, Forall, Sp, X, Sp, In, Sp, S, Comma, Sp,
+        Seq(Open, Forall, Sp, X, Sp, InMacro, Sp, S, Comma, Sp,
             Depth(Scan), Sp, Eq, Sp, Position(Call("card", S)), Close, Sp, Land),
-        Seq(Open, Forall, Sp, X, Sp, In, Sp, S, Comma, Sp,
+        Seq(Open, Forall, Sp, X, Sp, InMacro, Sp, S, Comma, Sp,
             Depth(Scan), Sp, Leq, Sp, Depth(T), Close, Dot)
     ]));
 }
