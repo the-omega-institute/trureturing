@@ -1,0 +1,18 @@
+### 98.2 多步收缩精确等于占据扇区振幅
+
+对一个词 $$w$$，把所有合法边界路径的局部转移振幅相乘并求和，得到 `contraction`。项目定理 `contraction_eq_sector` 证明：当剩余长度与切口满足
+
+$$
+|a|=t+n,
+$$
+
+时，逐步收缩恰好等于占据扇区向量的分量：
+
+$$
+\boxed{
+\operatorname{contraction}(a,n,t,w,b)
+=
+\operatorname{sectorVector}_n(a-b,w).
+}
+$$
+
