@@ -489,7 +489,7 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
         material = {"a.olean": b"first material", "nested/z.olean": b"last material"}
         for layer in ("dependency", "project"):
             source, cached, manifest = self.restore_fixture(layer, material)
-            for failure in ("hash", "mode", "missing", "directory", "symlink", "parent-link",
+            for failure in ("hash", "mode", "missing", "directory", "fifo", "symlink", "parent-link",
                             "duplicate", "escape", "backslash", "invalid-sha", "invalid-mode", "empty", "copy-error"):
                 with self.subTest(layer=layer, failure=failure):
                     saved = cached / "data/nested/z.olean"
@@ -499,10 +499,12 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                         saved.write_bytes(b"corrupt")
                     elif failure == "mode":
                         saved.chmod(0o755)
-                    elif failure in ("missing", "directory", "symlink"):
+                    elif failure in ("missing", "directory", "fifo", "symlink"):
                         saved.unlink()
                         if failure == "directory":
                             saved.mkdir()
+                        elif failure == "fifo":
+                            os.mkfifo(saved)
                         elif failure == "symlink":
                             saved.symlink_to("../a.olean")
                     elif failure == "parent-link":
