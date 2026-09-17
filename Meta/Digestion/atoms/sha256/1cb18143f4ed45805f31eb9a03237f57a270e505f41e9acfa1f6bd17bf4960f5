@@ -1,0 +1,63 @@
+**定理 68.6（有限维下的有限测试界）。** 令 $d=\dim H$。
+
+若 $d=0$，则 $H=0$，两个商均为零，且 $\tau_{\mathrm{fb}}=\tau_{\mathrm{init}}=0$。
+
+若 $d>0$，则
+$$
+N=\bigcap_{j=0}^{d-1}\ker(BD^j),
+\qquad
+R=\operatorname{span}\{D^jCv:0\le j<d,\ v\in V\}.
+$$
+此外，有限反馈尾存在当且仅当
+$$
+M_d=M_{d+1}=\cdots=M_{2d-1}=0.
+$$
+在此情形
+$$
+\tau_{\mathrm{fb}}\le \dim Q_{\mathrm{fb}}\le d,
+$$
+并且
+$$
+\tau_{\mathrm{fb}} =\min\Bigl\{0\le m\le d:
+M_m=M_{m+1}=\cdots=M_{m+d-1}=0\Bigr\}.
+$$
+同理，任意隐藏初态的统一强制终止存在当且仅当
+$$
+BD^d=BD^{d+1}=\cdots=BD^{2d-1}=0
+$$
+作为 $H\to V$ 的映射成立；存在时
+$$
+\tau_{\mathrm{init}}\le \dim Q_{\mathrm{init}}\le d,
+$$
+且
+$$
+\tau_{\mathrm{init}} =\min\Bigl\{0\le m\le d:
+BD^m=BD^{m+1}=\cdots=BD^{m+d-1}=0\Bigr\}.
+$$
+
+**证明。** 设 $D$ 的特征多项式为
+$$
+\chi_D(t)=t^d-a_{d-1}t^{d-1}-\cdots-a_0.
+$$
+Cayley--Hamilton 定理给出
+$$
+D^d=\sum_{r=0}^{d-1}a_rD^r.
+$$
+因此每个 $D^j$（$j\ge d$）都是 $I,D,\ldots,D^{d-1}$ 的线性组合。这立即给出 $R$ 的有限生成公式；若 $h$ 被 $BD^j$ 在 $0\le j<d$ 全部杀掉，则同一线性组合也使所有 $BD^jh$（$j\ge d$）为零，故得到 $N$ 的有限交公式。
+
+对任意 $q\ge0$，左乘 $BD^q$ 并右接 $C$ 得
+$$
+M_{q+d}=\sum_{r=0}^{d-1}a_rM_{q+r}.
+$$
+所以任意连续 $d$ 个 $M$-项一旦全为零，其后的项由归纳也全为零。若有限反馈尾存在，前一定理给出其截止等于 $Q_{\mathrm{fb}}$ 上幂零指数；幂零算子在 $r$-维空间上的幂零指数至多为 $r$，而
+$$
+r=\dim Q_{\mathrm{fb}}\le d,
+$$
+故 $\tau_{\mathrm{fb}}\le d$，从而 $M_d,\ldots,M_{2d-1}$ 必全为零。反之，这一长度为 $d$ 的零块通过上述递推强制全部后继项为零。对任意 $m\le d$，同样的递推说明“$M_m,\ldots,M_{m+d-1}$ 全零”恰好意味着 $m$ 已是一个反馈截止，因此取最小值得到公式。
+
+去掉右端的 $C$ 得
+$$
+BD^{q+d}=\sum_{r=0}^{d-1}a_rBD^{q+r},
+$$
+完全相同的论证给出初始强制的有限测试与最小截止。证毕。
+

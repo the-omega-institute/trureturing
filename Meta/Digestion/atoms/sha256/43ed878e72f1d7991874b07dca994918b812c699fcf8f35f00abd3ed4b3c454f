@@ -1,0 +1,38 @@
+**定理 68.5（反馈尾、初始强制与原算子幂零性严格分离）。** 下列三个现象均可发生。
+
+(a) 反馈记忆恒为零而初始隐藏强制永不终止：取 $V=H=\Bbbk$，
+$$
+A=B=D=\operatorname{id},\qquad C=0.
+$$
+则 $M_j=BD^jC=0$ 对全部 $j$ 成立，而
+$$
+BD^nh_0=h_0
+$$
+对任意 $n$ 及任意 $h_0\ne0$ 都非零。
+
+(b) $D$ 本身不幂零而可见反馈尾有限：取 $V=\Bbbk$、$H=\Bbbk^2$，
+$$
+C(v)=(v,0),\qquad B(x,y)=x,\qquad D(x,y)=(0,y).
+$$
+则 $D(0,1)=(0,1)$，故 $D$ 不幂零；但是
+$$
+M_0=\operatorname{id}_{\Bbbk},\qquad M_j=0\quad(j\ge1),
+$$
+所以 $\tau_{\mathrm{fb}}=1$。
+
+(c) 单条闭环轨迹可以把无限反馈核完全遮蔽：取 $V=H=\Bbbk$，
+$$
+A=0,\qquad B=C=D=\operatorname{id},
+$$
+并取 $y_0=h_0=0$。则闭环轨迹恒为零，但
+$$
+M_j=BD^jC=\operatorname{id}
+$$
+对每个 $j$ 都非零，故不存在有限反馈尾。
+
+**证明。** (a) 因 $C=0$，所有 $M_j$ 都为零；而 $B=D=\operatorname{id}$ 给出 $BD^n=\operatorname{id}$。这里 $R=0$，所以反馈商为零，但 $N=0$，故初始商为 $H$，其诱导 $D$ 为恒等映射。
+
+(b) 由 $DC=0$ 得 $M_j=0$ 对 $j\ge1$，而 $M_0=BC=\operatorname{id}$。同时 $(0,1)$ 是 $D$ 的不动向量，所以 $D$ 不幂零。事实上 $N=\operatorname{span}\{(0,1)\}$、$R=\operatorname{span}\{(1,0)\}$，故可达的可见商上诱导 $D$ 为零；不可见的非幂零方向被商掉。
+
+(c) 从零初态按线性更新归纳得 $y_n=h_n=0$；另一方面 $BD^jC=\operatorname{id}$ 对全部 $j$ 成立。故仅观察这一条轨迹上的抵消不能推出 Markov 参数尾消失，必要性必须按任意输入串的输入输出命题判断。证毕。
+
