@@ -36,8 +36,9 @@ public sealed class InformationTemplateDebtWriterTests
         var head = Git("rev-parse", "HEAD");
         var gateway = new GitRepositoryGateway(repository.Path);
         Assert.Empty(Git("status", "--porcelain"));
-        Assert.Contains("history comparison would be vacuous",
-            Assert.Throws<InvalidOperationException>(() => gateway.Prepare(head)).Message);
+        var prepared = gateway.Prepare(head);
+        Assert.Equal(head, prepared.Revision);
+        Assert.Empty(prepared.Changes.Paths);
         var report = Path.Combine(artifacts.Path, "seed-report.json");
         File.WriteAllBytes(report, Trureturing.Truth.StructuredCanonicalWriter.WriteJson(
             "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v2\"}").AsSpan());
@@ -55,14 +56,24 @@ public sealed class InformationTemplateDebtWriterTests
         Assert.Equal(activation.ToArray(), File.ReadAllBytes(activationPath));
         Assert.Empty(Git("status", "--porcelain"));
         var discharge = InformationTemplateDebtWriter.Run(repository.Path, gateway,
-            ["discharge", "--protected-base", head]);
+            ["discharge", "--protected-base", head, "--seed-lean-report", report]);
         Assert.False(discharge.Success);
-        Assert.Contains("history comparison would be vacuous", discharge.Error);
+        Assert.Contains("--candidate-lean-report is required for discharge", discharge.Error);
+        Assert.Equal(activation.ToArray(), File.ReadAllBytes(activationPath));
+        Assert.Empty(Git("status", "--porcelain"));
         Git("checkout", "--detach", seed);
+        var nonancestorPrepared = gateway.Prepare(head);
+        Assert.Equal(head, nonancestorPrepared.Revision);
+        Assert.Contains(nonancestorPrepared.Changes.Paths, path => path.Value == InformationTemplateDebtStore.ActivationPath);
+        Assert.False(File.Exists(activationPath));
         var nonancestor = InformationTemplateDebtWriter.Run(repository.Path, gateway,
             ["initialize", "--protected-base", head, "--seed-lean-report", report]);
         Assert.False(nonancestor.Success);
-        Assert.Contains("protected base must be an ancestor of HEAD", nonancestor.Error);
+        Assert.Contains(active
+            ? "DTR-Seed: initialization requires the original protected inactive seed"
+            : "DTR-Activation: writer cannot change activation", nonancestor.Error);
+        Assert.False(File.Exists(activationPath));
+        Assert.Empty(Git("status", "--porcelain"));
     }
 
     private static InformationTemplateUniverse Universe(InformationTemplateBindingState state)

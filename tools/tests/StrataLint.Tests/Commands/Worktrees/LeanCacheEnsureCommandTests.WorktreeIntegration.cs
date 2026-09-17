@@ -3,10 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// LeanCacheEnsureCommandTests 的 worktree 集成片段。它此前寄居在
-// Commands/WorktreeCommandTests.cs —— 一个以**另一个测试类**命名的文件里,
-// 而该类的正宗归宿是 Commands/Worktrees/。
-// 搬迁同时给宿主买回余量:796 行(离 800 硬线仅 4 行)→ 548 行。
+// LeanCacheEnsureCommand 的 worktree 集成测试。
 
 public sealed partial class LeanCacheEnsureCommandTests
 {
