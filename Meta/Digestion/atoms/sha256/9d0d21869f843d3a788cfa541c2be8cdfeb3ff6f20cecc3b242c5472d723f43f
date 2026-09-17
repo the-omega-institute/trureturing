@@ -1,0 +1,77 @@
+**定理 66.9（任意关系律的全部 Borel lifts、唯一补不变 lift 与公平锚平稳性）。**
+
+令 $\mu$ 为 $Y_k$ 上任意 Borel 概率。对任意 Borel 函数
+$$
+q:Y_k\longrightarrow[0,1],
+$$
+定义 $\{0,1\}\times Y_k$ 上的概率 $\eta_q$：对每个 Borel 集 $E\subseteq\{0,1\}\times Y_k$，
+$$
+\eta_q(E)
+:=
+\int_{Y_k}
+\left(
+q(c)\mathbf 1_E(0,c)
++(1-q(c))\mathbf 1_E(1,c)
+\right)\,d\mu(c).
+$$
+等价地可写成
+$$
+\eta_q(db,dc) = \bigl(q(c)\delta_0(db)+(1-q(c))\delta_1(db)\bigr)\mu(dc).
+$$
+并定义
+$$
+\lambda_q:=(\Theta^{-1})_*\eta_q.
+$$
+则
+$$
+R_*\lambda_q=\mu.
+$$
+
+反过来，若 $\lambda$ 是 $K_{k,k}$ 上任意满足
+$$
+R_*\lambda=\mu
+$$
+的 Borel 概率，则存在 Borel 函数 $q:Y_k\to[0,1]$，在 $\mu$-几乎处处意义下唯一，使
+$$
+\Theta_*\lambda=\eta_q.
+$$
+两个 Borel 函数 $q,q'$ 给出同一个 lift 当且仅当
+$$
+q=q'\qquad\mu\text{-几乎处处}.
+$$
+其中 $q$ 可取为正则条件概率的一个版本：
+$$
+q(c)=\Pr_\lambda(x_0=0\mid R(x)=c)
+\qquad\mu\text{-几乎处处}.
+$$
+
+在这些 lifts 中，存在唯一满足
+$$
+C_*\lambda=\lambda
+$$
+的概率，记为 $\lambda_{\mathrm{fair}}$。它由
+$$
+q(c)=\frac12
+\qquad\mu\text{-几乎处处}
+$$
+给出，即若
+$$
+U:=\frac12(\delta_0+\delta_1),
+$$
+则
+$$
+\Theta_*\lambda_{\mathrm{fair}}=U\otimes\mu.
+$$
+
+这一公平锚 lift 满足精确平稳性判据
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}
+\quad\Longleftrightarrow\quad
+\sigma_*\mu=\mu.
+$$
+此外，对每个 $j\ge0$，在 $\lambda_{\mathrm{fair}}$ 下
+$$
+\Pr(x_j=0)=\Pr(x_j=1)=\frac12,
+$$
+并且随机变量 $x_j$ 与整个关系记录 $R(x)$ 独立；但不同位置的原位数字一般并不相互独立。
+

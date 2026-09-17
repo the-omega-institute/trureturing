@@ -1,0 +1,125 @@
+**证明。**
+
+先证由 $q$ 构造的测度确为 lift。由定义，$\eta_q$ 的总质量为
+$$
+\int_{Y_k}(q(c)+1-q(c))\,d\mu(c)=1,
+$$
+并且它的第二坐标边缘是 $\mu$。又因为
+$$
+R\circ\Theta^{-1}(b,c)=c,
+$$
+所以
+$$
+R_*\lambda_q
+=R_*(\Theta^{-1})_*\eta_q
+=\mu.
+$$
+若 $q=q'$ 在 $\mu$-几乎处处相等，则 $\eta_q=\eta_{q'}$，从而 $\lambda_q=\lambda_{q'}$。反之，若 $\lambda_q=\lambda_{q'}$，对两边施加 $\Theta_*$ 得 $\eta_q=\eta_{q'}$。
+
+现取任意满足 $R_*\lambda=\mu$ 的 $\lambda$，令
+$$
+\widetilde\lambda:=\Theta_*\lambda.
+$$
+定义 $Y_k$ 上有限测度
+$$
+\nu_0(A):=\widetilde\lambda(\{0\}\times A),
+\qquad
+\nu_1(A):=\widetilde\lambda(\{1\}\times A).
+$$
+由于 $\widetilde\lambda$ 的第二边缘是 $\mu$，有
+$$
+\nu_0+\nu_1=\mu.
+$$
+因此 $\nu_0\ll\mu$。Radon--Nikodym 定理给出 Borel 版本
+$$
+q:=\frac{d\nu_0}{d\mu}.
+$$
+它满足 $0\le q\le1$ 在 $\mu$-几乎处处成立；在一个 $\mu$-零测集上修改其值后，可令 $q$ 处处取值于 $[0,1]$。同时
+$$
+\frac{d\nu_1}{d\mu}=1-q.
+$$
+于是
+$$
+\widetilde\lambda=\eta_q.
+$$
+Radon--Nikodym 导数的唯一性给出 $q$ 的 $\mu$-几乎处处唯一性，并且若 $\eta_q=\eta_{q'}$，取集合 $\{0\}\times A$ 可知
+$$
+\int_A q\,d\mu=\int_A q'\,d\mu
+$$
+对每个 Borel $A$ 成立，所以 $q=q'$ $\mu$-几乎处处。由于这里的空间是标准 Borel，正则条件概率存在，因此 $q$ 可解释为所写条件锚权重的一个版本。
+
+在锚定坐标中，补变换对应
+$$
+J(b,c):=(1-b,c),
+\qquad
+\Theta\circ C=J\circ\Theta.
+$$
+若 $C_*\lambda=\lambda$，则 $J_*\widetilde\lambda=\widetilde\lambda$，所以对每个 Borel 集 $A\subseteq Y_k$，
+$$
+\nu_0(A)=\nu_1(A).
+$$
+结合 $\nu_0+\nu_1=\mu$，得到
+$$
+\nu_0=\nu_1=\frac12\mu,
+$$
+即 $q=1/2$ $\mu$-几乎处处。反之，$U\otimes\mu$ 显然对 $J$ 不变，所以补不变 lift 存在且唯一。
+
+再证平稳性。若 $(B,C)\sim U\otimes\mu$，则条件于 $C=c$，随机变量
+$$
+B\oplus a(c)
+$$
+仍是公平位。因此对任意有界 Borel 函数 $h$，
+$$
+\int h\,dF_*(U\otimes\mu) = \int\frac{h(0,\sigma c)+h(1,\sigma c)}2\,d\mu(c).
+$$
+这正是
+$$
+F_*(U\otimes\mu)=U\otimes(\sigma_*\mu).
+$$
+结合
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F
+$$
+可知，若 $\sigma_*\mu=\mu$，则
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}.
+$$
+反过来，若公平锚 lift 平稳，则利用
+$$
+R\circ\sigma=\sigma\circ R
+$$
+得到
+$$
+\sigma_*\mu
+=\sigma_*R_*\lambda_{\mathrm{fair}}
+=R_*\sigma_*\lambda_{\mathrm{fair}}
+=R_*\lambda_{\mathrm{fair}}
+=\mu.
+$$
+
+最后，在锚定坐标中对每个 $j\ge0$ 有
+$$
+x_j = B\oplus\bigoplus_{\ell=0}^{j-1}(1-c_\ell),
+$$
+其中 $j=0$ 时空异或约定为 $0$。条件于整个 $c$，右侧只是公平位 $B$ 与一个确定常数异或，所以
+$$
+\Pr(x_j=0\mid c)=\Pr(x_j=1\mid c)=\frac12
+$$
+对 $\mu$-几乎每个 $c$ 成立。因此对每个 Borel 集 $A\subseteq Y_k$ 与 $a\in\{0,1\}$，
+$$
+\Pr(x_j=a,\ R(x)\in A)=\frac12\mu(A)
+=\Pr(x_j=a)\Pr(R(x)\in A).
+$$
+这既证明每个 $x_j$ 公平，也证明 $x_j$ 与整个关系记录独立。
+
+不同 $x_j$ 不必相互独立。取
+$$
+\mu=\delta_{0^\infty}.
+$$
+公平 lift 在两个交替序列上各给质量 $1/2$，并且
+$$
+x_{j+1}=1-x_j
+\qquad\text{几乎必然}.
+$$
+故相邻原位数字完全反相关，不能相互独立。证毕。
+
