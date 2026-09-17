@@ -111,11 +111,13 @@ def symlink_target(entry):
     return target
 
 
-def load_filemap(raw, read_include=None, document_bytes=None):
+def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
     if not raw or raw.startswith(b"\xef\xbb\xbf") or b"\r" in raw or not raw.endswith(b"\n"):
         raise ValueError("FILEMAP must be strict UTF-8 without BOM/CR and end in LF")
     data = tomllib.loads(raw.decode("utf-8"))
-    root_keys = {"schema_version", "resources", "residence_policy"}
+    schema = data.get("schema_version")
+    legacy = historical and schema == 2
+    root_keys = {"schema_version", "residence_policy"} | (set() if legacy else {"resources"})
     if "files" in data:
         root_keys.add("files")
     if "include" in data:
@@ -123,7 +125,7 @@ def load_filemap(raw, read_include=None, document_bytes=None):
     if "files" not in data and "include" not in data:
         raise ValueError("FILEMAP requires files or include")
     exact(data, root_keys, FILEMAP)
-    if type(data["schema_version"]) is not int or data["schema_version"] != 4:
+    if type(schema) is not int or (schema != 4 and not legacy):
         raise ValueError("FILEMAP schema_version must be 4")
     documents = [(FILEMAP, raw, data.get("files"))]
     if "include" in data:
@@ -143,7 +145,7 @@ def load_filemap(raw, read_include=None, document_bytes=None):
                 raise ValueError(include_path + ": must be strict UTF-8 without BOM/CR and end in LF")
             fragment = tomllib.loads(included.decode("utf-8"))
             exact(fragment, {"schema_version", "files"}, include_path)
-            if type(fragment["schema_version"]) is not int or fragment["schema_version"] != data["schema_version"]:
+            if type(fragment["schema_version"]) is not int or fragment["schema_version"] != schema:
                 raise ValueError(include_path + ": schema_version must match the FILEMAP root")
             documents.append((include_path, included, fragment["files"]))
     if document_bytes is not None:
@@ -157,9 +159,9 @@ def load_filemap(raw, read_include=None, document_bytes=None):
     if type(count) is not int or not 0 <= count <= 2147483647:
         raise ValueError("invalid known_violation_count")
     resources = {}
-    if not isinstance(data["resources"], list):
+    if not legacy and not isinstance(data["resources"], list):
         raise ValueError("resources must be an array")
-    for resource in data["resources"]:
+    for resource in data.get("resources", []):
         exact(resource, {"id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials"}, "resource")
         rid = name(resource["id"], "resource id")
         if rid in resources or resource["stage"] not in STAGES:
@@ -208,8 +210,10 @@ def load_filemap(raw, read_include=None, document_bytes=None):
         if not isinstance(entry, dict):
             raise ValueError("file row must be a table")
         where = entry.get("pattern", "file row") if isinstance(entry, dict) else "file row"
-        keys = {"pattern", "require", "kind", "admission_plane", "produced_by", "consumed_by",
+        keys = {"pattern", "kind", "admission_plane", "produced_by", "consumed_by",
                 "verified_by", "artifact_id", "runtime_disposition"}
+        if not legacy:
+            keys.add("require")
         generated = entry.get("kind") == "generated"
         local = entry.get("runtime_disposition") == "run-local"
         keyed = generated and entry.get("artifact_id") == "none" and "*" in str(where)
@@ -224,7 +228,8 @@ def load_filemap(raw, read_include=None, document_bytes=None):
         exact(entry, keys, where)
         glob(entry["pattern"])
         patterns.append(entry["pattern"])
-        names(entry["require"], where + ":require", resources)
+        if not legacy:
+            names(entry["require"], where + ":require", resources)
         if entry["kind"] not in {"truth", "program", "data", "generated", "ledger"} or entry["admission_plane"] not in {"judge", "content"}:
             raise ValueError(f"{where}: invalid kind/admission_plane")
         for key in ("produced_by", "artifact_id"):
@@ -670,7 +675,7 @@ def make_plan(root, commit, changes_file):
     if before_commit is not None:
         def read_before(p):
             return committed_file(root, before_commit, p)
-        before_manifest = load_filemap(read_before(FILEMAP), read_before)
+        before_manifest = load_filemap(read_before(FILEMAP), read_before, historical=True)
         before_entries = [(glob(e["pattern"]), e) for e in before_manifest["files"]]
     def match(p, registered_entries=entries):
         matches = [e for g, e in registered_entries if g.fullmatch(p)]
@@ -707,8 +712,12 @@ def make_plan(root, commit, changes_file):
         entry = match(p, before_entries) if removed and before_entries is not None else match(p)
         if entry["runtime_disposition"] == "run-local":
             raise ValueError(f"{p}: run-local path cannot be a committed change")
-        required.update(entry["require"])
-        scope.append({"path": p, "pattern": entry["pattern"], "require": entry["require"]})
+        endpoint_require = entry.get("require")
+        if endpoint_require is None:
+            candidate_matches = [candidate for candidate_glob, candidate in entries if candidate_glob.fullmatch(p)]
+            endpoint_require = candidate_matches[0]["require"] if len(candidate_matches) == 1 else sorted(resources)
+        required.update(endpoint_require)
+        scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require})
     roots = [r for r in required if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
     selected = closure(resources, roots)
     active = [resources[r] for r in selected]

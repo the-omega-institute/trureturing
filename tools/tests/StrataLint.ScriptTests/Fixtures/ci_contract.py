@@ -196,6 +196,51 @@ runtime_disposition = "committed-source"
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
 
+    def test_resolver_reads_schema_two_filemap_only_for_the_immutable_base(self):
+        self.env["GITHUB_EVENT_NAME"] = "pull_request"
+        self.git("init", "-q")
+        (self.root / "Meta").mkdir()
+        legacy = '''schema_version = 2
+[residence_policy]
+case_id = "fixture"
+desired = "registered"
+known_violation_count = 0
+status = "compliant"
+[[files]]
+pattern = "**"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["fixture"]
+verified_by = ["fixture"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+'''
+        current = legacy.replace("schema_version = 2", "schema_version = 4\nresources = []").replace(
+            'pattern = "**"\n', 'pattern = "**"\nrequire = []\n')
+        (self.root / "Meta/FILEMAP.toml").write_text(legacy)
+        self.git("add", "Meta/FILEMAP.toml")
+        base = self.commit("schema two base")
+        self.git("checkout", "-qb", "topic")
+        (self.root / "Meta/FILEMAP.toml").write_text(current)
+        (self.root / "lake-manifest.json").write_text("{}")
+        self.git("add", "Meta/FILEMAP.toml")
+        head = self.commit("schema four candidate")
+        merge = self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                         "commit-tree", "HEAD^{tree}", "-p", base, "-p", head, "-m", "merge")
+        self.git("checkout", "--detach", merge)
+        self.env["GITHUB_SHA"] = merge
+
+        result = self.run_tool(CI, "resolve", "--head", head)
+
+        self.assertEqual(0, result.returncode, result.stderr)
+        plan = json.loads((self.root / "build/ci/plan.json").read_text())
+        self.assertEqual(base, plan["base"])
+        self.assertEqual([], plan["declared_require"])
+        with self.assertRaises(ValueError):
+            sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+            importlib.import_module("ci_plan").load_filemap(legacy.encode())
+
     def test_parentless_checkout_needs_no_base_or_remote(self):
         self.git("init", "-q")
         commit = self.commit("parentless")

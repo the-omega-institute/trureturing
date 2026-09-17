@@ -18,6 +18,7 @@ public sealed class LeanCacheInputScriptTests
 
     [Theory]
     [InlineData("Contracts.test_resolver_fixes_merge_and_first_parent_before_merge_ref_moves")]
+    [InlineData("Contracts.test_resolver_reads_schema_two_filemap_only_for_the_immutable_base")]
     [InlineData("Contracts.test_parentless_checkout_needs_no_base_or_remote")]
     [InlineData("Contracts.test_reusable_input_cannot_fall_back_to_event_sha_when_empty")]
     [InlineData("Contracts.test_native_checkout_accepts_empty_actions_input_context")]
