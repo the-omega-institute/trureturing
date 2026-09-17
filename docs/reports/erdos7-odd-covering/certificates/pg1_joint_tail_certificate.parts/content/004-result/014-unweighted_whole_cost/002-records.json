@@ -1,0 +1,95 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000000/single.json",
+        "sha256": "84dc7a0f31d9bbc0fced8e7aa192104a04856698cc562e39044553bfec98301c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000001/single.json",
+        "sha256": "7ac342a7d1882566c645a2b87294aa018907b8958fe48e02ec8e1bf87ceaa9c3",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000002/single.json",
+        "sha256": "5963422eb5f793cc8c4f1f3e9a451c7d1a6637dafb9280f66ab4745b7e980018",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000003/single.json",
+        "sha256": "bce3d488d91fe15c27e5d697bb195807bb49541c448074291b92a5d500e1271b",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000004/single.json",
+        "sha256": "63ea5464af85a10ad12ed6dd437d9db4ce989d1faedc8d3b2179871b0b697060",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000005/single.json",
+        "sha256": "aa59776ad7b499ae3ba0bf0aeccd983fd515554af74ac4e6d69699ae4286bd87",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000006/single.json",
+        "sha256": "e1911f714ccea6a193aea1f9e6f350114b7927aa13a5c64f9e5909c0f922784f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000007/single.json",
+        "sha256": "cbd4026c7da991fb9d284625d0dfb3ea531e0bb258311cf4b60a4338107ac500",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000008/single.json",
+        "sha256": "91bd9b7ff5bd2643c5bbcf8f6f34a4146732f3bdfd052fd2e01e65baf2ff8c2d",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/004-result/014-unweighted_whole_cost/002-records/000009/single.json",
+        "sha256": "5f11a3718fca09c66c597160d8d0f8edcf858793e50eed377759672cccd4ff84",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "count": {
+    "kind": "inline",
+    "value": 120
+  },
+  "positive_count": {
+    "kind": "inline",
+    "value": 79
+  },
+  "best_thresholds": {
+    "kind": "inline",
+    "value": [
+      "4",
+      "6"
+    ]
+  },
+  "rows": {
+    "path": "content/014-endpoint_search/003-rows.json",
+    "sha256": "780a8db8e8ec3a972a7be29b4886601f2619ee2d19eb26852d1632b8a438191d",
+    "kind": "array"
+  }
+}
