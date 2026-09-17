@@ -28,7 +28,41 @@ Divisibility is in the integers. Set membership enforces distinct moduli;
 there is no bound on their sizes, exponents, number, or total prime support.
 A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
-16 September 2026. The results below do not settle this unrestricted assertion.
+17 September 2026. The results below do not settle this unrestricted assertion.
+
+An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#an-arbitrary-residue-supported-seed-below256-after13)
+now gives `Gamma13<=42035473165849976389/171474522380088889<245.141218`
+for every finite family supported on `{3,5,7,11,13}`, with all original
+heights, residues and test labels retained. It starts from the uniform
+complete actual 3/5/7 survivor law, applies pure-survivor kernels at
+thresholds 4 and 6 for 11 and 13, and conditions once. The proved actual
+survival lower bound is greater than 0.344319. This seed is below the
+first scalar-17 positivity threshold 256 and supplies a concrete supported
+six-prime law with `Gamma17<8014.263`; the supplied bound still does not
+continue through 19. This is an ordinary proof with exact arithmetic,
+not an unrestricted-tail theorem or a literature-priority claim.
+
+A [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
+for the same arbitrary five-prime forbidden-family domain has an explicit
+height-uniform Haar density cap and fourth-moment bound. Its
+[finite-core approximation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-finite-core-approximation-of-the-actual-supported-law-through13)
+controls the complete `Gamma2` error by less than 1, 0.1 or 0.01 at
+uniform original-exponent cutoffs 20, 24 or 28, respectively. Every
+omitted forbidden class and test label is included in a convergent tail.
+This approximation concerns its specified full-Haar law; its numerical
+bounds are not combined with the different pure-survivor law above.
+The finite core maxima over arbitrary residue families have not been
+computed, and unrestricted Erdős #7 remains open.
+
+For the new supported13 law, a [weighted forbidden-mask comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#weighted-forbidden-mask-tails-for-the-actual-ap46-restart)
+controls the subsequent pure-survivor17/8 and19/8 kernels. Retaining old
+cofactor exponents through20 and current forbidden depths through8 gives
+whole-cost error below0.377 at W=483, with all original tests still present.
+It is sufficient to prove the corresponding reference joint bound with that
+margin; this reference bound remains unresolved. The comparison truncates
+only the two later forbidden masks, not the incoming supported13 law or
+the test inventory, and uses neither the PP6 full-Haar17 step nor the AO
+finite-core approximation.
 
 The complete star head defined below **cannot be completed by any odd tail**
 whose primes exceed 73, at any positive head heights and without restrictions

@@ -1,0 +1,1161 @@
+{
+  "schema": "erdos7-finite-core-actual-old-law-v1",
+  "source_sha256": {
+    "verify_pg1_lifted_global_cap.py": "346eb74a328a9250be386dc5f0ef3be321e416451e829c5ac17e94200e4b21c2",
+    "uniform_gamma_cofactor_certificate.json": "f5a27165cc7f2c28474370814a81be2c5d17a053673d192303b47c7072462002",
+    "star_block_obstruction_certificate.json": "a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907"
+  },
+  "ordinary_source_commit": "0355c3cc98f5bd10e03b6d71108d820f56ebbf89",
+  "scope": "Every arbitrary finite original forbidden family on primes3,5,7,11,13, at most one residue per original modulus. Start from uniform complete actual357 survivors, apply full-Haar T4 kernels at11 and13 with delta=1/2, then condition on complete actual survival. All original test labels remain present in the target Gamma2.",
+  "verification_scope": "Exact constants and finite fixtures; ordinary CM8/SD/T4 and the adjacent continuity proof carry universal heights and layouts. The family-specific finite core law and its maximum are not enumerated by this certificate.",
+  "construction": {
+    "Gamma357": "3849/106",
+    "ambient_357_density_lower": "53/432",
+    "source_Haar_density_upper": "432/53",
+    "physical_J11": "157809/2650",
+    "physical_J13": "578633/6360",
+    "charge11_upper": "3849/10600",
+    "charge13_upper": "52603/127200",
+    "actual_survivor_mass_lower": "28409/127200",
+    "physical_density_upper": "1728/53",
+    "final_supported_density_upper": "4147200/28409",
+    "final_supported_Gamma2_upper": "11473869/28409"
+  },
+  "Haar_moments": {
+    "prime_order": [
+      3,
+      5,
+      7,
+      11,
+      13
+    ],
+    "fourth_factors": [
+      "30",
+      "285/32",
+      "140/27",
+      "1914/625",
+      "2275/864"
+    ],
+    "complete_second": "7007/480",
+    "complete_fourth": "19304285/1728",
+    "final_law_fourth_from_density": "46330284000/28409",
+    "plus_current17_Haar_fourth": "37739877175/1572864",
+    "final_law_plus_current17_fourth_from_density": "25474417093125/7272704"
+  },
+  "admissible_law_moments": {
+    "initial_Haar_fourth_357": "16625/12",
+    "initial_fourth_after_unit_floor": "598121/53",
+    "physical_fourth13": "3530785420609/14310000",
+    "supported_fourth_after_unit_floor": "7061548613243/6392025",
+    "quartic_transfer": "K_new<=K_old*(1+c*(F4(p)-1)); c=2 for the full-Haar11 and13 steps.",
+    "literal_prefix_fixtures": [
+      {
+        "prime": 3,
+        "height": 0,
+        "power": 2,
+        "direct": "1",
+        "infinite_tail": "2"
+      },
+      {
+        "prime": 3,
+        "height": 0,
+        "power": 3,
+        "direct": "1",
+        "infinite_tail": "29/4"
+      },
+      {
+        "prime": 3,
+        "height": 0,
+        "power": 4,
+        "direct": "1",
+        "infinite_tail": "29"
+      },
+      {
+        "prime": 3,
+        "height": 1,
+        "power": 2,
+        "direct": "2",
+        "infinite_tail": "1"
+      },
+      {
+        "prime": 3,
+        "height": 1,
+        "power": 3,
+        "direct": "10/3",
+        "infinite_tail": "59/12"
+      },
+      {
+        "prime": 3,
+        "height": 1,
+        "power": 4,
+        "direct": "6",
+        "infinite_tail": "24"
+      },
+      {
+        "prime": 3,
+        "height": 2,
+        "power": 2,
+        "direct": "23/9",
+        "infinite_tail": "4/9"
+      },
+      {
+        "prime": 3,
+        "height": 2,
+        "power": 3,
+        "direct": "49/9",
+        "infinite_tail": "101/36"
+      },
+      {
+        "prime": 3,
+        "height": 2,
+        "power": 4,
+        "direct": "119/9",
+        "infinite_tail": "151/9"
+      },
+      {
+        "prime": 5,
+        "height": 0,
+        "power": 2,
+        "direct": "1",
+        "infinite_tail": "7/8"
+      },
+      {
+        "prime": 5,
+        "height": 0,
+        "power": 3,
+        "direct": "1",
+        "infinite_tail": "83/32"
+      },
+      {
+        "prime": 5,
+        "height": 0,
+        "power": 4,
+        "direct": "1",
+        "infinite_tail": "253/32"
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "power": 2,
+        "direct": "8/5",
+        "infinite_tail": "11/40"
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "power": 3,
+        "direct": "12/5",
+        "infinite_tail": "191/160"
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "power": 4,
+        "direct": "4",
+        "infinite_tail": "157/32"
+      },
+      {
+        "prime": 5,
+        "height": 2,
+        "power": 2,
+        "direct": "9/5",
+        "infinite_tail": "3/40"
+      },
+      {
+        "prime": 5,
+        "height": 2,
+        "power": 3,
+        "direct": "79/25",
+        "infinite_tail": "347/800"
+      },
+      {
+        "prime": 5,
+        "height": 2,
+        "power": 4,
+        "direct": "33/5",
+        "infinite_tail": "369/160"
+      },
+      {
+        "prime": 7,
+        "height": 0,
+        "power": 2,
+        "direct": "1",
+        "infinite_tail": "5/9"
+      },
+      {
+        "prime": 7,
+        "height": 0,
+        "power": 3,
+        "direct": "1",
+        "infinite_tail": "55/36"
+      },
+      {
+        "prime": 7,
+        "height": 0,
+        "power": 4,
+        "direct": "1",
+        "infinite_tail": "113/27"
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "power": 2,
+        "direct": "10/7",
+        "infinite_tail": "8/63"
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "power": 3,
+        "direct": "2",
+        "infinite_tail": "19/36"
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "power": 4,
+        "direct": "22/7",
+        "infinite_tail": "386/189"
+      },
+      {
+        "prime": 7,
+        "height": 2,
+        "power": 2,
+        "direct": "75/49",
+        "infinite_tail": "11/441"
+      },
+      {
+        "prime": 7,
+        "height": 2,
+        "power": 3,
+        "direct": "117/49",
+        "infinite_tail": "247/1764"
+      },
+      {
+        "prime": 7,
+        "height": 2,
+        "power": 4,
+        "direct": "219/49",
+        "infinite_tail": "947/1323"
+      },
+      {
+        "prime": 11,
+        "height": 0,
+        "power": 2,
+        "direct": "1",
+        "infinite_tail": "8/25"
+      },
+      {
+        "prime": 11,
+        "height": 0,
+        "power": 3,
+        "direct": "1",
+        "infinite_tail": "413/500"
+      },
+      {
+        "prime": 11,
+        "height": 0,
+        "power": 4,
+        "direct": "1",
+        "infinite_tail": "1289/625"
+      },
+      {
+        "prime": 11,
+        "height": 1,
+        "power": 2,
+        "direct": "14/11",
+        "infinite_tail": "13/275"
+      },
+      {
+        "prime": 11,
+        "height": 1,
+        "power": 3,
+        "direct": "18/11",
+        "infinite_tail": "1043/5500"
+      },
+      {
+        "prime": 11,
+        "height": 1,
+        "power": 4,
+        "direct": "26/11",
+        "infinite_tail": "4804/6875"
+      },
+      {
+        "prime": 11,
+        "height": 2,
+        "power": 2,
+        "direct": "159/121",
+        "infinite_tail": "18/3025"
+      },
+      {
+        "prime": 11,
+        "height": 2,
+        "power": 3,
+        "direct": "217/121",
+        "infinite_tail": "1973/60500"
+      },
+      {
+        "prime": 11,
+        "height": 2,
+        "power": 4,
+        "direct": "351/121",
+        "infinite_tail": "12219/75625"
+      },
+      {
+        "prime": 13,
+        "height": 0,
+        "power": 2,
+        "direct": "1",
+        "infinite_tail": "19/72"
+      },
+      {
+        "prime": 13,
+        "height": 0,
+        "power": 3,
+        "direct": "1",
+        "infinite_tail": "193/288"
+      },
+      {
+        "prime": 13,
+        "height": 0,
+        "power": 4,
+        "direct": "1",
+        "infinite_tail": "1411/864"
+      },
+      {
+        "prime": 13,
+        "height": 1,
+        "power": 2,
+        "direct": "16/13",
+        "infinite_tail": "31/936"
+      },
+      {
+        "prime": 13,
+        "height": 1,
+        "power": 3,
+        "direct": "20/13",
+        "infinite_tail": "493/3744"
+      },
+      {
+        "prime": 13,
+        "height": 1,
+        "power": 4,
+        "direct": "28/13",
+        "infinite_tail": "5383/11232"
+      },
+      {
+        "prime": 13,
+        "height": 2,
+        "power": 2,
+        "direct": "213/169",
+        "infinite_tail": "43/12168"
+      },
+      {
+        "prime": 13,
+        "height": 2,
+        "power": 3,
+        "direct": "279/169",
+        "infinite_tail": "937/48672"
+      },
+      {
+        "prime": 13,
+        "height": 2,
+        "power": 4,
+        "direct": "33/13",
+        "infinite_tail": "1063/11232"
+      }
+    ],
+    "original_label_power_tails": [
+      {
+        "box": [
+          8,
+          5,
+          4,
+          3,
+          3
+        ],
+        "power2_tail_upper": "3423277858427070016/673178127034037625",
+        "power4_tail_upper": "185381222683903607968/2447920461941955"
+      },
+      {
+        "box": [
+          12,
+          8,
+          7,
+          6,
+          6
+        ],
+        "power2_tail_upper": "60604793915599835139687872/1533168149008707566964984375",
+        "power4_tail_upper": "1705271269961916573980799609056/1365913441844121286932440625"
+      },
+      {
+        "box": [
+          16,
+          11,
+          9,
+          8,
+          7
+        ],
+        "power2_tail_upper": "24463656641423321078688640658455232/39519671575266133413496731667191796875",
+        "power4_tail_upper": "11677999229359179494991651491188858208/364796968387072000739969830774078125"
+      }
+    ],
+    "cylinder_bound": "E_nu[L_T^2*1_(a mod d)] <= (D/d)*product_p F2(p,v_p(d)).",
+    "queried_cylinder_fixtures": [
+      {
+        "queried_old_exponents": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "original_old_modulus": 1,
+        "square_energy_in_cylinder_upper": "60540480/28409"
+      },
+      {
+        "queried_old_exponents": [
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "original_old_modulus": 45045,
+        "square_energy_in_cylinder_upper": "198402688/8948835"
+      },
+      {
+        "queried_old_exponents": [
+          8,
+          5,
+          4,
+          3,
+          3
+        ],
+        "original_old_modulus": 143952871334146875,
+        "square_energy_in_cylinder_upper": "3630656/131007588586875"
+      },
+      {
+        "queried_old_exponents": [
+          16,
+          11,
+          9,
+          8,
+          7
+        ],
+        "original_old_modulus": 1140873337698093479733324195098583984375,
+        "square_energy_in_cylinder_upper": "1707425449476224/514461438899446629614984239024693212890625"
+      }
+    ]
+  },
+  "cubic_weighted_cylinder_tail": {
+    "scope": "One AO law nu<=D*Haar, one complete original test, independently selected queried cylinders at each original old modulus. Query residues need not equal the old forbidden residues and may depend on the subsequent current depth.",
+    "full_old_three_label_Haar_sum": "10110619519/44236800",
+    "nonunit_queried_sum": "9464854399/44236800",
+    "coordinate_formula": "T_p=F3_Haar(p); U_p(b)=p^(-b)*[(b+2)^2/(p-1)+(4b+7)/(p-1)^2+3*(p+1)/(p-1)^3].",
+    "complete_tail_formula": "sum_(q outside box) E_nu[L_T^2*1_Cq] <= D*[product_p T_p-product_p(T_p-U_p(b_p))]. Only the queried old label is restricted.",
+    "positive_current17_three_label_factor": "595/2048",
+    "weighted_alpha17_bound": "E_nu[L_old^2*alpha17_high] <= D*tail/16.",
+    "actual_BB_bad_energy_bound": "For the full-Haar T4 kernel at17, E[L_full^2*1_B_high] <= D*tail*(595/2048), using bad density<=1. A generic Haar cap c instead gives c times this bound.",
+    "whole_charge_increment": "With beta_delta(alpha)=(alpha-delta)_+/(1-delta), E_nu[L_old^2*(beta_delta(alpha_full)-beta_delta(alpha_core))] <= D*tail/[16*(1-delta)]; the unweighted bound uses the reciprocal tail instead. This compares normalized kernels and includes redistribution on old bad points.",
+    "limitation": "This controls the weighted high-cofactor energy tail. Bad mass alone uses the smaller first-moment tail. No improved finite low-cofactor17 charge, complete Gamma bound or unrestricted continuation is asserted.",
+    "coordinate_checks": [
+      {
+        "prime": 3,
+        "queried_cutoff": 0,
+        "inside": "3",
+        "exact_tail": "21/4"
+      },
+      {
+        "prime": 3,
+        "queried_cutoff": 1,
+        "inside": "16/3",
+        "exact_tail": "35/12"
+      },
+      {
+        "prime": 3,
+        "queried_cutoff": 2,
+        "inside": "61/9",
+        "exact_tail": "53/36"
+      },
+      {
+        "prime": 3,
+        "queried_cutoff": 8,
+        "inside": "54067/6561",
+        "exact_tail": "245/26244"
+      },
+      {
+        "prime": 3,
+        "queried_cutoff": 16,
+        "inside": "355135267/43046721",
+        "exact_tail": "725/172186884"
+      },
+      {
+        "prime": 3,
+        "queried_cutoff": 28,
+        "inside": "188733537752947/22876792454961",
+        "exact_tail": "1925/91507169819844"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 0,
+        "inside": "15/8",
+        "exact_tail": "55/32"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 1,
+        "inside": "59/20",
+        "exact_tail": "103/160"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 2,
+        "inside": "677/200",
+        "exact_tail": "167/800"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 8,
+        "inside": "11230247/3125000",
+        "exact_tail": "887/12500000"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 16,
+        "inside": "4386901854783/1220703125000",
+        "exact_tail": "2743/4882812500000"
+      },
+      {
+        "prime": 5,
+        "queried_cutoff": 28,
+        "inside": "1071020960807800291107/298023223876953125000",
+        "exact_tail": "7447/1192092895507812500000"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 0,
+        "inside": "14/9",
+        "exact_tail": "35/36"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 1,
+        "inside": "142/63",
+        "exact_tail": "23/84"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 2,
+        "inside": "362/147",
+        "exact_tail": "115/1764"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 8,
+        "inside": "14572118/5764801",
+        "exact_tail": "643/207532836"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 16,
+        "inside": "756049170457918/299096375126409",
+        "exact_tail": "673/398795166835212"
+      },
+      {
+        "prime": 7,
+        "queried_cutoff": 28,
+        "inside": "1494956243770404873174406/591411261271808521255887",
+        "exact_tail": "263/788548348362411361674516"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 0,
+        "inside": "33/25",
+        "exact_tail": "253/500"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 1,
+        "inside": "476/275",
+        "exact_tail": "523/5500"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 2,
+        "inside": "5479/3025",
+        "exact_tail": "893/60500"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 8,
+        "inside": "9785482657/5358972025",
+        "exact_tail": "5213/107179440500"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 16,
+        "inside": "2097605168272068321/1148743246589304025",
+        "exact_tail": "16573/22974864931786080500"
+      },
+      {
+        "prime": 11,
+        "queried_cutoff": 28,
+        "inside": "6583183583261690033819912323017/3605248402662480850941901602025",
+        "exact_tail": "45613/72104968053249617018838032040500"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 0,
+        "inside": "91/72",
+        "exact_tail": "13/32"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 1,
+        "inside": "751/468",
+        "exact_tail": "245/3744"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 2,
+        "inside": "6739/4056",
+        "exact_tail": "421/48672"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 8,
+        "inside": "10899068731/6525845768",
+        "exact_tail": "2485/234930447648"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 16,
+        "inside": "80016347254277373899/47909995861188948552",
+        "exact_tail": "7925/191639983444755794208"
+      },
+      {
+        "prime": 13,
+        "queried_cutoff": 28,
+        "inside": "1864227669520153144886161596433439/1116211161791692527499406527597512",
+        "exact_tail": "21845/4464844647166770109997626110390048"
+      }
+    ],
+    "weighted_tail_rows": [
+      {
+        "queried_old_box": [
+          8,
+          5,
+          4,
+          3,
+          3
+        ],
+        "Haar_weighted_tail": "39043169506949609987927/32656483992996864000000",
+        "sum_old_square_cylinder_energy_upper": "39043169506949609987927/223702269906695580000",
+        "old_square_times_alpha17_high_upper": "39043169506949609987927/3579236318507129280000",
+        "full_current_square_on_BB_bad_high_upper": "663733881618143369794759/13089778536254644224000",
+        "BB_bad_high_mass_first_moment_upper": "155045985907/23484323287425",
+        "total_charge_increment_upper_delta_half": "310091971814/23484323287425",
+        "old_square_weighted_charge_increment_upper_delta_half": "39043169506949609987927/1789618159253564640000"
+      },
+      {
+        "queried_old_box": [
+          12,
+          8,
+          7,
+          6,
+          6
+        ],
+        "Haar_weighted_tail": "4543732923823303234872979051691/359126849997707063797324800000000",
+        "sum_old_square_cylinder_energy_upper": "4543732923823303234872979051691/2460077807095114770307243500000",
+        "old_square_times_alpha17_high_upper": "4543732923823303234872979051691/39361244913521836324915896000000",
+        "full_current_square_on_BB_bad_high_upper": "77243459704996154992840643878747/143949695683737001416835276800000",
+        "BB_bad_high_mass_first_moment_upper": "26924758774626896470046909/820367613171579244931623839375",
+        "total_charge_increment_upper_delta_half": "53849517549253792940093818/820367613171579244931623839375",
+        "old_square_weighted_charge_increment_upper_delta_half": "4543732923823303234872979051691/19680622456760918162457948000000"
+      },
+      {
+        "queried_old_box": [
+          16,
+          11,
+          9,
+          8,
+          7
+        ],
+        "Haar_weighted_tail": "4133382912319948180276580244210066665565827/16822861888361007214755705251245680000000000000",
+        "sum_old_square_cylinder_energy_upper": "4133382912319948180276580244210066665565827/115239362313476045033756469541531279687500000",
+        "old_square_times_alpha17_high_upper": "4133382912319948180276580244210066665565827/1843829797015616720540103512664500475000000000",
+        "full_current_square_on_BB_bad_high_upper": "70267509509439119064701864151571133314619059/6743148971942826863689521417744458880000000000",
+        "BB_bad_high_mass_first_moment_upper": "2937063252730909995388306913/7251463723570209397163460723046875",
+        "total_charge_increment_upper_delta_half": "5874126505461819990776613826/7251463723570209397163460723046875",
+        "old_square_weighted_charge_increment_upper_delta_half": "4133382912319948180276580244210066665565827/921914898507808360270051756332250237500000000"
+      },
+      {
+        "queried_old_box": [
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "Haar_weighted_tail": "27383962832873392324493871014235199201105039858334463395010665674853351534061786677/12992970425910165901084200639006260161642509405093357188550421381184906250000000000000000",
+        "sum_old_square_cylinder_energy_upper": "27383962832873392324493871014235199201105039858334463395010665674853351534061786677/89003977823515119377869660482621731513334792074001057187868663439931038208007812500000",
+        "old_square_times_alpha17_high_upper": "27383962832873392324493871014235199201105039858334463395010665674853351534061786677/1424063645176241910045914567721947704213356673184016915005898615038896611328125000000000",
+        "full_current_square_on_BB_bad_high_upper": "465527368158847669516395807241998386418785677591685877715181316472506976079050373509/5208004188073113271025058990525980175408847261930119003450143506427964750000000000000000",
+        "BB_bad_high_mass_first_moment_upper": "1887560140074643044077918135230126219346465053637524700887615463097178759/830148348306425784456456268916055357691190741430955458101474781100971221923828125",
+        "total_charge_increment_upper_delta_half": "3775120280149286088155836270460252438692930107275049401775230926194357518/830148348306425784456456268916055357691190741430955458101474781100971221923828125",
+        "old_square_weighted_charge_increment_upper_delta_half": "27383962832873392324493871014235199201105039858334463395010665674853351534061786677/712031822588120955022957283860973852106678336592008457502949307519448305664062500000000"
+      },
+      {
+        "queried_old_box": [
+          28,
+          28,
+          28,
+          28,
+          28
+        ],
+        "Haar_weighted_tail": "6180928171625470518852867299529434691877975250626417329494916893398020279811402078110124054444564015133143/10605659379862568686171673117646396164419120533620310310278104792176262876816642863784759948730468750000000000000000",
+        "sum_old_square_cylinder_energy_upper": "6180928171625470518852867299529434691877975250626417329494916893398020279811402078110124054444564015133143/72650505720128210311885383294564156210209971845973040992643392901460130224605518691469243196249008178710937500000",
+        "old_square_times_alpha17_high_upper": "6180928171625470518852867299529434691877975250626417329494916893398020279811402078110124054444564015133143/1162408091522051364990166132713026499363359549535568655882294286423362083593688299063507891139984130859375000000000",
+        "full_current_square_on_BB_bad_high_upper": "105075778917632998820498744092000389761925579260649094601413587187766344756793835327872108925557588257263431/4251092448994930706249750428207639769100286352587222512940961961776867048571202922289400287597656250000000000000000",
+        "BB_bad_high_mass_first_moment_upper": "4260945887966676280364893114607999476426240657546768409594397938158551232203320135894606525499484991678083/12295334324419272697422276464227522960150812815014418127256025337969503398620443612763625885767192734777927398681640625",
+        "total_charge_increment_upper_delta_half": "8521891775933352560729786229215998952852481315093536819188795876317102464406640271789213050998969983356166/12295334324419272697422276464227522960150812815014418127256025337969503398620443612763625885767192734777927398681640625",
+        "old_square_weighted_charge_increment_upper_delta_half": "6180928171625470518852867299529434691877975250626417329494916893398020279811402078110124054444564015133143/581204045761025682495083066356513249681679774767784327941147143211681041796844149531753945569992065429687500000000"
+      }
+    ],
+    "literal_original_tuple_fixtures": [
+      {
+        "physical_heights": [
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "queried_box": [
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "test_labels": 12,
+        "queried_tail_labels": 8,
+        "exact_Haar_weighted_tail": "536/45"
+      },
+      {
+        "physical_heights": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "queried_box": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "test_labels": 16,
+        "queried_tail_labels": 14,
+        "exact_Haar_weighted_tail": "192/11"
+      }
+    ]
+  },
+  "actual_BB_current_continuity_obstruction": {
+    "scope": "Arbitrary supported old laws with exact Gamma2=5; the old source is not asserted to be BBMST-generated. Both current transitions are actual full-Haar BB kernels at17, delta=1/2, with zero charge.",
+    "old_family": "Every original old class is 1 modulo 3^j, 1<=j<=N; law is the uniform actual survivors mixed with a spike at0.",
+    "current_family": "Pure17 forbids0; all mixed original current labels initially forbid current0. Only label3^N*17 changes from old0/current0 to old0/current3.",
+    "actual_rows": "The reference current law is uniform on16 points. The changed law is uniform on15 points only at old0; all other rows agree.",
+    "exact_complete_maxima": "Gamma_base=95/16; Gamma_new=95/16+w*(N+1)^2/80. Coherent old0 and one common good current root attain all pair bounds.",
+    "conclusion": "Joint L1 tends to0 while the complete current Gamma2 gap is strictly greater than1/80. A uniform old Gamma2 bound alone does not give uniform Gamma continuity.",
+    "fixtures": [
+      {
+        "N": 2,
+        "original_old_test_labels": 3,
+        "uniform_old_second": "10/3",
+        "mixture_spike_mass": "5/17",
+        "actual_old_mass_at_zero": "7/17",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "4069/680",
+        "current_Gamma_gap": "63/1360",
+        "joint_L1": "7/136",
+        "Gamma_gap_over_L1": "9/10",
+        "changed_original_modulus": 153
+      },
+      {
+        "N": 3,
+        "original_old_test_labels": 4,
+        "uniform_old_second": "67/18",
+        "mixture_spike_mass": "23/221",
+        "actual_old_mass_at_zero": "2/13",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "6207/1040",
+        "current_Gamma_gap": "2/65",
+        "joint_L1": "1/52",
+        "Gamma_gap_over_L1": "8/5",
+        "changed_original_modulus": 459
+      },
+      {
+        "N": 4,
+        "original_old_test_labels": 5,
+        "uniform_old_second": "35/9",
+        "mixture_spike_mass": "1/19",
+        "actual_old_mass_at_zero": "4/57",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "5435/912",
+        "current_Gamma_gap": "5/228",
+        "joint_L1": "1/114",
+        "Gamma_gap_over_L1": "5/2",
+        "changed_original_modulus": 1377
+      },
+      {
+        "N": 8,
+        "original_old_test_labels": 9,
+        "uniform_old_second": "8743/2187",
+        "mixture_spike_mass": "548/42101",
+        "actual_old_mass_at_zero": "1115/84202",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "8017253/1347232",
+        "current_Gamma_gap": "18063/1347232",
+        "joint_L1": "1115/673616",
+        "Gamma_gap_over_L1": "81/10",
+        "changed_original_modulus": 111537
+      },
+      {
+        "N": 16,
+        "original_old_test_labels": 17,
+        "uniform_old_second": "6377291/1594323",
+        "mixture_spike_mass": "398581/113595514",
+        "actual_old_mass_at_zero": "7174529/2044719252",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "973315083581/163577540160",
+        "current_Gamma_gap": "2073438881/163577540160",
+        "joint_L1": "7174529/16357754016",
+        "Gamma_gap_over_L1": "289/10",
+        "changed_original_modulus": 731794257
+      },
+      {
+        "N": 32,
+        "original_old_test_labels": 33,
+        "uniform_old_second": "2470693585135771/617673396283947",
+        "mixture_spike_mass": "154418349070991/167543908742020628",
+        "actual_old_mass_at_zero": "308836698142253/335087817484041256",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "159503036469196510117/26807025398723300480",
+        "current_Gamma_gap": "336323164276913517/26807025398723300480",
+        "joint_L1": "308836698142253/2680702539872330048",
+        "Gamma_gap_over_L1": "1089/10",
+        "changed_original_modulus": 31501343210481297
+      },
+      {
+        "N": 64,
+        "original_old_test_labels": 65,
+        "uniform_old_second": "1526081697907783326514599595225/381520424476945831628649898809",
+        "mixture_spike_mass": "19076021223847291581432494941/80519885585859417765226561143640",
+        "actual_old_mass_at_zero": "114456127343083749488594969857/483119313515156506591359366861840",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "9198610042308954778899400520280793/1545981803248500821092349973957888",
+        "current_Gamma_gap": "19343085520981153663572549905833/1545981803248500821092349973957888",
+        "joint_L1": "114456127343083749488594969857/3864954508121252052730874934894720",
+        "Gamma_gap_over_L1": "845/2",
+        "changed_original_modulus": 58372624944972712239183434517777
+      },
+      {
+        "N": 128,
+        "original_old_test_labels": 129,
+        "uniform_old_second": "15720246103651444228694497148550024887570948789701121478795883/3930061525912861057173624287137506221892737197425280369698987",
+        "mixture_spike_mass": "982515381478215264293406071784376555473184299356320092424763/16346108401653067352049396816276672753407367188391097377670511696",
+        "actual_old_mass_at_zero": "1965030762956430528586812143568753110946368598712640184853685/32692216803306134704098793632553345506814734376782194755341023392",
+        "old_complete_Gamma2": "5",
+        "current_Gamma_base": "95/16",
+        "current_Gamma_new": "3112300611699354388974628023268793347251251469764543910820627256657/523075468852898155265580698120853528109035750028515116085456374272",
+        "current_Gamma_gap": "6540015385271592085242628176225524103851703970235409063230034417/523075468852898155265580698120853528109035750028515116085456374272",
+        "joint_L1": "1965030762956430528586812143568753110946368598712640184853685/261537734426449077632790349060426764054517875014257558042728187136",
+        "Gamma_gap_over_L1": "16641/10",
+        "changed_original_modulus": 200433137821555913915854838644012817316529597068689298854648337
+      }
+    ]
+  },
+  "law_comparison": "For two families agreeing on the exponent box, L1(final laws)<=D*(6*T357+8*T11+12*T13). The finite-core family omits only high forbidden classes and its law is lifted with uniform suffixes. This approximating law is not asserted to avoid the full family tail.",
+  "Gamma_comparison": "|Gamma_full(nu_full)-Gamma_box(nu_core)|<=D*(H2_Haar-H2_box)+sqrt(D*H4_Haar*L1_bound). Unit and every inside original test are retained; all other original pairs are included in the explicit tail.",
+  "cutoffs": [
+    {
+      "box": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "T357": "29593474458942774658437240840593/141509210941035740477089640808105468750000",
+      "T11": "265453463901335294805762139532331859621810060351283/12693376125798981308926153733186623041951774468383789062500000",
+      "T13": "226280935873199043556812956905893165781342234818152825468677165172821/11803893418503770114799734576688924648273981595126676322524584806152343750000000",
+      "full_old_reciprocal_tail": "1887560140074643044077918135230126219346465053637524700887615463097178759/7574164943539919156996496353375393315975804856872950640286608583947753906250000000",
+      "initial_357_L1": "2233469770486247144032999308724/327567617919064214067337131500244140625",
+      "physical_13_L1": "60797916120226585433228875753190855325658427345141772528050964115513535918/5691581700918162630416638029431682998145013082551809262970000721213054656982421875",
+      "killed_13_L1": "51096120994628031531015621459822346691211738324460160957181373935758431703/1897193900306054210138879343143894332715004360850603087656666907071018218994140625",
+      "final_supported_L1": "3270151743656194017984999773428630188237551252765450301259607931888539628992/13559089689004954479455452392295570842289448776705605815657421424649196624755859375",
+      "final_supported_TV": "1635075871828097008992499886714315094118775626382725150629803965944269814496/13559089689004954479455452392295570842289448776705605815657421424649196624755859375",
+      "omitted_test_square_upper": "1791488858116027842731359944758002321300640674532374170499867981355340414656/399701056591982785108664129478100727777239986614904479826636005715282440185546875",
+      "same_test_law_error_squared": "57659315544146012925111516005093607479004503688760419711809407055058730738386944/146596328994792541480176945725788448526178944977852454447271465773410980224609375",
+      "certified_Gamma2_absolute_error": "1",
+      "strict_squared_margin": "96922280028414859780203781863569398112321552563558970740242523624616889205580355143033400204247906485998578072414426827705742104663191276713564036111759591863961/159760934640747425033951872468445992541763934546234585175922054017624495399390619351932199880004450776531595769197459439888692118799074218259193003177642822265625",
+      "finite_core_test_label_count": 4084101,
+      "first_uniform_cutoff_for_this_bound": 20
+    },
+    {
+      "box": [
+        24,
+        24,
+        24,
+        24,
+        24
+      ],
+      "T357": "133223576665715972624817165406095029459/51601599099419197206984132063752174377441406250000",
+      "T11": "3129802431093403658599031040639476307497965589158337941379/12122689868543137733640151940188635711625023908144296646118164062500000",
+      "T13": "149499607023091334939570048455479632048605611305229092580985699258423857827673622997/631699718366859989980170989653473947403510598745892367020900526889922953119752868652343750000000",
+      "full_old_reciprocal_tail": "204066963586519378156670354974956461864070809490131611505991095431973138202995435206457/66328470428520298947917953913614764477368612868318698537194555323441910077574051208496093750000000",
+      "initial_357_L1": "532894306662863890499268661624380117836/6330751741363929286967960646710336208343505859375",
+      "physical_13_L1": "3353548002995266084073071404220139656669713169040284987483822604624414413660784949826594/25429752117415913225113220178107512422602260431285380660238074595937653603236579239368438720703125",
+      "killed_13_L1": "256218851292674258726964553896789430402166163827078038640412120921931602082899116060243/770598549012603431064036975094167043109159407008647898795093169573868291007169067859649658203125",
+      "final_supported_L1": "16398006482731152558525731449394523545738634484932994472986375739003622533305543427855552/5507404824880264370590748786276777742814618765712875008017560214949440070244695861339569091796875",
+      "final_supported_TV": "8199003241365576279262865724697261772869317242466497236493187869501811266652771713927776/5507404824880264370590748786276777742814618765712875008017560214949440070244695861339569091796875",
+      "omitted_test_square_upper": "18078586314329050877212643319611331814662235115805961560043289983854654516293958287345921216/276459133855103830799379953073868467197310285767321838831034625509970578520408887220134735107421875",
+      "same_test_law_error_squared": "289129650303515681911925696915724239158463603238338558547695777030111872507243341719949092864/59544213375205149328428745452390268358544504834265569136680792786831698950794563426971435546875",
+      "certified_Gamma2_absolute_error": "1/10",
+      "strict_squared_margin": "1572700074641150801669261324615171223234957987372341160722302536498485898985761287170397729591424955083626221131440550474030517631509810000460978031380941490585889670553241716820536979402584815249/305718610767656868427012475906157369724773563520444021538569379797319467540063199143073496313540601352850587815881477543182724128200689901013446026228413255041261560933153668884187936782836914062500",
+      "finite_core_test_label_count": 9765625,
+      "first_uniform_cutoff_for_this_bound": 24
+    },
+    {
+      "box": [
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "T357": "199918134900252089678546095986144915417143539/6272206621533840557507175617431616640686988830566406250000",
+      "T11": "1922012097366390812931934673293898818738404240812887299983978184662376733/603009677425437713034472065590268376163084659388792108316217996534109115600585937500000",
+      "T13": "1337816605327056922378900329754241674944982476605407966029335414058758637916063845380428184841952048819/457881722864409235528530274543317898146834853521086976401522910259352315186466344659148951732148170471191406250000000",
+      "full_old_reciprocal_tail": "4260945887966676280364893114607999476426240657546768409594397938158551232203320135894606525499484991678083/112181022101780262704489917263112885045974539112666309218373113013541317220684254441491493174376301765441894531250000000",
+      "initial_357_L1": "799672539601008358714184383944579661668574156/769506830882623957286759971583045560084283351898193359375",
+      "physical_13_L1": "2800901492789283788067602594385297429581411389960169176654536059245839729931942056775344228668086735237382/1720368683852532963928809495065099220901808614864384950397504337302572283766280522395558199722784720361232757568359375",
+      "killed_13_L1": "470789825383730671228833047266219793733843469833795839083262266493626064142350812844663383611171448461031/114691245590168864261920633004339948060120574324292330026500289153504818917752034826370546648185648024082183837890625",
+      "final_supported_L1": "30130548824558762958645315025038066798965982069362933701328785055592068105110452022058456551114972701505984/819688954961284846494818430948501530676720854334294541817068355864633559908029574184241725717812848985195159912109375",
+      "final_supported_TV": "15065274412279381479322657512519033399482991034681466850664392527796034052555226011029228275557486350752992/819688954961284846494818430948501530676720854334294541817068355864633559908029574184241725717812848985195159912109375",
+      "omitted_test_square_upper": "2349420288569880507591318789880776154193711763018014068991620068452686345022502637779810765361101501205696/2522119861419337989214825941380004709774525705643983205590979556506564799717014074413051463747116458415985107421875",
+      "same_test_law_error_squared": "531261836874620108486834194521471193799368195847007247021829138100199344829307490052934705909259198672953509888/8862201996668147549239825623829876784166295704593681989812509365589981372314242775510250962720078103542327880859375",
+      "certified_Gamma2_absolute_error": "1/100",
+      "strict_squared_margin": "4076495740400582207270642759558088000473382309460823955430322431425474067065441718675257841942911239319944995410754581434587219539037182277704784758475026797167193203125811742259815154402152842842256302486993689849955380276281/101777417525854410613070031264380747697992648525184342423646586289969351722586505581972394866514243844791847641575589059348685376117726277685029455887129905426271301169324159000650148262529372594874530477682128548622131347656250000",
+      "finite_core_test_label_count": 20511149,
+      "first_uniform_cutoff_for_this_bound": 28
+    }
+  ],
+  "finite_checks": {
+    "original_test_pair_fixtures": [
+      {
+        "physical_heights": [
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "cutoff": [
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "original_test_labels": 12,
+        "original_ordered_pairs": 144,
+        "inside_labels": 4,
+        "exact_Haar_tail": "188/63"
+      },
+      {
+        "physical_heights": [
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cutoff": [
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "original_test_labels": 48,
+        "original_ordered_pairs": 2304,
+        "inside_labels": 8,
+        "exact_Haar_tail": "32672/6435"
+      },
+      {
+        "physical_heights": [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "cutoff": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "original_test_labels": 4,
+        "original_ordered_pairs": 16,
+        "inside_labels": 4,
+        "exact_Haar_tail": "0"
+      }
+    ],
+    "geometric_tail_fixtures": [
+      {
+        "prime": 3,
+        "cutoff": 0,
+        "tail": "2"
+      },
+      {
+        "prime": 3,
+        "cutoff": 2,
+        "tail": "4/9"
+      },
+      {
+        "prime": 3,
+        "cutoff": 20,
+        "tail": "22/3486784401"
+      },
+      {
+        "prime": 3,
+        "cutoff": 28,
+        "tail": "10/7625597484987"
+      },
+      {
+        "prime": 3,
+        "cutoff": 64,
+        "tail": "22/1144561273430837494885949696427"
+      },
+      {
+        "prime": 5,
+        "cutoff": 0,
+        "tail": "7/8"
+      },
+      {
+        "prime": 5,
+        "cutoff": 2,
+        "tail": "3/40"
+      },
+      {
+        "prime": 5,
+        "cutoff": 20,
+        "tail": "87/762939453125000"
+      },
+      {
+        "prime": 5,
+        "cutoff": 28,
+        "tail": "119/298023223876953125000"
+      },
+      {
+        "prime": 5,
+        "cutoff": 64,
+        "tail": "263/4336808689942017736029811203479766845703125000"
+      },
+      {
+        "prime": 7,
+        "cutoff": 0,
+        "tail": "5/9"
+      },
+      {
+        "prime": 7,
+        "cutoff": 2,
+        "tail": "11/441"
+      },
+      {
+        "prime": 7,
+        "cutoff": 20,
+        "tail": "65/718130396678508009"
+      },
+      {
+        "prime": 7,
+        "cutoff": 28,
+        "tail": "89/4139878828902659648791209"
+      },
+      {
+        "prime": 7,
+        "cutoff": 64,
+        "tail": "197/10977844388722521301247164763066746386800537647181145609"
+      },
+      {
+        "prime": 11,
+        "cutoff": 0,
+        "tail": "8/25"
+      },
+      {
+        "prime": 11,
+        "cutoff": 2,
+        "tail": "18/3025"
+      },
+      {
+        "prime": 11,
+        "cutoff": 20,
+        "tail": "108/16818749873314000230025"
+      },
+      {
+        "prime": 11,
+        "cutoff": 28,
+        "tail": "148/3605248402662480850941901602025"
+      },
+      {
+        "prime": 11,
+        "cutoff": 64,
+        "tail": "328/111447892113147559896737803334246038487254035874788167887848370656025"
+      },
+      {
+        "prime": 13,
+        "cutoff": 0,
+        "tail": "19/72"
+      },
+      {
+        "prime": 13,
+        "cutoff": 2,
+        "tail": "43/12168"
+      },
+      {
+        "prime": 13,
+        "cutoff": 20,
+        "tail": "259/1368357391791417559593672"
+      },
+      {
+        "prime": 13,
+        "cutoff": 28,
+        "tail": "355/1116211161791692527499406527597512"
+      },
+      {
+        "prime": 13,
+        "cutoff": 64,
+        "tail": "787/14115850303014797279807502750496753110557036160296336706450549396641925192"
+      }
+    ],
+    "BB_delta_half_mask_checks": {
+      "atoms": 8,
+      "all_ordered_mask_pairs": 65536,
+      "intersection_types": 165
+    }
+  }
+}

@@ -530,6 +530,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Same-law arbitrary-residue hinge profile and supported13 seed below256.
+pattern = "docs/reports/erdos7-odd-covering/arbitrary_head_profile_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Complete original-label tails and joint-mask stability with arbitrary high residues.
 pattern = "docs/reports/erdos7-odd-covering/average_mask_tails_certificate.json"
 kind = "data"
@@ -622,6 +631,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Exact scalar clipping boundaries and actual congruence capacity obstruction.
 pattern = "docs/reports/erdos7-odd-covering/fibre_scalar_boundary_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Actual-law quartic and cylinder tails with uniform finite-core approximation.
+pattern = "docs/reports/erdos7-odd-covering/finite_core_approximation_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1142,6 +1160,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Recomputes the arbitrary-head actual11/13 profile and complete multiplier tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_arbitrary_head_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Verifies joint-mask repair, all old/pure/mixed tails and the fixed-second-moment obstruction.
 pattern = "docs/reports/erdos7-odd-covering/verify_average_mask_tails.py"
 kind = "program"
@@ -1234,6 +1261,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Verifies the exact finite BBMST recurrence from its conditional Gamma seed.
 pattern = "docs/reports/erdos7-odd-covering/verify_finite_continuation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Verifies actual-law concentration, original-label tails and finite-core error bounds.
+pattern = "docs/reports/erdos7-odd-covering/verify_finite_core_approximation.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -1734,6 +1770,24 @@ admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks weighted17/19 kernel mask-tail comparisons on one actual supported13 law.
+pattern = "docs/reports/erdos7-odd-covering/verify_weighted_kernel_tails.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete mixed and pure mask-tail allowances for actual17/19 kernel comparisons.
+pattern = "docs/reports/erdos7-odd-covering/weighted_kernel_tails_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Preserves license terms for the imported partial-trace results.
