@@ -76,9 +76,12 @@ internal static partial class CommonExecutionEvidence
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
 
+    internal static readonly AsyncLocal<Action?> ReadingCheckManifest = new();
+
     internal static IReadOnlyList<RegisteredCommonCheck> ReadCheckManifest(RepositorySnapshot snapshot,
         EngineeringProjectRegistry? registry = null)
     {
+        ReadingCheckManifest.Value?.Invoke();
         if (!snapshot.TryGetFile(CheckManifestPath, out var file))
             throw new InvalidDataException($"missing common check registration: {CheckManifestPath}");
         CommonCheckManifest manifest;

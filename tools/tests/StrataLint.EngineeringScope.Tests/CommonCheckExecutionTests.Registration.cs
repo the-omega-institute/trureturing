@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.TestSupport;
 using Xunit;
@@ -11,10 +12,25 @@ public sealed partial class CommonCheckExecutionTests
     {
         using var fixture = new Fixture();
         var validation = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root);
-        var checks = validation.CheckManifest();
-        Assert.Equal(24, checks.Count);
-        Assert.Equal(CommonCheckRegistrationFixture.Ids, checks.Select(check => check.Id));
-        Assert.Same(checks, validation.CheckManifest());
+        var previous = CommonExecutionEvidence.ReadingCheckManifest.Value;
+        var reads = 0;
+        CommonExecutionEvidence.ReadingCheckManifest.Value = () => reads++;
+        try
+        {
+            var checks = validation.CheckManifest();
+            Assert.Equal(24, checks.Count);
+            Assert.Equal(CommonCheckRegistrationFixture.Ids, checks.Select(check => check.Id));
+            var expected = JsonSerializer.Serialize(checks);
+            var repeated = validation.CheckManifest();
+            Assert.NotSame(checks, repeated);
+            Assert.Equal(expected, JsonSerializer.Serialize(repeated));
+
+            checks[0].ProgramProjects[0] = "tools/Corrupt.csproj";
+            Assert.Equal(expected, JsonSerializer.Serialize(validation.CheckManifest()));
+            Assert.Equal(expected, JsonSerializer.Serialize(validation.Fresh().CheckManifest()));
+            Assert.Equal(1, reads);
+        }
+        finally { CommonExecutionEvidence.ReadingCheckManifest.Value = previous; }
     }
 
     [Fact]

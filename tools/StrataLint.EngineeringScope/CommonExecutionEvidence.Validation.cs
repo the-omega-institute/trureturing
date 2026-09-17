@@ -4,7 +4,7 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
-    // One read-only validation against one snapshot. Never reuse this across an
+    // One read-only validation against one snapshot. Hashes never cross an
     // execution callback, import copy, or write to any of the inspected paths.
     internal sealed class ValidationScope(RepositorySnapshot snapshot, ReportValidation? successfulReport = null)
     {
@@ -15,10 +15,21 @@ internal static partial class CommonExecutionEvidence
 
         internal static ValidationScope Create(string root) => new(CommonExecutionEvidence.Snapshot(root));
 
+        // Only successful registration from this exact snapshot is shared. No caller
+        // can supply declarations or inherit path hashes from an earlier phase.
+        internal ValidationScope Fresh(ReportValidation? report = null) => new(Snapshot, report) { checks = checks };
+
         internal IReadOnlyList<RegisteredCommonCheck> CheckManifest() => CheckManifest(null);
 
         internal IReadOnlyList<RegisteredCommonCheck> CheckManifest(EngineeringProjectRegistry? registry) =>
-            checks ??= ReadCheckManifest(Snapshot, registry);
+            (checks ??= ReadCheckManifest(Snapshot, registry)).Select(check => check with
+            {
+                ProgramProjects = [.. check.ProgramProjects],
+                Materials = [.. check.Materials],
+                MaterialExcludes = [.. check.MaterialExcludes],
+                PathInventory = [.. check.PathInventory],
+                ReportInputs = check.ReportInputs.Select(input => input with { Materials = [.. input.Materials] }).ToArray(),
+            }).ToArray();
 
         internal string Hash(string path)
         {
@@ -45,7 +56,7 @@ internal static partial class CommonExecutionEvidence
         }
     }
 
-    // A CheckExecution may retain one completely validated report across callbacks.
+    // One CheckExecution or seed import may retain a completely validated report.
     // Every caller must supply freshly hashed bytes; path hashes stay in its new scope.
     internal sealed class ReportValidation(RepositorySnapshot snapshot)
     {

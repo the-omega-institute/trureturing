@@ -125,6 +125,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("all")]
     [InlineData("selected")]
     [InlineData("metadata")]
+    [InlineData("metadata-seed-miss")]
     [InlineData("metadata-required-report")]
     [InlineData("metadata-forged-candidate")]
     [InlineData("metadata-missing-registration")]
@@ -204,6 +205,23 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (!metadata) WriteReport();
         var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
         var arguments = Arguments();
+        if (scenario == "metadata-seed-miss")
+        {
+            var root = temporary.Path;
+            var seedBuild = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.BuildPath);
+            var seedChecks = CommonExecutionEvidence.BeginChecks(root, "current", seedBuild, TextWriter.Null, selectedChecks);
+            foreach (var id in selectedChecks)
+                seedChecks.Run(id, () => new([new(id, 0, CommonCheckRegistrationFixture.Predicate(id))]));
+            _ = seedChecks.Seal();
+            _ = CommonExecutionEvidence.CompleteCurrent(root, seedBuild, [], ResourceExecutionPlan.Load(root, "build/plan.json", "build/scope.json"));
+            Assert.True(CommonExecutionEvidence.ExportCheckSeed(root, "current", TextWriter.Null));
+            var seed = Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("current"));
+            var record = CommonExecutionEvidence.Read<CommonCheckRecord>(seed, "checks.json");
+            CommonExecutionEvidence.Write(seed, "checks.json", record with
+            {
+                Units = record.Units.Select(unit => unit with { InputFingerprint = new string('0', 64) }).ToArray(),
+            });
+        }
         if (scenario == "metadata-required-report")
         {
             Assert.Empty(arguments);
@@ -219,7 +237,9 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (scenario == "metadata-missing-registration")
             File.Delete(Path.Combine(temporary.Path, CommonExecutionEvidence.CheckManifestPath));
         var reads = 0;
+        var manifestReads = 0;
         var previous = RawLeanReportArtifact.Reading.Value;
+        var previousManifest = CommonExecutionEvidence.ReadingCheckManifest.Value;
         var previousPath = Environment.GetEnvironmentVariable("PATH");
         using var executables = new TemporaryDirectory();
         if (metadata)
@@ -237,11 +257,13 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         try
         {
             RawLeanReportArtifact.Reading.Value = () => reads++;
+            CommonExecutionEvidence.ReadingCheckManifest.Value = () => manifestReads++;
             result = environment.CheckCurrent(arguments);
         }
         finally
         {
             RawLeanReportArtifact.Reading.Value = previous;
+            CommonExecutionEvidence.ReadingCheckManifest.Value = previousManifest;
             Environment.SetEnvironmentVariable("PATH", previousPath);
         }
         if (metadata)
@@ -250,7 +272,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 scenario, result.ExitCode, reads, result.Output, result.Error);
             Assert.Equal(0, reads);
             Assert.False(Directory.Exists(Path.Combine(temporary.Path, ".lake")));
-            if (scenario != "metadata")
+            if (scenario is not ("metadata" or "metadata-seed-miss"))
             {
                 Assert.Equal(2, result.ExitCode);
                 Assert.Contains(scenario switch
@@ -263,6 +285,14 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 return;
             }
             Assert.True(result.ExitCode == 0, result.Output + result.Error);
+            if (scenario == "metadata-seed-miss")
+            {
+                foreach (var id in selectedChecks)
+                    Assert.Contains($"COMMON_CHECK_SEED_MISS id={id} reason=\"invalid common check identity/provenance: {id}\"", result.Output, StringComparison.Ordinal);
+                Assert.DoesNotContain("COMMON_CHECK_SEED_UNAVAILABLE", result.Output, StringComparison.Ordinal);
+                Assert.DoesNotContain("COMMON_CHECK_REUSED", result.Output, StringComparison.Ordinal);
+            }
+            Assert.Equal(1, manifestReads);
             var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(temporary.Path, CommonExecutionEvidence.ChecksPath("current"));
             Assert.Equal(selectedChecks, checks.Units.Select(unit => unit.Id));
             Assert.All(checks.Units, unit =>

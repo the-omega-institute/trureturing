@@ -37,7 +37,7 @@ internal sealed partial class ProductionCliEnvironment
         if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
         if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
         {
-            var declaration = CommonExecutionEvidence.ReadCheckManifest(snapshot).Single(check => check.Id == "scribe-markdown");
+            var declaration = validation.CheckManifest().Single(check => check.Id == "scribe-markdown");
             var paths = EngineeringProjectRegistry.ExpandInputs(snapshot.Files.Keys.Select(path => path.Value), declaration.PathInventory, [], declaration.Id);
             File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\n", paths) + "\n");
             return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
@@ -56,7 +56,7 @@ internal sealed partial class ProductionCliEnvironment
         var combined = checks.ExecuteCurrentPredicates(policy, lean);
         var rendered = RenderStage(combined);
         if (rendered.ExitCode != 0) return new(rendered.ExitCode, trace + rendered.Output, rendered.Error);
-        if ((selectedIds is null || CommonExecutionEvidence.ReadCheckManifest(snapshot).Where(check => check.Id.StartsWith("SL-", StringComparison.Ordinal)).All(check => checks.Ids.Contains(check.Id)))
+        if ((selectedIds is null || validation.CheckManifest().Where(check => check.Id.StartsWith("SL-", StringComparison.Ordinal)).All(check => checks.Ids.Contains(check.Id)))
             && RepositoryCanonicalizer.Validate(snapshot, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
             return new(2, trace + RenderStage(combined).Output, "INFRASTRUCTURE_FAILURE " + failure.Message + "\n");
         _ = checks.Seal();

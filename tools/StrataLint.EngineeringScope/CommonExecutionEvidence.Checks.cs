@@ -38,7 +38,7 @@ internal static partial class CommonExecutionEvidence
         var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment, validation: validation);
         ValidateStartedBuild(root, build, Candidate(root, snapshot), validation);
         File.Delete(Path.Combine(root, ChecksPath(stage)));
-        return new(root, stage, build, snapshot, registrations, inputs, environment, output, ids);
+        return new(root, stage, build, validation, registrations, inputs, environment, output, ids);
     }
 
     // This is the existing common owner, split by responsibility. Only a validated
@@ -49,6 +49,7 @@ internal static partial class CommonExecutionEvidence
         private readonly string stage;
         private readonly CommonStageRecord build;
         private readonly RepositorySnapshot snapshot;
+        private readonly ValidationScope registration;
         private readonly ReportValidation successfulReport;
         private readonly IReadOnlyList<RegisteredCommonCheck> registrations;
         private readonly IReadOnlyDictionary<string, string> inputs;
@@ -58,15 +59,16 @@ internal static partial class CommonExecutionEvidence
         private readonly string invocation;
         internal string[] Ids { get; }
         internal IReadOnlyCollection<CheckUnitResult> Completed => completed.Values;
-        internal CheckExecution(string root, string stage, CommonStageRecord build, RepositorySnapshot snapshot,
+        internal CheckExecution(string root, string stage, CommonStageRecord build, ValidationScope validation,
             IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, string environment, TextWriter output, string[] ids)
         {
-            this.root = root; this.stage = stage; this.build = build; this.snapshot = snapshot;
+            this.root = root; this.stage = stage; this.build = build; snapshot = validation.Snapshot;
+            registration = validation.Fresh();
             successfulReport = new(snapshot);
             this.registrations = registrations; this.inputs = inputs; this.environment = environment;
             Ids = ids;
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
-            reused = ImportCheckSeed(root, stage, snapshot, inputs, output);
+            reused = ImportCheckSeed(root, stage, registration, inputs, output);
         }
         internal bool IsSelected(string id)
         {
@@ -132,7 +134,7 @@ internal static partial class CommonExecutionEvidence
                 .Concat(report is null ? [] : ReportPaths.Select(path => report + path[ReportPath.Length..])));
             var unit = new CheckUnitResult(id, inputs[id], "executed", id == "selftest-pair" ? "equal" : "passed", build.Candidate, build.Round, environment, operations, data, report, materials);
             ValidateCheckUnit(root, root, snapshot, unit, inputs[id], build.Candidate, build.Round,
-                new ValidationScope(snapshot, successfulReport));
+                registration.Fresh(successfulReport));
             completed.Add(id, unit);
             return unit;
         }
@@ -178,7 +180,7 @@ internal static partial class CommonExecutionEvidence
                 Ids.Select(id => completed.TryGetValue(id, out var unit) ? unit
                     : throw new InvalidDataException("required common unit did not run: " + id)).ToArray());
             ValidateStartedBuild(root, build, Candidate(root));
-            ValidateCheckRecord(root, record, snapshot, inputs, build.Candidate, build.Round, Ids);
+            ValidateCheckRecord(root, record, snapshot, inputs, build.Candidate, build.Round, Ids, registration.Fresh());
             Write(root, ChecksPath(stage), record);
             return record;
         }
