@@ -3,7 +3,40 @@
 # Current bounds and comparisons
 
 
-The [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+The [actual AP(4,5) construction](../profile-notes/35-ap45-layout-costs-and-complete-core-tails.md)
+applies physical11/T4 and13/T5 to the complete actual357 survivor law,
+then conditions once. Its complete same-law bounds are
+`Gamma13<151.712332`, `T13(81)<96.359129`, and
+`F17^-(403;nu13)+F19^-(403;physical mu17)<435.665947`.
+The exact joint bound is
+`635194866152821699517974252365456181477722101/1457986034966471039964009460664853061488000`.
+All original labels and arbitrary heights remain present. The source square
+constant stays `1730443/48600`; every later cap-dependent probability,
+survival coefficient and finite-core error is recomputed for AP(4,5).
+The verifier checks596,160 rational norm margins,1,296 consumer vertices,
+continuous-domain coefficients and all8 fallback branches.
+
+For the large box20/current8 core, the complete error is less than
+`0.000593344`, and the exact sufficient threshold is
+`306.6402782827821...`; the safe non-strict target is `306.640278`.
+The unequal core has safe target `306.413246`. The remaining gap above
+the larger exact threshold is more than`129.025668`. These are gaps
+between available bounds, not lower bounds on an actual family's cost.
+The negative-Q criterion, continuation through arbitrary later primes,
+and unrestricted Erdős7 remain open. These results have not been
+formalized as a Lean endpoint.
+
+The following AP(4,6) construction uses a different actual probability;
+its earlier bounds remain valid on that law.
+
+
+The [original-layout distance bound](../profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
+gives `Gamma13<=18612601765191482089/121507008625163304<153.181302`
+for the same actual AP(4,6) law. The source-square bound is
+`Gamma357<=1730443/48600`; the previous retained-event construction
+and its continuation bounds remain valid.
+
+The earlier [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
 gives `Gamma13<=74165888355209854559/475902450448556274<155.842628`
 for the same actual AP(4,6) law. The following earlier construction and
 its continuation bounds remain valid.
@@ -64,22 +97,19 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<98.980966`. The sufficient finite joint-frontier bounds
-are therefore304.018 for the large core and303.756 for the smaller one,
-at W403. [Retaining the same original event where kept or removed](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+`sup E(A^2-81)_+<98.976162`. The sufficient finite joint-frontier bounds
+are therefore304.023 for the large core and303.760 for the smaller one,
+at W403. The [original-layout Jensen loss](../profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
 gives the all-family upper bound
-`F17^-(403;nu13)+F19^-(403;physical mu17)<439.673530`.
-The source square bound is `Gamma357<=765767/21465`. One original
-modulus5 test couples the selected source increment to actual mixed7
-deletion; six pure3 cofactor events spend its common removed-mass budget.
-Forty-one fixed convex costs and five quadratic AP costs retain every
-other original label and the complete tails. Mod15,45,... keep their
-separate original five-coordinate residues. The exact rational certificate
-checks1,127,520 final norm inequalities and all continuous-domain
-coefficient conditions. The bound improves449.266218 but remains
-more than135.655162 above the larger exact allowance. The19 input is normalized
-physical mu17; the killed input xi in BM/RC is not substituted. These
-are ordinary inequalities with exact certificates, not Lean results.
+`F17^-(403;nu13)+F19^-(403;physical mu17)<439.210840`.
+It improves the [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+`439.673529721869...` using the same actual AP(4,6) law, original labels
+and complete tails. The new exact certificate checks12,960 source-square
+margins and64,800 quadratic-cost margins, then all1,296 consumer vertices,
+the continuous-domain coefficients and all8 fallback branches. The remaining
+gap above the larger exact allowance is more than135.187668. The19 input
+is normalized physical mu17; the killed input xi in BM/RC is not substituted.
+These are ordinary inequalities with exact certificates, not Lean results.
 
 The finite criterion's strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming

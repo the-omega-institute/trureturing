@@ -1,0 +1,8 @@
+## 15. 特征零下的完整 Zariski 稠密性推论
+
+在复数域上，取 det H≠0 且配对图连通的交替 H。则
+
+\[
+\overline{\langle1+N_i\rangle}^{\mathrm{Zar}}=\mathrm{Sp}(H).\tag{15.1}
+\]
+

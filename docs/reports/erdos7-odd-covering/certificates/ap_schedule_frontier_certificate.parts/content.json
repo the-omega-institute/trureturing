@@ -1,0 +1,199 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-ap45-layout-frontier-v1"
+  },
+  "physical_thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      5
+    ]
+  },
+  "caps": {
+    "kind": "inline",
+    "value": [
+      [
+        11,
+        "5/3"
+      ],
+      [
+        13,
+        "12/7"
+      ]
+    ]
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "1730443/48600"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "138463094971779285596846788846625500699/933733674416003479362197458605000000"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "1105494866024740603/16608440121273000"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "635194866152821699517974252365456181477722101/1457986034966471039964009460664853061488000"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "302778048367321641239/1995737886953762094"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "2036419805870547104171564658623139223/21133647016462988476744904886757500"
+  },
+  "continuous_coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "75039300224496430561561263686940087169331058862991/359481450192018929089336561827734701434180000000",
+      "Gamma13": "675092420492429019139359449/9867503806720636454878500",
+      "T13_81": "694027123166157443342700218825218832477/7322808691204425507192109543261473750",
+      "survival": "7938708479/15747558750"
+    }
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "302778048367321641239/1995737886953762094",
+      "rho13": "15447272417/31495117500",
+      "D13": "733471200000/15447272417"
+    }
+  },
+  "vertex_count": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "layout_count": {
+    "kind": "inline",
+    "value": 10
+  },
+  "norm_direction_count": {
+    "kind": "inline",
+    "value": 46
+  },
+  "direct_norm_margin_checks": {
+    "kind": "inline",
+    "value": 596160
+  },
+  "norm_margin_sha256": {
+    "kind": "inline",
+    "value": "bd387ba1258df38c839b66ab345b802db18ee1e470d32ac15da72382de157dad"
+  },
+  "consumer_row_sha256": {
+    "kind": "inline",
+    "value": "88cc5a3f0c2f14cf20695293ac8c269ffd06c7740c508854d80318a99e31bf2b"
+  },
+  "quadratic_cost": {
+    "kind": "inline",
+    "value": {
+      "expectation": "21566863/263178630",
+      "outside_active_first_moment": "1600217/12882870"
+    }
+  },
+  "linear_costs": {
+    "kind": "inline",
+    "value": [
+      {
+        "name": "R17",
+        "finite_tuple_count": 16,
+        "expectation": "3552926014661809/231107514266551923",
+        "outside_active_mass": "85536255919/179570718155829",
+        "tail_coefficient": "2651623933489/110505057326664",
+        "H": "100132727701502372144877582605922281/1375685321905058056465095022500000"
+      },
+      {
+        "name": "R19",
+        "finite_tuple_count": 16,
+        "expectation": "92181168238181777/7626547970796213459",
+        "outside_active_mass": "85536255919/179570718155829",
+        "tail_coefficient": "2651623933489/138131321658330",
+        "H": "1525690343280897133144328762858100379/26232112800949043364434653907812500"
+      },
+      {
+        "name": "R5",
+        "finite_tuple_count": 8,
+        "expectation": "37699087/8781393621",
+        "outside_active_mass": "82282/20469449",
+        "tail_coefficient": "82282/20469449",
+        "H": "175881576140599406867/71118263290408834500"
+      }
+    ]
+  },
+  "curvatures": {
+    "path": "content/019-curvatures.json",
+    "sha256": "bfade6600e7308af73bc89965f7b3bd5202c475847f7cc63e4cca7acfc74858a",
+    "kind": "value"
+  },
+  "norms": {
+    "path": "content/020-norms.json",
+    "sha256": "7972ec8f108eb15b5503fa5617c0f95e91933b64ee80031faae57579a5e40db9",
+    "kind": "array"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": {
+      "bound": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "Gamma13": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "T13_81": [
+        386,
+        388,
+        590,
+        592
+      ]
+    }
+  },
+  "other_eight_branches": {
+    "path": "content/022-other_eight_branches.json",
+    "sha256": "058d1d71a155f73ca6a4758c75931459f2893a41c603fdf84b1909b53e742c88",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/023-core_errors.json",
+    "sha256": "ee4c3a97326a579714dd26f5a5e53929b6c2d2e591f395a677ccbc28114cb4c2",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual AP(4,5) throughout; independent original residues, complete source and physical/killed/test tails. Ordinary proof and exact arithmetic. Negative Q, later-prime continuation and unrestricted Erd\u0151s7 remain open; no Lean endpoint."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+      "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+      "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+      "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70"
+  }
+}

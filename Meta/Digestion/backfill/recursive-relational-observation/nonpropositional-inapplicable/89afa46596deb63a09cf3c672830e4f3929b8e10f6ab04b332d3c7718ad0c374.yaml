@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89afa46596deb63a09cf3c672830e4f3929b8e10f6ab04b332d3c7718ad0c374
+  normalized_sha256: sha256:89afa46596deb63a09cf3c672830e4f3929b8e10f6ab04b332d3c7718ad0c374
+cas_ref: sha256:89afa46596deb63a09cf3c672830e4f3929b8e10f6ab04b332d3c7718ad0c374
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All mathematical clauses of the theorem 60.2 proof are bind-only over pinned Mathlib; no usable frozen project GID covers this claim. PadicInt.mem_span_pow_iff_le_valuation and PadicInt.ker_toZModPow identify each capped-valuation cutoff d <= e with reduction modulo p^d, including the zero case; map_add, map_neg and map_natCast give the congruence n = -x_p. PadicInt.cast_toZModPow and Nat.Prime.pow_dvd_iff_le_factorization with Nat.ModEq.of_dvd transfer congruence modulo M to all coordinate cutoffs. Evaluating at x_p = -n forces equality modulo every prime power; ZMod.equivPi, RingEquiv.injective and ZMod.natCast_eq_natCast_iff combine these into congruence modulo M. Nat.modEq_zero_iff_dvd and Nat.le_of_dvd give divisibility of every positive translation period by M and its leastness, while Nat.mod_mod, Nat.mod_eq_of_lt and Nat.mod_lt give the unique representative below M. Nat.Prime.primeFactors and Nat.Prime.factorization_self specialize M = 2; the same cutoff equivalence and finite ZMod 2 normalization give labels (1,0) and (0,1), distinct query functions, the identical even/odd observation partition for every n, and least positive kernel period 1. All steps are upstream instantiation, logical projection and normalization; no new Lean declaration, GID or first Freeze is required.
+    previous_atom_id: 85057f5803c3b8b44a20e420f541afe7638a2f0ce8a2f8befe82fa1b01657a74
+    next_atom_id: 1fc1696d1b20983c83b8fd77f904fc5f648b9dd98be961b97923bfd60522977c

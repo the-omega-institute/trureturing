@@ -274,9 +274,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             reportFreeIngestDependencies ?? new ReportFreeIngestDependencies();
     }
 
-    public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
-        InformationTemplateDebtWriter.Run(repositoryRoot, repository, arguments);
-
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
         CapacityAuditCommand.Run(arguments, repositoryRoot);
 
@@ -351,18 +348,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () => RawLeanReportArtifact.ReadFile(
                     options.CandidateLeanReport,
                     current));
-            // Historical evidence is compiled by the current producer against
-            // immutable content. The candidate selects neither the seed nor the
-            // protected revision consumed by the rule.
-            candidateLeanReport.TemplateEvidenceContext = new(prepared.Revision, revision =>
-            {
-                InformationTemplateJson.Hash(revision, 40);
-                var historical = Decode(repository.ReadRevision(revision));
-                var path = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(options.CandidateLeanReport))!,
-                    "information-template-history", revision, "raw-lean-report.json");
-                return new(historical, RawLeanReportArtifact.ReadFile(path,
-                    InformationTemplateEvidence.HistoricalInputs(historical, current)));
-            });
             var verifiedScribeEmissions = timing.Measure(
                 "scribe-verify",
                 () => VerifyScribeForAdmission(
