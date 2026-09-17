@@ -1,0 +1,647 @@
+{
+  "schema": "actual-bbmst-killed-unit-floor-v1",
+  "scope": "Ordinary exact original-label verification; the complete current test witnesses need not maximize Gamma.",
+  "old_period": 315,
+  "sharp_floor_fixtures": [
+    {
+      "prime": 17,
+      "delta": "7/15",
+      "actual_old_survivor_count": 144,
+      "original_forbidden_classes": [
+        [
+          3,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          21,
+          0
+        ],
+        [
+          35,
+          0
+        ],
+        [
+          45,
+          0
+        ],
+        [
+          63,
+          0
+        ],
+        [
+          105,
+          0
+        ],
+        [
+          315,
+          0
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          51,
+          1
+        ],
+        [
+          85,
+          36
+        ],
+        [
+          119,
+          71
+        ],
+        [
+          153,
+          55
+        ],
+        [
+          255,
+          226
+        ],
+        [
+          357,
+          295
+        ],
+        [
+          595,
+          211
+        ],
+        [
+          765,
+          586
+        ],
+        [
+          1071,
+          757
+        ],
+        [
+          1785,
+          316
+        ],
+        [
+          5355,
+          946
+        ]
+      ],
+      "original_test_classes": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          21,
+          2
+        ],
+        [
+          35,
+          2
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          63,
+          2
+        ],
+        [
+          105,
+          2
+        ],
+        [
+          315,
+          2
+        ],
+        [
+          17,
+          16
+        ],
+        [
+          51,
+          50
+        ],
+        [
+          85,
+          67
+        ],
+        [
+          119,
+          16
+        ],
+        [
+          153,
+          101
+        ],
+        [
+          255,
+          152
+        ],
+        [
+          357,
+          254
+        ],
+        [
+          595,
+          492
+        ],
+        [
+          765,
+          407
+        ],
+        [
+          1071,
+          254
+        ],
+        [
+          1785,
+          1682
+        ],
+        [
+          5355,
+          3467
+        ]
+      ],
+      "charged_old_rows": [
+        1
+      ],
+      "charge": "53/18432",
+      "physical_test_square": "2893079131/276756480",
+      "killed_test_square": "361535417/34594560",
+      "lost_test_square": "53/18432",
+      "old_cross_energy": "55/12",
+      "old_square": "35/4",
+      "joint_test_square_alpha": "55/192",
+      "SH26_testwise_relaxation": "811780951/48648600",
+      "weighted_actual_SH_cap": "471459931/48648600",
+      "positive_testwise_cap_covariance_saving": "436309/62370",
+      "old_joint_histogram": [
+        {
+          "test_load": 1,
+          "forbidden_load": 2,
+          "count": 16
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 3,
+          "count": 8
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 4,
+          "count": 12
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 6,
+          "count": 6
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 8,
+          "count": 2
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 12,
+          "count": 1
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 1,
+          "count": 16
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 2,
+          "count": 24
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 3,
+          "count": 6
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 4,
+          "count": 6
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 6,
+          "count": 2
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 1,
+          "count": 8
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 2,
+          "count": 6
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 4,
+          "count": 1
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 1,
+          "count": 12
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 2,
+          "count": 6
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 3,
+          "count": 1
+        },
+        {
+          "test_load": 6,
+          "forbidden_load": 1,
+          "count": 6
+        },
+        {
+          "test_load": 6,
+          "forbidden_load": 2,
+          "count": 2
+        },
+        {
+          "test_load": 8,
+          "forbidden_load": 1,
+          "count": 2
+        },
+        {
+          "test_load": 12,
+          "forbidden_load": 1,
+          "count": 1
+        }
+      ],
+      "positive_mass_bad_excess_square": "0",
+      "supported_test_square": "2892283336/275960685",
+      "maximizing_test_claim": false
+    },
+    {
+      "prime": 19,
+      "delta": "7/17",
+      "actual_old_survivor_count": 144,
+      "original_forbidden_classes": [
+        [
+          3,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          21,
+          0
+        ],
+        [
+          35,
+          0
+        ],
+        [
+          45,
+          0
+        ],
+        [
+          63,
+          0
+        ],
+        [
+          105,
+          0
+        ],
+        [
+          315,
+          0
+        ],
+        [
+          19,
+          0
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          95,
+          21
+        ],
+        [
+          133,
+          22
+        ],
+        [
+          171,
+          118
+        ],
+        [
+          285,
+          271
+        ],
+        [
+          399,
+          253
+        ],
+        [
+          665,
+          596
+        ],
+        [
+          855,
+          46
+        ],
+        [
+          1197,
+          883
+        ],
+        [
+          1995,
+          1891
+        ],
+        [
+          5985,
+          4096
+        ]
+      ],
+      "original_test_classes": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          21,
+          2
+        ],
+        [
+          35,
+          2
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          63,
+          2
+        ],
+        [
+          105,
+          2
+        ],
+        [
+          315,
+          2
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          57,
+          56
+        ],
+        [
+          95,
+          37
+        ],
+        [
+          133,
+          37
+        ],
+        [
+          171,
+          56
+        ],
+        [
+          285,
+          227
+        ],
+        [
+          399,
+          170
+        ],
+        [
+          665,
+          37
+        ],
+        [
+          855,
+          227
+        ],
+        [
+          1197,
+          569
+        ],
+        [
+          1995,
+          1367
+        ],
+        [
+          5985,
+          5357
+        ]
+      ],
+      "charged_old_rows": [
+        1
+      ],
+      "charge": "61/25920",
+      "physical_test_square": "215435327/21003840",
+      "killed_test_square": "64615769/6301152",
+      "lost_test_square": "61/25920",
+      "old_cross_energy": "55/12",
+      "old_square": "35/4",
+      "joint_test_square_alpha": "55/216",
+      "SH26_testwise_relaxation": "199838033/13224640",
+      "weighted_actual_SH_cap": "31651727/3306160",
+      "positive_testwise_cap_covariance_saving": "1331475/240448",
+      "old_joint_histogram": [
+        {
+          "test_load": 1,
+          "forbidden_load": 2,
+          "count": 16
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 3,
+          "count": 8
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 4,
+          "count": 12
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 6,
+          "count": 6
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 8,
+          "count": 2
+        },
+        {
+          "test_load": 1,
+          "forbidden_load": 12,
+          "count": 1
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 1,
+          "count": 16
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 2,
+          "count": 24
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 3,
+          "count": 6
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 4,
+          "count": 6
+        },
+        {
+          "test_load": 2,
+          "forbidden_load": 6,
+          "count": 2
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 1,
+          "count": 8
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 2,
+          "count": 6
+        },
+        {
+          "test_load": 3,
+          "forbidden_load": 4,
+          "count": 1
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 1,
+          "count": 12
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 2,
+          "count": 6
+        },
+        {
+          "test_load": 4,
+          "forbidden_load": 3,
+          "count": 1
+        },
+        {
+          "test_load": 6,
+          "forbidden_load": 1,
+          "count": 6
+        },
+        {
+          "test_load": 6,
+          "forbidden_load": 2,
+          "count": 2
+        },
+        {
+          "test_load": 8,
+          "forbidden_load": 1,
+          "count": 2
+        },
+        {
+          "test_load": 12,
+          "forbidden_load": 1,
+          "count": 1
+        }
+      ],
+      "positive_mass_bad_excess_square": "0",
+      "supported_test_square": "646157690/62863229",
+      "maximizing_test_claim": false
+    }
+  ]
+}

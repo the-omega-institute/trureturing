@@ -1,0 +1,466 @@
+{
+  "scope": "all low axis and point patterns; full original 357 part divides 315; arbitrary finite 11/13 heights; no tail conclusion",
+  "witnesses": {
+    "fixed_area": [
+      {
+        "low_survivor_cells_mean_lower": "18528575/257742",
+        "height1_J": "25942916/741143",
+        "allheight_J": "138587199499/3344291785",
+        "dual_constant": "110",
+        "dual_terms": [
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 1,
+            "coefficient": "-7"
+          },
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 2,
+            "coefficient": "-4"
+          },
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 6,
+            "coefficient": "-1"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 1,
+            "coefficient": "-5"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 2,
+            "coefficient": "-4"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 6,
+            "coefficient": "-1"
+          },
+          {
+            "axis": 2,
+            "kind": "hinge",
+            "knot": 1,
+            "coefficient": "-1"
+          }
+        ],
+        "primal_atoms": [
+          {
+            "loads": [
+              1,
+              6,
+              2
+            ],
+            "mass": "756719/33506460"
+          },
+          {
+            "loads": [
+              1,
+              7,
+              6
+            ],
+            "mass": "91133/33506460"
+          },
+          {
+            "loads": [
+              1,
+              8,
+              3
+            ],
+            "mass": "1403507/33506460"
+          },
+          {
+            "loads": [
+              1,
+              9,
+              3
+            ],
+            "mass": "543251/33506460"
+          },
+          {
+            "loads": [
+              2,
+              3,
+              4
+            ],
+            "mass": "8018/38961"
+          },
+          {
+            "loads": [
+              2,
+              4,
+              4
+            ],
+            "mass": "13919/77922"
+          },
+          {
+            "loads": [
+              2,
+              6,
+              2
+            ],
+            "mass": "84923/1675323"
+          },
+          {
+            "loads": [
+              3,
+              2,
+              1
+            ],
+            "mass": "2041/128871"
+          },
+          {
+            "loads": [
+              3,
+              2,
+              4
+            ],
+            "mass": "623/42957"
+          },
+          {
+            "loads": [
+              4,
+              2,
+              3
+            ],
+            "mass": "94781/257742"
+          },
+          {
+            "loads": [
+              6,
+              1,
+              2
+            ],
+            "mass": "2041/128871"
+          },
+          {
+            "loads": [
+              8,
+              1,
+              1
+            ],
+            "mass": "5/74"
+          }
+        ]
+      },
+      {
+        "clip": "3/2",
+        "low_survivor_cells_mean_lower": "5021105/77922",
+        "height1_J": "1355582788/43181503",
+        "allheight_J": "1470926841487/38483001205",
+        "dual_constant": "80",
+        "dual_terms": [
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 2,
+            "coefficient": "-2"
+          },
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 3,
+            "coefficient": "-7"
+          },
+          {
+            "axis": 0,
+            "kind": "hinge",
+            "knot": 4,
+            "coefficient": "-1"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 2,
+            "coefficient": "-1"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 3,
+            "coefficient": "-6"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 4,
+            "coefficient": "-1"
+          },
+          {
+            "axis": 1,
+            "kind": "hinge",
+            "knot": 8,
+            "coefficient": "-1/4"
+          },
+          {
+            "axis": 2,
+            "kind": "hinge",
+            "knot": 2,
+            "coefficient": "-1"
+          }
+        ],
+        "primal_atoms": [
+          {
+            "loads": [
+              1,
+              1,
+              2
+            ],
+            "mass": "140749/1116882"
+          },
+          {
+            "loads": [
+              2,
+              1,
+              1
+            ],
+            "mass": "70547/186147"
+          },
+          {
+            "loads": [
+              2,
+              12,
+              7
+            ],
+            "mass": "1/74"
+          },
+          {
+            "loads": [
+              3,
+              4,
+              6
+            ],
+            "mass": "434/38961"
+          },
+          {
+            "loads": [
+              3,
+              5,
+              4
+            ],
+            "mass": "10/1443"
+          },
+          {
+            "loads": [
+              3,
+              6,
+              5
+            ],
+            "mass": "3569/116883"
+          },
+          {
+            "loads": [
+              3,
+              6,
+              8
+            ],
+            "mass": "4207/116883"
+          },
+          {
+            "loads": [
+              3,
+              7,
+              4
+            ],
+            "mass": "2/37"
+          },
+          {
+            "loads": [
+              4,
+              4,
+              2
+            ],
+            "mass": "1/74"
+          },
+          {
+            "loads": [
+              4,
+              4,
+              3
+            ],
+            "mass": "146/1053"
+          },
+          {
+            "loads": [
+              4,
+              4,
+              6
+            ],
+            "mass": "500/12987"
+          },
+          {
+            "loads": [
+              5,
+              3,
+              4
+            ],
+            "mass": "1138/38961"
+          },
+          {
+            "loads": [
+              6,
+              3,
+              5
+            ],
+            "mass": "413/5994"
+          },
+          {
+            "loads": [
+              8,
+              3,
+              4
+            ],
+            "mass": "3/74"
+          },
+          {
+            "loads": [
+              10,
+              2,
+              6
+            ],
+            "mass": "1/74"
+          }
+        ]
+      }
+    ],
+    "global_optimum": {
+      "primal_variables": [
+        "336875760/229510133",
+        "434678400/229510133",
+        "336875760/229510133",
+        "0",
+        "0",
+        "-32600880/229510133",
+        "0",
+        "-7244640/229510133",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-25356240/229510133",
+        "0",
+        "-7244640/229510133",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-3622320/229510133",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "dual_variables": [
+        {
+          "index": 0,
+          "value": "-447323728579/148034035785"
+        },
+        {
+          "index": 288,
+          "value": "-2702923877617/296068071570"
+        },
+        {
+          "index": 413,
+          "value": "-1251509471979/365150621603"
+        },
+        {
+          "index": 419,
+          "value": "-102340183104/42459374605"
+        },
+        {
+          "index": 461,
+          "value": "-15732039873/19737871438"
+        },
+        {
+          "index": 651,
+          "value": "-607881735752/127378123815"
+        },
+        {
+          "index": 657,
+          "value": "-2132087148/8491874921"
+        },
+        {
+          "index": 915,
+          "value": "-470841655349/2190903729618"
+        },
+        {
+          "index": 917,
+          "value": "-8751655406707/10954518648090"
+        },
+        {
+          "index": 919,
+          "value": "-4392235801214/1095451864809"
+        },
+        {
+          "index": 939,
+          "value": "-225793959499/296068071570"
+        },
+        {
+          "index": 1183,
+          "value": "-1205669598297/365150621603"
+        },
+        {
+          "index": 1467,
+          "value": "-3231306492279/3651506216030"
+        },
+        {
+          "index": 2055,
+          "value": "-20787849693/8491874921"
+        },
+        {
+          "index": 3456,
+          "value": "-41575699386/1147550665"
+        }
+      ],
+      "objective_minus_one": "41575699386/1147550665"
+    }
+  },
+  "fixed_area_bounds": [
+    {
+      "clip": "1",
+      "low_mass_lower": "3705715/6185808",
+      "full_mass_lower": "668858357/1237161600",
+      "height1_J": "25942916/741143",
+      "allheight_J": "138587199499/3344291785",
+      "primal_atoms": 12
+    },
+    {
+      "clip": "3/2",
+      "low_mass_lower": "1004221/1246752",
+      "full_mass_lower": "7696600241/10722067200",
+      "height1_J": "1355582788/43181503",
+      "allheight_J": "1470926841487/38483001205",
+      "primal_atoms": 15
+    }
+  ],
+  "clip": "40/31",
+  "low_mass_lower": "74101/97929",
+  "high_reference_mass_upper": "24119/412800",
+  "square_reference_factor": "187759/108000",
+  "full_mass_lower": "229510133/336875760",
+  "Gamma_upper": "42723250051/1147550665",
+  "same_law_first_upper": "1242116000/229510133",
+  "reference_auxiliary_mean": "5809/4800",
+  "reference_mean": "1574239/412800",
+  "reference_quantile_mass": "229510133/434678400",
+  "reference_quantile_cut": 3,
+  "reference_comparison_mean": "1263555626/229510133",
+  "same_clip_height1_Gamma_upper": "99014608/3186343",
+  "primal_constraints_verified": 3458,
+  "dual_coordinates_verified": 30,
+  "nonzero_dual_terms": 15,
+  "pointwise_area_triples_verified": 1728
+}
