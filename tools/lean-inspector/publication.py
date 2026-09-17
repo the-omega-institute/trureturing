@@ -113,7 +113,7 @@ def check_origin(origin, row, compatibility):
             or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
         raise ValueError('module dependency source binding mismatch')
     for path in bindings:
-        selection.compile_glob(path, 'dependency source binding')
+        selection.validate_pattern(path, 'dependency source binding')
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
@@ -217,32 +217,46 @@ def validate_rows(report, archive_path, verified_materials=None):
     return root['modules']
 
 
+class _SourceValidation:
+    """Source reads shared only within one read-only validation invocation."""
+
+    def __init__(self, repository):
+        self.inputs = selection.Selection(repository)
+        self.digests = {}
+
+    def digest(self, path):
+        if path not in self.digests:
+            self.digests[path] = digest(self.inputs.safe_file(path))
+        return self.digests[path]
+
+    def validate_sources(self, rows):
+        modules = self.inputs.modules()
+        if [row['module'] for row in rows] != sorted(modules):
+            raise ValueError('report source membership mismatch')
+        for row in rows:
+            path = modules[row['module']]
+            if row['source_path'] != path or row['source_sha256'] != 'sha256:' + self.digest(path):
+                raise ValueError('report source binding mismatch')
+            evidence = row.get('utility_refutation')
+            if evidence and evidence['claim_source_sha256'] != 'sha256:' + self.digest(evidence['claim_source_path']):
+                raise ValueError('report claim source binding mismatch')
+
+    def validate_dependency_sources(self, origins):
+        allowed = set(self.inputs.dependency_sources())
+        for origin in origins.values():
+            for path, sha in origin['input_sources'].items():
+                if path not in allowed:
+                    raise ValueError('unregistered dependency source binding: ' + path)
+                if self.digest(path) != sha:
+                    raise ValueError('stale dependency source binding: ' + path)
+
+
 def validate_sources(rows, repository):
-    inputs = selection.Selection(repository)
-    modules = inputs.modules()
-    if [row['module'] for row in rows] != sorted(modules):
-        raise ValueError('report source membership mismatch')
-    for row in rows:
-        path = modules[row['module']]
-        if row['source_path'] != path or row['source_sha256'] != 'sha256:' + digest(inputs.safe_file(path)):
-            raise ValueError('report source binding mismatch')
-        evidence = row.get('utility_refutation')
-        if evidence and evidence['claim_source_sha256'] != 'sha256:' + digest(inputs.safe_file(evidence['claim_source_path'])):
-            raise ValueError('report claim source binding mismatch')
+    _SourceValidation(repository).validate_sources(rows)
 
 
 def validate_dependency_sources(origins, repository):
-    inputs = selection.Selection(repository)
-    allowed = set(inputs.dependency_sources())
-    observed = {}
-    for origin in origins.values():
-        for path, sha in origin['input_sources'].items():
-            if path not in allowed:
-                raise ValueError('unregistered dependency source binding: ' + path)
-            if path not in observed:
-                observed[path] = digest(inputs.safe_file(path))
-            if observed[path] != sha:
-                raise ValueError('stale dependency source binding: ' + path)
+    _SourceValidation(repository).validate_dependency_sources(origins)
 
 
 def verify_inputs(report, repository):
@@ -251,11 +265,12 @@ def verify_inputs(report, repository):
     provenance = read_json(member(report, '.provenance.json').read_bytes())
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
-    compatibility = selection.Selection(repository).compatibility()
+    sources = _SourceValidation(repository)
+    compatibility = sources.inputs.compatibility()
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
-    validate_sources(rows, repository)
-    validate_dependency_sources(origins, repository)
+    sources.validate_sources(rows)
+    sources.validate_dependency_sources(origins)
 
 
 def _require_bundle_files(report):
@@ -303,8 +318,9 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     for row in rows:
         check_origin(origins[row['module']], row, provenance['producer_sha256'])
     if repository is not None:
-        validate_sources(rows, repository)
-        validate_dependency_sources(origins, repository)
+        sources = _SourceValidation(repository)
+        sources.validate_sources(rows)
+        sources.validate_dependency_sources(origins)
     return rows
 
 

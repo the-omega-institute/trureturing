@@ -112,6 +112,8 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 ''')
         self.git("add", "Meta/FILEMAP.toml")
+        ancestor = self.commit("older than base")
+        (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": "b" * 40}]}))
         base = self.commit("base")
         self.git("checkout", "-qb", "topic")
         (self.root / "lake-manifest.json").write_text("{}")
@@ -129,6 +131,70 @@ runtime_disposition = "committed-source"
         result = self.run_tool(CI, "checkout", "--commit", outputs["candidate_sha"])
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual(merge, self.git("rev-parse", "HEAD"))
+        self.check_pr_shallow_resolution(ancestor, base, head, merge)
+
+    def check_pr_shallow_resolution(self, ancestor, base, head, merge):
+        expected_scope = json.loads((self.root / "build/ci/changes.json").read_text())
+        expected_plan = json.loads((self.root / "build/ci/plan.json").read_text())
+        self.assertEqual([base, head], self.git("show", "-s", "--format=%P", merge).split())
+        self.assertEqual(ancestor, self.git("rev-parse", base + "^1"))
+        for depth in (2, 1):
+            with self.subTest(depth=depth), tempfile.TemporaryDirectory(prefix="ci-pr-shallow-") as directory:
+                root = pathlib.Path(directory).resolve()
+
+                def git(*args, check=True):
+                    return subprocess.run(["git", "-C", str(root), *args], check=check,
+                                          capture_output=True, text=True)
+
+                def invoke(*args):
+                    return subprocess.run([sys.executable, str(CI), *args, "--repository", str(root)],
+                        env=dict(self.env, GITHUB_OUTPUT=str(root / "outputs")), capture_output=True, text=True)
+
+                git("init", "-q")
+                # file:// performs a real shallow fetch; a local clone without
+                # that transport can copy the complete object store instead.
+                git("-c", "protocol.file.allow=always", "fetch", "--no-tags", "--depth=" + str(depth),
+                    self.root.resolve().as_uri(), merge)
+                git("checkout", "--detach", "FETCH_HEAD")
+                self.assertEqual("true", git("rev-parse", "--is-shallow-repository").stdout.strip())
+                self.assertEqual("", git("remote").stdout.strip())
+                self.assertEqual(merge, git("rev-parse", "HEAD").stdout.strip())
+                self.assertNotEqual(0, git("cat-file", "-e", ancestor + "^{commit}", check=False).returncode)
+                if depth == 1:
+                    self.assertNotEqual(0, git("cat-file", "-e", base + "^{commit}", check=False).returncode)
+                    for args in [("resolve", "--head", head),
+                                 ("pr-plan", "--commit", merge, "--base", base, "--head", head)]:
+                        result = invoke(*args)
+                        self.assertEqual(2, result.returncode, result.stdout + result.stderr)
+                    self.assertFalse((root / "outputs").exists())
+                    self.assertFalse((root / "build/ci/changes.json").exists())
+                    self.assertFalse((root / "build/ci/plan.json").exists())
+                    continue
+
+                for commit in (base, head, merge):
+                    self.assertEqual(self.git("rev-parse", commit + "^{tree}"),
+                                     git("rev-parse", commit + "^{tree}").stdout.strip())
+                    for path in ("Meta/FILEMAP.toml", "lake-manifest.json"):
+                        self.assertEqual(self.git("show", commit + ":" + path),
+                                         git("show", commit + ":" + path).stdout.strip())
+                result = invoke("resolve", "--head", head)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
+                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual("", git("remote").stdout.strip())
+                self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
+                self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
+                result = invoke("validate-plan", "--commit", merge,
+                    "--changes", str(root / "build/ci/changes.json"), "--plan", str(root / "build/ci/plan.json"))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual(expected_plan, json.loads(result.stdout))
+                for args in [("resolve", "--head", base),
+                             ("pr-plan", "--commit", merge, "--base", head, "--head", head),
+                             ("pr-plan", "--commit", merge, "--base", base, "--head", base)]:
+                    result = invoke(*args)
+                    self.assertEqual(2, result.returncode, result.stdout + result.stderr)
+                self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
+                self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
 
     def test_parentless_checkout_needs_no_base_or_remote(self):
         self.git("init", "-q")

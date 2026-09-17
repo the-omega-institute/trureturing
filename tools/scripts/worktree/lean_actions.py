@@ -10,6 +10,7 @@ import pathlib
 import re
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tempfile
@@ -293,14 +294,14 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
     actual = {}
     for path in directory.rglob("*"):
         relative = path.relative_to(directory).as_posix()
-        if path.is_symlink():
+        metadata = path.lstat()
+        if stat.S_ISLNK(metadata.st_mode):
             raise CacheMaterialDifference("cache data contains a symlink: " + relative, "symlink-member", relative)
-        if path.is_dir():
+        if stat.S_ISDIR(metadata.st_mode):
             continue
-        if not path.is_file():
+        if not stat.S_ISREG(metadata.st_mode):
             raise CacheMaterialDifference("cache data member is not a regular file: " + relative,
                                           "nonregular-member", relative)
-        metadata = path.stat()
         if relative in declared and metadata.st_mode & 0o777 != declared[relative]:
             raise CacheMaterialDifference("cache material integrity mismatch: " + relative, "mode-changed", relative)
         actual[relative] = metadata.st_size
@@ -628,8 +629,6 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     or manifest.get("layer") != layer or manifest.get("key") != key):
                 raise ValueError("Actions seed identity or material integrity mismatch")
             stream_copy = layer in ("dependency", "project")
-            if not stream_copy:
-                inventory = files(cached / "data", expected=manifest.get("files"))
             target = root / spec.get("target", ".")
             with cache_guard(root):
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -642,15 +641,10 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                         # runner; this avoids a second 25 GB copy before Lake.
                         direct = move_validated_cache_data(cached / "data", staged, manifest.get("files"))
                     else:
-                        # Execution seeds must remain independently validated
-                        # material because their native verifier consumes the
-                        # complete staged bundle.
+                        # Verify the exact bytes copied into private staging.
+                        # Execution seeds then cross their native verifier.
                         staged.mkdir()
-                        inventory = files(cached / "data", expected=manifest.get("files"))
-                        for item in inventory:
-                            destination = staged / item["path"]
-                            destination.parent.mkdir(parents=True, exist_ok=True)
-                            shutil.copy2(cached / "data" / item["path"], destination)
+                        files(cached / "data", expected=manifest.get("files"), copy_to=staged)
                     if layer in EXECUTION_LAYERS:
                         restore_execution(root, layer, keys, staged)
                     else:

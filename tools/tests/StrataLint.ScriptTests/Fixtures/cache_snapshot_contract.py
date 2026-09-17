@@ -311,6 +311,41 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                 self.assertEqual(b"new source", (source / "a.olean").read_bytes())
                 self.assertFalse(list(cached.parent.glob(".snapshot-*")))
 
+    def check_private_seed_copy_rejects_late_changes_without_replacing_target(self):
+        owner = self.restore_owner()
+        with mock.patch.dict(os.environ, self.env):
+            keys = owner.actions_keys(self.root)
+        spec = keys["judge"]
+        cached = self.root / spec["path"]
+        target = self.root / spec["target"]
+        target.mkdir()
+        (target / "current-only").write_bytes(b"accepted candidate material")
+        inventory = []
+        for relative, data in (("a.dll", b"first material"), ("nested/z.dll", b"last material")):
+            path = cached / "data" / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(0o640)
+            inventory.append({"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640})
+        (cached / "manifest.json").write_text(json.dumps({"schema": "lean-actions-seed-v1",
+            "partition": keys["partition"], "layer": "judge", "key": spec["key"], "files": inventory}))
+        copy_metadata = shutil.copystat
+
+        def change_next_source(source, destination, **kwargs):
+            copy_metadata(source, destination, **kwargs)
+            if pathlib.Path(source) == cached / "data/a.dll":
+                (cached / "data/nested/z.dll").write_bytes(b"changed during staging")
+
+        with mock.patch.dict(os.environ, self.env), \
+             mock.patch.object(shutil, "copystat", side_effect=change_next_source), \
+             contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.restore(self.root, keys, {"judge": spec["key"]}, ["judge"], registry={})
+        self.assertIn('"status": "miss"', receipts.getvalue())
+        self.assertIn("cache material integrity mismatch: nested/z.dll", receipts.getvalue())
+        self.assertEqual(["current-only"], sorted(path.name for path in target.iterdir()))
+        self.assertEqual(b"accepted candidate material", (target / "current-only").read_bytes())
+        self.assertFalse(list(target.parent.glob(".actions-*")))
+
     def test_same_filesystem_restore_moves_validated_material_without_copy(self):
         owner = self.restore_owner()
         source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached", "nested/z.olean": b"tail"})
@@ -561,6 +596,7 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                 self.assertIn('"status": "miss"', receipts.getvalue())
                 self.assertEqual(b"cached", (source / "a.olean").read_bytes())
                 self.assertEqual(b"candidate material", (source / "private.keep").read_bytes())
+        self.check_private_seed_copy_rejects_late_changes_without_replacing_target()
 
     def test_dependency_module_and_submodule_seed_round_trip(self):
         self.assert_module_and_submodule_seed_round_trip("dependency")
