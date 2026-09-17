@@ -43,6 +43,16 @@ public sealed class DeclaredTemplateDeltaLoadTests
     }
 
     [Fact]
+    public void selected_malformed_owner_path_blocks_in_rule()
+    {
+        using var fixture = new WireFixture();
+        fixture.Evidence(A)["records"]![0]!["registration_source_path"] = "../Ring.lean";
+        var error = Xunit.Record.Exception(() => AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block));
+        Assert.True(error is null, "[FAIL] selected_malformed_owner_path_blocks_in_rule: " + error?.Message);
+        fixture.AssertAdmissionReachesRules(blocked: true);
+    }
+
+    [Fact]
     public void mixed_sidecar_validates_only_selected_registration_records()
     {
         using var fixture = new WireFixture();
