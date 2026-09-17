@@ -8,6 +8,7 @@
 
 import D5.S1.Digit.Infinite.SuccessorContinuity
 import D5.S1.Digit.Infinite.MultiplierObstruction
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 set_option autoImplicit false
 
@@ -87,22 +88,26 @@ theorem result :
     omega
   have even_sum (n : ℕ) : weight (positions 0 n) + 1 = Nat.fib (2 * n + 1) := by
     rw [weight_positions]
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      rw [Finset.sum_range_succ]
-      conv_rhs => rw [show 2 * (n + 1) + 1 = (2 * n + 1) + 2 by omega, Nat.fib_add_two]
-      simp only [Nat.add_zero, Nat.add_assoc, Nat.reduceAdd] at *
-      omega
+    have h := Finset.sum_range_tsub (f := fun i => Nat.fib (2 * i + 1))
+      (by intro a b hab; exact Nat.fib_mono (by omega)) n
+    have hstep (i : ℕ) :
+        Nat.fib (2 * (i + 1) + 1) - Nat.fib (2 * i + 1) = Nat.fib (2 * i + 0 + 2) := by
+      rw [show 2 * (i + 1) + 1 = (2 * i + 1) + 2 by omega,
+        Nat.fib_add_two, Nat.add_sub_cancel_left]
+    simp only [hstep, Nat.mul_zero, Nat.zero_add, Nat.fib_one] at h
+    have hpos : 0 < Nat.fib (2 * n + 1) := Nat.fib_pos.mpr (by omega)
+    omega
   have odd_sum (n : ℕ) : weight (positions 1 n) + 1 = Nat.fib (2 * n + 2) := by
     rw [weight_positions]
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      rw [Finset.sum_range_succ]
-      conv_rhs => rw [show 2 * (n + 1) + 2 = (2 * n + 2) + 2 by omega, Nat.fib_add_two]
-      simp only [Nat.add_assoc, Nat.reduceAdd] at *
-      omega
+    have h := Finset.sum_range_tsub (f := fun i => Nat.fib (2 * i + 2))
+      (by intro a b hab; exact Nat.fib_mono (by omega)) n
+    have hstep (i : ℕ) :
+        Nat.fib (2 * (i + 1) + 2) - Nat.fib (2 * i + 2) = Nat.fib (2 * i + 1 + 2) := by
+      rw [show 2 * (i + 1) + 2 = (2 * i + 2) + 2 by omega,
+        Nat.fib_add_two, Nat.add_sub_cancel_left]
+    simp only [hstep, Nat.mul_zero, Nat.zero_add, Nat.fib_two] at h
+    have hpos : 0 < Nat.fib (2 * n + 2) := Nat.fib_pos.mpr (by omega)
+    omega
   have parity_positions (p n i : ℕ) (hp : p < 2) :
       i ∈ positions p n ↔ i % 2 = p ∧ i < 2 * n + p := by
     rw [mem_positions]
