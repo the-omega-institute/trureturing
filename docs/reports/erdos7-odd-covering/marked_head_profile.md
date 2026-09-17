@@ -11975,3 +11975,447 @@ with the [standalone verifier](verify_weighted_kernel_tails.py):
 ```sh
 python3 -I -O /absolute/path/to/docs/reports/erdos7-odd-covering/verify_weighted_kernel_tails.py
 ```
+
+## A stronger generic profile from actual pure exclusions
+
+For the same actual supported AP(4,6) law considered in PP1--PP5,
+the complete-test square bound improves to
+
+    Gamma13 <=8416748733302130673/43949004608153173
+             =191.511703355864... .                       (PR1)
+
+The previous bound was245.141217379656... . The law and its thresholds
+are unchanged. Every original finite exponent height, arbitrary actual
+residue and missing class is included. The proof uses twelve cases
+according to actual low pure exclusions, then takes a single common
+profile. No forbidden residue is changed or added and no test label
+is removed. This is an ordinary proof with exact arithmetic, not an
+unrestricted Erdős7 solution or an end-to-end Lean proof.
+
+### Actual source law and twelve exhaustive cases
+
+Let S be the full actual survivor set for an arbitrary finite family
+of distinct nonunit moduli supported on3,5,7. Its uniform probability
+nu is the source law. The same-law observations CM8, BS10 and SD1--SD6
+give
+
+    s:=Haar(S)>=53/432,
+    sup_L E_nu L^2<=G=3849/106,
+    sup_L E_nu(L-1)<=R=1649/360.                          (PR2)
+
+Here L is a complete original-divisor test with its own independently
+chosen residue at every divisor, including the unit. The R bound is
+the stronger sum of cylinder maxima, so it bounds every such test.
+
+Partition the actual family into three ternary cases:
+
+* A: the actual modulus3 class is absent;
+* B: the actual modulus3 class is present, while the actual modulus9
+  class is absent or is contained in that forbidden modulus3 root;
+* C: the actual modulus3 and9 classes are present and the modulus9
+  class lies outside the forbidden modulus3 root.
+
+Cross these with presence or absence of the actual modulus5 class,
+and presence or absence of the actual modulus7 class. These twelve
+cases are disjoint and exhaustive, including all small finite heights.
+
+The actual pure-power survivor densities have lower bounds
+
+| ternary case | pure3 lower l3 | same uniform35 R35 upper | same uniform357 square upper |
+|---|---:|---:|---:|
+|A|5/6|17/12|5273/258|
+|B|11/18|47/24|14543/438|
+|C|1/2|15/7|3849/106|
+
+For A, only ternary exponents at least2 can remove pure mass, whose
+sum is1/6. For B the root exclusion costs1/3, an ineffective9 class
+adds no mass, and exponents at least3 cost at most1/18. For C the
+full positive-exponent geometric sum costs at most1/2. The pair R35
+bounds and the A/B square bounds are exactly the same-uniform-law
+fallback cases of P11--P12, N9 and SD6; no balanced or PG1 law is used.
+
+The quinary lower l5 is3/4 when modulus5 is present and19/20 when it
+is absent. The septenary lower l7 is5/6 when modulus7 is present and
+41/42 when absent. These again follow from the full remaining pure
+geometric sums, not a finite truncation.
+
+### Stronger density in missing-class cases
+
+Let s35 be the actual uniform ambient survivor density on3,5, and let
+x,z be its actual pure3 and pure5 survivor densities. All mixed35
+classes together have ambient density at most
+
+    sum_(a,b>=1)3^-a5^-b=1/8,
+
+so s35>=l3*l5-1/8=:s35_*>0. The uniform actual35 law has the R35
+bound of the table. At7, the actual pure survivors have mass at least
+l7; every new mixed class d7^e costs at most its old cylinder mass
+times7^-e. Thus
+
+    s>=s35(l7-R35/6)
+      >=s35_*(l7-R35_upper/6).                          (PR3)
+
+The bracket is positive in every case. This is the ambient-density
+version of the same-law recurrence in N9; no conditioning on individual
+old cells is involved.
+
+A second useful estimate is the actual linear numerator bound proved
+in CM2, including its missing-class fallback paragraphs:
+
+    (s35-s35*R35/5)/(xz)>=53/135.
+
+In particular, if modulus7 is absent, adding the extra pure7 mass
+1/7 relative to5/6 gives
+
+    s >=(5s35-s35*R35)/6+s35/7
+      >=(53/162)l3*l5+s35_*/7.                         (PR4)
+
+With modulus7 present the same formula holds without the final
+s35_*/7 term. This conclusion uses CM2's linear numerator itself;
+it does not infer it from the weaker final scalar CM8 statement.
+In case C with modulus5 present and modulus7 absent, PR4 is
+
+    s>=53/432+1/28=479/3024.
+
+For completeness the verifier also compares CM8, the bound
+(53/135)l3*l5*l7 from CM1 under the actual pure-survivor product,
+and the ordinary reciprocal-sum bound
+`s>=-3/16+sum_(missing p in{3,5,7})1/p`.
+Taking the strongest of these valid bounds and PR3--PR4 gives:
+
+| ternary case | 5 absent,7 absent | 5 absent,7 present | 5 present,7 absent | 5 present,7 present |
+|---|---:|---:|---:|---:|
+|A|373/756|43/108|373/1008|43/144|
+|B|5371/18144|2993/12960|655/3024|73/432|
+|C|13/60|1/6|479/3024|53/432|
+
+Denote the bound in the relevant cell by s_* and put D=1/s_*.
+All bounds apply to the same original uniform357 law nu.
+
+### Complete-test comparison inside the retained pure geometry
+
+Retain only the following exclusions when defining a reference
+product set P. These are actual exclusions, used as geometric
+information about S subset P; they do not alter the actual family.
+
+In case A, impose no reference ternary exclusion. In B retain the
+actual modulus3 exclusion. In C retain the actual modulus3 and9
+exclusions. At5 and7 retain the actual first-root class when it exists
+and impose no reference exclusion when it is absent. The reference
+coordinate Haar masses are therefore
+
+    u3=1 in A, 2/3 in B, 5/9 in C;
+    u5=1 if absent, 4/5 if present;
+    u7=1 if absent, 6/7 if present.                      (PR5)
+
+In C the extra modulus9 class lies in one of the two surviving3 roots,
+so removing it costs exactly1/9; the other surviving3 root remains
+entirely available. For every coordinate p and exponent e>=1, every
+test cylinder has conditional reference probability at most
+`c_p p^-e`, where c_p=1/u_p and c_p<=p. The unit prefix has probability1.
+
+Let independent nonnegative integer variables K_p satisfy
+
+    Pr(K_p>=e)=c_p p^-e, e>=1,
+    V=product_(p=3,5,7)(1+K_p).
+
+Then for every complete original test and every increasing convex
+function f,
+
+    E_(Haar conditioned on P) f(L)<=E f(V).              (PR6)
+
+The comparison is the capped version of the report's comonotone
+comparison following SH4. To see why every original label is retained,
+fix the other coordinates and view the test as a nonnegative weighted
+sum of current-coordinate prefix indicators, one per original label.
+An increasing convex cost is maximized when indicators of given
+probabilities are nested. Enlarging each probability to its cap can
+only increase the cost. Use a common nested indicator for each exponent,
+then repeat at the next coordinate. The resulting full labelled sum
+is the product of the three prefix counts. For finite original heights
+these counts are truncated; extending each count to K_p adds only
+nonnegative terms. This argument neither uses row-dependent test choices
+under nu nor moves any actual forbidden residue.
+
+For t>=1, apply PR6 to the nonnegative hinge f(v)=(v-t)_+ and use
+S subset P:
+
+    H_nu(t):=sup_L E_nu(L-t)_+
+      <=D*(u3*u5*u7)*E(V-t)_+.                         (PR7)
+
+This differs from encoding an old scalar count: the actual root
+exclusions give a smaller integration domain before the comparison.
+Missing roots are explicitly kept as u_p=1.
+
+The exact comparator probabilities and mean are
+
+    Pr(1+K_p=1)=1-c_p/p,
+    Pr(1+K_p=v)=c_p(p-1)p^-v, v>=2,
+    E V=product_p(1+c_p/(p-1)).                         (PR8)
+
+For an integer h>=1,
+
+    E(V-h)_+=E V-h+sum_(n<h)(h-n)Pr(V=n).              (PR9)
+
+Only finitely many product probabilities enter the correction; its
+omitted tail is supplied by the full mean, with no renormalization.
+
+The existing integer majorants used in PP3 further give, in each branch
+with its own same-law square bound G_branch,
+
+    H_nu(1)<=R,
+    H_nu(2)<=(G_branch-1+17R)/30,
+    H_nu(3)<=(G_branch-1+2R)/15.                        (PR10)
+
+These follow pointwise for positive integer L from
+`(L-2)_+<=(L^2+17L-18)/30` and
+`(L-3)_+<=(L^2+2L-3)/15`. Take the minimum of PR7 and the applicable
+PR10 bound, then the maximum over all twelve branches. The exact
+verifier checks that case C with5 and7 present dominates all twelve
+branches at every retained integer h=1,...,12.
+
+The common first six hinge bounds are
+
+    h1=1649/360,
+    h2=2159489/572400,
+    h3=6759/2597,
+    h4=776841/454475,
+    h5=20500987/15906625,
+    h6=1501750547/1670195625.                           (PR11)
+
+The JSON retains h7 through h12 too. For noninteger t between retained
+integers, the chord joining the upper values bounds the actual convex
+hinge. For t<=1, use H_nu(t)<=1+R-t. No global optimality of these
+profiles is asserted.
+
+### The unchanged AP(4,6) continuation
+
+Start with the original uniform357 law nu. Apply the same actual
+pure-survivor AP kernels as in PP4, with thresholds T11=4 and T13=6,
+caps c11=5/3,c13=2, and no intermediate conditioning. In particular
+the law has not been chosen differently for different branches.
+
+The existing AP full-tail comparison with PR11 gives
+
+    b11<=h4/6,
+    b13<=[(28/33)h6+(100/363)h3+(19300/483153)h2
+                 +(887/322102)R+1/966306]/6.
+
+The second formula retains the complete auxiliary11 multiplier tail.
+It is PP4's identical expression with the stronger same-source profile.
+Consequently final survivor mass is at least
+
+    rho13=1-b11_bound-b13_bound
+         =43949004608153173/99601923308580000>0.        (PR12)
+
+The unchanged unconditioned physical square bound is324599/3816, and
+its Haar density bound is1440/53. Deleting the actual bad union saves
+at least its mass from every test square because L>=1. One final
+conditioning therefore gives
+
+    Gamma13<=1+[(324599/3816)-1]/rho13
+            =8416748733302130673/43949004608153173,
+    dnu13/dHaar<= (1440/53)/rho13
+            =2706165463478400000/43949004608153173.    (PR13)
+
+These are stronger observations of the same full actual AP13 law.
+They do not establish a17/19 joint correlation criterion or later-prime
+continuation. Further restrictions on actual pure powers may improve
+the profile in additional cases, but arbitrary higher pure classes can
+also be redundant inside the retained exclusions; no uniform extra
+deletion is assumed.
+
+### Existing consumers of the stronger same-law observations
+
+The physical fourth-moment bound in PP5 is unchanged:
+Kphysical13=114643048312/536625. Substituting PR12 in the existing
+unit-floor conditioning argument gives
+
+    Gamma4_13<=1+(Kphysical13-1)/rho13.                 (PR14)
+
+The exact resulting fraction is in the new certificate. This is a
+stronger bound on the same law; it does not select a different kernel.
+
+The separate PP6 full-Haar T4 step at17, with delta=1/2, also admits
+the same direct substitution. Put g=PR1's square bound. Its assigned
+charge is at most g/256, its survival is at least1-g/256>0, and its
+supported complete square is at most
+
+    1+[(89/64)g-1]/(1-g/256)
+      =1054.2479524075604... .                          (PR15)
+
+This17 kernel is distinct from the pure-base AP17/8 kernel below;
+its conditioned output is not substituted into the WT17/19 chain.
+
+Finally, the previously proved WT4 bounds for the pure-base AP17/8
+and AP19/8 mask truncations are linear in their incoming D,J. Let
+Dold,Jold be PP's previous bounds on the same actual supported13
+law, and Dnew,Jnew be PR13,PR1. In each old WT step, multiply the
+old-cofactor and mixed-current errors by Dnew/Dold, and the pure-current
+error by Jnew/Jold. The common unconditioned17 multipliers2 and89/64
+remain unchanged. Thus the exact rescaled errors are
+
+    epsilon17=0.0001449714082004838...,
+    epsilon19=0.0003174881146077773... .
+
+The old weighted propagation factor59/45 and charge bound
+2epsilon17+epsilon19 are unchanged. At W=483 the total allowance is
+
+    (59/45)epsilon17+epsilon19
+       +483(2epsilon17+epsilon19)
+      =0.2938967014159167... <294/1000.                 (PR16)
+
+Accordingly the sufficient reference criterion becomes
+`E_ref[L^2-1]+483 B_ref<=483-.294` for every complete original test.
+The remaining strictly positive arithmetic slack gives B_actual<1
+and the same supported-square bound484 if that reference criterion
+is proved. It has not been proved here. Only the17/19 forbidden masks
+are truncated; the incoming AP13 law and all original test labels
+remain full, exactly as in WT1--WT11. The earlier WT certificate is
+an immutable pinned input, not overwritten with new bounds.
+
+The adjacent verifier pins the five source certificates by SHA-256,
+reconstructs all twelve branches and complete geometric means, and
+checks the independent closed13 charge formula. Default mode compares
+the entire saved JSON; `--write` explicitly regenerates it. Its finite
+one-coordinate fixtures test the prefix comparison implementation.
+These numerical checks do not replace the ordinary arbitrary-height
+argument above or claim a new Lean declaration.
+
+The [pure-root profile verifier](verify_pure_root_profile.py) reconstructs the
+[exact certificate](pure_root_profile_certificate.json) with the same full-law
+source certificates. It can be run from any working directory:
+
+```sh
+python3 -I -O /absolute/path/to/verify_pure_root_profile.py
+```
+
+## Exact equality in the killed unit floor for genuine BB17 and BB19
+
+For each `p in {17,19}`, there is a uniform complete actual357 survivor law, an actual pure-base BBMST step with `delta=7/(p-2)`, positive assigned bad mass, and one complete original test `L` such that
+
+`integral_bad L^2 dP = P(bad) > 0`,
+
+equivalently `integral_bad (L^2-1) dP=0`. Thus no universal testwise replacement of the killed unit floor by `(1+epsilon) P(bad)`, for any fixed `epsilon>0`, follows from actual357 uniformity and the genuine current kernel. This statement concerns a complete fixed test; it does not assert that this test maximizes the current square supremum.
+
+### The full original rectangle and actual old law
+
+Put `Q=315=3^2*5*7`, and let
+
+`D=(1,3,5,7,9,15,21,35,45,63,105,315)`.
+
+At every original nonunit modulus `d|315`, put the forbidden class `0 mod d`. The eleven original classes are retained, including redundant ones. Their complete actual survivor set is
+
+`S={x mod315:gcd(x,315)=1}`,
+
+which has144 points. Let `nu` be uniform on `S`. It is the product of the uniform laws on the six units modulo9, four nonzero residues modulo5, and six nonzero residues modulo7.
+
+At the current prime put the pure forbidden class `0 mod p`. List the eleven nonunit divisors increasingly as `d_1,...,d_11`. At the distinct original mixed modulus `d_i p`, put the CRT class
+
+`x=1 mod d_i`, `y=i mod p`.
+
+There are exactly23 original forbidden labels: eleven old, one pure-current, and eleven mixed. The period is exactly `315p`. Every nonunit divisor of this period has its one original forbidden label. The certificate stores all23 literal modulus/residue pairs for each prime.
+
+The normalized actual pure-current survivor base `m` is uniform on `y=1,...,p-1`. The mixed roots1 through11 are distinct. Define the independent complete old layouts
+
+`C(x)=sum_(d|315) 1_(x=1 mod d)`,
+
+`A(x)=sum_(d|315) 1_(x=2 mod d)`.
+
+Their residues differ already modulo3,5,7. No identification of the test and forbidden layouts is used.
+
+The actual row union has exact base mass
+
+`alpha(x)=(C(x)-1)/(p-1)`.
+
+This is an exact union identity because every active original mixed label uses a distinct current root. The unit cofactor is absent exactly once.
+
+### Genuine current kernels and positive charge
+
+The complete forbidden load factors as
+
+`C(x)=(1+1_(x=1 mod3)+1_(x=1 mod9))`
+`     *(1+1_(x=1 mod5))*(1+1_(x=1 mod7))`.
+
+At `x=1 mod315` it equals12. At every other old row it is at most8: a missing depth-two ternary match gives at most `2*2*2`, and a missing5 or7 match gives at most `3*1*2`. Hence `alpha>delta=7/(p-2)` occurs precisely at row1. Elsewhere `C-1<=7`, and `7/(p-1)<7/(p-2)`.
+
+Use the actual BBMST density relative to `m`:
+
+`k_x(y)=1/(1-min(alpha(x),delta))` on the actual mixed good set,
+
+`k_x(y)=(alpha(x)-delta)_+/(alpha(x)*(1-delta))` on the actual mixed bad set,
+
+with zero bad density when `alpha=0`. Each row is normalized. Its assigned bad mass is `beta(x)=(alpha(x)-delta)_+/(1-delta)`. At row1 the actual bad roots are1 through11, so
+
+| p | delta | beta(1) | b=E_nu beta |
+|---|---|---|---|
+|17|`7/15`|`53/128`|`53/18432`|
+|19|`7/17`|`61/180`|`61/25920`|
+
+Both charges are strictly positive. Actual mixed bad points exist in other rows too, but the kernel assigns them zero mass. The full physical probability is `P=nu k`; no conditioning or change of the old marginal occurs before this step.
+
+### One complete common test realizes the unit floor
+
+At every original old test modulus `d|315`, choose residue2 modulo `d`. At every original current test modulus `dp`, including `d=1`, choose CRT residue `(2 mod d,p-1 mod p)`. This gives exactly24 test labels, the full exponent rectangle
+
+`(a_3,a_5,a_7,a_p) in {0,1,2}*{0,1}*{0,1}*{0,1}`.
+
+All choices are fixed before sampling the old row. The full test load is
+
+`L(x,y)=A(x)*(1+1_(y=p-1))`.
+
+Every bad point with positive physical mass lies at old row1 and current root in1 through11. At row1, every nonunit divisor test centered at2 fails, since every such divisor has a factor among3,5,7. Thus `A(1)=1`. Also `p-1` is outside1 through11. It follows that `L=1` on every bad point of positive physical mass. This proves
+
+`integral_bad L^2 dP=b`, `integral_bad(L^2-1)dP=0`.
+
+If `P^-` is the killed subprobability and `P^s=P^-/(1-b)` is its supported normalization, the exact identity is
+
+`E_(P^s) L^2=1+(E_P L^2-1)/(1-b)`.
+
+The final unit-floor conditioning formula is therefore exact for this full test as well.
+
+### The same geometry has nontrivial joint cap information
+
+The old square is `E_nu A^2=35/4`, and this is the exact complete old square maximum. Indeed, the one-prime ordered-pair cap sums are `10/3`, `7/4`, and `3/2`; multiplying gives `35/4`. Each pair of arbitrary original test cylinders has at most its corresponding product cap. The coherent surviving center2 attains all these caps simultaneously.
+
+For the independent layout pair above, the three one-prime values of `E[A_p^2 C_p]` are4,2, and5/3. Hence
+
+`E_nu[A^2 C]=40/3`, `E_nu[A^2(C-1)]=55/12`,
+
+and the exact mixed-union cross energies are
+
+`E_nu[A^2 alpha17]=55/192`, `E_nu[A^2 alpha19]=55/216`.
+
+This old maximizing test can therefore be almost disjoint from the rows causing charge. It is not the diagonal `A=C` construction excluded by JL3.
+
+For comparison with SH26, use precisely its cap envelope
+
+`c_SH(x)=(p-1)/((p-2)*(1-min(alpha(x),delta)))`,
+
+`c=(p-1)/(p-9)`, `D=E_nu[c-c_SH]`.
+
+The extra testwise cap saving discarded by the SH26 unit-floor relaxation is
+
+`Z=E_nu[(c-c_SH)(A^2-1)]`,
+
+so `E_nu[c_SH A^2]=c*(35/4)-D-Z`. Exact computation gives
+
+| p | `c*(35/4)-D` | `E[c_SH A^2]` | `Z` |
+|---|---|---|---|
+|17|`811780951/48648600`|`471459931/48648600`|`436309/62370`|
+|19|`199838033/13224640`|`31651727/3306160`|`1331475/240448`|
+
+These are values of the same SH26 cap envelope; they are not a new exact-current-maximum assertion. The strict positive covariance saving and zero excess killed loss coexist on the same source, mask, kernel and complete test. Any refinement must retain that joint geometry; a universally larger killed floor is false. No numerical bound for all generic17/19 layouts or unrestricted tails follows from this example.
+
+The [killed-floor verifier](verify_killed_unit_floor.py) reconstructs the
+[exact certificate](killed_unit_floor_certificate.json), including both finite
+original families and all24 full test labels. It evaluates every physical
+CRT point above the144 old survivors and recomputes the square moments,
+charges, cross energy and cap covariance using exact fractions. Default mode
+compares the entire saved certificate; `--write` regenerates it. These are two
+separate one-step constructions from the actual357 law, not a17/19 chain
+from the supported AP13 law. No Lean declaration is added.
+
+```sh
+python3 -I -O /absolute/path/to/verify_killed_unit_floor.py
+```

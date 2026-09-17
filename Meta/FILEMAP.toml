@@ -692,6 +692,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Literal original-label counterexamples to a larger testwise killed-square floor.
+pattern = "docs/reports/erdos7-odd-covering/killed_unit_floor_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Fixed exact certificate for the finite lcm bridge.
 pattern = "docs/reports/erdos7-odd-covering/lcm_10000_bridge_certificate.json"
 kind = "data"
@@ -982,6 +991,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Actual75point weights and both common-digit square bounds with an arbitrary-height357 consumer.
 pattern = "docs/reports/erdos7-odd-covering/point_geometry_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Twelve actual-pure-geometry branches and complete same-law head and tail bounds.
+pattern = "docs/reports/erdos7-odd-covering/pure_root_profile_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1322,6 +1340,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Recomputes genuine BB kernels and exact killed-floor equality on all original labels.
+pattern = "docs/reports/erdos7-odd-covering/verify_killed_unit_floor.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Enumerates the odd abundant lcm bridge and checks two external capacity rows.
 pattern = "docs/reports/erdos7-odd-covering/verify_lcm_10000_bridge.py"
 kind = "program"
@@ -1567,6 +1594,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Replays actual seven-digit geometry, two square bounds and full all-height transfer with exact integers.
 pattern = "docs/reports/erdos7-odd-covering/verify_point_geometry.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Recomputes the complete pure-root hinge profile and same-law AP continuation.
+pattern = "docs/reports/erdos7-odd-covering/verify_pure_root_profile.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

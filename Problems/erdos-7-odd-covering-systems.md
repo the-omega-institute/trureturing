@@ -30,17 +30,19 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#an-arbitrary-residue-supported-seed-below256-after13)
-now gives `Gamma13<=42035473165849976389/171474522380088889<245.141218`
+An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-stronger-generic-profile-from-actual-pure-exclusions)
+now gives `Gamma13<=8416748733302130673/43949004608153173<191.511704`
 for every finite family supported on `{3,5,7,11,13}`, with all original
 heights, residues and test labels retained. It starts from the uniform
 complete actual 3/5/7 survivor law, applies pure-survivor kernels at
-thresholds 4 and 6 for 11 and 13, and conditions once. The proved actual
-survival lower bound is greater than 0.344319. This seed is below the
-first scalar-17 positivity threshold 256 and supplies a concrete supported
-six-prime law with `Gamma17<8014.263`; the supplied bound still does not
-continue through 19. This is an ordinary proof with exact arithmetic,
-not an unrestricted-tail theorem or a literature-priority claim.
+thresholds 4 and 6 for 11 and 13, and conditions once. Twelve exhaustive
+cases retain the actual first-root exclusions and whether modulus9 is
+effective. They improve the bound on this same law from245.141218,
+with actual survival lower bound greater than0.441246. The seed passes
+the scalar17 positivity threshold256 and supplies a separate full-Haar17
+supported law with `Gamma17<1054.248`; this bound still does not continue
+through19. These are ordinary proofs with exact arithmetic, not an
+unrestricted-tail theorem or a literature-priority claim.
 
 A [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
 for the same arbitrary five-prime forbidden-family domain has an explicit
@@ -57,12 +59,22 @@ computed, and unrestricted Erdős #7 remains open.
 For the new supported13 law, a [weighted forbidden-mask comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#weighted-forbidden-mask-tails-for-the-actual-ap46-restart)
 controls the subsequent pure-survivor17/8 and19/8 kernels. Retaining old
 cofactor exponents through20 and current forbidden depths through8 gives
-whole-cost error below0.377 at W=483, with all original tests still present.
+whole-cost error below0.294 at W=483, with all original tests still present.
+The stronger pure-root profile supplies this reduced allowance through
+(PR16); the earlier0.377 certificate remains a valid bound for the same law.
 It is sufficient to prove the corresponding reference joint bound with that
 margin; this reference bound remains unresolved. The comparison truncates
 only the two later forbidden masks, not the incoming supported13 law or
 the test inventory, and uses neither the PP6 full-Haar17 step nor the AO
 finite-core approximation.
+
+An [actual-kernel counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-equality-in-the-killed-unit-floor-for-genuine-bb17-and-bb19)
+shows that the testwise killed-square floor cannot be uniformly increased:
+for separate genuine steps at17 and19 from a uniform actual357 law, the
+assigned bad mass is positive while a complete24-label test equals1 on
+all bad points with positive mass. The same examples retain a positive
+joint cap saving. They refute that proposed testwise improvement without
+claiming a current-square maximizer or a generic17/19 joint bound.
 
 The complete star head defined below **cannot be completed by any odd tail**
 whose primes exceed 73, at any positive head heights and without restrictions
