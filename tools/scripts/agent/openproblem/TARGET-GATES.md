@@ -22,6 +22,18 @@ imaginary quadratic orders, and a PARI implementation. The annotation lagged by 
 `WebFetch` against `https://oeis.org/A...` returns HTTP 403; the `fmt=text` search endpoint
 works.
 
+**When the candidate comes with concrete witness values, search OEIS by those values before you
+search anything else.** The settlement is often recorded in a *different* entry, indexed by the
+numbers rather than by the conjecture, and that entry names the paper. R37 is the case: a 1984
+Erdős question whose witnesses are `228, 3115, 190233` survived a reading of the original paper, a
+repository duplicate check and an arXiv sweep, and died on
+
+    curl -s "https://oeis.org/search?fmt=text&q=228,3115,190233"
+
+which returns A302755, whose first comment attributes those three terms to Erdős & Hegyvári 1992 —
+Erdős answered his own question eight years later. Two minutes, after a deep search had ranked the
+candidate at 0.8. Checking the conjecture's own entry would never have found it.
+
 Note who else is working this corpus. Tom Adamczewski, "OEIS Open: How many conjectures can
 language models turn into theorems?", arXiv:2608.11941, builds a benchmark of 492 open OEIS
 conjectures formalized in Lean from that same corpus and reports 147 resolved. OEIS entries now

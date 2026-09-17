@@ -484,3 +484,41 @@ corresponding Quasi-Carmichael number.`,下一行:
 
 **判据不变**:无标记**不等于**开放,它只是「值得读」的过滤;读全条目、下载每篇 `%H` 论文、数值核对、
 预登记仍然手工。这两条的教训是反过来的那一侧 —— **有标记却没读出来,代价是派席去证一个已经了结的东西**。
+
+## R37(2026-09-17):Erdős 1984 的 `f(n)=n` 非素数幂问题 —— Erdős 自己 1992 年答了,见证值搜 OEIS 一次即中
+
+搜题席(ChatGPT Pro)按「读 Erdős 原始论文里没编号的顺带问题」这条路找回一条候选,`settlement_probability`
+自估 0.8,并且带着一个可直接核的见证:
+
+> P. Erdős, *On two unconventional number theoretic functions and on some related problems*,
+> Calcutta Math. Soc. jubilee volume (1984),p. 115,Theorem 2 之后的一句无编号问题,逐字:
+> **"In fact, are there integers n for which n ≠ p^α and f(n)=n ?"**
+> 其中 `f(n) = Σ_{p | n} p^{⌊log_p n⌋}`。
+
+本次亲跑核实见证为真:`228 = 2²·3·19`,`2⁷=128 ≤ 228 < 256`、`3⁴=81 ≤ 228 < 243`、`19 ≤ 228 < 361`,
+`128+81+19 = 228`,而 228 不是素数幂。30 万以内的非素数幂不动点恰为 `228, 3115, 190233`。
+席位另指出 OEIS **A339378** 的 `%F` 行印着 `a(n) = n iff n = p^k , p prime, k >= 1`(2020-12-07 加入、无出处),
+被 228 直接推翻。
+
+**决定性的一步只花了一次查询**:拿三个见证值去搜 OEIS —— `https://oeis.org/search?fmt=text&q=228,3115,190233`
+—— 命中 **A302755**「Strongly prime-additive numbers」,其 `%C` 写着
+「The first 3 terms were given in the paper by Erdős & Hegyvári. They were found by P. Massias.」
+
+下载并读了那篇论文(Paul Erdős and Norbert Hegyvári, *On prime-additive numbers*,
+Studia Sci. Math. Hungar. 27 (1992) 207–212,`https://real-j.mtak.hu/5469/1/StudScientMath_27.pdf`),
+p. 207 逐字给出 `2²·3·19 = 228 = 2⁷+3⁴+19`、`5·7·89 = 3115 = 5⁴+7⁴+89`、`3²·23·919 = 190233 = 3¹¹+23³+919`
+(found by P. Massias),随后才定义 strongly prime-additive。**1984 年的问题由 Erdős 本人 1992 年答掉了。**
+
+于是两半都出局:
+
+- **Erdős 的问题**:已解决,不是开放问题,按第 3.6 条「已知结果不派席」。
+- **A339378 的 `%F` 行**:它确实是假的,但推翻它的事实已经发表(Erdős–Hegyvári 1992 / A302755),
+  所以那是数据库勘误,不是开放问题的结算。
+
+**同篇论文里仍开放、但本线用不上的部分**(记下来免得再看一遍):「infinitely many strongly prime-additive
+numbers」「infinitely many prime-additive numbers」以及 prime-additive 计数远多于 strongly 的猜测,全是
+无穷性/渐近断言,有限见证不可结算;唯一形状可被有限反驳的是「前 `2r+1` 个素数之积**总是** prime-additive」,
+本次亲跑 `r = 0..4`(`2, 30, 2310, 510510, 223092870`)全部找到表示,且表示随 r 迅速变多,不是可结算靶。
+
+**这条教给管线的东西写进了 `TARGET-GATES.md` 第 ① 关**:查「是否已被结算」不能只 curl 猜想自己那条
+OEIS 条目 —— 结算常常记在**另一条**由见证值索引的条目里。有具体见证时,先拿见证值搜 OEIS。
