@@ -553,3 +553,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint geometry improves the complete endpoint comparison](profile-notes/82-joint-geometry-improves-the-complete-endpoint-comparison.md)
 - [Common seven hinges on both complete K-control faces](profile-notes/83-common-seven-hinges-on-both-complete-k-control-faces.md)
 - [A complete comparison on both K-control faces](profile-notes/84-a-complete-comparison-on-both-k-control-faces.md)
+- [A broad five-slot source/deletion tradeoff](profile-notes/85-a-broad-five-slot-source-deletion-tradeoff.md)
+- [Peeling surviving tails improves the K-face comparison](profile-notes/86-peeling-surviving-tails-improves-the-k-face-comparison.md)
+- [A clipped full-load interface on the broad slab](profile-notes/87-a-clipped-full-load-interface-on-the-broad-slab.md)
