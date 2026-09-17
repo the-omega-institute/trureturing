@@ -1,0 +1,18 @@
+**definition 54.0（局部输入、空输入与精确语义）.** 固定素数 $p$ 与有限顶点集
+$$
+V=[n]:=\{0,\ldots,n-1\},\qquad n\ge 0,
+$$
+并约定 $[0]=\varnothing$。输入是一族对称的非对角标号
+$$
+a_{ij}=a_{ji}\in\mathbb N_0\cup\{\infty\}\qquad(i\ne j).
+$$
+局部实现是同一个单位向量
+$$
+x=(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+满足
+$$
+v_p(x_i+x_j)=a_{ij}\qquad(i<j),
+$$
+其中 $v_p(0)=\infty$。因此 $a_{ij}=\infty$ 的含义严格是 $x_i+x_j=0$；有限值 $a$ 的含义严格是 $p^a\mid x_i+x_j$ 且 $p^{a+1}\nmid x_i+x_j$。当 $n=0$ 时，输入阵列、边集和向量都为空；$(\mathbb Z_p^\times)^\varnothing$ 含唯一空向量，它真空地满足全部约束。
+

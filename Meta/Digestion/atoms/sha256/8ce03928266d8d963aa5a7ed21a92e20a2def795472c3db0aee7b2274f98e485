@@ -1,0 +1,36 @@
+### 114.4 零风险的可测性判据
+
+zero_prediction_risk_iff_ae_observation_measurable 给出一个更强的边界。设
+
+$$
+\operatorname{obs}:X\to O
+$$
+
+是可测观测，且
+
+$$
+Y:X\to\mathbb R
+$$
+
+属于
+
+$$
+L^2(\mu).
+$$
+
+在概率测度条件下，定理证明：
+
+$$
+\boxed{
+\int
+\left(
+Y-
+\mathbb E[Y\mid\sigma(\operatorname{obs})]
+\right)^2
+\,d\mu
+=0
+\quad\Longleftrightarrow\quad
+Y\text{ 在 }\sigma(\operatorname{obs})\text{ 上几乎处处可测}.
+}
+$$
+

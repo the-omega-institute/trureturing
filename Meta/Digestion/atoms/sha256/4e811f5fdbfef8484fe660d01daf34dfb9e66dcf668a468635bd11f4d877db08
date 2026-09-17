@@ -1,0 +1,9 @@
+**定理。** 若 $p\mid C_j$ 为素数，则
+
+$$
+\boxed{
+p\notin\{2,3,5\},\qquad
+\alpha(p)=3^{j+1},\qquad p\equiv1\pmod4.
+}\tag{GP33}
+$$
+

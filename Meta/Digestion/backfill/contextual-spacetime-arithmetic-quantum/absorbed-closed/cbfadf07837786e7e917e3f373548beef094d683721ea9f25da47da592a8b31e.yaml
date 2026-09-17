@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cbfadf07837786e7e917e3f373548beef094d683721ea9f25da47da592a8b31e
+  normalized_sha256: sha256:cbfadf07837786e7e917e3f373548beef094d683721ea9f25da47da592a8b31e
+cas_ref: sha256:cbfadf07837786e7e917e3f373548beef094d683721ea9f25da47da592a8b31e
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.compatible_unbounded_coordinates
+    target_statement_id: sha256:3a484ef2924019594cd6dcd0295214539502af4e4023efdb8bc5bd87c834e548
+receipts:
+  unresolved_subitems: []

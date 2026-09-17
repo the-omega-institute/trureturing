@@ -1,0 +1,1 @@
+**反例 D19（命题：整系数与整值多项式的区别，repo-derived）。** 记 $\operatorname{Int}(\mathbb Z)=\{h\in\mathbb Q[z]:h(k)\in\mathbb Z\text{ 对每个 }k\in\mathbb Z\}$。

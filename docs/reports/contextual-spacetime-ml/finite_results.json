@@ -243,7 +243,42 @@
     "relu_conservative_rejections": 2,
     "relu_psd_sign_image_obstructions": 1,
     "relu_same_summary_migration_pairs": 1,
+    "rro_actual_endpoint_fixtures": 8,
+    "rro_actual_joint_counterexamples": 1,
+    "rro_actual_probability_box_points": 9,
+    "rro_binary_pair_kernel_checks": 54096,
+    "rro_binary_vertices": 2340,
+    "rro_cycle_order_cases": 6,
+    "rro_decoder_checks": 14168,
+    "rro_insufficient_prefix_witnesses": 540,
+    "rro_moving_window_counterexamples": 1,
+    "rro_probability_box_points": 14168,
+    "rro_rank_checks": 168,
+    "rro_reading_block_nodes": 376,
+    "rro_reading_candidate_set_checks": 1128,
+    "rro_reading_clock_parity_checks": 752,
+    "rro_reading_decoding_checks": 10813,
+    "rro_reading_endpoint_states": 756,
+    "rro_reading_fixed_decoding_checks": 125225,
+    "rro_reading_fixed_subsets": 4247,
+    "rro_reading_forbidden_word_checks": 2266,
+    "rro_reading_future_boundary_checks": 3930,
+    "rro_reading_mechanical_successor_checks": 430540,
+    "rro_reading_missed_window_witnesses": 1,
+    "rro_reading_natural_representatives": 985,
+    "rro_reading_seam_checks": 12,
+    "rro_reading_zero_window_checks": 66,
+    "rro_schedule_order_cases": 168,
+    "rro_schedules": 84,
+    "rro_tail_column_checks": 336,
+    "rro_zero_dimensional_cases": 8,
     "state_error_without_readout_regularity_cases": 3,
+    "static_mixture_horizon_bounded_readout_cases": 12384,
+    "static_mixture_horizon_clipping_cases": 4089,
+    "static_mixture_horizon_horizon_fenceposts": 437,
+    "static_mixture_horizon_same_length_pairs": 1320,
+    "static_mixture_horizon_tolerance_fenceposts": 51,
+    "static_mixture_horizon_words": 2047,
     "stochastic_discounted_pairs": 27,
     "stochastic_iid_horizons": 36,
     "stochastic_joint_law_cases": 1,
@@ -649,9 +684,231 @@
     }
   },
   "result": "all finite assertions passed",
+  "rro_reading": {
+    "depth_examples": {
+      "L12_adaptive_fixed_last": [
+        12,
+        189,
+        375
+      ],
+      "L5_adaptive_fixed_last": [
+        5,
+        7,
+        11
+      ]
+    },
+    "family": {
+      "block_digit_length_upper_exclusive": 12,
+      "endpoint_index_max": 378,
+      "endpoint_index_min": 1,
+      "max_depth": 12,
+      "max_fixed_subset_depth": 5,
+      "min_depth": 0
+    },
+    "geometry_assumptions": [
+      "RRO 20.1–20.7: arithmetic successor T, initial q_L, both complete split-endpoint conventions.",
+      "RRO 35.1: block-cylinder splitting clock and its two actual endpoint witnesses."
+    ],
+    "geometry_source": "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md",
+    "missed_window": {
+      "common_selected_record": "00000",
+      "depth": 5,
+      "differing_indices": [
+        4,
+        5
+      ],
+      "endpoint_index": 6,
+      "prefix_pair": [
+        "01000",
+        "01010"
+      ],
+      "zero_branch_indices": [
+        0,
+        1,
+        3,
+        6,
+        11
+      ]
+    },
+    "scope": "Initial prefix on one non-resettable trajectory; deterministic noiseless all-state paper task. Exact finite checks, not a universal proof, latency speedup, total-cost optimum or Lean claim.",
+    "section": 47,
+    "source": "docs/reports/contextual-spacetime-ml/rro_reading.py",
+    "source_bytes": 16455,
+    "source_sha256": "e0f508761a9970986fcd721a91e705945c73c15cb34540263e6366ded6bc1a16",
+    "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md"
+  },
+  "rro_retention": {
+    "current_and_next": {
+      "current_binary_classes": 3,
+      "current_minus_and_plus_histogram_01": [
+        "1/2",
+        "1/2"
+      ],
+      "current_rank": 1,
+      "digit_one_residual_matrix": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "fixed_width_bits_in_both_cases": 2,
+      "next_minus_histogram_01": [
+        "1/2",
+        "1/2"
+      ],
+      "next_plus_histogram_01": [
+        "1",
+        "0"
+      ],
+      "probability_TV": "1/2",
+      "schedule": [
+        1,
+        1
+      ],
+      "signed_variation": "1",
+      "stacked_binary_classes": 4,
+      "stacked_rank": 2
+    },
+    "endpoint_fixture": {
+      "citation": "RRO 20.2 oriented words; 25.9/25.12/28.7 actual kernel",
+      "lowest_digits_minus_plus_m1_to_m4": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "family": {
+      "box_grid": "g_k in {0,1/(2K),1/K}; K=0 has one empty vector",
+      "depths": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "horizons": [
+        0,
+        1,
+        2
+      ],
+      "max_initial_residual_dimension": 5,
+      "orders": "natural; permuted M2=(2,1), M3=(3,1,2), M5=(3,1,4,2,5)",
+      "rank_cases_by_schedule": {
+        "current_only": 12,
+        "future_visible": 68,
+        "none_visible": 4
+      }
+    },
+    "geometry_assumptions": [
+      "RRO 34.0: positive-depth boundary set E1..E_G_L with fixed side orientation",
+      "RRO 34.1: tau=0 coordinate product; RRO 34.3: full-cycle constant kernel",
+      "Cycle labels are permuted incidence inputs, not derived RRO digit geometry"
+    ],
+    "geometry_source": "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md",
+    "joint_boundary": {
+      "minus": [
+        "1/2",
+        "0",
+        "0",
+        "1/2"
+      ],
+      "phase": "(delta_E1 + delta_E2)/2; a phase measure, not one point",
+      "plus": [
+        "0",
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "probability_TV": "1",
+      "record_order": [
+        "00",
+        "10",
+        "01",
+        "11"
+      ],
+      "record_times": [
+        0,
+        2
+      ],
+      "schedule": [
+        1,
+        0,
+        1
+      ],
+      "signed_variation": "2"
+    },
+    "moving_window": {
+      "fixed_current_prefix_residual_after_truncation": "0",
+      "initial_cutoff": 1,
+      "minus_prefix_at_time2": "00",
+      "needed_current_index_at_time2": 3,
+      "plus_prefix_at_time2": "01",
+      "schedule": [
+        0,
+        0,
+        2
+      ]
+    },
+    "scope": "Fixed finite tuple of marginal histograms; full phase measure retained and charged; exact real residuals. Linear rank is not bits or total memory. Universal claims use paper proofs.",
+    "section": 46,
+    "source": "docs/reports/contextual-spacetime-ml/rro_retention.py",
+    "source_bytes": 19145,
+    "source_sha256": "d54c800a3802fb9ae2edf0e4d74c0fc992025b483df3e5de493b52e73625199c",
+    "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md"
+  },
   "schema": "contextual-spacetime-ml-finite-checks-v1",
   "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
-  "source_sha256": "b19fafb310ed8fbd286e5404e787591fd24ad130b9cc606b682c1204a5afdcb2",
+  "source_sha256": "c3076bbb18b2a1858de8ea206d4cb981bb3bfd7f83578a22339f97ef3afcf2fc",
+  "static_mixture_horizon": {
+    "bounded_readout": "unclipped integer balance; K>=1; tail error <=1/(2*(1+3^K)); exact inner table",
+    "clipping": {
+      "clamped_balance": "-K",
+      "error": "1/4",
+      "predicted": "1/4",
+      "true_balance": 0,
+      "true_next_one": "1/2",
+      "word": "1^(2K)0^(2K)"
+    },
+    "family": {
+      "K_max": 6,
+      "clipping_horizon_max": 10,
+      "clipping_witness_word_max": 24,
+      "empty_suffix_pairs": 180,
+      "horizon_T_max": 120,
+      "m_max": 10,
+      "max_word_length": 10,
+      "pair_L_max": 6,
+      "pair_final_time_max": 114,
+      "readout_balance_abs_max": 13,
+      "threshold_L_max": 7,
+      "threshold_j_max": 6
+    },
+    "scope": "Exact finite checks, not universal proof, observer enumeration, exact positive-epsilon or joint epsilon/T optimum, total-memory/runtime optimum, or Lean verification.",
+    "section": 49,
+    "sharp_bound": "1+floor((T+L)/(2L))",
+    "source": "docs/reports/contextual-spacetime-ml/static_mixture_horizon.py",
+    "source_bytes": 11318,
+    "source_sha256": "2c78709c8141bd63814eb5d3c66a7df39ab83b2635192e43f2edaecbd064aede",
+    "state_accounting": "all persistent history-bearing state, including control/scratch; public t is exogenous",
+    "strict_threshold": "epsilon=c_j gives L=j+1",
+    "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md"
+  },
   "stochastic_records": {
     "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
     "iid_state_contraction": "0",

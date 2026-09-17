@@ -1,0 +1,4 @@
+**Definition 36.3 (Successor kernel, full variation, and mixing time).** For $0\le p\le1$ and a finite signed Borel measure $\eta$ on $K$, define
+$$
+P_p\eta=(1-p)\eta+pT_\#\eta.
+$$

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82002a13cc40e4776ce68b4bdca8b9fcf1590f440ac4102e7d93eec24354d6af
+  normalized_sha256: sha256:82002a13cc40e4776ce68b4bdca8b9fcf1590f440ac4102e7d93eec24354d6af
+cas_ref: sha256:82002a13cc40e4776ce68b4bdca8b9fcf1590f440ac4102e7d93eec24354d6af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子给出实际与理想仪器以及全历史输出的模型定义，并限定参考与记录的访问权限，没有另列误差界。
+    previous_atom_id: c4d041d1f6becd6c94999ce552463374a0f08214dd4a20b931fd00840a24cfcf
+    next_atom_id: 0f44e24ace4429ea5a356aa3b55ee44b2d288f8d12cbb10f9208517729ffe9e2

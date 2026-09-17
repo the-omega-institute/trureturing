@@ -1,0 +1,21 @@
+**Assumption 44.1 (The phase background).** The map $H$ is continuous and onto, and $H(Z(n))=\gamma(n)$. An ordinary phase has one inverse image; a phase $\beta\in E$ has two distinct inverse images $z_\beta^{+1},z_\beta^{-1}$. The labels satisfy the following property for every $\beta\in E$ and every sequence of natural numbers:
+$$
+\gamma(n_j)=\beta+[\varepsilon_j],\quad
+0<|\varepsilon_j|<\tfrac12,\quad \varepsilon_j\longrightarrow0
+\quad\Longrightarrow\quad
+\left(
+Z(n_j)\longrightarrow z_\beta^s
+\ \Longleftrightarrow\ 
+s\varepsilon_j>0\text{ eventually}
+\right).
+$$
+Here $s\in\{-1,+1\}$. Define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&x=z_{H(x)}^s,\ H(x)\in E,\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+These are precisely the phase and oriented-approach statements in [Definition 16.3, the proof of Theorem 16.4, and Assumption 18.1 of the fixed source](https://raw.githubusercontent.com/the-omega-institute/trureturing/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+

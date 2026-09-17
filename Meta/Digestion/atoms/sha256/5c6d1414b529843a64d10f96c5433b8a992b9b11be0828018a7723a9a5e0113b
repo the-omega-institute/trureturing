@@ -1,0 +1,10 @@
+**定理 31.8（字符拓扑及零点的准确地位）。** 在字符拓扑下，存在自然同胚
+$$
+\Delta(A_t)\cong\Delta(\mathcal M)\sqcup(\overline{\mathbb D}\setminus\{0\}).
+$$
+两部分各自开闭。若把零泛函也加入 $A_t^*$，则
+$$
+\Delta(A_t)\cup\{0\}\cong\Delta(\mathcal M)\sqcup\overline{\mathbb D}.
+$$
+特别，当 $z\to0$ 时，$\mathcal E_z\to0$ 甚至在算子范数中成立；它不收敛到任何非零相位字符。零点不是 $A_t$ 的剩余字符。
+

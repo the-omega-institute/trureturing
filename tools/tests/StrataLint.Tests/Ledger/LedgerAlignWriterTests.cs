@@ -302,6 +302,9 @@ public sealed partial class LedgerAlignWriterTests
             this.fixture = fixture;
         }
 
+        public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
+            new(false, "", "Not used by this fixture");
+
         public CommandResult AlignLedger(IReadOnlyList<string> arguments) => fixture.Invoke(arguments);
 
         public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) => throw Unsupported();

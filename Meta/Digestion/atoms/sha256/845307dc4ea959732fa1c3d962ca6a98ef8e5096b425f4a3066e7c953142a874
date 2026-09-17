@@ -1,0 +1,36 @@
+### 11.1 一步记录与粗事件
+
+设有限系统基为 $\{|x\rangle\}_{x\in X}$，一步记录丢弃通道为
+$$
+M_C(\rho)=C\odot\rho,
+$$
+其中 $C=(c_{xy})$ 是单位对角的相关矩阵，因此 $C\succeq0$ 且 $c_{yx}=\overline{c_{xy}}$。记 $J$ 为全 1 矩阵，即 $J_{xy}=1$；它是 Schur 乘法的单位元。令 $\{Q_b\}_{b\in\mathcal B}$ 是有限粗标签的投影测量：
+$$
+Q_bQ_{b'}=\delta_{bb'}Q_b,
+\qquad
+\sum_{b\in\mathcal B}Q_b=I.
+$$
+对事件 $B\subseteq\mathcal B$，记
+$$
+Q_B=\sum_{b\in B}Q_b.
+$$
+粗标签分布记为
+$$
+C_Q(\rho)_b=\operatorname{tr}(Q_b\rho).
+$$
+定义删除前后的事件概率差的最坏值为
+$$
+\delta_B(C)
+=
+\sup_{\rho}\left|
+\operatorname{tr}\!\left(Q_BM_C(\rho)\right)
+-
+\operatorname{tr}(Q_B\rho)
+\right|,
+$$
+以及所有粗事件的缺陷
+$$
+\delta_Q(C)=\max_{B\subseteq\mathcal B}\delta_B(C).
+$$
+这里的上确界遍历系统上的所有密度算子。
+

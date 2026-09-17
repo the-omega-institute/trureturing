@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26fb9666a09aadddcb500623f26b1c7e6157dfe9b2032a75c47d7d83d3c40d36
+  normalized_sha256: sha256:26fb9666a09aadddcb500623f26b1c7e6157dfe9b2032a75c47d7d83d3c40d36
+cas_ref: sha256:26fb9666a09aadddcb500623f26b1c7e6157dfe9b2032a75c47d7d83d3c40d36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子定义非空联合赋值域上的丰富状态函数及共同来源的点态解释，并把合法性和平衡性作为输入条件。
+    previous_atom_id: 60a78f4b4b3eae05373bfeb786eef5bd2b1f4e6a1cdc79383da9491ac08d6c67
+    next_atom_id: 2b76fa1ffbe833eab3016ab920c7f58ea37fe71fa34da9e7fdb5b53eb88fc583

@@ -1,0 +1,9 @@
+原始乘法甚至不必结合到历史同构：取 $X=Y=\mathbf i(1)$、$Z=\mathbf i(2)$，其 $(|E|,|\Omega|)$ 分别为 $(2,2),(2,2),(4,4)$，则
+
+$$
+|E_{(X\boxtimes Y)\boxtimes Z}|=8+4+4\cdot4=28,
+\quad |E_{X\boxtimes(Y\boxtimes Z)}|=2+14+2\cdot8=32.
+$$
+
+两者读数都为 $2$。这些计数针对本稿保留档案的乘法，不是单纯 Cartesian 事件乘法的计数。
+

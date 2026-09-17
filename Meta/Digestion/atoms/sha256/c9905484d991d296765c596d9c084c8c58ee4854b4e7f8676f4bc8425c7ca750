@@ -1,0 +1,5 @@
+**定义 46.1（固定边际任务及其残差前缀）。** 采用[递归关系观察卷](RECURSIVE_RELATIONAL_OBSERVATION.md)（以下记为RRO）假设34.0的紧数位载体，记为 $\mathcal K$，保留其相位映射 $H:\mathcal K\to\mathbb T$、定向分裂纤维 $x_m^\pm$、$E_m=[-m\phi]$、$\phi=(1+\sqrt5)/2$ 及 $v_m=\delta_{x_m^+}-\delta_{x_m^-}$。固定RRO 定义34.1的参数 $\tau=0$ 与定理28.7的实际全测度乘法 $\star_0$，其相位提升记为 $\mathcal L_0$。对任意概率测度 $\mu$，置
+$$
+\nu=H_\#\mu,\qquad g_m=(R_0\mu)_m=\mu(\{x_m^+\}),\qquad
+U\mu=\mu\star_0\delta_{x_1^+}.
+$$

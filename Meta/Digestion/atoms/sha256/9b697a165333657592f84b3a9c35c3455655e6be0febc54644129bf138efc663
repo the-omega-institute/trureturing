@@ -1,0 +1,14 @@
+### IP.8 The next digit in every primitive block
+
+For $n>3$ odd and $5\nmid n$, retain the actual cyclotomic block
+$\mathcal C_n$, old factor $E_n$, and primitive block $\mathcal R_n$
+from IP.3-IP.5. Put
+
+$$
+c_n=\Phi_n(1)=\prod_{d\mid n}d^{\mu(n/d)},\qquad
+J_2(n)=\sum_{d\mid n}\mu(n/d)d^2.
+$$
+
+Here $c_n$ equals the underlying prime when n is a prime power and one
+otherwise. $J_2$ is the classical second Jordan totient.
+

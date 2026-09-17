@@ -7,6 +7,7 @@ internal static class UtilityAdmissionRule
 {
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>
         context.RuleImplementationChanged
+        || DeclaredTemplateBindingRule.IsAffectedBy(context)
         || SelectedPaths(context).Any()
         || context.Changes.Paths.Any(path => IsBaselineFrozen(context, path)
             && IsChangedUtilityHeader(context, path));
@@ -17,6 +18,7 @@ internal static class UtilityAdmissionRule
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         AddRatchetFindings(context, findings);
         AddInformationRegistrationFindings(context, findings);
+        findings.AddRange(DeclaredTemplateBindingRule.Evaluate(context));
         var modules = new Dictionary<RepoPath, UtilityValidationPhase>();
         foreach (var path in SelectedPaths(context))
         {

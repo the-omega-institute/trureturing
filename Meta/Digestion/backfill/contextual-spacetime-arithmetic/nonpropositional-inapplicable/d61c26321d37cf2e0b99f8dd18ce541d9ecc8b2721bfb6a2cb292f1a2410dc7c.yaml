@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d61c26321d37cf2e0b99f8dd18ce541d9ecc8b2721bfb6a2cb292f1a2410dc7c
+  normalized_sha256: sha256:d61c26321d37cf2e0b99f8dd18ce541d9ecc8b2721bfb6a2cb292f1a2410dc7c
+cas_ref: sha256:d61c26321d37cf2e0b99f8dd18ce541d9ecc8b2721bfb6a2cb292f1a2410dc7c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶“对任一点”接着断言 N 与 J 相等当且仅当背景为零，不是纯记号定义，也没有用定义偷带该等价；将两操作展开为坐标式，第二坐标消去所选分布即得必要性，零背景给充分性，探针甚至对所有有限支撑整数对成立，仓内无冻结 GID。
+    previous_atom_id: 20832feab4d10af45ef67aa55a40c137c859cd7d9465bbac98414aa3267c549e
+    next_atom_id: 435085f35cf3d1fdcd98b19f3166a9947a48f87187a377ca4704e9f5ce9bb32b

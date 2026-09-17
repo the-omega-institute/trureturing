@@ -1,0 +1,12 @@
+**definition 58.1 输入、位长与计算模型。** 顶点按输入次序编号为 $[n]$，其中 $n\ge0$。输入给出素数承诺下的 $p$ 及完整数组 $a:\binom{[n]}2\to\mathbb N_0\cup\{\infty\}$；对角线不属于输入，不同顶点允许具有相同坐标。目标是一个共同元组 $(x_i)\in\mathbb Z^n$，满足 $p\nmid x_i$，且每个 $i<j$ 都有 $v_p(x_i+x_j)=a_{ij}$，约定 $v_p(0)=\infty$。
+
+为精确计量，令 $\operatorname{enc}(u)$ 是正整数 $u+1$ 的二进制表示之前加上比其位数少一的零，故
+$$
+\ell(u)=|\operatorname{enc}(u)|=2\lfloor\log_2(u+1)\rfloor+1.
+$$
+输入依次编码 $n,p$ 及字典序排列的上三角标签；$\infty$ 编为单比特 $1$，有限 $a$ 编为 $0\operatorname{enc}(a)$。记实际总位长为 $L$，并令
+$$
+\Lambda=L+2,\qquad M=\max\bigl(\{0\}\cup\{a_{ij}:a_{ij}<\infty\}\bigr).
+$$
+这是二进制、自定界的输入，而非一元精度输入。使用固定的确定性多带图灵机，计量逐比特时间及工作带位数；输出带只写。所有复杂度常数均独立于 $p,n,M$ 和具体标签。素数承诺不由算法另行验证。沿用 definition 55.1 的 $\delta_p,s_p,q_p$，以下简写为 $\delta,s,q$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e2c13afad2078a2f4dca9d4761dfa3c7a47f95cf58ed7fadcbcced2dde1603c
+  normalized_sha256: sha256:5e2c13afad2078a2f4dca9d4761dfa3c7a47f95cf58ed7fadcbcced2dde1603c
+cas_ref: sha256:5e2c13afad2078a2f4dca9d4761dfa3c7a47f95cf58ed7fadcbcced2dde1603c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只约定“隐藏约束以同一世界见证的联合关系保留”，是在指定模型要保留的数据。关于不能换成边缘乘积的实际断言已拆到下一叶；这一表示约定自身没有暗中断定因子化或拼接定理。
+    previous_atom_id: 05ba2bd59b490169fa70f39b04bdc9e2f852ae8dc945911fa370e726eb27333c
+    next_atom_id: 101159bf14176d411118f30798c4a9c57e53029fe99b7854897415474605f678

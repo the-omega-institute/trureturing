@@ -48,6 +48,27 @@ judging surface is a single model family and not a diversity claim. A record tha
 compliant. Treat as a finding only the opposite case: an all-codex stage presented as the designed
 composition with no fallback evidence.
 
+## The PR body is part of the delivery — judge it under CLAUDE.md §2.10 and §5.2
+
+§2.10 forbids 「思考转录、实施日记、评审对话、命令流水、回执副本和重复快照」 in a pull request body and says it
+overrides this file's other retention requirements. Apply it sentence by sentence, with this test: delete the
+sentence — can a reader still tell what the CURRENT state is? If yes, it was narrating the past and should not be
+there; if no, it belongs, possibly rewritten as a statement of current state. The four shapes that have actually
+occurred: a `Post-Body Correction` section; quoted review dialogue; `initial` / `staged` / `attempt N` rows in a
+doors table (an intermediate retry is not a result — every row must be a final reading); and pending-tense
+sentences such as 「to be dispatched」 or 「will be added after review」.
+
+Do NOT over-apply it. §2.10 keeps 「结论、必要读数、验证状态及未解决的问题」. An unresolved local gate written as an
+open boundary with its readings is required, not a violation. A structural constraint that a failed step once
+revealed — for example that a resolution claim must be emitted after the freeze — belongs in the body stated as a
+current property of the door; only the chronology has to go.
+
+§5.2 independently requires the CURRENT review layout to be disclosed: which seats, at which head, with which
+carriers, the approve/reject/abstain tally, which approvals are carried forward from an earlier round and why, and
+how any disagreement was adjudicated. A body that says only 「three codex-cli seats」 with no round-specific
+standing is a §5.2 omission. Carrier fallback under §5.11 (an unavailable pool) is compliance when disclosed, not
+a finding.
+
 ## Verdict set and blocking rule
 `approve` / `comment` / `reject`. A `reject` must cite the exact file:line, the GoalArtifact term violated, the evidence in the work, the failure class (mistake / omission / uncertainty within the trust boundary). Advisory items go under `comment` findings and do not block.
 

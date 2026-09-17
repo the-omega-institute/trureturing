@@ -1,0 +1,20 @@
+**theorem 52.4 (全部二元加法规则与逐素数共同实现).** 对任意 $a,b\in E$，有精确公式
+$$
+a\boxplus_p b=
+\begin{cases}
+\{\min(a,b)\},&a\ne b,\\
+\{\infty\},&a=b=\infty,\\
+\{c\in E:c\ge a\},&a=b<\infty,\ p\ne2,\\
+\{c\in E:c\ge a+1\},&a=b<\infty,\ p=2.
+\end{cases}
+$$
+对任意 $A=(a_p)_p,B=(b_p)_p\in I$，有
+$$
+A\boxplus B=\prod_{p\in\mathcal P}(a_p\boxplus_p b_p).
+$$
+等式右侧每个完整赋值向量都由同一对 $x,y\in R$ 实现。此外
+$$
+\rho(xy)=\rho(x)\cdot\rho(y),\qquad (xR)(yR)=xyR.
+$$
+普通理想和 $xR+yR$ 的赋值向量是 $(\min(a_p,b_p))_p$；它不同于这里的生成元和支撑 $A\boxplus B$。
+

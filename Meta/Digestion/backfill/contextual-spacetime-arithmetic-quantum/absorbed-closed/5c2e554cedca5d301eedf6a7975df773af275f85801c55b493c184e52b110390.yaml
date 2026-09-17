@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c2e554cedca5d301eedf6a7975df773af275f85801c55b493c184e52b110390
+  normalized_sha256: sha256:5c2e554cedca5d301eedf6a7975df773af275f85801c55b493c184e52b110390
+cas_ref: sha256:5c2e554cedca5d301eedf6a7975df773af275f85801c55b493c184e52b110390
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.blackwellDominates_refl
+    target_statement_id: sha256:ceddd86ded2a1267bd837f2a1e9a1dbd7f3cd95bc266b313017a04b7978bfa4b
+  - gid: D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.blackwellDominates_trans
+    target_statement_id: sha256:fafaf49c6d72aad5790f6df4966be0bad97e1e74e568658d8f068d74365ab1d1
+receipts:
+  unresolved_subitems: []

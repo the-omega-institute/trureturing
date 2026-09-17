@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4f61e3e86d9e60cd881758120b41a19ffc98071e4dbf86ad239d678a6d4837c
+  normalized_sha256: sha256:a4f61e3e86d9e60cd881758120b41a19ffc98071e4dbf86ad239d678a6d4837c
+cas_ref: sha256:a4f61e3e86d9e60cd881758120b41a19ffc98071e4dbf86ad239d678a6d4837c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 存在某候选等于下确界的条件经等号代入正是下确界属于候选集；isGLB_sInf 保证允许的空候选集也有下确界，而 Set.notMem_empty 给其不属于该集，从而确界存在并不蕴含由单个实现取到，仓内无冻结 GID。
+    previous_atom_id: ca37257a5aa94309273a20fb94abb80b40d23c979a24ea6fd892a05aaccb4c5d
+    next_atom_id: d6e5ef094687e65b7ab9b37449be6b1833c04e8650f8e095f184159636b4de41

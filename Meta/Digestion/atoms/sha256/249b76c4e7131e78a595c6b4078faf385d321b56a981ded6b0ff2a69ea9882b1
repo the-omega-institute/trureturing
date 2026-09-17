@@ -1,0 +1,21 @@
+### PBC.2. Prime-index completeness and the least counterexample
+
+**Theorem.** The following assertions are equivalent:
+
+$$
+\begin{aligned}
+\mathrm{(A)}&\quad \forall m\ge1,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+\mathrm{(B)}&\quad \forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}\tag{PBC2}
+$$
+
+If (A) is false, its least counterexample index is prime and at least seven.
+
+**Proof.** Assertion (A) implies (B), since no prime at least seven belongs to E. Conversely suppose F_m is powerful and m is outside E. By PBC1, m has a prime factor at least seven. Let ell be its largest prime factor. ZBD1 shows that every prime p dividing F_ell has rank ell, exceeds ell, does not divide m, and satisfies v_p(F_m)=v_p(F_ell). Consequently F_ell is powerful. This contradicts (B), proving equivalence. If m is the least counterexample, ell is another counterexample with ell<=m. Minimality forces ell=m.
+
+**Corollary.** Any least counterexample to (A) produces a prime-index block all of whose prime divisors are WSS, and at least one of those divisors has odd initial depth at least three.
+
+**Proof.** The least index ell is prime by PBC2. Each prime divisor p of F_ell has rank ell and initial depth h_p=v_p(F_ell)>=2. Hence q_p=0. The classical Fibonacci square classification excludes F_ell from the squares, so at least one exponent is odd and therefore at least three. Here ell is the index prime; no assertion that q_ell=0 follows.
+
+PBC2 proves an equivalence and the shape of a least counterexample. It does not assert (A) or (B).
+

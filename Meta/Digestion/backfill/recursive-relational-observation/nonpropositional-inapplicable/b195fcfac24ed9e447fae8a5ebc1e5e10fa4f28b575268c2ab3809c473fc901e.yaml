@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b195fcfac24ed9e447fae8a5ebc1e5e10fa4f28b575268c2ab3809c473fc901e
+  normalized_sha256: sha256:b195fcfac24ed9e447fae8a5ebc1e5e10fa4f28b575268c2ab3809c473fc901e
+cas_ref: sha256:b195fcfac24ed9e447fae8a5ebc1e5e10fa4f28b575268c2ab3809c473fc901e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句固定载体、相位、闭加法图和定向端点的记号，末尾特定端点识别已拆出，不宣称对应结构定理已证明。
+    previous_atom_id: 7945a232f11b56b1021aaaf9227ce730d4f8135e357248e4730d882a363cce7b
+    next_atom_id: f799f258e1360344be79e7b877b6534fe96b399e84a26fb183933e03423f4126

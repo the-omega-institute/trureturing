@@ -1,0 +1,89 @@
+**Definition 34.1 (The actual all-measure algebra and positive powers).** Fix
+$$
+t\in\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+with $\infty$ a separate formal parameter. Use the setwise integrated multiplication $\star_t$ of Theorem 28.7 on the real signed regular Borel measures $M(K)$, not an arbitrary extension agreeing only on atomic measures. Thus
+$$
+(\mu\star_t\eta)(D)=\int_{K^2}P^{(t)}_{x,y}(D)\,d(\mu\otimes\eta)(x,y)
+$$
+for every Borel $D\subseteq K$. Total variation is $\|\mu\|_{\mathrm{TV}}=|\mu|(K)$, without a factor of one half.
+
+For $m\ge1$, put
+$$
+p_m(t)=
+\begin{cases}
+\dfrac{t^m}{t^m-1},&t\ne\infty,\\
+1,&t=\infty,
+\end{cases}
+\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+$$
+\rho_t=
+\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=
+\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+Write
+$$
+\pi^{(t)}_{E_m}=p_m(t)\delta_{x_m^+}+(1-p_m(t))\delta_{x_m^-},\qquad
+\pi^{(t)}_\theta=\delta_{k_\theta}\quad(\theta\notin E),
+$$
+and retain the lift $L_t\nu=\int\pi^{(t)}_\theta\,d\nu(\theta)$ in the setwise sense of Theorem 28.5. The residual coordinate is
+$$
+(R_t\mu)_m=d'_m\bigl((1-p_m(t))\mu(\{x_m^+\})-p_m(t)\mu(\{x_m^-\})\bigr).
+$$
+The imported coordinate isomorphism of Theorems 28.8–28.9 is
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu),\qquad
+\Phi_t(\mu\star_t\eta)=\bigl(H_\#\mu*_{\mathbb T}H_\#\eta,\ R_t\mu*_+R_t\eta\bigr),
+$$
+with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+Here $*_\mathbb T$ is convolution on the original compact circle and $*_+$ is convolution on $\ell^1(\mathbb N_{>0})$. The inverse series converges in total variation. In particular,
+$$
+\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}},\qquad
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+\sup_{x,y}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The measure
+$$
+\mathfrak m=L_t\lambda
+$$
+is the already constructed non-atomic probability of Theorem 28.11, independent of $t$.
+
+For a probability $\mu\in M(K)$, define only positive powers,
+$$
+\mu_t^{(1)}=\mu,\qquad \mu_t^{(n+1)}=\mu_t^{(n)}\star_t\mu\quad(n\ge1),
+$$
+and write
+$$
+\nu=H_\#\mu,\qquad g=R_t\mu,\qquad
+\nu^{(n)}=\nu^{*_{\mathbb T}n},\qquad g^{(n)}=g^{*_+n},
+$$
+$$
+D_{t,n}=\mu_t^{(n)}-L_t\nu^{(n)},\qquad
+\overline\mu_{t,N}=\frac1N\sum_{n=1}^N\mu_t^{(n)},\qquad
+\overline\nu_N=\frac1N\sum_{n=1}^N\nu^{(n)}.
+$$
+Weak-star convergence always means testing against $C(K)$ or $C(\mathbb T)$, as appropriate. Setwise convergence means convergence on every fixed Borel set.
+
+For $f\in C(K)$, define its cylinder oscillation by
+$$
+\omega_L(f)=\sup\{|f(x)-f(y)|:q_L(x)=q_L(y)\}.
+$$
+Compactness and the digit topology give $\omega_L(f)\to0$: otherwise pairs agreeing at arbitrarily large depths would have convergent subsequences with the same limit but a fixed positive difference of function values.
+

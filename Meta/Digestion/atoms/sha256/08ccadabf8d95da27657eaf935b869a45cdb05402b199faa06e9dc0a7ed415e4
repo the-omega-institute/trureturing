@@ -1,0 +1,8 @@
+沿用 $d=3$，以下证明对任一固定有限 $d\ge1$ 成立。令
+
+$$
+R=\mathbb Z^{(\mathbb Z^d)}
+=\{c:\mathbb Z^d\to\mathbb Z:\operatorname{supp}(c)\text{ 有限}\},
+\quad \varepsilon(c)=\sum_p c(p),\quad I=\ker\varepsilon.
+$$
+

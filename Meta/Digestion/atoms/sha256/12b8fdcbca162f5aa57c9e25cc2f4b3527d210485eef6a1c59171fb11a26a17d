@@ -1,0 +1,5 @@
+**theorem 36.7 (Golden spacing and the log-free Gaussian frequency sum).** For every integer $k\ge1$,
+$$
+\|k\phi\|>\frac1{4k},
+$$
+where $\|t\|$ denotes distance to the nearest integer. 

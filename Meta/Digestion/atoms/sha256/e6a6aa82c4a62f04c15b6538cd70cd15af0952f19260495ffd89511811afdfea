@@ -1,0 +1,32 @@
+**theorem 48.6 (The precise boundary-ring decision input).** Finite existential conjunctions of polynomial equalities with integer coefficients are uniformly decidable over $R=\widehat{\mathbb Z}$. More precisely, for each such ring sentence $\Psi$,
+$$
+R\models\Psi\quad\Longleftrightarrow\quad\text{for every }m>1,\ \mathbb Z/m\mathbb Z\models\Psi.
+$$
+The parameter-free first-order theory of the internal ring $B$, with its own zero $e$ and unit $\tau(1)$, is also decidable. This includes internally interpreted inequations, but does not add arbitrary named profinite parameters.
+
+**证明。** The published [Derakhshan–Macintyre, Corollary 3.1, page 5](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S2050509423000622#page=5) provides an algorithm deciding, from a ring sentence $\Phi$, whether it is true in every $\mathbb Z/m\mathbb Z$ with $m>1$. Their [Theorem 3.1, pages 4–5](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S2050509423000622#page=4) states uniform interpretability of that finite-ring class in the rational adele ring. It is not itself a theorem identifying $K$ with a ring.
+
+Write $\Psi=\exists\mathbf z\,\bigwedge_j A_j(\mathbf z)=D_j(\mathbf z)$. A solution in $R$ projects to a solution modulo every $m$. Conversely, suppose every modulus has a solution. Inside the compact space $R^n$, let $E_m$ be the closed set where all equations hold modulo $m$. It is nonempty because a solution tuple modulo $m$ lifts coordinatewise to $R$, for example through integer representatives. Given finitely many moduli, take their least common multiple $M$. A solution modulo $M$ lifts to a point in all the corresponding $E_m$. Thus these closed sets have the finite-intersection property. Their intersection contains a tuple whose polynomial equalities hold modulo every modulus, hence hold in $R$. This proves the equivalence, and Corollary 3.1 decides its right-hand side in one uniform procedure. No compatibility or surjectivity of maps between solution sets was assumed.
+
+For the stronger first-order statement, here is an explicit interpretation of $R$ which also distinguishes integral finite adeles from arbitrary finite adeles. Let $A=\mathbb A_{\mathbb Q}$. Use a fixed parameter-free ring formula $\theta$ defining $\mathbb Z_\ell$ in every $\mathbb Q_\ell$, supplied by [Cluckers–Derakhshan–Leenknegt–Macintyre, Theorem 2, page 2](https://arxiv.org/pdf/1306.1802v1#page=2) and recalled as Theorem 2.1 on page 2 of the 2023 paper. A nonzero minimal idempotent $f$ of $A$ selects one factor field $fA$. Its domain is defined by $fy=y$, its zero is ambient zero, and its unit is $f$. Every ring formula about this field is effectively translated by restricting quantifiers to that domain and replacing its unit by $f$.
+
+There is a unique minimal idempotent $f_\infty$ whose field satisfies
+$$
+\forall x\,\exists y\,(x=y^2\ \lor\ -x=y^2).
+$$
+The real field satisfies this sentence; no $\mathbb Q_\ell$ does, because taking $x=\ell$ makes both candidate squares have odd valuation. Thus $f_\infty$ is parameter-free definable. Put $f_{\rm fin}=1-f_\infty$ and define
+$$
+D_{\rm fin}=\{a\in A:f_{\rm fin}a=a\ \text{and, for every minimal }f\ne f_\infty,\ fA\models\theta(fa)\}.
+$$
+The preceding relativization makes this a fixed first-order definition. Its elements are exactly the adeles with real coordinate zero and every finite coordinate integral. Every tuple of integral finite coordinates is an adele, so projection onto those coordinates is a ring isomorphism
+$$
+(D_{\rm fin},0,f_{\rm fin},+,-,\cdot)\cong\prod_\ell\mathbb Z_\ell=R.
+$$
+In contrast, $f_{\rm fin}A$ without the integrality condition is strictly larger than $D_{\rm fin}$. For example, let $a\in\mathbb A_{\mathbb Q}$ have coordinates
+$$
+a(\infty)=0,\qquad a(2)=\frac12,\qquad a(p)=0\quad\text{for every prime }p\ne2.
+$$
+Then $a(p)\in\mathbb Z_p$ for every prime $p\ne2$, so $a$ satisfies the restricted-product condition defining a rational adele: its finite coordinate is nonintegral at only the single prime $2$. Since its real coordinate is zero, $f_{\rm fin}a=a$, hence $a\in f_{\rm fin}A$. But $a(2)=1/2\notin\mathbb Z_2$, so $a\notin D_{\rm fin}$. Thus $f_{\rm fin}A$ is not the integral product $\prod_p\mathbb Z_p$.
+
+Translate a sentence of $R$ by restricting all quantifiers to $D_{\rm fin}$ and replacing its unit by the uniquely definable $f_{\rm fin}$. Induction on terms and formulas proves preservation of truth. The construction is effective. Decidability of $A$, invoked in the published Corollary 3.1 proof on page 5, therefore decides the translated sentence. Finally, $\tau$ identifies $R$ with the internal ring $B$. Ring subtraction in this interpretation is internal ring subtraction; none is asserted for ambient $K$. 证毕。
+

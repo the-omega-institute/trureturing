@@ -1,0 +1,4 @@
+对每个 $L\ge1,h\ge0$，
+$$
+P_{L+h}x=P_{L+h}y\Longrightarrow P_LT^hx=P_LT^hy.
+$$

@@ -1,0 +1,5 @@
+函数 $f:D\to Y$ 的普通外部图与单个原函数码分别是
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},\qquad\operatorname{Enc}(f)=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+外部域为 $D^*$，单图码的语义域为 $\operatorname{Enc}(D)$；域外没有图边。

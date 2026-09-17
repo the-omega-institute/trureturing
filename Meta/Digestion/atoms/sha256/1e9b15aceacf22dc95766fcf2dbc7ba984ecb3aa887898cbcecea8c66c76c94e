@@ -1,0 +1,27 @@
+### FD.2 明确使用的最大素因子定理
+
+对非零整数 M，令 P(M) 为 |M| 的最大素因子，并约定 P(1)=1。记 Phi_n(A,B) 为齐次分圆多项式。Stewart 的定理断言：若 (A+B)^2 与 AB 为非零整数，且 A/B 不是单位根，则存在有效可计算的常数 n_0，使全部 n>n_0 满足
+
+\[
+P(\Phi_n(A,B))>
+n\exp\!\left(\frac{\log n}{104\log\log n}\right).
+\tag{FD2}
+\]
+
+这里使用 C. L. Stewart, *On divisors of Lucas and Lehmer numbers*, Acta Mathematica 211 (2013), 291-314, DOI 10.1007/s11511-013-0105-y；arXiv:1008.1274 的定理 1。FD2 是已有定理，不是下文重新证明的结论。
+
+取 A=phi=(1+sqrt(5))/2、B=psi=(1-sqrt(5))/2，则 (A+B)^2=1，AB=-1，且 |A/B|=phi^2>1。全部假设都成立。对 j>=1 令 r_j=3^(j+1)，GP3 中的 C_j 满足
+
+\[
+\Phi_{r_j}(\phi,\psi)
+=\frac{\phi^{3^{j+1}}-\psi^{3^{j+1}}}
+       {\phi^{3^j}-\psi^{3^j}}
+=\frac{F_{3^{j+1}}}{F_{3^j}}
+=C_j.
+\tag{FD3}
+\]
+
+分母非零，因为 phi/psi 不是单位根。第一式也可以由
+Phi_(3^(j+1))(A,B)=A^(2*3^j)+A^(3^j)B^(3^j)+B^(2*3^j)
+直接验证。
+

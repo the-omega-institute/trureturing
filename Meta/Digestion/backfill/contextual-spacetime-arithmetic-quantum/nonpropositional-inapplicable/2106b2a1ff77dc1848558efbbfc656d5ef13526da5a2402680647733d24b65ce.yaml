@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2106b2a1ff77dc1848558efbbfc656d5ef13526da5a2402680647733d24b65ce
+  normalized_sha256: sha256:2106b2a1ff77dc1848558efbbfc656d5ef13526da5a2402680647733d24b65ce
+cas_ref: sha256:2106b2a1ff77dc1848558efbbfc656d5ef13526da5a2402680647733d24b65ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子固定访问范围并定义单步扰动和窗口扰动量，没有提出累积预算结论。
+    previous_atom_id: 4b60281bc90d7c0d63883f10cf201f6842fcbbe36c10d97773a15765ebce12fd
+    next_atom_id: 54aa5cff88f8e790464fd025087e64bfadfd49199d46ceed3973c047c119d156

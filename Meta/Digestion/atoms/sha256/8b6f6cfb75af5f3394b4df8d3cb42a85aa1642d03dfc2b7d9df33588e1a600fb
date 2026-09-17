@@ -1,0 +1,15 @@
+**theorem 27.10 (Compactness and the atomic isometric embedding).** The digit space $K$ is compact and metrizable by $d_K$. Every $a\in B$ defines a finite signed regular Borel measure
+$$
+\iota(a)(D)=\sum_{x\in D}a(x)\qquad(D\subseteq K\text{ Borel}),
+$$
+and this gives a linear isometric embedding
+$$
+\iota:B\longrightarrow M(K),\qquad
+\|\iota(a)\|_{\mathrm{TV}}=\|a\|_1.
+$$
+In particular, all the kernels can be regarded as finite signed regular Borel measures. For distinct points,
+$$
+\|\delta_x-\delta_y\|_1
+=\|\delta_x-\delta_y\|_{\mathrm{TV}}=2.
+$$
+

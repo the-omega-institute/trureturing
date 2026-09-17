@@ -1,0 +1,12 @@
+**定理 23.5（零切片下降与双侧平均恒等式）。** 设 $P$ 可容许且结合。则存在唯一一族 $\pi_\theta\in\mathcal D_f(K)$，使
+$$
+P_{0_K,x}=P_{x,0_K}=\pi_{H(x)}
+\quad(x\in K).
+$$
+每个 $\pi_\theta$ 支撑于 $H^{-1}(\{\theta\})$，且 $\pi_0=\delta_{0_K}$。对所有 $\theta,\rho\in\mathbb T$ 和 $x,y\in K$，
+$$
+\pi_\theta*\delta_y=\pi_{\theta+H(y)},\qquad
+\delta_x*\pi_\rho=\pi_{H(x)+\rho},\qquad
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho}.
+$$
+

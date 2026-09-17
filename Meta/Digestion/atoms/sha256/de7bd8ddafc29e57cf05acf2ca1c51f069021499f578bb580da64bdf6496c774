@@ -1,0 +1,6 @@
+**theorem 28.14 (The global joint weak-star obstruction remains).** No globally jointly continuous product
+$$
+M(K)\times M(K)\longrightarrow M(K)
+$$
+for the topology $\sigma(M(K),C(K))$ on each measure space can agree with the prescribed point rows. In particular, neither the integrated product nor any sheared extension can have this global joint weak-star continuity. This concerns weak-star continuity, not total variation boundedness or the Banach weak topology.
+

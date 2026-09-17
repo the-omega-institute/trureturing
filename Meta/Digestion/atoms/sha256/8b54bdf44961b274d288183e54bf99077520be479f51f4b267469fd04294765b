@@ -1,0 +1,1 @@
+反例：$\Omega=\{a,b,c\}$，$f(a)=f(b)=0,f(c)=1,A=\{a\}$，则 $f[\Omega\setminus A]=\{0,1\}$，而 $\{0,1\}\setminus f[A]=\{1\}$。

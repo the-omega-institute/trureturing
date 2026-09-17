@@ -1,0 +1,5 @@
+**Corollary IP3, the prime-index block.** For each prime
+$\ell\ge7$ with $\chi(\ell)=-1$, every prime $p\mid F_\ell$ satisfies
+$r(p)=\ell$ and $v_p(F_\ell)=h_p$. The number of such primes that are
+inert and have odd $h_p$ is odd, hence positive.
+

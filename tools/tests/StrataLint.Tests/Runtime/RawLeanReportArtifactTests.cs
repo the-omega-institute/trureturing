@@ -196,6 +196,8 @@ public sealed class RawLeanReportArtifactTests
     {
         const string unicodeSource = "def term𝒪φ : Nat := 1\n";
         using var repository = new TemporaryDirectory();
+        var manifest = Path.Combine(repository.Path, LeanReportRegistrationFixture.ManifestPath);
+        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
         File.WriteAllText(
             Path.Combine(repository.Path, "lakefile.toml"),
             "name = \"producer_probe\"\nversion = \"0.1.0\"\ndefaultTargets = [\"Trureturing\"]\n\n[[lean_lib]]\nname = \"Trureturing\"\n",
@@ -230,7 +232,7 @@ public sealed class RawLeanReportArtifactTests
         var inspected = TestProcessRunner.Run(
             "lake",
             [
-                "env", "lean", "--run", inspector,
+                "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
                 "--output", spoolReport,
                 "--material-spool", spoolMaterials,
                 "Trureturing", "Trureturing.lean", sourceHash,
@@ -247,7 +249,7 @@ public sealed class RawLeanReportArtifactTests
             "python3",
             [
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py"),
-                "compact", spoolReport, spoolMaterials, output,
+                "compact", spoolReport, spoolMaterials, output, manifest,
             ],
             repository.Path,
             TestBudgets.LeanProcessHangGuard,

@@ -1,0 +1,5 @@
+**定理 29.5（无原子测度的充分性）。** 对每个参数及每个 $\mu\in M_c(K)$，
+$$
+\mu\in Z_{\mathrm{top}}(\star_t),\qquad \|\mathcal T_\mu^{(t)}\|\le\|\mu\|_{\mathrm{TV}}.
+$$
+

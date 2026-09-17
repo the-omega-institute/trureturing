@@ -1,0 +1,35 @@
+**Proof.** First, circle convolution is a contractive associative commutative product on $M(\mathbb T)$. Contractivity follows by pushforward under addition from
+$$
+|\nu\otimes\xi|=|\nu|\otimes|\xi|.
+$$
+For a bounded Borel test function and three input measures, both bracketings of circle convolution are the integral of $f(\theta+\eta+\zeta)$ against the same signed product measure. Its absolute integral is bounded by the product of the three variation norms times $\|f\|_\infty$. Theorem 28.4 therefore justifies all changes of integration order and proves associativity; symmetry proves commutativity. Absolute summation proves the analogous assertions and norm bound for $*_+$. Hence $\diamond$ is associative, commutative and submultiplicative for $\|\cdot\|_\oplus$, and $\mathcal C$ is complete.
+
+The first coordinate of the desired multiplicativity is theorem 28.7. For a fixed positive integer $k$, the point-kernel formula and the identities used in theorem 28.8 give the exact scalar identity
+$$
+(R_tP^{(t)}_{x,y})_k
+=\sum_{\substack{m,n\ge1\\m+n=k}}r_m(x)r_n(y).
+$$
+The left side is a fixed finite linear combination of two singleton evaluations of the output measure. Consequently the defining setwise integration law permits this coordinate to pass through the integral. The sum on the right is finite. Signed Fubini and the product-function identity now give
+$$
+\begin{aligned}
+(R_t(\mu\star_t\eta))_k
+&=\int_{K^2}(R_tP^{(t)}_{x,y})_k\,d(\mu\otimes\eta)(x,y)\\
+&=\sum_{m+n=k}\left(\int_Kr_m\,d\mu\right)\left(\int_Kr_n\,d\eta\right)\\
+&=(g*_+h)_k.
+\end{aligned}
+$$
+This proves every residual coordinate for arbitrary signed measures, including non-atomic inputs. No approximation by atomic measures has been used.
+
+Since $\Phi_t$ is injective and $\diamond$ is associative, both bracketings of any triple product in $M(K)$ have the same image under $\Phi_t$ and are equal. Applying $\Psi_t$ to the coordinate product proves the full product formula. Its series converges absolutely because
+$$
+\sum_{k\ge1}\left\|\frac{(g*_+h)_k}{d'_k}v_k\right\|_{\mathrm{TV}}
+\le\frac{2}{1-\rho_t}\|g*_+h\|_1
+\le\frac{2}{1-\rho_t}\|g\|_1\|h\|_1.
+$$
+The norm $N_t$ is the pullback of the complete submultiplicative direct-sum norm. Its equivalence to total variation is theorem 28.8. The sharp bilinear bound gives
+$$
+C_t\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}}).
+$$
+When $C_t>1$, an attaining pair of unit-norm Dirac measures disproves submultiplicativity of the unscaled norm. When $C_t=1$, that norm is submultiplicative by theorem 28.7. Finally, the two coordinate summands are closed ideals with zero cross products, and their inverse images are exactly the two asserted ideals. QED.
+

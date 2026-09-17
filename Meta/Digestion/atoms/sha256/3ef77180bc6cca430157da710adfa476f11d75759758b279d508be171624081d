@@ -1,0 +1,16 @@
+**定理 46.6（实际关系闭包、存在投影与自然参数）。** 对任意 $R\subseteq\mathbb N_0^d$，有
+$$
+\overline{\iota^d[R]}=\bigcap_{\alpha\in I}(\pi_\alpha^d)^{-1}(q_\alpha^d[R]),\qquad
+\overline{\iota^d[R]}\cap\iota^d[\mathbb N_0^d]=\iota^d[R].
+$$
+若 $R\subseteq\mathbb N_0^a\times\mathbb N_0^b$，$p$ 表示输出投影，则
+$$
+p\bigl(\overline{\iota^{a+b}[R]}\bigr)=\overline{\iota^a[p(R)]}.
+$$
+特别地，固定 $\mathbf u\in\mathbb N_0^a$ 后，闭包中存在输出恰为 $\iota^a(\mathbf u)$ 的点，当且仅当存在自然见证 $\mathbf v$ 使 $(\mathbf u,\mathbf v)\in R$。对于多项式系统，只能无条件断言
+$$
+\overline{\iota^d[S]}\subseteq E_\Sigma,\qquad
+E_\Sigma\cap\iota^d[\mathbb N_0^d]=\iota^d[S].
+$$
+把实际关系闭包换成 $E_\Sigma$ 后，即使固定输出为自然锚，前述存在性等价也可能失败。
+

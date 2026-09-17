@@ -1,0 +1,225 @@
+**命题 148.1（联合提升不变性与固定端点仪器的有限历史复现）。** 沿用命题 130.1、137.1 的输出在前、活动记忆在后的次序，以及命题 147.1 的全部复左收缩制备族。记
+$$
+a=\frac{\sqrt5-1}{2},\qquad s=\sqrt a,\qquad a+a^2=1,\qquad
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=\operatorname{diag}(1,0),\qquad C_0=s^3J.
+$$
+这里 $a$ 即前述命题的 $\alpha$。各 qubit 均取固定正交标准基，$\dagger$ 表示共轭转置，$\operatorname{outer}(v)=vv^\dagger$，向量化采用左行右列约定
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L\otimes|j\rangle_R.
+$$
+原过程从同一个纯记忆 $m_0=s|0\rangle+a|1\rangle$ 出发，以
+$$
+T|0\rangle=|0\rangle_{\rm out}\otimes(s|0\rangle+a|1\rangle)_M,
+\qquad T|1\rangle=|1\rangle_{\rm out}\otimes|0\rangle_M
+$$
+先发出 $L,R_0$，再在 $L$ 上施加任意 $F\in M_2(\mathbb C)$、$F^\dagger F\le I_2$ 的单 Kraus 成功分支。包括奇异 $F$ 与 $F=0$，保留共同成功旗标。置 $C=FC_0$，成功后实际联合向量与端点算子为
+$$
+\chi(C)=\operatorname{vec}_{LR}(C)\otimes|0\rangle_M
++s\operatorname{vec}_{LR}(CE_0)\otimes|1\rangle_M,
+\qquad Q(C)=\operatorname{Tr}_M\operatorname{outer}(\chi(C)).
+$$
+模拟器只取得 $Q(C)$ 与成功旗标，不取得 $F$ 的描述、原始记忆或其副本。所有分支在归一化以前比较。
+
+任取非空有限报告集 $Y$，固定同一个列随机矩阵 $W:Y\leftarrow\{0,1\}$，即 $W(y\mid b)\ge0$、$\sum_yW(y\mid b)=1$。每一步，原过程先对仍与端点相关的同一个活动记忆应用 $T$，发出下一右端点 $R_k$；随后在将退役的 $R_{k-1}$ 上测量固定基
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2},\qquad b\in\{0,1\},
+$$
+丢弃该退役 qubit，并给定 $b_k$ 按 $W(\cdot\mid b_k)$ 抽取报告 $y_k$。这些经典随机抽取在给定原始记录后相互独立，且独立于其余系统及制备设置；不以任何原始结果或报告反馈选基、改动 $W$ 或操作记忆。原始结果只用于本步报告处理，保留的历史为 $h=(y_1,\ldots,y_m)$。每个有限时刻的比较对象恰为历史 $h$ 与 $L,R_m$ 的联合未归一化块，不包括原始记忆、退役 qubit、不可访问的纯化或任意插入干预。
+
+按标准基将各个 $L,R_k$ 识别为同一个四维空间，定义
+$$
+A_b=Z^bJ,\qquad P=I_L\otimes E_0,\qquad
+\mathcal L(X)=X+aPXP,\qquad
+\mathcal L^{-1}(X)=X-a^2PXP,
+$$
+$$
+\mathcal K=\left\{\sum_{j=1}^N\lambda_jQ(C_j):
+N<\infty,\ \lambda_j\ge0,\ C_j\in M_2(\mathbb C)\right\}
+=\mathcal L(\operatorname{PSD}_4),
+$$
+其中允许空和，$\operatorname{PSD}_4$ 是四维正半定算子锥。令
+$$
+Vv=v\otimes|0\rangle_M+sPv\otimes|1\rangle_M,
+\qquad \Gamma(X)=V\mathcal L^{-1}(X)V^\dagger\quad(X\in\mathcal K).
+$$
+则 $\mathcal K$ 是闭凸锥，$\Gamma(X)\ge0$、$\operatorname{Tr}_M\Gamma(X)=X$，且任意上述正分解均给出
+$$
+\Gamma(X)=\sum_j\lambda_j\operatorname{outer}(\chi(C_j)).
+$$
+因此 $\Gamma$ 指定了一个不依赖分解的兼容联合提升；这不是所有可能联合扩张的唯一性断言，也不是在全部 $\operatorname{PSD}_4$ 上可实施的恢复映射。
+
+定义从 $L,R,M$ 到 $L,R',M'$ 的实际原始分支算子
+$$
+B_b=(I_L\otimes\langle\eta_b|_R\otimes I_{R'}\otimes I_{M'})
+(I_L\otimes I_R\otimes T),
+\qquad
+\mathcal H_y(\Omega)=\sum_bW(y\mid b)B_b\Omega B_b^\dagger.
+$$
+并置 $c_y=W(y\mid0)+W(y\mid1)$、$d_y=W(y\mid0)-W(y\mid1)$。对四个相互独立的复矩阵元定义
+$$
+\psi_\nu\!\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=\frac12\begin{pmatrix}
+a x+w+\nu(u+v)&a^2x+\nu a v\\
+a^2x+\nu a u&a^2x
+\end{pmatrix},\qquad
+\mathcal I_y=
+\begin{cases}
+c_y(\operatorname{Id}_L\otimes\psi_{d_y/c_y}),&c_y>0,\\
+0,&c_y=0.
+\end{cases}
+$$
+这是命题 147.1 的唯一复线性端点分支。对每个列随机 $W$，即使它不满足全空间完全正判据，仍有
+$$
+\mathcal I_yQ(C)=\frac a2\sum_bW(y\mid b)Q(CA_b),\qquad
+\mathcal I_y(\mathcal K)\subseteq\mathcal K,\qquad
+\mathcal H_y\Gamma(X)=\Gamma(\mathcal I_yX)\quad(X\in\mathcal K).
+$$
+锥不变性本身不等于全空间完全正性。
+
+令 $\Omega_\varnothing=\Gamma(Q(C))$，以实际报告更新 $\Omega_{hy}=\mathcal H_y(\Omega_h)$，并定义 $R_h(C)=\operatorname{Tr}_M\Omega_h$。则对每个有限 $m\ge0$、每条 $h\in Y^m$ 同时有
+$$
+\Omega_h=\Gamma(R_h(C)),\qquad R_h(C)\in\mathcal K,
+\qquad R_{hy}(C)=\mathcal I_y(R_h(C)),
+$$
+$$
+\begin{aligned}
+R_{(y_1,\ldots,y_m)}(C)
+&=\left(\frac a2\right)^m
+\sum_{b_1,\ldots,b_m\in\{0,1\}}
+\left[\prod_{k=1}^m W(y_k\mid b_k)\right]
+Q(CA_{b_1}\cdots A_{b_m})\\
+&=(\mathcal I_{y_m}\circ\cdots\circ\mathcal I_{y_1})(Q(C)).
+\end{aligned}
+$$
+空乘积、空记录和零次复合分别取恒等矩阵、唯一空记录和恒等映射。因此复现包括每个有限历史与最终端点的完整联合算子 $\sum_{h\in Y^m}|h\rangle\langle h|\otimes R_h(C)$。
+
+存在一个不依赖 $F$、每步反复作用于完整 $M_4(\mathbb C)$ 并更新当前 $R$ 的固定完全正端点仪器，对全部复收缩 $F$ 复现上述所有有限历史，当且仅当
+$$
+d_y^2\le a c_y^2\qquad\text{对每个 }y\in Y.
+$$
+零行和等号均包括在内；满足时该仪器就是 $(\mathcal I_y)_y$，无需额外的时间长度条件。
+
+写 $q_F=\operatorname{Tr}Q(C)$。有
+$$
+q_F=\|C\|_F^2+a\|CE_0\|_F^2\le1,\qquad
+\sum_{h\in Y^m}\operatorname{Tr}R_h(C)=q_F,\qquad
+\sum_y\operatorname{Tr}R_{hy}(C)=\operatorname{Tr}R_h(C).
+$$
+若 $F\ne0$，每条有限原始记录都有严格正权重；报告历史 $h$ 的迹严格为正当且仅当它使用的每一行 $W(y_k\mid\cdot)$ 非零。此条件在 $m=0$ 时为空条件。若 $F=0$，所有联合块和端点块均为零。只在相应分母严格为正时定义
+$$
+\Pr(h\mid\mathrm{success})=\frac{\operatorname{Tr}R_h(C)}{q_F},\qquad
+\Pr(y\mid h,\mathrm{success})=
+\frac{\operatorname{Tr}R_{hy}(C)}{\operatorname{Tr}R_h(C)},
+\qquad \rho_h=\frac{R_h(C)}{\operatorname{Tr}R_h(C)}.
+$$
+这些结论也按正线性性适用于有限正初始混合，但其实际初始联合态必须是所指定的 $\Gamma(X)$；若将混合作为成功子态，还要求 $\operatorname{Tr}X\le1$。结论不扩大到任意初始联合扩张。
+
+允许操作的边界可由一个右端点幺正精确显示：$|00\rangle\langle00|\in\mathcal K$，但在右端点作用 Hadamard 后得到的 $|0+\rangle\langle0+|$ 不属于 $\mathcal K$。因而该锥并不对任意端点干预封闭。这里的模拟器量子寄存器与随长度增加的保留经典历史是不同资源；上述结论不判定经典状态表示、量子记忆最小性或总记录存储量，也不涉及无限历史条件化。
+
+证明。命题 130.1 给出 $T^\dagger T=I_M$。命题 137.1 的空内部记录和命题 147.1 的成功制备展开，在本命题完全相同的 $m_0,T$、输出次序及复向量化下，给出实际初态 $\chi(FC_0)$；所以 $\Omega_\varnothing=\operatorname{outer}(\chi(C))$，且收缩条件使其迹不超过一。
+
+先在联合向量层验证延长。对任意复 $C$，将其两列写为 $r,t\in\mathbb C^2$，于是
+$$
+\chi(C)=r\otimes|0\rangle_R\otimes|0\rangle_M
++t\otimes|1\rangle_R\otimes|0\rangle_M
++s r\otimes|0\rangle_R\otimes|1\rangle_M.
+$$
+记 $e=(-1)^b$。在 $T$ 发出 $R'$ 后，按 $\langle\eta_b|$ 收缩退役 $R$；bra 使用共轭系数 $\overline{\eta_{b,0}}=1/\sqrt2$、$\overline{\eta_{b,1}}=e/\sqrt2$，不对列向量 $r,t$ 取共轭。对每个左指标 $i$，所得四个 $(R',M')=(0,0),(0,1),(1,0),(1,1)$ 系数依次为
+$$
+\frac{s}{\sqrt2}(C_{i0}+eC_{i1}),\qquad
+\frac{a}{\sqrt2}(C_{i0}+eC_{i1}),\qquad
+\frac{s}{\sqrt2}C_{i0},\qquad 0.
+$$
+这是逐项将 $T|0\rangle=s|00\rangle+a|01\rangle$、$T|1\rangle=|10\rangle$ 代入所得，没有在下一次发出以前擦除活动记忆。因为
+$$
+CA_b=(r+et,\ r),\qquad a=s^2,
+$$
+这四个系数恰给出字面的联合恒等式
+$$
+B_b\chi(C)=\frac{s}{\sqrt2}\chi(CA_b).
+$$
+再次延长是在已有系数矩阵的右侧乘新的 $A_b$，故时间较早的结果在乘积中位于较晚因子的左侧。该恒等式保留两条记忆列及其相干交叉项，强于仅比较端点偏迹。
+
+现证锥和提升的陈述。由 $P^2=P$ 及 $a-a^2-a^3=0$，两种次序复合 $X\mapsto X+aPXP$ 与 $X\mapsto X-a^2PXP$ 都给恒等映射。又
+$$
+P\operatorname{vec}(C)=\operatorname{vec}(CE_0),\qquad
+Q(C)=\mathcal L(\operatorname{outer}(\operatorname{vec}(C))).
+$$
+四维正半定矩阵的有限谱分解写作 $S=\sum_j\lambda_jv_jv_j^\dagger$，$\lambda_j\ge0$；将每个 $v_j$ 按既定次序还原为矩阵 $C_j$，便有 $\mathcal L(S)=\sum_j\lambda_jQ(C_j)$。反向包含由同一个等式立即得到。由此 $\mathcal K=\mathcal L(\operatorname{PSD}_4)$，且是凸锥。若 $X_n\in\mathcal K$ 收敛于 $X$，连续的逆映射给 $\mathcal L^{-1}(X_n)\to\mathcal L^{-1}(X)$；正半定锥闭，故后者正半定，$X\in\mathcal K$。这里使用的是可逆性，不是一般线性映射都保持闭集的断言。
+
+对 $S=\mathcal L^{-1}(X)\ge0$，合同 $VSV^\dagger$ 正半定，而对记忆取偏迹给
+$$
+\operatorname{Tr}_M(VSV^\dagger)=S+aPSP=\mathcal L(S)=X.
+$$
+因 $V\operatorname{vec}(C)=\chi(C)$，任一正分解都给所列 $\Gamma(X)$，且逆映射唯一使它与分解的选择无关。还可直接核对
+$$
+V^\dagger V=I_4+aP,\qquad
+\operatorname{Tr}\Gamma(X)=\operatorname{Tr}((I_4+aP)S)
+=\operatorname{Tr}\mathcal L(S)=\operatorname{Tr}X.
+$$
+此等式是提升在兼容锥上的迹恒等式，不将 $V$ 称为等距。
+
+应用命题 147.1 前，核对其全部制备与报告假设：本命题同样允许所有复收缩 $F$，取相同可逆的 $C_0=s^3J$、共同成功旗标、相同的固定 $\eta_b$，且只以一个有限非空列随机 $W$ 独立处理原始结果；模拟器没有 $F$ 或原始记忆。本命题的 $a$、$\mathcal L$ 与该命题的 $\alpha$、$\mathcal L$ 一致，右乘 $A_b$ 在右 Hilbert 因子上对应 $A_b^{\mathsf T}=JZ^b$，故 $\psi_\nu$ 中独立复元 $u,v$ 的方向也一致。因此该命题给出唯一全空间复线性分支 $\mathcal I_y$ 及其一步匹配。这个代数匹配对任意复矩阵 $D$ 都成立：令
+$$
+t_D=\max\{1,\|DC_0^{-1}\|_{\rm op}\},\qquad
+F_D=t_D^{-1}DC_0^{-1},
+$$
+则 $F_D^\dagger F_D\le I_2$、$D=t_DF_DC_0$；$Q$ 的二次齐次性和 $\mathcal I_y$ 的线性性把一步等式延伸到 $D$。因而即使历史中的系数矩阵未写成允许收缩，仍可使用
+$$
+\mathcal I_yQ(D)=\frac a2\sum_bW(y\mid b)Q(DA_b).
+$$
+零行两边为零，不定义 $d_y/c_y$。该式对所有 $W$ 给出锥不变性，不需要完全正前提。
+
+由已证联合子分支恒等式，在每个生成元上有
+$$
+\begin{aligned}
+\mathcal H_y\Gamma(Q(D))
+&=\sum_bW(y\mid b)\operatorname{outer}(B_b\chi(D))\\
+&=\frac a2\sum_bW(y\mid b)\operatorname{outer}(\chi(DA_b))
+=\Gamma(\mathcal I_yQ(D)).
+\end{aligned}
+$$
+两边对有限正和均为线性，故此交织恒等式扩展到整个 $\mathcal K$。特别地，它比较的是下一步需要的实际联合态，不是从端点态相等推断任意隐藏关联相等。
+
+对报告历史长度作同时归纳。空历史时 $R_\varnothing=Q(C)\in\mathcal K$，$\Omega_\varnothing=\Gamma(R_\varnothing)$。假设某个实际历史 $h$ 满足这两个性质。经典抽取的条件独立性和没有反馈保证，无论此前是哪条原始记录，下一报告 $y$ 都作用同一个 $\mathcal H_y$；由交织恒等式及锥不变性，
+$$
+\Omega_{hy}=\mathcal H_y\Gamma(R_h)=\Gamma(\mathcal I_yR_h),\qquad
+\mathcal I_yR_h\in\mathcal K.
+$$
+取本式的记忆偏迹，得到 $R_{hy}=\mathcal I_yR_h$，再代回即得 $\Omega_{hy}=\Gamma(R_{hy})$。这也适用于零块，归纳从未除以迹。逐次展开分支和给出陈述中的有限乘积公式；不同步骤的 $W$ 因子相乘，正是所假设的条件独立随机处理。因而所有有限 $m$ 的结论来自归纳。实际活动记忆始终留在 $\Omega_h$ 中；$R_h$ 的偏迹仅用于端点比较，并非在原过程下一步以前施行擦除或重置。
+
+若逐行不等式成立，命题 147.1 的完全正及 Kraus 结论直接给出 $\mathcal I_y$ 为完全正分支、$\sum_y\mathcal I_y$ 保迹，包括零行与 $|d_y|=sc_y$ 的边界。因此同一个固定仪器可以逐步作用在当前端点寄存器上，刚才的归纳证明它复现全部有限联合块。反之，若存在所要求的全部复 $F$、全部有限长度的固定端点仪器，其长度一的每个分支就满足命题 147.1 的匹配等式；该命题的唯一性迫使分支等于这里的 $\mathcal I_y$。任一行违反不等式即使这个强制分支不完全正，故仪器不可能存在。这里不重新要求更强的时间阈值。
+
+最后核对权重及边界。记忆偏迹消去不同正交记忆列之间的交叉项，故对任意非零 $D$，
+$$
+\operatorname{Tr}Q(D)=\|D\|_F^2+a\|DE_0\|_F^2>0.
+$$
+这是严格正迹，不是正定性。$C_0$ 与每个 $A_b$ 都可逆，所以 $F\ne0$ 时任意有限原始乘积 $CA_{b_1}\cdots A_{b_m}$ 非零。原始分支的正因子 $(a/2)^m$ 保证其权重严格为正。对于一条报告历史，若某个被用行全零，有限和的每个系数都为零；若每个被用行非零，可逐步选取一个 $b_k$ 使 $W(y_k\mid b_k)>0$，该原始词在和中有严格正系数和严格正迹，因此整个报告块的迹严格为正。空记录与零 $F$ 分别给所述边界。
+
+从 $T^\dagger T=I_M$ 和测量基完备性得到 $\sum_bB_b^\dagger B_b=I_{LRM}$，再用 $W$ 的列和，有
+$$
+\sum_y\operatorname{Tr}\mathcal H_y(\Omega)=\operatorname{Tr}\Omega
+\qquad(\Omega\ge0).
+$$
+逐前缀应用并用 $\operatorname{Tr}\Omega_h=\operatorname{Tr}R_h$，就得到所有迹的守恒式与陈述中的条件概率。非选择的后继量子态已经演化；这些式子不声称 $\sum_yR_{hy}=R_h$。同样，报告条件态的混合必须使用原始分支的 Born 权重。具体地，写 $D_{\mathbf b}=CA_{b_1}\cdots A_{b_m}$、$w_{h,\mathbf b}=\prod_kW(y_k\mid b_k)$，在正分母处有
+$$
+\rho_h=\sum_{\mathbf b}
+\frac{(a/2)^m w_{h,\mathbf b}\operatorname{Tr}Q(D_{\mathbf b})}
+{\operatorname{Tr}R_h}\,
+\frac{Q(D_{\mathbf b})}{\operatorname{Tr}Q(D_{\mathbf b})}.
+$$
+零权重项省去；在非零 $F$ 情形所写原始分母均正。有限正初始混合的结论由同样的联合提升和正线性性得出，而不引入额外的初始联合态。若 $z$ 是继续执行同一协议的有限报告词、$\mathcal I_z$ 是对应次序的复合，且 $0\le E\le I_4$ 是最后一次端点效应，则正前缀处的联合条件概率为 $\operatorname{Tr}(E\mathcal I_z(R_h))/\operatorname{Tr}R_h$；这只在继续协议的末端施测，不许可在中途插入任意操作。
+
+为证所附干预边界，记 $E_{00}=|0\rangle\langle0|\in M_2(\mathbb C)$。由 $a(1+a)=1$，
+$$
+|00\rangle\langle00|=aQ(E_{00})\in\mathcal K.
+$$
+右 Hadamard 将其变为 $X_+=|0+\rangle\langle0+|$。$\mathcal L^{-1}(X_+)$ 在左指标为 $0$ 的右二阶块为
+$$
+\frac12\begin{pmatrix}1-a^2&1\\1&1\end{pmatrix}
+=\frac12\begin{pmatrix}a&1\\1&1\end{pmatrix},\qquad
+\det=\frac{a-1}{4}<0.
+$$
+故 $\mathcal L^{-1}(X_+)$ 非正半定，$X_+\notin\mathcal K$。同一个逆像还是形式表达式 $V\mathcal L^{-1}(X_+)V^\dagger$ 在记忆 $|0\rangle$ 上的压缩，因此该表达式也非正半定；这排除了把所给 $\Gamma$ 公式当作全正半定锥上的正恢复映射。此计算仅说明命题的代数适用边界，没有在所定义的原协议中添加这次幺正操作。证毕。
+

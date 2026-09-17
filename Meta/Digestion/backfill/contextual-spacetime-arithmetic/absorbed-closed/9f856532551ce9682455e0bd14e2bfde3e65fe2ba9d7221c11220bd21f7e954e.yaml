@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f856532551ce9682455e0bd14e2bfde3e65fe2ba9d7221c11220bd21f7e954e
+  normalized_sha256: sha256:9f856532551ce9682455e0bd14e2bfde3e65fe2ba9d7221c11220bd21f7e954e
+cas_ref: sha256:9f856532551ce9682455e0bd14e2bfde3e65fe2ba9d7221c11220bd21f7e954e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.add_readout
+    target_statement_id: sha256:a144430dfa4126b6400a689d9fa83b6dd22b699039fb2ef674bc8213ee5084d3
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.neg_readout
+    target_statement_id: sha256:2622604afe65ea4fc08a750b6ae6d26d679f2975336f38d71a9ae6a3638d7d2a
+receipts:
+  unresolved_subitems: []

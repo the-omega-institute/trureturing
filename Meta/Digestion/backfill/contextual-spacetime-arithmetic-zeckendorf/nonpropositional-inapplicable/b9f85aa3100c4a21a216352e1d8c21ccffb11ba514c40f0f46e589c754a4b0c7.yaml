@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9f85aa3100c4a21a216352e1d8c21ccffb11ba514c40f0f46e589c754a4b0c7
+  normalized_sha256: sha256:b9f85aa3100c4a21a216352e1d8c21ccffb11ba514c40f0f46e589c754a4b0c7
+cas_ref: sha256:b9f85aa3100c4a21a216352e1d8c21ccffb11ba514c40f0f46e589c754a4b0c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅限定前述连续延拓结论的讨论范围，不排除任意集合函数延拓，也不对扩展实值域作额外断言，没有独立待证命题，故无需证明探针。
+    previous_atom_id: a84ea5b3e276957ca5b5acfedbc5764039aab49d146dc476dc36803ec8b23789
+    next_atom_id: 3be8c34069f621c592c52081b35eb3cefb1ce5a03c4ca67efed5581dac03500b

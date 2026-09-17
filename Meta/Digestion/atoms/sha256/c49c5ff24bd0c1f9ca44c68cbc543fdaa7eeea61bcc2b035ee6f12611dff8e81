@@ -1,0 +1,46 @@
+**证明。** 证明甲。按定义 57.13 的严格全序归纳。变量投影 $z\mapsto z_j$ 连续，常量映射 $z\mapsto\kappa(c)$ 连续。若两个前驱值函数连续，则其和与积连续；即使两个前驱槽相同，也只是把同一连续函数代入两次。因此每个 $E_v$ 连续，有限乘积映射 $\operatorname{ev}_G$ 连续。定义本身保证 $c\in C$ 的值不来自 $R^J$ 的坐标；若 $\operatorname{pred}_0(v)=\operatorname{pred}_1(v)$，两槽的值都等于同一个 $E_w(z)$，不会产生第二次采样。故 $\mathsf W_G(\mu)$ 正是实际共同输入的确定推前。
+
+证明乙。若 $F=G$ 逐点，则 $\rho^q\circ F=\rho^q\circ G$ 逐点，所以两可测映射对任意 $\mu$ 的推前相等。这一论证发生在代表求值映射上，不需要把某个概率二元核假定为环运算。
+
+证明丙。核
+$$
+a\longmapsto\bigotimes_{j\in J}m_{a_j}
+$$
+Borel；对固定 $a$，它支持于
+$$
+(\rho^J)^{-1}(a).
+$$
+因此
+$$
+(\rho^J)_*(\mathcal L_J\eta)=\eta.
+$$
+若 $\mu$ 具有所述正规条件核，则由全概率公式，对每个 Borel $B\subseteq R^J$，
+$$
+\mu(B)=
+\int_{I^J}
+\left(\bigotimes_{j\in J}m_{a_j}\right)(B)\,\eta(da)
+=(\mathcal L_J\eta)(B).
+$$
+故 $\mu=\mathcal L_J\eta$。正规条件核只需在一个 $\eta$-满测集上满足该等式，零集外的版本修改不影响积分；Simmons Theorem 2.1 给出标准 Borel 情形的这种几乎处处唯一性：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明丁的第一部分。取两个不同标签 $a\ne b$，令
+$$
+\eta_{\rm diag}
+=\frac12\delta_{(a,a)}+\frac12\delta_{(b,b)},
+$$
+$$
+\eta_{\rm cross}
+=\frac12\delta_{(a,b)}+\frac12\delta_{(b,a)}.
+$$
+两者两个边缘完全相同，均为
+$$
+\frac12(\delta_a+\delta_b),
+$$
+但联合律不同。
+
+第二部分取固定联合标签
+$$
+\eta=\delta_{(\boldsymbol0,\boldsymbol0)}.
+$$
+令 $X,Y$ 为独立 Haar 单位，则 $(X,Y)$ 的联合律与对角联合律 $(X,X)$ 都推前到同一个 $\eta$。考虑一个加法门，其两个有序前驱槽分别读取这两个输入；在对角情形也可等价地令两个槽都读取同一个变量节点。theorem 57.8 表明两种联合耦合的输出估值分布不同。因此完整标签联合律仍未确定纤维内耦合。Fritz Definition 2.1 与 §4 的确定 copy、乘积核和联合分布语义提供一般概率背景：https://arxiv.org/pdf/1908.07021 。证毕。
+

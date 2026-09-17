@@ -1,0 +1,2 @@
+**Definition.** Let F_0=0,F_1=1,F_(n+2)=F_(n+1)+F_n. For a prime p, let rho(p) be its least positive Fibonacci zero index. Let pi(q) be the least positive t for which Q^t=I modulo q, where Q=((1,1),(1,0)); this is the Pisano period. For primes q>5 put epsilon_q=(5/q), N_q=q-epsilon_q, h_q=v_q(F_rho(q)) and q_q=F_(N_q)/q modulo q. An aligned prime witness for q is a prime p congruent to one modulo q with rho(p)|pi(q).
+

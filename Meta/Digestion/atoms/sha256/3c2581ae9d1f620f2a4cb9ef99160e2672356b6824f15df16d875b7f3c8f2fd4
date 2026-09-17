@@ -1,0 +1,69 @@
+**theorem 32.12 (Ultrafilter products and an exact arithmetic double limit).** The zero-one probability charges on $\operatorname{Pow}(\mathbb N)$ form the usual ultrafilter space $\beta\mathbb N$, compact for its inherited weak-star topology, with the principal ultrafilters dense. Both products in Definition 32.10 preserve this space. For the first order the exact event formula is
+$$
+A\in p\mathbin{\square}q
+\quad\Longleftrightarrow\quad
+\{m:\{n:m+n\in A\}\in q\}\in p,
+$$
+where an ultrafilter is identified with its probability charge. This is the classical ultrafilter semigroup order described by Hindman and Strauss, Section 1.[^rro32-ultrafilters]
+
+Choose any free ultrafilters $\mathcal U,\mathcal V$ on $\mathbb N$ and put
+$$
+a_i=2^{2i},\qquad b_j=2^{2j+1},\qquad
+D=\{a_i+b_j:i<j\},\qquad f=\mathbf1_D,
+$$
+$$
+p(u)=\lim_{\mathcal U}u(a_i),\qquad
+q(u)=\lim_{\mathcal V}u(b_j).
+$$
+Then $p,q$ are ultrafilter probability charges and
+$$
+(p\mathbin{\square}q)(f)=1,\qquad
+(p\mathbin{\lozenge}q)(f)=0,\qquad
+(q\mathbin{\square}p)(f)=0,\qquad
+(q\mathbin{\lozenge}p)(f)=1.
+$$
+In particular both extended products are noncommutative, the two orders differ, and
+$$
+\|p\mathbin{\square}q-p\mathbin{\lozenge}q\|=2.
+$$
+The first product is not everywhere continuous in its second variable, and the second is not everywhere continuous in its first variable, even on ultrafilter probabilities.
+
+**Proof.** A zero-one probability charge determines an ultrafilter by declaring $A$ to belong when its value is one. Upward closure follows from positivity. If two sets have value one, their intersection has value one, by finite additivity and positivity applied to their complements. Exactly one of $A,A^c$ has value one. Conversely the ultrafilter-limit construction in Theorem 32.9, without the freeness requirement, produces the zero-one charge associated to any ultrafilter.
+
+Probability functionals on $\ell^\infty(\mathbb N)$ form a weak-star closed subset of its dual unit ball, by positivity and normalization, and hence a compact space by Banach–Alaoglu. Inside that space, the conditions $p(A)\in\{0,1\}$ for all $A\subseteq\mathbb N$ are closed. Thus the ultrafilter space is compact. The sets
+$$
+\widehat A=\{p:p(A)=1\}
+$$
+are clopen. They generate the relative weak-star topology: indicator tests generate the same topology as all bounded tests on the norm-one state space by uniform simple approximation. Finite intersections of consistent membership conditions contain a principal ultrafilter, by choosing an integer in the corresponding intersection of sets. Hence principals are dense. This is the clopen-set description of $\beta\mathbb N$ used in the cited ultrafilter semigroup construction.[^rro32-ultrafilters]
+
+For an indicator test, the inner evaluation under $q$ is the indicator of the set of $m$ appearing in the displayed event formula. Its outer evaluation under $p$ is therefore zero or one, and the formula follows. Positivity and normalization were proved in Theorem 32.11, so the product is again an ultrafilter probability. The opposite-product identity proves preservation for the second order as well.
+
+We verify the finite arithmetic encoding without a limiting assumption. Every $a_i+b_j$ has precisely two nonzero binary digits, one in even position $2i$ and one in odd position $2j+1$. There is no carry, because these positions are different. Finite binary expansions with coefficients zero or one are unique: if two such expansions differ, their largest differing position contributes a power of two larger than the sum of all lower powers, so their numerical values cannot agree. Thus
+$$
+a_i+b_j=a_{i'}+b_{j'}\quad\Longrightarrow\quad i=i',\ j=j'.
+$$
+It follows exactly, not only eventually, that
+$$
+f(a_i+b_j)=\mathbf1_{\{i<j\}}.
+$$
+For fixed $i$, the set of $j$ with $i<j$ is cofinite, so its $\mathcal V$-limit is one. For fixed $j$, the set of $i$ with $i<j$ is finite, so its $\mathcal U$-limit is zero. Consequently
+$$
+\lim_{\mathcal U,i}\lim_{\mathcal V,j}f(a_i+b_j)=1,\qquad
+\lim_{\mathcal V,j}\lim_{\mathcal U,i}f(a_i+b_j)=0.
+$$
+These are precisely the first two product evaluations. The other two follow from the opposite-product identity. Positivity makes both output charges norm-one probabilities. Their difference evaluated at $2f-1$, a function of norm one, is two; the triangle inequality gives the reverse upper bound of two. This proves the exact norm separation.
+
+To show the missing continuity sides fail, take a net of principal charges $q_\beta=\delta_{b_{j(\beta)}}\to q$ using the reverse-inclusion construction for $\mathcal V$. For every fixed $j$,
+$$
+(p\mathbin{\square}\delta_{b_j})(f)
+=\lim_{\mathcal U,i}\mathbf1_{\{i<j\}}=0,
+$$
+but $(p\mathbin{\square}q)(f)=1$. Thus second-variable continuity of the first product fails at this fixed $p$ and limit $q$. Similarly, for a principal net $p_\alpha=\delta_{a_{i(\alpha)}}\to p$,
+$$
+(\delta_{a_i}\mathbin{\lozenge}q)(f)
+=\lim_{\mathcal V,j}\mathbf1_{\{i<j\}}=1
+$$
+for every $i$, whereas $(p\mathbin{\lozenge}q)(f)=0$. This disproves the other missing continuity side.
+
+At every finite pair the identity $a_i+b_j=b_j+a_i$ still holds, and the finite convolution products of the two Diracs are equal in either order. Noncommutativity here concerns the extended products of limit charges and their different evaluation orders; it does not concern finite natural addition. QED.
+

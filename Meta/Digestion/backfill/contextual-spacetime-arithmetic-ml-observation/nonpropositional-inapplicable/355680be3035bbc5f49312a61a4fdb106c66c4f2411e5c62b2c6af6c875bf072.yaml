@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:355680be3035bbc5f49312a61a4fdb106c66c4f2411e5c62b2c6af6c875bf072
+  normalized_sha256: sha256:355680be3035bbc5f49312a61a4fdb106c66c4f2411e5c62b2c6af6c875bf072
+cas_ref: sha256:355680be3035bbc5f49312a61a4fdb106c66c4f2411e5c62b2c6af6c875bf072
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “对每个正有理容差”后列出网格族的参数、中心、区间、后继与读出记号；这些是沿用主卷构造的定义式，并未断言严格余量或全历史不变量，未夹带本节定理。
+    previous_atom_id: 6a78fa784307d3c86288aa554dfafc36ca354b90c86689b450f82fd99459e198
+    next_atom_id: 67cca323f4803c6235ddddd1edc136a1366c497ab430603df19d17458e7b6b0f

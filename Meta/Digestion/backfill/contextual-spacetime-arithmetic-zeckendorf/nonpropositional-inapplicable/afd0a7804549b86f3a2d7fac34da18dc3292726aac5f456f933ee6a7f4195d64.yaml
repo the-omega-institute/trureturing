@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:afd0a7804549b86f3a2d7fac34da18dc3292726aac5f456f933ee6a7f4195d64
+  normalized_sha256: sha256:afd0a7804549b86f3a2d7fac34da18dc3292726aac5f456f933ee6a7f4195d64
+cas_ref: sha256:afd0a7804549b86f3a2d7fac34da18dc3292726aac5f456f933ee6a7f4195d64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 425.4（预测七·有限深度关系）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: d4fb04c831a14fae13c9125be836290a4eef7abbe88c68ed7b873fb3eb34ad2c
+    next_atom_id: ebea428fe51b57a8dbf656ed9afd8920f7b2439e7dddce7f45d7d18443d333ac

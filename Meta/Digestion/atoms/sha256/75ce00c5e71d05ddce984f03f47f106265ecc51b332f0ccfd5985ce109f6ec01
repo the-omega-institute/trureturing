@@ -1,0 +1,10 @@
+**证明。** 长度 $t$ 的时间前缀只有 $t+1$ 个。它们的柱集覆盖 $X_\beta$，每个 $\rho$ 直径至多为 $2^{-t}$，故总 $q$ 次幂直径代价至多为
+$$
+(t+1)2^{-qt}\longrightarrow0.
+$$
+覆盖直径趋于零；对每个固定允许尺度，亦可任意增大 $t$，因此所有正指数 Hausdorff 测度都为零。由定义，Hausdorff 维数为零。
+
+$\Phi$ 是同胚，故拉回距离给出原拓扑；它又按定义是从 $(K,\widehat d)$ 到 $(X_\beta,\rho)$ 的等距双射，所以二者 Hausdorff 测度及维数相同。与定理 33.2 比较即得严格不等式。这里的变化来自距离，而不是从载体中删除位置序列。证毕。
+
+附引：所需时间词数是[第 20.5、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的既有结果。
+

@@ -1,0 +1,26 @@
+**证明。** 对每个固定 $p$，映射 $E\to\mathbb Z_p$，$n\mapsto p^n$、$\infty\mapsto0$ 连续，因为 $p^n\to0$；故 $s:I\to R$ 连续。赋值映射 $v_p:\mathbb Z_p\to E$ 连续：有限纤维 $v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times$ 开闭，而 $\infty$ 的尾邻域原像为 $p^N\mathbb Z_p$。由乘积的泛性质，$\rho:R\to I$ 连续。这也直接适配 Longhi–Mu–Saettone Lemma 4.5 的拓扑识别，印刷页 p.27，来源：https://arxiv.org/pdf/2202.13478v3 。因此 $F$ 是紧空间 $I^2\times U^2$ 上的连续映射。
+
+若分别把 $s(A),s(B)$ 换成 $w_As(A),w_Bs(B)$，则 $(u,v)\mapsto(uw_A,vw_B)$ 保持 $m_U^{\otimes2}$，故 $K$ 不变。再令 $f\in C(I)$。函数
+$$
+(A,B)\longmapsto\int_{U^2}f(F(A,B,u,v))\,dm_U(u)\,dm_U(v)
+$$
+连续：若 $(A_j,B_j)\to(A,B)$，则紧性给出 $f\circ F(A_j,B_j,\cdot,\cdot)\to f\circ F(A,B,\cdot,\cdot)$ 在 $U^2$ 上一致收敛，于是可直接积分。故 $K$ 对弱拓扑连续。
+
+为说明它确为 Borel 核，记 $\mathcal D$ 为所有满足 $\mu\mapsto\mu(D)$ 在 $\mathcal P(I)$ 上 Borel 的 Borel 集 $D$。若 $C\subset I$ 闭，取相容度量 $d$ 并令 $\phi_n(x)=\max\{0,1-nd(x,C)\}$；则 $\phi_n\in C(I)$ 且 $\phi_n\downarrow1_C$，所以
+$$
+\mu(C)=\inf_n\int_I\phi_n\,d\mu.
+$$
+右侧是连续函数的可数下确界，故为上半连续，特别为 Borel；于是闭集属于 $\mathcal D$。此外 $\mathcal D$ 对补集封闭，因为 $\mu(D^c)=1-\mu(D)$；若 $D_n$ 两两不交且都在 $\mathcal D$，则 $\mu(\bigcup_nD_n)=\sum_n\mu(D_n)$ 是 Borel 函数的单调极限。因此 $\mathcal D$ 是包含全部闭集的 Dynkin 系，而闭集构成生成 Borel $\sigma$-代数的 $\pi$-系；由 $\pi$-$\lambda$ 定理，$\mathcal D$ 包含全部 Borel 集。复合连续映射 $(A,B)\mapsto K(A,B)$ 即得 $(A,B)\mapsto K(A,B)(D)$ Borel。
+
+紧群 Haar 概率具有满支撑：若非空开集 $O\subset U$ 的质量为 $0$，其左平移仍全为零；由紧性，有限多个平移覆盖 $U$，将推出 $m_U(U)=0$，矛盾。因此 $m_U^{\otimes2}$ 在 $U^2$ 上满支撑。下面所用的一般支撑像引理带有 Hausdorff 目标假设：若 $X$ 紧，$\mu$ 是 $X$ 上满支撑概率，$Y$ 是 Hausdorff 空间，且 $g:X\to Y$ 连续，则
+$$
+\operatorname{supp}(g_*\mu)=g(X).
+$$
+事实上，$g(X)$ 紧，因 $Y$ Hausdorff 而闭，所以 $g(X)$ 外每一点都有零推前质量的开邻域；若 $y=g(x)$ 且 $O\ni y$ 开，则 $g^{-1}(O)$ 是含 $x$ 的非空开集，故 $(g_*\mu)(O)>0$。当前目标 $I$ 是紧 Hausdorff 空间，故把该引理应用于 $g=F(A,B,\cdot,\cdot)$ 得第一项支撑公式。由 theorem 56.2，每个 $\rho$-纤维恰为相应轨道，故第二项等号成立。
+
+最后取 $I$ 的任一相容紧度量 $d$。$F$ 在紧域上一致连续，所以当 $(A_j,B_j)\to(A,B)$ 时，
+$$
+\sup_{u,v\in U}d\bigl(F(A_j,B_j,u,v),F(A,B,u,v)\bigr)\longrightarrow0.
+$$
+于是对应像集的 Hausdorff 距离至多为上述上确界并趋于 $0$。紧度量空间的非空紧子集上，Hausdorff 度量拓扑就是 Vietoris–Michael 拓扑，故支撑映射连续。证毕。
+

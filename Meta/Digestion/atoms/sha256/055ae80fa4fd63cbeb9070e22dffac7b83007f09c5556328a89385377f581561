@@ -1,0 +1,58 @@
+**theorem 60.2（查询函数的精确模 $M$ 分类与周期；与观察核区分）。** 对任意 $M>1$ 与 $n,m\ge0$，
+$$
+Q_{M,n}=Q_{M,m}\quad\hbox{作为 }R\hbox{ 上的函数}
+$$
+当且仅当
+$$
+n\equiv m\pmod M.
+$$
+特别地，
+$$
+Q_{M,n+M}(x)=Q_{M,n}(x)
+$$
+对所有 $x\in R$ 成立，而且函数值族
+$$
+n\longmapsto Q_{M,n}
+$$
+关于平移变量的最小正周期恰为 $M$。因此每次查询都可取唯一代表元 $0\le n<M$，而不会改变查询函数。
+
+上述分类不适用于观察核本身。事实上，当 $M=2$ 时，
+$$
+Q_{2,0}\ne Q_{2,1},
+$$
+但
+$$
+\operatorname{Ker}_{\rm obs}(Q_{2,0})
+=
+\operatorname{Ker}_{\rm obs}(Q_{2,1}),
+$$
+并且核值族 $n\mapsto\operatorname{Ker}_{\rm obs}(Q_{2,n})$ 的最小正周期为 $1$。
+
+**证明。** 固定 $p\mid M$。对每个 $1\le d\le e_p$，
+$$
+q_{p,n}(x)\ge d
+\Longleftrightarrow
+x_p+n\in p^d\mathbb Z_p
+\Longleftrightarrow
+n\equiv-x_p\pmod{p^d}.
+$$
+若 $n\equiv m\pmod M$，则特别有 $n\equiv m\pmod{p^{e_p}}$，上式对所有 $d\le e_p$ 同时相同，所以 $q_{p,n}(x)=q_{p,m}(x)$；遍历 $p\mid M$ 即得两个整向量查询函数相同。
+
+反之，设两个查询函数作为 $R$ 上函数相同。固定 $p\mid M$，取一个 $x\in R$ 使
+$$
+x_p=-n\in\mathbb Z_p,
+$$
+其他坐标任意。则 $q_{p,n}(x)=e_p$。函数相同迫使 $q_{p,m}(x)=e_p$，从而
+$$
+m-n\equiv0\pmod{p^{e_p}}.
+$$
+这对每个 $p\mid M$ 成立；素数幂两两互素，故 $M\mid(m-n)$。于是查询函数等价恰是模 $M$ 同余。取 $m=n+T$ 立即得到函数值族的正周期 $T$ 必须满足 $M\mid T$，而 $T=M$ 确为周期。
+
+最后取 $M=2$。此时 $e_2=1$，并且
+$$
+Q_{2,n}(x)=1
+\Longleftrightarrow
+x_2\equiv-n\pmod2.
+$$
+在偶、奇两个剩余类上，$Q_{2,0}$ 的值依次为 $(1,0)$，而 $Q_{2,1}$ 的值依次为 $(0,1)$，所以两个函数不同；但两者都恰好把 $R$ 分成 $x_2$ 偶与 $x_2$ 奇两个等价类，因此观察核相同。任意 $n$ 只改变这两个类所带的 $0,1$ 标签而不改变分划，故该核值族对平移 $1$ 已经周期，最小正周期为 $1$。
+
