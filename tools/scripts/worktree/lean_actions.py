@@ -297,7 +297,8 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def validate_cache_directory(directory, expected, *, small_files_first=False, observations=None):
+def validate_cache_directory(directory, expected, *, small_files_first=False, observations=None,
+                             private_staging=False):
     """Validate a complete cache data directory before publishing it.
 
     ``files(..., expected=...)`` validates the declared bytes and modes but
@@ -340,7 +341,8 @@ def validate_cache_directory(directory, expected, *, small_files_first=False, ob
         expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
     snapshot_phase(observations, "directory_shape", "finish", shape_started, sizes=actual)
     hash_started = snapshot_phase(observations, "declared_material_hash", "start")
-    inventory = files(directory, expected=expected, parallel=not small_files_first)
+    inventory = files(directory, expected=expected, parallel=not small_files_first,
+                      parents_verified=private_staging)
     snapshot_phase(observations, "declared_material_hash", "finish", hash_started, sizes=actual)
     return inventory
 
@@ -361,7 +363,7 @@ def move_validated_cache_data(cached, staged, expected):
         files(cached, expected=expected, copy_to=staged)
         return False
     try:
-        validate_cache_directory(staged, expected)
+        validate_cache_directory(staged, expected, private_staging=True)
     except BaseException:
         try:
             staged.rename(cached)
