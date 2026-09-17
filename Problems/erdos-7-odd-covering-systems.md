@@ -30,8 +30,8 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [all-height common-layout bound with an unequal-norm source estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#unequal-source-norms-sharpen-the-uniform357-input)
-gives `Gamma13<=22083176977198383411/141008133466238896<156.609243`
+An [all-height common-layout bound retaining one original five test](../docs/reports/erdos7-odd-covering/marked_head_profile.md#one-original-five-test-couples-square-loss-to-mixed-deletion)
+gives `Gamma13<=2759803303859498317/17626016683279862<156.575553`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
 actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
@@ -86,14 +86,17 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<99.021376`. The sufficient finite joint-frontier bounds
-are therefore303.977 for the large core and303.715 for the smaller one,
+`sup E(A^2-81)_+<99.019600`. The sufficient finite joint-frontier bounds
+are therefore303.979 for the large core and303.717 for the smaller one,
 at W403. Row potentials coupled to the actual cap and charge, whole
 weighted original-layout costs and complete tails give the all-family
-upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<449.293953`.
-The same-law source square bound `Gamma357<=4351/120` retains unequal
-original-block norms through a weighted Young estimate. Its complete
-consumer improves the all-original-AP comparison449.351296 but remains
+upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<449.266218`.
+The same-law source square bound `Gamma357<=5761/159` retains unequal
+original-block norms and the same original modulus5 test in both the
+selected square and the mixed7 deletion estimate. Its improved cap is
+applied only to that one label; mod15,45,... keep their separate original
+five-coordinate residues. The complete consumer improves the preceding
+weighted-Young comparison449.293953 but remains
 above both required allowances. The19 input of this KC functional is
 the normalized physical mu17; the actual killed input xi in BM/RC is
 not substituted. All these are ordinary inequalities with exact
