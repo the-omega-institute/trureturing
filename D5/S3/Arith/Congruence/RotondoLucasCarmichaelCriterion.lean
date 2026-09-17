@@ -13,14 +13,13 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.Congruence.RotondoLucasCarmichaelCriterion
 
-set_option linter.unusedVariables false
-
 /-- A Lucas-Carmichael number is a squarefree composite `k > 1` such that
 `s + 1` divides `k + 1` for every prime divisor `s` of `k`. -/
 def IsLucasCarmichael (k : ℕ) : Prop :=
   Squarefree k ∧ ¬Nat.Prime k ∧ 1 < k ∧
     ∀ s : ℕ, Nat.Prime s → s ∣ k → s + 1 ∣ k + 1
 
+set_option linter.unusedVariables false in
 /-- Rotondo's sufficient condition for a product of three distinct odd primes
 to be a Lucas-Carmichael number. -/
 theorem result (a b c d p q r k : ℕ)
