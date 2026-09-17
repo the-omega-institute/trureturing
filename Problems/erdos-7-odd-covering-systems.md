@@ -191,6 +191,17 @@ has probability11/144>1/20 at both17 and19 in one explicit35-mask,
 48-test chain. A universal1/20 tail target is therefore false;
 mask-energy localization requires another proved bound or a case split.
 
+The [source-preserving extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#source-only-energy-conditions-do-not-force-a-positive-current-rebate)
+(SPF1)--(SPF3) establishes this Xi boundary for every fixed actual
+incoming law whose old period has eight nonunit divisors. Legal
+current completions preserve its entire old-test domain and every
+old-test distribution while the Xi gap, including the gap divided
+by charge, tends to zero. No radial old geometry is required.
+Conditions on source energy alone therefore do not supply an
+independent Xi rebate. The full common-test killed objective,
+mask-dependent conditions and cross-stage correlations remain open
+targets; fixing the source does not fix those data.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right

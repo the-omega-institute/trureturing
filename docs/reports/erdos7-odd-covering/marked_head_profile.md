@@ -15221,3 +15221,104 @@ The normalized physical K17 preserves the old315 marginal row by row. The19 forb
 This uses one explicitly combined original family and its normalized physical17 law. It does not transfer the assertion to the differently conditioned17 law or to the final killed measure. The charge values follow from the same row1 formulas already established for the315 family; K17's preserved old marginal also preserves the19 charge integral.
 
 For this threshold, kappa17(1/4)=64/45,c17=2 and kappa19(1/4)=24/17,c19=9/5. These constants make MT1 a valid conditional estimate, but MT2--MT3 exclude the1/20 premise on the whole allowed class. Conditional estimates restricted by additional actual geometry or energy remain possible. Existing AP3--AP4 hinge comparisons for upper tails are still valid; they do not supply new joint statistics merely by being substituted into MT1, and the fixed scalar ASB obstruction remains in force.
+
+### Source-only energy conditions do not force a positive-current rebate
+
+Fix p in{17,19}, threshold T=8, and one actual incoming probability mu on its full old period Q, with p not dividing Q. Assume Q has at least eight distinct divisors greater than1. This can be the prescribed supported AP13 law for p=17, or an already fixed normalized physical mu17 for p=19. All earlier actual exclusions, heights and kernels remain fixed.
+
+For this very source there is a sequence of legitimate finite current-prime completions with positive assigned charge and complete current height H such that
+
+    Xi_(p,H)^-/(a_p J_(p,H)) ->1,
+    a_p J_(p,H)-Xi_(p,H)^- ->0,
+    [a_p J_(p,H)-Xi_(p,H)^-]/b_H ->0.              (SPF1)
+
+The source law mu, its complete original old-test domain, G_mu=sup_A E_mu A^2, and the distribution of every individually specified old test are exactly unchanged with H. Thus a positive uniform Xi rebate cannot be forced by imposing only conditions on this source or its old energy profile, whenever the proposed class contains such an actual source. This is conditional on the existence of a source satisfying the proposed restrictions; it does not assert that an arbitrary numerical high-energy class is nonempty.
+
+#### An actual completion preserving the full old period
+
+Choose eight distinct nonunit divisors d_1,...,d_8 of Q and a point x0 with mu(x0)>0. Include Q itself among the d_i if the earlier actual exclusions do not already have old least common multiple Q. This ensures that the new complete family's old part is exactly Q even when its original heights had been set by later-prime padding. No old label is lost through a smaller least common multiple.
+
+Add the eight mixed classes of original moduli d_i p, with old residue x0 modulo d_i and current root i. For every H>=2 add the pure p-classes0 modulo p and, at exponent e=2,...,H, the least-significant-first prefix(9,1,...,1,0). Their residues are9+sum_(j=1..e-2)p^j. These pure cylinders are pairwise disjoint, avoid roots1,...,8, and leave the whole root p-1 clean. All original moduli are distinct and the full new period is Q p^H.
+
+The actual pure-survivor Haar mass and old row count are
+
+    lambda_H=(p-2+p^-H)/(p-1),
+    k(x)=sum_(i=1..8)1_(x=x0 mod d_i).
+
+The current mixed union consists of exactly k(x) distinct whole roots, so its conditional pure-base mass is alpha_H(x)=k(x)/(p lambda_H). Put
+
+    delta=7/(p-2),
+    g_H=1/(1-min(alpha_H,delta)),
+    beta_H=(alpha_H-delta)_+/(1-delta),
+    r_p=(p-1)/(p-2),
+    J_(p,H)=sup_A E_mu[r_p g_H A^2].
+
+These are the prescribed actual normalized physical and killed kernel quantities. For k<=7 one has alpha_H<delta, whereas k=8 implies alpha_H>delta. If
+
+    C={x:x=x0 mod lcm(d_1,...,d_8)},
+
+then the assigned bad mass is exactly
+
+    b_H=mu(C)*[8/(p lambda_H)-delta]/(1-delta)
+      ->mu(C)*(p-8)/[p(p-9)]>0.                   (SPF2)
+
+The event C has positive mass since it contains x0. If Q was included among the d_i, then C is the single residue x0 modulo Q. The current step is normalized row by row; mu itself is the same incoming law for every H.
+
+#### Global Xi equality needs no coherent old maximizer
+
+There is one complete old block A_e for every current exponent e=0,...,H, and every divisor label of Q remains independently selected within every block. For arbitrary current residues, the killed intersection of a pair of labels of current exponents e,f has pure-base mass at most
+
+    p^-max(e,f)/lambda_H
+
+when max(e,f)>0. Expanding every original old-label pair and then applying weighted Cauchy-Schwarz gives
+
+    positive pair-block(e,f)
+       <=[p^-max(e,f)/lambda_H]E_mu[g_H A_e A_f]
+       <=[p^-max(e,f)/lambda_H]sup_A E_mu[g_H A^2].
+
+Set a_(p,H)=sum_(t=1..H)(2t+1)p^-t. Summing all ordered current-exponent pairs gives the corresponding upper bound a_(p,H) sup_A E_mu[g_H A^2]/lambda_H.
+
+The old domain is finite, so let A_H be any actual complete old test attaining sup_A E_mu[g_H A^2]. It need not be nested, centered, radial, or equal to the forbidden layout. Select this very old test in every current block, and put every positive current test prefix at p-1 modulo p^e. All those prefixes are nested within the globally clean root. Each positive pair then attains its exact pure-base cap and survives killing; the weighted Cauchy-Schwarz inequalities are equalities because the old blocks coincide with A_H. Hence
+
+    Xi_(p,H)^-=a_(p,H) sup_A E_mu[g_H A^2]/lambda_H,
+    Xi_(p,H)^-/(a_p J_(p,H))
+      =(a_(p,H)/a_p)*(p-2)/(p-2+p^-H),             (SPF3)
+
+where a_p=(3p-1)/(p-1)^2. This is a global maximum over the full independent original test domain. Selecting repeated old blocks proves attainment, rather than restricting the optimization domain in advance.
+
+#### Exact consequences for conditional energy strategies
+
+The coefficient tail is
+
+    a_p-a_(p,H)=p^-H[(2H+3)p-(2H+1)]/(p-1)^2.
+
+The ratio in SPF3 therefore tends to1, independently of mu or the shape of its maximizing old tests. Moreover
+
+    r_p G_mu<=J_(p,H)<=c_p G_mu,
+    c_p=(p-1)/(p-9),
+
+so J_(p,H) is bounded by one fixed finite constant. This proves the additive limit in SPF1. SPF2 proves its charge-normalized limit. The quantitative pure-height convergence is O(H p^-H), with a bound proportional to the fixed G_mu.
+
+In particular, even allowing the proposed rebate constant to depend on this source, no strictly positive epsilon(mu), c(mu), or d(mu) can make respectively
+
+    Xi_p^-<=(1-epsilon(mu))a_p J_p,
+    Xi_p^-<=a_p J_p-c(mu),
+    Xi_p^-<=a_p J_p-d(mu)b_p
+
+hold for every legitimate current completion of this source. Restricting G_mu, a source-only hinge profile, or the high-load probability of an identified old test cannot change this counterexample construction: each of those observations is exactly preserved. If G_mu>64, the required eight nonunit old divisors follow automatically, since a period with at most eight divisors has A<=8 for every complete old test and hence G_mu<=64.
+
+A condition on J_p itself is different, because the mask weights vary with H. Precisely,
+
+    J_(p,H) -> J_infinity
+      =r_p sup_A E_mu[g_infinity A^2],
+    g_infinity(x)
+      =1/(1-min(k(x)(p-1)/[p(p-2)],delta)),
+    J_infinity>=r_p G_mu.
+
+The convergence follows uniformly on the finite old carrier and test domain. A strict condition J_p>J0 is preserved eventually if J_infinity>J0; it is not claimed for every arbitrary high-J threshold. In particular G_mu>J0/r_p is a sufficient condition for this completion to remain above J0. Conditions involving the actual relation between a maximizing test and the weighted mask, or the joint old/new objective, contain information beyond the preserved source alone.
+
+#### The19 input and the remaining common-test loss
+
+For p=19, start with one already specified normalized physical mu17 from its actual AP13-to17 construction, including all original17 heights. The new d_i may contain17 factors; choosing Q among them preserves those exact heights in the full family. The19 source is then exactly that same mu17. No conditioning is inserted and no independently chosen17 family is substituted. This establishes a source-preserving19 statement without asserting that the17 and19 Xi maxima can be attained by one final common test.
+
+Finally, the optimizing A_H can have substantial energy on the charged event C. The deleted old-square term E_mu[beta_H A_H^2] is retained in the full killed objective and need not tend to0. The CT terms, their shared-label correlations, and the gap between separately maximizing the stages are not bounded by SPF1. Thus the useful remaining conditional target is a bound on the full same-test killed or signed objective, rather than a positive standalone Xi rebate inferred only from high old-source energy. No general KC numerical bound or unrestricted Erdős #7 endpoint is claimed.
