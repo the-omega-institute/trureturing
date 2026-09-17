@@ -31,7 +31,7 @@ public sealed partial class CommonCurrentEvidenceValidationTests
     }
 
     [Fact]
-    public void SeedImportValidatesSharedReportOncePerReadOnlyPhase()
+    public void SeedImportReusesValidatedReportAcrossCopiedBytesWithinOneEntry()
     {
         using var fixture = new EvidenceFixture();
         fixture.Run("export");
@@ -44,9 +44,9 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         {
             RawLeanReportArtifact.Reading.Value = () => reads++;
             AssertSeedUnits(Import(fixture), record.Units.Length);
-            Assert.Equal(3, reads); // Current input, seed source, copied destination.
+            Assert.Equal(2, reads); // Current input and seed report; copied bytes are rehashed.
             AssertSeedUnits(Import(fixture), record.Units.Length);
-            Assert.Equal(6, reads); // A new entry cannot inherit earlier validation.
+            Assert.Equal(4, reads); // A new entry cannot inherit earlier validation.
         }
         finally { RawLeanReportArtifact.Reading.Value = previous; }
         Assert.Equal(File.ReadAllBytes(Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"), shared!)),

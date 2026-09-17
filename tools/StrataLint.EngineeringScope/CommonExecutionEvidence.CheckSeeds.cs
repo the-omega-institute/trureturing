@@ -6,8 +6,9 @@ namespace StrataLint.EngineeringScope;
 internal static partial class CommonExecutionEvidence
 {
     private static Dictionary<string, CheckUnitResult> ImportCheckSeed(string root, string stage,
-        RepositorySnapshot snapshot, IReadOnlyDictionary<string, string> inputs, TextWriter output)
+        ValidationScope registration, IReadOnlyDictionary<string, string> inputs, TextWriter output)
     {
+        var snapshot = registration.Snapshot;
         var accepted = new Dictionary<string, CheckUnitResult>(StringComparer.Ordinal);
         var seedRoot = Path.Combine(root, CheckSeedPath(stage));
         JsonElement document;
@@ -37,8 +38,9 @@ internal static partial class CommonExecutionEvidence
         var sources = new List<CheckUnitResult>();
         var copied = new List<CheckUnitResult>();
         var environment = ExecutionEnvironment(root);
+        var successfulReport = new ReportValidation(snapshot);
         {
-            var validation = new ValidationScope(snapshot);
+            var validation = registration.Fresh(successfulReport);
             foreach (var id in CheckIds(stage, validation.CheckManifest()).Where(inputs.ContainsKey))
                 Attempt(id, () =>
                 {
@@ -75,7 +77,7 @@ internal static partial class CommonExecutionEvidence
                 copied.Add(unit);
             });
         {
-            var validation = new ValidationScope(snapshot);
+            var validation = registration.Fresh(successfulReport);
             foreach (var unit in copied)
                 Attempt(unit.Id, () =>
                 {
@@ -235,7 +237,9 @@ internal static partial class CommonExecutionEvidence
         else
         {
             var snapshot = Snapshot(root);
-            var imported = ImportCheckSeed(root, stage, snapshot, CheckInputFingerprints(root, snapshot, currentReport: stage == "current"), output);
+            var validation = new ValidationScope(snapshot);
+            var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", validation: validation);
+            var imported = ImportCheckSeed(root, stage, validation, inputs, output);
             output.WriteLine($"COMMON_CHECK_SEED_IMPORTED stage={stage} units={imported.Count}");
             if (stage == "engineering") _ = ImportTestSeed(root, TestInputs(root, snapshot), output);
         }
