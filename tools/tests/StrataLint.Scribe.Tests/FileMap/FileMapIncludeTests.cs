@@ -161,8 +161,8 @@ public sealed class FileMapIncludeTests
     [Fact]
     public void AdmissionUsesEachEndpointsOwnIncludedManifest()
     {
-        var baseline = Snapshot(Entry("docs/reports/old.json", "judge"));
-        var candidate = Snapshot(Entry("docs/reports/new.json", "content"));
+        var baseline = Snapshot(Entry("docs/reports/old.json", "judge"), "docs/reports/old.json");
+        var candidate = Snapshot(Entry("docs/reports/new.json", "content"), "docs/reports/new.json");
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [("docs/reports/old.json", RawChangeKind.Deleted), ("docs/reports/new.json", RawChangeKind.Added)]));
 
@@ -173,8 +173,10 @@ public sealed class FileMapIncludeTests
     [Fact]
     public void MissingBaseIncludeCannotBeFilledFromCandidate()
     {
-        var baseline = RawRepositorySnapshot.Create([Raw(AdmissionPlanePolicy.FileMapPath,
-            "schema_version = 2\n" + Include + Residence)]);
+        var baseline = RawRepositorySnapshot.Create([
+            Raw(AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + Include + Residence),
+            Raw("docs/retired.md", string.Empty),
+        ]);
         var candidate = Snapshot(Entry("docs/**"));
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline,
             RawChangeSet.CreateWithKinds([("docs/retired.md", RawChangeKind.Deleted)]));
@@ -204,9 +206,10 @@ public sealed class FileMapIncludeTests
             new HashSet<string> { "AGENTS.md", FragmentPath }, entries.Select(entry => entry.Path).ToArray()));
     }
 
-    private static RawRepositorySnapshot Snapshot(string entries) => RawRepositorySnapshot.Create(
+    private static RawRepositorySnapshot Snapshot(string entries, params string[] paths) => RawRepositorySnapshot.Create(
         [Raw(AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + Include + Residence),
-            Raw(FragmentPath, "schema_version = 2\n" + entries)]);
+            Raw(FragmentPath, "schema_version = 2\n" + entries),
+            .. paths.Select(path => Raw(path, string.Empty))]);
 
     private static RawRepositoryEntry Raw(string path, string text) => new(path, ImmutableArray.Create(Bytes(text)));
     private static byte[] Bytes(string text) => Encoding.UTF8.GetBytes(text);
