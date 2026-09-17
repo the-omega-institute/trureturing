@@ -28,11 +28,11 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 P=(3,5,7)
 PINS={
-    'certificates/uniform_gamma_cofactor_certificate.json':'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'certificates/uniform_gamma_cofactor_certificate.json':'bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c',
     'certificates/star_block_obstruction_certificate.json':'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
     'certificates/joint_density_certificate.json':'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
-    'certificates/arbitrary_head_profile_certificate.json':'afd62721adaa0800421ea3fbcc9ce99c76ad6e7fda7526ac73194a9e6aeae65e',
-    'certificates/weighted_kernel_tails_certificate.json':'c1e64e46884a7a4e226222aea4394fae98e5f159fe4e2e366a5b17fbbc95f240',
+    'certificates/arbitrary_head_profile_certificate.json':'72a9f1b51edab126dfb7cc56f641f77c5c28149a6a67e26df5e3e25ab9e6eb0c',
+    'certificates/weighted_kernel_tails_certificate.json':'373b6a441a027f0e6fd7b4c9b718e90b8dcbf6382ecbbf87633a7bcec9741d48',
 }
 
 

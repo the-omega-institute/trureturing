@@ -26,9 +26,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PINS = {
     'certificates/shared_square_continuation_certificate.json':
-        '1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e',
+        '5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099',
     'certificates/shared_cell_square_certificate.json':
-        '100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef',
+        'df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d',
 }
 
 
