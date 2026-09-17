@@ -549,7 +549,9 @@ class EntryPointTests(unittest.TestCase):
                     path.write_text(text)
                     path.chmod(0o755)
                 repository = Path(publication.__file__).resolve().parents[2]
-                for name in ['tools/lean-inspector/inspect.sh', 'tools/scripts/report/lean-report-selection.py']:
+                for name in ['tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
+                             'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
