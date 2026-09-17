@@ -1,0 +1,59 @@
+**定义 50.0（阈值—超自然逆极限及两种算术运算）。** 取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+t\in\mathbb N_0\cup\{\infty\},
+$$
+并取超自然数
+$$
+D=\prod_p p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+有限正整数 $m$ 的记号 $m\mid D$ 表示对每个素数 $p$ 都有 $v_p(m)\le e_p$。定义
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\ge1,\ m\mid D\},
+$$
+其中
+$$
+(u,m)\preceq(v,n)\iff u\le v\ \land\ m\mid n.
+$$
+在 $\mathbb N_0$ 上定义
+$$
+a\mathrel{R_{u,m}}b
+\iff
+a=b\ \lor\ \bigl(a,b\ge u\ \land\ a\equiv b\pmod m\bigr),
+$$
+令
+$$
+Q_{u,m}=\mathbb N_0/R_{u,m},
+\qquad
+q_{u,m}:\mathbb N_0\to Q_{u,m}.
+$$
+若 $(u,m)\preceq(v,n)$，则 $R_{v,n}\subseteq R_{u,m}$，故有规范遗忘映射
+$$
+b_{(v,n),(u,m)}:Q_{v,n}\to Q_{u,m}.
+$$
+定义
+$$
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m},
+\qquad
+j(a)=\bigl(q_{u,m}(a)\bigr)_{(u,m)\in I_{t,D}}.
+$$
+每个 $Q_{u,m}$ 取离散拓扑，$K_{t,D}$ 取逆极限拓扑。采用
+$$
+\gcd(0,0)=0,\qquad \gcd(0,n)=n,
+$$
+以及
+$$
+\operatorname{lcm}(0,n)=0.
+$$
+记
+$$
+g(a,b)=\gcd(a,b),\qquad \ell(a,b)=\operatorname{lcm}(a,b).
+$$
+记 $D\mid2$ 表示 $e_p=0$ 对所有 $p\ne2$ 且 $e_2\le1$；等价地，$D=1$ 或 $D=2$。本节只讨论从整个 $K_{t,D}^2$ 到同一个 $K_{t,D}$ 的联合连续延拓。
+
+关于阈值—周期同余的公开基线是固定提交
+[RECURSIVE_RELATIONAL_OBSERVATION.md, §11 与 §14](https://github.com/the-omega-institute/trureturing/blob/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；其中 §11.2 使用同一类阈值—周期同余，§14.1 构造有限离散逆极限并区分“输出层”与“更细输入层”，§14.2 的证明明确给出连续有限输出必须由某个统一有限输入精度决定的判据。加法幺半群 $\mathbb N_0$ 的非平凡同余具有唯一阈值—周期形，见 East–Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:2010.04392v3, §2.1，特别是其公式
+$\theta=(m,m+d)^\sharp$：
+[公开文本](https://arxiv.org/html/2010.04392v3#S2.SS1)。有限离散逆极限与开闭有限细化所需的拓扑事实见 Stacks Project, Tag 08ZW, Definition 5.22.1 与 Lemmas 5.22.2, 5.22.4：
+[公开文本](https://stacks.math.columbia.edu/tag/08ZW)。这些引用只提供既有拓扑与同余框架；以下 gcd/lcm 分类由本节直接证明。
+

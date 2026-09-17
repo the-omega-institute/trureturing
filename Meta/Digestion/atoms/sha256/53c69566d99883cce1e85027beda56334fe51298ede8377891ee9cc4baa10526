@@ -1,0 +1,30 @@
+### 73.2 低于尾空间维数的压缩必然留下未来见证
+
+若 $\mathcal T(m)$ 有限维，取一个线性压缩
+
+$$
+Q:\mathcal T(m)\to W
+$$
+
+并假设
+
+$$
+\operatorname{finrank}W
+<
+\operatorname{finrank}\mathcal T(m),
+$$
+
+则仓库定理 `smaller_compression_has_future_witness` 给出某个非零尾方向 $x$，满足
+
+$$
+Qx=0,
+$$
+
+但存在有限时刻 $n$ 使
+
+$$
+\operatorname{out}(A^n x)\ne0.
+$$
+
+因此，压缩器当前看不到的方向，会在某个有限未来实验中重新出现。这个结论把“历史回流”改成了有限见证：不需要假定无限复杂的过去，只要压缩低于尾空间秩，就存在一个可定位的未来读出将其分开。
+

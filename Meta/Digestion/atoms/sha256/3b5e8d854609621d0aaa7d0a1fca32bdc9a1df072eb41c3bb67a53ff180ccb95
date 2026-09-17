@@ -1,0 +1,23 @@
+**theorem 49.3（连续有限输出必经某个共同的更细输入观察）。** 设
+$$
+F:K_{t,D}\times K_{t,D}\longrightarrow Q_{u,m}
+$$
+连续，其中 $(u,m)\in I_{t,D}$。则存在 $(v,n)\in I_{t,D}$，使 $F$ 经
+$$
+\pi_{v,n}\times\pi_{v,n}:K_{t,D}^2\longrightarrow Q_{v,n}^2
+$$
+因子化。特别地，若连续映射
+$$
+\operatorname{Pow}:K_{t,D}^2\to K_{t,D}
+$$
+在稠密自然数像上满足
+$$
+\operatorname{Pow}(j(a),j(b))=j(a^b),
+$$
+则对每个输出坐标 $(u,m)$，存在一个可能严格更细的输入坐标 $(v,n)$，使
+$$
+a\mathrel{R_{v,n}}a',\quad b\mathrel{R_{v,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{u,m}}(a')^{b'}.
+$$
+

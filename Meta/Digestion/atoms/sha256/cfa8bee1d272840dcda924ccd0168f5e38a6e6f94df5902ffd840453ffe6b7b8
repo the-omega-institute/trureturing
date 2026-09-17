@@ -1,0 +1,14 @@
+在 (R) 上，(I) 的读数后段就是 $1/a_n$，并有
+
+$$
+\left|\frac1{a_m}-\frac1{a_n}\right|
+\le\frac{|a_m-a_n|}{\delta^2}.
+$$
+
+故倒数读数为 Cauchy。若 $a\sim b$，分别取正下界 $\delta_a,\delta_b$，则后段
+
+$$
+\left|\frac1{a_n}-\frac1{b_n}\right|
+\le\frac{|a_n-b_n|}{\delta_a\delta_b}\longrightarrow0.
+$$
+

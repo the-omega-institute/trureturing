@@ -1,0 +1,7 @@
+**定理 46.7（实际锚的统一数值界判据）。** 设 $R\subseteq\mathbb N_0^d$，$x\in\overline{\iota^d[R]}$，并置 $\|\mathbf n\|_\infty=\max(\{0\}\cup\{n_i:1\le i\le d\})$。令
+$$
+W_k(x)=\{\mathbf n\in R:q_{c_k}^d(\mathbf n)=\pi_{c_k}^d(x)\},\qquad
+h_x(k)=\min_{\mathbf n\in W_k(x)}\|\mathbf n\|_\infty.
+$$
+则 $W_k(x)$ 非空，$h_x(k)$ 单调不减，且以下三者等价：$x\in\iota^d[R]$；存在 $M\in\mathbb N_0$ 使对每个 $k$ 都有 $W_k(x)\cap[0,M]^d\ne\varnothing$；存在 $\mathbf n_k\in W_k(x)$，使所有 $\mathbf n_k$ 属于离散空间 $\mathbb N_0^d$ 的某个紧致子集。等价地，$x$ 是实际锚当且仅当 $\sup_k h_x(k)<\infty$。若不是实际锚，则 $h_x(k)\to\infty$。
+

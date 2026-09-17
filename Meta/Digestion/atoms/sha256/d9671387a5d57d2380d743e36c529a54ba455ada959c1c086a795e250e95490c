@@ -1,0 +1,25 @@
+**theorem 39.4 (The exact evaluation cardinal in ZFC).** One has
+$$
+\min\{|D|:D\subseteq K,\ \operatorname{Eval}_D\text{ is injective}\}
+=\mathfrak c,
+\tag{39.11}
+$$
+and
+$$
+\min\{|D|:D\subseteq K,\ (e,\operatorname{Eval}_D)\text{ is injective}\}
+=\mathfrak c.
+\tag{39.12}
+$$
+These equalities require neither the continuum hypothesis nor regularity of $\mathfrak c$.
+
+**Proof.** The inclusion $K\subseteq\{0,1\}^{\mathbb N}$ gives $|K|\le\mathfrak c$. Conversely, sending a binary sequence $a$ to the point with digits $x_{2j}=a_j$ and $x_{2j+1}=0$ injects $\{0,1\}^{\mathbb N}$ into $K$. Thus $|K|=\mathfrak c$.
+
+For $|D|<\mathfrak c$,
+$$
+|E\cup U(D)|\le\max(\aleph_0,|D|)<\mathfrak c.
+\tag{39.13}
+$$
+For finite or countable $D$ this is the countable-union bound. For any infinite cardinal $\kappa=|D|$, it uses the ZFC identity $\kappa\cdot\aleph_0=\kappa$. This is a uniform bound on countable sets indexed by a fixed cardinal, not an assertion that arbitrary unions of fewer than $\mathfrak c$ smaller cardinals remain smaller than $\mathfrak c$. Hence it does not assume continuum regularity. The necessary conditions in Theorem 39.2 now exclude every such $D$, with or without $e$.
+
+For the upper bound, evaluations at all inputs $D=K$ distinguish distinct actual functions. This family has cardinality $\mathfrak c$ and also suffices when $e$ is supplied. $\square$
+

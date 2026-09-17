@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9f7f4d7836f05049d306aef8c336070e318810dc21cb31b390318a5eeecb495
+  normalized_sha256: sha256:f9f7f4d7836f05049d306aef8c336070e318810dc21cb31b390318a5eeecb495
+cas_ref: sha256:f9f7f4d7836f05049d306aef8c336070e318810dc21cb31b390318a5eeecb495
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶约定时间窗、轨道界及满足给定尾预算的记忆视界，并定义最小值的约定，不断言该视界存在或误差界成立。
+    previous_atom_id: 6a2014f34305540ea68452d35e3a0ff1afa4479bea462cc3ea80f627f49b9fa1
+    next_atom_id: cf9785021b3dd3672a3d457d623e2e8ba332a1cc63f35ba7ef1d482b0e290f9a

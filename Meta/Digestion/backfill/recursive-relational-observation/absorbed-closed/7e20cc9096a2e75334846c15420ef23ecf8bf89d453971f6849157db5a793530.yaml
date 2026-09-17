@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7e20cc9096a2e75334846c15420ef23ecf8bf89d453971f6849157db5a793530
+  normalized_sha256: sha256:7e20cc9096a2e75334846c15420ef23ecf8bf89d453971f6849157db5a793530
+cas_ref: sha256:7e20cc9096a2e75334846c15420ef23ecf8bf89d453971f6849157db5a793530
+coverage_gids:
+  - gid: D5/S1/Recurrence/Algebraic/MultiplicativeSliceParameters.result
+    target_statement_id: sha256:ef08531f67cf1d701186ec09f179dd70712f078a750e96a23e3b7cc872af35fd
+receipts:
+  unresolved_subitems: []

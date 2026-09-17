@@ -1,0 +1,21 @@
+**定义 57.10（平移闭观察与有限精度查询）。** 把每个 $n\in\mathbb N_0$ 对角嵌入 $R$，定义
+$$
+\Psi:R\to I^{\mathbb N_0},
+\qquad
+\Psi(x)=\bigl(\rho(x+n)\bigr)_{n\in\mathbb N_0}.
+$$
+若
+$$
+M=\prod_{p\mid M}p^{e_p}>1,
+$$
+定义有限剩余投影
+$$
+\pi_M:R\to\mathbb Z/M\mathbb Z
+$$
+为各 $x_p\bmod p^{e_p}$ 经中国剩余定理合成的类。一次针对 $M$ 的截断平移查询取某个 $n\in\mathbb N_0$，返回有限向量
+$$
+Q_{M,n}(x)=
+\bigl(\min(v_p(x_p+n),e_p)\bigr)_{p\mid M}.
+$$
+这里只要求恢复 $\pi_M(x)$；不把有限截断误称为判定两个任意 $p$-进整数是否相等。
+

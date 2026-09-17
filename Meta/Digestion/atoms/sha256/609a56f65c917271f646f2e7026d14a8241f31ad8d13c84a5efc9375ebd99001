@@ -1,0 +1,20 @@
+**theorem 51.10 (理想值最大公因数与最小公倍数的联合连续延拓).** 通过 theorem 51.2.1 的主理想参数识别，定义
+$$
+\mathfrak G:K^2\to\mathcal I,\qquad \mathfrak G(X,Y)=\sigma(X)R+\sigma(Y)R,
+$$
+$$
+\mathfrak L:K^2\to\mathcal I,\qquad \mathfrak L(X,Y)=\sigma(X)R\cap\sigma(Y)R.
+$$
+这两个映射联合连续，并且分别是自然理想值映射的唯一连续延拓：
+$$
+\mathfrak G(j(a),j(b))=\gcd(a,b)R,\qquad \mathfrak L(j(a),j(b))=\operatorname{lcm}(a,b)R.
+$$
+对任意 $(X,Y,G_*,L_*)\in C$，都有
+$$
+\rho(\sigma(G_*))=\mathfrak G(X,Y),\qquad \rho(\sigma(L_*))=\mathfrak L(X,Y),
+$$
+以及
+$$
+\sigma(G_*)\sigma(L_*)=\sigma(X)\sigma(Y).
+$$
+

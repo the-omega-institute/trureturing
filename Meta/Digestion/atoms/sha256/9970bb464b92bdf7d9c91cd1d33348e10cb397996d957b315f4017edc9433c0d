@@ -1,0 +1,9 @@
+**theorem 44.12 (Continuous observer rigidity for variable divisors).** Let $Y$ be Hausdorff, and let $f:K^2\to Y$ and $g:K^2\to Y$ be continuous. If
+$$
+f(Z(a),Z(b))
+=
+g\bigl(Z(a\operatorname{div}b),Z(a\bmod b)\bigr)
+\qquad(a\ge0,\ b\ge1),
+$$
+then $f$ and $g$ are the same constant value on their respective domains. Conversely, any common constant satisfies the identity.
+

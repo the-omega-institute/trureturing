@@ -1,0 +1,5 @@
+Every $C_w$ has an open phase-arc interior $J_w$ satisfying
+$$
+H^{-1}(J_w)\subseteq C_w\subseteq H^{-1}(\overline{J_w}),\qquad
+H[C_w]=\overline{J_w}.
+$$

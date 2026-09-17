@@ -1,0 +1,22 @@
+### 87.1 完美区分数受载体维数限制
+
+第 86 节讨论的是目标 observable 的线性覆盖；现在考虑更强的任务：用同一个 POVM 一次性、无误差地识别一组历史状态。设记忆 Hilbert 空间维数为 $d$，候选密度态为 $\rho_i$，记录效果为 $E_j$，满足
+
+$$
+E_j\succeq0,
+\qquad
+\sum_jE_j=I,
+$$
+
+并要求完美配对
+
+$$
+\operatorname{Tr}(E_j\rho_i)=\delta_{ij}.
+$$
+
+冻结定理 `finite_memory_history_capacity` 证明：若这些条件成立，候选历史数 $N$ 必须满足
+
+$$
+\boxed{N\le d.}
+$$
+

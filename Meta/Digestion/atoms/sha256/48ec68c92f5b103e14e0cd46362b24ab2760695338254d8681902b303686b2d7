@@ -1,0 +1,24 @@
+**theorem 37.2 (Oriented lift limits and the actual finite branch history).** For $s\in\Sigma$ and $0<\varepsilon<1/2$, put
+$$
+I_s(\theta,\varepsilon)=\{\theta+[st]:0<t<\varepsilon\}.
+$$
+The notation $\theta_i\to_s\theta$ means that $\theta_i\to\theta$ and, eventually, $\theta_i\ne\theta$ approaches through the side $s$.
+
+Suppose $y_i\in K$ and $H(y_i)\to\gamma$. If $\gamma\notin E$, then $y_i\to k_\gamma$. If $\gamma=E_m$ and $H(y_i)\ne E_m$ eventually, then
+$$
+y_i\longrightarrow x_m^s
+\quad\Longleftrightarrow\quad
+H(y_i)\longrightarrow_s E_m.
+$$
+These assertions hold for arbitrary nets and arbitrary lifts at the approaching phases.
+
+For every $m\ge1$, $n\ge0$, and $s\in\Sigma$,
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+In particular, $T^n$ preserves the two incoming branches at $E_m$ whenever $m>n$. Every phase outside $E$ remains outside $E$ under nonnegative rotation by $\delta$.
+

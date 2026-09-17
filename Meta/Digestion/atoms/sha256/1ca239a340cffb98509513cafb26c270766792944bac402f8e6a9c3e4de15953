@@ -1,0 +1,45 @@
+### 11.2 最坏粗读数误差的精确公式
+
+对每个输入态，粗标签分布的总变差距离满足
+$$
+\operatorname{TV}\!\left(
+C_Q(M_C(\rho)),C_Q(\rho)
+\right)
+=
+\max_{B\subseteq\mathcal B}
+\left|
+\operatorname{tr}\!\left(Q_BM_C(\rho)\right)
+-
+\operatorname{tr}(Q_B\rho)
+\right|.
+$$
+因此
+$$
+\boxed{
+\sup_{\rho}\operatorname{TV}\!\left(
+C_Q(M_C(\rho)),C_Q(\rho)
+\right)
+=
+\delta_Q(C)
+=
+\max_{B\subseteq\mathcal B}
+\left\|(\overline C-J)\odot Q_B\right\|_\infty.
+}
+$$
+证明只用有限最大值与态空间上确界的交换：对任意 $\rho$，每个事件差都不超过相应的算子范数，给出一个上界；反之，固定达到最大值的事件 $B$，取其 Hermitian 缺陷算子的最大特征向量态即可达到该事件的范数。证毕。
+
+于是粗读数对所有输入态项目一致，当且仅当
+$$
+\boxed{
+(\overline{c_{xy}}-1)(Q_B)_{xy}=0
+\quad
+\text{对所有 }B\subseteq\mathcal B\text{ 与所有 }x,y\in X.
+}
+$$
+由于 $c_{xy}=1$ 与 $\overline{c_{xy}}=1$ 等价，也可写成：
+$$
+(Q_B)_{xy}=0
+\quad\text{只要 }c_{xy}\ne1.
+$$
+这是一条比完整态项目一致性更弱、但比单纯保留对角布居更强的精确条件。
+

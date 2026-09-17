@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7071754e17182298b6bf9e3630faeb23bc445ca05de9509e8785b2ff63021b27
+  normalized_sha256: sha256:7071754e17182298b6bf9e3630faeb23bc445ca05de9509e8785b2ff63021b27
+cas_ref: sha256:7071754e17182298b6bf9e3630faeb23bc445ca05de9509e8785b2ff63021b27
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/ContextDepthBoundary.stopped_chain_boundary
+    target_statement_id: sha256:5e0b1d926713172d4bff900f16ac825cd8c310056a8f763183832437755acc7c
+receipts:
+  unresolved_subitems: []

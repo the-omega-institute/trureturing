@@ -1,0 +1,22 @@
+**definition 51.2 (影子、赋值与主理想参数).** 定义影子映射 $\sigma:K\to R$，使 $\sigma(X)\bmod m$ 为 $X$ 的 $Q_{0,m}$ 坐标。令
+$$
+E=\widetilde{\mathbb N}_0=\mathbb N_0\cup\{\infty\},\qquad \mathcal I=\prod_{p\in\mathcal P}E.
+$$
+$E$ 取离散 $\mathbb N_0$ 的一点紧化拓扑；各有限点孤立，而
+$$
+T_r=\{r,r+1,r+2,\ldots\}\cup\{\infty\}\qquad(r\in\mathbb N_0)
+$$
+构成 $\infty$ 的邻域基。$\mathcal I$ 取乘积拓扑。对每个 $p$，使用 $\mathbb Z_p$ 上的赋值 $v_p$，约定 $v_p(0)=\infty$。在 $E$ 中使用扩展次序、$\min$ 与 $\max$，以及 $e+\infty=\infty+e=\infty$；不定义 $\infty-\infty$。
+
+记
+$$
+\rho:R\to\mathcal I,\qquad \rho(x)=(v_p(x_p))_p,
+\qquad \operatorname{Prin}(R)=\{xR:x\in R\}.
+$$
+对 $e=(e_p)_p\in\mathcal I$，另记
+$$
+J(e)=\prod_p p^{e_p}\mathbb Z_p\subseteq R,
+\qquad p^\infty\mathbb Z_p=\{0\}.
+$$
+在 $\operatorname{Prin}(R)$ 上，以 $x\mapsto xR$ 指定商拓扑。这里的指数参数采用 Longhi–Mu–Saettone，*Coset topologies on $\mathbb Z$ and arithmetic applications*，arXiv:2202.13478v3，§4.1、Definition 4.1（印页 26）的超自然数约定；该文发表于 *Expositiones Mathematicae* 41(1) (2023), 71–114，DOI 10.1016/j.exmath.2022.10.001（[v3 原文，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)；[arXiv 记录](https://arxiv.org/abs/2202.13478v3)；[作者出版目录](https://www.fmsaettone.com/)）。
+

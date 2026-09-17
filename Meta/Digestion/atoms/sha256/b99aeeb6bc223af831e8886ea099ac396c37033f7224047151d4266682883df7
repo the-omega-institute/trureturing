@@ -1,0 +1,38 @@
+**theorem 40.11 (Exact golden-cylinder relation, with boundary costs retained).** Retain the carrier $K$, successor $T$, phase map $H$, invariant measure $m$, cylinders $C_w$, and numbers $Q_L=G_L$ of [§36, Definition 36.1 and Theorems 36.2, 36.4, and 36.5](#36-quadratic-observation-size-mixing-for-the-bernoulli-successor). Let $\alpha=\phi^{-1}$. For every $L\ge1$, translation by $Q_L\alpha$ carries the depth-$L$ phase cuts onto
+$$
+\{0,\alpha,\ldots,(Q_L-1)\alpha\}\pmod1.
+$$
+There is a bijection $\gamma_L:\mathcal W_L\to\{0,\ldots,Q_L-1\}$ matching the open cylinder arcs to the open interiors of the cells of $\pi_{Q_L,\alpha}$. It satisfies
+$$
+(\gamma_L)_\#q_{L\#}m=\boldsymbol\mu_{Q_L,\alpha}.
+$$
+Write $P_p^K$ and $P_p^{\mathbb T}$ for the two kernels, and put
+$$
+y_L=H(x)+Q_L\alpha.
+$$
+For every $x\in K$, $n\ge0$, and $p\in[0,1]$,
+$$
+\|(\gamma_L)_\#q_{L\#}(P_p^K)^n\delta_x
+  -(\pi_{Q_L,\alpha})_\#(P_p^{\mathbb T})^n\delta_{y_L}\|_1
+ \le2B_{Q_L,\alpha,p}(n,y_L)
+ \le2\min\{1,Q_LM_{n,p}\}.
+$$
+Nevertheless, the worst-start errors and mixing times agree exactly:
+$$
+e_{L,p}(n)=e_{Q_L,\alpha,p}(n),
+\qquad
+\tau_{L,p}(\varepsilon)=\tau_{Q_L,\alpha,p}(\varepsilon).
+$$
+In particular, for $0<p<1$ and $n\ge1$,
+$$
+e_{L,p}(n)
+ \le\sqrt{\frac\pi2}\,
+      \frac{G_L-1}{\sqrt{np(1-p)}}.
+$$
+The dense, full-$m$-measure set
+$$
+K_{\mathrm{reg}}
+ =H^{-1}(\mathbb T\setminus\mathcal G_\alpha)
+$$
+is a common set on which the two probability vectors agree simultaneously for every $L,n,p$.
+

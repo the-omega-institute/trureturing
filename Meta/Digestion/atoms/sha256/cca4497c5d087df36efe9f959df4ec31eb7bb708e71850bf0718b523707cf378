@@ -1,0 +1,36 @@
+### 定理 63.1（约化访问缺陷）
+
+设两个系统态 $\rho,\sigma$ 满足相同的对角元
+
+$$
+\forall i,\qquad \rho_{ii}=\sigma_{ii},
+$$
+
+但存在非对角位置 $i\ne j$ 使
+
+$$
+\rho_{ij}\ne\sigma_{ij}.
+$$
+
+冻结定理 `reduced_irreversibility_is_access_defect` 给出以下同时成立的事实：
+
+$$
+\operatorname{Tr}_{E}J(\rho)
+=
+\operatorname{Tr}_{E}J(\sigma),
+$$
+
+但
+
+$$
+J(\rho)\ne J(\sigma),
+$$
+
+并且不存在只依赖约化态的函数 $F$，同时满足
+
+$$
+F(\operatorname{Tr}_{E}J(\rho))=J(\rho),
+\qquad
+F(\operatorname{Tr}_{E}J(\sigma))=J(\sigma).
+$$
+

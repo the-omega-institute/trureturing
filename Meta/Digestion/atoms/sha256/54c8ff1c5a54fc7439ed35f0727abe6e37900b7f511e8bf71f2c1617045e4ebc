@@ -1,0 +1,6 @@
+**证明。** 先注意自然相位不属于 $E$。否则 $[n\phi]=[-m\phi]$，其中 $n\ge0,m\ge1$，便有 $(n+m)\phi\in\mathbb Z$，与 $\phi$ 无理矛盾。
+
+若 $\beta\notin E$，任何满足 $\gamma(n_k)\to\beta$ 的数列都有 $Z(n_k)\to x$：任一收敛子列的极限由 $H$ 连续性属于单点纤维 $H^{-1}(\{\beta\})$；若整列不趋于 $x$，紧致性将在某个固定邻域外给出另一聚点，矛盾。若第一项不存在所需的 $\eta$，取 $|\varepsilon_k|<1/k$ 且 $Z(n_k)\notin O$ 的反例，即与此收敛结论矛盾。
+
+分裂情形若不存在所需的 $\eta$，同样取得 $0<s\varepsilon_k<1/k$ 且 $Z(n_k)\notin O$ 的反例。假设43.1的单侧等价却给出 $Z(n_k)\to z_\beta^s=x$，仍矛盾。非分裂情形取 $\beta+[(-\eta,\eta)]$，分裂情形取 $\beta+[\{\varepsilon:0<s\varepsilon<\eta\}]$，即得到所述开弧。证毕。
+

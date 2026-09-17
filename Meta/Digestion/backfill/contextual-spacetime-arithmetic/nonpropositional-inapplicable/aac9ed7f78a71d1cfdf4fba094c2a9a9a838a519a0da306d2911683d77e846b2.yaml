@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aac9ed7f78a71d1cfdf4fba094c2a9a9a838a519a0da306d2911683d77e846b2
+  normalized_sha256: sha256:aac9ed7f78a71d1cfdf4fba094c2a9a9a838a519a0da306d2911683d77e846b2
+cas_ref: sha256:aac9ed7f78a71d1cfdf4fba094c2a9a9a838a519a0da306d2911683d77e846b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 区分“数学来源的定位”和“后来工程基线”，并说“旧候选的评审与核验收据不自动代表重整后候选已经通过”。末段仅指向具名命题的证明责任，没有展开这些命题或把它们塞入定义；故是来源与重编号说明。
+    previous_atom_id: e7517f4e7459688d747b61d77eac1fd8462559c9cae87103a3f3cd7932e27418
+    next_atom_id: 5a38ad23ecd93a5f4378879714625b803ed1dcd426c577550ef96810fa63564b

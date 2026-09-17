@@ -1,0 +1,16 @@
+**theorem 51.11 (单位轨道纤维与连续规范化 profinite 截面).** 映射 $\rho:R\to\mathcal I$ 的每个纤维是一个 $R^\times$ 轨道。对于代表元 $r\in R$，其稳定子为
+$$
+H_r=\{u\in R^\times:u_p=1\text{ 对所有满足 }r_p\ne0\text{ 的 }p\}.
+$$
+因此该纤维由 $R^\times/H_r$ 参数化；含零分量时不应把原单位群作用称为自由作用。
+
+固定各 $\mathbb Z_p$ 中的标准元素 $p$，定义
+$$
+s:\mathcal I\to R,\qquad s(e)_p=\begin{cases}p^{e_p},&e_p<\infty,\\0,&e_p=\infty.\end{cases}
+$$
+则 $s$ 连续，且
+$$
+\rho\circ s=\operatorname{id}_{\mathcal I}.
+$$
+故可以连续选取主理想的规范化 profinite 生成元。此选择不要求其值是某个正整数的对角像，也不保证把两个理想分别规范化后满足联合乘积方程。
+
