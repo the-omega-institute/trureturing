@@ -289,3 +289,150 @@ exactly reconstruct the published scalar source values.
 The remaining gap requires a stronger source/deletion comparison, a
 sharper numerator bound, or another proof mechanism. This result rules
 out closing it by tuning only \(C_4,C_5\) in the present family.
+
+## 6. The boundary extends to five cell-dependent barriers
+
+The same stopping value holds when each t=4,5 is allowed an arbitrary
+finite nonnegative vector C_t=(C_(t,l)) on the five cells. This extension
+keeps the old numerator and old m25 fixed and uses the complete weighted
+cylinder-cap relaxation below. It also permits a common shallow-carrier
+mixture and aggregation of the remaining caps after each test is clipped.
+Additional actual-source constraints or conditional numerator information
+change this model.
+
+Let S_l be the actual raw357 surviving mass in cell l; thus
+0<=S_l<=n_l and sum S_l=S. For any nonnegative cell weights C, the
+complete remaining-cofactor cap is
+
+    R(C)=max_l(d_l*C_l)/90+sum_l eta_l*C_l/20
+         +max_r sum_(ROOT(l)=r)eta_l*C_l/20
+         +max_l eta_l*C_l/20+max_l C_l/360.          (V1)
+
+The five terms account respectively for pure3 depths a>=3, positive5
+cofactors at old3 depths0,1,2, and positive5 cofactors at old3 depths>=3.
+They use the same full tails sum3^-a=1/18, sum5^-b=1/4, and normalized
+positive7 cap sum1/5. In particular R(1)=Trest. Its first term requires
+the actual pointwise density bound, not just the five marginal masses.
+
+For the common shallow-carrier mixture pi of profile46 put
+omega_bar=sum_c pi_c*omega_c. Fix one original test A_t, with its own
+original zero7 load Z_t. The signed identity and A_t>=Z_t give
+
+    mu[(h_t(A_t)-C_(t,l))*1_V]
+      <= integral_Lambda psi_t(Z_t)+P_t-C_t.n
+         +mu[(C_(t,l)-h_t(Z_t))_+*1_(V^c)],
+
+where mu=Lambda tensor normalized pure7. Apply the deletion caps only
+to the nonnegative clip. The shallow term is at most
+integral_Lambda omega_bar_l*(C_(t,l)-h_t(Z_t))_+; the remaining term
+is at most R(C_t). Pointwise absorption gives
+
+    psi_t(v)+omega_bar_l*(C_(t,l)-h_t(v))_+
+      =omega_bar_l*C_(t,l)+g_(t,l)(v),
+    g_(t,l)=psi_t-omega_bar_l*min(C_(t,l),h_t).
+
+This is an admissible convex source cost: its native h_t coefficient
+is29/35-omega_bar_l>=3/7 and its other coefficients are nonnegative.
+Therefore, with the same actual S_l,
+
+    mu[h_t(A_t)*1_V]<=C_t.S-m_t(C_t,pi),
+    m_t(C_t,pi)=C_t.n-C_t.(omega_bar*n)
+                   -P_t-R(C_t)-F_theta(g_t).       (V2)
+
+The source functional is convex in its cost argument: each of its
+branches is linear in that argument and each outer sum of maxima
+has nonnegative coefficients. Hence the carrier-linear bound
+m_t(C_t,pi)>=sum_c pi_c*m_t(C_t,c) also holds. The test loads and
+source maximizations remain independent for different t.
+
+There is a stronger valid way to combine the remaining caps. Write
+alpha4=1/6, alpha5=4/33 and Cbar=alpha4*C4+alpha5*C5. The individual
+nonnegative clips u_t satisfy sum_t alpha_t*u_t<=Cbar_l, so the
+common remaining deletion union can be charged R(Cbar), rather than
+sum_t alpha_t*R(C_t). The source terms still have separate F_theta
+values. This aggregates already clipped terms and does not replace
+them by a clip of one fictitious common load.
+
+### A single vector satisfies every inherited weighted mass cut
+
+The support function R is the Minkowski sum of the fixed vector
+eta/20 and four simplex hulls: the root-restricted eta/20 vectors,
+the vectors eta_l*e_l/20, d_l*e_l/90, and e_l/360. Include zero in
+each simplex for missing labels. Assigning actual deleted points to
+their original cofactor families gives a safe mass relaxation
+
+    0<=S_l<=n_l,
+    n_l-S_l<=n_l*omega_bar_l+r_l
+
+for some r in this support set. Downward closure accommodates overlap.
+In particular all nonnegative weighted cuts are
+
+    C.(n-S)<=C.(omega_bar*n)+R(C), C>=0.            (V3)
+
+This relaxation keeps the weighted first-order cylinder caps. It does
+not enforce compatibility of the actual source or mixed7 residues.
+
+At control402 choose the concentrated carrier(0,1), so
+omega=(1/5,2/5,0,0,0), and choose the following point of the support set:
+
+    r=eta/20+(eta restricted to root1)/20
+             +eta_1*e_1/20+d_0*e_0/90+e_1/360
+      =(1/90,1/72,1/90,1/90,1/90).
+
+Its total is7/120=Trest. The surviving vector
+
+    S*=n-omega*n-r
+      =(1/45,13/360,1/360,2/45,2/45)               (V4)
+
+has all coordinates in(0,n_l] and total3/20=D. It satisfies(V3)
+for every C>=0, because C.r<=R(C) by the support-set membership.
+Thus adding more weighted cuts from these same caps cannot exclude
+this one vector. No actual forbidden family is claimed to realize it.
+
+### Every finite barrier cancels at the same vector
+
+At this fixed carrier, let g_star,l=psi_t-omega_l*h_t. For every
+finite C_(t,l)>=0,
+
+    g_(t,l)-g_star,l=omega_l*h_(t+C_(t,l)).
+
+The difference is nonnegative increasing convex in each cell. The
+convex-increment argument of section2 applies cell by cell and proves
+F_theta(g_t)>=F_theta(g_star). In particular the signed centering does
+not require general pointwise monotonicity of F_theta.
+
+Use the stronger after-clipping remainder R(Cbar) in the survival
+expression, and substitute n-S*=omega*n+r. Its value is at most
+
+    (193/231)*D+m25/22+Cbar.r-R(Cbar)
+                 -sum_(t=4,5)alpha_t*[P_t+F_theta(g_t)]
+      <=(193/231)*D+m25/22
+                 -sum_(t=4,5)alpha_t*[P_t+F_theta(g_star)]
+       =2025618599/26741137500.                    (V5)
+
+All ten independent barrier coordinates disappear from(V5). The
+same relaxed vector and concentrated mixture work for every choice,
+so taking a supremum over barriers or a finite menu cannot evade
+this ceiling. The unchanged numerator at sum S*=D is exactly N_D
+from section4. Thus every positive-denominator certificate uniform
+over this relaxation has the same lower bound
+
+    K_certificate>=510.75294876651606...>403,
+
+or its denominator is inadmissible at(V4).
+
+The [cellwise checker](../frontier/cellwise_barrier_boundary.py) reconstructs
+the complete source and numerator constants using the pinned earlier
+checker, verifies the support-set decomposition and every vector identity,
+and exits zero. It does not sample barriers as a substitute for(V5).
+
+```sh
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cellwise_barrier_boundary.py
+```
+
+The new [actual-source constraint](48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md)
+requires liminf S>=139/900 at this source parameter. It therefore excludes
+(V4), whose total is3/20. This identifies a concrete difference between
+weighted cylinder caps and additional original-source compatibility.
+The stopping statement is preserved for its specified relaxation; it is
+not an obstruction after that relaxation or the numerator is strengthened.
