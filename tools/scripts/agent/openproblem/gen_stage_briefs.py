@@ -2,10 +2,20 @@
 """Split an implementation brief into Stage A (module + mirror + make lean/emit, STOP before any door) and
 Stage B (doors: deposit/cover, one builder commit, late dedupe, push, PR). Also fills the mirror-check brief.
 usage: gen_stage_briefs.py SCRATCHPAD LANE WORKTREE BRANCH MODULE_RELPATH(no ext, e.g. D5/S1/X/Y)
-writes briefs/impl-op-w1-<lane>.stageA.md, .stageB.md, mirror-check-<lane>.md"""
+writes briefs/impl-op-w1-<lane>.stageA.md, .stageB.md, mirror-check-<lane>.md
+The only input read from SCRATCHPAD is briefs/impl-op-w1-<lane>.md; the base brief and the mirror-check
+template are read from this script's own tracked templates/ directory. Missing inputs exit 1 with the path."""
 import sys,pathlib,re
+# Tracked templates live next to this script, never in the caller's scratchpad: a wiped scratchpad
+# must cost nothing but the one lane brief the caller wrote (case #6220, the same reason gen_review.py
+# reads its template and GoalArtifact from here).
+here=pathlib.Path(__file__).resolve().parent
 sp=pathlib.Path(sys.argv[1]); lane,wt,branch,module=sys.argv[2:6]
-src=sp/'briefs'/f'impl-op-w1-{lane}.md'; t=src.read_text()
+src=sp/'briefs'/f'impl-op-w1-{lane}.md'
+for required in (src, here/'templates'/'impl-base-brief.md', here/'templates'/'mirror-check-template.md'):
+    if not required.is_file():
+        sys.exit(f'missing required input: {required}')
+t=src.read_text()
 i=t.index('## Steps'); j=t.index('## Result envelope')
 pre,steps,env=t[:i],t[i:j],t[j:]
 # split steps: everything up to and including step 4 → stage A; step 5.. → stage B
@@ -31,12 +41,12 @@ You are the Stage-B `implementation_worker` (codex-cli). Worktree `{wt}` on bran
 
 **Render check after ANY Stage-B mirror change (zaremba v3 lesson, 2026-09-05):** if you add or edit Describe nodes here, then after `make emit` run `grep -n -E '&&|\\|\\||==|!=|\\bdecide\\b.*&&' Blueprint/<module>.md` (must be empty — Lean Boolean `&&`/`||`/`==` must be rendered as `∧`/`∨`/`=` inside `Parenthesized`), re-read every new formula, and run `make preflight`: a line `markdown red <your module>.md:…` (KaTeX parse error) or any check naming your module is a STOP-and-fix condition BEFORE `make deposit`; unrelated locale/observe noise is not. '''
 gm=re.search(r'## GoalArtifact.*?(?=\n## |\Z)',pre,re.S); goal=gm.group(0)+'\n\n' if gm else ''
-base=(sp/'briefs'/'impl-op-w1-ppn.md').read_text()
+base=(here/'templates'/'impl-base-brief.md').read_text()
 extra=''.join(re.findall(r'\n6[′″]\. \*\*.*?(?=\n[0-9]+[′″]?\. |\n## )',base,re.S))
 stepsB=stepsB.replace('\n7. `git push',extra+'\n7. `git push',1) if '6′.' not in stepsB else stepsB
 B=B_head+B_intro+goal+stepsB+env
 (sp/'briefs'/f'impl-op-w1-{lane}.stageA.md').write_text(A); (sp/'briefs'/f'impl-op-w1-{lane}.stageB.md').write_text(B)
-mc=(sp/'briefs'/'mirror-check-template.md').read_text().replace('__LANE__',lane).replace('__WORKTREE__',wt).replace('__BRANCH__',branch).replace('__MODULE__',module)
+mc=(here/'templates'/'mirror-check-template.md').read_text().replace('__LANE__',lane).replace('__WORKTREE__',wt).replace('__BRANCH__',branch).replace('__MODULE__',module)
 assert '__' not in mc.replace('__init__','')
 (sp/'briefs'/f'mirror-check-{lane}.md').write_text(mc)
 print('stageA',len(A),'stageB',len(B),'mirror-check',len(mc))
