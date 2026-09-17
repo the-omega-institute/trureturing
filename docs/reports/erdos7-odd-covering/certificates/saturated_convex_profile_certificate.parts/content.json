@@ -1,0 +1,88 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": 1
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "SH18 carrier and law; arbitrary finite original357 heights"
+  },
+  "head_certificate_sha256": {
+    "kind": "inline",
+    "value": "e224d3c1fc1a04c3a1fbfab8cc986e4a81ed4cca2e0876a8842843b51925cd6f"
+  },
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      10,
+      12
+    ]
+  },
+  "base_layouts": {
+    "kind": "inline",
+    "value": 280
+  },
+  "depth_count": {
+    "kind": "inline",
+    "value": 270
+  },
+  "records": {
+    "path": "content/006-records.json",
+    "sha256": "5fe28d0f0b998ff6449a92531f7ccbcde06027895fe1e140e7bbbd6ba77e60a7",
+    "kind": "array"
+  },
+  "outside_square_excess": {
+    "kind": "inline",
+    "value": "222330828717013853/7293036916557000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "2577991831/4799999616"
+  },
+  "mean_lambda_upper": {
+    "kind": "inline",
+    "value": "8223699805/2399999808"
+  },
+  "mean_nu_upper": {
+    "kind": "inline",
+    "value": "19618622895502373704/3964266656997890625"
+  },
+  "square_nu_upper": {
+    "kind": "inline",
+    "value": "2512626164927510733601/70505216618162484375"
+  },
+  "hinges": {
+    "path": "content/012-hinges.json",
+    "sha256": "75cd40a05cd2b80b7cdf9b88d9eab7361917a64392a5a0ffe05210d0316b9859",
+    "kind": "value"
+  },
+  "refined_hinge2": {
+    "path": "content/013-refined_hinge2.json",
+    "sha256": "d2297d4c40f636377171ed4bab4227cb26a7a55d534d553107dc0b4bbe801d5f",
+    "kind": "object"
+  },
+  "continuation11_13": {
+    "kind": "inline",
+    "value": {
+      "threshold11": 4,
+      "threshold13": 5,
+      "charge11_upper": "23373816874876978252/98707303265427478125",
+      "charge13_upper": "6069407380584151402322947/24185756982611367827578125",
+      "total_charge_upper": "1685225265764411856931321/3455108140373052546796875",
+      "survival_lower": "1769882874608640689865554/3455108140373052546796875",
+      "square_before_conditioning": "3525214509393297559242203/44418286469442365156250",
+      "supported_square_upper": "3815365447008599276017720573/24778360244520969658117756"
+    }
+  },
+  "combined_prime_cost": {
+    "path": "content/015-combined_prime_cost.json",
+    "sha256": "dfb5d7071b9b9251d3374b73da814ddaa11798a50e75f337d44d7dc4f7feff0f",
+    "kind": "value"
+  }
+}

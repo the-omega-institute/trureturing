@@ -1,0 +1,23 @@
+{
+  "length": 140,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 114,
+      "part": {
+        "path": "content/013-refined_hinge2/001-observations/000000-000114.json",
+        "sha256": "d9923b9fcdc23f846d9c222d935f7deed2558a71ff896252132c877e0d75bd92",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 114,
+      "stop": 140,
+      "part": {
+        "path": "content/013-refined_hinge2/001-observations/000114-000140.json",
+        "sha256": "225f3136d6041ae56732f47208077e9953b0d1fb79e794ca61ea58b6f82b7d5f",
+        "kind": "value"
+      }
+    }
+  ]
+}

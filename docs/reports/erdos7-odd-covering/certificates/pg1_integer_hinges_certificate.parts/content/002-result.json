@@ -1,0 +1,230 @@
+{
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "new_depth_thresholds": {
+    "kind": "inline",
+    "value": [
+      3,
+      7,
+      8
+    ]
+  },
+  "inherited_depth_thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      6
+    ]
+  },
+  "exact_zero_thresholds": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      6,
+      7,
+      8
+    ]
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "weight_denominator": {
+    "kind": "inline",
+    "value": 1000000007
+  },
+  "zero_depth_probability": {
+    "kind": "inline",
+    "value": "16/35"
+  },
+  "outside_probability": {
+    "kind": "inline",
+    "value": "4766753/27348890625"
+  },
+  "zero_anchor_coefficient": {
+    "kind": "inline",
+    "value": "12507116753/27348890625"
+  },
+  "tail_divisors": {
+    "kind": "inline",
+    "value": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ]
+  },
+  "complete_outside_mean_coefficients": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "29774081/54697781250",
+      "121447171/109395562500",
+      "221180777/170170875000",
+      "6441127813/3063075750000"
+    ]
+  },
+  "cap_numerators": {
+    "kind": "inline",
+    "value": [
+      1000000007,
+      207174054,
+      305330055,
+      67024566,
+      517529280,
+      117763278,
+      190412499,
+      41470054,
+      265958138,
+      46470620,
+      87568636,
+      16622259
+    ]
+  },
+  "complete_outside_mean_increment": {
+    "kind": "inline",
+    "value": "2330295100792072343/3063075771441530250000"
+  },
+  "records": {
+    "path": "content/002-result/013-records.json",
+    "sha256": "ab915c340bef4bdb25be5764d42158d1b7b8caac1bad6f453d9d16c584489c92",
+    "kind": "array"
+  },
+  "conditional_hinge_upper_bounds": {
+    "kind": "inline",
+    "value": {
+      "3": "10162026053915069246357/4868007485623062046875",
+      "4": "1433737384346892410897/973601497124612409375",
+      "6": "4033254968714385651877/4868007485623062046875",
+      "7": "9648458629766273805119/14604022456869186140625",
+      "8": "212159150814634558117/417257784481976746875"
+    }
+  },
+  "prior_hinge_upper_bounds": {
+    "kind": "inline",
+    "value": {
+      "3": "3631082005714019340073/1622669161874354015625",
+      "4": "2394156525804976633271/1622669161874354015625",
+      "6": "4106398428533515693477/4868007485623062046875",
+      "7": "4106398428533515693477/4868007485623062046875",
+      "8": "4106398428533515693477/4868007485623062046875"
+    }
+  },
+  "improvements": {
+    "kind": "inline",
+    "value": {
+      "3": "731219963226988773862/4868007485623062046875",
+      "4": "13782655680467845328/4868007485623062046875",
+      "6": "139320875845961984/9272395210710594375",
+      "7": "381533807976324753616/2086288922409883734375",
+      "8": "4893625007088337546336/14604022456869186140625"
+    }
+  },
+  "worst_roots": {
+    "kind": "inline",
+    "value": {
+      "3": [
+        2,
+        2
+      ],
+      "4": [
+        1,
+        1
+      ],
+      "6": [
+        2,
+        8
+      ],
+      "7": [
+        2,
+        8
+      ],
+      "8": [
+        2,
+        8
+      ]
+    }
+  },
+  "reused_H5": {
+    "kind": "inline",
+    "value": {
+      "source": "certificates/pg1_joint_tail_certificate.json",
+      "field": "result.unweighted_whole_cost.records.costs.n1",
+      "conditional_upper": "1093534028247938362241/973601497124612409375",
+      "scope": "Existing complete observation; not newly computed."
+    }
+  },
+  "direct_full_layout_checks": {
+    "path": "content/002-result/019-direct_full_layout_checks.json",
+    "sha256": "01b74b6e6ba0e7641d6b09024a478aabce74f9f4311bb9cc81c25843685982de",
+    "kind": "value"
+  },
+  "new_convex_query_count": {
+    "kind": "inline",
+    "value": 4050
+  },
+  "maximum_convex_integer_bound": {
+    "kind": "inline",
+    "value": 876096006132672
+  },
+  "oracle_domain_sha256": {
+    "kind": "inline",
+    "value": "67a11b0d0a27861a1445ac451c659e6a5e6c8d3f1cca68a9709eaaa0995c2d5c"
+  },
+  "exact_zero_score_checks": {
+    "kind": "inline",
+    "value": [
+      {
+        "threshold": 3,
+        "score_sha256": "4d35288d67b31a4704497665412d93ccbc9e1f132ac43843648ef2ee726cdd40",
+        "score_abs_bound": 9000000063
+      },
+      {
+        "threshold": 4,
+        "score_sha256": "83ca766f5d949272e6101098841953ce5cdfa3e8147a39ba68f0234f9129c683",
+        "score_abs_bound": 8000000056
+      },
+      {
+        "threshold": 6,
+        "score_sha256": "70a90df23a45f33f002d8c2f59791629d44e95da5e1f1363703c952cd15d0d4a",
+        "score_abs_bound": 6000000042
+      },
+      {
+        "threshold": 7,
+        "score_sha256": "f8eecb36e0e4987691d3baa259def88b1ab47f59928282805af9f84a695fc79e",
+        "score_abs_bound": 5000000035
+      },
+      {
+        "threshold": 8,
+        "score_sha256": "d05f491a69431bb5dc6dcbc37f7096feb5ecbd7dbc4243d66e19c9e8d8f70732",
+        "score_abs_bound": 4000000028
+      }
+    ]
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One unchanged PG1 low probability and actual higher357 survivor law. All10 fixed original3/original9 roots, complete270-depth observations with exact000 and outside anchor, and complete first-moment tails. Arbitrary finite physical heights. Five simultaneous integer hinge improvements; no later-prime consumer or unrestricted covering conclusion."
+  }
+}
