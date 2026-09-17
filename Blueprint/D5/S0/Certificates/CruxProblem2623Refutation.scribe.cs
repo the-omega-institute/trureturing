@@ -51,7 +51,10 @@ internal sealed class CruxProblem2623RefutationDocument : IScribeDocumentDefinit
                         + "give S(x,1)=1+1+1+1=4, while S(x,2)=4/5+5/4+4/5+5/4="
                         + "41/10. Thus S(x,2) is strictly greater than S(x,1), at an "
                         + "interior index rather than an endpoint."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("crux-problem-2623-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SFormula()
     {

@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/CruxProblem2623Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/crux-problem-2623-refutation` (refuted) by `D5/S0/Certificates/CruxProblem2623Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crux-problem-2623-refutation","declaration_gid":"D5/S0/Certificates/CruxProblem2623Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Faruk Zejnulahi; Sefket Arslanagic (2001). *Problem 2623*. URL: <https://cms.math.ca/wp-content/uploads/crux-pdfs/CRUXv27n2.pdf>.
