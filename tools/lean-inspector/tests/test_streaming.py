@@ -40,7 +40,10 @@ class ManifestVersionTests(unittest.TestCase):
             manifest = manifest_fixture(root, 7)
             evidence = evidence_fixture(manifest)
             self.assertEqual(evidence['compatibility_version'], 7)
-            materials.validate_template_evidence(evidence, manifest)
+            try:
+                materials.validate_template_evidence(evidence, manifest)
+            except Exception as error:
+                self.fail('[FAIL] manifest_only_bump_accepts_seven: ' + str(error))
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
                 materials.validate_template_evidence(dict(evidence, compatibility_version=6), manifest)
 
@@ -57,7 +60,8 @@ class ManifestVersionTests(unittest.TestCase):
                     manifest.unlink()
                 else:
                     manifest.write_text(text)
-                with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion'):
+                with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion',
+                        msg='[FAIL] invalid_manifest_version_rejected'):
                     materials.validate_template_evidence(evidence, manifest)
 
     def test_compact_cli_uses_explicit_manifest(self):
@@ -369,7 +373,7 @@ class PublicationTests(unittest.TestCase):
                 source = directory / 'spool.json'
                 source.write_text(json.dumps(raw))
                 report = directory / 'report.json'
-                materials.compact(source, spool, report, manifest_fixture(root))
+                materials.compact(source, spool, report, manifest_fixture(directory))
                 helper = Path(publication.__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
@@ -378,7 +382,7 @@ class PublicationTests(unittest.TestCase):
                     input_sources={'X.lean': 'a'*64})}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
-                publication.publish(report, live, coordinates)
+                publication.publish(report, live, coordinates, manifest=manifest_fixture(directory))
                 before = {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES}
                 if damage in ['material', 'missing', 'duplicate', 'unreferenced']:
                     path = publication.member(report, '.materials.zip')
@@ -431,7 +435,7 @@ class PublicationTests(unittest.TestCase):
                     path.rename(regular)
                     path.symlink_to(regular.name)
                 with self.assertRaises((ValueError, TypeError)):
-                    publication.publish(report, live, coordinates, mode='cached')
+                    publication.publish(report, live, coordinates, mode='cached', manifest=manifest_fixture(directory))
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 
