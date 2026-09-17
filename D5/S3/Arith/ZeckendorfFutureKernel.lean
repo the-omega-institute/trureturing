@@ -191,20 +191,20 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
           (y + value (x+y) (y+(x+y)) (zeros (T-2))) = y
         rw [hvzero,hvzero]
         simp
-  let repeat : ℕ → List Bool → List Bool := fun n w => (List.replicate n w).flatten
+  let copies : ℕ → List Bool → List Bool := fun n w => (List.replicate n w).flatten
   have repeats : ∀ n : ℕ, ∀ i : Bool,
-      let w := repeat n (if i then pulse1 else pulse0)
+      let w := copies n (if i then pulse1 else pulse0)
       w.length = n*(2*T) ∧ (∀ b, legal b w) ∧
         (∀ x y : ZMod M, advance w.length (x,y) = (x,y)) ∧
         (∀ x y : ZMod M, value x y w = (n : ZMod M)*(if i then y else x)) := by
     intro n
     induction n with
-    | zero => intro i; simp [repeat,legal,value,advance]
+    | zero => intro i; simp [copies,legal,value,advance]
     | succ n ih =>
       intro i
       have hp := pulseFacts i
       have hi := ih i
-      simp only [repeat,List.replicate_succ,List.flatten_cons] at *
+      simp only [copies,List.replicate_succ,List.flatten_cons] at *
       refine ⟨by rw [List.length_append,hp.1,hi.1]; omega, ?_, ?_, ?_⟩
       · intro b
         exact (legal_append _ _ b).mpr ⟨hp.2.1 b, hi.2.1 _⟩
@@ -218,8 +218,8 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
   have program : ∀ A B : ZMod M, ∃ w : List Bool,
       (∀ b, legal b w) ∧ (∀ x y : ZMod M, value x y w = A*x+B*y) := by
     intro A B
-    let w0 := repeat A.val pulse0
-    let w1 := repeat B.val pulse1
+    let w0 := copies A.val pulse0
+    let w1 := copies B.val pulse1
     have h0 := repeats A.val false
     have h1 := repeats B.val true
     refine ⟨w0++w1, ?_, ?_⟩
