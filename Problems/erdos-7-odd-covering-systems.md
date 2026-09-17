@@ -30,51 +30,68 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-stronger-generic-profile-from-actual-pure-exclusions)
-now gives `Gamma13<=8416748733302130673/43949004608153173<191.511704`
-for every finite family supported on `{3,5,7,11,13}`, with all original
-heights, residues and test labels retained. It starts from the uniform
-complete actual 3/5/7 survivor law, applies pure-survivor kernels at
-thresholds 4 and 6 for 11 and 13, and conditions once. Twelve exhaustive
-cases retain the actual first-root exclusions and whether modulus9 is
-effective. They improve the bound on this same law from245.141218,
-with actual survival lower bound greater than0.441246. The seed passes
-the scalar17 positivity threshold256 and supplies a separate full-Haar17
-supported law with `Gamma17<1054.248`; this bound still does not continue
-through19. These are ordinary proofs with exact arithmetic, not an
-unrestricted-tail theorem or a literature-priority claim.
+An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#shared-actual-cell-hinge-bounds-for-the-uniform357-law)
+now gives `Gamma13<=6471426752685569/37850019688694<170.975518796`
+for every finite family supported on `{3,5,7,11,13}`, retaining all original
+heights, residues and test labels. It starts from the uniform complete
+actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
+for11 and13, and conditions once. The shared actual-cell hinge bounds
+(HC1)--(HC9) handle all1296 continuous-domain vertices and all12 original
+missing-class branches. They sharpen the preceding PR bounds on this same
+probability, with survival lower bound
+`18925009844347/38266567762500>0.4945572846`.
 
-A [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
-for the same arbitrary five-prime forbidden-family domain has an explicit
-height-uniform Haar density cap and fourth-moment bound. Its
-[finite-core approximation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-finite-core-approximation-of-the-actual-supported-law-through13)
-controls the complete `Gamma2` error by less than 1, 0.1 or 0.01 at
-uniform original-exponent cutoffs 20, 24 or 28, respectively. Every
-omitted forbidden class and test label is included in a convergent tail.
-This approximation concerns its specified full-Haar law; its numerical
-bounds are not combined with the different pure-survivor law above.
-The finite core maxima over arbitrary residue families have not been
-computed, and unrestricted Erdős #7 remains open.
+Its [complete supported13 profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-hinges-and-actual-continuation-from-supported-ap13)
+gives mean at most10.653915367 and an actual pure-base17/T8 continuation
+with `Gamma17<403.658092`. A second construction starts again from supported13,
+applies17/T8 and19/T8 without intermediate conditioning, then conditions
+once after19. It proves positive actual survival and
+`Gamma19<=14309324828593686784688579/6107986643845861414296<2342.723661`
+for arbitrary finite original families supported on
+`{3,5,7,11,13,17,19}`. This does not use the single17 construction's
+conditioned output. The full comparison tails are included. None of the
+510 checked integer schedules for the two stated SH27 upper functionals
+reaches the proposed `Gamma19<=484` intermediate target; this is a limit
+of those upper estimates, not an actual-family lower bound or a refutation
+of richer joint information. No literature-priority or Lean endpoint is claimed.
 
-For the new supported13 law, a [weighted forbidden-mask comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#weighted-forbidden-mask-tails-for-the-actual-ap46-restart)
-controls the subsequent pure-survivor17/8 and19/8 kernels. Retaining old
-cofactor exponents through20 and current forbidden depths through8 gives
-whole-cost error below0.294 at W=483, with all original tests still present.
-The stronger pure-root profile supplies this reduced allowance through
-(PR16); the earlier0.377 certificate remains a valid bound for the same law.
-It is sufficient to prove the corresponding reference joint bound with that
-margin; this reference bound remains unresolved. The comparison truncates
-only the two later forbidden masks, not the incoming supported13 law or
-the test inventory, and uses neither the PP6 full-Haar17 step nor the AO
-finite-core approximation.
+A [complete finite-core comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#finite-core-stability-for-the-actual-pure-base-ap-law)
+now applies to this very same AP(4,6) probability. Truncating original
+forbidden labels and test labels to a common exponent box gives a complete
+`Gamma2` error below1,0.1,0.01 at box sizes11,14,16. Every omitted label
+is paid in a full tail. At box20, followed by the17/19 forbidden-mask
+boxes20/current-depth8, the total W483 error is less than0.263,
+including the change of incoming law and all seven-prime test tails.
+Thus (APC9) is a fully finite sufficient joint criterion with margin0.263.
+Its maximum over arbitrary retained residue families has not been computed;
+the period and number of patterns are not asserted small, and later-prime
+continuation is still required. The earlier WT/PR mask-only comparisons
+remain valid but do not themselves approximate the incoming law or tests.
 
-An [actual-kernel counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-equality-in-the-killed-unit-floor-for-genuine-bb17-and-bb19)
-shows that the testwise killed-square floor cannot be uniformly increased:
-for separate genuine steps at17 and19 from a uniform actual357 law, the
-assigned bad mass is positive while a complete24-label test equals1 on
-all bad points with positive mass. The same examples retain a positive
-joint cap saving. They refute that proposed testwise improvement without
-claiming a current-square maximizer or a generic17/19 joint bound.
+The [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
+and its [AO finite-core comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-finite-core-approximation-of-the-actual-supported-law-through13)
+remain separate mathematical results. Their law is not substituted into
+the AP estimates. All of these arbitrary-height results have ordinary
+proofs with exact rational coefficient checks, not a complete Lean proof
+or an unrestricted Erdős7 resolution.
+
+The [killed-floor examples](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-equality-in-the-killed-unit-floor-for-genuine-bb17-and-bb19)
+show that a complete test can equal1 on all bad points of positive actual
+BB mass. The [full-height joint-zero examples](../docs/reports/erdos7-odd-covering/marked_head_profile.md#full-original-heights-can-make-both-sh26-joint-savings-vanish)
+strengthen this boundary: both the SH26 generic cap-covariance correction
+and killed excess vanish, despite positive charge and a nonconstant zero
+block, with every original test label retained. Actual pure-density saving
+is still positive and the tests are provably nonmaximizing. These examples
+do not exclude an improvement using actual pure geometry or maximizing-test
+constraints.
+
+The [fixed-depth root-overlap criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#rro53-and-the-current-prime-root-overlap-interface)
+(CR1) supplies an exact feasibility cut for finite-core overlap matrices:
+every nonisolated component is complete bipartite, and the number of edge
+components plus the left/right isolation indicators is at most the effective
+root count. Inactive original labels remain marked. This cross-side projection
+has a different capacity from RRO53's full unit-sum graph; neither graph
+classification supplies the missing same-law weighted bound by itself.
 
 The complete star head defined below **cannot be completed by any odd tail**
 whose primes exceed 73, at any positive head heights and without restrictions

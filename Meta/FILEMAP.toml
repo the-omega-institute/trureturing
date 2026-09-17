@@ -530,6 +530,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact rational certificate for actual-law bounds or a joint-savings counterexample.
+pattern = "docs/reports/erdos7-odd-covering/ap_core_stability_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Same-law arbitrary-residue hinge profile and supported13 seed below256.
 pattern = "docs/reports/erdos7-odd-covering/arbitrary_head_profile_certificate.json"
 kind = "data"
@@ -595,6 +604,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Six-row common-density certificate using the sharp two-prime input.
 pattern = "docs/reports/erdos7-odd-covering/common_density_head_coupled_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact rational certificate for actual-law bounds or a joint-savings counterexample.
+pattern = "docs/reports/erdos7-odd-covering/current_joint_zero_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1088,6 +1106,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact rational certificate for actual-law bounds or a joint-savings counterexample.
+pattern = "docs/reports/erdos7-odd-covering/shared_cell_hinges_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact prime sums and block budgets for star and three-prime head noncoverage.
 pattern = "docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json"
 kind = "data"
@@ -1099,6 +1126,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Exact tree potentials and a common layout mixture refuting the universal Gamma73 bound.
 pattern = "docs/reports/erdos7-odd-covering/star_survivor_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete same-law hinges and actual17/19 positive continuation.
+pattern = "docs/reports/erdos7-odd-covering/supported13_hinges_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1178,6 +1214,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact actual-law profile and complete-tail verification.
+pattern = "docs/reports/erdos7-odd-covering/verify_ap_core_stability.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Recomputes the arbitrary-head actual11/13 profile and complete multiplier tails.
 pattern = "docs/reports/erdos7-odd-covering/verify_arbitrary_head_profile.py"
 kind = "program"
@@ -1234,6 +1279,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the four-prime head using the shared-cofactor bound and exact continuation.
 pattern = "docs/reports/erdos7-odd-covering/verify_common_density_head_coupled.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact actual-law profile and complete-tail verification.
+pattern = "docs/reports/erdos7-odd-covering/verify_current_joint_zero.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -1700,6 +1754,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact actual-law profile and complete-tail verification.
+pattern = "docs/reports/erdos7-odd-covering/verify_shared_cell_hinges.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks exact sufficient parameters for smoothed finite-height Gamma lifting.
 pattern = "docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py"
 kind = "program"
@@ -1729,6 +1792,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the star-family pointwise obstruction for all survivor probability laws.
 pattern = "docs/reports/erdos7-odd-covering/verify_star_survivor_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete same-law hinges and actual17/19 positive continuation.
+pattern = "docs/reports/erdos7-odd-covering/verify_supported13_hinges.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

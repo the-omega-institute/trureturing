@@ -12419,3 +12419,964 @@ from the supported AP13 law. No Lean declaration is added.
 ```sh
 python3 -I -O /absolute/path/to/verify_killed_unit_floor.py
 ```
+
+## Shared actual-cell hinge bounds for the uniform357 law
+
+For the same uniform complete actual357 survivor law used in CM8, SD1--SD6,
+BS10 and PR, the following ordinary bounds hold for every complete original
+test L, every original choice of residues and every finite exponent height:
+
+|h|upper bound for E(L-h)+|decimal|
+|--|--|--|
+|3|1318076/584325|2.2557241261284386|
+|4|94745926/61354125|1.5442470412543574|
+|6|578163435166/676429228125|0.8547286414110404|
+
+All three improve PR11. The same-law square bound remains3849/106. These
+are maxima of a parameter relaxation, with no actual-family sharpness or
+Lean verification claim. No forbidden or test label is deleted or merged.
+
+### The actual five-cell input
+
+First suppose the actual modulus3 and9 exclusions are effective. Reuse
+exactly SD's five cells, with root map r(l)=(0,0,1,1,1), and parameters
+
+    d_l=z-alpha_r(l)-beta_l,
+    n_l=w_l d_l/9-t_l,   s=sum n_l,   x=sum w_l/9.
+
+The parameter domain is
+
+    w_l=1-D_l, D_l>=0, sum D_l<=1/2;
+    alpha>=0, sum alpha<=1/4;
+    beta>=0, sum beta<=1/4;
+    t>=0, sum t<=1/72;   3/4<=z<=1.
+
+Here n_l is the actual raw complete35 survivor mass of cell l. Its
+remaining5 availability before deeper mixed deletions is d_l. For any
+original pure3 test prefix at depth a>=3 lying in cell l, its raw
+complete35 mass is at most d_l*3^-a. Under the raw actual pure3 survivor
+measure eta, its mass is at most3^-a and cell masses are w_l/9. These are
+the established SD2 input bounds. Inactive root3 or cell9 test choices may
+be completed to a surviving root or cell, pointwise increasing the load.
+This does not change any actual forbidden residue.
+
+### Arbitrary monotone ternary cost
+
+For a fixed original root/cell test choice (r,j), set
+
+    b_l=1+1_(r(l)=r)+1_(l=j),
+    Delta_a(g,b)=max_(0<=i<=a-3)[g(b+i+1)-g(b+i)], a>=3,
+    P_g(r,j;m,v)=sum_l m_l g(b_l)
+                 +sum_(a>=3)3^-a max_l[v_l Delta_a(g,b_l)].
+
+For every nondecreasing g used below, this bounds its raw ternary-test
+integral with cell masses m and depth caps v_l*3^-a. Add the original
+depth-a indicator after depths3,...,a-1. On that indicator the preceding
+deep count is an integer between0 and a-3. Its cost increment is at most
+Delta_a(g,b_l). That cylinder has one fixed cell l, so integrating the
+increment gives the displayed maximum. Summing proves the bound without
+assuming the original prefixes are nested or coherently centered.
+
+Write
+
+    P^A_g(r,j)=P_g(r,j;n,d),
+    P^eta_g(r,j)=P_g(r,j;(w_l/9)_l,(1)_l),
+    M_eta=max_(r,j)P^eta_id(r,j).
+
+Constants are exact in this bound: adding a constant c to g adds c times
+the measure's mass. This fact is used in the complete multiplier tails.
+
+### A positive5 convex increment retaining the actual zero5 integral
+
+Put f_t(v)=(v-t)+. A complete35 test consists of its original zero5
+ternary block A0 and all its positive5 original blocks. The actual35
+survivor set S35 is contained in the product P3*P5 of actual pure survivors.
+Since every added label is nonnegative,
+
+    integral_S35 f_t(A)
+      <= integral_S35 f_t(A0)
+           +integral_(P3*P5)[f_t(A)-f_t(A0)].            (HC1)
+
+The first integral retains the actual35 cell masses. Only the nonnegative
+increment is enlarged to the pure product. For each fixed3 coordinate,
+comonotone comparison of the5-prefix indicators bounds the second
+integral by a nested family with conditional probabilities5^-e/z. All
+original3 roots in each5 block are unchanged. The resulting block count
+N has raw positive-tail probabilities
+
+    z Pr(N=n)=4/5^n, n>=2.
+
+The zero-tail event makes no increment. On an outcome with N=n, convex
+Jensen gives
+
+    f_t(A0+...+A_(n-1))-f_t(A0)
+      <= g_(t,n)(A0)+(1/n)sum_(e=1)^(n-1) f_t(n A_e),
+    g_(t,n)(v)=f_t(nv)/n-f_t(v).                        (HC2)
+
+The function g_(t,n) is nonnegative and nondecreasing: it is zero below
+t/n, then v-t/n through t, then the constant t(1-1/n). It need not be
+convex; the ternary bound above was explicitly proved for monotone costs.
+Independently maximizing each positive5 block is a valid upper bound,
+not a statement that different blocks have a common maximizing layout.
+
+Consequently the raw actual35 cost has the valid bound
+
+    F_t=max_(r,j){P^A_(f_t)(r,j)
+       +sum_(n>=2) (4/5^n)
+          [P^eta_(g_(t,n))(r,j)
+             +(n-1)/n max_(r',j')P^eta_(f_t(n .))(r',j')]}.   (HC3)
+
+The original zero5 root/cell stays outside its multiplier sum. This is
+the convex-cost extension of the same decomposition that yields ZG2 and
+SD2 for the square. No full-Haar old law is substituted.
+
+For the raw old first moment, the same argument specializes to
+
+    M=max_(r,j)P^A_id(r,j)+M_eta/4.                    (HC4)
+
+### Complete tails, with no cutoff of original heights
+
+Only thresholds t in {1,6/5,4/3,3/2,2,3,4,6} are needed. Let
+N_t=max(2,ceil(t)). For n>=N_t and v>=1,
+
+    f_t(nv)=nv-t,
+    g_(t,n)(v)=min(v,t)-t/n.
+
+Thus the entire n>=N_t contribution inside HC3 is exactly bounded by
+
+    5^(1-N_t)[P^eta_(min(.,t))(r,j)-t*x
+                       +(N_t-3/4) M_eta].             (HC5)
+
+This uses the full geometric mass and first moment, not a renormalized
+finite sample. For the ternary coefficient sums, all cost breakpoints
+are at most6. Delta_a is therefore constant for a>=10 in every cost
+appearing here. The program sums depths3 through10 and adds the exact
+remaining coefficient1/(2*3^10). Every original depth remains covered.
+When a finite physical height omits later labels, complete them with
+arbitrary fixed test residues before these nonnegative comparisons;
+the added indicators only increase the load and all displayed geometric
+sums remain valid upper bounds for the original finite test.
+
+### Pure7 comparison and actual mixed7 deletion
+
+Under the actual pure7 survivor probability, every positive depth-e
+test prefix has probability at most(6/5)7^-e. Comonotone comparison and
+Jensen therefore use the complete auxiliary count
+
+    Pr(N7=1)=29/35,
+    Pr(N7=n)=36/(5*7^n), n>=2.
+
+On the product of the actual uniform35 law and actual pure7 law, a
+complete full test satisfies, for integer h in {3,4,6},
+
+    s E f_h(L) <= B_h,
+    B_h=(29/35) F_h
+          +sum_(2<=n<h)36*n/(5*7^n) F_(h/n)
+          +(6/5)7^(1-h)[(h+1/6)M-h*s].               (HC6)
+
+The final term includes every N7>=h. Each coefficient F_(h/n) uses the
+same actual five-cell parameters. Its independent maxima only enlarge
+the expectation; they do not authorize adaptive original test residues.
+
+The raw nonunit35 cylinder cap from SD3 with constant unit weight is
+
+    T=max_r sum_(r(l)=r)n_l+max_l n_l+max_l d_l/18
+       +sum_l w_l/36+max_r sum_(r(l)=r)w_l/36
+       +max_l w_l/36+1/72.                            (HC7)
+
+Let B be the actual mixed7 forbidden union. The same-family bound is
+Pr(B)<=T/(5s), and the existing SD parameter domain guarantees s-T/5>0.
+The signed conditioning identity gives
+
+    s E[(f_h(L)-C)1_(B^c)]
+      <= B_h-C*s+(C/5)T.                              (HC8)
+
+Indeed L is at least the retained root/cell load b_l<=3. At the current
+thresholds f_h(b_l)=0, so the safe deletion weight is exactly C. The
+two-anchor signed rebate vanishes; no nonexistent hinge rebate is
+claimed. The actual deletion union and the same s,T remain in the
+denominator, and conditioning gives exactly the original uniform357 law.
+Therefore C(s-T/5)>=B_h suffices.
+
+### Continuous parameter domain and all missing-class branches
+
+For each fixed original root/cell and each selected branch of every
+maximum in HC3--HC7, each expression is affine separately in the five
+groups D,alpha,beta,t,z. Terms such as w_l d_l use different groups. All
+maxima in F,M,T have nonnegative coefficients; the subtracted tail terms
+are affine. Hence the target margin C(s-T/5)-B_h is concave separately
+in each group. Repeated convex interpolation proves its nonnegativity
+throughout the product domain if it is nonnegative at every product
+vertex. There are6*3*6*6*2=1296 vertices. The exact verifier checks every
+one for the three stated targets, with minimum margin zero in each case.
+The scaled denominator(5/6)(s-T/5) has minimum53/432>0.
+
+The five-cell domain covers all four effective9 branches, including
+missing modulus5 or7 and arbitrary higher pure exclusions. For the eight
+cases where modulus3 is absent or modulus9 absent/ineffective, reuse the
+established corresponding PR profile. The verifier reads and checks all
+twelve branches. Every fallback at3,4,6 lies below the stated respective
+generic bounds; no branch is omitted.
+
+### Reuse and verification scope
+
+The source inputs are CM2, SD1--SD6, ZG2 and PR1--PR11. The repository
+ArbitraryRootEventMoment module supplies the square-specialized root-tail
+estimate; the present monotone-cost increment is proved directly above.
+The repository ConditionalComparison/Supermodular supplies the finite
+comonotone comparison, and pinned Mathlib Analysis/Convex/Jensen supplies
+ConvexOn.map_sum_le. No exact current shared-cell hinge endpoint was found
+in those searched declarations or the ordinary report. The BBMST source
+arXiv1811.03547 was reachable (HTTP200); no literature-priority claim is
+made. This argument and its exact coefficient checks are ordinary
+mathematics, not an end-to-end Lean formalization.
+
+### Consumer on the same actual AP(4,6) law (HC9)
+
+Pointwise translation of the new third hinge, and convexity in the
+threshold, also give the same-law bounds
+
+    h1<=2+h3=2486726/584325,
+    h2<=1+h3=1902401/584325,
+    h5<=(h4+h6)/2=811368634658/676429228125.
+
+In particular E L<=1+h1=3071051/584325. These lower the complete-test
+first moment, not the distinct sum of individually maximized cylinder
+masses; that latter observation is left unchanged. Retain PR's original
+AP kernels and physical square324599/3816. Substitution of this stronger
+same-law profile into the established full-tail charge formula gives
+
+    b11 <= 47372963/184062375,
+    b13 <= 9492718910453/38266567762500,
+    rho13 >= 18925009844347/38266567762500
+           >0.4945572846,
+    Gamma13 <= 6471426752685569/37850019688694
+             <170.975518796,
+    supported_Haar_density <=1039695426000000/18925009844347.
+
+The raw physical Haar density remains1440/53. The supported Haar density
+is consequently at most(1440/53)/rho13. These are improved observations
+of the same full actual AP13 law. They do not themselves provide a17/19
+joint certificate or a later-prime continuation. The preceding PR
+certificate is kept intact and is a pinned input of this separate result.
+
+The [shared-cell verifier](verify_shared_cell_hinges.py) reconstructs the
+[exact certificate](shared_cell_hinges_certificate.json), including all1296
+parameter vertices, all12 original-class branches and the same-law AP13 consumer.
+Its preceding PR input is pinned by SHA-256; default mode compares every
+certificate field, while `--write` regenerates the certificate.
+
+## Complete hinges and actual continuation from supported AP13
+
+For the same actual AP(4,6) supported13 law, the shared-cell source
+profile gives a complete-load mean bound
+
+    M13<=2621130891614589/246025127976511
+         =10.653915366989825... .                        (SP1)
+
+Its complete hinge profile supplies two positive continuations:
+
+    Gamma17<=71411032739803777721269/176909701938094610544
+             =403.65809199538637...;
+    Gamma19<=14309324828593686784688579/6107986643845861414296
+             =2342.7236605062217... .                    (SP2)
+
+The first applies actual pure-base AP17/T8 and then conditions. The
+second starts from supported13, applies AP17/T8 and AP19/T8 physically,
+and conditions only after19. It does not use the first construction's
+conditioned17 output. Every original label, arbitrary residue and
+finite height is retained. These are ordinary mathematical results,
+not Lean declarations or an unrestricted Erdős7 solution.
+
+### Same actual source law and unbounded initial profile
+
+Let nu357 be uniform on the full actual357 survivor set. The unchanged
+square bound is G=3849/106. HC1--HC8 strengthen its complete-test hinges
+at3,4,6. The elementary inequalities
+
+    H357(1)<=2+H357(3),
+    H357(2)<=1+H357(3),
+    H357(5)<=[H357(4)+H357(6)]/2
+
+give the source complete-load mean M=1+H357(1)<=3071051/584325.
+M bounds the complete-load mean; it does not rename the earlier
+independently stated cylinder-sum bound. The shared-cell certificate
+retains the stronger1--12 profile, including PR's other knots and all
+original missing-class branches.
+
+PR7--PR11 supply arbitrary further thresholds. For each of its twelve
+branches let u3,u5,u7 be the reference pure masses and D the same-law
+Haar density bound. Let V be the product of three independent prefix
+counts with tails Pr(Kp>=e)=p^-e/u_p. Then
+
+    E_nu357(L-t)_+<=D*u3*u5*u7*E(V-t)_+.
+
+At an integer h, the exact identity
+
+    E(V-h)_+=E V-h+sum_(n<h)(h-n)Pr(V=n)
+
+uses the full geometric mean and finitely many lower product
+probabilities. Take the maximum over twelve branches, and the minimum
+with valid same-law moment bounds. Consecutive integer chords bound
+the actual convex hinge between integers; for t<=1 use H357(t)<=M-t.
+No distribution is truncated or renormalized.
+
+For positive integer-valued L and integer h>=1, the unit-floor bound
+
+    E(L-h)_+<=(G-1)h/(4h^2-1)                           (SP3)
+
+also holds. For L<=h it is immediate. For L>h the pointwise difference
+after clearing the denominator is `(L-2h)(h(L-2h)+1)>=0`, since L-2h
+is an integer. The same formula applies below with the supported13
+square bound. The numerical consumer only needs knots through17, so
+the verifier extends1--12 through17 by these full-tail formulas. The
+underlying profile construction applies at every real threshold.
+
+### Full physical11/13 comparison and one conditioning
+
+Apply actual pure-survivor AP11/T4 and AP13/T6 without intermediate
+conditioning. Their physical law mu13, conditioned once on all actual
+survivors after13, is precisely the same nu13 used in PR. The
+shared-cell certificate strengthens its observations to
+
+    rho13>=r=18925009844347/38266567762500>0,
+    Gamma13<=g=6471426752685569/37850019688694.           (SP4)
+
+AP1--AP5 compare full labelled tests to independent auxiliary factors
+N11,N13 with caps c11=5/3,c13=2 and
+
+    Pr(Np=1)=1-cp/p,
+    Pr(Np=v)=cp(p-1)p^-v, v>=2,
+    E Np=1+cp/(p-1).
+
+Put N=N11*N13; its complete mean is49/36. The prefix caps hold on
+every physical history, so for all t>=1,
+
+    E_mu13(L-t)_+<=U(t):=E_N[N H357(t/N)].              (SP5)
+
+These are comparison variables, not independent actual forbidden
+events. No adaptive original test residues are chosen. Since
+H357(t/n)=M-t/n for n>=t, the exact full-tail formula is
+
+    U(t)=sum_(n<t)Pr(N=n)*n*H357(t/n)
+             +M E[N;N>=t]-t Pr(N>=t).                  (SP6)
+
+Subtract finite parts from the full probability1 and mean49/36 to
+evaluate both tails. Every real t>=1 has a finite low-part evaluation
+with the complete remaining tail retained.
+
+For a>=t>=1, `(L-t)_+<=a-t+(L-a)_+`. Nonnegativity of the hinge and
+the proved positive lower normalizer r give
+
+    H13(t):=sup_L E_nu13(L-t)_+
+       <=inf_(a>=t)[a-t+U(a)/r],
+    sup_L E_nu13 L<=a+U(a)/r, a>=1.                    (SP7)
+
+The second bound at a=6 gives SP1. Use a=6 for retained integer t<=6,
+a=t for retained integers above6, and the minimum with SP3 at G=g.
+The program checks the selected witnesses among1,...,17; it does not
+claim a global minimum over every real a.
+
+|t|H13(t) upper bound|
+|---|---:|
+|1|9.653915366989825...|
+|2|8.653915366989825...|
+|4|6.653915366989826...|
+|6|4.653915366989826...|
+|8|3.296496079559025...|
+|12|1.845797624615341...|
+|17|1.0561291774771513...|
+
+In particular,
+
+    H13(6)<=1144980123755523/246025127976511,
+    H13(8)<=2583101470464529227/783590032605187535.       (SP8)
+
+The certificate retains all17 consumer knots and every auxiliary tail
+mass and mean. Chords give intermediate bounds; SP5--SP7 give a full
+function beyond the table. These are simultaneous observations of one
+actual law, without asserting that the upper envelope is itself a
+comparator probability distribution.
+
+### Single17 continuation
+
+From nu13 use actual pure-base AP17/T8, delta=7/15 and full-Haar cap2.
+Its assigned charge is at most H13(8)/8<1; the unconditioned square
+is at most(89/64)g. The ordinary AP bound gives
+
+    Gamma17<=1+[(89/64)g-1]/[1-H13(8)/8]
+             =403.70034396394783... .                   (SP9)
+
+Keeping SH26's natural-cap deficit improves this to SP2. The exact
+combined SH27 charge and energy cost is
+
+    h17,W(z)=W(z-8)_+/8
+               +(50/256)[16/(16-min(z,8))-2].
+
+Above its convexity threshold it is increasing and convex. Its
+integer values expand as a constant and nonnegative coefficients of
+L-1 and (L-j)_+. Substitute SP1 and SP8, then solve the affine SH28
+inequality in W. The verifier checks the coefficients and criterion
+at the resulting W. Among integer thresholds1,...,15, threshold8 gives
+the smallest bound from this functional. No other-kernel or
+real-threshold optimality is claimed. The resulting actual17 law has
+positive survival at arbitrary original17 heights and residues.
+
+### Two distinct17/19 continuations
+
+The consumer checks all255 pairs T17 in{1,...,15}, T19 in{1,...,17}
+in each of two constructions:
+
+* Restart: form nu13 as in SP4, then apply17 and19 physically and
+  condition only after19. Source observations are g, SP1 and SP7.
+* One final conditioning: start from uniform nu357, physically apply
+  11/T4,13/T6,17/T17,19/T19, and condition only after19. Use the
+  shared-cell357 profile with M,G; no supported13 observation or
+  normalizer is inserted midway.
+
+At p set d=p-1-T, cp=(p-1)/d, ap=(3p-1)/(p-1)^2, and let fp be the
+product of later square-growth factors. The existing SH27 cost is
+
+    hp,W(z)=W(z-T)_+/d
+              +fp*ap[(p-1)/(p-1-min(z,T))-cp].
+
+It is increasing and convex for W>=fp*ap*cp. Its complete integer
+expansion has nonnegative mean and hinge coefficients. Earlier
+auxiliary products use individual probabilities below T and the
+full tail mass and mean for every remaining affine cost, as in SP6.
+
+Write AW+B for the sum of certified costs. The SH28 residual is
+I+(A-1)W, with
+
+    I=G_source*product_p(1+ap*cp)-1+B.
+
+Every tested schedule has I>0. If A>=1 the functional has no finite
+solution. Otherwise set W=max(W_min,I/(1-A)) and check the full
+criterion there; SH28 gives positive actual survival and supported
+square at most1+W. The program separately verifies the complete
+integer identity and residual at W=483 in all510 schedules.
+
+There are72 finite sufficient bounds for the supported13 restart and
+59 for four physical steps. The best in each uses T17=T19=8:
+
+    Gamma19_restart<=14309324828593686784688579
+                         /6107986643845861414296
+                    =2342.7236605062217...,
+    Gamma19_once<=81121527504111209187751525
+                         /33163008211196445012696
+                    =2446.1450236207183... .            (SP10)
+
+Both yield actual positive survival for arbitrary finite original
+families supported on3,5,7,11,13,17,19. No literature-priority claim
+is made for this prime-support consequence. The first does not pass
+through the conditioned single17 law from SP2.
+
+|construction|minimum A among255|minimum residual at W=483|
+|---|---:|---:|
+|supported13 restart|0.8650551339908986...|242.74759569039884...|
+|four physical steps, one conditioning|0.9354945670061158...|121.19490304202002...|
+
+The least W483 defect in both is at T17=6,T19=8, distinct from the
+best finite-bound schedule. All residuals are positive; no stated
+integer schedule reaches484 through this upper functional. This does
+not lower-bound actual charges or moments, exclude noninteger
+schedules, refute the covering theorem, or exclude a certificate
+using actual joint bad-set/test observations.
+
+The implementation reuses generic `build_step` and `verify_at` from
+the pinned `verify_pg1_scalar_schedule.py`. Its PG1 data loader and
+13/T5 whole-N2 improvement are never called: the source is the
+shared-cell strengthening of actual AP13 and all13 steps have
+threshold6. A check rejects any different-law improvement in a row.
+Source certificates and reused code are SHA-256 pinned. Default mode
+validates the entire JSON; `--write` regenerates it. Duplicate keys
+and changed fractions are rejected under `python3 -I -O`.
+
+Published PR certificates remain unchanged. The finite computations
+verify displayed constants and schedule outcomes; arbitrary-height
+claims use the ordinary argument above.
+
+The [supported13 profile verifier](verify_supported13_hinges.py) checks the
+[exact profile and continuation certificate](supported13_hinges_certificate.json).
+It uses the generic coefficient routines of the preceding pinned program,
+without its PG1 law-specific data or threshold5 improvement.
+
+## Finite-core stability for the actual pure-base AP law
+
+For every finite original family on3,5,7,11,13, use its actual uniform357
+survivors, its actual pure-base AP11/4 and13/6 kernels, and one final
+conditioning. Let nu_F be this supported law. Let F_b retain exactly its
+original forbidden labels whose five exponents are at most b, with all
+residues unchanged. Construct nu_b by the identical rule applied to F_b.
+Both probabilities are lifted to one common finite physical period.
+
+There is an explicit uniform bound E_b, proved below, such that
+
+    |Gamma_full(nu_F)-Gamma_box_b(nu_b)| <= E_b.          (APC1)
+
+The exact certificate gives
+
+| b | E_b upper |
+|---|---:|
+|11|0.803401658|
+|14|0.042600351|
+|16|0.005840800|
+
+Every omitted original forbidden class and every omitted test pair enters
+a complete positive tail. This result concerns the pure-base AP(4,6)
+probability, not the earlier AO full-Haar probability. The core law need
+not avoid the omitted forbidden classes; the full nu_F does avoid them.
+The finite core maximum is not computed by this error estimate.
+
+The source constants are those of PR2 and the stronger shared-cell
+hinge continuation (HC9):
+
+    G0=3849/106, D0=432/53,
+    r=18925009844347/38266567762500,
+    G=6471426752685569/37850019688694,
+    D=1039695426000000/18925009844347.
+
+Every complete actual357 uniform law has square at most G0 and Haar
+density at most D0. Both actual AP13 probabilities have square at most G,
+Haar density at most D, and unconditioned final retained mass at least r.
+These bounds hold for every original finite height, including missing
+classes and uniform padding to a larger common physical period.
+
+### Weighted variation before the current-prime steps
+
+For two finite positive measures on one old period, put
+
+    Delta2(sigma,tau)=sup_A integral A^2 d|sigma-tau|,
+    Delta0(sigma,tau)=integral d|sigma-tau|,
+
+where A ranges over complete old divisor tests with independently chosen
+residues at each original label. Delta0 is L1, twice the probability
+convention for total variation when both measures are probabilities.
+
+Use the previously proved localized two-test/one-query factor
+
+    Phi_p(a)=(a+1)^2+2(a+1)/(p-1)+(p+1)/(p-1)^2,
+    Sigma_p=p(p^2+4p+1)/(p-1)^3.
+
+For a prime set S, define complete query-label tails
+
+    T0(S,b)=product_(p in S)p/(p-1)
+             -product_(p in S)sum_(a=0..b)p^-a,
+    T2(S,b)=product_(p in S)Sigma_p
+             -product_(p in S)sum_(a=0..b)p^-a Phi_p(a).
+
+The second sum truncates only the queried forbidden label. Both test
+axes remain complete, as in the cubic-tail result preceding PP1.
+
+Let S_full subset S_core be the actual357 survivor sets for F and F_b,
+with Haar masses s and s0. Put delta=s0-s. Their uniform laws mu,mu0
+satisfy the exact identity
+
+    integral A^2 d|mu-mu0|
+      = (delta/s0) E_mu A^2
+          +(1/s0) integral_(S_core\S_full) A^2 dHaar.
+
+The removed set is contained in the union of omitted original357
+cylinders. Their probability sum is bounded by T0, and their localized
+square sum by T2. Since s0>=1/D0, this proves simultaneously
+
+    Delta2(mu,mu0)<=e0w=D0[G0*T0(357,b)+T2(357,b)],
+    Delta0(mu,mu0)=2delta/s0<=e0m=2D0*T0(357,b).        (APC2)
+
+The square expectation in the first term is under the full actual
+uniform law. The second term is an unnormalized Haar integral over the
+removed set; no observation from a different supported law is inserted.
+
+### Physical and killed kernel comparisons at11 and13
+
+The weighted WT4 proof applies with any fixed admissible pure-base
+threshold T, rather than only T=8. Set
+
+    s_*=(p-2)/(p-1), delta=(T-1)/(p-2),
+    C=1/(1-delta), ell=max(C^2,C/delta).
+
+Use T=4 at11 and T=6 at13. The pairs (C/s_*) are respectively5/3 and2.
+All delta lie strictly between zero and one. The actual pure survivor
+bases have Haar mass at least s_*, in both full and core families.
+
+For a source probability bounded by D_* times Haar and with every
+complete square at most J_*, define for i=0,2
+
+    z0(p)=1,       u0(p)=p/(p-1),
+    z2(p)=Phi_p(0),u2(p)=Sigma_p,
+    t0(p,b)=sum_(a>b)p^-a,
+    t2(p,b)=sum_(a>b)p^-a Phi_p(a),
+    H_i(S,b)=product_(q in S)[u_i(q)-t_i(q,b)]
+                 -product_(q in S)z_i(q).
+
+Here H_i excludes the unit old cofactor exactly once. Put J_0=1,
+J_2=J_*. The error for the i-th weighted comparison is
+
+    e_p,i = D_* T_i(S,b)
+             [(C/s_*)(u_i(p)-z_i(p))
+                    +(ell/s_*^2)z_i(p)/(p-1)]
+           + D_* H_i(S,b)
+             [(C/s_*)t_i(p,b)+(ell/s_*^2)z_i(p)t0(p,b)]
+           + J_i[(C/s_*)t_i(p,b)
+                    +((ell+C)/s_*^2)z_i(p)t0(p,b)].    (APC3)
+
+The three terms respectively cover old cofactors outside the box at
+all positive current depths; nonunit old cofactors inside the box at
+current depth above b; and omitted pure current classes. These regions
+are disjoint and exhaust all omitted current forbidden labels.
+
+For i=2 this is exactly WT4's weighted proof with the stated thresholds.
+For i=0, repeat its pointwise physical or killed kernel comparison with
+weight1. A mixed query of old modulus d then has old mass at most D_*/d,
+and the current Haar query mass is p^-a; the two full test axes are absent.
+This replaces Phi by1, Sigma by p/(p-1), and J_* by1. The pure-base
+comparison still pays both the common-region coefficient variation and
+the changed region, hence the coefficient ell+C remains. L1 is not
+replaced by probability total variation in APC3.
+
+At11 use S={3,5,7},D_*=D0,J_*=G0. At13 use S={3,5,7,11},
+D_*=(5/3)D0,J_*=(23/15)G0. These are unconditioned physical11 bounds
+under either construction. Its killed measure is dominated by its
+physical measure, so the same direct error estimates apply to killed
+chains as well.
+
+For a common physical or killed kernel of mass at most1, WT5 gives
+Delta2 propagation factor1+c(Phi_p(0)-1); these are23/15 at11 and55/36
+at13. Delta0 contracts with factor1. Comparing the two kernels under the
+full old measure, then propagating the change of old measure through the
+same core kernel, yields for both physical and killed final measures
+
+    ew=(55/36)[(23/15)e0w+e11,2]+e13,2,
+    em=e0m+e11,0+e13,0.                                (APC4)
+
+The killed chain is mu K11^- K13^-; it retains exactly those points that
+avoid the old family and both actual current masks. No intermediate
+conditioning is introduced. The physical chain is normalized on every
+history, including histories previously marked bad.
+
+### Final normalization and the complete original test tail
+
+Let eta,eta0 be the two killed13 measures, with masses q,q0>=r. Their
+normalizations are nu_F and nu_b. The exact decomposition
+
+    nu_F-nu_b=(eta-eta0)/q + ((q0-q)/q)nu_b
+
+and |q-q0|<=em give, for every complete old test A,
+
+    Delta2(nu_F,nu_b)<=eNw=(ew+G*em)/r,
+    Delta0(nu_F,nu_b)<=eNm=2em/r.                      (APC5)
+
+The bound G is valid for nu_b because F_b is itself an arbitrary actual
+five-prime family using the identical construction. Thus the two terms
+in APC5 do not mix the AO and AP probabilities. The first inequality
+bounds integrals against absolute measure difference, not merely the
+difference between two separately maximizing tests.
+
+For any probability of Haar density at most D, the previously proved
+full original two-test tail is
+
+    tail_test(S,b,D)
+       =D{product_(p in S)p(p+1)/(p-1)^2
+                 -product_(p in S)[1+sum_(a=1..b)(2a+1)p^-a]}.
+
+It bounds E(L_full^2-L_box^2) for every complete layout. Applying it
+to nu_b and APC5 to the identical full layout gives APC1 with
+
+    E_b=eNw+tail_test({3,5,7,11,13},b,D).              (APC6)
+
+For the opposite direction, extend each box test to the complete
+original inventory. Its extra indicators are nonnegative, so APC5 alone
+bounds Gamma_box(nu_b)-Gamma_full(nu_F). No equality of maximizing
+layouts is assumed.
+
+All tests are lifted to the same period before comparison. A core
+kernel depends only on retained low coordinates, so the construction
+from F_b is a rational law on that finite core lifted by independent
+uniform higher digits. If an original height is below b, intersect the
+box with the physical inventory; uniform padding yields the same bounds.
+
+### A completely finite reference for the17/19 joint criterion
+
+Start with the full actual nu_F at13 and the two actual pure-base
+AP17/8,AP19/8 kernels, with no intermediate conditioning. First apply
+WT1--WT11 with the stronger same-law HC9 density and square bounds: keep old cofactor exponents at most20 and current
+forbidden depths at most8 in both future masks, including pure depth8.
+This costs the exact allowance
+
+    e_mask=0.26221638911048406... .
+
+At this intermediate stage the incoming probability and all tests
+remain full. Now replace only the incoming probability by the actual
+AP13 core law nu_20, holding the two reference kernels fixed.
+For a common two-kernel continuation, the weighted variation factor is
+
+    k17*k19=(89/64)(59/45)=5251/2880.
+
+Each assigned charge is the expectation, under the initial probability,
+of a fixed function with values in[0,1]. For the19 charge this function
+already integrates the normalized reference17 kernel. Two probabilities
+have difference of total mass zero, so each such expectation changes
+by at most half their L1 distance. The sum of the two charge changes
+is at most their L1 distance, not twice that distance. Thus changing
+the incoming law costs at most
+
+    e_incoming=(5251/2880)eNw_20+483eNm_20.             (APC7)
+
+Finally retain only test labels with all seven exponents at most20.
+The final reference physical density is at most(18/5)D. Its test-tail
+cost is
+
+    e_test=tail_test({3,5,7,11,13,17,19},20,(18/5)D)
+          =8.512798422966208e-06... .
+
+Every ordered test pair with an omitted label is included in this
+positive tail. The exact complete allowance is
+
+    e_mask+e_incoming+e_test
+        =0.2624239752577702... <263/1000.             (APC8)
+
+Consequently, it suffices to prove on this finite reference
+
+    E_finite[L_box^2-1]+483 B_finite<=483-263/1000       (APC9)
+
+for every complete box20 test and every retained original family
+pattern. The reference is fully specified: actual incoming AP13 core20
+law; actual future kernels with old-cofactor box20 and current/pure
+depth8; and test box20. All are computable on a common finite period
+dividing (3*5*7*11*13*17*19)^20. The surviving family pattern still
+records every retained original modulus and its original residue.
+
+If APC9 holds for a given retained pattern, APC8 gives a strict
+positive slack for the full functional E_actual(L^2-1)+483B_actual<483.
+As in WT10 this implies B_actual<1 and a supported complete-square
+bound484 after one final conditioning. No assumption of final survival
+was made to construct any of the physical kernels.
+
+APC9 has not been proved uniformly or evaluated over all finite
+patterns. The period and number of patterns are not claimed small.
+Further prime continuation is also still required for unrestricted
+Erdős7. The finite reduction is an ordinary mathematical result with
+an exact arithmetic certificate; it is not an end-to-end Lean theorem.
+
+The adjacent exact verifier reconstructs these bounds from the shared-cell
+hinge, pure-root and weighted-kernel certificates, each pinned by SHA-256.
+It checks every whole certificate field. The displayed decimals are for
+reading; all acceptance comparisons use rational arithmetic.
+
+The [AP-core verifier](verify_ap_core_stability.py) checks the
+[exact certificate](ap_core_stability_certificate.json). Its three source
+certificates are pinned by SHA-256. Default mode verifies; `--write` regenerates.
+
+## Full original heights can make both SH26 joint savings vanish
+
+At each of p17 and p19 there is a genuine pure-base BBMST step at threshold `T=8`, starting from a uniform complete actual357 survivor law, for which one complete original test has all of the following properties:
+
+* its zero-current-exponent old block is nonconstant;
+* all positive-current-exponent old layouts are distinct from each other and from the zero block;
+* the actual assigned bad mass is strictly positive;
+* the entire cap-covariance correction dropped by SH26 is zero;
+* the actual killed excess `integral_bad(L^2-1)` is zero.
+
+The construction retains all original test labels through its actual highest current exponent. The cap statement refers specifically to SH26's generic pure-density envelope. The actual pure density provides a separate strictly positive cap improvement, displayed below. The test is not a current-square maximizer; this example does not decide a tradeoff restricted to maximizing tests or their common dual mixtures.
+
+### Actual old source and current pure law
+
+Use the following parameters:
+
+| p | current height H | old Q | old source size | full original period |
+|---|---|---|---|---|
+|17|4|`945=3^3*5*7`|432|78927345|
+|19|8|`2835=3^4*5*7`|1296|48148401221235|
+
+For every original nonunit divisor d of Q, keep the forbidden class `0 mod d`. The complete actual old survivor set is `S=(Z/QZ)^*`; let nu be uniform on S. Set `x0=1`, `x1=1+Q/3`, so `x1=316` or946. Both points belong to S.
+
+The only current pure forbidden class is `0 mod p^H`. The actual pure base m is uniform on the `n=p^H-1` other current points; its Haar mass is `lambda=1-p^-H`. Set
+
+`delta=7/(p-2)`, `C=1/(1-delta)`.
+
+For these heights `M=delta*n` is an integer. Its H base-p digits, from the coefficient of `p^(H-1)` downward, are
+
+| p | M | base-p digits |
+|---|---|---|
+|17|38976|`(7,15,14,12)`|
+|19|6993231840|`(7,15,12,5,11,3,6,13)`|
+
+Write these digits as b1,...,bH. Decompose M into disjoint current prefix cylinders as follows. At depth1 use roots1,...,7. The remaining prefixes lie inside root8. Starting with prefix r=8, at depth e>=2 use the b_e children `r+j p^(e-1)`, `0<=j<b_e`, and then continue inside the unused child `r+b_e p^(e-1)`. A depth-e cylinder contains `p^(H-e)` current points. These cylinders are pairwise disjoint and their total size is exactly M. All avoid the excluded pure leaf0 and the clean root p-1.
+
+### Original mixed labels and the exact threshold row
+
+At depth1 assign roots1,...,7 respectively to old divisors
+
+`(3,5,7,9,15,21,35)`,
+
+with old residue1. All seven divide Q/3. At each depth e>=2, assign its b_e disjoint current prefixes to the first b_e nonunit divisors of Q in increasing order, also with old residue1. There are15 or19 available old nonunit labels, so every depth budget fits. Different current exponents remain different original modulus labels.
+
+Finally add the original modulus Qp with old residue x1 and current root9. Its old cofactor was not used among the seven depth1 classes. This extra current cylinder is disjoint from all preceding cylinders. Thus original moduli remain distinct, and every actual mixed current cylinder is globally disjoint from every other one, even when the old projections overlap.
+
+There are65 forbidden classes at17 and93 at19, including all original old classes and the one current pure class. The certificate gives every literal CRT modulus/residue pair. No original forbidden label is silently merged.
+
+For every old row x, the actual mixed fraction is therefore the exact positive sum
+
+`alpha(x)=n^-1 sum_(d,a,e,r) p^(H-e) 1_(x=a mod d)`.
+
+At x0 every original prefix in the M decomposition is active and the extra Qp class is inactive. Hence `alpha(x0)=M/n=delta` exactly.
+
+At x1 all seven original depth1 classes remain active. At a deeper exponent, only old cofactors having the maximum ternary exponent can cease to match; there are exactly four such possible old labels. Thus the total lost current mass is at most
+
+`4 sum_(e=2)^H p^(H-e) < 4 p^(H-1)/(p-1)`.
+
+The new root9 adds `p^(H-1)` current points. Since p-1>4, `alpha(x1)>delta`. The exact fractions are
+
+| p | alpha(x0) | alpha(x1) | beta(x1) | assigned mass b |
+|---|---|---|---|---|
+|17|`7/15`|`1067/2088`|`463/5568`|`463/2405376`|
+|19|`7/17`|`2612524913/5661187680`|`281447633/3330110400`|`281447633/4315823078400`|
+
+Here `beta=(alpha-delta)_+/(1-delta)`. In fact only x1 has positive beta: without the extra Qp cylinder every row's active subset has at most M points, and that extra class is active only at x1.
+
+Every actual bad set is contained in current roots1,...,9. In particular alpha<1 in every row. Use the genuine normalized BB density relative to m,
+
+`k_x=a(alpha) 1_(B_x^c)+[beta(alpha)/alpha] 1_(B_x)`,
+
+where `a(alpha)=1/(1-min(alpha,delta))` and the bad coefficient is zero at alpha=0. Its row mass is exactly1. Let P=nu k and let B be the actual mixed bad event. The old marginal remains nu and `P(B)=b>0`.
+
+### Complete independent old test blocks
+
+For the zero-current-exponent test block, use residue0 at every nonunit old divisor except Q, where the test residue is1. Its complete old load is
+
+`A0(x)=1+1_(x=x0)` on S.
+
+For each positive current exponent e, use old residue0 at every nonunit divisor except Q, where the residue is3e. Each of these residues is divisible by3, so every nonunit test in that block is inactive on S. Thus
+
+`Ae(x)=1` for every x in S and every e>=1.
+
+The layouts are nevertheless independent and distinct: their Q-label residues are `1,3,6,...,3H`. This is a concrete choice of different original layouts, not an assumption identifying the arbitrary blocks in SH26.
+
+At every positive current exponent e and every old test divisor d, choose current prefix `p-1 mod p^e`. This specifies one literal CRT test at every original divisor `dp^e`, `d|Q`, `0<=e<=H`. There are80 tests at17 and180 at19. The full test load is exactly
+
+`L(x,y)=A0(x)+sum_(e=1)^H 1_(y=p-1 mod p^e)`.
+
+All positive current test prefixes lie inside the clean root p-1, whereas every actual mixed bad prefix lies on roots1 through9. Consequently L=A0 on B. Since beta(x0)=0 and A0=1 away from x0,
+
+`integral_B(L^2-1)dP=E_nu[beta(A0^2-1)]=0`.
+
+The zero block is nonconstant, with
+
+`E_nu(A0-1)=1/432` at17 and `1/1296` at19.
+
+### The complete SH26 cap-covariance sum
+
+Use precisely SH26's generic envelope
+
+`c=(p-1)/(p-9)`,
+
+`c_actual(x)=(p-1)/[(p-2)(1-min(alpha(x),delta))]`.
+
+Its nonnegative discarded covariance correction, before any all-height enlargement, is
+
+`Z=sum_((e,f)!=(0,0), 0<=e,f<=H) p^-max(e,f)`
+`    * E_nu[(c-c_actual)(Ae Af-1)]`.
+
+If both exponents are positive, Ae Af-1=0. If exactly one exponent is zero, Ae Af-1 is the indicator of x0. At x0, alpha=delta and hence c_actual=c. Every ordered-pair summand is therefore zero, so Z=0 exactly. This uses every original current depth and every original old test label. It does not truncate either inventory or take a limiting probability.
+
+Combining the two results gives `Z=integral_B(L^2-1)dP=0` with positive b and nonconstant A0. A positive height-uniform lower bound on their sum cannot follow merely from these observations. In particular the discrete alpha gap for one current digit does not survive the full original current-height domain.
+
+### Two limits on the conclusion
+
+The actual pure mass lambda is much larger than SH26's generic lower bound `(p-2)/(p-1)`. Reading it gives the stronger actual full-Haar cap `C/lambda`, which remains strictly below c even at alpha=delta:
+
+| p | SH26 ceiling c | actual pure-density ceiling C/lambda | difference |
+|---|---|---|---|
+|17|2|`83521/44544`|`5567/44544`|
+|19|`9/5`|`16983563041/9990331200`|`999033119/9990331200`|
+
+This separate pure-density saving is positive. The simultaneous-zero result does not remove it and does not rule out a stronger tradeoff that retains actual pure geometry.
+
+The displayed full test is also not maximizing. Its original zero-layer modulus3 test is residue0, inactive on S. Changing that single test to residue1 adds the indicator of a set of old mass1/2. Since L>=1, its physical square rises by at least3/2. Thus no assertion about a common maximizing test or a dual mixture is supplied. Whether those extra optimizing constraints force a useful uniform saving remains unverified here.
+
+### Exact verification
+
+The adjacent verifier reconstructs every original forbidden and test class, checks all current-prefix intersections for disjointness, and computes every old row's exact mask count. This covers all current points by exact disjoint-cylinder cardinalities, including the entire period48148401221235 at19. It does not sample that period or normalize a truncated current law.
+
+It checks every row's genuine kernel normalization, all distinct old block layouts and their loads, the entire ordered-exponent covariance sum, positive charge, and exact killed excess. It also reconstructs the full physical and killed test squares using the exact clean-prefix first and second count sums. Default operation compares `certificate.json`; `--write` explicitly regenerates it. Run `python3 -I -O /tmp/erdos7-0916/current-joint-tradeoff/verify.py`. This is ordinary mathematics and exact finite verification, with no new Lean declaration or canonical status claim.
+
+The [joint-zero verifier](verify_current_joint_zero.py) reconstructs the
+[complete-label certificate](current_joint_zero_certificate.json). Default
+mode verifies every field; `--write` regenerates. It evaluates the whole
+current period by exact disjoint-prefix cardinalities, without sampling.
+
+## RRO53 and the current-prime root-overlap interface
+
+[RRO53.5](https://github.com/the-omega-institute/trureturing/blob/387d32951f23706f94532f9165699764966ea655/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L22220) classifies the
+complete graph of unit-pair sums, including pairs on either side of any
+chosen bipartition. The finite-core current-prime interface keeps only
+the overlap between forbidden roots and test roots. Its exact capacity
+is different.
+
+Let L and R be finite sets of distinct original labels at one fixed
+current-prime depth, and let Omega be the alphabet of effective roots,
+of size q. Given maps a:L->Omega and b:R->Omega, put an edge ij exactly
+when a(i)=b(j). Labels remain distinct even when their roots coincide.
+For a proposed bipartite graph G on these fixed sides, let c_+(G) count
+its components containing an edge; let i_L and i_R indicate whether it
+has an isolated vertex on the respective side. Then such root maps
+exist if and only if
+
+    every component containing an edge is complete bipartite
+        with the specified left and right sides, and
+    c_+(G)+i_L+i_R <= q.                              (CR1)
+
+Proof. Every edge equates its two root labels, so all vertices of a
+connected component containing an edge have the same root. Every
+cross-side pair in that component must therefore be an edge. Two such
+components cannot use the same root, since each contains both a left
+and a right vertex, which would create cross-component edges. An
+isolated vertex cannot use a root already used by any edge component.
+If isolated vertices occur on both sides, their two sets of used roots
+must be disjoint, or an edge would join an isolated left/right pair.
+This proves necessity. For sufficiency, give each edge component one
+distinct root; give all left isolated vertices one additional root if
+needed, and all right isolated vertices another distinct additional
+root if needed. This realizes exactly every edge and nonedge. Empty
+sides and empty graphs are covered by the same rule.
+
+At depth1, if the actual pure modulus-p forbidden root a0 exists, its
+entire root is absent from the pure base. Keep every original label in
+the inventory; mark labels with that root inactive, with zero current
+contribution. Apply CR1 only to the remaining effective left/right
+vertices, with q=p-1. The inactive labels are not ordinary isolated
+vertices and do not consume colors in CR1. If the pure modulus-p class
+is absent, the safe full alphabet has q=p. Thus the respective generic
+depth1 capacities are16 or17 at17 and18 or19 at19.
+
+For active depth1 roots with a0 removed, the signed embedding
+
+    u_i=a(i)-a0,  v_j=-(b(j)-a0)
+
+uses units and satisfies u_i+v_j=0 exactly on the cross edges. It does
+not specify the same-side pairs. Consequently RRO53's capacity
+(p-1)/2 for the complete unit-sum graph cannot be imposed on this
+projection. For example, take both sides to list every nonzero residue
+once. The cross graph is(p-1)K2 and is actually realized, although its
+number of edge components exceeds(p-1)/2.
+
+The shape condition in CR1 can equivalently be enforced by excluding
+induced bipartite P4s: three edges of a cross rectangle force its fourth
+edge, since three root equalities imply the fourth. Together with CR1's
+q-capacity this is an exact feasibility cut for an oracle that relaxes
+unknown same-depth root-overlap matrices. Direct enumeration of actual
+roots already satisfies these relations.
+
+The edges here record only current-root equality. Old-cofactor
+compatibility, activation, same-law mass and AP weights must remain
+separate data. Distinct original labels with equal current roots cannot
+be merged merely because CR1 puts them in one component. At a larger
+fixed depth the same lemma uses its actual effective residue alphabet.
+Across different depths, additional residue-prefix compatibility is
+required. Refining to a common depth turns a shallower original label
+into a union of leaves; selecting one leaf would change the event.
+
+This elementary in-text consequence of residue labeling provides
+finite-core feasibility pruning. It supplies no quantitative improvement
+of the current same-law square/charge bound by itself and adds no Lean
+declaration.
