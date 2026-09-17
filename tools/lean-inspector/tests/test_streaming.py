@@ -16,6 +16,110 @@ import publication
 import native
 
 
+def manifest_fixture(root, version=6):
+    path = root / 'lean-report-inputs.json'
+    if not path.exists():
+        paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+        path.write_text(json.dumps(dict(schema_version=1, report_semantic_version=version,
+            report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
+            producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+    return path
+
+
+def evidence_fixture(manifest):
+    return dict(schema_version=1,
+        compatibility_version=json.loads(manifest.read_text())['report_semantic_version'],
+        inventory=[], registered=[], records=[], inputs=[])
+
+
+class ManifestVersionTests(unittest.TestCase):
+    def test_manifest_only_bump_accepts_seven_and_rejects_six(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = manifest_fixture(root, 7)
+            evidence = evidence_fixture(manifest)
+            self.assertEqual(evidence['compatibility_version'], 7)
+            try:
+                materials.validate_template_evidence(evidence, manifest)
+            except Exception as error:
+                self.fail('[FAIL] manifest_only_bump_accepts_seven: ' + str(error))
+            with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
+                materials.validate_template_evidence(dict(evidence, compatibility_version=6), manifest)
+
+    def test_absent_evidence_version_uses_named_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            evidence = evidence_fixture(manifest)
+            del evidence['compatibility_version']
+            with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
+                    msg='[FAIL] absent_evidence_version_uses_named_diagnostic'):
+                materials.validate_template_evidence(evidence, manifest)
+
+    def test_malformed_evidence_version_uses_named_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            for version in [None, True, '7', 0, -1, 7.0, 7.5]:
+                with self.subTest(version=version):
+                    evidence = dict(evidence_fixture(manifest), compatibility_version=version)
+                    with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
+                            msg='[FAIL] malformed_evidence_version_uses_named_diagnostic'):
+                        materials.validate_template_evidence(evidence, manifest)
+
+    def test_unrelated_malformed_evidence_keeps_structural_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = manifest_fixture(Path(directory), 7)
+            valid = evidence_fixture(manifest)
+            missing_inventory = dict(valid)
+            del missing_inventory['inventory']
+            for evidence, diagnostic in [(None, 'has unexpected fields'), ([], 'has unexpected fields'),
+                    (missing_inventory, 'has unexpected fields'), (dict(valid, unknown=1), 'has unexpected fields'),
+                    (dict(valid, schema_version=True), 'is malformed'), (dict(valid, inventory=None), 'is malformed')]:
+                with self.subTest(evidence=evidence):
+                    with self.assertRaisesRegex(ValueError,
+                            '^Inspector declared-template evidence ' + diagnostic + '$'):
+                        materials.validate_template_evidence(evidence, manifest)
+
+    def test_missing_or_malformed_manifest_version_rejected(self):
+        for text in [None, '{}', '{', '[]', '{"report_semantic_version":null}',
+                     '{"report_semantic_version":"7"}', '{"report_semantic_version":true}',
+                     '{"report_semantic_version":0}', '{"report_semantic_version":-1}',
+                     '{"report_semantic_version":6.5}']:
+            with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                manifest = manifest_fixture(root)
+                evidence = evidence_fixture(manifest)
+                if text is None:
+                    manifest.unlink()
+                else:
+                    manifest.write_text(text)
+                with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion',
+                        msg='[FAIL] invalid_manifest_version_rejected'):
+                    materials.validate_template_evidence(evidence, manifest)
+
+    def test_compact_cli_uses_explicit_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = manifest_fixture(root, 7)
+            spool = root / 'spool'
+            spool.mkdir()
+            source, output = root / 'spool.json', root / 'report.json'
+            row = dict(module='X', source_path='X.lean', source_sha256='sha256:' + 'a'*64,
+                imports=[], declarations=[], information_templates=evidence_fixture(manifest))
+            source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
+            result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
+                str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
+            self.assertEqual(result.returncode, 0, '[FAIL] compact_explicit_manifest: ' + result.stderr.decode())
+            rows = publication.validate_rows(output, publication.member(output, '.materials.zip'), manifest=manifest)
+            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 7)
+            row['information_templates']['compatibility_version'] = 6
+            source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
+            result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
+                str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn(b'DTR-EvidenceVersion', result.stderr)
+
+
 class StreamingTests(unittest.TestCase):
     def test_chunked_spool_preserves_material_bytes(self):
         data = ('λ😀' * 40000).encode()
@@ -103,7 +207,7 @@ class StreamingTests(unittest.TestCase):
                 output = directory / 'report.json'
                 with patch.object(materials, 'material_identities', return_value=('sha256:' + 'b' * 64, 'sha256:' + 'c' * 64)):
                     with self.assertRaisesRegex(ValueError, 'reused|collision'):
-                        materials.compact(report, spool, output)
+                        materials.compact(report, spool, output, manifest_fixture(directory))
                 self.assertFalse(output.exists())
 
 
@@ -148,8 +252,7 @@ class PublicationTests(unittest.TestCase):
                 utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
                 rows[name] = [dict(module=name, source_path=source.name,
                     source_sha256='sha256:' + publication.digest(source),
-                    information_templates=dict(schema_version=1, compatibility_version=6,
-                        inventory=[], registered=[], records=[],
+                    information_templates=dict(evidence_fixture(manifest_fixture(root)),
                         inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
                 requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
             request, result = root / 'request.json', root / 'result.json'
@@ -169,14 +272,13 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'spool').mkdir()
-            evidence = dict(schema_version=1, compatibility_version=6,
-                inventory=[], registered=[], records=[], inputs=[])
+            evidence = evidence_fixture(manifest_fixture(root))
             raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
                 source_sha256='sha256:' + 'a'*64, imports=[], declarations=[], information_templates=evidence)])
             source, report = root / 'spool.json', root / 'report.json'
             source.write_text(json.dumps(raw))
-            materials.compact(source, root / 'spool', report)
-            rows = publication.validate_rows(report, publication.member(report, '.materials.zip'))
+            materials.compact(source, root / 'spool', report, manifest_fixture(root))
+            rows = publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
             self.assertEqual(rows[0]['information_templates'], evidence)
             for field, value in [('compatibility_version', 3), ('compatibility_version', 4),
                                  ('compatibility_version', 5), ('compatibility_version', 7),
@@ -185,7 +287,7 @@ class PublicationTests(unittest.TestCase):
                     rows[0]['information_templates'] = dict(evidence, **{field: value})
                     report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
                     with self.assertRaisesRegex(ValueError, 'declared-template evidence'):
-                        publication.validate_rows(report, publication.member(report, '.materials.zip'))
+                        publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
 
     def test_binding_source_revalidation_rejects_stale_and_missing_inputs(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -201,7 +303,7 @@ class PublicationTests(unittest.TestCase):
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
             utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
-            evidence = dict(schema_version=1, compatibility_version=6, inventory=[], registered=[], records=[],
+            evidence = dict(evidence_fixture(manifest_fixture(root)),
                 inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 information_templates=evidence)]
@@ -236,24 +338,24 @@ class PublicationTests(unittest.TestCase):
                     material_file='0.statement', name='x', name_key='ns(n0,1:x)')])])) )
             report = root / 'report.json'
             archive = publication.member(report, '.materials.zip')
-            materials.compact(source, spool, report)
+            materials.compact(source, spool, report, manifest_fixture(root))
             verified = {}
             with patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
-                rows = publication.validate_rows(report, archive, verified)
-                publication.validate_rows(report, archive, verified)
+                rows = publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
+                publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
                 self.assertEqual(identities.call_count, 1)
                 original = report.read_bytes()
                 rows[0]['declarations'][0]['statement_id'] = 'sha256:' + 'b'*64
                 report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
                 with self.assertRaisesRegex(ValueError, 'identity mismatch'):
-                    publication.validate_rows(report, archive, verified)
+                    publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
                 report.write_bytes(original)
                 with zipfile.ZipFile(archive) as reader:
                     name = reader.namelist()[0]
                 with zipfile.ZipFile(archive, 'w') as writer:
                     writer.writestr(name, b'corrupt actual bytes')
                 with self.assertRaisesRegex(ValueError, 'material address mismatch'):
-                    publication.validate_rows(report, archive, verified)
+                    publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
 
     def test_source_membership_and_claim_bindings_use_current_registered_sources(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -304,7 +406,7 @@ class PublicationTests(unittest.TestCase):
                 source = directory / 'spool.json'
                 source.write_text(json.dumps(raw))
                 report = directory / 'report.json'
-                materials.compact(source, spool, report)
+                materials.compact(source, spool, report, manifest_fixture(directory))
                 helper = Path(publication.__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
@@ -313,7 +415,7 @@ class PublicationTests(unittest.TestCase):
                     input_sources={'X.lean': 'a'*64})}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
-                publication.publish(report, live, coordinates)
+                publication.publish(report, live, coordinates, manifest=manifest_fixture(directory))
                 before = {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES}
                 if damage in ['material', 'missing', 'duplicate', 'unreferenced']:
                     path = publication.member(report, '.materials.zip')
@@ -366,7 +468,7 @@ class PublicationTests(unittest.TestCase):
                     path.rename(regular)
                     path.symlink_to(regular.name)
                 with self.assertRaises((ValueError, TypeError)):
-                    publication.publish(report, live, coordinates, mode='cached')
+                    publication.publish(report, live, coordinates, mode='cached', manifest=manifest_fixture(directory))
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 

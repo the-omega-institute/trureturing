@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b73366f4f4d080d8ef14582e736a57f3316efaab6443b984802eae6a90f1ad36
+  normalized_sha256: sha256:b73366f4f4d080d8ef14582e736a57f3316efaab6443b984802eae6a90f1ad36
+cas_ref: sha256:b73366f4f4d080d8ef14582e736a57f3316efaab6443b984802eae6a90f1ad36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “固定损失中的四次可见信号”在此 CAS 中仅为40a.3小节标题，字节中没有四次信号公式或非零断言；无待证内容，也没有以定义偷渡识别结论。
+    previous_atom_id: 899109755e2b744483d8d9d6323a427c5a90a99c8289310d01cc881c06eec78f
+    next_atom_id: 81a52413cf64d0d2b2ff681df1181b590435f10300ed2150b5a8c3f63d803343

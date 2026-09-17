@@ -1,0 +1,7 @@
+例如对足够光滑的矩阵轨道，乘积的 Taylor 公式为
+
+$$
+V(t+h)U(t+h)=VU+h(\dot VU+V\dot U)
++\frac{h^2}{2}(\ddot VU+2\dot V\dot U+V\ddot U)+O(h^3).
+$$
+

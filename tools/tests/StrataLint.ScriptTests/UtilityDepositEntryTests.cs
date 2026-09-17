@@ -14,6 +14,8 @@ public sealed class UtilityDepositEntryTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         var root = fixture.Root;
+        var manifest = Path.Combine(root, LeanReportRegistrationFixture.ManifestPath);
+        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
         var repository = TestRepositoryLayout.FindRoot();
         const string gid = "D5/S0/Carrier/Probe";
         var utility = refutation
@@ -45,7 +47,7 @@ public sealed class UtilityDepositEntryTests
             "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
         RequireSuccess(TestProcessRunner.Run("python3", [Path.Combine(repository, "tools/lean-inspector/materials.py"), "compact",
-            report + ".spool", report + ".materials", report], root,
+            report + ".spool", report + ".materials", report, manifest], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
 
         // Only surrounding build/emission steps are bounded doubles; the judged precheck is the real CLI.

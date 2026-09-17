@@ -219,8 +219,8 @@ private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new 
 /-- Reuse only the fixed worker process, never a file digest. Requests carry the
 caller's current directory because isolated source fixtures may change it. The
 mutex keeps each request/response together; any failure retires the stream. -/
-private def fileHashes (paths : Array String) : IO (Array String) := do
-  if paths.isEmpty then return #[]
+private def fileInputBatch (paths : Array String) : IO (Array String × Option Nat) := do
+  if paths.isEmpty then return (#[], none)
   let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths]
   hashWorker.atomically do
     try
@@ -230,24 +230,58 @@ private def fileHashes (paths : Array String) : IO (Array String) := do
           let child ← IO.Process.spawn {
             cmd := "python3", stdin := .piped, stdout := .piped, stderr := .null,
             args := #["-I", "-c",
-              "import hashlib,json,pathlib,sys\nfor line in sys.stdin.buffer:\n try:\n  root,paths=json.loads(line)\n  result=[hashlib.sha256((pathlib.Path(root)/p).read_bytes()).hexdigest() for p in paths]\n except Exception:\n  result=None\n print(json.dumps(result,separators=(',',':')),flush=True)"] }
+              "import hashlib,json,pathlib,sys\n" ++
+              "def unique(pairs):\n" ++
+              " result={}\n" ++
+              " for key,value in pairs:\n" ++
+              "  if key in result: raise ValueError('duplicate field')\n" ++
+              "  result[key]=value\n" ++
+              " return result\n" ++
+              "for line in sys.stdin.buffer:\n" ++
+              " p=None\n" ++
+              " try:\n" ++
+              "  root,paths=json.loads(line)\n" ++
+              "  hashes=[]; version=None\n" ++
+              "  for p in paths:\n" ++
+              "   data=(pathlib.Path(root)/p).read_bytes()\n" ++
+              "   hashes.append(hashlib.sha256(data).hexdigest())\n" ++
+              "   if p=='lean-report-inputs.json':\n" ++
+              "    version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_semantic_version']\n" ++
+              "    if type(version) is not int or version<=0: raise ValueError('version')\n" ++
+              "  result=[hashes,version]\n" ++
+              " except Exception:\n" ++
+              "  result='DTR-ManifestVersion' if p=='lean-report-inputs.json' else None\n" ++
+              " print(json.dumps(result,separators=(',',':')),flush=True)\n"] }
           set (some child)
           pure child
       child.stdin.putStr (request.compress ++ "\n")
       child.stdin.flush
-      let hashes : Array String ← IO.ofExcept <|
-        Json.parse (← child.stdout.getLine) >>= fromJson?
+      let response ← IO.ofExcept <| Json.parse (← child.stdout.getLine)
+      if response.getStr? == .ok "DTR-ManifestVersion" then
+        throw <| IO.userError "DTR-ManifestVersion: missing or malformed report_semantic_version"
+      let (hashes, version) : Array String × Option Nat ← IO.ofExcept <| fromJson? response
       unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
           hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
         throw <| IO.userError "incomplete_closure:E7.native_hash"
-      return hashes
-    catch _ =>
+      return (hashes, version)
+    catch error =>
       let child : Option HashWorker ← get
       set (none : Option HashWorker)
       if let some child := child then
         try child.kill catch _ => pure ()
         try discard <| child.wait catch _ => pure ()
+      if error.toString.contains "DTR-ManifestVersion" then throw error
       throw <| IO.userError "incomplete_closure:E7.native_hash"
+
+private def fileHashes (paths : Array String) : IO (Array String) := do
+  return (← fileInputBatch paths).1
+
+/-- The version and manifest digest come from the same captured policy bytes. -/
+def readVersionedSourceInputs (paths : Array String) : CoreM (Array SourceInput × Nat) := do
+  let (hashes, version) ← fileInputBatch paths
+  let some version := version
+    | throwError "DTR-ManifestVersion: missing report_semantic_version policy input"
+  return ((paths.zip hashes).map (fun (path, sha256) => { path, sha256 }), version)
 
 /-- Hash every supplied current file in order, including repeated paths. The
 fixed native worker avoids interpreting SHA-256 separately for every byte. -/
