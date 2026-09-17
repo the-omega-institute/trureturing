@@ -85,8 +85,15 @@ def prepare(root):
     inputs = selection.Selection(root)
     inputs.validate('lean-report')
     modules = inputs.modules()
-    result = subprocess.run(['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Cli/StrataLint.Cli.csproj'),
-        '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--', 'lean-utility-input'],
+    producer = os.environ.get('STRATALINT_LEAN_PRODUCER_DLL')
+    if producer:
+        if not Path(producer).is_absolute() or not Path(producer).is_file():
+            raise ValueError('candidate Lean producer must be an existing absolute path')
+        command = ['dotnet', producer]
+    else:
+        command = ['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'),
+            '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--']
+    result = subprocess.run([*command, 'lean-utility-input'],
         cwd=root, stdout=subprocess.PIPE, check=True)
     utilities = public.read_json(result.stdout)
     if not isinstance(utilities, list):
@@ -108,8 +115,8 @@ def prepare(root):
         write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
             'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
     write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
-    # Membership and public input coordinates affect aggregation only. Each
-    # module traces compatibility, config, source, compiler and utility inputs.
+    # Membership and full config identity affect aggregation only. Each module
+    # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
         'modules': sorted(modules),
         'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))

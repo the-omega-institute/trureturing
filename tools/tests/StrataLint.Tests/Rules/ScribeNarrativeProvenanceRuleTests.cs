@@ -485,7 +485,7 @@ public sealed class ScribeNarrativeProvenanceRuleTests
             var file = context.Current.Files[path];
             var current = RepositorySnapshot.Create(context.Current.Files.SetItem(path,
                 new RepositoryFile(path, file.RawBytes, baseline)));
-            context = RuleEvaluationContext.Create(current, context.Baseline, context.Policy,
+            context = DeltaRuleContext.Create(current, context.Baseline, context.Policy,
                 context.Lean, context.Changes, context.MetaEvaluation);
         }
         Assert.Single(Diagnostics(context));
@@ -539,7 +539,7 @@ public sealed class ScribeNarrativeProvenanceRuleTests
         return Diagnostics(fixture.BuildForRuleCompatibility(changes));
     }
 
-    private static ImmutableArray<RuleFinding> Diagnostics(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> Diagnostics(DeltaRuleContext context) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(32), context).Diagnostics
             .Select(d => new RuleFinding(d.Path, d.Message)).ToImmutableArray();
 

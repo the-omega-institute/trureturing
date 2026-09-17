@@ -69,15 +69,12 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
-/-- Trace semantic compatibility and registered content configuration.
-Producer compilation remains a separate native obligation. -/
+/-- Trace semantic compatibility after validating registered inputs.
+Raw configuration identity belongs to the aggregate; module exports carry
+Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
-  let config ← readJson (← (← fetch <| pkg.facet `reportInputs).await)
-  let configs ← strings config "configs"
-  let mut deps := Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
-  for path in configs do
-    deps := deps.mix (← inputBinFile (pkg.dir / path))
-  return deps
+  discard <| (← fetch <| pkg.facet `reportInputs).await
+  return Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
 
 /-- A completed native build, not yet accepted by the canonical validator.
 Only private jobs carry this value; it is never a public report facet. -/

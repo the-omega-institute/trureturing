@@ -9,6 +9,56 @@ public sealed class PrOpenScriptTests
     private const string DeadlineBehaviorTimeoutSeconds = "30";
 
     [Fact]
+    public void PrWatchConsumesNestedBranchProtectionNamesWithoutFlattening()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("push / engineering", "COMPLETED", "SUCCESS"),
+            Context("push / current", "SUCCESS"), Check("delta", "COMPLETED", "SUCCESS"),
+            Check("current", "COMPLETED", "FAILURE"))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=green\n", Text(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PrWatchKeepsNestedFailureEvenWhenDirectChecksPass()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("push / engineering", "COMPLETED", "FAILURE"),
+            Check("push / current", "IN_PROGRESS", null), Check("delta", "IN_PROGRESS", null),
+            Check("engineering", "COMPLETED", "SUCCESS"), Check("current", "COMPLETED", "SUCCESS"))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=red check=push / engineering state=FAILURE\n",
+            Text(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PrWatchWaitsForNestedChecksWhenOnlyDirectChecksExist()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("push / engineering", "push / current", "delta")));
+        fixture.SnapshotResponses(
+            Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
+                Check("current", "COMPLETED", "SUCCESS"), Check("delta", "COMPLETED", "SUCCESS"))),
+            Ok(Snapshot("OPEN", Check("push / engineering", "COMPLETED", "SUCCESS"),
+                Check("push / current", "COMPLETED", "FAILURE"), Check("delta", "COMPLETED", "SUCCESS"))));
+
+        Assert.Equal(1, fixture.RunWatch42().ExitCode);
+        Assert.Equal(2, fixture.Invocations.Count(IsSnapshot));
+
+        static bool IsSnapshot(string invocation) => invocation.StartsWith("pr view ", StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PrWatchRejectsMissingOrInvalidPullRequestNumber()
     {
         using var fixture = new PrScriptFixture();
