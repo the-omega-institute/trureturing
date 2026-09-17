@@ -438,9 +438,9 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 - **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。**`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
 - **实施分支**:在独立 worktree(第 6.1 条),新建分支的 creation grammar 由 `WorktreeCommand` 唯一执行,形如 `<creation-namespace>/<kind>/<任务码>`,其中当前 creation namespace 只取 `WorktreeCommand.CreationNamespace`;精确 kind 词表只在同一 C# 所有者中定义。新建分类与受管生命周期必须分离:前者约束新产出,后者继续识别 `WorktreeCommand.LifecycleNamespaces` 中每个 namespace 的任何非空子路径,避免 creation 词表变化缩窄清理作用域。historical `harness/*` 仅属 lifecycle ownership(可回收),不是可创建 alias;这是前向新建约束,不执行存量分支清理。
-- **合并门(纯机器)**:PR → dev 须过 **三 required check**:① engineering(build --warnaserror + `make -C tools test` 全量 + selftest 字节比对 + 能力链编译证明);② lean-inspect(post-merge Lean 报告内容寻址生产);③ admission(**候选自带判官**跑 `check --protected-base <dev-parent>`——base 只以受审 merge 对象第一父提交的 SHA 参与 git 对象级 diff,**不 checkout、不编译 base**;`pull_request` 的入口 workflow 文本来自受审 PR merge tree,候选 workflow 与候选代码一起执行,不由 protected-base SHA 单独选取;版本核对见第 8.12 条)。冻结面(Hearts / `Golden/Frozen/state/` 状态片与当前 report 的 pin 一致 / 冻结模块不可变)由 SL-008 机器判;check-time union 级错误由 PR merge-tree CI 检测,M1→M2 残余由 dev push CI 检测 + 清扫(第 7.8 条形态)。绿且显式选择 auto-merge=自动合(缺省不 arm);红=修根因不绕。`enforce_admins` 实测 false(见第 7.1 条无外部特权的保证边界)。
+- **合并门(纯机器)**:PR → dev 须过 **三 required check**:`push / engineering` 执行登记的工程检查与测试证据校验、selftest 和两类反证编译;`push / current` 执行 Lean/报告增量入口、Scribe、filemap 与当前树谓词;`delta` 由候选自带判官检查 `B=M^1→M`,只消费本轮公共证据、不重跑公共步骤。base 只作为固定对象数据,不 checkout、不编译执行 base 代码。PR workflow 的候选取源与只读权限按第 9.5 条,不提供 base 侧 workflow 文本保证。push 只有 engineering/current,无 delta。冻结面由 SL-008 机器判;合并并集由 PR merge-ref CI 检测,M1→M2 残余由 dev push 检测与第 7.14 条恢复处理。绿且显式选择 auto-merge 才自动合,缺省不 arm;红则修根因。required 名称与已部署版本的对应依第 8.12 条真实核验,文档不冒称远端已切换。
 - **溯源**(H9):PR 载必要来源与第 5.2 条产地三项,用于审计,非准入条件;转录/过程卷宗及其引用不留(第 2.10 条)。
-*成熟锚*:zero-trust(永不信任、始终验证)、OSS 的 required status checks 治理、能力安全模型(权威在门不在人)、配置为只读的 pull_request 信任拓扑。
+*成熟锚*:zero-trust(永不信任、始终验证)、OSS 的 required status checks 治理、能力安全模型(权威在门不在人)、只读候选 CI 与独立发布权限。
 〔守护:**硬**·三 required check + auto-merge 机器强制(enforce_admins 的 false 读数只属既有证据,不构成机器锁;见第 7.1 条无外部特权的保证边界);exit-3 脚手架有案在录;削弱门=元层自改,须付 τ=0 成本〕
 
 ### 7.5 base 判官永久禁令与 SL-030 边界
@@ -459,7 +459,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 7.7 strict 禁令与并集保证
 
 **strict 严禁开启(τ=0 owner 裁决)**:不得要求分支追平 base,一致性须用别法解决。2026-08-10 窗口 dev 约 16 提交/小时、CI 约 344s/轮,追平 2.15 次/PR、48% PR 至少追两次;禁令反驳须同口径读数,不以“更安全”重开。
-**一致性义务**是被验树即落地树。三处 CI checkout 取 native `github.sha`(PR 为 merge commit M,push 为提交 H),验 `merge(dev_tip,head)` 并集;base 从 M/H 的第一父 `HEAD^1` 取,delta=`HEAD^1..HEAD`(契约见 `ci.yml`、`GitRepositoryGateway.cs`)。这只把 head/merge 缺口缩为 check-time M1/land-time M2:检查后 dev 前进可能落 M2,不保证严格同树,也不许可 strict。
+**一致性义务**是被验树即落地树。PR 入口固定 native `github.sha=M`,全部检查检出同一 M,候选判官以第一父 `B=M^1` 为数据检查 delta。push 固定 `H=event.after`,仅规划读取完整 `event.before→H`,current 不读 base、不执行 delta;契约见第 9.5 条及 `ci-pr.yml`/`ci-push.yml`。PR 只把 head/merge 缺口缩为 check-time M1/land-time M2:检查后 dev 前进可能落 M2,不保证严格同树,也不许可 strict。
 **替代检测/缓解**:①准入容量只判本次碰过目录,阈值比全仓不变量留 1 格,使两个并发新增并集仍在界内。②全仓不变量留检测层,架构测试超限即红并裂桶(第 4.8 条)。③共享聚合物按第 4.5 条分片。④PR merge-tree CI 判 check-time union 错误,M1→M2 残余由 dev push CI 检测并快速勘正(第 7.8 条)。内容寻址的独立定理/前置、逐定理叙事及路径 GID 不因粗路径分类成为真交互;全仓目录计数/共享汇总才有聚合交互。
 提高并集保证只能走**批量>1 的合并执行者**,构建真正落地树并先验,且先实证 `merge_group` 事件实际 workflow 来源/修订。〔守护:**硬(裁决)+软(记录)**·禁令归 owner,读数限上述窗口〕
 
@@ -650,7 +650,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 **dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/accepted/**`;④`Meta/Digestion/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
 判据为红因层次:dev 三门因判官逻辑/自锁/workflow/准入面红,该 lane 自身未红且只在四面才可改投。Lean 编译、SL-008、coverage 等内容判词须自己修;不能只凭所改路径认定无因果关系。
 **步骤**:从当时 dev 建新日子命名分支,内容 PR base 改投它;若他人已建且当前绿,直接共用,不另建。dev 三门一恢复绿即整体 PR 回 dev,带其新增量复测三门,不得跨过下一次 harness 红。创建/红绿时间由 CI 可查;分支若跨第二红说明首次绿未及时合。合回即删除,下次取新日子重建,不复用陈旧支。
-改投不绕门:integration 三门照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试计划读取 BaseSnapshot、candidate 程序集及发现输入,并非只由 base 决定;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
+改投不绕门:integration 三门照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试计划由候选 FILEMAP、显式工程登记与完整路径范围确定,delta 另以 base 项目数据核对候选接受的执行证据;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
 〔守护:**全软+no consumer**·红因及 PR 引 dev 具名判词原文靠对手官核验;tools/.github 无字段消费者、正文可改,有无引用现役门同判,不称硬投影;缺引用仍无改投评审依据,不豁免任何检测〕
 
 ### 8.16 CI 与判官的显式白名单权威
@@ -691,6 +691,8 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 
 ### 9.5 head/base 与远端状态独立性
 
+- **PR 事件与权限。** 编译、测试和候选判官使用 `pull_request`,目标为 `dev` 与 `integration-**`,只申请 `contents: read`、`actions: read`,不传入额外 secrets,PR 缓存只读。入口一次解析并核对候选合并 M 及第一父 B,所有下游固定使用该身份;合并冲突无可检查的 M,不得冒领成功。`pull_request_target` 不作为候选 CI 入口;需要写权限的 PR 元数据自动化与候选执行分离,发布走独立的受信任入口。候选也能修改 workflow,不提供 base 侧 workflow 文本保证;残余由现有分区、保护面标注、评审与 dev push 检测接住,不重建 base 判官。
+
 - **语义检查与轻量规划分工。** CI 的语义 `current` 只检查已检出的最终候选树(push 为 `H`,PR 为 `M`);PR 的 `delta` 由 `M` 自带的候选判官以 `B=M^1` 为数据基线检查 `B→M`。`HEAD^1` 在此只表示 PR 合并提交的第一父,不能代替 push 的完整范围。
 - **push 规划绑定完整事件端点。** `P=event.before`、`H=event.after` 是固定输入 OID,须核对 `H=已检出的 HEAD`;`P` 只供规划读数据,不扩大 `current` 的语义输入。规划比较完整 `P→H` 端点树差异,覆盖多提交 push、删除和重命名两端,不得用 GitHub 路径过滤清单代替完整范围。`P` 不必为 `H` 的祖先,无 ancestry/strict 要求。harness 可在检查前取得明确钉住的缺失对象;普通范围的对象取得失败、范围无效或不完整须显式失败,不得当作空/无工作或退回全套检查。
 - **初始输入与无候选事件。** 新分支的 `P` 为全零 SHA 时,使用当前树完整的显式登记输入/资源覆盖;这是初始输入模式,不得伪造空 diff、猜 dev/默认分支基线或推断缺失登记。删除事件没有候选树,不能报告成功的 current-tree 校验。
@@ -698,7 +700,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 - **候选与引用白名单。** 所有检查只执行候选代码,其它修订仅按上述角色读数据;harness 在判词前取得候选树及固定对象不授权检查中查询 latest 分支状态。对真实仓求值只许上述输入,`origin/*`、`refs/remotes/*`、本地分支名、tag、`HEAD~n` 及其它任意修订均禁止,固定 OID 也不自动取得输入资格;测试自建的合成夹具仓内部不受此限。base 代码禁令、`strict=false`、既定 ScriptTests 排除、实际 selftest/proof 与程序行为测试义务及第 8.13 条 workflow 测试禁令不变。
 **越界反例**:读取 origin/dev 会使同一候选红绿随别人合并或本机 fetch 改变,可能合前绿、合后全仓自锁;PR merge-tree/strict 都补不上读第三棵树的错误。见此先查输入角色。
 **早反馈边界**:`RemoteStateIndependencePolicy` 仅余 C# 测试源形状扫描,workflow/shell 扫描已依第 8.13 条退役;它不证明无远端执行读取。已执行的绕过覆盖 C# helper 间接、反射、属性式 ProcessStartInfo、workflow executable/revision 变量、调仓内 shell、MSBuild Exec、`github.event.before`(#2166 的历史匹配不禁止本条固定事件规划)。未执行且不新增形状机器的假设包括 composite/JS action、source generator、P/Invoke、PowerShell/Python/Make、eval/bash -c、文件/环境读 revision。
-**剥夺名字不等于远端不可达**: native pull_request workflow 的每个 checkout 后仍移除 remote/refs/remotes、断言空并烟测 HEAD/HEAD^1;但紧跟步骤及其 12 条契约的 workflow 测试族 inactive,改坏不红,仅真跑/评审守。已测按名 origin/dev/refs/remotes 解析 exit=128;未消除①fetch-depth:0 下缓存全部分支对象,记下原始 OID 仍可 rev-parse/cat-file;②本地 donor 下显式 URL ls-remote 或 remote add+fetch exit=0。②在 CI 私有 HTTPS+persist-credentials:false 未测,本地不可外推。未收窄 fetch-depth:会影响 diff/changed-path/ingest 历史需求,且该 OID 逃逸案底为 0(第 7.10 条)。
+**剥夺名字不等于远端不可达**:CI 共用 checkout 入口移除 remote/refs/remotes 并核对候选身份;旧 workflow 还曾烟测 HEAD/HEAD^1,此烟测不适用于无父提交的 push;但紧跟步骤及其 12 条契约的 workflow 测试族 inactive,改坏不红,仅真跑/评审守。已测按名 origin/dev/refs/remotes 解析 exit=128;未消除①fetch-depth:0 下缓存全部分支对象,记下原始 OID 仍可 rev-parse/cat-file;②本地 donor 下显式 URL ls-remote 或 remote add+fetch exit=0。②在 CI 私有 HTTPS+persist-credentials:false 未测,本地不可外推。PR 固定 M 的检出只取深度 2,保留直接父 B/H 与完整 tree/blob,不下载无关分支历史;缺少 B/H 或规划所需对象即失败,不隐式联网补取。push 保留完整历史以取得固定 event.before→after 的多提交或非祖先端点。本收窄是传输优化,不是远端隔离保证;实际 workflow 仍须依第 8.12 条真跑验证。
 **写守护先列两维反例:谁可绕过、检查可否被跳过**,写不出不能称保证;是否还有维度不能由提出者自行宣布。`if:false` 使步骤不执行却可过形状断言,正是 workflow 测试退役的层级理由。〔守护:**早反馈+无机器钉**·按名解析失效的旧测试保证已退役,剥夺步骤仍执行但无钉;远端整体不可达本就不成立。仅余 C# 早反馈,合成夹具仓放行〕
 
 ### 9.6 测试时间、确定性与接线边界

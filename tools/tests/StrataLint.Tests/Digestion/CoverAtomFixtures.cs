@@ -191,6 +191,7 @@ internal static partial class CoverWorld
                 StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(),
             ["Meta/registry.yaml"] = registry,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
