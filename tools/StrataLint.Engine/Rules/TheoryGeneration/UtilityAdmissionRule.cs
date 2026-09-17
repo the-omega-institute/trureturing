@@ -91,14 +91,10 @@ internal static class UtilityAdmissionRule
     }
 
     private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>
-        context.Changes.Paths.Where(path =>
-            context.Current.Files.TryGetValue(path, out var current)
+        context.Changes.Paths.Where(path => context.Current.Files.ContainsKey(path)
             && (FrozenStatePath.IsUnderRoot(path.Value)
                 ? !context.Baseline.Files.ContainsKey(path)
-                : IsD5Lean(path.Value)
-                    && !IsBaselineFrozen(context, path)
-                    && (!context.Baseline.Files.TryGetValue(path, out var baseline)
-                        || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))));
+                : RepositoryRules.IsPresentByteChangedD5Module(context, path) && !IsBaselineFrozen(context, path)));
 
     private static bool IsBaselineFrozen(RuleEvaluationContext context, RepoPath path) =>
         IsD5Lean(path.Value)

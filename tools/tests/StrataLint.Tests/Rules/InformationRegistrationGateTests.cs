@@ -66,6 +66,18 @@ public sealed class InformationRegistrationGateTests
     }
 
     [Fact]
+    public void FirstPinDoesNotExpandEnrollmentToUnchangedSourceListedInDelta()
+    {
+        var fixture = Fixture(Ignored);
+        var pin = AddExistingFrozenState(fixture);
+        fixture.Baseline.Remove(pin);
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityRuleId,
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(pin, RawChangeKind.Added), (RuleFixture.RingPath, RawChangeKind.Modified)]))).Diagnostics;
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Message == Ignored);
+    }
+
+    [Fact]
     public void CompleteWitnessEvidencePasses()
     {
         var fixture = Fixture();
