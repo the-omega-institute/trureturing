@@ -107,7 +107,7 @@ theorem uniform_paired_decoder_iff (cLo cHi eta : ℝ)
   have variance (c s t : ℝ) : outputVariance c s t =
       1+s^2+2*c*s*t+2*t^2 := by
     simp [outputVariance, ray, covariance, Fin.sum_univ_succ] <;> ring
-  have rec (c g o s t : ℝ) : records c g o s t =
+  have record_formula (c g o s t : ℝ) : records c g o s t =
       ![o+g, o+g+g*s^2, o+g+2*g*t^2,
         o+g+g*s^2+2*c*g*s*t+2*g*t^2] := by
     ext k
@@ -116,7 +116,7 @@ theorem uniform_paired_decoder_iff (cLo cHi eta : ℝ)
   have read_mass (n : ℕ) (c : ℝ) (w : Fin n → ℝ)
       (left right : Fin n → Calibration) :
       pairDenominator (pairedMatrix c w left right) = 2*pairMass w left right := by
-    simp only [pairDenominator, pairedMatrix, pairMass, rec,
+    simp only [pairDenominator, pairedMatrix, pairMass, record_formula,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.cons_val_three]
     simp only [← Finset.sum_sub_distrib, ← Finset.sum_add_distrib,
@@ -128,7 +128,7 @@ theorem uniform_paired_decoder_iff (cLo cHi eta : ℝ)
       (left right : Fin n → Calibration) :
       pairNumerator (pairedMatrix c w left right) =
         2*c^2*(pairMass w left right-pairDefect w left right) := by
-    simp only [pairNumerator, pairedMatrix, pairMass, pairDefect, rec,
+    simp only [pairNumerator, pairedMatrix, pairMass, pairDefect, record_formula,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.cons_val_three]
     simp only [← Finset.sum_sub_distrib, ← Finset.sum_add_distrib,
@@ -244,8 +244,7 @@ theorem uniform_paired_decoder_iff (cLo cHi eta : ℝ)
       · intro r
         simp [wL, lL, rL, z, Positive, ha0]
       · norm_num [wL, Fin.sum_univ_succ]
-      · simp [pairDefect, pairMass, wL, lL, rL, z, Fin.sum_univ_succ]
-        <;> positivity
+      · simp [pairDefect, pairMass, wL, lL, rL, z, Fin.sum_univ_succ] <;> positivity
 
     have avg (k : Fin 4) :
         (records cHi 1 0 (1-d) (1+d) k +
@@ -253,8 +252,8 @@ theorem uniform_paired_decoder_iff (cLo cHi eta : ℝ)
       have he : (records cHi 1 0 (1-d) (1+d) k +
           records cHi 1 0 (1+d) (1-d) k)/2 =
           ![1, 2+d^2, 3+2*d^2, 4+3*d^2+2*cHi*(1-d^2)] k := by
-        fin_cases k <;> simp [rec] <;> ring
-      rw [he, hd2, rec]
+        fin_cases k <;> simp [record_formula] <;> ring
+      rw [he, hd2, record_formula]
       fin_cases k <;> norm_num <;> ring_nf <;> simp only [ha2] <;>
         nlinarith [hbridge]
     have hcollision : pairedMatrix cHi wH lH rH = pairedMatrix cLo wL lL rL := by
