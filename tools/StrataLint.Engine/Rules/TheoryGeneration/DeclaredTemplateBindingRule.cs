@@ -53,7 +53,7 @@ internal static class DeclaredTemplateBindingRule
                     });
                 }
             }
-            catch (Exception error) when (error is FormatException or IOException or InvalidOperationException)
+            catch (Exception error) when (error is FormatException or IOException or InvalidOperationException or ArgumentException)
             {
                 findings.Add(new(path.Value, "DTR-Evidence " + error.Message, AdmissionEffect.Block));
             }
