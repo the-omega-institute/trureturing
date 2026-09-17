@@ -1,0 +1,62 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "ordinary exact-arithmetic hinge bounds for the same actual clipped survivor law; full original 357 part divides 315; arbitrary finite 11/13 heights; no Lean or tail conclusion"
+  },
+  "fixed_count_joint_costs": {
+    "path": "content/034-fixed_count_hinge_refinement/001-fixed_count_joint_costs.json",
+    "sha256": "83aa64e6208217fd55fa4f8d4425dac16457fc856bf4f5d9592a037f96e58a93",
+    "kind": "value"
+  },
+  "shared_branches_verified": {
+    "kind": "inline",
+    "value": 144
+  },
+  "branches": {
+    "path": "content/034-fixed_count_hinge_refinement/003-branches.json",
+    "sha256": "bd99a59f8df75f36a63b98f29fa809fbf9a5ad6969eb4de27af6a5cf572503c3",
+    "kind": "array"
+  },
+  "improved_branches": {
+    "kind": "inline",
+    "value": [
+      {
+        "shape": "root1_same_other_column",
+        "survivors": 80
+      },
+      {
+        "shape": "root1_same_other_column",
+        "survivors": 81
+      },
+      {
+        "shape": "root1_same_other_column",
+        "survivors": 82
+      }
+    ]
+  },
+  "universal_full_hinge6_upper": {
+    "kind": "inline",
+    "value": "26114497/32685768"
+  },
+  "gap_below_four_fifths": {
+    "kind": "inline",
+    "value": "170587/163428840"
+  },
+  "full_hinge6_maximizing_branches": {
+    "kind": "inline",
+    "value": [
+      {
+        "shape": "root1_same_other_column",
+        "survivors": 79
+      }
+    ]
+  },
+  "prime17_threshold6_charge_upper": {
+    "kind": "inline",
+    "value": "26114497/326857680"
+  },
+  "interpolation": {
+    "kind": "inline",
+    "value": "replace the threshold-six knot in the rectangle profile by this upper bound; adjacent-knot interpolation is valid for the convex actual hinge, without asserting a probability comparator"
+  }
+}

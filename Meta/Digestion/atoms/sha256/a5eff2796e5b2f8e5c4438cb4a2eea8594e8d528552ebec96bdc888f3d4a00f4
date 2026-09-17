@@ -1,0 +1,6 @@
+**Proof.** Taking logarithms in Theorem 36.12 proves the first assertion with constants depending only on $\varepsilon$. The established formula from Theorem 20.9,
+$$
+G_L=\frac{\phi^{L+2}-(-\phi^{-1})^{L+2}}{\sqrt5},
+$$
+then proves both limits for fixed $p$.
+

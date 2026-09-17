@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:11693e3e0060a43f7b20da0480cd78875d000ed5186bef68d760c05480e74a38
+  normalized_sha256: sha256:11693e3e0060a43f7b20da0480cd78875d000ed5186bef68d760c05480e74a38
+cas_ref: sha256:11693e3e0060a43f7b20da0480cd78875d000ed5186bef68d760c05480e74a38
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句引用已经逐项指定的求逆定义，指明前缀分支也必须有定义，不提出另一个命题，无待证明义务。
+    previous_atom_id: 27159a6297bf00c615a518cf62ce1534acc7c8bf6e3c5e756656fc149bd489df
+    next_atom_id: 9886bcde3caa0558107034e009a58e533f208b59d814c9b525538ce707b72937

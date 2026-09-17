@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec4ec4e8dc6ef642b8a05461d5a56d4c3b0277daf8ed280babe20deba1e46787
+  normalized_sha256: sha256:ec4ec4e8dc6ef642b8a05461d5a56d4c3b0277daf8ed280babe20deba1e46787
+cas_ref: sha256:ec4ec4e8dc6ef642b8a05461d5a56d4c3b0277daf8ed280babe20deba1e46787
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 按 EuclideanSpace.inner_eq_star_dotProduct 展开复内积，记录乘子逐项就是反向指标的 Gram 元，Matrix.transpose_apply 给出转置关系；仓内无冻结 GID，既有 recordGram 是定义不能充作覆盖声明。
+    previous_atom_id: f94e38e04868d6a4e98f9fa8f5850983939679c7931f08049589204ff0ffebda
+    next_atom_id: 1aabccf8b2c96fc2a33f64a3ab71599bb6614e335a4bab3913156eb002bb7807

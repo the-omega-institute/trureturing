@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:24be67a1486947881c73fe7f584dc3da812a92300c3765c34dc33d74459b7527
+  normalized_sha256: sha256:24be67a1486947881c73fe7f584dc3da812a92300c3765c34dc33d74459b7527
+cas_ref: sha256:24be67a1486947881c73fe7f584dc3da812a92300c3765c34dc33d74459b7527
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这一叶以“固定空间区域作为操作的名字，不因当前输入改规则”限定符号参数，再用“定义”引出三个签名的集合。这里只命名允许的操作与上下文范围，不断言观察核或充分性，定义没有夹带命题；单点保核断言已拆到下一叶。
+    previous_atom_id: d8381360f74aa81b82d8966de915dda5b99eb807d10f695abcfdd0927be173f8
+    next_atom_id: 062b09edd6e79f25bfb05836a76626243294905e81c8a841c1440638d7602bf2

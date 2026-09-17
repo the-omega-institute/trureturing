@@ -1,0 +1,6 @@
+**theorem 37.2 (Oriented lift limits and the actual finite branch history).** For $s\in\Sigma$ and $0<\varepsilon<1/2$, put
+$$
+I_s(\theta,\varepsilon)=\{\theta+[st]:0<t<\varepsilon\}.
+$$
+The notation $\theta_i\to_s\theta$ means that $\theta_i\to\theta$ and, eventually, $\theta_i\ne\theta$ approaches through the side $s$.
+

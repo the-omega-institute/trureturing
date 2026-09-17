@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:340da7f2921e22f58133139dd2fd2b1e35d659907af8a0e54bb43c647bd8ec65
+  normalized_sha256: sha256:340da7f2921e22f58133139dd2fd2b1e35d659907af8a0e54bb43c647bd8ec65
+cas_ref: sha256:340da7f2921e22f58133139dd2fd2b1e35d659907af8a0e54bb43c647bd8ec65
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “定理40a.2的简单正谱、非共振、连通性和非零检测条件均为适用域的一部分”是定理使用范围说明，“有限维有理校准只证明第40a.8节所列实例与非空性”限定例子的证据作用；未借定义添加新的全称结论，本叶无需另立证明。
+    previous_atom_id: 31665a88c0d2633586b0ad943d8a7831dc97923a335ebf1cd424a82070887d1a
+    next_atom_id: b87b7114cacf636ca657148f4a671c05be1335d9bb15fccd92c6b00b22e2c5d8

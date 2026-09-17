@@ -1,0 +1,11 @@
+## RS.3 完全重谱：第一个读数恢复和，第二个读数恢复交换子
+
+令 W₀=σI、σ>0，S=A+B、H=A-B，
+
+$$\alpha=1+h_0^2\sigma^2,\qquad\delta=1-h_0^2\sigma^2.$$
+
+直接由 RS.1 得
+
+$$W_1=\sigma(\alpha I-h_0S),\quad
+S_1=\alpha S-4h_0\sigma^2 I,\quad H_1=\delta H.$$
+

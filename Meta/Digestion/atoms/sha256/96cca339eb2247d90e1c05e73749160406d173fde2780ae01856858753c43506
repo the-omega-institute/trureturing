@@ -1,0 +1,7 @@
+若 $\beta<\varepsilon_*$，则有与 $w,u$ 无关的有限充分预热步数：当 $A_0\le\varepsilon_*$ 时取 $n_*=0$；当 $A_0>\varepsilon_*$ 时可取
+$$
+n_*=
+\left\lceil\frac{\log((A_0-\beta)/(\varepsilon_*-\beta))}{\log(1/\eta)}\right\rceil.
+$$
+于是对全部 $n\ge n_*$ 和全部上述 $w,u$，下一报告误差至多 $\varepsilon_*$。这里给出充分步数，不声称最小。
+

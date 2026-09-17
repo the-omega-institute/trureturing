@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dad484d609a5ff0609a0d747d6f0c06569aebdbd48a73a11a131eebf05141b79
+  normalized_sha256: sha256:dad484d609a5ff0609a0d747d6f0c06569aebdbd48a73a11a131eebf05141b79
+cas_ref: sha256:dad484d609a5ff0609a0d747d6f0c06569aebdbd48a73a11a131eebf05141b79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “完整相位、计划、提取、数值精度、查询和解码费用”须“分别计量”是资源接口约定；不宣称这些费用有限、常数或最优，故无可证明的数值命题。
+    previous_atom_id: 8e426ccc7196c92613bf40a3bd2c9966a1fdde77fc5e353a3ce085fd95b79935
+    next_atom_id: 8670027351fb92bb1c5bed578284d3c78aa437e7621f671af29a1d586f200651

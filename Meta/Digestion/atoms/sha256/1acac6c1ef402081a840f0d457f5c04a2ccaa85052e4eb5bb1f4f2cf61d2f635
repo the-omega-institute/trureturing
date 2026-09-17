@@ -1,0 +1,9 @@
+**定理 46.18（不存在有效、健全且完备的有限不可解证书族）。** 不存在二元关系 $V(\sigma,c)$，其中 $c$ 为有限二进制串，$V$ 递归可枚举，并同时满足
+$$
+V(\sigma,c)\Longrightarrow S_\sigma=\varnothing,
+$$
+$$
+S_\sigma=\varnothing\Longrightarrow\exists c\ V(\sigma,c).
+$$
+因此使用任何可判定检查器的有限证书方案也不能对所有自然不可解系统既健全又完备。这是经典正反半判定并行论证的后果；相关原始论证见 [Davis，第 263–264 页、定理 7.7 后的双枚举论证](https://www.math.umd.edu/~laskow/Pubs/713/Diophantine.pdf#page=32)。
+

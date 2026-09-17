@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43a5174f88537e8cf41f0680d709f59de920cf3375f3a03a787c90d4fce12bd5
+  normalized_sha256: sha256:43a5174f88537e8cf41f0680d709f59de920cf3375f3a03a787c90d4fce12bd5
+cas_ref: sha256:43a5174f88537e8cf41f0680d709f59de920cf3375f3a03a787c90d4fce12bd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子指出联合域非空是模型的显式前提，没有主张任意附加联合约束都相容。
+    previous_atom_id: 042edd95a2f593cad0cf9c10ca3fa779c8e37796acb35bd9354f5b38f086715d
+    next_atom_id: 0d9aa0c249aad776ba19107ca83113672773e1f45e847f5fe0eb43d88f9cda20

@@ -1,0 +1,2 @@
+形式化定理为 `future_statistics_iff_annihilates_infinite_system`。它把“历史被丢掉”精确改写为：历史差异是否落入全部未来读数的正交核。这个核依赖初始 effect 家族和 channel 对偶，不能被称为绝对不可观测部分。
+

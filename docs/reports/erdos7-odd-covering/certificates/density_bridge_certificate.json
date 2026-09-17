@@ -1,0 +1,308 @@
+{
+  "schema": "erdos7-dv-actual-density-bridge-v1",
+  "scope": "original357 part divides315; actual AP11/T4 AP13/T6 source; arbitrary original11/13/17/19 cofactors and finite heights; same actual killed17/T8 killed19/T8 kernels; ordinary proof plus rational arithmetic, not Lean or unrestricted continuation",
+  "verification_boundary": "consumer checks source hashes and rational consequences; upstream DV geometry and ordinary universal measure proof remain separate inputs",
+  "source_sha256": "809cb45859825890c3f90b1f6e4821086ffcc9f01e91e0ea08e56a10e44a90ac",
+  "upstream_sections_sha256": "43ee37b084b09a9574b5e53a2ae5c0d79180202c453ce991e3838c5457662c13",
+  "inputs": {
+    "G": "591122424341/16497075000",
+    "M": "1175795/219961",
+    "ell": "108683/204000",
+    "hinges": {
+      "4": "1896712717819/1358537500000",
+      "5": "5263525792649/4891475000000",
+      "6": "306627/391318",
+      "7": "306152576027/489147500000",
+      "8": "2291713236139/4843600000000",
+      "9": "1964369484727/4843600000000",
+      "10": "169349448989/489147500000",
+      "11": "21945226346/76429296875",
+      "12": "111549448277/489147500000"
+    }
+  },
+  "reference_Haar_density_upper": "3003/592",
+  "density_domination_D": "38288250/4021271",
+  "physical17_square_factor": "89/64",
+  "charges": {
+    "17": {
+      "delta": "7/15",
+      "pure_mass_lower": "15/16",
+      "physical_Haar_cap": "2",
+      "input_square_upper": "591122424341/16497075000",
+      "charge_upper": "574625349341/3695344800000"
+    },
+    "19": {
+      "delta": "7/17",
+      "pure_mass_lower": "17/18",
+      "physical_Haar_cap": "9/5",
+      "input_square_upper": "52609895766349/1055812800000",
+      "charge_upper": "51554082966349/295627584000000"
+    }
+  },
+  "two_stage_loss_upper": "97524110913629/295627584000000",
+  "bands": [
+    {
+      "h": 1,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "955834/219961",
+        "square_floor": "574625349341/49491225000"
+      },
+      "selected_tail_bound": "total_mass",
+      "auxiliary_tail_upper": "1",
+      "auxiliary_killed_band_lower": "0",
+      "actual_killed_band_lower": "0",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "0",
+        "121": "0"
+      }
+    },
+    {
+      "h": 2,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/219961",
+        "square_floor": "574625349341/131976600000"
+      },
+      "selected_tail_bound": "total_mass",
+      "auxiliary_tail_upper": "1",
+      "auxiliary_killed_band_lower": "0",
+      "actual_killed_band_lower": "0",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "0",
+        "121": "0"
+      }
+    },
+    {
+      "h": 3,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "955834/659883",
+        "square_floor": "574625349341/247456125000"
+      },
+      "selected_tail_bound": "total_mass",
+      "auxiliary_tail_upper": "1",
+      "auxiliary_killed_band_lower": "0",
+      "actual_killed_band_lower": "0",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "0",
+        "121": "0"
+      }
+    },
+    {
+      "h": 4,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/439922",
+        "square_floor": "574625349341/395929800000",
+        "hinge_4": "1896712717819/1358537500000"
+      },
+      "selected_tail_bound": "total_mass",
+      "auxiliary_tail_upper": "1",
+      "auxiliary_killed_band_lower": "0",
+      "actual_killed_band_lower": "0",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "0",
+        "121": "0"
+      }
+    },
+    {
+      "h": 5,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "955834/1099805",
+        "square_floor": "574625349341/577397625000",
+        "hinge_4": "1896712717819/2717075000000",
+        "hinge_5": "5263525792649/4891475000000"
+      },
+      "selected_tail_bound": "hinge_4",
+      "auxiliary_tail_upper": "1896712717819/2717075000000",
+      "auxiliary_killed_band_lower": "0",
+      "actual_killed_band_lower": "0",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "0",
+        "121": "0"
+      }
+    },
+    {
+      "h": 6,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/659883",
+        "square_floor": "574625349341/791859600000",
+        "hinge_4": "1896712717819/4075612500000",
+        "hinge_5": "5263525792649/9782950000000",
+        "hinge_6": "306627/391318"
+      },
+      "selected_tail_bound": "hinge_4",
+      "auxiliary_tail_upper": "1896712717819/4075612500000",
+      "auxiliary_killed_band_lower": "54816087309627223987/267747439265600000000",
+      "actual_killed_band_lower": "184381384586927935229/8575047608400000000000",
+      "mean_only_actual_lower": "0",
+      "CT_band_deficits": {
+        "81": "184381384586927935229/190556613520000000000",
+        "121": "184381384586927935229/100882913040000000000"
+      }
+    },
+    {
+      "h": 7,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "955834/1539727",
+        "square_floor": "574625349341/1039315725000",
+        "hinge_4": "1896712717819/5434150000000",
+        "hinge_5": "5263525792649/14674425000000",
+        "hinge_6": "306627/782636",
+        "hinge_7": "306152576027/489147500000"
+      },
+      "selected_tail_bound": "hinge_4",
+      "auxiliary_tail_upper": "1896712717819/5434150000000",
+      "auxiliary_killed_band_lower": "257901694980699125177/803242317796800000000",
+      "actual_killed_band_lower": "9542362714285867631549/282976571077200000000000",
+      "mean_only_actual_lower": "58643582678816197541/11319062843088000000000",
+      "CT_band_deficits": {
+        "81": "9542362714285867631549/8843017846162500000000",
+        "121": "9542362714285867631549/3930230153850000000000"
+      }
+    },
+    {
+      "h": 8,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/879844",
+        "square_floor": "574625349341/1319766000000",
+        "hinge_4": "1896712717819/6792687500000",
+        "hinge_5": "5263525792649/19565900000000",
+        "hinge_6": "102209/391318",
+        "hinge_7": "306152576027/978295000000",
+        "hinge_8": "2291713236139/4843600000000"
+      },
+      "selected_tail_bound": "hinge_6",
+      "auxiliary_tail_upper": "102209/391318",
+      "auxiliary_killed_band_lower": "23652827574078263489/57842197457856000000",
+      "actual_killed_band_lower": "95114429591641272698674519/2214676516815754992000000000",
+      "mean_only_actual_lower": "150891603759152197541/11319062843088000000000",
+      "CT_band_deficits": {
+        "81": "95114429591641272698674519/130275089224456176000000000",
+        "121": "1807174162241184181274815861/738225505605251664000000000"
+      }
+    },
+    {
+      "h": 9,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "955834/1979649",
+        "square_floor": "574625349341/1633210425000",
+        "hinge_4": "1896712717819/8151225000000",
+        "hinge_5": "5263525792649/24457375000000",
+        "hinge_6": "306627/1565272",
+        "hinge_7": "306152576027/1467442500000",
+        "hinge_8": "2291713236139/9687200000000",
+        "hinge_9": "1964369484727/4843600000000"
+      },
+      "selected_tail_bound": "hinge_6",
+      "auxiliary_tail_upper": "306627/1565272",
+      "auxiliary_killed_band_lower": "27429802540710263489/57842197457856000000",
+      "actual_killed_band_lower": "110302669492684501970674519/2214676516815754992000000000",
+      "mean_only_actual_lower": "667920193798240592623/33957188529264000000000",
+      "CT_band_deficits": {
+        "121": "110302669492684501970674519/55366912920393874800000000"
+      }
+    },
+    {
+      "h": 10,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/1099805",
+        "square_floor": "574625349341/1979649000000",
+        "hinge_4": "1896712717819/9509762500000",
+        "hinge_5": "5263525792649/29348850000000",
+        "hinge_6": "306627/1956590",
+        "hinge_7": "306152576027/1956590000000",
+        "hinge_8": "2291713236139/14530800000000",
+        "hinge_9": "1964369484727/9687200000000",
+        "hinge_10": "169349448989/489147500000"
+      },
+      "selected_tail_bound": "hinge_7",
+      "auxiliary_tail_upper": "306152576027/1956590000000",
+      "auxiliary_killed_band_lower": "148550064009912153061/289210987289280000000",
+      "actual_killed_band_lower": "54305460404654859422887321/1006671144007161360000000000",
+      "mean_only_actual_lower": "280038833271622597541/11319062843088000000000",
+      "CT_band_deficits": {
+        "121": "54305460404654859422887321/47936721143198160000000000"
+      }
+    },
+    {
+      "h": 11,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "86894/219961",
+        "square_floor": "574625349341/2359081725000",
+        "hinge_4": "1896712717819/10868300000000",
+        "hinge_5": "5263525792649/34240325000000",
+        "hinge_6": "102209/782636",
+        "hinge_7": "306152576027/2445737500000",
+        "hinge_8": "2291713236139/19374400000000",
+        "hinge_9": "1964369484727/14530800000000",
+        "hinge_10": "169349448989/978295000000",
+        "hinge_11": "21945226346/76429296875"
+      },
+      "selected_tail_bound": "hinge_8",
+      "auxiliary_tail_upper": "2291713236139/19374400000000",
+      "auxiliary_killed_band_lower": "1543282364132808713/2796683136450000000",
+      "actual_killed_band_lower": "6205956615698703826134223/107080103099181712500000000",
+      "mean_only_actual_lower": "327001462185248197541/11319062843088000000000",
+      "CT_band_deficits": {}
+    },
+    {
+      "h": 12,
+      "tail_candidates": {
+        "total_mass": "1",
+        "mean_floor": "477917/1319766",
+        "square_floor": "574625349341/2771508600000",
+        "hinge_4": "1896712717819/12226837500000",
+        "hinge_5": "5263525792649/39131800000000",
+        "hinge_6": "306627/2739226",
+        "hinge_7": "306152576027/2934885000000",
+        "hinge_8": "2291713236139/24218000000000",
+        "hinge_9": "1964369484727/19374400000000",
+        "hinge_10": "169349448989/1467442500000",
+        "hinge_11": "10972613173/76429296875",
+        "hinge_12": "111549448277/489147500000"
+      },
+      "selected_tail_bound": "hinge_8",
+      "auxiliary_tail_upper": "2291713236139/24218000000000",
+      "auxiliary_killed_band_lower": "257511016499071176239/447469301832000000000",
+      "actual_killed_band_lower": "1035521582828236447945779769/17132816495869074000000000000",
+      "mean_only_actual_lower": "122045662093312065847/3773020947696000000000",
+      "CT_band_deficits": {}
+    }
+  ],
+  "direct_CT_deficits": {
+    "64": {
+      "auxiliary_lower": "44555766209197/6033216000000",
+      "actual_deficit_lower": "179170810539823829387/231001282512000000000"
+    },
+    "81": {
+      "auxiliary_lower": "23129131611329/1231781600000",
+      "actual_deficit_lower": "93008506203820579159/47162761846200000000"
+    },
+    "100": {
+      "auxiliary_lower": "9314957575360009/295627584000000",
+      "actual_deficit_lower": "37457968764025518751439/11319062843088000000000"
+    },
+    "121": {
+      "auxiliary_lower": "67375652550869/1478137920000",
+      "actual_deficit_lower": "20841212131452733423/4353485708880000000"
+    },
+    "484": {
+      "auxiliary_lower": "12198098748646639/42232512000000",
+      "actual_deficit_lower": "49051860753069018658169/1617008977584000000000"
+    }
+  }
+}

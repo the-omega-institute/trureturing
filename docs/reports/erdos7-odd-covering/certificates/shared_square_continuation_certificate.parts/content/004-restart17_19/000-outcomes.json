@@ -1,0 +1,68 @@
+{
+  "length": 255,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 39,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000000-000039.json",
+        "sha256": "259e807b3b041180ce7fb1c4929920098b2fa654aaf758dc4ae090d21834606a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 39,
+      "stop": 78,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000039-000078.json",
+        "sha256": "f6f10067cc04f42e25715895b47bfa4cb27337e3cf377f32471d996d2405e481",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 78,
+      "stop": 116,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000078-000116.json",
+        "sha256": "304dae443bd2911fe51aec48b70a5d04136eaddbad70109ed43598317e65e1d5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 116,
+      "stop": 154,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000116-000154.json",
+        "sha256": "4e145fb064845f435c42272045a9a5a7e15be1b064ada33fcba6cb171413f2a6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 154,
+      "stop": 193,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000154-000193.json",
+        "sha256": "3f6281581be0a9555a96baae99b89e0aad09b8855ca6f4a1766bd0ecbbb5320a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 193,
+      "stop": 232,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000193-000232.json",
+        "sha256": "c0aa03d721fd657cb591ae95cfcd7140fa3db7c860cdc0d5038f537422ccb449",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 232,
+      "stop": 255,
+      "part": {
+        "path": "content/004-restart17_19/000-outcomes/000232-000255.json",
+        "sha256": "64c924c6741dfcfe880c88c1e4d49ff077ff78f4880c94d8c7060afb7bbb5f64",
+        "kind": "value"
+      }
+    }
+  ]
+}

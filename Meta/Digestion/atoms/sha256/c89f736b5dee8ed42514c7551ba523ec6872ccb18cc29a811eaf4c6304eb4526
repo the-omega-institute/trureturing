@@ -1,0 +1,18 @@
+### 90.2 完美复制只适用于正交或相同的历史
+
+设 $U$ 是同一 Hilbert 空间张量平方上的复线性等距等价，并设三个向量都归一化：输入历史为 $\psi,\phi$，空白记录为 $b$。若同一个 $U$ 满足
+
+$$
+U(\psi\otimes b)=\psi\otimes\psi,
+\qquad
+U(\phi\otimes b)=\phi\otimes\phi,
+$$
+
+则 `no_cloning_inner_product_criterion` 给出
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|\psi\rangle^2.
+$$
+

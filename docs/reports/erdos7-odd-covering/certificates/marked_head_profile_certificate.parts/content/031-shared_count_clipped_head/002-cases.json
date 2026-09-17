@@ -1,0 +1,32 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/031-shared_count_clipped_head/002-cases/000000-000002.json",
+        "sha256": "24719e74c56d10924bbe614fbd4773f9381edf34907a8fc435f64398fb19443b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/031-shared_count_clipped_head/002-cases/000002-000004.json",
+        "sha256": "c5c039b3ae371df97d45f757afbe396192f896dd54d0a26550e5ce5c4114525e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/031-shared_count_clipped_head/002-cases/000004-000006.json",
+        "sha256": "99669c2d6e2dfd147e7debcda05fe0eb4bcd6c7737e34bdc64f3a4263cae3be9",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bcc3b6e31888d9e99ac6e8ed620f195235274e498439df466479c482484194c9
+  normalized_sha256: sha256:bcc3b6e31888d9e99ac6e8ed620f195235274e498439df466479c482484194c9
+cas_ref: sha256:bcc3b6e31888d9e99ac6e8ed620f195235274e498439df466479c482484194c9
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ZetaThermalStatePinchingFixed.zeta_thermal_state_mem_diagonal
+    target_statement_id: sha256:4365d034d7c86c0c6b0a324e3e7228f03af124c53966dd1150929174c12a6cb5
+receipts:
+  unresolved_subitems: []

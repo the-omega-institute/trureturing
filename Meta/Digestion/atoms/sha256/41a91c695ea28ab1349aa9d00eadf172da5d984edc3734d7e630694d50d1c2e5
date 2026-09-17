@@ -1,0 +1,10 @@
+并保持二元密度混合：
+
+$$
+R(t\rho+(1-t)\sigma)
+=tR(\rho)+(1-t)R(\sigma),
+\qquad 0\le t\le1.
+$$
+
+这是 `operational_readout_quotient_representation` 的内容。故当前尺度上的“对象”可以取为操作商中的一个类；它不是脱离指定 readout 的本体标签。
+

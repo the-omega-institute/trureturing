@@ -1,0 +1,14 @@
+### 定理 57.2（全部未来统计的充要预测表示）
+
+对两个 traceless-Hermitian 状态坐标 $\rho,\sigma$，有
+
+$$
+P_{\infty}\rho=P_{\infty}\sigma
+\iff
+\forall n\in\mathbb N,\ \forall i\in I,
+\quad
+\langle\rho,H^nE_i\rangle
+=
+\langle\sigma,H^nE_i\rangle.
+$$
+

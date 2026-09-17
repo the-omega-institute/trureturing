@@ -1,0 +1,18 @@
+**证明。** The [DPRM representability theorem, Jones–Matijasevic (1991), Theorem 1, page 690](https://sites.math.rutgers.edu/~zeilberg/akherim/hilbert10Old.pdf#page=3) represents computably enumerable sets by existential Diophantine equations. It implies undecidability of existential polynomial equations over $\mathbb N_0$; a positive-integer formulation is converted by replacing each positive variable by a nonnegative variable plus one. For an integer-coefficient polynomial, separate its positive and negative coefficient parts to obtain an equation $P^+=P^-$ with natural coefficients. This conversion concerns ordinary integer or natural arithmetic and does not assert cancellation in $K$. If one could compute the image of every actual natural solution relation under the map to a singleton, emptiness of that image would decide this undecidable problem.
+
+The difference between the two solution domains is already witnessed by
+$$
+x^2=x,\qquad x=z+2.
+$$
+In $K$, take $x=\tau(1)$ and $z=\tau(-1)$. Both equations hold by Theorem 48.1. Over $\mathbb N_0$, the first equation forces $x=0$ or $x=1$, while the second forces $x\geq2$, a contradiction. Thus the $K$-solution set need not equal the closure of the actual natural solution set: in this example the latter set is empty. The bound in Theorem 48.5 allows boundary replacement and makes no assertion that a bounded natural solution exists. Moreover, $x+x=x$ has the boundary solution $x=e\ne0$, so replacing that literal equality by $x=0$ would be an invalid semiring cancellation.
+
+Every term map is continuous. An equality therefore defines a closed set, since the diagonal of the Hausdorff space $K$ is closed. Finite intersections and finite unions preserve closedness. Existential quantification is projection of a closed subset of a compact finite power of $K$; the image is compact and hence closed in the Hausdorff target. Induction proves the assertion for positive existential formulas. Fixed parameters do not affect continuity. The natural core is dense and proper by Theorem 48.1, so is not closed and cannot have such a definition.
+
+If inequations are admitted, however, define
+$$
+\operatorname{Nat}(x)\quad\Longleftrightarrow\quad\exists u\,\bigl(u+u=u\ \land\ u\ne0\ \land\ u+x\ne x\bigr).
+$$
+The first two conditions force $u=e$. For every natural $n$, $e+n=\tau(n)\ne n$; for every boundary $\tau(z)$, $e+\tau(z)=\tau(z)$. Thus this formula defines exactly $\mathbb N_0$.
+
+Given a natural Diophantine system, adjoin a single variable $u$, the conditions $u+u=u$ and $u\ne0$, and the condition $u+x_i\ne x_i$ for every original variable. These force precisely natural witnesses, and every natural witness extends by $u=e$. The resulting finite conjunction of equations and inequations has a $K$-solution exactly when the original natural system has a solution. DPRM therefore proves undecidability of this enlarged full-$K$ problem. It does not contradict Theorem 48.6, whose inequations are evaluated entirely inside the internal boundary ring. 证毕。
+

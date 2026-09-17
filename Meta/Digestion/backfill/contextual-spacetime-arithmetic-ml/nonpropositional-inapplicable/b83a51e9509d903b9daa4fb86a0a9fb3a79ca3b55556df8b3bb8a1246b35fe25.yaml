@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b83a51e9509d903b9daa4fb86a0a9fb3a79ca3b55556df8b3bb8a1246b35fe25
+  normalized_sha256: sha256:b83a51e9509d903b9daa4fb86a0a9fb3a79ca3b55556df8b3bb8a1246b35fe25
+cas_ref: sha256:b83a51e9509d903b9daa4fb86a0a9fb3a79ca3b55556df8b3bb8a1246b35fe25
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “以下仍是 repo-derived 推导，不宣称已有 Lean 证明”只限定后文的证明状态；它没有定义数学对象，更未把尚待证明的结论藏入定义，本叶无需数学证明。
+    previous_atom_id: d270313f54811cb1af68a1073bf7a5327e723ff2e0561e85b0d38b31b6c245bc
+    next_atom_id: af7e6a3584ad4dffc381b1e6127ae387f1faeb24323ee221d178d3c7b89ecf00

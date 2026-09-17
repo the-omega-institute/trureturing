@@ -1,0 +1,306 @@
+{
+  "scope": "single height at 11 and 13; prescribed constant old test blocks only; no universal Gamma or prime-cutoff claim",
+  "prescribed_old_blocks": {
+    "A": "1",
+    "B": "1",
+    "C": "1",
+    "D": "1",
+    "realization": "every nonunit old test cofactor uses its original forbidden residue"
+  },
+  "old_original_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      52
+    ],
+    [
+      105,
+      4
+    ],
+    [
+      315,
+      142
+    ]
+  ],
+  "old_survivor_count": 86,
+  "new_prime_heights": [
+    [
+      11,
+      1
+    ],
+    [
+      13,
+      1
+    ]
+  ],
+  "complete_original_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      52
+    ],
+    [
+      105,
+      4
+    ],
+    [
+      315,
+      142
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      33,
+      26
+    ],
+    [
+      55,
+      27
+    ],
+    [
+      77,
+      72
+    ],
+    [
+      99,
+      29
+    ],
+    [
+      165,
+      107
+    ],
+    [
+      231,
+      86
+    ],
+    [
+      385,
+      142
+    ],
+    [
+      495,
+      407
+    ],
+    [
+      693,
+      506
+    ],
+    [
+      1155,
+      737
+    ],
+    [
+      3465,
+      1892
+    ],
+    [
+      13,
+      0
+    ],
+    [
+      39,
+      17
+    ],
+    [
+      65,
+      57
+    ],
+    [
+      91,
+      58
+    ],
+    [
+      117,
+      20
+    ],
+    [
+      195,
+      47
+    ],
+    [
+      273,
+      191
+    ],
+    [
+      455,
+      387
+    ],
+    [
+      585,
+      362
+    ],
+    [
+      819,
+      506
+    ],
+    [
+      1365,
+      1157
+    ],
+    [
+      4095,
+      2522
+    ],
+    [
+      143,
+      1
+    ],
+    [
+      429,
+      2
+    ],
+    [
+      715,
+      497
+    ],
+    [
+      1001,
+      366
+    ],
+    [
+      1287,
+      146
+    ],
+    [
+      2145,
+      572
+    ],
+    [
+      3003,
+      1430
+    ],
+    [
+      5005,
+      3432
+    ],
+    [
+      6435,
+      4862
+    ],
+    [
+      9009,
+      7436
+    ],
+    [
+      15015,
+      13442
+    ],
+    [
+      45045,
+      43472
+    ]
+  ],
+  "full_survivor_count": 7128,
+  "local_old_point": 2,
+  "local_survivor_grid": [
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      3,
+      1
+    ]
+  ],
+  "local_square_numerators": {
+    "joint": 22,
+    "independent_intersection_caps": 25,
+    "sequential_qr": 28,
+    "sequential_rq": 28
+  },
+  "aggregate_square_numerators": {
+    "joint": 12618,
+    "independent_intersection_caps": 12621,
+    "sequential_qr": 12624,
+    "sequential_rq": 12624
+  },
+  "aggregate_normalized_bounds": [
+    "701/396",
+    "4207/2376",
+    "526/297",
+    "526/297"
+  ],
+  "strict_compatibility_gain": "1/2376",
+  "constant_old_block_actual_maximum": {
+    "square_numerator": 12522,
+    "second_moment": "2087/1188",
+    "row": 10,
+    "column": 10,
+    "cell": [
+      10,
+      10
+    ]
+  }
+}
