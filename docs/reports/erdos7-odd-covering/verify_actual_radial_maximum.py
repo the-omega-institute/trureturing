@@ -23,8 +23,8 @@ import argparse, json
 
 HERE = Path(__file__).resolve().parent
 SOURCE_PINS = {
-    'certificates/actual_zero_block_certificate.json': '4798b482b9632850770bfdea6e592767faa1ad316962b47ceb7d7c09d5e8f241',
-    'verify_actual_zero_block.py': '08656e13d056396814bb22a6403e8465ce5747186cf653bd2ab212782671c8ad',
+    'certificates/actual_zero_block_certificate.json': 'a2793e67cac77cd7db19e024cc4f446d32a8695ed3fa070991473e692db169de',
+    'verify_actual_zero_block.py': 'edd6284c0cbaee2e32903d3f20b27ef9e5880834c5e0c47c8d6e9b9fc10685fe',
 }
 
 def need(ok, message):

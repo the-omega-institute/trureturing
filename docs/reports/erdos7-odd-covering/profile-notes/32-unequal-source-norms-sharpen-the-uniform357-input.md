@@ -1,4 +1,4 @@
-[Index](../marked_head_profile.md) · [Previous](31-one-original-zero-five-layout-across-both-actual-measures.md)
+[Index](../marked_head_profile.md) · [Previous](31-one-original-zero-five-layout-across-both-actual-measures.md) · [Next](33-retained-and-removed-original-events-control-convex-costs.md)
 
 <a id="unequal-source-norms-sharpen-the-uniform357-input"></a>
 ### Unequal source norms sharpen the uniform357 input
