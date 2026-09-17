@@ -10,6 +10,9 @@ public sealed record RawRepositoryEntry(
     ImmutableArray<byte> Bytes,
     string? GitBlobOid = null)
 {
+    public string GitMode { get; init; } = "100644";
+    public bool IsTracked { get; init; } = true;
+
     public static RawRepositoryEntry FromText(string path, string text) =>
         new(path, ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(text)));
 }

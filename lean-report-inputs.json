@@ -46,9 +46,21 @@
         {"pattern": "tools/lean-inspector/native_image.c", "optional": false},
         {"pattern": "tools/lean-inspector/publication.py", "optional": false},
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
-        {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
+        {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/**", "optional": false},
+        {"pattern": "tools/StrataLint.Cli/**", "optional": false},
+        {"pattern": "tools/StrataLint.Engine/**", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe/**", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe.Documents/**", "optional": false},
+        {"pattern": "tools/Trureturing.Truth/**", "optional": false},
+        {"pattern": "tools/Architecture/**", "optional": false},
+        {"pattern": "tools/scripts/**", "optional": false},
+        {"pattern": "Blueprint/**/*.scribe.cs", "optional": true},
+        {"pattern": "Directory.*", "optional": false},
+        {"pattern": ".gitignore", "optional": false},
+        {"pattern": "Meta/lean-report.toml", "optional": true}
       ],
-      "exclude": ["**/bin/**", "**/obj/**"]
+      "exclude": ["**/bin/**", "**/obj/**", "**/.lake/**", "**/__pycache__/**"]
     },
     "scribe-content": {
       "include": [

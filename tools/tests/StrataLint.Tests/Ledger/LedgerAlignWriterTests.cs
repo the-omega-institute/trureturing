@@ -302,6 +302,9 @@ public sealed partial class LedgerAlignWriterTests
             this.fixture = fixture;
         }
 
+        public CommandResult InformationTemplateHistory(IReadOnlyList<string> arguments) =>
+            new(false, "", "history unavailable in this fixture\n");
+
         public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
             new(false, "", "Not used by this fixture");
 

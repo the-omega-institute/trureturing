@@ -519,6 +519,9 @@ public sealed class QuarantineAtomCommandTests
 
     private sealed class QuarantineCliEnvironment : ICliEnvironment
     {
+        public CommandResult InformationTemplateHistory(IReadOnlyList<string> arguments) =>
+            new(false, "", "history unavailable in this fixture\n");
+
         public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
             new(false, "", "Not used by this fixture");
 

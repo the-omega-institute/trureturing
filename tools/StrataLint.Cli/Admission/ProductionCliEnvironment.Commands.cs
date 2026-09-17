@@ -19,6 +19,10 @@ internal sealed partial class ProductionCliEnvironment
         }
     }
 
+    public CommandResult InformationTemplateHistory(IReadOnlyList<string> arguments) =>
+        InformationTemplateHistoryCommand.Run(repositoryRoot, new GitRepositoryGateway(repositoryRoot),
+            arguments, new ProductionGitProcessRunner(), timeProvider);
+
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         CoverageCommand.Run(repository, leanReportSource, arguments);
 

@@ -8,7 +8,8 @@ internal static class GitRepositorySnapshotReader
     private const int MaximumGitOutputBytes = 64 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null)
+    internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null,
+        Func<string, bool>? readBytes = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -46,8 +47,10 @@ internal static class GitRepositorySnapshotReader
             var info = new FileInfo(fullPath);
             if (info.LinkTarget is { } target)
             {
+                if (readBytes is not null) throw new InvalidOperationException("history predicate input is a symlink: " + path);
                 links.Add(path);
-                entries.Add(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))));
+                entries.Add(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target)))
+                    { GitMode = "120000", IsTracked = tracked.ContainsKey(path) });
                 continue;
             }
 
@@ -64,7 +67,8 @@ internal static class GitRepositorySnapshotReader
 
             entries.Add(new RawRepositoryEntry(
                 path,
-                ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
+                readBytes is null || readBytes(path) ? ImmutableArray.CreateRange(File.ReadAllBytes(fullPath)) : [])
+                { GitMode = tracked.GetValueOrDefault(path, "100644"), IsTracked = tracked.ContainsKey(path) });
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>
@@ -92,7 +96,8 @@ internal static class GitRepositorySnapshotReader
 
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit)
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        Func<string, bool>? include = null, Func<string, bool>? readBytes = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
@@ -101,10 +106,10 @@ internal static class GitRepositorySnapshotReader
             MaximumGitOutputBytes,
             default);
         EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).ToArray();
+        var tree = ParseTree(treeResult.StandardOutput).Where(e => include is null || include(e.Path)).ToArray();
         foreach (var entry in tree)
         {
-            if (!IsSupportedMode(entry.Mode)
+            if (!IsSupportedMode(entry.Mode) || readBytes is not null && entry.Mode == "120000"
                 || entry.ObjectType != "blob"
                 || entry.Size is null)
             {
@@ -113,14 +118,9 @@ internal static class GitRepositorySnapshotReader
             }
         }
 
-        var objects = tree
+        var objects = tree.Where(e => readBytes is null || readBytes(e.Path))
             .DistinctBy(static entry => entry.ObjectId, StringComparer.Ordinal)
             .ToArray();
-        if (objects.Length == 0)
-        {
-            return RawRepositorySnapshot.Create([]);
-        }
-
         var input = StrictUtf8.GetBytes(
             string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
         var objectResult = runGit(
@@ -131,8 +131,9 @@ internal static class GitRepositorySnapshotReader
         var blobs = ParseBatchObjects(objects, objectResult.StandardOutput);
         var entries = tree.Select(entry => new RawRepositoryEntry(
             entry.Path,
-            blobs[entry.ObjectId],
-            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)).ToArray();
+            readBytes is null || readBytes(entry.Path) ? blobs[entry.ObjectId] : [],
+            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)
+            { GitMode = entry.Mode }).ToArray();
         FileMapSymlinkPolicy.ValidateSnapshot(entries,
             tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
             tree.Select(entry => entry.Path).ToArray());

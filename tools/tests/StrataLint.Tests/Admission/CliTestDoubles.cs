@@ -20,6 +20,9 @@ internal sealed class StubCliEnvironment(
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
+    public CommandResult InformationTemplateHistory(IReadOnlyList<string> arguments) =>
+        new(false, "", "history unavailable in this fixture\n");
+
     public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
         new(false, "", "Not used by this fixture");
 
