@@ -1330,6 +1330,258 @@ L(f)=\sum_{i=1}^{d}u_i f(x_i)+
 \leq2^{2d-1}\varepsilon+\tau.
 \]
 
+
+## 17. 有限观察窗口的谱底恢复与时间精度过渡
+
+### 17.1 定义：固定最低态权重的被动观察模型
+
+固定 $0\leq E_-<E_+<\infty$ 及 $0<\eta<1$。令 $\mathcal M$ 为支撑于 $[E_-,E_+]$ 的 Borel 概率测度 $\mu$，要求
+\[
+g(\mu)=\min\operatorname{supp}\mu,\qquad \mu(\{g(\mu)\})\geq\eta.
+\]
+令 $\mathcal M_d$ 为其中至多有 $d$ 个原子的子类。对 $T>0$，定义
+\[
+C_\mu(t)=\int e^{-tE}\,\mu(dE),\quad 0\leq t\leq T,
+\]
+以及统一绝对噪声下的确定性 minimax 误差
+\[
+\mathcal R_T(\varepsilon)=\inf_{\widehat g}\sup_{\mu\in\mathcal M}
+\sup_{\|Y-C_\mu\|_{L^\infty[0,T]}\leq\varepsilon}
+|\widehat g(Y)-g(\mu)|.
+\tag{17.1}
+\]
+这里范数取逐点上确界，$Y$ 可为任意实值函数；估计函数不限计算复杂度。将 $\mathcal M$ 换成 $\mathcal M_d$ 得到 $\mathcal R_{d,T}$。没有对低能原子之外的支撑间距作假设。
+
+### 17.2 定理：从原始矩构造的端点证书
+
+设 $0\leq a<b$，$\mu,\nu$ 为概率测度，分别支撑于 $[a,\infty)$ 与 $[a,b]$，所用矩绝对可积。假设 $x_*\geq b$、$\mu(\{x_*\})\geq\eta>0$，且
+\[
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\delta,
+\quad 0\leq k\leq n,
+\qquad \delta\geq0.
+\]
+记
+\[
+Q=2\frac{2+a+b}{b-a}+1.
+\]
+则
+\[
+\boxed{2\eta n^2(x_*-b)\leq(b-a)\bigl[2(1-\eta)+\delta Q^n\bigr].}
+\tag{17.2}
+\]
+
+**证明。** 使用第一类 Chebyshev 多项式 $T_0=1,T_1=z,T_{k+2}=2zT_{k+1}-T_k$。对 $z\geq1$，共同归纳两个不变量
+\[
+T_k(z)\geq1+k^2(z-1),\qquad
+T_{k+1}(z)-T_k(z)\geq(2k+1)(z-1).
+\tag{17.3}
+\]
+第一式在下一阶由当前两式相加得到。第二式的递推使用
+\[
+T_{k+2}-T_{k+1}=(T_{k+1}-T_k)+2(z-1)T_{k+1}
+\]
+及 $T_{k+1}(z)\geq1$。基例 $k=0$ 直接成立。
+
+对实线性泛函 $F$，若 $|F(x^j)|\leq\delta$ 对 $j\leq n$ 成立，令 $S=|\alpha|+|\beta|$，则
+\[
+|F(T_n(\alpha x+\beta))|\leq\delta(2S+1)^n.
+\tag{17.4}
+\]
+证明对次数作强归纳：泛函 $F_A(f)=F((\alpha x+\beta)f)$ 在下一阶可用的原始矩预算为 $S\delta$。递推项因此不超过
+\[
+2S\delta(2S+1)^{n-1}+\delta(2S+1)^{n-2}
+\leq\delta(2S+1)^n.
+\]
+次数零、一分别由常数矩和一次矩直接处理。
+
+现在取
+\[
+A(x)=\frac{2x-a-b}{b-a},\qquad p_n(x)=\frac{1+T_n(A(x))}{2}.
+\]
+在 $[a,b]$ 上有 $0\leq p_n\leq1$；在 $[b,\infty)$ 上有 $p_n\geq1$。由式 (17.3)，
+\[
+p_n(x_*)\geq1+\frac{n^2(x_*-b)}{b-a}.
+\]
+对 $F(f)=\int f\,d\mu-\int f\,d\nu$ 应用式 (17.4)。两测度的总质量均为一，故 $F(1)=0$，而 $S=(2+a+b)/(b-a)$。于是
+\[
+\eta p_n(x_*)\leq\int p_n\,d\mu
+\leq\int p_n\,d\nu+\frac{\delta Q^n}{2}
+\leq1+\frac{\delta Q^n}{2}.
+\]
+整理得到式 (17.2)。这也证明了一般测度版本；有限原子情形的积分就是实际加权幂和。
+
+### 17.3 定理：可直接选择采样时刻的非渐近界
+
+取整数 $n\geq1$、$T>0$，记
+\[
+U=E_+T,\quad u=\min\{1,U/n\},\quad h=u/E_+,
+\quad K_n=64\max\{1,n/U\}.
+\]
+若 $\mu,\nu\in\mathcal M$ 在时刻 $0,h,\ldots,nh\subseteq[0,T]$ 上满足
+\[
+|C_\mu(kh)-C_\nu(kh)|\leq2\varepsilon\quad(0\leq k\leq n),
+\qquad \varepsilon K_n^n\leq1,
+\]
+则
+\[
+\boxed{|g(\mu)-g(\nu)|\leq\frac{3eE_+}{\eta n^2}.}
+\tag{17.5}
+\]
+
+**证明。** 推送 $x=e^{-hE}$，令 $a=e^{-u}$、$a_0=(3a-1)/2$。由于 $0<u\leq1$ 和 $e<3$，有 $0<a_0<a$。两测度的变换支撑均在 $[a,1]$。设其最大支撑点为 $y>b$，并将端点为 $y$ 的一侧作为式 (17.2) 的第一测度。比较区间选 $[a_0,b]$。它满足
+\[
+b-a_0\geq(1-a)/2,\qquad b-a_0\leq3(1-a)/2.
+\]
+对应的放大常数满足
+\[
+Q\leq\frac{16}{1-a}+1\leq\frac{17}{1-a}
+\leq\frac{17e}{u}\leq K_n,
+\]
+其中 $1-e^{-u}\geq u/e$。原始矩正好是 $C(kh)$，在式 (17.2) 中使用 $\delta=2\varepsilon$，得到
+\[
+y-b\leq\frac{(b-a_0)(1-\eta+\varepsilon Q^n)}{\eta n^2}
+\leq\frac{3(1-a)}{\eta n^2}.
+\]
+最后 $b\geq a\geq e^{-1}$、$1-a\leq u$，所以
+\[
+|g(\mu)-g(\nu)|=h^{-1}\log(y/b)
+\leq\frac{y-b}{ha}\leq\frac{3eE_+}{\eta n^2}.
+\]
+端点相同的情形显然成立。这个结果不使用未采样时间的读数。
+
+### 17.4 定理：具有固定端点权重的正测度下界构造
+
+固定
+\[
+E_0=(E_-+E_+)/2>0,\qquad
+\kappa=\min\{(E_+-E_0)/2,E_0/(4e)\}>0,
+\]
+并记 $A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、$W_\eta=1/\eta$。
+对每个奇数 $q\geq3$，存在两个各有 $(q+1)/2$ 个正原子的测度 $\mu_q,\nu_q\in\mathcal M$，使
+\[
+|g(\mu_q)-g(\nu_q)|\geq\frac{\kappa A_\eta^2}{4W_\eta q^2},
+\tag{17.6}
+\]
+并且对每个 $T>0$，
+\[
+\boxed{\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\left[\frac14\min\{1,E_+T/q\}\right]^q.}
+\tag{17.7}
+\]
+
+**证明。** 令 $n=q-1$ 为偶数，取
+\[
+x_j=\frac{1+\cos(j\pi/n)}2\quad(0\leq j\leq n),\qquad
+Y=\frac{1+\cosh(A_\eta/n)}2>1.
+\]
+设 $\ell_j$ 为节点的 Lagrange 基，$c_j=\ell_j(Y)$。乘积表达式给出 $\operatorname{sign}(c_j)=(-1)^j$；插值常数和 $T_n(2x-1)$ 分别给
+\[
+\sum_jc_j=1,\qquad
+P:=\sum_{j\ \mathrm{even}}c_j
+=\frac{1+T_n(2Y-1)}2=\frac1\eta.
+\]
+因此
+\[
+\alpha=P^{-1}\delta_Y+P^{-1}\sum_{j\ \mathrm{odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ \mathrm{even}}c_j\delta_{x_j}
+\]
+为概率测度，匹配次数 $0,\ldots,q-1$ 的矩。二者分别在最大支撑点 $Y$ 与 $1$ 上具有质量 $\eta$ 与 $c_0/P>\eta$；后者由
+\[
+c_0=\prod_{j=1}^n\frac{Y-x_j}{1-x_j}>1
+\]
+得到。通过 $\xi=(Y-x)/Y$ 将支撑送入 $[0,1]$，最小点分别为零与 $(Y-1)/Y$。由于 $Y\leq W_\eta$ 和 $\cosh v-1\geq v^2/2$，二者端点间距至少为 $A_\eta^2/(4W_\eta q^2)$。
+
+再推送到能量 $E=E_0+\kappa\xi$，得到所需模型和式 (17.6)。矩匹配在仿射变换下保持。对 $e^{-\kappa t\xi}$ 在 $\xi=0$ 处展开至 $q-1$ 阶，实 Taylor 余项在 $[0,1]$ 上不超过 $(\kappa t)^q/q!$。两测度的多项式项相消、总质量均为一，故
+\[
+|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2e^{-E_0t}\frac{(\kappa t)^q}{q!}.
+\]
+分别使用 $e^{E_0t}\geq(E_0t)^q/q!$ 以及 $q!\geq(q/e)^q$，得到
+\[
+\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\min\{(\kappa/E_0)^q,(e\kappa T/q)^q\}.
+\]
+由 $\kappa/E_0\leq1/4$、$e\kappa/E_+\leq1/4$ 得式 (17.7)。这一估计控制整个连续时间窗口。
+
+### 17.5 定理：观察时长与噪声精度的统一匹配阶
+
+存在仅依赖 $E_-,E_+,\eta$ 的正数 $c,C,L_0$，使对所有 $L=\log(1/\varepsilon)\geq L_0$ 和所有 $T\geq1/E_+$，有
+\[
+\boxed{
+c\left[\frac{\log(e+L/(E_+T))}{L}\right]^2
+\leq\mathcal R_T(\varepsilon)
+\leq C\left[\frac{\log(e+L/(E_+T))}{L}\right]^2.
+}
+\tag{17.8}
+\]
+这些常数与 $T$ 无关。即使把模型类限制为任意有限原子数的并集，同一个匹配阶仍成立。
+
+**上界证明。** 写 $U=E_+T\geq1$、$A=\log(e+L/U)\geq1$，取
+\[
+c_0=\frac1{4(1+\log64)},\qquad n=\lfloor c_0L/A\rfloor.
+\]
+由于 $A\leq\log(e+L)$，可选择与 $T$ 无关的 $L_0$，保证 $n\geq c_0L/(2A)\geq1$。又因 $n\leq L$，
+\[
+\log K_n\leq\log64+A\leq(1+\log64)A,
+\qquad n\log K_n\leq L/4.
+\]
+因此 $\varepsilon K_n^n\leq e^{-3L/4}\leq1$。对给定数据 $Y$，考虑所有在第 17.3 节所选采样网格上与 $Y$ 相差不超过 $\varepsilon$ 的模型。任意两个相容模型之间的矩差至多为 $2\varepsilon$，其谱底距离由式 (17.5) 控制。取相容谱底集合上下确界的中点；若该集合为空，任取 $E_-$。真模型总在相容集中，所以统一误差不超过 $C A^2/L^2$。
+
+**下界证明。** 令 $q$ 为不小于 $8L/A$ 的最小奇数。增大 $L_0$ 后有 $3\leq q\leq10L/A$。式 (17.7) 的右端不超过 $2\varepsilon$。为核对这一点，写 $r=L/U$。当 $r<1$ 时，$A<2$，故 $q\log4\geq4L$。当 $r\geq1$ 时，初等不等式
+\[
+\log(e+r)\leq2\sqrt r,\qquad \sqrt{e+r}\leq2\sqrt r
+\]
+给 $A\sqrt{e+r}\leq4r$，从而
+\[
+4q/U\geq32r/A\geq8\sqrt{e+r},\qquad
+q\log(4\max\{1,q/U\})\geq qA/2\geq4L.
+\]
+两种情形下曲线距离都至多为 $2e^{-4L}\leq2\varepsilon$。两条曲线的中点同时是二者的合法观测，任意估计在至少一侧的误差不小于谱底间距的一半。式 (17.6) 和 $q\leq10L/A$ 因而给出下界。
+
+### 17.6 推论：固定窗口的代价与足够长的窗口
+
+对任意固定 $T>0$，有
+\[
+\mathcal R_T(\varepsilon)
+=\Theta_{T,E_-,E_+,\eta}\left(
+\frac{\log\log(1/\varepsilon)}{\log(1/\varepsilon)}\right)^2.
+\tag{17.9}
+\]
+当 $T\geq1/E_+$ 时，这是式 (17.8) 的直接渐近结论。对固定的更小正 $T$，同一证明中 $A\sim\log L$ 以及 $L/A\to\infty$ 仍成立，允许起始阈值依赖于该 $T$，得到相同结论。
+
+若窗口 $T=T(\varepsilon)\geq1/E_+$ 可随精度增长，则在常数因子意义下达到全时间的 $\log^{-2}(1/\varepsilon)$ 阶，当且仅当 $E_+T(\varepsilon)$ 至少为 $\log(1/\varepsilon)$ 的一个固定正常数倍。更精确地，若 $E_+T/L\to0$，式 (17.8) 的下界与 $L^{-2}$ 的比值趋于无穷；若 $E_+T\geq c_1L$，$c_1>0$，则式 (17.8) 给出匹配的 $L^{-2}$ 阶。
+
+### 17.7 定理与问题：同时限制模态数时的联合下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的 $c>0$，使对 $d\geq1$、$0<\varepsilon<1$、$U=E_+T\geq1$，有
+\[
+\boxed{\mathcal R_{d,T}(\varepsilon)\geq
+c\max_{1\leq m\leq d}\frac1{m^2}
+\min\left\{1,\varepsilon^{1/(2m-1)}\max\{1,(2m-1)/U\}\right\}.}
+\tag{17.10}
+\]
+
+**证明。** 对 $m\geq2$，在第 17.4 节的构造中取 $q=2m-1$，并将能量缩放系数 $\kappa$ 换成 $\kappa v$，其中
+\[
+M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
+\]
+端点间距至少为 $c_2v/m^2$，而整个窗口的曲线差不超过
+\[
+2\left[\frac v4\min\{1,U/q\}\right]^q
+=2(v/(4M))^q\leq2\varepsilon.
+\]
+中点论证给出对应风险下界。$m=1$ 用 $\delta_{E_0}$ 与 $\delta_{E_0+\kappa\varepsilon}$，因为 $U\geq1$ 时该项的 $v=\varepsilon$；由 $e^{-E_0t}(1-e^{-\kappa\varepsilon t})\leq\kappa\varepsilon/E_0$ 得相同结论。最后使用 $\mathcal M_m\subseteq\mathcal M_d$ 并对 $m$ 取最大值。
+
+**问题。** 在同一模型类中，式 (17.10) 是否有一个常数与 $d,T$ 无关的匹配上界？式 (17.8) 已处理不限制模态数的情形，但不自动给出固定或缓慢增长的 $d$ 下的这个统一上界。还需区分：已知确切模态数、只知道模态上限、允许未排除的额外模式，以及允许正残余质量的模型。
+
+### 17.8 引用
+
+[17-A] NourElHouda Bourguiba and Abderrazek Karoui. *Weighted finite Laplace transform operator: spectral analysis and quality of approximation by its eigenfunctions*. Integral Transforms and Special Functions 29(9), 679–698, 2018. DOI: 10.1080/10652469.2018.1489804. https://arxiv.org/abs/1804.05207 . 有限 Laplace 算子的超指数谱衰减背景；其加权 $L^2$ 算子问题与这里固定端点原子权重的恢复风险不同。
+
+[17-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩的 Wasserstein 恢复背景；本节的支撑端点泛函及有限时间观察条件单独定义。
+
+[17-C] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 无分离条件的稀疏矩恢复背景。
+
 ## 22. 二进制极限逼近、机械读出敏感性与保序权重
 
 ### 22.1 定义与已有完成结果的边界
@@ -1531,12 +1783,179 @@ p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
 \]
 **证明。** $\sum_{k=0}^n|u+k\delta|$ 在 $u=-\delta t$、$t$ 为 $0,1,\ldots,n$ 的任一中位数时最小。可取 $t=n/2$，它满足局部条件。将两端关于中位数配对求和，得到 $\lfloor(n+1)^2/4\rfloor|\delta|$。这将零相位校准的主系数约减半，但保留 $n^2|\delta|$ 阶；没有对局部参数区间以外的全部相位平移声称全局最优。
 
-### 22.8 形式化范围与下一项问题
+### 22.8 证明覆盖与保留边界
 
-两个候选 Lean 主定理分别给出第 22.2 节的单侧精确敏感性及第 22.3 节的完整保序权重分类。第 22.4--22.7 节为上述普通数学证明，尚未声称完成其积分、无限和、黄金预算或联合校准的内核验证。下一项承重义务是把真实窗口的积分和无限加权极限接为 $L^1$ 等距定理，并研究带误码圆相位恢复；有限记录一致性与加权数值接近应保留不同的损失函数。
+本节的核心证明链由三个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。源码存在不代表已经执行 elaboration 或内核检查。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，以及第 22.11--22.12 节的精确原子表示与极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
 
 [22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
 
 [22-B] Franziskus Wiesnet and Nils Köpp. *Limits of real numbers in the binary signed digit representation*. Logical Methods in Computer Science 18(3:24), 2022. DOI: 10.46298/lmcs-18(3:24)2022. https://arxiv.org/abs/2103.15702v5 . 带收敛模量的带符号数字流极限与可验证程序提取；其 Minlog 结果不被算作本库新的 Lean 声明。
 
 [22-C] The Omega Institute, trureturing, inspected dev `6b430a6586586f56ae4f8f66c0e513f39db9fdeb`. `BisectionCompletion.lean`、`ReadoutTopology.lean`、`MechanicalBalance.lean`、`MechanicalPeriodicity.lean`、`GoldenHurwitzBound.lean` 为本节读取的实际源。新合入 PR #8335 在 `RECURSIVE_RELATIONAL_OBSERVATION.md` 第 36 节研究固定精确动力下的有限读出混合性；这里不将其有限混合性转述为全空间谱隙或数值替代后的同一性质。
+
+### 22.9 定理：一般几何完成与参数、截断的联合误差
+
+设 $0\leq r<1$、$0\leq\alpha,\beta<1$，并定义
+\[
+q_j=(1-r)r^j,\qquad P_{r,n}(\alpha,x)=\sum_{j=0}^{n-1}q_js_j(\alpha,x),\qquad
+G_r(\alpha,x)=\sum_{j=0}^{\infty}q_js_j(\alpha,x).
+\]
+对每个实相位 $x$，级数收敛，且
+\[
+\boxed{0\leq G_r(\alpha,x)-P_{r,n}(\alpha,x)\leq r^n.}
+\tag{22.14}
+\]
+两个完成读出在 $[0,1)$ 上可积，并满足
+\[
+\int_0^1|P_{r,n}(\beta,x)-P_{r,n}(\alpha,x)|\,dx
+=(1-r^n)|\beta-\alpha|,
+\]
+\[
+\boxed{\int_0^1|G_r(\beta,x)-G_r(\alpha,x)|\,dx=|\beta-\alpha|.}
+\tag{22.15}
+\]
+若 $\beta\leq\alpha$，则参数替代与输出截断的联合误差恰为
+\[
+\boxed{\int_0^1|G_r(\alpha,x)-P_{r,n}(\beta,x)|\,dx
+=\alpha-\beta(1-r^n)=(\alpha-\beta)+\beta r^n.}
+\tag{22.16}
+\]
+
+**证明。** 由实际字母属于 $\{0,1\}$，每项位于 $[0,q_j]$；而 $\sum q_j=1$、$\sum_{j<n}q_j=1-r^n$。正项级数比较同时给出收敛及式 (22.14)，包括 $r=0$ 和 $n=0$ 的约定 $r^0=1$。
+
+对任意实数 $t$，在 $x\in[0,1)$ 上直接展开进位：
+\[
+\lfloor x+t\rfloor=\lfloor t\rfloor+
+\mathbf1_{[1-\{t\},1)}(x).
+\]
+两边可积，右端积分是 $\lfloor t\rfloor+\{t\}=t$。相邻累计取整相减，便得到每个实际字母的积分为 $\alpha$，从而 $\int P_{r,n}(\alpha,x)dx=\alpha(1-r^n)$。几何权重递减且非负，式 (22.6) 证明有序参数对应逐相位有序读出；通过正项极限后，$G_r$ 也保序。有限读出在 $[0,1]$ 中，支配收敛给出完成读出的可积性及 $\int G_r(\alpha,x)dx=\alpha$。对有序参数，绝对差就是差，故积分得到式 (22.15)，交换参数覆盖另一顺序。最后由
+\[
+P_{r,n}(\beta,x)\leq G_r(\beta,x)\leq G_r(\alpha,x)
+\]
+消去式 (22.16) 的绝对值，使用已证明的两个均值即得结论。
+
+此证明由 `geometric_readout_isometric_completion` 承载，实际积分来自进位区间。二进制 $r=1/2$ 是其特例。若 $\beta$ 是 $p$ 位下方二进制逼近，则式 (22.16) 严格小于 $2^{-p}+2^{-n}$；这个预算控制相位平均误差，没有宣称全部相位上的同一界。
+
+### 22.10 定理：固定相位连续性的完整判据
+
+固定 $0<r<1$、$0<\alpha<1$ 和任意实相位 $x$。则
+\[
+\boxed{\beta\longmapsto G_r(\beta,x)\text{ 在 }\alpha\text{ 连续}
+\iff \forall k\geq1,\quad x+k\alpha\notin\mathbb Z.}
+\tag{22.17}
+\]
+若 $x+k\alpha=z\in\mathbb Z$，其中 $k\geq1$，则对每个 $0\leq\beta<\alpha$ 都有
+\[
+\boxed{G_r(\alpha,x)-G_r(\beta,x)\geq(1-r)^2r^{k-1}>0.}
+\tag{22.18}
+\]
+这里连续性使用完整的实数邻域；由于 $\alpha$ 是内部点，可把邻域限制在 $(0,1)$。$r=0$ 被明确排除，因为它只保留第一位，后续累计整数命中未必影响数值。
+
+**无整数命中时的证明。** 对给定 $N$，每个 $x+k\alpha$，$1\leq k\leq N$，到相邻整数的距离均为正。令
+\[
+d_N=\frac12\min\left(\{\alpha,1-\alpha\}\cup
+\left\{\frac{\min(\{x+k\alpha\},1-\{x+k\alpha\})}{k}:1\leq k\leq N\right\}\right)>0.
+\]
+$N=0$ 时内侧集合为空。若 $|\beta-\alpha|<d_N$，则 $\beta\in(0,1)$，前 $N$ 个累计取整完全相同，故 $P_{r,N}(\beta,x)=P_{r,N}(\alpha,x)$。两个尾部都位于 $[0,r^N]$，因此
+\[
+|G_r(\beta,x)-G_r(\alpha,x)|\leq r^N.
+\]
+给定正误差，取足够大的 $N$ 使 $r^N$ 小于它，便得到连续性。
+
+**整数命中时的证明。** 令
+\[
+D_j=\lfloor x+j\alpha\rfloor-\lfloor x+j\beta\rfloor\geq0,\qquad D_0=0.
+\]
+对任意 $N$，实际读出满足有限恒等式
+\[
+P_{r,N}(\alpha,x)-P_{r,N}(\beta,x)
+=q_ND_N+\sum_{j=0}^{N-1}(q_j-q_{j+1})D_{j+1}.
+\tag{22.19}
+\]
+它由展开相邻取整差后逐项抵消得到，也可按 $N$ 归纳。若在时间 $k$ 命中整数，则每个较小参数都有 $D_k\geq1$。因为
+\[
+q_j-q_{j+1}=(1-r)^2r^j>0,
+\]
+对 $N\geq k$，式 (22.19) 的右端至少为 $(1-r)^2r^{k-1}$。让 $N$ 增大，并使用式 (22.14)，该下界保留到完成读出，得到式 (22.18)。任意邻域中都能选择 $\beta<\alpha$，所以连续性不成立。这一论证处理了实际相邻 bit 的正负变化，未假设数值跳变不会抵消。
+
+`geometric_readout_continuity_and_jump` 同时承载式 (22.17) 的显式 $\varepsilon$-$\delta$ 形式与式 (22.18)。证明中的正前缀半径和无限下界均由真实取整计算导出。
+
+### 22.11 定理：原子分布表示及跳变的精确总量
+
+固定 $0<r<1$ 和 $0\leq x<1$，令
+\[
+a_k=(1-r)^2r^{k-1},\qquad
+\nu_{r,x}=\sum_{k=1}^{\infty}a_k\sum_{j=1}^{k}\delta_{(j-x)/k}.
+\tag{22.20}
+\]
+则 $\nu_{r,x}$ 是支撑于 $(0,1]$ 的概率测度，且对 $0\leq\alpha\leq1$，
+\[
+\boxed{G_r(\alpha,x)=\nu_{r,x}((0,\alpha])
+=\sum_{k=1}^{\infty}a_k\lfloor x+k\alpha\rfloor.}
+\tag{22.21}
+\]
+因此，内部斜率处的左跳变恰为
+\[
+\boxed{G_r(\alpha,x)-G_r(\alpha-,x)
+=\sum_{\substack{k\geq1\\x+k\alpha\in\mathbb Z}}(1-r)^2r^{k-1}.}
+\tag{22.22}
+\]
+
+**证明。** 对 $N\geq1$，有限 Abel 展开保留终端项为
+\[
+P_{r,N}(\alpha,x)
+=(1-r)r^{N-1}\lfloor x+N\alpha\rfloor
++\sum_{k=1}^{N-1}a_k\lfloor x+k\alpha\rfloor.
+\]
+这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。上述级数与测度推导是普通证明，不冒充新的 Lean 测度声明。
+
+当 $x=0$、$\alpha=p/q\in(0,1)$ 且分数既约时，命中时间恰好是 $q,2q,\ldots$，所以
+\[
+\boxed{G_r(p/q,0)-G_r((p/q)-,0)
+=\frac{(1-r)^2r^{q-1}}{1-r^q}.}
+\tag{22.23}
+\]
+当固定相位 $x$ 无理时，有理斜率不会命中整数；如果某个无理斜率命中一次，则不能再命中第二次，否则相减会强制斜率有理。因此这一情形的跳变若存在，就恰为单个 $a_k$。这说明连续性不能只按斜率的有理性分类，固定相位也参与判定。
+
+**推论：平均原子测度成为长度测度。** 对 $[0,1]$ 中任意 Borel 集 $A$，
+\[
+\boxed{\int_0^1\nu_{r,x}(A)\,dx=\lambda(A).}
+\tag{22.24}
+\]
+**证明。** 对固定 $k,j$，变量变换 $t=(j-x)/k$ 把均匀相位推送为区间 $((j-1)/k,j/k]$ 上密度 $k$ 的测度。对 $j=1,\ldots,k$ 求和得到 $k\lambda(A)$；再用非负级数与积分交换以及 $\sum ka_k=1$ 即得结论。各个相位的读出都是原子分布函数，而相位平均产生长度测度。这给出了点态跳变与式 (22.15) 的精确 $L^1$ 距离相容的具体机制，没有把两种拓扑等同。
+
+### 22.12 推论：改变位权的平均化与极限次序
+
+对 $0<r<1$、$0\leq\alpha<1$、$0\leq x<1$，式 (22.21) 给出
+\[
+G_r(\alpha,x)-\alpha
+=\sum_{k=1}^{\infty}a_k\bigl(x-\{x+k\alpha\}\bigr).
+\]
+由于 $\sum a_k=1-r$，得到
+\[
+\boxed{(1-r)(x-1)\leq G_r(\alpha,x)-\alpha\leq(1-r)x,
+\qquad |G_r(\alpha,x)-\alpha|\leq1-r.}
+\tag{22.25}
+\]
+因此 $r\uparrow1$ 时，完成读出对斜率、相位一致趋于 $\alpha$。这里改变的是位权本身，固定二进制比率 $r=1/2$ 的读出不包含这个极限。
+
+另一方面，固定有限 $n$ 时，每个权重 $(1-r)r^j$ 随 $r\uparrow1$ 趋于零，因此 $P_{r,n}(\alpha,x)\to0$。故
+\[
+\lim_{r\uparrow1}\lim_{n\to\infty}P_{r,n}(\alpha,x)=\alpha,
+\qquad
+\lim_{n\to\infty}\lim_{r\uparrow1}P_{r,n}(\alpha,x)=0.
+\tag{22.26}
+\]
+这两个极限在 $\alpha>0$ 时不同。若同时改变参数、位权和记录长度，对任意 $0\leq\beta<1$，三角不等式、式 (22.14) 与式 (22.25) 给出逐相位预算
+\[
+\boxed{|P_{r,n}(\beta,x)-\alpha|
+\leq r^n+(1-r)+|\beta-\alpha|.}
+\tag{22.27}
+\]
+所以 $\beta\to\alpha$、$r\uparrow1$、$r^n\to0$ 是一种明确的联合收敛方案。式 (22.25)--(22.27) 是基于已显示级数恒等式的普通推论；它们不宣称固定几何位权在参数上的一致连续性。
+
+### 22.13 文献关系
+
+[22-D] Michel Laurent and Arnaldo Nogueira. *Rotation number of contracted rotations*. Journal of Modern Dynamics 12, 175--191, 2018. DOI: 10.3934/jmd.2018007. https://www.aimsciences.org/article/doi/10.3934/jmd.2018007 . 使用 Hecke--Mahler 级数研究收缩旋转的参数与旋转数关系。相关的取整级数与阶梯现象属于已有研究；本节对指定实际机械读出、任意固定相位和所给误差泛函逐项证明，没有把不同参数映射直接识别。
+
+[22-E] DoYong Kwon. *A devil's staircase from rotations and irrationality measures for Liouville numbers*. arXiv:0709.1642, 2007. https://arxiv.org/abs/0709.1642 . 研究由机械词构造的另一阶梯函数及其连续性和单侧极限。其目标映射与本节的几何加权相位函数不同；本节不把无理连续、有理跳变的一般现象宣称为首次发现。
