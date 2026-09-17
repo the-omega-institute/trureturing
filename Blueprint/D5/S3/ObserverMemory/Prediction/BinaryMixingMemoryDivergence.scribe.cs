@@ -107,9 +107,9 @@ internal sealed class BinaryMixingMemoryDivergenceDocument : IScribeDocumentDefi
     private static Formula ResultFormula()
     {
         var p = Id("p");
-        var e = Id("epsilon");
+        var e = Varepsilon;
         var n = Id("N");
-        var d = Id("delta");
+        var d = DeltaLower;
         var r = Id("r");
         var s = Id("S");
         var s0 = Seq(Id("s"), Underscore, Grp(D(0)));
@@ -118,7 +118,7 @@ internal sealed class BinaryMixingMemoryDivergenceDocument : IScribeDocumentDefi
         var t = Id("t");
         var w = Id("w");
         var words = Seq(OpenBrace, D(0), Comma, D(1), CloseBrace, Caret, Grp(Star));
-        var error = Seq(Lvert, Call("t", Call("s", w)), Minus,
+        var error = Seq(Lvert, Sp, Call("t", Call("s", w)), Minus,
             Call("f", p, r, w), Rvert);
         return Disp(Seq(
             Forall, Sp, p, Comma, e, InMacro, Sp, Real, Comma, Sp,
@@ -129,7 +129,7 @@ internal sealed class BinaryMixingMemoryDivergenceDocument : IScribeDocumentDefi
             D(0), Sp, Lt, Sp, d, Sp, Land, Sp,
             Forall, Sp, r, InMacro, Sp, Real, Comma, Esc,
             Par(Seq(D(0), Sp, Lt, Sp, r, Sp, Land, Sp,
-                r, Sp, Lt, Sp, Call("min", d, Half))), Sp, Rightarrow, Sp,
+                r, Sp, Lt, Sp, Seq(Min, Par(Seq(d, Comma, Half))))), Sp, Rightarrow, Sp,
             Forall, Sp, s, Comma, Sp,
             OpenBracket, Operatorname, Grp(Id("Fintype")), Sp, s, CloseBracket, Comma, Esc,
             Forall, Sp, s0, InMacro, Sp, s, Comma, Sp,
