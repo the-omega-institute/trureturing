@@ -530,3 +530,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint endpoint linear source-deletion bound with complete tails](profile-notes/59-endpoint-linear-source-deletion-bound.md)
 - [Unit events force a positive outer-seven compatibility gap](profile-notes/60-unit-events-force-an-outer-seven-gap.md)
 - [Exact transformed-cost numerator reference on the actual tensor witness](profile-notes/61-exact-tensor-numerator-reference.md)
+- [Uniform endpoint square bound from original-cylinder intersections](profile-notes/62-endpoint-square-from-cylinder-intersections.md)
+- [Six original labels strengthen the endpoint square bound](profile-notes/63-six-original-labels-strengthen-the-endpoint-square.md)
