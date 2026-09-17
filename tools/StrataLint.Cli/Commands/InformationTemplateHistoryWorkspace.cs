@@ -6,20 +6,25 @@ namespace StrataLint.Cli;
 
 internal static class InformationTemplateHistoryWorkspace
 {
-    internal static void Prepare(string candidateRoot, string work, string identity,
+    internal static void Prepare(string candidateRoot, string work, string identity, string revision,
         ImmutableArray<RawRepositoryEntry> files, IGitProcessRunner runner)
     {
+        InformationTemplateJson.Hash(revision, 40);
         work = Path.GetFullPath(work);
         candidateRoot = Path.GetFullPath(candidateRoot);
         if (work == candidateRoot || work.StartsWith(candidateRoot + Path.DirectorySeparatorChar, StringComparison.Ordinal)
             || candidateRoot.StartsWith(work + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             throw new IOException("history execution directory must be outside the candidate repository");
         var marker = Path.Combine(work, ".git", "information-template-history");
+        var head = Path.Combine(work, ".git", "HEAD");
         if (Directory.Exists(work) && Directory.EnumerateFileSystemEntries(work).Any())
         {
             InformationTemplateHistoryBundle.RequireFile(marker);
             if (File.ReadAllText(marker) != identity + "\n")
                 throw new IOException("history execution directory belongs to a different plan");
+            InformationTemplateHistoryBundle.RequireFile(head);
+            if (File.ReadAllText(head) != revision + "\n")
+                throw new IOException("history execution source identity changed");
             var present = GitRepositorySnapshotReader.ReadCurrent(work);
             if (present.Entries.Length != files.Length || present.Entries.Any(e => !files.Any(f =>
                 f.Path == e.Path && f.GitMode == e.GitMode && f.Bytes.AsSpan().SequenceEqual(e.Bytes.AsSpan()))))
@@ -48,6 +53,10 @@ internal static class InformationTemplateHistoryWorkspace
         File.WriteAllText(Path.Combine(work, ".git", "info", "exclude"), ".lake/\n**/bin/\n**/obj/\n");
         Git(["-c", "core.hooksPath=/dev/null", "add", "--force", "--pathspec-from-file=-", "--pathspec-file-nul"],
             Encoding.UTF8.GetBytes(string.Concat(files.Select(e => e.Path + "\0"))));
+        // Historical run_meta commands read `git rev-parse HEAD`. Expose their
+        // original source identity as metadata, without creating or importing
+        // a commit. Object/ancestry reads remain unavailable in this index.
+        File.WriteAllText(head, revision + "\n");
         File.WriteAllText(marker, identity + "\n");
 
         void Git(string[] args, ReadOnlyMemory<byte> stdin = default)

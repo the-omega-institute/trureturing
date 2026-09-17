@@ -8,6 +8,24 @@ namespace StrataLint.Tests;
 public sealed class InformationTemplateHistoryBoundaryTests
 {
     [Fact]
+    public void prepared_workspace_exposes_source_identity_without_commit_objects()
+    {
+        using var fixture = new InformationTemplateHistoryFixture();
+        fixture.SeedPlan();
+        var arguments = new[] { "prepare", "--plan", fixture.Plan, "--revision", fixture.Seed, "--work", fixture.Work };
+        Assert.True(fixture.Command(arguments).Success);
+        var head = fixture.Run("git", ["rev-parse", "HEAD"], fixture.Work, TimeSpan.FromSeconds(10));
+        Assert.True(head.ExitCode == 0, "[FAIL] prepared_workspace_exposes_source_identity_without_commit_objects: historical run_meta cannot read HEAD");
+        Assert.Equal(fixture.Seed, System.Text.Encoding.UTF8.GetString(head.StandardOutput).Trim());
+        Assert.NotEqual(0, fixture.Run("git", ["cat-file", "-e", "HEAD^{commit}"],
+            fixture.Work, TimeSpan.FromSeconds(10)).ExitCode);
+        Assert.Equal("", ReviewRegressionTests.RunGit(fixture.Work, "remote"));
+        Assert.True(fixture.Command(arguments).Success);
+        File.WriteAllText(Path.Combine(fixture.Work, ".git", "HEAD"), fixture.Head + "\n");
+        Assert.False(fixture.Command(arguments).Success);
+    }
+
+    [Fact]
     public void bundle_symlinks_cannot_validate_as_regular_members()
     {
         using var fixture = new InformationTemplateHistoryFixture();

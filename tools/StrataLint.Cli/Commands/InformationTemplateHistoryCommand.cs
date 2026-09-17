@@ -104,7 +104,7 @@ internal static class InformationTemplateHistoryCommand
                 : throw new FormatException("history prepare requires --work");
             if (arguments[0] == "prepare")
             {
-                Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, Work(), pair, material.Files, runner));
+                Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, Work(), pair, revision, material.Files, runner));
                 return Result("prepared", false);
             }
             if (arguments[0] == "validate")
@@ -152,7 +152,7 @@ internal static class InformationTemplateHistoryCommand
                     {
                         var work = options.TryGetValue("--work", out var requestedWork) ? Path.GetFullPath(requestedWork)
                             : ownedWork = Directory.CreateTempSubdirectory("stratalint-history-work-").FullName;
-                        Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, work, pair, material.Files, runner));
+                        Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, work, pair, revision, material.Files, runner));
                         if (options.TryGetValue("--cache-donor", out var donor))
                             Timed("cache_seed", () => InformationTemplateHistoryCacheSeed.Copy(work, donor));
                         var inspectorStart = clock.GetTimestamp();
