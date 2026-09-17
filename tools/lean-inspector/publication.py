@@ -404,11 +404,15 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None, *, mode=None, manifest=None):
+def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None):
     report, destination = Path(report), Path(destination)
-    destination.parent.mkdir(parents=True, exist_ok=True)
     _require_bundle_files(report)
-    with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=destination.parent) as directory:
+    # Optional report reuse precedes ensure. A rejected seed must not create a
+    # cold .lake and thereby change the ordinary provisioning path.
+    staging_parent = destination.parent
+    while not staging_parent.exists():
+        staging_parent = staging_parent.parent
+    with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=staging_parent) as directory:
         # Keep the incoming basename and every sidecar byte until the complete
         # private snapshot has passed canonical and current repository checks.
         staged = Path(directory) / 'bundle' / report.name
@@ -416,6 +420,8 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         for suffix in SUFFIXES:
             shutil.copyfile(member(report, suffix), member(staged, suffix))
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
+        if expected_hashes is not None and accepted != expected_hashes:
+            raise ValueError('publication snapshot differs from sealed bundle')
         validate_bundle(staged, expected, repository, manifest=manifest)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
@@ -435,6 +441,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         _require_bundle_files(staged)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed after validation')
+        destination.parent.mkdir(parents=True, exist_ok=True)
         previous = Path(directory) / 'previous'
         previous.mkdir()
         backups = {}

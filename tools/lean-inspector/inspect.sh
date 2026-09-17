@@ -82,20 +82,46 @@ run_phase inputs python3 "$SCRIPT_DIR/../scripts/report/lean-report-selection.py
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
-else
+fi
+open_logs() {
+  mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
+  mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"
+  LOG_DIR="$FINAL_LOG_DIR"
+  export STRATALINT_INSPECTOR_ACTIVITY="$LOG_DIR/native-work.jsonl"
+  : > "$STRATALINT_INSPECTOR_ACTIVITY"
+  export STRATALINT_INSPECTOR_PHASES="$LOG_DIR/native-phases.jsonl"
+  : > "$STRATALINT_INSPECTOR_PHASES"
+}
+reuse_report() {
+  local status=0
+  python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
+    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" --lake "$LAKE" || status=$?
+  printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
+  # An optional seed miss is normal. Parser/registration failures still block.
+  if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
+  return "$status"
+}
+run_phase reuse reuse_report
+if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
+  open_logs
+  cat "$LOG_DIR/reuse.stdout.log"
+  exit 0
+fi
+cat "$LOG_DIR/reuse.stdout.log"
+run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
+  --lake "$LAKE" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+# A failed new default/report run must not leave an apparent successful seal.
+rm -f -- "${OUTPUT}.reuse.json"
+if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
     --configuration Release --nologo --verbosity quiet
 fi
 run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
-mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
-mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"
-LOG_DIR="$FINAL_LOG_DIR"
-export STRATALINT_INSPECTOR_ACTIVITY="$LOG_DIR/native-work.jsonl"
-: > "$STRATALINT_INSPECTOR_ACTIVITY"
-export STRATALINT_INSPECTOR_PHASES="$LOG_DIR/native-phases.jsonl"
-: > "$STRATALINT_INSPECTOR_PHASES"
+open_logs
 # The package facet demands all ordinary defaults/audits and owns module work.
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
+run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
+  --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"

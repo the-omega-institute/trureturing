@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Production actions for Lake's Inspector facets; Lake owns all reuse decisions."""
+"""Production actions for Lake's Inspector facets; Lake owns module invalidation."""
 from __future__ import annotations
 
 import json

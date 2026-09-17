@@ -375,8 +375,14 @@ jobs:
       - name: Install required Lean toolchain
         if: steps.route.outputs.lake == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: report_resources
+        name: Validate optional report seed and resolve remaining resources
+        if: steps.route.outputs.cache_layers != ''
+        env:
+          CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
@@ -384,20 +390,19 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
           path: ${{ steps.keys.outputs.project_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - name: Restore optional Lean and current evidence
-        if: steps.route.outputs.cache_layers != ''
+      - name: Restore optional Lean build evidence
+        if: steps.report_resources.outputs.needs_lake == 'true'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --current-key "$CURRENT_KEY"
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         env:
@@ -429,7 +434,7 @@ jobs:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
       - id: snapshot_project
-        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != ''
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
@@ -442,7 +447,7 @@ jobs:
           path: ${{ steps.keys.outputs.project_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - id: snapshot_dependency
-        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.dependency_key != ''
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'

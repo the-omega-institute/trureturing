@@ -24,6 +24,74 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
 
+    def test_report_route_uses_only_declared_complete_receipts_and_never_publishes(self):
+        owner = self.owner()
+        seed = self.root / "build/ci/current-check-seed"
+        seed.mkdir(parents=True)
+        report = "build/ci/check-material/" + "a" * 64 + "/" + "b" * 32 + "/" + "e" * 32 + "/report/raw-lean-report.json"
+        declared = [report + suffix for suffix in (*SUFFIXES, ".reuse.json")]
+        path = seed / report
+        path.parent.mkdir(parents=True)
+        for relative in declared:
+            (seed / relative).write_text("producer-owned fixture material\n")
+        unit = dict(report=report, materials=[dict(path=relative, sha256="a" * 64) for relative in declared])
+        checks = dict(version=2, stage="current", candidate="c" * 64, round="d" * 32, units=[unit, unit])
+        manifest = seed / "checks.json"
+        manifest.write_text(json.dumps(checks))
+        for defect in ("none", "legacy", "escape", "producer-miss"):
+            with self.subTest(defect=defect):
+                altered = json.loads(json.dumps(checks))
+                if defect == "legacy":
+                    for row in altered["units"]: row["materials"] = row["materials"][:-1]
+                if defect == "escape":
+                    for row in altered["units"]: row["report"] = "../outside/raw-lean-report.json"
+                manifest.write_text(json.dumps(altered))
+                result = subprocess.CompletedProcess([], 0, json.dumps(dict(needs_lake=defect == "producer-miss")), "")
+                with mock.patch.object(owner.subprocess, "run", return_value=result) as probe:
+                    selected = owner.report_seed(self.root, pathlib.Path("/declared/lake"))
+                self.assertEqual(str(path) if defect == "none" else None, selected)
+                self.assertEqual(1 if defect in ("none", "producer-miss") else 0, probe.call_count)
+                if probe.called:
+                    arguments = probe.call_args.args[0]
+                    self.assertIn("probe", arguments)
+                    self.assertIn(str(path), arguments)
+                    self.assertIn("/declared/lake", arguments)
+                self.assertFalse((self.root / REPORT).exists())
+
+    def test_report_route_missing_seed_does_not_invoke_a_producer_or_claim_success(self):
+        owner = self.owner()
+        with mock.patch.object(owner.subprocess, "run") as probe:
+            self.assertIsNone(owner.report_seed(self.root, pathlib.Path("/declared/lake")))
+        probe.assert_not_called()
+
+    def test_report_preparation_restores_only_current_and_keeps_normal_producer_selected(self):
+        owner = self.owner()
+        sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+        planner = importlib.import_module("ci_plan")
+        for report_required, reusable in ((True, False), (True, True), (False, False)):
+            with self.subTest(report_required=report_required, reusable=reusable):
+                plan = {"execution": {"steps": ["lean-report"] if report_required else ["filemap"]}}
+                requirements = dict(cache_layers=["current", "dependency", "project"] if report_required else ["current"],
+                                    tools=["lake"] if report_required else [])
+                selected = str(self.root / "build/ci/current-check-seed/report.json") if reusable else None
+                with mock.patch.dict(os.environ, dict(self.env, CANDIDATE_SHA=REV,
+                        CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
+                     mock.patch.object(sys, "argv", [str(CACHE), "prepare-report", "--repository", str(self.root),
+                        "--stage", "current", "--current-key", "transported-seed"]), \
+                     mock.patch.object(planner, "git", return_value=(REV + "\n").encode()), \
+                     mock.patch.object(planner, "validate_plan", return_value=plan), \
+                     mock.patch.object(planner, "stage_requirements", return_value=requirements), \
+                     mock.patch.object(owner, "restore") as restore, \
+                     mock.patch.object(owner, "report_seed", return_value=selected) as probe, \
+                     mock.patch.object(owner.shutil, "which", return_value="/declared/lake"), \
+                     contextlib.redirect_stdout(io.StringIO()) as result:
+                    self.assertEqual(0, owner.main())
+                self.assertEqual(["current"], restore.call_args.args[3])
+                self.assertEqual(int(report_required), probe.call_count)
+                self.assertIn("needs_lake=" + str(report_required and not reusable).lower(), result.getvalue())
+                self.assertIn("STRATALINT_LEAN_REPORT_REUSE=" + (selected or ""), result.getvalue())
+                self.assertEqual(["lean-report"] if report_required else ["filemap"], plan["execution"]["steps"])
+
     def prepare_current(self):
         self.report = self.root / REPORT
         self.report.parent.mkdir(parents=True)

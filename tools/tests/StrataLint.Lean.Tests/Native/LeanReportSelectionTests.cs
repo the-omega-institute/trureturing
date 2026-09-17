@@ -10,8 +10,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "utility-input-build", "ensure", "report", "publish" }
-                     : new[] { "", "inputs", "ensure", "report", "publish" })
+                     ? new[] { "", "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
+                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -33,13 +33,22 @@ public sealed class LeanReportSelectionTests
         var stubDirectory = Path.Combine(fixture, "fixture-bin");
         ScriptHarnessScratch.EnsureDirectory(stubDirectory);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "python3"), """
+            [[ "${1:-}" != -B ]] || shift
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
               */native.py) phase=publish ;;
+              */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
             printf '%s\n' "$phase" >> "$INSPECTOR_TEST_PHASES"
             [[ "$phase" != "$INSPECTOR_TEST_FAILURE" ]] || exit 23
+            [[ "$phase" != reuse ]] || exit 3
+            if [[ "$phase" == capture ]]; then
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --snapshot ]]; then printf '{}\n' > "$2"; break; fi
+                shift
+              done
+            fi
             if [[ "$phase" == publish ]]; then
               printf 'published\n' > "$4"
               printf 'fixture report published\n'
@@ -80,13 +89,14 @@ public sealed class LeanReportSelectionTests
         var result = TestProcessRunner.Run("env", arguments,
             temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
-        Assert.Equal(failedPhase.Length == 0 ? 0 : 23, result.ExitCode);
+        Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
+            $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "utility-input-build", "ensure", "report", "publish" }
-            : new[] { "inputs", "ensure", "report", "publish" };
+            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
+            : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
-        Assert.Equal(failedPhase.Length == 0, File.Exists(report));
+        Assert.Equal(failedPhase.Length == 0 || failedPhase == "seal", File.Exists(report));
         var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Equal(failedPhase.Length == 0 ? "fixture report published\n" : "", standardOutput);
         Assert.DoesNotContain("LEAN_INSPECTOR_PHASE", standardOutput, StringComparison.Ordinal);
