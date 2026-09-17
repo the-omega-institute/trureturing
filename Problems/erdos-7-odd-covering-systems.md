@@ -202,6 +202,13 @@ independent Xi rebate. The full common-test killed objective,
 mask-dependent conditions and cross-stage correlations remain open
 targets; fixing the source does not fix those data.
 
+The [conditional-deletion boundary](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-positive-unit-load-event-can-be-completely-deleted)
+(CB1)--(CB2) gives an actual source of Haar density below2 with positive
+unit-load mass that AP17 deletes completely. This rules out deriving
+a positive conditional survival fraction from those two source facts
+alone. The wider low-load bands and their actual deletion bounds remain
+unsettled.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right

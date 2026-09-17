@@ -15322,3 +15322,27 @@ The convergence follows uniformly on the finite old carrier and test domain. A s
 For p=19, start with one already specified normalized physical mu17 from its actual AP13-to17 construction, including all original17 heights. The new d_i may contain17 factors; choosing Q among them preserves those exact heights in the full family. The19 source is then exactly that same mu17. No conditioning is inserted and no independently chosen17 family is substituted. This establishes a source-preserving19 statement without asserting that the17 and19 Xi maxima can be attained by one final common test.
 
 Finally, the optimizing A_H can have substantial energy on the charged event C. The deleted old-square term E_mu[beta_H A_H^2] is retained in the full killed objective and need not tend to0. The CT terms, their shared-label correlations, and the gap between separately maximizing the stages are not bounded by SPF1. Thus the useful remaining conditional target is a bound on the full same-test killed or signed objective, rather than a positive standalone Xi rebate inferred only from high old-source energy. No general KC numerical bound or unrestricted Erdős #7 endpoint is claimed.
+
+### A positive unit-load event can be completely deleted
+
+Source density and positive low-load mass do not, by themselves, give a positive conditional survival fraction in CT5. Fix H>=16 and reuse the actual ternary family from CT6: the forbidden class at3^n is3^(n-1)-1, while the inherited test at3^n is2*3^(n-1)-1, for1<=n<=H. Include the unit test. There are no5,7,11 or13 exclusions, so the actual AP13 law nu is uniform on the complete old survivor set S_H. Its Haar mass is(1+3^-H)/2 and its density is strictly below2.
+
+On that source the complete old test A takes values1 and2. Its unit-load event is precisely E={-1 mod3^H}, with
+
+    nu(E)=2/(3^H+1)>0.                            (CB1)
+
+Add pure0 modulo17 and, for n=1,...,16, the original mixed class of modulus3^n*17 with CRT residues
+
+    x=-1 mod3^n,  y=n mod17.
+
+All H+17 actual moduli are distinct. Their period is3^H*17, and every one of its2(H+1) complete test labels remains available. At H16 every nonunit divisor has its actual forbidden class. For larger H the additional mixed exclusions are absent, but their test labels are retained. An explicit full test extends the inherited A by choosing its old residues in each positive17 label and current root16.
+
+On every old point of E, all16 mixed masks are active. They cover all16 nonzero roots of the actual pure17 base, giving alpha17=1. The prescribed threshold delta=7/15 therefore gives
+
+    beta17=(alpha17-delta)_+/(1-delta)=1,
+    K17^-1=0 on E,
+    nu(1_E beta17)=nu(E),  eta(E)=0.               (CB2)
+
+Here the19 factor is absent, so its step is identity. In particular no universal estimate nu(1_E beta17)<=theta*nu(E) with theta<1 follows even with the source density below2 and nu(E)>0. The family does not cover all integers: on the positive source cylinder1 mod3 none of these mixed masks is active, so every nonzero17 root survives there.
+
+The example concerns E={A=1}. The wider band A<=2 is the entire source, and CB2 does not exclude a useful conditional estimate for such broader bands or a tradeoff with the same test's positive-current energy. It specifies the extra deletion information required by CT5, without replacing that obligation by a source-density bound.
