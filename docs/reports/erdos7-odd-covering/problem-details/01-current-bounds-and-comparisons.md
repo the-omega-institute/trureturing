@@ -3,7 +3,12 @@
 # Current bounds and comparisons
 
 
-An [all-height common-layout bound retaining one original five test](../profile-notes/32-unequal-source-norms-sharpen-the-uniform357-input.md#one-original-five-test-couples-square-loss-to-mixed-deletion)
+The [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+gives `Gamma13<=74165888355209854559/475902450448556274<155.842628`
+for the same actual AP(4,6) law. The following earlier construction and
+its continuation bounds remain valid.
+
+The previous [all-height common-layout bound retaining one original five test](../profile-notes/32-unequal-source-norms-sharpen-the-uniform357-input.md#one-original-five-test-couples-square-loss-to-mixed-deletion)
 gives `Gamma13<=2759803303859498317/17626016683279862<156.575553`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
@@ -59,21 +64,22 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<99.019600`. The sufficient finite joint-frontier bounds
-are therefore303.979 for the large core and303.717 for the smaller one,
-at W403. Row potentials coupled to the actual cap and charge, whole
-weighted original-layout costs and complete tails give the all-family
-upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<449.266218`.
-The same-law source square bound `Gamma357<=5761/159` retains unequal
-original-block norms and the same original modulus5 test in both the
-selected square and the mixed7 deletion estimate. Its improved cap is
-applied only to that one label; mod15,45,... keep their separate original
-five-coordinate residues. The complete consumer improves the preceding
-weighted-Young comparison449.293953 but remains
-above both required allowances. The19 input of this KC functional is
-the normalized physical mu17; the actual killed input xi in BM/RC is
-not substituted. All these are ordinary inequalities with exact
-rational certificates.
+`sup E(A^2-81)_+<98.980966`. The sufficient finite joint-frontier bounds
+are therefore304.018 for the large core and303.756 for the smaller one,
+at W403. [Retaining the same original event where kept or removed](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+gives the all-family upper bound
+`F17^-(403;nu13)+F19^-(403;physical mu17)<439.673530`.
+The source square bound is `Gamma357<=765767/21465`. One original
+modulus5 test couples the selected source increment to actual mixed7
+deletion; six pure3 cofactor events spend its common removed-mass budget.
+Forty-one fixed convex costs and five quadratic AP costs retain every
+other original label and the complete tails. Mod15,45,... keep their
+separate original five-coordinate residues. The exact rational certificate
+checks1,127,520 final norm inequalities and all continuous-domain
+coefficient conditions. The bound improves449.266218 but remains
+more than135.655162 above the larger exact allowance. The19 input is normalized
+physical mu17; the killed input xi in BM/RC is not substituted. These
+are ordinary inequalities with exact certificates, not Lean results.
 
 The finite criterion's strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming
