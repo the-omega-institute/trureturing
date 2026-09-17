@@ -8,12 +8,13 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentPrebuiltCliContractTests
 {
     [Theory]
+    [InlineData("bound", null, null, null)]
     [InlineData("bound", null, null, "2")]
     [InlineData("bound", "321", "654", "7")]
     [InlineData("changed-dll", null, null, "7")]
     [InlineData("changed-producer-dll", null, null, "7")]
     [InlineData("changed-source", null, null, "7")]
-    public void CurrentHandsOnlyValidatedCliToProducerWithoutRepeatingEngineering(string scenario, string? buildBudget, string? lockBudget, string leanThreads)
+    public void CurrentHandsOnlyValidatedCliToProducerWithoutRepeatingEngineering(string scenario, string? buildBudget, string? lockBudget, string? leanThreads)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("current-prebuilt-").FullName;
@@ -88,7 +89,8 @@ public sealed class CurrentPrebuiltCliContractTests
                 Assert.Equal((lockBudget ?? "21600") + "\n", TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/producer-lock-budget")));
                 Assert.Equal(Path.Combine(root, "build/ci/logs/current/lean-inspector") + "\n",
                     TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/producer-log-dir")));
-                Assert.Equal("true\n1\n", TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/producer-execution")));
+                Assert.Equal("true\n" + (leanThreads ?? "unset") + "\n",
+                    TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/producer-execution")));
                 Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/logs/current/lean-inspector/stale.exit.log")));
             }
             else

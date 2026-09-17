@@ -342,13 +342,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         start.Environment["CI"] = "true";
-        // policy-override (2026-09-14, #7580; owner: repository CI maintainers).
-        // CI/preflight current: run 34770677471 confirmed OOM; a real two-module
-        // probe reduced overlap from 2 to 1 and preserved failures. Not capacity-derived.
-        // Review on single-worker failure or comparable hosted memory/time evidence.
         if (stage == "current")
         {
-            start.Environment["LEAN_NUM_THREADS"] = "1";
             // A missing optional seed must reach the selected producer. The local
             // ensure command retains its guard outside CI/preflight's child scope.
             start.Environment["STRATALINT_ACCEPT_COLD_BUILD"] = "1";
