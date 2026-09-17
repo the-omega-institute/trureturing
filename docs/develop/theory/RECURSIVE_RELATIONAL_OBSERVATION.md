@@ -20487,3 +20487,601 @@ $$
 $t=1$ 时由 theorem 49.9，所有允许 $D$ 都整除 $1806$，而 $1806$ 自身允许，所以最大元正是 $1806$。证毕。
 
 ## 49.99 追加锚
+## 50. 阈值—超自然算术完成上的最大公因数与最小公倍数
+
+**定义 50.0（阈值—超自然逆极限及两种算术运算）。** 取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+t\in\mathbb N_0\cup\{\infty\},
+$$
+并取超自然数
+$$
+D=\prod_p p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+有限正整数 $m$ 的记号 $m\mid D$ 表示对每个素数 $p$ 都有 $v_p(m)\le e_p$。定义
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\ge1,\ m\mid D\},
+$$
+其中
+$$
+(u,m)\preceq(v,n)\iff u\le v\ \land\ m\mid n.
+$$
+在 $\mathbb N_0$ 上定义
+$$
+a\mathrel{R_{u,m}}b
+\iff
+a=b\ \lor\ \bigl(a,b\ge u\ \land\ a\equiv b\pmod m\bigr),
+$$
+令
+$$
+Q_{u,m}=\mathbb N_0/R_{u,m},
+\qquad
+q_{u,m}:\mathbb N_0\to Q_{u,m}.
+$$
+若 $(u,m)\preceq(v,n)$，则 $R_{v,n}\subseteq R_{u,m}$，故有规范遗忘映射
+$$
+b_{(v,n),(u,m)}:Q_{v,n}\to Q_{u,m}.
+$$
+定义
+$$
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m},
+\qquad
+j(a)=\bigl(q_{u,m}(a)\bigr)_{(u,m)\in I_{t,D}}.
+$$
+每个 $Q_{u,m}$ 取离散拓扑，$K_{t,D}$ 取逆极限拓扑。采用
+$$
+\gcd(0,0)=0,\qquad \gcd(0,n)=n,
+$$
+以及
+$$
+\operatorname{lcm}(0,n)=0.
+$$
+记
+$$
+g(a,b)=\gcd(a,b),\qquad \ell(a,b)=\operatorname{lcm}(a,b).
+$$
+记 $D\mid2$ 表示 $e_p=0$ 对所有 $p\ne2$ 且 $e_2\le1$；等价地，$D=1$ 或 $D=2$。本节只讨论从整个 $K_{t,D}^2$ 到同一个 $K_{t,D}$ 的联合连续延拓。
+
+关于阈值—周期同余的公开基线是固定提交
+[RECURSIVE_RELATIONAL_OBSERVATION.md, §11 与 §14](https://github.com/the-omega-institute/trureturing/blob/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；其中 §11.2 使用同一类阈值—周期同余，§14.1 构造有限离散逆极限并区分“输出层”与“更细输入层”，§14.2 的证明明确给出连续有限输出必须由某个统一有限输入精度决定的判据。加法幺半群 $\mathbb N_0$ 的非平凡同余具有唯一阈值—周期形，见 East–Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:2010.04392v3, §2.1，特别是其公式
+$\theta=(m,m+d)^\sharp$：
+[公开文本](https://arxiv.org/html/2010.04392v3#S2.SS1)。有限离散逆极限与开闭有限细化所需的拓扑事实见 Stacks Project, Tag 08ZW, Definition 5.22.1 与 Lemmas 5.22.2, 5.22.4：
+[公开文本](https://stacks.math.columbia.edu/tag/08ZW)。这些引用只提供既有拓扑与同余框架；以下 gcd/lcm 分类由本节直接证明。
+
+**theorem 50.1（稠密自然核心与统一有限输入因子化）。** $I_{t,D}$ 是有向集，每个 $Q_{u,m}$ 有限，$K_{t,D}$ 是紧致 Hausdorff 的零维空间，且 $j(\mathbb N_0)$ 在 $K_{t,D}$ 中稠密。更精确地，若 $B$ 是有限离散空间且
+$$
+F:K_{t,D}^2\to B
+$$
+连续，则存在一个共同输入坐标 $\beta=(v,M)\in I_{t,D}$ 及映射
+$$
+\bar F:Q_\beta^2\to B
+$$
+使
+$$
+F=\bar F\circ(\pi_\beta\times\pi_\beta).
+$$
+若预先指定任意 $\alpha\in I_{t,D}$，还可要求 $\alpha\preceq\beta$。
+
+**证明。** 对任意 $(u,m),(v,n)\in I_{t,D}$，
+$$
+\bigl(\max\{u,v\},\operatorname{lcm}(m,n)\bigr)\in I_{t,D}
+$$
+且同时细化二者，因为有限整数 $m,n$ 都整除 $D$ 时其最小公倍数仍整除 $D$。故指标集有向。$Q_{u,m}$ 至多包含 $u$ 个孤立初始类及 $m$ 个尾部剩余类，因此有限。有限离散空间的乘积紧致 Hausdorff，逆极限由相容方程切出闭子空间，故 $K_{t,D}$ 紧致 Hausdorff 且零维。
+
+证明稠密性。任取非空基本柱邻域，只涉及有限多个坐标。取这些坐标的共同细化 $\beta$。邻域中某点的 $\beta$ 坐标属于 $Q_\beta$，故等于 $q_\beta(n)$ 对某个 $n\in\mathbb N_0$。相容性保证 $j(n)$ 在所有原先指定坐标上与该点相同，所以 $j(n)$ 落入该邻域。故 $j(\mathbb N_0)$ 稠密，进而 $j(\mathbb N_0)^2$ 在 $K_{t,D}^2$ 中稠密。
+
+现令 $F:K_{t,D}^2\to B$ 连续。每个纤维 $F^{-1}(\{b\})$ 都开闭。由有限个纤维组成的开覆盖及逆极限的柱集基，对每一点可取一个包含于其纤维的有限坐标柱；紧致性给出有限子覆盖。把这些有限柱所涉及的全部坐标在两个输入槽中共同细化到单一 $\beta$。于是两个点若具有相同的 $\beta$ 坐标对，就落在完全相同的这些柱原子中，从而具有相同的 $F$ 值。因此 $F$ 经 $Q_\beta^2$ 因子化。若还指定 $\alpha$，再把 $\beta$ 替换为 $\alpha\vee\beta$ 即可。这里正使用了 Stacks Project Tag 08ZW, Lemma 5.22.4 所表达的有限开闭细化事实。证毕。
+
+**theorem 50.2（连续二元算术延拓的精确有限逃逸判据）。** 设
+$$
+h:\mathbb N_0^2\to\mathbb N_0.
+$$
+存在联合连续
+$$
+H:K_{t,D}^2\to K_{t,D}
+$$
+满足
+$$
+H(j(a),j(b))=j(h(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+\forall\alpha\in I_{t,D}\ \exists\beta\in I_{t,D},\quad
+\alpha\preceq\beta
+$$
+且
+$$
+\forall a,a',b,b'\in\mathbb N_0,\quad
+a\mathrel{R_\beta}a'\ \land\ b\mathrel{R_\beta}b'
+\Longrightarrow
+h(a,b)\mathrel{R_\alpha}h(a',b').
+\tag{50.1}
+$$
+若延拓存在则唯一。因此，要否定延拓，必须为某个输出层 $\alpha$ 证明：对每一个允许的更细输入层 $\beta\succeq\alpha$ 都存在逃逸，而只展示某一个有限商上的同层失败并不足够。
+
+**证明。** 必要性：若 $H$ 存在，固定输出坐标 $\alpha$。有限离散值映射
+$$
+\pi_\alpha\circ H:K_{t,D}^2\to Q_\alpha
+$$
+由定理 50.1 经某个共同坐标 $\beta$ 因子化；再共同细化可令 $\beta\succeq\alpha$。在稠密自然核心上代入 $j(a),j(b)$，得到 (50.1)。
+
+充分性：对每个 $\alpha$ 选取满足 (50.1) 的 $\beta(\alpha)$。于是
+$$
+f_\alpha\bigl(q_{\beta(\alpha)}(a),q_{\beta(\alpha)}(b)\bigr)
+=
+q_\alpha(h(a,b))
+$$
+良定义，并给出连续有限值映射
+$$
+H_\alpha=f_\alpha\circ
+(\pi_{\beta(\alpha)}\times\pi_{\beta(\alpha)}).
+$$
+若 $\alpha\preceq\alpha'$，则
+$$
+b_{\alpha',\alpha}\circ H_{\alpha'}
+$$
+与 $H_\alpha$ 在稠密集 $j(\mathbb N_0)^2$ 上都等于
+$q_\alpha\circ h$，而目标 $Q_\alpha$ Hausdorff，故二者处处相等。因此 $(H_\alpha)_\alpha$ 是相容线程，定义唯一映射
+$$
+H:K_{t,D}^2\to K_{t,D}.
+$$
+每个坐标 $H_\alpha$ 连续，所以 $H$ 连续。它在自然核心上等于 $j\circ h$。若 $H,H'$ 都是连续延拓，它们在稠密的 $j(\mathbb N_0)^2$ 上相等，目标 Hausdorff，故 $H=H'$。证毕。
+
+**theorem 50.3（gcd 的完全分类）。** 存在联合连续映射
+$$
+G:K_{t,D}^2\to K_{t,D},
+\qquad
+G(j(a),j(b))=j(\gcd(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+t\le1
+\qquad\text{且}\qquad
+D\mid2.
+\tag{50.2}
+$$
+因此 gcd 只出现在下列四个有限模型中：
+$$
+(t,D)\in\{(0,1),(0,2),(1,1),(1,2)\},
+$$
+其基数分别为 $1,2,2,3$。在这四种情形中，每一个允许的有限输出层本身已经足够作为输入层；无需更细输入坐标。
+
+**证明。** 先证明阈值必要性。设 $t\ge2$，取输出层
+$$
+\alpha=(2,1).
+$$
+任取允许的更细输入层
+$$
+\beta=(v,M)\succeq(2,1).
+$$
+选择充分大的整数 $k$，令
+$$
+A=kM+1>v,\qquad B=A+M.
+$$
+则 $A,B\ge v$ 且 $A\equiv B\pmod M$，故
+$$
+A\mathrel{R_\beta}B.
+$$
+比较两对输入
+$$
+(A,A),\qquad(A,B).
+$$
+第一槽完全相同，第二槽在 $R_\beta$ 下相同；然而
+$$
+\gcd(A,A)=A\ge2,
+$$
+而
+$$
+\gcd(A,B)=\gcd(A,M)=1,
+$$
+因为 $A\equiv1\pmod M$。在 $Q_{2,1}$ 中，$1$ 是孤立初始类，而所有不小于 $2$ 的整数属于尾类，因此两个输出不同。这个逃逸对每一个 $\beta\succeq\alpha$ 都成立，定理 50.2 排除连续延拓。故必须 $t\le1$。
+
+再证明模数必要性。若 $D\nmid2$，则存在有限除数 $m\mid D$ 满足 $m>2$。取输出层
+$$
+\alpha=(0,m).
+$$
+任取
+$$
+\beta=(v,M)\succeq(0,m),
+$$
+于是 $m\mid M$。选择充分大的 $k$ 并令
+$$
+a=d=kM-1>v,\qquad b=a+M.
+$$
+则
+$$
+a\equiv b\equiv d\equiv-1\pmod M,
+\qquad
+\gcd(a,b)=\gcd(a,M)=1.
+$$
+令
+$$
+x=da,\qquad y=db.
+$$
+有 $x,y\ge v$ 且
+$$
+x\equiv y\equiv1\pmod M,
+$$
+所以 $x\mathrel{R_\beta}y$。比较
+$$
+(x,x),\qquad(x,y).
+$$
+输入在两个槽中具有相同的 $\beta$ 读数，而
+$$
+\gcd(x,x)=da\equiv1\pmod m,
+$$
+以及
+$$
+\gcd(x,y)=d\gcd(a,b)=d\equiv-1\pmod m.
+$$
+因为 $m>2$，
+$$
+1\not\equiv-1\pmod m.
+$$
+故输出在 $Q_{0,m}$ 中不同。再次，这是对每个允许的更细 $\beta$ 的逃逸，故定理 50.2 给出不连续。这里构造失败的唯一模数例外正是 $m\mid2$：模 $1$ 或模 $2$ 时 $1\equiv-1$，所以该证据不能分离；这不是证明缺口，而恰好对应下面的两个可行模数。
+
+现证明充分性。因 $t\le1$ 且 $D=1$ 或 $2$，$I_{t,D}$ 有最大元 $(t,D)$，所以 $K_{t,D}\cong Q_{t,D}$ 是有限离散空间。更强地，gcd 在每个允许层同层下降。四个最大层的表如下。
+
+当 $(t,D)=(0,1)$ 时只有一个类 $*$：
+$$
+G(*,*)=*.
+$$
+
+当 $(t,D)=(0,2)$ 时记 $E$ 为偶数类、$O$ 为奇数类。因为
+$$
+\gcd(a,b)\ \text{为偶数}
+\iff
+a,b\ \text{都为偶数},
+$$
+其中约定 $\gcd(0,0)=0$ 亦满足此式，所以
+$$
+\begin{array}{c|cc}
+G&E&O\\ \hline
+E&E&O\\
+O&O&O
+\end{array}.
+$$
+
+当 $(t,D)=(1,1)$ 时记 $0$ 为孤立零类、$P$ 为正整数尾类。由 $\gcd(0,n)=n$ 且两个正整数的 gcd 仍为正数，
+$$
+\begin{array}{c|cc}
+G&0&P\\ \hline
+0&0&P\\
+P&P&P
+\end{array}.
+$$
+
+当 $(t,D)=(1,2)$ 时记 $0$ 为孤立零类，$E$ 为正偶数尾类，$O$ 为奇数尾类。由零约定及奇偶判据，
+$$
+\begin{array}{c|ccc}
+G&0&E&O\\ \hline
+0&0&E&O\\
+E&E&E&O\\
+O&O&O&O
+\end{array}.
+$$
+这些表分别由自然数 gcd 诱导，因此与所有遗忘映射相容，并给出所需连续延拓。证毕。
+
+**theorem 50.4（lcm 的完全分类与同层稳定性）。** 存在联合连续映射
+$$
+L:K_{t,D}^2\to K_{t,D},
+\qquad
+L(j(a),j(b))=j(\operatorname{lcm}(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+D\mid2.
+\tag{50.3}
+$$
+这里 $t$ 可以是任意有限自然数，也可以是 $\infty$。当 $D\mid2$ 时，对每个输出层 $\alpha=(u,m)$，可取完全相同的输入层 $\beta=\alpha$；即 lcm 在每个有限层已经同层良定义。
+
+**证明。** 模数必要性使用与 gcd 相同的任意细化构造。若 $D\nmid2$，取 $m\mid D$、$m>2$，输出层 $\alpha=(0,m)$，并任取 $\beta=(v,M)\succeq\alpha$。仍取
+$$
+a=d=kM-1>v,\qquad b=a+M,\qquad x=da,\qquad y=db.
+$$
+则 $x\mathrel{R_\beta}y$ 且 $\gcd(a,b)=1$。第一对输入 $(x,x)$ 的 lcm 为
+$$
+\operatorname{lcm}(x,x)=da\equiv1\pmod m.
+$$
+第二对输入 $(x,y)$ 满足
+$$
+\operatorname{lcm}(x,y)
+=
+d\,\operatorname{lcm}(a,b)
+=
+dab
+\equiv(-1)^3
+\equiv-1\pmod m.
+$$
+因为 $m>2$，两个输出在 $Q_{0,m}$ 不同。该逃逸对每个允许的 $\beta$ 成立，故不能连续延拓。模 $1,2$ 时恰有 $1\equiv-1$，所以此障碍消失。
+
+现设 $D\mid2$。于是任意允许模数 $m$ 只能是 $1$ 或 $2$。固定 $\alpha=(u,m)$，设
+$$
+a\mathrel{R_\alpha}a',
+\qquad
+b\mathrel{R_\alpha}b'.
+$$
+证明
+$$
+\operatorname{lcm}(a,b)
+\mathrel{R_\alpha}
+\operatorname{lcm}(a',b').
+\tag{50.4}
+$$
+
+先设 $u=0$。若 $m=1$，$Q_{0,1}$ 为单点，结论平凡。若 $m=2$，对包括零在内的所有自然数都有
+$$
+\operatorname{lcm}(r,s)\ \text{为奇数}
+\iff
+r,s\ \text{都为奇数};
+$$
+若任一输入为零，左侧为零而为偶数，仍与右侧一致。因此 lcm 的输出奇偶性只由两个输入奇偶性决定，(50.4) 成立。
+
+再设 $u\ge1$。此时 $0<u$，所以 $0$ 是孤立类。若某一输入为 $0$，其等价输入必仍为同一个 $0$，两边 lcm 都为 $0$。以下设所有相关输入为正。若 $a,b<u$，则等价关系迫使 $a'=a,b'=b$，输出相等。否则至少一个输入不小于 $u$。若一个输入在同一 $R_\alpha$ 类中发生改变，则该输入及其对应输入都不小于 $u$；于是两边 lcm 都至少等于某个不小于 $u$ 的正输入，所以两边输出都处于尾部。此时只需比较模 $m$ 剩余。若 $m=1$ 自动成立；若 $m=2$，lcm 为奇数当且仅当两个输入都为奇数，而 $R_{u,2}$ 保留每个尾部输入的奇偶性，孤立初始输入又保持其精确值，故两边 lcm 奇偶性相同。于是 (50.4) 对所有 $u$ 成立。
+
+所以每个 $Q_{u,m}$ 上都有同层有限运算
+$$
+\lambda_{u,m}\bigl(q_{u,m}(a),q_{u,m}(b)\bigr)
+=
+q_{u,m}(\operatorname{lcm}(a,b)).
+$$
+若 $\alpha\preceq\beta$，两个有限运算都由同一个自然数 lcm 诱导，故遗忘映射满足
+$$
+b_{\beta,\alpha}\bigl(\lambda_\beta(x,y)\bigr)
+=
+\lambda_\alpha\bigl(b_{\beta,\alpha}(x),b_{\beta,\alpha}(y)\bigr).
+$$
+因此可逐坐标定义
+$$
+\pi_\alpha(L(x,y))
+=
+\lambda_\alpha(\pi_\alpha(x),\pi_\alpha(y)).
+\tag{50.5}
+$$
+右侧只依赖同一有限输入坐标，故每个输出坐标连续；相容性使 (50.5) 定义 $K_{t,D}$ 中唯一一点，所以 $L$ 联合连续，并在自然核心上等于 lcm。证毕。
+
+**theorem 50.5（显式有限 lcm 层、同时支持分类及加乘并不充分）。** 在 $D\mid2$ 时，定理 50.4 的有限层映射可写成如下显式形式。
+
+若 $m=1$，$Q_{u,1}$ 由精确类
+$$
+0,1,\ldots,u-1
+$$
+和一个尾类 $T$ 组成；$u=0$ 时仅有 $T$。当 $u\ge1$ 时，$0$ 对 lcm 为吸收元。两个精确正类 $r,s<u$ 的运算读数为
+$$
+q_{u,1}(\operatorname{lcm}(r,s));
+$$
+若至少一个正输入是 $T$，输出为 $T$。
+
+若 $m=2$，记两个尾类为 $E_u,O_u$，分别表示不小于 $u$ 的偶数和奇数。$u=0$ 时
+$$
+\begin{array}{c|cc}
+L&E_0&O_0\\ \hline
+E_0&E_0&E_0\\
+O_0&E_0&O_0
+\end{array}.
+$$
+当 $u\ge1$ 时，孤立的环境零 $0$ 为吸收元；两个精确正输入按真实 lcm 后再取商；一个精确正输入 $r$ 与一个尾输入 $X\in\{E_u,O_u\}$ 的输出仍为尾类，并且仅当 $r$ 为奇数且 $X=O_u$ 时输出 $O_u$，其余情形输出 $E_u$；两个尾输入的规则仍是只有 $O_u,O_u$ 输出 $O_u$。
+
+因此：
+$$
+\text{gcd 与 lcm 同时具有联合连续延拓}
+\iff
+t\le1\ \land\ D\mid2.
+\tag{50.6}
+$$
+而 lcm 单独具有延拓的范围严格更大：
+$$
+D\mid2
+$$
+且对 $t$ 无限制。故两种比较运算在阈值方向上并不拓扑对称。
+
+此外，对每个 $(t,D)$，每个 $R_{u,m}$ 都同时是自然数加法与乘法的二元同余，所以 $K_{t,D}$ 总有由有限层诱导的连续加法与乘法。因而“连续保存 $+$ 与 $\times$”并不足以推出连续 gcd 或 lcm。具体地，$K_{2,1}$ 有连续 $+$、$\times$ 与 lcm，却没有连续 gcd；$K_{0,3}$ 有连续 $+$、$\times$，却既没有连续 gcd，也没有连续 lcm。
+
+**证明。** 显式 lcm 规则只是定理 50.4 证明中各情形的展开。若 $m=1$，正尾输入的 lcm 至少与该尾输入同样大，所以仍在尾部；零的吸收律来自约定 $\operatorname{lcm}(0,n)=0$。若 $m=2$，输出尾部奇偶由“lcm 为奇数当且仅当两个输入都为奇数”完全决定，因此得到表与混合规则。相容性已经在定理 50.4 中证明。
+
+同时支持分类是定理 50.3 与 50.4 条件的交。
+
+最后证明加乘断言。若
+$$
+a\mathrel{R_{u,m}}a',
+$$
+则对任意 $c$，若 $a=a'$ 结论显然；否则 $a,a'\ge u$ 且模 $m$ 同余。于是
+$$
+a+c,a'+c\ge u,\qquad a+c\equiv a'+c\pmod m,
+$$
+所以平移保持关系。乘法方面，若 $c=0$，两积相等于 $0$；若 $c\ge1$，则
+$$
+ac,a'c\ge u,\qquad ac\equiv a'c\pmod m.
+$$
+逐槽替换说明 $R_{u,m}$ 同时是加法和乘法的二元同余。故逐层运算相容并在逆极限上连续。$K_{2,1}$ 不支持 gcd 来自定理 50.3，而支持 lcm 来自定理 50.4；$K_{0,3}$ 对两者的失败来自 $3>2$ 的模数逃逸。证毕。
+
+**theorem 50.6（环境零、内部环零与 $t=\infty$ 边界公式）。** 当 $D=1$ 或 $2$ 时，有限 $t$ 的系统有最大层 $(t,D)$，故
+$$
+K_{t,D}\cong Q_{t,D}.
+$$
+当 $t=0$ 时，环境自然数零 $j(0)$ 已与相同模 $D$ 的正尾元素合并；当 $t\ge1$ 时，$j(0)$ 是孤立点，与尾部剩余类 $0\bmod D$ 不同。
+
+当 $t=\infty,D=1$ 时，$K_{\infty,1}$ 可写为
+$$
+\mathbb N_0\sqcup\{\omega\},
+$$
+其中每个自然数点孤立，$\omega$ 是阈值趋于无穷的唯一边界点。lcm 延拓满足
+$$
+L(0,x)=0,
+$$
+$$
+L(n,\omega)=L(\omega,n)=\omega\quad(n\ge1),
+$$
+以及
+$$
+L(\omega,\omega)=\omega.
+$$
+这里将该唯一边界点的“内部环”记号局部绑定为
+$$
+R_1:=\mathbb Z/1\mathbb Z=\{\bar 0\}.
+$$
+通过唯一双射 $\bar 0\mapsto\omega$，把边界单点集 $\{\omega\}$ 与 $R_1$ 识别；因此 $\omega$ 是这个单元素环的唯一元素，在该内部环中同时有
+$$
+0_{R_1}=1_{R_1}=\omega.
+$$
+这个内部环的零元兼单位元只是边界剩余对象，不是环境自然数零；事实上 $\omega\ne j(0)$，后者在 $t=\infty$ 时是孤立点。
+
+当 $t=\infty,D=2$ 时，记边界点
+$$
+\omega_r=\lim_{k\to\infty}j(2k+r),
+\qquad r\in\{0,1\},
+$$
+其中极限可等价理解为：所有有限阈值之后固定剩余 $r\bmod2$ 的相容线程。则
+$$
+K_{\infty,2}
+=
+j(\mathbb N_0)\sqcup\{\omega_0,\omega_1\}
+$$
+作为集合，且 $j(\mathbb N_0)$ 中每点孤立。lcm 延拓满足
+$$
+L(0,x)=0
+$$
+对所有 $x$ 成立；对 $n\ge1$，
+$$
+L(j(n),\omega_r)
+=
+L(\omega_r,j(n))
+=
+\omega_{\epsilon(n)r},
+$$
+其中 $\epsilon(n)=1$ 当且仅当 $n$ 为奇数；并且
+$$
+L(\omega_r,\omega_s)=\omega_{rs}.
+$$
+特别地，$\omega_0$ 是边界中的模 $2$ 环零，而 $j(0)$ 是孤立环境零；二者不同，并满足
+$$
+L(j(0),\omega_1)=j(0),
+\qquad
+L(\omega_0,\omega_1)=\omega_0.
+$$
+所以“内部环零”与“环境零”不可混同。
+
+**证明。** 有限 $t$ 且 $D=1$ 或 $2$ 时，$(t,D)$ 是指标最大元，逆极限等于该终端有限商。$t=0$ 时 $R_{0,D}$ 只记录模 $D$ 剩余，所以 $0$ 与正的 $D$ 倍数同类；$t\ge1$ 时 $0<t$，故 $0$ 只能与自身等价。
+
+对 $D=1,t=\infty$，任意相容线程若在某阈值层取一个孤立值 $n<u$，则所有更细层都被迫继续表示同一个自然数 $n$，从而该线程为 $j(n)$；否则它在每层都取唯一尾类，得到唯一边界点 $\omega$。定理 50.4 的同层 lcm 公式立刻给出所列规则。
+
+对 $D=2,t=\infty$，同理，任何线程若在某层进入孤立初始值，就唯一确定为某个 $j(n)$；否则它永远处于尾部，而所有模 $2$ 坐标相容地固定一个剩余 $r\in\{0,1\}$，故恰有两个边界点 $\omega_0,\omega_1$。若自然数输入 $n\ge1$ 与边界输入共同趋于尾部，lcm 的大小至少趋向无穷，所以输出仍是边界；其奇偶性只有在 $n$ 与边界剩余都为奇时才为奇，故得到 $\omega_{\epsilon(n)r}$。两个边界输入同理得到 $\omega_{rs}$。零吸收律在每个 $u\ge1$ 的有限层把孤立 $j(0)$ 保持为 $0$，故对任意完成点仍有 $L(j(0),x)=j(0)$。最后，$j(0)\ne\omega_0$ 可在输出层 $(1,1)$ 或 $(1,2)$ 区分：前者是孤立初始零类，后者是尾类。证毕。
+
+**theorem 50.7（全完成中 gcd 图闭包在一个固定边界输入上多值）。** 令
+$$
+D_{\mathrm{full}}=\prod_p p^\infty,
+\qquad
+K=K_{\infty,D_{\mathrm{full}}}.
+$$
+定义两个边界点
+$$
+\omega_0=\lim_{k\to\infty}j(k!),
+\qquad
+\omega_1=\lim_{k\to\infty}j(k!+1).
+$$
+令 gcd 图的闭包为
+$$
+\overline{\Gamma_g}
+=
+\overline{
+\left\{
+\bigl(j(a),j(b),j(\gcd(a,b))\bigr):
+a,b\in\mathbb N_0
+\right\}}
+\subseteq K^2\times K.
+$$
+则在同一个固定输入
+$$
+(\omega_0,\omega_1)
+$$
+上至少有两个不同输出：
+$$
+\bigl(\omega_0,\omega_1,j(1)\bigr)\in\overline{\Gamma_g},
+$$
+以及
+$$
+\bigl(\omega_0,\omega_1,\omega_1\bigr)\in\overline{\Gamma_g},
+$$
+且
+$$
+j(1)\ne\omega_1.
+$$
+此结论只断言图闭包在该输入处至少二值，不断言完整图闭包的等式描述，也不断言任意额外的整除刻画。
+
+**证明。** 固定任意有限坐标 $(u,m)$. 当 $k$ 足够大时
+$$
+k!\ge u,\qquad m\mid k!,
+$$
+所以
+$$
+q_{u,m}(k!)
+$$
+最终是尾部剩余 $0$，而
+$$
+q_{u,m}(k!+1)
+$$
+最终是尾部剩余 $1$。故两个所写极限在逆极限拓扑中存在。
+
+第一列真实图点取
+$$
+\bigl(j(k!),j(k!+1),j(\gcd(k!,k!+1))\bigr).
+$$
+相邻整数互素，所以
+$$
+\gcd(k!,k!+1)=1.
+$$
+该图点列收敛到
+$$
+(\omega_0,\omega_1,j(1)).
+$$
+
+第二列真实图点取
+$$
+\bigl(j(k!(k!+1)),j(k!+1),
+j(\gcd(k!(k!+1),k!+1))\bigr).
+$$
+因为 $k!+1$ 整除 $k!(k!+1)$，
+$$
+\gcd(k!(k!+1),k!+1)=k!+1.
+$$
+第一输入对任意固定 $m$ 最终被 $m$ 整除且趋过任意阈值，所以趋于 $\omega_0$；第二输入与输出都趋于 $\omega_1$。故第二列图点收敛到
+$$
+(\omega_0,\omega_1,\omega_1).
+$$
+最后在层 $(2,1)$，$j(1)$ 是孤立初始类 $1$，而 $\omega_1$ 是尾类，所以二者不同。证毕。
+
+**theorem 50.8（与已发表 supernatural gcd/lcm 的精确关系及结论边界）。** 已发表文献中，supernatural numbers
+$$
+\mathbb S=\left\{\prod_p p^{e_p}:e_p\in\mathbb N_0\cup\{\infty\}\right\}
+$$
+具有按素数赋值逐坐标定义的 gcd 与 lcm：
+$$
+v_p(\gcd(A,B))=\min\{v_p(A),v_p(B)\},
+$$
+$$
+v_p(\operatorname{lcm}(A,B))=\max\{v_p(A),v_p(B)\}.
+$$
+Longhi–Mu–Saettone, *Coset topologies on $\mathbb Z$ and arithmetic applications*, Expositiones Mathematicae 41 (2023), 71–114, DOI 10.1016/j.exmath.2022.10.001, §4.1；可访问的作者预印本为 arXiv:2202.13478v3（2022-11-24），printed pp. 26–28，尤其是 Definition 4.1、Proposition 4.3 及其证明、Lemma 4.5：[开放预印本](https://arxiv.org/pdf/2202.13478v3)。Definition 4.1 将 supernatural numbers 定义为指数属于 $\mathbb N_0\cup\{\infty\}$ 的形式素数乘积；Proposition 4.3 通过
+$$
+\rho(x)=\prod_p p^{\widehat v_p(x)}
+$$
+给出规范双射
+$$
+\mathbb S\simeq\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\ast},
+$$
+其证明明确说明两个 profinite 整数具有相同 supernatural 赋值数据，当且仅当它们相差一个 $\widehat{\mathbb Z}^{\ast}$ 中的单位；Lemma 4.5 又证明该商拓扑与逐素数赋值坐标上的乘积拓扑一致。上述 gcd/lcm 的 $\min/\max$ 公式是 supernatural numbers 上标准的逐赋值格运算定义；这里不把这些公式声称为该论文中的逐字公式。
+这些格运算位于“遗忘单位信息”的 supernatural 商上，并不自动给出
+$$
+\widehat{\mathbb Z}\times\widehat{\mathbb Z}\to\widehat{\mathbb Z}
+$$
+或本节
+$$
+K_{t,D}^2\to K_{t,D}
+$$
+的自然数 gcd/lcm 连续提升。事实上，本节分类在 $t=0$ 时已经直接证明：只要 $D$ 含有某个有限除数 $m>2$，两种 $K_{0,D}$ 值提升都不存在；而 supernatural 商上的 $\min/\max$ 仍然有定义。
+
+因此本节所得“加法、乘法连续并不足以保证 gcd/lcm 连续”以及 gcd/lcm 的不对称性，只针对定义 50.0 的显式阈值—超自然算术完成族。这里不声称已经分类所有可能的算术紧化。
+
+**证明。** supernatural gcd/lcm 的赋值公式是其标准定义；所引文献给出 supernatural numbers 与 profinite 整数商结构的公开背景。本节定理 50.3 与 50.4 已独立证明在 $K_{t,D}$ 中的精确存在条件，因此当 $D$ 有 $m>2$ 时，supernatural 商上的格运算不能被误当作这里要求的 $K_{t,D}$ 值连续提升。其余限制陈述只是明确本节定理的量词范围。证毕。
+
+## 50.99 追加锚
