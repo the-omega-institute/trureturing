@@ -1,0 +1,11 @@
+**下界证明。** 令 $q$ 为不小于 $8L/A$ 的最小奇数。增大 $L_0$ 后有 $3\leq q\leq10L/A$。式 (17.7) 的右端不超过 $2\varepsilon$。为核对这一点，写 $r=L/U$。当 $r<1$ 时，$A<2$，故 $q\log4\geq4L$。当 $r\geq1$ 时，初等不等式
+\[
+\log(e+r)\leq2\sqrt r,\qquad \sqrt{e+r}\leq2\sqrt r
+\]
+给 $A\sqrt{e+r}\leq4r$，从而
+\[
+4q/U\geq32r/A\geq8\sqrt{e+r},\qquad
+q\log(4\max\{1,q/U\})\geq qA/2\geq4L.
+\]
+两种情形下曲线距离都至多为 $2e^{-4L}\leq2\varepsilon$。两条曲线的中点同时是二者的合法观测，任意估计在至少一侧的误差不小于谱底间距的一半。式 (17.6) 和 $q\leq10L/A$ 因而给出下界。
+
