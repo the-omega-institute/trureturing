@@ -3,6 +3,33 @@
 # Current bounds and comparisons
 
 
+The [actual AP(4,5) construction](../profile-notes/35-ap45-layout-costs-and-complete-core-tails.md)
+applies physical11/T4 and13/T5 to the complete actual357 survivor law,
+then conditions once. Its complete same-law bounds are
+`Gamma13<151.712332`, `T13(81)<96.359129`, and
+`F17^-(403;nu13)+F19^-(403;physical mu17)<435.665947`.
+The exact joint bound is
+`635194866152821699517974252365456181477722101/1457986034966471039964009460664853061488000`.
+All original labels and arbitrary heights remain present. The source square
+constant stays `1730443/48600`; every later cap-dependent probability,
+survival coefficient and finite-core error is recomputed for AP(4,5).
+The verifier checks596,160 rational norm margins,1,296 consumer vertices,
+continuous-domain coefficients and all8 fallback branches.
+
+For the large box20/current8 core, the complete error is less than
+`0.000593344`, and the exact sufficient threshold is
+`306.6402782827821...`; the safe non-strict target is `306.640278`.
+The unequal core has safe target `306.413246`. The remaining gap above
+the larger exact threshold is more than`129.025668`. These are gaps
+between available bounds, not lower bounds on an actual family's cost.
+The negative-Q criterion, continuation through arbitrary later primes,
+and unrestricted Erdős7 remain open. These results have not been
+formalized as a Lean endpoint.
+
+The following AP(4,6) construction uses a different actual probability;
+its earlier bounds remain valid on that law.
+
+
 The [original-layout distance bound](../profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
 gives `Gamma13<=18612601765191482089/121507008625163304<153.181302`
 for the same actual AP(4,6) law. The source-square bound is

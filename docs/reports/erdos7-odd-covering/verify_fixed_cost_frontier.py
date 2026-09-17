@@ -13,7 +13,7 @@ import sys
 
 IO_PIN = '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232'
 SOURCE_PINS = {
-    'verify_joint_frontier.py': '956cd05a582b12dda25b4e77d64d9267c3f26dd997de20c8389f6793eba43672',
+    'verify_joint_frontier.py': 'a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe',
     'certificates/joint_frontier_certificate.json': 'be01369024cf8a3a43efdfa5e18334d8ba3d07c96f25801c9a919a364c55a583',
     'frontier/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
     'certificates/fixed_cost_norms.json': 'dc4f440a5718bbf9c2ded831b6cb10c687e18df972270ab7b5f521430b225797',
