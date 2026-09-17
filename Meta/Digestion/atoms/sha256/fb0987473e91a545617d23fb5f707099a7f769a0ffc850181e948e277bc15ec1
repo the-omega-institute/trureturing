@@ -1,0 +1,18 @@
+**definition 54.3（压缩后的有限线性形式与停止指数）.** 假设 $G_\infty$ 二分，令其连通分量按根的大小排序为
+$$
+\mathcal C=\{C_1,\ldots,C_m\},
+$$
+其中允许 $m=0$，并采用 theorem 54.2 的规范符号。对每条有限边 $e=\{i,j\}$，记 $c(i),c(j)\in\{1,\ldots,m\}$ 为所属分量，定义整数行向量 $b_e\in\mathbb Z^m$ 为
+$$
+b_e=\varepsilon_i e_{c(i)}+\varepsilon_j e_{c(j)},
+$$
+其中 $e_c$ 是第 $c$ 个标准基向量。若 $c(i)=c(j)$，两个系数必须在同一坐标中相加，因此该坐标真实地是 $0$ 或 $\pm2$，绝不把重复变量误记成两个独立变量。记有限边集为 $E_f$。若 $E_f\ne\varnothing$，置
+$$
+A=\max_{e\in E_f}a_e,\qquad N=A+1;
+$$
+若 $E_f=\varnothing$，直接置
+$$
+N=1.
+$$
+特别地，$n=0$ 时 $m=0$、$E_f=\varnothing$ 且 $N=1$。
+

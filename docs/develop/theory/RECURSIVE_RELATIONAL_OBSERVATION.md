@@ -22574,3 +22574,578 @@ $$
 对所有 $p$ 与所有不同 $i,j$ 同时成立。因此 $(u_i)_{i\in I}$ 是所需全局见证。$I=\varnothing$ 时，乘积空间 $X$ 与见证空间 $U^I$ 都是单点集，各自唯一元素是相应的空元组，因此结论亦成立。证毕。
 
 ## 53.99 追加锚
+## 54. 完整单位对和赋值阵列的有限判定与计数
+
+**definition 54.0（局部输入、空输入与精确语义）.** 固定素数 $p$ 与有限顶点集
+$$
+V=[n]:=\{0,\ldots,n-1\},\qquad n\ge 0,
+$$
+并约定 $[0]=\varnothing$。输入是一族对称的非对角标号
+$$
+a_{ij}=a_{ji}\in\mathbb N_0\cup\{\infty\}\qquad(i\ne j).
+$$
+局部实现是同一个单位向量
+$$
+x=(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+满足
+$$
+v_p(x_i+x_j)=a_{ij}\qquad(i<j),
+$$
+其中 $v_p(0)=\infty$。因此 $a_{ij}=\infty$ 的含义严格是 $x_i+x_j=0$；有限值 $a$ 的含义严格是 $p^a\mid x_i+x_j$ 且 $p^{a+1}\nmid x_i+x_j$。当 $n=0$ 时，输入阵列、边集和向量都为空；$(\mathbb Z_p^\times)^\varnothing$ 含唯一空向量，它真空地满足全部约束。
+
+**axiom 54.1（整数 Smith 标准形、可计算性及所用外部代数事实）.** 对任意 $r,m\in\mathbb N_0$ 与整数矩阵 $M\in M_{r\times m}(\mathbb Z)$，记其整数秩为 $s$。本文使用如下整数 Smith 标准形事实：存在
+$$
+U\in\operatorname{GL}_r(\mathbb Z),\qquad V\in\operatorname{GL}_m(\mathbb Z)
+$$
+使
+$$
+UMV=\operatorname{diag}(d_1,\ldots,d_s,0,\ldots,0),
+$$
+其中可取 $d_j>0$ 且 $d_j\mid d_{j+1}$。这里 $\operatorname{diag}$ 表示相应的 $r\times m$ 矩形对角阵。若 $s=0$，则 $M=0$，非零不变量列表为空；可取 $U=I_r,V=I_m$。若 $r=0$ 或 $m=0$，同样按唯一空矩阵、秩零与相应空恒等矩阵解释，空乘积约定为 $1$。对非零矩阵，Smith 对角形中非零对角元的个数等于 $s$，因为左右乘可逆矩阵保持在 $\mathbb Q$ 上的秩；在 $\mathbb Z$ 中再以单位 $-1$ 调整符号即可令各 $d_j>0$。
+
+Richard Elman, *Lectures on Abstract Algebra*, Appendix D, Theorem D.2 对任意欧几里得环上的矩形矩阵给出左右可逆矩阵把它化为 Smith 标准形；其证明明确从零矩阵情形开始，并以欧几里得函数的严格下降和维数归纳给出终止过程。（[Theorem D.2，印刷页 854／PDF 页 862](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=862)；[证明续，印刷页 855／PDF 页 863](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=863)）
+
+整数矩阵 Smith 标准形的显式终止计算另可由 Arne Storjohann, *Near Optimal Algorithms for Computing Smith Normal Forms of Integer Matrices*, University of Waterloo Technical Report CS-96-03, Theorem 14 得到；该定理在 PDF 第 8 页给出输入任意 $n\times m$ 整数矩阵并输出其 Smith 标准形的确定性算法。（[Theorem 14，PDF 页 8](https://cs.uwaterloo.ca/research/tr/1996/03/CS-96-03.pdf#page=8)） 空维数情形在本文中按上一段的平凡约定直接处理。
+
+关于有限整数的逐素数分解，Longhi–Mu–Saettone, *Coset Topologies on $\mathbb Z$ and Arithmetic Applications*, arXiv:2202.13478v3, §3.1.2 在 Theorem 3.6 前给出
+$$
+v_p(x)=0\Longleftrightarrow x\in\mathbb Z_p^\times,
+$$
+Theorem 3.6 及其证明给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,
+$$
+而 §3.3.1 的式 (36) 给出
+$$
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+（[单位判据与 Theorem 3.6，PDF 页 19](https://arxiv.org/pdf/2202.13478v3#page=19)；[式 (36)，PDF 页 24](https://arxiv.org/pdf/2202.13478v3#page=24)）
+
+若把本节与轨道商超加法背景比较，Connes–Consani, *The Hyperring of Adèle Classes*, arXiv:1001.4260v2, Proposition 2.5 的式 (6) 是
+$$
+x+y=(xG+yG)/G.
+$$
+（[Proposition 2.5，式 (6)，PDF 页 7](https://arxiv.org/pdf/1001.4260v2#page=7)） 该公式描述轨道商上的超加法；它本身不提供本节所要求的“一组共同代表同时实现全部边”的结论，因此下文始终直接处理共同元组。
+
+**theorem 54.2（无穷标号子系统的精确分类与规范参数化）.** 令 $G_\infty$ 是顶点集 $V$ 上以
+$$
+E_\infty=\{\{i,j\}:a_{ij}=\infty\}
+$$
+为边集的图。存在单位向量满足全部无穷边方程 $x_i+x_j=0$，当且仅当 $G_\infty$ 是二分图，等价地每个连通分量都没有奇圈。若此条件成立，则在每个连通分量 $C$ 中取最小顶点 $r_C$ 为根，并定义
+$$
+\varepsilon_i=(-1)^{d_C(r_C,i)}\in\{\pm1\}.
+$$
+该符号与路径选择无关，而且全部无穷方程的解恰好唯一写成
+$$
+x_i=\varepsilon_i y_C\qquad(i\in C),
+$$
+其中每个 $y_C\in\mathbb Z_p^\times$ 独立。此结论对 $p=2$ 仍成立；奇圈不会因为剩余特征为 $2$ 而变得可行。当 $n=0$ 时，$G_\infty$ 是空图、连通分量族为空，参数向量为空，上述参数化给出唯一空解。
+
+**证明。** 当 $n=0$ 时所有断言均为真空断言，且唯一空向量给出所述解。以下设有顶点。若 $x_i+x_j=0$，则沿每条无穷边有 $x_j=-x_i$。沿一条长度为 $\ell$ 的路径迭代得到终点值为 $(-1)^\ell$ 乘起点值。若存在奇圈，从圈上一点 $i$ 出发一周得到 $x_i=-x_i$，故 $2x_i=0$。环 $\mathbb Z_p$ 具有特征 $0$ 且是整环，所以 $2\ne0$ 且不是零因子，于是 $x_i=0$，与 $x_i$ 为单位矛盾；这也覆盖 $p=2$。
+
+反之若图二分，则同一根到同一顶点的任意两条路径长度同奇偶，否则两条路径合成奇闭路；故 $\varepsilon_i$ 定义良好，相邻顶点符号相反。任取每个分量的单位 $y_C$，令 $x_i=\varepsilon_i y_C$，所有无穷边立即满足。最后，任一满足无穷方程的解沿根到 $i$ 的路径必有 $x_i=\varepsilon_i x_{r_C}$，故取 $y_C=x_{r_C}$ 给出唯一参数化。证毕。
+
+**definition 54.3（压缩后的有限线性形式与停止指数）.** 假设 $G_\infty$ 二分，令其连通分量按根的大小排序为
+$$
+\mathcal C=\{C_1,\ldots,C_m\},
+$$
+其中允许 $m=0$，并采用 theorem 54.2 的规范符号。对每条有限边 $e=\{i,j\}$，记 $c(i),c(j)\in\{1,\ldots,m\}$ 为所属分量，定义整数行向量 $b_e\in\mathbb Z^m$ 为
+$$
+b_e=\varepsilon_i e_{c(i)}+\varepsilon_j e_{c(j)},
+$$
+其中 $e_c$ 是第 $c$ 个标准基向量。若 $c(i)=c(j)$，两个系数必须在同一坐标中相加，因此该坐标真实地是 $0$ 或 $\pm2$，绝不把重复变量误记成两个独立变量。记有限边集为 $E_f$。若 $E_f\ne\varnothing$，置
+$$
+A=\max_{e\in E_f}a_e,\qquad N=A+1;
+$$
+若 $E_f=\varnothing$，直接置
+$$
+N=1.
+$$
+特别地，$n=0$ 时 $m=0$、$E_f=\varnothing$ 且 $N=1$。
+
+**theorem 54.4（有限停止界、模 $p^N$ 精确判据与实际提升）.** 在 theorem 54.2 的二分条件下，令 $N$ 按 definition 54.3 的分支定义，即
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing.
+\end{cases}
+$$
+原始 $p$-进实现存在，当且仅当存在
+$$
+\bar y=(\bar y_1,\ldots,\bar y_m)\in(\mathbb Z/p^N\mathbb Z)^m
+$$
+满足
+$$
+\bar y_c\not\equiv0\pmod p\qquad(1\le c\le m),
+$$
+以及对每条 $e\in E_f$，
+$$
+b_e\bar y\equiv0\pmod{p^{a_e}},
+\qquad
+b_e\bar y\not\equiv0\pmod{p^{a_e+1}}.
+$$
+因此当 $E_f\ne\varnothing$ 时，$N=1+\max a_e$ 是由输入显式给出的充分停止指数；当 $E_f=\varnothing$ 时固定取 $N=1$，不存在未定义的最大值。每个这样的 $\bar y$ 都提升为实际的 $p$-进共同单位解，并且所有无穷标号在提升后仍是精确零和。若 $m=0$，模参数空间是只含空向量的单点集。
+
+**证明。** 先设有 $p$-进实现。由 theorem 54.2 可唯一写成
+$$
+x_i=\varepsilon_i y_{c(i)},
+$$
+其中各 $y_c$ 是单位。模 $p^N$ 约化得到 $\bar y_c\not\equiv0\pmod p$。对有限边 $e=\{i,j\}$，
+$$
+x_i+x_j=b_ey.
+$$
+此时必有 $E_f\ne\varnothing$，且 $a_e+1\le N$。所以 $v_p(b_ey)=a_e$ 恰等价于模 $p^{a_e}$ 为零而模 $p^{a_e+1}$ 非零，约化后得到所列条件。
+
+反之，设给定这样的 $\bar y$。对每个 $c$ 取任意提升 $y_c\in\mathbb Z_p$；由于 $\bar y_c$ 模 $p$ 非零，提升仍是单位。定义
+$$
+x_i=\varepsilon_i y_{c(i)}.
+$$
+每条无穷边的两个符号相反且使用完全相同的自由参数，所以 $x_i+x_j=0$ 在 $\mathbb Z_p$ 中严格成立，而非仅在某个有限商中成立。对有限边，因为 $a_e+1\le N$，两个量模 $p^N$ 相同必然模 $p^{a_e+1}$ 相同；等价地，
+$$
+p^N\mathbb Z_p\subseteq p^{a_e+1}\mathbb Z_p.
+$$
+故所给“整除 $p^{a_e}$ 但不整除 $p^{a_e+1}$”条件在任意提升下保持，从而 $v_p(x_i+x_j)=a_e$。
+
+若 $E_f=\varnothing$，没有有限边精度需要检测，$N=1$ 只记录每个自由参数为单位；若进一步 $m=0$，唯一空模向量提升为唯一空 $p$-进向量。故所有情形均已覆盖。证毕。
+
+**theorem 54.5（同分量有限边的 $0,\pm2$ 系数约束）.** 在 theorem 54.2 的二分条件下，若有限边 $e=\{i,j\}$ 的两端属于同一无穷分量，则：
+
+1. 若 $\varepsilon_i=-\varepsilon_j$，任何有限 $a_e$ 都不可能，因为 $x_i+x_j=0$；
+2. 若 $\varepsilon_i=\varepsilon_j$，则必且只可能有
+$$
+a_e=v_p(2)=
+\begin{cases}
+1,&p=2,\\
+0,&p\ne2.
+\end{cases}
+$$
+当该值被指定时，此边对自由单位参数不再增加限制。
+
+**证明。** 同分量时
+$$
+x_i+x_j=(\varepsilon_i+\varepsilon_j)y_C.
+$$
+符号相反时系数为 $0$，估值为 $\infty$。符号相同时系数为 $\pm2$，而 $y_C$ 是单位，故估值恰为 $v_p(2)$。反向充分性由同一计算立即得到。证毕。
+
+**theorem 54.6（Smith 标准形的模 $p^N$ 核计数，包括秩零与空矩阵）.** 设 $M\in M_{r\times m}(\mathbb Z)$，其中 $r,m\in\mathbb N_0$，整数秩为 $s$，Smith 非零不变量为 $d_1,\ldots,d_s$。对 $N\ge1$，令
+$$
+K_N(M):=\#\{\bar y\in(\mathbb Z/p^N\mathbb Z)^m:M\bar y\equiv0\pmod{p^N}\}.
+$$
+则
+$$
+K_N(M)=p^{N(m-s)}\prod_{j=1}^s\gcd(d_j,p^N)
+=p^{N(m-s)+\sum_{j=1}^s\min(v_p(d_j),N)}.
+$$
+当 $s=0$ 时两个求和与乘积均为空，故
+$$
+K_N(M)=p^{Nm}.
+$$
+特别地，若 $m=0$，则 $K_N(M)=1$。
+
+**证明。** 若 $s=0$，则 $M=0$，所有 $m$ 个坐标任意，直接得到 $p^{Nm}$；当 $m=0$ 时只有空向量，计数为 $1$。以下设 $s>0$。由 axiom 54.1 取整数幺模矩阵 $U,V$ 使 $UMV=D$ 为 Smith 对角形。因为 $\det U,\det V=\pm1$，它们模 $p^N$ 后仍可逆，所以左乘 $U$ 不改变齐次方程解集，变量替换 $\bar y=V\bar z$ 是 $(\mathbb Z/p^N\mathbb Z)^m$ 的双射。因此只需计数
+$$
+d_j\bar z_j\equiv0\pmod{p^N}\qquad(1\le j\le s),
+$$
+其余 $m-s$ 个坐标任意。
+
+对单个非零整数 $d$，令 $g=\gcd(d,p^N)$，写 $d=gd'$、$p^N=gq$ 且 $\gcd(d',q)=1$。条件 $p^N\mid dz$ 等价于 $q\mid z$，故模 $p^N$ 恰有 $g$ 个解。于是前 $s$ 个坐标贡献 $\prod_j\gcd(d_j,p^N)$，其余坐标贡献 $p^{N(m-s)}$。又
+$$
+\gcd(d_j,p^N)=p^{\min(v_p(d_j),N)},
+$$
+得到第二式。证毕。
+
+**definition 54.7（统一模数矩阵）.** 假设 $G_\infty$ 二分。对 $T\subseteq E_f$ 与 $U\subseteq\{1,\ldots,m\}$，令
+$$
+k_e(T)=a_e+\mathbf1_{e\in T}.
+$$
+若 $E_f\ne\varnothing$，由 definition 54.3 有 $0\le k_e(T)\le N$；若 $E_f=\varnothing$，此条件真空且 $N=1$。定义整数矩阵 $M_{T,U}$，其行包括
+$$
+p^{N-k_e(T)}b_e\qquad(e\in E_f),
+$$
+以及
+$$
+p^{N-1}e_c\qquad(c\in U).
+$$
+当 $k_e(T)=0$ 时，对应行为 $p^Nb_e$，模 $p^N$ 恒为零，正好表达“模 $p^0$ 无约束”。若同一自由变量在一条边中重复出现，系数仍按 definition 54.3 真实相加为 $0$ 或 $\pm2$。当 $m=0$、$E_f=\varnothing$ 时，唯一的 $M_{\varnothing,\varnothing}$ 是 $0\times0$ 空矩阵，秩为 $0$。
+
+**theorem 54.8（精确整数计数公式、实际解约化类的双射与完全有限判定）.** 若 $G_\infty$ 不是二分图，置
+$$
+C_p(a)=0.
+$$
+若其二分，令 $N,m,E_f,M_{T,U}$ 如上，并令每个 $M_{T,U}$ 的整数 Smith 非零不变量为
+$$
+d_1(T,U),\ldots,d_{s(T,U)}(T,U).
+$$
+定义
+$$
+C_p(a)=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N).
+$$
+令 $\mathcal Y_N(a)$ 为 theorem 54.4 中满足全部单位条件与全部有限边精确条件的模 $p^N$ 参数类集合；令
+$$
+\mathcal R_N(a)=
+\left\{
+(x_i\bmod p^N)_{i\in V}:
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+\text{ 是原阵列的实际精确共同解}
+\right\}.
+$$
+则
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+换言之，这里计数的是实际精确 $p$-进共同解的不同模 $p^N$ 约化类，等价地计数 theorem 54.2 的规范有符号参数经 theorem 54.4 实际提升后得到的约化类；它不是把“仅在模 $p^N$ 意义满足无穷边方程”的任意顶点元组都计入。因此
+$$
+\text{存在实际 }(x_i)\in(\mathbb Z_p^\times)^V
+\quad\Longleftrightarrow\quad
+C_p(a)>0.
+$$
+这给出对任意有限输入的终止算法：先判定 $G_\infty$ 是否二分；若是，构造有限多个整数矩阵 $M_{T,U}$，计算其整数 Smith 标准形并代入上式。整数 Smith 形存在确定性终止算法的来源见 axiom 54.1 中 Storjohann, Theorem 14；零矩阵与空维数在本文中先直接返回。
+
+**证明。** 设 $G_\infty$ 二分；非二分情形由 theorem 54.2 已知没有实际解，而定义给出 $C_p(a)=0$。在所有满足基础整除条件
+$$
+p^{a_e}\mid b_e\bar y\qquad(e\in E_f)
+$$
+的模 $p^N$ 向量中，定义坏事件
+$$
+B_e=\{\bar y:p^{a_e+1}\mid b_e\bar y\},
+\qquad
+D_c=\{\bar y:p\mid\bar y_c\}.
+$$
+所需参数集合 $\mathcal Y_N(a)$ 正是基础解集中避开全部 $B_e$ 与全部 $D_c$ 的元素。
+
+对固定 $T,U$，同时强制 $B_e$ 对 $e\in T$ 成立、强制 $D_c$ 对 $c\in U$ 成立，并保留每条边的基础整除条件，等价于
+$$
+b_e\bar y\equiv0\pmod{p^{k_e(T)}}\qquad(e\in E_f),
+$$
+以及
+$$
+\bar y_c\equiv0\pmod p\qquad(c\in U).
+$$
+第一类同余乘以 $p^{N-k_e(T)}$，第二类乘以 $p^{N-1}$，恰变成统一模数系统
+$$
+M_{T,U}\bar y\equiv0\pmod{p^N}.
+$$
+故其解数由 theorem 54.6 精确给出。对这组有限坏事件应用容斥原理，得到
+$$
+|\mathcal Y_N(a)|=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N)
+=C_p(a).
+$$
+
+现证明这确实等于实际解的约化类数。定义
+$$
+\Phi:\mathcal Y_N(a)\longrightarrow\mathcal R_N(a)
+$$
+如下：给定 $\bar y$，先按 theorem 54.4 任取实际提升 $y\in(\mathbb Z_p^\times)^m$，再以
+$$
+x_i=\varepsilon_i y_{c(i)}
+$$
+重建顶点元组，并取模 $p^N$。因为重建后的模类直接是
+$$
+\bar x_i=\varepsilon_i\bar y_{c(i)},
+$$
+所以 $\Phi$ 与提升选择无关。theorem 54.4 保证该重建是实际精确解，故 $\Phi$ 确实落在 $\mathcal R_N(a)$。
+
+反过来，给定 $\mathcal R_N(a)$ 中一类，按定义它来自某个实际精确解 $x$。theorem 54.2 给出唯一的实际参数 $y_C=x_{r_C}$；约化后得到 $\bar y\in\mathcal Y_N(a)$，且重建正回到给定顶点约化类，所以 $\Phi$ 满射。又每个分量根满足 $\varepsilon_{r_C}=1$，因此从任意顶点约化类可直接读回
+$$
+\bar y_C=\bar x_{r_C}.
+$$
+故 $\Phi$ 单射。若 $m=0$，两边都是只含空类的单点集，同一论证真空成立。于是 $\Phi$ 是双射，得到
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+特别地，$C_p(a)>0$ 当且仅当实际精确共同解存在。全部求和集合有限，且每个所需 Smith 形可由终止的整数算法求得，所以整个判定过程终止。证毕。
+
+**theorem 54.9（空阵列、全无穷与小顶点边界）.** 有以下边界结论。
+
+1. 若 $n=0$，则 $G_\infty$ 是空图，有 $m=0$ 个连通分量，$E_f=\varnothing$，$N=1$，唯一空元组是实际解，并且
+$$
+C_p(\varnothing)=1.
+$$
+2. 若 $n=1$，则没有边，$G_\infty$ 有一个孤立分量，$N=1$，并且
+$$
+C_p(a)=p-1>0.
+$$
+3. 更一般地，若 $E_f=\varnothing$，则
+$$
+C_p(a)=
+\begin{cases}
+(p-1)^m,&G_\infty\text{ 二分且有 }m\text{ 个连通分量},\\
+0,&G_\infty\text{ 非二分}.
+\end{cases}
+$$
+因此原问题可行当且仅当 $G_\infty$ 二分；只有在二分情形才有 $(p-1)^m$ 的计数，且 $m=0$ 时按空乘积约定该值为 $1$。
+4. 特别地，全无穷阵列的无穷图是 $K_n$，故
+$$
+C_p(a)=
+\begin{cases}
+1,&n=0,\\
+p-1,&n=1,\\
+p-1,&n=2,\\
+0,&n\ge3.
+\end{cases}
+$$
+等价地，全无穷阵列可行当且仅当 $n\le2$。特别是 $p=2,n=3$ 的全无穷三角形满足 $C_2(a)=0$。
+
+**证明。** 若 $n=0$，只有空图与空参数。theorem 54.8 的双重求和中只有
+$$
+T=U=\varnothing,
+$$
+且 $M_{\varnothing,\varnothing}$ 为 $0\times0$ 矩阵，$s=0$。因此唯一项是
+$$
+p^{1(0-0)}\prod_{\varnothing}1=1,
+$$
+故 $C_p(\varnothing)=1$，并与唯一空实际解一致。
+
+现设 $E_f=\varnothing$。若 $G_\infty$ 非二分，则 theorem 54.2 说明不存在实际共同单位解，而 theorem 54.8 的定义直接给出
+$$
+C_p(a)=0.
+$$
+若 $G_\infty$ 二分且有 $m$ 个连通分量，则 theorem 54.2 给出全部实际解：每个分量独立选择一个单位参数。此时 $N=1$，模 $p$ 每个参数恰有 $p-1$ 个非零类，所以 theorem 54.8 所计的实际解约化类共有
+$$
+(p-1)^m.
+$$
+当 $m=0$ 时这就是空乘积 $1$。$n=1$ 时 $m=1$，得到 $p-1$。
+
+若阵列全无穷，则 $G_\infty=K_n$。完全图 $K_n$ 二分当且仅当 $n\le2$。其中 $K_0$ 有零个分量，$K_1$ 有一个分量，$K_2$ 也有一个连通分量，故分别得到 $1,p-1,p-1$；当 $n\ge3$ 时 $K_n$ 含三角形，从而非二分，故计数为 $0$。特别地，对 $p=2$ 的全无穷 $K_3$，三条方程给出 $x_1=-x_0$、$x_2=x_0$ 与 $x_2=-x_0$，从而 $2x_0=0$，不可能由单位满足，与 $C_2(a)=0$ 一致。证毕。
+
+**theorem 54.10（精确无穷路径上的 $p=2/p=3$ 系数例外）.** 取三个顶点 $0,1,2$，规定
+$$
+a_{01}=a_{12}=\infty,\qquad a_{02}=h<\infty.
+$$
+则存在共同单位见证当且仅当
+$$
+h=v_p(2).
+$$
+因此 $p=2$ 时唯一可能的有限值是 $h=1$，而 $p=3$ 时唯一可能的有限值是 $h=0$。
+
+**证明。** 两条无穷边给出
+$$
+x_1=-x_0,\qquad x_2=-x_1=x_0,
+$$
+故
+$$
+x_0+x_2=2x_0.
+$$
+因为 $x_0$ 是单位，其估值是 $v_p(2)$。反之取任意单位 $u$ 并令
+$$
+(x_0,x_1,x_2)=(u,-u,u),
+$$
+便同时实现两条精确零和边与 $a_{02}=v_p(2)$。证毕。
+
+**theorem 54.11（$p=2$：通过二值可行性但高精度失败的三角形）.** 对 $p=2$ 与三个顶点，有限阵列
+$$
+a_{01}=1,\qquad a_{12}=1,\qquad a_{02}=2
+$$
+没有共同单位见证。可是若只保留“估值是否为正”这一二值信息，则三条边全为正是可行的；并且数值 $1$ 与 $2$ 各自都能由某一对 $2$-进单位实现。
+
+**证明。** 若 $u,v$ 是奇数且 $v_2(u+v)=1$，则
+$$
+u+v\equiv2\pmod4,
+$$
+这对奇数等价于 $u\equiv v\pmod4$。假设共同见证存在。由前两条边得到
+$$
+x_0\equiv x_1\equiv x_2\pmod4.
+$$
+于是
+$$
+x_0+x_2\equiv2x_0\equiv2\pmod4,
+$$
+故 $v_2(x_0+x_2)=1$，与规定值 $2$ 矛盾。
+
+二值层面可直接取
+$$
+x_0=x_1=x_2=1,
+$$
+三条和都等于 $2$，故三条边的估值都为正。单对精确值方面，$(1,1)$ 给出估值 $1$，$(1,3)$ 给出估值 $2$。证毕。
+
+**theorem 54.12（$p=3$：通过二值可行性但第二位数字要求四种颜色）.** 对 $p=3$，取八个顶点
+$$
+A_1,\ldots,A_4,B_1,\ldots,B_4.
+$$
+规定同侧边
+$$
+a_{A_iA_j}=a_{B_iB_j}=0\qquad(i\ne j),
+$$
+对角跨侧边
+$$
+a_{A_iB_i}=2,
+$$
+非对角跨侧边
+$$
+a_{A_iB_j}=1\qquad(i\ne j).
+$$
+则该完整阵列没有共同 $3$-进单位见证；但仅保留“正估值/零估值”后，正边恰为 $K_{4,4}$ 的跨侧边，二值阵列可行。并且 $0,1,2$ 三种单边精确值分别都能由某对 $3$-进单位实现。
+
+**证明。** 二值可行性有显式见证：取所有
+$$
+x_{A_i}=1,\qquad x_{B_j}=2.
+$$
+则跨侧和等于 $3$，估值为 $1>0$；同侧和分别为 $2$ 或 $4$，估值为 $0$。
+
+现假设完整精确阵列有见证。所有跨侧边估值至少为 $1$，故对任意 $i,j$ 有
+$$
+x_{A_i}\equiv-x_{B_j}\pmod3.
+$$
+于是所有 $A_i$ 在 $\mathbb F_3^\times$ 中有同一个剩余类 $r$，所有 $B_j$ 有剩余类 $-r$。固定一次 $r$ 的标准整数代表
+$$
+\widetilde r\in\{1,2\}\subset\mathbb Z.
+$$
+于是存在唯一的 $\alpha_i,\beta_j\in\mathbb F_3$。再取它们的标准整数代表
+$$
+\widetilde\alpha_i,\widetilde\beta_j\in\{0,1,2\},
+$$
+则模 $9$ 有
+$$
+x_{A_i}\equiv\widetilde r+3\widetilde\alpha_i,\qquad
+x_{B_j}\equiv-\widetilde r+3\widetilde\beta_j.
+$$
+因此
+$$
+x_{A_i}+x_{B_j}\equiv3(\widetilde\alpha_i+\widetilde\beta_j)\pmod9,
+$$
+而是否被 $9$ 整除恰由 $\alpha_i+\beta_j\in\mathbb F_3$ 是否为零决定。对角边估值 $2$ 特别蕴含其和被 $9$ 整除，因此
+$$
+\alpha_i+\beta_i=0
+$$
+于 $\mathbb F_3$，即 $\beta_i=-\alpha_i$。非对角边估值恰为 $1$ 蕴含其和不被 $9$ 整除，因此
+$$
+\alpha_i+\beta_j\ne0\qquad(i\ne j).
+$$
+代入 $\beta_j=-\alpha_j$ 得
+$$
+\alpha_i\ne\alpha_j\qquad(i\ne j).
+$$
+这要求 $\mathbb F_3$ 中存在四个两两不同元素，矛盾。因此无共同见证。
+
+最后，单边值 $0$ 可由 $(1,1)$ 实现；对 $a=1,2$，取
+$$
+(1,-1+3^a),
+$$
+两者均为 $3$-进单位且和恰为 $3^a$。证毕。
+
+**theorem 54.13（精确无穷奇圈：每条边单独可行而共同不可行）.** 对任意素数 $p$，三个顶点上的阵列
+$$
+a_{01}=a_{12}=a_{20}=\infty
+$$
+没有共同单位见证，虽然每一条单独的无穷边都可由一对单位实现。
+
+**证明。** 三条方程依次给出
+$$
+x_1=-x_0,\qquad x_2=-x_1=x_0,\qquad x_0=-x_2=-x_0,
+$$
+故 $2x_0=0$。在特征 $0$ 的整环 $\mathbb Z_p$ 中这推出 $x_0=0$，与单位性矛盾。任一单独无穷边则可取 $(u,-u)$，其中 $u$ 为任意单位。证毕。
+
+**definition 54.14（全素数乘积输入与有限支撑呈现）.** 令
+$$
+R=\prod_p\mathbb Z_p,\qquad R^\times=\prod_p\mathbb Z_p^\times.
+$$
+对同一有限顶点集 $V=[n]$，其中 $n\ge0$，全局输入是在每个素数 $p$ 给出完整阵列
+$$
+a^{(p)}_{ij}\in\mathbb N_0\cup\{\infty\}.
+$$
+全局实现是
+$$
+X_i=(x_{i,p})_p\in R^\times
+$$
+满足对所有 $p$ 与 $i<j$，
+$$
+v_p(x_{i,p}+x_{j,p})=a^{(p)}_{ij}.
+$$
+这里 $R$ 直接定义为坐标乘积，因此其单位群是逐坐标单位的乘积；若把 $R$ 识别为有限整数 $\widehat{\mathbb Z}$，则 axiom 54.1 所引 Longhi–Mu–Saettone Theorem 3.6 与式 (36) 给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,\qquad
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+
+称输入具有规范有限支撑呈现，如果显式给出有限素数集 $S$，并且对 $p\notin S$ 规定统一默认阵列
+$$
+a^{(p)}_{ij}=v_p(2)
+$$
+对所有 $i<j$。该默认阵列由
+$$
+x_{i,p}=1
+$$
+对所有顶点实现；当 $n=0$ 时此规定真空成立。
+
+**theorem 54.15（全局逐素数充要条件与有限查询有效性边界）.** 对 definition 54.14 的任意全素数输入，存在全局共同单位元组
+$$
+(X_i)_{i\in V}\in(R^\times)^V
+$$
+当且仅当对每个素数 $p$ 都有
+$$
+C_p(a^{(p)})>0.
+$$
+这里每个 $C_p$ 都由 theorem 54.8 的有限整数公式计算。若输入具有规范有限支撑呈现，则全局判定化为对有限集合 $S$ 中各素数运行局部算法。
+
+再固定如下黑箱模型：一次查询选择一个素数 $p$，黑箱返回该 $p$ 处的完整阵列 $a^{(p)}$。当 $n\ge3$ 时，不存在一个对所有这种任意无限黑箱输入都正确、且总在查询有限多个素数后停止的全局二值判定算法。
+
+**证明。** 若有全局实现，则取其第 $p$ 坐标便得到同一顶点组在 $\mathbb Z_p$ 中的局部共同见证，所以 theorem 54.8 给出
+$$
+C_p(a^{(p)})>0
+$$
+对每个 $p$ 成立。
+
+反之，假设每个 $p$ 都有 $C_p(a^{(p)})>0$。对每个素数，theorem 54.8 给出非空的有限模参数见证集 $\mathcal Y_{N_p}(a^{(p)})$。按 theorem 54.2 的根排序固定分量顺序，并把每个剩余类写成 $0,\ldots,p^{N_p}-1$ 中的标准整数代表；在这个有限集合中取字典序最小参数见证 $\bar y^{(p)}$。再把其每个坐标的标准整数代表嵌入 $\mathbb Z_p$，作为一个确定的提升 $y^{(p)}$。theorem 54.4 保证任意这样的提升都保持全部有限边的精确估值，并由规范符号重建一个完整局部实际解
+$$
+x_{i,p}=\varepsilon_i^{(p)}y_{c_p(i)}^{(p)}.
+$$
+这为每个素数确定一整个一致的局部顶点元组，而不是为每条边分别选代表。令
+$$
+X_i=(x_{i,p})_p.
+$$
+每个坐标都是 $\mathbb Z_p^\times$ 的单位，故 $X_i\in R^\times$；逐坐标即实现全部规定阵列。若 $n=0$，以上选择全部为空，唯一全局空元组即为实现。
+
+若有规范有限支撑呈现，$p\notin S$ 时全部取 $x_{i,p}=1$ 即为显式见证，因此只需有限检查 $S$。
+
+最后证明黑箱有效性边界。设 $n\ge3$，假定存在一个总在有限次素数查询后停止且对任意无限输入都正确的判定器。让它运行在处处采用规范默认阵列的全可行输入上；由于该输入确实由所有坐标取 $1$ 实现，正确判定器最终回答“可行”，并且只查询有限素数集 $Q$。取未查询素数
+$$
+q\notin Q.
+$$
+只在 $q$ 处把顶点 $0,1,2$ 之间的三条边改成 theorem 54.13 的全无穷三角形，其余边以及其余素数全部保持默认。新旧输入在判定器实际查询的每个素数上完全相同，因此其整个查询转录与输出相同，仍回答“可行”。但修改后的输入在 $q$ 处包含一个局部不可行的精确无穷奇圈，故不可能有全局实现，矛盾。因此在这个黑箱模型中、对 $n\ge3$ 的任意无限输入，不存在总用有限素数查询完成的正确全局二值判定器。证毕。
+
+**theorem 54.16（完整局部程序的等价形式）.** 对任意固定素数 $p$、任意 $n\ge0$ 与任意有限完整阵列 $a$，以下条件等价：
+
+1. 存在同一个
+$$
+x\in(\mathbb Z_p^\times)^V
+$$
+实现全部精确有限估值与全部精确零和；
+2. $G_\infty$ 二分且 theorem 54.4 的模 $p^N$ 条件有解，其中
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing;
+\end{cases}
+$$
+3. theorem 54.8 的显式整数 $C_p(a)$ 为正。
+
+此外，在这些条件成立时，全部无穷约束由 theorem 54.2 的自由单位参数严格维持；若 $E_f\ne\varnothing$，全部有限约束只需要指数
+$$
+N=1+\max_{e\in E_f}a_e,
+$$
+而若 $E_f=\varnothing$ 则固定 $N=1$。不存在额外的无限提升相容条件。
+
+**证明。** $(1)\Longleftrightarrow(2)$ 是 theorem 54.2 与 theorem 54.4。$(2)\Longleftrightarrow(3)$ 是 theorem 54.8 的精确计数与实际解约化类双射。
+
+最后说明停止精度的方向。若 $E_f=\varnothing$，没有有限边且 $N=1$，无需谈任何最大值或更高精度。若 $E_f\ne\varnothing$，则对每条有限边 $e$ 都有
+$$
+a_e+1\le N.
+$$
+因此模 $p^N$ 的约化确定模 $p^{a_e+1}$ 的约化：若两个 $p$-进量模 $p^N$ 相同，则其差属于
+$$
+p^N\mathbb Z_p\subseteq p^{a_e+1}\mathbb Z_p,
+$$
+所以它们也模 $p^{a_e+1}$ 相同。于是“被 $p^{a_e}$ 整除但不被 $p^{a_e+1}$ 整除”已经完全由模 $p^N$ 信息决定。无穷边则在 theorem 54.2 的参数化中是严格恒等式 $x_i=-x_j$，并非有限精度近似。故没有任何更高阶提升条件。证毕。
+
+## 54.99 追加锚
