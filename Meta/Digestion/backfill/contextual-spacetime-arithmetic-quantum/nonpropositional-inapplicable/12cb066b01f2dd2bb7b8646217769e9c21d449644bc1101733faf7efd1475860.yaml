@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12cb066b01f2dd2bb7b8646217769e9c21d449644bc1101733faf7efd1475860
+  normalized_sha256: sha256:12cb066b01f2dd2bb7b8646217769e9c21d449644bc1101733faf7efd1475860
+cas_ref: sha256:12cb066b01f2dd2bb7b8646217769e9c21d449644bc1101733faf7efd1475860
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本引言用“记忆还必须携带多少条件熵”提出要比较的资源问题，前面的三种数量是论述主题；它没有给出下界数值、等式或任意记忆满足的熵不等式，也没有在术语介绍中夹带这些结论，故可按无命题的章节说明处理。
+    previous_atom_id: 5def2e89aa8db15afee628a6522959b8ed46fa7b21fc432a061c04a14e3120e4
+    next_atom_id: b447f0be3fa2011191b0c878202cb33868d7b17e4df90ff4c03a58c318604aee

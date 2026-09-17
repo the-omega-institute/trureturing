@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03441e87e7d7a10a429252c14f98cd5206df04d997d09f003ff428b303a67bbd
+  normalized_sha256: sha256:03441e87e7d7a10a429252c14f98cd5206df04d997d09f003ff428b303a67bbd
+cas_ref: sha256:03441e87e7d7a10a429252c14f98cd5206df04d997d09f003ff428b303a67bbd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“先把当前读数不同的节点放入源集合”并“再沿成对更新边反向扩张”，只给成对后继、初始集合和累计递推的定义；层成员语义及首次访问正确性均已拆走，因此定义中未暗含搜索正确性。
+    previous_atom_id: c6802111de6bc462321f8a569df89f51db473ff449885a1f4d5d9802c5492d15
+    next_atom_id: 03405154202f80773aab1106e208993cddb0c9ba62f2a4818db419dc072c8ec3

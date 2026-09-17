@@ -18,6 +18,7 @@ from pathlib import Path
 from random import Random
 
 from rro_retention import check_rro_retention
+from rro_reading import check_rro_reading
 
 SEED = 20270914
 RNG = Random(SEED)
@@ -945,6 +946,11 @@ def main():
     assert RNG.getstate() == rng_state and COUNTS.keys().isdisjoint(rro_counts)
     for name, count in rro_counts.items():
         record(name, count)
+    reading_rng_state = RNG.getstate()
+    reading, reading_counts = check_rro_reading()
+    assert RNG.getstate() == reading_rng_state and COUNTS.keys().isdisjoint(reading_counts)
+    for name, count in reading_counts.items():
+        record(name, count)
     result = {
         'schema': 'contextual-spacetime-ml-finite-checks-v1',
         'source': 'docs/reports/contextual-spacetime-ml/finite_checks.py',
@@ -953,6 +959,7 @@ def main():
         'stochastic_records': stochastic,
         'relu_certificates': relu_certificates,
         'rro_retention': rro,
+        'rro_reading': reading,
         'configuration': {'seed': SEED, 'arithmetic': 'fractions.Fraction and rational-complex pairs',
                           'regression_steps': 5, 'two_layer_steps': 4, 'momentum_steps': 3,
                           'automata_scope': 'all binary-output partial deterministic machines with 1 or 2 states and 2 actions',

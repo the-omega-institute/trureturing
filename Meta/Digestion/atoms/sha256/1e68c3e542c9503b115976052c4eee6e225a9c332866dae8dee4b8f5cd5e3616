@@ -1,0 +1,25 @@
+**命题 118.7（第 116.3 节最小性的准确方向）。** 对总更新 $I_u:X\to X$ 及读出 $c:X\to O$，令空词作用为恒等，非空词先执行首字母，再执行尾词，并定义
+
+$$
+\operatorname{Dyn}_I(c)(x)(w)=c(I_w(x)),\qquad w\in U^*.
+$$
+
+细化关系的方向固定为
+
+$$
+\operatorname{Refines}(c,d)
+\quad\Longleftrightarrow\quad
+\exists f:D\to O,\quad c=f\circ d,
+\qquad d:X\to D.
+$$
+
+若 $d$ 保留 $c$ 且每个 $I_u$ 保持 $d$ 的纤维，则
+
+$$
+\operatorname{Refines}(\operatorname{Dyn}_I(c),d),
+\quad\text{即}\quad
+\exists g:D\to(U^*\to O),\quad \operatorname{Dyn}_I(c)=g\circ d.
+$$
+
+这保留当前 $c$ 及全部未来 $c$，不包含任何未进入读出的独立动作要求。
+

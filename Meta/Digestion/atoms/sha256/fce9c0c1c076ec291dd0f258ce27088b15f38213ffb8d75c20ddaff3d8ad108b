@@ -1,0 +1,95 @@
+**theorem 54.8（精确整数计数公式、实际解约化类的双射与完全有限判定）.** 若 $G_\infty$ 不是二分图，置
+$$
+C_p(a)=0.
+$$
+若其二分，令 $N,m,E_f,M_{T,U}$ 如上，并令每个 $M_{T,U}$ 的整数 Smith 非零不变量为
+$$
+d_1(T,U),\ldots,d_{s(T,U)}(T,U).
+$$
+定义
+$$
+C_p(a)=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N).
+$$
+令 $\mathcal Y_N(a)$ 为 theorem 54.4 中满足全部单位条件与全部有限边精确条件的模 $p^N$ 参数类集合；令
+$$
+\mathcal R_N(a)=
+\left\{
+(x_i\bmod p^N)_{i\in V}:
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+\text{ 是原阵列的实际精确共同解}
+\right\}.
+$$
+则
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+换言之，这里计数的是实际精确 $p$-进共同解的不同模 $p^N$ 约化类，等价地计数 theorem 54.2 的规范有符号参数经 theorem 54.4 实际提升后得到的约化类；它不是把“仅在模 $p^N$ 意义满足无穷边方程”的任意顶点元组都计入。因此
+$$
+\text{存在实际 }(x_i)\in(\mathbb Z_p^\times)^V
+\quad\Longleftrightarrow\quad
+C_p(a)>0.
+$$
+这给出对任意有限输入的终止算法：先判定 $G_\infty$ 是否二分；若是，构造有限多个整数矩阵 $M_{T,U}$，计算其整数 Smith 标准形并代入上式。整数 Smith 形存在确定性终止算法的来源见 axiom 54.1 中 Storjohann, Theorem 14；零矩阵与空维数在本文中先直接返回。
+
+**证明。** 设 $G_\infty$ 二分；非二分情形由 theorem 54.2 已知没有实际解，而定义给出 $C_p(a)=0$。在所有满足基础整除条件
+$$
+p^{a_e}\mid b_e\bar y\qquad(e\in E_f)
+$$
+的模 $p^N$ 向量中，定义坏事件
+$$
+B_e=\{\bar y:p^{a_e+1}\mid b_e\bar y\},
+\qquad
+D_c=\{\bar y:p\mid\bar y_c\}.
+$$
+所需参数集合 $\mathcal Y_N(a)$ 正是基础解集中避开全部 $B_e$ 与全部 $D_c$ 的元素。
+
+对固定 $T,U$，同时强制 $B_e$ 对 $e\in T$ 成立、强制 $D_c$ 对 $c\in U$ 成立，并保留每条边的基础整除条件，等价于
+$$
+b_e\bar y\equiv0\pmod{p^{k_e(T)}}\qquad(e\in E_f),
+$$
+以及
+$$
+\bar y_c\equiv0\pmod p\qquad(c\in U).
+$$
+第一类同余乘以 $p^{N-k_e(T)}$，第二类乘以 $p^{N-1}$，恰变成统一模数系统
+$$
+M_{T,U}\bar y\equiv0\pmod{p^N}.
+$$
+故其解数由 theorem 54.6 精确给出。对这组有限坏事件应用容斥原理，得到
+$$
+|\mathcal Y_N(a)|=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N)
+=C_p(a).
+$$
+
+现证明这确实等于实际解的约化类数。定义
+$$
+\Phi:\mathcal Y_N(a)\longrightarrow\mathcal R_N(a)
+$$
+如下：给定 $\bar y$，先按 theorem 54.4 任取实际提升 $y\in(\mathbb Z_p^\times)^m$，再以
+$$
+x_i=\varepsilon_i y_{c(i)}
+$$
+重建顶点元组，并取模 $p^N$。因为重建后的模类直接是
+$$
+\bar x_i=\varepsilon_i\bar y_{c(i)},
+$$
+所以 $\Phi$ 与提升选择无关。theorem 54.4 保证该重建是实际精确解，故 $\Phi$ 确实落在 $\mathcal R_N(a)$。
+
+反过来，给定 $\mathcal R_N(a)$ 中一类，按定义它来自某个实际精确解 $x$。theorem 54.2 给出唯一的实际参数 $y_C=x_{r_C}$；约化后得到 $\bar y\in\mathcal Y_N(a)$，且重建正回到给定顶点约化类，所以 $\Phi$ 满射。又每个分量根满足 $\varepsilon_{r_C}=1$，因此从任意顶点约化类可直接读回
+$$
+\bar y_C=\bar x_{r_C}.
+$$
+故 $\Phi$ 单射。若 $m=0$，两边都是只含空类的单点集，同一论证真空成立。于是 $\Phi$ 是双射，得到
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+特别地，$C_p(a)>0$ 当且仅当实际精确共同解存在。全部求和集合有限，且每个所需 Smith 形可由终止的整数算法求得，所以整个判定过程终止。证毕。
+

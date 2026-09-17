@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df843b03e707905b8935dd48ccc3dbf490ed4a249bca556a98c68b86ef89e633
+  normalized_sha256: sha256:df843b03e707905b8935dd48ccc3dbf490ed4a249bca556a98c68b86ef89e633
+cas_ref: sha256:df843b03e707905b8935dd48ccc3dbf490ed4a249bca556a98c68b86ef89e633
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “什么时候这些记录足以把一个有限状态集合完全恢复出来”是章节问题，随后仅指向已有模块中的“双向判据”；此处没有写该判据的数学陈述，更没有宣称任意余数集合都可恢复，标题及导引没有把恢复命题藏入定义，因此无需新增证明。
+    previous_atom_id: 7cbd8581929830b07ae862b4d84d5ff6033760518d39c7ef23f8982324bfc3fd
+    next_atom_id: 4de84d5320e8976b5391f15488e5a7464fa26975e1636133af437acb45b40c7a
