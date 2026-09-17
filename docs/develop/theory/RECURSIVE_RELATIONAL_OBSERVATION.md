@@ -28317,3 +28317,1374 @@ $$
 截取到 $K_0-1$ 得到声明中的下界。若某一策略在下界上取等，则所有这些非负逐项差以及 $K_0$ 以后的尾概率都必须为零；反之，若这些等号同时成立且 $K_0$ 后无尾，则尾和恰等于该下界。这证明取等刻画。theorem 63.11 的单坐标实例说明点态固定时域最大值不能总由同一策略实现，因此乘积公式本身不能推出加权均值公式；上述同时时域取等条件只是一项足以使该尾和下界取等的附加条件，而不是任意全局均值最优性证明的必要条件。证毕。
 
 ## 63.99 追加锚
+
+## 63.100--63.104 随机种子、完整公共历史与 CRT 闭包附录
+
+**definition 63.100（附引模型校正：EDGE、NODE 与本节查询模型的严格区分）。** 为消除相关文献之间对“节点查询”一词的不同用法，本附录固定如下大写术语。
+
+设 $T=(V,E)$ 是有限树，隐藏目标为 $x\in V$。
+
+1. **EDGE 模型**：查询一条边 $e\in E$，答复指出 $x$ 位于 $T\setminus e$ 的哪一个连通分支。若 $T$ 已根化，$e=(\operatorname{par}(u),u)$，则这个二值查询等价于询问
+   $$
+   x\in T_u\ ?
+   $$
+   其中 $T_u$ 是以 $u$ 为根的后代子树。因此把边 $e=(\operatorname{par}(u),u)$ 仅用其下端点 $u$ 编号，并把查询写成“目标是否在 $u$ 的子树中”，仍然是 EDGE 查询，而不是下面的 NODE 查询。
+
+2. **NODE 模型**：查询一个顶点 $u\in V$；若 $x=u$，答复直接命中，否则答复指出 $x$ 位于森林
+   $$
+   T\setminus\{u\}
+   $$
+   的哪一个连通分支。此查询一般有 $\deg(u)+1$ 种可能答复，与上面的二值 EDGE 查询不同。
+
+Onak 与 Parys 在 *Generalization of Binary Search: Searching in Trees and Forest-Like Partial Orders* 中明确同时区分 edge-query 与 vertex-query 两个模型，主文献为 [FOCS 2006, DOI 10.1109/FOCS.2006.32](https://doi.org/10.1109/FOCS.2006.32)。
+
+Cicalese、Jacobs、Laber、Molinaro 的平均费用树搜索工作的会议版 *On the Complexity of Searching in Trees: Average-case Minimization* 以 EDGE 查询为主模型，主文献为 [ICALP 2010, DOI 10.1007/978-3-642-14165-2_45](https://doi.org/10.1007/978-3-642-14165-2_45)。其扩展期刊版 *On the complexity of searching in trees and partially ordered structures* 把根化后的边查询用下端点 $u$ 编号，并写成“目标是否位于以 $u$ 为根的子树中”；在本附录固定的大写术语下，这仍是 EDGE 模型的根化表示，而不是删除 $u$ 后返回连通分支的 NODE 模型。期刊主文献为 [Theoretical Computer Science 412 (2011), DOI 10.1016/j.tcs.2011.08.042](https://doi.org/10.1016/j.tcs.2011.08.042)。
+
+其余附引的模型范围固定如下。
+
+Dagan、Filmus、Gabizon、Moran 的 *Twenty (Simple) Questions* 研究已知加权先验下的二值二十问及受限问题族；其无约束平均费用基准由 Huffman 编码给出。主文献为 [STOC 2017, DOI 10.1145/3055399.3055422](https://doi.org/10.1145/3055399.3055422)。
+
+Hu 与 Tucker 的 *Optimal Computer Search Trees and Variable-Length Alphabetical Codes* 研究固定叶顺序下的最小加权路径长字母序二叉树。主文献为 [SIAM Journal on Applied Mathematics 21 (1971), DOI 10.1137/0121057](https://doi.org/10.1137/0121057)。
+
+Afshani、Agrawal、Benjamin Doerr、Carola Doerr、Larsen、Mehlhorn 的 *The Query Complexity of a Permutation-Based Variant of Mastermind* 的隐藏对象为二进制串与隐藏坐标置换之对 $(z,\pi)$，查询返回相对于该隐藏置换的最长公共前缀长度；这与本节固定已知 $p$ 叉层级上的单一隐藏剩余类不同。主文献为 [Discrete Applied Mathematics 260 (2019), DOI 10.1016/j.dam.2019.01.007](https://doi.org/10.1016/j.dam.2019.01.007)。
+
+theorem 63.10 使用的有限最大权一一指派问题，是 Kuhn 与 Munkres 的标准 assignment problem：Kuhn, *The Hungarian Method for the Assignment Problem*, [Naval Research Logistics Quarterly 2 (1955), DOI 10.1002/nav.3800020109](https://doi.org/10.1002/nav.3800020109)；Munkres, *Algorithms for the Assignment and Transportation Problems*, [Journal of the Society for Industrial and Applied Mathematics 5 (1957), DOI 10.1137/0105003](https://doi.org/10.1137/0105003)。
+
+上述文献只界定邻近模型及标准指派子问题；theorem 63.3--63.12 的完整前缀深度纤维、兄弟状态递推、加权调度及 CRT 固定时域公式均按本节所给模型和证明解释。
+
+**证明。** 唯一需要核对的模型等价是根化 EDGE 表示。设
+$$
+e=(\operatorname{par}(u),u).
+$$
+删除 $e$ 后恰得到两个连通分支，其中一个正是 $T_u$，另一个是
+$$
+V\setminus T_u.
+$$
+故询问删除 $e$ 后目标在哪一侧，与二值询问
+$$
+x\in T_u\ ?
+$$
+完全等价。
+
+另一方面，删除顶点 $u$ 后，若
+$$
+N(u)=\{v_1,\ldots,v_{\deg(u)}\},
+$$
+则 $T\setminus\{u\}$ 一般有 $\deg(u)$ 个连通分支，再加上答复 $x=u$，NODE 查询一般具有 $\deg(u)+1$ 个结果。因此它不能与上述二值 EDGE 查询混同。证毕。
+
+**definition 63.101（独立随机种子、冻结策略与完整公共历史）。** 保持 definition 63.1 与 assumption 63.2 的严格正有限模型，写
+$$
+X=X_{p,e},
+\qquad
+A\sim\mu.
+$$
+取任意概率空间
+$$
+(\Omega,\mathcal F,\nu),
+$$
+令随机种子
+$$
+R\sim\nu
+$$
+与隐藏目标 $A$ 独立。
+
+一个随机自适应策略 $\Pi$ 的全部随机性均由 $R$ 给出。对每个种子 $\omega\in\Omega$ 和每个已经观察到的完整公共历史，下一动作由 $\Pi$ 确定，动作只能是
+
+$$
+\operatorname{query}(c),
+\qquad c\in X,
+$$
+
+或
+
+$$
+\operatorname{stop}(\widehat a),
+\qquad \widehat a\in X.
+$$
+
+所有有限值动作映射均假定可测。冻结种子 $\omega$ 后得到一个确定性策略，记为
+$$
+D_\omega.
+$$
+
+若第 $j$ 次查询中心为 $C_j$，则答复为
+$$
+Y_j=h_{C_j}(A).
+$$
+停止前实际执行的查询数记为
+$$
+\tau=\tau_\Pi(A,R)\in\mathbb N\cup\{\infty\}.
+$$
+称 $\Pi$ 为随机零错误终止策略，如果
+$$
+\Pr\bigl(\tau<\infty
+\ \text{且最终输出等于 }A\bigr)=1.
+$$
+
+对整数 $n\ge0$，一个长度为 $n$ 的完整已答查询迹写成
+$$
+h=(c_1,y_1;\ldots;c_n,y_n).
+$$
+“完整”在这里特别意味着每个已经选择的查询中心 $c_j$ 与其答复 $y_j$ 都被记录，而不只记录答复。定义其目标纤维
+$$
+S(h)
+=
+\bigcap_{j=1}^n
+\{a\in X:h_{c_j}(a)=y_j\},
+$$
+并约定
+$$
+S(\varnothing)=X.
+$$
+
+定义种子重放集 $W(h)\subseteq\Omega$ 如下：$\omega\in W(h)$ 当且仅当冻结策略 $D_\omega$ 从空历史选择 $c_1$，并且对每个
+$$
+1\le j<n,
+$$
+在已经看到记录的
+$$
+(c_1,y_1;\ldots;c_j,y_j)
+$$
+以后继续查询且下一中心恰为 $c_{j+1}$。这里不对第 $n$ 个答复以后是否停止施加条件。
+
+若还记录第 $n$ 个答复后的停止动作
+$$
+\operatorname{stop}(\widehat a),
+$$
+定义
+$$
+W_\downarrow(h,\widehat a)
+=
+\{\omega\in W(h):
+D_\omega\text{ 在历史 }h\text{ 后执行 }
+\operatorname{stop}(\widehat a)\}.
+$$
+若还记录下一查询中心 $c$, 定义
+$$
+W_\rightarrow(h,c)
+=
+\{\omega\in W(h):
+D_\omega\text{ 在历史 }h\text{ 后执行 }
+\operatorname{query}(c)\}.
+$$
+
+对空历史作如下边界约定：
+$$
+W(\varnothing)=\Omega,
+\qquad
+H_0=\varnothing
+\quad\text{几乎必然}.
+$$
+因此上面关于首个中心 $c_1$ 以及逐步重放
+$$
+c_1,\ldots,c_n
+$$
+的条件只在 $n\ge1$ 时适用；当 $n=0$ 时不存在任何待重放的查询条件。零轮即停止与零轮后继续查询仍完全使用上述统一定义，即
+$$
+W_\downarrow(\varnothing,\widehat a)
+=
+\{\omega\in\Omega:
+D_\omega\text{ 在空历史执行 }\operatorname{stop}(\widehat a)\},
+$$
+以及
+$$
+W_\rightarrow(\varnothing,c)
+=
+\{\omega\in\Omega:
+D_\omega\text{ 在空历史执行 }\operatorname{query}(c)\}.
+$$
+这样长度为零的完整历史与正长度历史属于同一个重放与停止/继续框架。
+
+因此固定长度查询迹、显式继续动作以及可选停止历史都属于同一个完整公共历史模型。后文不把遗漏查询中心的粗化观察过程并入本定义。
+
+**theorem 63.102（公共满测种子冻结与完整历史的精确似然因子分解）。** 设 $\Pi$ 是 definition 63.101 的随机零错误终止策略。
+
+首先，存在一个与目标无关的集合
+$$
+\Omega_\star\in\mathcal F,
+\qquad
+\nu(\Omega_\star)=1,
+$$
+使得对每个
+$$
+\omega\in\Omega_\star
+$$
+以及每个
+$$
+a\in X,
+$$
+冻结策略 $D_\omega$ 在隐藏目标为 $a$ 时都有限步停止并输出 $a$。换言之，在有限严格正支撑下，可以在一个共同的满测种子集合上同时冻结出对所有目标零错误的确定性策略。
+
+其次，对任意长度 $n$ 的完整已答查询迹
+$$
+h=(c_1,y_1;\ldots;c_n,y_n)
+$$
+和任意 $a\in X$，有精确等式
+$$
+\Pr(H_n=h\mid A=a)
+=
+\mathbf 1_{\{a\in S(h)\}}\nu(W(h)),
+$$
+其中事件 $H_n=h$ 表示策略至少执行了前 $n$ 次查询且这些查询中心与答复恰为 $h$。等价地，
+$$
+\Pr(A=a,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+
+更强地，对所有
+$$
+a,a'\in S(h)
+$$
+都有完全相同的相容种子集合：
+$$
+\{\omega:H_n=h\text{ 在目标 }a\text{ 下发生}\}
+=
+W(h)
+=
+\{\omega:H_n=h\text{ 在目标 }a'\text{ 下发生}\}.
+$$
+因此完整历史的随机策略乘子在全部相容目标上是同一个常数
+$$
+\nu(W(h)),
+$$
+并不随 $a\in S(h)$ 改变。
+
+若
+$$
+\Pr(H_n=h)>0,
+$$
+则擦除随机种子以后，目标的条件后验仍恰为原先验在 $S(h)$ 上的限制：
+$$
+\Pr(A=a\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}.
+$$
+而且对任意可测
+$$
+B\in\mathcal F
+$$
+都有
+$$
+\Pr(A=a,\ R\in B\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}
+\,
+\frac{\nu(B\cap W(h))}{\nu(W(h))}.
+$$
+所以给定完整历史后，隐藏目标与随机种子再次条件独立，其两边分别是
+$$
+\mu(\,\cdot\mid S(h))
+$$
+与
+$$
+\nu(\,\cdot\mid W(h)).
+$$
+
+同样的结论对显式停止历史成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{stop}(\widehat a)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\downarrow(h,\widehat a)),
+$$
+以及对显式继续到下一中心 $c$ 成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{query}(c)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\rightarrow(h,c)).
+$$
+只要相应事件具有正概率，其种子擦除后验仍是
+$$
+\mu(\,\cdot\mid S(h)).
+$$
+
+特别地，若一个停止历史
+$$
+(h,\operatorname{stop}(\widehat a))
+$$
+具有正概率，则必有
+$$
+S(h)=\{\widehat a\}.
+$$
+
+最后，对每个非空完整历史纤维 $S(h)$，theorem 63.3 仍适用：
+$$
+S(h)
+$$
+要么是单点，要么是某个兄弟状态
+$$
+S(B,I).
+$$
+故 theorem 63.3 的后验闭包不仅对每个冻结种子成立；在这里完整记录查询中心与答复以后，擦除随机种子仍保持同一个兄弟状态闭包。不存在由种子擦除本身造成的不同兄弟支撑混合。
+
+**证明。** 对每个目标 $a\in X$，定义坏种子集合
+$$
+N_a
+=
+\{\omega:
+D_\omega\text{ 在目标 }a\text{ 下不有限零错误终止}\}.
+$$
+随机零错误终止给出
+$$
+0
+=
+\Pr\bigl(\tau=\infty
+\text{ 或最终输出}\ne A\bigr)
+=
+\sum_{a\in X}\mu(a)\nu(N_a).
+$$
+由于
+$$
+\mu(a)>0
+$$
+对每个 $a\in X$ 都成立，且各项均非负，必有
+$$
+\nu(N_a)=0
+\qquad
+\text{对所有 }a\in X.
+$$
+集合 $X$ 有限，因此
+$$
+\Omega_\star
+=
+\bigcap_{a\in X}N_a^c
+$$
+满足
+$$
+\nu(\Omega_\star)=1.
+$$
+对每个 $\omega\in\Omega_\star$，冻结策略 $D_\omega$ 同时对全部 $a\in X$ 有限零错误终止。这证明第一部分。
+
+现固定
+$$
+h=(c_1,y_1;\ldots;c_n,y_n)
+$$
+与目标 $a$。若
+$$
+a\notin S(h),
+$$
+则存在某个 $j$ 使
+$$
+h_{c_j}(a)\ne y_j.
+$$
+由于答复是隐藏目标与已选中心的确定函数，事件 $H_n=h$ 不可能发生，故
+$$
+\Pr(H_n=h\mid A=a)=0.
+$$
+
+以下设
+$$
+a\in S(h).
+$$
+于是只要策略依次选择记录中的中心
+$$
+c_1,\ldots,c_n,
+$$
+它看到的答复就必然依次为
+$$
+y_1,\ldots,y_n.
+$$
+在第一个查询以前，策略选择什么中心只依赖种子。看到第一个记录答复以后，第二中心只依赖同一个种子与记录历史
+$$
+(c_1,y_1).
+$$
+继续归纳，第 $j+1$ 个中心只依赖同一个种子与已经固定的公共历史
+$$
+(c_1,y_1;\ldots;c_j,y_j).
+$$
+这些记录对于每一个
+$$
+a\in S(h)
+$$
+完全相同。因此使策略依次选择
+$$
+c_1,\ldots,c_n
+$$
+的种子集合恰为 definition 63.101 中的 $W(h)$，且它与具体选择哪一个
+$$
+a\in S(h)
+$$
+无关。
+
+所以逐点有事件恒等式
+$$
+\{\omega:H_n=h\text{ 在目标 }a\text{ 下发生}\}
+=
+\begin{cases}
+W(h),&a\in S(h),\\
+\varnothing,&a\notin S(h).
+\end{cases}
+$$
+取 $\nu$ 测度即得
+$$
+\Pr(H_n=h\mid A=a)
+=
+\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+再乘以独立目标先验 $\mu(a)$ 得
+$$
+\Pr(A=a,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+
+对 $a$ 求和，
+$$
+\Pr(H_n=h)
+=
+\mu(S(h))\nu(W(h)).
+$$
+若此量为正，则
+$$
+\mu(S(h))>0,
+\qquad
+\nu(W(h))>0.
+$$
+Bayes 公式于是给出
+$$
+\Pr(A=a\mid H_n=h)
+=
+\frac{
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h))
+}{
+\mu(S(h))\nu(W(h))
+}
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}.
+$$
+这里最关键的是：乘子
+$$
+\nu(W(h))
+$$
+在全部 $a\in S(h)$ 上完全相同，因而不能仅从一个形式上的一般 Bayes 公式推断该乘子会随目标变化。
+
+更一般地，对任意 $B\in\mathcal F$，
+$$
+\Pr(A=a,R\in B,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}
+\nu(B\cap W(h)).
+$$
+除以
+$$
+\mu(S(h))\nu(W(h))
+$$
+即得到
+$$
+\Pr(A=a,R\in B\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}
+\frac{\nu(B\cap W(h))}{\nu(W(h))}.
+$$
+这正是给定完整历史后的条件乘积分解。
+
+若在 $h$ 后还记录
+$$
+\operatorname{stop}(\widehat a),
+$$
+则在已经证明的种子集合 $W(h)$ 内再与事件
+$$
+D_\omega(h)=\operatorname{stop}(\widehat a)
+$$
+相交即可。该额外条件仍只依赖种子和共同记录历史，不依赖哪一个
+$$
+a\in S(h)
+$$
+是真实目标。因此
+$$
+\Pr\bigl(H_n=h,\operatorname{stop}(\widehat a)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\downarrow(h,\widehat a)).
+$$
+继续查询中心 $c$ 的情形完全相同，得到
+$$
+\Pr\bigl(H_n=h,\operatorname{query}(c)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\rightarrow(h,c)).
+$$
+所以固定长度迹事件与可选停止历史都具有同一个目标纤维乘种子重放集的因子分解。
+
+若停止事件
+$$
+E=
+\{H_n=h,\operatorname{stop}(\widehat a)\}
+$$
+有正概率，而存在
+$$
+b\in S(h),\qquad b\ne\widehat a,
+$$
+则严格正先验给出
+$$
+\mu(b)>0,
+$$
+而正事件概率迫使
+$$
+\nu(W_\downarrow(h,\widehat a))>0.
+$$
+于是
+$$
+\Pr(A=b,E)
+=
+\mu(b)\nu(W_\downarrow(h,\widehat a))
+>0.
+$$
+在此事件上策略却输出 $\widehat a\ne b$，与随机零错误性矛盾。因此
+$$
+S(h)=\{\widehat a\}.
+$$
+
+最后，给定任何具体的中心与答复序列
+$$
+(c_1,y_1;\ldots;c_n,y_n),
+$$
+从根候选集开始逐次取答复纤维，正是 theorem 63.3 的确定性纤维更新过程；该论证只使用记录的中心和答复，不使用中心是如何随机选择出来的。因此每个非空 $S(h)$ 仍为单点或兄弟状态，条件后验是 $\mu$ 在该集合上的限制归一化。由于擦除种子后的后验支撑仍恰为同一个 $S(h)$，闭包同时对冻结种子和种子擦除历史成立。证毕。
+
+**theorem 63.103（随机化不改善均值或固定时域极值；等号强迫几乎处处确定性极值与 63.11 分离）。** 在 definition 63.101 的模型下，对一个随机零错误终止策略 $\Pi$，令
+$$
+\tau_\omega(a)
+$$
+为冻结种子 $\omega$ 后在目标 $a$ 上的查询数，并定义
+$$
+M(\omega)
+=
+\sum_{a\in X}\mu(a)\tau_\omega(a),
+$$
+以及对每个整数 $t\ge0$，
+$$
+R_t(\omega)
+=
+\sum_{a\in X}
+\mu(a)\mathbf 1_{\{\tau_\omega(a)\le t\}}.
+$$
+
+则
+$$
+\mathbb E[\tau]
+=
+\int_\Omega M(\omega)\,d\nu(\omega),
+$$
+且
+$$
+\Pr(\tau\le t)
+=
+\int_\Omega R_t(\omega)\,d\nu(\omega).
+$$
+
+记
+$$
+H_t=Q(X_{p,e},t).
+$$
+则对每个随机零错误终止策略都有
+$$
+\mathbb E[\tau]\ge E_\mu(p,e)
+$$
+以及
+$$
+\Pr(\tau\le t)\le H_t.
+$$
+两个界都可以由退化随机种子，也就是某一确定性最优策略，达到。因此
+$$
+\min_{\Pi\ {\rm randomized}}
+\mathbb E[\tau]
+=
+E_\mu(p,e),
+$$
+并且对每个 $t\ge0$，
+$$
+\max_{\Pi\ {\rm randomized}}
+\Pr(\tau\le t)
+=
+H_t.
+$$
+随机化既不能改善线性的加权平均查询数，也不能改善任一固定时域的最大成功概率。
+
+等号还具有强迫性。
+
+若
+$$
+\mathbb E[\tau]=E_\mu(p,e),
+$$
+则
+$$
+M(\omega)=E_\mu(p,e)
+$$
+对 $\nu$-几乎处处的 $\omega$ 成立；也就是说，几乎每一个冻结策略本身都是确定性均值最优策略。
+
+若对某个固定 $t$ 有
+$$
+\Pr(\tau\le t)=H_t,
+$$
+则
+$$
+R_t(\omega)=H_t
+$$
+对 $\nu$-几乎处处的 $\omega$ 成立；也就是说，几乎每一个冻结策略本身都是该固定时域的确定性最优策略。
+
+更一般地，若一个随机策略同时达到有限多个固定时域
+$$
+t_1,\ldots,t_m
+$$
+的极值，并且可选地同时达到均值极值，则存在一个共同的满测种子集合，使该集合中的每一个冻结策略同时达到所有这些相应的确定性极值。
+
+应用到 theorem 63.11 的精确先验，
+$$
+p=2,\qquad e=3,
+$$
+有
+$$
+E_\mu(2,3)=\frac{38}{25},
+\qquad
+H_1=\frac35,
+\qquad
+H_2=\frac{23}{25}.
+$$
+theorem 63.11 还给出以下互斥首动作集合：
+
+$$
+\mathcal C_{\rm mean}
+=
+\{3,7\},
+$$
+
+$$
+\mathcal C_1
+=
+\{3,7\},
+$$
+
+而
+$$
+\mathcal C_2
+\subseteq
+E
+=
+\{0,2,4,6\},
+$$
+事实上任何两步最优策略的第一中心必须位于 $E$。
+
+因此不存在随机零错误策略同时满足
+$$
+\mathbb E[\tau]=\frac{38}{25}
+$$
+和
+$$
+\Pr(\tau\le2)=\frac{23}{25},
+$$
+也不存在随机零错误策略同时满足
+$$
+\Pr(\tau\le1)=\frac35
+$$
+和
+$$
+\Pr(\tau\le2)=\frac{23}{25}.
+$$
+随机混合不能消除 theorem 63.11 的首动作冲突。
+
+**证明。** 由 theorem 63.102，存在
+$$
+\Omega_\star\subseteq\Omega,
+\qquad
+\nu(\Omega_\star)=1,
+$$
+使每个
+$$
+\omega\in\Omega_\star
+$$
+都冻结为一个对全部目标有限零错误的确定性策略 $D_\omega$。
+
+由于所有项非负，Tonelli 定理给出
+$$
+\begin{aligned}
+\mathbb E[\tau]
+&=
+\sum_{a\in X}
+\mu(a)
+\int_\Omega \tau_\omega(a)\,d\nu(\omega)\\
+&=
+\int_\Omega
+\left(
+\sum_{a\in X}\mu(a)\tau_\omega(a)
+\right)
+d\nu(\omega)\\
+&=
+\int_\Omega M(\omega)\,d\nu(\omega).
+\end{aligned}
+$$
+同样，
+$$
+\begin{aligned}
+\Pr(\tau\le t)
+&=
+\sum_{a\in X}\mu(a)
+\int_\Omega
+\mathbf 1_{\{\tau_\omega(a)\le t\}}
+\,d\nu(\omega)\\
+&=
+\int_\Omega R_t(\omega)\,d\nu(\omega).
+\end{aligned}
+$$
+
+对每个
+$$
+\omega\in\Omega_\star,
+$$
+$D_\omega$ 是 definition 63.4 所允许的确定性零错误策略，所以
+$$
+M(\omega)\ge E_\mu(p,e).
+$$
+积分得到
+$$
+\mathbb E[\tau]\ge E_\mu(p,e).
+$$
+反之，取一棵达到 theorem 63.7 最小值的确定性策略，并令随机种子恒定，就达到
+$$
+E_\mu(p,e).
+$$
+
+同理，对每个
+$$
+\omega\in\Omega_\star,
+$$
+$D_\omega$ 是 definition 63.9 中允许的最终零错误确定性策略，因此
+$$
+R_t(\omega)
+\le
+Q(X_{p,e},t)
+=
+H_t.
+$$
+积分给出
+$$
+\Pr(\tau\le t)\le H_t.
+$$
+取达到 $Q(X,t)$ 的确定性策略并使用退化种子，又达到等号。
+
+若随机均值达到最小值，则在 $\Omega_\star$ 上非负函数
+$$
+M(\omega)-E_\mu(p,e)
+$$
+的积分为零：
+$$
+\int_{\Omega_\star}
+\bigl(M(\omega)-E_\mu(p,e)\bigr)
+\,d\nu(\omega)
+=
+0.
+$$
+因此
+$$
+M(\omega)=E_\mu(p,e)
+$$
+几乎处处。
+
+若固定时域达到最大值，则非负函数
+$$
+H_t-R_t(\omega)
+$$
+积分为零，故
+$$
+R_t(\omega)=H_t
+$$
+几乎处处。
+
+对于有限多个时域，每一个等号分别给出一个满测种子集合；与 $\Omega_\star$ 以及可选的均值等号集合取有限交，仍是满测集合。于是几乎每一个冻结策略同时达到所要求的全部确定性极值。
+
+现取 theorem 63.11 的实例。若某随机策略均值最优，则几乎每个冻结策略都是确定性均值最优策略；theorem 63.11 强迫其第一中心属于
+$$
+\{3,7\}.
+$$
+若同一随机策略又两步最优，则几乎每个冻结策略又必须是确定性两步最优策略，其第一中心必须属于
+$$
+E=\{0,2,4,6\}.
+$$
+两个集合不交。两个相应满测种子集合的交仍为满测，因而不可能同时满足这两个互斥要求。这证明均值与两步极值不能同时达到。
+
+一步与两步的论证相同：一步等号几乎处处强迫第一中心位于
+$$
+\{3,7\},
+$$
+两步等号几乎处处强迫第一中心位于 $E$，故不存在同时达到两者的随机策略。证毕。
+
+**theorem 63.104（随机 CRT 的完整历史矩形闭包、固定时域乘积极值与尾和下界）。** 保持 theorem 63.12 的有限 CRT 数据。即 $I$ 为非空有限集；对每个 $q\in I$，
+$$
+X_q
+=
+\mathbb Z/p_q^{e_q}\mathbb Z,
+\qquad
+e_q\ge1,
+$$
+各 $p_q$ 两两不同，并带严格正先验
+$$
+\mu_q.
+$$
+全局隐藏目标
+$$
+A=(A_q)_{q\in I}
+$$
+服从独立直积先验
+$$
+\mu
+=
+\bigotimes_{q\in I}\mu_q.
+$$
+随机种子
+$$
+R\sim\nu
+$$
+与整个 $A$ 独立。
+
+每轮全局查询中心由 CRT 等价地写成局部中心向量
+$$
+\mathbf c_j=(c_{j,q})_{q\in I},
+$$
+答复向量为
+$$
+\mathbf y_j
+=
+\bigl(h_{c_{j,q}}(A_q)\bigr)_{q\in I}.
+$$
+
+对一个完整全局历史
+$$
+h=
+(\mathbf c_1,\mathbf y_1;
+\ldots;
+\mathbf c_n,\mathbf y_n),
+$$
+定义每个坐标的局部历史纤维
+$$
+S_q(h)
+=
+\bigcap_{j=1}^n
+\left\{
+a_q\in X_q:
+h_{c_{j,q}}(a_q)=y_{j,q}
+\right\}.
+$$
+则全局目标纤维严格分解为矩形
+$$
+S(h)
+=
+\prod_{q\in I}S_q(h).
+$$
+
+设 $W(h)$ 为与 theorem 63.102 相同的完整历史种子重放集。则对任意
+$$
+\mathbf a=(a_q)_{q\in I}
+$$
+有
+$$
+\Pr(H_n=h\mid A=\mathbf a)
+=
+\mathbf 1_{\{\mathbf a\in S(h)\}}
+\nu(W(h)),
+$$
+以及
+$$
+\Pr(A=\mathbf a,H_n=h)
+=
+\left(
+\prod_{q\in I}\mu_q(a_q)
+\right)
+\mathbf 1_{\{\mathbf a\in S(h)\}}
+\nu(W(h)).
+$$
+因此只要
+$$
+\Pr(H_n=h)>0,
+$$
+擦除随机种子后的全局后验仍严格为直积：
+$$
+\Pr(A=\mathbf a\mid H_n=h)
+=
+\prod_{q\in I}
+\frac{
+\mu_q(a_q)\mathbf 1_{\{a_q\in S_q(h)\}}
+}{
+\mu_q(S_q(h))
+}.
+$$
+特别地，每个 $S_q(h)$ 由 theorem 63.3 是单点或局部兄弟状态；完整历史下随机种子的擦除不会产生坐标依赖。
+
+对每个坐标定义
+$$
+F_q(t)
+=
+Q_q(X_q,t),
+$$
+并令
+$$
+J(t)
+=
+\prod_{q\in I}F_q(t).
+$$
+则即使允许任意共享随机种子和全局自适应随机策略，对每个固定整数 $t\ge0$，在 $t$ 轮内完成全部坐标的最大概率仍恰为
+$$
+J(t).
+$$
+也就是说，
+$$
+\max_{\Pi\ {\rm randomized}}
+\Pr_\Pi(T\le t)
+=
+\prod_{q\in I}F_q(t).
+$$
+达到这个固定时域乘积不需要随机化：逐坐标取各自的 $t$ 时域确定性最优策略并行运行即可。
+
+若某随机全局策略在固定 $t$ 达到
+$$
+\Pr(T\le t)=J(t),
+$$
+则对 $\nu$-几乎处处的种子，冻结后的确定性全局策略本身也在时域 $t$ 达到 $J(t)$。
+
+随机化同样不能改善全局平均查询轮数。若
+$$
+E_{\rm CRT}^{\rm det}
+=
+\min_D\mathbb E[T_D]
+$$
+是所有确定性全局零错误策略的最小平均轮数，而
+$$
+E_{\rm CRT}^{\rm rand}
+=
+\min_\Pi\mathbb E[T_\Pi]
+$$
+是随机策略的最小平均轮数，则
+$$
+E_{\rm CRT}^{\rm rand}
+=
+E_{\rm CRT}^{\rm det}.
+$$
+这里并未把二者进一步等同于下面的固定时域尾和表达式。
+
+令
+$$
+K_0
+=
+\max_{q\in I}e_q(p_q-1).
+$$
+对任意随机全局零错误终止策略的整数停止时间 $T$，
+$$
+\Pr(T\le t)\le J(t)
+$$
+对每个 $t\ge0$ 成立，因而
+$$
+\mathbb E[T]
+\ge
+\sum_{t=0}^{K_0-1}
+\left(
+1-
+\prod_{q\in I}F_q(t)
+\right).
+$$
+这是随机策略同样必须满足的尾和**下界**。
+
+更精确地，记
+$$
+L
+=
+\sum_{t=0}^{K_0-1}(1-J(t)).
+$$
+某个随机策略满足
+$$
+\mathbb E[T]=L
+$$
+当且仅当同时满足
+
+$$
+\Pr(T\le t)=J(t)
+\qquad
+(0\le t<K_0)
+$$
+
+以及
+
+$$
+\Pr(T\le K_0)=1.
+$$
+
+而且，如果随机策略达到这个尾和下界，则存在一个共同的满测种子集合，使其中每一个冻结确定性策略同时对全部有限时域
+$$
+0\le t<K_0
+$$
+达到
+$$
+J(t).
+$$
+因此随机化不能通过在不同种子上分别实现不同的固定时域最优策略来绕过“同一策略必须同时达到各时域等号”的要求。
+
+特别地，theorem 63.11 的单坐标实例已经给出
+$$
+K_0=3,
+$$
+$$
+J(0)=0,
+\qquad
+J(1)=\frac35,
+\qquad
+J(2)=\frac{23}{25},
+$$
+所以
+$$
+L
+=
+1+\frac25+\frac2{25}
+=
+\frac{37}{25}.
+$$
+但 theorem 63.103 给出即使允许随机化，
+$$
+\min_\Pi\mathbb E[T]
+=
+\frac{38}{25}.
+$$
+因此严格不等式
+$$
+\frac{37}{25}
+<
+\frac{38}{25}
+$$
+在随机策略类中仍然成立。固定时域 CRT 乘积公式与完整历史乘积后验都成立，但它们只产生上述尾和下界，并不把该下界自动提升为最优均值等式。
+
+**证明。** 先证明完整历史闭包。对每一轮 $j$，全局答复事件是逐坐标事件的交：
+$$
+\left\{
+\mathbf a:
+h_{c_{j,q}}(a_q)=y_{j,q}
+\text{ 对所有 }q\in I
+\right\}
+=
+\prod_{q\in I}
+\left\{
+a_q:
+h_{c_{j,q}}(a_q)=y_{j,q}
+\right\}.
+$$
+对 $j=1,\ldots,n$ 取交，并利用有限直积与逐坐标交交换，得到
+$$
+\begin{aligned}
+S(h)
+&=
+\bigcap_{j=1}^n
+\prod_{q\in I}
+\left\{
+a_q:
+h_{c_{j,q}}(a_q)=y_{j,q}
+\right\}\\
+&=
+\prod_{q\in I}
+\bigcap_{j=1}^n
+\left\{
+a_q:
+h_{c_{j,q}}(a_q)=y_{j,q}
+\right\}\\
+&=
+\prod_{q\in I}S_q(h).
+\end{aligned}
+$$
+
+现固定
+$$
+\mathbf a\in S(h).
+$$
+完整公共历史已经记录全部中心向量与答复向量，所以与 theorem 63.102 完全相同：策略在每一步看到的历史，对于所有
+$$
+\mathbf a\in S(h)
+$$
+都是同一个记录历史。故产生这些中心向量的相容种子集合统一为 $W(h)$，与具体的 $\mathbf a$ 无关。于是
+$$
+\Pr(H_n=h\mid A=\mathbf a)
+=
+\mathbf 1_{\{\mathbf a\in S(h)\}}\nu(W(h)).
+$$
+乘以直积先验得到
+$$
+\Pr(A=\mathbf a,H_n=h)
+=
+\left(
+\prod_q\mu_q(a_q)
+\right)
+\mathbf 1_{\{\mathbf a\in S(h)\}}
+\nu(W(h)).
+$$
+
+又因为
+$$
+\mu(S(h))
+=
+\prod_{q\in I}\mu_q(S_q(h)),
+$$
+对正概率历史应用 Bayes 公式，
+$$
+\begin{aligned}
+\Pr(A=\mathbf a\mid H_n=h)
+&=
+\frac{
+\left(\prod_q\mu_q(a_q)\right)
+\left(\prod_q\mathbf 1_{\{a_q\in S_q(h)\}}\right)
+}{
+\prod_q\mu_q(S_q(h))
+}\\
+&=
+\prod_{q\in I}
+\frac{
+\mu_q(a_q)\mathbf 1_{\{a_q\in S_q(h)\}}
+}{
+\mu_q(S_q(h))
+}.
+\end{aligned}
+$$
+所以即使擦除共享随机种子，完整历史后的坐标后验仍独立。每个局部 $S_q(h)$ 又是对固定局部中心与答复逐次取纤维所得，因此 theorem 63.3 逐坐标给出单点或兄弟状态闭包。
+
+现考虑固定时域。由 theorem 63.102 的同一有限严格正支撑论证，在一个共同满测种子集合上，每个冻结随机全局策略都是对所有全局目标有限零错误的确定性策略。对这样一个种子 $\omega$，记
+$$
+R_t^{\rm CRT}(\omega)
+=
+\Pr_A(T_\omega\le t).
+$$
+theorem 63.12 的确定性固定时域结论给出
+$$
+R_t^{\rm CRT}(\omega)
+\le
+J(t)
+=
+\prod_qF_q(t).
+$$
+因此
+$$
+\Pr(T\le t)
+=
+\int_\Omega
+R_t^{\rm CRT}(\omega)\,d\nu(\omega)
+\le
+J(t).
+$$
+
+反之，对所固定的 $t$，每个坐标 $q$ 取一棵达到
+$$
+F_q(t)
+$$
+的确定性局部策略。利用 CRT 在每轮把任意局部中心向量合成为一个全局中心，并行运行这些策略。theorem 63.12 已证明该确定性全局策略在 $t$ 轮内完成全部坐标的概率恰为
+$$
+\prod_qF_q(t)=J(t).
+$$
+故随机固定时域最优值恰为 $J(t)$。
+
+若随机策略达到
+$$
+\Pr(T\le t)=J(t),
+$$
+则非负函数
+$$
+J(t)-R_t^{\rm CRT}(\omega)
+$$
+积分为零，所以
+$$
+R_t^{\rm CRT}(\omega)=J(t)
+$$
+几乎处处。这证明固定时域等号强迫。
+
+在使用平均轮数的冻结不等式以前，先说明这里写成“最小值”确实有确定性实现者。记有限全局目标集为
+$$
+X^{\rm glob}
+=
+\prod_{q\in I}X_q.
+$$
+由当前有限 CRT 模型，每轮允许的全局中心集合有限，每个中心可能产生的全局答复集合也有限。考虑任意确定性全局零错误决策树，并在每个可达节点以该节点完整历史 $h$ 的候选集
+$$
+S(h)\subseteq X^{\rm glob}
+$$
+为状态。若某查询在当前 $S(h)$ 上的答复恒定，则该查询只有一个可达子节点，不排除任何候选目标；删去这个查询节点并把其父边直接接到唯一可达子树，保持零错误且对每个目标都不增加查询轮数。若
+$$
+|S(h)|=1,
+$$
+则立即输出该唯一候选并停止，同样保持零错误且不增加任何目标上的查询轮数。反复作这两种剪枝以后，每个保留的查询节点都满足
+$$
+|S(h)|\ge2
+$$
+并把当前候选集按答复分成至少两个非空真子集；特别地，沿任意可达分支进入下一节点时，候选集基数严格下降。因此每条分支的查询长度至多为
+$$
+|X^{\rm glob}|-1.
+$$
+
+这样的零错误有限树至少存在一棵：对每个坐标取一个有限确定性零错误局部识别树，并按 theorem 63.12 所用的 CRT 并行机制，在每一全局轮把各坐标当前所需的局部中心合成为一个全局中心；某坐标已经识别以后可固定其局部中心而忽略其后答复。由于坐标数有限且每棵局部树有限，这给出一棵有限的全局零错误树，再按上一段剪枝即可。
+
+现在只考虑已经如此剪枝的确定性零错误树。其深度统一不超过
+$$
+|X^{\rm glob}|-1,
+$$
+而每个内部节点可选的全局中心来自有限集合，每个中心的答复标签来自有限集合，每个叶子的输出又来自有限集 $X^{\rm glob}$。故这种有界深度的标号决策树总数有限。固定严格正先验 $\mu$ 后，每一棵树的平均查询轮数
+$$
+\mathbb E_A[T_D]
+=
+\sum_{\mathbf a\in X^{\rm glob}}
+\mu(\mathbf a)\,T_D(\mathbf a)
+$$
+是一个有限实数；在上述非空有限树族上必有一棵树 $D_*$ 取得最小值。由于任意原确定性零错误树都可剪枝为一棵点态查询成本不更大的树，所以
+$$
+E_{\rm CRT}^{\rm det}
+=
+\min_D\mathbb E[T_D]
+=
+\mathbb E[T_{D_*}]
+$$
+确为达到的最小值，而不只是下确界。随后对任意随机零错误策略应用冻结种子所得的不等式，将证明其平均成本不小于这个已经达到的确定性最小值；另一方面把同一棵 $D_*$ 看成与种子无关的随机策略即给出随机策略类中的同一成本。因此随机类的最优值也由 $D_*$ 达到，定理中
+$$
+E_{\rm CRT}^{\rm rand}
+=
+\min_\Pi\mathbb E[T_\Pi]
+$$
+的“最小值”记号同样得到实现，而这里没有预先使用待证的随机最优等式。
+
+平均轮数的随机化不改进性也由同一冻结论证得到。设
+$$
+M_{\rm CRT}(\omega)
+=
+\mathbb E_A[T_\omega].
+$$
+对几乎每个好种子，
+$$
+M_{\rm CRT}(\omega)
+\ge
+E_{\rm CRT}^{\rm det}.
+$$
+于是
+$$
+\mathbb E[T]
+=
+\int_\Omega M_{\rm CRT}(\omega)\,d\nu(\omega)
+\ge
+E_{\rm CRT}^{\rm det}.
+$$
+确定性策略是随机策略的特例，故反向不等式显然成立，从而
+$$
+E_{\rm CRT}^{\rm rand}
+=
+E_{\rm CRT}^{\rm det}.
+$$
+
+对尾界，任意非负整数值停止时间满足
+$$
+\mathbb E[T]
+=
+\sum_{t=0}^{\infty}\Pr(T>t).
+$$
+而固定时域界给出
+$$
+\Pr(T>t)
+=
+1-\Pr(T\le t)
+\ge
+1-J(t).
+$$
+因此截取前 $K_0$ 项，
+$$
+\mathbb E[T]
+\ge
+\sum_{t=0}^{K_0-1}(1-J(t))
+=
+L.
+$$
+
+为了刻画等号，直接写成非负项之和：
+$$
+\begin{aligned}
+\mathbb E[T]-L
+&=
+\sum_{t=0}^{K_0-1}
+\left(
+\Pr(T>t)-(1-J(t))
+\right)
++
+\sum_{t=K_0}^{\infty}\Pr(T>t)\\
+&=
+\sum_{t=0}^{K_0-1}
+\left(
+J(t)-\Pr(T\le t)
+\right)
++
+\sum_{t=K_0}^{\infty}\Pr(T>t).
+\end{aligned}
+$$
+每一项都非负。因此
+$$
+\mathbb E[T]=L
+$$
+当且仅当
+$$
+\Pr(T\le t)=J(t)
+\qquad
+(0\le t<K_0)
+$$
+并且
+$$
+\Pr(T>t)=0
+\qquad
+(t\ge K_0).
+$$
+后一组条件等价于
+$$
+\Pr(T\le K_0)=1.
+$$
+
+如果随机策略达到 $L$，则对每个有限的
+$$
+t=0,\ldots,K_0-1
+$$
+都达到固定时域极值 $J(t)$。由已经证明的等号强迫性，每个 $t$ 对应一个满测种子集合，在其中冻结策略达到 $J(t)$。这些集合只有有限多个，与共同零错误满测集合取交以后仍为满测。因此几乎每一个该交集中的冻结确定性策略同时达到全部
+$$
+J(0),\ldots,J(K_0-1).
+$$
+这证明随机种子不能把互不兼容的时域极值分别分配给不同正测种子后再通过平均得到全部等号。
+
+最后，把 theorem 63.11 的单坐标数据代入。此时
+$$
+K_0=e(p-1)=3,
+$$
+且
+$$
+J(0)=H_0=0,
+$$
+$$
+J(1)=H_1=\frac35,
+$$
+$$
+J(2)=H_2=\frac{23}{25}.
+$$
+故尾和下界为
+$$
+L
+=
+(1-0)
++
+\left(1-\frac35\right)
++
+\left(1-\frac{23}{25}\right)
+=
+1+\frac25+\frac2{25}
+=
+\frac{37}{25}.
+$$
+另一方面 theorem 63.103 已证明随机化不改善该实例的均值最优值，所以
+$$
+\min_\Pi\mathbb E[T]
+=
+E_\mu(2,3)
+=
+\frac{38}{25}.
+$$
+于是
+$$
+L
+=
+\frac{37}{25}
+<
+\frac{38}{25}.
+$$
+这同时证明固定时域乘积闭包、完整历史后验乘积闭包与尾和下界均可成立，而点态时域极值仍不能被错误拼接成随机均值最优公式。证毕。
+
+## 63.199 追加锚
