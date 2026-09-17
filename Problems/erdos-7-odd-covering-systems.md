@@ -30,15 +30,17 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [all-height shared-cell bound](../docs/reports/erdos7-odd-covering/marked_head_profile.md#one-original-depth-per-cell-sharpens-the-all-family-joint-frontier)
-gives `Gamma13<=16527355324420230957/102089544055356572<161.890775`
+An [all-height common-layout bound](../docs/reports/erdos7-odd-covering/marked_head_profile.md#one-original-zero-five-layout-across-both-actual-measures)
+gives `Gamma13<=5522463803581385359/35094633753560524<157.359209`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
 actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
 for11 and13, and conditions once. Each original deep ternary test occupies
-one cell; retaining the number of earlier depths assigned to that cell
-sharpens the nonlinear cost bounds. The same geometry stays in their
-numerators and survival denominator. Exact margins at all1296 vertices,
+one cell. Its original zero-five block also stays the same across the
+entire five-coordinate comparison mixture and the actual35 and pure3
+integrals. The pointwise density bound between those measures permits
+their increments to share one cell and one prior depth count. The same
+geometry stays in the numerators and survival denominator. Exact margins at all1296 vertices,
 positive continuous-extension coefficients and all12 missing-class
 branches give the uniform result. The preceding JN bounds remain valid;
 no actual-family sharpness or Lean endpoint is asserted.
@@ -81,12 +83,12 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<102.642888`. The sufficient finite joint-frontier bounds
-are therefore300.356 for the large core and300.094 for the smaller one,
+`sup E(A^2-81)_+<99.398311`. The sufficient finite joint-frontier bounds
+are therefore303.601 for the large core and303.338 for the smaller one,
 at W403. Row potentials coupled to the actual cap and charge, whole
 weighted original-layout costs and complete tails give the all-family
-upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<475.527101`.
-This improves the depthwise-relaxed477.430330 calculation but remains
+upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<454.190207`.
+This improves the separate zero-five cost comparison475.527101 but remains
 above both required allowances. The19 input of this KC functional is
 the normalized physical mu17; the actual killed input xi in BM/RC is
 not substituted. All these are ordinary inequalities with exact

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact arithmetic certificate for the cell-consistent joint frontier bound.
+"""Exact arithmetic certificate for the common zero-five joint frontier bound.
 
 Python 3.9+; standard library only. Run with -I -O. This checks the
 finite arithmetic in the accompanying ordinary proof, not a Lean proof
@@ -89,22 +89,8 @@ def affine(t, kind, n, b, mass, avail):
 
 ONES = (F(1),) * 5
 @lru_cache(None)
-def pure_add(t, pure):
-    M = max((affine(F(0), 'id', 1, b, pure, ONES) for b in BASES))
-    x = sum(pure)
-    N = max(2, ceilq(t))
-    vals = []
-    fmax = {n: max((affine(t, 'hn', n, b, pure, ONES) for b in BASES)) for n in range(2, N)}
-    for b in BASES:
-        val = sum((F(4, 5 ** n) * (affine(t, 'g', n, b, pure, ONES) + F(n - 1, n) * fmax[n]) for n in range(2, N)))
-        val += F(1, 5 ** (N - 1)) * (affine(t, 'min', 1, b, pure, ONES) - t * x + (N - F(3, 4)) * M)
-        vals.append(val)
-    return tuple(vals)
-
-@lru_cache(None)
 def raw35(t, dat):
-    avail, mass, pure, s, D = dat
-    return max((affine(t, 'h', 1, b, mass, avail) + addition for b, addition in zip(BASES, pure_add(t, pure))))
+    return zero5_raw(('h', t), dat)
 
 @lru_cache(None)
 def raw357(t, dat):
@@ -163,38 +149,8 @@ def sq_value(t, b, mass, avail):
     return sum((m * sh(t, x) for m, x in zip(mass, b))) + sq_deep(t, b, avail)
 
 @lru_cache(None)
-def correction_deep(t, n, b):
-    f = lambda x: sh(t, n * x) / n - sh(t, x)
-    cut = max(3, rootceil(t) + 3)
-    while any(F((n-1)*(2*(x+cut-3)+1)) <
-              max(f(k+1)-f(k) for k in range(x,x+cut-2)) for x in b):
-        cut += 1
-    m0, m1, _ = geom(3, cut)
-    return max(sum(F(1,3**a) * max(f(k+1)-f(k)
-                  for k in range(x,x+a-2)) for a in range(3,cut))
-        +(n-1)*(2*m1+(2*x-5)*m0) for x in b)
-
-@lru_cache(None)
-def square_pure_add(t, pure):
-    q = tuple((sq_value(F(0), b, pure, ONES) for b in BASES))
-    qmax = max(q)
-    x = sum(pure)
-    cut = max(2, rootceil(t) + 1)
-    vals = [F(0) for b in BASES]
-    for n in range(2, cut):
-        mx = max((n * n * sq_value(t / (n * n), b, pure, ONES) for b in BASES))
-        for j, b in enumerate(BASES):
-            correction = sum((m * (sh(t, n * v) / n - sh(t, v)) for m, v in zip(pure, b))) + correction_deep(t, n, b)
-            vals[j] += F(4, 5 ** n) * (correction + F(n - 1, n) * mx)
-    m0, m1, m2 = (4 * v for v in geom(5, cut))
-    for j, b in enumerate(BASES):
-        vals[j] += m1 * q[j] + (m2 - m1) * qmax - m0 * (sq_value(t, b, pure, ONES) + t * x)
-    return tuple(vals)
-
-@lru_cache(None)
 def square35(t, dat):
-    avail, mass, pure, s, D = dat
-    return max((sq_value(t, b, mass, avail) + addition for b, addition in zip(BASES, square_pure_add(t, pure))))
+    return zero5_raw(('s', t), dat)
 
 @lru_cache(None)
 def square357(t, dat):
@@ -308,28 +264,117 @@ def wd(weights, n, kind, k, b, avail):
 def wv(weights, n, kind, k, b, mass, avail):
     return sum((m * x for m, x in zip(mass, wt(weights, n, kind, k, b)[0]))) + wd(weights, n, kind, k, b, avail)
 
+# The raw complete35 and pure3 measures see the same original zero-five
+# ternary layout. On cell l their density ratio is at most avail[l].
+# Centering at f(n) cancels the 1/n constants before summing all 5-depths.
 @lru_cache(None)
-def wa(weights, n, pure):
-    cut = max(2, ceilq(F(max((h for h, c in weights)), n)))
-    a = sum((c for h, c in weights)) * n
-    b = -sum((h * c for h, c in weights))
-    M = max((affine(F(0), 'id', 1, bb, pure, ONES) for bb in BASES))
+def zero5_cost_metadata(tag):
+    """Return degree, leading coefficient, constant, and polynomial cutoff."""
+    kind, arg = tag
+    if kind == 'h':
+        return 1, F(1), -arg, max(2, ceilq(arg))
+    if kind == 's':
+        return 2, F(1), -arg, max(2, rootceil(arg))
+    if kind == 'w':
+        weights, dilation = arg
+        return (1, sum(c for _, c in weights) * dilation,
+                -sum(c * h for h, c in weights),
+                max(2, ceilq(F(max(h for h, _ in weights), dilation))))
+    raise ValueError('Unknown zero-five cost: ' + kind)
+
+@lru_cache(None)
+def zero5_cost(tag, v):
+    kind, arg = tag
+    if kind == 'h':
+        return max(F(v) - arg, F(0))
+    if kind == 's':
+        return max(F(v * v) - arg, F(0))
+    if kind == 'w':
+        weights, dilation = arg
+        return sum(c * max(F(dilation * v) - h, F(0)) for h, c in weights)
+    raise ValueError('Unknown zero-five cost: ' + kind)
+
+@lru_cache(None)
+def zero5_centered_correction(tag, v):
+    degree, a, _, cutoff = zero5_cost_metadata(tag)
+    tails = tuple(4 * z for z in geom(5, cutoff))
+    return (sum(F(4, 5 ** n) * (zero5_cost(tag, n * v) - zero5_cost(tag, n)) / n
+                for n in range(2, cutoff))
+            + a * tails[degree - 1] * (v ** degree - 1) - zero5_cost(tag, v) / 5)
+
+@lru_cache(None)
+def zero5_common_deep(tag, baseline, availability):
+    """One running increment maximum for both measures and every 5-depth."""
+    degree, a, _, cutoff = zero5_cost_metadata(tag)
+    current = F(0)
+    total = F(0)
+    i = 0
+    def h(v):
+        return availability * zero5_cost(tag, v) + zero5_centered_correction(tag, v)
+    while True:
+        increment = h(baseline + i + 1) - h(baseline + i)
+        require(increment >= 0, 'Nonnegative common zero-five increment')
+        current = max(current, increment)
+        if baseline + i >= cutoff:
+            if degree == 1:
+                require(h(baseline + i + 2) - h(baseline + i + 1) == increment,
+                        'Common zero-five affine tail')
+                return total + current * geom(3, i + 3)[0]
+            if current == increment:
+                coefficient = a * (availability + F(1, 4))
+                require(increment == coefficient * (2 * (baseline + i) + 1),
+                        'Common zero-five square tail')
+                z0, z1, _ = geom(3, i + 3)
+                return total + coefficient * (2 * z1 + (2 * baseline - 5) * z0)
+        total += F(1, 3 ** (i + 3)) * current
+        i += 1
+        # This guard refuses a result if the exact infinite-tail entry has
+        # not been proved; it never substitutes a truncated depth sum.
+        require(i <= 200, 'No proved common zero-five tail')
+
+def zero5_scaled_pure(tag, n, baseline, pure):
+    kind, arg = tag
+    if kind == 'h':
+        return affine(arg, 'hn', n, baseline, pure, ONES)
+    if kind == 's':
+        return n * n * sq_value(arg / (n * n), baseline, pure, ONES)
+    if kind == 'w':
+        weights, dilation = arg
+        return wv(weights, dilation, 'scaled', n, baseline, pure, ONES)
+    raise ValueError('Unknown zero-five cost: ' + kind)
+
+@lru_cache(None)
+def zero5_positive_with_constant(tag, pure):
+    """The original positive-five comparison plus the exact x*J_f term."""
+    degree, a, b, cutoff = zero5_cost_metadata(tag)
     x = sum(pure)
-    mx = {k: max((wv(weights, n, 'scaled', k, bb, pure, ONES) for bb in BASES)) for k in range(2, cut)}
-    m0, m1, _ = (4 * v for v in geom(5, cut))
-    ans = []
-    for bb in BASES:
-        finite = sum((F(4, 5 ** k) * (wv(weights, n, 'g', k, bb, pure, ONES) + F(k - 1, k) * mx[k]) for k in range(2, cut)))
-        tail = m0 * (wv(weights, n, 'rest', 1, bb, pure, ONES) + b * x) + a * (m1 - m0) * M
-        ans.append(finite + tail)
-    return tuple(ans)
+    answer = F(0)
+    for n in range(2, cutoff):
+        maximum = max((zero5_scaled_pure(tag, n, baseline, pure) - zero5_cost(tag, n) * x) / n
+                      for baseline in BASES)
+        answer += F(4 * (n - 1), 5 ** n) * maximum
+    tails = tuple(4 * z for z in geom(5, cutoff))
+    maximum = max((affine(F(0), 'id', 1, baseline, pure, ONES)
+                   if degree == 1 else sq_value(F(0), baseline, pure, ONES))
+                  for baseline in BASES)
+    answer += a * (tails[degree] - tails[degree - 1]) * (maximum - x)
+    constant = (sum(F(4, 5 ** n) * zero5_cost(tag, n) for n in range(2, cutoff))
+                + a * tails[degree] + b * tails[0])
+    return answer + x * constant
+
+@lru_cache(None)
+def zero5_raw(tag, dat):
+    available, masses, pure, _, _ = dat
+    answer = max(
+        sum(masses[j] * zero5_cost(tag, baseline[j])
+            + pure[j] * zero5_centered_correction(tag, baseline[j]) for j in range(5))
+        + max(zero5_common_deep(tag, baseline[j], available[j]) for j in range(5))
+        for baseline in BASES)
+    return answer + zero5_positive_with_constant(tag, pure)
 
 @lru_cache(None)
 def w35(weights, n, dat):
-    if n >= max((h for h, c in weights)):
-        return sum((c for h, c in weights)) * n * raw35(F(0), dat) - sum((h * c for h, c in weights)) * dat[3]
-    avail, mass, pure, s, D = dat
-    return max((wv(weights, n, 'f', 1, bb, mass, avail) + addition for bb, addition in zip(BASES, wa(weights, n, pure))))
+    return zero5_raw(('w', (weights, n)), dat)
 
 @lru_cache(None)
 def w357(weights, n, dat):
@@ -372,10 +417,11 @@ W5 = ((5, F(1)),)
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
 SOURCE_PINS = {'verify_shared_cell_hinges.py': '62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0', 'verify_shared_cell_square.py': '55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4', 'verify_joint_source_normalization.py': '5dadfee0a4a929d6a1f60fa7830f7c824ad92d90a71982baa9449b1a296f2471', 'pure_root_profile_certificate.json': 'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b', 'shared_cell_hinges_certificate.json': '6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29', 'shared_cell_square_certificate.json': 'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1', 'shared_square_continuation_certificate.json': '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32', 'joint_source_normalization_certificate.json': '5bff80b80f880c8de3f9c0ba62bac5536f9672ce86d02fa28e043d1c6bd0acf2'}
-TARGET=F(2322308771011317404407279020690922380203,4883651784640915381663610335586092800)
-TARGET_GAMMA=F(16527355324420230957,102089544055356572)
-TARGET_T81=F(7931895716487509426547181002099558246917,77276623182745478872422871889417857500)
+TARGET=F(12962561422729019748540463097645271562217,28539940401461137428522682187907859200)
+TARGET_GAMMA=F(5522463803581385359,35094633753560524)
+TARGET_T81=F(80490856468458306483061934903046859,809780928515534112801584606185500)
 BASELINE=F(118570862466538358475198684157361643465353,248352178520459750383083052623940732800)
+OLD_CELL_BOUND=F(2322308771011317404407279020690922380203,4883651784640915381663610335586092800)
 HC_TARGETS={3:F(1318076,584325),4:F(94745926,61354125),6:F(578163435166,676429228125)}
 FALLBACK_INPUTS = (
     ('3-absent/5-absent/7-absent', (F(1), F(1), F(1)), F(756,373)),
@@ -563,7 +609,7 @@ def reconstruct():
     require(min(coeff,cg,ct,splitcoef,nofloorcoef)>0,'All continuous-domain coefficient conditions')
     branches=fallback_checks()
     require(all(r['joint_upper']<=splitmax and r['joint_upper']<=nofloormax for r in branches),'Comparison envelopes cover other branches')
-    return encode({'schema':'erdos7-cell-consistent-joint-frontier-v1','source_commit':COMMIT,
+    return encode({'schema':'erdos7-common-zero-five-joint-frontier-v1','source_commit':COMMIT,
         'source_sha256':SOURCE_PINS,'input19':'physical mu17=nu13 K17, distinct from killed xi',
         'bound':TARGET,'Gamma13':TARGET_GAMMA,'T13_81':TARGET_T81,
         'C0':WHOLE_CONST,'KZ':kZ,'continuous_coefficient':coeff,'Gamma_coefficient':cg,'T81_coefficient':ct,
@@ -571,7 +617,8 @@ def reconstruct():
         'minimum_D':min(r['D'] for r in rows),'minimum_Delta':min(r['Delta'] for r in rows),
         'minimum_margin':min(r['margin'] for r in rows),'minimum_Gamma_margin':min(r['Gamma_margin'] for r in rows),
         'minimum_T81_margin':min(r['T81_margin'] for r in rows),
-        'baseline_whole_bound':BASELINE,'gain_from_cell_consistency':BASELINE-TARGET,
+        'baseline_whole_bound':BASELINE,'old_cell_bound':OLD_CELL_BOUND,
+        'gain_from_cell_consistency':BASELINE-OLD_CELL_BOUND,'common_zero5_gain':OLD_CELL_BOUND-TARGET,
         'same_cell_split_bound':splitmax,'same_cell_whole_weighted_gain':splitmax-TARGET,
         'same_cell_no_floor_bound':nofloormax,'same_law_floor_gain':nofloormax-TARGET,
         'split_continuous_coefficient':splitcoef,'no_floor_continuous_coefficient':nofloorcoef,

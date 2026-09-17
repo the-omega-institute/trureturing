@@ -18776,3 +18776,254 @@ A separate implementation using the existing HC/SQ/JN programs gives
 the same per-vertex results. These checks support the ordinary arguments
 above; they are not Lean verification or exhaustive enumeration of
 actual forbidden families.
+
+### One original zero-five layout across both actual measures
+
+Using exactly the actual HC/DP source and kernels, the bounding formulas
+give
+
+    Gamma13 <=5522463803581385359/35094633753560524
+             =157.359208885350...,
+    T13(81) <=80490856468458306483061934903046859
+              /809780928515534112801584606185500
+             =99.39831086910345...,
+    F17^-(403;nu13)+F19^-(403;physical nu13 K17)
+      <=12962561422729019748540463097645271562217
+         /28539940401461137428522682187907859200
+       =454.1902064401433... .                          (ZC1)
+
+These improve the DP comparison475.52710009238956 on the same law.
+The new all-family upper still exceeds the required finite frontier;
+later primes and unrestricted #7 remain open. This is ordinary
+mathematics plus exact rational arithmetic, not a Lean proof.
+
+#### 1. The pointwise bridge between HC's two actual measures
+
+Keep HC's raw pure3 survivor measure eta and five surviving mod9 cells.
+Let lambda35 be the3-coordinate marginal of the raw complete35 survivor
+measure; it has total mass s. It has density a(x) with respect to eta,
+where a(x) is the surviving5-coordinate Haar fraction at that same x.
+This raw measure is distinct from the normalized probability used elsewhere.
+
+The original CM2 definitions are stronger than mere cylinder caps:
+alpha_r is the removed5 mass from the original3*5^b labels in root r;
+beta_l is the **additional** mass removed from9*5^b in cell l after that
+root union. Therefore, before deeper mixed exclusions the available
+5-fraction in cell l is exactly d_l=z-alpha_r(l)-beta_l. Further mixed
+classes can only remove points. Consequently
+
+    d lambda35 / d eta =a(x),  0<=a(x)<=d_l on cell l.        (ZC2)
+
+This follows directly from the original union definitions in P12,
+specialized in CM2 and SD2 of
+[the problem dossier](../../../Problems/erdos-7-odd-covering-systems.md). It does not infer
+a density bound from a cylinder-mass bound. The old masses remain
+
+    lambda35(cell l)=n_l=w_l*d_l/9-t_l,
+    eta(cell l)=w_l/9.
+
+Both measures see the same original ternary test A0 and the same
+original prefix at each depth. No auxiliary probability is substituted.
+
+#### 2. Center Jensen before summing the full5 mixture
+
+Let f be any increasing convex cost used by DP (a hinge, a nonnegative
+weighted hinge sum, or a square hinge). Write
+
+    p_n=4/5^n, n>=2,   sum p_n=1/5,
+    q_n(v)=[f(nv)-f(n)]/n,
+    Gbar_f(v)=sum_(n>=2)p_n q_n(v)-f(v)/5,
+    J_f=sum_(n>=2)p_n f(n).
+
+The function q_n is nonnegative and convex on v>=1. Gbar_f is
+nondecreasing: it differs by a constant from sum p_n g_n, where
+g_n(v)=f(nv)/n-f(v) is nondecreasing by convexity. Gbar itself may have a
+negative constant; only its nonnegative increments enter the depth bound.
+
+For the same original A0,A1,..., Jensen's HC2 inequality is equivalently
+
+    f(A0+...+A_(n-1))-f(A0)
+      <=q_n(A0)-f(A0)+f(n)+sum_(e=1)^(n-1)q_n(A_e).
+
+After HC1 and summing **all** n, the raw35 cost is bounded by
+
+    integral_lambda35 f(A0)+integral_eta Gbar_f(A0)
+       +x J_f+sum_(e>=1)integral_eta Q_e(A_e),
+    Q_e(v)=sum_(n>e)p_n q_n(v), x=eta(1).              (ZC3)
+
+Thus each positive5 original block A_e is unchanged throughout its
+mixture terms. Centering at f(n) makes every remaining infinite tail
+rational. There is no uncanceled sum p_n/n and no original-depth cutoff.
+
+A valid retained-block upper term is sum_e max_A P_eta(Q_e). We retain the valid larger comparison
+
+    Pos_f=sum_(n>=2)p_n(n-1) max_A P_eta(q_n).           (ZC4)
+
+Section5 proves the retained and former comparisons coincide at all
+six pure3 mass vertices. The numerical improvement in ZC1 comes from the original zero5 block.
+
+#### 3. Merge its actual and pure costs at each original depth
+
+Fix the original root/cell choice and b_l=1+1_(r(l)=r)+1_(l=j). For each
+cell put
+
+    h_l(v)=d_l f(v)+Gbar_f(v),
+    R_l(k)=max_(0<=i<=k)[h_l(b_l+i+1)-h_l(b_l+i)].
+
+Every R_l is nonnegative and nondecreasing. When an original depth-a
+prefix in cell l is added, its f increment under lambda35 plus its Gbar
+increment under eta is at most its eta integral of the corresponding
+h_l increment: this is exactly ZC2 and the nonnegative f increment.
+The prior active deep count is bounded by the number of preceding
+original depths allocated to that same cell. Its pure eta cylinder
+mass is at most3^-a.
+
+Apply DP2 to these common rewards, retaining each original depth's
+cell and its actual prior counter. The resulting bound is
+
+    Z_f(r,j)=sum_l n_l f(b_l)+sum_l(w_l/9)Gbar_f(b_l)
+       +max_l sum_(k>=0)3^(-k-3) R_l(k),
+    F_f^new=max_(r,j) Z_f(r,j)+x J_f+Pos_f.             (ZC5)
+
+This replaces a sum of independently maximized deep costs by the
+maximum of their common running increments. It retains both the same
+zero5 layout across the entire5 mixture and the relation between its
+two actual measures. Neither original prefixes nor forbidden masks are
+assumed nested. Completion of absent depths adds nonnegative increments.
+
+Running maxima satisfy
+
+    R_l(k)<=d_l max_i Delta f(b_l+i)
+                   +sum_n p_n max_i Delta g_n(b_l+i).
+
+Then the maximum over cells is at most the separate maxima. Constants
+and initial values in ZC3 cancel exactly. Therefore ZC5 is never larger
+than the preceding DP raw35 expression; the strict gain is a legitimate
+restriction of its upper comparison.
+
+#### 4. Exact complete5 and ternary tails
+
+The implemented costs have f(v)=A*v^j+B for all v>=K, with j=1 or2 and
+K>=2. Put T_i(K)=sum_(n>=K)p_n*n^i=4*geom_i(5,K). Then
+
+    Gbar_f(v)=sum_(2<=n<K)p_n[f(nv)-f(n)]/n
+                +A*T_(j-1)(K)*(v^j-1)-f(v)/5,
+    J_f=sum_(2<=n<K)p_n f(n)+A*T_j(K)+B*T_0(K).
+
+The positive-block term ZC4 has finite part2<=n<K, and complete tail
+
+    A*[T_j(K)-T_(j-1)(K)]*[max_A P_eta(v^j)-x].         (ZC6)
+
+For j=1, Gbar_f is eventually constant, so every h_l has eventually
+constant increments and its running maximum stabilizes. For j=2,
+sum_(n>=2)p_n*n=9/20 gives the eventual quadratic coefficient
+
+    h_l(v)=A*(d_l+1/4)*v^2+constant.
+
+Once the present increasing increment dominates all preceding ones,
+the running maximum equals that increment forever. The implementation
+checks this entrance condition and uses the full geometric zeroth and
+first moments to sum the remainder. This handles every ternary depth.
+
+Adding a constant c to f changes F_f^new by exactly c*s. This follows
+from the centered formula: q_n is unchanged, Gbar decreases by c/5,
+J_f increases by c/5, and those pure-mass terms cancel. Thus the later
+complete7/11/13 affine and quadratic tails preserve the same exact
+constant terms as DP.
+
+#### 5. Positive5 block retention gives no gain in this comparison at its vertices
+
+At the six pure3 mass vertices, every w_l is1 except possibly one value
+1/2. The three-cell root has total width at least5/2, while the two-cell
+root has total width at most2. At least one cell j in the three-cell
+root still has w_j=1.
+
+For any increasing convex cost c, let Delta1=c(2)-c(1),
+Delta2=c(3)-c(2); then Delta2>=Delta1>=0. If the root/cell are incident,
+their initial pure increment is W_r*Delta1+w_j*Delta2, apart from the
+common constant. If they are nonincident it is(W_r+w_j)*Delta1.
+The fixed choice of the three-cell root and an undecreased incident
+cell simultaneously maximizes both expressions for **every** c.
+Its largest b is3, also simultaneously maximizing the convex deep
+increment at every depth because all pure caps are1.
+
+For this same choice DP's pure operator is linear in any nonnegative
+sum of increasing convex costs. Thus, at every such vertex,
+
+    sum_e max_A P_eta(sum_(n>e)p_n q_n)
+      =sum_n p_n(n-1)max_A P_eta(q_n).
+
+The proof includes the infinite limits by their convergent positive
+series. The other four HC parameter groups do not change this pure
+observation. Hence retaining the positive original blocks alone gives
+exactly zero gain at all1296 parameter vertices for the current source.
+This is a statement about the comparison formulas, not the actual
+maximizing original residue families.
+
+#### 6. Same full source, continuous parameter domain and numerical consumer
+
+Use ZC5 for the raw35 hinge, weighted hinge and square-hinge functions. All complete7/11/13 multipliers, physical source choices,
+actual sole conditioning, DP row potentials and later kernel inputs
+remain exactly as in DP4--DP11.
+
+Each combined increment is affine in d_l before a running maximum. The
+complete discounted sum and maximum over cells are therefore convex
+in that parameter group. Initial n_l and w_l contributions remain
+separately affine; positive pure comparison terms are maxima of affine
+functions. Exact constants remain exact by section4. Consequently the
+same separate-convexity and vertex interpolation proof applies.
+
+All1296 product vertices were reconstructed with exact fractions. The
+three maxima in ZC1 still occur at vertex398. All three vertex margins
+are nonnegative and attain zero. The unchanged coefficient K_Z and
+the new target C satisfy
+
+    (C-C0)*131/132-K_Z
+      =5547333519740397212762826906723421600619
+         /13546741505436061975028474427478348800 >0.
+
+The analogous Gamma and tau81 coefficients are positive. In detail,
+write rho=131/132, Delta=rho*D-H, and Z=K_Z*D+Q. Here D is separately
+concave and H,Q are separately convex. The target margin is
+
+    (C-C0)Delta-Z=[(C-C0)rho-K_Z]D-(C-C0)H-Q.
+
+Its positive coefficient and C>C0 make it separately concave, so the
+vertex inequalities extend to the entire product domain. The same
+argument applies to both square margins. Delta is separately concave
+and its vertex minimum is strictly positive, making every division
+valid throughout. All eight other missing-class branches remain below
+the new targets using their existing complete-tail formulas.
+Therefore this covers the full continuous effective9 domain and all
+twelve original-family branches, with arbitrary finite heights.
+
+The [standalone verifier](verify_joint_frontier.py) evaluates ZC5 and
+reconstructs every exact record in the
+[single certificate](joint_frontier_certificate.json). Eight earlier
+mathematical source files remain pinned by SHA-256. The current certificate
+sharpens DP1; its conclusions also imply all three earlier DP1 bounds.
+A separately written implementation evaluates the uncentered HC/SQ
+expressions with the same common-depth constraint. The programs verify
+the finite arithmetic and exact tails of these ordinary proofs; they
+do not enumerate all actual families or supply Lean verification.
+
+#### 7. The remaining finite criterion on the same actual law
+
+Using ZC1 in KC's complete finite-core comparison gives allowances
+
+    403-T13(81)-0.000667 >303.6010221308 [box20/current8],
+    403-T13(81)-0.263    >303.3386891308 [unequal/current6]. (ZC7)
+
+Thus303.601 and303.338 are safe sufficient finite upper thresholds.
+The454.190207 joint bound remains above both. Before adding finite-core
+error, the signed upper estimate is
+
+    (T13(81))_upper-403+(F17^-+F19^-)_upper
+      =150.5885173092467... >0.
+
+This is a gap in a sufficient estimate, not a positive lower bound for
+the actual functional, nor an actual covering family. Both a uniform
+negative KC criterion and continuation through arbitrary later primes
+remain unproved. The physical19 input, all original labels and the
+complete tails are unchanged; no independent BM, RC or OBE saving is
+added to this estimate.
