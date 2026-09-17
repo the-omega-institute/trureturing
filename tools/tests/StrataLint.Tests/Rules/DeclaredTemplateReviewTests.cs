@@ -40,6 +40,9 @@ public sealed class DeclaredTemplateReviewTests
     {
         var files = PolicyFiles();
         files[Judge] = "-- judge implementation\n";
+        var engineering = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest())!;
+        engineering["rule_build_inputs"] = JsonSerializer.SerializeToNode(new[] { Judge });
+        files[EngineeringRegistrationFixture.Path] = engineering.ToJsonString();
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
         files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, active)));
@@ -121,16 +124,16 @@ public sealed class DeclaredTemplateReviewTests
         return RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
     }
 
-    internal static RuleEvaluationContext Context(Dictionary<string, string> baseline, Dictionary<string, string> head,
+    internal static DeltaRuleContext Context(Dictionary<string, string> baseline, Dictionary<string, string> head,
         LeanAxiomReport report, string[] changes, InformationTemplateEvidenceContext? history = null)
     {
         var prototype = new RuleFixture().Build();
         report.TemplateEvidenceContext = history;
-        return RuleEvaluationContext.Create(Tree(head), Tree(baseline), prototype.Policy,
+        return DeltaRuleContext.Create(Tree(head), Tree(baseline), prototype.Policy,
             AcceptedLeanClosure.Create(report), RawChangeSet.Create(changes), prototype.MetaEvaluation);
     }
 
-    private static ImmutableArray<Diagnostic> Dispatch(RuleEvaluationContext context) =>
+    private static ImmutableArray<Diagnostic> Dispatch(DeltaRuleContext context) =>
         RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics;
 
     [Fact]

@@ -16,12 +16,20 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
     ExplicitCommandResult? capacityAudit = null,
-    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null) : ICliEnvironment
+    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null,
+    ExplicitCommandResult? checkCurrent = null,
+    ExplicitCommandResult? checkDelta = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
     public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
         new(false, "", "Not used by this fixture");
+
+    public ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments) =>
+        checkCurrent ?? throw new NotSupportedException();
+
+    public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) =>
+        checkDelta ?? throw new NotSupportedException();
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 

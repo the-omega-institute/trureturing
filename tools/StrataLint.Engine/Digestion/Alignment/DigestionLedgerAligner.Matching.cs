@@ -135,7 +135,8 @@ internal static partial class DigestionLedgerAligner
 
     private static bool InheritedSourceRequiresReplay(
         DigestionLedgerSource source,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        RepositorySnapshot snapshot)
     {
         if (changes is null)
         {
@@ -147,13 +148,14 @@ internal static partial class DigestionLedgerAligner
             return true;
         }
 
+        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
         var casPaths = source.Entries
             .Select(static entry => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         return changes.Paths.Any(path =>
             path.Value == source.SourcePath
             || path.Value == TheoryAtomizerDataLoader.DataPath
-            || IsAtomizerImplementationPath(path.Value)
+            || IsAtomizerImplementationPath(path.Value, registeredInputs)
             || casPaths.Contains(path.Value));
     }
 

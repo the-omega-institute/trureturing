@@ -26,13 +26,17 @@ def fields(value, expected, location):
         fail(location, f'expected fields {sorted(expected)}, got {actual}')
 
 
-def compile_glob(pattern, location):
-    # Same case-sensitive POSIX language as FileMapGlob, including literal [].
+def validate_pattern(pattern, location):
     if (not isinstance(pattern, str) or not pattern or pattern != pattern.strip()
             or pattern.startswith('/') or '\\' in pattern or '?' in pattern
             or any(ord(c) < 32 or ord(c) > 126 for c in pattern)
             or any(p in ('', '.', '..') for p in pattern.split('/'))):
         fail(location, f'unsafe path pattern {pattern!r}')
+
+
+def compile_glob(pattern, location):
+    # Same case-sensitive POSIX language as FileMapGlob, including literal [].
+    validate_pattern(pattern, location)
     expression, index = [], 0
     while index < len(pattern):
         if pattern[index:index + 3] == '**/':
@@ -113,7 +117,7 @@ class Selection:
         ).hexdigest()
 
     def safe_file(self, relative):
-        compile_glob(relative, 'path')
+        validate_pattern(relative, 'path')
         path = self.root
         for part in relative.split('/'):
             path = path / part

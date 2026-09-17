@@ -19,13 +19,7 @@ internal static class InformationTemplateDebtWriter
                     throw new FormatException("invalid or duplicate information-template-debt option");
             if (!options.TryGetValue("--protected-base", out var requestedBase))
                 throw new FormatException("--protected-base is required");
-            // Seeding creates its first delta from an already installed, immutable
-            // base. Admission's non-vacuous comparison is still required for all
-            // other commands and for an initialization against an earlier base.
-            var prepared = arguments[0] == "initialize"
-                && requestedBase == repository.ResolveCurrentRevision().Revision
-                ? new PreparedRepository(requestedBase, repository.ReadCurrentChanges())
-                : repository.Prepare(requestedBase);
+            var prepared = repository.Prepare(requestedBase);
             InformationTemplateJson.Hash(prepared.Revision, 40);
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
             var currentRaw = repository.ReadCurrent();
