@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67ebf70ce86123d28b64d316083848f301b39d016fdd7f5d9b95d93d12861aa1
+  normalized_sha256: sha256:67ebf70ce86123d28b64d316083848f301b39d016fdd7f5d9b95d93d12861aa1
+cas_ref: sha256:67ebf70ce86123d28b64d316083848f301b39d016fdd7f5d9b95d93d12861aa1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“分子一与分母互素”及“分母是二进制一后接”由既有有理分母和自然数位长引理落实，并用 Nat.testBit_two_pow 逐位确认唯一的一位与全部零位；“本例只否定通用常数位成本推断”限制结论为输出表示长度，不声称梯度下降的系数增长律。证明没有以定义夹带新断言，仓内无冻结 GID。
+    previous_atom_id: 088b9b87f5dc1fe77d0854fa8e4be189e5823070d88fea4f468996043f7fa73f
+    next_atom_id: c21abd318d18de648b9b8e24ecbf7bdd415bc30358d910e3b82ee1af74cc056e
