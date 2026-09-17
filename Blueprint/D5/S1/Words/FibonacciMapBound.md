@@ -22,6 +22,10 @@ $$\forall d \in \mathbb{N},\; 0 < d \Rightarrow \frac{goldenMAPMaximum\left(d\ri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/FibonacciMapBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/joshi-rust-fibonacci-map-bound` (proved) by `D5/S1/Words/FibonacciMapBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"joshi-rust-fibonacci-map-bound","declaration_gid":"D5/S1/Words/FibonacciMapBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gandhar Joshi and Dan Rust (2025). *Monochromatic arithmetic progressions in the Fibonacci, Thue-Morse, and Rudin-Shapiro words*. DOI: [10.1016/j.tcs.2025.115391](https://doi.org/10.1016/j.tcs.2025.115391). URL: <https://arxiv.org/html/2501.05830v2>.

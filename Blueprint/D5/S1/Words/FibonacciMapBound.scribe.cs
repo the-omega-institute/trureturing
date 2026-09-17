@@ -43,7 +43,10 @@ internal sealed class FibonacciMapBoundDocument : IScribeDocumentDefinition
                     + "strictness; the remaining small differences satisfy explicit "
                     + "fractional-window inequalities. The result applies to the attained "
                     + "maximum over all starts and both letters."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("joshi-rust-fibonacci-map-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {
