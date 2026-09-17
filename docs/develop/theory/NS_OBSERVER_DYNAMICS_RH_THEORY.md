@@ -1329,3 +1329,151 @@ L(f)=\sum_{i=1}^{d}u_i f(x_i)+
 \leq2^D\varepsilon+\tau
 \leq2^{2d-1}\varepsilon+\tau.
 \]
+
+## 21. 实际旋转读出、柱集几何与可认证相位分辨率
+
+### 21.1 对象与已有接口
+
+固定无理数 $\alpha\in(0,1)$，相位取 $x\in[0,1)$，读出窗口为 $[1-\alpha,1)$。定义实际旋转读出
+\[
+s_k(x)=\mathbf1_{[1-\alpha,1)}(\{x+k\alpha\}),\qquad
+O_n(x)=(s_0(x),\ldots,s_{n-1}(x)).
+\tag{21.1}
+\]
+花括号为实数小数部分。对 $k\geq0$ 定义
+\[
+c_k=1-\{(k+1)\alpha\}=\{-(k+1)\alpha\}.
+\]
+无理性保证 $0<c_k<1$，且这些点两两不同。把集合
+\[
+\{0,1,c_0,\ldots,c_{n-1}\}
+\]
+递增排序为 $0=q_0<q_1<\cdots<q_{n+1}=1$，并令 $I_j=[q_j,q_{j+1})$。$n=0$ 时只有 $[0,1)$。
+
+这里的排序切点及半开弧直接复用 `RotationGapArcs` 的 `rotationCut`、`rotationGapArc`，参数为 $N=n+1$。已有黄金词结果针对黄金斜率的轨道起点，本节处理任意无理斜率的全部相位。一般机械词、进位恒等式、排序弧的覆盖与不交性均为已有证明接口。Sturmian 的 $n+1$ 复杂度与三间隙理论属于经典数学 [21-A]；本节明确承担的是实际读出到区间纤维、估计误差及细分的对象识别。
+
+### 21.2 定理：实际 bit 记录决定全部切点测试
+
+对任意 $x,y\in[0,1)$ 和 $n\geq0$，
+\[
+\boxed{O_n(x)=O_n(y)
+\iff \forall k<n,\ (c_k\leq x\iff c_k\leq y).}
+\tag{21.2}
+\]
+
+**证明。** 窗口读出与实际取整增量相等：
+\[
+s_k(x)=\lfloor x+(k+1)\alpha\rfloor-\lfloor x+k\alpha\rfloor\in\{0,1\}.
+\]
+从 $\lfloor x\rfloor=0$ 起累加这些 bit，得到每一个 $\lfloor x+k\alpha\rfloor$，$0\leq k\leq n$。反之，相邻两个这样的整数之差恢复每一位读出。已有进位恒等式给出
+\[
+\lfloor x+(k+1)\alpha\rfloor
+=\lfloor(k+1)\alpha\rfloor+\mathbf1_{\{c_k\leq x\}}.
+\]
+因此全部累计整数相等，当且仅当全部切点测试相等，即得式 (21.2)。这一步没有把累计计数、柱集几何或切点测试与实际读出的等价性放入假设。
+
+### 21.3 定理：精确柱集与全部有效估计器的分类
+
+对每个 $0\leq j\leq n$，
+\[
+\boxed{\{x\in[0,1):O_n(x)=O_n(q_j)\}=[q_j,q_{j+1}).}
+\tag{21.3}
+\]
+并且对任意实数中心 $z$ 与半径 $R$，
+\[
+\boxed{
+\bigl[\forall x\in[0,1),\ O_n(x)=O_n(q_j)\Rightarrow |x-z|\leq R\bigr]
+\iff q_{j+1}-R\leq z\leq q_j+R.
+}
+\tag{21.4}
+\]
+所以该读出的最佳统一估计半径为 $(q_{j+1}-q_j)/2$，唯一最优中心为 $(q_j+q_{j+1})/2$。
+
+**证明。** 由式 (21.2)，相同读出等价于落在每一个切点的同一侧。两个有序初始段包含关系固定，故具有相同切点测试等价于相同切点秩；复用排序弧的秩刻画即得式 (21.3)。它同时包含左端点并排除右端点，不将边界约定视为可忽略。
+
+若统一误差界成立，在左端点代入给 $z\leq q_j+R$ 及 $q_j\leq z+R$。若 $z+R<q_{j+1}$，则点 $x=(z+R+q_{j+1})/2$ 严格位于该半开区间内，同时 $x-z>R$，矛盾。因此 $q_{j+1}-R\leq z$。反向由两端不等式及 $q_j\leq x<q_{j+1}$ 直接得到 $-R\leq x-z\leq R$。区间 $[q_{j+1}-R,q_j+R]$ 非空当且仅当 $2R\geq q_{j+1}-q_j$；在相等时它只有中点一个元素。这也解释了为什么右端点虽然不在柱集中，仍决定最坏误差上确界。
+
+候选 Lean `rotation_prefix_cell_and_decoder` 同时给出式 (21.3) 与 (21.4)，并在证明中完成第 21.2 节的算术识别。没有增加独立的中点代入包装定理。
+
+### 21.4 定理：每一步只有一个旧柱集被真正分裂
+
+令 $\beta=\{-(n+1)\alpha\}$。对全部 $x,y\in[0,1)$，有
+\[
+\boxed{O_{n+1}(x)=O_{n+1}(y)
+\iff O_n(x)=O_n(y)\ \land\ (\beta\leq x\iff\beta\leq y).}
+\tag{21.5}
+\]
+存在唯一 $j$ 使 $q_j<\beta<q_{j+1}$。这一旧柱集变为 $[q_j,\beta)$ 与 $[\beta,q_{j+1})$，其余旧柱集保持不变。两侧都非空，且可以明确选择
+\[
+x=(q_j+\beta)/2,\qquad y=\beta
+\]
+使 $O_n(x)=O_n(y)$、$O_{n+1}(x)\neq O_{n+1}(y)$。
+
+**证明。** 在式 (21.2) 中把 $n+1$ 个测试分成旧测试与最后一个测试即得式 (21.5)。若 $\beta$ 等于旧切点，则某个非零整数倍的 $\alpha$ 是整数，与无理性矛盾。又因 $0<\beta<1$，排序弧的覆盖给出包含它的旧弧，不交性给出唯一性；不在旧边界上使包含关系严格。式 (21.5) 此后给出全部纤维的细分和所列显式分离点。
+
+候选 Lean `rotation_prefix_single_cut` 证明式 (21.5) 及带显式分离见证的唯一旧弧存在性。排序后的新端点数组与旧数组的逐项插入恒等式没有另作 Lean 声明。该结论足以在普通数学中识别实际的一次二分过程，不需要假设整个信息划分的演化规则。
+
+### 21.5 推论：实现词数、全局相位误差与前缀度量
+
+实际实现的长度 $n$ 词恰好有 $n+1$ 个。令 $D_n=\max_j(q_{j+1}-q_j)$，对所有基于长度 $n$ 词的实值估计函数定义
+\[
+\mathcal R_n^{\rm phase}=\inf_f\sup_{x\in[0,1)}|x-f(O_n(x))|.
+\]
+则
+\[
+\boxed{\mathcal R_n^{\rm phase}=D_n/2\geq\frac1{2(n+1)}.}
+\tag{21.6}
+\]
+
+**证明。** 不交的非空区间给出不同读出，并覆盖全部相位，故词数恰为 $n+1$。在每个实现词上选其中点给出全局上界。对最长柱集，式 (21.4) 给任意估计的下界。全部正单元长度之和为一，最大值至少为 $1/(n+1)$，得最后一式。
+
+若无限词的前缀距离定义为 $d_{\rm pre}(u,v)=2^{-\ell(u,v)}$，则不能存在固定 $C,\gamma>0$，使实际相位解码统一满足 $|x-y|\leq C d_{\rm pre}(O_\infty(x),O_\infty(y))^\gamma$。最长长度 $n$ 柱集内有两个内部相位相距至少 $1/[2(n+1)]$，而共同前缀长度至少为 $n$。因此所述估计会强制 $1/[2(n+1)]\leq C2^{-\gamma n}$ 对所有 $n$ 成立，矛盾。这里使用切开后的线性相位距离；没有把指数前缀尺度识别为几何间隔。
+
+### 21.6 推论：真实细分的决策收益与信息时间
+
+给定均匀相位分布，只观察 $O_n(X)$。对阈值事件 $P_\theta=\{X\leq\theta\}$，最小判错概率记为 $B_n(\theta)$。若 $\theta\in[q_j,q_{j+1}]$，则
+\[
+B_n(\theta)=\min\{\theta-q_j,q_{j+1}-\theta\}.
+\]
+所以
+\[
+\sup_\theta B_n(\theta)=D_n/2,\qquad
+\int_0^1 B_n(\theta)\,d\theta=\frac14\sum_j(q_{j+1}-q_j)^2.
+\tag{21.7}
+\]
+由第 21.4 节，设新增切点在旧单元内产生正长度 $u,v$，则平均阈值错误率恰好下降 $uv/2$，柱集熵恰好增加
+\[
+(u+v)\left[-\frac u{u+v}\log\frac u{u+v}
+-\frac v{u+v}\log\frac v{u+v}\right].
+\tag{21.8}
+\]
+
+**证明。** 阈值只穿过一个单元，其他单元上的事件已确定；该单元上的最优判断取概率较大的一侧，得到逐单元公式。积分为底长 $q_{j+1}-q_j$、高为其一半的三角形面积。平方和变化由 $(u+v)^2-u^2-v^2=2uv$ 得出；熵变化直接展开 $-u\log u-v\log v+(u+v)\log(u+v)$，其余单元抵消。令 $\tau_{\min}(n)=\min_j[-\log(q_{j+1}-q_j)]$，还有 $D_n=e^{-\tau_{\min}(n)}$。这些度量依赖真实柱集及指定测度，不能从全部 $2^n$ 个标签或 Fibonacci 稳定语言的大小直接推断。
+
+本节的积分和熵推论为普通证明。当前新 Lean 声明建立了它们需要的实际纤维和唯一细分输入，尚未把概率测度、风险积分与列表熵源串成一条新的内核验证依赖链。
+
+### 21.7 命题：含误码读出中的几何边界
+
+设 $x\leq y$，令 $z_0=0$，并对 $1\leq k\leq n$ 定义 $z_k=\mathbf1_{\{c_{k-1}\in(x,y]\}}$。则
+\[
+s_k(y)-s_k(x)=z_{k+1}-z_k,\qquad
+\boxed{d_H(O_n(x),O_n(y))=\sum_{k=0}^{n-1}|z_{k+1}-z_k|.}
+\tag{21.9}
+\]
+这里 $d_H$ 是普通 Hamming 距离。其大小由被跨过切点在时间顺序中的变化决定，不能仅由跨过的切点数量决定。
+
+**证明。** 第 21.2 节的进位表达式给出 $\lfloor y+k\alpha\rfloor-\lfloor x+k\alpha\rfloor=z_k$，相邻两个等式相减即得读出差。每位为零或一，其绝对差正好是该位不一致的指示函数，累加得到式 (21.9)。
+
+一个边界例说明必须先固定损失函数。对 $n\geq1$，最左与最右柱集的读出仅第一位不同：对应 $z_0=0,z_1=\cdots=z_n=1$。因此，如果允许最多一位任意翻转，又用切开后的线性距离 $|x-\widehat x|$ 计误差，则所有长度 $n$ 读出的全局 minimax 半径都为 $1/2$。下界可让真实相位分别为零和任意接近一的最右柱集点，再将两个读出变为同一收到词；上界取恒定估计 $1/2$。这个障碍来自圆周切口，圆距离下不能使用同一个反例。抗误码的圆相位估计是下一项不同的、可精确陈述的研究任务；式 (21.9) 提供其实际观察约束。
+
+### 21.8 形式化范围与参考来源
+
+本节新增的两个候选 Lean 定理承载第 21.3--21.4 节，并从真实窗口读出完成第 21.2 节的算术识别。第 21.5--21.7 节保留上述普通证明。数量级 $D_n\asymp1/n$ 需要额外控制连分数部分商；本节没有对全部无理斜率声称这个速率，也没有从任意柱集定义直接得到三间隙的长度公式。
+
+Automath 的 `Omega/SPG/SturmianCylinderInformationTime.lean` 接收显式 `hCyl` 上下界后推出信息时间的对数夹逼。本节补入真实观察纤维及其细分关系，定量连分数间隙估计仍需继续证明。另一项承重义务是以圆距离和允许的 Hamming 误码预算研究相位恢复，不把第 21.7 节的切口效应误判为真实圆周不可辨识性。
+
+[21-A] Antoine Julien and Ian F. Putnam. *Spectral triples for subshifts*. Journal of Functional Analysis 270(3), 1031--1063, 2016. DOI: 10.1016/j.jfa.2015.12.002. https://arxiv.org/abs/1411.6800 . Proposition 2.10 与 Theorem 2.11 提供经典 Sturmian 复杂度、旋转区间和三间隙频率背景；这里不把这些经典事实归为新发现。
+
+[21-B] The Omega Institute, trureturing, inspected dev `c37b4b0c0b93c0eca12961440bcd5a23bda0e742`. `D5/S1/Words/Mechanical/MechanicalBalance.lean`, `D5/S1/Words/Mechanical/FloorFractShift.lean`, `D5/S1/Words/ReturnWords/RotationGapArcs.lean` 为本节实际复用的形式证明接口；`GoldenOccurrenceGaps.lean` 与 `GoldenRankArcs.lean` 为已存在的黄金轨道起点版本。
+
+[21-C] The Omega Institute, automath, dev `60ce0a1548858b977dd8719efb939ceb3e87effe`. `lean4/Omega/SPG/ScanErrorDiscrete.lean` 定义实际观察纤维及扫描错误；`lean4/Omega/SPG/SturmianCylinderInformationTime.lean` 的 `hCyl` 明确保留了柱集长度前提。本节不把条件推论误报为已有完整几何识别。
