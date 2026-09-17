@@ -532,3 +532,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exact transformed-cost numerator reference on the actual tensor witness](profile-notes/61-exact-tensor-numerator-reference.md)
 - [Uniform endpoint square bound from original-cylinder intersections](profile-notes/62-endpoint-square-from-cylinder-intersections.md)
 - [Six original labels strengthen the endpoint square bound](profile-notes/63-six-original-labels-strengthen-the-endpoint-square.md)
+- [One zero-seven layout and complete pure-three tails](profile-notes/64-one-zero-seven-layout-and-complete-pure-three-tails.md)
+- [The complete endpoint numerator from common cost constraints](profile-notes/65-endpoint-numerator-from-common-cost-constraints.md)
+- [An explicit neighborhood for the linear endpoint improvement](profile-notes/66-explicit-linear-endpoint-neighborhood.md)
