@@ -60,7 +60,11 @@ internal sealed class KrizekPhitorialDivisorSumParityDocument
                         + "divisors of a positive integer is odd exactly for a square, while "
                         + "halving the even divisors of 2m gives a bijection with the divisors "
                         + "of m. These facts determine the parity of the divisor sum."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a280258-krizek-phitorial-divisor-sum-parity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula PhitorialFormula()
     {

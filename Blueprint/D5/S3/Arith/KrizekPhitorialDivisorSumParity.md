@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; (n > 0) \Rightarrow ((\operatorname{Odd}\left(\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/KrizekPhitorialDivisorSumParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a280258-krizek-phitorial-divisor-sum-parity` (proved) by `D5/S3/Arith/KrizekPhitorialDivisorSumParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a280258-krizek-phitorial-divisor-sum-parity","declaration_gid":"D5/S3/Arith/KrizekPhitorialDivisorSumParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jaroslav Krizek (2017). *OEIS A280258, sum of phitorials over divisors*. URL: <https://oeis.org/A280258>.
