@@ -1,0 +1,14 @@
+**theorem 50.1（稠密自然核心与统一有限输入因子化）。** $I_{t,D}$ 是有向集，每个 $Q_{u,m}$ 有限，$K_{t,D}$ 是紧致 Hausdorff 的零维空间，且 $j(\mathbb N_0)$ 在 $K_{t,D}$ 中稠密。更精确地，若 $B$ 是有限离散空间且
+$$
+F:K_{t,D}^2\to B
+$$
+连续，则存在一个共同输入坐标 $\beta=(v,M)\in I_{t,D}$ 及映射
+$$
+\bar F:Q_\beta^2\to B
+$$
+使
+$$
+F=\bar F\circ(\pi_\beta\times\pi_\beta).
+$$
+若预先指定任意 $\alpha\in I_{t,D}$，还可要求 $\alpha\preceq\beta$。
+

@@ -20487,3 +20487,2090 @@ $$
 $t=1$ 时由 theorem 49.9，所有允许 $D$ 都整除 $1806$，而 $1806$ 自身允许，所以最大元正是 $1806$。证毕。
 
 ## 49.99 追加锚
+## 50. 阈值—超自然算术完成上的最大公因数与最小公倍数
+
+**定义 50.0（阈值—超自然逆极限及两种算术运算）。** 取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+t\in\mathbb N_0\cup\{\infty\},
+$$
+并取超自然数
+$$
+D=\prod_p p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+有限正整数 $m$ 的记号 $m\mid D$ 表示对每个素数 $p$ 都有 $v_p(m)\le e_p$。定义
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\ge1,\ m\mid D\},
+$$
+其中
+$$
+(u,m)\preceq(v,n)\iff u\le v\ \land\ m\mid n.
+$$
+在 $\mathbb N_0$ 上定义
+$$
+a\mathrel{R_{u,m}}b
+\iff
+a=b\ \lor\ \bigl(a,b\ge u\ \land\ a\equiv b\pmod m\bigr),
+$$
+令
+$$
+Q_{u,m}=\mathbb N_0/R_{u,m},
+\qquad
+q_{u,m}:\mathbb N_0\to Q_{u,m}.
+$$
+若 $(u,m)\preceq(v,n)$，则 $R_{v,n}\subseteq R_{u,m}$，故有规范遗忘映射
+$$
+b_{(v,n),(u,m)}:Q_{v,n}\to Q_{u,m}.
+$$
+定义
+$$
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m},
+\qquad
+j(a)=\bigl(q_{u,m}(a)\bigr)_{(u,m)\in I_{t,D}}.
+$$
+每个 $Q_{u,m}$ 取离散拓扑，$K_{t,D}$ 取逆极限拓扑。采用
+$$
+\gcd(0,0)=0,\qquad \gcd(0,n)=n,
+$$
+以及
+$$
+\operatorname{lcm}(0,n)=0.
+$$
+记
+$$
+g(a,b)=\gcd(a,b),\qquad \ell(a,b)=\operatorname{lcm}(a,b).
+$$
+记 $D\mid2$ 表示 $e_p=0$ 对所有 $p\ne2$ 且 $e_2\le1$；等价地，$D=1$ 或 $D=2$。本节只讨论从整个 $K_{t,D}^2$ 到同一个 $K_{t,D}$ 的联合连续延拓。
+
+关于阈值—周期同余的公开基线是固定提交
+[RECURSIVE_RELATIONAL_OBSERVATION.md, §11 与 §14](https://github.com/the-omega-institute/trureturing/blob/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；其中 §11.2 使用同一类阈值—周期同余，§14.1 构造有限离散逆极限并区分“输出层”与“更细输入层”，§14.2 的证明明确给出连续有限输出必须由某个统一有限输入精度决定的判据。加法幺半群 $\mathbb N_0$ 的非平凡同余具有唯一阈值—周期形，见 East–Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:2010.04392v3, §2.1，特别是其公式
+$\theta=(m,m+d)^\sharp$：
+[公开文本](https://arxiv.org/html/2010.04392v3#S2.SS1)。有限离散逆极限与开闭有限细化所需的拓扑事实见 Stacks Project, Tag 08ZW, Definition 5.22.1 与 Lemmas 5.22.2, 5.22.4：
+[公开文本](https://stacks.math.columbia.edu/tag/08ZW)。这些引用只提供既有拓扑与同余框架；以下 gcd/lcm 分类由本节直接证明。
+
+**theorem 50.1（稠密自然核心与统一有限输入因子化）。** $I_{t,D}$ 是有向集，每个 $Q_{u,m}$ 有限，$K_{t,D}$ 是紧致 Hausdorff 的零维空间，且 $j(\mathbb N_0)$ 在 $K_{t,D}$ 中稠密。更精确地，若 $B$ 是有限离散空间且
+$$
+F:K_{t,D}^2\to B
+$$
+连续，则存在一个共同输入坐标 $\beta=(v,M)\in I_{t,D}$ 及映射
+$$
+\bar F:Q_\beta^2\to B
+$$
+使
+$$
+F=\bar F\circ(\pi_\beta\times\pi_\beta).
+$$
+若预先指定任意 $\alpha\in I_{t,D}$，还可要求 $\alpha\preceq\beta$。
+
+**证明。** 对任意 $(u,m),(v,n)\in I_{t,D}$，
+$$
+\bigl(\max\{u,v\},\operatorname{lcm}(m,n)\bigr)\in I_{t,D}
+$$
+且同时细化二者，因为有限整数 $m,n$ 都整除 $D$ 时其最小公倍数仍整除 $D$。故指标集有向。$Q_{u,m}$ 至多包含 $u$ 个孤立初始类及 $m$ 个尾部剩余类，因此有限。有限离散空间的乘积紧致 Hausdorff，逆极限由相容方程切出闭子空间，故 $K_{t,D}$ 紧致 Hausdorff 且零维。
+
+证明稠密性。任取非空基本柱邻域，只涉及有限多个坐标。取这些坐标的共同细化 $\beta$。邻域中某点的 $\beta$ 坐标属于 $Q_\beta$，故等于 $q_\beta(n)$ 对某个 $n\in\mathbb N_0$。相容性保证 $j(n)$ 在所有原先指定坐标上与该点相同，所以 $j(n)$ 落入该邻域。故 $j(\mathbb N_0)$ 稠密，进而 $j(\mathbb N_0)^2$ 在 $K_{t,D}^2$ 中稠密。
+
+现令 $F:K_{t,D}^2\to B$ 连续。每个纤维 $F^{-1}(\{b\})$ 都开闭。由有限个纤维组成的开覆盖及逆极限的柱集基，对每一点可取一个包含于其纤维的有限坐标柱；紧致性给出有限子覆盖。把这些有限柱所涉及的全部坐标在两个输入槽中共同细化到单一 $\beta$。于是两个点若具有相同的 $\beta$ 坐标对，就落在完全相同的这些柱原子中，从而具有相同的 $F$ 值。因此 $F$ 经 $Q_\beta^2$ 因子化。若还指定 $\alpha$，再把 $\beta$ 替换为 $\alpha\vee\beta$ 即可。这里正使用了 Stacks Project Tag 08ZW, Lemma 5.22.4 所表达的有限开闭细化事实。证毕。
+
+**theorem 50.2（连续二元算术延拓的精确有限逃逸判据）。** 设
+$$
+h:\mathbb N_0^2\to\mathbb N_0.
+$$
+存在联合连续
+$$
+H:K_{t,D}^2\to K_{t,D}
+$$
+满足
+$$
+H(j(a),j(b))=j(h(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+\forall\alpha\in I_{t,D}\ \exists\beta\in I_{t,D},\quad
+\alpha\preceq\beta
+$$
+且
+$$
+\forall a,a',b,b'\in\mathbb N_0,\quad
+a\mathrel{R_\beta}a'\ \land\ b\mathrel{R_\beta}b'
+\Longrightarrow
+h(a,b)\mathrel{R_\alpha}h(a',b').
+\tag{50.1}
+$$
+若延拓存在则唯一。因此，要否定延拓，必须为某个输出层 $\alpha$ 证明：对每一个允许的更细输入层 $\beta\succeq\alpha$ 都存在逃逸，而只展示某一个有限商上的同层失败并不足够。
+
+**证明。** 必要性：若 $H$ 存在，固定输出坐标 $\alpha$。有限离散值映射
+$$
+\pi_\alpha\circ H:K_{t,D}^2\to Q_\alpha
+$$
+由定理 50.1 经某个共同坐标 $\beta$ 因子化；再共同细化可令 $\beta\succeq\alpha$。在稠密自然核心上代入 $j(a),j(b)$，得到 (50.1)。
+
+充分性：对每个 $\alpha$ 选取满足 (50.1) 的 $\beta(\alpha)$。于是
+$$
+f_\alpha\bigl(q_{\beta(\alpha)}(a),q_{\beta(\alpha)}(b)\bigr)
+=
+q_\alpha(h(a,b))
+$$
+良定义，并给出连续有限值映射
+$$
+H_\alpha=f_\alpha\circ
+(\pi_{\beta(\alpha)}\times\pi_{\beta(\alpha)}).
+$$
+若 $\alpha\preceq\alpha'$，则
+$$
+b_{\alpha',\alpha}\circ H_{\alpha'}
+$$
+与 $H_\alpha$ 在稠密集 $j(\mathbb N_0)^2$ 上都等于
+$q_\alpha\circ h$，而目标 $Q_\alpha$ Hausdorff，故二者处处相等。因此 $(H_\alpha)_\alpha$ 是相容线程，定义唯一映射
+$$
+H:K_{t,D}^2\to K_{t,D}.
+$$
+每个坐标 $H_\alpha$ 连续，所以 $H$ 连续。它在自然核心上等于 $j\circ h$。若 $H,H'$ 都是连续延拓，它们在稠密的 $j(\mathbb N_0)^2$ 上相等，目标 Hausdorff，故 $H=H'$。证毕。
+
+**theorem 50.3（gcd 的完全分类）。** 存在联合连续映射
+$$
+G:K_{t,D}^2\to K_{t,D},
+\qquad
+G(j(a),j(b))=j(\gcd(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+t\le1
+\qquad\text{且}\qquad
+D\mid2.
+\tag{50.2}
+$$
+因此 gcd 只出现在下列四个有限模型中：
+$$
+(t,D)\in\{(0,1),(0,2),(1,1),(1,2)\},
+$$
+其基数分别为 $1,2,2,3$。在这四种情形中，每一个允许的有限输出层本身已经足够作为输入层；无需更细输入坐标。
+
+**证明。** 先证明阈值必要性。设 $t\ge2$，取输出层
+$$
+\alpha=(2,1).
+$$
+任取允许的更细输入层
+$$
+\beta=(v,M)\succeq(2,1).
+$$
+选择充分大的整数 $k$，令
+$$
+A=kM+1>v,\qquad B=A+M.
+$$
+则 $A,B\ge v$ 且 $A\equiv B\pmod M$，故
+$$
+A\mathrel{R_\beta}B.
+$$
+比较两对输入
+$$
+(A,A),\qquad(A,B).
+$$
+第一槽完全相同，第二槽在 $R_\beta$ 下相同；然而
+$$
+\gcd(A,A)=A\ge2,
+$$
+而
+$$
+\gcd(A,B)=\gcd(A,M)=1,
+$$
+因为 $A\equiv1\pmod M$。在 $Q_{2,1}$ 中，$1$ 是孤立初始类，而所有不小于 $2$ 的整数属于尾类，因此两个输出不同。这个逃逸对每一个 $\beta\succeq\alpha$ 都成立，定理 50.2 排除连续延拓。故必须 $t\le1$。
+
+再证明模数必要性。若 $D\nmid2$，则存在有限除数 $m\mid D$ 满足 $m>2$。取输出层
+$$
+\alpha=(0,m).
+$$
+任取
+$$
+\beta=(v,M)\succeq(0,m),
+$$
+于是 $m\mid M$。选择充分大的 $k$ 并令
+$$
+a=d=kM-1>v,\qquad b=a+M.
+$$
+则
+$$
+a\equiv b\equiv d\equiv-1\pmod M,
+\qquad
+\gcd(a,b)=\gcd(a,M)=1.
+$$
+令
+$$
+x=da,\qquad y=db.
+$$
+有 $x,y\ge v$ 且
+$$
+x\equiv y\equiv1\pmod M,
+$$
+所以 $x\mathrel{R_\beta}y$。比较
+$$
+(x,x),\qquad(x,y).
+$$
+输入在两个槽中具有相同的 $\beta$ 读数，而
+$$
+\gcd(x,x)=da\equiv1\pmod m,
+$$
+以及
+$$
+\gcd(x,y)=d\gcd(a,b)=d\equiv-1\pmod m.
+$$
+因为 $m>2$，
+$$
+1\not\equiv-1\pmod m.
+$$
+故输出在 $Q_{0,m}$ 中不同。再次，这是对每个允许的更细 $\beta$ 的逃逸，故定理 50.2 给出不连续。这里构造失败的唯一模数例外正是 $m\mid2$：模 $1$ 或模 $2$ 时 $1\equiv-1$，所以该证据不能分离；这不是证明缺口，而恰好对应下面的两个可行模数。
+
+现证明充分性。因 $t\le1$ 且 $D=1$ 或 $2$，$I_{t,D}$ 有最大元 $(t,D)$，所以 $K_{t,D}\cong Q_{t,D}$ 是有限离散空间。更强地，gcd 在每个允许层同层下降。四个最大层的表如下。
+
+当 $(t,D)=(0,1)$ 时只有一个类 $*$：
+$$
+G(*,*)=*.
+$$
+
+当 $(t,D)=(0,2)$ 时记 $E$ 为偶数类、$O$ 为奇数类。因为
+$$
+\gcd(a,b)\ \text{为偶数}
+\iff
+a,b\ \text{都为偶数},
+$$
+其中约定 $\gcd(0,0)=0$ 亦满足此式，所以
+$$
+\begin{array}{c|cc}
+G&E&O\\ \hline
+E&E&O\\
+O&O&O
+\end{array}.
+$$
+
+当 $(t,D)=(1,1)$ 时记 $0$ 为孤立零类、$P$ 为正整数尾类。由 $\gcd(0,n)=n$ 且两个正整数的 gcd 仍为正数，
+$$
+\begin{array}{c|cc}
+G&0&P\\ \hline
+0&0&P\\
+P&P&P
+\end{array}.
+$$
+
+当 $(t,D)=(1,2)$ 时记 $0$ 为孤立零类，$E$ 为正偶数尾类，$O$ 为奇数尾类。由零约定及奇偶判据，
+$$
+\begin{array}{c|ccc}
+G&0&E&O\\ \hline
+0&0&E&O\\
+E&E&E&O\\
+O&O&O&O
+\end{array}.
+$$
+这些表分别由自然数 gcd 诱导，因此与所有遗忘映射相容，并给出所需连续延拓。证毕。
+
+**theorem 50.4（lcm 的完全分类与同层稳定性）。** 存在联合连续映射
+$$
+L:K_{t,D}^2\to K_{t,D},
+\qquad
+L(j(a),j(b))=j(\operatorname{lcm}(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+D\mid2.
+\tag{50.3}
+$$
+这里 $t$ 可以是任意有限自然数，也可以是 $\infty$。当 $D\mid2$ 时，对每个输出层 $\alpha=(u,m)$，可取完全相同的输入层 $\beta=\alpha$；即 lcm 在每个有限层已经同层良定义。
+
+**证明。** 模数必要性使用与 gcd 相同的任意细化构造。若 $D\nmid2$，取 $m\mid D$、$m>2$，输出层 $\alpha=(0,m)$，并任取 $\beta=(v,M)\succeq\alpha$。仍取
+$$
+a=d=kM-1>v,\qquad b=a+M,\qquad x=da,\qquad y=db.
+$$
+则 $x\mathrel{R_\beta}y$ 且 $\gcd(a,b)=1$。第一对输入 $(x,x)$ 的 lcm 为
+$$
+\operatorname{lcm}(x,x)=da\equiv1\pmod m.
+$$
+第二对输入 $(x,y)$ 满足
+$$
+\operatorname{lcm}(x,y)
+=
+d\,\operatorname{lcm}(a,b)
+=
+dab
+\equiv(-1)^3
+\equiv-1\pmod m.
+$$
+因为 $m>2$，两个输出在 $Q_{0,m}$ 不同。该逃逸对每个允许的 $\beta$ 成立，故不能连续延拓。模 $1,2$ 时恰有 $1\equiv-1$，所以此障碍消失。
+
+现设 $D\mid2$。于是任意允许模数 $m$ 只能是 $1$ 或 $2$。固定 $\alpha=(u,m)$，设
+$$
+a\mathrel{R_\alpha}a',
+\qquad
+b\mathrel{R_\alpha}b'.
+$$
+证明
+$$
+\operatorname{lcm}(a,b)
+\mathrel{R_\alpha}
+\operatorname{lcm}(a',b').
+\tag{50.4}
+$$
+
+先设 $u=0$。若 $m=1$，$Q_{0,1}$ 为单点，结论平凡。若 $m=2$，对包括零在内的所有自然数都有
+$$
+\operatorname{lcm}(r,s)\ \text{为奇数}
+\iff
+r,s\ \text{都为奇数};
+$$
+若任一输入为零，左侧为零而为偶数，仍与右侧一致。因此 lcm 的输出奇偶性只由两个输入奇偶性决定，(50.4) 成立。
+
+再设 $u\ge1$。此时 $0<u$，所以 $0$ 是孤立类。若某一输入为 $0$，其等价输入必仍为同一个 $0$，两边 lcm 都为 $0$。以下设所有相关输入为正。若 $a,b<u$，则等价关系迫使 $a'=a,b'=b$，输出相等。否则至少一个输入不小于 $u$。若一个输入在同一 $R_\alpha$ 类中发生改变，则该输入及其对应输入都不小于 $u$；于是两边 lcm 都至少等于某个不小于 $u$ 的正输入，所以两边输出都处于尾部。此时只需比较模 $m$ 剩余。若 $m=1$ 自动成立；若 $m=2$，lcm 为奇数当且仅当两个输入都为奇数，而 $R_{u,2}$ 保留每个尾部输入的奇偶性，孤立初始输入又保持其精确值，故两边 lcm 奇偶性相同。于是 (50.4) 对所有 $u$ 成立。
+
+所以每个 $Q_{u,m}$ 上都有同层有限运算
+$$
+\lambda_{u,m}\bigl(q_{u,m}(a),q_{u,m}(b)\bigr)
+=
+q_{u,m}(\operatorname{lcm}(a,b)).
+$$
+若 $\alpha\preceq\beta$，两个有限运算都由同一个自然数 lcm 诱导，故遗忘映射满足
+$$
+b_{\beta,\alpha}\bigl(\lambda_\beta(x,y)\bigr)
+=
+\lambda_\alpha\bigl(b_{\beta,\alpha}(x),b_{\beta,\alpha}(y)\bigr).
+$$
+因此可逐坐标定义
+$$
+\pi_\alpha(L(x,y))
+=
+\lambda_\alpha(\pi_\alpha(x),\pi_\alpha(y)).
+\tag{50.5}
+$$
+右侧只依赖同一有限输入坐标，故每个输出坐标连续；相容性使 (50.5) 定义 $K_{t,D}$ 中唯一一点，所以 $L$ 联合连续，并在自然核心上等于 lcm。证毕。
+
+**theorem 50.5（显式有限 lcm 层、同时支持分类及加乘并不充分）。** 在 $D\mid2$ 时，定理 50.4 的有限层映射可写成如下显式形式。
+
+若 $m=1$，$Q_{u,1}$ 由精确类
+$$
+0,1,\ldots,u-1
+$$
+和一个尾类 $T$ 组成；$u=0$ 时仅有 $T$。当 $u\ge1$ 时，$0$ 对 lcm 为吸收元。两个精确正类 $r,s<u$ 的运算读数为
+$$
+q_{u,1}(\operatorname{lcm}(r,s));
+$$
+若至少一个正输入是 $T$，输出为 $T$。
+
+若 $m=2$，记两个尾类为 $E_u,O_u$，分别表示不小于 $u$ 的偶数和奇数。$u=0$ 时
+$$
+\begin{array}{c|cc}
+L&E_0&O_0\\ \hline
+E_0&E_0&E_0\\
+O_0&E_0&O_0
+\end{array}.
+$$
+当 $u\ge1$ 时，孤立的环境零 $0$ 为吸收元；两个精确正输入按真实 lcm 后再取商；一个精确正输入 $r$ 与一个尾输入 $X\in\{E_u,O_u\}$ 的输出仍为尾类，并且仅当 $r$ 为奇数且 $X=O_u$ 时输出 $O_u$，其余情形输出 $E_u$；两个尾输入的规则仍是只有 $O_u,O_u$ 输出 $O_u$。
+
+因此：
+$$
+\text{gcd 与 lcm 同时具有联合连续延拓}
+\iff
+t\le1\ \land\ D\mid2.
+\tag{50.6}
+$$
+而 lcm 单独具有延拓的范围严格更大：
+$$
+D\mid2
+$$
+且对 $t$ 无限制。故两种比较运算在阈值方向上并不拓扑对称。
+
+此外，对每个 $(t,D)$，每个 $R_{u,m}$ 都同时是自然数加法与乘法的二元同余，所以 $K_{t,D}$ 总有由有限层诱导的连续加法与乘法。因而“连续保存 $+$ 与 $\times$”并不足以推出连续 gcd 或 lcm。具体地，$K_{2,1}$ 有连续 $+$、$\times$ 与 lcm，却没有连续 gcd；$K_{0,3}$ 有连续 $+$、$\times$，却既没有连续 gcd，也没有连续 lcm。
+
+**证明。** 显式 lcm 规则只是定理 50.4 证明中各情形的展开。若 $m=1$，正尾输入的 lcm 至少与该尾输入同样大，所以仍在尾部；零的吸收律来自约定 $\operatorname{lcm}(0,n)=0$。若 $m=2$，输出尾部奇偶由“lcm 为奇数当且仅当两个输入都为奇数”完全决定，因此得到表与混合规则。相容性已经在定理 50.4 中证明。
+
+同时支持分类是定理 50.3 与 50.4 条件的交。
+
+最后证明加乘断言。若
+$$
+a\mathrel{R_{u,m}}a',
+$$
+则对任意 $c$，若 $a=a'$ 结论显然；否则 $a,a'\ge u$ 且模 $m$ 同余。于是
+$$
+a+c,a'+c\ge u,\qquad a+c\equiv a'+c\pmod m,
+$$
+所以平移保持关系。乘法方面，若 $c=0$，两积相等于 $0$；若 $c\ge1$，则
+$$
+ac,a'c\ge u,\qquad ac\equiv a'c\pmod m.
+$$
+逐槽替换说明 $R_{u,m}$ 同时是加法和乘法的二元同余。故逐层运算相容并在逆极限上连续。$K_{2,1}$ 不支持 gcd 来自定理 50.3，而支持 lcm 来自定理 50.4；$K_{0,3}$ 对两者的失败来自 $3>2$ 的模数逃逸。证毕。
+
+**theorem 50.6（环境零、内部环零与 $t=\infty$ 边界公式）。** 当 $D=1$ 或 $2$ 时，有限 $t$ 的系统有最大层 $(t,D)$，故
+$$
+K_{t,D}\cong Q_{t,D}.
+$$
+当 $t=0$ 时，环境自然数零 $j(0)$ 已与相同模 $D$ 的正尾元素合并；当 $t\ge1$ 时，$j(0)$ 是孤立点，与尾部剩余类 $0\bmod D$ 不同。
+
+当 $t=\infty,D=1$ 时，$K_{\infty,1}$ 可写为
+$$
+\mathbb N_0\sqcup\{\omega\},
+$$
+其中每个自然数点孤立，$\omega$ 是阈值趋于无穷的唯一边界点。lcm 延拓满足
+$$
+L(0,x)=0,
+$$
+$$
+L(n,\omega)=L(\omega,n)=\omega\quad(n\ge1),
+$$
+以及
+$$
+L(\omega,\omega)=\omega.
+$$
+这里将该唯一边界点的“内部环”记号局部绑定为
+$$
+R_1:=\mathbb Z/1\mathbb Z=\{\bar 0\}.
+$$
+通过唯一双射 $\bar 0\mapsto\omega$，把边界单点集 $\{\omega\}$ 与 $R_1$ 识别；因此 $\omega$ 是这个单元素环的唯一元素，在该内部环中同时有
+$$
+0_{R_1}=1_{R_1}=\omega.
+$$
+这个内部环的零元兼单位元只是边界剩余对象，不是环境自然数零；事实上 $\omega\ne j(0)$，后者在 $t=\infty$ 时是孤立点。
+
+当 $t=\infty,D=2$ 时，记边界点
+$$
+\omega_r=\lim_{k\to\infty}j(2k+r),
+\qquad r\in\{0,1\},
+$$
+其中极限可等价理解为：所有有限阈值之后固定剩余 $r\bmod2$ 的相容线程。则
+$$
+K_{\infty,2}
+=
+j(\mathbb N_0)\sqcup\{\omega_0,\omega_1\}
+$$
+作为集合，且 $j(\mathbb N_0)$ 中每点孤立。lcm 延拓满足
+$$
+L(0,x)=0
+$$
+对所有 $x$ 成立；对 $n\ge1$，
+$$
+L(j(n),\omega_r)
+=
+L(\omega_r,j(n))
+=
+\omega_{\epsilon(n)r},
+$$
+其中 $\epsilon(n)=1$ 当且仅当 $n$ 为奇数；并且
+$$
+L(\omega_r,\omega_s)=\omega_{rs}.
+$$
+特别地，$\omega_0$ 是边界中的模 $2$ 环零，而 $j(0)$ 是孤立环境零；二者不同，并满足
+$$
+L(j(0),\omega_1)=j(0),
+\qquad
+L(\omega_0,\omega_1)=\omega_0.
+$$
+所以“内部环零”与“环境零”不可混同。
+
+**证明。** 有限 $t$ 且 $D=1$ 或 $2$ 时，$(t,D)$ 是指标最大元，逆极限等于该终端有限商。$t=0$ 时 $R_{0,D}$ 只记录模 $D$ 剩余，所以 $0$ 与正的 $D$ 倍数同类；$t\ge1$ 时 $0<t$，故 $0$ 只能与自身等价。
+
+对 $D=1,t=\infty$，任意相容线程若在某阈值层取一个孤立值 $n<u$，则所有更细层都被迫继续表示同一个自然数 $n$，从而该线程为 $j(n)$；否则它在每层都取唯一尾类，得到唯一边界点 $\omega$。定理 50.4 的同层 lcm 公式立刻给出所列规则。
+
+对 $D=2,t=\infty$，同理，任何线程若在某层进入孤立初始值，就唯一确定为某个 $j(n)$；否则它永远处于尾部，而所有模 $2$ 坐标相容地固定一个剩余 $r\in\{0,1\}$，故恰有两个边界点 $\omega_0,\omega_1$。若自然数输入 $n\ge1$ 与边界输入共同趋于尾部，lcm 的大小至少趋向无穷，所以输出仍是边界；其奇偶性只有在 $n$ 与边界剩余都为奇时才为奇，故得到 $\omega_{\epsilon(n)r}$。两个边界输入同理得到 $\omega_{rs}$。零吸收律在每个 $u\ge1$ 的有限层把孤立 $j(0)$ 保持为 $0$，故对任意完成点仍有 $L(j(0),x)=j(0)$。最后，$j(0)\ne\omega_0$ 可在输出层 $(1,1)$ 或 $(1,2)$ 区分：前者是孤立初始零类，后者是尾类。证毕。
+
+**theorem 50.7（全完成中 gcd 图闭包在一个固定边界输入上多值）。** 令
+$$
+D_{\mathrm{full}}=\prod_p p^\infty,
+\qquad
+K=K_{\infty,D_{\mathrm{full}}}.
+$$
+定义两个边界点
+$$
+\omega_0=\lim_{k\to\infty}j(k!),
+\qquad
+\omega_1=\lim_{k\to\infty}j(k!+1).
+$$
+令 gcd 图的闭包为
+$$
+\overline{\Gamma_g}
+=
+\overline{
+\left\{
+\bigl(j(a),j(b),j(\gcd(a,b))\bigr):
+a,b\in\mathbb N_0
+\right\}}
+\subseteq K^2\times K.
+$$
+则在同一个固定输入
+$$
+(\omega_0,\omega_1)
+$$
+上至少有两个不同输出：
+$$
+\bigl(\omega_0,\omega_1,j(1)\bigr)\in\overline{\Gamma_g},
+$$
+以及
+$$
+\bigl(\omega_0,\omega_1,\omega_1\bigr)\in\overline{\Gamma_g},
+$$
+且
+$$
+j(1)\ne\omega_1.
+$$
+此结论只断言图闭包在该输入处至少二值，不断言完整图闭包的等式描述，也不断言任意额外的整除刻画。
+
+**证明。** 固定任意有限坐标 $(u,m)$. 当 $k$ 足够大时
+$$
+k!\ge u,\qquad m\mid k!,
+$$
+所以
+$$
+q_{u,m}(k!)
+$$
+最终是尾部剩余 $0$，而
+$$
+q_{u,m}(k!+1)
+$$
+最终是尾部剩余 $1$。故两个所写极限在逆极限拓扑中存在。
+
+第一列真实图点取
+$$
+\bigl(j(k!),j(k!+1),j(\gcd(k!,k!+1))\bigr).
+$$
+相邻整数互素，所以
+$$
+\gcd(k!,k!+1)=1.
+$$
+该图点列收敛到
+$$
+(\omega_0,\omega_1,j(1)).
+$$
+
+第二列真实图点取
+$$
+\bigl(j(k!(k!+1)),j(k!+1),
+j(\gcd(k!(k!+1),k!+1))\bigr).
+$$
+因为 $k!+1$ 整除 $k!(k!+1)$，
+$$
+\gcd(k!(k!+1),k!+1)=k!+1.
+$$
+第一输入对任意固定 $m$ 最终被 $m$ 整除且趋过任意阈值，所以趋于 $\omega_0$；第二输入与输出都趋于 $\omega_1$。故第二列图点收敛到
+$$
+(\omega_0,\omega_1,\omega_1).
+$$
+最后在层 $(2,1)$，$j(1)$ 是孤立初始类 $1$，而 $\omega_1$ 是尾类，所以二者不同。证毕。
+
+**theorem 50.8（与已发表 supernatural gcd/lcm 的精确关系及结论边界）。** 已发表文献中，supernatural numbers
+$$
+\mathbb S=\left\{\prod_p p^{e_p}:e_p\in\mathbb N_0\cup\{\infty\}\right\}
+$$
+具有按素数赋值逐坐标定义的 gcd 与 lcm：
+$$
+v_p(\gcd(A,B))=\min\{v_p(A),v_p(B)\},
+$$
+$$
+v_p(\operatorname{lcm}(A,B))=\max\{v_p(A),v_p(B)\}.
+$$
+Longhi–Mu–Saettone, *Coset topologies on $\mathbb Z$ and arithmetic applications*, Expositiones Mathematicae 41 (2023), 71–114, DOI 10.1016/j.exmath.2022.10.001, §4.1；可访问的作者预印本为 arXiv:2202.13478v3（2022-11-24），printed pp. 26–28，尤其是 Definition 4.1、Proposition 4.3 及其证明、Lemma 4.5：[开放预印本](https://arxiv.org/pdf/2202.13478v3)。Definition 4.1 将 supernatural numbers 定义为指数属于 $\mathbb N_0\cup\{\infty\}$ 的形式素数乘积；Proposition 4.3 通过
+$$
+\rho(x)=\prod_p p^{\widehat v_p(x)}
+$$
+给出规范双射
+$$
+\mathbb S\simeq\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\ast},
+$$
+其证明明确说明两个 profinite 整数具有相同 supernatural 赋值数据，当且仅当它们相差一个 $\widehat{\mathbb Z}^{\ast}$ 中的单位；Lemma 4.5 又证明该商拓扑与逐素数赋值坐标上的乘积拓扑一致。上述 gcd/lcm 的 $\min/\max$ 公式是 supernatural numbers 上标准的逐赋值格运算定义；这里不把这些公式声称为该论文中的逐字公式。
+这些格运算位于“遗忘单位信息”的 supernatural 商上，并不自动给出
+$$
+\widehat{\mathbb Z}\times\widehat{\mathbb Z}\to\widehat{\mathbb Z}
+$$
+或本节
+$$
+K_{t,D}^2\to K_{t,D}
+$$
+的自然数 gcd/lcm 连续提升。事实上，本节分类在 $t=0$ 时已经直接证明：只要 $D$ 含有某个有限除数 $m>2$，两种 $K_{0,D}$ 值提升都不存在；而 supernatural 商上的 $\min/\max$ 仍然有定义。
+
+因此本节所得“加法、乘法连续并不足以保证 gcd/lcm 连续”以及 gcd/lcm 的不对称性，只针对定义 50.0 的显式阈值—超自然算术完成族。这里不声称已经分类所有可能的算术紧化。
+
+**证明。** supernatural gcd/lcm 的赋值公式是其标准定义；所引文献给出 supernatural numbers 与 profinite 整数商结构的公开背景。本节定理 50.3 与 50.4 已独立证明在 $K_{t,D}$ 中的精确存在条件，因此当 $D$ 有 $m>2$ 时，supernatural 商上的格运算不能被误当作这里要求的 $K_{t,D}$ 值连续提升。其余限制陈述只是明确本节定理的量词范围。证毕。
+
+## 50.99 追加锚
+## 51. 全阈值—周期完成中的最大公因数与最小公倍数联合图闭包
+
+**definition 51.0 (全算术完成、联合自然图与边界记号).** 令 $\mathbb N_0=\{0,1,2,\ldots\}$，令 $\mathcal P$ 为素数集合。对 $t\in\mathbb N_0$、$m\in\mathbb N_{>0}$，定义
+$$
+a\sim_{t,m}b\quad\Longleftrightarrow\quad a=b\ \lor\ \bigl(a,b\ge t\ \land\ a\equiv b\pmod m\bigr),
+\qquad Q_{t,m}=\mathbb N_0/\!\sim_{t,m}.
+$$
+各商取离散拓扑，指标次序为
+$$
+(t,m)\preceq(T,M)\quad\Longleftrightarrow\quad t\le T\ \land\ m\mid M.
+$$
+当 $(t,m)\preceq(T,M)$ 时，以自然代表元诱导的映射为过渡映射。定义
+$$
+K=\varprojlim_{(t,m)}Q_{t,m},\qquad j(n)=([n]_{t,m})_{(t,m)}.
+$$
+记 $\pi_{t,m}$ 为坐标投影，并记
+$$
+R=\widehat{\mathbb Z}=\varprojlim_{m\ge1}\mathbb Z/m\mathbb Z\cong\prod_{p\in\mathcal P}\mathbb Z_p.
+$$
+$R$ 取此逆极限拓扑，亦即右侧的乘积拓扑；整数在 $R$ 中均指其对角像。对 $x\in R$，以 $\tau(x)$ 表示在每个 $Q_{t,m}$ 上取尾部剩余类 $x\bmod m$ 的线程，即其该坐标由集合 $\{n\ge t:n\equiv x\pmod m\}$ 表示。
+
+采用
+$$
+\gcd(0,0)=0,\qquad \gcd(0,n)=n,\qquad \operatorname{lcm}(0,n)=0.
+$$
+定义
+$$
+\Gamma=\left\{\bigl(j(a),j(b),j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr):a,b\in\mathbb N_0\right\},
+\qquad C=\overline\Gamma\subseteq K^4.
+$$
+这里两个输出始终来自同一对自然输入。上述观察系统是固定基线定义 14.0 的全阈值—周期系统；关系的有限观察闭包与有限观察完成的框架分别见该基线定理 3.4、4.2（[固定基线：定义 14.0、定理 3.4 与 4.2](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)）。
+
+**theorem 51.0.1 (紧致可度量性、边界分解与共同序列判据).** 空间 $K$ 紧致、Hausdorff 且可度量。映射 $j$ 单射，其像稠密，每个 $j(n)$ 是孤立点。映射 $\tau$ 是从 $R$ 到 $K$ 的闭嵌入，并有集合的不交分解
+$$
+K=j(\mathbb N_0)\sqcup\tau(R).
+$$
+这不是两个开子空间的拓扑不交并。对 $T\ge0$、$m\ge1$，边界点 $\tau(x)$ 有基本邻域
+$$
+\mathcal U_{T,m}(x)=\{j(n):n\ge T,\ n\equiv x\pmod m\}\ \cup\ \{\tau(y):y\equiv x\pmod m\}.
+$$
+特别地，$j(0)\ne\tau(0)$。对任意 $P\in K^4$，$P\in C$ 当且仅当存在同一对自然数序列 $(a_N,b_N)$，使
+$$
+\bigl(j(a_N),j(b_N),j(\gcd(a_N,b_N)),j(\operatorname{lcm}(a_N,b_N))\bigr)\longrightarrow P.
+$$
+
+**证明。** $Q_{t,m}$ 由 $t$ 个小自然数单点类与 $m$ 个尾部剩余类组成，故有限。指标集可数，且任意有限组指标有共同上界：取阈值的最大值及周期的最小公倍数。列举所有指标为 $\alpha_1,\alpha_2,\ldots$ 后，乘积上的度量
+$$
+D(u,v)=\sum_{r\ge1}2^{-r}\mathbf 1_{\{u_{\alpha_r}\ne v_{\alpha_r}\}}
+$$
+诱导乘积拓扑：前 $r$ 个坐标相同使距离至多为 $2^{-r}$，而距离小于任一指定坐标的权重就强迫该坐标相同。有限离散空间的乘积紧致且 Hausdorff；每条相容方程规定闭集，所以 $K$ 是该乘积的闭子空间，继承紧致性、Hausdorff 性与可度量性。
+
+若 $n\ne n'$，取 $t>\max\{n,n'\}$，则它们在 $Q_{t,1}$ 上不同，故 $j$ 单射。更一般地，若线程 $X$ 的某个 $Q_{t,m}$ 坐标为小单点类 $n<t$，则在任何更细坐标中，能够投影到该类的也只有 $n$ 的单点类。对任意另一指标取共同上界，便得 $X$ 的每个坐标都等于 $j(n)$ 的对应坐标。因此
+$$
+\pi_{n+1,1}^{-1}(\{[n]_{n+1,1}\})=\{j(n)\},
+$$
+证明其孤立性。任何非空基本柱邻域的有限条件都由一个共同更细坐标控制；选择该坐标类的一个自然代表元，即得到落在邻域中的 $j(n)$。故 $j(\mathbb N_0)$ 稠密。
+
+若线程不属于 $j(\mathbb N_0)$，上一段说明其所有坐标都是尾类。在 $Q_{0,m}$ 上读出剩余类 $x_m$，相容性给出 $m\mid M$ 时 $x_M\bmod m=x_m$，故 $(x_m)_m$ 确定 $R$ 的一点 $x$。该线程的每个尾类只能是 $x\bmod m$，因而等于 $\tau(x)$。反之，这些尾类在全部过渡映射下相容，确实定义线程，而且不可能等于任何 $j(n)$。这证明分解。这里 $R\cong\prod_p\mathbb Z_p$ 的识别可直接由中国剩余定理得到：相容模数剩余类给出每个素数幂上的相容剩余类；反向地，对每个有限素数幂分解使用中国剩余定理，恢复唯一的模 $m$ 剩余类。两方向的有限坐标都连续，故为拓扑环同构。
+
+映射 $\tau$ 的每个有限坐标仅依赖 $x\bmod m$，故连续；全部模数的剩余类又区分 $R$ 中的点，所以它单射。$R$ 紧致而 $K$ Hausdorff，因此 $\tau$ 是闭嵌入。尾类柱邻域正是所列 $\mathcal U_{T,m}(x)$；对有限个这样的条件取共同上界，证明它们构成邻域基。每个这样的邻域都含自然点，故边界不是开子空间。$Q_{1,1}$ 已把 $j(0)$ 与 $\tau(0)$ 区分。
+
+最后，$K^4$ 可度量。若 $P\in\overline\Gamma$，对每个 $N\ge1$ 从 $P$ 的半径 $1/N$ 邻域与 $\Gamma$ 的交中取一点；该点按 $\Gamma$ 的定义来自一对自然数 $(a_N,b_N)$，而不是分别选择两个输出的见证。这些四元组趋于 $P$。反向地，$\Gamma$ 中序列的极限必属于其闭包。证毕。
+
+**theorem 51.1 (边界序列判据).** 对 $x\in R$ 与自然数序列 $(n_N)$，有 $j(n_N)\to\tau(x)$ 当且仅当
+$$
+n_N\longrightarrow+\infty
+$$
+且对每个 $m\ge1$，存在 $N_m$ 使
+$$
+N\ge N_m\quad\Longrightarrow\quad n_N\equiv x\pmod m.
+$$
+每个 $\tau(x)$ 都有正自然数序列如此逼近。
+
+**证明。** 若 $j(n_N)\to\tau(x)$，取任意阈值 $T$。在有限离散坐标 $Q_{T,1}$ 上，充分大时必须进入尾类，故 $n_N\ge T$。$T$ 任意，得到 $n_N\to+\infty$。再在 $Q_{0,m}$ 上取极限，有限离散性给出最终的模 $m$ 同余。
+
+反之，任一基本邻域只规定一个足够大的阈值 $T$ 与一个有限模数 $M$；两项条件保证充分大时 $n_N\ge T$ 且 $n_N\equiv x\pmod M$，故进入该邻域。为证明最后的存在性，记
+$$
+M_N=\operatorname{lcm}(1,2,\ldots,N)\qquad(N\ge1).
+$$
+在 $x\bmod M_N$ 的等差数列中选取 $n_N>N$。每个固定 $m$ 在 $N\ge m$ 时整除 $M_N$，所以该序列满足上述两个条件。证毕。
+
+**definition 51.2 (影子、赋值与主理想参数).** 定义影子映射 $\sigma:K\to R$，使 $\sigma(X)\bmod m$ 为 $X$ 的 $Q_{0,m}$ 坐标。令
+$$
+E=\widetilde{\mathbb N}_0=\mathbb N_0\cup\{\infty\},\qquad \mathcal I=\prod_{p\in\mathcal P}E.
+$$
+$E$ 取离散 $\mathbb N_0$ 的一点紧化拓扑；各有限点孤立，而
+$$
+T_r=\{r,r+1,r+2,\ldots\}\cup\{\infty\}\qquad(r\in\mathbb N_0)
+$$
+构成 $\infty$ 的邻域基。$\mathcal I$ 取乘积拓扑。对每个 $p$，使用 $\mathbb Z_p$ 上的赋值 $v_p$，约定 $v_p(0)=\infty$。在 $E$ 中使用扩展次序、$\min$ 与 $\max$，以及 $e+\infty=\infty+e=\infty$；不定义 $\infty-\infty$。
+
+记
+$$
+\rho:R\to\mathcal I,\qquad \rho(x)=(v_p(x_p))_p,
+\qquad \operatorname{Prin}(R)=\{xR:x\in R\}.
+$$
+对 $e=(e_p)_p\in\mathcal I$，另记
+$$
+J(e)=\prod_p p^{e_p}\mathbb Z_p\subseteq R,
+\qquad p^\infty\mathbb Z_p=\{0\}.
+$$
+在 $\operatorname{Prin}(R)$ 上，以 $x\mapsto xR$ 指定商拓扑。这里的指数参数采用 Longhi–Mu–Saettone，*Coset topologies on $\mathbb Z$ and arithmetic applications*，arXiv:2202.13478v3，§4.1、Definition 4.1（印页 26）的超自然数约定；该文发表于 *Expositiones Mathematicae* 41(1) (2023), 71–114，DOI 10.1016/j.exmath.2022.10.001（[v3 原文，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)；[arXiv 记录](https://arxiv.org/abs/2202.13478v3)；[作者出版目录](https://www.fmsaettone.com/)）。
+
+**theorem 51.2.1 (影子连续性、单位商拓扑与主理想格运算).** 映射 $\sigma$ 连续，且
+$$
+\sigma(j(n))=n,\qquad \sigma(\tau(x))=x.
+$$
+映射 $\rho$ 是连续满射及商映射，并诱导同胚
+$$
+R/R^\times\cong\mathcal I\cong\operatorname{Prin}(R).
+$$
+第一个商是单位乘法作用的轨道空间，不是环理想商。第二个识别由 $e\mapsto J(e)$ 给出。对所有 $x,y\in R$，有
+$$
+xR=\prod_p x_p\mathbb Z_p=J(\rho(x)),
+$$
+$$
+xR+yR=J\bigl((\min\{v_p(x_p),v_p(y_p)\})_p\bigr),
+$$
+$$
+xR\cap yR=J\bigl((\max\{v_p(x_p),v_p(y_p)\})_p\bigr).
+$$
+特别地，和与交仍为主理想，包含任意零分量。映射 $\min,\max:E^2\to E$ 连续。以后可通过上述同胚把一个主理想与其赋值向量视为同一参数。
+
+单位轨道双射的既有结果是 Longhi–Mu–Saettone Proposition 4.3；主理想识别见紧随其后的 Remark 4.4，均在印页 26（[Longhi–Mu–Saettone，v3，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)）。商拓扑与一点紧化赋值乘积拓扑的一致性是该文 Lemma 4.5，印页 27（[Longhi–Mu–Saettone，v3，第 27 页](https://arxiv.org/pdf/2202.13478v3#page=27)）。这些结果的对象是整个 $R$，并未排除零坐标；它们本身不是关于 $C$ 的共同自然见证定理。
+
+**证明。** $\sigma$ 的每个模 $m$ 坐标都是连续投影 $\pi_{0,m}$；逆极限拓扑遂给出 $\sigma$ 连续。两项取值公式逐坐标成立。
+
+一个 $R$ 中的元素可逆，当且仅当其每个 $p$ 分量都在 $\mathbb Z_p$ 中可逆：逆元在必要时投影得到，在充分时由各分量逆元组成。因此
+$$
+R^\times=\prod_p\mathbb Z_p^\times.
+$$
+$R$ 并非域：令 $\varepsilon_2=1$、$\varepsilon_p=0$ 对 $p\ne2$，则 $\varepsilon$ 与 $1-\varepsilon$ 均非零，却有 $\varepsilon(1-\varepsilon)=0$。
+
+若 $c=xr$，逐坐标有 $c_p\in x_p\mathbb Z_p$。反之，若每个 $c_p\in x_p\mathbb Z_p$，在 $x_p\ne0$ 时取 $r_p=c_p/x_p\in\mathbb Z_p$，在 $x_p=0$ 时必有 $c_p=0$，取 $r_p=0$；于是 $(r_p)_p\in R$ 且 $c=xr$。这证明 $xR=\prod_p x_p\mathbb Z_p$。每个非零 $x_p$ 可写成 $p^{v_p(x_p)}u_p$，其中 $u_p$ 为单位；零分量生成零理想。因此该乘积等于 $J(\rho(x))$。
+
+对任意 $e\in\mathcal I$，取元素 $c(e)$，其 $p$ 分量在 $e_p<\infty$ 时为 $p^{e_p}$，在 $e_p=\infty$ 时为 $0$。则 $\rho(c(e))=e$ 且 $J(e)=c(e)R$，证明满射以及所有 $J(e)$ 都为主理想。不同指数在对应 $\mathbb Z_p$ 中给出不同理想，故 $e\mapsto J(e)$ 单射。
+
+若 $\rho(x)=\rho(y)$，在 $y_p\ne0$ 的分量有 $x_p/y_p\in\mathbb Z_p^\times$；在 $y_p=0$ 的分量，同一赋值强迫 $x_p=0$，可任取单位，例如 $1$。这些单位组成 $u\in R^\times$，且 $x=uy$。反向地，单位乘法不改变任何赋值。故 $\rho$ 的纤维恰为单位轨道，也恰为 $x\mapsto xR$ 的纤维。
+
+对有限 $r$，有
+$$
+v_p^{-1}(\{r\})=p^r\mathbb Z_p\setminus p^{r+1}\mathbb Z_p,
+\qquad v_p^{-1}(T_r)=p^r\mathbb Z_p.
+$$
+这些集合开闭，故 $v_p:\mathbb Z_p\to E$ 连续，包括在 $0$ 处。乘积拓扑给出 $\rho$ 连续。$R$ 紧致而 $\mathcal I$ Hausdorff，故连续满射 $\rho$ 为闭映射，从而为商映射。结合已证纤维刻画，得到两个指定商空间与 $\mathcal I$ 的同胚。
+
+逐坐标的交显然满足
+$$
+\left(\prod_p x_p\mathbb Z_p\right)\cap\left(\prod_p y_p\mathbb Z_p\right)=\prod_p(x_p\mathbb Z_p\cap y_p\mathbb Z_p).
+$$
+和的对应公式也成立：对右侧一个元素，在每个分量中，把它写成 $x_pr_p+y_ps_p$，再将 $(r_p)_p,(s_p)_p$ 拼成 $R$ 中元素，即得全局表示。局部理想 $p^a\mathbb Z_p$ 与 $p^b\mathbb Z_p$ 线性嵌套，其和取较小指数，其交取较大指数；该论证包含 $a=\infty$ 或 $b=\infty$。由 $J$ 的主理想表示，得到所述和与交公式。
+
+最后，$T_r$ 在 $E$ 中开闭，并且
+$$
+\min^{-1}(T_r)=T_r\times T_r,
+\qquad \max^{-1}(T_r)=(T_r\times E)\cup(E\times T_r).
+$$
+两者均开闭。有限单点 $\{r\}$ 等于 $T_r\setminus T_{r+1}$，故其逆像也开闭。有限单点与各 $T_r$ 构成拓扑基，证明 $\min$、$\max$ 连续。证毕。
+
+**theorem 51.3 (同余类中的任意大互素提升).** 设 $M\ge1$，给定 $U_0,V_0\in\mathbb Z/M\mathbb Z$，并假设对每个 $p\mid M$，它们在 $\mathbb Z/p\mathbb Z$ 中不同时为零。则对任意整数 $B\ge1$，存在正整数 $U,V>B$ 满足
+$$
+U\equiv U_0\pmod M,\qquad V\equiv V_0\pmod M,\qquad \gcd(U,V)=1.
+$$
+
+**证明。** 先在 $U_0\bmod M$ 的等差数列中选取 $U>B$。令
+$$
+S=\{q\in\mathcal P:q\mid U,\ q\nmid M\}.
+$$
+这是有限集。对 $V$ 同时规定
+$$
+V\equiv V_0\pmod M,\qquad V\equiv1\pmod q\quad(q\in S).
+$$
+这些模数两两互素，所以中国剩余定理给出一个模 $M\prod_{q\in S}q$ 的剩余类；在其中取 $V>B$。若素数 $q\mid U$ 且 $q\nmid M$，则 $q\in S$，故 $q\nmid V$。若 $q\mid U$ 且 $q\mid M$，假设与 $U\equiv U_0\pmod M$ 给出 $V_0\not\equiv0\pmod q$，从而仍有 $q\nmid V$。因此没有共同素因子，$\gcd(U,V)=1$。当 $M=1$ 时原假设为空，以上构造与证明同样适用。证毕。
+
+**theorem 51.4 (生成元、零分量与带稳定子的反对角单位轨道).** 设 $x,y\in R$，令
+$$
+G=xR+yR,\qquad L=xR\cap yR.
+$$
+对 $G$ 的每个生成元 $z$，存在唯一 $w\in R$ 同时满足
+$$
+wR=L,\qquad zw=xy.
+$$
+其分量为
+$$
+w_p=\begin{cases}x_py_p/z_p,&z_p\ne0,\\0,&z_p=0.\end{cases}
+$$
+若 $(z_0,w_0)$ 是一组满足 $z_0R=G$、$w_0R=L$、$z_0w_0=xy$ 的解，则全部解恰为
+$$
+(z,w)=(uz_0,u^{-1}w_0),\qquad u\in R^\times.
+$$
+记
+$$
+S_{00}(x,y)=\{p:x_p=y_p=0\},
+\qquad H_{x,y}=\{u\in R^\times:u_p=1\text{ 对所有 }p\notin S_{00}(x,y)\}.
+$$
+该轨道的稳定子恰为 $H_{x,y}$，故不同解由陪集 $R^\times/H_{x,y}$ 精确参数化；采用子空间拓扑时，该参数化还是同胚。此作用自由当且仅当 $S_{00}(x,y)=\varnothing$。
+
+更明确地，若分别写两个生成元为 $z=uz_0$、$w=vw_0$，其中 $u,v\in R^\times$，则乘积方程等价于
+$$
+u_pv_p=1\quad\text{对每个满足 }x_py_p\ne0\text{ 的素数 }p.
+$$
+在零乘积分量上可能存在不受此式限制的单位参数，但它们的不可见部分不增加上述实际解轨道。
+
+**证明。** 固定 $p$。若 $x_p,y_p$ 均非零，令 $\alpha=v_p(x_p)$、$\beta=v_p(y_p)$。这两个数及 $v_p(z_p)=\min\{\alpha,\beta\}$ 都有限。故 $z_p$ 整除 $x_py_p$，且
+$$
+v_p(x_py_p/z_p)=\alpha+\beta-\min\{\alpha,\beta\}=\max\{\alpha,\beta\}.
+$$
+因此该商在 $\mathbb Z_p$ 中，并生成局部交理想。
+
+若恰有一个输入分量为零，则 $v_p(z_p)$ 是另一个输入的有限赋值，故 $z_p\ne0$。乘积 $x_py_p=0$，在整环 $\mathbb Z_p$ 中方程 $z_pw_p=0$ 唯一强迫 $w_p=0$；这恰好生成零交理想，其赋值是 $\infty$。这一分支不使用任何无穷量减法。
+
+若 $z_p=0$，最小赋值公式强迫 $x_p=y_p=0$。交理想的该分量也是零理想，故生成元条件强迫 $w_p=0$。在此分量，乘积方程本身不足以限制 $w_p$，必须保留交理想条件。三种情形穷尽全部可能，逐坐标拼合得到 $w\in R$，证明其存在性、两个等式与唯一性。
+
+现在设 $(z,w)$ 为任一解。相同主理想给出 $z=uz_0$，其中 $u\in R^\times$，见 theorem 51.2.1 的逐坐标轨道证明。在 $(z_0)_p\ne0$ 的分量，由
+$$
+u_p(z_0)_pw_p=(z_0)_p(w_0)_p
+$$
+在 $\mathbb Z_p$ 中消去非零 $(z_0)_p$，得到 $w_p=u_p^{-1}(w_0)_p$。在 $(z_0)_p=0$ 的分量，上文已经证明 $w_p=(w_0)_p=0$，故同一等式仍成立。于是 $w=u^{-1}w_0$。反向代入则保持两个主理想和乘积，证明轨道刻画。
+
+一个单位 $u$ 固定 $(z_0,w_0)$，在 $(z_0)_p\ne0$ 时必有 $u_p=1$；在 $(z_0)_p=0$ 时两个输出分量均为零，不限制 $u_p$。而 $(z_0)_p=0$ 当且仅当 $p\in S_{00}(x,y)$，故稳定子正是 $H_{x,y}$。若该集合非空，在其中一个素数分量取 $-1$、其他分量取 $1$，得到非平凡稳定子；各 $\mathbb Z_p$ 中 $-1\ne1$。这证明自由性的充要条件。单位群是各紧致群 $\mathbb Z_p^\times$ 的乘积，轨道映射连续，且恰在同一 $H_{x,y}$ 陪集上取同值。故它从紧致商空间到 $R^2$ 中该轨道诱导连续双射；目标 Hausdorff，因此为同胚。
+
+最后，分别扭曲两个生成元后的乘积等于 $uvxy$。在每个整环 $\mathbb Z_p$ 中，$(u_pv_p-1)x_py_p=0$ 当且仅当 $x_py_p=0$ 或 $u_pv_p=1$。当恰有一个输入分量为零时，$(z_0)_p\ne0$ 而 $(w_0)_p=0$：$u_p$ 仍可改变第一个输出，额外的 $v_p$ 却只乘在零上。当两个输入分量都为零时，$(z_0)_p=(w_0)_p=0$，两个单位参数在该分量上都不可见。结合非零乘积分量上的 $v_p=u_p^{-1}$，在所有分量上都有 $v_p(w_0)_p=u_p^{-1}(w_0)_p$。所以全部实际输出仍可且仅可写成已经证明的反对角轨道。证毕。
+
+**theorem 51.5 (两个边界输入的联合闭包精确分类).** 固定 $x,y\in R$ 与 $G_*,L_*\in K$。四元组
+$$
+\bigl(\tau(x),\tau(y),G_*,L_*\bigr)
+$$
+属于 $C$ 当且仅当存在 $z,w\in R$ 满足全部三个方程
+$$
+xR+yR=zR,\qquad xR\cap yR=wR,\qquad zw=xy,
+$$
+并且输出具有下列两种形态之一：
+$$
+(G_*,L_*)=(\tau(z),\tau(w)),
+$$
+或对某个正整数 $d\ge1$，
+$$
+z=d,\qquad (G_*,L_*)=(j(d),\tau(w)).
+$$
+特别地，两个边界输入时，最小公倍数输出必在边界，最大公因数输出不可能为 $j(0)$。每一项允许的联合输出都由一条共同自然输入序列实现。
+
+**证明。** 先证必要性。由 theorem 51.0.1 的紧致可度量性与闭包序列判据，取一条 $\Gamma$ 中的序列趋于所给四元组。记其共同输入为 $a_N,b_N$，其输出为
+$$
+g_N=\gcd(a_N,b_N),\qquad \ell_N=\operatorname{lcm}(a_N,b_N).
+$$
+由 theorem 51.1，$a_N,b_N\to+\infty$，故最终均为正。定义
+$$
+z=\sigma(G_*),\qquad w=\sigma(L_*).
+$$
+影子的连续性给出 $a_N\to x$、$b_N\to y$、$g_N\to z$、$\ell_N\to w$ 于 $R$。自然数上的恒等式给出
+$$
+g_N\ell_N=a_Nb_N,
+$$
+$$
+a_NR+b_NR=g_NR,\qquad a_NR\cap b_NR=\ell_NR.
+$$
+在最后两个等式中，逐素数使用赋值的最小值和最大值公式，再用 theorem 51.2.1 中 $\rho$、$\min$、$\max$ 的连续性取极限，得到
+$$
+xR+yR=zR,\qquad xR\cap yR=wR.
+$$
+在拓扑环 $R$ 中对乘积恒等式取极限，得到 $zw=xy$。
+
+若 $L_*=j(L)$，孤立性强迫 $\ell_N=L$ 最终成立。但最终输入为正，故 $a_N,b_N\le\ell_N$，与二者趋于无穷矛盾。因此 $L_*=\tau(w)$。若 $G_*=j(0)$，孤立性强迫 $g_N=0$ 最终成立，而自然数最大公因数为零当且仅当两个输入同时为零，仍然矛盾。若 $G_*=j(d)$ 且 $d>0$，则 $g_N=d$ 最终成立，其影子必为 $z=d$。其余可能性恰为 $G_*=\tau(z)$。必要性得证。
+
+为证明充分性，先证明一个有限精度的同步提升断言。假设三个方程已经成立。任给 $M\ge1$、正整数 $g\equiv z\pmod M$ 与整数 $B\ge1$，存在正整数 $U,V>B$，使
+$$
+\gcd(U,V)=1
+$$
+且同时满足
+$$
+gU\equiv x,\qquad gV\equiv y,\qquad g\equiv z,\qquad gUV\equiv w\pmod M.
+$$
+
+为此，对每个 $p^e\parallel M$，令
+$$
+k=\min\{v_p(z_p),e\}.
+$$
+若 $k<e$，则 $z_p\ne0$ 且 $v_p(z_p)=k$。第一个理想方程保证唯一的商
+$$
+A_p=x_p/z_p\in\mathbb Z_p,\qquad B_p=y_p/z_p\in\mathbb Z_p
+$$
+存在，并且其中至少一个是单位：最小输入赋值恰为 $k$，故至少一个输入除以 $z_p$ 后赋值为零。这个结论仍允许另一个商为零。由乘积方程在非零 $z_p$ 处消去，得到
+$$
+w_p=z_pA_pB_p.
+$$
+规定辅助剩余类
+$$
+U_0\equiv A_p\pmod{p^{e-k}},\qquad V_0\equiv B_p\pmod{p^{e-k}},
+$$
+并把它们任意提升到模 $p^e$ 的类。因为 $e-k\ge1$，这两个模 $p^e$ 的类不同时被 $p$ 整除。
+
+若 $k=e$，两个理想方程分别给出
+$$
+v_p(x_p),v_p(y_p)\ge e,\qquad v_p(w_p)\ge e.
+$$
+这些不等式也涵盖无穷赋值。此时规定
+$$
+U_0\equiv V_0\equiv1\pmod{p^e}.
+$$
+这两个类仍不同时被 $p$ 整除。
+
+各素数幂条件由中国剩余定理组成模 $M$ 的 $U_0,V_0$；它们满足 theorem 51.3 的假设。该定理给出 $U,V>B$，与这些类同余且互素。检查所有同余条件：在 $k<e$ 的分量中，$g-z_p\in p^e\mathbb Z_p$，且 $U-A_p,V-B_p\in p^{e-k}\mathbb Z_p$，因而
+$$
+gU-x_p=(g-z_p)U+z_p(U-A_p)\in p^e\mathbb Z_p,
+$$
+$$
+gV-y_p=(g-z_p)V+z_p(V-B_p)\in p^e\mathbb Z_p,
+$$
+以及
+$$
+gUV-w_p=(g-z_p)UV+z_p\bigl((U-A_p)V+A_p(V-B_p)\bigr)\in p^e\mathbb Z_p.
+$$
+在 $k=e$ 的分量中，$g,x_p,y_p,w_p$ 都属于 $p^e\mathbb Z_p$，故三个同余也成立。连同预先规定的 $g\equiv z\pmod M$，得到四坐标同时同余。若 $M=1$，素数幂条件为空，theorem 51.3 仍给出所需互素数，全部同余自动成立。有限同步提升断言得证。
+
+现在考虑边界最大公因数输出 $\tau(z)$。取 $M_N=\operatorname{lcm}(1,\ldots,N)$，在 $z\bmod M_N$ 中选取正整数 $g_N>N$。把有限同步提升断言用于 $M=M_N$、$g=g_N$、$B=N$，得到互素的 $U_N,V_N>N$。置
+$$
+a_N=g_NU_N,\qquad b_N=g_NV_N.
+$$
+每个阶段精确满足
+$$
+\gcd(a_N,b_N)=g_N,\qquad \operatorname{lcm}(a_N,b_N)=g_NU_NV_N,
+$$
+且同时有
+$$
+(a_N,b_N,g_N,g_NU_NV_N)\equiv(x,y,z,w)\pmod{M_N}.
+$$
+四个自然序列都趋于无穷：$g_N>N$，$a_N,b_N>N^2$，并且 $g_NU_NV_N>N^3$。每个固定模数最终整除 $M_N$，所以 theorem 51.1 同时适用于四坐标，给出
+$$
+\bigl(j(a_N),j(b_N),j(g_N),j(g_NU_NV_N)\bigr)\longrightarrow\bigl(\tau(x),\tau(y),\tau(z),\tau(w)\bigr).
+$$
+这是同一对输入逐阶段产生两个指定输出的序列。
+
+最后考虑自然最大公因数输出。此时 $z=d\ge1$。固定 $g_N=d$，再次把已证有限同步提升断言用于 $M=M_N$、$g=d$、$B=N$。得到互素的 $U_N,V_N>N$，并令
+$$
+a_N=dU_N,\qquad b_N=dV_N.
+$$
+每个阶段有
+$$
+\gcd(a_N,b_N)=d,\qquad \operatorname{lcm}(a_N,b_N)=dU_NV_N,
+$$
+$$
+(a_N,b_N,d,dU_NV_N)\equiv(x,y,d,w)\pmod{M_N}.
+$$
+其中 $a_N,b_N\to+\infty$，$dU_NV_N\to+\infty$，而最大公因数始终精确等于 $d$，不仅是与 $d$ 同余。因此
+$$
+\bigl(j(a_N),j(b_N),j(d),j(dU_NV_N)\bigr)\longrightarrow\bigl(\tau(x),\tau(y),j(d),\tau(w)\bigr).
+$$
+这一构造同样同时控制全部四个坐标，完成充分性。证毕。
+
+**theorem 51.6 (正自然输入与边界输入的精确分类).** 固定 $a\in\mathbb N_{>0}$ 与 $y\in R$。定义
+$$
+d(a,y)=\prod_{p\mid a}p^{\min\{v_p(a),v_p(y_p)\}}.
+$$
+则 $d(a,y)$ 是 $a$ 的正因子，且前两个坐标为 $j(a),\tau(y)$ 时，$C$ 中唯一的联合输出是
+$$
+\bigl(j(d(a,y)),\tau((a/d(a,y))y)\bigr).
+$$
+该结论包括 $a=1$，此时输出为 $j(1),\tau(y)$；也包括 $y=0\in R$，此时 $d(a,0)=a$，输出为 $j(a),\tau(0)$，而非 $j(a),j(0)$。
+
+**证明。** 指数均介于 $0$ 与 $v_p(a)$ 之间，故该有限乘积为 $a$ 的正因子。由 theorem 51.1，取 $j(n_N)\to\tau(y)$ 的正自然数序列。模 $a$ 的同余最终固定；等价地，对每个 $p\mid a$，$n_N\bmod p^{v_p(a)}$ 最终等于 $y_p$ 的对应剩余类。因此
+$$
+\min\{v_p(a),v_p(n_N)\}=\min\{v_p(a),v_p(y_p)\}
+$$
+最终成立。对 $p\nmid a$，最大公因数的赋值为零，故 $\gcd(a,n_N)$ 最终精确等于 $d=d(a,y)$。于是最终有
+$$
+\operatorname{lcm}(a,n_N)=\frac ad\,n_N.
+$$
+正整数 $a/d\ge1$，故该序列趋于无穷；对每个模数 $m$，最终的 $n_N\equiv y\pmod m$ 给出 $(a/d)n_N\equiv(a/d)y\pmod m$。theorem 51.1 于是给出
+$$
+j\bigl((a/d)n_N\bigr)\longrightarrow\tau\bigl((a/d)y\bigr).
+$$
+固定第一输入为 $a$，即证明存在性。
+
+反过来，任何 $C$ 中具有指定输入的点都由 theorem 51.0.1 给出的共同序列逼近；第一输入收敛到孤立点 $j(a)$，故最终精确为 $a$。刚才的最终同余与最大公因数计算因而对每条这样的序列成立，两个输出的极限只能是所列值。这证明唯一性。$a=1$ 时空乘积为 $1$；$y=0$ 时所有相关赋值为 $\infty$，故 $d=a$。此时最小公倍数序列仍趋于无穷，极限是边界 $\tau(0)$。证毕。
+
+**theorem 51.7 (环境零与边界输入).** 对每个 $y\in R$，前两个坐标为 $j(0),\tau(y)$ 时，$C$ 中唯一的联合输出是
+$$
+(\tau(y),j(0)).
+$$
+特别地，
+$$
+\bigl(j(0),\tau(0),\tau(0),j(0)\bigr)\in C.
+$$
+
+**证明。** 取 theorem 51.1 提供的 $j(n_N)\to\tau(y)$。对每个阶段，
+$$
+\gcd(0,n_N)=n_N,\qquad \operatorname{lcm}(0,n_N)=0.
+$$
+所以固定第一输入为零即可证明存在性。对于任一具有指定输入的闭包点，theorem 51.0.1 给出共同逼近序列；其第一输入因 $j(0)$ 孤立而最终恒为零，故两个输出最终正具有上述形式。取极限证明唯一性。$y=0$ 的特例保留了 $\tau(0)\ne j(0)$ 的区别。证毕。
+
+**theorem 51.8 (两个自然输入).** 对所有 $a,b\in\mathbb N_0$，前两个坐标为 $j(a),j(b)$ 时，$C$ 中唯一的点是
+$$
+\bigl(j(a),j(b),j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr).
+$$
+
+**证明。** 该点本身就在 $\Gamma$ 中。任一具有相同前两个坐标的闭包点，可由 theorem 51.0.1 用共同自然输入序列逼近。由于 $j(a),j(b)$ 孤立，输入对最终恒为 $(a,b)$，输出遂最终恒为所列两个自然点。此论证包括 $a=b=0$，以及恰有一个自然输入为零的情形。证毕。
+
+**theorem 51.9 (乘积等式是共同见证约束而非冗余条件).** 仅有两个理想方程
+$$
+xR+yR=zR,\qquad xR\cap yR=wR
+$$
+不足以刻画两个输出的联合闭包，即使两个输出分别属于固定输入下各自自然图的投影闭包。
+
+具体取 $R$ 中的元素
+$$
+x=y=1,\qquad z=-1,\qquad w=1.
+$$
+则两个理想方程成立，但
+$$
+\bigl(\tau(1),\tau(1),\tau(-1),\tau(1)\bigr)\notin C.
+$$
+另一方面，存在共同输入趋于 $\tau(1),\tau(1)$ 的自然序列，其最大公因数趋于 $\tau(-1)$；也存在共同输入趋于相同两点的另一自然序列，其最小公倍数趋于 $\tau(1)$。
+
+**证明。** $1,-1$ 都是单位，因此
+$$
+1R+1R=R=(-1)R,\qquad 1R\cap1R=R=1R.
+$$
+然而 $zw=-1\ne1=xy$；不等式已可由模 $3$ 的剩余类区分。theorem 51.5 的必要性因此排除所列四元组。
+
+为验证分别可达，先在 theorem 51.5 中取 $x=y=1$、$z=w=-1$。此时两个理想方程成立，且 $zw=1=xy$，所以其充分性构造给出同一对输入趋于 $\tau(1),\tau(1)$，而最大公因数趋于 $\tau(-1)$，事实上最小公倍数也趋于 $\tau(-1)$。再令
+$$
+h_N=1+NM_N,\qquad M_N=\operatorname{lcm}(1,\ldots,N),
+$$
+并把另一序列的两个输入都取为 $h_N$。则 $h_N\to+\infty$，且对每个固定模数最终同余于 $1$；其最大公因数和最小公倍数均等于 $h_N$，故两输入及最小公倍数都趋于 $\tau(1)$。两项投影闭包事实均由实际自然序列证明，却不能拼成被排除的共同四元组。证毕。
+
+**theorem 51.10 (理想值最大公因数与最小公倍数的联合连续延拓).** 通过 theorem 51.2.1 的主理想参数识别，定义
+$$
+\mathfrak G:K^2\to\mathcal I,\qquad \mathfrak G(X,Y)=\sigma(X)R+\sigma(Y)R,
+$$
+$$
+\mathfrak L:K^2\to\mathcal I,\qquad \mathfrak L(X,Y)=\sigma(X)R\cap\sigma(Y)R.
+$$
+这两个映射联合连续，并且分别是自然理想值映射的唯一连续延拓：
+$$
+\mathfrak G(j(a),j(b))=\gcd(a,b)R,\qquad \mathfrak L(j(a),j(b))=\operatorname{lcm}(a,b)R.
+$$
+对任意 $(X,Y,G_*,L_*)\in C$，都有
+$$
+\rho(\sigma(G_*))=\mathfrak G(X,Y),\qquad \rho(\sigma(L_*))=\mathfrak L(X,Y),
+$$
+以及
+$$
+\sigma(G_*)\sigma(L_*)=\sigma(X)\sigma(Y).
+$$
+
+**证明。** 第 $p$ 个赋值坐标分别为
+$$
+\mathfrak G_p(X,Y)=\min\{v_p(\sigma(X)_p),v_p(\sigma(Y)_p)\},
+$$
+$$
+\mathfrak L_p(X,Y)=\max\{v_p(\sigma(X)_p),v_p(\sigma(Y)_p)\}.
+$$
+theorem 51.2.1 已证明所有组成映射连续，包括零分量处的赋值连续性以及 $\min,\max$ 在无穷点处的连续性。乘积拓扑因此给出两个映射的联合连续性。
+
+对两个正自然输入，上述坐标公式是普通最大公因数与最小公倍数的赋值公式。若恰有一个输入为零，最小赋值为另一个输入的赋值，最大赋值为 $\infty$；若两个输入均为零，两者均为 $\infty$。这正与规定的零输入约定一致，证明全部自然输入上的等式。由 theorem 51.0.1，$j(\mathbb N_0)^2$ 稠密于 $K^2$；$\mathcal I$ Hausdorff，所以两个连续映射若在该稠密集上相等，便处处相等。这证明延拓的唯一性。
+
+关于 $C$ 的前两个等式，在 $\Gamma$ 上已经由自然输入公式成立。它们各自两边都是 $K^4$ 到 Hausdorff 空间 $\mathcal I$ 的连续映射，故相等点集闭，包含 $\overline\Gamma=C$。最后的乘积等式同理：$\sigma$ 与 $R$ 的乘法连续，自然图上有 $\gcd(a,b)\operatorname{lcm}(a,b)=ab$，故该等式的闭相等点集也包含 $C$。证毕。
+
+**theorem 51.11 (单位轨道纤维与连续规范化 profinite 截面).** 映射 $\rho:R\to\mathcal I$ 的每个纤维是一个 $R^\times$ 轨道。对于代表元 $r\in R$，其稳定子为
+$$
+H_r=\{u\in R^\times:u_p=1\text{ 对所有满足 }r_p\ne0\text{ 的 }p\}.
+$$
+因此该纤维由 $R^\times/H_r$ 参数化；含零分量时不应把原单位群作用称为自由作用。
+
+固定各 $\mathbb Z_p$ 中的标准元素 $p$，定义
+$$
+s:\mathcal I\to R,\qquad s(e)_p=\begin{cases}p^{e_p},&e_p<\infty,\\0,&e_p=\infty.\end{cases}
+$$
+则 $s$ 连续，且
+$$
+\rho\circ s=\operatorname{id}_{\mathcal I}.
+$$
+故可以连续选取主理想的规范化 profinite 生成元。此选择不要求其值是某个正整数的对角像，也不保证把两个理想分别规范化后满足联合乘积方程。
+
+**证明。** 纤维为单位轨道已经在 theorem 51.2.1 中逐坐标证明，与 Longhi–Mu–Saettone Proposition 4.3 的轨道识别一致（[Longhi–Mu–Saettone，v3，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)）。若 $ur=r$，在 $r_p\ne0$ 的分量可在整环 $\mathbb Z_p$ 中消去 $r_p$，得到 $u_p=1$；在 $r_p=0$ 的分量则不限制单位。这给出稳定子与陪集参数化。若存在零分量，在该分量取 $-1$ 即得到非平凡稳定子。
+
+对于截面，固定 $p$。坐标映射 $e_p\mapsto p^{e_p}$ 在有限 $e_p$ 处连续，因为该点孤立。在 $e_p=\infty$ 处，对任意 $p^r\mathbb Z_p$ 这一零点邻域，当 $e_p\in T_r$ 时，映射值属于 $p^r\mathbb Z_p$，包括 $e_p=\infty$ 时的值 $0$。所以该坐标映射处处连续。所有坐标连续，给出 $s$ 在乘积拓扑中连续，而 $v_p(s(e)_p)=e_p$ 逐坐标成立，故 $\rho s=\operatorname{id}$。
+
+这是 $R$ 值的生成元截面，不是取值于孤立自然层 $j(\mathbb N_{>0})$ 的截面。为验证最后的乘积限制，取 $x=1$、$y=-1$。这时 $G=L=R$，分别规范化给出 $s(G)=s(L)=1$，其乘积为 $1$，却有 $xy=-1$。因此连续规范化的存在不能替代 theorem 51.5 的共同乘积约束。证毕。
+
+**theorem 51.12 (正整数生成元的自然点提升处处不连续).** 令
+$$
+\mathcal I_{\mathrm{fin}}=\{dR:d\in\mathbb N_{>0}\}\subseteq\mathcal I
+$$
+取子空间拓扑。每个 $I\in\mathcal I_{\mathrm{fin}}$ 有唯一的正整数生成元 $d$。定义
+$$
+\lambda:\mathcal I_{\mathrm{fin}}\to K,\qquad \lambda(dR)=j(d).
+$$
+则 $\lambda$ 在每一点都不连续。
+
+**证明。** 若 $dR=eR$ 且 $d,e$ 都是正整数，则 theorem 51.2.1 给出每个素数上的赋值相同。由算术基本定理，$d=e$，证明生成元唯一。
+
+固定 $d$，选择两两不同且均不整除 $d$ 的素数 $q_N$。这样的序列存在，因为素数无限，而 $d$ 只有有限个素因子。对于每个固定素数 $p$，充分大时 $q_N\ne p$，从而
+$$
+v_p(dq_N)=v_p(d)
+$$
+最终成立。因此在 $\mathcal I$ 的乘积拓扑、也在 $\mathcal I_{\mathrm{fin}}$ 的子空间拓扑中，
+$$
+dq_NR\longrightarrow dR.
+$$
+当 $d=1$ 时的这种素数序列收敛，亦见 Longhi–Mu–Saettone Lemma 4.5 后的说明（印页 27）；这里直接给出了任意 $d$ 的逐坐标证明（[Longhi–Mu–Saettone，v3，第 27 页](https://arxiv.org/pdf/2202.13478v3#page=27)）。
+
+若 $\lambda$ 在 $dR$ 连续，则 $j(dq_N)\to j(d)$。但是 $\{j(d)\}$ 是开集，而 $dq_N\ne d$ 对每个 $N$ 成立，所以该收敛不可能。故 $\lambda$ 在任意指定的 $dR$ 处均不连续。证毕。
+
+**theorem 51.13 (两个边界输入的全部联合歧义与双重提升).** 固定 $x,y\in R$，令 $G=xR+yR$、$L=xR\cap yR$。选择 $G$ 的任一生成元 $z_0$，并定义
+$$
+(w_0)_p=\begin{cases}x_py_p/(z_0)_p,&(z_0)_p\ne0,\\0,&(z_0)_p=0.\end{cases}
+$$
+则 $w_0R=L$、$z_0w_0=xy$。在输入为 $\tau(x),\tau(y)$ 且两个输出均在边界时，全部联合输出恰为
+$$
+\bigl(\tau(uz_0),\tau(u^{-1}w_0)\bigr),\qquad u\in R^\times.
+$$
+实际不同的输出由 theorem 51.4 的商 $R^\times/H_{x,y}$ 精确参数化。
+
+若存在正整数 $d$ 使 $G=dR$，则该 $d$ 唯一。令 $w_d$ 为 theorem 51.4 对生成元 $z=d$ 给出的唯一元素。全部联合输出此时可精确写为
+$$
+\left\{\bigl(\tau(ud),\tau(u^{-1}w_d)\bigr):u\in R^\times\right\}\ \cup\ \left\{\bigl(j(d),\tau(w_d)\bigr)\right\}.
+$$
+特别地，同一个最大公因数影子 $d$ 有两个不同的 $K$ 型输出 $j(d)$ 与 $\tau(d)$，它们都与同一个最小公倍数输出 $\tau(w_d)$ 耦合；其余单位扭曲必须按所列反对角方式配对。若不存在这样的正整数 $d$，则没有自然最大公因数输出。
+
+若 $G=0R$，则 $x=y=0$，唯一联合输出为
+$$
+(\tau(0),\tau(0)),
+$$
+而不是任何含自然最大公因数 $j(0)$ 的输出。
+
+**证明。** $G$ 为主理想及其生成元的存在性来自 theorem 51.2.1。theorem 51.4 证明了所列 $w_0$ 的存在性、两个方程以及所有影子解的反对角单位轨道与稳定子。theorem 51.5 的充分性则逐个把这些影子解实现为同一对自然输入的边界联合输出；其必要性排除所有不在该轨道中的边界输出。因此第一个分类既没有遗漏，也没有多计稳定子造成的同值参数。
+
+若 $G=dR$ 有正整数生成元，唯一性由 theorem 51.12 中的赋值论证给出。把 $z_0$ 取为 $d$，所有边界联合输出便是所列单位轨道。theorem 51.5 的自然分支又给出 $(j(d),\tau(w_d))$，并且任何自然最大公因数输出必须有同一影子 $d$，其另一个输出由 theorem 51.4 唯一确定。取 $u=1$ 时，边界轨道中同时有 $(\tau(d),\tau(w_d))$。theorem 51.0.1 保证 $j(d)\ne\tau(d)$，故确有双重提升，而不存在第二个正整数生成元。若没有这样的 $d$，theorem 51.5 的自然分支便为空。
+
+最后，$xR+yR=0R$ 强迫 $x=y=0$。零理想只有生成元零，交理想也为零，所以 $z=w=0$。theorem 51.5 给出边界对 $(\tau(0),\tau(0))$ 并排除 $j(0)$。此时 $H_{x,y}=R^\times$，轨道确实退化为一点。证毕。
+
+**theorem 51.14 (完整联合闭包的分情总表).** 集合 $C$ 恰由下表及其最后一行明确引用的分类组成，其中 $a,b\in\mathbb N_0$，$x,y\in R$：
+$$
+\begin{array}{c|c|c}
+\text{输入一}&\text{输入二}&(\gcd\text{ 输出},\operatorname{lcm}\text{ 输出})\\
+\hline
+j(a)&j(b)&\bigl(j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr)\\
+j(a),\ a>0&\tau(y)&\bigl(j(d(a,y)),\tau((a/d(a,y))y)\bigr)\\
+\tau(x)&j(b),\ b>0&\bigl(j(d(b,x)),\tau((b/d(b,x))x)\bigr)\\
+j(0)&\tau(y)&\bigl(\tau(y),j(0)\bigr)\\
+\tau(x)&j(0)&\bigl(\tau(x),j(0)\bigr)\\
+\tau(x)&\tau(y)&\text{theorem 51.5 的三方程与两种输出形态}
+\end{array}
+$$
+最后一行的全部元素还具有 theorem 51.13 的带稳定子单位轨道参数化。交换两个输入不改变相应联合输出。
+
+对于两个边界输入，$xR+yR$ 与 $xR\cap yR$ 是由输入唯一决定且联合连续的理想值数据；实际生成元的联合歧义是反对角单位轨道，而不是两个可任意独立组合的实际生成元轨道。该作用是否自由由共同零分量决定。主理想有连续的规范化 $R$ 值生成元截面，但其正整数生成元的孤立自然点提升处处不连续。环境零 $j(0)$ 与边界零 $\tau(0)$ 在所有情形中保持不同。
+
+**证明。** 两自然输入由 theorem 51.8 分类；正自然输入与边界输入由 theorem 51.6 分类；环境零与边界输入由 theorem 51.7 分类；两边界输入由 theorem 51.5 分类。自然数最大公因数与最小公倍数关于输入对称，所以交换前两个坐标保持 $\Gamma$，也保持其闭包 $C$，给出表中两个反向混合行。
+
+由 theorem 51.0.1，每个输入恰属于自然层或边界层；自然层再唯一分成零与正数，因此这些输入类型互不混淆并覆盖 $K^2$。各引用定理都同时证明了必要性和共同自然序列的充分性，故表中既无遗漏，也没有把两个独立投影见证误当作联合见证。理想值的唯一性和连续性由 theorem 51.10 给出；反对角轨道及稳定子由 theorems 51.4、51.13 给出；连续规范化截面由 theorem 51.11 给出；自然点提升的不连续性由 theorem 51.12 给出。两个零型点的区别由 theorem 51.0.1 保证，并在 theorems 51.5–51.8 的各输入类型中分别保持。证毕。
+
+## 51.99 追加锚
+## 52. 单位商上的算术超加法与三对和的共同见证
+
+**定义 52.1（基本载体与单位观察）。** 记素数集合为 $\mathcal P$，并令
+$$
+R=\prod_{p\in\mathcal P}\mathbb Z_p,\qquad U=R^\times,\qquad E=\mathbb N_0\cup\{\infty\}.
+$$
+各 $\mathbb Z_p$ 取通常的 $p$ 进拓扑，$R$ 取乘积拓扑；$E$ 中有限点孤立，$\infty$ 的邻域包含某个尾集 $\{n\in\mathbb N_0:n\ge N\}\cup\{\infty\}$。约定 $\infty+n=n+\infty=\infty$，包括 $n=\infty$，并把 $\infty$ 置于所有有限整数之上。赋值归一化为 $v_p(p)=1$、$v_p(0)=\infty$。定义
+$$
+x\sim y\quad\Longleftrightarrow\quad \exists u\in U,\ x=uy,
+\qquad I=R/U,
+\qquad \rho:R\longrightarrow I.
+$$
+$I$ 取商拓扑。另定义局部代表
+$$
+d_p(e)=\begin{cases}p^e,&e\in\mathbb N_0,\\0,&e=\infty.\end{cases}
+$$
+本节见证的载体是 $R$ 或指定的 $\mathbb Z_p$，不要求见证来自对角嵌入的普通整数。带见证关系与其存在量化支撑的区分采用[固定背景的定义1.2](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**theorem 52.2 (单位商、主理想与紧拓扑的同一化).** 有自然同胚
+$$
+I\longrightarrow E^{\mathcal P},\qquad \rho(x)\longmapsto\bigl(v_p(x_p)\bigr)_{p\in\mathcal P}.
+$$
+而且 $\rho(x)=\rho(y)$ 当且仅当 $xR=yR$。因此 $I$ 同时识别为 $R$ 的主理想空间与扩展赋值空间；每个主理想都是闭集。$I$ 是紧 Hausdorff 空间，$\rho$ 是连续、满射、开映射，且 $U=\prod_p\mathbb Z_p^\times$ 是紧空间。以下把 $A\in I$ 写作 $A=(a_p)_p$，并记
+$$
+0_I=\rho(0)=(\infty)_p,\qquad 1_I=\rho(1)=(0)_p.
+$$
+上述商与拓扑识别对应 [Longhi–Mu–Saettone，§4.1，定义4.1、命题4.3、注4.4、引理4.5](https://arxiv.org/pdf/2202.13478v3)。
+
+**证明。** 元素 $x=(x_p)_p$ 在 $R$ 中可逆，当且仅当每个 $x_p$ 在 $\mathbb Z_p$ 中可逆：必要性由逐坐标投影得到，充分性由 $(x_p^{-1})_p$ 给出。因此 $U=\prod_p\mathbb Z_p^\times$。每个局部单位群是 $\mathbb Z_p$ 的闭子集，故紧；于是 $U$ 紧。
+
+在 $\mathbb Z_p$ 中，两个非零元素赋值相同，当且仅当它们相差一个单位因子。两个元素赋值都为 $\infty$ 时，它们都为零，此时单位因子可取 $1$。因此全部坐标赋值相同，当且仅当存在 $u=(u_p)_p\in U$ 使 $x=uy$。任给 $(a_p)_p\in E^{\mathcal P}$，取 $x_p=d_p(a_p)$，便得到具有该赋值向量的 $x\in R$，故所列映射是双射。
+
+逐坐标相乘给出
+$$
+xR=\prod_p x_p\mathbb Z_p.
+$$
+这里反向包含也成立：若 $z_p\in x_p\mathbb Z_p$，当 $x_p\ne0$ 时取 $r_p=z_p/x_p$，当 $x_p=0$ 时取 $r_p=0$，便有 $z=xr$。局部主理想相等当且仅当其生成元赋值相同，故 $xR=yR$ 与 $\rho(x)=\rho(y)$ 等价。乘法映射 $r\mapsto xr$ 连续，因而 $xR$ 是紧空间 $R$ 在 Hausdorff 空间 $R$ 中的紧像，故闭。
+
+$E$ 是紧 Hausdorff 空间：含 $\infty$ 的一个开覆盖成员覆盖一个尾集，剩余只有有限个点；不同点则可由有限点单集及其补集分离。对于有限 $n$，
+$$
+v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times
+$$
+是开闭集，而尾集的原像是 $p^N\mathbb Z_p$。故各赋值映射连续，从而 $R\to E^{\mathcal P}$ 连续。它由紧空间满射到 Hausdorff 空间，因而是商映射；其纤维恰为 $U$ 轨道，所以诱导的双射 $I\to E^{\mathcal P}$ 是同胚。
+
+最后，若 $O\subseteq R$ 开，则
+$$
+\rho^{-1}(\rho(O))=\bigcup_{u\in U}uO
+$$
+开。由商拓扑定义，$\rho(O)$ 开，故 $\rho$ 是开映射。证毕。
+
+**定义 52.3（实际生成元和、乘法及集合支撑）。** 对 $A,B\in I$ 定义
+$$
+A\boxplus B=\{\rho(x+y):x,y\in R,\ \rho(x)=A,\ \rho(y)=B\}.
+$$
+其带见证载体为 $R^2$，输入映射为 $(x,y)\mapsto(\rho(x),\rho(y))$，输出映射为 $(x,y)\mapsto\rho(x+y)$。定义赋值乘法
+$$
+A\cdot B=(a_p+b_p)_p.
+$$
+对集合 $S,T\subseteq I$，约定
+$$
+S\boxplus T=\bigcup_{A\in S,\,B\in T}(A\boxplus B),\qquad
+A\cdot S=\{A\cdot B:B\in S\},
+$$
+并把单个元素与其单集在这些表达式中识别。空超和定义为 $\{0_I\}$。局部实际支撑记为
+$$
+a\boxplus_p b=\{v_p(r+s):r,s\in\mathbb Z_p,\ v_p(r)=a,\ v_p(s)=b\}.
+$$
+记
+$$
+\Gamma_+=\{(A,B,C)\in I^3:C\in A\boxplus B\}.
+$$
+$I$ 的非空紧子集集合记为 $\mathcal K(I)$；其 Vietoris 拓扑由开集 $O\subseteq I$ 所给的两类集合
+$$
+\{K\in\mathcal K(I):K\subseteq O\},\qquad
+\{K\in\mathcal K(I):K\cap O\ne\varnothing\}
+$$
+作为子基。
+
+**theorem 52.4 (全部二元加法规则与逐素数共同实现).** 对任意 $a,b\in E$，有精确公式
+$$
+a\boxplus_p b=
+\begin{cases}
+\{\min(a,b)\},&a\ne b,\\
+\{\infty\},&a=b=\infty,\\
+\{c\in E:c\ge a\},&a=b<\infty,\ p\ne2,\\
+\{c\in E:c\ge a+1\},&a=b<\infty,\ p=2.
+\end{cases}
+$$
+对任意 $A=(a_p)_p,B=(b_p)_p\in I$，有
+$$
+A\boxplus B=\prod_{p\in\mathcal P}(a_p\boxplus_p b_p).
+$$
+等式右侧每个完整赋值向量都由同一对 $x,y\in R$ 实现。此外
+$$
+\rho(xy)=\rho(x)\cdot\rho(y),\qquad (xR)(yR)=xyR.
+$$
+普通理想和 $xR+yR$ 的赋值向量是 $(\min(a_p,b_p))_p$；它不同于这里的生成元和支撑 $A\boxplus B$。
+
+**证明。** 先设 $a<b<\infty$，写 $r=p^a u$、$s=p^b v$，其中 $u,v$ 为单位。则
+$$
+r+s=p^a(u+p^{b-a}v),
+$$
+括号内模 $p$ 非零，故赋值恰为 $a$。若 $b=\infty$，则 $s=0$，结论仍成立。交换两项处理 $b<a$。这些单值输出均可取代表 $d_p(a),d_p(b)$ 实现。若两者都为 $\infty$，则两项均为零，和也为零。
+
+现设 $a=b=m<\infty$。写 $r=p^m u,s=p^m v$，其中 $u,v$ 为单位。一般有 $v_p(r+s)\ge m$。当 $p=2$ 时，两个单位均为奇数，其和必在 $2\mathbb Z_2$ 中，所以必有 $v_2(r+s)\ge m+1$。
+
+这些必要界限也是充分的。若要求输出 $c=\infty$，取 $r=p^m,s=-p^m$。若要求有限 $c>m$，取
+$$
+r=p^m,\qquad s=-p^m+p^c=p^m(-1+p^{c-m}).
+$$
+第二项括号为单位，故两项赋值均为 $m$，而和恰为 $p^c$。若 $p\ne2$ 且要求 $c=m$，取 $r=s=p^m$，则和为 $2p^m$，赋值恰为 $m$。这同时证明 $p=2$ 的排除是必要的，而其他素数没有额外二元例外。
+
+全局等式的正向包含由投影到每个素数得到。反向，给定右侧的一个向量 $C=(c_p)_p$，对每个 $p$ 按刚才的显式分类选取 $x_p,y_p$。令
+$$
+x=(x_p)_p,\qquad y=(y_p)_p.
+$$
+则 $\rho(x)=A,\rho(y)=B$，并且 $\rho(x+y)=C$。这些是同一对全局元素，不是仅仅逐坐标陈述存在而不作组装。
+
+局部乘积的赋值为赋值之和；只要一项为零，两边都按约定取 $\infty$。因此 $\rho(xy)=\rho(x)\cdot\rho(y)$，也证明乘法与单位代表的选择无关。有限个生成元乘积的和都在 $xyR$ 中，而 $xy$ 自身属于 $(xR)(yR)$，故 $(xR)(yR)=xyR$。
+
+最后，局部理想和由赋值较小的生成元生成。任给各坐标属于局部理想和的元素，可在该坐标使用赋值较小的生成元，并把另一系数取零；这些系数组装成 $R$ 中的两个元素，证明全局普通理想和的赋值为逐坐标最小值。特别地，普通理想和 $R+R=R$，但 $1_I\notin1_I\boxplus1_I$，因为后者的 $2$ 进坐标必至少为 $1$。所以两种加法不能混同。证毕。
+
+**定义 52.5（采用的 Krasner 超环公理）。** 本节采用 [Connes–Consani，§2 的典范超群公理及定义2.1](https://arxiv.org/html/1001.4260v2) 的含幺、零与一不同的版本，并要求乘法交换。具体而言，交换含幺 Krasner 超环是带非空值超加法的集合 $H$，满足
+$$
+\begin{gathered}
+a\boxplus b=b\boxplus a,\qquad
+(a\boxplus b)\boxplus c=a\boxplus(b\boxplus c),\\
+0\boxplus a=a\boxplus0=\{a\},\\
+\forall a\ \exists!(-a),\quad 0\in a\boxplus(-a),\\
+c\in a\boxplus b\ \Longrightarrow\ b\in c\boxplus(-a).
+\end{gathered}
+$$
+此外，$(H,\cdot,1)$ 是交换幺半群，$0\ne1$，并满足原定义中的双侧分配等式及零吸收律：
+$$
+\begin{gathered}
+a\cdot(b\boxplus c)=(a\cdot b)\boxplus(a\cdot c),\\
+(b\boxplus c)\cdot a=(b\cdot a)\boxplus(c\cdot a),\\
+a\cdot0=0\cdot a=0.
+\end{gathered}
+$$
+分配律要求集合相等，而非仅有包含。若 $H\setminus\{0\}$ 在乘法下为群，则称为超域。非零元素 $a$ 称为零因子，当且仅当存在非零 $b$ 使 $ab=0$。
+
+**theorem 52.6 (支撑结合律与一个总和的实际见证).** 对任意有限列 $A_1,\ldots,A_n\in I$，任意括号化的超和都等于
+$$
+\left\{\rho\left(\sum_{i=1}^n x_i\right):x_i\in R,\ \rho(x_i)=A_i\text{ 对所有 }i\right\}.
+$$
+$n=0$ 时两边均为 $\{0_I\}$。特别地，$\boxplus$ 满足支撑结合律。这个等式的输出只指定总和的观察值，并不同时指定若干相交子和的观察值。商超环中的有限和机制亦见 [Connes–Consani，命题2.5，式(10)](https://arxiv.org/html/1001.4260v2)。
+
+**证明。** 对括号树作归纳。空列及单叶情形直接成立。考虑根节点把叶集分成两个互不相交的子树。由归纳假设，左子树某输出可写为 $\rho(s)$，其中 $s$ 是其叶代表之和；右子树某输出可写为 $\rho(t)$，其中 $t$ 是其叶代表之和。
+
+根节点的任意输出由代表 $s',t'$ 实现，其中 $\rho(s')=\rho(s)$、$\rho(t')=\rho(t)$。定理52.2给出 $u,v\in U$ 使
+$$
+s'=us,\qquad t'=vt.
+$$
+把左子树的每个叶代表都乘以 $u$，把右子树的每个叶代表都乘以 $v$。叶代表的观察值不变，而根节点输出成为全部这些叶代表之和的观察值。这证明任意括号化支撑包含于所列实际像。若某子树的和为零，取其单位因子为 $1$ 即可，因此论证也覆盖零和。
+
+反向，从任意一组叶代表出发，在每个内部节点取其全部后代叶代表的实际和。每个节点都满足定义52.3的二元关系，故总和观察值属于该括号化支撑。两向包含对任意括号树都成立，因而所有括号化相等。所证式子没有给相交子和指定独立目标，故其量词不包含这种额外要求。证毕。
+
+**theorem 52.7 (真正的 Krasner 超环及其单位、零因子).** $(I,\boxplus,\cdot,0_I,1_I)$ 满足定义52.5的全部公理，且
+$$
+-A=A\qquad(A\in I).
+$$
+它的乘法单位群仅为 $\{1_I\}$。对 $A=(a_p)_p,B=(b_p)_p$，有
+$$
+A\cdot B=0_I
+\quad\Longleftrightarrow\quad
+\forall p,\ a_p=\infty\text{ 或 }b_p=\infty.
+$$
+非零 $A$ 是零因子，当且仅当至少一个 $a_p=\infty$。因此 $I$ 是具有零因子的交换含幺 Krasner 超环，不是超域，也不是普通环；其二元素子集 $\{0_I,1_I\}$ 并不构成二元素 Krasner 超域的子超域。这里采用的是商超环机制 [Connes–Consani，命题2.5](https://arxiv.org/html/1001.4260v2)，而不是把“超环”仅用作多值运算的名称。
+
+**证明。** 任意 $A,B$ 都有代表，故 $A\boxplus B$ 非空。交换性来自 $R$ 的加法交换性，结合性由定理52.6得到。因为 $\rho^{-1}(0_I)=\{0\}$，有 $A\boxplus0_I=\{A\}$。
+
+由于 $-1\in U$，有 $\rho(-x)=\rho(x)$。于是 $x+(-x)=0$ 证明 $0_I\in A\boxplus A$。反之，若 $0_I\in A\boxplus B$，则存在 $x,y$ 满足相应输入观察以及 $x+y=0$，故 $B=\rho(-x)=A$。这证明加法逆元存在且唯一，并且 $-A=A$。
+
+若 $C\in A\boxplus B$，取见证 $x,y$，并置 $z=x+y$。则 $y=z+(-x)$，所以 $B\in C\boxplus(-A)$。交换 $x,y$ 也给出另一侧可逆性。若采用典范超群的再生性质表述，任给 $A,C$，取代表 $x,z$，并令 $B=\rho(z-x)$，便有 $C\in A\boxplus B$，因此 $A\boxplus I=I$。
+
+乘法的交换、结合、单位元及零吸收律均由 $E$ 中扩展加法的相应等式逐坐标得到。显然 $0_I\ne1_I$。为核对分配等式，固定 $a,b,c\in R$，分别代表 $A,B,C$。按轨道定义，
+$$
+B\boxplus C=\{\rho(bu+cv):u,v\in U\}.
+$$
+因此
+$$
+\begin{aligned}
+A\cdot(B\boxplus C)
+&=\{\rho(a(bu+cv)):u,v\in U\}\\
+&=\{\rho(abu+acv):u,v\in U\}\\
+&=(A\cdot B)\boxplus(A\cdot C).
+\end{aligned}
+$$
+这里没有约去 $a$，故当 $a$ 为零或零因子时仍成立。乘法交换性给出另一侧分配等式。全部公理得到验证。
+
+若 $A\cdot B=1_I$，则每个坐标满足 $a_p+b_p=0$。非负性迫使 $a_p=b_p=0$，所以 $A=B=1_I$。零乘积的判据直接来自：两个有限非负整数之和不可能为 $\infty$。设 $A\ne0_I$ 且某个 $a_p=\infty$，定义
+$$
+b_p=\begin{cases}\infty,&a_p<\infty,\\0,&a_p=\infty.\end{cases}
+$$
+则 $B\ne0_I$，且 $AB=0_I$。反之，若所有 $a_p$ 都有限，$AB=0_I$ 强迫所有 $b_p=\infty$，即 $B=0_I$。例如，分别由只在素数 $2$ 坐标取 $1$、以及只在其余坐标取 $1$ 的两个非零幂等元所生成的主理想，是一对非零零因子。
+
+定理52.4还给出 $0_I,\rho(2)\in1_I\boxplus1_I$，且两者不同，所以加法不是单值。另一方面 $1_I\notin1_I\boxplus1_I$，而二元素 Krasner 超域要求 $1\boxplus1=\{0,1\}$。这证明最后的全部区别。证毕。
+
+**theorem 52.8 (闭关系、紧输出与集合值连续性).** $\Gamma_+$ 是 $I^3$ 的紧闭子集，每个 $A\boxplus B$ 是非空紧集。乘法 $I^2\to I$ 连续，超加法作为映射
+$$
+I^2\longrightarrow\mathcal K(I),\qquad (A,B)\longmapsto A\boxplus B
+$$
+对 Vietoris 拓扑连续。
+
+**证明。** 映射
+$$
+R^2\longrightarrow I^3,\qquad (x,y)\longmapsto(\rho(x),\rho(y),\rho(x+y))
+$$
+连续，其像恰为 $\Gamma_+$。$R^2$ 紧且 $I^3$ Hausdorff，所以该像紧且闭。固定前两个坐标所得截面闭于紧空间 $I$，因而紧；非空性已证明。
+
+扩展加法 $E^2\to E$ 连续：在有限输入对处，两坐标可固定为孤立点；若至少一坐标为 $\infty$，为使和进入任意指定尾集，只须使该坐标进入同一尾集。逐坐标应用即得 $I$ 上乘法连续。
+
+设 $O\subseteq I$ 开。所有满足 $(A\boxplus B)\cap O\ne\varnothing$ 的输入对，恰为开集
+$$
+\{(x,y)\in R^2:\rho(x+y)\in O\}
+$$
+在 $\rho\times\rho$ 下的像。定理52.2说明 $\rho$ 开；由开矩形构成乘积拓扑的基，$\rho\times\rho$ 也开，故该输入集开。
+
+所有不满足 $A\boxplus B\subseteq O$ 的输入对，恰为
+$$
+\Gamma_+\cap\bigl(I^2\times(I\setminus O)\bigr)
+$$
+投影到 $I^2$ 的像。被投影集合紧，投影像在 Hausdorff 空间 $I^2$ 中闭。因此满足 $A\boxplus B\subseteq O$ 的输入集开。两类 Vietoris 子基的原像都开，证明连续性。证毕。
+
+**定义 52.9（单位三角形的实际联合像）。** 定义
+$$
+\Phi:U^3\longrightarrow I^3,\qquad
+\Phi(x,y,z)=\bigl(\rho(x+y),\rho(y+z),\rho(z+x)\bigr),
+\qquad \mathcal J=\Phi[U^3].
+$$
+局部实际像为
+$$
+J_p=\{(v_p(x+y),v_p(y+z),v_p(z+x)):x,y,z\in\mathbb Z_p^\times\}\subseteq E^3.
+$$
+对 $(a,b,c)\in E^3$，记 $n_j(a,b,c)$ 为三个位置中等于有限整数 $j$ 的位置数；重复值按位置计数。另记
+$$
+D=\rho(2),\qquad \delta_p=v_p(2)=\begin{cases}1,&p=2,\\0,&p\ne2.\end{cases}
+$$
+符号 $E_{\ge m}$ 表示 $\{e\in E:e\ge m\}$，因而包含 $\infty$。
+
+**theorem 52.10 (三个实际和的共同逆像判据).** 给定 $s,t,u\in\mathbb Z_p$。若它们分别等于 $x+y,y+z,z+x$，则在 $\mathbb Q_p$ 中唯一可能的共同输入是
+$$
+x=\frac{s+u-t}{2},\qquad
+y=\frac{s+t-u}{2},\qquad
+z=\frac{t+u-s}{2}.
+$$
+当 $p\ne2$ 时，存在单位共同输入，当且仅当
+$$
+\overline{s}+\overline{u}-\overline{t}\ne0,\qquad
+\overline{s}+\overline{t}-\overline{u}\ne0,\qquad
+\overline{t}+\overline{u}-\overline{s}\ne0
+$$
+在 $\mathbb F_p$ 中同时成立。当 $p=2$ 时，存在单位共同输入，当且仅当 $s,t,u\in2\mathbb Z_2$ 且
+$$
+\frac{s+t+u}{2}\in\mathbb Z_2^\times.
+$$
+
+**证明。** 三个线性方程分别相加、相减，得到
+$$
+s+u-t=2x,\qquad s+t-u=2y,\qquad t+u-s=2z.
+$$
+$2$ 在 $\mathbb Q_p$ 中非零，因此共同逆像若存在，必为所列三项；将这三项相加检查，确有 $x+y=s,y+z=t,z+x=u$，故逆像唯一。
+
+若 $p\ne2$，除以 $2$ 保持 $\mathbb Z_p$，且保持单位性。所列三个分子均为单位，等价于其模 $p$ 的三个剩余同时非零，证明奇素数判据。
+
+若 $p=2$，三个单位的两两和都为偶数。写 $s=2S,t=2T,u=2V$，则共同逆像为
+$$
+x=S+V-T,\qquad y=S+T-V,\qquad z=T+V-S.
+$$
+这三项模 $2$ 都等于 $S+T+V$。故它们同时为单位，当且仅当 $S+T+V$ 为奇数，即所列条件。反向条件还确保三项都在 $\mathbb Z_2$，所以充分性也成立。证毕。
+
+**theorem 52.11 (奇素数处的完整单位联合像).** 当 $p\ge5$ 时，
+$$
+J_p=\{(a,b,c)\in E^3:\min(a,b,c)=0\}.
+$$
+当 $p=3$ 时，
+$$
+J_3=\{(a,b,c)\in E^3:n_0(a,b,c)\in\{1,3\}\}.
+$$
+这里未取值为零的坐标可为任意正整数或 $\infty$；尤其没有未列出的高阶赋值限制。
+
+**证明。** 设 $s=x+y,t=y+z,u=z+x$ 来自三个单位。三个输出赋值都大于零时，$\overline{s}=\overline{t}=\overline{u}=0$，定理52.10的三个逆像分子都模 $p$ 为零，与单位性矛盾。因此至少一个输出赋值为零。
+
+还需分析恰有两个赋值为零的情形。由于条件对 $s,t,u$ 对称，可以置 $\overline{s}=\alpha\ne0,\overline{t}=\beta\ne0,\overline{u}=0$。定理52.10要求
+$$
+\alpha-\beta\ne0,\qquad \alpha+\beta\ne0,
+$$
+也就是
+$$
+\beta/\alpha\notin\{1,-1\}.
+$$
+在 $\mathbb F_3^\times=\{1,-1\}$ 中这不可能；当 $p\ge5$ 时，这一必要条件则有解。由此得到全部必要条件。
+
+下面对每一种允许模式直接构造实际的三个和，再由同一个逆公式得到单位共同输入。
+
+当 $a=b=c=0$ 时，取 $s=t=u=2$，共同输入为 $x=y=z=1$。
+
+当恰有一个坐标为零时，重新排列三个和使 $a=0,b,c>0$，并取
+$$
+s=1,\qquad t=d_p(b),\qquad u=d_p(c).
+$$
+三个逆像分子模 $p$ 分别为 $1,1,-1$，全部非零。因此逆公式给出三个单位，其三个和恰为所指定的 $s,t,u$，赋值恰为 $a,b,c$。
+
+当恰有两个坐标为零时，允许条件给出 $p\ge5$。重新排列使 $a=b=0,c>0$，取
+$$
+s=1,\qquad t=2,\qquad u=d_p(c).
+$$
+三个逆像分子模 $p$ 分别为 $-1,3,1$，对 $p\ge5$ 都非零，故仍得到同一个单位三元组。任意和坐标排列都可在构造后还原；也可直接把还原后的 $s,t,u$ 代入对称的三个非零条件。
+
+这些构造在指数为 $\infty$ 时使用 $d_p(\infty)=0$，所以实现的是精确零和，而非有限赋值趋于无穷的极限。三个允许模式穷尽所列集合，充分性得证。证毕。
+
+**theorem 52.12 (二进处的完整单位联合像).** 有
+$$
+J_2=\{(a,b,c)\in E_{\ge1}^3:n_1(a,b,c)\in\{1,3\}\}.
+$$
+换言之，三个输出都必须至少为 $1$，且恰有一个或三个输出等于 $1$；其余输出可以独立指定为任意大于 $1$ 的整数或 $\infty$。
+
+**证明。** 三个输入单位都是奇数，故三个两两和都是偶数，必要地 $a,b,c\ge1$。写
+$$
+s=x+y=2S,\qquad t=y+z=2T,\qquad u=z+x=2V.
+$$
+由定理52.10，$S+T+V$ 必为奇数。$S$ 为奇数当且仅当 $a=1$；若 $a>1$ 或 $a=\infty$，$S$ 为偶数。同理适用于另外两项。因此 $S+T+V$ 为奇数，当且仅当三个位置中取值 $1$ 的个数为奇数，即为 $1$ 或 $3$。
+
+反向，给定满足所列条件的 $(a,b,c)$，定义
+$$
+S=\begin{cases}2^{a-1},&a<\infty,\\0,&a=\infty,\end{cases}\quad
+T=\begin{cases}2^{b-1},&b<\infty,\\0,&b=\infty,\end{cases}\quad
+V=\begin{cases}2^{c-1},&c<\infty,\\0,&c=\infty.\end{cases}
+$$
+这些式子只在有限且至少为 $1$ 的指数上使用减一。置
+$$
+x=S+V-T,\qquad y=S+T-V,\qquad z=T+V-S.
+$$
+所假设的奇数计数使三项都为奇数，因而都是 $\mathbb Z_2$ 的单位。直接相加得到
+$$
+x+y=2S,\qquad y+z=2T,\qquad z+x=2V.
+$$
+这些和的赋值分别恰为 $a,b,c$，包括零项对应的 $\infty$。同一个显式三元组实现了全部目标。证毕。
+
+**theorem 52.13 (完整全局联合像与一个全局单位三元组).** 对 $A=(a_p)_p,B=(b_p)_p,C=(c_p)_p\in I$，以下条件等价：存在同一个 $(x,y,z)\in U^3$ 满足
+$$
+\rho(x+y)=A,\qquad\rho(y+z)=B,\qquad\rho(z+x)=C;
+$$
+以及全部下列逐素数条件同时成立：
+$$
+\begin{cases}
+a_2,b_2,c_2\ge1,\quad n_1(a_2,b_2,c_2)\in\{1,3\},&p=2,\\
+n_0(a_3,b_3,c_3)\in\{1,3\},&p=3,\\
+\min(a_p,b_p,c_p)=0,&p\ge5.
+\end{cases}
+$$
+在自然的坐标重排 $I^3\cong\prod_p E^3$ 下，
+$$
+\mathcal J=\prod_{p\in\mathcal P}J_p.
+$$
+这个集合是 $I^3$ 的紧闭子集。
+
+**证明。** 若已有全局单位三元组，逐坐标投影得到每个 $p$ 处的单位三元组，定理52.11与52.12给出全部必要条件。
+
+反向，假设全部条件成立。在 $p=2$ 处使用定理52.12的显式构造；在每个奇素数处，按零赋值位置的个数使用定理52.11的相应构造。由此对每个素数得到一组三个局部单位
+$$
+(x_p,y_p,z_p)\in(\mathbb Z_p^\times)^3,
+$$
+且这同一组三个局部单位同时给出三个指定赋值。定义
+$$
+x=(x_p)_p,\qquad y=(y_p)_p,\qquad z=(z_p)_p.
+$$
+由于 $U=\prod_p\mathbb Z_p^\times$，这些是三个全局单位。$R$ 的加法逐坐标进行，故它们同时满足三个所要求的全局观察等式。素数之间不另有兼容方程，因为这里的载体就是完整乘积 $R$；重叠输入的兼容性已经在每个局部三元组的构造中满足。由此得到实际像的乘积等式，而不是三个二元边缘像的乘积等式。
+
+最后，$U^3$ 紧，$\Phi$ 连续，且 $I^3$ Hausdorff，故其实际像 $\mathcal J$ 紧且闭。证毕。
+
+**theorem 52.14 (无限赋值与精确零和的边界).** 对每个素数 $p$，$(\infty,\infty,\infty)\notin J_p$。恰有两个无限坐标时，可实现的三元组恰为 $(\delta_p,\infty,\infty)$ 的各个排列。恰有一个无限坐标时，其余两个有限坐标的无序模式恰为
+$$
+\begin{cases}
+\{1,k\},\quad k\ge2,&p=2,\\
+\{0,k\},\quad k\ge1,&p=3,\\
+\{0,k\},\quad k\ge0,&p\ge5.
+\end{cases}
+$$
+全局特别有
+$$
+(A,0_I,0_I)\in\mathcal J\quad\Longleftrightarrow\quad A=D,
+\qquad (0_I,0_I,0_I)\notin\mathcal J.
+$$
+
+**证明。** 若三个实际和都为零，则 $x=-y$、$z=-y=x$，第三个和给出 $2x=0$。$\mathbb Z_p$ 是特征零整环，所以 $x=0$，不能是单位。
+
+若后两个实际和为零，则 $y=-z=x$，第一个和为 $2x$，其赋值恰为 $\delta_p$。反向，取 $x=y=1,z=-1$，三个和为 $2,0,0$，实现该模式。变量排列实现所有排列。
+
+若恰有一个无限坐标，定理52.12要求其余两项中恰有一个等于 $1$，给出二进模式；定理52.11在 $p=3$ 处要求其余两项中恰有一个为零，在 $p\ge5$ 处要求至少一个为零，分别给出所列另外两种模式。每种模式的充分性由这两个定理中已经给出的实际构造得到，其中无限坐标被直接置为零。
+
+对全局的两个零输出，局部必要条件迫使每个 $a_p=\delta_p$，即 $A=D$；同一个全局三元组 $(1,1,-1)$ 给出充分性。全局三个零输出在任意素数处都与第一段矛盾。证毕。
+
+**定义 52.15（边缘乘积与分别逆算的支撑条件）。** 记
+$$
+\mathcal M=(1_I\boxplus1_I)\times(1_I\boxplus1_I)\times(1_I\boxplus1_I),
+$$
+以及
+$$
+\mathcal S=\{(A,B,C)\in\mathcal M:D\in A\boxplus B\boxplus C\}.
+$$
+这里 $\times$ 是集合的笛卡尔乘积，不是主理想乘法。$\mathcal M$ 中三个坐标的二元见证允许互不相关；$\mathcal S$ 另加入一个总和支撑条件，但其定义仍未要求三对和共享一个输入三元组。
+
+**theorem 52.16 (二元支撑之后恰剩一个三元剩余域障碍).** $\mathcal M$ 的精确条件只有
+$$
+a_2,b_2,c_2\ge1,
+$$
+奇素数处没有边缘限制。$\mathcal S$ 的精确条件为
+$$
+\begin{cases}
+a_2,b_2,c_2\ge1,\quad n_1(a_2,b_2,c_2)\in\{1,3\},\\
+\min(a_p,b_p,c_p)=0\quad\text{对每个奇素数 }p.
+\end{cases}
+$$
+实际联合像满足更精确的等式
+$$
+\mathcal J
+=\{(A,B,C)\in\mathcal S:n_0(a_3,b_3,c_3)\ne2\}.
+$$
+因而，在边缘条件与 $D\in A\boxplus B\boxplus C$ 之外，唯一剩余的局部障碍是：模 $3$ 不能恰有两个单位输出和、另一个非单位输出和。三个分别逆算的支撑条件不足以排除此障碍。
+
+**证明。** 定理52.4在单位输入 $a=b=0$ 时给出
+$$
+0\boxplus_2 0=E_{\ge1},\qquad 0\boxplus_p0=E\quad(p\ne2),
+$$
+因此得到 $\mathcal M$ 的描述。
+
+对固定奇素数，考察三个赋值为 $a,b,c$ 的实际元素之和能否为单位。如果三者赋值都正或无限，三项都被 $p$ 整除，和不能为单位。如果恰有一个赋值为零，把该项取为 $1$，其余项取各自的 $d_p$ 代表；如果恰有两个赋值为零，把这两项都取为 $1$；两种情形的总和模 $p$ 分别为 $1$、$2$，都非零。如果三个赋值都为零，则取三项为 $1,1,-1$，总和为 $1$。所以
+$$
+0\in a\boxplus_p b\boxplus_p c
+\quad\Longleftrightarrow\quad \min(a,b,c)=0
+\qquad(p\ne2).
+$$
+这里左边的 $0$ 是赋值零，而不是局部加法零元 $\infty$。
+
+在 $p=2$ 处，$\mathcal M$ 已要求三项均为偶数或零。三项之和的赋值为 $1$，当且仅当除以 $2$ 后的总和为奇数。这等价于三项赋值中等于 $1$ 的位置数为奇数。因此
+$$
+1\in a\boxplus_2 b\boxplus_2 c
+\quad\Longleftrightarrow\quad n_1(a,b,c)\in\{1,3\}
+\qquad(a,b,c\ge1).
+$$
+定理52.6把这些三项支撑解释为实际三项总和；按素数组装各项代表，便得到全局 $D\in A\boxplus B\boxplus C$ 的充要条件。这证明 $\mathcal S$ 的描述。
+
+若 $(A,B,C)\in\mathcal J$，由实际共同和 $s=x+y,t=y+z,u=z+x$ 得到
+$$
+s+u-t=2x,\qquad s+t-u=2y,\qquad t+u-s=2z.
+$$
+三个输入是单位，所以三式右端的观察值都为 $D$。由于每个观察类的加法逆元就是自身，三个分别写出的超加法条件全部成为同一个条件 $D\in A\boxplus B\boxplus C$；这里各式的负号已被单位商忘去。
+
+最后，把 $\mathcal S$ 的逐素数条件与定理52.13比较。在 $p=2$ 及所有 $p\ge5$ 处条件完全相同；在 $p=3$ 处，$\mathcal S$ 允许至少一个零赋值，而 $\mathcal J$ 恰好排除其中零赋值位置数为二的情形。定理52.11的证明说明该排除恰为
+$$
+\mathbb F_3^\times\setminus\{1,-1\}=\varnothing
+$$
+所造成的共同剩余选择障碍。这证明精确等式及唯一剩余障碍的断言。证毕。
+
+**theorem 52.17 (独立可达而联合不可能，以及二元数据的不足).** 有严格包含
+$$
+\mathcal J\subsetneq\mathcal S\subsetneq\mathcal M.
+$$
+具体地，
+$$
+(D,D,\rho(6))\in\mathcal S\setminus\mathcal J,
+\qquad
+(D,D,\rho(4))\in\mathcal M\setminus\mathcal S.
+$$
+此外，若只保留局部载体 $E$、其拓扑、二元超加法与乘法，不另保留素数标签或剩余域，那么这些数据不能唯一决定局部实际联合像 $J_p$。
+
+**证明。** 首先 $D=\rho(1+1)$。定义全局单位 $h$ 为
+$$
+h_2=5,\qquad h_3=2,\qquad h_p=1\quad(p\ge5).
+$$
+则 $1+h$ 在 $p=2$ 处的赋值为 $1$，在 $p=3$ 处为 $1$，在其余素数处为零。因此 $\rho(1+h)=\rho(6)$，证明 $(D,D,\rho(6))\in\mathcal M$。
+
+还可直接展示额外总和支撑的见证。令 $r\in R$ 的坐标为
+$$
+r_2=6,\qquad r_3=3,\qquad r_p=2\quad(p\ge5).
+$$
+则 $\rho(r)=\rho(6)$，而 $2+2+r$ 在上述三类素数处分别等于 $10,7,6$，赋值向量恰为 $D$。故
+$$
+D\in D\boxplus D\boxplus\rho(6),
+$$
+证明该三元组属于 $\mathcal S$。
+
+若它来自共同单位输入，则模 $3$ 有 $z=-x$，同时 $x+y$ 与 $y+z=y-x$ 都非零。可是 $\mathbb F_3^\times$ 只有 $x$ 与 $-x$ 两种相对于 $x$ 的单位选择：若 $y=x$，则 $y-x=0$；若 $y=-x$，则 $x+y=0$。两种都矛盾，因此它不在 $\mathcal J$。
+
+再定义全局单位 $k$，令 $k_2=3$，所有奇素数坐标为 $1$。则 $\rho(1+k)=\rho(4)$，故 $(D,D,\rho(4))\in\mathcal M$。其 $2$ 进输出向量为 $(1,1,2)$，恰有两个位置等于 $1$，违反定理52.16的条件，所以不属于 $\mathcal S$。这证明两次严格包含。
+
+最后，定理52.4表明所有奇素数处的二元表完全相同，乘法都是扩展整数加法，拓扑也都是定义52.1中的拓扑。因此恒等映射 $E\to E$ 同时保持这些局部数据。然而 $(0,0,1)\notin J_3$，而在 $\mathbb Z_5$ 中，同一组三个单位
+$$
+(x,y,z)=(2,-1,3)
+$$
+给出三个和 $1,2,5$，故 $(0,0,1)\in J_5$。同一套未附加剩余域信息的二元数据对应不同的联合像，证明最后的不可恢复断言。证毕。
+
+**theorem 52.18 (与热带线性最小值条件的精确比较边界).** 奇素数处的局部二元规则等于 min-热带超加法在 $E$ 上的限制；$p=2$ 处同一有限赋值相加时必须删除最低值本身。这里 min-热带规则指
+$$
+a\boxplus_{\mathrm{trop}}b=
+\begin{cases}
+\{\min(a,b)\},&a\ne b,\\
+\{c\in E:c\ge a\},&a=b.
+\end{cases}
+$$
+该规则的标准超域表述见 [Maxwell–Smith，例2.2](https://arxiv.org/html/2309.17302v2)；线性回路的最小值重复出现条件见 [Rincón，§1](https://arxiv.org/html/1109.4130v2)。
+
+在单位三对和问题中，只对原来的三个和等式及定理52.10的三个逆算等式施加“最低项赋值至少出现两次”的条件，并不能刻画实际联合像。具体而言，在二元边缘条件之下，三个逆算等式的这一最低赋值条件等价于
+$$
+\min(a,b,c)=\delta_p.
+$$
+它在 $p=2$ 处还遗漏 $n_1$ 必为奇数的要求；在 $p=3$ 处还遗漏恰有两个零赋值位置的禁止模式。本断言仅比较上述指定线性关系，不把它们宣称为任意线性关系系统的热带基。
+
+**证明。** 二元规则的比较由定理52.4逐项得到，包括两输入均为 $\infty$ 的情形。
+
+先证明所用的最低项必要条件。设有限个 $q_i\in\mathbb Q_p$ 满足 $\sum_iq_i=0$，且至少一项非零。若最低赋值 $m$ 只在一项达到，将等式除以 $p^m$ 后，唯一最低项为单位，其余项都在 $p\mathbb Z_p$ 中；约化模 $p$ 得到一个非零元素等于零，矛盾。因此最低赋值至少出现两次。零项具有赋值 $\infty$，不会改变这个论证。
+
+对 $s-x-y=0$ 等三个原始等式，两项输入单位的赋值已经同为零，故最低赋值条件对任何非负输出赋值自动成立。对 $s+u-t-2x=0$ 等三个逆算等式，四个项的赋值均为同一组
+$$
+(a,b,c,\delta_p).
+$$
+当 $p$ 为奇素数时，$\delta_p=0$ 且 $a,b,c\ge0$，最低值至少出现两次当且仅当至少一个输出赋值为零。当 $p=2$ 时，边缘条件给出 $a,b,c\ge1$，而 $\delta_2=1$，所以最低值至少出现两次当且仅当至少一个输出赋值为 $1$。这证明所列等价式。
+
+但是 $(1,1,2)$ 在 $p=2$ 处通过该条件，而定理52.12排除它；$(0,0,1)$ 在 $p=3$ 处也通过该条件，而定理52.11排除它。定理52.16进一步说明：使用真实二元超加法而不只是热带最低项条件后，二进遗漏被补上，但模 $3$ 的共同剩余选择障碍仍然存在。因此分别满足支撑方程与拥有共同实际见证是不同的数学条件。证毕。
+
+## 52.99 追加锚
+## 53. 单位和的非单位图像、有限残数容量与共同见证元数
+
+**定义 53.1（单位和非单位图与本节接口）。** 固定素数 $p$ 与有限标号集 $V=[n]$，允许 $n=0$，并约定 $[0]=\varnothing$。对单位组
+$$
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+定义简单图 $\Gamma_p(x)$，其顶点集为 $V$，且对不同顶点 $i,j$ 定义
+$$
+ij\in E(\Gamma_p(x))
+\iff
+x_i+x_j\in p\mathbb Z_p.
+$$
+称有限标号图 $G$ 在 $p$ 处可实现，若存在同一个单位组 $x$ 使 $G=\Gamma_p(x)$。因此边与非边必须由同一组标号单位同时实现，而不是逐边另选见证。记 $K_n$ 为 $n$ 点完全图，$E_n$ 为 $n$ 点无边图，$rK_2$ 为 $r$ 条互不相交边的并，$P_4$ 为四点诱导路。
+
+本节的命名接口只有上述二值关系：它只记录 $x_i+x_j$ 是否属于 $p\mathbb Z_p$。本节不区分 $v_p(x_i+x_j)=1,2,\ldots,\infty$，不允许非单位输入，也不加入三元或更高元加法关系、标号算术常量或完整剩余域结构。作为商结构的背景，Connes–Consani 的 [*The hyperring of adèle classes*](https://alainconnes.org/wp-content/uploads/The-hyperring-of-adeles-classes-2011.pdf)，Proposition 2.6，期刊页 165，证明了：若 $A$ 为交换环且 $H\le A^\times$，则轨道集 $A/H$ 由轨道和与轨道积得到超环结构。该背景事实并不提供这里要求的“同一有限标号单位组同时决定全部边与非边”的图分类，以下分类直接证明。
+
+**theorem 53.2（精确残数下降）。** 设 $\bar x_i$ 为 $x_i$ 在 $\mathbb F_p$ 中的剩余类。则
+$$
+x_i+x_j\in p\mathbb Z_p
+\iff
+\bar x_i+\bar x_j=0.
+$$
+而且
+$$
+x_i\in\mathbb Z_p^\times
+\iff
+\bar x_i\in\mathbb F_p^\times.
+$$
+反之，每个 $a\in\mathbb F_p^\times$ 都有 $\mathbb Z_p^\times$ 中的提升。因此有限标号图 $G$ 在 $p$ 处可实现，当且仅当存在一个共同映射
+$$
+r:V\to\mathbb F_p^\times
+$$
+使得对所有不同 $i,j$ 同时有
+$$
+ij\in E(G)
+\iff
+r(j)=-r(i).
+$$
+
+**证明。** 约化映射 $\mathbb Z_p\to\mathbb F_p$ 的核正是 $p\mathbb Z_p$，故第一式成立。$\mathbb Z_p$ 的单位恰是不属于其极大理想 $p\mathbb Z_p$ 的元素，故第二式成立。对任意非零剩余类，取 $1,\ldots,p-1$ 中的整数代表，即得到一个 $\mathbb Z_p$ 单位提升。于是对每一对不同顶点，边条件等价于 $r(i)+r(j)=0$，非边条件等价于该等式不成立；所有这些条件由同一个映射 $r$ 同时满足。$V=\varnothing$ 时映射与单位组均为空，上述等价同样成立。证毕。
+
+**theorem 53.3（$p=2$ 的完整分类与最小禁诱导图）。** 当 $p=2$ 时，有限标号图 $G$ 可实现当且仅当 $G=K_n$。等价地，可实现类恰为不含诱导 $2K_1$ 的有限简单图。特别地，$K_0$ 与 $K_1$ 均可实现。
+
+**证明。** $\mathbb F_2^\times=\{1\}$ 且 $-1=1$。因此任意两个不同顶点的剩余类都为 $1$，其和为 $0$，所以每一对不同顶点都必须成边；反之给所有顶点残数 $1$ 即实现 $K_n$，而 $n=0$ 时取空组。有限简单图完全，当且仅当不存在两个互不相邻顶点，也就是当且仅当不含诱导 $2K_1$。证毕。
+
+**定义 53.4（奇素数容量权）。** 以下在涉及本定义时令 $p$ 为奇素数，并置
+$$
+m=\frac{p-1}{2}.
+$$
+对有限图 $G$，令 $c_+(G)$ 为含至少一条边的连通分支数；令 $\iota(G)=1$ 当且仅当 $G$ 至少有一个孤立点，否则令 $\iota(G)=0$。定义
+$$
+w(G)=c_+(G)+\iota(G).
+$$
+因而 $w(K_0)=0$，而单点图满足 $w(K_1)=1$。
+
+**theorem 53.5（奇素数的完整共同见证分类）。** 设 $p$ 为奇素数，$m=(p-1)/2$。有限标号图 $G$ 在 $p$ 处可实现，当且仅当同时满足：
+
+1. 每个含边连通分支都是完全二部图；
+2. $w(G)\le m$。
+
+更具体地，在任何实现中，每个含边连通分支使用某一个负残数对
+$$
+\{a,-a\}\subset\mathbb F_p^\times,
+$$
+不同含边分支必须使用不同的负残数对；若存在孤立点，则每个孤立点所用的负残数对都不能被含边分支使用。反过来，为了实现任意满足上述两条的图，全部孤立点只需共同占用一个尚未被含边分支使用的负残数对的一侧。因此不存在额外的跨分支兼容条件。此陈述包括 $n=0$ 与 $n=1$。
+
+**证明。** 先证必要性。由 theorem 53.2 取共同残数标号
+$$
+r:V\to\mathbb F_p^\times.
+$$
+若 $uv$ 是边，则 $r(v)=-r(u)$。沿一个含边连通分支中的任意路径递推，残数只能在某个二元集合 $\{a,-a\}$ 中交替出现。由于 $p$ 为奇数且 $a\ne0$，有 $a\ne-a$。把该分支中残数为 $a$ 与残数为 $-a$ 的顶点分成两侧。同侧两点的残数和分别为 $2a$ 或 $-2a$，均非零；异侧两点的残数和为零。由 theorem 53.2，该分支恰为这两侧之间的完全二部图。
+
+若两个不同含边分支使用同一个负残数对 $\{a,-a\}$，则每个含边分支都同时出现 $a$ 与 $-a$。从第一个分支取残数为 $a$ 的顶点，从第二个分支取残数为 $-a$ 的顶点，二者便应相邻，与它们属于不同连通分支矛盾。因此不同含边分支使用不同负残数对。
+
+再设 $z$ 是孤立点。若 $r(z)$ 所属的负残数对已经被某个含边分支使用，则该分支同时含有残数 $r(z)$ 与 $-r(z)$ 的顶点，特别是含有一个残数为 $-r(z)$ 的顶点；它与 $z$ 的残数和为零，于是应与 $z$ 相邻，矛盾。若两个孤立点恰使用同一个负残数对，它们还必须位于同一侧，否则二者互为负残数并会相邻；不同孤立点也可以使用多个未占用的负残数对。无论如何，只要存在孤立点，就至少需要一个未被含边分支使用的负残数对。因为
+$$
+\mathbb F_p^\times
+=
+\bigsqcup_{a\sim -a}\{a,-a\}
+$$
+恰分成 $m$ 个负残数对，所以 $w(G)\le m$。
+
+再证充分性。若 $V=\varnothing$，空单位组已经给出实现。以下设 $V\ne\varnothing$。把含边分支按最小顶点标号排序为
+$$
+C_1,\ldots,C_c,
+\qquad
+c=c_+(G).
+$$
+每个 $C_j$ 是含边的连通完全二部图，所以其二部划分在交换两侧之外唯一；规定包含 $C_j$ 最小标号顶点的一侧为正侧。由于 $c\le m$，在 $\mathbb F_p^\times$ 中负残数对
+$$
+\{\pm1\},\ldots,\{\pm c\}
+$$
+彼此不同：若 $1\le j<k\le m$，则 $j\ne k$，且 $j+k\le2m=p-1$，所以也不可能有 $j\equiv-k\pmod p$。给 $C_j$ 的正侧赋残数 $j$，负侧赋残数 $-j$。若有孤立点，则 $c+1\le m$，给全部孤立点统一赋残数 $c+1$。
+
+同一含边分支内恰好异侧成边。同一侧两点的残数和非零。不同含边分支使用不同负残数对，所以任意跨分支两点的残数不互为负数。若有孤立点，它们彼此残数相同，而 $p$ 为奇数，所以两个孤立点的残数和 $2(c+1)$ 非零；其负残数对又没有用于任何含边分支，所以它们也不与其他顶点成边。于是所有边与所有非边都被这一个残数映射精确实现。由 theorem 53.2 把每个非零残数提升到 $\mathbb Z_p^\times$，得到所需共同单位组。$n=1$ 时这里就是 $c=0$ 并给唯一顶点残数 $1$。证毕。
+
+**theorem 53.6（图形障碍与容量障碍的精确分离）。** 设 $p$ 为奇素数，$m=(p-1)/2$，并令
+$$
+F_m=mK_2\sqcup K_1.
+$$
+则有限图 $G$ 在 $p$ 处可实现，当且仅当 $G$ 不含下列任何诱导子图：
+$$
+K_3,\qquad P_4,\qquad F_m.
+$$
+其中 $K_3$ 与 $P_4$ 是与残数域容量无关的图形障碍，而 $F_m$ 是容量障碍。
+
+当 $p=3$ 时，$m=1$ 且
+$$
+F_1=K_2\sqcup K_1
+$$
+已经作为诱导子图包含在 $P_4$ 中，所以最小禁诱导族可取
+$$
+\{K_3,\ K_2\sqcup K_1\}.
+$$
+对每个 $m\ge1$，$F_m$ 都是相对于容量 $m$ 的顶点极小不可实现图；当 $p\ge5$ 时，$K_3,P_4,F_m$ 三者都是顶点极小的不可实现图。
+
+这里使用的纯图论机制在文献中有直接对应：Alfaro、Barrus、Sinkovic、Villagrán 的 [*Graphs with few trivial characteristic ideals*](https://arxiv.org/pdf/2004.00172v1)，Lemma 13，arXiv v1 PDF 排印页 7，原文假设是“$G$ 为连通且 $\{P_4,K_3\}$-free”，结论为完全二部图；其原始引用 Barrett、van der Holst、Loewy 的 [*Graphs whose minimal rank is two*](https://journals.uwyo.edu/index.php/ela/article/download/275/275)，Proposition 1，期刊页 269，给出“图是完全二部图的并”当且仅当它是 $(K_3,P_4)$-free。Alfaro 等的 Lemma 13 原文没有额外写“包含一条边”；下面只对本节的“含边连通分支”使用该机制，并给出完整自足证明，因此不依赖关于单点图是否计作退化完全二部图的记号约定。
+
+**证明。** 先证明图形部分：一个有限图的每个含边连通分支都是完全二部图，当且仅当它不含诱导 $K_3$ 或 $P_4$。
+
+正向是直接的。完全二部图不含三角形；其任意诱导子图仍是完全二部图与孤立点的相应限制，而一个连通的四点诱导路 $P_4$ 不是完全二部图：按 $P_4$ 的二部划分，两侧各有两点，但并非所有跨侧边都存在。因此完全二部分支不含诱导 $P_4$，不同连通分支之间又没有边，所以整个图不含诱导 $K_3$ 或 $P_4$。
+
+反向，设 $C$ 是一个含边连通分支，并假设 $C$ 不含诱导 $K_3$ 与 $P_4$。固定一条边 $uv$。对任意顶点 $z$，记
+$$
+d(z,\{u,v\})
+$$
+为 $z$ 到集合 $\{u,v\}$ 的图距离。我们先证此距离至多为 $1$。
+
+若某个 $z$ 的距离 $d\ge3$，取从 $z$ 到 $\{u,v\}$ 的最短路，并设其终点为 $q\in\{u,v\}$。这条最短路本身是诱导路：若其中两个非相邻的路顶点之间还有一条弦，就可跳过至少一个路顶点，得到从 $z$ 到 $q$ 的更短路。于是靠近 $q$ 的四个连续顶点诱导一个 $P_4$，矛盾。
+
+剩下必须明确处理距离恰为 $2$ 的情形。设
+$$
+z-a-q
+$$
+是从 $z$ 到 $\{u,v\}$ 的一条长度为 $2$ 的最短路，其中 $q$ 是 $\{u,v\}$ 中的最近顶点，令 $q'$ 为固定边 $uv$ 的另一个端点。于是
+$$
+z-a-q-q'
+$$
+有三条连续边。不存在弦 $zq$，因为那会使 $d(z,\{u,v\})\le1$；不存在弦 $zq'$，理由相同；也不存在弦 $aq'$，因为若存在，则 $a,q,q'$ 构成三角形，而 $C$ 是 $K_3$-free。故这四个顶点诱导一个实际的 $P_4$，仍矛盾。于是对每个 $z\in V(C)$ 都有
+$$
+d(z,\{u,v\})\le1.
+$$
+
+因此每个 $z\notin\{u,v\}$ 至少邻接 $u,v$ 中的一个；又因无三角形，它不可能同时邻接二者，所以恰邻接其中一个。定义
+$$
+A=\{u\}\cup\bigl(N(v)\setminus\{u\}\bigr),
+\qquad
+B=\{v\}\cup\bigl(N(u)\setminus\{v\}\bigr).
+$$
+上面的结论表明 $A,B$ 分割 $V(C)$。$A$ 内无边：两个属于 $N(v)\setminus\{u\}$ 的顶点若相邻，就与 $v$ 构成三角形；而 $u$ 与其中任一点若相邻，也与 $v$ 构成三角形。完全相同地，$B$ 内无边。
+
+最后证所有 $A$ 到 $B$ 的跨侧边都存在。若 $a=u$ 或 $b=v$，这由 $B$ 与 $A$ 的定义直接成立。否则
+$$
+a\in A\setminus\{u\},
+\qquad
+b\in B\setminus\{v\}.
+$$
+若 $ab$ 不是边，则
+$$
+a-v-u-b
+$$
+是四点诱导路：三条连续边由定义存在，弦 $au$ 因 $A$ 独立而不存在，弦 $vb$ 因 $B$ 独立而不存在，弦 $ab$ 又按假设不存在。这与 $P_4$-free 矛盾。因此每个跨侧对都是边，$C$ 为完全二部图。图形部分证完。
+
+在此图形条件下，再证容量条件
+$$
+w(G)\le m
+$$
+等价于不含诱导 $F_m$。若 $w(G)>m$，分两种互斥情形。若 $c_+(G)\ge m+1$，从其中 $m$ 个含边分支各取一条边，再从另一个含边分支取一个顶点；不同分支之间没有边，于是所得诱导子图正是 $F_m$。若 $c_+(G)\le m$，则
+$$
+c_+(G)+\iota(G)>m
+$$
+迫使 $c_+(G)=m$ 且 $\iota(G)=1$；从这 $m$ 个含边分支各取一条边，再取一个真正孤立点，同样得到诱导 $F_m$。
+
+反过来，设 $G$ 含有一个诱导 $F_m$。其中选出的 $m$ 条互不相交边不可能有两条来自同一个环境完全二部分支：若两条边在同一个完全二部分支中，它们的四个端点之间还会出现相应的额外跨侧边，所得四点诱导子图不会是 $2K_2$。故这 $m$ 条边来自 $m$ 个不同的含边分支。$F_m$ 中剩余的那个诱导孤立顶点也不可能位于这 $m$ 个分支之一，因为在一个含有已选边的完全二部分支中，任意第三个顶点必与该已选边的某一个端点相邻。因此这个额外顶点要么是 $G$ 的真正孤立点，要么属于另一个含边分支。两种情形都给出
+$$
+w(G)\ge m+1.
+$$
+结合 theorem 53.5，得到所述禁诱导刻画。
+
+现在证明极小性。首先
+$$
+w(F_m)=m+1,
+$$
+所以 $F_m$ 不可实现。删除 $F_m$ 的那个孤立点，得到 $mK_2$，其权为 $m$；删除任意一条边的一个端点，得到
+$$
+(m-1)K_2\sqcup2K_1,
+$$
+其权为
+$$
+(m-1)+1=m.
+$$
+这些图的含边分支都是完全二部图，所以由 theorem 53.5 可实现。这一计算对每个 $m\ge1$ 都成立；特别在 $m=1$ 时后一图就是 $2K_1$，仍有权 $1$。可实现性对诱导子图是遗传的，因为只需限制一个已有的共同残数见证。因此 $F_m$ 的每个真诱导子图都可实现，$F_m$ 对所有 $m\ge1$ 都是顶点极小障碍。
+
+$K_3$ 删除任一顶点得到 $K_2$，其权为 $1\le m$，故 $K_3$ 对所有奇素数都是顶点极小障碍。若 $p\ge5$，则 $m\ge2$。对 $P_4$，删除一个端点得到 $P_3=K_{1,2}$；删除一个内部顶点得到 $K_2\sqcup K_1$。这就是全部一顶点删除情形，没有 $3K_1$ 情形。前者权为 $1$，后者权为 $2$，均不超过 $m$，且它们的含边分支均为完全二部图，所以都可实现；遗传性于是说明 $P_4$ 的每个真诱导子图都可实现。故当 $p\ge5$ 时三个列出的障碍都顶点极小。
+
+最后当 $p=3$ 时 $m=1$。若把 $P_4$ 的顶点依路径次序记为 $1,2,3,4$，则 $\{1,2,4\}$ 诱导
+$$
+K_2\sqcup K_1=F_1.
+$$
+所以禁止 $F_1$ 已自动禁止 $P_4$。上面又已证明 $F_1$ 与 $K_3$ 各自顶点极小，因此最小禁诱导族可取 $\{K_3,F_1\}$。证毕。
+
+**定义 53.7（有限诱导检验元数）。** 固定素数 $p$。对 $k\in\mathbb N_0$，令 $\mathcal P_p(k)$ 表示下述性质：
+
+对每个有限简单标号图 $G$，若对所有满足 $|S|\le k$ 的顶点子集 $S\subseteq V(G)$，诱导图 $G[S]$ 都在 $p$ 处可实现，则 $G$ 本身在 $p$ 处可实现。
+
+令
+$$
+A_p=\{k\in\mathbb N_0:\mathcal P_p(k)\}.
+$$
+若 $A_p\ne\varnothing$，定义
+$$
+k(p)=\min A_p;
+$$
+若 $A_p=\varnothing$，则定义
+$$
+k(p)=\infty.
+$$
+所以此处“最小 $k$”先是一个允许取 $\infty$ 的候选定义；theorem 53.8 将证明对每个素数它实际有限。
+
+这里的 $k(p)$ 只度量定义 53.1 中那个已命名的二元接口及其诱导顶点限制。它不声称给出任意有限公理化的最小元数，也不声称在加入标号算术常量、完整剩余域数据、更高元关系或其他富化观测后仍有相同结论。
+
+**theorem 53.8（精确元数）。** 对所有素数，
+$$
+k(2)=2,
+\qquad
+k(p)=p\quad\text{当 $p$ 为奇素数}.
+$$
+特别地，定义 53.7 中的 $A_p$ 对每个素数都非空。
+
+**证明。** 先设 $p=2$。由 theorem 53.3，唯一的顶点极小禁诱导图是 $2K_1$，其顶点数为 $2$。因此若每个至多两点的诱导子图都可实现，则 $G$ 不含 $2K_1$，从而可实现，所以 $2\in A_2$。另一方面，$2K_1$ 的每个至多一个顶点的诱导子图都是 $K_0$ 或 $K_1$，均可实现，但 $2K_1$ 本身不可实现，故 $0,1\notin A_2$。所以 $k(2)=2$。
+
+再设 $p$ 为奇素数，$m=(p-1)/2$。若 $p=3$，theorem 53.6 给出的最小禁诱导族可取
+$$
+\{K_3,F_1\},
+$$
+两者都有 $3=p$ 个顶点。因此若所有至多 $p$ 点诱导子图可实现，$G$ 不可能含有这两个障碍，从而 $G$ 可实现。
+
+若 $p\ge5$，theorem 53.6 的三个禁诱导图的顶点数分别为
+$$
+3,\qquad4,\qquad |V(F_m)|=2m+1=p.
+$$
+因此同样地，检查所有至多 $p$ 点的诱导子图足以排除全部障碍，故 $p\in A_p$。这证明了所有奇素数都有 $k(p)\le p$，也同时给出了定义 53.7 所需的存在性。
+
+反向，对任意奇素数都有 $m\ge1$。图
+$$
+F_m=mK_2\sqcup K_1
+$$
+恰有
+$$
+2m+1=p
+$$
+个顶点且不可实现；theorem 53.6 已对每个 $m\ge1$ 明确证明它的每个真诱导子图都可实现，包括 $m=1$ 即 $p=3$ 的删除情形。因此对每个 $k\le p-1$，$F_m$ 的每个至多 $k$ 点诱导子图都是可实现的真诱导子图，而 $F_m$ 整体不可实现。故没有 $k<p$ 属于 $A_p$，于是 $k(p)\ge p$。合并上下界即得
+$$
+k(p)=p.
+$$
+证毕。
+
+**定义 53.9（所有素数上的共同槽位图像）。** 令
+$$
+R=\prod_p\mathbb Z_p,
+\qquad
+U=R^\times=\prod_p\mathbb Z_p^\times.
+$$
+第二个等号可直接逐坐标验证：一个乘积环元素可逆，当且仅当每个坐标可逆，此时逆元逐坐标组成。固定有限顶点集 $V=[n]$。给每个素数 $p$ 一个定义在同一槽位对集合上的有限标号简单图 $G_p$。称族 $(G_p)_p$ 全局可实现，若存在同一个
+$$
+(u_i)_{i\in V}\in U^V
+$$
+使得对每个素数 $p$ 与每对不同顶点 $i,j$，
+$$
+ij\in E(G_p)
+\iff
+u_{i,p}+u_{j,p}\in p\mathbb Z_p.
+$$
+
+若把这里的 $R$ 与标准的预有限整数背景对照，Longhi、Mu、Saettone 的 [*Coset topologies on $\mathbb Z$ and arithmetic applications*](https://arxiv.org/pdf/2202.13478v3)，Theorem 3.6，arXiv v3 PDF 排印页 19，给出典范环同构
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p.
+$$
+同一来源的 Definition 4.1、Lemma 4.2 与 Proposition 4.3，排印页 26，把 supernatural numbers 写成逐素数指数乘积并给出典范双射
+$$
+\mathbb S\cong\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\times},
+$$
+而 Lemma 4.5，排印页 27，说明相应商拓扑与该逐素数指数空间的乘积拓扑一致。这些标准背景解释逐素数坐标与乘单位取商，但定义 53.9 保留的是同一槽位单位的加法相关性；theorem 53.10 因而仍需实际装配共同元素，不能从单元素的赋值商直接读出。
+
+**theorem 53.10（全局像等于局部像的逐素数乘积）。** 对有限共同顶点集 $V=[n]$，族 $(G_p)_p$ 全局可实现，当且仅当：
+
+1. $G_2=K_n$；
+2. 对每个奇素数 $p$，$G_p$ 满足 theorem 53.5 中的两项分类条件；等价地，它不含 theorem 53.6 列出的禁诱导图。
+
+而且充分性可以由一个实际的逐坐标装配给出；不同素数之间不需要配对边见证。该陈述包括 $n=0$ 与 $n=1$。
+
+**证明。** 必要性立即来自投影。若 $(u_i)_i\in U^V$ 是全局见证，则对每个素数 $p$，坐标组
+$$
+(u_{i,p})_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+实现 $G_p$。因此 theorem 53.3 给出 $G_2=K_n$，而 theorem 53.5 给出每个奇素数坐标的两条条件。
+
+反过来假设这些局部条件成立。我们逐素数、但按一个完全确定的标号规则构造坐标，因此这里不需要在无限多个素数之间另作见证配对。
+
+对 $p=2$，给每个顶点坐标值 $1\in\mathbb Z_2^\times$。对奇素数 $p$，令
+$$
+m_p=\frac{p-1}{2},
+\qquad
+c_p=c_+(G_p).
+$$
+把 $G_p$ 的含边分支按其最小顶点标号排序。每个这样的分支是连通完全二部图，其二部划分在交换两侧之外唯一；把含最小顶点标号的一侧定为正侧。第 $j$ 个含边分支的正侧赋标准整数代表 $j$，负侧赋标准整数代表 $p-j$，也就是模 $p$ 的 $-j$。若存在孤立点，则由容量条件
+$$
+c_p+1\le m_p
+$$
+给所有孤立点赋标准整数代表 $c_p+1$。theorem 53.5 的充分性证明已经验证，这些坐标在该素数处精确给出 $G_p$ 的全部边与全部非边。
+
+把上述整数看作相应 $\mathbb Z_p$ 中的单位，记为 $u_{i,p}$，并定义
+$$
+u_i=(u_{i,p})_p\in R.
+$$
+每个 $u_{i,p}$ 都是 $\mathbb Z_p$ 单位，所以
+$$
+u_i^{-1}=(u_{i,p}^{-1})_p
+$$
+是 $R$ 中的逐坐标逆元；故 $u_i\in U$。固定任一素数 $p$，坐标组 $(u_{i,p})_i$ 精确实现 $G_p$，所以同一个全局槽位组 $(u_i)_i$ 同时实现所有素数的全部边与非边。若 $n=0$，上述构造就是唯一空组；若 $n=1$，没有成对约束，构造仍成立。证毕。
+
+**theorem 53.11（不存在与素数无关的固定有限认证元数）。** 不存在固定有限整数 $k$ 具有如下性质：对任意有限共同顶点集 $V$ 和任意素数图族 $(G_p)_p$，只要对每个 $S\subseteq V$ 且 $|S|\le k$，整个限制族
+$$
+(G_p[S])_p
+$$
+都有某个实际的全局单位组见证，就能推出整个族 $(G_p)_p$ 有全局单位组见证。
+
+更精确地，对每个给定的 $k$，都存在一个奇素数 $p>k$。令 $m=(p-1)/2$，在 $V=[p]$ 上定义
+$$
+G_p=F_m=mK_2\sqcup K_1,
+\qquad
+G_2=K_p,
+$$
+并对每个奇素数 $q\ne p$ 定义
+$$
+G_q=E_p.
+$$
+则每个大小至多 $k$ 的诱导子族都有实际的全局单位见证，而整个族没有全局单位见证。
+
+**证明。** 先说明所需奇素数可以完全初等地取得。令
+$$
+t=\max\{k,1\}+1\ge2
+$$
+并取 $t!+1$ 的任一素因子 $p$。若 $p\le t$，则 $p$ 同时整除 $t!$ 与 $t!+1$，矛盾，所以 $p>t>k$；又因为 $t!+1$ 为奇数，$p$ 是奇素数。
+
+固定这样的 $p$ 并按陈述定义图族。若 $S\subseteq V$ 且 $|S|\le k$，则
+$$
+|S|<p=|V|,
+$$
+所以 $S$ 是真子集。theorem 53.6 已证明 $F_m$ 对每个 $m\ge1$ 都顶点极小不可实现，因此
+$$
+F_m[S]
+$$
+在 $p$ 处可实现。$K_p[S]=K_{|S|}$ 在 $2$ 处可实现。对每个奇素数 $q\ne p$，$E_p[S]$ 可通过给所有顶点同一个剩余类 $1\in\mathbb F_q^\times$ 实现，因为
+$$
+1+1=2\ne0
+$$
+在奇特征 $q$ 中成立。于是 theorem 53.10 对这个固定的 $S$ 逐坐标装配出一个实际的 $U^S$ 全局见证。
+
+另一方面，若整个族在 $V$ 上有全局见证，那么取其 $p$ 坐标便会实现
+$$
+G_p=F_m,
+$$
+与 theorem 53.6 矛盾。因此不存在这样的统一有限 $k$。
+
+这里每个小集合 $S$ 的见证允许依赖于 $S$，陈述也没有要求这些见证在不同 $S$ 之间相容。故本定理否定的是“存在与素数无关的固定有界诱导检验元数”；它没有构造“每个有限子系统都可实现而整个无限系统不可实现”的例子，因此不是紧致性失败。下一定理给出相反的真正有限子系统紧致性陈述。证毕。
+
+**theorem 53.12（任意顶点集上的有限子系统紧致性，选择公理版本）。** 设 $I$ 为任意集合。假设一个足以保证任意族非空有限离散紧空间的乘积为紧空间的选择原则；完整选择公理足以满足这一假设。对每个素数 $p$ 给定 $I$ 上的简单图 $G_p$。若对每个有限 $S\subseteq I$，限制族 $(G_p[S])_p$ 都有某个全局单位见证，则整个族有一个
+$$
+(u_i)_{i\in I}\in U^I
+$$
+同时实现全部图。
+
+**证明。** 考虑乘积空间
+$$
+X=\prod_{(p,i)\in\mathcal P\times I}\mathbb F_p^\times,
+$$
+其中 $\mathcal P$ 是素数集合，每个有限集 $\mathbb F_p^\times$ 取离散拓扑。每个因子非空且紧；按陈述所假设的选择原则，$X$ 紧。
+
+对每个素数 $p$ 与每对不同顶点 $i,j\in I$，定义一个约束集。若 $ij\in E(G_p)$，要求
+$$
+r_{p,i}+r_{p,j}=0;
+$$
+若 $ij\notin E(G_p)$，要求
+$$
+r_{p,i}+r_{p,j}\ne0.
+$$
+每个条件只依赖两个有限离散坐标，所以相应子集既开又闭，特别是闭集。
+
+任取有限多个这样的闭条件。它们只涉及有限多个顶点；令 $S\subseteq I$ 为所有出现顶点的有限集合。按假设，限制族 $(G_p[S])_p$ 有一个实际全局单位见证。把该见证在所涉及的各素数处约化到 $\mathbb F_p^\times$，便得到 $X$ 中一个同时满足这有限批条件的点。因此全部约束闭集具有有限交性质。由 $X$ 的紧致性，它们的总交非空；取
+$$
+(r_{p,i})_{(p,i)}\in X
+$$
+同时满足全部边与非边条件。
+
+现在无需再作选择：对每个 $r_{p,i}\in\mathbb F_p^\times$，取其唯一标准整数代表
+$$
+\widetilde r_{p,i}\in\{1,\ldots,p-1\}\subset\mathbb Z_p^\times.
+$$
+对每个 $i\in I$ 定义
+$$
+u_i=(\widetilde r_{p,i})_p\in U.
+$$
+theorem 53.2 逐素数保证
+$$
+ij\in E(G_p)
+\iff
+u_{i,p}+u_{j,p}\in p\mathbb Z_p
+$$
+对所有 $p$ 与所有不同 $i,j$ 同时成立。因此 $(u_i)_{i\in I}$ 是所需全局见证。$I=\varnothing$ 时，乘积空间 $X$ 与见证空间 $U^I$ 都是单点集，各自唯一元素是相应的空元组，因此结论亦成立。证毕。
+
+## 53.99 追加锚

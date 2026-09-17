@@ -28,6 +28,65 @@ import native
 from test_native_support import *
 
 class NativePublicationTests:
+    def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
+        self.build()
+        state = native.state(self.root)
+        config = publication.read_json((state / 'inputs.json').read_bytes())
+        artifacts = [str(state / 'modules' / (name + '.zip')) for name in config['modules']]
+        requests = [['validate', [str(self.root), 'module', str(self.root), name,
+            str(state / 'inputs' / (name + '.json')), artifact]]
+            for name, artifact in zip(config['modules'], artifacts)]
+        output, request, result = (self.root / name for name in ['aggregate.zip', 'requests.json', 'statuses.json'])
+        requests.append(['aggregate', [str(self.root), str(output), *artifacts]])
+        # Lake's FilePath.join preserves the root package's /./ component.
+        # These must take the same complete shared validation boundary.
+        requests = [[kind, [arg.replace(str(self.root) + '/', str(self.root) + '/./')
+            if arg.startswith(str(self.root) + '/') else
+            str(self.root) + '/.' if arg == str(self.root) else arg for arg in args]]
+            for kind, args in requests]
+        request.write_text(json.dumps(requests))
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
+            native.batch(request, result)
+            self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+            self.assertEqual(validations.call_count, len(artifacts), '[FAIL] aggregate_row_validated_once')
+        self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
+        original = output.read_bytes()
+        alone_index = config['modules'].index('D5.Alone')
+        artifact = Path(artifacts[alone_index])
+        good_artifact = artifact.read_bytes()
+        source = self.root / 'D5/Alone.lean'
+        good_source = source.read_bytes()
+        for damage in ['artifact', 'source']:
+            with self.subTest(damage=damage):
+                if damage == 'artifact':
+                    artifact.unlink()  # Never write through Lake's cache hard link.
+                    artifact.write_bytes(b'not a ZIP')
+                else:
+                    source.write_bytes(good_source + b'\n-- changed after prior validation\n')
+                try:
+                    native.batch(request, result)
+                    expected = [0] * len(requests)
+                    expected[alone_index] = expected[-1] = 1
+                    self.assertEqual(json.loads(result.read_text()), expected,
+                                     '[FAIL] aggregate_exact_row_rejection')
+                    self.assertEqual(output.read_bytes(), original)
+                finally:
+                    artifact.unlink()
+                    artifact.write_bytes(good_artifact)
+                    source.write_bytes(good_source)
+        driver = self.root / 'LeanInformationAudit/Registry.lean'
+        good_driver = driver.read_bytes()
+        driver.write_bytes(good_driver + b'\n-- changed shared driver\n')
+        try:
+            native.batch(request, result)
+            self.assertEqual(json.loads(result.read_text()), [1] * len(requests),
+                             '[FAIL] aggregate_shared_source_rejection')
+            self.assertEqual(output.read_bytes(), original)
+        finally:
+            driver.write_bytes(good_driver)
+        native.batch(request, result)
+        self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+
     def test_coordinates_use_private_temporary_memo_and_clean_up_failures(self):
         temporary = self.root / 'coordinate temporary files'
         temporary.mkdir()
