@@ -16,7 +16,7 @@ permissions:
 jobs:
   analysis-fixtures:
     name: Build and export Lean analysis fixtures
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests'))
     runs-on: ubuntu-24.04-arm
     # Budget: measured, not a policy override any more (#5986).
     # First real run 34144393161 (workflow_dispatch on dev, 2026-09-07): job
