@@ -504,3 +504,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - <a id="exact-verification-and-remaining-obligations"></a>[Exact verification and remaining obligations](profile-notes/35-ap45-layout-costs-and-complete-core-tails.md#exact-verification-and-remaining-obligations)
 - <a id="joint-moment-caps-do-not-improve-the-row17-bound"></a>[Joint moment caps do not improve the row17 bound](profile-notes/36-joint-moment-caps-do-not-improve-the-row17-bound.md#joint-moment-caps-do-not-improve-the-row17-bound)
 - [Three original five events strengthen the complete source and AP(4,5) bound](profile-notes/37-three-original-five-events-strengthen-the-source.md)
+- [Three original five events sharpen all five AP(4,5) quadratic costs](profile-notes/38-three-original-five-events-sharpen-ap45-quadratic-costs.md)
