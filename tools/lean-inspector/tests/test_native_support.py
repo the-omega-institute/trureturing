@@ -93,7 +93,8 @@ root = "Cache"
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
-                     'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
+                     'tools/scripts/report/lean-report.sh', 'tools/scripts/report/history-report.sh',
+                     'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
             self.copy(name)
@@ -101,11 +102,15 @@ root = "Cache"
             + f'dotnet, cli = {self.dotnet!r}, {str(self.cli)!r}\n'
             + 'if "worktree" in sys.argv:\n'
             + '    os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index("worktree"):]])\n'
+            + 'if "information-template-history" in sys.argv:\n'
+            + '    os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index("information-template-history"):]])\n'
             + 'if sys.argv[1] == "build": raise SystemExit(0)  # utility input is fixture data\n'
             + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
             + 'print(Path("utility.json").read_text())\n')
         (self.root / 'bin/dotnet').chmod(0o755)
+        # The shim forwards this candidate CLI path to the real built judge.
+        self.write('tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll', 'fixture CLI forwarding marker\n')
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
         policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),

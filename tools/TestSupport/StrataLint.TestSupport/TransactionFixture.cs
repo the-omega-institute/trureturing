@@ -200,6 +200,7 @@ internal sealed partial class TransactionFixture : IDisposable
         ? []
         : File.ReadAllLines(callsPath).Select(static call =>
         {
+            if (call.StartsWith("make:", StringComparison.Ordinal)) return call.Split(' ')[0];
             if (!call.StartsWith("dotnet:", StringComparison.Ordinal)) return call;
             var command = call["dotnet:".Length..];
             var separator = command.IndexOf(' ');
@@ -305,6 +306,11 @@ internal sealed partial class TransactionFixture
         printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
         case "${1:-}" in
           lean-report)
+            expected_base="$PLAYBOOK_HISTORY_BASE"
+            if [[ "${PLAYBOOK_HISTORY_RESOLVE_BASE:-0}" == 1 ]]; then
+              expected_base="$(/usr/bin/git rev-parse --verify "${expected_base}^{commit}")"
+            fi
+            [[ $# == 2 && "$2" == "BASE=$expected_base" ]] || exit 96
             mkdir -p .lake/build/stratalint
             printf '{"schema":"synthetic-lean-report"}\n' \
               > .lake/build/stratalint/raw-lean-report.json
@@ -453,6 +459,8 @@ internal sealed partial class TransactionFixture
                 $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                 $"PLAYBOOK_TEST_CALLS={callsPath}",
                 $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
+                $"PLAYBOOK_HISTORY_BASE={baseRevision ?? (throughMake || command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base")}",
+                $"PLAYBOOK_HISTORY_RESOLVE_BASE={(command is "deposit" or "deposit-uncovered" ? "1" : "0")}",
                 $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                 $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                 $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
@@ -602,6 +610,7 @@ internal sealed partial class TransactionFixture
                 $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                 $"PLAYBOOK_TEST_CALLS={callsPath}",
                 "PLAYBOOK_STALE_REPORT=0",
+                "PLAYBOOK_HISTORY_BASE=synthetic-base",
                 $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),

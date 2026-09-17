@@ -30,11 +30,11 @@ warm-donor:
 lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build $(LEAN_TARGETS)
 
+lean-report:
+	@/bin/bash tools/scripts/report/lean-report.sh
 lean-report: export LEAN_REPORT := $(value LEAN_REPORT)
 lean-report: export TEMPLATE_HISTORY := $(value TEMPLATE_HISTORY)
 lean-report: export STRATALINT_HISTORY_BASE := $(if $(filter command line environment override,$(origin BASE)),$(value BASE),)
-lean-report:
-	@/bin/bash tools/scripts/report/lean-report.sh
 
 build: lean
 

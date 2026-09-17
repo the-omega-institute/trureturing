@@ -26,6 +26,13 @@ internal static class InformationTemplateHistoryCommand
         IReadOnlyList<string> arguments, IGitProcessRunner runner, TimeProvider clock)
     {
         var started = clock.GetTimestamp();
+        var timings = new Dictionary<string, double>(StringComparer.Ordinal);
+        void Timed(string phase, Action action)
+        {
+            var phaseStart = clock.GetTimestamp();
+            try { action(); }
+            finally { timings[phase] = timings.GetValueOrDefault(phase) + clock.GetElapsedTime(phaseStart).TotalMilliseconds; }
+        }
         try
         {
             if (arguments.Count == 0 || arguments[0] is not ("plan" or "prepare" or "produce" or "validate" or "adopt"))
@@ -97,14 +104,15 @@ internal static class InformationTemplateHistoryCommand
                 : throw new FormatException("history prepare requires --work");
             if (arguments[0] == "prepare")
             {
-                InformationTemplateHistoryWorkspace.Prepare(root, Work(), pair, material.Files, runner);
+                Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, Work(), pair, material.Files, runner));
                 return Result("prepared", false);
             }
             if (arguments[0] == "validate")
             {
                 var bundle = Path.GetFullPath(Required("--bundle"));
-                InformationTemplateHistoryBundle.Validate(bundle, producer, revision, material.Hybrid);
-                if (options.TryGetValue("--output", out var destination)) InformationTemplateHistoryWorkspace.Publish(bundle, destination);
+                Timed("validate", () => InformationTemplateHistoryBundle.Validate(bundle, producer, revision, material.Hybrid));
+                if (options.TryGetValue("--output", out var destination))
+                    Timed("publish", () => InformationTemplateHistoryWorkspace.Publish(bundle, destination));
                 return Result("validated", true);
             }
             var outputDirectory = Path.GetFullPath(Required("--output"));
@@ -122,7 +130,7 @@ internal static class InformationTemplateHistoryCommand
                 foreach (var directory in new[] { outputDirectory, cache }.Distinct(StringComparer.Ordinal))
                 {
                     if (!Directory.Exists(directory)) continue;
-                    try { InformationTemplateHistoryBundle.Validate(directory, producer, revision, material.Hybrid); }
+                    try { Timed("cache_validate", () => InformationTemplateHistoryBundle.Validate(directory, producer, revision, material.Hybrid)); }
                     catch (Exception ex) when (ArtifactError(ex)) { invalid = true; continue; }
                     RequireUnchangedProducer();
                     InformationTemplateHistoryWorkspace.Publish(directory, outputDirectory);
@@ -144,21 +152,27 @@ internal static class InformationTemplateHistoryCommand
                     {
                         var work = options.TryGetValue("--work", out var requestedWork) ? Path.GetFullPath(requestedWork)
                             : ownedWork = Directory.CreateTempSubdirectory("stratalint-history-work-").FullName;
-                        InformationTemplateHistoryWorkspace.Prepare(root, work, pair, material.Files, runner);
-                        if (options.TryGetValue("--cache-donor", out var donor)) InformationTemplateHistoryCacheSeed.Copy(work, donor);
+                        Timed("prepare", () => InformationTemplateHistoryWorkspace.Prepare(root, work, pair, material.Files, runner));
+                        if (options.TryGetValue("--cache-donor", out var donor))
+                            Timed("cache_seed", () => InformationTemplateHistoryCacheSeed.Copy(work, donor));
+                        var inspectorStart = clock.GetTimestamp();
                         var produced = runner.Run("/bin/bash", [Path.Combine(work, "tools/lean-inspector/inspect.sh"),
                             "--repository", work, "--output", report], work, TimeSpan.FromMinutes(60));
+                        timings["inspector"] = clock.GetElapsedTime(inspectorStart).TotalMilliseconds;
                         producerOutput = Encoding.UTF8.GetString(produced.StandardOutput) + Encoding.UTF8.GetString(produced.StandardError);
                         if (produced.ExitCode != 0) throw new IOException($"history inspector exit={produced.ExitCode}\n" + producerOutput);
                     }
                     // A concurrent source edit cannot be published under the old P.
                     RequireUnchangedProducer();
-                    InformationTemplateHistoryBundle.Seal(staging, producer, revision, material.Hybrid, fresh.Candidate,
-                        options.GetValueOrDefault("--run", "local"));
-                    InformationTemplateHistoryBundle.Validate(staging, producer, revision, material.Hybrid);
-                    InformationTemplateHistoryWorkspace.Publish(staging, outputDirectory);
+                    Timed("seal_validate", () =>
+                    {
+                        InformationTemplateHistoryBundle.Seal(staging, producer, revision, material.Hybrid, fresh.Candidate,
+                            options.GetValueOrDefault("--run", "local"));
+                        InformationTemplateHistoryBundle.Validate(staging, producer, revision, material.Hybrid);
+                    });
+                    Timed("publish", () => InformationTemplateHistoryWorkspace.Publish(staging, outputDirectory));
                     var save = "saved";
-                    try { if (cache != outputDirectory) InformationTemplateHistoryWorkspace.Publish(staging, cache); }
+                    try { if (cache != outputDirectory) Timed("cache_save", () => InformationTemplateHistoryWorkspace.Publish(staging, cache)); }
                     catch (Exception error) when (error is IOException or UnauthorizedAccessException)
                     { save = "save-failed"; producerOutput += "INFORMATION_TEMPLATE_HISTORY cache=save-failed detail=" + error.Message + "\n"; }
                     return Result(adopting ? "adopted" : invalid ? "rebuilt-invalid" : "produced", false, producerOutput, save);
@@ -181,6 +195,7 @@ internal static class InformationTemplateHistoryCommand
             {
                 schema = "information-template-history-result-v1", status, revision, producer, pair, cache_hit = hit,
                 elapsed_ms = clock.GetElapsedTime(started).TotalMilliseconds, cache_save = cacheSave,
+                timings_ms = timings,
                 material_files = material.Files.Length, material_bytes = material.Files.Sum(f => (long)f.Bytes.Length),
             }) + "\n", "");
         }

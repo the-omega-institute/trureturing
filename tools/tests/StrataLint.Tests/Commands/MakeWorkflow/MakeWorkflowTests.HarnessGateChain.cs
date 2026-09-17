@@ -719,6 +719,13 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(
             Path.Combine(producerDirectory, "inspect.sh"),
             "#!/usr/bin/env bash\nexit 0");
+        WriteExecutable(
+            Path.Combine(candidateRoot, "tools", "scripts", "report", "history-report.sh"),
+            """
+            #!/usr/bin/env bash
+            [[ $# == 5 && "$1" == produce && "$2" == --report && -s "$3"
+              && "$4" == --protected-base && "$5" == "${PREFLIGHT_EXPECTED_GATE_BASE:-0000000000000000000000000000000000000001}" ]]
+            """);
         File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
         var workflowDirectory = Path.Combine(candidateRoot, "tools", "scripts", "workflow");
         Directory.CreateDirectory(workflowDirectory);

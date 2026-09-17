@@ -159,7 +159,8 @@ public sealed partial class MakeWorkflowTests
         {
             var header = Assert.Single(
                 makefile.Split('\n'),
-                line => line.StartsWith(target + ":", StringComparison.Ordinal));
+                line => line.StartsWith(target + ":", StringComparison.Ordinal)
+                    && !line.StartsWith(target + ": export ", StringComparison.Ordinal));
             return header[(target.Length + 1)..]
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Count(static prerequisite => prerequisite == "lean-cache-ensure");

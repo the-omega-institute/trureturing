@@ -20,7 +20,7 @@ public sealed class PlaybookWorkflowScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:lean-report BASE=synthetic-base",
                 "make:emit",
                 "make:align-digestion-status BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",

@@ -129,12 +129,18 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
         File.WriteAllText(
             Path.Combine(fixture.Path, LeanReportScriptPath),
-            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
+            "#!/usr/bin/env bash\n[[ \"$*\" == '--protected-base 0000000000000000000000000000000000000001' ]] || exit 18\nprintf 'lean provenance\\n' >&2\n");
+        WriteExecutable(Path.Combine(binDirectory, "git"), """
+            #!/usr/bin/env bash
+            [[ "$1" == -C ]] && shift 2
+            [[ "$*" == 'rev-parse --verify synthetic-base^{commit}' ]] || exit 20
+            printf '%s\n' 0000000000000000000000000000000000000001
+            """);
         File.WriteAllText(
             Path.Combine(binDirectory, "dotnet"),
             """
             #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            [[ "$*" == *"echo-verify --emit --base 0000000000000000000000000000000000000001"* ]] || exit 19
             printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
