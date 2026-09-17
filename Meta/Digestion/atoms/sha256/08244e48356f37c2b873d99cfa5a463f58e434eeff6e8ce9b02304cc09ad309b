@@ -1,0 +1,71 @@
+**定理 43.11（有限多项式完整联合闭图的严格锥判据）。** 采用定义43.8。对任意 $\boldsymbol\xi\in K^q$，以下三项等价：$\boldsymbol\xi\in\Gamma(P)$；$\boldsymbol\xi\in\Gamma_T(P)$ 对所有 $T\in\mathbb N_0$ 成立；同时满足
+$$
+A_{j\nu}=0\text{ 对所有 }\nu\in M
+\quad\Longrightarrow\quad \xi_j=Z(c_j),
+$$
+$$
+\exists p\in\mathbb T^m,\qquad
+\boldsymbol\theta=\mathbf b+Ap,
+$$
+$$
+\mathcal C(\boldsymbol\xi)\ne\varnothing.
+$$
+相位条件可以等价地换成定理43.10的全部整数线性关系，但不能删除严格锥条件。
+
+更准确地，只要这些条件成立，对任意含 $\xi_j$ 的开集 $O_j\subseteq K$ 及任意 $T$，就存在一个实际元组 $\mathbf n\in\mathbb N_0^d$，使全部 $n_i\ge T$ 且
+$$
+Z(R_j(\mathbf n))\in O_j\qquad(1\le j\le q).
+$$
+$d\ge1$ 时还可以把该元组限制为定理43.9的同一条固定曲线 $\mathbf n(t)$。相位共同原像可以不唯一；严格锥始终在同一个单项式误差向量上施加全部条件。
+
+**证明。** 先证必要性。由 $K^q$ 可度量，若 $\boldsymbol\xi\in\Gamma(P)$，则存在实际元组列 $\mathbf n^{(k)}$，使
+$$
+(Z(R_j(\mathbf n^{(k)})))_{j=1}^q\longrightarrow\boldsymbol\xi.
+$$
+常数行的数字字在整列上恒为 $Z(c_j)$，所以其极限必须等于该点。又有实际相位恒等式
+$$
+(H(Z(R_j(\mathbf n))))_{j=1}^q=\mathbf b+A V_M(\mathbf n).
+$$
+环面 $\mathbb T^m$ 紧致，故在原序列的一个子列上可以令 $V_M(\mathbf n^{(k)})\to p$。由连续性得到 $\boldsymbol\theta=\mathbf b+Ap$。这一步不要求共同原像唯一。
+
+在 $p$ 附近使用环面的局部实坐标。丢弃有限初段后，可写
+$$
+V_M(\mathbf n^{(k)})=p+[u_k],\qquad
+u_k\in\mathbb R^m,\qquad u_k\longrightarrow0.
+$$
+每个输出或输入坐标的相位遂为
+$$
+H(Z(R_j(\mathbf n^{(k)})))=\theta_j+[(Au_k)_j].
+$$
+对充分大的 $k$，全部 $(Au_k)_j$ 的绝对值小于 $1/2$。当 $j\in I(\boldsymbol\xi)$ 时，该误差不可能为零，因为 $R_j(\mathbf n^{(k)})\in\mathbb N_0$，其自然相位不属于 $E$。由假设43.1及该数字坐标的收敛，
+$$
+s_j(Au_k)_j>0
+$$
+最终成立。只有有限多个分裂坐标，所以存在一个共同的充分大指标，使全部严格不等式同时成立。该 $u_k$ 就是 $\mathcal C(\boldsymbol\xi)$ 中的一个向量。这里没有把严格不等式传到可能退化的归一化极限上。
+
+再证充分性及实际元组断言。$d=0$ 时所有行均为常数，目标被常数行条件唯一确定，唯一的空输入元组已经实现它。以下设 $d\ge1$，于是 $m\ge1$。固定一个共同原像 $p$，并取 $v\in\mathcal C(\boldsymbol\xi)$。对各个非恒定行，应用定理43.2于 $\xi_j\in O_j$，取得相应的 $\eta_j>0$。常数行已精确等于目标，无需逼近。
+
+因为严格不等式只有有限个，可先把 $v$ 乘以足够小的正数 $\tau$，再选取以 $\tau v$ 为中心的一个非空实开球 $W\subseteq\mathbb R^m$，使对所有 $u\in W$ 均有
+$$
+\|u\|_\infty<\tfrac14,\qquad
+|(Au)_j|<\eta_j\text{ 对每个非恒定行 }j,
+$$
+$$
+s_j(Au)_j>0\text{ 对所有 }j\in I(\boldsymbol\xi).
+$$
+若没有分裂坐标，可直接使用零向量附近足够小的开球。如此选球的理由是：有限个严格线性不等式在 $\tau v$ 处仍严格成立，而所有线性误差随 $\tau\to0$ 趋于零。
+
+$p+[W]$ 是 $\mathbb T^m$ 的非空开集。由定理43.9，可以在同一曲线上选择一个 $t\ge\max\{T,1\}$，使
+$$
+V_M(\mathbf n(t))\in p+[W].
+$$
+故对某个 $u\in W$，有 $V_M(\mathbf n(t))=p+[u]$。实际相位恒等式给出
+$$
+H(Z(R_j(\mathbf n(t))))=\theta_j+[(Au)_j].
+$$
+非分裂目标使用小误差条件，分裂目标同时使用小误差及指定严格符号条件，由定理43.2均得到 $Z(R_j(\mathbf n(t)))\in O_j$。常数行则精确等于 $Z(c_j)=\xi_j$。因此同一个实际自然元组实现了全部邻域要求。
+
+取 $O_j=[\pi_k(\xi_j)]_K$ 并取 $T=k$，便得到全部输入同时趋于无穷的共同逼近列。这证明条件推出每个 $\Gamma_T(P)$ 的归属；后者当然推出 $\Gamma(P)$ 的归属，三项因而等价。定理43.10给出相位条件的整数关系表述。
+
+边界情形也由此完全确定。若 $r=0$，仅有输入行，$A$ 为单位矩阵，故 $\Gamma_T(P)=K^d$。若 $d=0$，图为固定常数输出元组的单点；$d=r=0$ 时就是 $K^0$。若两个多项式行相同，则常数及系数行均相同，目标相位也相同；该相位非分裂时目标字由单点纤维相等，分裂时相反标签将同时要求同一个实数严格为正和严格为负，故仍必须为同一数字点。因此重复多项式要求完整数字相等，而不只是相位相等。证毕。
+

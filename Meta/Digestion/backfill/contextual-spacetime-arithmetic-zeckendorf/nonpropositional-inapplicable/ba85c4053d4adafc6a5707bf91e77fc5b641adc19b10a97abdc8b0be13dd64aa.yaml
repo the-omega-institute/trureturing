@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba85c4053d4adafc6a5707bf91e77fc5b641adc19b10a97abdc8b0be13dd64aa
+  normalized_sha256: sha256:ba85c4053d4adafc6a5707bf91e77fc5b641adc19b10a97abdc8b0be13dd64aa
+cas_ref: sha256:ba85c4053d4adafc6a5707bf91e77fc5b641adc19b10a97abdc8b0be13dd64aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Finset.le_sup' 与 Finset.sup'_le 实现含零默认项的有限前缀最大值，空的内部索引集合取零并逐项吸收尾界之外的正整数；Finset.abs_sum_le_sum_abs、ArithmeticFunction.abs_moebius_le_one 和 Nat.floor_le 给 Mertens 绝对值不超过输入，再用 Real.one_le_rpow 得所列粗常数，仓内无冻结 GID。
+    previous_atom_id: c1d7d599c930dede64816c40b711a433987fe176a09eb2cf4b219d7ce5343a9e
+    next_atom_id: 60951e381fc5a15cbb38d7a4e7d6e2410e670389747b503e621285dada5989f7

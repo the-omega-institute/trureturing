@@ -1,0 +1,34 @@
+**theorem 20.4 (The exact mechanical coordinate and every split itinerary).** For $x\in K$, take any real lift $\rho$ of
+$$
+[\rho]=[\beta]-H(x).
+$$
+If $H(x)\notin E$, then
+$$
+\Phi(x)=M^{\mathrm{lo}}_\rho=M^{\mathrm{up}}_\rho.
+$$
+For every $m\ge1$, put $\rho_m=(1-m)\beta$. Then
+$$
+\Phi(x_m^-)=M^{\mathrm{lo}}_{\rho_m},
+\qquad
+\Phi(x_m^+)=M^{\mathrm{up}}_{\rho_m}.
+$$
+For $m=1$ these words differ only at coordinate zero, with respective digits zero and one. For $m\ge2$ they differ exactly at coordinates $m-2,m-1$, where the respective pairs are
+$$
+10\qquad\text{and}\qquad01.
+$$
+In particular, a length-$t$ itinerary separates the two members of the fiber above $e_m$ exactly when
+$$
+t\ge1\quad\text{and}\quad m\le t+1.
+$$
+The successor respects their orientation until the seam:
+$$
+Tx_m^\pm=x_{m-1}^\pm\quad(m\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+On the natural core the chosen word is exactly
+$$
+w_n:=f(Z(n))
+=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,
+$$
+so $w=\Phi(Z(0))$ is the lower mechanical word with slope and intercept both equal to $\beta$.
+

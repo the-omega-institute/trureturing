@@ -1,0 +1,2 @@
+**证明。** 每个 $r\in\mathcal R_8(X)$ 都有一个实际的非 WSS 素数支持。不同秩的支持素数不同。由于该素数整除 $F_r$，它至多为 $F_{60X+2}\le2^{60X+2}$。取 $X=\lfloor\log x/(120\log2)\rfloor$，则充分大的 $x$ 满足 $2^{60X+2}\le4\sqrt x\le x$。应用 EMWS7 并用 $X\asymp\log x$ 即得。
+

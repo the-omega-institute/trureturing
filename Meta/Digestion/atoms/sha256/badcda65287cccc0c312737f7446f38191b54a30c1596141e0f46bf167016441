@@ -1,0 +1,5 @@
+在 $V_L$ 坐标中，$R_L$ 恰含所有边
+$$
+s\longrightarrow s+1\quad(0\le s<G_L-1),\qquad
+G_L-1\longrightarrow0,\qquad \beta_L\longrightarrow0.
+$$

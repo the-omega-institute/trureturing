@@ -1,0 +1,25 @@
+**定义 23.0（固定数字载体与相位）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1}.
+$$
+令 $Z(n)$ 为以 $G_j$ 为权的有限 Zeckendorf 规范字按低位到高位补零后的无限字，并令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:\forall j,\ x_jx_{j+1}=0\},\qquad 0_K=Z(0).
+$$
+载体取数字乘积拓扑。定义
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad H(x)=[F(x)],
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},
+$$
+以及
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{w:(x,y,w)\in\Gamma\}.
+$$
+这些记号采用[本卷定义16.0的固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+

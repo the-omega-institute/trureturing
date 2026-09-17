@@ -1,0 +1,25 @@
+**theorem 28.2 (Uniform numerical bounds and actual maximizing rows).** For all positive integers $m,n$,
+$$
+1-\rho_t\le |d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+The residual functions are explicitly
+$$
+r_m(x)=\begin{cases}
+\mathbf1_{\{x_m^+\}}(x)+t^m\mathbf1_{\{x_m^-\}}(x),&|t|<1,\\
+t^{-m}\mathbf1_{\{x_m^+\}}(x)+\mathbf1_{\{x_m^-\}}(x),&|t|>1,\\
+\mathbf1_{\{x_m^-\}}(x),&t=\infty.
+\end{cases}
+$$
+The finite-parameter cases in this display exclude the formal parameter. Consequently,
+$$
+\sum_{m\ge1}|r_m(x)|\le1\qquad(x\in K).
+$$
+Furthermore,
+$$
+\sup_{\theta\in\mathbb T}\|\pi_\theta\|_{\mathrm{TV}}\le C_t,
+\qquad
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for finite $t\ge0$, at $(x_1^+,x_1^-)$ for finite $t<0$, and at $(0_K,0_K)$ for $t=\infty$.
+

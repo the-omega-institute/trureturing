@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:278c641a32882174454f1a1da9feed4d0892859a5ccf5a715b0c2408370cc337
+  normalized_sha256: sha256:278c641a32882174454f1a1da9feed4d0892859a5ccf5a715b0c2408370cc337
+cas_ref: sha256:278c641a32882174454f1a1da9feed4d0892859a5ccf5a715b0c2408370cc337
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有理代表的既约正分母给出其加法阶，钉版有理圆周阶公式保证该阶为正自然数，因而每个所列阶有限。仓内无冻结 GID。
+    previous_atom_id: ccabe5ceb4b989998951a1e8f74e64d9f16795fc320ce639627db8add111d5a2
+    next_atom_id: c0c701df9aa07476febb32b63747dd81eeac03a8e233d2dea9cd90c00b0e505e

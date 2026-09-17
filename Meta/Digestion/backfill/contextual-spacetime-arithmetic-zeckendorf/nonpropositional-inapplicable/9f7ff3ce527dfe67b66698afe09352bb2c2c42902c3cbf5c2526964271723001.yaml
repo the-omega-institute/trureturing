@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f7ff3ce527dfe67b66698afe09352bb2c2c42902c3cbf5c2526964271723001
+  normalized_sha256: sha256:9f7ff3ce527dfe67b66698afe09352bb2c2c42902c3cbf5c2526964271723001
+cas_ref: sha256:9f7ff3ce527dfe67b66698afe09352bb2c2c42902c3cbf5c2526964271723001
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义有序切口载体、权与费用拉回、观察及删除连接；唯一额外退化断言是空排列唯一与零阶乘为一，由 Fintype.card_perm 和 Nat.factorial_zero 直接化简，仓内无冻结 GID。
+    previous_atom_id: b8bcbd7b40eb6ecc8bbca476d437c61d30ffa176b0b1b70fb87436f3e1ddf774
+    next_atom_id: 78fe00fef65f45cba6a9b72087455fcb0c2c56c9692849617ffb6743e07670b9

@@ -1,0 +1,21 @@
+**定理 31.12（单位化字符、完整谱及逆元）。** 若 $a=(\lambda,\mu)\in A_t^{\#}$，且 $\Phi_t\mu=(\nu,g)$，则 $A_t^{\#}$ 的全部字符准确为
+$$
+\mathcal P_\chi^{\#}(a)=\lambda+\chi(\nu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z^{\#}(a)=\lambda+\mathscr G_g(z),\qquad z\in\overline{\mathbb D}.
+$$
+特别 $\mathcal E_0^{\#}(\lambda,\mu)=\lambda$ 是非零单位化字符，其在 $A_t$ 上的限制才是零泛函。字符空间同胚于 $\Delta(\mathcal M)\sqcup\overline{\mathbb D}$。完整谱为
+$$
+\sigma_{A_t^{\#}}(\lambda,\mu)=\bigl(\lambda+\sigma_{\mathcal M}(\nu)\bigr)\cup\{\lambda+\mathscr G_g(z):|z|\le1\}.
+$$
+因此 $a$ 可逆当且仅当
+$$
+\nu+\lambda\delta_0\text{ 在 }\mathcal M\text{ 中可逆},\qquad \lambda+\mathscr G_g(z)\ne0\quad\text{对每个 }|z|\le1.
+$$
+这些条件特别要求 $\lambda\ne0$。当它们成立时，令 $\xi=\nu+\lambda\delta_0$、$h=\lambda e_0+g$，则
+$$
+a^{-1}=\left(\lambda^{-1},\Psi_t\left(\xi^{-1}-\lambda^{-1}\delta_0,h^{-1}-\lambda^{-1}e_0\right)\right).
+$$
+这里 $h^{-1}$ 在 $\mathcal S_0$ 中取逆，第二个剩余参数的常数项为零。[^rro31-spectrum][^rro31-wiener]
+

@@ -1,0 +1,6 @@
+**命题 378.13。** 对已给标签、容量、字段边界及解释函数的有限配置，置
+$$
+Q=\prod_{p\in P}(C_{\rm cap}(p)+1),\qquad
+M=\prod_{p\in P}p^{C_{\rm cap}(p)},\qquad
+\ell_Z(A)=\min\{\ell\ge0:A<G_\ell\}.
+$$

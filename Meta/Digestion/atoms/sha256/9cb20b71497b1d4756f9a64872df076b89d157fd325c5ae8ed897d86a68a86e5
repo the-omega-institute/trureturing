@@ -1,0 +1,37 @@
+**theorem 45.6（紧致 Hausdorff 幺环的有限商定理）。** 设 $R$ 为紧致 Hausdorff 拓扑幺环，乘法不必交换。则每个连续加法特征 $R_+\to\mathbb T$ 都有有限像，其中 $\mathbb T=\mathbb R/\mathbb Z$。开双边理想构成零点邻域基，有限连续环商分离点，且 $R$ 是这些有限离散环商的逆极限。此结论不要求 Noetherian 或 Artinian 条件。
+
+经典来源为 Anzai，*On Compact Topological Rings*，Theorems 2–3，pp. 614–615；幺元排除了该文所排除的非零左或右全零因子。另见 Numakura，*Theory of compact rings*，§2，Lemma 5，p. 82。下证使用紧交换群的特征分离定理，其精确出处可取 Dikranjan，*Introduction to Topological Groups*，Theorem 9.3.2 后的交换情形，printed p. 63。[Anzai, Theorems 2–3, pp. 614–615](https://www.jstage.jst.go.jp/article/pjab1912/19/10/19_10_613/_pdf#page=2)；[Numakura, §2, Lemma 5, p. 82](https://www.math.okayama-u.ac.jp/mjou/mjou1-46/mjou_pdf/mjou_05/mjou_05_079.pdf#page=4)；[Dikranjan, Theorem 9.3.2 and abelian case, p. 63](https://users.dimi.uniud.it/~dikran.dikranjan/ITG.pdf#page=68)
+
+**证明。** 令
+$$
+\widehat{R_+}=\operatorname{Hom}_{\mathrm{cts}}(R_+,\mathbb T)
+$$
+取一致收敛拓扑。圆群没有包含于开弧 $(-1/4,1/4)$ 的非零子群：任一非零角的整数倍中总有一个离零至少 $1/4$。因此一致距离小于 $1/4$ 的两个特征必相同，故此特征空间离散。紧交换群的特征分离定理保证这些连续特征分离 $R_+$ 的点。
+
+固定特征 $\chi$，定义
+$$
+\psi_{a,b}(x)=\chi(axb),\qquad
+\mathcal O_\chi=\{\psi_{a,b}:a,b\in R\}.
+$$
+联合乘法连续性使 $(a,b)\mapsto\psi_{a,b}$ 对一致收敛拓扑连续。具体地，在固定 $(a_0,b_0)$ 处，对每个 $x$ 用连续性控制 $\chi(axb)-\chi(a_0xb_0)$，再用 $x$ 所在紧空间的有限覆盖，得到对所有 $x$ 同时有效的参数邻域。故 $\mathcal O_\chi$ 是离散空间中的紧集，因而有限。
+
+每个轨道特征自身也有有限像，因为
+$$
+\psi_{a,b}(x)=\psi_{ax,b}(1),
+$$
+右侧属于有限集合 $\{\psi(1):\psi\in\mathcal O_\chi\}$。特别地，$\chi=\psi_{1,1}$ 有有限像。于是
+$$
+I_\chi=\bigcap_{\psi\in\mathcal O_\chi}\ker\psi
+       =\{x:\chi(axb)=0\text{ 对所有 }a,b\in R\}
+$$
+是开加法子群。若 $x\in I_\chi$、$c\in R$，则
+$$
+\chi(a(cx)b)=\chi((ac)xb)=0,\qquad
+\chi(a(xc)b)=\chi(ax(cb))=0,
+$$
+故 $I_\chi$ 是双边理想。并且 $I_\chi\subseteq\ker\chi$。
+
+特征分离性说明这些理想的交为零。若 $U$ 为零点开邻域，对每个 $z\notin U$ 选 $\chi_z$ 使 $z\notin I_{\chi_z}$。开集 $R\setminus I_{\chi_z}$ 覆盖紧集 $R\setminus U$，取有限子覆盖，其对应理想之交即为包含于 $U$ 的开双边理想。开子群的陪集构成开覆盖，紧致性使其指数有限，所以这些环商有限离散。
+
+最后，规范映射到所有开双边理想商的逆极限是连续单射。给定相容商点，其有限多个陪集条件可在对应理想的交所给出的更细商中同时满足。闭陪集族具有有限交性质，紧致性给出共同代表，故规范映射满射。紧致到 Hausdorff 的连续双射为同胚，且运算逐坐标相容。证毕。
+

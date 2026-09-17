@@ -1,0 +1,9 @@
+**定义 470.13（扩展非负实向量的序与运算）。** 令 $E=[0,+\infty]=\mathbb R_{\ge0}\cup\{+\infty\}$，其中 $+\infty$ 为添入的一个不同于所有有限实数的元素。$E$ 上的序在有限部分为通常序，并令每个元素不大于 $+\infty$。加法在两个有限元素上为实加法；只要有一项为 $+\infty$，和便为 $+\infty$。不定义 $\infty-\infty$。对有限 $d\in\omega$，$V_E=E^d$ 的零、加法及序均逐坐标定义：
+$$
+v\preceq_E w\iff\forall j<d\ v_j\le w_j,\qquad
+v\prec_E w\iff v\preceq_E w\ \land\ v\ne w,
+$$
+$$
+\operatorname{Min}_E C=\{v\in C:\neg\exists w\in C\ (w\prec_E v)\}.
+$$
+这里 $C$ 是 $V_E$ 的任意子集。对 $A\subseteq E$，空集的上确界为零、下确界为 $+\infty$；非空集的上确界在无穷元素出现或有限部分无实上界时为 $+\infty$，其余为有限部分的通常实上确界；下确界在没有有限元素时为 $+\infty$，其余为有限部分的通常实下确界。对 $C\subseteq V_E$，上下确界逐坐标取相应投影的上下确界。

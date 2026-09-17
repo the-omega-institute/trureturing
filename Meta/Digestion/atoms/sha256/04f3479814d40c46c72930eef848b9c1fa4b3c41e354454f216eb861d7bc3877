@@ -1,0 +1,21 @@
+**theorem 42.2 (Compact actual-image inverse limit).** The space $S(V)$ is compact, Hausdorff, and zero-dimensional, with the cylinders $N(p;F)$ as a clopen base. Moreover,
+$$
+p\in S(V)
+\quad\Longleftrightarrow\quad
+\forall F\subseteq V^*\text{ finite}\ \exists v\in V\quad
+\forall\ell\in F,\quad \operatorname{sgn}(\ell(v))=p(\ell).
+\tag{42.1}
+$$
+Restriction gives a canonical homeomorphism
+$$
+S(V)\cong\varprojlim_{F\subseteq V^*,\ F\ {\rm finite}}Q_F,
+\tag{42.2}
+$$
+where the order is inclusion and every bonding map is surjective. The image $\sigma_V[V]$ is dense. Its distinct nonzero points correspond exactly to oriented rays:
+$$
+\sigma_V(v)=\sigma_V(w),\quad v\ne0
+\quad\Longleftrightarrow\quad
+w=cv\text{ for some }c>0.
+\tag{42.3}
+$$
+

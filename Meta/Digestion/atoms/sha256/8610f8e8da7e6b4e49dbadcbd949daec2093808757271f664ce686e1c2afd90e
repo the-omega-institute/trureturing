@@ -1,0 +1,33 @@
+**Proof.** At $t=G_L-1$, the cylinders are the positional length-$L$ cylinders. For those ending in zero, the numbers $N_p$ run through $0,\ldots,G_{L-1}-1$, so their cost denominators $M_p-1$ run through
+$$
+G_L,\ldots,G_{L+1}-1.
+$$
+For those ending in one, append the forced zero. Their positional values run through $G_{L-1},\ldots,G_L-1$, so their denominators run through
+$$
+G_{L+1},\ldots,2G_L-1.
+$$
+The value statement follows from the finite Zeckendorf value bijection; $L=1$ is immediate separately. Hence the entire denominator set at the checkpoint is exactly $G_L,\ldots,2G_L-1$.
+
+In the next batch, a splitting length-$L$ cylinder with denominator $j=M_p-1$ is replaced by children with denominators $j+G_L$ and $j+G_{L+1}$, by 35.1. The first $a$ such splits remove the denominators $G_L,\ldots,G_L+a-1$. Their first children extend the surviving initial interval through $2G_L+a-1$; their second children add the interval $G_{L+2},\ldots,G_{L+2}+a-1$. This proves the exact formula.
+
+Put $x=a/G_L$. Integral comparison for harmonic sums, uniformly over this batch, gives
+$$
+J_t=\Psi(x)+o(1),\qquad
+\Psi(x)=\log\frac{2+x}{1+x}+\log\frac{\phi^2+x}{\phi^2},
+$$
+where the error tends to zero as $L\to\infty$ and the ranges of $x$ tend to $[0,\alpha]$. Every point of that interval is approached by admissible choices of $a/G_L$.
+
+Direct differentiation gives
+$$
+\Psi'(x)=-\frac1{(1+x)(2+x)}+\frac1{\phi^2+x}.
+$$
+Its unique zero in $[0,\alpha]$ is $x=\sqrt\phi-1$. The derivative is negative before that point and positive afterwards. At the endpoints $\Psi(0)=\Psi(\alpha)=\log2$, while at the minimum
+$$
+\Psi(\sqrt\phi-1)=2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+This proves both limiting costs.
+
+For a direct strict comparison, set $z=(1+\sqrt\phi)/\phi$. One has $z>7/5$: squaring the positive sides reduces this inequality to $\phi>37/23$, which follows from $5>(51/23)^2$. Also $\log z>2(z-1)/(z+1)$ for $z>1$, as follows by differentiating the difference and using its value zero at one. Thus $2\log z>2/3$, whereas $5-2\sqrt{5}<2/3$. The strict gap follows.
+
+The simpler assignment of the upper diameter $2^{-t}$ to each of the $t+1$ cylinders would give total cost one. Neither that upper estimate nor the actual same-level costs compute the adaptive infimum proved in 35.7. $\square$
+

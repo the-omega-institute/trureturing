@@ -1,0 +1,29 @@
+**Proof.** Suppose first that $a_f$ is WAP. For any fixed $m$, theorem 26.2 provides actual nonnegative integer sequences whose two iterated scalar limits are $f(x_m^+)$ and $f(x_m^-)$. Theorem 26.3 forces them to agree. Thus $f$ is constant on every double fiber. Since every remaining fiber is a singleton, it is constant on every fiber of $H$.
+
+Define $g(\theta)$ to be this common value on $H^{-1}(\{\theta\})$. Surjectivity makes this definition possible and gives uniqueness. We verify continuity rather than just set-theoretic factorization. The continuous map $H$ from compact $K$ to Hausdorff $\mathbb T$ is closed: the image of a closed subset of $K$ is compact, hence closed. It is therefore a quotient map. Explicitly, for every closed $D\subseteq\mathbb F$,
+$$
+g^{-1}(D)=H(f^{-1}(D)).
+$$
+The right-hand side is compact and closed in $\mathbb T$. Thus $g$ is continuous. Conversely, any factorization $f=g\circ H$ plainly makes the two values on every double fiber equal.
+
+Now suppose $f=g\circ H$ with $g$ continuous. Define
+$$
+\Phi_g:\mathbb T\longrightarrow B_{\mathbb F},\qquad
+\Phi_g(\theta)=\bigl(g(\theta+[n\phi])\bigr)_{n\ge0}.
+$$
+The map is well-defined because $g$ is bounded. Given $\epsilon>0$, uniform continuity of $g$ supplies $\delta>0$ such that $\rho(s,t)<\delta$ implies $|g(s)-g(t)|<\epsilon$. Translation invariance of $\rho$ then gives
+$$
+\rho(\theta,\eta)<\delta
+\quad\Longrightarrow\quad
+\|\Phi_g(\theta)-\Phi_g(\eta)\|_\infty\le\epsilon.
+$$
+Hence $\Phi_g$ is norm-continuous, and its image is norm-compact. Since
+$$
+S^ka_f=\Phi_g([k\phi])\qquad(k\ge0),
+$$
+this compact image contains the translation orbit and its norm closure. Therefore $a_f$ is AP.
+
+Finally, if an orbit has compact norm closure $C$, the identity from $C$ with its norm topology to $B_{\mathbb F}$ with its weak topology is continuous. Its image is weakly compact and, since the weak topology is Hausdorff, weakly closed. It contains the weak closure of the orbit, which is consequently compact. Thus AP implies WAP and the four conditions are equivalent.
+
+Everything in the argument holds separately over $\mathbb R$ and $\mathbb C$. In the complex case, equality of the two values of $f$ on every split fiber is equivalent to those equalities for both $\operatorname{Re}f$ and $\operatorname{Im}f$. Applying the already proved real and complex classifications establishes the coordinate assertions. No minimal-flow theorem or invertibility of $T$ is required. $\square$
+

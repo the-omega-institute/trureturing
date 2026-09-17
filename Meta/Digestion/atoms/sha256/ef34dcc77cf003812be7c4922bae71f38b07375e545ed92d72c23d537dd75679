@@ -1,0 +1,22 @@
+**定义 25.0（载体、相位和固定定向）。** 取 $\mathbb N=\{0,1,2,\ldots\}$、$\mathbb N_{>0}=\{1,2,\ldots\}$，置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+记 $Z(n)$ 为以权 $G_j$ 展开的有限 Zeckendorf 规范字补零所得的点，$0_K=Z(0)$，并沿用定义16.0的闭图
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},\qquad
+\Gamma(x,y)=\{w:(x,y,w)\in\Gamma\}.
+$$
+对 $m\ge1$，记
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+x_m^+=z_{E_m}^{+1},\qquad x_m^-=z_{E_m}^{-1}.
+$$
+这里的标记严格取定义16.3的相位正、负侧定向，不另行逐纤维交换；特别 $x_1^+=(10)^{\mathbb N}$、$x_1^-=(01)^{\mathbb N}$。[^rro25-graph]
+

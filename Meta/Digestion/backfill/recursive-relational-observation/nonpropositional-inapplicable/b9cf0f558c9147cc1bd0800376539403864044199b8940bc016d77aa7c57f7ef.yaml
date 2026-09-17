@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9cf0f558c9147cc1bd0800376539403864044199b8940bc016d77aa7c57f7ef
+  normalized_sha256: sha256:b9cf0f558c9147cc1bd0800376539403864044199b8940bc016d77aa7c57f7ef
+cas_ref: sha256:b9cf0f558c9147cc1bd0800376539403864044199b8940bc016d77aa7c57f7ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在原文四个概率系数均属于闭单位区间及两条显示恒等链的前提下，探针对四个实数逐项规范化，推出全部相等且公共值为零或一；这里只结算标量后果，仓内无冻结 GID。
+    previous_atom_id: fe55b28e0dbbb841bf79eb9df20b82b14573a02c0a5dc2d0b1c79109e56bd8e3
+    next_atom_id: 5c5a000335822caf6523ab51832498ec200007ab96c61ecc0fafa1150ba477d7

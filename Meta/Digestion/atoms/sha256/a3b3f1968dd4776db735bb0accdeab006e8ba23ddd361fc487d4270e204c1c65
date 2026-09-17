@@ -1,0 +1,26 @@
+**Proof.** Expanding the binomial and integrating integer exponentials gives
+$$
+b_{n,p}(j)
+ =\frac1{2\pi}\int_{-\pi}^{\pi}
+   (1-p+pe^{it})^n e^{-ijt}\,dt.
+$$
+The modulus identity
+$$
+|1-p+pe^{it}|^2=1-4p(1-p)\sin^2(t/2)
+$$
+and $1-u\le e^{-u}$ imply
+$$
+b_{n,p}(j)
+ \le\frac1{2\pi}\int_{-\pi}^{\pi}
+       e^{-2V\sin^2(t/2)}\,dt.
+$$
+Concavity of sine on $[0,\pi/2]$ gives $\sin(|t|/2)\ge |t|/\pi$ for $|t|\le\pi$. Extending the resulting Gaussian integral to the real line yields
+$$
+b_{n,p}(j)
+ \le\frac1{2\pi}\int_{\mathbb R}e^{-2Vt^2/\pi^2}\,dt
+ =\frac{\sqrt\pi}{2\sqrt2\,s}.
+$$
+The probability bound by one supplies the other term. Theorems 40.5 and 40.6 now give the error bounds. Letting $np(1-p)$ tend to infinity proves the stated uniform convergence.
+
+No step restricts continued-fraction coefficients. Large partial quotients change the endpoint permutation and the masses, but the endpoint-vector diameter remains at most $2(N-1)$. Thus the mechanism does not pass through a global interval-discrepancy estimate. $\square$
+

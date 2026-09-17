@@ -1,0 +1,19 @@
+**定理 30.6（仅假设 Dirac 三元组结合的全部正运算分类）。** 设 $B:M(K)^2\to M(K)$ 实双线性。下列条件合在一起，等价于 $B$ 恰为 $\star_0$ 或 $\star_\infty$：$B$ 保持正测度对的正性；它满足假设30.0的全测度相位律；对全部 $x,y\in K$ 有准确闭图的支撑包含条件
+$$
+\operatorname{supp} B(\delta_x,\delta_y)\subseteq\Gamma(x,y);
+$$
+并且仅要求下列有序 Dirac 三元组结合律：
+$$
+B\bigl(B(\delta_x,\delta_y),\delta_z\bigr)
+=B\bigl(\delta_x,B(\delta_y,\delta_z)\bigr)
+\qquad(x,y,z\in K).
+$$
+这里支撑条件是包含于准确的 $\Gamma$，不是支撑等于 $\Gamma$。无需另行假设全部测度的结合律、交换律、有界性或积分表示。
+
+若把支撑包含条件加强为
+$$
+\operatorname{supp}B(\delta_x,\delta_y)=\Gamma(x,y)
+\qquad(x,y\in K),
+$$
+则不存在满足其余条件的运算。
+

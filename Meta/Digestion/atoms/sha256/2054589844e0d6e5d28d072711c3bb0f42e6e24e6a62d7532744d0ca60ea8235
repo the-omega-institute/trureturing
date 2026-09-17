@@ -1,0 +1,50 @@
+**定理 30.2（正性与质量给出的自动全变差压缩）。** 设 $X$ 为非空紧度量空间，$B:M(X)^2\to M(X)$ 实双线性、保持正测度对的正性，并对全部正输入满足
+$$
+\varepsilon_X(B(\mu,\nu))=\varepsilon_X(\mu)\varepsilon_X(\nu).
+$$
+则对任意实有符号输入都有测度不等式及范数估计
+$$
+|B(\mu,\nu)|\le B(|\mu|,|\nu|),\qquad
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+质量恒等式也对全部实有符号输入成立，并且
+$$
+\|B\|_{\mathrm{bil}}=1.
+$$
+特别，假设30.0的全测度相位契约蕴含这里的质量前提。
+
+正算子的自动连续性具有经典的一般理论，参见 Wolfgang Arendt、Robin Nittka，*Equivalent complete norms and positivity*，*Archiv der Mathematik* 92 (2009), 414–427，[定理2.8及例2.3(a)，作者公开全文](https://www.researchgate.net/publication/226200984_Equivalent_complete_norms_and_positivity)。正多线性映射的模支配也见 Geraldo Botelho、Vinícius C. C. Miranda，*Compact positive multilinear operators on Banach lattices*，[§1的正多线性映射定义之后](https://arxiv.org/html/2509.04652v1)。本结论中的精确常数由以下质量计算直接得到。
+
+**证明。** 对任意 $\mu,\nu$ 取 Jordan 分解，定义两个正测度
+$$
+U=B(\mu^+,\nu^+)+B(\mu^-,\nu^-),\qquad
+V=B(\mu^+,\nu^-)+B(\mu^-,\nu^+).
+$$
+仅由双线性即有
+$$
+B(\mu,\nu)=U-V,\qquad B(|\mu|,|\nu|)=U+V.
+$$
+对任意 Borel 集 $A$ 的有限 Borel 分割 $A=\bigsqcup_i A_i$，
+$$
+\sum_i |(U-V)(A_i)|
+\le\sum_i\bigl(U(A_i)+V(A_i)\bigr)=U(A)+V(A).
+$$
+取分割上确界得到 $|U-V|(A)\le U(A)+V(A)$，故得测度支配。再用质量前提于两个正测度 $|\mu|,|\nu|$，得到
+$$
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le B(|\mu|,|\nu|)(X)
+=|\mu|(X)|\nu|(X).
+$$
+这没有先使用 $B$ 的任何连续性。对四个 Jordan 项分别读取质量，则得到全部有符号输入的质量恒等式。
+
+正概率输入的输出是质量一的正测度，因而范数恰为一。由于 $X$ 非空，Dirac 概率存在；它们使双线性范数下界达到一，而已证估计给上界一。因此 $\|B\|_{\mathrm{bil}}=1$。
+
+对满足假设30.0契约的 $B$，在相位等式上读取整个圆周的质量，得到
+$$
+B(\mu,\nu)(K)
+=\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)(\mathbb T)
+=\mu(K)\nu(K)
+$$
+对全部正输入成立。最后，$H_\#$ 线性、圆周卷积双线性，所以同样的四项 Jordan 展开还证明：相位契约对全部正输入成立，等价于它对全部实有符号输入成立。这里使用的是相位契约对四对 Jordan 正部的适用性，而不是从 Dirac 对推出全测度相位律。证毕。
+

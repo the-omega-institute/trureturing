@@ -1,0 +1,65 @@
+**定理 33.2（任意集合的质量界、精确临界测度及 Ahlfors 界）。** 令 $\nu^*$ 为 $\nu$ 的外测度。对每个集合 $A\subseteq K$，
+$$
+\nu^*(A)\le(\operatorname{diam}_d A)^s.
+$$
+而且对所有 $\delta>0$ 都有更强的等式
+$$
+\mathcal H^s_{d,\delta}(A)=\mathcal H^s_d(A)=\nu^*(A).
+$$
+特别地，作为 Borel 测度，
+$$
+\mathcal H^s_d=\nu,\qquad \mathcal H^s_d(K)=1,\qquad
+\dim_{\mathrm H}(K,d)=s.
+$$
+对所有 $x\in K$ 和 $0<r\le1$，闭球满足
+$$
+\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s.
+$$
+这两个统一系数分别不能增大和减小。
+
+**证明。** 若 $A$ 为空或至多含一点，第一式由无原子性成立。否则在所有不同点对的首差下标中取最小值 $k$。所有点共享前 $k$ 位，并有两个点恰在第 $k$ 位不同，故 $\operatorname{diam}_d A=2^{-k}$。若 $k=0$，使用 $A\subseteq K$。若 $k\ge1$，共同前缀的末位必为零；否则第 $k$ 位被强制为零，不可能出现该处首差。因此 $A$ 包含于一个质量为 $\alpha^k$ 的柱集，得到
+$$
+\nu^*(A)\le\alpha^k=(2^{-k})^s.
+$$
+这证明的是所有集合的直径控制，而不只是球或可测集合的控制。
+
+任意允许的覆盖给出
+$$
+\nu^*(A)\le\sum_i\nu^*(A_i)
+\le\sum_i(\operatorname{diam}_d A_i)^s,
+$$
+所以 $\nu^*(A)\le\mathcal H^s_{d,\delta}(A)$。反向使用上一条预测度扩张的外测度公式
+$$
+\nu^*(A)=
+\inf\left\{\sum_i\nu(B_i):
+ A\subseteq\bigcup_i B_i,\ B_i\text{ 为开闭集}\right\}.
+$$
+固定 $\delta>0$ 和 $\varepsilon>0$，取右边总质量小于 $\nu^*(A)+\varepsilon$ 的开闭覆盖。将每个 $B_i$ 分成足够深的有限个柱集，使它们的直径均不超过 $\delta$。按定理 33.1，这些柱集的直径 $s$ 次幂之和恰为 $\nu(B_i)$。因此
+$$
+\mathcal H^s_{d,\delta}(A)\le\nu^*(A)+\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 得每个尺度上的等式，继而得到所述 Borel 测度等式。
+
+若 $0<q<s$，所有直径不超过 $\delta$ 的覆盖满足
+$$
+\sum_i(\operatorname{diam}_d A_i)^q
+\ge\delta^{q-s}\sum_i(\operatorname{diam}_d A_i)^s
+\ge\delta^{q-s}
+$$
+当它覆盖 $K$ 时；令 $\delta\downarrow0$ 得 $\mathcal H^q_d(K)=\infty$。若 $q>s$，长度 $L$ 的全部柱覆盖的 $q$ 次幂直径和不超过
+$$
+2^{-L(q-s)}\sum_{|p|=L}\nu(C_p)=2^{-L(q-s)}\longrightarrow0.
+$$
+因此所有 $q>s$ 的 Hausdorff 测度为零，维数恰为 $s$。
+
+对 $0<r<1$，置 $L=\lceil\log_2(1/r)\rceil$。闭球恰是 $C_{q_L(x)}$，且
+$$
+2^{-L}\le r<2^{-(L-1)},\qquad
+\alpha^{L+1}\le\nu(\overline B_d(x,r))\le\alpha^L.
+$$
+于是得到 $\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s$；$r=1$ 时闭球是 $K$。在以零结尾的深度 $L$ 柱上取 $r=2^{-L}$，上界等号成立。取 $x_0=1$ 并令 $r\uparrow1$、$r<1$，闭球质量恒为 $\alpha^2$，故质量与 $r^s$ 的比值趋于 $\alpha^2$，证明下界系数最优。
+
+原加权距离 $d_K$ 满足 $\tfrac12d\le d_K\le d$。对每个正指数，两个距离的覆盖代价只相差固定乘数，故零测度指数的集合相同，得到 $\dim_{\mathrm H}(K,d_K)=s$。本条临界测度的精确系数等式只对明确指定的距离 $d$ 成立，未将它移植为 $d_K$ 下的测度等式。证毕。
+
+附引：任意集合的直径幂质量分布界及所用归一化分别对应[Hausdorff 测度的质量界与直径幂定义](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Hausdorff.lean#L491-L500)；距离比较见 Zeckendorf 卷[第 477.3 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+

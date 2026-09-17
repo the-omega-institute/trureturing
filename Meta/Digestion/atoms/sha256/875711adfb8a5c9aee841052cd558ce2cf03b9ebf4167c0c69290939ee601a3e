@@ -1,0 +1,7 @@
+**定理 19.6（逐个固定平移不能补成全参数分别连续运算）。** 令 $T:K\to K$ 为连续后继，满足 $T(Z(n))=Z(n+1)$。对每个固定 $h\in\mathbb N$，$T^h$ 连续，并且是 $Z(n)\mapsto Z(n+h)$ 的唯一连续延拓。然而
+$$
+Z(b_l)\longrightarrow o,\qquad
+T^{b_l}(u)=Z(b_l-1)\longrightarrow v\ne u=T^0(u).
+$$
+因此，逐个固定自然参数的连续平移族不能补成分别连续映射 $K\times K\to K$，使第二参数 $Z(h)$ 对应 $T^h$。连续后继的存在见《情境时空算术：Zeckendorf》第 375.2 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+

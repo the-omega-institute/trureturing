@@ -1,0 +1,19 @@
+**证明。** 对给定 $a,b$，仅有有限多个输入对参与求和，每个 $P_{x,y}$ 又有有限支撑。因此乘积的支撑包含于有限多个有限集的并。由各核的系数和为一，
+$$
+\varepsilon(a*b)
+=\sum_{x,y}a(x)b(y)\varepsilon(P_{x,y})
+=\sum_{x,y}a(x)b(y)
+=\varepsilon(a)\varepsilon(b).
+$$
+假设25.1使 $P_{x,y}$ 支撑于相位 $H(x)+H(y)$；这给分次包含，并给
+$$
+H_\#(P_{x,y})=b_{H(x)+H(y)}.
+$$
+双线性扩张即得乘法相容性。每个相位有原像，所以每个 $b_\theta$ 都在像中，满射成立。最后，任意 $a,b,c$ 的结合子等于有限和
+$$
+(a*b)*c-a*(b*c)
+=\sum_{x,y,z}a(x)b(y)c(z)
+\bigl((\delta_x*\delta_y)*\delta_z-\delta_x*(\delta_y*\delta_z)\bigr).
+$$
+因此点质量上的结合律推出全空间结合律，反向是限制。证毕。
+

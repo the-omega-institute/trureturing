@@ -1,0 +1,14 @@
+**theorem 26.7 (Exact uniform distance to continuous phase observations).** For $f\in C(K,\mathbb F)$ put
+$$
+\Delta(f)=\sup_{m\ge1}|f(x_m^+)-f(x_m^-)|.
+$$
+Then
+$$
+\inf_{g\in C(\mathbb T,\mathbb F)}\|f-g\circ H\|_\infty
+=
+\inf_{b\in\mathcal R(\mathscr A_{\mathbb F})}\|a_f-b\|_\infty
+=
+\frac{\Delta(f)}2.
+$$
+In particular the sequence-space distance here is to the WAP observations already continuous on $K$, as identified in theorem 26.6, not an assertion about distance to all WAP sequences.
+

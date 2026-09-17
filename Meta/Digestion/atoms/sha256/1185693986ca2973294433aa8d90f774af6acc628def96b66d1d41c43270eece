@@ -1,0 +1,7 @@
+**theorem 22.12 (Probability outputs have the identical obstruction).** Every admissible probability assignment, measurable or not, satisfies
+$$
+P(Z(n),Z(m))=\delta_{Z(n+m)},\qquad
+\operatorname{Cont}(P)=G.
+$$
+In particular, no such assignment is globally continuous, or continuous on a nonempty open subspace of $X$.
+
