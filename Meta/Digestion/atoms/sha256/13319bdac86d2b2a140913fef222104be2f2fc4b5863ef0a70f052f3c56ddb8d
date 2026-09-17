@@ -1,0 +1,18 @@
+**命题 69.5（正加权读数的共同核）。** 设 $I$ 是有限指标集， $V$ 与各个 $Y_i$ 都是有限维实内积空间。对每个 $i$，$R_i:V\to Y_i$ 是实线性映射，$w_i\in\mathbb R$ 且 $w_i>0$：
+$$
+R_i:V\to Y_i,
+\qquad w_i>0.
+$$
+定义加权 Gram 算子
+$$
+G=\sum_iw_iR_i^*R_i.
+$$
+则
+$$
+\boxed{
+\langle v,Gv\rangle
+=\sum_iw_i\|R_iv\|^2,
+\qquad
+\ker G=\bigcap_i\ker R_i.
+}
+$$
