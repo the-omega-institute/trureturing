@@ -168,7 +168,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
         internal WireFixture(string delta = "changed")
         {
             var fixture = new RuleFixture();
-            fixture.Files[A] = UtilityAdmissionTestSupport.WithUtility(fixture.Files[A], "kind=none");
+            fixture.Files[A] = UtilityAdmissionTestSupport.WithUtility(fixture.Files[A], "none");
             fixture.Baseline[A] = fixture.Files[A];
             var changes = RawChangeSet.Create([A]);
             switch (delta)
@@ -285,6 +285,10 @@ public sealed class DeclaredTemplateDeltaLoadTests
                 loaded.Lean.Report, loaded.Changes, BootstrapGate.Evaluate(loaded.Changes), null);
             Assert.True(evaluation.Outcome is not AdmissionOutcome.InfrastructureFailure,
                 "[FAIL] " + name + ": " + evaluation.Outcome);
+            if (!blocked)
+                Assert.True(evaluation.Outcome is AdmissionOutcome.Admitted, "[FAIL] " + name + ": "
+                    + (evaluation.Outcome is AdmissionOutcome.RuleRejected failure
+                        ? string.Join("; ", failure.Diagnostics.Select(d => d.Render())) : evaluation.Outcome));
             var diagnostics = blocked
                 ? Assert.IsType<AdmissionOutcome.RuleRejected>(evaluation.Outcome).Diagnostics
                 : Assert.IsType<AdmissionOutcome.Admitted>(evaluation.Outcome).Observations;
