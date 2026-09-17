@@ -527,3 +527,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exact actual survival limits the fixed-numerator comparison](profile-notes/56-exact-survival-limits-the-fixed-numerator-comparison.md)
 - [A common deleted-measure coupling for numerator and survival](profile-notes/57-common-deleted-measure-coupling.md)
 - [Exact optimal original-seven thresholds](profile-notes/58-optimal-original-seven-thresholds.md)
+- [Unit events force a positive outer-seven compatibility gap](profile-notes/60-unit-events-force-an-outer-seven-gap.md)
