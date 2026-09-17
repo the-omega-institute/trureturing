@@ -1,0 +1,32 @@
+**definition 63.100（附引模型校正：EDGE、NODE 与本节查询模型的严格区分）。** 为消除相关文献之间对“节点查询”一词的不同用法，本附录固定如下大写术语。
+
+设 $T=(V,E)$ 是有限树，隐藏目标为 $x\in V$。
+
+1. **EDGE 模型**：查询一条边 $e\in E$，答复指出 $x$ 位于 $T\setminus e$ 的哪一个连通分支。若 $T$ 已根化，$e=(\operatorname{par}(u),u)$，则这个二值查询等价于询问
+   $$
+   x\in T_u\ ?
+   $$
+   其中 $T_u$ 是以 $u$ 为根的后代子树。因此把边 $e=(\operatorname{par}(u),u)$ 仅用其下端点 $u$ 编号，并把查询写成“目标是否在 $u$ 的子树中”，仍然是 EDGE 查询，而不是下面的 NODE 查询。
+
+2. **NODE 模型**：查询一个顶点 $u\in V$；若 $x=u$，答复直接命中，否则答复指出 $x$ 位于森林
+   $$
+   T\setminus\{u\}
+   $$
+   的哪一个连通分支。此查询一般有 $\deg(u)+1$ 种可能答复，与上面的二值 EDGE 查询不同。
+
+Onak 与 Parys 在 *Generalization of Binary Search: Searching in Trees and Forest-Like Partial Orders* 中明确同时区分 edge-query 与 vertex-query 两个模型，主文献为 [FOCS 2006, DOI 10.1109/FOCS.2006.32](https://doi.org/10.1109/FOCS.2006.32)。
+
+Cicalese、Jacobs、Laber、Molinaro 的平均费用树搜索工作的会议版 *On the Complexity of Searching in Trees: Average-case Minimization* 以 EDGE 查询为主模型，主文献为 [ICALP 2010, DOI 10.1007/978-3-642-14165-2_45](https://doi.org/10.1007/978-3-642-14165-2_45)。其扩展期刊版 *On the complexity of searching in trees and partially ordered structures* 把根化后的边查询用下端点 $u$ 编号，并写成“目标是否位于以 $u$ 为根的子树中”；在本附录固定的大写术语下，这仍是 EDGE 模型的根化表示，而不是删除 $u$ 后返回连通分支的 NODE 模型。期刊主文献为 [Theoretical Computer Science 412 (2011), DOI 10.1016/j.tcs.2011.08.042](https://doi.org/10.1016/j.tcs.2011.08.042)。
+
+其余附引的模型范围固定如下。
+
+Dagan、Filmus、Gabizon、Moran 的 *Twenty (Simple) Questions* 研究已知加权先验下的二值二十问及受限问题族；其无约束平均费用基准由 Huffman 编码给出。主文献为 [STOC 2017, DOI 10.1145/3055399.3055422](https://doi.org/10.1145/3055399.3055422)。
+
+Hu 与 Tucker 的 *Optimal Computer Search Trees and Variable-Length Alphabetical Codes* 研究固定叶顺序下的最小加权路径长字母序二叉树。主文献为 [SIAM Journal on Applied Mathematics 21 (1971), DOI 10.1137/0121057](https://doi.org/10.1137/0121057)。
+
+Afshani、Agrawal、Benjamin Doerr、Carola Doerr、Larsen、Mehlhorn 的 *The Query Complexity of a Permutation-Based Variant of Mastermind* 的隐藏对象为二进制串与隐藏坐标置换之对 $(z,\pi)$，查询返回相对于该隐藏置换的最长公共前缀长度；这与本节固定已知 $p$ 叉层级上的单一隐藏剩余类不同。主文献为 [Discrete Applied Mathematics 260 (2019), DOI 10.1016/j.dam.2019.01.007](https://doi.org/10.1016/j.dam.2019.01.007)。
+
+theorem 63.10 使用的有限最大权一一指派问题，是 Kuhn 与 Munkres 的标准 assignment problem：Kuhn, *The Hungarian Method for the Assignment Problem*, [Naval Research Logistics Quarterly 2 (1955), DOI 10.1002/nav.3800020109](https://doi.org/10.1002/nav.3800020109)；Munkres, *Algorithms for the Assignment and Transportation Problems*, [Journal of the Society for Industrial and Applied Mathematics 5 (1957), DOI 10.1137/0105003](https://doi.org/10.1137/0105003)。
+
+上述文献只界定邻近模型及标准指派子问题；theorem 63.3--63.12 的完整前缀深度纤维、兄弟状态递推、加权调度及 CRT 固定时域公式均按本节所给模型和证明解释。
+
