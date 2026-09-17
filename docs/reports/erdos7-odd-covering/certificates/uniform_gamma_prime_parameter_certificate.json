@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "34305bcda38a1f3a4984dfeb4a7904d531511edeebe4e5e07b428590137bb6cc",
+  "parts_directory": "uniform_gamma_prime_parameter_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "0df331cd9dc73b8e5128e6877418297f1cf7f615b18b6428d5b72f55be2b94d7",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/001-cases/000001/item/008-result/008-roots/000000-000001.json",
+        "sha256": "80ee8b174c5b195246d17527985b00281475ea5798abae459efeff43ebb6aafc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/001-cases/000001/item/008-result/008-roots/000001-000002.json",
+        "sha256": "599cdc85c89172c7879e2f88b76efc8be2dc919fe0c55d64154837923dace242",
+        "kind": "value"
+      }
+    }
+  ]
+}

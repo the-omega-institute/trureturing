@@ -1,0 +1,120 @@
+{
+  "parameter_interval": [
+    "1/27",
+    "1/18"
+  ],
+  "all_height_survival_lower": "(25-102*A)/(40-72*A)",
+  "all_height_mixed_mass_upper": "(15+30*A)/(40-72*A)",
+  "ambient_density_lower": "5/21-34*A/35",
+  "survivor_count_lower": "58*3^(H-2)+17 for H>=3",
+  "infinite_height_density_infimum": "58/315",
+  "parameter_vertices": 1296,
+  "root_cell_branches": 12960,
+  "unique_quadratics": 656,
+  "identically_zero_branches": 20,
+  "minimum_Bernstein_coefficient": "0",
+  "minimum_cell": "1/90",
+  "coefficient_encoding": "JSON sorted rational coefficient/Bernstein rows, separators comma and colon",
+  "coefficient_sha256": "d71c3538eac80cb5750a3dacce37fc32a28b22d0d32f43e9dd623532f22974a8",
+  "missing_pure_branches": [
+    {
+      "case": "modulus3_absent",
+      "polynomial_coefficients": [
+        "80/27",
+        "148/15",
+        "0"
+      ],
+      "Bernstein_coefficients": [
+        "1348/405",
+        "277/81",
+        "158/45"
+      ],
+      "height_two_survival_lower": "35/48"
+    },
+    {
+      "case": "modulus9_absent_or_ineffective",
+      "polynomial_coefficients": [
+        "16/27",
+        "4",
+        "0"
+      ],
+      "Bernstein_coefficients": [
+        "20/27",
+        "7/9",
+        "22/27"
+      ],
+      "height_two_survival_lower": "47/72"
+    }
+  ],
+  "height_two": {
+    "parameter_vertices": 36,
+    "root_cell_branches": 360,
+    "pure_product_survival_lower": "37/60",
+    "mixed_mass_upper": "23/60",
+    "ambient_density_lower": "74/315",
+    "period": 315,
+    "survivors": 74,
+    "pure_survivors": 120,
+    "extremizing_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        8
+      ],
+      [
+        63,
+        16
+      ],
+      [
+        35,
+        3
+      ],
+      [
+        105,
+        53
+      ],
+      [
+        315,
+        313
+      ]
+    ]
+  },
+  "actual_CM7_equality_cases": [
+    {
+      "ternary_height": 3,
+      "period": 945,
+      "survivors": 191,
+      "pure_product_survival": "191/336"
+    },
+    {
+      "ternary_height": 4,
+      "period": 2835,
+      "survivors": 539,
+      "pure_product_survival": "539/984"
+    }
+  ],
+  "scope": "For any distinct nonunit moduli dividing 3^H*35, all H>=2, arbitrary residues. Universal polynomial bounds are certified on the entire A interval; all-height CRT sharpness uses the ordinary CM3--CM7 construction. This is not a Lean kernel proof."
+}
