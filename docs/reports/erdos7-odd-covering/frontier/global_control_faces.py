@@ -206,10 +206,11 @@ def main():
     mode.add_argument('--check', action='store_true')
     args = parser.parse_args()
     result = calculate(args.base)
+    io = module('control_output_io', args.base/'certificate_io.py')
     if args.check:
-        require(json.loads((args.base/CERTIFICATE).read_text()) == result, 'Exact global control-face certificate')
+        require(json.loads(io.read_artifact_bytes(args.base/CERTIFICATE)) == result, 'Exact global control-face certificate')
     elif args.output is not None:
-        args.output.write_text(json.dumps(result, indent=2)+'\n')
+        io.write_certificate_text(args.output, json.dumps(result, indent=2)+'\n')
     else:
         print(json.dumps(result, indent=2))
     print('PASS: all1296 vertices,18 carriers,two mass endpoints; J18 zeros/two4D faces; K6 zeros/two2D faces.')
