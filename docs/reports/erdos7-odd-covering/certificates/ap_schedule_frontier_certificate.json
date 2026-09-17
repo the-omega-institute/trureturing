@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+  "parts_directory": "ap_schedule_frontier_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "33ef0c11841d02b2ac82373deec4e75c03410467c0fad296510ad507c147fea7",
+    "kind": "object"
+  }
+}
