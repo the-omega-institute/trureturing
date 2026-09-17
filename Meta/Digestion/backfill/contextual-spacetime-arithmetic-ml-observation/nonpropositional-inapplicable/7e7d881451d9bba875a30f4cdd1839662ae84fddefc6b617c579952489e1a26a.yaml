@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e7d881451d9bba875a30f4cdd1839662ae84fddefc6b617c579952489e1a26a
+  normalized_sha256: sha256:7e7d881451d9bba875a30f4cdd1839662ae84fddefc6b617c579952489e1a26a
+cas_ref: sha256:7e7d881451d9bba875a30f4cdd1839662ae84fddefc6b617c579952489e1a26a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “每收到报告”后的两个编号更新、计数比较及模式分支给出一条完整操作规则；分支中的“丢弃旧动态编号”是动作定义，未断言交接后误差界，故无夹带正确性定理。
+    previous_atom_id: 4b520f529ac2e61db03630ef966324f48889966d923654f47ecbaecbacf8589b
+    next_atom_id: c755b55ac8cc52e97e6df05ff1da74a0b3a878b90ba531dc94bda77b373082e6
