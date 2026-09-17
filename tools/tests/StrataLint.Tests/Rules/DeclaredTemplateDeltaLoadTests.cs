@@ -205,9 +205,9 @@ public sealed class DeclaredTemplateDeltaLoadTests
             foreach (var path in new[] { A, B }.Where(fixture.Reports.ContainsKey))
                 fixture.Reports[path] = fixture.Reports[path] with
                 {
-                    Declarations = fixture.Reports[path].Declarations.AddRange([
+                    Declarations = fixture.Reports[path].Declarations.AddRange(new LeanDeclaration[] {
                         new(ModuleName(path) + ".unit", "def", "True", []),
-                        new(ModuleName(path) + ".realization", "def", "True", [])]),
+                        new(ModuleName(path) + ".realization", "def", "True", []) }),
                 };
             context = fixture.Build(changes);
             reportPath = Path.Combine(directory.Path, "candidate.json");
