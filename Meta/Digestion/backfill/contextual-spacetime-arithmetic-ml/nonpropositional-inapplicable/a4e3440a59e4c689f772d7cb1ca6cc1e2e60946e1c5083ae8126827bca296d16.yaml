@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4e3440a59e4c689f772d7cb1ca6cc1e2e60946e1c5083ae8126827bca296d16
+  normalized_sha256: sha256:a4e3440a59e4c689f772d7cb1ca6cc1e2e60946e1c5083ae8126827bca296d16
+cas_ref: sha256:a4e3440a59e4c689f772d7cb1ca6cc1e2e60946e1c5083ae8126827bca296d16
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶的“本章只追加勘误，不改写第30章已经入账的字节”规定文本修订方式，标题标示策略状态边界；这里未陈述 Bayes 标签修正或闭包定理，也没有借定义夹带数学结论，故无待证命题。
+    previous_atom_id: dad44d8e9d4484198ff2cad2d73ecc3132a6b24c8a1ac6ebce3439dcb916c236
+    next_atom_id: d270313f54811cb1af68a1073bf7a5327e723ff2e0561e85b0d38b31b6c245bc

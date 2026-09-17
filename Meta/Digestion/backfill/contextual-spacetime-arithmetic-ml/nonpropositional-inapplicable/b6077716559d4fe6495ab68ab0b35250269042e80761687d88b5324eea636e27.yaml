@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6077716559d4fe6495ab68ab0b35250269042e80761687d88b5324eea636e27
+  normalized_sha256: sha256:b6077716559d4fe6495ab68ab0b35250269042e80761687d88b5324eea636e27
+cas_ref: sha256:b6077716559d4fe6495ab68ab0b35250269042e80761687d88b5324eea636e27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.6节“为一个完全由读数定义的线性算子”是明确性质断言，非定义偷渡；探针以任意固定矩阵族构造线性映射，逐项用 Matrix.mul_add、Matrix.add_mul、Matrix.mul_smul、Matrix.smul_mul 验证加法和标量作用，随后可限制到对称子空间，仓内无冻结 GID。
+    previous_atom_id: f5743eefab41a48e57403327b06435801b2d8054d0518e3d7921f88a5bbd2c73
+    next_atom_id: 0e9017628d543f6494c2b1f299e17bc7908126a89441ae19be5192c70b079df8
