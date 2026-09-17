@@ -1,7 +1,7 @@
 {
   "schema": "erdos7-joint-integer-moment-limits-v1",
   "source_sha256": {
-    "certificates/supported13_hinges_certificate.json": "b34a86ff533a3d1fc9c3de0c0ab3894f5648326eaf8e6602f0b176f350330442",
+    "certificates/supported13_hinges_certificate.json": "d484812af981dc55ee0c766f69dcdb0eb3301c18d1f0886b00e9cc726d514e7f",
     "verify_pg1_scalar_schedule.py": "9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b"
   },
   "W": "483",

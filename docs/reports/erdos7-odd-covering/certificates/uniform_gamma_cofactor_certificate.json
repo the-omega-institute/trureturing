@@ -505,7 +505,7 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d",
+    "verifier_sha256": "4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3",
     "scope": "Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution."
   },
   "same_original5_deletion_three_prime_parameters": {
@@ -658,7 +658,204 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d",
+    "verifier_sha256": "4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3",
     "scope": "The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
+  },
+  "same_original5_six_cofactor_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "765767/21465",
+    "previous_same_original5_upper": "5761/159",
+    "strict_improvement": "11968/21465",
+    "selected_pure3_cofactor_exponents": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pointwise_actual_label_multiplicity": 6,
+    "complete_positive7_coefficient": "1/5",
+    "weighted_removed_mass_budget": "6/5",
+    "selected_deep_coefficient": "40/729",
+    "complete_remaining_deep_coefficient": "1/1458",
+    "empty_root_cell_sum_lower": "35/36",
+    "deep_actual_mass_cap_coefficient_lower": "7/20",
+    "joint_remainder_is_standalone_deletion_upper_bound": false,
+    "separately_concave_parameter_groups": [
+      "pure_three_deficits",
+      "mixed_five_root_removal",
+      "mixed_five_cell_removal",
+      "deeper_mixed_removal",
+      "pure_five_survivor_mass"
+    ],
+    "original_unit_five_mass_upper_endpoint": "1/5",
+    "endpoint_order": "Use actual six-event multiplicity before taking cylinder caps.",
+    "parameter_vertices": 1296,
+    "selected_layout_vertex_pairs": 12960,
+    "minimum_scaled_margin": "0",
+    "minimum_branch_slope": "53/360",
+    "margin_rows_sha256": "19e826b45b1f8268441aa5e02eecfc5114bb420a0c037b12f8a40827d3daf883",
+    "relaxation_equalities": [
+      {
+        "vertex": 398,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 410,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 422,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 616,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 628,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 640,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "joint_remainder_parts": [
+          "1783481/386370",
+          "266257/128790",
+          "1302574/1043199",
+          "679907/41727960",
+          "698987/171720",
+          "372151/128790",
+          "372151/386370",
+          "372151/772740"
+        ],
+        "joint_remainder": "280817/17172",
+        "scaled_margin": "0"
+      }
+    ],
+    "fixed_formula_boundary": {
+      "vertex": 398,
+      "selected_root_cell": [
+        0,
+        1
+      ],
+      "margin_upper_slope": "53/360",
+      "margin_upper_intercept": "-765767/145800",
+      "target": "765767/21465",
+      "scope": "A fixed active-branch upper bound on this formula for every C>=16; not actual-family sharpness."
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "verifier_sha256": "4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3",
+    "scope": "One actual original5 event pays through retained or removed mass in the joint selected-square/deletion expression; independent original labels and complete tails remain; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
   }
 }

@@ -20,9 +20,9 @@ from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
-    'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
-    'certificates/weighted_kernel_tails_certificate.json':'c1e64e46884a7a4e226222aea4394fae98e5f159fe4e2e366a5b17fbbc95f240',
+    'certificates/shared_cell_hinges_certificate.json':'585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845',
+    'certificates/pure_root_profile_certificate.json':'b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196',
+    'certificates/weighted_kernel_tails_certificate.json':'373b6a441a027f0e6fd7b4c9b718e90b8dcbf6382ecbbf87633a7bcec9741d48',
 }
 
 def require(c,m):
