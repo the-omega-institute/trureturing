@@ -56,7 +56,8 @@ C-IRPT 语言 \(\mathcal L_{\mathrm{CIRPT}}\) 通过显式定义加入 `CUT`、`
 
 \[
 (-)^\flat:
-\mathcal L_{\mathrm{CIRPT}}\longrightarrow
+\mathcal L_{\mathrm{CIRPT}}
+\longrightarrow
 \mathcal L_0
 \]
 

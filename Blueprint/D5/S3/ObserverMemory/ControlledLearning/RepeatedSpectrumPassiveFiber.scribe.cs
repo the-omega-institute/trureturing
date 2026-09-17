@@ -66,8 +66,9 @@ internal sealed class RepeatedSpectrumPassiveFiberDocument : IScribeDocumentDefi
         var transportedDifference = Parenthesized(Product(d, x));
 
         var hypotheses = Conjoin(
-            Seq(Forall, Sp, F.Id("i"), Sp, InMacro, Sp, F.Id("I"), Comma, Sp,
-                D(0), Sp, Lt, Sp, Indexed(sigma, F.Id("i"))),
+            Parenthesized(Seq(
+                Forall, Sp, F.Id("i"), Sp, InMacro, Sp, F.Id("I"), Comma, Sp,
+                D(0), Sp, Lt, Sp, Indexed(sigma, F.Id("i")))),
             Equal(Transpose(aOne), aOne),
             Equal(Transpose(bOne), bOne),
             Equal(Transpose(aTwo), aTwo),
