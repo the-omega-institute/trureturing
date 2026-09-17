@@ -18,27 +18,44 @@ internal sealed class ResiduePosteriorClosureDocument : IScribeDocumentDefinitio
                     + "nonnegative extended-real embedding of a nonnegative rational number. "
                     + "The query h(c,a) is the existing residueReadout: the maximum of all k from "
                     + "zero through e for which the natural representatives agree modulo p^k. "
-                    + "The map pi(k,a) is primePowerProjection from precision e to k.")),
+                    + "For each fixed p,e, put Z(k)=ZMod(p^k) for k in N and X=Z(e). The map "
+                    + "pi(k,a), for k<=e and a in X, is primePowerProjection from precision e to k.")),
             Paragraph(Text(
-                "B(d,b) is the complete fiber pi(d,a)=b. For d<e, Ch(d,b) consists of all "
-                    + "labels modulo p^(d+1) reducing to b. For any set I of those labels, S(d,I) "
+                "For d<=e and b in Z(d), B(d,b) is the complete fiber pi(d,a)=b. "
+                    + "For d<e and b in Z(d), Ch(d,b) consists of all "
+                    + "labels modulo p^(d+1) reducing to b. For any I in Fin(Z(d+1)), S(d,I) "
                     + "is the union of their complete fibers in X. Empty I is permitted in a "
-                    + "fiber formula; a sibling state requires I nonempty. Define "
+                    + "fiber formula; a sibling state requires I nonempty. For every S in Fin(X), c in X, and r in N, define "
                     + "F(S,c,r) as the elements a of S with h(c,a)=r, and R(c,r)=F(X,c,r). "
-                    + "For t<e, J(t,c) is Ch(t,pi(t,c)) with pi(t+1,c) removed. "
+                    + "For t<e and c in X, J(t,c) is Ch(t,pi(t,c)) with pi(t+1,c) removed. "
                     + "Shape(U) means that U is a singleton or S(d,I) for some d<e, parent b, "
                     + "and nonempty I contained in Ch(d,b).")),
             Paragraph(Text(
                 "A selector D takes the entire chronological list of pairs (center,response) "
-                    + "and returns either the next center or none to stop. U(D,n,P) is its "
+                    + "and returns either the next center or none to stop. For each such D, "
+                    + "natural n, and starting history P, U(D,n,P) is its "
                     + "finite unrolling into PassiveProtocol, beginning with accumulated history P "
                     + "and allowing n further queries. A query appends its actual reply before "
-                    + "the next selection. Run denotes runPassiveProtocol with h, followed by "
+                    + "the next selection. Trace denotes runPassiveProtocol with h. Run is Trace followed by "
                     + "the pointwise conversion from Sigma responses to pairs. Legal(D,P,H) "
                     + "means each center in H is selected by D on P followed by exactly the "
                     + "earlier pairs of H. C(H) is the intersection of the recorded reply equations. "
                     + "A(D,H) is defined separately as the targets whose actual run U(D,|H|,[]) "
-                    + "equals H. It does not use C(H).")),
+                    + "equals H. It does not use C(H). Write L=List(X times N) and Sel for the maps "
+                    + "from L to Option(X); nil is the empty history and snoc(H,c,r) appends "
+                    + "the pair (c,r). Every history variable below ranges over L.")),
+            Paragraph(Text(
+                "In the formula, apply(f,a) means f(a), and Fin(Y) denotes the finite subsets of Y, Union(I,f) the union "
+                    + "of f(j) over j in I, and range(e+1) the natural numbers zero through e. "
+                    + "For every finite T contained in X, m(T) is the sum of mu(a) over a in T; "
+                    + "for every PMF P on X, prob(P,T) is the sum of P(a) over a in T. "
+                    + "Supported(P,T) means there exists a in T belonging to support(P). "
+                    + "The expression filter(P,T,hs) denotes PMF.filter using a witness hs of "
+                    + "Supported(P,T). The witnesses hn, hs, hF, hR in the formula respectively "
+                    + "certify normalization and the indicated support intersections. "
+                    + "A let binding extends only over its bracketed body; each bracketed list "
+                    + "is an explicit conjunction. All notation in the formula is relative to "
+                    + "its quantified p,e,mu; no history or response is fixed implicitly.")),
             Describe.Lean(
                 DescribeId.Create("residue-posterior-closure"),
                 DeclarationHandle.Create(
@@ -111,8 +128,9 @@ internal sealed class ResiduePosteriorClosureDocument : IScribeDocumentDefinitio
                             + "c, the operational extension equality identifies F with the next "
                             + "actual event as well. This is sequential conditioning of the original prior.")),
                     Paragraph(Text(
-                        "The maximum characterization follows by retaining its zero-depth member "
-                            + "and reducing congruence from a maximum depth to any smaller depth. "
+                        "For positive e, the bound, threshold, and top-depth equality follow from "
+                            + "PrimePowerNonadaptiveResolution by identifying cast equality with equality "
+                            + "of representative remainders. At e=0 these facts reduce to ZMod(1). "
                             + "Surjectivity of the natural projections and equal additive-homomorphism "
                             + "fiber sizes give the exact counts. The explicit fiber classification "
                             + "then drives the chronological induction. Strict positivity ensures "
@@ -126,60 +144,159 @@ internal sealed class ResiduePosteriorClosureDocument : IScribeDocumentDefinitio
     private static Formula C(string name, params Formula[] args) => Call(name, args);
     private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Implies(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
-    private static Formula Both(Formula a, Formula b) => Seq(a, Sp, Land, Sp, b);
+    private static Formula Par(Formula a) => Seq(Left, Open, a, Right, Close);
+    private static Formula Both(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
+    private static Formula Either(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
+    private static Formula IffTo(Formula a, Formula b) => Seq(Par(a), Sp, Iff, Sp, Par(b));
     private static Formula Member(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
+    private static Formula NotMember(Formula a, Formula b) => Seq(Neg, Par(Member(a, b)));
+    private static Formula Less(Formula a, Formula b) => Seq(a, Sp, Lt, Sp, b);
+    private static Formula AtMost(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
+    private static Formula SubsetOf(Formula a, Formula b) => Seq(a, Sp, Subseteq, Sp, b);
     private static Formula Power(Formula a, Formula b) => Seq(a, Caret, Grp(b));
     private static Formula Singleton(Formula a) => Seq(OpenBrace, a, CloseBrace);
     private static Formula Ratio(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
-    private static Formula Positive(Formula a) => Seq(D(0), Sp, Lt, Sp, a);
+    private static Formula Positive(Formula a) => Less(D(0), a);
     private static Formula Nonempty(Formula a) => Seq(a, Sp, Neq, Sp, Emptyset);
+    private static Formula All(Formula variables, Formula domain, Formula body) =>
+        Seq(Forall, Sp, variables, Sp, InMacro, Sp, domain, Comma, Sp, body);
+    private static Formula Witness(Formula variable, Formula proposition, Formula body) =>
+        Seq(Exists, Sp, variable, Colon, Par(proposition), Comma, Sp, body);
+    private static Formula Let(Formula variable, Formula value, Formula body) =>
+        Seq(V("let"), Sp, Equal(variable, value), Sp, V("in"), Sp, body);
+    private static Formula AndBlock(params Formula[] clauses) => Seq(Left, OpenBracket,
+        new Formula.Aligned([.. clauses.Select((clause, index) =>
+            index == 0 ? Par(clause) : Seq(Land, Sp, Par(clause)))]), Right, CloseBracket);
+
     private static Formula Statement()
     {
         var p = V("p"); var e = V("e"); var d = V("d"); var t = V("t"); var k = V("k");
         var a = V("a"); var b = V("b"); var c = V("c"); var r = V("r"); var i = V("I");
-        var x = V("X"); var s = C("S", d, i); var h = V("H"); var policy = V("D");
+        var j = V("j"); var b0 = V("b0"); var u = V("T"); var n = V("n"); var m = V("m");
+        var x = V("X"); var h = V("H"); var q = V("Q"); var z = V("z"); var policy = V("D");
+        var nat = Seq(Mathbb, Grp(V("N"))); var rat = Seq(Mathbb, Grp(V("Q")));
+        var histories = V("L"); var selectors = V("Sel");
+        var s = C("S", d, i); var parent = C("B", d, b); var ch = C("Ch", d, b);
+        var next = Seq(d, Plus, D(1)); var path = C("pi", next, c);
+        var erased = Seq(i, Sp, Setminus, Sp, Singleton(path));
         var cand = C("C", h); var actual = C("A", policy, h); var post = V("P");
-        var fiber = C("F", cand, c, r); var response = C("R", c, r);
-        var path = C("pi", Seq(d, Plus, D(1)), c);
-        return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, p, Comma, e, Comma, Mu, Comma, Sp,
-                Both(C("Prime", p), Both(Seq(Forall, Sp, a, Sp, InMacro, Sp, x, Comma, Sp, Positive(C("mu", a))), Equal(C("m", x), D(1)))), Sp, Rightarrow),
-            Seq(Forall, Sp, k, Sp, Leq, Sp, e, Comma, Sp, a, Comma, c, Comma, Sp,
-                k, Sp, Leq, Sp, C("h", c, a), Sp, Iff, Sp, Equal(C("pi", k, a), C("pi", k, c))),
-            Seq(Forall, Sp, t, Sp, Lt, Sp, e, Comma, Sp,
-                Equal(C("h", c, a), t), Sp, Iff, Sp,
-                Both(Equal(C("pi", t, a), C("pi", t, c)),
-                    Seq(C("pi", Seq(t, Plus, D(1)), a), Sp, Neq, Sp, C("pi", Seq(t, Plus, D(1)), c)))),
-            Seq(Equal(C("h", c, a), e), Sp, Iff, Sp, Equal(a, c)),
-            Equal(C("card", C("B", d, b)), Power(p, Seq(e, Minus, d))),
-            Equal(C("card", C("Ch", d, b)), p),
-            Implies(Member(c, s), Equal(C("F", s, c, d), C("S", d, Seq(i, Sp, Setminus, Sp, Singleton(path))))),
-            Seq(Member(c, s), Comma, Sp, d, Sp, Lt, Sp, t, Sp, Lt, Sp, e, Sp, Rightarrow, Sp,
-                Equal(C("F", s, c, t), C("S", t, C("J", t, c)))),
-            Equal(C("card", C("J", t, c)), Seq(p, Minus, D(1))),
-            Implies(Member(c, s), Equal(C("F", s, c, e), Singleton(c))),
-            Equal(C("card", C("B", Seq(d, Plus, D(1)), b)), Power(p, Seq(e, Minus, Open, d, Plus, D(1), Close))),
-            Seq(Equal(C("Run", C("U", policy, C("length", h), V("Q")), a), h), Sp, Iff, Sp,
-                Both(C("Legal", policy, V("Q"), h), Seq(Forall, Sp, V("z"), Sp, InMacro, Sp, h, Comma,
-                    Equal(C("h", C("fst", V("z")), a), C("snd", V("z")))))),
-            Seq(V("n"), Sp, Leq, Sp, V("m"), Sp, Rightarrow, Sp,
-                Equal(C("take", V("n"), C("Run", C("U", policy, V("m"), V("Q")), a)),
-                    C("Run", C("U", policy, V("n"), V("Q")), a))),
-            Implies(C("Legal", policy, C("nil"), h), Equal(actual, cand)),
-            Implies(Nonempty(cand), C("Shape", cand)),
-            Seq(Positive(C("m", actual)), Sp, Rightarrow, Sp,
-                Both(C("Legal", policy, C("nil"), h), Both(Equal(actual, cand), Nonempty(cand)))),
-            Equal(V("prior"), C("ofFintype", Seq(a, Sp, Mapsto, Sp, C("emb", C("mu", a))))),
-            Equal(post, C("filter", V("prior"), actual)),
-            Equal(C("support", post), cand),
-            Implies(Member(a, cand), Equal(C("P", a), C("emb", Ratio(C("mu", a), C("m", cand))))),
-            Implies(Seq(Neg, Sp, Member(a, cand)), Equal(C("P", a), D(0))),
-            Implies(Nonempty(fiber), Both(Positive(C("m", fiber)),
-                Equal(C("prob", post, response), C("emb", Ratio(C("m", fiber), C("m", cand)))))),
-            Implies(Nonempty(fiber), Both(Positive(C("prob", post, response)),
-                Equal(C("filter", post, response), C("filter", V("prior"), fiber)))),
-            Implies(Member(a, fiber), Equal(C("filter", V("prior"), fiber, a), C("emb", Ratio(C("mu", a), C("m", fiber))))),
-            Implies(Seq(Neg, Sp, Member(a, fiber)), Equal(C("filter", V("prior"), fiber, a), D(0)))
-        ]));
+        var prior = V("prior"); var hn = V("hn"); var hs = V("hs");
+        var hF = V("hF"); var hR = V("hR"); var fiber = V("F"); var response = V("R");
+        Formula Z(Formula depth) => C("Z", depth);
+        Formula Fin(Formula domain) => C("Fin", domain);
+        Formula Card(Formula set) => C("card", set);
+        Formula Mass(Formula set) => C("m", set);
+        Formula MuAt(Formula leaf) => C("mu", leaf);
+        Formula Read(Formula leaf) => C("h", c, leaf);
+        Formula Project(Formula depth, Formula leaf) => C("pi", depth, leaf);
+        Formula Fiber(Formula set, Formula reply) => C("F", set, c, reply);
+        Formula Support(Formula pmf) => C("support", pmf);
+        Formula Supported(Formula pmf, Formula set) => C("Supported", pmf, set);
+        Formula Filter(Formula pmf, Formula set, Formula witness) => C("filter", pmf, set, witness);
+        Formula Prob(Formula pmf, Formula set) => C("prob", pmf, set);
+        Formula Emb(Formula value) => C("emb", value);
+        Formula Union(Formula labels, Formula variable, Formula term) =>
+            C("Union", labels, Seq(variable, Sp, Mapsto, Sp, term));
+        Formula Depth(Formula variable, Formula guard, Formula body) =>
+            All(variable, nat, Implies(guard, body));
+        Formula At(Formula function, Formula argument) => C("apply", function, argument);
+        Formula Values(Formula pmf, Formula set) => All(a, x, AndBlock(
+            Implies(Member(a, set), Equal(At(pmf, a), Emb(Ratio(MuAt(a), Mass(set))))),
+            Implies(NotMember(a, set), Equal(At(pmf, a), D(0)))));
+
+        var childPartition = Depth(d, Less(d, e), All(b, Z(d), AndBlock(
+            Equal(Card(ch), p),
+            Equal(Union(ch, j, C("B", next, j)), parent),
+            All(Seq(j, Comma, k), Z(next), Implies(Seq(j, Sp, Neq, Sp, k),
+                C("Disjoint", C("B", next, j), C("B", next, k)))),
+            All(i, Fin(Z(next)), Equal(s, Union(i, j, C("B", next, j)))))));
+        var geometry = Depth(d, Less(d, e), All(b, Z(d), All(i, Fin(Z(next)),
+            Implies(SubsetOf(i, ch), All(c, x, AndBlock(
+                All(a, s, Member(a, parent)),
+                Implies(Both(Member(c, parent), NotMember(c, s)), All(a, s, Equal(Read(a), d))),
+                Implies(NotMember(c, parent), All(b0, parent, AndBlock(
+                    Less(Read(b0), d), All(a, parent, Equal(Read(a), Read(b0)))))),
+                Implies(Member(c, s), AndBlock(
+                    Equal(Fiber(s, d), C("S", d, erased)),
+                    Depth(t, Both(Less(d, t), Less(t, e)), Equal(Fiber(s, t), C("S", t, C("J", t, c)))),
+                    Equal(Fiber(s, e), Singleton(c)),
+                    All(r, nat, Implies(Either(Less(r, d), Less(e, r)), Equal(Fiber(s, r), Emptyset))),
+                    IffTo(Nonempty(Fiber(s, d)), Nonempty(erased))))))))));
+        var outside = Depth(d, Less(d, e), All(b, Z(d), All(i, Fin(Z(next)),
+            Implies(Both(Nonempty(i), SubsetOf(i, ch)), All(c, x,
+                Implies(NotMember(c, s), Seq(Exists, Sp, r, Sp, InMacro, Sp, nat, Comma, Sp,
+                    AndBlock(AtMost(r, e), All(t, nat, AndBlock(
+                        Implies(Equal(t, r), Equal(Fiber(s, t), s)),
+                        Implies(Seq(t, Sp, Neq, Sp, r), Equal(Fiber(s, t), Emptyset))))))))))));
+        var nonpath = Depth(t, Less(t, e), All(c, x, AndBlock(
+            Equal(Card(C("J", t, c)), Seq(p, Minus, D(1))),
+            Nonempty(C("S", t, C("J", t, c))))));
+        var partition = All(u, Fin(x), All(c, x, AndBlock(
+            All(Seq(r, Comma, t), nat, Implies(Seq(r, Sp, Neq, Sp, t),
+                C("Disjoint", Fiber(u, r), Fiber(u, t)))),
+            Equal(Union(C("range", Seq(e, Plus, D(1))), r, Fiber(u, r)), u))));
+        var noMixing = Depth(d, Less(d, e), All(i, Fin(Z(next)), AndBlock(
+            All(j, i, Equal(Card(C("B", next, j)), Power(p, Seq(e, Minus, Par(next))))),
+            Either(Both(Equal(next, e), All(j, i, Equal(Card(C("B", next, j)), D(1)))),
+                Both(Less(next, e), All(j, i, Less(D(1), Card(C("B", next, j)))))))));
+        var root = AndBlock(
+            Implies(Equal(e, D(0)), Equal(x, Singleton(D(0)))),
+            Implies(Positive(e), Equal(x, C("S", D(0), C("Ch", D(0), D(0))))),
+            All(b, Z(D(0)), Equal(C("B", D(0), b), x)));
+        var execution = All(policy, selectors, AndBlock(
+            All(Seq(h, Comma, q), histories, All(a, x, IffTo(
+                Equal(C("Run", C("U", policy, C("length", h), q), a), h),
+                Both(C("Legal", policy, q, h), All(z, h, Equal(C("h", C("fst", z), a), C("snd", z))))))),
+            All(Seq(n, Comma, m), nat, Implies(AtMost(n, m), All(q, histories, All(a, x,
+                Equal(C("take", n, C("Trace", C("U", policy, m, q), a)),
+                    C("Trace", C("U", policy, n, q), a)))))),
+            All(h, histories, Implies(C("Legal", policy, C("nil"), h), Equal(actual, cand))),
+            All(h, histories, All(c, x, All(r, nat,
+                Implies(Both(C("Legal", policy, C("nil"), h), Equal(At(policy, h), C("some", c))),
+                    Equal(C("A", policy, C("snoc", h, c, r)), Fiber(cand, r))))))));
+        var sequential = All(c, x, All(r, nat,
+            Let(fiber, Fiber(cand, r), AndBlock(Let(response, C("R", c, r), AndBlock(
+                Implies(Nonempty(fiber), AndBlock(
+                    Positive(Mass(fiber)),
+                    Equal(Prob(post, response), Emb(Ratio(Mass(fiber), Mass(cand)))),
+                    Positive(Prob(post, response)),
+                    Witness(hF, Supported(prior, fiber),
+                        Witness(hR, Supported(post, response), AndBlock(
+                            Equal(Filter(post, response, hR), Filter(prior, fiber, hF)),
+                            Values(Filter(prior, fiber, hF), fiber))))))))))));
+        var posterior = Witness(hn,
+            Equal(Seq(Sum, Underscore, Grp(Member(a, x)), Emb(MuAt(a))), D(1)),
+            Let(prior, C("ofFintype", Seq(a, Sp, Mapsto, Sp, Emb(MuAt(a))), hn), AndBlock(
+                Equal(Support(prior), x),
+                All(policy, selectors, All(h, histories, Implies(Positive(Mass(actual)),
+                    Witness(hs, Supported(prior, actual),
+                        Let(post, Filter(prior, actual, hs), AndBlock(
+                            C("Legal", policy, C("nil"), h), Equal(actual, cand),
+                            Nonempty(cand), C("Shape", cand), Equal(Support(post), cand),
+                            Values(post, cand), sequential)))))))));
+
+        return Disp(All(Seq(p, Comma, e), nat, Implies(C("Prime", p),
+            Let(x, C("ZMod", Power(p, e)), AndBlock(
+                Let(histories, C("List", Seq(x, Times, nat)), AndBlock(
+                    Let(selectors, Seq(histories, To, C("Option", x)), AndBlock(
+                        All(V("mu"), Par(Seq(x, To, rat)), Implies(
+                            AndBlock(All(a, x, Positive(MuAt(a))), Equal(Mass(x), D(1))),
+                            AndBlock(
+                                Depth(k, AtMost(k, e), All(Seq(a, Comma, c), x,
+                                    IffTo(AtMost(k, Read(a)), Equal(Project(k, a), Project(k, c))))),
+                                Depth(t, Less(t, e), All(Seq(a, Comma, c), x,
+                                    IffTo(Equal(Read(a), t), Both(Equal(Project(t, a), Project(t, c)),
+                                        Seq(Project(Seq(t, Plus, D(1)), a), Sp, Neq, Sp,
+                                            Project(Seq(t, Plus, D(1)), c)))))),
+                                All(Seq(a, Comma, c), x, IffTo(Equal(Read(a), e), Equal(a, c))),
+                                Depth(d, AtMost(d, e), All(b, Z(d), Equal(Card(parent), Power(p, Seq(e, Minus, d))))),
+                                childPartition, geometry, outside, nonpath, partition, noMixing, root,
+                                All(Seq(b, Comma, c), x, All(r, nat,
+                                    Implies(Nonempty(Fiber(Singleton(b), r)), Equal(Fiber(Singleton(b), r), Singleton(b))))),
+                                All(h, histories, Implies(Nonempty(cand), C("Shape", cand))),
+                                execution,
+                                All(u, Fin(x), Implies(Nonempty(u), Positive(Mass(u)))),
+                                Implies(Equal(e, D(0)), All(a, x, Equal(MuAt(a), D(1)))),
+                                posterior))))))))))));
     }
 }

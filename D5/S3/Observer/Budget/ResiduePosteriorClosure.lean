@@ -7,6 +7,7 @@
    digest: Actual residue histories have exact sibling fibers and positive rational posteriors. -/
 
 import D5.S3.Observer.Budget.ResidueLeafOptimality
+import D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution
 import D5.S3.Factorization.PrimePowers.PrimeBudgetReadoutDichotomy
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Mathlib.GroupTheory.Index
@@ -175,24 +176,25 @@ theorem residue_posterior_closure (p e : ℕ) [Fact p.Prime]
     simp only [primePowerProjection, ZMod.castHom_apply, ZMod.cast_eq_val,
       ZMod.natCast_eq_natCast_iff]
   have bound (a c : ZMod (p ^ e)) : residueReadout p e c a ≤ e := by
-    apply Finset.sup_le
-    intro i hi
-    have := (Finset.mem_filter.mp hi).1
-    exact Nat.le_of_lt_succ (Finset.mem_range.mp this)
+    by_cases he : e = 0
+    · subst e
+      simp [residueReadout]
+    · simpa only [PrimePowerNonadaptiveResolution.depth, residueReadout,
+        ZMod.cast_eq_val, ZMod.natCast_eq_natCast_iff'] using
+        ((PrimePowerNonadaptiveResolution.result p e (by omega)).1 c a).1
   have threshold (k : ℕ) (hk : k ≤ e) (a c : ZMod (p ^ e)) :
       k ≤ residueReadout p e c a ↔ primePowerProjection p hk a = primePowerProjection p hk c := by
-    rw [proj]
-    constructor
-    · intro h
-      have hn : ((Finset.range (e + 1)).filter fun i => a.val % p ^ i = c.val % p ^ i).Nonempty :=
-        ⟨0, by simp [Nat.mod_one]⟩
-      have hm := Finset.sup_mem_of_nonempty (f := id) hn
-      obtain ⟨i, hi, he⟩ := hm
-      change i = residueReadout p e c a at he
-      exact (show Nat.ModEq (p ^ i) a.val c.val from (Finset.mem_filter.mp hi).2).of_dvd
-        (pow_dvd_pow p (he ▸ h))
-    · intro h
-      exact Finset.le_sup (f := id) (Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), h⟩)
+    by_cases he : e = 0
+    · subst e
+      have hk0 : k = 0 := by omega
+      subst k
+      have : Subsingleton (ZMod (p ^ 0)) := by
+        simpa only [pow_zero] using (inferInstance : Subsingleton (ZMod 1))
+      exact ⟨fun _ => Subsingleton.elim _ _, fun _ => Nat.zero_le _⟩
+    · simpa only [PrimePowerNonadaptiveResolution.depth, residueReadout,
+        primePowerProjection, ZMod.castHom_apply, ZMod.cast_eq_val,
+        ZMod.natCast_eq_natCast_iff'] using
+        ((PrimePowerNonadaptiveResolution.result p e (by omega)).1 c a).2 k hk
   have cards (E k : ℕ) (hk : k ≤ E) (b : ZMod (p ^ k)) :
       (node p E k hk b).card = p ^ (E - k) := by
     let f := primePowerProjection p hk
@@ -219,9 +221,14 @@ theorem residue_posterior_closure (p e : ℕ) [Fact p.Prime]
     congrArg (fun f : ZMod (p ^ E) →+* ZMod (p ^ j) => f a)
       ((vertical_prime_inverse_system p).2.1 j k E hj hk)
   have top (a c : ZMod (p ^ e)) : residueReadout p e c a = e ↔ a = c := by
-    rw [Nat.eq_iff_le_and_ge]
-    simp only [bound, true_and, threshold e (le_refl e),
-      (vertical_prime_inverse_system p).1 e, RingHom.id_apply]
+    by_cases he : e = 0
+    · subst e
+      have : Subsingleton (ZMod (p ^ 0)) := by
+        simpa only [pow_zero] using (inferInstance : Subsingleton (ZMod 1))
+      exact ⟨fun _ => Subsingleton.elim _ _, fun _ => by simp [residueReadout]⟩
+    · simpa only [PrimePowerNonadaptiveResolution.depth, residueReadout,
+        ZMod.cast_eq_val, ZMod.natCast_eq_natCast_iff'] using
+        (PrimePowerNonadaptiveResolution.result p e (by omega)).2.1 c a
   have exactDepth (t : ℕ) (ht : t < e) (a c : ZMod (p ^ e)) :
       residueReadout p e c a = t ↔
         primePowerProjection p (Nat.le_of_lt ht) a = primePowerProjection p (Nat.le_of_lt ht) c ∧
