@@ -514,4 +514,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two deeper cofactors give a uniform survival gain](profile-notes/45-two-deeper-cofactors-give-a-uniform-survival-gain.md)
 - [One forbidden-carrier mixture strengthens survival](profile-notes/46-one-forbidden-carrier-mixture-strengthens-survival.md)
 
+- [Six linear tests share the survival carrier](profile-notes/47-six-linear-tests-share-the-survival-carrier.md)
 - [Actual source compatibility excludes a relaxed mass endpoint](profile-notes/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md)
