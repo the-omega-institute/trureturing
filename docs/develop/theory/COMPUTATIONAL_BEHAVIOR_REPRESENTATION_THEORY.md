@@ -803,3 +803,353 @@
 **约定 16.3（本批产地）。** 本批使用 `theory-volume-template/APPEND.md`；数学推导、原文核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，没有独立模型评审。正文只追加必要定义、结果、证明及来源。未新增 Lean 或 Scribe，未运行 Lean kernel、canonical `make ingest` 或生成消化账目；有限算术、矩阵和状态机检查只用于发现实现与公式错误。全称结论以本文证明为依据，未标为 kernel-verified。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 增补三·能量下降、几何长度与受控作用量
+
+**本批导航。** 本批接续 PR #8330 的 `223734ad64ffa1aee016c8ba7c29470e07eb1300`，读取的 dev 为 `11036b0baf142c8e6535e61f29d2cae83ecf7bba`。第 17 节区分能量梯度流、最短路和跨势垒作用量；第 18 节连接路径熵、自由能、Bellman 递推与转移谱；第 19 节给出优化问题沿观察商下降的精确条件及误差界；第 20 节计算隐藏变量消元后的能量、记忆核和快慢误差。既有条目保持原字节，不改判。数学结论均按下列量词和模型成立。
+
+**约定 17.1（熵、几何及费用的载体）。** 第 12 节的观察熵是轨迹覆盖数的渐近增长率。本批的 Shannon 熵、相对熵分别作用于明确给定的概率分布，路径代价作用于轨迹，几何度量作用于状态空间或概率分布空间。参数 $\tau>0$ 在离散优化中是正则化强度；只有给出物理单位、热浴和动力学模型时才另解释为热能尺度。全文自然对数。梯度依赖所给度量；最短路依赖端点、可行路径及长度函数。以下均不从同名“熵”推断这些对象自动相等。
+
+**定理 17.2（梯度流的耗散长度界及非最短路实例）。** 设 $(M,g)$ 为连通 Riemann 流形，$V\in C^1(M)$，$x:[0,T]\to M$ 为满足 $\dot x=-\operatorname{grad}_gV$ 的 $C^1$ 曲线，$T>0$。记其长度为 $L_g(x)$，则
+\[
+ V(x(0))-V(x(T))=\int_0^T\|\dot x\|_g^2dt
+ \ge\frac{L_g(x)^2}{T}\ge\frac{d_g(x(0),x(T))^2}{T}.
+\]
+对任意绝对连续端点连接曲线 $z$，其动能作用量 $\frac12\int_0^T\|\dot z\|_g^2dt$ 至少为 $d_g(z(0),z(T))^2/(2T)$；有常速最短测地线时达到该界。梯度流一般不达到此界。
+
+**证明。** 链式法则给 $dV(x(t))/dt=-\|\operatorname{grad}_gV\|_g^2=-\|\dot x\|_g^2$。积分后，以 Cauchy–Schwarz 得 $L_g(x)^2\le T\int\|\dot x\|_g^2$，再用距离是路径长度下确界得到结果。任意 $z$ 的作用量界使用同样两步；常速最短曲线令两步同时取等。
+
+在欧氏平面取 $V(u,v)=(u^2+2v^2)/2$、初态 $(1,1)$。梯度流为 $(e^{-t},e^{-2t})$，轨迹满足 $v=u^2$。对每个 $T>0$，这段非直线曲线的长度严格大于端点间线段长度。因此即使势能处处严格凸，自然下降轨迹也未必是该几何中的端点最短路。证毕。[^tcs3-thermogeo]
+
+**定理 17.3（自由能的概率几何耗散）。** 在平坦单位环面 $\mathbb T^d$ 上，设 $U$ 光滑、$\tau>0$，$\rho_t$ 是时间区间 $[0,T]$ 上光滑、严格正、积分为一的周期密度，并满足
+\[
+ \partial_t\rho=\nabla\cdot(\rho\nabla U)+\tau\Delta\rho.
+\]
+定义
+\[
+ \mathcal F_\tau(\rho)=\int U\rho+\tau\int\rho\log\rho,
+ \qquad \pi_\tau=Z_\tau^{-1}e^{-U/\tau}.
+\]
+则
+\[
+ \mathcal F_\tau(\rho)=\tau\operatorname{KL}(\rho\Vert\pi_\tau)-\tau\log Z_\tau,
+\]
+\[
+ \frac{d}{dt}\mathcal F_\tau(\rho_t)
+ =-\int\rho_t\|\nabla(U+\tau\log\rho_t)\|^2,
+\]
+以及
+\[
+ \mathcal F_\tau(\rho_0)-\mathcal F_\tau(\rho_T)
+ \ge T^{-1}W_2(\rho_0,\rho_T)^2.
+\]
+这里 $W_2$ 使用环面的测地距离，质量及迁移率采用方程中所写的归一化。
+
+**证明。** 把 $\log\pi_\tau=-U/\tau-\log Z_\tau$ 代入相对熵，即得第一式。质量守恒和周期分部积分给
+\[
+ \frac{d}{dt}\mathcal F_\tau
+ =\int(U+\tau\log\rho)\,\nabla\cdot\bigl(\rho\nabla(U+\tau\log\rho)\bigr)
+ =-\int\rho\|\nabla(U+\tau\log\rho)\|^2.
+\]
+置速度 $v_t=-\nabla(U+\tau\log\rho_t)$，原方程成为连续性方程。光滑速度的流映射把 $\rho_0$ 推到 $\rho_t$。对每条流线，其端点距离平方至多为 $T\int_0^T|v_t|^2dt$；对初始质量积分便构造一个端点耦合，代价至多为 $T\int_0^T\int\rho_t|v_t|^2$。$W_2^2$ 取全部耦合的下确界，再使用耗散恒等式即得结论。本条直接证明给定光滑解的恒等式与界，没有借此证明 PDE 的存在性或每条样本轨道势能单调。证毕。[^tcs3-thermogeo]
+
+**定理 17.4（跨势垒作用量与上坡代价）。** 对 $U\in C^1(\mathbb R^d)$ 和绝对连续路径 $z:[0,T]\to\mathbb R^d$，假设下式积分有限，定义
+\[
+ I_T(z)=\frac14\int_0^T\|\dot z+\nabla U(z)\|^2dt.
+\]
+则
+\[
+ I_T(z)=U(z(T))-U(z(0))+rac14\int_0^T\|\dot z-\nabla U(z)\|^2dt,
+\]
+且
+\[
+ I_T(z)\ge\max_{0\le t\le T}\bigl(U(z(t))-U(z(0))\bigr).
+\]
+若所有允许的端点连接路径都须经过高于初始势能至少 $b\ge0$ 的位置，则其作用量下确界至少为 $b$。
+
+**证明。** 展开两个平方之差得 $4\dot z\cdot\nabla U(z)$，积分为 $4(U(z(T))-U(z(0)))$。对任意前缀 $[0,t]$ 使用该恒等式，丢弃余下的非负平方项及 $[t,T]$ 上的非负原积分，得到 $I_T(z)\ge U(z(t))-U(z(0))$。取最大值及路径下确界即可。对给定端点，第一式取等要求 $\dot z=+\nabla U(z)$ 几乎处处；此条件不保证任意有限时间内可以连接指定端点，特别不能假设从临界点自动出发。这里直接研究作用量，不把小噪声概率渐近或最优路径存在性加入未给出的结论。证毕。
+
+## 18. 路径自由能、软 Bellman 与图的熵压力
+
+**定义 18.1（有限路径的参考分布）。** 令 $\Omega$ 是有限非空可行路径集，$R(\omega)>0$ 且 $\sum_\omega R(\omega)=1$，$C:\Omega\to\mathbb R$ 为总费用。对概率分布 $P$ 定义
+\[
+ J_\tau(P)=\mathbb E_PC+\tau\operatorname{KL}(P\Vert R),\quad
+ Z_\tau=\sum_\omega R(\omega)e^{-C(\omega)/\tau},\quad F_\tau=-\tau\log Z_\tau.
+\]
+只有当 $R$ 在 $\Omega$ 上均匀时，$J_\tau=\mathbb E_PC-\tau H(P)+\tau\log|\Omega|$。对一般参考分布，$-\mathbb E_P\log R$ 也是目标的一部分。
+
+**定理 18.2（路径优化的精确 Gibbs 分解及零温极限）。** 令
+\[
+ P_\tau^*(\omega)=Z_\tau^{-1}R(\omega)e^{-C(\omega)/\tau}.
+\]
+对任意 $P$ 有
+\[
+ J_\tau(P)=F_\tau+\tau\operatorname{KL}(P\Vert P_\tau^*).
+\]
+所以 $P_\tau^*$ 是唯一极小点。若 $c_* =\min C$，$r_*=R\{C=c_*\}>0$，则
+\[
+ c_*\le F_\tau\le c_*-\tau\log r_*,\qquad
+ \lim_{\tau\downarrow0}F_\tau=c_*.
+\]
+
+**证明。** 将 $\log P_\tau^*=\log R-C/\tau-\log Z_\tau$ 代入 KL，逐项整理得到恒等式。相对熵非负且仅在两分布相同时为零，给出唯一极小性。另有 $r_*e^{-c_*/\tau}\le Z_\tau\le e^{-c_*/\tau}$；取负对数得到夹逼与极限。最短路在此是固定可行路径集上的最小费用；若费用取几何长度才得到对应几何的最短路径。证毕。[^tcs3-gibbs][^tcs3-todorov]
+
+**定理 18.3（路径粗粒化的条件自由能与精确损失）。** 对满射 $q:\Omega\to\mathcal Y$，记 $r=q_\#R$，定义
+\[
+ A_\tau(y)=-\tau\log\sum_{q(\omega)=y}R(\omega\mid y)e^{-C(\omega)/\tau},
+\]
+以及纤维上的分布
+\[
+ R_\tau(\omega\mid y)=R(\omega\mid y)
+                 \exp\bigl(-(C(\omega)-A_\tau(y))/\tau\bigr).
+\]
+若 $p=q_\#P$，则
+\[
+ J_\tau(P)=\mathbb E_p A_\tau+\tau\operatorname{KL}(p\Vert r)
+    +\tau\sum_{y:p(y)>0}p(y)\operatorname{KL}\bigl(P(\cdot\mid y)\Vert R_\tau(\cdot\mid y)\bigr).
+\]
+因此给定任意粗分布 $p$，其全部提升中最小目标恰为前两项；最优提升在每个正质量纤维使用 $R_\tau(\cdot\mid y)$。
+
+**证明。** 分解 $P(\omega)=p(y)P(\omega\mid y)$、$R(\omega)=r(y)R(\omega\mid y)$，直接求和得到 KL 链式分解。对每个纤维使用定理 18.2，即将条件期望费用与条件 KL 合并为 $A_\tau$ 加上所列余项。按纤维求和完成证明，取指定条件分布即可达到下界。这里 $q$ 可以是整条路径的观察；推出的是路径级精确优化，不保证观察路径具有一阶 Markov 分解。证毕。[^tcs3-leonard]
+
+**定理 18.4（有限时域的软 Bellman 线性化）。** 设有限状态集 $X$ 上有参考转移矩阵 $R$，每行和为一，支持边上的费用 $c(x,y)$ 有限，终端费用 $g:X\to\mathbb R$ 有限。控制后继分布只使用 $R$ 的支持；以下转移求和也只取支持边。给定时域 $H$，定义
+\[
+ V_H=g,\qquad V_t(x)=-\tau\log\sum_yR_{xy}
+                   e^{-(c(x,y)+V_{t+1}(y))/\tau}.
+\]
+则 $V_0(x)$ 等于从固定初态 $x$ 出发的路径目标 $J_\tau$ 最小值，且最优转移为
+\[
+ Q_t^*(x,y)=R_{xy}
+       e^{-(c(x,y)+V_{t+1}(y)-V_t(x))/\tau}.
+\]
+令 $z_t=e^{-V_t/\tau}$、$K_\tau(x,y)=R_{xy}e^{-c(x,y)/\tau}$，则 $z_t=K_\tau z_{t+1}$。相应软算子在一致范数下是非扩张的。若 $D_t$ 是同一支持图、同一终端费用的最小费用递推，$r_{\min}$ 为最小正参考转移概率，则
+\[
+ 0\le V_t-D_t\le (H-t)\tau\log(1/r_{\min}).
+\]
+
+**证明。** 在每个状态上，以候选后继概率向量作变量，对费用 $c(x,y)+V_{t+1}(y)$ 使用定理 18.2，得到最小值及 $Q_t^*$。对任意允许的历史依赖转移，路径 KL 按条件分布链式求和；反向归纳给出这些逐步最小值同时达到路径最优，Markov 形式 $Q_t^*$ 已足够。指数变换直接给出线性递推。
+
+若 $\|v-w\|_\infty\le a$，则各指数项比值位于 $[e^{-a/\tau},e^{a/\tau}]$，取负对数即得算子距离至多 $a$。一行软最小值不小于该行真实最小值，且至多比它大 $\tau\log(1/r_{\min})$；结合单调性和非扩张性逐层累积得到最后一式。本条允许直接控制后继分布并支付 KL 代价，不等同于任意指定动作约束下的 MDP。证毕。[^tcs3-todorov]
+
+**定理 18.5（图路径熵、费用与同一转移谱）。** 设有限简单有向图强连通且含有边，支持边费用为 $c_{xy}\in\mathbb R$。置 $W_\tau(x,y)=\mathbf1_{x\to y}e^{-c_{xy}/\tau}$，其 Perron 根为 $\lambda_\tau>0$。对图上任意平稳 Markov 对 $(\pi,Q)$，定义
+\[
+ h(\pi,Q)=-\sum_{x,y}\pi_xQ_{xy}\log Q_{xy}.
+\]
+则
+\[
+ -\tau\log\lambda_\tau
+ =\min_{\pi Q=\pi}\left(\sum_{x,y}\pi_xQ_{xy}c_{xy}-\tau h(\pi,Q)\right).
+\]
+另外
+\[
+ \lim_{n\to\infty}n^{-1}\log(W_\tau^n\mathbf1)_x=\log\lambda_\tau.
+\]
+若 $c_{xy}=0$，图上的路径增长熵为 $\log\rho(A)$，其中 $A$ 是邻接矩阵。若 $c_{\mathrm{cyc}}$ 为最小有向环平均费用，$d_{\max}$ 为最大出度，则
+\[
+ c_{\mathrm{cyc}}-\tau\log d_{\max}
+ \le-\tau\log\lambda_\tau\le c_{\mathrm{cyc}},
+\]
+故零温极限为最小环平均费用。
+
+**证明。** 取正右 Perron 向量 $r$，定义 $Q^*_{xy}=W_\tau(x,y)r_y/(\lambda_\tau r_x)$，各行和为一。对任意平稳 $(\pi,Q)$ 展开
+\[
+ \tau\sum_x\pi_x\operatorname{KL}(Q_x\Vert Q_x^*)
+ =\sum\pi_xQ_{xy}c_{xy}-\tau h(\pi,Q)+\tau\log\lambda_\tau.
+\]
+$\log r_y-\log r_x$ 项因平稳性抵消。有限不可约 $Q^*$ 有平稳分布，代入时 KL 为零，得到变分公式。以正倍数的 $r$ 从上下夹住 $\mathbf1$，再作用 $W_\tau^n$，即可得到增长率，无需图非周期。
+
+任意平稳边流是有限个有向环流的非负组合：沿一条正流边连续追踪至出现重复顶点，减去该环上的最小流，再迭代；每次至少消去一条正边，有限步终止。按总边质量归一化后，平均费用是各环平均费用的凸组合，故至少为 $c_{\mathrm{cyc}}$，而沿最小环确定运行达到它。最后 $0\le h(\pi,Q)\le\log d_{\max}$，代回变分式得到夹逼。这里计数权重为一，未用行归一化参考概率；归一化参考会改变熵项。长时间的环平均目标与固定端点最短路也须分别计量。证毕。[^tcs3-pressure]
+
+## 19. 优化沿观察商下降的充要条件及尖锐误差
+
+**定义 19.1（费用加权的观察转移）。** 沿用定理 18.4 的 $X,R,c$，另给满射 $q:X\to Y$。对观察标签 $j\in Y$ 定义
+\[
+ k_\tau(x,j)=\sum_{y:q(y)=j}R_{xy}e^{-c(x,y)/\tau},\qquad
+ \mu_{x,j}=\sum_{y:q(y)=j,\ R_{xy}>0}R_{xy}\delta_{c(x,y)}.
+\]
+于是 $k_\tau(x,j)$ 是有限费用测度 $\mu_{x,j}$ 在 $1/\tau$ 处的 Laplace 变换。不存在支持边时，两者均为零。
+
+**定理 19.2（全终端费用的软 Bellman 精确下降）。** 固定 $\tau>0$。软 Bellman 算子把每个形如 $v\circ q$ 的终端函数仍映成 $q$ 的纤维常值函数，当且仅当
+\[
+ q(x)=q(x')\quad\Longrightarrow\quad
+ k_\tau(x,j)=k_\tau(x',j)\quad\text{对全部 }j.
+\]
+成立时定义 $\bar K_\tau(q(x),j)=k_\tau(x,j)$，全部有限时域、全部粗终端费用的值函数均精确下降，最优后继的粗概率也只依赖当前粗状态。
+
+**证明。** 对粗终端 $v$，指数变换后的单步值正是
+\[
+ \sum_j k_\tau(x,j)e^{-v(j)/\tau}.
+\]
+系数在纤维上恒定给出充分性。反向，$e^{-v(j)/\tau}$ 可独立遍历全部正向量。两个系数向量与全部正向量的内积相同，固定其余坐标而改变一个坐标即可证明每个系数相同。按时间反向归纳得到全部有限时域下降。最优粗转移由 $\bar K_\tau(i,j)e^{-\bar V_{t+1}(j)/\tau}/e^{-\bar V_t(i)/\tau}$ 给出。
+
+本条证明的是值及粗转移保真。最优微观条件转移仍可能依赖真实 $x$；仅能读取 $q(x)$ 的执行器是否可以实施它，还需要观测反馈或纤维内采样的实现条件。证毕。
+
+**定理 19.3（全部温度保真的费用测度判据）。** 定理 19.2 的精确下降对每个 $\tau>0$ 成立，当且仅当
+\[
+ q(x)=q(x')\quad\Longrightarrow\quad \mu_{x,j}=\mu_{x',j}
+                   \quad\text{对全部 }j.
+\]
+相比之下，零温最小费用算子对全部粗终端费用下降，当且仅当每个目标标签的最小支持边费用
+\[
+ d(x,j)=\min\{c(x,y):q(y)=j,\ R_{xy}>0\}\in\mathbb R\cup\{+\infty\}
+\]
+在当前观察纤维上恒定。
+
+**证明。** 费用测度相等显然给所有温度的加权和相等。反向，固定 $x,x',j$，把两个有限测度差的全部支持点排列为 $a_1<\cdots<a_m$，系数为 $b_i$。所给条件为 $\sum_i b_i e^{-\beta a_i}=0$ 对全部 $\beta>0$ 成立。乘 $e^{\beta a_1}$ 并令 $\beta\to\infty$ 得 $b_1=0$，逐个消去即得全部系数为零。
+
+零温算子是 $v\mapsto\min_j(d(x,j)+v(j))$。各 $d$ 相等即充分。反向令某个 $v(j)=0$，其余坐标为 $M$ 并令 $M\to\infty$；若到 $j$ 的支持非空，极限为 $d(x,j)$，否则趋于 $+\infty$。算子相同迫使这些极限逐项相同。故最小费用只读取费用测度的最小支持点，全部温度还读取各费用层的参考质量。证毕。
+
+**定理 19.4（近似加权下降的全时域证书）。** 固定 $\tau>0$，设粗矩阵 $\bar K$ 非负且每行至少有一项为正。若存在 $\delta\ge0$ 使
+\[
+ e^{-\delta/\tau}\bar K(q(x),j)\le k_\tau(x,j)
+                          \le e^{\delta/\tau}\bar K(q(x),j)
+\]
+对所有 $x,j$ 成立，则对任意粗终端费用 $g$、任意时域 $H$，真实软递推与粗递推满足
+\[
+ \|V_t-\bar V_t\circ q\|_\infty\le(H-t)\delta.
+\]
+粗递推直接使用 $\bar K$，不要求它行归一化。
+
+**证明。** 乘上任意正终端指数向量并求和，保持上述比值界。取负 $\tau$ 对数，得到在纤维常值输入上的单步误差至多为 $\delta$。真实软算子的非扩张性由定理 18.4 给出，该论证同样适用于任意非负非零行矩阵。于是
+\[
+ \|V_t-\bar V_tq\|_\infty
+ \le\|V_{t+1}-\bar V_{t+1}q\|_\infty+\delta.
+\]
+终端误差为零，反向归纳得到结果。此证书约束全部终端费用；零项也被双边界强制一致，不能用有限对数误差掩盖支持缺失。证毕。
+
+**命题 19.5（最短费用全保真而热化值线性分离的有限系统）。** 对任意 $\Delta,\tau>0$，存在四状态系统，全部状态观察相同，任意时域的零温最小费用均为零，但同一观察下的软最优值差随时域严格线性增长；定理 19.4 的 $(H-t)\delta$ 界在该系统中精确达到。
+
+**证明。** 取状态 $(b,i)$，其中 $b\in\{1,2\}$、$i\in\{0,1\}$，$q$ 恒定。参考转移只在同一 $b$ 内，以各 $1/2$ 概率到 $(b,0)$、$(b,1)$，费用分别为 $0,b\Delta$。每步选择零费用边可使任意时域最短费用为零，粗终端常数也被精确保留。置
+\[
+ z_b=\frac{1+e^{-b\Delta/\tau}}2,
+\]
+则零终端费用、剩余 $h$ 步时，指数值恰为 $z_b^h$，故
+\[
+ V_h(b,i)=-h\tau\log z_b,\qquad
+ V_h(2,i)-V_h(1,i)=h\tau\log(z_1/z_2)>0.
+\]
+任何仅依赖当前观察的值估计至少对一个初态有误差 $h\tau\log(z_1/z_2)/2$。选择一状态粗权重 $\bar K=\sqrt{z_1z_2}$，并令 $\delta=\tau\log(z_1/z_2)/2$，定理 19.4 的两个乘法界恰在两个隐藏模式取等；粗值是两个真实值的中点，因此误差恰为 $h\delta$。状态数量有限，差异完全来自未被观察的费用分布。本条没有把费用读数偷偷并入原观察。证毕。
+
+## 20. 势能消元、隐藏记忆与快慢闭合误差
+
+**定义 20.1（二次能量与观测坐标）。** 对 $x\in\mathbb R^p,z\in\mathbb R^r$，$p,r\ge1$，设对称块矩阵
+\[
+ L=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}>0,\qquad
+ U(x,z)=\tfrac12x^{\mathsf T}Ax+x^{\mathsf T}Bz+\tfrac12z^{\mathsf T}Cz.
+\]
+因此 $C>0$ 且 $S=A-BC^{-1}B^{\mathsf T}>0$。观察只保留 $x$，所有范数使用欧氏范数及其诱导算子范数。
+
+**定理 20.2（最小势能与积分自由能的同一 Schur 形状）。** 对上述模型和 $\tau>0$，
+\[
+ \min_z U(x,z)=\tfrac12x^{\mathsf T}Sx,
+\]
+\[
+ -\tau\log\int_{\mathbb R^r}e^{-U(x,z)/\tau}dz
+ =\tfrac12x^{\mathsf T}Sx+\frac\tau2\log\det C
+                         -\frac{r\tau}{2}\log(2\pi\tau).
+\]
+所以积分自由能与最小势能对 $x$ 有相同梯度 $Sx$。
+
+**证明。** 完成平方得
+\[
+ U(x,z)=\tfrac12x^{\mathsf T}Sx
+       +\tfrac12(z+C^{-1}B^{\mathsf T}x)^{\mathsf T}C
+                       (z+C^{-1}B^{\mathsf T}x).
+\]
+第二项唯一极小于 $z=-C^{-1}B^{\mathsf T}x$。对 $C$ 正交对角化并逐坐标计算高斯积分，积分值为
+\[
+ e^{-x^{\mathsf T}Sx/(2\tau)}(2\pi\tau)^{r/2}(\det C)^{-1/2}.
+\]
+取对数完成证明。本条隐藏刚度 $C$ 与 $x$ 无关，因此熵修正是常数；对位置依赖的隐藏刚度，不能删掉该导数。证毕。[^tcs3-schur]
+
+**定理 20.3（能量精确消元不保证轨迹自治）。** 对定义 20.1 的全空间欧氏梯度流
+\[
+ \dot x=-Ax-Bz,\qquad \dot z=-B^{\mathsf T}x-Cz,
+\]
+观测轨迹满足
+\[
+ \dot x(t)=-Ax(t)-Be^{-Ct}z_0
+          +\int_0^tBe^{-C(t-s)}B^{\mathsf T}x(s)ds.
+\]
+对所有初态都能仅从当前 $x$ 给出同一个自治向量场，当且仅当 $B=0$。即使初始 $z_0$ 取为该 $x_0$ 的条件能量极小点，也一般不能将轨迹精确替换为 $\dot{\bar x}=-S\bar x$。
+
+**证明。** 对隐藏方程使用常数变易公式：$z(t)=e^{-Ct}z_0-\int_0^te^{-C(t-s)}B^{\mathsf T}x(s)ds$，代入观测方程得到所列记忆核。若 $B=0$，自治显然成立；若同一 $x$ 的所有 $z$ 都给相同初始导数，则 $B(z-z')=0$ 对任意 $z,z'$ 成立，故 $B=0$。
+
+取标量块 $A=C=2,B=1$，$x_0=1,z_0=-1/2$。全矩阵特征值为 $1,3$，且 $z_0$ 正是条件极小点。全轨迹给 $\dot x(0)=-3/2$、$\ddot x(0)=3$；有效势能的梯度流给 $\dot{\bar x}(0)=-3/2$、$\ddot{\bar x}(0)=9/4$。二阶导数已不同，所以两个轨迹无法在邻域内相同。证明不需要不稳定能量地形。证毕。
+
+**定理 20.4（快隐藏变量使有效势能动力学具有统一误差界）。** 对 $\epsilon>0$ 改用
+\[
+ \dot x_\epsilon=-Ax_\epsilon-Bz_\epsilon,\qquad
+ \epsilon\dot z_\epsilon=-B^{\mathsf T}x_\epsilon-Cz_\epsilon,
+ \qquad\dot{\bar x}=-S\bar x,\quad\bar x(0)=x_0.
+\]
+令 $c=\lambda_{\min}(C)>0$、$m=\lambda_{\min}(S)>0$、$\ell=\lambda_{\min}(L)>0$，并置
+\[
+ R_0=\sqrt{2U(x_0,z_0)/\ell},\quad
+ M_0=\|[A\ B]\|R_0,\quad
+ D_0=\|C^{-1}B^{\mathsf T}\|,\quad
+ w_0=z_0+C^{-1}B^{\mathsf T}x_0.
+\]
+则对全部 $t\ge0$，
+\[
+ \|x_\epsilon(t)-\bar x(t)\|
+ \le\frac{\epsilon\|B\|}{c}
+             \left(\|w_0\|+\frac{D_0M_0}{m}\right).
+\]
+
+**证明。** 全能量满足 $dU/dt=-\|\nabla_xU\|^2-\epsilon^{-1}\|\nabla_zU\|^2\le0$，因此 $\|(x_\epsilon,z_\epsilon)\|\le R_0$，且 $\|\dot x_\epsilon\|\le M_0$。令 $w=z_\epsilon+C^{-1}B^{\mathsf T}x_\epsilon$，直接求导得
+\[
+ \dot w=-\epsilon^{-1}Cw+C^{-1}B^{\mathsf T}\dot x_\epsilon,
+\]
+从而
+\[
+ \|w(t)\|\le e^{-ct/\epsilon}\|w_0\|
+          +\frac{\epsilon D_0M_0}{c}(1-e^{-ct/\epsilon}).
+\]
+又有 $\dot x_\epsilon=-Sx_\epsilon-Bw$。两轨迹初始 $x$ 相同，故差为 $-\int_0^te^{-S(t-s)}Bw(s)ds$。对初始层一项用 $e^{-m(t-s)}\le1$ 及 $\int_0^te^{-cs/\epsilon}ds\le\epsilon/c$；对持续项用 $\int_0^te^{-m(t-s)}ds\le1/m$，相加得到一致界。快慢比例、完整能量正定性和有效谱隙共同提供闭合控制；仅有自由能公式没有给出这些动力学前提。证毕。
+
+**定理 20.5（隐藏状态熵改变有效地形的曲率）。** 设有限指标集 $I$ 上有固定正权重 $r_i$，$\sum_i r_i=1$，光滑能量 $E_i:\mathbb R^d\to\mathbb R$。令
+\[
+ A_\tau(x)=-\tau\log\sum_i r_i e^{-E_i(x)/\tau},\qquad
+ p_i(x)=\frac{r_i e^{-E_i(x)/\tau}}{\sum_jr_j e^{-E_j(x)/\tau}}.
+\]
+则
+\[
+ \nabla A_\tau=\mathbb E_p\nabla E_i,\qquad
+ \nabla^2 A_\tau=\mathbb E_p\nabla^2E_i
+                   -\tau^{-1}\operatorname{Cov}_p(\nabla E_i).
+\]
+即使每个 $E_i$ 都严格凸，$A_\tau$ 仍可非凸。具体地，对 $a>0$、$E_\pm(x)=(x\mp a)^2/2$、$r_\pm=1/2$，
+\[
+ A_\tau(x)=\frac{x^2+a^2}{2}-\tau\log\cosh(ax/\tau).
+\]
+若 $\tau\ge a^2$，唯一极小点为 $0$；若 $0<\tau<a^2$，$0$ 是严格局部极大点，恰有两个全局极小点 $\pm x_\tau$，其中 $0<x_\tau<a$ 且
+\[
+ x_\tau=a\tanh(ax_\tau/\tau).
+\]
+
+**证明。** 直接求导得 $\nabla p_i=-\tau^{-1}p_i(\nabla E_i-\mathbb E_p\nabla E_i)$，代入 $\nabla A_\tau$ 的导数即得 Hessian 公式。协方差半正定，因此隐藏分量的力差异可以降低有效曲率。
+
+对所给双分量，合并指数得到 $\cosh$ 表达式，故 $A_\tau'(x)=x-a\tanh(ax/\tau)$，$A_\tau''(0)=1-a^2/\tau$。若 $\tau\ge a^2$，对 $x>0$ 用 $\tanh u<u$ 得 $A_\tau'(x)>0$，偶对称性给唯一极小点。若 $\tau<a^2$，导数在零点右侧为负，在 $x=a$ 为正；它的导数 $1-(a^2/\tau)\operatorname{sech}^2(ax/\tau)$ 在 $x>0$ 严格递增，所以 $A_\tau'$ 先降后升，并恰有一个正零点。对称性给两个极小点，且 $A_\tau(x)\to+\infty$ 当 $|x|\to\infty$，因此它们都是全局极小点。这是指定潜能和权重的精确分岔，不表示一般熵正则化必定使所有优化目标凸。证毕。
+
+## 21. 本批来源、适用域与证明身份
+
+**出处 21.1（经典桥与本卷推导）。** 第 17.2、17.3 条的梯度耗散和概率几何，第 18.2、18.4 条的 Gibbs 与 KL 控制，第 18.5 条的有限图热力学变分属于经典结构，本批按所需约定给出证明。第 18.3、19.2 至 19.5、20.2 至 20.5 条及第 17.4 条的具体陈述列为 `repo-derived`：它们由正文假设直接推导，未确立全球首创。第 19.3 条的费用测度等价与第 19.5 条的尖锐误差实例，约束从精确行为商迁移到优化商所需的新增信息。文献中的连续随机系统、量子耗散及 Sinkhorn 流不被假定已经在本卷完成相应形式化。
+
+[^tcs3-thermogeo]: Olga Movilla Miangolarra、Ralph Sabbagh、Artemy Kolchinsky，*Wasserstein-2 gradient flows and the geometry of entropy production in classical and quantum stochastic thermodynamics*，arXiv:2606.00698v1，2026，[原文](https://arxiv.org/pdf/2606.00698)。实际读取第 II 节式 (1)–(10) 的梯度流、自由能、连续性方程及作用量距离定义，以及第 IV 节保守/耗散几何比较的范围。该文研究不同动力学及迁移率下的距离；不能据此给任意动力学指定同一个耗散几何。此引用仅承接上述数学背景，不把本文有限观察商定理归给该文。
+
+[^tcs3-todorov]: Emanuel Todorov，*Linearly-solvable Markov decision problems*，NIPS 2006，[官方论文条目](https://papers.nips.cc/paper_files/paper/2006/hash/d806ca13ca3449af72a1ea5aedbed26a-Abstract.html)。`literature-attested` 范围：参考转移的 KL 控制费用、指数变换及线性 Bellman 结构；第 18.4 条明确控制变量为后继概率分布。
+
+[^tcs3-leonard]: Christian Léonard，*A survey of the Schrödinger problem and some of its connections with optimal transport*，DCDS 34(4), 1533–1574，2014，[作者预印本](https://arxiv.org/abs/1308.0215)。参考范围：路径相对熵、端点约束与最优传输之间的关系。本文第 18.3 条只证明有限路径纤维上的分解，不声称已经给出连续 Schrödinger 桥的存在唯一性。
+
+[^tcs3-pressure]: 第 18.5 条在有限不可约矩阵上直接使用 Perron 正特征向量、KL 非负性和有限环流分解完成证明。邻接图路径数提供热力学压力与熵的有限状态实例；它与第 12 节观察熵相认时，还需观察足以区分被计数的状态路径。计数参考和概率参考的常数项依本批定义分别保留。
+
+[^tcs3-gibbs]: 固定仓库来源：[D5/S3/Divergence/StrictGibbs.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Divergence/StrictGibbs.lean)，用于有限 KL 严格性背景；[D5/S3/Observer/DynamicProgramming/BellmanContraction.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Observer/DynamicProgramming/BellmanContraction.lean) 的 `bellman_operator_contracting_unique_fixed_point` 研究折扣预测距离的最大型算子。该声明不等同于本批未折扣、费用加权的软 Bellman 算子，不直接当作本批下降判据的证明项。
+
+[^tcs3-schur]: 仓库中已有 Schur 能量与互补块消元构件，检索到 [D5/S3/Weil/ZetaLinear/ExactStickyReduction.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Weil/ZetaLinear/ExactStickyReduction.lean)。其能量正定/惯性背景与本批全空间梯度流的投影问题分开计量；第 20 节给出所用二次模型的完整平方分解及动力学证明，不新增绑定包装。
+
+**出处 21.2（前沿几何的额外限制）。** Mathis Hardion、Hugo Lavenant，*Gradient Flows of Potential Energies in the Geometry of Sinkhorn Divergences*，arXiv:2511.14278v1，2025，[原文](https://arxiv.org/pdf/2511.14278)。实际读取引言、Theorem 1.1、Sinkhorn-JKO 定义及论文对 Theorem 4.2、7.1 的适用范围说明。作者明确指出 Sinkhorn divergence 一般不是距离的平方，极限方案收敛另有条件。因此第 17 节的测地距离不被机械替换为任意 Sinkhorn divergence；“改变几何会改变下降动力学”是本批对接该文的范围。
+
+**约定 21.3（产地及核验）。** 本批使用仓库 `theory-volume-template/APPEND.md`。数学推导、资料核对、文字实施和有限自检由本会话 ChatGPT 单席串行完成，无独立模型或作者审定。正文给出纸面证明，不新增 Lean、Scribe 或机器派生状态。未运行 canonical `make ingest`，不宣称消化账本登记完成。有限算例、矩阵代数和数值解核对只用于检错，不替代无限时域、全部温度和全部终端费用的量词。原文献的数学结果与本批结果均未被本次工作标记为 kernel-verified。
+
+## 追加锚（本行以下为增补区）
