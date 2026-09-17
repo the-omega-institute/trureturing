@@ -511,3 +511,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Whole-hinge absorption sharpens actual survival](profile-notes/42-whole-hinge-absorption-sharpens-actual-survival.md)
 - [Complete cell costs strengthen whole-hinge survival](profile-notes/43-complete-cell-costs-strengthen-whole-hinge-survival.md)
 - [Constant survival barriers leave a structural gap](profile-notes/44-constant-survival-barriers-leave-a-structural-gap.md)
+- [Two deeper cofactors give a uniform survival gain](profile-notes/45-two-deeper-cofactors-give-a-uniform-survival-gain.md)
