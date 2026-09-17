@@ -6,10 +6,10 @@ For actual families approaching either entire controlling beta face
 398,410,422 with carrier(1,1), or616,628,640 with carrier(1,0),
 at saturated mass S=D=53/360, the complete AP comparison satisfies
 
-    N<=36.32508604632065...,
+    N<=36.325086046320646686969...,
     d>=148190644027/1898264214000
-      =0.0780663950434668...,
-    C0+N/d<=486.9042792360512... .                    (KC1)
+      =0.078066395043466799506341...,
+    C0+N/d<=486.904279236051191431614... .                    (KC1)
 
 This is uniform over all beta distributions on these actual faces,
 independent original test residues and unbounded exponent heights.
@@ -108,8 +108,8 @@ genuine conditional function, so its corresponding stored cost
 is a valid vertex upper bound in(KC4). No convexity of a patched
 table is required. The old raw81 source operators are also convex
 in beta: their source masses and available densities are affine,
-and their fixed-layout expressions are affine with nonnegative
-maxima and complete weighted tails. Apply(KC4) to these six costs
+and their expressions are built from affine terms, nonnegative
+weighted sums and maxima, including the complete weighted tails. Apply(KC4) to these six costs
 as well. The other source factors and carrier are held fixed.
 
 The checker takes the maximum of each of these52 cost bounds at
@@ -167,7 +167,7 @@ summed exactly using its zeroth and first moments. This yields
 
     d>=(945008/922383)*D-(45253/1844766)*L
                             -(346061/1844766)*U4-(4/33)*U5
-      =0.0780663950434668... .                       (KC7)
+      =0.078066395043466799506341... .                       (KC7)
 
 The direct AP11 expansion and its coefficient form agree as
 rational numbers. Since d and the upper numerator are positive,
