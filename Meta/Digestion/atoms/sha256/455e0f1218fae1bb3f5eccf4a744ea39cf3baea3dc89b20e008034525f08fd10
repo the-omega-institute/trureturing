@@ -1,0 +1,23 @@
+最后定义有限集合之间的映射
+$$
+\phi:\{0,\ldots,e\}\longrightarrow
+\{0\}\cup\{p^{-r}:0\le r<e\}
+$$
+为
+$$
+\phi(r)=
+\begin{cases}
+p^{-r},&0\le r<e,\\
+0,&r=e.
+\end{cases}
+$$
+这些值两两不同，所以 $\phi$ 为双射。对任意 $a$，若 $a=c$，则 $h_c(a)=e$ 且 $d_{p,e}(a,c)=0=\phi(e)$；若 $a\ne c$，则 $h_c(a)<e$ 且
+$$
+d_{p,e}(a,c)=p^{-h_c(a)}=\phi(h_c(a)).
+$$
+故恒有
+$$
+d_{p,e}(a,c)=\phi(h_c(a)).
+$$
+因为 $\phi$ 可逆，$h_c(a)$ 唯一决定距离，距离也唯一决定 $h_c(a)$，所需信息等价得证。
+
