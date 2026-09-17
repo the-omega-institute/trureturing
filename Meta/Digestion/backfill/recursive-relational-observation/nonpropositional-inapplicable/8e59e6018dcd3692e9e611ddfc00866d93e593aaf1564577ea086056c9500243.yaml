@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e59e6018dcd3692e9e611ddfc00866d93e593aaf1564577ea086056c9500243
+  normalized_sha256: sha256:8e59e6018dcd3692e9e611ddfc00866d93e593aaf1564577ea086056c9500243
+cas_ref: sha256:8e59e6018dcd3692e9e611ddfc00866d93e593aaf1564577ea086056c9500243
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义有限分布、许可概率核、有限卷积、点态结合律及分布展平记号，并区分映射单位与二元单位，不主张核存在或分类成立。
+    previous_atom_id: ba61e84737190076d6333191368e3a44f444c5d595f5fc68588b179d5fe91253
+    next_atom_id: cd8a8c6037f06255bf199381ae3350e2b46f482f9de92f879d6e61f6914fa48d

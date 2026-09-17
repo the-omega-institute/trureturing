@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c14223841f4b0e778e271f9c56a4fd43227f1d77844784b1cfef3e94e6b4d3b7
+  normalized_sha256: sha256:c14223841f4b0e778e271f9c56a4fd43227f1d77844784b1cfef3e94e6b4d3b7
+cas_ref: sha256:c14223841f4b0e778e271f9c56a4fd43227f1d77844784b1cfef3e94e6b4d3b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 探针对任意指标集合构造有限支撑一次 lp 子空间的规范完备化到一次 lp 的满射等距映射，并验证它在原有限支撑元素上就是包含映射，因此适用于本条原子系数空间的实际完备化，仓内无冻结 GID。
+    previous_atom_id: c2d3ede31ce944eca99816aba6d0e2a1f1960f2c73e44c48f4eb14ff2bbf0fc1
+    next_atom_id: 99e9ce68fe61dd251cc7002db673bf4318a3b8c97a4678a0d55d9444a0fd7e03

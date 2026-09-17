@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c7c663b69693e9e2fc6769a115c900078fec0c2d96f53ba08fef68935aef015
+  normalized_sha256: sha256:0c7c663b69693e9e2fc6769a115c900078fec0c2d96f53ba08fef68935aef015
+cas_ref: sha256:0c7c663b69693e9e2fc6769a115c900078fec0c2d96f53ba08fef68935aef015
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义指定 sigma 代数上的有限可加 charges、变差范数与概率正锥，明确有限可加不包含可数可加要求，没有独立待证结论。
+    previous_atom_id: 42e85aa74164a08bf0545b4f3e7ad3ce1596bc92fc6e38abd3698c1e1505cabe
+    next_atom_id: fbd6d9a3060781592068a3e6b0139ac2c77c50bfea957e79bdf7ad9da9b5d4bf
