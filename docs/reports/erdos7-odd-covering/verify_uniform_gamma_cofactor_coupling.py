@@ -5,7 +5,8 @@ Python3.9+ standard library only. The accompanying proof gives the layout
 inequality and the continuous linear-fractional vertex reduction. This checks
 all72 old branches,103680 shared branches,12960 original signed
 layout-vertices,12960 weighted-cross layout-vertices and16848
-same-original5 endpoint/layout pairs, plus all missing-class cases. No solver or finite original-height cutoff is used.
+same-original5 endpoint/layout pairs and12960 six-cofactor pairs,
+plus all missing-class cases. No solver or finite original-height cutoff is used.
 """
 
 # Pinned local IO preserves complete certificate hashes after semantic splitting.
@@ -434,6 +435,122 @@ def same_original5_deletion_three_prime_bound(source, vertices):
     }
 
 
+def same_original5_six_cofactor_three_prime_bound(source, vertices):
+    """Joint selected square and six actual pure3-cofactor deletions.
+
+    The same original unit5 event is retained or removed from actual35.
+    Its removed square increment pays the maximum multiplicity six of
+    the actual pure3 labels with exponents1..6. The effective remainder
+    below bounds the combined square/deletion expression, not W alone.
+    All a>=7 and positive5-cofactor tails retain their full old bounds.
+    """
+    roots = (0, 0, 1, 1, 1)
+    choices = tuple(product(range(2), range(5)))
+    bases = {choice: tuple(1+int(roots[l] == choice[0])+int(l == choice[1])
+                           for l in range(5)) for choice in choices}
+    cap, previous = F(765767,21465), F(5761,159)
+    deep, tail = F(40,729), F(1,1458)
+    require(F(source['Gamma357_upper']) == previous and cap >= 16,
+            'Six-cofactor source and pointwise square-floor domain')
+    require(sum(F(1,3**a) for a in range(3,7)) == deep
+            and F(1,3**7)/(1-F(1,3)) == tail and deep+tail == F(1,18),
+            'Six actual cofactor labels and the complete untouched pure3 tail')
+    empty_event_sum_lower = (16-9)*F(1,4)-F(7,5)*F(5,9)
+    deep_cap_lower = (16-9)*F(1,4)-F(7,5)
+    require(empty_event_sum_lower == F(35,36) > 0
+            and deep_cap_lower == F(7,20) > 0,
+            'Empty root/cell events and deep actual-mass caps have nonnegative envelopes')
+    records, witnesses = [], []
+    minimum_margin = None
+    boundary = None
+    for row in vertices:
+        index, alpha, beta, late, widths, eta, available, cells, s, pure_maximum, square, global_square = row
+        require(min(cells) >= 0 and s >= F(1,4) and sum(eta) <= F(5,9)
+                and min(available) >= F(1,4), 'Six-cofactor actual five-cell domain')
+        for (r,j), bb in bases.items():
+            k = tuple(cap-b*b for b in bb)
+            c = tuple(2*b+1 for b in bb)
+            cell_values = tuple(k[l]*cells[l]-c[l]*eta[l]/5 for l in range(5))
+            root_values = tuple(sum(cell_values[l] for l in range(5) if roots[l] == rr)
+                                for rr in range(2))
+            deep_values = tuple(k[l]*available[l]-F(c[l],5) for l in range(5))
+            require(sum(cell_values) >= empty_event_sum_lower
+                    and max(root_values) > 0 and max(cell_values) > 0
+                    and min(deep_values) >= deep_cap_lower,
+                    'Zero contributions from missing/empty actual cofactor events are covered')
+            parts = (
+                max(root_values), max(cell_values), deep*max(deep_values),
+                tail*max(k[l]*available[l] for l in range(5)),
+                sum(k[l]*widths[l] for l in range(5))/36,
+                max(sum(k[l]*widths[l] for l in range(5) if roots[l] == rr)
+                    for rr in range(2))/36,
+                max(k[l]*widths[l] for l in range(5))/36, (cap-1)/72)
+            joint_remainder = sum(parts)
+            # This quantity is only used with the same selected square.
+            # It is not a standalone upper bound on the deletion W.
+            margin = cap*s-F(6,5)*square[r,j]-F(7,15)*global_square-joint_remainder/5
+            require(isinstance(margin,F) and all(isinstance(part,F) for part in parts),
+                    'All six-cofactor arithmetic remains exact rational')
+            require(margin >= 0, 'Every joint six-cofactor target margin')
+            minimum_margin = margin if minimum_margin is None else min(minimum_margin,margin)
+            records.append([index,r,j,str(margin)])
+            if margin == 0:
+                witnesses.append({'vertex':index,'selected_root_cell':[r,j],
+                    's':str(s),'selected_raw_square':str(square[r,j]),
+                    'global_raw_square':str(global_square),
+                    'joint_remainder_parts':list(map(str,parts)),
+                    'joint_remainder':str(joint_remainder),'scaled_margin':str(margin)})
+            if index == 398 and (r,j) == (0,1):
+                active_root = max(range(2),key=lambda rr:root_values[rr])
+                active_cell = max(range(5),key=lambda l:cell_values[l])
+                active_deep = max(range(5),key=lambda l:deep_values[l])
+                active_tail = max(range(5),key=lambda l:k[l]*available[l])
+                active_mixed_root = max(range(2),key=lambda rr:
+                    sum(k[l]*widths[l] for l in range(5) if roots[l] == rr))
+                active_mixed_cell = max(range(5),key=lambda l:k[l]*widths[l])
+                slope = s-(sum(cells[l] for l in range(5) if roots[l] == active_root)
+                    +cells[active_cell]+deep*available[active_deep]+tail*available[active_tail]
+                    +sum(widths)/36
+                    +sum(widths[l] for l in range(5) if roots[l] == active_mixed_root)/36
+                    +widths[active_mixed_cell]/36+F(1,72))/5
+                intercept = margin-slope*cap
+                require(slope == F(53,360) and intercept == -F(765767,145800)
+                        and margin == 0, 'Exact fixed-formula boundary at the controlling layout')
+                boundary = {'vertex':index,'selected_root_cell':[r,j],
+                    'margin_upper_slope':str(slope),'margin_upper_intercept':str(intercept),
+                    'target':str(-intercept/slope),
+                    'scope':'A fixed active-branch upper bound on this formula for every C>=16; not actual-family sharpness.'}
+    require(len(vertices) == 1296 and len(records) == 12960
+            and minimum_margin == 0 and len(witnesses) == 6 and boundary is not None,
+            'Complete six-cofactor vertex/layout certificate and exact relaxation boundary')
+    missing = source['missing_pure_cases']
+    for case in missing:
+        require(F(case['three_prime_square']) < cap, 'Six-cofactor same-law missing-class fallback')
+    return {
+        'law':'uniform on the complete actual survivor set, arbitrary finite powers of3,5,7',
+        'Gamma357_upper':str(cap),'previous_same_original5_upper':str(previous),
+        'strict_improvement':str(previous-cap),'selected_pure3_cofactor_exponents':[1,2,3,4,5,6],
+        'pointwise_actual_label_multiplicity':6,'complete_positive7_coefficient':'1/5',
+        'weighted_removed_mass_budget':'6/5','selected_deep_coefficient':str(deep),
+        'complete_remaining_deep_coefficient':str(tail),
+        'empty_root_cell_sum_lower':str(empty_event_sum_lower),
+        'deep_actual_mass_cap_coefficient_lower':str(deep_cap_lower),
+        'joint_remainder_is_standalone_deletion_upper_bound':False,
+        'separately_concave_parameter_groups':['pure_three_deficits','mixed_five_root_removal',
+            'mixed_five_cell_removal','deeper_mixed_removal','pure_five_survivor_mass'],
+        'original_unit_five_mass_upper_endpoint':'1/5',
+        'endpoint_order':'Use actual six-event multiplicity before taking cylinder caps.',
+        'parameter_vertices':len(vertices),'selected_layout_vertex_pairs':len(records),
+        'minimum_scaled_margin':str(minimum_margin),
+        'minimum_branch_slope':source['minimum_unweighted_denominator'],
+        'margin_rows_sha256':hashlib.sha256(json.dumps(records,separators=(',',':')).encode()).hexdigest(),
+        'relaxation_equalities':witnesses,'fixed_formula_boundary':boundary,
+        'missing_pure_cases':missing,
+        'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'scope':'One actual original5 event pays through retained or removed mass in the joint selected-square/deletion expression; independent original labels and complete tails remain; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution.',
+    }
+
+
 def compute_certificate():
     y,a=F(1,4),F(7,8)
     cap=F(55,4)
@@ -483,6 +600,7 @@ def compute_certificate():
     require(old==F(57,4) and new==F(55,4),'shared-layout improvement at old extremum failed')
     young_vertex_data=[]
     young_source=signed_young_three_prime_bound(young_vertex_data)
+    unit_five_source=same_original5_deletion_three_prime_bound(young_source,young_vertex_data)
     return {'schema':'uniform-gamma-cofactor-coupling-v1','prime_support':[3,5],
             'Gamma_bound':str(cap),'same_law':'uniform complete survivor law',
             'positive_lcm_coefficient':str(a),'zero_to_positive_coefficient':str(y),
@@ -497,8 +615,9 @@ def compute_certificate():
             'shared_three_prime_parameters':joint_three_prime_bound(),
             'signed_two_level_three_prime_parameters':signed_two_level_three_prime_bound(),
             'signed_young_three_prime_parameters':young_source,
-            'same_original5_deletion_three_prime_parameters':
-                same_original5_deletion_three_prime_bound(young_source,young_vertex_data)}
+            'same_original5_deletion_three_prime_parameters':unit_five_source,
+            'same_original5_six_cofactor_three_prime_parameters':
+                same_original5_six_cofactor_three_prime_bound(unit_five_source,young_vertex_data)}
 
 
 def main():
@@ -531,6 +650,8 @@ def main():
           'same original floors, complete tails and both missing-pure-class bounds.')
     print('Verified16848 original-unit5 endpoint/layout pairs: uniform Gamma357<=5761/159; '
           'only the original unit5 cap is reduced; all other labels and complete tails remain.')
+    print('Verified12960 joint six-cofactor pairs: uniform Gamma357<=765767/21465; '
+          'actual event multiplicity pays the joint remainder, and every residual tail is retained.')
 
 
 if __name__=='__main__':
