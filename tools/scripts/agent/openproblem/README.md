@@ -25,6 +25,7 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 - `op-ingest-new-noalign.sh WORKTREE NEW_BRANCH ADDENDUM SUBJ PRMSG PATTERN [VOLUME]` / `op-ingest-noalign.sh` / `op-addendum-ingest-v3.sh`:理论卷增订 ingest(前两者绕开 align)。
 - `op-governance-pr.sh WORKTREE BRANCH COMMIT_MSG PR_MSG [AUTO]`:governance 改动的提交/推送/开 PR。
 - `op-fold-anchor-cover.sh WORKTREE BRANCH ATOM SOURCE_ID`:把漏掉的锚 cover 折进 builder commit。
+- `standing-check.py PR [--round N | --closed]`:派下一轮评审前、或合并前,机器核对 PR 正文的评审 standing——每一轮是否都有三席行与 tally、有没有占位判词、下一轮布局是否点名正确的轮次、`tests` 有没有被派给 nyxid、nyxid 席在相邻两轮之间有没有换位。`--round N` 传「即将派的那一轮」:正文自身无法区分「跑过但没记」与「本来就到此为止」,这一项只有调用方知道。`--closed` 是合并前那一次:要求末轮无 reject 且不再有未闭合的轮次。`--selftest` 19 例。
 
 ## 判据摘要(来自 2026-09-05 一日 40 余席的读数)
 - 产出由选题函数决定:唯一两个真解决出自把判据改为「近期论文明确写出且文献无证明」的那一轮。
