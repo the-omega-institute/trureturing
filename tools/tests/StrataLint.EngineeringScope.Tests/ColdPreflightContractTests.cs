@@ -130,9 +130,16 @@ public sealed class ColdPreflightContractTests
         {
             Assert.True(result.Exit == (resource == "engineering" ? 2 : 0), result.Text);
             Assert.Equal(1, events.Count(s => s == "bootstrap-build"));
-            Assert.Equal(1, events.Count(s => s.StartsWith("build " + ResourceRouteTests.ResourceFixture.Foo + " ", StringComparison.Ordinal)));
-            Assert.Equal(1, events.Count(s => s.StartsWith("restore " + ResourceRouteTests.ResourceFixture.Foo + " ", StringComparison.Ordinal)));
-            Assert.True(File.Exists(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
+            var processes = result.Text.Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
+                .Select(line => JsonNode.Parse(line["STAGE_PROCESS ".Length..])!)
+                .Where(process => process["stage"]!.ToString() == "build").ToArray();
+            Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process["arguments"]![0]!.ToString()));
+            Assert.Equal(processes[0]["arguments"]![1]!.ToString(), processes[1]["arguments"]![1]!.ToString());
+            var build = Read(root, "build.json");
+            Assert.Equal(new[] { ResourceRouteTests.ResourceFixture.Foo }, build["projects"]!.AsArray().Select(project => project!.ToString()));
+            Assert.Contains(build["materials"]!.AsArray(), material => material!["path"]!.ToString() == CommonExecutionEvidence.CliPath);
+            Assert.DoesNotContain(build["materials"]!.AsArray(), material => material!["path"]!.ToString().StartsWith("tools/Bar/", StringComparison.Ordinal));
+            Assert.True(File.Exists(Path.Combine(root, CommonExecutionEvidence.CliPath)));
             if (resource == "engineering")
             {
                 // Stop at the actual engineering test executor: this fixture registers
