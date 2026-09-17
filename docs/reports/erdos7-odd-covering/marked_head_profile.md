@@ -546,5 +546,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Forced27 and complete pure3 deletion on both controlling faces](profile-notes/75-forced27-and-complete-pure3-deletion-on-the-k-faces.md)
 - [Exact capacity of the current neighborhood globalization](profile-notes/76-exact-capacity-of-the-current-neighborhood-globalization.md)
 - [Complete pure3 deletion gives a uniform linear gap](profile-notes/77-complete-pure3-deletion-gives-a-uniform-linear-gap.md)
+- [A common seven head uniformly improves the endpoint fifth hinge](profile-notes/78-a-common-seven-head-uniformly-improves-the-endpoint-fifth-hinge.md)
 - [Complete deletion improves the endpoint comparison](profile-notes/79-complete-deletion-improves-the-endpoint-comparison.md)
+- [Joint15/25/75 forces another uniform linear gap](profile-notes/80-joint15-25-75-forces-another-uniform-linear-gap.md)
 - [Complete pure3 deletion sharpens the common square](profile-notes/81-complete-pure3-deletion-sharpens-the-common-square.md)
+- [Joint geometry improves the complete endpoint comparison](profile-notes/82-joint-geometry-improves-the-complete-endpoint-comparison.md)
