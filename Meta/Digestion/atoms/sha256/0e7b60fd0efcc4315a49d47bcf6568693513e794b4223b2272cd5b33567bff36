@@ -1,0 +1,31 @@
+**定义 59.1 稀疏精确估值实例、诱导限制与局部元数。** 固定素数 $p$，令 $\overline{\mathbb N}_0=\mathbb N_0\cup\{\infty\}$，约定 $v_p(0)=\infty$。一个稀疏单位和估值实例是三元组
+$$
+I=(V,E,a),
+$$
+其中 $V$ 为有限集，$E\subseteq\binom V2$ 为有限简单图的边集，$a:E\to\overline{\mathbb N}_0$。称 $I$ 可实现，是指存在同一个共同元组
+$$
+x=(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+使每条且仅需每条已指定边 $\{i,j\}\in E$ 满足
+$$
+v_p(x_i+x_j)=a_{ij}.
+$$
+不在 $E$ 中的点对不施加任何条件。全部共同见证的集合记为 $\operatorname{Wit}_p(I)$。对 $W\subseteq V$，诱导限制定义为
+$$
+I|_W=\left(W,E\cap\binom W2,a|_{E\cap\binom W2}\right).
+$$
+特别地，空集由空元组实现，单点集可取 $x=1$。
+
+若 $E=\binom V2$，称为完整实例。若 $\mathcal C$ 是一个对诱导限制封闭的实例类，定义其固定素数诱导局部元数 $\kappa_p(\mathcal C)$ 为满足
+$$
+\left(\forall W\subseteq V,\ |W|\le k\Longrightarrow I|_W\text{ 可实现}\right)
+\Longrightarrow I\text{ 可实现}
+$$
+对所有 $I\in\mathcal C$ 成立的最小非负整数 $k$；不存在则记为 $\infty$。记完整实例类为 $\mathcal C_{\mathrm{full}}(p)$。对 $d\in\overline{\mathbb N}_0$，记 $\mathcal C_d(p)$ 为所有每条已指定边都具有同一标签 $d$ 的稀疏实例。
+
+若 $I=(V,E,a)$，称完整数组
+$$
+A:\binom V2\to\overline{\mathbb N}_0
+$$
+是 $I$ 的完整延拓，如果 $A_{ij}=a_{ij}$ 对全部 $\{i,j\}\in E$ 成立。把完整数组限制到 $E$ 的映射记为 $\pi_E$。
+
