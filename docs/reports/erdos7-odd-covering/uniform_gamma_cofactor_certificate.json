@@ -505,7 +505,160 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "9a38d412a836bff231f74c1022be398ee82d3fe4c8958033c1087169435c8f55",
+    "verifier_sha256": "5ec4dfd763eab31a6ab8f72025fce89f1aa3101437d7557197568b70312d4d10",
     "scope": "Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution."
+  },
+  "same_original5_deletion_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "5761/159",
+    "previous_signed_young_upper": "4351/120",
+    "strict_improvement": "163/6360",
+    "original_five_mass_endpoints": [
+      "0",
+      "1/5"
+    ],
+    "separately_concave_parameter_groups": [
+      "pure_three_deficits",
+      "mixed_five_root_removal",
+      "mixed_five_cell_removal",
+      "deeper_mixed_removal",
+      "pure_five_survivor_mass",
+      "original_unit_five_test_mass"
+    ],
+    "signed_joint_lower_bound": "eta_l*(h-alpha_1-beta_l)-late_l",
+    "pure_three_root_cap": "max(A_0,A_1-sum_root1 (2*b_l+1)*signed_joint_lower_bound)",
+    "incident_selected_layouts": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "selected_young_weight": "1",
+    "selected_square_strip_gain": "(1/5-h)*sum_l eta_l*(2*b_l+1)",
+    "reduced_five_cap_label": "original unit-cofactor5 only",
+    "positive_five_pair_coefficient": "1/8",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "pure_three_deletion_coefficient": "1/5",
+    "parameter_vertices": 1296,
+    "selected_layout_endpoint_pairs": 16848,
+    "layout_group_counts": {
+      "incident": 7776,
+      "other": 9072
+    },
+    "minimum_scaled_margin": {
+      "incident": "1/10800",
+      "other": "0"
+    },
+    "incident_endpoint_minima": {
+      "0": "5377/10800",
+      "1/5": "1/10800"
+    },
+    "minimum_unweighted_denominator": "53/360",
+    "layout_margin_sha256": "1f8b4522a35ad475a525f552d97478cb2f75a796ea62e82b05f8a1e74b3e79b0",
+    "relaxation_equalities": [
+      {
+        "vertex": 398,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 410,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 422,
+        "selected_root_cell": [
+          0,
+          1
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 616,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 628,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 640,
+        "selected_root_cell": [
+          0,
+          0
+        ],
+        "original_five_mass": null,
+        "s": "1/4",
+        "selected_raw_square": "61/18",
+        "global_raw_square": "61/18",
+        "weighted_cap": "97595/5724",
+        "scaled_margin": "0"
+      }
+    ],
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "verifier_sha256": "5ec4dfd763eab31a6ab8f72025fce89f1aa3101437d7557197568b70312d4d10",
+    "scope": "The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
   }
 }

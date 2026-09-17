@@ -19487,15 +19487,23 @@ existing n_l,w_l,d_l,s; eta_l=w_l/9, and the marginal density satisfies
 
 Fix the original mod3 and mod9 choices(r,j) of the zero5 block B0
 inside the original zero7 complete35 test A0. Write its baseline as
-b_l=1+1_(root(l)=r)+1_(l=j). Complete the positive5 blocks B_e at their
-original depths. On the actual35 survivor set,
+b_l=1+1_(root(l)=r)+1_(l=j). Retain the separate CRT factors of every
+positive5 original label(a,e), where a>=0 and e>=1:
 
-    A0=B0+sum_(e>=1)J_e B_e.
+    A0=B0+sum_(a,e)A_(a,e)(u)J_(a,e)(v),
+    B_e(u)=sum_a A_(a,e)(u).
 
-Every added term is nonnegative. Enlarge only the increment A0^2-B0^2
-to the raw product of the actual pure3 and pure5 survivor measures.
-The original positive5 cylinder has raw mass at most5^-e and an
-intersection of two such cylinders has mass at most5^-max(e,f).
+Here A_(0,e)=1 when that label is present. Distinct a at the same e
+need not have the same five-coordinate residue. Every added term is
+nonnegative. Enlarge only the increment A0^2-B0^2 to the raw product
+of the actual pure3 and pure5 survivor measures. At fixed u, expand
+this increment into its single and pair indicators. Their coefficients
+are nonnegative, their individual raw five masses are at most5^-e,
+and their pair intersections are at most5^-max(e,f). Replacing these
+indicators by auxiliary nested intervals [0,5^-e] therefore bounds the
+integral above, term by term. Only in this upper comparison does the
+positive load have the grouped form sum_e 1_[0,5^-e] B_e. No equality
+or alignment of the original five residues is asserted.
 Thus, for any fixed t>0, use
 
     2B0 B_e<=t*B0^2+B_e^2/t
@@ -19698,3 +19706,180 @@ error is145.31532793062718...>0.
 The uniform negative-Q criterion and arbitrary later-prime continuation
 remain unproved. These results are ordinary proofs with exact rational
 certificates, without new Lean declarations or an unrestricted resolution.
+
+### One original five test couples square loss to mixed deletion
+
+For every finite original family supported on{3,5,7}, the uniform law on
+its complete actual survivor set satisfies the stronger bound
+
+    Gamma357<=5761/159=36.23270440251572... .             (OS1)
+
+The gain from YC1 is163/6360. The additional observation is the raw
+pure5 mass of one original modulus5 test. That same event constrains
+both the selected zero7 square and one mixed7 deletion term. Distinct
+original mod15,45,... tests retain their own five-coordinate residues.
+All exponent heights, missing-class branches and complete tails remain
+included. This is an ordinary proof with exact rational certificates.
+
+#### A strip loss for one label, with no residue identification
+
+Keep lambda35, eta and the original zero5 block B0 from YC. Let P5 be
+the actual pure5 survivor set, with raw Haar mass z. In the CRT expansion
+of the selected zero7 test, write
+
+    A0=B0+R,
+    R(u,v)=sum_(a>=0,e>=1)A_(a,e)(u)J_(a,e)(v).
+
+Each pair(a,e) is its original label. Set J=J_(0,1), the original
+modulus5 test, and h=Haar(P5 intersect J), so0<=h<=1/5. At each fixed
+ternary point u, the nonnegative polynomial2 B0 R+R^2 is bounded by
+the auxiliary nested-interval comparison from YC. Give only label(0,1)
+the improved cap h; every other label keeps cap5^-e. Individual masses
+obey these caps, and each pair intersection is at most their minimum.
+Thus the comparison follows term by term without coupling the actual
+five residues.
+
+Write R_h for this auxiliary sum and R_full for the old sum, where
+also label(0,1) has cap1/5. Since A_(0,1)=1,
+
+    R_h=R_full-1_(h,1/5].
+
+On that strip R_full>=1, and in cell l the square-increment difference is
+
+    (2 B0 R_full+R_full^2)-(2 B0 R_h+R_h^2)
+       =2 B0+2 R_full-1>=2 b_l+1.
+
+Retain the integral of B0^2 under lambda35. Enlarge only its nonnegative
+increment to eta times raw Haar on P5, apply the interval comparison,
+and then use YC3 to bound the full auxiliary expression. With
+eta_l=w_l/9 this proves
+
+    integral_lambda35 A0^2<=U_strip(r,j,h),
+    U_strip=U_t(r,j)-(1/5-h)sum_l eta_l(2 b_l+1).       (OS2)
+
+Only the selected zero7 test uses OS2. The independent positive7 tests
+keep their old global bound U=max_(r,j)U_t(r,j). If a test inventory
+is incomplete, completing its missing nonnegative labels gives an
+upper bound with the same argument; no forbidden class is added.
+
+#### The same event also lowers the pure3 cofactor cap
+
+The raw cell masses remain n_l=eta_l(z-alpha_root(l)-beta_l)-late_l.
+Here alpha and beta are the actual successive removed five masses;
+late_l is the additional raw mass removed by deeper mixed classes.
+For the same actual event J put
+
+    q_l=lambda35(cell_l intersect J),
+    L_l=eta_l(h-alpha_root(l)-beta_l)-late_l.
+
+Before mixed deletion the intersection has mass eta_l h. The root
+and cell exclusions remove at most eta_l(alpha_root(l)+beta_l), and
+deeper exclusions remove at most late_l. Consequently q_l>=L_l,
+including when L_l is negative. This is a lower bound for an actual
+intersection, independent of the auxiliary comparison used in OS2.
+
+For C>=16 set k_l=C-b_l^2 and c_l=2 b_l+1. The actual test has
+A0>=b_l+1_J, and therefore
+
+    (C-A0^2)_+<=k_l-c_l 1_J,
+    k_l-c_l 1_J>=0.                                  (OS3)
+
+For the three incident layouts r=1,j in{2,3,4}, let
+
+    H_r=sum_(root(l)=r)k_l n_l.
+
+In SD3 the pure3 cofactor term was max(H_0,H_1). For an original
+root1 query, integrating OS3 gives at most H_1-sum_root1 c_l q_l,
+hence at most H_1-sum_root1 c_l L_l. For a root0 query retain H_0.
+The valid replacement is thus
+
+    W'_3=max(H_0,H_1-sum_(root(l)=1)c_l L_l).           (OS4)
+
+Let W' be SD3's full weighted cofactor cap with just this term
+replaced. All other cofactor terms remain as before. For the other
+seven layouts retain both the old W and the old selected square U_t.
+The same actual SD5 deletion argument now gives, for incident layouts,
+
+    s E_M[(L^2-C)1_(B^c)]
+       <=(6/5)U_strip+(7/15)U+W'/5-C*s.               (OS5)
+
+Here M and B are exactly SD5's product law and actual mixed7 forbidden
+union. Conditioning on B^c is the actual complete uniform357 law;
+the established positive-mass result supplies its denominator.
+
+#### Six parameter groups and complete exact verification
+
+The five old parameter groups and h in[0,1/5] form a product domain.
+Actual families occupy a subset; the relaxation need not realize every
+parameter tuple. OS2 is separately convex: its subtracted strip term
+is separately affine. In OS4 each branch is separately affine, so
+W' is separately convex. The other SD3 terms and U retain their
+previous separate convexity. Hence
+
+    C*s-(6/5)U_strip-(7/15)U-W'/5
+
+is separately concave. It suffices to test each old product vertex
+and the two endpoints h=0,1/5. The signed L_l must stay signed here;
+replacing them by positive parts would require a different convexity
+argument.
+
+At C=5761/159, all7776 incident endpoint/layout margins are positive.
+Their minimum is1/10800; the h=0 minimum is5377/10800. The9072
+remaining old-layout margins are nonnegative, with six zero margins
+at vertices398,410,422,616,628,640. Both missing-class bounds5273/258
+and14543/438 are strictly below C. Repeated vertex interpolation
+proves OS5's nonpositive upper throughout the full continuous domain.
+This proves OS1, without claiming an actual family realizes any
+relaxation vertex.
+
+The [source verifier](verify_uniform_gamma_cofactor_coupling.py) retains
+the preceding bounds and reconstructs all16848 current endpoint/layout
+records. The [source certificate](uniform_gamma_cofactor_certificate.json)
+stores their complete digest, counts, extrema and equality witnesses.
+An independent implementation matches every selected square, global
+square, weighted deletion cap and margin. These arithmetic checks
+support the ordinary actual-label and interpolation proofs above;
+they are not Lean verification.
+
+#### Propagation through the complete actual AP13 consumer
+
+Use g=5761/159-4351/120=-163/6360 in YC4, retaining every original
+raw AP cost, Delta and test law. This recomputes both uniform-cap
+slots and all complete tails. The resulting same-law bounds are
+
+    Gamma13<=2759803303859498317/17626016683279862
+           =156.57555268726503...,
+    T13(81)<=40328059447468124566268231594828117/407273507000616495667817513124000
+           =99.01959924785159...,
+    F17^-(403;nu13)+F19^-(403;physical mu17)
+      <=135235148346191272912644779662034152101019/301013392900945745723455169136921801600
+       =449.266217170254... .                         (OS6)
+
+The19 input remains normalized physical mu17=nu13 K17, distinct from
+the killed input in BM/RC. The new joint gain is exactly
+15753210252311875/567976817318556672; no independent source saving
+is subtracted from an unrelated objective.
+
+The joint, Gamma and T81 continuous-margin coefficients are respectively
+
+    30608625189355598901951158054960421028721/75641684010069914287950061539561484800,
+    384818684614381280186471/3329413543338099692904,
+    63785933429005107702629491421514123461/657527412686841462390473381957424000,
+
+all positive. The [joint verifier](verify_joint_frontier.py) checks
+all1296 vertices, all eight remaining branch records and the complete
+tails against the [joint certificate](joint_frontier_certificate.json).
+Independent reconstruction matches the changed rows and coefficients.
+The two uniform-source SHA-256 pins are updated; the eight predecessor
+pins and historical gains are retained.
+
+The exact finite allowances become
+
+    unequal/current6: 123696050941439161049501590188192271/407273507000616495667817513124000,
+    box20/current8: 30950723055587788444164903939965657323/101818376750154123916954378281000000.
+
+Safe sufficient bounds are303.717 and303.979 respectively. OS6 remains
+145.28648341810555... above the larger exact allowance, and the signed
+upper before finite-core error is145.28581641810555...>0. The uniform
+negative-Q criterion and arbitrary later-prime continuation remain open.
+No new Lean declaration or unrestricted Erdős #7 resolution is claimed.

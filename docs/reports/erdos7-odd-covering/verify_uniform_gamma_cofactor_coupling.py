@@ -4,8 +4,8 @@
 Python3.9+ standard library only. The accompanying proof gives the layout
 inequality and the continuous linear-fractional vertex reduction. This checks
 all72 old branches,103680 shared branches,12960 original signed
-layout-vertices and12960 weighted-cross layout-vertices, plus all
-missing-class cases. No solver or finite original-height cutoff is used.
+layout-vertices,12960 weighted-cross layout-vertices and16848
+same-original5 endpoint/layout pairs, plus all missing-class cases. No solver or finite original-height cutoff is used.
 """
 from fractions import Fraction as F
 from itertools import product
@@ -204,7 +204,7 @@ def signed_two_level_three_prime_bound():
     }
 
 
-def signed_young_three_prime_bound():
+def signed_young_three_prime_bound(vertex_data=None):
     """Fixed Young weights retain the two actual zero-five source norms.
 
     The ordinary proof supplies the actual-family extraction, complete
@@ -286,6 +286,9 @@ def signed_young_three_prime_bound():
                 require(square[r,j] == F(61,18) and pure_maximum == F(5,2)
                         and margin == F(163,43200), 'Strictly improved old obstruction')
                 old_obstruction = witness
+        if vertex_data is not None:
+            vertex_data.append((index,alpha,beta,late,widths,eta,available,cells,
+                                s,pure_maximum,square,global_square))
         vertices += 1
     require(vertices == 1296 and len(records) == 12960 and minimum_margin == 0,
             'Complete weighted-cross continuous-domain certificate')
@@ -314,6 +317,109 @@ def signed_young_three_prime_bound():
         'missing_pure_cases':missing,
         'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'scope':'Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution.',
+    }
+
+
+def same_original5_deletion_three_prime_bound(source, vertices):
+    """Retain the original unit-cofactor5 test in square and pure3 deletion.
+
+    Only the original unit-cofactor5 label has its cap reduced to h.
+    The strip comparison subtracts (1/5-h)*sum eta*(2*b+1) from
+    the previous selected Young square, retaining every other label cap.
+    The incident test uses h in [0,1/5] and the signed actual-cell lower
+    bound eta*(h-alpha1-beta)-late. The fixed-target margin is separately
+    concave in the original five parameter groups and h. Its two h endpoints
+    therefore suffice; the other seven layouts keep the previous formulas.
+    """
+    roots = (0, 0, 1, 1, 1)
+    choices = tuple(product(range(2), range(5)))
+    bases = {choice: tuple(1+int(roots[l] == choice[0])+int(l == choice[1])
+                           for l in range(5)) for choice in choices}
+    cap, previous = F(5761,159), F(4351,120)
+    require(F(source['Gamma357_upper']) == previous and cap >= 16,
+            'Same-original5 source and nonnegative pointwise deletion bound')
+    counts = {'incident':0, 'other':0}
+    minima = {'incident':None, 'other':None}
+    endpoint_minima = {'0':None, '1/5':None}
+    records, witnesses = [], []
+    for row in vertices:
+        index, alpha, beta, late, widths, eta, available, cells, s, pure_maximum, square, global_square = row
+        require(F(1,2) <= sum(eta) <= F(5,9) and 0 < s <= sum(eta),
+                'Same-original5 raw source domain')
+        for (r,j), bb in bases.items():
+            incident = r == 1 and j >= 2
+            group = 'incident' if incident else 'other'
+            weights = tuple(cap-b*b for b in bb)
+            require(min(weights) >= 0 and min(cap-(b+1)**2 for b in bb) >= 0,
+                    'Original5 pointwise signed square floor is nonnegative')
+            root_caps = tuple(sum(weights[l]*cells[l] for l in range(5) if roots[l] == rr)
+                              for rr in range(2))
+            remaining_parts = (
+                max(weights[l]*cells[l] for l in range(5)),
+                max(weights[l]*available[l] for l in range(5))/18,
+                sum(weights[l]*widths[l] for l in range(5))/36,
+                max(sum(weights[l]*widths[l] for l in range(5) if roots[l] == rr)
+                    for rr in range(2))/36,
+                max(weights[l]*widths[l] for l in range(5))/36,
+                (cap-1)/72)
+            for h in ((F(0),F(1,5)) if incident else (None,)):
+                selected_square = square[r,j]
+                root_cap = max(root_caps)
+                joint_lower = None
+                if incident:
+                    strip_coefficient = sum(w*(2*b+1) for w,b in zip(eta,bb))
+                    selected_square = square[r,j]-(F(1,5)-h)*strip_coefficient
+                    joint_lower = sum((2*bb[l]+1)
+                        *(eta[l]*(h-alpha[1]-beta[l])-late[l]) for l in (2,3,4))
+                    # Signed lower bounds preserve separate affinity even
+                    # when the relaxed lower bound is negative.
+                    root_cap = max(root_caps[0],root_caps[1]-joint_lower)
+                weighted_cap = root_cap+sum(remaining_parts)
+                margin = cap*s-F(6,5)*selected_square-F(7,15)*global_square-weighted_cap/5
+                require(margin >= 0, 'Every same-original5 endpoint/layout target margin')
+                counts[group] += 1
+                minima[group] = margin if minima[group] is None else min(minima[group],margin)
+                if incident:
+                    key = str(h)
+                    endpoint_minima[key] = margin if endpoint_minima[key] is None else min(endpoint_minima[key],margin)
+                records.append([index,r,j,None if h is None else str(h),
+                                str(selected_square),str(global_square),str(weighted_cap),str(margin)])
+                if margin == 0:
+                    witnesses.append({'vertex':index,'selected_root_cell':[r,j],
+                        'original_five_mass':None if h is None else str(h),
+                        's':str(s),'selected_raw_square':str(selected_square),
+                        'global_raw_square':str(global_square),'weighted_cap':str(weighted_cap),
+                        'scaled_margin':str(margin)})
+    require(len(vertices) == 1296 and counts == {'incident':7776,'other':9072},
+            'All original layouts and original5 endpoint vertices')
+    require(minima == {'incident':F(1,10800),'other':F(0)} and len(witnesses) == 6,
+            'Exact same-original5 margins and relaxation equalities')
+    missing = source['missing_pure_cases']
+    for case in missing:
+        require(F(case['three_prime_square']) < cap, 'Same-original5 missing-class fallback')
+    return {
+        'law':'uniform on the complete actual survivor set, arbitrary finite powers of3,5,7',
+        'Gamma357_upper':str(cap),'previous_signed_young_upper':str(previous),
+        'strict_improvement':str(previous-cap),'original_five_mass_endpoints':['0','1/5'],
+        'separately_concave_parameter_groups':['pure_three_deficits','mixed_five_root_removal',
+            'mixed_five_cell_removal','deeper_mixed_removal','pure_five_survivor_mass',
+            'original_unit_five_test_mass'],
+        'signed_joint_lower_bound':'eta_l*(h-alpha_1-beta_l)-late_l',
+        'pure_three_root_cap':'max(A_0,A_1-sum_root1 (2*b_l+1)*signed_joint_lower_bound)',
+        'incident_selected_layouts':[[1,j] for j in (2,3,4)],
+        'selected_young_weight':'1',
+        'selected_square_strip_gain':'(1/5-h)*sum_l eta_l*(2*b_l+1)',
+        'reduced_five_cap_label':'original unit-cofactor5 only',
+        'positive_five_pair_coefficient':'1/8','zero_seven_square_coefficient':'6/5',
+        'remaining_old_square_coefficient':'7/15','pure_three_deletion_coefficient':'1/5',
+        'parameter_vertices':len(vertices),'selected_layout_endpoint_pairs':len(records),
+        'layout_group_counts':counts,'minimum_scaled_margin':{k:str(v) for k,v in minima.items()},
+        'incident_endpoint_minima':{k:str(v) for k,v in endpoint_minima.items()},
+        'minimum_unweighted_denominator':source['minimum_unweighted_denominator'],
+        'layout_margin_sha256':hashlib.sha256(json.dumps(records,separators=(',',':')).encode()).hexdigest(),
+        'relaxation_equalities':witnesses,'missing_pure_cases':missing,
+        'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'scope':'The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution.',
     }
 
 
@@ -364,6 +470,8 @@ def compute_certificate():
     old=1+(3*n+(z-alpha)+a*x+2*a)/(n+m)
     new=1+(3*n+(z-alpha)+y*(x+w+1)+(a-y)*(x+v+1))/(n+m)
     require(old==F(57,4) and new==F(55,4),'shared-layout improvement at old extremum failed')
+    young_vertex_data=[]
+    young_source=signed_young_three_prime_bound(young_vertex_data)
     return {'schema':'uniform-gamma-cofactor-coupling-v1','prime_support':[3,5],
             'Gamma_bound':str(cap),'same_law':'uniform complete survivor law',
             'positive_lcm_coefficient':str(a),'zero_to_positive_coefficient':str(y),
@@ -377,7 +485,9 @@ def compute_certificate():
                                    'n':str(n),'m':str(m)},
             'shared_three_prime_parameters':joint_three_prime_bound(),
             'signed_two_level_three_prime_parameters':signed_two_level_three_prime_bound(),
-            'signed_young_three_prime_parameters':signed_young_three_prime_bound()}
+            'signed_young_three_prime_parameters':young_source,
+            'same_original5_deletion_three_prime_parameters':
+                same_original5_deletion_three_prime_bound(young_source,young_vertex_data)}
 
 
 def main():
@@ -408,6 +518,8 @@ def main():
           'both missing-pure-class bounds are smaller on the same law.')
     print('Verified12960 weighted-cross layout-vertices: uniform Gamma357<=4351/120; '
           'same original floors, complete tails and both missing-pure-class bounds.')
+    print('Verified16848 original-unit5 endpoint/layout pairs: uniform Gamma357<=5761/159; '
+          'only the original unit5 cap is reduced; all other labels and complete tails remain.')
 
 
 if __name__=='__main__':
