@@ -547,3 +547,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exact capacity of the current neighborhood globalization](profile-notes/76-exact-capacity-of-the-current-neighborhood-globalization.md)
 - [Complete pure3 deletion gives a uniform linear gap](profile-notes/77-complete-pure3-deletion-gives-a-uniform-linear-gap.md)
 - [Complete deletion improves the endpoint comparison](profile-notes/79-complete-deletion-improves-the-endpoint-comparison.md)
+- [Complete pure3 deletion sharpens the common square](profile-notes/81-complete-pure3-deletion-sharpens-the-common-square.md)
