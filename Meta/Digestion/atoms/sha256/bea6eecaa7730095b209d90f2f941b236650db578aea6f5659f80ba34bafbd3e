@@ -1,0 +1,18 @@
+## 23. 关联循环路线的对象核对与可用修正
+
+进一步核对 [IW14, §2 and §4] 后，应补充第 9 节中“选择通用嵌入”的具体含义。一般 A∈A4 的 Prym 纤维 S 是曲面；但参数化 theta 中 Prym-embedded curves 的自然空间 F→S 的纤维是曲线 λ(X-tilde)，所以 dim F=3。其 tautological curve family C→F 的总空间维数为 4。该文 Theorem 4.1 研究的是 H5(F)→H3(Theta) 的 Abel-Jacobi 像，不是我们需要的 H2(A)_prim→H2(S)_minus 比较。
+
+因此，原先的三维关联循环 Z⊂A×S 不能直接用这个自然四维全族代替。原文第 9 节已经保留了选择、下降和非零性义务；这里明确一个可用的修正：在这些实际族及适当紧化已经给定时，取 F 上相对 S 的 ample 除子类 η，设 r:C→F、p:F→S、e:C→A，则
+
+\[
+Z_\eta=(e,p\circ r)_*\bigl(r^*\eta\cap[C]\bigr)\in CH^3(A\times S)
+\]
+
+具有正确余维。可以由它定义
+
+\[
+\Psi_\eta(\alpha)=\frac{1-\tau^*}{2}(Z_\eta)_*(\theta\cup\alpha).
+\]
+
+这给出了修正后的具体候选，不证明其 primitive 反不变分量非零，也没有证明它在所需 moduli 基变换上的所有延拓与平坦性条件。特别不能由总族维数不同推断所有候选必为零，也不能把另一项 Abel-Jacobi 满射替代本问题的非零性。
+
