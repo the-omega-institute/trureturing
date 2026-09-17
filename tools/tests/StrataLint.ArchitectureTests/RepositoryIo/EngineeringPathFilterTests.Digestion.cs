@@ -7,6 +7,8 @@ public sealed partial class EngineeringPathFilterTests
     private const string DigestionCasPath =
         "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string DigestionFileMap = """
+        schema_version = 2
+
         [[files]]
         pattern = "Meta/Digestion/backfill/**"
         admission_plane = "content"

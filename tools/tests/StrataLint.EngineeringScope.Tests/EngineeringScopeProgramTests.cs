@@ -167,8 +167,8 @@ public sealed class EngineeringScopeProgramTests
 
     [Theory]
     [InlineData(true, null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
-    [InlineData(true, "", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
-    [InlineData(true, "[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData(true, "schema_version = 2", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData(true, "schema_version = 2\n[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
     [InlineData(true, "files = [", "ADMISSION-PLANE-FILEMAP-INVALID")]
     [InlineData(true, "[[files]]\npattern = '**'\nadmission_plane = 'observer'", "ADMISSION-PLANE-FILEMAP-INVALID")]
     [InlineData(false, null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
@@ -746,7 +746,7 @@ public sealed class EngineeringScopeProgramTests
         WriteFile(
             root,
             FileMapPath,
-            string.Join(
+            "schema_version = 2\n\n" + string.Join(
                 "\n",
                 entries.Select(entry =>
                     $"[[files]]\npattern = \"{entry.Pattern}\"\nadmission_plane = \"{entry.Plane}\"\n")));
