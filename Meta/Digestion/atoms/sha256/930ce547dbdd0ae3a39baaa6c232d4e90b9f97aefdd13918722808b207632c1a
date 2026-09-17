@@ -1,0 +1,13 @@
+### 17.5 定理：观察时长与噪声精度的统一匹配阶
+
+存在仅依赖 $E_-,E_+,\eta$ 的正数 $c,C,L_0$，使对所有 $L=\log(1/\varepsilon)\geq L_0$ 和所有 $T\geq1/E_+$，有
+\[
+\boxed{
+c\left[\frac{\log(e+L/(E_+T))}{L}\right]^2
+\leq\mathcal R_T(\varepsilon)
+\leq C\left[\frac{\log(e+L/(E_+T))}{L}\right]^2.
+}
+\tag{17.8}
+\]
+这些常数与 $T$ 无关。即使把模型类限制为任意有限原子数的并集，同一个匹配阶仍成立。
+
