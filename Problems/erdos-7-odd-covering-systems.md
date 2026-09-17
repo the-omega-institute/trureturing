@@ -207,7 +207,44 @@ The [conditional-deletion boundary](../docs/reports/erdos7-odd-covering/marked_h
 unit-load mass that AP17 deletes completely. This rules out deriving
 a positive conditional survival fraction from those two source facts
 alone. The wider low-load bands and their actual deletion bounds remain
-unsettled.
+unsettled for unrestricted old cofactors.
+
+The [common old-test distance profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#eliminating-current-heights-with-a-common-old-test-distance-profile)
+(OBE1)--(OBE7) now eliminates the independent current-height choices
+from a valid complete killed-square upper bound. It keeps the literal
+zero block coupled to every positive block through a finite lower
+envelope of actual norm deficits and squared distances. The entire
+height tail is summed over finitely many affine intervals, with an
+exact eventual geometric tail. A strict improvement occurs precisely
+when the baseline and weighted-norm maximizing sets are disjoint;
+an actual ternary family exhibits this at every prime p>=17 and
+every finite current height. The positive blocks are not assumed
+equal. This needs the actual old norm/Gram profile, which has not
+been bounded uniformly over the unrestricted family.
+
+A [conditional315 head estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#conditional-deletion-controlled-by-the-same315-head-cells)
+controls deletion of any inherited event using its two largest actual
+head-cell masses. If the actual357 part divides315 and every17/19
+mixed old cofactor divides315, all complete tests satisfy
+`eta(A<=10)>0.01548133737` and
+`Delta121>0.32510808492`. Source11/13 classes and all current
+heights remain arbitrary, but17 masks contain no11/13 factor and19
+masks contain no11/13/17 factor. Complete cross-factor test labels
+remain present. This is an event-conditioned observation for the
+same actual AP(4,6) law, not an unrestricted KC saving or a new
+subfamily noncoverage endpoint.
+
+The [highest-digit CRT cut](../docs/reports/erdos7-odd-covering/marked_head_profile.md#highest-digit-crt-contrasts-give-signed-common-test-cuts)
+(CCD1)--(CCD3) uses the unique full-modulus test label: its alternating
+sum over a highest-digit CRT cube is1, while every proper-divisor
+label cancels. Actual deleted masses at even corners and surviving
+masses at odd corners give a finite fractional-packing lower
+certificate for the same-test CT loss. An actual20-label branch
+has bound19/209952 uniformly over all remaining test choices.
+The certificate is conditional on those corner masses and the
+assigned full-modulus residue; a global bound must also handle
+branches with zero capacities. These additions have ordinary
+proofs and exact arithmetic checks, without new Lean verification.
 
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix

@@ -15346,3 +15346,228 @@ On every old point of E, all16 mixed masks are active. They cover all16 nonzero 
 Here the19 factor is absent, so its step is identity. In particular no universal estimate nu(1_E beta17)<=theta*nu(E) with theta<1 follows even with the source density below2 and nu(E)>0. The family does not cover all integers: on the positive source cylinder1 mod3 none of these mixed masks is active, so every nonzero17 root survives there.
 
 The example concerns E={A=1}. The wider band A<=2 is the entire source, and CB2 does not exclude a useful conditional estimate for such broader bands or a tradeoff with the same test's positive-current energy. It specifies the extra deletion information required by CT5, without replacing that obligation by a source-density bound.
+
+### Conditional deletion controlled by the same315 head cells
+
+There is a positive conditional estimate when the current mixed forbidden classes use only old cofactors dividing315. At p=17 or19 assume every actual mixed forbidden modulus is d*p^e, where d>1 divides315 and e>=1. All residues, finite current heights, missing classes and pure p-power exclusions remain arbitrary. At17 this hypothesis excludes old11/13 factors; at19 it also excludes17 factors. It is a restriction on forbidden classes, not on the complete test inventory, which retains all original divisor labels and their cross factors.
+
+Let sigma be the normalized actual incoming probability on the old coordinates, padding unused315 digits uniformly if needed. For any old event E set
+
+    w_E(u)=sigma(E intersect {x=u mod315}).
+
+Then the AP/T8 assigned bad mass satisfies
+
+    integral_E beta_p d sigma <=4/(p-9)*max_u w_E(u). (HBD1)
+
+Indeed the actual pure-survivor Haar mass lambda is at least(p-2)/(p-1). At current depth e let B_e(u) count the active original nonunit315 cofactor cylinders. There are at most11, each with its own fixed residue. With t_e=(p-1)p^-e and all absent depths assigned B_e=0, the actual mixed union obeys
+
+    alpha_p(u)<=(1/(p-2))*sum_e t_e B_e(u),
+    beta_p(u)<=(1/(p-9))*sum_e t_e(B_e(u)-7)_+.
+
+The second inequality uses delta=7/(p-2) and convexity of the positive part; sum_e t_e=1 includes the entire current tail. Complete each 1+B_e upward to a315 comparison load C_e. The existing endpoint identity(2), extended homogeneously to every nonnegative head measure w, gives
+
+    sum_u w(u)(C_e(u)-8)_+<=4 max_u w(u).
+
+Applying this to the one measure w_E proves HBD1. No source probability or test residue is reselected by depth. The comparison loads C_e bound the original masks; they do not identify the masks with the inherited test defining E. If the largest current height is H, the right side can additionally be multiplied by1-p^-H.
+
+#### Joint deletion and the two largest event cells
+
+Under this cofactor restriction beta17 and beta19 are functions of the same315 head alone. For the normalized physical mu17=nu13 K17, the old marginal remains nu13. Consequently the final killed measure satisfies the exact identity
+
+    eta(E)=sum_u w_E(u)(1-beta17(u))(1-beta19(u)).
+
+Let w1>=w2 be the two largest entries of w_E. The argument for HBD1 applied to counting measure, rather than the probability sigma, gives
+
+    sum_u beta17(u)<=1/2,  sum_u beta19(u)<=2/5.
+
+These bounds imply
+
+    nu13(E)-eta(E)
+      <=max{(7/10)w1,(1/2)w1+(2/5)w2}
+      <=(9/10)w1.                                 (HBD2)
+
+To check the first inequality, maximize sum_u w_E(u)(b_u+c_u-b_uc_u) on the two nonnegative simplices sum b<=1/2 and sum c<=2/5. The objective is affine in either variable with the other fixed, so a maximizing pair of simplex vertices exists. Vertices on the same cell give at most(7/10)w1; vertices on different cells give at most(1/2)w1+(2/5)w2. Zero vertices give no larger value. This upper optimization does not assert that all its vertices are actual masks. It retains the two deletion events on one actual head and accounts for their overlap.
+
+Now assume the actual357 period divides315. Its full original survivor set S in this head has N>=74 points by the existing315 counting result. Start with the uniform law on S, apply the actual physical11/T4 and13/T6 kernels, and condition once, with retained mass rho>=r=18925009844347/38266567762500. Each physical kernel preserves the incoming head marginal; restriction and division by rho therefore give
+
+    max_u w_E(u)<=1/(N rho)<=1/(74r).               (HBD3)
+
+This uses the full actual source, not a replacement by the canonically pruned law or another supported probability. Source11/13 masks may have arbitrary permitted old cofactors, residues and finite heights.
+
+For every inherited complete test A, the same-law mean bound M=2621130891614589/246025127976511 and integer A>=1 imply nu13(A<=10)>=(11-M)/10. Write m=nu13(E) and c0=1/(74r). Since w1<=c0 and w1+w2<=m, HBD2 gives
+
+    eta(E)>=min{m-(7/10)c0,(3/5)m-(1/10)c0}.
+
+Both expressions increase with m. At m=(11-M)/10 the first is smaller, so
+
+    eta(A<=10)>=704627631753217/45514648675654535>0,
+    Delta_121(L)>=21 eta(A<=10)
+      >=14797180266817557/45514648675654535
+       =0.3251080849215137... .                    (HBD4)
+
+The bound holds for the inherited block of every complete final test in this restricted actual family, with no assumption of positive final mass. For the ASB candidate marginal with nu13(A=1)=7/100, the same conditional calculation gives Delta_121>=120*(7/100-9/(740r))>5.4489577146. If its positive terms also obey the stated ASB upper functional, this exceeds that functional's defect3.96663236768. It does not exclude the source marginal by itself or assert an unrestricted improvement of the299.398 target.
+
+An exact actual-family check uses the existing86-survivor315 family, eleven mixed11 classes, seven mixed13 classes involving11, and three current heights at both17 and19. Its103 distinct forbidden moduli have period1517938437015 and768 complete test labels. Direct physical AP(4,6) integration gives rho=819/860. Exact prefix unions, independently counted as finite bitsets, give positive charges at both current primes; the same inherited tests satisfy HBD1--HBD4 on all checked bands. The universal statement rests on the proof above, not this single instance.
+
+The existing DV1 construction supplies a different supported law with a stronger315-source square bound. It cannot replace the particular actual AP(4,6) probability used here. The useful addition is the event-conditioned head observation and its CT consumer, not a new noncoverage endpoint for this subfamily. Extending HBD1 to arbitrary old cofactors requires another estimate: the excluded old exponents and11/13/17 factors cannot be omitted as an unpaid tail.
+
+### Highest-digit CRT contrasts give signed common-test cuts
+
+Fix the actual source nu on Z/QZ, Q>1, and project the complete killed17/19 output eta to this old coordinate. Define the actual deleted and surviving point masses
+
+    u(x)=nu(x)[beta17+K17^- beta19](x),
+    v(x)=eta({x}),  u(x)+v(x)=nu(x).
+
+For a complete inherited test A and integer s>=2, the first two CT3 losses are
+
+    D_s(A)=sum_x u(x)(A(x)^2-s^2)_+,
+    N_s(A)=sum_x v(x)(s^2-A(x)^2)_+.
+
+These retain the same original source and the same test. Original modulus uniqueness supplies an additional discrete constraint on their sum.
+
+Write Q=product_i p_i^h_i with r>=1 distinct primes, and let a be the residue selected by the original full-modulus test label Q. In each coordinate choose one alternative to a_i that agrees modulo p_i^(h_i-1) but differs modulo p_i^h_i. The2^r CRT corners x_epsilon independently choose the original or alternative coordinate. Then
+
+    sum_epsilon (-1)^|epsilon| A(x_epsilon)=1.      (CCD1)
+
+Every proper-divisor indicator is constant in at least one cube direction, so cancels from the alternating sum, irrespective of its independently chosen residue. The unique Q indicator contributes1 at the all-original corner and0 elsewhere. This proves CCD1 without aligning any proper-divisor labels.
+
+Let C+ and C- be the even and odd corners. They have equal cardinality. CCD1 forces at least one even corner with A>=s+1 or one odd corner with A<=s-1: otherwise the alternating sum is at most0. Hence
+
+    D_s(A)+N_s(A)
+      >=min({(2s+1)u(x):x in C+}
+               union {(2s-1)v(x):x in C-}).         (CCD2)
+
+Strict positivity requires deleted mass at every even corner and surviving mass at every odd corner. Positive total charge alone does not suffice. For s=9 the coefficients are19 and17.
+
+Several cubes for the same assigned Q residue can be combined. Choose nonnegative rational lambda_C satisfying the separate point capacities
+
+    sum_(C:x in C+)lambda_C<=(2s+1)u(x),
+    sum_(C:x in C-)lambda_C<=(2s-1)v(x).
+
+Each cube has a qualifying high or low corner. Weight these clauses and use the capacities to obtain
+
+    sum_C lambda_C<=D_s(A)+N_s(A)<=Delta_(s^2)(L).   (CCD3)
+
+Thus overlapping cubes have a finite fractional-packing certificate that does not charge any point beyond its own actual mass. Once the literal Q label is assigned, the certificate holds uniformly over every remaining independent original test label. A global optimization must cover every Q residue or justify its branch exclusions using the full objective; Xi-only optimality conditions do not authorize exclusions here.
+
+For an actual nonempty branch, take Q=3^9 and forbid0 modulo3^j for1<=j<=9. The old source is uniform on its13122 units. At17 add pure0 and eight classes3^j*17 with old residue1 and current root j,1<=j<=8. Other source-prime steps and19 have height0. The full family has18 distinct forbidden moduli and20 complete test labels. On E8={x=1 mod3^8}, alpha17=1/2 and beta17=1/16; outside E8 the assigned charge vanishes.
+
+Assign the original Q test residue a=1. Its two highest-digit corners1 and6562 lie in E8 and have
+
+    u(1)=1/209952,  v(6562)=15/209952.
+
+The one-cube certificate at s=9 gives Delta81(L)>=19/209952 for every complete test in this branch. Centering every old label at1 gives A(1)=10,A(6562)=9 and attains this restricted two-corner cost; it need not minimize the full CT loss. This is a usable branch constraint, not a uniform bound across all source geometries or full-modulus residues. Cube weights can vanish in other branches and become arbitrarily small with growing periods.
+
+The endpoint identity(2), existing AP comparison, and CT decomposition are reused directly in these conditional arguments. The CRT cut follows from cancellation of the original proper-divisor indicators and finite point capacities. These are ordinary proofs with exact arithmetic checks; they add no Lean declaration, frozen status or unrestricted Erdős #7 conclusion.
+
+### Eliminating current heights with a common old-test distance profile
+
+Fix a finite actual old carrier, a finite nonnegative measure sigma and its complete old-test domain D. Each original divisor remains an independently chosen label. Let R_x be the actual killed current-prime kernel, q(x)=R_x(1), and choose a full-Haar density cap c(x): every depth-e current prefix has mass at most c(x)p^-e. Assume0<=q<=c and finite integrals. The literal actual cap g/lambda and the larger generic AP cap are both allowed. The following upper bound uses these quantities on their one actual source; it requires no normalization of sigma.
+
+Define
+
+    <A,B>_c=integral c A B d sigma,
+    ||A||_c^2=<A,A>_c,
+    Gamma=max_(A in D)||A||_c^2,
+    d(A)=Gamma-||A||_c^2,
+    M={A in D:d(A)=0}.
+
+The domain D and M are finite and nonempty. For a fixed literal zero-current block A0, keep the joint profile
+
+    psi_t(A0)=min_(A in D){t d(A)+||A-A0||_c^2},
+    t>0.                                          (OBE1)
+
+This minimum couples norm deficit and distance to the same old test. It cannot in general be recovered from marginal moments or independently maximized Gram entries.
+
+#### Finite original heights and the retained deficits
+
+For original current height H, put s_e=p^-e and
+
+    S_H=sum_(e=1..H)s_e,
+    a_H=sum_(e=1..H)(2e+1)s_e,
+    t_(e,H)=e+1+sum_(f=e+1..H)s_f/s_e,
+    B_H(A0)=integral q A0^2 d sigma+S_H||A0||_c^2,
+    Psi_H(A0)=sum_(e=1..H)s_e psi_(t_(e,H))(A0).
+
+For independent old blocks A0,...,AH, the current-prefix pair caps give
+
+    integral L^2 d(sigma R)<=Phi_H,
+    Phi_H=integral q A0^2 d sigma
+       +sum_((e,f)!=(0,0),0<=e,f<=H)
+                             s_max(e,f)<Ae,Af>_c.
+
+The following is an exact identity for this cap functional:
+
+    Phi_H=B_H(A0)+(a_H-S_H)Gamma-Psi_H(A0)
+      -sum_(e=1..H)s_e[
+          t_(e,H)d(Ae)+||Ae-A0||_c^2
+                           -psi_(t_(e,H))(A0)]
+      -sum_(1<=e<f<=H)s_f||Ae-Af||_c^2.             (OBE2)
+
+To prove it, expand each pair by2<A,B>_c=||A||_c^2+||B||_c^2-||A-B||_c^2. The coefficient of||Ae||_c^2 is(e+1)s_e+sum_(f>e)s_f=s_e t_(e,H), and these coefficients sum to a_H-S_H. Substitute||Ae||_c^2=Gamma-d(Ae), then add and subtract the minimum OBE1. Every displayed bracket and distance is nonnegative. Thus
+
+    sup_L integral L^2 d(sigma R)
+      <=(a_H-S_H)Gamma
+         +max_(A0 in D){B_H(A0)-Psi_H(A0)}.         (OBE3)
+
+No equality between positive blocks is imposed. If one common current root and all its relevant prefixes avoid every pure and mixed exclusion, c=g/lambda is simultaneously attained by assigning all positive labels to that root. At H1, OBE3 is then exact: there are no positive-to-positive distances and the sole positive block can attain OBE1. At higher H, OBE3 remains an upper bound; it discards those distances and possible incompatibility of the separate minima.
+
+#### Complete tails and finite affine intervals
+
+Set S=1/(p-1), a=(3p-1)/(p-1)^2 and
+
+    B(A0)=integral q A0^2 d sigma+S||A0||_c^2,
+    Psi(A0)=sum_(e>=1)p^-e psi_(e+1+S)(A0).
+
+For every finite original current height with these same q,c and D,
+
+    sup_L integral L^2 d(sigma R)
+      <=(a-S)Gamma+max_(A0 in D){B(A0)-Psi(A0)}.    (OBE4)
+
+Indeed extend the finite block tuple by arbitrary complete old tests in the cap functional. All added pair terms are nonnegative, and the full series converges absolutely since every inner product is at most Gamma and the coefficient sum is a. Apply the expansion used for OBE2 to this series. The resulting norm coefficient is p^-e(e+1+S). This adds comparison terms, not original forbidden classes, and does not identify the finite coefficients with the infinite ones.
+
+The complete tail of Psi has a finite description. Let
+
+    D_*(A0)=min_(A in M)||A-A0||_c^2,
+    T_*(A0)=max_(A not in M)
+       (D_*(A0)-||A-A0||_c^2)_+/d(A),
+
+with maximum0 when there are no nonmaximal tests. Then
+
+    psi_t(A0)=D_*(A0) for every t>=T_*(A0).         (OBE5)
+
+Every nonmaximal test contributes at least D_* after this threshold, while a nearest member of M attains D_*. Zero seminorm differences cause no difficulty: tests equal c-sigma almost everywhere have the same norm, and q<=c makes their baseline terms agree too. Original labels are not removed from the admissible domain.
+
+Before the threshold, psi_t is the lower envelope of the finitely many affine functions t d(A)+||A-A0||_c^2. Its breakpoints partition the integer depths e into at most|D| active intervals. On each interval the sum defining Psi is a combination of sum p^-e and sum e p^-e; the last interval is exactly geometric by OBE5. With rational actual data, crossings, integer interval endpoints and sums admit exact rational computation. No iteration through every depth up to T_* is necessary.
+
+The old domain can still be very large, and its nonzero norm gaps can be arbitrarily small. This finite interface supplies no uniform complexity bound on the original family search. It eliminates the independent current-height layout choices from this particular valid upper estimate, using the actual old norm/Gram profile and q-weighted baseline.
+
+#### When the complete bound improves strictly
+
+Relative to U0=max_D B+(a-S)Gamma, the gain in OBE4 is
+
+    delta_profile=min_(A0 in D){max_D B-B(A0)+Psi(A0)}.
+
+For t>0, psi_t(A0)=0 exactly when A0 itself maximizes the c-weighted norm, allowing the same null-space identification. Finiteness therefore gives
+
+    delta_profile>0 iff argmax_D B and M are disjoint. (OBE6)
+
+This is a condition on two observations under the same actual source and kernel. Its numerical size must be supplied by that source's profile.
+
+The strict case occurs in an actual family at every finite current height. Use uniform units modulo3^8 as source, forbid0 modulo3, and take prime p>=17, threshold8, pure0 modulo p, and the eight classes3^j p with old residue1 and current root j. Include the redundant pure classes0 modulo p^e to retain any desired higher current height. The original3^8 height is retained by its mixed class; every original test remains present. All5/7/11/13 factors are absent, so their source steps are identities.
+
+Write R for the nested old depth count, P8=1/4374, and u_j=g_j/(p-1). The same actual row calculation as RS gives
+
+    q_j=1 (j<=7),  q8=(p-2)/(p-1),
+    u7=1/(p-8),  u8=(p-2)/[(p-1)(p-9)],
+    c_j=p u_j.
+
+The strictly increasing c_j make the spine prefix the unique maximal c-weighted cylinder at every old depth. Expanding the complete square gives the unique norm-maximizing load A_*=1+R. For the full-height baseline weight w_j=q_j+[p/(p-1)]u_j, move just the last old cylinder to another child of the depth7 spine. The resulting complete spur test A' satisfies
+
+    B(A')-B(A_*)=17 P8(w7-w8)>0,
+    w7-w8=[1-p(u8-u7)]/(p-1),
+    u8-u7=7/[(p-1)(p-9)(p-8)].                    (OBE7)
+
+Positivity follows from(p-1)(p-9)(p-8)>7p for p>=17. Thus the norm maximum does not maximize B, proving OBE6 is nonvacuous for actual kernels, without assuming repeated positive blocks. This example establishes a strict comparison gain; it is not a new numerical bound for arbitrary AP13 families.
+
+For the final KC objective one can apply OBE3 or OBE4 directly at19 with sigma=nu13 K17^- and R=K19^-; the output is exactly eta and the old domain contains every original17 label. Subtract the test-independent484 integral q d sigma from the bound. This is the actual killed input, with its mass retained; no normalized physical or separately conditioned source is substituted. Uniform numerical control of its norm/Gram profile over the full original family remains open. The identities, envelope computation and strict-gain argument here are ordinary mathematics, not Lean verification.
