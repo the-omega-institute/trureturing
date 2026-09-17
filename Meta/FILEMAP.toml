@@ -710,6 +710,24 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact primal/dual limit of two fixed univariate SH27 moment relaxations.
+pattern = "docs/reports/erdos7-odd-covering/joint_moment_limits_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Direct killed-law finite-core errors and full square-hinge tails.
+pattern = "docs/reports/erdos7-odd-covering/killed_core_continuity_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Literal original-label counterexamples to a larger testwise killed-square floor.
 pattern = "docs/reports/erdos7-odd-covering/killed_unit_floor_certificate.json"
 kind = "data"
@@ -1394,6 +1412,26 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact primal/dual limit of two fixed univariate SH27 moment relaxations.
+pattern = "docs/reports/erdos7-odd-covering/verify_joint_moment_limits.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]] # Direct killed-law finite-core errors and full square-hinge tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_killed_core_continuity.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Recomputes genuine BB kernels and exact killed-floor equality on all original labels.
 pattern = "docs/reports/erdos7-odd-covering/verify_killed_unit_floor.py"
 kind = "program"

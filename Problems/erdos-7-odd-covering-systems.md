@@ -68,6 +68,27 @@ the period and number of patterns are not asserted small, and later-prime
 continuation is still required. The earlier WT/PR mask-only comparisons
 remain valid but do not themselves approximate the incoming law or tests.
 
+The [direct killed-law criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#direct-killed-law-comparison-and-a-smaller-complete-finite-core)
+(KC1)--(KC15) controls `Q=integral(L^2-484)d eta` for the same actual
+AP13 and killed17/19 construction. Independent L1 mass errors reduce its
+complete box20/current8 allowance to less than0.000667. A smaller unequal
+box `(17,10,8,7,6,6,6)` over the seven primes, with current cutoffs6,
+has4,889,808 complete test labels and total Q error below0.263. Every
+omitted original label and incoming-law change remains paid in the
+full tails. The common period is still51 digits; no exhaustive search
+or optimal-cutoff claim is made.
+
+On this same law, the complete square hinge satisfies
+`sup E(A^2-81)_+<117.103689`. Expanding the exact killed pair matrices
+therefore gives the sufficient finite joint-frontier bounds285.895 for
+the large core and285.633 for the smaller one, at W403. These remain
+unproved requirements. Their strict negative Q conclusion would itself
+establish positive final mass and `Gamma19<484`, without assuming
+survival in advance. This new Q functional is distinct from the earlier
+APC physical-square-plus-assigned-charge functional. Its pointwise
+HK1024 clip-loss bound13.607 does not bound every later auxiliary or
+layout-supremum relaxation loss.
+
 The [separate full-Haar construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-cylinder-and-fourth-moment-bounds-for-arbitrary-old-families-through13)
 and its [AO finite-core comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#uniform-finite-core-approximation-of-the-actual-supported-law-through13)
 remain separate mathematical results. Their law is not substituted into
@@ -84,6 +105,15 @@ block, with every original test label retained. Actual pure-density saving
 is still positive and the tests are provably nonmaximizing. These examples
 do not exclude an improvement using actual pure geometry or maximizing-test
 constraints.
+
+For the two fixed17/T6,19/T8 schedules, an [exact moment-relaxation limit](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-limit-of-the-joint-integer-moment-refinement-at-w483)
+uses rational dual majorants and matching abstract positive-integer
+load distributions. All mean, square and H1--H17 constraints together
+reduce their SH27 costs by only0.000127542 and0.000063077, respectively;
+both W483 defects stay positive. The separate SH26 square estimate is
+held fixed. This does not optimize all255 schedules or show that an
+actual congruence family attains the abstract distributions. It identifies
+the limit of tightening just these cost terms with those observations.
 
 The [fixed-depth root-overlap criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#rro53-and-the-current-prime-root-overlap-interface)
 (CR1) supplies an exact feasibility cut for finite-core overlap matrices:

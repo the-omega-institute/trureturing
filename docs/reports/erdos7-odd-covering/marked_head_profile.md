@@ -13380,3 +13380,556 @@ This elementary in-text consequence of residue labeling provides
 finite-core feasibility pruning. It supplies no quantitative improvement
 of the current same-law square/charge bound by itself and adds no Lean
 declaration.
+
+## Exact limit of the joint integer-moment refinement at W=483
+
+For the two fixed schedules selected in SP, the simultaneous mean,
+square and H1--H17 observations improve the SH27 cost bounds by exactly
+
+    restart:  600111216928696/4705230572550772875
+               =0.00012754129849227924...;
+    fourstep: 13638891293834/216227850226171875
+               =0.00006307647825924308... .             (JM1)
+
+The resulting W483 defects are respectively
+242.74746814910034... and 121.19483996554176..., both positive. Exact
+dual majorants and matching abstract load distributions show that no
+further tightening of these SH27 costs follows from this particular
+set of univariate moment constraints. The separate SH26 physical-square
+term is held fixed. This conclusion is specific to two schedules and
+does not determine the best schedule among all255 choices.
+
+### Fixed sources, schedules and relaxed moment problem
+
+The restart route uses the actual supported AP(4,6)13 source of SP,
+then physical steps17/T6 and19/T8. The fourstep route uses uniform
+actual357 survivors, then physical steps11/T4,13/T6,17/T6,19/T8 with
+one final conditioning. Source laws, every original labelled test,
+residue and missing-class branch remain as in SP. The source bounds
+apply at arbitrary finite original prime heights.
+
+For each route write M,G,Hj for its simultaneous source bounds
+
+    E L<=M, E L^2<=G, E(L-j)_+<=Hj, 1<=j<=17,          (JM2)
+
+where L is a complete positive integer-valued labelled load. For the
+fourstep source M=3071051/584325 and G=3849/106. For restart,
+M=2621130891614589/246025127976511 and
+G=6471426752685569/37850019688694. All17 hinge fractions are in the
+source-pinned certificate. In particular M is a complete-load mean
+bound, not a renamed cylinder-sum bound.
+
+We maximize each SH27 cost over all positive integer distributions
+satisfying JM2. Such an abstract distribution need not arise from an
+actual congruence family or from the physical construction. This
+enlargement gives valid upper bounds for the actual source loads.
+
+Let d=p-1-T, c=(p-1)/d, a=(3p-1)/(p-1)^2 and let f be the product of
+the later factors1+ac. For a given earlier auxiliary multiplier n,
+the cost as a function of the source load is
+
+    h(p,T,n;x)=483(nx-T)_+/d
+       +f*a[(p-1)/(p-1-min(nx,T))-c].                  (JM3)
+
+Different p,n terms may concern different actual complete test
+layouts. Each bound is applied separately using JM2; no common
+actual layout or common maximizer is assumed.
+
+### Exact dual bounds for the only changed term
+
+Only p=19,T=8,n=1 changes. Its future multiplier is1 and its cost is
+
+    F(x)=483(x-8)_+/10
+           +(14/81)[18/(18-min(x,8))-9/5].             (JM4)
+
+Define
+
+    QR(x)=-7/135+(7/270)(x-6)_+
+                        +(6517/135)(x-8)_+;
+    QF(x)=-14/135+(2/135)(x-3)_++(1/270)(x-4)_+
+                     +(1/135)(x-6)_+
+                        +(6517/135)(x-8)_+.           (JM5)
+
+Both majorize F for every x>=1. Below the first knot, the constant
+equals F at that knot and F is increasing. Between consecutive knots
+the majorant is a chord of the convex function F on[1,8]. For QR the
+knots are6,8; for QF they are3,4,6,8. At and above8 each majorant is
+exactly483(x-8)/10: its value at8 is zero and its slope is483/10.
+Thus the entire unbounded load tail is proved by identity. The exact
+verifier checks integers1,...,8 and that affine identity, which
+suffices for the positive integer moment problem.
+
+All hinge coefficients in JM5 are nonnegative; the mean and square
+coefficients are zero. Substituting the respective Hj in JM5 therefore
+gives dual upper bounds valid for every distribution in JM2.
+
+The old integer expansion of F has coefficient7/1485 at H7. All
+savings come from the valid convexity constraint
+
+    E(L-7)_+ <= [E(L-6)_+ + E(L-8)_+]/2.              (JM6)
+
+Each old bound table has H7>(H6+H8)/2. The improvement of the
+unweighted19/T8/N1 term is exactly
+
+    (7/1485)[H7-(H6+H8)/2].                           (JM7)
+
+Multiplying by Pr(N=1), namely77/85 for restart and2156/3315 for
+fourstep, gives JM1. Using the mean, square and the other retained
+hinges simultaneously yields no additional gain for these costs,
+as the feasible equality witnesses below demonstrate.
+
+### Matching abstract distributions
+
+For restart put r=(H6-H8)/2 and use the distribution
+
+    Pr(L=13)=H8-4r,
+    Pr(L=12)=r-Pr(L=13),
+    Pr(L=6)=1-r.                                      (JM8)
+
+For fourstep put q=H3-H4, v=(H4-H6)/2, r=(H6-H8)/2 and use
+
+    Pr(L=12)=H8-3r,
+    Pr(L=11)=r-Pr(L=12),
+    Pr(L=6)=v-r,
+    Pr(L=4)=q-v,
+    Pr(L=3)=1-q.                                      (JM9)
+
+Substitution of the certified rational Hj gives nonnegative masses
+summing to1. In each route E L=M, E L^2<=G, and every one of the17
+hinge inequalities in JM2 holds. These are exact finite rational
+inequalities checked and retained in the certificate. The dual
+hinges with positive coefficients attain their upper bounds, and
+QR=F or QF=F on the corresponding support, so these laws attain JM5.
+
+For every other retained finite auxiliary multiplier, the old SH27
+bound is already attained by the same law of its route. Explicitly,
+if vj=h(p,T,n;j) and e=ceil(T/n), then on positive integers
+
+    h(p,T,n;x)=v1+(v2-v1)(x-1)
+        +sum_(j=2)^e(v_(j+1)-2vj+v_(j-1))(x-j)_+.    (JM10)
+
+The slope after e is exactly483n/d. The existing helper checks the
+finite identity, the final affine slope and nonnegativity of all
+moment coefficients. The new verifier substitutes JM8 or JM9 in
+every such cost and verifies equality with its retained upper bound.
+This establishes the maximum for each term without a numerical LP
+oracle or a finite load cutoff.
+
+### Complete auxiliary tails and the precise limitation
+
+For each earlier physical prime q with its cap cq, the comparison
+factor Nq has
+
+    Pr(Nq=1)=1-cq/q,
+    Pr(Nq=v)=cq(q-1)q^(-v), v>=2,
+    E Nq=1+cq/(q-1).
+
+The auxiliary product N uses independent comparison factors; this
+does not assert independence of the actual forbidden events. The
+probabilities Pr(N=n) for n<T are computed exactly. The full tail
+probability and first moment are obtained by subtracting that finite
+part from1 and product_q(1+cq/(q-1)). For every n>=T and x>=1, JM3 is
+exactly483(nx-T)/d. Thus the complete tail cost is
+
+    (483/d)[M E(N;N>=T)-T Pr(N>=T)].                 (JM11)
+
+JM8 and JM9 have mean exactly M, so they attain JM11 as well. Every
+tail probability, full auxiliary mean, tail mean and matching tail
+cost is included in the certificate. No auxiliary height or product
+distribution is truncated or renormalized.
+
+Consequently the sum of optimized SH27 costs is the exact optimum
+of the listed univariate moment relaxation for each fixed schedule.
+This remains true if a single abstract law is required for all its
+terms, since JM8 or JM9 attains all of them simultaneously. The
+statement for actual layouts is only the separate valid upper bounds.
+
+The W483 defect uses
+
+    G*product_p(1+ap*cp)-1-483 + sum(SH27 costs).       (JM12)
+
+The coefficient of G in JM12 is held fixed in this calculation.
+Both matching laws have square slack, so they do not certify
+attainment of the entire physical-square contribution or of the
+full actual defect. They also do not identify an actual covering
+layout, exclude further information about joint square/bad-mask
+geometry, or settle unrestricted Erdős7. The reusable conclusion
+is that improving only these SH27 cost terms through JM2 is exhausted
+at the positive defects reported above.
+
+The standard-library verifier pins the SP profile and the generic
+`build_step`, `feature_value`, `verify_at` helper by SHA-256. The
+helper's PG1 loader is not called and its13/T5-specific improvement
+does not occur; an exact check rejects any such foreign-law input.
+Default mode recomputes and compares the entire certificate;
+`--write` regenerates it. All mathematical checks survive `-I -O`.
+
+The [joint-moment verifier](verify_joint_moment_limits.py) reconstructs
+the [primal/dual certificate](joint_moment_limits_certificate.json) using
+only exact rational arithmetic and the pinned SP source.
+
+## Direct killed-law comparison and a smaller complete finite core
+
+Use the actual supported AP(4,6)13 law of HC9 and SP4. Extend it through
+actual pure-base AP17/T8 and AP19/T8, with normalized physical kernels on
+every history and no intermediate conditioning. If Kp denotes a physical
+kernel, its killed version Kp^- keeps just the actual mixed-good summand.
+The final killed measure is
+
+    eta=nu13 K17^- K19^-,  Q_eta(L)=integral(L^2-484)d eta.  (KC1)
+
+The complete original test L includes its unit label, so L>=1. Strict
+Q_eta(L)<0 for every complete test implies eta(1)>0, since the zero
+measure would give Q=0. One final normalization then gives every complete
+square below484. Final survival is a consequence, not a premise.
+
+The following bounds concern Q, not APC's physical-square-plus-assigned-
+charge functional. They approximate the same underlying AP construction.
+At the previous box20/current-depth8 cutoffs, the complete Q error is
+less than0.000667. There is also a complete unequal box with4,889,808 test
+labels and error less than0.263. Neither statement evaluates the finite
+core inequality or completes the continuation beyond19.
+
+### Independent mass and square errors for each omitted mask
+
+Let B=(b_q) be the vector of old original-cofactor cutoffs. The current
+pure and mixed cutoff k need not equal any b_q. For i=0,2 put
+
+    z0(p)=1, u0(p)=p/(p-1), t0(p,k)=1/[(p-1)p^k],
+    z2(p)=Phi_p(0), u2(p)=Sigma_p,
+    t2(p,k)=sum_(a>k)p^-a Phi_p(a),
+
+where Phi and Sigma are the complete two-test/one-query factors in APC2.
+Define
+
+    U_i(B)=product_q u_i(q),
+    V_i(B)=product_q[u_i(q)-t_i(q,b_q)],
+    Z_i(B)=product_q z_i(q), R_i(B)=U_i(B)-V_i(B).
+
+The queried-label tail R_i includes every label with any old exponent
+outside B. In its weighted version the two test axes remain complete.
+The complement of an unequal box can equivalently be partitioned by
+its first coordinate exceeding its cutoff; the product difference is
+exact and contains no finite-height restriction.
+
+For threshold T at p set
+
+    s_*=(p-2)/(p-1), delta=(T-1)/(p-2),
+    C=1/(1-delta), ell=max(C^2,C/delta), c=C/s_*.
+
+If the source probability has Haar density at most D_* and complete
+square at most J_*, use J_0=1 and J_2=J_*. The direct physical or killed
+kernel error is bounded by
+
+    epsilon_p,i = D_* R_i(B)
+       [c(u_i(p)-z_i(p))+(ell/s_*^2)z_i(p)/(p-1)]
+      +D_*[V_i(B)-Z_i(B)]
+       [c t_i(p,k)+(ell/s_*^2)z_i(p)t0(p,k)]
+      +J_i[c t_i(p,k)+((ell+C)/s_*^2)z_i(p)t0(p,k)].   (KC2)
+
+This is APC3 with separate old cutoffs and current cutoff. Its three
+terms cover old-cofactor tails at every positive current depth, retained
+nonunit cofactors at omitted current depths, and pure-current tails.
+For i=0 the weight is1: old and current query masses are D_*/d and
+p^-a. For i=2 the original complete test-pair weights give Phi. The
+pure-base coefficient ell+C still pays both the changed region and the
+common-region density change. Thus epsilon_0 is an L1 error in its own
+right; it is not inferred by paying the much larger square-weighted
+error as mass.
+
+At17 use (D_*,J_*)=(D,G), where
+
+    D=1039695426000000/18925009844347,
+    G=6471426752685569/37850019688694.
+
+At19 use (2D,(89/64)G), valid for the unconditioned physical17 measure.
+The killed17 input is dominated by this physical measure, so it has the
+same direct error bounds. For box20/current8, exact evaluation gives
+
+|error|upper bound, decimal display|
+|---|---:|
+|epsilon17,2|0.0001293444399147029...|
+|epsilon19,2|0.0002832646182242736...|
+|epsilon17,0|0.000000010898327478914162...|
+|epsilon19,0|0.000000014506721280970769...|
+
+All four values use the same actual HC13 source bounds.
+
+### Comparing the two killed steps
+
+First change only the17/19 forbidden masks, retaining the full incoming
+nu13. Write eta_mask for the resulting killed reference measure.
+Triangle comparison and the common-kernel bounds in WT5/APC4 give
+
+    Delta2(eta,eta_mask)<=(59/45)epsilon17,2+epsilon19,2,
+    Delta0(eta,eta_mask)<=epsilon17,0+epsilon19,0.       (KC3)
+
+For the first inequality, the17 difference is propagated through the
+common reference19 kernel, whose weighted factor is59/45. For the
+second, every killed kernel is a positive subprobability kernel and
+contracts L1. The19 direct error may be integrated under the full
+killed17 input, dominated by the physical source used in KC2. There is
+one propagated17 mass error, not the two appearances arising when
+separate physical-prefix assigned charges are compared.
+
+For positive measures sigma,tau and any L>=1,
+
+    |Q_sigma(L)-Q_tau(L)|
+       <=integral(L^2-1)d|sigma-tau|
+                           +483|sigma(1)-tau(1)|
+       <=Delta2(sigma,tau)+483 Delta0(sigma,tau).       (KC4)
+
+Consequently the mask part of the Q error is
+
+    e_mask=(59/45)epsilon17,2+epsilon19,2
+                          +483(epsilon17,0+epsilon19,0).
+
+At box20/current8 it is0.0004651201891079085..., with only
+0.000012270638551024422... from the mass term. This comparison neither
+changes nor contradicts the earlier APC error for its different
+physical/assigned-charge functional.
+
+### Replacing the incoming law and retaining the complete test box
+
+Now replace the incoming probability by the actual AP13 law nu_B of
+its retained original five-prime family. Construct it by precisely the
+same uniform357, AP11/T4, AP13/T6 and one-conditioning rule. Keep the
+reference17/19 kernels fixed. APC2--APC5 give
+
+    Delta2(nu13,nu_B)<=eNw,
+    Delta0(nu13,nu_B)<=eNm,                           (KC5)
+
+also for unequal B, replacing each product cutoff by b_q and using
+b11,b13 as the respective current cutoffs. Both full and core laws
+have the same HC lower normalizer and upper square bound. Uniform
+padding to a common physical period preserves the construction.
+
+For a fixed common killed continuation, the weighted difference in
+final square integrals is at most
+
+    (89/64)(59/45)eNw=(5251/2880)eNw.
+
+Its final survival probability, as a function of the incoming point,
+is a fixed h with0<=h<=1. The two incoming measures are probabilities,
+so their difference has total mass zero. Therefore
+
+    |eta_mask(1)-eta_core(1)|<=eNm/2.
+
+Using the raw form Q=integral L^2-484 mass gives the sufficient incoming
+error
+
+    e_incoming=(5251/2880)eNw+242eNm.                 (KC6)
+
+There is no assumption that either final killed mass is positive. In
+particular nu_B need not avoid omitted full-family constraints; their
+effect is already included in KC2 and KC5.
+
+Finally keep every original test label in the chosen seven-prime box H.
+The final reference killed law is bounded by its physical law of Haar
+density at most(18/5)D. The complete two-test tail gives
+
+    e_test=(18/5)D {product_p p(p+1)/(p-1)^2
+               -product_p[1+sum_(a=1..h_p)(2a+1)p^-a]}. (KC7)
+
+Every omitted ordered test pair is included. For one original complete
+layout, restrict its labels to the box, without altering any retained
+residue. Then
+
+    Q_actual(L)<=Q_core(L_box)+e_mask+e_incoming+e_test. (KC8)
+
+If an actual exponent is smaller than a listed cutoff, use the
+intersection with its inventory and uniform padding. Larger finite
+exponents are paid by the full tails. Original forbidden and test
+labels remain distinct throughout the comparison.
+
+### Two fully specified finite cores
+
+In the following table the five-prime incoming core and each old-
+cofactor box use the corresponding entries of H. Pure and mixed current
+cutoffs are listed separately. The full finite reference is the actual
+AP construction for those retained original residues, followed by the
+two specified reference kernels, and the complete test box H.
+
+|H, ordered by3,5,7,11,13,17,19|current17/19|complete test labels|total Q error|safe allowance|
+|---|---|---:|---:|---:|
+|`(20,20,20,20,20,20,20)`|`(8,8)`|1801088541|0.0006664579809979847...|0.000667|
+|`(17,10,8,7,6,6,6)`|`(6,6)`|4889808|0.2563651750935413...|0.263|
+
+Thus the finite sufficient condition is
+
+    Q_core(L_box)<=-safe_allowance                  (KC9)
+
+for every retained original family pattern and every complete box test.
+The error is strictly below its safe allowance, so KC8 then makes every
+full Q strictly negative and KC1 gives positive survival and square<484.
+KC9 itself has not been proved or evaluated uniformly.
+
+The second core has at most99791 old five-prime forbidden labels,
+598752 labels whose largest prime is17, and4191264 whose largest prime
+is19:4889807 in total. Adding the test unit gives4889808. Its common
+period may be taken as
+
+    3^17*5^10*7^8*11^7*13^6*17^6*19^6
+     =776550560750774609700229544439786533325582744140625.
+
+This remains a51-digit period, and the number of residue assignments is
+not asserted small. The core is a feasible cutoff choice, not a proof
+of optimal cutoffs or feasible exhaustive enumeration.
+
+### A source square-hinge observation with full comparison tails
+
+For the same actual supported13 law define
+
+    T13(tau)=sup_A E_nu13(A^2-tau)_+.
+
+For each of the twelve PR original-root branches, let u3,u5,u7 and
+D_branch be its certified reference pure masses and actual uniform357
+Haar-density bound. Use independent comparison counts with caps
+
+    (c3,c5,c7,c11,c13)=(1/u3,1/u5,1/u7,5/3,2),
+    Pr(Xp=1)=1-cp/p,
+    Pr(Xp=n)=cp(p-1)p^-n, n>=2.
+
+Let M be their product. The nonnegative increasing convex function
+(z^2-tau)_+ permits the PR restriction to the actual pure reference,
+the complete labelled AP11/13 comparison, and finally division by the
+same HC retained mass r. Hence
+
+    T13(tau)<=max_branch (D_branch*u3*u5*u7/r)
+                                      E(M^2-tau)_+.  (KC10)
+
+The old uniform law is never replaced by a different supported law.
+The comparison variables are independent; the actual forbidden events
+need not be. For integer tau>=1, the entire product tail is evaluated
+by the exact identity
+
+    E(M^2-tau)_+=E M^2-tau
+                    +sum_(n^2<tau)(tau-n^2)Pr(M=n),
+    E M^2=product_p[1+cp(3p-1)/(p-1)^2].
+
+All omitted product probabilities are accounted for by the full second
+moment. Checking all twelve branches gives
+
+    T13(81)<=27462732511027063792077002926276002
+                    /234516374824438312292389830652525
+             =117.10368852318302...,
+    T13(1024)<=29.592792472449865... .                (KC11)
+
+The largest value in each is the effective9 branch with5 and7 present.
+Appending a complete cap2 comparison factor X17 gives, for the
+unconditioned physical mu17=nu13 K17,
+
+    sup_A E_mu17(A^2-1024)_+<=64.10180348992289... .
+
+The bounds also apply to the core's actual AP13 source and its
+normalized reference17 continuation: these are members of the same
+arbitrary-family and cap-bounded construction. No conditioned single17
+law is inserted.
+
+### A killed pair frontier that retains actual test/mask overlap
+
+For one globally fixed complete current test, index its original labels
+by ell,k. Let C_ell,C_k be their old test cylinders and I_ell,k their
+current-prefix intersection. Let m_x be the actual pure base, B_x the
+actual mixed forbidden union, alpha_x=m_x(B_x), and
+
+    a_x=1/(1-min(alpha_x,delta)).
+
+The exact killed pair entry under old input sigma is
+
+    P^-_(ell,k)=E_sigma[1_(C_ell intersect C_k)(x)
+                         a_x m_x(I_ell,k outside B_x)]. (KC12)
+
+Summing every ordered pair gives the killed square of that fixed test.
+If b_x is the physical bad-side density, the physical entry exceeds
+KC12 by exactly
+
+    E_sigma[1_(C_ell intersect C_k) b_x m_x(I_ell,k intersect B_x)].
+
+In PO notation b_x=g_x-h_x; here b means the bad-side density itself.
+This avoids identifying two different coefficient conventions. The
+actual overlap can vanish; no uniformly increased killed floor is used.
+
+Let Xi_p^-(sigma) be the supremum of the sum of KC12 over pairs with
+at least one positive current exponent, over globally legal complete
+tests. Each original old block and current residue remains independent
+of the forbidden layout. Set F_p^-(W;sigma)=W b_p+Xi_p^-(sigma), where
+b_p is the assigned bad mass under the normalized physical input.
+For0<=tau<=484 and W=484-tau,
+
+    Q_eta(L)<=T13(tau)-W
+                   +F17^-(W;nu13)+F19^-(W;mu17).      (KC13)
+
+To prove this, expand L^2=A13^2+R17+R19, where R17 contains the ordered
+pairs in the19-zero block with a positive17 exponent and R19 contains
+pairs with a positive19 exponent. Both R terms are nonnegative. Since
+eta17<=mu17 and every killed kernel has mass at most1, their integrals
+are bounded by the respective Xi17^- and Xi19^-. The marginal of eta
+through13 is dominated by nu13. Thus integral(A13^2-tau)d eta<=T13(tau).
+Finally eta(1)>=1-b17-b19, and W>=0. These give KC13. Its two independent
+suprema need not be attained by one common test; they are upper bounds
+for the one test used in the expansion.
+
+For each finite core, F17 here uses nu_B and its reference K17; F19
+uses the normalized physical input mu17,B=nu_B K17, not killed or
+conditioned17. Both Xi suprema use every complete test label in that
+row's box H. In particular the uniform row retains test depths20 even
+though the two current forbidden-mask cutoffs are8.
+
+Taking tau=81,W=403, KC11 and the two safe allowances give sufficient
+finite reference bounds, respectively,
+
+    F17^-(403)+F19^-(403)<=285.895  [box20/current8],
+    F17^-(403)+F19^-(403)<=285.633  [the unequal box].   (KC14)
+
+For each row these constants are strictly smaller than403-T13(81)
+minus its safe allowance. Therefore KC13 implies KC9. Neither frontier
+bound is supplied by the tail computation.
+
+### Pointwise clipped covariance and its exact scope
+
+A relaxation of Xi^- keeps
+
+    J_p(sigma)=sup_A E_sigma[kappa_p(alpha) A^2],
+    kappa_p(alpha)=((p-1)/(p-2))/(1-min(alpha,delta)).
+
+The killed current-prefix mass is bounded by the same physical cap.
+Weighted Cauchy--Schwarz for every pair of independent old blocks then
+gives Xi_p^-(sigma)<=a_p J_p(sigma), with
+
+    a17=25/128, a19=14/81.
+
+Keeping J_p retains the cap covariance discarded in SH26. If this is
+further bounded with the existing common-vector clipped cost H_K,
+K=1024 is admissible at W403: its required thresholds a_p K c_p are
+400 and14336/45, both below403. This is a pointwise stronger majorant
+than SH27's unit-floor cap replacement; no universal strict numerical
+improvement of the subsequent auxiliary comparison is asserted.
+
+For the original row variables, the loss from clipping y^2 at1024 is
+
+    a_p(c_p-kappa_p(alpha))(y^2-1024)_+.
+
+Since kappa_p>=(p-1)/(p-2), its expectations under nu13 at17 and mu17
+at19 sum to at most
+
+    (35/192)T13(1024)
+       +(98/765)sup_A E_mu17(A^2-1024)_+
+          =13.606253764407912... <13.607.              (KC15)
+
+This controls the pointwise original-row clip loss only. It does not
+bound the additional errors of comonotone comparison, Jensen,
+independently maximizing layouts, or every relaxation of KC14. The
+actual joint frontier still requires its own upper bound.
+
+The proof reuses PR, HC, APC, WT, PO and the existing H_K comparison;
+it adds no Lean wrapper or formalization claim. Its exact verifier
+checks the complete geometric tails, twelve root branches, both finite
+reference specifications and all rational budget comparisons. Ordinary
+proofs and certificates do not settle the unrestricted problem.
+
+The [killed-core verifier](verify_killed_core_continuity.py) reconstructs
+the [full-tail certificate](killed_core_continuity_certificate.json). It
+pins the existing HC, PR and APC sources. Default mode compares every
+field; `--write` regenerates. Numeric, duplicate-key and source-hash
+changes are rejected under `python3 -I -O`.
