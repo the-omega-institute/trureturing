@@ -9411,3 +9411,26 @@ original label ceiling inside its rounding optimization. These results
 use the same actual xi and kernels; they do not bound changes to forbidden
 masks, provide the remaining299.661 uniform frontier, or supply an
 independent rebate to add to the stronger OBE profile.
+
+An [actual threshold-deficit certificate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-threshold-deficits-and-sharp-row-caps)
+now retains the joint square observation `G(min(alpha19,7/17))`, the
+assigned loss and explicit nonnegative row-curvature terms. Its general
+all-height bound uses the actual killed17 input and full original old
+test domain. A family with7+8H distinct odd moduli, of period3^7*19^H,
+shows that all four BM15 pointwise row constants are limiting sharp
+even for actual AP rows. At H=2 the new observation improves the
+rectangular relaxation from5.34179178255 to4.89000232359; the more
+informative exact MW bound is4.83872561480 and is not improved by this
+relaxation.
+
+For the D7 domain `357 part | 45*7^H`, the same supported-law bridge
+forces the actual19 threshold deficit
+`(7/17)G(1)-G(min(alpha19,7/17))>0.002509422159`.
+The proof controls the actual union via complete old cofactor hinges,
+then transports a bounded nonnegative shortfall through killed17;
+every auxiliary17 comparison tail is paid. RC consequently improves
+its rectangular endpoint envelope uniformly by more than0.000862026574
+on this domain. This spends RC's own deficit and cannot be subtracted
+again from BM/OBE. The unrestricted joint frontier and later-prime
+continuation remain unproved; all these results are ordinary mathematics
+with exact rational certificates, not new Lean declarations.

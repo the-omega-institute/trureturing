@@ -18159,3 +18159,323 @@ the minorant tail signs and reconstructs the entire
 support construction, comparison theorem and universal measure argument
 remain the explicitly stated mathematical inputs; these arithmetic
 checks do not constitute a new Lean theorem or a solution of Erdős #7.
+
+
+### Actual threshold deficits and sharp row caps
+
+Ordinary mathematical proof and exact rational corroboration. No Lean proof, no unrestricted #7 conclusion, and no claim that the existing exact weighted maxima have improved. The improvement is over the rectangular row-cap relaxation. All source laws and original labels are unchanged.
+
+#### 1. Scope and repository reuse
+
+The preceding MW1--MW4 and BM15--BM19 are reused. Fix exactly the actual killed19 input sigma=xi=nu13 K17^-; it may be a subprobability. The same argument works for any actual input to the prescribed19 kernel. Let lambda_p be its actual pure-survivor Haar mass. All original pure heights are finite but arbitrary. Distinct pure labels imply 17/18 <= lambda_p <= 1. The mixed forbidden union, relative to the pure survivor base, has fraction alpha(x) in [0,1]. Put
+
+    delta=7/17, c0=1/lambda_p, C=c0/(1-delta),
+    a(x)=min(alpha(x),delta),
+    beta(x)=(alpha(x)-delta)_+/(1-delta).
+
+The exact killed AP row is
+
+    q=1-beta,
+    c=c0/(1-a),
+    R_x=c(x) 1_(actual surviving current points) u19.
+
+In particular eta(1)=sigma(1)-sigma(beta). The endpoint C depends on this original pure family; no extra pure class is inserted. Here C is in [17/10,9/5].
+
+Use MW at r=theta:
+
+    S=1/18, theta=18/37, ell=37/361, rho=324/361,
+    b=19/162, kappa=37/361,
+    v=ell c+rho q, g=q+S c^2/v, w=(1-theta)c+theta q.
+
+The notation ell avoids confusing the MW scalar with the actual pure mass lambda_p. Let D be the complete original old-test domain including its unit label, and G(f)=max_(A in D) sigma(f A^2). Thus A>=1, and each positive-current block has the very same domain, as in MW/BM. Write
+
+    Gamma=G(1), M_a=G(a), Delta_a=delta Gamma-M_a >=0.
+
+M_a is an additional actual mask-weighted square observation. It is not inferred from the source-only moments. No current or old labels are truncated here.
+
+#### 2. Exact three-endpoint identities
+
+For f in {g,c,w}, denote its actual row values at alpha=0,delta,1 by f0,fd,f1. The q,c endpoints are (1,c0), (1,C), (0,C). Set
+
+    g0=1+S c0^2/(ell c0+rho),
+    gd=1+S C^2/(ell C+rho),
+    g1=S C/ell,
+    sg=(gd-g0)/delta,
+    w0=(1-theta)c0+theta.
+
+There are explicit nonnegative functions Dc,Dg such that exactly
+
+    c=c0+C a-Dc,
+    w=w0+(1-theta)C a-theta beta-(1-theta)Dc,
+    g=g0+sg a-(gd-g1)beta-Dg.                 (RC1)
+
+For alpha<=delta,
+
+    Dc=C alpha(delta-alpha)/(1-alpha).
+
+For alpha>=delta, Dc=0. This c identity follows by subtracting c0/(1-alpha) from the chord c0+C alpha on [0,delta]; beyond delta c=C.
+
+For the low branch put A=ell c0, y=1-delta, z=1-alpha. Then
+
+    Dg = S c0^2 alpha(delta-alpha)
+          [A^2+A rho(1+y+z)+rho^2(y+z+yz)]
+          /[yz(A+rho)(A+rho y)(A+rho z)].     (RC2)
+
+Every factor in its denominator is positive and its numerator is nonnegative. To verify the identity directly, substitute
+
+    g(alpha)=1+S c0^2/[(1-alpha)(ell c0+rho(1-alpha))]
+
+and subtract it from the line joining g(0),g(delta). Expanding the common numerator factors into RC2. This is a symbolic rational identity, not an inference from the finite probe.
+
+On the charged branch, set vd=ell C+rho, v1=ell C, v=ell C+rho(1-beta). Then
+
+    Dg=S rho^2 C^2 beta(1-beta)/(vd v1 v).     (RC3)
+
+Indeed g=1-beta+S C^2/v, and the gap between the endpoint chord and this expression is the displayed fraction. Thus Dg is strictly positive at every interior alpha of either branch. Dc is strictly positive at 0<alpha<delta.
+
+All coefficients used below are nonnegative. The low-branch g increases with c, so sg>0. For the other endpoint,
+
+    gd-g1=1-S rho C/[ell(ell C+rho)]
+          >= 1531/8029 >0.
+
+The rational term subtracted from1 increases with C, so its worst value is at C=9/5. Also
+
+    T=b-kappa theta=b-S rho=3943/58482 >0.
+
+#### 3. A complete all-height upper bound using one additional budget
+
+For every original A, RC1 and A>=1 give
+
+    sigma(g A^2) <= g0 Gamma+sg M_a
+                       -(gd-g1)sigma(beta)-sigma(Dg),
+    sigma(c A^2) <= c0 Gamma+C M_a-sigma(Dc),
+    sigma(w A^2) <= w0 Gamma+(1-theta)C M_a
+                       -theta sigma(beta)-(1-theta)sigma(Dc).
+
+Taking the separate maxima is legitimate: all positive coefficients multiply upper budgets, and every subtracted function is nonnegative. Substitute these three inequalities into MW2. Define
+
+    F0=g0+T c0+S rho,
+    Fa=sg+T C,
+    Fb=gd-g1+S rho,
+    Fd=gd+(b-kappa)C+kappa[(1-theta)C+theta]
+      =F0+delta Fa,
+    Dcurve=Dg+T Dc.
+
+For every finite original current height and every full original test L,
+
+    eta L^2 <= F0 Gamma+Fa M_a-Fb sigma(beta)-sigma(Dcurve)
+             = Fd Gamma-Fa Delta_a-Fb sigma(beta)-sigma(Dcurve).  (RC4)
+
+This is a direct bound from MW, including its complete comparison tail. It is not an additional rebate to subtract from BM, OBE, or KC. It may be minimized against those separately proved envelopes.
+
+The rectangular relaxation gives merely Fd Gamma: it bounds each weight by its alpha=delta endpoint. RC4 retains three nonnegative savings. The nontrivial source/mask coupling is
+
+    Delta_a = min_(A in D) {
+          delta[Gamma-sigma(A^2)]+sigma[(delta-a)A^2]}.
+
+It combines failure to maximize the source square with failure to concentrate that same original test on threshold-or-higher rows. In particular Delta_a>=sigma(delta-a). This supplies a useful necessary condition for near-saturation, not an assertion of a uniform positive numerical gap.
+
+For any tau, the signed consumer is
+
+    eta(L^2-tau)
+      <= Fd Gamma-tau sigma(1)
+           +(tau-Fb)sigma(beta)-Fa Delta_a-sigma(Dcurve). (RC5)
+
+All beta and curvature integrals use exactly sigma. No auxiliary source, upper moment, or probability normalization is substituted. To close the unrestricted frontier this still needs uniform actual-family bounds on the displayed coupled observations. Section6 supplies a quantitative consumer on the D7 supported domain.
+
+#### 4. A literal actual family: all four BM15 row caps are sharp
+
+For any H>=1, use old period3^7 and current period19^H. Include every old forbidden class0 mod3^j, j=1,...,7. For e=1,...,H define the prefix
+
+    s_(e-1)=8(19^(e-1)-1)/18.
+
+Include the pure forbidden class s_(e-1) mod19^e. For every j=1,...,7 include the unique CRT class modulo3^j19^e with
+
+    x=1 mod3^j,
+    y=s_(e-1)+j19^(e-1) mod19^e.
+
+All7+8H moduli are odd, >1, and pairwise distinct. In fact they are every nonunit divisor of3^7 19^H. Thus the complete test inventory is also preserved. The old actual source is uniform on the1458 units mod3^7: absent5/7/11/13/17 steps are identities, and the prescribed final13 conditioning has mass1.
+
+In the19 coordinate, the pure cylinder at each e branches from the all8 spine with final digit0; the mixed cylinders branch with digits1,...,7. Cylinders at distinct levels are disjoint, since a later cylinder has digit8 where an earlier one has digit0,...,7. Put z=19^-H. The actual pure mass and mixed union on old row x are therefore
+
+    lambda_H=1-(1-z)/18,
+    mixed Haar mass=k(x)(1-z)/18,
+    k(x)=sum_(j=1..7)1_(x=1 mod3^j).
+
+The largest mixed fraction is
+
+    alpha_H=7(1-z)/(17+z) <7/17=delta.
+
+Every row is uncharged and q=1. On the positive-source-mass row set x=1 mod3^7,
+
+    c_H=1/[lambda_H-7(1-z)/18]
+       =9/(5+4z) ->9/5.
+
+Consequently the actual values of g,w,v at these rows tend respectively to
+
+    2531/2170, 261/185, 1953/1805.
+
+Those are exactly BM15's three scalar bounds, and c tends to9/5. Hence no smaller uniform pointwise constant for any of the four weights follows from the full AP row relation: it would fail in some finite member of this literal actual family. This statement addresses pointwise caps only. It does not claim saturation of a global weighted-square bound, or invalidate a joint source/mask estimate such as RC4.
+
+#### 5. Exact H=2 consumer, over the complete old test domain
+
+Take H=2. The verifier lists all23 literal forbidden classes, reconstructs the361 current points and the1458 old source points, and verifies
+
+    lambda=341/361, C=6137/3410,
+    Gamma=647/162,
+    M_a=113680/248589.
+
+For the actual unit source,
+
+    Pr(k=0)=1/2,
+    Pr(k=j)=3^-j, j=1,...,6,
+    Pr(k=7)=1/(2*3^6).
+
+Every weight1,a,c,g,w is nondecreasing in k. A weighted depth-e old cylinder has maximum mass at residue1: partition cylinders by their first deviation from the1 spine; moving it onto the spine cannot lower its k values or its source count. More explicitly the unweighted nonzero-root source is uniform, and at every deeper ternary split the spine child has all additional nonnegative radial weight while off-spine children have identical constant weight. This proves the prefix maximum at1 by induction.
+
+The intersection of any two original3-power tests is either empty or a cylinder at the larger depth. Thus the sum of all ordered pairwise upper caps is attained simultaneously by putting every original old test at residue1. This proves global maximality over all independent original old residue choices, not just a search over centered layouts. The verifier checks every weighted residue-cylinder sum and the attained pair-cap equality. Its old maximum is therefore exactly the expectation of f(k)(1+k)^2 for each of the five weights.
+
+The resulting exact rational values have decimal displays
+
+    rectangular endpoint bound Fd Gamma       5.341791782555235...
+    RC4 using Gamma,M_a and curvature floor   4.890002323596652...
+    exact original MW2 for this actual family 4.838725614802768...
+
+Thus the row-profile certificate improves the rectangular bound by
+
+    0.451789458958583...
+
+while correctly staying above the more informative exact MW value. This is an actual-family witness to the usefulness of the additional observation M_a; it is not an improvement over exact G(g),G(c),G(w), and is not a uniform299.661 certificate.
+
+#### 6. A uniform positive mask deficit on the D7 supported domain
+
+The D7 support bridge supplies an actual numerical lower bound for the
+new observation Delta_a. Here the restriction is substantive: the entire
+original357 part divides45*7^H for arbitrary finite H, with all original
+11/13/17/19 heights, cofactors and residues retained. Write sigma_* for
+the auxiliary13 probability of D7, to distinguish it from RC's actual
+sigma=xi=nu13 R17. On this same family, D7 gives
+
+    sigma_* <= D7 nu13,   D7=306306000/24763693,
+    zeta17=sigma_* R17 <= D7 xi,
+    m17=sigma_* K17,   zeta17<=m17,
+    (m17-zeta17)1 <= b17*
+      =370266223393294937/3241768200400000000.          (RC6)
+
+Of the two17-stage auxiliary measures, m17 is normalized. The actual xi is not replaced by it. The
+same original physical17 and killed17 rows act on both old probabilities.
+
+Set delta17=7/15 and delta19=7/17. For p=17 or19, let Y_p=(p-2)alpha_p, where alpha_p is the actual mixed
+union under its actual pure-survivor base. Let A_e be a fixed complete
+old test extending the actual mixed cofactor labels at original current
+depth e. The pure bound lambda_p>=(p-2)/(p-1) and distinct original
+moduli give
+
+    Y_p <= sum_(e>=1) (p-1)p^-e A_e - 1.               (RC7)
+
+The subtraction is one unit cofactor, after completing all missing depths
+and using sum_(e>=1)(p-1)p^-e=1. A_e keeps every original old label and
+is chosen before sampling. For any fixed incoming probability and h>=1,
+positive-part monotonicity and Jensen therefore imply
+
+    E(Y_p-(h-1))_+ <= sup_A E(A-h)_+.                  (RC8)
+
+This is a consequence about the actual union alpha, even when its
+individual cylinders overlap. No equality with the union bound is assumed.
+
+Let H7(t) be D7.4's simultaneous auxiliary upper hinge function with
+R_F=R_T=5809/240240 and q0=669289/869464. At t<=1 use M7-t, where
+M7=1022311423880/147217477729. For19 the physical17 comparison gives
+
+    J_h=E[N H7(h/N)],
+    sup_A E_m17(A-h)_+ <= J_h,                         (RC9)
+
+with the complete D7.7 factor N. For integer h>=2 its tail is exactly
+
+    Pr(N>=h)=2/17^(h-1),
+    E[N;N>=h]=(h+1/16)*2/17^(h-1).
+
+On that whole tail, NH7(h/N)=M7 N-h. Thus J_h uses the finitely many
+terms N<h and the displayed complete mean and probability. For h=1
+use total probability1 and mean9/8. No physical17 height is truncated.
+
+For1<=h<8, set
+
+    u_h(Y)=min(8-h,(7-Y)_+).
+
+It satisfies0<=u_h<=8-h and
+`u_h(Y)>=8-h-(Y-(h-1))_+`. Since
+`delta19-min(alpha19,delta19)=(7-Y19)_+/17`, RC6--RC9 and nonnegative
+domination yield
+
+    xi(delta19-min(alpha19,delta19))
+      >=[(8-h)(1-b17*)-J_h]/(17D7).                   (RC10)
+
+The removed17 mass costs at most(8-h)b17*. This bounded minorant is
+essential: simply subtracting a worst-case unbounded hinge loss would
+not justify the estimate. Every term uses the same auxiliary source,
+actual kernels and actual19 mask function.
+
+At h=4 the complete physical17 hinge and the resulting actual deficit are
+
+    J4=27262754949126328889/9040993351032212500
+       =3.0154601259621248...,
+    Delta_a >= xi(delta19-a)
+       >=172720421147338864700128617
+          /68828762219888452600000000000
+       >0.002509422159.                               (RC11)
+
+The first inequality follows from RC4's exact minimum expression for
+Delta_a and A>=1. The verifier evaluates all seven integer choices
+h=1,...,7; h=4 is the strongest of these seven bounds. No optimality
+over all real thresholds or all possible minorants is asserted.
+
+At17 there is no earlier killed step to pay. Apply RC8 directly under
+sigma_* and the same bounded minorant to obtain
+
+    nu13(delta17-min(alpha17,delta17))
+      >=[8-h-H7(h)]/(15D7).
+
+The choice h=4 gives
+
+    nu13(delta17-min(alpha17,delta17))
+      >=24340697834399/2393015625000000
+      >0.010171558254.                                (RC12)
+
+These are joint source/mask observations. They do not arise by replacing
+the actual probability's upper moments with those of sigma_*.
+
+Finally Fa has a uniform positive lower bound across every actual pure19
+family. For f(c)=1+S c^2/(ell c+rho), one has f'>0 and f''>0. Hence
+`[f(17c0/10)-f(c0)]/delta+T*(17c0/10)` increases with c0>=1. Its value
+at c0=1 is
+
+    Fa_min=38863139/113133429.
+
+Combining this with RC11 produces the fixed numerical consumer
+
+    eta L^2 <= Fd Gamma-epsilon_RC,
+    epsilon_RC=989600137872264452151450945061
+                  /1147992611493680176933800000000000
+              >0.000862026574.                        (RC13)
+
+The additional beta and curvature savings in RC4 remain available in
+that same formula. RC13 improves the rectangular endpoint envelope on
+the stated D7 family; it is not a further saving from exact MW, BM or
+OBE. The full joint299.661 bound and unrestricted3/5/later-prime steps
+remain open. The sharpness family in section4, which has3-exponent7,
+shows why pointwise constants alone cannot supply this average deficit.
+
+#### 7. Verification and source scope
+
+The [standard-library verifier](verify_ap_row_coupling.py) reconstructs
+the literal CRT family, all old weighted-cylinder maxima and the
+simultaneously attained pair bounds, and compares the entire
+[certificate](ap_row_coupling_certificate.json). It also reconstructs
+the pinned D7 source and all seven complete physical17 hinge queries.
+Use `python3 -I -O`; no floating optimization is a verifier input.
+The continuous RC1--RC3 identities follow by the displayed algebra;
+finite rational samples corroborate them without standing in for that
+proof. The universal comparison, support and domain arguments remain
+ordinary mathematics. No Lean, frozen-state or literature-priority
+claim is made.
