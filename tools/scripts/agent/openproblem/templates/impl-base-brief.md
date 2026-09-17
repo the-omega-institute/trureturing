@@ -102,6 +102,52 @@ stop line verbatim and the `origin/dev` SHA before and after.
   **(b) Do not count model families you have not established.** 「four producing carriers in three model families」 is an overclaim: the sshx `WorkerDelegationContract` itself records that whether `codex-cli` and the oracle are distinct model families is `ASSUMED-UNVERIFIED`. State the part that is verified — the number of seats, the number of distinct carriers, and the vendor split (ChatGPT Pro and codex-cli are OpenAI; the orchestrator is Anthropic) — and mark family-distinctness `ASSUMED-UNVERIFIED` in the same sentence. A smaller claim that survives is worth more than a larger one that a seat deletes.
 7. `git push -u origin lane/math/op-w1-ppn` EXIT=0; write the PR message file `<<OP_SCRATCH>>/pr-op-w1-ppn.md` (first line = title; body = provenance triple【skill 上下文 / 载体与分工 / 混合方式】+ 「目标与来源」(open problem / atom id / issue) + 回声表(每条 clause ↔ Lean binder/hypothesis/conclusion) + 检索留痕(commands + hit/no-hit) + 「逃逸内容」表(per public theorem: `proof_shape`, direct frozen deps GID + statement_id, `escape_witness`, and module `admission_basis`) + 读数(exit codes, HEAD, `#print axioms`, Scribe counts, freeze event hash, prerequisite mapping) + 「未做」). Then `make pr-open HEAD=lane/math/op-w1-ppn MESSAGE=<that file>` (NO AUTO_MERGE); report `PR_WATCH_RESULT` and the PR number. After the PR opens, do not push again.
 
+## The PR body has a fixed skeleton, and its first section is the provenance block
+
+Eleven blocking findings across four lanes in one day were PR-body defects, not mathematics. Every one of them
+is ruled out by writing the body in this order and nothing else in the first section:
+
+```
+<title line>
+
+question_answered: <issue number and the question>
+dominating_theorem_search: <scope, method, found | not-found-in-searched-scope>
+
+## Provenance
+  skill context
+  carriers and roles: search seat, the orchestrator WITH ITS OWN CARRIER AND MODEL, probe, implementation
+  seat count / carrier count / vendor split — and NO model-family count
+  review seat layout, mixing mode and standing, as ONE table of completed rounds:
+      | round | head | seat | carrier | decision |
+  tallies per round, carried-forward approvals, disagreement adjudication
+  orchestrator-verified vs seat-self-reported
+
+## Statement echo
+  | source clause | Lean counterpart | fidelity |   — every clause mapped, and every binder or conjunct
+  that has NO source clause listed explicitly with why it is not a weakening
+
+## <the rest: result, declarations, placement, verification, boundary>
+```
+
+Four rules decide most of the rejections, and each was reported by seats in two carriers:
+
+1. **§5.2 says 「正文顶部必载三项」 — at the top, and complete there.** The review-seat layout, the mixing mode,
+   the tally, the carried-forward status and the adjudication are part of 「载体/分工」 and 「混合方式与核验范围」,
+   so putting them in a later section leaves the top block incomplete. One lane had the block at the top and the
+   standing 150 lines below it and was still blocked.
+2. **The standing table exists from first publication and lists the CURRENT round's seats and carriers**, even
+   though their verdicts do not exist yet — that is what lets a reader recompute the independent review-source
+   count. A PR with no round yet writes the head, a zero tally, `Carried-forward approvals: none.` and
+   `Disagreement adjudication: none.`
+3. **No sentence about what any seat found.** Not the findings, not the accepted replacements, not which round
+   they were confined to, not a summary of them. The table carries seat, carrier and verdict; the corrections
+   stand in the artifacts. This one has bitten hardest: the sentence that gets added is almost always written
+   while trimming other narration.
+4. **No claim about the work you did not measure at the delivered head.** Do not say the head's parent equals
+   `origin/dev` (it stops being true when dev moves), do not carry a verification snapshot from a superseded
+   head next to the current one, and do not describe an edit you intended rather than the one you made — each of
+   those was a separate blocking finding this week. Before writing 「now X is Y」, run the command that shows it.
+
 **L-plane notes need a DOI or an arXiv id (Scribe emit fails otherwise: `requires a DOI for academic citation`, EM v2 attempt 1).** For a DOI-less classic (Kotzig 1964, Laguerre 1880s, Moser 1953, Erdős 1950 …) do NOT invent or borrow a DOI: attest through a DOI/arXiv-bearing secondary source that STATES the theorem (a survey, a modern paper, a textbook chapter with DOI), make the note about THAT source (its authors/year/title/DOI), put the original attribution inside `claim`, and say in the Describe prose "X (year); literature attestation via Y (year), Theorem N". Verify the DOI online before writing it.
 
 ## Result envelope
