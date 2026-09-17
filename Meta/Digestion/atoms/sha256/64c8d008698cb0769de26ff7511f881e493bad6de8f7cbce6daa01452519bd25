@@ -1,0 +1,22 @@
+**定义 49.10（Carmichael supernatural 闭包）。** 对任意 supernatural $E$ 定义
+$$
+\Phi(E)=\operatorname{lcm}\Bigl(E,\{\lambda(m):m\in\mathbb N_{>0},\ m\mid E\}\Bigr).
+$$
+从
+$$
+D_0=D,\qquad D_{r+1}=\Phi(D_r)
+$$
+递归，并令
+$$
+D^{\mathrm{pow}}=\operatorname{lcm}_{r\ge0}D_r.
+$$
+再定义
+$$
+T^{\mathrm{pow}}=
+\begin{cases}
+0,&t=0\text{ 且 }D=1,\\
+\max\{t,1,H(D^{\mathrm{pow}})\},&\text{其余情形},
+\end{cases}
+$$
+其中若最大值中出现 $\infty$，则结果为 $\infty$。
+

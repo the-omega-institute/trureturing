@@ -1,0 +1,31 @@
+**theorem 49.5（$K_{t,D}$ 上自然幂联合连续延拓的完整分类）。** 自然数幂
+$$
+(a,b)\longmapsto a^b,
+\qquad a^0=1,
+\qquad 0^0=1,
+$$
+存在唯一连续延拓
+$$
+\operatorname{Pow}_{t,D}:K_{t,D}\times K_{t,D}\longrightarrow K_{t,D}
+$$
+当且仅当下列相应条件成立。
+
+若 $t=0$，充要条件为
+$$
+D=1.
+$$
+
+若 $1\le t<\infty$，充要条件为
+$$
+H(D)\le t
+$$
+以及
+$$
+\forall m\mid D,\qquad \lambda(m)\mid D.
+$$
+
+若 $t=\infty$，充要条件仅为
+$$
+\forall m\mid D,\qquad \lambda(m)\mid D.
+$$
+

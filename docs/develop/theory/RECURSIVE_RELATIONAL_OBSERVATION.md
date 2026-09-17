@@ -19831,3 +19831,659 @@ If $E$ halts, its value $h!$ is nonzero in $\widehat{\mathbb Z}$: reduction modu
 The reduction uses only a positive equality; a dummy existential variable with the equation $x=x$ may be added without changing truth. Every parameter in this construction is individually a computable boundary point, but its value is not supplied as an explicit integer numeral. This dependence on the naming representation distinguishes the extension from Definition 48.0 and a fortiori excludes any unsupported transfer to arbitrarily specified noncomputable parameters. 证毕。
 
 ## 48.99 追加锚
+## 49. 阈值—supernatural 完备化上的联合连续幂
+
+**定义 49.1（supernatural 周期与 Carmichael 闭包条件）。** 令
+$$
+D=\prod_p p^{e_p},\qquad e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+对正整数 $m$，写 $m\mid D$ 表示对每个素数 $p$ 都有 $v_p(m)\le e_p$。令
+$$
+H(D)=\sup_p e_p\in\mathbb N_0\cup\{\infty\}.
+$$
+称 $D$ 为 Carmichael 闭合的，若
+$$
+\forall m\in\mathbb N_{>0},\qquad m\mid D\Longrightarrow \lambda(m)\mid D,
+$$
+其中约定 $\lambda(1)=1$，而对 $m>1$，$\lambda(m)$ 是 $(\mathbb Z/m\mathbb Z)^\times$ 的指数。Ford、Luca、Pomerance，*The image of Carmichael's $\lambda$-function*，第 1 节明确把 $\lambda(n)$ 定义为单位群的指数，并给出
+$$
+\lambda(n)=\operatorname{lcm}_{p^a\parallel n}\lambda(p^a)
+$$
+及素数幂公式；见 [arXiv:1408.6506v2，PDF 第 1—2 页](https://arxiv.org/pdf/1408.6506v2)。这里 $\lambda(1)=1$ 只是平凡群指数的本节约定。
+
+对 $t\in\mathbb N_0\cup\{\infty\}$，令
+$$
+I_{t,D}=\{(u,m):u\in\mathbb N_0,\ u\le t,\ m\mid D\},
+$$
+其中 $u\le\infty$ 恒成立。令
+$$
+a\mathrel{R_{u,m}}b
+\quad\Longleftrightarrow\quad
+a=b\ \lor\ \bigl(a,b\ge u\land a\equiv b\pmod m\bigr),
+$$
+并令 $Q_{u,m}=\mathbb N_0/R_{u,m}$，赋予有限离散拓扑。按
+$$
+(u,m)\preceq(v,n)
+\quad\Longleftrightarrow\quad
+u\le v\ \land\ m\mid n
+$$
+取规范商映射组成逆系统，并定义
+$$
+K_{t,D}=\varprojlim_{(u,m)\in I_{t,D}}Q_{u,m}.
+$$
+自然映射记为
+$$
+j:\mathbb N_0\longrightarrow K_{t,D}.
+$$
+对任意 $t\in\mathbb N_0\cup\{\infty\}$，记
+$$
+R_D=\varprojlim_{m\mid D}\mathbb Z/m\mathbb Z.
+$$
+若 $t<\infty$，把候选载体写成
+$$
+\{0,1,\ldots,t-1\}\sqcup R_D.
+$$
+若 $t=\infty$，把候选载体写成
+$$
+\mathbb N_0\sqcup R_D.
+$$
+
+**theorem 49.1.1（逆极限载体、拓扑与自然像稠密性）。** 上述 $K_{t,D}$ 是紧致 Hausdorff 空间，且 $j(\mathbb N_0)$ 稠密。若 $t<\infty$，存在保持自然映射的规范同胚
+$$
+K_{t,D}\cong \{0,1,\ldots,t-1\}_{\mathrm{disc}}\sqcup R_D,
+$$
+其中右侧取有限离散前缀与 profinite 空间 $R_D$ 的拓扑不交并；特别地两个分量均开闭。若 $t=\infty$，存在保持自然映射的规范同胚
+$$
+K_{\infty,D}\cong\mathbb N_0\sqcup R_D,
+$$
+其中每个自然数点孤立，而对任意边界点 $z\in R_D$，其邻域基由
+$$
+U\cup\{n\in\mathbb N_0:n\ge N,\ \bar n\in U\}
+$$
+组成；这里 $N\in\mathbb N_0$，而 $U$ 是 $R_D$ 中包含 $z$ 的开闭柱集。换言之，$U$ 必须是 $z$ 的一个 profinite 柱邻域，而不是任意与 $z$ 无关的集合。
+
+**证明。** 每个 $Q_{u,m}$ 有限离散，所以其乘积紧致 Hausdorff；逆极限由相容等式切出闭子空间，故 $K_{t,D}$ 紧致 Hausdorff。有限坐标柱集构成其开闭基。
+
+先设 $t<\infty$。对任意 $r<t$，坐标 $(r+1,1)$ 已把 $r$ 与所有其他自然数分开，因此相容线程若在某个阈值以下取到孤立值 $r$，则全部更细坐标被唯一确定，并给出自然点 $j(r)$。其余线程在每个 $u\le t$ 都落入尾类；对固定 $m\mid D$，尾坐标恰给出一个 $\mathbb Z/m\mathbb Z$ 元素，且随 $m\mid n$ 相容，因此给出唯一 $R_D$ 元素。反之，任意 $R_D$ 元素与各阈值尾类组合都给出相容线程。于是得到集合分解
+$$
+K_{t,D}=\{0,\ldots,t-1\}\sqcup R_D.
+$$
+每个前缀点由单个有限坐标隔离，故是开闭单点；其有限并也是开闭，于是 $R_D$ 分量开闭。限制到 $R_D$ 后，逆极限柱集恰是通常的 profinite 柱集，所以该分解是有限离散前缀与 $R_D$ 的拓扑不交并。
+
+再设 $t=\infty$。任意自然数 $r$ 可由阈值坐标 $(r+1,1)$ 单独隔离，故自然数点全都孤立。一个不是任何自然点的相容线程，对每个有限阈值都必须处于尾类，因而只剩下一族彼此相容的模 $m\mid D$ 剩余类，正好给出 $R_D$ 中一点；反向同样成立。
+
+固定边界点 $z$。任一有限坐标柱邻域只涉及有限多个阈值和有限多个模数。把阈值取最大值得到某个 $N$，把模数取最小公倍数得到一个仍整除 $D$ 的有限模数，于是该柱邻域可改写为
+$$
+U\cup\{n\ge N:\bar n\in U\},
+$$
+其中 $U$ 是包含 $z$ 的 $R_D$ 开闭柱集。反之，这样的集合只由阈值 $N$ 与定义 $U$ 的有限模坐标决定，所以确为逆极限开邻域。由此得到所述边界邻域基。
+
+最后证明稠密性。任意非空基本柱集只涉及有限多个坐标；取共同细化坐标 $(v,n)$。该柱集中的指定值属于商 $Q_{v,n}$ 的实际像，因为 $Q_{v,n}$ 就是自然数商。故存在自然数 $a$ 具有该指定坐标，并由相容性落入原柱集。因此每个非空基本开集都与 $j(\mathbb N_0)$ 相交，$j(\mathbb N_0)$ 稠密。证毕。
+
+**假设 49.2（已公开有限算术前置）。** 固定公开源 [RECURSIVE_RELATIONAL_OBSERVATION.md，第 13.0—13.2 与 14.0、14.0a、14.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的有限阈值—周期结论。特别地，有限同层核 $R_{u,m}$ 双槽保幂当且仅当
+$$
+(u,m)=(0,1)
+$$
+或
+$$
+u\ge\max\{1,h(m)\},\qquad \lambda(m)\mid m,
+$$
+其中
+$$
+h(m)=\max_p v_p(m).
+$$
+对正整数 $m$，周期条件 $\lambda(m)\mid m$ 等价于每个素数 $p\mid m$ 都满足 $p-1\mid m$。后一个判据与 Novák-Carmichael 条件一致：Kalmynin 在第 1 节定义正整数 $N$ 为对每个 $(a,N)=1$ 都有 $a^N\equiv1\pmod N$，并在第 2 节引理 1 证明其充要条件为每个素因子 $p\mid N$ 都满足 $p-1\mid N$；见 [arXiv:1706.07343v1，PDF 第 1—3 页，尤其第 2—3 页的 Lemma 1 及完整证明](https://arxiv.org/pdf/1706.07343v1)。本节以下证明不把同层条件 $\lambda(m)\mid m$ 当作无限完备化的必要条件。
+
+**theorem 49.3（连续有限输出必经某个共同的更细输入观察）。** 设
+$$
+F:K_{t,D}\times K_{t,D}\longrightarrow Q_{u,m}
+$$
+连续，其中 $(u,m)\in I_{t,D}$。则存在 $(v,n)\in I_{t,D}$，使 $F$ 经
+$$
+\pi_{v,n}\times\pi_{v,n}:K_{t,D}^2\longrightarrow Q_{v,n}^2
+$$
+因子化。特别地，若连续映射
+$$
+\operatorname{Pow}:K_{t,D}^2\to K_{t,D}
+$$
+在稠密自然数像上满足
+$$
+\operatorname{Pow}(j(a),j(b))=j(a^b),
+$$
+则对每个输出坐标 $(u,m)$，存在一个可能严格更细的输入坐标 $(v,n)$，使
+$$
+a\mathrel{R_{v,n}}a',\quad b\mathrel{R_{v,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{u,m}}(a')^{b'}.
+$$
+
+**证明。** $K_{t,D}^2$ 紧致，而 $Q_{u,m}$ 有限离散。对每个 $c\in Q_{u,m}$，集合 $F^{-1}(c)$ 是开闭集。逆极限柱集构成拓扑基，所以对 $F^{-1}(c)$ 中每一点可取一个有限坐标柱集仍包含于 $F^{-1}(c)$。紧致性给出有限子覆盖。再对有限多个 $c$ 合并，得到有限多个输入坐标，已经足以决定 $F$。
+
+指标集是有向的：有限多个阈值取最大值，有限多个模数取最小公倍数；由于只取有限多个 $m\mid D$，其最小公倍数仍整除 supernatural $D$。故存在一个共同坐标 $(v,n)$ 同时细化刚才所有坐标。于是两个输入若在该共同坐标相同，便落在相同的有限柱块中，因而有相同 $F$ 值。这给出因子化。
+
+应用于
+$$
+F=\pi_{u,m}\circ\operatorname{Pow}
+$$
+并限制到稠密自然数像，即得最后的蕴含。这里得到的是“每个有限输出存在某个更细有限输入”，并未推出输出核本身双槽保幂。证毕。
+
+**theorem 49.4（跨层幂判据）。** 设 $1\le t<\infty$，$m\mid n$。则
+$$
+a\mathrel{R_{t,n}}a',\quad b\mathrel{R_{t,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{t,m}}(a')^{b'}
+$$
+对所有自然数 $a,a',b,b'$ 成立，当且仅当
+$$
+h(m)\le t,\qquad \lambda(m)\mid n.
+$$
+更一般地，若 $t=\infty$，给定有限 $u,m$，只要
+$$
+v\ge\max\{u,1,h(m)\},\qquad m\mid n,\qquad \lambda(m)\mid n,
+$$
+就有
+$$
+a\mathrel{R_{v,n}}a',\quad b\mathrel{R_{v,n}}b'
+\Longrightarrow
+a^b\mathrel{R_{u,m}}(a')^{b'}.
+$$
+
+**证明。** 先证有限 $t$ 的充分性。若两个底数相等且两个指数相等，则显然成立。其余只需考察发生尾部替换的槽。
+
+由 $m\mid n$，若 $a,a'\ge t$ 且 $a\equiv a'\pmod n$，则
+$$
+a\equiv a'\pmod m,
+$$
+所以固定指数时底数替换不改变模 $m$ 的幂值。
+
+再固定底数 $a$，设 $b,b'\ge t$ 且 $b\equiv b'\pmod n$。对任意 $p^e\parallel m$ 分情况。若 $p\mid a$，则
+$$
+v_p(a^b)\ge b\ge t\ge e,
+$$
+且同样 $v_p(a^{b'})\ge e$，故两者都模 $p^e$ 为零。若 $p\nmid a$，则 $a$ 在 $(\mathbb Z/p^e\mathbb Z)^\times$ 中的阶整除 $\lambda(p^e)$，而
+$$
+\lambda(p^e)\mid\lambda(m)\mid n\mid b-b'.
+$$
+所以
+$$
+a^b\equiv a^{b'}\pmod{p^e}.
+$$
+中国剩余定理给出模 $m$ 相等。依次替换两个槽即可得到
+$$
+a^b\equiv(a')^{b'}\pmod m.
+$$
+
+还须检查 $R_{t,m}$ 的输出阈值，而不仅是模 $m$ 同余。先设 $t=1$。此时低于阈值的唯一输出是 $0$。若某个幂值为 $0$，则指数为正且底数为 $0$；但 $0$ 是 $R_{1,n}$ 的孤立类，所以对应的另一个底数也必须等于 $0$，从而两个输出都等于 $0$。因此只要两个输出不完全相等，它们就都至少为 $1=t$，故属于同一尾剩余类。
+
+再设 $t\ge2$。若发生尾底数替换，则底数均至少为 $t$；指数若为 $0$，两边输出都精确等于 $1$，若指数为正，则输出均至少为 $t$。若只发生尾指数替换，则指数均至少为 $t$；固定底数 $0$ 或 $1$ 时输出分别恒为精确的 $0$ 或 $1$，固定底数 $a\ge2$ 时输出至少为 $2^t\ge t$。因此所有低于输出阈值 $t$ 的情形都被精确保持；一旦两个输出不同，它们必同时至少为 $t$。结合已经证明的模 $m$ 同余，得到所需 $R_{t,m}$ 关系。
+
+必要性方面，取 $p^e\mid m$。若 $e>t$，任选足够大的 $a\ge t$ 满足 $v_p(a)=1$，并取
+$$
+b=t,\qquad b'=t+n.
+$$
+指数二者属于同一 $R_{t,n}$ 类，而
+$$
+v_p(a^t)=t,\qquad
+v_p(a^{t+n})=t+n.
+$$
+于是
+$$
+v_p\bigl(a^{t+n}-a^t\bigr)
+=v_p\bigl(a^t(a^n-1)\bigr)=t<e,
+$$
+因为 $p\mid a$ 蕴含 $a^n\equiv0\pmod p$，故 $p\nmid a^n-1$。两输出既不相等，又不模 $p^e$ 同余，与输出必须满足 $R_{t,m}$ 矛盾。因此 $e\le t$，即 $h(m)\le t$。
+
+再取任意模 $m$ 单位类，选择其一个足够大的自然数代表 $a\ge t$。仍取任意 $b\ge t$ 与 $b'=b+n$。输出不能相等时必须模 $m$ 相等；相等时当然也模 $m$ 相等，因此总有
+$$
+a^b(a^n-1)\equiv0\pmod m.
+$$
+因 $a^b$ 为单位，得到
+$$
+a^n\equiv1\pmod m.
+$$
+这对每个单位类成立，因此有限群 $(\mathbb Z/m\mathbb Z)^\times$ 的指数整除 $n$，即
+$$
+\lambda(m)\mid n.
+$$
+
+当 $t=\infty$ 时，把上述充分性证明中的输入阈值 $t$ 换成所选 $v$。条件 $v\ge h(m)$ 保证非单位底数在尾指数下消失模各 $p^e\parallel m$，而 $v\ge u$ 保证所有非恒值输出进入输出尾部；对低于 $u$ 的输出，和上面有限阈值论证一样，只有由孤立常值情形产生的值需要保留，而这些值在替换前后精确相等。故得到 $R_{u,m}$。证毕。
+
+**theorem 49.5（$K_{t,D}$ 上自然幂联合连续延拓的完整分类）。** 自然数幂
+$$
+(a,b)\longmapsto a^b,
+\qquad a^0=1,
+\qquad 0^0=1,
+$$
+存在唯一连续延拓
+$$
+\operatorname{Pow}_{t,D}:K_{t,D}\times K_{t,D}\longrightarrow K_{t,D}
+$$
+当且仅当下列相应条件成立。
+
+若 $t=0$，充要条件为
+$$
+D=1.
+$$
+
+若 $1\le t<\infty$，充要条件为
+$$
+H(D)\le t
+$$
+以及
+$$
+\forall m\mid D,\qquad \lambda(m)\mid D.
+$$
+
+若 $t=\infty$，充要条件仅为
+$$
+\forall m\mid D,\qquad \lambda(m)\mid D.
+$$
+
+**证明。** 先证必要性。
+
+设 $t=0$。若 $D>1$，取素数 $p\mid D$。考虑输出坐标 $(0,p)$。由 theorem 49.3，若连续延拓存在，则存在某个输入模数 $n\mid D$，使该输出只依赖模 $n$ 输入。指数 $0$ 与任意正倍数 $kn$ 在 $R_{0,n}$ 中相同。取底数 $a=p$，则
+$$
+a^0=1,
+$$
+而
+$$
+a^{kn}\equiv0\pmod p.
+$$
+两输出在 $Q_{0,p}=\mathbb Z/p\mathbb Z$ 中不同，矛盾。因此 $D=1$。反之 $K_{0,1}$ 是单点，延拓唯一存在。
+
+以下设 $1\le t<\infty$。固定任意有限 $m\mid D$，考察输出坐标 $(t,m)$。theorem 49.3 给出某个 $(v,n)\in I_{t,D}$ 决定该输出。把 $v$ 增大到 $t$，并把 $n$ 替换为 $\operatorname{lcm}(n,m)$；后二者仍满足 $n\mid D$，而输入观察只变细。因此可假设输入为 $(t,n)$ 且 $m\mid n$。theorem 49.4 的必要性给出
+$$
+h(m)\le t,\qquad\lambda(m)\mid n\mid D.
+$$
+由于这对所有有限 $m\mid D$ 成立，第一式等价于每个 $e_p\le t$，即 $H(D)\le t$；第二式正是 Carmichael 闭合。
+
+若 $t=\infty$，固定 $m\mid D$ 并取任意有限输出阈值，例如 $(1,m)$。theorem 49.3 给出某个输入 $(v,n)$。再把 $n$ 替换成 $\operatorname{lcm}(n,m)$。对任意模 $m$ 单位 $a$，取足够大的同余代表，并比较尾指数 $b$ 与 $b+n$，与 theorem 49.4 必要性部分相同，得到
+$$
+\lambda(m)\mid n\mid D.
+$$
+所以 $D$ Carmichael 闭合。
+
+再证充分性。设 $1\le t<\infty$ 且两条件成立。固定任意输出 $(u,m)\in I_{t,D}$。由 Carmichael 闭合，有限整数
+$$
+n=\operatorname{lcm}(m,\lambda(m))
+$$
+满足 $n\mid D$。又由 $H(D)\le t$ 得 $h(m)\le t$。theorem 49.4 因此说明输出 $(u,m)$ 只依赖输入坐标 $(t,n)$。于是对每个有限输出坐标，都有一个有限输入坐标决定自然幂的输出。
+
+这些有限坐标函数彼此相容，因为它们在自然数输入上都等于同一个自然幂函数的相应投影，而每个有限输入商均由自然数商映射满射。故可逐坐标定义
+$$
+\operatorname{Pow}_{t,D}:K_{t,D}^2\to K_{t,D}.
+$$
+每个输出坐标只依赖一个有限离散输入坐标，所以该映射连续，并在稠密自然数像上延拓普通幂。
+
+若 $t=\infty$ 且 $D$ Carmichael 闭合，固定输出 $(u,m)$，仍取
+$$
+n=\operatorname{lcm}(m,\lambda(m))\mid D
+$$
+以及
+$$
+v\ge\max\{u,1,h(m)\}.
+$$
+theorem 49.4 给出所需有限输入依赖，逐坐标同样构造连续延拓。
+
+最后，若有两个连续延拓，它们在稠密集 $j(\mathbb N_0)^2$ 上相等；目标 $K_{t,D}$ 为 Hausdorff 空间，所以两者处处相等。证毕。
+
+**定义 49.6（边界单位幂字符）。** 以下假设 theorem 49.5 的相应存在条件成立。设 $p^e\mid D$，$e\ge1$。由于 $\lambda(p^e)\mid D$，任意 $z\in R_D$ 有确定的坐标
+$$
+z_{\lambda(p^e)}\in\mathbb Z/\lambda(p^e)\mathbb Z.
+$$
+对 $x\in R_D$ 与非负整数代表 $r$ 定义候选值
+$$
+\mathcal E_{p^e}(x,z;r)=
+\begin{cases}
+0,&x\equiv0\pmod p,\\
+x_e^r\pmod{p^e},&x\not\equiv0\pmod p,
+\end{cases}
+$$
+其中 $x_e$ 是 $x$ 的模 $p^e$ 坐标，且要求
+$$
+r\equiv z_{\lambda(p^e)}\pmod{\lambda(p^e)}.
+$$
+对自然数 $a$ 同样定义
+$$
+\mathcal E_{p^e}(a,z;r)=
+\begin{cases}
+0,&p\mid a,\\
+a^r\pmod{p^e},&p\nmid a.
+\end{cases}
+$$
+
+**theorem 49.6.1（边界单位幂字符的代表元无关性）。** 在定义 49.6 的条件下，$\mathcal E_{p^e}(x,z;r)$ 与 $\mathcal E_{p^e}(a,z;r)$ 都只依赖 $z_{\lambda(p^e)}$，与所选非负整数代表 $r$ 无关。因此可无歧义地记为
+$$
+\mathcal E_{p^e}(x,z)
+\qquad\text{和}\qquad
+\mathcal E_{p^e}(a,z).
+$$
+
+**证明。** 若 $x$ 在模 $p^e$ 下不是单位，定义值恒为 $0$，与 $r$ 无关。若 $x$ 是单位，则其在有限群 $(\mathbb Z/p^e\mathbb Z)^\times$ 中的乘法阶整除该群指数 $\lambda(p^e)$。若 $r\equiv r'\pmod{\lambda(p^e)}$，则该阶也整除 $r-r'$，所以
+$$
+x_e^r=x_e^{r'}\pmod{p^e}.
+$$
+自然数 $a$ 的单位情形完全相同；非单位情形同样恒定义为 $0$。故两个候选值都与非负代表无关。这里没有把 $z$ 当成一个未经限定的 $p$-进指数；所使用的只是指数在具体有限单位群指数 $\lambda(p^e)$ 上的坐标。证毕。
+
+**theorem 49.7（有限阈值时的全部边界公式）。** 设 $1\le t<\infty$ 且 $K_{t,D}$ 满足 theorem 49.5。对 $x,z\in R_D$，存在唯一边界元素
+$$
+E(x,z)\in R_D
+$$
+使对每个 $p^e\mid D$ 都有
+$$
+E(x,z)\bmod p^e=\mathcal E_{p^e}(x,z).
+$$
+对 $a\in\{0,\ldots,t-1\}$，同样记 $E(a,z)$ 为由 $\mathcal E_{p^e}(a,z)$ 给出的边界元素。连续幂延拓完全由下列公式决定：
+$$
+\operatorname{Pow}_{t,D}(a,b)=j(a^b),
+\qquad a,b<t;
+$$
+$$
+\operatorname{Pow}_{t,D}(x,0)=j(1),
+\qquad x\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(x,b)=x^b\in R_D,
+\qquad x\in R_D,\quad1\le b<t;
+$$
+$$
+\operatorname{Pow}_{t,D}(0,z)=j(0),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(1,z)=j(1),
+\qquad 1<t,\quad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{t,D}(a,z)=E(a,z),
+\qquad2\le a<t,\quad z\in R_D;
+$$
+以及
+$$
+\operatorname{Pow}_{t,D}(x,z)=E(x,z),
+\qquad x,z\in R_D.
+$$
+当 $t=1$ 时，孤立自然数部分只有 $0$，所以含孤立 $1$ 的两条公式自动消失；$j(1)$ 此时就是边界中的环常数 $1$。当 $t>1$ 时，$j(0),j(1)$ 是环境空间中的孤立自然数点，必须与边界环中的 $0,1\in R_D$ 区分。
+
+**证明。** 先说明 $E(x,z)$ 的各素数幂坐标相容。固定素数 $p$。若 $x$ 模 $p$ 非单位，则该素数的全部坐标均为零。若为单位，则对 $e'\le e$，模 $p^e$ 的单位幂向模 $p^{e'}$ 投影就是同一指数的单位幂；theorem 49.6.1 保证指数可用 $z$ 在相应 Carmichael 周期上的任一代表计算，因而较高坐标的投影正是较低坐标。不同素数的有限素数幂坐标由中国剩余定理唯一拼接，所以得到 $R_D$ 中唯一元素。$E(a,z)$ 同理。
+
+取自然指数网 $b_i\ge t$ 收敛到边界 $z$。若某个模 $p^e$ 坐标上的底数为非单位，由
+$$
+e\le H(D)\le t\le b_i
+$$
+可知其 $b_i$ 次幂模 $p^e$ 恒为零。若底数为单位，则幂值只依赖 $b_i$ 模 $\lambda(p^e)$，并收敛到定义 49.6 与 theorem 49.6.1 的值。这证明边界指数公式。
+
+若底数是边界 $x$，取自然数网 $a_i\ge t$ 收敛到 $x$。固定正自然指数 $b<t$ 时，$a_i^b$ 仍趋向边界，其每个模数坐标趋向 $x^b$，得到第三条公式。指数为零时每个自然底数都给出 $1$，所以极限是环境中的 $j(1)$，而不是在 $t>1$ 时与之不同的边界环常数。这解释了必须单独保留零指数例外。
+
+若孤立底数为 $0$ 且指数趋于边界，则所有代表指数最终至少为 $t\ge1$，所以 $0^{b_i}=0$，极限为环境自然点 $j(0)$。底数为 $1$ 时恒有 $1^{b_i}=1$，得到环境自然点 $j(1)$。这两点在 $t>1$ 时不能用边界环常数替代。
+
+其余孤立底数 $a\ge2$ 与边界指数的幂值最终至少为 $t$，故极限属于边界，并由前述逐 $p^e$ 计算给出 $E(a,z)$。边界—边界情形同时应用相同有限坐标计算。所有公式在稠密自然数核上与普通幂一致；由 theorem 49.5 的唯一性，它们就是连续延拓。证毕。
+
+**theorem 49.8（无限阈值时的全部边界公式与非单位消失）。** 设 $t=\infty$ 且 $D$ Carmichael 闭合。仍以定义 49.6 与 theorem 49.6.1 定义 $E(x,z)$ 与 $E(a,z)$。则
+$$
+\operatorname{Pow}_{\infty,D}(a,b)=j(a^b),
+\qquad a,b\in\mathbb N_0;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,0)=j(1),
+\qquad x\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,b)=x^b\in R_D,
+\qquad x\in R_D,\quad b\ge1;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(0,z)=j(0),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(1,z)=j(1),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(a,z)=E(a,z),
+\qquad a\ge2,\quad z\in R_D;
+$$
+以及
+$$
+\operatorname{Pow}_{\infty,D}(x,z)=E(x,z),
+\qquad x,z\in R_D.
+$$
+若 $x$ 的模 $p$ 坐标为零，则最后一式的全部模 $p^e$ 坐标均为零，即
+$$
+E(x,z)\equiv0\pmod{p^e}
+$$
+对每个有限 $p^e\mid D$ 成立。这里 $j(0),j(1)$ 始终是环境中的孤立自然数点，而 $E(x,z)$ 属于边界环 $R_D$。
+
+**证明。** 先证明任意收敛到边界的自然数网都最终逃出每个有限集合。设网 $j(b_i)$ 收敛到 $z\in R_D$，固定 $B\in\mathbb N_0$。由 theorem 49.1.1，每个自然数点 $j(k)$ 都孤立；又因 $K_{\infty,D}$ Hausdorff，每个单点闭。因此
+$$
+F_B=\{j(0),j(1),\ldots,j(B)\}
+$$
+是有限闭集。边界点 $z$ 不属于 $F_B$，故其补集 $K_{\infty,D}\setminus F_B$ 是包含 $z$ 的开邻域。按网收敛的定义，最终有
+$$
+j(b_i)\in K_{\infty,D}\setminus F_B,
+$$
+也就是最终 $b_i>B$。这对每个 $B$ 成立。完全相同的论证适用于任何收敛到边界 $x$ 的自然底数网。此处没有使用序列或子序列论证。
+
+因此若底数在某个 $p$-坐标上为非单位，则对固定 $e$，逼近底数的自然数网最终被 $p$ 整除，而逼近指数网最终大于 $e$，所以相应幂模 $p^e$ 最终为零。这给出非单位消失。
+
+若底数为 $p$-单位，则幂值模 $p^e$ 只依赖指数模该单位的阶，该阶整除 $\lambda(p^e)$；Carmichael 闭合保证 $\lambda(p^e)\mid D$，所以这个有限周期正是指数边界实际记录的坐标。由 theorem 49.6.1，极限正是 $\mathcal E_{p^e}$。
+
+固定正自然指数 $b$ 时，逼近边界底数的自然数网最终逃出每个有限集合，所以其 $b$ 次幂也最终逃出每个有限集合，且模每个 $m\mid D$ 收敛到 $x^b$，故极限属于边界并等于边界环幂 $x^b$。固定指数 $0$ 时输出始终为孤立自然点 $1$，故必须得到 $j(1)$。孤立底数 $0,1$ 与边界指数分别恒给出 $j(0),j(1)$；孤立底数 $a\ge2$ 的幂随指数网逃向无穷并进入边界。最后由逐有限坐标计算和 theorem 49.5 的唯一性得到全部公式。证毕。
+
+**theorem 49.9（$t=1$ 的穷尽分类）。** 当 $t=1$ 时，连续幂延拓存在当且仅当
+$$
+D\in\{1,2,6,42,1806\}.
+$$
+其中最大者为
+$$
+1806=2\cdot3\cdot7\cdot43.
+$$
+
+**证明。** 由 theorem 49.5，$H(D)\le1$，故 $D$ 平方自由。又对每个素数 $p\mid D$，取 $m=p$，Carmichael 闭合给出
+$$
+p-1=\lambda(p)\mid D.
+$$
+因此 $p-1$ 必为平方自由数，其每个素因子都再次属于 $D$。
+
+证明所有可能素因子都属于
+$$
+S=\{2,3,7,43\}.
+$$
+若否，取最小的 $p\mid D$ 且 $p\notin S$。$p-1$ 的每个素因子 $q$ 都小于 $p$，又因 $q\mid D$，由 $p$ 的最小性有 $q\in S$。由于 $p-1$ 平方自由，遂有
+$$
+p-1\mid2\cdot3\cdot7\cdot43=1806.
+$$
+$1806$ 的正因子为
+$$
+1,2,3,6,7,14,21,42,43,86,129,258,301,602,903,1806.
+$$
+分别加一得到
+$$
+2,3,4,7,8,15,22,43,44,87,130,259,302,603,904,1807.
+$$
+其中素数只有
+$$
+2,3,7,43.
+$$
+确实，$259=7\cdot37$，$302=2\cdot151$，$603=3\cdot201$，$904=8\cdot113$，$1807=13\cdot139$。这与 $p\notin S$ 矛盾。
+
+再由
+$$
+43-1=42,\qquad7-1=6,\qquad3-1=2
+$$
+可知若 $43\mid D$ 则 $2,3,7\mid D$；若 $7\mid D$ 则 $2,3\mid D$；若 $3\mid D$ 则 $2\mid D$。所以素因子集合只能依次为
+$$
+\varnothing,\quad\{2\},\quad\{2,3\},\quad\{2,3,7\},\quad\{2,3,7,43\},
+$$
+正好给出
+$$
+1,2,6,42,1806.
+$$
+每一个都直接满足 $p-1\mid D$ 对所有 $p\mid D$，因而满足 Carmichael 闭合，并由 theorem 49.5 得到连续幂。
+
+这一有限算术结论也与 Halbeisen–Hungerbühler 的广义 Carmichael 分类一致。其定义的 $C_k$ 要求 $n>\max\{1,1-k\}$ 且对所有自然数 $a$ 有 $a^{n+k}\equiv a\pmod n$；其 theorem 2.1 给出平方自由与 $p-1\mid n+k-1$ 的广义 Korselt 判据，而第 3.2 节 theorem 3.1 明确证明
+$$
+C_1=\{2,6,42,1806\}.
+$$
+见 [Halbeisen–Hungerbühler, *On generalised Carmichael numbers*, Hardy–Ramanujan Journal 22 (1999), printed pp. 10, 12–13，DOI 10.46298/hrj.1999.138](https://hrj.episciences.org/138/pdf)。这里额外的 $D=1$ 是空素因子 supernatural，不属于该文 $C_1$ 的正整数范围。证毕。
+
+**定义 49.10（Carmichael supernatural 闭包）。** 对任意 supernatural $E$ 定义
+$$
+\Phi(E)=\operatorname{lcm}\Bigl(E,\{\lambda(m):m\in\mathbb N_{>0},\ m\mid E\}\Bigr).
+$$
+从
+$$
+D_0=D,\qquad D_{r+1}=\Phi(D_r)
+$$
+递归，并令
+$$
+D^{\mathrm{pow}}=\operatorname{lcm}_{r\ge0}D_r.
+$$
+再定义
+$$
+T^{\mathrm{pow}}=
+\begin{cases}
+0,&t=0\text{ 且 }D=1,\\
+\max\{t,1,H(D^{\mathrm{pow}})\},&\text{其余情形},
+\end{cases}
+$$
+其中若最大值中出现 $\infty$，则结果为 $\infty$。
+
+**theorem 49.11（最小兼容细化、正确映射方向与自然映射保持型唯一性）。** $D^{\mathrm{pow}}$ 是包含 $D$ 的最小 Carmichael 闭合 supernatural。$K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}$ 支持连续自然幂，并有规范连续满射
+$$
+\rho:K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}\twoheadrightarrow K_{t,D}
+$$
+满足
+$$
+\rho\circ j=j.
+$$
+更精确地，若 $K_{s,E}$ 支持连续自然幂并且
+$$
+s\ge t,\qquad D\mid E,
+$$
+则必有
+$$
+T^{\mathrm{pow}}\le s,\qquad D^{\mathrm{pow}}\mid E.
+$$
+记坐标限制给出的规范映射为
+$$
+\rho_{s,E}^{t,D}:K_{s,E}\to K_{t,D}.
+$$
+则存在规范连续满射
+$$
+\sigma:K_{s,E}\twoheadrightarrow K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}
+$$
+满足
+$$
+\sigma\circ j=j,\qquad
+\rho\circ\sigma=\rho_{s,E}^{t,D}.
+$$
+而且 $\sigma$ 在自然映射保持的连续因子映射类别中唯一：若连续
+$$
+f:K_{s,E}\to K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}
+$$
+同时满足
+$$
+f\circ j=j,\qquad
+\rho\circ f=\rho_{s,E}^{t,D},
+$$
+则
+$$
+f=\sigma.
+$$
+不要求 $f\circ j=j$ 时不主张唯一性。因此这是保持原有观察区别的最粗幂兼容细化；方向是从更细完备化连续满射到原完备化，而不是把原空间误称为向更细空间的商。
+
+**证明。** 序列 $D_r$ 单调增加。若有限 $m\mid D^{\mathrm{pow}}$，$m$ 只涉及有限多个素数及有限指数；对其中每个素数指数，因其出现在逐点上确界 $D^{\mathrm{pow}}$ 中，存在有限阶段达到该指数。取这些阶段最大值，得到某个 $r$ 满足
+$$
+m\mid D_r.
+$$
+于是
+$$
+\lambda(m)\mid D_{r+1}\mid D^{\mathrm{pow}}.
+$$
+故 $D^{\mathrm{pow}}$ Carmichael 闭合。
+
+若 $E$ Carmichael 闭合且 $D\mid E$，归纳有 $D_r\mid E$：起点显然；若 $D_r\mid E$，则每个 $m\mid D_r$ 也整除 $E$，故 $\lambda(m)\mid E$，于是 $D_{r+1}\mid E$。取 supernatural 最小公倍数得到
+$$
+D^{\mathrm{pow}}\mid E.
+$$
+故其最小性成立。
+
+由 $T^{\mathrm{pow}}$ 的定义，除平凡 $(0,1)$ 情形外有
+$$
+T^{\mathrm{pow}}\ge1,\qquad H(D^{\mathrm{pow}})\le T^{\mathrm{pow}},
+$$
+而 $D^{\mathrm{pow}}$ Carmichael 闭合，所以 theorem 49.5 给出连续幂。平凡 $(0,1)$ 情形由 theorem 49.5 直接成立。
+
+参数不等式
+$$
+T^{\mathrm{pow}}\ge t,\qquad D\mid D^{\mathrm{pow}}
+$$
+使原指标集 $I_{t,D}$ 成为较细指标集 $I_{T^{\mathrm{pow}},D^{\mathrm{pow}}}$ 的子集；限制逆极限坐标得到规范连续映射 $\rho$，并显然满足 $\rho\circ j=j$。其像是紧集，故在 Hausdorff 目标中闭；又包含稠密自然数像，所以像等于整个 $K_{t,D}$，即 $\rho$ 满射。
+
+现设 $K_{s,E}$ 是任意幂兼容细化。若 $(t,D)=(0,1)$，则 $T^{\mathrm{pow}}=0$、$D^{\mathrm{pow}}=1$，所需参数不等式立即成立。否则 theorem 49.5 给出 $s\ge1$；当 $s<\infty$ 时还给出 $H(E)\le s$，并且无论 $s$ 有限还是无限都给出 $E$ Carmichael 闭合。刚证的最小性给出
+$$
+D^{\mathrm{pow}}\mid E.
+$$
+于是有限 $s$ 时
+$$
+H(D^{\mathrm{pow}})\le H(E)\le s,
+$$
+而 $s=\infty$ 时 $T^{\mathrm{pow}}\le s$ 自动成立。结合 $s\ge t$，得到
+$$
+T^{\mathrm{pow}}\le s.
+$$
+
+因此指标包含给出坐标限制的规范连续映射
+$$
+\sigma:K_{s,E}\to K_{T^{\mathrm{pow}},D^{\mathrm{pow}}},
+$$
+并满足 $\sigma\circ j=j$ 及
+$$
+\rho\circ\sigma=\rho_{s,E}^{t,D}.
+$$
+与 $\rho$ 的满射证明相同，$\sigma$ 的像紧且闭，又含有中间空间的稠密自然数像，所以 $\sigma$ 也是满射。
+
+最后证明所声明的精确唯一性。设 $f$ 是另一连续映射并满足 $f\circ j=j$。则对每个自然数 $n$，
+$$
+f(j(n))=j(n)=\sigma(j(n)).
+$$
+theorem 49.1.1 给出 $j(\mathbb N_0)$ 在 $K_{s,E}$ 中稠密，而中间目标 $K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}$ Hausdorff，所以两个连续映射 $f,\sigma$ 在稠密集上相等即处处相等。因而 $f=\sigma$；交换条件 $\rho\circ f=\rho_{s,E}^{t,D}$ 与因子化语义相容，但唯一性的关键附加范围正是 $f\circ j=j$。若删除自然映射保持条件，本文不声称因子映射唯一。证毕。
+
+**定义 49.12（固定有限阈值的最大允许 supernatural）。** 对 $1\le t<\infty$，令
+$$
+\mathcal D_t=\{D:H(D)\le t\text{ 且 }D\text{ Carmichael 闭合}\},
+$$
+并定义
+$$
+D_t^{\max}=\operatorname{lcm}_{D\in\mathcal D_t}D.
+$$
+
+**theorem 49.13（最大同阈值周期存在；$t=1$ 显式，$t\ge2$ 不作枚举断言）。** 对每个有限 $t\ge1$，$D_t^{\max}$ 本身属于 $\mathcal D_t$，故它是同一阈值 $t$ 下允许的最大 supernatural。特别地
+$$
+D_1^{\max}=1806.
+$$
+本结论不需要、也不推出对 $t\ge2$ 的素因子集合有有限显式枚举。
+
+**证明。** 显然
+$$
+H(D_t^{\max})\le t.
+$$
+取任意有限 $m\mid D_t^{\max}$。对每个 $p^e\parallel m$，因为 $e\le e_p(D_t^{\max})$ 且右侧是集合 $\{0,1,\ldots,t\}$ 中某些整数的上确界，所以存在某个 $D_p\in\mathcal D_t$ 满足 $p^e\mid D_p$。由 $D_p$ Carmichael 闭合，
+$$
+\lambda(p^e)\mid D_p\mid D_t^{\max}.
+$$
+又由 Carmichael 函数的素数幂最小公倍数公式，
+$$
+\lambda(m)=\operatorname{lcm}_{p^e\parallel m}\lambda(p^e),
+$$
+所以
+$$
+\lambda(m)\mid D_t^{\max}.
+$$
+因此 $D_t^{\max}$ Carmichael 闭合，属于 $\mathcal D_t$。它按定义包含所有 $\mathcal D_t$ 的成员，故为最大元。
+
+$t=1$ 时由 theorem 49.9，所有允许 $D$ 都整除 $1806$，而 $1806$ 自身允许，所以最大元正是 $1806$。证毕。
+
+## 49.99 追加锚
