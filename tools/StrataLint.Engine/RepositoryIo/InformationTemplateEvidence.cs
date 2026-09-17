@@ -49,6 +49,7 @@ internal static class InformationTemplateEvidence
 
     // The historical content is data evaluated by today's producer. Keep its
     // D5 sources and state; bind configuration/toolchain inputs to the current program.
+    // The current manifest is the version authority for historical evidence.
     internal static RepositorySnapshot HistoricalInputs(RepositorySnapshot historical, RepositorySnapshot current)
     {
         static bool ProducerInput(string path) => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
@@ -61,6 +62,10 @@ internal static class InformationTemplateEvidence
     internal static InformationTemplateModuleEvidence Read(
         JsonElement value, string sourcePath, RepositorySnapshot snapshot)
     {
+        if (value.ValueKind == JsonValueKind.Object
+            && (!value.TryGetProperty("compatibility_version", out var compatibility)
+                || compatibility.ValueKind != JsonValueKind.Number))
+            throw new FormatException("DTR-EvidenceVersion: compatibility_version requires a positive integer");
         InformationTemplateJson.Fields(value, "schema_version", "compatibility_version", "inventory",
             "records", "registered", "inputs");
         InformationTemplateJson.Version(value);

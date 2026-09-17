@@ -229,11 +229,12 @@ def read_manifest_version(manifest: pathlib.Path) -> int:
 
 def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
     version = read_manifest_version(manifest)
+    if isinstance(value, dict) and type(value.get("compatibility_version")) is not int:
+        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version requires a positive integer")
     evidence = require_keys(value,
         {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
         "Inspector declared-template evidence")
     if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
-            or type(evidence["compatibility_version"]) is not int
             or any(not isinstance(evidence[field], list)
                    for field in ("inventory", "registered", "records", "inputs"))):
         raise ValueError("Inspector declared-template evidence is malformed")
