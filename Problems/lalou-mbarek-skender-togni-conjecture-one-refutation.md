@@ -33,14 +33,17 @@ bounded surrogate or an assumed invariant value.
 
 ## Gap
 
-The caller's GoalArtifact preregistered the exact source statement, the proposed
-six-vertex witness, its success and falsification criteria, and the bounded
-literature-status conclusion before this worker's first Lean edit. The caller
-did not provide an issue number to this worker and retained ownership of issue
-and pull-request operations. The supplied intake found no complete result in
-the searched repository, pinned Mathlib, or stated literature surfaces. This
-worker verified the primary source and local source hash but did not repeat a
-generic novelty search. No exhaustive openness or priority claim is made.
+The exact source statement, six-vertex witness, success and falsification
+criteria, and bounded literature-status scope were preregistered in
+[issue #8518](https://github.com/the-omega-institute/trureturing/issues/8518)
+before the first Lean edit. A bounded screen of the primary and latest arXiv
+records, arXiv results for bipanchromatic coloring, author and OpenAlex
+records, the project library, pinned Mathlib, and public Lean keyword results
+found no exact earlier resolution in the searched scope. Crossref records the
+journal publication as *Discrete Applied Mathematics* 391 (2026), pages
+511--522, DOI `10.1016/j.dam.2026.05.028`; publisher full text remains
+unverified because access returned HTTP 403. No worldwide novelty or priority
+claim is made.
 
 ## Route
 
@@ -71,13 +74,13 @@ global color multiplicities would also invalidate the result.
 
 ## Evidence
 
-The public Lean surface is exactly `claim : Prop` and `result : Not claim` in
-`D5/S3/ConceptDynamics/GraphColoring/PanchromaticPairingConjectureRefutation`.
-The claim uses relational extrema with attainment and universal inequalities;
-the result constructs all three witness certificates. The scoped canonical
-Lean build exited zero and printed the axiom closure `[propext,
-Classical.choice, Quot.sound]` for both declarations. The finite witness checks
-use kernel `decide`, not `native_decide`.
+The 207-line Lean module
+`D5/S3/ConceptDynamics/GraphColoring/PanchromaticPairingConjectureRefutation`
+has exactly the public surface `claim : Prop` and `result : Not claim`. The
+claim uses relational extrema with attainment and universal inequalities; the
+result constructs all three witness certificates. Both declarations use only
+the standard axiom closure `[propext, Classical.choice, Quot.sound]`. The
+finite witness checks use kernel `decide`, not `native_decide`.
 
 ## Triage
 
@@ -87,12 +90,3 @@ the all-optimal-coloring singleton lower bound. The public conclusion itself is
 the escape witness. Its `admission_basis` is `open-problem-resolution`, and its
 computational utility is the typed `certified-instance` refutation from
 `result` to `claim`.
-
-## ASSUMED-UNVERIFIED
-
-The supplied bounded literature screen was not independently repeated by this
-worker, and no exhaustive publication or priority claim is made. The caller
-must supply the retained preregistration issue reference in the pull-request
-body. Independent semantic review, canonical report and writer checks, remote
-CI, ordinary merge, and post-merge completion audits remain outside this
-worker's Git/GitHub authority.

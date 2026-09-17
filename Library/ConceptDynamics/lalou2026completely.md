@@ -34,11 +34,16 @@ conjecture. It does not contain or attest the repository's six-vertex
 counterexample. The repository result is therefore recorded as repo-derived,
 with no world-priority claim.
 
-The supplied bounded status and library intake found no existing proof or
-refutation of the complete conjecture in the inspected repository, pinned
-Mathlib, or stated literature surfaces. This implementation worker did not
-repeat that generic novelty search; exhaustive publication coverage remains
-unverified.
+A bounded screen of the primary and latest arXiv records, arXiv results for
+bipanchromatic coloring, author and OpenAlex records, the project library,
+pinned Mathlib, and public Lean keyword results found no exact earlier
+resolution in the searched scope. This is not a worldwide novelty or priority
+claim.
+
+Crossref records the journal publication as *Discrete Applied Mathematics*
+391 (2026), pages 511--522, DOI `10.1016/j.dam.2026.05.028`. The publisher full
+text remains unverified because access returned HTTP 403; the verified locator
+below therefore remains the arXiv version used for the exact statement.
 
 ## Verified locator
 
