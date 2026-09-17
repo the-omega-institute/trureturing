@@ -78,8 +78,17 @@ internal sealed class SimpleGraphCycleSpaceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "finite_graph_cycle_space"),
                 H("Lifts, fundamental bases, and independent fair labels"),
                 StatementSource.FromAuthor(FiniteFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/harary1953notion")),
                 Blocks(
+                    Paragraph(Text(
+                        "The binary cycle criterion has the classical signed-balance formulation: "
+                        + "give an edge sign +1 for label zero and -1 for label one. Zero cycle "
+                        + "parity means that every cycle has positive sign product; a vertex lift "
+                        + "expresses each edge sign as the product of its endpoint signs. "
+                        + "The literature acknowledgement concerns this classical core. The "
+                        + "arbitrary-anchor bijections, constructions for every supplied forest, "
+                        + "counts, probabilities, and this Lean proof are not attributed as a "
+                        + "bundle to the cited paper. No full 2-adic classification is asserted.")),
                     Paragraph(Text(
                         "Let V be any finite type with decidable equality and let G be any simple "
                         + "graph on V. Finite enumerations of E and the actual connected-component "

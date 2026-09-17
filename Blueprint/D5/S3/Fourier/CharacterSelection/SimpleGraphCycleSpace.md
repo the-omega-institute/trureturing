@@ -74,7 +74,11 @@ $$\begin{gathered}S=R, c\le n\\{}\operatorname{card}(\operatorname{range}(delta)
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Frank Harary (1953). *On the notion of balance of a signed graph*. DOI: [10.1307/mmj/1028989917](https://doi.org/10.1307/mmj/1028989917).
+
 *Commentary.*
+
+The binary cycle criterion has the classical signed-balance formulation: give an edge sign +1 for label zero and -1 for label one. Zero cycle parity means that every cycle has positive sign product; a vertex lift expresses each edge sign as the product of its endpoint signs. The literature acknowledgement concerns this classical core. The arbitrary-anchor bijections, constructions for every supplied forest, counts, probabilities, and this Lean proof are not attributed as a bundle to the cited paper. No full 2-adic classification is asserted.
 
 Let V be any finite type with decidable equality and let G be any simple graph on V. Finite enumerations of E and the actual connected-component quotient are supplied. Set n=card(V), m=card(E), and c=card(components). R is the kernel of the linear-combination map of endpoint characters. Then S=R and c is at most n. For every y:E-to-F, delta(x)=y has a solution if and only if walkParity(y,p)=0 for every base vertex v and every simple closed walk p at v.
 
