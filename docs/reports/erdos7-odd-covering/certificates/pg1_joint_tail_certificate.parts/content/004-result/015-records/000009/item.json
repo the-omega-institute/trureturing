@@ -1,0 +1,88 @@
+{
+  "final_root3": {
+    "kind": "inline",
+    "value": 2
+  },
+  "final_root9": {
+    "kind": "inline",
+    "value": 8
+  },
+  "source_square_excess": {
+    "kind": "inline",
+    "value": "2921757792381179999627/13783840971486886125000"
+  },
+  "separate_denominator_unit_floor_excess": {
+    "kind": "inline",
+    "value": "2719555822559379809273680509879823/318075611337140137917088618999687500"
+  },
+  "method": {
+    "kind": "inline",
+    "value": "weighted final-original-root floor"
+  },
+  "geometry": {
+    "path": "content/004-result/015-records/000009/item/005-geometry.json",
+    "sha256": "f4f7c6a8a6234143352ee2c36e9d3507a71bf915d6dbe9cf29a6a1f58abc953b",
+    "kind": "object"
+  },
+  "floor_increment_mu_mean": {
+    "kind": "inline",
+    "value": "2268264936/1000000007"
+  },
+  "floor_increment_deletion": {
+    "kind": "inline",
+    "value": {
+      "upper": "1976526183/1000000007",
+      "caps": [
+        2268264936,
+        547946214,
+        903460882,
+        205305390,
+        2268264936,
+        547946214,
+        903460882,
+        205305390,
+        1313364408,
+        350212104,
+        531557416,
+        132978072
+      ],
+      "group_numerator48": 72077161608
+    }
+  },
+  "weighted_hinge2_excess": {
+    "kind": "inline",
+    "value": "-183598197967989168761321/27567681942973772250000"
+  },
+  "selected_lambda_H4": {
+    "kind": "inline",
+    "value": "3165446489577781151551979/27567681942973772250000"
+  },
+  "selected_lambda_G1": {
+    "kind": "inline",
+    "value": "2416831440163518835325483/27567681942973772250000"
+  },
+  "selected_lambda_G2": {
+    "kind": "inline",
+    "value": "5430990741413010969057227/13783840971486886125000"
+  },
+  "selected_hinge2_excess": {
+    "kind": "inline",
+    "value": "-183598197967989168761321/27567681942973772250000"
+  },
+  "positive_floor_residual": {
+    "kind": "inline",
+    "value": "291738753/1000000007"
+  },
+  "criterion_constant": {
+    "kind": "inline",
+    "value": "-1840997/25410"
+  },
+  "criterion_inverse_Q_coefficient": {
+    "kind": "inline",
+    "value": "2502453138771205500781783517/65671387328527833081796875"
+  },
+  "criterion_excess": {
+    "kind": "inline",
+    "value": "-579384152407827206979536831/1113264631887138059499843750"
+  }
+}
