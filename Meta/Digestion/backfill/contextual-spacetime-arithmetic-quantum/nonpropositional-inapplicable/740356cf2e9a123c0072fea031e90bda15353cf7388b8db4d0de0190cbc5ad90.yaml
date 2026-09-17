@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:740356cf2e9a123c0072fea031e90bda15353cf7388b8db4d0de0190cbc5ad90
+  normalized_sha256: sha256:740356cf2e9a123c0072fea031e90bda15353cf7388b8db4d0de0190cbc5ad90
+cas_ref: sha256:740356cf2e9a123c0072fea031e90bda15353cf7388b8db4d0de0190cbc5ad90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本版本的“惰性的外部参考系统”与“固定槽接线后视为一个 CPTP 通道”明确规定本节对象类别，再用“定义过程缺陷”引入量；这是共同通道与参考的设定，未把自适应过程范数等价或风险界藏入定义。
+    previous_atom_id: ea6673afcf9d47991fec52bd64a6771ec99231cc91faf35ee91b430d6fd7a543
+    next_atom_id: cbc6e6aa38ec163669361ea61f35d2a00d12dfd5db3ed760eeb6b38a7e9ebbbf

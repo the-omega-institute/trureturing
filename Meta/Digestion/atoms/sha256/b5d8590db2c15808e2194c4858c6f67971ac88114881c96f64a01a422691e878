@@ -1,0 +1,22 @@
+**Proof.** Under $(N-1)\theta<1$, the endpoint indices are already in increasing circular order. Under $n\theta<1$, no sampled point $j\theta$ wraps around zero. It belongs to the $i$-th short cell exactly when $j=i$, with the left endpoint included; all remaining indices belong to the last cell. This proves the exact probabilities, with the zero extension of $b_{n,p}$ handling indices larger than $n$.
+
+For the displayed range of $x$, all points $x+j\theta$, $0\le j\le n$, lie in the last cell. Its observation law is therefore a point mass there, giving error $2(1-\mu_{N-1})=2(N-1)\theta$. For fixed $N,n$, the phase $1/2$ lies in this range for all sufficiently small positive $\theta$. Taking irrational $\theta\downarrow0$ proves the infimum assertion.
+
+The equation $\alpha=1/(1+\alpha)$ gives the stated continued fraction; in particular $\theta_A$ is irrational and its first partial quotient is $A$. For $A\ge16$, we have $n_A+1\le A^{3/4}+1\le A/2+1<A+\alpha$, so $(n_A+1)\theta_A<1$. The half-open arc
+$$
+[0,(n_A+1)\theta_A)
+$$
+contains every atom of $\nu_A$. Consequently
+$$
+1\ge\mathscr D(\nu_A)
+ \ge1-(n_A+1)\theta_A\longrightarrow1.
+$$
+On the other hand, Theorem 40.7 gives
+$$
+e_{N_A,\theta_A,1/2}(n_A)
+ \le2\sqrt{\frac\pi2}\,
+      \frac{N_A-1}{\sqrt{n_A}}
+ =O(A^{-1/8})\longrightarrow0.
+$$
+This family has only two cell lengths, while its largest cell mass tends to one. It therefore also verifies directly that a bound on the number of gap lengths supplies no near-uniform-mass conclusion. $\square$
+

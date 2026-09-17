@@ -1,0 +1,46 @@
+**定理 31.9（原测度弱星连续乘法观察的完全分类）。** 定义
+$$
+\mathcal F_n(\mu)=\int_K\exp(2\pi i nH(x))\,d\mu(x),\qquad n\in\mathbb Z.
+$$
+这里 $\exp(2\pi i n[\theta])=\exp(2\pi i n\theta)$。$\Delta(A_t)$ 中对 $\tau_K$ 连续的元素恰为 $\{\mathcal F_n:n\in\mathbb Z\}$，且整数参数唯一。特别，没有非零剩余字符对 $\tau_K$ 连续。连续函数分解所用的逼近定理是复 Stone–Weierstrass 定理。[^rro31-sw]
+
+**证明。** 先说明连续预伴随的必要性。若复线性泛函 $\ell$ 对 $\tau_K$ 连续，则存在有限多个 $f_1,\ldots,f_N\in C(K,\mathbb C)$，使共同核
+$$
+\bigcap_{j=1}^N\ker\left(\mu\mapsto\int_Kf_j\,d\mu\right)
+$$
+包含于 $\ker\ell$。否则在一个共同核向量上任意放大将违反零点连续性。因此 $\ell$ 通过这些测试组成的有限维映射之像分解，并可把该像上的线性泛函延拓到 $\mathbb C^N$。于是某个 $f=\sum_jc_jf_j\in C(K,\mathbb C)$ 满足
+$$
+\ell(\mu)=\int_Kf\,d\mu\qquad\text{对全部 }\mu.
+$$
+反向由 $\tau_K$ 的定义成立。
+
+若 $\ell=\mathcal E_z$，则其连续预伴随必须满足 $f(x)=\mathcal E_z(\delta_x)=q_{t,z}(x)$。每个有限字 $Z(n)$ 的相位非分裂，所以这些点上的值都是零。截断任意合法无限字并补零，仍是有限合法 Zeckendorf 字，故 $Z(\mathbb N)$ 稠密于 $K$。连续性迫使 $f=0$；然而定理31.7中某个第一纤维点的读数为 $z\ne0$，矛盾。这也给出实际不连续序列：取该点的有限字截断，Dirac 测度弱星收敛，而读数从恒零变为 $z$。
+
+现在设 $\ell=\mathcal P_\chi$ 弱星连续，连续预伴随为 $f$。对点质量求值得
+$$
+f(x)=\chi(\delta_{H(x)}),
+$$
+故 $f$ 在每个完整相位纤维上常值。连续满射 $H$ 从紧致空间到 Hausdorff 空间，因而是商映射；于是存在唯一 $h\in C(\mathbb T,\mathbb C)$ 满足 $f=h\circ H$。
+
+必须同时确定字符在全部圆周测度上的作用。对任意 $\nu\in\mathcal M$，使用实际右逆而非原子稠密性，得到
+$$
+\chi(\nu)=\ell(L_t\nu)=\int_Kh\circ H\,d(L_t\nu)=\int_{\mathbb T}h\,d\nu.
+$$
+最后一步只使用 $H_\#L_t\nu=\nu$，不要求 $L_t$ 弱星连续。乘法性在圆周 Dirac 测度上给出
+$$
+h(\theta+\eta)=h(\theta)h(\eta),\qquad h(0)=1.
+$$
+所以 $h$ 处处非零。其连续像有界，若某个 $|h(\theta)|>1$，正整数次幂即无界；若小于一，则逆元素的值大于一。因此 $|h|=1$。
+
+为准确分类这样的 $h$，注意三角多项式代数包含常数、对共轭封闭，且函数 $\theta\mapsto e^{2\pi i\theta}$ 分离圆周点。复 Stone–Weierstrass 定理使它在 $C(\mathbb T,\mathbb C)$ 中一致稠密。若对所有整数 $n$ 都有
+$$
+a_n:=\int_{\mathbb T}h(\theta)e^{-2\pi i n\theta}\,d\lambda_{\mathbb T}(\theta)=0,
+$$
+其中 $\lambda_{\mathbb T}$ 是归一化 Haar 测度，则由一致逼近 $\overline h$ 得 $\int|h|^2\,d\lambda_{\mathbb T}=0$，与 $|h|=1$ 矛盾。因此某个 $a_n\ne0$。平移不变性及乘法性给出
+$$
+a_n=\int_{\mathbb T}h(\theta+\eta)e^{-2\pi i n(\theta+\eta)}\,d\lambda_{\mathbb T}(\theta)=h(\eta)e^{-2\pi i n\eta}a_n.
+$$
+故 $h(\eta)=e^{2\pi i n\eta}$，从而 $\ell=\mathcal F_n$。
+
+反之，函数 $x\mapsto e^{2\pi i nH(x)}$ 连续，故其积分给出实际连续预伴随。复 Fubini 和相位卷积恒等式给出 $\mathcal F_n(\mu\star_t\eta)=\mathcal F_n(\mu)\mathcal F_n(\eta)$，而 $\mathcal F_n(e)=1$。整数参数唯一，因为不同整数给出不同圆周指数函数，且 $H$ 满射。证毕。
+

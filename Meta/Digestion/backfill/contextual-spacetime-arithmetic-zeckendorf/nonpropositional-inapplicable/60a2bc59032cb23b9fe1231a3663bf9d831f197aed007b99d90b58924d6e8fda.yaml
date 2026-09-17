@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60a2bc59032cb23b9fe1231a3663bf9d831f197aed007b99d90b58924d6e8fda
+  normalized_sha256: sha256:60a2bc59032cb23b9fe1231a3663bf9d831f197aed007b99d90b58924d6e8fda
+cas_ref: sha256:60a2bc59032cb23b9fe1231a3663bf9d831f197aed007b99d90b58924d6e8fda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句规定语义幂集及全函数空间采用单个原集合码的记号，属于定义而非另行断言一个幂集或函数空间运输定理。
+    previous_atom_id: 87e3b46fdfd19df9ce0f6f0585c9a8ecc018278a0f992d658a7cc69990ce7d71
+    next_atom_id: 5a4cb515e4f894b404d2d85c5b0bc427a9539a3c3c6988e2aa9b3bdf1eafe254

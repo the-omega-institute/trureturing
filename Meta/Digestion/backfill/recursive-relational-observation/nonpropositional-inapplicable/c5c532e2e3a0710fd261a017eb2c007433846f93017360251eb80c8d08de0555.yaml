@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5c532e2e3a0710fd261a017eb2c007433846f93017360251eb80c8d08de0555
+  normalized_sha256: sha256:c5c532e2e3a0710fd261a017eb2c007433846f93017360251eb80c8d08de0555
+cas_ref: sha256:c5c532e2e3a0710fd261a017eb2c007433846f93017360251eb80c8d08de0555
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句规定 Banach 弱拓扑和总变差范数拓扑的含义并澄清术语，属于定义性说明。
+    previous_atom_id: ce7a85f303dc09a8c56d0b5d6e1d949e304236415542b4318eb116c5edba9e52
+    next_atom_id: 8b6f6cfb75af5f3394b4df8d3cb42a85aa1642d03dfc2b7d9df33588e1a600fb

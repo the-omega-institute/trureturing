@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce3e14830128834b27ff17baf84fa8a820e2d21eb3b6bb77bd8bc55f22663bc9
+  normalized_sha256: sha256:ce3e14830128834b27ff17baf84fa8a820e2d21eb3b6bb77bd8bc55f22663bc9
+cas_ref: sha256:ce3e14830128834b27ff17baf84fa8a820e2d21eb3b6bb77bd8bc55f22663bc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“remains outside”明确断言非分裂相位在所有非负旋转下保持非分裂；探针将落入第 m 个负黄金相位改写为原相位落入第 m 加 n 个负黄金相位，使用 eq_sub_iff_add_eq、AddCircle.coe_sub、AddCircle.coe_nsmul 与环规范化闭合，仓内无冻结 GID。
+    previous_atom_id: c115e2f3a247b7a7d8d604370110ffb53680c7f0b6d5e6bc04a6fd3ad9729f6e
+    next_atom_id: b5aef61e58fb96a6c1202e410dc22cc3f236d0cd0c7edfa0e5b7c5819ac609ff

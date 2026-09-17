@@ -1,0 +1,9 @@
+**Proof.** Only O(log X) indices can occur, since F_j<=X^2+1 and the
+preceding exponential lower bound holds. For each such j, there are at
+most R(F_j)(X/F_j+1) solutions in the interval. Sum the main terms using
+QR3. Each error term is at most64(X^2+1)^(1/4), by QR2, and there are
+O(log X) of them. This proves QR4. In particular the upper density of
+the large-divisor tail is at most T_J, tending to zero exponentially.
+The error estimate controls divisors larger than X as well as smaller
+ones; a convergent formal density series alone would not suffice.
+

@@ -1,0 +1,32 @@
+**theorem 50.8（与已发表 supernatural gcd/lcm 的精确关系及结论边界）。** 已发表文献中，supernatural numbers
+$$
+\mathbb S=\left\{\prod_p p^{e_p}:e_p\in\mathbb N_0\cup\{\infty\}\right\}
+$$
+具有按素数赋值逐坐标定义的 gcd 与 lcm：
+$$
+v_p(\gcd(A,B))=\min\{v_p(A),v_p(B)\},
+$$
+$$
+v_p(\operatorname{lcm}(A,B))=\max\{v_p(A),v_p(B)\}.
+$$
+Longhi–Mu–Saettone, *Coset topologies on $\mathbb Z$ and arithmetic applications*, Expositiones Mathematicae 41 (2023), 71–114, DOI 10.1016/j.exmath.2022.10.001, §4.1；可访问的作者预印本为 arXiv:2202.13478v3（2022-11-24），printed pp. 26–28，尤其是 Definition 4.1、Proposition 4.3 及其证明、Lemma 4.5：[开放预印本](https://arxiv.org/pdf/2202.13478v3)。Definition 4.1 将 supernatural numbers 定义为指数属于 $\mathbb N_0\cup\{\infty\}$ 的形式素数乘积；Proposition 4.3 通过
+$$
+\rho(x)=\prod_p p^{\widehat v_p(x)}
+$$
+给出规范双射
+$$
+\mathbb S\simeq\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\ast},
+$$
+其证明明确说明两个 profinite 整数具有相同 supernatural 赋值数据，当且仅当它们相差一个 $\widehat{\mathbb Z}^{\ast}$ 中的单位；Lemma 4.5 又证明该商拓扑与逐素数赋值坐标上的乘积拓扑一致。上述 gcd/lcm 的 $\min/\max$ 公式是 supernatural numbers 上标准的逐赋值格运算定义；这里不把这些公式声称为该论文中的逐字公式。
+这些格运算位于“遗忘单位信息”的 supernatural 商上，并不自动给出
+$$
+\widehat{\mathbb Z}\times\widehat{\mathbb Z}\to\widehat{\mathbb Z}
+$$
+或本节
+$$
+K_{t,D}^2\to K_{t,D}
+$$
+的自然数 gcd/lcm 连续提升。事实上，本节分类在 $t=0$ 时已经直接证明：只要 $D$ 含有某个有限除数 $m>2$，两种 $K_{0,D}$ 值提升都不存在；而 supernatural 商上的 $\min/\max$ 仍然有定义。
+
+因此本节所得“加法、乘法连续并不足以保证 gcd/lcm 连续”以及 gcd/lcm 的不对称性，只针对定义 50.0 的显式阈值—超自然算术完成族。这里不声称已经分类所有可能的算术紧化。
+

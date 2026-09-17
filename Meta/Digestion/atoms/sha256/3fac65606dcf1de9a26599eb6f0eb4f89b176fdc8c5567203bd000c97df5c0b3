@@ -1,0 +1,14 @@
+**定理 47.1（载体的穷尽分解与实际逆极限拓扑）。** 映射
+$$
+\mathbb N_0\sqcup\widehat{\mathbb Z}\longrightarrow K,
+\qquad n\longmapsto\iota(n),\quad r\longmapsto\tau(r)
+$$
+是双射。对每个 $n\in\mathbb N_0$，$\{\iota(n)\}$ 是开闭集。对每个 $r\in\widehat{\mathbb Z}$，边界点 $\tau(r)$ 的一组开闭邻域基为
+$$
+U(t,p;r)=
+\{\iota(n):n\ge t,\ n\bmod p=r_p\}
+\cup
+\{\tau(s):s_p=r_p\}.
+$$
+因此 $A$ 是开稠密离散子空间，$B$ 是非空、闭且无内点的紧致子空间，$\tau$ 是 $\widehat{\mathbb Z}$ 到 $B$ 的同胚。这里的集合不交分解不是拓扑不交并。定义 47.0 的加乘也是自然数加乘的唯一联合连续延拓。
+

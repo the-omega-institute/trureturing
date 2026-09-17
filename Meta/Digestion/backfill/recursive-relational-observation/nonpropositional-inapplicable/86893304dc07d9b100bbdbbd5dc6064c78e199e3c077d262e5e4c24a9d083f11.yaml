@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86893304dc07d9b100bbdbbd5dc6064c78e199e3c077d262e5e4c24a9d083f11
+  normalized_sha256: sha256:86893304dc07d9b100bbdbbd5dc6064c78e199e3c077d262e5e4c24a9d083f11
+cas_ref: sha256:86893304dc07d9b100bbdbbd5dc6064c78e199e3c077d262e5e4c24a9d083f11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅规定数学对象与记号，或说明引用范围，没有需要证明的独立命题。按现有 settle-atom 路径结算。
+    previous_atom_id: ded5cef6f63602182ea91c229af8d9439d6c935b479c267055f91c21b2be8f2e
+    next_atom_id: e4dc03c1bd316e8500bffb3165ca212c34c672f64b5f22706e1d876f037f6f0e

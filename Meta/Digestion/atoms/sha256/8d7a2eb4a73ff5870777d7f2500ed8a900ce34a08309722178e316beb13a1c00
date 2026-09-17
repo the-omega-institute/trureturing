@@ -1,0 +1,46 @@
+**证明。** $\phi$ 无理，故 $E_m$ 两两不同，且 $E_m+E_n=E_{m+n}$。置 $\tau=[1/2]$。$\tau\notin E$：否则 $m\phi$ 与一个半整数相等，矛盾。同样，
+$$
+(E+\tau)\cap E=\varnothing,
+$$
+因为 $E_m+\tau=E_n$ 会使 $(n-m)\phi+1/2$ 为整数；$n=m$ 时不可能，$n\ne m$ 时则迫使 $\phi$ 有理。
+
+令 $h=k_\tau$、$a_h=\delta_h$。相位零只有 $0_K$，故归一化与精确支撑给
+$$
+a_h*a_h=e.
+$$
+固定 $\theta=E_m$。对该纤维的任意 $x$，因 $\theta+\tau\notin E$，
+$$
+a_h*\delta_x=\delta_x*a_h=\delta_{k_{\theta+\tau}}.
+$$
+所以
+$$
+e*\delta_x=a_h*(a_h*\delta_x)
+=a_h*\delta_{k_{\theta+\tau}},
+$$
+$$
+\delta_x*e=(\delta_x*a_h)*a_h
+=\delta_{k_{\theta+\tau}}*a_h.
+$$
+左、右零切片各自在该相位纤维上恒定。非分裂纤维只有一个输入点，恒定性也成立。分别将这两个切片记为 $L_\theta,R_\theta$。它们均属于 $A_\theta$，且系数和均为一。
+
+对 $H(x)=\theta$，结合律在 $(0_K,x,0_K)$ 上给
+$$
+L_\theta*e=e*R_\theta.
+$$
+逐项使用右切片恒定性，左边是 $\varepsilon(L_\theta)R_\theta=R_\theta$；逐项使用左切片恒定性，右边是 $\varepsilon(R_\theta)L_\theta=L_\theta$。因此二者相等，记为 $\pi_\theta$。此步只使用系数和为一，允许负系数。满射性保证每个 $\pi_\theta$ 都由这些切片唯一确定。对 $a\in A_\theta$ 逐项求和，即得所述平均恒等式。零相位单点性还给 $\pi_0=e$、$e*e=e$。
+
+最后，若 $H(x)=\theta,H(y)=\rho$，则
+$$
+\pi_\theta*\delta_y
+=(e*\delta_x)*\delta_y
+=e*P_{x,y}
+=\pi_{\theta+\rho},
+$$
+$$
+\delta_x*\pi_\rho
+=\delta_x*(\delta_y*e)
+=P_{x,y}*e
+=\pi_{\theta+\rho}.
+$$
+在第二槽对系数和为一的 $\pi_\rho$ 求和，得到 $\pi_\theta*\pi_\rho=\pi_{\theta+\rho}$。整个论证没有交换任意两个未知乘积。证毕。
+

@@ -1,0 +1,17 @@
+**命题 18.2（集合值结合律与全部点单位的排除）。** $\Gamma$ 非空值且交换，并且对任意 $x,y,z\in K$，
+$$
+\bigcup_{w\in\Gamma(x,y)}\Gamma(w,z)
+=
+\bigcup_{w\in\Gamma(y,z)}\Gamma(x,w).
+$$
+更准确地，令
+$$
+\sigma=H(x)+H(y)+H(z),\qquad
+U=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+若 $\sigma\notin E$，两边都等于单点纤维 $H^{-1}(\{\sigma\})$；若 $\sigma\in E$，两边都等于
+$$
+\{z_\sigma^s:s\in U\}.
+$$
+因此，最终相位分裂时，恰在三个输入全为同号分裂点时只保留该号，其余情形保留两个号。$0_K$ 是唯一弱左单位，也因交换性成为唯一弱右单位；但是 $K$ 中不存在严格左单位或严格右单位。[^rro18_fibers]
+

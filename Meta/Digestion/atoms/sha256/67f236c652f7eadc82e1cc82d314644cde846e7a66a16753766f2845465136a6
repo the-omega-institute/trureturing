@@ -1,0 +1,28 @@
+### QR.2 Definitions and the credited primitive-prime input
+
+For a positive integer M define the finite set of distinct positive
+Fibonacci divisor VALUES
+
+$$
+D_F(M)=\{F_j:j\ge2,\ F_j\mid M\},\qquad
+\sigma_F(M)=\sum_{d\in D_F(M)}d.
+$$
+
+The value one occurs once. For a set A of nonnegative integers its natural
+density is lim_(X->infinity) #(A intersect [0,X])/X, when that limit exists.
+
+We use Carmichael's classical primitive-divisor theorem in the following
+precise form: for every j>12 there is a prime q_j dividing F_j whose least
+positive Fibonacci zero index is exactly j. Different j give different
+chosen primes. The classical rank bound j|(q_j-(5/q_j)) implies
+q_j>=j-1. This implication is for the prime value, not its exponent.
+The primes q_j are different from two and five for j>12.
+
+A primary accessible statement is H. Hong, *On big primitive divisors of
+Fibonacci numbers*, arXiv:2312.04354v2, introduction. The classical result
+is also proved in M. Yabuta, *A simple proof of Carmichael's theorem on
+primitive divisors*, Fibonacci Quarterly39(5)(2001),439-443. For the few
+indices 3<=j<=12, direct Fibonacci calculations give a prime of exact
+rank j except j=6,12; for j=3,4,5,7,8,9,10,11 one may take respectively
+2,3,5,13,7,17,11,89. No simple-exponent assertion is used here.
+

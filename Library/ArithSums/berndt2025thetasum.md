@@ -4,8 +4,8 @@ authors: Bruce C. Berndt, Raghavendra N. Bhat, Jeffrey L. Meyer, Likun Xie, Alex
 year: 2025
 title: "An Arithmetic Sum Associated with the Classical Theta Function"
 doi: null
-url: https://arxiv.org/abs/2501.03234
-claim: "S'(h,k) = sum_{j=1}^{k-1} (-1)^(j+1+floor(h*j/k)), S(k) = sum_{h=1}^{k-1} S'(h,k). Conjecture 1.1: S(k) > 0 for every odd prime k. Conjecture 4.1: S(k) > k for every prime k > 5. Conjecture 4.2: S(k) > 2k for k > 233. Conjecture 4.3: S(k) > 3k for k > 3119. Conjecture 4.4: for every n, eventually n*k < S(k) along odd primes."
+url: https://arxiv.org/html/2501.03234v3
+claim: "S'(h,k) = sum_{j=1}^{k-1} (-1)^(j+1+floor(h*j/k)), S(k) = sum_{h=1}^{k-1} S'(h,k). Conjecture 1.1: S(k) > 0 for each odd prime k > 5. Conjecture 3.1: S(k) > 2k for each prime k > 233. Conjecture 3.2: S(k) > 3k for each prime k > 3119. Conjecture 3.3: for arbitrary fixed C1,C2 > 0 and epsilon > 0, every sufficiently large prime k satisfies C1*k < S(k) < C2*k^(1+epsilon)."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,9 +13,12 @@ triage: anchor
 
 # Berndt, Bhat, Meyer, Xie and Zaharescu, arithmetic sum of the theta function
 
-The five conjectures quoted above are open. None is proved in this repository, and no
-declaration about `S` or `S'` exists here. This note records what was measured while
-attempting Conjecture 1.1, so that a later attempt does not repeat eliminated routes.
+Version 3, revised 2026-01-09, presents the four statements quoted above as conjectures.
+Whether later work proves or refutes any of them is not verified here. None is proved in this
+repository, and no declaration about `S` or `S'` exists here. This note records what was
+measured during an earlier attempt on Conjecture 1.1, so that a later attempt does not repeat
+eliminated routes; those computations are retained historical evidence and were not rerun for
+this source correction.
 
 ## Structure that is established by computation
 
@@ -33,9 +36,10 @@ Primality is needed: `S'(3,9) = -2`, so the unrestricted odd-composite form is f
 `S'(k-1,k) = k-1`, since `floor((k-1)*j/k) = j - 1` makes every exponent even.
 
 Hence `S(k) = (k-1) + rest(k)`, where `rest(k)` sums `S'(h,k)` over the even `h` in
-`[2, k-3]`, and Conjecture 1.1 is equivalent to `rest(k) >= 0`. Measured values of `rest` for
-the first eighteen odd primes: 0, 0, 4, 4, 8, 8, 20, 8, 16, 56, 56, 40, 52, 60, 32, 48, 104,
-132 — always nonnegative, zero only at `k = 3` and `k = 5`, and always divisible by four.
+`[2, k-3]`. Thus `S(k) > 0` is equivalent to `rest(k) > -(k-1)`; the stronger condition
+`rest(k) >= 0` is sufficient and yields `S(k) >= k-1`. Measured values of `rest` for the first
+eighteen odd primes: 0, 0, 4, 4, 8, 8, 20, 8, 16, 56, 56, 40, 52, 60, 32, 48, 104, 132 —
+always nonnegative, zero only at `k = 3` and `k = 5`, and always divisible by four.
 
 Inversion invariance: for even `h` whose inverse modulo `k` is also even,
 `S'(h,k) = S'(h^{-1} mod k, k)`. Verified on 2381 such pairs across the 63 odd primes from 7
@@ -78,4 +82,5 @@ form in which a further attempt should start.
 
 ## Verified locator
 
-- URL: https://arxiv.org/abs/2501.03234
+- Version: v3, revised 2026-01-09
+- URL: https://arxiv.org/html/2501.03234v3

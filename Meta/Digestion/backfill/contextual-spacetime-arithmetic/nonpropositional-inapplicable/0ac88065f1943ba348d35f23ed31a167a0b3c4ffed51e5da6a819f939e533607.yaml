@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ac88065f1943ba348d35f23ed31a167a0b3c4ffed51e5da6a819f939e533607
+  normalized_sha256: sha256:0ac88065f1943ba348d35f23ed31a167a0b3c4ffed51e5da6a819f939e533607
+cas_ref: sha256:0ac88065f1943ba348d35f23ed31a167a0b3c4ffed51e5da6a819f939e533607
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里限定为“这些结论未由本卷当前定义推出”，并明确“不写成任何扩展都不可能”；最后说明读数、来源树及共同世界域“均未被定义为物理态或实验概率”。这是解释范围和命名边界，不是量子不可能性证明，也没有借定义夹带该断言。
+    previous_atom_id: c38a0d8cc721a1322e95bd7eba6949409865cbdd9b41438900a23bae7ac38add
+    next_atom_id: f8d32997781def59e3e1403569e9e24c0ecddf6e8b835c5968a90a2212e9af34

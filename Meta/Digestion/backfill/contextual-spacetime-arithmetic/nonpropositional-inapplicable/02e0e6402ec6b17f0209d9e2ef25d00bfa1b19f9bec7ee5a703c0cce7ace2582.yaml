@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02e0e6402ec6b17f0209d9e2ef25d00bfa1b19f9bec7ee5a703c0cce7ace2582
+  normalized_sha256: sha256:02e0e6402ec6b17f0209d9e2ef25d00bfa1b19f9bec7ee5a703c0cce7ace2582
+cas_ref: sha256:02e0e6402ec6b17f0209d9e2ef25d00bfa1b19f9bec7ee5a703c0cce7ace2582
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “命题 55 的域不含输入自适应参数、无限项或身份扩签名”与“命题 57 只给存在性，不给唯一性”限定所引用结果的范围；末句限定交付工件，不在本子句新增数学命题，无定义暗带结论。
+    previous_atom_id: da41d986671080c10b10db39b2f162cec5d0badb1a3ab334f610d189abc186d3
+    next_atom_id: 512252328f5ac47abc3d75bc98228741f12f86bb5363472ef2a2a6f2fbb0727e

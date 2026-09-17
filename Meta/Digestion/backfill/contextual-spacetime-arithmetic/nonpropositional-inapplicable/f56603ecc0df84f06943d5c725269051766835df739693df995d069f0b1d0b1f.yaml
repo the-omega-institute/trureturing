@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f56603ecc0df84f06943d5c725269051766835df739693df995d069f0b1d0b1f
+  normalized_sha256: sha256:f56603ecc0df84f06943d5c725269051766835df739693df995d069f0b1d0b1f
+cas_ref: sha256:f56603ecc0df84f06943d5c725269051766835df739693df995d069f0b1d0b1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “命题 32–33 引用仍正确”以及“也不按 P2 偏移量改号”排除不应修改的引用，所列标题用于识别地址；不主张新的时间或属性定理，未偷带数学结论。
+    previous_atom_id: a4a50f54d1b9dd614f9768b8ac2ac52fa6006d367fd82b4414aa85810c8656f9
+    next_atom_id: 0b4d8ea0be82296865d566ec819925fc048ca48be07abf9a05b19076c2e725c7

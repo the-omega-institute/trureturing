@@ -1,0 +1,13 @@
+**Proof of a quantitative finite exclusion bound.** For each j>J0 choose
+the classical primitive prime q_j. The q_j are distinct and coprime to
+Q0. Avoid the at most two roots of -1 modulo q_j. For J>=J0, CRT gives
+a set of progressions of density at least
+
+$$
+\frac1{Q0}\prod_{j=J0+1}^{J}\left(1-\frac2{q_j}\right)
+\ge\frac{(J0-2)(J0-1)}{Q0(J-2)(J-1)}.              \tag{QR5}
+$$
+
+The last product telescopes using q_j>=j-1; the empty product is one.
+These progressions obey every required exclusion through index J.
+

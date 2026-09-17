@@ -1,0 +1,32 @@
+**Theorem GAW9.** The following statements separate the unconditional
+conclusions from the finite exclusion.
+
+1. If $q=3$, $p=kq+1$ is prime, $k\ge2$, and
+   $\rho(p)\mid\pi(q)$, then $k=2$.
+2. If $q>5$ is prime, $k\ge4$, and $A_k(q)$ holds, then the divisibility
+   alternative in GAW1 holds and
+
+   $$
+   p\mid F_kF_{k+2}F_{2(k-2)}.                         \tag{GAW8}
+   $$
+
+3. For every prime $q>5$, without $E_{200}$,
+
+   $$
+   \boxed{
+   0\in S(q)\iff q_q=0\ \text{or}\ A_{\{2\}}(q)\ \text{or}\
+   A_{[4,200]}(q)\ \text{or}\ A_{>200}(q).}           \tag{GAW9}
+   $$
+
+4. Under $E_{200}$, GAW2 follows in its stated range: for every odd prime
+   $q\ne5$, every prime $p=kq+1$ with $2\le k\le200$ and
+   $\rho(p)\mid\pi(q)$ has $k=2$. Under the same assumption, GAW9 reduces
+   to GAW6. Thus the implication in GAW6 that excludes all intermediate
+   multipliers and leaves only $k=2$ or $p>200q+1$ is conditional on
+   $E_{200}$. The reverse implication from any branch displayed in GAW6
+   to $0\in S(q)$ is unconditional.
+
+In particular, GAW1, GAW4, GAW5, the four-branch equivalence GAW9, and the
+theorem following GAW6 about external prime witnesses in residue classes do
+not require $E_{200}$.
+

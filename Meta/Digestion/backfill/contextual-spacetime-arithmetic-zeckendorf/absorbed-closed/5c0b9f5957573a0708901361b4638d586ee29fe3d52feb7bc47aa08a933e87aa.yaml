@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5c0b9f5957573a0708901361b4638d586ee29fe3d52feb7bc47aa08a933e87aa
+  normalized_sha256: sha256:5c0b9f5957573a0708901361b4638d586ee29fe3d52feb7bc47aa08a933e87aa
+cas_ref: sha256:5c0b9f5957573a0708901361b4638d586ee29fe3d52feb7bc47aa08a933e87aa
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/WindowSuccessorGraph.window_successor_graph
+    target_statement_id: sha256:2546de88351c9c1a224ced3cb56a66d6124fc5219f8bd3f521d0fdfdd91a4086
+receipts:
+  unresolved_subitems: []

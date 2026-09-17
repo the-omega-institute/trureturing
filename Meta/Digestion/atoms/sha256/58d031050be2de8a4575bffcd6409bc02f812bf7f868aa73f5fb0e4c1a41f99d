@@ -1,0 +1,24 @@
+**定理 7.1（逐有限层可复合与完成空间的共同中间见证）。** 在上述数据下，$P$ 闭，并且
+
+$$
+P=\bigcap_{n\ge0}(\pi_n^{XZ})^{-1}(D_n),\qquad
+\widehat C\subseteq P.
+$$
+
+等价地，对任意 $\xi\in K_X$、$\zeta\in K_Z$，
+
+$$
+(\xi,\zeta)\in P
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists b_n\in Q_n^Y,\quad
+(\pi_n^X\xi,b_n)\in R_n\ \land\ (b_n,\pi_n^Z\zeta)\in S_n.
+$$
+
+保留中间见证时有
+
+$$
+\widehat W\subseteq T,\qquad
+\operatorname{pr}_{XZ}(\widehat W)=\widehat C,\qquad
+\operatorname{pr}_{XZ}(T)=P.
+$$
+

@@ -1,0 +1,1 @@
+1. 对任意连续映射 $j:X\to K$ 及任意 $A\subseteq X$，若 $j[A]$ 在 $K$ 中闭，则 $\operatorname{Sat}_j(A)$ 在 $X$ 中闭。

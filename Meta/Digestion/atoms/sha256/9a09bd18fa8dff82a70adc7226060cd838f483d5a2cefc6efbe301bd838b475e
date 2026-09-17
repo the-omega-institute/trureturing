@@ -1,0 +1,2 @@
+证明。直接应用[动态闭包最小性定理](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)，其前提正是 $c=f\circ d$ 与纤维保持，结论正是所列 $g$。空词求值给出 $c(x)=\operatorname{Dyn}_I(c)(x)([])$。该结论中的全部响应坐标均为 $c\circ I_w$，没有未指定的动作读出。
+

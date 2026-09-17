@@ -1,0 +1,28 @@
+**证明。** 令 $A=\{a:\sigma(\{a\})\ne0\}$，这是实际原子集合，不是其可能更大的拓扑闭包。集合
+$$
+F_\sigma=E\cup\bigcup_{a\in A}(E-H(a))
+$$
+可数。对每个 $n\ge1$ 和每个符号 $s$，可选
+$$
+0<\epsilon_n^s<\min(1/4,1/n),\qquad \theta_n^s=\theta+[s\epsilon_n^s]\notin F_\sigma,
+$$
+因为非空圆周开弧不可能由可数集合耗尽。定义 $y_n^s=k_{\theta_n^s}$。若 $\theta$ 非分裂，紧致性及唯一纤维保证任意这些提升趋于 $k_\theta$：任何子列聚点都必须落在该唯一纤维。若 $\theta=E_j$，假设29.1的严格单侧任意提升结论给出对应的定向极限。
+
+对每个实际原子 $a$，$H(a)+\theta_n^s\notin E$，所以实际核行准确为
+$$
+P_t(a,y_n^s)=\delta_{k_{H(a)+\theta_n^s}}.
+$$
+在逐集合积分中对可数原子求和，并按相位 regroup，得到
+$$
+\sigma\star_t\delta_{y_n^s}=\sum_\lambda b_\lambda\delta_{k_{\lambda+\theta_n^s}}.
+$$
+重排合法，因为原始系数的绝对和不超过 $\|\sigma\|_{\mathrm{TV}}$。特别，同一相位上的正负分支在此处以它们的完整相位质量相加，不能遗漏这种抵消。
+
+对每个固定 $\lambda$，相位 $\lambda+\theta_n^s$ 以同一严格符号趋于 $\lambda+\theta$。若极限相位非分裂，其唯一提升给出收敛；若它是 $E_r$，严格单侧提升给出收敛至 $x_r^s$。因此对任意 $f\in C(K)$，
+$$
+f(k_{\lambda+\theta_n^s})\longrightarrow f(s_s(\lambda+\theta)).
+$$
+各项由 $\|f\|_\infty|b_\lambda|$ 支配，而该系数族绝对可和。对级数使用支配收敛，得到声明的全部连续测试极限。定理29.8保证这些绝对可和原子和是实际正则测度。
+
+两个截面只在 $E$ 上不同，所以极限差仅保留 $\lambda+\theta=E_r$ 的项，准确地给出 $J_\theta$。指标 $r$ 对应互异相位 $E_r-\theta$，故系数绝对和不超过 $\|\beta\|_{\mathrm{TV}}$；再用定理29.8的二点差分变差公式，得到准确范数。所有极限均为连续测试意义的弱星极限，不声称总变差收敛。证毕。
+

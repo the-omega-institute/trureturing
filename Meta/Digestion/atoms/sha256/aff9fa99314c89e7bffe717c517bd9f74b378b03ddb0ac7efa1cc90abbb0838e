@@ -1,0 +1,35 @@
+**theorem 56.4（完整局部分布、全局实际 Haar 乘积分解与零原子支撑点）。** 记 $U_p=\mathbb Z_p^\times$，令 $K_p(a,b)$ 为 $K(A,B)$ 的第 $p$ 坐标边缘，其中 $a=A_p,b=B_p$。则：
+
+若 $a,b<\infty$ 且 $a<b$，则 $K_p(a,b)=\delta_a$；若 $b<a$，则 $K_p(a,b)=\delta_b$。若 $a<\infty,b=\infty$，则 $K_p(a,\infty)=\delta_a$，对称地 $K_p(\infty,b)=\delta_b$；而 $K_p(\infty,\infty)=\delta_\infty$。
+
+若 $a=b<\infty$ 且 $p$ 为奇素数，则
+$$
+K_p(a,a)(\{a\})=\frac{p-2}{p-1},\qquad
+K_p(a,a)(\{a+n\})=\frac1{p^n}\quad(n\ge1),\qquad
+K_p(a,a)(\{\infty\})=0.
+$$
+其支撑为 $\{a,a+1,a+2,\ldots,\infty\}$。
+
+若 $a=b<\infty$ 且 $p=2$，则
+$$
+K_2(a,a)(\{a\})=0,\qquad
+K_2(a,a)(\{a+n\})=2^{-n}\quad(n\ge1),\qquad
+K_2(a,a)(\{\infty\})=0,
+$$
+其支撑为 $\{a+1,a+2,\ldots,\infty\}$。
+
+此外，归一化 Haar 概率本身满足
+$$
+m_U=\bigotimes_pm_{U_p},
+$$
+所以对实际抽取的全局 Haar 单位 $u,v$，各素数坐标对 $(u_p,v_p)$ 独立，并非另行假设“商标签独立”。因而
+$$
+K(A,B)=\bigotimes_pK_p(A_p,B_p),
+$$
+且对任意有限素数集 $F$ 与 Borel 集 $D_p\subset E$，
+$$
+K(A,B)\bigl(\{C:C_p\in D_p\ \forall p\in F\}\bigr)
+=\prod_{p\in F}K_p(A_p,B_p)(D_p).
+$$
+全局支撑正好是各局部支撑的乘积，也正好是 theorem 56.3 的实际二元像。
+

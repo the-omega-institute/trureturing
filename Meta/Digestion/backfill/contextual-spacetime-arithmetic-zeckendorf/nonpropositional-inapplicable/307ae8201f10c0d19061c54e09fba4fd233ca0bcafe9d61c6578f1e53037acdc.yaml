@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:307ae8201f10c0d19061c54e09fba4fd233ca0bcafe9d61c6578f1e53037acdc
+  normalized_sha256: sha256:307ae8201f10c0d19061c54e09fba4fd233ca0bcafe9d61c6578f1e53037acdc
+cas_ref: sha256:307ae8201f10c0d19061c54e09fba4fd233ca0bcafe9d61c6578f1e53037acdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶是固定任务的接口、允许配置、成功转换及精确费用的假设契约，所有存在与费用要求均作为输入前提，没有声称构造出满足契约的实现。
+    previous_atom_id: 4b03be498ac77dee8d43fa3826b7a9905020ab25eda945c2d202b395554bd06e
+    next_atom_id: 7ff1592f9325f639504bcb0f0031ad677945d975947b3133467d767313c4edaa

@@ -1,0 +1,5 @@
+**theorem 36.8 (Variance-uniform binomial rotation discrepancy).** For every $0<p<1$ and $n\ge1$,
+$$
+\mathscr D(\nu_{n,p})
+\le\min\left\{1,\frac{64}{\sqrt{np(1-p)}}\right\}.
+$$

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef1fe1556967b1af089b43f8e84cb9ebe63521efb322952e6cfc944ffc32c1af
+  normalized_sha256: sha256:ef1fe1556967b1af089b43f8e84cb9ebe63521efb322952e6cfc944ffc32c1af
+cas_ref: sha256:ef1fe1556967b1af089b43f8e84cb9ebe63521efb322952e6cfc944ffc32c1af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “三个定义与六个命题的跨稿编号”仅为标题，未给变量、假设或数学结论；它没有以标题偷带证明义务，按结构文字结算。
+    previous_atom_id: c9b68ca89dacc1dd5991af2a1bb4dd892df3cfd5079c45bb13ffcdfed9532863
+    next_atom_id: 87d4442113f02c52bfb9eee9ed6c12ef006c893b9cbcfa5bc3fb19afa29e6555

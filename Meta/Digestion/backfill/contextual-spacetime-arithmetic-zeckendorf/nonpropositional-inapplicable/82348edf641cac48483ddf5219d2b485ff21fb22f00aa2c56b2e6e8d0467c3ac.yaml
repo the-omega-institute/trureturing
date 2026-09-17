@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82348edf641cac48483ddf5219d2b485ff21fb22f00aa2c56b2e6e8d0467c3ac
+  normalized_sha256: sha256:82348edf641cac48483ddf5219d2b485ff21fb22f00aa2c56b2e6e8d0467c3ac
+cas_ref: sha256:82348edf641cac48483ddf5219d2b485ff21fb22f00aa2c56b2e6e8d0467c3ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句仅区分实参数定义的数学序列与算法实际接收的整数输入，是预算使用约定，没有待证明命题。
+    previous_atom_id: 7fd1096388871cca742ce751eb1b04946d75d9f3444718ad7287a27de265d1f1
+    next_atom_id: e4b4c319530735ecd80a8064e25662cd0f0cb39c0650470c860c95d5c967cb97

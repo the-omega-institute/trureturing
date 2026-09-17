@@ -1,0 +1,7 @@
+**命题 11（总操作与部分操作的下降判据）。** 设 $q:\mathcal X\twoheadrightarrow Q$ 为满射，$U:\mathcal X\to\mathcal X$ 是确定性总操作。存在唯一 $\bar U:Q\to Q$ 使 $q\circ U=\bar U\circ q$，当且仅当
+
+$$
+q(X)=q(Y)\Longrightarrow q(U(X))=q(U(Y)).
+\tag{D}
+$$
+

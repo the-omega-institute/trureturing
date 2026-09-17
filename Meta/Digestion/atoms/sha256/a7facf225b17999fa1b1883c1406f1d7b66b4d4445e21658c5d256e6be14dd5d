@@ -1,0 +1,14 @@
+**theorem 49.1.1（逆极限载体、拓扑与自然像稠密性）。** 上述 $K_{t,D}$ 是紧致 Hausdorff 空间，且 $j(\mathbb N_0)$ 稠密。若 $t<\infty$，存在保持自然映射的规范同胚
+$$
+K_{t,D}\cong \{0,1,\ldots,t-1\}_{\mathrm{disc}}\sqcup R_D,
+$$
+其中右侧取有限离散前缀与 profinite 空间 $R_D$ 的拓扑不交并；特别地两个分量均开闭。若 $t=\infty$，存在保持自然映射的规范同胚
+$$
+K_{\infty,D}\cong\mathbb N_0\sqcup R_D,
+$$
+其中每个自然数点孤立，而对任意边界点 $z\in R_D$，其邻域基由
+$$
+U\cup\{n\in\mathbb N_0:n\ge N,\ \bar n\in U\}
+$$
+组成；这里 $N\in\mathbb N_0$，而 $U$ 是 $R_D$ 中包含 $z$ 的开闭柱集。换言之，$U$ 必须是 $z$ 的一个 profinite 柱邻域，而不是任意与 $z$ 无关的集合。
+

@@ -519,6 +519,9 @@ public sealed class QuarantineAtomCommandTests
 
     private sealed class QuarantineCliEnvironment : ICliEnvironment
     {
+        public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
+            new(false, "", "Not used by this fixture");
+
         public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) => throw new NotSupportedException();
         internal IReadOnlyList<string> Arguments { get; private set; } = [];
 

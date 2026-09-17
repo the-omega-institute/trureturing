@@ -1,0 +1,87 @@
+**theorem 27.2 (Exact row variation and exact finite bilinear norm).** For every parameter in Assumption 27.0,
+$$
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for every finite $t\ge0$ in the parameter domain, at $(x_1^+,x_1^-)$ for every $t<0$ in the parameter domain, and at $(0_K,0_K)$ for the formal parameter $\infty$. Moreover,
+$$
+\sup_{\substack{a,b\in A\\\|a\|_1\le1,\ \|b\|_1\le1}}\|a*_t b\|_1=C_t.
+$$
+
+**Proof.** We first bound every row. When at least one input is nonexceptional, theorem 25.9 gives the output $\pi_{H(x)+H(y)}$. A nonexceptional output phase gives a Dirac measure and hence norm one. At an exceptional phase, for finite $t$ and $r=|t|$,
+$$
+\|\pi_{E_m}\|_{\mathrm{TV}}
+=|p_m|+|1-p_m|
+=\frac{1+r^m}{|1-t^m|}.
+$$
+If $t<0$ and $m$ is odd, this expression is one. In every other finite-parameter case it equals
+$$
+\frac{1+\rho_t^m}{1-\rho_t^m}\le\frac{1+\rho_t}{1-\rho_t}=C_t.
+$$
+Here the inequality follows from $0\le\rho_t^m\le\rho_t<1$ and the monotonicity of $(1+u)/(1-u)$ on $[0,1)$. This also covers $t=0$. For the formal parameter, every $\pi_\theta$ is a Dirac measure.
+
+Two exceptional inputs with the same sign give a Dirac measure by theorem 25.9, for all indices and every parameter. It remains to bound the two mixed-sign types. For finite $t$, put
+$$
+M_{m,n}(t)=\|P^{(t)}_{x_m^+,x_n^-}\|_{\mathrm{TV}}
+=\frac{|t|^n|t^m-1|+|t^n-1|}{|t^{m+n}-1|}.
+$$
+The reversed-sign type has norm $M_{n,m}(t)$, as is seen directly from its formula in theorem 25.9. For $t=0$, the mixed row is $\delta_{x_{m+n}^-}$, so its norm is one. For $t>0$, both mixed coefficients are nonnegative: when $t<1$, their relevant factors and denominator have the corresponding negative signs, and when $t>1$ all those factors are positive. Their sum is one, so again $M_{m,n}(t)=1$.
+
+Suppose next that $t=-r$ with $0<r<1$. Write $u=r^m$ and $v=r^n$. Direct substitution into the two mixed coefficients gives the exhaustive parity cases
+$$
+M_{m,n}(-r)=\begin{cases}
+1,&n\text{ even},\\
+\dfrac{1+2v-uv}{1+uv},&n\text{ odd},\ m\text{ even},\\
+\dfrac{1+2v+uv}{1-uv},&n\text{ odd},\ m\text{ odd}.
+\end{cases}
+$$
+Indeed, $t^m-1$, $t^n-1$, and $t^{m+n}-1$ are all negative, so the second mixed coefficient is positive and the first has the sign of $t^n$. This establishes the first case and gives the two displayed absolute-value expressions in the remaining cases. Since $0<u,v\le r<1$, the even-$m$, odd-$n$ case satisfies
+$$
+\frac{1+2v-uv}{1+uv}
+=1+\frac{2v(1-u)}{1+uv}
+\le1+2r
+\le\frac{1+r}{1-r}.
+$$
+The odd-$m$, odd-$n$ case satisfies
+$$
+\frac{1+2v+uv}{1-uv}
+=1+\frac{2v(1+u)}{1-uv}
+\le1+\frac{2r(1+r)}{1-r^2}
+=\frac{1+r}{1-r}.
+$$
+Thus every parity case is bounded by $C_t$ when $-1<t<0$.
+
+For every nonzero admissible finite parameter, direct multiplication of numerator and denominator by $|t|^{m+n}$ gives
+$$
+M_{m,n}(t)=M_{n,m}(t^{-1}).
+$$
+More explicitly, the numerator of $M_{n,m}(t^{-1})$, after that multiplication, becomes
+$$
+|t^n-1|+|t|^n|t^m-1|.
+$$
+The denominator becomes $|t^{m+n}-1|$. Therefore all cases $t<-1$, including every parity combination, reduce to the preceding proof for $t^{-1}\in(-1,0)$, and $C_{t^{-1}}=C_t$. Swapping $m,n$ also bounds every reversed-sign row. For the formal parameter, both mixed rows are Dirac measures by theorem 25.9. These cases exhaust all input pairs.
+
+For finite $t\ge0$, the actual zero slice gives
+$$
+\|P^{(t)}_{0_K,x_1^+}\|_{\mathrm{TV}}
+=\|\pi_{E_1}\|_{\mathrm{TV}}
+=\frac{1+t}{|1-t|}=C_t.
+$$
+For finite $t<0$, the actual first mixed pair gives, after cancelling the nonzero factor $t-1$,
+$$
+P^{(t)}_{x_1^+,x_1^-}
+=\frac{t}{t+1}\delta_{x_2^+}+\frac1{t+1}\delta_{x_2^-}.
+$$
+Since $t\ne-1$ and the two output points are distinct, its norm is
+$$
+\frac{|t|+1}{|t+1|}=\frac{1+|t|}{|1-|t||}=C_t.
+$$
+For $\infty$, the row at $(0_K,0_K)$ is $\delta_{0_K}$ and attains $C_\infty=1$.
+
+Finally, finite bilinearity and the row bound give
+$$
+\|a*_t b\|_1
+\le\sum_{x,y}|a(x)|\,|b(y)|\,\|P^{(t)}_{x,y}\|_1
+\le C_t\|a\|_1\|b\|_1.
+$$
+The two point masses associated with each attaining pair have norm one, and their product has norm $C_t$. Hence the bilinear norm is exactly $C_t$. QED.
+

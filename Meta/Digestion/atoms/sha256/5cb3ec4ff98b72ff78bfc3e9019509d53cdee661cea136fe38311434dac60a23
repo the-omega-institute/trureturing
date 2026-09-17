@@ -1,0 +1,3 @@
+## RS.10 文献与适用范围
+
+RS.1 的精确 Gram 更新与有限步、梯度流之别沿用本卷 RK、IR，并可与 [Holzmüller–Steinwart](../../../Library/Dynamics/holzmueller2020training.md) 附录C命题C.2的离散合同递推比较；该先例不蕴含 RS.2 的两步交换子纤维。RS.7 的 Hilbert–Schmidt 非扩张估计由正文中的特征基展开逐项证明，其适用域仍是所声明的 Frobenius 范数与谱区间。

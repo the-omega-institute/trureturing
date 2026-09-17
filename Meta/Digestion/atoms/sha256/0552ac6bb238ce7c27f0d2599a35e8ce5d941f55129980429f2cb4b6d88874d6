@@ -1,0 +1,32 @@
+**Definition 40.4 (Vector transfer and its finite endpoint data).** Let $\mathbf e_i$ denote the $i$-th coordinate vector and, for a set of labels $A$, let $\mathbf1_A=\sum_{i\in A}\mathbf e_i$. Define
+$$
+F_q(x)=\sum_{r=1}^q\{x-r\theta\},\qquad F_0=0,
+$$
+$$
+g_i(x)=F_{\sigma_{i+1}}(x)-F_{\sigma_i}(x),
+\qquad
+\mathbf g(x)=(g_i(x))_{i<N},
+\qquad
+\mathbf f(x)=\mathbf e_{\pi_{N,\theta}(x)}-\boldsymbol\mu.
+$$
+Set
+$$
+\Delta_{N,\theta}
+ =\sup_{x,y\in\mathbb T}\|\mathbf g(x)-\mathbf g(y)\|_1.
+$$
+For a bounded scalar function $h$, write $\operatorname{osc}(h)=\sup_xh(x)-\inf_xh(x)$. The actual right and left labels of the endpoint with time index $r$ are
+$$
+a_r^+=\sigma^{-1}(r),
+\qquad
+a_r^-=a_r^+-1\pmod N.
+$$
+For $0\le k<N$ and $\eta\in\{+,-\}$, put
+$$
+A_k^\eta=\{a_r^\eta:0\le r<k\},
+\qquad
+\mathbf v_k^\eta=k\boldsymbol\mu-\mathbf1_{A_k^\eta}.
+$$
+Each $A_k^\eta$ has exactly $k$ elements.
+
+The scalar transfer used here is the Hecke–Ostrowski fractional-part construction; see [the fixed-revision identity `hecke_ostrowski_coboundary`](https://github.com/the-omega-institute/trureturing/blob/698e9f0de668cd049829b372eb436849db61bd1b/D5/S1/Phase/HeckeOstrowskiCoboundary.lean#L29-L78) and [Grepstad–Lev, Proposition 2.3, Proposition 2.5, and Theorem 2.6](https://arxiv.org/html/1404.0165v2#S2). The identities below use actual one-sided values, not merely almost-everywhere representatives.
+

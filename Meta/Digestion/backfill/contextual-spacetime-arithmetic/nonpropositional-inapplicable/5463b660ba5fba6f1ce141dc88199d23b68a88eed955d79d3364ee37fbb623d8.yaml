@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5463b660ba5fba6f1ce141dc88199d23b68a88eed955d79d3364ee37fbb623d8
+  normalized_sha256: sha256:5463b660ba5fba6f1ce141dc88199d23b68a88eed955d79d3364ee37fbb623d8
+cas_ref: sha256:5463b660ba5fba6f1ce141dc88199d23b68a88eed955d79d3364ee37fbb623d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “以下逐处限定所在语句，不构成全局替换规则”规定编辑作用域，未对任何函数或命题作数学推论；没有定义偷带，故无需形式证明。
+    previous_atom_id: fa77ba10bd73197c0a51f5d703d2b95fd30b56a206c989f035fe8f89a6c9b6f4
+    next_atom_id: bf33a038c75cedea893e0c142ec273efdf42bd2b4891e1d5aea46e03d8ce17c0

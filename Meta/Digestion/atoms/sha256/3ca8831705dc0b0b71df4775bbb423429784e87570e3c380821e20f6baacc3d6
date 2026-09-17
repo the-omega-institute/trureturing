@@ -1,0 +1,12 @@
+**theorem 37.14 (The precise continuity obstruction and the distinction between operators and values).** There is no separately continuous function $A:K^2\to K$ satisfying
+$$
+A(Z(n),Z(m))=Z(n+m)\qquad(n,m\ge0).
+$$
+Consequently there is no jointly continuous extension of finite addition, and no separately continuous single-valued selection of $\Gamma$.
+
+On the larger carrier $\mathscr E$, actual composition is associative and unital, with precisely the one-sided continuity proved above. On the state carrier $K$, evaluation forgets composition witnesses. Even an injective recoding of evaluated states cannot turn evaluation into a homomorphism for all representatives. In contrast, the composite
+$$
+\mathscr E\xrightarrow{e}K\xrightarrow{H}\mathbb T
+$$
+is the genuine continuous homomorphism $\vartheta$ into circle addition.
+

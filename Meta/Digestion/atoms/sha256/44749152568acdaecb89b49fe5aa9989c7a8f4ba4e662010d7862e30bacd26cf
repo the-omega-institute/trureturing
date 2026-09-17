@@ -1,0 +1,26 @@
+**theorem 41.8 (Stability under higher-order errors).** Let $r\ge1$, let $\gamma\in tV[t]$ have degree at most $r$, and suppose it is eventually feasible. If
+$$
+\eta(t)=\gamma(t)+e(t),\qquad \|e(t)\|=o(t^r)
+\quad(t\downarrow0),
+$$
+then $\eta$ is eventually feasible for every fixed row. No continuity of $e$ is required.
+
+**Proof.** Fix $i$. There are $1\le k_i\le r$ and $c_i>0$ such that
+$$
+\ell_i(\gamma(t))=c_it^{k_i}+O(t^{k_i+1}).
+$$
+Let $\|\ell_i\|_*$ denote its operator norm. Then
+$$
+\frac{|\ell_i(e(t))|}{t^{k_i}}
+\le
+\|\ell_i\|_*\frac{\|e(t)\|}{t^r}t^{r-k_i}
+\longrightarrow0.
+$$
+Therefore
+$$
+\frac{\ell_i(\eta(t))}{t^{k_i}}\longrightarrow c_i>0.
+$$
+This proves eventual positivity for that row. It uses only the norm of the fixed form, not a uniform bound over $I$.
+
+For the empty family, the same conclusion is vacuous with $r=0$, $\gamma=0$, and $e=o(1)$. The little-oh hypothesis cannot universally be replaced by big-oh: in $\mathbb R$, the constraint $x>0$, curve $\gamma(t)=t$, and perturbation $\eta(t)=-t$ give an error $-2t=O(t)$ but violate positivity. $\square$
+

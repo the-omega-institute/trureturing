@@ -40,6 +40,8 @@ internal interface ICliEnvironment
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
+    CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments);
+
     CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
@@ -137,6 +139,8 @@ internal static class CliApplication
                 RenderExplicit(environment.GateAuthority(tail), console),
             ["filemap-conform"] = static (environment, tail, console) =>
                 RenderExplicit(environment.FileMapConform(tail), console),
+            ["information-template-debt"] = static (environment, tail, console) =>
+                RenderCommand(environment.InformationTemplateDebt(tail), console),
             ["ingest"] = static (environment, tail, console) =>
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-align"] = static (environment, tail, console) =>

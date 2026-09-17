@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf33a038c75cedea893e0c142ec273efdf42bd2b4891e1d5aea46e03d8ce17c0
+  normalized_sha256: sha256:bf33a038c75cedea893e0c142ec273efdf42bd2b4891e1d5aea46e03d8ce17c0
+cas_ref: sha256:bf33a038c75cedea893e0c142ec273efdf42bd2b4891e1d5aea46e03d8ce17c0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “应读为”将核证明中的空间唯一性引用定位到命题 28，非在本句重证非零因子解唯一性；这是引文纠正，没有定义性暗证。
+    previous_atom_id: 5463b660ba5fba6f1ce141dc88199d23b68a88eed955d79d3364ee37fbb623d8
+    next_atom_id: b96372ea21a5a5fb3cc095d581e3723968f1f9cf77927da53d1419c72dc3e9f4

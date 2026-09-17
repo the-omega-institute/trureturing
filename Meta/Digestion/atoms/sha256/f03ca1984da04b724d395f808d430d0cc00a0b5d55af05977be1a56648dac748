@@ -1,0 +1,4 @@
+There is an elementary preliminary bound independent of the asserted exact formula:
+$$
+q_{D+1}(x)=q_{D+1}(y)\quad\Longrightarrow\quad q_D(Tx)=q_D(Ty)\qquad(D\ge0).
+$$

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:daa4b0868decde14b265df5e4d5b003bbf7f8ae3ce27de6893c317e5122c066c
+  normalized_sha256: sha256:daa4b0868decde14b265df5e4d5b003bbf7f8ae3ce27de6893c317e5122c066c
+cas_ref: sha256:daa4b0868decde14b265df5e4d5b003bbf7f8ae3ce27de6893c317e5122c066c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.observe_complement
+    target_statement_id: sha256:c347ce9e468c40956b0e363e2b37572d4bac80dde87e8ff73d4d3a686b599510
+receipts:
+  unresolved_subitems: []

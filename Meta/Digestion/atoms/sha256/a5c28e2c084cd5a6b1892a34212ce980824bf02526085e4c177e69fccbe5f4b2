@@ -1,0 +1,20 @@
+**假设 29.1（精确几何与全测度逐集合积分契约）。** 采用假设25.1的精确相位纤维及精确闭图公式、假设26.1的任意提升严格单侧收敛，以及定理25.6—25.9的有限核恒等式和定理27.2的统一行界。特别，$K$ 紧致，$H$ 连续满射，
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+闭集 $\Gamma\subseteq K^3$ 是实际有限加法图的闭包，每行满足
+$$
+P_t(a,x)(K)=1,\qquad \operatorname{supp}P_t(a,x)\subseteq\Gamma(a,x)\subseteq H^{-1}(\{H(a)+H(x)\}),\qquad \|P_t(a,x)\|_{\mathrm{TV}}\le C_t.
+$$
+若 $\theta\notin E$，则相位 $\theta$ 的纤维为单点；若 $\epsilon_n>0$ 趋于零，且任意所选提升满足 $H(y_n)=E_j+[s\epsilon_n]$，其中 $s\in\{+1,-1\}$ 固定，则 $y_n\to x_j^s$。
+
+对每个所讨论的参数 $t$，另假定给定有界双线性运算
+$$
+\star_t:M(K)\times M(K)\longrightarrow M(K),
+$$
+并满足以下逐集合契约：对每个 Borel 集 $D\subseteq K$，函数 $(a,x)\mapsto P_t(a,x)(D)$ 在 $K^2$ 上联合 Borel 可测，且
+$$
+(\mu\star_t\nu)(D)=\int_K\left(\int_K P_t(a,x)(D)\,d\mu(a)\right)d\nu(x).
+$$
+各行均为有限实有符号测度，且具有上述统一总变差界。本节关于全测度乘法的结论均以这一契约为前提。这里的有界有符号核及其积分算子采用通常的逐集合可测定义。[^rro29-kernel]
+

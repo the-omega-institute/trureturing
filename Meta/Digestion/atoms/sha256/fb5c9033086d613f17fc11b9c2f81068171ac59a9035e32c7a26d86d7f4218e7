@@ -1,0 +1,4 @@
+**定义 445.4（同一配置、同一任务与全 Zeckendorf 费用）。** 沿用原约化配置 $C=(P,A)$：$P$ 是有限素数集，$A_p\ge1$，状态为 $a\in\prod_{p\in P}\{0,\ldots,A_p\}$，数值为 $n(a)=\prod_pp^{a_p}$。保留原
+$$
+Q(C)=\prod_p(A_p+1),\quad M(C)=\prod_pp^{A_p},\quad B(C)=\sum_p\ell_Z(A_p),\quad k(C)=|P|.
+$$

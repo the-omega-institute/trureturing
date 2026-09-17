@@ -1,0 +1,12 @@
+**Theorem RP3.** There is an exact weighted initial-depth congruence
+
+$$
+\boxed{
+\sum_{r(p)=n}h_p\lambda_5(p)
+\equiv\lambda_5(c_n)-J_2(n)-\lambda_5(E_n)\pmod5.
+}\tag{RP3}
+$$
+
+The sum is over actual primes of exact Fibonacci rank n. Its h_p are
+the actual initial WSS depths, without assuming they equal one.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b439a35b8c9b8c085f4ac1874c4bf51e20729395fa62464e62a82c91be34cab7
+  normalized_sha256: sha256:b439a35b8c9b8c085f4ac1874c4bf51e20729395fa62464e62a82c91be34cab7
+cas_ref: sha256:b439a35b8c9b8c085f4ac1874c4bf51e20729395fa62464e62a82c91be34cab7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定单份输入的后揭查询、有限父测量和随机译码的允许范围，并定义有效效应与输出概率，没有断言可实现性或最优误差。
+    previous_atom_id: 1011481c64d0d7270b712511ea64f3549cd0af2f14e517020db11c90214e944f
+    next_atom_id: 908a9df272f740abd9776eff2a060d2d67dd440305de2ddf7966da248697b603

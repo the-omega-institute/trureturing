@@ -1,0 +1,15 @@
+**Theorem.** The actual initial depths satisfy
+
+$$
+\boxed{\sum_{r(p)=n}h_p\lambda_3(p)
+\equiv-H(n)-\lambda_3(E_n)\pmod3.}
+\tag{S3}
+$$
+
+Moreover,
+
+$$
+H(n)=\prod_{q^a\parallel n}\eta(q)^{a-1}(\eta(q)-1).
+\tag{S4}
+$$
+
