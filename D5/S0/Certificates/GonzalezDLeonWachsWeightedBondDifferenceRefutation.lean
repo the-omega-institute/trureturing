@@ -31,7 +31,11 @@ private structure WeightedPartition (V : Type*) [Fintype V] [DecidableEq V] wher
 
 private instance weightedPartitionDecidableEq
     (V : Type*) [Fintype V] [DecidableEq V] : DecidableEq (WeightedPartition V) :=
-  Classical.decEq _
+  (show Function.Injective (fun P : WeightedPartition V => (P.partition, P.weight)) from by
+    rintro ⟨P, weightP, boundP, zeroP⟩ ⟨Q, weightQ, boundQ, zeroQ⟩ h
+    change (P, weightP) = (Q, weightQ) at h
+    cases h
+    rfl).decidableEq
 
 private instance weightedPartitionFintype
     (V : Type*) [Fintype V] [DecidableEq V] : Fintype (WeightedPartition V) := by
@@ -373,7 +377,7 @@ private def ConnectedWeightedPartition
 private instance connectedWeightedPartitionDecidableEq
     {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
     DecidableEq (ConnectedWeightedPartition G) :=
-  Classical.decEq _
+  Subtype.instDecidableEq
 
 private instance connectedWeightedPartitionFintype
     {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
@@ -449,6 +453,322 @@ private theorem pathThree_lt_triangleThree : pathThree < triangleThree := by
   intro heq
   have hadj := congrArg (fun G : SimpleGraph (Fin 3) ↦ G.Adj 0 2) heq
   simp [pathThree, triangleThree, SimpleGraph.pathGraph_adj] at hadj
+
+/- A genuine undirected edge on the three-vertex carrier.  The strict order on
+   endpoints removes the directed duplicate without quotienting the edge. -/
+private structure LocalEdge (G : SimpleGraph (Fin 3)) where
+  left : Fin 3
+  right : Fin 3
+  left_lt_right : left < right
+  adjacent : G.Adj left right
+  deriving DecidableEq
+
+private instance localEdgeFintype (G : SimpleGraph (Fin 3)) : Fintype (LocalEdge G) := by
+  refine Fintype.ofInjective (fun edge => (edge.left, edge.right)) ?_
+  intro edge other h
+  cases edge
+  cases other
+  simp only [Prod.mk.injEq] at h
+  cases h.1
+  cases h.2
+  rfl
+
+private inductive LocalNormalForm (G : SimpleGraph (Fin 3)) where
+  | bottom
+  | middle (edge : LocalEdge G) (weight : Fin 2)
+  | top (weight : Fin 3)
+  deriving DecidableEq, Fintype
+
+private def localEdgeBlock {G : SimpleGraph (Fin 3)} (edge : LocalEdge G) :
+    Finset (Fin 3) :=
+  {edge.left, edge.right}
+
+private theorem localEdgeBlock_card {G : SimpleGraph (Fin 3)} (edge : LocalEdge G) :
+    (localEdgeBlock edge).card = 2 := by
+  simp [localEdgeBlock, ne_of_lt edge.left_lt_right]
+
+private theorem localEdgeBlock_compl_nonempty {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) :
+    ((univ : Finset (Fin 3)) \ localEdgeBlock edge).Nonempty := by
+  by_contra h
+  rw [not_nonempty_iff_eq_empty, sdiff_eq_empty_iff_subset] at h
+  have hcard := Finset.card_le_card h
+  rw [Finset.card_univ, Fintype.card_fin, localEdgeBlock_card] at hcard
+  omega
+
+private def localMiddlePartition {G : SimpleGraph (Fin 3)} (edge : LocalEdge G) :
+    Finpartition (univ : Finset (Fin 3)) := by
+  let block := localEdgeBlock edge
+  let complement := (univ : Finset (Fin 3)) \ block
+  refine Finpartition.ofExistsUnique {block, complement} ?_ ?_ ?_
+  · intro part hpart
+    simp only [mem_insert, mem_singleton] at hpart
+    rcases hpart with rfl | rfl
+    · exact subset_univ _
+    · exact sdiff_subset
+  · intro vertex _
+    by_cases hvertex : vertex ∈ block
+    · refine ⟨block, by simp [hvertex], ?_⟩
+      intro part hpart
+      rcases hpart with ⟨hpart, hmem⟩
+      simp only [mem_insert, mem_singleton] at hpart
+      rcases hpart with rfl | rfl
+      · rfl
+      · simp [complement, hvertex] at hmem
+    · refine ⟨complement, by simp [complement, hvertex], ?_⟩
+      intro part hpart
+      rcases hpart with ⟨hpart, hmem⟩
+      simp only [mem_insert, mem_singleton] at hpart
+      rcases hpart with rfl | rfl
+      · exact False.elim (hvertex hmem)
+      · rfl
+  · simp only [mem_insert, mem_singleton]
+    push Not
+    constructor
+    · intro hzero
+      have hcard := localEdgeBlock_card edge
+      change ∅ = localEdgeBlock edge at hzero
+      rw [← hzero, Finset.card_empty] at hcard
+      omega
+    · exact (localEdgeBlock_compl_nonempty edge).ne_empty.symm
+
+@[simp] private theorem localMiddlePartition_parts {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) :
+    (localMiddlePartition edge).parts =
+      {localEdgeBlock edge, (univ : Finset (Fin 3)) \ localEdgeBlock edge} :=
+  rfl
+
+private theorem singleton_induce_connected (G : SimpleGraph (Fin 3)) (vertex : Fin 3) :
+    (G.induce ({vertex} : Set (Fin 3))).Connected := by
+  refine @SimpleGraph.Connected.mk _ _ ?_ ⟨⟨vertex, by simp⟩⟩
+  intro left right
+  have heq : left = right := Subtype.ext (by
+    have hleft : left.val = vertex := Set.mem_singleton_iff.mp left.property
+    have hright : right.val = vertex := Set.mem_singleton_iff.mp right.property
+    exact hleft.trans hright.symm)
+  subst right
+  exact SimpleGraph.Reachable.rfl
+
+private theorem localEdgeBlock_compl_singleton {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) :
+    ∃ vertex : Fin 3,
+      (univ : Finset (Fin 3)) \ localEdgeBlock edge = {vertex} := by
+  have hcard : ((univ : Finset (Fin 3)) \ localEdgeBlock edge).card = 1 := by
+    rw [card_sdiff, Finset.inter_eq_left.mpr (subset_univ _), Finset.card_univ,
+      Fintype.card_fin, localEdgeBlock_card]
+  exact Finset.card_eq_one.mp hcard
+
+private theorem localEdgeBlock_ne_compl {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) :
+    localEdgeBlock edge ≠ (univ : Finset (Fin 3)) \ localEdgeBlock edge := by
+  intro heq
+  have hcard := congrArg Finset.card heq
+  rw [localEdgeBlock_card] at hcard
+  obtain ⟨vertex, hvertex⟩ := localEdgeBlock_compl_singleton edge
+  rw [hvertex, Finset.card_singleton] at hcard
+  omega
+
+private theorem localEdge_eq_of_block_eq {G : SimpleGraph (Fin 3)}
+    {edge other : LocalEdge G}
+    (hblock : localEdgeBlock edge = localEdgeBlock other) : edge = other := by
+  have hcoe := congrArg (fun block : Finset (Fin 3) => (block : Set (Fin 3))) hblock
+  have hset : ({edge.left, edge.right} : Set (Fin 3)) =
+      {other.left, other.right} := by
+    ext vertex
+    have hvertex := Set.ext_iff.mp hcoe vertex
+    simpa [localEdgeBlock] using hvertex
+  rw [Set.pair_eq_pair_iff] at hset
+  rcases hset with hsame | hswap
+  · cases edge
+    cases other
+    simp only at hsame
+    cases hsame.1
+    cases hsame.2
+    rfl
+  · have hleft : edge.left = other.right := hswap.1
+    have hright : edge.right = other.left := hswap.2
+    have := edge.left_lt_right
+    rw [hleft, hright] at this
+    exact False.elim ((lt_asymm other.left_lt_right) this)
+
+private def localMiddleWeighted {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) (w : Fin 2) : WeightedPartition (Fin 3) where
+  partition := localMiddlePartition edge
+  weight := fun block => if block = localEdgeBlock edge then
+    ⟨w, lt_trans w.isLt (by decide : 2 < 4)⟩ else 0
+  weight_lt_card := by
+    intro block hblock
+    simp only [localMiddlePartition_parts, mem_insert, mem_singleton] at hblock
+    rcases hblock with rfl | hcomplement
+    · simp only [ite_true, localEdgeBlock_card]
+      exact w.isLt
+    · subst block
+      have hne : (univ : Finset (Fin 3)) \ localEdgeBlock edge ≠
+          localEdgeBlock edge := (localEdgeBlock_ne_compl edge).symm
+      simp only [hne, ite_false, Fin.val_zero]
+      exact Finset.card_pos.mpr (localEdgeBlock_compl_nonempty edge)
+  weight_eq_zero := by
+    intro block hblock
+    simp only [localMiddlePartition_parts, mem_insert, mem_singleton, not_or] at hblock
+    simp [hblock.1]
+
+private theorem localMiddleWeighted_connected {G : SimpleGraph (Fin 3)}
+    (edge : LocalEdge G) (w : Fin 2) :
+    ∀ block ∈ (localMiddleWeighted edge w).partition.parts,
+      (G.induce (block : Set (Fin 3))).Connected := by
+  intro block hblock
+  simp only [localMiddleWeighted, localMiddlePartition_parts, mem_insert,
+    mem_singleton] at hblock
+  rcases hblock with rfl | rfl
+  · have hset : (↑(localEdgeBlock edge) : Set (Fin 3)) =
+        {edge.left, edge.right} := by
+      ext vertex
+      simp [localEdgeBlock]
+    rw [hset]
+    exact G.induce_pair_connected_of_adj edge.adjacent
+  · obtain ⟨vertex, hvertex⟩ := localEdgeBlock_compl_singleton edge
+    rw [hvertex]
+    have hset : (↑({vertex} : Finset (Fin 3)) : Set (Fin 3)) = {vertex} := by
+      ext other
+      simp
+    rw [hset]
+    exact singleton_induce_connected G vertex
+
+private def localTopWeighted (w : Fin 3) : WeightedPartition (Fin 3) where
+  partition := Finpartition.indiscrete Finset.univ_nonempty.ne_empty
+  weight := fun block => if block = (univ : Finset (Fin 3)) then
+    ⟨w, lt_trans w.isLt (by decide : 3 < 4)⟩ else 0
+  weight_lt_card := by
+    intro block hblock
+    simp only [Finpartition.indiscrete_parts, mem_singleton] at hblock
+    subst block
+    simp
+  weight_eq_zero := by
+    intro block hblock
+    simp only [Finpartition.indiscrete_parts, mem_singleton] at hblock
+    simp [hblock]
+
+private def localNormalFormToSource {G : SimpleGraph (Fin 3)} (hG : G.Connected) :
+    LocalNormalForm G → ConnectedWeightedPartition G
+  | .bottom => connectedWeightedBottom G
+  | .middle edge w => ⟨localMiddleWeighted edge w, localMiddleWeighted_connected edge w⟩
+  | .top w => ⟨localTopWeighted w, by
+      intro block hblock
+      simp only [localTopWeighted, Finpartition.indiscrete_parts, mem_singleton] at hblock
+      subst block
+      have hset : (↑(univ : Finset (Fin 3)) : Set (Fin 3)) = Set.univ := by
+        ext vertex
+        simp
+      rw [hset]
+      exact (G.induceUnivIso.connected_iff).mpr hG⟩
+
+@[simp] private theorem localNormalFormToSource_partition_card
+    {G : SimpleGraph (Fin 3)} (hG : G.Connected) (normal : LocalNormalForm G) :
+    (localNormalFormToSource hG normal).val.partition.parts.card =
+      match normal with
+      | .bottom => 3
+      | .middle _ _ => 2
+      | .top _ => 1 := by
+  cases normal with
+  | bottom =>
+      simp [localNormalFormToSource, connectedWeightedBottom, weightedBottom]
+  | middle edge w =>
+      simp [localNormalFormToSource, localMiddleWeighted, localMiddlePartition_parts,
+        localEdgeBlock_ne_compl edge]
+  | top w =>
+      simp [localNormalFormToSource, localTopWeighted]
+
+@[simp] private theorem localNormalFormToSource_totalBlockWeight
+    {G : SimpleGraph (Fin 3)} (hG : G.Connected) (normal : LocalNormalForm G) :
+    totalBlockWeight (localNormalFormToSource hG normal).val =
+      match normal with
+      | .bottom => 0
+      | .middle _ w => w
+      | .top w => w := by
+  cases normal with
+  | bottom =>
+      simp [localNormalFormToSource, totalBlockWeight, connectedWeightedBottom,
+        weightedBottom]
+  | middle edge w =>
+      have hne := localEdgeBlock_ne_compl edge
+      have hedge : localEdgeBlock edge ≠ ∅ := by
+        intro hzero
+        have hcard := localEdgeBlock_card edge
+        rw [hzero, Finset.card_empty] at hcard
+        omega
+      simp [localNormalFormToSource, totalBlockWeight, localMiddleWeighted,
+        localMiddlePartition_parts, hne, hedge, Finset.univ_nonempty.ne_empty]
+  | top w =>
+      simp [localNormalFormToSource, totalBlockWeight, localTopWeighted]
+
+private theorem localNormalFormToSource_injective
+    {G : SimpleGraph (Fin 3)} (hG : G.Connected) :
+    Function.Injective (localNormalFormToSource hG) := by
+  intro normal other heq
+  cases normal with
+  | bottom =>
+      cases other with
+      | bottom => rfl
+      | middle edge w =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+      | top w =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+  | middle edge w =>
+      cases other with
+      | bottom =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+      | middle other v =>
+          have hpartition := congrArg (fun P => P.val.partition.parts) heq
+          change (localMiddlePartition edge).parts =
+            (localMiddlePartition other).parts at hpartition
+          have hmem : localEdgeBlock edge ∈ (localMiddlePartition other).parts := by
+            rw [← hpartition, localMiddlePartition_parts]
+            simp
+          rw [localMiddlePartition_parts] at hmem
+          simp only [mem_insert, mem_singleton] at hmem
+          have hedge : edge = other := by
+            rcases hmem with hsame | hcomplement
+            · exact localEdge_eq_of_block_eq hsame
+            · have hcard := congrArg Finset.card hcomplement
+              rw [localEdgeBlock_card] at hcard
+              obtain ⟨vertex, hvertex⟩ := localEdgeBlock_compl_singleton other
+              rw [hvertex, Finset.card_singleton] at hcard
+              omega
+          subst other
+          have hweight := congrArg
+            (fun P => (P.val.weight (localEdgeBlock edge) : Nat)) heq
+          simp only [localNormalFormToSource, localMiddleWeighted, ite_true] at hweight
+          have hwv : w = v := Fin.ext hweight
+          subst v
+          rfl
+      | top w =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+  | top w =>
+      cases other with
+      | bottom =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+      | middle edge v =>
+          have hcard := congrArg (fun P => P.val.partition.parts.card) heq
+          simp only [localNormalFormToSource_partition_card] at hcard
+          omega
+      | top v =>
+          have hweight := congrArg
+            (fun P => (P.val.weight (univ : Finset (Fin 3)) : Nat)) heq
+          simp only [localNormalFormToSource, localTopWeighted, ite_true] at hweight
+          have hwv : w = v := Fin.ext hweight
+          subst v
+          rfl
+
 
 end
 
