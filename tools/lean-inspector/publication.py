@@ -158,7 +158,8 @@ def write_sidecars(report, inputs, origins, mode='produced'):
     member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
-def validate_rows(report, archive_path, verified_materials=None):
+def validate_rows(report, archive_path, verified_materials=None, *, manifest):
+    materials.read_manifest_version(manifest)
     data = Path(report).read_bytes()
     root = read_json(data)
     materials.require_keys(root, {'modules', 'schema'}, 'report')
@@ -184,7 +185,7 @@ def validate_rows(report, archive_path, verified_materials=None):
         if 'information_registration_errors' in row:
             materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
         if 'information_templates' in row:
-            materials.validate_template_evidence(row['information_templates'])
+            materials.validate_template_evidence(row['information_templates'], manifest)
         if 'utility_refutation' in row:
             evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
                 'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
@@ -257,6 +258,8 @@ def validate_template_sources(rows, repository, *, inputs=None):
     """
     # Selection expands the report scope. A native batch shares that immutable
     # scope description; path checks and byte digests remain fresh per call.
+    manifest = Path(repository) / 'lean-report-inputs.json'
+    materials.read_manifest_version(manifest)
     if inputs is None:
         inputs = selection.Selection(repository)
     elif inputs.root != Path(repository).resolve():
@@ -266,7 +269,7 @@ def validate_template_sources(rows, repository, *, inputs=None):
         evidence = row.get('information_templates')
         if evidence is None:
             continue
-        materials.validate_template_evidence(evidence)
+        materials.validate_template_evidence(evidence, manifest)
         previous = None
         for source in evidence['inputs']:
             materials.require_keys(source, {'path', 'sha256'}, 'declared-template input')
@@ -315,7 +318,7 @@ def _require_bundle_files(report):
             raise ValueError(f'missing bundle member: {path.name}')
 
 
-def validate_bundle(report, expected=None, repository=None, verified_materials=None):
+def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None):
     report = Path(report)
     _require_bundle_files(report)
     sha = digest(report)
@@ -347,7 +350,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
             'lean_config_sha256': expected['config']}
         if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
             raise ValueError('stale input/provenance')
-    rows = validate_rows(report, member(report, '.materials.zip'), verified_materials)
+    rows = validate_rows(report, member(report, '.materials.zip'), verified_materials,
+        manifest=Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest)
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
     for row in rows:
@@ -384,7 +388,7 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None, *, mode=None):
+def publish(report, destination, expected, repository=None, *, mode=None, manifest=None):
     report, destination = Path(report), Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
     _require_bundle_files(report)
@@ -396,7 +400,7 @@ def publish(report, destination, expected, repository=None, *, mode=None):
         for suffix in SUFFIXES:
             shutil.copyfile(member(report, suffix), member(staged, suffix))
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
-        validate_bundle(staged, expected, repository)
+        validate_bundle(staged, expected, repository, manifest=manifest)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 
@@ -448,6 +452,7 @@ def main():
     validate = sub.add_parser('validate')
     validate.add_argument('report', type=Path)
     validate.add_argument('--repository', type=Path)
+    validate.add_argument('--manifest', type=Path)
     verify = sub.add_parser('verify-inputs')
     verify.add_argument('report', type=Path)
     verify.add_argument('--repository', required=True, type=Path)
@@ -461,7 +466,7 @@ def main():
         return
     expected = coordinates(args.repository) if args.repository else None
     if args.command == 'validate':
-        validate_bundle(args.report, expected, args.repository)
+        validate_bundle(args.report, expected, args.repository, manifest=args.manifest)
     else:
         output = args.staging_directory / RAW
         publish(args.bundle, output, expected, args.repository)

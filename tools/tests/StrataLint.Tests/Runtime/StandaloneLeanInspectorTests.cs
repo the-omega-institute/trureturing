@@ -458,6 +458,8 @@ public sealed class StandaloneLeanInspectorTests
     {
         internal LeanAxiomReport Inspect(RepositorySnapshot snapshot)
         {
+            var manifest = Path.Combine(repositoryRoot, LeanReportRegistrationFixture.ManifestPath);
+            File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
             foreach (var (path, file) in snapshot.Files)
             {
                 var destination = Path.Combine(repositoryRoot, path.Value);
@@ -522,7 +524,7 @@ public sealed class StandaloneLeanInspectorTests
                     Path.Combine(
                         TestRepositoryLayout.FindRoot(),
                         "tools", "lean-inspector", "materials.py"),
-                    "compact", spoolReport, spoolMaterials, output,
+                    "compact", spoolReport, spoolMaterials, output, manifest,
                 ],
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,
