@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/LaymanDivisorPowerCongruenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a196226-layman-divisor-power-congruences` (refuted) by `D5/S0/Certificates/LaymanDivisorPowerCongruenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a196226-layman-divisor-power-congruences","declaration_gid":"D5/S0/Certificates/LaymanDivisorPowerCongruenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John W. Layman (2011). *OEIS A196226, divisor-sum residue and divisor-power congruence conjectures*. URL: <https://oeis.org/A196226>.

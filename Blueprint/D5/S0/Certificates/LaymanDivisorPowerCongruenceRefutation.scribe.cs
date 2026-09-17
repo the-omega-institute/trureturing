@@ -39,7 +39,11 @@ internal sealed class LaymanDivisorPowerCongruenceRefutationDocument
                     + "244202442248. Their remainders modulo 690 are 380, 426, and 668, "
                     + "rather than the required 350, 354, and 362. Thus each disjunct fails.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a196226-layman-divisor-power-congruences"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -48,10 +52,11 @@ internal sealed class LaymanDivisorPowerCongruenceRefutationDocument
         string prose,
         string declaration,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula MembershipFormula()
     {
