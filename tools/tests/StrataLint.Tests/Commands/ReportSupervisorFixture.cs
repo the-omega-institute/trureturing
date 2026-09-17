@@ -335,6 +335,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"PATH={Root}:{HostPath}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
+            "PREFLIGHT_DEADLINE_AT=",
         };
         arguments.AddRange(environment);
         arguments.Add(Supervisor);

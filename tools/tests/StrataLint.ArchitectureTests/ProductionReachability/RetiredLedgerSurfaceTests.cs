@@ -19,6 +19,7 @@ public sealed class RetiredLedgerSurfaceTests(
             [
                 "tools/StrataLint.Cli/StrataLint.Cli.csproj::StrataLint.Cli.Program.Main(string[])",
                 "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj::StrataLint.EngineeringScope.Program.Main(string[])",
+                "tools/StrataLint.Lean/StrataLint.Lean.csproj::StrataLint.EngineeringScope.LeanProgram.Main(string[])",
                 "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj::StrataLint.Scribe.Documents.Program.Main(string[])",
             ],
             graph.ExecutableEntryPointDescriptions);

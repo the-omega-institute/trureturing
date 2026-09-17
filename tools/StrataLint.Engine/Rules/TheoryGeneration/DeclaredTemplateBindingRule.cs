@@ -33,7 +33,7 @@ internal sealed record DeclaredTemplateFinding(string Code, string Path, string 
 // observer is output-only: it cannot alter any predicate or supply an admission.
 internal static class DeclaredTemplateBindingRule
 {
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         (context.Baseline.TryGetFile(InformationTemplateDebtStore.ActivationPath, out _)
             || context.Current.TryGetFile(InformationTemplateDebtStore.ActivationPath, out _))
         && (context.RuleImplementationChanged || context.Changes.Paths.Any(path =>
@@ -42,7 +42,7 @@ internal static class DeclaredTemplateBindingRule
             || path.Value.StartsWith("Golden/Frozen/state/", StringComparison.Ordinal)
             || path.Value == AdmissionPlanePolicy.FileMapPath));
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         if (!IsAffectedBy(context)) return [];
         try
