@@ -1,0 +1,77 @@
+{
+  "schema": "erdos7-fixed-q-p11-v1",
+  "source_sha256": {
+    "verify_saturated_whole_cost.py": "4495ebd3a29464e25445143ba73ff0fb80ef09247bf3e37b0738e8dcf11cb417",
+    "certificates/saturated_joint_head_certificate.json": "e224d3c1fc1a04c3a1fbfab8cc986e4a81ed4cca2e0876a8842843b51925cd6f",
+    "certificates/saturated_convex_profile_certificate.json": "82b5211366625c3c9eed79d8124db700f7b24bd7a43f088d9b4487492c32d940"
+  },
+  "p": 11,
+  "T": 4,
+  "W": "10000",
+  "scope": "one fixed potential before comparison; actual77-point SH18 law; all finite357 heights; p11 has no earlier-prime multiplier",
+  "q": [
+    "0",
+    "8/45",
+    "128/315",
+    "512/315"
+  ],
+  "survival_lower": "2577991831/4799999616",
+  "queries": [
+    {
+      "name": "fixed_q_P",
+      "conditioning_cut": 2,
+      "conditioning_center": "8/45",
+      "exact_cost_denominator": 105,
+      "integer_range_bound": 8015014558798784,
+      "linear_from": 4,
+      "affine_slope": "5000/3",
+      "affine_intercept": "699848/105",
+      "square_majorant_coefficient": "233384/2205",
+      "majorant_maximizing_integer": 8,
+      "finite_box": "27331398239525596789904/21537249644207390625",
+      "geometric_remainder": "6486057266161445133569/2010143300126023125000",
+      "nu_cost_upper": "122765207543488529549806232/51821334214349426015625"
+    },
+    {
+      "name": "fixed_q_V",
+      "conditioning_center": "16/45",
+      "exact_cost_denominator": 105,
+      "integer_range_bound": 1195265504378752,
+      "square_majorant_coefficient": "8/15",
+      "finite_box": "329880268705474824944/35895416073678984375",
+      "geometric_remainder": "222330828717013853/13674444218544375000",
+      "nu_cost_upper": "8635355160799587699488/493536516327137390625"
+    },
+    {
+      "name": "diagonal_u",
+      "conditioning_cut": 2,
+      "conditioning_center": "2/45",
+      "exact_cost_denominator": 105,
+      "integer_range_bound": 8015008958799232,
+      "linear_from": 4,
+      "affine_slope": "5000/3",
+      "affine_intercept": "699904/105",
+      "square_majorant_coefficient": "700096/6615",
+      "majorant_maximizing_integer": 8,
+      "finite_box": "136640375286313300133488/107686248221036953125",
+      "geometric_remainder": "2432076935335414537967/753803737547258671875",
+      "nu_cost_upper": "40914461758223058873873758/17273778071449808671875"
+    },
+    {
+      "name": "H11_plus_diagonal_v",
+      "conditioning_center": "16/45",
+      "exact_cost_denominator": 105,
+      "integer_range_bound": 1195272504378192,
+      "square_majorant_coefficient": "8/15",
+      "finite_box": "610824990733267701092/64611748932622171875",
+      "geometric_remainder": "222330828717013853/13674444218544375000",
+      "nu_cost_upper": "399496906756565776840352/22209143234721182578125"
+    }
+  ],
+  "Cp_upper": "123671919835372486258252472/51821334214349426015625",
+  "diagonal_Cp_upper": "371026634171303490302746286/155464002643048278046875",
+  "strict_improvement": "310704719600900799682/4441828646944236515625",
+  "whole_depth_queries": 1080,
+  "rounding": "none",
+  "maximum_integer_range": 8015014558798784
+}

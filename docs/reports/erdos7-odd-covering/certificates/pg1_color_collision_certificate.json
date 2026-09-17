@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "ed5136453faffdaf44352bc60cc45fd58364d30ef86d7e85671630da5a528e02",
+  "parts_directory": "pg1_color_collision_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "24828e3bd136a604ca0458f24065341bb9de198c7d747c61e8d7ca5687a57d9b",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-arbitrary-head-profile-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/uniform_gamma_cofactor_certificate.json": "c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48",
+      "certificates/star_block_obstruction_certificate.json": "a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907",
+      "certificates/joint_density_certificate.json": "de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual generic uniform357 source; pure-base AP11/13 kernels at thresholds4,6; one final conditioning. All original heights/residues retained. Ordinary proof, not Lean or global actual-law optimality."
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G": "3849/106",
+      "R": "1649/360",
+      "D0": "432/53",
+      "mean_bound": "2009/360"
+    }
+  },
+  "truncated_product_distribution": {
+    "kind": "inline",
+    "value": {
+      "1": "16/35",
+      "2": "1136/3675",
+      "3": "30256/385875",
+      "4": "3534176/40516875",
+      "5": "27931696/4254271875",
+      "6": "14809345616/446698546875",
+      "7": "30966757936/46903347421875",
+      "8": "63168487266656/4924851479296875",
+      "9": "1816323188999776/517109405326171875",
+      "10": "130762838048745296/54296487559248046875",
+      "11": "44412862158151216/5701131193721044921875",
+      "12": "3221095677884279925536/598618775340709716796875",
+      "13": "54187297310494686256/62854971410774520263671875"
+    }
+  },
+  "full_product_mean": {
+    "kind": "inline",
+    "value": "35/16"
+  },
+  "Haar_hinge_bounds": {
+    "kind": "inline",
+    "value": {
+      "1": "513/53",
+      "2": "9747/1855",
+      "3": "217449/64925",
+      "4": "4733643/2272375",
+      "5": "121526801/79533125",
+      "6": "8571397321/8350978125",
+      "7": "697109986241/876852703125",
+      "8": "52388909773561/92069533828125",
+      "9": "4326729250407281/9667301051953125",
+      "10": "360086583356015401/1015066610455078125",
+      "11": "30008197927802885921/106581994097783203125",
+      "12": "44009011115718238997/211153007174853515625"
+    }
+  },
+  "integer_profile": {
+    "kind": "inline",
+    "value": {
+      "0": "2009/360",
+      "1": "1649/360",
+      "2": "2159489/572400",
+      "3": "424267/143100",
+      "4": "4733643/2272375",
+      "5": "121526801/79533125",
+      "6": "8571397321/8350978125",
+      "7": "697109986241/876852703125",
+      "8": "52388909773561/92069533828125",
+      "9": "4326729250407281/9667301051953125",
+      "10": "360086583356015401/1015066610455078125",
+      "11": "30008197927802885921/106581994097783203125",
+      "12": "44009011115718238997/211153007174853515625"
+    }
+  },
+  "selected_actual_law": {
+    "kind": "inline",
+    "value": {
+      "T11": "4",
+      "T13": "6",
+      "c11": "5/3",
+      "c13": "2",
+      "b11": "1577881/4544750",
+      "b13": "153632313644558711/498009616542900000",
+      "survival_lower": "171474522380088889/498009616542900000",
+      "physical_square": "324599/3816",
+      "positive_survival_bound": true,
+      "supported_square": "42035473165849976389/171474522380088889",
+      "supported_Haar_density": "13530827317392000000/171474522380088889"
+    }
+  },
+  "initial_fourth": {
+    "kind": "inline",
+    "value": "598121/53"
+  },
+  "physical_fourth13": {
+    "kind": "inline",
+    "value": "114643048312/536625"
+  },
+  "supported_fourth13": {
+    "kind": "inline",
+    "value": "106393040395571160497689/171474522380088889"
+  },
+  "next17": {
+    "kind": "inline",
+    "value": {
+      "kernel": "full-Haar T4, delta=1/2, from supported13 law",
+      "assigned_bad_upper": "42035473165849976389/43897477729302755584",
+      "actual_survival_lower": "1862004563452779195/43897477729302755584",
+      "physical_square": "3741157111760647898621/10974369432325688896",
+      "supported_square": "2984518594775348323619/372400912690555839"
+    }
+  },
+  "integer_majorant_fixture_count": {
+    "kind": "inline",
+    "value": 1000
+  },
+  "endpoint_search": {
+    "path": "content/014-endpoint_search.json",
+    "sha256": "2c9b057046c0de5003080ad236d79ef3217c8d6f67f65f286ebae3d1335de4af",
+    "kind": "object"
+  }
+}

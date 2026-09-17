@@ -1,0 +1,106 @@
+{
+  "source_case": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "old_period": {
+    "kind": "inline",
+    "value": 315
+  },
+  "old_nonunit_divisors": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      9,
+      15,
+      21,
+      35,
+      45,
+      63,
+      105,
+      315
+    ]
+  },
+  "source_weight_denominator": {
+    "kind": "inline",
+    "value": 1000000007
+  },
+  "records": {
+    "path": "content/003-result/004-records.json",
+    "sha256": "38e9b97e7a151ab06bbfd99770920ed66d0c8ae9a95ca8ecae1d07ff323d63b4",
+    "kind": "value"
+  },
+  "repeated_layout_limits": {
+    "kind": "inline",
+    "value": [
+      {
+        "prime": 17,
+        "layout": "diagonal",
+        "a_infinity": "25/128",
+        "row_values_sha256": "3e23b1d056b350022ea50188e69063147b07942357fb104831f574465672d26f",
+        "square": "1083797689097/78000000546",
+        "charge": "6559699/1000000007",
+        "weighted_cost": "1221944950037/78000000546"
+      },
+      {
+        "prime": 17,
+        "layout": "off-diagonal",
+        "a_infinity": "25/128",
+        "row_values_sha256": "8046014ecd094f5845115178448105446d9f83bb0b32192f1040d87f0445b314",
+        "square": "7891852123865/546000003822",
+        "charge": "6559699/1000000007",
+        "weighted_cost": "8858882950445/546000003822"
+      },
+      {
+        "prime": 19,
+        "layout": "diagonal",
+        "a_infinity": "14/81",
+        "row_values_sha256": "69ef45feb300675a5c58cefd5feda099e7e6f6d4ae25c6b2df137418e98b1136",
+        "square": "226460459750/17000000119",
+        "charge": "26238796/5000000035",
+        "weighted_cost": "250547674478/17000000119"
+      },
+      {
+        "prime": 19,
+        "layout": "off-diagonal",
+        "a_infinity": "14/81",
+        "row_values_sha256": "aa7bff30faf1d89e8384105656cfee6fe41517c09651e45f5921674ea2f56ce2",
+        "square": "14242830357541/1020000007140",
+        "charge": "26238796/5000000035",
+        "weighted_cost": "15688063241221/1020000007140"
+      }
+    ]
+  },
+  "all_family_truncation_checks": {
+    "path": "content/003-result/006-all_family_truncation_checks.json",
+    "sha256": "20b6f3fde0b192e5241bcc05215fb8e110cd261d96512fdb38dc9c9938df4491",
+    "kind": "value"
+  },
+  "literal_checks": {
+    "path": "content/003-result/007-literal_checks.json",
+    "sha256": "94833e1ecdf4155344ffe95010ad1277e68724fe5bf37a5066523bf1e557ad46",
+    "kind": "value"
+  },
+  "literal_point_evaluations": {
+    "kind": "inline",
+    "value": 433650
+  },
+  "disjoint_prefix_pair_checks": {
+    "kind": "inline",
+    "value": 1570404
+  },
+  "prefix_rule": {
+    "kind": "inline",
+    "value": "Least significant digits: (p-2) repeated e-1 times, then spoke j; pure j=0, mixed j=1..11. Test prefix p-1 followed by zeros."
+  },
+  "varying_layout_rule": {
+    "kind": "inline",
+    "value": "For zero-based cofactor index i: forbidden residue (center+(e-1)*(i+1)+(e-1)^2) mod d; test residue (center+e*(i+2)+e^2) mod d."
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Fixed PG1 low law, old period315 and11 nonunit old cofactors. The finite-H ordinary theorem optimizes current-prime residues for any fixed old forbidden/test layouts at each depth; literal checks include independently varying depths. Closed monotone limits concern repeated old layouts only. Old-layout optimization, arbitrary old357 heights, later-prime iteration and unrestricted covering conclusions are not established."
+  }
+}
