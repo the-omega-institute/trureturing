@@ -502,3 +502,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - <a id="finite-core-errors"></a>[Finite-core errors](profile-notes/35-ap45-layout-costs-and-complete-core-tails.md#finite-core-errors)
 - <a id="final-quadratic-costs-and-coupled-layout-loss"></a>[Final quadratic costs and coupled layout loss](profile-notes/35-ap45-layout-costs-and-complete-core-tails.md#final-quadratic-costs-and-coupled-layout-loss)
 - <a id="exact-verification-and-remaining-obligations"></a>[Exact verification and remaining obligations](profile-notes/35-ap45-layout-costs-and-complete-core-tails.md#exact-verification-and-remaining-obligations)
+- <a id="joint-moment-caps-do-not-improve-the-row17-bound"></a>[Joint moment caps do not improve the row17 bound](profile-notes/36-joint-moment-caps-do-not-improve-the-row17-bound.md#joint-moment-caps-do-not-improve-the-row17-bound)
