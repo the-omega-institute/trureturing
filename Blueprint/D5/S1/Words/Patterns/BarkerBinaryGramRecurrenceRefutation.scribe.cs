@@ -40,7 +40,11 @@ internal sealed class BarkerBinaryGramRecurrenceRefutationDocument
                     + "a181278(3)=11, and a181278(4)=48. Specializing the claim at n=4 would "
                     + "therefore assert 48=4*11+4*3=56, which is false.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a181278-barker-binary-gram-recurrence-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -49,10 +53,11 @@ internal sealed class BarkerBinaryGramRecurrenceRefutationDocument
         string prose,
         string declaration,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula A181278Formula()
     {

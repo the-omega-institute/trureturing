@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/BarkerBinaryGramRecurrenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a181278-barker-binary-gram-recurrence-refutation` (refuted) by `D5/S1/Words/Patterns/BarkerBinaryGramRecurrenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a181278-barker-binary-gram-recurrence-refutation","declaration_gid":"D5/S1/Words/Patterns/BarkerBinaryGramRecurrenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Barker (2018). *OEIS A181278, binary matrices with ordered rows and decreasing mod-2 Gram rows*. URL: <https://oeis.org/A181278>.
