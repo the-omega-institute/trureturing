@@ -61,6 +61,24 @@ def check(body, next_round=None, closed=False):
         rounds.setdefault(rnd, []).append((seat, carrier, decision))
 
     if not rounds:
+        # A first-publication body has no completed round: the template (impl-base-brief.md,
+        # standing rule 2) makes it carry an empty table plus a "Round 1 seat layout" line stating
+        # the drawn carriers. That is the correct state before round 1, not an omission, and it is
+        # checked the same way as any other layout line (round number, tests never nyxid). Only a
+        # body with neither rows nor a layout line is NO-TABLE.
+        if (next_round is None or next_round == 1) and not closed and LAYOUT.search(body):
+            layouts = LAYOUT.findall(body)
+            nums = [int(n) for n, _ in layouts]
+            if max(nums) != 1:
+                findings.append(
+                    f"STANDING LAYOUT-ROUND layout names round {max(nums)} but no round has completed"
+                )
+            text = dict((int(n), t) for n, t in layouts)[max(nums)]
+            for m in re.finditer(r"\btests\b[`\s]*(?:seat\s*)?(?:is\s*)?[:=]?\s*([A-Za-z][\w-]*)", text, re.I):
+                if m.group(1).lower().startswith("nyxid"):
+                    findings.append("STANDING TESTS-NYXID round 1 layout assigns tests to nyxid-oracle")
+                    break
+            return findings
         findings.append("STANDING NO-TABLE no completed-round rows found")
         return findings
 
@@ -210,6 +228,18 @@ Round 2 seat layout at this head: architecture nyxid-oracle / ChatGPT Pro, quali
         "No round is open.", "Round 3 seat layout at this head: quality nyxid-oracle, architecture codex-cli, tests codex-cli."),
         None, True), ["LAYOUT-WHILE-CLOSED"]))
     bad = 0
+    first_pub = """
+| round | head | seat | carrier | decision |
+| --- | --- | --- | --- | --- |
+
+Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli; `tests` is never nyxid-oracle. No round has completed at this head; tally approve 0 / reject 0 / abstain 0. Carried-forward approvals: none. Disagreement adjudication: none.
+"""
+    cases.append(("first publication: empty table + round-1 layout", first_pub, []))
+    cases.append(("first publication, --round 1", (first_pub, 1), []))
+    cases.append(("first publication, layout names round 2", first_pub.replace("Round 1 seat layout", "Round 2 seat layout"), ["LAYOUT-ROUND"]))
+    cases.append(("first publication, tests nyxid", first_pub.replace("tests codex-cli;", "tests nyxid-oracle / ChatGPT Pro;"), ["TESTS-NYXID"]))
+    cases.append(("first publication, no layout line at all", first_pub.replace("Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli;", "Seats:"), ["NO-TABLE"]))
+    cases.append(("first publication, --closed", (first_pub, None, True), ["NO-TABLE"]))
     for name, body, want in cases:
         nxt, cl = None, False
         if isinstance(body, tuple):
