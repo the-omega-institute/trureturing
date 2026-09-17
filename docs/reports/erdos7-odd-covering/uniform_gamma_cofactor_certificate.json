@@ -210,5 +210,302 @@
       }
     ],
     "scope": "Continuous-domain ordinary proof with exact vertices; no actual-family sharpness, optimal supported-law, or new tail cutoff claim."
+  },
+  "signed_young_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "4351/120",
+    "previous_signed_upper": "3849/106",
+    "strict_improvement": "337/6360",
+    "young_weights_by_root": [
+      "9/8",
+      "1"
+    ],
+    "positive_five_diagonal_coefficient": "1/4",
+    "positive_five_pair_coefficient": "1/8",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "parameter_vertices": 1296,
+    "selected_layout_vertex_pairs": 12960,
+    "minimum_scaled_margin": "0",
+    "minimum_unweighted_denominator": "53/360",
+    "layout_margin_sha256": "9359280878d314d38ea3400b371651b3ed43031d461800092ffef166896cf02d",
+    "relaxation_equalities": [
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 314,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 316,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 518,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          2
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          3
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      },
+      {
+        "vertex": 520,
+        "selected_root_cell": [
+          1,
+          4
+        ],
+        "s": "7/24",
+        "selected_raw_square": "191/48",
+        "global_raw_square": "191/48",
+        "weighted_cap_parts": [
+          "3671/480",
+          "3871/1440",
+          "3871/2880",
+          "11573/2880",
+          "3671/1440",
+          "4231/4320",
+          "4231/8640"
+        ],
+        "scaled_margin": "0"
+      }
+    ],
+    "previous_obstruction": {
+      "vertex": 398,
+      "selected_root_cell": [
+        0,
+        1
+      ],
+      "s": "1/4",
+      "selected_raw_square": "61/18",
+      "global_raw_square": "61/18",
+      "weighted_cap_parts": [
+        "4231/864",
+        "3271/1440",
+        "3871/2880",
+        "11933/2880",
+        "4231/1440",
+        "4231/4320",
+        "4231/8640"
+      ],
+      "scaled_margin": "163/43200"
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "verifier_sha256": "9a38d412a836bff231f74c1022be398ee82d3fe4c8958033c1087169435c8f55",
+    "scope": "Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution."
   }
 }

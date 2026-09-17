@@ -19460,3 +19460,241 @@ signed upper before finite-core error is145.37634253013505, still
 positive. These local gaps are not a percentage of the unrestricted
 proof. The uniform negative-Q criterion and the later-prime continuation
 remain open; no new Lean declaration or unrestricted resolution is claimed.
+
+### Unequal source norms sharpen the uniform357 input
+
+For every finite original family with distinct nonunit moduli supported
+on{3,5,7}, the same uniform probability on its complete actual survivor
+set satisfies
+
+    Gamma357<=4351/120=36.25833333333333...
+                      <3849/106.                    (YC1)
+
+The improvement is337/6360=0.0529874213836478.... The proof retains
+all original prime-power heights and residue choices. It uses weighted
+Young inequalities in the existing ZG2 expansion, the established
+common zero5 source bounds, and the same SD3/SD5 signed deletion floor.
+It is an ordinary proof with exact rational verification, not Lean or
+a resolution of unrestricted Erdős #7.
+
+#### The information omitted by the symmetric cross estimate
+
+Use the actual raw complete35 survivor measure lambda35 and the raw
+pure3 survivor measure eta. Their masses and cell parameters are the
+existing n_l,w_l,d_l,s; eta_l=w_l/9, and the marginal density satisfies
+
+    0<=d lambda35/d eta<=d_l on cell l.
+
+Fix the original mod3 and mod9 choices(r,j) of the zero5 block B0
+inside the original zero7 complete35 test A0. Write its baseline as
+b_l=1+1_(root(l)=r)+1_(l=j). Complete the positive5 blocks B_e at their
+original depths. On the actual35 survivor set,
+
+    A0=B0+sum_(e>=1)J_e B_e.
+
+Every added term is nonnegative. Enlarge only the increment A0^2-B0^2
+to the raw product of the actual pure3 and pure5 survivor measures.
+The original positive5 cylinder has raw mass at most5^-e and an
+intersection of two such cylinders has mass at most5^-max(e,f).
+Thus, for any fixed t>0, use
+
+    2B0 B_e<=t*B0^2+B_e^2/t
+
+in every zero-positive cross term, and the ordinary symmetric square
+bound for positive-positive terms. The complete coefficients are
+
+    sum_(e>=1)5^-e=1/4,
+    2sum_(f>e>=1)5^-f=1/8.
+
+If M bounds integral_eta B_e^2 for every complete ternary block, this
+gives
+
+    integral_lambda35 A0^2
+      <=integral_lambda35 B0^2+(t/4)integral_eta B0^2
+                                      +(3/8+1/(4t))*M. (YC2)
+
+The coefficient3/8 includes the positive diagonal1/4 and
+positive-positive1/8. All series include every original depth.
+
+#### One zero5 layout under its two actual measures
+
+The existing ternary root/cell bound supplies
+
+    M=max_b[sum_l eta_l*b_l^2+max_l(b_l+1)/9].
+
+Apply the same arbitrary-root square bound to the combined positive
+measure lambda35+(t/4)eta, whose cell mass is n_l+t*eta_l/4 and whose
+depth-a cylinder cap is(d_l+t/4)*3^-a. Equivalently, the existing
+common-layout depth estimate sums the exact tail
+
+    sum_(k>=0)3^(-k-3)[2(b+k)+1]=(b+1)/9.
+
+It follows from YC2 that the valid fixed-layout upper bound is
+
+    U_t(r,j)=sum_l n_l*b_l^2+(t/4)sum_l eta_l*b_l^2
+          +max_l[(d_l+t/4)*(b_l+1)/9]
+          +(3/8+1/(4t))*M.                          (YC3)
+
+The root/cell choice in both terms is the same original B0. No
+compatibility or common maximizing choice is imposed on distinct
+positive5 blocks. The arbitrary-root bound already covers nonnested
+original ternary prefixes and empty labels at their original depths.
+
+Set t=9/8 for the two-cell root r=0 and t=1 for the three-cell root
+r=1. These weights are fixed on the whole continuous parameter domain.
+Define U_(r,j)=U_t(r,j) and U=max_(r,j)U_(r,j). Both are upper bounds
+on the same actual complete35 laws used by SD4.
+
+#### The previous controlling relaxation cannot attain its square input
+
+At vertex398/layout(0,1), the zero5 block has pure-eta square bound2,
+whereas M=5/2. Simultaneous saturation of those two upper bounds is
+incompatible with equality in symmetric Young. If two actual blocks
+instead coincide with norm at most2, they do not saturate the positive
+block's5/2 upper comparison. This is a tradeoff between norm deficit
+and cross-term slack, not a claimed positive distance between every
+pair of actual blocks. For t=9/8, YC3 is
+
+    U_(0,1)=61/18=163/48-1/144.
+
+The same raw source and layouts are involved;1/144 is not subtracted
+from an unrelated estimate. This gives an explicit obstruction to
+simultaneously saturating the old163/48 comparison at this relaxed
+point. No actual family attaining that parameter tuple is asserted.
+
+#### Same actual mixed7 deletion and every missing-class branch
+
+Retain SD3's weighted cofactor cap W_(r,j)(C) exactly. Its floor is
+the same original b_l^2 and the actual complete test is still at least
+that floor. The unchanged SD4/SD5 argument therefore gives
+
+    s E_M[(L^2-C)1_(B^c)]
+      <=(6/5)U_(r,j)+(7/15)U+W_(r,j)(C)/5-C*s,
+
+where M is the product of the actual uniform35 law and actual pure7
+law, and B is its actual mixed7 forbidden union. Conditioning on B^c
+gives precisely the complete actual uniform357 law. Its mass remains
+positive by the existing CM2 theorem.
+
+For C=4351/120 all1296*10=12960 exact vertex/layout margins
+
+    C*s-(6/5)U_(r,j)-(7/15)U-W_(r,j)(C)/5
+
+are nonnegative. The minimum is zero. For fixed weights t each
+quantity in YC3 is separately convex in the five parameter groups:
+its initial terms are separately affine and its maxima have
+nonnegative coefficients. W retains its established convexity.
+The signed margin is therefore separately concave. Repeated vertex
+interpolation proves its nonnegativity throughout the full continuous
+parameter domain, not merely on a finite set of actual families.
+
+The new controlling points are314,316,518,520, each with r=1 and
+j=2,3,4. Representative314/(1,2) has
+
+    s=7/24, D=1/6, U_(1,2)=U=191/48.
+
+The former398/(0,1) has strictly positive final margin163/43200.
+These are extrema of the comparison formulas; actual-family
+sharpness is not asserted.
+
+If modulus3 is absent, the established same-law inputs
+Gamma35<=215/24 and R35<=17/12 give Gamma357<=5273/258.
+If modulus3 is present but9 is absent or ineffective, use
+Gamma35<=593/48 and R35<=47/24, giving Gamma357<=14543/438.
+Both are strictly below4351/120. These include low ternary heights;
+missing5/7 classes and arbitrary finite heights are already covered
+by the full cap sums and the five-cell domain. No branch is omitted.
+
+#### Exact limit of changing only these Young weights
+
+At the new controlling point314 and original layout(1,2), the fixed
+pure-zero5 square bound and the pure global bound both equal5/2,
+while the actual-zero5 square contribution is43/24. The same cell
+maximizes the complete deep term for every t>0. Hence YC3 becomes
+
+    U_t=191/48+(5/8)*(t+1/t-2)>=191/48.
+
+This follows from(t-1)^2/t>=0. The global U is at least U_t, and a
+fixed available SD3 branch satisfies W_(1,2)(C)>=5C/8-53/18 for C>=9.
+Since s=7/24, the signed SD5 margin is at most
+
+    (7/24)C-(5/3)(191/48)-(5C/8-53/18)/5
+      =(C-4351/120)/6.
+
+Thus the retained SD3/SD5 comparison cannot give a smaller constant
+by any positive Young weights, even weights depending on the parameter
+point. The fixed weighting above attains this limit. This is a boundary
+of the stated bounding formulas, not actual-family sharpness or a
+barrier to retaining additional joint layout/deletion information.
+
+The [source verifier](verify_uniform_gamma_cofactor_coupling.py) checks
+all12960 margins, the complete coefficients and both fallback fractions
+against the [source certificate](uniform_gamma_cofactor_certificate.json).
+A separate implementation expands the weighted cofactor cap directly
+from original cell weights and independently matches all12960 layout
+records, source bounds, affine roots and target margins. The ordinary
+source applicability and continuous interpolation arguments above supply
+the bridge beyond those arithmetic checks.
+
+#### Complete consumer on the unchanged AP13 law
+
+Use YC1 only in the existing globally fixed uniform-cap slots and
+complete auxiliary tails of U16 and U81. Keep the same all-original7
+raw cost, all-originalAP weighted costs, original-label domain and
+Delta. No actual probability is changed. Write g=4351/120-3849/106<0,
+and let pn be the unchanged N11*N13 product probabilities. The exact
+numerator changes are
+
+    U16_new-U16_old=g*D*[E(N^2;N>=4)+9*p3],
+    U81_new-U81_old=g*D*[E(N^2;N>=9)+49*p7+64*p8].       (YC4)
+
+Thus Gamma13, T13(81) and the joint bound are recomputed together.
+In particular the joint numerator changes by(2371/2880) times the
+first line of YC4; the source improvement337/6360 is not subtracted
+from the final joint bound. The result is
+
+    Gamma13<=22083176977198383411/141008133466238896
+           =156.60924256178234...,
+    T13(81)<=16980540086875374377725858588657069/171483581894996419228554742368000
+           =99.02137510326192...,
+    F17^-(403;nu13)+F19^-(403;physical mu17)
+      <=1081947977203541447444658369092299900073777/2408107143207565965787641353095374412800
+       =449.2939528273653....                         (YC5)
+
+The prescribed19 input is still the normalized physical mu17=nu13 K17.
+It is not replaced by the killed input of BM/RC. Every original exponent,
+residue, missing-class branch and full comparison tail remains included.
+
+The joint, Gamma and T81 continuous-margin coefficients are respectively
+
+    4620321152673881618746989997998445167871/11417612680765270081200009288990412800,
+    58093929085555795259077/502552987673675425344,
+    506744711227124988573279036192990409/5223653725416814001115975229056000,                              (YC6)
+
+all strictly positive. The same separate-concavity argument therefore
+extends the verified1296 vertex inequalities to the full continuous
+domain. All eight additional branch inequalities are rechecked at the
+new target values. Joint/Gamma and T81 maxima are computed separately.
+The [joint verifier](verify_joint_frontier.py) binds the new source
+verifier and source certificate by two additional SHA-256 pins, while
+retaining the eight predecessor input pins. These bind source identity;
+they do not replace the ordinary mathematical proofs.
+
+An independent algebraic reconstruction uses the published ABP rows and
+YC4, with separately computed complete product moments and probabilities.
+It checks the changed numerators, all1296 downstream values, their maxima
+and continuous coefficients without recomputing the original raw-cost
+implementation. The canonical full reconstruction also checks all eight
+remaining branches and the complete polynomial tails.
+
+The exact finite allowances are now
+
+    unequal/current6: 52082243234769798513124592688404147/171483581894996419228554742368000,
+    box20/current8: 6515903629657382326096259642454221443/21435447736874552403569342796000000.
+
+Safe sufficient bounds are303.715 and303.977, respectively. The new
+joint bound is still above both; its signed upper before finite-core
+error is145.31532793062718...>0.
+The uniform negative-Q criterion and arbitrary later-prime continuation
+remain unproved. These results are ordinary proofs with exact rational
+certificates, without new Lean declarations or an unrestricted resolution.

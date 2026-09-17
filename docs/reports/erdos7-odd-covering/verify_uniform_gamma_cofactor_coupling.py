@@ -3,13 +3,15 @@
 
 Python3.9+ standard library only. The accompanying proof gives the layout
 inequality and the continuous linear-fractional vertex reduction. This checks
-all72 old branches,103680 shared branches and12960 signed layout-vertices,
-plus missing-class cases,
-with no solver.
+all72 old branches,103680 shared branches,12960 original signed
+layout-vertices and12960 weighted-cross layout-vertices, plus all
+missing-class cases. No solver or finite original-height cutoff is used.
 """
 from fractions import Fraction as F
 from itertools import product
 from pathlib import Path
+import argparse
+import hashlib
 import json
 
 
@@ -202,6 +204,119 @@ def signed_two_level_three_prime_bound():
     }
 
 
+def signed_young_three_prime_bound():
+    """Fixed Young weights retain the two actual zero-five source norms.
+
+    The ordinary proof supplies the actual-family extraction, complete
+    tails and separate convexity. Every rational target margin is checked
+    here; the source hash identifies this verifier, not a Lean proof.
+    """
+    def simplex(size, budget):
+        yield (F(0),)*size
+        for j in range(size):
+            yield tuple(budget if i == j else F(0) for i in range(size))
+
+    roots = (0, 0, 1, 1, 1)
+    choices = tuple(product(range(2), range(5)))
+    bases = {choice: tuple(1+int(roots[l] == choice[0])+int(l == choice[1])
+                           for l in range(5)) for choice in choices}
+    cap, previous = F(4351, 120), F(3849, 106)
+    young = (F(9, 8), F(1))
+    minimum_margin = minimum_denominator = None
+    witnesses = []
+    records = []
+    old_obstruction = None
+    vertices = 0
+    for index, (deficits, alpha, beta, late, z) in enumerate(product(
+            simplex(5, F(1, 2)), simplex(2, F(1, 4)),
+            simplex(5, F(1, 4)), simplex(5, F(1, 72)), (F(3, 4), F(1)))):
+        widths = tuple(1-d for d in deficits)
+        eta = tuple(w/9 for w in widths)
+        available = tuple(z-alpha[roots[l]]-beta[l] for l in range(5))
+        cells = tuple(widths[l]*available[l]/9-late[l] for l in range(5))
+        s = sum(cells)
+        require(min(cells) >= 0 and s >= F(1, 4) and min(available) >= F(1, 4),
+                'Young-bound actual five-cell domain')
+        pure_maximum = max(sum(w*b*b for w,b in zip(eta,bb))
+                           +max(F(b+1,9) for b in bb) for bb in bases.values())
+        square = {}
+        for (r,j), bb in bases.items():
+            t = young[r]
+            square[r,j] = (sum(n*b*b for n,b in zip(cells,bb))
+                +(t/4)*sum(w*b*b for w,b in zip(eta,bb))
+                +max((d+t/4)*F(b+1,9) for d,b in zip(available,bb))
+                +(F(3,8)+1/(4*t))*pure_maximum)
+        global_square = max(square.values())
+        unweighted = (max(sum(cells[l] for l in range(5) if roots[l] == r)
+                          for r in range(2))+max(cells)+max(available)/18
+            +sum(widths)/36
+            +max(sum(widths[l] for l in range(5) if roots[l] == r)
+                 for r in range(2))/36+max(widths)/36+F(1,72))
+        denominator = s-unweighted/5
+        require(denominator > 0, 'Young-bound positive surviving denominator')
+        minimum_denominator = denominator if minimum_denominator is None else min(minimum_denominator,denominator)
+        for (r,j), bb in bases.items():
+            weights = tuple(cap-b*b for b in bb)
+            require(min(weights) >= 0 and max(weights) == cap-1,
+                    'Young-bound same original root/cell deletion floor')
+            parts = (
+                max(sum(weights[l]*cells[l] for l in range(5) if roots[l] == rr)
+                    for rr in range(2)),
+                max(weights[l]*cells[l] for l in range(5)),
+                max(weights[l]*available[l] for l in range(5))/18,
+                sum(weights[l]*widths[l] for l in range(5))/36,
+                max(sum(weights[l]*widths[l] for l in range(5) if roots[l] == rr)
+                    for rr in range(2))/36,
+                max(weights[l]*widths[l] for l in range(5))/36,
+                (cap-1)/72)
+            weighted_cap = sum(parts)
+            margin = cap*s-F(6,5)*square[r,j]-F(7,15)*global_square-weighted_cap/5
+            require(margin >= 0, 'Every weighted-cross signed357 target margin')
+            minimum_margin = margin if minimum_margin is None else min(minimum_margin,margin)
+            records.append([index,r,j,str(square[r,j]),str(global_square),
+                            str(weighted_cap),str(margin)])
+            witness = {'vertex': index, 'selected_root_cell': [r,j],
+                       's': str(s), 'selected_raw_square': str(square[r,j]),
+                       'global_raw_square': str(global_square),
+                       'weighted_cap_parts': list(map(str,parts)),
+                       'scaled_margin': str(margin)}
+            if margin == 0:
+                witnesses.append(witness)
+            if index == 398 and (r,j) == (0,1):
+                require(square[r,j] == F(61,18) and pure_maximum == F(5,2)
+                        and margin == F(163,43200), 'Strictly improved old obstruction')
+                old_obstruction = witness
+        vertices += 1
+    require(vertices == 1296 and len(records) == 12960 and minimum_margin == 0,
+            'Complete weighted-cross continuous-domain certificate')
+    require(minimum_denominator == F(53,360) and len(witnesses) == 12,
+            'Exact weighted-cross denominator and equality count')
+    missing = []
+    for name,G,R in (
+            ('modulus3_absent',F(215,24),F(17,12)),
+            ('modulus9_absent_or_ineffective',F(593,48),F(47,24))):
+        bound = (F(5,3)*G-R/5)/(1-R/5)
+        require(R < 5 and bound < cap, 'Weighted-cross same-law missing-class fallback')
+        missing.append({'case':name,'old_square':str(G),'old_cylinder_cap':str(R),
+                        'three_prime_square':str(bound)})
+    return {
+        'law':'uniform on the complete actual survivor set, arbitrary finite powers of3,5,7',
+        'Gamma357_upper':str(cap),'previous_signed_upper':str(previous),
+        'strict_improvement':str(previous-cap),'young_weights_by_root':list(map(str,young)),
+        'positive_five_diagonal_coefficient':'1/4',
+        'positive_five_pair_coefficient':'1/8',
+        'zero_seven_square_coefficient':'6/5','remaining_old_square_coefficient':'7/15',
+        'parameter_vertices':vertices,'selected_layout_vertex_pairs':len(records),
+        'minimum_scaled_margin':str(minimum_margin),
+        'minimum_unweighted_denominator':str(minimum_denominator),
+        'layout_margin_sha256':hashlib.sha256(json.dumps(records,separators=(',',':')).encode()).hexdigest(),
+        'relaxation_equalities':witnesses,'previous_obstruction':old_obstruction,
+        'missing_pure_cases':missing,
+        'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'scope':'Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution.',
+    }
+
+
 def compute_certificate():
     y,a=F(1,4),F(7,8)
     cap=F(55,4)
@@ -261,13 +376,29 @@ def compute_certificate():
             'old_budget_extremum':{'old_envelope':str(old),'coupled_envelope':str(new),
                                    'n':str(n),'m':str(m)},
             'shared_three_prime_parameters':joint_three_prime_bound(),
-            'signed_two_level_three_prime_parameters':signed_two_level_three_prime_bound()}
+            'signed_two_level_three_prime_parameters':signed_two_level_three_prime_bound(),
+            'signed_young_three_prime_parameters':signed_young_three_prime_bound()}
 
 
 def main():
-    data=json.loads(Path(__file__).with_name('uniform_gamma_cofactor_certificate.json').read_text())
+    parser=argparse.ArgumentParser(description=__doc__)
+    mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--write',action='store_true',help='Regenerate the full exact certificate.')
+    mode.add_argument('--check',action='store_true',help='Check the full certificate; this is the default.')
+    args=parser.parse_args()
+    path=Path(__file__).with_name('uniform_gamma_cofactor_certificate.json')
     expected=compute_certificate()
-    require(data==expected,'fixed certificate differs from exact recomputation')
+    if args.write:
+        path.write_text(json.dumps(expected,indent=2)+'\n',encoding='utf-8')
+    else:
+        def unique(pairs):
+            values={}
+            for key,value in pairs:
+                require(key not in values,'Duplicate certificate key: '+key)
+                values[key]=value
+            return values
+        data=json.loads(path.read_text(),object_pairs_hook=unique)
+        require(data==expected,'fixed certificate differs from exact recomputation')
     print('Verified all72 continuous-envelope branches: uniform Gamma35 <=55/4.')
     print('Positive denominators and absent-modulus-3 bound215/24 verified; '
           'the old57/4 extremal budget now has coupled bound55/4.')
@@ -275,6 +406,8 @@ def main():
           'all denominator and missing-pure-class checks passed.')
     print('Verified12960 signed two-level layout-vertices: uniform Gamma357<=3849/106; '
           'both missing-pure-class bounds are smaller on the same law.')
+    print('Verified12960 weighted-cross layout-vertices: uniform Gamma357<=4351/120; '
+          'same original floors, complete tails and both missing-pure-class bounds.')
 
 
 if __name__=='__main__':
