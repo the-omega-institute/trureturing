@@ -1,0 +1,79 @@
+**theorem 56.4（完整局部分布、全局实际 Haar 乘积分解与零原子支撑点）。** 记 $U_p=\mathbb Z_p^\times$，令 $K_p(a,b)$ 为 $K(A,B)$ 的第 $p$ 坐标边缘，其中 $a=A_p,b=B_p$。则：
+
+若 $a,b<\infty$ 且 $a<b$，则 $K_p(a,b)=\delta_a$；若 $b<a$，则 $K_p(a,b)=\delta_b$。若 $a<\infty,b=\infty$，则 $K_p(a,\infty)=\delta_a$，对称地 $K_p(\infty,b)=\delta_b$；而 $K_p(\infty,\infty)=\delta_\infty$。
+
+若 $a=b<\infty$ 且 $p$ 为奇素数，则
+$$
+K_p(a,a)(\{a\})=\frac{p-2}{p-1},\qquad
+K_p(a,a)(\{a+n\})=\frac1{p^n}\quad(n\ge1),\qquad
+K_p(a,a)(\{\infty\})=0.
+$$
+其支撑为 $\{a,a+1,a+2,\ldots,\infty\}$。
+
+若 $a=b<\infty$ 且 $p=2$，则
+$$
+K_2(a,a)(\{a\})=0,\qquad
+K_2(a,a)(\{a+n\})=2^{-n}\quad(n\ge1),\qquad
+K_2(a,a)(\{\infty\})=0,
+$$
+其支撑为 $\{a+1,a+2,\ldots,\infty\}$。
+
+此外，归一化 Haar 概率本身满足
+$$
+m_U=\bigotimes_pm_{U_p},
+$$
+所以对实际抽取的全局 Haar 单位 $u,v$，各素数坐标对 $(u_p,v_p)$ 独立，并非另行假设“商标签独立”。因而
+$$
+K(A,B)=\bigotimes_pK_p(A_p,B_p),
+$$
+且对任意有限素数集 $F$ 与 Borel 集 $D_p\subset E$，
+$$
+K(A,B)\bigl(\{C:C_p\in D_p\ \forall p\in F\}\bigr)
+=\prod_{p\in F}K_p(A_p,B_p)(D_p).
+$$
+全局支撑正好是各局部支撑的乘积，也正好是 theorem 56.3 的实际二元像。
+
+**证明。** 固定 $p$。若 $a<b<\infty$，写
+$$
+u_pp^a+v_pp^b=p^a(u_p+p^{b-a}v_p).
+$$
+括号内模 $p$ 等于单位 $u_p$，故仍是单位，输出赋值恒为 $a$。其余不等有限情形对称；若一项为 $0$，结论更直接；两项均为 $0$ 时输出为 $0$，赋值为 $\infty$。
+
+现在令 $a=b<\infty$。因
+$$
+v_p(u_pp^a+v_pp^a)=a+v_p(1+w_p),\qquad w_p=u_p^{-1}v_p,
+$$
+且独立 Haar 单位的比 $w_p$ 仍为 $U_p$ 上 Haar，问题化为 $T=v_p(1+w_p)$。对 $n\ge1$，
+$$
+\{T\ge n\}=\{w_p\equiv-1\pmod{p^n}\}.
+$$
+这是 $U_p$ 中子群 $1+p^n\mathbb Z_p$ 的一个陪集。标准单位滤过满足
+$$
+[U_p:1+p^n\mathbb Z_p]=(p-1)p^{n-1},
+$$
+故
+$$
+\Pr(T\ge n)=\frac1{(p-1)p^{n-1}}.
+$$
+该指数公式可由约化映射 $U_p\to(\mathbb Z/p^n\mathbb Z)^\times$ 直接数出；公开辅助资料 Yassine El Maazouz, *p-adic Harmonic Analysis*, §2.5，印刷页 p.5，亦列出 $U_0=\mathbb Z_p^\times$、$U_n=1+p^n\mathbb Z_p$ 及 $[U_0:U_n]=(p-1)p^{n-1}$。来源：https://yelmaazouz.org/content/documents/p_adicHarmonicAnalysis.pdf 。
+
+若 $p$ 为奇数，模 $p$ 的 $p-1$ 个非零剩余类中只有 $-1$ 导致 $T\ge1$，于是
+$$
+\Pr(T=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而对 $n\ge1$，
+$$
+\Pr(T=n)=\Pr(T\ge n)-\Pr(T\ge n+1)=\frac1{p^n}.
+$$
+若 $p=2$，所有单位均为奇数，所以 $T\ge1$；上式给出 $\Pr(T\ge n)=2^{1-n}$，故 $\Pr(T=n)=2^{-n}$。单点 $w_p=-1$ 的 Haar 质量为 $0$，因为它包含在每个上述陪集中，而这些陪集质量趋于 $0$，所以 $\Pr(T=\infty)=0$。归一化分别为
+$$
+\frac{p-2}{p-1}+\sum_{n\ge1}p^{-n}=1
+$$
+以及
+$$
+\sum_{n\ge1}2^{-n}=1.
+$$
+然而 $\infty$ 仍在支撑中：$w_p=-1$ 给出实际和 $0$；并且 $\infty$ 的任一尾邻域都有事件 $T\ge N$ 的正概率。故“原子质量为零”不等于“不在拓扑支撑”。
+
+再证全局乘积。局部 Haar 概率的乘积 $\bigotimes_pm_{U_p}$ 是 $U=\prod_pU_p$ 上的 Borel 概率，并在逐坐标左乘下不变；紧群归一化 Haar 概率的唯一性因此迫使它等于 $m_U$。于是 $m_U^{\otimes2}$ 下的坐标对 $(u_p,v_p)$ 独立，且输出第 $p$ 坐标只依赖该坐标对，有限柱事件公式随即成立；这些柱事件生成 Borel $\sigma$-代数，故得到整个乘积测度等式。各局部实际见证可逐坐标组装成全局 $u,v\in U$，反之全局见证逐坐标投影到局部见证，故全局实际像等于局部实际像的乘积；结合 theorem 56.3 即得支撑断言。证毕。
+

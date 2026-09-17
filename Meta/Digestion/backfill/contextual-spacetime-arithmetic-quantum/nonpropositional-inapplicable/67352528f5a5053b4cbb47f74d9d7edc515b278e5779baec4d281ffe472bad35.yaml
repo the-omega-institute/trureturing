@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67352528f5a5053b4cbb47f74d9d7edc515b278e5779baec4d281ffe472bad35
+  normalized_sha256: sha256:67352528f5a5053b4cbb47f74d9d7edc515b278e5779baec4d281ffe472bad35
+cas_ref: sha256:67352528f5a5053b4cbb47f74d9d7edc515b278e5779baec4d281ffe472bad35
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “定义两种条件期望预测”只为嵌套 sigma 代数下的两个预测器命名，平方可积性和包含关系已作为设定；“它没有自动等同于量子 Hilbert 子空间”限制解释范围，全文未推出风险下降或正交分解，故定义没有偷渡命题，暂无独立结论需要证明。
+    previous_atom_id: 85031d1e2a2801a4185cc2a4423e381326552c8dda161a60b58dcff22270ac39
+    next_atom_id: 245126c5fb423a86c48a2d004b965800beba83b0e6ee148de962c99a425a2b55

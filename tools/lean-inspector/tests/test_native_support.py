@@ -74,10 +74,22 @@ root = "Cache"
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
+        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 1\n')
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'inspect.sh']:
+            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
+        # These native-facet fixtures test statement extraction and publication,
+        # with no D5 registration library. Use the explicit statement-only API;
+        # their reports cannot satisfy the declared-template admission reader.
+        inspector = self.root / 'tools/lean-inspector/Inspector.lean'
+        source = inspector.read_text()
+        entry = '  let statementOnly := args.head? == some "--statements-only"'
+        if source.count(entry) != 1:
+            raise RuntimeError('statement fixture inspector entry is missing')
+        inspector.write_text(source.replace(entry,
+            '  let args := "--statements-only" :: args\n' + entry))
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
@@ -98,11 +110,11 @@ root = "Cache"
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
         policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
-            dependency_sources=paths('External.lean', 'ClaimSupport.lean'),
+            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))

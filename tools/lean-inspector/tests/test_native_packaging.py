@@ -28,6 +28,120 @@ import native
 from test_native_support import *
 
 class NativePackagingTests:
+    def test_mapped_image_matches_loaded_bytes(self):
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+open Lean
+private structure RegionLayout where
+  filePath : System.FilePath
+  size : USize
+  isMemoryMapped : Bool
+  baseAddr : USize
+  bufferOffset : USize
+  root : NonScalar
+@[noinline, export lean_dtr_mapped_image_match]
+unsafe def mappedImageMatch (_root : NonScalar) (_coordinates : Array USize)
+    (_bytes : ByteArray) : Nat := 0
+unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  let env ← getEnv
+  let some region := env.header.regions.find? (·.filePath.toString.endsWith "D5/Alone.olean")
+    | throwError "setup: missing loaded native fixture"
+  let view : RegionLayout := unsafeCast region
+  let bytes ← IO.FS.readBinFile region.filePath
+  let coordinates := #[view.size, view.baseAddr, view.bufferOffset,
+    if view.isMemoryMapped then 1 else 0]
+  let test (coords : Array USize) (input : ByteArray) :=
+    mappedImageMatch view.root coords input == 1
+  let checks := Json.mkObj [
+    ("mapped_image_matches_loaded_bytes", toJson (test coordinates bytes)),
+    ("mapped_image_changed_bytes_rejected", toJson (!test coordinates (bytes.set! 0 (bytes[0]! + 1)))),
+    ("mapped_image_wrong_length_rejected", toJson (!test coordinates (bytes.push 0))),
+    ("mapped_image_relocated_falls_back", toJson (!test (coordinates.set! 1 (view.baseAddr + 8)) bytes)),
+    ("mapped_image_unmapped_falls_back", toJson (!test (coordinates.set! 3 0) bytes)),
+    ("mapped_image_bad_frame_falls_back", toJson (!test #[] bytes)),
+    ("mapped_image_root_out_of_range_falls_back", toJson (!test (coordinates.set! 2 view.size) bytes)),
+    ("mapped_image_scalar_root_falls_back", toJson (mappedImageMatch (unsafeCast (0 : Nat)) coordinates bytes == 0))]
+  let debug := s!"mapped={view.isMemoryMapped} size={view.size} base={view.baseAddr} offset={view.bufferOffset} root={ptrAddrUnsafe view.root}"
+  return names.map fun _ => Json.mkObj [("checks", checks), ("debug", toJson debug)]
+''')
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.ensure()
+        built = subprocess.run(['make', 'lean',
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        output = self.root / 'mapped.spool.json'
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        result = self.run_lake('env', str(executable), '--output', str(output),
+            '--material-spool', str(self.root / 'mapped.material-spool'),
+            'D5.Alone', 'D5/Alone.lean', 'sha256:' + publication.digest(self.root / 'D5/Alone.lean'),
+            success=None)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        record = json.loads(output.read_text())['modules'][0]['information_templates']
+        symbols = subprocess.run(['nm', '-g', str(executable)], capture_output=True, text=True)
+        native_symbols = [line for line in symbols.stdout.splitlines() if 'lean_dtr_mapped_image_match' in line]
+        for name, passed in record['checks'].items():
+            self.assertTrue(passed, '[FAIL] ' + name + ': ' + record['debug'] + ' symbols=' + repr(native_symbols))
+
+    def test_native_facet_supplies_toolchain_environment(self):
+        self.env.pop('LEAN_SYSROOT', None)
+        result = self.run_lake('build', ':report', success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] native_toolchain_search_path\n' + result.stdout + result.stderr)
+        self.assertIn('D5.Alone', self.stamps())
+
+    def test_binding_driver_environment_survives_interpreter_shutdown(self):
+        # Exercise the dynamic driver entry, including interpreter teardown.
+        # These fixture records test lifetime only, not binding admission.
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
+  Lean.registerSimplePersistentEnvExtension {
+    addEntryFn := fun entries entry => entries.push entry
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  let env ← Lean.getEnv
+  let entries := fixtureExtension.getState env
+  return names.map fun name => Lean.Json.mkObj [
+    ("fixture_root", Lean.toJson name.toString),
+    ("fixture_modules", Lean.toJson env.header.moduleNames.size),
+    ("fixture_entries", Lean.toJson entries.size)]
+''')
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.ensure()
+        built = subprocess.run(['make', 'lean',
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        output = self.root / 'driver.spool.json'
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        result = self.run_lake('env', str(executable), '--output', str(output),
+            '--material-spool', str(self.root / 'driver.material-spool'),
+            'D5.Alone', 'D5/Alone.lean', 'sha256:' + publication.digest(self.root / 'D5/Alone.lean'),
+            success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
+        binding = json.loads(output.read_text())['modules'][0]['information_templates']
+        self.assertEqual(binding['fixture_root'], 'D5.Alone')
+        self.assertGreater(binding['fixture_modules'], 0)
+        # The source interpreter has its own process-global IR cache. Exercise
+        # that entry as well as the relocated native executable.
+        result = self.run_lake('env', 'lean', '--root=tools/lean-inspector', '--run',
+            'tools/lean-inspector/Inspector.lean', '--output', str(output),
+            '--material-spool', str(self.root / 'source-driver.material-spool'),
+            'D5.Alone', 'D5/Alone.lean', 'sha256:' + publication.digest(self.root / 'D5/Alone.lean'),
+            success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
+
     def test_native_pack_unpack_reuses_complete_rows(self):
         self.build()
         expected = self.report()[1:]

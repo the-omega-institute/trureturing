@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import nullcontext
+from functools import lru_cache
 import hashlib
 import importlib.util
 import json
@@ -26,6 +27,20 @@ _selection_spec = importlib.util.spec_from_file_location('report_selection',
     Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
 selection = importlib.util.module_from_spec(_selection_spec)
 _selection_spec.loader.exec_module(selection)
+
+# This Selection module is private to the inspector. Only the pure grammar
+# computation is memoized; safe_file still checks every current path component.
+_compile_glob = selection.compile_glob
+_compiled_glob = lru_cache(maxsize=16384)(_compile_glob)
+
+
+def compile_glob(pattern, location):
+    if not isinstance(pattern, str) or not isinstance(location, str):
+        return _compile_glob(pattern, location)
+    return _compiled_glob(pattern, location)
+
+
+selection.compile_glob = compile_glob
 
 RAW = 'raw-lean-report.json'
 SUFFIXES = ('', '.sha256', '.input.attestation', '.provenance.json', '.materials.zip')
@@ -156,7 +171,7 @@ def validate_rows(report, archive_path, verified_materials=None):
     references = {}
     for row in root['modules']:
         keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
-        keys.update(key for key in ('information_registration_errors', 'utility_refutation') if key in row)
+        keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
         materials.require_keys(row, keys, 'module')
         name, path, sha = row['module'], row['source_path'], row['source_sha256']
         if (not isinstance(name, str) or not name or previous is not None and name <= previous
@@ -168,6 +183,8 @@ def validate_rows(report, archive_path, verified_materials=None):
         materials.require_sorted_strings(row['imports'], 'imports')
         if 'information_registration_errors' in row:
             materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
+        if 'information_templates' in row:
+            materials.validate_template_evidence(row['information_templates'])
         if 'utility_refutation' in row:
             evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
                 'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
@@ -229,6 +246,39 @@ def validate_sources(rows, repository):
         evidence = row.get('utility_refutation')
         if evidence and evidence['claim_source_sha256'] != 'sha256:' + digest(inputs.safe_file(evidence['claim_source_path'])):
             raise ValueError('report claim source binding mismatch')
+    validate_template_sources(rows, repository, inputs=inputs)
+
+
+def validate_template_sources(rows, repository, *, inputs=None):
+    """Reject stale binding inputs before native reuse or final publication.
+
+    Their paths are emitted by the checked driver. This checks byte binding;
+    the strict C# consumer still checks the complete evidence semantics.
+    """
+    # Selection expands the report scope. A native batch shares that immutable
+    # scope description; path checks and byte digests remain fresh per call.
+    if inputs is None:
+        inputs = selection.Selection(repository)
+    elif inputs.root != Path(repository).resolve():
+        raise ValueError('declared-template input owner mismatch')
+    observed = {}
+    for row in rows:
+        evidence = row.get('information_templates')
+        if evidence is None:
+            continue
+        materials.validate_template_evidence(evidence)
+        previous = None
+        for source in evidence['inputs']:
+            materials.require_keys(source, {'path', 'sha256'}, 'declared-template input')
+            path, sha = source['path'], source['sha256']
+            if (not isinstance(path, str) or not path or previous is not None and path <= previous
+                    or not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{64}', sha)):
+                raise ValueError('malformed declared-template input binding')
+            previous = path
+            if path not in observed:
+                observed[path] = digest(inputs.safe_file(path))
+            if observed[path] != sha:
+                raise ValueError('stale declared-template input binding: ' + path)
 
 
 def validate_dependency_sources(origins, repository):

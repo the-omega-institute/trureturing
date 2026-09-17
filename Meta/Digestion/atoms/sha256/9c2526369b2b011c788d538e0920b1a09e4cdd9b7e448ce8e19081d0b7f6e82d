@@ -1,0 +1,18 @@
+### 101.2 标量相位的交换律会抹掉顺序
+
+对任意有限频率列表 $$(\omega_1,\ldots,\omega_m)$$，定义标量相位积
+
+$$
+\Pi(t)
+=\prod_{r=1}^{m}\exp(-i t\omega_r).
+$$
+
+`ordered_phase_product_collapse` 证明
+
+$$
+\boxed{
+\Pi(t)
+=\exp\!\left(-i t\sum_{r=1}^{m}\omega_r\right).
+}
+$$
+

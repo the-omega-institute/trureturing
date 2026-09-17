@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c8c32a9ec565b90e75accbf475a2fa4d9d424d152cc889b5f56ccf24e897e67
+  normalized_sha256: sha256:6c8c32a9ec565b90e75accbf475a2fa4d9d424d152cc889b5f56ccf24e897e67
+cas_ref: sha256:6c8c32a9ec565b90e75accbf475a2fa4d9d424d152cc889b5f56ccf24e897e67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这段使用“首次摄入的已提交输入”定位工程树，逐次说明 ingest、追加本节及固定检查点。这里的成功、文件数和正文覆盖是历史工程读数，不是算术命题，也未借定义建立数学结论；本建议不重新认证历史日志。
+    previous_atom_id: 90c2532bb2a24546f96197fb0cd1325bb6f52aa86eca358b6573d0d860e0c2ce
+    next_atom_id: d7da039f40f4ebc32923fba9ce4eb3b80a6677959253fc791847b0d6da0d83cf

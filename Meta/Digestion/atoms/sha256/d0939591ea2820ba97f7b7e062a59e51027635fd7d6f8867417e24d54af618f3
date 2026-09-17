@@ -1,0 +1,24 @@
+### 105.2 完整未来核与最大的前向不变关系
+
+把所有未来读出合并为完整 itinerary：
+
+$$
+\operatorname{Itin}(y)
+=
+\bigl(q(y),q(\tau y),q(\tau^2y),\ldots\bigr).
+$$
+
+完整未来核为
+
+$$
+R_\infty(y,y')
+\iff
+\operatorname{Itin}(y)=\operatorname{Itin}(y').
+$$
+
+`complete_kernel_eq_iInf_finite_horizon` 证明它是有限未来核的无穷交：
+
+$$
+R_\infty=\bigcap_{m\ge0}R_m.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e976caa7950d13615ea9ccd740fdde06b4bc7747ffe71e1ed780db1c46a925ca
+  normalized_sha256: sha256:e976caa7950d13615ea9ccd740fdde06b4bc7747ffe71e1ed780db1c46a925ca
+cas_ref: sha256:e976caa7950d13615ea9ccd740fdde06b4bc7747ffe71e1ed780db1c46a925ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对被删配对选取两端单点选择，Finset.sum_singleton 与符号定义把完整读数积化为正一或负一，把限制读数化为零；一般方向用 Finset.sum_mul_sum，仓内无冻结 GID。
+    previous_atom_id: 95935030fbfe486a26b9088a30faa8abf642429e6d7d18949bc37714ebbd2e04
+    next_atom_id: ef6bf6a01bc5719e78708037601124a1e9fc7658f27556305077e64ed2da0d3f

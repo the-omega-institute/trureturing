@@ -1,0 +1,19 @@
+**theorem 48.1 (Structure needed for positive equations).** The space $K$ is a compact Hausdorff topological semiring. Its natural-number embedding is injective and dense, and every natural point is isolated. There is a disjoint decomposition
+$$
+K=\mathbb N_0\sqcup B,\qquad B=\tau(\widehat{\mathbb Z}),\qquad \widehat{\mathbb Z}=\varprojlim_{m\geq1}\mathbb Z/m\mathbb Z\cong\prod_{\ell\ {\rm prime}}\mathbb Z_\ell,
+$$
+where $B$ is closed and $\tau$ is a homeomorphism. For $n\in\mathbb N_0$ and $z,w\in\widehat{\mathbb Z}$, the operations satisfy
+$$
+n+\tau(z)=\tau(n+z),\qquad \tau(z)+\tau(w)=\tau(z+w),
+$$
+$$
+0\tau(z)=0,\qquad n\tau(z)=\tau(nz)\quad(n>0),\qquad \tau(z)\tau(w)=\tau(zw).
+$$
+Consequently $B$, with its inherited operations, is a ring with zero $e=\tau(0)$ and unit $\tau(1)$. Neither is the corresponding ambient natural point. The map
+$$
+\rho:K\longrightarrow\widehat{\mathbb Z},\qquad \rho(n)=n,\quad \rho(\tau(z))=z,
+$$
+is a unital semiring homomorphism and is injective on $B$. The ambient nonzero elements are closed under addition and multiplication. The only additive idempotents of $K$ are $0$ and $e$.
+
+The threshold-period construction agrees with [the fixed source, Definition 14.0 and Theorem 14.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md). The profinite-natural-number and boundary-ring identifications also occur in [Almeida–Klíma, section 2, page 3](https://arxiv.org/pdf/1606.04059v1#page=3) and [Almeida–Kufleitner–Wächter, Proposition 4.1, page 34](https://arxiv.org/pdf/2411.08523v1#page=34).
+

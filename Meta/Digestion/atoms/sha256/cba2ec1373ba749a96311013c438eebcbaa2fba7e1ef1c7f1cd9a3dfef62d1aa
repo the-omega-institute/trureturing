@@ -1,0 +1,8 @@
+Suppose $y_i\in K$ and $H(y_i)\to\gamma$. If $\gamma\notin E$, then $y_i\to k_\gamma$. If $\gamma=E_m$ and $H(y_i)\ne E_m$ eventually, then
+$$
+y_i\longrightarrow x_m^s
+\quad\Longleftrightarrow\quad
+H(y_i)\longrightarrow_s E_m.
+$$
+These assertions hold for arbitrary nets and arbitrary lifts at the approaching phases.
+
