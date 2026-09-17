@@ -1,0 +1,97 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": 1
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "SH20 high hinges on the exact SH18 law; same bounded SH27 schedule obstruction"
+  },
+  "profile_certificate_sha256": {
+    "kind": "inline",
+    "value": "82b5211366625c3c9eed79d8124db700f7b24bd7a43f088d9b4487492c32d940"
+  },
+  "head_certificate_sha256": {
+    "kind": "inline",
+    "value": "e224d3c1fc1a04c3a1fbfab8cc986e4a81ed4cca2e0876a8842843b51925cd6f"
+  },
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  "records": {
+    "path": "content/005-records.json",
+    "sha256": "91b404b6f8c8fe1ed74e91381ec879a3dd72ee3c15fe584776b4497a8f6639e8",
+    "kind": "array"
+  },
+  "outside_square_excess": {
+    "kind": "inline",
+    "value": "222330828717013853/7293036916557000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "2577991831/4799999616"
+  },
+  "hinges": {
+    "path": "content/008-hinges.json",
+    "sha256": "09064a05f54e484a855f67059b10acd1c2a20f7f1f2bffcd490e35eb545121ed",
+    "kind": "value"
+  },
+  "dense_independent_checks": {
+    "kind": "inline",
+    "value": [
+      {
+        "depth": [
+          2,
+          1,
+          1
+        ],
+        "threshold": 13,
+        "full_layout_pairs": 20070400,
+        "hinge_numerator": 79299012,
+        "integer_range_bound": 17999998560
+      },
+      {
+        "depth": [
+          3,
+          0,
+          2
+        ],
+        "threshold": 17,
+        "full_layout_pairs": 20070400,
+        "hinge_numerator": 80659542,
+        "integer_range_bound": 19199998464
+      },
+      {
+        "depth": [
+          8,
+          5,
+          4
+        ],
+        "threshold": 21,
+        "full_layout_pairs": 20070400,
+        "hinge_numerator": 1403702325,
+        "integer_range_bound": 184799985216
+      }
+    ]
+  },
+  "reduced_integer_range_bound": {
+    "kind": "inline",
+    "value": 85377593169792
+  },
+  "extended_schedule_obstruction": {
+    "path": "content/011-extended_schedule_obstruction.json",
+    "sha256": "845a4cc520b174d6c949e5dbcd98de1a18dfa2eceb4d3ba32fd35cbd9af77ca3",
+    "kind": "value"
+  }
+}

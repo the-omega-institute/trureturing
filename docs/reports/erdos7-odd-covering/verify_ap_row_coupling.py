@@ -5,6 +5,17 @@ Standard library only. Universal row identities and comparison are ordinary
 proofs in the adjacent report; this checks rational inputs and literal data,
 not Lean or an unrestricted numerical noncoverage bound.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 import json
 from pathlib import Path
@@ -136,8 +147,8 @@ def encode(x):
 def supported_mask_consumer():
     root = Path(__file__).resolve().parent
     source = runpy.run_path(str(root/'verify_high_seven_density_bridge.py'))['verify'](
-        root/'actual_deletion_profile_certificate.json', root/'marked_head_profile_certificate.json')
-    need(source == json.loads((root/'high_seven_density_bridge_certificate.json').read_text(),
+        root/'certificates/actual_deletion_profile_certificate.json', root/'certificates/marked_head_profile_certificate.json')
+    need(source == json.loads(read_artifact_text(root/'certificates/high_seven_density_bridge_certificate.json'),
                               object_pairs_hook=unique), 'complete D7 source reconstruction')
     M0 = F(source['inputs']['M0'])
     H0 = {int(k): F(v) for k,v in source['inputs']['hinges'].items()}
@@ -198,10 +209,10 @@ if __name__=='__main__':
     import argparse
     ap=argparse.ArgumentParser();ap.add_argument('--write',type=Path);ap.add_argument('--check',type=Path)
     args=ap.parse_args()
-    path=Path(__file__).with_name('ap_row_coupling_certificate.json')
+    path=(Path(__file__).resolve().parent / 'certificates/ap_row_coupling_certificate.json')
     raw=compute();raw['supported_mask_consumer']=supported_mask_consumer();out=encode(raw)
     if args.check or not args.write:
-        need(json.loads((args.check or path).read_text(),object_pairs_hook=unique)==out,'certificate mismatch')
-    if args.write:args.write.write_text(json.dumps(out,indent=2)+'\n')
+        need(json.loads(read_artifact_text(args.check or path),object_pairs_hook=unique)==out,'certificate mismatch')
+    if args.write:write_certificate_text(args.write, json.dumps(out,indent=2)+'\n')
     print('PASS: exact AP row identities, literal family, full old-layout pair caps, sharp limits, '
           'and supported actual-mask deficits')

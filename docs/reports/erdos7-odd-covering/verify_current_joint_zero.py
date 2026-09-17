@@ -1,3 +1,14 @@
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 #!/usr/bin/env python3
 from collections import Counter
 from fractions import Fraction as F
@@ -159,7 +170,7 @@ def unique(pairs):
 
 
 parser = argparse.ArgumentParser(description="Exact full-height SH26 joint-zero counterexamples with all original labels.")
-parser.add_argument('certificate',nargs='?',type=Path,default=Path(__file__).with_name('current_joint_zero_certificate.json'))
+parser.add_argument('certificate',nargs='?',type=Path,default=(Path(__file__).resolve().parent / 'certificates/current_joint_zero_certificate.json'))
 parser.add_argument('--write',action='store_true')
 args = parser.parse_args()
 data = dict(schema='full-height-SH26-joint-zero-v1',
@@ -167,8 +178,8 @@ data = dict(schema='full-height-SH26-joint-zero-v1',
             fixtures=[fixtures(17,4,945),fixtures(19,8,2835)])
 output = args.certificate
 if args.write:
-    output.write_text(json.dumps(data,indent=2)+'\n')
+    write_certificate_text(output, json.dumps(data,indent=2)+'\n')
 else:
-    saved = json.loads(output.read_text(),object_pairs_hook=unique)
+    saved = json.loads(read_artifact_text(output),object_pairs_hook=unique)
     require(json.dumps(saved,sort_keys=True) == json.dumps(data,sort_keys=True),'certificate mismatch')
 print('PASS: full original 17/19 heights, distinct independent old test blocks, actual uniform357 source, genuine BB kernels, positive charge and zero-layer excess, both joint savings zero')

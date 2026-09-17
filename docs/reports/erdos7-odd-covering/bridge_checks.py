@@ -8,6 +8,17 @@ DOI 10.5281/zenodo.22760638 (code MIT, prose CC BY 4.0); they are not kernel
 verification. These finite calculations do not settle Erdős problem #7.
 """
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from collections import Counter
 from fractions import Fraction as Q
@@ -30,7 +41,7 @@ def check(condition, description):
 
 
 def bind_source(archive):
-    data = archive.read_bytes()
+    data = read_artifact_bytes(archive)
     digest = sha256(data).hexdigest()
     check(digest == ARCHIVE_SHA256, "source archive SHA-256 mismatch: " + digest)
     snippets = {

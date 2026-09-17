@@ -13,6 +13,17 @@ where N_p(e)=p**e-sum(p**i for i in range(e)). Pigeonholing a largest
 projected coset separately for every d proves the weighted lower bound.
 No independence of the measure's coordinates is assumed.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction
 from itertools import product
@@ -74,7 +85,7 @@ def pure_residue(p, exponent):
 
 
 def verify(certificate_path):
-    certificate = json.loads(Path(certificate_path).read_text(encoding='utf-8'),
+    certificate = json.loads(read_artifact_text(Path(certificate_path), encoding='utf-8'),
                              object_pairs_hook=unique_object)
     require(type(certificate) is dict, 'Certificate must be a JSON object')
     require(set(certificate) == {'core_residues', 'dual'}, 'Unexpected certificate fields')
@@ -191,7 +202,7 @@ def verify(certificate_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?',
-                        default=str(Path(__file__).with_name('h73_dual.json')))
+                        default=str((Path(__file__).resolve().parent / 'certificates/h73_dual.json')))
     args = parser.parse_args()
     try:
         result = verify(args.certificate)

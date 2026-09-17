@@ -7,6 +7,17 @@ complete geometric remainders and the original zero exponent label.
 It uses no solver, quantization, cache, scratch imports or Lean wrappers.
 """
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -151,7 +162,7 @@ def whole_observation(name, cost, linear_from, head, prepared, q):
 
 
 def compute(head_path, profile_path):
-    head_raw, profile_raw = head_path.read_bytes(), profile_path.read_bytes()
+    head_raw, profile_raw = read_artifact_bytes(head_path), read_artifact_bytes(profile_path)
     head, profile = json.loads(head_raw), json.loads(profile_raw)
     require(profile['head_certificate_sha256'] == sha256(head_raw).hexdigest(), 'same head prerequisite')
     prepared = prepare(head)
@@ -213,14 +224,14 @@ def compute(head_path, profile_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     directory = Path(__file__).parent
-    parser.add_argument('--head', type=Path, default=directory/'saturated_joint_head_certificate.json')
-    parser.add_argument('--profile', type=Path, default=directory/'saturated_convex_profile_certificate.json')
-    parser.add_argument('--certificate', type=Path, default=directory/'saturated_whole_cost_certificate.json')
+    parser.add_argument('--head', type=Path, default=directory/'certificates/saturated_joint_head_certificate.json')
+    parser.add_argument('--profile', type=Path, default=directory/'certificates/saturated_convex_profile_certificate.json')
+    parser.add_argument('--certificate', type=Path, default=directory/'certificates/saturated_whole_cost_certificate.json')
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     result, stats = compute(args.head, args.profile)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        require(result == json.loads(args.certificate.read_text()), 'complete exact whole-cost certificate equality')
+        require(result == json.loads(read_artifact_text(args.certificate)), 'complete exact whole-cost certificate equality')
     print(json.dumps(stats, indent=2))

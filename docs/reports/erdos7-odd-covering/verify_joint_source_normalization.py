@@ -6,6 +6,17 @@ continuous separately concave margin; this checks every product vertex,
 its required coefficient sign, and all other original missing-class branches.
 Python 3.9+ standard library only; this is not Lean verification.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from pathlib import Path
 import argparse
@@ -16,12 +27,12 @@ import json
 BASE = Path(__file__).resolve().parent
 G = F(3849, 106)
 PINS = {
-    'verify_shared_cell_hinges.py': '62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0',
-    'verify_shared_cell_square.py': '55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4',
-    'pure_root_profile_certificate.json': 'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b',
-    'shared_cell_hinges_certificate.json': '6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29',
-    'shared_cell_square_certificate.json': 'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1',
-    'shared_square_continuation_certificate.json': '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32',
+    'verify_shared_cell_hinges.py': 'f8ba06810c4552e5f6ec022d3762d615751407551ef6f4412bbb0490bb09ece9',
+    'verify_shared_cell_square.py': '9627bf255470676aec922813c031f2488c9433c7fa1326e735b4965d2ba89ca5',
+    'certificates/pure_root_profile_certificate.json': '64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
+    'certificates/shared_cell_hinges_certificate.json': 'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
+    'certificates/shared_cell_square_certificate.json': '100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef',
+    'certificates/shared_square_continuation_certificate.json': '1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e',
 }
 
 
@@ -126,12 +137,12 @@ def run_target(h, weights, source_rows, branches, sq):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-directory', type=Path, default=BASE)
-    parser.add_argument('--certificate', type=Path, default=BASE/'joint_source_normalization_certificate.json')
+    parser.add_argument('--certificate', type=Path, default=BASE/'certificates/joint_source_normalization_certificate.json')
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     sources = {}
     for name, pin in PINS.items():
-        raw = (args.source_directory/name).read_bytes()
+        raw = read_artifact_bytes(args.source_directory/name)
         need(hashlib.sha256(raw).hexdigest() == pin, 'pinned input: ' + name)
         if name.endswith('.json'):
             sources[name] = json.loads(raw, object_pairs_hook=unique)
@@ -146,8 +157,8 @@ def main():
         delta = dat[4]*rho
         need(delta > 0, 'joint raw survival denominator at each vertex')
         source_rows.append((par, dat, delta, rho))
-    pr = sources['pure_root_profile_certificate.json']
-    old = sources['shared_cell_square_certificate.json']['targets']
+    pr = sources['certificates/pure_root_profile_certificate.json']
+    old = sources['certificates/shared_cell_square_certificate.json']['targets']
     need(F(pr['source_inputs']['G']) == G and len(pr['branches']) == 12, 'original source scope')
     targets = [
         run_target(4, {F(16, 9): F(1)}, source_rows, pr['branches'], sq),
@@ -157,7 +168,7 @@ def main():
     need(targets[0]['shift_square'] < F(old[0]['shift_square']), 'strict same-law square improvement')
     need(targets[1]['supported_hinge'] < F(old[1]['supported_hinge']), 'strict same-law tail improvement')
     budgets = []
-    for prior, safe in zip(sources['shared_square_continuation_certificate.json']['killed_frontier_budgets'],
+    for prior, safe in zip(sources['certificates/shared_square_continuation_certificate.json']['killed_frontier_budgets'],
                            (F(299923, 1000), F(299661, 1000))):
         need(prior['W'] == 403 and prior['tau'] == 81, 'unchanged signed objective')
         error = F(prior['previous_KC_safe_error'])
@@ -178,9 +189,9 @@ def main():
         'scope': 'Same actual uniform357, AP11/T4, AP13/T6 and sole conditioning. All original labels, residues, missing classes and finite heights; complete tails. Ordinary continuous-domain proof, not Lean or actual-layout sharpness.',
     })
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        need(json.loads(args.certificate.read_text(), object_pairs_hook=unique) == result,
+        need(json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique) == result,
              'whole certificate mismatch')
     print('PASS 1296 common vertices, 12 branches, full tails and concavity coefficients; Gamma13 <= '
           + str(float(targets[0]['shift_square'])) + '; T13(81) <= '

@@ -6,6 +6,17 @@ Requires Python3 and NumPy. Reuses the two adjacent geometry algorithms,
 retaining the original mod3 test root in each one. All certificate arithmetic
 is integer/Fraction. No optimization or external service is used.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from pathlib import Path
@@ -106,8 +117,8 @@ def evaluate(case):
 
 def main():
     args=[a for a in sys.argv[1:] if a!='--write']
-    path=Path(args[0]) if args else HERE/'mod3_conditioned_geometry_certificate.json'
-    data=json.loads(path.read_text())
+    path=Path(args[0]) if args else HERE/'certificates/mod3_conditioned_geometry_certificate.json'
+    data=json.loads(read_artifact_text(path))
     require(data['schema']=='erdos7-mod3-conditioned-geometry-v1','certificate schema')
     require(len(data['cases'])==2,'two specified actual carriers')
     for case in data['cases']:
@@ -119,7 +130,7 @@ def main():
                           'survival_lower':result['survival_lower'],
                           'minimum_margin':result['minimum_margin'],
                           'unit_loss_Gamma_upper':result['unit_loss_Gamma_upper']}),flush=True)
-    if '--write' in sys.argv:path.write_text(json.dumps(data,indent=2)+'\n')
+    if '--write' in sys.argv:write_certificate_text(path, json.dumps(data,indent=2)+'\n')
 
 
 if __name__=='__main__':main()

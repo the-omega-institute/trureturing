@@ -1,0 +1,130 @@
+{
+  "source_sha256": {
+    "kind": "inline",
+    "value": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "original9_sha256": {
+    "kind": "inline",
+    "value": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "same actual PG1 low probability, fixed original3/original9 across Z; all finite original357 heights; one actual conditioning"
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "group_numerator48": {
+    "kind": "inline",
+    "value": 19216215624
+  },
+  "cap_numerators": {
+    "kind": "inline",
+    "value": [
+      1000000007,
+      207174054,
+      305330055,
+      67024566,
+      517529280,
+      117763278,
+      190412499,
+      41470054,
+      265958138,
+      46470620,
+      87568636,
+      16622259
+    ]
+  },
+  "outside_mean_coefficients": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "29774081/54697781250",
+      "121447171/109395562500",
+      "221180777/170170875000",
+      "6441127813/3063075750000"
+    ]
+  },
+  "outside_mean_increment": {
+    "kind": "inline",
+    "value": "2330295100792072343/3063075771441530250000"
+  },
+  "branches": {
+    "path": "content/004-result/009-branches.json",
+    "sha256": "3b2265abc2209dfe0e764763bef760b07cd3aaed094336b18f04f306864fe1c3",
+    "kind": "array"
+  },
+  "H4_upper": {
+    "kind": "inline",
+    "value": "2394156525804976633271/1622669161874354015625"
+  },
+  "H6_upper": {
+    "kind": "inline",
+    "value": "4106398428533515693477/4868007485623062046875"
+  },
+  "direct_checks": {
+    "path": "content/004-result/012-direct_checks.json",
+    "sha256": "1c434b63d7ffd7a1fa29815e77c2f590185fe2f14ca3f48353f4ad0bbc96454b",
+    "kind": "value"
+  },
+  "signed_floor": {
+    "kind": "inline",
+    "value": "zero for b=1+I3+I9 at thresholds4/6"
+  },
+  "fixed11_13_consumer": {
+    "kind": "inline",
+    "value": {
+      "threshold11": 4,
+      "threshold13": 5,
+      "H2": "3",
+      "H3_interpolated": "3631082005714019340073/1622669161874354015625",
+      "H4": "2394156525804976633271/1622669161874354015625",
+      "H5_interpolated": "1128886800594844559329/973601497124612409375",
+      "H6": "4106398428533515693477/4868007485623062046875",
+      "head_square": "492647095380812739054683/14604022456869186140625",
+      "charge11": "2394156525804976633271/9736014971246124093750",
+      "charge13": "1307567795844733434747919/4947842808387280264443750",
+      "total_charge": "6310695355647056399440603/12369607020968200661109375",
+      "retained_mass_lower": "6058911665321144261668772/12369607020968200661109375",
+      "square_before_conditioning": "691183874819280272893720249/9200534147827587268593750",
+      "supported_square_upper": "83065286271124677944190495859/545302049878902983550189480"
+    }
+  },
+  "scalar17_19_gap": {
+    "kind": "inline",
+    "value": {
+      "scope": "necessary condition for existing square-only T6, not actual noncoverage or an obstruction to richer-profile continuation",
+      "input_seed": "83065286271124677944190495859/545302049878902983550189480",
+      "prime17_a": "25/128",
+      "prime17_b": "1/1024",
+      "prime19_requires_seed_below": "324",
+      "polynomial_coefficients": [
+        "44145/16384",
+        "-9477/8",
+        "104976"
+      ],
+      "smaller_root_lower": "30764692367187/250000000000",
+      "smaller_root_upper": "123058769468749/1000000000000",
+      "polynomial_at_seed": "-31169274491258778321032492880172550188284258141552214413775/2405853466995237955269335692794497643373018479852519424",
+      "gap_above_necessary_threshold_lower": "399027175606012178484775852432052785987/13632551246972574588754737000000000000",
+      "all_admissible_prime17_updates_exceed": "500",
+      "negative_discriminant_for500": "-11524501464766335766022049439331503578063302635129104720941671/4871853270665356859420404777908857727830362421701351833600"
+    }
+  }
+}

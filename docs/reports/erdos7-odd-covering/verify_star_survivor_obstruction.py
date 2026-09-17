@@ -4,6 +4,17 @@ Python 3.8+ standard library. No solver output, repository state, or floating
 arithmetic is used to decide a comparison. The full-height argument is in
 Problems/erdos-7-odd-covering-systems.md.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from math import gcd, prod
@@ -258,8 +269,8 @@ def main():
           'small_tree_checks':tiny_trees,'small_actual_families':tiny_families,
           'coherent_gamma_boundary':coherent_boundary}
     target=(Path(sys.argv[1]) if len(sys.argv)>1 else
-            Path(__file__).with_name('star_survivor_obstruction_certificate.json'))
-    require(json.loads(target.read_text())==cert,'fixed certificate equality')
+            (Path(__file__).resolve().parent / 'certificates/star_survivor_obstruction_certificate.json'))
+    require(json.loads(read_artifact_text(target))==cert,'fixed certificate equality')
     print(json.dumps({'result':'PASS','branch_b_floor':str(lower_B),
                       'branch_b_floor_decimal':float(lower_B),
                       'branch_b_exact_decimal':float(B),

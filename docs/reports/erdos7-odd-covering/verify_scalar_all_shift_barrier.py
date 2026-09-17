@@ -6,6 +6,17 @@ Full geometric auxiliary tails and a three-piece affine calculation certify
 that the specified common-N functional stays positive for every square shift.
 No actual congruence realization, other-schedule barrier, or Lean claim follows.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -14,10 +25,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PINS = {
-    'shared_square_continuation_certificate.json':
-        '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32',
-    'shared_cell_square_certificate.json':
-        'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1',
+    'certificates/shared_square_continuation_certificate.json':
+        '1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e',
+    'certificates/shared_cell_square_certificate.json':
+        '100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef',
 }
 
 
@@ -45,14 +56,14 @@ def encode(value):
 
 
 def source_observations(sources, law):
-    continuation = sources['shared_square_continuation_certificate.json']
-    square = sources['shared_cell_square_certificate.json']
+    continuation = sources['certificates/shared_square_continuation_certificate.json']
+    square = sources['certificates/shared_cell_square_certificate.json']
     require(continuation['schema'] == 'erdos7-shared-square-continuation-v1',
             'continuation source schema')
     require(square['schema'] == 'erdos7-shared-cell-square-v1',
             'square source schema')
-    require(continuation['source_sha256']['shared_cell_square_certificate.json']
-            == PINS['shared_cell_square_certificate.json'], 'same SQ source')
+    require(continuation['source_sha256']['certificates/shared_cell_square_certificate.json']
+            == PINS['certificates/shared_cell_square_certificate.json'], 'same SQ source')
     source = continuation['source']
     targets = {r['tau']: r for r in square['targets']}
     require(set(targets) == {16, 81} and len(square['targets']) == 2,
@@ -230,26 +241,26 @@ def compute(sources):
             identity='H_K-H_direct=a_p*(c_p-kappa_p(z))*(y^2-min(y^2,K))',
             sign_reason='min(z,8)<=8 implies 0<kappa_p(z)<=c_p; both remaining factors are nonnegative'),
         scope='Abstract scalar countermodel to closing the fixed17/T8,19/T8 common-N functional for any real0<=tau<=484 or any pointwise-majorizing clip. Exactly21 published upper observations are checked. No congruence realization, actual AP13 law, all-schedule barrier, killed-frontier lower bound, or Lean endpoint is asserted.',
-        unresolved='Actual labelled test and bad-mask geometry, and the finite killed frontier, remain outside these scalar observations. Unrestricted Erdos7 remains unresolved.'))
+        open_mathematical_obligations='Actual labelled test and bad-mask geometry, and the finite killed frontier, remain outside these scalar observations. Unrestricted Erdos7 remains unresolved.'))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--certificate', type=Path,
-                        default=HERE/'scalar_all_shift_barrier_certificate.json')
+                        default=HERE/'certificates/scalar_all_shift_barrier_certificate.json')
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     sources = {}
     for name, digest in PINS.items():
-        raw = (args.source_directory/name).read_bytes()
+        raw = read_artifact_bytes(args.source_directory/name)
         require(sha256(raw).hexdigest() == digest, 'source SHA-256: '+name)
         sources[name] = json.loads(raw, object_pairs_hook=unique)
     result = compute(sources)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        saved = json.loads(args.certificate.read_text(), object_pairs_hook=unique)
+        saved = json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique)
         require(saved == result, 'entire certificate equality')
     value = F(result['direct_functional']['minimum_defect'])
     print('PASS21 scalar observations; complete N tails at8 and16; '

@@ -4,6 +4,17 @@
 The accompanying ordinary proof supplies the full-height comparison and
 separately convex vertex reduction. No Lean endpoint is asserted.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from functools import lru_cache
 from itertools import product
@@ -19,8 +30,8 @@ BS=tuple(tuple(1+(ROOT[l]==r)+(l==j) for l in range(5)) for r,j in CHOICES)
 G=F(3849,106)
 RHO=F(18925009844347,38266567762500)
 BASE=Path(__file__).resolve().parent
-PINS={'pure_root_profile_certificate.json':'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b',
-      'shared_cell_hinges_certificate.json':'6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29'}
+PINS={'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
+      'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae'}
 
 def need(ok,message):
  if not ok:raise ValueError(message)
@@ -158,14 +169,14 @@ def unique(pairs):
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
  parser.add_argument('--source-directory',type=Path,default=BASE)
- parser.add_argument('--certificate',type=Path,default=BASE/'shared_cell_square_certificate.json')
+ parser.add_argument('--certificate',type=Path,default=BASE/'certificates/shared_cell_square_certificate.json')
  parser.add_argument('--write',action='store_true')
  args=parser.parse_args();sources={}
  for name,pin in PINS.items():
-  raw=(args.source_directory/name).read_bytes()
+  raw=read_artifact_bytes(args.source_directory/name)
   need(hashlib.sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
   sources[name]=json.loads(raw,object_pairs_hook=unique)
- pr=sources['pure_root_profile_certificate.json'];hc=sources['shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
+ pr=sources['certificates/pure_root_profile_certificate.json'];hc=sources['certificates/shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
  need(F(pr['source_inputs']['G'])==G and F(hc['survival_lower'])==RHO,'same actual source square and AP13 normalization')
  rows=[run(h,pr) for h in (4,9)]
  need(rows[0]['shift_square']==F(148878188597300778613,914721425816667898),'exact tau16 shift square')
@@ -174,8 +185,8 @@ def main():
  need(rows[1]['supported_hinge']<F(27462732511027063792077002926276002,234516374824438312292389830652525),'strict improvement on pure-root square hinge')
  result=encode({'schema':'erdos7-shared-cell-square-v1','source_sha256':PINS,'same_actual_law_inputs':{'G357':G,'rho13':RHO,'previous_Gamma13':F(hc['supported_square'])},'targets':rows,
    'scope':'Same actual uniform357 and supported AP(4,6)13 laws, every original residue/label and arbitrary finite heights. Complete ternary,5,7,11,13 tails. Ordinary monotone-cost and continuous-vertex proof; no actual-layout sharpness or Lean endpoint.'})
- if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
- else:need(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,'whole certificate mismatch')
+ if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
+ else:need(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)==result,'whole certificate mismatch')
  print('PASS 2x1296 vertices and all12 branches; Gamma13 <= '+str(float(rows[0]['shift_square']))+'; T13(81) <= '+str(float(rows[1]['supported_hinge'])))
 
 if __name__=='__main__':main()

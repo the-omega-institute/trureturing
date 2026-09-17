@@ -20,6 +20,17 @@ oracle accepts integer scores with an optional common positive denominator.
 Executables and complete all-A outputs are temporary. No physical height
 or outer auxiliary-profile quantifier is inferred from an oracle query.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction
 from hashlib import sha256
 from importlib.util import module_from_spec, spec_from_file_location
@@ -32,7 +43,7 @@ import shutil
 import subprocess
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_SOURCE = HERE / 'mod3_conditioned_geometry_certificate.json'
+DEFAULT_SOURCE = HERE / 'certificates/mod3_conditioned_geometry_certificate.json'
 COFACTORS = (1, 3, 5, 9, 15, 45)
 _spec = spec_from_file_location('weighted_base_dp', HERE / 'exact_signed_digit_dp.py')
 _base = module_from_spec(_spec)
@@ -136,7 +147,7 @@ class WeightedDigitDP(_base.ExactSignedDigitDP):
 
 class Oracle:
     def __init__(self, digit_weights, old_labels, source=DEFAULT_SOURCE, binary=None):
-        raw = Path(source).read_bytes()
+        raw = read_artifact_bytes(Path(source))
         self.source_sha256 = sha256(raw).hexdigest()
         self.case = next(c for c in json.loads(raw)['cases'] if c['name'] == 'PG1')
         self.points, self.xs = self.case['points'], self.case['old_points']
@@ -236,11 +247,11 @@ class Oracle:
         header = f'{len(self.old)} {self.state_count} {self.maxload} {self.dp.weights[5]}\n'
         with TemporaryDirectory(prefix='pg1-weighted-oracle-query-') as tmp:
             input_path, output_path = Path(tmp)/'input.txt', Path(tmp)/'values.txt'
-            input_path.write_text(header+score_text+self.domain)
+            write_certificate_text(input_path, header+score_text+self.domain)
             completed = subprocess.run([str(self.binary), str(input_path), str(output_path)],
                                        check=True, capture_output=True, text=True)
             runtime = json.loads(completed.stdout)
-            values = [tuple(map(int, line.split())) for line in output_path.read_text().splitlines()]
+            values = [tuple(map(int, line.split())) for line in read_artifact_text(output_path).splitlines()]
         require(len(values) == len(self.old) and all(len(row) == 3 for row in values) and
                 [row[0] for row in values] == list(range(len(self.old))), 'complete ordered old-A output')
         winner, maximum, _ = max(values, key=lambda r: r[1])
@@ -287,13 +298,13 @@ def main():
     parser.add_argument('--binary', type=Path)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
-    payload = json.loads(args.score_file.read_text())
+    payload = json.loads(read_artifact_text(args.score_file))
     with Oracle(payload['digit_weights'], payload['old_labels'], args.source, args.binary) as oracle:
         result = oracle.optimize(oracle.score_tensor(payload), payload.get('denominator', 1))
         seconds = oracle.last_seconds
     output = json.dumps(result, indent=2) + '\n'
     if args.output:
-        args.output.write_text(output)
+        write_certificate_text(args.output, output)
         print(json.dumps({'output': str(args.output), 'maximum': result['maximum'], 'seconds': seconds}))
     else:
         print(output, end='')

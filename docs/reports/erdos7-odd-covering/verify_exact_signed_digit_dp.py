@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """Brute-force and actual-PG1 checks for the signed CRT digit optimizer."""
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from importlib.util import module_from_spec, spec_from_file_location
@@ -35,7 +46,7 @@ def brute(oracle, A, scores):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=Path,
-                        default=HERE / 'mod3_conditioned_geometry_certificate.json')
+                        default=HERE / 'certificates/mod3_conditioned_geometry_certificate.json')
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     rng = Random(20260917)
@@ -63,7 +74,7 @@ def main():
                                 for _ in range(2)])
     require(e['value'] == 0 and e['labels'][0]['old_residue'] == 2,
             'realizable empty singleton has zero gain')
-    raw = args.source.read_bytes()
+    raw = read_artifact_bytes(args.source)
     case = next(c for c in json.loads(raw)['cases'] if c['name'] == 'PG1')
     points, xs = case['points'], case['old_points']
     nums, den = case['weight_numerators'], case['weight_denominator']
@@ -150,11 +161,11 @@ def main():
            'subset_transitions': c['subset_transitions'],
            'fixed_old_residues': [2 % d for d in oracle.cofactors], 'fixed_old_load': A,
            'common_digit_counterexample': {'points_and_weight_numerators': [list(tw) for tw in pair],
-               'formula': '-mu(point)*(B-A-1)^2 on these two points; zero elsewhere',
+               'formula_description': '-mu(point)*(B-A-1)^2 on these two points; zero elsewhere',
                'maximum': str(F(c['value'], den)),
                'common_digit_maximum': str(F(c['common_digit_value'], den)), 'labels': c['labels']},
            'digit_zero_example': {'maximum': z['value'], 'labels': z['labels']},
-           'joint_auxiliary_example': {'formula': 'E_mu[(4/3)*(B+R)^2+(149-B^2)*(L-4)_+/6]',
+           'joint_auxiliary_example': {'formula_description': 'E_mu[(4/3)*(B+R)^2+(149-B^2)*(L-4)_+/6]',
                'scope': 'one fixed-A, fixed-auxiliary, one-depth score profile; not the all-height or global final-floor maximum',
                'depth': [1, 1, 1], 'divisors': [d for d, _ in divisors],
                'moment_auxiliary_residues': moment_residues,
@@ -165,11 +176,11 @@ def main():
                'independent_digit_gain': str(F(j['value'] - j['common_digit_value'], 6 * den)),
                'labels': j['labels'], 'digit_partition': j['digit_partition'],
                'auxiliary_point_loads': aux}}
-    destination = HERE / 'exact_signed_digit_dp_certificate.json'
+    destination = HERE / 'certificates/exact_signed_digit_dp_certificate.json'
     if args.write:
-        destination.write_text(json.dumps(out, indent=2) + '\n')
+        write_certificate_text(destination, json.dumps(out, indent=2) + '\n')
     else:
-        require(json.loads(destination.read_text()) == out,
+        require(json.loads(read_artifact_text(destination)) == out,
                 'stored certificate equals complete exact recomputation')
     print(json.dumps({'result': 'written' if args.write else 'verified',
                       'source_sha256': out['source_sha256'],

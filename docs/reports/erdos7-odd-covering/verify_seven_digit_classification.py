@@ -7,6 +7,17 @@ The default action checks the adjacent seven_digit_classification_certificate.js
 --write PATH creates the deterministic result certificate after reconstruction.
 No optimizer, scratch module, policy cache, or floating arithmetic is used.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from collections import Counter
 from hashlib import sha256
 from itertools import permutations, product
@@ -50,7 +61,7 @@ def canonical_classes(root, category):
 
 
 def read_geometries(path):
-    source = json.loads(path.read_text())
+    source = json.loads(read_artifact_text(path))
     require(type(source) is dict and source.get("schema") == SOURCE_SCHEMA,
             "canonical source schema")
     cases = source.get("cases")
@@ -297,20 +308,20 @@ def main():
     base = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-certificate", type=Path,
-                        default=base / "actual_deletion_profile_certificate.json")
+                        default=base / 'certificates/actual_deletion_profile_certificate.json')
     parser.add_argument("--check", type=Path,
-                        default=base / "seven_digit_classification_certificate.json")
+                        default=base / 'certificates/seven_digit_classification_certificate.json')
     parser.add_argument("--write", type=Path)
     args = parser.parse_args()
     expected = None
     if args.write is None:
-        expected = json.loads(args.check.read_text())
+        expected = json.loads(read_artifact_text(args.check))
         check_json_types(expected)
         require(type(expected) is dict and expected.get("schema") == SCHEMA,
                 "classification result schema")
     result = reconstruct(args.source_certificate)
     if args.write is not None:
-        args.write.write_text(json.dumps(result, indent=2) + "\n")
+        write_certificate_text(args.write, json.dumps(result, indent=2) + "\n")
     else:
         require(expected == result, "exact deterministic classification certificate")
     print(json.dumps({"verified": True, "digit_patterns": 203, **result["totals"]}, indent=2))

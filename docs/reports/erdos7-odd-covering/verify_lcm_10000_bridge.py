@@ -6,6 +6,17 @@ The retained filename also locates the earlier external-10000 bridge. The
 current calculation starts at 1 and does not depend on that external theorem.
 This checks a certificate of an ordinary proof, not a Lean proof.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from array import array
 from fractions import Fraction
 from hashlib import sha256
@@ -166,8 +177,8 @@ def compute():
 
 def main():
     data = compute()
-    path = Path(__file__).with_name("lcm_10000_bridge_certificate.json")
-    require(json.loads(path.read_text(encoding="utf-8")) == data, "fixed lcm certificate")
+    path = (Path(__file__).resolve().parent / 'certificates/lcm_10000_bridge_certificate.json')
+    require(json.loads(read_artifact_text(path, encoding="utf-8")) == data, "fixed lcm certificate")
     print(json.dumps({"result": "PASS", "candidates": data["odd_abundant_candidates"],
                       "pure_exclusions": data["pure_bound_exclusions"],
                       "two_block_exclusions": len(data["two_block_exclusions"]),

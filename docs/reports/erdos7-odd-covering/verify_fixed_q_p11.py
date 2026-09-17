@@ -4,6 +4,17 @@
 Run from any cwd with Python3+NumPy. The adjacent directory, or --source-dir,
 contains the three hash-bound canonical prerequisites. No optimizer or scratch import is used.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from pathlib import Path
 from fractions import Fraction as F
 from hashlib import sha256
@@ -17,13 +28,13 @@ def require(value,message):
 P,T,W=11,4,F(10000)
 A=F(3*P-1,(P-1)**2);DEN=P-1-T;CAP=F(P-1,DEN)
 KNOTS=(F(0),F(56,315),F(128,315),F(512,315))
-FILES=('verify_saturated_whole_cost.py','saturated_joint_head_certificate.json',
-       'saturated_convex_profile_certificate.json')
+FILES=('verify_saturated_whole_cost.py','certificates/saturated_joint_head_certificate.json',
+       'certificates/saturated_convex_profile_certificate.json')
 
 def kappa(k):return F(P-1,P-1-min(k,T))
 
 def compute(source,expected=None):
-    raw={name:(source/name).read_bytes() for name in FILES}
+    raw={name:read_artifact_bytes(source/name) for name in FILES}
     hashes={name:sha256(data).hexdigest() for name,data in raw.items()}
     if expected is not None:
         require(expected.get('schema')=='erdos7-fixed-q-p11-v1','schema')
@@ -101,9 +112,9 @@ def compute(source,expected=None):
 if __name__=='__main__':
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--source-dir',type=Path,default=Path(__file__).resolve().parent)
-    ap.add_argument('--certificate',type=Path,default=Path(__file__).with_name('fixed_q_p11_certificate.json'))
+    ap.add_argument('--certificate',type=Path,default=(Path(__file__).resolve().parent / 'certificates/fixed_q_p11_certificate.json'))
     ap.add_argument('--write',action='store_true')
-    args=ap.parse_args();expected=None if args.write else json.loads(args.certificate.read_text())
+    args=ap.parse_args();expected=None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         def strict_types(value):
             require(type(value) in (dict,list,str,int),'exact certificate types; no floats or bools')
@@ -114,7 +125,7 @@ if __name__=='__main__':
                 for child in value:strict_types(child)
         strict_types(expected)
     result=compute(args.source_dir,expected)
-    if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+    if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:require(result==expected,'complete exact certificate equality')
     print(json.dumps({'verified':True,'Cp_upper':result['Cp_upper'],
                       'Cp_upper_decimal':float(F(result['Cp_upper'])),

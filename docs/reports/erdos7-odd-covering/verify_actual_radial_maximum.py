@@ -4,6 +4,17 @@
 The first-exit normal form and branch-bound soundness are proved in marked_head_profile.md (RS1 and its finite optimization).
 No external optimizer is used. Every rational/integer check remains active -O.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from math import lcm, prod
 from hashlib import sha256
@@ -12,8 +23,8 @@ import argparse, json
 
 HERE = Path(__file__).resolve().parent
 SOURCE_PINS = {
-    'actual_zero_block_certificate.json': '1c79645e040fc9a54c1b6c9fedac6beeb999f54286826cffccfc4456643ba163',
-    'verify_actual_zero_block.py': '63a72485e833be8fa20f25ba3c38ce0d0cea6988e31ec54403700802714d4751',
+    'certificates/actual_zero_block_certificate.json': '4798b482b9632850770bfdea6e592767faa1ad316962b47ceb7d7c09d5e8f241',
+    'verify_actual_zero_block.py': '08656e13d056396814bb22a6403e8465ce5747186cf653bd2ab212782671c8ad',
 }
 
 def need(ok, message):
@@ -177,8 +188,8 @@ def solve(p, source):
 
 def compute(source_root):
     for name, pin in SOURCE_PINS.items():
-        need(sha256((source_root / name).read_bytes()).hexdigest() == pin, 'pinned prerequisite: ' + name)
-    source = json.loads((source_root / 'actual_zero_block_certificate.json').read_text(), object_pairs_hook=unique)
+        need(sha256(read_artifact_bytes(source_root / name)).hexdigest() == pin, 'pinned prerequisite: ' + name)
+    source = json.loads(read_artifact_text(source_root / 'certificates/actual_zero_block_certificate.json'), object_pairs_hook=unique)
     rows = [solve(p, source) for p in (17, 19)]
     factor = F(source['p19_with_explicit_physical17_history']['factor'])
     extension = {
@@ -195,14 +206,14 @@ def compute(source_root):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-root', type=Path, default=HERE)
-    parser.add_argument('--certificate', type=Path, default=HERE / 'actual_radial_maximum_certificate.json')
+    parser.add_argument('--certificate', type=Path, default=HERE / 'certificates/actual_radial_maximum_certificate.json')
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     result = compute(args.source_root)
     # Normalize tuples identically on write and compare.
     result = json.loads(json.dumps(result))
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2) + '\n')
     else:
-        need(json.loads(args.certificate.read_text(), object_pairs_hook=unique) == result, 'complete deterministic certificate match')
+        need(json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique) == result, 'complete deterministic certificate match')
     print('PASS exact killed maxima, all normal-form choices, both split-sup gaps and same-test hinge losses')

@@ -8,6 +8,17 @@ A sparse rational dual, with exact box-residual correction, proves that its
 minimum already exceeds the target. This does not lower-bound an actual moment
 and does not exclude using another reference K.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -34,8 +45,8 @@ class Matrix:
         self.rows.append(dict(terms));self.rhs.append(rhs)
 
 def evaluate(data,source):
-    names=('mod3_conditioned_geometry_certificate.json','original9_conditioned_geometry_certificate.json')
-    raw={name:(source/name).read_bytes() for name in names}
+    names=('certificates/mod3_conditioned_geometry_certificate.json','certificates/original9_conditioned_geometry_certificate.json')
+    raw={name:read_artifact_bytes(source/name) for name in names}
     require(data['source_sha256']=={name:sha256(value).hexdigest() for name,value in raw.items()},
             'canonical probability and previous-bound source hashes')
     case=next(c for c in json.loads(raw[names[0]])['cases'] if c['name']=='PG1')
@@ -141,9 +152,9 @@ def evaluate(data,source):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--certificate',type=Path,default=HERE/'pg1_maxplus_obstruction_certificate.json')
+    parser.add_argument('--certificate',type=Path,default=HERE/'certificates/pg1_maxplus_obstruction_certificate.json')
     parser.add_argument('--source-dir',type=Path,default=DEFAULT_SOURCE)
-    args=parser.parse_args();data=json.loads(args.certificate.read_text())
+    args=parser.parse_args();data=json.loads(read_artifact_text(args.certificate))
     lower,target,dimensions=evaluate(data,args.source_dir)
     print(json.dumps({'result':'verified','reference':33,'price_family_lower':str(lower),
                       'improvement_target':str(target),'strict_gap':str(lower-target),

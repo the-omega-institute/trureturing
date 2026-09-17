@@ -10,6 +10,17 @@ Only the Python standard library is needed here; -I -O is supported.
 """
 from __future__ import annotations
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -39,10 +50,10 @@ def canonical_digest(value):
 
 
 def verify(source_path, upstream_path):
-    raw = source_path.read_bytes()
+    raw = read_artifact_bytes(source_path)
     require(sha256(raw).hexdigest() == DV_SHA256, "exact DV source certificate SHA-256")
     source = json.loads(raw, object_pairs_hook=unique)
-    upstream = json.loads(upstream_path.read_text(), object_pairs_hook=unique)
+    upstream = json.loads(read_artifact_text(upstream_path), object_pairs_hook=unique)
     selected = {key: upstream[key] for key in source["source_certificate_sections"]}
     require(canonical_digest(selected) == source["source_sections_sha256"] == UPSTREAM_SHA256,
             "exact original DV upstream sections")
@@ -129,17 +140,17 @@ def verify(source_path, upstream_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-certificate", type=Path,
-                        default=Path(__file__).with_name("actual_deletion_profile_certificate.json"))
+                        default=(Path(__file__).resolve().parent / 'certificates/actual_deletion_profile_certificate.json'))
     parser.add_argument("--upstream-profile", type=Path,
-                        default=Path(__file__).with_name("marked_head_profile_certificate.json"))
+                        default=(Path(__file__).resolve().parent / 'certificates/marked_head_profile_certificate.json'))
     parser.add_argument("--write", type=Path)
     parser.add_argument("--check", type=Path)
     args = parser.parse_args()
     result = verify(args.source_certificate, args.upstream_profile)
     if args.check:
-        require(result == json.loads(args.check.read_text(), object_pairs_hook=unique), "saved density-bridge result matches reconstruction")
+        require(result == json.loads(read_artifact_text(args.check), object_pairs_hook=unique), "saved density-bridge result matches reconstruction")
     if args.write:
-        args.write.write_text(json.dumps(result, indent=2)+"\n")
+        write_certificate_text(args.write, json.dumps(result, indent=2)+"\n")
     print(json.dumps({"density_domination_D": result["density_domination_D"],
                       "band8": result["bands"][7]["actual_killed_band_lower"],
                       "band10": result["bands"][9]["actual_killed_band_lower"],

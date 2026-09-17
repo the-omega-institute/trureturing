@@ -31,6 +31,17 @@ optimize arbitrary higher 3/5/7 powers, and does not settle unrestricted #7.
 No new optimizer or Lean theorem is introduced.  Checks survive Python -O.
 Default execution recomputes the complete certificate; --write regenerates.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from importlib.util import module_from_spec, spec_from_file_location
@@ -41,7 +52,7 @@ import json
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'erdos7-pg1-joint-layout-gap-v1'
-SOURCE = 'mod3_conditioned_geometry_certificate.json'
+SOURCE = 'certificates/mod3_conditioned_geometry_certificate.json'
 P, T, H, M = 17, 8, 3, 315
 FORBIDDEN_CENTER, TEST_CENTER = 257, 47
 ENERGY_WEIGHT, CHARGE_WEIGHT = F(59, 45), F(483)
@@ -81,7 +92,7 @@ def limiting_cost(A, C):
 
 
 def evaluate(directory, expected_hashes=None):
-    raw = (directory/SOURCE).read_bytes()
+    raw = read_artifact_bytes(directory/SOURCE)
     hashes = {SOURCE: sha256(raw).hexdigest()}
     if expected_hashes is not None:
         require(hashes == expected_hashes, 'unchanged canonical PG1 source')
@@ -224,16 +235,16 @@ def evaluate(directory, expected_hashes=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?', type=Path,
-                        default=HERE/'pg1_joint_layout_gap_certificate.json')
+                        default=HERE/'certificates/pg1_joint_layout_gap_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
-    expected = None if args.write else json.loads(args.certificate.read_text())
+    expected = None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         require(expected['schema'] == SCHEMA, 'certificate schema')
     actual = evaluate(args.source_directory, None if expected is None else expected['source_sha256'])
     if args.write:
-        args.certificate.write_text(json.dumps(actual, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(actual, indent=2)+'\n')
     else:
         require(actual == expected, 'complete deterministic joint-layout-gap certificate equality')
     result = actual['result']

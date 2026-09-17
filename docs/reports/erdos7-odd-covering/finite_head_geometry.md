@@ -227,7 +227,7 @@ neither dominates the other at all thresholds. No continuation from prime
 ## Exact verification and scope
 
 The [standard-library verifier](verify_finite_head_geometry.py)
-reads the [fixed rational certificate](finite_head_geometry_certificate.json),
+reads the [fixed rational certificate](certificates/finite_head_geometry_certificate.json),
 reconstructs the six actual survivor sets, and checks all 140 normalized
 assignments, all 27720 independent test layouts, the primal and dual
 probabilities, the same-law hinge profiles and all six prime-7 lifts.

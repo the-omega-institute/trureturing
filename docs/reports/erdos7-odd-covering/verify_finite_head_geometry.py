@@ -5,6 +5,17 @@ All arithmetic and exhaustive layout checks use only the Python standard library
 The certificate contains probability laws and dual distributions, not solver claims.
 The hierarchical symmetry/completion and prime7 lift are ordinary proof inputs.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import permutations,product
 from math import lcm,prod
@@ -184,7 +195,7 @@ def verify(certificate):
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
- parser.add_argument('certificate',nargs='?',type=Path,default=Path(__file__).with_name('finite_head_geometry_certificate.json'))
- args=parser.parse_args();result=verify(json.loads(args.certificate.read_text()))
+ parser.add_argument('certificate',nargs='?',type=Path,default=(Path(__file__).resolve().parent / 'certificates/finite_head_geometry_certificate.json'))
+ args=parser.parse_args();result=verify(json.loads(read_artifact_text(args.certificate)))
  print(json.dumps({'result':'PASS',**result}))
 if __name__=='__main__':main()

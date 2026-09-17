@@ -6,6 +6,17 @@ original9/H2 and mod3 probability certificates are hash-bound inputs. The
 point geometry helper is loaded from the same directory.
 All omitted auxiliary depths are included by exact geometric moments.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -112,8 +123,8 @@ def scalar_gap(seed):
 
 def evaluate(data,source_directory):
     PG=load(source_directory/'verify_point_geometry.py','point_geometry')
-    source=(source_directory/'mod3_conditioned_geometry_certificate.json').read_bytes()
-    m9raw=(source_directory/'original9_conditioned_geometry_certificate.json').read_bytes()
+    source=read_artifact_bytes(source_directory/'certificates/mod3_conditioned_geometry_certificate.json')
+    m9raw=read_artifact_bytes(source_directory/'certificates/original9_conditioned_geometry_certificate.json')
     m9=json.loads(m9raw)
     require(sha256(source).hexdigest()==data['mod3_source_sha256']==m9['source_sha256']
             and sha256(m9raw).hexdigest()==data['original9_source_sha256'],
@@ -204,16 +215,16 @@ def evaluate(data,source_directory):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate',nargs='?',type=Path,
-                        default=HERE/'original9_convex_transfer_certificate.json')
+                        default=HERE/'certificates/original9_convex_transfer_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args()
-    data=json.loads(args.certificate.read_text())
+    data=json.loads(read_artifact_text(args.certificate))
     require(data['schema']=='erdos7-original9-convex-transfer-v1'
             and data['rounded_Gamma13_upper']=='152329/1000','specified transfer certificate')
     result=evaluate(data,args.source_directory)
     if args.write:
-        data['result']=result;args.certificate.write_text(json.dumps(data,indent=2)+'\n')
+        data['result']=result;write_certificate_text(args.certificate, json.dumps(data,indent=2)+'\n')
     else:require(data['result']==result,'exact convex branches, full tails, same-law transfer and scalar gap')
     print(json.dumps({'H4_upper':result['H4_upper'],'H6_upper':result['H6_upper'],
                       'Gamma13_upper':result['fixed11_13_consumer']['supported_square_upper'],

@@ -5,6 +5,17 @@ Usage: python3 verify_point_geometry.py [point_geometry_certificate.json]
 Requires Python3 and NumPy. All comparisons and certificate arithmetic are
 integer or Fraction; no optimizer, external service, or scratch module is used.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from pathlib import Path
 from fractions import Fraction as F
 from itertools import product,combinations
@@ -174,8 +185,8 @@ def group_oracle(q,D,top=0,chunk=16):
 
 
 def main():
- path=Path(sys.argv[1]) if len(sys.argv)>1 else Path(__file__).with_name('point_geometry_certificate.json')
- data=json.loads(path.read_text())
+ path=Path(sys.argv[1]) if len(sys.argv)>1 else (Path(__file__).resolve().parent / 'certificates/point_geometry_certificate.json')
+ data=json.loads(read_artifact_text(path))
  require(type(data) is dict,'certificate object')
  require(data['target']=='3849/106','pinned target3849/106')
  for name in ['points','old_points','weight_numerators','depth_box','divisors','cap_numerators','pure7_square_numerators','fixedA_square_numerators']:

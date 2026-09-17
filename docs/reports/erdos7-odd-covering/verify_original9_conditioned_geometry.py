@@ -6,6 +6,17 @@ All ten original3/original9 branches, full geometric tails, weighted actual
 deletion groups and the independent positive survival bound are recomputed.
 Requires Python3 and NumPy. Run with python3 -I -O; --write creates the result.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -90,9 +101,9 @@ def hinge2_observation(pts,xs,w,den,ri,cut,ds,ga,rem,depths,probs,beta,caps,GD,q
 
 
 def evaluate(data):
-    source=HERE/'mod3_conditioned_geometry_certificate.json'
-    require(sha256(source.read_bytes()).hexdigest()==data['source_sha256'],'inherited probability source')
-    parent=json.loads(source.read_text())
+    source=HERE/'certificates/mod3_conditioned_geometry_certificate.json'
+    require(sha256(read_artifact_bytes(source)).hexdigest()==data['source_sha256'],'inherited probability source')
+    parent=json.loads(read_artifact_text(source))
     require(parent['schema']=='erdos7-mod3-conditioned-geometry-v1','source schema')
     case=next(c for c in parent['cases'] if c['name']==data['source_case'])
     require(case['name']=='PG1' and data['reference_target']=='33'
@@ -164,12 +175,12 @@ def evaluate(data):
 
 def main():
     args=[a for a in sys.argv[1:] if a!='--write']
-    path=Path(args[0]) if args else HERE/'original9_conditioned_geometry_certificate.json'
-    data=json.loads(path.read_text())
+    path=Path(args[0]) if args else HERE/'certificates/original9_conditioned_geometry_certificate.json'
+    data=json.loads(read_artifact_text(path))
     require(data['schema']=='erdos7-original9-conditioned-geometry-v1','schema')
     result=evaluate(data)
     if '--write' in sys.argv:
-        data['result']=result;path.write_text(json.dumps(data,indent=2)+'\n')
+        data['result']=result;write_certificate_text(path, json.dumps(data,indent=2)+'\n')
     else:require(data['result']==result,'all exact split-label geometry and deletion data')
     print(json.dumps({'Gamma_upper':result['Gamma_upper'],'rounded_Gamma_upper':data['rounded_Gamma_upper'],
                       'survival_lower':result['survival_lower'],'branches':len(result['records']),

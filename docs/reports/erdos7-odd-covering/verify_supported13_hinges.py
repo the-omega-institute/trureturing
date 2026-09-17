@@ -5,6 +5,17 @@ The source is the same actual AP(4,6) law. Exact auxiliary probability
 and first-moment tails remain full at every step. Default validates a
 saved certificate; --write regenerates it. No Lean status is asserted.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from collections import defaultdict
 from fractions import Fraction as F
@@ -17,9 +28,9 @@ import runpy
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'pure_root_profile_certificate.json':'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b',
-    'shared_cell_hinges_certificate.json':'6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29',
-    'verify_pg1_scalar_schedule.py':'22fe9f08170e2585e8e9d57d600937b4ce0a8bf653ff6f21942e207a74ba9507',
+    'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
+    'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
+    'verify_pg1_scalar_schedule.py':'9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b',
 }
 LIMIT=17
 
@@ -163,18 +174,18 @@ def scan(initial,hinges,mean,G,helper,expected_finite):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'supported13_hinges_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/supported13_hinges_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--shared-cell-certificate',type=Path)
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args()
-    shared_path=args.shared_cell_certificate or args.source_directory/'shared_cell_hinges_certificate.json'
+    shared_path=args.shared_cell_certificate or args.source_directory/'certificates/shared_cell_hinges_certificate.json'
     for name,pin in PINS.items():
-        path=shared_path if name=='shared_cell_hinges_certificate.json' else args.source_directory/name
-        require(sha256(path.read_bytes()).hexdigest()==pin,'source SHA-256: '+name)
-    j=json.loads((args.source_directory/'pure_root_profile_certificate.json').read_text(),object_pairs_hook=unique)
-    shared=json.loads(shared_path.read_text(),object_pairs_hook=unique)
-    require(shared['source_sha256']['pure_root_profile_certificate.json']==PINS['pure_root_profile_certificate.json'],
+        path=shared_path if name=='certificates/shared_cell_hinges_certificate.json' else args.source_directory/name
+        require(sha256(read_artifact_bytes(path)).hexdigest()==pin,'source SHA-256: '+name)
+    j=json.loads(read_artifact_text(args.source_directory/'certificates/pure_root_profile_certificate.json'),object_pairs_hook=unique)
+    shared=json.loads(read_artifact_text(shared_path),object_pairs_hook=unique)
+    require(shared['source_sha256']['certificates/pure_root_profile_certificate.json']==PINS['certificates/pure_root_profile_certificate.json'],
             'same prior actual law in the shared-cell source')
     helper=runpy.run_path(str(args.source_directory/'verify_pg1_scalar_schedule.py'))
     knots,M,G,extension=source_profile(j,shared)
@@ -198,10 +209,10 @@ def main():
         single17=dict(schedule_count=15,outcomes=single,best=best17),
         restart17_19=restart,once_conditioned11_13_17_19=four_step,
         universal_formula='U(t)=sum_(n<t)P(N=n)*n*H357(t/n)+M357*E[N;N>=t]-t*P(N>=t), N=N11*N13 and E N=49/36. For t>=1, H13(t)<=inf_(a>=t)[a-t+U(a)/rho13]. Only the listed witnesses are numerically evaluated.',
-        unresolved='Every one of the255 supported13-restart schedules and255 four-step once-conditioned schedules has positive W483 defect for this specific upper functional. Some yield larger finite positive-survival bounds. Actual kernels or richer joint observations may perform better.'))
-    if args.write: args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+        open_mathematical_obligations='Every one of the255 supported13-restart schedules and255 four-step once-conditioned schedules has positive W483 defect for this specific upper functional. Some yield larger finite positive-survival bounds. Actual kernels or richer joint observations may perform better.'))
+    if args.write: write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:
-        actual=json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+        actual=json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)
         require(actual==result,'entire certificate equals exact recomputation')
     print('PASS full AP13 profile: mean<='+str(float(ms))+'; AP17 Gamma<='+str(float(best17['Gamma_upper']))+
           '; AP19 Gamma<='+str(float(restart['best_sufficient_bound']['Gamma_upper']))+

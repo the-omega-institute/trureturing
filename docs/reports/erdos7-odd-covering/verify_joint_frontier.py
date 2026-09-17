@@ -6,12 +6,23 @@ finite arithmetic in the accompanying ordinary proof, not a Lean proof
 or an enumeration of actual congruence families. All infinite tails
 in the bounding formulae are evaluated by exact geometric identities.
 
-The original eight predecessor inputs are identified by their commit and
-SHA-256 pins. Two additional pins identify the uniform three-prime source,
+The commit identifies the mathematical predecessor of the original eight inputs;
+SHA-256 pins identify their current complete bytes. Two additional pins identify the uniform three-prime source,
 which was not present at that predecessor commit. Mathematical validity
 is imported from the corresponding ordinary proofs; hashes check source
 identity, not those proofs.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from functools import lru_cache
@@ -569,11 +580,11 @@ W5 = ((5, F(1)),)
 
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
-ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': '62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0', 'verify_shared_cell_square.py': '55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4', 'verify_joint_source_normalization.py': '5dadfee0a4a929d6a1f60fa7830f7c824ad92d90a71982baa9449b1a296f2471', 'pure_root_profile_certificate.json': 'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b', 'shared_cell_hinges_certificate.json': '6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29', 'shared_cell_square_certificate.json': 'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1', 'shared_square_continuation_certificate.json': '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32', 'joint_source_normalization_certificate.json': '5bff80b80f880c8de3f9c0ba62bac5536f9672ce86d02fa28e043d1c6bd0acf2'}
+ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': 'f8ba06810c4552e5f6ec022d3762d615751407551ef6f4412bbb0490bb09ece9', 'verify_shared_cell_square.py': '9627bf255470676aec922813c031f2488c9433c7fa1326e735b4965d2ba89ca5', 'verify_joint_source_normalization.py': 'c52ef571da5dc9e6310d4081b85e6fca2786d7ca066cee8b1906abd01e6b3631', 'certificates/pure_root_profile_certificate.json': '64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751', 'certificates/shared_cell_hinges_certificate.json': 'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae', 'certificates/shared_cell_square_certificate.json': '100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef', 'certificates/shared_square_continuation_certificate.json': '1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e', 'certificates/joint_source_normalization_certificate.json': 'd0d5759ec857bdbe8376c593711c2f5f3273d115b134e87d0dc9be64ce5f01f1'}
 SOURCE_PINS = {
     **ORIGINAL_SOURCE_PINS,
-    'verify_uniform_gamma_cofactor_coupling.py': '5ec4dfd763eab31a6ab8f72025fce89f1aa3101437d7557197568b70312d4d10',
-    'uniform_gamma_cofactor_certificate.json': '2c0ad011cf6627046b24b001de288ac9d32fe2390d6fd119b302e52349b0e341',
+    'verify_uniform_gamma_cofactor_coupling.py': 'dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d',
+    'certificates/uniform_gamma_cofactor_certificate.json': 'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
 }
 TARGET=F(135235148346191272912644779662034152101019,301013392900945745723455169136921801600)
 TARGET_GAMMA=F(2759803303859498317,17626016683279862)
@@ -700,7 +711,7 @@ def square81num(dat):
 
 def source_pins(directory):
     for name,pin in SOURCE_PINS.items():
-        require(hashlib.sha256((directory/name).read_bytes()).hexdigest()==pin,
+        require(hashlib.sha256(read_artifact_bytes(directory/name)).hexdigest()==pin,
                 'Pinned canonical mathematical input '+name)
 
 def fallback_checks():
@@ -778,7 +789,7 @@ def reconstruct():
     require(all(r['joint_upper']<=splitmax and r['joint_upper']<=nofloormax for r in branches),'Comparison envelopes cover other branches')
     return encode({'schema':'erdos7-original-five-strip-deletion-frontier-v1','source_commit':COMMIT,
         'source_commit_scope':list(ORIGINAL_SOURCE_PINS),
-        'source_provenance':'source_commit identifies only source_commit_scope; the two additional uniform-source inputs are identified by their SHA-256 pins and were not present at that commit',
+        'source_provenance':'source_commit records the mathematical predecessor of source_commit_scope, not the current source bytes. source_sha256 binds every current Python source or fully reconstructed certificate byte sequence; certificate manifests additionally validate every part hash.',
         'source_sha256':SOURCE_PINS,'input19':'physical mu17=nu13 K17, distinct from killed xi',
         'bound':TARGET,'Gamma13':TARGET_GAMMA,'T13_81':TARGET_T81,
         'C0':WHOLE_CONST,'KZ':kZ,'continuous_coefficient':coeff,'Gamma_coefficient':cg,'T81_coefficient':ct,
@@ -811,13 +822,13 @@ def main():
     base=Path(__file__).resolve().parent
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-directory',type=Path,default=(base/'sources' if (base/'sources').is_dir() else base))
-    parser.add_argument('--certificate',type=Path,default=base/'joint_frontier_certificate.json')
+    parser.add_argument('--certificate',type=Path,default=base/'certificates/joint_frontier_certificate.json')
     mode=parser.add_mutually_exclusive_group()
     mode.add_argument('--write',action='store_true',help='Regenerate the single complete exact certificate.')
     mode.add_argument('--check',action='store_true',help='Reconstruct and compare; this is also the default.')
     args=parser.parse_args();source_pins(args.source_directory);result=reconstruct()
-    if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
-    else:require(json.loads(args.certificate.read_text(),object_pairs_hook=unique_json)==result,'Entire single certificate, all1296 case records and8 branches')
+    if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n', encoding='utf-8')
+    else:require(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique_json)==result,'Entire single certificate, all1296 case records and8 branches')
     print('PASS: independently reconstructed1296 vertices, all12 branches, complete tails and source pins.')
     print('Joint bound '+str(TARGET)+' = '+str(float(TARGET)))
     print('Gamma13 '+str(float(TARGET_GAMMA))+'; T13(81) '+str(float(TARGET_T81)))

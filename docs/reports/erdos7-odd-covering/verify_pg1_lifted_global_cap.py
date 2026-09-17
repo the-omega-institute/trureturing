@@ -6,6 +6,17 @@ Finite replays below verify formulas and family identities, not the universal
 quantifiers. All original divisor labels are retained. Standard library only;
 checks remain active under python -I -O. No Lean verification is asserted.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -15,9 +26,9 @@ import argparse
 import json
 
 HERE = Path(__file__).resolve().parent
-SOURCE = 'mod3_conditioned_geometry_certificate.json'
+SOURCE = 'certificates/mod3_conditioned_geometry_certificate.json'
 SOURCE_SHA256 = '9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a'
-CERTIFICATE = 'pg1_lifted_global_cap_certificate.json'
+CERTIFICATE = 'certificates/pg1_lifted_global_cap_certificate.json'
 P, LOW, CENTER, SLICE, TARGET = 17, 315, 2, 314, 2
 DELTA, CAP, TRANSFER = F(7, 15), F(15, 8), F(1, 2**24)
 OLD_PRIMES = (3, 5, 7, 11, 13)
@@ -339,7 +350,7 @@ def unique_object(pairs):
 
 
 def evaluate(directory):
-    raw = (directory/SOURCE).read_bytes()
+    raw = read_artifact_bytes(directory/SOURCE)
     require(sha256(raw).hexdigest() == SOURCE_SHA256, 'canonical PG1 source SHA-256')
     source = json.loads(raw, object_pairs_hook=unique_object)
     require(source['schema'] == 'erdos7-mod3-conditioned-geometry-v1', 'source schema')
@@ -408,9 +419,9 @@ def main():
     args = parser.parse_args()
     result = evaluate(args.source_directory)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        stored = json.loads(args.certificate.read_text(), object_pairs_hook=unique_object)
+        stored = json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique_object)
         require(json.dumps(stored, sort_keys=True) == json.dumps(result, sort_keys=True),
                 'entire certificate equals exact recomputation')
     print(json.dumps(dict(K2=result['moments']['K2'], K3=result['moments']['K3'],

@@ -5,6 +5,17 @@ Rebuilds its actual mask orbits, one shared270-depth pure7 numerator, every
 actual deletion-group maximum, and support-inclusion coverage. Uses NumPy
 and the adjacent canonical geometry algorithms; no optimizer or scratch data.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from collections import Counter
 from fractions import Fraction as F
 from itertools import product
@@ -98,7 +109,7 @@ def evaluate(data, directory):
     require(type(data) is dict and data.get("schema") == SCHEMA, "uniform-profile schema")
     require(data.get("shape") == SHAPE and data.get("target") == "35"
             and data.get("depth_box") == [8, 5, 4], "specified geometry and full-tail target")
-    geometries = geometry.read_geometries(directory / "actual_deletion_profile_certificate.json")
+    geometries = geometry.read_geometries(directory / 'certificates/actual_deletion_profile_certificate.json')
     old_case = next(row for row in geometries if row["shape"] == SHAPE)
     old = old_case["old_points"]
     profile = data.get("profile")
@@ -296,15 +307,15 @@ def main():
     here = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--canonical-directory", type=Path, default=here)
-    parser.add_argument("--certificate", type=Path, default=here / "uniform_profile_geometry_certificate.json")
+    parser.add_argument("--certificate", type=Path, default=here / 'certificates/uniform_profile_geometry_certificate.json')
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
-    data = json.loads(args.certificate.read_text())
+    data = json.loads(read_artifact_text(args.certificate))
     exact_json_types(data)
     result = evaluate(data, args.canonical_directory)
     if args.write:
         data["result"] = result
-        args.certificate.write_text(json.dumps(data, indent=2) + "\n")
+        write_certificate_text(args.certificate, json.dumps(data, indent=2) + "\n")
     else:
         require(data.get("result") == result, "exact profile, moments, actual groups, and coverage")
     print(json.dumps({"verified": True, "target": data["target"],

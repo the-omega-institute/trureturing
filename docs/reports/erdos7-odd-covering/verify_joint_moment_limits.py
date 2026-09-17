@@ -5,6 +5,17 @@ Only two fixed W483 schedules are checked, not a new255-schedule search.
 The infinite load tail is covered by an exact affine identity. No solver
 or floating-point value is needed for certificate generation or replay.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -15,8 +26,8 @@ import runpy
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'supported13_hinges_certificate.json':'ea618a2dfe14723b0f9f3adea343d72dac162d106c432ba023e6b21fe874b8fc',
-    'verify_pg1_scalar_schedule.py':'22fe9f08170e2585e8e9d57d600937b4ce0a8bf653ff6f21942e207a74ba9507',
+    'certificates/supported13_hinges_certificate.json':'b34a86ff533a3d1fc9c3de0c0ab3894f5648326eaf8e6602f0b176f350330442',
+    'verify_pg1_scalar_schedule.py':'9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b',
 }
 W=F(483)
 
@@ -149,24 +160,24 @@ def route(source,helper,name):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'joint_moment_limits_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/joint_moment_limits_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--profile-certificate',type=Path)
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args()
-    profile_path=args.profile_certificate or args.source_directory/'supported13_hinges_certificate.json'
+    profile_path=args.profile_certificate or args.source_directory/'certificates/supported13_hinges_certificate.json'
     helper_path=args.source_directory/'verify_pg1_scalar_schedule.py'
-    for path,name in [(profile_path,'supported13_hinges_certificate.json'),(helper_path,'verify_pg1_scalar_schedule.py')]:
-        require(sha256(path.read_bytes()).hexdigest()==PINS[name],'source SHA-256: '+name)
-    source=json.loads(profile_path.read_text(),object_pairs_hook=unique)
+    for path,name in [(profile_path,'certificates/supported13_hinges_certificate.json'),(helper_path,'verify_pg1_scalar_schedule.py')]:
+        require(sha256(read_artifact_bytes(path)).hexdigest()==PINS[name],'source SHA-256: '+name)
+    source=json.loads(read_artifact_text(profile_path),object_pairs_hook=unique)
     helper=runpy.run_path(str(helper_path))
     rows=[route(source,helper,name) for name in ('restart','fourstep')]
     result=encode(dict(schema='erdos7-joint-integer-moment-limits-v1',source_sha256=PINS,
         W=W,routes=rows,
         scope='Two fixed existing schedules, all load moments together and complete unbounded load/auxiliary tails. No repeated255 scan. Exact dual upper bounds and matching abstract primal probabilities certify the limited gain from this moment relaxation; actual joint geometry remains outside it.'))
-    if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+    if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:
-        actual=json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+        actual=json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)
         require(actual==result,'entire certificate equals exact recomputation')
     print('PASS exact joint moments: '+', '.join(r['name']+' defect='+str(float(r['exact_joint_moment_W483_defect']))+
                                                ', saving='+str(float(r['exact_saving'])) for r in rows))

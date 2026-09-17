@@ -6,6 +6,17 @@ This program checks their exact constants and finite coefficient fixtures.
 By default validate the existing certificate. Writing requires --write.
 """
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -14,8 +25,8 @@ from math import prod
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SOURCE_NAME = 'arbitrary_head_profile_certificate.json'
-SOURCE_SHA256 = '707c70369e8e7d27988c3710f17c4fa99c74bd7d40fc4af301020e1439b18f48'
+SOURCE_NAME = 'certificates/arbitrary_head_profile_certificate.json'
+SOURCE_SHA256 = 'afd62721adaa0800421ea3fbcc9ce99c76ad6e7fda7526ac73194a9e6aeae65e'
 
 
 def require(condition, message):
@@ -168,11 +179,11 @@ def step(p, old_primes, D, J, b=20, h=8):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?', type=Path,
-                        default=HERE/'weighted_kernel_tails_certificate.json')
+                        default=HERE/'certificates/weighted_kernel_tails_certificate.json')
     parser.add_argument('--source-certificate', type=Path, default=HERE/SOURCE_NAME)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
-    raw = args.source_certificate.read_bytes()
+    raw = read_artifact_bytes(args.source_certificate)
     require(sha256(raw).hexdigest() == SOURCE_SHA256, 'source certificate SHA-256')
     source = json.loads(raw, object_pairs_hook=unique)
     require(source['schema'] == 'erdos7-arbitrary-head-profile-v1', 'source certificate schema')
@@ -215,13 +226,13 @@ def main():
                           'Any desired test truncation requires a separate paid test-tail error.',
                           'Any incoming-law truncation needs continuity for this AP law; the existing AO finite-core certificate is a different law.'],
         optional_test_tail=dict(physical19_Haar_density_bound=physical_density,
-             formula='E[L^2-L_h^2] <= (18D13/5)*(product_p sum_(a>=0)(2a+1)/p^a - product_p sum_(0<=a<=h_p)(2a+1)/p^a).',
+             formula_description='E[L^2-L_h^2] <= (18D13/5)*(product_p sum_(a>=0)(2a+1)/p^a - product_p sum_(0<=a<=h_p)(2a+1)/p^a).',
              primes=[3,5,7,11,13,17,19], used_in_377_allowance=False),
         fixtures=dict(localized_prefix_pair_cases=prefix_fixtures(),**coefficient_fixtures())))
     if args.write:
-        args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:
-        actual = json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+        actual = json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)
         require(actual == result, 'entire certificate equals exact recomputation')
     print('PASS mask-only AP(4,6) restart: epsilon17='+str(float(eps17))+
           '; epsilon19='+str(float(eps19))+'; full W483 allowance='+str(float(allowance))+' < .377')

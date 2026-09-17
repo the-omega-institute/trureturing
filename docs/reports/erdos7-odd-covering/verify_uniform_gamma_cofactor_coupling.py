@@ -7,6 +7,17 @@ all72 old branches,103680 shared branches,12960 original signed
 layout-vertices,12960 weighted-cross layout-vertices and16848
 same-original5 endpoint/layout pairs, plus all missing-class cases. No solver or finite original-height cutoff is used.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from pathlib import Path
@@ -315,7 +326,7 @@ def signed_young_three_prime_bound(vertex_data=None):
         'layout_margin_sha256':hashlib.sha256(json.dumps(records,separators=(',',':')).encode()).hexdigest(),
         'relaxation_equalities':witnesses,'previous_obstruction':old_obstruction,
         'missing_pure_cases':missing,
-        'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'verifier_sha256':hashlib.sha256(read_artifact_bytes(Path(__file__))).hexdigest(),
         'scope':'Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution.',
     }
 
@@ -418,7 +429,7 @@ def same_original5_deletion_three_prime_bound(source, vertices):
         'minimum_unweighted_denominator':source['minimum_unweighted_denominator'],
         'layout_margin_sha256':hashlib.sha256(json.dumps(records,separators=(',',':')).encode()).hexdigest(),
         'relaxation_equalities':witnesses,'missing_pure_cases':missing,
-        'verifier_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'verifier_sha256':hashlib.sha256(read_artifact_bytes(Path(__file__))).hexdigest(),
         'scope':'The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution.',
     }
 
@@ -496,10 +507,10 @@ def main():
     mode.add_argument('--write',action='store_true',help='Regenerate the full exact certificate.')
     mode.add_argument('--check',action='store_true',help='Check the full certificate; this is the default.')
     args=parser.parse_args()
-    path=Path(__file__).with_name('uniform_gamma_cofactor_certificate.json')
+    path=(Path(__file__).resolve().parent / 'certificates/uniform_gamma_cofactor_certificate.json')
     expected=compute_certificate()
     if args.write:
-        path.write_text(json.dumps(expected,indent=2)+'\n',encoding='utf-8')
+        write_certificate_text(path, json.dumps(expected,indent=2)+'\n', encoding='utf-8')
     else:
         def unique(pairs):
             values={}
@@ -507,7 +518,7 @@ def main():
                 require(key not in values,'Duplicate certificate key: '+key)
                 values[key]=value
             return values
-        data=json.loads(path.read_text(),object_pairs_hook=unique)
+        data=json.loads(read_artifact_text(path),object_pairs_hook=unique)
         require(data==expected,'fixed certificate differs from exact recomputation')
     print('Verified all72 continuous-envelope branches: uniform Gamma35 <=55/4.')
     print('Positive denominators and absent-modulus-3 bound215/24 verified; '

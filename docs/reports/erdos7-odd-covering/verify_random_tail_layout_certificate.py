@@ -6,6 +6,17 @@ Gamma for every probability supported on the specified complete survivors.
 It does not compute an upper bound or assert a minimax optimum. All layout
 scores are reconstructed from residues; no saved solver matrix is trusted.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from itertools import product
@@ -229,10 +240,9 @@ def evaluate_certificate_inputs(data):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate', nargs='?', default=str(Path(__file__).with_name(
-        'random_tail_layout_certificate.json')))
+    parser.add_argument('certificate', nargs='?', default=str((Path(__file__).resolve().parent / 'certificates/random_tail_layout_certificate.json')))
     args = parser.parse_args()
-    data = json.loads(Path(args.certificate).read_text(), object_pairs_hook=unique_object)
+    data = json.loads(read_artifact_text(Path(args.certificate)), object_pairs_hook=unique_object)
     require(data.get('schema') == 'erdos7-random-tail-layout-certificate-v1', 'wrong certificate schema')
     expected = evaluate_certificate_inputs(data)
     require(data['verified_result'] == expected, 'fixed result differs from exact reconstruction')

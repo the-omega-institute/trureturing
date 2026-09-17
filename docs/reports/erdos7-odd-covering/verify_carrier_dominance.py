@@ -7,6 +7,17 @@ all six resource-DP minimal-carrier classifications, and PG1's support-inclusion
 coverage. This entry does not modify or reinterpret the existing classification
 certificate and does not run an LP or evaluate a new moment bound.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from collections import Counter
 from functools import lru_cache, reduce
 from itertools import permutations, product
@@ -231,7 +242,7 @@ def classify_minimal(points, states, representatives, cylinders, maps, geometry)
 
 
 def read_pg1(path, geometries, geometry):
-    data = json.loads(path.read_text())
+    data = json.loads(read_artifact_text(path))
     require(geometry.digest(data) == PG1_SOURCE_SHA256, "published PG1 certificate identity")
     require(type(data) is dict and data.get("schema") == "erdos7-point-geometry-v1", "PG1 schema")
     require(data.get("target") == "3849/106" and data.get("Gamma") == PG1_GAMMA,
@@ -294,7 +305,7 @@ C2_SHAPE = "root2_other_same_column"
 
 
 def read_mod3_source(path, geometries, geometry):
-    data = json.loads(path.read_text())
+    data = json.loads(read_artifact_text(path))
     require(geometry.digest(data) == MOD3_SOURCE_SHA256, "mod3 source certificate identity")
     require(type(data) is dict and data.get("schema") == "erdos7-mod3-conditioned-geometry-v1",
             "mod3 source schema")
@@ -401,10 +412,10 @@ def c2_coverage(masks, assignments, points, maps, minimal, geometry):
 
 def reconstruct(directory):
     geometry = geometry_module(directory)
-    geometries = geometry.read_geometries(directory / "actual_deletion_profile_certificate.json")
-    pg1_masks, pg1_digest = read_pg1(directory / "point_geometry_certificate.json", geometries, geometry)
+    geometries = geometry.read_geometries(directory / 'certificates/actual_deletion_profile_certificate.json')
+    pg1_masks, pg1_digest = read_pg1(directory / 'certificates/point_geometry_certificate.json', geometries, geometry)
     c2_masks, c2_assignments = read_mod3_source(
-        directory / "mod3_conditioned_geometry_certificate.json", geometries, geometry)
+        directory / 'certificates/mod3_conditioned_geometry_certificate.json', geometries, geometry)
     embedding_counts = old_shape_embedding_counts(geometries)
     rows = []
     coverage = None
@@ -467,17 +478,17 @@ def main():
     base = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--canonical-directory", type=Path, default=base)
-    parser.add_argument("--check", type=Path, default=base / "carrier_dominance_certificate.json")
+    parser.add_argument("--check", type=Path, default=base / 'certificates/carrier_dominance_certificate.json')
     parser.add_argument("--write", type=Path)
     args = parser.parse_args()
     expected = None
     if args.write is None:
-        expected = json.loads(args.check.read_text())
+        expected = json.loads(read_artifact_text(args.check))
         check_json_types(expected)
         require(type(expected) is dict and expected.get("schema") == SCHEMA, "result schema")
     result = reconstruct(args.canonical_directory)
     if args.write is not None:
-        args.write.write_text(json.dumps(result, indent=2) + "\n")
+        write_certificate_text(args.write, json.dumps(result, indent=2) + "\n")
     else:
         require(result == expected, "exact deterministic dominance result")
     print(json.dumps({"verified": True, **result["totals"],

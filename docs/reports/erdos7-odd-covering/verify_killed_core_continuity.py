@@ -6,6 +6,17 @@ standard-library verifier checks exact rational coefficients, twelve
 actual-root branches, both complete cutoffs and every saved certificate
 field. No numerical solver, finite-period enumeration or Lean claim.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -15,9 +26,9 @@ import json
 
 HERE=Path(__file__).resolve().parent
 PINS={
- 'shared_cell_hinges_certificate.json':'6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29',
- 'pure_root_profile_certificate.json':'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b',
- 'ap_core_stability_certificate.json':'a18f75b4ab0b22823347f186cafb4cc310f0da03bb23bd2eecced6f23ab46c4f',
+ 'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
+ 'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
+ 'certificates/ap_core_stability_certificate.json':'338f6868753a5b2c321e20ef34bdadb2c52a78550c14e5f59cbc28177bdc1b46',
 }
 
 def require(condition,message):
@@ -99,14 +110,14 @@ def cost(branch,tau,last=False):
 def main():
  global G0,D0,G,D,rho
  parser=argparse.ArgumentParser(description=__doc__)
- parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'killed_core_continuity_certificate.json')
+ parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/killed_core_continuity_certificate.json')
  parser.add_argument('--source-directory',type=Path,default=HERE)
  parser.add_argument('--write',action='store_true')
  args=parser.parse_args();src={}
  for n,pin in PINS.items():
-  raw=(args.source_directory/n).read_bytes();require(sha256(raw).hexdigest()==pin,'source SHA-256: '+n)
+  raw=read_artifact_bytes(args.source_directory/n);require(sha256(raw).hexdigest()==pin,'source SHA-256: '+n)
   src[n]=json.loads(raw,object_pairs_hook=unique)
- PR=src['pure_root_profile_certificate.json'];HC=src['shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
+ PR=src['certificates/pure_root_profile_certificate.json'];HC=src['certificates/shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
  G0,D0=F(3849,106),F(432,53)
  G,D,rho=map(F,[HC['supported_square'],HC['supported_Haar_density'],HC['survival_lower']])
  require((HC['T11'],HC['T13'])==(4,6),'same actual AP(4,6) construction')
@@ -114,7 +125,7 @@ def main():
  ps=[3,5,7,11,13,17,19]
  rows=[evaluate(list(zip(ps,[20]*7)),(8,8)),evaluate(list(zip(ps,[17,10,8,7,6,6,6])),(6,6))]
  safe=[F(667,1000000),F(263,1000)]
- APC=src['ap_core_stability_certificate.json']
+ APC=src['certificates/ap_core_stability_certificate.json']
  predecessor=next(r for r in APC['rows'] if r['box']==20)
  require(rows[0]['source']==[F(predecessor['normalized_weighted_error']),F(predecessor['normalized_L1_error'])], 'same AP incoming variation')
  require([rows[0]['steps'][0],rows[0]['steps'][2]]==list(map(F,APC['full_finite_reference']['mask_step_epsilons'])), 'same full weighted mask tails')
@@ -148,9 +159,9 @@ def main():
   energy_tail_bounds=energy,actual_row_1024_clip_error=clip,
   clip_scope='Only the pointwise HK minus unclipped cap cost under the actual old input laws. It does not bound every subsequent auxiliary/Jensen/supremum relaxation loss.',
   scope='Same actual AP13 construction, normalized physical and killed17/8,19/8 kernels; full original residues/heights and all missing classes. Complete source-law, forbidden-mask and test tails. The new criterion concerns killed Q, not the APC physical-square-plus-assigned-charge functional.',
-  unresolved='No maximum of either finite killed core or the two Xi frontiers is computed. Neither a Gamma19<484 theorem nor later-prime continuation or unrestricted Erdos7 resolution follows without that inequality. Ordinary proof and exact arithmetic, no Lean endpoint.'))
- if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
- else:require(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,'entire certificate equality')
+  open_mathematical_obligations='No maximum of either finite killed core or the two Xi frontiers is computed. Neither a Gamma19<484 theorem nor later-prime continuation or unrestricted Erdos7 resolution follows without that inequality. Ordinary proof and exact arithmetic, no Lean endpoint.'))
+ if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
+ else:require(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)==result,'entire certificate equality')
  print('PASS killed-Q full core errors '+str([float(r['total']) for r in rows])+'; unequal box labels '+str(rows[1]['test_labels'])+'; T13(81) '+str(float(T81))+'; actual-row clip error '+str(float(clip)))
 
 if __name__=='__main__':main()

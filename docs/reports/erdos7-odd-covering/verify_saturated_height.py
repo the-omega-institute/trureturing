@@ -4,6 +4,17 @@ finite CRT checks do not
 replace their all-height argument. No independence of original forbidden
 and test classes is assumed.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from pathlib import Path
@@ -199,8 +210,8 @@ mode.add_argument("--check", type=Path, help="compare against an exact certifica
 mode.add_argument("--output", type=Path, help="write the reconstructed certificate")
 args = parser.parse_args()
 if args.output:
- args.output.write_text(json.dumps(result, indent=2) + "\n")
+ write_certificate_text(args.output, json.dumps(result, indent=2) + "\n")
 else:
- certificate = args.check or Path(__file__).with_name("saturated_height_certificate.json")
- require(json.loads(certificate.read_text()) == result, "certificate equals exact reconstruction")
+ certificate = args.check or (Path(__file__).resolve().parent / 'certificates/saturated_height_certificate.json')
+ require(json.loads(read_artifact_text(certificate)) == result, "certificate equals exact reconstruction")
 print(json.dumps({'verified':True,'higher_height_cases':len(heightchecks),'kernel_entries':64*len(heightchecks),'oracle_delta_r':original['delta_r'],'oracle_delta_square_increment':original['delta_square_increment'],'strong_delta_r':strong['delta_r'],'strong_delta_c':strong['delta_c'],'strong_delta_s':strong['delta_s'],'strong_delta_square_increment':strong['delta_square_increment'],'actual_CRT_cases':len(crtchecks),'conditioning_obstruction_verified':True},sort_keys=True))

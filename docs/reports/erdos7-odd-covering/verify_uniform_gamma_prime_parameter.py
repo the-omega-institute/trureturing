@@ -6,6 +6,17 @@ This verifies identities and nonnegative polynomial coefficients on the entire
 interval 0 <= y <= 1/4, not a sample of numerical q values. The accompanying
 proof supplies the common-law layout inequality and the vertex reduction.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from math import comb
@@ -191,7 +202,7 @@ def compute_certificate():
 
 
 def main():
-    data = json.loads(Path(__file__).with_name('uniform_gamma_prime_parameter_certificate.json').read_text())
+    data = json.loads(read_artifact_text(Path(__file__).resolve().parent / 'certificates/uniform_gamma_prime_parameter_certificate.json'))
     expected = compute_certificate()
     require(data == expected, 'fixed certificate differs from symbolic reconstruction')
     print('Verified the exact two-branch budget envelope for every 0 <= y <= 1/4.')

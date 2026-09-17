@@ -6,6 +6,17 @@ and the complete outside-box remainder.  The aligned2 consumer uses separately
 verified, hash-bound source survival and 11/13 charge certificates.  This does
 not evaluate the inside-box anchored layout maxima or a global low-test search.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -30,11 +41,11 @@ def valuation(d,p):
     return out
 
 def evaluate(data,source_directory):
-    names=('mod3_conditioned_geometry_certificate.json',
-           'original9_conditioned_geometry_certificate.json',
-           'original9_convex_transfer_certificate.json',
-           'pg1_joint_tail_certificate.json','pg1_signed_g2_certificate.json')
-    raw={name:(source_directory/name).read_bytes() for name in names}
+    names=('certificates/mod3_conditioned_geometry_certificate.json',
+           'certificates/original9_conditioned_geometry_certificate.json',
+           'certificates/original9_convex_transfer_certificate.json',
+           'certificates/pg1_joint_tail_certificate.json','certificates/pg1_signed_g2_certificate.json')
+    raw={name:read_artifact_bytes(source_directory/name) for name in names}
     hashes={name:sha256(value).hexdigest() for name,value in raw.items()}
     require(hashes==data['source_sha256'],'five unchanged canonical certificate inputs')
     source,m9,cx,joint,g2=(json.loads(raw[name]) for name in names)
@@ -155,14 +166,14 @@ def evaluate(data,source_directory):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'pg1_anchored_square_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/pg1_anchored_square_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--write',action='store_true')
-    args=parser.parse_args();data=json.loads(args.certificate.read_text())
+    args=parser.parse_args();data=json.loads(read_artifact_text(args.certificate))
     require(data['schema']=='erdos7-pg1-anchored-square-v1','certificate schema')
     result=evaluate(data,args.source_directory)
     if args.write:
-        data['result']=result;args.certificate.write_text(json.dumps(data,indent=2)+'\n')
+        data['result']=result;write_certificate_text(args.certificate, json.dumps(data,indent=2)+'\n')
     else:require(data['result']==result,'exact anchored observations, remainders and branch consumers')
     print(json.dumps({'aligned2_head_upper':result['aligned2']['head_square_upper'],
                       'aligned2_Gamma13_upper':result['aligned2_current_charge']['Gamma13_upper'],

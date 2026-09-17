@@ -7,6 +7,17 @@ those tables. Recomputes the new grouped deletion queries and exhausts all
 10000 independent root combinations, using rigorous separate bounds to prune.
 The default action verifies; --write rebuilds the adjacent certificate.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -18,12 +29,12 @@ import json
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
-NAMES = ('mod3_conditioned_geometry_certificate.json',
-         'original9_conditioned_geometry_certificate.json',
-         'pg1_joint_tail_certificate.json',
-         'original9_convex_transfer_certificate.json',
-         'pg1_signed_g2_certificate.json',
-         'pg1_exact_zero_depth_certificate.json')
+NAMES = ('certificates/mod3_conditioned_geometry_certificate.json',
+         'certificates/original9_conditioned_geometry_certificate.json',
+         'certificates/pg1_joint_tail_certificate.json',
+         'certificates/original9_convex_transfer_certificate.json',
+         'certificates/pg1_signed_g2_certificate.json',
+         'certificates/pg1_exact_zero_depth_certificate.json')
 
 
 def require(condition, message):
@@ -32,7 +43,7 @@ def require(condition, message):
 
 
 def evaluate(directory):
-    raw = {name: (directory / name).read_bytes() for name in NAMES}
+    raw = {name: read_artifact_bytes(directory / name) for name in NAMES}
     hashes = {name: sha256(value).hexdigest() for name, value in raw.items()}
     data = {name: json.loads(value) for name, value in raw.items()}
     source, old, joint, convex, signed, exact = (data[name] for name in NAMES)
@@ -210,15 +221,15 @@ def evaluate(directory):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate', nargs='?', type=Path, default=HERE / 'pg1_common_source_floor_certificate.json')
+    parser.add_argument('certificate', nargs='?', type=Path, default=HERE / 'certificates/pg1_common_source_floor_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     result = evaluate(args.source_directory)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2) + '\n')
     else:
-        require(result == json.loads(args.certificate.read_text()), 'complete deterministic common-floor replay')
+        require(result == json.loads(read_artifact_text(args.certificate)), 'complete deterministic common-floor replay')
     print(json.dumps({'status': 'verified', 'Gamma13_upper': result['Gamma13_upper'],
                       'Gamma13_decimal': float(F(result['Gamma13_upper'])),
                       'root_combinations': result['root_combinations'], 'joint_queries': len(result['joint_queries']),

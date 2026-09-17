@@ -6,6 +6,17 @@ then compare the entire summary certificate. Uses NumPy and adjacent
 canonical carrier modules. No optimizer, network or height search is used.
 --write explicitly writes the certificate; default operation only compares.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import permutations, product
@@ -19,12 +30,12 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'erdos7-pg1-weighted-carrier-transfer-v1'
 SHAPE = 'root2_other_other_column'
-SOURCES = ('mod3_conditioned_geometry_certificate.json',
-           'original9_conditioned_geometry_certificate.json',
-           'actual_deletion_profile_certificate.json',
-           'carrier_dominance_certificate.json',
-           'uniform_profile_box_certificate.json',
-           'row_weighted_geometry_certificate.json')
+SOURCES = ('certificates/mod3_conditioned_geometry_certificate.json',
+           'certificates/original9_conditioned_geometry_certificate.json',
+           'certificates/actual_deletion_profile_certificate.json',
+           'certificates/carrier_dominance_certificate.json',
+           'certificates/uniform_profile_box_certificate.json',
+           'certificates/row_weighted_geometry_certificate.json')
 
 
 def require(ok, message):
@@ -41,7 +52,7 @@ def module(name, directory):
 
 
 def evaluate(directory, expected_hashes=None):
-    raw = {name: (directory / name).read_bytes() for name in SOURCES}
+    raw = {name: read_artifact_bytes(directory / name) for name in SOURCES}
     hashes = {name: sha256(value).hexdigest() for name, value in raw.items()}
     if expected_hashes is not None:
         require(hashes == expected_hashes, 'hash-bound canonical source certificates')
@@ -293,16 +304,16 @@ def evaluate(directory, expected_hashes=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?', type=Path,
-                        default=HERE / 'pg1_weighted_carrier_transfer_certificate.json')
+                        default=HERE / 'certificates/pg1_weighted_carrier_transfer_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
-    expected = None if args.write else json.loads(args.certificate.read_text())
+    expected = None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         require(expected['schema'] == SCHEMA, 'certificate schema')
     actual = evaluate(args.source_directory, None if expected is None else expected['source_sha256'])
     if args.write:
-        args.certificate.write_text(json.dumps(actual, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(actual, indent=2) + '\n')
     else:
         require(actual == expected, 'complete exact weighted-carrier transfer certificate')
     print(json.dumps({key: actual['result'][key] for key in

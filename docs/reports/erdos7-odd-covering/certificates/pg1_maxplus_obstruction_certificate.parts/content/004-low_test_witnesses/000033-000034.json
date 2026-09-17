@@ -1,0 +1,70 @@
+[
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 7
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 16
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 7,
+      "digit": 1,
+      "residue": 43
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 16,
+      "digit": 1,
+      "residue": 106
+    }
+  ]
+]

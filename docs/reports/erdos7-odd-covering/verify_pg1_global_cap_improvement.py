@@ -8,6 +8,17 @@ Other heights use exact disjoint-prefix arithmetic, without expanding17**H.
 Neither the complete-test maximum nor the unrestricted problem is solved.
 Standard library only; all mathematical checks survive Python -O.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from pathlib import Path
@@ -15,8 +26,8 @@ import argparse
 import json
 
 HERE = Path(__file__).resolve().parent
-SOURCE = 'mod3_conditioned_geometry_certificate.json'
-CERTIFICATE = 'pg1_global_cap_improvement_certificate.json'
+SOURCE = 'certificates/mod3_conditioned_geometry_certificate.json'
+CERTIFICATE = 'certificates/pg1_global_cap_improvement_certificate.json'
 M, P, CENTER, X0, TARGET = 315, 17, 2, 314, 2
 DELTA, GLOBAL_CAP, TRANSFER = F(7, 15), F(15, 8), F(1, 8192)
 
@@ -152,7 +163,7 @@ def literal(H, points, divisors, old, mu, counts, epsilon):
 
 
 def evaluate(directory):
-    raw = (directory/SOURCE).read_bytes()
+    raw = read_artifact_bytes(directory/SOURCE)
     source = json.loads(raw)
     require(source['schema'] == 'erdos7-mod3-conditioned-geometry-v1', 'source schema')
     cases = [case for case in source['cases'] if case['name'] == 'PG1']
@@ -240,9 +251,9 @@ def main():
     args = parser.parse_args()
     result = evaluate(args.source_directory)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        stored = json.loads(args.certificate.read_text(), object_pairs_hook=unique_object)
+        stored = json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique_object)
         require(json.dumps(stored, sort_keys=True) == json.dumps(result, sort_keys=True),
                 'entire certificate equals exact recomputation')
     print(json.dumps(dict(uniform_physical_gain=result['uniform_comparisons']['physical_V_decrease_at_least'],

@@ -4,6 +4,17 @@ No external dependencies. Run Python with -I -O; checks do not use assert.
 Arithmetic uses integers and Fractions. All fixture objectives are independently
 evaluated by summing the literal square over leaves.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from collections import defaultdict
 from fractions import Fraction as F
 from functools import cache
@@ -322,7 +333,7 @@ def main():
     }
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("certificate", nargs="?", type=Path,
-                        default=Path(__file__).with_name("prefix_correction_certificate.json"))
+                        default=(Path(__file__).resolve().parent / 'certificates/prefix_correction_certificate.json'))
     parser.add_argument("--emit-certificate", action="store_true",
                         help="recompute exact fixture data and emit a candidate certificate")
     args = parser.parse_args()
@@ -333,7 +344,7 @@ def main():
                 require(key not in out, "duplicate JSON certificate key")
                 out[key] = value
             return out
-        expected = json.loads(args.certificate.read_text(), object_pairs_hook=unique_pairs)
+        expected = json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique_pairs)
         require(expected == output, "certificate differs from independently recomputed data")
     print(json.dumps(output, sort_keys=True, indent=2))
 

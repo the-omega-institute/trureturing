@@ -6,6 +6,17 @@ geometry is certified by verify_pg1_joint_tail.py, not recomputed here.  Only
 the added signed deletion bounds and complete shared-denominator criteria
 are recomputed.  --write rebuilds the adjacent extension certificate.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from pathlib import Path
@@ -25,17 +36,17 @@ def load(path,name):
     return mod
 
 def evaluate(data,source_directory):
-    prior_raw=(source_directory/'pg1_joint_tail_certificate.json').read_bytes()
+    prior_raw=read_artifact_bytes(source_directory/'certificates/pg1_joint_tail_certificate.json')
     require(sha256(prior_raw).hexdigest()==data['source_joint_sha256'],
             'hash-bound prior joint geometry certificate')
     prior=json.loads(prior_raw)
     require(prior['schema']=='erdos7-pg1-joint-tail-v1','prior certificate schema')
     c=prior['result'];source_hashes=prior['source_sha256']
-    source_raw={name:(source_directory/name).read_bytes() for name in source_hashes}
+    source_raw={name:read_artifact_bytes(source_directory/name) for name in source_hashes}
     require({name:sha256(raw).hexdigest() for name,raw in source_raw.items()}==source_hashes,
             'unchanged three original canonical inputs')
-    source=json.loads(source_raw['mod3_conditioned_geometry_certificate.json'])
-    m9=json.loads(source_raw['original9_conditioned_geometry_certificate.json'])
+    source=json.loads(source_raw['certificates/mod3_conditioned_geometry_certificate.json'])
+    m9=json.loads(source_raw['certificates/original9_conditioned_geometry_certificate.json'])
     require(c['source_sha256']==source_hashes,'prior result source identities')
     PG=load(source_directory/'verify_point_geometry.py','point_geometry')
     case=next(x for x in source['cases'] if x['name']=='PG1')
@@ -180,14 +191,14 @@ def evaluate(data,source_directory):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'pg1_signed_g2_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/pg1_signed_g2_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--write',action='store_true')
-    args=parser.parse_args();data=json.loads(args.certificate.read_text())
+    args=parser.parse_args();data=json.loads(read_artifact_text(args.certificate))
     require(data['schema']=='erdos7-pg1-signed-g2-v1','certificate schema')
     result=evaluate(data,args.source_directory)
     if args.write:
-        data['result']=result;args.certificate.write_text(json.dumps(data,indent=2)+'\n')
+        data['result']=result;write_certificate_text(args.certificate, json.dumps(data,indent=2)+'\n')
     else:require(data['result']==result,'exact signed deletions and complete common-Q criteria')
     print(json.dumps({'Gamma13_upper':result['Gamma13_upper'],
                       'Gamma13_decimal':float(F(result['Gamma13_upper'])),

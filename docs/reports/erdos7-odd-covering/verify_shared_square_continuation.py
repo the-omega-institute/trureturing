@@ -5,6 +5,17 @@ The SQ proof supplies the improved AP13 observations. This program
 reuses the complete SP scalar-cost formulas and KC finite-core errors.
 All original tails remain paid. No unrestricted or Lean claim is made.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -15,11 +26,11 @@ import runpy
 
 HERE=Path(__file__).resolve().parent
 PINS={
- 'killed_core_continuity_certificate.json':'0a9df513c2b186f66001054e2d1f56cd5211848fdacab7a37fad9f110b0ace52',
- 'shared_cell_square_certificate.json':'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1',
- 'supported13_hinges_certificate.json':'ea618a2dfe14723b0f9f3adea343d72dac162d106c432ba023e6b21fe874b8fc',
- 'verify_supported13_hinges.py':'846c0d42b821cc87598f709533631b836af8ef107514ee012bd3a025dae20723',
- 'verify_pg1_scalar_schedule.py':'22fe9f08170e2585e8e9d57d600937b4ce0a8bf653ff6f21942e207a74ba9507',
+ 'certificates/killed_core_continuity_certificate.json':'18e793e038e4a0b443483b4ca982ae1033f6c7e342a1bf21a0402d14dead0c12',
+ 'certificates/shared_cell_square_certificate.json':'100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef',
+ 'certificates/supported13_hinges_certificate.json':'b34a86ff533a3d1fc9c3de0c0ab3894f5648326eaf8e6602f0b176f350330442',
+ 'verify_supported13_hinges.py':'24cb40a86e08830d918297e1215b4fbe557d8c9392ddeb4c34c9ce879de25ef9',
+ 'verify_pg1_scalar_schedule.py':'9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b',
 }
 
 def require(ok,message):
@@ -34,15 +45,15 @@ def unique(pairs):
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
  parser.add_argument('--source-directory',type=Path,default=HERE)
- parser.add_argument('--certificate',type=Path,default=HERE/'shared_square_continuation_certificate.json')
+ parser.add_argument('--certificate',type=Path,default=HERE/'certificates/shared_square_continuation_certificate.json')
  parser.add_argument('--write',action='store_true')
  args=parser.parse_args();sources={}
  for name,pin in PINS.items():
-  raw=(args.source_directory/name).read_bytes()
+  raw=read_artifact_bytes(args.source_directory/name)
   require(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
   if name.endswith('.json'):sources[name]=json.loads(raw,object_pairs_hook=unique)
- sq=sources['shared_cell_square_certificate.json']
- sp=sources['supported13_hinges_certificate.json']
+ sq=sources['certificates/shared_cell_square_certificate.json']
+ sp=sources['certificates/supported13_hinges_certificate.json']
  profile=sp['supported13_profile']
  require(F(profile['survival_lower'])==F(sq['same_actual_law_inputs']['rho13']),
          'same actual AP(4,6) normalization')
@@ -71,7 +82,7 @@ def main():
          'all stated255 W483 scalar defects remain positive')
  require(defect['schedule']==[(17,6),(19,8)],'least-defect integer schedule')
  budgets=[]
- kc=sources['killed_core_continuity_certificate.json']
+ kc=sources['certificates/killed_core_continuity_certificate.json']
  for box,current,safe,threshold in [
    ([20]*7,[8,8],F(667,1000000),F(299660,1000)),
    ([17,10,8,7,6,6,6],[6,6],F(263,1000),F(299398,1000))]:
@@ -90,9 +101,9 @@ def main():
      finite_sufficient_count=sum(r['Gamma_upper'] is not None for r in restart)),
   killed_frontier_budgets=budgets,
   scope='Same supported AP13 input throughout. Single17 conditioned output is separate from the two-step physical17/19 chain. Complete auxiliary tails are those of the pinned SP helper; no PG1 loader is invoked. KC safe errors remain valid with the unchanged actual law.',
-  unresolved='The two finite killed-frontier inequalities are unproved. The255 positive W483 defects concern only the fixed scalar upper functional, not a lower bound on actual squares. Unrestricted Erdos7 and later-prime continuation remain open.'))
- if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
- else:require(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,'entire certificate equality')
+  open_mathematical_obligations='The two finite killed-frontier inequalities are unproved. The255 positive W483 defects concern only the fixed scalar upper functional, not a lower bound on actual squares. Unrestricted Erdos7 and later-prime continuation remain open.'))
+ if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
+ else:require(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)==result,'entire certificate equality')
  print('PASS same-law single17 '+str(float(best17['Gamma_upper']))+
   '; two-step19 '+str(float(best19['Gamma_upper']))+
   '; least W483 defect '+str(float(defect['residual_at483']))+

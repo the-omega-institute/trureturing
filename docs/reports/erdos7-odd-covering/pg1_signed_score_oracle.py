@@ -16,6 +16,17 @@ existing executable. No generated executable, raw input, or all-A value table
 is retained. Each global winner is checked with the original Python optimizer
 and by literal evaluation of all twelve original labels at all 75 points.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction
 from hashlib import sha256
 from importlib.util import module_from_spec, spec_from_file_location
@@ -29,7 +40,7 @@ import subprocess
 import time
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_SOURCE = HERE / 'mod3_conditioned_geometry_certificate.json'
+DEFAULT_SOURCE = HERE / 'certificates/mod3_conditioned_geometry_certificate.json'
 _spec = spec_from_file_location('exact_signed_digit_dp', HERE / 'exact_signed_digit_dp.py')
 _dp = module_from_spec(_spec)
 _spec.loader.exec_module(_dp)
@@ -39,7 +50,7 @@ require = _dp.require
 class Oracle:
     """Use as a context manager; one compiled binary serves repeated queries."""
     def __init__(self, source=DEFAULT_SOURCE, binary=None):
-        raw = Path(source).read_bytes()
+        raw = read_artifact_bytes(Path(source))
         self.source_sha256 = sha256(raw).hexdigest()
         self.case = next(c for c in json.loads(raw)['cases'] if c['name'] == 'PG1')
         self.points = self.case['points']
@@ -131,11 +142,11 @@ class Oracle:
         with TemporaryDirectory(prefix='pg1-score-oracle-query-') as tmp:
             input_path = Path(tmp) / 'input.txt'
             values_path = Path(tmp) / 'values.txt'
-            input_path.write_text(input_text)
+            write_certificate_text(input_path, input_text)
             completed = subprocess.run([str(self.binary), str(input_path), str(values_path)],
                                        check=True, capture_output=True, text=True)
             runtime = json.loads(completed.stdout)
-            values = [tuple(map(int, line.split())) for line in values_path.read_text().splitlines()]
+            values = [tuple(map(int, line.split())) for line in read_artifact_text(values_path).splitlines()]
         require(len(values) == 11808 and all(len(row) == 3 for row in values) and
                 [row[0] for row in values] == list(range(11808)), 'complete ordered all-A result')
         winner, maximum, common_at_winner = max(values, key=lambda row: row[1])
@@ -184,13 +195,13 @@ def main():
     parser.add_argument('--binary', type=Path)
     args = parser.parse_args()
     started = time.monotonic()
-    payload = json.loads(args.score_file.read_text())
+    payload = json.loads(read_artifact_text(args.score_file))
     with Oracle(args.source, args.binary) as oracle:
         result = oracle.optimize(oracle.score_tensor(payload), payload.get('denominator', 1))
         solve_seconds = oracle.last_seconds
     text = json.dumps(result, indent=2) + '\n'
     if args.output:
-        args.output.write_text(text)
+        write_certificate_text(args.output, text)
         print(json.dumps({'output': str(args.output), 'maximum': result['maximum'],
                           'solve_seconds': solve_seconds, 'total_seconds': time.monotonic() - started}))
     else:

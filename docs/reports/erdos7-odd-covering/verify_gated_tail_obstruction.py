@@ -6,6 +6,17 @@ physical17/killed17 rows, the full191-class family, both complete inherited test
 and the prices/residuals from the same original labels. A certificate can carry
 the120 current colors of the actual-residual variant. This is not Lean verification.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from math import gcd
 from pathlib import Path
@@ -231,7 +242,7 @@ def compute(color_assignment=None):
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--certificate",type=Path,
-                        default=Path(__file__).with_name("gated_tail_obstruction_certificate.json"))
+                        default=(Path(__file__).resolve().parent / 'certificates/gated_tail_obstruction_certificate.json'))
     parser.add_argument("--write",action="store_true")
     args=parser.parse_args()
     def unique(pairs):
@@ -240,11 +251,11 @@ if __name__=="__main__":
             require(k not in out,"duplicate certificate key")
             out[k]=v
         return out
-    supplied=(json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+    supplied=(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)
               if args.certificate.exists() else {})
     result=compute(supplied.get("color_assignment"))
     if args.write:
-        args.certificate.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
+        write_certificate_text(args.certificate, json.dumps(result,indent=2,sort_keys=True)+"\n")
     else:
         require(supplied==result,
                 "certificate differs from exact reconstruction")

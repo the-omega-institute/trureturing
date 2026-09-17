@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """Exact PP1--PP6 constants for one actual generic pure-base continuation."""
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from collections import defaultdict
 from fractions import Fraction as F
 from pathlib import Path
@@ -28,23 +39,23 @@ def unique(pairs):
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('certificate', nargs='?', type=Path,
-                    default=HERE/'arbitrary_head_profile_certificate.json')
+                    default=HERE/'certificates/arbitrary_head_profile_certificate.json')
 parser.add_argument('--source-directory', type=Path, default=HERE)
 parser.add_argument('--write', action='store_true')
 args = parser.parse_args()
 pins = {
-    'uniform_gamma_cofactor_certificate.json': 'f5a27165cc7f2c28474370814a81be2c5d17a053673d192303b47c7072462002',
-    'star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
-    'joint_density_certificate.json': 'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
+    'certificates/uniform_gamma_cofactor_certificate.json': 'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'certificates/star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
+    'certificates/joint_density_certificate.json': 'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
 }
 source = {}
 for filename, digest in pins.items():
-    raw = (args.source_directory/filename).read_bytes()
+    raw = read_artifact_bytes(args.source_directory/filename)
     require(sha256(raw).hexdigest() == digest, 'source SHA-256: '+filename)
     source[filename] = json.loads(raw, object_pairs_hook=unique)
-G = F(source['uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']['Gamma357_upper'])
-R = F(source['joint_density_certificate.json']['improved_R_bound'])
-D0 = 1/F(source['star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']['infimum_ambient_uncovered_density'])
+G = F(source['certificates/uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']['Gamma357_upper'])
+R = F(source['certificates/joint_density_certificate.json']['improved_R_bound'])
+D0 = 1/F(source['certificates/star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']['infimum_ambient_uncovered_density'])
 require((G,R,D0) == (F(3849,106),F(1649,360),F(432,53)), 'same uniform357 law source constants')
 M=1+R
 dist={1:F(1)}
@@ -134,8 +145,8 @@ result=dict(
                          best_thresholds=[F(4),F(6)],rows=rows))
 result = encode(result)
 if args.write:
-    args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+    write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
 else:
-    require(json.loads(args.certificate.read_text(),object_pairs_hook=unique) == result,
+    require(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique) == result,
             'entire certificate equals exact recomputation')
 print('PASS pure-base(4,6): G13=',f,'; rho=',rho,'; G17=',G17,';',len(rows),'endpoint certificates')

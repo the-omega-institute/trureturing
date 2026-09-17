@@ -6,6 +6,17 @@ independently checks three full4480^2 maxima, and replays every integer
 11/13/17/19/23 schedule through the existing obstruction evaluator.
 Only the numerical strategy obstruction is claimed, not noncoverage.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -60,8 +71,8 @@ def dense_checks(head,observations):
     return output
 
 def compute(profile_path,head_path,convex_verifier,obstruction_verifier):
-    raw=profile_path.read_bytes();data=json.loads(raw)
-    head_raw=head_path.read_bytes();head=json.loads(head_raw)
+    raw=read_artifact_bytes(profile_path);data=json.loads(raw)
+    head_raw=read_artifact_bytes(head_path);head=json.loads(head_raw)
     require(sha256(head_raw).hexdigest()==data['head_certificate_sha256'],'same SH18 prerequisite')
     require(data['schema']==1 and data['scope']=='SH18 carrier and law; arbitrary finite original357 heights',
             'specified initial law and profile contract')
@@ -109,21 +120,21 @@ def compute(profile_path,head_path,convex_verifier,obstruction_verifier):
 def main():
     here=Path(__file__).parent
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile',type=Path,default=here/'saturated_convex_profile_certificate.json')
-    parser.add_argument('--head',type=Path,default=here/'saturated_joint_head_certificate.json')
+    parser.add_argument('--profile',type=Path,default=here/'certificates/saturated_convex_profile_certificate.json')
+    parser.add_argument('--head',type=Path,default=here/'certificates/saturated_joint_head_certificate.json')
     parser.add_argument('--convex-verifier',type=Path,default=here/'verify_saturated_convex_profile.py')
     parser.add_argument('--obstruction-verifier',type=Path,default=here/'verify_combined_schedule_obstruction.py')
-    parser.add_argument('--certificate',type=Path,default=here/'saturated_high_hinges_certificate.json')
+    parser.add_argument('--certificate',type=Path,default=here/'certificates/saturated_high_hinges_certificate.json')
     parser.add_argument('--write-certificate',action='store_true')
     args=parser.parse_args();start=time.perf_counter()
     if not args.write_certificate:
-        expected=json.loads(args.certificate.read_text())
-        require(sha256(args.profile.read_bytes()).hexdigest()==expected['profile_certificate_sha256'],
+        expected=json.loads(read_artifact_text(args.certificate))
+        require(sha256(read_artifact_bytes(args.profile)).hexdigest()==expected['profile_certificate_sha256'],
                 'exact profile prerequisite hash')
-        require(sha256(args.head.read_bytes()).hexdigest()==expected['head_certificate_sha256'],
+        require(sha256(read_artifact_bytes(args.head)).hexdigest()==expected['head_certificate_sha256'],
                 'exact head prerequisite hash')
     result=compute(args.profile,args.head,args.convex_verifier,args.obstruction_verifier)
-    if args.write_certificate:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+    if args.write_certificate:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:require(result==expected,'complete high-hinge and enhanced-obstruction certificate replay')
     print(json.dumps({'thresholds':result['thresholds'],'queries':len(result['records'])*len(THRESHOLDS),
                       'dense_pairs':sum(r['full_layout_pairs'] for r in result['dense_independent_checks']),

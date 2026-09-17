@@ -17,6 +17,17 @@ existing rectangle duals and JC upper bounds are explicit source inputs.
 """
 from __future__ import annotations
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from collections import Counter
 from fractions import Fraction as F
@@ -451,15 +462,15 @@ def verify(source):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-certificate", type=Path,
-                        default=Path(__file__).with_name("marked_head_profile_certificate.json"))
+                        default=(Path(__file__).resolve().parent / 'certificates/marked_head_profile_certificate.json'))
     parser.add_argument("--write", type=Path, help="write the deterministic experiment result")
     parser.add_argument("--check", type=Path, help="compare with a saved experiment result")
     args = parser.parse_args()
-    result = verify(json.loads(args.source_certificate.read_text()))
+    result = verify(json.loads(read_artifact_text(args.source_certificate)))
     if args.check:
-        require(result == json.loads(args.check.read_text()), "saved experiment result matches recomputation")
+        require(result == json.loads(read_artifact_text(args.check)), "saved experiment result matches recomputation")
     if args.write:
-        args.write.write_text(json.dumps(result, indent=2) + "\n")
+        write_certificate_text(args.write, json.dumps(result, indent=2) + "\n")
     print(json.dumps({key: result[key] for key in ("all_optional_deletion_vectors", "Gamma_upper", "mean_upper",
                       "reference_fraction_lower", "full_hinge_upper_at_4_through_12")}, separators=(",", ":")))
 

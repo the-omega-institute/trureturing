@@ -15,6 +15,17 @@ layouts, arbitrary old 3/5/7 heights, or a solution of unrestricted #7.
 Only Python's standard library is used. Checks remain active under -O.
 Default replay binds the source probability and all certificate fields.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from math import isqrt
@@ -25,7 +36,7 @@ import json
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'erdos7-pg1-comb-sharpness-v1'
-SOURCE = 'mod3_conditioned_geometry_certificate.json'
+SOURCE = 'certificates/mod3_conditioned_geometry_certificate.json'
 M = 315
 
 
@@ -266,7 +277,7 @@ def truncation_checks(points, mu, divisors, p, T, forbidden_center, test_center,
 
 
 def evaluate(directory, params, expected_hashes=None):
-    raw = (directory/SOURCE).read_bytes()
+    raw = read_artifact_bytes(directory/SOURCE)
     hashes = {SOURCE: sha256(raw).hexdigest()}
     if expected_hashes is not None:
         require(hashes == expected_hashes, 'unchanged source certificate')
@@ -379,7 +390,7 @@ def evaluate(directory, params, expected_hashes=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate', nargs='?', type=Path, default=HERE/'pg1_comb_sharpness_certificate.json')
+    parser.add_argument('certificate', nargs='?', type=Path, default=HERE/'certificates/pg1_comb_sharpness_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--primes', nargs='+', type=int, default=[17, 19])
     parser.add_argument('--heights', nargs='+', type=int, default=[1, 2, 4, 8, 16, 32, 64])
@@ -392,13 +403,13 @@ def main():
     args = parser.parse_args()
     params = {key: getattr(args, key) for key in ('primes', 'heights', 'threshold', 'forbidden_center',
                                                'test_center', 'energy_weight', 'charge_weight')}
-    expected = None if args.write else json.loads(args.certificate.read_text())
+    expected = None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         require(expected['schema'] == SCHEMA and expected['parameters'] == params,
                 'schema and explicitly selected parameters match certificate')
     actual = evaluate(args.source_directory, params, None if expected is None else expected['source_sha256'])
     if args.write:
-        args.certificate.write_text(json.dumps(actual, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(actual, indent=2)+'\n')
     else:
         require(actual == expected, 'complete deterministic comb certificate equality')
     print(json.dumps({'status': 'written' if args.write else 'verified',

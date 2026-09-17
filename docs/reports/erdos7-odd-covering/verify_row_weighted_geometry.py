@@ -6,6 +6,17 @@ for its uniform sufficient criterion, a positive shared-row law satisfying
 both exact signed35 criteria, and all support-inclusion coverage. Uses only
 canonical adjacent modules and certificates. No optimizer is a dependency.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from pathlib import Path
 from itertools import product
 from fractions import Fraction as F
@@ -18,8 +29,8 @@ import numpy as np
 
 SCHEMA='erdos7-row-weighted-geometry-v1'
 SHAPE='root1_same_other_column'
-GEOMETRY='actual_deletion_profile_certificate.json'
-BOX='uniform_profile_box_certificate.json'
+GEOMETRY='certificates/actual_deletion_profile_certificate.json'
+BOX='certificates/uniform_profile_box_certificate.json'
 
 def require(ok,why):
     if not ok:raise ArithmeticError(why)
@@ -147,9 +158,9 @@ def uniform_group_attainment(xs,points,groups):
 def evaluate(data,directory):
     require(type(data) is dict and data.get('schema')==SCHEMA and data.get('target')=='35',
             'row-weighted geometry contract')
-    require(sha256((directory/GEOMETRY).read_bytes()).hexdigest()==data.get('geometry_sha256'),
+    require(sha256(read_artifact_bytes(directory/GEOMETRY)).hexdigest()==data.get('geometry_sha256'),
             'actual old-shape geometry fingerprint')
-    require(sha256((directory/BOX).read_bytes()).hexdigest()==data.get('uniform_box_sha256'),
+    require(sha256(read_artifact_bytes(directory/BOX)).hexdigest()==data.get('uniform_box_sha256'),
             'uniform-box coverage baseline fingerprint')
     pg=module('row_law_point',directory/'verify_point_geometry.py')
     up=module('row_law_uniform',directory/'verify_uniform_profile_geometry.py')
@@ -196,7 +207,7 @@ def evaluate(data,directory):
     used={u for s in states for u in s}
     edges=[{b:sum(1<<j for j,a in enumerate(s) if b&~a==0) for b in used} for s in sorted(sources)]
     covered={s for s in states if any(dom.injection(tuple(sorted(e[b] for b in s))) for e in edges)}
-    box_cert=json.loads((directory/BOX).read_text());bc=box_cert['result']
+    box_cert=json.loads(read_artifact_text(directory/BOX));bc=box_cert['result']
     require(bc['shape']==SHAPE and bc['old_points']==xs,'same old geometry for coverage comparison')
     images={tuple(p) for p in bc['profile_images']}
     box={s for s in states if any(all(a<=b for a,b in zip(geo.deletion_vector(s,len(xs)),p)) for p in images)}
@@ -228,16 +239,16 @@ def main():
     args=parser.parse_args();require(not(args.write and args.check),'writer or replay')
     if args.write:
         require(args.input is not None,'writer needs the specified family and row law')
-        raw=json.loads(args.input.read_text())
+        raw=json.loads(read_artifact_text(args.input))
         data={'schema':SCHEMA,'target':'35','family':raw['family'],
               'row_weight_numerators':raw['row_weight_numerators'],
-              'geometry_sha256':sha256((args.directory/GEOMETRY).read_bytes()).hexdigest(),
-              'uniform_box_sha256':sha256((args.directory/BOX).read_bytes()).hexdigest()}
+              'geometry_sha256':sha256(read_artifact_bytes(args.directory/GEOMETRY)).hexdigest(),
+              'uniform_box_sha256':sha256(read_artifact_bytes(args.directory/BOX)).hexdigest()}
         data['result']=evaluate(data,args.directory)
-        args.write.write_text(json.dumps(data,indent=2)+'\n')
+        write_certificate_text(args.write, json.dumps(data,indent=2)+'\n')
     else:
-        path=args.check or args.directory/'row_weighted_geometry_certificate.json'
-        data=json.loads(path.read_text());require(evaluate(data,args.directory)==data['result'],'complete row-law certificate replay')
+        path=args.check or args.directory/'certificates/row_weighted_geometry_certificate.json'
+        data=json.loads(read_artifact_text(path));require(evaluate(data,args.directory)==data['result'],'complete row-law certificate replay')
     result=data['result']
     print(json.dumps({'schema':SCHEMA,'survival_lower':result['weighted_law']['survival_lower'],
                       'root_margins':[r['signed_margin'] for r in result['weighted_law']['roots']],

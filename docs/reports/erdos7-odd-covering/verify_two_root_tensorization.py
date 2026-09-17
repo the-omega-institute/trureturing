@@ -7,6 +7,17 @@ all real nonnegative probability weights, by exact rational polytope reduction.
 Every numerical comparison uses int64 and is covered by a checked overflow
 bound. The mathematical reduction is in Problems/erdos-7-odd-covering-systems.md.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import combinations, product
 from math import lcm
@@ -137,7 +148,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--shape',choices=('all','2+2','3+1'),default='all')
     args=parser.parse_args()
-    data=json.loads(Path(__file__).with_name('two_root_tensorization_certificate.json').read_text())
+    data=json.loads(read_artifact_text(Path(__file__).resolve().parent / 'certificates/two_root_tensorization_certificate.json'))
     require(data.get('schema')=='two-root-depth-two-tensor-v1','certificate schema mismatch')
     require(set(data.get('shapes',{}))==set(SHAPES),'fixed shape set mismatch')
     names=tuple(SHAPES) if args.shape=='all' else (args.shape,)

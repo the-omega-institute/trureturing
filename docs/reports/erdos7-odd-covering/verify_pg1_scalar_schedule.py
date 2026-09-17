@@ -12,6 +12,17 @@ They neither lower-bound actual moments nor exclude richer joint costs.
 Default: exact certificate replay. --write explicitly regenerates it.
 Uses only Python's standard library; -O preserves every require check.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -22,10 +33,10 @@ import json
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'erdos7-pg1-scalar-schedule-v1'
-SOURCES = ('pg1_integer_hinges_certificate.json',
-           'pg1_exact_depth100_certificate.json',
-           'pg1_joint_tail_certificate.json',
-           'original9_conditioned_geometry_certificate.json')
+SOURCES = ('certificates/pg1_integer_hinges_certificate.json',
+           'certificates/pg1_exact_depth100_certificate.json',
+           'certificates/pg1_joint_tail_certificate.json',
+           'certificates/original9_conditioned_geometry_certificate.json')
 
 
 def require(condition, message):
@@ -42,9 +53,10 @@ def sources(directory, expected_hashes):
     data, hashes = {}, {}
 
     def read(name, expected=None):
-        require(Path(name).name == name, 'adjacent source filename')
+        require((name == Path(name).name or name == 'certificates/' + Path(name).name)
+                and Path(name).name not in ('', '.', '..') and '\\' not in name, 'adjacent source filename')
         if name not in hashes:
-            raw = (directory / name).read_bytes()
+            raw = read_artifact_bytes(directory / name)
             hashes[name] = sha256(raw).hexdigest()
             if name.endswith('.json'):
                 item = json.loads(raw)
@@ -179,7 +191,7 @@ def evaluate(directory, expected_hashes=None):
             and joint['schema'] == 'erdos7-pg1-joint-tail-v1'
             and original['schema'] == 'erdos7-original9-conditioned-geometry-v1', 'source schemas')
     require(original['source_case'] == 'PG1'
-            and original['source_sha256'] == hashes['mod3_conditioned_geometry_certificate.json'],
+            and original['source_sha256'] == hashes['certificates/mod3_conditioned_geometry_certificate.json'],
             'one unchanged PG1 law')
     ih, sq, jt, old = (item['result'] for item in (integer, square, joint, original))
     q0 = F(old['survival_lower'])
@@ -252,16 +264,16 @@ def evaluate(directory, expected_hashes=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate', nargs='?', type=Path, default=HERE / 'pg1_scalar_schedule_certificate.json')
+    parser.add_argument('certificate', nargs='?', type=Path, default=HERE / 'certificates/pg1_scalar_schedule_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
-    expected = None if args.write else json.loads(args.certificate.read_text())
+    expected = None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         require(expected['schema'] == SCHEMA, 'certificate schema')
     actual = evaluate(args.source_directory, None if expected is None else expected['source_sha256'])
     if args.write:
-        args.certificate.write_text(json.dumps(actual, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(actual, indent=2) + '\n')
     else:
         require(actual == expected, 'all exact schedule outcomes and source bindings')
     result = actual['result']

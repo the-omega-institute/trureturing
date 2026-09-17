@@ -6,6 +6,17 @@ The accompanying proof supplies the common-law density and layout meaning;
 this checks the profile recurrence, support budgets, all infinite cell sums,
 six nonnegative density-row multipliers, bound corrections and continuation.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import combinations, product
 from math import prod
@@ -260,7 +271,7 @@ def compute_certificate():
 
 
 def main():
-    data = json.loads(Path(__file__).with_name('common_density_head_coupled_certificate.json').read_text())
+    data = json.loads(read_artifact_text(Path(__file__).resolve().parent / 'certificates/common_density_head_coupled_certificate.json'))
     expected = compute_certificate()
     require(data == expected, 'Fixed common-density certificate differs from exact reconstruction')
     print('Verified six common-density rows and all infinite cylinder cells; Gamma <= ' + expected['head_bound'] + '.')

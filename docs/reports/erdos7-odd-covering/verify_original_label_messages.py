@@ -2,6 +2,17 @@
 """Exact message certificate on one literal, nonradial 315/17/19 law.
 No optimizer, floating arithmetic, symmetry consolidation, or Lean claim.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import json
 from fractions import Fraction as F
 from pathlib import Path
@@ -19,7 +30,7 @@ def unique(pairs):
     return out
 
 def run(path):
-    c = json.loads(Path(path).read_text(), object_pairs_hook=unique)
+    c = json.loads(read_artifact_text(Path(path)), object_pairs_hook=unique)
     Q = 315
     ds = [d for d in range(2, Q + 1) if Q % d == 0]
     bad = [(3, 0), (5, 0), (7, 0), (9, 2), (15, 4)]
@@ -134,4 +145,4 @@ def run(path):
         return locals()
 if __name__ == '__main__':
     import sys
-    run(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).with_name('original_label_message_certificate.json'))
+    run(sys.argv[1] if len(sys.argv) > 1 else (Path(__file__).resolve().parent / 'certificates/original_label_message_certificate.json'))

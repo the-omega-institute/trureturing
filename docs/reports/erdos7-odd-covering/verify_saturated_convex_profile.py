@@ -7,6 +7,17 @@ maxima with all 270 independently enumerated SH18 square observations.
 All finite calculations use bounded integers and exact rational numbers.
 """
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -182,7 +193,7 @@ def combined_prime_cost(square, mean, hinges, standard):
 
 
 def compute(head_path):
-    raw = head_path.read_bytes()
+    raw = read_artifact_bytes(head_path)
     head = json.loads(raw)
     points, sizes, nums, denominator, features = prepare(head)
     thresholds = (2, 3, 4, 5, 6, 8, 10, 12)
@@ -274,14 +285,14 @@ def survivors_from(head):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--head', type=Path,
-                        default=Path(__file__).with_name('saturated_joint_head_certificate.json'))
+                        default=(Path(__file__).resolve().parent / 'certificates/saturated_joint_head_certificate.json'))
     parser.add_argument('--certificate', type=Path,
-                        default=Path(__file__).with_name('saturated_convex_profile_certificate.json'))
+                        default=(Path(__file__).resolve().parent / 'certificates/saturated_convex_profile_certificate.json'))
     parser.add_argument('--write', action='store_true', help='write the exact research data')
     args = parser.parse_args()
     result, stats = compute(args.head)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        require(result == json.loads(args.certificate.read_text()), 'complete convex certificate equality')
+        require(result == json.loads(read_artifact_text(args.certificate)), 'complete convex certificate equality')
     print(json.dumps(stats, indent=2))

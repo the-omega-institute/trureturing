@@ -5,6 +5,17 @@ cuts, geometric coefficients and rational dual inequality are reconstructed
 from semantic inputs. No LP solver, NumPy, float, or enumeration cache is used.
 The lower bound concerns an upper-bound formula, not actual test moments.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from math import lcm
@@ -19,7 +30,7 @@ def require(ok,message):
 
 
 def verify(path):
-    data=json.loads(Path(path).read_text())
+    data=json.loads(read_artifact_text(Path(path)))
     old=data['old_classes']
     points=[x for x in range(45) if all(x%d!=a for d,a in old)]
     require(points==data['points'] and len(points)==16,'actual old45 survivor set')
@@ -124,8 +135,7 @@ def verify(path):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',default=str(Path(__file__).with_name(
-        'fiber_uniform_saturated_envelope_obstruction_certificate.json')))
+    parser.add_argument('certificate',nargs='?',default=str((Path(__file__).resolve().parent / 'certificates/fiber_uniform_saturated_envelope_obstruction_certificate.json')))
     args=parser.parse_args()
     print(json.dumps(verify(args.certificate),indent=2))
 

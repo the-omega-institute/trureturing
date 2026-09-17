@@ -10,6 +10,17 @@ library only; checks remain enabled under python3 -I -O.
 """
 from __future__ import annotations
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from itertools import product
@@ -179,18 +190,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     root = Path(__file__).resolve().parent
     parser.add_argument("--source-certificate", type=Path,
-                        default=root / "actual_deletion_profile_certificate.json")
+                        default=root / 'certificates/actual_deletion_profile_certificate.json')
     parser.add_argument("--upstream-profile", type=Path,
-                        default=root / "marked_head_profile_certificate.json")
+                        default=root / 'certificates/marked_head_profile_certificate.json')
     parser.add_argument("--write", type=Path)
     parser.add_argument("--check", type=Path)
     args = parser.parse_args()
     result = verify(args.source_certificate, args.upstream_profile)
     if args.check:
-        require(result == json.loads(args.check.read_text(), object_pairs_hook=unique),
+        require(result == json.loads(read_artifact_text(args.check), object_pairs_hook=unique),
                 "saved high-seven certificate matches reconstruction")
     if args.write:
-        args.write.write_text(json.dumps(result, indent=2)+"\n")
+        write_certificate_text(args.write, json.dumps(result, indent=2)+"\n")
     print(json.dumps({"retained_mass_lower": result["extension"]["retained_mass_lower"],
                       "two_stage_charge_upper": result["high7_charge"]["total"],
                       "deficits": {k: v["high7_deficit_lower"]

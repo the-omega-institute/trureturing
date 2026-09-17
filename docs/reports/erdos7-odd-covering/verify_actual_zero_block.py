@@ -4,6 +4,17 @@
 All finite state sums are exact. Global optimality and complete-domain
 upper bounds use the ordinary pair-cap and tensor proof in marked_head_profile.md (ZB1--ZB8).
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 from math import prod,gcd
@@ -39,12 +50,12 @@ def compute():
   probability=prod(F(1,q-1) if bit else 1-F(1,q-1) for q,bit in zip(OTHER,bits))
   other_states.append((2**sum(bits),probability))
  source_T81=sum(pr*ps*max(F(((j+1)*v)**2-81),F(0)) for j,pr in enumerate(P) for v,ps in other_states)
- pins={'shared_square_continuation_certificate.json':'157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32','shared_cell_square_certificate.json':'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1'}
+ pins={'certificates/shared_square_continuation_certificate.json':'1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e','certificates/shared_cell_square_certificate.json':'100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef'}
  sources={}
  for name,pin in pins.items():
-  raw=(HERE/name).read_bytes();need(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
+  raw=read_artifact_bytes(HERE/name);need(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
   sources[name]=json.loads(raw,object_pairs_hook=unique)
- obs=sources['shared_square_continuation_certificate.json']['source'];checks=[]
+ obs=sources['certificates/shared_square_continuation_certificate.json']['source'];checks=[]
  M=F(obs['mean']);need(M>0 and G<M*M,'uniform complete mean via Cauchy-Schwarz')
  checks.append({'observation':'mean','square_upper':G,'upper_squared':M*M,'squared_slack':M*M-G})
  def check(name,value,upper):
@@ -53,7 +64,7 @@ def compute():
  check('square',G,obs['Gamma13'])
  need(set(obs['hinges'])=={str(h) for h in range(1,18)},'all seventeen hinges')
  for h in range(1,18):check('H'+str(h),G/(4*h),obs['hinges'][str(h)])
- targets=sources['shared_cell_square_certificate.json']['targets']
+ targets=sources['certificates/shared_cell_square_certificate.json']['targets']
  need(len(targets)==2 and {row['tau'] for row in targets}=={16,81},'two square-hinge targets')
  for row in targets:check('T'+str(row['tau']),G,row['supported_hinge'])
  need(len(checks)==21,'all twenty-one source observations')
@@ -124,8 +135,8 @@ def unique(pairs):
  return out
 
 if __name__=='__main__':
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--write',action='store_true');parser.add_argument('--certificate',type=Path,default=HERE/'actual_zero_block_certificate.json');args=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--write',action='store_true');parser.add_argument('--certificate',type=Path,default=HERE/'certificates/actual_zero_block_certificate.json');args=parser.parse_args()
  result=encode(compute())
- if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
- else:need(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,'complete certificate match')
+ if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
+ else:need(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)==result,'complete certificate match')
  print('PASS actual AP13 source, all original labels, both global physical maxima and killed full-test brackets')

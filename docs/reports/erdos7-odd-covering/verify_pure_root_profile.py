@@ -5,6 +5,17 @@ All missing-prime and missing/ineffective-modulus9 branches are retained.
 The proof is ordinary mathematics; no finite enumeration proves arbitrary heights.
 Default: validate the existing certificate. Use --write to regenerate it.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from collections import defaultdict
 from fractions import Fraction as F
@@ -17,11 +28,11 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 P=(3,5,7)
 PINS={
-    'uniform_gamma_cofactor_certificate.json':'f5a27165cc7f2c28474370814a81be2c5d17a053673d192303b47c7072462002',
-    'star_block_obstruction_certificate.json':'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
-    'joint_density_certificate.json':'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
-    'arbitrary_head_profile_certificate.json':'707c70369e8e7d27988c3710f17c4fa99c74bd7d40fc4af301020e1439b18f48',
-    'weighted_kernel_tails_certificate.json':'01816bca889e93dde865a115ad6165209f5e98297706a619eb6022d5dec20471',
+    'certificates/uniform_gamma_cofactor_certificate.json':'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'certificates/star_block_obstruction_certificate.json':'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
+    'certificates/joint_density_certificate.json':'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
+    'certificates/arbitrary_head_profile_certificate.json':'afd62721adaa0800421ea3fbcc9ce99c76ad6e7fda7526ac73194a9e6aeae65e',
+    'certificates/weighted_kernel_tails_certificate.json':'c1e64e46884a7a4e226222aea4394fae98e5f159fe4e2e366a5b17fbbc95f240',
 }
 
 
@@ -152,20 +163,20 @@ def prefix_fixtures():
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'pure_root_profile_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/pure_root_profile_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args()
     source={}
     for name,pin in PINS.items():
-        raw=(args.source_directory/name).read_bytes()
+        raw=read_artifact_bytes(args.source_directory/name)
         require(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
         source[name]=json.loads(raw,object_pairs_hook=unique)
-    cofactor=source['uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']
+    cofactor=source['certificates/uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']
     G=F(cofactor['Gamma357_upper'])
     fallback={row['case']:row for row in cofactor['missing_pure_cases']}
-    R=F(source['joint_density_certificate.json']['improved_R_bound'])
-    s0=F(source['star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']['infimum_ambient_uncovered_density'])
+    R=F(source['certificates/joint_density_certificate.json']['improved_R_bound'])
+    s0=F(source['certificates/star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']['infimum_ambient_uncovered_density'])
     require((G,R,s0)==(F(3849,106),F(1649,360),F(53,432)),'same uniform357 source bounds')
     cases=('modulus3_absent','modulus9_absent_or_ineffective','modulus9_effective')
     rows=[branch(case,p5,p7,G,R,s0,fallback) for case in cases for p5,p7 in product((False,True),repeat=2)]
@@ -179,10 +190,10 @@ def main():
             'new same-law supported13 square bound')
     require(law['survival_lower']==F(43949004608153173,99601923308580000),
             'new same-law supported13 survival lower')
-    old=source['arbitrary_head_profile_certificate.json']['selected_actual_law']
+    old=source['certificates/arbitrary_head_profile_certificate.json']['selected_actual_law']
     require(law['supported_square']<F(old['supported_square']) and
             law['survival_lower']>F(old['survival_lower']), 'strict same-law improvement')
-    Kphysical=F(source['arbitrary_head_profile_certificate.json']['physical_fourth13'])
+    Kphysical=F(source['certificates/arbitrary_head_profile_certificate.json']['physical_fourth13'])
     fourth13=1+(Kphysical-1)/law['survival_lower']
     g13=law['supported_square']
     charge17=g13/256
@@ -190,7 +201,7 @@ def main():
     require(survival17>0,'separate full-Haar17 survivor normalization')
     physical17=F(89,64)*g13
     supported17=1+(physical17-1)/survival17
-    old_wt=source['weighted_kernel_tails_certificate.json']
+    old_wt=source['certificates/weighted_kernel_tails_certificate.json']
     require(F(old_wt['incoming_law']['Haar_density_bound'])==F(old['supported_Haar_density'])
             and F(old_wt['incoming_law']['complete_square_bound'])==F(old['supported_square']),
             'WT source is the same old supported AP(4,6) law')
@@ -229,11 +240,11 @@ def main():
              reference_criterion='For every complete original L: E_ref[L^2-1]+483*B_ref <=483-.294.',
              scope='Only17/19 forbidden masks reduced; incoming actual AP13 law and all original test labels remain full. Reference correlation criterion is not supplied.'),
         literal_one_coordinate_layout_fixtures=prefix_fixtures(),
-        unresolved='No 17/19 joint correlation certificate or later-prime continuation is supplied here.'))
+        open_mathematical_obligations='No 17/19 joint correlation certificate or later-prime continuation is supplied here.'))
     if args.write:
-        args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:
-        actual=json.loads(args.certificate.read_text(),object_pairs_hook=unique)
+        actual=json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)
         require(actual==result,'entire saved certificate equals exact recomputation')
     print('PASS generic 12-branch pure-root profile: Gamma13='+str(law['supported_square'])+
           ' = '+str(float(law['supported_square']))+'; rho13='+str(float(law['survival_lower'])))

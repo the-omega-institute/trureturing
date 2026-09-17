@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 """Exact full-law AP(4,6) finite-core stability and the complete W483 reduction."""
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -9,9 +20,9 @@ from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'shared_cell_hinges_certificate.json':'6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29',
-    'pure_root_profile_certificate.json':'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b',
-    'weighted_kernel_tails_certificate.json':'01816bca889e93dde865a115ad6165209f5e98297706a619eb6022d5dec20471',
+    'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
+    'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
+    'certificates/weighted_kernel_tails_certificate.json':'c1e64e46884a7a4e226222aea4394fae98e5f159fe4e2e366a5b17fbbc95f240',
 }
 
 def require(c,m):
@@ -88,16 +99,16 @@ def evaluate(b,G0,D0,G13,D13,rho):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'ap_core_stability_certificate.json')
+    parser.add_argument('certificate',nargs='?',type=Path,default=HERE/'certificates/ap_core_stability_certificate.json')
     parser.add_argument('--source-directory',type=Path,default=HERE)
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args();sources={}
     for n,h in PINS.items():
-        raw=(args.source_directory/n).read_bytes()
+        raw=read_artifact_bytes(args.source_directory/n)
         require(sha256(raw).hexdigest()==h,'source SHA-256 '+n)
         sources[n]=json.loads(raw,object_pairs_hook=unique)
-    src=sources['pure_root_profile_certificate.json']
-    law=sources['shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
+    src=sources['certificates/pure_root_profile_certificate.json']
+    law=sources['certificates/shared_cell_hinges_certificate.json']['same_actual_AP13_consumer']
     G0=F(src['source_inputs']['G']);D0=1/F(src['source_inputs']['survivor_density_lower'])
     G13=F(law['supported_square']);D13=F(law['supported_Haar_density']);rho=F(law['survival_lower'])
     require((G0,D0)==(F(3849,106),F(432,53)),'same actual uniform357 source')
@@ -109,7 +120,7 @@ def main():
         require(by_b[b]['full_to_finite_Gamma_error']<t,'full law and test approximation')
         require(by_b[b-1]['full_to_finite_Gamma_error']>=t,'previous uniform box fails this sufficient bound')
     r20=by_b[20]
-    old_wt=sources['weighted_kernel_tails_certificate.json']
+    old_wt=sources['certificates/weighted_kernel_tails_certificate.json']
     require(old_wt['W']==483,'original full-mask criterion coefficient')
     D_ratio=D13/F(old_wt['incoming_law']['Haar_density_bound'])
     G_ratio=G13/F(old_wt['incoming_law']['complete_square_bound'])
@@ -135,8 +146,8 @@ def main():
             criterion='For every complete box20 test: E_finite[L_box^2-1]+483*B_finite <=483-.263.',
             implication='If the finite criterion holds for every original finite core pattern, the corresponding full actual17/19 law has positive survivor mass and supported Gamma19<=484. The finite maximum is not computed and the later-prime continuation is not supplied.',
             actual_reference='Actual AP13 law of the retained original core, then original17/19 kernels with only box20 cofactors/currentdepth8/puredepth8 constraints; all law and test periods are lifted uniformly to the common box20 period.')))
-    if args.write:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
-    else:require(json.loads(args.certificate.read_text(),object_pairs_hook=unique)==result,'entire certificate equality')
+    if args.write:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
+    else:require(json.loads(read_artifact_text(args.certificate),object_pairs_hook=unique)==result,'entire certificate equality')
     print('PASS actual AP finite-core: errors '+str({b:float(by_b[b]['full_to_finite_Gamma_error']) for b in tolerances})+
           '; complete W483 allowance '+str(float(allowance))+' < .263')
 

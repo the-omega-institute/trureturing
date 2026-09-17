@@ -6,6 +6,17 @@ rational inequalities below do not replace their universal proofs. Existing
 FI moment helpers and numerical source certificates are hash-bound and read;
 their experiments are not rerun. Python standard library only.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -17,12 +28,12 @@ import json
 import sys
 
 HERE = Path(__file__).resolve().parent
-CERTIFICATE = 'finite_core_approximation_certificate.json'
+CERTIFICATE = 'certificates/finite_core_approximation_certificate.json'
 PRIMES = (3, 5, 7, 11, 13)
 PINS = {
-    'verify_pg1_lifted_global_cap.py': '346eb74a328a9250be386dc5f0ef3be321e416451e829c5ac17e94200e4b21c2',
-    'uniform_gamma_cofactor_certificate.json': 'f5a27165cc7f2c28474370814a81be2c5d17a053673d192303b47c7072462002',
-    'star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
+    'verify_pg1_lifted_global_cap.py': '1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf',
+    'certificates/uniform_gamma_cofactor_certificate.json': 'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'certificates/star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
 }
 
 
@@ -42,7 +53,7 @@ def unique(pairs):
 def load_inputs(directory):
     data = {}
     for filename, expected in PINS.items():
-        raw = (directory/filename).read_bytes()
+        raw = read_artifact_bytes(directory/filename)
         require(sha256(raw).hexdigest() == expected, 'source SHA-256: '+filename)
         if filename.endswith('.json'):
             data[filename] = json.loads(raw, object_pairs_hook=unique)
@@ -293,8 +304,8 @@ def actual_BB_continuity_obstruction(fi):
 
 def evaluate(directory):
     fi, data = load_inputs(directory)
-    signed = data['uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']
-    cm8 = data['star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']
+    signed = data['certificates/uniform_gamma_cofactor_certificate.json']['signed_two_level_three_prime_parameters']
+    cm8 = data['certificates/star_block_obstruction_certificate.json']['cm1_actual_head_sharpness']
     G = F(signed['Gamma357_upper'])
     density_lower = F(cm8['infimum_ambient_uncovered_density'])
     require(G == F(3849, 106) and density_lower == F(53, 432), 'CM8 and same-law SD numerical inputs')
@@ -356,9 +367,9 @@ def main():
     args = parser.parse_args()
     result = evaluate(args.source_directory)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
-        require(json.loads(args.certificate.read_text(), object_pairs_hook=unique) == result,
+        require(json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique) == result,
                 'entire certificate equals exact recomputation')
     print(json.dumps(dict(survivor_lower=result['construction']['actual_survivor_mass_lower'],
                           final_density_upper=result['construction']['final_supported_density_upper'],

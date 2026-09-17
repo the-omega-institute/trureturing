@@ -6,6 +6,17 @@ remainder, row-count group bounds, and the originalmod3 signed criterion.
 The result applies by concavity to the entire box and its allowed old maps.
 Actual carrier membership, support gains and minimality are reconstructed.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from pathlib import Path
 from itertools import product
 from fractions import Fraction as F
@@ -16,7 +27,7 @@ import json
 import numpy as np
 
 SCHEMA = "erdos7-uniform-profile-box-v1"
-SOURCE = "uniform_profile_geometry_certificate.json"
+SOURCE = 'certificates/uniform_profile_geometry_certificate.json'
 SHAPE = "root1_same_other_column"
 
 def require(ok, why):
@@ -90,7 +101,7 @@ def evaluate(data, directory):
     require(type(data) is dict and data.get('schema') == SCHEMA, 'profile-box schema')
     require(data.get('source_certificate') == SOURCE and data.get('target') == '35',
             'specified source and target')
-    source_bytes = (directory / SOURCE).read_bytes()
+    source_bytes = read_artifact_bytes(directory / SOURCE)
     require(hashlib.sha256(source_bytes).hexdigest() == data.get('source_sha256'),
             'parent uniform-profile certificate fingerprint')
     cert = json.loads(source_bytes)
@@ -99,7 +110,7 @@ def evaluate(data, directory):
     pg = module('box_point', directory / 'verify_point_geometry.py')
     geo = module('box_geometry', directory / 'verify_seven_digit_classification.py')
     dom = module('box_dominance', directory / 'verify_carrier_dominance.py')
-    geometries = geo.read_geometries(directory / 'actual_deletion_profile_certificate.json')
+    geometries = geo.read_geometries(directory / 'certificates/actual_deletion_profile_certificate.json')
     old_case = next(row for row in geometries if row['shape'] == SHAPE)
     points = old_case['old_points']
     require(points == cert['result']['old_points'], 'canonical old geometry agrees with parent')
@@ -233,12 +244,12 @@ def main():
     require(not (args.write and args.check), 'select writer or replay')
     if args.write:
         data = {'schema': SCHEMA, 'source_certificate': SOURCE, 'target': '35',
-                'source_sha256': hashlib.sha256((args.directory / SOURCE).read_bytes()).hexdigest()}
+                'source_sha256': hashlib.sha256(read_artifact_bytes(args.directory / SOURCE)).hexdigest()}
         data['result'] = evaluate(data, args.directory)
-        args.write.write_text(json.dumps(data, indent=2) + '\n')
+        write_certificate_text(args.write, json.dumps(data, indent=2) + '\n')
     else:
-        path = args.check or args.directory / 'uniform_profile_box_certificate.json'
-        data = json.loads(path.read_text())
+        path = args.check or args.directory / 'certificates/uniform_profile_box_certificate.json'
+        data = json.loads(read_artifact_text(path))
         require(evaluate(data, args.directory) == data['result'], 'complete profile-box certificate replay')
     result = data['result']
     print(json.dumps({'schema': SCHEMA, 'box_vertices': result['box_vertices'],

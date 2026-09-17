@@ -5,6 +5,17 @@ Uses only standard-library rational/integer arithmetic. The product first-exit
 normal form, branch bound and all-height theorem are proved in marked_head_profile.md.
 No Lean verification or bound over arbitrary source families is claimed.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from math import gcd,lcm,prod
 from itertools import product
@@ -174,9 +185,9 @@ if __name__=='__main__':
     import argparse
     from pathlib import Path
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--certificate',type=Path,default=Path(__file__).with_name('exact_bqc_certificate.json'))
+    p.add_argument('--certificate',type=Path,default=(Path(__file__).resolve().parent / 'certificates/exact_bqc_certificate.json'))
     p.add_argument('--write',action='store_true')
     a=p.parse_args();out=compute()
-    if a.write:a.certificate.write_text(json.dumps(out,indent=2)+'\n')
-    else:need(json.loads(a.certificate.read_text(),object_pairs_hook=unique)==out,'complete deterministic certificate match')
+    if a.write:write_certificate_text(a.certificate, json.dumps(out,indent=2)+'\n')
+    else:need(json.loads(read_artifact_text(a.certificate),object_pairs_hook=unique)==out,'complete deterministic certificate match')
     print('PASS literal source/masks, charged kernels, full original-label maximum and all-height coefficients')

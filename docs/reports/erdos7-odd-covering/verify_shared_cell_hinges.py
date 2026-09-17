@@ -6,6 +6,17 @@ label convex increment, complete geometric tails and continuous-domain
 vertex argument. This program checks every parameter vertex and all
 12 missing-class branches against the pinned preceding PR certificate.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from functools import lru_cache
 from itertools import product
@@ -17,7 +28,7 @@ import json
 
 Q=F
 BASE=Path(__file__).resolve().parent
-PINNED_PR_SHA256='eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b'
+PINNED_PR_SHA256='64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751'
 
 ROOTS=(0,0,1,1,1)
 CHOICES=list(product(range(2),range(5)))
@@ -161,9 +172,9 @@ def result(source_directory):
     # Reuse the twelve branch values of the established PR result. The four
     # effective9 branches also admit the new shared-cell bound above; the
     # other eight are bounded by their already verified PR profiles.
-    source=Path(source_directory)/'pure_root_profile_certificate.json'
-    need(hashlib.sha256(source.read_bytes()).hexdigest()==PINNED_PR_SHA256,'pinned predecessor PR certificate hash')
-    old=json.loads(source.read_text(),object_pairs_hook=no_duplicate)
+    source=Path(source_directory)/'certificates/pure_root_profile_certificate.json'
+    need(hashlib.sha256(read_artifact_bytes(source)).hexdigest()==PINNED_PR_SHA256,'pinned predecessor PR certificate hash')
+    old=json.loads(read_artifact_text(source),object_pairs_hook=no_duplicate)
     rows=[]
     for branch in old['branches']:
         values={h:F(branch['profile'][str(h)]) for h in targets}
@@ -192,7 +203,7 @@ def result(source_directory):
     density=F(1440,53)/rho
     need(gamma<F(old['selected_actual_law']['supported_square']),'strict same-law AP13 improvement')
     return {'schema':'shared-cell-hinge-v1',
-            'source_sha256':{'pure_root_profile_certificate.json':PINNED_PR_SHA256},
+            'source_sha256':{'certificates/pure_root_profile_certificate.json':PINNED_PR_SHA256},
             'vertex_count':count,'minimum_raw_survivor_denominator':str(denmin),
             'targets':{str(h):str(v) for h,v in targets.items()},'minimum_raw_margins':{str(h):str(v) for h,v in minimargin.items()},
             'strict_gains_from_PR':{str(h):str(F(old['generic_integer_hinges'][str(h)])-v) for h,v in targets.items()},
@@ -209,12 +220,12 @@ def result(source_directory):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-directory',type=Path,default=BASE)
-    parser.add_argument('--certificate',type=Path,default=BASE/'shared_cell_hinges_certificate.json')
+    parser.add_argument('--certificate',type=Path,default=BASE/'certificates/shared_cell_hinges_certificate.json')
     parser.add_argument('--write',action='store_true')
     args=parser.parse_args()
     actual=result(args.source_directory)
     file=args.certificate
-    if args.write:file.write_text(json.dumps(actual,indent=2)+'\n')
+    if args.write:write_certificate_text(file, json.dumps(actual,indent=2)+'\n')
     else:
-        need(json.loads(file.read_text(),object_pairs_hook=no_duplicate)==actual,'certificate mismatch')
+        need(json.loads(read_artifact_text(file),object_pairs_hook=no_duplicate)==actual,'certificate mismatch')
     print('Verified 1296 complete shared-cell vertices and all 12 original missing branches; exact h3,h4,h6 margins are nonnegative.')

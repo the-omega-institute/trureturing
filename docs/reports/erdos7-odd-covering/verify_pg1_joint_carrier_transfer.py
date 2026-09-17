@@ -16,6 +16,17 @@ replays weighted matching only on included targets to subtract old overlap.
 Default: exact certificate replay. --write regenerates the certificate.
 Requires Python3 and NumPy; all decision arithmetic is integer or Fraction.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from importlib.util import module_from_spec, spec_from_file_location
@@ -27,11 +38,11 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = 'erdos7-pg1-joint-carrier-transfer-v1'
-INPUTS = ('mod3_conditioned_geometry_certificate.json',
-          'original9_conditioned_geometry_certificate.json',
-          'pg1_exact_zero_depth_certificate.json',
-          'actual_deletion_profile_certificate.json',
-          'pg1_weighted_carrier_transfer_certificate.json')
+INPUTS = ('certificates/mod3_conditioned_geometry_certificate.json',
+          'certificates/original9_conditioned_geometry_certificate.json',
+          'certificates/pg1_exact_zero_depth_certificate.json',
+          'certificates/actual_deletion_profile_certificate.json',
+          'certificates/pg1_weighted_carrier_transfer_certificate.json')
 MODULES = ('verify_point_geometry', 'verify_seven_digit_classification',
            'verify_carrier_dominance')
 # Fixed experiment inputs, not a new whole-domain or loss-tier enumeration.
@@ -344,7 +355,7 @@ def support_coverage(results, prior, geometry, old, points, weights, den, maps, 
 
 
 def evaluate(directory, expected_hashes=None):
-    raw = {name: (directory / name).read_bytes() for name in INPUTS}
+    raw = {name: read_artifact_bytes(directory / name) for name in INPUTS}
     data = {name: json.loads(value) for name, value in raw.items()}
     source, original, exact, _, weighted = (data[name] for name in INPUTS)
     prerequisites = dict(exact['source_sha256'])
@@ -352,12 +363,13 @@ def evaluate(directory, expected_hashes=None):
         require(name not in prerequisites or prerequisites[name] == stamp, 'compatible prerequisite source hashes')
         prerequisites[name] = stamp
     for name, stamp in prerequisites.items():
-        require(Path(name).name == name and name.endswith('.json'), 'local prerequisite filename')
-        value = (directory / name).read_bytes()
+        require((name == Path(name).name or name == 'certificates/' + Path(name).name)
+                and Path(name).name not in ('', '.', '..') and '\\' not in name and name.endswith('.json'), 'local prerequisite filename')
+        value = read_artifact_bytes(directory / name)
         require(sha256(value).hexdigest() == stamp, 'exact-zero prerequisite hash: ' + name)
         raw[name] = value
     for name in MODULES:
-        raw[name + '.py'] = (directory / (name + '.py')).read_bytes()
+        raw[name + '.py'] = read_artifact_bytes(directory / (name + '.py'))
     hashes = {name: sha256(value).hexdigest() for name, value in sorted(raw.items())}
     if expected_hashes is not None:
         require(hashes == expected_hashes, 'hash-bound certificates and replay implementations')
@@ -481,16 +493,16 @@ def evaluate(directory, expected_hashes=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?', type=Path,
-                        default=HERE / 'pg1_joint_carrier_transfer_certificate.json')
+                        default=HERE / 'certificates/pg1_joint_carrier_transfer_certificate.json')
     parser.add_argument('--source-directory', type=Path, default=HERE)
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
-    expected = None if args.write else json.loads(args.certificate.read_text())
+    expected = None if args.write else json.loads(read_artifact_text(args.certificate))
     if expected is not None:
         require(expected['schema'] == SCHEMA, 'certificate schema')
     actual = evaluate(args.source_directory, None if expected is None else expected['source_sha256'])
     if args.write:
-        args.certificate.write_text(json.dumps(actual, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(actual, indent=2) + '\n')
     else:
         require(actual == expected, 'complete deterministic certificate equality')
     rows = actual['result']['selected_carriers']

@@ -4,6 +4,17 @@
 One actual uniform 357 source, with pure 11/13/17/19 extensions. No optimizer,
 abstract Gram relaxation, external numerical package, or Lean verification.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from collections import Counter
 from fractions import Fraction
@@ -175,14 +186,14 @@ def compute():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--certificate', type=Path,
-                        default=Path(__file__).with_name('star_cycle_obstruction_certificate.json'))
+                        default=(Path(__file__).resolve().parent / 'certificates/star_cycle_obstruction_certificate.json'))
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     result = compute()
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2) + '\n')
     else:
-        supplied = json.loads(args.certificate.read_text(), object_pairs_hook=unique)
+        supplied = json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique)
         require(supplied == result, 'certificate differs from literal reconstruction')
     print('PASS actual 1575-source obstruction: all 17 central-unary stars and 136 two-ended edges vanish; '
           'full triangle loss 9/382; 288-label pure-extension scope as stated.')

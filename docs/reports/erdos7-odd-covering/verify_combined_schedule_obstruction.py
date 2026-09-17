@@ -5,6 +5,17 @@ This program verifies a finite obstruction for that numerical certificate,
 not an obstruction for actual congruence families or other observations.
 Only Python's standard library is required; all judging arithmetic is exact.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -24,7 +35,7 @@ def ceildiv(a,b):return -((-a)//b)
 def floor_scaled(x):return x.numerator*SCALE//x.denominator
 
 def read_profile(source):
-    raw=source.read_bytes();data=json.loads(raw)
+    raw=read_artifact_bytes(source);data=json.loads(raw)
     require(data['schema']==1,'known profile schema')
     mean,square=F(data['mean_nu_upper']),F(data['square_nu_upper'])
     hinges={int(k):F(v['nu_upper']) for k,v in data['hinges'].items()}
@@ -148,16 +159,16 @@ def compute(source, *, additional_hinges=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--source',type=Path,default=Path(__file__).with_name('saturated_convex_profile_certificate.json'))
-    parser.add_argument('--certificate',type=Path,default=Path(__file__).with_name('combined_schedule_obstruction_certificate.json'))
+    parser.add_argument('--source',type=Path,default=(Path(__file__).resolve().parent / 'certificates/saturated_convex_profile_certificate.json'))
+    parser.add_argument('--certificate',type=Path,default=(Path(__file__).resolve().parent / 'certificates/combined_schedule_obstruction_certificate.json'))
     parser.add_argument('--write-certificate',action='store_true')
     args=parser.parse_args();start=time.perf_counter()
     if not args.write_certificate:
-        expected=json.loads(args.certificate.read_text())
-        require(sha256(args.source.read_bytes()).hexdigest()==expected['profile_certificate_sha256'],
+        expected=json.loads(read_artifact_text(args.certificate))
+        require(sha256(read_artifact_bytes(args.source)).hexdigest()==expected['profile_certificate_sha256'],
                 'exact same-law prerequisite source hash')
     result=compute(args.source)
-    if args.write_certificate:args.certificate.write_text(json.dumps(result,indent=2)+'\n')
+    if args.write_certificate:write_certificate_text(args.certificate, json.dumps(result,indent=2)+'\n')
     else:require(result==expected,'all recomputed obstruction certificate fields')
     print(json.dumps({'schedule_count':result['schedule_count'],
                       'minimum_charge_coefficient_lower':result['minimum_charge_coefficient_lower'],

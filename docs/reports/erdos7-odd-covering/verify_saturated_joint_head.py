@@ -5,6 +5,17 @@ All maxima use bounded integer arithmetic; final comparisons use Fractions.
 SH10-SH17 in marked_head_profile.md supply the arbitrary-height argument.
 """
 
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
+
 import argparse
 from fractions import Fraction as F
 from itertools import product
@@ -31,7 +42,7 @@ def low_layouts(points, moduli):
 
 
 def verify(path):
-    data = json.loads(Path(path).read_text())
+    data = json.loads(read_artifact_text(Path(path)))
     family = data['family']
     exps = list(product(range(3), range(2), range(2)))
     divisors = [3**a * 5**b * 7**c for a, b, c in exps]
@@ -204,5 +215,5 @@ def verify(path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('certificate', nargs='?', type=Path,
-                        default=Path(__file__).with_name('saturated_joint_head_certificate.json'))
+                        default=(Path(__file__).resolve().parent / 'certificates/saturated_joint_head_certificate.json'))
     print(json.dumps(verify(parser.parse_args().certificate), indent=2))

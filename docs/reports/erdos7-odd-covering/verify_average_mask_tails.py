@@ -5,6 +5,17 @@ This is arithmetic supporting the adjacent ordinary tail proof and AM1--AM7.
 Finite mask checks do not replace those universal ordinary proofs. Existing
 FI source and moment constants are imported with exact SHA-256 binding.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import product
@@ -16,11 +27,11 @@ import json
 import sys
 
 HERE = Path(__file__).resolve().parent
-CERTIFICATE = 'average_mask_tails_certificate.json'
+CERTIFICATE = 'certificates/average_mask_tails_certificate.json'
 SOURCE_PINS = {
-    'verify_pg1_lifted_global_cap.py': '346eb74a328a9250be386dc5f0ef3be321e416451e829c5ac17e94200e4b21c2',
-    'pg1_lifted_global_cap_certificate.json': 'dff7a6767a3e63f4f3db749c293d8c8cfd39e1bc4d32e006f24b1fbc93b283ca',
-    'mod3_conditioned_geometry_certificate.json': '9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a',
+    'verify_pg1_lifted_global_cap.py': '1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf',
+    'certificates/pg1_lifted_global_cap_certificate.json': 'cf365032f6447be1fe010fdca00d90444a09bbf19b3654a1b089c7d06f2fe35d',
+    'certificates/mod3_conditioned_geometry_certificate.json': '9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a',
 }
 PRIMES = (3, 5, 7, 11, 13)
 BOX = (65, 65, 65, 65, 65, 65)
@@ -33,13 +44,13 @@ def require(condition, message):
 
 def load_fi(directory):
     for filename, pin in SOURCE_PINS.items():
-        require(sha256((directory/filename).read_bytes()).hexdigest() == pin,
+        require(sha256(read_artifact_bytes(directory/filename)).hexdigest() == pin,
                 'exact dependency SHA-256: '+filename)
     spec = importlib.util.spec_from_file_location('pinned_fi', directory/'verify_pg1_lifted_global_cap.py')
     module = importlib.util.module_from_spec(spec)
     sys.dont_write_bytecode = True
     spec.loader.exec_module(module)
-    stored = json.loads((directory/'pg1_lifted_global_cap_certificate.json').read_text(),
+    stored = json.loads(read_artifact_text(directory/'certificates/pg1_lifted_global_cap_certificate.json'),
                         object_pairs_hook=module.unique_object)
     return module, stored
 
@@ -308,7 +319,7 @@ def fixed_second_moment_obstruction(fi):
 
 def evaluate(directory):
     fi, prior = load_fi(directory)
-    source = json.loads((directory/'mod3_conditioned_geometry_certificate.json').read_text(),
+    source = json.loads(read_artifact_text(directory/'certificates/mod3_conditioned_geometry_certificate.json'),
                         object_pairs_hook=fi.unique_object)
     case = next(c for c in source['cases'] if c['name'] == 'PG1')
     maximum = max(case['weight_numerators'])
@@ -407,7 +418,7 @@ def main():
     args = parser.parse_args()
     result = evaluate(args.source_directory)
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2)+'\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2)+'\n')
     else:
         def unique(pairs):
             obj = {}
@@ -415,7 +426,7 @@ def main():
                 require(key not in obj, 'duplicate certificate key: '+key)
                 obj[key] = value
             return obj
-        require(json.loads(args.certificate.read_text(), object_pairs_hook=unique) == result,
+        require(json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique) == result,
                 'entire certificate equals exact recomputation')
     print(json.dumps(dict(C_old=result['old_law']['full_Haar_density_cap'],
                           box=result['box']['inclusive_maximum_exponents'],

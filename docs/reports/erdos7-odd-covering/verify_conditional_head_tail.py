@@ -5,6 +5,17 @@ Reconstructs original congruences and the same physical/killed probability.
 The arbitrary-cofactor theorem is in marked_head_profile.md. Standard-library
 exact arithmetic; no Lean verification or unrestricted covering conclusion.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from math import gcd, prod
 import json
@@ -140,12 +151,12 @@ if __name__ == '__main__':
         return out
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--certificate', type=Path,
-                        default=Path(__file__).with_name('conditional_head_tail_certificate.json'))
+                        default=(Path(__file__).resolve().parent / 'certificates/conditional_head_tail_certificate.json'))
     parser.add_argument('--write', action='store_true')
     args = parser.parse_args()
     if args.write:
-        args.certificate.write_text(json.dumps(result, indent=2) + '\n')
+        write_certificate_text(args.certificate, json.dumps(result, indent=2) + '\n')
     else:
-        require(json.loads(args.certificate.read_text(), object_pairs_hook=unique) == result,
+        require(json.loads(read_artifact_text(args.certificate), object_pairs_hook=unique) == result,
                 'certificate differs from exact recomputation')
     print('PASS actual107-class chain, all original tails, gated price and same-event identity')

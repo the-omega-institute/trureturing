@@ -5,6 +5,17 @@ The accompanying mathematical proof supplies the weighted layout/cylinder
 inequalities. This verifies all their parameter branches on the complete
 continuous budget domain, including the nonvertex ternary-density edge.
 """
+
+# Pinned local IO preserves complete certificate hashes after semantic splitting.
+import sys as _certificate_sys
+from pathlib import Path as _CertificatePath
+from hashlib import sha256 as _certificate_sha256
+_certificate_root = _CertificatePath(__file__).resolve().parent
+_certificate_io_path = _certificate_root / 'certificate_io.py'
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+    raise ValueError('certificate IO source SHA-256 mismatch')
+_certificate_sys.path.insert(0, str(_certificate_root))
+from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
 from fractions import Fraction as F
 from itertools import product
 import json
@@ -142,7 +153,7 @@ def compute_certificate():
 
 def main():
     from pathlib import Path
-    actual=json.loads(Path(__file__).with_name('nonuniform_root_certificate.json').read_text())
+    actual=json.loads(read_artifact_text(Path(__file__).resolve().parent / 'certificates/nonuniform_root_certificate.json'))
     expected=compute_certificate()
     require(actual==expected,'fixed certificate differs from exact recomputation')
     print('Verified 1044 continuous polynomial minima: balanced (Gamma,R) <= (277/20,11/5); '
