@@ -49,13 +49,18 @@ internal sealed class KrizekTotativeSumDivisorProductParityDocument
                     + "totative-sum classification is closed under taking positive divisors, "
                     + "so oddness at n propagates to every divisor; the factor indexed by n "
                     + "gives the reverse implication.",
-                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a280246-krizek-totative-sum-divisor-product-parity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a280246-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula TotativeSumFormula()
     {
