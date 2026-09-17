@@ -28,8 +28,8 @@ import runpy
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
-    'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae',
+    'certificates/pure_root_profile_certificate.json':'b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196',
+    'certificates/shared_cell_hinges_certificate.json':'585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845',
     'verify_pg1_scalar_schedule.py':'9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b',
 }
 LIMIT=17

@@ -1,0 +1,6 @@
+对完整有限报告词 $w\in\{0,1\}^n$，记
+$$
+q_w^{(p)}=\mathbb P_p(X_n=1\mid Y_1\cdots Y_n=w),\qquad
+t_p(w)=\mathbb P_p(Y_{n+1}=0\mid Y_1\cdots Y_n=w)
+=h_p(q_w^{(p)}),\quad h_p(q)=p+(1-2p)q.
+$$

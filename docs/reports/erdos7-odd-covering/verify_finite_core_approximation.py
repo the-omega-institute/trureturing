@@ -32,7 +32,7 @@ CERTIFICATE = 'certificates/finite_core_approximation_certificate.json'
 PRIMES = (3, 5, 7, 11, 13)
 PINS = {
     'verify_pg1_lifted_global_cap.py': '1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf',
-    'certificates/uniform_gamma_cofactor_certificate.json': 'c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48',
+    'certificates/uniform_gamma_cofactor_certificate.json': 'bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c',
     'certificates/star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
 }
 

@@ -2,6 +2,26 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
+    // Present byte changes and first pins share the protected-base delta source.
+    // Rename/copy destinations have their own candidate path and are included.
+    internal static IEnumerable<RepoPath> ChangedOrFirstPinD5Modules(RuleEvaluationContext context) =>
+        context.Changes.Paths.Select(path =>
+                FrozenStatePath.TryToModulePath(path.Value, out var module)
+                    ? !context.Baseline.Files.ContainsKey(path) && context.Current.Files.ContainsKey(path)
+                        ? module : default
+                    : IsPresentByteChangedD5Module(context, path) ? path : default)
+            .OfType<RepoPath>()
+            .Where(path => path.Value is { } value && value.StartsWith("D5/", StringComparison.Ordinal)
+                && value.EndsWith(".lean", StringComparison.Ordinal) && context.Current.Files.ContainsKey(path))
+            .Distinct().OrderBy(path => path.Value, StringComparer.Ordinal);
+
+    internal static bool IsPresentByteChangedD5Module(RuleEvaluationContext context, RepoPath path) =>
+        path.Value.StartsWith("D5/", StringComparison.Ordinal)
+        && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+        && context.Current.Files.TryGetValue(path, out var current)
+        && (!context.Baseline.Files.TryGetValue(path, out var baseline)
+            || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()));
+
     private static bool ManagedLean(RepositoryFile artifact, RuleApplicabilityContext context) =>
         LeanClosureValidator.IsManagedLean(artifact.Path.Value);
 

@@ -26,7 +26,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SOURCE_NAME = 'certificates/arbitrary_head_profile_certificate.json'
-SOURCE_SHA256 = 'afd62721adaa0800421ea3fbcc9ce99c76ad6e7fda7526ac73194a9e6aeae65e'
+SOURCE_SHA256 = '72a9f1b51edab126dfb7cc56f641f77c5c28149a6a67e26df5e3e25ab9e6eb0c'
 
 
 def require(condition, message):

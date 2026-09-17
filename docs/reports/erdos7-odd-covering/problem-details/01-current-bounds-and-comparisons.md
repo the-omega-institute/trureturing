@@ -3,7 +3,45 @@
 # Current bounds and comparisons
 
 
-An [all-height common-layout bound retaining one original five test](../profile-notes/32-unequal-source-norms-sharpen-the-uniform357-input.md#one-original-five-test-couples-square-loss-to-mixed-deletion)
+The [actual AP(4,5) construction](../profile-notes/35-ap45-layout-costs-and-complete-core-tails.md)
+applies physical11/T4 and13/T5 to the complete actual357 survivor law,
+then conditions once. Its complete same-law bounds are
+`Gamma13<151.712332`, `T13(81)<96.359129`, and
+`F17^-(403;nu13)+F19^-(403;physical mu17)<435.665947`.
+The exact joint bound is
+`635194866152821699517974252365456181477722101/1457986034966471039964009460664853061488000`.
+All original labels and arbitrary heights remain present. The source square
+constant stays `1730443/48600`; every later cap-dependent probability,
+survival coefficient and finite-core error is recomputed for AP(4,5).
+The verifier checks596,160 rational norm margins,1,296 consumer vertices,
+continuous-domain coefficients and all8 fallback branches.
+
+For the large box20/current8 core, the complete error is less than
+`0.000593344`, and the exact sufficient threshold is
+`306.6402782827821...`; the safe non-strict target is `306.640278`.
+The unequal core has safe target `306.413246`. The remaining gap above
+the larger exact threshold is more than`129.025668`. These are gaps
+between available bounds, not lower bounds on an actual family's cost.
+The negative-Q criterion, continuation through arbitrary later primes,
+and unrestricted Erdős7 remain open. These results have not been
+formalized as a Lean endpoint.
+
+The following AP(4,6) construction uses a different actual probability;
+its earlier bounds remain valid on that law.
+
+
+The [original-layout distance bound](../profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
+gives `Gamma13<=18612601765191482089/121507008625163304<153.181302`
+for the same actual AP(4,6) law. The source-square bound is
+`Gamma357<=1730443/48600`; the previous retained-event construction
+and its continuation bounds remain valid.
+
+The earlier [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+gives `Gamma13<=74165888355209854559/475902450448556274<155.842628`
+for the same actual AP(4,6) law. The following earlier construction and
+its continuation bounds remain valid.
+
+The previous [all-height common-layout bound retaining one original five test](../profile-notes/32-unequal-source-norms-sharpen-the-uniform357-input.md#one-original-five-test-couples-square-loss-to-mixed-deletion)
 gives `Gamma13<=2759803303859498317/17626016683279862<156.575553`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
@@ -59,21 +97,19 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<99.019600`. The sufficient finite joint-frontier bounds
-are therefore303.979 for the large core and303.717 for the smaller one,
-at W403. Row potentials coupled to the actual cap and charge, whole
-weighted original-layout costs and complete tails give the all-family
-upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<449.266218`.
-The same-law source square bound `Gamma357<=5761/159` retains unequal
-original-block norms and the same original modulus5 test in both the
-selected square and the mixed7 deletion estimate. Its improved cap is
-applied only to that one label; mod15,45,... keep their separate original
-five-coordinate residues. The complete consumer improves the preceding
-weighted-Young comparison449.293953 but remains
-above both required allowances. The19 input of this KC functional is
-the normalized physical mu17; the actual killed input xi in BM/RC is
-not substituted. All these are ordinary inequalities with exact
-rational certificates.
+`sup E(A^2-81)_+<98.976162`. The sufficient finite joint-frontier bounds
+are therefore304.023 for the large core and303.760 for the smaller one,
+at W403. The [original-layout Jensen loss](../profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
+gives the all-family upper bound
+`F17^-(403;nu13)+F19^-(403;physical mu17)<439.210840`.
+It improves the [retained-or-removed original-event bound](../profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
+`439.673529721869...` using the same actual AP(4,6) law, original labels
+and complete tails. The new exact certificate checks12,960 source-square
+margins and64,800 quadratic-cost margins, then all1,296 consumer vertices,
+the continuous-domain coefficients and all8 fallback branches. The remaining
+gap above the larger exact allowance is more than135.187668. The19 input
+is normalized physical mu17; the killed input xi in BM/RC is not substituted.
+These are ordinary inequalities with exact certificates, not Lean results.
 
 The finite criterion's strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming

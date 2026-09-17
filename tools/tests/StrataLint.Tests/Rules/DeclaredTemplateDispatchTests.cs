@@ -1,48 +1,33 @@
-using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class DeclaredTemplateDispatchTests
 {
-    private static string Inactive => Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(
-        new(InformationTemplateDebtStoreTests.Seed, false)).AsSpan());
-
     [Fact]
     public void declared_template_rule_required()
     {
-        var fixture = new RuleFixture();
-        fixture.Baseline[InformationTemplateDebtStore.ActivationPath] = Inactive;
-        fixture.Files.Remove(InformationTemplateDebtStore.ActivationPath);
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
-            fixture.Build(RawChangeSet.CreateWithKinds(
-                [(InformationTemplateDebtStore.ActivationPath, RawChangeKind.Deleted)]))).Diagnostics;
+            DeclaredTemplateBindingRuleTests.Delta()).Diagnostics;
         Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block
-            && diagnostic.Message == "DTR-Required activation mechanism deleted");
+            && diagnostic.Message.StartsWith("DTR-Undeclared ", StringComparison.Ordinal));
     }
 
     [Fact]
-    public void dispatched_complete_rule_accepted()
+    public void dispatched_validated_registration_observed()
     {
-        var fixture = new RuleFixture();
-        fixture.Files[InformationTemplateDebtStore.ActivationPath] = Inactive;
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
-            fixture.Build(RawChangeSet.CreateWithKinds(
-                [(InformationTemplateDebtStore.ActivationPath, RawChangeKind.Added)]))).Diagnostics;
-        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
-        Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Observe
-            && diagnostic.Message == "DTR-Inactive installation; protected activation is absent");
+            DeclaredTemplateBindingRuleTests.Delta(declared: true, added: true)).Diagnostics;
+        var finding = Assert.Single(diagnostics, diagnostic => diagnostic.Message.StartsWith("DTR-", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Observe, finding.AdmissionEffect);
+        Assert.StartsWith("DTR-Declared ", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void candidate_activation_cannot_install_an_active_mechanism()
+    public void unchanged_registration_not_dispatched()
     {
-        var fixture = new RuleFixture();
-        fixture.Files[InformationTemplateDebtStore.ActivationPath] = Inactive.Replace("false", "true", StringComparison.Ordinal);
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
-            fixture.Build(RawChangeSet.CreateWithKinds(
-                [(InformationTemplateDebtStore.ActivationPath, RawChangeKind.Added)]))).Diagnostics;
-        Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block
-            && diagnostic.Message.Contains("DTR-Activation: installation must be inactive and row-free", StringComparison.Ordinal));
+            DeclaredTemplateBindingRuleTests.Delta(changed: false, missing: true)).Diagnostics;
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Message.StartsWith("DTR-", StringComparison.Ordinal));
     }
 }
