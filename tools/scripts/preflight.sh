@@ -86,7 +86,7 @@ record_timing restore-proofs
 CI=true make -C tools dotnet
 record_timing dotnet
 
-make lean-report
+make lean-report BASE="$BASE_SHA"
 record_timing lean-report
 
 STRATALINT_SCRIBE_BASE="$BASE_SHA" \

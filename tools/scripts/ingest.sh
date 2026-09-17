@@ -48,16 +48,17 @@ case "$VERB" in
         alignment_args+=(--plan)
       fi
     fi
-    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
+    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" --protected-base "$BASE" -- \
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status "${alignment_args[@]}"
     ;;
   mathlib-reanchor)
-    make -C "$ROOT" lean-report
     base_sha="$(git -C "$ROOT" merge-base HEAD "$BASE")"
+    BASE="$base_sha"
+    make -C "$ROOT" lean-report BASE="$base_sha"
     dotnet run --project "$PROJECT" --configuration Release -- \
       ledger-reanchor-mathlib --base "$base_sha"
-    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
+    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" --protected-base "$BASE" -- \
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status --base "$base_sha"
     ;;

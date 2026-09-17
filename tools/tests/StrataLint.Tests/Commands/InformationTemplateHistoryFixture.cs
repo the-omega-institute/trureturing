@@ -108,7 +108,7 @@ internal sealed class InformationTemplateHistoryFixture : IDisposable, IInformat
         Assert.Equal("--repository", arguments[1]);
         Assert.Equal(workingDirectory, arguments[2]);
         Assert.Equal("--output", arguments[3]);
-        WriteBundle(arguments[4], InformationTemplateEvidence.HistoricalInputs(Decode(Historical), CandidateSnapshot));
+        WriteBundle(arguments[4], InformationTemplateHistoryInputs.Decode(GitRepositorySnapshotReader.ReadCurrent(workingDirectory)));
         return new(0, Encoding.UTF8.GetBytes("fixture inspector completed\n"), []);
     }
 

@@ -179,8 +179,8 @@ freeze_module_if_needed() {
 deposit_module() {
   local deposit_base_sha freeze_precheck status
   require_new_module_blueprint_mirror
-  step lean-report make lean-report
   deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
+  step lean-report make lean-report BASE="$deposit_base_sha"
   step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
   step emit make emit
   if freeze_exists; then
@@ -305,7 +305,7 @@ cover_row() {
 cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
-    make lean-report
+    make lean-report BASE="$BASE"
     make emit
     make align-digestion-status BASE="$BASE"
     run_digest_status
@@ -340,13 +340,13 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    step lean-report make lean-report
+    step lean-report make lean-report BASE="$BASE"
     cover_row
     step emit make emit
     ;;
   cover-batch)
     require_cover_batch_arguments
-    step lean-report make lean-report
+    step lean-report make lean-report BASE="$BASE"
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID" --base "$BASE"
     ;;
   *)

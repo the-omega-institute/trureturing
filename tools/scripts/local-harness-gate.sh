@@ -159,6 +159,9 @@ run_stage lean-reports \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
   --candidate-output "$CANDIDATE_REPORT"
+run_stage historical-reports env STRATALINT_HISTORY_CLI_BUILT=1 \
+  "$CANDIDATE_ROOT/tools/scripts/report/history-report.sh" produce \
+  --report "$CANDIDATE_REPORT" --protected-base "$BASE_SHA"
 GATE="$CANDIDATE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
 admission_started="$(date +%s)"

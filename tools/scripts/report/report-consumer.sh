@@ -3,15 +3,21 @@ set -euo pipefail
 
 ROLE=""
 REPORT=""
+BASE="" PURPOSE=check
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --role) ROLE="$2"; shift 2 ;;
-    --report) REPORT="$2"; shift 2 ;;
+    --protected-base) [[ $# -ge 2 && -n "$2" ]] || exit 2; BASE="$2"; shift 2 ;;
+    --purpose) [[ $# -ge 2 && -n "$2" ]] || exit 2; PURPOSE="$2"; shift 2 ;;
+    --role) [[ $# -ge 2 && -n "$2" ]] || exit 2; ROLE="$2"; shift 2 ;;
+    --report) [[ $# -ge 2 && -n "$2" ]] || exit 2; REPORT="$2"; shift 2 ;;
     --) shift; break ;;
     *) echo "report-consumer: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+[[ "$REPORT" == /* ]] || REPORT="$ROOT/$REPORT"
+[[ "$PURPOSE" == check || "$PURPOSE" == seed || "$PURPOSE" == discharge ]] || exit 2
 [[ -n "$ROLE" ]] || { echo "report-consumer: --role is required" >&2; exit 2; }
 [[ -s "$REPORT" ]] || {
   echo "report-consumer: raw Lean report is missing at $REPORT; run make lean-report first" >&2
@@ -19,7 +25,6 @@ done
 }
 [[ $# -gt 0 ]] || { echo "report-consumer: command is required after --" >&2; exit 2; }
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 SUPERVISOR="$ROOT/tools/scripts/report/report-supervisor.sh"
 INPUT_VERIFIER="$ROOT/tools/scripts/report/lean-report-input.sh"
 SNAPSHOT_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-consumer.XXXXXXXX")"
@@ -37,6 +42,10 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   }
   cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
 done
+if [[ -n "$BASE" ]]; then
+  "$ROOT/tools/scripts/report/history-report.sh" stage --report "$REPORT" --protected-base "$BASE" \
+    --purpose "$PURPOSE" --destination "$SNAPSHOT_ROOT"
+fi
 "$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
 set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"
