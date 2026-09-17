@@ -32527,3 +32527,223 @@ $$
 于 $\mathbb F_2$，即得所述公式。证毕。
 
 ## 67.99 追加锚
+
+## 68. 有限维隐藏状态的精确反馈尾判据
+
+**假设 68.1（有限维线性隐藏实现与已存在的 MF1 消元式）。** 设 $\Bbbk$ 为域，$V,H$ 为有限维 $\Bbbk$-向量空间，
+$$
+A:V\to V,\qquad B:H\to V,\qquad C:V\to H,\qquad D:H\to H
+$$
+为线性映射，且
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n.
+$$
+以下直接复用既有 MF1 消元恒等式，而不把它作为新结论：
+$$
+h_n=D^nh_0+\sum_{i=0}^{n-1}D^{\,n-1-i}Cy_i,
+$$
+$$
+y_{n+1}=Ay_n+BD^nh_0+\sum_{i=0}^{n-1}BD^{\,n-1-i}Cy_i.
+$$
+其中 $BD^jC$ 始终表示 $B\circ D^j\circ C$。仓内出处为 trureturing@e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5 的 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md`，MF.2 定理 MF1；标量专门化见 `docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md` 定理 7.1。
+
+**定义 68.2（反馈可达空间、不可观测空间与两个隐藏商）。** 令
+$$
+R=\operatorname{span}\{D^jCv:j\ge0,\ v\in V\},\qquad
+N=\bigcap_{j\ge0}\ker(BD^j).
+$$
+令
+$$
+Q_{\mathrm{fb}}=R/(R\cap N),\qquad Q_{\mathrm{init}}=H/N.
+$$
+若相应子空间对 $D$ 不变，则记诱导映射为
+$$
+\bar D_{\mathrm{fb}}[r]=[Dr],\qquad
+\bar D_{\mathrm{init}}[h]=[Dh].
+$$
+记反馈 Markov 参数
+$$
+M_j=BD^jC.
+$$
+对任意而非闭环强制生成的输入串 $u_0,\ldots,u_{n-1}\in V$，定义反馈输入输出项
+$$
+F_n(u_0,\ldots,u_{n-1}) =\sum_{i=0}^{n-1}M_{n-1-i}u_i.
+$$
+若存在 $m\in\mathbb N$ 使 $M_j=0$ 对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{fb}}$。若存在 $m$ 使 $BD^j=0$ 作为 $H\to V$ 的映射对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{init}}$。对零向量空间约定恒等映射也是零映射，所以零商空间的幂零指数为 $0$。
+
+**定理 68.3（精确有限反馈尾由可达的可见隐藏商控制）。** $R$ 与 $N$ 都对 $D$ 不变，故 $Q_{\mathrm{fb}}$ 上的 $\bar D_{\mathrm{fb}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+1. $M_j=0$ 对全部 $j\ge m$ 成立；
+2. $\bar D_{\mathrm{fb}}^{\,m}=0$；
+3. 对每个 $n$ 及任意两条输入串 $u,u'\in V^n$，只要它们在所有 $i\ge\max(0,n-m)$ 处相同，就有 $F_n(u)=F_n(u')$。
+
+因此有限反馈尾存在当且仅当 $\bar D_{\mathrm{fb}}$ 幂零；存在时，
+$$
+\tau_{\mathrm{fb}} =\min\{m:\bar D_{\mathrm{fb}}^{\,m}=0\}.
+$$
+特别地，
+$$
+\tau_{\mathrm{fb}}=0\iff Q_{\mathrm{fb}}=0
+\iff M_j=0\ \text{对全部 }j\ge0.
+$$
+这正说明反馈尾不是由全部隐藏坐标 $H$ 控制，也不是仅由 $H/N$ 控制，而是由其可达部分的可见商 $R/(R\cap N)$ 控制。经典实现论背景是 R. E. Kalman, “Mathematical Description of Linear Dynamical Systems”, J. SIAM Control Ser. A 1(2), 152–192 (1963), DOI 10.1137/0301010；以及 B. L. Ho and R. E. Kalman, “Effective construction of linear state-variable models from input/output functions”, 1966, pp. 545–548, DOI 10.1524/auto.1966.14.112.545。这里只采用经典的可达/可观测与 Markov 参数视角；本定理的具体截尾等价由下述直接论证给出。
+
+**证明。** 若 $r=D^jCv$ 是 $R$ 的生成元，则 $Dr=D^{j+1}Cv\in R$，故 $R$ 对 $D$ 不变。若 $h\in N$，则对每个 $j\ge0$，
+$$
+BD^j(Dh)=BD^{j+1}h=0,
+$$
+故 $Dh\in N$，于是 $N$ 及 $R\cap N$ 都对 $D$ 不变，两个商上的诱导映射均良定义。
+
+先证 $1\Rightarrow2$。任取
+$$
+r=\sum_{\ell}D^{\ell}Cv_{\ell}\in R.
+$$
+对任意 $k\ge0$，
+$$
+BD^kD^mr =\sum_{\ell}BD^{m+\ell+k}Cv_{\ell} =\sum_{\ell}M_{m+\ell+k}v_{\ell} =0.
+$$
+故 $D^mr\in N$，又 $D^mr\in R$，所以 $D^mR\subseteq R\cap N$，即 $\bar D_{\mathrm{fb}}^{\,m}=0$。
+
+再证 $2\Rightarrow1$。由 $C(V)\subseteq R$，对任意 $v\in V$，
+$$
+D^mCv\in R\cap N.
+$$
+由于 $N$ 对 $D$ 不变，对任意 $j=m+k\ge m$，
+$$
+D^jCv=D^k(D^mCv)\in N,
+$$
+从而 $M_jv=BD^jCv=0$。故 $M_j=0$。
+
+若 1 成立，则 $F_n$ 中只有滞后 $<m$ 的项可能非零，所以只依赖最后 $\min(m,n)$ 个输入，得 3。反之假设 3，任取 $j\ge m$、$v\in V$，置 $n=j+1$，令两条输入串只在 $i=0$ 处相差 $v$，其余均为零。因为 $0<n-m$，两串在要求的后缀上相同，于是
+$$
+0=F_n(u)-F_n(u')=M_jv.
+$$
+故 1 成立。最小截止与幂零指数相等由逐个 $m$ 的等价立即得到。若 $Q_{\mathrm{fb}}=0$，则 $\bar D_{\mathrm{fb}}^0=\operatorname{id}_{0}=0$，故截止为 $0$；反向由 $m=0$ 的等价得到。证毕。
+
+**定理 68.4（任意隐藏初态的强制终止由整个可见隐藏商控制）。** $Q_{\mathrm{init}}=H/N$ 上的 $\bar D_{\mathrm{init}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+$$
+BD^j=0:H\to V\quad(\forall j\ge m),
+$$
+$$
+\bar D_{\mathrm{init}}^{\,m}=0.
+$$
+因此对 MF1 中的初始隐藏强制
+$$
+\eta_n(h_0)=BD^nh_0
+$$
+而言，“对任意 $h_0$ 都从某一统一时刻起恒为零”当且仅当 $\bar D_{\mathrm{init}}$ 幂零；存在时
+$$
+\tau_{\mathrm{init}} =\min\{m:\bar D_{\mathrm{init}}^{\,m}=0\}.
+$$
+并且
+$$
+\tau_{\mathrm{init}}=0\iff H/N=0\iff BD^j=0\ \text{对全部 }j\ge0.
+$$
+
+**证明。** $N$ 的 $D$-不变性已在前一定理证明。若 $BD^j=0$ 对全部 $j\ge m$，则任取 $h\in H$ 与 $k\ge0$，
+$$
+BD^kD^mh=BD^{m+k}h=0,
+$$
+故 $D^mH\subseteq N$，即 $\bar D_{\mathrm{init}}^{\,m}=0$。反之，若 $\bar D_{\mathrm{init}}^{\,m}=0$，则 $D^mH\subseteq N$；对 $j=m+k$，有 $D^jH\subseteq N$，故 $BD^j=0$。最小截止与零商边界同前一定理。证毕。
+
+**定理 68.5（反馈尾、初始强制与原算子幂零性严格分离）。** 下列三个现象均可发生。
+
+(a) 反馈记忆恒为零而初始隐藏强制永不终止：取 $V=H=\Bbbk$，
+$$
+A=B=D=\operatorname{id},\qquad C=0.
+$$
+则 $M_j=BD^jC=0$ 对全部 $j$ 成立，而
+$$
+BD^nh_0=h_0
+$$
+对任意 $n$ 及任意 $h_0\ne0$ 都非零。
+
+(b) $D$ 本身不幂零而可见反馈尾有限：取 $V=\Bbbk$、$H=\Bbbk^2$，
+$$
+C(v)=(v,0),\qquad B(x,y)=x,\qquad D(x,y)=(0,y).
+$$
+则 $D(0,1)=(0,1)$，故 $D$ 不幂零；但是
+$$
+M_0=\operatorname{id}_{\Bbbk},\qquad M_j=0\quad(j\ge1),
+$$
+所以 $\tau_{\mathrm{fb}}=1$。
+
+(c) 单条闭环轨迹可以把无限反馈核完全遮蔽：取 $V=H=\Bbbk$，
+$$
+A=0,\qquad B=C=D=\operatorname{id},
+$$
+并取 $y_0=h_0=0$。则闭环轨迹恒为零，但
+$$
+M_j=BD^jC=\operatorname{id}
+$$
+对每个 $j$ 都非零，故不存在有限反馈尾。
+
+**证明。** (a) 因 $C=0$，所有 $M_j$ 都为零；而 $B=D=\operatorname{id}$ 给出 $BD^n=\operatorname{id}$。这里 $R=0$，所以反馈商为零，但 $N=0$，故初始商为 $H$，其诱导 $D$ 为恒等映射。
+
+(b) 由 $DC=0$ 得 $M_j=0$ 对 $j\ge1$，而 $M_0=BC=\operatorname{id}$。同时 $(0,1)$ 是 $D$ 的不动向量，所以 $D$ 不幂零。事实上 $N=\operatorname{span}\{(0,1)\}$、$R=\operatorname{span}\{(1,0)\}$，故可达的可见商上诱导 $D$ 为零；不可见的非幂零方向被商掉。
+
+(c) 从零初态按线性更新归纳得 $y_n=h_n=0$；另一方面 $BD^jC=\operatorname{id}$ 对全部 $j$ 成立。故仅观察这一条轨迹上的抵消不能推出 Markov 参数尾消失，必要性必须按任意输入串的输入输出命题判断。证毕。
+
+**定理 68.6（有限维下的有限测试界）。** 令 $d=\dim H$。
+
+若 $d=0$，则 $H=0$，两个商均为零，且 $\tau_{\mathrm{fb}}=\tau_{\mathrm{init}}=0$。
+
+若 $d>0$，则
+$$
+N=\bigcap_{j=0}^{d-1}\ker(BD^j),
+\qquad
+R=\operatorname{span}\{D^jCv:0\le j<d,\ v\in V\}.
+$$
+此外，有限反馈尾存在当且仅当
+$$
+M_d=M_{d+1}=\cdots=M_{2d-1}=0.
+$$
+在此情形
+$$
+\tau_{\mathrm{fb}}\le \dim Q_{\mathrm{fb}}\le d,
+$$
+并且
+$$
+\tau_{\mathrm{fb}} =\min\Bigl\{0\le m\le d:
+M_m=M_{m+1}=\cdots=M_{m+d-1}=0\Bigr\}.
+$$
+同理，任意隐藏初态的统一强制终止存在当且仅当
+$$
+BD^d=BD^{d+1}=\cdots=BD^{2d-1}=0
+$$
+作为 $H\to V$ 的映射成立；存在时
+$$
+\tau_{\mathrm{init}}\le \dim Q_{\mathrm{init}}\le d,
+$$
+且
+$$
+\tau_{\mathrm{init}} =\min\Bigl\{0\le m\le d:
+BD^m=BD^{m+1}=\cdots=BD^{m+d-1}=0\Bigr\}.
+$$
+
+**证明。** 设 $D$ 的特征多项式为
+$$
+\chi_D(t)=t^d-a_{d-1}t^{d-1}-\cdots-a_0.
+$$
+Cayley--Hamilton 定理给出
+$$
+D^d=\sum_{r=0}^{d-1}a_rD^r.
+$$
+因此每个 $D^j$（$j\ge d$）都是 $I,D,\ldots,D^{d-1}$ 的线性组合。这立即给出 $R$ 的有限生成公式；若 $h$ 被 $BD^j$ 在 $0\le j<d$ 全部杀掉，则同一线性组合也使所有 $BD^jh$（$j\ge d$）为零，故得到 $N$ 的有限交公式。
+
+对任意 $q\ge0$，左乘 $BD^q$ 并右接 $C$ 得
+$$
+M_{q+d}=\sum_{r=0}^{d-1}a_rM_{q+r}.
+$$
+所以任意连续 $d$ 个 $M$-项一旦全为零，其后的项由归纳也全为零。若有限反馈尾存在，前一定理给出其截止等于 $Q_{\mathrm{fb}}$ 上幂零指数；幂零算子在 $r$-维空间上的幂零指数至多为 $r$，而
+$$
+r=\dim Q_{\mathrm{fb}}\le d,
+$$
+故 $\tau_{\mathrm{fb}}\le d$，从而 $M_d,\ldots,M_{2d-1}$ 必全为零。反之，这一长度为 $d$ 的零块通过上述递推强制全部后继项为零。对任意 $m\le d$，同样的递推说明“$M_m,\ldots,M_{m+d-1}$ 全零”恰好意味着 $m$ 已是一个反馈截止，因此取最小值得到公式。
+
+去掉右端的 $C$ 得
+$$
+BD^{q+d}=\sum_{r=0}^{d-1}a_rBD^{q+r},
+$$
+完全相同的论证给出初始强制的有限测试与最小截止。证毕。
+
+## 68.99 追加锚
