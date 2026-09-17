@@ -19309,3 +19309,154 @@ The uniform negative-Q criterion, arbitrary subsequent-prime
 continuation and unrestricted Erdős #7 remain unproved. These are
 ordinary mathematical estimates and exact arithmetic certificates,
 without an actual-family sharpness assertion or new Lean declaration.
+
+### Every original AP11/13 exponent block
+
+Retaining each original AP exponent tuple across all auxiliary outcomes
+strengthens CB1 on the same actual law to
+
+    F17^-(403;nu13)+F19^-(403;physical nu13 K17)
+      <=270521516350366644094844875118567294436413
+        /602026785801891491446910338273843603200
+       =449.35129587304937....                         (ABP1)
+
+The source bounds remain Gamma13<=156.67889586063097... and
+T13(81)<=99.02504665708572..., with their exact values in CB1.
+The gain over CB1 is
+
+    476847867448244109695443125/689143933742337091835542297
+      =0.6919423419412003... .
+
+This is an application of the existing FL1--FL4 original-label grouping
+principle to CB2's all-original7 operator. It keeps the prescribed
+physical AP11/T4 and AP13/T6 kernels, every original residue and label,
+the same mixed7 deletion floor, one final conditioning, and the physical
+mu17 input of the19 functional.
+
+#### Group before taking each source maximum
+
+Use the original-label reverse conditional comparison in CB4: conditional
+on the actual357 point x, the compared full test has load
+
+    sum_(0<=e<N11,0<=f<N13) A_(e,f)(x).
+
+Each A_(e,f) is its globally fixed original complete357 block. The
+auxiliary counts N11,N13 are independent of each other and x because
+their full-history caps are the constants5/3 and2. This does not assert
+independence of the actual physical coordinates. Their distributions are
+
+    Pr(Np=1)=1-cp/p,
+    Pr(Np=n)=cp*(p-1)*p^-n, n>=2.
+
+Put N=N11*N13. For an original exponent tuple a=(e,f), define
+
+    Q_a(v)=E[1_(e<N11,f<N13)*(h(Nv)-h(N))/N],
+    S_all(h)=s*E h(N)+sum_a B(Q_a),                    (ABP2)
+
+where B is exactly the CB2 source operator on the same raw mass s.
+On each auxiliary rectangle, centered Jensen assigns one summand to
+each of its N original blocks. Collecting the summands with the same
+original tuple yields Q_a(A_a). Each Q_a is nonnegative, increasing and
+convex; bounding its source integral by B(Q_a) proves ABP2. All completions
+are fixed before sampling. Nonnegative summation and the finite complete
+count moments justify the infinite extension of physical heights.
+
+CB4 keeps only Q_(0,0) together and bounds the other tuples separately
+within each outcome. Positive homogeneity and subadditivity of B show
+S_all<=S from CB4. No equality of actual maximizing layouts is assumed.
+
+#### Exact finite exceptions and the complete tuple complement
+
+Suppose h(v)=A*v^j+B0 for v>=K, where j is1 or2 and K>=2. The finite
+set of tuples that can be active for some N<K is exactly
+
+    I={(e,f):(e+1)*(f+1)<K}.
+
+For a=(e,f) in I, set
+
+    p_a(n)=sum_(uv=n,e<u,f<v) Pr(N11=u)Pr(N13=v), n<K,
+    M_a=E[1_(e<N11,f<N13)*N^(j-1)],
+    t_a=M_a-sum_(n<K)p_a(n)*n^(j-1)>=0.
+
+Auxiliary independence computes M_a as the product of the two complete
+one-coordinate active moments. For exponent e and order r in{0,1},
+these moments are
+
+    E[1_(Np>e) Np^r]
+      =1                         if e=0,r=0,
+      =1+cp/(p-1)                if e=0,r=1,
+      =cp*p^-e                   if e>=1,r=0,
+      =cp*p^-e*(e+1+1/(p-1))     if e>=1,r=1.
+
+Thus each whole original-block cost is exactly
+
+    Q_a(v)=sum_(n<K)(p_a(n)/n)[h(nv)-h(n)]
+                           +A*t_a*(v^j-1).           (ABP3)
+
+It is eventually a polynomial of degree j, with leading coefficient
+A*M_a and constant sum_(n<K)(p_a(n)/n)[B0-h(n)]-A*t_a. The existing
+generic zero5/all-original7 source formulas therefore apply, including
+their full five, seven and ternary tails.
+
+For every tuple outside I, Q_a=A*M_a*(v^j-1). There are exactly N
+active original tuples in each rectangle, so
+
+    sum_a M_a=E N^j,
+    sum_(a outside I) B(Q_a)
+      =A*[E N^j-sum_(a in I)M_a]*[B(v^j)-s].          (ABP4)
+
+The coefficient is nonnegative. The complete product moments are
+E N^0=1, E N=49/36 and E N^2=253/108. Equations ABP3--ABP4 account for
+every original exponent height with no truncation, renormalization, or
+uncanceled inverse-N series.
+
+#### Same floor, continuous domain and checked consumer
+
+The comparison integrand equals E h(N) plus nonnegative centered costs
+on the same raw pre-deletion source. Let u>=D be the actual357 mass
+after mixed7 deletion and e_h=E h(N). Then S_all>=s*e_h and
+
+    [S_all-e_h(s-u)]/u <= [S_all-e_h(s-D)]/D,
+    R_all(h)=S_all(h)-e_h(s-D),
+    sup_A E_nu13 h(A)<=R_all(h)/Delta.                 (ABP5)
+
+The last step uses the unchanged final survival lower bound Delta/D.
+The floor is charged once on the same actual removed set. The physical
+AP11/13 comparison is not replaced by a product law on the actual source.
+
+ABP2--ABP4 express S_all as a positive sum of fixed-cost B bounds plus
+separately affine multiples of s. Hence it is separately convex in the
+five original HC parameter groups and exact on constant shifts.
+Writing R_all=e_h*D+[S_all-s*e_h] leaves K_Z unchanged. For the joint
+target C in ABP1 the separately concave target margin has D coefficient
+
+    (C-C0)*131/132-K_Z
+      =20407800120324728147819485087313651255189
+        /50427789340046609525300041026374323200 >0.    (ABP6)
+
+The current consumer improves the three weighted costs R17,R19,R5.
+Delta,U16,U81 and the complete Gamma/T81 source bounds remain exactly
+the CB2 all-original7 quantities; no common-AP square gain is claimed.
+Positive vertex Delta and nonnegative target margins extend by repeated
+vertex interpolation to the full continuous domain. All1296 product
+vertices and all eight other original-family branches pass. Joint and
+Gamma maximizing representatives include398; a T81 representative
+is386. The certificate records all tied maximizing indices, without
+claiming that actual families attain the comparison extrema.
+
+The [canonical verifier](verify_joint_frontier.py) uses centered source
+costs, divisor-probability convolution, and the closed active moments
+above. A separate implementation uses uncentered source costs, direct
+factor-pair convolution, and geometric active moments. Every common
+certificate field, all1296 rows and all eight current-target fallback
+records are checked against that independent implementation. The
+[certificate](joint_frontier_certificate.json) also retains the earlier
+bounds and separates this gain from the previous improvements.
+
+The finite allowances remain303.7119533429143 and303.9742863429143;
+safe sufficient bounds are303.711 and303.974. The joint upper remains
+145.63934253013505 or145.37700953013507 above those allowances. The
+signed upper before finite-core error is145.37634253013505, still
+positive. These local gaps are not a percentage of the unrestricted
+proof. The uniform negative-Q criterion and the later-prime continuation
+remain open; no new Lean declaration or unrestricted resolution is claimed.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact certificate for common seven blocks and the AP zero357 frontier.
+"""Exact certificate retaining every original seven and AP source block.
 
 Python 3.9+; standard library only. Run with -I -O. This checks the
 finite arithmetic in the accompanying ordinary proof, not a Lean proof
@@ -112,7 +112,7 @@ def pmf(caps, cut):
 
 @lru_cache(None)
 def raw_ap_hinge(h, caps, dat):
-    return ap_common_raw(('h', h), caps, dat)
+    return ap_original_blocks_raw(('h', h), caps, dat)
 
 def delta(dat):
     D = dat[4]
@@ -299,6 +299,13 @@ def zero5_cost_metadata(tag):
         constant = (sum(p * (b - zero5_cost(inner, n)) / n for n, p in finite.items())
                     - a * tails[degree - 1])
         return degree, leading, constant, cutoff
+    if kind == 'ap_block':
+        inner, caps, e, f = arg
+        degree, a, b, cutoff = zero5_cost_metadata(inner)
+        finite, active, tail = ap_block_record(caps, cutoff, degree, e, f)
+        return (degree, a * active,
+                sum(p * (b - zero5_cost(inner, n)) / n for n, p in finite) - a * tail,
+                cutoff)
     raise ValueError('Unknown zero-five cost: ' + kind)
 
 @lru_cache(None)
@@ -331,6 +338,12 @@ def zero5_cost(tag, v):
         finite, tails = ap_product_distribution(caps, cutoff)
         return (sum(p * (zero5_cost(inner, n * v) - zero5_cost(inner, n)) / n
                     for n, p in finite.items()) + a * tails[degree - 1] * (v ** degree - 1))
+    if kind == 'ap_block':
+        inner, caps, e, f = arg
+        degree, a, _, cutoff = zero5_cost_metadata(inner)
+        finite, _, tail = ap_block_record(caps, cutoff, degree, e, f)
+        return (sum(p * (zero5_cost(inner, n * v) - zero5_cost(inner, n)) / n
+                    for n, p in finite) + a * tail * (v ** degree - 1))
     raise ValueError('Unknown zero-five cost: ' + kind)
 
 @lru_cache(None)
@@ -400,7 +413,7 @@ def zero5_scaled_pure(tag, n, baseline, pure):
     if kind == 'scale':
         inner, dilation = arg
         return zero5_scaled_pure(inner, n * dilation, baseline, pure)
-    if kind in ('zero7', 'seven_block', 'zeroap'):
+    if kind in ('zero7', 'seven_block', 'zeroap', 'ap_block'):
         return (sum(w * zero5_cost(tag, n * b) for w, b in zip(pure, baseline))
                 + max(zero5_convex_pure_deep(tag, n, b) for b in baseline))
     raise ValueError('Unknown zero-five cost: ' + kind)
@@ -465,17 +478,61 @@ def ap_product_distribution(caps, cutoff):
     return finite, tails
 
 @lru_cache(None)
-def ap_common_raw(tag, caps, dat):
-    """Keep the original (11,13)-zero block on the same raw357 source."""
+def ap_active_moment(prime, cap, exponent, order):
+    """E[1_(N>exponent) N^order], for order zero or one, without cutoff."""
+    require(order in (0, 1), 'Original AP block uses moment zero or one')
+    if exponent == 0:
+        return F(1) if order == 0 else 1 + cap / F(prime - 1)
+    probability = cap / prime ** exponent
+    return probability if order == 0 else probability * (exponent + 1 + F(1, prime - 1))
+
+def ap_count_probability(prime, cap, n):
+    return 1 - cap / prime if n == 1 else cap / prime ** (n - 1) - cap / prime ** n
+
+@lru_cache(None)
+def ap_original_block_inputs(caps, cutoff, degree):
+    require(caps == CAP13 and degree in (1, 2), 'Original AP11/13 source and polynomial degree')
+    (p, cp), (q, cq) = caps
+    records = []
+    for e in range(cutoff - 1):
+        for f in range(cutoff - 1):
+            if (e + 1) * (f + 1) >= cutoff:
+                continue
+            finite = []
+            for n in range(1, cutoff):
+                probability = sum((ap_count_probability(p, cp, u) * ap_count_probability(q, cq, n // u)
+                                   for u in range(1, n + 1)
+                                   if n % u == 0 and u > e and n // u > f), F(0))
+                if probability:
+                    finite.append((n, probability))
+            active = ap_active_moment(p, cp, e, degree - 1) * ap_active_moment(q, cq, f, degree - 1)
+            tail = active - sum(probability * n ** (degree - 1) for n, probability in finite)
+            require(tail >= 0, 'Complete active original AP block tail')
+            records.append(((e, f), tuple(finite), active, tail))
+    outside = moment(caps, degree) - sum(active for _, _, active, _ in records)
+    require(outside >= 0, 'Complete complement of finite original AP block set')
+    return tuple(records), outside
+
+@lru_cache(None)
+def ap_block_record(caps, cutoff, degree, e, f):
+    for pair, finite, active, tail in ap_original_block_inputs(caps, cutoff, degree)[0]:
+        if pair == (e, f):
+            return finite, active, tail
+    raise ValueError('AP block is outside the finite exceptional set')
+
+@lru_cache(None)
+def ap_original_blocks_raw(tag, caps, dat):
+    """Collect each original (11,13) exponent tuple before its source maximum."""
     degree, a, b, cutoff = zero5_cost_metadata(tag)
+    records, outside = ap_original_block_inputs(caps, cutoff, degree)
     finite, tails = ap_product_distribution(caps, cutoff)
     s = dat[3]
-    positive = sum(p * (F(n - 1, n) * zero7_raw(('scale', (tag, n)), dat)
-                        + s * zero5_cost(tag, n) / n) for n, p in finite.items())
+    expectation = (sum(p * zero5_cost(tag, n) for n, p in finite.items())
+                   + a * tails[degree] + b * tails[0])
+    common = sum(zero7_raw(('ap_block', (tag, caps, e, f)), dat)
+                 for (e, f), _, _, _ in records)
     monomial = ('h', F(0)) if degree == 1 else ('s', F(0))
-    tail = (a * (tails[degree] - tails[degree - 1]) * zero7_raw(monomial, dat)
-            + s * (a * tails[degree - 1] + b * tails[0]))
-    return zero7_raw(('zeroap', (tag, caps)), dat) + positive + tail
+    return s * expectation + common + a * outside * (zero7_raw(monomial, dat) - s)
 
 @lru_cache(None)
 def w35(weights, n, dat):
@@ -497,7 +554,7 @@ def w_ap_base(weights, caps):
 
 @lru_cache(None)
 def w_ap(weights, caps, dat):
-    raw = ap_common_raw(('w', (weights, 1)), caps, dat)
+    raw = ap_original_blocks_raw(('w', (weights, 1)), caps, dat)
     floor = w_ap_base(weights, caps)
     require(raw >= floor * dat[3], 'Same-source AP centered remainder is nonnegative')
     return raw - floor * (dat[3] - dat[4])
@@ -511,13 +568,14 @@ W5 = ((5, F(1)),)
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
 SOURCE_PINS = {'verify_shared_cell_hinges.py': '62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0', 'verify_shared_cell_square.py': '55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4', 'verify_joint_source_normalization.py': '5dadfee0a4a929d6a1f60fa7830f7c824ad92d90a71982baa9449b1a296f2471', 'pure_root_profile_certificate.json': 'eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b', 'shared_cell_hinges_certificate.json': '6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29', 'shared_cell_square_certificate.json': 'b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1', 'shared_square_continuation_certificate.json': '157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32', 'joint_source_normalization_certificate.json': '5bff80b80f880c8de3f9c0ba62bac5536f9672ce86d02fa28e043d1c6bd0acf2'}
-TARGET=F(20841391090341979866125382429441856802801,46309752753991653188223872174911046400)
+TARGET=F(270521516350366644094844875118567294436413,602026785801891491446910338273843603200)
 TARGET_GAMMA=F(5523249664714699759,35252033366559724)
 TARGET_T81=F(80660556065861952082417951246296859,814547014001232991335635026248000)
 BASELINE=F(118570862466538358475198684157361643465353,248352178520459750383083052623940732800)
 OLD_CELL_BOUND=F(2322308771011317404407279020690922380203,4883651784640915381663610335586092800)
 OLD_ZERO5_BOUND=F(12962561422729019748540463097645271562217,28539940401461137428522682187907859200)
 OLD_ZERO7_BOUND=F(5323534511332833048109272786522049864207,11791742854906074667157193240441043200)
+OLD_COMBINED_ZERO_AP_BOUND=F(20841391090341979866125382429441856802801,46309752753991653188223872174911046400)
 HC_TARGETS={3:F(1318076,584325),4:F(94745926,61354125),6:F(578163435166,676429228125)}
 FALLBACK_INPUTS = (
     ('3-absent/5-absent/7-absent', (F(1), F(1), F(1)), F(756,373)),
@@ -709,7 +767,7 @@ def reconstruct():
     require(min(coeff,cg,ct,splitcoef,nofloorcoef)>0,'All continuous-domain coefficient conditions')
     branches=fallback_checks()
     require(all(r['joint_upper']<=splitmax and r['joint_upper']<=nofloormax for r in branches),'Comparison envelopes cover other branches')
-    return encode({'schema':'erdos7-common-seven-blocks-ap-zero357-frontier-v1','source_commit':COMMIT,
+    return encode({'schema':'erdos7-all-original-seven-ap-blocks-frontier-v1','source_commit':COMMIT,
         'source_sha256':SOURCE_PINS,'input19':'physical mu17=nu13 K17, distinct from killed xi',
         'bound':TARGET,'Gamma13':TARGET_GAMMA,'T13_81':TARGET_T81,
         'C0':WHOLE_CONST,'KZ':kZ,'continuous_coefficient':coeff,'Gamma_coefficient':cg,'T81_coefficient':ct,
@@ -724,7 +782,9 @@ def reconstruct():
         'baseline_whole_bound':BASELINE,'old_cell_bound':OLD_CELL_BOUND,
         'gain_from_cell_consistency':BASELINE-OLD_CELL_BOUND,'common_zero5_gain':OLD_CELL_BOUND-OLD_ZERO5_BOUND,
         'old_zero5_bound':OLD_ZERO5_BOUND,'common_zero7_gain':OLD_ZERO5_BOUND-OLD_ZERO7_BOUND,
-        'old_zero7_bound':OLD_ZERO7_BOUND,'common_seven_blocks_ap_gain':OLD_ZERO7_BOUND-TARGET,
+        'old_zero7_bound':OLD_ZERO7_BOUND,'common_seven_blocks_ap_gain':OLD_ZERO7_BOUND-OLD_COMBINED_ZERO_AP_BOUND,
+        'old_combined_zero_ap_bound':OLD_COMBINED_ZERO_AP_BOUND,
+        'common_ap_original_blocks_gain':OLD_COMBINED_ZERO_AP_BOUND-TARGET,
         'same_cell_split_bound':splitmax,'same_cell_whole_weighted_gain':splitmax-TARGET,
         'same_cell_no_floor_bound':nofloormax,'same_law_floor_gain':nofloormax-TARGET,
         'split_continuous_coefficient':splitcoef,'no_floor_continuous_coefficient':nofloorcoef,

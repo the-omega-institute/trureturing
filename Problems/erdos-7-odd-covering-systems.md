@@ -90,9 +90,10 @@ On this same law, the complete square hinge satisfies
 are therefore303.974 for the large core and303.711 for the smaller one,
 at W403. Row potentials coupled to the actual cap and charge, whole
 weighted original-layout costs and complete tails give the all-family
-upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<450.043239`.
-This improves the zero-seven-only comparison451.462908 but remains
-above both required allowances. The19 input of this KC functional is
+upper bound `F17^-(403;nu13)+F19^-(403;physical mu17)<449.351296`.
+[Retaining every original AP11/13 exponent block](../docs/reports/erdos7-odd-covering/marked_head_profile.md#every-original-ap1113-exponent-block)
+improves the common-zero-AP comparison450.043239 but remains above
+both required allowances. The19 input of this KC functional is
 the normalized physical mu17; the actual killed input xi in BM/RC is
 not substituted. All these are ordinary inequalities with exact
 rational certificates.
