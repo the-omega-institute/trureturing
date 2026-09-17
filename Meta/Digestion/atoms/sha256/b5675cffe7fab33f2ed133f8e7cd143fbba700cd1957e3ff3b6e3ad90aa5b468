@@ -1,0 +1,12 @@
+### 121.3 量子记录接口
+
+经典核的退化对应量子记录态族之间的 CPTP 模拟。设每个历史 $h$ 在接口 $E$、$F$ 下分别产生密度算子 $\rho_h^E$、$\rho_h^F$。定义
+
+$$
+E\succeq_QF
+\quad\Longleftrightarrow\quad
+\exists\Lambda\ \text{CPTP},
+\quad
+\rho_h^F=\Lambda(\rho_h^E)\quad(\forall h).
+$$
+
