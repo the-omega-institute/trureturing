@@ -86,7 +86,11 @@ internal sealed class PnimHeavyIntervalRefutationDocument : IScribeDocumentDefin
                         + "the table with the recursive Grundy function. A second table "
                         + "establishes the rectangle premise. Only printed Conjecture 2 "
                         + "is refuted; no priority or corrected formula is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "gottlieb-krnc-mursic-pnim-heavy-interval-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("pnim-" + name.ToLowerInvariant()),
