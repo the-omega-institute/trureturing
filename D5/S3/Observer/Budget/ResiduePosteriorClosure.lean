@@ -1,7 +1,7 @@
 /- GID: D5/S3/Observer/Budget/ResiduePosteriorClosure
    generality: G
-   mirror - B: D5/B/S3/Observer/Budget/ResiduePosteriorClosure
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Observer/Budget/ResiduePosteriorClosure
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Actual residue histories have exact sibling fibers and positive rational posteriors. -/
