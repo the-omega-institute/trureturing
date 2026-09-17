@@ -1,0 +1,15 @@
+**证明。** $c_i\in Y_i^*$ 给唯一 $\operatorname{Dec}(c_i)\in Y_i$，替代给其 $A$ 域上的总图，故 $\Psi_Y$ 良定义。应用显示的逆后，第 $i$ 坐标为 $\operatorname{Enc}(\operatorname{Dec}(c_i))=c_i$；反向给 $\operatorname{Enc}(i\mapsto p_i)=\operatorname{Enc}(p)$。这证明两个复合恒等，且逆仅在积的成员像上使用。$A=\varnothing$ 时原积和外部因子积均有唯一空函数，$\Psi_Y$ 将它送到 $\operatorname{Enc}(\varnothing)$；有空因子时两积均空，同一空映射仍为双射。
+
+对一般空间 $(X,\tau)$，第 378.5 条在任意拓扑上给
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\},\qquad
+ e_X:(X,\tau)\simeq(X^*,\tau^*),
+$$
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+因子积中的基本开集只限制某个有限 $D\subseteq A$，形如 $p_i\in U_i$ 对所有 $i\in D$。逐坐标编码使其恰对应 $c_i\in\operatorname{Enc}[U_i]$ 的基本开集；正逆均将这些基条件一一对应。再与 $e_{\mathscr P_Y}$ 的运输同胚复合，就得 $\Psi_Y$ 连续且逆连续，包含空积的拓扑。
+
+最后原 $p$ 的每条普通边为 $\langle i,p_i\rangle$，定理 386.1 给显示全图码。若改用普通索引集 $A^*$，相应外部族为 $\operatorname{Enc}(i)\mapsto\operatorname{Enc}(p_i)$；它与原索引的码值族通过 $e_A$ 重索引，再通过语义配对与 $\operatorname{Pack}$ 得单个族码。这逐项保留全部指标。证毕。
+

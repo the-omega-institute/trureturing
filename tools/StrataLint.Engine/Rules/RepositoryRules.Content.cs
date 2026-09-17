@@ -252,7 +252,10 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> ResolvableAnchors(RuleEvaluationContext context) =>
-        Literature(context).AddRange(AnchorReferenceRule.Evaluate(context));
+        (context.RuleImplementationChanged || LiteratureAffected(context)
+            ? Literature(context)
+            : ImmutableArray<RuleFinding>.Empty)
+        .AddRange(AnchorReferenceRule.Evaluate(context));
 
     private static void ValidateQuerySource(
         RepositorySnapshot snapshot,

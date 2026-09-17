@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:27159a6297bf00c615a518cf62ce1534acc7c8bf6e3c5e756656fc149bd489df
+  normalized_sha256: sha256:27159a6297bf00c615a518cf62ce1534acc7c8bf6e3c5e756656fc149bd489df
+cas_ref: sha256:27159a6297bf00c615a518cf62ce1534acc7c8bf6e3c5e756656fc149bd489df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 零前缀常一序列在首项取零且其完成类等于一，CauSeq.Completion.mk_eq 与有限前缀归一化给出该见证，仓内无冻结 GID。
+    previous_atom_id: 2899180c47f096c6ddf7340b928690b17ea464090692643e4e14aac59df0cfa2
+    next_atom_id: 11693e3e0060a43f7b20da0480cd78875d000ed5186bef68d760c05480e74a38

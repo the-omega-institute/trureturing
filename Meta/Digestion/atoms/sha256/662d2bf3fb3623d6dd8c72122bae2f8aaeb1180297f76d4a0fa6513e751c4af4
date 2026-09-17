@@ -1,0 +1,18 @@
+**定理 417.2（准确计数及其逆区间）。** 对全部 $L\ge1,N\ge0$，
+$$
+C_L(N)=\#\{m\ge1:e_{L,m}\le N\}
+=\max\{m\ge0:e_{L,m}\le N\}.
+$$
+对任意 $M\ge0$，
+$$
+C_L(N)=M\quad\Longleftrightarrow\quad e_{L,M}\le N\le e_{L,M+1}-1.
+$$
+有 $C_L(0)=0$，且对全部 $m\ge1$，
+$$
+C_L(e_{L,m}-1)=m-1,\qquad C_L(e_{L,m})=m.
+$$
+另令 $h=\lfloor N/\Lambda_L\rfloor\in\omega$，则
+$$
+C_L(N)=h+\mathbf1_{\{e_{L,h+1}\le N\}}.
+$$
+

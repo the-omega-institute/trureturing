@@ -1,0 +1,9 @@
+**定义 47.5（自然锚相对化翻译）。** 对任意 $L_{\mathrm{sr}}$ 公式 $\varphi$，先按需要有效改名束缚变量以避免变量捕获，再定义 $\varphi^N$：等式原子不变，布尔联结词逐项翻译，量词替换为
+$$
+(\exists x\,\psi)^N:=\exists x\,(N(x)\land\psi^N),
+$$
+$$
+(\forall x\,\psi)^N:=\forall x\,(N(x)\rightarrow\psi^N),
+$$
+其中 $N(x)$ 是定理 47.3 给出的无参数公式。
+

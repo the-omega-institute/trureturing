@@ -1,0 +1,6 @@
+**定义。** 沿用 PT6 的 $K_{a,b},P$，令 $Q=I-P$，并在隐藏方向 $(1,-1,0)$ 上置
+
+$$
+\lambda=1-2a-b/2,\quad D=QK_{a,b}Q,\quad C=QK_{a,b}P,\quad B=PK_{a,b}Q.
+$$
+

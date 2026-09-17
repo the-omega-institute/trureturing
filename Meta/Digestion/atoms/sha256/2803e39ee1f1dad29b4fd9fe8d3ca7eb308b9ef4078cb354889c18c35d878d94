@@ -1,0 +1,14 @@
+**定理 446.7（两个状态的最小分离深度）。** 固定盒内不同状态 $a,b$，令 $I=\{p:a_p\ne b_p\}$。若当前 $\mu$ 不同，最小分离深度为零。若当前相同，则只乘法语言中：二者平方自由时深度为一，二者非平方自由时深度恰为
+$$
+\delta_+(a,b)=1+\min_{p\in I}(A_p-\max(a_p,b_p)).
+$$
+乘除语言中，令
+$$
+\delta_G=1+\min_{p\in I}\min\bigl(\min(a_p,b_p),A_p-\max(a_p,b_p)\bigr),
+$$
+则最小深度恰为
+$$
+\delta_{\pm}(a,b)=\min\bigl(\delta_G,\max(1,\min(D(a),D(b)))\bigr).
+$$
+同状态的分离深度记为 $+\infty$。
+

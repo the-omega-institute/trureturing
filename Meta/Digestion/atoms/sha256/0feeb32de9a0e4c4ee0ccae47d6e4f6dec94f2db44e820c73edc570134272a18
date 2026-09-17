@@ -1,0 +1,6 @@
+**定理。** $H_k$ 的最小特征值没有与 $k$ 无关的正下界，并且
+
+$$
+\lambda_{\min}(H_k)\leq\frac{1}{4(k^2+1)}\longrightarrow0.
+$$
+

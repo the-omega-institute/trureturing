@@ -1,0 +1,8 @@
+**定义。** 对具有魔群作用的非负分次空间 $V^\natural=\bigoplus_{n\ge0}V_n^\natural$，定义
+
+$$
+T_g(q)=\sum_{n\ge0}\operatorname{Tr}(g|V_n^{\natural})q^{n-1}.
+$$
+
+当 $g=1$ 时系数为各级维数；一般 $g$ 的系数为字符值。
+

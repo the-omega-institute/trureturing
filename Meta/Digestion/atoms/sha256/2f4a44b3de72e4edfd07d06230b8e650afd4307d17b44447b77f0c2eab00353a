@@ -1,0 +1,19 @@
+**证明。** 第一式的逆将任意 $h:X^*\to\mathbb R$ 送到 $h\circ e_X$；第二式的逆送到 $\operatorname{Dec}\circ h\circ e_X$。双逆逐点成立，且同胚的复合及第 405.1 条证明 Borel 性在每个方向都成立。这样包括所有假设存在的 Borel 函数，而非只运输某个指定见证。第一式不改值，第二式由 $e_{\mathbb R}$ 单射保持并反映值相等；关系的逐点比较于是保持完全不变量的两个方向。与一个共轭映射复合的等式也两向保持，所以不变函数的定义相同。任一外部完全不变量拉回会违反第 399.1 或 401.1 条，故不存在。
+
+实数码始终作为实数对象的编码使用。具体定义
+$$
+c<^*d\iff\operatorname{Dec}(c)<\operatorname{Dec}(d),\qquad
+c+^*d=\operatorname{Enc}(\operatorname{Dec}(c)+\operatorname{Dec}(d)),
+$$
+并以同样方式定义零、一、乘法、负号、绝对值以及非零域上的除法。它们的图以第 403–404 条的乘积、联合域和图公式编码。阈值 $q\in\mathbb Q$ 在第二目标中为 $\operatorname{Enc}(q)$，故
+$$
+\{e_X(x):e_{\mathbb R}(f(x))<^*\operatorname{Enc}(q)\}
+=e_X[\{x:f(x)<q\}].
+$$
+对每个序列 $(r_n)$，拓扑同胚给
+$$
+r_n\longrightarrow r
+\iff e_{\mathbb R}(r_n)\longrightarrow e_{\mathbb R}(r).
+$$
+若序列的指标也完整编码，则在 $\operatorname{NatZ}(n)$ 处取 $e_{\mathbb R}(r_n)$；“全部充分大指标”经自然序的运输恰为同一条件。有限和逐步用 $+^*$ 对应，无穷级数的有限实极限由上述极限式对应。上、下确界也因双射的保序及反映序而对应：上界及每个上界都不小于所取者的两个全称条件逐项解码就是原条件。由此有理阈值、算术和极限都具有各自的明确比较，$\operatorname{Enc}(r)$ 并未被定义成普通实数 $r$。证毕。
+

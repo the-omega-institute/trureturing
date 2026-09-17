@@ -1,0 +1,41 @@
+**Proof by an exact example.** Let n=337 and q=673. Both are primes,
+chi(n)=chi(q)=-1, q=2n-1, and q divides F_n. Since n is prime and
+F_1=1, the exact rank of q is337. Put M=q^3=304821217. Then
+
+$$
+1<M<F_{337},\qquad M\equiv F_{337}\equiv2017\pmod{25200}.
+$$
+
+The integer M is powerful, with one inert prime at odd exponent three,
+and it meets the rank lower bound with equality q=2n-1. The actual
+Fibonacci value and the exact distinguishing residues are
+
+$$
+F_{337}=
+12004657173391489668678522013941832147005954727556362660159637892443617,
+$$
+
+$$
+F_{337}\bmod673^2=172288=256\cdot673\ne0,
+$$
+
+$$
+M\bmod337^2=2021,\qquad F_{337}\bmod337^2=86945.
+$$
+
+All residues are computed by the integer Fibonacci recurrence or binary
+doubling. The primalities require only trial division through the square
+roots. In particular q's actual initial depth is ONE, not three.
+The native parent quotient is q_337=158 modulo337, so NP8 requires
+S_(337,0)=79 modulo337. The candidate M instead gives3*(-2)=-6=331
+modulo337. The native-prime first digit thus excludes this particular
+candidate, which the congruences modulo 5040 and 25 and the inequality
+$1<M<F_{337}$ admit.
+
+This example does not give two Fibonacci factorizations of one integer.
+M is not asserted to be a Fibonacci value; it has neither the exact
+magnitude nor necessarily the complete prime support of F_337. It only
+refutes the proposed inference from the displayed weaker necessary
+conditions alone. More precise height, exact support, or native-prime
+information could exclude it, as the last calculation demonstrates.
+

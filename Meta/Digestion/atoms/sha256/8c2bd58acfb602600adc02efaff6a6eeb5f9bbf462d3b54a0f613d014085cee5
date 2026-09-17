@@ -1,0 +1,12 @@
+**命题 402.2。** 上述类函数在全部原 ZFC 集合上有定义、单射，且对全部集合 $X$、全部有效码 $c$ 及全部集合 $B\subseteq\mathfrak V_Z$，有
+$$
+\operatorname{Dec}(\operatorname{Enc}(X))=X,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,
+$$
+$$
+\operatorname{El}(\operatorname{Enc}(X))=\operatorname{Enc}[X],\qquad
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c.
+$$
+$e_X$ 是逆为 $\operatorname{Dec}|_{X^*}$ 的双射。映射 $A\mapsto e_X[A]$ 与 $B\mapsto\operatorname{Dec}[B]$ 给 $\mathcal P(X)$ 与 $\mathcal P(X^*)$ 的双射。有效码类是真类。
+

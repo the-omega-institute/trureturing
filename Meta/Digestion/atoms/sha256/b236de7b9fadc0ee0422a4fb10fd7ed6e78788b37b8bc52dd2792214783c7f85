@@ -1,0 +1,17 @@
+**定理 418.9（全部固定公式、严格表达式与定义消去）。** 对每个固定有限集合论公式 $\psi(x_1,\ldots,x_r)$、每组任意原集合参数，在先展开定义 413.1 至定理 418.8 所用函数的准确域和唯一值图后，有
+$$
+\psi(a_1,\ldots,a_r)
+\Longleftrightarrow
+\psi^Z(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r)).
+$$
+翻译使用定义 75：等号保持，成员改为 $\in_Z$，布尔联结词逐项保持，
+$$
+(\exists x\ \theta)^Z=\exists c\,(c\in\mathfrak V_Z\land\theta^Z),\qquad
+(\forall x\ \theta)^Z=\forall c\,(c\in\mathfrak V_Z\Longrightarrow\theta^Z).
+$$
+这包括每个集合、全部子集、全部函数、每个索引、每个实数界及每个固定公式的参数；也包括任何其他原情境字段、集合值参数或守卫的原定义。
+
+编码相等、历史同构、数值等价分别保持并反映。对原部分运算构成的任意固定有限带括号表达式，所有中间联合守卫、严格失败域和成功时的完整输出均准确对应；输入叶可重复，树、参数和槽位预先固定。全部 ZFC 公理及分离、替代的每个实例均保留，加入本组定义及所证定理是原集合论语言的定义性保守扩展。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，其内部的同一 $\operatorname{Enc}$ 为原对象与内部有效码之间的外部同构，保持每个外部标准有限公式。该条件结论使用 $\mathfrak M$ 的内部全部子集与函数，不将它们等同于环境的全部子集与函数。
+

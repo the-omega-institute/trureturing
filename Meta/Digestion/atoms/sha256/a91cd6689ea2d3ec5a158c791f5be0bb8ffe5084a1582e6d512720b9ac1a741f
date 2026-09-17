@@ -1,0 +1,39 @@
+### 91.1 双系统的无读相关扇区
+
+设两个有限 Hilbert 因子的维数分别为 $m,n$，并在双系统的 trace-zero Hermitian 空间中区分三个子空间：第一因子的局部扇区 $L_A$、第二因子的局部扇区 $L_B$，以及相关扇区 $C$。`local_marginal_correlation_blind_spot` 给出它们的正交分解：
+
+$$
+\boxed{
+L_A\oplus^{\perp}L_B\oplus^{\perp}C
+=
+\operatorname{bipartiteTraceZero}(m,n).
+}
+$$
+
+完整局部边缘能够看到的方向数为
+
+$$
+\dim(L_A\oplus L_B)
+=(m^2-1)+(n^2-1),
+$$
+
+而相关扇区的维数为
+
+$$
+\boxed{
+\dim C=(m^2-1)(n^2-1).
+}
+$$
+
+总的 trace-zero 方向数是 $(mn)^2-1$，所以相关盲区占比为
+
+$$
+\boxed{
+\frac{\dim C}{\dim\operatorname{bipartiteTraceZero}(m,n)}
+=
+\frac{(m^2-1)(n^2-1)}{m^2n^2-1}.
+}
+$$
+
+这里的“盲”有严格范围：$C$ 与两个局部扇区在 Hilbert—Schmidt 配对下正交，因此只使用完整的两个局部边缘时，$C$ 中的差异不会改变这些局部线性读数。它不表示相关差异在联合系统中不存在，也不表示任何允许联合操作的实验都无法恢复它。
+

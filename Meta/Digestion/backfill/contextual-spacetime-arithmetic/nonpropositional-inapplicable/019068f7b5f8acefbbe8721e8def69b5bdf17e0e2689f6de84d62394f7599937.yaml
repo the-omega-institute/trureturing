@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:019068f7b5f8acefbbe8721e8def69b5bdf17e0e2689f6de84d62394f7599937
+  normalized_sha256: sha256:019068f7b5f8acefbbe8721e8def69b5bdf17e0e2689f6de84d62394f7599937
+cas_ref: sha256:019068f7b5f8acefbbe8721e8def69b5bdf17e0e2689f6de84d62394f7599937
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子分别定义编码相等、历史同构和数值等价，并规定坐标及来源重命名的解释范围；关系间的蕴含在其他叶子陈述。
+    previous_atom_id: b0b68f1e14e94b93ee056008a6deb5799594e7a2c28c8c1d9d821ebffa9a9f44
+    next_atom_id: 7b1d7e0150272c78bb2561de3a61ec3ae8d4ce1730613e9b30fa83b6463d8333

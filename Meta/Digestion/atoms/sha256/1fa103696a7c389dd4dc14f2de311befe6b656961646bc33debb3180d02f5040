@@ -1,0 +1,43 @@
+### 96.1 同一个 POVM 不决定同一个仪器
+
+在一个量子比特上，令
+
+$$
+P_0=|0\rangle\langle0|,
+\qquad
+P_1=I-P_0,
+\qquad
+X=|0\rangle\langle1|+|1\rangle\langle0|.
+$$
+
+考虑两组单 Kraus 分支：
+
+$$
+K_b=P_b,
+\qquad
+L_b=XP_b,
+\qquad b\in\{0,1\}.
+$$
+
+它们的静态效果完全相同，因为
+
+$$
+K_b^\dagger K_b=P_b,
+$$
+
+而
+
+$$
+L_b^\dagger L_b
+=P_bX^\dagger XP_b
+=P_b.
+$$
+
+两组效果都满足
+
+$$
+\sum_{b=0}^1P_b=I.
+$$
+
+因此，只看当前一次测量的 outcome 概率，无法区分这两台仪器。
+

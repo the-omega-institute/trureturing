@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7fb41b9cf2b60db1bdf2e54614870f7158e9afa8786dac67b0f547833737b249
+  normalized_sha256: sha256:7fb41b9cf2b60db1bdf2e54614870f7158e9afa8786dac67b0f547833737b249
+cas_ref: sha256:7fb41b9cf2b60db1bdf2e54614870f7158e9afa8786dac67b0f547833737b249
+coverage_gids:
+  - gid: D5/S3/Analytic/Asymptotics/RiemannZetaDerivativeNegativeTwo.riemann_zeta_derivative_negative_two
+    target_statement_id: sha256:a839b86bf4a1281f1126b424f97b8f59f82271383d8d8a7a0c8785dce45e35e9
+receipts:
+  unresolved_subitems: []

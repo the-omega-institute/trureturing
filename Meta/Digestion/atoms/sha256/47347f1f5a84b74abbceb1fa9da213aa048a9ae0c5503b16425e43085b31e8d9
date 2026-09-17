@@ -1,0 +1,6 @@
+## 63. 约化不可见、整体可逆与恢复误差下界
+
+第 60 节已经把记录作用量与恢复下界分开。本节进一步区分两种常被混称为“不可逆”的现象：一是只访问约化态时无法从同一个输入恢复不同的联合记录；二是包括记录自由度在内的整体演化是否真的不可逆。仓库中的可逆复制模型给出一个明确反例：前者可以成立，而后者仍然完全可逆。
+
+本节引用 `ReducedRecordAccessDefect.lean` 的 `reduced_irreversibility_is_access_defect`、`CanonicalRecordAccessRecovery.lean` 的 canonical-record 包装，以及 `FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound`。这些结果都是有限矩阵和有限通道命题，正文继续标记为 `repo-derived/open`。
+

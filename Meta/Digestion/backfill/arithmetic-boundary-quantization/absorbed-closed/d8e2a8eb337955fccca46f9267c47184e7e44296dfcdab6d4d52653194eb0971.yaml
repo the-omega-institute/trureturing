@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d8e2a8eb337955fccca46f9267c47184e7e44296dfcdab6d4d52653194eb0971
+  normalized_sha256: sha256:d8e2a8eb337955fccca46f9267c47184e7e44296dfcdab6d4d52653194eb0971
+cas_ref: sha256:d8e2a8eb337955fccca46f9267c47184e7e44296dfcdab6d4d52653194eb0971
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/HermiteEnvelopeEquality.negative_left_of_double_node
+    target_statement_id: sha256:9fe6924072073d4a4bcca899e6b51b653fc5a6c30d58734136d291f194f1c1ca
+  - gid: D5/S3/Analytic/Interpolation/HermiteUpperEnvelope.hermite_two_point_remainder_on
+    target_statement_id: sha256:ab9281aeb3e9a8090d50b4fb9b5bc74bfd4b06d6ae4e4446a8d38ebb3b0281d3
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:efe86c77127a7e21e2ba95c9489401c0e06ba5f0ccf7f8a3e424f3624ac38e79
+receipts:
+  unresolved_subitems: []

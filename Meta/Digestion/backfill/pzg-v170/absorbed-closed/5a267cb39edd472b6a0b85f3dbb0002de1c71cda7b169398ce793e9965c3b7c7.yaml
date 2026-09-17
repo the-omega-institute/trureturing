@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5a267cb39edd472b6a0b85f3dbb0002de1c71cda7b169398ce793e9965c3b7c7
+  normalized_sha256: sha256:5a267cb39edd472b6a0b85f3dbb0002de1c71cda7b169398ce793e9965c3b7c7
+cas_ref: sha256:5a267cb39edd472b6a0b85f3dbb0002de1c71cda7b169398ce793e9965c3b7c7
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimeExponentRecordEventualDivisibility.prime_exponent_record_eventual_divisibility
+    target_statement_id: sha256:2087ffc88c621f2deb07db4d1451140bb144bee17f5720910cf9c6b615b1bd8f
+receipts:
+  unresolved_subitems: []

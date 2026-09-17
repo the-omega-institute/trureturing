@@ -1,0 +1,57 @@
+## 6. 一个从输入系数计算的 Fourier 见证
+
+考虑两个连续实参数 \(\alpha,\beta\) 的周期速度族
+
+\[
+u_{\alpha,\beta}(x,y,z)=
+\bigl(\beta\cos(y-x),\ \alpha\cos x+\beta\cos(y-x),\ 0\bigr).
+\]
+
+其四个输入频率为
+
+\[
+(1,0),\ (-1,0),\ (-1,1),\ (1,-1),
+\]
+
+均以第三频率为零嵌入三维。每对相反频率各取一半实余弦振幅。实际系数由有限求和定义，同频率重复项也按求和语义处理。
+
+`lowObservation` 保留全部 \(|k|^2\le1\) 的整数频率及三个速度分量。于是
+
+\[
+\operatorname{lowObservation}(\alpha,\beta)
+=\operatorname{lowObservation}(\alpha,\beta')
+\]
+
+对所有 \(\alpha,\beta,\beta'\) 成立；隐藏参数 \(\beta\) 不由这一观察确定。
+
+定义双线性对流的实际 Fourier 系数
+
+\[
+\widehat{(u\cdot\nabla)u}(k)
+=i\sum_{p+q=k}(q\cdot\widehat u(p))\widehat u(q).
+\]
+
+源码计算全部 16 对输入相互作用，并对每个整数输出频率定义系数，没有丢弃新生成的低频。压力消去使用实际乘子
+
+\[
+\mathbb P_\sigma(k)=I-\frac{kk^T}{|k|^2},
+\]
+
+零频率取恒等。随后定义
+
+\[
+\widehat V_\nu(k)=-\nu|k|^2\widehat u(k)
+-\mathbb P_\sigma(k)\widehat{(u\cdot\nabla)u}(k).
+\]
+
+对全部实数 \(\nu,\alpha,\beta\)，源码推出
+
+\[
+\boxed{\widehat V_\nu(0,1)_1=-\frac{i\alpha\beta}{4}.}
+\tag{6.1}
+\]
+
+以 \((\alpha,\beta)=(-1,-1)\) 和 \((-1,1)\) 比较，整个低频状态相同，式 (6.1) 的目标系数相差 \(-i/2\)。任何只依赖该低频状态的确定性复数预测器，至少在其中一个输入上有不小于 \(1/4\) 的误差。三角不等式给出这个下界，无需假定预测器连续、线性或来自某个学习模型。
+
+`no_low_mode_acceleration_closure` 进一步排除在整个双参数族上精确恢复这个系数的单值函数。因此它排除了更强的完整低频加速度闭包，但不讨论通过记忆或额外观察进行恢复的可能性。
+

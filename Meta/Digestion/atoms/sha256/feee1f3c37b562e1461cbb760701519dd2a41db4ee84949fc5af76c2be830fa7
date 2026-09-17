@@ -1,0 +1,48 @@
+**定理 14.1（保幂共尾性、完成比较与加乘幂的联合连续延拓）。** 在上述定义与算术前置下，有
+$$
+\alpha\preceq\beta\quad\Longleftrightarrow\quad R_\beta\subseteq R_\alpha.
+$$
+若 $\alpha=(t,p)$、$\beta=(u,v)$，则
+$$
+\alpha\vee\beta=(\max\{t,u\},\operatorname{lcm}(p,v)),
+\qquad
+R_{\alpha\vee\beta}=R_\alpha\cap R_\beta.
+$$
+映射 $\kappa:I\to J$ 满足
+$$
+\alpha\preceq\kappa(\alpha),
+\qquad
+\kappa(\alpha)\preceq\gamma
+\quad\Longleftrightarrow\quad
+\alpha\preceq\gamma
+\quad(\gamma\in J).
+$$
+因此 $\kappa$ 保序、在 $J$ 上为恒等映射且幂等；$J\hookrightarrow I$ 与 $\kappa:I\to J$ 都是共尾映射。任意两个指标的最小保幂共同细化是 $\kappa(\alpha\vee\beta)$。若两个指标本来都属于 $J$，则 $\alpha\vee\beta\in J$。
+
+一个同时共尾于 $I$ 与 $J$ 的显式可数塔为
+$$
+L_k=\operatorname{lcm}(1,2,\ldots,k),
+\qquad
+c_k=(k,L_k),
+\qquad k\ge1.
+$$
+具体地，$c_k\in J$、$c_k\preceq c_{k+1}$，且
+$$
+k\ge\max\{1,t,p\}\quad\Longrightarrow\quad (t,p)\preceq c_k.
+$$
+
+两个完成 $K_I$、$K_J$ 都是紧致 Hausdorff 空间，具有开闭柱集基，且相应的 $\iota_D$ 为稠密单射。由原 $\mathbb{N}$ 上恒等映射诱导的坐标限制
+$$
+\Phi:K_I\longrightarrow K_J,
+\qquad
+\Phi((x_\alpha)_{\alpha\in I})=(x_\gamma)_{\gamma\in J}
+$$
+是同胚，满足 $\Phi\circ\iota_I=\iota_J$；其逆映射显式为
+$$
+\bigl(\Psi(y)\bigr)_\alpha
+=b_{\kappa(\alpha),\alpha}\bigl(y_{\kappa(\alpha)}\bigr).
+$$
+二者也都通过坐标限制同胚于 $\varprojlim_k Q_{c_k}$。
+
+在这个共同完成上，自然数加法、乘法与双槽自然数幂分别具有唯一的联合连续延拓。对于指定输出指标 $\alpha$，加法与乘法可以在两个输入槽都使用精度 $\alpha$；幂可以在两个输入槽都使用精度 $\kappa(\alpha)$。这是允许输入比输出更细的因子化结论，并不要求每个 $Q_\alpha$ 本身都具有同层幂运算。
+

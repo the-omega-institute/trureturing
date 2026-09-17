@@ -2,24 +2,24 @@
 import json
 import os
 import pathlib
-import subprocess
 import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from validation import run_batches
+from resources import run
 
 
 def check_trivial_sources(repository, directory):
     directory.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, IE_PROJECTION_OUTPUT_DIR=str(directory))
     def step(command, label, **kwargs):
-        subprocess.run(["lake", "env", *command], cwd=repository, env=env, check=True)
+        return run(["lake", "env", *command], directory, label, cwd=repository, env=env, **kwargs)
     step(["lean", "-R", "tools/lean-inspector",
           "tools/lean-inspector/LeanInformationAudit/Tests/Census/StructuralSources.lean"], "sources")
     read = lambda name: json.loads((directory / name).read_bytes())
     metadata, request = read("trivial-source-index.json"), read("trivial-source-request.json")
     key = request["keys"][0]
     batch = {"keys": [key], "imports": [key[0], "LeanInformationAudit.Census.Command"]}
-    plan = {"execute": [batch], "planned": [batch], "bound": metadata["batch_module_bound"],
+    plan = {"execute": [batch], "planned": [batch], "skipped": [], "bound": metadata["batch_module_bound"],
             "key_bound": 1, "scopes": dict(metadata["scopes"]), "cache": directory / "cache",
             "addresses": {key[2]: "sha256:fixture"}, "inputs_for": lambda _: {"key": key},
             "keys_by_id": {key[2]: key}, "entries": [], "source_inputs": [], "hits": [], "misses": [key]}

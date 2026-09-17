@@ -18,7 +18,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{a}\left(n\right) \op
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a397349-logarithmic-weight-mod-three","declaration_gid":"D5/S1/Recurrence/Residue/LogarithmicWeightCatalanParity.hanna_conjecture_a397349_mod_three","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A397349, logarithmic-weight coefficients modulo three*. URL: <https://oeis.org/A397349>.
+*Citation.* Paul D. Hanna (2026). *OEIS A397349, logarithmic-weight coefficients: residue and parity*. URL: <https://oeis.org/A397349>.
 
 *Commentary.*
 

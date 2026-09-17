@@ -148,10 +148,12 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
-        Assert.DoesNotContain("run_phase build \"$LAKE\"", inspector, StringComparison.Ordinal);
+        Assert.DoesNotContain("run_phase report \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
-        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
-        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+        Assert.Contains(
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$LAKE\" build :report",
+            inspector,
+            StringComparison.Ordinal);
 
         int EnsureDependency(string target)
         {
@@ -169,16 +171,21 @@ public sealed partial class MakeWorkflowTests
             RegexOptions.CultureInvariant).Count;
         var reportCommands = Regex.Matches(
             inspector,
-            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
+            Regex.Escape(LeanCacheRunScriptPath),
             RegexOptions.CultureInvariant).Count;
-        // lean-report needs both wrapper calls: inspect.sh:107 builds and inspect.sh:130 inspects.
+        // Inspector provisions dependencies, then one guarded Lake facet demands ordinary
+        // defaults/audits and report work; each cache entry retains its own ensure contract.
+        var inspectorEnsures = Regex.Matches(
+            inspector,
+            Regex.Escape(LeanCacheEnsureScriptPath),
+            RegexOptions.CultureInvariant).Count;
         var leanEnsures = EnsureDependency("lean") + leanCommands;
-        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
+        var reportEnsures = EnsureDependency("lean-report") + inspectorEnsures + reportCommands;
         var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
         var buildEnsures = EnsureDependency("build") + leanEnsures;
 
         Assert.Equal(1, leanCommands);
-        Assert.Equal(2, reportCommands);
+        Assert.Equal(1, reportCommands);
         Assert.Equal(1, leanEnsures);
         Assert.Equal(2, reportEnsures);
         Assert.Equal(3, testEnsures);

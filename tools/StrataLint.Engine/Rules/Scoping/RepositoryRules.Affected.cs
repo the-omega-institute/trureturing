@@ -51,9 +51,13 @@ internal static partial class RepositoryRules
     private static bool RepositoryShapeAffected(RuleEvaluationContext context) =>
         !context.Changes.Paths.IsEmpty;
 
-    private static bool AnchorsAffected(RuleEvaluationContext context) =>
+    private static bool LiteratureAffected(RuleEvaluationContext context) =>
         Changed(context, static path => path == "Library/queries.yaml")
         || LiteratureReferenceChanged(context);
+
+    private static bool AnchorsAffected(RuleEvaluationContext context) =>
+        LiteratureAffected(context)
+        || Changed(context, IsManagedLeanPath) || Changed(context, IsLeanReportProducerInput);
 
     private static bool LedgerAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
@@ -112,7 +116,8 @@ internal static partial class RepositoryRules
             && path.EndsWith(".lean", StringComparison.Ordinal);
 
     internal static bool IsLeanReportProducerInput(string path) =>
-        path.StartsWith("tools/", StringComparison.Ordinal)
+        path == "lean-report-inputs.json"
+        || path.StartsWith("tools/", StringComparison.Ordinal)
             && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
         || StrataLintEngineBuildInputs.Contains(path)
         || path.StartsWith(".github/workflows/", StringComparison.Ordinal)

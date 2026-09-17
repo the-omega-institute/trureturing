@@ -1,0 +1,11 @@
+证明。令 $e=\widehat D-D$。正规方程给出 $A^\ast(Ae-\xi)=0$，从而
+
+$$
+\|Ae\|_2^2=\langle Ae,\xi\rangle
+\le\|Ae\|_2\|\xi\|_2.
+$$
+
+若 $Ae=0$，下帧界推出 $e=0$；否则约去 $\|Ae\|_2$。两种情形均有 $\sqrt\alpha\|e\|_{\mathrm{HS}}\le\|\xi\|_2$。这一推导的抽象有限维内积空间版本由 `D5/S3/Observer/Linear/LeastSquaresReconstructionNoiseBound.lean` 的 `least_squares_reconstruction_noise_bound` 承担。证毕。
+
+这个命题不自行给出 $\xi$ 的统计分布或有限采样置信度。若采样、刻度近似和其他建模误差已在同一个加权数据范数中分别有界，才能用三角不等式合并。第 58 节的黄金刻度误差只有经过该节要求的响应正则性或另行证明的范数转换，才能作为这里的输入噪声界。
+

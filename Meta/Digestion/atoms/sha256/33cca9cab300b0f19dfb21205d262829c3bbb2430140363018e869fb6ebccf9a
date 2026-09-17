@@ -1,0 +1,22 @@
+**定理 407.1。** 关系 $\mathcal F_{n,{\rm ext}}$、$\mathcal G_{n,{\rm ext}}$ 为递增的 Borel 等价关系，其类大小分别至多为 $L_n$、$2L_n$，且
+$$
+\bigcup_{n\in\omega}\mathcal F_{n,{\rm ext}}=E_{R,{\rm ext}},
+\qquad
+\bigcup_{n\in\omega}\mathcal G_{n,{\rm ext}}=E_{T,{\rm ext}}.
+$$
+对任意拓扑集合 $X$ 上的等价关系 $Q$，$Q$ 超有限当且仅当 $Q_{\rm ext}$ 超有限；此处两个方向都量化全部可能的近似族。
+
+若 $\mathcal A:\omega\to\mathcal P(X\times X)$ 是任意族，$\mathcal A(n)=Q_n$，则其整个图码为
+$$
+\operatorname{Enc}(\mathcal A)=
+\operatorname{Pack}\{
+\langle\operatorname{NatZ}(n),\operatorname{Enc}(Q_n)\rangle_Z:n\in\omega\}.
+$$
+在外部载体上的关系值族 $\operatorname{NatZ}(n)\mapsto Q_{n,{\rm ext}}$ 与集合码值族 $\operatorname{NatZ}(n)\mapsto\operatorname{Enc}(Q_n)$ 通过双射
+$$
+\mathcal P(X^*\times X^*)\longrightarrow
+\operatorname{Enc}[\mathcal P(X\times X)],\qquad
+B\longmapsto\operatorname{Pack}(\chi_{X,X}[B])
+$$
+相接。截面运输为 $s^*=e_Kse_{\mathbb T}^{-1}$，它 Borel 且 $H^*s^*=\operatorname{id}_{\mathbb T^*}$。Borel 轨道横截集的存在与否也保持并反映。
+

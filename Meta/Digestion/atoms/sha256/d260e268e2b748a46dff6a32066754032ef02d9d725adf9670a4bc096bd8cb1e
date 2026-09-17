@@ -1,0 +1,12 @@
+**假设 443.13（系数极限与有符号抵消接口）。** 分别考虑两个独立假设：
+$$
+H_c:\quad \inf_{Q\text{ 平方自由},\ Q>1}c_Q=0;
+$$
+以及对某个固定 $0\le a<1$ 和 $C>0$，对所有 $N\ge1$ 有
+$$
+H_6(a):\quad
+\left|\sum_{\substack{N/2<d\le N\\(d,6)=1}}\mu(d)\right|
++\left|\sum_{\substack{N/6<d\le N/3\\(d,6)=1}}\mu(d)\right|\le CN^a.
+$$
+不把任何一个假设从有限配对恒等式中自动推出。
+

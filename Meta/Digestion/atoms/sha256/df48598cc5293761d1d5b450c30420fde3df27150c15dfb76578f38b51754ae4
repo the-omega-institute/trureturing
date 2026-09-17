@@ -1,0 +1,26 @@
+**定理 373.2。** $\tau_{\rm digit}=\tau_{\rm phase}$，两者分别由 $d_{\rm digit},d_{\rm phase}$ 给出；此拓扑没有孤立点。两个度量的完备化分别为 $K_{\rm infdig}$ 和 $\mathbb T$，但两种一致结构不相同。从 $d_{\rm digit}$ 到 $d_{\rm phase}$ 的恒等映射一致连续，反向恒等映射不一致连续。
+
+**证明。** $H_{\rm infdig}$ 连续且 $\gamma=H_{\rm infdig}\circ z_{\rm infdig}$，故相位拉回开集均为数字拉回开集。反向，给定开集 $U\subseteq K_{\rm infdig}$ 及 $z_{\rm infdig}(n)\in U$。定理 372.4 的单点纤维保证
+$$
+\gamma(n)\notin H_{\rm infdig}[K_{\rm infdig}\setminus U].
+$$
+右侧为紧集的连续像，在 Hausdorff 圆周中闭，故其补集 $V$ 是含 $\gamma(n)$ 的开集，且 $H_{\rm infdig}^{-1}(V)\subseteq U$。在核心上拉回，$\gamma^{-1}(V)$ 包含 $n$ 且包含于 $z_{\rm infdig}^{-1}(U)$。逐点取并，得反向拓扑包含。
+
+对每个 $n$，当 $j\ge|\zeta(n)|+1$ 时，令 $n_j=n+G_j$。新增第 $j$ 位与全部旧非零位之间至少隔一个零，故由有限规范唯一性，$z_{\rm infdig}(n_j)$ 恰在第 $j$ 位与 $z_{\rm infdig}(n)$ 不同。因此
+$$
+d_{\rm digit}(n_j,n)=2^{-j-1}\longrightarrow0,\qquad n_j\ne n.
+$$
+每一点都有不同点趋近，证明无孤立点。
+
+$\rho$ 的最小值由与 $s-t$ 最近的整数取得，换代表只平移所取整数，故良定义。距离为零恰当两类相同；将两次取到最小值的整数相加，再用实直线三角不等式，得到圆周三角不等式。小于 $1/2$ 的球为通常开弧，故这是通常圆周的度量。$z_{\rm infdig}$ 单射，$\phi$ 无理又使 $\gamma$ 单射，故两个拉回均为度量，并给相应拓扑。
+
+上述两个嵌入按定义为等距嵌入。$K_{\rm infdig}$ 紧；圆周是紧区间 $[0,1]$ 的连续像，也紧。紧度量空间中的 Cauchy 序列有收敛子序列，而 Cauchy 条件使整个序列有同一极限，所以两目标均完备。第 371.2 条给数字核心稠密；对任意圆周开集，其 $H_{\rm infdig}$ 原像由满性和连续性是非空开集，必遇到数字核心，故自然相位轨道亦稠密。于是这两个完备目标分别是所声明度量的完备化。
+
+紧度量域上的连续映射 $H_{\rm infdig}$ 一致连续：否则存在某个 $\varepsilon>0$ 及 $x_k,y_k$ 满足 $d_K(x_k,y_k)\to0$、$\rho(H_{\rm infdig}x_k,H_{\rm infdig}y_k)\ge\varepsilon$；紧性给 $x_k$ 的一个收敛子序列，该子序列上 $y_k$ 趋于同一点，连续性矛盾。限制到核心得正向恒等映射一致连续。
+
+令 $a_L,b_L\in\omega$ 分别为 $u,v$ 截到前 $L$ 位的 Fibonacci 值。其补零规范行逐坐标互补于前 $L$ 位，故
+$$
+d_{\rm digit}(a_L,b_L)=\sum_{j<L}2^{-j-1}=1-2^{-L}.
+$$
+它们分别趋于 $u,v$，相位距离却趋于 $\rho([a],[b])=0$。若反向恒等映射一致连续，取输出距离阈值 $1/2$ 就与这两列相矛盾。因此两种一致结构不同。证毕。
+

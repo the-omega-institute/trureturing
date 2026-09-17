@@ -1,0 +1,9 @@
+**定义 447.4（实际 Baez–Duarte 系数及核）。** 以 $\zeta_{\mathbb C}$ 为 Riemann zeta 函数；对实数 $s>1$，$\zeta_R(s)=\sum_{n\ge1}n^{-s}=\operatorname{Re}\zeta_{\mathbb C}(s)>0$。沿用实际定义，本组的 $c_k$ 专指 Baez–Duarte 系数，与 443 中未过滤系数 $c_R$ 的局部记号分别使用。对全部 $k\in\mathbb N$，
+$$
+c_k=\sum_{j=0}^k(-1)^j\binom kj\frac1{\operatorname{Re}\zeta_{\mathbb C}(2j+2)}.
+$$
+实际实核在 $x\ne0$ 时为 $f_k(x)=x^{-2}(1-x^{-2})^k$，在 $x=0$ 取零；这给与总逆约定相同的全实数函数，下文微分及积分只在 $x\ge1$ 使用。非负整数幂的零次幂取一。对 $b,c>0$ 记实 Beta 积分
+$$
+\mathrm B(b,c)=\int_0^1 t^{b-1}(1-t)^{c-1}\,dt.
+$$
+

@@ -1,0 +1,56 @@
+## PC.7 词长下界与最短代表
+
+**定理。** 对任意词 $w$，若
+
+$$
+\operatorname{low}=m(w),\qquad
+\operatorname{high}=M(w),\qquad
+d=d(w),
+$$
+
+**定理。** 此时
+
+$$
+\boxed{2(\operatorname{high}-\operatorname{low})-|d|\le |w|.}
+$$
+
+**证明。** 若轨迹先首次到达 $\operatorname{low}$ 再首次到达 $\operatorname{high}$，从 $0$ 到低点、再到高点、再到终点 $d$ 的总距离给出
+
+$$
+|w|\ge -\operatorname{low}+(\operatorname{high}-\operatorname{low})+(\operatorname{high}-d)
+=2(\operatorname{high}-\operatorname{low})-d.
+$$
+
+**证明。** 若先到高点再到低点，同理
+
+$$
+|w|\ge \operatorname{high}+(\operatorname{high}-\operatorname{low})+(d-\operatorname{low})
+=2(\operatorname{high}-\operatorname{low})+d.
+$$
+
+**证明。** 两种次序必居其一，而两下界都不小于 $2(\operatorname{high}-\operatorname{low})-|d|$。证毕。
+
+**定理。** 对非空正规形 $F=[l,u;d]$，诱导 $F$ 的词的最短长度精确为
+
+$$
+\boxed{L_{\min}(F)=2(a-u+l)-|d|.}
+$$
+
+**证明。** 任一实现词都满足 $m=-l$、$M=a-u$，故前一定理给出下界。若 $d\ge0$，词
+
+$$
+(-)^l(+)^{a-u+l}(-)^{a-u-d}
+$$
+
+**证明。** 实现 $F$，长度为 $2(a-u+l)-d$。若 $d<0$，词
+
+$$
+(+)^{a-u}(-)^{a-u+l}(+)^{l+d}
+$$
+
+**证明。** 的前缀最小值、最大值和终点分别为 $-l,a-u,d$，且长度为 $2(a-u+l)+d$。两种情形均达到 $2(a-u+l)-|d|$。证毕。
+
+**命题。** 空映射的最短实现长度为 $a+1$。
+
+**证明。** 若词处处失败，则由 PC.2 有 $M(w)-m(w)>a$。单位步轨迹满足 $M(w)-m(w)\le|w|$，故 $|w|\ge a+1$。词 $(+)^{a+1}$ 达到此界。证毕。
+

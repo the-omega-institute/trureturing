@@ -1,0 +1,11 @@
+**命题 413.2（有限读数前提与任意位移）。** 对全部 $j,L,k\in\omega$，
+$$
+F_{\rm old}(k)=\lfloor(k+1)\alpha\rfloor,\qquad
+G_{j+L}=f_{L+1}G_j+f_LH_j.
+$$
+$\alpha$ 无理且 $1/2<\alpha<1$。每个宽度 $r\in\omega$ 的合法有限字唯一表示 $0,\ldots,G_r-1$，包括宽度零的空字。对 $L\ge1$，
+$$
+G_{L+1}+\alpha G_L=\phi^{L+2},\qquad
+\frac1{G_{L+1}+\alpha G_L}=\alpha^{L+2}.
+$$
+

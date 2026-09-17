@@ -1,0 +1,34 @@
+**引理 49.2（固定控制表的纯化目标对系统边缘凹）。** 固定一个允许的历史控制表，并将对应实际与理想输出映射的加权差记为 Hermitian 保持映射 $\mathcal F$。对系统密度矩阵 $\rho$，令
+
+$$
+f_{\mathcal F}(\rho)
+=\| (\mathcal F\otimes\operatorname{id})(|\psi_\rho\rangle\langle\psi_\rho|)\|_1,
+$$
+
+其中 $|\psi_\rho\rangle$ 为任意纯化，纯化参考始终不受控制。则 $f_{\mathcal F}$ 良定义，并且为凹函数。
+
+证明。同一系统边缘的纯化之间可通过参考等距联系。所有协议映射只作用于系统，参考等距保留输出迹范数，因此选择纯化不影响数值。
+
+设 $\rho=\lambda\rho_0+(1-\lambda)\rho_1$，其中 $0\le\lambda\le1$。把两种纯化嵌入同一个有限参考空间，并引入一个仅用于纯化的二标签参考因子 $F$，取
+
+$$
+|\Omega\rangle
+=\sqrt\lambda\,|\psi_{\rho_0}\rangle|0\rangle_F
++\sqrt{1-\lambda}\,|\psi_{\rho_1}\rangle|1\rangle_F.
+$$
+
+它是 $\rho$ 的归一化纯化。在输出参考因子 $F$ 上去相干，产生两个权重分别为 $\lambda$、$1-\lambda$ 的直和块，故去相干后的迹范数为
+
+$$
+\lambda f_{\mathcal F}(\rho_0)+(1-\lambda)f_{\mathcal F}(\rho_1).
+$$
+
+去相干是 CPTP 映射，在 Hermitian 算子上收缩迹范数。因此
+
+$$
+f_{\mathcal F}(\rho)
+\ge\lambda f_{\mathcal F}(\rho_0)+(1-\lambda)f_{\mathcal F}(\rho_1).
+$$
+
+这里的参考去相干只用于比较两个输出范数，并未作为控制操作加入原协议。证毕。
+

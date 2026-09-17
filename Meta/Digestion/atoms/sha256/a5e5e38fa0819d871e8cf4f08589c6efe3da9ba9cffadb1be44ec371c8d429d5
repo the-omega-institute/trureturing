@@ -1,0 +1,27 @@
+If its first $00$ starts at $j$, the preceding alternating word has value $G_j-1$: its values $A_j$ satisfy $A_0=0$, $A_1=1$, and $A_j=G_{j-1}+A_{j-2}$ for $j\ge2$. Clearing that word and setting position $j$ to one increases a finite input's value by exactly one. The resulting word remains legal, since its lower digits are zero and the retained digit at $j+1$ is zero. Uniqueness of the legal finite expansion therefore gives
+$$
+T^kZ(n)=Z(n+k).
+$$
+Moreover, the recurrence and its initial values give
+$$
+\eta_j:=\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}.
+$$
+The series defining $F$ has uniformly vanishing tails, so $F$ and $H$ are continuous; the displayed identity gives $H(Z(n))=[n\phi]$. Equality on the dense padded core, followed by continuity, yields
+$$
+H(T^kx)=H(x)+[k\phi]\qquad(x\in K).
+$$
+This also supplies the successor and phase identities used below without assuming the desired modulus. [Z, Sections 371.2 and 375.2-375.3.]
+
+We next establish the full cylinder geometry, including endpoint ownership. Put
+$$
+a_0=-\alpha,\qquad b_0=\alpha^2,\qquad I=[a_0,b_0],\qquad c=-\alpha^3.
+$$
+The total negative and positive coefficient sums bound $F$ below by $a_0$ and above by $b_0$. Equality forces respectively every even digit to be one and every odd digit to be zero, or the reverse. Hence the extreme fibres are $\{u\}$ and $\{v\}$. Every legal infinite word has a unique parsing into blocks $0$ and $10$. Their affine maps are
+$$
+f_0(t)=\lambda t,\qquad f_{10}(t)=-\alpha^2+\lambda^2t,
+$$
+with
+$$
+f_0(I)=[c,b_0],\qquad f_{10}(I)=[a_0,c],\qquad f_0(b_0)=f_{10}(b_0)=c.
+$$
+These identities follow from $\alpha+\alpha^2=1$. Repeatedly choosing an inverse branch whose image contains a prescribed point of $I$ constructs legal blocks; the residual interval length tends to zero because both branches contract. Their infinite concatenation has precisely the prescribed value. 

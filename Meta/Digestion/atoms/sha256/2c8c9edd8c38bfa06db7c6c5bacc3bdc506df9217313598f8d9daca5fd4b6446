@@ -1,0 +1,7 @@
+**定理 391.1。** $E_R$ 与 $E_T$ 都是可数 Borel 等价关系，且对全部 $x,y\in K$，
+$$
+x\mathrel{E_T}y\iff Hx\mathrel{E_R}Hy,\qquad
+x\mathrel{S_T}y\iff Hx=Hy.
+$$
+若 $Hx=Hy=[-j\phi]$、$j\ge1$，则 $T^jx=T^jy=z(0)$。若该纤维的两点不同，则在任何 $0\le i<j$ 时仍有 $T^ix\ne T^iy$。
+

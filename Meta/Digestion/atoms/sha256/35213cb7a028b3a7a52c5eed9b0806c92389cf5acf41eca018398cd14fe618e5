@@ -1,0 +1,19 @@
+**命题 431.7（预测十三·真类、有限字障碍与完整情境对象）。** $\mathfrak V_Z$ 是真类；任意集合乃至 $\mathcal P(\omega)$ 不能全体单射编码到有限字母表的有限字。$K$ 不可数，其全集合码不能均为有限字。
+
+《情境时空算术》定义 1–3 的丰富表示保持为整个集合对象
+$$
+\mathcal X=((E,\prec,t,x,\sigma,\rho,\Omega),A),
+$$
+其中 $E\subset HF$ 有限，$\prec\subset E\times E$ 为严格偏序。这里整数坐标取原情境的有限编码实现
+$$
+\mathbb Z_{\rm CSA}=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),
+$$
+由 $(0,n)\mapsto n,(1,n)\mapsto-n$ 与通常整数双射，序、符号及算术沿此双射运输。各坐标的定义域与所指定的陪域为
+$$
+t:E\to\mathbb Z_{\rm CSA},\quad x:E\to\mathbb Z_{\rm CSA}^3,\quad
+\sigma:E\to\{1,-1\},\quad\rho:E\to\mathcal T
+$$
+均为全函数，$\mathcal T\subset HF$ 为以 $\operatorname{leaf}(n)$（$n\in\omega$）和 $\operatorname{pair}(r,s)$（$r,s\in\mathcal T$）生成、叶与二叉节点标签不交的原来源树集合，$e\prec f$ 蕴含 $t(e)<t(f)$，$A\subseteq\Omega\subseteq E$。空档案、空区域及空选择允许。其完整码为 $\operatorname{Enc}(\mathcal X)$，所选标量仍为 $q(\mathcal X)=\sum_{e\in A}\sigma(e)$。完整编码保留全部档案事件、偏序、各全函数、当前区域和选择，包括未入当前区域或未被选择的事件。
+
+第 378.10–378.13 条中情境整数对象、通常整数、素数标签、容量、当前内容及标量各自的域保持不变。特别地，有序素数标签 $(2,3,5,7)$、当前内容 $(4,2,1,1)$ 给标量 $5040$；在恰好这些标签和容量 $(4,2,1,1)$ 下，相应容量盒有六十个状态，相关遗传有限性和有限表示宽度仍按其原定域成立。
+

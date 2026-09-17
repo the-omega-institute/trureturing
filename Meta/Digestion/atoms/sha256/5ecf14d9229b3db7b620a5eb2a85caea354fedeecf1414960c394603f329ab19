@@ -1,0 +1,7 @@
+**证明。** 若 $g:K\to\mathbb R$ 为 Borel 完全不变量，则 $g\circ s$ Borel。由 $Hs=\operatorname{id}$ 和定理 391.1，任意 $t,t'\in\mathbb T$ 满足
+$$
+g(s(t))=g(s(t'))\iff s(t)\mathrel{E_T}s(t')
+\iff t\mathrel{E_R}t'.
+$$
+这给 $E_R$ 的 Borel 实值完全不变量，与定理 399.1 矛盾。另一方面 $s(0)=z(0)$、$s([\phi])=z(1)$，两个值不同而异步等价，故 $s[\mathbb T]$ 并非轨道横截集。这一证明给的是所述实值完全不变量不存在性。证毕。
+

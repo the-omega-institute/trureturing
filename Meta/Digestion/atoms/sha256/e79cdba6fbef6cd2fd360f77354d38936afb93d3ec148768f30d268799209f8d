@@ -1,0 +1,12 @@
+**定义 470.26（容量盒中普通读数的部分加法）。** 沿用第 91–92、119–120 条，令
+$$
+M=\prod_{p\in P}p^{A_p},\qquad n(a)=\prod_{p\in P}p^{a_p},\qquad
+n:\mathcal C(P,A)\longleftrightarrow\operatorname{Div}(M).
+$$
+在有序输入域 $\mathcal C(P,A)^2$ 上定义
+$$
+D_+=\{(a,b):n(a)+n(b)\mid M\},\qquad
+\operatorname{Add}_{P,A}(a,b)=n^{-1}(n(a)+n(b))\quad((a,b)\in D_+).
+$$
+域外无正常输出。严格总化使用第 80–81 条的不交成功、失败标签：域内返回 $\operatorname{ok}(\operatorname{Add}_{P,A}(a,b))$，域外返回 $\bot$。两个输入为函数 $2\to\mathcal C(P,A)$ 的两个位置，即使 $a=b$ 也保留这两个位置。
+

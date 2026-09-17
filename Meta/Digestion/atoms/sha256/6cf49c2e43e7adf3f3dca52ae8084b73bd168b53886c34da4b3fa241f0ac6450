@@ -1,0 +1,12 @@
+**定理。** 对任意 $A,B,C\subseteq\mathbb Z$，
+
+$$
+\boxed{R(A;B)=D(B)\setminus D(A),}
+\qquad
+\boxed{[\forall m,\ \ell_m|_A=u_m|_A\Rightarrow\ell_m|_B=u_m|_B]
+\iff D(B)\subseteq D(A),}
+$$
+$$
+R(A\cup C;B)=R(A;B)\setminus D(C).
+$$
+

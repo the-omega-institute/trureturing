@@ -1,0 +1,11 @@
+**定理。** 对素数 $p$，
+
+$$
+\boxed{
+\pi(p^2)=\pi(p)
+\iff p^2\mid C_{\pi(p)}
+\iff p\mid a\ \text{且}\ p\mid b.
+}
+\tag{R9}
+$$
+

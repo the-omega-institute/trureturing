@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aedb2259c6e4929e3de823ee76af2c3cf4aac1090c61a8495393c990df6bb357
+  normalized_sha256: sha256:aedb2259c6e4929e3de823ee76af2c3cf4aac1090c61a8495393c990df6bb357
+cas_ref: sha256:aedb2259c6e4929e3de823ee76af2c3cf4aac1090c61a8495393c990df6bb357
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This closing bullet records ledger totals and continuation placement for the adjudication obligations. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the referenced frozen declarations and subsumption maps.
+    previous_atom_id: 4c3a213f96aa9169a1eeb9e3419501b24d8289bc5186c204d2e9bb9e35f93382
+    next_atom_id: null

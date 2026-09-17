@@ -1,0 +1,7 @@
+**定理 400.1。** 存在总 Borel 函数 $s:\mathbb T\to K$，使 $Hs=\operatorname{id}_{\mathbb T}$，且 $s(t)$ 是 $H^{-1}(\{t\})$ 中按低位到高位字典序最小的点。它满足
+$$
+s([a])=v,\qquad s([f_w(q)])=w0v,\qquad
+s([n\phi])=z(n)\quad(n\in\omega),
+$$
+其中 $a,q,v,w,f_w$ 均取定义 371.1、372.1 的原义。
+

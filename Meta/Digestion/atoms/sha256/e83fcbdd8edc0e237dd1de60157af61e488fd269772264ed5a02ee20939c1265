@@ -1,0 +1,25 @@
+**定理 418.2（普通积、完整图与全部候选域）。** 对任意集合 $A,B$，包括空集合，令
+$$
+J_{A,B}:A^*\times B^*\longrightarrow\operatorname{Enc}[A\times B],\qquad
+J_{A,B}(\langle c,d\rangle)=\langle c,d\rangle_Z.
+$$
+它是双射。对任意 $D\subseteq A$ 及任意实际函数 $g:D\to B$，令
+$$
+g^*:D^*\to B^*,\qquad g^*(\operatorname{Enc}(a))=\operatorname{Enc}(g(a)),
+$$
+$$
+G_g=\{\langle a,g(a)\rangle:a\in D\},\qquad
+\Gamma_g^*=\{\langle\operatorname{Enc}(a),\operatorname{Enc}(g(a))\rangle:a\in D\}.
+$$
+则
+$$
+\operatorname{El}(\operatorname{Enc}(G_g))=J_{A,B}[\Gamma_g^*],\qquad
+\operatorname{Enc}(G_g)=\operatorname{Pack}(J_{A,B}[\Gamma_g^*]),
+$$
+$$
+\operatorname{dom}(g^*)=\operatorname{Enc}[D],\quad
+\operatorname{ran}(g^*)=\operatorname{Enc}[\operatorname{ran}(g)],\quad
+\operatorname{dom}_Z(\operatorname{Enc}(G_g))=\operatorname{Enc}(D),\quad
+\operatorname{ran}_Z(\operatorname{Enc}(G_g))=\operatorname{Enc}(\operatorname{ran}(g)).
+$$
+对每个 $H\subseteq D$，$(g|_H)^*=g^*|_{\operatorname{Enc}[H]}$。

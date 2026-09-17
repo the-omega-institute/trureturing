@@ -1,0 +1,8 @@
+**定义 442.1（初始素数积及有限权）。** 依递增次序记素数为 $p_1,p_2,\ldots$，对 $k\ge0$ 定义
+$$
+P_k=\prod_{i=1}^kp_i,\qquad
+E_k=\prod_{i=1}^k(1-p_i^{-1}),\qquad
+\Theta_k=\sum_{i=1}^k\log p_i.
+$$
+空积和空和给 $P_0=E_0=1,\Theta_0=0$。
+

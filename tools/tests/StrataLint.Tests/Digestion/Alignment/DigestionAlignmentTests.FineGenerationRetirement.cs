@@ -32,6 +32,6 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes, [captured]),
             baseline));
 
-        Assert.Contains("parent CAS blob has no clause plan", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("CHILD_CAS_MISSING atom_id=child-atom", exception.Message, StringComparison.Ordinal);
     }
 }

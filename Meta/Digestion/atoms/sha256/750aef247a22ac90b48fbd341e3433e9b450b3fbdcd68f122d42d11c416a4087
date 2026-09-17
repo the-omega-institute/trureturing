@@ -1,0 +1,6 @@
+**定理 376.1。** 对每个整数 $m\ge2$，不存在连续映射 $M:K_{\rm infdig}\to K_{\rm infdig}$ 使
+$$
+M(z_{\rm infdig}(n))=z_{\rm infdig}(mn)\qquad(n\in\omega).
+$$
+在共同有限核心拓扑上，每个固定 $m\ge0$ 的 $n\mapsto mn$ 连续；当 $m\ge2$ 时，它对 $d_{\rm digit}$ 不一致连续。非负整数乘数中恰有零和一取得到全紧载体的连续延拓，且各自唯一。
+

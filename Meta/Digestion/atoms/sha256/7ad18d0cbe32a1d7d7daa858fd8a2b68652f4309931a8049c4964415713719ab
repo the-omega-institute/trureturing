@@ -1,0 +1,29 @@
+**定义 413.1（实际自然后继与零窗事件）。** 在通常 ZFC 中，令 $\omega$ 为有限冯·诺伊曼序数的集合，$\mathbb P=\omega\setminus\{0\}$。有序对为普通库拉托夫斯基对。沿用定义 3、9、15、19、22、50、69 的权重、有限数字与第二读数，另记
+$$
+f_0=0,\qquad f_1=1,\qquad f_{j+2}=f_{j+1}+f_j,\qquad
+G_j=f_{j+2},\qquad H_j=f_{j+1},
+$$
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \phi=1+\alpha=\alpha^{-1},\qquad
+z(n)=s(n)=\operatorname{pad}(\zeta(n)),\qquad
+F_{\rm old}(n)=\sum_{j\in\omega}H_jz(n)_j.
+$$
+$F_{\rm old}$ 是定义 22 的 $f$，此处的 $f_j$ 仅为斐波那契数列。$z(n):\omega\to\{0,1\}$ 是值为 $n$ 的唯一有限支撑合法总行；合法指对每个 $j\in\omega$ 有 $z(n)_jz(n)_{j+1}=0$。总行是包含每一条零值边的完整函数图。有限数字 $\zeta(n)$ 与总行 $z(n)$ 是不同集合。
+
+对全部 $L\in\mathbb P$、$n,k\in\omega$ 定义
+$$
+q_L(n)=\sum_{j<L}G_jz(n)_j,\qquad
+\beta_L=G_{L-1}-1,\qquad
+Z_L=\{n\in\omega:q_L(n)=0\},
+$$
+$$
+E_L=\{n\in\omega:q_L(n)=\beta_L\ \land\ q_L(n+1)=0\},\qquad
+U_L(k)=\sum_{j\in\omega}G_{j+L}z(k)_j.
+$$
+$q_L$ 是数位窗口值；情境时空算术的 $q(X)$ 仍为原选择电荷。$E_L$ 记录实际后继 $n\mapsto n+1$ 从分支值 $\beta_L$ 到零窗的出发时刻。定理 379.2 的有限窗口关系在数值坐标中为
+$$
+\{\langle s,s+1\rangle:0\le s<G_L-1\}
+\cup\{\langle G_L-1,0\rangle,\langle\beta_L,0\rangle\};
+$$
+其中 $\beta_L<G_L-1$，故这里取的是该关系的额外边在原自然后继上的全部发生时刻。
+

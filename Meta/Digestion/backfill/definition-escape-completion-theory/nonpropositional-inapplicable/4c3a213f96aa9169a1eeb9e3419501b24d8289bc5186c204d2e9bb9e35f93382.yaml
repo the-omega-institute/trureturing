@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c3a213f96aa9169a1eeb9e3419501b24d8289bc5186c204d2e9bb9e35f93382
+  normalized_sha256: sha256:4c3a213f96aa9169a1eeb9e3419501b24d8289bc5186c204d2e9bb9e35f93382
+cas_ref: sha256:4c3a213f96aa9169a1eeb9e3419501b24d8289bc5186c204d2e9bb9e35f93382
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This note records only that the subsumption decision does not rewrite earlier narrative sections. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with section 54.3 and section 57.
+    previous_atom_id: 4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+    next_atom_id: aedb2259c6e4929e3de823ee76af2c3cf4aac1090c61a8495393c990df6bb357

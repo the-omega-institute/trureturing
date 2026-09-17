@@ -1,0 +1,12 @@
+**定义 388.1。** 记 $\mathsf N_Z=\omega^*=\{\operatorname{NatZ}(n):n\in\omega\}$。使用第 70、77 条在自然叶上的原算术运输，记其加法和序为 $+_{\mathsf N},\le_{\mathsf N}$。令
+$$
+\mathsf G:\mathsf N_Z\to\mathsf N_Z,\qquad
+\mathsf G(\operatorname{NatZ}(j))=\operatorname{NatZ}(G_j).
+$$
+它是原递推函数 $G$ 的共轭，其单个完整图码为
+$$
+\operatorname{Enc}(G)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(G_j)\rangle_Z:j\in\omega\}.
+$$
+迭代指数 $h$ 先取原自然数；使用自然叶作时间参数时，经 $\operatorname{Dec}|_{\mathsf N_Z}$ 取同一个 $h$。
+

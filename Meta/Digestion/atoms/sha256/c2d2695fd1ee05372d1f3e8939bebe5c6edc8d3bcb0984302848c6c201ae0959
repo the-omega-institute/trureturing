@@ -1,0 +1,23 @@
+**theorem 44.13 (The maximal continuous fixed-divisor output factor).** Fix $c\ge1$ and give $\mathcal Q_c=K\times R_c$ the product topology with $R_c$ discrete. Define
+$$
+P_c:\mathcal Q_c\to\mathbb T,\qquad P_c(y,r)=cH(y)+[r\phi].
+$$
+For a Hausdorff space $Y$ and continuous $g:\mathcal Q_c\to Y$, the following conditions are equivalent: there is a continuous $f:K\to Y$ satisfying
+$$
+f(Z(cn+r))=g(Z(n),r)
+\qquad(n\in\mathbb N_0,\ r\in R_c);
+$$
+and $g$ is constant on every set $Q_c(x)$.
+
+If $c\ge2$, these conditions hold precisely when there is a unique continuous $h:\mathbb T\to Y$ such that
+$$
+g=h\circ P_c.
+$$
+The corresponding input observer is exactly $f=h\circ H$. Thus $P_c$ is the maximal continuous Hausdorff-valued output factor compatible with the fixed-divisor input fibers. If $c=1$, every continuous $g$ is compatible, and the maximal factor is instead the identification $(y,0)\mapsto y$ onto $K$.
+
+In particular, the remainder label is continuously recoverable from the completed dividend only when $c=1$. For $c\ge2$, all continuously descending finite-discrete-valued readouts are constant, but the nonconstant circle-valued combination
+$$
+cH(y)+[r\phi]
+$$
+does descend, with input readout $H(x)$.
+

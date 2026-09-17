@@ -416,7 +416,7 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture);
 
-        AssertMalformedClauseChain(result, parentEntry.AtomId, "parent CAS blob has no clause plan");
+        AssertMalformedClauseChain(result, parentEntry.AtomId, "clause plan has no proper claim decomposition");
     }
 
     [Fact]
@@ -464,7 +464,7 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger));
 
-        AssertMalformedClauseChain(alignment, parentEntry.AtomId, "parent CAS blob has no clause plan");
+        AssertMalformedClauseChain(alignment, parentEntry.AtomId, "clause plan has no proper claim decomposition");
         Assert.Contains(parentEntry.AtomId, alignment.ClausePlanChainParents);
         Assert.DoesNotContain(parentEntry.AtomId, alignment.VerifiedClausePlanParents);
         Assert.Equal(DigestionReceiptAlignment.Rejected, alignment.AlignmentFor(childEntry.AtomId));

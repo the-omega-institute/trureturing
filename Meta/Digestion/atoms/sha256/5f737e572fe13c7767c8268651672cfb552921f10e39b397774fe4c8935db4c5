@@ -1,0 +1,6 @@
+**定理 375.3。** 对所有 $x\in K_{\rm infdig}$，
+$$
+H_{\rm infdig}(T_{\rm infdig}x)=H_{\rm infdig}(x)+[\phi].
+$$
+每个固定 $h\in\omega$ 的迭代 $T_{\rm infdig}^h$ 是 $z_{\rm infdig}(n)\mapsto z_{\rm infdig}(n+h)$ 的唯一连续延拓，包括 $h=0$。三元组 $(K_{\rm infdig},z_{\rm infdig}(0),T_{\rm infdig})$ 不满足通常自然数结构的后继条件，$T_{\rm infdig}$ 也不是任何 $\mathbb Z$ 作用的生成元。
+

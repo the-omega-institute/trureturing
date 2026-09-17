@@ -1,0 +1,9 @@
+对定义中的任意集合及全运算族，$\operatorname{DynClosure}(q,I)$ 的纤维对 $I$ 封闭，且
+$$
+\operatorname{Refines}(q,\operatorname{DynClosure}(q,I)).
+$$
+若 $a:X\to C$ 满足 $\operatorname{Refines}(q,a)$ 且其纤维对 $I$ 封闭，则
+$$
+\operatorname{Refines}(\operatorname{DynClosure}(q,I),a).
+$$
+这对空集合情形也成立。

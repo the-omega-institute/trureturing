@@ -1,0 +1,18 @@
+### 90.5 与 Zeckendorf 刻度的组合边界
+
+对合法构型集合 $\mathcal W_L$，Zeckendorf 数值只提供一个离散坐标
+
+$$
+\nu(w)=\sum_j F_{j+2}w_j.
+$$
+
+若记录耦合另行定义为 $|w\rangle\mapsto|r_w\rangle$，真正进入局部预测的是
+
+$$
+R_{wv}=\langle r_w|r_v\rangle,
+$$
+
+而不是 $\nu(w)-\nu(v)$ 本身。两个 Zeckendorf 数值相差很大，记录向量仍可能重合；两个数值相邻，也可能被特定耦合映射到正交记录。必须同时给出编码、记录态和允许操作，才能判断历史是否已经成为稳定的经典标签。
+
+本节复用 `pure_record_distinguishability_coherence_complementarity` 与 `no_cloning_inner_product_criterion`。由它们得到的等式和正交/相同二分是 Lean 已证明的有限 Hilbert 空间结果；把它们推广到近似复制、带噪声环境、无限记录链或具体 Zeckendorf 里德伯动力学，仍需额外的通道模型和误差界。
+

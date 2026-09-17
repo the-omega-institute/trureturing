@@ -1,0 +1,12 @@
+**theorem 26.4 (Classification of continuous observations).** For every $f\in C(K,\mathbb F)$ the following conditions are equivalent:
+$$
+\begin{aligned}
+&a_f\text{ is WAP};\\
+&a_f\text{ is AP};\\
+&f(x_m^-)=f(x_m^+)\quad\text{for every }m\ge1;\\
+&\text{there exists a unique }g\in C(\mathbb T,\mathbb F)
+  \text{ such that }f=g\circ H.
+\end{aligned}
+$$
+For complex observations the WAP condition is also equivalent to WAP for both real and imaginary coordinate sequences; the analogous statement holds for AP.
+

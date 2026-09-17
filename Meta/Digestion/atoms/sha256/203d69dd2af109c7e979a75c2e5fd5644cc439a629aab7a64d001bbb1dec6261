@@ -1,0 +1,43 @@
+**命题 378.10。** 记通常整数为 $\mathbb Z_o$，使用第 255–256 条的
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),\qquad
+v:J\leftrightarrow\mathbb Z_o,\quad v(0,n)=n,\quad v(1,n)=-n,
+$$
+$$
+S=\mathsf Z_{\mathbb Z},\qquad b=\operatorname{scode}\circ v:J\leftrightarrow S.
+$$
+对 $c\in S$，三个提升分别为
+$$
+\operatorname{Enc}(v^{-1}(\operatorname{ival}(c))),\qquad
+\operatorname{Enc}(\operatorname{ival}(c)),\qquad
+\operatorname{Enc}(c).
+$$
+它们的像分别为 $J^*,\mathbb Z_o^*,S^*$，逆分别在这三个像上为
+$$
+\operatorname{scode}\circ v\circ\operatorname{Dec},\qquad
+\operatorname{scode}\circ\operatorname{Dec},\qquad
+\operatorname{Dec}.
+$$
+CSA 的电荷、时间摘要与联合时空摘要保持各自原对象及实际像，不能由标量相位恢复整个事件对象；第 93 条的历史指标 $(t,p,j)$ 分别是时间、素数标签及数位位置，不是 GICT 的尺度、规范字、相位三个观察值。
+
+**证明。** $v$ 和 $b$ 的双逆直接取第 255–256 条，$\operatorname{scode},\operatorname{ival}$ 的双逆取第 113–114 条。将它们代入第 378.8 条的原对象和数字对象提升，得到第一、第三个像与逆；将 $\operatorname{ival}:S\to\mathbb Z_o$ 代入同一构造，得到第二个像与逆。每个复合先解码再使用相应原逆，恢复原字；反向先恢复原对象再编码，也恢复原码。非负数值按第 255 条约定与自然序数对应，但原 $J$ 对象仍用 $v^{-1}$，没有由数值相等抹去对象的配对。
+
+[CSA 定义 1–3、8](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的 $X=(C,A)$ 保留档案 $E_X$、当前区域 $\Omega_X$、所选集合 $A_X$ 以及事件的符号、位置、时间和偏序；$q(X)$ 只对 $A_X$ 中的事件符号作有限和。将其送入通常整数即用 $v(q(X))$。即使给定该和，也不能恢复未选事件或档案中的其余事件；例如一份取空档案，另一份取单事件档案 $E=\{e\}$，两份都取 $\Omega=A=\varnothing$；单事件的时间、位置取各自零，符号取正，来源取固定叶，偏序为空。两份均满足当前整体平衡条件，选择电荷均为零，档案却不同。继而任何只依赖这个电荷的字或相位也不能区分它们。
+
+在 CSA 定义 20 中，将其空间摘要 $\pi(X)$ 在此记为 $\pi_{\rm CSA}(X)$，则
+$$
+\Theta(X)=(\pi_{\rm CSA}(X),m_X,M_X,s_X),\qquad
+m_X=\min t_X[E_X],\quad M_X=\max t_X[E_X],\quad s_X=\max t_X[\Omega_X].
+$$
+端点类型分别为 $\mathbb Z\cup\{+\infty\}$、$\mathbb Z\cup\{-\infty\}$、$\mathbb Z\cup\{-\infty\}$，空档案取 $m_X=+\infty,M_X=-\infty$，空当前区域取 $s_X=-\infty$。定义域为原 $\mathcal B$，值域取准确的 $\mathcal T=\Theta[\mathcal B]$，不取任意端点积；非空档案必须有有限 $m_X\le M_X$，非空当前区域还满足 $m_X\le s_X\le M_X$。
+
+CSA 定义 22 的联合摘要仍为
+$$
+\Xi(X)=(W_X,Z_X,m_X,M_X,s_X),
+$$
+$$
+W_X(t,y)=\sum_{\substack{e\in\Omega_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e),\qquad
+Z_X(t,y)=\sum_{\substack{e\in A_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e).
+$$
+两个函数有限支撑，前者读当前背景，后者读当前选择，均不计档案中 $E_X\setminus\Omega_X$ 的事件。所列公式保留原端点和原实际像 $\Xi[\mathcal B]$；它们的函数图可按第 378.3 条完整编码。第 93 条的 $(t,p,j)$ 是有限历史表的索引，而 $\Gamma_+(n)$ 的三分量是同一个正标量 $n$ 的三个函数值，两者由不同自变量及求值公式给出。证毕。
+

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:c6214cf47d27fb8802c49965f818ee9fea198675a1afab28f15888a3416fc7fe
+  normalized_sha256: sha256:c6214cf47d27fb8802c49965f818ee9fea198675a1afab28f15888a3416fc7fe
+cas_ref: sha256:c6214cf47d27fb8802c49965f818ee9fea198675a1afab28f15888a3416fc7fe
+coverage_gids:
+  - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
+    target_statement_id: sha256:cb80fb5140cb6fdba5350cf5ee1fea447acf9c6c2580be6625900403da5fc76e
+  - gid: D5/S3/Factorization/PositiveRationalGroup.positiveRationalLocalization
+    target_statement_id: sha256:bb86401c2c2e2903567dde107f712ddded46d62377785d5e390c9788e1839b0f
+  - gid: D5/S3/Factorization/PositiveRationalGroup.primeExponentEquivPositiveRational
+    target_statement_id: sha256:4e104012337cdc8301308ca8b837bfd88459e6c9e2f1579f4d55958d50c3732a
+  - gid: D5/S3/Factorization/PositiveRationalGroup.signedLedgerLocalization
+    target_statement_id: sha256:2f40076a9389610ebb21445f7f665db505880b8fd39b67a27ca2eafa22b98081
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,3 @@
+**证明。** 正性及 \(k\ge2\) 给出 \(\sum_ix_i^2<(\sum_ix_i)^2\),所以 \(V<k(k-1)\mu^2\),即 \(r<\mu\)。又由 \(\sum_{j\ne i}(x_j-\mu)=-(x_i-\mu)\) 及 Cauchy-Schwarz,
+\((x_i-\mu)^2\le(k-1)(V-(x_i-\mu)^2)\),故 \(x_i\le H\)。\(V=0\) 时全部坐标等于 \(\mu\),结论直接成立。
+

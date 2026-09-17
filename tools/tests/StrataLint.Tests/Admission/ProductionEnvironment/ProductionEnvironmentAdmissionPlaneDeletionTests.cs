@@ -21,9 +21,10 @@ public sealed partial class ProductionEnvironmentTests
             ? Manifest((DeletedAdmissionPath, deletedPlane == "judge" ? "content" : "judge"))
             : Manifest((FileMapPath, "judge")));
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var changes = DeletionChanges();
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            baseline, candidate, RawChangeSet.CreateWithKinds([(DeletedAdmissionPath, RawChangeKind.Deleted)]));
+            candidate, baseline, changes);
 
         Assert.True(decision.IsAdmissible, decision.Message);
         Assert.Equal(deletedPlane == "judge"
@@ -47,9 +48,10 @@ public sealed partial class ProductionEnvironmentTests
         var baseline = DeletionSnapshot(baselineManifest, includePath: true);
         var candidate = DeletionSnapshot(Manifest((FileMapPath, "judge"), (DeletedAdmissionPath, "judge")));
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var changes = DeletionChanges();
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            baseline, candidate, RawChangeSet.CreateWithKinds([(DeletedAdmissionPath, RawChangeKind.Deleted)]));
+            candidate, baseline, changes);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -70,9 +72,10 @@ public sealed partial class ProductionEnvironmentTests
         var baseline = DeletionSnapshot(Manifest((DeletedAdmissionPath, "judge")), includePath: true);
         var candidate = DeletionSnapshot(candidateManifest);
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var changes = DeletionChanges();
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            baseline, candidate, RawChangeSet.CreateWithKinds([(DeletedAdmissionPath, RawChangeKind.Deleted)]));
+            candidate, baseline, changes);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -91,7 +94,7 @@ public sealed partial class ProductionEnvironmentTests
             : DeletionSnapshot(Manifest((DeletedAdmissionPath, "judge")), includePath: true);
         var candidate = invalidBaseline ? DeletionSnapshot(Manifest((FileMapPath, "judge"))) : invalid;
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, DeletionChanges());
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal("ADMISSION-PLANE-FILEMAP-INVALID", decision.Code);
@@ -107,10 +110,11 @@ public sealed partial class ProductionEnvironmentTests
         var baseline = DeletionSnapshot(Manifest((DeletedAdmissionPath, "judge")), baselineHasPath);
         var candidate = DeletionSnapshot(Manifest((FileMapPath, "judge")), candidateHasPath);
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var changes = DeletionChanges();
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         // Even a claimed deletion cannot replace the two snapshots' presence evidence.
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            baseline, candidate, RawChangeSet.CreateWithKinds([(DeletedAdmissionPath, RawChangeKind.Deleted)]));
+            candidate, baseline, changes);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal("ADMISSION-PLANE-PATH-MATCH-COUNT", decision.Code);
@@ -126,7 +130,7 @@ public sealed partial class ProductionEnvironmentTests
         var baseline = DeletionSnapshot("files = [", baselineHasPath);
         var candidate = DeletionSnapshot(Manifest((DeletedAdmissionPath, plane)), includePath: true);
 
-        var decision = AdmissionPlanePolicy.Evaluate(baseline, candidate, [DeletedAdmissionPath]);
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, DeletionChanges());
 
         Assert.True(decision.IsAdmissible, decision.Message);
         Assert.Equal(plane == "judge", decision.RequiresFullEngineering());
@@ -159,7 +163,7 @@ public sealed partial class ProductionEnvironmentTests
         var prepared = gateway.Prepare(baseline);
 
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            gateway.ReadRevision(prepared.Revision), gateway.ReadCurrent(), prepared.Changes);
+            gateway.ReadCurrent(), gateway.ReadRevision(prepared.Revision), prepared.Changes);
 
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == source && change.Kind == RawChangeKind.Deleted);
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == destination && change.Kind == RawChangeKind.Added);
@@ -174,4 +178,7 @@ public sealed partial class ProductionEnvironmentTests
             ? RawRepositorySnapshot.Create(snapshot.Entries.Append(RawRepositoryEntry.FromText(DeletedAdmissionPath, "component\n")))
             : snapshot;
     }
+
+    private static RawChangeSet DeletionChanges() =>
+        RawChangeSet.CreateWithKinds([(DeletedAdmissionPath, RawChangeKind.Deleted)]);
 }

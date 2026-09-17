@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bdad9f848b260efa00a23b431f3888b67b0fe9b0429b2b665ef0ddd3ed14eec
+  normalized_sha256: sha256:8bdad9f848b260efa00a23b431f3888b67b0fe9b0429b2b665ef0ddd3ed14eec
+cas_ref: sha256:8bdad9f848b260efa00a23b431f3888b67b0fe9b0429b2b665ef0ddd3ed14eec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Note 3.4.9 revises proof-shape, escape-witness, admission-basis, and dependency-edge classifications for candidate theorems 3.4.5-3.4.8. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 3.4.5-3.4.8.
+    previous_atom_id: 8d2d3346e605e727628ec4b56942c7361dd8ea911072a5ca5bcd988bbcb049cb
+    next_atom_id: bd1a7872105af042935ae9df198d6fce7075f9d2043331badfeb7a009ad1fc30

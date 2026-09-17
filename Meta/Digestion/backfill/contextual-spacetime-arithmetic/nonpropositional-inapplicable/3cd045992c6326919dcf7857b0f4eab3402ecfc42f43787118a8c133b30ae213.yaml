@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3cd045992c6326919dcf7857b0f4eab3402ecfc42f43787118a8c133b30ae213
+  normalized_sha256: sha256:3cd045992c6326919dcf7857b0f4eab3402ecfc42f43787118a8c133b30ae213
+cas_ref: sha256:3cd045992c6326919dcf7857b0f4eab3402ecfc42f43787118a8c133b30ae213
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom records reasoning-seat provenance, prior exposure, review-process corrections, and unavailable later review artifacts. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the surrounding PR6 theory atoms.
+    previous_atom_id: 512252328f5ac47abc3d75bc98228741f12f86bb5363472ef2a2a6f2fbb0727e
+    next_atom_id: 742ace561fc3c25897398282c55b29b8560f3bb58527d7d0ca930a03ee1bae10

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af367a23bb69f0e442b62161b3e85d5845b50cb9a67697ec161b8eaa1e3a174e
+  normalized_sha256: sha256:af367a23bb69f0e442b62161b3e85d5845b50cb9a67697ec161b8eaa1e3a174e
+cas_ref: sha256:af367a23bb69f0e442b62161b3e85d5845b50cb9a67697ec161b8eaa1e3a174e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 40 corrects the preregistered proof-shape and landing basis for W-1 after repository review. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligation stays with W-1.
+    previous_atom_id: d983ef1deabb51c2ddecd3b3440f19e4e34a5efab537c435118c009979cd8371
+    next_atom_id: 52efd500a0844dd87fa2654efeba07d16cd65e7ff657d9b89ce314b01c5cc4c2

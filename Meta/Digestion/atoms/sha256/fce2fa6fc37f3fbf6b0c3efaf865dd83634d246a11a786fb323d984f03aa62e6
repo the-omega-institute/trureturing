@@ -1,0 +1,5 @@
+**定义 470.17（素数与非素数的坐标双射）。** 令 $\pi_0<\pi_1<\cdots$ 为全部素数的递增枚举，$\eta_0<\eta_1<\cdots$ 为 $\omega\setminus\operatorname{Pr}$ 的递增枚举；特别地 $\pi_0=2,\eta_0=0,\eta_1=1$。定义
+$$
+f(\pi_i)=2i,\qquad f(\eta_i)=2i+1\quad(i\in\omega).
+$$
+

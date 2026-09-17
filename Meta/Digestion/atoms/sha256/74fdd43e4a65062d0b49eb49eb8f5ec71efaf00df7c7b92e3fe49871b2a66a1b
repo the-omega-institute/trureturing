@@ -1,0 +1,2 @@
+**定义 3.6（缘起支持族）**〔semantic〕。固定 $K,\mathfrak A$ 及两种读出，令 $\mathcal A(K,\mathfrak A)$ 为所有有限集合 $S\subseteq\mathcal P$ 的族，其中 $S$ 上存在逐点合格、引用闭合且无环的见证 $w_S$。集合 $S$ 只保留“存在某见证”的信息；它没有预先选定每个命题唯一的依赖边。
+

@@ -1,0 +1,117 @@
+**命题 44.2（交叉支撑界与第 40 节下界互不支配）。** 在两者共同适用的量子比特任务中，定理 44.1 的 $\mathsf B_{ij}$ 与定理 40.1 的 $\mathsf L$ 没有普遍的大小顺序。
+
+具体地，取
+
+$$
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+J=\frac1{10}\begin{pmatrix}9&3\\3&1\end{pmatrix},
+\qquad c=\frac14,\quad d=4,
+\qquad \mu=\frac{\sqrt{265}-15}{40}>0.
+$$
+
+两候选不对易，两个加权差都严格不定。此时两个下界为
+
+$$
+\mathsf B_{cd}=\mu\left(5-\sqrt{\frac{677}{53}}\right),
+\qquad
+\mathsf L=2\mu\left(5-\sqrt{\frac{1125}{53}}\right),
+$$
+
+并且
+
+$$
+\boxed{0<\mathsf L<\mu<\mathsf B_{cd}.}
+$$
+
+另一方面，在命题 40.2 的混态例中，$\mathsf B_{12}=\mathsf L/2>0$，因此第 40 节的下界严格更强。
+
+证明。这里 $A$ 是秩一投影，$J=vv^\dagger/10$，其中 $v=(3,1)^{\mathsf T}$ 且 $v^\dagger v=10$，所以两者都是纯态密度矩阵。由于 $J$ 的非对角元非零，$[A,J]\ne0$。两个加权差为
+
+$$
+D_c=\frac1{20}\begin{pmatrix}-13&-6\\-6&-2\end{pmatrix},
+\qquad
+D_d=\frac1{10}\begin{pmatrix}31&-3\\-3&-1\end{pmatrix}.
+$$
+
+它们的行列式分别为 $-1/40$ 与 $-2/5$，因此都严格不定。迹分别为 $-3/4$ 与 $3$，迹范数分别为
+
+$$
+\|D_c\|_1=\frac{\sqrt{265}}{20},\qquad
+\|D_d\|_1=\frac{\sqrt{265}}5.
+$$
+
+按第 40 节的记号，正、负本征值绝对值中的较小者为 $\mu_c=\mu$、$\mu_d=4\mu$。由于 $c<1<d$，$D_c$ 的正本征值较小、$D_d$ 的负本征值绝对值较小，所以定理 44.1 中的两个谱间隙恰为
+
+$$
+\alpha=\mu,\qquad\beta=4\mu.
+$$
+
+再令 $S_t=2P_t^+-I_2$。直接去迹并除以相应的 $\|D_t\|_1/2$ 得到
+
+$$
+S_c=\frac1{\sqrt{265}}\begin{pmatrix}-11&-12\\-12&11\end{pmatrix},
+\qquad
+S_d=\frac1{\sqrt{265}}\begin{pmatrix}16&-3\\-3&-16\end{pmatrix}.
+$$
+
+因此
+
+$$
+\kappa=\frac12\operatorname{tr}(S_cS_d)=-\frac{28}{53},
+\qquad \eta=|\kappa|=\frac{28}{53},
+\qquad
+\chi=\operatorname{tr}(P_c^+P_d^-)=\frac{1-\kappa}{2}=\frac{81}{106}.
+$$
+
+代入两个定理，根式中的量分别化为
+
+$$
+(\alpha+\beta)^2-4\alpha\beta\chi
+=\mu^2\frac{677}{53},
+$$
+
+$$
+\mu_c^2+\mu_d^2+2\mu_c\mu_d\eta
+=\mu^2\frac{1125}{53}.
+$$
+
+这给出所列两个下界。它们的严格比较只需要有理数平方比较：
+
+$$
+\frac{1125}{53}<25,
+\qquad
+\frac{1125}{53}>\frac{81}{4},
+\qquad
+\frac{677}{53}<16.
+$$
+
+第一式给出 $\mathsf L>0$；第二式给出 $\mathsf L<2\mu(5-9/2)=\mu$；第三式给出 $\mathsf B_{cd}>\mu(5-4)=\mu$。又因 $265>15^2$，$\mu>0$，所有不等号方向确定。
+
+为得到反向的严格比较，取命题 40.2 的
+
+$$
+A=\begin{pmatrix}3/4&0\\0&1/4\end{pmatrix},\qquad
+J=\begin{pmatrix}1/2&1/4\\1/4&1/2\end{pmatrix},
+\qquad c=1,\quad d=2.
+$$
+
+该节已经算得
+
+$$
+\mu_c=\frac{\sqrt2}{4},\qquad
+\mu_d=\frac{\sqrt5-2}{4},\qquad
+\kappa=\eta=\frac3{\sqrt{10}}>0.
+$$
+
+此时同样有 $\alpha=\mu_c$、$\beta=\mu_d$。把 $\chi=(1-\kappa)/2$ 代入秩一公式，得到
+
+$$
+\mathsf B_{12}
+=\mu_c+\mu_d-\sqrt{\mu_c^2+\mu_d^2+2\mu_c\mu_d\kappa}
+=\frac{\mathsf L}{2}.
+$$
+
+由第 40 节的 $\mathsf L>0$，这是严格较小的下界。两个精确例子共同排除了任一方的普遍数值支配关系。
+
+第 44 节的界适用于任意有限输入维数及奇异加权差，第 40 节则同时给出两项量子比特任务的经典损失上下界。在共同适用处可以取两个下界的较大者；这里保留第 40 节的结论，没有用新界替代它，也未把上述纯态例中的任一下界宣称为实际最优损失。证毕。
+

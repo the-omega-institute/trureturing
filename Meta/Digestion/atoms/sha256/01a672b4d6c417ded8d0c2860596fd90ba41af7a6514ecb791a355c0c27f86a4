@@ -1,0 +1,2 @@
+反之，设 $\theta\subseteq\ker q$ 满足 (SC)。对上下文的生成作归纳：恒等孔保持 $\theta$；基本上下文由 (SC) 保域，并在域内保持 $\theta$。复合时，若内层失败，两侧均严格失败；否则内层输出相关，外层由归纳假设同域且在域内输出相关。最后用 $\theta\subseteq\ker q$，两侧正常读数也相同。因此 $x\mathrel\theta y$ 蕴含每个上下文的观察相同，即 $\theta\subseteq\approx_\Sigma$。全过程没有使用满射或挑选 $Q$ 中未被命中的值。证毕。
+

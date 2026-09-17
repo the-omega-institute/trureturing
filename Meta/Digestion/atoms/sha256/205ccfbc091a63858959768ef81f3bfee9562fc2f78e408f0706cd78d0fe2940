@@ -1,0 +1,53 @@
+**theorem 36.7 (Golden spacing and the log-free Gaussian frequency sum).** For every integer $k\ge1$,
+$$
+\|k\phi\|>\frac1{4k},
+$$
+where $\|t\|$ denotes distance to the nearest integer. For $s\ge1$, let $M=2^J$ be the largest power of two not exceeding $s$. Then
+$$
+\sum_{k=1}^M\frac{e^{-8s^2\|k\phi\|^2}}{k}\le\frac{16}{s}.
+$$
+
+**Proof.** The established rational estimate says that for a rational $q$ with reduced positive denominator $d$,
+$$
+\left|\phi-q\right|>\frac1{\sqrt5\,d^2+d}.
+$$
+Choose an integer $a$ nearest to $k\phi$ and apply this to $a/k$, whose reduced denominator is at most $k$. Then
+$$
+\|k\phi\|
+>\frac1{\sqrt5\,k+1}
+\ge\frac1{(\sqrt5+1)k}
+>\frac1{4k}.
+$$
+This uses the exact rational-denominator statement of [GoldenHurwitzBound](https://github.com/the-omega-institute/trureturing/blob/7a2f78d2072b99bfa7b599db4ee342716fcd18dc/D5/S1/Depth/GoldenHurwitzBound.lean).
+
+Partition $1,\ldots,M$ into bands
+$$
+B_i=\{k\in\mathbb N:2^{i-1}<k\le2^i\},\qquad 0\le i\le J.
+$$
+In particular $B_0=\{1\}$. Put $m_i=2^i$ and $\delta_i=1/(4m_i)$. The signed representatives of $k\phi$ in $(-1/2,1/2]$, for $k\in B_i$, have distance greater than $\delta_i$ from zero. Distinct representatives have circle distance greater than $\delta_i$, because their frequency difference is a nonzero integer of absolute value at most $m_i$.
+
+Order the positive representatives by distance from zero, and separately order the absolute values of the negative representatives. In either list the $r$-th term is at least $r\delta_i$. It is essential here to keep the two sides separate; the folded distances are not asserted to be mutually separated. Consequently,
+$$
+\sum_{k\in B_i}e^{-8s^2\|k\phi\|^2}
+\le2\sum_{r\ge1}\exp\left(-\frac{s^2r^2}{2m_i^2}\right).
+$$
+Since $1/k\le2/m_i$ on the band, writing $t_i=s/m_i\ge1$ gives
+$$
+\sum_{k\in B_i}\frac{e^{-8s^2\|k\phi\|^2}}k
+\le\frac4{m_i}\sum_{r\ge1}e^{-t_i^2r^2/2}.
+$$
+For $t\ge1$, the inequality $r^2-1\ge3(r-1)$ for $r\ge1$ implies
+$$
+\sum_{r\ge1}e^{-t^2r^2/2}
+\le e^{-t^2/2}\sum_{r\ge1}e^{-3(r-1)/2}
+<2e^{-t^2/2}.
+$$
+Thus the contribution of the band is at most $8t_i e^{-t_i^2/2}/s$.
+
+Now $t_i=t_0'2^{J-i}$ with $t_0'=s/M\in[1,2)$. The function $t\mapsto te^{-t^2/2}$ is nonincreasing on $[1,\infty)$, so
+$$
+\sum_{i=0}^J t_i e^{-t_i^2/2}
+\le\sum_{r\ge0}2^r e^{-4^r/2}<2.
+$$
+Indeed the term at $r=0$ is less than one. For $r\ge1$, $4^r\ge4r$, so the remaining sum is bounded by $\sum_{r\ge1}(2e^{-2})^r<1$. Summing the band estimates proves the result. $\square$
+

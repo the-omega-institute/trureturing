@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79055dfd4aba2b5b10c799cb871af1159545fb8a8df16b9c99d718f69091cb27
+  normalized_sha256: sha256:79055dfd4aba2b5b10c799cb871af1159545fb8a8df16b9c99d718f69091cb27
+cas_ref: sha256:79055dfd4aba2b5b10c799cb871af1159545fb8a8df16b9c99d718f69091cb27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This bullet records literature provenance and repository tier treatment for the already dispatched Kotzig-family lane. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligation stays with candidate theorem 18.12.
+    previous_atom_id: eddff9cc4a56c4488ec767fa59751706df8f3dbc8e902cc882f8fbbb42a1d827
+    next_atom_id: d40f2c809251998b2d12147605ab9da3a10bf0a4ad1507ae5e3880cd26c0a35a

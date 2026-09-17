@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7e01e70d58db7b340b6017e0c7c80b4263ec6112ad892ca0c696e90de3e019c4
+  normalized_sha256: sha256:7e01e70d58db7b340b6017e0c7c80b4263ec6112ad892ca0c696e90de3e019c4
+cas_ref: sha256:7e01e70d58db7b340b6017e0c7c80b4263ec6112ad892ca0c696e90de3e019c4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulativeEquiv
+    target_statement_id: sha256:e40b3e795692f3976e192ccff9c3cb237503d909cd6aff59bb35e8c6efd2e16f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_inverse_bijective
+    target_statement_id: sha256:039f3e252252042b488b25fd745cec59f5439e3175aadc654158c65c00396d91
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.difference_apply
+    target_statement_id: sha256:2f7ab4912fd942d07f2eda5693eb6187b33f859115245292c3e016d469708eb1
+receipts:
+  unresolved_subitems: []

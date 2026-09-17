@@ -1,0 +1,6 @@
+**theorem 37.8 (Baire-one operators and a Rosenthal representation).** Every element of $\mathscr E$ is a pointwise limit of a sequence of continuous maps $K\to K$. Every $P_\theta^s$ is nevertheless discontinuous at some actual input. Thus
+$$
+\mathscr E\cap C(K,K)=\mathcal I.
+$$
+The compactum $\mathscr E$ is Rosenthal: it is homeomorphic to a pointwise compact family of real-valued Baire-one functions on the Polish space $K$. In the standard compact metric semigroup-action terminology, the positive-time system $(K,T)$ is tame.[^rro37_semigroup][^rro37_tame]
+

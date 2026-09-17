@@ -1,0 +1,6 @@
+**证明。** 直接在原 418.2 的全图结论中使用 $H,D,Y,f$。其普通积桥满足 $J(\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle)=\operatorname{Enc}(\langle x,y\rangle)$，所以两种图通过 $J$ 比较，不能省掉该桥而把普通配对当作语义配对。逆图逐点解码给 $f$，定义域恰为 $H$，而非某个扩大的可计算子域。
+
+为明确“全部”的反向，任意 $B\subseteq D^*$ 的逆像为 $\operatorname{Dec}[B]\subseteq D$，双逆保证再取像得 $B$。任意 $g:D^*\to Y^*$ 的逆函数图由 $x\mapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))$ 给出，域为完整 $D$，再共轭恰得 $g$。空域有唯一空函数；非空域到空陪域无函数，两个方向均保留。集合索引族本身就是定义域为该索引集的全函数，任意联合域是完整积的子集，故以上两种逆构造同时保留全部候选、全部参数和全部路径索引。固定元数组装及原括号使用原 418.2 的 $J_r$；没有把普通分量积认同于单个元组的有效码。
+
+最后，$yRx$ 当且仅当 $(\operatorname{Enc}(y),\operatorname{Enc}(x))\in R^*$，逐点给等价类的成员像式；应用原 $\operatorname{Pack}$ 双逆给单码式。因此 $D^*/R^*$ 到 $\operatorname{Enc}[D/R]$ 通过这一个 Pack 映射双射，无须为所有类挑选代表。证毕。
+

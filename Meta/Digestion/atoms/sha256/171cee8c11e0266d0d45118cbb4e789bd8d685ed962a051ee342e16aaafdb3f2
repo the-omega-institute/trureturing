@@ -1,0 +1,14 @@
+**证明。** 第 74 条的语义配对定义与第 73 条首先给
+$$
+\{\operatorname{Enc}(x),\operatorname{Enc}(y)\}_Z
+=\operatorname{Enc}(\{x,y\}).
+$$
+将此式代入 Kuratowski 对的两个无序对，再配成外层无序对，得
+$$
+\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z
+=\operatorname{Enc}(\langle x,y\rangle).
+$$
+每个 $c\in X^*,d\in Y^*$ 唯一解码为 $x\in X,y\in Y$，故 $\chi$ 在指定域内有值。代入显示的逆式，在两个方向分别得到普通对 $\langle c,d\rangle$ 和原对码，证明双逆。
+
+对任意边 $\langle x,y\rangle\in A$，其外部对应边为普通对 $\langle e_X(x),e_Y(y)\rangle$，再经 $\chi$ 恰为该原边的编码。反向，$A_{\rm ext}$ 的每条边唯一来自 $A$ 的一条边。因此 $\chi[A_{\rm ext}]=\operatorname{Enc}[A]$，第 402.2 条给其余两式。任意外部关系 $B\subseteq X^*\times Y^*$ 都以 $(e_X\times e_Y)^{-1}[B]$ 为唯一原关系，所以并非只对已显示的关系成立。证毕。
+

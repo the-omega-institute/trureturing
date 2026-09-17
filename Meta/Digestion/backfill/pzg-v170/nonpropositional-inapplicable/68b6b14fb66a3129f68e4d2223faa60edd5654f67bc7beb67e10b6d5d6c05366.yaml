@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68b6b14fb66a3129f68e4d2223faa60edd5654f67bc7beb67e10b6d5d6c05366
+  normalized_sha256: sha256:68b6b14fb66a3129f68e4d2223faa60edd5654f67bc7beb67e10b6d5d6c05366
+cas_ref: sha256:68b6b14fb66a3129f68e4d2223faa60edd5654f67bc7beb67e10b6d5d6c05366
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 27.855 records an atomizer-driven paragraph split so three unchanged candidate statements receive distinct atom addresses. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 4.121-4.123.
+    previous_atom_id: afa8caa49241b5fb66403ff258a9f8d9b98a81d9b74b24cd1d1a05c3795ef092
+    next_atom_id: cf437209d2955b6c2e255ddeded36f85351e3217a59d408a7667229797dab9c1

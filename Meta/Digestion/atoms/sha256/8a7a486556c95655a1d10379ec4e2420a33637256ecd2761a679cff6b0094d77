@@ -1,0 +1,17 @@
+**定理 404.2。** 对任意联合域 $D\subseteq X\times Y$ 及函数 $f:D\to Z$，外部联合域是
+$$
+D_{\rm ext}=(e_X\times e_Y)[D].
+$$
+在 $(c,d)\in D_{\rm ext}$ 处的外部值为
+$$
+\widetilde f(c,d)=e_Z(f(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)).
+$$
+其原图码为
+$$
+\operatorname{Enc}(G_f)=
+\operatorname{Pack}\{
+\langle\chi_{X,Y}(c,d),\widetilde f(c,d)\rangle_Z:
+(c,d)\in D_{\rm ext}\}.
+$$
+每个固定有限元数及对任意 $E\subseteq D$ 的限制都保持准确联合域。若使用带互异成功、失败标签的严格部分求值，所有失败及成功值也双向保持。
+

@@ -1,0 +1,14 @@
+**Proof of existence and positivity of the limiting density.** Let A_(K,J)
+be the full set with K|m^2+1 and the correct Fibonacci divisor membership
+only through index J. It is periodic, so its density d_(K,J) exists.
+These sets decrease with J. The difference A_(K,J) minus A_K is contained
+in the QR4 tail. Hence their finite counting densities differ in limsup
+by at most T_J. It follows that A_K has natural density
+lim_(J->infinity)d_(K,J).
+
+For any J>=J0 this limit is at least the right side of QR5 minus T_J.
+The first quantity decreases polynomially with J and T_J exponentially.
+Choose J so that T_J is less than half that positive rational quantity.
+This proves strictly positive density. No assertion about the primality
+or squarefreeness of m^2+1 is required.
+

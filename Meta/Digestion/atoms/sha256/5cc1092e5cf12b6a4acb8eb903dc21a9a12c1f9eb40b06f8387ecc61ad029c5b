@@ -1,0 +1,9 @@
+**定义。** 设 $T>0$，$X,Y$ 为有限维实 Hilbert 空间，$A:X\to X$、$D:Y\to Y$、$B:X\to Y$ 为线性映射，$B^*:Y\to X$ 为 $B$ 的伴随。考虑可微轨迹 $x:[0,T]\to X$、$y:[0,T]\to Y$ 满足的块系统
+
+\[
+\dot x=-Ax+B^*y,
+\qquad
+\dot y=-Bx-Dy.
+\tag{12.18}
+\]
+

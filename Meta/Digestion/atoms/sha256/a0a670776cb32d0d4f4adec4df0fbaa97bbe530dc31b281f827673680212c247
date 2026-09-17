@@ -1,0 +1,23 @@
+**定理 404.1。** 设 $D\subseteq X$，$f:D\to Y$ 为任意函数。令 $G_f=\{\langle x,f(x)\rangle:x\in D\}$。其外部函数在准确的域 $D^*=e_X[D]$ 上为
+$$
+f^*=e_Y\circ f\circ e_X^{-1},\qquad
+\Gamma_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$
+原图的完整码为
+$$
+\operatorname{Enc}(G_f)=
+\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+其语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(f[D])$，且对每个 $x\in D$，
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x)).
+$$
+若编码的是外部图自身，则准确为
+$$
+\operatorname{Enc}(\Gamma_{f^*})=
+\operatorname{Pack}\{\langle\operatorname{Enc}(c),
+\operatorname{Enc}(f^*(c))\rangle_Z:c\in D^*\}.
+$$
+全部外部函数均能唯一反向解码。
+

@@ -23,9 +23,10 @@ the entry snapshot `oeis-A397356.src`:
 ```
 
 A397356 carries two conjectures. This lane settles ONLY the parity
-classification. The separate assertion about divisibility by three remains
-open, is not claimed as proved, and appears nowhere in the module as a
-theorem or as a definition.
+classification; the assertion about divisibility by three is not claimed
+here and appears nowhere in this module as a theorem or as a definition.
+That second conjecture is settled separately in
+`D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalModThree`.
 
 ## Motivation
 

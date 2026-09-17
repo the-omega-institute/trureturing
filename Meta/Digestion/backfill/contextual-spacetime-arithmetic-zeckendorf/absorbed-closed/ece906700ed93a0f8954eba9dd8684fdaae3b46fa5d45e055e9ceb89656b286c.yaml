@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ece906700ed93a0f8954eba9dd8684fdaae3b46fa5d45e055e9ceb89656b286c
+  normalized_sha256: sha256:ece906700ed93a0f8954eba9dd8684fdaae3b46fa5d45e055e9ceb89656b286c
+cas_ref: sha256:ece906700ed93a0f8954eba9dd8684fdaae3b46fa5d45e055e9ceb89656b286c
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.pushforward_comp
+    target_statement_id: sha256:656edd11d1bd5231d848d38234fab4d88b8c20381d0741996e70d41b01e756d6
+  - gid: D5/S3/Factorization/Combinatorics/MarkedPrimeWordSnapshotFiber.snapshot_fiber_equiv_and_forced_marks
+    target_statement_id: sha256:2d628f2f4e721b53df6cf430d2322a50835ee676d28815efc202caad16ae2e95
+receipts:
+  unresolved_subitems: []

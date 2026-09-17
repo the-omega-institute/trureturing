@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:03fcc8af61485ea6a25373ced61db4b07d8fec6fd91d888e9009187baa2041b0
+  normalized_sha256: sha256:03fcc8af61485ea6a25373ced61db4b07d8fec6fd91d888e9009187baa2041b0
+cas_ref: sha256:03fcc8af61485ea6a25373ced61db4b07d8fec6fd91d888e9009187baa2041b0
+coverage_gids:
+  - gid: D5/S3/Analytic/WeightedCapacity/DyadicTailFilling.closure_level_eq_sublevel
+    target_statement_id: sha256:248948705fb7d302f4e37d7660939d3108b0e76327c76d1c0e7dcc88195a6fe8
+receipts:
+  unresolved_subitems: []

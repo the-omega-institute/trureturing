@@ -1,0 +1,12 @@
+**定义。** 令 $V=\mathbb R^2$，令 $j:\mathbb Z^2\to V$ 为逐坐标嵌入，$L=j(\mathbb Z^2)$，并令
+
+$$
+\mathbb T^2=V/L.
+$$
+
+对整数矩阵 $A$，其实线性延拓保持 $L$，故诱导连续群同态
+
+$$
+f_A:\mathbb T^2\to\mathbb T^2,qquad [x]\longmapsto[Ax].
+$$
+

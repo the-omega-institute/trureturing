@@ -62,7 +62,9 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains(
             $"INGEST_INVALID ingest clause chain parent {atomId} lacks verified clause-plan proof: "
-                + $"entry {atomId} malformed clause chain: parent CAS blob has no clause plan",
+                + $"entry {atomId} malformed clause chain: "
+                + (chainAtomId == atomId ? "clause plan has no proper claim decomposition"
+                    : $"CHILD_CAS_MISSING atom_id={chainAtomId}"),
             result.Error,
             StringComparison.Ordinal);
         Assert.Equal(atomText, TemporaryFileSystem.File.ReadAllText(outputPath));

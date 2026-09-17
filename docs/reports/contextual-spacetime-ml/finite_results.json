@@ -1,0 +1,708 @@
+{
+  "boundary": "Finite exact checks are not proofs of universal claims; no empirical 2027 or kernel-verification claim.",
+  "capacity_boxes": {
+    "210": {
+      "capacities": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        2,
+        16,
+        16,
+        16,
+        16
+      ],
+      "minimum_label_bits": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "states": 16
+    },
+    "30030": {
+      "capacities": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        2,
+        64,
+        64,
+        64,
+        64
+      ],
+      "minimum_label_bits": [
+        1,
+        6,
+        6,
+        6,
+        6
+      ],
+      "states": 64
+    },
+    "5040": {
+      "capacities": [
+        4,
+        2,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        3,
+        32,
+        52,
+        56,
+        60
+      ],
+      "minimum_label_bits": [
+        2,
+        5,
+        6,
+        6,
+        6
+      ],
+      "states": 60
+    }
+  },
+  "configuration": {
+    "arithmetic": "fractions.Fraction and rational-complex pairs",
+    "automata_max_word_length": 4,
+    "automata_scope": "all binary-output partial deterministic machines with 1 or 2 states and 2 actions",
+    "momentum_steps": 3,
+    "quantum_initial_grid": "Bloch coordinates in {-1,-1/2,0,1/2,1} with squared norm at most 1",
+    "quantum_max_word_length": 4,
+    "regression_steps": 5,
+    "seed": 20270914,
+    "two_layer_steps": 4
+  },
+  "counterexamples": {
+    "approximation": {
+      "regional_missing_stability": {
+        "Fhat": "x^2+epsilon",
+        "T_and_F": "x^2",
+        "actions": 1,
+        "cases": [
+          {
+            "second_step_secant_slope": "201/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "301/10000"
+            ],
+            "x0": "1"
+          },
+          {
+            "second_step_secant_slope": "20001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "20101/10000"
+            ],
+            "x0": "10"
+          },
+          {
+            "second_step_secant_slope": "2000001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "2000101/10000"
+            ],
+            "x0": "100"
+          }
+        ],
+        "cost": "0",
+        "delta_close": "0",
+        "delta_eval": "1/100",
+        "domain": "[0,infinity)",
+        "guard": "constant true",
+        "output": "x",
+        "q": "identity",
+        "regions": 1
+      },
+      "state_error_without_readout_regularity": {
+        "L": "1",
+        "actions": 1,
+        "cases": [
+          {
+            "a": "1/10",
+            "initial_approximate": "1/10",
+            "initial_exact": "-1/10",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5",
+              "1/5",
+              "1/5"
+            ]
+          },
+          {
+            "a": "1/100",
+            "initial_approximate": "1/100",
+            "initial_exact": "-1/100",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/50",
+              "1/50",
+              "1/50"
+            ]
+          },
+          {
+            "a": "1/10000",
+            "initial_approximate": "1/10000",
+            "initial_exact": "-1/10000",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5000",
+              "1/5000",
+              "1/5000"
+            ]
+          }
+        ],
+        "delta_close": "0",
+        "delta_eval": "0",
+        "domain": "[-1,1]",
+        "guard": "constant true",
+        "output": "1{x>0}",
+        "output_evaluation_error": "0",
+        "q_T_F_Fhat": "identity",
+        "regions": 1,
+        "requested_output_budget_each_h0_to_h2": "1/2"
+      }
+    },
+    "discrete_C_before_after": [
+      "9",
+      "5184/625"
+    ],
+    "families": [
+      "same_w_different_next_w",
+      "coordinate_intervention",
+      "relu_prediction",
+      "ntk_nonclosure",
+      "flow_invariant_not_discrete_invariant",
+      "xor_use_and_misuse",
+      "terminal_marginal_not_transcript",
+      "stationary_fiber_exception",
+      "optimizer_memory",
+      "coordinate_preconditioning",
+      "relu_region_exit",
+      "quotient_path_without_common_lift",
+      "regional_missing_stability",
+      "state_error_without_readout_regularity"
+    ],
+    "minimax_absolute_error": "9/80",
+    "ntk_Kdot": [
+      "48",
+      "-48"
+    ],
+    "pair_difference": "9/40",
+    "two_layer_next_w": [
+      "81/100",
+      "117/200"
+    ],
+    "xor_accuracy": {
+      "ignore": "1/2",
+      "reverse": "0",
+      "use": "1"
+    }
+  },
+  "counts": {
+    "bloch_initial_states": 33,
+    "capacity_boxes": 3,
+    "exhaustive_partial_automata": 332,
+    "hidden_memory_trajectories": 72,
+    "lipschitz_box_pairs": 108,
+    "matrix_cases": 108,
+    "momentum_trajectories": 60,
+    "named_counterexample_families": 14,
+    "partition_horizon_comparisons": 1675,
+    "quantum_word_cases": 1023,
+    "regional_missing_stability_cases": 3,
+    "regression_trajectories": 48,
+    "relu_certified_steps": 593,
+    "relu_certified_words": 256,
+    "relu_conservative_rejections": 2,
+    "relu_psd_sign_image_obstructions": 1,
+    "relu_same_summary_migration_pairs": 1,
+    "state_error_without_readout_regularity_cases": 3,
+    "stochastic_discounted_pairs": 27,
+    "stochastic_iid_horizons": 36,
+    "stochastic_joint_law_cases": 1,
+    "two_layer_trajectories": 90,
+    "worked_regression_trajectory": 1
+  },
+  "relu_certificates": {
+    "certificate_state": "One declared mu, one global D, explicit clock; all sums seeded with Fraction(0).",
+    "collision": {
+      "cases": [
+        {
+          "initial_rows": [
+            [
+              "2",
+              "0"
+            ],
+            [
+              "1",
+              "1"
+            ],
+            [
+              "1",
+              "3"
+            ]
+          ],
+          "next_loss": "32",
+          "next_masks": [
+            [
+              1
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "next_prediction": "-8",
+          "next_rows": [
+            [
+              "2",
+              "-4"
+            ],
+            [
+              "-1",
+              "-1"
+            ],
+            [
+              "-5",
+              "1"
+            ]
+          ]
+        },
+        {
+          "initial_rows": [
+            [
+              "2/5",
+              "-4/5"
+            ],
+            [
+              "11/5",
+              "3/5"
+            ],
+            [
+              "1",
+              "3"
+            ]
+          ],
+          "next_loss": "49/2",
+          "next_masks": [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ]
+          ],
+          "next_prediction": "-7",
+          "next_rows": [
+            [
+              "2",
+              "-8/5"
+            ],
+            [
+              "1",
+              "-19/5"
+            ],
+            [
+              "-5",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "common_exact_minimum": "1/4",
+      "common_initial_A_W_B": [
+        "6",
+        "4",
+        "10"
+      ],
+      "common_unmasked_next_A_W_B": [
+        "30",
+        "-12",
+        "18"
+      ],
+      "drift_after_one_step": "2"
+    },
+    "family": [
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          1,
+          1
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1",
+          "1"
+        ],
+        "max_global_drift": "17/64",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          1,
+          2
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1",
+          "1/2"
+        ],
+        "max_global_drift": "953/4096",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          2,
+          3
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1/2",
+          "1/3"
+        ],
+        "max_global_drift": "7921/65536",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          1,
+          1
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1",
+          "1"
+        ],
+        "max_global_drift": "63649/248832",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          1,
+          2
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1",
+          "1/2"
+        ],
+        "max_global_drift": "24543428462125/106993205379072",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          2,
+          3
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1/2",
+          "1/3"
+        ],
+        "max_global_drift": "105009992248704601/876488338465357824",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      }
+    ],
+    "mixed_vector_cases": [
+      {
+        "all_batch_words": 49,
+        "d": 2,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "15/53",
+        "k": 2,
+        "max_global_drift": "3038927555929059634177/7683200000000000000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      },
+      {
+        "all_batch_words": 49,
+        "d": 2,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "45/169",
+        "k": 3,
+        "max_global_drift": "24549164645092607161/31395410156250000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      },
+      {
+        "all_batch_words": 49,
+        "d": 3,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "680/3441",
+        "k": 2,
+        "max_global_drift": "8610249625412238090504744019/19760514278400000000000000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      }
+    ],
+    "psd_sign_obstruction": {
+      "Q": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "pattern": [
+        1,
+        1
+      ],
+      "rank": 2,
+      "separation": "strict ++ implies A12>0, but Q has A12=0; rational factors exist",
+      "width": 2
+    },
+    "queries": "All current training predictions and all batch losses at 0..H; next predictions only at t<H.",
+    "rejections_without_crossing": [
+      {
+        "accepted": false,
+        "actual_gate_crossing": false,
+        "drift": "1",
+        "horizon": 2,
+        "kind": "equality",
+        "mu": "1"
+      },
+      {
+        "accepted": false,
+        "actual_gate_crossing": false,
+        "drift": "213/256",
+        "horizon": 2,
+        "kind": "strictly_above",
+        "mu": "1/2"
+      }
+    ],
+    "scope": "Exact finite checks of §§27.4–27.10; no universal proof or bit-time claim.",
+    "worked_family_trajectory": {
+      "eta": "1/8",
+      "full_batch_losses_t0_to_t2": [
+        "17/64",
+        "223112961/1073741824",
+        "851142878624054573636891450625/5070602400912917605986812821504"
+      ],
+      "global_drift_t2": "7921/65536",
+      "initial_rows": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "-1/2",
+          "-1/2"
+        ]
+      ],
+      "mu": "1/2",
+      "predictions_t0_to_t2": [
+        [
+          "1",
+          "-1/4"
+        ],
+        [
+          "225/256",
+          "-3969/16384"
+        ],
+        [
+          "3371544225/4294967296",
+          "-264551038250625/1125899906842624"
+        ]
+      ],
+      "sample_indexing": "zero-based: x[0]=1, x[1]=-1; both labels zero",
+      "word": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  },
+  "result": "all finite assertions passed",
+  "schema": "contextual-spacetime-ml-finite-checks-v1",
+  "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
+  "source_sha256": "b19fafb310ed8fbd286e5404e787591fd24ad130b9cc606b682c1204a5afdcb2",
+  "stochastic_records": {
+    "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
+    "iid_state_contraction": "0",
+    "iid_trace_tv_h0_to_h8": {
+      "0": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "1": [
+        "0",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "1/2": [
+        "0",
+        "1/2",
+        "3/4",
+        "7/8",
+        "15/16",
+        "31/32",
+        "63/64",
+        "127/128",
+        "255/256"
+      ],
+      "1/5": [
+        "0",
+        "1/5",
+        "9/25",
+        "61/125",
+        "369/625",
+        "2101/3125",
+        "11529/15625",
+        "61741/78125",
+        "325089/390625"
+      ]
+    },
+    "joint_output_next_summary_tv": "1",
+    "joint_two_step_trace_tv": "1"
+  },
+  "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md"
+}

@@ -1,0 +1,45 @@
+**证明。** 首先证明 Haar 提升唯一。若 $\eta$ 是 Borel 概率且 $H_*\eta=m$，则对每个正深度柱 $C_p$，第 20.2 条给出
+$$
+H^{-1}(H[C_p])\setminus C_p
+\subseteq H^{-1}(\partial_{\mathbb T}H[C_p]).
+$$
+右侧在 $\eta$ 下为零，因为相位边界是有限集且 $H_*\eta=m$。因此
+$$
+\eta(C_p)=m(H[C_p])=\nu(C_p).
+$$
+柱集生成 Borel 集，两个概率在所有柱上相同，故 $\eta=\nu$。定理 33.3 已给出这一提升的存在。
+
+任意 $R$ 不变概率 $\lambda$ 都无原子：同一旋转轨道上的单点质量相同，而无理性使该轨道无限，正原子质量会违反总质量有限。进一步，对任意连续 $g$，旋转不变性使
+$$
+\int g(\theta+[n\phi])\,d\lambda(\theta)=\int g(\theta)\,d\lambda(\theta).
+$$
+无理旋转的轨道稠密，一致连续性使此式对任意平移 $a\in\mathbb T$ 成立。再对 $a$ 按 $m$ 积分，利用 Fubini 定理及 Haar 平移不变性，
+$$
+\int g\,d\lambda
+=\int_{\mathbb T}\int_{\mathbb T}g(\theta+a)\,d\lambda(\theta)\,dm(a)
+=\int g\,dm.
+$$
+故 $\lambda=m$。
+
+若 $\mu$ 是 $T$ 不变概率，由 $HT=RH$，$H_*\mu$ 是 $R$ 不变概率，因此等于 $m$，唯一提升迫使 $\mu=\nu$。这里也明确得到
+$$
+\mu(H^{-1}(\Omega))=m(\Omega)=0,
+$$
+所以全部分裂纤维及其所需轨道饱和集都不能携带不变概率的正质量。反过来，$H_*(T_*\nu)=R_*m=m$，唯一提升给出 $T_*\nu=\nu$，证明存在性与唯一性。
+
+$\Omega$ 可数且在 $R$ 的正、反向下不变，故 $\mathbb T_0$ 是不变满测度 Borel 集。全部非单点相位纤维都位于
+$$
+E=\{[-m\phi]:m\ge1\}\subseteq\Omega,
+$$
+所以 $H_0$ 双射。$HT=RH$ 立即给出 $T^{-1}(K_0)=K_0$。对任意 $x\in K_0$，$R^{-1}H(x)$ 在 $\mathbb T_0$ 中有唯一提升 $y$，并且 $H(Ty)=H(x)$；该纤维单点，故 $Ty=x$，证明 $T(K_0)=K_0$ 以及限制后继的可逆性。
+
+设 $J=H_0^{-1}$。对每个正深度柱，其相位弧内部记为 $J_p$。边界均已从 $\mathbb T_0$ 删除，因而
+$$
+J^{-1}(C_p\cap K_0)=J_p\cap\mathbb T_0.
+$$
+右侧在 $\mathbb T_0$ 中开，柱集在 $K_0$ 中构成基，故 $J$ 连续。$H_0$ 的连续性继承自 $H$，于是双方均可测。推前恒等式及其双射性证明它保持测度，半共轭恒等式给出所述同构。
+
+仅删除 $H^{-1}(E)$ 不足以得到上述正、反向不变的同构：接缝双点 $u,v$ 都被 $T$ 送到相位为零的 $Z(0)$，而 $0\notin E$。删除整个双向轨道 $\Omega$ 才同时排除这一进入点及其全部轨道。最后，利用同胚共轭 $\Phi T=S\Phi$，任意 $S$ 不变概率经 $\Phi^{-1}$ 推前成为 $T$ 不变概率，故必为 $\Phi_*\nu$。证毕。
+
+附引：全部纤维、接缝合并及算术半共轭使用[第 20.1、20.2、20.4、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；唯一提升和满测度同构在本条直接构造。
+

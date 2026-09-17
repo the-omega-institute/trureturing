@@ -1,0 +1,2 @@
+**theorem 22.10 (Strict measurable distinctions among selections).** There exist Borel selections that are not of Baire class one. There also exist selections that are not measurable for the completion of a Borel probability measure on $X$, hence are neither Borel nor universally measurable. Nevertheless every point selection is Baire-property measurable. All these selections still have exactly the continuity locus $G$.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:71ead032ba211cd557dbf49299281484066d34b42cacdce1b683dbb1b5b2dd52
+  normalized_sha256: sha256:71ead032ba211cd557dbf49299281484066d34b42cacdce1b683dbb1b5b2dd52
+cas_ref: sha256:71ead032ba211cd557dbf49299281484066d34b42cacdce1b683dbb1b5b2dd52
+coverage_gids:
+  - gid: D5/S1/Digit/CarryStepConfluence.rawValue_reflTransGen
+    target_statement_id: sha256:255e2e41285ef9a49cddec71f2116088b6dcc627630fdce2ee70cc88528cdd90
+receipts:
+  unresolved_subitems: []

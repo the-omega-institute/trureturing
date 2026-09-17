@@ -1,0 +1,37 @@
+**定理 386.2。** 全部窗口映射的外部共轭具有准确的域和求值：
+$$
+P_L^*:K^*\to\mathsf X_L^*,\quad P_L^*(\operatorname{Enc}(x))=\operatorname{Enc}(x|_L),
+$$
+$$
+\pi_{J,L}^*:\mathsf X_J^*\to\mathsf X_L^*,\quad
+\pi_{J,L}^*(\operatorname{Enc}(p))=\operatorname{Enc}(p|_L)\quad(J\ge L\ge1),
+$$
+$$
+V_L^*:\mathsf X_L^*\to\{\operatorname{NatZ}(s):s<G_L\},\quad
+V_L^*(\operatorname{Enc}(p))=\operatorname{NatZ}(V_L(p)),
+$$
+$$
+T^*:K^*\to K^*,\quad T^*(\operatorname{Enc}(x))=\operatorname{Enc}(Tx),\qquad
+z^*:\omega^*\to K^*,\quad z^*(\operatorname{NatZ}(n))=\operatorname{Enc}(z(n)).
+$$
+$V_L^*$ 的逆在且仅在所列有限自然叶集上为
+$$
+\operatorname{NatZ}(s)\longmapsto\operatorname{Enc}(P_Lz(s))\qquad(s<G_L).
+$$
+对每个 $x\in K$ 和 $p\in\mathsf X_L$，完整图码分别为
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\},
+$$
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(p_j)\rangle_Z:j<L\}.
+$$
+它们保留每个零值边；$L=0$ 时第二式为空字的码。原始空字 $\zeta(0)$、语义空集 $\operatorname{NatZ}(0)$ 和总零图 $z(0)$ 具有各自的域与成员。有限窗口、有限规范字及自然叶遗传有限，而 $K$ 的每个点作为总图及其完整码均不遗传有限。
+
+**证明。** 所列各共轭由定义 385.1 代入原函数得到，每个输入码只在指定成员像上解码。窗口双射使 $V_L$ 在 $s<G_L$ 处的逆为 $P_Lz(s)$；逐向代入 $V_L$ 和补零代表的恒等式，再编码即得显示双逆，域外不声称逆值。
+
+每个总图对全部 $j\in\omega$ 有唯一边 $\langle j,x_j\rangle$，每个有限窗口对全部 $j<L$ 有唯一边 $\langle j,p_j\rangle$。应用定理 386.1 的逐边编码和 $\operatorname{Enc}(j)=\operatorname{NatZ}(j)$ 给两个公式，数字为零时仍有该条边。$L=0$ 时普通窗口为空函数，其码为 $\operatorname{NatZ}(0)$。原始空字本身是空集合，第 71 条的所有有效码都是非空 Kuratowski 对，故该空字不是有效码；总零函数则仍有每个输入 $j$ 的边。
+
+有限窗口与规范字都是有限个自然数对的有限图，故遗传有限；其码的遗传有限性及自然叶的结论使用第 70、72 条。$K$ 中每个总图有无限多个互异首坐标边，故非有限，更不在 $HF$ 中；第 72 条的 $\operatorname{Enc}(x)\in HF\iff x\in HF$ 使完整码也不遗传有限。证毕。
+

@@ -1,0 +1,186 @@
+**定理 18.2（两步纯经典历史误差的精确最优值）。** 取 $N=2$，$\beta_1=e$、$\beta_2=f$，其中 $e,f\in[0,1/2]$。则
+
+$$
+T_2(e,f)
+=\max\left\{
+ e+f-ef,\ \sqrt{f^2+(1-2f)e}
+\right\}.
+$$
+
+第一项由指针初态 $P_0$ 与恒等控制达到；第二项由平衡纯初态 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 及按第一结果选择的末次测量基达到。所有最优值均可使用实正交系统控制实现。
+
+两种策略的平方值差为
+
+$$
+f^2+(1-2f)e-(e+f-ef)^2
+=e\bigl[1-4f+2f^2-(1-f)^2e\bigr].
+$$
+
+该因子式决定在给定 $e,f$ 下哪种达到策略给出较大的历史差异；等于零时两种策略都达到最优值。
+
+证明。 第一共同酉可吸收入初态。对任一固定控制表，经典概率差线性依赖 $\rho$，总变差是其凸函数；将混态作纯态凸分解可知，其值不超过其中某个纯态的值。因此可以只优化纯输入。写作
+
+$$
+|\psi\rangle=\sqrt t|0\rangle+e^{i\theta}\sqrt{1-t}|1\rangle,
+\qquad 0\le t\le1.
+$$
+
+令 $D=\operatorname{diag}(1,e^{i\theta})$。第一步的实际算子与理想投影均与 $D$ 交换；把输入换为相位为零的向量，并把每个第二步共同控制 $U_z$ 换成 $U_zD$，便保留所有经典路径概率。因此可以令 $\theta=0$。
+
+给定第一结果 $z$，记实际和理想未归一化分支向量为
+
+$$
+\psi_z=K_{1,z}\psi,
+\qquad
+\phi_z=P_z\psi,
+\qquad
+p_z=\|\psi_z\|^2,
+\qquad q_z=\|\phi_z\|^2.
+$$
+
+于是 $q_0=t$、$q_1=1-t$，并且
+
+$$
+p_z=e+(1-2e)q_z,
+\qquad
+|\langle\phi_z,\psi_z\rangle|^2=(1-e)q_z^2.
+$$
+
+令 $d=1-2f\ge0$。第二步共同控制 $U_z$ 之后，结果 $w$ 的实际与理想联合路径概率之差为
+
+$$
+\langle w|U_zY_zU_z^\dagger|w\rangle,
+\qquad
+Y_z=d|\psi_z\rangle\langle\psi_z|
+-|\phi_z\rangle\langle\phi_z|+fp_zI_2.
+$$
+
+这是因为 $K_{2,w}^\dagger K_{2,w}=fI_2+dP_w$。两个 $Y_z$ 为 Hermitian 矩阵；其迹为 $p_z-q_z$，一般不为零。对任意 Hermitian 矩阵，任意基中的对角元绝对值之和不超过迹范数，在特征基中达到。两个历史分支可以分别选择 $U_z$，所以对固定 $t$ 的精确优化为
+
+$$
+\frac12\sum_{z=0}^1\|Y_z\|_1.
+$$
+
+输入已取实数，故 $Y_z$ 为实对称矩阵，所需特征基及控制均可选为实的。
+
+令 $r=|2t-1|\in[0,1]$，定义
+
+$$
+A=f^2+de,\qquad
+B=2f(f+de),\qquad
+C=f^2-d^2e(1-e).
+$$
+
+对一个二阶 Hermitian 矩阵，迹范数等于其迹绝对值和特征值间距的较大者。这里 $|\operatorname{tr}Y_z|=er$；直接计算特征值间距的平方，两个分支依次给出 $A+Br+Cr^2$ 和 $A-Br+Cr^2$，其中分支次序不影响其和。因而
+
+$$
+T_2(e,f)=\max_{0\le r\le1}F(r),
+$$
+
+$$
+F(r)=\frac12\left[
+\max\{er,\sqrt{A+Br+Cr^2}\}
++\max\{er,\sqrt{A-Br+Cr^2}\}
+\right].
+$$
+
+为核对间距公式，可对 $q=q_z$ 写 $p=e+(1-2e)q$。矩阵 $d|\psi_z\rangle\langle\psi_z|-|\phi_z\rangle\langle\phi_z|$ 加上标量矩阵不改变特征值间距，该间距平方为
+
+$$
+(dp+q)^2-4d(1-e)q^2.
+$$
+
+代入 $q=(1\pm r)/2$ 即得到上述两个二次式。因此它们在所用区间内均非负。
+
+下面直接证明最大值在 $r=0$ 或 $r=1$ 取得。记
+
+$$
+L=e+f-ef,\qquad M=\max\{\sqrt A,L\}.
+$$
+
+端点满足
+
+$$
+F(0)=\sqrt A,
+\qquad
+\sqrt{A+B+C}=2f+de,
+\qquad
+\sqrt{A-B+C}=de,
+\qquad F(1)=L.
+$$
+
+此外，有 $B\ge0$、$C\le A$，以及
+
+$$
+4AC-B^2=-4d^3e^2(1-e)\le0.
+$$
+
+置 $u=\sqrt{A+Br+Cr^2}$、$v=\sqrt{A-Br+Cr^2}$，则 $u\ge v$。两个最大值的和可写成
+
+$$
+F(r)=\max\left\{er,\frac{er+u}{2},\frac{u+v}{2}\right\}.
+$$
+
+第一项不超过 $e\le L\le M$。对第三项，由 $C\le A$ 及 $0\le r\le1$，有 $A-Cr^2\ge0$；同时
+
+$$
+(A-Cr^2)^2-
+\bigl[(A+Cr^2)^2-B^2r^2\bigr]
+=(B^2-4AC)r^2\ge0.
+$$
+
+根号中的量等于 $u^2v^2\ge0$，因此 $uv\le A-Cr^2$。由此
+
+$$
+\left(\frac{u+v}{2}\right)^2
+=\frac{A+Cr^2+uv}{2}\le A,
+$$
+
+故第三项也不超过 $\sqrt A\le M$。
+
+对第二项，$2M-er\ge0$。定义
+
+$$
+Q(r)=(2M-er)^2-(A+Br+Cr^2)
+=4M^2-A-(4Me+B)r+(e^2-C)r^2.
+$$
+
+有 $Q(0)=4M^2-A\ge3A$。又因为 $M\ge L=(e+2f+de)/2$，
+
+$$
+Q(1)=(2M-e)^2-(2f+de)^2\ge0.
+$$
+
+最后，在 $e,f\in[0,1/2]$ 上，
+
+$$
+A-(e^2-C)
+=2f\bigl[e(1-2e)+f(1-2e+2e^2)\bigr]\ge0.
+$$
+
+所以 $e^2-C\le A$。将二次式与其端点连接，得到
+
+$$
+\begin{aligned}
+Q(r)
+&=(1-r)Q(0)+rQ(1)-(e^2-C)r(1-r)\\
+&\ge(1-r)3A-Ar(1-r)
+=A(1-r)(3-r)\ge0.
+\end{aligned}
+$$
+
+于是 $u\le2M-er$，第二项也不超过 $M$。结合三个分支，$F(r)\le M$ 对整个闭区间成立；这里没有除以参数或根式，包含所有端点与零根情形。
+
+两种达到策略分别实现两个端点。取初态 $P_0$、全部控制为恒等，则系统始终为 $P_0$，理想历史确定为 $00$，实际得到 $00$ 的概率为 $(1-e)(1-f)$，故总变差为 $L$。
+
+取 $t=1/2$、初态 $|+\rangle$ 时，令 $g=f+de$、$h=d\sqrt{e(1-e)}$，上述两矩阵为
+
+$$
+Y_0=\frac12\begin{pmatrix}-g&h\\h&g\end{pmatrix},
+\qquad
+Y_1=\frac12\begin{pmatrix}g&h\\h&-g\end{pmatrix},
+\qquad g^2+h^2=A.
+$$
+
+它们各有特征值 $\pm\sqrt A/2$。对每个第一结果 $z$ 选择使 $Y_z$ 对角的共同实控制 $U_z$，便达到 $F(0)=\sqrt A$；$A=0$ 时任取控制即可。该控制表只依赖模型参数与第一结果，实验前即可确定。选取两种策略中较大的一种即得结论；陈述中的策略分界因子式由 $A-L^2$ 直接展开得到。证毕。
+

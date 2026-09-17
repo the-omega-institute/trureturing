@@ -1,0 +1,7 @@
+**定义 473.1（全部素数终点历史及访问集合）。** 固定实数 $X\ge2$，沿用第 456.1–456.4、463.1、467.6–467.9、469.6–469.7 条的 P2 任务。初始整数为一，字母为带类型及素数标签的 $A_q(n)=n+q$、$M_q(n)=qn$，其中 $q$ 遍历全部素数。$\mathcal H(n)$ 是到 $n$ 的全部有限带标词，空词只到一。每条词使用第 467.8 条的完整 CSA 实现和 $q_{\rm ord}$ 观察，保存所有中间状态、旧选择快照、来源、绝对时间、偏序、区域及失败分支。令
+$$
+\mathcal E_X=\bigsqcup_{p\le X,\ p\text{ 素}}\mathcal H(p),\qquad
+P=\max\{p\le X:p\text{ 素}\}.
+$$
+令 $\mathcal C_X$ 为 $\mathcal E_X$ 中全部词访问的整数集，含初态一；置 $C^*(X)=\operatorname{lcm}(\mathcal C_X)$、$L_m=\operatorname{lcm}(1,\ldots,m)$。这里不以纯乘法任务替换 P2。
+

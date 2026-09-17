@@ -1,0 +1,7 @@
+**定理 378.3。** $\operatorname{enc}_X$ 是双射，逆恰为 $\operatorname{Dec}|_{X^*}$。对每个上述 $f$，
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},\qquad

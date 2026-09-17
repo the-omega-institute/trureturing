@@ -1,0 +1,6 @@
+With the parameter space $\mathbb N_0$ given its discrete topology, the evaluation map
+$$
+\mathbb N_0\times K\longrightarrow K,\qquad (k,x)\longmapsto T^kx
+$$
+is nonetheless jointly continuous.
+

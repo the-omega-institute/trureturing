@@ -35256,3 +35256,68 @@ I(Y;X\mid C)
 “从这里能够保证做到什么、永远避免什么，
 以及这些行动结论在随机和跨尺度世界中是否仍然真实”。}
 ]
+
+
+---
+
+# 531. 语义 holonomy 与分类核的边界
+
+## 定义 531.1（分类核与闭环后的读出）
+
+设 \(C:X\to B\) 为概念读出，\(H:B\to B\) 为标签空间上的闭环 transport。定义
+
+\[
+\ker C=\{(x,y)\in X\times X:C(x)=C(y)\},
+\qquad C^H=H\circ C.
+\]
+
+## 定理 531.1（单射 transport 保持分类核）
+
+若 \(H\) 为单射，则
+
+\[
+\boxed{\ker C^H=\ker C.}
+\]
+
+**证明。** 对任意 \(x,y\in X\)，由 \(H\) 的单射性及函数保持等式，
+
+\[
+H(C(x))=H(C(y))\iff C(x)=C(y).
+\]
+
+因此两个关系逐点相同。\(\square\)
+
+## 命题 531.2（非平凡 holonomy 不蕴含区分能力改变）
+
+在定义 7.2 的概念等价意义下，第 95 节的条件 \(H\ne\operatorname{id}\) 不足以推出 \(C^H\) 与 \(C\) 具有不同的分类核或区分能力。具体地，取
+
+\[
+X=B=\mathbf2=\{0,1\},\qquad C(b)=b,\qquad H(b)=1-b.
+\]
+
+则
+
+\[
+\boxed{
+H\ne\operatorname{id},\qquad
+C^H\ne C,\qquad
+\ker C^H=\ker C,\qquad
+C^H\simeq_{\mathrm{con}}C.
+}
+\]
+
+**证明。** \(H(0)=1\ne0\)，故前两个不等式成立。对 \(b\in\mathbf2\)，有 \(H(H(b))=1-(1-b)=b\)，所以 \(H\) 为双射；定理 531.1 给出分类核相等。又
+
+\[
+C^H=H\circ C,\qquad C=H\circ C^H,
+\]
+
+两向因子化给出定义 7.2 的概念等价。\(\square\)
+
+该反例中的标签读出确实改变，而无标签区分能力相同。因此第 95 节的 transport 历史与分类核是不同数据：若“区分结构”包含指定标签、基点或 transport 历史，这些额外数据必须作为结构的一部分保留，不能仅由分类核表示。对于任意双射 \(g:B\to B'\)，仍有
+
+\[
+gHg^{-1}=\operatorname{id}_{B'}\iff H=\operatorname{id}_B,
+\]
+
+因为分别在等式两侧复合 \(g^{-1},g\) 或 \(g,g^{-1}\) 即得另一方向；非平凡 holonomy 在重命名下保持非平凡，与上述分类核相等相容。

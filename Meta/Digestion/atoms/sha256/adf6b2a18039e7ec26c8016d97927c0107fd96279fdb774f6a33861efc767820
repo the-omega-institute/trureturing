@@ -1,0 +1,3 @@
+**定理 436.3。** 若 $V\subseteq U$ 且每个 $u\in U$ 有 $v\in V$ 满足 $v\preceq u$，则 $\operatorname{Min}U=\operatorname{Min}V$。
+**证明。** 若 $u$ 在 $U$ 极小，所给 $v\preceq u$ 只能等于 $u$，所以 $u\in V$ 且在 $V$ 极小。若 $v$ 在 $V$ 极小却被 $u\in U$ 严格支配，再取 $v'\in V$ 弱支配 $u$，则 $v'$ 严格支配 $v$，矛盾。空集也满足这两个方向。证毕。
+

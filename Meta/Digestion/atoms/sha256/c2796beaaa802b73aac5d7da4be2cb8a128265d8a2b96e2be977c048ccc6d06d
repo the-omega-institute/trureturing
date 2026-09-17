@@ -1,0 +1,8 @@
+**定理。** 对每个奇素数 $p\ne5$，有
+
+$$
+p\mid L_p-1,
+\qquad p\mid F_{p-\epsilon},
+\qquad 2\ell_p=5q_p\pmod p.
+$$
+

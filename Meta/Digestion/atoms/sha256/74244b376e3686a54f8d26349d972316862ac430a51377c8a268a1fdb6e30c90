@@ -1,0 +1,8 @@
+**Theorem.** Let q be an odd prime other than five, and let p=kq+1 be prime with 2<=k<=200. Then
+
+$$
+\boxed{\rho(p)\mid\pi(q)\quad\Longrightarrow\quad k=2.}\tag{GAW2}
+$$
+
+There is no bound on q or p.
+

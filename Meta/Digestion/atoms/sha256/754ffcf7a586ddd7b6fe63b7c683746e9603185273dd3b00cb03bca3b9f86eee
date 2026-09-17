@@ -1,0 +1,7 @@
+**定义 423.1（预测五·首位语言）。** 对 $x\in K,n\in\omega$，定义
+$$
+c(x)=x_0,\qquad B_n(x)=(c(T^tx))_{0\le t<n},\qquad
+\mathcal L_n=B_n[K],\qquad B_0(x)=\varnothing,
+\qquad \iota(x)=(c(T^tx))_{t\in\omega}.
+$$
+

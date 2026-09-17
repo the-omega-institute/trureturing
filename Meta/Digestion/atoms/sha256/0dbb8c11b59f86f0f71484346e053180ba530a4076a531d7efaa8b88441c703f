@@ -1,0 +1,8 @@
+**命题 404.3。** 对全部 $x\in K$，其作为普通集合的总图及完整码准确为
+$$
+x=\{\langle j,x_j\rangle:j\in\omega\},\qquad
+\operatorname{Enc}(x)=
+\operatorname{Pack}\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\}.
+$$
+每条零值边都保留。$\zeta(n)$、$\operatorname{NatZ}(n)$、$z(n)$、$\operatorname{Enc}(z(n))$ 分别为有限规范字、自然叶、总数字图、该总图的整体码。前两者遗传有限，后两者不遗传有限。
+

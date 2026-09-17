@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1939d46eb0c76c0e5734e45888e34a2370dd13734375521c788ce30964b0d105
+  normalized_sha256: sha256:1939d46eb0c76c0e5734e45888e34a2370dd13734375521c788ce30964b0d105
+cas_ref: sha256:1939d46eb0c76c0e5734e45888e34a2370dd13734375521c788ce30964b0d105
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FibonacciFactorialBlockTailFilling.factorial_block_tail_filling
+    target_statement_id: sha256:ec1a7786b3991b84dc207f93c808b68999031593516d61448b4703202808e9d9
+  - gid: D5/S3/Arith/GoldenResource/RationalCapacityTailRealization.cofinal_capacity_rational_tail_filling
+    target_statement_id: sha256:ce84158f10caaf1b3aaf67b985faffdc671708b9726f0128d08f413027e0f433
+  - gid: D5/S3/Arith/GoldenResource/RationalTailLevelClosure.rational_tail_level_closure
+    target_statement_id: sha256:bb9b867eea0b302f4e5de82e11519d7b30f81a81b28364fd6ed497146958a245
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - bb2084373c10f2b7cd11c97b908b68256bf06178dcc90e63d36c86f9a2fa9319
+    - 703f42b42fb00be60cac52fcb610c12f6c6a28208195ad0ffceda64c638ece26

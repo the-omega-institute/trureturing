@@ -44,6 +44,32 @@ internal static class DigestionContentKindResolver
             }
         }
 
+        var entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        var sourceKinds = result.ToImmutable();
+        var pending = new Queue<string>(result.Keys.Order(StringComparer.Ordinal));
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        while (pending.TryDequeue(out var id))
+        {
+            if (!visited.Add(id) || !entries.TryGetValue(id, out var parent)
+                || parent.Receipts.ChainAtoms.IsEmpty
+                || parent.Receipts.ChainAtoms.All(sourceKinds.ContainsKey)) continue;
+            if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
+                throw new FormatException($"parent CAS blob is missing: {id}");
+            var plan = DigestionDecomposition.Plan(parent, blob.RawBytes,
+                AtomizerRegistry.Require(parent.Atomizer).Atomize, rules, snapshot);
+            if (!plan.IsExplicit && sourceKinds.ContainsKey(id)) continue;
+            var materialized = DigestionDecomposition.Materialize(parent, plan, entries);
+            if (!materialized.NewEntries.IsEmpty)
+                throw new FormatException($"chain atom is absent for parent {id}");
+            foreach (var childId in parent.Receipts.ChainAtoms)
+            {
+                if (entries[childId].SourceId != parent.SourceId || sourceKinds.ContainsKey(childId)) continue;
+                if (result.TryGetValue(childId, out var kind) && kind != result[id])
+                    throw new FormatException($"CONTENT_KIND_CONFLICT atom_id={childId}");
+                if (!result.ContainsKey(childId)) result.Add(childId, result[id]);
+                pending.Enqueue(childId);
+            }
+        }
         return result.ToImmutable();
     }
 }

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2108b5e5b3d6cab8e3f5557cfe06eab3caf2e714839d95aacf5159e2125c6d1e
+  normalized_sha256: sha256:2108b5e5b3d6cab8e3f5557cfe06eab3caf2e714839d95aacf5159e2125c6d1e
+cas_ref: sha256:2108b5e5b3d6cab8e3f5557cfe06eab3caf2e714839d95aacf5159e2125c6d1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 50 records source ownership, duplicate removal, proof-shape classification, Scribe presence, and verification boundaries. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the original ambiguity owner and the five referenced public interfaces.
+    previous_atom_id: 311bc53bd8134068a978aead722681191a85e624f1e2ec588c859733b6c9fcb9
+    next_atom_id: null

@@ -1,0 +1,8 @@
+**定理。** 对任意满射 $f:M\twoheadrightarrow F$ 到非交换有限单群，以下等价：
+
+$$\boxed{f\text{ 经 }a(M)\text{ 因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }M\to\operatorname{Sp}_{2g}(\mathbb Z/(2\ell))\text{ 因子化}.}$$
+
+这里要求同一个源同态 $f$ 因子化，而非仅比较目标群的同构类型。
+

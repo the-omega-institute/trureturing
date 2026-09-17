@@ -1,0 +1,28 @@
+### 103.3 对经典接口的影响
+
+设粗观察只保留投影 $$\pi(x)$$，而不保留隐藏商坐标
+
+$$
+ c(x)=\operatorname{QuotientAddGroup.mk'}(\operatorname{range}(\operatorname{realFlowHom}))(x).
+$$
+
+对仅由连续实流组成的操作族，有
+
+$$
+ c(\gamma(t))=c(\gamma(0)).
+$$
+
+所以这类操作下，丢掉 $$c$$ 不会在同一连续扇区内立即造成预测分裂；它只是把不同扇区压进同一个粗标签。可是，一旦实验族加入离散 jump、可访问的隐藏寄存器，或第 102 节中的共享记忆回流，两个原先相同的粗读数就可能在后续被分开。
+
+因此预测闭合必须带有操作族下标：
+
+$$
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\bigr)
+\ne
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\cup
+\mathfrak T_{\mathrm{jump}}\bigr).
+$$
+
+这把“保留多少历史”具体化为：先规定允许的时间操作，再判断隐藏扇区是否可以安全商掉。若未来协议允许跨扇区访问，当前的经典接口必须补回 $$c$$，或保留一个能恢复它的记忆寄存器。
+
+本节使用 `visible_path_hidden_address_dichotomy` 与 `universal_solenoid_visible_hidden_motion_classification` 的现成结论。Lean 已证明的是 UniversalSolenoid、连续路径和 HiddenAddress 之间的这些结构关系；它没有证明现实物理系统必然采用该拓扑模型，也没有把“隐藏扇区”自动识别成实验中的某个具体粒子或场。

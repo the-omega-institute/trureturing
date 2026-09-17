@@ -1,0 +1,2 @@
+**必要数学引用。** 局部有限关联代数的卷积、链区间和积偏序值直接使用 R. P. Stanley，*Enumerative Combinatorics, Volume 1*，第3.7–3.8节，尤其 Example 3.8.1、Proposition 3.8.2、Example 3.8.4、Proposition 3.8.5，第303、305–307页。严格链交错和对 $n>1$ 用开整除区间添两端点，对 $n=1$ 用平凡链；一般反演公式不在这里重新证明。黄金观察用 Z 卷第 445.1–445.2 条；纯增长词及其完整 CSA 实现和字段费用用第 444、468 条。有限保权推前使用原 `D5/S3/Entropy/Forgetting/PushforwardComposition.lean` 与 `D5/S3/Entropy/Fusion/QuotientFiberDecomposition.lean` 的实际有限域。
+

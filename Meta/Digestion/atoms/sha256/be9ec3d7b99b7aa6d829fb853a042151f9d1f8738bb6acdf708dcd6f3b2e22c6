@@ -1,0 +1,6 @@
+特别定理 363.3 的唯一延拓在运输侧存在当且仅当 $\theta\in W_A$，存在时为
+$$
+F_{A,\theta}^*(\operatorname{Enc}(x))=\operatorname{Enc}(F_{A,\theta}(x))
+$$
+从坐标 $(X_A^{\rm cap})^*$ 到通常圆周的运输 $\mathbb T^*$。定理 368.1 的联合延拓在运输侧存在当且仅当 $J_A$ 有限。
+

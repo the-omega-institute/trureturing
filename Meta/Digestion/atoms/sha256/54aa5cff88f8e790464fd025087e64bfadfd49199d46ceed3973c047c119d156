@@ -1,0 +1,12 @@
+**推论 15.4（固定访问窗口的累积预算）。** $\xi_t^{m,R}$ 恰为 $\tau_{t+1}^R$ 与 $\tau_t^R$ 的最坏迹距离，并且
+$$
+\max_{m\le u\le v\le n}\sup_\rho
+\mathsf d\bigl(\tau_v^R(\rho),\tau_u^R(\rho)\bigr)
+\le\min\left\{1,\sum_{t=m}^{n-1}\xi_t^{m,R}\right\},
+\qquad
+\xi_t^{m,R}\le\kappa(C_{t+1}).
+$$
+同一结论适用于最初与系统纠缠、随后保持不动的任意有限可访问参考系统。
+
+证明。相邻时刻的差值仍为定理15.3所处理的Hermitian Schur差值，其乘子即定义 $\xi_t^{m,R}$ 的方括号。该定理的证明给出精确值及参考系统无增益。固定同一初态后沿窗口作迹距离的三角不等式，再取上确界，得到累积界。矩阵 $G^{m,R}\odot F_{m,t}$ 是相关矩阵；对应通道将 $(M_{C_{t+1}}-\operatorname{id})(\rho)$ 映为这里的差值。CPTP映射对Hermitian算子的迹范数收缩，故 $\xi_t^{m,R}\le\kappa(C_{t+1})$。证毕。
+

@@ -1,0 +1,28 @@
+### 107.2 禁词从位约束传递到相位约束
+
+项目已有的黄金词性质给出两条局部规则：
+
+$$
+S_pS_p\quad\text{不会出现},
+$$
+
+$$
+L_pL_pL_p\quad\text{不会出现}.
+$$
+
+`short_frequency_forces_next_long` 证明每个短步之后必为长步；`two_long_frequencies_force_next_short` 证明连续两个长步之后下一步必为短步。通过 `short_phase_forces_next_long` 和 `two_long_phases_force_next_short`，同样的规则传递到
+
+$$
+\Phi_{p,\ell}(t)=\exp(i t\omega_{p,\ell})
+$$
+
+构成的相位字母：
+
+$$
+S\text{-phase}\,\Longrightarrow\,L\text{-phase},
+\qquad
+LL\text{-phase}\,\Longrightarrow\,S\text{-phase}.
+$$
+
+这给出一个比“黄金比例出现了”更严格的结构：合法时间序列属于一个局部受限语言。它与第 102、106 节的历史预算直接相连，因为预测下一步至少需要知道当前的局部禁词上下文。
+

@@ -1,0 +1,80 @@
+### 9.3 任意截面的进位与复合缺陷
+
+**定义。** 对 $\rho\in\mathbb R$ 与 $n\in\mathbb Z$，定义
+
+$$
+q_\rho(n)=\lfloor n\alpha+\rho\rfloor,
+\qquad s_\rho(n)=q_\rho(n)+n\varphi,
+\qquad r_\rho(n)=n\alpha-q_\rho(n).
+$$
+
+若 $u=a_u+b_u\varphi$，再定义
+
+$$
+P_u^\rho(n)=\pi(u s_\rho(n)),
+$$
+
+并在写成 $u s_\rho(n)=A+P_u^\rho(n)\varphi$ 后定义
+
+$$
+c_u^\rho(n)=q_\rho(P_u^\rho(n))-A.
+$$
+
+**命题。** $s_\rho$ 是 $\pi$ 的一个截面，并且
+
+$$
+\pi(s_\rho(n))=n,
+\qquad -\rho\le r_\rho(n)<1-\rho,
+\qquad (s_\rho(n))_*=-r_\rho(n).
+$$
+
+**证明。** 第一式由 $s_\rho(n)$ 的 $\varphi$ 坐标得到。
+取整的基本界给出第二式，而
+$q_\rho(n)+n\psi=q_\rho(n)-n\alpha=-r_\rho(n)$ 给出第三式。
+
+**定理。** 对任意 $u\in\mathcal O$、$\rho\in\mathbb R$ 与
+$n\in\mathbb Z$，截面进位满足
+
+$$
+\boxed{
+c_u^\rho(n)=\lfloor u_*r_\rho(n)+\rho\rfloor,
+\qquad
+s_\rho(P_u^\rho(n))=u s_\rho(n)+c_u^\rho(n).
+}\tag{GS4}
+$$
+
+**证明。** 写 $u s_\rho(n)=A+P\varphi$，其中 $P=P_u^\rho(n)$。
+取内部嵌入并用 $(s_\rho(n))_*=-r_\rho(n)$，得到
+$A-P\alpha=-u_*r_\rho(n)$，即 $P\alpha=A+u_*r_\rho(n)$。
+因此
+
+$$
+c_u^\rho(n)=\lfloor P\alpha+\rho\rfloor-A
+=\lfloor u_*r_\rho(n)+\rho\rfloor.
+$$
+
+第二式比较整数坐标与 $\varphi$ 坐标即可。
+
+**定理。** 对所有 $u,v\in\mathcal O$、$\rho\in\mathbb R$ 与
+$n\in\mathbb Z$，
+
+$$
+\boxed{
+P_u^\rho(P_v^\rho(n))
+=P_{uv}^\rho(n)+b_u c_v^\rho(n),
+}\tag{GS5}
+$$
+
+$$
+\boxed{
+P_u^\rho(P_v^\rho(n))-P_v^\rho(P_u^\rho(n))
+=b_u c_v^\rho(n)-b_v c_u^\rho(n).
+}\tag{GS6}
+$$
+
+**证明。** 由 GS4，
+$s_\rho(P_v^\rho(n))=v s_\rho(n)+c_v^\rho(n)$。
+两边乘以 $u$ 后取 $\varphi$ 坐标，注意普通整数
+$c_v^\rho(n)$ 乘以 $u$ 所贡献的 $\varphi$ 坐标为
+$b_uc_v^\rho(n)$，便得到 GS5。交换 $u,v$，再用 $uv=vu$ 相减，得到 GS6。
+

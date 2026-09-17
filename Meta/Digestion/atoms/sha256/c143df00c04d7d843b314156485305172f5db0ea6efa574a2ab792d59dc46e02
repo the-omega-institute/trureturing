@@ -1,0 +1,11 @@
+**定理。** 对任意词 $w_1,w_2$，下列条件等价：
+
+$$
+\mathcal N_a(w_1)=\mathcal N_a(w_2),
+$$
+
+$$
+\forall e\in[0,a],\ \forall x,y\in\{+,-\}^*,\qquad
+A_a(e,xw_1y)=A_a(e,xw_2y).
+$$
+

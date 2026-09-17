@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:fb8440ce7bc3bd7ad96faf3201472ad4df8b77c087be565ee5bc31b01f475aa7
+  normalized_sha256: sha256:fb8440ce7bc3bd7ad96faf3201472ad4df8b77c087be565ee5bc31b01f475aa7
+cas_ref: sha256:fb8440ce7bc3bd7ad96faf3201472ad4df8b77c087be565ee5bc31b01f475aa7
+coverage_gids:
+  - gid: D5/S1/Phase/Basic.goldenPhase_injective
+    target_statement_id: sha256:dbb071f95f0bf9c9ffcd1977920fdd7e147a287dca38a2e8c9b7692a73d168bf
+  - gid: D5/S3/Arith/GoldenResource/FibonacciFactorialBlockTailFilling.factorial_block_tail_filling
+    target_statement_id: sha256:ec1a7786b3991b84dc207f93c808b68999031593516d61448b4703202808e9d9
+  - gid: D5/S3/Arith/GoldenResource/RationalCapacityTailRealization.cofinal_capacity_rational_tail_filling
+    target_statement_id: sha256:ce84158f10caaf1b3aaf67b985faffdc671708b9726f0128d08f413027e0f433
+  - gid: D5/S3/Arith/GoldenResource/RationalCapacityTailRealization.rational_tail_filling_full_range
+    target_statement_id: sha256:3d2e298e8961b240671ccb65a0caed5e1c8f558f25515b55f5c1d8505797ceca
+  - gid: D5/S3/Arith/GoldenResource/RationalTailLevelClosure.rational_tail_level_closure
+    target_statement_id: sha256:bb9b867eea0b302f4e5de82e11519d7b30f81a81b28364fd6ed497146958a245
+receipts:
+  unresolved_subitems: []

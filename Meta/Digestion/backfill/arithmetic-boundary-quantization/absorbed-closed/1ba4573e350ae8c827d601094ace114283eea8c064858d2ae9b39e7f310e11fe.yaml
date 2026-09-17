@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1ba4573e350ae8c827d601094ace114283eea8c064858d2ae9b39e7f310e11fe
+  normalized_sha256: sha256:1ba4573e350ae8c827d601094ace114283eea8c064858d2ae9b39e7f310e11fe
+cas_ref: sha256:1ba4573e350ae8c827d601094ace114283eea8c064858d2ae9b39e7f310e11fe
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.coordinate_variance_domain
+    target_statement_id: sha256:0156ea429a9816ca30aef9627a0fd4285e109fafa7b0c544bb4c203afa23a8d9
+receipts:
+  unresolved_subitems: []

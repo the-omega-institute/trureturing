@@ -1,0 +1,15 @@
+**定理 378.5。** 对每个指定拓扑空间 $(X,\tau_X)$，定义
+$$
+\tau_X^*=\{\operatorname{Enc}[U]:U\in\tau_X\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau_X)\to(X^*,\tau_X^*)$ 是同胚。对函数 $f:D\to Y$，域 $D$ 取已指定的拓扑或相应子空间拓扑，对每个 $O\subseteq Y$ 及 $S\subseteq X$ 有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)],\qquad
+\overline{\operatorname{Enc}[S]}^{\tau_X^*}=\operatorname{Enc}[\overline S^{\tau_X}].
+$$
+因此连续性、收敛与闭包均保持并反映。$\chi_{X,Y}$ 是运输拓扑的乘积与乘积拓扑的运输之间的同胚，且
+$$
+\operatorname{El}(\operatorname{Enc}(\tau_X))=\operatorname{Enc}[\tau_X],\qquad
+\tau_X^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau_X]\}.
+$$
+

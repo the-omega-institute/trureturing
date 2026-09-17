@@ -1,0 +1,2 @@
+**定理 373.2。** $\tau_{\rm digit}=\tau_{\rm phase}$，两者分别由 $d_{\rm digit},d_{\rm phase}$ 给出；此拓扑没有孤立点。两个度量的完备化分别为 $K_{\rm infdig}$ 和 $\mathbb T$，但两种一致结构不相同。从 $d_{\rm digit}$ 到 $d_{\rm phase}$ 的恒等映射一致连续，反向恒等映射不一致连续。
+

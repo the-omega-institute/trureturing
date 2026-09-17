@@ -1,0 +1,8 @@
+**假设。** $u_n$ 取值于复赋范空间，存在 $q$ 个复数 $\lambda_1,\ldots,\lambda_q$，允许重复，满足 $|\lambda_i|\le\theta$ 以及
+
+$$
+\prod_{i=1}^q(E-\lambda_i)u=0.
+$$
+
+空乘积按恒等算子解释，因此 $q=0$ 的假设表示 $u$ 恒为零。设 $\delta\ge0$，且 $\|u_i\|\le\delta$ 对 $0\le i<q$ 成立。
+

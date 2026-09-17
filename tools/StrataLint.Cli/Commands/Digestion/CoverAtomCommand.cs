@@ -376,8 +376,7 @@ internal static partial class CoverAtomCommand
                 true,
                 $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-                + backfillObservations
-                + (allowAlreadyApplied ? string.Empty : DigestStatusCommand.RenderText(evaluation)),
+                + backfillObservations,
                 string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)

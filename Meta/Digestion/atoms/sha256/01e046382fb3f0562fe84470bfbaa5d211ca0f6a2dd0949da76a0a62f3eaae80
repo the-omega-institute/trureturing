@@ -1,0 +1,2 @@
+**定义。** 令 $p=m/2^m$，$e=(F-p)/\sqrt{p(1-p)}$。在 $L^2(\pi)$ 中令 $P$ 为到 $\operatorname{span}\{1,e\}$ 的正交投影，$Q=I-P$。
+

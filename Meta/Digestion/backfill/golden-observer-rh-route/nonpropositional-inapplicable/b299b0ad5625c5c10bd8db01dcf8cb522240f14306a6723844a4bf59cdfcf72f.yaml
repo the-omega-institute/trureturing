@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+  normalized_sha256: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+cas_ref: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The new-module atom prescribes layer-correct file placement, definition ownership, and public API cardinality. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with R-A-R-F and their later candidate statements.
+    previous_atom_id: fccf4cfaabb96d64fd500094a83508f4c6a8fe9fda7ad571a3a11fd8bafdffd4
+    next_atom_id: a25134ca914fe9856d7593d62a647de5d6978ed657f04117f25986bcf83fdf59

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7df7327b057ec1fb3c4d48e062894ff038276d049269abe9dbb493ba3276fa37
+  normalized_sha256: sha256:7df7327b057ec1fb3c4d48e062894ff038276d049269abe9dbb493ba3276fa37
+cas_ref: sha256:7df7327b057ec1fb3c4d48e062894ff038276d049269abe9dbb493ba3276fa37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只有数值表的引导标题和列名，不含任何表格数值、平均值或概率公式；其余数据不由本叶结算。
+    previous_atom_id: 7351899331070a90a0d4bbd9d1724049c32b3cdb15c27f36c20b089d6af9f1b7
+    next_atom_id: 164d193839e48791e8345135cf06b8cbe347d0ff4b4b785d83f034bbc080a9e7

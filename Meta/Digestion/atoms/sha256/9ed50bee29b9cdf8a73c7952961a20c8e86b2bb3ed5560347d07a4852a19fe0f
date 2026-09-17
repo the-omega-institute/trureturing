@@ -1,0 +1,6 @@
+**证明。** 每个 $d\mid N$ 都由一个素因子词到达。若 $d,e\mid N$ 且 $d\ne e$，则 $e\nmid d$ 或 $d\nmid e$。在前一种情形，取值为 $N/d$ 的素因子词：它从 $d$ 出发成功，而
+
+$$
+e(N/d)\mid N=d(N/d)\iff e\mid d
+$$
+

@@ -1,0 +1,7 @@
+**假设 442.3（Nicolas 解析接口 $H_{\rm Nic}$）。** 以经典 Riemann 假设为 $\mathrm{RH}$，假定以下精确解析等价可用：
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\forall k\ge1,\qquad \frac{P_k}{\Phi(P_k)}>e^\gamma\log\log P_k,
+$$
+其中 $\gamma$ 为 Euler 常数。此假设不由 442.2 的有限恒等式导出。
+

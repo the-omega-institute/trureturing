@@ -1,0 +1,11 @@
+**推论。** 在同一前提下，存在常数 $c_1>0$，使全部充分大的 $x$ 满足
+
+$$
+\#\left\{p\le x:\begin{array}{l}
+p\ne2,5\text{ 为素数},\ q_p\ne0,\\
+\rho(p)\text{ 平方自由},\ \gcd(\rho(p),60)\le2,\\
+1\le\omega(\rho(p)_{\rm odd})\le8
+\end{array}\right\}
+\ge c_1\frac{(\log x)^{4/35}}{(\log\log x)^4}.\tag{EMWS8}
+$$
+

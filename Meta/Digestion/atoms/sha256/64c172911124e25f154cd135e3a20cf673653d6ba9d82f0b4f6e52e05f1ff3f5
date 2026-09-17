@@ -1,0 +1,5 @@
+**定理 436.4。** 有限时域极小费用满足
+$$
+P_T(s)=\begin{cases}\{h(s)\},&s\in F_T,\\\varnothing,&s\notin F_T,\end{cases}\qquad P_t(s)=\operatorname{Min}\bigcup_{e:s\to u}\bigl(g_{t+1}(e)+P_{t+1}(u)\bigr).
+$$
+有完整路径时 $P_t(s)$ 非空；其中全部费用实际取到，并可恢复每个极小费用的全部路径身份。

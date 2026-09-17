@@ -1,0 +1,17 @@
+**定理 442.4（判据的域和正确符号）。** 记
+$$
+c_{\rm Nic}(n)=\left(\frac n{\Phi(n)}-e^\gamma\log\log n\right)\sqrt{\log n}\quad(n\in\mathbb Z,\ n\ge2),
+$$
+并对 $k\ge1$ 记 $F_k=e^\gamma E_k\log\Theta_k$。每个 $k\ge1$ 的原不等式等价于 $E_k\log\Theta_k<e^{-\gamma}$，且
+$$
+1-F_k=\frac{E_kc_{\rm Nic}(P_k)}{\sqrt{\Theta_k}}.
+$$
+当且仅当把域限于 $k\ge2$ 时，可进一步使用这些正量改写：
+$$
+E_k<\frac{e^{-\gamma}}{\log\Theta_k},\qquad
+F_k<1\ \Longleftrightarrow\ \log F_k<0,
+\qquad
+\log F_k=\gamma+\log E_k+\log\log\Theta_k.
+$$
+在 $H_{\rm Nic}$ 下，全称的上述合法改写与 RH 等价。
+

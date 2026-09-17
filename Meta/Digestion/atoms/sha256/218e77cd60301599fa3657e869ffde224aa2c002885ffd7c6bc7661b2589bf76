@@ -1,0 +1,23 @@
+**定理 474.5（重叠的精确总量、任意尾部与端点误差）。** 对每个 $k\ge1$，
+$$
+\sum_{j=2}^\infty\Lambda_j=\frac1{6\zeta_R(2)},\qquad
+\sum_{j=k+1}^\infty\Lambda_j=\frac{\alpha_{P_k}}2\le\frac{F_K(p_k)}2,
+\tag{474.5a}
+$$
+$$
+0<\frac1{3\zeta_R(2)}-T_k=\alpha_{P_k}\le F_K(p_k),\qquad
+T_k\longrightarrow\frac1{3\zeta_R(2)}.
+\tag{474.5b}
+$$
+原有限递推在这里给 $2\mathcal L_k(N)=W_2(N)-W_{P_k}(N)$（$N\ge0$），且对全部 $N\ge1,k\ge1$，
+$$
+\left|\frac{\mathcal L_k(N)}N-\frac{\alpha_2-\alpha_{P_k}}2\right|
+\le\frac{E_2+E_{P_k}}{2\sqrt N},
+\tag{474.5c}
+$$
+$$
+\left|\frac{W_2(N)-W_{P_k}(N)}N-T_k\right|
+\le\frac{E_2+E_{P_k}}{\sqrt N}.
+\tag{474.5d}
+$$
+

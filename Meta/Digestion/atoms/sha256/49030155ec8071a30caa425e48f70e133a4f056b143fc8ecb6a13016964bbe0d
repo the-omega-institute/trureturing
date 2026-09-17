@@ -1,0 +1,27 @@
+**定理 480.4（附加容量的准确失败式与无预读提升）。** 令
+$$
+\varepsilon_a(D)=\mathbf1_{\{\operatorname{lcm}(a,11)\nmid D\}},\qquad a\in\{4,8,9\}.
+$$
+在 $\widehat{\mathscr G}_D$ 中，全部不可提升输入恰为下列保留分支的不交并：
+$$
+\varepsilon_9(D)\,\mathcal H(9)A_2\ \sqcup\
+\varepsilon_8(D)\,\mathcal H(8)A_3\ \sqcup\
+\varepsilon_4(D)\,\mathcal H(4)A_7,
+$$
+其中 $0\,S=\varnothing,1\,S=S$。其准确失败质量为
+$$
+\delta_D(t)=
+\frac{
+\varepsilon_9(D)(6t^3+11t^4+7t^5)
++\varepsilon_8(D)(t^2+5t^3+11t^4+2t^5)
++\varepsilon_4(D)(t^2+2t^3)
+}{6t+9t^2+24t^3+24t^4+9t^5}.
+\tag{480.4a}
+$$
+因此最大图能完成整个共同任务，当且仅当
+$$
+792\mid D.
+\tag{480.4b}
+$$
+任意实际子图继承 (480.4a) 的失败下界。若 $792\mid D$ 且实际子图包含下述策略所需全部带身份边，则整个任务有确定性提升策略：每次仅在一个新字母被揭示后，依已执行前缀和这个字母决定转换，不读取更后的字母。
+

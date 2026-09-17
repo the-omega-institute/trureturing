@@ -1,0 +1,6 @@
+**命题。** 令 $X_{\rm simp}$ 为由本质简单闭曲线表示的共轭类集合，则
+
+$$\{[\tau^n(u)]:n\in\mathbb Z\}\cap X_{\rm simp}=\varnothing.$$
+
+并且映射 $n\mapsto[\tau^n(u)]$ 在 $\mathbb Z$ 上为单射。
+

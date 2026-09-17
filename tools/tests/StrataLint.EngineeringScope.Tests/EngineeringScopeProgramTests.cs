@@ -395,6 +395,101 @@ public sealed class EngineeringScopeProgramTests
         Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(false, "judge")]
+    [InlineData(true, "judge")]
+    [InlineData(false, "content")]
+    [InlineData(true, "content")]
+    public void RetiredRegistrationClassifiesDeletedAndRenamedEndpoints(bool rename, string oldPlane)
+    {
+        const string retired = "Meta/retired.toml";
+        const string replacement = "Meta/replacement.toml";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, retired, "retired configuration\n");
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"), (retired, oldPlane));
+            },
+            root =>
+            {
+                if (rename)
+                    File.Move(Path.Combine(root, retired), Path.Combine(root, replacement));
+                else
+                    TemporaryFileSystem.File.Delete(Path.Combine(root, retired));
+                WriteAdmissionPlaneFileMap(root,
+                    rename ? [(FileMapPath, "judge"), (replacement, "judge")] : [(FileMapPath, "judge")]);
+            });
+
+        if (oldPlane == "content")
+        {
+            Assert.True(result.ExitCode == 2, result.Diagnostic);
+            Assert.Contains("ADMISSION-PLANE-MIXED", result.Error, StringComparison.Ordinal);
+            Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.True(result.ExitCode == 0, result.Diagnostic);
+            Assert.Equal([ProductTestsProject], result.SelectedProjects);
+            Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DeletedEndpointCannotBorrowCandidateRegistration(bool ambiguous)
+    {
+        const string retired = "Meta/retired.toml";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, retired, "retired configuration\n");
+                WriteAdmissionPlaneFileMap(root, ambiguous
+                    ? [("Meta/*.toml", "judge"), (retired, "judge")]
+                    : [(FileMapPath, "judge")]);
+            },
+            root =>
+            {
+                TemporaryFileSystem.File.Delete(Path.Combine(root, retired));
+                WriteAdmissionPlaneFileMap(root, ("Meta/*.toml", "judge"));
+            });
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Contains("ADMISSION-PLANE-PATH-MATCH-COUNT", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"path={retired} matches={(ambiguous ? 2 : 0)}", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
+    [InlineData("files = [\n", "ADMISSION-PLANE-FILEMAP-INVALID")]
+    public void DeletedEndpointRequiresProtectedBaseManifest(string? manifest, string expectedCode)
+    {
+        const string retired = "Meta/retired.toml";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, retired, "retired configuration\n");
+                if (manifest is null)
+                    TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
+                else
+                    WriteFile(root, FileMapPath, manifest);
+            },
+            root =>
+            {
+                TemporaryFileSystem.File.Delete(Path.Combine(root, retired));
+                WriteAdmissionPlaneFileMap(root, ("Meta/*.toml", "judge"));
+            });
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Contains(expectedCode, result.Error, StringComparison.Ordinal);
+        Assert.Contains("protected-base", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void AdmissionPlaneFirstCandidateFileMapForcesFullEngineeringScope()
     {

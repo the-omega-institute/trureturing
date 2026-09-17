@@ -1,0 +1,40 @@
+### 111.3 条件熵下界
+
+给定一个非负质量函数
+
+$$
+\mu:X\to\mathbb R,
+\qquad
+0\le\mu(x),
+$$
+
+定义当前读出与记忆状态的联合质量
+
+$$
+J_{q,s}(o,z)
+=
+\sum_{x:(q(x),s(x))=(o,z)}\mu(x).
+$$
+
+那么仓库定理 `predictive_memory_entropy_lower_bound` 精确证明：
+
+$$
+\boxed{
+H\bigl(\pi_{F,q}\mid q\bigr)
+\le
+H\bigl(r\mid q\bigr).
+}
+$$
+
+这里的熵是由上述联合质量计算的条件 Shannon 熵；定理允许 (mu) 只是非负而未预先归一化。总质量为零时两边都退化为零；总质量为正时，证明把 (mu) 归一化，应用条件熵的数据处理不等式，再乘回总质量。因而这不是把“概率”偷偷扩展成任意带符号的线性权重。
+
+定理中的数学关系可以压缩成：
+
+$$
+\pi_{F,q}=g\circ r
+\quad\Longrightarrow\quad
+H(\pi_{F,q}\mid q)\le H(r\mid q).
+$$
+
+右侧记忆可能包含额外的、对预测无用的历史；左侧只保留在未来实验中不可省略的部分。于是 canonical quotient 不只是商类最粗，还在这个有限质量模型中给出条件熵意义下的最低记忆成本。
+

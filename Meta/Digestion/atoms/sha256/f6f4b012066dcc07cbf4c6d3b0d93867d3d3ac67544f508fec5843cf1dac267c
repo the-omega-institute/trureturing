@@ -1,0 +1,30 @@
+**定理 430.3（预测十二·任意指标积与所有零边）。** 对任意集合 $A$ 及集合族 $(Y_i)_{i\in A}$，映射
+$$
+\Psi:\prod_{i\in A}Y_i^*\longrightarrow\left(\prod_{i\in A}Y_i\right)^*,\qquad
+(c_i)_{i\in A}\longmapsto\operatorname{Enc}(i\mapsto\operatorname{Dec}(c_i))
+$$
+是双射，逆为 $\operatorname{Enc}(f)\mapsto(\operatorname{Enc}(f(i)))_{i\in A}$。空指标集时两侧各有一个元素，分别为外部空函数与其原函数码；若某个被索引因子为空，两侧乘积均空。
+
+对字母集 $U$，逐个有限原指标 $k\in\omega$ 的这个双射把编码字母的外部字对应到原字的单一码，保留字长和串联。完全语义的时间指标为 $\operatorname{NatZ}(t)$，普通外部指标仍为 $t$，两者由相应的函数图连接。特别地，
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\}\quad(x\in K),
+$$
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(p_j)\rangle_Z:j<L\}\quad(p\in X_L),
+$$
+$$
+\operatorname{Enc}(\iota(x))=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(t),\operatorname{NatZ}(c(T^tx))\rangle_Z:t\in\omega\},
+$$
+$$
+\operatorname{Enc}(Q_{L,h}(x))=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(t),\operatorname{Enc}(P_LT^tx)\rangle_Z:0\le t\le h\},
+$$
+且全未来的同式遍历每个 $t\in\omega$。每条零值边均保留。有限空字或空窗口的原图之单一码为 $\operatorname{NatZ}(0)$；总零行及无限轨迹的图无限，其码不在 $HF$。
+
+**证明。** 任意集合指标积的精确双射及逆为定义 387.1、定理 387.2，含空指标集。若某个 $i\in A$ 的 $Y_i$ 为空，则取该坐标已排除乘积元素，$Y_i^*$ 也空，所以两侧均空。对有限字，在每个 $j<k$ 上的双射公式逐项成立，拼接后前段坐标与后段偏移坐标均相同，故保持字长及串联；这给所有有限字的对应，空字亦包括。
+
+行与有限窗口的图式是定理 378.3、386.2。对新定义的首位序列和轨迹，每个 $t$ 都有唯一所写值，将定理 430.2 的完整图式应用于各时间函数，即得全部等式；任意有限观察的成功零值也照样有一个值边。图式中的指标并无“值非零”的限制，所以每条零边都在其中。总行和无限轨迹含来自每个 $j$ 或 $t\in\omega$ 的互异边，因而图无限；若其码在 $HF$，命题 429.2 的反映性会使原图在 $HF$，矛盾。证毕。
+

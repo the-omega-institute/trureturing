@@ -1,0 +1,7 @@
+**定理 464.7。**固定 $t>0$ 时，每个圆周弱子列极限更准确地具有形式
+$$
+\eta=\frac{\sum_{d\in D}\rho_t^d\delta_{x-[\alpha d]}}{\sum_{d\in D}\rho_t^d},
+\qquad 0\in D\subseteq2\mathbb N.
+$$
+这里 $D$ 只允许来自实际头素数差图案的子列极限。头原子质量至少 $1-\rho_t^2$。存在 Dirac 弱子列极限；在 P6 的宏观输入下，整个 $X\to\infty$ 序列没有圆周弱极限。
+

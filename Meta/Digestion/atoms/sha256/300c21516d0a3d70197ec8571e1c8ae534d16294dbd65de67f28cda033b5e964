@@ -1,0 +1,7 @@
+**定理 456.2。**全部正整数可达，各 $\mathcal H(n)$ 有限，且对 $n\ge2$，
+$$
+H(n)=\sum_{\substack{q<n\\q\ {\rm prime}}}H(n-q)+
+\sum_{\substack{q\mid n\\q\ {\rm prime}}}H(n/q).
+$$
+$h_k$ 对 $k\ge1$ 满足右侧换成 $h_{k-1}$ 的同一递推。
+

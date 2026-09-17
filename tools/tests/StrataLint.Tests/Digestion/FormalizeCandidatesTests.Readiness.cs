@@ -6,6 +6,82 @@ namespace StrataLint.Tests;
 
 public sealed partial class FormalizeCandidatesTests
 {
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void ReadinessReportsDiagnosticsAlongsideExistingGaps(bool includeSource)
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.32",
+            atomizer: AtomizerRegistry.GenericId);
+        const string currentSource = "# Synthetic\n\n**theorem 99.1**。Other。\n";
+        var status = Run([entry], includeCas: false, atomizer: AtomizerRegistry.GenericId, arguments: [],
+            currentSource: currentSource, includeSource: includeSource);
+        var readiness = Run([entry], includeCas: false, atomizer: AtomizerRegistry.GenericId, arguments: ["--readiness"],
+            currentSource: currentSource, includeSource: includeSource);
+
+        Assert.False(status.Success);
+        Assert.StartsWith("DIGEST_STATUS_INVALID count=", status.Error);
+        Assert.Contains("GAP atom=removed-claim code=coverage-gid-missing ", status.Error);
+        Assert.DoesNotContain("source-occurrence-missing", status.Error);
+        Assert.DoesNotContain("READINESS_SOURCE_UNAVAILABLE", status.Error);
+        Assert.False(readiness.Success);
+        Assert.Empty(readiness.Output);
+        var diagnostic = includeSource
+            ? "GAP atom=removed-claim code=source-occurrence-missing detail=\"source\"\n"
+            : "READINESS_SOURCE_UNAVAILABLE source=source code=SOURCE_MISSING "
+                + "detail=\"source_id=source source_path=synthetic/source.md\"\n";
+        Assert.Equal(status.Error + diagnostic, readiness.Error);
+    }
+
+    [Fact]
+    public void ReadinessReportsUnavailableSourceWithoutChangingSuccessOrReadingHistory()
+    {
+        var history = new FakeAtomHistorySource(() => throw new InvalidOperationException("history must not be read"));
+
+        var result = DigestAgeFixture.Create().Run(history, "--readiness");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, history.Calls);
+        Assert.Equal("READINESS_SOURCE_UNAVAILABLE source=source-a code=SOURCE_MISSING "
+            + "detail=\"source_id=source-a source_path=synthetic/source-a.md\"\n", result.Error);
+        Assert.DoesNotContain("source-occurrence-missing", result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+    }
+
+    [Fact]
+    public void ReadinessReportsMissingSourceOccurrenceWithoutChangingActionOrSuccess()
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.30",
+            atomizer: AtomizerRegistry.GenericId);
+        var present = Run([entry], atomizer: AtomizerRegistry.GenericId, arguments: ["--readiness"]);
+        var missing = Run([entry], atomizer: AtomizerRegistry.GenericId,
+            arguments: ["--readiness"], currentSource: "# Synthetic\n\n**theorem 99.1**。Other。\n");
+
+        Assert.True(missing.Success, missing.Error);
+        using var json = JsonDocument.Parse(missing.Output);
+        var readiness = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal("not-formalizable", readiness.GetProperty("action").GetString());
+        Assert.Equal(["non-assertion-ast-kind:none"], readiness.GetProperty("ordered_blockers")
+            .EnumerateArray().Select(static item => item.GetString()));
+        Assert.Equal("GAP atom=removed-claim code=source-occurrence-missing detail=\"source\"\n", missing.Error);
+        Assert.Empty(present.Error);
+    }
+
+    [Theory]
+    [InlineData("--formalize-candidates")]
+    [InlineData(null)]
+    public void MissingSourceOccurrenceIsOnlyReportedByReadiness(string? option)
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.31",
+            atomizer: AtomizerRegistry.GenericId);
+        var result = Run([entry], atomizer: AtomizerRegistry.GenericId,
+            arguments: option is null ? [] : [option], currentSource: "# Synthetic\n\n**theorem 99.1**。Other。\n");
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("source-occurrence-missing", result.Output + result.Error);
+    }
+
     [Fact]
     public void ReadinessOptionDispatchesToReadinessJsonRenderer()
     {

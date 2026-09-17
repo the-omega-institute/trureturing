@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:27e59e9353a91a77f92b4f06ab70cc635ac432ef98d3239dcb293dad97c6df7a
+  normalized_sha256: sha256:27e59e9353a91a77f92b4f06ab70cc635ac432ef98d3239dcb293dad97c6df7a
+cas_ref: sha256:27e59e9353a91a77f92b4f06ab70cc635ac432ef98d3239dcb293dad97c6df7a
+coverage_gids:
+  - gid: D5/S1/Phase/Basic.goldenPhase_injective
+    target_statement_id: sha256:dbb071f95f0bf9c9ffcd1977920fdd7e147a287dca38a2e8c9b7692a73d168bf
+  - gid: D5/S3/Arith/GoldenResource/RationalTailLevelClosure.rational_tail_level_closure
+    target_statement_id: sha256:bb9b867eea0b302f4e5de82e11519d7b30f81a81b28364fd6ed497146958a245
+receipts:
+  unresolved_subitems: []

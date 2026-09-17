@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:84b889f5b9962673ee441d4621b1a048412b1e88635d826fa9d5aa826b49bf1b
+  normalized_sha256: sha256:84b889f5b9962673ee441d4621b1a048412b1e88635d826fa9d5aa826b49bf1b
+cas_ref: sha256:84b889f5b9962673ee441d4621b1a048412b1e88635d826fa9d5aa826b49bf1b
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wValue_one
+    target_statement_id: sha256:027020f066fe99e34e39510a648eee969bb5e0c7bfbed0f24768b88731ad9760
+  - gid: D5/S0/Conventions/WDigits.wValue_two
+    target_statement_id: sha256:5aced3f5900219eb07fde76fda0e9d34bdbc89fa324e9edc9fb5a0e1100c4bae
+  - gid: D5/S0/Conventions/WDigits.wValue_zero
+    target_statement_id: sha256:e19ad2d942bd85e9fd27c6cb0dfa867d7b540d653578f33058b6834986a6198a
+  - gid: D5/S0/History/Spacetime/HFEncoding.natCode
+    target_statement_id: sha256:d2dc933b69461d45448a42ff8ade42af10c9884250adc9c005df2b6b1fc4ed68
+  - gid: D5/S0/History/Spacetime/HFEncoding.natCode_inj
+    target_statement_id: sha256:450bd9813f1b536a7a9e9191ddaf1e619a4408be8a978cc2916bb8612d8a0384
+  - gid: D5/S1/Digit/Normalize.canonicalRaw_unique
+    target_statement_id: sha256:ffef2b78657d19d06f891f5f5160a8ca79aa96b6e08b2a9c3aca96b7aa52f5d9
+  - gid: D5/S1/Digit/Normalize.normalize_canonical
+    target_statement_id: sha256:c7ecbc805125d69e4800ec62f5cb899dbac15561334e1ffe47f738b5053733bd
+  - gid: D5/S1/Digit/Normalize.rawValue_normalize
+    target_statement_id: sha256:1b373b1dd34fc811be37c263466245d84c8870b77b31317cd489255a74aa4fa8
+  - gid: D5/S1/Digit/Raw.rawValue_add
+    target_statement_id: sha256:91d1dcdd561f0ed29f011360ff0564b5fc6a4ad8805ab98c115c99025a1ac6d8
+  - gid: D5/S1/Digit/Raw.rawValue_single
+    target_statement_id: sha256:a4b60a056b821cab48fb8fd0b17b40ee4c399ba8205c154f6433d251ef4d2ff3
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.archiveOf
+    target_statement_id: sha256:7942dfdded058262022d1b14175e4781320e0b011216ccb7d55252114e9091cd
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.contextOf
+    target_statement_id: sha256:c5418f052e2db518d711e18d5fd9592af136b7debf29e22980453a9587b0d295
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.eventEquiv
+    target_statement_id: sha256:bcb857f21dd042d18ddb1211483f1fab6d96b183ee0cca93ef6a7270b213e3a2
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.selectionOf
+    target_statement_id: sha256:f3229163ad2903c1c9968e5102a7c4d18349816aeea97885c85e14340eda76dc
+receipts:
+  unresolved_subitems: []

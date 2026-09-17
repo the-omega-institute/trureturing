@@ -1,0 +1,17 @@
+**定理。** 对所有 $u,v\in\mathcal O$、$\rho\in\mathbb R$ 与
+$n\in\mathbb Z$，
+
+$$
+\boxed{
+P_u^\rho(P_v^\rho(n))
+=P_{uv}^\rho(n)+b_u c_v^\rho(n),
+}\tag{GS5}
+$$
+
+$$
+\boxed{
+P_u^\rho(P_v^\rho(n))-P_v^\rho(P_u^\rho(n))
+=b_u c_v^\rho(n)-b_v c_u^\rho(n).
+}\tag{GS6}
+$$
+

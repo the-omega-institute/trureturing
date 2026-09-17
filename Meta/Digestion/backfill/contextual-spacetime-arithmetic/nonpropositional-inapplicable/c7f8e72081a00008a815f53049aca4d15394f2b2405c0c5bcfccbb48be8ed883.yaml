@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7f8e72081a00008a815f53049aca4d15394f2b2405c0c5bcfccbb48be8ed883
+  normalized_sha256: sha256:c7f8e72081a00008a815f53049aca4d15394f2b2405c0c5bcfccbb48be8ed883
+cas_ref: sha256:c7f8e72081a00008a815f53049aca4d15394f2b2405c0c5bcfccbb48be8ed883
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句定义强保域同余、保域要求或关系包含下的最大性术语，无独立待证明命题。
+    previous_atom_id: 0553f3dbbc60940a72df0942c681a43e02692ac8de4fd0afdbfd5d5a69886bdf
+    next_atom_id: e372d7838a3cdaec1afe234805c68a2a8f9b40d580c6375913a46af08308de88

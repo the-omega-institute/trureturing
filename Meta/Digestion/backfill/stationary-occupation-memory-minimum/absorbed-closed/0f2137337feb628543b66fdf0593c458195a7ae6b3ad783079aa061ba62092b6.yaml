@@ -1,0 +1,62 @@
+fingerprints:
+  raw_sha256: sha256:0f2137337feb628543b66fdf0593c458195a7ae6b3ad783079aa061ba62092b6
+  normalized_sha256: sha256:0f2137337feb628543b66fdf0593c458195a7ae6b3ad783079aa061ba62092b6
+cas_ref: sha256:0f2137337feb628543b66fdf0593c458195a7ae6b3ad783079aa061ba62092b6
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.conditional_derivative_closed_subspace_rigidity
+    target_statement_id: sha256:a7d21a6c1ebf9220dc96d29ecfc6d05b115750cfa9dc343d8a51e9346cc50a14
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.eq_constant_of_partials_zero
+    target_statement_id: sha256:91602ae6fec6a28a16c583f0ec423208eece266af8bf2720d7b2c087e8644c5c
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.exists_minimum_degree
+    target_statement_id: sha256:9d90b03aa4dd1c82069d2c93d8baec08153beb284fb7aedccee85fcf40edcbde
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.exists_nonzero_evaluation_kernel
+    target_statement_id: sha256:c7ec037aa05a2fd2076c60cef3274ca54f142c0eb40637432563346ee205be1e
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.exists_rigid_minimum
+    target_statement_id: sha256:88ace91f9e3155da6c8b1416ffea4b27fce9c9c92deae0aee65ae94a2344a90c
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.minimum_has_nonzero_constantCoeff
+    target_statement_id: sha256:643df83ba0cc51599ff5f2e7cf6d53ff727d25320ae0ee709dd63a56e8c5cf3b
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.partials_commute
+    target_statement_id: sha256:ed67cba7db02bbd54957864957a5c2c5b1bfd63a4c6ee4878db4b315c1a87fe1
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.small_degree_dependence
+    target_statement_id: sha256:60585f3d998213aa61d803c1f9437ac6258d2bdea2b1c72922fc5a99a19d6e1b
+  - gid: D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity.totalDegree_pderiv_lt
+    target_statement_id: sha256:12cf57f4c677c080d13e535ca5b9ab12575b53ff78318f1ea4a30a7c5a050b7b
+  - gid: D5/S3/Quantum/Algebra/PolynomialTangentDescent.tangent_descent
+    target_statement_id: sha256:e71198fe3848d730759417ecd9f583f1421daec00cfe578b8cda7f8083415a75
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.coeff_single_aeval_linear_form
+    target_statement_id: sha256:8e00ea72f740c621301667c01f48c6ad64d20f9380a628de5872fbeeb598541a
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.finrank_le_pivot_capacity
+    target_statement_id: sha256:418cb7f1613c17356c8dfe89b14d9bda0fecf16d8a8d872073468592e18d070f
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.nat_degree_le_of_rectangular_support
+    target_statement_id: sha256:718c98ef7c083c235ac303499c278c3f20eb319308f8f0864353296840fd8c18
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.stationary_rectangular_nullity_bound
+    target_statement_id: sha256:27a3edd2580964fa75431ecca7b16b929370d9af7c46a9ead956bd87baf14b23
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.submodule_eq_bot_of_zero_box
+    target_statement_id: sha256:d6c2a8e3280b9dd1f6b4b05f1b5ad343bf1517eb1ac70997b4709347fdbe20f2
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.constantCoeff_polynomialMap
+    target_statement_id: sha256:12d417b3b18b9533000493661170ae47cd117c3ebc607b2e2b7ed5a932a6126b
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.coordinateEquiv
+    target_statement_id: sha256:53cea4c8a73f2a698d2269942da5618db1d99848a1c515cab8c10545ddc71982
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.lowering_mem_kernel
+    target_statement_id: sha256:6e85664b5c37507a5e20d3029a962e85f5b35722183e153a2c7b71022dd0a2d8
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.lowering_single
+    target_statement_id: sha256:5e91f54570047c57cf4a5ca98ea41f978462f03070fcea8cd9cbd7f316cf4853
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.pderiv_polynomialMap
+    target_statement_id: sha256:d8be093b56527bcbe49cab6f88370d3f2d02d0596d953070ab4d6f74dec5208a
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.polynomialMap_injective
+    target_statement_id: sha256:ed390edbd7ffe8eb230e3da27c91f4f71f178ac8ba739e97e57e5cef847c864e
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.polynomialMap_single
+    target_statement_id: sha256:d53a4cdd676664f22e4cafb424fd0af3b91643c541068fcace399f9713970d26
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.recurrence_quadratic_identity
+    target_statement_id: sha256:1d8c5c134335e45b0e1b215bb60e62f372c7a1affc1f46000879e94796a64a39
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.stationary_gram_rank_lower_bound
+    target_statement_id: sha256:6fe0bb547105dc87566836492d6e90d51b29b2b6f62808251179a663266217c8
+  - gid: D5/S3/Quantum/StationaryPreparation/PhysicalGram.physical_gram_from_exact_preparation
+    target_statement_id: sha256:eaf080ed3c855938529c7309811746900f4d99f6153c14e07d3cc487b23f297f
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 30cb17cd405fb3722edb16dc2dc8a490f28738b9e41ad1eec9c1753447d8f9de
+    - e52b08df1b0615a3b1ff4d0f32e30e5ae637379678e5d45f2b63db4e65723f25
+    - 3702bc7aa29231c0bac7e74ee18a40c4d1ead68959a2318a4fe86f9107a496cf
+    - 1382b04f24d017965712d72b9d115c7b73b94080167e148b79cfa78615a68f36

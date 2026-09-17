@@ -1,0 +1,4 @@
+**定理 455.3（定义与命题）。**$\zeta(n)$ 编码整数本身；$\zeta(p)$ 编码素数标签；$\zeta(v_p(n))$ 编码该素数的指数；$\zeta(j)$ 编码位索引。它们使用同一函数但处于不同参数槽。对 $r$ 元关系 $R\subseteq\mathbb N^r$ 及参数 $\boldsymbol a$，定义 $R^\zeta(\boldsymbol u;\zeta(\boldsymbol a))\iff R(\operatorname{val}(\boldsymbol u);\boldsymbol a)$；对部分函数 $f:D\subseteq\mathbb N^r\to\mathbb N$，定义域为 $\zeta^{\times r}[D]$，值为 $\zeta(f(\operatorname{val}(\boldsymbol u)))$。此运输保持元数、等号、参数、定义域和每个自然数结构公式。
+
+**证明。**等号由双射保持反映，关系由定义保持反映，函数值由唯一逆给出。布尔联结词保等价；存在见证逐个编码，反向逐个解码；全称量词以满射覆盖全部对象。对公式归纳即得结论，零元关系亦按同一真假值运输。此结论的量词域是自然数，完整 ZFC 另见 P13。证毕。
+

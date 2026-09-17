@@ -1,0 +1,5 @@
+对 $h\ge1$，
+$$
+a\equiv_h^{\pm}b\quad\Longleftrightarrow\quad
+a=b\ \text{或}\ \bigl(D(a)>h, D(b)>h, g_h(a)=g_h(b)\bigr).
+$$

@@ -1,0 +1,12 @@
+### 73.1 有限尾空间恰好等价于有限线性预测实现
+
+仓库的 `D5.S3.Observer.Hankel.SequenceHankelRealization` 已给出以下等价关系：
+
+$$
+\boxed{
+\mathcal T(m)\text{ 有限维}
+\iff
+\text{存在有限维线性系统完整重现 }m.
+}
+$$
+

@@ -1,0 +1,46 @@
+## 127. 固定尾零支撑下相干局部态的精确迹距离
+
+固定整数 $n>K\ge0$，令 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并沿用从第 $0$ 位向右的前缀方向。记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad \mathcal K_n=(\mathbb C^2)^{\otimes n}.
+$$
+在完整 $n$ qubit 空间的计算基上，取未归一化向量及指定目标
+$$
+s_n=\sum_{u\in W_n}|u\rangle,
+\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle,
+\qquad
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+这正是 Q125.1 的相干局部极限；非法词方向上的行、列均为零。预算固定的是具体计算基支撑
+$$
+A=A_{K,n}=\{w0^{n-K}:w\in W_K\},
+\qquad
+P=P_{K,n}=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,n}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\}.
+$$
+可行态允许混合及支撑内的任意相干。以
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}
+$$
+采用半迹范数约定，字母 $D$ 只用于计数。以下简记
+$$
+D=F_{K+2},\qquad B=F_{n+1},\qquad C=F_n,\qquad b=B-D,
+$$
+$$
+m=D\alpha^n,\qquad
+\delta=\alpha^{2n+3}BC,\qquad
+\eta=\alpha^{2n+3}bC,\qquad
+c=1-m-\delta,
+$$
+并置
+$$
+|a\rangle=D^{-1/2}\sum_{u\in A}|u\rangle,
+\qquad \tau_{K,n}=|a\rangle\langle a|.
+$$
+

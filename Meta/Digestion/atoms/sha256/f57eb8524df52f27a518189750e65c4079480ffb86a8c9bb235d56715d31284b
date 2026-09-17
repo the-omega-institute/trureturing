@@ -1,0 +1,2 @@
+**定义 12.2（有限支持模式）**〔semantic〕。设 $X$ 为有限集，$2^X$ 表示其幂集。称 $\mathcal F\subseteq 2^X$ 为 $X$ 上的有限支持模式，亦称可逐点生成的并族，当且仅当满足三条集合律：$\varnothing\in\mathcal F$；若 $A,B\in\mathcal F$，则 $A\cup B\in\mathcal F$；若 $A\in\mathcal F$ 且 $A\ne\varnothing$，则存在 $x\in A$ 使 $A\setminus\{x\}\in\mathcal F$。第三条称为可达性。不要求 $X$ 的每个元素都出现在 $\mathcal F$ 的某个成员中。
+

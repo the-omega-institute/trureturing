@@ -1,0 +1,25 @@
+**定理 409.1。** 对任意拓扑集合 $X$ 及任意 Borel 概率 $\mu$，令
+$$
+\mu_{\rm ext}(B)=\mu(e_X^{-1}[B])\qquad(B\in\mathscr B_{X^*}).
+$$
+这是以普通实数为值的 Borel 概率；该构造给两载体上全部 Borel 概率的双射，逆为 $\eta\mapsto(A\mapsto\eta(e_X[A]))$。所有 Borel 零测集、不变概率、模零不变集、唯一性及遍历性均保持并反映。对任意非负 Borel 函数 $f$，以及任何正负部积分使有符号积分有定义的实 Borel 函数，有
+$$
+\int_{X^*}f\circ e_X^{-1}\,d\mu_{\rm ext}
+=\int_X f\,d\mu.
+$$
+非负积分允许 $+\infty$；有符号式不定义 $\infty-\infty$。
+
+测度作为整个函数图的码另满足
+$$
+\operatorname{Enc}(\mu)=
+\operatorname{Pack}\{
+\langle\operatorname{Enc}(A),\operatorname{Enc}(\mu(A))\rangle_Z:
+A\in\mathscr B_X\}.
+$$
+实际外部 Borel 子集与这个图的自变量码之间的双射为
+$$
+B\longmapsto\operatorname{Pack}(B)=\operatorname{Enc}(e_X^{-1}[B]),
+\qquad B\in\mathscr B_{X^*},
+$$
+逆为 $\operatorname{El}$；完整实数码值为 $\operatorname{Enc}(\mu_{\rm ext}(B))$。
+

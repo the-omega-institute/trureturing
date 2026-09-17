@@ -1,0 +1,10 @@
+它的总质量为 2,不是质量为 1 的三点概率分布。由于 \(c'-\mu=-2v-s,d'-\mu=v,t-\mu=-s\),直接得到
+
+\[
+(1-\theta')(-2v-s)^2+\theta'v^2=2v^2-s^2,
+\]
+\[
+\mathcal M(1)=2,\qquad\mathcal M(x)=z+t=2\mu,\qquad
+\mathcal M((x-\mu)^2)=2v^2.
+\]
+

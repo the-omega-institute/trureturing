@@ -1,0 +1,5 @@
+非空当且仅当每个坐标的前缀极差不超过容量：
+$$
+\max_{0\le j\le m}q_j(p)-\min_{0\le j\le m}q_j(p)\le A(p)\qquad(p\in P).
+$$
+域内终值为 $x+q_m$。

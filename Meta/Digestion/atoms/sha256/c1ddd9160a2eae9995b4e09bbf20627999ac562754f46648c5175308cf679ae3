@@ -1,0 +1,11 @@
+### 定理 57.6（最小动力学修复）
+
+仅有当前 visible space $\mathcal V$ 时，$\mathcal V^{\perp}$ 未必对后续演化保持不变；于是两个当前不可区分状态的差异可能在未来重新出现。令
+
+$$
+\overline{\mathcal V}
+=\operatorname{span}\{(H^*)^n v:v\in\mathcal V,\ n\in\mathbb N\},
+\qquad
+\mathcal R=\overline{\mathcal V}^{\perp}.
+$$
+

@@ -1,0 +1,2 @@
+**定理 460.3（定义与定理）。**$X\ge2$ 时 $\mu_X=\pi(X)^{-1}\sum_{p\le X}\delta_{[\alpha p]}$；$X<2$ 时不定义该概率。$\mu_X\Rightarrow\lambda$；每个固定整数 $a\ge1,b\ge0$ 的像经验概率也弱趋 $\lambda$。
+

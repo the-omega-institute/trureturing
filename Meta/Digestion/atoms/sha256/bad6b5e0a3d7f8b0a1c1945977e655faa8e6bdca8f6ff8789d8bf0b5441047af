@@ -1,0 +1,30 @@
+**定义与假设 8.1（固定标签、新鲜时间因子与一般复记录）。** 设$\mathcal I$为非空有限标签集，$n=|\mathcal I|$，$\mathcal H_S=\mathbb C^{\mathcal I}$带固定相位的正交基$(|i\rangle)_{i\in\mathcal I}$。记$P_i=|i\rangle\langle i|$、$E_{ij}=|i\rangle\langle j|$。输入为任意密度矩阵$\varrho=\sum_{i,j}\varrho_{ij}E_{ij}$，允许混态、零布居及秩亏。内积首变量共轭线性；本章专用的记录矩阵取乘子方向
+$$
+G_t(i,j)=\langle e_j^{(t)},e_i^{(t)}\rangle.
+$$
+它是第3.1条通常Gram矩阵的转置，不能把两种下标方向混用。
+
+固定有限整数$N\ge0$及时间指标集$T=\{1,\ldots,N\}$。每个$t$有非零有限维环境$\mathcal E_t$、预备单位向量$|0_t\rangle$及单位记录向量$|e_i^{(t)}\rangle$。初态严格为
+$$
+\varrho\otimes\bigotimes_{t\in T}|0_t\rangle\langle0_t|.
+$$
+因此各未用环境不仅有指定边缘态，而且与系统、旧记录及其他未用因子均无初始关联。第$t$步只作用于$\mathcal H_S\otimes\mathcal E_t$，在其预备子空间上满足受控非破坏条件
+$$
+U_t(|i\rangle\otimes|0_t\rangle)
+=e^{i\theta_{i,t}}|i\rangle\otimes|e_i^{(t)}\rangle,
+\qquad \theta_{i,t}\in\mathbb R.
+$$
+这里$U_t$可取酉算符；若只给出该子空间上的等距映射，也只使用它在该子空间上的值。右边的向量因系统标签正交而两两正交，故任何这样的指定都能通过补齐正交基延拓成同一有限空间上的酉算符。无须假定同一时刻的记录正交、线性无关、等重叠或实重叠。
+
+各步按$t$递增执行；已用环境不再与系统或其他环境相互作用，不复用、不回注，不按中间测量结果选择后续操作，不作后选择。除了上述各步，没有混合标签的系统演化；若另有保持每个$P_i$的系统酉演化，其对角相位已经计入$\theta_{i,t}$。本章的保留记录在末端读取前不经历额外噪声。所谓丢弃是无条件部分迹，不是选择一次测量结果；在这些无反馈条件下，丢弃可以在该因子使用后立即进行，也可以推迟到末端。
+
+对任意$A\subseteq T$，令
+$$
+\Theta_i(A)=\sum_{t\in A}\theta_{i,t},\qquad
+|e_i^A\rangle=\bigotimes_{t\in A}|e_i^{(t)}\rangle,\qquad
+\Gamma_A(i,j)=\prod_{t\in A}G_t(i,j).
+$$
+张量因子始终按时间递增排列。空和为零，空积为一，空张量空间为$\mathbb C$且$|e_i^\varnothing\rangle=1$；因而$\Gamma_\varnothing$是全部元素为一的矩阵，不是单位矩阵。取$N=0$时只剩恒等系统演化。阶段的重叠和相位可以逐时刻、逐标签变化，全部陈述只涉及这个有限时间集合。
+
+对时间单元取迹，指对$\mathcal E_t$这个环境记录因子取迹；没有把抽象时间本身当作Hilbert空间，也没有把同一个系统在不同时刻的状态当作独立张量因子。
+

@@ -1,0 +1,88 @@
+**证明。** 每个门的三坐标投影连续，而 $\Gamma$ 闭，故 $\mathcal L$ 是有限多个闭集的交。实际自然数图上的每个门都执行真实加法，所以实际联合像包含于 $\mathcal L$；取闭包得到 $\mathcal J\subseteq\mathcal L$。
+
+第一例的矩阵为
+$$
+A_\square=
+\begin{pmatrix}
+1&0&1&0\\
+1&0&0&1\\
+0&1&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+四个输出相位都为 $E_2$。由 $\Gamma(u,v)=\{0v,10v\}$，所指定的每一个门均合法。若存在共同实际逼近，定理38.2必要性给出同一个误差向量 $(\varepsilon_a,\varepsilon_b,\varepsilon_c,\varepsilon_d)$，使
+$$
+\varepsilon_a+\varepsilon_c>0,\qquad
+\varepsilon_a+\varepsilon_d<0,\qquad
+\varepsilon_b+\varepsilon_c<0,\qquad
+\varepsilon_b+\varepsilon_d>0.
+$$
+第一式与第四式相加，和严格为正；第二式与第三式相加，和严格为负；两边却都是
+$$
+\varepsilon_a+\varepsilon_b+\varepsilon_c+\varepsilon_d.
+$$
+矛盾。等价的整数证书是：给四个带符号的输出行各权重一，给所有输入行权重零，因为
+$$
+(1,0,1,0)-(1,0,0,1)-(0,1,1,0)+(0,1,0,1)=0.
+$$
+
+为准确确定第二例的字，使用定义16.3中的 $c_*=-\alpha^3$ 与 $f_0(t)=-\alpha t$。由 $\alpha^2+\alpha=1$，
+$$
+f_0(c_*)=\alpha^4=5-3\phi,\qquad [f_0(c_*)]=E_3.
+$$
+前缀 $w=0$ 的长度为奇数，故该定义的定向规则给
+$$
+z_{E_3}^+=w10v=010v,\qquad
+z_{E_3}^-=w0v=00v.
+$$
+于是第二例的三个局部门分别满足
+$$
+0v\in\Gamma(u,v),\qquad
+0v\in\Gamma(u,u),\qquad
+00v\in\Gamma(0v,v).
+$$
+最后一个门的两个输入符号分别为正与负，输出相位为 $E_3$，所以负分支确实被允许。
+
+但其矩阵为
+$$
+A_\triangle=
+\begin{pmatrix}
+1&1\\
+2&0\\
+2&1
+\end{pmatrix},
+$$
+按两个输入、再按三个输出的顺序，其符号矩阵为
+$$
+B_\triangle=
+\begin{pmatrix}
+1&0\\
+0&-1\\
+1&1\\
+2&0\\
+-2&-1
+\end{pmatrix}.
+$$
+非负整数权重
+$$
+c=(1,0,1,0,1)^{\mathsf T}
+$$
+满足 $B_\triangle^{\mathsf T}c=0$。直接说，就是
+$$
+\varepsilon_x>0,\qquad
+\varepsilon_x+\varepsilon_y>0
+\quad\Longrightarrow\quad
+2\varepsilon_x+\varepsilon_y>0,
+$$
+与最后一个输出要求的负偏移矛盾。中间输出 $2x$ 的符号约束在此已经由输入 $x$ 的正号蕴含。
+
+只保留两个输出 $x+y$ 与 $2x+y$ 时，上述矛盾仍成立。分别只要求其中一个输出，则方向 $(2,-1)$ 实现前者的正分支，方向 $(1,-3)$ 实现后者的负分支；两者都符合固定输入的正、负符号。各自的相位恒等式均成立，故定理38.2将这两个方向分别提升为真实自然数逼近。删去任一输出后的剩余族因而可行，证明所说的包含极小性，而非宣称三门在所有互异输出形式的图中具有最少门数。
+
+最后，用同一批显式字可直接看到结合律没有受到反驳：
+$$
+\Gamma(\Gamma(u,u),v)
+=\Gamma(u,\Gamma(u,v))
+=\{010v,00v\}.
+$$
+左式中 $\Gamma(u,u)=\{0v\}$，再与负号输入 $v$ 运算得到两个分支。右式中 $\Gamma(u,v)=\{0v,10v\}$；与正号输入 $u$ 运算后也得到相同的两个分支。若在右括号方式中取得最终负分支，中间值可以取 $10v$，但不能被额外固定为 $0v$。实际方向 $(1,-3)$ 同样实现最终的 $2x+y$ 负分支，却使 $x+y$ 取负分支。集合值复合只要求存在适当的中间值；第二例还要求另一个复用输入的输出同时取指定值。两种量词条件不同，前者的结合律不推出后者的共同逼近。证毕。
+

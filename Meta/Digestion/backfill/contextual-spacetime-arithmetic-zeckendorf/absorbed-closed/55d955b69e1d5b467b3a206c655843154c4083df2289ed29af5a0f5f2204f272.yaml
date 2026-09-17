@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:55d955b69e1d5b467b3a206c655843154c4083df2289ed29af5a0f5f2204f272
+  normalized_sha256: sha256:55d955b69e1d5b467b3a206c655843154c4083df2289ed29af5a0f5f2204f272
+cas_ref: sha256:55d955b69e1d5b467b3a206c655843154c4083df2289ed29af5a0f5f2204f272
+coverage_gids:
+  - gid: D5/S0/Rewriting/GuardedBoxPaths.path_lower_bound
+    target_statement_id: sha256:5f12a18ad05813863064b8915c7626ce8b0c4d999a6db6d90f00109780436238
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+**证明。** 由 $\det M\ne0$，实线性映射 $M_{\mathbb R}$ 可逆。定义
+
+$$
+b_M:\mathbb Z^2\to\ker f_M,qquad
+z\longmapsto[M_{\mathbb R}^{-1}j(z)].
+$$
+
+若 $[x]\in\ker f_M$，则 $M_{\mathbb R}x\in L$，故存在 $z\in\mathbb Z^2$ 使 $M_{\mathbb R}x=j(z)$，从而 $b_M(z)=[x]$；所以 $b_M$ 满射。另一方面，$b_M(z)=0$ 当且仅当存在 $w\in\mathbb Z^2$ 使 $M_{\mathbb R}^{-1}j(z)=j(w)$，也即 $z=Mw$。因此 $\ker b_M=M\mathbb Z^2$，第一同构定理给出结论。所写逆映射由同一计算得出。
+

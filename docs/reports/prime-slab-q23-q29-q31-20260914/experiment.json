@@ -1,0 +1,882 @@
+{
+  "costs_ns": {
+    "pilot": 73933081,
+    "window": 13985921306
+  },
+  "coverage": {
+    "active_slots": 85819,
+    "boxes": 12288,
+    "by_kind": {
+      "adjacent": 84982,
+      "reflection": 837
+    },
+    "by_q": {
+      "23": 28596,
+      "29": 28613,
+      "31": 28610
+    },
+    "candidates": 0,
+    "coalesced_slots": 0,
+    "completed_exact_keys": 85819,
+    "exact_keys": 85819,
+    "inactive_slots": 221381,
+    "invalid": 0,
+    "nodes_with_exact_nearest_ties": 837,
+    "pending": 0,
+    "raw_slots": 307200,
+    "signs": {
+      "negative": 85819
+    },
+    "tiers": {
+      "128": 85819
+    },
+    "unresolved_512": 0
+  },
+  "diagnostic_keys": {
+    "G": "357f33ad87c36e4d87aaf16684fd914c8ed7026f5d1c8143d1a0ead3754ea854",
+    "q23_G": "357f33ad87c36e4d87aaf16684fd914c8ed7026f5d1c8143d1a0ead3754ea854",
+    "q29_G": "8d3814c623c9fc7dc8d8a3b868b0cca7b78c5b4cb6973240bd23c2aa60851b5c",
+    "q31_G": "a4ce116ebaf3001b04649d734d1f2e49981c82e57a6345222b020a1096958ff4",
+    "reflection_scaled_G": "1b7bcbb6d8011fce4d40bdd3c34bacd956c3f140927fe85b94c55e545044f631",
+    "scaled_G": "63240a8058a6624cd94548d34d3a6b7d6a10c6def1b4ee95d98587f16d25f4d9"
+  },
+  "measurement_limitation": {
+    "id": "B08-CPU-MEASUREMENT-PREHASH",
+    "statement": "Original v1 search-run wall and RSS samples precede final dataset hashing; whole-process peak for those terminated runs is unmeasured. They are not full-command measurements."
+  },
+  "measurements": {
+    "pilot_evaluation_ns": 73933081,
+    "postfix_full_resume_command": {
+      "evaluation_ns": 0,
+      "maximum_resident_set_size_bytes": 53444608,
+      "method": "External /usr/bin/time -l whole-command observation, reported with the completed experiment.",
+      "real_seconds": 23.44,
+      "swaps": 0,
+      "system_seconds": 1.85,
+      "user_seconds": 19.48
+    },
+    "remaining_window_evaluation_ns": 13985921306,
+    "scope": "Original v1 search-run wall and RSS samples precede final dataset hashing; whole-process peak for those terminated runs is unmeasured. They are not full-command measurements.",
+    "search_phase_peak_rss_bytes_max": 46596096,
+    "search_phase_wall_ns_sum": 155914342000,
+    "total_evaluation_ns": 14059854387
+  },
+  "provenance": {
+    "producer_identity": "Original producer IDs retained as join keys for node tiers and measurement provenance; projected producer records are not asserted to hash to those IDs.",
+    "producers": {
+      "09047a817188a53d8d2a3df38580a2961abc5b12feb0edf3b0f7aff45f391198": {
+        "finished_utc": "2026-09-14T23:00:55.969812+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1195641284,
+          "free_bytes_end": 337050390528,
+          "free_bytes_start": 337098797056,
+          "process_peak_rss_bytes": 46252032,
+          "system_seconds": 2.047786,
+          "user_seconds": 10.525349,
+          "wall_ns": 14534084584
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:00:41.612616+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 7232,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "11f325c4ee9dbcb842b15a7e661552939101d06a715770500bd14d88adf8c802": {
+        "finished_utc": "2026-09-14T23:02:06.754576+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1145303577,
+          "free_bytes_end": 336845946880,
+          "free_bytes_start": 336897900544,
+          "process_peak_rss_bytes": 46530560,
+          "system_seconds": 2.3111610000000002,
+          "user_seconds": 14.784229,
+          "wall_ns": 19189881208
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:01:47.933385+00:00",
+        "work": {
+          "boxes_processed": 960,
+          "boxes_skipped": 11328,
+          "completed_keys_skipped": 0,
+          "reason": "fixed-phase-complete",
+          "residual_keys_skipped": 0
+        }
+      },
+      "13ce15c2d501ca95ffce397e3c7fa4bb9938ff2c57bf5c452c2a498723c3f210": {
+        "finished_utc": "2026-09-14T22:58:57.489457+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1129906930,
+          "free_bytes_end": 337404207104,
+          "free_bytes_start": 337452404736,
+          "process_peak_rss_bytes": 44564480,
+          "system_seconds": 1.6109069999999999,
+          "user_seconds": 3.079537,
+          "wall_ns": 6580945541
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T22:58:50.930026+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 16,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "2c973e80099969addd9df506b3c0e444d2785b1edcbe8bf2eb9d82339f25faa9": {
+        "finished_utc": "2026-09-14T23:01:29.371011+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1184212240,
+          "free_bytes_end": 336949440512,
+          "free_bytes_start": 336999997440,
+          "process_peak_rss_bytes": 46596096,
+          "system_seconds": 2.1791,
+          "user_seconds": 12.777277,
+          "wall_ns": 17231599250
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:01:12.371789+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 9280,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "33b6a97878f7a2a8cc533f8f0827bc40209482311cf4729d8648bdee202ac2c3": {
+        "finished_utc": "2026-09-14T23:00:03.536252+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1187527480,
+          "free_bytes_end": 337250254848,
+          "free_bytes_start": 337300770816,
+          "process_peak_rss_bytes": 45121536,
+          "system_seconds": 1.8281319999999999,
+          "user_seconds": 6.513788,
+          "wall_ns": 10321183000
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T22:59:53.303378+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 3136,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "36bcdc54a85f537ee930a8e231637fdf250703e866acb469c5f0b8cba795c0fa": {
+        "finished_utc": "2026-09-14T23:00:41.175185+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1192905520,
+          "free_bytes_end": 337098760192,
+          "free_bytes_start": 337149181952,
+          "process_peak_rss_bytes": 45760512,
+          "system_seconds": 1.9601950000000001,
+          "user_seconds": 9.576668,
+          "wall_ns": 13479511125
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:00:27.851352+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 6208,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "71276264ecb31da2835e31103faa8fbcb0a67613c48b772fa37aaa45bb74b373": {
+        "finished_utc": "2026-09-14T23:00:14.798768+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1159866506,
+          "free_bytes_end": 337200664576,
+          "free_bytes_start": 337250283520,
+          "process_peak_rss_bytes": 45301760,
+          "system_seconds": 1.8375650000000001,
+          "user_seconds": 7.382681,
+          "wall_ns": 11069820791
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:00:03.839119+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 4160,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "7f4f500e5dab61bba27d67347e517d3fa061b4803a53625f64f4f727f3beda45": {
+        "finished_utc": "2026-09-14T22:59:43.641748+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1187269040,
+          "free_bytes_end": 337353527296,
+          "free_bytes_start": 337403711488,
+          "process_peak_rss_bytes": 44777472,
+          "system_seconds": 1.951583,
+          "user_seconds": 4.309048,
+          "wall_ns": 8123975542
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T22:59:35.561216+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 1056,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "9b82f2dbacf6442ece3bfc9bc3d7355d73b46d13de736e2638e6d2518f62b503": {
+        "finished_utc": "2026-09-14T23:00:27.459690+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1177833232,
+          "free_bytes_end": 337149149184,
+          "free_bytes_start": 337200693248,
+          "process_peak_rss_bytes": 45563904,
+          "system_seconds": 1.916518,
+          "user_seconds": 8.473835,
+          "wall_ns": 12444980834
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:00:15.147203+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 5184,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "a0649bdbe69e325e11097ae4b67033a82c2f3a5aa6e8886ab421d6685710143b": {
+        "finished_utc": "2026-09-14T23:07:45.640696+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 0,
+          "free_bytes_end": 336867807232,
+          "free_bytes_start": 336871104512,
+          "process_peak_rss_bytes": 48562176,
+          "scope": "Through closed-database streaming hash; excludes only final small JSON/stdout publication.",
+          "system_seconds": 1.8211739999999998,
+          "user_seconds": 19.389787,
+          "wall_ns": 23241422750
+        },
+        "measurement_scope": "Through closed-database streaming hash; excludes only final small JSON/stdout publication.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "13d048d0945741bef862c0c69e08d38a32f6c088fd5f36d24d15487bf5268626",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "ddf7b04b786192600002e9689fbcd96f9bcf28a7028b63473c7720c88330064d"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "search_phase_measurement": {
+          "evaluation_ns": 0,
+          "free_bytes_end": 336867807232,
+          "free_bytes_start": 336871104512,
+          "process_peak_rss_bytes": 48480256,
+          "system_seconds": 1.579089,
+          "user_seconds": 19.112720999999997,
+          "wall_ns": 22994407000
+        },
+        "started_utc": "2026-09-14T23:07:22.399058+00:00",
+        "work": {
+          "boxes_processed": 0,
+          "boxes_skipped": 12288,
+          "completed_keys_skipped": 0,
+          "reason": "fixed-phase-complete",
+          "residual_keys_skipped": 0
+        }
+      },
+      "aeaa4643cecca49dd3013b4ee4803657baa8701f454e1db4041e6fce6ab89b01": {
+        "finished_utc": "2026-09-14T23:01:47.345253+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1087664345,
+          "free_bytes_end": 336898928640,
+          "free_bytes_start": 336949469184,
+          "process_peak_rss_bytes": 46497792,
+          "system_seconds": 2.052737,
+          "user_seconds": 13.563072,
+          "wall_ns": 17637913625
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:01:29.949925+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 10304,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "b5a40b4ad09f59dfd11e755ed227d47f0bc72832705f64b37ae642e8339bac48": {
+        "finished_utc": "2026-09-14T22:59:53.047327+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1175121750,
+          "free_bytes_end": 337300750336,
+          "free_bytes_start": 337353547776,
+          "process_peak_rss_bytes": 44990464,
+          "system_seconds": 1.823816,
+          "user_seconds": 5.285382,
+          "wall_ns": 9255728292
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T22:59:43.856367+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 2096,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      },
+      "d14926b421c3a6ff2a8a69a158ef02fead2b39049f55dedbe9e86ffcaabedb81": {
+        "finished_utc": "2026-09-14T22:57:40.389738+00:00",
+        "max_boxes": 64,
+        "measurement": {
+          "evaluation_ns": 73933081,
+          "free_bytes_end": 337471803392,
+          "free_bytes_start": 337474879488,
+          "process_peak_rss_bytes": 44433408,
+          "system_seconds": 0.140079,
+          "user_seconds": 0.22407999999999997,
+          "wall_ns": 449166375
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "pilot",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "560f910e49d1540a437c99a9a8e3951b9b5d5e5b9ee147a18ceaea21f3b33002",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T22:57:39.942287+00:00",
+        "work": {
+          "boxes_processed": 64,
+          "boxes_skipped": 0,
+          "completed_keys_skipped": 0,
+          "reason": "fixed-phase-complete",
+          "residual_keys_skipped": 0
+        }
+      },
+      "d37b9a3110639b1ddb2da1693d6c7ea43afe4cab7ef32a5f3fa4852b14d08668": {
+        "finished_utc": "2026-09-14T23:01:11.842111+00:00",
+        "max_boxes": 1024,
+        "measurement": {
+          "evaluation_ns": 1162669402,
+          "free_bytes_end": 336999952384,
+          "free_bytes_start": 337050419200,
+          "process_peak_rss_bytes": 46235648,
+          "system_seconds": 2.0438609999999997,
+          "user_seconds": 11.620803,
+          "wall_ns": 15595551833
+        },
+        "measurement_scope": "Search phase only, before database hashing. Whole-command peaks of these terminated runs were not measured.",
+        "phase": "window",
+        "program_sha256": {
+          "tools/scripts/agent/prime_slab_cpu.py": "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1",
+          "tools/scripts/agent/prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "tools/scripts/agent/prime_slabs/cpu.py": "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f",
+          "tools/scripts/agent/prime_slabs/cpu_store.py": "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495"
+        },
+        "runtime": {
+          "numpy": "2.0.2",
+          "platform": "darwin",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]",
+          "python_flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "schema": "actual-prime-cpu-producer-v1",
+        "started_utc": "2026-09-14T23:00:56.450804+00:00",
+        "work": {
+          "boxes_processed": 1024,
+          "boxes_skipped": 8256,
+          "completed_keys_skipped": 0,
+          "reason": "batch-box-limit",
+          "residual_keys_skipped": 0
+        }
+      }
+    },
+    "scope": "Only this completed q23/29/31 experiment. The two retained supports are scoped exclusion evidence, not an all-history absence claim. Package processing performs no arithmetic evaluation.",
+    "source_binding_boundary": "Original data-production identities; the source input included omitted orchestration fields. No reconstruction of that original input or of SQLite physical bytes is claimed.",
+    "source_database": {
+      "bytes": 590004224,
+      "sha256": "5871db41a7e902c18a60ffe33dd0e91e16b23e87a45c6a40939eda1e85e30702"
+    },
+    "source_input_sha256": "3671b76065b88d29c4de8599c9617011753e6ab1b1bdd350e09e473e41762bb7",
+    "source_repository_head": "031295a47d19b5ebfa33d2014ab7ad0c6d2c68d6",
+    "source_roles": {
+      "13d048d0945741bef862c0c69e08d38a32f6c088fd5f36d24d15487bf5268626": [
+        "tools/scripts/agent/prime_slab_cpu.py"
+      ],
+      "5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495": [
+        "tools/scripts/agent/prime_slabs/cpu_store.py"
+      ],
+      "55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1": [
+        "tools/scripts/agent/prime_slab_cpu.py"
+      ],
+      "560f910e49d1540a437c99a9a8e3951b9b5d5e5b9ee147a18ceaea21f3b33002": [
+        "tools/scripts/agent/prime_slab_cpu.py"
+      ],
+      "aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f": [
+        "tools/scripts/agent/prime_slabs/cpu.py"
+      ],
+      "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e": [
+        "tools/scripts/agent/prime_slabs/certify.py"
+      ],
+      "ddf7b04b786192600002e9689fbcd96f9bcf28a7028b63473c7720c88330064d": [
+        "tools/scripts/agent/prime_slabs/cpu_store.py"
+      ]
+    }
+  },
+  "representation": {
+    "columns": {
+      "boxes": [
+        "id",
+        "document",
+        "complete",
+        "pilot",
+        "active"
+      ],
+      "nodes": [
+        "key",
+        "unit",
+        "document",
+        "status",
+        "sign",
+        "pilot"
+      ]
+    },
+    "format": "RFC4648 base64, one unwrapped line with a final LF, wrapping XZ/LZMA2 preset6 CRC64, wrapping ASCII JSON Lines",
+    "omitted": [
+      "Goal/plan/convergence and intake-orchestration identities, issue/protocol instructions and scheduling deadline",
+      "Repeated input bodies in producer records and cumulative intermediate coverage/database snapshots",
+      "Repeated diagnostic node documents (their keys address the complete retained rows)",
+      "Validation receipts and terminal trace reference in the measurement annotation"
+    ],
+    "partition": "One file per recorded prime support (2,3,q); boxes then nodes, each in original rowid order. Existing SQLite TEXT cells remain exact strings in row arrays.",
+    "reconstruction_boundary": "Every boxes/nodes cell and original rowid can be reconstructed without mathematical evaluation. Costs and scientific metadata are retained here. Compression and base64 are byte-reversible. Intentional metadata selection is not reversible; SQLite pages, unused space and discarded orchestration metadata are not retained.",
+    "shards": [
+      {
+        "bytes": 16489609,
+        "decoded_xz_bytes": 12367204,
+        "decoded_xz_sha256": "a69c7da245c91ee203560db9621bc306691d1c79a7da7de3513288df430aa138",
+        "path": "q23.rows.jsonl.xz.b64",
+        "prime_support": [
+          2,
+          3,
+          23
+        ],
+        "reconstructed_jsonl_bytes": 190205428,
+        "reconstructed_jsonl_sha256": "fa59f0cfedeffe475de59ee5ace0ccdf50b51639e5b65e24bfb497b619164811",
+        "rows": {
+          "active_slots": 28596,
+          "boxes": 4096,
+          "nodes": 28596,
+          "raw_slots": 102400
+        },
+        "sha256": "fb0f95e6275361ab38f179c8f9aea788ec33c9c7512e4d32d8766f41b2a33f8f"
+      },
+      {
+        "bytes": 16428865,
+        "decoded_xz_bytes": 12321648,
+        "decoded_xz_sha256": "ba6da38280abac7bfc8c1732be75b47783a83fa6b7eeacca08206f7423e08797",
+        "path": "q29.rows.jsonl.xz.b64",
+        "prime_support": [
+          2,
+          3,
+          29
+        ],
+        "reconstructed_jsonl_bytes": 190661781,
+        "reconstructed_jsonl_sha256": "178094e94838381545f71537b6d7bd968ca29dae0231b4458a6db96ae7a22e0a",
+        "rows": {
+          "active_slots": 28613,
+          "boxes": 4096,
+          "nodes": 28613,
+          "raw_slots": 102400
+        },
+        "sha256": "20c2bdf5b1492a16c76aa88d7fa1cb4ddfd571f2cdacd162c965d20380f3262a"
+      },
+      {
+        "bytes": 16414537,
+        "decoded_xz_bytes": 12310900,
+        "decoded_xz_sha256": "8971a631f8cbe9e6720ea8a1abe41a0b12e71f2c4e6ca0202d5fdea4846c95a1",
+        "path": "q31.rows.jsonl.xz.b64",
+        "prime_support": [
+          2,
+          3,
+          31
+        ],
+        "reconstructed_jsonl_bytes": 190633739,
+        "reconstructed_jsonl_sha256": "3c555b46863f6a52f34445c641eb148ebf5cb6d1c107cb196a8217a6919b650c",
+        "rows": {
+          "active_slots": 28610,
+          "boxes": 4096,
+          "nodes": 28610,
+          "raw_slots": 102400
+        },
+        "sha256": "8259470ade21b020c6945d983be522d8c5395f540b1209c5d1401e85e51bd275"
+      }
+    ],
+    "sql_schema": {
+      "boxes": "CREATE TABLE boxes\n            (id TEXT PRIMARY KEY, document TEXT NOT NULL, complete INTEGER NOT NULL,\n             pilot INTEGER NOT NULL, active INTEGER NOT NULL)",
+      "nodes": "CREATE TABLE nodes\n            (key TEXT PRIMARY KEY, unit TEXT NOT NULL UNIQUE, document TEXT NOT NULL,\n             status TEXT NOT NULL, sign TEXT NOT NULL, pilot INTEGER NOT NULL)"
+    }
+  },
+  "residual_question": "For k>=3 and arbitrary distinct actual primes, does every admissible closed slab satisfy D-Psi<=0? In the exactly-one-fractional-row optimum, is sum_i f(x_i)-Psi <= J_j under the original V0, budget and support definitions? This fixed negative node window supplies no universal or continuous-slab proof.",
+  "schema": "actual-prime-retained-experiment-v1",
+  "scientific_input": {
+    "experiment": {
+      "definition": "actual-prime-closed-slab-dual-minus-hermite-sum-variance-v1",
+      "exponents": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "mathematical_domain": {
+        "H": "mu+2*rho",
+        "L": "mu-rho",
+        "boundary": "Finite nodes only; neither C nor Not C follows from a search dataset.",
+        "common_constant": "log E; E=prod_i (1-1/p_i)^(-1)",
+        "configurations": "two distinct actual exponent vectors in {b_i,b_i+1}",
+        "cutoff": "exp(T0)>5040",
+        "dual": "inf_(lambda>=0) lambda*M1+sum_i max(f(c_i)-lambda*c_i,f(d_i)-lambda*d_i)",
+        "endpoints": "c_i=(b_i+1)log(p_i); d_i=(b_i+2)log(p_i)",
+        "f": "log(1-exp(-x)), x>0",
+        "gap": "G=D-(f(H)+2*f(L))",
+        "k": 3,
+        "mu": "M1/3",
+        "primal": "max sum_i ((1-y_i)*f(c_i)+y_i*f(d_i)); 0<=y_i<=1; sum_i log(p_i)*y_i<=M1-sum_i c_i",
+        "rho": "sqrt(V0/6)",
+        "shift": "M_j=T_j+sum(log(p_i))",
+        "slab": "closed",
+        "support": "mu>0; 0<=V0<6*mu^2; L>0",
+        "variance": "V0=sum_i dist([M0/3,M1/3],{c_i,d_i})^2"
+      },
+      "pilot_evaluation_cap_ns": 600000000000,
+      "pilot_exponents": [
+        0,
+        5,
+        10,
+        15
+      ],
+      "precisions": [
+        128,
+        256,
+        512
+      ],
+      "q": [
+        23,
+        29,
+        31
+      ],
+      "schema": "actual-prime-cpu-v1"
+    },
+    "hypotheses": {
+      "finite_search_hypothesis": "R_nodes: one eligible adjacent or active-reflection node defined below, for p=(2,3,q), q∈{23,29,31}, b∈{0,…,15}³, has G>0. R_nodes is a prospective search hypothesis, not an assumption of the proof. Failure of this finite search does not refute R or prove C.",
+      "non_binding_fact": "R: there exist k≥3, distinct actual prime labels, nonnegative integer exponents, and two distinct actual exponent configurations in a closed slab with log(5040)<T₀<T₁, satisfying every definition and support condition of C, with G>0. This is the proposed new arithmetic fact, currently unverified; the intended public theorem is result : Not C."
+    },
+    "question": {
+      "complete_chosen_statement": "Let C be the closed proposition: for every integer k≥3, every p:Fin k→N of pairwise distinct primes, every b:Fin k→N (zero exponents included), and every pair of finite real budgets log(5040)<T₀<T₁, if there exist distinct a,a′:Fin k→N with a_i,a′_i∈{b_i,b_i+1} and both T₀≤Σ_i a_i log p_i≤T₁ and T₀≤Σ_i a′_i log p_i≤T₁, then U_dual≤U_var, with the following exact definitions and valid-domain qualifications. Put h_i=log p_i, c_i=(b_i+1)h_i, d_i=(b_i+2)h_i, Q=Σ_i h_i, M_j=T_j+Q, f(x)=log(1−exp(−x)) on x>0, μ=M₁/k, I=[M₀/k,M₁/k], V₀=Σ_i dist(I,{c_i,d_i})², r=sqrt(V₀/[k(k−1)]), L=μ−r, H=μ+(k−1)r. Distance is inf{|x−y|:x∈I,y∈{c_i,d_i}}; V₀ has no further division by k. Retain μ>0, 0≤V₀<k(k−1)μ² and L>0 (the source derives these from an actual admitted positive corner; they may not be silently presumed for an arbitrary grid). E=∏_i(1−1/p_i)^(−1). D=inf_{λ≥0}(λM₁+Σ_i max(f(c_i)−λc_i,f(d_i)−λd_i)); Ψ=f(H)+(k−1)f(L); U_dual=log E+D and U_var=log E+Ψ. Thus C asserts G=D−Ψ≤0. The equivalent fractional primal maximizes Σ_i[(1−y_i)f(c_i)+y_i f(d_i)] over 0≤y_i≤1, Σ_i h_i y_i≤M₁−Σ_i c_i, with no lower-budget constraint. Endpoint inclusion, zero radius, price ties and all finite upper slack retain their definitions. In a matching optimum with exactly one truly fractional row j, x_j=(1−θ)c_j+θd_j and other x_i actual endpoints, J_j=f(x_j)−(1−θ)f(c_j)−θf(d_j)>0 and G=Σ_i f(x_i)−Ψ−J_j. This residual identity does not supply its sign or a general equality classification.",
+      "exact_search_domain": {
+        "box_window": "p=(2,3,23),(2,3,29),(2,3,31); each b_i∈{0,…,15}. Do not replace the universal C by this window in a deliverable.",
+        "layout_only": "12,288 boxes; at most 25 raw slots per box, 307,200 raw slots before guards; at most six permutation fills per active node. These are source-derived layout counts, not runtime, evaluated-case counts, certified exclusions or numeric ROI.",
+        "nodes": "For each box let P=∏p_i and let R₀<…<R₇ be the eight distinct integers ∏p_i^(b_i+e_i), with masks e∈{0,1}³ sorted by exact integer comparison. β_s=log(P R_s). Adjacent slots s=1,…,7 use (M₀,M₁)=(β_{s−1},β_s) with R_{s−1}>5040. Reflection slots j=1,…,6 and i=0,1,2 use X=P R_{j−1}, E_i=p_i^[3(2b_i+3)], (M₀,M₁)=(log X,log(E_i/X)), only if R_{j−1}>5040, p_i^[3(b_i+1)]<X, X²<E_i, and P²R_{j−1}R_j<E_i<P²R_{j−1}R_{j+1}. Their original budgets are T₀=log R_{j−1}, T₁=log(E_i/(P²R_{j−1})). Every guard is exact; the reflection upper exponential is a positive noninteger rational, not an integer corner.",
+        "reuse_identity": "Use canonical exact (ordered prime/exponent pairs, reduced rational exp(M₀), reduced rational exp(M₁), definition/source identity) keys, also recognizing coordinate permutations. A fresh run ID or program hash does not prove new mathematical inputs."
+      },
+      "source": {
+        "atom": "f997dd3619c188b83af714ffd2b7d80e70039afd2d0e80180009b714318a4cee",
+        "clauses": "§25.16 and §§15–20; exact prime-domain and correction boundaries §§24.14–24.15,25.1,25.5–25.16,26.2–26.25,27–28,34.20,35.29.",
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "problem_status": "Internal source question. No verified external published named tier1/tier2 problem identity is supplied; no open-problem-resolution admission is claimed.",
+        "related_exact_question_atom": "a769b2ec2e88dd9fa7a19a3799e4cfb1e2ee8c900e01d88009ba3d017fd89b48"
+      }
+    },
+    "retained_supports": [
+      {
+        "paired_exponents": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            [
+              4,
+              7
+            ]
+          ],
+          [
+            11,
+            [
+              0,
+              15
+            ]
+          ]
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "source_sha256": "a9e01e233d78970f82b6752b13eef5191415c767334889b7d8ccf18da891a529",
+        "support_complete": true
+      },
+      {
+        "paired_exponents": [
+          [
+            2,
+            12
+          ],
+          [
+            3,
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            5,
+            [
+              0,
+              15
+            ]
+          ]
+        ],
+        "primes": [
+          2,
+          3,
+          5
+        ],
+        "source_sha256": "6895b9e5fdbfc5bdc47ed0bd2cf455ca6d8689f953f26b7b94c43b68c4e56f94",
+        "support_complete": true
+      }
+    ],
+    "source_bindings": [
+      {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "sha256": "9b73326f45cd654d6287ace8daf0a2e35c983d5912c67020036281ddb8b6eabe"
+      },
+      {
+        "path": "tools/scripts/agent/prime_slabs/certify.py",
+        "sha256": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e"
+      }
+    ]
+  },
+  "scientific_status": {
+    "C": "open",
+    "Not_C": "open",
+    "R": "unestablished",
+    "R_nodes": "Original positive-node hypothesis retained; the completed experiment reported only negative enclosures.",
+    "boundary": "All signs are directed Arb experiment results using the existing pure evaluator. No positive witness, independent mathematical certification, Lean refutation, universal proof, atom closure or 2029-goal completion."
+  }
+}

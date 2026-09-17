@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d76a4a56b5f040c8133aa456d1319db9a59b04eaaf4383b1cacf0591196ad46f
+  normalized_sha256: sha256:d76a4a56b5f040c8133aa456d1319db9a59b04eaaf4383b1cacf0591196ad46f
+cas_ref: sha256:d76a4a56b5f040c8133aa456d1319db9a59b04eaaf4383b1cacf0591196ad46f
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Obstructions/ErdosMoserLocalObstruction.erdos_moser_local_obstruction
+    target_statement_id: sha256:d0f9088b1c57984c12fbe941649057490fc7892be96d10ddb052d93e8d24d91c
+receipts:
+  unresolved_subitems: []

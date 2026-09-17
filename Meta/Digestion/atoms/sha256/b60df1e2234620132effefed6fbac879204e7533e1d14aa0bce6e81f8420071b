@@ -1,0 +1,20 @@
+**定理 431.2（预测十三·全部纤维、商与预测断言的双向运输）。** 对命题 431.1 中任意 $f:D\to Y$，任意 $S\subseteq D,B\subseteq Y$，有
+$$
+f^*[\operatorname{Enc}[S]]=\operatorname{Enc}[f[S]],\qquad
+(f^*)^{-1}(\operatorname{Enc}[B])=\operatorname{Enc}[f^{-1}(B)],
+$$
+$$
+\ker f^*=\{(\operatorname{Enc}(x),\operatorname{Enc}(y)):x,y\in D,\ f(x)=f(y)\}.
+$$
+对每个集合 $X$ 上的等价关系 $R$，
+$$
+[\operatorname{Enc}(x)]_{R^*}=\operatorname{Enc}[[x]_R],
+$$
+且外部商到原商成员像的桥为双射
+$$
+X^*/R^*\longrightarrow(X/R)^*,\qquad
+[\operatorname{Enc}(x)]_{R^*}\longmapsto
+\operatorname{Enc}([x]_R)=\operatorname{Pack}([\operatorname{Enc}(x)]_{R^*}).
+$$
+全部因子等式、复合及迭代等式、字典互逆、核包含、整段恢复和全行为比较均在精确域上保持并反映。全部参数 $L,h,J,B$ 及所有候选子集、关系、函数和精确实现均被覆盖，故首位的 $n+1$ 个值、整段的 $G_L+h$ 个值、全部有界计数、最短长度、锐利深度与反例，以及有限精确实现的不存在性都双向成立。
+

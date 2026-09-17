@@ -1,0 +1,9 @@
+**定义。** 对 $q\ge2$ 取等距节点
+
+$$
+\lambda_i=\frac\kappa4+\frac\kappa4\frac{i}{q-1},
+\qquad 0\le i<q.
+$$
+
+$q=1$ 时取唯一节点 $\kappa/4$。始终有 $\kappa/4\le\lambda_i\le\kappa/2$。
+

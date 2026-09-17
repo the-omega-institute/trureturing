@@ -1,0 +1,15 @@
+**定理 428.3（预测十·有限前缀决定首个失败与末端观察）。** 对任意 $L\in\omega$ 和有限字 $w$，令
+$$
+N=\max\bigl(\{L\}\cup\{j+2:(j,b)\text{ 在 }w\text{ 中出现}\}\bigr).
+$$
+空字时 $N=L$。存在唯一函数
+$$
+\Phi_{L,w}:X_N\longrightarrow
+\bigl(\{1,\ldots,|w|\}\sqcup\{\infty\}\bigr)\times\operatorname{Opt}(X_L)
+$$
+使对所有 $x\in K$，
+$$
+\Phi_{L,w}(P_Nx)=(\kappa(w,x),O_{L,w}(x)).
+$$
+其公式是在 $z(V_N(p))$ 上取这两个值。每个中间时刻的标记 $P_L$ 观察也由同一前缀决定。此命题不蕴含整个成功无限末态由该前缀决定。
+

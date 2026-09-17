@@ -1,0 +1,33 @@
+**定理 371.2。** $d_K$ 是给出上述拓扑的度量，$K_{\rm infdig}$ 紧，$z_{\rm infdig}[\omega]$ 稠密。$F_{\rm infdig}:K_{\rm infdig}\to\mathbb R$ 和 $H_{\rm infdig}:K_{\rm infdig}\to\mathbb T$ 连续；若 $x_j=y_j$ 对所有 $j<L$ 成立，则
+$$
+d_K(x,y)\le2^{-L},\qquad
+|F_{\rm infdig}(x)-F_{\rm infdig}(y)|\le\alpha^L.
+$$
+对每个 $n\in\omega$，
+$$
+F_{\rm infdig}(z_{\rm infdig}(n))
+=n\alpha-f(n)=n\phi-(n+f(n))\in(a,b),\qquad
+H_{\rm infdig}(z_{\rm infdig}(n))=\gamma(n).
+$$
+$H_{\rm infdig}$ 是相对于 $z_{\rm infdig}$ 的唯一连续圆周值延拓。
+
+**证明。** 度量级数绝对收敛；对称性逐项成立，不同函数至少有一个不同坐标，其正权保证距离非零。逐坐标三角不等式相加给三角不等式。前 $L$ 位相同给尾和界 $2^{-L}$，而 $d_K(x,y)<2^{-L}$ 强制所有 $j<L$ 的坐标相同，因为其中每个权至少为 $2^{-L}$。有限坐标柱集和度量球因而生成同一拓扑。
+
+给定 $K_{\rm infdig}$ 中的序列，先取第零坐标恒定的无限子序列，再依次取每个下一坐标恒定的无限子序列；取对角子序列。每个坐标最终恒定，得到函数 $x$。每对相邻坐标同时稳定后仍不同时为一，故 $x\in K_{\rm infdig}$。给定 $\varepsilon>0$，取 $2^{-L}<\varepsilon$，对角子序列最终在前 $L$ 位与 $x$ 相同，故收敛到 $x$。这证明序列紧性，度量空间的序列紧性与紧性等价，故载体紧。
+
+对 $x\in K_{\rm infdig}$ 置 $N_L=\sum_{j<L}G_jx_j$。截到前 $L$ 位再补零仍合法，即使末位为一，新添的下一位也是零。第 10、69–70 条的有限规范唯一性给这个函数恰为 $z_{\rm infdig}(N_L)$，其中 $L=0$ 给总零函数。它与 $x$ 的距离不超过 $2^{-L}$，故有限核心稠密。
+
+由 $1-\alpha=\alpha^2$，
+$$
+\sum_{j\ge L}\alpha^{j+2}=\frac{\alpha^{L+2}}{1-\alpha}=\alpha^L.
+$$
+这同时给 $F_{\rm infdig}$ 的一致尾界和两点差的所述估计。有限部分和是连续坐标函数的线性组合，一致极限连续；与连续商映射 $\pi$ 复合给 $H_{\rm infdig}$ 连续。
+
+在有限核心上，直接使用第 51 条在原自然数域上的恒等式
+$$
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2},\qquad
+G_{j+1}=G_j+H_j,\qquad
+f(n)=\sum_jH_jz_{\rm infdig}(n)_j=\lfloor(n+1)\alpha\rfloor.
+$$
+按有限支撑求和即得显示的 $F_{\rm infdig}$ 值；第 51 条的 $-\alpha^2<f(n)-n\alpha<\alpha$ 给严格区间，包括 $n=0$。整数 $n+f(n)$ 在取模一时消去，得到与第 287–288 条相同的有限标量相位。这使用 $G_j=F_{j+2}$ 的权值次序，与 [GICT 第 4.2 条](GICT.md) 的 Fibonacci 下标按权值对应。最后，两个连续圆周值映射的相等集合在 Hausdorff 目标下为闭集；若均延拓 $\gamma$，该集合包含稠密核心，故等于整个载体。证毕。
+

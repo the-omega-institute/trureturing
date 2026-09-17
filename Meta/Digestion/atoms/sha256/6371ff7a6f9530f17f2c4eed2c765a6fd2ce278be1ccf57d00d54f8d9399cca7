@@ -1,0 +1,11 @@
+**证明。** 光滑性与周期性由指数函数、余弦函数及整数频率直接得到。令 $\ell=(-2k,2)$、$a=(1,k)$，则 $\ell\cdot a=0$，所以散度及完整对流项消失。再用
+
+$$
+\partial_tv_\lambda=-\nu\lambda v_\lambda,\qquad
+\partial_{xx}v_\lambda=-4k^2v_\lambda,\qquad
+\partial_{xy}v_\lambda=4kv_\lambda,\qquad
+\partial_{yy}v_\lambda=-4v_\lambda
+$$
+
+代入 TR.11 的残差定义，即得公式。
+

@@ -1,0 +1,2 @@
+**定理 462.3（所引证明的长度界）。**在 Walker 的 Proposition 6 证明中，取整数 $K\ge16$ 及正整数 $n,m$，满足 $K\le n<2K$、$1\le m\le\lfloor\frac1{10}\log(2K)\rfloor$，并记 $X_W=\frac12K\log K$。这些范围给 $nm\le X_W/2$。对实数 $y$ 记 $y_+=\max(y,0)$，奇异积分函数为 $J_W:\mathbb R\to\mathbb R_{\ge0}$、$J_W(d)=(X_W-|d|)_+$，因而 $J_W(nm)\ge X_W/2$。原文的 $nm\le X_W/5$ 不能由这些范围得到；此处使用上述足够界。
+

@@ -1,0 +1,6 @@
+**定义。** 令图临界群为
+
+$$\mathcal K(\mathcal D)=\operatorname{Div}^0(\mathcal D)/\operatorname{im}(BB^{\mathsf T}),$$
+
+其中 $\operatorname{Div}^0(\mathcal D)$ 为顶点整数系数和为零的格。当 $b>0$ 时，记 $Q_{\mathcal D}$ 的正 Smith 不变量为 $s_1\mid\cdots\mid s_b$，保留其中等于 $1$ 的项。
+

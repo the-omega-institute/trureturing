@@ -1,0 +1,12 @@
+**命题 31.2（有界损失的条件核扰动界）。** 对任意 $a\in A$ 和源支持中的 $(h,q)$，有
+$$
+\bigl|r_t(a\mid h,q)-r_s(a\mid h,q)\bigr|\le M\delta(h,q).
+$$
+
+**证明。** 令 $f(y)=\ell(a,y)/M\in[0,1]$。有限集合上的总变差对偶式给出
+$$
+\left|\sum_y(P_t-P_s)(y\mid h,q)f(y)\right|
+\le \operatorname{TV}(P_t(\cdot\mid h,q),P_s(\cdot\mid h,q)).
+$$
+乘以 $M$ 即得。证毕。
+

@@ -1,0 +1,21 @@
+## 18. 单群目标的轨道控制等价于完整因子化
+
+**定理。** 设 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。令 $f:\Lambda\twoheadrightarrow F$ 为到非交换有限单群的满射，$\Gamma=\ker f$，并假设 $f(H)<F$。对任意同态 $a:\Lambda\to A$，令 $A_0=a(\Lambda)$、$C=\ker a$。则下列条件等价：
+
+$$C\alpha\subseteq\Gamma\alpha;\qquad C\subseteq\Gamma;\qquad
+\exists\,\theta:A_0\twoheadrightarrow F,\ f=\theta\circ a.$$
+
+**证明。** 由第 9 节及 $\Gamma=\ker f$，第一条件等价于 $f(C)\subseteq f(H)$。$C$ 正规于 $\Lambda$，所以 $f(C)$ 正规于 $F$。单性及 $f(H)<F$ 强制 $f(C)=1$，即第二条件。反之第二条件直接给出第一条件。第二条件使 $\theta(a(x))=f(x)$ 良定义；乘法保持性和满射性来自 $f$。任何这样的因子化都消去 $C$。
+
+**推论。** 对第 17 节固定的真实曲面、曲线和 $f$，某个有限特征商 $q$ 能满足该轨道要求，当且仅当这个同一个 $f$ 经 $a_q(\mathcal M_g)$ 因子化。只证明某个单独扭转被看见，或只证明 $a_q$ 的像很大，不足以给出该因子化。
+
+**定理。** 在上述一般条件中，若 $A_0$ 有限，令
+
+$$B=\operatorname{im}(f,a)\le F\times A_0.$$
+
+则恰有两种可能：$B=F\times A_0$，或者 $B$ 是一个满射 $\theta:A_0\twoheadrightarrow F$ 的图像。后一种情形恰好对应轨道控制；等价的有限判据为
+
+$$\boxed{B\cap(F\times\{1\})=\{(1,1)\}.}$$
+
+**证明。** 该交等于 $f(C)\times\{1\}$。单性给出 $f(C)=1$ 或 $F$。前者使第二坐标投影 $B\to A_0$ 为同构，其逆的第一坐标即 $\theta$。后者使 $F\times\{1\}\subseteq B$；利用 $B\to A_0$ 满射即可得到整个直积。若给定 $\Lambda$ 的生成集，则 $B$ 由同一批生成元在 $f$ 与 $a$ 下的像对生成；不能独立生成两侧像后把它们默认视为联合像。
+

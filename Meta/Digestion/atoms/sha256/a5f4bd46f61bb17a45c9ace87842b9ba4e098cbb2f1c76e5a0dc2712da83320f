@@ -1,0 +1,12 @@
+**theorem 27.11 (Exact continuity locus for the compact digit topology).** For each fixed parameter, the map
+$$
+K^2\longrightarrow M(K),\qquad (x,y)\longmapsto P^{(t)}_{x,y},
+$$
+with the digit topology on its domain and $\sigma(M(K),C(K))$ on its codomain, is continuous at $(x,y)$ if and only if $\Gamma(x,y)$ is a singleton. Equivalently, its continuity locus is exactly
+$$
+\{(x,y):H(x)+H(y)\notin E\}
+\ \cup\ 
+\{(x_m^s,x_n^s):m,n\ge1,\ s\in\{+1,-1\}\}.
+$$
+No parameter gives a jointly continuous map on all of $K^2$.
+

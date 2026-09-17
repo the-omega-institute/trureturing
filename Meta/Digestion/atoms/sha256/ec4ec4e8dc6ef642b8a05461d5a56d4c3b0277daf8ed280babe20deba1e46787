@@ -1,0 +1,7 @@
+按定义1.1的内积方向，复用 [SingletonRecordClassicality 的 recordGram](../../../D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.lean)时，坐标换算为
+$$
+\operatorname{recordGram}(e)_{hk}
+=\sum_a(e_h)_a\overline{(e_k)_a}
+=\langle e_k,e_h\rangle=G_{kh}.
+$$
+因此既有记录通道所用的Hadamard乘子矩阵为$\operatorname{recordGram}(e)=G^{\mathsf T}$。

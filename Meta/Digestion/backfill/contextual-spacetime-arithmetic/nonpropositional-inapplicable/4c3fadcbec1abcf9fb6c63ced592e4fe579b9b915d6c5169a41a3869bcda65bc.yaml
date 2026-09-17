@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c3fadcbec1abcf9fb6c63ced592e4fe579b9b915d6c5169a41a3869bcda65bc
+  normalized_sha256: sha256:4c3fadcbec1abcf9fb6c63ced592e4fe579b9b915d6c5169a41a3869bcda65bc
+cas_ref: sha256:4c3fadcbec1abcf9fb6c63ced592e4fe579b9b915d6c5169a41a3869bcda65bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子定义反数值纤维及其元素类型，没有声称纤维的非空性或大小。
+    previous_atom_id: 76f91e276b69fa0e7ce2261266cd49edd0c531c385b44010d5797d35991936bd
+    next_atom_id: 5577b30a88030a085963becfa89ca4e6ba21c5746c9c52c581f505756c5b7605

@@ -1,0 +1,23 @@
+**定理 385.3。** 对任意集合 $X,Y$，包括空集合，下列操作是全部外部子集及全部外部函数之间的双射：
+$$
+\mathcal P(X)\longleftrightarrow\mathcal P(X^*),\qquad
+U\longmapsto\operatorname{Enc}[U],\quad B\longmapsto\operatorname{Dec}[B],
+$$
+$$
+Y^X\longleftrightarrow(Y^*)^{X^*},\qquad
+f\longmapsto f^*,\quad
+ g\longmapsto\bigl(x\mapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))\bigr).
+$$
+语义子集及语义函数空间仍准确为
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+其中每个 $B\subseteq X^*$ 的对应子集码为 $\operatorname{Pack}(B)$，且
+$$
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c\quad(c\in\mathfrak V_Z).
+$$
+这些双射用于 $K,\mathsf X_L,\mathscr Q,\mathscr Q_R,\mathbb T$ 及其任意子集时，没有有限性或可定义性限制。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd3821bc3ff74547e5d8a30c261694135ef17f702401cbe7ee3c7e812cad6a60
+  normalized_sha256: sha256:dd3821bc3ff74547e5d8a30c261694135ef17f702401cbe7ee3c7e812cad6a60
+cas_ref: sha256:dd3821bc3ff74547e5d8a30c261694135ef17f702401cbe7ee3c7e812cad6a60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子在已声明的非零实数类定义域上规定求逆的两个分支，是函数定义；其闭包和有限前缀性质由相邻命题承担。
+    previous_atom_id: aa9588d77104130e9e813fa2f39f7168dd09ef5f130e8b63df46bbd994b28c66
+    next_atom_id: 9f856532551ce9682455e0bd14e2bfde3e65fe2ba9d7221c11220bd21f7e954e

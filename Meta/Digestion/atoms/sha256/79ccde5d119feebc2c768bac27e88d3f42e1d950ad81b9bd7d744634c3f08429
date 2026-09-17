@@ -1,0 +1,6 @@
+**定理。** 第 8 节的返回映射与规范尺度映射满足锚定关系
+
+$$
+\boxed{T_L(m)=A_L+U_L(m-1),\qquad m\in\mathbb Z.}\tag{GS13}
+$$
+

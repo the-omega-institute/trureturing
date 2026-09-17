@@ -1,0 +1,14 @@
+**theorem 42.8 (The precise classical order and oriented-matroid connections).** For $p\in S(V)$, the quotient $E=V^*/Z_p$ carries an algebraic real-linear total order whose strictly positive elements are
+$$
+P_p=\{[\ell]\in E:p(\ell)=1\}.
+$$
+The set $P_p$ is a semispace at zero: a maximal convex subset of $E\setminus\{0\}$. Under a representing flag, the map
+$$
+E\longrightarrow\mathbb R^r,\qquad
+[\ell]\longmapsto(\ell(v_1),\ldots,\ell(v_r))
+\tag{42.11}
+$$
+is a linear order isomorphism to the first-nonzero-positive lexicographic order. No closed-positive-cone assumption is being imposed.
+
+For each finite $F$, the actual image $Q_F$ is exactly the covector set of the realizable oriented matroid of the finite configuration $F\subseteq V^*$. This statement concerns finite ground sets only.
+

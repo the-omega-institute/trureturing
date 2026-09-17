@@ -1,0 +1,5 @@
+因此对所有 $A$ 和实数 $c$，
+$$
+L_{A,c}\text{ 在 }B_A^{\rm cap}\text{ 中闭}
+\iff M_A<+\infty\ \text{ 或 }\ c\notin\mathbb D_+\setminus\{0\}.
+$$

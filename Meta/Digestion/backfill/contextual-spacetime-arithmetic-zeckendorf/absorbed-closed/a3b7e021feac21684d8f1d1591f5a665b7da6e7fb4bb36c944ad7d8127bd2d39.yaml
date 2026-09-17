@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:a3b7e021feac21684d8f1d1591f5a665b7da6e7fb4bb36c944ad7d8127bd2d39
+  normalized_sha256: sha256:a3b7e021feac21684d8f1d1591f5a665b7da6e7fb4bb36c944ad7d8127bd2d39
+cas_ref: sha256:a3b7e021feac21684d8f1d1591f5a665b7da6e7fb4bb36c944ad7d8127bd2d39
+coverage_gids:
+  - gid: D5/S3/Analytic/WeightedCapacity/ProbeTopologySequences.tendsto_tauPlus_iff_eventually_eq
+    target_statement_id: sha256:ba4ede92ed9e645f85e4ee0e78b1cb3bf1a204a3a468e59b15b1ca443de58fa3
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - cbfe9325d70f3480594e5ebc5f30fbb5a68c1c9ec376c25415c9a19cfd6d83a1
+    - 186594eeea8c61d74554e1d5479d4ecdf3445bacd91abd2ce5745b8255072cb0

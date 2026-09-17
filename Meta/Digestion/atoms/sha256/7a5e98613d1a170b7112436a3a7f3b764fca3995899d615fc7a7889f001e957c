@@ -1,0 +1,21 @@
+**定理 404.2。** 对任意联合域 $D\subseteq X\times Y$ 及函数 $f:D\to Z$，外部联合域是
+$$
+D_{\rm ext}=(e_X\times e_Y)[D].
+$$
+在 $(c,d)\in D_{\rm ext}$ 处的外部值为
+$$
+\widetilde f(c,d)=e_Z(f(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)).
+$$
+其原图码为
+$$
+\operatorname{Enc}(G_f)=
+\operatorname{Pack}\{
+\langle\chi_{X,Y}(c,d),\widetilde f(c,d)\rangle_Z:
+(c,d)\in D_{\rm ext}\}.
+$$
+每个固定有限元数及对任意 $E\subseteq D$ 的限制都保持准确联合域。若使用带互异成功、失败标签的严格部分求值，所有失败及成功值也双向保持。
+
+**证明。** $(c,d)\in D_{\rm ext}$ 当且仅当解码普通对属于 $D$。第 403.1 条将这个外部普通对送到原输入的单个码 $\chi(c,d)$，第 404.1 条再编码它与原输出组成的图边，得显示式。只有两个分量各自有效并不蕴含其普通对在 $D_{\rm ext}$，所以联合域条件不能用分量有效性替代。对 $E\subseteq D$ 逐边分离，得到相应图限制；$E=\varnothing$ 时边集合为空，公式照常成立。递归使用普通对与 $\chi$ 的比较便处理每个固定有限元组。
+
+具体地，可将严格结果记为普通标签对象 $\langle0,y\rangle$ 和 $\langle1,\varepsilon\rangle$，其中前者为成功值，后者为指定失败值；若有多个失败值，也逐一保留。普通配对单射性与 $\operatorname{Enc}$ 单射性使两种标签及所有失败值不会合并。在一个固定有限表达式中对构造次序归纳：输入的对应由双逆给出；若子表达式失败，严格规则两侧均传递同一失败；若子表达式均成功，则准确联合域在两侧等价，域外两侧均失败，域内由逐点求值式给对应成功值。于是整个表达式的成功域和输出相同。缺边不成为成功的零值。证毕。
+

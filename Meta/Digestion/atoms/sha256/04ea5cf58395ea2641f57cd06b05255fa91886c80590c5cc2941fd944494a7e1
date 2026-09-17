@@ -1,0 +1,16 @@
+**Proof.** If $\theta\notin U(D_f)$, (39.3) says that $P_\theta^+$ and $P_\theta^-$ agree at every input of $D_f$. Equation (39.16) makes their $f$-values equal. This proves (39.19), since $D_f$ is countable and each translated exceptional set is countable.
+
+If digit $j$ differs between $x_m^+$ and $x_m^-$, their prefixes of length $j+1$ differ. The exact prefix criterion in Theorem 20.2 gives $m\le G_{j+1}$, proving (39.20). The selector definition now gives the exact equality
+$$
+S(\chi_{b,j})=\Delta_j-H(b).
+$$
+If the values of $f=h_F\circ Q_F$ differ on a selector pair, at least one digit in $F$ must differ, proving (39.21). Its right-hand side is a finite union of finite sets.
+
+Finally, evaluation at zero gives different selector values exactly when the phase belongs to $E$, by Theorem 37.9. Irrationality makes the elements of $E$ distinct, so this is a countably infinite set.
+
+For the stronger support assertion, let $G=\{k\delta:k\in\mathbb Z\}$ and choose phases $\theta_0,\theta_1,\ldots$ in pairwise different cosets of $G$. Such a sequence exists recursively because each finite union of these countable cosets is a proper subset of the circle. Choose $b_r\in K$ with $H(b_r)=E_1-\theta_r$ and define
+$$
+g(p)=(\chi_{b_r,0}(p))_{r\ge0}\in\{0,1\}^{\mathbb N}.
+$$
+This map is continuous by coordinatewise continuity. Its $r$-th coordinate distinguishes $P_{\theta_r}^+$ and $P_{\theta_r}^-$, because the two lifts above $E_1$ have different lowest digits. Thus $\theta_r\in S(g)$ for every $r$. If a finite evaluation set $D$ determined $g$, the proof of (39.19) would give $S(g)\subseteq U(D)$. But each $E-H(b)$ lies in the single coset $G-H(b)$, so $U(D)$ lies in finitely many cosets and cannot contain all the $\theta_r$. This contradiction proves that finite evaluation support does not suffice in general. $\square$
+

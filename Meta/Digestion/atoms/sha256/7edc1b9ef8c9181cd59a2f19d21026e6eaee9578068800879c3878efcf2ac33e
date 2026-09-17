@@ -1,0 +1,52 @@
+**命题 118.10（第 116.5 节的剩余视野与稳定条件）。** 在固定的总更新模型上定义
+
+$$
+E_N(x,y)\quad\Longleftrightarrow\quad
+\forall w\in U^*,\ |w|\le N\Longrightarrow c(I_w(x))=c(I_w(y)).
+$$
+
+有限深度接口恰保留被查询的这些响应；其正确递归为
+
+$$
+E_0(x,y)\Longleftrightarrow c(x)=c(y),
+$$
+
+$$
+E_{N+1}(x,y)
+\Longleftrightarrow
+c(x)=c(y)\ \land\ \forall u\in U,\ E_N(I_u(x),I_u(y)).
+$$
+
+所以
+
+$$
+E_{N+1}\subseteq E_N,\qquad
+E_{N+1}(x,y)\Longrightarrow E_N(I_u(x),I_u(y)),
+$$
+
+$$
+N\ge1,\ E_N(x,y)\Longrightarrow E_{N-1}(I_u(x),I_u(y)).
+$$
+
+这些式子不宣称 $E_N$ 被一步更新保持在同一深度。若整个二元关系满足 $E_N=E_{N+1}$，则该层对全部更新稳定，并永久等于全部有限词的响应关系。这里需要关系在所有状态对上的相等，不能以一个状态对在相邻两层都成立来代替。
+
+证明。将非空词唯一分成首字母与尾词，尾词长度减少一，得到递归；缩小查询词集得到包含。由全关系相等和递归，$E_N$ 的每对后继仍在 $E_N$ 中；沿词归纳，得到任意长度响应相等。这是第 106.2 节所用的永久稳定原理。在 $X,U,O$ 固定有限非空、更新为总函数且 $c:X\to O$ 满射时，直接使用第 106.3 节及[ControlledFiniteStability](../../../D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.lean)的已有结论：存在最小稳定深度 $H$，并有
+
+$$
+H\le |X/E_\infty|-|O|\le |X|-|O|,
+\qquad E_\infty=\bigcap_{n\ge0}E_n.
+$$
+
+应用该界时可把 $O$ 限制为实际像 $c[X]$，以满足满射条件；该有限性条件不能由只固定一个查询深度代替。递减视野的部分操作版本亦见[Zeckendorf 卷定理 446.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+同层闭合与逐对稳定的反例可同时取
+
+$$
+X=\{0,1,2,3,4\},\quad U=\{e\},\quad
+I_e(i)=\min\{i+1,4\},\quad c(i)=\mathbf 1_{\{i=4\}}.
+$$
+
+状态零与一在深度一及二的响应都相同，但三次更新后的读数分别为零与一。因此 $E_1(0,1)$ 与 $E_2(0,1)$ 都成立，不蕴含完整等价；同时 $E_2(0,1)$ 成立而 $E_2(I_e(0),I_e(1))=E_2(1,2)$ 不成立。
+
+若某个记录 $q$ 合并 $x,y$，而某词 $w$ 使 $c(I_w(x))\ne c(I_w(y))$，该词证明任务 $c\circ I_w$ 不能经 $q$ 因子化。第 116.5 节“某条长度至多 $N$ 的词把它们分开，则当前接口不闭合”应按这一任务不足解释；它本身不证明深度 $N$ 接口违反同层更新不变性，后者须另检验上面的后继关系。
+

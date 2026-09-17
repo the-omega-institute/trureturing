@@ -1,0 +1,49 @@
+### 102.4 Zeckendorf 频率进入记忆，而不仅是标量相位
+
+把第 101 节的 Zeckendorf 频率选择接入事件频率：
+
+$$
+\omega_{p,\ell}
+=
+\begin{cases}
+\varphi^2\log p,&2\notin\operatorname{wdigits}(\ell),\\
+\varphi\log p,&2\in\operatorname{wdigits}(\ell).
+\end{cases}
+$$
+
+则两个事件的有效注入为
+
+$$
+\widetilde b_{p,\ell}
+=
+\exp(-it\omega_{p,\ell})b_{p,\ell}.
+$$
+
+Zeckendorf 位仍只决定局部旋转速度；顺序是否可见，取决于这些旋转后的注入是否进入共享记忆，以及稳定因子与局部因子是否产生非零曲率：
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)e^{-it_P\omega_P}b_P
+-
+(a-\lambda_P)e^{-it_Q\omega_Q}b_Q.
+$$
+
+所以同一组 Zeckendorf 标签可以有两种完全不同的接口：
+
+$$
+\Delta_{P,Q}=0
+\quad\Longrightarrow\quad
+\text{该记忆读出对这次交换不可见},
+$$
+
+而
+
+$$
+\Delta_{P,Q}\ne0
+\quad\Longrightarrow\quad
+\text{在访问记忆坐标的后续实验中，顺序可被区分}.
+$$
+
+这把“历史是否存在”改写成了可计算问题：不是问标签是否记录了先后，而是问允许的读出是否包含一个对交换曲率敏感的记忆坐标。
+

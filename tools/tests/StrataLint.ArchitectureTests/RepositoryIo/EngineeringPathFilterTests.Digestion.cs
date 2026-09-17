@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed partial class EngineeringPathFilterTests
@@ -132,8 +134,5 @@ public sealed partial class EngineeringPathFilterTests
     private static EngineeringTestPlan EvaluateDigestion(IReadOnlyList<string> paths,
         TestProjectTopologySnapshot snapshot, bool full = false, string fileMap = DigestionFileMap) =>
         EngineeringTestPlanPolicy.EvaluateOrdinary(paths, snapshot, snapshot, full,
-            AdmissionPlanePolicy.Evaluate(
-                RawRepositorySnapshot.Create([]),
-                RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(AdmissionPlanePolicy.FileMapPath, fileMap)]),
-                paths));
+            AdmissionPlanePolicy.Evaluate(Encoding.UTF8.GetBytes(fileMap), paths));
 }

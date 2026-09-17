@@ -1,0 +1,10 @@
+**证明。** 由 Fibonacci 递推，
+$C_{r_p}=\gcd(F_{r_p},F_{r_p-1}-1)$。结合 $s_p$ 的定义与 R2，
+$\varphi^{r_p}-1$ 的两个整数坐标都被
+$p^{s_p}$ 整除，但不都被 $p^{s_p+1}$ 整除。因此存在
+$B\in\mathcal O$ 使
+
+$$
+\varphi^{r_p}=1+p^{s_p}B,\qquad p\nmid B.
+$$
+

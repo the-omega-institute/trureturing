@@ -1,0 +1,9 @@
+**theorem 41.3 (Convex-hull characterization and classical separation).** With $A=\{a_i:i\in I\}$ and $\operatorname{conv}\varnothing=\varnothing$, finite feasibility is equivalent to
+$$
+0\notin\operatorname{conv}A.
+$$
+Equivalently, there is no finitely supported family of real coefficients $\lambda_i\ge0$, not all zero, satisfying
+$$
+\sum_i\lambda_i a_i=0.
+$$
+

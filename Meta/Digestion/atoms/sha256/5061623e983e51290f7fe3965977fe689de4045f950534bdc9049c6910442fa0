@@ -1,0 +1,8 @@
+**定义。** 令 $K$ 为有限维实观察函数空间上的一步转移算子，$P^2=P$，$Q=I-P$，并定义
+
+$$
+\overline K=PKP,\qquad
+\Delta_2=PK^2P-\overline K^2,\qquad
+B=QKP.
+$$
+

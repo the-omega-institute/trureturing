@@ -1,0 +1,15 @@
+**定理 411.1。** 对每个固定有限一阶集合论公式 $\varphi(x_1,\ldots,x_r)$ 及全部集合参数，第 75–78 条的同一定义性解释给
+$$
+\varphi(x_1,\ldots,x_r)
+\iff
+\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+这包括第 390–410 条中量化全部子集、函数、实值函数、测度和近似族的每个固定断言。全部 ZFC 公理及分离、替代的每个实例都在该解释中成立；添加这里的已证定义和定理对原集合论语言保守。
+
+若已给外部模型 $\mathfrak M\models\mathrm{ZFC}$，其内部的同一定义图给外部双射
+$$
+\operatorname{Enc}^{\mathfrak M}:|\mathfrak M|
+\longrightarrow\mathfrak V_Z^{\mathfrak M},
+$$
+保持并反映模型成员与语义成员，因而保持每个外部标准有限公式。
+

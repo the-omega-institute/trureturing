@@ -1,0 +1,55 @@
+### 101.1 Zeckendorf 位选择两种黄金步长
+
+对素数 $$p$$ 和层数 $$\ell$$，项目定义一步频率增量
+
+$$
+\omega_{p,\ell}
+=
+\operatorname{primeLayerFrequency}(p,\ell+1)
+-
+\operatorname{primeLayerFrequency}(p,\ell).
+$$
+
+`prime_step_frequency_zeckendorf` 证明，最低 Zeckendorf 位决定两种频率之一：
+
+$$
+\boxed{
+\begin{aligned}
+2\notin\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi^2\log p,\\
+2\in\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi\log p.
+\end{aligned}
+}
+$$
+
+相应的单位圆相位为
+
+$$
+\Phi_{p,\ell}(t)
+=
+\exp\!\left(i\,t\,\omega_{p,\ell}\right).
+$$
+
+`prime_step_phase_euler` 和 `prime_step_phase_norm` 给出
+
+$$
+\Phi_{p,\ell}(t)
+=\cos(t\omega_{p,\ell})+i\sin(t\omega_{p,\ell}),
+\qquad
+|\Phi_{p,\ell}(t)|=1.
+$$
+
+所以在这个明确模型中，Zeckendorf 位改变的是旋转速度；它本身不产生衰减。长步还满足
+
+$$
+\exp(i t\varphi^2\log p)
+=
+\exp(i t\varphi\log p)\,
+\exp(i t\log p),
+$$
+
+因为 $$\varphi^2=\varphi+1$$。这是一条频率分解，不是说物理系统必然存在两个独立的记录寄存器。
+

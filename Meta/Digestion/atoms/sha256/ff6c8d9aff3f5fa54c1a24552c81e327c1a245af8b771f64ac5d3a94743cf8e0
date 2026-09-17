@@ -1,0 +1,8 @@
+**定理 440.6。** 任意集合索引 $J$ 和集合族 $(Y_i)_{i\in J}$ 有积双射
+$$
+\Psi:\prod_{i\in J}Y_i^*\to\left(\prod_{i\in J}Y_i\right)^*,\quad\Psi(c)=\operatorname{Enc}(i\mapsto\operatorname{Dec}(c_i)),
+$$
+逆为 $\operatorname{Enc}(p)\mapsto(i\mapsto\operatorname{Enc}(p_i))$，且完整图满足
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}\{\langle\operatorname{Enc}(i),\operatorname{Enc}(p_i)\rangle_Z:i\in J\}.
+$$

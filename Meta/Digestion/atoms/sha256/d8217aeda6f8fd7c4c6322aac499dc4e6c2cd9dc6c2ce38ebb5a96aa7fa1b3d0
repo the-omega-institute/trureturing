@@ -1,0 +1,11 @@
+**证明。** 展开两个秩一更新：
+
+$$P_zP_w=I+z\phi_z+w\phi_w+z\langle w,z\rangle\phi_w.$$
+
+乘 U_Q 后取迹，得到
+
+$$-\nu(z)^TQ\nu(z)-\nu(w)^TQ\nu(w)
++\langle w,z\rangle\langle U_Qz,w\rangle.$$
+
+在指定 z=b_i、w=b_j+a_i 下，后面两个配对分别为 -1 和 -Q_{ji}，而 ν(z)、ν(w) 分别为第 i、j 个标准向量。代入并用对称性即得。恢复式只是相加减，所以对整数、任意有限域及复合模数同时成立。
+

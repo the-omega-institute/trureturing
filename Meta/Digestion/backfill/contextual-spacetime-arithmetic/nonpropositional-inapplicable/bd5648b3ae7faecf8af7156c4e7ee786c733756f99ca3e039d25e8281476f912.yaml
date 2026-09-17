@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd5648b3ae7faecf8af7156c4e7ee786c733756f99ca3e039d25e8281476f912
+  normalized_sha256: sha256:bd5648b3ae7faecf8af7156c4e7ee786c733756f99ca3e039d25e8281476f912
+cas_ref: sha256:bd5648b3ae7faecf8af7156c4e7ee786c733756f99ca3e039d25e8281476f912
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom records the reasoning-seat carriers, prior exposure, dispatch bypass provenance, and unavailable review artifacts for a theory batch. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the surrounding PR5 theory atoms.
+    previous_atom_id: 06026bbbbcbd38439ad22b6ebc7af31f73d722b7c0d67e17316d757da74c1a1d
+    next_atom_id: 6b5e74500f30053d728a07e79e4f52dc595c3fbfa649ebb3af08b278e4116bfd

@@ -1,0 +1,23 @@
+**定理 388.2。** 对所有原自然参数 $L\ge1,h\ge0,J\ge L$，有
+$$
+(T^*)^h=e_KT^he_K^{-1}.
+$$
+以下两个断言都等价于 $G_J\ge G_L+h$：
+$$
+\exists g\in(\mathsf X_L^*)^{\mathsf X_J^*}\ \forall c\in K^*,\quad
+P_L^*((T^*)^hc)=g(P_J^*c),
+$$
+$$
+\exists g\in(\mathsf X_L^*)^{\mathsf X_J^*}\ \forall \nu\in\mathsf N_Z,\quad
+P_L^*z^*(\nu+_{\mathsf N}\operatorname{NatZ}(h))
+=g(P_J^*z^*(\nu)).
+$$
+成功时该 $g$ 唯一，为 $f_{L,h,J}^*$。其参数判据完整编码为
+$$
+\mathsf G(\operatorname{NatZ}(L))+_{\mathsf N}\operatorname{NatZ}(h)
+\le_{\mathsf N}\mathsf G(\operatorname{NatZ}(J)).
+$$
+因此同一结论也量化全部 $\lambda,\eta,\iota\in\mathsf N_Z$ 满足
+$\operatorname{NatZ}(1)\le_{\mathsf N}\lambda\le_{\mathsf N}\iota$，分别取
+$L=\operatorname{Dec}(\lambda),h=\operatorname{Dec}(\eta),J=\operatorname{Dec}(\iota)$。最小深度码为 $\operatorname{NatZ}(J_{\min}(L,h))$。
+

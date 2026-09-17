@@ -1,0 +1,24 @@
+**定义 381.1。** 记 $E_m=[-m\phi]$，$m\ge1$。第 372.4 条的实纤维与指标枚举给
+$$
+H^{-1}(\{E_1\})=\{u,v\},\qquad
+H^{-1}(\{E_m\})=\{w0v,w10v\}\quad(m\ge2),
+$$
+其中 $w$ 是唯一的有限块字，$t=L(w)$ 满足 $m=G_{t+1}-N_w$。定义定向原像
+$$
+e_1^-=v,\qquad e_1^+=u,
+$$
+$$
+(e_m^-,e_m^+)=
+\begin{cases}
+(w10v,w0v),&t\text{ 为偶数},\\
+(w0v,w10v),&t\text{ 为奇数}
+\end{cases}
+\qquad(m\ge2).
+$$
+圆周的正向为实数增加的方向；负侧为从较小局部实坐标趋近，正侧为从较大局部实坐标趋近。对 $p\in\mathsf X_L,L\ge1$，将其补成完整块字
+$$
+c(p)=\begin{cases}p,&p_{L-1}=0,\\p0,&p_{L-1}=1,\end{cases}
+\qquad d(p)=L+p_{L-1},\qquad S_p=\sum_{j<L}\eta_jp_j,
+$$
+并置 $I_p=S_p+r^{d(p)}I=[\ell_p,b_p]$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0660575b26cc7049776b1a7c8cdeddc3a01085df035e02e11980056ffc46f9fa
+  normalized_sha256: sha256:0660575b26cc7049776b1a7c8cdeddc3a01085df035e02e11980056ffc46f9fa
+cas_ref: sha256:0660575b26cc7049776b1a7c8cdeddc3a01085df035e02e11980056ffc46f9fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子固定第一次读取前的 Bell 有效输入与允许控制，定义受限任务的上确界分数，没有断言最优值或达到性。
+    previous_atom_id: 07c37e1d44c773dd632fcee935e1706d34e7d77e1e709abf549f3c092d97102d
+    next_atom_id: 3cea128fe63971c9574d0c0189b9a3d48f48956b2528ffa398e33e5500deb9f2

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fa20ef66576c2fa4d9b9f940a6f90841cc5a0ae03fdab2741e56386ed896067d
+  normalized_sha256: sha256:fa20ef66576c2fa4d9b9f940a6f90841cc5a0ae03fdab2741e56386ed896067d
+cas_ref: sha256:fa20ef66576c2fa4d9b9f940a6f90841cc5a0ae03fdab2741e56386ed896067d
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/UpperHalfPrimeCertificateExtension.certificate_extension
+    target_statement_id: sha256:448602553d85b0d24a533a3fc699a495623b07ca314062b67f7eed0919c0adb4
+receipts:
+  unresolved_subitems: []

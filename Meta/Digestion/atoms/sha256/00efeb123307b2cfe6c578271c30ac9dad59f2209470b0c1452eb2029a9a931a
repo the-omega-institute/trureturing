@@ -1,0 +1,9 @@
+**Theorem.** Uniformly for X>=2, the count of m in [0,X] for which some
+j>J satisfies F_j|m^2+1 is at most
+
+$$
+XT_J+O\bigl(X^{1/2}\log X\bigr).                  \tag{QR4}
+$$
+
+The implicit constant is absolute and independent of J.
+

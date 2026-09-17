@@ -1,0 +1,34 @@
+**定义 16.0（数字观察、平移区分与加法闭图）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，并置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$
+令 $Z(n)$ 为 $n$ 的有限 Zeckendorf 规范字按低位到高位排列后补零所得的无限字，包括 $Z(0)=0_K$。设
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad
+D_L=\{\text{长度为 }L\text{ 的合法二值字}\},
+$$
+$$
+\pi_L(x)=(x_0,\ldots,x_{L-1}),\qquad q_L=\pi_L\circ Z,\qquad
+\delta_j(x)=x_j.
+$$
+其中 $D_0$ 仅含空字，将 $D_1$ 与 $\{0,1\}$ 自然等同，故 $q_1(n)=Z(n)_0$。各数字空间取乘积拓扑，有限读数空间取离散拓扑。沿用带符号相位
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad H(x)=[F(x)],\qquad
+\gamma(n)=[n\phi],\qquad E=\{[-m\phi]:m\ge1\}.
+$$
+对有限离散集 $D$ 和函数 $f:\mathbb N\to D$，定义平移区分关系
+$$
+n\equiv_f m\quad\Longleftrightarrow\quad
+\forall k\in\mathbb N,\ f(n+k)=f(m+k).
+$$
+称 $f$ 最终周期，若存在 $t\ge0$、$d\ge1$，使所有 $n\ge t$ 满足 $f(n+d)=f(n)$。定义
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+

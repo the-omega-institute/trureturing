@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e04231bd60ff8cb89e93abf7c64c6b126803dafde1b24e0028d1deb0bbd62f6
+  normalized_sha256: sha256:5e04231bd60ff8cb89e93abf7c64c6b126803dafde1b24e0028d1deb0bbd62f6
+cas_ref: sha256:5e04231bd60ff8cb89e93abf7c64c6b126803dafde1b24e0028d1deb0bbd62f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section zero explains the repository process for append-only preregistration replacement after an observed witness differs. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the G-c-L1 witness and its candidate statements.
+    previous_atom_id: c5c9296586a6fe9dedfa0f0d4d197dd9df1e0a760129d9d36dec1d83d0563208
+    next_atom_id: 5392f69b45faa6ec96d3e8c15459fb185cfda8b960b2edd4709403441c1a8977

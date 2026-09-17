@@ -1,0 +1,8 @@
+**定理 442.6（定量接口的有限改写及两个反例）。** 在 $H_{\rm Nic,q}$ 和 RH 下，对 $k\ge1$，
+$$
+e^\gamma\log\Theta_k+\frac{c_{\rm Nic}(2)}{\sqrt{\Theta_k}}
+\le \frac1{E_k}\le
+e^\gamma\log\Theta_k+\frac{c_{\rm Nic}(P_{66})}{\sqrt{\Theta_k}}.
+$$
+无进位的素数槽增长本身不推出 Nicolas 型不等式，约数格的和也不是整数初段的和。
+

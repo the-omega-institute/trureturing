@@ -1,0 +1,22 @@
+**定理 403.1。** 对任意集合 $X,Y$，第 378.4 条的乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z
+$$
+是双射，且
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+对全部关系 $A\subseteq X\times Y$，令
+$$
+A_{\rm ext}=(e_X\times e_Y)[A]\subseteq X^*\times Y^*.
+$$
+则
+$$
+\operatorname{El}(\operatorname{Enc}(A))=\chi_{X,Y}[A_{\rm ext}],
+\qquad
+\operatorname{Enc}(A)=\operatorname{Pack}(\chi_{X,Y}[A_{\rm ext}]).
+$$
+这些式子给全部关系的双向对应，包括空关系。
+

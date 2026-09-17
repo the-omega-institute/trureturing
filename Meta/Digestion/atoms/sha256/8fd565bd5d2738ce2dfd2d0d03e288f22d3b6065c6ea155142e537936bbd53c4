@@ -1,0 +1,6 @@
+**定理。** 对每个整数 $m>1$，
+
+$$
+\boxed{\rho(m)=m\iff\exists k\ge1:\ m=2\cdot3^k.}\tag{JP8}
+$$
+

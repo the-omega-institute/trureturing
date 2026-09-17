@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b4d8ea0be82296865d566ec819925fc048ca48be07abf9a05b19076c2e725c7
+  normalized_sha256: sha256:0b4d8ea0be82296865d566ec819925fc048ca48be07abf9a05b19076c2e725c7
+cas_ref: sha256:0b4d8ea0be82296865d566ec819925fc048ca48be07abf9a05b19076c2e725c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 41.4 records final engineering-source identity, CAS and backfill counts, and canonical ingestion ownership. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with P2 definitions 31-33 and propositions 58-63.
+    previous_atom_id: ec5733d5eb5b61e028404083c4ed153b1575a10499ca86d6185c77c69c3f70f1
+    next_atom_id: 0d69b4565fb3118691b08fe6e07107c79cd1e1848ebafd6cd3990a9095734044

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00f97b01e4b510807b46f5e3e3dc94c15ec7f3db6dc04342c4168d74ae2bb0a3
+  normalized_sha256: sha256:00f97b01e4b510807b46f5e3e3dc94c15ec7f3db6dc04342c4168d74ae2bb0a3
+cas_ref: sha256:00f97b01e4b510807b46f5e3e3dc94c15ec7f3db6dc04342c4168d74ae2bb0a3
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.TablePath
+    target_statement_id: sha256:28846c470c8b17a973bc57cad56d7c7985d8b09f499af06f708e896d69e3f7fc
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.TableStep
+    target_statement_id: sha256:4f07c0d73efc1b551322dab73a630f6457086bb43a8de73a28644b11feafdef9
+receipts:
+  unresolved_subitems: []

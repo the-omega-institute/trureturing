@@ -1,0 +1,4 @@
+**命题。** 若 $\Lambda=M$ 且 $f(\mathcal I_g)=F$，平凡字符块不能实现 $f$。任何成功块必须为非平凡 $S$ 类型，并满足同源联合像条件
+
+$$\operatorname{im}(f,\psi_\chi)\cap(F\times\{1\})=\{(1,1)\}.$$
+

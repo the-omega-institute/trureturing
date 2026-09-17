@@ -1,0 +1,20 @@
+**定理 377.1。** 在乘积拓扑下，不存在连续映射
+$$
+\operatorname{Add}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Add}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(n+k)$；也不存在连续映射
+$$
+\operatorname{Mul}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Mul}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(nk)$。共同核心拓扑的乘积上，二元加法连续，每个固定自然平移的连续延拓为 $T_{\rm infdig}^h$。
+
+**证明。** 若 $\operatorname{Add}$ 存在，与连续对角映射 $x\mapsto(x,x)$ 复合便连续延拓倍二映射，违反定理 376.1 的 $m=2$ 情形。若 $\operatorname{Mul}$ 存在，沿连续映射 $x\mapsto(x,z_{\rm infdig}(2))$ 限制，又得到同一个被排除的倍二延拓。
+
+圆周加法满足
+$$
+\rho(s+t,s'+t')\le\rho(s,s')+\rho(t,t')\qquad(s,t,s',t'\in\mathbb T),
+$$
+由实数代表的三角不等式及整数平移可得，因而联合连续。其在 $\gamma[\omega]\times\gamma[\omega]$ 上的值仍在 $\gamma[\omega]$，且 $\gamma(n)+\gamma(k)=\gamma(n+k)$。通过 $\gamma$ 与共同核心之间的同胚，得到核心二元加法连续。固定平移的延拓已由定理 375.3 给出。
+
+第 70 条的有限字算术及全部通常自然数等式保持在其原有限域上。所证不存在性排除的是这个特定紧载体上延拓自然算术的连续总二元运算，因而也排除这样的连续总半环结构；它不涉及其他载体的算术结构。证毕。
+

@@ -1,0 +1,12 @@
+**定义 443.4（未过滤的互素计数证书）。** 对 $N\in\mathbb N$ 和平方自由 $R>1$，将约数排序为 $1=a_1<\cdots<a_t=R$，记
+$$
+b_i=\sum_{j\le i}\mu(a_j),\quad e_R=\frac{\Phi(R)}R,\quad
+C_R(x)=\#\{1\le d\le x:(d,R)=1\}\quad(x\ge0),
+$$
+$$
+U_R(N)=\sum_{\substack{1\le d\le N\\(d,R)=1}}|B_R(N/d)|,
+\qquad
+c_R=e_R\sum_{i<t}|b_i|(a_i^{-1}-a_{i+1}^{-1}).
+$$
+$U_R$ 保留所有互素 $d$，包括非平方自由者；这是先只使用 $|\mu(d)|\le1$ 得到的证书。另定义 $C_1(x)=\lfloor x\rfloor$、$U_1(N)=N,c_1=1$。
+

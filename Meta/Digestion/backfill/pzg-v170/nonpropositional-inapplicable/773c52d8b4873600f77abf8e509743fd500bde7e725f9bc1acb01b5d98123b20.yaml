@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:773c52d8b4873600f77abf8e509743fd500bde7e725f9bc1acb01b5d98123b20
+  normalized_sha256: sha256:773c52d8b4873600f77abf8e509743fd500bde7e725f9bc1acb01b5d98123b20
+cas_ref: sha256:773c52d8b4873600f77abf8e509743fd500bde7e725f9bc1acb01b5d98123b20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 27.841 corrects repository research-tier classifications for the listed candidate lanes. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the candidate statements enumerated in the classification.
+    previous_atom_id: 80c76a208e910c351d9b35aa6fecb24400b48ae9cafad67deb4249ff930f06c0
+    next_atom_id: f27abfbc0e1bc86eb7d79eaebd5d00cd074223555b4668f93b99c2946ca7dcee

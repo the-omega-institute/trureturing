@@ -1,0 +1,12 @@
+**命题 124.9（连续延拓保持每个有限缺陷）。** 若存在连续延拓 $\widehat T:\widehat X\to\mathcal D_d$，把定义 124.5 中的定义域换成 $\widehat X$，而保持 $W_k$ 与模拟器类不变，则对每个 $k$ 有
+$$
+e_k(\widehat T)=e_k(T),\qquad \omega_k(\widehat T)=\omega_k(T).
+$$
+更强地，对每个 $w\in W_k$ 与每个中心 $\sigma\in\mathcal D_d$，
+$$
+\sup_{z\in\widehat F_{k,w}}D(\widehat T(z),\sigma)
+=\sup_{x\in F_{k,w}}D(T(x),\sigma).
+$$
+证明。核心包含于完备载体给右边不大于左边。任一 $z\in\widehat F_{k,w}$ 的截断 $\tau_nz$ 在 $n\ge k$ 时属于 $F_{k,w}$；连续性使其到中心的距离趋于 $D(\widehat T(z),\sigma)$，每项又不超过右侧上确界，故反向不等式成立。
+逐对截断同样证明每个柱上的直径上确界不变；对中心取下确界、对有限个柱取最大值便给两个结论。无限串可以使某个上确界真正达到，但不会在连续延拓下增大任何有限层最坏误差。
+

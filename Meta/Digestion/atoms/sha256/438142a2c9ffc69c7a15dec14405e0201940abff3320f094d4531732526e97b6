@@ -1,0 +1,6 @@
+**定理 426.1（预测八·十四边而无共同起点）。** 在 $R_6$ 的数值坐标中，
+$$
+12\longrightarrow0\longrightarrow1\longrightarrow\cdots\longrightarrow12\longrightarrow0
+$$
+是十四条边、十五次观察的路径。不存在 $n\in\omega$ 使 $P_6z(n+t)$ 在 $0\le t\le14$ 上给出此路径；也不存在 $x\in K$ 使 $P_6T^tx$ 给出此路径。
+

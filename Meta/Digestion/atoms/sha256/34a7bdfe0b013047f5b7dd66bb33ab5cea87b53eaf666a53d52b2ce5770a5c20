@@ -1,0 +1,10 @@
+**定理。** 共同平移不改变交叉系数，共同反射则使它取共轭；特别地，
+
+$$
+\boxed{
+\mathcal C(z_t,w_t)=\mathcal C(z,w),\qquad
+\operatorname{Im}\mathcal C(z^{\mathrm{mir}},w^{\mathrm{mir}})
+=-\operatorname{Im}\mathcal C(z,w).
+}\tag{GC14}
+$$
+

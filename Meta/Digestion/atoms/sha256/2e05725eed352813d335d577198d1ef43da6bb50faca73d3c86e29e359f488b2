@@ -1,0 +1,53 @@
+**定理 418.6（七字段、全档案及原运算守卫的完整比较）。** 对定义 418.5 的每个完整 $X$，$\operatorname{Enc}(X)$ 的两个语义字段为 $\operatorname{Enc}(C),\operatorname{Enc}(A)$；情境的七字段、全部属性图和关系图均逐项保留。出现身份不因来源相等而合并。全部 $A\subseteq\Omega$、全部选择族及其任意索引族均保持；$\Omega\setminus A$、$\mathcal P(\Omega)\setminus\mathcal K$ 与补集映射在族 $\mathcal K\subseteq\mathcal P(\Omega)$ 上的直接像各有原来的层级。
+
+补集保持完整 $C$ 并给
+$$
+N_C(A)=\Omega\setminus A,\quad
+q_C(N_C(A))=u(C)-q_C(A),\quad N_C(N_C(A))=A.
+$$
+对全部选择都投影为算术负号的充要条件恰为 $u(C)=0$。
+
+对 $X,Y$，记 $\iota_0(a)=\langle0,a\rangle$、$\iota_1(b)=\langle1,b\rangle$。并行和的三个完整集合为
+$$
+\begin{aligned}
+E_{X\boxplus Y}&=\iota_0[E_X]\cup\iota_1[E_Y],\\
+\Omega_{X\boxplus Y}&=\iota_0[\Omega_X]\cup\iota_1[\Omega_Y],\\
+A_{X\boxplus Y}&=\iota_0[A_X]\cup\iota_1[A_Y].
+\end{aligned}
+$$
+两组四属性在整个旧域上复制，只保留两组内部偏序。时间复合使用相同三个集合与属性，增加每条左档案到右档案的边，其准确域为
+$$
+\forall a\in E_X\ \forall b\in E_Y\quad t_X(a)<t_Y(b),
+\qquad\text{等价于 }M_X<m_Y.
+$$
+空档案依空真解释；$s_X$ 不替代 $M_X$。显式时间平移 $T_k$，$k\in J$，逐事件改为 $t(e)+k$，保持为另一个明确运算。
+
+档案乘法的完整定义为
+$$
+\begin{gathered}
+p_{ab}=\langle2,\langle a,b\rangle\rangle,\qquad
+\mathcal P_{X,Y}=\{p_{ab}:a\in\Omega_X,b\in\Omega_Y\},\\
+E_{X\boxtimes Y}=\iota_0[E_X]\cup\iota_1[E_Y]\cup\mathcal P_{X,Y},\qquad
+\Omega_{X\boxtimes Y}=\mathcal P_{X,Y},\qquad
+A_{X\boxtimes Y}=\{p_{ab}:a\in A_X,b\in A_Y\}.
+\end{gathered}
+$$
+旧四属性全部复制，新四属性为
+$$
+\begin{aligned}
+t(p_{ab})&=\max(t_X(a),t_Y(b))+1,\\
+x(p_{ab})&=x_X(a)+x_Y(b),\\
+\sigma(p_{ab})&=\sigma_X(a)\sigma_Y(b),\\
+\rho(p_{ab})&=\operatorname{pair}(\rho_X(a),\rho_Y(b)).
+\end{aligned}
+$$
+偏序为两组旧关系与父边 $\iota_0(a)\prec p_{ab},\iota_1(b)\prec p_{ab}$ 的传递闭包。并行和与合法时间复合的 $q,u$ 分别相加；档案乘法满足
+$$
+q(X\boxtimes Y)=q(X)q(Y),\quad
+u(C_{X\boxtimes Y})=u(C_X)u(C_Y),\quad
+|E_{X\boxtimes Y}|=|E_X|+|E_Y|+|\Omega_X||\Omega_Y|.
+$$
+两份旧档案均嵌入乘积，内部偏序保持并反映。即使读数为零或当前区域为空也不删旧档案；这个嵌入不声称恢复被结果遗忘的旧选择。
+
+任意 $S\subseteq J_{\rm CSA}^3$、$I\subseteq J$ 的空间与时间筛选分别取 $A\cap x^{-1}(S)$、$A\cap t^{-1}(I)$，保留整个 $C$。所有联合电荷的零边、各端点及素数槽条件也被完整运输。上述每个合法运算的码侧输出恰为原完整输出的 $\operatorname{Enc}$，定义域在两侧等价。
+

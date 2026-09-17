@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0091b9e132dfa19ca6b6bd4c4ab632a7574279d0bd8eebcb7a1dfa811fafbc36
+  normalized_sha256: sha256:0091b9e132dfa19ca6b6bd4c4ab632a7574279d0bd8eebcb7a1dfa811fafbc36
+cas_ref: sha256:0091b9e132dfa19ca6b6bd4c4ab632a7574279d0bd8eebcb7a1dfa811fafbc36
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryGenerating.mixed_coefficient
+    target_statement_id: sha256:ea1ecc41e3c6fcbca131a8c23e82d21107addb0368488ae6f8a497ace4bfaec8
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+**证明。** $q=1$ 时 $S_1=1$。对 $q\ge2$，令 $r=q-1$，网格间距为 $h=\kappa/(4r)$。每个系数的分子绝对值不超过一，分母绝对值等于 $h^r i!(r-i)!$。因此
+
+$$
+S_q\le(4r/\kappa)^r\sum_{i=0}^r\frac1{i!(r-i)!}
+=\frac{(8r/\kappa)^r}{r!}.
+$$
+
+由 $\log(r!)=\sum_{j=1}^r\log j\ge\int_1^r\log x\,dx\ge r\log r-r$ 得 $r!\ge(r/e)^r$。结合 $e<3$，得到 $S_q\le(24/\kappa)^r$。证毕。
+

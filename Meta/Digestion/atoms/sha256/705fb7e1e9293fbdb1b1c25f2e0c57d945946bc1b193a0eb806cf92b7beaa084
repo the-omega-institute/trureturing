@@ -1,0 +1,19 @@
+**定理 33.9（几何概率的初始律与位置平稳概率的密度）。** 按状态 $0,1$ 排列，令
+$$
+p=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right).
+$$
+几何概率 $\nu$ 是初始律为 $p$、转移矩阵为 $P$ 的单侧 Markov 概率。以 $\pi$ 为初始律、以同一个 $P$ 为转移矩阵的概率 $\mu_{\mathrm{st}}$ 是 $\sigma$ 不变的，并且
+$$
+\frac{d\mu_{\mathrm{st}}}{d\nu}(x)=
+\begin{cases}
+\displaystyle\frac1{\alpha(1+\alpha^2)},&x_0=0,\\[4pt]
+\displaystyle\frac1{1+\alpha^2},&x_0=1.
+\end{cases}
+$$
+因此二者相互绝对连续但不相等，而且
+$$
+\sigma_*\nu\ne\nu,\qquad T_*\mu_{\mathrm{st}}\ne\mu_{\mathrm{st}}.
+$$
+

@@ -1,0 +1,17 @@
+**命题 378.9。** 第 332、335 条的四对字段双射保持精确的原域：
+$$
+\operatorname{qenc}:\mathbb Q\leftrightarrow\mathsf{RatFld}:\operatorname{qdec},\qquad
+\operatorname{penc}:\mathbb Q/\mathbb Z\leftrightarrow\mathsf{RatPhaseFld}:\operatorname{pdec},
+$$
+$$
+\operatorname{cenc}_\phi:\phi\mathbb Q\leftrightarrow\mathsf{Coeff}_\phi:\operatorname{cdec}_\phi,\qquad
+\operatorname{genc}_\phi:C_\phi\leftrightarrow\mathsf{Phase}_\phi:\operatorname{gdec}_\phi,
+\qquad C_\phi=\{[\phi q']:q'\in\mathbb Q\}.
+$$
+这里 $\mathbb Q/\mathbb Z$ 为第 332 条的 $\mathsf D_{\rm rat}$，每个箭头的逆都只在所列另一端使用。每个有限 $\gamma(n)$ 可用 $\operatorname{genc}_\phi$；但
+$$
+F_{\rm infdig}(z_{\rm infdig}(1))=\phi-2\notin\phi\mathbb Q,\qquad
+[1/2]\notin C_\phi.
+$$
+全体 $F_{\rm infdig}$、$H_{\rm infdig}$ 的输出分别使用完整实数及完整圆周解释。$K_{\rm infdig}$ 不可数，不存在将其全部点单射表示为有限字的函数。
+

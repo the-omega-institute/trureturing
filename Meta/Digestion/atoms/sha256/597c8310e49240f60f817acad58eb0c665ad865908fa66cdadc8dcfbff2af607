@@ -1,0 +1,9 @@
+**定义 18（双空间读数）。** 对 $X=(C,A)\in\mathcal B$ 定义
+
+$$
+\pi(X)=(w_X,z_X),\qquad
+w_X(p)=\sum_{e\in\Omega_C,\ x(e)=p}\sigma(e),\qquad
+z_X(p)=\sum_{e\in A,\ x(e)=p}\sigma(e).
+\tag{SP}
+$$
+

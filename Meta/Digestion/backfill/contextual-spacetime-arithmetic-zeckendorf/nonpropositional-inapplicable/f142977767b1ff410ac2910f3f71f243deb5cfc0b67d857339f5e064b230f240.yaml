@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f142977767b1ff410ac2910f3f71f243deb5cfc0b67d857339f5e064b230f240
+  normalized_sha256: sha256:f142977767b1ff410ac2910f3f71f243deb5cfc0b67d857339f5e064b230f240
+cas_ref: sha256:f142977767b1ff410ac2910f3f71f243deb5cfc0b67d857339f5e064b230f240
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 沿用相邻定义中的素数且不整除原模数条件，Nat.divisors_mul 与 Nat.Prime.eq_one_or_self_of_dvd 将约数和分成原约数及其素数倍，ArithmeticFunction.isMultiplicative_moebius 和 ArithmeticFunction.moebius_apply_prime 给第二部分变号，再以 Finset.sum_union、Finset.sum_image 和正数除法归一化得到所列核递推；既有 coefficient_recurrence 内的局部 hsplit 不是可引用声明，仓内无冻结 GID。
+    previous_atom_id: 9ebdf802189d8424946347e800098f47492f018acc0f2a1373722144564fa916
+    next_atom_id: e9383b2615ed49d44b3a2485006fe12eee7f4bc8183ec7f77b730f674358779f

@@ -1,0 +1,7 @@
+写 \(z=\mu+s,t=\mu-s\),均值向量的平方偏差为 \(\overline V=2s^2<2\mu^2\)。若 \(\overline V\ge V_0\),真正分数行的严格凹性给出
+
+\[
+D(M_1)<f(z)+f(t)=\Psi_2(\mu,\overline V)
+\le\Psi_2(\mu,V_0).
+\]
+

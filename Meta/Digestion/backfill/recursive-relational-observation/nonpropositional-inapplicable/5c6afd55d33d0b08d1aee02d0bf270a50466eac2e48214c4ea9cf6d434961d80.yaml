@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c6afd55d33d0b08d1aee02d0bf270a50466eac2e48214c4ea9cf6d434961d80
+  normalized_sha256: sha256:5c6afd55d33d0b08d1aee02d0bf270a50466eac2e48214c4ea9cf6d434961d80
+cas_ref: sha256:5c6afd55d33d0b08d1aee02d0bf270a50466eac2e48214c4ea9cf6d434961d80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条在前文所指定基及参数系数上给出候选乘法与点核的定义配方，形式无穷是额外参数符号，本条没有证明后续的支撑及结合性。
+    previous_atom_id: 57ff1e0d7f82c8cb6144a377aaed309a842e766823c2fbc3e93ce9526b50b5d1
+    next_atom_id: e7a09bff467701a3bdeaa017dfe76425e1dba45b1dedff60fff54c741edb9613

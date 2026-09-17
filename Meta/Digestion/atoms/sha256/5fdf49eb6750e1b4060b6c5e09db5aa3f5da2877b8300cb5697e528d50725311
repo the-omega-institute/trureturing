@@ -1,0 +1,33 @@
+**theorem 39.2 (Exact separating-evaluation criterion).** For every $D\subseteq K$, the map $\operatorname{Eval}_D$ is injective if and only if both conditions hold:
+$$
+U(D)=\mathbb T,
+\tag{39.1}
+$$
+$$
+\forall s\in\Sigma\ \forall n\ge0\ \exists m>n:
+\quad x_m^s\in D.
+\tag{39.2}
+$$
+Equivalently, each of $N_+(D)$ and $N_-(D)$ is unbounded. More precisely,
+$$
+P_\theta^+(b)\ne P_\theta^-(b)
+\quad\Longleftrightarrow\quad
+\theta\in E-H(b),
+\tag{39.3}
+$$
+and
+$$
+\{b\in K:T^n(b)\ne P_{n\delta}^s(b)\}
+=\{x_m^{-s}:m>n\}.
+\tag{39.4}
+$$
+Here $-s$ denotes the opposite sign. Operators of different phases are distinguished by every single evaluation coordinate.
+
+With $e$ supplied, the exact criterion is instead
+$$
+E\cup U(D)=\mathbb T
+\quad\text{and}\quad
+N_+(D),N_-(D)\text{ are unbounded}.
+\tag{39.5}
+$$
+

@@ -1,0 +1,19 @@
+**定义 419.1（预测一·自然数、有限字与总行）。** 在通常集合论 $\mathrm{ZFC}$ 中，$\omega$ 为冯·诺伊曼自然数集合，有序对取库拉托夫斯基对，函数取包含每个自变量之唯一值的完整图。局部记
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j\quad(j\in\omega).
+$$
+对每个 $L\in\omega$，令
+$$
+X_L=\{p:L\to\{0,1\}:\forall j\,(j+1<L\Rightarrow p_jp_{j+1}=0)\},\qquad
+V_L(p)=\sum_{j<L}G_jp_j.
+$$
+特别地 $X_0=\{\varnothing\}$。$\zeta(n)$ 是第 69–70 条的从低位到高位、末位不补零的唯一自然数字字，$\zeta(0)=\varnothing$。$z(n)$ 为它的总零延拓。局部简记第 371.1、375.1、379.1 条的载体及映射为
+$$
+K=\{x:\omega\to\{0,1\}:\forall j\in\omega\ x_jx_{j+1}=0\},\qquad
+P_Lx=x|L,\qquad C_p=P_L^{-1}\{p\}.
+$$
+$K$ 上取乘积拓扑及度量
+$$
+d(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|.
+$$
+

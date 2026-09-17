@@ -1,0 +1,37 @@
+### FSP.3 全部正整数上的 Fibonacci 约数和
+
+对正整数 $M$，定义实际约数值集合与和
+
+$$
+\mathcal D_F(M)=\{d>0:d\mid M,\ d\in\mathcal F_+\},\qquad
+\sigma_F(M)=\sum_{d\in\mathcal D_F(M)}d.
+$$
+
+**定理。** 对每个 $M>0$，若 $\sigma_F(M)$ 为 Fibonacci 数，则存在唯一 $r\ge1$，使
+
+$$
+\boxed{
+\sigma_F(M)=F_{2r},\qquad
+\mathcal D_F(M)=\{1\}\cup\{F_{2j+1}:1\le j<r\}.
+}\tag{FSP3}
+$$
+
+**证明。** $\mathcal D_F(M)$ 是有限的不同正 Fibonacci 值集合，并且因 $1\mid M$ 而包含一。其和为正，因此所给 Fibonacci 值属于 $\mathcal F_+$。应用 FSP2 即得。
+
+**推论，OEIS A339621。** 对每个整数 $m\ge0$，令
+
+$$
+a(m)=\sigma_F(m^2+1).
+$$
+
+若 $a(m)$ 是 Fibonacci 数，则
+
+$$
+\boxed{\exists r\ge1:\quad a(m)=F_{2r}.}\tag{FSP4}
+$$
+
+**证明。** $m^2+1>0$，应用 FSP3。这是 Michel Lagneau 于 2020 年 12 月 10 日提出、OEIS A339621 COMMENTS 中标为猜想的命题。证明实际上适用于全部正整数 $M$，不需要 $M=m^2+1$ 或 $3\nmid M$。
+
+FSP4 对值一给出 $1=F_2$，并不否认 $1=F_1$；结论是存在偶下标表示。若允许重复一，$1+1=F_3$ 将破坏结论；若删去必须含一的假设，$\{2,3\}$ 的和为 $F_5$，同样破坏结论。FSP3 没有断言每个偶下标 Fibonacci 数都能由某个 $m^2+1$ 的约数和实现。
+
+

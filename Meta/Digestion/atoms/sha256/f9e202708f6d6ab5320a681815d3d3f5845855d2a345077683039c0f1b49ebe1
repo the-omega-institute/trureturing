@@ -1,0 +1,6 @@
+**定理。** 假设 $\operatorname{Out}(S)$ 可解。对任意到非交换有限单群的满射 $f:\Lambda\twoheadrightarrow F$，有
+
+$$\boxed{f\text{ 经 }a_S\text{ 的像因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }b_S\text{ 的像因子化}.}$$
+

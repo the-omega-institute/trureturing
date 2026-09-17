@@ -1,0 +1,7 @@
+**定理 440.10。** 观测商的两种码呈现存在准确双射。令 $R=\ker q$，$q^*(\operatorname{Enc}(s))=\operatorname{Enc}(q(s))$。则
+$$
+[\operatorname{Enc}(s)]_{\ker q^*}=\operatorname{Enc}[[s]_R],\qquad [\operatorname{Enc}(s)]_{\ker q^*}\longmapsto\operatorname{Enc}([s]_R)
+$$
+给 $S^*/\ker q^*\to(S/R)^*$ 的双射，正向为 $\operatorname{Pack}$，逆为 $\operatorname{El}$。
+**证明。** 两个状态码同观测当且仅当原状态同观测，逐成员即得第一式。换同类代表不改变右侧类，故映射良定义；打包与成员展开互逆，故单射且满射。可直接以全部 $s\in S$ 生成这张唯一值图，无需同时选择各类代表。空域给空商。费用商边按其三元组运输，保费匹配、终端饱和及路径提升的每个存在见证在编码和解码间相互恢复，因此前述费用商定理也完整保留。证毕。
+

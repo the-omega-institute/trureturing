@@ -1,0 +1,16 @@
+**定理 SM3。** 同时有
+
+$$
+x_n=(a^n,-b^n),\quad y_0=0,\quad y_n>0\ (n>0),\quad y_n\longrightarrow0,
+$$
+
+$$
+\|x_{n+1}\|^2<\|x_n\|^2\quad(n\ge0),
+$$
+
+以及
+
+$$
+y_{n+1}-y_n=(1-b)b^n-(1-a)a^n.
+$$
+

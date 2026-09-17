@@ -1,0 +1,20 @@
+**Proof.** Put $Q=G_L$ and consider $x_{Q+1}^-,x_{Q+1}^+$. Theorem 20.2 gives the same depth-$L$ prefix for these two points. Their successors are $x_Q^-,x_Q^+$, whose prefixes are different. Therefore their one-step projected laws differ by
+$$
+p\left(\delta_{q_L(x_Q^-)}-\delta_{q_L(x_Q^+)}\right)\ne0,
+$$
+although their initial projected laws agree. This contradicts the proposed matrix identity.
+
+Invariance of $m$ and convexity show that $U_p$ is an $L^2$ contraction preserving the mean-zero subspace. For every integer $k\ge1$, the function
+$$
+\chi_k(x)=e^{2\pi ikH(x)}
+$$
+has mean zero and $L^2$ norm one, because $H_\#m=\lambda$. Semiconjugacy gives
+$$
+U_p\chi_k=(1-p+pe^{2\pi ik\phi})\chi_k.
+$$
+The exact approximation identity used in Theorem 20.2 is
+$$
+|\phi G_j-G_{j+1}|=\alpha^{j+2}\longrightarrow0.
+$$
+Consequently the corresponding eigenvalues for $k=G_j$ tend to one. For every fixed $n$, the norms $\|U_p^n\chi_{G_j}\|_2$ tend to one, proving the operator-norm lower bound by one. The contraction property supplies the reverse inequality. Thus finite observation size supplies neither an autonomous quotient chain nor a full-space spectral gap. $\square$
+

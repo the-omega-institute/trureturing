@@ -1,0 +1,48 @@
+### T.4 标量整除、模同余与范数
+
+**定理。** 对每个奇数 $n$ 与每个整数 $q$，
+
+$$
+\boxed{q\mid E_n\text{ 于 }\mathcal O
+\iff q\mid L_n-1\text{ 于 }\mathbb Z.}\tag{T2}
+$$
+
+这包括复合整数 $q$ 及 $q=0$。
+
+**证明。** 令 $x=\varphi^n$。由
+$x\overline x=-1$ 可知 $x^{-1}=-\overline x\in\mathcal O$。
+若 $E_n=qy$，则 T1 给出
+
+$$
+L_n-1=qyx^{-1}.
+$$
+
+写 $yx^{-1}=a+b\varphi$。比较 $\{1,\varphi\}$ 中的整数坐标可得
+$b=0$ 及 $L_n-1=qa$。反之，若 $L_n-1=qa$，则
+$E_n=q(a\varphi^n)$。上述论证也适用于 $q=0$。
+
+**定理。** 对每个奇数 $n$ 与每个自然数 $q$，
+
+$$
+\boxed{E_n\equiv0\pmod q\text{ 于 }\mathcal O
+\iff L_n\equiv1\pmod q\text{ 于 }\mathbb Z.}\tag{T3}
+$$
+
+**证明。** 两个同余分别等价于 $q\mid E_n$ 于 $\mathcal O$ 与
+$q\mid L_n-1$ 于 $\mathbb Z$，故结论由 T2 得到。
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\boxed{\operatorname N(E_n)=-(L_n-1)^2.}\tag{T4}
+$$
+
+**证明。** 由 T1、范数的乘法性及
+$\operatorname N(\varphi^n)=-1$，有
+
+$$
+\operatorname N(E_n)
+=\operatorname N(L_n-1)\operatorname N(\varphi^n)
+=(L_n-1)^2(-1).
+$$
+
