@@ -28,7 +28,7 @@ import json
 
 Q=F
 BASE=Path(__file__).resolve().parent
-PINNED_PR_SHA256='64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751'
+PINNED_PR_SHA256='b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196'
 
 ROOTS=(0,0,1,1,1)
 CHOICES=list(product(range(2),range(5)))

@@ -50,7 +50,7 @@ def compute():
   probability=prod(F(1,q-1) if bit else 1-F(1,q-1) for q,bit in zip(OTHER,bits))
   other_states.append((2**sum(bits),probability))
  source_T81=sum(pr*ps*max(F(((j+1)*v)**2-81),F(0)) for j,pr in enumerate(P) for v,ps in other_states)
- pins={'certificates/shared_square_continuation_certificate.json':'1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e','certificates/shared_cell_square_certificate.json':'100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef'}
+ pins={'certificates/shared_square_continuation_certificate.json':'5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099','certificates/shared_cell_square_certificate.json':'df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d'}
  sources={}
  for name,pin in pins.items():
   raw=read_artifact_bytes(HERE/name);need(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)
