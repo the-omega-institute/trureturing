@@ -1,0 +1,22 @@
+项目已经在
+D5/S3/Entropy/Observation/CompletionInformationChainDecomposition.lean
+中冻结了 completion_information_chain_decomposition。当相邻深度的历史核稳定时，深度词的实现范围与完整未来商相等，并且
+\[
+\boxed{
+H(\operatorname{CompletedState}\mid W_0)
+=
+\sum_{k<d}H(J_k\mid W_k).
+}
+\]
+这里的完成不是把任意局部描述强行拼起来，而是把所有规定的未来读数放进同一个相容商。
+
+若另一个完成 \(c'\) 经过满射因子 \(g\) 得到完成 \(c=g\circ c'\)，则固定同一个当前观察，条件熵只能下降：
+\[
+\boxed{
+H(c\mid q)\le H(c'\mid q).
+}
+\]
+这正是
+D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.lean
+中 completion_conditional_entropy_le_of_factorization 的结论。它给出“保留相同预测任务的完成中，因子化完成不会增加剩余信息”的方向；它不声称任意两个完成之间都有这样的因子。
+

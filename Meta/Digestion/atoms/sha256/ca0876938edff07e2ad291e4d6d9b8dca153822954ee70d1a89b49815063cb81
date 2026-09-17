@@ -1,0 +1,22 @@
+### 69.4 最小预测记忆不是最小坐标数，而是一个商的泛性质
+
+令 \(r:X\to M\) 是候选记忆。要让它真的成为预测记忆，至少要有两个因子化条件：
+\[
+q=\text{factor}\circ r,
+\qquad
+r\circ\tau=\text{induced}\circ r.
+\]
+第一条要求当前读数能从记忆恢复，第二条要求记忆更新不需要重新查看完整状态。
+
+在这两个条件下，\(r\) 的实际像唯一地映到完整未来读数的规范商：
+\[
+\boxed{
+\operatorname{range}(r)\longrightarrow\operatorname{CompletedState}(\tau,q).
+}
+\]
+并且该映射与完整状态到完成商的投影交换。精确的唯一性定理是
+D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean
+中的 predictive_memory_minimal_quotient。
+
+因此“最小记忆”应理解为：在所有能够因子化当前读数和更新的记忆中，规范完成商是共同的预测因子。它可以有比某个实现更多或更少的坐标；坐标数量只有在额外有限性假设下才是有意义的成本。
+

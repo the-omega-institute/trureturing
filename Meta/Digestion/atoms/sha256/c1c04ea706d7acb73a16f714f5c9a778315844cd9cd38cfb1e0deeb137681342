@@ -1,0 +1,38 @@
+### 69.5 多个带权读数的共同盲核
+
+现在把观察从一个 \(q\) 扩展为有限指标集 \(I\) 上的线性读数；假设 \(V\) 与各个 \(Y_i\) 都是有限维实内积空间：
+\[
+R_i:V\to Y_i,
+\qquad w_i>0.
+\]
+定义加权 Gram 算子
+\[
+G=\sum_iw_iR_i^*R_i.
+\]
+则
+\[
+\boxed{
+\langle v,Gv\rangle
+=\sum_iw_i\|R_iv\|^2,
+\qquad
+\ker G=\bigcap_i\ker R_i.
+}
+\]
+第一式把每个读数的能量按指定权重相加；严格正权保证第二式中没有某个读数被零权隐藏。于是 \(G\) 的零空间正是所有这些观察共同看不见的方向。
+
+这两个结论已经由
+D5/S3/Observer/PositiveWeightedReadoutGramKernel.lean
+的 positive_weighted_readout_gram 冻结。它把“正核”与项目的共同纤维直接接起来：条件期望残差描述某一目标在当前概念下的不可预测部分，而 \(\ker G\) 描述一族线性读数对所有目标共同留下的盲核。
+
+若在有限层 \(L\) 只保留分区 \(\mathcal P_L=\{C_i\}\)，并令
+\[
+e_i=\frac{\mathbf 1_{C_i}}{\sqrt{\mu(C_i)}},
+\]
+则正质量保证这些 \(e_i\) 构成正交归一基，故
+\[
+\boxed{
+\dim\mathcal H_L=|\mathcal P_L|.
+}
+\]
+这只是该层的可见线性秩。它不等于完整 \(L^2\) 空间的维数，也不等于几何 Hausdorff 维数。
+

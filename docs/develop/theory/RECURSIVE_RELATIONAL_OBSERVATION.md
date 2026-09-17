@@ -32747,3 +32747,238 @@ $$
 完全相同的论证给出初始强制的有限测试与最小截止。证毕。
 
 ## 68.99 追加锚
+
+## 69. 观察残差、最小预测记忆与正加权核
+
+第 68 节给出了有限维隐藏反馈的尾判据。本节把它接到另一条尚未在本卷显式写出的链：当前名字还没有决定的未来，可以同时用条件熵的残差、\(L^2\) 的正交残差和一个最小预测记忆商来表示。三者共享同一个观察纤维，但数值含义不同；不能把其中一个替换成另外两个。
+
+### 69.1 当前名字下的目标读数有一个唯一正交残差
+
+设 \((X,\mu)\) 是概率空间，\(q:X\to B\) 是可测概念，\(f\in L^2(X,\mu)\) 是需要预测的目标读数。把由 \(q\) 生成的可测读数所成的子空间记为 \(L^2_q\)；这里的 \(L^2_q\) 是按 \(\mu\)-几乎处处相等取商后的 \(q\)-可测子空间（若用生成的 \(\sigma\)-代数表示，需要给 \(B\) 指定相应的可测结构）。记条件期望为
+\[
+\widehat f=\mathbb E[f\mid\sigma(q)].
+\]
+则有分解
+\[
+\boxed{
+f=\widehat f+r,
+\qquad
+r\perp L^2_q.
+}
+\]
+其中
+\[
+r=f-\widehat f
+\]
+是唯一满足这两个条件的残差；等式和正交关系均按\(\mu\)-几乎处处意义理解。因此
+\[
+\boxed{
+\|f\|_2^2=\|\widehat f\|_2^2+\|r\|_2^2.
+}
+\]
+
+这条结论已经由
+D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean
+中的 conditional_expectation_residual_orthogonal_decomposition 冻结。它把“名字没有保留的预测方向”变成一个可计算的 Hilbert 向量。对同一\(q\)-纤维，\(q\)-可测版本在几乎处处意义下给出同一个估计；不能把\(L^2\) 等价类无条件解释成每个点的逐点值。
+
+对事件 \(A\) 取 \(f=\mathbf 1_A\) 时，在有限分区或选定的条件概率版本下，条件期望在每个观察类上可写成该事件的条件概率：
+\[
+\widehat f(x)=\mu(A\mid q(x)).
+\]
+于是
+\[
+\boxed{
+\|\mathbf 1_A-\mathbb E[\mathbf 1_A\mid q]\|_2^2
+=\mathbb E\bigl[p_q(A)(1-p_q(A))\bigr].
+}
+\]
+这量化了当前观察仍未决定的事件质量，但它仍依赖 \(\mu\)；观察核本身保留的是哪些状态被合并。 这个事件方差等式是有限分区条件期望的标准计算，不是上面所引 Lean 声明的额外结论。
+
+### 69.2 条件熵把同一残差换成离散的未来不确定性
+
+令 \(\tau:Y\to Y\) 是确定更新，\(q:Y\to O\) 是有限读出。深度 \(m\) 的历史词为
+\[
+W_m(y)=\bigl(q(y),q(\tau y),\ldots,q(\tau^m y)\bigr).
+\]
+若两个状态有同一个 \(W_m\)，却有不同的下一读数 \(q(\tau^{m+1}y)\)，那么当前历史还不能封闭未来。
+
+在初始分布对每个状态都严格为正的有限模型中，下一读数由 \(W_m\) 唯一决定，当且仅当联合分布 \((W_m,q\circ\tau^{m+1})\) 的条件熵为零：
+\[
+\boxed{
+\operatorname{predictionStableAt}(m)
+\Longleftrightarrow
+H\bigl(q\circ\tau^{m+1}\mid W_m\bigr)=0.
+}
+\]
+因而最小预测稳定深度满足
+\[
+\boxed{
+\inf\{m:\operatorname{predictionStableAt}(m)\}
+=
+\inf\{m:H(q\circ\tau^{m+1}\mid W_m)=0\}.
+}
+\]
+这里的“严格正”不可删除：若某个状态质量为零，它可以在集合论上携带一个反例，却不改变条件分布的熵。上述精确判据见
+D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.lean
+的 prediction_stability_depth_eq_conditional_entropy_zero。
+
+这说明预测闭合有两种互补读法：
+\[
+\begin{aligned}
+&\text{集合读法：同一个历史词的纤维具有相同下一读数；}\\
+&\text{概率读法：给定历史词的下一读数条件熵为零。}
+\end{aligned}
+\]
+第一条保留零测度见证，第二条衡量在指定权重下它们是否还有作用。
+
+### 69.3 观察塔的熵增量正是每一步新增的未来信息
+
+设初始权重为 \(p:Y\to\mathbb R\)，满足 \(p(y)\ge0\) 且 \(\sum_y p(y)=1\)，并把 \(W_d\) 推前得到深度 \(d\) 的观察词分布。对每个 \(k\)，令 \(J_k\) 是 \(W_k,q\circ\tau^{k+1}\) 的联合律，并把 \(H(J_k\mid W_k)\) 记作该联合律给定其第一边缘的条件熵。有限 Shannon 链式法则给出
+\[
+\boxed{
+H(W_d)=H(W_0)+\sum_{k<d}H(J_k\mid W_k).
+}
+\]
+因此每个增量
+\[
+H(J_k\mid W_k)
+\]
+就是在已有历史后再加入一格读数所付出的平均区分成本；它为零时，该层没有增加新的预测信息。
+
+项目已经在
+D5/S3/Entropy/Observation/CompletionInformationChainDecomposition.lean
+中冻结了 completion_information_chain_decomposition。当相邻深度的历史核稳定时，深度词的实现范围与完整未来商相等，并且
+\[
+\boxed{
+H(\operatorname{CompletedState}\mid W_0)
+=
+\sum_{k<d}H(J_k\mid W_k).
+}
+\]
+这里的完成不是把任意局部描述强行拼起来，而是把所有规定的未来读数放进同一个相容商。
+
+若另一个完成 \(c'\) 经过满射因子 \(g\) 得到完成 \(c=g\circ c'\)，则固定同一个当前观察，条件熵只能下降：
+\[
+\boxed{
+H(c\mid q)\le H(c'\mid q).
+}
+\]
+这正是
+D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.lean
+中 completion_conditional_entropy_le_of_factorization 的结论。它给出“保留相同预测任务的完成中，因子化完成不会增加剩余信息”的方向；它不声称任意两个完成之间都有这样的因子。
+
+### 69.4 最小预测记忆不是最小坐标数，而是一个商的泛性质
+
+令 \(r:X\to M\) 是候选记忆。要让它真的成为预测记忆，至少要有两个因子化条件：
+\[
+q=\text{factor}\circ r,
+\qquad
+r\circ\tau=\text{induced}\circ r.
+\]
+第一条要求当前读数能从记忆恢复，第二条要求记忆更新不需要重新查看完整状态。
+
+在这两个条件下，\(r\) 的实际像唯一地映到完整未来读数的规范商：
+\[
+\boxed{
+\operatorname{range}(r)\longrightarrow\operatorname{CompletedState}(\tau,q).
+}
+\]
+并且该映射与完整状态到完成商的投影交换。精确的唯一性定理是
+D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean
+中的 predictive_memory_minimal_quotient。
+
+因此“最小记忆”应理解为：在所有能够因子化当前读数和更新的记忆中，规范完成商是共同的预测因子。它可以有比某个实现更多或更少的坐标；坐标数量只有在额外有限性假设下才是有意义的成本。
+
+### 69.5 多个带权读数的共同盲核
+
+现在把观察从一个 \(q\) 扩展为有限指标集 \(I\) 上的线性读数；假设 \(V\) 与各个 \(Y_i\) 都是有限维实内积空间：
+\[
+R_i:V\to Y_i,
+\qquad w_i>0.
+\]
+定义加权 Gram 算子
+\[
+G=\sum_iw_iR_i^*R_i.
+\]
+则
+\[
+\boxed{
+\langle v,Gv\rangle
+=\sum_iw_i\|R_iv\|^2,
+\qquad
+\ker G=\bigcap_i\ker R_i.
+}
+\]
+第一式把每个读数的能量按指定权重相加；严格正权保证第二式中没有某个读数被零权隐藏。于是 \(G\) 的零空间正是所有这些观察共同看不见的方向。
+
+这两个结论已经由
+D5/S3/Observer/PositiveWeightedReadoutGramKernel.lean
+的 positive_weighted_readout_gram 冻结。它把“正核”与项目的共同纤维直接接起来：条件期望残差描述某一目标在当前概念下的不可预测部分，而 \(\ker G\) 描述一族线性读数对所有目标共同留下的盲核。
+
+若在有限层 \(L\) 只保留分区 \(\mathcal P_L=\{C_i\}\)，并令
+\[
+e_i=\frac{\mathbf 1_{C_i}}{\sqrt{\mu(C_i)}},
+\]
+则正质量保证这些 \(e_i\) 构成正交归一基，故
+\[
+\boxed{
+\dim\mathcal H_L=|\mathcal P_L|.
+}
+\]
+这只是该层的可见线性秩。它不等于完整 \(L^2\) 空间的维数，也不等于几何 Hausdorff 维数。
+
+### 69.6 两种残差必须分账
+
+在同一观察塔中，可以同时出现两种严格不同的“剩余”：
+\[
+\boxed{
+\begin{aligned}
+\text{Shannon 残差}&:\quad H(\text{未来}\mid\text{当前名字});\\
+\text{Hilbert 残差}&:\quad \|f-\mathbb E[f\mid q]\|_2^2.
+\end{aligned}
+}
+\]
+第一种对整个条件分布的尾部敏感，第二种只对所选目标 \(f\) 的均方误差敏感。条件熵为零会推出离散下一读数在满支持模型中已由名字决定；一个特定 \(f\) 的 Hilbert 残差为零，则只说明这个 \(f\) 已可由名字恢复。不能从后者推出所有未来读数都已闭合。
+
+同理，\(|\mathcal P_L|\) 的增长率、\(H(W_L)\) 的增长率和 \(\dim\mathcal H_L\) 的增长率，在有限分区模型中有明确对应，但它们仍分别回答“有多少类”“质量怎样分布”和“有多少线性读数方向”。把它们统称为一个“维数”会丢掉权重和目标依赖。
+
+### 69.7 对谱读出的边界：读完全部迹仍可能看不见内部关系
+
+若同一域上的两个\(d\)维有限线性演化只通过一条标量读数（例如各步迹）观察，Cayley--Hamilton 在相同特征多项式的前提下给出有限测试界：前 \(d\) 个幂迹相同，就能推出所有后续幂迹相同。这类有限饱和可与第 68 节的有限反馈尾并列使用。
+
+但它不恢复内部相似类。项目
+D5/S0/Observation/PowerTraceSimilarityCountermodel.lean
+中的反例给出零矩阵与非零 \(2\times2\) 幂零矩阵：它们的全部正幂迹和特征多项式相同，却秩不同且不共轭。因此
+\[
+\boxed{
+\text{全部标量谱读数相同}\not\Rightarrow\text{共同见证或内部状态相同}.
+}
+\]
+这与正加权 Gram 核的结论一致：只有当读数族的共同核被证明为零，才可从观察商得到状态分离。有限余数窗口、单条轨道或局部边缘概率都不能自动承担这个分离义务。
+
+### 69.8 统一链及其适用条件
+
+在有限、可测、权重明确的观察塔中，当前结果可以压缩为：
+\[
+\boxed{
+\begin{aligned}
+\text{观察纤维 }q_L
+&\longrightarrow \text{条件期望正交投影};\\
+\text{下一读数的条件律}
+&\longrightarrow \text{条件熵残差};\\
+\text{稳定历史商}
+&\longrightarrow \text{最小预测记忆};\\
+\text{正权读数族}
+&\longrightarrow \text{Gram 正核与共同盲核};\\
+\text{有限分区}
+&\longrightarrow \text{可见 Hilbert 秩与熵增量}.
+\end{aligned}
+}
+\]
+这条链需要逐项保留前提：条件熵判据需要有限全支持模型；正核结论需要严格正权和内积空间；完成商需要更新和读出的因子化；从有限秩增长谈几何维数还需要指定尺度和相应的覆盖条件。
+
+因此，本节的统一不是
+\[
+\text{熵}=\text{维数}=\text{Hilbert 维数}=\text{谱读数},
+\]
+而是：同一组带共同见证的观察关系，在给定测度、内积、尺度和更新规则后，能够分别产生这些读数，并且每一步的遗忘都能写成一个明确的核、熵或正交残差。第 68 节的隐藏反馈判据控制“有限读数何时足以终止”；本节补上“若尚未终止，剩余信息如何被测量，以及什么记忆商仍能无损保留未来预测”。

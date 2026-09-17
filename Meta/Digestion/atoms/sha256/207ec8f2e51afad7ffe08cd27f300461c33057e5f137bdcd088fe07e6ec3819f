@@ -1,0 +1,42 @@
+### 69.1 当前名字下的目标读数有一个唯一正交残差
+
+设 \((X,\mu)\) 是概率空间，\(q:X\to B\) 是可测概念，\(f\in L^2(X,\mu)\) 是需要预测的目标读数。把由 \(q\) 生成的可测读数所成的子空间记为 \(L^2_q\)；这里的 \(L^2_q\) 是按 \(\mu\)-几乎处处相等取商后的 \(q\)-可测子空间（若用生成的 \(\sigma\)-代数表示，需要给 \(B\) 指定相应的可测结构）。记条件期望为
+\[
+\widehat f=\mathbb E[f\mid\sigma(q)].
+\]
+则有分解
+\[
+\boxed{
+f=\widehat f+r,
+\qquad
+r\perp L^2_q.
+}
+\]
+其中
+\[
+r=f-\widehat f
+\]
+是唯一满足这两个条件的残差；等式和正交关系均按\(\mu\)-几乎处处意义理解。因此
+\[
+\boxed{
+\|f\|_2^2=\|\widehat f\|_2^2+\|r\|_2^2.
+}
+\]
+
+这条结论已经由
+D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean
+中的 conditional_expectation_residual_orthogonal_decomposition 冻结。它把“名字没有保留的预测方向”变成一个可计算的 Hilbert 向量。对同一\(q\)-纤维，\(q\)-可测版本在几乎处处意义下给出同一个估计；不能把\(L^2\) 等价类无条件解释成每个点的逐点值。
+
+对事件 \(A\) 取 \(f=\mathbf 1_A\) 时，在有限分区或选定的条件概率版本下，条件期望在每个观察类上可写成该事件的条件概率：
+\[
+\widehat f(x)=\mu(A\mid q(x)).
+\]
+于是
+\[
+\boxed{
+\|\mathbf 1_A-\mathbb E[\mathbf 1_A\mid q]\|_2^2
+=\mathbb E\bigl[p_q(A)(1-p_q(A))\bigr].
+}
+\]
+这量化了当前观察仍未决定的事件质量，但它仍依赖 \(\mu\)；观察核本身保留的是哪些状态被合并。 这个事件方差等式是有限分区条件期望的标准计算，不是上面所引 Lean 声明的额外结论。
+
