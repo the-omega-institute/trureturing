@@ -66,7 +66,7 @@ The row and column options are concatenated, then restricted to strictly smaller
 
 **Definition 1.6 (The least excluded natural number).**
 
-$$\forall s \in \operatorname{Finset}\left(\mathrm{Nat}\right),\; \operatorname{mex}\left(s\right)$$
+$$\forall s \in \operatorname{Finset}\left(\mathrm{Nat}\right),\; \operatorname{mex}\left(s\right) = \operatorname{min}\left(Finset.range\left(\operatorname{card}\left(s\right) + 1\right) \setminus s\right)$$
 
 *Formalization.* `D5/S0/Certificates/Games/PnimHeavyIntervalRefutation.mex` (`✓ std3`).
 
@@ -74,7 +74,7 @@ $$\forall s \in \operatorname{Finset}\left(\mathrm{Nat}\right),\; \operatorname{
 
 *Commentary.*
 
-mex(s) denotes the least natural number that is absent from s. The finite minimum over range(card(s)+1) minus s computes this value; the finite-set cardinality argument guarantees that the missing set is nonempty.
+mex(s) is the least natural number absent from s, computed as the minimum of the finite set range(card(s)+1) minus s; that set is nonempty because s cannot contain all of the card(s)+1 numbers below card(s)+1.
 
 **Definition 1.7 (Grundy evaluation by cell count).**
 
@@ -86,7 +86,7 @@ $$\forall p \in Position,\; \operatorname{grundy}\left(p\right) = \operatorname{
 
 *Commentary.*
 
-The Lean definition uses well-founded recursion on cell count. Its private proof-carrying lemmas move_decreases and missing_nonempty establish termination and finite-minimum existence, but are not part of the mathematical statement. The terminal empty list has value zero.
+The Lean definition uses well-founded recursion on cell count; the termination measure and the nonemptiness of the finite set behind each minimum are discharged inside the definition and are not part of the mathematical statement. The terminal empty list has value zero.
 
 **Definition 1.8 (Positive nonincreasing partitions).**
 

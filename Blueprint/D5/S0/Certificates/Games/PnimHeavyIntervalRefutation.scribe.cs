@@ -37,15 +37,15 @@ internal sealed class PnimHeavyIntervalRefutationDocument : IScribeDocumentDefin
                     + "nonincreasing partition. It extends termination to arbitrary natural "
                     + "lists. Repeated followers do not affect the finite set used by mex."),
             Definition("mex", "The least excluded natural number", MexFormula(),
-                "mex(s) denotes the least natural number that is absent from s. The finite "
-                    + "minimum over range(card(s)+1) minus s computes this value; the "
-                    + "finite-set cardinality argument guarantees that the missing set is "
-                    + "nonempty."),
+                "mex(s) is the least natural number absent from s, computed as the "
+                    + "minimum of the finite set range(card(s)+1) minus s; that set is "
+                    + "nonempty because s cannot contain all of the card(s)+1 numbers below "
+                    + "card(s)+1."),
             Definition("grundy", "Grundy evaluation by cell count", GrundyFormula(),
-                "The Lean definition uses well-founded recursion on cell count. Its private "
-                    + "proof-carrying lemmas move_decreases and missing_nonempty establish "
-                    + "termination and finite-minimum existence, but are not part of the "
-                    + "mathematical statement. The terminal empty list has value zero."),
+                "The Lean definition uses well-founded recursion on cell count; the "
+                    + "termination measure and the nonemptiness of the finite set behind "
+                    + "each minimum are discharged inside the definition and are not part "
+                    + "of the mathematical statement. The terminal empty list has value zero."),
             Definition("IsPartition", "Positive nonincreasing partitions", PartitionFormula(),
                 "Pairwise requires each earlier row to be at least each later row. "
                     + "The Boolean all test requires every row length to be positive."),
@@ -145,8 +145,9 @@ internal sealed class PnimHeavyIntervalRefutationDocument : IScribeDocumentDefin
     private static Formula MexFormula()
     {
         var s = F.Id("s");
+        var candidates = QualifiedCall("Finset", "range", Add(Call("card", s), D(1)));
         return Bound("s", Call("Finset", Naturals()),
-            Call("mex", s));
+            Equal(Call("mex", s), Call("min", Seq(candidates, Sp, Setminus, Sp, s))));
     }
 
     private static Formula GrundyFormula()
