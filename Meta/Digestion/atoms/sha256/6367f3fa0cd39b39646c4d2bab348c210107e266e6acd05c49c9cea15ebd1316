@@ -1,0 +1,6 @@
+B. Oliynyk--B. Ponomarchuk, Corollary 1, p. 201, [https://serdica.math.bas.bg/index.php/serdica/article/download/197/119/378](https://serdica.math.bas.bg/index.php/serdica/article/download/197/119/378) 的精确假设是有限超度量空间中对每个 $x$ 都存在 $y$ 使 $d(x,y)=\alpha_1$，其中 $\alpha_1$ 是最小正距离；其结论为
+$$
+md(X)=|L_m|-|L_{m-1}|.
+$$
+由 theorem 60.4，definition 60.3 的满 $p$ 叉深度 $e$ 残基空间确为有限超度量空间；其最小正距离为 $p^{-(e-1)}$，每个叶都有同一深度 $e-1$ 球中的其他叶达到该距离，因此引用中的假设在此成立并给出 $p^e-p^{e-1}$。下列证明不依赖该引用，并同时给出本查询模型中 resolving 集的充要条件。
+

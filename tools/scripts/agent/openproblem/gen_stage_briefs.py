@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """Split an implementation brief into Stage A (module + mirror + make lean/emit, STOP before any door) and
 Stage B (doors: deposit/cover, one builder commit, late dedupe, push, PR). Also fills the mirror-check brief.
-usage: gen_stage_briefs.py SCRATCHPAD LANE WORKTREE BRANCH MODULE_RELPATH(no ext, e.g. D5/S1/X/Y)
+usage: gen_stage_briefs.py SCRATCHPAD LANE WORKTREE BRANCH MODULE_RELPATH(no ext, e.g. D5/S1/X/Y) [NYXID_SEAT]
 writes briefs/impl-op-w1-<lane>.stageA.md, .stageB.md, mirror-check-<lane>.md
+NYXID_SEAT (architecture|quality) is the round-1 review seat the orchestrator has ALREADY drawn (od /dev/urandom,
+README step 9); the Stage-B brief tells the seat to write that layout into the first-published standing table,
+because "seat assignment is not established at first publication" was a blocking §5.2 finding (#8511). Omitted
+means the Stage-B brief carries no layout and the orchestrator must edit the body before the first round.
 The only input read from SCRATCHPAD is briefs/impl-op-w1-<lane>.md; the base brief and the mirror-check
 template are read from this script's own tracked templates/ directory. Missing inputs exit 1 with the path."""
 import sys,pathlib,re
@@ -11,6 +15,9 @@ import sys,pathlib,re
 # reads its template and GoalArtifact from here).
 here=pathlib.Path(__file__).resolve().parent
 sp=pathlib.Path(sys.argv[1]); lane,wt,branch,module=sys.argv[2:6]
+nyx=sys.argv[6] if len(sys.argv)>6 else ''
+if nyx and nyx not in ('architecture','quality'):
+    sys.exit(f'NYXID_SEAT must be architecture or quality, got {nyx!r}')
 src=sp/'briefs'/f'impl-op-w1-{lane}.md'
 for required in (src, here/'templates'/'impl-base-brief.md', here/'templates'/'mirror-check-template.md'):
     if not required.is_file():
@@ -71,7 +78,18 @@ gm=re.search(r'## GoalArtifact.*?(?=\n## |\Z)',pre,re.S); goal=gm.group(0)+'\n\n
 base=(here/'templates'/'impl-base-brief.md').read_text()
 extra=''.join(re.findall(r'\n6[′″]\. \*\*.*?(?=\n[0-9]+[′″]?\. |\n## )',base,re.S))
 stepsB=stepsB.replace('\n7. `git push',extra+'\n7. `git push',1) if '6′.' not in stepsB else stepsB
-B=B_head+B_intro+goal+stepsB+env
+layout=''
+if nyx:
+    other='quality' if nyx=='architecture' else 'architecture'
+    layout=f"""
+## Round-1 review layout (drawn by the orchestrator before this dispatch — write it into the PR body)
+
+The first-published standing table lists the CURRENT round's seats and carriers as a fact: `{nyx} nyxid-oracle /
+ChatGPT Pro, {other} codex-cli, tests codex-cli`, at the delivered head, with a zero tally, `Carried-forward
+approvals: none.` and `Disagreement adjudication: none.` Do not write "not established"; the assignment is this one.
+
+"""
+B=B_head+B_intro+goal+layout+stepsB+env
 (sp/'briefs'/f'impl-op-w1-{lane}.stageA.md').write_text(A); (sp/'briefs'/f'impl-op-w1-{lane}.stageB.md').write_text(B)
 mc=(here/'templates'/'mirror-check-template.md').read_text().replace('__LANE__',lane).replace('__WORKTREE__',wt).replace('__BRANCH__',branch).replace('__MODULE__',module)
 assert '__' not in mc.replace('__init__','')
