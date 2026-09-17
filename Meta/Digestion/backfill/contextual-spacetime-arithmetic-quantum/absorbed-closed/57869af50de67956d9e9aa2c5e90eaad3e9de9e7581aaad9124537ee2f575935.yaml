@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:57869af50de67956d9e9aa2c5e90eaad3e9de9e7581aaad9124537ee2f575935
   normalized_sha256: sha256:57869af50de67956d9e9aa2c5e90eaad3e9de9e7581aaad9124537ee2f575935
 cas_ref: sha256:57869af50de67956d9e9aa2c5e90eaad3e9de9e7581aaad9124537ee2f575935
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Prediction/BinaryMixingMemoryDivergence.small_mixing_observer_obstruction
+    target_statement_id: sha256:3e78d482d454bd51f6da43894021357b869a0067870be2f691c2101723ab7126
 receipts:
   unresolved_subitems: []
