@@ -30,15 +30,15 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 17 September 2026. The results below do not settle this unrestricted assertion.
 
-An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#shared-actual-cell-square-hinges-improve-the-same-ap13-law)
-now gives `Gamma13<=148878188597300778613/914721425816667898<162.757954931`
+An [arbitrary-residue actual-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#joint-source-geometry-sharpens-normalization-on-the-same-actual-law)
+now gives `Gamma13<=2440240269691060633/15032927232998818<162.326354134`
 for every finite family supported on `{3,5,7,11,13}`, retaining all original
 heights, residues and test labels. It starts from the uniform complete
 actual3/5/7 survivor law, applies pure-survivor kernels at thresholds4 and6
-for11 and13, and conditions once. The shared actual-cell square hinges
-(SQ1)--(SQ7) handle all1296 continuous-domain vertices and all12 original
-missing-class branches. They sharpen the preceding HC bounds on this same
-probability, with survival lower bound
+for11 and13, and conditions once. Joint source normalization (JN1)--(JN5)
+retains the same geometry in the cost and survival denominator, checking all1296 continuous-domain vertices
+and all12 original missing-class branches. It sharpens the preceding SQ
+bounds on this same probability, whose HC survival lower bound remains
 `18925009844347/38266567762500>0.4945572846`.
 
 Its [complete supported13 continuation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-continuations-and-the-larger-killed-frontier-allowance)
@@ -79,9 +79,9 @@ full tails. The common period is still51 digits; no exhaustive search
 or optimal-cutoff claim is made.
 
 On this same law, the complete square hinge satisfies
-`sup E(A^2-81)_+<103.338868`. Expanding the exact killed pair matrices
-therefore gives the sufficient finite joint-frontier bounds299.660 for
-the large core and299.398 for the smaller one, at W403. These remain
+`sup E(A^2-81)_+<103.075646`. Expanding the exact killed pair matrices
+therefore gives the sufficient finite joint-frontier bounds299.923 for
+the large core and299.661 for the smaller one, at W403 (JN6). These remain
 unproved requirements. Their strict negative Q conclusion would itself
 establish positive final mass and `Gamma19<484`, without assuming
 survival in advance. This new Q functional is distinct from the earlier
@@ -9346,3 +9346,27 @@ have not been combined into a Lean proof of the complete-star theorem.
 The independent finite lcm exclusion through `11486474` likewise consists
 of an ordinary CRT product-law proof and exact integer enumeration; no
 local Lean formalization or duplicate declaration is claimed.
+
+A [literal actual1575-source obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#zero-local-losses-do-not-imply-a-common-maximizing-original-layout)
+shows that every central-unary star and every two-ended edge can have
+zero separate loss while a common maximizing layout fails. The complete
+triangle on original labels5/21/35 has exact loss9/382, retaining the
+tradeoff of sacrificing one unary maximum. Pure11/13/17/19 extensions
+preserve the example on all288 complete original labels of the actual
+killed law. Both charges are zero; this is neither a positive-charge
+classification nor a uniform numeric gain. Full support propagation
+through the original period label does decide exact saturation; weighted
+near-maximizing tradeoffs still require additional estimates.
+
+A [proved density-domination bridge](../docs/reports/erdos7-odd-covering/marked_head_profile.md#dv-supported-probability-gives-lower-bounds-for-the-actual-ap-killed-law)
+now transfers the DV supported probability to this actual AP13 killed
+continuation. Under the substantive restriction that the entire original
+357 part divides315, it proves `nu_* <= (38288250/4021271) nu13`, then
+propagates the same actual17/19 kernels. For every inherited complete old
+test, the actual surviving masses satisfy `eta(A<=8)>0.04294732385` and
+`eta(A<=10)>0.05394558166`. Directly transferring the nonnegative
+floor deficit gives `Delta81>1.97207505589` and `Delta121>4.78724716815`
+in CT3, with all original11/13/17/19 heights and cofactors retained.
+This uses domination in its proved direction, not substitution of the
+auxiliary moments into actual-law upper bounds. It does not extend to
+arbitrary original357 heights or complete the remaining frontier.

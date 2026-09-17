@@ -1,0 +1,264 @@
+{
+  "schema": "erdos7-joint-source-normalization-v1",
+  "source_sha256": {
+    "verify_shared_cell_hinges.py": "62813cba55433cea7342c09476edbd4f2247f9010ef28529eee98edea57b93e0",
+    "verify_shared_cell_square.py": "55947127f0a1abb159a0b27d9e7b376682a338b566454b56d1a1291a3c8e55f4",
+    "pure_root_profile_certificate.json": "eafd30f891efcf166eed4c10f0b9344048c276c942d1e5c1b6921a4879182d7b",
+    "shared_cell_hinges_certificate.json": "6b7fe3d3c79b6b39127d433f2c7389c5e21f0ecc7273bc6b74131cfbee42bc29",
+    "shared_cell_square_certificate.json": "b9ffe9706fb788466a9f004d9a5856741f9faa74f75f0e6c3b6d9731b2b8cbd1",
+    "shared_square_continuation_certificate.json": "157c674601b0c2dcd3192f23ced55611970943676a9f984a13330da52ba39a32"
+  },
+  "source_square": "3849/106",
+  "vertex_count": 1296,
+  "original_branch_count": 12,
+  "minimum_D": "53/360",
+  "minimum_Delta": "18955015484347/259923856500000",
+  "minimum_vertex_survival": "18955015484347/38266567762500",
+  "targets": [
+    {
+      "h": 4,
+      "tau": 16,
+      "uniform_cap_weights": {
+        "16/9": "1"
+      },
+      "AP_tail_mass": "20051/797511",
+      "AP_tail_second_moment": "14288737/28710396",
+      "D_coefficient_in_numerator": "24328405067/1014433992",
+      "continuous_concavity_coefficient": "4781395875818352928637/39438884595772399023",
+      "minimum_vertex_margin": "0",
+      "relaxed_maximum_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ],
+      "supported_hinge": "2199713433963079545/15032927232998818",
+      "shift_square": "2440240269691060633/15032927232998818",
+      "other_eight_branches": [
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": false,
+          "modulus7_present": false,
+          "survival_lower": "1569000971107/1899894150000",
+          "supported_hinge": "91774624626185225550/2009656462843372057"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": false,
+          "modulus7_present": true,
+          "survival_lower": "736063237391/919895130000",
+          "supported_hinge": "47983583509549603650/942787333675499741"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": true,
+          "modulus7_present": false,
+          "survival_lower": "186365951747/237486768750",
+          "supported_hinge": "4695831937271912325/86802551149489708"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": true,
+          "modulus7_present": true,
+          "survival_lower": "43313020418/57493445625",
+          "supported_hinge": "27180168162920739225/443820204123325744"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": false,
+          "modulus7_present": false,
+          "survival_lower": "150229754737/207253462500",
+          "supported_hinge": "288779192624688975475/4233282494862106114"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": false,
+          "modulus7_present": true,
+          "survival_lower": "718952939641/1067149660500",
+          "supported_hinge": "151477829423549819925/1841743183384228982"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": true,
+          "modulus7_present": false,
+          "survival_lower": "45271484593/69505734375",
+          "supported_hinge": "41197543853097319975/463888210499429144"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": true,
+          "modulus7_present": true,
+          "survival_lower": "38215140043/65070101250",
+          "supported_hinge": "21774053366930191425/195791601356866372"
+        }
+      ]
+    },
+    {
+      "h": 9,
+      "tau": 81,
+      "uniform_cap_weights": {
+        "81/64": "1",
+        "81/49": "1",
+        "9/4": "1"
+      },
+      "AP_tail_mass": "9004952807171/47688852150240873",
+      "AP_tail_second_moment": "30724353023163359/1716798677408671428",
+      "D_coefficient_in_numerator": "330735186714685710445/60660219935106390456",
+      "continuous_concavity_coefficient": "6531660602371000161896116359784324956377857/67446212506733001418619070071611648805625",
+      "minimum_vertex_margin": "0",
+      "relaxed_maximum_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ],
+      "supported_hinge": "7949756328165560683803712670852067996917/77125457411930247476980068692523326250",
+      "shift_square": "14196918378531910729439098234946457423167/77125457411930247476980068692523326250",
+      "other_eight_branches": [
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": false,
+          "modulus7_present": false,
+          "survival_lower": "1569000971107/1899894150000",
+          "supported_hinge": "988528329377616456278746795623115462/46371234072600740925228909344167125"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": false,
+          "modulus7_present": true,
+          "survival_lower": "736063237391/919895130000",
+          "supported_hinge": "42584348573024773202486247916022162/1673390182270058849728820105542125"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": true,
+          "modulus7_present": false,
+          "survival_lower": "186365951747/237486768750",
+          "supported_hinge": "615651235499593567698559230878769683/22031902671228617312595132971788500"
+        },
+        {
+          "ternary_case": "modulus3_absent",
+          "modulus5_present": true,
+          "modulus7_present": true,
+          "survival_lower": "43313020418/57493445625",
+          "supported_hinge": "344684111967463820297566863034916029/10240800331830731450162407470438000"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": false,
+          "modulus7_present": false,
+          "survival_lower": "150229754737/207253462500",
+          "supported_hinge": "3760404557871312461427043270782132799/97679646792444509541023109168584250"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": false,
+          "modulus7_present": true,
+          "survival_lower": "718952939641/1067149660500",
+          "supported_hinge": "2105914806848787119289786002681119337/42496767899073054199795737607782750"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": true,
+          "modulus7_present": false,
+          "survival_lower": "45271484593/69505734375",
+          "supported_hinge": "585975064561586391067384180308675779/10703853713461988891627427975363000"
+        },
+        {
+          "ternary_case": "modulus9_absent_or_ineffective",
+          "modulus5_present": true,
+          "modulus7_present": true,
+          "survival_lower": "38215140043/65070101250",
+          "supported_hinge": "327987328285722490596615822809387077/4517736411089374895451338465656500"
+        }
+      ]
+    }
+  ],
+  "killed_frontier_budgets": [
+    {
+      "box": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "current": [
+        8,
+        8
+      ],
+      "W": 403,
+      "previous_KC_safe_error": "667/1000000",
+      "available_frontier": "18505401252929788233555350293223211655019513/61700365929544197981584054954018661000000",
+      "sufficient_frontier_bound": "299923/1000",
+      "slack": "42402243103742324715779249072791916513/61700365929544197981584054954018661000000"
+    },
+    {
+      "box": [
+        17,
+        10,
+        8,
+        7,
+        6,
+        6,
+        6
+      ],
+      "current": [
+        6,
+        6
+      ],
+      "W": 403,
+      "previous_KC_safe_error": "263/1000",
+      "available_frontier": "92446076054171965577331237016674795388117/308501829647720989907920274770093305000",
+      "sufficient_frontier_bound": "299661/1000",
+      "slack": "13660013280752566742444849233189814/38562728705965123738490034346261663125"
+    }
+  ],
+  "scope": "Same actual uniform357, AP11/T4, AP13/T6 and sole conditioning. All original labels, residues, missing classes and finite heights; complete tails. Ordinary continuous-domain proof, not Lean or actual-layout sharpness."
+}

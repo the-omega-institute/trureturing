@@ -658,6 +658,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Quantitative DV-to-actual-law domination and nonnegative deficit consumers.
+pattern = "docs/reports/erdos7-odd-covering/density_bridge_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact charged common-test maxima and arbitrary-current-height coefficients.
 pattern = "docs/reports/erdos7-odd-covering/exact_bqc_certificate.json"
 kind = "data"
@@ -777,6 +787,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Same-source numerator and survival normalization with complete tails.
+pattern = "docs/reports/erdos7-odd-covering/joint_source_normalization_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Direct killed-law finite-core errors and full square-hinge tails.
 pattern = "docs/reports/erdos7-odd-covering/killed_core_continuity_certificate.json"
 kind = "data"
@@ -1268,6 +1288,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Actual odd CRT obstruction to composing individually zero-loss clusters.
+pattern = "docs/reports/erdos7-odd-covering/star_cycle_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact tree potentials and a common layout mixture refuting the universal Gamma73 bound.
 pattern = "docs/reports/erdos7-odd-covering/star_survivor_obstruction_certificate.json"
 kind = "data"
@@ -1467,6 +1497,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Pinned rational consumer of the same-kernel probability domination bridge.
+pattern = "docs/reports/erdos7-odd-covering/verify_density_bridge.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Checks the complete original-label charged maximum and all-height coefficients.
 pattern = "docs/reports/erdos7-odd-covering/verify_exact_bqc.py"
 kind = "program"
@@ -1588,6 +1628,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Exact primal/dual limit of two fixed univariate SH27 moment relaxations.
 pattern = "docs/reports/erdos7-odd-covering/verify_joint_moment_limits.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]] # Exact continuous-vertex and complete-tail normalization certificate.
+pattern = "docs/reports/erdos7-odd-covering/verify_joint_source_normalization.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -2080,6 +2130,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Literal original-label star and edge obstruction with triangle correction.
+pattern = "docs/reports/erdos7-odd-covering/verify_star_cycle_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Checks the star-family pointwise obstruction for all survivor probability laws.
 pattern = "docs/reports/erdos7-odd-covering/verify_star_survivor_obstruction.py"
 kind = "program"
