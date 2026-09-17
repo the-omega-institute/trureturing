@@ -22574,3 +22574,2490 @@ $$
 对所有 $p$ 与所有不同 $i,j$ 同时成立。因此 $(u_i)_{i\in I}$ 是所需全局见证。$I=\varnothing$ 时，乘积空间 $X$ 与见证空间 $U^I$ 都是单点集，各自唯一元素是相应的空元组，因此结论亦成立。证毕。
 
 ## 53.99 追加锚
+## 54. 完整单位对和赋值阵列的有限判定与计数
+
+**definition 54.0（局部输入、空输入与精确语义）.** 固定素数 $p$ 与有限顶点集
+$$
+V=[n]:=\{0,\ldots,n-1\},\qquad n\ge 0,
+$$
+并约定 $[0]=\varnothing$。输入是一族对称的非对角标号
+$$
+a_{ij}=a_{ji}\in\mathbb N_0\cup\{\infty\}\qquad(i\ne j).
+$$
+局部实现是同一个单位向量
+$$
+x=(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+满足
+$$
+v_p(x_i+x_j)=a_{ij}\qquad(i<j),
+$$
+其中 $v_p(0)=\infty$。因此 $a_{ij}=\infty$ 的含义严格是 $x_i+x_j=0$；有限值 $a$ 的含义严格是 $p^a\mid x_i+x_j$ 且 $p^{a+1}\nmid x_i+x_j$。当 $n=0$ 时，输入阵列、边集和向量都为空；$(\mathbb Z_p^\times)^\varnothing$ 含唯一空向量，它真空地满足全部约束。
+
+**axiom 54.1（整数 Smith 标准形、可计算性及所用外部代数事实）.** 对任意 $r,m\in\mathbb N_0$ 与整数矩阵 $M\in M_{r\times m}(\mathbb Z)$，记其整数秩为 $s$。本文使用如下整数 Smith 标准形事实：存在
+$$
+U\in\operatorname{GL}_r(\mathbb Z),\qquad V\in\operatorname{GL}_m(\mathbb Z)
+$$
+使
+$$
+UMV=\operatorname{diag}(d_1,\ldots,d_s,0,\ldots,0),
+$$
+其中可取 $d_j>0$ 且 $d_j\mid d_{j+1}$。这里 $\operatorname{diag}$ 表示相应的 $r\times m$ 矩形对角阵。若 $s=0$，则 $M=0$，非零不变量列表为空；可取 $U=I_r,V=I_m$。若 $r=0$ 或 $m=0$，同样按唯一空矩阵、秩零与相应空恒等矩阵解释，空乘积约定为 $1$。对非零矩阵，Smith 对角形中非零对角元的个数等于 $s$，因为左右乘可逆矩阵保持在 $\mathbb Q$ 上的秩；在 $\mathbb Z$ 中再以单位 $-1$ 调整符号即可令各 $d_j>0$。
+
+Richard Elman, *Lectures on Abstract Algebra*, Appendix D, Theorem D.2 对任意欧几里得环上的矩形矩阵给出左右可逆矩阵把它化为 Smith 标准形；其证明明确从零矩阵情形开始，并以欧几里得函数的严格下降和维数归纳给出终止过程。（[Theorem D.2，印刷页 854／PDF 页 862](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=862)；[证明续，印刷页 855／PDF 页 863](https://www.math.ucla.edu/~rse/algebra_book.pdf#page=863)）
+
+整数矩阵 Smith 标准形的显式终止计算另可由 Arne Storjohann, *Near Optimal Algorithms for Computing Smith Normal Forms of Integer Matrices*, University of Waterloo Technical Report CS-96-03, Theorem 14 得到；该定理在 PDF 第 8 页给出输入任意 $n\times m$ 整数矩阵并输出其 Smith 标准形的确定性算法。（[Theorem 14，PDF 页 8](https://cs.uwaterloo.ca/research/tr/1996/03/CS-96-03.pdf#page=8)） 空维数情形在本文中按上一段的平凡约定直接处理。
+
+关于有限整数的逐素数分解，Longhi–Mu–Saettone, *Coset Topologies on $\mathbb Z$ and Arithmetic Applications*, arXiv:2202.13478v3, §3.1.2 在 Theorem 3.6 前给出
+$$
+v_p(x)=0\Longleftrightarrow x\in\mathbb Z_p^\times,
+$$
+Theorem 3.6 及其证明给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,
+$$
+而 §3.3.1 的式 (36) 给出
+$$
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+（[单位判据与 Theorem 3.6，PDF 页 19](https://arxiv.org/pdf/2202.13478v3#page=19)；[式 (36)，PDF 页 24](https://arxiv.org/pdf/2202.13478v3#page=24)）
+
+若把本节与轨道商超加法背景比较，Connes–Consani, *The Hyperring of Adèle Classes*, arXiv:1001.4260v2, Proposition 2.5 的式 (6) 是
+$$
+x+y=(xG+yG)/G.
+$$
+（[Proposition 2.5，式 (6)，PDF 页 7](https://arxiv.org/pdf/1001.4260v2#page=7)） 该公式描述轨道商上的超加法；它本身不提供本节所要求的“一组共同代表同时实现全部边”的结论，因此下文始终直接处理共同元组。
+
+**theorem 54.2（无穷标号子系统的精确分类与规范参数化）.** 令 $G_\infty$ 是顶点集 $V$ 上以
+$$
+E_\infty=\{\{i,j\}:a_{ij}=\infty\}
+$$
+为边集的图。存在单位向量满足全部无穷边方程 $x_i+x_j=0$，当且仅当 $G_\infty$ 是二分图，等价地每个连通分量都没有奇圈。若此条件成立，则在每个连通分量 $C$ 中取最小顶点 $r_C$ 为根，并定义
+$$
+\varepsilon_i=(-1)^{d_C(r_C,i)}\in\{\pm1\}.
+$$
+该符号与路径选择无关，而且全部无穷方程的解恰好唯一写成
+$$
+x_i=\varepsilon_i y_C\qquad(i\in C),
+$$
+其中每个 $y_C\in\mathbb Z_p^\times$ 独立。此结论对 $p=2$ 仍成立；奇圈不会因为剩余特征为 $2$ 而变得可行。当 $n=0$ 时，$G_\infty$ 是空图、连通分量族为空，参数向量为空，上述参数化给出唯一空解。
+
+**证明。** 当 $n=0$ 时所有断言均为真空断言，且唯一空向量给出所述解。以下设有顶点。若 $x_i+x_j=0$，则沿每条无穷边有 $x_j=-x_i$。沿一条长度为 $\ell$ 的路径迭代得到终点值为 $(-1)^\ell$ 乘起点值。若存在奇圈，从圈上一点 $i$ 出发一周得到 $x_i=-x_i$，故 $2x_i=0$。环 $\mathbb Z_p$ 具有特征 $0$ 且是整环，所以 $2\ne0$ 且不是零因子，于是 $x_i=0$，与 $x_i$ 为单位矛盾；这也覆盖 $p=2$。
+
+反之若图二分，则同一根到同一顶点的任意两条路径长度同奇偶，否则两条路径合成奇闭路；故 $\varepsilon_i$ 定义良好，相邻顶点符号相反。任取每个分量的单位 $y_C$，令 $x_i=\varepsilon_i y_C$，所有无穷边立即满足。最后，任一满足无穷方程的解沿根到 $i$ 的路径必有 $x_i=\varepsilon_i x_{r_C}$，故取 $y_C=x_{r_C}$ 给出唯一参数化。证毕。
+
+**definition 54.3（压缩后的有限线性形式与停止指数）.** 假设 $G_\infty$ 二分，令其连通分量按根的大小排序为
+$$
+\mathcal C=\{C_1,\ldots,C_m\},
+$$
+其中允许 $m=0$，并采用 theorem 54.2 的规范符号。对每条有限边 $e=\{i,j\}$，记 $c(i),c(j)\in\{1,\ldots,m\}$ 为所属分量，定义整数行向量 $b_e\in\mathbb Z^m$ 为
+$$
+b_e=\varepsilon_i e_{c(i)}+\varepsilon_j e_{c(j)},
+$$
+其中 $e_c$ 是第 $c$ 个标准基向量。若 $c(i)=c(j)$，两个系数必须在同一坐标中相加，因此该坐标真实地是 $0$ 或 $\pm2$，绝不把重复变量误记成两个独立变量。记有限边集为 $E_f$。若 $E_f\ne\varnothing$，置
+$$
+A=\max_{e\in E_f}a_e,\qquad N=A+1;
+$$
+若 $E_f=\varnothing$，直接置
+$$
+N=1.
+$$
+特别地，$n=0$ 时 $m=0$、$E_f=\varnothing$ 且 $N=1$。
+
+**theorem 54.4（有限停止界、模 $p^N$ 精确判据与实际提升）.** 在 theorem 54.2 的二分条件下，令 $N$ 按 definition 54.3 的分支定义，即
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing.
+\end{cases}
+$$
+原始 $p$-进实现存在，当且仅当存在
+$$
+\bar y=(\bar y_1,\ldots,\bar y_m)\in(\mathbb Z/p^N\mathbb Z)^m
+$$
+满足
+$$
+\bar y_c\not\equiv0\pmod p\qquad(1\le c\le m),
+$$
+以及对每条 $e\in E_f$，
+$$
+b_e\bar y\equiv0\pmod{p^{a_e}},
+\qquad
+b_e\bar y\not\equiv0\pmod{p^{a_e+1}}.
+$$
+因此当 $E_f\ne\varnothing$ 时，$N=1+\max a_e$ 是由输入显式给出的充分停止指数；当 $E_f=\varnothing$ 时固定取 $N=1$，不存在未定义的最大值。每个这样的 $\bar y$ 都提升为实际的 $p$-进共同单位解，并且所有无穷标号在提升后仍是精确零和。若 $m=0$，模参数空间是只含空向量的单点集。
+
+**证明。** 先设有 $p$-进实现。由 theorem 54.2 可唯一写成
+$$
+x_i=\varepsilon_i y_{c(i)},
+$$
+其中各 $y_c$ 是单位。模 $p^N$ 约化得到 $\bar y_c\not\equiv0\pmod p$。对有限边 $e=\{i,j\}$，
+$$
+x_i+x_j=b_ey.
+$$
+此时必有 $E_f\ne\varnothing$，且 $a_e+1\le N$。所以 $v_p(b_ey)=a_e$ 恰等价于模 $p^{a_e}$ 为零而模 $p^{a_e+1}$ 非零，约化后得到所列条件。
+
+反之，设给定这样的 $\bar y$。对每个 $c$ 取任意提升 $y_c\in\mathbb Z_p$；由于 $\bar y_c$ 模 $p$ 非零，提升仍是单位。定义
+$$
+x_i=\varepsilon_i y_{c(i)}.
+$$
+每条无穷边的两个符号相反且使用完全相同的自由参数，所以 $x_i+x_j=0$ 在 $\mathbb Z_p$ 中严格成立，而非仅在某个有限商中成立。对有限边，因为 $a_e+1\le N$，两个量模 $p^N$ 相同必然模 $p^{a_e+1}$ 相同；等价地，
+$$
+p^N\mathbb Z_p\subseteq p^{a_e+1}\mathbb Z_p.
+$$
+故所给“整除 $p^{a_e}$ 但不整除 $p^{a_e+1}$”条件在任意提升下保持，从而 $v_p(x_i+x_j)=a_e$。
+
+若 $E_f=\varnothing$，没有有限边精度需要检测，$N=1$ 只记录每个自由参数为单位；若进一步 $m=0$，唯一空模向量提升为唯一空 $p$-进向量。故所有情形均已覆盖。证毕。
+
+**theorem 54.5（同分量有限边的 $0,\pm2$ 系数约束）.** 在 theorem 54.2 的二分条件下，若有限边 $e=\{i,j\}$ 的两端属于同一无穷分量，则：
+
+1. 若 $\varepsilon_i=-\varepsilon_j$，任何有限 $a_e$ 都不可能，因为 $x_i+x_j=0$；
+2. 若 $\varepsilon_i=\varepsilon_j$，则必且只可能有
+$$
+a_e=v_p(2)=
+\begin{cases}
+1,&p=2,\\
+0,&p\ne2.
+\end{cases}
+$$
+当该值被指定时，此边对自由单位参数不再增加限制。
+
+**证明。** 同分量时
+$$
+x_i+x_j=(\varepsilon_i+\varepsilon_j)y_C.
+$$
+符号相反时系数为 $0$，估值为 $\infty$。符号相同时系数为 $\pm2$，而 $y_C$ 是单位，故估值恰为 $v_p(2)$。反向充分性由同一计算立即得到。证毕。
+
+**theorem 54.6（Smith 标准形的模 $p^N$ 核计数，包括秩零与空矩阵）.** 设 $M\in M_{r\times m}(\mathbb Z)$，其中 $r,m\in\mathbb N_0$，整数秩为 $s$，Smith 非零不变量为 $d_1,\ldots,d_s$。对 $N\ge1$，令
+$$
+K_N(M):=\#\{\bar y\in(\mathbb Z/p^N\mathbb Z)^m:M\bar y\equiv0\pmod{p^N}\}.
+$$
+则
+$$
+K_N(M)=p^{N(m-s)}\prod_{j=1}^s\gcd(d_j,p^N)
+=p^{N(m-s)+\sum_{j=1}^s\min(v_p(d_j),N)}.
+$$
+当 $s=0$ 时两个求和与乘积均为空，故
+$$
+K_N(M)=p^{Nm}.
+$$
+特别地，若 $m=0$，则 $K_N(M)=1$。
+
+**证明。** 若 $s=0$，则 $M=0$，所有 $m$ 个坐标任意，直接得到 $p^{Nm}$；当 $m=0$ 时只有空向量，计数为 $1$。以下设 $s>0$。由 axiom 54.1 取整数幺模矩阵 $U,V$ 使 $UMV=D$ 为 Smith 对角形。因为 $\det U,\det V=\pm1$，它们模 $p^N$ 后仍可逆，所以左乘 $U$ 不改变齐次方程解集，变量替换 $\bar y=V\bar z$ 是 $(\mathbb Z/p^N\mathbb Z)^m$ 的双射。因此只需计数
+$$
+d_j\bar z_j\equiv0\pmod{p^N}\qquad(1\le j\le s),
+$$
+其余 $m-s$ 个坐标任意。
+
+对单个非零整数 $d$，令 $g=\gcd(d,p^N)$，写 $d=gd'$、$p^N=gq$ 且 $\gcd(d',q)=1$。条件 $p^N\mid dz$ 等价于 $q\mid z$，故模 $p^N$ 恰有 $g$ 个解。于是前 $s$ 个坐标贡献 $\prod_j\gcd(d_j,p^N)$，其余坐标贡献 $p^{N(m-s)}$。又
+$$
+\gcd(d_j,p^N)=p^{\min(v_p(d_j),N)},
+$$
+得到第二式。证毕。
+
+**definition 54.7（统一模数矩阵）.** 假设 $G_\infty$ 二分。对 $T\subseteq E_f$ 与 $U\subseteq\{1,\ldots,m\}$，令
+$$
+k_e(T)=a_e+\mathbf1_{e\in T}.
+$$
+若 $E_f\ne\varnothing$，由 definition 54.3 有 $0\le k_e(T)\le N$；若 $E_f=\varnothing$，此条件真空且 $N=1$。定义整数矩阵 $M_{T,U}$，其行包括
+$$
+p^{N-k_e(T)}b_e\qquad(e\in E_f),
+$$
+以及
+$$
+p^{N-1}e_c\qquad(c\in U).
+$$
+当 $k_e(T)=0$ 时，对应行为 $p^Nb_e$，模 $p^N$ 恒为零，正好表达“模 $p^0$ 无约束”。若同一自由变量在一条边中重复出现，系数仍按 definition 54.3 真实相加为 $0$ 或 $\pm2$。当 $m=0$、$E_f=\varnothing$ 时，唯一的 $M_{\varnothing,\varnothing}$ 是 $0\times0$ 空矩阵，秩为 $0$。
+
+**theorem 54.8（精确整数计数公式、实际解约化类的双射与完全有限判定）.** 若 $G_\infty$ 不是二分图，置
+$$
+C_p(a)=0.
+$$
+若其二分，令 $N,m,E_f,M_{T,U}$ 如上，并令每个 $M_{T,U}$ 的整数 Smith 非零不变量为
+$$
+d_1(T,U),\ldots,d_{s(T,U)}(T,U).
+$$
+定义
+$$
+C_p(a)=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N).
+$$
+令 $\mathcal Y_N(a)$ 为 theorem 54.4 中满足全部单位条件与全部有限边精确条件的模 $p^N$ 参数类集合；令
+$$
+\mathcal R_N(a)=
+\left\{
+(x_i\bmod p^N)_{i\in V}:
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+\text{ 是原阵列的实际精确共同解}
+\right\}.
+$$
+则
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+换言之，这里计数的是实际精确 $p$-进共同解的不同模 $p^N$ 约化类，等价地计数 theorem 54.2 的规范有符号参数经 theorem 54.4 实际提升后得到的约化类；它不是把“仅在模 $p^N$ 意义满足无穷边方程”的任意顶点元组都计入。因此
+$$
+\text{存在实际 }(x_i)\in(\mathbb Z_p^\times)^V
+\quad\Longleftrightarrow\quad
+C_p(a)>0.
+$$
+这给出对任意有限输入的终止算法：先判定 $G_\infty$ 是否二分；若是，构造有限多个整数矩阵 $M_{T,U}$，计算其整数 Smith 标准形并代入上式。整数 Smith 形存在确定性终止算法的来源见 axiom 54.1 中 Storjohann, Theorem 14；零矩阵与空维数在本文中先直接返回。
+
+**证明。** 设 $G_\infty$ 二分；非二分情形由 theorem 54.2 已知没有实际解，而定义给出 $C_p(a)=0$。在所有满足基础整除条件
+$$
+p^{a_e}\mid b_e\bar y\qquad(e\in E_f)
+$$
+的模 $p^N$ 向量中，定义坏事件
+$$
+B_e=\{\bar y:p^{a_e+1}\mid b_e\bar y\},
+\qquad
+D_c=\{\bar y:p\mid\bar y_c\}.
+$$
+所需参数集合 $\mathcal Y_N(a)$ 正是基础解集中避开全部 $B_e$ 与全部 $D_c$ 的元素。
+
+对固定 $T,U$，同时强制 $B_e$ 对 $e\in T$ 成立、强制 $D_c$ 对 $c\in U$ 成立，并保留每条边的基础整除条件，等价于
+$$
+b_e\bar y\equiv0\pmod{p^{k_e(T)}}\qquad(e\in E_f),
+$$
+以及
+$$
+\bar y_c\equiv0\pmod p\qquad(c\in U).
+$$
+第一类同余乘以 $p^{N-k_e(T)}$，第二类乘以 $p^{N-1}$，恰变成统一模数系统
+$$
+M_{T,U}\bar y\equiv0\pmod{p^N}.
+$$
+故其解数由 theorem 54.6 精确给出。对这组有限坏事件应用容斥原理，得到
+$$
+|\mathcal Y_N(a)|=
+\sum_{T\subseteq E_f}\ \sum_{U\subseteq\{1,\ldots,m\}}
+(-1)^{|T|+|U|}
+p^{N(m-s(T,U))}
+\prod_{j=1}^{s(T,U)}\gcd(d_j(T,U),p^N)
+=C_p(a).
+$$
+
+现证明这确实等于实际解的约化类数。定义
+$$
+\Phi:\mathcal Y_N(a)\longrightarrow\mathcal R_N(a)
+$$
+如下：给定 $\bar y$，先按 theorem 54.4 任取实际提升 $y\in(\mathbb Z_p^\times)^m$，再以
+$$
+x_i=\varepsilon_i y_{c(i)}
+$$
+重建顶点元组，并取模 $p^N$。因为重建后的模类直接是
+$$
+\bar x_i=\varepsilon_i\bar y_{c(i)},
+$$
+所以 $\Phi$ 与提升选择无关。theorem 54.4 保证该重建是实际精确解，故 $\Phi$ 确实落在 $\mathcal R_N(a)$。
+
+反过来，给定 $\mathcal R_N(a)$ 中一类，按定义它来自某个实际精确解 $x$。theorem 54.2 给出唯一的实际参数 $y_C=x_{r_C}$；约化后得到 $\bar y\in\mathcal Y_N(a)$，且重建正回到给定顶点约化类，所以 $\Phi$ 满射。又每个分量根满足 $\varepsilon_{r_C}=1$，因此从任意顶点约化类可直接读回
+$$
+\bar y_C=\bar x_{r_C}.
+$$
+故 $\Phi$ 单射。若 $m=0$，两边都是只含空类的单点集，同一论证真空成立。于是 $\Phi$ 是双射，得到
+$$
+C_p(a)=|\mathcal Y_N(a)|=|\mathcal R_N(a)|.
+$$
+特别地，$C_p(a)>0$ 当且仅当实际精确共同解存在。全部求和集合有限，且每个所需 Smith 形可由终止的整数算法求得，所以整个判定过程终止。证毕。
+
+**theorem 54.9（空阵列、全无穷与小顶点边界）.** 有以下边界结论。
+
+1. 若 $n=0$，则 $G_\infty$ 是空图，有 $m=0$ 个连通分量，$E_f=\varnothing$，$N=1$，唯一空元组是实际解，并且
+$$
+C_p(\varnothing)=1.
+$$
+2. 若 $n=1$，则没有边，$G_\infty$ 有一个孤立分量，$N=1$，并且
+$$
+C_p(a)=p-1>0.
+$$
+3. 更一般地，若 $E_f=\varnothing$，则
+$$
+C_p(a)=
+\begin{cases}
+(p-1)^m,&G_\infty\text{ 二分且有 }m\text{ 个连通分量},\\
+0,&G_\infty\text{ 非二分}.
+\end{cases}
+$$
+因此原问题可行当且仅当 $G_\infty$ 二分；只有在二分情形才有 $(p-1)^m$ 的计数，且 $m=0$ 时按空乘积约定该值为 $1$。
+4. 特别地，全无穷阵列的无穷图是 $K_n$，故
+$$
+C_p(a)=
+\begin{cases}
+1,&n=0,\\
+p-1,&n=1,\\
+p-1,&n=2,\\
+0,&n\ge3.
+\end{cases}
+$$
+等价地，全无穷阵列可行当且仅当 $n\le2$。特别是 $p=2,n=3$ 的全无穷三角形满足 $C_2(a)=0$。
+
+**证明。** 若 $n=0$，只有空图与空参数。theorem 54.8 的双重求和中只有
+$$
+T=U=\varnothing,
+$$
+且 $M_{\varnothing,\varnothing}$ 为 $0\times0$ 矩阵，$s=0$。因此唯一项是
+$$
+p^{1(0-0)}\prod_{\varnothing}1=1,
+$$
+故 $C_p(\varnothing)=1$，并与唯一空实际解一致。
+
+现设 $E_f=\varnothing$。若 $G_\infty$ 非二分，则 theorem 54.2 说明不存在实际共同单位解，而 theorem 54.8 的定义直接给出
+$$
+C_p(a)=0.
+$$
+若 $G_\infty$ 二分且有 $m$ 个连通分量，则 theorem 54.2 给出全部实际解：每个分量独立选择一个单位参数。此时 $N=1$，模 $p$ 每个参数恰有 $p-1$ 个非零类，所以 theorem 54.8 所计的实际解约化类共有
+$$
+(p-1)^m.
+$$
+当 $m=0$ 时这就是空乘积 $1$。$n=1$ 时 $m=1$，得到 $p-1$。
+
+若阵列全无穷，则 $G_\infty=K_n$。完全图 $K_n$ 二分当且仅当 $n\le2$。其中 $K_0$ 有零个分量，$K_1$ 有一个分量，$K_2$ 也有一个连通分量，故分别得到 $1,p-1,p-1$；当 $n\ge3$ 时 $K_n$ 含三角形，从而非二分，故计数为 $0$。特别地，对 $p=2$ 的全无穷 $K_3$，三条方程给出 $x_1=-x_0$、$x_2=x_0$ 与 $x_2=-x_0$，从而 $2x_0=0$，不可能由单位满足，与 $C_2(a)=0$ 一致。证毕。
+
+**theorem 54.10（精确无穷路径上的 $p=2/p=3$ 系数例外）.** 取三个顶点 $0,1,2$，规定
+$$
+a_{01}=a_{12}=\infty,\qquad a_{02}=h<\infty.
+$$
+则存在共同单位见证当且仅当
+$$
+h=v_p(2).
+$$
+因此 $p=2$ 时唯一可能的有限值是 $h=1$，而 $p=3$ 时唯一可能的有限值是 $h=0$。
+
+**证明。** 两条无穷边给出
+$$
+x_1=-x_0,\qquad x_2=-x_1=x_0,
+$$
+故
+$$
+x_0+x_2=2x_0.
+$$
+因为 $x_0$ 是单位，其估值是 $v_p(2)$。反之取任意单位 $u$ 并令
+$$
+(x_0,x_1,x_2)=(u,-u,u),
+$$
+便同时实现两条精确零和边与 $a_{02}=v_p(2)$。证毕。
+
+**theorem 54.11（$p=2$：通过二值可行性但高精度失败的三角形）.** 对 $p=2$ 与三个顶点，有限阵列
+$$
+a_{01}=1,\qquad a_{12}=1,\qquad a_{02}=2
+$$
+没有共同单位见证。可是若只保留“估值是否为正”这一二值信息，则三条边全为正是可行的；并且数值 $1$ 与 $2$ 各自都能由某一对 $2$-进单位实现。
+
+**证明。** 若 $u,v$ 是奇数且 $v_2(u+v)=1$，则
+$$
+u+v\equiv2\pmod4,
+$$
+这对奇数等价于 $u\equiv v\pmod4$。假设共同见证存在。由前两条边得到
+$$
+x_0\equiv x_1\equiv x_2\pmod4.
+$$
+于是
+$$
+x_0+x_2\equiv2x_0\equiv2\pmod4,
+$$
+故 $v_2(x_0+x_2)=1$，与规定值 $2$ 矛盾。
+
+二值层面可直接取
+$$
+x_0=x_1=x_2=1,
+$$
+三条和都等于 $2$，故三条边的估值都为正。单对精确值方面，$(1,1)$ 给出估值 $1$，$(1,3)$ 给出估值 $2$。证毕。
+
+**theorem 54.12（$p=3$：通过二值可行性但第二位数字要求四种颜色）.** 对 $p=3$，取八个顶点
+$$
+A_1,\ldots,A_4,B_1,\ldots,B_4.
+$$
+规定同侧边
+$$
+a_{A_iA_j}=a_{B_iB_j}=0\qquad(i\ne j),
+$$
+对角跨侧边
+$$
+a_{A_iB_i}=2,
+$$
+非对角跨侧边
+$$
+a_{A_iB_j}=1\qquad(i\ne j).
+$$
+则该完整阵列没有共同 $3$-进单位见证；但仅保留“正估值/零估值”后，正边恰为 $K_{4,4}$ 的跨侧边，二值阵列可行。并且 $0,1,2$ 三种单边精确值分别都能由某对 $3$-进单位实现。
+
+**证明。** 二值可行性有显式见证：取所有
+$$
+x_{A_i}=1,\qquad x_{B_j}=2.
+$$
+则跨侧和等于 $3$，估值为 $1>0$；同侧和分别为 $2$ 或 $4$，估值为 $0$。
+
+现假设完整精确阵列有见证。所有跨侧边估值至少为 $1$，故对任意 $i,j$ 有
+$$
+x_{A_i}\equiv-x_{B_j}\pmod3.
+$$
+于是所有 $A_i$ 在 $\mathbb F_3^\times$ 中有同一个剩余类 $r$，所有 $B_j$ 有剩余类 $-r$。固定一次 $r$ 的标准整数代表
+$$
+\widetilde r\in\{1,2\}\subset\mathbb Z.
+$$
+于是存在唯一的 $\alpha_i,\beta_j\in\mathbb F_3$。再取它们的标准整数代表
+$$
+\widetilde\alpha_i,\widetilde\beta_j\in\{0,1,2\},
+$$
+则模 $9$ 有
+$$
+x_{A_i}\equiv\widetilde r+3\widetilde\alpha_i,\qquad
+x_{B_j}\equiv-\widetilde r+3\widetilde\beta_j.
+$$
+因此
+$$
+x_{A_i}+x_{B_j}\equiv3(\widetilde\alpha_i+\widetilde\beta_j)\pmod9,
+$$
+而是否被 $9$ 整除恰由 $\alpha_i+\beta_j\in\mathbb F_3$ 是否为零决定。对角边估值 $2$ 特别蕴含其和被 $9$ 整除，因此
+$$
+\alpha_i+\beta_i=0
+$$
+于 $\mathbb F_3$，即 $\beta_i=-\alpha_i$。非对角边估值恰为 $1$ 蕴含其和不被 $9$ 整除，因此
+$$
+\alpha_i+\beta_j\ne0\qquad(i\ne j).
+$$
+代入 $\beta_j=-\alpha_j$ 得
+$$
+\alpha_i\ne\alpha_j\qquad(i\ne j).
+$$
+这要求 $\mathbb F_3$ 中存在四个两两不同元素，矛盾。因此无共同见证。
+
+最后，单边值 $0$ 可由 $(1,1)$ 实现；对 $a=1,2$，取
+$$
+(1,-1+3^a),
+$$
+两者均为 $3$-进单位且和恰为 $3^a$。证毕。
+
+**theorem 54.13（精确无穷奇圈：每条边单独可行而共同不可行）.** 对任意素数 $p$，三个顶点上的阵列
+$$
+a_{01}=a_{12}=a_{20}=\infty
+$$
+没有共同单位见证，虽然每一条单独的无穷边都可由一对单位实现。
+
+**证明。** 三条方程依次给出
+$$
+x_1=-x_0,\qquad x_2=-x_1=x_0,\qquad x_0=-x_2=-x_0,
+$$
+故 $2x_0=0$。在特征 $0$ 的整环 $\mathbb Z_p$ 中这推出 $x_0=0$，与单位性矛盾。任一单独无穷边则可取 $(u,-u)$，其中 $u$ 为任意单位。证毕。
+
+**definition 54.14（全素数乘积输入与有限支撑呈现）.** 令
+$$
+R=\prod_p\mathbb Z_p,\qquad R^\times=\prod_p\mathbb Z_p^\times.
+$$
+对同一有限顶点集 $V=[n]$，其中 $n\ge0$，全局输入是在每个素数 $p$ 给出完整阵列
+$$
+a^{(p)}_{ij}\in\mathbb N_0\cup\{\infty\}.
+$$
+全局实现是
+$$
+X_i=(x_{i,p})_p\in R^\times
+$$
+满足对所有 $p$ 与 $i<j$，
+$$
+v_p(x_{i,p}+x_{j,p})=a^{(p)}_{ij}.
+$$
+这里 $R$ 直接定义为坐标乘积，因此其单位群是逐坐标单位的乘积；若把 $R$ 识别为有限整数 $\widehat{\mathbb Z}$，则 axiom 54.1 所引 Longhi–Mu–Saettone Theorem 3.6 与式 (36) 给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,\qquad
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+
+称输入具有规范有限支撑呈现，如果显式给出有限素数集 $S$，并且对 $p\notin S$ 规定统一默认阵列
+$$
+a^{(p)}_{ij}=v_p(2)
+$$
+对所有 $i<j$。该默认阵列由
+$$
+x_{i,p}=1
+$$
+对所有顶点实现；当 $n=0$ 时此规定真空成立。
+
+**theorem 54.15（全局逐素数充要条件与有限查询有效性边界）.** 对 definition 54.14 的任意全素数输入，存在全局共同单位元组
+$$
+(X_i)_{i\in V}\in(R^\times)^V
+$$
+当且仅当对每个素数 $p$ 都有
+$$
+C_p(a^{(p)})>0.
+$$
+这里每个 $C_p$ 都由 theorem 54.8 的有限整数公式计算。若输入具有规范有限支撑呈现，则全局判定化为对有限集合 $S$ 中各素数运行局部算法。
+
+再固定如下黑箱模型：一次查询选择一个素数 $p$，黑箱返回该 $p$ 处的完整阵列 $a^{(p)}$。当 $n\ge3$ 时，不存在一个对所有这种任意无限黑箱输入都正确、且总在查询有限多个素数后停止的全局二值判定算法。
+
+**证明。** 若有全局实现，则取其第 $p$ 坐标便得到同一顶点组在 $\mathbb Z_p$ 中的局部共同见证，所以 theorem 54.8 给出
+$$
+C_p(a^{(p)})>0
+$$
+对每个 $p$ 成立。
+
+反之，假设每个 $p$ 都有 $C_p(a^{(p)})>0$。对每个素数，theorem 54.8 给出非空的有限模参数见证集 $\mathcal Y_{N_p}(a^{(p)})$。按 theorem 54.2 的根排序固定分量顺序，并把每个剩余类写成 $0,\ldots,p^{N_p}-1$ 中的标准整数代表；在这个有限集合中取字典序最小参数见证 $\bar y^{(p)}$。再把其每个坐标的标准整数代表嵌入 $\mathbb Z_p$，作为一个确定的提升 $y^{(p)}$。theorem 54.4 保证任意这样的提升都保持全部有限边的精确估值，并由规范符号重建一个完整局部实际解
+$$
+x_{i,p}=\varepsilon_i^{(p)}y_{c_p(i)}^{(p)}.
+$$
+这为每个素数确定一整个一致的局部顶点元组，而不是为每条边分别选代表。令
+$$
+X_i=(x_{i,p})_p.
+$$
+每个坐标都是 $\mathbb Z_p^\times$ 的单位，故 $X_i\in R^\times$；逐坐标即实现全部规定阵列。若 $n=0$，以上选择全部为空，唯一全局空元组即为实现。
+
+若有规范有限支撑呈现，$p\notin S$ 时全部取 $x_{i,p}=1$ 即为显式见证，因此只需有限检查 $S$。
+
+最后证明黑箱有效性边界。设 $n\ge3$，假定存在一个总在有限次素数查询后停止且对任意无限输入都正确的判定器。让它运行在处处采用规范默认阵列的全可行输入上；由于该输入确实由所有坐标取 $1$ 实现，正确判定器最终回答“可行”，并且只查询有限素数集 $Q$。取未查询素数
+$$
+q\notin Q.
+$$
+只在 $q$ 处把顶点 $0,1,2$ 之间的三条边改成 theorem 54.13 的全无穷三角形，其余边以及其余素数全部保持默认。新旧输入在判定器实际查询的每个素数上完全相同，因此其整个查询转录与输出相同，仍回答“可行”。但修改后的输入在 $q$ 处包含一个局部不可行的精确无穷奇圈，故不可能有全局实现，矛盾。因此在这个黑箱模型中、对 $n\ge3$ 的任意无限输入，不存在总用有限素数查询完成的正确全局二值判定器。证毕。
+
+**theorem 54.16（完整局部程序的等价形式）.** 对任意固定素数 $p$、任意 $n\ge0$ 与任意有限完整阵列 $a$，以下条件等价：
+
+1. 存在同一个
+$$
+x\in(\mathbb Z_p^\times)^V
+$$
+实现全部精确有限估值与全部精确零和；
+2. $G_\infty$ 二分且 theorem 54.4 的模 $p^N$ 条件有解，其中
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing;
+\end{cases}
+$$
+3. theorem 54.8 的显式整数 $C_p(a)$ 为正。
+
+此外，在这些条件成立时，全部无穷约束由 theorem 54.2 的自由单位参数严格维持；若 $E_f\ne\varnothing$，全部有限约束只需要指数
+$$
+N=1+\max_{e\in E_f}a_e,
+$$
+而若 $E_f=\varnothing$ 则固定 $N=1$。不存在额外的无限提升相容条件。
+
+**证明。** $(1)\Longleftrightarrow(2)$ 是 theorem 54.2 与 theorem 54.4。$(2)\Longleftrightarrow(3)$ 是 theorem 54.8 的精确计数与实际解约化类双射。
+
+最后说明停止精度的方向。若 $E_f=\varnothing$，没有有限边且 $N=1$，无需谈任何最大值或更高精度。若 $E_f\ne\varnothing$，则对每条有限边 $e$ 都有
+$$
+a_e+1\le N.
+$$
+因此模 $p^N$ 的约化确定模 $p^{a_e+1}$ 的约化：若两个 $p$-进量模 $p^N$ 相同，则其差属于
+$$
+p^N\mathbb Z_p\subseteq p^{a_e+1}\mathbb Z_p,
+$$
+所以它们也模 $p^{a_e+1}$ 相同。于是“被 $p^{a_e}$ 整除但不被 $p^{a_e+1}$ 整除”已经完全由模 $p^N$ 信息决定。无穷边则在 theorem 54.2 的参数化中是严格恒等式 $x_i=-x_j$，并非有限精度近似。故没有任何更高阶提升条件。证毕。
+
+## 54.99 追加锚
+## 55. 完整单位和估值数组的固定素数诱导元数
+
+**定义 55.1 完整单位和数组与诱导元数。** 固定素数 $p$，令 $\overline{\mathbb N}_0=\mathbb N_0\cup\{\infty\}$，约定 $v_p(0)=\infty$、$\infty-n=\infty$。有限标号集 $V$ 上的完整数组是函数 $a:\binom V2\to\overline{\mathbb N}_0$。称其可实现，是指存在同一个元组 $(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V$，使所有不同顶点满足 $v_p(x_i+x_j)=a_{ij}$；不同标号不要求取不同数值。记 $a|_W$ 为 $W\subseteq V$ 上的完整诱导限制。定义 $k_{\mathrm{full}}(p)$ 为使下式对所有有限 $V,a$ 成立的最小非负整数 $k$，不存在时记为 $\infty$：
+$$
+\left(\forall W\subseteq V,\ |W|\le k\Longrightarrow a|_W\text{ 可实现}\right)
+\Longrightarrow a\text{ 可实现}.
+$$
+另记
+$$
+\delta_p=v_p(2),\qquad s_p=\delta_p+1,\qquad
+q_p=
+\begin{cases}
+(p-1)/2,&p\ne2,\\
+1,&p=2.
+\end{cases}
+$$
+
+**定义 55.2 二色交叉数组、阈值与分支需求。** 设 $A,B$ 是不交的有限集。交叉数组 $b:A\times B\to\overline{\mathbb N}_0$ 可实现，是指存在同一个 $(z_w)_{w\in A\sqcup B}\in\mathbb Z_p^{A\sqcup B}$，满足
+$$
+b_{uv}=v_p(z_u-z_v)\qquad(u\in A,\ v\in B).
+$$
+同色差值不指定。对 $t\in\mathbb N_0$，令 $G_t(b)$ 为顶点集 $A\sqcup B$ 上以 $b_{uv}\ge t$ 为边的二部图。称包含边的连通分量为混合分量。对 $G_t(b)$ 的混合分量 $H$，在诱导图 $G_{t+1}(b)[V(H)]$ 中记混合分量数为 $c_t(H)$，并以 $\epsilon_A(H,t)$、$\epsilon_B(H,t)$ 分别表示是否存在相应颜色的孤立点，存在时取 $1$，否则取 $0$。定义
+$$
+D_t(H)=c_t(H)+\epsilon_A(H,t)+\epsilon_B(H,t).
+$$
+矩形条件 $\mathrm R$ 指每个二行二列子阵的四个标签中，最小值至少出现两次。对 $t\in\mathbb N_0$，模式 $\mathrm F_{p,t}$ 指存在两色各 $p$ 个不同顶点 $u_1,\ldots,u_p$ 和 $v_1,\ldots,v_p$，使
+$$
+b_{u_i v_i}>t\quad(1\le i<p),\qquad
+b_{u_i v_j}=t\quad\text{其余所有 }(i,j).
+$$
+这里 $>t$ 包括 $\infty$，而第二式包括 $b_{u_pv_p}=t$。
+
+**theorem 55.3 矩形条件恰好控制阈值分量。** 交叉数组满足 $\mathrm R$，当且仅当每个 $G_t(b)$ 的混合分量都是完全二部图。可实现的交叉数组必满足 $\mathrm R$。所用循环极值机制可参见 [Dovgoshey–Petrov，Lemma 2.1、Theorem 3.3](https://arxiv.org/html/1110.6802v1)：以 $w=p^{-b}$、$p^{-\infty}=0$ 换元，循环上的最大距离重复对应最小估值重复；此处的阈值论证如下。
+
+**证明。** 若有共同见证，则任取两色各两个顶点，有
+$$
+(z_u-z_v)-(z_{u'}-z_v)+(z_{u'}-z_{v'})-(z_u-z_{v'})=0.
+$$
+若四项估值有唯一最小值 $m$，则 $m$ 有限。除以 $p^m$ 后模 $p$ 化简，恰有一项非零，不可能和为零。因此 $\mathrm R$ 必要。
+
+若一个矩形有唯一最小值 $m$，则在 $G_{m+1}(b)$ 中，该矩形恰有三条边。这四个顶点处于同一混合分量，但缺少一条跨色边，故该分量不是完全二部图。
+
+反之，假设 $\mathrm R$ 成立，而 $G_t(b)$ 的某个混合分量不是完全二部图。取该分量中不相邻的异色顶点及连接它们的最短路径。路径长度为至少三的奇数；其前四个顶点诱导一条三边路径，否则可缩短原路径。这四点对应一个矩形，三条边的标签至少为 $t$，缺边的标签小于 $t$，于是产生唯一最小值，矛盾。证毕。
+
+**theorem 55.4 交叉数组的精确分支判据与共同整数见证。** 交叉数组 $b$ 可实现，当且仅当它满足 $\mathrm R$，且对每个 $t\in\mathbb N_0$ 和每个 $G_t(b)$ 的混合分量 $H$ 都有
+$$
+D_t(H)\le p.
+$$
+条件成立时，可以选取全部 $z_w\in\mathbb Z$。这里每个同余球恰有 $p$ 个下一层同余子球，使用的是 $\mathbb F_p$ 的基数；这一数字分支机制见 [Bradley，§2，所链接版本第4–5页](https://www2.ipf.kit.edu/Personen/bradley/CV/hier2vis.pdf)。
+
+**证明。** 先设有见证。矩形条件由 theorem 55.3 得到。沿 $H$ 的边传递同余，所有 $z_w$ 都落在同一个模 $p^t$ 同余类中，该类内只有 $p$ 个模 $p^{t+1}$ 同余类。
+
+每个下一层混合分量必须占据其中一个类。不同混合分量不能共用类：从两个分量各取一个异色顶点，它们之间没有下一层边，故其差不能被 $p^{t+1}$ 整除。孤立的 $A$ 色点不能使用任何混合分量的类，因为该分量含有 $B$ 色点；$B$ 色孤立点亦然。若两色孤立点都存在，它们又不能彼此共用类。因此至少需要 $c_t(H)+\epsilon_A(H,t)+\epsilon_B(H,t)$ 个类，得到必要的不等式。
+
+现设所列条件成立。若某一颜色为空，取全部 $z_w=0$ 即可。若所有交叉标签都是 $\infty$，同样取全部为零。其余情形令 $M$ 为有限交叉标签的最大值。下面同时为全部顶点构造第 $0,\ldots,M$ 位数字，而不拼接预先给定的局部见证。
+
+起始时 $G_0(b)$ 是完全二部图，全部顶点具有共同的模 $1$ 前缀。在第 $t$ 步，考虑已经具有共同模 $p^t$ 前缀的混合分量 $H$。把 $V(H)$ 分为下一层的各混合分量、全体 $A$ 色孤立点组成的一个组，以及全体 $B$ 色孤立点组成的一个组；空组省略。这些组的数目为 $D_t(H)\le p$。给不同组分配不同的数字 $0,\ldots,p-1$，把相应数字作为该组所有顶点的第 $t$ 位。下一步仅在混合组内部继续。
+
+纯色孤立组可以把其余数字全部置零。事实上，$G_{t+1}(b)\subseteq G_t(b)$，所以这些点在整个 $G_{t+1}(b)$ 中也没有边，更没有任何更深的交叉同余要求。同色点可以共同取值，因而合并同色孤立点不丢失任何已指定约束。
+
+若 $b_{uv}=t<\infty$，则 $u,v$ 在此前各位始终位于同一混合组。第 $t$ 步中，它们不可能落入同一个下一层混合分量，否则 theorem 55.3 给出的完全二部性会强迫 $b_{uv}\ge t+1$；它们也不可能落入同一个纯色组。因此它们在第 $t$ 位首次不同，恰有 $v_p(z_u-z_v)=t$。
+
+完成第 $M$ 位后，把所有尚未指定的数字置零。标签为 $\infty$ 的一对顶点从未分开，故得到完全相同的整数，而不是仅仅模某个幂相同。有限标签已经由其首次不同的数字决定，不受后续零位影响。所得 $0\le z_w<p^{M+1}$ 同时实现全部交叉标签。证毕。
+
+**theorem 55.5 分支超额压缩为至多 $2p$ 个顶点。** 交叉数组可实现，当且仅当满足 $\mathrm R$ 且不含任何 $\mathrm F_{p,t}$。因此每个不可实现的交叉数组都有一个至多 $2p$ 个顶点的不可实现诱导交叉限制。
+
+**证明。** 违反 $\mathrm R$ 的矩形本身就是四顶点障碍。模式 $\mathrm F_{p,t}$ 也不可实现：在其自身的 $2p$ 个顶点上，$G_t$ 是一个完全二部混合分量，而 $G_{t+1}$ 恰有 $p-1$ 个独立边分量和两色各一个孤立点，所以分支需求为 $p+1$，违反 theorem 55.4 的必要条件。
+
+反过来，设 $\mathrm R$ 成立，而某个 $H,t$ 满足 $D_t(H)>p$。写 $c=c_t(H)$、$e=\epsilon_A(H,t)+\epsilon_B(H,t)$。若 $e=2$，则 $c\ge p-1$；从 $p-1$ 个不同混合分量各取一条边，再取两色各一个孤立点。若 $e=1$，则 $c\ge p$；从 $p-1$ 个混合分量各取一条边，取一个已有孤立点，再从另一个混合分量取一个与该孤立点异色的顶点。若 $e=0$，则 $c\ge p+1$；从 $p-1$ 个混合分量各取一条边，再从两个不同的其余混合分量分别取一个 $A$ 色顶点和一个 $B$ 色顶点。
+
+三种情形都选出两色各 $p$ 个顶点。所取的 $p-1$ 条边标签大于 $t$。其余跨色对处于不同的下一层分量，标签小于 $t+1$；但它们都在 $H$ 中，由 theorem 55.3 的完全二部性，标签至少为 $t$，所以恰等于 $t$。故选出的完整交叉限制正是 $\mathrm F_{p,t}$。
+
+因此，不含这些模式就保证所有分支需求不超过 $p$，由 theorem 55.4 得到共同见证。两种障碍分别使用 $4$ 和 $2p$ 个顶点，而 $p\ge2$，所以统一界是 $2p$。证毕。
+
+**theorem 55.6 单位和的精确初层分解。** 对完整数组 $a$，令 $G(a)$ 的边为 $a_{ij}\ge s_p$。数组可实现，当且仅当下述条件同时成立：所有 $a_{ij}\ge\delta_p$；$G(a)$ 是完全二部混合分量与孤立点的不交并；若混合分量数为 $m$、存在孤立点的指示数为 $\epsilon$，则 $m+\epsilon\le q_p$；对每个混合分量及其二部分拆 $H=A_H\sqcup B_H$，交叉数组
+$$
+b^H_{uv}=a_{uv}-s_p\qquad(u\in A_H,\ v\in B_H)
+$$
+可实现。满足这些条件时，全部单位见证都可以取为普通整数。
+
+**证明。** 当 $p$ 为奇数时，模 $p^{s_p}=p$ 的非零类分成 $q_p=(p-1)/2$ 个相反类对。当 $p=2$ 时，$s_p=2$，模 $4$ 的单位类只有相反的一对 $1,-1$。两种情形中，单位满足
+$$
+v_p(x+y)\ge s_p
+\Longleftrightarrow x\equiv-y\pmod{p^{s_p}},
+$$
+并且若左侧不成立，则 $v_p(x+y)=\delta_p$。
+
+在一个相反类对中，两类都有人时恰产生一个完全二部混合分量；只有一类有人时，这些顶点均为孤立点。不同混合分量使用不同的相反类对，而孤立点不能使用已被混合分量占据的类对。这证明图形条件与 $m+\epsilon\le q_p$ 的必要性。
+
+在一个混合分量中，把 $A_H$ 上的数保持原号，把 $B_H$ 上的数取负。这些数沿跨色边模 $p^{s_p}$ 同余，所以具有共同的单位剩余类代表 $r_H$。分别写成
+$$
+x_u=r_H+p^{s_p}z_u,\qquad
+x_v=-r_H-p^{s_p}z_v.
+$$
+于是
+$$
+v_p(x_u+x_v)=s_p+v_p(z_u-z_v),
+$$
+证明交叉数组条件必要，包括两边同时为 $\infty$ 的情形。
+
+反之，为 $m$ 个混合分量选择不同的相反单位类对及代表 $r_H$；若存在孤立点，再留一个未使用的类对，把所有孤立点置于其中同一类，并共同取该类的一个整数代表。由 theorem 55.4，为各交叉数组选择共同整数见证，再用上述公式定义各 $x_i$。跨色对得到指定估值；同色对的和是 $\pm2r_H$ 加上 $p^{s_p}$ 的倍数，所以估值恰为 $\delta_p$。不同分量之间以及涉及孤立点的其余对，不处于相反剩余类，估值也恰为 $\delta_p$，正好是数组中所有非边的标签。
+
+特别地，$p=2$ 的混合分量可用
+$$
+x_u=1+4z_u,\qquad x_v=-1-4z_v.
+$$
+跨色和的估值为 $2+v_2(z_u-z_v)$，同色和的估值恒为 $1$。因此这里没有把奇单位的和直接当作通常的差值超度量。空顶点集用空元组；只有孤立点时用上述同一单位即可。证毕。
+
+**theorem 55.7 完整单位和数组的统一诱导上界。** 每个不可实现的完整数组都有一个至多 $2p$ 个顶点的不可实现诱导限制，界与有限估值标签的大小无关。
+
+**证明。** 若某个标签小于 $\delta_p$，其两个端点已给出障碍。以下设所有标签至少为 $\delta_p$。
+
+先说明：一个有限图若不含诱导三角形和诱导四顶点路径，则其每个含边分量都是完全二部图。事实上，不含四顶点诱导路径使每个连通分量的直径至多为二。在一个含边分量内固定顶点 $v$，令 $B=N(v)$、$A=V(H)\setminus B$。无三角形保证 $B$ 独立。每个 $u\in A\setminus\{v\}$ 有某个邻点 $b\in B$；若它漏掉另一个 $b'\in B$，则 $u,b,v,b'$ 诱导四顶点路径。因此每个 $u\in A$ 与整个 $B$ 相邻。$A$ 中任何一条边又会与 $B$ 中的点构成三角形，故 $A$ 也独立。
+
+所以，若 $G(a)$ 不是 theorem 55.6 要求的图形，它含一个三角形或四顶点诱导路径。相应完整子数组不可能有单位见证，因为单位见证的阈值图及其诱导子图均具有该定理要求的图形。这给出至多四个顶点的障碍。
+
+再设图形正确，但 $m+\epsilon>q_p$。若有孤立点，从 $q_p$ 个不同混合分量各取一条边，再取一个孤立点。若无孤立点，则 $m\ge q_p+1$，从 $q_p$ 个不同混合分量各取一条边，再从另一个混合分量只取一个顶点。两种情形所得诱导阈值图都是 $q_p$ 条独立边加一个孤立点，仍违反类对容量，使用 $2q_p+1$ 个顶点。这个数在奇素数情形等于 $p$，在 $p=2$ 时等于 $3$。
+
+最后，若初层条件全部成立，由 theorem 55.6，失败必来自某个混合分量的交叉数组 $b^H$。由 theorem 55.5，在该分量内可选至多 $2p$ 个顶点，使交叉限制仍不可实现。该限制的两色均非空。假如这些顶点上的完整和数组有单位见证，则把一色取负后，所有点由完整跨色边连接，并模 $p^{s_p}$ 具有共同剩余类；减去共同代表再除以 $p^{s_p}$，就得到该交叉限制的见证，矛盾。
+
+所有情形的顶点数都不超过 $2p$，且任何深度 $t$ 的分支失败都已经在 theorem 55.5 中压缩到这个数目。证毕。
+
+**theorem 55.8 每个固定素数的 $2p$ 顶点极小障碍。** 固定整数 $d\ge s_p$，任选
+$$
+h_1,\ldots,h_{p-1}\in\{d+1,d+2,\ldots\}\cup\{\infty\}.
+$$
+取 $V=\{u_1,\ldots,u_p,v_1,\ldots,v_p\}$，同色不同顶点间的标签均为 $\delta_p$，跨色标签规定为
+$$
+a_{u_i v_j}=
+\begin{cases}
+h_i,&i=j<p,\\
+d,&\text{其余情形}.
+\end{cases}
+$$
+该完整数组不可实现，但每个真诱导限制都由满足 $x_i\in\mathbb Z$、$p\nmid x_i$ 的共同元组实现。特别地，取全部 $h_i=d+1$ 就得到不含 $\infty$ 的极小障碍。
+
+**证明。** 假设存在单位见证，令 $y_{u_i}=x_{u_i}$、$y_{v_j}=-x_{v_j}$。全部跨色差的估值至少为 $d$，故这些数具有共同的模 $p^d$ 剩余类。其内部只有 $p$ 个模 $p^{d+1}$ 剩余类。
+
+每对 $u_i,v_i$（$i<p$）必须共用一个下一层类；不同这样的配对必须占据不同类，因为 $a_{u_i v_j}=d$（$i\ne j$）。$u_p$ 不能使用任何配对的类，因为它到每个 $v_i$ 的标签为 $d$；$v_p$ 同样不能使用任何配对的类。最后 $u_p,v_p$ 的标签为 $d$，所以这两个点也必须使用不同类。于是至少需要 $(p-1)+2=p+1$ 个类，矛盾。
+
+下面逐点删除并构造实际见证。保留的完整配对 $\{u_i,v_i\}$（$i<p$）各自组成一个组，其余未配对的 $u$ 点共同组成一个纯色组，未配对的 $v$ 点共同组成另一个纯色组，空组省略。
+
+删除 $u_p$ 或 $v_p$ 后，有 $p-1$ 个配对组和一个纯色组。删除 $u_i$（$i<p$）后，有 $p-2$ 个配对组、纯色组 $\{u_p\}$ 及纯色组 $\{v_i,v_p\}$；删除 $v_i$ 的情形交换两色。因此每种单点删除都恰有 $p$ 个组，可以给它们分配两两不同的数字 $c_C\in\{0,\ldots,p-1\}$。
+
+每个 $u$ 点置 $z_u=c_C$。纯色组中的 $v$ 点置 $z_v=c_C$。对于保留配对组 $C=\{u_i,v_i\}$，置
+$$
+z_{v_i}=
+\begin{cases}
+c_C+p^{h_i-d},&h_i<\infty,\\
+c_C,&h_i=\infty.
+\end{cases}
+$$
+最后取
+$$
+x_u=1+p^d z_u,\qquad x_v=-1-p^d z_v.
+$$
+这些数都属于 $\mathbb Z\cap\mathbb Z_p^\times$。同一保留配对的和恰有估值 $h_i$，包括 $h_i=\infty$ 时的严格零和。其余每一跨色对来自不同组，第 $d$ 位的系数模 $p$ 不同，故和的估值恰为 $d$。同色和为 $\pm2$ 加上 $p^d$ 的倍数，由 $d>\delta_p$ 得到估值 $\delta_p$。因此每个单点删除都有完整共同见证。任一真子集都包含在某个单点删除中，限制该元组即得它的共同见证。证毕。
+
+**theorem 55.9 固定素数问题的锐值。** 对每个素数 $p$，
+$$
+k_{\mathrm{full}}(p)=2p.
+$$
+特别地，$k_{\mathrm{full}}(2)=4$。该等式对任意有限顶点集、任意大有限估值及全部允许的 $\infty$ 标签同时成立。
+
+**证明。** theorem 55.7 表明，若所有至多 $2p$ 个顶点的诱导限制可实现，则不存在不可实现的整体数组，故 $k_{\mathrm{full}}(p)\le2p$。theorem 55.8 给出 $2p$ 个顶点的不可实现数组，其全部真诱导限制实际可实现，故任何 $k\le2p-1$ 都不够。两界相等。
+
+空集由空元组实现，单点集取 $x=1$。上界论证没有要求不同小子集的见证相容；它通过有限禁形排除和共同数字构造重新产生一个元组。theorem 55.4 的终止构造使所有 $\infty$ 标签成为严格相等，theorem 55.6 再把它们转成严格零和。因此无须对估值精度设置统一上限。证毕。
+
+**theorem 55.10 完整数组中无穷标签奇圈的短障碍。** 若完整数组的 $\infty$ 标签边构成的图含有奇圈，则该数组已有至多四个顶点的不可实现诱导限制。
+
+**证明。** 沿奇圈的零和等式依次取负，回到起点得到 $x=-x$，即 $2x=0$。在特征零的 $\mathbb Q_p$ 中这强迫 $x=0$，与单位条件冲突，$p=2$ 也不例外。
+
+进一步，所有 $\infty$ 边都属于 $G(a)$，所以 $G(a)$ 含奇圈，不可能是完全二部混合分量与孤立点的不交并。由 theorem 55.7 证明中的图论结论，它含诱导三角形或诱导四顶点路径，相应完整子数组即不可实现。因此，保留一个无穷标签奇圈并填入全部其余标签，不能产生超过四个顶点的诱导极小障碍。证毕。
+
+## 55.99 追加锚
+## 56. Haar 轨道概率卷积、共同见证与普通整数边界
+
+**假设 56.1（载体、拓扑、作用与概率约定）。** 令素数集为 $\mathbb P$，令
+$$
+R=\prod_{p\in\mathbb P}\mathbb Z_p,\qquad U=R^\times=\prod_{p\in\mathbb P}\mathbb Z_p^\times,
+$$
+其中 $R$ 取乘积拓扑并按坐标相加，$U$ 取乘积拓扑并以逐坐标乘法作用于 $R$；记 $m_U$ 为 $U$ 的归一化 Haar 概率。令 $E=\mathbb N_0\cup\{\infty\}$，有限点孤立，而 $\infty$ 的邻域基为 $\{\infty\}\cup\{n\ge N\}$；令 $I=\prod_pE$。定义
+$$
+\rho(x)=(v_p(x_p))_p,\qquad v_p(0)=\infty,
+$$
+以及规范截面
+$$
+s(A)_p=\begin{cases}p^{A_p},&A_p<\infty,\\0,&A_p=\infty.\end{cases}
+$$
+本文中的概率均为非负 Borel 概率，不引入带符号概率权。Longhi–Mu–Saettone, *Coset topologies on Z and arithmetic applications*, arXiv:2202.13478v3, Proposition 4.3，印刷页 p.26，给出 $\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\times}$ 的逐素数赋值轨道分类；Lemma 4.5，印刷页 p.27，证明相应商拓扑与 $\prod_p(\mathbb N_0\cup\{\infty\})$ 的乘积拓扑一致。来源：https://arxiv.org/pdf/2202.13478v3 。这里对当前 $R=\prod_p\mathbb Z_p$ 重新证明本节所需部分。
+
+**theorem 56.2（$\rho$ 的纤维恰为 $U$-轨道，含零坐标；规范轨道概率与稳定子）。** 对任意 $x,y\in R$，
+$$
+\rho(x)=\rho(y)\quad\Longleftrightarrow\quad \exists u\in U,\ y=ux.
+$$
+若 $A\in I$，则 $s(A)$ 的稳定子为
+$$
+H_A=\prod_pH_{A,p},\qquad H_{A,p}=\begin{cases}\{1\},&A_p<\infty,\\ \mathbb Z_p^\times,&A_p=\infty.\end{cases}
+$$
+而
+$$
+m_A:=(u\mapsto us(A))_*m_U
+$$
+是该轨道上唯一的 $U$-不变 Borel 概率；若以轨道内任意其他代表 $t=ws(A)$ 定义同一推前，则仍得到 $m_A$。因此即使 $H_A$ 非平凡、作用不自由，轨道概率仍规范且与代表元选择无关。
+
+**证明。** 固定 $p$。若 $v_p(x_p)=v_p(y_p)=n<\infty$，则可唯一写成 $x_p=p^na_p$、$y_p=p^nb_p$，其中 $a_p,b_p\in\mathbb Z_p^\times$；取 $u_p=b_pa_p^{-1}$ 即有 $y_p=u_px_p$。若公共赋值为 $\infty$，则 $x_p=y_p=0$，任意 $u_p\in\mathbb Z_p^\times$ 均满足 $y_p=u_px_p$。逐坐标组装 $u=(u_p)_p\in U$ 得正向蕴含；反向由单位不改变赋值立即成立。
+
+对稳定子，若 $A_p<\infty$ 且 $u_pp^{A_p}=p^{A_p}$，因 $\mathbb Z_p$ 为整环，得 $u_p=1$；若 $A_p=\infty$，该坐标为 $0$，全部单位都稳定它，故得到所列乘积稳定子。特别地，含零坐标时作用一般不自由。
+
+若 $t=ws(A)$，则
+$$
+(u\mapsto ut)_*m_U=(u\mapsto uws(A))_*m_U=m_A,
+$$
+因为右乘固定 $w$ 保持归一化 Haar 概率。为证唯一性，令 $\nu$ 是轨道 $U\cdot s(A)$ 上任意 $U$-不变概率，且 $f$ 为该轨道上的连续函数。Fubini 与不变性给出
+$$
+\int f(x)\,d\nu(x)=\int\!\!\int_U f(ux)\,dm_U(u)\,d\nu(x).
+$$
+若 $x=ws(A)$，内层积分经变量 $u\mapsto uw$ 后等于 $\int_Uf(us(A))\,dm_U(u)$，与 $x$ 无关。因此 $\nu(f)=m_A(f)$；连续函数分离紧 Hausdorff 空间上的概率，故 $\nu=m_A$。证毕。
+
+**theorem 56.3（规范概率核、Feller 弱连续性与精确实际支撑）。** 定义
+$$
+K(A,B)=\operatorname{Law}\bigl(\rho(us(A)+vs(B))\bigr),
+$$
+其中 $u,v$ 独立且各服从 $m_U$。则 $K:I\times I\to\mathcal P(I)$ 与代表元选择无关，是弱拓扑连续的 Borel 概率核；等价地，对每个 $f\in C(I)$，
+$$
+(A,B)\longmapsto\int_I f(C)\,K(A,B)(dC)
+$$
+连续。若
+$$
+F(A,B,u,v)=\rho(us(A)+vs(B)),
+$$
+则对每个 $A,B$，
+$$
+\operatorname{supp}K(A,B)=F(\{A\}\times\{B\}\times U^2)
+=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+因此支撑恰是“一对实际代表元”的二元实际支撑，包括概率质量为 $0$ 的支撑点。并且 $(A,B)\mapsto\operatorname{supp}K(A,B)$ 在非空紧子集的 Vietoris–Michael 拓扑中连续。这里弱连续性的极限次序是：先令参数 $(A_j,B_j)\to(A,B)$，利用紧集 $U^2$ 上的一致连续性取得对全部 $(u,v)$ 的一致收敛，再对固定 Haar 概率积分；证明不以“先截断素数、再令素数界趋于无穷”为定义步骤。
+
+**证明。** 对每个固定 $p$，映射 $E\to\mathbb Z_p$，$n\mapsto p^n$、$\infty\mapsto0$ 连续，因为 $p^n\to0$；故 $s:I\to R$ 连续。赋值映射 $v_p:\mathbb Z_p\to E$ 连续：有限纤维 $v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times$ 开闭，而 $\infty$ 的尾邻域原像为 $p^N\mathbb Z_p$。由乘积的泛性质，$\rho:R\to I$ 连续。这也直接适配 Longhi–Mu–Saettone Lemma 4.5 的拓扑识别，印刷页 p.27，来源：https://arxiv.org/pdf/2202.13478v3 。因此 $F$ 是紧空间 $I^2\times U^2$ 上的连续映射。
+
+若分别把 $s(A),s(B)$ 换成 $w_As(A),w_Bs(B)$，则 $(u,v)\mapsto(uw_A,vw_B)$ 保持 $m_U^{\otimes2}$，故 $K$ 不变。再令 $f\in C(I)$。函数
+$$
+(A,B)\longmapsto\int_{U^2}f(F(A,B,u,v))\,dm_U(u)\,dm_U(v)
+$$
+连续：若 $(A_j,B_j)\to(A,B)$，则紧性给出 $f\circ F(A_j,B_j,\cdot,\cdot)\to f\circ F(A,B,\cdot,\cdot)$ 在 $U^2$ 上一致收敛，于是可直接积分。故 $K$ 对弱拓扑连续。
+
+为说明它确为 Borel 核，记 $\mathcal D$ 为所有满足 $\mu\mapsto\mu(D)$ 在 $\mathcal P(I)$ 上 Borel 的 Borel 集 $D$。若 $C\subset I$ 闭，取相容度量 $d$ 并令 $\phi_n(x)=\max\{0,1-nd(x,C)\}$；则 $\phi_n\in C(I)$ 且 $\phi_n\downarrow1_C$，所以
+$$
+\mu(C)=\inf_n\int_I\phi_n\,d\mu.
+$$
+右侧是连续函数的可数下确界，故为上半连续，特别为 Borel；于是闭集属于 $\mathcal D$。此外 $\mathcal D$ 对补集封闭，因为 $\mu(D^c)=1-\mu(D)$；若 $D_n$ 两两不交且都在 $\mathcal D$，则 $\mu(\bigcup_nD_n)=\sum_n\mu(D_n)$ 是 Borel 函数的单调极限。因此 $\mathcal D$ 是包含全部闭集的 Dynkin 系，而闭集构成生成 Borel $\sigma$-代数的 $\pi$-系；由 $\pi$-$\lambda$ 定理，$\mathcal D$ 包含全部 Borel 集。复合连续映射 $(A,B)\mapsto K(A,B)$ 即得 $(A,B)\mapsto K(A,B)(D)$ Borel。
+
+紧群 Haar 概率具有满支撑：若非空开集 $O\subset U$ 的质量为 $0$，其左平移仍全为零；由紧性，有限多个平移覆盖 $U$，将推出 $m_U(U)=0$，矛盾。因此 $m_U^{\otimes2}$ 在 $U^2$ 上满支撑。下面所用的一般支撑像引理带有 Hausdorff 目标假设：若 $X$ 紧，$\mu$ 是 $X$ 上满支撑概率，$Y$ 是 Hausdorff 空间，且 $g:X\to Y$ 连续，则
+$$
+\operatorname{supp}(g_*\mu)=g(X).
+$$
+事实上，$g(X)$ 紧，因 $Y$ Hausdorff 而闭，所以 $g(X)$ 外每一点都有零推前质量的开邻域；若 $y=g(x)$ 且 $O\ni y$ 开，则 $g^{-1}(O)$ 是含 $x$ 的非空开集，故 $(g_*\mu)(O)>0$。当前目标 $I$ 是紧 Hausdorff 空间，故把该引理应用于 $g=F(A,B,\cdot,\cdot)$ 得第一项支撑公式。由 theorem 56.2，每个 $\rho$-纤维恰为相应轨道，故第二项等号成立。
+
+最后取 $I$ 的任一相容紧度量 $d$。$F$ 在紧域上一致连续，所以当 $(A_j,B_j)\to(A,B)$ 时，
+$$
+\sup_{u,v\in U}d\bigl(F(A_j,B_j,u,v),F(A,B,u,v)\bigr)\longrightarrow0.
+$$
+于是对应像集的 Hausdorff 距离至多为上述上确界并趋于 $0$。紧度量空间的非空紧子集上，Hausdorff 度量拓扑就是 Vietoris–Michael 拓扑，故支撑映射连续。证毕。
+
+**theorem 56.4（完整局部分布、全局实际 Haar 乘积分解与零原子支撑点）。** 记 $U_p=\mathbb Z_p^\times$，令 $K_p(a,b)$ 为 $K(A,B)$ 的第 $p$ 坐标边缘，其中 $a=A_p,b=B_p$。则：
+
+若 $a,b<\infty$ 且 $a<b$，则 $K_p(a,b)=\delta_a$；若 $b<a$，则 $K_p(a,b)=\delta_b$。若 $a<\infty,b=\infty$，则 $K_p(a,\infty)=\delta_a$，对称地 $K_p(\infty,b)=\delta_b$；而 $K_p(\infty,\infty)=\delta_\infty$。
+
+若 $a=b<\infty$ 且 $p$ 为奇素数，则
+$$
+K_p(a,a)(\{a\})=\frac{p-2}{p-1},\qquad
+K_p(a,a)(\{a+n\})=\frac1{p^n}\quad(n\ge1),\qquad
+K_p(a,a)(\{\infty\})=0.
+$$
+其支撑为 $\{a,a+1,a+2,\ldots,\infty\}$。
+
+若 $a=b<\infty$ 且 $p=2$，则
+$$
+K_2(a,a)(\{a\})=0,\qquad
+K_2(a,a)(\{a+n\})=2^{-n}\quad(n\ge1),\qquad
+K_2(a,a)(\{\infty\})=0,
+$$
+其支撑为 $\{a+1,a+2,\ldots,\infty\}$。
+
+此外，归一化 Haar 概率本身满足
+$$
+m_U=\bigotimes_pm_{U_p},
+$$
+所以对实际抽取的全局 Haar 单位 $u,v$，各素数坐标对 $(u_p,v_p)$ 独立，并非另行假设“商标签独立”。因而
+$$
+K(A,B)=\bigotimes_pK_p(A_p,B_p),
+$$
+且对任意有限素数集 $F$ 与 Borel 集 $D_p\subset E$，
+$$
+K(A,B)\bigl(\{C:C_p\in D_p\ \forall p\in F\}\bigr)
+=\prod_{p\in F}K_p(A_p,B_p)(D_p).
+$$
+全局支撑正好是各局部支撑的乘积，也正好是 theorem 56.3 的实际二元像。
+
+**证明。** 固定 $p$。若 $a<b<\infty$，写
+$$
+u_pp^a+v_pp^b=p^a(u_p+p^{b-a}v_p).
+$$
+括号内模 $p$ 等于单位 $u_p$，故仍是单位，输出赋值恒为 $a$。其余不等有限情形对称；若一项为 $0$，结论更直接；两项均为 $0$ 时输出为 $0$，赋值为 $\infty$。
+
+现在令 $a=b<\infty$。因
+$$
+v_p(u_pp^a+v_pp^a)=a+v_p(1+w_p),\qquad w_p=u_p^{-1}v_p,
+$$
+且独立 Haar 单位的比 $w_p$ 仍为 $U_p$ 上 Haar，问题化为 $T=v_p(1+w_p)$。对 $n\ge1$，
+$$
+\{T\ge n\}=\{w_p\equiv-1\pmod{p^n}\}.
+$$
+这是 $U_p$ 中子群 $1+p^n\mathbb Z_p$ 的一个陪集。标准单位滤过满足
+$$
+[U_p:1+p^n\mathbb Z_p]=(p-1)p^{n-1},
+$$
+故
+$$
+\Pr(T\ge n)=\frac1{(p-1)p^{n-1}}.
+$$
+该指数公式可由约化映射 $U_p\to(\mathbb Z/p^n\mathbb Z)^\times$ 直接数出；公开辅助资料 Yassine El Maazouz, *p-adic Harmonic Analysis*, §2.5，印刷页 p.5，亦列出 $U_0=\mathbb Z_p^\times$、$U_n=1+p^n\mathbb Z_p$ 及 $[U_0:U_n]=(p-1)p^{n-1}$。来源：https://yelmaazouz.org/content/documents/p_adicHarmonicAnalysis.pdf 。
+
+若 $p$ 为奇数，模 $p$ 的 $p-1$ 个非零剩余类中只有 $-1$ 导致 $T\ge1$，于是
+$$
+\Pr(T=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而对 $n\ge1$，
+$$
+\Pr(T=n)=\Pr(T\ge n)-\Pr(T\ge n+1)=\frac1{p^n}.
+$$
+若 $p=2$，所有单位均为奇数，所以 $T\ge1$；上式给出 $\Pr(T\ge n)=2^{1-n}$，故 $\Pr(T=n)=2^{-n}$。单点 $w_p=-1$ 的 Haar 质量为 $0$，因为它包含在每个上述陪集中，而这些陪集质量趋于 $0$，所以 $\Pr(T=\infty)=0$。归一化分别为
+$$
+\frac{p-2}{p-1}+\sum_{n\ge1}p^{-n}=1
+$$
+以及
+$$
+\sum_{n\ge1}2^{-n}=1.
+$$
+然而 $\infty$ 仍在支撑中：$w_p=-1$ 给出实际和 $0$；并且 $\infty$ 的任一尾邻域都有事件 $T\ge N$ 的正概率。故“原子质量为零”不等于“不在拓扑支撑”。
+
+再证全局乘积。局部 Haar 概率的乘积 $\bigotimes_pm_{U_p}$ 是 $U=\prod_pU_p$ 上的 Borel 概率，并在逐坐标左乘下不变；紧群归一化 Haar 概率的唯一性因此迫使它等于 $m_U$。于是 $m_U^{\otimes2}$ 下的坐标对 $(u_p,v_p)$ 独立，且输出第 $p$ 坐标只依赖该坐标对，有限柱事件公式随即成立；这些柱事件生成 Borel $\sigma$-代数，故得到整个乘积测度等式。各局部实际见证可逐坐标组装成全局 $u,v\in U$，反之全局见证逐坐标投影到局部见证，故全局实际像等于局部实际像的乘积；结合 theorem 56.3 即得支撑断言。证毕。
+
+**theorem 56.5（有界复测度轨道卷积的精确拓扑合同与概率限制）。** 记 $M_b(I)$ 为 $I$ 上有界复正则 Borel 测度的 Banach 空间，范数为全变差范数 $\|\cdot\|$。本定理中 $M_b(I)$ 的弱星拓扑明确指
+$$
+\sigma(M_b(I),C(I)),
+$$
+即使所有映射
+$$
+\mu\longmapsto\int_I f\,d\mu,\qquad f\in C(I),
+$$
+连续的最弱拓扑。对 $M,N\ge0$ 记
+$$
+B_M=\{\mu\in M_b(I):\|\mu\|\le M\},\qquad B_N=\{\nu\in M_b(I):\|\nu\|\le N\}.
+$$
+再记
+$$
+M_b^U(R)=\{\lambda\in M_b(R):u_*\lambda=\lambda\ \text{对所有 }u\in U\}.
+$$
+令 $q:R\to R/U$ 为轨道商映射，并令
+$$
+\bar\rho:R/U\longrightarrow I,\qquad \bar\rho(Ux)=\rho(x).
+$$
+则 $\bar\rho$ 是同胚。
+
+对任意 $\mu\in M_b(I)$ 定义规范不变提升 $\Lambda_b\mu\in M_b(R)$ 为
+$$
+\int_R f(x)\,d(\Lambda_b\mu)(x)
+=\int_I\int_U f(us(A))\,dm_U(u)\,d\mu(A),
+\qquad f\in C(R).
+$$
+定义
+$$
+\mu\star_b\nu
+:=\rho_*\bigl((\Lambda_b\mu)*_R(\Lambda_b\nu)\bigr),
+$$
+其中 $*_R$ 是紧阿贝尔加法群 $(R,+)$ 上的复测度卷积。则：
+
+1. $\Lambda_b$ 是 $M_b(I)$ 到 $M_b^U(R)$ 的等距线性双射，其逆为 $\rho_*$。
+
+2. $\star_b$ 双线性、结合、交换，以
+$$
+e=(\infty,\infty,\ldots)=\rho(0)
+$$
+对应的 $\delta_e$ 为单位元，并满足
+$$
+\|\mu\star_b\nu\|\le\|\mu\|\,\|\nu\|.
+$$
+因而 $\star_b$ 是有界双线性映射并对全变差范数联合连续。
+
+3. 对弱星拓扑 $\sigma(M_b(I),C(I))$，$\star_b$ 在整个 $M_b(I)$ 上对每个变量分别连续。对每个固定的 $M,N<\infty$，其限制
+$$
+\star_b:B_M\times B_N\longrightarrow M_b(I)
+$$
+在两个因子均取弱星子空间拓扑时联合连续。因此它在概率空间 $\mathcal P(I)$ 上联合弱连续，并且在正测度锥 $M_b^+(I)$ 上取 $\sigma(M_b(I),C(I))$ 的子空间拓扑时也联合连续。相反，
+$$
+\star_b:M_b(I)\times M_b(I)\longrightarrow M_b(I)
+$$
+在整个复测度空间上并非联合 $\sigma(M_b(I),C(I))$-连续；失败已经发生在 $(0,0)$。
+
+4. 对任意 $A,B\in I$，
+$$
+\delta_A\star_b\delta_B
+=\int_U\delta_{\rho(s(A)+us(B))}\,dm_U(u)
+=K(A,B).
+$$
+特别地，点卷积是紧支撑概率，并且
+$$
+(A,B)\longmapsto\operatorname{supp}(\delta_A\star_b\delta_B)
+$$
+到非空紧子集空间在 Michael 拓扑中连续。
+
+5. 点对合为连续恒等映射 $A^\ast=A$。若对 Borel 集 $D\subset I$ 记 $D^\ast=\{A^\ast:A\in D\}$，并对 $\mu\in M_b(I)$ 记
+$$
+\mu^{-}(D)=\overline{\mu(D^\ast)},
+$$
+则 $(M_b(I),\star_b,{}^{-})$ 是以 $\delta_e$ 为单位元的交换 Banach-$\ast$-代数，而且
+$$
+\delta_{A^\ast}\star_b\delta_{B^\ast}
+=(\delta_B\star_b\delta_A)^{-},
+$$
+以及
+$$
+B=A^\ast\quad\Longleftrightarrow\quad
+e\in\operatorname{supp}(\delta_A\star_b\delta_B).
+$$
+由于 $A^\ast=A$，后一条件等价于 $A=B$。
+
+Rösler–Voit, *Dunkl theory, convolution algebras, and related Markov processes*, §3.2, Definition 3.6，印刷页 p.40，给出其超群定义；Example 3.8，印刷页 pp.40–41，把局部紧阿贝尔群 $V$ 上紧自同构群 $K$ 的不变有界测度 Banach-$\ast$-代数搬运到轨道空间 $V^K$，称所得结构为交换 orbit hypergroup，并给出上述形式的点测度 Haar 平均、单位元与对合。来源：https://math.uni-paderborn.de/fileadmin/mathematik/AG_Harmonische_Analysis/Publications_Roesler/roesler_voit_angers.pdf 。这里采用该轨道代数与点卷积结构；对于复测度空间的拓扑连续性，则以本定理明确指定的 $\sigma(M_b(I),C(I))$ 为准，并由下面证明给出精确范围，而不把 Definition 3.6(1) 的未限定弱连续性表述解释为全空间的联合弱星连续性。
+
+在概率层面，$\mathcal P(I)$ 是 $M_b(I)$ 中的凸集。令 $\Lambda=\Lambda_b|_{\mathcal P(I)}$，并定义
+$$
+\mu\star\nu:=\rho_*\bigl((\Lambda\mu)*_R(\Lambda\nu)\bigr),
+\qquad \mu,\nu\in\mathcal P(I).
+$$
+则 $\star$ 恰为 $\star_b$ 在 $\mathcal P(I)$ 上的限制；特别地，
+$$
+\delta_A\star\delta_B=K(A,B).
+$$
+并且 $\star$ 在 $\mathcal P(I)$ 上交换、结合、对每个变量仿射并对弱拓扑联合连续。
+
+最后，点核在以下正确的连续性类别中唯一决定整个复测度卷积：若 $\diamond$ 是 $M_b(I)$ 上另一个双线性运算，对每个变量分别关于 $\sigma(M_b(I),C(I))$ 连续，并且
+$$
+\delta_A\diamond\delta_B=K(A,B)\qquad(A,B\in I),
+$$
+则
+$$
+\mu\diamond\nu=\mu\star_b\nu\qquad(\mu,\nu\in M_b(I)).
+$$
+
+**证明。** theorem 56.2 表明 $\bar\rho$ 良定义且双射。由于 $\rho=\bar\rho\circ q$ 连续，商映射的泛性质给出 $\bar\rho$ 连续；$R/U$ 是紧空间，而 $I$ 是 Hausdorff 空间，所以连续双射 $\bar\rho$ 是同胚。
+
+对 $f\in C(R)$，令
+$$
+P_f(A)=\int_U f(us(A))\,dm_U(u).
+$$
+由 $s$ 与作用的连续性及紧性，$P_f\in C(I)$，且 $\|P_f\|_\infty\le\|f\|_\infty$，所以 $\Lambda_b$ 是良定义的有界线性映射且
+$$
+\|\Lambda_b\mu\|\le\|\mu\|.
+$$
+又对 $\varphi\in C(I)$，
+$$
+\int_I\varphi\,d(\rho_*\Lambda_b\mu)
+=\int_I\int_U\varphi(\rho(us(A)))\,dm_U(u)\,d\mu(A)
+=\int_I\varphi(A)\,d\mu(A),
+$$
+故
+$$
+\rho_*\Lambda_b\mu=\mu.
+$$
+另一方面，若 $\lambda\in M_b^U(R)$，则 theorem 56.2 表明，对 $x\in R$，
+$$
+P_f(\rho(x))=\int_Uf(ux)\,dm_U(u).
+$$
+因此复测度的 Fubini 定理和 $U$-不变性给出
+$$
+\int_Rf\,d\Lambda_b(\rho_*\lambda)
+=\int_R\int_Uf(ux)\,dm_U(u)\,d\lambda(x)
+=\int_Rf\,d\lambda.
+$$
+所以
+$$
+\Lambda_b(\rho_*\lambda)=\lambda.
+$$
+这证明 $\Lambda_b$ 与 $\rho_*$ 在 $M_b^U(R)$ 上互逆。推前不增加全变差范数，于是
+$$
+\|\mu\|=\|\rho_*\Lambda_b\mu\|\le\|\Lambda_b\mu\|\le\|\mu\|,
+$$
+故 $\Lambda_b$ 等距，得到第 1 项。
+
+若 $\lambda,\kappa\in M_b^U(R)$，则对任意 $t\in U$，
+$$
+t_*(\lambda*_R\kappa)
+=(t_*\lambda)*_R(t_*\kappa)
+=\lambda*_R\kappa,
+$$
+因为 $t$ 是 $(R,+)$ 的连续群自同构。因此 $M_b^U(R)$ 对 $*_R$ 封闭。加法群的复测度卷积双线性、结合、交换，并满足
+$$
+\|\lambda*_R\kappa\|\le\|\lambda\|\,\|\kappa\|.
+$$
+由 $\Lambda_b$ 的等距双射搬运这些性质，得到 $\star_b$ 的双线性、结合、交换及范数估计。又 $\Lambda_b\delta_e=\delta_0$，故 $\delta_e$ 是单位元。范数估计还给出
+$$
+\|\mu_1\star_b\nu_1-\mu_2\star_b\nu_2\|
+\le\|\mu_1-\mu_2\|\,\|\nu_1\|
++\|\mu_2\|\,\|\nu_1-\nu_2\|,
+$$
+从而 $\star_b$ 对全变差范数联合连续。
+
+对点质量，$\Lambda_b\delta_A=m_A$，故
+$$
+\delta_A\star_b\delta_B
+=\operatorname{Law}\bigl(\rho(us(A)+vs(B))\bigr)
+=K(A,B).
+$$
+又
+$$
+\rho(us(A)+vs(B))
+=\rho\bigl(s(A)+u^{-1}vs(B)\bigr),
+$$
+而 $(u,v)\mapsto(u,u^{-1}v)$ 保持 $m_U^{\otimes2}$，所以
+$$
+\delta_A\star_b\delta_B
+=\int_U\delta_{\rho(s(A)+ws(B))}\,dm_U(w).
+$$
+这既给出第 4 项的点卷积公式，也与 Rösler–Voit Example 3.8 的轨道公式一致。支撑连续性已经由 theorem 56.3 直接证明。
+
+下面证明精确的弱星连续性范围。对 $f\in C(I)$ 定义
+$$
+T_f(A,B)
+:=\int_I f(C)\,K(A,B)(dC).
+$$
+theorem 56.3 给出 $T_f\in C(I\times I)$，并且对任意 $\mu,\nu\in M_b(I)$，由上面的点卷积公式与复测度 Fubini 定理，
+$$
+\int_I f\,d(\mu\star_b\nu)
+=\int_I\int_I T_f(A,B)\,d\mu(A)\,d\nu(B).
+$$
+固定 $\nu$，令
+$$
+G_{\nu,f}(A)=\int_I T_f(A,B)\,d\nu(B).
+$$
+因为 $T_f$ 在紧空间 $I\times I$ 上连续，映射 $A\mapsto T_f(A,\cdot)$ 连续进入 $C(I)$ 的一致范数；于是 $G_{\nu,f}\in C(I)$。若 $\mu_\alpha\to\mu$ 于 $\sigma(M_b(I),C(I))$，则
+$$
+\int_I f\,d(\mu_\alpha\star_b\nu)
+=\int_I G_{\nu,f}\,d\mu_\alpha
+\longrightarrow
+\int_I G_{\nu,f}\,d\mu
+=\int_I f\,d(\mu\star_b\nu).
+$$
+故第一变量弱星连续；第二变量同理。这证明整个 $M_b(I)$ 上的分别弱星连续性。
+
+现在固定 $M,N<\infty$，设
+$$
+\mu_\alpha\to\mu,\qquad \nu_\alpha\to\nu
+$$
+分别在 $B_M,B_N$ 的弱星子空间拓扑中。有限和
+$$
+Q(A,B)=\sum_{j=1}^r\phi_j(A)\psi_j(B),
+\qquad \phi_j,\psi_j\in C(I),
+$$
+构成 $C(I\times I)$ 中含常数、闭合于共轭并分离点的子代数，所以由 Stone–Weierstrass 定理在一致范数下稠密。给定 $\varepsilon>0$，取这样的 $Q$ 使
+$$
+\|T_f-Q\|_\infty<\varepsilon.
+$$
+对 $Q$ 有
+$$
+\int\!\!\int Q\,d\mu_\alpha\,d\nu_\alpha
+=\sum_{j=1}^r
+\left(\int\phi_j\,d\mu_\alpha\right)
+\left(\int\psi_j\,d\nu_\alpha\right)
+\longrightarrow
+\int\!\!\int Q\,d\mu\,d\nu.
+$$
+同时
+$$
+\left|\int\!\!\int(T_f-Q)\,d\mu_\alpha\,d\nu_\alpha\right|
+\le MN\varepsilon
+$$
+以及
+$$
+\left|\int\!\!\int(T_f-Q)\,d\mu\,d\nu\right|
+\le MN\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 即得
+$$
+\mu_\alpha\star_b\nu_\alpha\longrightarrow\mu\star_b\nu
+$$
+于 $\sigma(M_b(I),C(I))$。故在每个 $B_M\times B_N$ 上联合弱星连续。概率全在 $B_1$ 中，因此概率卷积联合弱连续。若 $\mu_\alpha,\mu$ 都为正测度且 $\mu_\alpha\to\mu$ 弱星，则
+$$
+\|\mu_\alpha\|=\mu_\alpha(I)\longrightarrow\mu(I)=\|\mu\|,
+$$
+所以任一收敛网最终落在某个固定全变差球内；对另一正测度网同理。由网刻画连续性，$\star_b$ 在 $M_b^+(I)\times M_b^+(I)$ 上也联合弱星连续。
+
+再证明全空间联合弱星连续性确实失败。对 $n\ge0$，令
+$$
+H_n=\{x\in R:x_2\in2^n\mathbb Z_2,\ x_p=0\ \text{对所有 }p\ne2\},
+$$
+令 $\eta_n$ 为紧加法群 $H_n$ 的归一化 Haar 概率，并令
+$$
+h_n=\rho_*\eta_n\in\mathcal P(I).
+$$
+每个 $\eta_n$ 都是 $U$-不变的，所以 $\Lambda_bh_n=\eta_n$。若 $n\ge m$，则 $H_n\subset H_m$，而 $\eta_m$ 对 $H_n$ 的平移不变，故
+$$
+\eta_n*_R\eta_m=\eta_m.
+$$
+于是对所有 $m,n\ge0$，
+$$
+h_n\star_bh_m=h_{\min(n,m)}.
+$$
+令
+$$
+d_n=h_n-h_{n-1}\qquad(n\ge1).
+$$
+直接展开即得
+$$
+d_n\star_bd_m=0\quad(n\ne m),\qquad
+d_n\star_bd_n=d_n.
+$$
+定义
+$$
+f(A)=
+\begin{cases}
+2^{-A_2},&A_2<\infty,\\
+0,&A_2=\infty.
+\end{cases}
+$$
+因为 $2^{-k}\to0$，故 $f\in C(I)$。在 $\eta_n$ 下，
+$$
+\Pr(v_2(x)=n+j)=2^{-j-1}\qquad(j\ge0),
+$$
+所以
+$$
+h_n(f)
+=\sum_{j\ge0}2^{-(n+j)}2^{-j-1}
+=\frac23\,2^{-n},
+$$
+从而
+$$
+d_n(f)=-\frac23\,2^{-n}<0.
+$$
+
+取 $(0,0)$ 的任意两个弱星邻域。缩小后，它们分别由有限多个 $C(I)$ 测试函数控制；把两组测试函数合并为 $g_1,\ldots,g_r$。取整数 $N>2r$。实线性方程组
+$$
+\sum_{n=1}^N a_n\operatorname{Re}d_n(g_j)=0,\qquad
+\sum_{n=1}^N a_n\operatorname{Im}d_n(g_j)=0
+\qquad(1\le j\le r)
+$$
+只有至多 $2r$ 个方程，因此存在非零实向量 $(a_1,\ldots,a_N)$。令
+$$
+\mu=\sum_{n=1}^Na_nd_n.
+$$
+则 $\mu(g_j)=0$ 对所有 $j$ 成立，所以对每个实数 $t$，$t\mu$ 同时属于上述两个缩小后的零邻域。另一方面，正交幂等关系给出
+$$
+(\mu\star_b\mu)(f)
+=\sum_{n=1}^Na_n^2d_n(f)
+=-\frac23\sum_{n=1}^Na_n^22^{-n}<0.
+$$
+因此
+$$
+((t\mu)\star_b(t\mu))(f)
+=t^2(\mu\star_b\mu)(f)
+$$
+的绝对值随 $|t|\to\infty$ 无界。输出弱星零邻域
+$$
+\{\lambda\in M_b(I):|\lambda(f)|<1\}
+$$
+因而不可能包含所有这类乘积。这证明 $\star_b$ 在 $(0,0)$ 不联合弱星连续，也证明第 3 项的有界全变差限制是实质性的。
+
+加法群复测度代数的对合为
+$$
+\lambda^\dagger(D)=\overline{\lambda(-D)}.
+$$
+它保持 $M_b^U(R)$。在轨道商上，$-x=(-1)x$ 且 $-1\in U$，所以轨道对合为恒等映射 $A^\ast=A$，而搬运后的复测度对合正是
+$$
+\mu^{-}(D)=\overline{\mu(D^\ast)}.
+$$
+因此 $(M_b(I),\star_b,{}^{-})$ 是交换 Banach-$\ast$-代数。若
+$$
+e\in\operatorname{supp}(\delta_A\star_b\delta_B),
+$$
+则 theorem 56.3 给出实际 $x,y\in R$，满足 $\rho(x)=A,\rho(y)=B$ 且 $x+y=0$；于是 $y=-x$ 与 $x$ 同一 $U$-轨道，所以 $A=B=A^\ast$。反之若 $A=B$，任取 $\rho(x)=A$ 并令 $y=-x$，即有 $\rho(y)=B$ 且 $x+y=0$，故 theorem 56.3 给出 $e$ 属于该支撑。第 5 项得证。
+
+对概率测度，$\Lambda=\Lambda_b|_{\mathcal P(I)}$，所以定义中的 $\star$ 显然就是 $\star_b$ 的概率限制。结合律、交换律从 $\star_b$ 继承，仿射性来自双线性，联合弱连续性由 $\mathcal P(I)\subset B_1$ 与第 3 项得到。这也重新给出
+$$
+\delta_A\star\delta_B=K(A,B).
+$$
+
+最后证明点核唯一性。令
+$$
+\mathcal A=\operatorname{span}\{\delta_A:A\in I\}.
+$$
+若 $f\in C(I)$ 被 $\mathcal A$ 中每个测度湮灭，则特别有 $\delta_A(f)=f(A)=0$ 对所有 $A\in I$，故 $f=0$。因此由弱拓扑的双极刻画，$\mathcal A$ 在 $\sigma(M_b(I),C(I))$ 中稠密。若 $\diamond$ 满足定理末尾的条件，则双线性先给出 $\diamond$ 与 $\star_b$ 在 $\mathcal A\times\mathcal A$ 上相同。固定 $\nu\in\mathcal A$，利用第一变量的分别弱星连续性和 $\mathcal A$ 的稠密性，把相等性延拓到所有 $\mu\in M_b(I)$；再固定任意这样的 $\mu$，利用第二变量的分别弱星连续性和同一稠密性，把相等性延拓到所有 $\nu\in M_b(I)$。故 $\diamond=\star_b$。这里不需要、也没有使用全空间联合弱星连续性。证毕。
+
+**theorem 56.6（中间轨道重新随机化保持独立树的根分布，但不一般保证公共见证联合律）。** 设 $X,Y,Z$ 独立，且分别服从某三个规范轨道概率 $m_A,m_B,m_C$。令 $S=X+Y$。则 $S$ 的律是 $U$-不变的，并且
+$$
+\operatorname{Law}(S)=\Lambda\operatorname{Law}(\rho(S)).
+$$
+因此若第三输入 $Z$ 与整个子树 $(X,Y)$ 独立，则先只保留 $\rho(S)$、再按其规范轨道概率重新抽取代表、再与 $Z$ 相加，所得最终轨道律与直接计算 $\rho(X+Y+Z)$ 相同；不同括号方式给出 theorem 56.5 的结合律。若另一个观察量再次使用 $X$ 或 $Y$，则仅由 $\operatorname{Law}(\rho(S))$ 重新抽取中间代表并不一般保证保存该观察量与中间代表之间的原联合律；某些特殊联合律可以恰好保持。theorem 56.7 给出一个严格失败的具体事件。
+
+**证明。** theorem 56.5 的概率限制证明已经表明 $m_A*_Rm_B$ 是 $U$-不变概率，而它正是 $S$ 的律。对任意 $U$-不变概率 $\lambda$，同一定理证明了 $\Lambda(\rho_*\lambda)=\lambda$，故得到所列恒等式。若 $Z$ 与 $(X,Y)$ 独立，则把 $S$ 的律换成完全相同的 $\Lambda\operatorname{Law}(\rho(S))$ 不会改变 $(S,Z)$ 的乘积律，因此也不改变 $\rho(S+Z)$ 的律。
+
+若某个量再次使用 $X$ 或 $Y$，则所需对象是含公共变量的联合律，而上面的边缘恒等式只确定 $S$ 的边缘律；从一个边缘律不能推出所有这类联合律在重新抽取后保持不变。因此本定理只给出“不一般保证”的结论，而不作普遍失败断言。theorem 56.7 的同一输入复用构造给出一个联合律确实改变的实例。证毕。
+
+**theorem 56.7（复用输入三元联合律的精确支撑、两两独立而非联合独立，以及 $1/8$ 对 $0$ 的反例）。** 令 $x,y,z$ 为 $U$ 上相互独立的 Haar 单位，并令
+$$
+J(x,y,z)=\bigl(\rho(x+y),\rho(y+z),\rho(z+x)\bigr),\qquad L=J_*m_U^{\otimes3}.
+$$
+则
+$$
+\operatorname{supp}L=J(U^3),
+$$
+即恰为真实连续像；逐素数还有
+$$
+J(U^3)=\prod_pJ_p(U_p^3),
+$$
+其中
+$$
+J_p(r,s,t)=\bigl(v_p(r+s),v_p(s+t),v_p(t+r)\bigr).
+$$
+三个边缘都等于 $K(\mathbf0,\mathbf0)$，其中 $\mathbf0=(0)_p$；任意两个边缘事实上独立，但三个边缘不联合独立。具体地，令 $H$ 为只约束 $p=2$ 坐标的柱事件
+$$
+H=\{(C_{12},C_{23},C_{31}):C_{12,2}\ge2,\ C_{23,2}\ge2,\ C_{31,2}\ge2\}.
+$$
+若取三个二元边缘的独立乘积，则
+$$
+\bigl(K(\mathbf0,\mathbf0)^{\otimes3}\bigr)(H)=\left(\frac12\right)^3=\frac18,
+$$
+而真实复用输入联合律满足
+$$
+L(H)=0.
+$$
+故真实联合支撑严格小于三个边缘支撑的笛卡尔乘积。
+
+**证明。** $J$ 连续，而 $m_U^{\otimes3}$ 在紧空间 $U^3$ 上满支撑；目标 $I^3$ 是 Hausdorff 空间，故 theorem 56.3 中带 Hausdorff 目标假设的连续像支撑引理适用，得到 $\operatorname{supp}L=J(U^3)$。因为 $U^3=\prod_pU_p^3$ 且 $J$ 完全逐坐标计算，任意一族局部见证可逐素数组装，故像集恰为 $\prod_pJ_p(U_p^3)$。
+
+每个单边缘都由两个独立 Haar 单位之和得到，故是 $K(\mathbf0,\mathbf0)$。再看例如前两个边缘。条件于 $y$ 后，$y^{-1}x$ 与 $y^{-1}z$ 仍是相互独立的 Haar 单位，并且
+$$
+\rho(x+y)=\rho(y^{-1}x+1),\qquad
+\rho(y+z)=\rho(1+y^{-1}z).
+$$
+其条件联合律不依赖 $y$ 且等于两个 $K(\mathbf0,\mathbf0)$ 边缘的乘积，所以这两个边缘独立；其他两对同理。
+
+但在 $p=2$，theorem 56.4 给出对两独立单位 $r,s$，
+$$
+\Pr(v_2(r+s)\ge2)=\frac12.
+$$
+因此三个独立边缘给 $H$ 的概率为 $1/8$。对真实三元组，$x_2,y_2,z_2$ 模 $4$ 均只能为 $1$ 或 $3$。两个奇单位之和可被 $4$ 整除，当且仅当二者模 $4$ 属于相反的两个类。若 $H$ 发生，则三对 $(x_2,y_2)$、$(y_2,z_2)$、$(z_2,x_2)$ 都必须异色；但三个位点用两个颜色不可能使三条边都异色。故 $H$ 不可能发生，$L(H)=0$。由于 $H$ 是非空开闭柱集且独立边缘乘积给它正概率，这还直接证明真实支撑严格较小。证毕。
+
+**theorem 56.8（正普通整数输入几乎必然逃离普通整数生成理想；零输入例外）。** 令 $a,b\in\mathbb N_{>0}$ 以对角方式嵌入 $R$，令 $A=\rho(a),B=\rho(b)$，并令 $C$ 服从 $K(A,B)$。则
+$$
+\Pr\bigl(\exists n\in\mathbb N_{>0},\ C=\rho(n)\bigr)=0.
+$$
+更精确地，几乎处处所有 $C_p$ 都有限，但集合 $\{p:C_p>0\}$ 是无限集。因此随机输出总对应某个 $R$ 中的主闭理想 $s(C)R$，却几乎必然不是任何正普通整数 $n$ 的理想 $nR$。若一个输入为 $0$、另一个为正整数 $b$，则 $K(\rho(0),\rho(b))=\delta_{\rho(b)}$；若两输入均为 $0$，则输出恒为 $\rho(0)$，即零理想而非正整数生成理想。
+
+**证明。** 先设 $a,b>0$。令 $S$ 为整除 $ab$ 的有限素数集。对任意奇素数 $p\notin S$，有 $A_p=B_p=0$。定义
+$$
+E_p=\{C_p>0\}.
+$$
+theorem 56.4 给出
+$$
+\Pr(E_p)=\Pr(v_p(1+w_p)\ge1)=\frac1{p-1}.
+$$
+并且这些 $E_p$ 对不同 $p$ 独立，因为 theorem 56.4 已从实际全局 Haar 概率证明了坐标独立。
+
+下面自足证明所需发散。首先
+$$
+\sum_{p\ \mathrm{prime}}\frac1p=\infty.
+$$
+否则对充分大的有限素数界 $N$，由 $-\log(1-t)\le2t$ 对 $0<t\le1/2$ 可得有限 Euler 乘积
+$$
+P_N=\prod_{p\le N}\left(1-\frac1p\right)^{-1}
+$$
+一致有界。然而把每个几何级数展开，$P_N$ 包含每个只含 $p\le N$ 素因子的 $1/n$ 项，特别包含全部 $1\le n\le N$，故
+$$
+P_N\ge\sum_{n\le N}\frac1n\longrightarrow\infty,
+$$
+矛盾。因此删去有限多个素数后仍有 $\sum_p1/p=\infty$，又因 $1/(p-1)\ge1/p$，
+$$
+\sum_{\substack{p\notin S\\p\ \mathrm{odd}}}\Pr(E_p)=\infty.
+$$
+
+无需把 Borel–Cantelli 当作黑箱即可推出无限多次发生。把这些奇素数枚举为 $p_1,p_2,\ldots$。固定 $M$，独立性给出
+$$
+\Pr(E_{p_j}\text{ 对所有 }j\ge M\text{ 都不发生})
+=\lim_{N\to\infty}\prod_{j=M}^N\bigl(1-\Pr(E_{p_j})\bigr)
+\le\lim_{N\to\infty}\exp\left(-\sum_{j=M}^N\Pr(E_{p_j})\right)=0.
+$$
+对 $M$ 可数并，得到“仅有限多个 $E_p$ 发生”的概率为 $0$。故几乎处处有无限多个 $p$ 满足 $C_p>0$。
+
+另一方面，每个固定 $p$ 在有限相等输入情形下取 $\infty$ 的概率为 $0$，不等输入情形更不可能取 $\infty$；素数集可数，所以
+$$
+\Pr(\exists p,\ C_p=\infty)=0.
+$$
+因而几乎处处全部坐标有限且正支撑无限。一个向量 $D\in I$ 等于某个正整数的赋值向量 $\rho(n)$，当且仅当全部 $D_p<\infty$ 且 $\{p:D_p>0\}$ 有限；反向由有限乘积 $n=\prod_pp^{D_p}$ 得到。因此所求普通整数事件概率为 $0$。这里的零概率结论来自实际坐标独立性和发散和，而非“普通整数只有可数多个”的基数论推断。
+
+若 $a=0$，则 $s(\rho(0))=0$，所以对任意 $B$，
+$$
+K(\rho(0),B)=\operatorname{Law}(\rho(vs(B)))=\delta_B.
+$$
+另一个输入为零时同理；两者皆零时恒得 $\rho(0)$。证毕。
+
+**约定 56.9（Haar 轨道概率卷积与集合值商超加法的记号）。** 本节称 theorem 56.3 与 theorem 56.5 所定义的 $K$ 与 $\star$ 为相对于 $(R,U,\rho,m_U)$ 的规范 Haar 轨道概率核与规范 Haar 轨道概率卷积；“规范”仅表示这些对象由所给轨道商、截面无关的 Haar 轨道概率以及上述公式唯一确定。对 $A,B\in I$，另记集合值运算
+$$
+A\boxplus B:=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+由 theorem 56.3，
+$$
+A\boxplus B=\operatorname{supp}K(A,B)
+=\operatorname{supp}(\delta_A\star\delta_B).
+$$
+Connes–Consani, *The hyperring of adèle classes*, arXiv:1001.4260v2, Proposition 2.5，印刷页 p.7，对交换环 $R$ 与单位群子群 $G\subset R^\times$ 定义的集合值商超加法正是
+$$
+(xG+yG)/G.
+$$
+取当前 $G=U$ 并用 theorem 56.2 的轨道识别，即得到上述 $\boxplus$。来源：https://arxiv.org/pdf/1001.4260v2 。与此不同，测度卷积 $\star_b$ 的完整有界复测度代数结构及其精确拓扑合同由 theorem 56.5 给出；概率卷积 $\star$ 是其在凸集 $\mathcal P(I)$ 上的限制。本节的符号约定不另行在 $\mathcal P(I)$ 上引入乘法运算。
+
+## 56.99 追加锚
+## 57. 树递归的可合成边界、复制障碍、平移完备观察与共同见证语义
+
+**定义 57.1（轨道空间、截断观察、轨道律与粗加法核）。** 记素数集合为 $\mathcal P$，并令
+$$
+E=\mathbb N_0\cup\{\infty\}.
+$$
+给 $E$ 赋如下紧拓扑：每个有限点 $n$ 是孤立点，而 $\infty$ 的一组邻域为
+$$
+E_{\ge L}=\{L,L+1,\ldots\}\cup\{\infty\}\qquad(L\ge0).
+$$
+等价地，对 $L\ge0$ 定义有限截断
+$$
+\tau_L:E\to\{0,1,\ldots,L\},\qquad
+\tau_L(n)=\min(n,L),\quad \tau_L(\infty)=L,
+$$
+其中值 $L$ 表示“$\ge L$”；上述拓扑正是这些截断共同诱导的逆极限拓扑。置
+$$
+R=\prod_{p\in\mathcal P}\mathbb Z_p,\qquad
+U=R^\times=\prod_{p\in\mathcal P}\mathbb Z_p^\times,\qquad
+I=E^{\mathcal P}.
+$$
+对 $x=(x_p)_p\in R$ 定义
+$$
+\rho(x)_p=v_p(x_p),\qquad v_p(0)=\infty.
+$$
+对 $a\in I$ 定义标准代表 $s(a)\in R$：
+$$
+s(a)_p=
+\begin{cases}
+p^{a_p},&a_p<\infty,\\
+0,&a_p=\infty.
+\end{cases}
+$$
+令 $\lambda_U$ 为 $U$ 的归一化 Haar 概率。定义
+$$
+m_a=(u\mapsto u\,s(a))_*\lambda_U.
+$$
+在 $I$ 上定义坐标加法 $\oplus$，约定 $\infty+n=n+\infty=\infty$：
+$$
+(a\oplus b)_p=a_p+b_p.
+$$
+最后定义二元 Markov 核
+$$
+k(a,b)=
+\rho_*\bigl((x,y)\mapsto x+y\bigr)_*(m_a\otimes m_b).
+$$
+本定义只给出对象；$m_a$、$k$ 的 Borel/Feller 性、轨道唯一性以及零坐标稳定子的处理在 theorem 57.3 中证明。
+
+**假设 57.2（概率与常量契约）。** 全文只使用标准 Borel 空间上的 Borel 概率；出现拓扑连续性时，相关空间均取本节指定的紧可度量拓扑。$\lambda_U$ 指紧群 $U$ 的归一化 Haar 概率。普通整数 $n$ 始终按对角嵌入视为 $R$ 中的固定元素；字面常量 $0,1,n$ 从不被替换为轨道上的随机代表。Haar 测度的存在唯一性、紧群 Haar 测度的有限性与双侧不变性，以及闭子群商 $G/H$ 上的不变测度公式采用 Tornier 的 Theorem 2.2、Proposition 2.9、Proposition 3.6、Theorem 4.2 和 Remark 4.4；在紧群情形可归一化为概率：https://arxiv.org/pdf/2006.10956 。正规条件概率的存在与几乎处处唯一性采用 Simmons Definition 1.1 与 Theorem 2.1 的标准 Borel 特例：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。Markov 核的复合、乘积核与确定 copy 的概率语义采用 Fritz Definition 2.1、Example 2.5、Notation 2.8 及 §4：https://arxiv.org/pdf/1908.07021 。
+
+**theorem 57.3（轨道分类、零稳定子与 Feller 核）。** $R,U,I$ 都是紧可度量空间，$\rho:R\to I$ 与 $s:I\to R$ 连续，$\oplus:I^2\to I$ 连续。对每个 $a\in I$，
+$$
+\rho^{-1}(a)=U\,s(a).
+$$
+其稳定子恰为闭子群
+$$
+H_a=\{u\in U:u_p=1\ \text{对每个 }a_p<\infty\},
+$$
+而在 $a_p=\infty$ 的坐标上 $u_p$ 任意。轨道 $U\,s(a)$ 与 $U/H_a$ 同胚，$m_a$ 是该轨道上唯一的 $U$-不变概率。并且 $a\mapsto m_a$ 是 Feller Markov 核，$k:I^2\leadsto I$ 也是 Feller Markov 核。
+
+**证明。** $\mathbb Z_p$ 与 $\mathbb Z_p^\times$ 都是紧可度量空间；可数积仍紧可度量。$E$ 是离散可数空间 $\mathbb N_0$ 的一点紧化，故紧可度量，因而 $I=E^{\mathcal P}$ 亦然。对固定 $p$，
+$$
+v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times
+$$
+是开闭集，而
+$$
+v_p^{-1}(E_{\ge L})=p^L\mathbb Z_p
+$$
+也是开闭集，因此 $v_p:\mathbb Z_p\to E$ 连续；乘积映射 $\rho$ 连续。另一方面，$p^n\to0$ 于 $\mathbb Z_p$，故 $n\mapsto p^n$ 连同 $\infty\mapsto0$ 连续，从而 $s$ 连续。$E$ 上带吸收元 $\infty$ 的加法连续：有限点处因其孤立而显然；若一分量趋向 $\infty$，则对任意 $L$，该分量最终至少为 $L$，从而其和也落入 $E_{\ge L}$。故乘积加法 $\oplus$ 连续。
+
+若 $\rho(x)=a$，则在 $a_p<\infty$ 时唯一写成 $x_p=p^{a_p}u_p$，其中 $u_p\in\mathbb Z_p^\times$；在 $a_p=\infty$ 时 $x_p=0$，任取 $u_p$。所以 $x=u\,s(a)$。反向包含显然，故纤维就是轨道。等式 $u\,s(a)=s(a)$ 在有限坐标上因 $\mathbb Z_p$ 为整环而强迫 $u_p=1$，在零坐标上没有约束，遂得 $H_a$。它是闭子群。标准轨道映射
+$$
+U/H_a\longrightarrow U\,s(a),\qquad uH_a\longmapsto u\,s(a)
+$$
+是紧空间到 Hausdorff 空间的连续双射，故为同胚。$U$ 与 $H_a$ 都是紧群，因此 modular function 恒为 $1$；Tornier Theorem 4.2 的商测度条件满足，归一化后得到 $U/H_a$ 上唯一的 $U$-不变概率。它在轨道同胚下正是 $\lambda_U$ 的推前，即 $m_a$。这同时处理了所有零坐标的非平凡稳定子而不要求作用自由。所用 Haar 与商测度结果见 https://arxiv.org/pdf/2006.10956 。
+
+为证 Feller 性，取 $f\in C(R)$。映射
+$$
+(a,u)\longmapsto f(u\,s(a))
+$$
+在紧空间 $I\times U$ 上连续，故一致连续。于是
+$$
+M_f(a)=\int_U f(u\,s(a))\,d\lambda_U(u)
+$$
+随 $a$ 连续；这正是 $a\mapsto m_a$ 的 Feller 性。特别地，对每个 Borel 集 $B\subseteq R$，$a\mapsto m_a(B)$ 可测：先对连续函数成立，再由函数单调类定理扩张到所有有界 Borel 函数。类似地，对 $g\in C(I)$，
+$$
+(a,b)\longmapsto
+\int_{U^2}g\!\left(\rho(u\,s(a)+v\,s(b))\right)
+\,d\lambda_U(u)\,d\lambda_U(v)
+$$
+连续，因为被积函数在紧空间 $I^2\times U^2$ 上连续。因此 $k$ 是 Feller Markov 核。证毕。
+
+**theorem 57.4（不变律的唯一轨道提升与显式析取）。** 对任意 $\nu\in\operatorname{Prob}(I)$ 定义
+$$
+\mathcal L\nu=\int_I m_a\,\nu(da).
+$$
+等价地令
+$$
+T:I\times U\to R,\qquad T(a,u)=u\,s(a),
+$$
+则
+$$
+\mathcal L\nu=T_*(\nu\otimes\lambda_U).
+$$
+于是 $\mathcal L\nu$ 是 $U$-不变概率且
+$$
+\rho_*(\mathcal L\nu)=\nu.
+$$
+反之，若 $\mu\in\operatorname{Prob}(R)$ 是 $U$-不变的，则
+$$
+\boxed{\mu=\mathcal L(\rho_*\mu)}.
+$$
+故一个 $U$-不变随机元素的完整分布由其 $\rho$-分布唯一确定。进一步，令 $\nu=\rho_*\mu$，则 $a\mapsto m_a$ 是 $\mu$ 关于 $\rho$ 的一个正规条件分布：对任意 Borel $B\subseteq R$、$C\subseteq I$，
+$$
+\mu\bigl(B\cap\rho^{-1}(C)\bigr)=\int_C m_a(B)\,\nu(da).
+$$
+在 $\nu$-几乎处处意义下它唯一。此结论不要求轨道作用自由。
+
+**证明。** theorem 57.3 已给出 $T$ 的连续性和 $a\mapsto m_a$ 的 Borel 性，故 $\mathcal L\nu$ 定义良好。每个 $m_a$ 支持于 $\rho^{-1}(a)$，因此对 Borel $C\subseteq I$，
+$$
+\rho_*(\mathcal L\nu)(C)
+=\int_I m_a(\rho^{-1}(C))\,\nu(da)
+=\int_I\mathbf1_C(a)\,\nu(da)
+=\nu(C).
+$$
+又因 Haar 左平移不变，每个 $m_a$ 对 $U$-作用不变，混合后 $\mathcal L\nu$ 仍不变。
+
+现设 $\mu$ 不变。对 $f\in C(R)$ 定义轨道平均
+$$
+Af(x)=\int_U f(ux)\,d\lambda_U(u).
+$$
+若 $a=\rho(x)$，取 $w\in U$ 使 $x=w\,s(a)$。紧群 $U$ 的归一化 Haar 概率双侧不变，故
+$$
+Af(x)=\int_U f(uw\,s(a))\,d\lambda_U(u)
+=\int_U f(u\,s(a))\,d\lambda_U(u)
+=M_f(a).
+$$
+写 $\nu=\rho_*\mu$，由 Fubini 与 $\mu$ 的不变性，
+$$
+\begin{aligned}
+\int_R f\,d\mathcal L\nu
+&=\int_I M_f(a)\,\nu(da)\\
+&=\int_R Af(x)\,\mu(dx)\\
+&=\int_U\int_R f(ux)\,\mu(dx)\,d\lambda_U(u)\\
+&=\int_R f(x)\,\mu(dx).
+\end{aligned}
+$$
+紧可度量空间上的 Borel 概率由连续函数积分唯一决定，故 $\mu=\mathcal L\nu$。
+
+由于 $m_a(\rho^{-1}(a))=1$，对 $B,C$ 有
+$$
+m_a\bigl(B\cap\rho^{-1}(C)\bigr)=\mathbf1_C(a)m_a(B).
+$$
+将混合恒等式应用于 $B\cap\rho^{-1}(C)$ 即得条件分布公式。若另一 Borel 核 $q_a$ 也满足同一公式，则取 $R$ 的一个可数生成代数 $\mathcal A$。对固定 $B\in\mathcal A$，
+$$
+\int_C q_a(B)\,\nu(da)=\int_Cm_a(B)\,\nu(da)
+$$
+对所有 Borel $C\subseteq I$ 成立，故 $q_a(B)=m_a(B)$ 对 $\nu$-几乎处处成立。对可数个 $B\in\mathcal A$ 取共同满测集，再用单调类定理扩张到全部 Borel $B$，得到一个共同的 $\nu$-满测集，在其上两个条件概率测度完全相同。这与 Simmons Definition 1.1、Theorem 2.1 的存在与共同零集唯一性一致；此处所需条件核本身已经由轨道平均显式给出。来源：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。证毕。
+
+**定义 57.5（一次叶使用的表达式树语义）。** 一个有限二叉表达式树的每个叶 $\ell$ 带标签 $a_\ell\in I$，并采样一次
+$$
+X_\ell\sim m_{a_\ell}.
+$$
+全体叶样本相互独立，每个叶在树中只出现一次。内部节点标记为 $+$ 或 $\cdot$，其代表值 $Y_v\in R$ 由通常环运算递归求值。定义标签概率 $\nu_v\in\operatorname{Prob}(I)$：
+$$
+\nu_\ell=\delta_{a_\ell}.
+$$
+若 $v$ 是加法节点、两个子节点为 $r,s$，则
+$$
+\nu_v(C)=\int_{I^2}k(a,b)(C)\,\nu_r(da)\nu_s(db).
+$$
+若 $v$ 是乘法节点，则
+$$
+\nu_v=\oplus_*(\nu_r\otimes\nu_s).
+$$
+这里“两个子树独立”来自叶集合不交且原始叶独立，而不是由两个边缘标签分布自动推出。
+
+**theorem 57.6（树上的精确递归与条件单位方向）。** 对定义 57.5 的每个节点 $v$，
+$$
+\operatorname{Law}(\rho(Y_v))=\nu_v
+\qquad\text{且}\qquad
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+尤其所有节点代表值的边缘律均为 $U$-不变。若 $v$ 的两个子节点为 $r,s$，则存在一个处处定义的 Borel 条件核
+$$
+(a,b)\longmapsto m_a\otimes m_b
+$$
+给出 $(Y_r,Y_s)$ 关于 $(\rho(Y_r),\rho(Y_s))$ 的正规条件分布版本；它在 $(\nu_r\otimes\nu_s)$-几乎处处意义下唯一。乘法在标签上是 $\oplus$，且在固定输入标签 $(a,b)$ 下代表乘积具有轨道律 $m_{a\oplus b}$。
+
+**证明。** 对树作结构归纳。叶节点由定义即
+$$
+\operatorname{Law}(Y_\ell)=m_{a_\ell}=\mathcal L\delta_{a_\ell},
+$$
+且 $\rho(Y_\ell)=a_\ell$ 几乎处处。
+
+设结论对两个子节点 $r,s$ 成立。因两子树依赖于互不相交的叶集合，而所有叶独立，$Y_r,Y_s$ 独立。因此
+$$
+\operatorname{Law}(Y_r,Y_s)
+=(\mathcal L\nu_r)\otimes(\mathcal L\nu_s)
+=\int_{I^2}(m_a\otimes m_b)\,\nu_r(da)\nu_s(db).
+$$
+核 $(a,b)\mapsto m_a\otimes m_b$ 的 Borel 性可先在矩形集 $B_1\times B_2$ 上由
+$$
+(m_a\otimes m_b)(B_1\times B_2)=m_a(B_1)m_b(B_2)
+$$
+得到，再由 $\pi$-$\lambda$ 定理扩张到乘积 Borel $\sigma$-代数。它支持于
+$$
+\rho^{-1}(a)\times\rho^{-1}(b),
+$$
+故给出所述条件版本；几乎处处唯一性由 theorem 57.4 的同一可数生成代数论证或 Simmons Theorem 2.1 得到。
+
+若 $v$ 为加法节点，则由 $k$ 的定义和 Fubini，
+$$
+\operatorname{Law}(\rho(Y_r+Y_s))
+=\int_{I^2}k(a,b)\,\nu_r(da)\nu_s(db)
+=\nu_v.
+$$
+又对任意 $u\in U$，
+$$
+u(Y_r+Y_s)=uY_r+uY_s,
+$$
+而独立性与两边缘律的 $U$-不变性给出
+$$
+(uY_r,uY_s)\stackrel d=(Y_r,Y_s).
+$$
+故 $Y_r+Y_s$ 的律 $U$-不变；theorem 57.4 随即给出
+$$
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+
+若 $v$ 为乘法节点，则逐坐标
+$$
+v_p((Y_r)_p(Y_s)_p)=v_p((Y_r)_p)+v_p((Y_s)_p),
+$$
+其中含零时按 $\infty$ 吸收解释。因此
+$$
+\rho(Y_rY_s)=\rho(Y_r)\oplus\rho(Y_s).
+$$
+两标签独立，遂得
+$$
+\operatorname{Law}(\rho(Y_v))
+=\oplus_*(\nu_r\otimes\nu_s)=\nu_v.
+$$
+输出律亦不变，因为
+$$
+u(Y_rY_s)=(uY_r)Y_s
+$$
+且 $(uY_r,Y_s)\stackrel d=(Y_r,Y_s)$。再用 theorem 57.4 得代表律 $\mathcal L\nu_v$。若输入标签固定，写
+$$
+Y_r=u_1s(a),\qquad Y_s=u_2s(b),
+$$
+其中 $u_1,u_2$ 独立 Haar；于是
+$$
+Y_rY_s=(u_1u_2)s(a\oplus b).
+$$
+$u_1u_2$ 仍为 Haar，故条件代表律为 $m_{a\oplus b}$。Fritz §4 中 Markov 核的复合与乘积测度公式以及 Definition 2.1 中的 copy 区分了独立张量与同一输入的复制：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.7（固定常量、确定系数、重复变量与共同参数的精确边界）。** 以下各项成立。
+
+甲，字面 $0$ 是例外地兼容轨道语义的固定常量：
+$$
+\delta_0=m_{\boldsymbol\infty},
+\qquad \boldsymbol\infty=(\infty)_p.
+$$
+字面 $1$ 满足 $\rho(1)=\boldsymbol0=(0)_p$，但
+$$
+\delta_1\ne m_{\boldsymbol0}.
+$$
+把固定 $1$ 换成 $m_{\boldsymbol0}$ 是改变实验，而不是同一实验的粗化。
+
+乙，若 $c\in R$ 固定且 $X$ 有 $U$-不变律，则 $cX$ 仍有 $U$-不变律，并且
+$$
+\rho(cX)=\rho(c)\oplus\rho(X).
+$$
+特别地，对 $X\sim m_a$，
+$$
+cX\sim m_{\rho(c)\oplus a}.
+$$
+因此确定乘法系数可作为一元标签平移使用，而无需随机化 $c$。
+
+丙，对固定 $c\in R$，可定义确定平移的标签核
+$$
+t_c(a)=\rho_*(x\mapsto x+c)_*m_a.
+$$
+该核是 Feller；若 $X\sim\mathcal L\nu$，则
+$$
+\operatorname{Law}(\rho(X+c))
+=\int_I t_c(a)\,\nu(da).
+$$
+但 $X+c$ 一般不再 $U$-不变，所以仅知道这一新标签边缘律通常不足以把它继续送入 $k$。
+
+丁，设 $S$ 是标准 Borel 参数空间，$\beta\in\operatorname{Prob}(S)$，$T$ 是一个固定有限二叉 $+$、$\cdot$ 表达式树，叶集合为有限集 $L$。对每个 $\ell\in L$，给定 Borel Markov 核
+$$
+\nu_\ell:S\leadsto I.
+$$
+对 $\theta\in S$ 写 $\nu_{\ell,\theta}=\nu_\ell(\theta,\cdot)$。设随机参数 $\Theta$ 的律为 $\beta$，叶向量 $X_L=(X_\ell)_{\ell\in L}$ 有一个选定的、处处定义的 Borel 正规条件核
+$$
+Q:S\leadsto R^L,
+$$
+并存在一个 Borel 集 $S_0\subseteq S$，满足 $\beta(S_0)=1$，使对每个同一个 $\theta\in S_0$ 都有
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}.
+$$
+则可在所有 $\theta\in S$ 上递归定义 Borel 标签核 $\nu_v:S\leadsto I$：叶上取给定 $\nu_\ell$；若 $v=r+s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}k(a,b)(C)\,\nu_r(\theta,da)\nu_s(\theta,db);
+$$
+若 $v=r\cdot s$，则
+$$
+\nu_v(\theta,C)=
+\int_{I^2}\mathbf1_C(a\oplus b)\,\nu_r(\theta,da)\nu_s(\theta,db).
+$$
+对每个节点 $v$，令 $Y_v$ 是从叶代表按树求值得到的普通算术值，则存在由 $Q_\theta$ 推前得到的 Borel 条件核，使对每个 $\theta\in S_0$ 同时成立
+$$
+\operatorname{Law}(\rho(Y_v)\mid\Theta=\theta)=\nu_{v,\theta},
+$$
+$$
+\operatorname{Law}(Y_v\mid\Theta=\theta)=\mathcal L\nu_{v,\theta}.
+$$
+因此无条件律为
+$$
+\operatorname{Law}(\rho(Y_v))
+=\int_S\nu_{v,\theta}\,\beta(d\theta),
+$$
+$$
+\operatorname{Law}(Y_v)
+=\int_S\mathcal L\nu_{v,\theta}\,\beta(d\theta).
+$$
+$S\setminus S_0$ 上条件版本可以任意修改而不影响这些等式；不能把“几乎处处条件独立”改写成对每个参数值成立。
+
+戊，先遗忘共同参数再把无条件边缘独立相乘一般给出错误的算术输出。具体地，令
+$$
+S=\{0,1\},\qquad \beta(0)=\beta(1)=\frac12,
+$$
+取两个叶 $X,Y$，并规定
+$$
+Q_0=\delta_{(0,0)},
+\qquad
+Q_1=m_{\boldsymbol0}\otimes m_{\boldsymbol0}.
+$$
+于是给定 $\Theta$ 后两叶独立，且它们分别处于零轨道或单位轨道。对乘法输出 $Z=XY$，实际共同参数实验满足
+$$
+\Pr\bigl(\rho(Z)=\boldsymbol0\bigr)=\frac12.
+$$
+然而每个无条件边缘均为
+$$
+\mu=\frac12\delta_0+\frac12m_{\boldsymbol0}.
+$$
+若丢掉 $\Theta$ 后另取独立 $X',Y'\sim\mu$，则
+$$
+\Pr\bigl(\rho(X'Y')=\boldsymbol0\bigr)=\frac14.
+$$
+故共同参数产生的联合信息能够改变一个具体普通乘法门的输出分布。
+
+己，同名变量若每次出现均重新独立采样，则只是多个不同叶；若同名表示同一个已采样代表被多处复用，则是复制，不能用独立叶替代。
+
+**证明。** 甲中 $m_{\boldsymbol\infty}$ 的标准代表为全零元，任意 $u$ 作用后仍是零，故为 $\delta_0$。而 $m_{\boldsymbol0}$ 是 $U$ 自身的 Haar 律并非点质量，故 $\delta_1\ne m_{\boldsymbol0}$。
+
+乙中对任意 $u\in U$，
+$$
+u(cX)=c(uX).
+$$
+所以 $X\stackrel d=uX$ 推出 $cX\stackrel d=u(cX)$。估值乘法公式给出标签等式。若 $X\sim m_a$，输出既不变又具有确定标签 $\rho(c)\oplus a$，故 theorem 57.4 的唯一性给出 $cX\sim m_{\rho(c)\oplus a}$。
+
+丙的 Feller 性与 theorem 57.3 相同：对 $g\in C(I)$，
+$$
+a\mapsto\int_U g\!\left(\rho(u\,s(a)+c)\right)\,d\lambda_U(u)
+$$
+连续。混合公式由 Fubini 得到。为见不变性一般丢失，取 $c\ne0$，选 $p$ 使 $d=v_p(c_p)<\infty$。若 $p$ 为奇数，取 $a_p=d+1$，则
+$$
+X_p+c_p=p^d(c'_p+pU_p),
+$$
+其中 $c'_p$ 为固定单位，括号中的单位恒与 $c'_p$ 模 $p$ 同余；乘以一个模 $p$ 不等于 $1$ 的单位会把该支撑剩余类移走，所以输出不对全部 $\mathbb Z_p^\times$ 不变。若 $p=2$，取 $a_2=d+2$，括号中的单位固定在 $c'_2\bmod4$，乘以 $3$ 后落到不同奇剩余类。故非零加法常量不能普遍保持继续使用 $k$ 所需的不变性。
+
+证明丁。由 theorem 57.3，$a\mapsto m_a$ 是 Borel 核，所以
+$$
+\theta\longmapsto \mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 概率核：对 Borel $B\subseteq R$，其取值为
+$$
+\int_I m_a(B)\,\nu_\ell(\theta,da),
+$$
+这是 Borel 函数。有限乘积
+$$
+\theta\longmapsto\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 核；在生成矩形上其概率是有限个 Borel 函数的乘积，再用 $\pi$-$\lambda$ 定理扩张。Fritz §4 的公式 $(\mu,\nu)\mapsto\mu\otimes\nu$ 给出同一可测性事实：https://arxiv.org/pdf/1908.07021 。
+
+接着对节点作归纳证明 $\nu_v$ 为 Borel 核。叶节点由假设成立。若 $v=r+s$，则对固定 Borel $C$，函数
+$$
+(a,b)\longmapsto k(a,b)(C)
+$$
+Borel，而 $(\theta,da,db)$ 的乘积核 Borel；核积分的可测性可先对指标函数矩形验证，再用有界函数单调类定理扩张，因此 $\theta\mapsto\nu_v(\theta,C)$ Borel。乘法节点因 $\oplus$ 连续，同理可得。于是递归中每个 $\nu_v$ 都是处处定义的 Borel Markov 核。
+
+对每个节点 $v$，从 $R^L$ 到 $R$ 的子树求值映射 $F_v$ 是连续的，故
+$$
+Q^v_\theta=(F_v)_*Q_\theta
+$$
+是 Borel 核；其标签推前 $\rho_*Q^v_\theta$ 也为 Borel 核。固定任意 $\theta\in S_0$。由
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta},
+$$
+不同叶条件独立且各叶律 $U$-不变。完全重复 theorem 57.6 的结构归纳，但把叶上的点质量标签 $\delta_{a_\ell}$ 换成 $\nu_{\ell,\theta}$，可得对该同一个 $\theta$、所有有限多个节点同时有
+$$
+\rho_*Q^v_\theta=\nu_{v,\theta},
+\qquad
+Q^v_\theta=\mathcal L\nu_{v,\theta}.
+$$
+由于 $S_0$ 在归纳开始前已经固定，这里没有为不同节点分别丢弃不同的参数零集。最后用条件概率的全概率公式积分 $\beta$ 即得无条件两式。标准 Borel 空间上正规条件核版本的存在以及不同版本只在参数零集上可能不同，见 Simmons Definition 1.1 与 Theorem 2.1：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明戊。若 $\Theta=0$，则 $XY=0$，故标签为 $\boldsymbol\infty$；若 $\Theta=1$，两输入都是单位，故其乘积也是单位，标签为 $\boldsymbol0$。两种参数各概率 $1/2$，所以实际输出成为单位的概率为 $1/2$。丢弃参数后，每个输入独立地以概率 $1/2$ 为单位、以概率 $1/2$ 为零；乘积为单位当且仅当两者均为单位，故概率为 $1/4$。这给出一个具体算术输出的差异，而不只是假定“联合律可能不同”。
+
+己只是两个概率实验的区分：fresh occurrence 使用乘积耦合；copy occurrence 使用对角耦合。Fritz Definition 2.1 对 copy 的解释正是复制同一输入而不增加随机性：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.8（复制与独立采样的精确局部估值分布）。** 令 $\boldsymbol0=(0)_p\in I$。取 $X,Y$ 为独立的 $m_{\boldsymbol0}$ 样本，即独立 Haar 单位。固定素数 $p$。
+
+若 $p$ 为奇数，则
+$$
+\Pr\!\left(v_p(X_p+Y_p)=0\right)=\frac{p-2}{p-1},
+$$
+并且对每个 $n\ge1$，
+$$
+\Pr\!\left(v_p(X_p+Y_p)\ge n\right)
+=\frac{1}{p^{n-1}(p-1)},
+$$
+$$
+\Pr\!\left(v_p(X_p+Y_p)=n\right)=p^{-n},
+\qquad
+\Pr\!\left(v_p(X_p+Y_p)=\infty\right)=0.
+$$
+而复制同一个输入时
+$$
+v_p(X_p+X_p)=v_p(2X_p)=0
+\quad\text{几乎必然}.
+$$
+所以事件 $v_p(\,\cdot\,)\ge1$ 的概率分别为 $1/(p-1)$ 与 $0$。
+
+若 $p=2$，则
+$$
+\Pr\!\left(v_2(X_2+Y_2)\ge n\right)=2^{1-n}
+\qquad(n\ge1),
+$$
+$$
+\Pr\!\left(v_2(X_2+Y_2)=n\right)=2^{-n}
+\qquad(n\ge1),
+$$
+且无穷估值概率为 $0$。复制时却有
+$$
+v_2(X_2+X_2)=1
+\quad\text{几乎必然}.
+$$
+所以事件 $v_2(\,\cdot\,)\ge2$ 的概率分别为 $1/2$ 与 $0$，而事件 $v_2(\,\cdot\,)=1$ 的概率分别为 $1/2$ 与 $1$。
+
+**证明。** 在独立情形令
+$$
+Z_p=Y_pX_p^{-1}.
+$$
+因 Haar 概率在乘法平移下不变，$Z_p$ 是 $\mathbb Z_p^\times$ 上的 Haar 单位，并且
+$$
+v_p(X_p+Y_p)=v_p(1+Z_p).
+$$
+Haar 概率推前到有限商 $(\mathbb Z/p^n\mathbb Z)^\times$ 后仍是平移不变概率，故是该有限群上的均匀概率。因此
+$$
+\Pr(v_p(1+Z_p)\ge n)
+=\Pr(Z_p\equiv-1\pmod{p^n})
+=\frac1{\varphi(p^n)}
+=\frac1{p^{n-1}(p-1)}.
+$$
+奇 $p$ 时，$n=1$ 的补事件给出
+$$
+\Pr(v_p=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而相邻尾概率之差为
+$$
+\frac1{p^{n-1}(p-1)}-\frac1{p^n(p-1)}=p^{-n}.
+$$
+尾概率趋于零，故无穷估值概率为零。复制时 $p\nmid2$ 且 $X_p$ 为单位，故估值恒为零。
+
+对 $p=2$，同一尾概率公式化为 $2^{1-n}$；所有奇单位都满足 $Z_2\equiv-1\pmod2$，所以估值至少为 $1$。相邻尾概率之差为 $2^{-n}$。复制时 $2X_2$ 恰有估值 $1$。所用 Haar 平移不变性与有限归一化见 Tornier Theorem 2.2 与 compact-group discussion：https://arxiv.org/pdf/2006.10956 。证毕。
+
+**theorem 57.9（边缘标签二元接口不可能同时实现独立与复制）。** 不存在一个 Markov 核
+$$
+K:I\times I\leadsto I
+$$
+同时满足以下两个全称要求：
+
+一，对所有 $a,b\in I$，若 $X\sim m_a$、$Y\sim m_b$ 独立，则
+$$
+\operatorname{Law}(\rho(X+Y))=K(a,b).
+$$
+
+二，对所有 $a\in I$，若 $X\sim m_a$ 且同一 $X$ 被复制到两个输入端，则
+$$
+\operatorname{Law}(\rho(X+X))=K(a,a).
+$$
+因此，一个只看两个输入边缘标签并在 $(a,a)$ 处调用同一个二元核的 Markov 接口，不可能既解释独立重新采样又解释复制。每次出现都重新抽取独立轨道代表是另一个实验。
+
+**证明。** 取 $a=\boldsymbol0$。若 $p$ 为任一奇素数，要求一和 theorem 57.8 强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_p\ge1\}\bigr)=\frac1{p-1},
+$$
+其中 $\infty$ 也计入“$\ge1$”。要求二却因 $v_p(2X_p)=0$ 强迫同一概率等于 $0$，矛盾。若只观察 $p=2$，则要求一强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_2\ge2\}\bigr)=\frac12,
+$$
+要求二强迫其为 $0$，同样矛盾。Fritz Definition 2.1 和 §4 将确定 copy 与独立乘积核严格区分：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**定义 57.10（平移闭观察与有限精度查询）。** 把每个 $n\in\mathbb N_0$ 对角嵌入 $R$，定义
+$$
+\Psi:R\to I^{\mathbb N_0},
+\qquad
+\Psi(x)=\bigl(\rho(x+n)\bigr)_{n\in\mathbb N_0}.
+$$
+若
+$$
+M=\prod_{p\mid M}p^{e_p}>1,
+$$
+定义有限剩余投影
+$$
+\pi_M:R\to\mathbb Z/M\mathbb Z
+$$
+为各 $x_p\bmod p^{e_p}$ 经中国剩余定理合成的类。一次针对 $M$ 的截断平移查询取某个 $n\in\mathbb N_0$，返回有限向量
+$$
+Q_{M,n}(x)=
+\bigl(\min(v_p(x_p+n),e_p)\bigr)_{p\mid M}.
+$$
+这里只要求恢复 $\pi_M(x)$；不把有限截断误称为判定两个任意 $p$-进整数是否相等。
+
+**theorem 57.11（非负平移已分离全部点；有限模数可由有限截断查询恢复）。** 映射 $\Psi$ 连续且单射。因此仅用 $n\in\mathbb N_0$ 的平移估值族就分离 $R$ 中任意两点；不需要负平移。由于 $R$ 紧而 $I^{\mathbb N_0}$ Hausdorff，$\Psi$ 还是到其像的拓扑嵌入。
+
+对有限模数 $M>1$，令
+$$
+N_M=\max_{p^{e_p}\parallel M}(p^{e_p}-1).
+$$
+非自适应地查询
+$$
+n=0,1,\ldots,N_M-1
+$$
+的 $Q_{M,n}$ 足以恢复 $\pi_M(x)$。另有一个显式自适应算法，用至多
+$$
+\sum_{p^{e_p}\parallel M}e_p(p-1)
+$$
+次查询恢复 $\pi_M(x)$。两者均只是已证明的充分界，不主张最优。$M=1$ 时无需查询。
+
+**证明。** 连续性来自每个坐标 $x\mapsto\rho(x+n)$ 的连续性。为证单射，设 $x\ne y$。选素数 $p$ 使 $x_p\ne y_p$，并令
+$$
+k=v_p(x_p-y_p)<\infty.
+$$
+取唯一代表
+$$
+n\in\{0,1,\ldots,p^{k+1}-1\}
+$$
+满足
+$$
+n\equiv-x_p\pmod{p^{k+1}}.
+$$
+于是
+$$
+v_p(x_p+n)\ge k+1.
+$$
+另一方面
+$$
+y_p+n=(y_p-x_p)+(x_p+n),
+$$
+右边两项估值分别为 $k$ 与至少 $k+1$；非阿基米德估值在两项估值不等时取较小者，所以
+$$
+v_p(y_p+n)=k.
+$$
+故 $\rho(x+n)\ne\rho(y+n)$，$\Psi$ 单射。紧空间到 Hausdorff 空间的连续单射是到像的同胚，遂得拓扑嵌入。
+
+现固定 $p^{e_p}\parallel M$。对任何 $n$，
+$$
+\min(v_p(x_p+n),e_p)=e_p
+\iff
+x_p+n\equiv0\pmod{p^{e_p}}.
+$$
+在完整剩余系 $n=0,\ldots,p^{e_p}-1$ 中恰有一个 $n$ 命中。统一查询区间 $0,\ldots,N_M-1$ 包含
+$$
+0,\ldots,p^{e_p}-2.
+$$
+若其中某个 $n$ 的 $p$ 坐标返回 $e_p$，便得到
+$$
+-x_p\equiv n\pmod{p^{e_p}}.
+$$
+若都不命中，则唯一未查询的类 $p^{e_p}-1$ 必命中。故可恢复每个 $x_p\bmod p^{e_p}$，再由中国剩余定理恢复 $\pi_M(x)$。
+
+对自适应算法，逐个素数处理。设在第 $k$ 步已知
+$$
+r_k\equiv-x_p\pmod{p^k},
+\qquad0\le r_k<p^k.
+$$
+依次测试
+$$
+n=r_k+t p^k,\qquad t=0,1,\ldots,p-2,
+$$
+只读取是否
+$$
+v_p(x_p+n)\ge k+1.
+$$
+在 $t=0,\ldots,p-1$ 中恰有一个满足；若前 $p-1$ 个候选都失败，就推断 $t=p-1$。置
+$$
+r_{k+1}=r_k+t p^k.
+$$
+如此每提升一位至多 $p-1$ 次查询，共 $e_p(p-1)$ 次得到 $-x_p\bmod p^{e_p}$。对所有 $p\mid M$ 求和并用中国剩余定理即得所述界。证毕。
+
+**theorem 57.12（任何有限确定标签都不能因子化全部整数平移测试）。** 设 $F$ 为任意有限集合，$\theta:R\to F$ 为任意函数，并令增强观察
+$$
+q(x)=(\rho(x),\theta(x))\in I\times F.
+$$
+则不可能存在一族函数
+$$
+\Phi_n:q[R]\to I\qquad(n\in\mathbb N_0)
+$$
+使得对所有 $x\in R$、所有 $n\in\mathbb N_0$ 都有
+$$
+\rho(x+n)=\Phi_n(q(x)).
+$$
+所以在 $\rho$ 旁再加一个有限确定标签，并只保留该增强状态，不能修复所有固定整数平移测试。此结论不排除保留实际共同代表、完整联合律、无限标签，或为某个固定有限任务设计专用有限状态。
+
+**证明。** 轨道纤维
+$$
+\rho^{-1}(\boldsymbol0)=U
+$$
+是无限集合，而 $F$ 有限，所以存在不同的 $x,y\in U$ 满足
+$$
+\theta(x)=\theta(y).
+$$
+于是
+$$
+q(x)=q(y)=(\boldsymbol0,\theta(x)).
+$$
+theorem 57.11 给出某个 $n\in\mathbb N_0$ 使
+$$
+\rho(x+n)\ne\rho(y+n).
+$$
+若所有 $\Phi_n$ 存在，则由 $q(x)=q(y)$ 应有
+$$
+\rho(x+n)=\Phi_n(q(x))=\Phi_n(q(y))=\rho(y+n),
+$$
+矛盾。这正是既有 framework theorem 2.2 的实际像因子化判据应用于
+$$
+T_n(x)=\rho(x+n)
+$$
+和输入观察 $q$：目标映射能下降到 $q[R]$ 当且仅当它在每个 $q$-纤维上常值。该 theorem 2.2 的精确文本见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。证毕。
+
+**定义 57.13（有类型有限 DAG 与共同见证推前语义）。** 一个有类型有限算术 DAG 的数据为有限顶点集 $V$ 的不交分解
+$$
+V=J\sqcup C\sqcup A\sqcup M,
+$$
+其中 $J$ 是变量输入节点集，$C$ 是零元输入的常量节点集，$A$ 是二元加法节点集，$M$ 是二元乘法节点集。给定常量标记
+$$
+\kappa:C\to R.
+$$
+对每个二元节点 $v\in A\sqcup M$，给定两个有序前驱槽
+$$
+\operatorname{pred}_0(v),\operatorname{pred}_1(v)\in V.
+$$
+要求存在一个严格全序 $<$ 于 $V$，使
+$$
+\operatorname{pred}_i(v)<v
+\qquad(v\in A\sqcup M,\ i=0,1).
+$$
+允许
+$$
+\operatorname{pred}_0(v)=\operatorname{pred}_1(v),
+$$
+因此同一代表在一个二元门的两个槽中重复使用被显式编码；一个顶点也可成为多个后继槽的前驱。$J$ 只包含真正的变量输入，$C$ 中常量虽在底层依赖图中没有前驱，却不属于 $J$，故不从输入概率空间取得任意值。
+
+给定 $z=(z_j)_{j\in J}\in R^J$，按 $<$ 递归定义
+$$
+E_j(z)=z_j\qquad(j\in J),
+$$
+$$
+E_c(z)=\kappa(c)\qquad(c\in C),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)+E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in A),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in M).
+$$
+定义
+$$
+\operatorname{ev}_G:R^J\to R^V,
+\qquad
+\operatorname{ev}_G(z)=(E_v(z))_{v\in V}.
+$$
+给定任意 Borel 联合输入律
+$$
+\mu\in\operatorname{Prob}(R^J),
+$$
+定义共同见证粗语义
+$$
+\mathsf W_G(\mu)
+=(\rho^V)_*(\operatorname{ev}_G)_*\mu.
+$$
+若只关心一个有序输出列表 $o=(o_1,\ldots,o_q)\in V^q$，则相应输出语义为坐标映射
+$$
+z\longmapsto(E_{o_1}(z),\ldots,E_{o_q}(z))
+$$
+再经 $\rho^q$ 的推前。
+
+若只给定变量输入的联合标签律
+$$
+\eta\in\operatorname{Prob}(I^J),
+$$
+定义条件独立轨道方向契约下的规范提升
+$$
+\mathcal L_J\eta
+=\int_{I^J}\bigotimes_{j\in J}m_{a_j}\,\eta(da)
+$$
+$$
+=\Bigl((a,(u_j)_j)\mapsto(u_js(a_j))_j\Bigr)_*
+(\eta\otimes\lambda_U^{\otimes J}).
+$$
+一个变量输入只采样一次；DAG 中所有后续复用都复用该同一代表。这里的有序输入槽和零元常量类型与既有 framework Definition 1.1 的空输入常量、ordered input ports，以及 Proposition 1.4 对重复出现位置的保留完全相容；精确来源为 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。
+
+**theorem 57.14（有类型有限 DAG 的恒等式保持与联合信息层级）。** 对定义 57.13 的有类型有限 DAG 有以下结论。
+
+甲，$\operatorname{ev}_G:R^J\to R^V$ 连续。对任意 $\mu\in\operatorname{Prob}(R^J)$，$\mathsf W_G(\mu)$ 是同一组变量输入代表经过确定 DAG 求值后的精确联合标签推前；常量节点始终取 $\kappa(c)$，重复前驱槽始终读取同一个先前代表。
+
+乙，若两个这样的有限 DAG 或两个有序输出元组在同一变量输入空间上定义连续算术映射
+$$
+F,G:R^J\to R^q
+$$
+且逐点恒等
+$$
+F(z)=G(z)\qquad(\forall z\in R^J),
+$$
+则对每个联合输入律 $\mu$，
+$$
+(\rho^q\circ F)_*\mu=(\rho^q\circ G)_*\mu.
+$$
+因此任何在代表层逐点成立的普通环恒等式在共同见证推前下保持；这不推出任何独立随机核 $k$ 的结合律或分配律。
+
+丙，对每个 $\eta\in\operatorname{Prob}(I^J)$，
+$$
+(\rho^J)_*(\mathcal L_J\eta)=\eta.
+$$
+并且若一个联合代表律 $\mu$ 关于标签向量 $\rho^J$ 具有正规条件核
+$$
+a\longmapsto\bigotimes_{j\in J}m_{a_j}
+$$
+对 $\eta$-几乎处处成立，其中 $\eta=(\rho^J)_*\mu$，则
+$$
+\mu=\mathcal L_J\eta.
+$$
+也就是说，完整联合标签律加上纤维内条件独立轨道方向这一契约唯一确定规范提升。
+
+丁，当 $|J|\ge2$ 时，仅给出各变量输入的边缘标签律不足以确定 $\eta$；即使给出完整联合标签律 $\eta$，若不指定标签纤维内的联合耦合，也不足以确定一般的代表联合律或 DAG 输出律。
+
+**证明。** 证明甲。按定义 57.13 的严格全序归纳。变量投影 $z\mapsto z_j$ 连续，常量映射 $z\mapsto\kappa(c)$ 连续。若两个前驱值函数连续，则其和与积连续；即使两个前驱槽相同，也只是把同一连续函数代入两次。因此每个 $E_v$ 连续，有限乘积映射 $\operatorname{ev}_G$ 连续。定义本身保证 $c\in C$ 的值不来自 $R^J$ 的坐标；若 $\operatorname{pred}_0(v)=\operatorname{pred}_1(v)$，两槽的值都等于同一个 $E_w(z)$，不会产生第二次采样。故 $\mathsf W_G(\mu)$ 正是实际共同输入的确定推前。
+
+证明乙。若 $F=G$ 逐点，则 $\rho^q\circ F=\rho^q\circ G$ 逐点，所以两可测映射对任意 $\mu$ 的推前相等。这一论证发生在代表求值映射上，不需要把某个概率二元核假定为环运算。
+
+证明丙。核
+$$
+a\longmapsto\bigotimes_{j\in J}m_{a_j}
+$$
+Borel；对固定 $a$，它支持于
+$$
+(\rho^J)^{-1}(a).
+$$
+因此
+$$
+(\rho^J)_*(\mathcal L_J\eta)=\eta.
+$$
+若 $\mu$ 具有所述正规条件核，则由全概率公式，对每个 Borel $B\subseteq R^J$，
+$$
+\mu(B)=
+\int_{I^J}
+\left(\bigotimes_{j\in J}m_{a_j}\right)(B)\,\eta(da)
+=(\mathcal L_J\eta)(B).
+$$
+故 $\mu=\mathcal L_J\eta$。正规条件核只需在一个 $\eta$-满测集上满足该等式，零集外的版本修改不影响积分；Simmons Theorem 2.1 给出标准 Borel 情形的这种几乎处处唯一性：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明丁的第一部分。取两个不同标签 $a\ne b$，令
+$$
+\eta_{\rm diag}
+=\frac12\delta_{(a,a)}+\frac12\delta_{(b,b)},
+$$
+$$
+\eta_{\rm cross}
+=\frac12\delta_{(a,b)}+\frac12\delta_{(b,a)}.
+$$
+两者两个边缘完全相同，均为
+$$
+\frac12(\delta_a+\delta_b),
+$$
+但联合律不同。
+
+第二部分取固定联合标签
+$$
+\eta=\delta_{(\boldsymbol0,\boldsymbol0)}.
+$$
+令 $X,Y$ 为独立 Haar 单位，则 $(X,Y)$ 的联合律与对角联合律 $(X,X)$ 都推前到同一个 $\eta$。考虑一个加法门，其两个有序前驱槽分别读取这两个输入；在对角情形也可等价地令两个槽都读取同一个变量节点。theorem 57.8 表明两种联合耦合的输出估值分布不同。因此完整标签联合律仍未确定纤维内耦合。Fritz Definition 2.1 与 §4 的确定 copy、乘积核和联合分布语义提供一般概率背景：https://arxiv.org/pdf/1908.07021 。证毕。
+
+**theorem 57.15（精确的观察与电路契约边界）。** 在本节设定下，以下四层结论同时成立。
+
+一，若计算对象是定义 57.5 的有限表达式树，即每个随机叶只使用一次、不同叶独立、叶律为指定轨道律 $m_a$，内部仅用 $+$ 与 $\cdot$，则仅保留每个子树的 $\rho$-边缘律并用 $k$ 与 $\oplus$ 递归是精确的。若另有标准 Borel 共同参数，则 theorem 57.7 丁给出的正确条件是：选择 Borel 正规条件核，并在一个预先固定的共同参数满测集上具有条件乘积轨道形式；此时逐参数递归再积分是精确的。
+
+二，一旦允许把同一随机代表复制到两个输入槽，仅有两个输入边缘标签便不再足够。theorem 57.8 给出 $x+x$ 与两个独立同轨道代表之和的不同数值分布，theorem 57.9 证明不存在一个边缘标签二元核同时满足独立采样和复制两种全称契约。theorem 57.7 戊进一步给出共同参数被边缘化后，一个普通乘法门的输出单位概率从实际的 $1/2$ 变成错误独立化实验的 $1/4$。
+
+三，确定的任务相对修复可以通过增加观察实现：完整平移族
+$$
+\Psi=(\rho(x+n))_{n\ge0}
+$$
+单射；对任意固定模数 $M$，theorem 57.11 的有限截断查询可恢复 $x\bmod M$。但是 theorem 57.12 证明任何单个有限确定标签都不能让所有整数平移测试同时从 $(\rho,\theta)$ 因子化。这不意味着任意两个 $p$-进数的相等性可由有限测试判定，也不意味着某个固定有限任务没有更小的专用观察。
+
+四，对定义 57.13 的任意有类型有限 DAG，保留实际共同代表或完整变量输入联合律 $\mu$ 并使用 $\mathsf W_G(\mu)$，总能得到精确共同见证推前，并保持所有逐点代表恒等式。变量输入 $J$ 与零元常量节点 $C$ 分离；二元门有两个有序前驱槽且允许重复，因此常量不会变成随机输入，$x+x$ 也确实读取同一个 $x$ 两次。若只保留标签联合律，则必须另行指定纤维内耦合；$\mathcal L_J\eta$ 是条件独立轨道方向这一额外契约，而不是由标签边缘或标签联合律自动推出的事实。
+
+**证明。** 第一项由 theorem 57.6；带共同参数的精确量词、共同满测集和积分公式由 theorem 57.7 丁。第二项由 theorem 57.8、57.9 与 57.7 戊。第三项由 theorem 57.11、57.12。第四项由 definition 57.13 与 theorem 57.14：求值是从 $R^J$ 出发的单一确定连续映射，常量由 $\kappa$ 固定，重复槽在该映射内部复制同一个已算出的值，因此任意输入联合律都通过一次共同代表推前传播。
+
+与本结论相关的既有 framework 陈述只按其原量词使用。theorem 2.2 是任意观察 $q:X\to Q$ 与目标 $T:X\to Y$ 在实际像 $q[X]$ 上的精确纤维因子化判据。theorem 5.1 在有限指标集、有限观察塔和给定关系 $R$ 的假设下，识别共同关系像闭包与有限阶段联合像逆极限条件；它不是“边缘律自动恢复共同代表”的一般定理。§23 中，theorem 23.9 只在 Assumption 23.1 的特定 Zeckendorf 许可支撑契约下分类可容许结合概率核，theorem 23.11 在同一假设下证明许可集合值关系自身的结合律，而 theorem 23.12 对特定常偏置混合 $B^{(r)}$ 计算结合缺陷并证明仅 $r\in\{0,1\}$ 时结合。这些精确结果均见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。本节的 DAG 结论来自实际代表的确定推前，不把 theorem 23.9、23.11 或 23.12 扩张为关于任意概率核的断言。证毕。
+
+## 57.99 追加锚
+## 58. 二进制估值标签下的精度跳跃构造、可核验证书与展开输出障碍
+
+**definition 58.1 输入、位长与计算模型。** 顶点按输入次序编号为 $[n]$，其中 $n\ge0$。输入给出素数承诺下的 $p$ 及完整数组 $a:\binom{[n]}2\to\mathbb N_0\cup\{\infty\}$；对角线不属于输入，不同顶点允许具有相同坐标。目标是一个共同元组 $(x_i)\in\mathbb Z^n$，满足 $p\nmid x_i$，且每个 $i<j$ 都有 $v_p(x_i+x_j)=a_{ij}$，约定 $v_p(0)=\infty$。
+
+为精确计量，令 $\operatorname{enc}(u)$ 是正整数 $u+1$ 的二进制表示之前加上比其位数少一的零，故
+$$
+\ell(u)=|\operatorname{enc}(u)|=2\lfloor\log_2(u+1)\rfloor+1.
+$$
+输入依次编码 $n,p$ 及字典序排列的上三角标签；$\infty$ 编为单比特 $1$，有限 $a$ 编为 $0\operatorname{enc}(a)$。记实际总位长为 $L$，并令
+$$
+\Lambda=L+2,\qquad M=\max\bigl(\{0\}\cup\{a_{ij}:a_{ij}<\infty\}\bigr).
+$$
+这是二进制、自定界的输入，而非一元精度输入。使用固定的确定性多带图灵机，计量逐比特时间及工作带位数；输出带只写。所有复杂度常数均独立于 $p,n,M$ 和具体标签。素数承诺不由算法另行验证。沿用 definition 55.1 的 $\delta_p,s_p,q_p$，以下简写为 $\delta,s,q$。
+
+**premise 58.2 前置假设与文献边界。** 使用第 55 节中的 theorem 55.3–55.8：初层相反剩余类分解、交叉矩形条件、混合父结点的分支需求、超额分支的实际顶点抽取，以及相应诱导障碍。特别是 theorem 55.6 已说明其中的可实现性与存在普通整数单位见证等价。本节不把这些分类重新作为新结论。
+
+背景上，Dovgoshey–Petrov 的 Lemma 2.1 与 Theorem 3.3 给出循环最大边权重复及伪超度量延拓的关系；它是第 55 节矩形机制的背景，而不是本节位复杂度的来源。[Dovgoshey–Petrov，arXiv:1110.6802v1，Lemma 2.1、Theorem 3.3](https://arxiv.org/html/1110.6802v1) Bradley 的 §2–§3 说明数字共同前缀、同余球的 $p$ 个子球以及自上而下的数字编码；这里始终使用给定 $p$，不通过扩域增加分支容量。[Bradley，2010-10-22，§2–§3，pp. 4–6](https://www2.ipf.kit.edu/Personen/bradley/CV/hier2vis.pdf#page=4) Ischebeck 的 §2、式 (1)–(2) 说明 Patricia 树通过共同前缀跳跃或收缩单子结点进行压缩。[Ischebeck，arXiv:2305.14900v2，§2，式 (1)–(2) 及单子结点压缩](https://arxiv.org/html/2305.14900v2#S2) 本节还须证明跳过的数字可以统一取零，并把跳跃深度本身二进制编码；仅引用压缩树并不足以得到这一位复杂度结论。以下界由显式构造与计数证明，不援用随机树平均复杂度，也不作全局原创性断言。
+
+**definition 58.3 只记录真正分裂的交叉森林。** 设初层混合分量 $H=A_H\sqcup B_H$ 已给出，其交叉数组 $b_{uv}=a_{uv}-s$ 满足 $\mathrm R$；$\infty-s=\infty$。森林在各 $H$ 上各有一个根。根的入口深度是 $h=0$。对当前顶点集 $U$，记 $A_U=U\cap A_H$、$B_U=U\cap B_H$。
+
+纯色 $U$ 是终端。若两色均非空而全部交叉标签为 $\infty$，则 $U$ 是无穷终端。其余情形直接扫描当前交叉标签，取有限最小值
+$$
+t(U)=\min\{b_{uv}:u\in A_U,\ v\in B_U,\ b_{uv}<\infty\}.
+$$
+只在这个深度建立边条件为 $b_{uv}>t(U)$ 的二部图。子组是该图的各混合分量、所有 $A_U$ 色孤立点组成的一个组，以及所有 $B_U$ 色孤立点组成的一个组，空组省略。子组按最小原顶点编号递增排列。记组数为
+$$
+D(U)=c(U)+\epsilon_A(U)+\epsilon_B(U).
+$$
+混合子组的入口深度是 $t(U)+1$，纯色子组直接终止。无穷终端不产生一个所谓的“$\infty+1$ 层”。森林也可以在首次发现 $D(U)>p$ 时截断。
+
+**theorem 58.4 跳跃覆盖所有必要阈值，且分裂事件少于顶点数。** definition 58.3 中，每个有限分裂结点至少有两个非空子组，沿递归路径的有限深度严格递增。全部有限分裂事件至多 $\max(n-1,0)$ 个，全部结点至多 $2n$ 个。未显式访问的深度不是未经检验的容量条件：在每一段被跳过的混合分量中，其分支需求恒为 $1$。
+
+**证明。** 根在 $G_0(b)$ 中完全混合。归纳地，入口为 $h$ 的混合结点 $U$ 是 $G_h(b)$ 的混合分量。theorem 55.3 保证其完全二部性，所以所有内部交叉标签至少为 $h$。通向 $U$ 外部的边在这个阈值已消失，随阈值增大不会重新出现。
+
+若有限最小值为 $t$，则对每个整数 $h\le k<t$，内部交叉标签都至少为 $k+1$。因此该分量从深度 $k$ 到 $k+1$ 不变，只有一个混合子分量，没有孤立点，需求恰为 $1$。在深度 $t$，定义中的子组恰是 definition 55.2 计数的子组。一个达到最小值 $t$ 的跨色对不可能处于同一个下一层混合分量，否则完全二部性会使其标签大于 $t$；它也不能处于同一个纯色组。因此 $D(U)\ge2$。每个混合子组内所有交叉标签都大于 $t$，故其下一有限分裂深度严格大于 $t$。
+
+无穷终端在所有后续有限阈值都不变，需求仍为 $1$。纯色终端没有内部跨色约束；它与外部的交叉边已经消失，也不会产生新的深层义务。这同时证明递归涵盖了所有可能出现的混合分量及其分支需求。
+
+每次分裂把一个非空顶点集分成至少两个互不相交的非空子组。森林的叶组互不相交，故叶数至多 $n$。若根数为 $r>0$、内部结点数为 $J$、叶数为 $F$，则树边计数给出
+$$
+2J\le J+F-r,\qquad J\le F-r\le n-1.
+$$
+结点数 $J+F\le2n$。无根时 $J=0$。在失败处截断时，把未展开组视为叶，完全相同的计数仍成立。每个实际深度都是某个输入交叉标签的有限值；没有从 $0$ 逐层递增到 $M$ 的过程。证毕。
+
+**definition 58.5 受限的带符号稀疏整数语言。** 一个成功证书包含 $p,n$，以及按原顶点次序排列的
+$$
+\left(\sigma_i,r_i,k_i;(e_{i1},d_{i1}),\ldots,(e_{ik_i},d_{ik_i})\right),
+$$
+其中 $\sigma_i\in\{+1,-1\}$，并满足
+$$
+0\le k_i\le n-1,\qquad s\le e_{i1}<\cdots<e_{ik_i}\le M,\qquad
+1\le d_{ij}<p.
+$$
+奇素数时要求 $1\le r_i\le q$；$p=2$ 时要求 $r_i=1$。$n=0$ 时没有坐标记录，上述逐坐标条件为空。空尾表允许出现。证书所表示的普通整数严格定义为
+$$
+Y_i=r_i+\sum_{j=1}^{k_i}d_{ij}p^{e_{ij}},\qquad x_i=\sigma_iY_i.
+$$
+所有未列数字都等于零，包括最高列出指数以后的全部数字。符号作用于整个正的整数 $Y_i$，不是把负数写成未终止的 $p$ 进展开。这里没有未知尾项、精度占位符或指数为 $\infty$ 的项。
+
+序列化使用一个三比特类型标记、$\operatorname{enc}(p)\operatorname{enc}(n)$，每个坐标使用一比特符号（$0$ 表示 $+1$，$1$ 表示 $-1$）、$\operatorname{enc}(r_i)\operatorname{enc}(k_i)$，随后编码各 $\operatorname{enc}(e_{ij})\operatorname{enc}(d_{ij})$。
+
+**definition 58.6 与原输入逐项绑定的诱导否证语言。** 一个失败证书包含三比特类型标记、头字段 $p,n,k$、随后 $k$ 个互不相同的原顶点编号，以及这些顶点上全部 $\binom k2$ 个原标签的副本。所有整数头字段及编号使用 $\operatorname{enc}$，标签按有序顶点表的上三角次序沿用 definition 58.1 的编码。成功及以下六种失败类型依次使用三比特标记 $000,001,010,011,100,101,110$；标记 $111$ 及规定字段之后的多余内容均拒绝。校验首先核对 $p,n$、编号范围与互异性，并将每一个标签副本与原输入对应项比较。六种类型的附加条件如下。
+
+类型 $\mathrm B$ 有两个顶点，要求其标签小于 $\delta$。类型 $\mathrm T$ 有三个顶点，要求全部三条标签至少为 $s$。类型 $\mathrm P$ 有四个依次排列的顶点，要求相邻三对的标签至少为 $s$，其余三对的标签全部等于 $\delta$。
+
+类型 $\mathrm C$ 的有序顶点表是 $q$ 个配对再加一个顶点，故 $k=2q+1$。每个配对标签至少为 $s$，所有其他对的标签都等于 $\delta$。因此检验的是完整诱导匹配加孤立点，而不只是看见 $q$ 条边。
+
+类型 $\mathrm R$ 的顶点表为 $u_1,u_2,v_1,v_2$。同色两对标签等于 $\delta$，四个跨色标签至少为 $s$，而四个跨色标签有唯一的最小值。
+
+类型 $\mathrm F$ 的顶点表为 $u_1,\ldots,u_p,v_1,\ldots,v_p$，故 $k=2p$，并另编码一个有限 $t\ge0$。令 $d=s+t$。全部同色标签必须等于 $\delta$，而全部跨色标签必须满足
+$$
+a_{u_i v_i}>d\quad(1\le i<p),\qquad
+a_{u_i v_j}=d\quad\text{其余所有 }(i,j).
+$$
+严格大于允许 $\infty$；其余等式包括 $a_{u_pv_p}=d$。这就是原标签坐标下的 $\mathrm F_{p,t}$，不是只指定其部分边的图样。
+
+类型和有序顶点表已确定配对及颜色，不另附未验证的分量声明。校验先比较 $k\le n$ 及必要的 $k=2q+1$ 或 $k=2p$，再遍历已列出的顶点；不会因为一个二进制大数 $p$ 而先分配 $p$ 个位置。
+
+**definition 58.7 确定性算法。** 空输入返回空元组，单点输入返回 $x_1=1$。其他输入首先计算 $\delta,s,q$ 并扫描全部标签。若有标签小于 $\delta$，返回类型 $\mathrm B$。随后建立边条件为 $a_{ij}\ge s$ 的图，枚举所有三顶点组和所有有序四顶点组，查找三角形或诱导四顶点路径，分别返回类型 $\mathrm T$ 或 $\mathrm P$；缺边条件也必须读取并核对。
+
+若无此类图形，则由 theorem 55.7 的图论部分取得完全二部混合分量与孤立点的分解。对每个分量的最小编号顶点 $v_H$，取 $B_H=N_H(v_H)$、$A_H=V(H)\setminus B_H$，确定两色；按分量的最小编号排序。令混合分量数为 $m$，孤立点存在指示数为 $\epsilon$。若 $m+\epsilon>q$，有孤立点时从前 $q$ 个混合分量各取一条边，再取最小孤立点；无孤立点时取前 $q$ 个分量的边，再取下一分量的一个顶点，返回类型 $\mathrm C$。
+
+对每个混合分量构成 $b=a-s$，枚举其全部二行二列矩形。若 $\mathrm R$ 失败，返回类型 $\mathrm R$。否则建立 definition 58.3 的森林。遇到 $D(U)>p$ 时，按 theorem 58.10 的三个确定性抽取情形返回类型 $\mathrm F$。
+
+若 $D(U)\le p$，只给实际存在的第 $j$ 个子组分配数字 $j-1$，其中 $1\le j\le D(U)$。对该子组每个顶点，将非零数字记在其辅助整数 $z_i$ 的指数 $t(U)$ 处；零数字不记录。每个辅助尾表初始为空，终端不再增加项。
+
+奇素数时，第 $j$ 个初层混合分量取 $r_H=j$；存在孤立点时，它们共取 $r_0=m+1$。$p=2$ 时，所有实际使用的代表均取 $1$。在混合分量中置
+$$
+x_u=r_H+p^s z_u\quad(u\in A_H),\qquad
+x_v=-(r_H+p^s z_v)\quad(v\in B_H);
+$$
+孤立点共同取正的 $r_0$。输出时只把辅助指数 $t$ 改记为 $s+t$，得到 definition 58.5 的记录，不计算这些幂的展开值。所有选择中的并列情形均取原编号字典序最小者。
+
+**theorem 58.8 成功分支产生一个共同的、有限表示的整数元组。** definition 58.7 若未返回失败证书，则其输出属于 definition 58.5 的语言，且同时实现完整输入。对全部坐标都有
+$$
+0<|x_i|<p^{M+1}.
+$$
+
+**证明。** 先固定一个初层混合分量。有限标签 $b_{uv}=k$ 的两端从共同根出发，不可能共同终止于纯色叶，也不可能共同终止于所有交叉标签均为 $\infty$ 的叶。因此它们在某个有限分裂结点首次落入不同子组。
+
+在该结点，所有内部跨色标签至少为 $t(U)$。不同子组之间不存在标签大于 $t(U)$ 的跨色边，否则两端不会分属不同混合分量或孤立组。故 $k=t(U)$。此前所有记录数字相同，所有跳过位置共同为零；此时两端得到不同的数字 $c_u,c_v\in\{0,\ldots,p-1\}$，以后的记录指数严格更大。因而
+$$
+z_u-z_v=p^k\bigl(c_u-c_v+pQ\bigr),\qquad Q\in\mathbb Z,
+$$
+其中 $0<|c_u-c_v|<p$，所以估值恰为 $k$。
+
+若 $b_{uv}=\infty$，这条边在每次有限分裂后仍存在，两端始终处于同一个混合子组，最终共同到达无穷终端。它们得到完全相同的有限数字表，故 $z_u=z_v$ 是普通整数的严格相等。这不是有限精度同余。
+
+类对容量条件保证奇素数时 $m+\epsilon\le q$，故所选 $1,\ldots,m+\epsilon$ 均可用，且任意两个这些代表之和至多 $2q=p-1$，不同代表也不互为相反类。$p=2$ 时容量条件保证至多使用一个类对。于是 theorem 55.6 的整数变换适用于刚刚构造的全部 $z_i$，给出所有跨色标签、同色标签及分量间标签。它调用的是同一个共同辅助元组，不是拼接各对子集的见证。
+
+沿每条路径有限深度严格递增，非零数字小于 $p$。每个 $t(U)$ 是一个实际有限 $b_{uv}$，故最终指数 $s+t(U)$ 是实际有限 $a_{uv}$，不超过 $M$。由 theorem 58.4，每个顶点至多经过 $n-1$ 个分裂结点，所以尾表满足 $k_i\le n-1$。
+
+每个 $Y_i$ 的常数数字 $r_i$ 非零且小于 $p$，其余数字满足 definition 58.5。于是 $Y_i>0$ 且 $p\nmid Y_i$。全部指数至多为 $M$，标准有限数字估计给出 $Y_i<p^{M+1}$。空辅助表表示 $z_i=0$，但绝不使单位坐标 $x_i$ 等于零。证毕。
+
+**theorem 58.9 无须展开幂的成功证书校验。** definition 58.5 的证书有一个直接校验器，不需要森林或构造历史。通过语法校验后，对每个 $i<j$，其真实和估值由下列规则完全确定：
+$$
+v_p(x_i+x_j)=
+\begin{cases}
+\delta,&\sigma_i=\sigma_j,\\
+\infty,&\sigma_i=-\sigma_j\ \text{且 }Y_i,Y_j\text{ 的完整稀疏数字表相同},\\
+e,&\sigma_i=-\sigma_j\ \text{且 }e\text{ 是两表首次不同的指数}.
+\end{cases}
+$$
+这里把常数项视为指数 $0$ 的数字，未列指数视为数字 $0$。将这些值与全部原标签逐项比较即可。
+
+**证明。** 奇素数时 $Y_i=r_i+pZ_i$，且同号相加的常数和满足
+$$
+2\le r_i+r_j\le p-1.
+$$
+它在模 $p$ 下非零，故同号和估值为 $0=\delta$。更高位相加产生的进位不会向低位传播，因此无须归一化那些高位。$p=2$ 时语法排除了指数 $1$ 的项，所以 $Y_i=1+4Z_i$；同号和为
+$$
+\pm\bigl(2+4(Z_i+Z_j)\bigr),
+$$
+估值恰为 $1=\delta$。这里指数 $0$ 的两个 $1$ 的确发生一次进位，进入指数 $1$；该位没有别的贡献，故不会被消去。
+
+异号时，和相差一个总符号等于 $Y_i-Y_j$。若首次不同指数为 $e$，较低位在整数减法中严格抵消，因而
+$$
+Y_i-Y_j=p^e\bigl(d_i(e)-d_j(e)+pQ\bigr),\qquad Q\in\mathbb Z.
+$$
+两个数字均在 $\{0,\ldots,p-1\}$ 内且不同，其差非零且绝对值小于 $p$，所以估值恰为 $e$。这也证明不同的规范有限数字表不能表示同一个整数；无须沿巨大空隙展开借位。若两表全部相同，则差严格为零；反之差为零便不可能存在首次不同位置。同号的两个正幅值不可能相消。
+
+校验器合并两个有序支持表，比较支持并集中的指数及数字；相邻指数即使相差巨大，也只进行一次二进制比较。它必须比较完整有限支持，而不是仅检查某个截断前缀。每表至多 $n$ 个数字，故全部配对至多需要 $O((n+1)^3)$ 次记录比较。所有坐标均已由语法排除零，辅助零由空尾表表示，严格零和由上述异号全表相等规则识别。于是通过校验当且仅当所表示的共同整数元组满足全部有限标签及全部 $\infty$ 标签。证毕。
+
+**theorem 58.10 否证抽取与原输入绑定校验的正确性。** definition 58.7 的每次失败均能返回 definition 58.6 的证书，其顶点属于实际输入，数量不超过 $\min(n,2p)$。任何通过该否证校验器的证书都证明原数组不可实现；反之，每个不可实现输入都会使算法返回一种此类证书。
+
+**证明。** 类型 $\mathrm B$ 违反 theorem 55.6 的必要下界。类型 $\mathrm T,\mathrm P$ 的完整阈值图违反同一定理要求的图形。类型 $\mathrm C$ 的诱导图有 $q$ 个混合分量及一个孤立点，违反类对容量。类型 $\mathrm R$ 的四个跨色标签经减去 $s$ 后仍有唯一最小值，违反 theorem 55.3；完整跨色边保证 theorem 55.6 的归一化可用。类型 $\mathrm F$ 正是 theorem 55.5 的交叉障碍经 theorem 55.6 转回完整和数组的形式，也直接属于 theorem 55.8 的数组族。以上均为第 55 节结论的应用。
+
+现在验证超额分支的抽取确实只使用当前原顶点。写 $c=c(U)$，$e=\epsilon_A(U)+\epsilon_B(U)$，$t=t(U)$。当 $e=2$ 时，$D(U)>p$ 给出 $c\ge p-1$：从前 $p-1$ 个混合子分量各取一条跨色边，再取两色各一个孤立点，作为 $u_p,v_p$。当 $e=1$ 时，$c\ge p$：取前 $p-1$ 个混合子分量的边，取已有颜色的一个孤立点，再从第 $p$ 个混合子分量取一个异色点，作为最后的一对。当 $e=0$ 时，$c\ge p+1$：取前 $p-1$ 个混合子分量的边，再分别从第 $p$ 个分量取一个 $A$ 点、从第 $p+1$ 个分量取一个 $B$ 点。
+
+这些顶点两两不同。所取配对边的标签大于 $t$。其余跨色对均来自不同子分量或孤立组，故标签不大于 $t$；又因全部位于 $U$，标签至少为 $t$，所以恰等于 $t$。原初层分量内部的同色标签均等于 $\delta$。因此抽取后读取并复制全部诱导标签，逐项得到类型 $\mathrm F$，不需要相信父分量的文字描述。
+
+类对超额时，definition 58.7 的抽取同样只使用已有分量。存在孤立点时有 $m\ge q$；不存在时有 $m\ge q+1$。所取配对之外的所有标签均为 $\delta$，故输出确是诱导匹配加孤立点。特别是只有在这些不等式已成立时才遍历所需分量；不会枚举全部剩余类。
+
+各类型的顶点数分别为 $2,3,4,2q+1,4,2p$。奇素数时 $2q+1=p$，$p=2$ 时 $2q+1=3$；其余四顶点界也满足 $4\le2p$。抽取只用实际互异顶点，故同时不超过 $n$。深层失败的上述三种抽取还直接证明了此时当前分量中确实有至少 $2p$ 个可用顶点，而非从形式上的数字 $p$ 虚构顶点。
+
+全部必要非边及标签均已包含在完整副本中，并由校验器重新向原输入核对。一个局部不可实现的诱导限制不能是共同见证的限制，故否证校验是可靠的。
+
+若一个输入未在初层或矩形检查中失败，则 theorem 58.4 证明未访问层的需求均为 $1$。若所有访问层也通过，theorem 58.8 已构造整个输入的整数见证。因此不可实现输入必在某处失败。可实现输入不能触发任何可靠否证，且递归有限，故一定成功。
+
+空集、单点不会失败。只有孤立点时全部标签为 $\delta$，可共同取 $1$；纯色终端没有跨色义务；全为 $\infty$ 的混合终端保留从祖先分裂继承的全部共同辅助数字，仅将尚未赋值的续位取为 $0$，故终端内各顶点的完整辅助整数严格相等，但其共同值不必为 $0$。特别地，$p=2$ 的小标签失败只可能是标签 $0$，容量障碍使用三个顶点，深层障碍使用四个顶点。整个数组全为 $\infty$ 时，$n=2$ 返回 $(1,-1)$，$n\ge3$ 返回三角形，$n\le1$ 使用空集或单点规则。这些情形均满足同一契约。证毕。
+
+**theorem 58.11 描述长度界与数值大小分离。** 算法的成功证书总数字数至多 $n^2$，其位长 $C_+$ 满足
+$$
+C_+\le3+L+n+2Ln^2\le8\Lambda^3.
+$$
+失败证书若使用 $k$ 个顶点，其位长 $C_-$ 满足
+$$
+C_-\le3+4L+k\ell(n)\le3+(k+4)L\le8\Lambda^2.
+$$
+这些是有限描述的界，不是所表示整数的二进制展开长度界。
+
+**证明。** 每个坐标有一个常数数字及至多 $n-1$ 个尾项，所以总数字数至多 $n^2$。所有尾指数不超过 $M$，所有数字及代表小于 $p$，所有尾项计数不超过 $n$。因此每个这样的整数的 $\operatorname{enc}$ 长度均至多 $L$。成功头部至多使用 $3+L$ 位，符号总共 $n$ 位，代表和计数至多 $2Ln$ 位，尾项至多 $2Ln(n-1)$ 位，给出第一式。
+
+失败头部的 $p,n$ 编码合计至多 $L$ 位，$k$ 的编码至多 $L$ 位，顶点表至多 $k\ell(n)$ 位。若有深度字段，由 $s+t=d$ 是一个实际有限输入标签可知 $t\le M$，故其编码至多 $L$ 位。全部诱导标签都是完整原数组中互不重复的项，其编码长度之和至多 $L$，而不是重复计算 $k^2$ 份最大标签长度。加上三比特类型即得第二式。
+
+definition 58.1 的完整输入编码保证 $n\le L+1$；$n=0,1,2$ 可直接检验，$n\ge3$ 时仅标签个数就至少为 $n$。代入即得所列统一多项式界。
+
+固定 $p$ 的 $2p$ 顶点结论不限制这些顶点携带的数值字段长度。特别是本否证语言明示并复制实际标签，故随深度增长仍须支付其二进制长度；不能把顶点个数界解释为一个只依赖 $p$ 的总证书位数界。证毕。
+
+**theorem 58.12 统一确定性位复杂度契约。** 在 definition 58.1 的承诺输入上，存在同一确定性算法，以
+$$
+T_{\mathrm{construct}}(L)=O(\Lambda^8),\qquad
+S_{\mathrm{construct}}(L)=O(\Lambda^3)
+$$
+返回一个成功稀疏整数证书或一个诱导否证证书。两种证书均可在
+$$
+T_{\mathrm{check}}(L)=O(\Lambda^8),\qquad
+S_{\mathrm{check}}(L)=O(\Lambda^3)
+$$
+内校验。校验器对成功证书设置 $8\Lambda^3$ 位上限，对失败证书设置 $8\Lambda^2$ 位上限，超限或不合语法即拒绝。所有可实现输入都有通过校验的成功证书，所有不可实现输入都有通过校验的失败证书。主构造及校验均不展开 $p^M$，不扫描 $M$ 个零，也不枚举 $p$ 个剩余类。
+
+**证明。** 给出保守的顺序存储计数，避免把大整数或随机寻址当作单位成本。初层标签检查使用 $O(n^2)$ 次记录访问；三角形和有序四顶点路径枚举使用 $O((n+1)^4)$ 次记录操作；全部交叉矩形枚举也不超过这个阶。连通性可用三重顶点循环的布尔传递闭包求出，不需要任何更快的图算法。
+
+森林至多有 $2n$ 个结点。在每个结点，最小标签扫描和阈值图构造使用 $O(n^2)$ 次记录操作，连通性及分组使用 $O((n+1)^3)$ 次，子组排序和赋数字也被此界覆盖。故全部森林工作为 $O((n+1)^4)$ 次记录操作。抽取否证不枚举顶点子集；它只从已有组中取代表并读取至多 $n^2$ 个诱导标签。赋值只使用 $0,\ldots,D(U)-1$；$D(U)\le |U|\le n$。当需要抽取 $p$ 或 $q$ 个组时，失败不等式已保证这些组实际存在，数量被 $n$ 限制。
+
+标签、深度、数字、计数以及地址均可存为 $O(L+1)$ 位字段。保留一份标签表，各结点只存原顶点索引而不复制整张标签表；再保留分组资料及至多 $n^2$ 个输出数字记录，工作存储为 $O(\Lambda^3)$ 位。比较、加减和移位可直接逐比特完成。甚至允许每次记录访问都顺序扫描整个工作存储，并额外支付 $O(\Lambda)$ 的寻址和字段处理因子，每次抽象记录操作仍只需 $O(\Lambda^4)$ 位时间。抽象操作总数为 $O((n+1)^4+L)=O(\Lambda^4)$，乘积给出 $O(\Lambda^8)$。
+
+成功校验器先检查证书语法、指数上界及计数，再用 theorem 58.9 的支持表合并检查所有对。失败校验器检查编号互异性、全部标签绑定以及类型的全部条件。它们分别只需 $O((n+1)^3+L)$ 与 $O((n+1)^2+L)$ 次有界字段操作，均被上述更宽的 $O(\Lambda^8)$ 时间和 $O(\Lambda^3)$ 空间覆盖。
+
+读取证书时至多读取规定上限加一位，超限立即拒绝；这段逐比特读取及语法扫描另需 $O(\Lambda^3)$ 时间，仍在上述总界内。对于数值字段，先核对其编码长度与允许上界，再进行数值操作；不会把恶意超长数字当作单位成本。theorem 58.11 保证上述限制不排除任何算法产出的证书。正确性及两侧完备性分别由 theorem 58.8–58.10 给出。深度只参与最小值选择、二进制比较及加减；$M$ 只是一个二进制上界字段，绝不是循环次数。证毕。
+
+**theorem 58.13 巨大标签与严格无穷条件共存的短成功证书。** 对任意素数 $p$ 和整数 $D\ge s_p$，取四个顶点 $u_0,u_1,v_0,v_1$，指定
+$$
+a_{u_0u_1}=a_{v_0v_1}=\delta_p,\qquad
+a_{u_0v_0}=a_{u_1v_1}=\infty,\qquad
+a_{u_0v_1}=a_{u_1v_0}=D.
+$$
+它有总共六个非零数字的成功证书，完整输入和该证书的长度均为 $O(\log(p+1)+\log(D+2))$。交叉森林只有一个有限分裂事件。
+
+**证明。** 取
+$$
+x_{u_0}=1,\quad x_{u_1}=1+p^D,\quad
+x_{v_0}=-1,\quad x_{v_1}=-(1+p^D).
+$$
+四个常数数字加上两个指数为 $D$、系数为 $1$ 的数字，共六个数字，且全部满足 definition 58.5。两个指定对角跨色和严格为零，另外两个跨色和分别为 $-p^D$ 与 $p^D$。两个同色和分别为 $2+p^D$ 与 $-(2+p^D)$；因 $D\ge s_p>\delta_p$，其估值恰为 $\delta_p$。这核对了全部六对。
+
+辅助交叉数组的有限最小值为 $D-s_p$。超过这个阈值后只剩两个无穷配对混合分量，故 $D(U)=2\le p$；两个子分量均立即成为无穷终端。所有中间精度被一次跳过。输入中只有常数个标签，证书只有常数个数字及二进制指数，得到所述长度界。特别是固定 $p$、令 $D=2^h\ge s_p$ 时，描述长度为 $O(h)$，而非 $O(2^h)$。证毕。
+
+**theorem 58.14 巨大深度的四顶点否证编码。** 固定 $p=2$，令 $h\ge1$、$d=2+2^h$，并取 $H\in\{d+1,\infty\}$。四个实际顶点 $u_1,u_2,v_1,v_2$ 的完整标签为
+$$
+a_{u_1u_2}=a_{v_1v_2}=1,\qquad
+a_{u_1v_1}=H,\qquad
+a_{u_1v_2}=a_{u_2v_1}=a_{u_2v_2}=d.
+$$
+算法在一个有限分裂事件后返回深度 $t=2^h$ 的四顶点类型 $\mathrm F$ 证书。输入长度及本否证语言中的证书长度均为 $\Theta(h+1)$。
+
+**证明。** 此数组是 theorem 55.8 在 $p=2$、所列 $d,H$ 下的实例；其不可实现性及每个真诱导限制的整数可实现性直接由该定理给出，不作为本节另一个分类结果重证。
+
+其初层阈值图恰为 $K_{2,2}$，唯一混合分量满足类对容量 $1$。交叉矩形的最小标签 $d$ 出现三次，所以矩形检查通过。辅助标签的有限最小值为 $d-2=2^h$。在更高阈值图中只有边 $u_1v_1$，另有 $u_2$ 和 $v_2$ 两个异色孤立点。因此
+$$
+D(U)=1+1+1=3>2.
+$$
+抽取使用的正是全部四个原顶点。证书核对两条同色标签 $1$、一条大于 $2+t$ 的配对标签，以及其余三条恰为 $2+t$ 的跨色标签，全部六个副本均向输入核对，故没有遗漏非边或标签条件。
+
+$t,d,d+1$ 的二进制长度均为 $h+O(1)$；$H=\infty$ 时该项只用一个标签比特。其余字段数量恒定，故输入与证书均为 $\Theta(h+1)$。该例同时显示固定四个顶点并不使数值证书长度成为常数，而算法也没有访问 $2^h$ 个精度层。证毕。
+
+**theorem 58.15 完全展开二进制输出的无条件长度障碍。** 即使固定 $p=2,n=2$，也不存在对所有可实现输入都在原始位长 $L$ 的多项式时间内输出完全展开二进制整数元组的算法。这个结论是输出长度障碍，不是可实现性判定的计算困难。
+
+**证明。** 令唯一标签为有限的 $M=2^h$，其中 $h\ge1$。输入长度为 $\Theta(h+1)$，definition 58.5 中的两坐标证书
+$$
+x_1=1,\qquad x_2=-(1+2^M)
+$$
+只有一个高位数字，并给出 $x_1+x_2=-2^M$，所以输入确实可实现。
+
+任取一个普通整数实现，不论坐标符号如何，由有限估值条件有 $x_1+x_2\ne0$ 且 $2^M\mid x_1+x_2$。因此
+$$
+|x_1+x_2|\ge2^M,\qquad
+\max(|x_1|,|x_2|)\ge2^{M-1}.
+$$
+至少一个坐标的二进制幅值必须有至少 $M=2^h$ 位。逐比特输出这些位已经需要至少这么多时间，故不可能对原始 $\Theta(h+1)$ 位输入具有统一多项式输出时间。
+
+这一下界允许任意符号、任意选择的实现以及重复坐标，因而不是某个构造选择不佳造成的。另一方面，theorem 58.12 已给出所有承诺输入的多项式判定与稀疏构造；本例的可实现性甚至由上面的显式二坐标证书直接确定。故没有从巨大展开输出推导任何判定困难性。证毕。
+
+**theorem 58.16 展开模式的正确替代契约。** 令
+$$
+K=2+(M+1)\lceil\log_2(p+1)\rceil.
+$$
+主算法生成的稀疏元组可以另行转换为完全展开的二进制整数，以
+$$
+T_{\mathrm{expanded}}
+=O\bigl(\Lambda^8+n^2\Lambda K^2\bigr)
+$$
+位时间完成；工作空间为 $O(\Lambda^3+K)$。展开格式可取每个坐标一比特符号及固定 $K$ 位幅值，$K$ 由输入确定，因此只写的展开输出长度为 $n(K+1)$ 位。若要求同时保留全部展开输出，则空间界改为 $O(\Lambda^3+nK+K)$。这不是关于原始 $L$ 的多项式界，但也是关于 $L$ 与实际展开输出长度之和的多项式界。
+
+**证明。** theorem 58.8 给出每个幅值小于 $p^{M+1}$，故 $K$ 是充足的二进制位数上界；其中 $\lceil\log_2(p+1)\rceil$ 就是 $p$ 的二进制位数，可直接从编码取得。对每个稀疏项，用指数的二进制表示进行反复平方，至多进行 $O(\Lambda)$ 次乘法；不做无用的最后一次平方，所需中间幂及累积乘积均可限制在 $O(K)$ 位。通常的逐位乘法在 $O(K^2)$ 位时间及 $O(K)$ 工作空间内完成。乘以数字并加到当前坐标也在此界内。
+
+尾项总数至多 $n(n-1)$。逐坐标计算、写出并释放展开幅值，连同主算法及记录读取开销，即得所列时间与空间界。这个转换仍按二进制指数取幂，不需要在稀疏证书校验中引入任何展开操作。
+
+最后记实际展开输出长度为 $B_{\mathrm{out}}$。若 $M=0$，则 $K=O(L)$。若 $M\ge1$，它必由某个实际有限输入标签达到；对该对顶点，任意实现满足
+$$
+\max(|x_i|,|x_j|)\ge p^M/2,
+$$
+故 $B_{\mathrm{out}}\ge M\log_2p-O(1)$。由 $p\ge2$ 可得 $K=O(L+B_{\mathrm{out}})$。再用 $n\le L+1$，展开时间便是 $L+B_{\mathrm{out}}$ 的多项式。theorem 58.15 说明不能把这里的 $B_{\mathrm{out}}$ 从统一界中删去。证毕。
+
+## 58.99 追加锚

@@ -1,0 +1,47 @@
+**证明。** 先设 $a,b>0$。令 $S$ 为整除 $ab$ 的有限素数集。对任意奇素数 $p\notin S$，有 $A_p=B_p=0$。定义
+$$
+E_p=\{C_p>0\}.
+$$
+theorem 56.4 给出
+$$
+\Pr(E_p)=\Pr(v_p(1+w_p)\ge1)=\frac1{p-1}.
+$$
+并且这些 $E_p$ 对不同 $p$ 独立，因为 theorem 56.4 已从实际全局 Haar 概率证明了坐标独立。
+
+下面自足证明所需发散。首先
+$$
+\sum_{p\ \mathrm{prime}}\frac1p=\infty.
+$$
+否则对充分大的有限素数界 $N$，由 $-\log(1-t)\le2t$ 对 $0<t\le1/2$ 可得有限 Euler 乘积
+$$
+P_N=\prod_{p\le N}\left(1-\frac1p\right)^{-1}
+$$
+一致有界。然而把每个几何级数展开，$P_N$ 包含每个只含 $p\le N$ 素因子的 $1/n$ 项，特别包含全部 $1\le n\le N$，故
+$$
+P_N\ge\sum_{n\le N}\frac1n\longrightarrow\infty,
+$$
+矛盾。因此删去有限多个素数后仍有 $\sum_p1/p=\infty$，又因 $1/(p-1)\ge1/p$，
+$$
+\sum_{\substack{p\notin S\\p\ \mathrm{odd}}}\Pr(E_p)=\infty.
+$$
+
+无需把 Borel–Cantelli 当作黑箱即可推出无限多次发生。把这些奇素数枚举为 $p_1,p_2,\ldots$。固定 $M$，独立性给出
+$$
+\Pr(E_{p_j}\text{ 对所有 }j\ge M\text{ 都不发生})
+=\lim_{N\to\infty}\prod_{j=M}^N\bigl(1-\Pr(E_{p_j})\bigr)
+\le\lim_{N\to\infty}\exp\left(-\sum_{j=M}^N\Pr(E_{p_j})\right)=0.
+$$
+对 $M$ 可数并，得到“仅有限多个 $E_p$ 发生”的概率为 $0$。故几乎处处有无限多个 $p$ 满足 $C_p>0$。
+
+另一方面，每个固定 $p$ 在有限相等输入情形下取 $\infty$ 的概率为 $0$，不等输入情形更不可能取 $\infty$；素数集可数，所以
+$$
+\Pr(\exists p,\ C_p=\infty)=0.
+$$
+因而几乎处处全部坐标有限且正支撑无限。一个向量 $D\in I$ 等于某个正整数的赋值向量 $\rho(n)$，当且仅当全部 $D_p<\infty$ 且 $\{p:D_p>0\}$ 有限；反向由有限乘积 $n=\prod_pp^{D_p}$ 得到。因此所求普通整数事件概率为 $0$。这里的零概率结论来自实际坐标独立性和发散和，而非“普通整数只有可数多个”的基数论推断。
+
+若 $a=0$，则 $s(\rho(0))=0$，所以对任意 $B$，
+$$
+K(\rho(0),B)=\operatorname{Law}(\rho(vs(B)))=\delta_B.
+$$
+另一个输入为零时同理；两者皆零时恒得 $\rho(0)$。证毕。
+
