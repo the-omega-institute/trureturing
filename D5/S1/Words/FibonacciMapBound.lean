@@ -666,46 +666,70 @@ theorem result (d : ℕ) (hd : 0 < d) :
       (by rw [hp]; exact hsmall)
       (by rw [hp]; exact golden_map_small_step i d length symbol hd hpos hsmall hmap)
   have golden_approx_lower (q : ℕ) (p : ℤ) (hq : 0 < q)
-      (herror : |(p : ℝ) - (q : ℝ) * Real.goldenRatio| < 1) :
+      (_herror : |(p : ℝ) - (q : ℝ) * Real.goldenRatio| < 1) :
       1 ≤ |(p : ℝ) - (q : ℝ) * Real.goldenRatio| *
         (Real.sqrt 5 * (q : ℝ) + 1) := by
-    let err : ℝ := (p : ℝ) - (q : ℝ) * Real.goldenRatio
-    let δ : ℝ := |err|
+    let r : ℚ := Rat.divInt p (q : ℤ)
     have hroot : 0 ≤ Real.sqrt 5 := Real.sqrt_nonneg 5
-    have hqreal : (0 : ℝ) ≤ q := Nat.cast_nonneg _
-    have hfactor :
-        (((p ^ 2 - p * (q : ℤ) - (q : ℤ) ^ 2 : ℤ) : ℝ)) =
-          err * (Real.sqrt 5 * (q : ℝ) + err) := by
-      push_cast
+    have hqreal : (0 : ℝ) < q := by exact_mod_cast hq
+    have hden_dvd : r.den ∣ q := by
+      change (Rat.divInt p (q : ℤ)).den ∣ q
+      exact_mod_cast Rat.den_dvd p (q : ℤ)
+    have hden_le_nat : r.den ≤ q := Nat.le_of_dvd hq hden_dvd
+    have hden_le : (r.den : ℝ) ≤ q := by exact_mod_cast hden_le_nat
+    have hcast : (r : ℝ) = (p : ℝ) / (q : ℝ) := by
+      dsimp [r]
+      rw [Rat.cast_divInt]
+      norm_num
+    have habs : |Real.goldenRatio - (r : ℝ)| =
+        |(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ) := by
+      rw [hcast]
       calc
-        (p : ℝ) ^ 2 - (p : ℝ) * (q : ℝ) - (q : ℝ) ^ 2 =
-            ((p : ℝ) - (q : ℝ) * Real.goldenRatio) *
-              ((p : ℝ) - (q : ℝ) * Real.goldenConj) := by
-                linear_combination
-                  (p : ℝ) * (q : ℝ) * Real.goldenRatio_add_goldenConj -
-                    (q : ℝ) ^ 2 * Real.goldenRatio_mul_goldenConj
-        _ = err * (Real.sqrt 5 * (q : ℝ) + err) := by
-          dsimp [err]
-          rw [← Real.goldenRatio_sub_goldenConj]
-          ring
-    have hform : (1 : ℝ) ≤
-        |(((p ^ 2 - p * (q : ℤ) - (q : ℤ) ^ 2 : ℤ) : ℝ))| := by
-      exact_mod_cast Int.one_le_abs (golden_integer_form_nonzero q p hq)
-    have htri : |Real.sqrt 5 * (q : ℝ) + err| ≤
-        Real.sqrt 5 * (q : ℝ) + δ := by
+        |Real.goldenRatio - (p : ℝ) / (q : ℝ)| =
+            |((q : ℝ) * Real.goldenRatio - (p : ℝ)) / (q : ℝ)| := by
+              congr 1
+              field_simp
+        _ = |(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ) := by
+              rw [abs_div, abs_sub_comm, abs_of_pos hqreal]
+    have hhurwitz := D5.S1.Depth.golden_hurwitz_bound r
+    have hdenpos : (0 : ℝ) < r.den := by exact_mod_cast r.pos
+    have hdenominator_pos :
+        0 < Real.sqrt 5 * (r.den : ℝ) ^ 2 + r.den := by positivity
+    have hlower : (1 : ℝ) <
+        (|(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ)) *
+          (Real.sqrt 5 * (r.den : ℝ) ^ 2 + r.den) := by
+      rw [← habs]
+      exact (div_lt_iff₀ hdenominator_pos).mp hhurwitz
+    have hdenominator_le :
+        Real.sqrt 5 * (r.den : ℝ) ^ 2 + r.den ≤
+          Real.sqrt 5 * (q : ℝ) ^ 2 + q := by
+      have hsquare : (r.den : ℝ) ^ 2 ≤ (q : ℝ) ^ 2 := by
+        have hproduct : 0 ≤ ((q : ℝ) - (r.den : ℝ)) *
+            ((q : ℝ) + (r.den : ℝ)) :=
+          mul_nonneg (sub_nonneg.mpr hden_le) (add_nonneg hqreal.le hdenpos.le)
+        nlinarith
+      have hrootmul := mul_le_mul_of_nonneg_left hsquare hroot
+      linarith
+    have hscaled :
+        (|(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ)) *
+            (Real.sqrt 5 * (r.den : ℝ) ^ 2 + r.den) ≤
+          (|(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ)) *
+            (Real.sqrt 5 * (q : ℝ) ^ 2 + q) :=
+      mul_le_mul_of_nonneg_left hdenominator_le
+        (div_nonneg (abs_nonneg _) hqreal.le)
+    have hstrict : (1 : ℝ) <
+        |(p : ℝ) - (q : ℝ) * Real.goldenRatio| *
+          (Real.sqrt 5 * (q : ℝ) + 1) := by
       calc
-        |Real.sqrt 5 * (q : ℝ) + err| ≤
-            |Real.sqrt 5 * (q : ℝ)| + |err| := abs_add_le _ _
-        _ = Real.sqrt 5 * (q : ℝ) + δ := by
-          rw [abs_of_nonneg (mul_nonneg hroot hqreal)]
-    calc
-      (1 : ℝ) ≤ |(((p ^ 2 - p * (q : ℤ) - (q : ℤ) ^ 2 : ℤ) : ℝ))| := hform
-      _ = δ * |Real.sqrt 5 * (q : ℝ) + err| := by
-        rw [hfactor, abs_mul]
-      _ ≤ δ * (Real.sqrt 5 * (q : ℝ) + δ) :=
-        mul_le_mul_of_nonneg_left htri (abs_nonneg _)
-      _ ≤ δ * (Real.sqrt 5 * (q : ℝ) + 1) := by
-        exact mul_le_mul_of_nonneg_left (by linarith [herror]) (abs_nonneg _)
+        (1 : ℝ) <
+            (|(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ)) *
+              (Real.sqrt 5 * (r.den : ℝ) ^ 2 + r.den) := hlower
+        _ ≤ (|(p : ℝ) - (q : ℝ) * Real.goldenRatio| / (q : ℝ)) *
+              (Real.sqrt 5 * (q : ℝ) ^ 2 + q) := hscaled
+        _ = |(p : ℝ) - (q : ℝ) * Real.goldenRatio| *
+              (Real.sqrt 5 * (q : ℝ) + 1) := by
+            field_simp
+    exact hstrict.le
   have golden_large_arithmetic (d length : ℕ) (hd : 7 ≤ d)
       (δ : ℝ) (hδpos : 0 < δ)
       (hnorm : 1 ≤ δ * (Real.sqrt 5 * ((2 * d : ℕ) : ℝ) + 1))
