@@ -538,3 +538,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exact endpoint survival and the boundary of its scalar constraints](profile-notes/67-exact-endpoint-survival-and-its-scalar-boundary.md)
 - [An explicit neighborhood for the square endpoint improvement](profile-notes/68-explicit-square-endpoint-neighborhood.md)
 - [Complete positive-five tails in one square layout](profile-notes/69-complete-positive-five-tails-in-one-square-layout.md)
+- [A complete endpoint ratio with uniform actual survival](profile-notes/70-a-complete-endpoint-ratio-with-uniform-survival.md)
