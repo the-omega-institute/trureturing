@@ -603,6 +603,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Common old-block budget with actual coefficient and parameter-family witnesses.
+pattern = "docs/reports/erdos7-odd-covering/budgeted_mask_square_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact minimal actual315 carrier domain and inherited PG1 support coverage.
 pattern = "docs/reports/erdos7-odd-covering/carrier_dominance_certificate.json"
 kind = "data"
@@ -1442,6 +1452,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact same-law budget, full original residue domains and complete test tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_budgeted_mask_square.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Reconstructs all six carrier resource DPs and quantifier-preserving support coverage.
 pattern = "docs/reports/erdos7-odd-covering/verify_carrier_dominance.py"
 kind = "program"

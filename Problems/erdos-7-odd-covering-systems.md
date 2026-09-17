@@ -9370,3 +9370,28 @@ in CT3, with all original11/13/17/19 heights and cofactors retained.
 This uses domination in its proved direction, not substitution of the
 auxiliary moments into actual-law upper bounds. It does not extend to
 arbitrary original357 heights or complete the remaining frontier.
+
+A [common old-block budget](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-common-old-block-budget-strengthens-the-actual-mask-certificate)
+now strengthens the actual MW interface. Each positive-current old block
+obeys the same G(g) square budget, giving a one-price joint integer
+maximum with all current tails retained. If the original modulus19 class
+is present, it reduces the G(g) coefficient by104976/811405621 and
+retains a further nonnegative actual-mask integral. An actual all-divisor
+unit family proves this coefficient sharp for that certificate form;
+at current height3 it also refutes doubling the coefficient and gives a
+strict integer-interface improvement3499529/10779402240.
+
+A second, literal six-class family of period513 shows the scalar budget
+strictly improves the full old parameter family: its continuous minimum
+is3.7106583639706385, while price1/18 gives3.710034179714640. All729 original
+old residue layouts and an endpoint supporting tangent are checked
+exactly. Its old integer bound already equals its budgeted integer bound;
+that distinct improvement is not claimed on this second family.
+
+The actual subprobability constraint q<=1 also sharpens the complete MW
+old-test error to less than0.000357927 at box16 and0.000005399757 at box20.
+The budgeted integer bound pays its price term and preserves the full
+original label ceiling inside its rounding optimization. These results
+use the same actual xi and kernels; they do not bound changes to forbidden
+masks, provide the remaining299.661 uniform frontier, or supply an
+independent rebate to add to the stronger OBE profile.
