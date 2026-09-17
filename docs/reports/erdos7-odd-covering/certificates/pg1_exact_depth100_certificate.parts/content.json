@@ -1,0 +1,29 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-exact-depth100-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/pg1_exact_zero_depth_certificate.json": "06ea453a891b41737b19e20f1b1eb2d43db19c6064e91c67c32f39ab22977427",
+      "certificates/pg1_common_source_floor_certificate.json": "85ad4a1c8cf5ed09ba750906a62648a7bff01a02ed7a2e45f0bb964d32412b2a"
+    }
+  },
+  "implementation_sha256": {
+    "kind": "inline",
+    "value": {
+      "pg1_weighted_score_oracle.py": "475428e42302b2283c43be4dd888b372b701f27242fd25b783e23ce04cfb08a4",
+      "pg1_weighted_score_oracle.cpp": "25c337e90073c3c4e6465f4e5a3be18d30592aca1b2dca798e00e31c2c4d61bd",
+      "exact_signed_digit_dp.py": "29d364453963581d97face3b65bef8365e7a9ac58788814534f687ecce3c4307",
+      "verify_point_geometry.py": "4896a0d9987c9167c2170994e7447ea0266d8148ed6c9856721acbf7e32b9a24"
+    }
+  },
+  "result": {
+    "path": "content/003-result.json",
+    "sha256": "c5183370050d85840268f6e3aa35a48acff123e904fecaf936a099d712c9f92e",
+    "kind": "object"
+  }
+}
