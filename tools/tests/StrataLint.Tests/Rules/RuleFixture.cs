@@ -125,6 +125,7 @@ internal sealed partial class RuleFixture
             [BannedApiCompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
             [CompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
         };
+        foreach (var (path, text) in DeclaredTemplateReviewTests.PolicyFiles()) Files[path] = text;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -326,7 +327,7 @@ internal sealed partial class RuleFixture
                 Encoding.UTF8.GetBytes(TestRegistry.Domains));
             policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
         }
-        var lean = AcceptLean(current, Reports);
+        var lean = AcceptLean(current, ReportsWithEmptyTemplateEvidence(current));
         var bootstrap = BootstrapGate.Evaluate(changes);
         var meta = bootstrap switch
         {
@@ -361,7 +362,7 @@ internal sealed partial class RuleFixture
             current,
             baseline,
             policy,
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(ReportsWithEmptyTemplateEvidence(current))),
             RawChangeSet.Create(Changes),
             meta,
             null);
@@ -387,7 +388,7 @@ internal sealed partial class RuleFixture
             current,
             baseline,
             policy,
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(ReportsWithEmptyTemplateEvidence(current))),
             changes,
             meta,
             null);
@@ -407,7 +408,7 @@ internal sealed partial class RuleFixture
             current,
             baseline,
             policy,
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(ReportsWithEmptyTemplateEvidence(current))),
             RawChangeSet.Create(Changes),
             MetaEvaluationProfile.ForProtectedSurface(meta),
             null);

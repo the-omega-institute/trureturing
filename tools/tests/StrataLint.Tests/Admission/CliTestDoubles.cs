@@ -20,8 +20,6 @@ internal sealed class StubCliEnvironment(
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
-    public CommandResult InformationTemplateDebt(IReadOnlyList<string> arguments) =>
-        new(false, "", "Not used by this fixture");
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
