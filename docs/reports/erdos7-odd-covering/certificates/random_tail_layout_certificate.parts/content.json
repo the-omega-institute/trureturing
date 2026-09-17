@@ -1,0 +1,104 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-random-tail-layout-certificate-v1"
+  },
+  "full_height": {
+    "kind": "inline",
+    "value": 4
+  },
+  "core_factors": {
+    "kind": "inline",
+    "value": [
+      [
+        3,
+        3
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        7,
+        1
+      ]
+    ]
+  },
+  "full_prime_support": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "core_divisor_order": {
+    "kind": "inline",
+    "value": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      15,
+      21,
+      25,
+      27,
+      35,
+      45,
+      63,
+      75,
+      105,
+      135,
+      175,
+      189,
+      225,
+      315,
+      525,
+      675,
+      945,
+      1575,
+      4725
+    ]
+  },
+  "core_forbidden_residues": {
+    "path": "content/005-core_forbidden_residues.json",
+    "sha256": "cd0c4948f96f67e09d240ab3d685a9919d35957314861a4c4a3c21103ec95ed3",
+    "kind": "value"
+  },
+  "mass_denominator": {
+    "kind": "inline",
+    "value": 10000000000
+  },
+  "layout_rows": {
+    "path": "content/007-layout_rows.json",
+    "sha256": "64e93152cc126c820515745a02b0d97027918cbd22d13bab6594fa3db37520bf",
+    "kind": "array"
+  },
+  "comparison_target": {
+    "kind": "inline",
+    "value": "138877/1000"
+  },
+  "verified_result": {
+    "path": "content/009-verified_result.json",
+    "sha256": "e7f16bab522adaf4dc19ef8a41bc62c5551c2060d748194247e0d18456e7b2f7",
+    "kind": "object"
+  }
+}

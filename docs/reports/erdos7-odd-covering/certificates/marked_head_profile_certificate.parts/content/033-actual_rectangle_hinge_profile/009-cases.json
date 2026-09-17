@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000000-000001.json",
+        "sha256": "2b483d09714ebbfa04a286a0939e0bd8bc77ce4a57b8fcbd03a40412be58b38d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000001-000002.json",
+        "sha256": "2329695650c831087b345d10fe9d5d1aece443fb27d1d41cf1bcd23414c4d93e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000002-000003.json",
+        "sha256": "5ae7b838d2238e93e0eb693cead7bcaf43178f2e3cd79956394e717b5c031e49",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000003-000004.json",
+        "sha256": "28c27c11e6ba4d6e21766d79382e8ffb274c0aae9ed1e77d03b22c3b3ab7bd90",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000004-000005.json",
+        "sha256": "04952dad4d01566f99a1c0ddd08a36ee0b7e5c6ca4868507292e414646bfa18f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/033-actual_rectangle_hinge_profile/009-cases/000005-000006.json",
+        "sha256": "c7eb759aa6216a280cdd54d195036321a38c0fbec10805efb9d598a0025527e3",
+        "kind": "value"
+      }
+    }
+  ]
+}

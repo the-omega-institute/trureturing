@@ -1,0 +1,15 @@
+{
+  "root3": {
+    "kind": "inline",
+    "value": 1
+  },
+  "root9": {
+    "kind": "inline",
+    "value": 1
+  },
+  "hinges": {
+    "path": "content/002-result/013-records/000000/item/002-hinges.json",
+    "sha256": "06b5ce19b4ed575a758689f285c922587536de2a907d42cb14c2dbf2f376638d",
+    "kind": "object"
+  }
+}

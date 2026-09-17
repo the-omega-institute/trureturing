@@ -1,0 +1,521 @@
+{
+  "schema": "erdos7-pg1-global-cap-improvement-v1",
+  "scope": "Fixed PG1 source and center2 CS2 comb at p17, every finite H>=1. One kernel chosen before the complete global test. Physical max and actual survivor-conditioned max strictly decrease; no exact maximum or arbitrary-family result is asserted.",
+  "source_sha256": {
+    "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "old_family": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      59
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      89
+    ]
+  ],
+  "old_point_count": 75,
+  "old_weight_denominator": 1000000007,
+  "old_divisors": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    15,
+    21,
+    35,
+    45,
+    63,
+    105,
+    315
+  ],
+  "forbidden_old_center": 2,
+  "selected_old_point": 314,
+  "selected_old_mass": "16622259/1000000007",
+  "witness_old_mass": "13119398/1000000007",
+  "delta": "7/15",
+  "global_density_cap": "15/8",
+  "transferred_row_mass": "1/8192",
+  "target_root": 2,
+  "target_old_cofactor": 5,
+  "target_root_capacity_slack_lower": "41/952",
+  "donor_root_mass_lower": "1/17",
+  "constants": {
+    "target_conditional_square_upper": "4977/8",
+    "arbitrary_test_increase_upper": "82728983043/65536000458752",
+    "test_class_gap_lower_bounds": {
+      "dirty_spoke": "551014716/187000001309",
+      "pure_root": "3/17",
+      "spine_root_at_height_at_least_two": "3/289",
+      "misaligned_active_depth_one_label": "33244518/17000000119"
+    },
+    "gap_margins": {
+      "dirty_spoke": "103130302295283/61276160428933120",
+      "pure_root": "976001261440953/5570560038993920",
+      "spine_root_at_height_at_least_two": "863381334395721/94699520662896640",
+      "misaligned_active_depth_one_label": "3854818217913/5570560038993920"
+    },
+    "deep_target_gain_coefficient": "1275/2",
+    "deep_pair_gap_margin": "31493/16384"
+  },
+  "uniform_comparisons": {
+    "physical_V_decrease_at_least": "49866777/40960000286720",
+    "conditioned_Gamma_decrease_at_least": "49866777/40960000286720",
+    "conditioned_sharper_decrease": "epsilon / rho_H",
+    "f59over45_W483_cost_decrease_at_least": "326904427/204800001433600"
+  },
+  "exact_height_fixtures": [
+    {
+      "height": 1,
+      "s": "1/17",
+      "pure_survival": "16/17",
+      "clean_roots": [
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "forbidden_label_count": 23,
+      "complete_test_label_count": 24,
+      "selected_good_Haar_density": "17/15",
+      "selected_row_charge": "0",
+      "actual_survivor_mass": "63652336401/64000000448",
+      "conditioned_Gamma_decrease_at_least": "16622259/13579165098880"
+    },
+    {
+      "height": 2,
+      "s": "18/289",
+      "pure_survival": "271/289",
+      "clean_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "forbidden_label_count": 35,
+      "complete_test_label_count": 36,
+      "selected_good_Haar_density": "289/253",
+      "selected_row_charge": "0",
+      "actual_survivor_mass": "1076961450561/1084000007588",
+      "conditioned_Gamma_decrease_at_least": "4504632189/3676028417914880"
+    },
+    {
+      "height": 3,
+      "s": "307/4913",
+      "pure_survival": "4606/4913",
+      "clean_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "forbidden_label_count": 47,
+      "complete_test_label_count": 48,
+      "selected_good_Haar_density": "4913/4299",
+      "selected_row_charge": "0",
+      "actual_survivor_mass": "18303216391281/18424000128968",
+      "conditioned_Gamma_decrease_at_least": "38281062477/31237489307786240"
+    },
+    {
+      "height": 16,
+      "s": "3041324492229179280/48661191875666868481",
+      "pure_survival": "45619867383437689201/48661191875666868481",
+      "clean_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "forbidden_label_count": 203,
+      "complete_test_label_count": 204,
+      "selected_good_Haar_density": "48661191875666868481/42578542891208509921",
+      "selected_row_charge": "0",
+      "actual_survivor_mass": "181282460417285968234671012321/182479470811107043540255297628",
+      "conditioned_Gamma_decrease_at_least": "758305251193153580260525059/618777464891002771574343722055680"
+    },
+    {
+      "height": 100,
+      "s": "69306210798798977581631982242193435402251072978117470275173115079930473781335418607026543391000318349328028218941774850500/1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001",
+      "pure_survival": "1039593161981984663724479733632901531033766094671762054127596726198957106720031279105398150865004775239920423284126622757501/1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001",
+      "clean_roots": [
+        12,
+        13,
+        14,
+        16
+      ],
+      "forbidden_label_count": 1211,
+      "complete_test_label_count": 1212,
+      "selected_good_Haar_density": "1108899372780783641306111715875094966436017167649879524402769841278887580501366697712424694256005093589248451503068397608001/970286951183185686142847751390708095631515021693644583852423611119026632938695860498371607474004456890592395065184847907001",
+      "selected_row_charge": "0",
+      "actual_survivor_mass": "4131095004136306939126894294880110623695424589962689815820929451899534469514946974736402813831843241343269276811492494492846483157921/4158372677036547190393489518817038665856307247632498867319724420368536760450924104582468418411167325179815399854278342985549437210028",
+      "conditioned_Gamma_decrease_at_least": "17280386793093502414456206772697100170339797771052548850080931830431150557791000409391216361799183410274744415218383312270475814759/14100804280785261018886465859857444262213715933739314571335439195817077655944352340433588271212691597118359131516561047868915995845703680"
+    }
+  ],
+  "literal_CRT_replays": [
+    {
+      "height": 1,
+      "period": 5355,
+      "literal_points": 1275,
+      "original_forbidden_classes": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          45,
+          37
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          63,
+          59
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          89
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          51,
+          35
+        ],
+        [
+          85,
+          2
+        ],
+        [
+          119,
+          37
+        ],
+        [
+          153,
+          38
+        ],
+        [
+          255,
+          107
+        ],
+        [
+          357,
+          23
+        ],
+        [
+          595,
+          177
+        ],
+        [
+          765,
+          722
+        ],
+        [
+          1071,
+          128
+        ],
+        [
+          1785,
+          1472
+        ],
+        [
+          5355,
+          317
+        ]
+      ],
+      "original_complete_test_moduli": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        15,
+        17,
+        21,
+        35,
+        45,
+        51,
+        63,
+        85,
+        105,
+        119,
+        153,
+        255,
+        315,
+        357,
+        595,
+        765,
+        1071,
+        1785,
+        5355
+      ],
+      "all_labels": 24,
+      "changed_actual_survivor_points": 6,
+      "positive_supported_survivor_points": 1086,
+      "physical_mass": "1",
+      "minimum_bad_charge": "347664047/64000000448",
+      "actual_survivor_mass": "63652336401/64000000448",
+      "conditional_target_root_mass_increase": "5540753/2715833019776",
+      "conditioned_Gamma_decrease_at_least": "16622259/13579165098880"
+    },
+    {
+      "height": 2,
+      "period": 91035,
+      "literal_points": 21675,
+      "original_forbidden_classes": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          45,
+          37
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          63,
+          59
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          89
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          289,
+          15
+        ],
+        [
+          51,
+          35
+        ],
+        [
+          85,
+          2
+        ],
+        [
+          119,
+          37
+        ],
+        [
+          153,
+          38
+        ],
+        [
+          255,
+          107
+        ],
+        [
+          357,
+          23
+        ],
+        [
+          595,
+          177
+        ],
+        [
+          765,
+          722
+        ],
+        [
+          1071,
+          128
+        ],
+        [
+          1785,
+          1472
+        ],
+        [
+          5355,
+          317
+        ],
+        [
+          867,
+          32
+        ],
+        [
+          1445,
+          627
+        ],
+        [
+          2023,
+          933
+        ],
+        [
+          2601,
+          83
+        ],
+        [
+          4335,
+          3857
+        ],
+        [
+          6069,
+          695
+        ],
+        [
+          10115,
+          9382
+        ],
+        [
+          13005,
+          1307
+        ],
+        [
+          18207,
+          14618
+        ],
+        [
+          30345,
+          1052
+        ],
+        [
+          91035,
+          72452
+        ]
+      ],
+      "original_complete_test_moduli": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        15,
+        17,
+        21,
+        35,
+        45,
+        51,
+        63,
+        85,
+        105,
+        119,
+        153,
+        255,
+        289,
+        315,
+        357,
+        595,
+        765,
+        867,
+        1071,
+        1445,
+        1785,
+        2023,
+        2601,
+        4335,
+        5355,
+        6069,
+        10115,
+        13005,
+        18207,
+        30345,
+        91035
+      ],
+      "all_labels": 36,
+      "changed_actual_survivor_points": 85,
+      "positive_supported_survivor_points": 18273,
+      "physical_mass": "1",
+      "minimum_bad_charge": "7038557027/1084000007588",
+      "actual_survivor_mass": "1076961450561/1084000007588",
+      "conditional_target_root_mass_increase": "1501544063/735205683582976",
+      "conditioned_Gamma_decrease_at_least": "4504632189/3676028417914880"
+    }
+  ],
+  "all_height_proof": "Three common-test cases: nonclean pure-p root; clean pure-p root with a misaligned active depth1 label; otherwise coherent depth1. In the last case remove at least3 mu0 t/r and absorb higher target gain by its missing pure-p cross pairs, using t*(1275/2)<2. The same argument applies before and after deleting actual bad points; the survivor normalizer is unchanged."
+}
