@@ -75,6 +75,64 @@ public sealed class DeclaredTemplateBindingRuleTests
     public void first_pin_selects_registration() =>
         Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Block);
 
+    [Theory]
+    [InlineData("stale-input")]
+    [InlineData("malformed-record")]
+    [InlineData("wrong-version")]
+    public void delta_invalid_evidence_blocks(string mutation)
+    {
+        var before = Files();
+        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
+        var reports = Report(after, count: 1, declared: true).Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
+        var evidence = reports[Registration].InformationTemplates!;
+        var wire = JsonSerializer.SerializeToNode(evidence.Wire)!;
+        if (mutation == "stale-input") wire["inputs"]![0]!["sha256"] = new string('0', 64);
+        if (mutation == "malformed-record") wire["records"]![0]!.AsObject().Remove("certificate");
+        if (mutation == "wrong-version") wire["compatibility_version"] = 1;
+        reports[Registration] = reports[Registration] with
+        {
+            InformationTemplates = evidence with { Wire = JsonSerializer.SerializeToElement(wire) },
+        };
+        Finding(DeclaredTemplateBindingRule.Evaluate(Context(before, after, LeanAxiomReport.Create(reports), [Registration])),
+            "DTR-Evidence", AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void delta_does_not_collect_unchanged_module_evidence()
+    {
+        var before = Files();
+        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
+        var report = Report(after, count: 1);
+        before["D5/S0/Carrier/Unchanged.lean"] = "-- no evidence for unchanged registrations\n";
+        after["D5/S0/Carrier/Unchanged.lean"] = before["D5/S0/Carrier/Unchanged.lean"];
+        Finding(DeclaredTemplateBindingRule.Evaluate(Context(before, after, report, [Registration])),
+            "DTR-Undeclared", AdmissionEffect.Block);
+    }
+
+    [Theory]
+    [InlineData(RawChangeKind.Added)] // Git renames are normalized to deleted/added endpoints.
+    [InlineData(RawChangeKind.Copied)]
+    public void rename_and_copy_destinations_select_registrations(RawChangeKind kind)
+    {
+        var context = Delta(added: true, declared: true);
+        var changes = RawChangeSet.CreateWithKinds(
+            [("D5/S0/Carrier/OldRegistration.lean", RawChangeKind.Deleted), (Registration, kind)]);
+        var renamed = RuleEvaluationContext.Create(context.Current, context.Baseline, context.Policy,
+            context.Lean, changes, context.MetaEvaluation);
+        Finding(DeclaredTemplateBindingRule.Evaluate(renamed), "DTR-Declared", AdmissionEffect.Observe);
+    }
+
+    [Fact]
+    public void applicability_ignores_judge_changes_and_deleted_modules()
+    {
+        var before = Files();
+        var after = new Dictionary<string, string>(before) { [Judge] = "-- implementation changed\n" };
+        after.Remove(Registration);
+        var context = Context(before, after, LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()), [Judge, Registration]);
+        Assert.False(DeclaredTemplateBindingRule.IsAffectedBy(context));
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(context));
+    }
+
     [Fact]
     public void deleted_finding_names_cannot_be_emitted()
     {

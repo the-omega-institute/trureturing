@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
-using static StrataLint.Tests.InformationTemplateDebtStoreTests;
 
 namespace StrataLint.Tests;
 
@@ -31,7 +30,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var files = DeclaredTemplateReviewTests.PolicyFiles();
         foreach (var (path, text) in entries) files[path] = text;
-        return InformationTemplateDebtStoreTests.Snapshot(files.Select(p => (p.Key, p.Value)).ToArray());
+        return DeclaredTemplateReviewTests.Tree(files);
     }
 
     private static object[] WithPolicy(params object[] inputs) => inputs.Concat(
@@ -44,11 +43,11 @@ public sealed class InformationTemplateEvidenceTests
             schema_version = 1,
             compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
             inputs = WithPolicy(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
-            inventory = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
-            registered = sidecar ? [] : new[] { InformationTemplateDebtStore.KeyJson(Key) },
+            inventory = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
+            registered = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
             {
-                key = InformationTemplateDebtStore.KeyJson(Key),
+                key = InformationTemplateJson.KeyJson(Key),
                 unit_name = Unit,
                 realization_name = Realization,
                 registration_source_path = PathA,
@@ -59,7 +58,7 @@ public sealed class InformationTemplateEvidenceTests
                 diagnostic = declared ? null : MissingDiagnostic,
                 certificate = declared ? new
                 {
-                    key = InformationTemplateDebtStore.KeyJson(Key),
+                    key = InformationTemplateJson.KeyJson(Key),
                     evidence_ref = Hash("fixture binding A"),
                     plan_identity = Hash("fixture plan"),
                     descriptor_identity = Hash("fixture descriptor"),
@@ -120,7 +119,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var snapshot = Snapshot((PathA, TextA));
         var evidence = InformationTemplateEvidence.Read(Wire(), PathA, snapshot);
-        var universe = InformationTemplateEvidence.Collect(snapshot,
+        var universe = Collect(snapshot,
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = Module(evidence) }));
         Assert.Single(universe.Inventory);
         Assert.Equal(InformationTemplateBindingState.Undeclared, universe.Occurrences[Key].State);
@@ -139,7 +138,7 @@ public sealed class InformationTemplateEvidenceTests
             new(ModuleA + ".sealed.__information_unit", "def", "fixture sealed unit", [])) };
         var error = Record.Exception(() =>
         {
-            var universe = InformationTemplateEvidence.Collect(snapshot,
+            var universe = Collect(snapshot,
                 LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module }));
             Assert.Single(universe.Inventory);
         });
@@ -155,7 +154,7 @@ public sealed class InformationTemplateEvidenceTests
         wire["inventory"] = new System.Text.Json.Nodes.JsonArray();
         wire["records"] = new System.Text.Json.Nodes.JsonArray();
         var module = Module(InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot));
-        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot,
+        var error = Assert.Throws<FormatException>(() => Collect(snapshot,
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module })));
         Assert.Contains("command inventory, retained units and binding records differ", error.Message);
     }
@@ -175,7 +174,7 @@ public sealed class InformationTemplateEvidenceTests
         var error = Record.Exception(() =>
         {
             var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
-            universe = InformationTemplateEvidence.Collect(snapshot, LeanAxiomReport.Create(
+            universe = Collect(snapshot, LeanAxiomReport.Create(
                 new Dictionary<string, LeanFileReport>
                 {
                     [PathA] = new([], [new(unit, "def", "fixture unit", []),
@@ -199,7 +198,7 @@ public sealed class InformationTemplateEvidenceTests
         var duplicate = new LeanDeclaration(realization ? Realization : Unit, "def", "other declaration", [])
             { NameKey = "ns(n0,9:different)" };
         module = module with { Declarations = module.Declarations.Add(duplicate) };
-        var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
+        var error = Record.Exception(() => Collect(snapshot,
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module })));
         Assert.True(error is FormatException && error.Message.Contains("retained unit/realization owner", StringComparison.Ordinal),
             "[FAIL] ambiguous_generated_" + (realization ? "realization" : "unit") + "_rejected");
@@ -222,7 +221,7 @@ public sealed class InformationTemplateEvidenceTests
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);
-        return InformationTemplateEvidence.Collect(snapshot, LeanAxiomReport.Create(
+        return Collect(snapshot, LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>
             {
                 [PathA] = new(imported ? ["D5.S0.Carrier.Binding"] : [],
@@ -266,7 +265,7 @@ public sealed class InformationTemplateEvidenceTests
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot)),
             [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, sidecar: true), PathB, snapshot), sidecar: true),
         });
-        var universe = InformationTemplateEvidence.Collect(snapshot, report);
+        var universe = Collect(snapshot, report);
         Assert.Single(universe.Occurrences);
         Assert.Equal(PathB, universe.Occurrences[Key].BindingSourcePath);
         Assert.Equal(InformationTemplateBindingState.DeclaredValidated, universe.Occurrences[Key].State);
@@ -292,7 +291,7 @@ public sealed class InformationTemplateEvidenceTests
             : JsonSerializer.SerializeToElement(wire);
         var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA,
             Snapshot((PathA, TextA))));
-        Assert.StartsWith("DTR-DebtSchema:", error.Message, StringComparison.Ordinal);
+        Assert.StartsWith("DTR-Evidence:", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -317,7 +316,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var snapshot = Snapshot((PathA, TextA));
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = new([], []) });
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot, report));
+        Assert.Throws<FormatException>(() => Collect(snapshot, report));
     }
 
     [Fact]
@@ -328,7 +327,7 @@ public sealed class InformationTemplateEvidenceTests
         {
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot)),
         });
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot, report));
+        Assert.Throws<FormatException>(() => Collect(snapshot, report));
     }
 
     [Fact]
@@ -340,23 +339,26 @@ public sealed class InformationTemplateEvidenceTests
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(declared: true), PathA, snapshot)),
             [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, sidecar: true), PathB, snapshot), sidecar: true),
         });
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot, report));
+        Assert.Throws<FormatException>(() => Collect(snapshot, report));
     }
-    [Fact]
-    public void historical_content_uses_current_judge_producer()
-    {
-        const string judge = "tools/lean-inspector/LeanInformationAudit/Registry.lean";
-        var historical = Snapshot((PathA, TextA), (judge, "old producer"));
-        var current = Snapshot((PathA, "candidate content cannot replace seed"), (judge, "current producer"));
-        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
-        wire["inputs"] = JsonSerializer.SerializeToNode(new[] { Input(PathA, TextA), Input(judge, "current producer") });
-        var value = JsonSerializer.SerializeToElement(wire);
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA, historical));
-        var inputs = InformationTemplateEvidence.HistoricalInputs(historical, current);
-        var evidence = InformationTemplateEvidence.Read(value, PathA, inputs);
-        Assert.Single(evidence.Inventory);
-        Assert.Equal(Key, Assert.Single(evidence.Records).Key);
-        Assert.Equal(Hash(TextA), Assert.Single(evidence.Records).ContentInputs[0].Sha256);
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA, current));
-    }
+    private static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report) =>
+        InformationTemplateEvidence.Collect(snapshot, report, snapshot.Files.Keys.Where(path =>
+            path.Value.StartsWith("D5/", StringComparison.Ordinal) && path.Value.EndsWith(".lean", StringComparison.Ordinal)));
+
+    [Theory]
+    [InlineData("Fixture.α₁.lemma?")]
+    [InlineData("Fixture.«中文.name».value")]
+    [InlineData("Fixture.«».23")]
+    public void canonical_lean_name_roundtrip(string name) =>
+        Assert.Equal(name, InformationTemplateJson.Name(name));
+
+    [Theory]
+    [InlineData("Fixture.«alpha»")]
+    [InlineData("Fixture.中文")]
+    [InlineData("Fixture.α.01")]
+    [InlineData("Fixture.«missing")]
+    [InlineData("Fixture.«name»tail")]
+    [InlineData("Fixture.")]
+    public void noncanonical_lean_name_rejected(string name) =>
+        Assert.Throws<FormatException>(() => InformationTemplateJson.Name(name));
 }

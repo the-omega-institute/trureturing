@@ -1,80 +1,30 @@
-using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-// DTR v1 uses compact, recursively sorted JSON, unlike the spaced report wire format.
+internal sealed record InformationOccurrenceKey(
+    string Root, string RegistrationModule, string Theorem, string ObjectArena, string Catalog);
+
+internal sealed record InformationTemplateContentInput(string Path, string Sha256);
+
+// Strict declared-template evidence primitives; the Lean producer owns wire bytes.
 internal static class InformationTemplateJson
 {
     private static readonly UTF8Encoding Utf8 = new(false, true);
 
-    internal static JsonDocument Read(ReadOnlySpan<byte> bytes)
+    internal static JsonElement KeyJson(InformationOccurrenceKey key) => JsonSerializer.SerializeToElement(new
     {
-        try
-        {
-            var document = JsonDocument.Parse(Utf8.GetString(bytes));
-            try
-            {
-                if (!Canonical(document.RootElement).AsSpan().SequenceEqual(bytes))
-                    throw new FormatException("DTR-DebtSchema: noncanonical JSON bytes");
-                return document;
-            }
-            catch
-            {
-                document.Dispose();
-                throw;
-            }
-        }
-        catch (Exception ex) when (ex is JsonException or DecoderFallbackException)
-        {
-            throw new FormatException("DTR-DebtSchema: invalid JSON/UTF-8", ex);
-        }
-    }
+        root = key.Root, registration_module = key.RegistrationModule, theorem = key.Theorem,
+        object_arena = key.ObjectArena, catalog = key.Catalog,
+    });
 
-    internal static ImmutableArray<byte> Canonical(JsonElement value, bool newline = true)
+    internal static InformationOccurrenceKey ReadKey(JsonElement value)
     {
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        }))
-        {
-            Write(writer, value);
-        }
-
-        if (newline) stream.WriteByte((byte)'\n');
-        return ImmutableArray.CreateRange(stream.ToArray());
-    }
-
-    private static void Write(Utf8JsonWriter writer, JsonElement value)
-    {
-        switch (value.ValueKind)
-        {
-            case JsonValueKind.Object:
-                var fields = value.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal).ToArray();
-                if (fields.Select(p => p.Name).Distinct(StringComparer.Ordinal).Count() != fields.Length)
-                    throw new FormatException("DTR-DebtSchema: duplicate JSON member");
-                writer.WriteStartObject();
-                foreach (var field in fields)
-                {
-                    writer.WritePropertyName(field.Name);
-                    Write(writer, field.Value);
-                }
-
-                writer.WriteEndObject();
-                break;
-            case JsonValueKind.Array:
-                writer.WriteStartArray();
-                foreach (var item in value.EnumerateArray()) Write(writer, item);
-                writer.WriteEndArray();
-                break;
-            default:
-                value.WriteTo(writer);
-                break;
-        }
+        InformationTemplateJson.Fields(value, "root", "registration_module", "theorem", "object_arena", "catalog");
+        string Name(string field) => InformationTemplateJson.Name(InformationTemplateJson.String(value, field));
+        return new(Name("root"), Name("registration_module"), Name("theorem"), Name("object_arena"), Name("catalog"));
     }
 
     internal static void Fields(JsonElement value, params string[] expected)
@@ -82,14 +32,14 @@ internal static class InformationTemplateJson
         if (value.ValueKind != JsonValueKind.Object
             || !value.EnumerateObject().Select(p => p.Name).Order(StringComparer.Ordinal)
                 .SequenceEqual(expected.Order(StringComparer.Ordinal)))
-            throw new FormatException("DTR-DebtSchema: missing, duplicate or unknown fields");
+            throw new FormatException("DTR-Evidence: missing, duplicate or unknown fields");
     }
 
     internal static string String(JsonElement value, string field)
     {
         if (!value.TryGetProperty(field, out var item) || item.ValueKind != JsonValueKind.String
             || item.GetString() is not { Length: > 0 } text)
-            throw new FormatException($"DTR-DebtSchema: nonempty string required: {field}");
+            throw new FormatException($"DTR-Evidence: nonempty string required: {field}");
         return text;
     }
 
@@ -97,13 +47,13 @@ internal static class InformationTemplateJson
     {
         if (!value.TryGetProperty("schema_version", out var item)
             || item.ValueKind != JsonValueKind.Number || item.GetRawText() != "1")
-            throw new FormatException("DTR-DebtSchema: unsupported schema_version");
+            throw new FormatException("DTR-Evidence: unsupported schema_version");
     }
 
     internal static string Hash(string value, int length)
     {
         if (value.Length != length || value.Any(c => c is not (>= '0' and <= '9' or >= 'a' and <= 'f')))
-            throw new FormatException("DTR-DebtSchema: lowercase hash required");
+            throw new FormatException("DTR-Evidence: lowercase hash required");
         return value;
     }
 
@@ -116,7 +66,7 @@ internal static class InformationTemplateJson
     internal static string Name(string value)
     {
         if (value.Length == 0 || Utf8.GetByteCount(value) > 1024)
-            throw new FormatException("DTR-DebtSchema: noncanonical Name");
+            throw new FormatException("DTR-Evidence: noncanonical Name");
         var index = 0;
         while (index < value.Length)
         {
@@ -124,7 +74,7 @@ internal static class InformationTemplateJson
             {
                 var end = value.IndexOf('»', index + 1);
                 if (end < 0 || PlainIdentifier(value[(index + 1)..end]))
-                    throw new FormatException("DTR-DebtSchema: noncanonical quoted Name");
+                    throw new FormatException("DTR-Evidence: noncanonical quoted Name");
                 index = end + 1;
             }
             else
@@ -134,16 +84,16 @@ internal static class InformationTemplateJson
                 var part = value[index..end];
                 if (!PlainIdentifier(part) && !(part.Length > 0 && part.All(char.IsAsciiDigit)
                     && (part.Length == 1 || part[0] != '0')))
-                    throw new FormatException("DTR-DebtSchema: noncanonical Name component");
+                    throw new FormatException("DTR-Evidence: noncanonical Name component");
                 index = end;
             }
 
             if (index == value.Length) return value;
             if (value[index++] != '.' || index == value.Length)
-                throw new FormatException("DTR-DebtSchema: noncanonical Name separator");
+                throw new FormatException("DTR-Evidence: noncanonical Name separator");
         }
 
-        throw new FormatException("DTR-DebtSchema: empty Name");
+        throw new FormatException("DTR-Evidence: empty Name");
     }
 
     private static bool PlainIdentifier(string value)

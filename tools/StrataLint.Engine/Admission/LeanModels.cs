@@ -82,8 +82,6 @@ public sealed class LeanAxiomReport
 
     public ImmutableDictionary<RepoPath, LeanFileReport> Files { get; }
 
-    internal InformationTemplateEvidenceContext? TemplateEvidenceContext { get; set; }
-
     public static LeanAxiomReport Create(IReadOnlyDictionary<string, LeanFileReport> reports)
     {
         ArgumentNullException.ThrowIfNull(reports);

@@ -1,15 +1,13 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
-using StrataLint.Cli;
 using StrataLint.Engine;
 using Trureturing.Truth;
-using static StrataLint.Tests.InformationTemplateDebtStoreTests;
 
 namespace StrataLint.Tests;
 
 // Wire fixtures model two imported-theorem registrations. They exercise the
-// production reader, dispatch and writer; they make no kernel-proof claim.
+// production reader and dispatch; they make no kernel-proof claim.
 public sealed class DeclaredTemplateReviewTests
 {
     internal const string Registration = "D5/S0/Carrier/Registration.lean";
@@ -36,17 +34,15 @@ public sealed class DeclaredTemplateReviewTests
         return manifest.RootElement.GetProperty("report_semantic_version").GetInt32();
     }
 
-    internal static Dictionary<string, string> Files(string seed = Seed, bool active = false)
+    internal static Dictionary<string, string> Files()
     {
         var files = PolicyFiles();
         files[Judge] = "-- judge implementation\n";
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
-        files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, active)));
         files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 2\ninclude = [\"FILEMAP.inputs.toml\"]\n";
         files["Meta/FILEMAP.inputs.toml"] = "schema_version = 2\nfiles = [\n" + string.Join("\n",
-            new[] { ("D5/**", "content"), (InformationTemplateDebtStore.ActivationPath, "judge"),
-                ("Golden/InformationTemplateDebt/rows/*.json", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
+            new[] { ("D5/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
                 .Select(pair => "{ pattern = \"" + pair.Item1 + "\", admission_plane = \"" + pair.Item2
                     + "\", kind = \"data\", produced_by = \"none\", consumed_by = [\"StrataLint\"], "
                     + "verified_by = [\"StrataLint\"], artifact_id = \"none\", runtime_disposition = \"committed-source\" },"))
@@ -55,7 +51,8 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     internal static RepositorySnapshot Tree(Dictionary<string, string> files) =>
-        Snapshot(files.Select(p => (p.Key, p.Value)).ToArray());
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(files.Select(p => RawRepositoryEntry.FromText(p.Key, p.Value))))).Snapshot;
     internal static string Text(ImmutableArray<byte> bytes) => Encoding.UTF8.GetString(bytes.AsSpan());
     private static string Hash(string text) => InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(text));
     internal static InformationOccurrenceKey Key(int n) => new(Module, Module, TargetModule + ".target" + n,
@@ -79,11 +76,11 @@ public sealed class DeclaredTemplateReviewTests
             var wire = JsonSerializer.SerializeToElement(new
             {
                 schema_version = 1, compatibility_version = ManifestVersion(files), inputs,
-                inventory = own.Select(InformationTemplateDebtStore.KeyJson),
-                registered = own.Select(InformationTemplateDebtStore.KeyJson),
+                inventory = own.Select(InformationTemplateJson.KeyJson),
+                registered = own.Select(InformationTemplateJson.KeyJson),
                 records = own.Select(key => new
                 {
-                    key = InformationTemplateDebtStore.KeyJson(key), registration_source_path = Registration,
+                    key = InformationTemplateJson.KeyJson(key), registration_source_path = Registration,
                     statement_identity = Hash(key.Theorem),
                     content_inputs = Content(files).Select(i => new { path = i.Path, sha256 = i.Sha256 }),
                     binding_source_path = declared ? Registration : null,
@@ -95,7 +92,7 @@ public sealed class DeclaredTemplateReviewTests
                     unit_name = key.Theorem + ".unit", realization_name = key.Theorem + ".realization",
                     certificate = declared ? new
                     {
-                        key = InformationTemplateDebtStore.KeyJson(key), evidence_ref = Hash("evidence"),
+                        key = InformationTemplateJson.KeyJson(key), evidence_ref = Hash("evidence"),
                         plan_identity = Hash("plan"), descriptor_identity = Hash("descriptor"), actual_identity = Hash("actual"),
                         argument_inputs = Array.Empty<object>(), extraction_inputs = Array.Empty<object>(),
                     } : null,
@@ -122,10 +119,9 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     internal static RuleEvaluationContext Context(Dictionary<string, string> baseline, Dictionary<string, string> head,
-        LeanAxiomReport report, string[] changes, InformationTemplateEvidenceContext? history = null)
+        LeanAxiomReport report, string[] changes)
     {
         var prototype = new RuleFixture().Build();
-        report.TemplateEvidenceContext = history;
         return RuleEvaluationContext.Create(Tree(head), Tree(baseline), prototype.Policy,
             AcceptedLeanClosure.Create(report), RawChangeSet.Create(changes), prototype.MetaEvaluation);
     }
@@ -140,9 +136,9 @@ public sealed class DeclaredTemplateReviewTests
         var bytes = RawLeanReportArtifact.Write(Tree(before), Report(before));
         var after = new Dictionary<string, string>(before) { [Judge] = "-- optimized judge implementation\n" };
         var report = RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(after));
-        var diagnostics = Dispatch(Context(before, after, report, [Judge, InformationTemplateDebtStore.ActivationPath]));
+        var diagnostics = Dispatch(Context(before, after, report, [Judge]));
         Assert.True(!diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block)
-                && diagnostics.Any(d => d.Message.Contains("DTR-Inactive complete producer", StringComparison.Ordinal)),
+                && !diagnostics.Any(d => d.Message.StartsWith("DTR-", StringComparison.Ordinal)),
             "[FAIL] same_version_changed_judge_bytes_preserve_binding_evidence: "
             + string.Join("; ", diagnostics.Select(d => d.Message)));
     }
@@ -161,8 +157,7 @@ public sealed class DeclaredTemplateReviewTests
         Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_seven: " + error?.Message);
     }
 
-    private static Exception? ReadChangedManifest(string? manifest, int compatibility,
-        Dictionary<string, string>? historical = null)
+    private static Exception? ReadChangedManifest(string? manifest, int compatibility)
     {
         var files = Files();
         var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
@@ -178,49 +173,8 @@ public sealed class DeclaredTemplateReviewTests
                     input["sha256"] = Hash(manifest);
         }
         var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
-        var snapshot = historical is null ? Tree(files)
-            : InformationTemplateEvidence.HistoricalInputs(Tree(historical), Tree(files));
+        var snapshot = Tree(files);
         return Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), snapshot));
-    }
-
-    [Theory]
-    [InlineData(7)]
-    [InlineData(6)]
-    public void historical_evidence_version_matches_current_producer(int compatibility)
-    {
-        var historical = Files();
-        Assert.Equal(6, ManifestVersion(historical));
-        var currentManifest = historical["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
-        var error = ReadChangedManifest(currentManifest, compatibility, historical);
-        if (compatibility == 7)
-            Assert.True(error is null, "[FAIL] historical_current_version_accepted: " + error?.Message);
-        else
-            Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
-                "[FAIL] historical_old_version_rejected: " + error?.Message);
-    }
-
-    [Fact]
-    public void historical_missing_manifest_uses_current_manifest()
-    {
-        var historical = Files();
-        var currentManifest = historical["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
-        historical.Remove("lean-report-inputs.json");
-        var error = ReadChangedManifest(currentManifest, 7, historical);
-        Assert.True(error is null, "[FAIL] historical_missing_manifest_uses_current_manifest: " + error?.Message);
-    }
-
-    [Theory]
-    [InlineData("{")]
-    [InlineData("{\"report_semantic_version\":\"7\"}")]
-    public void historical_valid_manifest_cannot_mask_malformed_current_manifest(string currentManifest)
-    {
-        var historical = Files();
-        Assert.Equal(6, ManifestVersion(historical));
-        var error = ReadChangedManifest(currentManifest, 7, historical);
-        Assert.True(error is FormatException && error.Message.StartsWith("DTR-ManifestVersion:", StringComparison.Ordinal),
-            "[FAIL] historical_valid_manifest_cannot_mask_malformed_current_manifest: " + error?.Message);
     }
 
     [Theory]
@@ -305,32 +259,13 @@ public sealed class DeclaredTemplateReviewTests
     public void required_configuration_input_omission_rejected(string omitted)
     {
         var before = Files();
-        var report = Report(before, omit: omitted);
-        var diagnostics = Dispatch(Context(before, before, report, [InformationTemplateDebtStore.ActivationPath]));
+        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
+        var report = Report(after, omit: omitted);
+        var diagnostics = Dispatch(Context(before, after, report, [Registration]));
         Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block
                 && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
                 && d.Message.Contains(omitted, StringComparison.Ordinal)),
             "[FAIL] required_configuration_input_omission_rejected: " + omitted);
-    }
-
-    [Fact]
-    public void empty_seed_can_activate_after_protected_inventory_reconciliation()
-    {
-        var before = Files();
-        var after = Files(active: true);
-        var reads = new List<string>();
-        const string protectedRevision = "1234567890123456789012345678901234567890";
-        var history = new InformationTemplateEvidenceContext(protectedRevision, revision =>
-        {
-            reads.Add(revision);
-            return new(Tree(before), Report(before, count: 0));
-        });
-        var diagnostics = Dispatch(Context(before, after, Report(after, count: 0),
-            [InformationTemplateDebtStore.ActivationPath], history));
-        Assert.True(!diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block)
-                && reads.SequenceEqual([Seed, protectedRevision]),
-            "[FAIL] empty_seed_can_activate_after_protected_inventory_reconciliation: "
-            + string.Join("; ", diagnostics.Select(d => d.Message)));
     }
 
     [Fact]
@@ -354,149 +289,12 @@ public sealed class DeclaredTemplateReviewTests
         Assert.Contains(RepoPath.CreateKnown(Target), closure);
         Assert.Equal(1, report.Files[RepoPath.CreateKnown(Registration)].Declarations.Count(
             declaration => declaration.Name == Key(0).Theorem + ".unit"));
-        var error = Record.Exception(() => InformationTemplateEvidence.Collect(Tree(files), report));
+        var error = Record.Exception(() => InformationTemplateEvidence.Collect(Tree(files), report,
+            new[] { RepoPath.CreateKnown(Registration) }));
         Assert.Null(error);
         var evidence = report.Files[RepoPath.CreateKnown(Registration)].InformationTemplates!;
         Assert.Contains(evidence.Inputs, input => input.Path == Target);
         Assert.DoesNotContain(evidence.Inputs,
             input => input.Path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal));
     }
-    internal static Dictionary<string, string> ExpectedRows(Dictionary<string, string> files, string seed = Seed, int count = 2)
-    {
-        var rows = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var key in Enumerable.Range(0, count).Select(Key))
-        {
-            var tuple = InformationTemplateJson.Canonical(JsonSerializer.SerializeToElement(new[]
-                { key.Root, key.RegistrationModule, key.Theorem, key.ObjectArena, key.Catalog }), newline: false);
-            var tupleText = Text(tuple).TrimEnd('\n');
-            var path = "Golden/InformationTemplateDebt/rows/" + Hash("DTR-occurrence-v1\0" + tupleText) + ".json";
-            var row = JsonSerializer.Serialize(new
-            {
-                schema_version = 1,
-                key = new { root = key.Root, registration_module = key.RegistrationModule,
-                    theorem = key.Theorem, object_arena = key.ObjectArena, catalog = key.Catalog },
-                seed_base = seed, base_statement_identity = Hash(key.Theorem),
-                base_registration_source_sha256 = Hash(files[Registration]),
-                base_content_inputs = Content(files).Select(i => new { path = i.Path, sha256 = i.Sha256 }),
-                reason = "undeclared",
-            });
-            rows[path] = Text(InformationTemplateJson.Canonical(JsonSerializer.Deserialize<JsonElement>(row)));
-        }
-        return rows;
-    }
-
-    [Theory]
-    [InlineData("valid")]
-    [InlineData("subset")]
-    [InlineData("extra")]
-    [InlineData("statement")]
-    [InlineData("content")]
-    [InlineData("empty-activation")]
-    public void protected_seed_relation_is_checked_by_dispatch(string mutation)
-    {
-        var before = Files();
-        var after = new Dictionary<string, string>(before);
-        var rows = ExpectedRows(before);
-        foreach (var pair in rows) after[pair.Key] = pair.Value;
-        if (mutation == "subset") after.Remove(rows.Keys.First());
-        if (mutation == "extra")
-            foreach (var pair in ExpectedRows(before, count: 3)) after[pair.Key] = pair.Value;
-        if (mutation is "statement" or "content")
-        {
-            var path = rows.Keys.First();
-            var node = System.Text.Json.Nodes.JsonNode.Parse(after[path])!;
-            if (mutation == "statement") node["base_statement_identity"] = new string('f', 64);
-            else node["base_content_inputs"]!.AsArray().RemoveAt(1);
-            after[path] = Text(InformationTemplateJson.Canonical(JsonSerializer.SerializeToElement(node)));
-        }
-        if (mutation == "empty-activation")
-        {
-            foreach (var path in rows.Keys) after.Remove(path);
-            after[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(Seed, true)));
-        }
-        const string protectedRevision = "1234567890123456789012345678901234567890";
-        var reads = new List<string>();
-        var history = new InformationTemplateEvidenceContext(protectedRevision, revision =>
-        {
-            reads.Add(revision);
-            return new(Tree(before), Report(before));
-        });
-        var changes = mutation == "empty-activation" ? new[] { InformationTemplateDebtStore.ActivationPath } : rows.Keys.ToArray();
-        var diagnostics = Dispatch(Context(before, after, Report(after), changes, history));
-        var blocks = diagnostics.Where(d => d.AdmissionEffect == AdmissionEffect.Block).ToArray();
-        if (mutation == "valid") Assert.True(blocks.Length == 0 && reads.SequenceEqual([Seed, protectedRevision]),
-            "[FAIL] protected_seed_valid_dispatch: " + string.Join("; ", diagnostics.Select(d => d.Message)));
-        else Assert.True(blocks.Any(d => d.Message.Contains("DTR-Seed:", StringComparison.Ordinal)),
-            "[FAIL] protected_seed_relation_" + mutation + ": " + string.Join("; ", diagnostics.Select(d => d.Message)));
-    }
-
-    [Fact]
-    public void nonempty_source_bound_writer_publishes_exact_rows_and_deletes_discharge()
-    {
-        using var repository = new TemporaryDirectory();
-        using var artifacts = new TemporaryDirectory();
-        string Git(params string[] args) => ReviewRegressionTests.RunGit(repository.Path, args).Trim();
-        void WriteFiles(Dictionary<string, string> files)
-        {
-            foreach (var (path, text) in files)
-            {
-                var full = Path.Combine(repository.Path, path);
-                Directory.CreateDirectory(Path.GetDirectoryName(full)!);
-                File.WriteAllText(full, text);
-            }
-        }
-        string WriteReport(string name, Dictionary<string, string> files, bool declared = false)
-        {
-            var path = Path.Combine(artifacts.Path, name + ".json");
-            File.WriteAllBytes(path, RawLeanReportArtifact.Write(Tree(files), Report(files, declared: declared)).AsSpan());
-            return path;
-        }
-        Git("init");
-        Git("config", "user.email", "stratalint@example.invalid");
-        Git("config", "user.name", "StrataLint Tests");
-        var files = Files();
-        files.Remove(InformationTemplateDebtStore.ActivationPath);
-        WriteFiles(files);
-        Git("add", "."); Git("commit", "-m", "original occurrences");
-        var seed = Git("rev-parse", "HEAD");
-        files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, false)));
-        WriteFiles(files);
-        Git("add", "."); Git("commit", "-m", "inactive installation");
-        var installed = Git("rev-parse", "HEAD");
-        var gateway = new GitRepositoryGateway(repository.Path);
-        var seedReport = WriteReport("seed", files);
-        var initialize = InformationTemplateDebtWriter.Run(repository.Path, gateway,
-            ["initialize", "--protected-base", installed, "--seed-lean-report", seedReport]);
-        Assert.True(initialize.Success, initialize.Error);
-        var expected = ExpectedRows(files, seed);
-        var rowsDir = Path.Combine(repository.Path, InformationTemplateDebtStore.RowsRoot);
-        Assert.True(Directory.Exists(rowsDir), "[FAIL] nonempty_seed_publication_required: no row directory");
-        Assert.Equal(expected.Keys.Order(StringComparer.Ordinal), Directory.GetFiles(rowsDir)
-            .Select(path => Path.GetRelativePath(repository.Path, path).Replace('\\', '/')).Order(StringComparer.Ordinal));
-        var initializedRows = expected.Keys.ToDictionary(path => path,
-            path => File.ReadAllBytes(Path.Combine(repository.Path, path)), StringComparer.Ordinal);
-        foreach (var (path, bytes) in expected)
-            Assert.True(initializedRows[path].AsSpan().SequenceEqual(Encoding.UTF8.GetBytes(bytes)),
-                "[FAIL] nonempty_seed_exact_bytes: " + path);
-        files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, true)));
-        WriteFiles(files);
-        foreach (var (path, bytes) in initializedRows)
-            File.WriteAllBytes(Path.Combine(repository.Path, path), bytes);
-        Git("add", "."); Git("commit", "-m", "activated seeded debt");
-        var baseline = Git("rev-parse", "HEAD");
-        var baseReport = WriteReport("base", files);
-        files[Registration] += "-- current declared binding source\n";
-        WriteFiles(files);
-        Git("add", "."); Git("commit", "-m", "declared bindings");
-        var candidateReport = WriteReport("candidate", files, declared: true);
-        var discharge = InformationTemplateDebtWriter.Run(repository.Path, gateway,
-            ["discharge", "--protected-base", baseline, "--seed-lean-report", seedReport,
-             "--base-lean-report", baseReport, "--candidate-lean-report", candidateReport]);
-        Assert.True(discharge.Success, "[FAIL] nonempty_discharge_run: " + discharge.Error);
-        Assert.True(expected.Keys.All(path => !File.Exists(Path.Combine(repository.Path, path))),
-            "[FAIL] validated_discharge_deletes_published_rows");
-        Assert.Equal(2, Git("status", "--porcelain").Split('\n').Count(line => line.StartsWith("D ", StringComparison.Ordinal)
-            || line.StartsWith(" D ", StringComparison.Ordinal)));
-    }
-
 }
