@@ -198,17 +198,16 @@ internal static class InformationTemplateEvidence
         IEnumerable<RepoPath> sources)
     {
         var governed = sources.Select(path => path.Value).ToImmutableHashSet(StringComparer.Ordinal);
+        var selection = new InformationTemplateSelection(governed);
         var inventory = ImmutableHashSet.CreateBuilder<InformationOccurrenceKey>();
         var registered = ImmutableHashSet.CreateBuilder<InformationOccurrenceKey>();
         var claims = new Dictionary<InformationOccurrenceKey, List<InformationTemplateOccurrence>>();
         foreach (var source in governed.Order(StringComparer.Ordinal))
         {
             if (!report.Files.TryGetValue(RepoPath.CreateKnown(source), out var module) || module.Error is not null
-                || module.InformationTemplates is not { } evidence)
+                || module.InformationTemplates is not { } payload)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
-            // Recheck only selected sources against candidate bytes. An unchanged
-            // module does not acquire an evidence obligation from this consumer.
-            evidence = Read(evidence.Wire, source, snapshot);
+            var evidence = Read(selection.Project(payload, source), source, snapshot);
             var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
                 .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     || path.Value == "Trureturing.lean")
@@ -228,10 +227,10 @@ internal static class InformationTemplateEvidence
         }
         foreach (var (path, module) in report.Files)
         {
-            if (governed.Contains(path.Value) || module.InformationTemplates is not { } evidence
-                || !evidence.Records.Any(record => governed.Contains(record.RegistrationSourcePath))) continue;
+            if (governed.Contains(path.Value) || module.InformationTemplates is not { } payload
+                || !selection.HasRecords(payload)) continue;
             if (module.Error is not null) throw new FormatException("DTR-Evidence: invalid binding producer " + path.Value);
-            foreach (var occurrence in Read(evidence.Wire, path.Value, snapshot).Records
+            foreach (var occurrence in Read(selection.Project(payload, path.Value), path.Value, snapshot).Records
                 .Where(record => governed.Contains(record.RegistrationSourcePath)))
             {
                 if (!claims.TryGetValue(occurrence.Key, out var list)) claims.Add(occurrence.Key, list = []);

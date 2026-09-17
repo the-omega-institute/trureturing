@@ -106,7 +106,7 @@ public sealed class DeclaredTemplateReviewTests
                     : [TargetModule, "LeanInformationAudit.Syntax"]
                 : [];
             reports[path] = new(imports.ToImmutableArray(), declarations)
-            { InformationTemplates = InformationTemplateEvidence.Read(wire, path, snapshot), InformationRegistrationErrors = [] };
+            { InformationTemplates = wire, InformationRegistrationErrors = [] };
         }
         if (indirectJudgePath)
             reports["tools/lean-inspector/LeanInformationAudit/Syntax.lean"] =
@@ -114,7 +114,7 @@ public sealed class DeclaredTemplateReviewTests
         var report = LeanAxiomReport.Create(reports);
         // Round-trip canonical raw bytes for every fixture, including the
         // indirect judge-import case. Admission never receives hand-attached
-        // InformationTemplates in place of the strict raw artifact loader.
+        // InformationTemplates in place of the production raw artifact loader.
         return RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
     }
 
@@ -174,7 +174,8 @@ public sealed class DeclaredTemplateReviewTests
         }
         var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
         var snapshot = Tree(files);
-        return Record.Exception(() => RawLeanReportArtifact.Read(bytes.AsSpan(), snapshot));
+        return Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
+            RawLeanReportArtifact.Read(bytes.AsSpan(), snapshot), [RepoPath.CreateKnown(Registration)]));
     }
 
     [Theory]
@@ -247,7 +248,9 @@ public sealed class DeclaredTemplateReviewTests
         foreach (var module in wire["modules"]!.AsArray())
             module!["information_templates"]!["compatibility_version"] = version;
         var changed = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
-        var error = Record.Exception(() => RawLeanReportArtifact.Read(changed.AsSpan(), Tree(files)));
+        var snapshot = Tree(files);
+        var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
+            RawLeanReportArtifact.Read(changed.AsSpan(), snapshot), [RepoPath.CreateKnown(Registration)]));
         Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
             "[FAIL] mismatched_report_semantic_version_rejects_binding_evidence: " + version);
     }
@@ -292,7 +295,8 @@ public sealed class DeclaredTemplateReviewTests
         var error = Record.Exception(() => InformationTemplateEvidence.Collect(Tree(files), report,
             new[] { RepoPath.CreateKnown(Registration) }));
         Assert.Null(error);
-        var evidence = report.Files[RepoPath.CreateKnown(Registration)].InformationTemplates!;
+        var evidence = InformationTemplateEvidence.Read(
+            report.Files[RepoPath.CreateKnown(Registration)].InformationTemplates!.Value, Registration, Tree(files));
         Assert.Contains(evidence.Inputs, input => input.Path == Target);
         Assert.DoesNotContain(evidence.Inputs,
             input => input.Path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal));

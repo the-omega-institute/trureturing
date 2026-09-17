@@ -107,7 +107,7 @@ internal static class RawLeanReportArtifact
                 {
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
                     InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
-                        ? InformationTemplateEvidence.Read(templates, sourcePath, snapshot) : null,
+                        ? templates.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -173,7 +173,7 @@ internal static class RawLeanReportArtifact
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),
                         information_registration_errors = fileReport.InformationRegistrationErrors,
-                        information_templates = fileReport.InformationTemplates?.Wire,
+                        information_templates = fileReport.InformationTemplates,
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),

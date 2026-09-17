@@ -85,13 +85,13 @@ public sealed class DeclaredTemplateBindingRuleTests
         var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
         var reports = Report(after, count: 1, declared: true).Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
         var evidence = reports[Registration].InformationTemplates!;
-        var wire = JsonSerializer.SerializeToNode(evidence.Wire)!;
+        var wire = JsonSerializer.SerializeToNode(evidence)!;
         if (mutation == "stale-input") wire["inputs"]![0]!["sha256"] = new string('0', 64);
         if (mutation == "malformed-record") wire["records"]![0]!.AsObject().Remove("certificate");
         if (mutation == "wrong-version") wire["compatibility_version"] = 1;
         reports[Registration] = reports[Registration] with
         {
-            InformationTemplates = evidence with { Wire = JsonSerializer.SerializeToElement(wire) },
+            InformationTemplates = JsonSerializer.SerializeToElement(wire),
         };
         Finding(DeclaredTemplateBindingRule.Evaluate(Context(before, after, LeanAxiomReport.Create(reports), [Registration])),
             "DTR-Evidence", AdmissionEffect.Block);

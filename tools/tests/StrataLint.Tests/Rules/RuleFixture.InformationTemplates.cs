@@ -24,6 +24,6 @@ internal sealed partial class RuleFixture
             inventory = Array.Empty<object>(), registered = Array.Empty<object>(), records = Array.Empty<object>(),
         });
         return Reports.ToDictionary(pair => pair.Key, pair => pair.Value.InformationTemplates is not null ? pair.Value
-            : pair.Value with { InformationTemplates = new(wire, [], [], [], inputs) }, StringComparer.Ordinal);
+            : pair.Value with { InformationTemplates = wire }, StringComparer.Ordinal);
     }
 }

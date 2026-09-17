@@ -72,7 +72,7 @@ public sealed class InformationTemplateEvidenceTests
     private static LeanFileReport Module(InformationTemplateModuleEvidence evidence, bool sidecar = false) =>
         new(sidecar ? [ModuleA] : [], sidecar ? [] :
             [new(Unit, "def", "fixture unit", []), new(Realization, "def", "fixture realization", [])])
-        { InformationTemplates = evidence };
+        { InformationTemplates = evidence.Wire };
 
     [Theory]
     [InlineData("D5/S0/Carrier/Probe.lean", "D5.S0.Carrier.Probe")]
@@ -106,13 +106,19 @@ public sealed class InformationTemplateEvidenceTests
     public void raw_report_retains_binding_inventory()
     {
         var module = RawReport().Files[RepoPath.CreateKnown(PathA)];
-        Assert.Equal(Key, Assert.Single(Assert.IsType<InformationTemplateModuleEvidence>(module.InformationTemplates).Records).Key);
+        var evidence = InformationTemplateEvidence.Read(module.InformationTemplates!.Value, PathA, Snapshot((PathA, TextA)));
+        Assert.Equal(Key, Assert.Single(evidence.Records).Key);
     }
 
     [Theory]
     [InlineData(3)]
     [InlineData(4)]
-    public void binding_loader_required(int retiredVersion) => Assert.Throws<FormatException>(() => RawReport(compatibility: retiredVersion));
+    public void binding_loader_required(int retiredVersion)
+    {
+        var report = RawReport(compatibility: retiredVersion);
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            report.Files[RepoPath.CreateKnown(PathA)].InformationTemplates!.Value, PathA, Snapshot((PathA, TextA))));
+    }
 
     [Fact]
     public void fresh_imported_record_accepted()
@@ -178,7 +184,7 @@ public sealed class InformationTemplateEvidenceTests
                 new Dictionary<string, LeanFileReport>
                 {
                     [PathA] = new([], [new(unit, "def", "fixture unit", []),
-                        new(realization, "def", "fixture realization", [])]) { InformationTemplates = evidence },
+                        new(realization, "def", "fixture realization", [])]) { InformationTemplates = evidence.Wire },
                 }));
         });
         Assert.True(error is null, "[FAIL] generated_name_with_nested_quote_accepted: " + error?.Message);
@@ -225,9 +231,9 @@ public sealed class InformationTemplateEvidenceTests
             new Dictionary<string, LeanFileReport>
             {
                 [PathA] = new(imported ? ["D5.S0.Carrier.Binding"] : [],
-                    [new(Unit, "def", "fixture unit", [])]) { InformationTemplates = owner },
+                    [new(Unit, "def", "fixture unit", [])]) { InformationTemplates = owner.Wire },
                 [PathB] = new([], [new(Realization, "theorem", "fixture realization", [])])
-                    { InformationTemplates = bridge },
+                    { InformationTemplates = bridge.Wire },
             }));
     }
 
