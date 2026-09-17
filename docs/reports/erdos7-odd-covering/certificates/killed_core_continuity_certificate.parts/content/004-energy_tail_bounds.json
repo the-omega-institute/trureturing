@@ -1,0 +1,23 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/004-energy_tail_bounds/000000-000002.json",
+        "sha256": "7b7d4fa6cce0b1cd9ca0ff2dad1db4a3f620312c03ba7eedba24dc94ee8a0770",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-energy_tail_bounds/000002-000003.json",
+        "sha256": "5a8843624bdafb8f030db5c5b1ac45c2af5bc53a4e1e26077791389e27866ea7",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "ordinary exact-arithmetic hinge bounds for the same actual clipped survivor law; full original 357 part divides 315; arbitrary finite 11/13 heights; no Lean or tail conclusion"
+  },
+  "clip": {
+    "kind": "inline",
+    "value": "40/31"
+  },
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  "witnesses": {
+    "path": "content/033-actual_rectangle_hinge_profile/003-witnesses.json",
+    "sha256": "e6d7b8bff53fdf574f3a8b1ff15d30d97fbe1967872b0119ff7f13a2f1f969c1",
+    "kind": "value"
+  },
+  "pointwise_dual_checks": {
+    "path": "content/033-actual_rectangle_hinge_profile/004-pointwise_dual_checks.json",
+    "sha256": "2ee99c71cad7e5a3399a76bffd2de691db0f870109630a9e4b2d7c87308a6b2b",
+    "kind": "value"
+  },
+  "nonempty_grid_counts_verified": {
+    "kind": "inline",
+    "value": 1372
+  },
+  "integer_inequalities_verified": {
+    "kind": "inline",
+    "value": 26078976
+  },
+  "full_domain_inequalities_certified": {
+    "kind": "inline",
+    "value": 256048128
+  },
+  "shared_branches_verified": {
+    "kind": "inline",
+    "value": 144
+  },
+  "cases": {
+    "path": "content/033-actual_rectangle_hinge_profile/009-cases.json",
+    "sha256": "7973bb78a4693d6da0a470265632a58c7138b44ded699706efb427033bb8f02c",
+    "kind": "array"
+  },
+  "universal_low_hinge_upper_at_4_through_12": {
+    "kind": "inline",
+    "value": [
+      "8178017719/9000000000",
+      "4447846521/6500000000",
+      "1489975/3133728",
+      "385962879343/1053000000000",
+      "2031519641/7800000000",
+      "111680583049/526500000000",
+      "178759014853/1053000000000",
+      "3192684409/25000000000",
+      "201638013/2312500000"
+    ]
+  },
+  "universal_full_hinge_upper_at_4_through_12": {
+    "kind": "inline",
+    "value": [
+      "7407925830803/5142075000000",
+      "11428702759/10284150000",
+      "19427/24198",
+      "87992771107937/137483325000000",
+      "242331326613/499400000000",
+      "4663598074519/11236500000000",
+      "7944529460443/22473000000000",
+      "9807064477819/33423487500000",
+      "47555781251/205683000000"
+    ]
+  },
+  "full_hinge_maximizing_branches_at_4_through_12": {
+    "path": "content/033-actual_rectangle_hinge_profile/012-full_hinge_maximizing_branches_at_4_through_12.json",
+    "sha256": "035bd9d572856a342944bfd1303a9e13ccd22169bc8fa3e21443af4569f55b91",
+    "kind": "value"
+  },
+  "interpolation": {
+    "kind": "inline",
+    "value": "adjacent certified knots may be joined linearly to upper-bound the convex actual hinge; the resulting upper curve is not asserted to be a probability comparator"
+  }
+}

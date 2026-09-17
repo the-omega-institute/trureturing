@@ -1,0 +1,148 @@
+{
+  "schema": "rectangular-family-nonuniform-v1",
+  "common_height_minimum": 5,
+  "scope": "specified forbidden family; existence of a supported nonuniform law",
+  "ternary_raw_root_multipliers": [
+    "1",
+    "4/3"
+  ],
+  "ternary_second_root_width_interval": [
+    "40/81",
+    "1/2"
+  ],
+  "ternary_width_upper_endpoint_is_limit": true,
+  "weighted_root_cap_endpoint_values": [
+    [
+      "2",
+      "17/9",
+      "484/243",
+      "322/243"
+    ],
+    [
+      "2",
+      "17/9",
+      "2",
+      "4/3"
+    ]
+  ],
+  "ternary_raw_mass_lower": "403/729",
+  "Gamma_3_bound": "1861/403",
+  "quinary_remaining_density_lower": "1/2",
+  "quinary_transfer_factor": "11/4",
+  "Gamma_35_bound": "20471/1612",
+  "remaining_prime_transfers": [
+    {
+      "prime": 7,
+      "survivor_density_lower": "5/6",
+      "point_cap": "6/5",
+      "transfer_factor": "5/3"
+    },
+    {
+      "prime": 11,
+      "survivor_density_lower": "9/10",
+      "point_cap": "10/9",
+      "transfer_factor": "61/45"
+    },
+    {
+      "prime": 13,
+      "survivor_density_lower": "11/12",
+      "point_cap": "12/11",
+      "transfer_factor": "85/66"
+    },
+    {
+      "prime": 17,
+      "survivor_density_lower": "15/16",
+      "point_cap": "16/15",
+      "transfer_factor": "29/24"
+    },
+    {
+      "prime": 19,
+      "survivor_density_lower": "17/18",
+      "point_cap": "18/17",
+      "transfer_factor": "181/153"
+    },
+    {
+      "prime": 23,
+      "survivor_density_lower": "21/22",
+      "point_cap": "22/21",
+      "transfer_factor": "265/231"
+    },
+    {
+      "prime": 29,
+      "survivor_density_lower": "27/28",
+      "point_cap": "28/27",
+      "transfer_factor": "421/378"
+    },
+    {
+      "prime": 31,
+      "survivor_density_lower": "29/30",
+      "point_cap": "30/29",
+      "transfer_factor": "481/435"
+    },
+    {
+      "prime": 37,
+      "survivor_density_lower": "35/36",
+      "point_cap": "36/35",
+      "transfer_factor": "137/126"
+    },
+    {
+      "prime": 41,
+      "survivor_density_lower": "39/40",
+      "point_cap": "40/39",
+      "transfer_factor": "841/780"
+    },
+    {
+      "prime": 43,
+      "survivor_density_lower": "41/42",
+      "point_cap": "42/41",
+      "transfer_factor": "925/861"
+    },
+    {
+      "prime": 47,
+      "survivor_density_lower": "45/46",
+      "point_cap": "46/45",
+      "transfer_factor": "221/207"
+    },
+    {
+      "prime": 53,
+      "survivor_density_lower": "51/52",
+      "point_cap": "52/51",
+      "transfer_factor": "1405/1326"
+    },
+    {
+      "prime": 59,
+      "survivor_density_lower": "57/58",
+      "point_cap": "58/57",
+      "transfer_factor": "1741/1653"
+    },
+    {
+      "prime": 61,
+      "survivor_density_lower": "59/60",
+      "point_cap": "60/59",
+      "transfer_factor": "1861/1770"
+    },
+    {
+      "prime": 67,
+      "survivor_density_lower": "65/66",
+      "point_cap": "66/65",
+      "transfer_factor": "449/429"
+    },
+    {
+      "prime": 71,
+      "survivor_density_lower": "69/70",
+      "point_cap": "70/69",
+      "transfer_factor": "2521/2415"
+    },
+    {
+      "prime": 73,
+      "survivor_density_lower": "71/72",
+      "point_cap": "72/71",
+      "transfer_factor": "2665/2556"
+    }
+  ],
+  "remaining_prime_product": "34522246402806715078896712155725/3268731173404447066684907556864",
+  "Gamma_73_bound": "64245900555623296761826781321804225/479017695593451697408733725605888",
+  "decimal_upper_bound": "134121/1000",
+  "continuation_threshold": "138877/1000",
+  "threshold_margin": "284829994413561827400741536145585347/59877211949181462176091715700736000"
+}
