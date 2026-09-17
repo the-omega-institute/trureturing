@@ -1,0 +1,13 @@
+### 17.6 推论：固定窗口的代价与足够长的窗口
+
+对任意固定 $T>0$，有
+\[
+\mathcal R_T(\varepsilon)
+=\Theta_{T,E_-,E_+,\eta}\left(
+\frac{\log\log(1/\varepsilon)}{\log(1/\varepsilon)}\right)^2.
+\tag{17.9}
+\]
+当 $T\geq1/E_+$ 时，这是式 (17.8) 的直接渐近结论。对固定的更小正 $T$，同一证明中 $A\sim\log L$ 以及 $L/A\to\infty$ 仍成立，允许起始阈值依赖于该 $T$，得到相同结论。
+
+若窗口 $T=T(\varepsilon)\geq1/E_+$ 可随精度增长，则在常数因子意义下达到全时间的 $\log^{-2}(1/\varepsilon)$ 阶，当且仅当 $E_+T(\varepsilon)$ 至少为 $\log(1/\varepsilon)$ 的一个固定正常数倍。更精确地，若 $E_+T/L\to0$，式 (17.8) 的下界与 $L^{-2}$ 的比值趋于无穷；若 $E_+T\geq c_1L$，$c_1>0$，则式 (17.8) 给出匹配的 $L^{-2}$ 阶。
+

@@ -31008,3 +31008,1742 @@ $$
 定理 65.4 对任意独立局部策略对给出下界 $121799/46384$，故上述严格不等式对每一对这样的策略成立。证毕。
 
 ## 65.99 追加锚
+
+## 66. 相邻相等关系商、锚定余循环与公平提升
+
+**定义 66.0（禁游程空间、关系空间、补变换与关系编码）。**
+
+固定整数 $k\ge 2$。令
+$$
+K_{k,k}:=\left\{x\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }x_j=x_{j+1}=\cdots=x_{j+k-1}\right\},
+$$
+即同时禁止 $0^k$ 与 $1^k$。令
+$$
+Y_k:=\left\{c\in\{0,1\}^{\mathbb N}:\text{不存在 }j\ge0\text{ 使 }c_j=c_{j+1}=\cdots=c_{j+k-2}=1\right\},
+$$
+即禁止 $1^{k-1}$。定义逐位补变换
+$$
+(Cx)_j:=1-x_j
+$$
+以及相邻相等关系编码
+$$
+R(x)_j:=\mathbf 1_{\{x_j=x_{j+1}\}}.
+$$
+两边都取乘积拓扑；$\sigma$ 表示左移位；$\oplus$ 表示 $\mathbb Z/2\mathbb Z$ 中的加法。
+
+**定理 66.1（精确像、两点互补纤维、锚定重构与拓扑商）。**
+
+对每个 $k\ge2$，映射
+$$
+R:K_{k,k}\longrightarrow Y_k
+$$
+连续且满射，并且对每个 $c\in Y_k$，其纤维恰有两个点；若其中一个是 $x$，另一个就是 $Cx$。更精确地，对任意 $b\in\{0,1\}$ 与 $c\in Y_k$，递推
+$$
+x^{b,c}_0=b,\qquad
+x^{b,c}_{j+1}=x^{b,c}_j\oplus(1-c_j)\qquad(j\ge0)
+$$
+给出 $K_{k,k}$ 中唯一满足 $x_0=b$ 且 $R(x)=c$ 的点；两个锚 $b=0,1$ 所得序列互为逐位补。于是
+$$
+\Theta:K_{k,k}\longrightarrow\{0,1\}\times Y_k,\qquad
+\Theta(x)=(x_0,R(x))
+$$
+是同胚，并且
+$$
+\Theta(Cx)=(1-x_0,R(x)).
+$$
+因此 $R$ 在补变换轨道商上诱导同胚
+$$
+\overline R:K_{k,k}/\langle C\rangle\longrightarrow Y_k,\qquad
+\overline R([x])=R(x).
+$$
+
+当 $k=2$ 时，
+$$
+Y_2=\{0^\infty\},\qquad
+K_{2,2}=\{0101\ldots,1010\ldots\},
+$$
+故上述像、纤维、锚定重构和商结论仍成立。
+
+**证明。**
+
+若 $x\in K_{k,k}$ 而
+$$
+R(x)_j=R(x)_{j+1}=\cdots=R(x)_{j+k-2}=1,
+$$
+则
+$$
+x_j=x_{j+1}=\cdots=x_{j+k-1},
+$$
+与 $x\in K_{k,k}$ 矛盾。因此 $R(K_{k,k})\subseteq Y_k$。
+
+反之，给定 $b\in\{0,1\}$ 与 $c\in Y_k$，上述递推唯一确定 $x^{b,c}$。递推式直接给出
+$$
+c_j=1\Longleftrightarrow x^{b,c}_{j+1}=x^{b,c}_j,
+$$
+故 $R(x^{b,c})=c$。若 $x^{b,c}$ 含有长度 $k$ 的常值块，则对应的 $k-1$ 个关系位全为 $1$，与 $c\in Y_k$ 矛盾。因此 $x^{b,c}\in K_{k,k}$，从而 $R$ 满射，并且锚 $b$ 与关系记录 $c$ 唯一确定原序列。
+
+若 $R(x)=R(y)$，令
+$$
+\delta_j:=x_j\oplus y_j.
+$$
+由于两序列在每一步同为“保持”或同为“翻转”，有
+$$
+\delta_{j+1}=\delta_j\qquad(j\ge0).
+$$
+故 $\delta_j$ 恒等于 $\delta_0$。若 $\delta_0=0$，则 $x=y$；若 $\delta_0=1$，则 $y=Cx$。反过来 $R(Cx)=R(x)$，且 $(Cx)_0=1-x_0\ne x_0$，所以 $Cx\ne x$。因此每个纤维恰为两个互补点。
+
+$R$ 的第 $j$ 个坐标只依赖 $x_j,x_{j+1}$，故 $R$ 连续。对每个 $n\ge0$，$(\Theta^{-1}(b,c))_n$ 只依赖 $b,c_0,\ldots,c_{n-1}$，故 $\Theta^{-1}$ 连续；因此 $\Theta$ 是同胚。补变换在锚定坐标中恰为
+$$
+(b,c)\longmapsto(1-b,c).
+$$
+所以 $R$ 在轨道商上给出连续双射 $\overline R$。空间 $K_{k,k}$ 是紧空间，有限群的连续像 $K_{k,k}/\langle C\rangle$ 仍紧，而 $Y_k$ 是 Hausdorff 空间，故 $\overline R$ 为同胚。
+
+当 $k=2$ 时，$Y_2$ 禁止单个 $1$，所以只有 $0^\infty$；重构递推在每一步都翻转，恰给出两个交替序列。证毕。
+
+**定义 66.2（首差度量与补轨道距离）。**
+
+在 $\{0,1\}^{\mathbb N}$ 上定义
+$$
+d(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m(x,y)},&x\ne y,
+\end{cases}
+\qquad
+m(x,y):=\min\{j\ge0:x_j\ne y_j\}.
+$$
+在 $Y_k$ 上记同型首差度量为
+$$
+\rho(c,c')=
+\begin{cases}
+0,&c=c',\\
+2^{-m(c,c')},&c\ne c'.
+\end{cases}
+$$
+由于 $C$ 是 $d$-等距变换，定义
+$$
+\overline d([x],[y]):=\min\{d(x,y),d(x,Cy)\}.
+$$
+
+**定理 66.3（精确商度量与固定锚相似性）。**
+
+$\overline d$ 在 $K_{k,k}/\langle C\rangle$ 上良定义并且是度量。在商同胚 $\overline R$ 下有精确恒等式
+$$
+\boxed{\ \overline d([x],[y])=\frac12\,\rho(Rx,Ry)\ }.
+$$
+因此
+$$
+\rho(\overline R([x]),\overline R([y]))=2\overline d([x],[y]).
+$$
+
+此外，对每个固定锚 $b\in\{0,1\}$，令
+$$
+T_b:Y_k\longrightarrow K_{k,k},\qquad T_b(c):=x^{b,c}.
+$$
+则当 $c\ne c'$ 时，
+$$
+d(T_b(c),T_b(c'))=\frac12\,\rho(c,c').
+$$
+所以 $T_b$ 是从 $Y_k$ 到闭开集
+$$
+K_{k,k}^{(b)}:=\{x\in K_{k,k}:x_0=b\}
+$$
+的比例 $1/2$ 相似双射。
+
+**证明。**
+
+先证良定义。若把 $x$ 换为 $Cx$，则由于 $C$ 是等距且 $C^2=\mathrm{id}$，集合
+$$
+\{d(Cx,y),d(Cx,Cy)\}
+$$
+正是
+$$
+\{d(x,Cy),d(x,y)\}.
+$$
+把 $y$ 换为 $Cy$ 也只交换同一对数，所以最小值只依赖两个轨道。
+
+非负性和对称性显然。若 $\overline d([x],[y])=0$，则 $x=y$ 或 $x=Cy$，故 $[x]=[y]$。对三角不等式，取 $g,h\in\{\mathrm{id},C\}$ 使
+$$
+d(x,gy)=\overline d([x],[y]),\qquad
+d(y,hz)=\overline d([y],[z]).
+$$
+因 $g$ 是等距且群为交换的二阶群，
+$$
+d(x,ghz)\le d(x,gy)+d(gy,ghz)
+=d(x,gy)+d(y,hz).
+$$
+左侧不小于 $\overline d([x],[z])$，故得到三角不等式。
+
+若 $Rx=Ry$，前一定理给出 $[x]=[y]$，公式两边都为零。现设 $Rx\ne Ry$，令
+$$
+m:=\min\{j\ge0:R(x)_j\ne R(y)_j\}.
+$$
+在 $y,Cy$ 中恰有一个与 $x$ 具有相同第零位，记为 $y'$。对 $0\le j<m$，两条关系位相同；从共同锚递推可知
+$$
+x_j=y'_j\qquad(0\le j\le m).
+$$
+在第 $m$ 个关系位处二者不同，所以从位置 $m$ 到 $m+1$ 的“保持/翻转”选择相反，从而
+$$
+x_{m+1}\ne y'_{m+1}.
+$$
+于是
+$$
+d(x,y')=2^{-(m+1)}.
+$$
+另一个补取向在第零位即与 $x$ 不同，距离为 $1$。因此
+$$
+\overline d([x],[y])
+=2^{-(m+1)}
+=\frac12\,2^{-m}
+=\frac12\,\rho(Rx,Ry).
+$$
+
+固定 $b$ 时，对 $c\ne c'$ 作同一论证，但两条重构序列从一开始就有相同锚，所以它们在首个不同关系位 $m$ 之后的第 $m+1$ 位首次不同，得到
+$$
+d(T_b(c),T_b(c'))=2^{-(m+1)}=\frac12\rho(c,c').
+$$
+第一条定理已证明 $T_b$ 双射到 $K_{k,k}^{(b)}$。证毕。
+
+**定义 66.4（有限允许词数）。**
+
+令 $N_k(n)$ 为长度 $n$ 的二进制词中不含 $1^{k-1}$ 的词数，并约定
+$$
+N_k(0)=1.
+$$
+令 $M_k(L)$ 为长度 $L\ge1$ 的二进制词中同时不含 $0^k,1^k$ 的词数。
+
+**定理 66.5（有限词计数与 $k=3$ 的 Hausdorff 维数）。**
+
+令
+$$
+r:=k-1.
+$$
+则
+$$
+N_k(n)=2^n\qquad(0\le n<r),
+$$
+并且对每个 $n\ge r$，
+$$
+N_k(n)=N_k(n-1)+N_k(n-2)+\cdots+N_k(n-r).
+$$
+此外，对每个 $L\ge1$，
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+特别地，当 $k=3$ 时，
+$$
+N_3(n)=F_{n+2},\qquad M_3(L)=2F_{L+1},
+$$
+其中 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。若
+$$
+\phi=\frac{1+\sqrt5}{2},
+\qquad
+s:=\frac{\log\phi}{\log2},
+$$
+则
+$$
+\dim_{\mathrm H}(Y_3,\rho) = \dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d) = \dim_{\mathrm H}(K_{3,3},d)
+=s.
+$$
+
+**证明。**
+
+当 $n<r$ 时，长度不足以出现 $r$ 个连续的 $1$，故 $N_k(n)=2^n$。当 $n\ge r$ 时，全 $1$ 词非法，所以任一允许词存在最后一个 $0$，并且有唯一末尾形式
+$$
+u\,0\,1^j,\qquad 0\le j\le r-1,
+$$
+其中 $u$ 是长度 $n-j-1$ 的允许词。按 $j$ 分类即得
+$$
+N_k(n)=\sum_{j=0}^{r-1}N_k(n-j-1).
+$$
+有限锚定重构给出长度 $L$ 的原位允许词与“一个锚位 $b$ 加一个长度 $L-1$ 的允许关系词”之间的双射，因此
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+当 $k=3$ 时，递推化为 Fibonacci 递推，初值 $N_3(0)=1,N_3(1)=2$，故
+$$
+N_3(n)=F_{n+2}.
+$$
+由 Binet 公式，存在常数 $A_1,A_2>0$ 使
+$$
+A_1\phi^n\le F_{n+2}\le A_2\phi^n
+$$
+对所有 $n\ge0$ 成立。
+
+先证上界。长度 $n$ 的允许关系柱覆盖 $Y_3$，每个柱的 $\rho$-直径至多 $2^{-n}$，柱数为 $F_{n+2}$。若 $q>s$，则
+$$
+\mathcal H^q_{\rho,2^{-n}}(Y_3)
+\le A_2\phi^n2^{-qn}
+=A_2\,2^{(s-q)n}\longrightarrow0.
+$$
+所以
+$$
+\dim_{\mathrm H}(Y_3,\rho)\le s.
+$$
+
+再证下界。置
+$$
+\alpha:=\phi^{-1},
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+$$
+矩阵 $P$ 的各行和为 $1$，直接计算有 $\pi P=\pi$，且 $P_{11}=0$。因此相应柱公式定义一个支撑在 $Y_3$ 上的平稳 Markov 概率 $\mu_{\mathrm{st}}$。对任意长度 $n\ge1$ 的允许词 $u$，令 $N_{ab}(u)$ 为相邻转移 $a\to b$ 的次数。因为 $N_{11}(u)=0$，
+$$
+\mu_{\mathrm{st}}([u])
+=\pi_{u_0}\alpha^{N_{00}(u)+2N_{01}(u)}.
+$$
+又有
+$$
+N_{01}(u)-N_{10}(u)=u_{n-1}-u_0
+$$
+以及
+$$
+N_{00}(u)+N_{01}(u)+N_{10}(u)=n-1,
+$$
+故
+$$
+N_{00}(u)+2N_{01}(u)
+=n-1+u_{n-1}-u_0.
+$$
+上式指数至少为 $n-2$，故例如取
+$$
+B:=\max\{\pi_0,\pi_1\}\alpha^{-2}
+$$
+即可得到对所有允许的 $u$ 与 $n\ge1$，
+$$
+\mu_{\mathrm{st}}([u])\le B\alpha^n
+=B\,2^{-sn}.
+$$
+
+对每个 $n\ge1$，闭球
+$$
+\overline B_\rho(c,2^{-n})
+$$
+正是由 $c_0,\ldots,c_{n-1}$ 决定的长度 $n$ 柱。于是增大常数后，存在 $B'>0$ 使对所有 $c\in Y_3$ 与 $0<r\le1$，
+$$
+\mu_{\mathrm{st}}(\overline B_\rho(c,r))\le B'r^s.
+$$
+这里若 $2^{-(n+1)}<r\le2^{-n}$，则
+$$
+\overline B_\rho(c,r)\subseteq\overline B_\rho(c,2^{-n})
+$$
+并且 $2^{-sn}\le2^sr^s$，故上述统一界成立。
+
+令 $\mu_{\mathrm{st}}^*$ 表示由 $\mu_{\mathrm{st}}$ 产生的外测度。对任意非空子集 $U\subseteq Y_3$，若
+$$
+\delta:=\operatorname{diam}_\rho U>0,
+$$
+取 $c\in U$，则
+$$
+U\subseteq\overline B_\rho(c,\delta),
+$$
+从而
+$$
+\mu_{\mathrm{st}}^*(U)\le B'\delta^s.
+$$
+若 $\delta=0$，则 $U$ 是单点集。该单点是其一列嵌套长度 $n$ 柱的交，而这些柱的质量至多为 $B2^{-sn}\to0$。由概率测度对递减可测集列的从上连续性，该单点质量为零，于是同一不等式在 $\delta=0$ 时也成立。
+
+现在令 $\{U_i\}_{i\ge1}$ 是 $Y_3$ 的任意可数覆盖；这些集合不要求可测。由外测度的单调性和可数次次可加性，
+$$
+1=\mu_{\mathrm{st}}^*(Y_3)
+\le\sum_i\mu_{\mathrm{st}}^*(U_i)
+\le B'\sum_i(\operatorname{diam}_\rho U_i)^s.
+$$
+因此每个允许直径阈值下的 $s$-维 Hausdorff 覆盖代价都至少为 $1/B'$，所以
+$$
+\mathcal H^s_\rho(Y_3)\ge\frac1{B'}>0.
+$$
+于是
+$$
+\dim_{\mathrm H}(Y_3,\rho)\ge s.
+$$
+结合上界得到等号。
+
+上一条定理给出
+$$
+\rho=2\overline d
+$$
+在商空间对应下成立。把度量乘一个正常数不改变 Hausdorff 维数，因此
+$$
+\dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d)=s.
+$$
+同一条定理还给出两个固定锚相似副本
+$$
+K_{3,3}=K_{3,3}^{(0)}\cup K_{3,3}^{(1)},
+\qquad
+K_{3,3}^{(b)}=T_b(Y_3),
+$$
+且每个 $T_b$ 的相似比例为 $1/2$，所以每个 $K_{3,3}^{(b)}$ 的 Hausdorff 维数都是 $s$。对任意 $q>s$，两个部分的 $q$-维 Hausdorff 测度都为零，所以其有限并的 $q$-维测度也为零；另一方面并集包含任一维数为 $s$ 的部分。因此
+$$
+\dim_{\mathrm H}(K_{3,3},d)=s.
+$$
+证毕。
+
+**定义 66.6（锚定移位与翻转余循环）。**
+
+在锚定坐标 $\{0,1\}\times Y_k$ 上定义
+$$
+a(c):=1-c_0\in\{0,1\},
+\qquad
+F(b,c):=(b\oplus a(c),\sigma c).
+$$
+定义平凡直积移位
+$$
+G(b,c):=(b,\sigma c).
+$$
+
+**定理 66.7（锚定动力学的 skew-product 公式、周期 lift 奇偶律与非平凡性）。**
+
+锚定同胚满足
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F.
+$$
+对每个整数 $n\ge1$，
+$$
+F^n(b,c) = \left(
+b\oplus\bigoplus_{j=0}^{n-1}(1-c_j),
+\ \sigma^n c
+\right).
+$$
+
+若 $n\ge1$ 且 $\sigma^n c=c$，令
+$$
+z_n(c):=\#\{0\le j<n:c_j=0\}.
+$$
+则：
+
+1. 若 $z_n(c)$ 为偶数，则两个锚定 lifts 都被 $F^n$ 固定，因此两者都是 $n$-周期点；
+2. 若 $z_n(c)$ 为奇数，则 $F^n$ 交换两个 lifts，因此没有 lift 被 $F^n$ 固定，而两个 lifts 都被 $F^{2n}$ 固定；
+3. 若 $n$ 是 $c$ 的最小正周期，则在偶数情形每个 lifted 点的最小正周期恰为 $n$，在奇数情形恰为 $2n$。
+
+此外，对每个 $k\ge2$，动力系统
+$$
+(\{0,1\}\times Y_k,F)
+\quad\text{与}\quad
+(\{0,1\}\times Y_k,G)
+$$
+不存在任何拓扑共轭。特别地，不存在形如
+$$
+H_h(b,c)=(b\oplus h(c),c)
+$$
+的连续纤维保持 gauge 共轭把 $F$ 化为 $G$。
+
+**证明。**
+
+若 $\Theta(x)=(b,c)$，则
+$$
+(\sigma x)_0=x_1=x_0\oplus(1-c_0)=b\oplus a(c),
+$$
+而
+$$
+R(\sigma x)=\sigma R(x)=\sigma c.
+$$
+因此
+$$
+\Theta(\sigma x)=F(\Theta x),
+$$
+即得共轭公式。连续迭代时，每一步把锚异或当前值
+$$
+a(\sigma^jc)=1-c_j,
+$$
+所以得到 $F^n$ 的公式。
+
+若 $\sigma^n c=c$，则经过 $n$ 步的锚总翻转量为
+$$
+\bigoplus_{j=0}^{n-1}(1-c_j)
+=z_n(c)\pmod2.
+$$
+因此偶数时锚复原，奇数时锚交换；第二次走过同一 $n$-块时再翻转一次，故奇数情形在 $2n$ 步后复原。这证明前两项。
+
+若 $n$ 是 $c$ 的最小正周期，而某个 lift 的正周期为 $m$，则其第二坐标满足
+$$
+\sigma^m c=c,
+$$
+所以 $n\mid m$。偶数情形 $m=n$ 已经可行，因此最小正周期是 $n$。奇数情形走一个 $n$-块会交换锚，走奇数个 $n$-块仍交换锚，只有走偶数个 $n$-块才复原；最小可行倍数因此是 $2n$。
+
+最后，$Y_k$ 的移位不动点只有 $0^\infty$：另一个二进制常值点 $1^\infty$ 含有 $1^{k-1}$，不属于 $Y_k$。所以 $G$ 有恰好两个不动点
+$$
+(0,0^\infty),\qquad(1,0^\infty).
+$$
+而 $F$ 在唯一可能的基底不动点 $0^\infty$ 上把锚翻转，故 $F$ 没有不动点。拓扑共轭保持不动点集合的基数，因此 $F$ 与 $G$ 不可能拓扑共轭。
+
+若进一步假设存在连续 $h:Y_k\to\{0,1\}$ 使 $H_h$ 把 $F$ 共轭到 $G$，则所需 coboundary 方程为
+$$
+a(c)=h(c)\oplus h(\sigma c).
+$$
+在 $c=0^\infty$ 处左侧为 $1$，右侧为
+$$
+h(c)\oplus h(c)=0,
+$$
+矛盾。证毕。
+
+**假设 66.8（Borel 概率结构）。**
+
+以下所有概率均取 $K_{k,k}$ 与 $Y_k$ 的乘积拓扑 Borel $\sigma$-代数。二者都是 Cantor 空间 $\{0,1\}^{\mathbb N}$ 的闭子空间，故紧且可度量，因而是标准 Borel 空间。
+
+**定理 66.9（任意关系律的全部 Borel lifts、唯一补不变 lift 与公平锚平稳性）。**
+
+令 $\mu$ 为 $Y_k$ 上任意 Borel 概率。对任意 Borel 函数
+$$
+q:Y_k\longrightarrow[0,1],
+$$
+定义 $\{0,1\}\times Y_k$ 上的概率 $\eta_q$：对每个 Borel 集 $E\subseteq\{0,1\}\times Y_k$，
+$$
+\eta_q(E)
+:=
+\int_{Y_k}
+\left(
+q(c)\mathbf 1_E(0,c)
++(1-q(c))\mathbf 1_E(1,c)
+\right)\,d\mu(c).
+$$
+等价地可写成
+$$
+\eta_q(db,dc) = \bigl(q(c)\delta_0(db)+(1-q(c))\delta_1(db)\bigr)\mu(dc).
+$$
+并定义
+$$
+\lambda_q:=(\Theta^{-1})_*\eta_q.
+$$
+则
+$$
+R_*\lambda_q=\mu.
+$$
+
+反过来，若 $\lambda$ 是 $K_{k,k}$ 上任意满足
+$$
+R_*\lambda=\mu
+$$
+的 Borel 概率，则存在 Borel 函数 $q:Y_k\to[0,1]$，在 $\mu$-几乎处处意义下唯一，使
+$$
+\Theta_*\lambda=\eta_q.
+$$
+两个 Borel 函数 $q,q'$ 给出同一个 lift 当且仅当
+$$
+q=q'\qquad\mu\text{-几乎处处}.
+$$
+其中 $q$ 可取为正则条件概率的一个版本：
+$$
+q(c)=\Pr_\lambda(x_0=0\mid R(x)=c)
+\qquad\mu\text{-几乎处处}.
+$$
+
+在这些 lifts 中，存在唯一满足
+$$
+C_*\lambda=\lambda
+$$
+的概率，记为 $\lambda_{\mathrm{fair}}$。它由
+$$
+q(c)=\frac12
+\qquad\mu\text{-几乎处处}
+$$
+给出，即若
+$$
+U:=\frac12(\delta_0+\delta_1),
+$$
+则
+$$
+\Theta_*\lambda_{\mathrm{fair}}=U\otimes\mu.
+$$
+
+这一公平锚 lift 满足精确平稳性判据
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}
+\quad\Longleftrightarrow\quad
+\sigma_*\mu=\mu.
+$$
+此外，对每个 $j\ge0$，在 $\lambda_{\mathrm{fair}}$ 下
+$$
+\Pr(x_j=0)=\Pr(x_j=1)=\frac12,
+$$
+并且随机变量 $x_j$ 与整个关系记录 $R(x)$ 独立；但不同位置的原位数字一般并不相互独立。
+
+**证明。**
+
+先证由 $q$ 构造的测度确为 lift。由定义，$\eta_q$ 的总质量为
+$$
+\int_{Y_k}(q(c)+1-q(c))\,d\mu(c)=1,
+$$
+并且它的第二坐标边缘是 $\mu$。又因为
+$$
+R\circ\Theta^{-1}(b,c)=c,
+$$
+所以
+$$
+R_*\lambda_q
+=R_*(\Theta^{-1})_*\eta_q
+=\mu.
+$$
+若 $q=q'$ 在 $\mu$-几乎处处相等，则 $\eta_q=\eta_{q'}$，从而 $\lambda_q=\lambda_{q'}$。反之，若 $\lambda_q=\lambda_{q'}$，对两边施加 $\Theta_*$ 得 $\eta_q=\eta_{q'}$。
+
+现取任意满足 $R_*\lambda=\mu$ 的 $\lambda$，令
+$$
+\widetilde\lambda:=\Theta_*\lambda.
+$$
+定义 $Y_k$ 上有限测度
+$$
+\nu_0(A):=\widetilde\lambda(\{0\}\times A),
+\qquad
+\nu_1(A):=\widetilde\lambda(\{1\}\times A).
+$$
+由于 $\widetilde\lambda$ 的第二边缘是 $\mu$，有
+$$
+\nu_0+\nu_1=\mu.
+$$
+因此 $\nu_0\ll\mu$。Radon--Nikodym 定理给出 Borel 版本
+$$
+q:=\frac{d\nu_0}{d\mu}.
+$$
+它满足 $0\le q\le1$ 在 $\mu$-几乎处处成立；在一个 $\mu$-零测集上修改其值后，可令 $q$ 处处取值于 $[0,1]$。同时
+$$
+\frac{d\nu_1}{d\mu}=1-q.
+$$
+于是
+$$
+\widetilde\lambda=\eta_q.
+$$
+Radon--Nikodym 导数的唯一性给出 $q$ 的 $\mu$-几乎处处唯一性，并且若 $\eta_q=\eta_{q'}$，取集合 $\{0\}\times A$ 可知
+$$
+\int_A q\,d\mu=\int_A q'\,d\mu
+$$
+对每个 Borel $A$ 成立，所以 $q=q'$ $\mu$-几乎处处。由于这里的空间是标准 Borel，正则条件概率存在，因此 $q$ 可解释为所写条件锚权重的一个版本。
+
+在锚定坐标中，补变换对应
+$$
+J(b,c):=(1-b,c),
+\qquad
+\Theta\circ C=J\circ\Theta.
+$$
+若 $C_*\lambda=\lambda$，则 $J_*\widetilde\lambda=\widetilde\lambda$，所以对每个 Borel 集 $A\subseteq Y_k$，
+$$
+\nu_0(A)=\nu_1(A).
+$$
+结合 $\nu_0+\nu_1=\mu$，得到
+$$
+\nu_0=\nu_1=\frac12\mu,
+$$
+即 $q=1/2$ $\mu$-几乎处处。反之，$U\otimes\mu$ 显然对 $J$ 不变，所以补不变 lift 存在且唯一。
+
+再证平稳性。若 $(B,C)\sim U\otimes\mu$，则条件于 $C=c$，随机变量
+$$
+B\oplus a(c)
+$$
+仍是公平位。因此对任意有界 Borel 函数 $h$，
+$$
+\int h\,dF_*(U\otimes\mu) = \int\frac{h(0,\sigma c)+h(1,\sigma c)}2\,d\mu(c).
+$$
+这正是
+$$
+F_*(U\otimes\mu)=U\otimes(\sigma_*\mu).
+$$
+结合
+$$
+\Theta\circ\sigma\circ\Theta^{-1}=F
+$$
+可知，若 $\sigma_*\mu=\mu$，则
+$$
+\sigma_*\lambda_{\mathrm{fair}}=\lambda_{\mathrm{fair}}.
+$$
+反过来，若公平锚 lift 平稳，则利用
+$$
+R\circ\sigma=\sigma\circ R
+$$
+得到
+$$
+\sigma_*\mu
+=\sigma_*R_*\lambda_{\mathrm{fair}}
+=R_*\sigma_*\lambda_{\mathrm{fair}}
+=R_*\lambda_{\mathrm{fair}}
+=\mu.
+$$
+
+最后，在锚定坐标中对每个 $j\ge0$ 有
+$$
+x_j = B\oplus\bigoplus_{\ell=0}^{j-1}(1-c_\ell),
+$$
+其中 $j=0$ 时空异或约定为 $0$。条件于整个 $c$，右侧只是公平位 $B$ 与一个确定常数异或，所以
+$$
+\Pr(x_j=0\mid c)=\Pr(x_j=1\mid c)=\frac12
+$$
+对 $\mu$-几乎每个 $c$ 成立。因此对每个 Borel 集 $A\subseteq Y_k$ 与 $a\in\{0,1\}$，
+$$
+\Pr(x_j=a,\ R(x)\in A)=\frac12\mu(A)
+=\Pr(x_j=a)\Pr(R(x)\in A).
+$$
+这既证明每个 $x_j$ 公平，也证明 $x_j$ 与整个关系记录独立。
+
+不同 $x_j$ 不必相互独立。取
+$$
+\mu=\delta_{0^\infty}.
+$$
+公平 lift 在两个交替序列上各给质量 $1/2$，并且
+$$
+x_{j+1}=1-x_j
+\qquad\text{几乎必然}.
+$$
+故相邻原位数字完全反相关，不能相互独立。证毕。
+
+**假设 66.10（平稳黄金均值关系律）。**
+
+令
+$$
+\phi:=\frac{1+\sqrt5}{2},
+\qquad
+\alpha:=\frac{\sqrt5-1}{2}=\phi^{-1},
+\qquad
+\alpha+\alpha^2=1,
+$$
+并令关系过程
+$$
+c=(c_j)_{j\ge0}
+$$
+服从状态 $0,1$ 上的平稳 Markov 律
+$$
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right),
+\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+这给出 $Y_3$ 上的平稳 no-$11$ 关系律 $\mu_{\mathrm{st}}$。
+
+**定理 66.11（关系位的二点相关）。**
+
+置
+$$
+p:=\mathbb E[c_0]=\pi_1=\frac{\alpha^2}{1+\alpha^2},
+\qquad
+\vartheta:=-\alpha^2=-\phi^{-2}.
+$$
+则对每个 $n\ge0$，
+$$
+\operatorname{Cov}(c_0,c_n)
+=p(1-p)\vartheta^n.
+$$
+因此 Pearson 相关系数为
+$$
+\boxed{\ \operatorname{Corr}(c_0,c_n)=(-\phi^{-2})^n\ }.
+$$
+等价地，
+$$
+\mathbb E[c_0c_n]
+=p^2+p(1-p)(-\phi^{-2})^n.
+$$
+
+若定义符号关系位
+$$
+g_j:=2c_j-1\in\{-1,1\},
+$$
+则
+$$
+\mathbb E[g_0]=-\frac1{\sqrt5},
+\qquad
+\mathbb E[g_0g_n]
+=\frac15+\frac45(-\phi^{-2})^n.
+$$
+
+**证明。**
+
+令 $f(i):=i-p$，按列向量写成
+$$
+f=
+\frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^2\\1\end{pmatrix}.
+$$
+直接计算
+$$
+Pf = \frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^3+\alpha^2\\-\alpha^2\end{pmatrix} = \frac1{1+\alpha^2}
+\begin{pmatrix}\alpha^4\\-\alpha^2\end{pmatrix} = -\alpha^2 f,
+$$
+其中使用
+$$
+1-\alpha=\alpha^2.
+$$
+因此由 Markov 性，
+$$
+\mathbb E[f(c_n)\mid c_0]
+=(P^nf)(c_0)
+=\vartheta^n f(c_0).
+$$
+于是
+$$
+\operatorname{Cov}(c_0,c_n) = \mathbb E[f(c_0)f(c_n)] = \vartheta^n\mathbb E[f(c_0)^2] = \vartheta^n p(1-p).
+$$
+因 $0<p<1$，除以方差得到 Pearson 相关公式。
+
+又因为 $g=2c-1$，
+$$
+\mathbb E[g_0]=2p-1
+=-\frac{\alpha}{1+\alpha^2}
+=-\frac1{\sqrt5}.
+$$
+所以
+$$
+\operatorname{Var}(g_0)=1-\frac15=\frac45.
+$$
+仿射变换不改变非退化二变量的 Pearson 相关系数，故
+$$
+\mathbb E[g_0g_n] = \mathbb E[g_0]^2+\operatorname{Var}(g_0)\vartheta^n = \frac15+\frac45\vartheta^n.
+$$
+证毕。
+
+**定理 66.12（公平锚重构位的相关、传递矩阵、递推与精确谱）。**
+
+令 $\lambda_{\mathrm{fair}}$ 是上述平稳关系律 $\mu_{\mathrm{st}}$ 的公平锚 lift，并定义原位自旋
+$$
+S_j:=(-1)^{x_j}\in\{-1,1\}.
+$$
+则对每个 $j\ge0$，
+$$
+\mathbb E[S_j]=0.
+$$
+对任意 $j,n\ge0$，
+$$
+\mathbb E[S_jS_{j+n}]=a_n,
+$$
+其中
+$$
+a_0:=1,
+\qquad
+a_n:=\mathbb E\prod_{\ell=0}^{n-1}(2c_\ell-1)\quad(n\ge1).
+$$
+
+置
+$$
+G:=\operatorname{diag}(-1,1),
+\qquad
+M:=PG = \begin{pmatrix}
+-\alpha&\alpha^2\\
+-1&0
+\end{pmatrix}.
+$$
+则对 $n\ge1$，
+$$
+a_n = \pi G M^{n-1}
+\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+矩阵 $M$ 的特征多项式与特征根分别为
+$$
+r^2+\alpha r+\alpha^2,
+\qquad
+r_\pm=\alpha e^{\pm2\pi i/3}.
+$$
+序列 $a_n$ 对所有 $n\ge0$ 满足
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0,
+$$
+并且
+$$
+a_0=1,\qquad
+a_1=-\frac1{\sqrt5}.
+$$
+其精确闭式为
+$$
+\boxed{\ 
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right)
+\ }.
+$$
+等价地，
+$$
+a_{3m}=\alpha^{3m},\qquad
+a_{3m+1}=-\frac{\alpha^{3m}}{\sqrt5},\qquad
+a_{3m+2}=-\frac{\alpha^{3m+3}}{\sqrt5}
+\qquad(m\ge0).
+$$
+
+由于每个 $x_j$ 都是公平 Bernoulli 位，
+$$
+\operatorname{Cov}(x_j,x_{j+n})=\frac14a_n,
+\qquad
+\boxed{\ \operatorname{Corr}(x_j,x_{j+n})=a_n\ }.
+$$
+因此重构位相关具有角相位 $2\pi/3$ 的三步振荡和指数包络 $\phi^{-n}$；关系位相关则是实特征值 $-\phi^{-2}$ 产生的周期 2 的符号交替和包络 $\phi^{-2n}$。两种相关的相位结构与衰减率都不同。
+
+**证明。**
+
+由重构递推，
+$$
+x_{\ell+1}=x_\ell\oplus(1-c_\ell).
+$$
+所以
+$$
+S_{\ell+1} = (-1)^{x_{\ell+1}} = S_\ell(-1)^{1-c_\ell} = S_\ell(2c_\ell-1).
+$$
+迭代得到
+$$
+S_{j+n} = S_j\prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+由于 $S_j^2=1$，
+$$
+S_jS_{j+n} = \prod_{\ell=j}^{j+n-1}(2c_\ell-1).
+$$
+关系律平稳，因此其期望只依赖 $n$，即为 $a_n$。公平锚定理还给出每个 $x_j$ 都公平，故每个 $S_j$ 的均值为零。
+
+对 $n\ge1$，令 $g(0)=-1,g(1)=1$。展开 Markov 路径概率，
+$$
+a_n = \sum_{i_0,\ldots,i_{n-1}}
+\pi_{i_0}g(i_0)
+P_{i_0i_1}g(i_1)\cdots
+P_{i_{n-2}i_{n-1}}g(i_{n-1}).
+$$
+这正是
+$$
+a_n=\pi G(PG)^{n-1}\mathbf 1
+=\pi G M^{n-1}\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+直接计算
+$$
+\det(rI-M) = \det
+\begin{pmatrix}
+r+\alpha&-\alpha^2\\
+1&r
+\end{pmatrix} = r^2+\alpha r+\alpha^2.
+$$
+因此
+$$
+r_\pm = \frac{-\alpha\pm i\sqrt3\,\alpha}{2} = \alpha e^{\pm2\pi i/3}.
+$$
+由 Cayley--Hamilton，
+$$
+M^2+\alpha M+\alpha^2I=0.
+$$
+左乘 $\pi G M^{n-1}$、右乘 $\begin{pmatrix}1\\1\end{pmatrix}$，可知
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0
+$$
+对所有 $n\ge1$ 成立。
+
+现检查 $n=0$ 的递推端点。首先
+$$
+a_1 = \pi_1-\pi_0 = -\frac{\alpha}{1+\alpha^2} = -\frac1{\sqrt5}.
+$$
+其次，由 $\pi_1=\alpha^2\pi_0$、$1+\alpha^2=\alpha\sqrt5$ 与 $\alpha^3=2\alpha-1$，
+$$
+\begin{aligned}
+a_2
+&=
+\pi_0(\alpha-\alpha^2)-\pi_1\\
+&=
+\frac{\alpha-2\alpha^2}{1+\alpha^2}\\
+&=
+\frac{1-2\alpha}{\sqrt5} = -\frac{\alpha^3}{\sqrt5}.
+\end{aligned}
+$$
+又因为
+$$
+\sqrt5=\alpha^{-1}+\alpha,
+$$
+有
+$$
+a_2+\alpha a_1+\alpha^2a_0 = -\frac{\alpha^3+\alpha}{\sqrt5}+\alpha^2
+=0.
+$$
+所以递推对所有 $n\ge0$ 成立。
+
+具有特征根
+$$
+\alpha e^{\pm2\pi i/3}
+$$
+且满足 $a_0=1,a_1=-1/\sqrt5$ 的唯一实递推解为
+$$
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right).
+$$
+按 $n\bmod3$ 代入即得三条分段公式。
+
+最后，
+$$
+x_j-\frac12=-\frac12S_j.
+$$
+因此
+$$
+\operatorname{Cov}(x_j,x_{j+n}) = \frac14\mathbb E[S_jS_{j+n}] = \frac14a_n.
+$$
+又因
+$$
+\operatorname{Var}(x_j)=\frac14,
+$$
+Pearson 相关恰为 $a_n$。证毕。
+
+## 66.99 追加锚
+
+## 67. 有限时空关系的共同见证、循环约束与概率提升
+
+**定义 67.0（有限关系网络、差分与锚点）。**
+
+设 $G=(V,E)$ 为有限简单无向图：$V$ 是有限集合，
+$$
+E\subseteq\{\{u,v\}:u,v\in V,\ u\neq v\},
+$$
+因此不含自环与平行边。允许 $V=\varnothing$ 与 $E=\varnothing$。令 $\mathbb F_2=\{0,1\}$，加法均模 $2$。顶点配置空间与边标签空间分别为
+$$
+C^0(G)=\mathbb F_2^V,\qquad C^1(G)=\mathbb F_2^E.
+$$
+定义边差分
+$$
+(\delta x)_{\{u,v\}}=x_u+x_v.
+$$
+把孤立顶点也计为连通分量；记分量数为 $c(G)$，约定 $c(\varnothing,\varnothing)=0$。若每个非空连通分量 $K$ 选一根 $o_K$，则向量
+$$
+(x_{o_K})_K\in\mathbb F_2^{c(G)}
+$$
+称为锚点。对一条简单循环 $C=e_1\cdots e_m$，定义其标签奇偶为
+$$
+\langle y,C\rangle=\sum_{i=1}^m y_{e_i}\in\mathbb F_2.
+$$
+
+**定理 67.1（循环零奇偶恰好刻画共同顶点见证）。**
+
+对任意 $y\in C^1(G)$，下列条件等价：
+$$
+\exists x\in C^0(G)\quad \delta x=y;
+$$
+$$
+\forall\text{ 简单循环 }C\subseteq G,\quad \langle y,C\rangle=0.
+$$
+若它们成立，则任意给定的每分量一个锚点值恰有一个顶点配置实现 $y$；故每个可实现边标签恰有 $2^{c(G)}$ 个顶点提升，
+$$
+|\operatorname{im}\delta|=2^{|V|-c(G)}.
+$$
+若 $T$ 是一棵生成森林，则
+$$
+|T|=|V|-c(G),
+$$
+非森林边数
+$$
+\beta_1(G)=|E|-|V|+c(G)
+$$
+等于 $\mathbb F_2$ 循环空间的维数；相对于 $T$ 的基本循环构成一组基。于是若所有边先独立取公平比特，则所得标签可由共同顶点配置实现的概率恰为
+$$
+2^{-\beta_1(G)}=2^{-(|E|-|V|+c(G))}.
+$$
+这包括 $E=\varnothing$ 与非连通情形；特别地，空图时两端计数均为 $1$。
+
+**证明。** 若 $y=\delta x$，沿循环 $v_0v_1\cdots v_m=v_0$ 求和，
+$$
+\sum_{i=0}^{m-1}(x_{v_i}+x_{v_{i+1}})
+=2\sum_{i=0}^{m-1}x_{v_i}
+=0
+$$
+于 $\mathbb F_2$，故每个循环奇偶为零。
+
+反之，在每个非空连通分量 $K$ 取根 $o_K$ 和生成树 $T_K$，其并为生成森林 $T$。给定锚点 $a_K\in\mathbb F_2$，对 $v\in K$ 定义
+$$
+x_v=a_K+\sum_{e\in P_T(o_K,v)}y_e,
+$$
+其中 $P_T(o_K,v)$ 是树中唯一简单路径；根处为空和。若 $e=\{u,v\}\in T$，两条根路径的对称差恰为该树边，故
+$$
+x_u+x_v=y_e.
+$$
+若 $e\notin T$，树中 $u,v$ 的唯一路径与 $e$ 组成一个基本简单循环 $C_e$。循环零奇偶给出
+$$
+y_e=\sum_{f\in P_T(u,v)}y_f=x_u+x_v.
+$$
+所以 $\delta x=y$。构造又表明锚点一旦固定，所有顶点值唯一。
+
+若 $\delta x=\delta x'$，则 $z=x+x'$ 满足 $\delta z=0$，故每条边两端的 $z$ 相等；沿路径传播可知 $z$ 在每个连通分量上常值。反之，每分量整体翻转显然不改边差分，因此每个纤维恰有 $2^{c(G)}$ 个元素。由
+$$
+|C^0(G)|=2^{|V|}
+$$
+得
+$$
+|\operatorname{im}\delta|=2^{|V|-c(G)}.
+$$
+
+每个含 $n_K$ 个顶点的非空分量的生成树有 $n_K-1$ 条边，求和得 $|T|=|V|-c(G)$。每条非树边 $e$ 给出基本循环 $C_e$，而 $C_e$ 含有非树边 $e$ 且不含任何别的非树边，所以这些基本循环线性无关。任一循环的边集依次与其所含非树边对应的基本循环作对称差，可消去全部非树边；所得剩余边集仍使每个顶点具有偶数度且完全支撑在森林中。若它非空，其有限森林子图必有一个度为 $1$ 的叶顶点，与偶度矛盾，故剩余为空。因此基本循环张成整个循环空间，维数为非树边数 $|E|-|V|+c(G)$。独立公平边标签在 $2^{|E|}$ 个标签上均匀，而其中可实现者恰有 $2^{|V|-c(G)}$ 个，故概率为上述值。
+
+数学引文与复用：本定理的二元循环判据及按连通分量选根、沿路径构造顶点位的论证，显式复用 RRO 定理 61.5 中的一般二元图论部分，而不援引其完整的 2-adic 估值分类；见 [RRO 定理 61.5](https://raw.githubusercontent.com/the-omega-institute/trureturing/e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。另见 Frank Harary, “On the notion of balance of a signed graph,” *Michigan Mathematical Journal* 2(2) (1953), 143–146, DOI: 10.1307/mmj/1028989917，<https://doi.org/10.1307/mmj/1028989917>。该文给出 signed-graph balance 的经典表述；这里所需的 $\mathbb F_2$ 结论已在上文直接证明，不依赖外部定理编号。证毕。
+
+**定义 67.2（开矩形网格）。**
+
+取整数 $M,N\geq1$。顶点为
+$$
+V_{M,N}=\{0,\ldots,M-1\}\times\{0,\ldots,N-1\}.
+$$
+水平边记
+$$
+s_{i,j}\quad(0\leq i<M,\ 0\leq j<N-1),
+$$
+连接 $(i,j)$ 与 $(i,j+1)$；竖直边记
+$$
+u_{i,j}\quad(0\leq i<M-1,\ 0\leq j<N),
+$$
+连接 $(i,j)$ 与 $(i+1,j)$。这里 $s,u$ 同时记相应边上的 $\mathbb F_2$ 标签。一个基本方格 $(i,j)$，其中 $0\leq i<M-1$、$0\leq j<N-1$，满足方格方程
+$$
+s_{i,j}+s_{i+1,j}=u_{i,j}+u_{i,j+1},
+$$
+等价地四条边之和为零。若 $M=1$ 或 $N=1$，基本方格集合为空。
+
+**定理 67.3（开矩形中局部方格方程充分且独立）。**
+
+对开矩形网格的任意边标签，存在顶点配置 $x_{i,j}$ 使
+$$
+s_{i,j}=x_{i,j}+x_{i,j+1},\qquad
+u_{i,j}=x_{i,j}+x_{i+1,j}
+$$
+当且仅当全部基本方格方程成立。此时任取一个根比特 $a=x_{0,0}$ 后提升唯一，具体可取
+$$
+x_{i,j}=a+\sum_{k=0}^{i-1}u_{k,0}
++\sum_{\ell=0}^{j-1}s_{i,\ell},
+$$
+其中空和为零。可实现边标签共有
+$$
+2^{MN-1}
+$$
+个；边总数为
+$$
+|E|=M(N-1)+(M-1)N=2MN-M-N,
+$$
+方格数为
+$$
+Q=(M-1)(N-1).
+$$
+因此这 $Q$ 个方格线性方程彼此独立，而独立公平边标签满足它们、等价地具有共同顶点见证的概率恰为
+$$
+2^{-Q}.
+$$
+
+**证明。** 若边来自顶点差分，每个方格的四个顶点各出现两次，方格和必为零。反之假设全部方格方程成立，并按所给公式定义 $x$。水平边立即满足
+$$
+x_{i,j}+x_{i,j+1}=s_{i,j}.
+$$
+对竖直边，固定 $i<M-1$。当 $j=0$ 时定义直接给出
+$$
+x_{i,0}+x_{i+1,0}=u_{i,0}.
+$$
+当 $j>0$ 时，
+$$
+\begin{aligned}
+x_{i,j}+x_{i+1,j}
+&=u_{i,0}
++\sum_{\ell=0}^{j-1}(s_{i,\ell}+s_{i+1,\ell})\\
+&=u_{i,0}
++\sum_{\ell=0}^{j-1}(u_{i,\ell}+u_{i,\ell+1})\\
+&=u_{i,j},
+\end{aligned}
+$$
+中间项在 $\mathbb F_2$ 中两两消去。故构造确为共同见证。网格在 $M,N\geq1$ 时连通，所以前一定理给出每个可实现标签两个互补提升以及 $2^{MN-1}$ 个可实现标签。总标签数为 $2^{2MN-M-N}$，故可实现比例
+$$
+2^{MN-1-(2MN-M-N)}
+=2^{-(M-1)(N-1)}.
+$$
+另一方面，全部方格方程的公共核正是可实现标签空间，维数为 $MN-1$，故方程组的秩为
+$$
+(2MN-M-N)-(MN-1)
+=(M-1)(N-1)
+=Q.
+$$
+共有恰 $Q$ 个方程且秩为 $Q$，所以它们独立。若 $M=1$ 或 $N=1$，方格集合为空且网格是一棵路径；若 $M=N=1$，边集也为空，所有公式仍给出比例 $1$。证毕。
+
+**定义 67.4（周期矩形网格、plaquette 和与全局 holonomy）。**
+
+取 $M,N\geq3$，顶点为
+$$
+V=\mathbb Z/M\mathbb Z\times\mathbb Z/N\mathbb Z.
+$$
+水平边 $s_{i,j}$ 连接 $(i,j)$ 与 $(i,j+1)$，竖直边 $u_{i,j}$ 连接 $(i,j)$ 与 $(i+1,j)$，指标分别模 $M,N$。由于 $M,N\geq3$，这些是无自环、无平行边的简单图边。定义 plaquette 和
+$$
+p_{i,j}=s_{i,j}+u_{i,j+1}+s_{i+1,j}+u_{i,j}.
+$$
+称边标签 flat，当且仅当全部 $p_{i,j}=0$。定义第 $i$ 行和第 $j$ 列的 holonomy
+$$
+H_i=\sum_{j\in\mathbb Z/N\mathbb Z}s_{i,j},\qquad
+U_j=\sum_{i\in\mathbb Z/M\mathbb Z}u_{i,j}.
+$$
+
+**定理 67.5（周期网格：局部方格约束只差两个全局循环比特）。**
+
+在上述周期网格中：
+1. $MN$ 个 plaquette 方程只有一个线性关系，即
+$$
+\sum_{i,j}p_{i,j}=0,
+$$
+所以其秩为 $MN-1$。
+2. 若标签 flat，则 $H_i$ 与 $i$ 无关、$U_j$ 与 $j$ 无关；记公共值为 $H,U\in\mathbb F_2$。
+3. 一个 flat 标签来自单值周期顶点配置 $x$ 的边差分，当且仅当
+$$
+H=U=0.
+$$
+4. flat 边标签空间维数为 $MN+1$。holonomy 映射
+$$
+\operatorname{Hol}:\{y:p(y)=0\}\longrightarrow\mathbb F_2^2,\qquad
+y\longmapsto(H,U)
+$$
+满射；四个 holonomy 扇区各含 $2^{MN-1}$ 个标签。因而在 flat 标签的均匀分布下，具有单值周期顶点提升的比例恰为 $1/4$。
+5. 在全部 $2^{2MN}$ 个边标签中，flat 比例为 $2^{-(MN-1)}$，真正可由周期顶点提升者比例为 $2^{-(MN+1)}$。
+
+**证明。** 每条水平边 $s_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i-1,j}$ 中，每条竖直边 $u_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i,j-1}$ 中，所以所有 plaquette 求和为零。反过来，若系数 $\lambda_{i,j}\in\mathbb F_2$ 满足
+$$
+\sum_{i,j}\lambda_{i,j}p_{i,j}\equiv0
+$$
+作为边变量的恒等式，则比较 $s_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i-1,j}=0,
+$$
+比较 $u_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i,j-1}=0.
+$$
+沿两个周期方向传播可知所有 $\lambda_{i,j}$ 相同，故关系空间恰为由全 $1$ 系数生成的一维空间，plaquette 秩为 $MN-1$。
+
+若 $p=0$，对固定 $i$ 求和全部 $j$，竖直边各出现两次并消去，得到
+$$
+H_i+H_{i+1}=0.
+$$
+故所有 $H_i$ 相同。同理对固定 $j$ 求和全部 $i$，得
+$$
+U_j+U_{j+1}=0,
+$$
+所以所有 $U_j$ 相同。
+
+若边标签为 $\delta x$，每个 plaquette 和为零，且任一闭合水平或竖直周期上的顶点值望远镜消去，所以 $H=U=0$。反之，设 $p=0$ 且 $H=U=0$。取代表 $0\leq i<M$、$0\leq j<N$，任取 $a\in\mathbb F_2$，定义
+$$
+x_{i,j}=a+\sum_{k=0}^{i-1}u_{k,0}
++\sum_{\ell=0}^{j-1}s_{i,\ell}.
+$$
+与开矩形同样的望远镜计算，使用所有 $0\leq i<M-1$、$0\leq j<N-1$ 的 plaquette 方程，给出全部不跨周期缝的水平、竖直边差分。对水平缝边，
+$$
+H=0
+\quad\Longrightarrow\quad
+s_{i,N-1}=\sum_{\ell=0}^{N-2}s_{i,\ell}
+=x_{i,N-1}+x_{i,0}.
+$$
+对竖直缝边，因 $U_j=U=0$，
+$$
+u_{M-1,j}=\sum_{i=0}^{M-2}u_{i,j}
+=x_{M-1,j}+x_{0,j}.
+$$
+所以 $x$ 是单值周期提升。
+
+边变量总维数是 $2MN$，plaquette 秩为 $MN-1$，故 flat 空间维数 $MN+1$。为证明 holonomy 满射，给定 $h,v\in\mathbb F_2$，定义 seam 标签
+$$
+s_{i,j}=
+\begin{cases}
+h,&j=N-1,\\
+0,&\text{否则},
+\end{cases}
+\qquad
+u_{i,j}=
+\begin{cases}
+v,&i=M-1,\\
+0,&\text{否则}.
+\end{cases}
+$$
+每个 plaquette 若遇到水平 seam 就同时含两条值为 $h$ 的水平边，若遇到竖直 seam 就同时含两条值为 $v$ 的竖直边；在两条 seam 的交会处两种成对消去同时发生，因此总和仍为零，而其 holonomy 恰为 $(h,v)$。所以四个扇区均非空，且它们是零 holonomy 子空间的四个仿射陪集。零 holonomy 子空间恰为 $\operatorname{im}\delta$，周期图连通且有 $MN$ 个顶点，故其维数为 $MN-1$，每个扇区大小均为 $2^{MN-1}$。flat 总数因此为
+$$
+4\cdot2^{MN-1}=2^{MN+1}.
+$$
+相除即得第 4、5 项中的各比例。证毕。
+
+**定理 67.6（奇偶无关的 seam 反例与扭曲提升）。**
+
+对任意 $M,N\geq3$，令
+$$
+s_{i,N-1}=1\quad\text{对所有 }i,\qquad
+s_{i,j}=0\quad(j\neq N-1),\qquad
+u_{i,j}=0.
+$$
+则该标签 flat，但
+$$
+H=1,\qquad U=0,
+$$
+因此不存在单值周期顶点提升；此结论与 $M,N$ 的奇偶无关。
+
+更一般地，每个 flat 周期标签 $y=(s,u)$ 与每个锚点 $a\in\mathbb F_2$ 在模 M,N 约化给出的周期拉回图论覆盖方格 $\mathbb Z^2$ 上恰有一个提升 $\widetilde x$，且该提升在坐标 (0,0) 处的值等于 a，其相邻差分等于周期拉回的边标签，并满足扭曲边界条件
+$$
+\widetilde x_{i,j+N}=\widetilde x_{i,j}+H,\qquad
+\widetilde x_{i+M,j}=\widetilde x_{i,j}+U.
+$$
+因此 $(H,U)$ 正是从局部 plaquette 条件到单值周期提升的全局障碍。
+
+**证明。** 第一组 seam 标签是前一定理满射构造的 $(h,v)=(1,0)$ 情形，故 flat，且每行恰一条水平边取 $1$，所以 $H=1$。前一定理遂排除单值周期提升；这里没有使用 $M$ 或 $N$ 的奇偶。
+
+对一般 flat 标签，把 $s,u$ 周期拉回 $\mathbb Z^2$，记为 $\widetilde s,\widetilde u$。定义有限路径和
+$$
+U(i)=
+\begin{cases}
+\sum_{k=0}^{i-1}\widetilde u_{k,0},&i>0,\\
+0,&i=0,\\
+\sum_{k=i}^{-1}\widetilde u_{k,0},&i<0,
+\end{cases}
+$$
+以及对每个固定 $i$，
+$$
+S_i(j)=
+\begin{cases}
+\sum_{\ell=0}^{j-1}\widetilde s_{i,\ell},&j>0,\\
+0,&j=0,\\
+\sum_{\ell=j}^{-1}\widetilde s_{i,\ell},&j<0.
+\end{cases}
+$$
+令
+$$
+\widetilde x_{i,j}=a+U(i)+S_i(j).
+$$
+则水平差分由定义直接满足
+$$
+\widetilde x_{i,j}+\widetilde x_{i,j+1}=\widetilde s_{i,j}
+$$
+对所有整数 $i,j$ 成立。对于竖直相邻点，当 $j>0$ 时，把 $0\leq \ell<j$ 的 plaquette 方程求和；当 $j<0$ 时，把 $j\leq \ell<0$ 的 plaquette 方程求和；当 $j=0$ 时无需 plaquette。三种情形都给出
+$$
+S_i(j)+S_{i+1}(j)=\widetilde u_{i,0}+\widetilde u_{i,j},
+$$
+其中 $j=0$ 时右侧为 $0$。结合
+$$
+U(i)+U(i+1)=\widetilde u_{i,0}
+$$
+得到
+$$
+\widetilde x_{i+1,j}+\widetilde x_{i,j}=\widetilde u_{i,j}.
+$$
+故 $\widetilde x$ 是全格点提升。若有另一提升同锚点，两者之差在每条相邻边两端相等；$\mathbb Z^2$ 连通，故两者处处相等。
+
+定义
+$$
+D_H(i,j)=\widetilde x_{i,j+N}+\widetilde x_{i,j}.
+$$
+由拉回边标签的 $N$-周期性，任意水平或竖直相邻两点上的 $D_H$ 值相等，所以 $D_H$ 在连通的 $\mathbb Z^2$ 上常值。在 $(0,0)$ 处，
+$$
+D_H(0,0)=\sum_{j=0}^{N-1}\widetilde s_{0,j}=H,
+$$
+故第一条扭曲边界式成立。同理
+$$
+D_U(i,j)=\widetilde x_{i+M,j}+\widetilde x_{i,j}
+$$
+为常值，且
+$$
+D_U(0,0)=\sum_{i=0}^{M-1}\widetilde u_{i,0}=U,
+$$
+得到第二式。若 $H=U=0$，提升对两个周期平移均不变，因而下降为单值周期顶点配置；若任一 holonomy 非零，则相应周期平移改变顶点值，不能下降。这再次识别了全局障碍。证毕。
+
+**定义 67.7（有限图上的概率提升与分量翻转）。**
+
+固定有限简单图 $G$，选每个非空连通分量一个根，记
+$$
+R(G)=\operatorname{im}\delta\subseteq C^1(G).
+$$
+有限集合均取离散拓扑及其 Borel $\sigma$-代数。定义
+$$
+\Phi:C^0(G)\longrightarrow R(G)\times\mathbb F_2^{c(G)},\qquad
+\Phi(x)=\bigl(\delta x,(x_{o_K})_K\bigr).
+$$
+令分量翻转群
+$$
+\mathcal H=\mathbb F_2^{c(G)}
+$$
+作用于顶点配置：若 $v\in K$，
+$$
+(g\cdot x)_v=x_v+g_K.
+$$
+给定 $R(G)$ 上的概率测度 $\nu$，定义其正质量支撑
+$$
+S_\nu=\{y\in R(G):\nu(y)>0\}.
+$$
+
+**定理 67.8（所有概率提升恰由正质量纤维上的条件锚点分布分类）。**
+
+映射 $\Phi$ 是双射。固定任意概率测度 $\nu$ 于 $R(G)$ 后，满足
+$$
+\delta_*\mu=\nu
+$$
+的顶点概率测度 $\mu$ 与族
+$$
+(q_y)_{y\in S_\nu},\qquad
+q_y\in\operatorname{Prob}(\mathbb F_2^{c(G)}),
+$$
+一一对应。对应公式为：对 $y\in S_\nu$ 与 $a\in\mathbb F_2^{c(G)}$，
+$$
+\mu\{x:\delta x=y,\ (x_{o_K})_K=a\}=\nu(y)q_y(a),
+$$
+而对 $y\notin S_\nu$，上述每个点质量都等于 $0$。因此零质量纤维上不引入任何额外核坐标，所述对应是真正的一一对应。
+
+在给定 $\nu$ 的所有提升中，存在唯一一个对全部分量翻转 $g\in\mathcal H$ 不变的提升；它满足
+$$
+q_y(a)=2^{-c(G)}
+$$
+对每个 $y\in S_\nu$ 与每个 $a\in\mathbb F_2^{c(G)}$。因此在该不变提升下，条件于任一正质量边标签 $y$ 后，各分量锚点是相互独立的公平比特。
+
+**证明。** 前面的锚定重建定理说明：给定可实现边标签 $y$ 和每分量一个锚点 $a$，存在唯一顶点配置 $x$。所以 $\Phi$ 双射。有限集合上的测度可逐点写出。若 $\delta_*\mu=\nu$，则对每个 $y\in S_\nu$ 定义
+$$
+q_y(a)=\frac{\mu(\Phi^{-1}(y,a))}{\nu(y)}.
+$$
+对固定 $y$ 求和 $a$ 得 $1$，所以 $q_y$ 是概率分布。若 $y\notin S_\nu$，则
+$$
+0=\nu(y)=\sum_a\mu(\Phi^{-1}(y,a)),
+$$
+各项非负，故每一项都为 $0$；此处不存在需要选择的 $q_y$。反之，给定仅在 $S_\nu$ 上的族 $(q_y)$，按
+$$
+\mu(\Phi^{-1}(y,a))=
+\begin{cases}
+\nu(y)q_y(a),&y\in S_\nu,\\
+0,&y\notin S_\nu
+\end{cases}
+$$
+定义点质量，总质量为 $1$ 且边缘为 $\nu$。两个不同的核族在某个 $y\in S_\nu$ 上不同，就给出不同的点质量，故对应既满又单。
+
+分量翻转不改变任何边差分，并且在固定 $y$ 的纤维上把锚点 $a$ 变为 $a+g$。加法群 $\mathbb F_2^{c(G)}$ 在自身上自由传递，所以一个条件分布对全部平移不变当且仅当它在全部 $2^{c(G)}$ 个锚点上等质量。因此每个 $y\in S_\nu$ 上的条件分布被唯一强制为均匀分布，反之均匀分布显然不变。均匀分布在 $\mathbb F_2^{c(G)}$ 上就是各坐标独立公平；当 $c(G)=0$ 时这是单点空间上的唯一分布。证毕。
+
+**定理 67.9（iid 公平顶点先验的边结构）。**
+
+若顶点比特 $(x_v)_{v\in V}$ 独立且各为公平 Bernoulli，则：
+1. $\delta x$ 在 $R(G)$ 上均匀，且与所选分量锚点向量独立；锚点向量均匀于 $\mathbb F_2^{c(G)}$。
+2. 对任一生成森林 $T$，森林边差分 $(\delta x)_e$，$e\in T$，相互独立且公平。
+3. 每条简单非自环边的单边差分都公平。
+4. 非森林边由基本循环奇偶唯一强制。全部边差分相互独立当且仅当 $G$ 是森林。
+
+**证明。** iid 公平顶点律就是 $C^0(G)$ 上的均匀分布，而 $\Phi$ 是从 $C^0(G)$ 到
+$$
+R(G)\times\mathbb F_2^{c(G)}
+$$
+的双射，故像是乘积集合上的均匀分布，得到第一项。对生成森林，映射
+$$
+x\longmapsto\bigl((x_{o_K})_K,((\delta x)_e)_{e\in T}\bigr)
+$$
+同样由树上递推重建而为双射，故这些坐标在均匀顶点律下相互独立公平，得到第二项。第三项也可直接由一条边两端的两个独立公平比特异或为公平比特得到。对每条非树边，基本循环的零奇偶给出其值等于该循环其余树边标签之和，所以被强制。若 $G$ 是森林，全部边都属于某生成森林，故独立；若 $G$ 含循环，则该循环上的边标签满足一个非平凡确定奇偶关系，而每条边本身又公平。若这些边全体相互独立，它们在该循环上的联合分布应均匀支撑全部 $\mathbb F_2^{|C|}$，与确定奇偶关系矛盾。故全体边差分相互独立当且仅当 $G$ 是森林。证毕。
+
+**定义 67.10（部分边观察）。**
+
+对 $F\subseteq E$，令
+$$
+G_F=(V,F),
+$$
+并把孤立顶点计入其连通分量；记
+$$
+c_F=c(G_F).
+$$
+给定观察值 $z\in\mathbb F_2^F$，称其兼容，当且仅当存在 $x\in\mathbb F_2^V$ 使
+$$
+x_u+x_v=z_{\{u,v\}}\qquad(\{u,v\}\in F).
+$$
+
+**定理 67.11（精确部分观察、条件锚点与可判定的顶点对关系）。**
+
+部分观察 $z$ 兼容，当且仅当 $G_F$ 中每个简单循环的 $z$-奇偶为零。若兼容，则恰有
+$$
+2^{c_F}
+$$
+个顶点配置实现它。若先验是 iid 公平顶点律，则条件于该兼容观察后：
+1. 每个 $G_F$ 连通分量选一个根，其根比特相互独立且公平；
+2. 每个分量内其余顶点由根比特与所观测路径和唯一确定；
+3. 对任意顶点 $p,q$，$x_p+x_q$ 在条件分布下为确定值，当且仅当 $p,q$ 位于 $G_F$ 的同一连通分量；若二者位于不同分量，则 $x_p+x_q$ 是公平比特。
+
+**证明。** 把循环零奇偶定理应用于子图 $G_F$ 即得兼容判据和 $2^{c_F}$ 个提升。iid 公平先验给每个顶点配置相同质量 $2^{-|V|}$，所以条件在一个非空兼容纤维上后，就是该 $2^{c_F}$ 元纤维上的均匀分布。锚定重建把该纤维双射到 $\mathbb F_2^{c_F}$，故各分量根比特独立公平，其余顶点是相应根与固定路径和之和。
+
+若 $p,q$ 同分量，取任一 $F$-路径 $P$ 从 $p$ 到 $q$，则
+$$
+x_p+x_q=\sum_{e\in P}z_e,
+$$
+右边由观察完全确定且因循环兼容而与路径无关。若 $p,q$ 属于不同分量，则
+$$
+x_p=\alpha_p+A,\qquad x_q=\alpha_q+B,
+$$
+其中 $\alpha_p,\alpha_q$ 由观察固定，而 $A,B$ 是两个不同分量的独立公平锚点；故 $A+B$，从而 $x_p+x_q$，公平。证毕。
+
+**定理 67.12（时间边与空间边的共同见证判据）。**
+
+设 $F_t,F_s\subseteq E$ 分别是两类已观察边，给定标签
+$$
+z_t\in\mathbb F_2^{F_t},\qquad z_s\in\mathbb F_2^{F_s}.
+$$
+存在同一个顶点配置 $x\in\mathbb F_2^V$ 同时满足
+$$
+\delta x|_{F_t}=z_t,\qquad \delta x|_{F_s}=z_s
+$$
+当且仅当：
+$$
+z_t|_{F_t\cap F_s}=z_s|_{F_t\cap F_s},
+$$
+并且把二者合并为 $z\in\mathbb F_2^{F_t\cup F_s}$ 后，子图 $(V,F_t\cup F_s)$ 的每个简单循环都有
+$$
+\sum_{e\in C}z_e=0.
+$$
+条件成立时，共同见证恰有
+$$
+2^{c(V,F_t\cup F_s)}
+$$
+个。
+
+对于完整开矩形，将水平边与竖直边分别看作两类观察时，全部基本方格方程已经等价于这个全局循环条件；对于周期矩形，全部 plaquette 方程只保证 flat，仍必须额外要求两个 holonomy
+$$
+H=U=0
+$$
+才有共同单值周期见证。
+
+**证明。** 若共同见证存在，重叠边上的两种指定值都等于同一个 $\delta x$，故必须相等；合并标签也必在每个循环上零奇偶。反之，重叠一致使合并标签良定义，循环零奇偶定理应用于子图 $(V,F_t\cup F_s)$ 即产生共同顶点见证，并给出精确纤维大小。开矩形的进一步结论由其方格充分性定理；周期矩形的进一步结论由 holonomy 定理。证毕。
+
+**定义 67.13（路径上的差分标签、相等标签与全局补比特）。**
+
+对有限路径顶点
+$$
+x_0,x_1,\ldots,x_L\in\mathbb F_2
+$$
+定义相邻差分与相等标签
+$$
+r_j=x_j+x_{j+1},\qquad
+c_j=1-r_j=1+r_j
+\quad(0\leq j<L).
+$$
+因此 $c_j=1$ 恰表示 $x_j=x_{j+1}$。全局补变换为
+$$
+(\iota x)_j=x_j+1.
+$$
+
+**定理 67.14（有限路径关系商与 $000/111$ 禁形）。**
+
+对任意 $L\geq0$，映射 $x\mapsto r$ 满足：对每个配置 x，在其像 r 处的纤维恰为
+$$
+\{x,\iota x\};
+$$
+等价地，给定任意关系字 $r_0,\ldots,r_{L-1}$ 和一个锚点 $x_0=a$，所有 $x_j$ 唯一由递推
+$$
+x_{j+1}=x_j+r_j
+$$
+恢复。若 $L\geq2$，则顶点字中不出现 $000$ 或 $111$ 当且仅当相等标签字 $c$ 不出现相邻的 $11$；当 $L<2$ 时两种禁形条件都为空真。
+
+循环奇偶条件属于差分标签 $r$：在任意图循环 $C$ 上要求
+$$
+\sum_{e\in C}r_e=0.
+$$
+若改写成相等标签 $c_e=1+r_e$，则条件变成
+$$
+\sum_{e\in C}c_e\equiv |C|\pmod2,
+$$
+一般并不是 $\sum_{e\in C}c_e=0$。
+
+**证明。** 路径无循环，任意边差分都可递推实现；锚点只有 $0,1$ 两种，二者产生的提升逐点相差 $1$，故纤维恰为一对全局互补配置。三个连续顶点相等，当且仅当连接它们的两条边都满足相等，即 $c_j=c_{j+1}=1$，从而得到禁形等价。最后 $r_e=1+c_e$，故在循环上
+$$
+0=\sum_{e\in C}r_e
+=\sum_{e\in C}1+\sum_{e\in C}c_e
+=|C|+\sum_{e\in C}c_e
+$$
+于 $\mathbb F_2$，即得所述公式。证毕。
+
+## 67.99 追加锚
+
+## 68. 有限维隐藏状态的精确反馈尾判据
+
+**假设 68.1（有限维线性隐藏实现与已存在的 MF1 消元式）。** 设 $\Bbbk$ 为域，$V,H$ 为有限维 $\Bbbk$-向量空间，
+$$
+A:V\to V,\qquad B:H\to V,\qquad C:V\to H,\qquad D:H\to H
+$$
+为线性映射，且
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n.
+$$
+以下直接复用既有 MF1 消元恒等式，而不把它作为新结论：
+$$
+h_n=D^nh_0+\sum_{i=0}^{n-1}D^{\,n-1-i}Cy_i,
+$$
+$$
+y_{n+1}=Ay_n+BD^nh_0+\sum_{i=0}^{n-1}BD^{\,n-1-i}Cy_i.
+$$
+其中 $BD^jC$ 始终表示 $B\circ D^j\circ C$。仓内出处为 trureturing@e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5 的 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md`，MF.2 定理 MF1；标量专门化见 `docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md` 定理 7.1。
+
+**定义 68.2（反馈可达空间、不可观测空间与两个隐藏商）。** 令
+$$
+R=\operatorname{span}\{D^jCv:j\ge0,\ v\in V\},\qquad
+N=\bigcap_{j\ge0}\ker(BD^j).
+$$
+令
+$$
+Q_{\mathrm{fb}}=R/(R\cap N),\qquad Q_{\mathrm{init}}=H/N.
+$$
+若相应子空间对 $D$ 不变，则记诱导映射为
+$$
+\bar D_{\mathrm{fb}}[r]=[Dr],\qquad
+\bar D_{\mathrm{init}}[h]=[Dh].
+$$
+记反馈 Markov 参数
+$$
+M_j=BD^jC.
+$$
+对任意而非闭环强制生成的输入串 $u_0,\ldots,u_{n-1}\in V$，定义反馈输入输出项
+$$
+F_n(u_0,\ldots,u_{n-1}) =\sum_{i=0}^{n-1}M_{n-1-i}u_i.
+$$
+若存在 $m\in\mathbb N$ 使 $M_j=0$ 对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{fb}}$。若存在 $m$ 使 $BD^j=0$ 作为 $H\to V$ 的映射对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{init}}$。对零向量空间约定恒等映射也是零映射，所以零商空间的幂零指数为 $0$。
+
+**定理 68.3（精确有限反馈尾由可达的可见隐藏商控制）。** $R$ 与 $N$ 都对 $D$ 不变，故 $Q_{\mathrm{fb}}$ 上的 $\bar D_{\mathrm{fb}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+1. $M_j=0$ 对全部 $j\ge m$ 成立；
+2. $\bar D_{\mathrm{fb}}^{\,m}=0$；
+3. 对每个 $n$ 及任意两条输入串 $u,u'\in V^n$，只要它们在所有 $i\ge\max(0,n-m)$ 处相同，就有 $F_n(u)=F_n(u')$。
+
+因此有限反馈尾存在当且仅当 $\bar D_{\mathrm{fb}}$ 幂零；存在时，
+$$
+\tau_{\mathrm{fb}} =\min\{m:\bar D_{\mathrm{fb}}^{\,m}=0\}.
+$$
+特别地，
+$$
+\tau_{\mathrm{fb}}=0\iff Q_{\mathrm{fb}}=0
+\iff M_j=0\ \text{对全部 }j\ge0.
+$$
+这正说明反馈尾不是由全部隐藏坐标 $H$ 控制，也不是仅由 $H/N$ 控制，而是由其可达部分的可见商 $R/(R\cap N)$ 控制。经典实现论背景是 R. E. Kalman, “Mathematical Description of Linear Dynamical Systems”, J. SIAM Control Ser. A 1(2), 152–192 (1963), DOI 10.1137/0301010；以及 B. L. Ho and R. E. Kalman, “Effective construction of linear state-variable models from input/output functions”, 1966, pp. 545–548, DOI 10.1524/auto.1966.14.112.545。这里只采用经典的可达/可观测与 Markov 参数视角；本定理的具体截尾等价由下述直接论证给出。
+
+**证明。** 若 $r=D^jCv$ 是 $R$ 的生成元，则 $Dr=D^{j+1}Cv\in R$，故 $R$ 对 $D$ 不变。若 $h\in N$，则对每个 $j\ge0$，
+$$
+BD^j(Dh)=BD^{j+1}h=0,
+$$
+故 $Dh\in N$，于是 $N$ 及 $R\cap N$ 都对 $D$ 不变，两个商上的诱导映射均良定义。
+
+先证 $1\Rightarrow2$。任取
+$$
+r=\sum_{\ell}D^{\ell}Cv_{\ell}\in R.
+$$
+对任意 $k\ge0$，
+$$
+BD^kD^mr =\sum_{\ell}BD^{m+\ell+k}Cv_{\ell} =\sum_{\ell}M_{m+\ell+k}v_{\ell} =0.
+$$
+故 $D^mr\in N$，又 $D^mr\in R$，所以 $D^mR\subseteq R\cap N$，即 $\bar D_{\mathrm{fb}}^{\,m}=0$。
+
+再证 $2\Rightarrow1$。由 $C(V)\subseteq R$，对任意 $v\in V$，
+$$
+D^mCv\in R\cap N.
+$$
+由于 $N$ 对 $D$ 不变，对任意 $j=m+k\ge m$，
+$$
+D^jCv=D^k(D^mCv)\in N,
+$$
+从而 $M_jv=BD^jCv=0$。故 $M_j=0$。
+
+若 1 成立，则 $F_n$ 中只有滞后 $<m$ 的项可能非零，所以只依赖最后 $\min(m,n)$ 个输入，得 3。反之假设 3，任取 $j\ge m$、$v\in V$，置 $n=j+1$，令两条输入串只在 $i=0$ 处相差 $v$，其余均为零。因为 $0<n-m$，两串在要求的后缀上相同，于是
+$$
+0=F_n(u)-F_n(u')=M_jv.
+$$
+故 1 成立。最小截止与幂零指数相等由逐个 $m$ 的等价立即得到。若 $Q_{\mathrm{fb}}=0$，则 $\bar D_{\mathrm{fb}}^0=\operatorname{id}_{0}=0$，故截止为 $0$；反向由 $m=0$ 的等价得到。证毕。
+
+**定理 68.4（任意隐藏初态的强制终止由整个可见隐藏商控制）。** $Q_{\mathrm{init}}=H/N$ 上的 $\bar D_{\mathrm{init}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+$$
+BD^j=0:H\to V\quad(\forall j\ge m),
+$$
+$$
+\bar D_{\mathrm{init}}^{\,m}=0.
+$$
+因此对 MF1 中的初始隐藏强制
+$$
+\eta_n(h_0)=BD^nh_0
+$$
+而言，“对任意 $h_0$ 都从某一统一时刻起恒为零”当且仅当 $\bar D_{\mathrm{init}}$ 幂零；存在时
+$$
+\tau_{\mathrm{init}} =\min\{m:\bar D_{\mathrm{init}}^{\,m}=0\}.
+$$
+并且
+$$
+\tau_{\mathrm{init}}=0\iff H/N=0\iff BD^j=0\ \text{对全部 }j\ge0.
+$$
+
+**证明。** $N$ 的 $D$-不变性已在前一定理证明。若 $BD^j=0$ 对全部 $j\ge m$，则任取 $h\in H$ 与 $k\ge0$，
+$$
+BD^kD^mh=BD^{m+k}h=0,
+$$
+故 $D^mH\subseteq N$，即 $\bar D_{\mathrm{init}}^{\,m}=0$。反之，若 $\bar D_{\mathrm{init}}^{\,m}=0$，则 $D^mH\subseteq N$；对 $j=m+k$，有 $D^jH\subseteq N$，故 $BD^j=0$。最小截止与零商边界同前一定理。证毕。
+
+**定理 68.5（反馈尾、初始强制与原算子幂零性严格分离）。** 下列三个现象均可发生。
+
+(a) 反馈记忆恒为零而初始隐藏强制永不终止：取 $V=H=\Bbbk$，
+$$
+A=B=D=\operatorname{id},\qquad C=0.
+$$
+则 $M_j=BD^jC=0$ 对全部 $j$ 成立，而
+$$
+BD^nh_0=h_0
+$$
+对任意 $n$ 及任意 $h_0\ne0$ 都非零。
+
+(b) $D$ 本身不幂零而可见反馈尾有限：取 $V=\Bbbk$、$H=\Bbbk^2$，
+$$
+C(v)=(v,0),\qquad B(x,y)=x,\qquad D(x,y)=(0,y).
+$$
+则 $D(0,1)=(0,1)$，故 $D$ 不幂零；但是
+$$
+M_0=\operatorname{id}_{\Bbbk},\qquad M_j=0\quad(j\ge1),
+$$
+所以 $\tau_{\mathrm{fb}}=1$。
+
+(c) 单条闭环轨迹可以把无限反馈核完全遮蔽：取 $V=H=\Bbbk$，
+$$
+A=0,\qquad B=C=D=\operatorname{id},
+$$
+并取 $y_0=h_0=0$。则闭环轨迹恒为零，但
+$$
+M_j=BD^jC=\operatorname{id}
+$$
+对每个 $j$ 都非零，故不存在有限反馈尾。
+
+**证明。** (a) 因 $C=0$，所有 $M_j$ 都为零；而 $B=D=\operatorname{id}$ 给出 $BD^n=\operatorname{id}$。这里 $R=0$，所以反馈商为零，但 $N=0$，故初始商为 $H$，其诱导 $D$ 为恒等映射。
+
+(b) 由 $DC=0$ 得 $M_j=0$ 对 $j\ge1$，而 $M_0=BC=\operatorname{id}$。同时 $(0,1)$ 是 $D$ 的不动向量，所以 $D$ 不幂零。事实上 $N=\operatorname{span}\{(0,1)\}$、$R=\operatorname{span}\{(1,0)\}$，故可达的可见商上诱导 $D$ 为零；不可见的非幂零方向被商掉。
+
+(c) 从零初态按线性更新归纳得 $y_n=h_n=0$；另一方面 $BD^jC=\operatorname{id}$ 对全部 $j$ 成立。故仅观察这一条轨迹上的抵消不能推出 Markov 参数尾消失，必要性必须按任意输入串的输入输出命题判断。证毕。
+
+**定理 68.6（有限维下的有限测试界）。** 令 $d=\dim H$。
+
+若 $d=0$，则 $H=0$，两个商均为零，且 $\tau_{\mathrm{fb}}=\tau_{\mathrm{init}}=0$。
+
+若 $d>0$，则
+$$
+N=\bigcap_{j=0}^{d-1}\ker(BD^j),
+\qquad
+R=\operatorname{span}\{D^jCv:0\le j<d,\ v\in V\}.
+$$
+此外，有限反馈尾存在当且仅当
+$$
+M_d=M_{d+1}=\cdots=M_{2d-1}=0.
+$$
+在此情形
+$$
+\tau_{\mathrm{fb}}\le \dim Q_{\mathrm{fb}}\le d,
+$$
+并且
+$$
+\tau_{\mathrm{fb}} =\min\Bigl\{0\le m\le d:
+M_m=M_{m+1}=\cdots=M_{m+d-1}=0\Bigr\}.
+$$
+同理，任意隐藏初态的统一强制终止存在当且仅当
+$$
+BD^d=BD^{d+1}=\cdots=BD^{2d-1}=0
+$$
+作为 $H\to V$ 的映射成立；存在时
+$$
+\tau_{\mathrm{init}}\le \dim Q_{\mathrm{init}}\le d,
+$$
+且
+$$
+\tau_{\mathrm{init}} =\min\Bigl\{0\le m\le d:
+BD^m=BD^{m+1}=\cdots=BD^{m+d-1}=0\Bigr\}.
+$$
+
+**证明。** 设 $D$ 的特征多项式为
+$$
+\chi_D(t)=t^d-a_{d-1}t^{d-1}-\cdots-a_0.
+$$
+Cayley--Hamilton 定理给出
+$$
+D^d=\sum_{r=0}^{d-1}a_rD^r.
+$$
+因此每个 $D^j$（$j\ge d$）都是 $I,D,\ldots,D^{d-1}$ 的线性组合。这立即给出 $R$ 的有限生成公式；若 $h$ 被 $BD^j$ 在 $0\le j<d$ 全部杀掉，则同一线性组合也使所有 $BD^jh$（$j\ge d$）为零，故得到 $N$ 的有限交公式。
+
+对任意 $q\ge0$，左乘 $BD^q$ 并右接 $C$ 得
+$$
+M_{q+d}=\sum_{r=0}^{d-1}a_rM_{q+r}.
+$$
+所以任意连续 $d$ 个 $M$-项一旦全为零，其后的项由归纳也全为零。若有限反馈尾存在，前一定理给出其截止等于 $Q_{\mathrm{fb}}$ 上幂零指数；幂零算子在 $r$-维空间上的幂零指数至多为 $r$，而
+$$
+r=\dim Q_{\mathrm{fb}}\le d,
+$$
+故 $\tau_{\mathrm{fb}}\le d$，从而 $M_d,\ldots,M_{2d-1}$ 必全为零。反之，这一长度为 $d$ 的零块通过上述递推强制全部后继项为零。对任意 $m\le d$，同样的递推说明“$M_m,\ldots,M_{m+d-1}$ 全零”恰好意味着 $m$ 已是一个反馈截止，因此取最小值得到公式。
+
+去掉右端的 $C$ 得
+$$
+BD^{q+d}=\sum_{r=0}^{d-1}a_rBD^{q+r},
+$$
+完全相同的论证给出初始强制的有限测试与最小截止。证毕。
+
+## 68.99 追加锚

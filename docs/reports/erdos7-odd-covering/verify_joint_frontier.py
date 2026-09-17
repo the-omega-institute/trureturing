@@ -504,7 +504,8 @@ def ap_count_probability(prime, cap, n):
 
 @lru_cache(None)
 def ap_original_block_inputs(caps, cutoff, degree):
-    require(caps == CAP13 and degree in (1, 2), 'Original AP11/13 source and polynomial degree')
+    require(caps in (CAP13, ((11, F(5, 3)), (13, F(12, 7)))) and degree in (1, 2),
+            'Supported AP11/13 schedule and polynomial degree')
     (p, cp), (q, cq) = caps
     records = []
     for e in range(cutoff - 1):

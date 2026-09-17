@@ -35,6 +35,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 ### Results and proofs
 
 - [Current bounds and comparisons](../docs/reports/erdos7-odd-covering/problem-details/01-current-bounds-and-comparisons.md)
+- [Actual AP(4,5): layout costs and complete finite-core tails](../docs/reports/erdos7-odd-covering/profile-notes/35-ap45-layout-costs-and-complete-core-tails.md)
+- [Original-layout distance forces a Jensen loss](../docs/reports/erdos7-odd-covering/profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
 - [Retained and removed events: the complete convex-cost bound](../docs/reports/erdos7-odd-covering/profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
 
 ## Motivation

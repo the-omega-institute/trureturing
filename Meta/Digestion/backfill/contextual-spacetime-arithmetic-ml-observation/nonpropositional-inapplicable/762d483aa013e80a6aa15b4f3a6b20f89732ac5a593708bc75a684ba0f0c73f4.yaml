@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:762d483aa013e80a6aa15b4f3a6b20f89732ac5a593708bc75a684ba0f0c73f4
+  normalized_sha256: sha256:762d483aa013e80a6aa15b4f3a6b20f89732ac5a593708bc75a684ba0f0c73f4
+cas_ref: sha256:762d483aa013e80a6aa15b4f3a6b20f89732ac5a593708bc75a684ba0f0c73f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “这里计最大可达层宽，不计跨时间状态集并集的大小”澄清当前费用指标，后一句只标识表示成本与控制状态的来源；它未给任何数值层宽界，亦未借术语约定断言免费时钟下的下界。
+    previous_atom_id: d3f35d62265435632ca9d06c6f2c5e37fcb9a502f72c4dfaa729f8fb5b9f4e7b
+    next_atom_id: c89eb7db1cbbea385336b07aa8ec2ed20894e95b8ba64442877e648ee6f41543
