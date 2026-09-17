@@ -193,6 +193,9 @@ public sealed class SharedBuildRuntimeTests
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         Assert.False(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
+        foreach (var project in new[] { excludedProject, proofProject, bannedProject })
+            Assert.False(Directory.Exists(Path.Combine(root, Path.GetDirectoryName(project)!, "bin")));
+        Assert.All(build.Materials, material => Assert.DoesNotContain("/Debug/", material.Path, StringComparison.Ordinal));
         Cache("snapshot");
         var manifest = Path.Combine(root, "build/lean-cache/judge/manifest.json");
         Assert.True(File.Exists(manifest));
@@ -337,11 +340,25 @@ public sealed class SharedBuildRuntimeTests
         var expandedBuild = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { testProject, excludedProject }, expandedBuild.Projects);
         Assert.Contains(excludedProject, CommonBuildOutputs.TestAssemblies(root, expandedBuild).Keys);
+        Assert.All(expandedBuild.Materials, material => Assert.DoesNotContain("/Debug/", material.Path, StringComparison.Ordinal));
         Assert.True(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
         Cache("snapshot");
         Cache("restore", "--judge-key", key);
+
+        var originalProject = File.ReadAllText(Path.Combine(root, testProject));
+        Write(testProject, originalProject.Replace("Include=\"xunit\" Version=\"2.9.3\"", "Include=\"xunit\" Version=\"2.9.2\"", StringComparison.Ordinal));
+        var lockedFailure = Stage("locked-mismatch", "build", expected: 1);
+        Assert.Contains("NU1004", lockedFailure, StringComparison.Ordinal);
+        var restore = Assert.Single(GraphProcesses(lockedFailure));
+        Assert.Equal("restore", restore.GetProperty("arguments")[0].GetString());
+        Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
+        Write(testProject, originalProject);
+
         Write("tools/StrataLint.Cli/Program.cs", "not valid C#\n");
-        Stage("wrong-candidate", "build", expected: 1);
+        var compileFailure = Stage("wrong-candidate", "build", expected: 1);
+        Assert.Matches(@"error CS[0-9]+", compileFailure);
+        Assert.Equal(new[] { "restore", "build" }, GraphProcesses(compileFailure)
+            .Select(process => process.GetProperty("arguments")[0].GetString()));
         foreach (var path in new[] { CommonExecutionEvidence.BuildPath, CommonExecutionEvidence.EngineeringPath,
                      CommonExecutionEvidence.CurrentPath, CommonExecutionEvidence.TestsPath })
             Assert.False(File.Exists(Path.Combine(root, path)));
@@ -392,6 +409,12 @@ public sealed class SharedBuildRuntimeTests
             .SelectMany(summary => Regex.Matches(summary.Groups["tasks"].Value,
                 @"(?m)^[^\r\n]*\bCsc[ \t]+(?<calls>[0-9]+)[ \t]+calls\r?$"))
             .Sum(task => int.Parse(task.Groups["calls"].Value, System.Globalization.CultureInfo.InvariantCulture));
+        static JsonElement[] GraphProcesses(string text) => text.Split('\n')
+            .Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
+            .Select(line => JsonDocument.Parse(line["STAGE_PROCESS ".Length..]).RootElement)
+            .Where(process => process.GetProperty("stage").GetString() == "build"
+                && process.GetProperty("command").GetString() == "dotnet"
+                && process.GetProperty("arguments")[0].GetString() is "restore" or "build").ToArray();
         string Stage(string label, string stage, int expected = 0)
         {
             File.Delete(Path.Combine(root, "build/dotnet-calls"));
@@ -411,6 +434,13 @@ public sealed class SharedBuildRuntimeTests
                 }
             }
             Assert.True(result.Exit == expected, result.Text);
+            if (stage == "build" && expected == 0)
+            {
+                var processes = GraphProcesses(result.Text);
+                Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process.GetProperty("arguments")[0].GetString()));
+                Assert.All(processes, process => Assert.Contains("-m:1",
+                    process.GetProperty("arguments").EnumerateArray().Select(argument => argument.GetString())));
+            }
             return result.Text;
         }
         void Cache(string command, params string[] arguments)
