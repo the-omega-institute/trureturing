@@ -46,6 +46,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/MarcusPythagoreanNonpolygonalTriple.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a344083-marcus-pythagorean-nonpolygonal-triple` (proved) by `D5/S3/Arith/Congruence/MarcusPythagoreanNonpolygonalTriple.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a344083-marcus-pythagorean-nonpolygonal-triple","declaration_gid":"D5/S3/Arith/Congruence/MarcusPythagoreanNonpolygonalTriple.result","resolution_kind":"proved"} -->
+
 *Citation.* Michel Marcus (2021). *OEIS A344083, a(n) = f(x)+f(y)+f(z), where (x,y,h) is the n-th Pythagorean triple listed in (A046083, A046084, A009000), and f(m)=A176775(m) is the index of m as k-gonal number for the smallest possible k*. URL: <https://oeis.org/A344083>.
 
 *Commentary.*

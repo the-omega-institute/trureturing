@@ -42,7 +42,11 @@ internal sealed class MarcusPythagoreanNonpolygonalTripleDocument
                     + "multiple 3t has the polygonal representation polygonal(t+1,3). The "
                     + "Pythagorean equation then bounds and determines the other leg and the "
                     + "hypotenuse as four and five.",
-                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a344083-marcus-pythagorean-nonpolygonal-triple"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
@@ -50,14 +54,16 @@ internal sealed class MarcusPythagoreanNonpolygonalTripleDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a344083-" + name),
             DeclarationHandle.Create(Prefix + name),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula PolygonalFormula()
     {
