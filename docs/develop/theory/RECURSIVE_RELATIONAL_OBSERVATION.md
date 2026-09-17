@@ -23324,3 +23324,644 @@ $$
 进一步，所有 $\infty$ 边都属于 $G(a)$，所以 $G(a)$ 含奇圈，不可能是完全二部混合分量与孤立点的不交并。由 theorem 55.7 证明中的图论结论，它含诱导三角形或诱导四顶点路径，相应完整子数组即不可实现。因此，保留一个无穷标签奇圈并填入全部其余标签，不能产生超过四个顶点的诱导极小障碍。证毕。
 
 ## 55.99 追加锚
+## 56. Haar 轨道概率卷积、共同见证与普通整数边界
+
+**假设 56.1（载体、拓扑、作用与概率约定）。** 令素数集为 $\mathbb P$，令
+$$
+R=\prod_{p\in\mathbb P}\mathbb Z_p,\qquad U=R^\times=\prod_{p\in\mathbb P}\mathbb Z_p^\times,
+$$
+其中 $R$ 取乘积拓扑并按坐标相加，$U$ 取乘积拓扑并以逐坐标乘法作用于 $R$；记 $m_U$ 为 $U$ 的归一化 Haar 概率。令 $E=\mathbb N_0\cup\{\infty\}$，有限点孤立，而 $\infty$ 的邻域基为 $\{\infty\}\cup\{n\ge N\}$；令 $I=\prod_pE$。定义
+$$
+\rho(x)=(v_p(x_p))_p,\qquad v_p(0)=\infty,
+$$
+以及规范截面
+$$
+s(A)_p=\begin{cases}p^{A_p},&A_p<\infty,\\0,&A_p=\infty.\end{cases}
+$$
+本文中的概率均为非负 Borel 概率，不引入带符号概率权。Longhi–Mu–Saettone, *Coset topologies on Z and arithmetic applications*, arXiv:2202.13478v3, Proposition 4.3，印刷页 p.26，给出 $\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\times}$ 的逐素数赋值轨道分类；Lemma 4.5，印刷页 p.27，证明相应商拓扑与 $\prod_p(\mathbb N_0\cup\{\infty\})$ 的乘积拓扑一致。来源：https://arxiv.org/pdf/2202.13478v3 。这里对当前 $R=\prod_p\mathbb Z_p$ 重新证明本节所需部分。
+
+**theorem 56.2（$\rho$ 的纤维恰为 $U$-轨道，含零坐标；规范轨道概率与稳定子）。** 对任意 $x,y\in R$，
+$$
+\rho(x)=\rho(y)\quad\Longleftrightarrow\quad \exists u\in U,\ y=ux.
+$$
+若 $A\in I$，则 $s(A)$ 的稳定子为
+$$
+H_A=\prod_pH_{A,p},\qquad H_{A,p}=\begin{cases}\{1\},&A_p<\infty,\\ \mathbb Z_p^\times,&A_p=\infty.\end{cases}
+$$
+而
+$$
+m_A:=(u\mapsto us(A))_*m_U
+$$
+是该轨道上唯一的 $U$-不变 Borel 概率；若以轨道内任意其他代表 $t=ws(A)$ 定义同一推前，则仍得到 $m_A$。因此即使 $H_A$ 非平凡、作用不自由，轨道概率仍规范且与代表元选择无关。
+
+**证明。** 固定 $p$。若 $v_p(x_p)=v_p(y_p)=n<\infty$，则可唯一写成 $x_p=p^na_p$、$y_p=p^nb_p$，其中 $a_p,b_p\in\mathbb Z_p^\times$；取 $u_p=b_pa_p^{-1}$ 即有 $y_p=u_px_p$。若公共赋值为 $\infty$，则 $x_p=y_p=0$，任意 $u_p\in\mathbb Z_p^\times$ 均满足 $y_p=u_px_p$。逐坐标组装 $u=(u_p)_p\in U$ 得正向蕴含；反向由单位不改变赋值立即成立。
+
+对稳定子，若 $A_p<\infty$ 且 $u_pp^{A_p}=p^{A_p}$，因 $\mathbb Z_p$ 为整环，得 $u_p=1$；若 $A_p=\infty$，该坐标为 $0$，全部单位都稳定它，故得到所列乘积稳定子。特别地，含零坐标时作用一般不自由。
+
+若 $t=ws(A)$，则
+$$
+(u\mapsto ut)_*m_U=(u\mapsto uws(A))_*m_U=m_A,
+$$
+因为右乘固定 $w$ 保持归一化 Haar 概率。为证唯一性，令 $\nu$ 是轨道 $U\cdot s(A)$ 上任意 $U$-不变概率，且 $f$ 为该轨道上的连续函数。Fubini 与不变性给出
+$$
+\int f(x)\,d\nu(x)=\int\!\!\int_U f(ux)\,dm_U(u)\,d\nu(x).
+$$
+若 $x=ws(A)$，内层积分经变量 $u\mapsto uw$ 后等于 $\int_Uf(us(A))\,dm_U(u)$，与 $x$ 无关。因此 $\nu(f)=m_A(f)$；连续函数分离紧 Hausdorff 空间上的概率，故 $\nu=m_A$。证毕。
+
+**theorem 56.3（规范概率核、Feller 弱连续性与精确实际支撑）。** 定义
+$$
+K(A,B)=\operatorname{Law}\bigl(\rho(us(A)+vs(B))\bigr),
+$$
+其中 $u,v$ 独立且各服从 $m_U$。则 $K:I\times I\to\mathcal P(I)$ 与代表元选择无关，是弱拓扑连续的 Borel 概率核；等价地，对每个 $f\in C(I)$，
+$$
+(A,B)\longmapsto\int_I f(C)\,K(A,B)(dC)
+$$
+连续。若
+$$
+F(A,B,u,v)=\rho(us(A)+vs(B)),
+$$
+则对每个 $A,B$，
+$$
+\operatorname{supp}K(A,B)=F(\{A\}\times\{B\}\times U^2)
+=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+因此支撑恰是“一对实际代表元”的二元实际支撑，包括概率质量为 $0$ 的支撑点。并且 $(A,B)\mapsto\operatorname{supp}K(A,B)$ 在非空紧子集的 Vietoris–Michael 拓扑中连续。这里弱连续性的极限次序是：先令参数 $(A_j,B_j)\to(A,B)$，利用紧集 $U^2$ 上的一致连续性取得对全部 $(u,v)$ 的一致收敛，再对固定 Haar 概率积分；证明不以“先截断素数、再令素数界趋于无穷”为定义步骤。
+
+**证明。** 对每个固定 $p$，映射 $E\to\mathbb Z_p$，$n\mapsto p^n$、$\infty\mapsto0$ 连续，因为 $p^n\to0$；故 $s:I\to R$ 连续。赋值映射 $v_p:\mathbb Z_p\to E$ 连续：有限纤维 $v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times$ 开闭，而 $\infty$ 的尾邻域原像为 $p^N\mathbb Z_p$。由乘积的泛性质，$\rho:R\to I$ 连续。这也直接适配 Longhi–Mu–Saettone Lemma 4.5 的拓扑识别，印刷页 p.27，来源：https://arxiv.org/pdf/2202.13478v3 。因此 $F$ 是紧空间 $I^2\times U^2$ 上的连续映射。
+
+若分别把 $s(A),s(B)$ 换成 $w_As(A),w_Bs(B)$，则 $(u,v)\mapsto(uw_A,vw_B)$ 保持 $m_U^{\otimes2}$，故 $K$ 不变。再令 $f\in C(I)$。函数
+$$
+(A,B)\longmapsto\int_{U^2}f(F(A,B,u,v))\,dm_U(u)\,dm_U(v)
+$$
+连续：若 $(A_j,B_j)\to(A,B)$，则紧性给出 $f\circ F(A_j,B_j,\cdot,\cdot)\to f\circ F(A,B,\cdot,\cdot)$ 在 $U^2$ 上一致收敛，于是可直接积分。故 $K$ 对弱拓扑连续。
+
+为说明它确为 Borel 核，记 $\mathcal D$ 为所有满足 $\mu\mapsto\mu(D)$ 在 $\mathcal P(I)$ 上 Borel 的 Borel 集 $D$。若 $C\subset I$ 闭，取相容度量 $d$ 并令 $\phi_n(x)=\max\{0,1-nd(x,C)\}$；则 $\phi_n\in C(I)$ 且 $\phi_n\downarrow1_C$，所以
+$$
+\mu(C)=\inf_n\int_I\phi_n\,d\mu.
+$$
+右侧是连续函数的可数下确界，故为上半连续，特别为 Borel；于是闭集属于 $\mathcal D$。此外 $\mathcal D$ 对补集封闭，因为 $\mu(D^c)=1-\mu(D)$；若 $D_n$ 两两不交且都在 $\mathcal D$，则 $\mu(\bigcup_nD_n)=\sum_n\mu(D_n)$ 是 Borel 函数的单调极限。因此 $\mathcal D$ 是包含全部闭集的 Dynkin 系，而闭集构成生成 Borel $\sigma$-代数的 $\pi$-系；由 $\pi$-$\lambda$ 定理，$\mathcal D$ 包含全部 Borel 集。复合连续映射 $(A,B)\mapsto K(A,B)$ 即得 $(A,B)\mapsto K(A,B)(D)$ Borel。
+
+紧群 Haar 概率具有满支撑：若非空开集 $O\subset U$ 的质量为 $0$，其左平移仍全为零；由紧性，有限多个平移覆盖 $U$，将推出 $m_U(U)=0$，矛盾。因此 $m_U^{\otimes2}$ 在 $U^2$ 上满支撑。下面所用的一般支撑像引理带有 Hausdorff 目标假设：若 $X$ 紧，$\mu$ 是 $X$ 上满支撑概率，$Y$ 是 Hausdorff 空间，且 $g:X\to Y$ 连续，则
+$$
+\operatorname{supp}(g_*\mu)=g(X).
+$$
+事实上，$g(X)$ 紧，因 $Y$ Hausdorff 而闭，所以 $g(X)$ 外每一点都有零推前质量的开邻域；若 $y=g(x)$ 且 $O\ni y$ 开，则 $g^{-1}(O)$ 是含 $x$ 的非空开集，故 $(g_*\mu)(O)>0$。当前目标 $I$ 是紧 Hausdorff 空间，故把该引理应用于 $g=F(A,B,\cdot,\cdot)$ 得第一项支撑公式。由 theorem 56.2，每个 $\rho$-纤维恰为相应轨道，故第二项等号成立。
+
+最后取 $I$ 的任一相容紧度量 $d$。$F$ 在紧域上一致连续，所以当 $(A_j,B_j)\to(A,B)$ 时，
+$$
+\sup_{u,v\in U}d\bigl(F(A_j,B_j,u,v),F(A,B,u,v)\bigr)\longrightarrow0.
+$$
+于是对应像集的 Hausdorff 距离至多为上述上确界并趋于 $0$。紧度量空间的非空紧子集上，Hausdorff 度量拓扑就是 Vietoris–Michael 拓扑，故支撑映射连续。证毕。
+
+**theorem 56.4（完整局部分布、全局实际 Haar 乘积分解与零原子支撑点）。** 记 $U_p=\mathbb Z_p^\times$，令 $K_p(a,b)$ 为 $K(A,B)$ 的第 $p$ 坐标边缘，其中 $a=A_p,b=B_p$。则：
+
+若 $a,b<\infty$ 且 $a<b$，则 $K_p(a,b)=\delta_a$；若 $b<a$，则 $K_p(a,b)=\delta_b$。若 $a<\infty,b=\infty$，则 $K_p(a,\infty)=\delta_a$，对称地 $K_p(\infty,b)=\delta_b$；而 $K_p(\infty,\infty)=\delta_\infty$。
+
+若 $a=b<\infty$ 且 $p$ 为奇素数，则
+$$
+K_p(a,a)(\{a\})=\frac{p-2}{p-1},\qquad
+K_p(a,a)(\{a+n\})=\frac1{p^n}\quad(n\ge1),\qquad
+K_p(a,a)(\{\infty\})=0.
+$$
+其支撑为 $\{a,a+1,a+2,\ldots,\infty\}$。
+
+若 $a=b<\infty$ 且 $p=2$，则
+$$
+K_2(a,a)(\{a\})=0,\qquad
+K_2(a,a)(\{a+n\})=2^{-n}\quad(n\ge1),\qquad
+K_2(a,a)(\{\infty\})=0,
+$$
+其支撑为 $\{a+1,a+2,\ldots,\infty\}$。
+
+此外，归一化 Haar 概率本身满足
+$$
+m_U=\bigotimes_pm_{U_p},
+$$
+所以对实际抽取的全局 Haar 单位 $u,v$，各素数坐标对 $(u_p,v_p)$ 独立，并非另行假设“商标签独立”。因而
+$$
+K(A,B)=\bigotimes_pK_p(A_p,B_p),
+$$
+且对任意有限素数集 $F$ 与 Borel 集 $D_p\subset E$，
+$$
+K(A,B)\bigl(\{C:C_p\in D_p\ \forall p\in F\}\bigr)
+=\prod_{p\in F}K_p(A_p,B_p)(D_p).
+$$
+全局支撑正好是各局部支撑的乘积，也正好是 theorem 56.3 的实际二元像。
+
+**证明。** 固定 $p$。若 $a<b<\infty$，写
+$$
+u_pp^a+v_pp^b=p^a(u_p+p^{b-a}v_p).
+$$
+括号内模 $p$ 等于单位 $u_p$，故仍是单位，输出赋值恒为 $a$。其余不等有限情形对称；若一项为 $0$，结论更直接；两项均为 $0$ 时输出为 $0$，赋值为 $\infty$。
+
+现在令 $a=b<\infty$。因
+$$
+v_p(u_pp^a+v_pp^a)=a+v_p(1+w_p),\qquad w_p=u_p^{-1}v_p,
+$$
+且独立 Haar 单位的比 $w_p$ 仍为 $U_p$ 上 Haar，问题化为 $T=v_p(1+w_p)$。对 $n\ge1$，
+$$
+\{T\ge n\}=\{w_p\equiv-1\pmod{p^n}\}.
+$$
+这是 $U_p$ 中子群 $1+p^n\mathbb Z_p$ 的一个陪集。标准单位滤过满足
+$$
+[U_p:1+p^n\mathbb Z_p]=(p-1)p^{n-1},
+$$
+故
+$$
+\Pr(T\ge n)=\frac1{(p-1)p^{n-1}}.
+$$
+该指数公式可由约化映射 $U_p\to(\mathbb Z/p^n\mathbb Z)^\times$ 直接数出；公开辅助资料 Yassine El Maazouz, *p-adic Harmonic Analysis*, §2.5，印刷页 p.5，亦列出 $U_0=\mathbb Z_p^\times$、$U_n=1+p^n\mathbb Z_p$ 及 $[U_0:U_n]=(p-1)p^{n-1}$。来源：https://yelmaazouz.org/content/documents/p_adicHarmonicAnalysis.pdf 。
+
+若 $p$ 为奇数，模 $p$ 的 $p-1$ 个非零剩余类中只有 $-1$ 导致 $T\ge1$，于是
+$$
+\Pr(T=0)=1-\frac1{p-1}=\frac{p-2}{p-1},
+$$
+而对 $n\ge1$，
+$$
+\Pr(T=n)=\Pr(T\ge n)-\Pr(T\ge n+1)=\frac1{p^n}.
+$$
+若 $p=2$，所有单位均为奇数，所以 $T\ge1$；上式给出 $\Pr(T\ge n)=2^{1-n}$，故 $\Pr(T=n)=2^{-n}$。单点 $w_p=-1$ 的 Haar 质量为 $0$，因为它包含在每个上述陪集中，而这些陪集质量趋于 $0$，所以 $\Pr(T=\infty)=0$。归一化分别为
+$$
+\frac{p-2}{p-1}+\sum_{n\ge1}p^{-n}=1
+$$
+以及
+$$
+\sum_{n\ge1}2^{-n}=1.
+$$
+然而 $\infty$ 仍在支撑中：$w_p=-1$ 给出实际和 $0$；并且 $\infty$ 的任一尾邻域都有事件 $T\ge N$ 的正概率。故“原子质量为零”不等于“不在拓扑支撑”。
+
+再证全局乘积。局部 Haar 概率的乘积 $\bigotimes_pm_{U_p}$ 是 $U=\prod_pU_p$ 上的 Borel 概率，并在逐坐标左乘下不变；紧群归一化 Haar 概率的唯一性因此迫使它等于 $m_U$。于是 $m_U^{\otimes2}$ 下的坐标对 $(u_p,v_p)$ 独立，且输出第 $p$ 坐标只依赖该坐标对，有限柱事件公式随即成立；这些柱事件生成 Borel $\sigma$-代数，故得到整个乘积测度等式。各局部实际见证可逐坐标组装成全局 $u,v\in U$，反之全局见证逐坐标投影到局部见证，故全局实际像等于局部实际像的乘积；结合 theorem 56.3 即得支撑断言。证毕。
+
+**theorem 56.5（有界复测度轨道卷积的精确拓扑合同与概率限制）。** 记 $M_b(I)$ 为 $I$ 上有界复正则 Borel 测度的 Banach 空间，范数为全变差范数 $\|\cdot\|$。本定理中 $M_b(I)$ 的弱星拓扑明确指
+$$
+\sigma(M_b(I),C(I)),
+$$
+即使所有映射
+$$
+\mu\longmapsto\int_I f\,d\mu,\qquad f\in C(I),
+$$
+连续的最弱拓扑。对 $M,N\ge0$ 记
+$$
+B_M=\{\mu\in M_b(I):\|\mu\|\le M\},\qquad B_N=\{\nu\in M_b(I):\|\nu\|\le N\}.
+$$
+再记
+$$
+M_b^U(R)=\{\lambda\in M_b(R):u_*\lambda=\lambda\ \text{对所有 }u\in U\}.
+$$
+令 $q:R\to R/U$ 为轨道商映射，并令
+$$
+\bar\rho:R/U\longrightarrow I,\qquad \bar\rho(Ux)=\rho(x).
+$$
+则 $\bar\rho$ 是同胚。
+
+对任意 $\mu\in M_b(I)$ 定义规范不变提升 $\Lambda_b\mu\in M_b(R)$ 为
+$$
+\int_R f(x)\,d(\Lambda_b\mu)(x)
+=\int_I\int_U f(us(A))\,dm_U(u)\,d\mu(A),
+\qquad f\in C(R).
+$$
+定义
+$$
+\mu\star_b\nu
+:=\rho_*\bigl((\Lambda_b\mu)*_R(\Lambda_b\nu)\bigr),
+$$
+其中 $*_R$ 是紧阿贝尔加法群 $(R,+)$ 上的复测度卷积。则：
+
+1. $\Lambda_b$ 是 $M_b(I)$ 到 $M_b^U(R)$ 的等距线性双射，其逆为 $\rho_*$。
+
+2. $\star_b$ 双线性、结合、交换，以
+$$
+e=(\infty,\infty,\ldots)=\rho(0)
+$$
+对应的 $\delta_e$ 为单位元，并满足
+$$
+\|\mu\star_b\nu\|\le\|\mu\|\,\|\nu\|.
+$$
+因而 $\star_b$ 是有界双线性映射并对全变差范数联合连续。
+
+3. 对弱星拓扑 $\sigma(M_b(I),C(I))$，$\star_b$ 在整个 $M_b(I)$ 上对每个变量分别连续。对每个固定的 $M,N<\infty$，其限制
+$$
+\star_b:B_M\times B_N\longrightarrow M_b(I)
+$$
+在两个因子均取弱星子空间拓扑时联合连续。因此它在概率空间 $\mathcal P(I)$ 上联合弱连续，并且在正测度锥 $M_b^+(I)$ 上取 $\sigma(M_b(I),C(I))$ 的子空间拓扑时也联合连续。相反，
+$$
+\star_b:M_b(I)\times M_b(I)\longrightarrow M_b(I)
+$$
+在整个复测度空间上并非联合 $\sigma(M_b(I),C(I))$-连续；失败已经发生在 $(0,0)$。
+
+4. 对任意 $A,B\in I$，
+$$
+\delta_A\star_b\delta_B
+=\int_U\delta_{\rho(s(A)+us(B))}\,dm_U(u)
+=K(A,B).
+$$
+特别地，点卷积是紧支撑概率，并且
+$$
+(A,B)\longmapsto\operatorname{supp}(\delta_A\star_b\delta_B)
+$$
+到非空紧子集空间在 Michael 拓扑中连续。
+
+5. 点对合为连续恒等映射 $A^\ast=A$。若对 Borel 集 $D\subset I$ 记 $D^\ast=\{A^\ast:A\in D\}$，并对 $\mu\in M_b(I)$ 记
+$$
+\mu^{-}(D)=\overline{\mu(D^\ast)},
+$$
+则 $(M_b(I),\star_b,{}^{-})$ 是以 $\delta_e$ 为单位元的交换 Banach-$\ast$-代数，而且
+$$
+\delta_{A^\ast}\star_b\delta_{B^\ast}
+=(\delta_B\star_b\delta_A)^{-},
+$$
+以及
+$$
+B=A^\ast\quad\Longleftrightarrow\quad
+e\in\operatorname{supp}(\delta_A\star_b\delta_B).
+$$
+由于 $A^\ast=A$，后一条件等价于 $A=B$。
+
+Rösler–Voit, *Dunkl theory, convolution algebras, and related Markov processes*, §3.2, Definition 3.6，印刷页 p.40，给出其超群定义；Example 3.8，印刷页 pp.40–41，把局部紧阿贝尔群 $V$ 上紧自同构群 $K$ 的不变有界测度 Banach-$\ast$-代数搬运到轨道空间 $V^K$，称所得结构为交换 orbit hypergroup，并给出上述形式的点测度 Haar 平均、单位元与对合。来源：https://math.uni-paderborn.de/fileadmin/mathematik/AG_Harmonische_Analysis/Publications_Roesler/roesler_voit_angers.pdf 。这里采用该轨道代数与点卷积结构；对于复测度空间的拓扑连续性，则以本定理明确指定的 $\sigma(M_b(I),C(I))$ 为准，并由下面证明给出精确范围，而不把 Definition 3.6(1) 的未限定弱连续性表述解释为全空间的联合弱星连续性。
+
+在概率层面，$\mathcal P(I)$ 是 $M_b(I)$ 中的凸集。令 $\Lambda=\Lambda_b|_{\mathcal P(I)}$，并定义
+$$
+\mu\star\nu:=\rho_*\bigl((\Lambda\mu)*_R(\Lambda\nu)\bigr),
+\qquad \mu,\nu\in\mathcal P(I).
+$$
+则 $\star$ 恰为 $\star_b$ 在 $\mathcal P(I)$ 上的限制；特别地，
+$$
+\delta_A\star\delta_B=K(A,B).
+$$
+并且 $\star$ 在 $\mathcal P(I)$ 上交换、结合、对每个变量仿射并对弱拓扑联合连续。
+
+最后，点核在以下正确的连续性类别中唯一决定整个复测度卷积：若 $\diamond$ 是 $M_b(I)$ 上另一个双线性运算，对每个变量分别关于 $\sigma(M_b(I),C(I))$ 连续，并且
+$$
+\delta_A\diamond\delta_B=K(A,B)\qquad(A,B\in I),
+$$
+则
+$$
+\mu\diamond\nu=\mu\star_b\nu\qquad(\mu,\nu\in M_b(I)).
+$$
+
+**证明。** theorem 56.2 表明 $\bar\rho$ 良定义且双射。由于 $\rho=\bar\rho\circ q$ 连续，商映射的泛性质给出 $\bar\rho$ 连续；$R/U$ 是紧空间，而 $I$ 是 Hausdorff 空间，所以连续双射 $\bar\rho$ 是同胚。
+
+对 $f\in C(R)$，令
+$$
+P_f(A)=\int_U f(us(A))\,dm_U(u).
+$$
+由 $s$ 与作用的连续性及紧性，$P_f\in C(I)$，且 $\|P_f\|_\infty\le\|f\|_\infty$，所以 $\Lambda_b$ 是良定义的有界线性映射且
+$$
+\|\Lambda_b\mu\|\le\|\mu\|.
+$$
+又对 $\varphi\in C(I)$，
+$$
+\int_I\varphi\,d(\rho_*\Lambda_b\mu)
+=\int_I\int_U\varphi(\rho(us(A)))\,dm_U(u)\,d\mu(A)
+=\int_I\varphi(A)\,d\mu(A),
+$$
+故
+$$
+\rho_*\Lambda_b\mu=\mu.
+$$
+另一方面，若 $\lambda\in M_b^U(R)$，则 theorem 56.2 表明，对 $x\in R$，
+$$
+P_f(\rho(x))=\int_Uf(ux)\,dm_U(u).
+$$
+因此复测度的 Fubini 定理和 $U$-不变性给出
+$$
+\int_Rf\,d\Lambda_b(\rho_*\lambda)
+=\int_R\int_Uf(ux)\,dm_U(u)\,d\lambda(x)
+=\int_Rf\,d\lambda.
+$$
+所以
+$$
+\Lambda_b(\rho_*\lambda)=\lambda.
+$$
+这证明 $\Lambda_b$ 与 $\rho_*$ 在 $M_b^U(R)$ 上互逆。推前不增加全变差范数，于是
+$$
+\|\mu\|=\|\rho_*\Lambda_b\mu\|\le\|\Lambda_b\mu\|\le\|\mu\|,
+$$
+故 $\Lambda_b$ 等距，得到第 1 项。
+
+若 $\lambda,\kappa\in M_b^U(R)$，则对任意 $t\in U$，
+$$
+t_*(\lambda*_R\kappa)
+=(t_*\lambda)*_R(t_*\kappa)
+=\lambda*_R\kappa,
+$$
+因为 $t$ 是 $(R,+)$ 的连续群自同构。因此 $M_b^U(R)$ 对 $*_R$ 封闭。加法群的复测度卷积双线性、结合、交换，并满足
+$$
+\|\lambda*_R\kappa\|\le\|\lambda\|\,\|\kappa\|.
+$$
+由 $\Lambda_b$ 的等距双射搬运这些性质，得到 $\star_b$ 的双线性、结合、交换及范数估计。又 $\Lambda_b\delta_e=\delta_0$，故 $\delta_e$ 是单位元。范数估计还给出
+$$
+\|\mu_1\star_b\nu_1-\mu_2\star_b\nu_2\|
+\le\|\mu_1-\mu_2\|\,\|\nu_1\|
++\|\mu_2\|\,\|\nu_1-\nu_2\|,
+$$
+从而 $\star_b$ 对全变差范数联合连续。
+
+对点质量，$\Lambda_b\delta_A=m_A$，故
+$$
+\delta_A\star_b\delta_B
+=\operatorname{Law}\bigl(\rho(us(A)+vs(B))\bigr)
+=K(A,B).
+$$
+又
+$$
+\rho(us(A)+vs(B))
+=\rho\bigl(s(A)+u^{-1}vs(B)\bigr),
+$$
+而 $(u,v)\mapsto(u,u^{-1}v)$ 保持 $m_U^{\otimes2}$，所以
+$$
+\delta_A\star_b\delta_B
+=\int_U\delta_{\rho(s(A)+ws(B))}\,dm_U(w).
+$$
+这既给出第 4 项的点卷积公式，也与 Rösler–Voit Example 3.8 的轨道公式一致。支撑连续性已经由 theorem 56.3 直接证明。
+
+下面证明精确的弱星连续性范围。对 $f\in C(I)$ 定义
+$$
+T_f(A,B)
+:=\int_I f(C)\,K(A,B)(dC).
+$$
+theorem 56.3 给出 $T_f\in C(I\times I)$，并且对任意 $\mu,\nu\in M_b(I)$，由上面的点卷积公式与复测度 Fubini 定理，
+$$
+\int_I f\,d(\mu\star_b\nu)
+=\int_I\int_I T_f(A,B)\,d\mu(A)\,d\nu(B).
+$$
+固定 $\nu$，令
+$$
+G_{\nu,f}(A)=\int_I T_f(A,B)\,d\nu(B).
+$$
+因为 $T_f$ 在紧空间 $I\times I$ 上连续，映射 $A\mapsto T_f(A,\cdot)$ 连续进入 $C(I)$ 的一致范数；于是 $G_{\nu,f}\in C(I)$。若 $\mu_\alpha\to\mu$ 于 $\sigma(M_b(I),C(I))$，则
+$$
+\int_I f\,d(\mu_\alpha\star_b\nu)
+=\int_I G_{\nu,f}\,d\mu_\alpha
+\longrightarrow
+\int_I G_{\nu,f}\,d\mu
+=\int_I f\,d(\mu\star_b\nu).
+$$
+故第一变量弱星连续；第二变量同理。这证明整个 $M_b(I)$ 上的分别弱星连续性。
+
+现在固定 $M,N<\infty$，设
+$$
+\mu_\alpha\to\mu,\qquad \nu_\alpha\to\nu
+$$
+分别在 $B_M,B_N$ 的弱星子空间拓扑中。有限和
+$$
+Q(A,B)=\sum_{j=1}^r\phi_j(A)\psi_j(B),
+\qquad \phi_j,\psi_j\in C(I),
+$$
+构成 $C(I\times I)$ 中含常数、闭合于共轭并分离点的子代数，所以由 Stone–Weierstrass 定理在一致范数下稠密。给定 $\varepsilon>0$，取这样的 $Q$ 使
+$$
+\|T_f-Q\|_\infty<\varepsilon.
+$$
+对 $Q$ 有
+$$
+\int\!\!\int Q\,d\mu_\alpha\,d\nu_\alpha
+=\sum_{j=1}^r
+\left(\int\phi_j\,d\mu_\alpha\right)
+\left(\int\psi_j\,d\nu_\alpha\right)
+\longrightarrow
+\int\!\!\int Q\,d\mu\,d\nu.
+$$
+同时
+$$
+\left|\int\!\!\int(T_f-Q)\,d\mu_\alpha\,d\nu_\alpha\right|
+\le MN\varepsilon
+$$
+以及
+$$
+\left|\int\!\!\int(T_f-Q)\,d\mu\,d\nu\right|
+\le MN\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 即得
+$$
+\mu_\alpha\star_b\nu_\alpha\longrightarrow\mu\star_b\nu
+$$
+于 $\sigma(M_b(I),C(I))$。故在每个 $B_M\times B_N$ 上联合弱星连续。概率全在 $B_1$ 中，因此概率卷积联合弱连续。若 $\mu_\alpha,\mu$ 都为正测度且 $\mu_\alpha\to\mu$ 弱星，则
+$$
+\|\mu_\alpha\|=\mu_\alpha(I)\longrightarrow\mu(I)=\|\mu\|,
+$$
+所以任一收敛网最终落在某个固定全变差球内；对另一正测度网同理。由网刻画连续性，$\star_b$ 在 $M_b^+(I)\times M_b^+(I)$ 上也联合弱星连续。
+
+再证明全空间联合弱星连续性确实失败。对 $n\ge0$，令
+$$
+H_n=\{x\in R:x_2\in2^n\mathbb Z_2,\ x_p=0\ \text{对所有 }p\ne2\},
+$$
+令 $\eta_n$ 为紧加法群 $H_n$ 的归一化 Haar 概率，并令
+$$
+h_n=\rho_*\eta_n\in\mathcal P(I).
+$$
+每个 $\eta_n$ 都是 $U$-不变的，所以 $\Lambda_bh_n=\eta_n$。若 $n\ge m$，则 $H_n\subset H_m$，而 $\eta_m$ 对 $H_n$ 的平移不变，故
+$$
+\eta_n*_R\eta_m=\eta_m.
+$$
+于是对所有 $m,n\ge0$，
+$$
+h_n\star_bh_m=h_{\min(n,m)}.
+$$
+令
+$$
+d_n=h_n-h_{n-1}\qquad(n\ge1).
+$$
+直接展开即得
+$$
+d_n\star_bd_m=0\quad(n\ne m),\qquad
+d_n\star_bd_n=d_n.
+$$
+定义
+$$
+f(A)=
+\begin{cases}
+2^{-A_2},&A_2<\infty,\\
+0,&A_2=\infty.
+\end{cases}
+$$
+因为 $2^{-k}\to0$，故 $f\in C(I)$。在 $\eta_n$ 下，
+$$
+\Pr(v_2(x)=n+j)=2^{-j-1}\qquad(j\ge0),
+$$
+所以
+$$
+h_n(f)
+=\sum_{j\ge0}2^{-(n+j)}2^{-j-1}
+=\frac23\,2^{-n},
+$$
+从而
+$$
+d_n(f)=-\frac23\,2^{-n}<0.
+$$
+
+取 $(0,0)$ 的任意两个弱星邻域。缩小后，它们分别由有限多个 $C(I)$ 测试函数控制；把两组测试函数合并为 $g_1,\ldots,g_r$。取整数 $N>2r$。实线性方程组
+$$
+\sum_{n=1}^N a_n\operatorname{Re}d_n(g_j)=0,\qquad
+\sum_{n=1}^N a_n\operatorname{Im}d_n(g_j)=0
+\qquad(1\le j\le r)
+$$
+只有至多 $2r$ 个方程，因此存在非零实向量 $(a_1,\ldots,a_N)$。令
+$$
+\mu=\sum_{n=1}^Na_nd_n.
+$$
+则 $\mu(g_j)=0$ 对所有 $j$ 成立，所以对每个实数 $t$，$t\mu$ 同时属于上述两个缩小后的零邻域。另一方面，正交幂等关系给出
+$$
+(\mu\star_b\mu)(f)
+=\sum_{n=1}^Na_n^2d_n(f)
+=-\frac23\sum_{n=1}^Na_n^22^{-n}<0.
+$$
+因此
+$$
+((t\mu)\star_b(t\mu))(f)
+=t^2(\mu\star_b\mu)(f)
+$$
+的绝对值随 $|t|\to\infty$ 无界。输出弱星零邻域
+$$
+\{\lambda\in M_b(I):|\lambda(f)|<1\}
+$$
+因而不可能包含所有这类乘积。这证明 $\star_b$ 在 $(0,0)$ 不联合弱星连续，也证明第 3 项的有界全变差限制是实质性的。
+
+加法群复测度代数的对合为
+$$
+\lambda^\dagger(D)=\overline{\lambda(-D)}.
+$$
+它保持 $M_b^U(R)$。在轨道商上，$-x=(-1)x$ 且 $-1\in U$，所以轨道对合为恒等映射 $A^\ast=A$，而搬运后的复测度对合正是
+$$
+\mu^{-}(D)=\overline{\mu(D^\ast)}.
+$$
+因此 $(M_b(I),\star_b,{}^{-})$ 是交换 Banach-$\ast$-代数。若
+$$
+e\in\operatorname{supp}(\delta_A\star_b\delta_B),
+$$
+则 theorem 56.3 给出实际 $x,y\in R$，满足 $\rho(x)=A,\rho(y)=B$ 且 $x+y=0$；于是 $y=-x$ 与 $x$ 同一 $U$-轨道，所以 $A=B=A^\ast$。反之若 $A=B$，任取 $\rho(x)=A$ 并令 $y=-x$，即有 $\rho(y)=B$ 且 $x+y=0$，故 theorem 56.3 给出 $e$ 属于该支撑。第 5 项得证。
+
+对概率测度，$\Lambda=\Lambda_b|_{\mathcal P(I)}$，所以定义中的 $\star$ 显然就是 $\star_b$ 的概率限制。结合律、交换律从 $\star_b$ 继承，仿射性来自双线性，联合弱连续性由 $\mathcal P(I)\subset B_1$ 与第 3 项得到。这也重新给出
+$$
+\delta_A\star\delta_B=K(A,B).
+$$
+
+最后证明点核唯一性。令
+$$
+\mathcal A=\operatorname{span}\{\delta_A:A\in I\}.
+$$
+若 $f\in C(I)$ 被 $\mathcal A$ 中每个测度湮灭，则特别有 $\delta_A(f)=f(A)=0$ 对所有 $A\in I$，故 $f=0$。因此由弱拓扑的双极刻画，$\mathcal A$ 在 $\sigma(M_b(I),C(I))$ 中稠密。若 $\diamond$ 满足定理末尾的条件，则双线性先给出 $\diamond$ 与 $\star_b$ 在 $\mathcal A\times\mathcal A$ 上相同。固定 $\nu\in\mathcal A$，利用第一变量的分别弱星连续性和 $\mathcal A$ 的稠密性，把相等性延拓到所有 $\mu\in M_b(I)$；再固定任意这样的 $\mu$，利用第二变量的分别弱星连续性和同一稠密性，把相等性延拓到所有 $\nu\in M_b(I)$。故 $\diamond=\star_b$。这里不需要、也没有使用全空间联合弱星连续性。证毕。
+
+**theorem 56.6（中间轨道重新随机化保持独立树的根分布，但不一般保证公共见证联合律）。** 设 $X,Y,Z$ 独立，且分别服从某三个规范轨道概率 $m_A,m_B,m_C$。令 $S=X+Y$。则 $S$ 的律是 $U$-不变的，并且
+$$
+\operatorname{Law}(S)=\Lambda\operatorname{Law}(\rho(S)).
+$$
+因此若第三输入 $Z$ 与整个子树 $(X,Y)$ 独立，则先只保留 $\rho(S)$、再按其规范轨道概率重新抽取代表、再与 $Z$ 相加，所得最终轨道律与直接计算 $\rho(X+Y+Z)$ 相同；不同括号方式给出 theorem 56.5 的结合律。若另一个观察量再次使用 $X$ 或 $Y$，则仅由 $\operatorname{Law}(\rho(S))$ 重新抽取中间代表并不一般保证保存该观察量与中间代表之间的原联合律；某些特殊联合律可以恰好保持。theorem 56.7 给出一个严格失败的具体事件。
+
+**证明。** theorem 56.5 的概率限制证明已经表明 $m_A*_Rm_B$ 是 $U$-不变概率，而它正是 $S$ 的律。对任意 $U$-不变概率 $\lambda$，同一定理证明了 $\Lambda(\rho_*\lambda)=\lambda$，故得到所列恒等式。若 $Z$ 与 $(X,Y)$ 独立，则把 $S$ 的律换成完全相同的 $\Lambda\operatorname{Law}(\rho(S))$ 不会改变 $(S,Z)$ 的乘积律，因此也不改变 $\rho(S+Z)$ 的律。
+
+若某个量再次使用 $X$ 或 $Y$，则所需对象是含公共变量的联合律，而上面的边缘恒等式只确定 $S$ 的边缘律；从一个边缘律不能推出所有这类联合律在重新抽取后保持不变。因此本定理只给出“不一般保证”的结论，而不作普遍失败断言。theorem 56.7 的同一输入复用构造给出一个联合律确实改变的实例。证毕。
+
+**theorem 56.7（复用输入三元联合律的精确支撑、两两独立而非联合独立，以及 $1/8$ 对 $0$ 的反例）。** 令 $x,y,z$ 为 $U$ 上相互独立的 Haar 单位，并令
+$$
+J(x,y,z)=\bigl(\rho(x+y),\rho(y+z),\rho(z+x)\bigr),\qquad L=J_*m_U^{\otimes3}.
+$$
+则
+$$
+\operatorname{supp}L=J(U^3),
+$$
+即恰为真实连续像；逐素数还有
+$$
+J(U^3)=\prod_pJ_p(U_p^3),
+$$
+其中
+$$
+J_p(r,s,t)=\bigl(v_p(r+s),v_p(s+t),v_p(t+r)\bigr).
+$$
+三个边缘都等于 $K(\mathbf0,\mathbf0)$，其中 $\mathbf0=(0)_p$；任意两个边缘事实上独立，但三个边缘不联合独立。具体地，令 $H$ 为只约束 $p=2$ 坐标的柱事件
+$$
+H=\{(C_{12},C_{23},C_{31}):C_{12,2}\ge2,\ C_{23,2}\ge2,\ C_{31,2}\ge2\}.
+$$
+若取三个二元边缘的独立乘积，则
+$$
+\bigl(K(\mathbf0,\mathbf0)^{\otimes3}\bigr)(H)=\left(\frac12\right)^3=\frac18,
+$$
+而真实复用输入联合律满足
+$$
+L(H)=0.
+$$
+故真实联合支撑严格小于三个边缘支撑的笛卡尔乘积。
+
+**证明。** $J$ 连续，而 $m_U^{\otimes3}$ 在紧空间 $U^3$ 上满支撑；目标 $I^3$ 是 Hausdorff 空间，故 theorem 56.3 中带 Hausdorff 目标假设的连续像支撑引理适用，得到 $\operatorname{supp}L=J(U^3)$。因为 $U^3=\prod_pU_p^3$ 且 $J$ 完全逐坐标计算，任意一族局部见证可逐素数组装，故像集恰为 $\prod_pJ_p(U_p^3)$。
+
+每个单边缘都由两个独立 Haar 单位之和得到，故是 $K(\mathbf0,\mathbf0)$。再看例如前两个边缘。条件于 $y$ 后，$y^{-1}x$ 与 $y^{-1}z$ 仍是相互独立的 Haar 单位，并且
+$$
+\rho(x+y)=\rho(y^{-1}x+1),\qquad
+\rho(y+z)=\rho(1+y^{-1}z).
+$$
+其条件联合律不依赖 $y$ 且等于两个 $K(\mathbf0,\mathbf0)$ 边缘的乘积，所以这两个边缘独立；其他两对同理。
+
+但在 $p=2$，theorem 56.4 给出对两独立单位 $r,s$，
+$$
+\Pr(v_2(r+s)\ge2)=\frac12.
+$$
+因此三个独立边缘给 $H$ 的概率为 $1/8$。对真实三元组，$x_2,y_2,z_2$ 模 $4$ 均只能为 $1$ 或 $3$。两个奇单位之和可被 $4$ 整除，当且仅当二者模 $4$ 属于相反的两个类。若 $H$ 发生，则三对 $(x_2,y_2)$、$(y_2,z_2)$、$(z_2,x_2)$ 都必须异色；但三个位点用两个颜色不可能使三条边都异色。故 $H$ 不可能发生，$L(H)=0$。由于 $H$ 是非空开闭柱集且独立边缘乘积给它正概率，这还直接证明真实支撑严格较小。证毕。
+
+**theorem 56.8（正普通整数输入几乎必然逃离普通整数生成理想；零输入例外）。** 令 $a,b\in\mathbb N_{>0}$ 以对角方式嵌入 $R$，令 $A=\rho(a),B=\rho(b)$，并令 $C$ 服从 $K(A,B)$。则
+$$
+\Pr\bigl(\exists n\in\mathbb N_{>0},\ C=\rho(n)\bigr)=0.
+$$
+更精确地，几乎处处所有 $C_p$ 都有限，但集合 $\{p:C_p>0\}$ 是无限集。因此随机输出总对应某个 $R$ 中的主闭理想 $s(C)R$，却几乎必然不是任何正普通整数 $n$ 的理想 $nR$。若一个输入为 $0$、另一个为正整数 $b$，则 $K(\rho(0),\rho(b))=\delta_{\rho(b)}$；若两输入均为 $0$，则输出恒为 $\rho(0)$，即零理想而非正整数生成理想。
+
+**证明。** 先设 $a,b>0$。令 $S$ 为整除 $ab$ 的有限素数集。对任意奇素数 $p\notin S$，有 $A_p=B_p=0$。定义
+$$
+E_p=\{C_p>0\}.
+$$
+theorem 56.4 给出
+$$
+\Pr(E_p)=\Pr(v_p(1+w_p)\ge1)=\frac1{p-1}.
+$$
+并且这些 $E_p$ 对不同 $p$ 独立，因为 theorem 56.4 已从实际全局 Haar 概率证明了坐标独立。
+
+下面自足证明所需发散。首先
+$$
+\sum_{p\ \mathrm{prime}}\frac1p=\infty.
+$$
+否则对充分大的有限素数界 $N$，由 $-\log(1-t)\le2t$ 对 $0<t\le1/2$ 可得有限 Euler 乘积
+$$
+P_N=\prod_{p\le N}\left(1-\frac1p\right)^{-1}
+$$
+一致有界。然而把每个几何级数展开，$P_N$ 包含每个只含 $p\le N$ 素因子的 $1/n$ 项，特别包含全部 $1\le n\le N$，故
+$$
+P_N\ge\sum_{n\le N}\frac1n\longrightarrow\infty,
+$$
+矛盾。因此删去有限多个素数后仍有 $\sum_p1/p=\infty$，又因 $1/(p-1)\ge1/p$，
+$$
+\sum_{\substack{p\notin S\\p\ \mathrm{odd}}}\Pr(E_p)=\infty.
+$$
+
+无需把 Borel–Cantelli 当作黑箱即可推出无限多次发生。把这些奇素数枚举为 $p_1,p_2,\ldots$。固定 $M$，独立性给出
+$$
+\Pr(E_{p_j}\text{ 对所有 }j\ge M\text{ 都不发生})
+=\lim_{N\to\infty}\prod_{j=M}^N\bigl(1-\Pr(E_{p_j})\bigr)
+\le\lim_{N\to\infty}\exp\left(-\sum_{j=M}^N\Pr(E_{p_j})\right)=0.
+$$
+对 $M$ 可数并，得到“仅有限多个 $E_p$ 发生”的概率为 $0$。故几乎处处有无限多个 $p$ 满足 $C_p>0$。
+
+另一方面，每个固定 $p$ 在有限相等输入情形下取 $\infty$ 的概率为 $0$，不等输入情形更不可能取 $\infty$；素数集可数，所以
+$$
+\Pr(\exists p,\ C_p=\infty)=0.
+$$
+因而几乎处处全部坐标有限且正支撑无限。一个向量 $D\in I$ 等于某个正整数的赋值向量 $\rho(n)$，当且仅当全部 $D_p<\infty$ 且 $\{p:D_p>0\}$ 有限；反向由有限乘积 $n=\prod_pp^{D_p}$ 得到。因此所求普通整数事件概率为 $0$。这里的零概率结论来自实际坐标独立性和发散和，而非“普通整数只有可数多个”的基数论推断。
+
+若 $a=0$，则 $s(\rho(0))=0$，所以对任意 $B$，
+$$
+K(\rho(0),B)=\operatorname{Law}(\rho(vs(B)))=\delta_B.
+$$
+另一个输入为零时同理；两者皆零时恒得 $\rho(0)$。证毕。
+
+**约定 56.9（Haar 轨道概率卷积与集合值商超加法的记号）。** 本节称 theorem 56.3 与 theorem 56.5 所定义的 $K$ 与 $\star$ 为相对于 $(R,U,\rho,m_U)$ 的规范 Haar 轨道概率核与规范 Haar 轨道概率卷积；“规范”仅表示这些对象由所给轨道商、截面无关的 Haar 轨道概率以及上述公式唯一确定。对 $A,B\in I$，另记集合值运算
+$$
+A\boxplus B:=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+由 theorem 56.3，
+$$
+A\boxplus B=\operatorname{supp}K(A,B)
+=\operatorname{supp}(\delta_A\star\delta_B).
+$$
+Connes–Consani, *The hyperring of adèle classes*, arXiv:1001.4260v2, Proposition 2.5，印刷页 p.7，对交换环 $R$ 与单位群子群 $G\subset R^\times$ 定义的集合值商超加法正是
+$$
+(xG+yG)/G.
+$$
+取当前 $G=U$ 并用 theorem 56.2 的轨道识别，即得到上述 $\boxplus$。来源：https://arxiv.org/pdf/1001.4260v2 。与此不同，测度卷积 $\star_b$ 的完整有界复测度代数结构及其精确拓扑合同由 theorem 56.5 给出；概率卷积 $\star$ 是其在凸集 $\mathcal P(I)$ 上的限制。本节的符号约定不另行在 $\mathcal P(I)$ 上引入乘法运算。
+
+## 56.99 追加锚
