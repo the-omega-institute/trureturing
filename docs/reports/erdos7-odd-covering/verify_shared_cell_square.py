@@ -30,8 +30,8 @@ BS=tuple(tuple(1+(ROOT[l]==r)+(l==j) for l in range(5)) for r,j in CHOICES)
 G=F(3849,106)
 RHO=F(18925009844347,38266567762500)
 BASE=Path(__file__).resolve().parent
-PINS={'certificates/pure_root_profile_certificate.json':'64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751',
-      'certificates/shared_cell_hinges_certificate.json':'e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae'}
+PINS={'certificates/pure_root_profile_certificate.json':'b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196',
+      'certificates/shared_cell_hinges_certificate.json':'585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845'}
 
 def need(ok,message):
  if not ok:raise ValueError(message)

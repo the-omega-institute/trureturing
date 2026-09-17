@@ -1,0 +1,18 @@
+**theorem 65.5（引理：有限上下文中的条件最小与共同极小动作判据）。** 设有限上下文集合 $S$ 上有严格正概率 $p_s$，有限非空动作集为 $\mathcal A$，损失为 $\ell(s,a)\in\mathbb R$。则
+$$
+\sum_{s\in S}p_s\min_{a\in\mathcal A}\ell(s,a)
+\le
+\min_{a\in\mathcal A}\sum_{s\in S}p_s\ell(s,a).
+$$
+且等号成立当且仅当存在一个动作 $a_*$，使它对每个 $p_s>0$ 的上下文同时最优，即
+$$
+a_*\in\bigcap_{s:p_s>0}\operatorname*{argmin}_{a\in\mathcal A}\ell(s,a).
+$$
+
+**证明。** 记 $m(s)=\min_a\ell(s,a)$。对每个固定动作 $a$，
+$$
+\sum_s p_s\ell(s,a)-\sum_s p_sm(s)
+=\sum_s p_s\bigl(\ell(s,a)-m(s)\bigr)\ge0.
+$$
+对 $a$ 取最小值得到不等式。由于每个 $p_s$ 严格为正，固定 $a$ 使上式等号成立，当且仅当每一项 $\ell(s,a)-m(s)$ 都为零，即 $a$ 同时属于所有正概率上下文的极小动作集合。再对有限动作集取最小即得等号判据。证毕。
+

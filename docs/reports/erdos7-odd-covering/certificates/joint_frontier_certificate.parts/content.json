@@ -1,7 +1,7 @@
 {
   "schema": {
     "kind": "inline",
-    "value": "erdos7-original-five-strip-deletion-frontier-v1"
+    "value": "erdos7-original-five-kept-or-removed-frontier-v1"
   },
   "source_commit": {
     "kind": "inline",
@@ -27,16 +27,16 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "verify_shared_cell_hinges.py": "f8ba06810c4552e5f6ec022d3762d615751407551ef6f4412bbb0490bb09ece9",
-      "verify_shared_cell_square.py": "9627bf255470676aec922813c031f2488c9433c7fa1326e735b4965d2ba89ca5",
-      "verify_joint_source_normalization.py": "c52ef571da5dc9e6310d4081b85e6fca2786d7ca066cee8b1906abd01e6b3631",
-      "certificates/pure_root_profile_certificate.json": "64cca3231e75e3356eac5202196db65ecc03beca27bbe9d290d21c89b3960751",
-      "certificates/shared_cell_hinges_certificate.json": "e5661edc37f4c133dd72f1ba51563908e8f02cc9cefa1ca15d319188591fc6ae",
-      "certificates/shared_cell_square_certificate.json": "100041c9cd4b668071ffb0c188aa622c1b59f1849481daab40d4b1349e50deef",
-      "certificates/shared_square_continuation_certificate.json": "1444a9203af13cee800c132187692747d5d29e30d46345fea367b803738be48e",
-      "certificates/joint_source_normalization_certificate.json": "d0d5759ec857bdbe8376c593711c2f5f3273d115b134e87d0dc9be64ce5f01f1",
-      "verify_uniform_gamma_cofactor_coupling.py": "dee641ea80f6e3e94a18c1d57494381feb86ea93d275c070134b97a213a2843d",
-      "certificates/uniform_gamma_cofactor_certificate.json": "c443ac33dab710c3651c7785135e8b47f69511c3418727afec446b07934fff48"
+      "verify_shared_cell_hinges.py": "44c89672e97868325e7c7d6bb409a0facc1d158263f379253b4096fbead4fe38",
+      "verify_shared_cell_square.py": "0a58af421ba54c427b6414caae32880f8b42625d6a43231aea97f69e899c407d",
+      "verify_joint_source_normalization.py": "b369bc6e157183fa2145fabdf4bf03274cfb8fa2a1a5ba782d8e6a48bd757d8a",
+      "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+      "certificates/shared_cell_hinges_certificate.json": "585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845",
+      "certificates/shared_cell_square_certificate.json": "df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d",
+      "certificates/shared_square_continuation_certificate.json": "5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099",
+      "certificates/joint_source_normalization_certificate.json": "6d20b947850c8ae3cc08faf72021a71347e16dc6a855907009422257f41c39dd",
+      "verify_uniform_gamma_cofactor_coupling.py": "4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3",
+      "certificates/uniform_gamma_cofactor_certificate.json": "bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c"
     }
   },
   "input19": {
@@ -45,15 +45,15 @@
   },
   "bound": {
     "kind": "inline",
-    "value": "135235148346191272912644779662034152101019/301013392900945745723455169136921801600"
+    "value": "405160558934792762657900543938490087303057/903040178702837237170365507410765404800"
   },
   "Gamma13": {
     "kind": "inline",
-    "value": "2759803303859498317/17626016683279862"
+    "value": "74165888355209854559/475902450448556274"
   },
   "T13_81": {
     "kind": "inline",
-    "value": "40328059447468124566268231594828117/407273507000616495667817513124000"
+    "value": "120936974732058762228421006729484351/1221820521001849487003452539372000"
   },
   "C0": {
     "kind": "inline",
@@ -61,27 +61,27 @@
   },
   "KZ": {
     "kind": "inline",
-    "value": "20334093065511997197357661/1028050742777126149635840"
+    "value": "540401596493056268582430223/27757370054982406040167680"
   },
   "continuous_coefficient": {
     "kind": "inline",
-    "value": "30608625189355598901951158054960421028721/75641684010069914287950061539561484800"
+    "value": "825844056210813777535018280512917792392747/2042325468271887685774651661568160089600"
   },
   "Gamma_coefficient": {
     "kind": "inline",
-    "value": "384818684614381280186471/3329413543338099692904"
+    "value": "10358623165784234038408349/89894165670128691708408"
   },
   "T81_coefficient": {
     "kind": "inline",
-    "value": "63785933429005107702629491421514123461/657527412686841462390473381957424000"
+    "value": "1721892971495221009767557599470666960647/17753240142544719484542781312850448000"
   },
   "DCOEF16": {
     "kind": "inline",
-    "value": "109235053489/4564952964"
+    "value": "2902859034091/123253730028"
   },
   "DCOEF81": {
     "kind": "inline",
-    "value": "344126004540434879099/272970989707978757052"
+    "value": "45723343746233077083037/36851083610577132202020"
   },
   "vertex_count": {
     "kind": "inline",
@@ -202,13 +202,21 @@
     "kind": "inline",
     "value": "15753210252311875/567976817318556672"
   },
+  "previous_strip_bound": {
+    "kind": "inline",
+    "value": "135235148346191272912644779662034152101019/301013392900945745723455169136921801600"
+  },
+  "kept_or_removed_gain": {
+    "kind": "inline",
+    "value": "18072701332406875/29951902475783262"
+  },
   "source_G357": {
     "kind": "inline",
-    "value": "5761/159"
+    "value": "765767/21465"
   },
   "same_cell_split_bound": {
     "kind": "inline",
-    "value": "135241235738532012300100610333107962335899/301013392900945745723455169136921801600"
+    "value": "405178821111814980820268035951711518007697/903040178702837237170365507410765404800"
   },
   "same_cell_whole_weighted_gain": {
     "kind": "inline",
@@ -216,7 +224,7 @@
   },
   "same_cell_no_floor_bound": {
     "kind": "inline",
-    "value": "135267545144352250852230456917580219163519/301013392900945745723455169136921801600"
+    "value": "405257749329275696476657575705128288490557/903040178702837237170365507410765404800"
   },
   "same_law_floor_gain": {
     "kind": "inline",
@@ -224,23 +232,23 @@
   },
   "split_continuous_coefficient": {
     "kind": "inline",
-    "value": "520372436135809940279092238745399087751297/1285908628171188542895151046172545241600"
+    "value": "14040045769336482709635219667618544587778779/34719532960622090658169078246658721523200"
   },
   "no_floor_continuous_coefficient": {
     "kind": "inline",
-    "value": "520585994525155698199500101286132618515677/1285908628171188542895151046172545241600"
+    "value": "14045811845848818173486231956218349918417039/34719532960622090658169078246658721523200"
   },
   "frontier_unequal": {
     "kind": "inline",
-    "value": "123696050941439161049501590188192271/407273507000616495667817513124000"
+    "value": "371135356434663094618888458619576813/1221820521001849487003452539372000"
   },
   "frontier_box20": {
     "kind": "inline",
-    "value": "30950723055587788444164903939965657323/101818376750154123916954378281000000"
+    "value": "92863970069349768200090633833646971969/305455130250462371750863134843000000"
   },
   "remaining_signed_upper": {
     "kind": "inline",
-    "value": "3816454442489947630011734869198571985623331115016873/26268596182210256363393030042845131560225044176000"
+    "value": "11398768072774735270873801107519936857258982310050619/78805788546630769090179090128535394680675132528000"
   },
   "checks": {
     "kind": "inline",
@@ -280,13 +288,13 @@
     }
   },
   "other_eight_branches": {
-    "path": "content/050-other_eight_branches.json",
-    "sha256": "435d657975b3f92832da8c5e18c8a1bbafae2068a04051eed44229fbc836a396",
+    "path": "content/052-other_eight_branches.json",
+    "sha256": "e8c1411678d384d6af000862bb90c7fa9020e0c17275d171a6921e4a3005c132",
     "kind": "value"
   },
   "rows": {
-    "path": "content/051-rows.json",
-    "sha256": "98bb4d63b03d9ae4eddae330deb6979436c1e1fbf381e50ecec5ac1725c550d2",
+    "path": "content/053-rows.json",
+    "sha256": "86244877976dcb909b48e9b75742fbaa0753d2df5c7165f2e0904494bd3ff127",
     "kind": "array"
   },
   "scope": {

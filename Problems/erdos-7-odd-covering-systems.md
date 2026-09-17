@@ -35,6 +35,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 ### Results and proofs
 
 - [Current bounds and comparisons](../docs/reports/erdos7-odd-covering/problem-details/01-current-bounds-and-comparisons.md)
+- [Original-layout distance forces a Jensen loss](../docs/reports/erdos7-odd-covering/profile-notes/34-original-layout-distance-forces-a-jensen-loss.md)
+- [Retained and removed events: the complete convex-cost bound](../docs/reports/erdos7-odd-covering/profile-notes/33-retained-and-removed-original-events-control-convex-costs.md)
 
 ## Motivation
 
