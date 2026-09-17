@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:13319bdac86d2b2a140913fef222104be2f2fc4b5863ef0a70f052f3c56ddb8d
+  normalized_sha256: sha256:13319bdac86d2b2a140913fef222104be2f2fc4b5863ef0a70f052f3c56ddb8d
+cas_ref: sha256:13319bdac86d2b2a140913fef222104be2f2fc4b5863ef0a70f052f3c56ddb8d
+coverage_gids:
+  - gid: D5/S3/Observer/PositiveWeightedReadoutGramKernel.positive_weighted_readout_gram
+    target_statement_id: sha256:f4206a8b8be699892f83d2c29cb48271a42be9138fae2ce37371e8eaf2ce51b3
+receipts:
+  unresolved_subitems: []
