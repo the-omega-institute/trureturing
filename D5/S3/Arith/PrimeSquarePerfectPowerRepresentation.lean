@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
-   digest: Every prime added to a square is a perfect power of exponent at least two. -/
+   digest: Every prime plus some square is a perfect power of exponent at least two. -/
 
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.Ring
