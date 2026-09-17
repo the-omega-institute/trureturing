@@ -243,6 +243,21 @@
     "relu_conservative_rejections": 2,
     "relu_psd_sign_image_obstructions": 1,
     "relu_same_summary_migration_pairs": 1,
+    "rro_actual_endpoint_fixtures": 8,
+    "rro_actual_joint_counterexamples": 1,
+    "rro_actual_probability_box_points": 9,
+    "rro_binary_pair_kernel_checks": 54096,
+    "rro_binary_vertices": 2340,
+    "rro_cycle_order_cases": 6,
+    "rro_decoder_checks": 14168,
+    "rro_insufficient_prefix_witnesses": 540,
+    "rro_moving_window_counterexamples": 1,
+    "rro_probability_box_points": 14168,
+    "rro_rank_checks": 168,
+    "rro_schedule_order_cases": 168,
+    "rro_schedules": 84,
+    "rro_tail_column_checks": 336,
+    "rro_zero_dimensional_cases": 8,
     "state_error_without_readout_regularity_cases": 3,
     "stochastic_discounted_pairs": 27,
     "stochastic_iid_horizons": 36,
@@ -649,9 +664,144 @@
     }
   },
   "result": "all finite assertions passed",
+  "rro_retention": {
+    "current_and_next": {
+      "current_binary_classes": 3,
+      "current_minus_and_plus_histogram_01": [
+        "1/2",
+        "1/2"
+      ],
+      "current_rank": 1,
+      "digit_one_residual_matrix": [
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "fixed_width_bits_in_both_cases": 2,
+      "next_minus_histogram_01": [
+        "1/2",
+        "1/2"
+      ],
+      "next_plus_histogram_01": [
+        "1",
+        "0"
+      ],
+      "probability_TV": "1/2",
+      "schedule": [
+        1,
+        1
+      ],
+      "signed_variation": "1",
+      "stacked_binary_classes": 4,
+      "stacked_rank": 2
+    },
+    "endpoint_fixture": {
+      "citation": "RRO 20.2 oriented words; 25.9/25.12/28.7 actual kernel",
+      "lowest_digits_minus_plus_m1_to_m4": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "family": {
+      "box_grid": "g_k in {0,1/(2K),1/K}; K=0 has one empty vector",
+      "depths": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "horizons": [
+        0,
+        1,
+        2
+      ],
+      "max_initial_residual_dimension": 5,
+      "orders": "natural; permuted M2=(2,1), M3=(3,1,2), M5=(3,1,4,2,5)",
+      "rank_cases_by_schedule": {
+        "current_only": 12,
+        "future_visible": 68,
+        "none_visible": 4
+      }
+    },
+    "geometry_assumptions": [
+      "RRO 34.0: positive-depth boundary set E1..E_G_L with fixed side orientation",
+      "RRO 34.1: tau=0 coordinate product; RRO 34.3: full-cycle constant kernel",
+      "Cycle labels are permuted incidence inputs, not derived RRO digit geometry"
+    ],
+    "geometry_source": "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md",
+    "joint_boundary": {
+      "minus": [
+        "1/2",
+        "0",
+        "0",
+        "1/2"
+      ],
+      "phase": "(delta_E1 + delta_E2)/2; a phase measure, not one point",
+      "plus": [
+        "0",
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "probability_TV": "1",
+      "record_order": [
+        "00",
+        "10",
+        "01",
+        "11"
+      ],
+      "record_times": [
+        0,
+        2
+      ],
+      "schedule": [
+        1,
+        0,
+        1
+      ],
+      "signed_variation": "2"
+    },
+    "moving_window": {
+      "fixed_current_prefix_residual_after_truncation": "0",
+      "initial_cutoff": 1,
+      "minus_prefix_at_time2": "00",
+      "needed_current_index_at_time2": 3,
+      "plus_prefix_at_time2": "01",
+      "schedule": [
+        0,
+        0,
+        2
+      ]
+    },
+    "scope": "Fixed finite tuple of marginal histograms; full phase measure retained and charged; exact real residuals. Linear rank is not bits or total memory. Universal claims use paper proofs.",
+    "section": 46,
+    "source": "docs/reports/contextual-spacetime-ml/rro_retention.py",
+    "source_bytes": 19145,
+    "source_sha256": "d54c800a3802fb9ae2edf0e4d74c0fc992025b483df3e5de493b52e73625199c",
+    "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md"
+  },
   "schema": "contextual-spacetime-ml-finite-checks-v1",
   "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
-  "source_sha256": "b19fafb310ed8fbd286e5404e787591fd24ad130b9cc606b682c1204a5afdcb2",
+  "source_sha256": "1b646de651ee0a986f18f1c7fc82d976ad927809913054baaac86814f8cd2474",
   "stochastic_records": {
     "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
     "iid_state_contraction": "0",
