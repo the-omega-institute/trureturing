@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42da8e1d448ab7a2a8e1becf926b3c366690ce7f402bba86eeddd0f6d45483eb
+  normalized_sha256: sha256:42da8e1d448ab7a2a8e1becf926b3c366690ce7f402bba86eeddd0f6d45483eb
+cas_ref: sha256:42da8e1d448ab7a2a8e1becf926b3c366690ce7f402bba86eeddd0f6d45483eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “记”引入实际读取数及其两个上确界，“上确界允许为无穷”确定值域，深度零的空输出与不赋最后索引属于费用约定；本叶没有正深度的最优值断言，也未将有限性作为已证事实塞入定义。
+    previous_atom_id: 510429db24b6822d0335f3a60c924b048d81b774fb03b2e3692ed3eaa868454d
+    next_atom_id: 0876bf8b643bce15a0e03e6142e774d59578c52457cd560cd58b01e6eef43b80

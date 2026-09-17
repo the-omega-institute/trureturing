@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c121c8229c983a110df77f83691f4ede3a1d49871e8b67d48c82b3088ef96fa
+  normalized_sha256: sha256:7c121c8229c983a110df77f83691f4ede3a1d49871e8b67d48c82b3088ef96fa
+cas_ref: sha256:7c121c8229c983a110df77f83691f4ede3a1d49871e8b67d48c82b3088ef96fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本必要等待结论不量化为每个旧描述符都须等待”只限制前一叶下界的量词；实际等待下界保留在父链另一子项，本叶不再断言某描述符必须等待或能够立即停止，亦无定义夹带命题。
+    previous_atom_id: ca2e32ac0288c0f572f0d595e7df8c1525c15db2c157e574a4604e835a7d4afb
+    next_atom_id: 016ea3a7a66fb8663e6d47e0d5bf95d54b7e287ce5612eb5f8c580508b76abce
