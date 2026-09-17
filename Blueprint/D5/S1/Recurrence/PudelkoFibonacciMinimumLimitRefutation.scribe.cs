@@ -69,7 +69,10 @@ internal sealed class PudelkoFibonacciMinimumLimitRefutationDocument
                     + "choosing t as the maximum of three and that threshold supplies a later "
                     + "index N=6t and contradicts the required epsilon bound.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pudelko-fibonacci-minimum-limit-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -78,14 +81,16 @@ internal sealed class PudelkoFibonacciMinimumLimitRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("pudelko-" + id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula BilateralFibonacciFormula()
     {
