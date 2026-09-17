@@ -145,6 +145,17 @@ potential proves
 This is profile30(DP2), applied with q=1/3. It bounds every switching
 schedule; it does not exchange a sum and a maximum.
 
+Absent shallow test labels are also covered by B. At every integer v>=1,
+convexity gives
+
+    Delta q_(n,l)(v)=(1/n)*sum_(i=0..n-1)Delta f_l(n*v+i)
+                    >=Delta f_l(v).
+
+Since sum_(n>=2)p5_n=1/5, this implies Delta bar f_l(v)>=0.
+Both terms in the baseline expression therefore increase when an absent
+shallow carrier is completed in the upper comparison. This does not
+add a forbidden class to the actual measure or identify any residues.
+
 At original depth a, the actual ternary cylinder lies in one surviving
 cell l or is empty. Its eta mass is at most3^-a. At each point of this
 cylinder, the preceding active deep count is at most the number k_l
