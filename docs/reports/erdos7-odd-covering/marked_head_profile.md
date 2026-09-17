@@ -15772,3 +15772,590 @@ Every original old block contains its unit indicator, so a_i>=1. Substitution gi
 All maxima retain the48 original test labels. There is no assumption that A,B,C,D coincide or that their extrema have a prescribed form. The factors q19 in u, q17 in v and both in q preserve the actual two-stage killing. Subtracting484 eta1 on both sides gives the same loss for the signed objective, but this benchmark is not the separate KC sum of the17 and19 frontiers.
 
 The literal21-class construction,144 source rows, both physical/killed kernels, every cylinder coefficient and the matrix certificate have been recomputed with exact rational arithmetic. The arbitrary-layout conclusion follows from BQC1--BQC4 and the displayed matrix identity. This proves a same-family strict loss with positive charge at both stages; it does not supply a uniform0.057281 subtraction over other original families, the299.398 target, later-prime continuation or Lean verification.
+
+### Prefix-tree optimization and branch-price certificates
+
+This is ordinary mathematics with exact rational computation, not Lean
+verification. All masses belong to one actual unnormalized killed row. No
+probability replacement, original-modulus deletion, or repeated-block hypothesis
+is used. The method evaluates CPI's row relaxation; it does not make the original
+complete test independently selectable at different old histories.
+
+#### 1. Tree score
+
+Let R be a finite nonnegative measure on Z/p^H Z. Its prefix tree has one
+node v=(e,a) for each current residue a modulo p^e, with mass m(v)=R(v).
+Let M_e=max_(depth v=e)m(v), q=R1, and
+
+    C_H = sum_(e=1)^H (2e+1) M_e.
+
+Select one node v_e at each depth. Let anc_S(v) be the number of selected
+strict ancestors of a selected node v. Laminarity of residue cylinders gives
+
+    J(S) = integral[(sum_(v in S)1_v)^2 + 2 sum_(v in S)1_v] dR
+         = sum_(v in S) [3+2 anc_S(v)] m(v),
+
+because distinct incomparable nodes are disjoint and the intersection of an
+ancestor with v has mass m(v). Rewriting CPI1 gives exactly
+
+    Omega_H(R) = C_H - max_(one node per depth) J(S).                 (PT1)
+
+Thus the quantity to optimize is a positive tree score. Nodes of zero mass can
+be omitted for this maximum when q>0. Any selected zero-mass node has no
+positive-mass descendant; replacing it by any positive-mass node at the same
+depth cannot decrease the original pointwise nonnegative square. Repeating
+leaves a tuple of positive nodes. For q=0, Omega_H=0 separately.
+
+If s full-height leaves carry positive mass, the positive tree has at most
+1+Hs nodes. Constructing all its masses costs O(Hs) additions, when the leaf list
+is already available. This does not give a bound on the size or discovery cost
+of that actual row representation.
+
+#### 2. Exact subset-of-depths dynamic program
+
+For a node v of depth d, an integer a in [0,d-1], and a subset D of
+{d,...,H}, let F_v(a,D) maximize the score of choosing exactly one node at each
+depth in D, all inside v's subtree, with a already selected strict ancestors.
+These are the only external effects on the subtree score.
+
+Put epsilon=1_(d in D), D'=D\{d}, a'=a+epsilon. Then
+
+    F_v(a,D) = epsilon(3+2a)m(v)
+        + max_(disjoint union_c D_c = D') sum_c F_c(a',D_c).        (PT2)
+
+Here c runs over the positive children of v. An empty subtree allocation gives
+zero. An allocation requesting a depth unavailable below a leaf is infeasible.
+At the virtual depth-zero root, epsilon=0 and a=0; D={1,...,H} gives max J.
+
+Proof: v is the only depth-d node of its subtree, so its inclusion is forced by
+D. Every other chosen node lies in exactly one child subtree; its depth is
+allocated to that child, with no duplicated depth. Selections from different
+children have zero interaction. Selected ancestors contribute only through a'.
+This proves both inequalities in PT2 and gives reconstruction of a maximizing
+tuple. It does not impose that all selected nodes form a chain.
+
+Combine children by max-plus subset convolution. For a fixed state a, the total
+number of disjoint-pair trials on a future-depth set of size k is 3^k. A simple
+uniform upper bound is O(H N 3^H) arithmetic operations and O(H N 2^H) stored
+score entries for a tree of N positive nodes; the depth-dependent bound can be much
+smaller. This is exponential in H, but has no product of level widths. Literal
+tuple enumeration has product_e n_e candidates, where n_e is the positive
+width at depth e. The implementation caches one whole table per (node, ancestor
+count), sharing each convolution across all requested masks. It does not rerun
+the convolution separately for each final mask. The subset program is not
+claimed faster on every small row; its advantage is dependence on H versus the
+product of widths. The reference implementation retains witness tuples of length
+at most H beside each score entry; tuple-copy operations and witness storage
+therefore carry an additional factor at most H. Arithmetic bit complexity and
+actual old-state enumeration are additional costs.
+
+#### 3. Depth prices give small checkable lower certificates
+
+Fix real prices lambda_1,...,lambda_H. Drop the one-node-per-depth restriction
+inside an auxiliary maximization, allowing any subset S of positive nodes. Put
+
+    B_v(a) = max over selections in v's subtree
+               [subtree score with a selected ancestors - sum selected prices].
+
+It obeys the binary tree recurrence
+
+    B_v(a) = max {
+        sum_c B_c(a),
+        (3+2a)m(v) - lambda_d + sum_c B_c(a+1)
+      }.                                                         (PT3)
+
+At the virtual root use B_root(0)=sum_(depth1 v)B_v(0). Every feasible PT1 tuple
+has total price sum_e lambda_e, so
+
+    max J <= sum_e lambda_e + B_root(0),
+    Omega_H >= C_H - sum_e lambda_e - B_root(0).                   (PT4)
+
+The maximum of the latter expression with zero is also a valid lower bound.
+Prices of either sign are valid. Computing PT3 uses O(HN) arithmetic operations
+and O(HN) states, since at depth d only a=0,...,d-1 can arise. Root and edge
+traversals are included in this bound. A rational upper table need only satisfy
+both inequalities corresponding to PT3; exact equality is unnecessary. Such a
+table is a short certificate checked with additions, comparisons, and the actual
+prefix masses. Floating-point optimization may propose prices but cannot certify
+the bound without this exact evaluation.
+
+PT4 is a Lagrangian upper relaxation of max J, not an assertion of strong
+duality for the integral one-node-per-depth problem.
+
+#### 4. Branching enforces a few actual depth constraints
+
+Choose some depths to fix. A branch specifies one positive node at every fixed
+depth, with no nesting restriction between the specified nodes. In PT3, force
+the inclusion action for that node and force the exclusion action for all its
+peers. Set its depth price to zero and price only the remaining free depths.
+The resulting recurrence exactly maximizes the priced unrestricted score within
+that branch. For any such branch b and any branch-specific price vector,
+
+    J_b <= sum_(free e) lambda_(b,e) + B_(b,root)(0) = U_b.
+
+All positive-node tuples are covered by the branches. These suffice for the
+original maximum by PT1's zero-node replacement argument, hence
+
+    max J <= max_b U_b,
+    Omega_H >= C_H - max_b U_b.                                  (PT5)
+
+Each branch takes O(HN) arithmetic. Exhausting r fixed depths costs at most the
+product of their positive widths times that per-branch work. Branch selection
+and price discovery are separate from certificate validity. Fixing more depths
+can only improve the best possible upper certificate, because existing prices
+restrict to the finer branch; it does not guarantee a particular chosen price
+vector improves. Fixing every depth reduces to the literal exact problem.
+
+#### 5. Exact tests on the actual S / S' fixtures
+
+Use unit leaf masses first, multiplying the conclusions by the actual common
+weight w=15/36992 afterwards. For
+
+    S = {1,2,18,35,52,69,86,291,580}
+
+the positive widths are (2,7,9), masses (M1,M2,M3)=(6,3,1), and C3=40.
+The subset program gives max J=32, so Omega3=8, reproducing the independent
+literal-square maximum 41 after adding q=9. There are 126 complete positive
+tuples. For S' from CPI5, the program gives max J=40 and Omega3=0.
+
+The unbranched price vector (18,6,6) gives B_root(0)=3 and upper score 33,
+therefore Omega3>=7. This is the best possible scalar-depth-price certificate,
+not a failure to search prices long enough. Consider three unrestricted subsets:
+
+    A = {root1, root2, child2, leaf2, leaf291, leaf580},
+    B = {child2},
+    C = {root1, child2}.
+
+Their depth-count vectors and scores are
+
+    A: (2,1,3), score63;
+    B: (0,1,0), score9;
+    C: (1,1,0), score27.
+
+The equally weighted mixture has mean count (1,1,1) and mean score33. For every
+price vector lambda, the unrestricted maximum priced score is at least its
+average over this mixture, namely 33-sum lambda. Thus no scalar-price bound is
+below33. It leaves an exact integrality gap of1 in this fixture.
+
+Two root branches remove that gap with explicit integer prices:
+
+    selected root1: lambda2=9,  lambda3=5; upper J=32;
+    selected root2: lambda2=15, lambda3=7; upper J=31.
+
+Both bounds follow directly from PT3 with lambda1=0 and the depth-one actions
+fixed. Hence max J<=32 and Omega3>=8. A feasible original tuple attains J=32,
+so this lower certificate is exact. This uses two tree recurrences, not an
+assumption that the maximizing prefixes form a chain. In particular the winning
+root1 branch uses the incompatible depth-two child2.
+
+The actual arithmetic realization, original 480 test labels, actual row factor
+w, and full old measure remain those of CPI5. Integrating a row certificate uses
+its actual weight and does not give a positive uniform correction for families
+whose rows have a common nested sequence of maxima.
+
+#### Exact verification
+
+verify_prefix_correction.py uses exact integers/Fractions and does not rely on Python assertions.
+It checks both fixtures against direct literal leaf squares; compares PT2 with
+all 256 binary depth-three support sets; compares another 80 rational weighted
+rows at binary depth4 and ternary depth3; and checks PT3 against exhaustive
+arbitrary-node-subset maximization on 20 small rational rows. Root-branch upper
+bounds are independently checked on the 80 weighted rows. The exact dual-gap
+mixture and branch-price constants are separately checked.
+
+The script also reconstructs both literal odd-modulus families from scratch:
+it generates all old divisors, all 273 distinct forbidden moduli and their CRT
+residues, the 480 complete original labels, and checks every current leaf at
+old x=1 against the actual congruences. It reconstructs the uniform old-unit
+count 777600 and the AP/T8 killed leaf weight 15/36992. Its adjacent
+prefix_correction_certificate.json pins the exact counts, masses, all observed
+survivors, and a digest of each original arithmetic family. Normal verification
+recomputes these fields and rejects any mismatch or duplicate JSON key.
+
+These checks establish reproducible computational evidence for the new mechanism
+and its examples. The general mathematical justification is PT1--PT5 above;
+no Lean validation or unrestricted #7 numerical improvement is claimed.
+
+The [prefix certificate](prefix_correction_certificate.json) also reconstructs both273-modulus arithmetic realizations from their literal CRT classes, all480 complete test labels, the pure current base, and the actual killed leaf mass. Altered numerical values and duplicate JSON keys are rejected.
+
+### Prefix corrections survive height extension and controlled law changes
+
+Let R be a finite nonnegative measure on the leaves of a p-ary prefix tree of actual height H. Me=max_(depth e nodes v) R(v), q=R1. For a selection v1,...,vh of one node at every depth, set N_v(y)=sum_e1_(y in ve). CPI gives exactly
+
+  Omega_h(R)=U_h(R)-J_h(R),
+  U_h=sum_e=1..h(2e+1)Me,
+  J_h=max_v integral(N_v^2+2N_v)dR.                 (PCS1)
+
+All quantities at h use the projection of the same actual row; J_h removes the common unit q from the square. Direct expansion proves PCS1, with no nested-selection restriction. Both U_h and J_h are nonnegative, positively homogeneous, monotone under adding positive measure, and bounded by C_h R1, where C_h=h(h+2). Omega_h is nonnegative and homogeneous but is NOT asserted monotone in R.
+
+For h<=H,
+
+  0<=Omega_H(R)-Omega_h(R)
+    <=2 sum_e=h+1..H (e-1)Me
+    <=2c p^(-h) [h/(p-1)+1/(p-1)^2]               (PCS2)
+
+whenever Me<=c p^-e. The first inequality follows because every summand in the original CPI1 cost is nonnegative and restricting a full selection gives a legal h-selection. For the upper bound, extend a minimizing h-selection by choosing a maximal-mass node at each later depth. All new individual deficits vanish. For depth e there are e-1 earlier choices, each causing incompatibility cost at most2Me. This proves the finite sum; summing the entire geometric tail proves the final formula. It also covers h=0. At actual height0 both corrections are0.
+
+For two nonnegative measures R,S on the SAME finite height-h tree, with epsilon=||R-S||_1 (full L1, not half),
+
+  |Omega_h(R)-Omega_h(S)|<=C_h epsilon.            (PCS3)
+
+Write R-S=delta_plus-delta_minus with masses a,b. A maximizing cylinder in R gives Me(R)-Me(S)<=a, and swapping gives >=-b. Thus -C_h b<=U_h(R)-U_h(S)<=C_h a. Every function N_v^2+2N_v takes values in[0,C_h], so the same bounds hold for J_h(R)-J_h(S). Subtracting gives [-C_h(a+b),C_h(a+b)]. This proves PCS3, including different total row masses and empty rows. No normalized conditional probability or division by a row mass is used.
+
+For a joint nonnegative measure zeta on a finite old carrier X times current prefixes, let zeta_x be its unnormalized current row, and
+
+  omega_h(zeta)=sum_x Omega_h(zeta_x).
+
+By positive homogeneity this equals integral Omega_h(R_x) dsigma when zeta=sigma R, even on zero-mass rows. Therefore, on the SAME old carrier and prefix tree,
+
+  |omega_h(zeta)-omega_h(zeta')|<=C_h||zeta-zeta'||_1. (PCS4)
+
+In particular for actual height H>=h, any certified lower value B_h<=omega_h(zeta') gives
+
+  omega_H(zeta)>=max(0,B_h-C_h epsilon).           (PCS5)
+
+Only the one full joint L1 discrepancy is charged: incoming-law change and kernel change must not be counted separately after already included in epsilon. The larger actual current height costs NOTHING in this lower certificate because PCS2 is monotone. A two-sided approximation additionally pays the geometric upper tail of PCS2; with c(x) caps its integrated coefficient is integral c dsigma.
+
+At p19,T8, sigma=nu13 K17^-, R=K19^-, zeta=eta. The generic full-Haar cap is c<=18/10=9/5 and sigma1<=1. Thus for h=6,
+
+  0<=omega_H-omega_6<=2*(9/5)*19^-6*(6/18+1/18^2)
+       =109/(90*19^6).
+
+The joint-law sensitivity is48 epsilon. At p17 the cap2 similarly gives tail97/(64*17^6) and sensitivity48 epsilon. If H<6 use h=H: extra original test depths cannot be fabricated just to claim a larger correction.
+
+For the KC lifted finite reference on the common original carrier, existing positive-kernel contractions give
+
+  ||eta-eta_core||_1<=epsilon17,0+epsilon19,0+eNm.    (PCS6)
+
+Consequently its depth-h correction can be transported by PCS5 with this error. This only transports a supplied certificate, not its unknown uniform minimum over original residue families. The core must be lifted to the common carrier; simply averaging or forgetting old rows is not covered by PCS4.
+
+There are two distinct legitimate uses. To correct an independently established ACTUAL envelope U, combine CPI4 and PCS5: Q_eta<=U-484 eta1-max(0,B_h-C_h epsilon). Alternatively evaluate the full REFERENCE corrected objective using its own row data, then apply KC8's already-paid full-objective comparison. In the latter use no second PCS5 error is required. Neither route appends a new subtraction to the exact CT identity or changes299.398 without the missing uniform optimization.
+
+The common-old-carrier condition is necessary. Split CPI5's S row into its six leaves below root1 and three below root2. Each separate row has Omega3=0, while their sum has Omega3=8 at unit leaf mass. Forgetting which old row occurred can therefore invent a positive correction. Positive homogeneity does not authorize averaging old histories. The ordinary proof above was independently checked, with exact tests on256 support sets,80 rational row pairs and all32,640 pairs of those support sets; this is not Lean verification.
+
+### Conditional head deletion with a priced arbitrary cofactor tail
+
+Ordinary mathematics and exact rational checks; no Lean verification or new
+noncoverage endpoint. The preserved-law theorem permits all original old
+cofactors and all finite current heights at17 and19. Its numerical corollary
+still needs an explicit bound on one new actual tail observable.
+
+#### 1. Actual tail residuals on the unchanged pure bases
+
+Fix the actual AP13 probability nu, the normalized actual physical K17,
+its killed restriction R17=K17^-, and the actual R19=K19^-. Let eta=nu R17 R19.
+No conditioning is inserted. An old event E is lifted unchanged through17.
+Pad the through13 old space uniformly to include315 if necessary.
+
+At p=17,19 split the ACTUAL mixed forbidden labels (d,p^e) into the head
+labels d>1 dividing315 and all the remaining labels d not dividing315.
+The latter are called tail labels even at small exponent; in particular11,
+13, and the19 step's17 factors are paid. Unit cofactors are pure constraints,
+not mixed tail labels. Let P_p be the ACTUAL pure survivor set with Haar
+mass lambda_p. Both head and full mixed unions below use this same P_p,
+including all actual pure depths. Let alpha_p^h(u) be the pure-base
+probability of the head mixed union, alpha_p(x) that of the full mixed union.
+Define delta_p=7/(p-2) and
+
+    b_p(u)=(alpha_p^h(u)-delta_p)_+/(1-delta_p),
+    r_p(x)=beta_p(x)-b_p(u)>=0.
+
+These are observations on one actual family. No reference physical process
+is constructed, and the19 input remains exactly nu R17 in killed expectations.
+The head estimates already proved in HBD give
+
+    sum_(u mod315)b17(u)<=1/2,
+    sum_(u mod315)b19(u)<=2/5.                    (CHT1)
+
+Write ell_p(x) for the labelled tail union upper bound
+
+    ell_p(x)=lambda_p^-1
+      sum_(actual tail(d,e)) p^-e 1_(x=a_(d,e) mod d).
+
+Each original label occurs once; all actually present finite depths remain.
+The actual extra union mass z_p=alpha_p-alpha_p^h satisfies0<=z_p<=ell_p.
+Consequently, setting
+
+    s_p(x)=min(1-b_p(u),
+      [(alpha_p^h(u)+ell_p(x)-delta_p)_+
+       -(alpha_p^h(u)-delta_p)_+]/(1-delta_p)),    (CHT2)
+
+we have the pointwise bounds
+
+    0<=r_p<=s_p<=ell_p/(1-delta_p).               (CHT3)
+
+Indeed beta is an increasing hinge, and r_p is its exact increment under
+z_p. The additional clip uses beta_p<=1. If alpha_p^h<delta_p, every tail
+load ell_p<=delta_p-alpha_p^h costs zero in CHT2. This is the actual head
+slack, not the result of selecting a different head layout for each row.
+The possible coincidence of head and tail current prefixes only improves
+z_p<=ell_p; no independence or disjointness is assumed.
+
+#### 2. Exact same-event two-step identity and upper certificate
+
+Let w_E(u)=nu(E intersect {head=u}). The exact identity is
+
+    eta(E)=sum_u w_E(u)(1-b17(u))(1-b19(u))-P_E,
+
+    P_E=nu[1_E(1-b19)r17]+nu R17[1_E r19].       (CHT4)
+
+Proof: R19(1)=1-b19-r19. The functions1_E and b19 depend only on the
+inherited coordinates. Thus nu R17[1_E(1-b19)] is
+nu[1_E(1-b19)(1-beta17)]; substitute beta17=b17+r17.
+The second term stays under the actual R17. This explicitly retains the
+head19 survival discount on17 tail loss and the prior killing on19 tail loss.
+
+Define the nonnegative computable upper price
+
+    T_E=nu[1_E(1-b19)s17]+nu R17[1_E s19].        (CHT5)
+
+Then P_E<=T_E, and T_E<=T_Omega. Replacing R17 by K17 produces a valid,
+usually weaker upper bound; equality of those source laws is NOT asserted.
+If w1>=w2 are the two greatest actual w_E entries, CHT1 and the existing
+two-simplex vertex argument give
+
+    eta(E)>=nu(E)
+      -max{(7/10)w1,(1/2)w1+(2/5)w2}-T_E.       (CHT6)
+
+This theorem has no restriction on current mixed old cofactors or finite
+heights. With arbitrary original357 exponents the event head weights w1,w2
+remain actual required inputs; no generic1/(74 rho) cap is asserted there.
+
+#### 3. Conditional numerical threshold with arbitrary current cofactors
+
+For the corollary only, require the original357 period to divide315.
+Allow arbitrary original11/13 classes and heights and ALL current17/19 old
+cofactors and finite heights. Use the actual AP11/T4, AP13/T6 source with
+one final conditioning, so the established constants are
+
+    M=2621130891614589/246025127976511,
+    r=18925009844347/38266567762500,
+    c0=1/(74r),  m0=(11-M)/10.
+
+For EVERY inherited complete test A, E={A<=10} satisfies nu(E)>=m0 and
+w1<=c0. Also w1+w2<=nu(E). CHT6 therefore yields
+
+    eta(A<=10)>=mstar-T_E,
+    mstar=min(m0-(7/10)c0,(3/5)m0-(1/10)c0)
+          =704627631753217/45514648675654535
+          =0.01548133737721494... .              (CHT7)
+
+The two arguments of the minimum increase with nu(E), so substitution of
+m0 is legitimate. Using CT5 with tau121,c100 gives on the SAME full test
+
+    Delta_121(L)>=21(mstar-T_E)
+       >=0.3251080849215137... -21 T_Omega.       (CHT8)
+
+Thus T_Omega<mstar is a distribution-specific certificate uniformly over
+all original final test labels, with17 tails containing11/13 and19 tails
+containing17 permitted. A negative displayed lower bound is merely vacuous;
+nonnegativity of eta and Delta remains available. Nothing in CHT7/8 proves
+T_Omega<mstar for every unrestricted family, nor transfers this tau121
+certificate to the tau81 KC threshold.
+
+#### 4. Actual arithmetic family distinguishes gated and linear tail prices
+
+Let Q=315*11*13. For every d|Q,d>1, forbid0 modulo d. The AP13 construction
+is exactly uniform on the units of Q: all mixed old exclusions are inactive
+on previous units, the pure0 classes remove zero roots, and conditioning
+has mass1. No other law is substituted. Let d_0,...,d_11 be the ascending
+divisors of315, with d_0=1. At17 and19 add pure0 modulo p, and for i=1..11
+add the head class of modulus d_i*p with old residue1 and current residue i.
+
+At17 also add, for i=0..11:
+
+    modulus d_i*11*17: head residue1, 11 residue1,
+                         17 residue13+(i mod4);
+    modulus d_i*13*17: head residue1, 13 residue1,
+                         17 residue12.
+
+At19 add for i=0..11:
+
+    modulus d_i*17*19: head residue1, 17 residue16,
+                         19 residue12+(i mod7).
+
+CRT makes each listed class a literal original residue. The107 moduli are
+all distinct odd integers>1. The period is14549535 and all192 divisor-test
+labels, with independent residues allowed, are retained.
+
+Exact grouped enumeration of the actual source and physical17 rows gives
+
+    T_Omega=7041421/663552000=0.01061170940634645... <mstar.
+
+The grouping only identifies values on which every actual mask and the
+one checked centered test agree: for11 and13 it separates1,2,and every
+other unit. Source masses are their exact counts, not a new law. For the
+whole-space price there is no test in the integrand, so T_Omega itself is
+uniform over the complete test domain without enumerating test layouts.
+CHT8 consequently proves a positive CT121 loss for EVERY full test in
+this family, using generic same-law constants M,r. The exact resulting
+loss is0.1022621873882... .
+
+The corresponding un-gated linear union price on the SAME killed chain is
+
+    30855578893/448345497600=0.06882098528516593...,
+
+which exceeds mstar. Thus retaining threshold slack establishes a
+certificate that the direct Lipschitz/union tail price fails to establish.
+The exact actual residual price P_Omega is smaller still:
+
+    P17=20983/13271040=0.0015811119550540123...,
+    P19=2590579/995328000=0.0026027389965920782... .
+
+Replacing the latter killed expectation by its actual physical17 counterpart
+gives15960467/5971968000=0.00267256405258702..., a strict loss of information.
+The exact identity CHT4 is checked on seven bands of the literal inherited
+complete test centered at2, including A<=10. The [exact verifier](verify_conditional_head_tail.py) and [certificate](conditional_head_tail_certificate.json) use explicit
+raise-on-failure checks and pass under python3 -I -O. This finite family is
+neither a universal tail bound nor a newly solved noncoverage subclass;
+older supported-law results dominate existence conclusions in this class.
+
+#### 5. Exact barrier for the unconditioned Haar-density shortcut
+
+A generic estimate based only on nu<=D Haar, where
+D=1039695426000000/18925009844347, and physical17<=2D Haar, gives the following
+all-height linear tail upper prices after discarding the discounts in CHT5:
+
+    U17=D/8*(product_(q=3,5,7,11,13)q/(q-1)-208/105)
+       =650660582446875/151400078754776
+       =4.297623804415291...,
+
+    U19=2D/10*(product_(q=3,5,7,11,13,17)q/(q-1)-208/105)
+       =2624163406239375/302800157509552
+       =8.666321140062797... .
+
+Here208/105=sum_(d|315)1/d. The constants use lambda_p>=(p-2)/(p-1),
+1/(1-delta_p)=(p-2)/(p-9), and sum_(e>=1)p^-e=1/(p-1).
+Every old and current tail is summed; this is a comparison against the
+actual law via its density, not a substitution of Haar as the source.
+Both prices exceed1 and cannot prove CHT7 positivity. These are exact
+values of this particular sufficient estimate, not a counterexample to
+better conditional tail estimates or to an unrestricted CHT7 premise.
+
+An independent reconstruction enumerates all17280 actual old units, groups their48 literal mask-incidence patterns, and obtains the same four rational totals for the gated price, linear price, and two residual costs. The grouping changes no measure.
+
+### Exact charged common-test maximum at every current height
+
+These are ordinary mathematical arguments with exact standard-library verification, not Lean verification. The scope is the same actual source and mixed masks as BQC, extended only by redundant pure current classes. They do not provide a uniform correction for arbitrary AP13 source families.
+
+#### Literal family and one actual law
+
+Let Q = 315. Exclude 0 modulo 3, 5 and 7. The actual old source is uniform on the 144 units modulo Q. For each p = 17, 19 exclude 0 modulo p and, for i = 1,...,8, use the distinct mixed modulus d_i p, with old residue 1 modulo d_i and current residue i modulo p, where
+
+    d_i = (3, 9, 15, 21, 45, 63, 105, 315).
+
+The actual residue is CRT(1 modulo d_i, i modulo p). There are 21 distinct odd forbidden moduli, period 101745, and 48 complete original divisor-test labels.
+
+Set k(x) = sum_i 1_(x = 1 modulo d_i), alpha_p = k/(p-1), delta_p = 7/(p-2), g_p = 1/(1-min(alpha_p,delta_p)), beta_p = (alpha_p-delta_p)_+/(1-delta_p), t_p = g_p/(p-1), and q_p = 1-beta_p. The killed row puts mass g_p/(p-1) on each actual surviving nonzero current root. Put
+
+    q = q17 q19, u = t17 q19, v = t19 q17, w = t17 t19.
+
+This is the same final killed law eta, because the 19 masks have no 17 factor. Both assigned charges remain positive: b17 = 1/2304 and b19 = 1/2592, with the latter measured under the physical 17 input. The actual final mass is eta(BQX1) = 13813/13824. No source is renormalized or replaced.
+
+The four complete old blocks A, B, C, D remain independently chosen, each containing all 12 old divisor labels. BQC1 gives the exact maximum over current residues as the maximum of
+
+    E[q A^2 + u(2AB+B^2) + v(2AC+C^2)
+                  + w(2AD+2BC+2BD+2CD+D^2)].       (BQX1)
+
+For any prescribed old layouts, current roots 16 and 18 attain all pair caps simultaneously. This is exact current optimization, not a restriction on the independent old choices.
+
+#### Product first-exit consolidation
+
+The following reduction uses symmetry of this actual measure and these actual weights, not arbitrary source symmetry. It also gives a reusable reduction for nonnegative quadratic cylinder objectives with the stated invariance.
+
+Under the uniform unit source, q, u, v and w are invariant under permutations of off-spine children of the distinguished paths x = 1 in the 3-, 5- and 7-coordinate trees. For each old divisor d and each coordinate p^a dividing it, a unit residue is classified by its first digit at which it differs from 1, or by never differing. Replace every off-spine choice at first-exit depth r by 1 + p^(r-1); for p = 3, exponent 1 this gives representative 2. At exponent 2 the representatives are 1, 2 and 4. At p = 5, 7 the representatives are 1 and 2.
+
+Make this replacement independently for every original label and combine the coordinate representatives by CRT. A cylinder's weighted mass is unchanged: the transformation retains its coordinate depths and first exits, and those specify its orbit under measure- and weight-preserving tree permutations. If two original cylinders intersect, their replacements still intersect, their intersection has the same coordinate first exits and depths, and its weighted mass is unchanged. If they were disjoint, the new intersection has nonnegative weighted mass. Thus every nonnegative unary or pair term stays the same or increases. A cylinder with a nonunit residue initially vanishes on the actual source; changing it to a unit cylinder can only increase this objective.
+
+Consequently the maximum over all original residue choices equals the maximum over these independent representative choices. No common center or nested chain was assumed. All choices remain legal original test labels; the reduction only consolidates equivalent off-spine positions for this nonnegative objective.
+
+There are 11 nonconstant labels per old block. Their representative-domain product is 5,308,416. Four independent blocks therefore have
+
+    5,308,416^4 = 794,071,845,499,378,503,449,051,136
+
+representative assignments. Their four unit labels are constant 1 and are retained in every quadratic coefficient.
+
+#### Exact finite maximum
+
+Expand (BQX1) into a constant, one unary table per original label, and one pair table per unordered pair of labels. For a symmetric matrix of actual row weights H, a label in block g has unary weight H_gg + 2 sum_h H_gh; labels in blocks g,h have pair weight 2 H_gh. Here
+
+    H = [[q,u,v,w], [u,u,w,w], [v,w,v,w], [w,w,w,w]].
+
+The [exact verifier](verify_exact_bqc.py) reconstructs every rational table entry by summing over the actual 144 old points. It multiplies by the exact common denominator and uses the existing RS arbitrary-table branch inequalities. At a partial assignment with remaining variables U, current exact value c and adjusted unary tables a_i,
+
+    c + sum_i max_r a_i(r) + sum_(i<j) max_(r,s) V_ij(r,s)
+
+bounds every completion. Conditioning on i = r replaces each remaining unary maximum by max_s(a_j(s)+V_ij(r,s)). Pruned branches are disjoint and contribute their full product of remaining domain sizes to the coverage count; unpruned branches are recursively exhausted. The certificate carries this coverage and exact integer scale/value. The correctness claim uses the inequalities and complete branch partition, not the search-node count.
+
+The result is
+
+    max_(A,B,C,D) E F = 7061549/548352.             (BQX2)
+
+All four old blocks centered at 1 attain it. This is a proved outcome of optimization, not a premise. The verifier also independently scans the literal surviving points modulo 101745 with their actual killed weights and computes the same value for the maximizing original test.
+
+Let C_* = sum_(d|315) 1_(x=1 modulo d), with the d=1 summand understood as constant 1. The exact values are
+
+    E q C_*^2 = 829/96,
+    Gamma(u) = 8261/12096,
+    Gamma(v) = 160813/274176,
+    Gamma(w) = 79309/1645056,
+    Gamma(q) = 120949/13824.
+
+For u,v,w, C_* is maximizing by the nonnegative centered-cylinder expansion BQC2, directly rechecked on every actual row. For q, the old test centered at 2 attains Gamma(q). Hence the same final-law split benchmark is
+
+    S = Gamma(q)+3 Gamma(u)+3 Gamma(v)+9 Gamma(w)
+      = 10685917/822528,
+
+and its exact, uniform-over-all-original-tests loss is
+
+    S - max E F = 1573/13824
+                = 0.11378761574074074... .        (BQX3)
+
+This improves the earlier BQC5 lower bound 0.057281... to the exact answer for that same family and benchmark. In particular the full maximizer accepts the entire available baseline mismatch to maximize the coupled objective.
+
+A separate old-weight calculation, useful as a direct comparison, gives R0 = u+v+w,
+
+    Gamma(R0) = 103223/78336,
+    Gamma(q+R0) = 109340767/10967040,
+    Gamma(q)+Gamma(R0)-Gamma(q+R0)
+                = 3189979/32901120 = 0.096956547... .
+
+The merged weight maximizer is centered at 226 modulo315 (1 modulo9, 1 modulo5 and 2 modulo7), whereas the full four-block optimum centers at1. This is a concrete distinction between an optimum of the merged one-block envelope and the actual coupled optimum. The stronger exact conclusion (BQX3) does not rely on this subadditivity bound.
+
+#### All original current heights and complete geometric tails
+
+For arbitrary finite H,K >= 1, add the redundant pure classes 0 modulo17^e for 2 <= e <= H and 0 modulo19^f for 2 <= f <= K. The family has 19+H+K distinct forbidden moduli and exactly 12(H+1)(K+1) complete original test labels. It keeps the same old law, alpha, beta, q,u,v,w and both charges. The new digits are uniform within each surviving root under the same actual killed kernels.
+
+For p = 17,19 define
+
+    b_p(h) = sum_(e=1..h)(2e+1) p^(1-e).
+
+The exact full original-test maximum is
+
+    M_HK = E q C_*^2 + b17(H) Gamma(u) + b19(K) Gamma(v)
+                                  + b17(H)b19(K) Gamma(w).       (BQX4)
+
+Proof: decompose every test by its literal exponent pair (e,f). Retain the four blocks indexed by {0,1} x {0,1}. Their full contribution is at most (BQX2). Every remaining pair coefficient is a nonnegative scalar multiple of u, v or w: a positive current maximum depth m contributes t_p p^(1-m), and a coordinate of depth0 at both endpoints contributes q_p. For each f in {u,v,w}, BQC2 and Cauchy-Schwarz give
+
+    E[f A B] <= sqrt(E[f A^2] E[f B^2]) <= Gamma(f)
+
+for arbitrary independent complete old blocks A,B. Therefore all added terms are bounded termwise by their centered values. Taking every old block equal to C_* and all positive current prefixes along the globally clean roots16 and18 attains every bound, including the retained four-block maximum. Summing the pair coefficients yields (BQX4), because exactly 2e+1 ordered pairs have maximum depth e. This proves all finite H,K with no removal or identification of original labels.
+
+The split comparison with coefficients b17(H), b19(K) therefore has the same exact gap1573/13824 at every H,K. Subtracting484 eta(BQX1) preserves this gap for the original signed final-law objective. It remains a split comparison for this final eta, not KC's separately optimized two-frontier sum.
+
+The complete tails are explicit:
+
+    b_p(infinity) = p(3p-1)/(p-1)^2,
+    b17(infinity) = 425/128,
+    b19(infinity) = 266/81,
+    b_p(infinity)-b_p(h)
+      = p^(1-h)[(2h+3)/(p-1)+2/(p-1)^2].
+
+Thus the supremum of the finite-height maxima is exactly
+
+    sup_(H,K>=1) M_HK = 113889776093/8527970304
+                     = 13.354851392901848... .     (BQX5)
+
+This is a same-family all-height result. No arbitrary old-source, arbitrary new mixed-depth geometry, 299.398 KC target, later-prime continuation or unrestricted covering-system conclusion follows.
+
+The [certificate](exact_bqc_certificate.json) records both actual charges, full signed mass, every first-exit domain, exact maxima and all-height coefficients. A separate calculation partitions by the first zero-block original label not centered at1 and refines its two insufficient bounds;45 disjoint exact cuts cover the same full representative domain and give the same maximum. Both methods use integer bounds rather than floating optimization.

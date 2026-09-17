@@ -268,6 +268,46 @@ the four old blocks or subtract a selected test's loss from an
 unrelated maximum. This benchmark differs from the two KC frontiers;
 the unrestricted numerical bound remains unproved.
 
+The [exact coupled maximum](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-charged-common-test-maximum-at-every-current-height)
+(BQX1)--(BQX5) sharpens that same-family loss to1573/13824,
+approximately0.113787616. The complete four-block maximum is
+7061549/548352; all four centered old blocks attain it as a conclusion
+of unrestricted original-label optimization. Adding arbitrary finite
+redundant pure17/19 heights preserves the exact split gap, and the
+full-height square supremum is113889776093/8527970304.
+Two independent integer bounds cover the full representative domain.
+Neither the common-center conclusion nor the positive gap is transferred
+to arbitrary source or mixed-mask geometries.
+
+The [prefix-tree certificate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#prefix-tree-optimization-and-branch-price-certificates)
+(PT1)--(PT5) computes CPI by an exact subset program with
+O(H N 3^H) arithmetic for N positive tree nodes. A depth-price
+certificate takes O(H N) per branch. On the actual nine-leaf example,
+unbranched prices can certify only7w; an explicit fractional mixture
+proves that limit. Two root branches recover the exact8w.
+[Height and joint-law stability](../docs/reports/erdos7-odd-covering/marked_head_profile.md#prefix-corrections-survive-height-extension-and-controlled-law-changes)
+(PCS1)--(PCS6) then transport a finite-depth lower correction to all
+larger actual heights, with error h(h+2) times the full joint L1
+error. At current depth6 the remaining correction tail is below
+6.28e-8 at17 and2.58e-8 at19. The complete old carrier must be
+retained: averaging distinct old rows can invent a correction.
+These interfaces do not supply a uniform positive CPI correction.
+
+The [priced arbitrary cofactor tail](../docs/reports/erdos7-odd-covering/marked_head_profile.md#conditional-head-deletion-with-a-priced-arbitrary-cofactor-tail)
+(CHT1)--(CHT8) removes HBD's restriction on current mixed cofactors
+by retaining their actual threshold slack and all original tail
+labels. The precise new obligation is a same-law tail price T_E;
+the17 term retains head19 survival and the19 term retains actual17
+killing. When the original357 part divides315, a whole-space price
+below0.0154813373772 gives Delta121>=0.3251080849215-21T.
+An actual107-class,192-test family with11/13 factors at17 and17
+factors at19 has T=7041421/663552000 and uniform loss>0.1022621873882.
+Its ordinary linear tail price0.068821 fails this criterion. All
+finite heights are permitted in the general identity, but the
+uniform unrestricted tail premise and the tau81 KC bound are still
+unproved. These additions have ordinary proofs and exact programs,
+not new Lean verification or an unrestricted covering conclusion.
+
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
 has at most p next digits, with separate capacity for left and right

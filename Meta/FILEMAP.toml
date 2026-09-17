@@ -629,6 +629,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Actual threshold-sensitive head/tail deletion values on the same killed chain.
+pattern = "docs/reports/erdos7-odd-covering/conditional_head_tail_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact rational certificate for actual-law bounds or a joint-savings counterexample.
 pattern = "docs/reports/erdos7-odd-covering/current_joint_zero_certificate.json"
 kind = "data"
@@ -638,6 +648,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact charged common-test maxima and arbitrary-current-height coefficients.
+pattern = "docs/reports/erdos7-odd-covering/exact_bqc_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact signed CRT digit-partition optimizer preserving independent original labels.
 pattern = "docs/reports/erdos7-odd-covering/exact_signed_digit_dp.py"
 kind = "program"
@@ -1052,6 +1072,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact prefix-tree, branch-price and original CRT correction certificates.
+pattern = "docs/reports/erdos7-odd-covering/prefix_correction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact counterexample to independent-depth original-prefix feasibility.
 pattern = "docs/reports/erdos7-odd-covering/prefix_obstruction_certificate.json"
 kind = "data"
@@ -1388,6 +1418,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs arbitrary-cofactor tail prices on the literal actual probability.
+pattern = "docs/reports/erdos7-odd-covering/verify_conditional_head_tail.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact actual-law profile and complete-tail verification.
 pattern = "docs/reports/erdos7-odd-covering/verify_current_joint_zero.py"
 kind = "program"
@@ -1397,6 +1437,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks the complete original-label charged maximum and all-height coefficients.
+pattern = "docs/reports/erdos7-odd-covering/verify_exact_bqc.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Replays the exact signed CRT optimizer against original-residue enumeration and actual PG1 witnesses.
 pattern = "docs/reports/erdos7-odd-covering/verify_exact_signed_digit_dp.py"
 kind = "program"
@@ -1777,6 +1827,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact subset and priced tree programs with actual odd-modulus fixtures.
+pattern = "docs/reports/erdos7-odd-covering/verify_prefix_correction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact mod3/mod9 obstruction retaining all original prefix labels.
 pattern = "docs/reports/erdos7-odd-covering/verify_prefix_obstruction.py"
 kind = "program"
