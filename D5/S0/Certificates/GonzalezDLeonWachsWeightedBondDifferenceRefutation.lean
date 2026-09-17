@@ -4,9 +4,11 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Order.Partition.Finpartition]
    utility: none
-   digest: A nine-vertex counterexample to weighted bond poset real-rootedness. -/
+   digest: Weighted bond carrier and Mobius polynomial for a planned counterexample. -/
 
 import Mathlib.Combinatorics.Enumerative.IncidenceAlgebra
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
+import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Order.Partition.Finpartition
 import Mathlib.Tactic
 
@@ -360,6 +362,93 @@ private instance weightedPartitionLocallyFiniteOrder
     {V : Type*} [Fintype V] [DecidableEq V] : LocallyFiniteOrder (WeightedPartition V) := by
   classical
   exact Fintype.toLocallyFiniteOrder
+
+/- The graph-dependent carrier is the literal connected-block restriction from
+   the source: every actual partition block induces a connected subgraph. -/
+private def ConnectedWeightedPartition
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :=
+  {P : WeightedPartition V //
+    ∀ block ∈ P.partition.parts, (G.induce (block : Set V)).Connected}
+
+private instance connectedWeightedPartitionDecidableEq
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    DecidableEq (ConnectedWeightedPartition G) :=
+  Classical.decEq _
+
+private instance connectedWeightedPartitionFintype
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    Fintype (ConnectedWeightedPartition G) := by
+  classical
+  unfold ConnectedWeightedPartition
+  infer_instance
+
+private instance connectedWeightedPartitionPartialOrder
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    PartialOrder (ConnectedWeightedPartition G) := by
+  unfold ConnectedWeightedPartition
+  infer_instance
+
+private instance connectedWeightedPartitionLocallyFiniteOrder
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    LocallyFiniteOrder (ConnectedWeightedPartition G) := by
+  classical
+  exact Fintype.toLocallyFiniteOrder
+
+private def connectedWeightedBottom
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    ConnectedWeightedPartition G := by
+  refine ⟨(weightedBottom V : WeightedPartition V), ?_⟩
+  intro block hblock
+  change block ∈ (⊥ : Finpartition (univ : Finset V)).parts at hblock
+  rw [Finpartition.mem_bot_iff] at hblock
+  obtain ⟨vertex, _, rfl⟩ := hblock
+  refine @SimpleGraph.Connected.mk _ _ ?_ ⟨⟨vertex, by simp⟩⟩
+  intro left right
+  have heq : left = right := Subtype.ext (by
+    have hleft : left.val = vertex := by simpa using left.property
+    have hright : right.val = vertex := by simpa using right.property
+    exact hleft.trans hright.symm)
+  subst right
+  exact SimpleGraph.Reachable.rfl
+
+private instance connectedWeightedPartitionOrderBot
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
+    OrderBot (ConnectedWeightedPartition G) where
+  bot := connectedWeightedBottom G
+  bot_le P := weightedBottom_le P.val
+
+/- The exponent in the source polynomial is the sum of the weights of the
+   actual blocks, not a statistic of an auxiliary recurrence. -/
+private def totalBlockWeight
+    {V : Type*} [Fintype V] [DecidableEq V] (P : WeightedPartition V) : Nat :=
+  ∑ block ∈ P.partition.parts, (P.weight block : Nat)
+
+/- The source Möbius polynomial: sum over maximal connected weighted
+   partitions, with incidence-algebra Möbius value from the singleton bottom. -/
+private def sourceMobiusPolynomial
+    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) : Polynomial ℝ := by
+  classical
+  exact ∑ P ∈ (Finset.univ.filter (IsMax : ConnectedWeightedPartition G → Prop)),
+    Polynomial.C (((IncidenceAlgebra.mu ℤ) (⊥ : ConnectedWeightedPartition G) P : ℤ) : ℝ) *
+      Polynomial.X ^ totalBlockWeight P.val
+
+private def triangleThree : SimpleGraph (Fin 3) :=
+  SimpleGraph.completeGraph (Fin 3)
+
+private def pathThree : SimpleGraph (Fin 3) :=
+  SimpleGraph.pathGraph 3
+
+private theorem triangleThree_connected : triangleThree.Connected := by
+  exact SimpleGraph.connected_top
+
+private theorem pathThree_connected : pathThree.Connected := by
+  simpa [pathThree] using SimpleGraph.pathGraph_connected 2
+
+private theorem pathThree_lt_triangleThree : pathThree < triangleThree := by
+  refine lt_of_le_of_ne le_top ?_
+  intro heq
+  have hadj := congrArg (fun G : SimpleGraph (Fin 3) ↦ G.Adj 0 2) heq
+  simp [pathThree, triangleThree, SimpleGraph.pathGraph_adj] at hadj
 
 end
 
