@@ -22,7 +22,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
         using var fixture = new WireFixture();
         fixture.Evidence(B)["records"]![0]!["state"] = "invalid";
         AssertFinding(fixture, "DTR-Declared", AdmissionEffect.Observe);
-        fixture.AssertAdmissionReachesRules();
+        fixture.AssertAdmissionReachesRules(blocked: false);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
         using var fixture = new WireFixture();
         fixture.Evidence(A)["records"]![0]!["state"] = "invalid";
         AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
-        fixture.AssertAdmissionReachesRules();
+        fixture.AssertAdmissionReachesRules(blocked: true);
     }
 
     [Fact]
@@ -168,6 +168,8 @@ public sealed class DeclaredTemplateDeltaLoadTests
         internal WireFixture(string delta = "changed")
         {
             var fixture = new RuleFixture();
+            fixture.Files[A] = UtilityAdmissionTestSupport.WithUtility(fixture.Files[A], "kind=none");
+            fixture.Baseline[A] = fixture.Files[A];
             var changes = RawChangeSet.Create([A]);
             switch (delta)
             {
@@ -276,16 +278,18 @@ public sealed class DeclaredTemplateDeltaLoadTests
                 AcceptedLeanClosure.Create(report!), context.Changes, context.MetaEvaluation);
         }
 
-        internal void AssertAdmissionReachesRules([CallerMemberName] string name = "")
+        internal void AssertAdmissionReachesRules(bool blocked, [CallerMemberName] string name = "")
         {
             var loaded = Load(name);
             var evaluation = SnapshotAdmissionCore.Evaluate(loaded.Current, loaded.Baseline,
                 loaded.Lean.Report, loaded.Changes, BootstrapGate.Evaluate(loaded.Changes), null);
             Assert.True(evaluation.Outcome is not AdmissionOutcome.InfrastructureFailure,
                 "[FAIL] " + name + ": " + evaluation.Outcome);
-            var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(evaluation.Outcome);
-            Assert.Contains(rejected.Diagnostics, d => d.Path == A && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
-            Assert.DoesNotContain(rejected.Diagnostics, d => d.Path == B && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
+            var diagnostics = blocked
+                ? Assert.IsType<AdmissionOutcome.RuleRejected>(evaluation.Outcome).Diagnostics
+                : Assert.IsType<AdmissionOutcome.Admitted>(evaluation.Outcome).Observations;
+            Assert.Contains(diagnostics, d => d.Path == A && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
+            Assert.DoesNotContain(diagnostics, d => d.Path == B && d.Message.StartsWith("DTR-", StringComparison.Ordinal));
         }
 
         public void Dispose() => directory.Dispose();

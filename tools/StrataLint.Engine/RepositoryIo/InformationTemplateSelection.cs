@@ -32,16 +32,13 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
                     writer.WriteStartArray();
                     writer.WriteEndArray();
                 }
-                else if (property.Name is "records" or "inventory" or "registered"
+                else if (property.Name == "records"
                     && property.Value.ValueKind == JsonValueKind.Array)
                 {
                     writer.WriteStartArray();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        var included = property.Name == "records"
-                            ? IncludesRecord(item, ownerSelected)
-                            : String(item, "registration_module") is not { } module || modules.Contains(module);
-                        if (included) item.WriteTo(writer);
+                        if (IncludesRecord(item, ownerSelected)) item.WriteTo(writer);
                     }
                     writer.WriteEndArray();
                 }
