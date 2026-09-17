@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9fd1405ebdadada268e4945ef100c54a9e812232ab8b4317fd4dfb4000bc0356
+  normalized_sha256: sha256:9fd1405ebdadada268e4945ef100c54a9e812232ab8b4317fd4dfb4000bc0356
+cas_ref: sha256:9fd1405ebdadada268e4945ef100c54a9e812232ab8b4317fd4dfb4000bc0356
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “历史族，是预先指定的原合法对象或合法执行历史的有限非空族”给出取域条件，“不预设其标签已实现为原历史”排除实现承诺；事件、偏序、守卫及读数均作为沿用或指定数据，没有从这些定义推出新存在结论，也没有夹带有限实验可实现的断言。
+    previous_atom_id: 955b4d4683a2d7e5902eada962d6203a10b9ace0e8fbda2655b0580e2ac89fab
+    next_atom_id: 2891f4a907a65335156470258c1bf772b9593c210315a1885cc6ad1ec54824f3
