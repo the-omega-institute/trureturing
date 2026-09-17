@@ -521,3 +521,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Sharp off-diagonal source costs and a two-baseline Jensen correction](profile-notes/51-sharp-off-diagonal-source-costs.md)
 - [Every high-threshold scalar source envelope is jointly sharp](profile-notes/52-all-high-threshold-source-costs-are-sharp.md)
 - [Allocated seven thresholds sharpen actual survival](profile-notes/53-allocated-seven-thresholds-sharpen-actual-survival.md)
+
+- [Sharp positive-seven source costs at the off-diagonal endpoint](profile-notes/54-sharp-positive-seven-source-costs.md)
+- [An actual tensor test bounds every source-only refinement](profile-notes/55-an-actual-test-limits-source-refinements.md)
