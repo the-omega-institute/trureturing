@@ -1,0 +1,4 @@
+**证明。** 第一项由 theorem 57.6；带共同参数的精确量词、共同满测集和积分公式由 theorem 57.7 丁。第二项由 theorem 57.8、57.9 与 57.7 戊。第三项由 theorem 57.11、57.12。第四项由 definition 57.13 与 theorem 57.14：求值是从 $R^J$ 出发的单一确定连续映射，常量由 $\kappa$ 固定，重复槽在该映射内部复制同一个已算出的值，因此任意输入联合律都通过一次共同代表推前传播。
+
+与本结论相关的既有 framework 陈述只按其原量词使用。theorem 2.2 是任意观察 $q:X\to Q$ 与目标 $T:X\to Y$ 在实际像 $q[X]$ 上的精确纤维因子化判据。theorem 5.1 在有限指标集、有限观察塔和给定关系 $R$ 的假设下，识别共同关系像闭包与有限阶段联合像逆极限条件；它不是“边缘律自动恢复共同代表”的一般定理。§23 中，theorem 23.9 只在 Assumption 23.1 的特定 Zeckendorf 许可支撑契约下分类可容许结合概率核，theorem 23.11 在同一假设下证明许可集合值关系自身的结合律，而 theorem 23.12 对特定常偏置混合 $B^{(r)}$ 计算结合缺陷并证明仅 $r\in\{0,1\}$ 时结合。这些精确结果均见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。本节的 DAG 结论来自实际代表的确定推前，不把 theorem 23.9、23.11 或 23.12 扩张为关于任意概率核的断言。证毕。
+
