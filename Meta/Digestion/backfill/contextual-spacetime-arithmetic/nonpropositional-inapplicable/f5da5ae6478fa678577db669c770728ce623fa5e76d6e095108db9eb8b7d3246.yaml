@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5da5ae6478fa678577db669c770728ce623fa5e76d6e095108db9eb8b7d3246
+  normalized_sha256: sha256:f5da5ae6478fa678577db669c770728ce623fa5e76d6e095108db9eb8b7d3246
+cas_ref: sha256:f5da5ae6478fa678577db669c770728ce623fa5e76d6e095108db9eb8b7d3246
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “34.2 默认延迟乘法的累积与差分公式”读作“38.2”是一条节号纠正，未断言乘法恒等式本身；未把推论混入命名，故按导航条目结算。
+    previous_atom_id: 6c06bf6a272e1098acbc6cc67b8b9367c37b804005750e57ac8f0e3dd7928be0
+    next_atom_id: 57fa8321df580ee9f6fd2221e74acf85260dcc5b2acbd638fea562da5562c0ef

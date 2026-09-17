@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1f422fa0d78abd5e08ddcd448a3eaf9cb0514e88baf3ada472b44b645fd1eac
+  normalized_sha256: sha256:f1f422fa0d78abd5e08ddcd448a3eaf9cb0514e88baf3ada472b44b645fd1eac
+cas_ref: sha256:f1f422fa0d78abd5e08ddcd448a3eaf9cb0514e88baf3ada472b44b645fd1eac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “开工基线为”列出提交与 merge-tree 读数，“故续接”仅解释编辑分支选择，不导出数学命题；这些工程来源资料没有通过定义偷带定理，按来源说明处理。
+    previous_atom_id: 2040e139642b3c7a2f63e837c3fa0d880c61cbc39d4045e8a682e9a69e63475d
+    next_atom_id: 43388e9aa0cafd2968939b99b51448f1d2da7ca391d22bba8740a4418ec5b915
