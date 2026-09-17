@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a3146c5acc1650fb4e3234e637dee984c98389e7823910379f11f695818337f7
+  normalized_sha256: sha256:a3146c5acc1650fb4e3234e637dee984c98389e7823910379f11f695818337f7
+cas_ref: sha256:a3146c5acc1650fb4e3234e637dee984c98389e7823910379f11f695818337f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “确定性初始化只可读取旧标签”与“没有切换前时钟、词长、历史重放或额外观察输入”逐项规定输入权限；它不宣称任何初始化可达某精度，属于任务前提而非待证结论。
+    previous_atom_id: b9e4ac11cc54830627f13e85e7a5a774aa0c2850461dbdc216392f0476f88404
+    next_atom_id: 6ad08d8b0976ac5ea84b1101b0eb37b0353e7941a2ebcd7365b2878d20e22b6f

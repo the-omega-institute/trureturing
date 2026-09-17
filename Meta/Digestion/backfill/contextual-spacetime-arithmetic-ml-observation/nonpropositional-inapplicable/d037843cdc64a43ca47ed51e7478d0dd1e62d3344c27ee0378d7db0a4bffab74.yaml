@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d037843cdc64a43ca47ed51e7478d0dd1e62d3344c27ee0378d7db0a4bffab74
+  normalized_sha256: sha256:d037843cdc64a43ca47ed51e7478d0dd1e62d3344c27ee0378d7db0a4bffab74
+cas_ref: sha256:d037843cdc64a43ca47ed51e7478d0dd1e62d3344c27ee0378d7db0a4bffab74
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “另一个无需对数的充分选择为”承诺所列阈值确实充分，未作为定义假定正确；探针使用完全相同的有理 bernoulliThreshold 定义，并由 one_add_mul_le_pow、Nat.le_ceil 与正分母正规化证明所有不小于它的报告数满足原充分条件。仓内无冻结 GID，不宣称该阈值是实际捕获时间的最小值。
+    previous_atom_id: 136bb171e06da86b7f12c458cc53c804293a685ceb76f4542c58e40ae6ef5e0c
+    next_atom_id: 6f153b871644a54413877d59dfe414a6d1538675ebe1c7e30886f6d9a6675f60
