@@ -545,3 +545,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A strict global K gain from the controlling faces](profile-notes/74-a-strict-global-k-gain-from-the-controlling-faces.md)
 - [Forced27 and complete pure3 deletion on both controlling faces](profile-notes/75-forced27-and-complete-pure3-deletion-on-the-k-faces.md)
 - [Exact capacity of the current neighborhood globalization](profile-notes/76-exact-capacity-of-the-current-neighborhood-globalization.md)
+- [Complete pure3 deletion gives a uniform linear gap](profile-notes/77-complete-pure3-deletion-gives-a-uniform-linear-gap.md)
+- [Complete deletion improves the endpoint comparison](profile-notes/79-complete-deletion-improves-the-endpoint-comparison.md)
