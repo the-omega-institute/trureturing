@@ -730,6 +730,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact actual-family refutation of uniform whole/event gated-tail thresholds.
+pattern = "docs/reports/erdos7-odd-covering/gated_tail_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact core congruences and rational dual weights refuting H73.
 pattern = "docs/reports/erdos7-odd-covering/h73_dual.json"
 kind = "data"
@@ -856,6 +866,16 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Rational original-label messages and an attained nonradial actual-law maximum.
+pattern = "docs/reports/erdos7-odd-covering/original_label_message_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Exact twelve-label maximum of one actual PG1 signed score table.
 pattern = "docs/reports/erdos7-odd-covering/pg1_all_low_scores_certificate.json"
 kind = "data"
@@ -1519,6 +1539,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs the original191-class family and same-event tail prices.
+pattern = "docs/reports/erdos7-odd-covering/verify_gated_tail_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Verifies the H73 dual and correlated-measure fibre-counting factors.
 pattern = "docs/reports/erdos7-odd-covering/verify_h73.py"
 kind = "program"
@@ -1602,6 +1632,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks masked-square identities and complete original-test tail coefficients.
+pattern = "docs/reports/erdos7-odd-covering/verify_masked_square.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Replays both fixed-mod3 square branches, weighted deletion groups and full geometric tails.
 pattern = "docs/reports/erdos7-odd-covering/verify_mod3_conditioned_geometry.py"
 kind = "program"
@@ -1647,6 +1687,16 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks original-label rational messages, local cuts and an actual attaining test.
+pattern = "docs/reports/erdos7-odd-covering/verify_original_label_messages.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]] # Reconstructs actual signed scores and checks the complete PG1 twelve-label optimization.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_all_low_scores.py"
 kind = "program"

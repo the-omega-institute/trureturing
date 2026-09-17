@@ -16359,3 +16359,614 @@ Thus the supremum of the finite-height maxima is exactly
 This is a same-family all-height result. No arbitrary old-source, arbitrary new mixed-depth geometry, 299.398 KC target, later-prime continuation or unrestricted covering-system conclusion follows.
 
 The [certificate](exact_bqc_certificate.json) records both actual charges, full signed mass, every first-exit domain, exact maxima and all-height coefficients. A separate calculation partitions by the first zero-block original label not centered at1 and refines its two insufficient bounds;45 disjoint exact cuts cover the same full representative domain and give the same maximum. Both methods use integer bounds rather than floating optimization.
+
+### Finite translated queries locate the original point but do not integrate it
+
+[RRO section60 at dev dd264421a2](https://github.com/the-omega-institute/trureturing/blob/dd264421a2a26cf8b84202d5082f880ddebffd4b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+sharpens the observation-cost interface. Its oracle fixes one unknown point x
+and, for a chosen integer n, returns the ENTIRE vector
+(min(v_p(x+n),e_p))_(p|M), where M=product p^e_p and the factorization is supplied.
+Each complete vector costs one call. CRT and all finite arithmetic are outside
+this query count. For deterministic zero-error recovery of x modulo M, the
+ordinary proofs in60.5--60.8 give
+
+    C_nonadaptive(M)=max_(p|M)(p-1)p^(e_p-1),
+    C_adaptive(M)=max_(p|M)e_p(p-1).             (TQ1)
+
+The local nonadaptive condition is to query all but at most one leaf in each
+final sibling group. The adaptive strategy eliminates at most p-1 child balls
+per digit; the adversary can force that many. CRT combines one selected center
+per prime into one integer query each round, so global costs are maxima, not
+sums. The M=1 boundary costs0 queries.
+
+For5040=2^4*3^2*5*7 the two costs are8 and6. For its odd part315 both are6.
+For the existing unequal KC period
+
+    M=3^17*5^10*7^8*11^7*13^6*17^6*19^6,
+
+local adaptive costs are(34,40,48,70,72,96,108), so the global value is108;
+the nonadaptive value on the full finite residue space is86,093,442. On the
+actual surviving support108 remains an upper bound; the whole-space lower
+bound need not remain sharp after that restriction.
+
+For a fixed actual family and original test, a successful same-point transcript
+determines every literal mask/test indicator and hence both signs of L^2-484.
+It preserves their common witness. This does not compute actual transcript
+masses, row union sizes or normalizations, nor bound the number of transcript
+cells or family/test assignments to optimize. If an exact enumerator already
+knows x, these queries supply no additional information. The costs therefore
+do not imply a108-operation expectation or an enumeration speedup.
+
+The useful search discipline is to branch on actual translated observations
+and retain each branch's actual weight and original labels. A target-specific
+pruning bound must still be proved. Section60 adds theory and digestion input;
+this increment contains no new D5 Lean or frozen-pin result for #7. Neither
+TQ1 nor the earlier sparse-feasibility classification gives the299.398 bound
+or later-prime continuation.
+
+### A literal obstruction to uniform gated-tail thresholds, with its CHT6 consumer
+
+Ordinary mathematics and exact standard-library verification, not Lean
+verification. This result refutes the proposed unrestricted inequalities
+T_Omega < mstar and T_{A<=10} < mstar (uniformly over every original complete
+test), where mstar is the fixed generic CHT7 intercept. It does not refute CHT6,
+CHT7's conditional implication, noncoverage, or a stronger joint estimate.
+
+#### 1. One actual191-modulus family
+
+Let Q=315*11*13=45045. For every nonunit d|Q, forbid0 modulo d. There are47
+such original constraints. Their union removes precisely the nonunits. The
+specified AP11/T4, AP13/T6 construction produces the uniform17280-unit source:
+the pure zero classes delete zero roots, and every other old zero class is
+inactive on the existing units. Its single final conditioning has mass1.
+No reference probability is substituted.
+
+Write the12 divisors of315 as d_0,...,d_11 in ascending order, with d_0=1.
+At each p=17,19 retain pure0 modulo p and, for i=1,...,11, the head constraint
+
+    old residue1 modulo d_i, current residue i modulo p.
+
+For every d|Q not dividing315, add at17 the tail constraint
+
+    old residue1 modulo d, current residue12 modulo17.
+
+At19 add all remaining mixed cofactors of Q*17:
+
+    d|Q, d not dividing315: old residue1 modulo d, current residue12 modulo19;
+    d|Q: old residue1 modulo d, 17 residue16, current residue12 modulo19,
+         with original cofactor17d.
+
+Each class is combined by ordinary CRT. The family has47+48+96=191 distinct
+odd forbidden moduli, precisely every nonunit divisor of Q*17*19. Its period
+is14549535 and all192 original final divisor-test labels are retained; the
+inherited through13 complete test has48 labels. There are36 mixed tail labels
+at17 and84 at19, including every original17 factor. Both charges are positive:
+
+    b17=779/245760,
+    b19=1089821/398131200,
+
+with b19 measured under the actual normalized physical17 input.
+
+#### 2. Closed-form row prices from the literal labels
+
+At an old unit x, put
+
+    C(x)=sum_(d|315)1_(x=1 mod d),
+    A1(x)=sum_(d|Q)1_(x=1 mod d)
+         =C(x)(1+1_(x=1 mod11))(1+1_(x=1 mod13)).
+
+Thus C-1 head labels are active. Their current residues1,...,11 are distinct.
+The active17 tail-label count is A1-C, all at current residue12. The full
+current bad set is therefore the head bad set together with12 iff A1>C.
+Current root16 is globally clean. The actual killed17 mass q and its root16
+mass t are
+
+    k=C-1+1_(A1>C),
+    beta17=(k/16-7/15)_+/(8/15),
+    q=1-beta17,
+    t=1/[16(1-min(k/16,7/15))].
+
+At19 the active tail-label count is
+
+    A1-C+A1 1_(current17=16).
+
+Define the literal head charge h_p(n)=(n/(p-1)-7/(p-2))_+/(1-7/(p-2)) and
+the CHT2 gate, in label-count notation,
+
+    s_p(n,l)=min(1-h_p(n), h_p(n+l)-h_p(n)).
+
+The old-point integrand whose expectation is T_Omega is exactly
+
+    (1-h19(C-1)) s17(C-1,A1-C)
+      +(q-t)s19(C-1,A1-C)+t s19(C-1,2A1-C).       (GTO1)
+
+The t term is under the actual killed17 row. No physical-source replacement is
+made. Formula GTO1 retains every label in the CHT2 union price; all coincident
+tail current residues remain part of that labelled price.
+
+The C distribution under uniform units modulo315 has counts
+
+    C:      1   2   3   4   6   8  12
+    count: 45  54  15  19   8   2   1
+
+out of144. The11 and13 indicator probabilities are1/10 and1/12, independently
+under this actual source. Thus GTO1 is a finite exact rational sum, yielding
+
+    T_Omega = 889799/43545600 = 0.02043372924015...
+             > mstar = 704627631753217/45514648675654535.
+
+This family satisfies CHT7's original357-period restriction. Consequently a
+universal upper bound T_Omega<mstar in that class is false, not merely absent.
+
+#### 3. Two original tests distinguish what the event remembers
+
+Let A_j=sum_(d|Q)1_(x=j mod d), j=1,2. Both are legitimate complete inherited
+tests with all48 original labels. Put E_j={A_j<=10}. Exact values are
+
+| event | nu(E) | greatest two head masses | T_E |
+|---|---|---|---|
+| E1 | 4229/4320 | 1/144,1/144 | 300761/70761600 |
+| E2 | 4229/4320 | 1/144,1/144 | 889799/43545600 |
+
+The entire sorted head-mass profiles agree, not just the greatest two entries.
+Indeed multiplication by2 permutes the actual old unit source and carries the
+center1 test to the center2 test, with the corresponding permutation of head
+cells. The actual mask placement is held fixed, so the tail prices differ.
+
+There is also a short structural reason that E2 contains all the priced support.
+The possible A1 values are1,2,3,4,6,8,12,16,24,32,48. A positive17 term in GTO1
+requires A1>=9, hence A1>=12. A positive19 term requires 2A1-1>126/17, hence
+A1>=6 in that spectrum. In each prime coordinate the two centered loads have
+product at most3 in the3^2 coordinate and at most2 in every other coordinate.
+The reason is that residues1 and2 are already distinct at the first digit, so
+both coordinate loads cannot exceed1 simultaneously. Hence pointwise
+
+    A1 A2 <= 3*2*2*2*2=48.
+
+Every positively priced point therefore has A2<=8 and belongs to E2. This proves
+T_E2=T_Omega without assuming independent masks or changing the event.
+
+For E1, A1<=10 forces A1<=8 and the17 term vanishes. The exact19 expectation is
+300761/70761600=0.00425034199339...<mstar. Thus retaining the same event can change
+the certificate, but event retention alone does not imply the uniform numerical
+premise T_E<mstar: E2 is an actual counterexample to that premise as well.
+
+#### 4. The actual CHT6 intercept remains large and succeeds
+
+For both E1 and E2, the CHT6 head cost is
+
+    max{(7/10)(1/144),(1/2+2/5)(1/144)}=1/160.
+
+Their actual intercept nu(E)-headcost is2101/2160, rather than the much smaller
+generic mstar. Consequently CHT6 gives the positive same-event surplus
+
+    E1: eta(E1)>=68527999/70761600,
+    E2: eta(E2)>=41466361/43545600.                (GTO2)
+
+CT5 with tau121,c100 then gives, for every complete current-test extension of
+the corresponding original inherited block,
+
+    E1: Delta121>=68527999/3369600,
+    E2: Delta121>=41466361/2073600.               (GTO3)
+
+These are lower bounds from CHT6, not claims of equality for Delta. Direct
+same-law calculation gives eta(E1)=152233/155520 and
+eta(E2)=7756553/7962624, consistent with both lower bounds.
+
+The exact residual prices illustrate the remaining loss in the labelled proxy:
+
+    P_E1=11/155520,
+    P_E2=P_Omega=22319/39813120.
+
+The literal tails share current residue12. Their labelled loads can be large
+while the actual extra union adds only one root. This explains why T can be
+substantially larger than P in this witness; it is not evidence that actual
+tail deletion universally exceeds mstar.
+
+#### 5. A consumer uniform over every original test in this same family
+
+The successful CHT6 conclusion is not restricted to the two centered tests.
+For any complete inherited test A, every nonconstant cylinder has actual source
+mass at most1/phi(d). Nonunit residue choices have mass0; unit residue choices
+have exactly1/phi(d). Therefore, without assuming a common center,
+
+    E_nu A <= sum_(d|Q) 1/phi(d)=5005/1728.
+
+Since A>=1 and A>10 implies A>=11,
+
+    nu(A<=10) >= (11-5005/1728)/10=14003/17280.
+
+Every actual head cell has mass1/144, so every event has CHT6 head cost at most
+1/160. Using T_E<=T_Omega on this same family yields, uniformly over all original
+inherited and final test labels,
+
+    eta(A<=10) >= 14003/17280-1/160-889799/43545600
+                 =34125601/43545600 >0,
+
+    Delta121 >= 34125601/2073600.                (GTO4)
+
+The uniformity in GTO4 is justified by the per-original-label mean bound and
+CHT6, not by enumerating finitely many chosen test layouts. This remains a
+same-family result and not a new noncoverage subclass beyond prior results.
+
+#### 6. Consequence for the unrestricted next obligation
+
+Both overly strong candidate obligations are now excluded: T_Omega<mstar for
+every family, and T_{A<=10}<mstar for every family and original test. The original
+CHT6 route remains viable because the needed quantity is the joint surplus
+
+    nu(E)-max{(7/10)w1,(1/2)w1+(2/5)w2}-T_E.
+
+The exact counterexample shows why replacing its actual intercept by mstar
+before controlling the tail can lose a working certificate. To obtain a general
+positive surplus one still needs a quantitative coupling between the same
+test's event mass/head cells and its actual tail geometry, or a stronger
+observable for the actual extra union r. The present result supplies neither
+that unrestricted inequality nor the KC tau81/later-prime continuation.
+
+The standalone verifier reconstructs every191 original congruence by CRT,
+enumerates all17280 actual old units, checks the1296 mask/test incidence groups,
+and evaluates each physical17/killed17 row and every19 original tail condition.
+It checks the exact CHT4 identities, all stated fractions, the original test
+inventory, and the uniform consumer's numeric premise. All checks use explicit
+raise-on-failure conditions and exact fractions, including under Python -I -O.
+
+### Actual mask weights and an all-height square certificate
+
+Ordinary proof with exact rational coefficient checks; no Lean verification.
+Fix the actual killed19 input sigma=xi=nu13 K17^- and R=K19^-, so eta=sigma R.
+The following argument also applies to any finite actual old measure sigma
+and current prime p>=3 with row mass q and nonnegative prefix cap c satisfying
+0<=q<=c. Neither input is normalized or replaced by the physical17 law.
+For the actual flat killed row, R_x=c(x)1_(G_x)u_p; here c includes the actual
+pure-survivor density, and q/c is its actual surviving Haar fraction.
+
+Let D be the complete original old-test domain, with all divisor labels and
+independently chosen original residues. For any nonnegative old weight f, put
+
+    G(f)=max_(A in D) integral f A^2 d sigma,
+    d_f(A)=G(f)-integral f A^2 d sigma.
+
+Set S=1/(p-1), a=(3p-1)/(p-1)^2, b=a-S=2p/(p-1)^2,
+theta=1/(2+S), and h=c-q. Choose 0<=r<=theta and define
+
+    lambda=S/(S+r), rho=1-lambda, k=rho/theta, kappa=S k,
+    w=c-theta h, v=q+lambda h,
+    g=q+S c+r lambda c h/v, z=c/v.               (MW1)
+
+The quotients are defined as0 on c=0, where every weighted term vanishes.
+For c>0, v>=lambda c>0. In particular g,w,v are nonnegative and
+
+    g<=q+Sc+rh<=(1+S)c,  w<=c,  k<=2+S.
+
+Every original full test then satisfies the general bound
+
+    integral L^2 d(sigma R)<=U_r,
+    U_r=G(g)+(b-kappa)G(c)+kappa G(w).           (MW2)
+
+At r=0 this is exactly the ordinary split cap
+G(q+Sc)+b G(c). Thus minimizing U_r over its allowed parameter never worsens
+that cap. No domination of the stronger OBE distance-profile bound is asserted.
+The new observations are actual mask-weighted old square maxima, not another
+encoding of the source-only scalar moments.
+
+#### Exact identity and its retained losses
+
+Write A_e for the literal old block of a full test at current exponent e,
+including A_0. For finite actual current height H, the original prefix caps give
+
+    integral L^2 d(sigma R)<=Phi_H,
+    Phi_H=||A0||_q^2
+      +sum_((e,f)!=(0,0),0<=e,f<=H) p^-max(e,f)<Ae,Af>_c.
+
+This cap includes independent original current prefixes; it does not suppose
+that they are compatible. Extend only the comparison sequence by A_e=A_0 for
+e>H. It does not add original forbidden or test labels. The extra tail is
+
+    Phi_infinity-Phi_H
+      =p^-H[2S sum_(e=0..H)<Ae,A0>_c+(a-2S)||A0||_c^2]
+      <=p^-H(a+2HS)G(c).                        (MW3)
+
+It is nonnegative. Polarization, with s_e=p^-e and t_e=e+1+S, gives
+
+    Phi_infinity=||A0||_(q+Sc)^2+sum_(e>=1)s_e t_e||Ae||_c^2
+      -sum_(e>=1)s_e||Ae-A0||_c^2
+      -sum_(1<=e<f)s_f||Ae-Af||_c^2.
+
+Since r lambda=S rho, v=c-rho h and k theta=rho,
+
+    Sc+g-(q+Sc)=Sc^2/v.
+
+Completing squares pointwise therefore yields the exact nonnegative identity
+
+    U_r-integral L^2 d(sigma R)
+      =Lambda(L)+d_g(A0)
+       +sum_(e>=1)s_e[(t_e-k)d_c(Ae)+k d_w(Ae)]
+       +sum_(e>=1)s_e||Ae-z A0||_v^2
+       +sum_(1<=e<f)s_f||Ae-Af||_c^2,            (MW4)
+
+where Lambda=Phi_infinity-integral L^2 d(sigma R)>=0. All infinite
+sums converge: the actual old domain is finite and the comparison tail repeats
+A0. Also sum s_e t_e=b and sum s_e k=kappa, proving MW2.
+
+The finite part of Lambda is the ordered original-label sum
+
+    integral Ii Ij [c p^-max(ei,ej)-R_x(Ci intersect Cj)] d sigma,
+
+excluding two zero-current labels. A compatible pair pays its actual deleted
+prefix intersection; an incompatible pair pays the full cap. The comparison
+tail MW3 supplies the rest. Thus MW4 retains both actual mask intersections
+and original-test incompatibility on the same law.
+
+If a test has square at least U_r-epsilon, MW4 forces each displayed
+nonnegative loss to be at most epsilon. In particular
+
+    sum_(e>=1)p^-e||Ae-z A0||_v^2<=epsilon,
+    integral (c^2/v) A0^2 d sigma
+      <=(sqrt(G(v))+sqrt(epsilon/S))^2.          (MW5)
+
+The second statement follows from the triangle inequality in the direct sum
+of the weighted spaces, using sum s_e=S. This specifies the extra near-maximum
+condition: the positive old blocks must approximate the actual row-dependent
+amplification z of the same baseline. No assumption of centered maximizers is
+made, and a source-only high-energy condition does not supply MW5.
+
+#### A three-value curvature alternative
+
+Let E(t)=G(c-th), t0=1/(1+S), and define the nonnegative convexity gap
+
+    C=theta E(0)+(1-theta)E(t0)-E(theta).
+
+Here theta=(1-theta)t0. Write
+V=(E(0)-E(theta))/theta and U=(E(theta)-E(t0))/(t0-theta).
+Convexity and 0<=h<=c give 0<=U<=V<=E(0) and V-U=C/theta^2.
+Since g<=q+Sc+rh, interpolation between t0 and theta gives
+
+    U_r<=U_0-r[S V/(S+r)-U].
+
+If V>0 choose r=S(V-U)/(2V), which lies in [0,theta]. The bracket is
+at least(V-U)/2. If V=0 then C=0 and use r=0. Consequently, for E(0)>0,
+
+    sup_L integral L^2 d(sigma R)
+      <=U_0-S C^2/[4 theta^4 E(0)].             (MW6)
+
+When E(0)=0 the full square is0. This does not assert positive C for every
+family. If A_theta maximizes E(theta), then exactly
+
+    C=theta d_c(A_theta)+(1-theta)d_(c-t0 h)(A_theta).
+
+Thus C=0 supplies a common endpoint maximizer, while C>0 supplies the
+quantitative saving MW6. Which alternative the actual family realizes remains
+part of the joint optimization.
+
+#### The unchanged19 input and complete old-test tails
+
+At p=19 and r=theta=18/37 the weights and coefficients are
+
+    w=(19c+18q)/37,
+    g=q+c/18+18c(c-q)/(37c+324q),
+    kappa=37/361, b-kappa=865/58482,
+    z=361c/(37c+324q).
+
+Therefore
+
+    sup_L eta(L^2-484)
+      <=G(g)+(37/361)G(w)+(865/58482)G(c)-484 eta(1). (MW7)
+
+The actual caps c<=9/5 and K17's cap2, together with the existing same-AP13
+bound, give
+
+    G(c)<=(9/5)(89/64) Gamma13
+      <=119251429066437923669013/292710856261333727360,
+    (865/58482)G(c)<6.025855.
+
+The comparison xi<=mu17 is used here only to bound a nonnegative square;
+the weighted maxima in MW7 stay under xi. With this cap the coefficient of
+C^2 in MW6 is greater than0.0006086; no uniform positive C is established.
+
+For a finite box B in the original old test exponents at primes
+P={3,5,7,11,13,17}, keep the actual sigma,c,q completely unchanged and optimize
+only the test labels in that box, intersected with the actual inventory.
+Write G_B for this maximum. The actual density bound sigma<=110 u_old gives,
+for 0<=f<=F,
+
+    0<=G(f)-G_B(f)<=110 F T_B,
+    T_B=product_(p in P) p(p+1)/(p-1)^2
+       -product_(p in P) sum_(j=0..B)(2j+1)p^-j. (MW8)
+
+Indeed the square difference is a sum of omitted ordered label pairs;
+each is at most110 F/lcm(d,e). The full pair sum factors by prime.
+Every core assignment extends to the original labels, so the optimization
+inequality has the stated direction. The exact single-prime tail is
+
+    p^-B[(2B+3)p-(2B+1)]/(p-1)^2.
+
+Using g<=19/10 and w,c<=9/5, the TOTAL MW7 error is at most
+
+    (2090/9) T_B,
+    B16: error<0.000564917,
+    B20: error<0.000008522461.                   (MW9)
+
+This truncates the original test inventory only. It does not bound the cost
+of replacing forbidden masks or the actual input law by a finite reference.
+Those changes still require KC's separate common-law estimates.
+
+Rational upper certificates U_g,U_w,U_c for the three actual box16 maxima
+would therefore give
+
+    sup_L eta(L^2-484)
+      <U_g+(37/361)U_w+(865/58482)U_c
+       +0.000564917-484 eta(1).                 (MW10)
+
+The arbitrary-label message certificates below can bound these weighted
+maxima using their own exact unary/pair tables. No uniform such certificates
+are currently supplied. MW10, the299.398 frontier and later-prime continuation
+remain unresolved; the inequality is a reusable actual-mask reduction, not
+an unrestricted #7 conclusion. The standalone verifier checks1296 rational
+finite-array identities with complete comparison tails and the exact constants
+in MW7--MW9. This is finite corroboration of the ordinary proof, not a kernel
+verification of its universal quantifiers.
+
+### Same-law original-label conflict cuts and rational message certificates
+
+These are ordinary mathematical results, with exact standard-library certificate checks, not Lean verification. All bounds below apply to the entire final signed objective under one actual killed law. The numerical fixture is evidence of a nonzero cut and an attained message certificate; it is not a uniform improvement to the existing Gamma split, KC299.398, or unrestricted Erdős #7.
+
+#### 1. General actual-law statement and original labels
+
+Fix any finite actual family and one finite nonnegative final measure
+
+    eta = nu13 K17^- K19^- .
+
+At the second step its incoming measure is literally `nu13 K17^-`. Neither the normalized physical input `nu13 K17` nor a fresh supported law is substituted. Let `J` be the complete original divisor-test label set, including the single modulus-one label. Every other original modulus `m_i` has one globally selected residue `r_i mod m_i`, reused in every factor and every old row. Write `I_i=1_(x=r_i mod m_i)`, `L=1+sum_i I_i`, and `z=eta 1`.
+
+The exact full objective is
+
+    Q_eta(L) = eta(L²)-484 z
+             = -483 z + sum_i u_i(r_i) + sum_(i<j) v_ij(r_i,r_j),
+    u_i(r) = 3 eta C(r,m_i),
+    v_ij(r,s) = 2 eta(C(r,m_i) intersect C(s,m_j)).              (LC1)
+
+Every intersection is evaluated on the same eta. Generalized CRT makes it zero when the residues disagree modulo the gcd, otherwise the mass of the unique combined class modulo the lcm. There is no independent choice of a residue for separate entries containing the same label.
+
+Put
+
+    B0(eta) = -483 z + sum_i max u_i + sum_(i<j) max v_ij.
+
+This is the entrywise pair envelope. It is generally different from, and can be weaker than, existing old-block Gamma envelopes.
+
+#### 2. Arithmetic stars detect information erased by separate pair maxima
+
+Choose one original central label d and distinct neighboring original labels m in N. For each central residue a define
+
+    J_m(a) = max_(r mod m) eta(C(a,d) intersect C(r,m)).
+
+For every global test,
+
+    sum_(m in N) 2 eta(I_d I_m) <= 2 max_a sum_m J_m(a).
+
+Consequently the exact lost amount in independently maximizing just these star factors is
+
+    kappa_(d;N) = 2 [sum_m max_a J_m(a) - max_a sum_m J_m(a)] >= 0. (LC2)
+
+This is a quantified constraint on the selected original label, not merely a condition on an abstract Gram matrix. It costs only one table per neighbor and one maximization over residues of d. The result holds for arbitrary actual eta, arbitrary residues, and all finite original heights. No radial symmetry, common center, nested-chain maximizer, or zero charge is assumed.
+
+If d divides m, this simplifies to
+
+    J_m(a) = max_(r mod m, r=a mod d) eta C(r,m).                (LC3)
+
+A version spending the unary factor of d has
+
+    kappa = max_a u_d(a) + 2 sum_m max_a J_m(a)
+            - max_a [u_d(a)+2 sum_m J_m(a)].                   (LC4)
+
+The same label d is chosen only once. In particular, pair maxima that require conflicting residues modulo d cannot all be attained.
+
+For a finite collection of such stars, assign rational weights lambda_C >= 0. For each original unordered pair, the total weight of stars using that pair must be at most1. If LC4 is used, impose the same capacity1 for its original unary factor. Then
+
+    sup_L Q_eta(L) <= B0(eta) - sum_C lambda_C kappa_C(eta).    (LC5)
+
+Proof: each original factor has nonnegative loss `max f-f`. Within each star their sum is at least kappa_C. Multiply and sum, using factor capacities to avoid charging any individual loss more than once. The constant `-483 z` is retained exactly. The certificate holds uniformly over every complete original test, although kappa depends on the actual family law. A bound valid for all families still requires an outer argument controlling these quantities; LC5 does not supply that missing argument.
+
+These cuts may also be taken for any small factor tree. Its minimum total loss is computed by eliminating leaves, storing at each original separator label its complete residue table. A disconnected or cyclic collection is not silently converted into independent trees; either its exact joint minimum is verified or a legitimate fractional packing is used.
+
+#### 3. Law stability of a selected cut and finite-core use
+
+Let eta and eta' be two finite nonnegative measures on a common lifted carrier, with full L1 discrepancy epsilon. A star spending t pair factors and h unary factors, h in {0,1}, has
+
+    |kappa(eta)-kappa(eta')| <= (2t+3h) epsilon.                (LC6)
+
+To prove this write eta-eta'=delta_plus-delta_minus with masses a,b. Every spent nonnegative factor has amplitude bounded by its coefficient c in {2,3}; its integral changes between -c b and c a. The independent-max sum and the joint star maximum each change between -C b and C a, where C=2t+3h. Their difference changes between -C(a+b) and C(a+b). No normalization or equal-mass premise is needed.
+
+Thus a depth/core reference certificate B_C implies the actual correction
+
+    kappa_C(eta) >= max(0, B_C-(2t+3h)epsilon).                (LC7)
+
+Only selected factors are charged. This does not incur the number of all original labels. The core must be lifted to the same carrier and the discrepancy must include the actual incoming-law and killed-kernel change once. If the full reference objective is already transported by KC's full-objective comparison, do not pay the same discrepancy a second time. Conversely LC7 may only be subtracted from an actual factor envelope whose spent factors are present; it cannot be attached to an unrelated Gamma bound or to the exact CT identity.
+
+All original depths and tails remain in LC1. Selecting a finite set of star factors does not truncate L. If a separate full-objective finite-core reduction is used, its already established omitted-label and law errors remain necessary. LC2 alone provides no tail deletion.
+
+#### 4. Arbitrary signed rational messages
+
+For each original pair i<j choose arbitrary rational functions h_ij,i(r_i) and h_ij,j(r_j). Define
+
+    u_i^h(r) = u_i(r) + sum_(e incident i) h_e,i(r),
+    v_ij^h(r,s) = v_ij(r,s)-h_ij,i(r)-h_ij,j(s).
+
+The messages cancel exactly, assignment by assignment. Therefore
+
+    sup_L Q_eta(L)
+       <= -483 z + sum_i max_r u_i^h(r)
+                  + sum_(i<j) max_(r,s) v_ij^h(r,s).           (LC8)
+
+No sign restriction on the reparameterized factors or messages is required. The same algebra works for any exact finite unary/pair table, including signed factors obtained from an independently proved full-objective decomposition. A verifier checks all finite maxima using rational arithmetic. It need not trust LP convergence, floating dual feasibility, a branch count, or a solver's status. Missing messages mean zero messages and are valid, so one can work on selected stars or cycles without storing the full factor graph.
+
+An LP using one candidate unary marginal per original residue, one pair marginal per literal residue pair, normalization, and agreement of pair projections with those unary marginals can generate h. This is the standard local marginal-polytope relaxation. Its optimality is not needed for LC8: every rational h is a valid upper certificate, and an actual assignment with equal value proves exactness for the stated input. The benchmark corrected by LC8 remains B0 for the same full objective. The method is a reusable certificate route; it does not assert the relaxation is exact on arbitrary arithmetic families.
+
+For a chosen sparse message support, let G_h=B0-U_h. If only factor set F* has nonzero reparameterization, then
+
+    |G_h(eta)-G_h(eta')| <= (sum_(f in F*) c_f) epsilon.
+
+Indeed each factor's perturbations lie between -c_f b and c_f a; the difference of its original and shifted maximum changes by at most c_f(a+b). Messages must be held fixed during this comparison. The nonnegative improvement is max(0,G_h).
+
+#### 5. A literal nonradial actual family
+
+Take Q=315 and forbid old classes
+
+    0 mod3, 0 mod5, 0 mod7, 2 mod9, 4 mod15.
+
+Their 102 survivors modulo315 carry the uniform actual old law. Use cofactor list
+
+    (3,9,15,21,45,63,105,315,5,7,35).
+
+For p=17 and19 forbid pure0 modp and, at current residues i+1 for i=0,...,10, the mixed class with that cofactor. The first eight old residues are1. The last three old residues are2 at17 and3 at19. The full forbidden classes are their literal CRT combinations. Thus there are29 distinct odd forbidden moduli and common period101745. The complete divisor-test inventory is12*2*2=48 original labels.
+
+At old x let k_p be the number of matching mixed masks, alpha_p=k_p/(p-1), delta_p=7/(p-2), g_p=1/(1-min(alpha_p,delta_p)), beta_p=(alpha_p-delta_p)_+/(1-delta_p), t_p=g_p/(p-1), q_p=1-beta_p. The actual killed row puts mass t_p on each unmasked nonzero root. Current19 masks have no17 factor, so the actual final law has row products, and the physical17 input has the same old marginal. The exact charges and final mass are
+
+    b17 = 1/1632, b19 under physical17 = 1/1836,
+    eta1 = 9781/9792.
+
+Define q=q17q19, u=t17q19, v=q17t19, w=t17t19. For four independent complete old blocks A,B,C,D, retaining each block's unit label as constant1, the exact current maximum is
+
+    E[q A²+u(2AB+B²)+v(2AC+C²)
+         +w(2AD+2BC+2BD+2CD+D²)].                              (LC9)
+
+Every prescribed old assignment attains all current pair caps simultaneously by putting every17-positive label at globally clean root16 and every19-positive label at globally clean root18. This is why no independent current label is dropped. Positive current unit-cofactor labels also take those roots and supply the three additional block constants. Before current maximization the original modulus-one test is unique; LC9's four constants arise from four distinct original labels1,17,19,323.
+
+For LC9, H=[[q,u,v,w],[u,u,w,w],[v,w,v,w],[w,w,w,w]]. Expanding the four blocks gives constant E(sum H_gh), unary coefficient H_gg+2 sum_h H_gh, and pair coefficient2H_gh. All11 nonconstant old divisor labels in each block remain independent. A residue whose entire old cylinder is empty has zero contribution in every term; changing it to a nonempty residue cannot decrease a nonnegative objective. The verifier keeps EVERY nonempty original residue, yielding1004 unary choices in total. There is no first-exit consolidation, permutation orbit quotient, or assumed centered maximum.
+
+The rational message certificate gives
+
+    entrywise bound = 317481153727/19995655680,
+    exact maximum = 846619/55488,
+    entrywise improvement = 12393530887/19995655680
+                          = 0.6198111772546786... .
+
+The all-block old assignment centered at1 attains the bound. This is an output of exact upper/lower matching, not an input restriction. A separate scan of all literal surviving triples (x,y17,y19) under their actual killed weights gives the same mass and square integral. The signed final objective is
+
+    max Q_eta = -77938211/166464.
+
+For the tiny original-label cut d=3, neighbors9 and15, only the old marginal of the same eta is needed. The complete profile tables are
+
+| a mod3 | M9(a) | M15(a) |
+|---|---:|---:|
+|0|0|0|
+|1|3/17|3/17|
+|2|4/17|2/17|
+
+Thus
+
+    kappa_(3;9,15) = 2[(4/17)+(3/17)-(6/17)] = 2/17.
+
+The two best pair observations individually choose different residues for the SAME original modulus3 test. This is nonzero genuinely joint information. With any actual common-carrier L1 perturbation epsilon, this selected cut retains at least max(0,2/17-4epsilon), positive for epsilon<1/34. The coefficient4 here belongs to the two original pair factors 2 eta(I3 I9), 2 eta(I3 I15) in LC1. It is not the general variation coefficient of all LC9 factors.
+
+#### 6. Reproduction and limits
+
+The standard-library verifier `verify_original_label_messages.py` rebuilds the literal source/masks, every nonempty original-domain table, the rational message upper bound, the attaining assignment, the tiny divisibility-star profile, and the literal point scan. It runs with `python3 -I -O`. The file `original_label_message_certificate.json` contains the exact rational messages and result data. The verifier rejects duplicate JSON keys, duplicate original pairs, and inconsistent reported values. An optimizer is unnecessary to check the certificate.
+
+The remaining unresolved step is an outer, all-family constraint sufficient to control LC5/LC8 or a stronger common-law envelope on the full AP13 core and all paid tails. The unrestricted299.398 continuation and later primes remain open.
+
+#### 7. Existing results and public basis
+
+The repository search for common/shared original labels, star cuts, pair compatibility, marginal polytopes, and message reparameterization found the current KB maximizing-label comparisons, RS signed unary/pair branch envelopes, OBE common-old-block distances, CPI/PT current-prefix incompatibility, and BQX exact four-block optimization. Those results are reused as context, but none of the searched report sections states LC3's old-divisibility profile cut or verifies the nonradial rational message certificate. The repository's `FiniteCompatibleCrt` and `CompatibleResidueJointImage` already provide the CRT compatibility structure; it is not reproved in new Lean. The finite response-law obstruction in `CompleteMediatorCutSharpBounds.three_cycle_complete_mediation_sharp` and the Boolean gluing example in `LocalLawGluingObstruction` are different finite input problems, not this weighted arbitrary-source cut. Text searches in the pinned Mathlib combinatorics and convex-analysis trees did not locate an exact weighted original-residue certificate theorem. This is a searched-scope statement, not a claim that the method is new.
+
+Public source: David Sontag, Talya Meltzer, Amir Globerson, Tommi Jaakkola, Yair Weiss, [Tightening LP Relaxations for MAP using Message Passing](https://people.csail.mit.edu/dsontag/papers/sontag_uai08.pdf), UAI2008, sections2–3. The downloaded author-hosted PDF confirms the local marginal polytope, dual message upper bounds, exact assignment/dual matching, and the cluster gain `sum max b_e - max sum b_e` in equation4. Thus the message relaxation and general incompatibility gain are established methods. LC1–LC7 supply their explicit full-signed-killed-law, original-modulus CRT, factor-capacity, and L1 application here. No new Lean wrapper, claim of an invented LP method, or standalone positive finite-instance formalization is proposed.

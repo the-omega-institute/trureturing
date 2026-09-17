@@ -303,10 +303,49 @@ below0.0154813373772 gives Delta121>=0.3251080849215-21T.
 An actual107-class,192-test family with11/13 factors at17 and17
 factors at19 has T=7041421/663552000 and uniform loss>0.1022621873882.
 Its ordinary linear tail price0.068821 fails this criterion. All
-finite heights are permitted in the general identity, but the
-uniform unrestricted tail premise and the tau81 KC bound are still
+finite heights are permitted in the general identity. The fixed
+uniform tail threshold is refuted below; the tau81 KC bound remains
 unproved. These additions have ordinary proofs and exact programs,
 not new Lean verification or an unrestricted covering conclusion.
+
+An [actual191-class counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-literal-obstruction-to-uniform-gated-tail-thresholds-with-its-cht6-consumer)
+has T_Omega=889799/43545600>0.0154813373772. Its complete inherited
+test centered at2 has the same event price, refuting even the uniform
+event-specific threshold. The center1 event has the same mass and
+sorted head-cell profile but price300761/70761600. Keeping the actual
+CHT6 intercept instead of its generic minimum yields positive bounds
+for both, and a same-family bound Delta121>=34125601/2073600 uniformly
+over all192 original final test labels. The required unrestricted
+estimate must couple event mass, head weights and actual tail geometry;
+the counterexample does not refute CHT6 or noncoverage.
+
+The [actual-mask square certificate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-mask-weights-and-an-all-height-square-certificate)
+(MW1)--(MW10) bounds the complete killed square by three weighted
+old-test maxima on the unchanged killed17 input. An exact sum-of-squares
+identity retains actual mask incidence, common original blocks and all
+current heights. Near equality requires the positive blocks to realize
+a row-dependent amplification of the baseline. The old-test box16
+error is below0.000564917, without truncating the actual masks or law.
+The three weighted maxima have no established uniform bound closing
+the full signed target.
+
+[Original-label cuts and rational messages](../docs/reports/erdos7-odd-covering/marked_head_profile.md#same-law-original-label-conflict-cuts-and-rational-message-certificates)
+(LC1)--(LC9) keep one residue choice per original label across every
+pair factor. General star cuts admit fractional packing and common-law
+L1 stability. In a nonradial29-class actual family, the original labels
+3,9,15 give a local cut2/17, stable up to4epsilon. A rational message
+certificate proves the complete48-test maximum846619/55488, improving
+its entrywise pair envelope by12393530887/19995655680. These use the
+standard marginal-polytope/message method; they do not supply the
+uniform299.398 bound or an equal subtraction from a different Gamma
+envelope. The new results have ordinary proofs and exact standard-library
+checks, not Lean verification.
+
+[RRO60's finite query costs](../docs/reports/erdos7-odd-covering/marked_head_profile.md#finite-translated-queries-locate-the-original-point-but-do-not-integrate-it)
+give108 adaptive whole-vector queries to recover a point in the complete
+unequal KC period, versus86,093,442 fixed queries. This is an identity
+task under the specified oracle, not a bound on actual integration,
+number of layout candidates, or #7 proof-search complexity.
 
 The [cross-depth prefix criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#common-original-prefixes-across-depths-from-rro55)
 reuses RRO55's shared-witness construction: each common parent prefix
