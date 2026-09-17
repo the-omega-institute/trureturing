@@ -1,0 +1,10 @@
+fingerprints:
+  raw_sha256: sha256:5e7e7bc5427ff5989f2f6043685c7684f86a2d5fed7a63f7a9b217cc4e6d23bf
+  normalized_sha256: sha256:5e7e7bc5427ff5989f2f6043685c7684f86a2d5fed7a63f7a9b217cc4e6d23bf
+cas_ref: sha256:5e7e7bc5427ff5989f2f6043685c7684f86a2d5fed7a63f7a9b217cc4e6d23bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 3ca3da66a9c3fd691aa2fe64c079d3fa2cab16027b5ee538477bfa74943e4c89
+    - 55ebb8fb023b86e92b5b338dd05cb8d44e25e9b7c14909fb44328def52f6c200

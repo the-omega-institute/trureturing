@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c763d54544b9b485bdb9bbc500b1dd8f10dd68be716560d0615480776fde70bf
+  normalized_sha256: sha256:c763d54544b9b485bdb9bbc500b1dd8f10dd68be716560d0615480776fde70bf
+cas_ref: sha256:c763d54544b9b485bdb9bbc500b1dd8f10dd68be716560d0615480776fde70bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶在“定义完整过程的最优 Bayes 风险”中显式把参考系统也列入优化，并写“并以同样方式定义”保留过程风险；只给策略类与记号，不声称最优策略存在或两风险有序，无偷渡的数学结论。
+    previous_atom_id: cbc6e6aa38ec163669361ea61f35d2a00d12dfd5db3ed760eeb6b38a7e9ebbbf
+    next_atom_id: 8b9b8b8c6a07fd4c86502a112e7d68524be308cae0bb3972311eaee7fa18dd3a

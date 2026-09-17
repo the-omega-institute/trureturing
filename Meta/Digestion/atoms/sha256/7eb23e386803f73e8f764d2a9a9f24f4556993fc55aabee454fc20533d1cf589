@@ -1,0 +1,9 @@
+**定义 49.12（固定有限阈值的最大允许 supernatural）。** 对 $1\le t<\infty$，令
+$$
+\mathcal D_t=\{D:H(D)\le t\text{ 且 }D\text{ Carmichael 闭合}\},
+$$
+并定义
+$$
+D_t^{\max}=\operatorname{lcm}_{D\in\mathcal D_t}D.
+$$
+

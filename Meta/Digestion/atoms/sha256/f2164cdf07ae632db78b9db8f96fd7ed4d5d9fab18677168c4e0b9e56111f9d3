@@ -1,0 +1,16 @@
+**Corollary.** With the standard definition `WSS(p) iff p^2 divides F_N`,
+
+\[
+\mathrm{WSS}(p)
+\iff p^4\mid L_N-2\epsilon
+\iff p^2\mid L_p-1.\tag{U.10}
+\]
+
+At normalized first order, dividing in the integers before reducing gives
+
+\[
+2\frac{L_p-1}{p}\equiv5\frac{F_N}{p}\pmod p.\tag{U.11}
+\]
+
+At the return index N, the trace already has a second-order zero for every p. Its residue modulo p^2 cannot distinguish the WSS primes. The prime-index trace retains the original depth.
+

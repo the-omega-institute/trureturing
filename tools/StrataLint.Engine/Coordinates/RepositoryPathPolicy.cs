@@ -11,7 +11,7 @@ internal static partial class RepositoryPathPolicy
     internal const string AgentFilesRootPath = "agents/";
     // Spec drafts and agent reports have author-chosen names, so this path layer admits
     // their prefixes without copying a filename registry into the harness. Reports have
-    // a stricter, separate FILEMAP gate: FileMapPolicy requires one exact entry per
+    // a separate FILEMAP gate: FileMapPolicy requires one matching entry per
     // tracked docs/reports file before the file is usable. Path admission alone is not
     // registration and must not be treated as a substitute for filemap-conform.
     internal const string SpecRootPath = "docs/develop/spec/";
@@ -152,6 +152,7 @@ internal static partial class RepositoryPathPolicy
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
+            || FileMapDocuments.IsPolicyPath(value)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || IsEchoResidualShardPath(value)
@@ -162,10 +163,11 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
             // Report filenames are intentionally not copied into registry.yaml. Their
-            // exact per-file registration is enforced by FILEMAP's content-plane gate.
+            // unique registration is enforced by FILEMAP's content-plane gate.
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
+            || InformationTemplateDebtStore.IsCanonicalPath(value)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;

@@ -1,0 +1,210 @@
+**命题 153.1（正潜在混合允许任意精度的有限确定性因果后缀观察者，而精确预测商仍无限）。** 固定时间齐次、无控制的二元协议，取实数 $0<p<1/2$ 与 $0<r<1/2$。令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，并定义
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}=\begin{cases}1-r,&j=i,\\ r,&j\ne i.\end{cases}
+$$
+对每个 $b,i,j\in\{0,1\}$ 分别取秩一 Kraus 算子
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\;|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+=\sum_{i,j=0}^1c_{bi}P_{ji}X_{ii}E_j
+\quad(X\in M_2(\mathbb C)).
+$$
+每支使用四个独立的 Kraus 项，不能先把它们相加成一个算子再取共轭作用。每支完全正，其效应满足
+$$
+pI_2\le\phi_b^*(I_2)=\sum_i c_{bi}E_i\le(1-p)I_2,
+\qquad \sum_b\phi_b^*(I_2)=I_2.
+$$
+非选择通道是先退相干再按 $P$ 翻转。词 $w=b_1\cdots b_n$ 按时间顺序书写，置 $\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1}$、$\phi_\varnothing=\operatorname{Id}$。对任意有限维参考 $A$ 及任意正联合算子 $\Omega\ge0$，每个非空词的 $(\operatorname{Id}_A\otimes\phi_w)(\Omega)$ 都是有限正乘积和；非零输入的输出归一化后可分。空词在一般输入上仍为恒等作用，可以保留纠缠。这项逐支纠缠破坏结论与下面从固定初态 $I_2/2$ 出发的标量预测结论分别成立；可分不等于参考独立，也不意味着标量后验能恢复初始参考相关性。
+
+标量过程固定初态为 $I_2/2$。取列向量约定，令
+$$
+M_b=P\operatorname{diag}(c_{b0},c_{b1}),\qquad
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_w=M_{b_n}\cdots M_{b_1}v_\varnothing,
+$$
+$$
+Q_w=\phi_w(I_2/2)=\operatorname{diag}(v_w),\qquad
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w},\qquad
+\rho(q)=(1-q)E_0+qE_1.
+$$
+则 $Z_w\ge p^{|w|}>0$，$\sum_{|w|=n}Z_w=1$，且 $0<q_w<1$，包括空词。给定历史后下一零报告概率及收到 $b$ 后的归一化递推分别为
+$$
+f(q)=p+(1-2p)q,\qquad
+\widetilde q=\frac{c_{b1}q}{c_{b0}(1-q)+c_{b1}q},\qquad
+q'=r+(1-2r)\widetilde q.
+$$
+即旧隐藏位先发射，随后混合；先混合后发射是另一仪器。
+
+令
+$$
+\eta=1-2r\in(0,1),\quad
+\lambda=\log\frac{1-p}{p}>0,\quad
+B=\log\frac{1-r}{r}>0,\quad
+\sigma(x)=\frac{e^x}{1+e^x},\quad
+\ell_w=\log\frac{q_w}{1-q_w},
+$$
+$$
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x},\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr),\qquad
+F_w=F_{b_n}\circ\cdots\circ F_{b_1},\quad F_\varnothing=\operatorname{Id}.
+$$
+则 $\ell_w=F_w(0)$，$G$ 为奇函数，严格递增，值域为 $(-B,B)$，且 $0<G'(x)\le\eta$。对任意共同报告词 $u$，有
+$$
+|F_u(x)-F_u(y)|\le\eta^{|u|}|x-y|\qquad(x,y\in\mathbb R).
+$$
+
+对整数 $k\ge0$，定义有限观察者的全部动态记忆为
+$$
+S_k=\bigcup_{j=0}^k\{0,1\}^j,\qquad s_0=\varnothing,\qquad
+T_b(s)=\operatorname{tail}_{\min(k,|s|+1)}(sb),
+$$
+其中 $\operatorname{tail}_m$ 取时间顺序下最后 $m$ 个符号，$\operatorname{tail}_0=\varnothing$。因此 $k=0$ 时两个更新恒取空词。每个状态的后验、端点及下一零报告读出是固定表
+$$
+h_k(s)=\sigma(F_s(0)),\qquad R_k(s)=\rho(h_k(s)),\qquad a_k(s)=f(h_k(s)).
+$$
+状态递推为 $s(\varnothing)=\varnothing$、$s(wb)=T_b(s(w))$，令 $\widehat q_w=h_k(s(w))$。这些表是随 $p,r,k$ 固定的数学常数，不是另行动态存储的实数后验。所有填充阶段的长度信息已包含在 $S_k$，没有外置时钟或可读取的历史档案；连同初始空词及所有短词，指定状态总数恰为
+$$
+|S_k|=\sum_{j=0}^k2^j=2^{k+1}-1.
+$$
+
+长度 $n\le k$ 时读出精确。对全部有限历史，置 $E_k=\min(1,B\eta^k/4)$，有
+$$
+D(\rho(q_w),R_k(s(w)))=|q_w-\widehat q_w|\le E_k,
+$$
+$$
+\operatorname{TV}\bigl((f(q_w),1-f(q_w)),(a_k(s(w)),1-a_k(s(w)))\bigr)
+=(1-2p)|q_w-\widehat q_w|\le(1-2p)E_k.
+$$
+这里 $D(U,V)=\tfrac12\|U-V\|_1$，$\operatorname{TV}(\mu,\nu)=\tfrac12\sum_y|\mu(y)-\nu(y)|$。给定任意 $\varepsilon>0$，取
+$$
+k=\max\!\left(0,\left\lceil\frac{\log(C/\varepsilon)}{-\log\eta}\right\rceil\right),
+\qquad C=\frac{(1-2p)B}{4},
+$$
+即可使全部有限历史的下一报告误差不超过 $\varepsilon$；端点精度使用同式的 $C=B/4$。若报告读出另以 $\bar a_k:S_k\to[0,1]$ 近似，且 $|\bar a_k(s)-a_k(s)|\le\delta$，则报告误差至多 $\min(1,C\eta^k+\delta)$；符号更新不累积舍入误差。若 $p,r$ 有理，全部 $h_k(s),a_k(s)$ 可用概率递推精确计算为有理数，不需计算对数。对任意实参数只断言固定精确实数表的数学存在，不断言不可计算实参数的有效构造、最小状态数或位复杂度。
+
+然而，以所有有限未来报告律相等定义的精确预测商仍有无限多个类，任何固定有限状态的确定性观察者都不能精确预测每个有限历史的下一报告。混合是本模型的额外假设，不由纠缠破坏推出；本命题不以第152节的误差下界为前提。量词只涉及固定 $p,r$、固定初态、时间齐次无控制协议与全部有限历史，包括稀有历史；不主张 $r\to0$ 的一致界、历史重建、最优记忆或普遍经典性。边界值 $r=1/2$ 或 $p=1/2$ 不在严格预测区分的结论内。
+
+**证明。** 对任意复矩阵 $X$，逐个矩阵单位相乘给
+$$
+K_{bji}XK_{bji}^\dagger=c_{bi}P_{ji}X_{ii}E_j,\qquad
+K_{bji}^\dagger K_{bji}=c_{bi}P_{ji}E_i.
+$$
+按 $i,j$ 求和，利用 $\sum_jP_{ji}=1$，即得所列分支、效应与完全正性；再用 $\sum_bc_{bi}=1$ 得总效应为 $I_2$，以及总通道
+$$
+\sum_b\phi_b(X)=\sum_{i,j}P_{ji}X_{ii}E_j.
+$$
+这就是退相干后翻转。特别地，它对非对角矩阵单位的输出为零，不能由合并 Kraus 振幅代替。
+
+现在独立取任意 $\Omega\ge0$ 于 $A\otimes\mathbb C^2$，写成 $\Omega=\sum_{i,i'}\Omega_{ii'}\otimes|i\rangle\langle i'|$。每个对角块由压缩为正：对任意 $u\in A$，
+$$
+\langle u,\Omega_{ii}u\rangle
+=\langle u\otimes i,\Omega(u\otimes i)\rangle\ge0.
+$$
+一次分支给 $\sum_{i,j}c_{bi}P_{ji}\Omega_{ii}\otimes E_j$。对非空词长度归纳，得到
+$$
+(\operatorname{Id}_A\otimes\phi_w)(\Omega)
+=\sum_{i_0,\ldots,i_n\in\{0,1\}}
+\left(\prod_{t=1}^n c_{b_t i_{t-1}}P_{i_t i_{t-1}}\right)
+\Omega_{i_0i_0}\otimes E_{i_n}.
+$$
+所有系数严格为正，两个参考块为正，无须彼此交换。效应下界在每一步给输出迹至少为前一步的 $p$ 倍，故非零正输入在词 $w$ 后的迹至少为 $p^n\operatorname{Tr}\Omega>0$。删去迹零项，把其余正因子除以各自迹，即把归一化输出写成乘积密度矩阵的凸组合。零输入输出为零。空词没有经过这些分支，作用仍为 $\operatorname{Id}_A\otimes\operatorname{Id}$；以上非空公式不用于推断空词可分。
+
+再回到指定初态。$Q_\varnothing=I_2/2$；分支公式按长度归纳给 $v_{wb}=M_bv_w$ 及 $Q_w=\operatorname{diag}(v_w)$。$v_\varnothing$ 两分量严格为正，而 $M_b$ 的每项严格为正，所以所有有限词的两分量都为正，后验及其对数赔率均有定义。又
+$$
+Z_{wb}=c_{b0}(v_w)_0+c_{b1}(v_w)_1,
+\qquad pZ_w\le Z_{wb}\le(1-p)Z_w,
+\qquad Z_{w0}+Z_{w1}=Z_w.
+$$
+由 $Z_\varnothing=1$ 归纳，得到 $Z_w\ge p^{|w|}$ 和各固定长度的概率总和为一，包括长度零。除以 $Z_w$ 得条件报告权重；对 $b=0$ 即为 $f(q_w)$。旧位在看到 $b$ 后的条件质量为 $\widetilde q$，再按 $P$ 翻转给 $q'=r+\eta\widetilde q$。由于 $0<\widetilde q<1$，每次非空更新后 $r<q'<1-r$。相反次序使用 $\operatorname{diag}(c_{b0},c_{b1})P$；例如输入 $E_0$ 时本仪器报告零的概率是 $p$，反序为 $p+(1-2p)r>p$。两者在均匀初态上的首报告权重都为 $1/2$，不能据此认同递推。
+
+发射一步把赔率乘以 $c_{b1}/c_{b0}$，其对数增加 $(-1)^b\lambda$；翻转一步把旧赔率 $e^x$ 变为 $[r+(1-r)e^x]/[(1-r)+re^x]$，遂得 $\ell_{wb}=F_b(\ell_w)$。将 $G(-x)$ 的分子、分母同时乘以 $e^x$，得
+$$
+G(-x)=\log\frac{re^x+1-r}{(1-r)e^x+r}=-G(x),\qquad G(0)=0,
+$$
+$$
+\lim_{x\to+\infty}G(x)=B,\qquad
+\lim_{x\to-\infty}G(x)=-B.
+$$
+直接对两项对数求导：
+$$
+G'(x)=\frac{(1-r)e^x}{r+(1-r)e^x}
+-\frac{re^x}{(1-r)+re^x}
+=\frac{\eta e^x}{(r+(1-r)e^x)((1-r)+re^x)}.
+$$
+分母除以 $e^x$ 恰为
+$$
+r(1-r)(e^x+e^{-x})+r^2+(1-r)^2
+=1+r(1-r)(e^x+e^{-x}-2)\ge1,
+$$
+因为 $e^x+e^{-x}-2=(e^{x/2}-e^{-x/2})^2\ge0$，等号仅在 $x=0$。因此 $0<G'(x)\le\eta<1$，且 $G'(0)=\eta$。严格递增性、连续性与上述两端极限共同给出值域恰为 $(-B,B)$。每个平移后的 $F_b$ 都具有同一个全局 Lipschitz 常数 $\eta$。若 $u=d_1\cdots d_m$，逐次对 $F_{d_t}$ 用均值定理，归纳得
+$$
+|F_{d_t}\cdots F_{d_1}(x)-F_{d_t}\cdots F_{d_1}(y)|
+\le\eta^t|x-y|\qquad(0\le t\le m).
+$$
+$t=0$ 是恒等式。这证明的是任意共同词的复合收缩，不把不同报告的更新当作一个映射的幂。
+
+这一常数也与经典正核理论精确一致。对严格正二向量，Hilbert 距离是
+$$
+d_{\mathrm H}(u,v)=\log\frac{\max_i u_i/v_i}{\min_i u_i/v_i}
+=\left|\log\frac{u_1}{u_0}-\log\frac{v_1}{v_0}\right|.
+$$
+正对角乘法同时消去比值中的相同因子，故为等距映射。$P$ 的输出对数赔率为 $G$，其值域给射影直径的上确界 $2B$；具体交比也给
+$$
+\max_{i,i',j,j'}\frac{P_{ji}P_{j'i'}}{P_{ji'}P_{j'i}}
+=\frac{(1-r)^2}{r^2}=e^{2B},
+$$
+因为这些比值只可能为 $1$、$(1-r)^2/r^2$ 或其倒数。正核的 Birkhoff 系数公式由下列 Atar–Zeitouni 式(9)–(12)及 Le Gland–Oudjane 最终版引理3.8给出；代入即为
+$$
+\tanh\frac{2B}{4}=\frac{e^B-1}{e^B+1}
+=\frac{(1-r)/r-1}{(1-r)/r+1}=1-2r=\eta.
+$$
+上面的直接导数证明同时给出本例的全局界及其在零点的极限斜率，无需另加未经证明的一般收缩步骤。
+
+对观察者的符号递推归纳：若 $n<k$，向整个已存历史追加一个符号后长度仍不超过 $k$；若 $n\ge k$，向最后 $k$ 个符号追加后再取尾，所得正是新历史的最后 $k$ 个符号。$k=0$ 时每一步都为空。因此 $s(w)=w$ 当 $|w|\le k$，否则 $s(w)=\operatorname{tail}_k(w)$。不同长度的词是不交的状态，计数为所列几何和，且每个状态可由其同名报告词达到。短词、空词和填充长度均已计入；固定的 $T_0,T_1,h_k,R_k,a_k$ 不读取额外动态记忆。
+
+当 $n\le k$，同一初值和完整词给 $\widehat q_w=q_w$。当 $n>k$，写 $w=tu$、$|u|=k$、$|t|\ge1$。由 $G$ 的值域，$|\ell_t|<B$；表沿同一 $u$ 从零重新计算，故
+$$
+|\ell_w-F_u(0)|=|F_u(\ell_t)-F_u(0)|
+\le\eta^k|\ell_t|\le B\eta^k.
+$$
+此式包括 $k=0$ 的恒等复合。$\sigma'(x)=e^x/(1+e^x)^2\le1/4$，因为 $(1+e^x)^2-4e^x=(e^x-1)^2\ge0$。均值定理及概率差至多一给 $|q_w-\widehat q_w|\le E_k$。两个对角态之差的特征值为 $\pm(q_w-\widehat q_w)$，所以迹距离恰为该绝对差。二元报告 TV 也恰为零报告概率差，再用 $f$ 的斜率得 $(1-2p)E_k$。此界还蕴含较松的 $\min(1,(1-2p)B\eta^k/4)$，不混淆两种截断。若 $C\le\varepsilon$，所选 $k=0$ 已有 $C\eta^k\le\varepsilon$；否则所选整数满足 $k(-\log\eta)\ge\log(C/\varepsilon)$，指数化即得同一不等式。对端点换用 $C=B/4$。舍入后的界用一次三角不等式，更新仍只在符号状态上进行，故不存在逐步后验舍入项。对有理 $p,r$，从 $1/2$ 开始，每步概率递推仅用有理数加乘和严格正分母的除法；有限多词因而给有理有限表。
+
+还可在同一证明内比较一次端点替换后的完整未来。对固定整数 $H\ge0$，明确取原仪器的报告及终端端点通道
+$$
+\mathcal C_H(X)=\sum_{u\in\{0,1\}^H}|u\rangle\langle u|\otimes\phi_u(X).
+$$
+它保留每一个未来报告旗标和一个终端量子端点；若指定一次终端 POVM 查询，就对这个端点应用同一测量通道，所有未来旗标仍保留。以下两输入使用同一个 $\mathcal C_H$（有查询时也使用同一个复合通道）。每支完全正且总仪器保迹，按 $H$ 归纳有 $\sum_{|u|=H}\operatorname{Tr}\phi_u(X)=\operatorname{Tr}X$，所以 $\mathcal C_H$ 完全正保迹。$H=0$ 时仅有空旗标，$\mathcal C_0$ 在端点上就是恒等。令 $A_i=\mathcal C_H(E_i)$，于是 $A_i\ge0$、$\operatorname{Tr}A_i=1$。线性性给
+$$
+\Omega_H(q):=\mathcal C_H(\rho(q))=(1-q)A_0+qA_1,
+$$
+$$
+D(\Omega_H(q_w),\Omega_H(\widehat q_w))
+=\frac{|q_w-\widehat q_w|}{2}\|A_1-A_0\|_1
+\le |q_w-\widehat q_w|\le E_k,
+$$
+其中 $\|A_1-A_0\|_1\le\|A_1\|_1+\|A_0\|_1=2$；加入指定终端查询时，其同一复合通道的两项输出仍正且迹一，论证不变。这只从两个指定端点态开始，不重构任意初始相关参考，也不由无条件界推出后选择不扩张。
+
+一次初始端点替换后精确继续，与每一步用后缀读出重新生成报告是不同操作。取 $p=1/3,r=1/4,k=0$，初始端点本来精确，但滚动恒定读出为 $1/2$，两步报告独立均匀。真实首报告零的概率为 $1/2$，其后验是 $1/4+(1/2)(2/3)=7/12$，下一零概率是 $1/3+(1/3)(7/12)=19/36$；故 $P(00)=19/72$。对称性及每个首报告概率为 $1/2$ 给出完整的两报告律（依次为 $00,01,10,11$）
+$$
+P_2=\frac1{72}(19,17,17,19),\qquad
+\widehat P_2=\frac1{72}(18,18,18,18).
+$$
+所以单个 $00$ 事件的概率差为 $|19/72-1/4|=1/72$，而整个两报告律的
+$$
+\operatorname{TV}(P_2,\widehat P_2)=\frac12\frac{1+1+1+1}{72}=\frac1{36}.
+$$
+若只在初始时替换同一个 $I_2/2$ 再按原仪器精确继续，两输出则完全相同。对本模型的指定共同未来词另用已证复合收缩，还可把上面的对数赔率误差界乘以 $\eta^H$；这项条件更新事实来自显式递推，而非无条件迹距离界。
+
+最后证明无限精确区分。令 $a_0=0$、$a_{n+1}=F_0(a_n)$。由 $\lambda>0$、$G(0)=0$ 和严格递增性，$a_1=G(\lambda)>a_0$。若 $n\ge1$ 且 $a_n>a_{n-1}$，严格递增的 $F_0$ 给
+$$
+a_{n+1}=F_0(a_n)>F_0(a_{n-1})=a_n.
+$$
+从而对所有有限 $n$ 严格递增；不需要假设某个轨道区间上 $F_0(x)-x>0$。虽然 $0\le a_n<B$，有界性不会造成有限时重复。$\sigma$ 和 $f$ 都严格递增，所以 $0^n$ 的下一报告律 $f(\sigma(a_n))$ 两两不同，且每个词的概率至少为 $p^n>0$。若观察者只有有限状态，取比状态数多的这些前缀，必有两个不同长度的零词落在同一状态；固定读出在两处相同，与真实下一报告律不同矛盾。完整未来预测等价要求每个有限未来词概率相同，特别要求下一报告律相同，故这些前缀也属于两两不同的完整未来类。此处只需商的无限性，不把有混合时的有序词商识别为第152节的整数计数商。证毕。
+
+本命题的 Kraus、Born 与正概率条件化约定使用本量子卷假设1.2及[《情境时空算术·机器学习》定义20.5](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)；分支迹与效应 Born 权重的通式见既有 [`finite_kraus_instrument_born_marginal`](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean)，此处取单一设置、二元报告和四项 Kraus 指标。旧位发射后的 Bayes 乘权及归一化使用 ML 定理30.3证明中的一步公式；该定理的固定假设标签并非本节会翻转的隐藏位，混合步骤已在本节单独推导。共同词的几何误差传播对应 ML 定义21.1与定理21.2中 $L=\eta$、每步闭合及求值误差为零的情形；ML 定理21.6在其有限载体、联合核误差与共同策略假设下给出完整记录累计界 $1-(1-\varepsilon)^H$，命题21.7说明终端状态收缩不能消去已经写入的记录差异，只用于上述滚动生成的边界区分，不充当后验或 Kraus 定理。一次端点替换的正保迹传播是本量子卷定理50.4证明所用数据处理原则的具体两端点情形，已由正性、线性与迹范数直接算出。本量子卷命题124.10给出的静态任务满足 $e_k=\tfrac2{15}4^{-k}>0$ 且 $e_k\to0$，只用于区分任意精度的有限表示与精确有限表示，不作为本节动态收缩或下界的前提。
+
+正核工具的文献来源为 R. Atar、O. Zeitouni，*Exponential stability for nonlinear filtering*，*Annales de l'Institut Henri Poincaré, Probabilités et Statistiques* 33(6) (1997), 697–725，[原刊扫描](https://www.numdam.org/item/AIHPB_1997__33_6_697_0.pdf)，印刷页703–704式(9)–(12)分别给出 Hilbert 度量、Birkhoff 系数、核表示与交比直径；F. Le Gland、N. Oudjane，*Stability and uniform approximation of nonlinear filters using the Hilbert metric and application to particle filters*，*The Annals of Applied Probability* 14(1) (2004), 144–187，[DOI:10.1214/aoap/1075828050](https://doi.org/10.1214/aoap/1075828050)，[最终刊版作者 PDF](https://www.irisa.fr/aspi/legland/pub/legland04a.pdf)，其中引理3.8、式(11)，印刷页152–153，给出 $\tau(K)=\tanh(H(K)/4)$；这里的编号专指最终刊版。有限窗口方法参见 A. D. Kara、S. Yüksel，*Near Optimality of Finite Memory Feedback Policies in Partially Observed Markov Decision Processes*，*Journal of Machine Learning Research* 23(11) (2022), 1–46，[期刊页](https://jmlr.org/papers/v23/20-1152.html)、[论文](https://jmlr.org/papers/volume23/20-1152/20-1152.pdf)，第3节第10–12页以固定重启先验及有限观察、动作窗口构造有限信念集合，第2.2节定理5第7页及第12页讨论使用期望滤波误差而非对所有观察实现的一致误差。本节的全历史界来自上述具体正二态核的逐词证明，不把该文的期望结论提升为一致结论；Hilbert 遗忘及有限窗口方法均为既有工具，不附加优先性主张。
+

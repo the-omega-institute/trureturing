@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b1cc23441d6acdf5980a5e52e4654ded280d60d0609c0834129ed58627a608e
+  normalized_sha256: sha256:1b1cc23441d6acdf5980a5e52e4654ded280d60d0609c0834129ed58627a608e
+cas_ref: sha256:1b1cc23441d6acdf5980a5e52e4654ded280d60d0609c0834129ed58627a608e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶是章节说明、研究范围或基准报告规范，只指定讨论与报告事项，没有独立数学命题需要证明，按纯叙述条目交由现有结算器处理。
+    previous_atom_id: 1d3023af13632349b16208094d9b9b04bc80a035649ff0acdce45f85cfa90b10
+    next_atom_id: b3748b14215147fc0d49059e18cc2c70b6d98de58f1363711d103ed4d7a471ca

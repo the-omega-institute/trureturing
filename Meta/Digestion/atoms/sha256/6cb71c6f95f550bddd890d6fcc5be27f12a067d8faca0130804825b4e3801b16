@@ -1,0 +1,68 @@
+**证明。** 对树作结构归纳。叶节点由定义即
+$$
+\operatorname{Law}(Y_\ell)=m_{a_\ell}=\mathcal L\delta_{a_\ell},
+$$
+且 $\rho(Y_\ell)=a_\ell$ 几乎处处。
+
+设结论对两个子节点 $r,s$ 成立。因两子树依赖于互不相交的叶集合，而所有叶独立，$Y_r,Y_s$ 独立。因此
+$$
+\operatorname{Law}(Y_r,Y_s)
+=(\mathcal L\nu_r)\otimes(\mathcal L\nu_s)
+=\int_{I^2}(m_a\otimes m_b)\,\nu_r(da)\nu_s(db).
+$$
+核 $(a,b)\mapsto m_a\otimes m_b$ 的 Borel 性可先在矩形集 $B_1\times B_2$ 上由
+$$
+(m_a\otimes m_b)(B_1\times B_2)=m_a(B_1)m_b(B_2)
+$$
+得到，再由 $\pi$-$\lambda$ 定理扩张到乘积 Borel $\sigma$-代数。它支持于
+$$
+\rho^{-1}(a)\times\rho^{-1}(b),
+$$
+故给出所述条件版本；几乎处处唯一性由 theorem 57.4 的同一可数生成代数论证或 Simmons Theorem 2.1 得到。
+
+若 $v$ 为加法节点，则由 $k$ 的定义和 Fubini，
+$$
+\operatorname{Law}(\rho(Y_r+Y_s))
+=\int_{I^2}k(a,b)\,\nu_r(da)\nu_s(db)
+=\nu_v.
+$$
+又对任意 $u\in U$，
+$$
+u(Y_r+Y_s)=uY_r+uY_s,
+$$
+而独立性与两边缘律的 $U$-不变性给出
+$$
+(uY_r,uY_s)\stackrel d=(Y_r,Y_s).
+$$
+故 $Y_r+Y_s$ 的律 $U$-不变；theorem 57.4 随即给出
+$$
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+
+若 $v$ 为乘法节点，则逐坐标
+$$
+v_p((Y_r)_p(Y_s)_p)=v_p((Y_r)_p)+v_p((Y_s)_p),
+$$
+其中含零时按 $\infty$ 吸收解释。因此
+$$
+\rho(Y_rY_s)=\rho(Y_r)\oplus\rho(Y_s).
+$$
+两标签独立，遂得
+$$
+\operatorname{Law}(\rho(Y_v))
+=\oplus_*(\nu_r\otimes\nu_s)=\nu_v.
+$$
+输出律亦不变，因为
+$$
+u(Y_rY_s)=(uY_r)Y_s
+$$
+且 $(uY_r,Y_s)\stackrel d=(Y_r,Y_s)$。再用 theorem 57.4 得代表律 $\mathcal L\nu_v$。若输入标签固定，写
+$$
+Y_r=u_1s(a),\qquad Y_s=u_2s(b),
+$$
+其中 $u_1,u_2$ 独立 Haar；于是
+$$
+Y_rY_s=(u_1u_2)s(a\oplus b).
+$$
+$u_1u_2$ 仍为 Haar，故条件代表律为 $m_{a\oplus b}$。Fritz §4 中 Markov 核的复合与乘积测度公式以及 Definition 2.1 中的 copy 区分了独立张量与同一输入的复制：https://arxiv.org/pdf/1908.07021 。证毕。
+

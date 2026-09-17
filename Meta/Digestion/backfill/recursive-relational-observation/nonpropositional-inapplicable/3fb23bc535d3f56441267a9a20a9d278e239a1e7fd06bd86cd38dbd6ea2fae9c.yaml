@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3fb23bc535d3f56441267a9a20a9d278e239a1e7fd06bd86cd38dbd6ea2fae9c
+  normalized_sha256: sha256:3fb23bc535d3f56441267a9a20a9d278e239a1e7fd06bd86cd38dbd6ea2fae9c
+cas_ref: sha256:3fb23bc535d3f56441267a9a20a9d278e239a1e7fd06bd86cd38dbd6ea2fae9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“put”与“The notation”引入有向短弧及最终从指定侧逼近的记号；未宣称该逼近与某个载体极限等价，定义未夹带后续网收敛定理，故本叶没有独立命题待证。
+    previous_atom_id: bf1bae2dabdacc46379545d8163b88f62eb1b549822c3ef898ba15cd7d102aae
+    next_atom_id: cba2ec1373ba749a96311013c438eebcbaa2fba7e1ef1c7f1cd9a3dfef62d1aa

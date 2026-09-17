@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a979f2106e444ad859566f09e6ce79c7da48c1e55ce0ae14ddf5ff9b6eca8e6
+  normalized_sha256: sha256:5a979f2106e444ad859566f09e6ce79c7da48c1e55ce0ae14ddf5ff9b6eca8e6
+cas_ref: sha256:5a979f2106e444ad859566f09e6ce79c7da48c1e55ce0ae14ddf5ff9b6eca8e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶“Lean 定理逐对证明了它与源语义”是对证明载体及结果性质的元层说明，没有另立对象层命题；距离等式在前一叶承担，这里也没有定义新算法或偷带额外正确性结论。
+    previous_atom_id: 70192c47403a324b46a5eb43eb53f397470c0b5d4ad2269cc88634af2be9a552
+    next_atom_id: ed24be80b69de29d455681cfec3b6406fbc02fed0a62ed197da1f583145ba444

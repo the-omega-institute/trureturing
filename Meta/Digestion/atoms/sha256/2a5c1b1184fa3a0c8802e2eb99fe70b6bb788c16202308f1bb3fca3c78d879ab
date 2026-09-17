@@ -1,0 +1,20 @@
+**定义 17.1（实二能级历史反馈协议）。** 固定有限阶段数 $N\ge1$ 和参数 $\beta_t\in[0,1]$，令
+
+$$
+a_t=\sqrt{1-\beta_t},\qquad b_t=\sqrt{\beta_t},
+\qquad s_0=1,\qquad s_k=\prod_{t=1}^k a_t.
+$$
+
+系统为 $S=\mathbb C^2$，指针投影为 $P_z=|z\rangle\langle z|$，$z\in\{0,1\}$。不设置可访问量子记忆。第 $t$ 步使用一个新鲜二能级记录，其单位条件向量为
+
+$$
+e_{t,0}=a_t|0\rangle+b_t|1\rangle,
+\qquad e_{t,1}=b_t|0\rangle+a_t|1\rangle.
+$$
+
+条件写入之后在记录的计算基上读取，实际仪器的两个 Kraus 算子是
+
+$$
+K_{t,z}=a_tP_z+b_tP_{1-z}.
+$$
+

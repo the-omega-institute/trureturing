@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:270c1fbd930ea0963dd99fd7861ac15aee4a01d66c07a01131e5ee511cede9bc
+  normalized_sha256: sha256:270c1fbd930ea0963dd99fd7861ac15aee4a01d66c07a01131e5ee511cede9bc
+cas_ref: sha256:270c1fbd930ea0963dd99fd7861ac15aee4a01d66c07a01131e5ee511cede9bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文说“记全局读数”并将它“与逐事件来源函数”区分，随后直接以有限事件求和定义来源位置的背景和选择电荷。它没有在本叶断言总和、边缘或代数性质，定义中不夹带结论；这些命题已经留在第二叶。
+    previous_atom_id: 28e6cd15262e6f458250cb71896a71d2c6d485d75fab2ab27c2d501c9866dfba
+    next_atom_id: ee0f4261b5792666f461fb72ea0dd3dc6dd58288f1a1cb2e650ddb26e737eefc

@@ -1,0 +1,12 @@
+**证明。** 取 $a=\boldsymbol0$。若 $p$ 为任一奇素数，要求一和 theorem 57.8 强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_p\ge1\}\bigr)=\frac1{p-1},
+$$
+其中 $\infty$ 也计入“$\ge1$”。要求二却因 $v_p(2X_p)=0$ 强迫同一概率等于 $0$，矛盾。若只观察 $p=2$，则要求一强迫
+$$
+K(\boldsymbol0,\boldsymbol0)
+\bigl(\{c:c_2\ge2\}\bigr)=\frac12,
+$$
+要求二强迫其为 $0$，同样矛盾。Fritz Definition 2.1 和 §4 将确定 copy 与独立乘积核严格区分：https://arxiv.org/pdf/1908.07021 。证毕。
+

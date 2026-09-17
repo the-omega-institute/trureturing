@@ -1,0 +1,12 @@
+### IP.11 All finite-precision periods and the full 5-adic closure
+
+Put $s_\ell=v_5(\ell^4-1)\ge1$. Then RP9 becomes
+
+$$
+v_5(B_{\ell,k+t}-B_{\ell,k})=
+\begin{cases}
+1,&t\text{ odd},\\
+1+s_\ell+v_5(t),&t\text{ even}.
+\end{cases}                                      \tag{RP10}
+$$
+

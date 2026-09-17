@@ -1,0 +1,31 @@
+**定理 7.3（闭关系像与中间代表提升保证严格交换）。** 假定 $R^0$ 在 $K_X\times K_Y$ 中闭、$S^0$ 在 $K_Y\times K_Z$ 中闭，并且以下条件至少一个成立：
+
+1. $\iota_Y$ 单射。
+2. $R$ 在完整中间观察纤维上饱和，即
+   $$
+   \forall x\in X\ \forall y_0,y_1\in Y,\quad
+   R(x,y_0)\land\iota_Y(y_0)=\iota_Y(y_1)\ \Longrightarrow\ R(x,y_1).
+   $$
+3. $S$ 在完整中间观察纤维上饱和，即
+   $$
+   \forall y_0,y_1\in Y\ \forall z\in Z,\quad
+   S(y_1,z)\land\iota_Y(y_0)=\iota_Y(y_1)\ \Longrightarrow\ S(y_0,z).
+   $$
+
+则
+
+$$
+W^0=\widehat W=T,\qquad C^0=\widehat C=P.
+$$
+
+若进一步 $\iota_X,\iota_Z$ 单射，则对每个指定实际端点 $x\in X$、$z\in Z$，
+
+$$
+\exists y\in Y,\ R(x,y)\land S(y,z)
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists b\in Q_n^Y,\quad
+(q_n^X(x),b)\in R_n\land(b,q_n^Z(z))\in S_n.
+$$
+
+一组充分拓扑假设是：$X,Y,Z$ 为紧致 Hausdorff 空间，各 $q_n^U$ 连续，$R,S$ 在原乘积空间中闭，且中间观察族分离 $Y$ 的点。若三个载体的观察族均分离点，则还得到指定实际端点的版本。
+

@@ -1,0 +1,13 @@
+**Theorem IP5.** If $\ell\ge7$, then every prime divisor of $B_{\ell,k}$
+has exact rank $\ell^{k+1}$, and its exponent in $B_{\ell,k}$ equals its
+initial depth $h_p$. These layers are pairwise coprime. Moreover,
+
+$$
+\chi(B_{\ell,k})=\chi(\ell),\qquad
+B_{\ell,k}\equiv\ell(-1)^{(\ell-1)/2}\pmod5.     \tag{IP5}
+$$
+
+Thus, if $\ell$ is inert, every layer contains an odd number of inert
+prime divisors having odd initial depth. In particular each layer
+supplies a new such prime; IP4 holds with $n=\ell^{k+1}$.
+

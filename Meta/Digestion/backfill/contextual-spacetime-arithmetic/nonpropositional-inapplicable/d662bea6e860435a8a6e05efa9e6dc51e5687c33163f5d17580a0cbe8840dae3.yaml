@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d662bea6e860435a8a6e05efa9e6dc51e5687c33163f5d17580a0cbe8840dae3
+  normalized_sha256: sha256:d662bea6e860435a8a6e05efa9e6dc51e5687c33163f5d17580a0cbe8840dae3
+cas_ref: sha256:d662bea6e860435a8a6e05efa9e6dc51e5687c33163f5d17580a0cbe8840dae3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此项定义全部丰富有理柯西序列、零差等价、逐项运算和常值嵌入，并说明精度指标的语义；没有声称算法可计算性或连续时空极限。
+    previous_atom_id: 60d8e9dd2edfbcfd4a665da02aaef0c39798a97b851e940e746f9d42dac702ec
+    next_atom_id: 72458f832ebe0d6bf0506a8367b6880a106513461d9e063ec1e6477c9b8b009c

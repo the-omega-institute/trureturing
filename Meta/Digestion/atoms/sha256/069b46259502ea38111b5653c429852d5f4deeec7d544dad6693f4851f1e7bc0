@@ -1,0 +1,6 @@
+**Proof.** RP7 makes $P'_a(0)$ a unit modulo five: 24, ell, and
+ell^2-1 are all units there. Polynomial subtraction factors as
+$P_a(x)-P_a(y)=(x-y)(P'_a(0)+5z)$ for some integer z, because each
+remaining divided-difference term has a factor x or y. The second
+factor is a unit at five, proving the equality.
+

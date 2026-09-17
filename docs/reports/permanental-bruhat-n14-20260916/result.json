@@ -1,0 +1,77 @@
+{
+  "schema": "permanental-bruhat-n14-experiment-v1",
+  "date": "2026-09-16",
+  "outcome": "finite_all_pass_conjecture_open",
+  "target": "Pan–Skandera–Wang Conjecture 7.8 / Pan thesis Conjecture 7.25",
+  "domain": {
+    "n": 14,
+    "description": "All permutations preserving the blocks {1,...,7} and {8,...,14}.",
+    "cardinality_formula": "7! * 7!",
+    "expected_inputs": 25401600,
+    "image": "The specific recursively defined source map f14."
+  },
+  "comparison": "For every input and every 1<=r,c<=14, the northwest rank of the input is at least the northwest rank of its image. Zero row/column ranks are identically zero.",
+  "counts": {
+    "source_controls_passed": 25,
+    "begun_inputs": 25401600,
+    "evaluated_inputs": 25401600,
+    "all_cells_passed_inputs": 25401600,
+    "evaluated_nonempty_northwest_cells": 4978713600,
+    "violations_found": 0
+  },
+  "completion": {
+    "stop_reason": "child_completed",
+    "exit_code": 0,
+    "signal": 0,
+    "child_reaped": true
+  },
+  "measurements": {
+    "wall_seconds": 2.972533,
+    "child_user_cpu_seconds": 2.861671,
+    "child_system_cpu_seconds": 0.001482,
+    "child_cpu_seconds": 2.863153,
+    "wait4_child_peak_rss_bytes": 1294336,
+    "sampled_child_peak_rss_bytes": 1294336,
+    "rss_samples": 30,
+    "static_workspace_bytes": 1116,
+    "fixed_shared_mapping_bytes": 4096,
+    "application_storage_bound_bytes": 131072
+  },
+  "limits": {
+    "cpu_soft_seconds": 1200,
+    "cpu_hard_seconds": 1200,
+    "configured_wall_seconds": 1500,
+    "effective_wall_seconds": 996.530484,
+    "wall_semantics": "The earlier of 1500 seconds and the caller-supplied absolute UTC stop time.",
+    "rss_sampling_interval_ms": 100,
+    "rss_watchdog_ceiling_bytes": 1073741824,
+    "rss_watchdog_is_hard_address_space_cap": false
+  },
+  "producer": {
+    "source_file": "checker.c",
+    "source_sha256": "66ad936d835fe17fcc616f9636b91c448931333d11cae774d2f0e27c8c58d405",
+    "controls_file": "source_tests.h",
+    "controls_sha256": "26c9002455b7531f4b5567848474c02875dea7b40dd50843d6060359854b1d0a",
+    "executed_binary_sha256": "6228a190a27bc71ccecf3820e446af60ae3d7129e71c9410fbe24967783e8a21",
+    "compiler": "Apple clang 21.0.0 (clang-2100.3.34.2)",
+    "target": "arm64-apple-darwin25.6.0",
+    "flags": [
+      "-std=c11",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Werror",
+      "-fstack-usage",
+      "-fno-omit-frame-pointer",
+      "-lproc"
+    ]
+  },
+  "limitations": [
+    "Finite experimental check, not a Lean kernel proof or an all-size theorem; the conjecture remains open.",
+    "No global novelty claim; bounded named-source literature scope.",
+    "RSS sampling can miss transient peaks and overshoot the threshold. Child RSS is distinct from static application-owned storage; runtime/library storage is excluded from the static bound.",
+    "The independent point evaluator is used in source controls and for a candidate, not redundantly on every successful input.",
+    "Timing and binary hashes describe the executed build; later builds need not reproduce timing or executable bytes."
+  ]
+}

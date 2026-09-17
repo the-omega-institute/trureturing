@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2d3ede31ce944eca99816aba6d0e2a1f1960f2c73e44c48f4eb14ff2bbf0fc1
+  normalized_sha256: sha256:c2d3ede31ce944eca99816aba6d0e2a1f1960f2c73e44c48f4eb14ff2bbf0fc1
+cas_ref: sha256:c2d3ede31ce944eca99816aba6d0e2a1f1960f2c73e44c48f4eb14ff2bbf0fc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Mathlib 的单坐标向量求和收敛定理给出趋于任意一次 lp 元素的有限和，各部分和有有限支撑，由闭包的极限判据得到原文有限支撑子空间稠密，仓内无冻结 GID。
+    previous_atom_id: 19e3f23a2ad7e56e555229f857b94aa0fd4a30a3b1244e12da3a51db4c8fa1cd
+    next_atom_id: c14223841f4b0e778e271f9c56a4fd43227f1d77844784b1cfef3e94e6b4d3b7

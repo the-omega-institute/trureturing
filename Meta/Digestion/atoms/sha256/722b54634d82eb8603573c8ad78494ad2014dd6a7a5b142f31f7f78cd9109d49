@@ -1,0 +1,10 @@
+### U.4. Complete prime-value classification for A250093
+
+The sequence OEIS A250093 is
+
+\[
+a(n)=\operatorname{core}(F_{n^2}),\qquad n\ge1.
+\]
+
+The externally stated conjecture asserts that its only prime values are 3 and 3001. The following gives the exact indices as well.
+

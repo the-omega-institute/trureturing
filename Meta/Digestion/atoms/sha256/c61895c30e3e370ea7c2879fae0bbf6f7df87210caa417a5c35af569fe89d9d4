@@ -1,0 +1,31 @@
+**Proof.** For every Borel $D$,
+$$
+\pi_\theta(D)=\mathbf1_D(s(\theta))
++\sum_{m\ge1}\mathbf1_{\{E_m\}}(\theta)p_m v_m(D).
+$$
+At each phase the sum has at most one nonzero term, so this is a Borel function. The variation evaluation is
+$$
+|\pi_\theta|(D)=\begin{cases}
+\mathbf1_D(k_\theta),&\theta\notin E,\\
+|p_m|\mathbf1_D(x_m^+)+|1-p_m|\mathbf1_D(x_m^-),&\theta=E_m.
+\end{cases}
+$$
+It is Borel for the same reason. Theorem 28.2 and theorem 28.4 therefore construct $L_t$ with the asserted bound and regularity.
+
+For any finite signed measure, finite partitions give
+$$
+\sum_{m\ge1}|\nu(\{E_m\})|\le\|\nu\|_{\mathrm{TV}}.
+$$
+Also $|p_m|\le C_t$ by theorem 28.2. Thus
+$$
+\sum_{m\ge1}\|p_m\nu(\{E_m\})v_m\|_{\mathrm{TV}}
+\le2C_t\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+The displayed correction series converges in $M(K)$. Absolute scalar domination permits integration of the preceding Borel formula term by term and proves that its sum is exactly $L_t\nu$. Since $s$ chooses the negative branch, evaluating the series on the two singleton sets gives the claimed atom formulas.
+
+Finally, every $\pi_\theta$ has mass one and is supported on $H^{-1}(\{\theta\})$. Hence for every Borel $B\subseteq\mathbb T$,
+$$
+\pi_\theta(H^{-1}(B))=\mathbf1_B(\theta).
+$$
+Integrating proves $H_\#L_t\nu=\nu$. The construction uses setwise integration, not a total-variation Bochner integral. QED.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ee72878cab7493ec0882a731b70db21f5767446b4edc6df77afc54fd86514a7
+  normalized_sha256: sha256:1ee72878cab7493ec0882a731b70db21f5767446b4edc6df77afc54fd86514a7
+cas_ref: sha256:1ee72878cab7493ec0882a731b70db21f5767446b4edc6df77afc54fd86514a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 新版明确称“量子接口的状态族模拟缺陷为”，随后仅给共同 CPTP 模拟的最坏历史迹距下确界；没有“因此”式推论，也不声称参考扩张控制，属于纯记号定义。
+    previous_atom_id: b5675cffe7fab33f2ed133f8e7cd143fbba700cd1957e3ff3b6e3ad90aa5b468
+    next_atom_id: ef9f1a52c8ab8206057d65c18bd3fa72151988771643e9ae3595f5d7bf10eef1

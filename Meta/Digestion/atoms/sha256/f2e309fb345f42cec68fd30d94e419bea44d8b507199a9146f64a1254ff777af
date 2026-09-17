@@ -1,0 +1,15 @@
+**定理 47.9（边界环上整数系数方程的局部—整体等价）。** 对任意 $d,s\in\mathbb N_0$ 及有限多个整数系数多项式
+$$
+P_1,\ldots,P_s\in\mathbb Z[X_1,\ldots,X_d],
+$$
+以下两个条件等价：
+$$
+\exists\bar r\in\widehat{\mathbb Z}^{\,d}\quad
+\bigwedge_{j=1}^s P_j(\bar r)=0,
+$$
+$$
+\forall m>1\ \exists\bar a_m\in(\mathbb Z/m\mathbb Z)^d\quad
+\bigwedge_{j=1}^s P_j(\bar a_m)=0.
+$$
+空方程组按真命题解释，零维元组空间按含空元组的单点空间解释。
+

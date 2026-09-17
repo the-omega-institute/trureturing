@@ -1,0 +1,16 @@
+**定理 7。** 若对某个 \(60\mid M_0\)，
+
+\[
+\sum_{r\in\mathcal R_1(M_0)}\frac1r<\infty,
+\tag{EMW-F1}
+\]
+
+则对每个 \(0<\eta<1\)，存在 \(M_0\mid M\)，使
+
+\[
+\underline d\{k\ge1:Mk\in\mathcal T\}\ge1-\eta.
+\tag{EMW-F2}
+\]
+
+特别地，\(\underline d(\mathcal T)>0\)。
+

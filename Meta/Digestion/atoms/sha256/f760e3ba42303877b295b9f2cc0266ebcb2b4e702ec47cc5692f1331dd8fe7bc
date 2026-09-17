@@ -1,0 +1,10 @@
+**定义 52.15（边缘乘积与分别逆算的支撑条件）。** 记
+$$
+\mathcal M=(1_I\boxplus1_I)\times(1_I\boxplus1_I)\times(1_I\boxplus1_I),
+$$
+以及
+$$
+\mathcal S=\{(A,B,C)\in\mathcal M:D\in A\boxplus B\boxplus C\}.
+$$
+这里 $\times$ 是集合的笛卡尔乘积，不是主理想乘法。$\mathcal M$ 中三个坐标的二元见证允许互不相关；$\mathcal S$ 另加入一个总和支撑条件，但其定义仍未要求三对和共享一个输入三元组。
+

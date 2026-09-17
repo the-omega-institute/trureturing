@@ -1,0 +1,4 @@
+**定义 440.1。** 全部集合在同一原集合论宇宙中取值。沿用第69–74条的有限自然数字 $\zeta(n)$、自然叶及原编码：
+$$
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,\qquad \operatorname{Enc}(x)=\begin{cases}\operatorname{NatZ}(x),&x\in\omega,\\\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega.\end{cases}
+$$

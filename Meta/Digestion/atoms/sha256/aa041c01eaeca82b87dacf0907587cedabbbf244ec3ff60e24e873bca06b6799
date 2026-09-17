@@ -1,0 +1,6 @@
+在该子类中区域线性目标的存在性分类为
+\[
+\forall B\subseteq K:\quad
+\bigl(\exists Q\subseteq\mathrm{Attr}_t\ \forall X\in\mathcal B:\ q(D_Q(X))=q(F_BX)\bigr)
+\ \Longleftrightarrow\ B=\varnothing.
+\]

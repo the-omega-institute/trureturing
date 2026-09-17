@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85d7d8203aac88d2777f2a4070b4bff83c03c9614ba0b1c377d2df252585ef8b
+  normalized_sha256: sha256:85d7d8203aac88d2777f2a4070b4bff83c03c9614ba0b1c377d2df252585ef8b
+cas_ref: sha256:85d7d8203aac88d2777f2a4070b4bff83c03c9614ba0b1c377d2df252585ef8b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义有理行的实水平和实际系数行除法，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 16beef4429df5a7c6451ff273861216e8dda67e94b36a05c918537e9efdab148
+    next_atom_id: 49fe7e93fe68196b789d1ba382c131d7379b3b32bc37a29bb5a97244ca25b115

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70d65275a001b0e4150180033e339b92a518ff0d3351b00abe160c41b6f527e7
+  normalized_sha256: sha256:70d65275a001b0e4150180033e339b92a518ff0d3351b00abe160c41b6f527e7
+cas_ref: sha256:70d65275a001b0e4150180033e339b92a518ff0d3351b00abe160c41b6f527e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句只定义两个卷积空间直和上的逐分量乘法与相加范数，交叉乘积的推论已另行拆出。
+    previous_atom_id: ccbbdabe10b23b134636034becdb641aaed335a92489d6da00cdf2818a1a45a5
+    next_atom_id: 2a0541c44215853497848995d6d866ff32cd10de301b30e3f63cbacdca18f03d

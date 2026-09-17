@@ -1,0 +1,49 @@
+**theorem 36.12 (Quadratic mixing time at every fixed accuracy).** For every $L\ge1$, $0<p<1$, and $0<\varepsilon<1$,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(\varepsilon)
+\le\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil
+\le\left(4096\varepsilon^{-2}+1\right)\frac{G_L^2}{p(1-p)}.
+$$
+In particular,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(1/4)
+\le65537\frac{G_L^2}{p(1-p)}.
+$$
+More explicitly, whenever
+$$
+np(1-p)\le\frac{G_L^2}{16384},
+$$
+one has both $e_{L,p}(n)>1$ and $D_{L,p}(n,Z(0))>1/4$.
+
+**Proof.** Write $Q=G_L$. First suppose $Q\ge16$ and $V\le Q^2/16384$, so $s\le Q/128$. Theorem 36.2 gives $\alpha^L\le\phi/Q$, and therefore
+$$
+(4s+1)\alpha^L
+\le\phi\left(\frac1{32}+\frac1Q\right)
+\le\frac{3\phi}{32}<\frac3{16}.
+$$
+Taking $t=2$ in Theorem 36.11 yields, for every initial point $x$,
+$$
+D_{L,p}(n,x)>2\left(\frac34-\frac3{16}\right)=\frac98.
+$$
+
+If $Q<16$, then $V<1/64$. The small-variance worst-start witness gives
+$$
+e_{L,p}(n)>2\alpha-\frac1{16}>1,
+$$
+because $\alpha^{L+1}\le\alpha^2=1-\alpha$. For the particular initial state $Z(0)$, the other small-variance bound gives
+$$
+D_{L,p}(n,Z(0))>2(1-\alpha)-\frac1{16}
+=2\beta-\frac1{16}>\frac14.
+$$
+All numerical comparisons follow from $\alpha=(\sqrt5-1)/2$. This covers every depth, including the smallest ones, and every variance satisfying the stated condition.
+
+Thus no integer $n\le G_L^2/(16384p(1-p))$ can meet any accuracy below one. This proves the strict lower bound for the first-passage time; no additive correction is needed.
+
+For the upper bound, take
+$$
+n=\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil.
+$$
+Then $\sqrt{np(1-p)}\ge64G_L/\varepsilon$, so Theorem 36.10 gives $e_{L,p}(n)\le\varepsilon$. This also proves finiteness of the mixing time. Finally, $G_L\ge2$ and $p(1-p)\le1/4$, so $G_L^2/(p(1-p))\ge16>1$. The ceiling is consequently bounded by the last expression in the theorem. Substitution of $\varepsilon=1/4$ gives $4096\varepsilon^{-2}+1=65537$. $\square$
+

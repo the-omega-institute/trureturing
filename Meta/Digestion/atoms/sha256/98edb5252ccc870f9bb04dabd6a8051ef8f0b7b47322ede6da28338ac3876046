@@ -1,0 +1,22 @@
+**定理 29.8（全部有符号原子分解与连续柱集检测）。** 任意 $\mu\in M(K)$ 唯一分解为
+$$
+\mu=\mu_c+\mu_a,\qquad \mu_c\in M_c(K),\qquad \mu_a=\sum_{a\in A_\mu}\mu(\{a\})\delta_a,
+$$
+其中
+$$
+A_\mu=\{a\in K:\mu(\{a\})\ne0\}
+$$
+至多可数，级数在总变差范数中绝对收敛，并且
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_c\|_{\mathrm{TV}}+\|\mu_a\|_{\mathrm{TV}},\qquad \|\mu_a\|_{\mathrm{TV}}=\sum_{a\in A_\mu}|\mu(\{a\})|.
+$$
+任意非零绝对可和原子测度 $\zeta$，都可由某个有限数字柱集的连续指示函数检测，即存在柱集 $U\subseteq K$ 使
+$$
+\mathbf1_U\in C(K),\qquad \langle\zeta,\mathbf1_U\rangle\ne0.
+$$
+特别，对任意绝对可和实序列 $(q_r)_{r\ge1}$，
+$$
+\left\|\sum_{r\ge1}q_rv_r\right\|_{\mathrm{TV}}=2\sum_{r\ge1}|q_r|,
+$$
+该和是正则有符号测度，且它对全部连续测试为零当且仅当每个 $q_r=0$。
+

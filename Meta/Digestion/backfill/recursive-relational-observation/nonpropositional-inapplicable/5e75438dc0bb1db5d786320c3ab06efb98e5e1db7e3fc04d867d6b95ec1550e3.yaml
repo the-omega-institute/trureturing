@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e75438dc0bb1db5d786320c3ab06efb98e5e1db7e3fc04d867d6b95ec1550e3
+  normalized_sha256: sha256:5e75438dc0bb1db5d786320c3ab06efb98e5e1db7e3fc04d867d6b95ec1550e3
+cas_ref: sha256:5e75438dc0bb1db5d786320c3ab06efb98e5e1db7e3fc04d867d6b95ec1550e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句只规定两个绝对可和空间及各自离散卷积的含义，首坐标消失的命题已另行拆出。
+    previous_atom_id: 99e9ce68fe61dd251cc7002db673bf4318a3b8c97a4678a0d55d9444a0fd7e03
+    next_atom_id: ccbbdabe10b23b134636034becdb641aaed335a92489d6da00cdf2818a1a45a5

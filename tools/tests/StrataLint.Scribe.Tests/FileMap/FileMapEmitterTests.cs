@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -80,7 +81,12 @@ public sealed class FileMapEmitterTests
         {
             var manifestPath = Path.Combine(root, FileMapLoader.RelativePath);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
-            repository.CopyTo(RepositoryRelativePath.Create(FileMapLoader.RelativePath), manifestPath);
+            var documents = FileMapDocuments.Resolve(
+                repository.ReadAllBytes(RepositoryRelativePath.Create(FileMapLoader.RelativePath)),
+                FileMapLoader.RelativePath,
+                path => repository.ReadAllBytes(RepositoryRelativePath.Create(path)));
+            foreach (var document in documents)
+                repository.CopyTo(RepositoryRelativePath.Create(document.Path), Path.Combine(root, document.Path));
             using var output = new StringWriter();
             using var error = new StringWriter();
 

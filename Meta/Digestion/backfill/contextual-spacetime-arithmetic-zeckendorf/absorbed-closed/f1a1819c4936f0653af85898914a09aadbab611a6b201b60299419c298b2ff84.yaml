@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:f1a1819c4936f0653af85898914a09aadbab611a6b201b60299419c298b2ff84
+  normalized_sha256: sha256:f1a1819c4936f0653af85898914a09aadbab611a6b201b60299419c298b2ff84
+cas_ref: sha256:f1a1819c4936f0653af85898914a09aadbab611a6b201b60299419c298b2ff84
+coverage_gids:
+  - gid: D5/S1/Digit/CarryStepConfluence.rawValue_reflTransGen
+    target_statement_id: sha256:255e2e41285ef9a49cddec71f2116088b6dcc627630fdce2ee70cc88528cdd90
+  - gid: D5/S1/Digit/Normalize.canonicalRaw_unique
+    target_statement_id: sha256:ffef2b78657d19d06f891f5f5160a8ca79aa96b6e08b2a9c3aca96b7aa52f5d9
+  - gid: D5/S1/Digit/Normalize.normalize_canonical
+    target_statement_id: sha256:c7ecbc805125d69e4800ec62f5cb899dbac15561334e1ffe47f738b5053733bd
+  - gid: D5/S1/Digit/Normalize.rawValue_normalize
+    target_statement_id: sha256:1b373b1dd34fc811be37c263466245d84c8870b77b31317cd489255a74aa4fa8
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.exists_tablePath_rowNormalize
+    target_statement_id: sha256:c02d6f80136fe51248040a952005e033f3dfe49eaee387b832e0194fa95215b9
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.tablePath_project
+    target_statement_id: sha256:f2ec5327de8756afee635434f2fb5317cc8e2cd8bed731c041c8e5f4a7ced140
+receipts:
+  unresolved_subitems: []

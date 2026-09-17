@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca37257a5aa94309273a20fb94abb80b40d23c979a24ea6fd892a05aaccb4c5d
+  normalized_sha256: sha256:ca37257a5aa94309273a20fb94abb80b40d23c979a24ea6fd892a05aaccb4c5d
+cas_ref: sha256:ca37257a5aa94309273a20fb94abb80b40d23c979a24ea6fd892a05aaccb4c5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: le_sInf_iff 在有限坐标 ENNReal 完备格上直接给向量是全部候选的下界当且仅当它不大于该集合的下确界，集合允许为空而无需补充前提，仓内无冻结 GID。
+    previous_atom_id: 0c6a68592ea3c5cb76016cbb57ffecb5c4823ce1b541ac2c9c809cb8aed8657b
+    next_atom_id: a4f61e3e86d9e60cd881758120b41a19ffc98071e4dbf86ad239d678a6d4837c
