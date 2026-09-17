@@ -20,6 +20,7 @@ internal sealed class InformationTemplateHistoryFixture : IDisposable, IInformat
     internal readonly Dictionary<string, string> Historical;
     internal int CandidateReads, HistoricalReads, Productions;
     internal bool FailProducer, TimeoutProducer;
+    internal Action? AfterCandidateRead;
     internal string? ProducerCwd;
     internal IReadOnlyList<string> ProducerArguments = [];
     internal RepositorySnapshot CandidateSnapshot => Decode(Candidate);
@@ -72,7 +73,13 @@ internal sealed class InformationTemplateHistoryFixture : IDisposable, IInformat
         : throw new FormatException("fixture base unavailable");
     public RawRepositorySnapshot ReadPredicate(string? revision) => Raw(Candidate.Where(p =>
         p.Key.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)).ToDictionary());
-    public RawRepositorySnapshot ReadCandidate() { CandidateReads++; return Raw(Candidate); }
+    public RawRepositorySnapshot ReadCandidate()
+    {
+        CandidateReads++;
+        var snapshot = Raw(Candidate);
+        AfterCandidateRead?.Invoke();
+        return snapshot;
+    }
     public RawRepositorySnapshot ReadHistorical(string revision)
     {
         HistoricalReads++;

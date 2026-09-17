@@ -8,6 +8,42 @@ namespace StrataLint.Tests;
 public sealed class InformationTemplateHistoryBoundaryTests
 {
     [Fact]
+    public void bundle_symlinks_cannot_validate_as_regular_members()
+    {
+        using var fixture = new InformationTemplateHistoryFixture();
+        fixture.SeedPlan();
+        Assert.True(fixture.Produce().Success);
+        var member = Path.Combine(fixture.Output, "history.json");
+        var target = Path.Combine(fixture.Scratch.Path, "metadata.json");
+        File.WriteAllBytes(target, File.ReadAllBytes(member));
+        File.Delete(member);
+        new FileInfo(member).CreateAsSymbolicLink(target);
+        Assert.False(fixture.Validate().Success);
+        File.Delete(member);
+        File.WriteAllBytes(member, File.ReadAllBytes(target));
+        var alias = Path.Combine(fixture.Scratch.Path, "alias");
+        Directory.CreateSymbolicLink(alias, fixture.Output);
+        Assert.False(fixture.Command("validate", "--plan", fixture.Plan, "--revision", fixture.Seed, "--bundle", alias).Success);
+    }
+
+    [Fact]
+    public void cache_hit_rechecks_producer_after_pair_lock()
+    {
+        using var fixture = new InformationTemplateHistoryFixture();
+        fixture.SeedPlan();
+        Assert.True(fixture.Produce().Success);
+        fixture.AfterCandidateRead = () =>
+        {
+            fixture.AfterCandidateRead = null;
+            fixture.Candidate["tools/StrataLint.Scribe/Fixture.cs"] += "edited after initial snapshot";
+        };
+        var result = fixture.Produce();
+        Assert.False(result.Success);
+        Assert.Contains("producer changed", result.Error);
+        Assert.Equal(1, fixture.Productions);
+    }
+
+    [Fact]
     public void producer_selection_is_independent_of_content_and_binds_entire_registered_runtime()
     {
         using var fixture = new InformationTemplateHistoryFixture();

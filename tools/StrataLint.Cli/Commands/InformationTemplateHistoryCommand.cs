@@ -124,6 +124,7 @@ internal static class InformationTemplateHistoryCommand
                     if (!Directory.Exists(directory)) continue;
                     try { InformationTemplateHistoryBundle.Validate(directory, producer, revision, material.Hybrid); }
                     catch (Exception ex) when (ArtifactError(ex)) { invalid = true; continue; }
+                    RequireUnchangedProducer();
                     InformationTemplateHistoryWorkspace.Publish(directory, outputDirectory);
                     return Result("hit", true);
                 }
@@ -151,8 +152,7 @@ internal static class InformationTemplateHistoryCommand
                         if (produced.ExitCode != 0) throw new IOException($"history inspector exit={produced.ExitCode}\n" + producerOutput);
                     }
                     // A concurrent source edit cannot be published under the old P.
-                    if (new InformationTemplateHistoryInputs(repository.ReadCandidate()).Producer != producer)
-                        throw new IOException("history producer changed during production");
+                    RequireUnchangedProducer();
                     InformationTemplateHistoryBundle.Seal(staging, producer, revision, material.Hybrid, fresh.Candidate,
                         options.GetValueOrDefault("--run", "local"));
                     InformationTemplateHistoryBundle.Validate(staging, producer, revision, material.Hybrid);
@@ -170,6 +170,12 @@ internal static class InformationTemplateHistoryCommand
                 }
             }
             finally { if (acquired) mutex.ReleaseMutex(); }
+
+            void RequireUnchangedProducer()
+            {
+                if (new InformationTemplateHistoryInputs(repository.ReadCandidate()).Producer != producer)
+                    throw new IOException("history producer changed during production");
+            }
 
             CommandResult Result(string status, bool hit, string detail = "", string cacheSave = "not-required") => new(true, detail + JsonSerializer.Serialize(new
             {

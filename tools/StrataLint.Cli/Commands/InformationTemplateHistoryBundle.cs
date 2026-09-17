@@ -152,7 +152,13 @@ internal static class InformationTemplateHistoryBundle
 
     internal static void RequireFile(string path)
     {
-        var full = LeanCacheGuard.PhysicalPath(path);
+        var full = Path.GetFullPath(path);
+        // Normalize only the host's temporary root (e.g. macOS /var). Resolving
+        // the entire member would hide links inside the supplied bundle.
+        var temporaryRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetTempPath()))
+            + Path.DirectorySeparatorChar;
+        if (full.StartsWith(temporaryRoot, StringComparison.Ordinal))
+            full = Path.Combine(LeanCacheGuard.PhysicalPath(temporaryRoot), full[temporaryRoot.Length..]);
         for (var parent = new FileInfo(full).Directory; parent is not null; parent = parent.Parent)
             if (parent.LinkTarget is not null) throw new IOException("history bundle traverses a symlink: " + path);
         var info = new FileInfo(full);
