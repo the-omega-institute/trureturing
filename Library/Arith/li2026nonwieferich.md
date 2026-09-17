@@ -729,3 +729,299 @@ specialization and refinement for the actual constrained golden norm
 orbits. No first-ever claim for stationary phase, Gauss evaluation, or
 conic parametrization is made, and no separately posed external open
 problem is counted as newly solved.
+
+## 7. No cancellation between the actual slices: rank, all precisions and onset
+
+This section resolves the remaining possible complete cancellation in ES4.
+It also treats the earlier precisions m<2h, to which ES4 did not apply.
+Keep p>5 prime, the ORIGINAL golden unit phi, its order tau modulo p,
+and its exact initial depth h=v_p(F_(p-(5/p))). Put rho=r(p), the least
+positive Fibonacci zero index. Write M=p^m and e_M(t)=exp(2*pi*i*t/M).
+All frequencies in this section are for the actual two-coordinate orbit
+H_m, with its one shared exponent, rather than a product of local images.
+Let
+
+$$T_m(\xi)=\sum_{z\in H_m}e_{p^m}(\xi\cdot z),\qquad
+\widehat\nu_m(\xi)=T_m(\xi)/\#H_m.$$
+
+### 7.1 The scalar stabilizer has exactly tau/rho elements
+
+**Lemma RS1.** For every m>=1, the scalar subgroup
+
+$$U_m=H_m\cap(\mathbb Z/p^m\mathbb Z)^\times$$
+
+has order kappa=tau/rho in {1,2,4}. Here scalars are embedded as (a,0)
+in the actual golden algebra. If kappa=2, U_m={1,-1}; if kappa=4, it is
+{1,-1,i,-i} for a root i^2=-1 modulo p^m. In the latter case p=1 modulo4.
+For every 1<=d<=h, the tau points of H_d give exactly rho distinct
+projective directions, and each direction contains kappa of those points.
+The same statement holds after applying the invertible matrix J.
+
+**Proof.** The scalar condition on phi^n is precisely F_n=0 modulo p^m,
+by its original Fibonacci coordinates. The rank and valuation formulas give
+its least positive index as rho*p^max(0,m-h). The order from GD1 is
+ tau*p^max(0,m-h). The kernel of the map from this cyclic group to its
+projective orbit therefore has size tau/rho. A scalar in H_m has norm
+1 or -1, so its fourth power is one. Over Z/p^m, four is a unit and the
+fourth roots of unity lift uniquely from the field. Their group is cyclic
+of order dividing four. This proves the possibilities and the descriptions.
+Reduction from U_m to U_d is bijective: it is injective on these prime-to-p
+torsion elements and both groups have the displayed cardinality. Two unit
+points of H_d lie on the same scalar ray precisely when their quotient is
+in U_d. Hence there are tau/kappa=rho rays, each of size kappa.
+
+This keeps the residue order tau and the Fibonacci rank rho separate.
+Examples are (p,rho,tau,kappa)=(7,8,16,2),(11,10,10,1),(13,7,28,4).
+The claim that -1 always belongs to H_m would be false in the second example.
+
+### 7.2 The two and four scalar phases cannot sum to zero
+
+For A a unit modulo an odd integer M>=3 and sigma in {1,-1}, set
+
+$$D_\sigma(A)=e_M(A)+\sigma e_M(-A).$$
+
+If i^2=-1 modulo M, also set
+
+$$C_\sigma(A,i)=e_M(A)+e_M(-A)
+ +\sigma\bigl(e_M(iA)+e_M(-iA)\bigr).$$
+
+**Theorem RS2.** Every displayed D_sigma and C_sigma is nonzero.
+
+**Proof.** Put x=e_M(A) and y=e_M(iA). A character of an odd cyclic
+additive group never takes the value -1: its M-th power is one, whereas
+(-1)^M=-1. Thus D_+(A)=0 would give x^2=-1, impossible. The equation
+D_-(A)=0 would give e_M(2A)=1, hence 2A=0 modulo M, impossible for a unit A.
+For the four-term sums, the exact factorizations are
+
+$$xyC_+=(x+y)(xy+1),\qquad
+xyC_-=(x-y)(xy-1). \tag{RS1}$$
+
+In the plus case, x=-y would give e_M((1-i)A)=-1, and xy=-1 would give
+ e_M((1+i)A)=-1; both are impossible. In the minus case, x=y or xy=1
+would imply i=1 or i=-1, respectively, by faithfulness and the unit A.
+Either contradicts i^2=-1 in an odd ring of size at least three. This
+proves the two signs without a numerical lower-bound approximation.
+
+The companion Lean source proves this statement for the actual canonical
+`ZMod.stdAddChar`, every odd modulus M>=3, and both signs. The proof derives
+all exclusions from the modulus, its faithful character and the displayed
+inverse of A. It does not assume the desired noncancellation statement.
+
+### 7.3 The complete primitive-frequency support, at every precision
+
+**Theorem RS3.** If m<=h, then T_m(xi) is nonzero for EVERY frequency,
+including nonprimitive frequencies. If m>h, put
+
+$$d_m=\min(h,m-h).$$
+
+For a primitive frequency xi, the following are equivalent:
+
+$$\boxed{
+T_m(\xi)\ne0\quad\Longleftrightarrow\quad
+\xi\bmod p^{d_m}\in
+\{\lambda Jz:\lambda\in(\mathbb Z/p^{d_m})^\times,\ z\in H_{d_m}\}.
+} \tag{RS2}$$
+
+Every surviving frequency has exactly kappa contributing slices. Therefore
+
+$$\boxed{
+\#\{\xi\text{ primitive}:T_m(\xi)\ne0\}
+=\rho(p-1)p^{2m-d_m-1}\qquad(m>h).
+} \tag{RS3}$$
+
+**Proof before activation.** If m<=h, GD1 gives #H_m=tau, prime to p.
+If a sum of tau p^m-th roots of unity vanished, its integer coefficient
+polynomial would be divisible by Phi_(p^m). Evaluating at one would give
+p|tau, since Phi_(p^m)(1)=p. This is impossible. Division by the monic
+cyclotomic polynomial is in Z[X], so the weight divisibility follows
+without assuming an independence model for the summands.
+
+**Proof in the linear regime h<m<=2h.** Choose an actual center z in any
+of the residue slices of H_m. In the chart ES1, t is divisible by p^h,
+so t^2=0 modulo p^m. The ENTIRE slice is therefore z+2tV(z). Additive
+character orthogonality makes its sum zero unless xi dot V(z)=0 modulo
+p^(m-h). Since (z,V(z)) is a basis with unit determinant -2Q(z), that
+condition is exactly xi=lambda Jz modulo p^(m-h), with lambda a unit.
+If it holds, the slice sum is p^(m-h)e_M(xi dot z).
+
+By RS1, each active ray contains exactly kappa slice centers modulo p^h:
+reduction to p^(m-h) has the same scalar kernel. Choose the other actual
+centers to be uz, u in U_m. All their phases are uA, where A=xi dot z
+is a unit because A=2lambda Q(z) modulo p. Their total is
+
+$$T_m(\xi)=p^{m-h}\sum_{u\in U_m}e_M(uA). \tag{RS4}$$
+
+For kappa=1 it is a single nonzero term; for kappa=2 or4 it is one of
+the plus-sign sums in RS2. Thus it cannot vanish.
+
+**Proof in the curved regime m>=2h.** ES2 selects the unique normal
+point in each active slice. If (c,lambda,z*) is one such triple, all
+other selected points are precisely uz*, with u in U_m. Indeed equal
+frequency normals imply the two points are scalar multiples, and both
+points lie in the actual group H_m. The other triples have norm u^2c
+and normal multiplier lambda/u, so their phases are uA, A=2c lambda.
+At even precision the full sum is
+
+$$T_m(\xi)=p^{m/2}\sum_{u\in U_m}e_M(uA). \tag{RS5}$$
+
+At odd precision it is
+
+$$T_m(\xi)=p^{(m-1)/2}G_p(5c\lambda)
+ \sum_{u\in U_m}\left(\frac up\right)e_M(uA). \tag{RS6}$$
+
+The elementary identity G_p(au)=(u/p)G_p(a) follows by counting square
+roots in F_p, and |G_p(a)|^2=p as already proved in ES2. For kappa=2,
+the last sum is D_sigma with sigma=(-1/p). For kappa=4, (-1/p)=1,
+and it is C_sigma with sigma=(i/p). RS2 again excludes complete cancellation.
+The formulas agree with the linear regime at m=2h.
+
+Finally H_(d_m) has rho distinct normal rays. Each ray contains
+(p-1)p^(d_m-1) primitive vectors modulo p^(d_m), and each such vector
+has p^(2(m-d_m)) frequency lifts modulo p^m. These rays are disjoint,
+proving RS3. A nonprimitive frequency reduces, with equal group fibres,
+to the same formula at its actual conductor. Thus all frequencies at
+all precisions are determined, not only those of conductor p^m.
+
+**Corollary.** At every m>=2h the improved whole-orbit bound is
+
+$$|\widehat\nu_m(\xi)|\le\frac1\rho p^{h-m/2}.$$
+
+There are exactly kappa terms of magnitude p^(m/2) in the unnormalized
+sum, and kappa/tau=1/rho. In the linear range h<m<=2h the analogous
+bound is 1/rho. Applying the interval Fourier argument of ES11 therefore
+replaces its prefactor C_p/tau by 1/rho, with the same conductor condition.
+No lower bound for the magnitude is inferred merely from nonvanishing.
+
+### 7.4 The first spectral zero and the original modulus p squared
+
+Let j_0 be the least precision at which SOME Fourier coefficient of
+H_m is zero, and put j_0=infinity if no such precision exists.
+
+**Corollary RS4.** The exact possibilities are
+
+$$\boxed{
+ j_0=
+ \begin{cases}
+ h+1,&\rho<p+1,\\
+ \infty,&\rho=p+1,\ h=1,\\
+ h+2,&\rho=p+1,\ h\ge2.
+ \end{cases}} \tag{RS7}$$
+
+In particular the TOTAL number of zeros at modulus p^2 is
+
+$$\boxed{
+Z_2=
+\begin{cases}
+(p-1)p^2(p+1-\rho),&h=1,\\
+0,&h\ge2.
+\end{cases}} \tag{RS8}$$
+
+**Proof.** For m<=h there are no zeros. At m=h+1, d_m=1, so the surviving
+fraction among primitive frequencies is rho/(p+1). It is below one
+exactly when rho<p+1. If rho=p+1 and h=1, d_m=1 at EVERY later level,
+so no primitive coefficient ever vanishes, nor does any lower-conductor
+coefficient. If rho=p+1 and h>=2, the next level m=h+2 has d_m=2,
+with surviving fraction 1/p, so zeros first appear there. At modulus
+p^2, imprimitive frequencies have conductor p or one and never vanish;
+subtract the RS3 support at h=1 from p^4-p^2 to obtain RS8.
+
+For every split prime, rho<=p-1<p+1. Hence WSS is equivalent in that
+case to a zero-free full transform at modulus p^2. The same statement
+holds for inert primes of nonmaximal rank. It fails without the rank
+qualification: p=7 has rho=8=p+1 and h=1, yet its transforms are zero-free
+at EVERY precision. This is a genuine non-WSS example, not a hypothetical
+exception. For p=11, rho=10 and h=1, RS8 gives exactly2420 zeros at p^2.
+
+These are exact spectral reformulations, not independent prime-family
+constraints. Evaluating the actual orbit may already require the same
+initial lifting information as the Fibonacci quotient. The theorem neither
+forces a spectral zero nor prohibits one independently of that arithmetic.
+It supplies no new integer WSS example or unbounded exclusion family.
+
+### 7.5 Exact second and fourth moments above the curvature threshold
+
+For kappa=1,2,4 put respectively
+
+$$(E_\kappa,C_\kappa)=(1,1),(6,3),(36,9),\qquad
+ C_\kappa=E_\kappa/\kappa.$$
+
+**Theorem RS5.** For m>=2h, the primitive-frequency moments are
+
+$$\boxed{
+\sum_{\xi\text{ primitive}}|\widehat\nu_m(\xi)|^2
+=\frac{(p-1)p^{m+h-1}}{\tau},\qquad
+\sum_{\xi\text{ primitive}}|\widehat\nu_m(\xi)|^4
+=\frac{C_\kappa(p-1)p^{3h-1}}{\tau^3}.
+} \tag{RS9}$$
+
+In particular the fourth moment is independent of m throughout this range.
+If E(H_m) counts ordered quadruples z1+z2=z3+z4 in the actual orbit, then
+
+$$\boxed{
+E(H_m)-p^2E(H_{m-1})
+=C_\kappa(p-1)\tau p^{2m-h-1}\qquad(m\ge2h).
+} \tag{RS10}$$
+
+**Proof.** The stationary parameterization (z*,lambda) with z* in H_m
+and lambda a unit counts each active frequency kappa times. Holding z*
+fixed, A=2Q(z*)lambda ranges over all units modulo M. Thus the moment
+problem reduces exactly to the unit average of the periods in RS5-RS6.
+For a difference v the unit-character sum is phi(M) if v=0 modulo M,
+-p^(m-1) if v is zero modulo p^(m-1) but not M, and zero otherwise.
+This follows by subtracting the sum over multiples of p from the full
+additive-character sum.
+
+For U of size kappa, distinct u in U remain distinct modulo p. Hence
+in the second moment only u=v survives, giving kappa*phi(M). In the
+fourth moment, equal pair sums give E_kappa*phi(M). There are no hidden
+congruence collisions for p>5: for {1,-1,i,-i}, a nontrivial pair-sum
+difference is A+B i with integer |A|+|B|<=4 and A+B even. If it were
+zero modulo p, p would divide A^2+B^2, whose possible nonzero values
+in this parity/range are2,4,8,10,16. Only two and five can occur as
+prime divisors. Actual zero pair-sum relations are four zero-sum ordered
+pairs, four doubled points, and four mixed sums of multiplicity two,
+giving16+4+16=36. For {1,-1} the count is6, and for {1} it is1.
+
+The quadratic-character signs in RS6 do not change these energy counts:
+unordered equal pairs contribute one, and all zero-sum pairs have the
+same sign product (-1/p). The common nonzero Gauss factor has magnitude
+sqrt(p). Multiplying by the count of stationary representations and the
+normalization |H_m|=tau*p^(m-h) gives RS9.
+
+Finally character orthogonality gives
+sum_all |T_m|^4=M^2 E(H_m). Imprimitive frequencies reduce to level m-1;
+each sum has the extra fibre factor p, so their total fourth power is
+p^4*(M/p)^2 E(H_(m-1)). Subtract this from the full sum and substitute
+the second identity in RS9. This proves RS10. It concerns additive
+relations among the REAL orbit points, with no independent-coordinate
+replacement.
+
+### 7.6 Formal scope and prior literature
+
+`GoldenConicFourierNoCancellation.lean` and its authored Scribe supply the
+canonical-character noncancellation kernel RS2. The exact rank quotient,
+all-precision support, onset and moment identities RS1,RS3-RS5 are ordinary
+proofs in this section. No additional kernel acceptance is inferred from
+having a Lean representation of RS2. The earlier conic chart is unchanged.
+
+The period/rank ratio in {1,2,4} is classical, including Vinson's 1963
+work and Ballot-Elia, *Rank and period of primes in the Fibonacci sequence.
+A trichotomy*, Fibonacci Quarterly45(2007),56-63,
+DOI10.1080/00150517.2007.12428243. It is not counted as a new arithmetic
+classification here. Vanishing sums of roots of unity and prime-power
+stationary phase are also classical subjects. For established general weight results see T. Y. Lam
+and K. H. Leung, *On Vanishing Sums of Roots of Unity*, Journal of Algebra
+224(2000),91-109, DOI10.1006/jabr.1999.8089. For explicit prime-power
+exponential sums see S. J. Gurak, *Kloosterman sums for prime powers in
+P-adic fields*, JTNB21(2009),175-201, DOI10.5802/jtnb.665, and the
+Milicevic-Zhang source in Section6. The additive character in the formal
+source is Mathlib's actual `ZMod.stdAddChar`; its injectivity is used,
+not supplied as an unproved numerical-observation assumption.
+
+The new completion here is the exact scalar-stabilizer reduction of the
+original constrained golden orbit and the resulting disappearance of the
+previously unresolved cancellation possibility. No worldwide priority is
+asserted for this specialization, and no separately posed open problem is
+counted as newly solved. In particular the first-zero formulas distinguish
+the spectral effects of h but do not independently constrain its arithmetic
+value as p varies.
