@@ -601,3 +601,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The whole J face forces source anti-alignment](profile-notes/130-the-whole-j-face-forces-source-anti-alignment.md)
 - [Ten complete quadratic costs share their actual off-face head](profile-notes/131-ten-complete-quadratic-costs-share-their-actual-off-face-head.md)
 - [The whole J face has a quantitative surplus neighborhood](profile-notes/132-the-whole-j-face-has-a-quantitative-surplus-neighborhood.md)
+- [Unchanged source budgets can move the best five slot](profile-notes/133-unchanged-source-budgets-can-move-the-best-five-slot.md)
+- [An actual overlap forces nonlinear complete-tail prices](profile-notes/135-an-actual-overlap-forces-nonlinear-complete-tail-prices.md)
