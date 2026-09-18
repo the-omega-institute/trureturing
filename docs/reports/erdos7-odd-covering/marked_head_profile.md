@@ -556,4 +556,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A broad five-slot source/deletion tradeoff](profile-notes/85-a-broad-five-slot-source-deletion-tradeoff.md)
 - [Peeling surviving tails improves the K-face comparison](profile-notes/86-peeling-surviving-tails-improves-the-k-face-comparison.md)
 - [A clipped full-load interface on the broad slab](profile-notes/87-a-clipped-full-load-interface-on-the-broad-slab.md)
+- [A weighted source comparison on the broad slab](profile-notes/88-a-weighted-source-comparison-on-the-broad-slab.md)
 - [A marked-event cancellation improves global K](profile-notes/89-a-marked-event-cancellation-improves-global-k.md)
