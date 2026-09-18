@@ -188,6 +188,14 @@ class NativeReuseTests:
         seed.parent.mkdir()
         for suffix in (*publication.SUFFIXES, '.reuse.json'):
             shutil.copyfile(publication.member(output, suffix), publication.member(seed, suffix))
+        sealed = {suffix: publication.member(seed, suffix).read_bytes()
+                  for suffix in (*publication.SUFFIXES, '.reuse.json')}
+        def probe():
+            result = self.guarded_command([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
+                'probe', '--repository', str(self.root), '--report', str(seed), '--lake', self.lake], env=self.env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertFalse(json.loads(result.stdout)['needs_lake'], '[FAIL] probe_only_selects_resources')
+        probe()
         shutil.rmtree(self.root / '.lake')
         self.env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
         reused = self.inspect()
@@ -196,6 +204,32 @@ class NativeReuseTests:
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', reused.stdout)
         self.assertEqual(expected, output.read_bytes())
         self.assertFalse((self.root / '.lake/packages').exists())
+        # Resource planning neither parses material semantics nor vouches for
+        # bytes that may change before the normal entry consumes its seed.
+        for damage in ('sealed-invalid-material', 'changed-after-probe'):
+            with self.subTest(damage=damage):
+                for suffix, data in sealed.items():
+                    publication.member(seed, suffix).write_bytes(data)
+                if damage == 'changed-after-probe':
+                    probe()
+                archive = publication.member(seed, '.materials.zip')
+                with zipfile.ZipFile(archive, 'a') as target:
+                    target.writestr('unreferenced', b'not an admitted report material')
+                if damage == 'sealed-invalid-material':
+                    receipt = json.loads(sealed['.reuse.json'])
+                    receipt['bundle']['.materials.zip'] = publication.digest(archive)
+                    publication.member(seed, '.reuse.json').write_text(json.dumps(receipt))
+                    probe()
+                shutil.rmtree(self.root / '.lake')
+                recovered = self.inspect()
+                self.assertIn('phase=ensure status=started', recovered.stderr)
+                self.assertIn('phase=report status=completed', recovered.stderr,
+                              '[FAIL] invalid_seed_must_reenter_native_producer')
+                self.assertEqual(expected, output.read_bytes())
+                publication.validate_bundle(output, publication.coordinates(self.root), self.root)
+        for suffix, data in sealed.items():
+            publication.member(seed, suffix).write_bytes(data)
+        probe()
         # A successful planning probe never exempts the normal entry from the
         # default-only input obligation. A changed audit must reach Lake/fail.
         self.write('Audit.lean', 'def audit : False := True.intro\n')
@@ -207,6 +241,11 @@ class NativeReuseTests:
         recovered = self.inspect()
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        invalid = self.inspect(success=False)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=inputs', invalid.stderr)
+        self.assertNotIn('phase=report status=started', invalid.stderr)
 
     def test_fetched_package_absence_reuses_only_wholly_unmaterialized_snapshot(self):
         self._configure_fetched_git_package()
@@ -227,6 +266,10 @@ class NativeReuseTests:
         shutil.rmtree(self.root / '.lake')
         self.env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        with patch.object(publication, 'coordinates', side_effect=AssertionError('probe prepares publication')), \
+                patch.object(publication, 'validate_bundle', side_effect=AssertionError('probe accepts publication')):
+            self.assertEqual(reuse.probe(self.root, seed, self.lake),
+                             dict(needs_lake=False, reason='receipt-matched'))
         reused = self.inspect()
         self.assertEqual(reused.returncode, 0, reused.stdout + reused.stderr)
         self.assertNotIn('phase=ensure status=started', reused.stderr)
