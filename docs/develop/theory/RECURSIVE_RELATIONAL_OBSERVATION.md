@@ -35833,3 +35833,254 @@ $$
 与上式矛盾。命题 71.8 给出的则是总长度趋于无穷时、固定短前缀的分布极限；它没有要求这些有限总长度的均匀律逐层相容，也不将定理 81.3 的均匀源替换为平稳 Parry 律。证毕。
 
 ## 81.99 追加锚
+
+## 82. 参考纤维上的凸缺陷与共同恢复零集
+
+**定义与假设 82.1（质量坐标、似然比坐标与凸缺陷）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$，以及质量算子 $C,B,E=BC$；其粗参考为
+$$
+p_i=(Cq)_i=\sum_{r(j)=i}q_j>0.
+$$
+对任意非负归一化质量列向量 $d\in\Delta(J)$，记
+$$
+a=Cd,\qquad u_j=\frac{d_j}{q_j},\qquad m_i=\frac{a_i}{p_i}.
+$$
+在任意实函数 $v:J\to\mathbb R$ 上定义
+$$
+(\Pi v)_j=\frac1{p_{r(j)}}
+             \sum_{r(k)=r(j)}q_kv_k,
+\qquad D_q=\operatorname{diag}(q).
+$$
+于是
+$$
+\Pi u=m\circ r,\qquad Ed=D_q\Pi u,\qquad
+E=D_q\Pi D_q^{-1}.
+$$
+这里 $\Pi$ 作用于似然比或实读数，$E$ 作用于质量；二者的自然内积分别是
+$$
+\langle v,w\rangle_q=\sum_jq_jv_jw_j,
+\qquad
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+具体地，在有限概率空间 $(J,2^J,\mu_q)$ 上取
+$$
+\mu_q(A)=\sum_{j\in A}q_j,
+\qquad
+\mathcal F_r=\{r^{-1}(S):S\subseteq I\}.
+$$
+$\Pi$ 是命题 69.1、定理 76.1 的有限正加权条件投影。质量空间中的正交性使用命题 74.5 的证明及定理 76.1 中的 $q^{-1}$ 内积；$D_q$ 给出这两个带权空间之间的等距同构。
+
+令 $K\subseteq\mathbb R$ 为包含所有 $u_j$ 的凸区间，$\Phi:\mathbb R\to\mathbb R$ 在 $K$ 上凸。定义有限实数
+$$
+\mathcal J_\Phi(d;q,r)
+=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i).
+$$
+此处用 $\mathcal J_\Phi$ 表示凸缺陷，不与定义 72.1 的细基去相干 $\Delta_f$ 混用。以下 KL 与熵均采用自然对数，零质量项按正支撑求和约定处理。
+
+**命题 82.2（纤维 Jensen 缺陷、严格零集与两种特例）。** 在定义与假设 82.1 下，各 $m_i\in K$，且
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=\sum_i p_i\left[
+    \sum_{r(j)=i}\frac{q_j}{p_i}\Phi(u_j)-\Phi(m_i)
+  \right]\ge0.
+}
+$$
+若 $\Phi$ 在 $K$ 上严格凸，则
+$$
+\begin{aligned}
+\mathcal J_\Phi(d;q,r)=0
+&\ \Longleftrightarrow\
+  \forall j,k\ \bigl(r(j)=r(k)\Rightarrow u_j=u_k\bigr)\\
+&\ \Longleftrightarrow\ u=\Pi u
+\ \Longleftrightarrow\ d=Ed.
+\end{aligned}
+$$
+对任意 $\alpha,\beta\in\mathbb R$，有
+$$
+\mathcal J_{\Phi+\alpha\,\mathrm{id}+\beta}(d;q,r)
+=\mathcal J_\Phi(d;q,r).
+$$
+因此不要求 $\Phi(1)=0$。若只有凸性而没有严格凸性，上述零集刻画不由该假设保证；仿射生成函数的缺陷对每个 $d$ 都为零。各严格凸生成函数共享这里的恢复零集，但本命题不规定它们的共同数值尺度，也不要求不同生成函数在每个输入上给出不同数值。
+
+**二次特例。** 取 $\Phi(t)=t^2$，等价地取 $\Phi(t)=(t-1)^2$，则
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{t^2}(d;q,r)
+ &=\sum_j q_j\bigl(u_j-(\Pi u)_j\bigr)^2\\
+ &=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}\\
+ &=\chi^2(d\Vert q)-\chi^2(Cd\Vert p),
+\end{aligned}
+}
+$$
+其中对严格正参考质量 $w$，
+$$
+\chi^2(v\Vert w)=\sum_x\frac{(v_x-w_x)^2}{w_x}.
+$$
+这里的残差分母是 $q_j$；即使 $Ed$ 逐坐标正，它一般也不等于以 $(Ed)_j$ 为分母的 $\chi^2(d\Vert Ed)$。该残差是 $L^2(\mu_q)$ 中 $u$ 的条件投影残差平方，也是在质量空间 $\langle\cdot,\cdot\rangle_{q^{-1}}$ 中 $d-Ed$ 的范数平方。
+
+**KL 特例。** 取 $\Phi(t)=t\ln t$（$t>0$）及 $\Phi(0)=0$，在 $K=[0,\infty)$ 上使用其严格凸性，则
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p)
+=D_{\mathrm{KL}}(d\Vert Ed).
+}
+$$
+三个 KL 值均有限，包括 $d$ 或 $Cd$ 有零坐标的情形。这是定理 73.3、74.2 的支撑型 KL 缺陷在同一凸缺陷记号下的特化。
+
+**证明。** 对每个 $i$，满射保证纤维 $J_i=r^{-1}(i)$ 非空，参考正性给出 $p_i>0$。置
+$$
+\lambda_{j\mid i}=\frac{q_j}{p_i}\quad(j\in J_i).
+$$
+这些权重严格为正、总和为一，且
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}u_j
+=\frac1{p_i}\sum_{r(j)=i}d_j
+=m_i.
+$$
+因此 $m_i$ 是 $K$ 中有限个点的凸组合，属于 $K$。按纤维拆分第一项，便得到框中的缺陷分解。有限 Jensen 不等式逐纤维给出
+$$
+\Phi(m_i)\le\sum_{j\in J_i}\lambda_{j\mid i}\Phi(u_j).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在指标集 $J_i$、权重 $\lambda_{j\mid i}$ 和点 $u_j$ 上的应用；权重非负归一化及所有点的域内条件已逐项满足。再乘 $p_i>0$ 并求和，得到非负性。
+
+若 $\Phi$ 严格凸，所有方括号均非负且所有外权 $p_i$ 均为正，所以总和为零当且仅当每个纤维的 Jensen 等号成立。[StrictConvexOn.map_sum_eq_iff_of_pos](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在同一代入下适用，其严格正权重条件也已满足。它给出等号当且仅当该纤维的所有 $u_j$ 相等。若共同值为 $h_i$，上面的加权平均等式使 $h_i=m_i$，故恰为 $u=\Pi u$。反过来，$\Pi u$ 在每条纤维上为常值，故 $u=\Pi u$ 蕴含纤维常值。由 $d=D_qu$、$Ed=D_q\Pi u$ 及 $q_j>0$，这又等价于 $d=Ed$。
+
+若 $a_i=0$，则 $a_i$ 是该纤维所有非负 $d_j$ 的和，故整条纤维的 $d_j=0$，继而所有 $u_j=0$、$m_i=0$。它已满足纤维常值条件，不能因实际粗质量为零而另加一个未定义的后验条件。这里的平均权重是始终正的参考 $q_j/p_i$。
+
+对任意仿射函数 $\ell(t)=\alpha t+\beta$，每条纤维上都有
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}\ell(u_j)
+=\alpha m_i+\beta=\ell(m_i).
+$$
+因而加上仿射函数不改变任何方括号，证明仿射不变性，也给出仿射生成函数的恒零结论。
+
+为明确二次特例的 Hilbert 载体，任取实函数 $v$，$\Pi v$ 在各纤维上常值且
+$$
+\sum_{r(j)=i}q_j(\Pi v)_j
+=\sum_{r(j)=i}q_jv_j.
+$$
+每个 $\mathcal F_r$ 事件是若干纤维的不交并，故同一积分等式在这些事件上成立；$\Pi v$ 又是 $\mathcal F_r$-可测的。有限载体使 $v\in L^2(\mu_q)$，所以这正是命题 69.1、定理 76.1 中的条件正交投影。严格正的每个 $q_j$ 使几乎处处相等在此等价于逐点相等。
+
+坐标适配直接给出，对任意实质量向量 $x$，
+$$
+(D_q\Pi D_q^{-1}x)_j
+=\frac{q_j}{p_{r(j)}}\sum_{r(k)=r(j)}x_k
+=(Ex)_j,
+$$
+且
+$$
+\langle D_qv,D_qw\rangle_{q^{-1}}
+=\sum_jq_jv_jw_j=\langle v,w\rangle_q.
+$$
+所以这一变换是两个带权空间之间的等距同构，说明两个残差平方的精确对应；它不是相同 Euclidean 内积下的算子识别。
+
+下面直接计算全部二次公式。每条纤维的中心化和为零：
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)
+=a_i-p_im_i=0.
+$$
+展开 $u_j=(u_j-m_i)+m_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_ju_j^2
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2
+  +2m_i\sum_{r(j)=i}q_j(u_j-m_i)+p_im_i^2\\
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2+p_im_i^2.
+\end{aligned}
+$$
+按纤维求和并减去 $\sum_i p_im_i^2$，即得第一个二次等式。再用
+$$
+d_j-(Ed)_j=q_j\bigl(u_j-m_{r(j)}\bigr)
+$$
+得到第二个。由于
+$$
+\sum_jq_j=\sum_i p_i=1,
+\qquad
+\sum_jq_ju_j=\sum_i p_im_i=1,
+$$
+有
+$$
+\chi^2(d\Vert q)=\sum_jq_ju_j^2-1,
+\qquad
+\chi^2(Cd\Vert p)=\sum_i p_im_i^2-1.
+$$
+相减得到第三个等式。全部分母来自严格正参考，因此不要求 $d_j>0$。所用的条件投影勾股关系是命题 69.1 的范数恒等式，这里的坐标计算将其识别为所列 $\chi^2$ 差。
+
+最后取 $\Phi(t)=t\ln t$、$\Phi(0)=0$。[Real.strictConvexOn_mul_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean) 给出它在 $[0,\infty)$ 上的严格凸性，包含零点的连续值；所有 $u_j,m_i\ge0$，故适用。在 $d_j>0$ 时，
+$$
+q_j\Phi(u_j)=d_j\ln(d_j/q_j),
+$$
+而 $d_j=0$ 时该项为零；粗坐标同理。因此 $\mathcal J_\Phi$ 恰为两个参考 KL 之差。若 $d_j>0$，则 $a_{r(j)}>0$，从而 $(Ed)_j=q_ja_{r(j)}/p_{r(j)}>0$；若 $a_i=0$，该纤维上 $d$ 与 $Ed$ 全为零。$q,p$ 严格正，$d\ll Ed$，而 $Ed$ 是定理 74.2 中已归一化的概率，故三个 KL 都有限。对同一个 $C,B,E,q,p,d$ 直接应用定理 74.2 的缺陷差式，得到最后一个等号；其支撑与恢复条件正是定理 73.3 的条件。对数项始终只在正实际支撑上计算，零粗质量不需要归一化实际后验。若改用 bit，则将这一特例中的全部 KL 项一致除以 $\ln2$。证毕。
+
+**命题 82.3（族保持不推出所有凸缺陷的动力学单调性）。** 取四状态集 $J=\{1,2,3,4\}$，分区 $\{1,2\}\mid\{3,4\}$，并令
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},
+\qquad
+d=\begin{pmatrix}2/5\\1/10\\2/5\\1/10\end{pmatrix},
+\qquad
+T=\frac1{40}
+\begin{pmatrix}
+37&1&37&1\\
+1&37&1&37\\
+1&1&1&1\\
+1&1&1&1
+\end{pmatrix}.
+$$
+则 $T$ 严格正且列随机，满足 $TE=ET=ETE$；但二次凸缺陷严格增加：
+$$
+\mathcal J_{t^2}(d;q,r)=\frac9{25},
+\qquad
+\mathcal J_{t^2}(Td;q,r)=\frac{729}{1250}>\frac9{25}.
+$$
+这里
+$$
+Tq=\begin{pmatrix}19/40\\19/40\\1/40\\1/40\end{pmatrix}\ne q,
+$$
+故本命题不涉及另加平稳参考条件 $Tq=q$ 的结论。
+
+**证明。** 每个矩阵元至少为 $1/40>0$，每列的整数分子之和为 $40$。本分区的重采样矩阵为
+$$
+E=\frac12
+\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix}.
+$$
+直接相乘得到
+$$
+TE=ET=
+\begin{pmatrix}
+19/40&19/40&19/40&19/40\\
+19/40&19/40&19/40&19/40\\
+1/40&1/40&1/40&1/40\\
+1/40&1/40&1/40&1/40
+\end{pmatrix}.
+$$
+右侧每列在各对内相等，故左乘 $E$ 不变，证明 $TE=ETE$。同一乘法给出上述 $Tq$ 以及
+$$
+Td=\begin{pmatrix}149/200\\41/200\\1/40\\1/40\end{pmatrix},
+\qquad Ed=q,
+\qquad ETd=Tq.
+$$
+因此
+$$
+d-Ed=\begin{pmatrix}3/20\\-3/20\\3/20\\-3/20\end{pmatrix},
+\qquad
+Td-ETd=\begin{pmatrix}27/100\\-27/100\\0\\0\end{pmatrix}.
+$$
+应用命题 82.2 的二次残差公式，参考分母均为 $1/4$，于是
+$$
+\mathcal J_{t^2}(d;q,r)
+=4\cdot4\left(\frac3{20}\right)^2=\frac9{25},
+$$
+$$
+\mathcal J_{t^2}(Td;q,r)
+=4\cdot2\left(\frac{27}{100}\right)^2=\frac{729}{1250}.
+$$
+两值之差为 $279/1250>0$。定理 74.2 在 $TE=ETE$ 下保证的是 KL 特例的缺陷不增；以上同一参考、同一分区的精确计算表明，该动力学结论不能直接换成任意凸生成函数。证毕。
+
+## 82.99 追加锚
