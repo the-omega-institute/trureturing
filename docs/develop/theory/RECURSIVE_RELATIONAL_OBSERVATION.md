@@ -39056,3 +39056,313 @@ $C_n$ 保留全部正反 KL，而每个单时刻状态读出在两种实验下�
 似然比只依赖 $C_n$，定理 73.3 在其实际像上的等号条件给出计数 KL 保留；单时刻结论由定理 93.3 给出。若 $p\ne q$，$p-q$ 与 $\log(p/q)$ 同号，乘积严格为正；若 $p=q$，则详细平衡成立。$n=0$ 的计数为空和、反演为恒等，完成全部边界情形。证毕。
 
 ## 93.99 追加锚
+
+## 94. Monna 观察下的补码、半值纤维与等变截面障碍
+
+**定义 94.1（数字空间、双译码与 Monna 观察）。** 设整数 $b\ge2$，取
+$$
+\Sigma_b=\{0,1,\ldots,b-1\}^{\mathbb N_0},
+\qquad
+(C_ba)_n=b-1-a_n.
+$$
+赋予 $\Sigma_b$ 离散字母表的乘积拓扑，并用首差距离表示：
+$$
+d_b(a,c)=
+\begin{cases}
+0,&a=c,\\
+b^{-k},&k=\min\{n\ge0:a_n\ne c_n\}.
+\end{cases}
+$$
+实译码为
+$$
+D_{\infty,b}(a)=\sum_{n\ge0}a_n b^{-(n+1)}\in[0,1].
+$$
+这里的级数按通常实绝对值收敛，端点 $1$ 由全为 $b-1$ 的数字串表示；数字展开的值域、连续性与前缀估计采用通常的位置展开结论。[^rro94-real-digits]
+
+当底数为素数 $p$ 时，在标准归一化 $|p|_p=p^{-1}$ 下，另取通常的 $p$-进数字识别
+$$
+D_p:\Sigma_p\longrightarrow\mathbb Z_p,
+\qquad
+D_p(a)=\sum_{n\ge0}a_np^n.
+$$
+这一次级数在 $p$-进范数下收敛。$D_p$ 是等距双射；下述证明从有限剩余类回顾所需的识别。[^rro94-padic-digits] 定义
+$$
+M_p=D_{\infty,p}\circ D_p^{-1}:\mathbb Z_p\longrightarrow[0,1],
+\qquad
+J_p(z)=-1-z,
+\qquad
+J_\infty(t)=1-t.
+$$
+$M_p$ 是经典 Monna 映射在 $\mathbb Z_p$ 上的限制，其数字公式及连续性估计见 Kozyrev 的式 (12) 与引理 3。[^rro94-monna] 对任意自映射 $F$，以下记 $\operatorname{Fix}(F)=\{x:F(x)=x\}$。
+
+[^rro94-real-digits]: 数字级数的上下界、包含端点的满射性、前缀分解与连续性，可参见 [Mathlib，实数位置展开](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Real/OfDigits.lean)。其第 $n$ 位权重正是 $b^{-(n+1)}$；$[0,1)$ 的通常展开与全为 $b-1$ 的展开共同给出 $[0,1]$。
+
+[^rro94-padic-digits]: 所用完备性、素数幂理想与范数的关系见 [Mathlib，$p$-进整数](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicIntegers.lean)；相容约化、有限剩余类代表及剩余类分离见 [Mathlib，$p$-进整数的剩余类映射](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/RingHoms.lean)。这里仅用整数部分和的完备性、有限余数类代表与相容约化说明数字展开，不需把数字空间赋予环同态结构。
+
+[^rro94-monna]: S. V. Kozyrev，[*Wavelet analysis as a p-adic spectral analysis*，arXiv:math-ph/0012019v3](https://arxiv.org/pdf/math-ph/0012019v3)，式 (12) 将 $\sum_{i\ge\gamma}a_ip^i$ 送到 $\sum_{i\ge\gamma}a_ip^{-i-1}$，引理 3 给出实距离不超过原 $p$-进距离的估计。这里仅使用其在 $\mathbb Z_p$ 上的限制及该估计。
+
+**定理 94.2（补码半共轭与完整半值纤维）。** 对定义 94.1 的每个整数底数 $b\ge2$，$D_{\infty,b}$ 是连续满射，且
+$$
+C_b^2=\mathrm{id},
+\qquad
+D_{\infty,b}\circ C_b=J_\infty\circ D_{\infty,b},
+\qquad
+\operatorname{Fix}(J_\infty)=\{1/2\}.
+\tag{94.2a}
+$$
+数字空间中的不动点与实译码的完整半值纤维分别为
+$$
+\operatorname{Fix}(C_b)=
+\begin{cases}
+\varnothing,&b=2m,\\
+\{(m,m,m,\ldots)\},&b=2m+1,
+\end{cases}
+$$
+$$
+D_{\infty,b}^{-1}(\{1/2\})=
+\begin{cases}
+\{(m,0,0,\ldots),(m-1,b-1,b-1,\ldots)\},&b=2m,\\
+\{(m,m,m,\ldots)\},&b=2m+1.
+\end{cases}
+\tag{94.2b}
+$$
+偶底的两个半值码由 $C_b$ 交换；奇底的唯一半值码由 $C_b$ 固定。
+
+对每个素数 $p$，$D_p$ 是从 $(\Sigma_p,d_p)$ 到 $\mathbb Z_p$ 的等距双射，并满足
+$$
+D_p\circ C_p=J_p\circ D_p,
+\qquad
+M_p\circ J_p=J_\infty\circ M_p.
+\tag{94.2c}
+$$
+$M_p$ 是连续满射，且
+$$
+|M_p(z)-M_p(w)|\le |z-w|_p
+\qquad(z,w\in\mathbb Z_p).
+\tag{94.2d}
+$$
+在素数底的状态空间中，
+$$
+M_2^{-1}(\{1/2\})=\{1,-2\},
+\qquad
+\operatorname{Fix}(J_2)=\varnothing;
+$$
+$$
+M_p^{-1}(\{1/2\})=\{-1/2\}
+=\operatorname{Fix}(J_p)
+\qquad(p\text{ 为奇素数}).
+\tag{94.2e}
+$$
+因此，二进制情形的固定实读数来自一个被观察合并的二周期；奇素数情形的同一实读数则来自唯一的固定状态。这使用半共轭下固定读数与轨道合并的既有关系。[^rro94-fixed-fiber]
+
+**证明。** 逐位计算 $b-1-(b-1-a_n)=a_n$，得 $C_b^2=\mathrm{id}$。若 $C_ba=a$，则每一位满足 $2a_n=b-1$。当 $b$ 偶时无整数解；当 $b=2m+1$ 时唯一解为每一位 $a_n=m$，这也直接满足不动条件。
+
+实译码级数绝对收敛，并且
+$$
+0\le D_{\infty,b}(a)
+\le\sum_{n\ge0}(b-1)b^{-(n+1)}=1.
+$$
+通常的 $b$ 进位实展开给出 $[0,1)$ 的每个值，全为 $b-1$ 的串再给出端点 $1$，故它满射。若 $a,c$ 前 $N$ 位相同，则
+$$
+\begin{aligned}
+|D_{\infty,b}(a)-D_{\infty,b}(c)|
+&\le\sum_{n\ge N}|a_n-c_n|b^{-(n+1)}\\
+&\le\sum_{n\ge N}(b-1)b^{-(n+1)}
+=b^{-N}.
+\end{aligned}
+\tag{94.2f}
+$$
+这就是所引用的位置展开前缀估计，也给出乘积拓扑下的连续性。几何权重之和为 $1$，所以绝对收敛允许逐项相减：
+$$
+D_{\infty,b}(C_ba)
+=\sum_{n\ge0}(b-1-a_n)b^{-(n+1)}
+=1-D_{\infty,b}(a).
+$$
+而 $1-t=t$ 在 $[0,1]$ 中恰有解 $t=1/2$，证明式 (94.2a)。
+
+为求出全部半值码，记尾移 $(\sigma a)_n=a_{n+1}$。在首位处拆分级数，得到
+$$
+bD_{\infty,b}(a)
+=a_0+D_{\infty,b}(\sigma a).
+\tag{94.2g}
+$$
+又有
+$$
+D_{\infty,b}(c)=0
+\iff c=(0,0,\ldots),
+\qquad
+D_{\infty,b}(c)=1
+\iff c=(b-1,b-1,\ldots).
+\tag{94.2h}
+$$
+第一式因为级数每一项非负，任何非零数字都会贡献正值；第二式由
+$$
+1-D_{\infty,b}(c)
+=\sum_{n\ge0}(b-1-c_n)b^{-(n+1)}
+$$
+的非负性同样得到。两式反向分别代入零串与几何级数即可。
+
+设 $b=2m$ 且 $D_{\infty,b}(a)=1/2$。由式 (94.2g)，
+$$
+m=a_0+D_{\infty,b}(\sigma a),
+\qquad 0\le D_{\infty,b}(\sigma a)\le1.
+$$
+整数 $a_0$ 因此只能为 $m$ 或 $m-1$。前者迫使尾值为 $0$，后者迫使尾值为 $1$；式 (94.2h) 分别迫使全部尾数字为 $0$ 或 $b-1$。这排除了另外的半值码。反向代入式 (94.2g) 即知所列两码都译为 $1/2$，逐位取补又确实交换它们。
+
+设 $b=2m+1$ 且 $D_{\infty,b}(a)=1/2$，则
+$$
+m+\frac12=a_0+D_{\infty,b}(\sigma a).
+$$
+尾值在 $[0,1]$ 中，故整数 $a_0$ 必为 $m$，随后尾值仍为 $1/2$。把同一论证应用于每个尾串，归纳得到 $a_n=m$ 对所有 $n$ 成立。反向有
+$$
+\sum_{n\ge0}m b^{-(n+1)}
+=\frac{m}{b-1}=\frac12,
+$$
+且此串逐位固定。这完成式 (94.2b) 的两个方向。
+
+现固定素数 $p$，置整数部分和
+$$
+S_N(a)=\sum_{0\le n<N}a_np^n,
+\qquad S_0(a)=0.
+$$
+若 $M\ge N$，则 $p^N\mid S_M(a)-S_N(a)$，所以
+$$
+|S_M(a)-S_N(a)|_p\le p^{-N}.
+$$
+由 $\mathbb Z_p$ 的完备性，这些部分和收敛到 $D_p(a)$。对固定 $N$ 让 $M\to\infty$，闭球保留该界，从而
+$$
+|D_p(a)-S_N(a)|_p\le p^{-N},
+\qquad
+D_p(a)\equiv S_N(a)\pmod{p^N\mathbb Z_p}.
+\tag{94.2i}
+$$
+第二式使用素数幂理想与对应范数闭球相同的标准性质。
+
+给定 $z\in\mathbb Z_p$，令 $r_N$ 为它模 $p^N$ 的唯一整数代表，满足
+$$
+0\le r_N<p^N,
+\qquad
+z-r_N\in p^N\mathbb Z_p.
+$$
+取 $r_0=0$。相容约化给出 $r_{N+1}\equiv r_N\pmod{p^N}$。因为 $r_N$ 正是 $r_{N+1}$ 除以 $p^N$ 的余数，存在唯一数字 $a_N\in\{0,\ldots,p-1\}$ 使
+$$
+r_{N+1}=r_N+a_Np^N.
+$$
+归纳得到 $r_N=S_N(a)$，而 $|z-r_N|_p\le p^{-N}$，故 $D_p(a)=z$。这证明满射。
+
+若 $a\ne c$ 首次在第 $k$ 位不同，则式 (94.2i) 给出
+$$
+D_p(a)-D_p(c)
+=p^k\bigl((a_k-c_k)+pu\bigr)
+\qquad\text{对某个 }u\in\mathbb Z_p.
+$$
+整数 $a_k-c_k$ 非零且绝对值小于 $p$，故不被素数 $p$ 整除，括号中的元素模 $p$ 非零，是 $\mathbb Z_p$ 的单位，其范数为 $1$。因此
+$$
+|D_p(a)-D_p(c)|_p=p^{-k}=d_p(a,c).
+$$
+相同数字串的两边距离皆为零，故 $D_p$ 是等距双射。
+
+有限几何和又给出
+$$
+S_N(C_pa)=p^N-1-S_N(a).
+$$
+在 $p$-进范数中 $p^N\to0$，取极限即得
+$$
+D_p(C_pa)=-1-D_p(a).
+$$
+这同时说明有限商上的补码为 $z_N\mapsto-1-z_N$，并与约化相容。再由 $D_p$ 的双射性及实译码的补码恒等式，得到
+$$
+M_p(J_pz)
+=D_{\infty,p}\bigl(C_p(D_p^{-1}z)\bigr)
+=1-M_p(z),
+$$
+即式 (94.2c)。$M_p$ 满射，因为 $D_{\infty,p}$ 满射而 $D_p$ 双射。把式 (94.2f) 与刚证的首差等距式结合，即得 Kozyrev 估计在本域上的式 (94.2d)，从而连续。
+
+当 $p=2$ 时，半值两码 $(1,0,0,\ldots)$ 与 $(0,1,1,\ldots)$ 的 $2$-进值分别为 $1$ 与 $-2$；后一个值也可由两码互补及 $D_2(C_2a)=-1-D_2(a)$ 直接求得。完整码纤维与 $D_2$ 的双射性因此给出
+$$
+M_2^{-1}(\{1/2\})=\{1,-2\}.
+$$
+若 $J_2z=z$，则 $2z=-1$；约化模 $2$ 得到 $0=1$，矛盾，故 $\operatorname{Fix}(J_2)=\varnothing$。
+
+当 $p$ 为奇素数，令 $m=(p-1)/2$。唯一实半值码为常数串 $(m,m,\ldots)$，其 $p$-进值由有限几何和及 $p^N\to0$ 算出：
+$$
+\sum_{n\ge0}mp^n
+=\frac{m}{1-p}
+=-\frac12.
+$$
+这里 $1-p$ 是 $\mathbb Z_p$ 中的单位，且奇素数情形下 $2$ 也是单位。方程 $J_pz=z$ 等价于 $2z=-1$，故它在 $\mathbb Z_p$ 中的唯一解恰为 $-1/2$。再用完整码纤维得到式 (94.2e)。
+
+最后，对任意 $z\in\mathbb Z_p$，已建立的半共轭直接给出
+$$
+J_\infty(M_pz)=M_pz
+\iff
+M_p(J_pz)=M_pz.
+$$
+在二进制半值纤维中，$J_2$ 交换不同状态 $1,-2$；在奇素数半值纤维中，$J_p$ 固定唯一状态 $-1/2$。这正是所述固定读数的两种具体来源。证毕。
+
+[^rro94-fixed-fiber]: 半共轭下“固定读数等价于变换前后具有相同读数”的一般关系，参见项目 [观察下降与轨道合并](https://github.com/the-omega-institute/trureturing/blob/38fe6e8aa82049fd2a568fa0bcd1a1586f1ce61c/D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.lean)。这里先证明具体译码的半共轭，再应用该关系；单凭观察不单射不能推出它必然合并某个指定对合轨道。
+
+**推论 94.3（二进制的全局等变障碍、扩域不动点与不变概率）。** 在定义 94.1 的二进制情形：
+
+1. 不存在任何集合映射 $s:[0,1]\to\mathbb Z_2$ 满足
+   $$
+   s\circ J_\infty=J_2\circ s.
+   \tag{94.3a}
+   $$
+   因而不存在同时满足 $M_2\circ s=\mathrm{id}_{[0,1]}$ 的等变截面。等价地，实译码 $D_{\infty,2}$ 也没有取值于 $\Sigma_2$ 的补码等变截面。这里不附加连续性或可测性要求。
+2. 将仿射式 $z\mapsto-1-z$ 从 $\mathbb Z_2$ 延拓到 $\mathbb Q_2$，其唯一不动点为
+   $$
+   -\frac12,
+   \qquad
+   \left|-\frac12\right|_2=2.
+   \tag{94.3b}
+   $$
+   它属于 $\mathbb Q_2\setminus\mathbb Z_2$，所以不在原映射 $M_2$ 的定义域内。
+3. 在 $\mathbb Z_2$ 的 Borel 空间上，取实值概率
+   $$
+   \nu=\frac12\delta_1+\frac12\delta_{-2}.
+   $$
+   则
+   $$
+   (J_2)_*\nu=\nu,
+   \qquad
+   (M_2)_*\nu=\delta_{1/2},
+   \tag{94.3c}
+   $$
+   尽管这两个支撑状态都不是 $J_2$ 的不动点。
+
+**证明。** 若式 (94.3a) 成立，因 $J_\infty(1/2)=1/2$，代入得
+$$
+J_2(s(1/2))=s(J_\infty(1/2))=s(1/2).
+$$
+这与定理 94.2 的 $\operatorname{Fix}(J_2)=\varnothing$ 矛盾。它是“不动点沿半共轭运输”的直接应用，整个矛盾不需要使用截面条件。[^rro94-fixed-transport] 若存在补码等变截面 $h:[0,1]\to\Sigma_2$，则 $s=D_2\circ h$ 满足式 (94.3a)；反向的截面对应由 $D_2^{-1}$ 给出。因此两种截面表述具有同一个障碍。
+
+在特征零域 $\mathbb Q_2$ 中，$z=-1-z$ 等价于 $2z=-1$，其唯一解是 $z=-1/2$。标准归一化给出
+$$
+|-1/2|_2=|2|_2^{-1}=2>1.
+$$
+而 $\mathbb Z_2$ 恰为 $\mathbb Q_2$ 中范数不超过 $1$ 的元素，故该解在 $\mathbb Z_2$ 之外。这里延拓的是仿射变换 $J_2$；原 $M_2$ 的定义域仍为 $\mathbb Z_2$，不因这个求解自动改变，也不据此排除其他另行定义的观察延拓。
+
+$J_2$ 与 $M_2$ 连续，故其 Borel 推前有定义。由
+$$
+J_2(1)=-2,\qquad J_2(-2)=1,
+\qquad
+M_2(1)=M_2(-2)=1/2,
+$$
+对任意 Borel 集 $A\subseteq\mathbb Z_2$，有
+$$
+((J_2)_*\nu)(A)
+=\frac12\mathbf1_A(-2)+\frac12\mathbf1_A(1)
+=\nu(A).
+$$
+对任意 Borel 集 $B\subseteq[0,1]$，有
+$$
+((M_2)_*\nu)(B)
+=\frac12\mathbf1_B(1/2)+\frac12\mathbf1_B(1/2)
+=\delta_{1/2}(B).
+$$
+两份实质量之和为 $1$，给出所需概率。其权重 $1/2$ 位于实值概率的数值空间，既不要求状态环 $\mathbb Z_2$ 含有元素 $1/2$，也不产生第三个支撑状态。证毕。
+
+[^rro94-fixed-transport]: 不动点沿半共轭映射到不动点，参见项目 [不动点半共轭桥梁](https://github.com/the-omega-institute/trureturing/blob/38fe6e8aa82049fd2a568fa0bcd1a1586f1ce61c/D5/S3/Observer/Bridges/FixedPointSemiconjugacy.lean)。此处源变换为 $J_\infty$，目标变换为 $J_2$，假定的桥梁为 $s$；仅由源不动点与目标无不动点就已得到矛盾。
+
+## 94.99 追加锚
