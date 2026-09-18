@@ -111,6 +111,41 @@ class ReuseTests(unittest.TestCase):
                 for call in commands.call_args_list), '[FAIL] lean_tools_must_remain_unused')
         publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
 
+    def test_registered_friend_assembly_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Lean', 'Properties/AssemblyInfo.cs')
+
+    def test_registered_engine_friend_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Engine', 'AssemblyInfo.cs')
+
+    def assert_registered_friend_edit(self, project, friend_path):
+        registration = publication.selection.Selection(ROOT).data['producer_scopes']['lean-report']
+        scope = self.policy['producer_scopes']['lean-report']
+        scope['include'].extend(row for row in registration['include']
+                               if row['pattern'].startswith(f'tools/{project}/'))
+        scope['exclude'] = registration['exclude']
+        friend = f'tools/{project}/{friend_path}'
+        source = f'tools/{project}/ReportProducer.cs'
+        self.write(friend, '[assembly: InternalsVisibleTo("Existing.Tests")]\n')
+        self.write(source, 'class ReportProducer {}\n')
+        self.write(f'tools/{project}/{project}.csproj', '<Project />\n')
+        self.write(f'tools/{project}/packages.lock.json', '{}\n')
+        self.register_toolchain()
+        api = self.receipt()
+        report_bytes = self.report.read_bytes()
+        shutil.rmtree(self.lake.parent)
+
+        self.write(friend, '[assembly: InternalsVisibleTo("Repository.Tests")]\n')
+        with patch.object(publication, 'validate_bundle', wraps=publication.validate_bundle) as validation:
+            self.assertFalse(api.probe(self.root, self.report, None)['needs_lake'])
+            self.assertFalse(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+            self.assertEqual(validation.call_count, 1, 'reuse must validate the complete report')
+        self.assertEqual(report_bytes, self.output.read_bytes())
+
+        self.write(source, 'class ReportProducer { int changed; }\n')
+        self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        self.assertTrue(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
     def test_tool_free_reuse_requires_candidate_identity_not_donor_claims(self):
         self.register_toolchain()
         api = self.receipt()

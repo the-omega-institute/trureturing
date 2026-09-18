@@ -29,6 +29,12 @@ class NativeReuseTests:
         for path in ['tools/lean-inspector/reuse.py', 'tools/lean-inspector/inspect.sh',
                      'tools/scripts/workflow/install-lean-toolchain.sh', 'utility.json']:
             policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
+        friend = 'tools/StrataLint.Lean/Properties/AssemblyInfo.cs'
+        policy['producer_scopes']['lean-report']['include'].append(
+            dict(pattern='tools/StrataLint.Lean/**/*.cs', optional=False))
+        policy['producer_scopes']['lean-report']['exclude'] = json.loads(
+            (ROOT / 'lean-report-inputs.json').read_text())['producer_scopes']['lean-report']['exclude']
+        self.write(friend, '[assembly: InternalsVisibleTo("Existing.Tests")]\n')
         # Simulate activating the installed pinned toolchain only after a miss;
         # ensuing report/default work still runs the real compiler and Lake.
         self.write('tools/scripts/workflow/install-lean-toolchain.sh',
@@ -59,6 +65,7 @@ class NativeReuseTests:
         (self.root / 'bin/python3').symlink_to(sys.executable)
         self.env['PATH'] = str(self.root / 'bin') + ':/usr/bin:/bin:/usr/sbin:/sbin'
         self.env['LAKE_BIN'] = ''
+        self.write(friend, '[assembly: InternalsVisibleTo("Repository.Tests")]\n')
         reused = self.inspect()
         self.assertFalse((self.root / 'tool-installs').exists(), '[FAIL] reuse_must_not_activate_toolchain')
         self.assertNotIn('phase=ensure status=started', reused.stderr, '[FAIL] heavy_cache_not_required')
