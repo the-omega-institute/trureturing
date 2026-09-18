@@ -709,3 +709,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Six actual cells close the last fallback comparison](profile-notes/240-six-actual-cells-close-the-last-fallback-comparison.md)
 - [One original J head controls complete square and factorial moments](profile-notes/241-one-original-j-head-controls-complete-square-and-factorial-moments.md)
 - [The complete J survival and linear heads retain one late split](profile-notes/242-the-complete-j-survival-and-linear-heads-retain-one-late-split.md)
+- [All original J costs have exact moment envelopes and a method boundary](profile-notes/243-all-original-j-costs-have-exact-moment-envelopes-and-a-method-boundary.md)
