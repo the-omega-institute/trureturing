@@ -1,0 +1,6 @@
+**推论 AT3。**
+
+$$
+\sum_{n\ge0}|f_n-\widetilde f_n|\le C_q(\theta)\delta.
+$$
+

@@ -1,0 +1,2 @@
+**Proof.** Pushforward is linear, and $T_\#(T^j)_\#=(T^{j+1})_\#$. Applying $P_p$ to the asserted formula and collecting adjacent terms proves the next case by Pascal's identity; the case $n=0$ is the identity. The phase formula follows from $HT^j=R^jH$. Invariance follows from Theorem 36.2, and the semigroup identity follows from composition of powers of the same operator. The split formulas follow by iterating the identities of Theorem 20.4 until the seam and then using $T^jZ(0)=Z(j)$. $\square$
+

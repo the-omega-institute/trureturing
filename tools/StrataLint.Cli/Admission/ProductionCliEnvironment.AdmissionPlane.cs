@@ -6,7 +6,7 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
-    // Current paths use candidate FILEMAP; deleted endpoints use protected-base FILEMAP.
+    // Current paths use candidate FILEMAP; snapshot-confirmed deletions use protected-base FILEMAP.
     // Required manifests must be available and valid before canonical validation.
     private static readonly RuleDescriptor AdmissionPlaneRule = new(
         RuleId.CreateKnown(29),

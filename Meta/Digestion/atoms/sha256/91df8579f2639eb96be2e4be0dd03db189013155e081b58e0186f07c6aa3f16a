@@ -1,0 +1,4 @@
+则$W$等距，当且仅当
+$$
+\delta_{f(s),f(t)}\langle e_s,e_t\rangle=\delta_{s,t}\qquad(s,t\in S).
+$$

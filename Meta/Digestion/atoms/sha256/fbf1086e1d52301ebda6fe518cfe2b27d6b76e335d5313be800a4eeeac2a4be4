@@ -1,0 +1,36 @@
+**theorem 49.8（无限阈值时的全部边界公式与非单位消失）。** 设 $t=\infty$ 且 $D$ Carmichael 闭合。仍以定义 49.6 与 theorem 49.6.1 定义 $E(x,z)$ 与 $E(a,z)$。则
+$$
+\operatorname{Pow}_{\infty,D}(a,b)=j(a^b),
+\qquad a,b\in\mathbb N_0;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,0)=j(1),
+\qquad x\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(x,b)=x^b\in R_D,
+\qquad x\in R_D,\quad b\ge1;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(0,z)=j(0),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(1,z)=j(1),
+\qquad z\in R_D;
+$$
+$$
+\operatorname{Pow}_{\infty,D}(a,z)=E(a,z),
+\qquad a\ge2,\quad z\in R_D;
+$$
+以及
+$$
+\operatorname{Pow}_{\infty,D}(x,z)=E(x,z),
+\qquad x,z\in R_D.
+$$
+若 $x$ 的模 $p$ 坐标为零，则最后一式的全部模 $p^e$ 坐标均为零，即
+$$
+E(x,z)\equiv0\pmod{p^e}
+$$
+对每个有限 $p^e\mid D$ 成立。这里 $j(0),j(1)$ 始终是环境中的孤立自然数点，而 $E(x,z)$ 属于边界环 $R_D$。
+

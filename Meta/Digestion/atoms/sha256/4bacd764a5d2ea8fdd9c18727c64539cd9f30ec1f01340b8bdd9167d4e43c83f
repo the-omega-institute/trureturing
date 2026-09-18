@@ -1,0 +1,5 @@
+We use the exact positional cylinder intervals and finite cut sets from Theorem 20.2. We also retain the one-sided normalization of Theorem 20.7:
+$$
+\Phi(0_K)=w,\qquad \Phi(x_1^-)=0w,\qquad \Phi(x_1^+)=1w,
+$$
+where $w$ is the characteristic mechanical word with slope and intercept $\alpha^2$. 

@@ -1,0 +1,23 @@
+**定义 67.0（有限关系网络、差分与锚点）。**
+
+设 $G=(V,E)$ 为有限简单无向图：$V$ 是有限集合，
+$$
+E\subseteq\{\{u,v\}:u,v\in V,\ u\neq v\},
+$$
+因此不含自环与平行边。允许 $V=\varnothing$ 与 $E=\varnothing$。令 $\mathbb F_2=\{0,1\}$，加法均模 $2$。顶点配置空间与边标签空间分别为
+$$
+C^0(G)=\mathbb F_2^V,\qquad C^1(G)=\mathbb F_2^E.
+$$
+定义边差分
+$$
+(\delta x)_{\{u,v\}}=x_u+x_v.
+$$
+把孤立顶点也计为连通分量；记分量数为 $c(G)$，约定 $c(\varnothing,\varnothing)=0$。若每个非空连通分量 $K$ 选一根 $o_K$，则向量
+$$
+(x_{o_K})_K\in\mathbb F_2^{c(G)}
+$$
+称为锚点。对一条简单循环 $C=e_1\cdots e_m$，定义其标签奇偶为
+$$
+\langle y,C\rangle=\sum_{i=1}^m y_{e_i}\in\mathbb F_2.
+$$
+

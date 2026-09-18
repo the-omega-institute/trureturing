@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:576c9aab91b879bcbb2dfaf923dd99aca63a24b73a17f3f3f62540482cac46de
+  normalized_sha256: sha256:576c9aab91b879bcbb2dfaf923dd99aca63a24b73a17f3f3f62540482cac46de
+cas_ref: sha256:576c9aab91b879bcbb2dfaf923dd99aca63a24b73a17f3f3f62540482cac46de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只限定尾空间实现定理的适用范围，明确非线性控制与后选择还需单独建模，没有独立待证命题。
+    previous_atom_id: 5868c2c3afd047064146abc040fc27845fc2101ed80dd8dea1495b48e97a54a4
+    next_atom_id: 53c69566d99883cce1e85027beda56334fe51298ede8377891ee9cc4baa10526

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb6cc20fc8bc844d973dc7e5afbec1a4473275a81f465e130aea221d3072ee87
+  normalized_sha256: sha256:bb6cc20fc8bc844d973dc7e5afbec1a4473275a81f465e130aea221d3072ee87
+cas_ref: sha256:bb6cc20fc8bc844d973dc7e5afbec1a4473275a81f465e130aea221d3072ee87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶以“同距取较小编号”约定选择，并用“在旧历史”后的递推定义重启编号；它没有说该编号等于全历史新机标签，也未给出准确性保证，属于确定性规则。
+    previous_atom_id: 8ae23d5f084747ddbe6665beba5ebbf89823600e894538466b9c1a77eeee04b9
+    next_atom_id: ac32f6197778f9cb42df9dfdf669fd8a1d5b1d895c8adf5c771094bafa6525c6

@@ -1,0 +1,10 @@
+**theorem 57.3（轨道分类、零稳定子与 Feller 核）。** $R,U,I$ 都是紧可度量空间，$\rho:R\to I$ 与 $s:I\to R$ 连续，$\oplus:I^2\to I$ 连续。对每个 $a\in I$，
+$$
+\rho^{-1}(a)=U\,s(a).
+$$
+其稳定子恰为闭子群
+$$
+H_a=\{u\in U:u_p=1\ \text{对每个 }a_p<\infty\},
+$$
+而在 $a_p=\infty$ 的坐标上 $u_p$ 任意。轨道 $U\,s(a)$ 与 $U/H_a$ 同胚，$m_a$ 是该轨道上唯一的 $U$-不变概率。并且 $a\mapsto m_a$ 是 Feller Markov 核，$k:I^2\leadsto I$ 也是 Feller Markov 核。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2198f6cef89c8571ba3e53618f9a8233134a487a254883f26ad3aa035317af1a
+  normalized_sha256: sha256:2198f6cef89c8571ba3e53618f9a8233134a487a254883f26ad3aa035317af1a
+cas_ref: sha256:2198f6cef89c8571ba3e53618f9a8233134a487a254883f26ad3aa035317af1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “36.2 成熟文献的具体前提”读作“40.2”纠正书目小节编号，未替代被引理论的前提证明；它没有数学定义或偷带结论，可终结为编辑说明。
+    previous_atom_id: a5846a59bf09e6525d0743ed0775325b17db21970299a0cae784f275df97ab79
+    next_atom_id: 5d663881df48608f8e4abeed4f6533d417adb0d847589065b300fc2fc6452fce

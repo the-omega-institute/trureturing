@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d81f0489b325248adc9dc9d18fbc0439654f1938952a133a13c7b87a0b7816e9
+  normalized_sha256: sha256:d81f0489b325248adc9dc9d18fbc0439654f1938952a133a13c7b87a0b7816e9
+cas_ref: sha256:d81f0489b325248adc9dc9d18fbc0439654f1938952a133a13c7b87a0b7816e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明中的“逐步费用差受”由两段误差三角界取得，“对有限和使用三角不等式”由 Finset.abs_sum_le_sum_abs 实现；“预设合法性与步数一致”限定有定义的同长序列，没有把无定义路径纳入求和。这里是已验推导说明，不是夹带断言的定义，仓内无冻结 GID。
+    previous_atom_id: 3991f7ce9af788ff17b413117eee6d9af27356a2606f155203640876f3347f69
+    next_atom_id: e852c4264a676db410127470ce6ef28a323d28b52ed013810bde6707d887be88

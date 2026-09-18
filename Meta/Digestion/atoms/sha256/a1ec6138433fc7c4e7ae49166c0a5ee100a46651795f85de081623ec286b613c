@@ -1,0 +1,27 @@
+**theorem 28.11 (The Haar lift and the proper atomic completion).** Let $\lambda$ be normalized Haar measure on the original circle. Its existence as a regular probability measure follows from the classical Haar theorem; see [Tornier, Definition 2.1, Theorem 2.2 and Proposition 2.9](https://arxiv.org/html/2006.10956v1). Then
+$$
+\mathfrak m=L_t\lambda=s_\#\lambda
+$$
+is a non-atomic probability measure on $K$, independent of $t$ and independent of the branch choices at the split phases. It satisfies
+$$
+H_\#\mathfrak m=\lambda,\qquad R_t\mathfrak m=0,\qquad
+\mathfrak m\star_t\mathfrak m=\mathfrak m.
+$$
+The atomic measures form a closed proper subalgebra
+$$
+M_{\mathrm{at}}(K)\cong\ell^1(K_{\mathrm d})\subsetneq M(K),
+$$
+with the isometric atomic embedding and the multiplication of Section 27. Under $\Phi_t$, this entire atomic subalgebra corresponds to
+$$
+\mathcal C_{\mathrm{at}}=M_{\mathrm{at}}(\mathbb T)\oplus\mathcal S.
+$$
+For every atomic signed measure $\alpha$ on $K$, the exact individual distance is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}}.
+$$
+Consequently,
+$$
+\operatorname{dist}_{\mathrm{TV}}(\mathfrak m,M_{\mathrm{at}}(K))=1.
+$$
+The distance to each atomic probability measure is two. Thus the distance one is a distance to the atomic signed subspace, not the distance to every member of that subspace.
+

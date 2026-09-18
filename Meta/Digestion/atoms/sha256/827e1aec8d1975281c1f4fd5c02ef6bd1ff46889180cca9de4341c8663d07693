@@ -1,0 +1,7 @@
+**Proof.** CRT gives the factors from the moduli 16,9,5,7. Their unit
+groups have the listed cyclic factors; their orders multiply to1152
+and their exponents have least common multiple twelve. At higher powers,
+the four local exponents are 2^(4s-2), 2*3^(2s-1), 4*5^(s-1) and
+6*7^(s-1). Their least common multiple is S9. These are the standard
+prime-power unit-group formulas, specialized to the actual modulus.
+

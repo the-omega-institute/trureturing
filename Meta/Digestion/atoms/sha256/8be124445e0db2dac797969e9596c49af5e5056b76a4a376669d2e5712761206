@@ -1,0 +1,67 @@
+**命题 157.1（有限词排除阈值与必要状态数）。** 固定 $0<p<1/2$，置
+$$
+d=1-2p,\qquad \Delta=\frac d2,\qquad
+\kappa=\frac{1-p}{p}>1.
+$$
+沿用命题153.1、156.1的时间齐次无控制协议：旧隐藏位 $i\in\{0,1\}$ 先发射报告 $b$，随后以概率 $0\le r<1/2$ 翻转为新隐藏位 $j$，其中
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,
+\qquad
+P_{ji}(r)=\begin{cases}1-r,&j=i,\\r,&j\ne i.\end{cases}
+$$
+初态为 $I_2/2$，词按时间顺序书写。列向量、词质量和新隐藏位的后验为
+$$
+v_\varnothing^{(r)}=\binom{1/2}{1/2},\qquad
+v_{wb}^{(r)}=P(r)\operatorname{diag}(c_{b0},c_{b1})v_w^{(r)},
+\qquad Z_w^{(r)}=\mathbf1^{\mathsf T}v_w^{(r)},\qquad
+q_w^{(r)}=\frac{(v_w^{(r)})_1}{Z_w^{(r)}}.
+$$
+命题156.1的正质量论证给出 $Z_w^{(r)}\ge p^{|w|}>0$，下一报告为零的条件概率是
+$$
+f_r(w)=\frac{Z_{w0}^{(r)}}{Z_w^{(r)}}=p+dq_w^{(r)}\in[p,1-p],
+\qquad f_r(\varnothing)=\frac12.
+$$
+
+观察者仍严格取命题156.1的类别：$\mathcal O=(S,s_0,T_0,T_1,t)$，$S$ 非空有限，初态 $s_0\in S$、确定性全函数 $T_b:S\to S$ 及静态实数读出 $t:S\to[0,1]$ 固定，
+$$
+s_{\mathcal O}(\varnothing)=s_0,\qquad
+s_{\mathcal O}(wb)=T_b(s_{\mathcal O}(w)),\qquad
+\mathcal E_r(\mathcal O)=\sup_{w\in\{0,1\}^{*}}
+|t(s_{\mathcal O}(w))-f_r(w)|.
+$$
+全部可读的演化记忆均计入 $S$，不另有可读历史、时钟、隐藏位或演化实数寄存器；固定表可含任意精确实数，并可对每个 $r$ 分别设计，但同一张表须适用于包括空词及任意稀有历史在内的全部有限词。$N_{\min}^{(r)}(\varepsilon)$ 是使 $\mathcal E_r(\mathcal O)\le\varepsilon$ 的最小有限状态数，不存在可行有限观察者时取 $\infty$。
+
+固定 $0<\varepsilon<\Delta$，令
+$$
+\gamma=\frac{\Delta-\varepsilon}{4}>0,
+\qquad K\in\mathbb Z_{\ge1},\qquad
+\kappa^K\ge\frac{3\Delta+\varepsilon}{\Delta-\varepsilon},
+\qquad H_N=2N+3K\quad(N\in\mathbb Z_{\ge1}).
+$$
+这样的 $K$ 存在，且只依赖 $p,\varepsilon$。对每个整数 $N\ge1$ 及每个 $0<r<1/2$，有较强的有限词排除结论
+$$
+p r(\kappa^{H_N}-1)\le\gamma
+\quad\Longrightarrow\quad
+\forall\mathcal O\ (|S|\le N),\quad
+\exists w\in\{0,1\}^{*},\quad |w|\le H_N,\quad
+|t(s_{\mathcal O}(w))-f_r(w)|\ge\varepsilon+\gamma>\varepsilon.
+$$
+特别地，原阈值
+$$
+0<r<\frac12,\qquad
+r\le\frac{\gamma p^{H_N}}{H_N}
+$$
+也排除每个至多 $N$ 状态的观察者，包含右侧阈值的等号。每个可行有限观察者的状态数 $m$ 必须严格满足
+$$
+m>\frac12\left(
+\frac{\log(1+\gamma/(p r))}{\log\kappa}-3K\right).
+$$
+同一不等式适用于扩展值 $m=N_{\min}^{(r)}(\varepsilon)$，并且
+$$
+\liminf_{r\downarrow0}
+\frac{N_{\min}^{(r)}(\varepsilon)}{\log(1/r)}
+\ge\frac1{2\log\kappa}
+>\frac1{2\log(1/p)}.
+$$
+所有对数均为自然对数；这里只断言必要下界，不断言相配的上界或最优速率。
+

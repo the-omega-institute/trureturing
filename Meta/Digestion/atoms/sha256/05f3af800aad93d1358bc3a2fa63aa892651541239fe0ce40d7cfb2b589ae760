@@ -1,0 +1,27 @@
+## AT.3 两个实际有限模态族的目标误差
+
+**假设。** 设
+
+$$
+f_n=\sum_{i=1}^d c_i\lambda_i^n,
+\qquad \widetilde f_n=\sum_{i=1}^e\widetilde c_i\widetilde\lambda_i^n,
+$$
+
+其中节点为实数，$|\lambda_i|,|\widetilde\lambda_i|\le\theta<1$。权重允许有符号或为零，节点允许重复，两个模型可以具有不同模态数。令 $q=d+e$，并假设 $|f_i-\widetilde f_i|\le\delta$ 对 $i<q$ 成立。
+
+**推论 AT3。**
+
+$$
+\sum_{n\ge0}|f_n-\widetilde f_n|\le C_q(\theta)\delta.
+$$
+
+**证明。** 差序列被所有节点对应的一次移位因子的乘积消去，应用 AT2。也可以对实际模态逐一使用
+
+$$
+f_{n+1}-a f_n=\sum_i c_i(\lambda_i-a)\lambda_i^n,
+$$
+
+其中节点为 $a$ 的选定项恰好消失。该恒等式对零权重和重复节点同样成立。证毕。
+
+**注。** 无分离条件下的稀疏矩恢复已有相关研究：Fan 与 Li，*Efficient Algorithms for Sparse Moment Problems without Separation*，COLT 2023，PMLR 195:3510–3565，arXiv:2207.13008。该文讨论混合分布的运输距离恢复；AT3 的目标是整个输出序列的绝对误差和。
+

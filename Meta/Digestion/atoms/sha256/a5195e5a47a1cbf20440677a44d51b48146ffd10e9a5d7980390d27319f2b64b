@@ -1,0 +1,15 @@
+**定理 PN7。** 两个 $P_\pm$ 都是每项严格为正的随机矩阵，具有共同的平稳分布 $\bar\pi(i,\sigma)=\pi_i/2$，且满足细致平衡。作为 $L^2(\bar\pi)$ 上的算子，它们是正算子，常数之外的谱包含于 $[\kappa/8,5\kappa/8]$。同一个中心化单位观察
+
+$$
+e(i,\sigma)=\frac{\sigma\boldsymbol1_{\{i=0\}}}{\sqrt{\pi_0}}
+$$
+
+满足
+
+$$
+\langle e,P_\pm^ne\rangle_{\bar\pi}=s_n(K_\pm),
+\qquad \|e\|_\infty\le\sqrt{5/4}.
+$$
+
+该观察的目标记忆核也等于 PN3 的 $m_n^\pm$。
+

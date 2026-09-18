@@ -1,0 +1,36 @@
+**theorem 40.2 (Binomial law, Dirac reduction, monotonicity, and deterministic parameters).** For every finite signed Borel measure $\eta$,
+$$
+P_p^n\eta
+ =\sum_{j=0}^n b_{n,p}(j)(R_\theta^j)_\#\eta,
+\qquad
+P_p^{n+r}=P_p^nP_p^r,
+\qquad
+P_p^n\lambda=\lambda.
+$$
+For every $N\ge2$, $n,r\ge0$, and $p\in[0,1]$,
+$$
+e_{N,\theta,p}(n)
+ =\sup_{\eta\in\mathcal P(\mathbb T)}
+   \|(\pi_{N,\theta})_\#P_p^n\eta-\boldsymbol\mu\|_1
+ =\max_{x\in\mathbb T\setminus\mathcal G_\theta}
+   D_{N,\theta,p}(n,x),
+$$
+$$
+e_{N,\theta,p}(n+r)\le e_{N,\theta,p}(n),
+\qquad
+e_{N,\theta,p}(n)\le e_{N+1,\theta,p}(n).
+$$
+Moreover,
+$$
+e_{N,\theta,p}(0)=2(1-\mu_{\min}),
+\qquad
+e_{N,\theta,0}(n)=e_{N,\theta,1}(n)=2(1-\mu_{\min}),
+$$
+$$
+\lim_{p\downarrow0}e_{N,\theta,p}(n)
+ =\lim_{p\uparrow1}e_{N,\theta,p}(n)
+ =\sup_{0<p<1}e_{N,\theta,p}(n)
+ =2(1-\mu_{\min}).
+$$
+Consequently $\tau_{N,\theta,0}(\varepsilon)=\tau_{N,\theta,1}(\varepsilon)=+\infty$. For $N=1$, the error and mixing time are identically zero for every parameter. The first-passage definition of $\tau$ agrees with requiring the error bound at all subsequent times.
+

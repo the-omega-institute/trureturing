@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa94c8d8b36799e1a20d990685b6c40a2e82583fef20b89a64bc74e7fe38e60b
+  normalized_sha256: sha256:aa94c8d8b36799e1a20d990685b6c40a2e82583fef20b89a64bc74e7fe38e60b
+cas_ref: sha256:aa94c8d8b36799e1a20d990685b6c40a2e82583fef20b89a64bc74e7fe38e60b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“求和只含两个有限支撑的 Cartesian 积”解释有限双和，随后“支撑包含于”两支撑之和是实际闭包命题，“故仍有限”不是定义。AddMonoidAlgebra.support_coeff_mul_subset 直接给出该包含，有限性由两 Finset 的和承载；仓内无冻结 GID，不以定义替代证明。
+    previous_atom_id: b2276a8920d031fc609caf86c10eca658197ab302520cbb5c373d5d4eea82675
+    next_atom_id: 5ff0d764fbc8652c93c24ca4bdd375986792af5c1229a87bece8f817b7a1fab6

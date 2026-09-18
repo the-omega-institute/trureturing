@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31c3fdfe6fc1a38fbc2fe791877788043191e69ad63d489d9e501b76bacf10cb
+  normalized_sha256: sha256:31c3fdfe6fc1a38fbc2fe791877788043191e69ad63d489d9e501b76bacf10cb
+cas_ref: sha256:31c3fdfe6fc1a38fbc2fe791877788043191e69ad63d489d9e501b76bacf10cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶写“项目定义”有限分区和并“构造加权算子”，两条式子均为有限求和的记号约定；对角归属和固定性已拆出，本叶未通过定义宣称分母非零、单位迹或物理态存在。
+    previous_atom_id: 57d6114b6f0665c419322fcb453bea9b39f77ca9b0c9c43b400aeed654992681
+    next_atom_id: bcc3b6e31888d9e99ac6e8ed620f195235274e498439df466479c482484194c9

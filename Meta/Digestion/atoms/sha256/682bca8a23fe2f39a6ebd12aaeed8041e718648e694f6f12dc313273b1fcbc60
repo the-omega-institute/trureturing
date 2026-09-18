@@ -1,0 +1,19 @@
+**theorem 37.6 (Intrinsic topology, the doubled circle, and nonmetrizability).** Choose $\varepsilon_*>0$ smaller than $1/4$ such that the phase arc of radius $\varepsilon_*$ around $E_1$ contains no other depth-one cut. For $0<\varepsilon<\varepsilon_*$, define subsets of the actual operator space by
+$$
+V_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}
+\cup\{T^n:n\delta\in I_s(\theta,\varepsilon)\}.
+$$
+These sets form a neighborhood base at $P_\theta^s$. The singletons $\{T^n\}$ form neighborhood bases at the finite iterates.
+
+In particular, the intrinsic neighborhood base on $\mathscr D$ is
+$$
+U_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}.
+$$
+Thus $\mathscr D$ is homeomorphic to the circle split at every phase, with the circular lexicographic order in which $\theta^-$ immediately precedes $\theta^+$. This is not the product topology on $\mathbb T\times\Sigma$. The full operator topology is obtained by inserting the isolated point $T^n$ between $P_{n\delta}^-$ and $P_{n\delta}^+$ at every natural phase.
+
+Both $\mathscr E$ and $\mathscr D$ have cardinality $2^{\aleph_0}$. The space $\mathscr E$ is first countable and has the countable dense set $\mathcal I$, but it is not metrizable. Each fixed-sign subset of $\mathscr D$ is dense in $\mathscr D$.[^rro37_double][^rro37_functions]
+

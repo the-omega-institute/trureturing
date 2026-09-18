@@ -1,0 +1,86 @@
+### 16.9 推论：有限支撑情形的一致次数界
+
+设 $d\geq1$、$m,\ell\geq0$，并给定三个有限原子族
+
+\[
+x_i\in[0,1],\ u_i\geq0\quad(1\leq i\leq d),\qquad
+z_j\in[0,1],\ a_j\geq0\quad(1\leq j\leq m),
+\]
+
+\[
+y_r\leq b,\ v_r\geq0\quad(1\leq r\leq\ell).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*=x_{i_*}>b$、$u_{i_*}\geq\eta>0$，并且
+
+\[
+\sum_{j=1}^{m}a_j\leq\tau,\qquad \varepsilon\geq0,
+\]
+
+以及对每个整数 $0\leq k\leq2d-1$ 都有
+
+\[
+\left|
+\sum_{i=1}^{d}u_i x_i^k+
+\sum_{j=1}^{m}a_j z_j^k-
+\sum_{r=1}^{\ell}v_r y_r^k
+\right|\leq\varepsilon.
+\tag{16.12}
+\]
+
+这里空原子族的和取零。则
+
+\[
+\boxed{
+\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.
+}
+\tag{16.13}
+\]
+
+**证明。** 令 $S=\{i:x_i\leq b\}$、$s=|S|$，并置
+
+\[
+q(t)=(t-b)\prod_{i\in S}(t-x_i)^2,
+\qquad D=2s+1.
+\]
+
+由于 $i_*\notin S$，有 $D\leq2d-1$。多项式 $q$ 的全部 $D$ 个线性因子的根都属于 $[0,b]\subseteq[0,1]$。对保留族，若 $i\in S$，则 $q(x_i)=0$；若 $i\notin S$，则 $q(x_i)\geq0$。对比较族有 $y_r\leq b$，故 $q(y_r)\leq0$。再令 $\delta=x_*-b$，则 $0<\delta\leq1$，并且
+
+\[
+q(x_*)=(x_*-b)\prod_{i\in S}(x_*-x_i)^2\geq\delta^D.
+\]
+
+另一方面，对每个 $z_j\in[0,1]$，每个线性因子的绝对值都不超过一，所以 $|q(z_j)|\leq1$。定义有限和线性泛函
+
+\[
+L(f)=\sum_{i=1}^{d}u_i f(x_i)+
+\sum_{j=1}^{m}a_j f(z_j)-
+\sum_{r=1}^{\ell}v_r f(y_r).
+\]
+
+利用上述符号、$u_{i_*}\geq\eta$ 以及 $\sum_j a_j\leq\tau$，得到
+
+\[
+\eta\delta^D\leq L(q)+\tau\leq |L(q)|+\tau.
+\tag{16.14}
+\]
+
+现将 $q$ 的因子按次序写成 $\prod_{h=1}^{D}(t-c_h)$，其中 $0\leq c_h\leq1$。式 (16.12) 即 $|L(t^k)|\leq\varepsilon$。逐个乘入因子，并使用
+
+\[
+|L((t-c_h)p)|\leq |L(tp)|+c_h|L(p)|,
+\]
+
+作归纳可得：只要 $j+k\leq2d-1$，前 $j$ 个因子的乘积再乘 $t^k$ 后，其 $L$ 值的绝对值不超过 $2^j\varepsilon$。取 $j=D$、$k=0$，便有
+
+\[
+|L(q)|\leq2^D\varepsilon.
+\]
+
+代入式 (16.14)，再用 $0<\delta\leq1$、$D\leq2d-1$ 与 $\varepsilon\geq0$，即得
+
+\[
+\eta\delta^{2d-1}\leq\eta\delta^D
+\leq2^D\varepsilon+\tau
+\leq2^{2d-1}\varepsilon+\tau.
+\]

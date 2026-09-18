@@ -1,0 +1,43 @@
+**theorem 28.10 (Atomic and non-atomic signed parts are linear projections).** Let $X$ be a compact metric space. Every $\mu\in M(X)$ has a unique decomposition
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},\qquad
+\mu_{\mathrm{at}}=\sum_{x\in X}\mu(\{x\})\delta_x,
+$$
+where the sum has at most countably many nonzero terms and converges in total variation, while $\mu_{\mathrm{na}}$ is non-atomic. Here non-atomic means that its variation measure has no atoms, not that it is absolutely continuous with respect to Haar measure. The two parts are mutually singular in variation and satisfy
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}+\|\mu_{\mathrm{na}}\|_{\mathrm{TV}}.
+$$
+Both assignments are bounded linear projections of norm at most one. Their ranges $M_{\mathrm{at}}(X)$ and $M_{\mathrm{na}}(X)$ are closed.
+
+On the circle, $M_{\mathrm{at}}(\mathbb T)$ is a convolution subalgebra, $M_{\mathrm{na}}(\mathbb T)$ is a convolution ideal, and
+$$
+(\nu*_{\mathbb T}\xi)_{\mathrm{at}}
+=\nu_{\mathrm{at}}*_{\mathbb T}\xi_{\mathrm{at}}.
+$$
+In particular,
+$$
+a:M(\mathbb T)\to\mathbb R,\qquad a(\nu)=\nu_{\mathrm{na}}(\mathbb T)
+$$
+is a bounded linear functional with $|a(\nu)|\le\|\nu\|_{\mathrm{TV}}$, and vanishes on every atomic measure. It is not asserted to be multiplicative. This classical measure-algebra decomposition is recalled in [Daws, §3, the paragraph immediately preceding Lemma 3.7](https://arxiv.org/html/0904.0436v2).
+
+**Proof.** For every positive integer $j$, there are only finitely many points with $|\mu(\{x\})|\ge1/j$, since any finite collection of them contributes its absolute masses to a variation bound. Thus
+$$
+A_\mu=\{x:\mu(\{x\})\ne0\}
+$$
+is countable and
+$$
+\sum_{x\in A_\mu}|\mu(\{x\})|\le\|\mu\|_{\mathrm{TV}}.
+$$
+The atomic series is therefore a measure in $M(X)$ and equals the restriction of $\mu$ to $A_\mu$. Its difference from $\mu$ is the restriction to $X\setminus A_\mu$. Since $|\mu|(\{x\})=|\mu(\{x\})|$, the latter restriction has zero variation on every singleton. The two restrictions are mutually singular, which proves the norm identity.
+
+On a compact metric space, a finite positive Borel measure with no singleton atoms has no atoms at all. Indeed, construct refining finite Borel partitions whose mesh tends to zero. If a Borel set were an atom of positive mass, in each partition exactly one cell would contain its full mass. These cells can be selected nested. Continuity from above then gives full positive mass to their intersection with the atom, while the vanishing mesh makes that intersection contain at most one point. This would be a singleton atom. Apply this argument to the variation of the non-atomic restriction.
+
+Linearity of the atomic part does not require the sets $A_\mu$ to be fixed as $\mu$ varies. For two measures, work on the countable union of their atomic sets. At every point, singleton evaluation is linear; the corresponding absolutely convergent atomic series is therefore linear as well. The non-atomic part is the difference from the identity and is consequently linear. The norm identity proves contractivity. Uniqueness follows because the non-atomic part has zero singleton masses and an atomic measure is determined by its singleton masses. The projection identities and closed ranges follow.
+
+On $\mathbb T$, the convolution of two atomic measures is the absolutely convergent series of products of their atom coefficients at summed phases, so it remains atomic. If $\nu$ is non-atomic and $\xi$ is arbitrary, signed Fubini gives, for each $\theta$,
+$$
+(\nu*_{\mathbb T}\xi)(\{\theta\})
+=\int_{\mathbb T}\nu(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+Thus this convolution is non-atomic. Commutativity handles the other order. Expanding the two atomic/non-atomic decompositions proves the atomic-part convolution identity. Finally, $a$ is the composition of the non-atomic projection and the mass functional, both contractive linear maps. QED.
+

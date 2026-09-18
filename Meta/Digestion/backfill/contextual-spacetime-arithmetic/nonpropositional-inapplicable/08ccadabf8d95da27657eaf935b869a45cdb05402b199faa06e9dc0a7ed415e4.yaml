@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08ccadabf8d95da27657eaf935b869a45cdb05402b199faa06e9dc0a7ed415e4
+  normalized_sha256: sha256:08ccadabf8d95da27657eaf935b869a45cdb05402b199faa06e9dc0a7ed415e4
+cas_ref: sha256:08ccadabf8d95da27657eaf935b869a45cdb05402b199faa06e9dc0a7ed415e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句是章节标题、有限支撑整数函数及增广和的定义，或共同坐标系和单点函数的记号约定，无独立待证明命题。
+    previous_atom_id: c9f696d7457a8bcabfba9f5a990cf1e61ab406688c94bddda258da314119a497
+    next_atom_id: 3adf8236b94162ebf5b42c9d44163b5c4b8d38673eef76734655975abfb7b5f6

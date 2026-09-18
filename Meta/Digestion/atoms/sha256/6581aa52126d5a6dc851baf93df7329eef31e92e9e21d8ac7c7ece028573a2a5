@@ -1,0 +1,2 @@
+**theorem 48.7 (Uniform decidability over the full compact semiring).** There is an algorithm deciding $K\models\exists\mathbf x\,\Sigma(\mathbf x)$ for every input of Definition 48.0. The same holds for finite existential disjunctions of such conjunctions.
+

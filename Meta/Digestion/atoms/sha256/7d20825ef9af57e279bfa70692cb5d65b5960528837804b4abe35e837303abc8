@@ -1,0 +1,20 @@
+### 102.3 两步交换曲率是顺序的最小见证
+
+对两个事件 $$P,Q$$，`time_ordered_two_event_swap_curvature` 证明：交换次序时，标量输出完全相同，而记忆坐标的差为
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)\widetilde b_P
+-
+(a-\lambda_P)\widetilde b_Q.
+$$
+
+也就是
+
+$$
+\boxed{
+M_a(PQ)-M_a(QP)=\Delta_{P,Q}.
+}
+$$
+

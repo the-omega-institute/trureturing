@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:958e9f55627e11f25288ef9f98f5da2b249599869d72b77d996b9e3883cf982f
+  normalized_sha256: sha256:958e9f55627e11f25288ef9f98f5da2b249599869d72b77d996b9e3883cf982f
+cas_ref: sha256:958e9f55627e11f25288ef9f98f5da2b249599869d72b77d996b9e3883cf982f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶以“本节复用”列出既有结果，明确把后续组合称为“开放研究桥接，不冒充已有 Lean 定理”；这是文献归属和证明范围声明，没有新增数学断言，亦未用定义隐藏桥接已完成的主张。
+    previous_atom_id: c85c027e05df2032ef6a009463669e4c3b3ba7718537a158e397d6025cd76650
+    next_atom_id: 5af117df7dd08665382387104e64a9e044d08ef94f429971d9d2c995f6eb7d6f

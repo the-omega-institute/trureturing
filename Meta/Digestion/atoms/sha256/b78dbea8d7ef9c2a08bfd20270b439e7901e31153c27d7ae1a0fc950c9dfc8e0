@@ -1,0 +1,18 @@
+**theorem 42.6 (Exact oriented-flag classification).** An oriented flag of length $r$ in $V$ means
+$$
+0=L_0<L_1<\cdots<L_r,\qquad \dim L_j=j,
+$$
+together with an orientation of each real line $L_j/L_{j-1}$. Such flags, including the empty flag, are in bijection with $S(V)$. A representing list defines $L_j=\operatorname{span}(v_1,\ldots,v_j)$ and declares the class of $v_j$ positive.
+
+More precisely, independent column lists $v=(v_1,\ldots,v_r)$ and $w=(w_1,\ldots,w_s)$ define the same signature if and only if $r=s$ and
+$$
+w=vC,\qquad
+C\in B_r^+,
+\tag{42.9}
+$$
+where $B_r^+$ is the group of invertible upper triangular real matrices with positive diagonal entries. Entries strictly above the diagonal are unrestricted. Thus
+$$
+w_j=\sum_{i\le j}v_iC_{ij},\qquad C_{jj}>0.
+$$
+For a fixed inner product every oriented flag has exactly one compatible orthonormal list.
+

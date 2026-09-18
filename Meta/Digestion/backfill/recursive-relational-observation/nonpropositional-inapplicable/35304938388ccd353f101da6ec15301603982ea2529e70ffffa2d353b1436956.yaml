@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35304938388ccd353f101da6ec15301603982ea2529e70ffffa2d353b1436956
+  normalized_sha256: sha256:35304938388ccd353f101da6ec15301603982ea2529e70ffffa2d353b1436956
+cas_ref: sha256:35304938388ccd353f101da6ec15301603982ea2529e70ffffa2d353b1436956
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句仅限定前述经典谱等式和字符紧致性所用的交换与非零假设并注明来源，属于适用范围说明，没有另加待证明命题。
+    previous_atom_id: 5784e02654c5821206c6eadb6fcc6df3dbc9ecf35adaeaf7e89e55b11afe98ba
+    next_atom_id: 28d36b9f0fa02d51d303c61b39354b333be27db4d139c4387ad3bd0392084c7b

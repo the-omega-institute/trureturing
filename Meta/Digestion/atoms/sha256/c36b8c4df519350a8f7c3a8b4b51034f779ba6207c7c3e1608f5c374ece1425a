@@ -1,0 +1,12 @@
+**theorem 57.6（树上的精确递归与条件单位方向）。** 对定义 57.5 的每个节点 $v$，
+$$
+\operatorname{Law}(\rho(Y_v))=\nu_v
+\qquad\text{且}\qquad
+\operatorname{Law}(Y_v)=\mathcal L\nu_v.
+$$
+尤其所有节点代表值的边缘律均为 $U$-不变。若 $v$ 的两个子节点为 $r,s$，则存在一个处处定义的 Borel 条件核
+$$
+(a,b)\longmapsto m_a\otimes m_b
+$$
+给出 $(Y_r,Y_s)$ 关于 $(\rho(Y_r),\rho(Y_s))$ 的正规条件分布版本；它在 $(\nu_r\otimes\nu_s)$-几乎处处意义下唯一。乘法在标签上是 $\oplus$，且在固定输入标签 $(a,b)$ 下代表乘积具有轨道律 $m_{a\oplus b}$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d68dd836ca8ac1741b1184d056c5ef242165a9273edfb18f697001a2a8d92646
+  normalized_sha256: sha256:d68dd836ca8ac1741b1184d056c5ef242165a9273edfb18f697001a2a8d92646
+cas_ref: sha256:d68dd836ca8ac1741b1184d056c5ef242165a9273edfb18f697001a2a8d92646
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a章此尾句“上面的传播误差证书只要求初始迹先验，不依赖这个可选步长限制”交代两段结果的假设关系；迹不增命题已保留在前叶，这里没有新数值结论或定义中暗含的稳定性保证。
+    previous_atom_id: 7c09d000b54419e7440ce3d5d55ea35d09d41857704dc2daf52d27727a056d76
+    next_atom_id: 324db69c8681cf0e9ba5974d8f4f4839fecc24fe6deaf0f72dbf488da3ad14fd

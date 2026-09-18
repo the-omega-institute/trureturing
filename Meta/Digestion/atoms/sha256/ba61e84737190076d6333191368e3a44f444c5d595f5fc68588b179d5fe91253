@@ -1,0 +1,28 @@
+**假设 23.1（完整纤维与精确支撑契约）。** 本节明确采用以下相位纤维及关系公式。映射 $H:K\to\mathbb T$ 满射；对 $\theta\in E$，
+$$
+H^{-1}(\{\theta\})=\{z_\theta^{+1},z_\theta^{-1}\},
+\qquad z_\theta^{+1}\ne z_\theta^{-1};
+$$
+对 $\theta\notin E$，该纤维只有一点，记为 $k_\theta$。另有
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+\qquad k_0=0_K.
+$$
+正负标记固定采用定义16.3的定向标记。置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{\sigma\},&H(x)\in E,\ x=z_{H(x)}^\sigma,\quad \sigma\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+对全部 $x,y\in K$，以 $\lambda=H(x)+H(y)$ 记输出相位，假设
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:\sigma\in\mathcal S(x)\cup\mathcal S(y)\},&\lambda\in E.
+\end{cases}
+$$
+特别地，两个同号分裂输入只能产生同号输出；任何非分裂输入在分裂输出处允许两个符号。这里采用的是完整输入纤维公式，而不只是输出相位相加。相位前提见[Zeckendorf 理论卷第371—372节，尤其定理372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；定向标记及关系公式见[本卷定义16.3、定理16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+

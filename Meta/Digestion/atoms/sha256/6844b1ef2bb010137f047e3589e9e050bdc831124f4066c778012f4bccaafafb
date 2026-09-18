@@ -1,0 +1,11 @@
+**Theorem.** The following assertions are equivalent:
+
+$$
+\begin{aligned}
+\mathrm{(A)}&\quad \forall m\ge1,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+\mathrm{(B)}&\quad \forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}\tag{PBC2}
+$$
+
+If (A) is false, its least counterexample index is prime and at least seven.
+

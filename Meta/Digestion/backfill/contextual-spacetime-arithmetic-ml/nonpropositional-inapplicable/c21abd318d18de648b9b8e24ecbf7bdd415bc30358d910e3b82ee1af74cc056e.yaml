@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c21abd318d18de648b9b8e24ecbf7bdd415bc30358d910e3b82ee1af74cc056e
+  normalized_sha256: sha256:c21abd318d18de648b9b8e24ecbf7bdd415bc30358d910e3b82ee1af74cc056e
+cas_ref: sha256:c21abd318d18de648b9b8e24ecbf7bdd415bc30358d910e3b82ee1af74cc056e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由有序环的加法移项与乘法分配律，将摘要总费严格小于原总费等价变为原文显示的节省条件，步数保留为自然数，未附加资源最优性结论；仓内无冻结 GID。
+    previous_atom_id: c5a09da1b887eb0ee6043181630a9bd11430ced6e5e1fbf081bc5c0c8552e9c0
+    next_atom_id: cc8f0a7bc7d32c40fe44815825353a6645e411dd3d89d5779172929e9b882e0f

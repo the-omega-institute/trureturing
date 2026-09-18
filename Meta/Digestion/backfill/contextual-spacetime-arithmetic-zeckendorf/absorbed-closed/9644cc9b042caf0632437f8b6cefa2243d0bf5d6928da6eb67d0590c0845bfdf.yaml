@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9644cc9b042caf0632437f8b6cefa2243d0bf5d6928da6eb67d0590c0845bfdf
+  normalized_sha256: sha256:9644cc9b042caf0632437f8b6cefa2243d0bf5d6928da6eb67d0590c0845bfdf
+cas_ref: sha256:9644cc9b042caf0632437f8b6cefa2243d0bf5d6928da6eb67d0590c0845bfdf
+coverage_gids:
+  - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
+    target_statement_id: sha256:cb80fb5140cb6fdba5350cf5ee1fea447acf9c6c2580be6625900403da5fc76e
+receipts:
+  unresolved_subitems: []

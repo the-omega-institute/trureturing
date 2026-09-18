@@ -96,6 +96,36 @@ internal sealed class VerifiedScribeEmissions
             latexRecords);
     }
 
+    private sealed record Material(int Version, ScribeEmissionRecord[] Records, string[] References, ScribeDescribeLatexRecord[] Latex);
+    private static readonly JsonSerializerOptions MaterialOptions = new()
+    {
+        UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow,
+        RespectRequiredConstructorParameters = true, AllowDuplicateProperties = false,
+    };
+    internal string WriteMaterial() => JsonSerializer.Serialize(new Material(1,
+        records.Values.OrderBy(record => record.Gid, StringComparer.Ordinal).ToArray(),
+        declarationReferences.Order(StringComparer.Ordinal).ToArray(), describeLatexRecords.ToArray()), MaterialOptions);
+
+    internal static VerifiedScribeEmissions ReadMaterial(string text, RepositorySnapshot snapshot)
+    {
+        var material = JsonSerializer.Deserialize<Material>(text, MaterialOptions)
+            ?? throw new InvalidDataException("missing Scribe capability material");
+        if (material.Version != 1 || material.Records is null || material.References is null || material.Latex is null)
+            throw new InvalidDataException("invalid Scribe capability material");
+        var definitions = snapshot.Files.Keys.Select(path => path.Value).Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+            && path.EndsWith(".scribe.cs", StringComparison.Ordinal)).Order(StringComparer.Ordinal);
+        if (!definitions.SequenceEqual(material.Records.Select(record => record.DefinitionPath).Order(StringComparer.Ordinal)))
+            throw new InvalidDataException("Scribe material does not cover current definition sources");
+        var verified = Create(material.Records, material.References, material.Latex);
+        foreach (var record in material.Records)
+            if (!snapshot.TryGetFile(record.DefinitionPath, out var definition)
+                || DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256 != record.DefinitionSha256)
+                throw new InvalidDataException("Scribe definition material mismatch: " + record.DefinitionPath);
+        if (material.Latex.Any(record => !material.Records.Any(emission => emission.DefinitionPath == record.DefinitionPath)))
+            throw new InvalidDataException("Scribe LaTeX material has no emission source");
+        return verified;
+    }
+
     internal bool TryGet(string gid, out ScribeEmissionRecord record) =>
         records.TryGetValue(gid, out record!);
 

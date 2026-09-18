@@ -1,0 +1,13 @@
+**命题 69.2（全支持下的预测稳定深度）。** 令 $Y,O$ 是有限非空集合，$\tau:Y\to Y$ 是确定更新，$q:Y\to O$ 是读出。深度 $m$ 的历史词为
+$$
+W_m(y)=\bigl(q(y),q(\tau y),\ldots,q(\tau^m y)\bigr).
+$$
+若两个状态有同一个 $W_m$，却有不同的下一读数 $q(\tau^{m+1}y)$，那么当前历史还不能封闭未来。
+
+记 $\operatorname{predictionStableAt}(m)$ 表示同一 $W_m$ 纤维具有相同的下一读数。若初始概率分布对每个状态都严格为正，则最小预测稳定深度满足
+$$
+\boxed{
+\inf\{m:\operatorname{predictionStableAt}(m)\}
+= \inf\{m:H(q\circ\tau^{m+1}\mid W_m)=0\}.
+}
+$$

@@ -1,0 +1,58 @@
+**theorem 63.10（有限时域的精确指派递推与多项式状态压缩）。** 设
+$$
+S(B,I),\qquad I=\{C_1,\ldots,C_k\}.
+$$
+若这些孩子全为叶，并按
+$$
+m(C_1)\ge\cdots\ge m(C_k)
+$$
+编号，则 $k=1$ 时
+$$
+Q(B,I;t)=m(C_1)
+$$
+对所有 $t\ge0$；而 $k\ge2$ 时
+$$
+Q(B,I;t)=
+\begin{cases}
+\displaystyle\sum_{j=1}^{t}m(C_j),&0\le t<k-1,\\
+\displaystyle\sum_{j=1}^{k}m(C_j),&t\ge k-1.
+\end{cases}
+$$
+其中 $t=0$ 时空和为零。
+
+若这些孩子全为非叶，则对每个整数 $t\ge0$，
+$$
+Q(B,I;t)
+=
+\max_{\pi\in\mathfrak S_k}
+\sum_{j=1}^k
+Q(C_{\pi(j)},t-j+1).
+$$
+因此固定时域 $t$ 后，寻找最优孩子次序恰是一个 $k\times k$ 最大权指派问题，其权矩阵为
+$$
+A_{i,j}=Q(C_i,t-j+1).
+$$
+一般不能把这一式替换为只按孩子总质量排序的均值规则。
+
+对一个剩余高度 $h\ge2$ 的完整节点 $B$，取其全部 $p$ 个孩子，上式成为
+$$
+Q(B,t)
+=
+\max_{\pi\in\mathfrak S_p}
+\sum_{j=1}^pQ(C_{\pi(j)},t-j+1).
+$$
+只需计算
+$$
+0\le t\le h(p-1),
+$$
+因为有零错误策略在 $h(p-1)$ 次查询内必然完成。若完整树有 $N=p^e$ 个叶，则自底向上求全部这些有限时域值所需的 $p\times p$ 指派实例数至多为
+$$
+\sum_{h=2}^e
+\frac{N}{p^h}\bigl(h(p-1)+1\bigr)
+\le
+\frac{2N}{p-1}.
+$$
+所以配合标准的多项式精确指派算法，这给出关于显式叶数 $N$ 的多项式精确递推，而不是对全部决策树枚举。
+
+附引：Kuhn 的 Hungarian method 把给定 $n\times n$ 数值评分的一一指派定义为最大化评分总和的问题；Munkres 给出一般 assignment problem 的算法及正确性论证。这里使用的只是这一标准有限指派子问题；矩阵 $A_{i,j}$ 及其来自残基查询的递推由本定理直接证明。
+

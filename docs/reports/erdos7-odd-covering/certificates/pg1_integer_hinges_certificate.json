@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "1b9b37ff3991f9e87ba87c7ba924948f7a33a5432289687f47df1e405b676e1e",
+  "parts_directory": "pg1_integer_hinges_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "c80302698e94c278992eab53559e4c4090c89a7a76fba8af0403da25b161f171",
+    "kind": "object"
+  }
+}

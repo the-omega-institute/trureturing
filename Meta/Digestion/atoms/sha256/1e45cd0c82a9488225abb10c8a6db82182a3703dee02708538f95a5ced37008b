@@ -1,0 +1,2 @@
+**Proof.** By LFO1, exclusion is equivalent to p dividing F_ell exactly once for some p^2|M. Such p is different from two and five and has rank ell by LFO3; its exponent is its initial depth. EMW-B3 makes exponent one equivalent to q_p nonzero. These steps reverse to prove both implications. Finally p<=P(M) and p>=2ell-1 give the bound on ell.
+

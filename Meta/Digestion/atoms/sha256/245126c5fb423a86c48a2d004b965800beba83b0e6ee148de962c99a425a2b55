@@ -1,0 +1,14 @@
+### 114.2 Pythagoras 分解
+
+conditional_expectation_refinement_pythagoras 精确证明：
+
+$$
+\boxed{
+\|Y-\widehat Y_c\|_2^2
+=
+\|Y-\widehat Y_f\|_2^2
++
+\|\widehat Y_f-\widehat Y_c\|_2^2.
+}
+$$
+

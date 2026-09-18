@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:661875a99907bb3bf274846065daadb00971f2a7efdcd1572d06c33daa7243ac
+  normalized_sha256: sha256:661875a99907bb3bf274846065daadb00971f2a7efdcd1572d06c33daa7243ac
+cas_ref: sha256:661875a99907bb3bf274846065daadb00971f2a7efdcd1572d06c33daa7243ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic and explanatory source text, read with its actual adjacent interpretation and invariance-proof leaves. Retain exactly the classical background citations printed here: R. E. Kalman, "Mathematical Description of Linear Dynamical Systems", J. SIAM Control Ser. A 1(2), 152-192 (1963), DOI 10.1137/0301010; B. L. Ho and R. E. Kalman, "Effective construction of linear state-variable models from input/output functions", 1966, pp. 545-548, DOI 10.1524/auto.1966.14.112.545. This paragraph attributes the reachable/observable and Markov-parameter viewpoint and points to the following direct argument; it does not assert that either paper proves this exact cutoff equivalence and supplies no Lean premise or novelty claim. The preceding mathematical limitation about H versus H/N versus R/(R intersect N) is separately retained and project-covered; it is not relabeled as bibliography. No independent comparison with the full historical papers is claimed.'
+    previous_atom_id: 93873b47ebb094d9bf9754cf02d9da43d5fc44b9adbe67b1e2177a5b49acb871
+    next_atom_id: da7414c456d193b2fdc56aae3c67b2398baef7ea24a862507c930c888a865c9e

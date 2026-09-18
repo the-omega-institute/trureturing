@@ -1,0 +1,5 @@
+**Proof.** The right side has the Fibonacci initial values modulo five.
+Writing $u_n=n3^{n-1}$ gives
+$u_{n+2}-u_{n+1}-u_n=5(n+3)3^{n-1}$, so induction proves the formula.
+For odd $n$, the factor $3^{n-1}$ is a nonzero square modulo five.
+

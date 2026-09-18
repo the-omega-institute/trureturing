@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5540a4710705a6748a86a47113bb96712910c242c08e4881642519cbcc75ab71
+  normalized_sha256: sha256:5540a4710705a6748a86a47113bb96712910c242c08e4881642519cbcc75ab71
+cas_ref: sha256:5540a4710705a6748a86a47113bb96712910c242c08e4881642519cbcc75ab71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子汇总前文已校准的使用范围，要求在应用时注明效应、载体、通道和任务，并明确离散索引不自动给出物理结构，没有独立待证结论。
+    previous_atom_id: d004d77f974634544911b634c37fea70dbe1b8cb2654bb1259eacd8aed643231
+    next_atom_id: 9601266dc55b0f660dadb686447c76d045d5709dc97b32ee7d3921eb1a86aece

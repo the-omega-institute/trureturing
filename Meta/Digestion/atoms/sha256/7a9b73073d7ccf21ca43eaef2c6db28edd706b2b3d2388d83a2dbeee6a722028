@@ -1,0 +1,28 @@
+**定理 61.2（有限标签的精确有限环截断与展开证书界）。** 固定素数 $p$。设 $I=(V,E,a)$ 不含 $\infty$。若 $E=\varnothing$，则 $I$ 可实现。若 $E\ne\varnothing$，令
+$$
+D=\max_{e\in E}a_e.
+$$
+则下列两件事等价：
+
+1. 存在 $x\in(\mathbb Z_p^\times)^V$ 实现 $I$；
+2. 存在剩余类
+$$
+r_v\in(\mathbb Z/p^{D+1}\mathbb Z)^\times
+$$
+使每条边 $e=\{u,v\}$ 都满足
+$$
+r_u+r_v\equiv0\pmod{p^{a_e}},
+\qquad
+r_u+r_v\not\equiv0\pmod{p^{a_e+1}}.
+$$
+
+而且若第 2 条成立，把每个 $r_v$ 取为标准整数代表
+$$
+1\le x_v<p^{D+1},
+$$
+就得到一个普通整数共同见证。因此每个顶点的展开整数证书至多需要
+$$
+\left\lceil(D+1)\log_2p\right\rceil
+$$
+位。
+

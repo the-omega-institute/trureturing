@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:57444e24d07621527647415b42ba7a121e8a04a85c1107f89dac5fdacbc651e4
+  normalized_sha256: sha256:57444e24d07621527647415b42ba7a121e8a04a85c1107f89dac5fdacbc651e4
+cas_ref: sha256:57444e24d07621527647415b42ba7a121e8a04a85c1107f89dac5fdacbc651e4
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainCount.strict_divisor_chain_count
+    target_statement_id: sha256:37111772775aeadb9fbc1831daf27a4c9221f7bc53e1921787c2069ce41f9b5c
+receipts:
+  unresolved_subitems: []

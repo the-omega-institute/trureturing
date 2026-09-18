@@ -1,0 +1,8 @@
+由实际递推直接得到
+
+$$
+ e_{n+1}
+=
+Ae_n+R_A\widetilde x_n+R_Bu_n.
+$$
+

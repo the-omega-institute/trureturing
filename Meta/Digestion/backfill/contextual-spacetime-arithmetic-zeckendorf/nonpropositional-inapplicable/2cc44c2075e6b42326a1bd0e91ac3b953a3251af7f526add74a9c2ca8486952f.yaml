@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2cc44c2075e6b42326a1bd0e91ac3b953a3251af7f526add74a9c2ca8486952f
+  normalized_sha256: sha256:2cc44c2075e6b42326a1bd0e91ac3b953a3251af7f526add74a9c2ca8486952f
+cas_ref: sha256:2cc44c2075e6b42326a1bd0e91ac3b953a3251af7f526add74a9c2ca8486952f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nat.fib_greatestFib_le、Nat.lt_fib_greatestFib_add_one 和 Nat.fib_mono 给完整 Fibonacci 窗口夹逼，Finset.le_sup' 与 Finset.sup'_le 给逐点界与窗口界互推，Real.goldenRatio_mul_fib_succ_add_fib 及实幂单调性给黄金比例窗口等价，Nat.floor_natCast 与向下取整界给自然数和真实实数条件互推；全部存在量词及正的常数按这些等价重组，仓内无冻结 GID。
+    previous_atom_id: e1fafabedb54aa0a6f46963a0bb17fe8ebdae1da6177a07d24eee91dc9724b71
+    next_atom_id: 3d0e05e1d052fbcd9bca670427ecf8787eb71dd60536a9cd46188c5b1eabba5f

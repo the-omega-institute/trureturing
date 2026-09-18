@@ -1,0 +1,14 @@
+### theorem 5.4: 逆极限映射的阶段自然性及其独立反推
+
+令 \(I\) 为预序，\(\mathsf X,\mathsf Y\) 为阶段系统，
+\(\delta_i:\mathsf X_i\to\mathsf Y_i\) 为逐阶段映射。以下两条分别成立：
+
+1. 若对所有 \(i\le j\) 和 \(x\in\mathsf X_j\) 有
+   \[
+   \mathsf Y_{j\to i}(\delta_jx)=\delta_i(\mathsf X_{j\to i}x),
+   \]
+   则存在唯一极限映射 \(\Delta:\varprojlim\mathsf X\to\varprojlim\mathsf Y\)，
+   且其第 \(i\) 个坐标为 \(\delta_i\) 作用于第 \(i\) 个坐标。
+2. 反之，若每个投影 \(\varprojlim\mathsf X\to\mathsf X_i\) 都满射，并且存在一个具有上述坐标公式的极限映射 \(\Delta\)，
+   则阶段自然性等式必然成立。
+

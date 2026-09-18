@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e1f7104bd2285dbe909c9cbfd33371a8896d8b0d8a72c9faa08cfc384b3a5a8
+  normalized_sha256: sha256:2e1f7104bd2285dbe909c9cbfd33371a8896d8b0d8a72c9faa08cfc384b3a5a8
+cas_ref: sha256:2e1f7104bd2285dbe909c9cbfd33371a8896d8b0d8a72c9faa08cfc384b3a5a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本行是对象名称到保留定义域、支撑及使用条件的表格索引，逐项规定解释范围，没有新增等式、不等式或可计算数值；相应运输定理是否完成由其独立命题承担。
+    previous_atom_id: ad5a58d019433ed7a93c0482e0676a0692cc3147bb2a95eb2eff5740d98f4d4e
+    next_atom_id: 8019705bf48bafb5ee037d6da86f9553d723774c9b7f3186abf8f6c73a75fe85

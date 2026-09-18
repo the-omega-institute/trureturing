@@ -1,0 +1,19 @@
+**Independent direct proof of the odd necessity.** If 5 divides odd n, the odd valuation of 3001 in F_25 persists in F_(n^2), because
+
+\[
+v_{3001}(F_{n^2})=1+v_{3001}(n^2/25)=1+2v_{3001}(n).
+\]
+
+Primality forces a(n)=3001=s(25), whence n=5 by square-class uniqueness. If odd n>1 is coprime to five, choose a prime q dividing n. Then q is odd and different from five, and q does not divide F_q. One can use the lemma of U.3 with d=q, or the standard congruence `F_q=(5/q) (mod q)`.
+
+If an odd prime r has odd valuation in F_q, then r!=q and
+
+\[
+v_r(F_{n^2})=v_r(F_q)+v_r(n^2/q)
+             =v_r(F_q)+2v_r(n),
+\]
+
+which is odd. If 2 occurs in s(q), then q=3, and both odd indices q and n^2 have Fibonacci valuation one at two. Consequently s(q) divides a(n). The square theorem ensures s(q)>1. Primality of a(n) therefore forces s(q)=s(n^2), impossible for the distinct positive odd indices q<n^2.
+
+The source of the target is https://oeis.org/A250093 , introduced by Vincenzo Librandi on November 12, 2014. The proof above uses the published classical square-class and valuation theorems explicitly; it requires no assumption on the existence or nonexistence of Wall-Sun-Sun primes.
+

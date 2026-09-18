@@ -1,0 +1,25 @@
+**定理 30.4（正相位提升由点行唯一决定的显式公式）。** 设 $B:M(K)^2\to M(K)$ 满足假设30.0的正性与全测度相位契约，记其实际点行为
+$$
+Q_{x,y}=B(\delta_x,\delta_y).
+$$
+对任意 $\mu,\nu\in M(K)$，置
+$$
+\Omega_{\mu,\nu}
+=(H_\#\mu)*_{\mathbb T}(H_\#\nu)
+-(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}}).
+$$
+则 $\Omega_{\mu,\nu}$ 非原子，并且
+$$
+B(\mu,\nu)
+=\sum_{x,y\in K}\mu(\{x\})\nu(\{y\})Q_{x,y}
++s_\#\Omega_{\mu,\nu}.
+$$
+级数只涉及两个输入实际原子集的乘积，在全变差中绝对收敛，且
+$$
+\sum_{x,y}
+\bigl\|\mu(\{x\})\nu(\{y\})Q_{x,y}\bigr\|_{\mathrm{TV}}
+=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}\,
+ \|\nu_{\mathrm{at}}\|_{\mathrm{TV}}.
+$$
+因此，两个满足正性及全测度相位契约的实双线性运算，若在所有 Dirac 对上相同，则在整个 $M(K)^2$ 上相同。此结论不要求交换律、结合律或点行的联合 Borel 可测性。
+

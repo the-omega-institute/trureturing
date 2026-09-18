@@ -28,6 +28,74 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_native_config_options_rebuild_and_fail_closed(self):
+        # Origin evidence includes the actual executable hash. Inspector embeds
+        # its source-adjacent fallback writer path, so both builds must compile
+        # in this fixture instead of mixing a cross-directory compiler seed
+        # with a local rebuild. Keep optional artifact restoration off throughout.
+        self.compiler_seed = None
+        self.env['LAKE_ARTIFACT_CACHE'] = 'false'
+        self.write('D5/Alone.lean', 'import Lean\nopen Lean Elab Term\n'
+            'elab "optionType" : term => return mkConst '
+            '(if (← getOptions).getBool `pp.universes false then `Bool else `Nat)\n'
+            'def optionValue : optionType := default\n'
+            'def inferred (x : α) := x\n')
+        config = (self.root / 'lakefile.toml').read_text()
+        self.build()
+        before = self.stamps()
+        original = self.report()[0]
+        # Lake must apply actual Lean options before accepting cached rows.
+        self.write('lakefile.toml', 'leanOptions.autoImplicit = false\n' + config)
+        rejected = self.build(success=False)
+        self.assertIn('Unknown identifier', rejected.stdout + rejected.stderr)
+        self.assertEqual(before, self.stamps())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+        self.write('lakefile.toml', 'leanOptions.pp.universes = true\n' + config)
+        self.build()
+        warm = self.report()[0]
+        changed = {name for name, stamp in self.stamps().items() if stamp != before[name]}
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertIn('D5.Alone', changed)
+        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(changed))
+        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'aggregate'), 1)
+        def option_type(rows):
+            row = next(row for row in rows if row['module'] == 'D5.Alone')
+            return next(decl['type_sha256'] for decl in row['declarations'] if decl['name'] == 'optionValue')
+        self.assertNotEqual(option_type(original), option_type(warm))
+        self.publish()
+        published = {suffix: publication.member(self.root / 'public.json', suffix).read_bytes()
+                     for suffix in publication.SUFFIXES}
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        producer = publication.digest(executable)
+        self.record_result('config-options-warm', dict(inspector_executable_sha256=producer),
+            [publication.member(self.root / 'public.json', suffix) for suffix in publication.SUFFIXES])
+        stamps = self.stamps()
+        self.build()
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+        # Recompile and extract under the same option environment with no
+        # optional artifact restoration; all five canonical materials agree.
+        shutil.rmtree(self.root / '.lake/build')
+        rebuilt = self.build()
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        extracted = sum(r['count'] for r in records if r['kind'] == 'extract')
+        compiled = [name for name in sorted(stamps) if f'Built {name} (' in rebuilt.stdout + rebuilt.stderr]
+        self.assertEqual(compiled, sorted(stamps))
+        self.assertEqual(extracted, len(stamps))
+        self.assertEqual(publication.digest(executable), producer)
+        self.publish()
+        fresh = {suffix: publication.member(self.root / 'public.json', suffix).read_bytes()
+                 for suffix in publication.SUFFIXES}
+        result = dict(changed=sorted(changed), original_type=option_type(original),
+            current_type=option_type(warm), warm_matches_fresh=published == fresh,
+            rejected_exit_code=rejected.returncode, compiled_modules=compiled,
+            extracted=extracted, inspector_executable_sha256=producer)
+        self.record_result('config-options', result,
+            [publication.member(self.root / 'public.json', suffix) for suffix in publication.SUFFIXES])
+        self.assertEqual(published, fresh)
+
     def test_native_invalidation(self):
         self.build()
         rows, original_report, original_materials = self.report()
@@ -74,6 +142,9 @@ class NativeInvalidationTests:
         self.assertNotIn('D5.Added', [row['module'] for row in self.report()[0]])
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
+        # The fixed injected driver also governs modules with no registry import.
+        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 2\n')
+        changed(['D5.B', 'D5.A', 'D5.Alone', 'Fixture'])
     def test_reported_module_proof_axioms_invalidate_public_trace(self):
         # Both registered modules use module headers. The public theorem body
         # in B is not exposed to A's ordinary public import, but Inspector reads

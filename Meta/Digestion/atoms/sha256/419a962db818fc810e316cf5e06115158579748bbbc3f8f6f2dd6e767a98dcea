@@ -1,0 +1,40 @@
+**Proof.** Suppose first that $H_\#\mu=0$. If $D\subseteq K^\circ$ is Borel, theorem 28.3 implies that $H(D)$ is Borel in $\mathbb T^\circ$, hence in $\mathbb T$. Uniqueness of these fibers gives $H^{-1}(H(D))=D$, and therefore
+$$
+\mu(D)=(H_\#\mu)(H(D))=0.
+$$
+Thus the restriction of $\mu$ to $K^\circ$ is zero as a signed measure, and $\mu$ is concentrated on $S$. On each split fiber,
+$$
+\mu(\{x_m^+\})+\mu(\{x_m^-\})=(H_\#\mu)(\{E_m\})=0.
+$$
+Set $b_m=\mu(\{x_m^+\})$. Countability of $S$ and finite variation now give
+$$
+\mu=\sum_{m\ge1}b_mv_m,\qquad 2\sum_{m\ge1}|b_m|=\|\mu\|_{\mathrm{TV}}.
+$$
+Conversely, every such absolutely convergent series has zero phase pushforward, since $H_\#v_m=0$ and pushforward is a contraction. This proves the kernel description using the Borel inverse, not density of atomic measures.
+
+For arbitrary $\mu$, the simplified formulas in theorem 28.2 give
+$$
+\sum_{m\ge1}|g_m|
+\le\sum_{m\ge1}\bigl(|\mu(\{x_m^+\})|+|\mu(\{x_m^-\})|\bigr)
+=|\mu|(S)\le\|\mu\|_{\mathrm{TV}}.
+$$
+Also $\|H_\#\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}$, by the variation inequality for pushforward, or directly by taking preimages of finite partitions. Thus $\Phi_t$ is well-defined and has the forward bound.
+
+The lower bound on $|d'_m|$ proves absolute total-variation convergence of the inverse series and yields its stated estimate. On the phase lift, theorem 28.5 gives
+$$
+R_tL_t\nu=0.
+$$
+Indeed, each coordinate equals $d'_m((1-p_m)p_m-p_m(1-p_m))\nu(\{E_m\})=0$. Furthermore,
+$$
+H_\#(v_m/d'_m)=0,\qquad R_t(v_m/d'_m)=e_m.
+$$
+Boundedness of these maps permits passage through the absolutely convergent inverse series, proving $\Phi_t\Psi_t=\operatorname{id}_{\mathcal C}$.
+
+For the other composition, put $\nu=H_\#\mu$. The measure $\mu-L_t\nu$ has zero phase pushforward and hence is a split-difference series by the first part of the proof. Its positive-branch coefficient is
+$$
+\mu(\{x_m^+\})-p_m\nu(\{E_m\})
+=(1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})
+=\frac{g_m}{d'_m}.
+$$
+Thus $\Psi_t\Phi_t\mu=\mu$. Applying the inverse bound to $\Phi_t\mu$ proves the norm equivalence. QED.
+

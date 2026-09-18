@@ -1,0 +1,1 @@
+Indeed, if an actual $00$ starts at some $j<D$, its first position and all retained output digits below $D$ are determined by those $D+1$ input digits. Otherwise the first $00$ starts at or above $D$, or does not exist, and all output digits below $D$ are zero. 

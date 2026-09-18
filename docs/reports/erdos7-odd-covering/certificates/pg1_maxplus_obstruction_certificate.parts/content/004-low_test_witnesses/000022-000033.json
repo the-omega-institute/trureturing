@@ -1,0 +1,750 @@
+[
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 6,
+      "residue": 6
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 6,
+      "residue": 13
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 6,
+      "residue": 34
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 6,
+      "residue": 55
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 6,
+      "residue": 34
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 6,
+      "residue": 244
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 4,
+      "residue": 109
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 6,
+      "residue": 34
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 4,
+      "residue": 109
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 5,
+      "residue": 5
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 5,
+      "residue": 19
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 3,
+      "residue": 3
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 10
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 3,
+      "residue": 24
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 10
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 3,
+      "residue": 94
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 3,
+      "residue": 199
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 7
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 16
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 11
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 7,
+      "digit": 4,
+      "residue": 25
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 16,
+      "digit": 4,
+      "residue": 151
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 7
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 16
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 3,
+      "residue": 3
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 10
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 31
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 7,
+      "digit": 3,
+      "residue": 52
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 31
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 16,
+      "digit": 3,
+      "residue": 241
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 4
+    },
+    {
+      "modulus": 45,
+      "residue": 19
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 4,
+      "digit": 1,
+      "residue": 29
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 1,
+      "residue": 1
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 4,
+      "digit": 1,
+      "residue": 64
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 19,
+      "digit": 1,
+      "residue": 64
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 1
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 4
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 11
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 1,
+      "digit": 4,
+      "residue": 46
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 1
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 5,
+      "residue": 5
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 26
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 19
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 61
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 1,
+      "digit": 5,
+      "residue": 271
+    }
+  ],
+  [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 1
+    },
+    {
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 1
+    },
+    {
+      "cofactor": 1,
+      "modulus": 7,
+      "old_residue": 0,
+      "digit": 3,
+      "residue": 3
+    },
+    {
+      "cofactor": 3,
+      "modulus": 21,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 10
+    },
+    {
+      "cofactor": 5,
+      "modulus": 35,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 31
+    },
+    {
+      "cofactor": 9,
+      "modulus": 63,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 10
+    },
+    {
+      "cofactor": 15,
+      "modulus": 105,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 31
+    },
+    {
+      "cofactor": 45,
+      "modulus": 315,
+      "old_residue": 1,
+      "digit": 3,
+      "residue": 136
+    }
+  ]
+]

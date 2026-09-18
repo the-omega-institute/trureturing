@@ -3,7 +3,8 @@ set -euo pipefail
 
 SCRIPT_DIRECTORY="$(dirname "${BASH_SOURCE[0]}")"
 ROOT="$(cd "$SCRIPT_DIRECTORY/../.." && pwd -P)"
-RESULTS_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")"
+RESULTS_DIRECTORY="${TEST_RESULTS_DIRECTORY:-$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")}"
+mkdir -p "$RESULTS_DIRECTORY"
 completed=0
 
 finish() {
@@ -14,32 +15,32 @@ finish() {
     rc=1
   fi
   trap - EXIT
-  rm -rf -- "$RESULTS_DIRECTORY"
+  if [[ -z "${TEST_RESULTS_DIRECTORY:-}" ]]; then rm -rf -- "$RESULTS_DIRECTORY"; fi
   exit "$rc"
 }
 trap 'finish "$?"' EXIT
 
-dotnet test "$@" --configuration Release --verbosity normal \
+dotnet test "$@" --configuration Release --verbosity normal -p:RestoreLockedMode=true -nr:false \
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 
 OWNER_ASSEMBLY_ARGS=()
-full_suite=1
+test_target="${1:-$ROOT/tools/StrataLint.sln}"
+if [[ "$test_target" == -* ]]; then test_target="$ROOT/tools/StrataLint.sln"; fi
+filtered=false
 for argument in "$@"; do
   if [[ "$argument" == "--filter" || "$argument" == --filter=* ]]; then
-    full_suite=0
+    filtered=true
   fi
 done
 
-if [[ "$full_suite" -eq 1 ]]; then
-  owner_assemblies="$(dotnet run \
-    --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
-    --configuration Release --no-build --no-launch-profile -- \
-    list-test-owner-assemblies --repository "$ROOT")"
-  while IFS= read -r owner_assembly; do
-    [[ -n "$owner_assembly" ]] || continue
-    OWNER_ASSEMBLY_ARGS+=(--required-assembly "$owner_assembly")
-  done <<< "$owner_assemblies"
-fi
+owner_assemblies="$(dotnet run \
+  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --configuration Release --no-build --no-launch-profile -- \
+  list-test-owner-assemblies --repository "$ROOT" --target "$test_target" --filtered "$filtered")"
+while IFS= read -r owner_assembly; do
+  [[ -n "$owner_assembly" ]] || continue
+  OWNER_ASSEMBLY_ARGS+=(--required-assembly "$owner_assembly")
+done <<< "$owner_assemblies"
 
 dotnet run \
   --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \

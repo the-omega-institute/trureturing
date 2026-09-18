@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:93e5a8bd426cffb93298c6a597144097f50cd2ae3b53c16184d827246b00296c
+  normalized_sha256: sha256:93e5a8bd426cffb93298c6a597144097f50cd2ae3b53c16184d827246b00296c
+cas_ref: sha256:93e5a8bd426cffb93298c6a597144097f50cd2ae3b53c16184d827246b00296c
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/ProjectedExactDescent.projectedState_eq_of_descent
+    target_statement_id: sha256:0db186c9ec10a125862866ed1b56b77b070fbb94806e04699b26538fa29a3f67
+receipts:
+  unresolved_subitems: []

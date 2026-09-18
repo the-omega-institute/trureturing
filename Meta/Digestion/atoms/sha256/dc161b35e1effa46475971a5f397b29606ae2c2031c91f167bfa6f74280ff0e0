@@ -1,0 +1,10 @@
+More precisely,
+$$
+F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ and }p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0\text{ and }p_{L-1}=1.
+\end{cases}
+$$
+

@@ -1,0 +1,13 @@
+**definition 27.4 (The convolution direct sum).** Put
+$$
+\mathcal G=\ell^1(\mathbb T_{\mathrm d}),\qquad
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal B=\mathcal G\oplus_1\mathcal S.
+$$
+The products within the two summands are the discrete convolutions
+$$
+(f*_{\mathbb T}f')(\theta)=\sum_{\rho\in\mathbb T}f(\rho)f'(\theta-\rho),
+$$
+$$
+(g*_{+}g')(k)=\sum_{\substack{m,n\ge1\\m+n=k}}g_mg'_n.
+$$

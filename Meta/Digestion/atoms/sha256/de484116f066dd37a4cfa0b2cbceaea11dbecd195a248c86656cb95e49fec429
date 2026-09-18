@@ -1,0 +1,4 @@
+对任何 $i\in J$，
+$$
+\sigma(J\setminus\{i\})=\sigma J\setminus\{\sigma i\},
+$$

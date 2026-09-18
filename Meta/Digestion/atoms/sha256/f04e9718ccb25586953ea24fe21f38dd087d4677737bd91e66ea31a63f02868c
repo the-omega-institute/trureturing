@@ -1,0 +1,125 @@
+**definition 63.101（独立随机种子、冻结策略与完整公共历史）。** 保持 definition 63.1 与 assumption 63.2 的严格正有限模型，写
+$$
+X=X_{p,e},
+\qquad
+A\sim\mu.
+$$
+取任意概率空间
+$$
+(\Omega,\mathcal F,\nu),
+$$
+令随机种子
+$$
+R\sim\nu
+$$
+与隐藏目标 $A$ 独立。
+
+一个随机自适应策略 $\Pi$ 的全部随机性均由 $R$ 给出。对每个种子 $\omega\in\Omega$ 和每个已经观察到的完整公共历史，下一动作由 $\Pi$ 确定，动作只能是
+
+$$
+\operatorname{query}(c),
+\qquad c\in X,
+$$
+
+或
+
+$$
+\operatorname{stop}(\widehat a),
+\qquad \widehat a\in X.
+$$
+
+所有有限值动作映射均假定可测。冻结种子 $\omega$ 后得到一个确定性策略，记为
+$$
+D_\omega.
+$$
+
+若第 $j$ 次查询中心为 $C_j$，则答复为
+$$
+Y_j=h_{C_j}(A).
+$$
+停止前实际执行的查询数记为
+$$
+\tau=\tau_\Pi(A,R)\in\mathbb N\cup\{\infty\}.
+$$
+称 $\Pi$ 为随机零错误终止策略，如果
+$$
+\Pr\bigl(\tau<\infty
+\ \text{且最终输出等于 }A\bigr)=1.
+$$
+
+对整数 $n\ge0$，一个长度为 $n$ 的完整已答查询迹写成
+$$
+h=(c_1,y_1;\ldots;c_n,y_n).
+$$
+“完整”在这里特别意味着每个已经选择的查询中心 $c_j$ 与其答复 $y_j$ 都被记录，而不只记录答复。定义其目标纤维
+$$
+S(h)
+=
+\bigcap_{j=1}^n
+\{a\in X:h_{c_j}(a)=y_j\},
+$$
+并约定
+$$
+S(\varnothing)=X.
+$$
+
+定义种子重放集 $W(h)\subseteq\Omega$ 如下：$\omega\in W(h)$ 当且仅当冻结策略 $D_\omega$ 从空历史选择 $c_1$，并且对每个
+$$
+1\le j<n,
+$$
+在已经看到记录的
+$$
+(c_1,y_1;\ldots;c_j,y_j)
+$$
+以后继续查询且下一中心恰为 $c_{j+1}$。这里不对第 $n$ 个答复以后是否停止施加条件。
+
+若还记录第 $n$ 个答复后的停止动作
+$$
+\operatorname{stop}(\widehat a),
+$$
+定义
+$$
+W_\downarrow(h,\widehat a)
+=
+\{\omega\in W(h):
+D_\omega\text{ 在历史 }h\text{ 后执行 }
+\operatorname{stop}(\widehat a)\}.
+$$
+若还记录下一查询中心 $c$, 定义
+$$
+W_\rightarrow(h,c)
+=
+\{\omega\in W(h):
+D_\omega\text{ 在历史 }h\text{ 后执行 }
+\operatorname{query}(c)\}.
+$$
+
+对空历史作如下边界约定：
+$$
+W(\varnothing)=\Omega,
+\qquad
+H_0=\varnothing
+\quad\text{几乎必然}.
+$$
+因此上面关于首个中心 $c_1$ 以及逐步重放
+$$
+c_1,\ldots,c_n
+$$
+的条件只在 $n\ge1$ 时适用；当 $n=0$ 时不存在任何待重放的查询条件。零轮即停止与零轮后继续查询仍完全使用上述统一定义，即
+$$
+W_\downarrow(\varnothing,\widehat a)
+=
+\{\omega\in\Omega:
+D_\omega\text{ 在空历史执行 }\operatorname{stop}(\widehat a)\},
+$$
+以及
+$$
+W_\rightarrow(\varnothing,c)
+=
+\{\omega\in\Omega:
+D_\omega\text{ 在空历史执行 }\operatorname{query}(c)\}.
+$$
+这样长度为零的完整历史与正长度历史属于同一个重放与停止/继续框架。
+
+因此固定长度查询迹、显式继续动作以及可选停止历史都属于同一个完整公共历史模型。后文不把遗漏查询中心的粗化观察过程并入本定义。
+

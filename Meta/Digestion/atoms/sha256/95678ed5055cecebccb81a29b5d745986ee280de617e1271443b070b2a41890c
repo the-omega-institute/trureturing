@@ -1,0 +1,14 @@
+**证明。** 定理28.10的原子投影逐实部、虚部复化；也可直接用绝对收敛级数 $\nu_{\mathrm{at}}=\sum_\theta\nu(\{\theta\})\delta_\theta$ 定义。非原子复测度与任意有限复测度的卷积没有单点质量，因为复 Fubini 给出
+$$
+(\nu_{\mathrm{na}}*\xi)(\{\theta\})=\int_{\mathbb T}\nu_{\mathrm{na}}(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+原子测度的卷积仍为原子测度，所以
+$$
+(\nu*\xi)_{\mathrm{at}}=\nu_{\mathrm{at}}*\xi_{\mathrm{at}}.
+$$
+取总质量便得 $\mathfrak a(\nu*\xi)=\mathfrak a(\nu)\mathfrak a(\xi)$；且 $|\mathfrak a(\nu)|\le\|\nu\|_{\mathrm{TV}}$、$\mathfrak a(\delta_0)=1$，故它是字符。
+
+有限相位纤维的质量等于其各单点质量之和。非原子原测度推前后仍没有单点质量，而原子部分的总质量在推前下不变。这证明原测度上的公式。Haar 测度没有原子，因此两个字符在 $L_t\lambda_{\mathbb T}$ 上分别取零和一。
+
+若 $\mathcal P_{\mathfrak a}$ 有连续预伴随 $f$，则在每个 Dirac 测度上求值将给出 $f(x)=1$，从而它在所有测度上都应等于总质量。Haar 提升已经排除这一结论。因此它不弱星连续。证毕。
+

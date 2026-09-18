@@ -1,0 +1,15 @@
+**证明。** 先证明对每个输入对都有
+$$
+\bigcup_{u\in\Gamma(x,y)}\mathcal S(u)
+=\mathcal S(x)\cup\mathcal S(y).
+$$
+若 $H(x)+H(y)\in E$，许可输出恰按右侧符号逐个列出，而每个分裂输出的符号集为单点，所以等式成立。若相位和不在 $E$，唯一输出非分裂，左侧为 $\{-1,+1\}$。此时两输入不可能都分裂，因为 $E+E\subseteq E$；至少一个输入非分裂，故右侧也为 $\{-1,+1\}$。
+
+若最终相位 $\lambda$ 非分裂，两个括号中的每个最终输出均为 $k_\lambda$；中间许可纤维非空，故两边确为该单点集。若 $\lambda$ 分裂，则左括号允许的符号集合是
+$$
+\bigcup_{u\in\Gamma(x,y)}
+\bigl(\mathcal S(u)\cup\mathcal S(z)\bigr)
+=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+右括号用同一恒等式得到完全相同的符号集合。两点纤维的标记唯一确定输出，结论成立。证毕。
+

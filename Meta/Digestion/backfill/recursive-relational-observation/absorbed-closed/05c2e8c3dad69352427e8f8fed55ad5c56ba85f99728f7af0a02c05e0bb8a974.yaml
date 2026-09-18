@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:05c2e8c3dad69352427e8f8fed55ad5c56ba85f99728f7af0a02c05e0bb8a974
+  normalized_sha256: sha256:05c2e8c3dad69352427e8f8fed55ad5c56ba85f99728f7af0a02c05e0bb8a974
+cas_ref: sha256:05c2e8c3dad69352427e8f8fed55ad5c56ba85f99728f7af0a02c05e0bb8a974
+coverage_gids:
+  - gid: D5/S3/Quantum/Sharpness/FreeNegentropyBudget.von_neumann_entropy_eq_shannon_state_spectrum
+    target_statement_id: sha256:418a3458d7e30f3b6473c08140a6b2fe6d7de5cfc410395fca6ee760d8ec80bd
+receipts:
+  unresolved_subitems: []

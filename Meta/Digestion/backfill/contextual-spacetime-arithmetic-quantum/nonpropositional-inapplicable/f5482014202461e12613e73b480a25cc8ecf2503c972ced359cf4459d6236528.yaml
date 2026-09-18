@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5482014202461e12613e73b480a25cc8ecf2503c972ced359cf4459d6236528
+  normalized_sha256: sha256:f5482014202461e12613e73b480a25cc8ecf2503c972ced359cf4459d6236528
+cas_ref: sha256:f5482014202461e12613e73b480a25cc8ecf2503c972ced359cf4459d6236528
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子限定无参考的两步任务并定义带权经典差异和三步任务记号，没有计算最优值。
+    previous_atom_id: eb94e8e1e3105dbc11b4df9cd36d1ddba1c3bd3d3654c080367c6d3846bf0b87
+    next_atom_id: 3fcfc2dd74434036e5c36fe7e5fb62964ae2cd0362787f84b34e4b4451c948f3

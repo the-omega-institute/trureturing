@@ -1,0 +1,44 @@
+**定义 13.0（观察核、细化与数论记号）。** 本节取 $\mathbb N=\{0,1,2,\ldots\}$，使用自然数上的总幂运算
+$$
+a^0=1,\qquad a^{b+1}=a^b a,
+$$
+特别约定 $0^0=1$。对 $t\ge0$、$p\ge1$，沿用阈值—周期核
+$$
+n\mathrel{R_{t,p}}m
+\quad\Longleftrightarrow\quad
+n=m\ \lor\
+\bigl(n\ge t\ \land\ m\ge t\ \land\ n\equiv m\pmod p\bigr).
+$$
+称等价关系 $R$ 双槽保幂，若
+$$
+\forall a,a',b,b'\in\mathbb N,\qquad
+a\mathrel R a'\ \land\ b\mathrel R b'
+\quad\Longrightarrow\quad
+a^b\mathrel R (a')^{b'}.
+$$
+关系包含 $R'\subseteq R$ 表示 $R'$ 细化 $R$；某类细化中的最粗者，指该类中按关系包含排序的最大元素。
+
+对正整数 $n$，记
+$$
+\operatorname{Pr}(n)=\{\ell:\ell\text{ 为素数且 }\ell\mid n\}.
+$$
+对素数 $\ell$，$v_\ell(n)$ 表示 $\ell$ 在 $n$ 的素因子分解中的指数，并定义
+$$
+h(n)=
+\max\bigl(\{0\}\cup
+\{v_\ell(n):\ell\in\operatorname{Pr}(n)\}\bigr).
+$$
+因此 $\operatorname{Pr}(1)=\varnothing$、$h(1)=0$。记 $\ell^e\parallel n$ 表示 $e=v_\ell(n)\ge1$。
+
+有限群 $G$ 的指数定义为
+$$
+\operatorname{exp}(G)
+=\operatorname{lcm}\{\operatorname{ord}(g):g\in G\},
+$$
+其中 $\operatorname{ord}(g)$ 是 $g$ 的阶。对 $n\ge2$，令
+$$
+U(n)=(\mathbb Z/n\mathbb Z)^\times,\qquad
+\lambda(n)=\operatorname{exp}(U(n)),
+$$
+并约定 $\lambda(1)=1$。这是 Carmichael 函数的标准群指数定义，参见 Kevin Ford、Florian Luca 与 Carl Pomerance，*The image of Carmichael's $\lambda$-function*，第 1 节，[arXiv:1408.6506v2](https://arxiv.org/html/1408.6506v2)。
+

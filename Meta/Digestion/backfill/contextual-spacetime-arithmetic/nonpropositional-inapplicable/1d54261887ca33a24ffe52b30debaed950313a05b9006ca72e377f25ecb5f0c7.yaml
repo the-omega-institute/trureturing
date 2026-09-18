@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d54261887ca33a24ffe52b30debaed950313a05b9006ca72e377f25ecb5f0c7
+  normalized_sha256: sha256:1d54261887ca33a24ffe52b30debaed950313a05b9006ca72e377f25ecb5f0c7
+cas_ref: sha256:1d54261887ca33a24ffe52b30debaed950313a05b9006ca72e377f25ecb5f0c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原句“对非零”及“记支撑极值”后明确断言卷积支撑两端为输入两端之和，记号没有偷带存在性；探针在源文所定字典序整数三格中同时给出非空支撑的最小最大点及乘积的对应极值，有限支撑极值、唯一和系数及序规范化完成该叶，仓内无冻结 GID。
+    previous_atom_id: 74620bba10041dc66e3cd08270f78b230db72679170a2422bed8c80f335bc9c1
+    next_atom_id: 6782cb71b0a75f0cc43cc6a29c93be3361a8aea74b63d8ebd4a47edc19ce4bae

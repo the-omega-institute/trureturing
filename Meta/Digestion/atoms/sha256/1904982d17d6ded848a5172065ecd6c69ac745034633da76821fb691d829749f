@@ -1,0 +1,24 @@
+**Assumption 26.1 (Established structure of the fixed carrier).** Use the following published carrier facts. The space $K$ is compact, $Z(\mathbb N_0)$ is dense, and $H$ is a continuous surjection satisfying
+$$
+H(Z(n))=[n\phi].
+$$
+Its nonsingleton fibers are exactly
+$$
+E_m=[-m\phi],\qquad
+H^{-1}(\{E_m\})=\{x_m^-,x_m^+\}\quad(m\ge1).
+$$
+Every other fiber is a singleton; in particular $H^{-1}(\{[n\phi]\})=\{Z(n)\}$ for $n\ge0$. The orientation is
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty.
+$$
+For each $m$, if $\epsilon_k\to0$ with a fixed strict sign and $H(y_k)=E_m+[\epsilon_k]$, then
+$$
+y_k\longrightarrow x_m^+\ \text{if }\epsilon_k>0,\qquad
+y_k\longrightarrow x_m^-\ \text{if }\epsilon_k<0.
+$$
+This holds for arbitrary choices of the lifts $y_k$, including lifts over other split phases. There is a continuous map $T:K\to K$ with
+$$
+TZ(n)=Z(n+1),\qquad H(Tx)=H(x)+[\phi],\qquad Tu=Tv=Z(0).
+$$
+These facts are the conclusions of the Zeckendorf volume, theorems 371.2, 372.2–372.4, 375.2–375.3, 381.2, and 382.1, with the oriented labels of Definition 381.1 and Definition 16.3. ([CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), sections 371–375 and 381–382, specifically theorems 371.2, 372.2–372.4, 375.2–375.3, 381.2 and 382.1 and Definition 381.1, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`; [RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Definition 16.3, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`.)
+

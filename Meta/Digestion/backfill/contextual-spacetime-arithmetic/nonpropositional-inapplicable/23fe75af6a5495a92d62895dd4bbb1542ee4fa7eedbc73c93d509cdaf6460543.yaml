@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:23fe75af6a5495a92d62895dd4bbb1542ee4fa7eedbc73c93d509cdaf6460543
+  normalized_sha256: sha256:23fe75af6a5495a92d62895dd4bbb1542ee4fa7eedbc73c93d509cdaf6460543
+cas_ref: sha256:23fe75af6a5495a92d62895dd4bbb1542ee4fa7eedbc73c93d509cdaf6460543
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 若交替部分和有实极限，Filter.tendsto_add_atTop_nat、Filter.Tendsto.sub 与 Finset.sum_range_succ 迫使相邻差趋零；Filter.Tendsto.norm 和 tendsto_nhds_unique 与差的绝对值恒一矛盾，仓内无冻结 GID。
+    previous_atom_id: 1040f6f9e8457308f4d145ed0496f96f1b1be80ef98cc1144f5a03c8496263eb
+    next_atom_id: 4815358357224e12dd9b58211f35115723f2644936a7217b51e6f0ee623770cc

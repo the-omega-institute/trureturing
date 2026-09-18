@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c380e988f9b6ac502c754581b6d433a4a010e8a34982427115c9ad824bde8eab
+  normalized_sha256: sha256:c380e988f9b6ac502c754581b6d433a4a010e8a34982427115c9ad824bde8eab
+cas_ref: sha256:c380e988f9b6ac502c754581b6d433a4a010e8a34982427115c9ad824bde8eab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义无参考纯经典历史任务、允许控制及其总变差最优值，没有计算最优值。
+    previous_atom_id: a462027643aa1619f37ca5409d068f39dbbbb56aaeb4fe1913c87bde348df203
+    next_atom_id: 12bc762d78f88ed714eb1a582d6f76aebac3821ea9cddea387d9cf5ee6dd8721

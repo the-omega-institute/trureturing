@@ -1,0 +1,75 @@
+**定理 23.9（全载体概率结合核的完整分类）。** 在假设23.1下，对任意可容许概率核 $P$，
+$$
+P\text{ 结合}
+\quad\Longleftrightarrow\quad
+\exists!\,s\in\{-1,+1\}\ \forall x,y\in K,\quad P_{x,y}=P^s_{x,y}.
+$$
+因此恰有两个解，每个解逐点为 Dirac 分布，并自动满足交换律。它们包含如下全域边界公式：
+$$
+P^s_{0_K,x}=P^s_{x,0_K}=\delta_{c_s(H(x))},
+$$
+$$
+P^s_{z_{E_m}^{+1},z_{E_n}^{-1}}
+=P^s_{z_{E_m}^{-1},z_{E_n}^{+1}}
+=\delta_{z_{E_{m+n}}^s}\qquad(m,n\ge1),
+$$
+$$
+P^s_{Z(n),Z(m)}=\delta_{Z(n+m)}\qquad(n,m\in\mathbb N).
+$$
+若进一步要求全部许可输出都有严格正质量，即对所有输入都有 $\operatorname{supp}P_{x,y}=\Gamma(x,y)$，则不存在结合解。
+
+**证明。** 先证明必要性。由定理23.5—23.7及非分裂纤维的唯一性，存在唯一符号 $s$，使
+$$
+\pi_\theta=\delta_{c_s(\theta)}\qquad(\theta\in\mathbb T).
+$$
+取任意有序输入对 $(x,y)$。若 $x\in R_s$，则 $\delta_x=\pi_{H(x)}$，所以平均恒等式给
+$$
+P_{x,y}=\pi_{H(x)}*\delta_y
+=\delta_{c_s(H(x)+H(y))}.
+$$
+若 $y\in R_s$，则另一个平均恒等式同样给
+$$
+P_{x,y}=\delta_x*\pi_{H(y)}
+=\delta_{c_s(H(x)+H(y))}.
+$$
+剩下的唯一情形是 $x,y\in N_s$。此时两输入都是符号 $-s$ 的分裂点，假设23.1直接强制
+$$
+P_{x,y}=\delta_{z_{H(x)+H(y)}^{-s}}.
+$$
+这正是定义23.8，覆盖非分裂输入、零、分裂输入的两种顺序以及所有相位和；没有预设确定性选择的分类。
+
+再证明两个候选确实存在。若 $x,y\in N_s$，定义选取的点就是同号强制输出。否则，当输出相位分裂时，至少一个输入非分裂或具有符号 $s$，所以 $s\in\mathcal S(x)\cup\mathcal S(y)$，所选点属于 $\Gamma(x,y)$；当输出相位非分裂时，所选点是唯一许可输出。因此每个 $P^s$ 都可容许。
+
+为验证所有三元组的结合律，定义
+$$
+\varepsilon_s(x)=
+\begin{cases}
+1,&x\in N_s,\\
+0,&x\in R_s,
+\end{cases}
+\qquad
+M=(\mathbb T\times\{0\})\cup(E\times\{1\}),
+$$
+并在 $M$ 上定义
+$$
+(\theta,i)\cdot(\rho,j)=(\theta+\rho,ij).
+$$
+若 $ij=1$，两个相位均属于 $E$，故其和仍属于 $E$；若 $ij=0$，输出属于 $\mathbb T\times\{0\}$。所以该乘法封闭。它的结合性和交换性分别来自圆周加法及 $\{0,1\}$ 上通常乘法的结合性和交换性。
+
+映射
+$$
+\Phi_s:K\to M,\qquad \Phi_s(x)=(H(x),\varepsilon_s(x))
+$$
+是双射：$(\theta,0)$ 的唯一原像是 $c_s(\theta)$，而对 $\theta\in E$，$(\theta,1)$ 的唯一原像是 $z_\theta^{-s}$。定义23.8逐分支给出
+$$
+\Phi_s(A_s(x,y))=\Phi_s(x)\cdot\Phi_s(y).
+$$
+因而两个括号的像均为
+$$
+\bigl(H(x)+H(y)+H(z),\,
+\varepsilon_s(x)\varepsilon_s(y)\varepsilon_s(z)\bigr).
+$$
+由 $\Phi_s$ 单射，$A_s(A_s(x,y),z)=A_s(x,A_s(y,z))$。交换律同理成立。于是相应 Dirac 核满足点态结合律，定理23.3又给全部有限分布上的结合律。
+
+两个核在 $(0_K,z_{E_1}^{+1})$ 处分别输出 $z_{E_1}^{+1}$ 和 $z_{E_1}^{-1}$，故互异。必要性中的全局符号唯一，排除了任何第三个核。零切片公式由 $0_K\in R_s$ 得到；每个异号输入对恰有一个输入属于 $R_s$，给出两个有序混合公式。核心相位之和为 $[(n+m)\phi]$，其唯一原像为 $Z(n+m)$，给出核心公式。最后，$\Gamma(0_K,z_{E_1}^{+1})$ 有两个点，而每个结合解在该处只有一个正质量点，所以严格全支撑条件不可能成立。证毕。
+

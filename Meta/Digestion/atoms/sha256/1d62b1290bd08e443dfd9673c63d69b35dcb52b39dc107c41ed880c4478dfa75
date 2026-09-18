@@ -1,0 +1,28 @@
+### LFO.4. What fixed value-prime probes can see in a prime-index block
+
+**Theorem.** Let ell>=7 be prime. Every prime divisor p of F_ell satisfies
+
+$$
+\rho(p)=\ell,\quad p\equiv1\pmod4,\quad
+\begin{cases}
+p\ge4\ell+1,&(5/p)=1,\\
+p\ge2\ell-1,&(5/p)=-1.
+\end{cases}\tag{LFO3}
+$$
+
+These are classical rank and golden-norm consequences.
+
+**Proof.** The ranks of two and five exclude them from F_ell. The rank of any other prime divisor divides ell and is greater than one, so it equals ell. At this odd index the norm identity gives L_ell^2-5F_ell^2=-4. Modulo p, L_ell/2 is a square root of minus one, so p=1 modulo four. The rank bound gives ell|p-(5/p). For a split prime, both ell and four divide p-1, giving 4ell|p-1. For an inert prime, the positive integer (p+1)/ell is even, giving p>=2ell-1. More precisely that integer is two modulo four.
+
+**Corollary.** Let P(M) be the largest prime factor of M, with P(1)=1. If 2ell-1>P(M), then gcd(F_ell,M)=1. Thus [F_ell]_M belongs to C(M) and contains the non-perfect powerful examples of LFO.2. Increasing the exponents on the same finite prime support does not alter this assertion.
+
+**Proof.** A common prime divisor would contradict LFO3. Apply LFO1 and LFO.2 to the resulting unit class.
+
+**Definition.** A residue-only rejection rule at modulus M is called sound for nonpowerfulness if it rejects a residue class only when every positive integer in that class is nonpowerful.
+
+**Theorem.** Every such sound rule accepts F_ell whenever ell is prime, ell>=7, and 2ell-1>P(M). A finite collection of residue-only rules can be combined at their least-common-multiple modulus and has the same eventual acceptance property. In particular, on prime indices ell in [Y,2Y] with Y>=7, probes supported only on value primes below 2Y-1 reject no index.
+
+**Proof.** The corollary provides a positive powerful integer in the same class. Rejecting it would violate soundness. Equality modulo the least common multiple preserves all the individual residues. Apply the same corollary once to that modulus.
+
+This theorem concerns the specified residue-only information. It does not assert that every arithmetic argument involving congruences is powerless, nor does it apply to moduli whose prime support is allowed to grow past the stated cutoff. Replacing F_ell by a compatible powerful integer preserves polynomial congruences in the numerical Fibonacci/Lucas coordinates at those fixed moduli. It does not preserve the exact integer norm equation, the actual recurrence value, or exact ranks of the replacement integer's prime factors.
+

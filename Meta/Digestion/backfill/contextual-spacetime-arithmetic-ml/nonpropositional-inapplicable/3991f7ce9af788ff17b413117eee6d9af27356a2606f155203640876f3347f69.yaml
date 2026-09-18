@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3991f7ce9af788ff17b413117eee6d9af27356a2606f155203640876f3347f69
+  normalized_sha256: sha256:3991f7ce9af788ff17b413117eee6d9af27356a2606f155203640876f3347f69
+cas_ref: sha256:3991f7ce9af788ff17b413117eee6d9af27356a2606f155203640876f3347f69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “同一合法动作序列”与“每步费用求值误差至多”给出两条逐步误差前提；绝对值三角不等式和有限求和直接推出所写每个坐标的累计上界。此叶明确提出命题而非定义，未隐入额外命题；探针对任意步数及费用坐标成立，仓内无冻结 GID。
+    previous_atom_id: b4fe6fc353d232ebaf572d55f2d973cec11e50ee8261b3ea44eb769f32cd29c6
+    next_atom_id: d81f0489b325248adc9dc9d18fbc0439654f1938952a133a13c7b87a0b7816e9

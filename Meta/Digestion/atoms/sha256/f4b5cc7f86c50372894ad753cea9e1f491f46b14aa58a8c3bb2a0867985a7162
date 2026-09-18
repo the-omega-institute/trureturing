@@ -1,0 +1,2 @@
+附引：Kuhn 的 Hungarian method 把给定 $n\times n$ 数值评分的一一指派定义为最大化评分总和的问题；Munkres 给出一般 assignment problem 的算法及正确性论证。这里使用的只是这一标准有限指派子问题；矩阵 $A_{i,j}$ 及其来自残基查询的递推由本定理直接证明。
+

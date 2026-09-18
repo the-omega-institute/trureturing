@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a24d9b9e36b17dcda5d345d7b89367712e87d0000c030cdcb1052b91681430e
+  normalized_sha256: sha256:6a24d9b9e36b17dcda5d345d7b89367712e87d0000c030cdcb1052b91681430e
+cas_ref: sha256:6a24d9b9e36b17dcda5d345d7b89367712e87d0000c030cdcb1052b91681430e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段指定出现标识、七字段数据、偏序关系、选择规则和档案名称，属于待检验构造的定义；载体合法性、平衡性和读数由下一定理承担，此处不予证明认证。
+    previous_atom_id: 8a7e418c8ea659f3c75b6b0871e2b0b6d2ea4750f77435a057c95c6e3c1973cb
+    next_atom_id: f073749555de26a8f0a1f29a6b4efccdec4532005a328d7164ad809ece7a40ec

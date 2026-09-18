@@ -1,0 +1,271 @@
+**命题 151.1（保留全部旗标的有限分块与有限经典隐状态实现）。** 设 $R=\mathbb C^2$，取固定的非空有限报告集 $Y$，$r=|Y|$，以及固定的复线性完全正仪器
+$$
+\phi_y:M_2(\mathbb C)\longrightarrow M_2(\mathbb C)\quad(y\in Y),
+\qquad \mathcal T=\sum_{y\in Y}\phi_y\quad\text{保迹}.
+$$
+各个时刻使用同一个仪器，不依赖时间或已见历史，不反馈、不重置、不插入其他操作。所有报告均保留。各次右端点按固定计算基识别为 $R$，任意有限维参考 $A$ 保持不动。对有限词 $p=(p_1,\ldots,p_\ell)$，规定
+$$
+\phi_p=\phi_{p_\ell}\circ\cdots\circ\phi_{p_1},\qquad
+\phi_\varnothing=\operatorname{Id}_R.
+$$
+固定整数 $b\ge1$。完整块词 $h\in Y^b$ 的分支记为 $\Psi_h=\phi_h$，参考因子在前的未归一化 Choi 算子为
+$$
+H_h=\sum_{u,v=0}^1|u\rangle\langle v|\otimes\Psi_h(|u\rangle\langle v|).
+$$
+假设每个完整块都满足有限可分性
+$$
+\operatorname{EB}_{\rm BLOCK}(b):\qquad
+H_h=\sum_{k=1}^{n_h}A_{hk}\otimes B_{hk},\qquad
+A_{hk},B_{hk}\ge0\quad(h\in Y^b),
+$$
+其中允许零算子为空和。此假设等价于完整旗标通道
+$$
+X\longmapsto\sum_{h\in Y^b}\Psi_h(X)\otimes|h\rangle\langle h|
+$$
+对任意有限参考为纠缠破坏通道，分割为 $A\mid(R\otimes\mathbb C^{Y^b})$；这里采用命题 150.1 的有限正乘积和定义。
+
+则存在一个固定有限集合 $J=\{1,\ldots,N\}$、块报告函数 $h:J\to Y^b$、非零正效应 $E_j$ 及右密度 $\sigma_j$，满足
+$$
+1\le N\le16r^b,\qquad
+\sum_{j\in J}E_j=I_2,\qquad
+\Psi_h(X)=\sum_{j\in J_h}\operatorname{Tr}(E_jX)\sigma_j
+\quad(X\in M_2(\mathbb C)),\qquad
+J_h=\{j\in J:h(j)=h\}.
+$$
+这些对象给出整个首个 $b$ 步的输入、报告及块末端点仪器的另一种实现：测量 $\{E_j\}$，保留其内部标签 $j$，报告 $h(j)$，在该块末端点被请求时制备 $\sigma_j$。对任意未归一化正输入 $\omega_{AR}$，令
+$$
+A_j=(\operatorname{Id}_A\otimes[X\mapsto\operatorname{Tr}(E_jX)])(\omega_{AR}).
+$$
+则 $A_j\ge0$、$\sum_jA_j=\operatorname{Tr}_R\omega_{AR}$，且
+$$
+(\operatorname{Id}_A\otimes\Psi_h)(\omega_{AR})
+=\sum_{j\in J_h}A_j\otimes\sigma_j.
+$$
+对标量密度输入 $\rho_R$，初始隐标签概率就是 $p_j=\operatorname{Tr}(E_j\rho_R)$。
+
+从这个首块完成时刻起，只需有限经典隐状态即可精确预测所规定的未来。块边界转移矩阵为
+$$
+K_{ji}=\operatorname{Tr}(E_j\sigma_i),\qquad
+K_{ji}\ge0,\qquad \sum_jK_{ji}=1.
+$$
+为了逐个发出报告并允许在任意后续报告处终止，定义
+$$
+d_{i,p}=\operatorname{Tr}\phi_p(\sigma_i),\qquad
+\mathsf S=\{(i,p):i\in J,\ p\in\bigcup_{\ell=0}^{b-1}Y^\ell,\ d_{i,p}>0\},
+\qquad
+\sigma_{i,p}=\frac{\phi_p(\sigma_i)}{d_{i,p}}.
+$$
+特别地 $d_{i,\varnothing}=1$、$\sigma_{i,\varnothing}=\sigma_i$。将每个转移的报告显式列入，令
+$$
+\begin{aligned}
+P\bigl(y,(i,py)\mid(i,p)\bigr)
+&=\frac{d_{i,py}}{d_{i,p}}
+&&\bigl(|p|<b-1,\ d_{i,py}>0\bigr),\\
+P\bigl(y,(j,\varnothing)\mid(i,p)\bigr)
+&=\frac{K_{ji}}{d_{i,p}}
+&&\bigl(|p|=b-1,\ j\in J_{py}\bigr).
+\end{aligned}
+$$
+其余报告与后继状态对的概率均为零。这个转移核在 $\mathsf S$ 上时间齐次；词 $p$ 的长度已经记录相位。进入时刻以后的状态数满足
+$$
+M:=|\mathsf S|\le N\sum_{\ell=0}^{b-1}r^\ell
+\le16r^b\sum_{\ell=0}^{b-1}r^\ell.
+$$
+若 $b=1$，没有内部转移，只有
+$P(y,(j,\varnothing)\mid(i,\varnothing))=K_{ji}$，其中 $h(j)=(y)$；若 $r=1$，每一长度只有一个词，$M\le Nb$。
+
+精确性同时包含每条完整报告前缀、未归一化端点算子及其与任意有限参考的关联。具体地，对 $m\ge1$、$h_1,\ldots,h_m\in Y^b$ 及 $|p|<b$，在时刻 $mb+|p|$ 有
+$$
+\begin{aligned}
+W_{h_1,\ldots,h_m,p}
+&:=(\operatorname{Id}_A\otimes
+(\phi_p\circ\Psi_{h_m}\circ\cdots\circ\Psi_{h_1}))(\omega_{AR})\\
+&=\sum_{\substack{j_1\in J_{h_1},\ldots,j_m\in J_{h_m}}}
+\left(\prod_{t=2}^m K_{j_tj_{t-1}}\right)
+A_{j_1}\otimes\phi_p(\sigma_{j_m}).
+\end{aligned}
+$$
+$m=1$ 时空乘积取一。该算子正是上述隐状态实现的报告分支，因而在时间 $b$ 及其以后任选一个终止时刻，对 $A,R$ 的每个联合终端实验都相同，也允许实验及终止选择依赖已经报告的历史。任意报告事件先对相应未归一化块求和，只在实际迹严格为正时条件化。
+
+这里的进入仪器实现整个首块，而不是先运行原首块、再从其已经产生的端点及报告无扰动地取出 $j$。若首块报告必须逐个发出，可以先抽取 $j$，再依次发出 $h(j)$ 的字母；这给出首块报告的正确边缘前缀概率，但不承诺时间 $b$ 以前的中间量子端点相等。参考仍是量子系统；$A_j$ 可以互不交换，不是标量概率。端点密度 $\sigma_{i,p}$ 只在选定的终止时间制备，或用于该次端点实验的 Born 响应，不承诺在多个时间同时提供端点副本。
+
+对命题 147.1—150.1 的每个固定可准入 $W$，取其同一个右仪器 $\phi_y$，可令 $b=5$。特别地，对命题 147.1 的最大二元报告 $B_s$，$r=2$，上述存在性上界为
+$$
+N\le16\cdot2^5=512,\qquad
+M\le512(1+2+4+8+16)=15872.
+$$
+这两个数不是最小值，亦不指定该应用的任何显式 Choi 乘积分解。非选择通道为 EB、受限制备族已经可分、输出态交换以及有限隐状态这几件事均须区别；以下证明中的非选择例与保留 Pauli 旗标的反例说明这些边界。
+
+证明。先从有限可分 Choi 块提取支持。正矩阵的所有特征值非负，故非零正矩阵的迹严格为正；正矩阵迹零则矩阵为零。每个 $H_h$ 的分解中，任一因子为零的乘积项都先删除。若 $H_h=0$，比较四个输入矩阵单位的块得 $\Psi_h=0$，此支不需任何标签。若 $H_h\ne0$，则
+$$
+\frac{H_h}{\operatorname{Tr}H_h}
+=\sum_k
+\frac{\operatorname{Tr}A_{hk}\operatorname{Tr}B_{hk}}{\operatorname{Tr}H_h}
+\frac{A_{hk}}{\operatorname{Tr}A_{hk}}\otimes
+\frac{B_{hk}}{\operatorname{Tr}B_{hk}}
+$$
+是二 qubit 乘积密度的有限凸组合。直接应用命题 141.1 证明中的有限凸支持消元：该集合位于实仿射维数十五的迹一 Hermitian 空间，超过十六个正权重时的仿射相关消元保持所表示的态，并减少正权重项数。因此每个非零块可取至多十六个乘积项。乘回总迹后再删除零项，将所有块的剩余项编成 $j\in J$，并令 $h(j)$ 保留其所属完整报告词。由 $|Y^b|=r^b$ 得 $N\le16r^b$。这一步使用已有的支持界，不要求各乘积因子为实矩阵或纯态。
+
+对一个保留项暂记两因子为 $A_{hk},B_{hk}$，定义
+$$
+\sigma_{hk}=\frac{B_{hk}}{\operatorname{Tr}B_{hk}},\qquad
+E_{hk}=\operatorname{Tr}(B_{hk})A_{hk}^{\mathsf T}.
+$$
+$\mathsf T$ 为输入计算基中的普通转置，而非伴随。若 $A_{hk}=\sum_\nu\lambda_\nu v_\nu v_\nu^\dagger$，则
+$A_{hk}^{\mathsf T}=\sum_\nu\lambda_\nu\overline v_\nu\overline v_\nu^\dagger\ge0$，故 $E_{hk}$ 为非零正效应候选，$\sigma_{hk}$ 为密度。记 $e_{uv}=|u\rangle\langle v|$；在参考在前的 Choi 次序中，输入 $(u,v)$ 块给出
+$$
+\Psi_h(e_{uv})=\sum_k(A_{hk})_{uv}B_{hk},\qquad
+\operatorname{Tr}(E_{hk}e_{uv})
+=(E_{hk})_{vu}
+=\operatorname{Tr}(B_{hk})(A_{hk})_{uv}.
+$$
+因此 $\Psi_h(e_{uv})=\sum_k\operatorname{Tr}(E_{hk}e_{uv})\sigma_{hk}$。四个 $e_{uv}$ 是全部复二阶矩阵的复基，对相互独立的复系数线性延伸，便得陈述中的所有 $X$ 的公式；并未只在实对称或 Hermitian 输入上比较。普通转置正是使这个系数恒等式成立的因素。
+
+依完整词逐步求和，有 $\sum_{h\in Y^b}\Psi_h=\mathcal T^b$。各分支完全正，其和保迹；因而对每个复矩阵 $X$，
+$$
+\operatorname{Tr}\left(\left(\sum_jE_j\right)X\right)
+=\sum_h\operatorname{Tr}\Psi_h(X)
+=\operatorname{Tr}\mathcal T^b(X)=\operatorname{Tr}X.
+$$
+取 $X=e_{uv}$ 逐元比较，得到 $\sum_jE_j=I_2$。所以各个 $E_j\le I_2$，确为同一有限 POVM 的效应，且 $N\ge1$。对密度输入，$\operatorname{Tr}(E_j\rho)\ge0$ 可由正压缩 $E_j^{1/2}\rho E_j^{1/2}$ 的迹看出，总和为一。测量后按 $j$ 制备 $\sigma_j$ 是完全正操作：若
+$E_j=\sum_u e_{ju}|u_j\rangle\langle u_j|$、$\sigma_j=\sum_v t_{jv}|v_j\rangle\langle v_j|$ 为谱分解，则
+$$
+L_{juv}=\sqrt{e_{ju}t_{jv}}\,|v_j\rangle\langle u_j|
+$$
+给出该分支的 Kraus 算子，且 $\sum_{j,u,v}L_{juv}^\dagger L_{juv}=I_2$。保留 $j$ 并把其报告函数取为 $h(j)$，就是整个首块仪器的一种实现。
+
+现在保留任意有限参考。按输入矩阵单位展开
+$$
+\omega_{AR}=\sum_{u,v=0}^1\omega_{uv}\otimes e_{uv},\qquad
+A_j=\sum_{u,v=0}^1(E_j)_{vu}\omega_{uv}.
+$$
+第二式也恰等于正压缩后的偏迹
+$$
+A_j=\operatorname{Tr}_R\left[
+(I_A\otimes\sqrt{E_j})\omega_{AR}(I_A\otimes\sqrt{E_j})\right],
+$$
+因为每个 $e_{uv}$ 的系数满足
+$\operatorname{Tr}(\sqrt{E_j}e_{uv}\sqrt{E_j})=\operatorname{Tr}(E_je_{uv})=(E_j)_{vu}$。合同保持正性，正算子的偏迹为正，故 $A_j\ge0$。由 $\sum_jE_j=I_2$，逐系数求和得 $\sum_jA_j=\sum_u\omega_{uu}=\operatorname{Tr}_R\omega_{AR}$。再将已证的复矩阵单位重建式应用于右因子，得到
+$$
+(\operatorname{Id}_A\otimes\Psi_h)(\omega_{AR})
+=\sum_{u,v}\omega_{uv}\otimes\Psi_h(e_{uv})
+=\sum_{j\in J_h}A_j\otimes\sigma_j.
+$$
+此处没有把 $\omega_{uv}$ 或 $A_j$ 当成相互交换的标量。也由此验证假设的 EB 等价性：每块 Choi 可分时，上式对任意有限参考给出有限正乘积和，附上右侧旗标仍如此；反过来，将完整旗标通道作用于归一化最大纠缠输入，再局部压缩至旗标 $h$，得到可分的 $H_h/2$。通道保迹使总体输出迹为一。这与命题 150.1 的全参考及旗标判据一致。
+
+进入以后，正密度 $\sigma_i$ 与正效应 $E_j$ 给
+$$
+K_{ji}=\operatorname{Tr}(\sqrt{E_j}\sigma_i\sqrt{E_j})\ge0,
+\qquad \sum_jK_{ji}=\operatorname{Tr}\sigma_i=1,
+\qquad
+\Psi_h(\sigma_i)=\sum_{j\in J_h}K_{ji}\sigma_j.
+$$
+对完整块数作归纳。首块就是上面的参考恒等式。若已经得到 $m$ 块的和，下一块只作用于其中的右因子，用最后一个公式替换 $\Psi_{h_{m+1}}(\sigma_{j_m})$，每项便乘入 $K_{j_{m+1}j_m}$，参考系数 $A_{j_1}$ 保持不动。因此
+$$
+(\operatorname{Id}_A\otimes(\Psi_{h_m}\circ\cdots\circ\Psi_{h_1}))(\omega_{AR})
+=\sum_{\substack{j_1\in J_{h_1},\ldots,j_m\in J_{h_m}}}
+\left(\prod_{t=2}^mK_{j_tj_{t-1}}\right)
+A_{j_1}\otimes\sigma_{j_m}.
+$$
+较早标签位于每个 $K$ 的列指标，较晚标签位于行指标；这固定了时间次序。取迹给真正的报告历史权重，各个报告块没有被当作独立抽样的边缘事件。对所有完整块历史求和，列和为一及 $\sum_j\operatorname{Tr}A_j=\operatorname{Tr}\omega_{AR}$ 保证总迹守恒。
+
+接着证明逐个报告的实现。每个 $\phi_p(\sigma_i)$ 因完全正性而正半定，所以 $d_{i,p}\ge0$；若 $d_{i,p}=0$，正谱的非负特征值和为零，故 $\phi_p(\sigma_i)=0$，任意后继复合均把它送为零。删除这些状态不会失去任何正权重路径，也不用归一化零算子。若 $d_{i,p}>0$，$\sigma_{i,p}$ 是固定密度。对内部相位 $|p|<b-1$，保迹性给
+$$
+\sum_{y\in Y}d_{i,py}
+=\operatorname{Tr}\mathcal T(\phi_p(\sigma_i))=d_{i,p}.
+$$
+因此所有报告与后继对的转移概率之和为一。对每个 $d_{i,py}>0$ 的报告，算子级等式为
+$$
+\frac{d_{i,py}}{d_{i,p}}\sigma_{i,py}
+=\frac{\phi_{py}(\sigma_i)}{d_{i,p}}
+=\phi_y(\sigma_{i,p}).
+$$
+若 $d_{i,py}=0$，右边也是零，省去该后继同样满足等式。沿任一正权重内部前缀，概率比相乘消去中间分母，乘积恰为 $d_{i,p}/d_{i,\varnothing}=d_{i,p}$；一条前缀有正迹时，其全部较早前缀也有正迹，因为零算子的后继恒为零。
+
+在最后相位 $|p|=b-1$，对每个报告 $y$，完整块重建给
+$$
+\sum_{j\in J_{py}}K_{ji}\sigma_j
+=\Psi_{py}(\sigma_i)=\phi_y(\phi_p(\sigma_i)).
+$$
+先对每个 $y$ 取迹，再对 $y$ 求和，得到
+$$
+\sum_{y\in Y}\sum_{j\in J_{py}}K_{ji}
+=\operatorname{Tr}\mathcal T(\phi_p(\sigma_i))=d_{i,p}.
+$$
+故最后相位的全部报告与后继对仍归一化。比只核迹更强的是每个报告分别满足
+$$
+\sum_{j\in J_{py}}\frac{K_{ji}}{d_{i,p}}\sigma_j
+=\frac{\Psi_{py}(\sigma_i)}{d_{i,p}}
+=\phi_y(\sigma_{i,p}).
+$$
+其迹是当前隐状态下实际下一报告概率；该迹正时再归一化，就得到实际条件端点。若该报告概率为零，左侧非负系数的和为零，每个系数均为零。内部比值乘至此步后，整块路径的权重恰为 $K_{ji}$。当 $b=1$ 时 $p=\varnothing$、分母为一，上述最后相位论证直接给全部转移，不需任何内部步骤。当 $r=1$ 时仅有一个可能报告；每个内部比值为一，最后相位的后继系数列和为一，同样适用。
+
+将 $\phi_p$ 作用于完整块归纳式的右因子，得到陈述中的 $W_{h_1,\ldots,h_m,p}$。每项若 $d_{j_m,p}>0$，可重写为
+$$
+\left[d_{j_m,p}\left(\prod_{t=2}^mK_{j_tj_{t-1}}\right)A_{j_1}\right]
+\otimes\sigma_{j_m,p};
+$$
+若 $d_{j_m,p}=0$，该项为零。括号内是正参考算子。刚证的内部比值及最后报告算子恒等式恰好逐步产生这些系数，故经典转移复现每个停止前缀的完整算子，而非仅复现整块概率。状态集合是有限的，转移只依赖 $(i,p)$；数每个长度的至多 $r^\ell$ 个前缀即得 $M$ 的界。相位已经由 $|p|$ 决定，不再另乘一个 $b$。
+
+为了明确终端实验和条件化，令 $z$ 表示任何长度至少为 $b$ 的完整已报词，$W_z$ 为上式相应块。对依赖该词的任意联合效应 $0\le G_z\le I_{A\otimes R}$，实际与实现中的该词及终端事件共同权重都为 $\operatorname{Tr}(G_zW_z)$。若输入的迹为一，这就是概率；未归一化成功子态则给共同成功权重。对同一时刻的事件 $C\subseteq Y^n$，令
+$$
+W_C=\sum_{z\in C}W_z,\qquad
+\Pr(\text{终端事件}\mid C)
+=\frac{\sum_{z\in C}\operatorname{Tr}(G_zW_z)}{\operatorname{Tr}W_C}
+\quad\bigl(\operatorname{Tr}W_C>0\bigr).
+$$
+这包括先按历史选终端 POVM，再对每个结果使用其效应。若停止时刻依赖报告，只须对该有限停止规则的终止词逐项使用同一等式；这些词不互为严格前缀，所对应停止事件互斥。历史条件化从未用等权平均替代实际迹权重。所有零概率历史都由正零算子处理，不定义其条件态。
+
+首块若须顺序发出报告，抽到 $j$ 后依次输出 $h(j)$。对长度 $\ell\le b$ 的首块前缀 $p$ 及密度 $\rho$，其边缘概率为
+$$
+\sum_{j:h(j)\text{ 以前缀 }p\text{ 开始}}\operatorname{Tr}(E_j\rho)
+=\sum_{z\in Y^{b-\ell}}\operatorname{Tr}\Psi_{pz}(\rho)
+=\operatorname{Tr}\mathcal T^{b-\ell}(\phi_p(\rho))
+=\operatorname{Tr}\phi_p(\rho).
+$$
+对带参考输入的报告边缘，取 $\rho=\operatorname{Tr}_A\omega_{AR}$ 给相同等式。这是整个首块的实现及其报告边缘化，不把未来块末密度提前认作当前端点。时间 $b$ 前输入纠缠可以尚未消失；整段前入口量子过程的经典实现是另一命题。进入以后若在一块开头先按 $K_{ji}$ 抽取未来 $j$，其块词概率虽正确，却一般不能在中间时刻用 $\sigma_j$ 作为响应；上面的 $\sigma_{i,p}$ 与最后报告重建正为保留中间端点而设。
+
+这种实现自己保存测量产生的 $j$，不要求原仪器的环境实际具有同一经典标签。特别地，$\sigma_j$ 可以非正交，报告及输出密度一般不能揭示 $j$，上述构造不提供从原仪器不透明输出恢复它的通道。标量输入下，观察者条件于记录所持有的是有限隐集上的概率向量：例如首块 $h$ 的后验为
+$$
+\pi_j(h)=\frac{\mathbf1_{\{j\in J_h\}}\operatorname{Tr}(E_j\rho)}
+{\operatorname{Tr}\Psi_h(\rho)}
+\quad\bigl(\operatorname{Tr}\Psi_h(\rho)>0\bigr).
+$$
+有限隐集的信念空间是实概率单纯形，跨任意初始态这些向量可以连续变化，并不只有有限种观察者预测状态。对一个固定输入，有限字母表上的全部有限词是可数集，故其实际可达后验至多可数，可以无限，不能自动称为不可数连续统。带参考时需保留正算子系数，而不把量子参考经典化。完整报告档案仍随时间增长；有限隐支持并不推出有限确定性预测商、最少状态数、最小记忆位数、有限精度转移表或可从原环境访问的标签。
+
+作为同一结论内的非交换说明，取命题 145.1 的非选择右通道作为单报告仪器，令 $b=1$，并沿用该命题的 $\alpha$：
+$$
+\mathcal T(X)=X_{00}\tau_0+X_{11}E_0,\qquad
+\tau_0=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+E_0=|0\rangle\langle0|,\qquad \alpha+\alpha^2=1.
+$$
+该命题已证明 $\tau_0$ 为密度，$\operatorname{Tr}\tau_0=1$、$\det\tau_0=\alpha^5>0$。取两个隐状态的响应依次为 $\tau_0,E_0$，入口效应依次为 $E_0,|1\rangle\langle1|$，直接代入 $K_{ji}=\operatorname{Tr}(E_j\sigma_i)$ 得
+$$
+K=\begin{pmatrix}\alpha&1\\\alpha^2&0\end{pmatrix},\qquad
+[\tau_0,E_0]:=\tau_0E_0-E_0\tau_0
+=\begin{pmatrix}0&-\alpha^2\\\alpha^2&0\end{pmatrix}\ne0.
+$$
+所以有限隐状态响应不要求输出代数交换。此处是右端点通道 $\mathcal T$；命题 130.1、133.1 原始记忆通道的制备态 $P_0=|m_0\rangle\langle m_0|$ 有非对角元 $\alpha^{3/2}$，而这里为 $\alpha^2$，两通道不可混同。
+
+非选择 EB 也不能替代逐完整报告块的假设。取报告集 $\{0,1,2,3\}$，令 $U_y$ 依次为 $I_2$ 及三个 Pauli 矩阵，分支为
+$$
+\phi_y(X)=\frac14U_yXU_y^\dagger.
+$$
+对计算基的四个矩阵单位求和，两个对角单位均送为 $I_2/2$，两个非对角单位送为零，故
+$$
+\sum_y\phi_y(X)=\operatorname{Tr}(X)\frac{I_2}{2}.
+$$
+对任意有限参考，该非选择通道送 $\omega_{AR}$ 为
+$\operatorname{Tr}_R(\omega_{AR})\otimes I_2/2$，所以为 EB。然而每个长度 $n\ge1$ 的完整报告词都给
+$$
+\phi_{(y_1,\ldots,y_n)}(X)
+=4^{-n}U_{y_n}\cdots U_{y_1}XU_{y_1}^\dagger\cdots U_{y_n}^\dagger.
+$$
+作用于最大纠缠参考密度时，这是正权重 $4^{-n}$ 乘以局部幺正像，归一化后仍有 Schmidt 秩二，因而仍纠缠。其 Choi 算子是同一纠缠纯态的正倍数，不可能为有限正乘积和。于是保留每个旗标时，没有任何有限 $b$ 满足这里的块假设，尽管非选择通道一步已经 EB。
+
+最后对齐本卷的具体应用及较弱前提。对命题 147.1 的逐行可准入 $W$，各 $\phi_y$ 完全正且和保迹；命题 148.1 对同一相关记忆的联合提升归纳，已经把所有实际有限报告历史及端点算子等同于同一个仪器的按时间复合。命题 150.1 则对这个固定仪器证明 $\mathcal J_W^{(5)}$ 对任意有限参考为 EB，完整五步报告仍在右侧。对其参考在前的 Choi 输入逐旗标压缩，恰给这里每个长度五的 $H_h$ 的有限可分性，所以本命题可取 $b=5$。对 $B_s$ 的二元字母表代入计数式，就得 $512$ 与 $15872$ 两个上界。这里的应用使用全参考五步结论；只用该命题的兼容族四步可分性不足以满足假设，且其 $B_s$ 四步非 EB 结论已经说明两者严格有别。这是有限实数表的存在性结论，没有在此给出该五步应用的精确分解、有限精度算法或最优性结论。
+
+定理 16.5 的经典路径依赖指定理想投影与初始经典相关结构，第 70.4 节依赖每步实际插入构型投影，命题 78.9 的四标签描述则从首次实际秩一 Lüders 查询后开始；这些前提各自给出相应过程，不能单独推出此处保留全部报告的有限块及块内任意参考算子恒等式。命题 118.16 另要求控制器可由记录确定其状态描述，并对每个动作验证受控 Markov 充分性；本命题的隐标签通常不能由观察历史确定，也未允许反馈动作。命题 133.1 的分解依赖实际忽略中间输出，不能代替保留旗标的假设，正如上述 Pauli 例所示。命题 144.1 的射影历史商针对已完成制备后的确定性充分记录，本命题的有限隐支持不宣称那个确定性商只有有限多个跨时域类别。所证的算子相等只用于规定过程中的一个选定终端实验，不扩展到中途任意插入操作、同时输出多个时刻的端点副本或普遍的经典现实断言。证毕。
+
+本命题所用可分 Choi、纠缠破坏及测量后制备的成熟等价性，参见 M. Horodecki、P. W. Shor、M. B. Ruskai，*Entanglement Breaking Channels*，Reviews in Mathematical Physics 15，629–641（2003），[arXiv:quant-ph/0302031v2，定理 4，PDF 第 4—6 页](https://arxiv.org/pdf/quant-ph/0302031v2)，[DOI:10.1142/S0129055X03001709](https://doi.org/10.1142/S0129055X03001709)。其中（A）、（B）、（C）、（D）给出测量后制备、EB、可分 Choi 与秩一 Kraus 的等价性，保迹情形另要求效应构成 POVM；此处各块分支本身不要求保迹，归一化来自所有完整报告块之和。十六项支持界直接使用命题 141.1 的有限凸支持论证，按时间的块历史和逐报告实现由上面的恒等式给出，不附加文献新颖性主张。
+

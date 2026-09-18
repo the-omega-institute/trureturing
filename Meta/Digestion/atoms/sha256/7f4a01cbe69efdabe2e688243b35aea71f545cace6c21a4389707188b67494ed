@@ -1,0 +1,23 @@
+**定理 25.10（完全分类及单个切片系数参数）。** 在假设25.1下，映射
+$$
+t\longmapsto P^{(t)}
+$$
+是 $\Lambda$ 到全部归一化实有符号结合核的双射。等价地，全部核由一个实数
+$$
+q=P_{0_K,x_1^+}(x_1^+)\in\mathbb R\setminus\{1/2\}
+$$
+唯一参数化。两种参数的转换为
+$$
+q=\frac{t}{t-1}\quad(t\ne\infty),\qquad
+q=1\quad(t=\infty),
+$$
+$$
+t=\frac{q}{q-1}\quad(q\ne1),\qquad
+t=\infty\quad(q=1).
+$$
+若置 $D_m(q)=q^m-(q-1)^m$，则所有情形统一为
+$$
+p_m=\frac{q^m}{D_m(q)},\qquad
+c_{m,n}=-\frac{D_m(q)D_n(q)}{D_{m+n}(q)}.
+$$
+

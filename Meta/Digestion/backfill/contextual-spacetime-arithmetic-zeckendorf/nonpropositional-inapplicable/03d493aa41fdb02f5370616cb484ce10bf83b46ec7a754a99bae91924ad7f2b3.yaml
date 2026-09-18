@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03d493aa41fdb02f5370616cb484ce10bf83b46ec7a754a99bae91924ad7f2b3
+  normalized_sha256: sha256:03d493aa41fdb02f5370616cb484ce10bf83b46ec7a754a99bae91924ad7f2b3
+cas_ref: sha256:03d493aa41fdb02f5370616cb484ce10bf83b46ec7a754a99bae91924ad7f2b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句固定有限历史、正权、实费用和正温度，并定义实际像上的配分和和有效费用，没有待证明命题。
+    previous_atom_id: 35607321ce969df4c1411846b19f657a4786ac2f0e8f254eef4ece82a7f210b7
+    next_atom_id: 500be7f4dfdfaddd684f94264cd69e794cc08590c028874730fe3304e039079e
