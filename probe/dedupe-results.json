@@ -1,0 +1,135 @@
+[
+  {
+    "key": "repo_names",
+    "command": "git grep -n -i -P 'arithmetic.?deriv|arithderiv|IsArithmeticDerivative|Bradshaw|A003415|算术导数' -- D5 Blueprint Problems Library docs/develop/theory Evidence Chronicle Meta/Digestion",
+    "exit": 0,
+    "hit_lines": 10,
+    "hits": [
+      "Library/Words/oeis2026triage0909.md:132:| [A396915](https://oeis.org/A396915) | 猜想复合无平方因子整数 k 中满足算术导数 D(k)+2k 为平方者有无穷多个；同页还猜测其计数约为√X/4。 | out | open | low | yes | drop |",
+      "Library/Words/oeis2026triage0909.md:316:**A396915 — precise；drop。** 文献/卡点：已读主条目和A003415/A005117/A120944所有要求字段。主条目明确只以Bunyakovsky猜想支持无穷性，计数为经验启发。实际打开 erdosproblems.com/307，页面仍标Open且Proof expositions(0)，该题要求两个素数倒数和乘积为1，与本条仅加号平方条件不同，不能把二者等同。无界infinitely many/asymptotic按用户范围直接out；open仅表示所查来源无目标证明。 Mathlib：Nat.squarefree_iff_nodup_primeFactorsList（.lake/packages/mathlib/Mathlib/Data/Nat/Squarefree.lean:34）：n≠0时无平方因子等价于素因数列表无重复；已读声明。全库文本检索 arithmeticDeriv/arithmetic derivative/Bunyakovsky 未命中目标，无直接素值多项式无穷性声明。 数值方案：约30行筛最小素因子至 X=10^6，分解每个k，只保留至少2个不同素因子且指数全1，算 D(k)=Σ_{p∣k}k//p，再以 isqrt(D(k)+2*k)^2==D(k)+2*k 判入列；核对 data 和计数比值。可另筛 s≤10^4、s≡±4 mod11，检验 q=(s²−5)/11 为素数，得到子族5q。仅有限样本，不能验证无穷或渐近。 全部直接 A 引用：A003415、A005117、A120944。",
+      "Library/Words/oeis2026triage0910.md:162:| [A377992](https://oeis.org/A377992) | 每个n≥2，凡k的算术导数等于第n个primorial的算术导数，则k无立方素因子。 | 3 | open | low | yes | note-only |",
+      "Library/Words/oeis2026triage0910.md:392:**A392604** — precise；满足质数幂配额的二进制编码整数，其1位数总不超过4。 文献/裁决：A380475把目标等价为五个以上不同质数的算术导数在primorial进制必进位，仍标猜想；源条目对2^k+1的证明仅处理两位，不能外推。与A392603合并，缺进位的全称障碍。 bind low，疑似声明：none。数值 yes：由位集生成平方自由质数积N；对每个p∣N把N/p作primorial进制，累加各位，检查第j位是否小于第j个质数；比较1位数。 直接 A 号：A000040, A000079, A000120, A007645, A019565, A045331, A047257, A048675, A138968, A276086, A276156, A359550, A380467, A380468, A380475, A380476, A392603。",
+      "Library/Words/oeis2026triage0910.md:520:**A381949** — precise；对每个n>2，满足V(k^n)=n且k>1非完全幂的最小k均被5整除。 文献/裁决：已读MO487698接受答案全文：只示范同余1 mod100情形，最后明确一般倍数5结论为概率启发式。Ripà–Onnis2022 PDF p14式(16)是速度公式，不是所有n的最小化排除；其p5–6证明链未完整追到2021原文，不能标published。与A381460合族但n3基底25不合非完全幂限制。 bind med，疑似声明：none；全Mathlib检索 cryptarith/tetration/arithmetic.derivative/EKG/Yellowstone/forest.fire 无目标命中；只读源码，非真实bind探针。 最近基础为NumberTheory/Multiplicity.lean:390 padicValNat.pow_sub_pow（声明已读）。。数值 yes：已运行：自写2/5估值分类、完全幂指数gcd及逐k枚举，n1..10得2,7,55,5,95,95,385,95,1535,1535，全部对应DATA；速度公式复现A373387全部DATA。未运行：模塔独立交叉验证、n>10最小化及无界分类。 直接 A 号：A018247, A091663, A317905, A373387, A381460。",
+      "Library/Words/oeis2026triage0910.md:534:**A377992** — precise；每个n≥2，凡k的算术导数等于第n个primorial的算术导数，则k无立方素因子。 文献/裁决：原条目明确是A024451全部squarefree猜想的后果，而非独立已证。已完整读A024451及补集相关A048103：p^p-free是已述较弱性质，不能替代squarefree。已开Ufnarovski–Åhlander PDF p5 Thm9、p6完整AM-GM证明及Cor3，只证明有限枚举界D²/4，不证明本目标。 bind low，疑似声明：none；全Mathlib检索 cryptarith/tetration/arithmetic.derivative/EKG/Yellowstone/forest.fire 无目标命中；只读源码，非真实bind探针。。数值 yes：已运行：自写Leibniz导数筛，n2..4按D²/4完整枚举，三行[6]、[30,58]、[210,435,507]复现前6项DATA；均cubefree，507非squarefree。未运行：大n完整反导数及一般立方排除。 直接 A 号：A002110, A003415, A004709, A005117, A024451, A048103, A327978, A366890, A369240, A377987, A377993, A378209。",
+      "Library/Words/oeis2026triage0910.md:536:**A376084** — precise；12位cryptarithmically unique primes总数恰为24。 文献/裁决：已打开Inosov–Vlasák arXiv2410.21427 PDF pp6–10；p7称>10^12的≥4不同数字未检，pp8–9表列24，OEIS却明确a12也依赖无≥4数字项。缺可重放的12位全模式排除证书，不能将表格或概率当完整证明。有限前沿可保留tier2，暂不派；无界渐近另直接out。 bind low，疑似声明：none；全Mathlib检索 cryptarith/tetration/arithmetic.derivative/EKG/Yellowstone/forest.fire 无目标命中；只读源码，非真实bind探针。。数值 yes：已运行：独立筛尽全部p<10^6，按首次出现数字编码分组，n1..6计数[0,1,0,0,0,0]复现DATA。未运行：12位各受限增长串全部注入赋值及素性/合数证书；至少需覆盖4..10种数字所有模式。 直接 A 号：A004022, A006879, A358497, A374238, A376918。",
+      "Library/Words/oeis2026triage0911.md:66:| [A399369](https://oeis.org/A399369) | 正进位差相等且算术导数相等的不同整数对只有(28,16)。 | 3 | open | low | yes | note-only |",
+      "Library/Words/oeis2026triage0911.md:161:精确目标：令R(n)把素因子指数按素数基数逐位进位（指数e_p≥p时将p的p份换成下一素数的一份，直到每位小于p），D(n)=n−R(n)=A376418(n)，δ(n)=Σ_{p^e∥n}e(n/p)。对1≤j<k且D(j)=D(k)>0，δ(j)=δ(k)⇒(k,j)=(28,16)。这保留原文such pair的正进位条件；若去掉>0，素数(3,2)就以D=0、δ=1反驳字面加强版。Conj1只比较A399370给的最大j，Conj2的正进位版本允许任何j，不可混同。文献裁决：完整读本条及所有直引，A379240明确说明Adamczewski arXiv2608.11941所述AI反例误读了A376418；reader1下载并读该PDF相关论述，不能将错误模型的反例记为本命题公开反驳。当前正进位目标未见证明，open。bind-only 疑似声明：Mathlib `Nat.factorization_mul` 是指数加法支撑，D5的primorial上界定理不处理此进位归一化；按本号及arithmetic-derivative/primorial检索无目标声明（none限本次），low。数值方案实际用最小素因子筛至100000、指数数组向下一素数进位，再按(D,δ)哈希存全部较小j；只发现(28,16)，两者(D,δ)=(7,32)。A399369得到4073项、前60项DATA全等，A376418与A003415前缀也全等。便宜形态是哈希碰撞，避免对每个k重扫所有j。拟议逃逸：按首次进位位数与导数变化给唯一性约束，尚无控制所有素数支持的短证据，note-only。停止条件：第二个正D碰撞即反驳；零纤维例子只反驳错误去域版本；有限无碰撞不立唯一性。同族合派：与A399370/A379240共用一族，原强弱目标最多共一探针、当前零席。 xref 预检全部直接 A 号（完整读；占位另注）：A003415、A100716、A376418、A379240、A399369、A399370。",
+      "Library/notes/katz2015goldeninterfaces.md:106:## 4. Arithmetic derivatives and cohomology"
+    ],
+    "stderr": ""
+  },
+  {
+    "key": "repo_lean_leibniz",
+    "command": "git grep -n -i -P 'Leibniz|deriv.*mul|mul.*deriv' -- 'D5/**/*.lean'",
+    "exit": 0,
+    "hit_lines": 769,
+    "stderr": "",
+    "hit_files": 296,
+    "interpretation": "Broad preliminary query superseded by focused name and product-rule searches; not used as a negative result."
+  },
+  {
+    "key": "repo_positive_control",
+    "command": "git grep -n -P Nat.factorization -- 'D5/**/*.lean'",
+    "exit": 0,
+    "hit_lines": 301,
+    "stderr": "",
+    "hit_files": 68,
+    "interpretation": "Broad preliminary query superseded by focused name and product-rule searches; not used as a negative result."
+  },
+  {
+    "key": "mathlib_names",
+    "command": "git -C .lake/packages/mathlib grep -n -i -P 'arithmetic.?deriv|arithderiv|IsArithmeticDerivative|A003415' -- 'Mathlib/**/*.lean'",
+    "exit": 128,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": "fatal: cannot change to '.lake/packages/mathlib': No such file or directory\n"
+  },
+  {
+    "key": "mathlib_leibniz",
+    "command": "git -C .lake/packages/mathlib grep -n -i -P 'Leibniz|deriv.*mul|mul.*deriv' -- 'Mathlib/NumberTheory/**/*.lean' 'Mathlib/ArithmeticFunction*.lean' 'Mathlib/NumberTheory/ArithmeticFunction*.lean'",
+    "exit": 128,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": "fatal: cannot change to '.lake/packages/mathlib': No such file or directory\n"
+  },
+  {
+    "key": "mathlib_positive_control",
+    "command": "git -C .lake/packages/mathlib grep -n -P 'theorem factorization_mul' -- 'Mathlib/**/*.lean'",
+    "exit": 128,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": "fatal: cannot change to '.lake/packages/mathlib': No such file or directory\n"
+  },
+  {
+    "key": "repo_leibniz_exact",
+    "command": "git grep -n -i -P '\\bleibniz\\b' -- 'D5/**/*.lean'",
+    "exit": 0,
+    "hit_lines": 26,
+    "hits": [
+      "D5/S0/Certificates/ChapotonConjectureFiveFourRefutation.lean:43:division and the Leibniz determinant, and (2.2) with symmetric-basis geometric",
+      "D5/S0/Certificates/CiglerConjectureSevenFiveRefutation.lean:39:elimination, and C=1+x*C^2 with Cauchy multiplication and the full Leibniz sum.",
+      "D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.lean:144:    simp [Derivation.leibniz, constantCoeff_inv, hS]",
+      "D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.lean:162:    simp only [Derivation.leibniz, derivative_X, derivative_inv', smul_eq_mul]",
+      "D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.lean:168:    simp only [Derivation.leibniz, derivative_X, derivative_inv', smul_eq_mul]",
+      "D5/S1/Recurrence/Invariants/CompanionPellExpBaseFiveResidue.lean:131:      simp only [hd6, Derivation.leibniz, derivative_pow, map_add, map_sub, derivative_one,",
+      "D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:36:  simp only [Derivation.map_sub, Derivation.leibniz, derivative_one, derivative_C,",
+      "D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:54:  have h := congrArg (coeff (n-1)) ((derivative R).leibniz",
+      "D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:392:    rw [hF, Derivation.map_add, Derivation.leibniz, derivative_pow, derivative_pow]",
+      "D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.lean:433:    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative ℚ).leibniz,",
+      "D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.lean:623:    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative ℚ).leibniz,",
+      "D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.lean:53:  simp only [H, he, map_add, map_sub, Derivation.leibniz, derivative_one,",
+      "D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.lean:99:  simp only [F, Derivation.leibniz, derivative_C, smul_eq_mul, mul_zero, add_zero,",
+      "D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.lean:121:    simp only [B, Derivation.leibniz, smul_eq_mul, U_pow_derivative,",
+      "D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:221:    rw [he, (derivative ℤ).leibniz, ih]",
+      "D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:226:    rw [(derivative ℤ).leibniz, ih] at he",
+      "D5/S1/Recurrence/Residue/IterateExponentialFiveModThree.lean:84:      simp only [D, derivative_subst hgs, map_add, Derivation.leibniz, smul_eq_mul]",
+      "D5/S1/Recurrence/Residue/LogarithmicWeightBinaryParity.lean:105:  simp only [map_add, Derivation.leibniz, smul_eq_mul, deriv_A, mul_one] at hd",
+      "D5/S1/Recurrence/Residue/LogarithmicWeightBinaryParity.lean:109:  simp only [Derivation.leibniz, smul_eq_mul, deriv_A, mul_one] at hds",
+      "D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalModThree.lean:76:    simp only [map_add, derivative_one, derivative_X, Derivation.leibniz,",
+      "D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalModThree.lean:80:    simp only [Derivation.leibniz, derivative_one, smul_eq_mul] at hdq",
+      "D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:36:  simp only [Derivation.map_sub, Derivation.leibniz, derivative_one, derivative_C,",
+      "D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:54:  have h := congrArg (coeff (n-1)) ((derivative R).leibniz",
+      "D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:319:    rw [hF, Derivation.map_add, Derivation.leibniz, derivative_pow, derivative_pow]",
+      "D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.lean:14:the first `m` jets and then applies the multiplication Leibniz rule.  Those",
+      "D5/S3/PrimeForms/PrimaryPseudoperfectPortComposition.lean:40:/-- The quotient sum obeys a Leibniz rule on coprime natural factors. -/"
+    ],
+    "stderr": ""
+  },
+  {
+    "key": "repo_product_rule",
+    "command": "git grep -n -i -P '\\b(\\w+)\\s*\\(m\\s*\\*\\s*n\\)\\s*=\\s*\\1\\s+m\\s*\\*\\s*n\\s*\\+' -- 'D5/**/*.lean'",
+    "exit": 1,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": ""
+  },
+  {
+    "key": "mathlib_names",
+    "command": "git -C .lake/packages/mathlib grep -n -i -P 'arithmetic.?deriv|arithderiv|IsArithmeticDerivative|A003415' -- 'Mathlib/**/*.lean'",
+    "exit": 1,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": ""
+  },
+  {
+    "key": "mathlib_product_rule",
+    "command": "git -C .lake/packages/mathlib grep -n -i -P '\\bleibniz\\b|\\b(\\w+)\\s*\\(m\\s*\\*\\s*n\\)\\s*=\\s*\\1\\s+m\\s*\\*\\s*n\\s*\\+' -- 'Mathlib/NumberTheory/**/*.lean' 'Mathlib/Data/Nat/**/*.lean'",
+    "exit": 1,
+    "hit_lines": 0,
+    "hits": [],
+    "stderr": ""
+  },
+  {
+    "key": "mathlib_positive_control",
+    "command": "git -C .lake/packages/mathlib grep -n -i -P 'theorem factorization_mul' -- 'Mathlib/**/*.lean'",
+    "exit": 0,
+    "hit_lines": 4,
+    "hits": [
+      "Mathlib/Data/Nat/Factorization/Defs.lean:155:theorem factorization_mul {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0) :",
+      "Mathlib/Data/Nat/Factorization/Defs.lean:273:theorem factorization_mul_apply_of_coprime {p a b : ℕ} (hab : Coprime a b) :",
+      "Mathlib/Data/Nat/Factorization/Defs.lean:279:theorem factorization_mul_of_coprime {a b : ℕ} (hab : Coprime a b) :",
+      "Mathlib/RingTheory/UniqueFactorizationDomain/Finsupp.lean:52:theorem factorization_mul {a b : α} (ha : a ≠ 0) (hb : b ≠ 0) :"
+    ],
+    "stderr": ""
+  }
+]

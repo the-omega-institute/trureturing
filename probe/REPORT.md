@@ -28,3 +28,19 @@ Issue #8643 matches each of these clauses. The extra hypothesis 1 <= n is explic
 At (17,7,125): D(125)=75, C(125)=1066, D(1066)=641=C(75), D(75)=55, and 125 has factorization 5^3. Both preregistered numerical predictions passed. These are computational checks, not a replacement for the Lean existence and refutation proofs.
 
 PDF SHA-256: `5d2579130e5a88b1f3aec05d6d00d0e9876c85db42846fb05c76572a2aaed6bd`.
+
+## Dedupe and capability result
+
+Repository name search returned 10 lines, all in Library prose; focused Leibniz search returned 26 lines. The relevant nearby result is `D5.S3.PrimeForms.PrimaryPseudoperfectPortComposition.squarefreeDeriv_mul_of_coprime`, read in full: its sum has no valuation multiplicity, and its product rule requires coprimality. Thus it cannot implement D on 125 (its quotient sum is 25, whereas D(125)=75). No exact admissible arithmetic-derivative definition or all-input product rule was found in the searched repository scope. Repository positive control `Nat.factorization`: 301 matching lines.
+
+After cache provisioning, pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d returned 0 name hits and 0 number-theory/natural-number product-rule hits. Positive control `theorem factorization_mul`: 4 lines. Reuse `Nat.factorization_mul`, `Nat.Prime.factorization`, `Nat.dvd_of_mem_primeFactors`, `Nat.mul_div_assoc`, and Finsupp finite-sum identities directly inside the proof. Search commands and exact scoped counts are in `dedupe-results.json`; all shell globs were quoted (subprocess argument vectors do not expand globs).
+
+External Lean searches returned one unrelated real-autodifferentiation file (opened and excluded), and no arithmeticDerivative/arithmetic-derivation declarations. GitHub issue search found only #8643. Independent arXiv checks: arithmetic derivative + Collatz: 0; arithmetic derivative positive control: 11; Bradshaw + Collatz: 0. HTTP 406 from initial urllib requests was resolved using curl; successful HTTP 200 results are retained. No known settlement found in this scope. Comprehensive literature novelty remains ASSUMED-UNVERIFIED; this seat did not search citation indexes, MathSciNet, zbMATH, or OEIS independently.
+
+## Cache gate
+
+The supplied PATH was exported verbatim. `make lean-cache-ensure` exited 0 before any lake invocation. The initial missing Mathlib checkout was a capability gap, not a negative search; the successful searches above supersede those failed attempts.
+
+```
+LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-bradshaw-probe","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+```

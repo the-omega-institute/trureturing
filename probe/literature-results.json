@@ -1,0 +1,84 @@
+{
+  "initial_urllib_queries": "HTTP 406; curl recovery below",
+  "arxiv": [
+    {
+      "query": "all:\"arithmetic derivative\" AND all:Collatz",
+      "http": 200,
+      "total": "0",
+      "entries": []
+    },
+    {
+      "query": "all:\"arithmetic derivative\"",
+      "http": 200,
+      "total": "11",
+      "entries": [
+        {
+          "title": "Giuga Numbers and the arithmetic derivative",
+          "id": "http://arxiv.org/abs/1103.2298v1"
+        },
+        {
+          "title": "A Generalization of Arithmetic Derivative to $p$-adic Fields and Number Fields",
+          "id": "http://arxiv.org/abs/2307.04912v1"
+        },
+        {
+          "title": "The Dirichlet series of the arithmetic derivative",
+          "id": "http://arxiv.org/abs/2305.09445v1"
+        },
+        {
+          "title": "The arithmetic derivative and Leibniz-additive functions",
+          "id": "http://arxiv.org/abs/1803.06849v1"
+        },
+        {
+          "title": "Arithmetic derivatives through geometry of numbers",
+          "id": "http://arxiv.org/abs/2106.16165v3"
+        },
+        {
+          "title": "Fermat-Wilson Supercongruences, arithmetic derivatives and strange factorizations",
+          "id": "http://arxiv.org/abs/2211.01076v1"
+        },
+        {
+          "title": "Arithmetic Subderivatives and Leibniz-Additive Functions",
+          "id": "http://arxiv.org/abs/1901.02216v1"
+        },
+        {
+          "title": "Investigations on the properties of the arithmetic derivative",
+          "id": "http://arxiv.org/abs/1108.4762v1"
+        },
+        {
+          "title": "Port Fillings for Primary Pseudoperfect Numbers",
+          "id": "http://arxiv.org/abs/2605.21518v1"
+        },
+        {
+          "title": "From Plato's Rational Diameter to Proclus' Elegant Theorem",
+          "id": "http://arxiv.org/abs/2011.07335v4"
+        },
+        {
+          "title": "Simple alternative to the Hardy-Ramanujan-Rademacher formula for p(N)",
+          "id": "http://arxiv.org/abs/math-ph/0404050v1"
+        }
+      ]
+    },
+    {
+      "query": "all:\"Bradshaw\" AND all:\"Collatz\"",
+      "http": 200,
+      "total": "0",
+      "entries": []
+    }
+  ],
+  "github_code": {
+    "\"arithmetic derivative\" language:Lean": {
+      "hits": 1,
+      "exact_hits": 0,
+      "excluded": "lean-dojo/TorchLean NN/Proofs/Autograd/FDeriv/PrimitiveArithmetic.lean at 29149c92f0d05fb1fdf437bc40b6eafb8bd702f9: ordinary real tensor autodifferentiation"
+    },
+    "\"arithmeticDerivative\" language:Lean": 0,
+    "\"arithmetic derivation\" language:Lean": 0
+  },
+  "github_issues": {
+    "query": "Bradshaw repo:the-omega-institute/trureturing",
+    "hits": [
+      8643
+    ]
+  },
+  "limits": "No comprehensive citation-index, MathSciNet, zbMATH, or OEIS recheck performed by this seat; absence of a published settlement remains ASSUMED-UNVERIFIED beyond searched scope."
+}
