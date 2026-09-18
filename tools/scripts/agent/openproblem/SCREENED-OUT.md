@@ -1051,3 +1051,55 @@ Erdős 这条线的 41 条可结算面**已逐条列名并逐条给出死因**�
 要么是正被系统攻击的名题,要么其有限检查已被该题 forum 页记录的社区计算推到远超本机的规模。
 **第一关因此再加一条固定动作:读 forum 讨论页,不止读题页。** #993 与 #743 都是题页不载而 forum 页载着计算前沿的例子,
 只读题页会让人以为它们还没被算过。
+
+## R48–R50 与 C1(2026-09-18):arXiv 结尾栏三轮、首个 codex 本地去重搜题席,与「GPT Pro 席不能去重」的两次代价
+
+会话内搜题轮编号(R47–R49)与本文件的节号错开一位;本节按内容记。
+
+### 搜题轮「Kok」(ChatGPT Pro,arXiv math.CO 2025-07/08、math.GM/HO 2025-02..06 题级,期刊问题栏)
+
+提出 Kok, arXiv:2507.16500, **Conjecture 2.12** 与 **Conjecture 2.9**。2.12 仓内已由 #7348 反驳(`JacoExponentialDominationRefutation`)——
+席位无本地树,`D5/`、`Problems/` 去重未完成,orchestrator `git grep -il -P '\bjaco\b|2507\.16500'` 命中 5 个文件全是 2.12 lane。
+2.9 开 lane:#8569 → PR #8588(v1,tests 席编译邻接矩阵变异证明私有定理非见证,关闭)→ PR #8614(v2,bind-only)。
+同轮报 Kourovka 3.46/18.50/19.25/20.125/21.8/21.24/21.147/21.150 已被 arXiv:2607.17477 解决——不派席。
+Crux 累积未解表当轮下载失败,未读。
+
+### 搜题轮「abelian4」(ChatGPT Pro,math.CO 2025-09/10、cs.DM 2025-07/08、math.NT 2025-02/03、math.GM 2024 部分)
+
+唯一候选 Fazekas–Mammoliti–Mercaş–Simpson, arXiv:2604.23188, **Conjecture 4**(`w = abab`,论文自己的 Table 1 印着反例行):
+#8589 → PR #8603 MERGED `1bac71778f`。已结算、不派席:DeLeo–Henderschedt–Wells arXiv:2605.29166 的 lex-merge 最优性猜想已由
+Ramos–Hulak–de Queiroz arXiv:2608.08431 对全部 `n` 证明(附 Isabelle/HOL 形式化);Niu arXiv:2605.04328(Fibonacci 立方 pebbling 数)已撤稿,
+v2 评注指向 Mollard 2025 的先证。
+
+### C1(codex-cli 搜题席,math.CO 2025-02..06 与 cs.DM 2025-01..06 全量清单,本地树去重)
+
+首个用 codex 席做 arXiv 清单搜题的轮次:读 704 篇去重摘要、402 篇 PDF(结尾三分之一自动标记),**一轮出 3 个问题 / 4 条记录**,
+全部经 orchestrator 亲验后开 lane:Misawa–Nishimura arXiv:2505.06893 Conjecture 3.3(`{2,4}`,#8616)、Chauve–Zhang arXiv:2505.13796 §6 结尾问句两部分
+(`n=3,d=2` / `n=4,d=1`,#8618)、Göbel–Misra arXiv:2506.23936 Conjecture 5.3(`m=7`,#8621)。席位自报已在源文内结算的 6 篇
+(2501.00784、2502.01161、2505.02045、2506.20296、2506.04407、2504.19031)与仓内已有卷宗的 2503.04122,均不派席。
+**读数**:同日 GPT Pro 三轮各出 0–1 条,codex 一轮出 3 条;差别在能不能 `git grep`——GPT Pro 席的每条候选都要 orchestrator 再做一遍去重,
+而 codex 席把去重命令与命中数写进候选记录。搜题以 codex 席为主,GPT Pro 席只做文献结算核对。
+
+### 搜题轮 R49(ChatGPT Pro,chrono 池;math.CO 2025-11..2026-05、cs.DM 2025-09..2026-05、math.NT 2025-04..08、math.GM 2025、cs.FL/cs.GT 部分)
+
+五条候选,两条开 lane、三条判掉:
+
+- **开 lane**:Wenpeng Zhang, arXiv:2506.17235, §1 **Question (D)**(两个 Legendre 特征和之差的常数 `c` 只能是 0 或 2?)——`f = X²`, `g = (X+1)²`
+  对每个奇素数差恒为 1(#8626);Bašić–Gottlieb–Krnc, arXiv:2606.16828, **Conjecture 2** 于印刷边界 `r = 1`(`G([1]) = 1` 而公式给 2,与同页
+  Conjecture 4 的 `n = 1` 值一致;#8628)。
+- **仓内已结算**:同文 **Conjecture 3** 的 `r = 7, k = 5`(`R^5_{7,6} = PS_6`,377 个位置)已由 `D5/S0/Certificates/Games/CrimGrundyRefutation` 反驳
+  (`escape-witness` 依据,冻结)。席位无本地树,再一次把已落地的结果当候选。
+- **已发表定理的即时实例**:Fried, arXiv:2607.07013, Conjecture 10.2(加权投票博弈由 swing table 在全部 simple games 中唯一确定)——
+  swing table 经双重计数给出 Chow 参数(`Σ_S v(S)` 与各 `Σ_{S∋i} v(S)`),而 Chow(1961)定理正是「阈值函数由 Chow 参数在全部布尔函数中唯一确定」
+  (arXiv:1206.0985 明写);按 R32 规则「某已发表定理的即时实例」判掉,不开 lane、不 cover。
+- **不派**:Relia, arXiv:2402.19365v2, Conjecture 1(顶点覆盖算法的正确性)——席位的 9 顶点「假阴性」依赖对四个过程与匹配选取/平局规则的转写,
+  论文摘要自述正确性未定;转写不确定的算法反驳不是有限判定,不派。
+- 席位顺手核出的已结算:Zhang 同文 Question (A) 由 Nica arXiv:2507.09991 Example 5.3 直接证明(不触及 (D));Bouras arXiv:2509.09745 / A356247
+  三条猜想 OEIS 记 Cloitre 2025 已证;arXiv:2312.16052 的 vincular 模式 Fibonacci-平方猜想已是其 2026-01 修订版的 Theorem 5。
+
+### 方法学读数
+
+- **GPT Pro 席不能去重,已两次把仓内已落地的结果当候选**(Kok 2.12、CRIM Conjecture 3)。它的候选一律先过 `git grep -il '<arXiv 号>|<对象名>' origin/dev -- D5 Blueprint Problems Library`,
+  命中即读该模块的 `claim` 与卷宗;这一步不能交给席位。
+- `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`;派前查 `nyxid oracle pool show <slug> --output json` 的 `online_workers`,
+  `NYX_TIMEOUT` 两次即查任务状态,`queued + Attempts 0` 是死池不是慢。
