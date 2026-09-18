@@ -46,13 +46,13 @@ def s (w : List ℕ) : List ℕ := westRun [] w
 def M (w : List ℕ) : List ℕ := s (r w)
 
 /-- The proposed potential, compared with the ordinary lexicographic order. -/
-def Phi (w : List ℕ) : List ℕ := w.reverse
+private def Phi (w : List ℕ) : List ℕ := w.reverse
 
 private theorem westRun_perm (stack input : List ℕ) :
     (westRun stack input).Perm (stack ++ input) := by
   fun_induction westRun stack input with
   | case1 stack => simp [westRun]
-  | case2 x xs ih => simpa [westRun] using ih
+  | case2 x xs ih => simpa using ih
   | case3 x xs a rest h ih => simpa [westRun, h] using ih.cons a
   | case4 x xs a rest h ih =>
       simpa [westRun, h] using ih.trans List.perm_middle.symm
@@ -77,7 +77,7 @@ private theorem westRun_split (stack X Y : List ℕ) (m : ℕ)
     westRun stack (X ++ m :: Y) = westRun stack X ++ westRun [m] Y := by
   fun_induction westRun stack X with
   | case1 stack =>
-      simp only [List.nil_append, westRun]
+      simp only [List.nil_append]
       have drain : ∀ st : List ℕ, (∀ x ∈ st, x < m) →
           westRun st (m :: Y) = st ++ westRun [m] Y := by
         intro st
@@ -173,7 +173,7 @@ private theorem valleyRuns_append_valley (X Y : List ℕ) (v : ℕ)
         induction t with
         | nil => simp [hv]
         | cons x xs ht =>
-            cases hx : p x <;> simp [List.takeWhile_cons, List.dropWhile_cons, hx, ht]
+            cases hx : p x <;> simp [hx, ht]
       have hb : ∀ x ∈ tail.dropWhile p, v < x := by
         intro x hx
         have ht : x ∈ tail := List.dropWhile_subset p hx
@@ -299,7 +299,7 @@ private theorem potential_weak (w : List ℕ) (nd : w.Nodup) : Phi w ≤ Phi (M 
         List.cons_le_cons m combined
 termination_by w.length
 decreasing_by
-  simp_all only [List.length_append, List.length_cons, List.length_singleton]
+  simp_all only [List.length_append, List.length_cons]
   omega
 
 /-- Shieh–Yang–Yu Conjecture 6.2 in its preregistered S_n form. -/
