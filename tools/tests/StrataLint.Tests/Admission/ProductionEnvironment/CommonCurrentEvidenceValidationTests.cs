@@ -7,6 +7,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
+[Collection("CI fixture environment")]
 public sealed partial class CommonCurrentEvidenceValidationTests
 {
     [Theory]

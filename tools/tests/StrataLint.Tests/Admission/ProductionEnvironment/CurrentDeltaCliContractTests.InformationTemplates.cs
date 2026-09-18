@@ -43,6 +43,8 @@ public sealed partial class CurrentDeltaCliContractTests
                         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
+                    escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                    escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                     unit_name = "goldenRing", realization_name = "goldenRing", certificate = (object?)null,
                 }),
             });

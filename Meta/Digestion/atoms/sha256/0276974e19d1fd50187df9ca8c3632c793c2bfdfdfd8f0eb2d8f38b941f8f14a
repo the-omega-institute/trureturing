@@ -1,0 +1,39 @@
+**证明。** 先不使用 $C_A$。在全体源前提集与目标闭理论之间定义
+$$
+L_0:\mathcal P(F_A)\to\operatorname{Th}(C_B),
+\quad L_0(\Gamma)=C_B(\tau[\Gamma]),
+$$
+$$
+R_0:\operatorname{Th}(C_B)\to\mathcal P(F_A),
+\quad R_0(U)=\tau^{-1}[U].
+$$
+它们单调；$L_0$ 的值由幂等性目标闭。对目标闭 $U$，闭包最小性与直接像／逆像的伴随给出
+$$
+\begin{aligned}
+L_0(\Gamma)\subseteq U
+&\Longleftrightarrow \tau[\Gamma]\subseteq U\\
+&\Longleftrightarrow \Gamma\subseteq R_0(U).
+\end{aligned}
+$$
+故 $L_0\dashv R_0$。由伴随复合的闭包构造，$R_0L_0$ 是闭包算子；它逐点正是 $K_\tau$。中间偏序在这里是目标闭理论。[^rro88-adjunction] 若只复合裸直接像与裸逆像，得到的是饱和化 $\tau^{-1}[\tau[\Gamma]]$，没有包含目标推理 $C_B$。
+
+若 $C_A\le K_\tau$ 且 $C_B(U)=U$，则
+$$
+\begin{aligned}
+C_A(\tau^{-1}[U])
+&\subseteq K_\tau(\tau^{-1}[U])\\
+&=\tau^{-1}[C_B(\tau[\tau^{-1}[U]])]\\
+&\subseteq\tau^{-1}[C_B(U)]
+=\tau^{-1}[U].
+\end{aligned}
+$$
+第三步使用 $\tau[\tau^{-1}[U]]\subseteq U$ 及 $C_B$、逆像的单调性。扩张性给出反向包含，所以 $\tau^{-1}[U]$ 源闭。
+
+反之，假设每个目标闭理论的逆像都源闭。对任意 $\Gamma$，$C_B(\tau[\Gamma])$ 目标闭，故其逆像 $K_\tau(\Gamma)$ 源闭。又因 $K_\tau$ 扩张，有 $\Gamma\subseteq K_\tau(\Gamma)$。应用最小源闭扩张性质，得
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma),
+$$
+证明式 (88.2a)。在这些条件下，$R$ 确实落入源闭理论；$L$ 的值仍由幂等性目标闭。将 $L_0\dashv R_0$ 的包含等价限制到源闭 $T$ 即得式 (88.2b)。证毕。
+
+[^rro88-adjunction]: 钉版 Mathlib 的 [`Set.image_preimage`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Lattice/Image.lean) 给出 `GaloisConnection (Set.image τ) (Set.preimage τ)`；[`ClosureOperator.gi`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean) 的下伴随为 `C_B.toCloseds`，上伴随为闭集子类型的包含映射。按 [`GaloisConnection.compose`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的顺序复合这两个伴随，得到下伴随 $C_B.\mathrm{toCloseds}\circ\tau[-]$ 与上伴随 $\tau^{-1}[-]$ 复合闭集包含映射。再用 [`GaloisConnection.closureOperator`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean)，其底层复合就是 $R_0L_0=K_\tau$；所需源偏序为 $\mathcal P(F_A)$，中间偏序为 $C_B.\mathrm{Closeds}$。
+

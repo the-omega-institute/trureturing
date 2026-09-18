@@ -7,6 +7,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed partial class ExecutionSeedTransportBehaviorTests
 {
     [Fact]
