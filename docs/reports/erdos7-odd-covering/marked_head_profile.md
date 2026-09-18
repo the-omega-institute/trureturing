@@ -602,4 +602,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Ten complete quadratic costs share their actual off-face head](profile-notes/131-ten-complete-quadratic-costs-share-their-actual-off-face-head.md)
 - [The whole J face has a quantitative surplus neighborhood](profile-notes/132-the-whole-j-face-has-a-quantitative-surplus-neighborhood.md)
 - [Unchanged source budgets can move the best five slot](profile-notes/133-unchanged-source-budgets-can-move-the-best-five-slot.md)
+- [One complete cost is uniform on a nonzero K neighborhood](profile-notes/134-one-complete-cost-is-uniform-on-a-nonzero-k-neighborhood.md)
 - [An actual overlap forces nonlinear complete-tail prices](profile-notes/135-an-actual-overlap-forces-nonlinear-complete-tail-prices.md)
