@@ -679,3 +679,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The survival tests use the same raw-source interface](profile-notes/210-the-survival-tests-use-the-same-raw-source-interface.md)
 - [All four selected labels can be retained above the first hinge](profile-notes/211-all-four-selected-labels-can-be-retained-above-the-first-hinge.md)
 - [A supporting affine margin sharpens the whole J reserve](profile-notes/212-a-supporting-affine-margin-sharpens-the-whole-j-reserve.md)
+- [The affine J reserve enters the complete global comparison](profile-notes/213-the-affine-j-reserve-enters-the-complete-global-comparison.md)
