@@ -569,3 +569,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A complete stop-loss profile strengthens the whole-face comparison](profile-notes/98-a-complete-stop-loss-profile-strengthens-the-whole-face-comparison.md)
 - [Tied-root deep payments use one actual capacity budget](profile-notes/99-tied-root-deep-payments-use-one-actual-capacity-budget.md)
 - [Fractional deep payments improve the global comparison](profile-notes/100-fractional-deep-payments-improve-the-global-comparison.md)
+- [Neighboring hinges strengthen complete AP11 survival](profile-notes/101-neighboring-hinges-strengthen-complete-ap11-survival.md)
+- [One root-imbalance charge reduces the deep-capacity penalty](profile-notes/102-one-root-imbalance-charge-reduces-the-deep-capacity-penalty.md)
+- [A smaller deep-capacity charge improves global K](profile-notes/103-a-smaller-deep-capacity-charge-improves-global-k.md)
