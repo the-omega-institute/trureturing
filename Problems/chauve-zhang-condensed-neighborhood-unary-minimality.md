@@ -13,11 +13,24 @@ motivation_gids:
 ## Problem
 
 Chauve and Zhang, *On the size of the neighborhoods of a word*,
-arXiv:2505.13796v2, Section 6 on printed page 7, ask whether unary words
-have the smallest condensed neighborhoods among words of the same length
-over a fixed alphabet. The quantified condensed assertion says that for
-every finite alphabet, lengths `n,d`, letter `a`, and word `w` of length
-`n`, the cardinality of `CN(a^n,d)` is at most that of `CN(w,d)`.
+arXiv:2505.13796v2, Section 6 (Conclusion) on printed page 7:
+
+> It is thus natural to ask if a similar property holds for condensed and super
+> condensed neighborhoods, namely that unary words have the smallest condensed
+> or super condensed neighborhoods.
+
+with, on printed page 2, `N(w, d) = {x ∈ Σ* | d_lev(x, w) ≤ d}` (2.1) and
+
+> The condensed d-neighborhood of w, written as CN(w, d), consists of the
+> words of N(w, d) which do not have a prefix in N(w, d), that is,
+> CN(w, d) = N(w, d) \ N(w, d)Σ⁺. (2.2)
+
+and "A word w is unary if it consists of multiple occurrences of a single
+character from Σ, i.e., w = σ^{|w|} for some σ ∈ Σ."
+
+The first assertion of that sentence, with its quantifiers written out: for
+every finite alphabet Σ, all `n, d`, every letter σ ∈ Σ and every word `w` of
+length `n`, `|CN(σⁿ, d)| ≤ |CN(w, d)|`.
 
 ## Motivation
 
