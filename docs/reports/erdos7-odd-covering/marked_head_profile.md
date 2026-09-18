@@ -733,3 +733,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Three shifted factorial costs improve the complete J comparison](profile-notes/271-three-shifted-factorial-costs-improve-the-complete-j-comparison.md)
 - [Joint raw and survivor crosses strengthen three original J costs](profile-notes/272-joint-raw-and-survivor-crosses-strengthen-three-original-j-costs.md)
 - [Joint factorial crosses improve the complete J comparison](profile-notes/273-joint-factorial-crosses-improve-the-complete-j-comparison.md)
+- [Generalized factorial thresholds strengthen two original J costs](profile-notes/274-generalized-factorial-thresholds-strengthen-two-original-j-costs.md)
+- [Generalized factorial observations improve the complete J comparison](profile-notes/275-generalized-factorial-observations-improve-the-complete-j-comparison.md)
