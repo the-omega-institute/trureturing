@@ -73,11 +73,6 @@ an auxiliary recurrence.
 - The source HTML was checked at SHA-256
   `1781237e65346eab7d5119fcf67abb2d795c505d7e99a26e572df891a760773e`.
 
-The earlier monolithic compilation is not delivery evidence for the split
-artifact. The canonical state pins and accepted events were produced by
-`deposit-uncovered` against protected base
-`3f8015a83dedcc59fe499fc5a16c08830997b8a8`.
-
 ## Triage
 
 `theorem`. The explicit nine-vertex pair refutes Conjecture 4.13(2) in its

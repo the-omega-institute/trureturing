@@ -2,7 +2,7 @@
 bibkey: gonzalezdeleonwachs2026weighted
 authors: Rafael S. Gonzalez D'Leon; Michelle L. Wachs
 year: 2026
-title: "Weighted bond posets and Whitney duality"
+title: "Weighted bond posets and a new chromatic symmetric function"
 doi: 10.48550/arXiv.2608.08692
 url: https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13
 claim: "Conjecture 4.13(2): for a graph G on n vertices with k connected components and a spanning subgraph H with the same k components, (-1)^(n-k)(mu_G-mu_H) is real-rooted."
@@ -14,7 +14,7 @@ license: citation-only
 triage: anchor
 ---
 
-# Weighted bond posets and Whitney duality
+# Weighted bond posets and a new chromatic symmetric function
 
 Section 2 defines weighted connected-block partitions, their refinement order,
 the singleton bottom, and the weighted bond-poset Mobius polynomial. Propositions
