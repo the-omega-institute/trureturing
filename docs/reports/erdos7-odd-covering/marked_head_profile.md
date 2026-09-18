@@ -591,3 +591,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One pure-three defect controls root spill and three head credits](profile-notes/120-one-pure-three-defect-controls-root-spill-and-three-head-credits.md)
 - [The original forced27 exclusion has a quantitative defect](profile-notes/121-the-original-forced27-exclusion-has-a-quantitative-defect.md)
 - [Two complete deep-five families transport the mean credit](profile-notes/122-two-complete-deep-five-families-transport-the-mean-credit.md)
+- [Full-coordinate deep-five defects have complete moment tails](profile-notes/123-full-coordinate-deep-five-defects-have-complete-moment-tails.md)
+- [One original head transports the whole deep mean credit](profile-notes/124-one-original-head-transports-the-whole-deep-mean-credit.md)
