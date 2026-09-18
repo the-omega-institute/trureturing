@@ -597,4 +597,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A complete off-face original cost has no unspecified tail](profile-notes/126-a-complete-off-face-original-cost-has-no-unspecified-tail.md)
 - [Complete-tail supports restore one shared convex budget](profile-notes/127-complete-tail-supports-restore-one-shared-convex-budget.md)
 - [The complete factorial tail retains its head off the face](profile-notes/128-the-complete-factorial-tail-retains-its-head-off-the-face.md)
+- [One complete cost has an exhaustive shared-budget consumer](profile-notes/129-one-complete-cost-has-an-exhaustive-shared-budget-consumer.md)
 - [The whole J face forces source anti-alignment](profile-notes/130-the-whole-j-face-forces-source-anti-alignment.md)
+- [Ten complete quadratic costs share their actual off-face head](profile-notes/131-ten-complete-quadratic-costs-share-their-actual-off-face-head.md)
