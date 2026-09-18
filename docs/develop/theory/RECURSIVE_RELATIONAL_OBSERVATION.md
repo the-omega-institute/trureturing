@@ -34206,3 +34206,240 @@ $$
 由命题 73.2 得所列矩阵等式。此处等式只识别 $\eta_n$ 的有限分区概率表，未将其识别为第 71 节 Gibbs 算子态的恢复。证毕。
 
 ## 73.99 追加锚
+
+## 74. 参考 Bayes 族保持、KL 缺陷与粗动力学
+
+**定义与假设 74.1（有限列质量接口）。** 沿用第 73 节的有限非空集合 $J,I$、满射 $r:J\to I$、严格正概率 $q$ 与 $p=r_*q$。记 $\Delta(X)$ 为有限集合 $X$ 上包括边界在内的全部概率列向量，定义实矩阵
+$$
+C_{ij}=\mathbf1_{r(j)=i},\qquad
+B_{ji}=\mathbf1_{r(j)=i}\frac{q_j}{p_i},\qquad
+E=BC.
+$$
+这里 $C:\mathbb R^J\to\mathbb R^I$、$B:\mathbb R^I\to\mathbb R^J$ 是定理 72.4、命题 73.2 在对角质量上的作用；$B\Delta(I)$ 是命题 73.4 的指定参考族在质量空间中的表示。$\operatorname{Im}B$ 指整个实线性像空间。
+
+给定任意非负列随机矩阵 $T$，即 $\sum_kT_{kj}=1$ 对每个 $j$ 成立，置
+$$
+P=T^{\mathsf T},\qquad S=CTB,\qquad K=S^{\mathsf T},\qquad
+\delta(d)=D_{\mathrm{KL}}(d\Vert Ed)\quad(d\in\Delta(J)).
+$$
+质量演化是 $d\mapsto Td$；行核的约定是 $P_{jk}=T_{kj}$，即从 $j$ 到 $k$ 的转移概率。KL 与绝对连续性 $u\ll v$ 沿用定理 73.3 的正支撑求和约定。
+
+**定理 74.2（族保持恰为全部初态的缺陷不增）。** 在定义与假设 74.1 下，每个 $d\in\Delta(J)$ 的缺陷有限，且
+$$
+\delta(d)=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p).
+$$
+以下五个条件等价：
+$$
+\begin{aligned}
+TE=ETE
+&\ \Longleftrightarrow\ TB=BS\\
+&\ \Longleftrightarrow\ T\bigl(B\Delta(I)\bigr)\subseteq B\Delta(I)\\
+&\ \Longleftrightarrow\ T(\operatorname{Im}B)\subseteq\operatorname{Im}B\\
+&\ \Longleftrightarrow\ \forall d\in\Delta(J),\quad\delta(Td)\le\delta(d).
+\end{aligned}
+$$
+这些条件成立时，还有包含粗输出差异的有限值不等式
+$$
+\delta(Td)+D_{\mathrm{KL}}(CTd\Vert CTEd)
+=D_{\mathrm{KL}}(Td\Vert TEd)\le\delta(d)
+\qquad(d\in\Delta(J)).
+$$
+
+证明。满射和 $q_j>0$ 给出每个 $p_i>0$。$C$ 每列恰有一个 $1$，$B$ 的第 $i$ 列之和为 $\sum_{r(j)=i}q_j/p_i=1$；故二者均非负列随机。非负矩阵乘积仍非负，且若两矩阵的列和均为一，则有限换序给出其乘积的列和为一。因此 $E,S$ 也列随机，所有相应概率输出仍归一化。对 $CB$，不同纤维的交项为零，同一纤维之和为一，故
+$$
+CB=I_I,\qquad E^2=E,\qquad EB=B,\qquad CE=C,\qquad Bp=q.
+$$
+由 $E=BC$ 与 $EB=B$，还得到 $\operatorname{Im}E=\operatorname{Im}B$。
+
+先在证明内处理支撑。任取 $u\in\Delta(J)$，令 $c=Cu$。若 $u_j>0$，则 $c_{r(j)}>0$，从而
+$$
+(Eu)_j=\frac{q_j}{p_{r(j)}}c_{r(j)}>0.
+$$
+所以 $u\ll Eu$，其 KL 是有限实数。若 $c_i=0$，有限非负和为零使该纤维的全部 $u_j=0$。对概率对 $(u,Eu)$ 应用 [GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Divergence/GrandmotherTheorem.lean) 与 [GibbsEquality.kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Divergence/GibbsEquality.lean)，其非负、归一化及绝对连续性前提均已满足，得到
+$$
+\delta(u)\ge0,\qquad \delta(u)=0\ \Longleftrightarrow\ u=Eu.
+$$
+
+给定 $a\in\Delta(I)$ 并假设 $u\ll Ba$。若 $a_i=0$，则 $(Ba)_j=0$ 对整条纤维成立，绝对连续性迫使该纤维的 $u_j$ 全为零。因此 $c\ll a$。若 $c_i>0$，纤维内有某个 $u_j>0$，所以 $a_i>0$；此时 $Ba$ 与 $Eu$ 在该纤维上的参考后验都等于
+$$
+\mathbf1_{r(j)=i}\frac{q_j}{p_i}.
+$$
+在 [ZeroSupportDPI.classical_dpi_identity_zero_support](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDPI.lean) 中取确定性行信道 $W(j,i)=C_{ij}$，分别取输入对 $(u,Ba)$ 与 $(u,Eu)$。它们的参考粗输出分别为 $a,c$；前段保证两对输入非负归一化且满足支撑包含。正 $c_i$ 处的后验 KL 项相同，零 $c_i$ 处的加权项均为零，且第二次应用的粗项是 $D_{\mathrm{KL}}(c\Vert c)=0$，故两次链式恒等式给出
+$$
+D_{\mathrm{KL}}(u\Vert Ba)
+=D_{\mathrm{KL}}(u\Vert Eu)+D_{\mathrm{KL}}(Cu\Vert a). \tag{74.1}
+$$
+这里的对数拆分只在 $u_j>0$ 的坐标进行：写 $i=r(j)$，此时 $c_i,a_i,q_j,p_i$ 都严格为正，且
+$$
+\ln\frac{u_j}{(Ba)_j}
+=\ln\frac{u_j}{(Eu)_j}+\ln\frac{c_i}{a_i}.
+$$
+按纤维求和时第二项的系数为 $c_i$；零 $c_i$ 的纤维没有正 $u_j$，贡献为零，不作零分母约分。$u\ll Ba$、$u\ll Eu$、$c\ll a$ 保证式 (74.1) 的三项全有限。取 $a=p$，由 $Bp=q$ 得所述缺陷差式；严格正的 $q,p$ 也直接保证该差式没有无穷项。
+
+先比较四个线性条件。由 $EB=B$，将 $TE=ETE$ 右乘 $B$ 得 $TB=ETB=BCTB=BS$；反之，$TB=BS$ 右乘 $C$ 给出 $TE=BSC=ETE$。若 $TB=BS$，则 $TBa=BSa$，而 $Sa\in\Delta(I)$，所以概率族被保持。若概率族被保持，对每个粗标准基向量 $e_i\in\Delta(I)$，$TBe_i$ 属于该族，因而被 $E$ 固定。逐列比较得 $TB=ETB$，右乘 $C$ 即得 $TE=ETE$。最后，$E$ 是像为 $\operatorname{Im}B$ 的幂等算子，故 $TE=ETE$ 恰说 $T$ 把它的像映入自身：若该式成立，则 $x=Ex$ 蕴含 $Tx=ETx$；反之，对任意实向量 $x$，$Ex$ 在该像中，像保持给出 $TEx=ETEx$。这一步作用于整个实空间，并未把像空间中的向量都当成概率。
+
+设 $TE=ETE$，任取概率 $d$，置 $u=Td$、$v=TEd$。已有 $d\ll Ed$，非负信道保持这个支撑包含，给出 $u\ll v$。具体地，若 $v_k=\sum_jT_{kj}(Ed)_j=0$，则每个非负乘积为零；当 $(Ed)_j>0$ 时 $T_{kj}=0$，当 $(Ed)_j=0$ 时 $d_j=0$，故每个 $T_{kj}d_j=0$，即 $u_k=0$。这正是 [ZeroSupportDPI.channel_output_absolute_continuity](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDPI.lean) 在 $W(j,k)=T_{kj}=P_{jk}$ 的代入。若 $(Cv)_i=0$，则纤维上的全部 $v_k=0$，继而全部 $u_k=0$，所以 $Cu\ll Cv$。
+
+族保持给出 $v=Ev=B(Cv)$。在式 (74.1) 中取 $a=Cv$，再对概率对 $(d,Ed)$ 及行信道 $W(j,k)=T_{kj}$ 应用 [ZeroSupportDefect.dpi_defect_nonneg_zero_support](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDefect.lean)，便得到
+$$
+\delta(Td)+D_{\mathrm{KL}}(CTd\Vert CTEd)
+=D_{\mathrm{KL}}(Td\Vert TEd)
+\le D_{\mathrm{KL}}(d\Vert Ed)=\delta(d).
+$$
+上述支撑包含保证每个 KL 值有限，允许 $v$ 及 $Cv$ 有零坐标。对 $(Cu,Cv)$ 用同一 Gibbs 非负性定理消去非负粗项，即得 $\delta(Td)\le\delta(d)$。
+
+反之，若缺陷对所有概率初态不增，逐个取 $d=Be_i$。它是合法的概率向量，且 $Ed=d$，所以
+$$
+0\le\delta(TBe_i)\le\delta(Be_i)=0.
+$$
+把前述 Gibbs 等号条件用于 $(TBe_i,ETBe_i)$，得到 $TBe_i=ETBe_i$。两者归一化，支撑前提由任意概率 $u\ll Eu$ 在 $u=TBe_i$ 处给出。逐列比较再右乘 $C$，得到 $TE=ETE$。粗标准基可以具有零坐标；整个论证没有删去这些边界初态。证毕。
+
+**命题 74.3（粗自治与族保持是两个方向）。** 在定义与假设 74.1 下，
+$$
+CT=SC\ \Longleftrightarrow\ ET=ETE,
+\qquad
+ET=TE\ \Longleftrightarrow\bigl(CT=SC\ \text{且}\ TB=BS\bigr).
+$$
+粗自治 $CT=SC$ 等价于行核 $P$ 对分区 $r$ 强可并，即
+$$
+r(j)=r(j')\ \Longrightarrow\
+\sum_{r(k)=i}P_{jk}=\sum_{r(k)=i}P_{j'k}
+\quad\text{对所有 }i.
+$$
+成立时，唯一的粗列质量动力学为 $S$，对应粗行核为 $K=S^{\mathsf T}$，且 $\sum_{r(k)=i}P_{jk}=K_{r(j),i}$。
+
+证明。若 $CT=SC$，左乘 $B$ 得 $ET=BSC=ETE$。若 $ET=ETE$，左乘 $C$ 并用 $CE=C$ 得 $CT=CTE=CTBC=SC$。结合定理 74.2 的 $TB=BS\Longleftrightarrow TE=ETE$，这两个方向分别是
+$$
+ET(I_J-E)=0,\qquad (I_J-E)TE=0.
+$$
+为应用投影交叉块判据，把实矩阵逐元视为复矩阵，取 $V=\operatorname{Im}E$、$R=\ker E$。对每个 $x$，分解 $x=Ex+(x-Ex)$ 的两项分别属于 $V,R$；若 $y\in V\cap R$，则 $Ey=y$ 且 $Ey=0$，故 $y=0$。因此 $V,R$ 互补，$E$ 在 $V$ 上为恒等、在 $R$ 上为零，正是沿 $R$ 到 $V$ 的投影，其补投影为 $I_J-E$。在标准基下，[ProjectionCommutatorIdentity.visible_projection_commutes_iff_cross_blocks_eq_zero](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.lean) 的两个线性映射交叉块因而恰为上式两矩阵。该判据给出二者同时为零当且仅当 $ET=TE$；实矩阵的逐元嵌入是单射，故也得到原实空间的等价。
+
+令实际观察行 $F(j,i)=\sum_{r(k)=i}P_{jk}=(CT)_{ij}$。在 [StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 中取标签映射 $r$、实值行函数 $F$。它给出上述同纤维行相等条件恰好等价于存在 $\overline K$，使 $F(j,\cdot)=\overline K(r(j),\cdot)$。$F$ 非负，且每行之和为 $\sum_kP_{jk}=1$；$r$ 满射使 $\overline K$ 的每行都等于某个实际 $F$ 行，所以 $\overline K$ 是行核。因子化写成矩阵便是 $CT=\overline K^{\mathsf T}C$，右乘 $B$ 得 $S=\overline K^{\mathsf T}$，于是 $CT=SC$。反之，$CT=SC$ 逐元即为 $F(j,i)=K_{r(j),i}$，给出强可并性。任何满足 $CT=\widetilde S C$ 的粗矩阵都由右乘 $B$ 被迫等于 $CTB=S$，故唯一。证毕。
+
+附引：强可并的逐块行和判据见 Wolfer–Watanabe，*Geometric Aspects of Data-Processing of Markov Chains*，[arXiv:2203.04575v3，Theorem 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmtheorem1)，该处引 Kemeny–Snell 的 Theorem 6.3.2。该文的转移矩阵空间采用固定强连通支撑上的不可约链；本命题的实值行因子化证明适用于这里的任意有限行核。
+
+**命题 74.4（平稳参考下的正反强可并性）。** 在定义与假设 74.1 上另加 $Tq=q$。定义相对于同一参考的反向行核
+$$
+P^{\leftarrow}_{jk}=\frac{q_kP_{kj}}{q_j},\qquad
+K^{\leftarrow}_{hi}=\frac{p_iK_{ih}}{p_h}.
+$$
+则 $P^{\leftarrow},K^{\leftarrow}$ 均为行随机核，$Sp=p$，并且
+$$
+ET=TE
+\ \Longleftrightarrow\
+P\ \text{与}\ P^{\leftarrow}\ \text{都对}\ r\ \text{强可并}.
+$$
+等价条件成立时，反向细核的粗行核恰为 $K^{\leftarrow}$。
+
+证明。由 $Bp=q$ 得 $Sp=CTBp=CTq=p$。反向细核非负，且其第 $j$ 行之和为 $(Tq)_j/q_j=1$；同理反向粗核第 $h$ 行之和为 $(Sp)_h/p_h=1$。分母 $q_j,p_h$ 均严格为正。对 $h=r(j)$，直接展开有
+$$
+(TB)_{ji}=\frac{q_j}{p_i}\sum_{r(k)=i}P^{\leftarrow}_{jk},
+\qquad
+(BS)_{ji}=\frac{q_j}{p_h}K_{ih}.
+$$
+故 $TB=BS$ 当且仅当 $\sum_{r(k)=i}P^{\leftarrow}_{jk}=K^{\leftarrow}_{r(j),i}$。若 $ET=TE$，命题 74.3 给出正向强可并性以及 $TB=BS$，上式便给出反向强可并性及其指定粗核。
+
+反之，设两个细核都强可并。命题 74.3 给出正向粗核 $K$；设反向粗核为 $L$。对任意两个粗标签 $h,i$，有限块流量求和给出
+$$
+\begin{aligned}
+p_hL_{hi}
+&=\sum_{r(j)=h}\sum_{r(k)=i}q_jP^{\leftarrow}_{jk}\\
+&=\sum_{r(k)=i}q_k\sum_{r(j)=h}P_{kj}
+=p_iK_{ih}.
+\end{aligned}
+$$
+因此 $L=K^{\leftarrow}$，再由逐元公式得 $TB=BS$。结合正向 $CT=SC$ 与命题 74.3，得到 $ET=TE$。证毕。
+
+**命题 74.5（同一参考下的详细平衡与加权投影）。** 在定义与假设 74.1 下，若
+$$
+q_jP_{jk}=q_kP_{kj}\quad(j,k\in J)
+$$
+且 $P$ 对 $r$ 强可并，则 $ET=TE$，并且粗核满足 $p_iK_{ih}=p_hK_{hi}$。
+
+证明。对详细平衡求和，利用 $P$ 的行和为一，得到 $(Tq)_j=\sum_kq_kP_{kj}=q_j$。因此这是命题 74.4 中的同一平稳参考，并有 $P^{\leftarrow}=P$。下面在质量空间的加权坐标中直接应用自伴投影下降判据。
+
+令
+$$
+D=\operatorname{diag}_{j\in J}(q_j^{-1/2}),\qquad
+D^{-1}=\operatorname{diag}_{j\in J}(\sqrt{q_j}),\qquad
+\widehat E=DED^{-1},\qquad\widehat T=DTD^{-1}.
+$$
+正 $q_j$ 保证两对角矩阵互逆。逐元计算给出
+$$
+\widehat E_{jk}
+=\mathbf1_{r(j)=r(k)}\frac{\sqrt{q_j}\sqrt{q_k}}{p_{r(j)}},
+\qquad
+\widehat T_{jk}=P_{kj}\frac{\sqrt{q_k}}{\sqrt{q_j}}.
+$$
+按定义 72.1，$\widehat E=U_rU_r^*$，而定理 72.2 给出 $U_r^*U_r=I_I$，故 $\widehat E$ 幂等且 Hermitian。这也说明原质量算子 $E$ 在内积 $\langle x,y\rangle_{q^{-1}}=\sum_j\overline{x_j}y_j/q_j$ 下为正交投影。详细平衡使
+$$
+P_{kj}\frac{\sqrt{q_k}}{\sqrt{q_j}}
+=P_{jk}\frac{\sqrt{q_j}}{\sqrt{q_k}},
+$$
+故实矩阵 $\widehat T$ 对称，视为复矩阵时也是 Hermitian。
+
+强可并性由命题 74.3 给出 $ET(I_J-E)=0$，共轭后为 $\widehat E\widehat T(I_J-\widehat E)=0$。在 [LinearProjectionDescentCriterion.linear_projection_descent_criterion](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.lean) 中取有限指标集 $J$、投影矩阵 $\widehat E$、动力学矩阵 $\widehat T$。已证的幂等性及两个 Hermitian 条件履行其前提，定理第二个合取给出 $\widehat E\widehat T-\widehat T\widehat E=0$。用 $D^{-1},D$ 共轭回来即得 $ET=TE$。这个坐标变换使用质量内积中的 $q^{-1}$ 权重；没有将未变换的 $E$ 当成普通 Euclidean 正交投影。
+
+最后，由强可并性及详细平衡，
+$$
+p_iK_{ih}
+=\sum_{r(j)=i}\sum_{r(k)=h}q_jP_{jk}
+=\sum_{r(k)=h}\sum_{r(j)=i}q_kP_{kj}
+=p_hK_{hi}.
+$$
+证毕。
+
+附引：可逆链的强可并粗链仍可逆，见 Wolfer–Watanabe 同文 [Proposition 4.2](https://arxiv.org/html/2203.04575v3#S4.Thmproposition2)，该处引 Kemeny–Snell 的 Theorem 6.4.7；其块平稳流量公式见 [Corollary 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmcorollary1)。这些引文提供强可并性与可逆性构件；本节对指定 $q$ 的状态重采样 $B$、两个方向及 KL 缺陷的连接由上面的有限证明给出。该文以转移矩阵为输入的 Markov embedding 与这里以粗概率为输入的 $B$ 是不同映射。
+
+**命题 74.6（三状态矩阵及其转置分离两个方向）。** 取 $J=\{1,2,3\}$，分区为 $\{1,2\}\mid\{3\}$，参考与矩阵为
+$$
+q=\begin{pmatrix}1/3\\1/3\\1/3\end{pmatrix},\qquad
+p=\begin{pmatrix}2/3\\1/3\end{pmatrix},\qquad
+P_0=\begin{pmatrix}1/2&0&1/2\\1/2&0&1/2\\0&1&0\end{pmatrix},
+\qquad T_0=P_0^{\mathsf T},\qquad T_+=P_0.
+$$
+两列质量动力学均固定 $q$。$T_0$ 粗自治且其粗行核对 $p$ 可逆，但不保持参考族；对 $d=(1/2,1/2,0)^{\mathsf T}$，有 $\delta(d)=0$、$\delta(T_0d)=(\ln2)/2>0$。相反，$T_+$ 的每个概率输出都具有零缺陷，却不粗自治，也不与 $E$ 交换。在满支撑平稳参考、满射确定性分区的范围内，三个细状态是这类方向分离的最小状态数。
+
+证明。本分区给出
+$$
+C=\begin{pmatrix}1&1&0\\0&0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1/2&0\\1/2&0\\0&1\end{pmatrix},\qquad
+E=\begin{pmatrix}1/2&1/2&0\\1/2&1/2&0\\0&0&1\end{pmatrix}.
+$$
+$P_0$ 的行和、列和都为一，且各项非负，故 $T_0,T_+$ 都列随机并固定均匀参考 $q$。直接相乘得到
+$$
+CT_0=\begin{pmatrix}1/2&1/2&1\\1/2&1/2&0\end{pmatrix}
+=S_0C,\qquad
+S_0=CT_0B=\begin{pmatrix}1/2&1\\1/2&0\end{pmatrix},
+\qquad
+K_0=S_0^{\mathsf T}=\begin{pmatrix}1/2&1/2\\1&0\end{pmatrix}.
+$$
+粗链两向的非对角平稳流量均为 $1/3$，所以 $K_0$ 对 $p$ 可逆。细链却有 $q_1(P_0)_{13}=1/6$、$q_3(P_0)_{31}=0$，不满足该详细平衡。
+
+令 $e_1$ 为第一个粗标准基，$d=Be_1$。则 $Ed=d$，而
+$$
+T_0d=\begin{pmatrix}1/2\\0\\1/2\end{pmatrix},\qquad
+ET_0d=BS_0e_1=\begin{pmatrix}1/4\\1/4\\1/2\end{pmatrix}.
+$$
+输出不被 $E$ 固定，因此参考族未被保持，且 $ET_0d\ne T_0Ed$。正输出坐标只有第 $1,3$ 项，参考在两处均正，故
+$$
+\delta(T_0d)=\frac12\ln\frac{1/2}{1/4}
++\frac12\ln\frac{1/2}{1/2}=\frac{\ln2}{2}>0,
+\qquad\delta(d)=0.
+$$
+初态的第三坐标及第二个粗质量为零，正是定理 74.2 所允许的边界初态。
+
+对转置列作用 $T_+=P_0$，前两行相等使 $ET_+=T_+$，故任意概率 $d$ 都满足 $ET_+d=T_+d$，从而 $\delta(T_+d)=0$，也有 $TE=ETE$ 在 $T=T_+$ 时成立。但
+$$
+CT_+=\begin{pmatrix}1&0&1\\0&1&0\end{pmatrix}
+$$
+的前两列分别为 $(1,0)^{\mathsf T}$ 与 $(0,1)^{\mathsf T}$。任何矩阵 $\widetilde S C$ 的前两列都相同，故不存在粗自治矩阵；命题 74.3 遂排除交换。
+
+最后，若 $1\le |J|\le2$，满射给出 $1\le |I|\le |J|\le2$。当 $|I|=1$ 时，$E=q\mathbf1^{\mathsf T}$，平稳性与列质量守恒分别给出
+$$
+TE=(Tq)\mathbf1^{\mathsf T}=E,\qquad
+ET=q(\mathbf1^{\mathsf T}T)=E.
+$$
+当 $|I|=2$ 时，必有 $|J|=2$；这两个有限等势集合间的满射是双射，每条纤维只有一点，故 $E=I_J$，仍与 $T$ 交换。两个方向由命题 74.3 同时成立，因此至多两个细状态不能实现所述分离，而上述三状态例已经实现。证毕。
+
+## 74.99 追加锚
