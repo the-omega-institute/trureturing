@@ -584,3 +584,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Quadratic hinges and the factorial tail share one head](profile-notes/113-quadratic-hinges-and-the-factorial-tail-share-one-head.md)
 - [A common source bridge has matching controller witnesses](profile-notes/114-a-common-source-bridge-has-matching-controller-witnesses.md)
 - [A dominated defect controls complete independent-label tails](profile-notes/115-a-dominated-defect-controls-complete-independent-label-tails.md)
+- [Signed face duals transport one shared finite source](profile-notes/116-signed-face-duals-transport-one-shared-finite-source.md)
+- [The actual slot defects share a stronger packing polytope](profile-notes/117-the-actual-slot-defects-share-a-stronger-packing-polytope.md)
+- [The shared slot gap enters the complete global comparison](profile-notes/118-the-shared-slot-gap-enters-the-complete-global-comparison.md)
+- [The complete pure-three family has one projected defect](profile-notes/119-the-complete-pure-three-family-has-one-projected-defect.md)
