@@ -4,7 +4,7 @@ internal static partial class RepositoryRules
 {
     // Present byte changes and first pins share the protected-base delta source.
     // Rename/copy destinations have their own candidate path and are included.
-    internal static IEnumerable<RepoPath> ChangedOrFirstPinD5Modules(RuleEvaluationContext context) =>
+    internal static IEnumerable<RepoPath> ChangedOrFirstPinD5Modules(DeltaRuleContext context) =>
         context.Changes.Paths.Select(path =>
                 FrozenStatePath.TryToModulePath(path.Value, out var module)
                     ? !context.Baseline.Files.ContainsKey(path) && context.Current.Files.ContainsKey(path)
@@ -15,7 +15,7 @@ internal static partial class RepositoryRules
                 && value.EndsWith(".lean", StringComparison.Ordinal) && context.Current.Files.ContainsKey(path))
             .Distinct().OrderBy(path => path.Value, StringComparer.Ordinal);
 
-    internal static bool IsPresentByteChangedD5Module(RuleEvaluationContext context, RepoPath path) =>
+    internal static bool IsPresentByteChangedD5Module(DeltaRuleContext context, RepoPath path) =>
         path.Value.StartsWith("D5/", StringComparison.Ordinal)
         && path.Value.EndsWith(".lean", StringComparison.Ordinal)
         && context.Current.Files.TryGetValue(path, out var current)

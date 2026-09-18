@@ -9,6 +9,35 @@ namespace StrataLint.Tests;
 public sealed class CanonicalSnapshotTests
 {
     [Fact]
+    public void RealRepositoryRegistryHasCanonicalSnapshotFixedPoint()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var registry = File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml"));
+        var domains = File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"));
+        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(registry, domains)).Policy;
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([
+                new RawRepositoryEntry("Meta/registry.yaml", ImmutableArray.CreateRange(registry)),
+                new RawRepositoryEntry("Meta/domains.yaml", ImmutableArray.CreateRange(domains)),
+            ]))).Snapshot;
+
+        // No path admission or changed-path filter participates in this byte contract.
+        var outcome = RepositoryCanonicalizer.Validate(snapshot, policy);
+        Assert.True(outcome is CanonicalizationOutcome.Accepted,
+            outcome is CanonicalizationOutcome.InfrastructureFailure failure ? failure.Message : outcome.ToString());
+        var first = Assert.IsType<CanonicalizationOutcome.Accepted>(outcome);
+        var reloaded = RegistryLoadAssert.Accepted(RegistryLoader.Load(
+            policy.CanonicalRegistryBytes.AsSpan(), policy.CanonicalDomainsBytes.AsSpan())).Policy;
+        var second = Assert.IsType<CanonicalizationOutcome.Accepted>(
+            RepositoryCanonicalizer.Validate(snapshot, reloaded));
+
+        Assert.Equal(registry, reloaded.CanonicalRegistryBytes.ToArray());
+        Assert.Equal(domains, reloaded.CanonicalDomainsBytes.ToArray());
+        Assert.Equal(first.Capability.Bytes.ToArray(), second.Capability.Bytes.ToArray());
+        Assert.Equal(first.Capability.Sha256, second.Capability.Sha256);
+    }
+
+    [Fact]
     public void WholeRepositorySnapshotHasOneStableCanonicalFixedPoint()
     {
         var fixture = new RuleFixture();

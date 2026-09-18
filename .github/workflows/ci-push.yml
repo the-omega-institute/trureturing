@@ -1,0 +1,494 @@
+name: CI current
+
+on:
+  push:
+    branches: [dev, 'integration-**']
+  workflow_call:
+    inputs:
+      candidate_sha:
+        required: true
+        type: string
+      plan_artifact_id:
+        required: true
+        type: string
+    outputs:
+      engineering_artifact_id:
+        value: ${{ jobs.engineering.outputs.artifact_id }}
+      engineering_run_id:
+        value: ${{ jobs.engineering.outputs.run_id }}
+      engineering_run_attempt:
+        value: ${{ jobs.engineering.outputs.run_attempt }}
+      artifact_id:
+        value: ${{ jobs.current.outputs.artifact_id }}
+      artifact_name:
+        value: ${{ jobs.current.outputs.artifact_name }}
+      run_id:
+        value: ${{ jobs.current.outputs.run_id }}
+      run_attempt:
+        value: ${{ jobs.current.outputs.run_attempt }}
+      commit:
+        value: ${{ jobs.current.outputs.commit }}
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  CI_WORKFLOW_INPUTS: ${{ contains(toJSON(inputs), '"candidate_sha":') && format('{{"candidate_sha":{0}}}', toJSON(inputs.candidate_sha)) || '{}' }}
+  CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
+  STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
+  CI_CHANGES_PATH: build/ci/changes.json
+  CI_PLAN_PATH: build/ci/plan.json
+
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    outputs:
+      round: ${{ steps.pack.outputs.round }}
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      run_id: ${{ steps.pack.outputs.run_id }}
+      run_attempt: ${{ steps.pack.outputs.run_attempt }}
+      commit: ${{ steps.pack.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
+      - id: route
+        name: Validate plan and route build
+        run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage build
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage build --job-timeout-minutes 30
+      - uses: actions/setup-dotnet@v4
+        if: steps.route.outputs.dotnet == 'true'
+        with:
+          global-json-file: global.json
+      - id: keys
+        if: steps.route.outputs.cache_layers != ''
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage build
+      - id: judge
+        if: steps.keys.outputs.judge_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.judge_path }}
+          key: ${{ steps.keys.outputs.judge_key }}
+          restore-keys: ${{ steps.keys.outputs.judge_restore_prefix }}
+      - name: Restore requested optional seeds
+        if: steps.route.outputs.cache_layers != ''
+        env:
+          JUDGE_KEY: ${{ steps.judge.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage build --judge-key "$JUDGE_KEY"
+      - name: Execute selected stage
+        if: steps.route.outputs.required == 'true'
+        run: make -C tools ci-build
+      - id: pack
+        if: steps.route.outputs.artifact_required == 'true'
+        run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-build.tar.gz"
+      - id: upload
+        if: steps.pack.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.archive }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+      - id: snapshot
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true'
+        continue-on-error: true
+        env:
+          STRATALINT_BUILD_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage build --layer judge --bounded-cache
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.judge_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.judge_path }}
+          key: ${{ steps.keys.outputs.judge_key }}
+      - if: always()
+        run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage build
+
+  engineering:
+    name: engineering
+    needs: build
+    if: ${{ !cancelled() }}
+    env:
+      CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
+      CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      run_id: ${{ steps.pack.outputs.run_id }}
+      run_attempt: ${{ steps.pack.outputs.run_attempt }}
+      commit: ${{ steps.pack.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
+      - id: route
+        name: Validate plan and route engineering
+        run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage engineering
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 30
+      - uses: actions/setup-dotnet@v4
+        if: steps.route.outputs.dotnet == 'true'
+        with:
+          global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        if: steps.route.outputs.build_required == 'true'
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/build
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        if: steps.route.outputs.build_required == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/build/ci-build.tar.gz"
+      - id: keys
+        if: steps.route.outputs.cache_layers != ''
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage engineering
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - id: engineering
+        if: steps.keys.outputs.engineering_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}
+          restore-keys: ${{ steps.keys.outputs.engineering_restore_prefix }}
+      - name: Install required Lean toolchain
+        if: steps.route.outputs.lake == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore requested optional seeds
+        if: steps.route.outputs.cache_layers != ''
+        env:
+          ENGINEERING_KEY: ${{ steps.engineering.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
+      - name: Execute selected stage
+        if: steps.route.outputs.required == 'true'
+        run: make -C tools engineering SEED_EXPORT=deferred
+      - id: pack
+        if: steps.route.outputs.artifact_required == 'true'
+        run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-engineering.tar.gz"
+      - id: upload
+        if: steps.pack.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.archive }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+      - id: save_elan
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage engineering --max-minutes 12
+      - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: always()
+        run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
+      - name: Retain engineering diagnostics
+        if: failure() || (success() && steps.route.outputs.required == 'true')
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-engineering-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/ci/engineering-result.json
+            build/ci/logs/engineering
+            build/ci/trx
+          if-no-files-found: warn
+          retention-days: 7
+
+  engineering_cache:
+    name: engineering_cache
+    needs: [build, engineering]
+    if: github.event_name == 'push' && inputs.candidate_sha == '' && needs.engineering.result == 'success' && needs.engineering.outputs.artifact_id != ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - id: cache_window
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
+      - name: Validate plan for engineering cache
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --stage engineering
+      - uses: actions/setup-dotnet@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }},${{ needs.engineering.outputs.artifact_id }}
+          path: ${{ runner.temp }}/engineering-cache
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-build.tar.gz"
+      - name: Validate accepted engineering bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.engineering.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.engineering.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-engineering.tar.gz"
+      - id: keys
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage engineering
+      - id: snapshot
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
+      - if: steps.snapshot.outputs.engineering_ready == 'true'
+        timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}
+
+  current:
+    name: current
+    needs: build
+    if: ${{ !cancelled() }}
+    env:
+      CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      artifact_name: ${{ steps.pack.outputs.artifact_name }}
+      run_id: ${{ steps.pack.outputs.run_id }}
+      run_attempt: ${{ steps.pack.outputs.run_attempt }}
+      commit: ${{ steps.pack.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
+      - id: route
+        name: Validate plan and route current
+        run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage current
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 60
+      - uses: actions/setup-dotnet@v4
+        if: steps.route.outputs.dotnet == 'true'
+        with:
+          global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        if: steps.route.outputs.build_required == 'true'
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/build
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        if: steps.route.outputs.build_required == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/build/ci-build.tar.gz"
+      - id: keys
+        if: steps.route.outputs.cache_layers != ''
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage current
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - id: current
+        if: steps.keys.outputs.current_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.current_path }}
+          key: ${{ steps.keys.outputs.current_key }}
+          restore-keys: ${{ steps.keys.outputs.current_restore_prefix }}
+      - name: Install required Lean toolchain
+        if: steps.route.outputs.lake == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: report_resources
+        name: Validate optional report seed and resolve remaining resources
+        if: steps.route.outputs.cache_layers != ''
+        env:
+          CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.project_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional Lean build evidence
+        if: steps.report_resources.outputs.needs_lake == 'true'
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Execute selected stage
+        if: steps.route.outputs.required == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make current SEED_EXPORT=deferred
+      - id: pack
+        if: steps.route.outputs.artifact_required == 'true'
+        run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-current.tar.gz"
+      - id: upload
+        if: steps.pack.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.archive }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+      - id: snapshot_current
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.current_key != ''
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+          PREPARED_SEED_ARCHIVE: ${{ steps.pack.outputs.seed_archive }}
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer current --bounded-cache --seed-archive "$PREPARED_SEED_ARCHIVE"
+      - if: steps.snapshot_current.outcome == 'success' && steps.snapshot_current.outputs.current_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_current.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.current_path }}
+          key: ${{ steps.keys.outputs.current_key }}
+      - id: snapshot_project
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer project --bounded-cache
+      - if: steps.snapshot_project.outcome == 'success' && steps.snapshot_project.outputs.project_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_project.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.project_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+      - id: snapshot_dependency
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer dependency --bounded-cache
+      - if: steps.snapshot_dependency.outcome == 'success' && steps.snapshot_dependency.outputs.dependency_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_dependency.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+      - id: save_elan
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage current --max-minutes 12
+      - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: always()
+        run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
+      - name: Retain current diagnostics
+        if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/ci/current-result.json
+            build/ci/current.json
+            build/ci/current-checks.json
+            build/ci/current-paths.nul
+            build/ci/plan.json
+            build/ci/changes.json
+            build/ci/logs/current
+            build/ci/check-material/**/*.log
+          if-no-files-found: warn
+          retention-days: 7

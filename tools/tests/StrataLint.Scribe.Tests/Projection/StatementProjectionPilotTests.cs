@@ -273,13 +273,77 @@ public sealed class StatementProjectionPilotTests
     [InlineData("D5/S0/Carrier/Probe.lean", false)]
     [InlineData("Golden/Projection/statement-projection-pilot-v1.json", true)]
     [InlineData("tools/StrataLint.Scribe/Projection/StatementProjectionReconciliation.cs", true)]
+    [InlineData("Meta/ReportProducers/scribe-content.json", true)]
+    [InlineData("Meta/engineering-projects.json", true)]
+    [InlineData("lean-report-inputs.json", true)]
+    [InlineData("producer/deleted.py", true)]
+    [InlineData("producer/excluded/deleted.py", false)]
+    [InlineData("lean-producer/deleted.py", true)]
+    [InlineData("inspector/Deleted.lean", true)]
     public void R15StatementProjectionReplayRunsOnlyForFixtureOrImplementationDelta(
         string changedPath,
         bool expected)
     {
         Assert.Equal(
             expected,
-            StatementProjectionReconciliation.IsAffectedBy(RawChangeSet.Create([changedPath])));
+            StatementProjectionReconciliation.IsAffectedBy(RegisteredProjectionSnapshot(), RawChangeSet.Create([changedPath])));
+    }
+
+    [Theory]
+    [InlineData("legacy-pointer")]
+    [InlineData("alternate-manifest")]
+    [InlineData("missing-scope")]
+    [InlineData("unknown-field")]
+    [InlineData("missing-required")]
+    [InlineData("invalid-pattern")]
+    [InlineData("missing-optional")]
+    public void RegisteredProjectionInputsRejectInvalidDeclarations(string mutation)
+    {
+        Assert.Throws<InvalidDataException>(() => StatementProjectionReconciliation.IsAffectedBy(
+            RegisteredProjectionSnapshot(mutation), RawChangeSet.Create(["notes/unrelated.txt"])));
+    }
+
+    [Fact]
+    public void NullChangesPreserveFullProjectionCheckWithoutRegistration() =>
+        Assert.True(StatementProjectionReconciliation.IsAffectedBy(
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot, null));
+
+    private static RepositorySnapshot RegisteredProjectionSnapshot(string? mutation = null)
+    {
+        var producer = System.Text.Json.Nodes.JsonNode.Parse("""
+            {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
+             "scope":"scribe-content","projects":["producer/Owner.csproj"]}
+            """)!;
+        var native = System.Text.Json.Nodes.JsonNode.Parse("""
+            {"schema_version":1,
+             "inspector_sources":{"include":[{"pattern":"inspector/**/*.lean","optional":true}],"exclude":[]},
+             "producer_scopes":{
+               "lean-report":{"include":[{"pattern":"lean-producer/**/*.py","optional":true}],"exclude":[]},
+               "scribe-content":{"include":[{"pattern":"producer/**/*.py","optional":false}],
+                                 "exclude":["producer/excluded/**"]}}}
+            """)!;
+        var selected = native["producer_scopes"]!["scribe-content"]!;
+        switch (mutation)
+        {
+            case "legacy-pointer": producer["schema"] = "report-producer-scope-v1"; break;
+            case "alternate-manifest": producer["registration"] = "alternative.json"; break;
+            case "missing-scope": native["producer_scopes"]!.AsObject().Remove("scribe-content"); break;
+            case "unknown-field": selected["scripts"] = new System.Text.Json.Nodes.JsonArray(); break;
+            case "missing-required": selected["include"]![0]!["pattern"] = "absent/*.py"; break;
+            case "invalid-pattern": selected["include"]![0]!["pattern"] = "../outside.py"; break;
+            case "missing-optional": selected["include"]![0]!.AsObject().Remove("optional"); break;
+        }
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
+        [
+            RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json", producer.ToJsonString()),
+            RawRepositoryEntry.FromText("lean-report-inputs.json", native.ToJsonString()),
+            RawRepositoryEntry.FromText("alternative.json", native.ToJsonString()),
+            RawRepositoryEntry.FromText("producer/Owner.csproj", "<Project />"),
+            RawRepositoryEntry.FromText("producer/retained.py", "# retained registered member"),
+            RawRepositoryEntry.FromText(StrataLint.TestSupport.EngineeringRegistrationFixture.Path,
+                StrataLint.TestSupport.EngineeringRegistrationFixture.Manifest(new StrataLint.TestSupport.EngineeringProjectFixture(
+                    "producer/Owner.csproj", "Owner", "test-support", false, ["tools/StrataLint.Scribe/**/*.cs"]))),
+        ]))).Snapshot;
     }
 
     [Fact]
