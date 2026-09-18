@@ -649,3 +649,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Fresh original heads cover the one-over-twenty-five source domain](profile-notes/178-fresh-original-heads-cover-the-one-over-twenty-five-source-domain.md)
 - [The wider source union reaches the far escape boundary](profile-notes/179-the-wider-source-union-reaches-the-far-escape-boundary.md)
 - [A fresh complete comparison covers source radius one twentieth](profile-notes/181-a-fresh-complete-comparison-covers-source-radius-one-twentieth.md)
+- [The original signed gap retains its own mass through interpolation](profile-notes/183-the-original-signed-gap-retains-its-own-mass-through-interpolation.md)
+- [The two pure-prime paths share their shallow square state](profile-notes/184-the-two-pure-prime-paths-share-their-shallow-square-state.md)
+- [The joint source gap and mass improve the complete global comparison](profile-notes/185-the-joint-source-gap-and-mass-improve-the-complete-global-comparison.md)
+- [The original survival margin pays its own target change](profile-notes/186-the-original-survival-margin-pays-its-own-target-change.md)
+- [The original denominator payment strengthens the complete source union](profile-notes/187-the-original-denominator-payment-strengthens-the-complete-source-union.md)
