@@ -588,3 +588,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The actual slot defects share a stronger packing polytope](profile-notes/117-the-actual-slot-defects-share-a-stronger-packing-polytope.md)
 - [The shared slot gap enters the complete global comparison](profile-notes/118-the-shared-slot-gap-enters-the-complete-global-comparison.md)
 - [The complete pure-three family has one projected defect](profile-notes/119-the-complete-pure-three-family-has-one-projected-defect.md)
+- [One pure-three defect controls root spill and three head credits](profile-notes/120-one-pure-three-defect-controls-root-spill-and-three-head-credits.md)
+- [The original forced27 exclusion has a quantitative defect](profile-notes/121-the-original-forced27-exclusion-has-a-quantitative-defect.md)
+- [Two complete deep-five families transport the mean credit](profile-notes/122-two-complete-deep-five-families-transport-the-mean-credit.md)
