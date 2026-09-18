@@ -276,6 +276,10 @@ public sealed class StatementProjectionPilotTests
     [InlineData("Meta/ReportProducers/scribe-content.json", true)]
     [InlineData("Meta/engineering-projects.json", true)]
     [InlineData("lean-report-inputs.json", true)]
+    [InlineData("lean-toolchain", true)]
+    [InlineData("lake-manifest.json", true)]
+    [InlineData("lakefile.toml", true)]
+    [InlineData("lakefile.lean", true)]
     [InlineData("producer/deleted.py", true)]
     [InlineData("producer/excluded/deleted.py", false)]
     [InlineData("lean-producer/deleted.py", true)]
@@ -303,6 +307,17 @@ public sealed class StatementProjectionPilotTests
             RegisteredProjectionSnapshot(mutation), RawChangeSet.Create(["notes/unrelated.txt"])));
     }
 
+    [Theory]
+    [InlineData("missing-config-inputs", "missing config_inputs")]
+    [InlineData("missing-required-config", "required registration has no files after exclusions: absent-config.toml")]
+    public void RegisteredProjectionInputsRequireConfiguration(string mutation, string message)
+    {
+        var error = Assert.Throws<InvalidDataException>(() => StatementProjectionReconciliation.IsAffectedBy(
+            RegisteredProjectionSnapshot(mutation), RawChangeSet.Create(["notes/unrelated.txt"])));
+
+        Assert.Equal($"lean-report-inputs.json: {message}", error.Message);
+    }
+
     [Fact]
     public void NullChangesPreserveFullProjectionCheckWithoutRegistration() =>
         Assert.True(StatementProjectionReconciliation.IsAffectedBy(
@@ -317,6 +332,11 @@ public sealed class StatementProjectionPilotTests
         var native = System.Text.Json.Nodes.JsonNode.Parse("""
             {"schema_version":1,
              "inspector_sources":{"include":[{"pattern":"inspector/**/*.lean","optional":true}],"exclude":[]},
+             "config_inputs":{"include":[
+               {"pattern":"lean-toolchain","optional":false},
+               {"pattern":"lake-manifest.json","optional":false},
+               {"pattern":"lakefile.toml","optional":false},
+               {"pattern":"lakefile.lean","optional":true}],"exclude":[]},
              "producer_scopes":{
                "lean-report":{"include":[{"pattern":"lean-producer/**/*.py","optional":true}],"exclude":[]},
                "scribe-content":{"include":[{"pattern":"producer/**/*.py","optional":false}],
@@ -332,12 +352,17 @@ public sealed class StatementProjectionPilotTests
             case "missing-required": selected["include"]![0]!["pattern"] = "absent/*.py"; break;
             case "invalid-pattern": selected["include"]![0]!["pattern"] = "../outside.py"; break;
             case "missing-optional": selected["include"]![0]!.AsObject().Remove("optional"); break;
+            case "missing-config-inputs": native.AsObject().Remove("config_inputs"); break;
+            case "missing-required-config": native["config_inputs"]!["include"]![0]!["pattern"] = "absent-config.toml"; break;
         }
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
         [
             RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json", producer.ToJsonString()),
             RawRepositoryEntry.FromText("lean-report-inputs.json", native.ToJsonString()),
             RawRepositoryEntry.FromText("alternative.json", native.ToJsonString()),
+            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.33.0"),
+            RawRepositoryEntry.FromText("lake-manifest.json", "{\"packages\":[]}"),
+            RawRepositoryEntry.FromText("lakefile.toml", "name = \"projection_fixture\""),
             RawRepositoryEntry.FromText("producer/Owner.csproj", "<Project />"),
             RawRepositoryEntry.FromText("producer/retained.py", "# retained registered member"),
             RawRepositoryEntry.FromText(StrataLint.TestSupport.EngineeringRegistrationFixture.Path,
