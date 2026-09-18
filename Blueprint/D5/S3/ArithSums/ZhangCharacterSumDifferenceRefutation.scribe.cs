@@ -61,7 +61,10 @@ internal sealed class ZhangCharacterSumDifferenceRefutationDocument
                     + "symbol is one, so the functions differ. Their sum difference is the fixed "
                     + "integer c=1, which is neither zero nor two.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-character-sum-difference-question-d-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string name,
@@ -69,14 +72,16 @@ internal sealed class ZhangCharacterSumDifferenceRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("zhang-character-sum-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
         StatementSource.FromAuthor(formula),
         provenance,
         Blocks(Paragraph(Text(prose))),
-        role);
+        role,
+        claim);
 
     private static Formula CharacterSumFormula()
     {

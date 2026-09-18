@@ -48,6 +48,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/ZhangCharacterSumDifferenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-character-sum-difference-question-d-refutation` (refuted) by `D5/S3/ArithSums/ZhangCharacterSumDifferenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-character-sum-difference-question-d-refutation","declaration_gid":"D5/S3/ArithSums/ZhangCharacterSumDifferenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wenpeng Zhang (2025). *Some interesting number theory problems*. DOI: [10.48550/arXiv.2506.17235](https://doi.org/10.48550/arXiv.2506.17235). URL: <https://arxiv.org/abs/2506.17235v1>.
