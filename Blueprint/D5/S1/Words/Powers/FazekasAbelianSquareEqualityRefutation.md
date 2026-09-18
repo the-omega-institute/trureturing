@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Powers/FazekasAbelianSquareEqualityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fazekas-abelian-square-equality-refutation` (refuted) by `D5/S1/Words/Powers/FazekasAbelianSquareEqualityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fazekas-abelian-square-equality-refutation","declaration_gid":"D5/S1/Words/Powers/FazekasAbelianSquareEqualityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

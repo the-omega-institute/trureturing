@@ -62,7 +62,11 @@ internal sealed class FazekasAbelianSquareEqualityRefutationDocument
                     + "and is not a positive even power of either one. This refutes the conjunction "
                     + "through its equality conclusion and does not refute the lower bound.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()))));
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "fazekas-abelian-square-equality-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -71,14 +75,16 @@ internal sealed class FazekasAbelianSquareEqualityRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula IsAbelianSquareFormula()
     {
