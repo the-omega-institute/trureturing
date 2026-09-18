@@ -111,12 +111,22 @@ weighting`.
 | --- | --- | --- | --- |
 | `augmentedCube` | N/A (definition) | none | open-problem-resolution |
 | `hypercubeWeight` | N/A (definition) | none | open-problem-resolution |
-| `result` | content | none | open-problem-resolution |
+| `result` | bind-only | none | open-problem-resolution |
 
-The theorem's public conclusion is produced by a live determinant,
-positive-semidefinite and Schur-complement chain, not by specializing or
-repackaging an existing theorem. It is uniform in the dimension and is
-not bounded enumeration, a checker, numeric reduction or a certified
+After inlining the local lets and haves, the maximal-minor expansion
+instantiates `Matrix.det_one_add_mul_comm` and
+`Matrix.coeff_det_one_add_X_smul_eq_sum_minors`, then reindexes and
+normalizes determinants. The integer-minor bound uses `Nat.le_mul_self`;
+the Gram and Schur bounds instantiate the pinned PSD diagonal, congruence
+and `Matrix.PosDef.fromBlocks₂₂` results. The determinant bound uses
+`CStarAlgebra.nonneg_iff_eq_star_mul_self` and
+`Orientation.abs_volumeForm_apply_le`; the block determinant and facet
+identities finish by library rewrites, finite sums and algebraic
+normalization. No live intermediate step escapes these permitted binding
+and normalization operations. The external Equation (16) remains admitted
+under `open-problem-resolution` through preregistration in issue #8541,
+not through an escape witness. The result is uniform in the dimension and
+is not bounded enumeration, a checker, numeric reduction or a certified
 finite instance. Thus `utility: none`; all computational-use fields are
 not applicable. The ordered dominating-theorem search covered repository
 D5, pinned Mathlib and the external Lean ecosystem scope recorded by the
