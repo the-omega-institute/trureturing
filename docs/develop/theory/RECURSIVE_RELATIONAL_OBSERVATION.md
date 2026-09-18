@@ -34443,3 +34443,166 @@ $$
 当 $|I|=2$ 时，必有 $|J|=2$；这两个有限等势集合间的满射是双射，每条纤维只有一点，故 $E=I_J$，仍与 $T$ 交换。两个方向由命题 74.3 同时成立，因此至多两个细状态不能实现所述分离，而上述三状态例已经实现。证毕。
 
 ## 74.99 追加锚
+
+## 75. 量子相干、参考纤维缺陷与族保持
+
+**定义与假设 75.1（经典质量与矩阵制备的类型）。** 沿用第 73–74 节的有限非空集合 $J,I$、满射 $r:J\to I$、固定正交归一基及严格正概率 $q$，令 $p_i=\sum_{r(j)=i}q_j>0$、$Q=\operatorname{diag}q$。$\Delta(I)$ 仍指包括边界的粗概率单纯形；细基去相干简记为 $\Delta$。对细 Hermitian 矩阵 $X$ 和实粗向量 $a$，置
+$$
+c(X)_i=\sum_{r(j)=i}X_{jj},\qquad
+b_{\mathrm{vec}}(a)_j=\frac{q_j a_{r(j)}}{p_{r(j)}},
+\qquad b(a)=\operatorname{diag}b_{\mathrm{vec}}(a),\qquad E=bc.
+$$
+对密度矩阵 $\rho$，记 $d_j=\rho_{jj}$，故 $\Delta\rho=\operatorname{diag}d$。这里 $c:\operatorname{Herm}(\mathbb C^J)\to\mathbb R^I$、$b:\mathbb R^I\to\operatorname{Herm}(\mathbb C^J)$；命题 73.2、73.4 的制备族与右逆关系在这些载体上写作
+$$
+\mathcal F=b(\Delta(I)),\qquad cb=I_{\mathbb R^I},\qquad E^2=E.
+$$
+$\operatorname{Im}b$ 指实线性像，全部矩阵恒等式则使用 $c,b$ 的复线性延拓。在完整粗矩阵代数上，继承的公式仍是 $\mathcal C_r B_{r,q}=\Delta_I$，而非完整恒等映射；$E=B_{r,q}\mathcal C_r$ 总输出对角态，$Y\mapsto U_rYU_r^*$ 则是第 72.3 条的相干提升，不能混用。
+
+$D$ 使用定义 72.1 的带支撑 Umegaki 相对熵，$H,S$ 均用自然对数及 $0\ln0=0$。经典 $D_{\mathrm{KL}}(u\Vert v)$ 在 $u\ll v$ 时按定理 73.3 对正输入坐标求和，否则取 $+\infty$。定义
+$$
+\delta_Q(\rho)=D(\rho\Vert E\rho).
+$$
+
+**定理 75.2（相干与校准纤维缺陷的有限分解）。** 在定义与假设 75.1 下，对每个密度矩阵 $\rho$，包括奇异态及有零粗质量的态，有
+$$
+\begin{aligned}
+\delta_Q(\rho)
+&=D(\rho\Vert\Delta\rho)+D_{\mathrm{KL}}(d\Vert b_{\mathrm{vec}}(c\rho))\\
+&=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(c\rho\Vert p)\\
+&=D(\rho\Vert Q)-D_{\mathrm{KL}}(c\rho\Vert p).
+\end{aligned}
+$$
+所列各相对熵均有限，第一行的两项均非负，并且
+$$
+\delta_Q(\rho)\ge0,\qquad
+\delta_Q(\rho)=0\ \Longleftrightarrow\ \rho=E\rho
+\ \Longleftrightarrow\ \rho\in\mathcal F.
+$$
+
+证明。置 $\alpha=c\rho$、$t=b_{\mathrm{vec}}(\alpha)$。正性与迹一使 $d,\alpha,t$ 都是概率向量；$t$ 的归一化沿用命题 73.2 的纤维求和。PSD 的二阶主子式给出 $|\rho_{jk}|^2\le d_jd_k$，所以 $d_j=0$ 时整行、整列均为零。又 $t_j=0$ 当且仅当 $\alpha_{r(j)}=0$，此时同纤维全部 $d_k=0$。因此
+$$
+\operatorname{supp}\rho\subseteq\operatorname{supp}\Delta\rho
+\subseteq\operatorname{supp}E\rho.
+$$
+这也可在证明内定量化。令 $n=|J|$、$M=\max_j p_{r(j)}/q_j<\infty$。对任意 $v\in\mathbb C^J$，
+$$
+v^*\rho v\le
+\left(\sum_j\sqrt{d_j}|v_j|\right)^2
+\le n\sum_jd_j|v_j|^2,
+\qquad d_j\le\alpha_{r(j)}\le M t_j,
+$$
+故 $0\le\rho\le n\Delta\rho\le nM E\rho$。任意正线性映射 $T$ 保持该支配；若 $T(E\rho)v=0$，则 $0\le v^*T(\rho)v\le0$，PSD 的零二次型判据给出 $T(\rho)v=0$，从而 $\operatorname{supp}T(\rho)\subseteq\operatorname{supp}T(E\rho)$。此判据的现成矩阵形式是钉版 Mathlib 的 [Matrix.PosSemidef.dotProduct_mulVec_zero_iff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/Order.lean)；这里没有假设任何输入或输出可逆。
+
+对概率向量 $s$，若 $\operatorname{supp}\rho\subseteq\operatorname{supp}\operatorname{diag}s$，谱对数在参考的正支撑上对角，因而
+$$
+D(\rho\Vert\operatorname{diag}s)
+=-S(\rho)-\sum_{j:d_j>0}d_j\ln s_j
+=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert s).
+$$
+零参考坐标处的输入行列已经为零，不能将这个有限表达式用于不满足支撑条件的态对。先取 $s=d$、再取 $s=t$，得到第一行。对 $(d,t)$，定理 74.2 的经典缺陷恒等式给出
+$D_{\mathrm{KL}}(d\Vert t)=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(\alpha\Vert p)$；它的确定信道代入及零纤维处理仍是式 (74.1) 的证明。最后取 $s=q$ 得末行。$q,p$ 严格正，$d\ll t$ 已证，故没有无穷相减。
+
+相干项的非负性复用第 72.90 节所引的公开相干删除恒等式：取 $U=I$、$\rho_k=\Delta^k\rho$ 及 $k=0$。其步进条件由这个轨道定义满足，得到 $S(\Delta\rho)-S(\rho)=D_{\mathrm{legacy}}(\rho\Vert\Delta\rho)\ge0$；前述支撑证明与该节的两个有限分支桥把它接到这里的 $D$。等号使用具体的 [SpectralReadoutEntropyEquality.spectral_readout_entropy_eq_iff_isDiag](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality.lean)：取实际谱分解 $\rho=V\operatorname{diag}(\lambda)V^*$，其中 $V$ 幺正、$\lambda_j\ge0$；[FreeNegentropyBudget.von_neumann_entropy_eq_shannon_state_spectrum](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Sharpness/FreeNegentropyBudget.lean) 给出 $S(\rho)=H(\lambda)$，有序谱与此谱之间只作保持重数的有限重排。因此 $H(d)-S(\rho)=0$ 当且仅当 $\rho=\Delta\rho$，允许零及重复特征值。经典项则对非负归一化且 $d\ll t$ 的 $(d,t)$，使用定理 74.2 所引的 Gibbs 非负性及 Gibbs 等号条件，得到其为零当且仅当 $d=t$。两非负项同时为零恰好是 $\rho=E\rho$；命题 73.4 识别其为 $\mathcal F$。没有使用一般量子 Klein 等号定理。
+
+同一计算还给出后续所需的恒等式。对任意 $a\in\Delta(I)$，$\operatorname{supp}\rho\subseteq\operatorname{supp}b(a)$ 当且仅当 $\alpha\ll a$：若 $a_i=0$，该纤维的参考对角元全零，支撑包含迫使其中全部 $d_j=0$；反向由上述零行列结论得到。在有限分支上只对 $d_j>0$ 拆对数，
+$$
+\ln t_j-\ln b_{\mathrm{vec}}(a)_j
+=\ln\frac{\alpha_{r(j)}}{a_{r(j)}},
+$$
+按纤维求和即得
+$$
+D(\rho\Vert b(a))=\delta_Q(\rho)+D_{\mathrm{KL}}(c\rho\Vert a). \tag{75.1}
+$$
+若 $\alpha\not\ll a$，左端与右端最后一项均为 $+\infty$，而 $\delta_Q(\rho)$ 仍有限，所以式 (75.1) 是扩展值加法恒等式，不作无穷相减。Gibbs 等号条件也说明 $b(c\rho)$ 是 $\mathcal F$ 中唯一使该相对熵最小的态。
+
+这里的熵增项是 $H(d)-S(\rho)$。直接比较两个迹对数式还可见
+$$
+\delta_Q(\rho)-\bigl(S(E\rho)-S(\rho)\bigr)
+=\sum_j(t_j-d_j)\ln q_j,
+$$
+因为 $\sum_{r(j)=i}(t_j-d_j)=0$ 消去了正粗纤维上的 $\ln\alpha_i-\ln p_i$，零粗纤维两质量均为零。二者相等恰在这个剩余项为零时成立，不能把一般加权制备的缺陷直接替换为单独的 $S(E\rho)-S(\rho)$。证毕。
+
+**定理 75.3（任意有限 CPTP 演化的精确族保持判据）。** 在定义与假设 75.1 下，令 $T:\mathcal B(\mathbb C^J)\to\mathcal B(\mathbb C^J)$ 为任意 CPTP 映射，并令 $S_T=cTb$。则 $S_T$ 是经典列随机矩阵，且
+$$
+\begin{aligned}
+T(\mathcal F)\subseteq\mathcal F
+&\ \Longleftrightarrow\ Tb=bS_T\\
+&\ \Longleftrightarrow\ TE=ETE\\
+&\ \Longleftrightarrow\ T(\operatorname{Im}b)\subseteq\operatorname{Im}b\\
+&\ \Longleftrightarrow\ \forall\rho\text{ 为密度矩阵},\quad
+\delta_Q(T\rho)\le\delta_Q(\rho).
+\end{aligned}
+$$
+这些条件成立时，对每个密度矩阵还有全部项有限的剩余不等式
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cTE\rho)
+=D(T\rho\Vert TE\rho)\le\delta_Q(\rho). \tag{75.2}
+$$
+这里不附加 $T(Q)=Q$、保单位元或初态内点条件；要求保持的只是指定族 $\mathcal F$。
+
+证明。每个粗标准基向量 $e_i$ 都是允许有零坐标的概率，$b(e_i)$ 是密度态；$T$ 与 $c$ 依次把它送到密度态和概率向量。它们就是 $S_T$ 的各列，故该矩阵非负且列和为一。
+
+前四个条件使用定理 74.2 的 $cb=I$ 代数，载体换成定义 75.1 所列空间。具体地，族保持给出 $Tb(e_i)=ETb(e_i)=bS_T(e_i)$；这些 $e_i$ 张成粗实空间，复线性延拓后亦张成粗复空间，故 $Tb=bS_T$。反向由 $S_T\Delta(I)\subseteq\Delta(I)$ 得到族保持。$Tb=bS_T$ 右复合 $c$ 给出 $TE=ETE$；该式右复合 $b$，由 $Eb=b$ 得到 $Tb=ETb=bS_T$。最后，$E$ 的实像为 $\operatorname{Im}b$ 且在其上为恒等，故 $TE=ETE$ 恰为此像不变；Hermitian 空间上的恒等式再按复线性延拓到全部矩阵。
+
+设族保持，置 $\sigma=E\rho$。定理 75.2 证明中的支配经正映射 $T$ 给出 $\operatorname{supp}T\rho\subseteq\operatorname{supp}T\sigma$；族保持又给出 $T\sigma=b(cT\sigma)$。将式 (75.1) 用于 $T\rho$ 和 $a=cT\sigma$，并应用量子数据处理不等式，得到
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cT\sigma)
+=D(T\rho\Vert T\sigma)
+\le D(\rho\Vert\sigma)=\delta_Q(\rho).
+$$
+这里量子不等式的外部输入是 Watrous，Theorem 5.35（定位见本节附引），作用于 PSD 对 $(\rho,E\rho)$ 与通道 $T$。前述支撑包含和式 (75.1) 同时保证量子项及粗 KL 项有限，即使 $T\sigma$ 奇异也成立。以经典 Gibbs 非负性去掉粗项即得普遍不增；经典信道 DPI 本身不能承担这一量子步骤。
+
+反之，普遍不增作用于每个 $b(e_i)$，由定理 75.2 得
+$$
+0\le\delta_Q(Tb(e_i))\le\delta_Q(b(e_i))=0.
+$$
+同一定理的零集判据给出 $Tb(e_i)=ETb(e_i)$，再线性延拓得 $Tb=bS_T$。此方向不需要量子 DPI，也没有删去边界制备。
+
+另一个方向仍是命题 74.3 的粗自治代数，在此载体上原样给出
+$$
+cT=S_Tc\ \Longleftrightarrow\ ET=ETE,\qquad
+ET=TE\ \Longleftrightarrow\
+\bigl(cT=S_Tc\ \text{且}\ Tb=bS_T\bigr).
+$$
+第一式分别左复合 $b$、$c$ 并用 $cb=I$、$cE=c$ 即得；第二式是 $ET=ETE$ 与 $TE=ETE$ 的合取。这与所证族保持是两个条件，不引入第 74.4–74.5 节额外的平稳性或详细平衡假设。证毕。
+
+**命题 75.4（同一 qubit 对分离粗自治与缺陷不增）。** 取 $J=I=\{0,1\}$、$r=\operatorname{id}$、$q=(1/2,1/2)$，故 $E=\Delta$。令归一化 Hadamard 矩阵及两态为
+$$
+\mathsf H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad |\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2},
+\qquad
+T_{\mathrm{gen}}=\operatorname{Ad}_{\mathsf H}\circ\Delta,\quad
+T_{\mathrm{read}}=\Delta\circ\operatorname{Ad}_{\mathsf H},
+$$
+其中 $\operatorname{Ad}_{\mathsf H}(X)=\mathsf H X\mathsf H^*$，$H(d)$ 仍表示 Shannon 熵。两映射均 CPTP、保单位元且固定 $Q=I_2/2$。$T_{\mathrm{gen}}$ 粗自治，但不保持 $\mathcal F$，并将某个零缺陷输入的缺陷增至 $\ln2$；$T_{\mathrm{read}}$ 的所有密度输出缺陷均为零，但不粗自治。两者均不与 $E$ 交换；在允许相干态的这个有限量子范围内，二维是分离这两个条件的最小维数。
+
+证明。两映射的 Kraus 族依次为
+$$
+\{|+\rangle\langle0|,\ |-\rangle\langle1|\},
+\qquad
+\{|0\rangle\langle+|,\ |1\rangle\langle-|\}.
+$$
+各族均满足 $\sum K^*K=I_2$，故适用第 73.2 条所引的有限 Kraus 通道定理；也均有 $\sum KK^*=I_2$，故保单位元并固定 $I_2/2$。对任意 Hermitian 矩阵 $X=\begin{pmatrix}x&z\\\bar z&y\end{pmatrix}$，直接乘法给出
+$$
+T_{\mathrm{gen}}(X)=\frac12
+\begin{pmatrix}x+y&x-y\\x-y&x+y\end{pmatrix},
+\qquad
+T_{\mathrm{read}}(X)=\frac12\operatorname{diag}
+(x+y+z+\bar z,\ x+y-z-\bar z).
+$$
+由 $r=\operatorname{id}$，$b_{\mathrm{vec}}(c\rho)=d$，经典纤维缺陷恒为零，定理 75.2 给出 $\delta_Q(\rho)=H(d)-S(\rho)$。第一式说明
+$$
+cT_{\mathrm{gen}}=S_{\mathrm{gen}}c,\qquad
+S_{\mathrm{gen}}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix};
+$$
+对密度态 $x+y=1$，粗输出恒为 $(1/2,1/2)$。但 $T_{\mathrm{gen}}(|0\rangle\langle0|)=|+\rangle\langle+|$。输入对角且为纯态，缺陷为零；输出的谱为 $(1,0)$、对角为 $(1/2,1/2)$，所以其缺陷为 $\ln2$，且不属于对角族 $\mathcal F$。
+
+第二式给出 $ET_{\mathrm{read}}=T_{\mathrm{read}}$，故每个输出的缺陷为零，特别地保持 $\mathcal F$。然而 $|+\rangle\langle+|$ 与 $|-\rangle\langle-|$ 的粗输入同为 $(1/2,1/2)$，输出却分别为 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$，粗输出不同；因此不存在仅依赖粗输入的演化。由定理 75.3 证明末尾的两方向恒等式，两通道均不交换。若细维数为一，非空满射迫使粗维数也为一，唯一密度态及保迹线性映射使两个条件都成立。二维的上述两见证遂证明最小性；它与命题 74.6 只在经典质量动力学内的三状态最小性适用域不同。证毕。
+
+### 75.90 来源与形式化边界
+
+对角参考分解及零相干条件是成熟结果（literature-attested）：Baumgratz–Cramer–Plenio，Quantifying Coherence，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 2 页 (C1')、第 3 页式 (8) 及其前一显示式；本节将参考代入为第 73–74 节的校准制备。量子 DPI 引自 Watrous，The Theory of Quantum Information，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 5.35，印刷第 280–281 页／PDF 第 288–289 页，式 (5.174)，其输入是任意 PSD 对和通道；Definition 5.18，印刷第 266 页／PDF 第 274 页式 (5.85)，规定有限／无穷的支撑语义。书中以二为底的值统一乘 $\ln2$ 换算为本节的 nats。Proposition 5.22 只陈述非负性，不作为这里的等号依据。校准组合、判据与成对边界由本节证明给出（repo-derived），不主张新颖性或穷尽文献。
+
+上述源码构件各自只承担所指定的输入：相干删除及其有限分支桥不包含任意 CPTP 的 DPI，经典 Gibbs 等号也不成为一般量子等号定理。在所检索的 D5 与钉版 Mathlib 源码范围内，尚未找到这里所需的一般带支撑量子 DPI；[SupportAwareRelativeEntropy](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.lean) 也明确将 DPI 留作后续定理。因此式 (75.2) 及普遍不增的充分性依赖已核对的外部数学输入。本节的支撑支配、对角对数、载体和谱重排适配、完整等价与具体边界均未组成经编译的 Lean 证明；局部构件不覆盖这些完整命题。所有结论限于所给有限矩阵与概率载体。
+
+## 75.99 追加锚
