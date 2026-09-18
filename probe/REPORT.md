@@ -68,3 +68,5 @@ Compiled private lemma `s_split_max`: `s (X ++ m :: Y) = s X ++ s Y ++ [m]` when
 Compiled private lemma `r_perm`: reversing each valley run preserves the whole word multiset.
 
 Compiled private lemma `s_ends_max`: on every nonempty word, including words with duplicates, the operational West map ends in a largest input entry.
+
+Compiled private lemma `input_le_reverse_s`: every word is lexicographically at most the reverse of its West output. Substituting `reverse A ++ [v]` gives the weak inequality needed in the preregistered sublemma, without a smallness hypothesis or an equality-case classification.

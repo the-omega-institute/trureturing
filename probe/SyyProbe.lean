@@ -143,4 +143,19 @@ private theorem s_ends_max (w : List ℕ) (ne : w ≠ []) :
   have hy : ∀ y ∈ Y, y ≤ m := fun y hmem => bound y (by simp [hmem])
   exact ⟨s X ++ s Y, m, s_split_max X Y m hx hy, hm', bound⟩
 
+private theorem input_le_reverse_s (w : List ℕ) : w ≤ (s w).reverse := by
+  induction w with
+  | nil => simp [s, westRun]
+  | cons a tail ih =>
+      obtain ⟨b, m, hs, _, hmax⟩ := s_ends_max (a :: tail) (by simp)
+      have ha := hmax a (by simp)
+      rcases lt_or_eq_of_le ha with ha | rfl
+      · rw [hs, List.reverse_append]
+        exact le_of_lt (List.Lex.rel ha)
+      · have hb : ∀ x ∈ tail, x ≤ a := fun x hx => hmax x (by simp [hx])
+        have heq : s (a :: tail) = s tail ++ [a] := by
+          simpa only [s, westRun, List.nil_append] using westRun_sentinel [] tail a hb
+        rw [heq, List.reverse_append]
+        exact List.cons_le_cons a ih
+
 end SyyProbe
