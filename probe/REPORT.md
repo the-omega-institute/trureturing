@@ -88,3 +88,7 @@ Compiled public theorem `SyyProbe.result`: for all n >= 1 and all words permutin
 Final public surface: `IsValley`, `valleyRuns`, `r`, `s`, `M`, and the single theorem `result`. The potential and all proof helpers are private. Final compilation removes unused simp arguments and retains only the standard three axioms.
 
 The final main file compiles without warnings. The only public theorem remains the exact S_n convergence statement; all operational and potential lemmas remain private.
+
+## Elaborated live dependency
+
+`python3 probe/check_dependencies.py` exited 0. Lean's elaborated proof of `result` directly contains `potential_weak`; it still contains that constant after `Lean.Meta.reduce` with reducible transparency and all explicit-argument, type, and proof skipping disabled. Output: `POTENTIAL_DEPENDENCY raw=true reduced=true`. The proof uses its inequality as the second argument of antisymmetry, then injectivity of reversal returns the fixed-point equality. It is not an unused let-binding or discarded conjunction component.

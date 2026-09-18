@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "direct_potential_dependency": true,
+  "retained_after_reduction": true,
+  "reduction": "Lean.Meta.reduce with reducible transparency, explicitOnly=false, skipTypes=false, skipProofs=false",
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/dependency-audit.log"
+}
