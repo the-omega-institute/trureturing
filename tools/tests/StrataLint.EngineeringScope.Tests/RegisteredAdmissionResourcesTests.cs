@@ -81,11 +81,11 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("Meta/Digestion/atoms/sha256/admission-resource-probe", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
-    public void RegisteredDigestionMetadataUsesLeanOnlyForPrDelta(string metadata, string mode)
+    public void RegisteredDigestionMetadataKeepsDeltaReportWithoutUnrelatedCurrentChecks(string metadata, string mode)
     {
         const string theory = "docs/develop/theory/admission-resource-probe.md";
         var plan = Plan(metadata, theory, mode);
-        Assert.Equal(new[] { "current-metadata", "delta", "filemap" }, Strings(plan["declared_require"]!));
+        Assert.Equal(new[] { "current-metadata", "delta-metadata", "filemap" }, Strings(plan["declared_require"]!));
         Assert.Equal(new[] { "filemap" }, Strings(plan["paths"]!.AsArray()
             .Single(row => row!["path"]!.GetValue<string>() == theory)!["require"]!));
         if (mode == "push")
@@ -102,13 +102,29 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         }
         else
         {
-            Assert.Equal(new[] { "build", "current", "current-metadata", "delta", "engineering", "filemap", "lean", "lean-report", "scribe" },
+            Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "engineering", "filemap", "lean", "lean-report" },
                 Strings(plan["resources"]!));
             Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
-            Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(CommonCheckRegistrationFixture.Ids.Order(StringComparer.Ordinal), Strings(plan["execution"]!["checks"]!));
+            Assert.Equal(new[] { "lean-report", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
+            Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "banned-api-proof", "capability-proof", "filemap", "selftest-pair" },
+                Strings(plan["execution"]!["checks"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("Meta/registry.yaml")]
+    public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
+    {
+        var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);
+        Assert.Contains("current", Strings(plan["resources"]!));
+        Assert.Contains("delta", Strings(plan["resources"]!));
+        Assert.Contains("scribe", Strings(plan["resources"]!));
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Order(StringComparer.Ordinal), Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
     }
 
     private JsonNode Plan(string judge, string content, string mode = "pr")
