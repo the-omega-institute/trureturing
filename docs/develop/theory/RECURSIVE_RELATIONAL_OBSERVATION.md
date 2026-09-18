@@ -38852,3 +38852,207 @@ $$
 最后，$1,a,b,ab$ 在均匀加权内积下为正交归一基，后三者均中心化；只依赖 $a$ 且在 $a\mapsto-a$ 下为偶的函数必为常数。故三条纯方向恰好用尽中心化空间的三个分区方向，而混合方向以式 (92.14) 说明 $\Pi f_-=0$ 不蕴含精确的 $A_r=0$。证毕。
 
 ## 92.99 追加锚
+
+## 93. 端点势、平稳路径方向性与转移计数的充分读出
+
+**定义与假设 93.1（有限路径和正反实验）。** 设 $S$ 为有限非空集合，固定一个全序，仅用于将无序状态对记为 $i<j$。对 $n\in\mathbb N_0$，路径
+$$
+w=(x_0,\ldots,x_n)\in S^{n+1}
+$$
+含 $n$ 次转移、$n+1$ 个状态，反演为 $\Theta_nw=(x_n,\ldots,x_0)$。给定概率 $P_n$，以下均在其非空正支撑 $\Omega_n$ 上比较，且要求 $\Theta_n[\Omega_n]=\Omega_n$。记
+$$
+P_n^R=(\Theta_n)_*P_n,\qquad P_n^R(w)=P_n(\Theta_nw),\qquad
+\sigma_n(w)=\log\frac{P_n(w)}{P_n^R(w)}.
+$$
+两份概率在 $\Omega_n$ 上严格为正，所有对数取自然底数；$D$ 表示相应的有限 KL 散度。定义转移数与净转移数
+$$
+N_{ij}(w)=\#\{0\le t<n:(x_t,x_{t+1})=(i,j)\},\qquad
+J_{ij}(w)=N_{ij}(w)-N_{ji}(w),
+$$
+并以 $J(w)=(J_{ij}(w))_{i<j}$ 为计数读出。每个读出的陪域均取其在 $\Omega_n$ 上的实际像。
+
+**命题 93.2（固定端点权重的有界方向性）。** 固定正函数 $a,b:S\to(0,\infty)$，不随 $n$ 改变。对每个 $n\ge0$，取非负、非零权重 $B_n:S^{n+1}\to[0,\infty)$，满足 $B_n\circ\Theta_n=B_n$。置
+$$
+Z_n=\sum_{w\in S^{n+1}}B_n(w)a(x_0)b(x_n),\qquad
+P_n(w)=\frac{B_n(w)a(x_0)b(x_n)}{Z_n},\qquad
+\Omega_n=\{w:B_n(w)>0\},
+$$
+$$
+g(i)=\log a(i)-\log b(i),\qquad
+\operatorname{osc}(g)=\max_{i\in S}g(i)-\min_{i\in S}g(i).
+$$
+则 $Z_n>0$，$P_n,P_n^R$ 在 $\Omega_n$ 上有共同正支撑，并且
+$$
+\sigma_n(w)=g(x_0)-g(x_n)
+=\sum_{i<j}J_{ij}(w)(g(i)-g(j)). \tag{93.1}
+$$
+因而
+$$
+0\le D(P_n\Vert P_n^R)\le\operatorname{osc}(g),\qquad
+\lim_{n\to\infty}\frac{D(P_n\Vert P_n^R)}{n}=0,\qquad
+\lim_{n\to\infty}\frac{D(P_n\Vert P_n^R)}{n+1}=0, \tag{93.2}
+$$
+其中除以 $n$ 的表达只用于 $n\ge1$。当 $n=0$ 时散度为零。端点读出 $T_n(w)=(x_0,x_n)$ 与净计数读出分别精确保留该正反实验的 KL：
+$$
+D((T_n)_*P_n\Vert(T_n)_*P_n^R)
+=D(J_*P_n\Vert J_*P_n^R)
+=D(P_n\Vert P_n^R). \tag{93.3}
+$$
+这里不要求 $B_n$ 来自 Markov 链，不要求平稳性，也不要求不同长度的 $P_n$ 是同一无限过程的边缘。
+
+**证明。** $B_n$ 非零且端点权重严格为正，所以 $Z_n>0$，归一化得到概率。$B_n$ 的反演不变性使 $\Omega_n$ 反演不变，并给出
+$$
+\frac{P_n(w)}{P_n^R(w)}
+=\frac{a(x_0)b(x_n)}{a(x_n)b(x_0)}.
+$$
+取对数即得式 (93.1) 的第一个等式。内部端点抵消，故
+$$
+g(x_0)-g(x_n)=\sum_{t=0}^{n-1}(g(x_t)-g(x_{t+1}))
+=\sum_{i,j}N_{ij}(w)(g(i)-g(j)).
+$$
+对角项为零，将 $i\to j$ 与 $j\to i$ 两项配对，即得式 (93.1) 的第二个等式。$n=0$ 时这些和均为空和，且 $\Theta_0$ 为恒等。
+
+在共同正支撑上应用已有 Gibbs 非负性，得到散度下界；所用有限概率与绝对连续性假设见 [`kl_divergence_nonneg`](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/D5/S3/Divergence/GrandmotherTheorem.lean)。另一方面，逐路径有 $g(x_0)-g(x_n)\le\operatorname{osc}(g)$，故
+$$
+D(P_n\Vert P_n^R)=\sum_{w\in\Omega_n}P_n(w)\sigma_n(w)
+\le\operatorname{osc}(g).
+$$
+固定有限上界分别除以 $n$、$n+1$，夹逼得到两个极限。
+
+最后，式 (93.1) 表明似然比在每条端点纤维以及每条净计数纤维上恒定。分别应用 [定理 73.3](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)：细载体取 $\Omega_n$，输入取 $d=P_n$，参考取 $q=P_n^R$，粗载体取相应读出的实际像。细载体有限，参考严格正，读出满射，因而粗参考质量也严格正；该定理的等号判据恰由上述似然比满足，给出式 (93.3)。
+
+若另允许端点权重随 $n$ 改变，同一证明只给出 $D(P_n\Vert P_n^R)\le\operatorname{osc}(g_n)$。条件 $\operatorname{osc}(g_n)=o(n)$ 是每次转移的散度趋零的充分条件；缺少该条件时，这个上界本身不能推出该极限。证毕。
+
+**定理 93.3（平稳边流的路径 KL 与读出比较）。** 设 $K=(K_{ij})_{i,j\in S}$ 是非负行随机矩阵，并给定严格正概率 $\pi$，满足
+$$
+\sum_jK_{ij}=1,\qquad \sum_i\pi_iK_{ij}=\pi_j.
+$$
+另要求双向支撑
+$$
+K_{ij}>0\quad\Longleftrightarrow\quad K_{ji}>0. \tag{93.4}
+$$
+不要求不可约、非周期或正的自环概率。定义
+$$
+P_n(w)=\pi_{x_0}\prod_{t=0}^{n-1}K_{x_tx_{t+1}},\qquad
+Q_{ij}=\pi_iK_{ij},\qquad Q^{\mathsf T}_{ij}=Q_{ji},\qquad
+K^{\leftarrow}_{ij}=\frac{\pi_jK_{ji}}{\pi_i}.
+$$
+$P_n$ 的正支撑为使用正转移边的路径集合，记为 $\Omega_n$；$Q,Q^{\mathsf T}$ 在共同正边集上作为概率比较。置
+$$
+A_{ij}=\begin{cases}\log(Q_{ij}/Q_{ji}),&Q_{ij}>0,\\0,&Q_{ij}=0,\end{cases}
+\qquad e=D(Q\Vert Q^{\mathsf T}).
+$$
+则反向实验是在原坐标顺序上由反向核生成的路径律：
+$$
+P_n^R(w)=\pi_{x_0}\prod_{t=0}^{n-1}K^{\leftarrow}_{x_tx_{t+1}}
+=\pi_{x_n}\prod_{t=0}^{n-1}K_{x_{t+1}x_t}. \tag{93.5}
+$$
+在 $\Omega_n$ 上，
+$$
+\begin{aligned}
+\sigma_n(w)
+&=\log\frac{\pi_{x_0}}{\pi_{x_n}}
+ +\sum_{t=0}^{n-1}\log\frac{K_{x_tx_{t+1}}}{K_{x_{t+1}x_t}}\\
+&=\sum_{t=0}^{n-1}A_{x_tx_{t+1}}
+=\sum_{i<j}J_{ij}(w)A_{ij}.
+\end{aligned} \tag{93.6}
+$$
+由此得到精确的有限长度公式
+$$
+D(P_n\Vert P_n^R)=n e,\qquad
+e=\sum_{\substack{i<j\\Q_{ij}>0}}
+(Q_{ij}-Q_{ji})\log\frac{Q_{ij}}{Q_{ji}}\ge0. \tag{93.7}
+$$
+并且
+$$
+e=0\quad\Longleftrightarrow\quad Q=Q^{\mathsf T}
+\quad\Longleftrightarrow\quad
+\forall i,j,\ \pi_iK_{ij}=\pi_jK_{ji}. \tag{93.8}
+$$
+因此当 $n\ge1$ 时，路径方向性为零当且仅当详细平衡成立；$n=0$ 时恒为零。$n\ge1$ 时每次转移的散度为 $e$，按状态词长归一化的散度 $ne/(n+1)$ 趋向 $e$。
+
+净计数精确保留全部方向性，而每个单时刻读出 $r_t(w)=x_t$ 都不显露方向性：
+$$
+D(J_*P_n\Vert J_*P_n^R)=n e,\qquad
+J(\Theta_nw)=-J(w), \tag{93.9}
+$$
+$$
+(r_t)_*P_n=(r_t)_*P_n^R=\pi,\qquad
+D((r_t)_*P_n\Vert(r_t)_*P_n^R)=0
+\quad(0\le t\le n). \tag{93.10}
+$$
+在每条净计数纤维上，两份条件路径律相同，故同一参考条件恢复核恢复这两个指定分布。标量读出 $w\mapsto\sigma_n(w)$ 的似然比同样在每条纤维上恒定，故由定理 73.3 也保留全部正反 KL。这里的充分性只针对正反二分实验，不表示计数确定原来的完整路径，也不表示它是最小或低成本读出。
+
+此外，对任意 $g:S\to\mathbb R$，
+$$
+\sum_{i,j}Q_{ij}(g(i)-g(j))=0. \tag{93.11}
+$$
+若 $e>0$，则 $A$ 不可能在所有正边上等于某个端点势差 $g(i)-g(j)$；这些 $P_n$ 也不可能全部具有命题 93.2 那种势振幅一致有界的端点表示。
+
+**证明。** 逐次对末坐标求和并用行归一化，得到每个 $P_n$ 是概率。严格正的 $\pi$ 与式 (93.4) 保证其正支撑非空、反演不变。$Q$ 的两个边缘分别为
+$$
+\sum_jQ_{ij}=\pi_i,\qquad \sum_iQ_{ij}=\pi_j,
+$$
+故 $Q,Q^{\mathsf T}$ 均归一化并有相同正支撑。
+
+反向核及其随机性直接采用 [命题 74.4](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的构造：该接口的细、粗集合都取 $S$，读出取恒等，参考取 $\pi$，列质量算子取 $T=K^{\mathsf T}$，所以 $T\pi=\pi$；此时 $C=B=E=I$，原接口的细、粗行核均为 $K$，其反向核正是这里的 $K^{\leftarrow}$。这一用法不附加非平凡粗化或可合并性条件。代入核的公式，有
+$$
+\pi_{x_0}\prod_{t=0}^{n-1}
+ \frac{\pi_{x_{t+1}}K_{x_{t+1}x_t}}{\pi_{x_t}}
+=\pi_{x_n}\prod_{t=0}^{n-1}K_{x_{t+1}x_t}
+=P_n(\Theta_nw),
+$$
+证明式 (93.5)。这里保持坐标顺序；若同时反转核与路径坐标，会再反转一次，得到原路径律。
+
+取正似然比给出式 (93.6) 的第一行。将每条边的 $\pi$ 比值一起写入，利用
+$$
+\sum_{t=0}^{n-1}\log\frac{\pi_{x_t}}{\pi_{x_{t+1}}}
+=\log\frac{\pi_{x_0}}{\pi_{x_n}},
+$$
+便得到 $Q/Q^{\mathsf T}$ 的边分解。它包含端点项。$A_{ji}=-A_{ij}$ 且 $A_{ii}=0$，所以按有向转移计数分组、再将两个方向配对，得到净计数表达。这个离散平稳路径似然比及端点项的标准出处为 Lebowitz–Spohn，[*A Gallavotti–Cohen Type Symmetry in the Large Deviation Functional for Stochastic Dynamics*](https://arxiv.org/pdf/cond-mat/9811220v1)，§2.2，式 (2.18)–(2.20)，印刷第 6 页／PDF 第 7 页。
+
+从初始律 $\pi$ 出发，用 $\pi K=\pi$ 归纳得到 $X_t$ 的律恒为 $\pi$，而相邻对满足
+$$
+\Pr_{P_n}(X_t=i,X_{t+1}=j)=\pi_iK_{ij}=Q_{ij}.
+$$
+故 $\mathbb E_{P_n}N_{ij}=nQ_{ij}$。对式 (93.6) 求期望，有限和的线性性给出
+$$
+D(P_n\Vert P_n^R)
+=n\sum_{i,j:Q_{ij}>0}Q_{ij}\log\frac{Q_{ij}}{Q_{ji}}
+=nD(Q\Vert Q^{\mathsf T}).
+$$
+此处只用了相邻对的共同边缘，没有假设连续边独立。将相反方向的两项合并，得到式 (93.7) 的无序对表达，无额外二倍因子。平稳边测度 $Q=\operatorname{diag}(\pi)K$ 与相应散度率的标准接口见 Wolfer–Watanabe，[*Geometric Aspects of Data-Processing of Markov Chains*](https://arxiv.org/pdf/2203.04575v3)，§§3.1–3.2，第 9–10 页、式 (8)。该式取正向核 $K$ 与参考核 $K^{\leftarrow}$ 时，$K_{ij}/K^{\leftarrow}_{ij}=Q_{ij}/Q_{ji}$，其路径词长 $k$ 对应这里的 $n+1$。这里的有限计算仅使用已给定的正平稳律与双向支撑，不从该文的几何背景额外引入不可约性或平稳律唯一性。
+
+对 $Q,Q^{\mathsf T}$ 应用 Gibbs 非负性与 [`kl_divergence_eq_zero_iff`](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/D5/S3/Divergence/GibbsEquality.lean)。两者为有限归一化非负律，共同支撑给出绝对连续性，故散度为零恰好是两律相同，得到式 (93.8)。正边外两边同时为零，因此该等式覆盖全部状态对。详细平衡沿用命题 74.5 的同一参考约定。$n\ge1$ 的零条件及两种归一化立即由式 (93.7) 得到；$n=0$ 时反演为恒等。
+
+式 (93.6) 使 $P_n/P_n^R$ 在 $J$ 的每条纤维上恒定。再直接应用定理 73.3，载体、输入、参考、实际像的代入与命题 93.2 相同，得到式 (93.9) 的 KL 等式和共同条件恢复。反演使每次 $i\to j$ 成为 $j\to i$，故 $J\Theta_n=-J$，其实际像也在取负下不变。对单时刻读出，有 $r_t\Theta_n=r_{n-t}$，而这两个坐标在 $P_n$ 下的律都为 $\pi$，所以式 (93.10) 成立。联合观察全部坐标则给出路径本身，其散度仍为 $ne$。
+
+最后，$Q$ 的两个边缘相同，故
+$$
+\sum_{i,j}Q_{ij}(g(i)-g(j))
+=\sum_i\pi_i g(i)-\sum_j\pi_j g(j)=0.
+$$
+若 $A_{ij}=g(i)-g(j)$ 在正边上成立，则 $e=\sum_{i,j}Q_{ij}A_{ij}=0$，与 $e>0$ 矛盾。若全部 $P_n$ 具有反演对称基准与势振幅统一不超过 $C$ 的端点表示，命题 93.2 则给出 $ne\le C$ 对全部 $n$ 成立，同样矛盾。以上结论是指定有限路径正反实验的统计方向性；物理熵产生还需要额外的动力学、热浴及物理反向实验假设。证毕。
+
+**推论 93.4（三状态环的持续方向性）。** 取 $S=\mathbb Z/3\mathbb Z$，令
+$$
+K(i,i+1)=p,\qquad K(i,i-1)=q,\qquad K(i,i)=1-p-q,
+\qquad p,q>0,\quad p+q\le1,
+$$
+初始律为均匀律 $\pi_i=1/3$。以 $i\to i+1$ 为顺时针方向，定义
+$$
+C_n(w)=\sum_{i\in S}N_{i,i+1}(w)-\sum_{i\in S}N_{i,i-1}(w).
+$$
+则
+$$
+\sigma_n(w)=C_n(w)\log\frac pq,\qquad
+\mathbb E_{P_n}C_n=n(p-q),\qquad
+D(P_n\Vert P_n^R)=n(p-q)\log\frac pq. \tag{93.12}
+$$
+$C_n$ 保留全部正反 KL，而每个单时刻状态读出在两种实验下均为均匀律，KL 为零。式 (93.12) 中的 KL 严格为正当且仅当 $n>0$ 且 $p\ne q$；$p=q$ 时路径律反演不变，$n=0$ 时散度恒为零。
+
+**证明。** 各列之和与各行之和均为 $p+q+(1-p-q)=1$，故均匀律平稳，正的非自环边双向存在。当 $p+q=1$ 时，将自环从正路径支撑中排除即可，所有计算都无需取 $\log(0/0)$。在正边上，均匀的 $\pi$ 因子抵消，顺时针边的 $A$ 为 $\log(p/q)$，逆时针边为其负，自环若存在则分数为一、对数为零。定理 93.3 的似然比公式给出式 (93.12) 的第一式；每个时刻顺、逆转移的概率分别为 $p,q$，故有限期望相加给出第二式，再对似然比求期望得到第三式。
+
+似然比只依赖 $C_n$，定理 73.3 在其实际像上的等号条件给出计数 KL 保留；单时刻结论由定理 93.3 给出。若 $p\ne q$，$p-q$ 与 $\log(p/q)$ 同号，乘积严格为正；若 $p=q$，则详细平衡成立。$n=0$ 的计数为空和、反演为恒等，完成全部边界情形。证毕。
+
+## 93.99 追加锚
