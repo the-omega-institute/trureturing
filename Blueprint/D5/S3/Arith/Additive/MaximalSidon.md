@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Arith/Additive/MaximalSidon.card_le_of_maximal`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/MaximalSidon.card_le_of_maximal` (`✓ std3`). ∎
 
-*Citation.* Paul Erdős; András Sárközy; Vera T. Sós (1994). *On additive properties of general sequences*. DOI: [10.1016/0012-365X(94)00108-U](https://doi.org/10.1016/0012-365X(94)00108-U). URL: <https://doi.org/10.1016/0012-365X(94)00108-U>.
+*Citation.* Paul Erdős and András Sárközy and Vera T. Sós (1994). *On additive properties of general sequences*. DOI: [10.1016/0012-365X(94)00108-U](https://doi.org/10.1016/0012-365X(94)00108-U).
 
 *Commentary.*
 
