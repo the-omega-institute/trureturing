@@ -74,6 +74,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\forall w \in List\left(
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shieh-yang-yu-dotted-machine-fixed-point-convergence` (proved) by `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shieh-yang-yu-dotted-machine-fixed-point-convergence","declaration_gid":"D5/S1/Words/Patterns/ShiehYangYuMachineConvergence.result","resolution_kind":"proved"} -->
+
 *Citation.* Michael Yang, Hansen Shieh, Ashley Yu (2025). *Stack-Sorting with Dotted-Pattern-Avoiding Stacks*. URL: <https://arxiv.org/abs/2411.11914v2>.
 
 *Commentary.*

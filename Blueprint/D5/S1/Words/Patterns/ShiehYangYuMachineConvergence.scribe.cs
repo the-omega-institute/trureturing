@@ -71,13 +71,16 @@ internal sealed class ShiehYangYuMachineConvergenceDocument : IScribeDocumentDef
                 + "reverse(w) ≤ reverse(M(w)) in lexicographic order for every word without "
                 + "repetitions. Choose a reachable word with maximal reversed word in the "
                 + "finite set of permutations. The inequality is then an equality, and "
-                + "injectivity of reverse gives the fixed point.", DescribeRole.Theorem))));
+                + "injectivity of reverse gives the fixed point.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shieh-yang-yu-dotted-machine-fixed-point-convergence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("syy-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ValleyFormula() => Disp(All("earlier", Words(),
         All("entry", Naturals(), IffOf(Call("IsValley", Id("earlier"), Id("entry")),
