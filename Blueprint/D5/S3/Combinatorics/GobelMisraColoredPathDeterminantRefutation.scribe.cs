@@ -90,10 +90,15 @@ internal sealed class GobelMisraColoredPathDeterminantRefutationDocument
                     + "(P,reflect(Q)), e_3(P)=v differs from e_6(reflect(Q))=u; and for the "
                     + "double reflection, e_1(reflect(P))=v differs from "
                     + "e_6(reflect(Q))=u.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "gobel-misra-colored-path-determinant-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
@@ -101,7 +106,8 @@ internal sealed class GobelMisraColoredPathDeterminantRefutationDocument
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula ColoredPathFormula()
     {

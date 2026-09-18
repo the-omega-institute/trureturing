@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/GobelMisraColoredPathDeterminantRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gobel-misra-colored-path-determinant-refutation` (refuted) by `D5/S3/Combinatorics/GobelMisraColoredPathDeterminantRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gobel-misra-colored-path-determinant-refutation","declaration_gid":"D5/S3/Combinatorics/GobelMisraColoredPathDeterminantRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
