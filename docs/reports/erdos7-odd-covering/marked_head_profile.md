@@ -663,3 +663,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete wider source rectangle moves the global controller](profile-notes/194-the-complete-wider-source-rectangle-moves-the-global-controller.md)
 - [The complete source comparison extends beyond the old radius domain](profile-notes/195-the-complete-source-comparison-extends-beyond-the-old-radius-domain.md)
 - [The actual J reserve crosses the paired-table capacity](profile-notes/196-the-actual-j-reserve-crosses-the-paired-table-capacity.md)
+- [The whole J reserve keeps each original family error](profile-notes/197-the-whole-j-reserve-keeps-each-original-family-error.md)
+- [The separate J family errors enter the complete global comparison](profile-notes/198-the-separate-j-family-errors-enter-the-complete-global-comparison.md)
