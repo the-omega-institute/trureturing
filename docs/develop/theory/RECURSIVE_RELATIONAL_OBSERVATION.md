@@ -37452,3 +37452,339 @@ $$
 由于 $r$ 常值，$E_{q_n,r}d_n=q_n$，所以 $\delta_n=D(d_n\Vert q_n)$。两种结果下的后验向量均严格正且不同，有限 Gibbs 非负性及等号条件给出各自 KL 严格为正，并且此值对全部 $n\ge1$ 不变。[^rro87-gibbs] 另一方面，单点行类上的两条件先验都是该点的单位质量，故 iid 结论中的 $\delta_c$ 均为零。正概率事件上的上述恒正极限反驳了删除条件独立性后的结论。证毕。
 
 ## 87.99 追加锚
+
+## 88. 公式运输、闭理论伴随与反例提升
+
+**定义与假设 88.1（固定公式集上的后承运输）。** 设 $F_A,F_B$ 为任意集合，$\tau:F_A\to F_B$ 为任意映射，$C_A,C_B$ 分别为 $\mathcal P(F_A),\mathcal P(F_B)$ 上的扩张、单调、幂等闭包算子。令
+$$
+\operatorname{Th}(C_X)=\{T\subseteq F_X:C_X(T)=T\}
+\qquad(X=A,B),
+$$
+并按集合包含排序。定义
+$$
+K_\tau(\Gamma)=\tau^{-1}[C_B(\tau[\Gamma])]
+\qquad(\Gamma\subseteq F_A).
+$$
+算子间的不等式一律为逐点集合包含。称 $\tau$ 保持后承、反射后承或保守，分别指
+$$
+C_A\le K_\tau,\qquad K_\tau\le C_A,\qquad C_A=K_\tau.
+$$
+所有前提集都允许为空或无限；不要求公式集有限、$\tau$ 单射或满射，也不预设联结词、可计算性或紧致性。闭理论载体与最小闭扩张采用 `TheoryIsConsequenceFixedPoint` 的 `ConsequenceOperator`、`Theory` 和 `consequenceClosure_isLeast_fixedPoint_above` 接口。[^rro88-consequence]
+
+[^rro88-consequence]: [`TheoryIsConsequenceFixedPoint`](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.lean)：`ConsequenceOperator Formula` 为 `ClosureOperator (Set Formula)`，`Theory Cn` 为 `Cn.Closeds`；`consequenceClosure_isLeast_fixedPoint_above Cn S` 断言 `Cn S` 是满足 $S\subseteq T$ 且 $Cn(T)=T$ 的最小集合。分别取 $Cn=C_A,C_B$，给出本节使用的最小闭理论性质。
+
+**定理 88.2（诱导闭包与有类型的闭理论伴随）。** $K_\tau$ 总是 $F_A$ 上的闭包算子。以下两项等价：
+$$
+C_A\le K_\tau;
+\qquad
+\forall U\in\operatorname{Th}(C_B),\quad
+\tau^{-1}[U]\in\operatorname{Th}(C_A).
+\tag{88.2a}
+$$
+在这些等价条件下，
+$$
+L:\operatorname{Th}(C_A)\to\operatorname{Th}(C_B),
+\quad L(T)=C_B(\tau[T]),
+$$
+$$
+R:\operatorname{Th}(C_B)\to\operatorname{Th}(C_A),
+\quad R(U)=\tau^{-1}[U]
+$$
+良定义，并满足
+$$
+L(T)\subseteq U
+\quad\Longleftrightarrow\quad
+T\subseteq R(U).
+\tag{88.2b}
+$$
+
+**证明。** 先不使用 $C_A$。在全体源前提集与目标闭理论之间定义
+$$
+L_0:\mathcal P(F_A)\to\operatorname{Th}(C_B),
+\quad L_0(\Gamma)=C_B(\tau[\Gamma]),
+$$
+$$
+R_0:\operatorname{Th}(C_B)\to\mathcal P(F_A),
+\quad R_0(U)=\tau^{-1}[U].
+$$
+它们单调；$L_0$ 的值由幂等性目标闭。对目标闭 $U$，闭包最小性与直接像／逆像的伴随给出
+$$
+\begin{aligned}
+L_0(\Gamma)\subseteq U
+&\Longleftrightarrow \tau[\Gamma]\subseteq U\\
+&\Longleftrightarrow \Gamma\subseteq R_0(U).
+\end{aligned}
+$$
+故 $L_0\dashv R_0$。由伴随复合的闭包构造，$R_0L_0$ 是闭包算子；它逐点正是 $K_\tau$。中间偏序在这里是目标闭理论。[^rro88-adjunction] 若只复合裸直接像与裸逆像，得到的是饱和化 $\tau^{-1}[\tau[\Gamma]]$，没有包含目标推理 $C_B$。
+
+若 $C_A\le K_\tau$ 且 $C_B(U)=U$，则
+$$
+\begin{aligned}
+C_A(\tau^{-1}[U])
+&\subseteq K_\tau(\tau^{-1}[U])\\
+&=\tau^{-1}[C_B(\tau[\tau^{-1}[U]])]\\
+&\subseteq\tau^{-1}[C_B(U)]
+=\tau^{-1}[U].
+\end{aligned}
+$$
+第三步使用 $\tau[\tau^{-1}[U]]\subseteq U$ 及 $C_B$、逆像的单调性。扩张性给出反向包含，所以 $\tau^{-1}[U]$ 源闭。
+
+反之，假设每个目标闭理论的逆像都源闭。对任意 $\Gamma$，$C_B(\tau[\Gamma])$ 目标闭，故其逆像 $K_\tau(\Gamma)$ 源闭。又因 $K_\tau$ 扩张，有 $\Gamma\subseteq K_\tau(\Gamma)$。应用最小源闭扩张性质，得
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma),
+$$
+证明式 (88.2a)。在这些条件下，$R$ 确实落入源闭理论；$L$ 的值仍由幂等性目标闭。将 $L_0\dashv R_0$ 的包含等价限制到源闭 $T$ 即得式 (88.2b)。证毕。
+
+[^rro88-adjunction]: 钉版 Mathlib 的 [`Set.image_preimage`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Lattice/Image.lean) 给出 `GaloisConnection (Set.image τ) (Set.preimage τ)`；[`ClosureOperator.gi`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean) 的下伴随为 `C_B.toCloseds`，上伴随为闭集子类型的包含映射。按 [`GaloisConnection.compose`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的顺序复合这两个伴随，得到下伴随 $C_B.\mathrm{toCloseds}\circ\tau[-]$ 与上伴随 $\tau^{-1}[-]$ 复合闭集包含映射。再用 [`GaloisConnection.closureOperator`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean)，其底层复合就是 $R_0L_0=K_\tau$；所需源偏序为 $\mathcal P(F_A)$，中间偏序为 $C_B.\mathrm{Closeds}$。
+
+**定理 88.3（源闭理论往返只检查反射）。** 不预设后承保持时，已经有
+$$
+K_\tau\le C_A
+\quad\Longleftrightarrow\quad
+\forall T\subseteq F_A,\quad
+[C_A(T)=T\Rightarrow K_\tau(T)=T].
+\tag{88.3a}
+$$
+若再满足 $C_A\le K_\tau$，则定理 88.2 的闭理论伴随良定义，而且
+$$
+C_A=K_\tau
+\quad\Longleftrightarrow\quad
+RL=\mathrm{id}_{\operatorname{Th}(C_A)}.
+\tag{88.3b}
+$$
+在同一保持条件下，对任意目标闭理论 $U$，目标侧往返为
+$$
+LR(U)=C_B(U\cap\tau[F_A])\subseteq U.
+\tag{88.3c}
+$$
+因此 $LR=\mathrm{id}_{\operatorname{Th}(C_B)}$ 恰须另有
+$$
+\forall U\in\operatorname{Th}(C_B),\quad
+C_B(U\cap\tau[F_A])=U.
+\tag{88.3d}
+$$
+源侧恒等式 (88.3b) 不自动给出这个目标侧条件。
+
+**证明。** 若 $K_\tau\le C_A$，对源闭 $T$ 有
+$$
+T\subseteq K_\tau(T)\subseteq C_A(T)=T,
+$$
+故原始往返恒等。反之，对任意 $\Gamma$，$C_A(\Gamma)$ 是源闭理论。由 $K_\tau$ 单调与原始往返假设，
+$$
+K_\tau(\Gamma)
+\subseteq K_\tau(C_A(\Gamma))
+=C_A(\Gamma).
+$$
+这证明式 (88.3a)，没有使用保持条件。加入 $C_A\le K_\tau$ 后，反射恰等价于两算子相等；且 $RL(T)=K_\tau(T)$，得到式 (88.3b)。
+
+最后，对目标闭 $U$，任意映射都满足 $\tau[\tau^{-1}[U]]=U\cap\tau[F_A]$，所以
+$$
+LR(U)=C_B(\tau[\tau^{-1}[U]])
+     =C_B(U\cap\tau[F_A])
+     \subseteq C_B(U)=U.
+$$
+这给出式 (88.3c)，逐点相等恰为式 (88.3d)。命题 88.7 给出源侧恒等而目标侧严格包含的模型见证。证毕。
+
+**命题 88.4（同一单公式闭包对分离保持与反射）。** 取 $F_A=F_B=\{p\}$、$\tau=\mathrm{id}$，并定义
+$$
+C_0(\Gamma)=\Gamma,\qquad C_+(\Gamma)=\Gamma\cup\{p\}.
+$$
+二者均扩张、单调、幂等。取 $C_A=C_0,C_B=C_+$ 时，$K_\tau=C_+$，所以保持成立，但
+$$
+p\in K_\tau(\varnothing)\setminus C_A(\varnothing),
+$$
+反射失败。反向取 $C_A=C_+,C_B=C_0$ 时，$K_\tau=C_0\le C_A$；唯一源闭理论为 $\{p\}$，并有 $K_\tau(\{p\})=\{p\}$，但
+$$
+C_A(\varnothing)=\{p\}\not\subseteq K_\tau(\varnothing)=\varnothing.
+$$
+所以全部源闭理论的原始往返测试通过，保持与保守性仍失败。
+
+**证明。** 闭包三律由并集的单调性与 $\{p\}\cup\{p\}=\{p\}$ 直接得到；$\tau=\mathrm{id}$ 使 $K_\tau=C_B$，上述包含及失败均由两算子在空集上的值给出。在第二个方向，目标空理论是 $C_0$-闭的，而
+$$
+R_0(\varnothing)=\varnothing
+\notin\operatorname{Th}(C_+).
+$$
+因此这里仅有式 (88.3a) 的原始集合测试，不能把 $R_0$ 称为两个闭理论偏序之间已经良定义的右伴随。证毕。
+
+**定义与假设 88.5（固定满足关系及其语义闭包）。** 另给模型集 $\mathcal M_A,\mathcal M_B$ 及满足关系
+$$
+\models_X\ \subseteq\mathcal M_X\times F_X
+\qquad(X=A,B).
+$$
+定义
+$$
+\operatorname{Mod}_X(\Gamma)
+=\{M\in\mathcal M_X:\forall\gamma\in\Gamma,\ M\models_X\gamma\},
+$$
+$$
+S_X(\Gamma)
+=\{\varphi\in F_X:
+      \forall M\in\operatorname{Mod}_X(\Gamma),\ M\models_X\varphi\}
+\qquad(X=A,B).
+$$
+简记 $M\models_X\Gamma$ 表示 $M$ 满足 $\Gamma$ 的全部成员。这些语义算子与前述任意闭包 $C_A,C_B$ 分开保留。给定 $\beta:\mathcal M_B\to\mathcal M_A$，要求满足条件
+$$
+N\models_B\tau(\varphi)
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\varphi
+\qquad(N\in\mathcal M_B,\ \varphi\in F_A).
+\tag{SC}
+$$
+置
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\tau^{-1}[S_B(\tau[\Gamma])].
+$$
+以下反模型的 $M\not\models_X\varphi$ 是经典元理论中的满足关系否定，不要求公式语言含有否定联结词。这里仅采用固定公式集与模型集上的满足接口。[^rro88-satisfaction]
+
+[^rro88-satisfaction]: Mossakowski、Goguen、Diaconescu、Tarlecki，[*What is a Logic?*，作者稿](https://cseweb.ucsd.edu/~goguen/pps/nel05.pdf)，Definitions 2.1、2.6、3.2：分别给出 institution 的满足条件、任意句子集上的语义后承及 comorphism 的句子向前／模型向后满足条件。式 (SC) 只取其固定签名上的映射方向与满足等价；完整 institution 或 comorphism 还需签名范畴、函子及自然性资料。
+
+**定理 88.6（语义反射恰为反模型存在性提升）。** $S_A,S_B$ 是语义后承闭包。在 (SC) 下，
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\{\varphi\in F_A:\quad
+  \forall M\in\beta[\mathcal M_B],\quad
+  [M\models_A\Gamma\Rightarrow M\models_A\varphi]\},
+\tag{88.6a}
+$$
+从而 $S_A\le K_\tau^{\rm sem}$。以下反模型存在性提升条件
+$$
+\begin{aligned}
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+&[\exists M\in\mathcal M_A,\quad
+     M\models_A\Gamma\land M\not\models_A\varphi]\\
+&\Longrightarrow
+[\exists N\in\mathcal M_B,\quad
+     N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi)]
+\end{aligned}
+\tag{CE}
+$$
+满足精确等价
+$$
+\mathrm{CE}
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}\le S_A
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}=S_A.
+\tag{88.6b}
+$$
+$\beta$ 对模型身份满射足以推出 CE，但 CE 不要求对每个指定源模型作同身份提升。
+
+**证明。** 对任意一侧 $X$，每个满足 $\Gamma$ 的模型满足 $\Gamma$ 的每个成员，故 $\Gamma\subseteq S_X(\Gamma)$。若 $\Gamma\subseteq\Delta$，则 $\operatorname{Mod}_X(\Delta)\subseteq\operatorname{Mod}_X(\Gamma)$，从而 $S_X(\Gamma)\subseteq S_X(\Delta)$，给出单调性。扩张性给出 $\operatorname{Mod}_X(S_X(\Gamma))\subseteq\operatorname{Mod}_X(\Gamma)$；反向包含由 $S_X(\Gamma)$ 的定义成立。所以
+$$
+\operatorname{Mod}_X(\Gamma)=\operatorname{Mod}_X(S_X(\Gamma)),
+$$
+两边对全部模型的共同真公式相同，即 $S_X(S_X(\Gamma))=S_X(\Gamma)$。这验证语义闭包三律。
+
+将 (SC) 对 $\Gamma$ 的每个成员使用，有
+$$
+N\models_B\tau[\Gamma]
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\Gamma.
+$$
+与结论公式的 (SC) 合用，得到
+$$
+\begin{aligned}
+\varphi\in K_\tau^{\rm sem}(\Gamma)
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[N\models_B\tau[\Gamma]\Rightarrow N\models_B\tau(\varphi)]\\
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[\beta(N)\models_A\Gamma\Rightarrow\beta(N)\models_A\varphi],
+\end{aligned}
+$$
+即式 (88.6a)。在全部源模型上成立的后承也在子族 $\beta[\mathcal M_B]$ 上成立，所以 $S_A\le K_\tau^{\rm sem}$。
+
+设 CE 成立，且 $\varphi\in K_\tau^{\rm sem}(\Gamma)$。若 $\varphi\notin S_A(\Gamma)$，经典地否定定义中的全称命题，得到一个源反模型。CE 给出目标反模型，与 $\tau(\varphi)\in S_B(\tau[\Gamma])$ 矛盾。因此 $\varphi\in S_A(\Gamma)$，证明反射。
+
+反向设 $K_\tau^{\rm sem}\le S_A$，并给定 CE 前件中的源反模型。它保证 $\varphi\notin S_A(\Gamma)$，因而 $\varphi\notin K_\tau^{\rm sem}(\Gamma)$。经典地否定目标语义后承的全称定义，得到
+$$
+\exists N\in\mathcal M_B,\quad
+N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi),
+$$
+正是 CE。反射再与已证保持相合，得到式 (88.6b) 的等式。
+
+最后，若 $\beta$ 满射，给定源反模型 $M$，取 $\beta(N)=M$，再用 (SC) 即得目标反模型。这个充分条件比 CE 的“存在某个反模型”更强；命题 88.7 给出其非必要性。整个证明不要求公式集或模型集非空、紧致或前提集有限，也不产生有效选择反模型的算法。证毕。
+
+**命题 88.7（同一语义数据分离模型身份、源保守与目标往返）。** 取
+$$
+F_A=\{p_A\},\qquad F_B=\{p_B,q_B\},\qquad
+p_B\ne q_B,\qquad\tau(p_A)=p_B.
+$$
+源模型为三个不同对象 $m_T,m_F,m_F'$，$p_A$ 仅在 $m_T$ 为真。目标模型为两个不同对象 $n_T,n_F$，满足关系与模型映射为
+$$
+\begin{array}{c|cc|c}
+N & N\models_B p_B & N\models_B q_B & \beta(N)\\
+\hline
+n_T & \mathrm{true} & \mathrm{false} & m_T\\
+n_F & \mathrm{false} & \mathrm{true} & m_F
+\end{array}
+$$
+则 (SC) 与 CE 成立，$S_A,S_B$ 都是恒等闭包，且 $K_\tau^{\rm sem}=S_A$；但 $\beta$ 不满射。将定理 88.2 中的闭包取为 $C_A=S_A,C_B=S_B$，有
+$$
+RL=\mathrm{id}_{\operatorname{Th}(S_A)},
+\qquad
+LR(\{q_B\})=\varnothing\subsetneq\{q_B\}.
+\tag{88.7}
+$$
+若把允许的目标模型缩为 $\{n_T\}$，(SC) 仍成立，CE 与语义反射则失败。
+
+**证明。** $p_A$ 与 $p_B$ 在每对 $N,\beta(N)$ 上真值相同，故 (SC) 成立。源前提集只有 $\varnothing,\{p_A\}$ 两种。空前提下 $p_A$ 的反模型 $m_F,m_F'$ 均可由目标反模型 $n_F$ 见证相同失败；前提为 $\{p_A\}$ 时没有使结论 $p_A$ 为假的源模型。所以 CE 成立。不同对象 $m_F'$ 不在 $\beta$ 像中，故模型身份满射失败。
+
+源侧 $S_A(\varnothing)=\varnothing$、$S_A(\{p_A\})=\{p_A\}$。目标侧，两个模型的共同真公式为空；只满足 $p_B$ 的模型 $n_T$ 的真公式集为 $\{p_B\}$，只满足 $q_B$ 的模型 $n_F$ 的真公式集为 $\{q_B\}$；没有模型同时满足 $p_B,q_B$，其全部后果为 $F_B=\{p_B,q_B\}$。所以 $S_B$ 也在全部四个前提集上等于恒等闭包。又因 $\tau$ 将唯一源公式映到 $p_B$，$\tau^{-1}[\tau[\Gamma]]=\Gamma$，故 $K_\tau^{\rm sem}=S_A$。由定义 $RL(T)=K_\tau^{\rm sem}(T)=T$，给出源侧往返恒等；而 $\{q_B\}$ 是目标闭理论，并有
+$$
+R(\{q_B\})=\varnothing,\qquad
+L(R(\{q_B\}))=S_B(\varnothing)=\varnothing,
+$$
+证明严格包含。
+
+将目标族限制为 $\{n_T\}$ 后，原满足条件仍逐模型成立。令 $\widetilde S_B$ 为限制后的目标语义闭包，$\widetilde K_\tau^{\rm sem}(\Gamma)=\tau^{-1}[\widetilde S_B(\tau[\Gamma])]$。空前提的翻译结论 $p_B$ 在全部剩余目标模型上为真，源侧的 $p_A$ 仍被 $m_F$ 反驳。所以
+$$
+p_A\in\widetilde K_\tau^{\rm sem}(\varnothing),\qquad
+p_A\notin S_A(\varnothing);
+$$
+目标侧已经没有提升这一失败的反模型。$q_B$ 在此只是第二个公式，不预设一个将它与 $p_B$ 联系起来的否定联结词。源保守所覆盖的是源语言后承，不能据此识别全部目标闭理论。证毕。
+
+**推论 88.8（语义运输到证明后承的充分桥接条件）。** 在定义与假设 88.5 的数据与 (SC) 下，将 $C_A,C_B$ 解释为另外指定的证明后承闭包，仍与 $S_A,S_B$ 分开。下列两组条件分别充分：
+
+1. 若源系统可靠，即 $C_A\le S_A$，且目标系统对翻译前提与翻译结论完备，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in S_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+   $$
+   则 $C_A\le K_\tau$。
+2. 若 CE 成立，源系统完备，即 $S_A\le C_A$，且目标系统对翻译推理可靠，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in C_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in S_B(\tau[\Gamma]),
+   $$
+   则 $K_\tau\le C_A$。
+
+两组条件同时成立时，证明后承运输保守。
+
+**证明。** 对任意前提集 $\Gamma$ 和结论 $\varphi$，第一组条件依次给出
+$$
+\begin{aligned}
+\varphi\in C_A(\Gamma)
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+\end{aligned}
+$$
+中间一步为定理 88.6 的语义保持。第二组条件依次给出
+$$
+\begin{aligned}
+\tau(\varphi)\in C_B(\tau[\Gamma])
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\varphi\in C_A(\Gamma),
+\end{aligned}
+$$
+中间一步为 CE 所等价的语义反射。两条链分别证明保持与反射，其合取给出等式。
+
+这些条件是充分条件包，不主张各项必要。链中的完备性与可靠性均按所写的全部前提集量化，包括无限前提集；不能只检验有限前提后便无条件取得这里的结论。后承等式没有提供证明对象的可计算转换，也没有提供搜索时间、证书长度或转换成本界。证毕。
+
+## 88.99 追加锚
