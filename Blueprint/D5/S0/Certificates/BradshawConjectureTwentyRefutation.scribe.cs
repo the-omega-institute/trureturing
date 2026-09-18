@@ -43,20 +43,27 @@ internal sealed class BradshawConjectureTwentyRefutationDocument : IScribeDocume
                     + "Thus both sides of the commutation equation equal 641, although "
                     + "125 = 5³ is divisible by 5² and is not squarefree.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "bradshaw-arithmetic-derivative-collatz-squarefree-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
-        Node(id, title, formula, Blocks(Paragraph(Text(prose))), declaration, role, provenance);
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
+        Node(id, title, formula, Blocks(Paragraph(Text(prose))), declaration, role, provenance,
+            resolution);
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, BlockSequence prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            prose, role);
+            prose, role, resolution);
 
     private static BlockSequence DerivativeProse() => Blocks(
         Paragraph(

@@ -52,6 +52,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/BradshawConjectureTwentyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bradshaw-arithmetic-derivative-collatz-squarefree-refutation` (refuted) by `D5/S0/Certificates/BradshawConjectureTwentyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bradshaw-arithmetic-derivative-collatz-squarefree-refutation","declaration_gid":"D5/S0/Certificates/BradshawConjectureTwentyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Z. P. Bradshaw (2025). *On a Family of Solutions to Arithmetic Differential Equations Involving the Collatz Map*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL28/Bradshaw/bradshaw3.pdf>.
