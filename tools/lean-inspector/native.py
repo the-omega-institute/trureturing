@@ -115,7 +115,9 @@ def _walk_regular(root, excluded):
         return [_regular_file(root, root.parent)]
     if not root.is_dir():
         raise ValueError('native source root is not a directory')
-    for directory, dirs, files in os.walk(root, followlinks=False):
+    def unreadable(error):
+        raise error
+    for directory, dirs, files in os.walk(root, followlinks=False, onerror=unreadable):
         kept = []
         for name in dirs:
             child = Path(directory) / name
