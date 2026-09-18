@@ -678,3 +678,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The selected indicators share one raw source](profile-notes/209-the-selected-indicators-share-one-raw-source.md)
 - [The survival tests use the same raw-source interface](profile-notes/210-the-survival-tests-use-the-same-raw-source-interface.md)
 - [All four selected labels can be retained above the first hinge](profile-notes/211-all-four-selected-labels-can-be-retained-above-the-first-hinge.md)
+- [A supporting affine margin sharpens the whole J reserve](profile-notes/212-a-supporting-affine-margin-sharpens-the-whole-j-reserve.md)
