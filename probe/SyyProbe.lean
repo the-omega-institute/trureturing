@@ -158,4 +158,28 @@ private theorem input_le_reverse_s (w : List ℕ) : w ≤ (s w).reverse := by
         rw [heq, List.reverse_append]
         exact List.cons_le_cons a ih
 
+private theorem valleyRuns_append_valley (X Y : List ℕ) (v : ℕ)
+    (bound : ∀ x ∈ X, v < x) :
+    valleyRuns (X ++ v :: Y) = valleyRuns X ++ valleyRuns (v :: Y) := by
+  fun_induction valleyRuns X with
+  | case1 => simp [valleyRuns]
+  | case2 a tail ih =>
+      let p := fun x => decide (a ≤ x)
+      have hv : p v = false := by simp [p, Nat.not_le.mpr (bound a (by simp))]
+      have cut : ∀ t : List ℕ,
+          (t ++ v :: Y).takeWhile p = t.takeWhile p ∧
+          (t ++ v :: Y).dropWhile p = t.dropWhile p ++ v :: Y := by
+        intro t
+        induction t with
+        | nil => simp [hv]
+        | cons x xs ht =>
+            cases hx : p x <;> simp [List.takeWhile_cons, List.dropWhile_cons, hx, ht]
+      have hb : ∀ x ∈ tail.dropWhile p, v < x := by
+        intro x hx
+        have ht : x ∈ tail := List.dropWhile_subset p hx
+        exact bound x (by simp [ht])
+      simp only [valleyRuns, List.cons_append]
+      rw [(cut tail).1, (cut tail).2, ih hb]
+      rw [valleyRuns]
+
 end SyyProbe
