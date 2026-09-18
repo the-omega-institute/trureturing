@@ -706,7 +706,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
 def report_seed(root, lake):
     """Ask the normal producer whether a transported full report can be reused.
 
-    The check manifest declares the report paths; this adapter neither infers
+    The seed manifest declares the report paths; this adapter neither infers
     producer inputs nor treats a cache hit or prior check as current success.
     Publication and the second input/material validation belong to inspect.sh.
     """
@@ -719,14 +719,29 @@ def report_seed(root, lake):
             return None
         reports = set()
         suffixes = ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")
-        for unit in checks["units"]:
-            relative = unit.get("report")
-            if not isinstance(relative, str) or not re.fullmatch(
-                    r"build/ci/check-material/[0-9a-f]{64}/[0-9a-f]{32}/[0-9a-f]{32}/report/raw-lean-report\.json", relative):
-                continue
-            declared = {material["path"] for material in unit["materials"]}
-            if all(relative + suffix in declared for suffix in suffixes):
-                reports.add(relative)
+        producer_path = seed / "producer-report.json"
+        if producer_path.exists():
+            producer = json.loads(producer_path.read_text())
+            relative = ".lake/build/stratalint/raw-lean-report.json"
+            if (set(producer) != {"version", "candidate", "round", "report", "materials"}
+                    or producer["version"] != 1 or producer["report"] != relative
+                    or not re.fullmatch(r"[0-9a-f]{64}", producer["candidate"])
+                    or not re.fullmatch(r"[0-9a-f]{32}", producer["round"])):
+                return None
+            declared = [material["path"] for material in producer["materials"]]
+            if len(declared) != len(suffixes) or set(declared) != {relative + suffix for suffix in suffixes}:
+                return None
+            reports.add(relative)
+        else:
+            # Legacy seeds carry only the original report of each check unit.
+            for unit in checks["units"]:
+                relative = unit.get("report")
+                if not isinstance(relative, str) or not re.fullmatch(
+                        r"build/ci/check-material/[0-9a-f]{64}/[0-9a-f]{32}/[0-9a-f]{32}/report/raw-lean-report\.json", relative):
+                    continue
+                declared = {material["path"] for material in unit["materials"]}
+                if all(relative + suffix in declared for suffix in suffixes):
+                    reports.add(relative)
     except (OSError, ValueError, TypeError, KeyError, AttributeError):
         return None
     for relative in sorted(reports):

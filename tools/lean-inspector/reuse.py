@@ -96,24 +96,16 @@ def miss(reason, error=None):
     return result
 
 
-def validate(report, repository, captured):
-    receipt = read_receipt(report, captured)
-    coordinates = publication.coordinates(repository)
-    publication.validate_bundle(report, coordinates, repository)
-    if receipt != read_receipt(report, captured):
-        raise ValueError('reuse receipt changed during validation')
-    return coordinates
-
-
 def probe(repository, report, lake):
+    """Select optional downloads; only the normal entry validates publication."""
     captured = capture(repository, lake)
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
-        validate(report, repository, captured)
+        read_receipt(report, captured)
     except INVALID_SEED as error:
         return miss('seed-rejected', error)
-    return dict(needs_lake=False, reason='complete-entry-reusable')
+    return dict(needs_lake=False, reason='receipt-matched')
 
 
 def write_receipt(report, captured):
