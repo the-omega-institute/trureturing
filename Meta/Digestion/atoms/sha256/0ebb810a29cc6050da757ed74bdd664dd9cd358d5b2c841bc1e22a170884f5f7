@@ -1,0 +1,9 @@
+**B14.F 第二主定理候选：选择的误差放大与动力学闭合。** 对任意有限 P、Q 及共同 w∈[0,1]，两归一化常数为正时，有较强的界
+
+\[
+\operatorname{TV}(P^w,Q^w)
+\leq\min\left(1,\frac{\operatorname{TV}(P,Q)}{\max(Z_P,Z_Q)}\right).
+\tag{B14-5}
+\]
+
+证明草图：设 α=Z_P≥Z_Q=β，令 γ=Σw min(P,Q)。则 Σmin(P^w,Q^w)≥γ/α，所以 TV≤(α-γ)/α≤TV(P,Q)/α；交换 P、Q 得另半边。

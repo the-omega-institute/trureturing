@@ -1,0 +1,8 @@
+为了研究选择如何改变可见动力学，令 T 为有限 Markov 核，V 为 N 时刻的可行域，h_t(x)=Pr_x(X_N∈V)。在 h_t(x)>0 的部分定义
+
+\[
+T_t^h(x,x')=T(x,x')\frac{h_{t+1}(x')}{h_t(x)},
+\qquad h_t=Th_{t+1}.
+\tag{B14-6}
+\]
+

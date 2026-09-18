@@ -1,0 +1,18 @@
+**B14.O 文献与检索账。** 以下链接为本条使用的具体来源，访问日均为 2026-09-13。预印本只按所列版本使用；“摘要核读”不能充当定理细节已经审计的凭据。检索主轴为 observer selection / anthropic typicality、restricted information、hidden-state entropy production、causal coarse-graining、semantic information、quantum heat correlations 与 Rydberg constraints，并交叉阅读相反典型性立场。〔账目，免分型〕
+
+| 编号 | 来源及核读深度 | 本条用途与边界 |
+|---|---|---|
+| R1 | J. B. Hartle, M. Srednicki, *Are We Typical?*, Phys. Rev. D 75, 123523 (2007), [arXiv:0704.2630v3](https://arxiv.org/abs/0704.2630v3)；摘要与元数据 | 典型性假设需显式化；不据此否定所有选择模型 |
+| R2 | F. Azhar, A. H. Guth, M. H. Namjoo, *Probabilistic inference in very large universes*, [arXiv:2602.02667v1](https://arxiv.org/html/2602.02667v1), 2026-02-02；摘要、导论与规则说明 | 自我定位和 observer-instant 抽样的比较模型；measure problem 未由此闭合 |
+| R3 | Z. Huang, *ALAverse: A falsifiable anthropic model from the string landscape*, [arXiv:2607.24100v1](https://arxiv.org/html/2607.24100v1), 2026-07-27；摘要、导论及先验/选择说明 | 检查先验与观察时间权重的敏感性；不把该宇宙模型的拟合当成已证现实 |
+| R4 | T. Chumley, R. Feres, Z. Zhang, *Entropy production in Knudsen thermodynamics of compartmented systems*, [arXiv:2607.18202v1](https://arxiv.org/abs/2607.18202v1), 2026-07-20；摘要 | 路径 KL 到温度/热量需要 reciprocity 的物理桥；全文定理细节待专项核读 |
+| R5 | J. Knight, G. Pruessner, *Partial Entropy production of active particles with hidden states in potentials*, [arXiv:2605.29201v1](https://arxiv.org/html/2605.29201v1), 2026-05-28；摘要与模型导论 | 隐藏推进变量和部分熵产；具体势场条件不能删去 |
+| R6 | K. Micadei et al., *Reversing the direction of heat flow using quantum correlations*, Nature Communications 10, 2456 (2019), [DOI:10.1038/s41467-019-10333-7](https://doi.org/10.1038/s41467-019-10333-7)；正文实验与讨论 | 相关性伴随热流反向的实验参照；本文未复现实验 |
+| R7 | C. J. Turner et al., *Quantum many-body scars*, [arXiv:1711.03528v2](https://arxiv.org/abs/1711.03528v2)；摘要 | 受约束 Fibonacci 空间及动力学背景；合法态计数不决定演化 |
+| R8 | H. Bernien et al., *Probing many-body dynamics on a 51-atom quantum simulator*, Nature 551, 579–584 (2017), [arXiv:1707.04344v2](https://arxiv.org/abs/1707.04344v2)；摘要与元数据 | 原子阵列现实载体；不代替经典平衡假设的检验 |
+| R9 | A. Kolchinsky, D. H. Wolpert, *Semantic information, autonomous agency, and nonequilibrium statistical physics*, Interface Focus (2018), [arXiv:1806.08053v3](https://arxiv.org/abs/1806.08053v3), DOI:10.1098/rsfs.2018.0041；摘要与定义说明 | 相关性扰乱、可行性与语义信息的研究来源，具体任务须实例化 |
+| R10 | D. R. Sowinski et al., *Semantic Information in a model of Resource Gathering Agents*, [arXiv:2304.03286](https://arxiv.org/abs/2304.03286) (2023)；摘要 | 资源采集中的任务实例候选；不提升为一般生命定律 |
+| R11 | F. Pigozzi, M. Levin, *Causal Architecture Dynamics Prior to Arrival of Self-replicators in a Model of Catalytic Networks Relevant to Origin-of-Life*, [arXiv:2607.28250v1](https://arxiv.org/abs/2607.28250v1), 2026-07-30；摘要 | GARD 模型中的因果干预候选；复用前仍需全文与实现审查 |
+| R12 | P. K. Rubenstein et al., *Causal Consistency of Structural Equation Models*, [arXiv:1707.00819](https://arxiv.org/abs/1707.00819) (2017)；摘要与框架说明 | 跨层干预相容的先例；不把被动分布相同等同于干预相同 |
+| R13 | T. Pernambuco, L. C. Céleri, *Geometry of restricted information: the case of quantum thermodynamics*, [arXiv:2602.06716v2](https://arxiv.org/html/2602.06716v2), 2026-05-18；§II–III 及 Eq.(5)–(8) | 观察限制的几何候选；B14.K 记录一般参考态等式的局部反例与修复目标 |
+

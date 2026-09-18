@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5dad6e51f462e3697b517d28d6c2656c0fcbdfb593e8ccba60f4470d43feca1d
+  normalized_sha256: sha256:5dad6e51f462e3697b517d28d6c2656c0fcbdfb593e8ccba60f4470d43feca1d
+cas_ref: sha256:5dad6e51f462e3697b517d28d6c2656c0fcbdfb593e8ccba60f4470d43feca1d
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel
+    target_statement_id: sha256:67427e074ca61a486373990ed0a3cdf2d3ddcd20654f6bf17a2216233d9cf0d3
+receipts:
+  unresolved_subitems: []

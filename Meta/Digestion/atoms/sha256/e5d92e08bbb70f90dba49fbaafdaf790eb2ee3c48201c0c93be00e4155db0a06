@@ -1,0 +1,2 @@
+**过程如实记(判例价值高于结果)**:③④之间隔着一道**非数学的坎**——`ProperCone.hyperplane_separation'` 要求 `[NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]`,而裸 `Matrix` 不带这些实例;pinned mathlib 亦无 `Matrix` 的实内积实例(Frobenius 族皆 scoped 且止于 `NormedSpace`)。更关键:`InnerProductSpace.ofCore` **会诱导自身的范数与拓扑**,而 ③ 的闭性是在 `Matrix` 原生拓扑下证的——两者不打通,"闭"便非同一个闭,分离所得结论将因错配而不可靠。④ 的承重步正是此拓扑搬运:按 mathlib 规定路线(第二范数置于类型副本、证双向恒等映射连续)得同胚,再以 `isClosed_separableCone.preimage` 将闭性搬入 ofCore 拓扑。**故 B12 判据③"见证存在性属对偶之推论"须细化**:它不只是对偶的推论,还须闭性与拓扑一致两项前置;三者齐备方可宣称。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40595d70c8aff2375058f4d93afdacc38fe5fcb636e9a82eebd790b7d3a6e76b
+  normalized_sha256: sha256:40595d70c8aff2375058f4d93afdacc38fe5fcb636e9a82eebd790b7d3a6e76b
+cas_ref: sha256:40595d70c8aff2375058f4d93afdacc38fe5fcb636e9a82eebd790b7d3a6e76b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological and empirical caveat, not an additional mathematical proposition. The source label Lean-can-close is a work tag rather than a status. No experiment, estimate of p_min, or statistical confidence guarantee for p_min is established; empirical calibration and its error budget remain research work.
+    previous_atom_id: ce1c71e6e2c1d7e8e7a162a867e6be537e3fff883cf53e5bfc1e465b4dd87ce5
+    next_atom_id: 5fd9defb40d373bb99b99652787d371f67acd08aed4de38ed491f7d7d0f14063

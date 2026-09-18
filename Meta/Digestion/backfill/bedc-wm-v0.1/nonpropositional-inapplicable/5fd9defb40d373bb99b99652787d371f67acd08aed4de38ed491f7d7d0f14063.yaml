@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5fd9defb40d373bb99b99652787d371f67acd08aed4de38ed491f7d7d0f14063
+  normalized_sha256: sha256:5fd9defb40d373bb99b99652787d371f67acd08aed4de38ed491f7d7d0f14063
+cas_ref: sha256:5fd9defb40d373bb99b99652787d371f67acd08aed4de38ed491f7d7d0f14063
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Mathematical upstream-only closure at pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no appropriate frozen project GID was found for the finite terminal-selection law. PMF.ofFintype constructs R from ENNReal.ofReal(Txy); PMF.toMeasure_bind_apply, PMF.toMeasure_pure_apply, ENNReal.toReal_sum and Function.Semiconj.iterate_right identify the genuine sequential endpoint probability with the real transfer-operator iterate for every finite horizon. Function.iterate_succ_apply' gives the backward recurrence for t<N and Function.iterate_zero_apply gives the terminal indicator. PMF.bind_apply, PMF.map_apply and PMF.filter_apply give the selected first-coordinate mass of the joint next-state/endpoint law as ENNReal.ofReal(Txy*h_(t+1)(y)/h_t(x)), only when h_t(x)>0. Selection tests the terminal state only; there is no path-avoidance condition, no global positivity premise and no transformed row at t=N. This is a mathematical specialization of existing upstream results, not a new project theorem or an empirical statement.
+    previous_atom_id: 40595d70c8aff2375058f4d93afdacc38fe5fcb636e9a82eebd790b7d3a6e76b
+    next_atom_id: 29583a6d29c1150b28369da2ceb9f1abebd42c8008f6cd3f950ebd90f44e83d9

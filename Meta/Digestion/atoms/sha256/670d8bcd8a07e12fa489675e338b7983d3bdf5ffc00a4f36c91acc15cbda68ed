@@ -1,0 +1,2 @@
+**另记**:④ 之 `R.PosSemidef` 前件在证明中实际未用(分离仅需 `R` 不属该锥),定理去之亦成立;保留是为恰好闭合 `EntanglementWitness` 所登记之 open 陈述。〔Lean-closed(形式面四件);读法级各条仍循 §9 边界〕
+

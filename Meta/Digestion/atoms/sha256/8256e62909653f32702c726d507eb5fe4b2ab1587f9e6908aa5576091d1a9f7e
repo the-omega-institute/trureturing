@@ -1,0 +1,2 @@
+**悬赏 B1(gap-as-goal)**。高 gap 触发**消歧动作**而非回避;判据:risk 降 ∧ success 不降;对照:vanilla 与 avoid-only。赏格:tradeoff 翻转为 win;monitor→agent 之跳。成熟形态参照(v0.2):E6 之 Lean 路径被管线自动分解为带"欠"标之依赖 DAG(GoldenInt 供应链)——**计划非轨迹,乃债标依赖图**;B1 判据可依此升级:消歧动作 = 关一笔标"欠"之债。〔runner可关〕
+

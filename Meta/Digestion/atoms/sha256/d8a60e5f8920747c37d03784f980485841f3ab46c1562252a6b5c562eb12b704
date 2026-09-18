@@ -1,0 +1,2 @@
+**悬赏 B2(密度基线)——判真机已注册,待真实载体首跑**。合同 `B2_density_baseline_contract.md`,runner `b2_density_baseline.py`,参数已冻结(K=20,boot=500,seed=20260718,层 q=0.5,证人邻域 q=0.25)。判决类:PASS(层内 AUROC>0.65 且 CI 下端>0.5,证人对 ≥30 且 pair-acc>0.6、CI 下端>0.5)/ DEGRADE(E1 降级 OOD 检测)/ FAIL_CLOSED。合成双世界自检机器绿(dynamics→PASS 0.98 [0.94,1.00];density→DEGRADE 零证人)。四载体逐跑,判决回写 E1 措辞。〔runner可关,第一优先〕
+

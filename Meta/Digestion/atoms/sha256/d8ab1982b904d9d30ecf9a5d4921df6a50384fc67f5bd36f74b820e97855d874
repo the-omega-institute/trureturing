@@ -1,0 +1,2 @@
+**悬赏 B4(债务定价市场)**。每条债务携带关账边际价值 MV(t,b);账本自日记升为复式。compute-value 标签机现成,改指向数据/动作获取。补注(v0.3,**邻债折扣**):债共享子结构者互为折扣——Euclidean.lean 偿"欠(golden-euclidean-division)"即解锁 UFD,MinkowskiModelSet.lean 为他节点而建却预付了 E6 余层(Pisot/Meyer)之大半机器;故 MV 须计**期权项**:关此债对邻债成本之折减。〔runner可关,远期〕
+

@@ -1,0 +1,2 @@
+**索引附注(2026-08-14)**:本表由逐个读取 dev 树上 Lean statement 建成,24 条之路径存在性与承重标识符真实性均经机器核验(逐条断言该文件内确有同名 `theorem`/`lemma`/`def`),失败 0、悬空 0。**已修正一处名实不符**:源卷宗所称 `CHSH` 若落实为 `D5/S3/Quantum/CHSH.lean` 则该路径不存在,实存者为 `QuantumBounds/CHSHSpectrum` 与 `QuantumBounds/CHSHWitness`,表中按实址登记。**有意排除并记明理由**:`StrictGibbs`/`DpiDefect`/`StrictDpi` 各自只给单向不等或严格正,不自陈取等 iff,其零面已由 `GibbsEquality`/`PetzClassical` 登记;`CompositeCones` 只给两项锥包含,具体对偶 iff 改登记实存的 `CompositeConeDuality`。
+

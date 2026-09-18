@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:382c7c669c2682b9831bdd203b5e2936983c5da716e386496ebf43414a72d197
+  normalized_sha256: sha256:382c7c669c2682b9831bdd203b5e2936983c5da716e386496ebf43414a72d197
+cas_ref: sha256:382c7c669c2682b9831bdd203b5e2936983c5da716e386496ebf43414a72d197
+coverage_gids:
+  - gid: D5/S3/TotalVariation/Pinsker.total_variation_eq_sum_positive
+    target_statement_id: sha256:603850d0162ae2d86c55a8a0798294f237671b67fd1f3db1e229418fdbe1e81e
+receipts:
+  unresolved_subitems: []

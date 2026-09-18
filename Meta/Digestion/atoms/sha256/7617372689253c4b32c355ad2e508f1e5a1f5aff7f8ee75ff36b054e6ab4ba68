@@ -1,0 +1,13 @@
+**B14.B 现有基础与真实剩余。** 下表只登记本轮亲读的陈述，完整模块名以路径为准。它们是优先复用的证明来源，本文不把旧结果重新列为新发现。〔账目，免分型〕
+
+| 真源路径 / 声明 | 已有陈述 | 本研究仍需做的连接 |
+|---|---|---|
+| `D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean` / `strong_lumpability_descent_tfae` | 推前 PMF 在观察纤维上恒定，当且仅当存在 realized image 上的宏观转移核 | 存活条件化之后该性质何时保留；动作与多步误差如何运输 |
+| `D5/S3/DivergenceSupport/ZeroSupportDPI.lean` / `classical_dpi_identity_zero_support` | 非负归一化质量、p≪q、非负随机信道下的精确 KL 链式分解，允许零概率 | 选择归一化项、物理反向协议和有限读数的组合 |
+| `D5/S3/DivergenceSupport/ZeroSupportDefect.lean` / `dpi_defect_nonneg_zero_support` | 一般支撑下的信息损失非负 | 给实际观察分辨率与筛选规则赋予含义 |
+| `D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.lean` / `deterministic_forgetting_kl_loss_nonnegative` | 确定性有限粗粒化不能增加 KL | 可见路径层的耗散下界、选择后的误差放大 |
+| `D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.lean` / `energy_information_identity` | 实际密度矩阵、Hamiltonian、初始 Gibbs 边缘与联合幺正演化的能量–相关性等式 | 任意初始边缘、外界做功、实验误差与具体两比特实例 |
+| 同模块 / `marginal_entropy_change_eq_mutual_information_change` | 两个边缘的熵变化之和等于联合互信息变化，保留初始相关性 | 接通关系资源、部分观测与相关性证书 |
+
+进度校正：此前讨论把支持零概率的 DPI 扩展列作缺口，当前源码已经提供 `ZeroSupportDPI` 和确定性 specialization。后续直接复用。旧 `PetzClassical` 的严格正前件不代表整个库只有严格正版本。本文没有完成全仓及所有在飞分支的去重普查，实施时仍须对具体目标查重。〔账目，免分型〕
+
