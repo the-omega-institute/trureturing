@@ -403,7 +403,7 @@ public sealed partial class ResourceAdapterTests
             string.Concat(patterns.Select(pattern => row.Replace("pattern = \"**\"", "pattern = \"" + pattern + "\"", StringComparison.Ordinal))));
         fixture.CommitPlan();
         fixture.Write("missing/registered-later.md", "no inferred ownership\n");
-        fixture.CommitPlan();
+        fixture.CommitChanges();
         var result = PushPlan(fixture);
         Assert.Equal(2, result.Exit);
         Assert.Contains("missing/registered-later.md: FILEMAP match count " + (conflict ? "2" : "0"), result.Text, StringComparison.Ordinal);

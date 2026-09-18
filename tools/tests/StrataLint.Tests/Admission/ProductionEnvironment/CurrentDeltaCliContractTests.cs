@@ -278,7 +278,9 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 Assert.Contains(scenario switch
                 {
                     "metadata-forged-candidate" => "candidate identity",
-                    _ => CommonExecutionEvidence.CheckManifestPath,
+                    // Removing a registered input invalidates the complete local
+                    // scope before the current predicate can read its manifest.
+                    _ => "push origin does not match candidate's actual immutable event endpoints",
                 }, result.Error, StringComparison.Ordinal);
                 Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.ChecksPath("current"))));
                 Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.CurrentPath)));
@@ -343,15 +345,10 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             var commit = Git(root, "rev-parse", "HEAD");
-            var entry = Git(root, "ls-tree", "HEAD", "--", RuleFixture.RingPath).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
             var changes = Path.Combine(root, "build/scope.json");
             var plan = Path.Combine(root, "build/plan.json");
-            File.WriteAllText(changes, JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
-                candidate = new { commit, tree = Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
-                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null,
-                    @new = new { path = RuleFixture.RingPath, mode = entry[0], oid = entry[2] } } } }));
-            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", root,
-                "--commit", commit, "--changes", changes, "--output", plan], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan", "--repository", root,
+                "--commit", commit], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
             if (scenario == "metadata-required-report")
             {
                 Assert.NotEqual(0, planning.ExitCode);
@@ -360,6 +357,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 return [];
             }
             Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
+            File.Copy(Path.Combine(root, "build/ci/changes.json"), changes, true);
+            File.Copy(Path.Combine(root, "build/ci/plan.json"), plan, true);
             return [.. metadata ? Array.Empty<string>() : new[] { "--candidate-lean-report", report },
                 "--common-build-round", build.Round, "--common-plan", plan, "--common-changes", changes];
         }

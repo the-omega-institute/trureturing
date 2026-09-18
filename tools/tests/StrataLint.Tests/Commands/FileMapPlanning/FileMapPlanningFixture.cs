@@ -100,20 +100,19 @@ internal sealed class FileMapPlanningFixture : IDisposable
 
     internal JsonObject Changes(params string[] paths)
     {
+        var baseline = Commit;
         foreach (var path in paths) Write(path, "candidate\n");
-        if (paths.Length > 0) Save();
-        var entries = new JsonArray();
-        foreach (var path in paths)
-            entries.Add(new JsonObject { ["status"] = "A", ["old"] = null,
-                ["new"] = Endpoint(path) });
-        return new JsonObject { ["schema_version"] = 1, ["mode"] = "current",
-            ["candidate"] = new JsonObject { ["commit"] = Commit, ["tree"] = Git("rev-parse", "HEAD^{tree}").Trim() },
-            ["base"] = null, ["head"] = null, ["complete"] = true,
-            ["change_count"] = entries.Count, ["changes"] = entries };
+        Git("add", ".");
+        Git("commit", "--allow-empty", "-qm", "candidate input");
+        var head = Commit;
+        var merge = Git("commit-tree", Git("rev-parse", "HEAD^{tree}").Trim(),
+            "-p", baseline, "-p", head, "-m", "candidate merge").Trim();
+        Git("reset", "--hard", merge);
+        var scope = Cli("pr-paths", "--commit", merge, "--base", baseline, "--head", head, "--output", Manifest);
+        Assert.True(scope.ExitCode == 0, Text(scope));
+        return Read(Manifest);
     }
 
-    internal JsonObject Endpoint(string path) => new() { ["path"] = path, ["mode"] = "100644",
-        ["oid"] = Git("rev-parse", "HEAD:" + path).Trim() };
     internal void Supply(JsonObject manifest) => TemporaryFileSystem.File.WriteAllText(Manifest, manifest.ToJsonString());
 
     internal ProcessOutput Cli(string command, params string[] args)
