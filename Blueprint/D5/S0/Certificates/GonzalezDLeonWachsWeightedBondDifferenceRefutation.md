@@ -10,7 +10,7 @@ $$claim = ConjecturePartTwo\left(\right)$$
 
 *Formalization.* `D5/S0/Certificates/GonzalezDLeonWachsWeightedBondDifferenceRefutation.claim` (`✓ std3`).
 
-*Citation.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and Whitney duality*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
+*Citation.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and a new chromatic symmetric function*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
 
 *Commentary.*
 
@@ -28,7 +28,7 @@ $$\neg claim$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and Whitney duality*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
+*Acknowledgement.* Rafael S. Gonzalez D'Leon; Michelle L. Wachs (2026). *Weighted bond posets and a new chromatic symmetric function*. DOI: [10.48550/arXiv.2608.08692](https://doi.org/10.48550/arXiv.2608.08692). URL: <https://arxiv.org/html/2608.08692v1#S4.Thmtheorem13>.
 
 *Commentary.*
 
