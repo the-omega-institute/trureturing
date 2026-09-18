@@ -27,7 +27,7 @@ public sealed class FileMapResourceParityTests
         Assert.Equal(["elan", "engineering"], Assert.Single(map.Resources, resource => resource.Id == "engineering").CacheLayers.ToArray());
         var lean = Assert.Single(map.Resources, resource => resource.Id == "lean");
         Assert.Equal(["dependency", "elan", "project"], lean.CacheLayers.ToArray());
-        Assert.All(lean.CacheActivation.Values, activation => Assert.Equal("stage-start", activation));
+        Assert.All(lean.CacheActivation.Values, activation => Assert.Equal("report-miss", activation));
         var report = Assert.Single(map.Resources, resource => resource.Id == "lean-report");
         Assert.Empty(report.CacheLayers);
         Assert.Equal(["lean"], report.Prerequisites.ToArray());

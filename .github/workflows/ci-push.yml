@@ -383,13 +383,6 @@ jobs:
       - id: keys
         if: steps.route.outputs.cache_layers != ''
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage current
-      - id: elan
-        if: steps.keys.outputs.elan_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v4
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
       - id: current
         if: steps.keys.outputs.current_key != ''
         continue-on-error: true
@@ -398,17 +391,24 @@ jobs:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
           restore-keys: ${{ steps.keys.outputs.current_restore_prefix }}
-      - name: Install required Lean toolchain
-        if: steps.route.outputs.lake == 'true'
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: report_resources
         name: Validate optional report seed and resolve remaining resources
-        if: steps.route.outputs.cache_layers != ''
+        if: steps.route.outputs.required == 'true'
         env:
           CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
         run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
+      - id: elan
+        if: steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.elan_required == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Install required Lean toolchain
+        if: steps.report_resources.outputs.needs_lake == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.dependency_required == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
@@ -416,7 +416,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
+        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.project_required == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
@@ -424,13 +424,14 @@ jobs:
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build evidence
-        if: steps.report_resources.outputs.needs_lake == 'true'
+        if: steps.report_resources.outputs.build_cache_layers != ''
         env:
+          LEAN_CACHE_LAYERS: ${{ steps.report_resources.outputs.build_cache_layers }}
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers $LEAN_CACHE_LAYERS --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         env:
@@ -489,7 +490,7 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - id: save_elan
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.elan_required == 'true' && steps.elan.outputs.cache-hit != 'true'
         continue-on-error: true
         run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage current --max-minutes 12
       - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
