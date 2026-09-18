@@ -51,8 +51,9 @@ public sealed class DeclaredTemplateEscapeRecordTests
     }
 
     [Fact]
-    public void unchanged_old_form_is_not_read() => Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Slots(
-        DeclaredTemplateBindingRuleTests.Delta(declared: true, changed: false), "malformed")));
+    public void unchanged_old_form_is_not_read() => Assert.True(DeclaredTemplateBindingRule.Evaluate(Slots(
+        DeclaredTemplateBindingRuleTests.Delta(declared: true, changed: false), "malformed")).IsEmpty,
+        "[FAIL] unchanged_old_form_is_not_read");
 
     [Fact]
     public void new_theorem_requires_four_slots()

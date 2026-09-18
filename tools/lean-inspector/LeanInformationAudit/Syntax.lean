@@ -345,8 +345,11 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
         (stx[8].getNumArgs == 0 || stx[9].getNumArgs == 0) then
       throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
-    let unitValue <- `(term|
-      { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+    let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+        `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+      else `(term|
+        D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+          $realizationId:ident $theoremId:ident)
     if isPrivateName unitName then
       elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
     else
@@ -487,8 +490,12 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
       (stx[12].getNumArgs == 0 || stx[13].getNumArgs == 0) then
     throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
-  let unitValue <- `(term|
-    { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+  let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
+  let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+      `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+    else `(term|
+      D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+        $qualifiedRealizationId:ident $theoremId:ident)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
   registerEntry { entry with
     variationWitness := ← optionalWitnessName stx[12]
