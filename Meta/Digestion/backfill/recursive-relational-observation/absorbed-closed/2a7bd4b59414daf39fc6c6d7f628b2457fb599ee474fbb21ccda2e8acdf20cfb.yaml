@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2a7bd4b59414daf39fc6c6d7f628b2457fb599ee474fbb21ccda2e8acdf20cfb
+  normalized_sha256: sha256:2a7bd4b59414daf39fc6c6d7f628b2457fb599ee474fbb21ccda2e8acdf20cfb
+cas_ref: sha256:2a7bd4b59414daf39fc6c6d7f628b2457fb599ee474fbb21ccda2e8acdf20cfb
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResiduePosteriorClosure.residue_posterior_closure
+    target_statement_id: sha256:171afa17233edfedab56d5795a4cd9e99a30396c01f3a0c9b42c6769ee3ad644
+receipts:
+  unresolved_subitems: []
