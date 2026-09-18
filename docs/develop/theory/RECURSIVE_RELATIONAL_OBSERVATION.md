@@ -35653,3 +35653,434 @@ $$
 若另一个解码器获准读取 $W$，则映射 $(b,w)\mapsto w$ 直接返回 $E_0$，命中概率为一。式 (80.5) 及其单点纤维判据限定于指定的 $R_B$ 抽样器，所比较的是有限实现标签及其保留记录。证毕。
 
 ## 80.99 追加锚
+
+## 81. 确定记忆更新的信息收支与有限历史恢复界
+
+**定义与假设 81.1（共同有限律与信息单位）。** 本节每个实验中的随机变量均取值于有限非空集合，全部边缘、条件量及更新前后读数来自该实验的同一个非负归一化联合律。不同实验不预设为同一时间过程。用 $\mathsf H$ 表示 Shannon 熵，以区别于目标随机变量 $H$；沿用命题 69.3a 的自然对数约定，单位为 nat，且 $0\ln0=0$。具体地，
+$$
+\mathsf H(X)=-\sum_x p_X(x)\ln p_X(x),\qquad
+\mathsf H(X\mid Z)=
+\sum_{z:p_Z(z)>0}p_Z(z)\,
+\mathsf H\!\left(\frac{p_{X,Z}(\,\cdot\,,z)}{p_Z(z)}\right),
+$$
+$$
+I(X;Y)=\mathsf H(X)+\mathsf H(Y)-\mathsf H(X,Y),\qquad
+I(X;Y\mid Z)=
+\mathsf H(X\mid Z)+\mathsf H(Y\mid Z)-\mathsf H((X,Y)\mid Z).
+$$
+零质量条件切片对条件熵和条件互信息贡献零，不在其上指定归一化后验。这与定义与假设 80.1 的支撑约定一致。若以 bit 为单位，则定义 $\mathsf H_2=\mathsf H/\ln2$、$I_2=I/\ln2$，整条熵或信息等式、不等式统一除以 $\ln2$；概率不作此换算。下述数据只指定一次更新或固定长度实验，不指定正反路径概率律，也不作物理时间箭头断言。
+
+**定理 81.2（固定目标的确定记忆更新收支）。** 设目标 $H$、旧记忆 $M$、新观察 $O$ 具有定义与假设 81.1 的共同联合律。给定全定义的确定映射
+$$
+F:\mathcal M\times\mathcal O\longrightarrow\mathcal M',
+\qquad U=(M,O),\qquad M'=F(M,O),
+$$
+其中 $\mathcal M'$ 也有限非空，且更新前后比较的是同一个目标随机变量 $H$。则
+$$
+\boxed{
+I(H;M')-I(H;M)
+=I(H;O\mid M)-I(H;U\mid M').
+} \tag{81.1}
+$$
+右侧两项分别非负，但左侧可正也可负。第一项是观察在旧记忆之外增加的目标信息；第二项是整个输入对 $U$ 中未由新记忆保留的目标信息，能够包含刚取得的观察信息，不能仅称为旧记忆的损失。本定理不要求均匀性、平稳性、独立性或记忆容量上界。
+
+证明。记 $p(h,u)=\Pr(H=h,U=u)$，将 $F(m,o)$ 简写为 $F(u)$。实际更新的三元联合律为
+$$
+P(h,u,m')=p(h,u)\mathbf1_{\{m'=F(u)\}}.
+$$
+对每个 $u$ 恰有一个 $F(u)\in\mathcal M'$，故
+$$
+\sum_{m'}\mathbf1_{\{m'=F(u)\}}=1,\qquad
+\sum_{m'}P(h,u,m')=p(h,u),\qquad
+\sum_{h,u,m'}P(h,u,m')=\sum_{h,u}p(h,u)=1.
+$$
+所以 $P$ 非负归一化，其 $(H,U)$ 边缘确为原律。令 $p_U(u)=\sum_h p(h,u)$。若 $p_U(u)>0$，则
+$$
+\Pr(H=h,M'=m'\mid U=u)
+=\frac{p(h,u)}{p_U(u)}\mathbf1_{\{m'=F(u)\}}.
+$$
+右侧两个因子分别是归一化的 $H\mid U=u$ 条件律和集中于 $F(u)$ 的 $M'\mid U=u$ 条件律，因而该切片是其两边缘的乘积。若 $p_U(u)=0$，非负和为零迫使每个 $p(h,u)=0$，于是对应的 $P$ 切片全零，条件量贡献零。对以 $U$ 为条件坐标的联合律，直接应用有限条件乘积判据
+[conditional_mutual_information_eq_zero_iff_conditional_product](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean)，得到
+$$
+I(H;M'\mid U)=0.
+$$
+此图律也是归一化通道 $W(u,m')=\mathbf1_{\{m'=F(u)\}}$ 生成的律；上面的行和与边缘等式正好满足同一出处中 markov_of_channel 的假设。
+
+现在对这个共同联合律按两个顺序使用
+[mutual_information_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean)。交换成对坐标只重排有限熵和，故
+$$
+\begin{aligned}
+I(H;(U,M'))
+&=I(H;U)+I(H;M'\mid U)=I(H;U),\\
+I(H;(U,M'))
+&=I(H;M')+I(H;U\mid M').
+\end{aligned}
+$$
+再在原来的 $(H,M,O)$ 律上用同一链式法则，
+$$
+I(H;U)=I(H;M)+I(H;O\mid M).
+$$
+合并移项即为式 (81.1)。两个条件互信息来自非负归一化联合律及其坐标重排，满足
+[conditional_mutual_information_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)
+的假设，故分别非负。
+
+为证明差值确可取两种符号，令 $H$ 在 $\{0,1\}$ 上均匀。若 $M$ 恒定、$O=H$、$F(m,o)=o$，则 $I(H;M)=0$、$I(H;M')=\mathsf H(H)=\ln2$，差为 $\ln2$。若 $M=H$、$O$ 恒定、$F$ 恒定，则两信息依次为 $\ln2,0$，差为 $-\ln2$。这些值直接由点质量熵为零及均匀二点熵为 $\ln2$ 得到。最后，仍取 $M$ 恒定、$O=H$，却使 $F$ 恒定；这时
+$$
+I(H;M)=I(H;M')=0,\qquad
+I(H;O\mid M)=I(H;U\mid M')=\ln2.
+$$
+旧记忆没有目标信息而被丢弃项严格为正，证明它不能只计旧记忆损失。证毕。
+
+**定理 81.3（均匀合法历史通过有限记忆的恢复与条件熵界）。** 固定 $n\in\mathbb N=\{0,1,\ldots\}$，令
+$$
+\mathcal W_n=\{w\in\{0,1\}^n:w\text{ 不含相邻的 }11\},
+\qquad N=|\mathcal W_n|=G_n\ge1,
+$$
+其中直接沿用命题 70.10 的计数 $G_n$；$\mathcal W_0$ 仅含空字，$G_0=1$。在本次固定 $n$ 的实验中，$H$ 均匀分布于 $\mathcal W_n$。记忆载体 $\mathcal M$ 有 $K\ge1$ 个状态，位预算为 $B\in\mathbb N$，且 $K\le2^B$。设非负编码核、解码核
+$$
+e:\mathcal W_n\times\mathcal M\to[0,\infty),\qquad
+d:\mathcal M\times\mathcal W_n\to[0,\infty)
+$$
+逐行满足
+$$
+\sum_m e(h,m)=1\quad(\forall h),\qquad
+\sum_{\widehat h}d(m,\widehat h)=1\quad(\forall m).
+$$
+要求实际三元联合律完整地分解为
+$$
+\boxed{
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\frac1N e(h,m)d(m,\widehat h).
+} \tag{81.2}
+$$
+这是本定理的无旁路条件：给定记忆后，解码使用同一行 $d(m,\cdot)$。它允许随机编码与随机解码，但不能仅由“所用随机种子与 $H$ 独立”代替。则恢复原历史的成功概率满足
+$$
+\boxed{
+\Pr(\widehat H=H)
+\le\min\!\left(1,\frac K{G_n}\right)
+\le\min\!\left(1,\frac{2^B}{G_n}\right).
+} \tag{81.3}
+$$
+同时有
+$$
+\boxed{
+\mathsf H(H\mid M)
+\ge\max(0,\ln G_n-\ln K)
+\ge\max(0,\ln G_n-B\ln2).
+} \tag{81.4}
+$$
+式 (81.4) 对任意均匀源 $H$ 与至多 $K$ 态记忆 $M$ 的联合律均成立，不需要解码器或式 (81.2)。式 (81.3) 的成功事件要求重建所抽取的整个原历史；命题 69.4 则只要求保留指定更新与读出的预测完成商。即使两个历史在该预测任务中等价，这里的恢复事件仍要求区分它们。若把本定理用于定理 81.2 的更新后记忆，须将 $M$、载体、$K$ 及编码核一致替换为 $M'$ 的对应数据。
+
+证明。$N\ge1$ 也可由全零字（$n=0$ 时为空字）直接见证。两核非负且行和为一，故式 (81.2) 的右侧确为概率律：
+$$
+\frac1N\sum_h\sum_m e(h,m)\sum_{\widehat h}d(m,\widehat h)
+=\frac1N\sum_h1=1.
+$$
+其 $H$ 边缘为 $1/N$，$(H,M)$ 边缘为 $e(h,m)/N$。编码行的非负性还给出
+$$
+0\le e(h,m)\le\sum_{m'}e(h,m')=1.
+$$
+于是仅以有限求和便得
+$$
+\begin{aligned}
+\Pr(\widehat H=H)
+&=\frac1N\sum_m\sum_h e(h,m)d(m,h)\\
+&\le\frac1N\sum_m\sum_h d(m,h)
+=\frac KN.
+\end{aligned}
+$$
+结合概率至多为一、$N=G_n>0$ 及 $K\le2^B$，得到式 (81.3)。此证明没有除以 $\Pr(M=m)$。未使用的记忆状态满足 $\sum_h e(h,m)=0$，故其编码列全零；无论该状态的解码行选哪一个归一化概率，都不影响成功率。$n=0$ 时解码只能返回空字，成功率为一，与上界相符。
+
+条件熵部分只使用 $(H,M)$ 联合律。对它及交换坐标后的律应用
+[entropy_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/ConditionalEntropy.lean)，得到
+$$
+\mathsf H(H)+\mathsf H(M\mid H)
+=\mathsf H(H,M)
+=\mathsf H(M)+\mathsf H(H\mid M).
+$$
+所有涉及的边缘非负归一化，源载体与记忆载体均非空。因此
+[entropy_eq_log_card_iff_uniform](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyEquality.lean)
+给出 $\mathsf H(H)=\ln N$；
+[entropy_le_log_card](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/MaxEntropy.lean)
+给出 $\mathsf H(M)\le\ln K$；若实际载体少于 $K$ 个状态，再用对数单调性即可。同一非负联合律上的
+[conditional_entropy_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyNonneg.lean)
+给出两个条件熵非负。故
+$$
+\mathsf H(H\mid M)
+=\ln N+\mathsf H(M\mid H)-\mathsf H(M)
+\ge\ln N-\ln K.
+$$
+与 $\mathsf H(H\mid M)\ge0$ 合并，得到第一个最大值界；$1\le K\le2^B$ 蕴含 $\ln K\le B\ln2$，再得第二个。$n=0$ 时源熵和条件熵都为零，右侧两个最大值也为零。依定义与假设 81.1 换成 bit 后，最后一界就是 $\mathsf H_2(H\mid M)\ge\max(0,\log_2G_n-B)$。
+
+为核实无旁路条件中随机性的边界，取 $n=1$，令 $H,S$ 为相互独立的均匀二点变量，置 $M=H\mathbin{\oplus}S$，其中 $\oplus$ 为模二加法。若解码器还可读取共享种子 $S$，则令 $\widehat H=M\mathbin{\oplus}S=H$。此时 $e(h,m)=1/2$，而
+$$
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\tfrac14\mathbf1_{\{\widehat h=h\}}.
+$$
+若式 (81.2) 成立，则对任意固定 $m$，取 $h=0$ 会迫使 $d(m,0)=1$，取 $h=1$ 又迫使 $d(m,1)=1$，违反解码行归一化。故种子独立本身不足以保证该式。使用额外可读记录时，须把它纳入实际记忆状态及容量条件，或另行指定扩展模型的联合律。式 (81.4) 的推导完全没有使用 $d$ 或 $\widehat H$，因而其适用范围不受这个解码边界影响。证毕。
+
+**命题 81.4（各长度均匀合法历史律不具投影相容性）。** 令 $u_n$ 为定理 81.3 中 $\mathcal W_n$ 上的均匀律，$t:\mathcal W_2\to\mathcal W_1$ 为保留首位的截断映射。按 $\mathcal W_1=(0,1)$ 排列，有
+$$
+t_*u_2=(2/3,1/3)\ne(1/2,1/2)=u_1.
+$$
+因此不存在一个取值于无限无相邻 $11$ 序列空间的概率过程，使全部长度 $n$ 的前缀律同时等于 $u_n$。
+
+证明。$\mathcal W_2=\{00,01,10\}$，每个字在 $u_2$ 下的质量为 $1/3$；首位为零的有两个，为一的有一个，故得到所列截断律。$\mathcal W_1=\{0,1\}$，其均匀律两点质量各为 $1/2$。若存在所述过程，记其律为 $\lambda$、长度一及长度二的前缀映射为 $\pi_1,\pi_2$，则逐点有 $\pi_1=t\circ\pi_2$。推前概率的复合性将强制
+$$
+u_1=(\pi_1)_*\lambda
+=t_*\bigl((\pi_2)_*\lambda\bigr)=t_*u_2,
+$$
+与上式矛盾。命题 71.8 给出的则是总长度趋于无穷时、固定短前缀的分布极限；它没有要求这些有限总长度的均匀律逐层相容，也不将定理 81.3 的均匀源替换为平稳 Parry 律。证毕。
+
+## 81.99 追加锚
+
+## 82. 参考纤维上的凸缺陷与共同恢复零集
+
+**定义与假设 82.1（质量坐标、似然比坐标与凸缺陷）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$，以及质量算子 $C,B,E=BC$；其粗参考为
+$$
+p_i=(Cq)_i=\sum_{r(j)=i}q_j>0.
+$$
+对任意非负归一化质量列向量 $d\in\Delta(J)$，记
+$$
+a=Cd,\qquad u_j=\frac{d_j}{q_j},\qquad m_i=\frac{a_i}{p_i}.
+$$
+在任意实函数 $v:J\to\mathbb R$ 上定义
+$$
+(\Pi v)_j=\frac1{p_{r(j)}}
+             \sum_{r(k)=r(j)}q_kv_k,
+\qquad D_q=\operatorname{diag}(q).
+$$
+于是
+$$
+\Pi u=m\circ r,\qquad Ed=D_q\Pi u,\qquad
+E=D_q\Pi D_q^{-1}.
+$$
+这里 $\Pi$ 作用于似然比或实读数，$E$ 作用于质量；二者的自然内积分别是
+$$
+\langle v,w\rangle_q=\sum_jq_jv_jw_j,
+\qquad
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+具体地，在有限概率空间 $(J,2^J,\mu_q)$ 上取
+$$
+\mu_q(A)=\sum_{j\in A}q_j,
+\qquad
+\mathcal F_r=\{r^{-1}(S):S\subseteq I\}.
+$$
+$\Pi$ 是命题 69.1、定理 76.1 的有限正加权条件投影。质量空间中的正交性使用命题 74.5 的证明及定理 76.1 中的 $q^{-1}$ 内积；$D_q$ 给出这两个带权空间之间的等距同构。
+
+令 $K\subseteq\mathbb R$ 为包含所有 $u_j$ 的凸区间，$\Phi:\mathbb R\to\mathbb R$ 在 $K$ 上凸。定义有限实数
+$$
+\mathcal J_\Phi(d;q,r)
+=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i).
+$$
+此处用 $\mathcal J_\Phi$ 表示凸缺陷，不与定义 72.1 的细基去相干 $\Delta_f$ 混用。以下 KL 与熵均采用自然对数，零质量项按正支撑求和约定处理。
+
+**命题 82.2（纤维 Jensen 缺陷、严格零集与两种特例）。** 在定义与假设 82.1 下，各 $m_i\in K$，且
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=\sum_i p_i\left[
+    \sum_{r(j)=i}\frac{q_j}{p_i}\Phi(u_j)-\Phi(m_i)
+  \right]\ge0.
+}
+$$
+若 $\Phi$ 在 $K$ 上严格凸，则
+$$
+\begin{aligned}
+\mathcal J_\Phi(d;q,r)=0
+&\ \Longleftrightarrow\
+  \forall j,k\ \bigl(r(j)=r(k)\Rightarrow u_j=u_k\bigr)\\
+&\ \Longleftrightarrow\ u=\Pi u
+\ \Longleftrightarrow\ d=Ed.
+\end{aligned}
+$$
+对任意 $\alpha,\beta\in\mathbb R$，有
+$$
+\mathcal J_{\Phi+\alpha\,\mathrm{id}+\beta}(d;q,r)
+=\mathcal J_\Phi(d;q,r).
+$$
+因此不要求 $\Phi(1)=0$。若只有凸性而没有严格凸性，上述零集刻画不由该假设保证；仿射生成函数的缺陷对每个 $d$ 都为零。各严格凸生成函数共享这里的恢复零集，但本命题不规定它们的共同数值尺度，也不要求不同生成函数在每个输入上给出不同数值。
+
+**二次特例。** 取 $\Phi(t)=t^2$，等价地取 $\Phi(t)=(t-1)^2$，则
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{t^2}(d;q,r)
+ &=\sum_j q_j\bigl(u_j-(\Pi u)_j\bigr)^2\\
+ &=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}\\
+ &=\chi^2(d\Vert q)-\chi^2(Cd\Vert p),
+\end{aligned}
+}
+$$
+其中对严格正参考质量 $w$，
+$$
+\chi^2(v\Vert w)=\sum_x\frac{(v_x-w_x)^2}{w_x}.
+$$
+这里的残差分母是 $q_j$；即使 $Ed$ 逐坐标正，它一般也不等于以 $(Ed)_j$ 为分母的 $\chi^2(d\Vert Ed)$。该残差是 $L^2(\mu_q)$ 中 $u$ 的条件投影残差平方，也是在质量空间 $\langle\cdot,\cdot\rangle_{q^{-1}}$ 中 $d-Ed$ 的范数平方。
+
+**KL 特例。** 取 $\Phi(t)=t\ln t$（$t>0$）及 $\Phi(0)=0$，在 $K=[0,\infty)$ 上使用其严格凸性，则
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p)
+=D_{\mathrm{KL}}(d\Vert Ed).
+}
+$$
+三个 KL 值均有限，包括 $d$ 或 $Cd$ 有零坐标的情形。这是定理 73.3、74.2 的支撑型 KL 缺陷在同一凸缺陷记号下的特化。
+
+**证明。** 对每个 $i$，满射保证纤维 $J_i=r^{-1}(i)$ 非空，参考正性给出 $p_i>0$。置
+$$
+\lambda_{j\mid i}=\frac{q_j}{p_i}\quad(j\in J_i).
+$$
+这些权重严格为正、总和为一，且
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}u_j
+=\frac1{p_i}\sum_{r(j)=i}d_j
+=m_i.
+$$
+因此 $m_i$ 是 $K$ 中有限个点的凸组合，属于 $K$。按纤维拆分第一项，便得到框中的缺陷分解。有限 Jensen 不等式逐纤维给出
+$$
+\Phi(m_i)\le\sum_{j\in J_i}\lambda_{j\mid i}\Phi(u_j).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在指标集 $J_i$、权重 $\lambda_{j\mid i}$ 和点 $u_j$ 上的应用；权重非负归一化及所有点的域内条件已逐项满足。再乘 $p_i>0$ 并求和，得到非负性。
+
+若 $\Phi$ 严格凸，所有方括号均非负且所有外权 $p_i$ 均为正，所以总和为零当且仅当每个纤维的 Jensen 等号成立。[StrictConvexOn.map_sum_eq_iff_of_pos](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在同一代入下适用，其严格正权重条件也已满足。它给出等号当且仅当该纤维的所有 $u_j$ 相等。若共同值为 $h_i$，上面的加权平均等式使 $h_i=m_i$，故恰为 $u=\Pi u$。反过来，$\Pi u$ 在每条纤维上为常值，故 $u=\Pi u$ 蕴含纤维常值。由 $d=D_qu$、$Ed=D_q\Pi u$ 及 $q_j>0$，这又等价于 $d=Ed$。
+
+若 $a_i=0$，则 $a_i$ 是该纤维所有非负 $d_j$ 的和，故整条纤维的 $d_j=0$，继而所有 $u_j=0$、$m_i=0$。它已满足纤维常值条件，不能因实际粗质量为零而另加一个未定义的后验条件。这里的平均权重是始终正的参考 $q_j/p_i$。
+
+对任意仿射函数 $\ell(t)=\alpha t+\beta$，每条纤维上都有
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}\ell(u_j)
+=\alpha m_i+\beta=\ell(m_i).
+$$
+因而加上仿射函数不改变任何方括号，证明仿射不变性，也给出仿射生成函数的恒零结论。
+
+为明确二次特例的 Hilbert 载体，任取实函数 $v$，$\Pi v$ 在各纤维上常值且
+$$
+\sum_{r(j)=i}q_j(\Pi v)_j
+=\sum_{r(j)=i}q_jv_j.
+$$
+每个 $\mathcal F_r$ 事件是若干纤维的不交并，故同一积分等式在这些事件上成立；$\Pi v$ 又是 $\mathcal F_r$-可测的。有限载体使 $v\in L^2(\mu_q)$，所以这正是命题 69.1、定理 76.1 中的条件正交投影。严格正的每个 $q_j$ 使几乎处处相等在此等价于逐点相等。
+
+坐标适配直接给出，对任意实质量向量 $x$，
+$$
+(D_q\Pi D_q^{-1}x)_j
+=\frac{q_j}{p_{r(j)}}\sum_{r(k)=r(j)}x_k
+=(Ex)_j,
+$$
+且
+$$
+\langle D_qv,D_qw\rangle_{q^{-1}}
+=\sum_jq_jv_jw_j=\langle v,w\rangle_q.
+$$
+所以这一变换是两个带权空间之间的等距同构，说明两个残差平方的精确对应；它不是相同 Euclidean 内积下的算子识别。
+
+下面直接计算全部二次公式。每条纤维的中心化和为零：
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)
+=a_i-p_im_i=0.
+$$
+展开 $u_j=(u_j-m_i)+m_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_ju_j^2
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2
+  +2m_i\sum_{r(j)=i}q_j(u_j-m_i)+p_im_i^2\\
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2+p_im_i^2.
+\end{aligned}
+$$
+按纤维求和并减去 $\sum_i p_im_i^2$，即得第一个二次等式。再用
+$$
+d_j-(Ed)_j=q_j\bigl(u_j-m_{r(j)}\bigr)
+$$
+得到第二个。由于
+$$
+\sum_jq_j=\sum_i p_i=1,
+\qquad
+\sum_jq_ju_j=\sum_i p_im_i=1,
+$$
+有
+$$
+\chi^2(d\Vert q)=\sum_jq_ju_j^2-1,
+\qquad
+\chi^2(Cd\Vert p)=\sum_i p_im_i^2-1.
+$$
+相减得到第三个等式。全部分母来自严格正参考，因此不要求 $d_j>0$。所用的条件投影勾股关系是命题 69.1 的范数恒等式，这里的坐标计算将其识别为所列 $\chi^2$ 差。
+
+最后取 $\Phi(t)=t\ln t$、$\Phi(0)=0$。[Real.strictConvexOn_mul_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean) 给出它在 $[0,\infty)$ 上的严格凸性，包含零点的连续值；所有 $u_j,m_i\ge0$，故适用。在 $d_j>0$ 时，
+$$
+q_j\Phi(u_j)=d_j\ln(d_j/q_j),
+$$
+而 $d_j=0$ 时该项为零；粗坐标同理。因此 $\mathcal J_\Phi$ 恰为两个参考 KL 之差。若 $d_j>0$，则 $a_{r(j)}>0$，从而 $(Ed)_j=q_ja_{r(j)}/p_{r(j)}>0$；若 $a_i=0$，该纤维上 $d$ 与 $Ed$ 全为零。$q,p$ 严格正，$d\ll Ed$，而 $Ed$ 是定理 74.2 中已归一化的概率，故三个 KL 都有限。对同一个 $C,B,E,q,p,d$ 直接应用定理 74.2 的缺陷差式，得到最后一个等号；其支撑与恢复条件正是定理 73.3 的条件。对数项始终只在正实际支撑上计算，零粗质量不需要归一化实际后验。若改用 bit，则将这一特例中的全部 KL 项一致除以 $\ln2$。证毕。
+
+**命题 82.3（族保持不推出所有凸缺陷的动力学单调性）。** 取四状态集 $J=\{1,2,3,4\}$，分区 $\{1,2\}\mid\{3,4\}$，并令
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},
+\qquad
+d=\begin{pmatrix}2/5\\1/10\\2/5\\1/10\end{pmatrix},
+\qquad
+T=\frac1{40}
+\begin{pmatrix}
+37&1&37&1\\
+1&37&1&37\\
+1&1&1&1\\
+1&1&1&1
+\end{pmatrix}.
+$$
+则 $T$ 严格正且列随机，满足 $TE=ET=ETE$；但二次凸缺陷严格增加：
+$$
+\mathcal J_{t^2}(d;q,r)=\frac9{25},
+\qquad
+\mathcal J_{t^2}(Td;q,r)=\frac{729}{1250}>\frac9{25}.
+$$
+这里
+$$
+Tq=\begin{pmatrix}19/40\\19/40\\1/40\\1/40\end{pmatrix}\ne q,
+$$
+故本命题不涉及另加平稳参考条件 $Tq=q$ 的结论。
+
+**证明。** 每个矩阵元至少为 $1/40>0$，每列的整数分子之和为 $40$。本分区的重采样矩阵为
+$$
+E=\frac12
+\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix}.
+$$
+直接相乘得到
+$$
+TE=ET=
+\begin{pmatrix}
+19/40&19/40&19/40&19/40\\
+19/40&19/40&19/40&19/40\\
+1/40&1/40&1/40&1/40\\
+1/40&1/40&1/40&1/40
+\end{pmatrix}.
+$$
+右侧每列在各对内相等，故左乘 $E$ 不变，证明 $TE=ETE$。同一乘法给出上述 $Tq$ 以及
+$$
+Td=\begin{pmatrix}149/200\\41/200\\1/40\\1/40\end{pmatrix},
+\qquad Ed=q,
+\qquad ETd=Tq.
+$$
+因此
+$$
+d-Ed=\begin{pmatrix}3/20\\-3/20\\3/20\\-3/20\end{pmatrix},
+\qquad
+Td-ETd=\begin{pmatrix}27/100\\-27/100\\0\\0\end{pmatrix}.
+$$
+应用命题 82.2 的二次残差公式，参考分母均为 $1/4$，于是
+$$
+\mathcal J_{t^2}(d;q,r)
+=4\cdot4\left(\frac3{20}\right)^2=\frac9{25},
+$$
+$$
+\mathcal J_{t^2}(Td;q,r)
+=4\cdot2\left(\frac{27}{100}\right)^2=\frac{729}{1250}.
+$$
+两值之差为 $279/1250>0$。定理 74.2 在 $TE=ETE$ 下保证的是 KL 特例的缺陷不增；以上同一参考、同一分区的精确计算表明，该动力学结论不能直接换成任意凸生成函数。证毕。
+
+## 82.99 追加锚
