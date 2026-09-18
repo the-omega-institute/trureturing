@@ -66,6 +66,48 @@ elab "observe_proof_plan_identities" : command => do
 
 observe_proof_plan_identities
 
+-- Constructor description fields enter the same compiler as template bodies.
+def discardTrue (_h : True) : Bool := true
+def keepBool (b : Bool) : Bool := b
+
+elab "observe_constructor_proof_identity" : command => do
+  let initial ← get
+  let ast := (← getCurrNamespace).str "ProofAST"
+  let ctor := ast.str "mk"
+  let proofs := #[mkConst ``True.intro,
+    Expr.letE `h (mkConst ``True) (mkConst ``True.intro) (.bvar 0) false]
+  let mut plans : Array TemplatePlanData := #[]
+  let mut rawTypes : Array String := #[]
+  for proof in proofs do
+    set initial
+    let domain ← liftTermElabM do
+      let value ← mkAppM ``discardTrue #[proof]
+      let value ← mkAppM ``keepBool #[value]
+      mkEq value (mkConst ``Bool.true)
+    let ctorType := mkForall `h .default domain (mkConst ast)
+    liftCoreM <| addDecl (.inductDecl [] 0
+      [{ name := ast, type := mkSort (.succ .zero),
+         ctors := [{ name := ctor, type := ctorType }] }] false)
+    let info ← getConstInfo ctor
+    let .ok (identity, _) := rawStatementIdentity [] info.type
+      | throwError "[FAIL] constructor_proof_raw_setup"
+    rawTypes := rawTypes.push identity
+    let result ← enroll ``cutRealization #[ast]
+    match selectedPlan (← getEnv) ``cutRealization with
+    | .ok plan => plans := plans.push plan
+    | .error error => logError m!"[FAIL] constructor_proof_enrolled {error}; {repr result}"
+  set initial
+  let work := plans.map (·.chargedWork)
+  logInfo m!"[MEASURE] constructor proof raw types={rawTypes}; work={work}"
+  for (label, ok) in #[
+      ("constructor_proof_raw_inputs_distinct", rawTypes.size == 2 && rawTypes[0]! != rawTypes[1]!),
+      ("constructor_proof_work_identity", plans.size == 2 && work[0]! == work[1]!),
+      ("constructor_proof_plan_identity", plans.size == 2 &&
+        plans[0]!.planIdentity == plans[1]!.planIdentity)] do
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
+
+observe_constructor_proof_identity
+
 register_information_template cutRealization
 register_information_template termBound
 

@@ -680,7 +680,7 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
             else
               if (domain.find? fun e => e.isConstOf name).isSome then
                 throwError "unclassified_form:E4c.nested_recursion"
-              let (_, next) ← (compileExpr domain 0 true).run current
+              let (_, next) ← (do compileExpr (← eraseInput domain) 0 true).run current
               current := next
         return ((), current)
     inspect
