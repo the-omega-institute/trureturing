@@ -30,19 +30,19 @@ def probeArena : PrimitiveLawArena.{0, 0, 0} where
 
 local instance : DecidableEq probeArena.State := instDecidableEqBool
 
-def probeRealization : PrimitiveRealization probeArena.signature :=
+def probeRealization : PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization (fun x : Bool => x)
 
-def probeBad : PrimitiveRealization probeArena.signature :=
+def probeBad : PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization (fun _ : Bool => true)
 
-theorem probe_bridge : LegacyPrimitiveRealization probeArena (∀ x : Bool, x = x) probeRealization :=
+private theorem probe_bridge : LegacyPrimitiveRealization probeArena (∀ x : Bool, x = x) probeRealization :=
   ⟨⟨fun _ => rfl, fun _ => probe_four_slot_true⟩⟩
 
-theorem probe_lawVariation : probeArena.Law probeRealization ∧ ¬ probeArena.Law probeBad :=
+private theorem probe_lawVariation : probeArena.Law probeRealization ∧ ¬ probeArena.Law probeBad :=
   ⟨rfl, Bool.noConfusion⟩
 
-theorem probe_slotSensitivity : FiniteSlotSensitivity probeArena := by
+private theorem probe_slotSensitivity : FiniteSlotSensitivity probeArena := by
   constructor
   · intro i
     refine ⟨probeRealization, probeBad, ?_, ?_, ?_⟩
@@ -57,7 +57,7 @@ def probeChain : LayerChain probeArena.toArena where
   kernel := fun _ => cutKernel (fun x : Bool => x)
   refines := fun r => Fin.elim0 r
 
-theorem probe_emptyProof : EscapeResidualEmpty probeChain := by
+private theorem probe_emptyProof : EscapeResidualEmpty probeChain := by
   change probeChain.unresolvedCount = 0
   decide +kernel
 
