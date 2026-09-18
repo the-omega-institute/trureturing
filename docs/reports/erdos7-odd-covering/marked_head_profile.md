@@ -700,3 +700,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Fixed supports transport the complete punctured tails](profile-notes/231-fixed-supports-transport-the-complete-punctured-tails.md)
 - [Each complete fallback uses its own square bound](profile-notes/232-each-complete-fallback-uses-its-own-square-bound.md)
 - [Explicit pruning errors preserve all four face ceilings near the source](profile-notes/233-explicit-pruning-errors-preserve-all-four-face-ceilings-near-the-source.md)
+- [Every retained dual transports on a generated small source domain](profile-notes/234-every-retained-dual-transports-on-a-generated-small-source-domain.md)
+- [Every original head candidate transports on a positive source box](profile-notes/235-every-original-head-candidate-transports-on-a-positive-source-box.md)
+- [The last missing9 branch uses a better AP threshold](profile-notes/236-the-last-missing9-branch-uses-a-better-ap-threshold.md)
