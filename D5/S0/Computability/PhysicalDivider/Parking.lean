@@ -40,6 +40,34 @@ theorem park_preserves_extent (k : ActiveTape) (next : Continuation)
         some (liftBlockCfg k next tapes c.1) ∧
       c.2.low = 0 ∧ c.2.high = H ∧
       0 ≤ c.2.head ∧ c.2.head ≤ 2 * (below.length : ℤ) ∧ Within c.1.tape c.2 := by
+  have block_lift_run (k : ActiveTape) (next : Continuation)
+      (tapes : ActiveTape → Tape Bool) (n : ℕ) (c c' : BlockCfg)
+      (h : ((fun o : Option BlockCfg => o.bind blockStep)^[n]) (some c) = some c') :
+      ((fun o : Option PhysicalCfg => o.bind physicalStep)^[n])
+        (some (liftBlockCfg k next tapes c)) = some (liftBlockCfg k next tapes c') := by
+    have one (k : ActiveTape) (next : Continuation) (tapes : ActiveTape → Tape Bool)
+        (c c' : BlockCfg) (h : blockStep c = some c') :
+        physicalStep (liftBlockCfg k next tapes c) = some (liftBlockCfg k next tapes c') := by
+      cases c with
+      | mk pc tape =>
+        cases pc <;>
+          simp only [blockStep, blockAction] at h <;>
+          cases h <;>
+          simp [physicalStep, liftBlockCfg, instruction, blockAction, liftBlockAction,
+            executeInstruction, Function.update_idem]
+    induction n generalizing c' with
+    | zero =>
+        simp only [Function.iterate_zero, id_eq, Option.some.injEq] at h
+        subst c'
+        rfl
+    | succ n ih =>
+        rw [Function.iterate_succ_apply'] at h ⊢
+        cases he : ((fun o : Option BlockCfg => o.bind blockStep)^[n]) (some c) with
+        | none => simp [he] at h
+        | some middle =>
+            rw [he] at h
+            rw [ih middle he]
+            exact one k next tapes middle c' h
   have bounded (below above : List Bool) (H : ℤ)
       (hH : 2 * (below.length : ℤ) ≤ H) :
       let step := fun o : Option (BlockCfg × Extent) => o.bind accountedBlockStep

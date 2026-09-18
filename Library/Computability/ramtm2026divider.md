@@ -16,6 +16,8 @@ strata_touched:
   - D5/S0/Computability/PhysicalDivider/Rounds
   - D5/S0/Computability/PhysicalDivider/Positive
   - D5/S0/Computability/PhysicalDivider/StackGrowth
+  - D5/S0/Computability/PhysicalDivider/ArithmeticExecution
+  - D5/S0/Computability/PhysicalDivider/CallExecution
 license: Apache-2.0
 triage: anchor
 ---
@@ -47,6 +49,11 @@ equivalent declarations, consumers should use those declarations directly.
 Any retirement or migration remains subject to the repository's frozen-content
 rules. Acceptance into a different or hypothetical Mathlib revision is not
 the retirement condition.
+
+The physical call proof also retains the `bitsValue_append_false` argument
+from `WordOperations.lean:37-41` locally to identify the executed padding.
+The inverse `fixedBits_bitsValue` supplies the fixed-word equality; no additional
+arithmetic declaration is introduced.
 
 ## Exact source files
 
