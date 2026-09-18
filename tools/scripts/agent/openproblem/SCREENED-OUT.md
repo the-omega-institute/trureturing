@@ -809,3 +809,22 @@ v2 评注指向 Mollard 2025 的先证。
   命中即读该模块的 `claim` 与卷宗;这一步不能交给席位。
 - `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`;派前查 `nyxid oracle pool show <slug> --output json` 的 `online_workers`,
   `NYX_TIMEOUT` 两次即查任务状态,`queued + Attempts 0` 是死池不是慢。
+
+## R52(2026-09-18):`DECIDABLE` 徽章不等于边界已知,与 size-4 Sidon-extension 的出局
+
+**#475(Graham valid orderings)出局:有限残余没有可枚举的边界。** 页面 badge 是
+`DECIDABLE / Resolved up to a finite check`,但已知结果由五段拼成,每段都带无效常数:
+小 t 的 Costa–Della Fiore 2026 `t ≤ e^{c(log p)^{1/3}}`、中 t 的 Pham–Sauermann 2026
+`1 ≪_α t ≤ p^{1-α}`、大 t 的 Bedert–Bucić–Kravitz–Montgomery–Müyesser 2025
+`p^{1-c} ≤ t ≤ (1-o(1))p`、极大 t 的 Müyesser–Pokrovskiy 2025 `t ≥ (1-o(1))p`,
+另有 `t ≤ 12` 与 `p-3 ≤ t ≤ p-1`。无一篇给出显式 p₀,故「剩下的有限检查」没有边界可跑完;
+要兑现该 badge 得先把五个常数各自显式化。**判据:`DECIDABLE` 只断言原则上有限,不断言边界已知——
+入管线前必须找到显式阈值,找不到即出局。** 验小素数或抽样都关不掉它(抽样本来也不是证明)。
+
+**size-4 Sidon-extension 出局:专家社群在攻。** #707($1000)已由 Alexeev–Mixon 反驳并形式化;
+残余的真开放问题是「size-4 的 Sidon 集是否总可扩成完美差集」——size 2 平凡、size 3 由 Sawin 证得总可扩、
+size 5 有 {1,2,4,8,13} 与 Hall 1947 的 {1,3,9,10,13}。Müller 只证到 {0,1,3,11} 是候选反例
+(所有*已知*构造够不着),缺口是排除非 Singer 型差集,挂在 prime power conjecture 上。
+该方向有 PNAS 论文与专题报告,且他们自己在做自动形式化,按档位律出局。
+arXiv:2604.25214(Niu,size-4 反例)已于 2026-05-14 撤稿,撤稿理由正是 Müller 的 MO 答复
+早六个月证得更强,故该预印本及其后续不作为前置。
