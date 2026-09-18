@@ -706,3 +706,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The sixteen legacy heads transport with their survivor-cap prices](profile-notes/237-the-sixteen-legacy-heads-transport-with-their-survivor-cap-prices.md)
 - [The shared square and complete factorial bound extend to the small source box](profile-notes/238-the-shared-square-and-complete-factorial-bound-extend-to-the-small-source-box.md)
 - [All fifty-two costs cross403 on the complete small source box](profile-notes/239-all-fifty-two-costs-cross403-on-the-complete-small-source-box.md)
+- [Six actual cells close the last fallback comparison](profile-notes/240-six-actual-cells-close-the-last-fallback-comparison.md)
