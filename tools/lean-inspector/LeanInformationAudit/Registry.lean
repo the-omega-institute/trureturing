@@ -21,8 +21,21 @@ private initialize pendingDeclaration : EnvExtension (Option ResolvedDeclaration
 
 /-- Scoped syntax input, never enrollment or certification authority. The
 registration transaction owns rollback; the inner scope always clears itself. -/
+private def eraseDescriptor (descriptor : Option Expr) (diagnostic : Option String) :
+    Elab.Command.CommandElabM (Option Expr × Option String) := Elab.Command.liftTermElabM do
+  try
+    let descriptor ← descriptor.mapM fun value => do
+      return (← TemplateAudit.withCumulativeBudget <| TemplateAudit.eraseProofs value
+        (TemplateAudit.informationTemplate.work.get (← getOptions))).1
+    return (descriptor, diagnostic)
+  catch error =>
+    return (none, some ("incomplete_closure:E8.descriptor_erasure:" ++
+      (← error.toMessageData.toString)))
+
 def withDeclaration (declaration : ResolvedDeclaration)
     (action : Elab.Command.CommandElabM Unit) : Elab.Command.CommandElabM Unit := do
+  let (descriptor, diagnostic) ← eraseDescriptor declaration.descriptor declaration.diagnostic
+  let declaration := { declaration with descriptor, diagnostic }
   let previous := pendingDeclaration.getState (← getEnv)
   if previous.isSome then throwError "unclassified_form:dtr.nested_declaration"
   modifyEnv (pendingDeclaration.setState · (some declaration))
@@ -122,7 +135,7 @@ def sourcePath := TemplateAudit.sourcePath
 
 def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName
-  let statementIdentity := match TemplateAudit.rawIdentity info.levelParams info.type with
+  let statementIdentity := match TemplateAudit.rawStatementIdentity info.levelParams info.type with
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
@@ -164,6 +177,7 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
   let event := matching[0]!
   if (bindingClaims.getState env).any (·.key == event.key) then
     throwError "unclassified_form:dtr.duplicate_claim"
+  let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
   let claim : TemplateBindingClaim := {
     key := event.key, arena := event.arena, descriptor, resolutionDiagnostic,
     owner := env.header.mainModule }
@@ -199,7 +213,7 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   unless input.sha256 == event.registrationSourceIdentity do
     throwError "incomplete_closure:dtr.event_source"
   let info ← getConstInfo event.key.theoremName
-  let .ok (identity, _) := TemplateAudit.rawIdentity info.levelParams info.type
+  let .ok (identity, _) := TemplateAudit.rawStatementIdentity info.levelParams info.type
     | throwError "incomplete_closure:dtr.event_statement"
   unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
       info.type.equal event.statement do
@@ -297,7 +311,8 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
   let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
     record.occurrence.realizationName, record.occurrence.key.objectArena]
   if let some descriptor := record.descriptor then
-    pending := descriptor.getUsedConstants.toList ++ pending
+    let erased ← TemplateAudit.eraseProofs descriptor
+    pending := (erased.1.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
   let mut seen : NameSet := {}
   let mut paths := #[record.occurrence.registrationSource]
   if let some owner := record.bindingOwner then paths := paths.push (sourcePath owner)
@@ -313,9 +328,14 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
     if isRepositoryModule owner then
       let path := sourcePath owner
       unless paths.contains path || path.startsWith "tools/" do paths := paths.push path
-    pending := info.type.getUsedConstants.toList ++ pending
+    let (type, work) ← TemplateAudit.eraseProofs info.type remaining
+    remaining := remaining - work
+    pending := (type.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
     if !info.isTheorem then
-      if let some value := info.value? then pending := value.getUsedConstants.toList ++ pending
+      if let some value := info.value? then
+        let (value, work) ← TemplateAudit.eraseProofs value remaining
+        remaining := remaining - work
+        pending := (value.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
   (paths.toList.eraseDups.toArray.qsort (· < ·)).mapM fun path => TemplateAudit.readSourceInput path
 
 private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [

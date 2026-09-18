@@ -49,11 +49,11 @@ run_meta do
       retained.equal argument
     | _ => false
   let retained := PlanNode.audit (.typeNode (.atom (.bvar 0)))
-    (.expanded (.app (.bvar 0) (.fvar x)) (.proofLeaf (.app (.bvar 0) ty) (.fvar x)))
+    (.expanded (.app (.bvar 0) (.fvar x)) (.proofLeaf (.app (.bvar 0) ty)))
   let retainedOk := match PlanTransform.substitutePlan retained (.atom argument) with
-    | .ok (.audit (.typeNode (.atom t)) (.expanded raw (.proofLeaf pt pe)), _) =>
+    | .ok (.audit (.typeNode (.atom t)) (.expanded raw (.proofLeaf pt)), _) =>
       t.equal argument && raw.equal (.app argument (.fvar x)) &&
-        pt.equal (.app argument ty) && pe.equal (.fvar x)
+        pt.equal (.app argument ty)
     | _ => false
   let materialized := PlanTransform.toExpr p
   let exactWork := match materialized with
