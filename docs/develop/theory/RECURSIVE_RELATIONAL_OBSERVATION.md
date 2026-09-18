@@ -35036,3 +35036,215 @@ $$
 证毕。
 
 ## 77.99 追加锚
+
+## 78. 胞腔对角态的共同空间极限与观察原子质量
+
+**定义与假设 78.1（实际观察塔及其胞腔态）。** 设 $(X,\mathcal F,\mu)$ 为概率空间，$\mu(X)=1$。对每个 $L\in\mathbb N$，$\mathcal P_L$ 是 $X$ 的实际有限可测分区，$\mathcal P_{L+1}$ 细化 $\mathcal P_L$。以有限离散集合 $Q_L$ 标记全部胞腔，记实际标签映射为 $q_L:X\to Q_L$，父映射为 $r_L:Q_{L+1}\to Q_L$，满足逐点相容性 $q_L=r_L\circ q_{L+1}$。零质量胞腔仍保留在分区和标签中，只从归一化 Hilbert 坐标中略去。
+
+取闭相容逆极限及其 Borel $\sigma$ 代数
+$$
+Y=\left\{y\in\prod_{L\ge0}Q_L:
+r_L(y_{L+1})=y_L\ \text{对所有 }L\right\},
+\qquad q_\infty(x)=(q_L(x))_{L\ge0},
+\qquad \nu=(q_\infty)_*\mu.
+$$
+$Y$ 是紧可度量的标准 Borel 空间，其对角集合可测。沿用定义 70.1 的指示函数子空间，置
+$$
+\mathcal F_\infty=\sigma(q_L:L\ge0),\qquad
+H_L=\operatorname{span}_{\mathbb C}
+\{\mathbf1_C:C\in\mathcal P_L,\ \mu(C)>0\},
+$$
+$$
+H_{\mathrm{obs}}=L^2(X,\mathcal F_\infty,\mu;\mathbb C)
+=\overline{\bigcup_{L\ge0}H_L}.
+$$
+形成 $L^2$ 时可对 $\mathcal F_\infty$ 作 $\mu$-零集完备化；内积仍为 $\langle f,g\rangle=\int\overline f g\,d\mu$。所有算子作用于这个可分的共同空间。将它等同于整个环境 $L^2(X,\mathcal F,\mu;\mathbb C)$ 的条件是：每个 $\mathcal F$ 可测集合都与某个 $\mathcal F_\infty$ 可测集合只差 $\mu$-零集。
+
+对 $y\in Y$ 定义
+$$
+C_L(y)=q_L^{-1}\{y_L\},\qquad
+E_y=q_\infty^{-1}\{y\}=\bigcap_{L\ge0}C_L(y),\qquad
+A=\{y\in Y:\mu(E_y)>0\},
+$$
+$$
+a_y=\mu(E_y)=\nu(\{y\})\quad(y\in A),\qquad
+a=\sum_{y\in A}a_y\in[0,1].
+$$
+$A$ 至多可数；$a=1$ 称为完整观察律 $\nu$ 纯原子。这里的正原子在 $X$ 上是完整观察纤维 $E_y$，不预设它们是环境单点。对正质量胞腔和纤维分别写
+$$
+e_C=\frac{\mathbf1_C}{\sqrt{\mu(C)}},\qquad
+e_y=\frac{\mathbf1_{E_y}}{\sqrt{a_y}},\qquad
+(|u\rangle\langle v|)h=u\langle v,h\rangle.
+$$
+定义
+$$
+R_L=\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)|e_C\rangle\langle e_C|
+=\sum_{C\in\mathcal P_L}|\mathbf1_C\rangle\langle\mathbf1_C|,
+\qquad
+R_{\mathrm{at}}=\sum_{y\in A}a_y|e_y\rangle\langle e_y|.
+$$
+$R_L$ 在 $H_L^\perp$ 上延零；$R_{\mathrm{at}}$ 的级数按 Schatten 迹范数求和。相邻 $H_L$ 使用定理 72.2 的实际 $L^2$ 包含，$R_L$ 是各层胞腔对角态在共同空间中的实现，不以经典标签推前或 Heisenberg 压缩替代这个包含。记 $\Pi_L$ 为到 $H_L$ 的正交投影；$R_L$ 的胞腔权重为 $\mu(C)$，$\Pi_L$ 的对应权重为一。下文 $\|T\|_1=\operatorname{Tr}|T|$ 是未除以二的 Schatten 迹范数，$\|T\|_{\mathrm{HS}}^2=\operatorname{Tr}(T^*T)$ 是 Hilbert–Schmidt 范数平方，$\|T\|_{\mathrm{op}}$ 是算子范数；$\|\cdot\|_1$ 不表示概率全变差。
+
+**定理 78.2（碰撞恒等式、精确迹缺口与两类读出）。** 在定义与假设 78.1 下，$R_L$ 是正的有限秩迹一算子，$R_{\mathrm{at}}$ 是正迹类算子，且
+$$
+\operatorname{Tr}R_L=1,\qquad
+\operatorname{Tr}R_{\mathrm{at}}=a,
+$$
+$$
+\boxed{\begin{aligned}
+\|R_L-R_{\mathrm{at}}\|_{\mathrm{HS}}^2
+&=\sum_{C\in\mathcal P_L}\mu(C)^2-\sum_{y\in A}a_y^2
+\longrightarrow0,\\
+\|R_L-R_{\mathrm{at}}\|_{\mathrm{op}}&\longrightarrow0,\\
+\|R_L-R_{\mathrm{at}}\|_1&\longrightarrow1-a.
+\end{aligned}}
+$$
+因此指定序列 $(R_L)$ 存在迹范数极限，当且仅当 $a=1$，其极限必为 $R_{\mathrm{at}}$。$a<1$ 时的算子范数极限是迹为 $a$ 的次归一化正算子，不是归一化密度态；特别地，$a=0$ 时算子范数极限为零，而 $\|R_L\|_1=1$。纯原子支撑可以可数无限，无须原子熵有限。
+
+对任意有界的 $\mathcal F_\infty$ 可测复函数 $f$，令 $M_fh=fh$；对任意紧算子 $K$，有
+$$
+\operatorname{Tr}(R_LM_f)=\int_X f\,d\mu,
+\qquad
+\operatorname{Tr}(R_LK)\longrightarrow
+\operatorname{Tr}(R_{\mathrm{at}}K).
+$$
+常数单位向量还给出迹一秩一算子 $J=|\mathbf1\rangle\langle\mathbf1|$，满足
+$$
+\operatorname{Tr}(JM_f)=\int_X f\,d\mu.
+$$
+乘法算子与紧算子不是互斥类别。$I=M_{\mathbf1}$，且无限维时 $I$ 不紧；$a<1$ 时，该极限若推广到全部有界算子，在 $K=I$ 上便失败。故该序列的迹范数极限失败不否定 $\mu$ 的正常态表示，也不从经典乘法读数取得唯一的非交换扩张。
+
+若另有 $X$ 紧可度量且零维、$\mathcal F=\mathcal B(X)$，并且这些有限分区由闭开集组成且分离点，则 $\mathcal F_\infty=\mathcal B(X)$，每个非空 $E_y$ 都是单点；此时 $a$ 可用环境点原子的总质量计算。一般的模零生成条件用于识别两个 $L^2$ 空间，以单点替代纤维仍须逐点分离的假设。
+
+证明。同层胞腔向量正交归一，故 $R_L$ 的非零特征值就是各正胞腔质量，迹为一。不同正质量纤维互不相交，对每个 $n\ge1$，集合 $\{y\in A:a_y\ge1/n\}$ 至多含 $n$ 点，因而 $A$ 至多可数且质量和不超过一。纤维向量 $(e_y)_{y\in A}$ 正交归一，所以其正秩一级数在迹范数下收敛，$\|R_{\mathrm{at}}\|_1=\operatorname{Tr}R_{\mathrm{at}}=a$。这里所用的 Schatten 范数及迹类性质见 Gerald Teschl，*Mathematical Methods in Quantum Mechanics: With Applications to Schrödinger Operators*，[作者 2009 版本](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)（Version: February 12, 2009），Lemmas 6.12–6.16，印刷第 141–144 页。有限分区的递增代数生成 $\mathcal F_\infty$，可测简单函数逼近给出所写的稠密并；可数个有限维空间的稠密并同时给出可分性。环境 $L^2$ 的识别条件则由各可测集合的指示函数在模零意义下是否属于此闭包得到。
+
+在 $(X,\mathcal F_\infty,\mu)$ 上，$R_L$ 的一个积分核为
+$$
+K_L(x,x')=\mathbf1_{\{q_L(x)=q_L(x')\}},
+\qquad
+(R_Lh)(x)=\int_{C_L(q_\infty(x))}h(x')\,d\mu(x').
+$$
+零质量胞腔对积分算子没有贡献。实际分区的细化及标签相容性给出逐点单调极限
+$$
+K_L(x,x')\downarrow
+K_\infty(x,x')=\mathbf1_{\{q_\infty(x)=q_\infty(x')\}}.
+$$
+$Y$ 的可测对角允许在完整标签律上应用 Tonelli，得到
+$$
+\iint K_\infty\,d\mu\,d\mu
+=(\nu\otimes\nu)(\{(y,y):y\in Y\})
+=\int_Y\nu(\{y\})\,d\nu(y)
+=\sum_{y\in A}a_y^2.
+$$
+集合 $\bigsqcup_{y\in A}(E_y\times E_y)$ 包含于标签相等事件，且乘积测度也是这个和，故
+$$
+K_\infty(x,x')=
+\sum_{y\in A}\mathbf1_{E_y}(x)\mathbf1_{E_y}(x')
+\quad\text{在 }\mu\otimes\mu\text{ 几乎处处成立}.
+$$
+右侧核级数的平方范数尾和为 $\sum a_y^2$ 的尾和，因而在 $L^2(\mu\otimes\mu)$ 中收敛。其有限部分对应 $R_{\mathrm{at}}$ 的有限部分；核的 $L^2$/Hilbert–Schmidt 等距及已得的迹范数收敛识别出其算子正是 $R_{\mathrm{at}}$。此处仅使用 Teschl §6.3、Lemma 6.9 及式 (6.13)，印刷第 139–140 页的显式平方可积核等距。
+
+由于 $K_\infty\le K_L$ 且二者都是二值核，
+$$
+|K_L-K_\infty|^2=K_L-K_\infty,
+\qquad
+\iint K_L\,d\mu\,d\mu=\sum_{C\in\mathcal P_L}\mu(C)^2.
+$$
+再用核等距即得精确的 Hilbert–Schmidt 平方差；支配收敛使它趋零，$\|T\|_{\mathrm{op}}\le\|T\|_{\mathrm{HS}}$ 给出算子范数极限。
+
+记 $S_L=R_L-R_{\mathrm{at}}$。迹配对界首先给出
+$$
+\|S_L\|_1\ge|\operatorname{Tr}S_L|=1-a.
+$$
+所用界 $|\operatorname{Tr}(TB)|\le\|T\|_{\mathrm{op}}\|B\|_1$（$T$ 有界，$B$ 迹类）及配对的循环性见 Jordan Bell，*Trace class operators and Hilbert-Schmidt operators*，[2016-04-18 讲义](https://jordanbell.info/LaTeX/mathematics/traceclass/traceclass.pdf)，Theorem 23，第 21–22 页。
+
+上界须保留交叉块。取有限 $F\subseteq A$，令 $a_F=\sum_{y\in F}a_y$，$P_F$ 为这些 $e_y$ 张成空间的正交投影，$Q_F=I-P_F$。不同完整标签总在某个有限坐标分开；由 $F$ 有限及细化性，充分大的每个 $L$ 都把 $F$ 中各标签分入不同胞腔。这时
+$$
+P_FR_LP_F=P_FR_{\mathrm{at}}P_F
+=\sum_{y\in F}a_y|e_y\rangle\langle e_y|,
+\qquad P_FR_{\mathrm{at}}Q_F=Q_FR_{\mathrm{at}}P_F=0.
+$$
+令 $u_y=\mathbf1_{E_y}$、$v_{L,y}=\mathbf1_{C_L(y)\setminus E_y}$，则两个实际交叉块为
+$$
+P_FR_LQ_F=\sum_{y\in F}|u_y\rangle\langle v_{L,y}|,
+\qquad
+Q_FR_LP_F=\sum_{y\in F}|v_{L,y}\rangle\langle u_y|.
+$$
+秩一算子的迹范数为两向量范数之积，故
+$$
+\|P_FR_LQ_F+Q_FR_LP_F\|_1
+\le2\sum_{y\in F}\sqrt{a_y\bigl(\mu(C_L(y))-a_y\bigr)}
+\longrightarrow0.
+$$
+这里 $C_L(y)\downarrow E_y$，有限测度的上连续性给出 $\mu(C_L(y))\downarrow a_y$。另外，$Q_FR_LQ_F$ 与 $Q_FR_{\mathrm{at}}Q_F$ 都是正算子，分别有迹 $1-a_F$ 与 $a-a_F$。分块并使用三角不等式，得到
+$$
+\|S_L\|_1
+\le2\sum_{y\in F}\sqrt{a_y\bigl(\mu(C_L(y))-a_y\bigr)}
++1+a-2a_F.
+$$
+因此 $\limsup_L\|S_L\|_1\le1+a-2a_F$。使有限 $F$ 的质量 $a_F$ 增至 $a$，上界变为 $1-a$，与下界合并即得所述极限；$A=\varnothing$ 时直接取 $F=\varnothing$。这没有把差算子 $S_L$ 当作正算子。任何迹范数极限也必为算子范数极限，因而只能是 $R_{\mathrm{at}}$；结合精确缺口便得迹范数收敛的充要条件。证明只使用可数原子质量的可和性，没有熵条件。
+
+有限秩迹计算给出
+$$
+\operatorname{Tr}(R_LM_f)
+=\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)\langle e_C,M_fe_C\rangle
+=\sum_C\int_C f\,d\mu
+=\int_Xf\,d\mu.
+$$
+对紧算子 $K$，由 Teschl §6.2、Lemma 6.8（印刷第 136–138 页），可取有限秩 $B$ 在算子范数下任意逼近 $K$。因 $\|S_L\|_1\le1+a$，Hilbert–Schmidt 的 Cauchy–Schwarz 不等式和上述迹配对界给出
+$$
+|\operatorname{Tr}(S_LK)|
+\le\|S_L\|_{\mathrm{HS}}\|B\|_{\mathrm{HS}}
++(1+a)\|K-B\|_{\mathrm{op}}.
+$$
+先令 $L\to\infty$，再令逼近误差趋零，即得紧测试极限。另一方面，$\|\mathbf1\|_2=1$，故 $J$ 是正迹一的秩一算子，并有 $\operatorname{Tr}(JM_f)=\langle\mathbf1,M_f\mathbf1\rangle=\int f\,d\mu$。它在 $\mathcal B(H_{\mathrm{obs}})$ 上定义正常向量态；$\operatorname{Tr}(S_LI)=1-a$ 则说明 $a<1$ 时紧测试结论不能扩到全部有界算子。
+
+最后，在所列紧可度量闭开分区专门化中，$q_\infty$ 连续，分离点使它单射。紧空间到 Hausdorff 空间的连续单射是到其像的同胚；有限坐标柱生成 $Y$ 的 Borel $\sigma$ 代数，因此其逆像生成 $\mathcal B(X)$，且非空完整纤维恰为单点。这证明了该专门化及相应原子解释。证毕。
+
+**命题 78.3（混合前缀与常值观察的两种边界）。** 在 $X=\{0,1\}^{\mathbb N}$ 的 Borel 空间上用长度 $L$ 的前缀分区，令 $\nu_p$ 是各坐标独立且取一概率为 $p$ 的 Bernoulli 乘积律，并取
+$$
+\mu=a\delta_{0^\infty}+(1-a)\nu_p,
+\qquad 0\le a<1,\qquad0<p<1.
+$$
+当 $0<a<1$ 时，完整观察律唯一的正原子为 $0^\infty$，质量为 $a$，故
+$$
+R_{\mathrm{at}}=a|e_{0^\infty}\rangle\langle e_{0^\infty}|,
+\qquad
+\|R_L-R_{\mathrm{at}}\|_1\longrightarrow1-a;
+$$
+而每个有限 $L$ 的 $R_L-R_{\mathrm{at}}$ 都不是正算子。当 $a=0$ 时，$R_{\mathrm{at}}=0$，并有
+$$
+\|R_L\|_{\mathrm{op}}=\max(p,1-p)^L,\qquad
+\operatorname{Tr}(R_L^2)=[p^2+(1-p)^2]^L,\qquad
+\operatorname{Tr}R_L=1.
+$$
+特别地，$a=0,p=1/2$ 时 $R_L=2^{-L}\Pi_L$；固定紧测试 $J=|\mathbf1\rangle\langle\mathbf1|$ 满足
+$$
+\operatorname{Tr}(R_LJ)=2^{-L}\longrightarrow0,
+\qquad \operatorname{Tr}(J^2)=1,
+$$
+尽管 $R_L$ 与 $J$ 对全部乘法算子的读数相同。
+
+若环境改为 $[0,1]$ 上的 Lebesgue 概率而每个 $q_L$ 都恒定，则完整观察律只有一个质量一的原子，$H_{\mathrm{obs}}=\mathbb C\mathbf1$，并且所有 $R_L=J$。所以环境无点原子本身不能推出胞腔态趋于零。
+
+证明。二进制前缀分离点并生成 Borel $\sigma$ 代数。任一单点的 $\nu_p$ 质量不超过 $\max(p,1-p)^L$ 对所有 $L$ 成立，因而为零。这证明混合律的原子断言，定理 78.2 随即给出精确缺口。对 $0<a<1$，令 $C_L^0$ 为全零前缀胞腔，$b_L=(1-a)(1-p)^L>0$。在正交单位向量
+$$
+e_{0^\infty}=a^{-1/2}\mathbf1_{\{0^\infty\}},
+\qquad b_L^{-1/2}\mathbf1_{C_L^0\setminus\{0^\infty\}}
+$$
+张成的二维空间上，$R_L-R_{\mathrm{at}}$ 的压缩矩阵为
+$$
+\begin{pmatrix}
+0&\sqrt{ab_L}\\
+\sqrt{ab_L}&b_L
+\end{pmatrix}.
+$$
+其行列式为 $-ab_L<0$，故它有负特征值，差算子不正。
+
+当 $a=0$ 时，含 $k$ 个一的长度 $L$ 胞腔质量为 $p^k(1-p)^{L-k}$。正交胞腔谱的最大值给出算子范数，平方和按二项式定理给出所列纯度。公平情形每个权重为 $2^{-L}$，故 $R_L=2^{-L}\Pi_L$。由于 $\mathbf1\in H_L$，$\operatorname{Tr}(R_LJ)=\langle\mathbf1,R_L\mathbf1\rangle=2^{-L}$；$J^2=J$ 给出另一读数。全部乘法读数的一致性由定理 78.2 的两个精确等式给出。
+
+常值观察时，每层实际分区只有胞腔 $X$，完整标签也只有一个取值，其纤维为整个 $[0,1]$，质量为一。指示函数构造因此给出 $H_{\mathrm{obs}}=\mathbb C\mathbf1$ 及固定算子 $R_L=J$；Lebesgue 测度的每个环境单点质量仍为零。证毕。
+
+## 78.99 追加锚
