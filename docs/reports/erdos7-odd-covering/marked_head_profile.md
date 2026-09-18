@@ -670,3 +670,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two more seven labels and selected intersections control both heavy costs](profile-notes/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md)
 - [Eight original costs have an exact load-two remainder](profile-notes/202-eight-original-costs-have-an-exact-load-two-remainder.md)
 - [The expanded seven head improves the complete survival denominator](profile-notes/203-the-expanded-seven-head-improves-the-complete-survival-denominator.md)
+- [A second seven depth strengthens both complete heavy costs](profile-notes/204-a-second-seven-depth-strengthens-both-complete-heavy-costs.md)
