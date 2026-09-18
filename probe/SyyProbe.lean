@@ -1,3 +1,4 @@
+import Mathlib.Data.Finset.Max
 import Mathlib.Data.List.Lex
 import Mathlib.Data.List.Permutation
 import Mathlib.Data.List.TakeWhile
@@ -123,5 +124,23 @@ private theorem r_perm (w : List ℕ) : (r w).Perm w := by
       have h := (List.reverse_perm (v :: tail.takeWhile p)).append ih
       simpa only [p, r, valleyRuns, List.map_cons, List.flatten_cons,
         List.cons_append, List.takeWhile_append_dropWhile] using h
+
+private theorem s_ends_max (w : List ℕ) (ne : w ≠ []) :
+    ∃ b m, s w = b ++ [m] ∧ m ∈ w ∧ ∀ x ∈ w, x ≤ m := by
+  classical
+  have hn : w.toFinset.Nonempty := by
+    obtain ⟨a, ha⟩ := List.exists_mem_of_ne_nil w ne
+    exact ⟨a, by simpa using ha⟩
+  obtain ⟨m, hm, hmax⟩ := w.toFinset.exists_max_image id hn
+  have hm' : m ∈ w := by simpa using hm
+  have bound : ∀ x ∈ w, x ≤ m := by simpa using hmax
+  obtain ⟨X, Y, hw, hnX⟩ := List.eq_append_cons_of_mem hm'
+  subst w
+  have hx : ∀ x ∈ X, x < m := by
+    intro x hmem
+    have le := bound x (by simp [hmem])
+    exact lt_of_le_of_ne le (fun e => hnX (e ▸ hmem))
+  have hy : ∀ y ∈ Y, y ≤ m := fun y hmem => bound y (by simp [hmem])
+  exact ⟨s X ++ s Y, m, s_split_max X Y m hx hy, hm', bound⟩
 
 end SyyProbe
