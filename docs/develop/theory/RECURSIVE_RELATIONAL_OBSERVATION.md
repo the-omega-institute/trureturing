@@ -35248,3 +35248,152 @@ $$
 常值观察时，每层实际分区只有胞腔 $X$，完整标签也只有一个取值，其纤维为整个 $[0,1]$，质量为一。指示函数构造因此给出 $H_{\mathrm{obs}}=\mathbb C\mathbf1$ 及固定算子 $R_L=J$；Lebesgue 测度的每个环境单点质量仍为零。证毕。
 
 ## 78.99 追加锚
+
+## 79. 完整观察熵的扩展值极限
+
+**定义 79.1（有限观察熵与完整标签熵）。** 沿用定义与假设 78.1 的概率空间、实际有限分区 $\mathcal P_L$、相容标签逆极限 $Y$、可测映射 $q_\infty$ 及推前律 $\nu$；$A,a_y,a$ 仍表示完整观察律的正原子集、原子质量及其总和。算子 $R_L,R_{\mathrm{at}}$ 始终作用于同一个 $H_{\mathrm{obs}}$。使用自然对数，置
+$$
+\iota(t)=
+\begin{cases}
+-\ln t,&0<t\le1,\\
++\infty,&t=0,
+\end{cases}
+\qquad
+h_L=-\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)\ln\mu(C),
+$$
+$$
+\mathsf H(\nu)=\int_Y\iota\bigl(\nu(\{y\})\bigr)\,d\nu(y)
+\in[0,+\infty].
+$$
+被积函数的可测性由定理 79.2 给出。积分为非负扩展积分；非负无穷和均取有限部分和的上确界，允许值为 $+\infty$。有限熵和中的零质量胞腔贡献按 $0\ln0=0$ 处理，但信息函数在零质量处的值是 $+\infty$。这是完整标签的总观察熵，不是微分熵，也未除以层数成为熵率。对正迹类且迹一的算子 $T$，以其正特征值 $\lambda_i(T)$（按重数计）定义扩展谱熵
+$$
+S(T)=\sum_i-\lambda_i(T)\ln\lambda_i(T)\in[0,+\infty];
+$$
+零特征值贡献零。
+
+**定理 79.2（有限观察熵的单调极限及原子谱）。** 在定义 79.1 下，$y\mapsto\nu(\{y\})$ 是 Borel 可测函数，$A$ 是至多可数的 Borel 集，且 $\nu(A)=a$。有
+$$
+\boxed{
+h_L\uparrow\mathsf H(\nu)=
+\begin{cases}
+\displaystyle\sum_{y\in A}-a_y\ln a_y,&a=1,\\[1mm]
++\infty,&a<1.
+\end{cases}}
+$$
+纯原子分支的级数也允许发散到 $+\infty$。各有限层满足 $S(R_L)=h_L<\infty$；当 $a=1$ 时，同时有
+$$
+\|R_L-R_{\mathrm{at}}\|_1\longrightarrow0,
+\qquad
+S(R_L)\uparrow S(R_{\mathrm{at}})=\mathsf H(\nu)
+\quad\text{于 }[0,+\infty].
+$$
+当 $a<1$ 时，定理 78.2 的 $R_{\mathrm{at}}$ 仍是迹为 $a$ 的次归一化正算子，且 $\|R_L-R_{\mathrm{at}}\|_1\to1-a$；它不是这列密度态的迹范数极限。
+
+证明。对 $y\in Y$ 定义有限前缀柱集及其质量
+$$
+K_L(y)=\{z\in Y:z_\ell=y_\ell\text{ 对所有 }0\le\ell\le L\},
+\qquad g_L(y)=\nu(K_L(y)).
+$$
+每层只有有限个 Borel 前缀柱集，$g_L$ 在各柱集上为常数，故为 $[0,1]$ 值 Borel 可测函数。相容父映射 $r_\ell$ 保证，在此 $Y$ 上
+$$
+K_L(y)=\{z\in Y:z_L=y_L\},
+\qquad
+K_{L+1}(y)\subseteq K_L(y),
+\qquad
+\bigcap_{L\ge0}K_L(y)=\{y\}.
+$$
+由于 $\nu(K_0(y))\le1$，测度从上连续性给出
+$$
+g_L(y)\downarrow g(y):=\nu(\{y\}).
+$$
+因此 $g$ 可测。扩展函数 $\iota:[0,1]\to[0,+\infty]$ 可测，且在 $t\downarrow0$ 时 $\iota(t)\uparrow+\infty$，所以 $\iota\circ g$ 可测。这里的从上连续性可对照钉版 Mathlib 的 [MeasureTheory.tendsto_measure_iInter_atTop](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/MeasureSpace.lean#L672)：指标为 $\mathbb N$，柱集可测、递减，且初项测度有限。
+
+相容性还给出
+$$
+q_\infty^{-1}K_L(q_\infty(x))
+=q_L^{-1}\{q_L(x)\}=C_L(q_\infty(x)).
+$$
+故 $m_L(x):=\mu(C_L(q_\infty(x)))=g_L(q_\infty(x))$ 递减到 $\nu(\{q_\infty(x)\})$。令 $I_L=\iota\circ m_L$，则各 $I_L$ 非负扩展可测，并且逐点有
+$$
+I_L(x)\uparrow\iota\bigl(\nu(\{q_\infty(x)\})\bigr).
+$$
+有限层的零质量胞腔之并是零测集，$I_L$ 在其上取 $+\infty$ 对非负积分仍贡献零。对其余胞腔逐项积分，得
+$$
+\int_X I_L\,d\mu
+=\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)(-\ln\mu(C))=h_L<\infty.
+$$
+非负单调收敛及推前测度的非负积分换元于是给出
+$$
+h_L\uparrow
+\int_X\iota\bigl(\nu(\{q_\infty(x)\})\bigr)\,d\mu(x)
+=\int_Y\iota\bigl(\nu(\{y\})\bigr)\,d\nu(y)
+=\mathsf H(\nu).
+$$
+所用单调收敛可对照同一钉版的 [MeasureTheory.lintegral_tendsto_of_tendsto_of_monotone](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Lebesgue/Add.lean#L113)：上面已经给出各函数的可测性、逐点单调性及扩展值极限，因而满足其几乎处处版本的前提；无需假定极限可积。
+
+对每个 $n\ge1$，集合 $A_n=\{y:g(y)\ge1/n\}$ 至多有 $n$ 个点，否则这些单点的有限可加性将给出总质量大于一。每个正质量点属于某个 $A_n$，故 $A=\bigcup_{n\ge1}A_n$ 至多可数。单点 Borel 可测，因此 $A$ 是 Borel 集，且可数可加性给出 $\nu(A)=\sum_{y\in A}a_y=a$。在 $Y\setminus A$ 上，$\iota(g(y))=+\infty$。若 $a<1$，对每个实数 $M>0$ 都有
+$$
+\mathsf H(\nu)\ge M\nu(Y\setminus A)=M(1-a),
+$$
+令 $M\to\infty$ 即得无穷分支。若 $a=1$，补集为零测集，按可数原子积分得
+$$
+\mathsf H(\nu)=\sum_{y\in A}a_y(-\ln a_y),
+$$
+仍按非负扩展和理解。
+
+最后，定义与假设 78.1 的各 $e_C$ 正交归一，$R_Le_C=\mu(C)e_C$，且 $R_L$ 在 $H_L^\perp$ 上为零。因此其非零特征值按重数恰为各正胞腔质量，直接得到 $S(R_L)=h_L$；这正是定义与假设 72.1 的一般有限对角坐标在共同空间中的实现。$a=1$ 时，定理 78.2 给出迹范数收敛，$R_{\mathrm{at}}$ 的正交原子级数则给出非零特征值 $(a_y)_{y\in A}$，故其扩展谱熵等于上述级数。熵的单调收敛来自所指定观察塔中的信息函数单调收敛，不能将这一步换成一般的迹范数熵连续性。这里的原子始终属于完整观察律；只有另加逐点分离条件，才能把非空观察纤维识别为环境单点。证毕。
+
+**命题 79.3（迹范数收敛而原子熵无穷的观察塔）。** 取带全部子集 $\sigma$ 代数的可数空间
+$$
+X=\{(k,j):k\ge1,\ 1\le j\le2^k\},
+\qquad
+w_{k,j}:=\mu(\{(k,j)\})=\frac1{k(k+1)2^k}.
+$$
+令 $\mathcal P_L$ 由 $k\le L$ 的各单点及尾胞腔 $T_L=\{(k,j):k>L\}$ 组成，$\mathcal P_0=\{X\}$。这些分区构成分离点的实际有限观察塔，其完整观察律满足 $a=1$，且
+$$
+\tau_L:=\mu(T_L)=\frac1{L+1},
+\qquad
+\|R_L-R_{\mathrm{at}}\|_1\le\frac2{L+1}\longrightarrow0.
+$$
+其有限观察熵为
+$$
+h_L=
+\sum_{k=1}^{L}\frac{\ln(k(k+1))+k\ln2}{k(k+1)}
++\frac{\ln(L+1)}{L+1}
+\ge\ln2\sum_{k=1}^{L}\frac1{k+1}\longrightarrow+\infty.
+$$
+因此各 $S(R_L)$ 有限而 $S(R_{\mathrm{at}})=+\infty$；迹范数收敛无须原子熵有限，也不保证有限层熵一致有界。此例仍有 $S(R_L)\uparrow S(R_{\mathrm{at}})$ 的扩展值收敛。
+
+证明。第 $k$ 块的质量为 $1/[k(k+1)]=1/k-1/(k+1)$，故总质量由望远镜和得一，尾质量为 $1/(L+1)$。各 $\mathcal P_L$ 有限且可测，从第 $L$ 层到第 $L+1$ 层只将尾胞腔中的第 $L+1$ 块逐点分开；以胞腔为标签、包含关系为父映射便满足 78.1 的逐点相容性。任意两个不同点在足够深的有限层被分开，且每个单点都出现在某个有限分区中，故这些分区生成全部子集 $\sigma$ 代数。非空完整观察纤维恰为单点，$\nu$ 集中于可数集合 $q_\infty(X)$，从而 $a=1$，$H_{\mathrm{obs}}=L^2(X,\mu;\mathbb C)$。
+
+记原子正交基 $e_{k,j}=w_{k,j}^{-1/2}\mathbf1_{\{(k,j)\}}$。两态在已分开的原子上完全一致，与尾块之间均无交叉项，因此
+$$
+R_L-R_{\mathrm{at}}=A_L-B_L,
+\qquad
+A_L=|\mathbf1_{T_L}\rangle\langle\mathbf1_{T_L}|,
+\qquad
+B_L=\sum_{k>L}\sum_{j=1}^{2^k}w_{k,j}|e_{k,j}\rangle\langle e_{k,j}|.
+$$
+这里 $B_L$ 的级数按迹范数收敛，两个尾算子都正且迹类，并有
+$$
+\operatorname{Tr}A_L=\|\mathbf1_{T_L}\|_2^2=\tau_L,
+\qquad \operatorname{Tr}B_L=\tau_L.
+$$
+$A_L$ 保留尾胞腔内部的相干项，$B_L$ 则是原子基上的对角尾算子。以下估计不假定有符号差 $A_L-B_L$ 为正；使用迹类三角不等式及两个正算子的迹范数等于迹，得到
+$$
+\|R_L-R_{\mathrm{at}}\|_1
+\le\|A_L\|_1+\|B_L\|_1
+=2\tau_L=\frac2{L+1}.
+$$
+这些 Schatten 范数事实沿用定理 78.2 所引 Gerald Teschl，*Mathematical Methods in Quantum Mechanics: With Applications to Schrödinger Operators*，[2009-02-12 版本](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)，§6.3，results 6.12–6.16，印刷第 141–144 页。
+
+第 $k\le L$ 块的 $2^k$ 个等质量单点对熵的总贡献是
+$$
+2^k w_{k,j}(-\ln w_{k,j})
+=\frac{\ln(k(k+1))+k\ln2}{k(k+1)},
+$$
+尾胞腔贡献为 $-\tau_L\ln\tau_L=\ln(L+1)/(L+1)$，故得到所列精确有限公式，包括 $L=0$ 时空和为零的情形。丢去非负的 $\ln(k(k+1))$ 项及尾项，得调和下界。由于 $\ln2>0$ 且 $\sum_{k=1}^L1/(k+1)\to+\infty$，有限熵趋于无穷；定理 79.2 将其识别为 $S(R_{\mathrm{at}})=\mathsf H(\nu)=+\infty$。证毕。
+
+## 79.99 追加锚
