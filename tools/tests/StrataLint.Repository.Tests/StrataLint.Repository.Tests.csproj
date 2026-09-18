@@ -6,6 +6,7 @@
     <AssemblyName>StrataLint.Repository.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

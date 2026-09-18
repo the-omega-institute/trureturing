@@ -45,6 +45,11 @@
         "resolved": "3.1.4",
         "contentHash": "5mj99LvCqrq3CNi06xYdyIAXOEh+5b33F2nErCzI5zWiDdLHXiPXEWFSUAF8zlIv0ZWqjZNCwHTQeAPYbF3pCg=="
       },
+      "Acornima": {
+        "type": "Transitive",
+        "resolved": "1.2.0",
+        "contentHash": "pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ=="
+      },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
         "resolved": "3.11.0",
@@ -127,6 +132,17 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "StrataLint": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.EngineeringScope": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )",
+          "StrataLint.Scribe.Documents": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )",
+          "YamlDotNet": "[16.3.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -139,10 +155,33 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
+      "stratalint.engineeringscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.Lean": "[1.0.0, )"
+        }
+      },
       "stratalint.lean": {
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
+      "stratalint.scribe": {
+        "type": "Project",
+        "dependencies": {
+          "Jint": "[4.4.2, )",
+          "QuestPDF": "[2026.7.1, 2026.7.1]",
+          "StrataLint.Engine": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )",
+          "Trureturing.Truth": "[0.1.0, )"
+        }
+      },
+      "stratalint.scribe.documents": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Scribe": "[1.0.0, )"
         }
       },
       "stratalint.testsupport": {
@@ -162,6 +201,15 @@
         "resolved": "1.16.2",
         "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
       },
+      "Jint": {
+        "type": "CentralTransitive",
+        "requested": "[4.4.2, )",
+        "resolved": "4.4.2",
+        "contentHash": "+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
+        "dependencies": {
+          "Acornima": "1.2.0"
+        }
+      },
       "Markdig": {
         "type": "CentralTransitive",
         "requested": "[1.3.2, )",
@@ -173,6 +221,12 @@
         "requested": "[3.5.1, )",
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
+      },
+      "QuestPDF": {
+        "type": "CentralTransitive",
+        "requested": "[2026.7.1, 2026.7.1]",
+        "resolved": "2026.7.1",
+        "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
       },
       "Tomlyn": {
         "type": "CentralTransitive",

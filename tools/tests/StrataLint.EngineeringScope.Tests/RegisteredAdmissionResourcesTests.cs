@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
+public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
     : IClassFixture<RegisteredAdmissionResourcesTests.RegisteredBase>
 {
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
@@ -97,7 +97,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
-    [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -219,7 +218,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
-    [InlineData("Meta/registry.yaml")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
     {
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);

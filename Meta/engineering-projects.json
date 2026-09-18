@@ -415,12 +415,9 @@
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-checks.json",
         "Meta/ci-resources.json",
-        "Meta/domains.yaml",
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "agents/**",
         "docs/develop/spec/**",
         "*.props",
         "*.json",
@@ -430,8 +427,12 @@
         ".gitignore"
       ],
       "execution_excludes": [
+        "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md",
+        "tools/scripts/agent/openproblem/TARGET-GATES.md",
+        "tools/scripts/agent/openproblem/erdos617.py",
+        "tools/scripts/agent/openproblem/standing-check.py"
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
@@ -648,6 +649,7 @@
       ],
       "exclude": [],
       "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -669,9 +671,20 @@
       ],
       "execution_inputs": [
         "**/*.cs",
-        "tools/**/*.csproj",
+        "CLAUDE.md",
         "D5/**",
-        "skills/codex-formal-answer/SKILL.md"
+        "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportConsumers/*.json",
+        "Meta/ReportProducers/*.json",
+        "Meta/domains.yaml",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "lean-report-inputs.json",
+        "skills/**",
+        "tools/**/*.csproj",
+        "tools/scripts/agent/batch_pr.sh"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -751,8 +764,6 @@
         "D5/**",
         "Blueprint/**",
         "Library/**",
-        "Meta/domains.yaml",
-        "Meta/registry.yaml",
         "tools/scripts/katex/**",
         "tools/scripts/renderer/**"
       ],
@@ -858,15 +869,12 @@
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-checks.json",
         "Meta/ci-resources.json",
-        "Meta/domains.yaml",
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "D5/**",
         "Blueprint/**",
         "Library/**",
-        "agents/**",
         "*.props",
         "*.json",
         "*.toml",
@@ -876,8 +884,12 @@
         "docs/develop/spec/**"
       ],
       "execution_excludes": [
+        "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md",
+        "tools/scripts/agent/openproblem/TARGET-GATES.md",
+        "tools/scripts/agent/openproblem/erdos617.py",
+        "tools/scripts/agent/openproblem/standing-check.py"
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"

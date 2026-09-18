@@ -96,6 +96,14 @@
       "steps": []
     },
     {
+      "id": "delta-registry",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "engineering",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
