@@ -1,0 +1,1 @@
+This intentionally unregistered file must prevent a no-resource CI result.
