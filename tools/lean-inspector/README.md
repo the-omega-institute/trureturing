@@ -78,6 +78,9 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 `producer_scopes`，并可声明 `dependency_sources`、完整调用的 `report_execution` 环境，
 以及 `native_inputs = {"kind":"lake-fetched"}`。后者的所有者、库根、模块和配置由 Lake
 workspace 派生，不列包名或以 `.lake/` 前缀推断所有权。
+描述符保留 Lake 配置的 `packagesDir` 原始路径；描述符缺失时，仅该实际存储目录
+完全缺失或为空、且既有 fetched 包均未物化，才可复用已接受的不可变快照。
+未列出的目录、部分检出、文件或别名均要求重新进入 Lake；旧或损坏的描述符只作缓存未命中。
 只有成功完成默认目标、report 和发布的入口才封存 `.reuse.json`；该证据随 current
 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为

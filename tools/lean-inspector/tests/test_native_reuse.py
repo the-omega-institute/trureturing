@@ -5,8 +5,8 @@ import reuse
 
 
 class NativeReuseTests:
-    def fetched_entry(self):
-        self._configure_fetched_git_package()
+    def fetched_entry(self, *, packages_dir='.lake/packages'):
+        self._configure_fetched_git_package(packages_dir=packages_dir)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         self.write('lean-report-inputs.json', json.dumps(policy))
@@ -97,6 +97,155 @@ class NativeReuseTests:
         self.assertIn('phase=ensure status=started', recovered.stderr)
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertEqual(before, self.stamps())
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+    def test_fetched_missing_descriptor_with_unlisted_checkout_requires_lake(self):
+        self.check_unlisted_fetched_checkout('.lake/packages')
+
+    def test_fetched_missing_descriptor_uses_configured_store(self):
+        self.check_unlisted_fetched_checkout('vendor/fetched')
+
+    def check_unlisted_fetched_checkout(self, packages_dir):
+        output = self.fetched_entry(packages_dir=packages_dir)
+        descriptor = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        captured = json.loads(descriptor.read_bytes())['descriptor']
+        package = self.root / packages_dir / 'fetched'
+        sibling = package.with_name('unlisted')
+        self.assertNotIn(sibling.relative_to(self.root).as_posix(),
+                         [p['dir'] for p in captured['packages']])
+        shutil.copytree(package, sibling)
+        shutil.rmtree(package)
+        descriptor.unlink()
+        expected, origins = output.read_bytes(), self.origins()
+        recovered = self.inspect()
+        self.record_result('unlisted-checkout', dict(exit_code=recovered.returncode,
+            ensure_entered='phase=ensure status=started' in recovered.stderr,
+            report_completed='phase=report status=completed' in recovered.stderr,
+            descriptor_restored=descriptor.is_file(), package_restored=package.is_dir(),
+            stdout=recovered.stdout, stderr=recovered.stderr))
+        self.assertIn('phase=ensure status=started', recovered.stderr,
+                      '[FAIL] unlisted_fetched_checkout_requires_native_resolution')
+        self.assertIn('phase=report status=completed', recovered.stderr)
+        self.assertTrue(descriptor.is_file())
+        self.assertTrue(package.is_dir())
+        self.assertEqual(captured['packages_dir'], packages_dir)
+        self.assertEqual(expected, output.read_bytes())
+        self.assertEqual(origins, self.origins())
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+    def test_fetched_store_absence_and_unlisted_partial_materializations(self):
+        output = self.fetched_entry(packages_dir='vendor/fetched')
+        descriptor = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        store = self.root / 'vendor/fetched'
+        expected, origins = output.read_bytes(), self.origins()
+        for materialization in ('absent', 'empty', 'partial', 'file', 'dangling-alias'):
+            with self.subTest(materialization=materialization):
+                shutil.rmtree(store, ignore_errors=False)
+                if descriptor.exists():
+                    descriptor.unlink()
+                if materialization != 'absent':
+                    store.mkdir()
+                if materialization == 'partial':
+                    partial = store / 'unlisted/Foreign'
+                    partial.mkdir(parents=True)
+                    (partial / 'Thing.lean').write_text('def value : Nat := 9\n')
+                elif materialization == 'file':
+                    (store / 'unlisted').write_text('incomplete checkout')
+                elif materialization == 'dangling-alias':
+                    (store / 'unlisted').symlink_to('missing', target_is_directory=True)
+                needs_lake = materialization not in ('absent', 'empty')
+                self.assertEqual(reuse.probe(self.root, output, self.lake)['needs_lake'], needs_lake)
+                recovered = self.inspect()
+                self.assertEqual('phase=ensure status=started' in recovered.stderr, needs_lake)
+                self.assertEqual(descriptor.is_file(), needs_lake)
+                self.assertEqual((store / 'fetched').is_dir(), needs_lake)
+                self.assertEqual(expected, output.read_bytes())
+                self.assertEqual(origins, self.origins())
+                publication.verify_inputs(output, self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+                self.assertFalse((self.root / '.lake/packages').exists())
+                if materialization == 'absent':
+                    store.mkdir()
+
+    def test_fetched_store_aliases_and_obstructions_reject_through_entry(self):
+        output = self.fetched_entry(packages_dir='vendor/fetched')
+        descriptor = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        store = self.root / 'vendor/fetched'
+        for shape in ('store-alias', 'parent-alias', 'store-file', 'parent-file'):
+            with self.subTest(shape=shape):
+                shutil.rmtree(store)
+                descriptor.unlink()
+                path = store.parent if shape.startswith('parent') else store
+                if path.is_dir():
+                    path.rmdir()
+                saved = self.root / 'empty-store'
+                saved.mkdir()
+                if shape.endswith('alias'):
+                    path.symlink_to(saved, target_is_directory=True)
+                else:
+                    path.write_text('not a checkout directory')
+                try:
+                    self.assertTrue(reuse.probe(self.root, output, self.lake)['needs_lake'])
+                    failed = self.inspect(success=False)
+                    self.assertIn('phase=ensure status=started', failed.stderr)
+                    self.assertFalse(publication.member(output, '.reuse.json').exists())
+                    with self.assertRaises(ValueError):
+                        publication.verify_inputs(output, self.root)
+                finally:
+                    path.unlink()
+                    shutil.rmtree(saved)
+                self.inspect()
+                publication.verify_inputs(output, self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        # Lake normalizes this configuration before locating fetched packages.
+        # Its descriptor must retain the unsafe lexical spelling for validation.
+        alias = self.root / 'store-alias'
+        alias.symlink_to('vendor', target_is_directory=True)
+        config = self.root / 'lakefile.toml'
+        lexical = 'store-alias/../vendor/fetched'
+        config.write_text(config.read_text().replace('packagesDir = "vendor/fetched"',
+                                                    f'packagesDir = "{lexical}"'))
+        rejected = self.inspect(success=False)
+        self.assertIn('phase=ensure status=started', rejected.stderr)
+        self.assertIn('unsafe native input path', rejected.stderr)
+        self.assertEqual(json.loads(descriptor.read_bytes())['packages_dir'], lexical)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
+
+    def test_fetched_store_descriptor_damage_reconstructs(self):
+        output = self.fetched_entry()
+        descriptor = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        expected = descriptor.read_bytes()
+        stamps, origins = self.stamps(), self.origins()
+        for damage in ('missing', None, [], '', '../outside', '/outside'):
+            with self.subTest(packages_dir=damage):
+                value = json.loads(expected)
+                if damage == 'missing':
+                    del value['descriptor']['packages_dir']
+                else:
+                    value['descriptor']['packages_dir'] = damage
+                descriptor.write_text(json.dumps(value))
+                recovered = self.inspect()
+                self.assertIn('phase=ensure status=started', recovered.stderr)
+                self.assertIn('phase=report status=completed', recovered.stderr)
+                self.assertEqual(expected, descriptor.read_bytes())
+                self.assertEqual(stamps, self.stamps())
+                self.assertEqual(origins, self.origins())
+                publication.verify_inputs(output, self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+        provenance = publication.member(output, '.provenance.json')
+        old = json.loads(provenance.read_bytes())
+        del old['native_inputs']['descriptor']['packages_dir']
+        provenance.write_text(json.dumps(old))
+        descriptor.unlink()
+        recovered = self.inspect()
+        self.assertIn('phase=ensure status=started', recovered.stderr)
+        self.assertIn('phase=report status=completed', recovered.stderr)
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(origins, self.origins())
         publication.verify_inputs(output, self.root)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
 

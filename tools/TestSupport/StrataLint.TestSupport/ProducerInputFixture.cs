@@ -130,7 +130,7 @@ internal static class ProducerInputFixture
             rows = publication.read_json(report.read_bytes())['modules']
             pin = json.loads((root / 'lake-manifest.json').read_text())['packages'][0]
             configs = ['lakefile.toml', 'lakefile.lean', 'lake-manifest.json', 'lean-toolchain']
-            descriptor = dict(kind='lake-fetched', complete_defaults=True,
+            descriptor = dict(kind='lake-fetched', complete_defaults=True, packages_dir='.lake/packages',
                 workspace_overrides='.lake/package-overrides.json', excluded_dirs=['.lake'], packages=[
                 dict(owner='batchFixture', dir='.', source_roots=['D5', 'Trureturing.lean'],
                      config_paths=configs, remote_url='', scope='', pin=None,

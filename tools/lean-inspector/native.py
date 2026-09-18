@@ -179,11 +179,13 @@ def _git_snapshot(package_dir, entries, package, roots, excluded):
 def _descriptor(value):
     if isinstance(value, dict) and set(value) == {'descriptor', 'resolver'}:
         value = value['descriptor']
-    materials.require_keys(value, {'kind', 'packages', 'excluded_dirs', 'complete_defaults', 'workspace_overrides'},
+    materials.require_keys(value, {'kind', 'packages', 'packages_dir', 'excluded_dirs',
+                                  'complete_defaults', 'workspace_overrides'},
                            'native Lake input population')
     if value['kind'] != selection.NATIVE_INPUT_KIND or type(value['complete_defaults']) is not bool:
         raise ValueError('invalid native Lake population')
-    if (not isinstance(value['packages'], list) or not isinstance(value['workspace_overrides'], str)
+    if (not isinstance(value['packages'], list) or not isinstance(value['packages_dir'], str)
+            or not isinstance(value['workspace_overrides'], str)
             or not isinstance(value['excluded_dirs'], list)
             or any(not isinstance(path, str) for path in value['excluded_dirs'])):
         raise ValueError('invalid native Lake population shape')
@@ -271,6 +273,7 @@ def native_population(root, descriptor):
         return None
     descriptor = _descriptor(descriptor)
     root = Path(root).resolve()
+    _safe_path(root, descriptor['packages_dir'])
     # Lake permits a package buildDir to point at a workspace-owned parent.
     # Normalize those native output paths only; input owner paths stay strict.
     excluded = {_safe_path(root, os.path.normpath(path)) for path in descriptor['excluded_dirs']}
@@ -326,6 +329,15 @@ def current_population(root, previous=None):
     elif previous is not None:
         # A stored resolver is usable only for the wholly absent fetched
         # snapshot. Any present checkout needs current Lake-owned resolution.
+        # Census Lake's store itself: yesterday's package names cannot account
+        # for unlisted siblings, partial checkouts, files or dangling aliases.
+        store = _safe_path(root, previous['descriptor']['packages_dir'])
+        try:
+            with os.scandir(store) as entries:
+                if next(entries, None) is not None:
+                    raise ValueError('native resolver evidence is absent for populated fetched store')
+        except FileNotFoundError:
+            pass
         for package in previous['descriptor']['packages']:
             if isinstance(package['pin'], dict) and package['pin'].get('type') == 'git':
                 if _safe_path(root, package['dir']).exists():

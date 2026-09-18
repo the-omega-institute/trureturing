@@ -139,6 +139,9 @@ private def writeNativeInputDescriptor (ws : Workspace) (pkg : Package) (path : 
   let value := Lean.Json.mkObj [
     ("kind", Lean.toJson ("lake-fetched" : String)),
     ("complete_defaults", Lean.toJson complete),
+    -- Workspace.pkgsDir is rooted at ws.root.dir. Preserve the configured
+    -- spelling before Package.relPkgsDir.normalize can erase aliases.
+    ("packages_dir", Lean.toJson ws.root.config.packagesDir.toString),
     ("workspace_overrides", Lean.toJson (relPathFrom ws.dir ws.packageOverridesFile).toString),
     ("excluded_dirs", Lean.Json.arr excluded),
     ("packages", Lean.Json.arr packages)]

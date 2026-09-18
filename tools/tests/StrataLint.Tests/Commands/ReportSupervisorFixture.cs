@@ -93,6 +93,9 @@ internal sealed class ReportSupervisorFixture : IDisposable
             [[ "$first_event" == "blocked:slot-1.lock" ]]
             if [[ "$slots" == "1" ]]; then
               printf 'release\n' > "$first_release"
+              # Join the released producer before another blocking FIFO open.
+              wait "$first"
+              first=""
               while true; do
                 read_acquisition
                 second_event="$acquisition_event"
@@ -112,7 +115,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
               printf 'release\n' > "$first_release"
               printf 'release\n' > "$second_release"
             fi
-            wait "$first"
+            [[ -z "$first" ]] || wait "$first"
             wait "$second"
             trap - EXIT
             """);
