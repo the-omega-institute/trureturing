@@ -828,3 +828,29 @@ size 5 有 {1,2,4,8,13} 与 Hall 1947 的 {1,3,9,10,13}。Müller 只证到 {0,1
 该方向有 PNAS 论文与专题报告,且他们自己在做自动形式化,按档位律出局。
 arXiv:2604.25214(Niu,size-4 反例)已于 2026-05-14 撤稿,撤稿理由正是 Müller 的 MO 答复
 早六个月证得更强,故该预印本及其后续不作为前置。
+
+## R53(2026-09-19):徽章与 claim 页会互相矛盾,以及 #455 是目前唯一未被 claim 的活靶
+
+**判据:题面徽章不是 claim 状态,claim 页才是。** 本轮把一份外部选靶意见逐条对站点原文复核,
+出现系统性的不一致:#196、#1097、#197 的题面当天仍写着 `OPEN / cannot be resolved with a finite
+computation`,而外部意见称它们已被反驳或已被 claim。去读 claim 页才判得出来——**#196 实测有
+1 条 full proof claim,2026-09-14 由 Liam Kruer 与 Jensen Kohlmeyer 提交(GPT-6 Astra),
+同时附证明与形式化两个外链,内容是构造一个无单调四项等差的 ℕ 排列**,故 #196 出局;题面徽章
+当时尚未更新。反过来,外部意见对 #1097、#197 的断言本轮未能由站点证实,记
+`ASSUMED-UNVERIFIED`,用前须自行读 claim 页。
+
+**操作后果:claim 清查不能外包。** 该外部意见明确报告自己读不到 erdosproblems 的 claim 页、
+且 arXiv 检索端点失败,并拒绝把检索失败写成「无人 claim」——这个自觉是对的,但也意味着
+**清查只能由能取到页面的一侧做**:`curl https://www.erdosproblems.com/forum/thread/<n>/proof-claims`
+可读,零 claim 时的字样是 `No proof claims have been submitted yet.`。派席前按此逐题实测。
+
+**#455 是本轮唯一通过清查的活靶。** 题面:设素数 `q_1 < q_2 < ⋯` 满足 `q_{n+1} − q_n ≥ q_n − q_{n−1}`,
+是否必有 `lim q_n / n² = ∞`?claim 页实测 `No proof claims have been submitted yet.`,
+`Currently working on` 为空(两人标 Looks difficult)。已知结果只有 Richter [Ri76] 的
+`liminf q_n/n² > 0.352⋯`。
+**等价化简**(本仓推导,供后续用):令 `d_n = q_{n+1} − q_n`,由 `d` 单调不减得
+`q_n ≥ (n/2)·d_{n/2}`,而 `d_m ≤ Cm` 无穷次出现即给出 `q_m ≤ q_1 + Cm²`;故原命题等价于
+`d_n / n → ∞`。朴素机制只能走到 `d_n ≳ n / log n`:等间隔的一段就是素数等差数列,长度 `L` 的
+一段要求公差被所有 `p ≤ L` 整除即 `d ≥ primorial(L)`,故 `d_n ≤ Cn` 时每段长 `≤ log(Cn) + O(1)`,
+相异值数 `≥ n / log(Cn)`。这比 Richter 弱,**缺口正是「重复间隔段的整体稀疏性」**,不是逐段估计。
+结论:唯一未被 claim 的候选,但属研究级,不按小时级管线派。
