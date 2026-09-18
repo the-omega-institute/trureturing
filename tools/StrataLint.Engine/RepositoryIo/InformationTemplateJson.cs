@@ -96,7 +96,7 @@ internal static class InformationTemplateJson
         throw new FormatException("DTR-Evidence: empty Name");
     }
 
-    private static bool PlainIdentifier(string value)
+    internal static bool PlainIdentifier(string value)
     {
         var runes = value.EnumerateRunes().ToArray();
         return runes.Length > 0 && IdFirst(runes[0].Value)

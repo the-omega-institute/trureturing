@@ -195,10 +195,10 @@ internal static class InformationTemplateEvidence
         "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"];
 
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
-        IEnumerable<RepoPath> sources)
+        IEnumerable<RepoPath> sources, ImmutableHashSet<string>? theorems = null)
     {
         var governed = sources.Select(path => path.Value).ToImmutableHashSet(StringComparer.Ordinal);
-        var selection = new InformationTemplateSelection(governed);
+        var selection = new InformationTemplateSelection(governed, theorems);
         var inventory = ImmutableHashSet.CreateBuilder<InformationOccurrenceKey>();
         var registered = ImmutableHashSet.CreateBuilder<InformationOccurrenceKey>();
         var claims = new Dictionary<InformationOccurrenceKey, List<InformationTemplateOccurrence>>();
