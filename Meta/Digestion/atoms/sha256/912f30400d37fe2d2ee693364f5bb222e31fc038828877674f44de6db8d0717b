@@ -1,0 +1,19 @@
+**命题 70.7（无需微分的能量控制）。** 若 $Z(\beta/2)<\infty$，则 $E_\beta<\infty$，并有
+$$
+0\le\beta U_\beta
+\le\frac2e\frac{Z(\beta/2)}{Z(\beta)}.
+$$
+特别地，在定理 70.5 的假设下，所有 $\beta>0$ 均有有限配分函数与有限能量，且 $\beta\downarrow0$ 时 $\beta U_\beta=O(1)$。
+
+证明。逐项比较先给出 $Z(\beta)\le Z(\beta/2)<\infty$，故 $\rho_\beta$ 有定义。对 $x\ge0$，由 $e^{y-1}\ge1+(y-1)=y$ 并取 $y=x/2$ 得
+$$
+xe^{-x}\le\frac2e e^{-x/2}.
+$$
+取 $x=\beta a_L$，乘以重数后求非负和，得到
+$\beta E_\beta\le(2/e)Z(\beta/2)$。除以正数 $Z(\beta)$ 即为所求。定理 70.5 使右边对全部正 $\beta$ 有限；在 $0<\beta\le1$ 时又有
+$$
+\frac{Z(\beta/2)}{Z(\beta)}
+\le\frac{C_+}{C_-}2^\gamma,
+$$
+给出与 $\beta$ 无关的界。由于 $a_Le^{-\beta a_L}\le1/(e\beta)$，$\rho_\beta$ 将整个 $H_{\mathrm{obs}}$ 映入 $\mathcal D(A)$。能量有限后，$A\rho_\beta$ 的对角特征值 $a_Lp_L(\beta)$ 非负且可和，所以也可写 $U_\beta=\operatorname{Tr}(A\rho_\beta)$。证毕。
+
