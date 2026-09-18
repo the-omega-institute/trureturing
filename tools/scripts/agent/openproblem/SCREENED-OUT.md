@@ -922,3 +922,13 @@ computation`,而外部意见称它们已被反驳或已被 claim。去读 claim 
   pdftotext 会丢掉 vincular / consecutive 模式的下划线,两篇栈排序论文里不同的映射全印成同一个名字——以 TeX 源或渲染页为准。
 - **载体分工(小样本)。** ChatGPT Pro 三次扫窗口共 0 候选(一次约 60 分钟只精读约 20 篇),但做需要浏览器的文献核对有用:能取到出版商与 ProQuest 的索引摘录,
   并分得清「打开核对」与「索引摘录」、「取不到」与「零结果」。要求其回复为 JSON 时须规定「值内不得出现双引号字符」,否则信封两次因未转义引号整体作废。
+
+## C2(2026-09-19):codex 搜题席读最新三个月——2230 篇、332 份 PDF、1 条开 lane
+
+窗口:arXiv `math.CO`/`cs.DM` 2026-06-01..09-18(降序,最新优先)与 `math.NT` 2025-09..2026-05;清单 1329+160+853 条,去重后摘要筛 2230 篇,PDF 读 332 篇,抽出 1179 条编号 Conjecture/Question/Problem。产出 1 条,记录在 `/tmp` 的 `screened.tsv`(过程材料不入仓)。
+
+- **开 lane**:Dębski–Grytczuk–Naroski–Pawlik–Przybyło–Śleszyńska-Nowak, arXiv:2609.18476v1(2026-09-16),**Conjecture 2 (2)** `A2(i) = A1(i) + 1 for every i ⩾ 3`——论文自己的印刷行 `ϱ3 = (4, 3, 1, 5, 6, …)` 遗漏 2 而首项为 4,`i = 3` 即反例;正文写的观察是 `i ⩾ 4`,猜想印的是 `i ⩾ 3`(#8675)。orchestrator 按 Algorithm 1 亲算 15 行 × 4000 项,与 Table 1/2 逐项一致。
+- **有限核查无反例、不派**:arXiv:2609.03081 Conjecture 3.9(`n = 9` 全部 362880 个排列);arXiv:2601.09510 Conjecture 1.1(中心二项式系数的 2-adic/3-adic 赋值,`257 ≤ n ≤ 10^7`);arXiv:2609.01562 Conjecture 7.4(`496 ≤ n ≤ 10^5`,最近点 `n = 497`);arXiv:2603.29973 Conjectures 2.2(i)/2.3(i)/2.4(i)(`n ≤ 100` 整数精确核查);arXiv:2609.06096 Conjecture 10.1(未判区间 `1001 ≤ d < 2^72`,pdftotext 把上标阈值渲染成 `272`,以 PDF 原文为准)。
+- **源文内已反驳**:arXiv:2609.19372 Pachter–Sturmfels Conjecture 6.3——同文 Example 6.4 以七点图反驳 `k = 2`。
+
+**读数**:与 C1 同形(704 篇/3 条)相比,最新三个月的 math.CO 出货率更低(2230 篇/1 条),但唯一命中的是提交两天内的论文——「新到没人看」这一档的候选来自最新月份,不来自更宽的窗口。
