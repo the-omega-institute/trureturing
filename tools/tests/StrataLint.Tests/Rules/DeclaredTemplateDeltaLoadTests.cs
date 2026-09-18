@@ -152,7 +152,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
         Assert.Empty(Diagnostics(context));
     }
 
-    private static ImmutableArray<Diagnostic> Diagnostics(RuleEvaluationContext context) =>
+    private static ImmutableArray<Diagnostic> Diagnostics(DeltaRuleContext context) =>
         RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics
             .Where(d => d.Message.StartsWith("DTR-", StringComparison.Ordinal)).ToImmutableArray();
 
@@ -171,7 +171,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
     private sealed class WireFixture : IDisposable
     {
         private readonly TemporaryDirectory directory = new();
-        private readonly RuleEvaluationContext context;
+        private readonly DeltaRuleContext context;
         private readonly string reportPath;
         private readonly JsonNode wire;
 
@@ -278,13 +278,13 @@ public sealed class DeclaredTemplateDeltaLoadTests
                 + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}";
         }
 
-        internal RuleEvaluationContext Load(string name)
+        internal DeltaRuleContext Load(string name)
         {
             File.WriteAllBytes(reportPath, StructuredCanonicalWriter.WriteJson(wire.ToJsonString()).ToArray());
             LeanAxiomReport? report = null;
             var error = Xunit.Record.Exception(() => report = RawLeanReportArtifact.ReadFile(reportPath, context.Current));
             Assert.True(error is null, "[FAIL] " + name + " global load failure: " + error?.Message);
-            return RuleEvaluationContext.Create(context.Current, context.Baseline, context.Policy,
+            return DeltaRuleContext.Create(context.Current, context.Baseline, context.Policy,
                 AcceptedLeanClosure.Create(report!), context.Changes, context.MetaEvaluation);
         }
 

@@ -27,10 +27,10 @@ internal sealed record InformationTemplateUniverse(
 
 internal static class DeclaredTemplateBindingRule
 {
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         RepositoryRules.ChangedOrFirstPinD5Modules(context).Any();
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var path in RepositoryRules.ChangedOrFirstPinD5Modules(context))
