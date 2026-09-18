@@ -76,7 +76,11 @@ internal sealed class MisawaHarmonicStrengthPairRefutationDocument
                     + "so its harmonic strength cannot equal {2,4}. No value for minimumSize({2,4}) "
                     + "is asserted.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()))));
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "misawa-nishimura-harmonic-strength-pair-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -85,14 +89,16 @@ internal sealed class MisawaHarmonicStrengthPairRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula MomentSumFormula()
     {

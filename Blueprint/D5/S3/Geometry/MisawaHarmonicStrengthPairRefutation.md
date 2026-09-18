@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/MisawaHarmonicStrengthPairRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/misawa-nishimura-harmonic-strength-pair-refutation` (refuted) by `D5/S3/Geometry/MisawaHarmonicStrengthPairRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"misawa-nishimura-harmonic-strength-pair-refutation","declaration_gid":"D5/S3/Geometry/MisawaHarmonicStrengthPairRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
