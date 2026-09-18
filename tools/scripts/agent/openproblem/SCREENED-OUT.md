@@ -730,20 +730,101 @@ R35 量出「可有限判定的一档共 41 条」却只列了前五条,于是�
 是否为已知未查证,记 `ASSUMED-UNVERIFIED`。它不结算该题,但把搜索面从「两个集合」压到「一个整数」,且与 `|P∪Q| ≥ 60` 相容:
 `A` 需带三十余个素因子,故直接枚举仍不可行。
 
-### #617 r=5:公开状态相互矛盾,而它是纯有限判定
+### #617 r=5:四条 claim 同向,已被他方认领(勘误)
 
-Erdős–Gyárfás 证了 r=3(Chung–Liu 1978 已先证)与 r=4,并指出 r=2 为假;**r=5 是第一个开放情形**。
-该题的 proof-claims 页载 7 条互不相容的 claim:Nick Winter(2026-07-31)与 Rob Sneiderman(2026-07-18)称 K₂₆ 不存在平衡 5-染色,
-Conner Silverstein(2026-07-21)称存在。至多一条为真,故公开状态未定。
+Erdős–Gyárfás 证了 r=3(Chung–Liu 1978 已先证)与 r=4,并指出 r=2 为假;r=5 是第一个开放情形。
+题面是「r ≥ 3 时,K_{r²+1} 的任意 r-染色都存在 r+1 个顶点,其导出 K_{r+1} 上缺至少一色」,
+故一个 r=5 的反例(K₂₆ 的 5-染色使每 6 顶点五色齐现)将直接推翻整题,而 r=5 成立只是推进一个情形。
 
-判据是纯有限的:反例即 K₂₆ 的一个 5-染色,使每 6 个顶点的导出 K₆ 上五色齐现。
-编码为每条边一个颜色的 exactly-one,加上每个 6-子集 × 每色一条长 15 的子句(1625 变元 / 1,151,150 子句),颜色置换对称性按首 r 条边破掉。
-**阶梯自带对照**:`(r,n) = (2,5)` 与 `(3,9)` 必须 SAT(后者即 `K_{r²}` 由 r 阶仿射平面承载),`(3,10)` 与 `(4,17)` 必须 UNSAT(已证的两个情形),
-到 `(5,25)` 仍应 SAT,`(5,26)` 才是问句。器在 `tools/scripts/agent/openproblem/erdos617.py`。
+**本节原记「7 条互不相容的 claim,Conner Silverstein 称存在,公开状态未定」是错的,今按原文勘正。**
+2026-09-18 读 `https://www.erdosproblems.com/forum/thread/617/proof-claims` 原文:四条 r=5 claim 方向一致,
+全部主张 K₂₆ 不存在这样的染色——Nick Winter(2026-07-31,附形式化外链)、Anthony Rose(2026-07-25,
+458 个 SAT 实例全 UNSAT,逐个 DRAT 证书)、Conner Silverstein(2026-07-21)、Rob Sneiderman(2026-07-18,
+Kang–Pikhurko 界)。原记之误在于把 Silverstein 摘要开头的「Assume for contradiction that a five-coloring
+… exists」读成了存在性主张,它是反证法的假设句。同页 Sneiderman 另有 r=6(K₃₇)、r=7(K₅₀)、r=8(K₆₅)、
+r=9(K₈₂)四条 claim,均附 LRAT 证书。
+
+**结论**:r=5 至 r=9 的有限情形在 2026 年 7 月已由多方认领,不满足「无人 claim」的选题前提,出局。
+整题(∀r)仍开放,但其可有限判定的前几个情形已被扫过,剩下的是无界方向。
+
+`tools/scripts/agent/openproblem/erdos617.py` 的编码与对照阶梯保留作为可复用工具:
+每条边一个颜色的 exactly-one,加每个 6-子集 × 每色一条长 15 的子句(1625 变元 / 1,151,150 子句),
+颜色置换对称性按首 r 条边破掉;自带对照为 `(r,n) = (2,5)`、`(3,9)`、`(5,25)` 必 SAT,
+`(3,10)`、`(4,17)` 必 UNSAT。同型的「r-染色使每个 K_{r+1} 见全色」判定问题可直接复用它。
 
 ### 对选题函数的结论
 
-Erdős 这条线的 41 条可结算面**已逐条列名并逐条给出死因**。除 #617 的 r=5 外,没有一条留下本机预算内的有限空隙:
-要么是正被系统攻击的名题,要么其有限检查已被该题 forum 页记录的社区计算推到远超本机的规模。
-**第一关因此再加一条固定动作:读 forum 讨论页,不止读题页。** #993 与 #743 都是题页不载而 forum 页载着计算前沿的例子,
-只读题页会让人以为它们还没被算过。
+Erdős 这条线的可结算面就是上表那 41 条,已全部列名。本轮跑掉两条(#458、#699),两条都无反例,
+且两条都没有前人上界可比,故按 §3.6 ③ 都不作进展;#993 仍在预算内未跑。相较之下 OEIS 的 `%F`/`%C` 猜想线本会话产出 8 条已合入的结算。
+**按每小时结算数排序,OEIS 线优先;Erdős 线按上表逐条推进,不再重新普查徽章。**
+
+## R48–R50 与 C1(2026-09-18):arXiv 结尾栏三轮、首个 codex 本地去重搜题席,与「GPT Pro 席不能去重」的两次代价
+
+会话内搜题轮编号(R47–R49)与本文件的节号错开一位;本节按内容记。
+
+### 搜题轮「Kok」(ChatGPT Pro,arXiv math.CO 2025-07/08、math.GM/HO 2025-02..06 题级,期刊问题栏)
+
+提出 Kok, arXiv:2507.16500, **Conjecture 2.12** 与 **Conjecture 2.9**。2.12 仓内已由 #7348 反驳(`JacoExponentialDominationRefutation`)——
+席位无本地树,`D5/`、`Problems/` 去重未完成,orchestrator `git grep -il -P '\bjaco\b|2507\.16500'` 命中 5 个文件全是 2.12 lane。
+2.9 开 lane:#8569 → PR #8588(v1,tests 席编译邻接矩阵变异证明私有定理非见证,关闭)→ PR #8614(v2,bind-only)。
+同轮报 Kourovka 3.46/18.50/19.25/20.125/21.8/21.24/21.147/21.150 已被 arXiv:2607.17477 解决——不派席。
+Crux 累积未解表当轮下载失败,未读。
+
+### 搜题轮「abelian4」(ChatGPT Pro,math.CO 2025-09/10、cs.DM 2025-07/08、math.NT 2025-02/03、math.GM 2024 部分)
+
+唯一候选 Fazekas–Mammoliti–Mercaş–Simpson, arXiv:2604.23188, **Conjecture 4**(`w = abab`,论文自己的 Table 1 印着反例行):
+#8589 → PR #8603 MERGED `1bac71778f`。已结算、不派席:DeLeo–Henderschedt–Wells arXiv:2605.29166 的 lex-merge 最优性猜想已由
+Ramos–Hulak–de Queiroz arXiv:2608.08431 对全部 `n` 证明(附 Isabelle/HOL 形式化);Niu arXiv:2605.04328(Fibonacci 立方 pebbling 数)已撤稿,
+v2 评注指向 Mollard 2025 的先证。
+
+### C1(codex-cli 搜题席,math.CO 2025-02..06 与 cs.DM 2025-01..06 全量清单,本地树去重)
+
+首个用 codex 席做 arXiv 清单搜题的轮次:读 704 篇去重摘要、402 篇 PDF(结尾三分之一自动标记),**一轮出 3 个问题 / 4 条记录**,
+全部经 orchestrator 亲验后开 lane:Misawa–Nishimura arXiv:2505.06893 Conjecture 3.3(`{2,4}`,#8616)、Chauve–Zhang arXiv:2505.13796 §6 结尾问句两部分
+(`n=3,d=2` / `n=4,d=1`,#8618)、Göbel–Misra arXiv:2506.23936 Conjecture 5.3(`m=7`,#8621)。席位自报已在源文内结算的 6 篇
+(2501.00784、2502.01161、2505.02045、2506.20296、2506.04407、2504.19031)与仓内已有卷宗的 2503.04122,均不派席。
+**读数**:同日 GPT Pro 三轮各出 0–1 条,codex 一轮出 3 条;差别在能不能 `git grep`——GPT Pro 席的每条候选都要 orchestrator 再做一遍去重,
+而 codex 席把去重命令与命中数写进候选记录。搜题以 codex 席为主,GPT Pro 席只做文献结算核对。
+
+### 搜题轮 R49(ChatGPT Pro,chrono 池;math.CO 2025-11..2026-05、cs.DM 2025-09..2026-05、math.NT 2025-04..08、math.GM 2025、cs.FL/cs.GT 部分)
+
+五条候选,两条开 lane、三条判掉:
+
+- **开 lane**:Wenpeng Zhang, arXiv:2506.17235, §1 **Question (D)**(两个 Legendre 特征和之差的常数 `c` 只能是 0 或 2?)——`f = X²`, `g = (X+1)²`
+  对每个奇素数差恒为 1(#8626);Bašić–Gottlieb–Krnc, arXiv:2606.16828, **Conjecture 2** 于印刷边界 `r = 1`(`G([1]) = 1` 而公式给 2,与同页
+  Conjecture 4 的 `n = 1` 值一致;#8628)。
+- **仓内已结算**:同文 **Conjecture 3** 的 `r = 7, k = 5`(`R^5_{7,6} = PS_6`,377 个位置)已由 `D5/S0/Certificates/Games/CrimGrundyRefutation` 反驳
+  (`escape-witness` 依据,冻结)。席位无本地树,再一次把已落地的结果当候选。
+- **已发表定理的即时实例**:Fried, arXiv:2607.07013, Conjecture 10.2(加权投票博弈由 swing table 在全部 simple games 中唯一确定)——
+  swing table 经双重计数给出 Chow 参数(`Σ_S v(S)` 与各 `Σ_{S∋i} v(S)`),而 Chow(1961)定理正是「阈值函数由 Chow 参数在全部布尔函数中唯一确定」
+  (arXiv:1206.0985 明写);按 R32 规则「某已发表定理的即时实例」判掉,不开 lane、不 cover。
+- **不派**:Relia, arXiv:2402.19365v2, Conjecture 1(顶点覆盖算法的正确性)——席位的 9 顶点「假阴性」依赖对四个过程与匹配选取/平局规则的转写,
+  论文摘要自述正确性未定;转写不确定的算法反驳不是有限判定,不派。
+- 席位顺手核出的已结算:Zhang 同文 Question (A) 由 Nica arXiv:2507.09991 Example 5.3 直接证明(不触及 (D));Bouras arXiv:2509.09745 / A356247
+  三条猜想 OEIS 记 Cloitre 2025 已证;arXiv:2312.16052 的 vincular 模式 Fibonacci-平方猜想已是其 2026-01 修订版的 Theorem 5。
+
+### 方法学读数
+
+- **GPT Pro 席不能去重,已两次把仓内已落地的结果当候选**(Kok 2.12、CRIM Conjecture 3)。它的候选一律先过 `git grep -il '<arXiv 号>|<对象名>' origin/dev -- D5 Blueprint Problems Library`,
+  命中即读该模块的 `claim` 与卷宗;这一步不能交给席位。
+- `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`;派前查 `nyxid oracle pool show <slug> --output json` 的 `online_workers`,
+  `NYX_TIMEOUT` 两次即查任务状态,`queued + Attempts 0` 是死池不是慢。
+
+## R52(2026-09-18):`DECIDABLE` 徽章不等于边界已知,与 size-4 Sidon-extension 的出局
+
+**#475(Graham valid orderings)出局:有限残余没有可枚举的边界。** 页面 badge 是
+`DECIDABLE / Resolved up to a finite check`,但已知结果由五段拼成,每段都带无效常数:
+小 t 的 Costa–Della Fiore 2026 `t ≤ e^{c(log p)^{1/3}}`、中 t 的 Pham–Sauermann 2026
+`1 ≪_α t ≤ p^{1-α}`、大 t 的 Bedert–Bucić–Kravitz–Montgomery–Müyesser 2025
+`p^{1-c} ≤ t ≤ (1-o(1))p`、极大 t 的 Müyesser–Pokrovskiy 2025 `t ≥ (1-o(1))p`,
+另有 `t ≤ 12` 与 `p-3 ≤ t ≤ p-1`。无一篇给出显式 p₀,故「剩下的有限检查」没有边界可跑完;
+要兑现该 badge 得先把五个常数各自显式化。**判据:`DECIDABLE` 只断言原则上有限,不断言边界已知——
+入管线前必须找到显式阈值,找不到即出局。** 验小素数或抽样都关不掉它(抽样本来也不是证明)。
+
+**size-4 Sidon-extension 出局:专家社群在攻。** #707($1000)已由 Alexeev–Mixon 反驳并形式化;
+残余的真开放问题是「size-4 的 Sidon 集是否总可扩成完美差集」——size 2 平凡、size 3 由 Sawin 证得总可扩、
+size 5 有 {1,2,4,8,13} 与 Hall 1947 的 {1,3,9,10,13}。Müller 只证到 {0,1,3,11} 是候选反例
+(所有*已知*构造够不着),缺口是排除非 Singer 型差集,挂在 prime power conjecture 上。
+该方向有 PNAS 论文与专题报告,且他们自己在做自动形式化,按档位律出局。
+arXiv:2604.25214(Niu,size-4 反例)已于 2026-05-14 撤稿,撤稿理由正是 Müller 的 MO 答复
+早六个月证得更强,故该预印本及其后续不作为前置。
