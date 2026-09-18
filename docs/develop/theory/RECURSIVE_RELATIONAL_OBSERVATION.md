@@ -36857,3 +36857,269 @@ $$
 该载体仍只有一个粗标签，所以 $E_Ad_A=q_A$，后验缺陷为 $A_\star$。结果 $B$ 的活载体为 $J_B=\{3\}$，两后验均为唯一概率 $(1)$，故其缺陷为零。按实际结果概率加权得到 $A_\star/2$，而 $A_\star>A_\star/2$ 证明逐结果无权不增失败。最后，式 (85.2) 中其余项全部非负，保留任意一个后验加权项便得所述加权界；本例在结果 $A$ 上有 $b_AA_\star=A_\star/2$，等号成立。证毕。
 
 ## 85.99 追加锚
+
+## 86. 自适应观察下的后验缺陷预算与有限越界界
+
+**定义与假设 86.1（有限历史树、共同信道与活动支撑）。** 固定有限非空集合 $J,I$、满射 $r:J\to I$、实际先验 $d_0\in\Delta(J)$ 及严格正参考先验 $q_0\in\Delta(J)$。潜状态 $j$ 在全部观察期间保持不变，粗标签始终为同一个 $r(j)$；$d_0$ 允许零坐标。取确定的有限时域 $N\in\mathbb N=\{0,1,\ldots\}$，每步观察字母集 $Z_1,\ldots,Z_N$ 有限非空，置
+$$
+\mathscr H_t=\prod_{s=1}^t Z_s\quad(0\le t\le N),\qquad
+\mathscr H_0=\{\varnothing\}.
+$$
+对每个 $t<N$、$h\in\mathscr H_t$，给定两模型共同使用的有效观察核
+$$
+K_t(z\mid j,h)\ge0,\qquad
+\sum_{z\in Z_{t+1}}K_t(z\mid j,h)=1\quad(j\in J).
+$$
+共同性要求在同一潜状态 $j$、同一已记录历史 $h$ 下，两模型的条件核确为这个 $K_t$。它可以随历史改变；对各自后验使用同一策略函数，并不足以保证所得有效核相同。若策略含随机选择，可将已实现的选择纳入记录；若省略它，则共同性须对所保留历史下的有效核成立。
+
+对 $h=(z_1,\ldots,z_t)$，记 $h_s$ 为其长度 $s$ 的前缀，$hz$ 为追加一个结果，定义
+$$
+L_h(j)=\prod_{s=0}^{t-1}K_s(z_{s+1}\mid j,h_s),\qquad
+L_{\varnothing}(j)=1,
+$$
+$$
+P_d(h)=\sum_jd_{0j}L_h(j),\qquad
+P_q(h)=\sum_jq_{0j}L_h(j).
+$$
+在 $\Omega=J\times\mathscr H_N$ 及其全体子集上，对任意 $\nu\in\Delta(J)$ 定义联合律
+$$
+\mathbb P_\nu(\{(j,w)\})=\nu_jL_w(j).
+$$
+它非负归一化，且记隐藏坐标为 $X$、记录前缀为 $H_t(j,w)=w_t$ 时，有
+$$
+\mathbb P_\nu(X=j,H_t=h)=\nu_jL_h(j). \tag{86.1}
+$$
+以下将 $\mathbb P_{d_0},\mathbb P_{q_0}$ 简写为 $\mathbb P_d,\mathbb P_q$，故 $H_t$ 的两份边缘分别为 $P_d,P_q$。只取已记录历史生成的过滤族
+$$
+\mathcal F_t=\sigma(H_t),\qquad 0\le t\le N.
+$$
+它不额外包含隐藏坐标或粗标签的信息；以下对粗纤维的条件分解不假定 $r(X)$ 已被观察。
+
+对每个 $P_q(h)>0$ 的历史定义
+$$
+J_h=\{j\in J:L_h(j)>0\},\qquad
+I_h=r(J_h),\qquad r_h=r|_{J_h}:J_h\to I_h,
+$$
+$$
+q_j^h=\frac{q_{0j}L_h(j)}{P_q(h)}\quad(j\in J_h),\qquad
+p_i^h=\sum_{\substack{j\in J_h\\r(j)=i}}q_j^h\quad(i\in I_h).
+$$
+$J_h,I_h$ 非空，$r_h$ 满射，$q^h$ 是 $J_h$ 上严格正的概率，全部 $p_i^h>0$。在每个这样的参考历史上，沿用定义 74.1 的质量算子
+$$
+(C_hu)_i=\sum_{\substack{j\in J_h\\r(j)=i}}u_j,\qquad
+(B_hv)_j=\frac{q_j^h}{p_{r(j)}^h}v_{r(j)},\qquad
+E_h=B_hC_h.
+$$
+实际律满足 $\mathbb P_d\ll\mathbb P_q$，特别地 $P_d(h)>0\Rightarrow P_q(h)>0$。只在 $P_d(h)>0$ 时定义实际后验及其粗质量
+$$
+d_j^h=\frac{d_{0j}L_h(j)}{P_d(h)}\quad(j\in J_h),\qquad
+a_i^h=(C_hd^h)_i.
+$$
+$q^h,d^h$ 分别是两模型给定 $H_t=h$ 后在 $J_h$ 上的隐藏状态条件律，各自在其正概率定义域上使用；仅有 $P_q(h)>0$ 时不定义 $d^h$。
+
+对 $t<N$、$P_d(h)>0$，参考纤维的下一结果条件律对每个 $i\in I_h$ 定义为
+$$
+\kappa_{t,i}^{q,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h)}{p_i^h},
+$$
+实际条件律只在 $a_i^h>0$ 时定义为
+$$
+\kappa_{t,i}^{d,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}d_j^hK_t(z\mid j,h)}{a_i^h}.
+$$
+沿用定理 73.3 的自然对数及正实际支撑求和约定 $D(u\Vert v)=\sum_{x:u_x>0}u_x\ln(u_x/v_x)$，置
+$$
+\delta_t(h)=D(d^h\Vert E_hd^h),\qquad
+G_t(h)=\sum_{i:a_i^h>0}a_i^h
+ D(\kappa_{t,i}^{d,h}\Vert\kappa_{t,i}^{q,h}). \tag{86.2}
+$$
+其中 $\delta_t$ 定义到 $t=N$，$G_t$ 只定义于 $t<N$。这些值均有限非负。$G_t$ 比较给定潜粗标签后的结果预测，采用实际粗质量加权；它一般不等于两份无粗标签结果边缘之间的 KL。对 $P_d(h)=0$ 的历史，只将标量函数 $\delta_t(h)$、$G_t(h)$ 零延拓，不在那里指定实际后验。记相应随机变量为 $\delta_t=\delta_t(H_t)$、$G_t=G_t(H_t)$；后文过程等式均相对于 $\mathbb P_d$ 几乎处处成立。
+
+**证明（联合律、前缀与支撑）。** 固定 $j$ 及长度 $t$ 的前缀 $h$，对所有后缀逐层从 $z_N$ 向 $z_{t+1}$ 求和。每次在已固定的先前历史上使用 $\sum_zK_s(z\mid j,h_s)=1$，故
+$$
+\sum_{z_{t+1},\ldots,z_N}
+ \prod_{s=t}^{N-1}K_s(z_{s+1}\mid j,h_s)=1,
+$$
+这里 $h_s$ 由固定前缀和该后缀确定；$t=N$ 时为单个空乘积。因此
+$$
+\sum_{w\in\mathscr H_N:w_t=h}L_w(j)=L_h(j).
+$$
+乘 $\nu_j$ 即得式 (86.1)，取 $t=0$ 再对 $j$ 求和得总质量一。有限条件概率的比率于是给出上述后验公式。$H_t$ 是 $H_{t+1}$ 的截断，故 $\mathcal F_t\subseteq\mathcal F_{t+1}$。
+
+若 $\mathbb P_q(\{(j,w)\})=q_{0j}L_w(j)=0$，严格正 $q_{0j}$ 强制 $L_w(j)=0$，从而实际点质量也为零。在有限空间逐点求和，得到 $\mathbb P_d\ll\mathbb P_q$。同样，$P_q(h)>0$ 恰好表示 $J_h$ 非空；参考后验在此载体严格正且总和为一，$r_h$ 满射给出各 $p_i^h>0$。在 $P_d(h)>0$ 时，$d^h\ge0$ 且总和也为一。
+
+在 $(J_h,I_h,r_h,q^h)$ 上，$C_h,B_h,E_h$ 正是定理 74.2 的静态参考重建算子，非负列随机，故 $E_hd^h$ 是概率。若 $d_j^h>0$，则 $a_{r(j)}^h\ge d_j^h>0$，所以
+$$
+(E_hd^h)_j=\frac{q_j^h a_{r(j)}^h}{p_{r(j)}^h}>0.
+$$
+这给出 $d^h\ll E_hd^h$，也有 $d^h\ll q^h$。行随机性使各已定义的 $\kappa$ 非负归一化。若 $\kappa_{t,i}^{q,h}(z)=0$，其分子的每个非负项为零；由 $q_j^h>0$ 得该纤维上每个 $K_t(z\mid j,h)=0$。因此在 $a_i^h>0$ 时，$\kappa_{t,i}^{d,h}(z)=0$，即 $\kappa_{t,i}^{d,h}\ll\kappa_{t,i}^{q,h}$。全部 KL 的正分子都有正分母，有限载体保证其值有限；对这些归一化且绝对连续的概率对使用 [Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/0ab255d9f64bf6735d5da1930b2565e3944c635d/D5/S3/Divergence/GrandmotherTheorem.lean)，得到 $\delta_t,G_t\ge0$。这是定理 73.3、74.2 的支撑约定在每个活动载体上的使用。证毕。
+
+**定理 86.2（历史上的缺陷平衡、补偿鞅与有限期望预算）。** 在定义与假设 86.1 下，对每个 $t<N$ 及 $P_d(h)>0$，有
+$$
+\boxed{
+\delta_t(h)=G_t(h)+
+ \sum_{z:P_d(hz)>0}\frac{P_d(hz)}{P_d(h)}\delta_{t+1}(hz),
+\qquad
+\mathbb E_d[\delta_{t+1}\mid\mathcal F_t]=\delta_t-G_t.
+} \tag{86.3}
+$$
+定义
+$$
+A_t=\sum_{s=0}^{t-1}G_s,\qquad
+M_t=\delta_t+A_t\quad(0\le t\le N). \tag{86.4}
+$$
+则 $\delta$ 是非负超鞅，$M$ 是非负鞅，均相对于 $(\mathcal F_t)$ 及实际律 $\mathbb P_d$。$A_0=0$，$A$ 非负非减，$A_{t+1}-A_t=G_t$ 为 $\mathcal F_t$-可测；对 $t\ge1$，$A_t$ 为 $\mathcal F_{t-1}$-可测，故 $A$ 可预测。对每个 $0\le n\le N$，有
+$$
+\boxed{
+\mathbb E_d\delta_n+\sum_{s=0}^{n-1}\mathbb E_dG_s=\delta_0,
+\qquad \delta_0=D(d_0\Vert E_{\varnothing}d_0).
+} \tag{86.5}
+$$
+这是期望预算；它不主张逐路径的 $\delta_t+A_t=\delta_0$，也不主张 $\delta_t$ 逐路径非增。Doob 分解写成 $\delta=M-A$，其可预测部分是 $-A$。
+
+**证明。** 固定 $t<N$ 及实际正历史 $h$。将定理 85.2 的输入逐项取为
+$$
+(J,I,r,q,d,K)=(J_h,I_h,r_h,q^h,d^h,K_t(\,\cdot\mid\,\cdot,h)).
+$$
+定义 86.1 已给出有限非空载体、满射、严格正参考、实际概率及共同非负行随机核，允许实际零坐标。由 $L_{hz}(j)=L_h(j)K_t(z\mid j,h)$，两份下一结果质量恰为
+$$
+b_z=\sum_{j\in J_h}d_j^hK_t(z\mid j,h)
+=\frac{P_d(hz)}{P_d(h)},\qquad
+c_z=\sum_{j\in J_h}q_j^hK_t(z\mid j,h)
+=\frac{P_q(hz)}{P_q(h)}. \tag{86.6}
+$$
+
+对每个 $c_z>0$，定义 85.1 的活动载体及满射是
+$$
+(J_h)_z=\{j\in J_h:K_t(z\mid j,h)>0\}=J_{hz},\qquad
+(I_h)_z=I_{hz},\qquad (r_h)_z=r_{hz}.
+$$
+其参考后验满足
+$$
+(q_z^h)_j=\frac{q_j^hK_t(z\mid j,h)}{c_z}
+=\frac{q_{0j}L_{hz}(j)}{P_q(hz)}=q_j^{hz}\quad(j\in J_{hz}). \tag{86.7}
+$$
+这个识别对 $b_z=0<c_z$ 也成立，因为参考后验已在全部参考正历史上定义。进一步记
+$$
+n_{iz}^h=\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h).
+$$
+则 $I_{hz}=\{i\in I_h:n_{iz}^h>0\}$，且 $p_i^{hz}=n_{iz}^h/c_z$。所以定义 85.1 的更新重建核在 $J_{hz}\times I_{hz}$ 上恰为
+$$
+(B_z^h)_{ji}
+=\mathbf1_{r(j)=i}\frac{q_j^hK_t(z\mid j,h)}{n_{iz}^h}
+=\mathbf1_{r(j)=i}\frac{q_j^{hz}}{p_i^{hz}}
+=(B_{hz})_{ji}.
+$$
+粗化同为 $C_{hz}$，故更新投影是 $E_{hz}$。若 $b_z>0$，由实际绝对连续性得 $c_z>0$，并且
+$$
+(d_z^h)_j=\frac{d_j^hK_t(z\mid j,h)}{b_z}
+=\frac{d_{0j}L_{hz}(j)}{P_d(hz)}=d_j^{hz}.
+$$
+因此定理 85.2 中的后验缺陷正是 $\delta_{t+1}(hz)$，其条件证据项正是式 (86.2) 的 $G_t(h)$。直接应用式 (85.2)，即得式 (86.3) 的第一式；实际零结果不进入后验和。式 (86.1)、(86.6) 给出正历史原子上的实际下一结果条件概率 $b_z$，故第二式正是第一式的条件期望写法。
+
+所有标量过程由当前历史决定，因而适应。历史树有限，各节点的实数值有限，包括规定为零的实际零历史，所以各时间的 $\delta_t,G_t,A_t,M_t$ 均可积。由式 (86.3) 及 $G_t\ge0$，$\delta$ 满足单步超鞅不等式。有限次塔式条件化给出全部 $s\le t\le N$ 的超鞅关系。
+
+$A_{t+1}=A_t+G_t$ 给出非减性及增量可测性；$A_t$ 的每个加项在 $t\ge1$ 时均为 $\mathcal F_{t-1}$-可测，故得到可预测性。再由式 (86.3)，
+$$
+\mathbb E_d[M_{t+1}\mid\mathcal F_t]
+=\delta_t-G_t+A_t+G_t=M_t.
+$$
+非负性来自 $\delta_t,A_t\ge0$，有限次条件化给出鞅关系。空历史使 $\delta_0$ 确定，$M_0=\delta_0$；取期望并展开 $A_n$ 即得式 (86.5)。同时
+$$
+\sum_{s=0}^{t-1}\mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]
+=-\sum_{s=0}^{t-1}G_s=-A_t, \tag{86.8}
+$$
+所以 Doob 可预测部分的符号是负号。证毕。
+
+附引：Steven P. Lalley，*Conditional Expectation and Martingales*，[§1.1 的鞅与超鞅定义、§1.2 Corollary 1 的期望恒等式](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=1)。式 (86.8) 使用离散 Doob 分解的通常约定：可预测部分为条件增量之和，鞅部分为原过程减去该和，见 Mathlib 的 [predictablePart、martingalePart 及 martingale_martingalePart](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Martingale/Centering.lean)。
+
+**定理 86.3（有界停止预算与有限时域最大界）。** 在定义与假设 86.1 下，对每个取值于 $\{0,\ldots,N\}$ 的 $(\mathcal F_t)$-停止时刻 $\tau$，有
+$$
+\boxed{
+\mathbb E_d\delta_\tau+
+ \sum_{s=0}^{N-1}\mathbb E_d[\mathbf1_{\{\tau>s\}}G_s]
+=\mathbb E_d[\delta_\tau+A_\tau]=\delta_0.
+} \tag{86.9}
+$$
+费用只计 $s<\tau$，不包含 $G_\tau$。特别地，$\mathbb E_d\delta_\tau\le\delta_0$。对每个实数 $\lambda>0$，有
+$$
+\boxed{
+\mathbb P_d\!\left(\max_{0\le t\le N}\delta_t\ge\lambda\right)
+\le\min\!\left(1,\frac{\delta_0}{\lambda}\right).
+} \tag{86.10}
+$$
+
+**证明。** 有界停止值和全部有限和均可积。逐路径的有限望远镜恒等式为
+$$
+\delta_\tau=\delta_0+
+ \sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}(\delta_{s+1}-\delta_s),
+\qquad
+A_\tau=\sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}G_s.
+$$
+停止时刻条件给出 $\{\tau>s\}\in\mathcal F_s$。对第一式取期望，利用这个指示函数的可测性及式 (86.3)，得到
+$$
+\begin{aligned}
+\mathbb E_d\delta_\tau
+&=\delta_0+\sum_{s=0}^{N-1}
+ \mathbb E_d\!\left[\mathbf1_{\{\tau>s\}}
+   \mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]\right]\\
+&=\delta_0-\sum_{s=0}^{N-1}
+ \mathbb E_d[\mathbf1_{\{\tau>s\}}G_s].
+\end{aligned}
+$$
+这与 $A_\tau$ 的表达式给出式 (86.9)，再由非负费用得停止期望上界。
+
+令
+$$
+B_\lambda=\left\{\max_{0\le t\le N}\delta_t\ge\lambda\right\},
+\qquad
+\sigma(\omega)=
+\begin{cases}
+\min\{t\in\{0,\ldots,N\}:\delta_t(\omega)\ge\lambda\},
+ &\omega\in B_\lambda,\\
+N,&\omega\notin B_\lambda.
+\end{cases}
+$$
+对每个 $s<N$，
+$$
+\{\sigma>s\}=\bigcap_{t=0}^{s}\{\delta_t<\lambda\}\in\mathcal F_s,
+$$
+而 $\{\sigma\le N\}=\Omega$，故 $\sigma$ 是有界停止时刻。在 $B_\lambda$ 上，包括首次在 $N$ 命中的路径，$\delta_\sigma\ge\lambda$；在补集上 $\sigma=N$ 且 $\delta_\sigma\ge0$。因此不把事件 $B_\lambda$ 等同于 $\{\sigma\le N\}$，而是使用
+$$
+\lambda\mathbf1_{B_\lambda}\le\delta_\sigma.
+$$
+由式 (86.9) 得
+$$
+\lambda\mathbb P_d(B_\lambda)\le\mathbb E_d\delta_\sigma\le\delta_0.
+$$
+除以 $\lambda>0$，再结合概率至多为一，即得式 (86.10)。初始即命中时 $\sigma=0$；$N=0$ 时全部费用和为空、$\sigma=0$，上述两种事件分支和不等式仍成立。证明仅使用确定有限时域内的求和。证毕。
+
+附引：Lalley 同文，[§3.1 Theorem 1，PDF 第 7–8 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=7)给出有界停止期望，[§4 Proposition 7 证明中的有限 $n$ 最大界，PDF 第 12 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=12)给出式 (86.10) 的非负超鞅形式。Steven R. Howard、Aaditya Ramdas、Jon McAuliffe、Jasjeet Sekhon，*Time-uniform Chernoff bounds via nonnegative supermartingales*，[arXiv:1808.03204v8，Lemma 1、式 (2.11)，PDF 第 15 页](https://arxiv.org/pdf/1808.03204v8#page=15)，其[§6.1 式 (6.1)，PDF 第 45 页](https://arxiv.org/pdf/1808.03204v8#page=45)给出固定有限时域的首次越界停止论证；这里仅使用这一有限步骤。
+
+**推论 86.4（三状态边界的尖锐性与逐路径增加）。** 在命题 85.3 的同一三状态实验中，取 $N=1$，唯一粗标签下的先验为
+$$
+q_0=(1/4,1/4,1/2)^{\mathsf T},\qquad
+d_0=(9/20,1/20,1/2)^{\mathsf T},
+$$
+确定性观察 $A=\{1,2\}$ 或 $B=\{3\}$。记该命题的正二点 KL 标量为 $a_*:=A_\star>0$，则
+$$
+\delta_0=\frac{a_*}{2},\qquad G_0=0,\qquad A_0=A_1=0,
+\qquad
+\delta_1=
+\begin{cases}
+a_*,&H_1=A,\\
+0,&H_1=B,
+\end{cases}
+$$
+两种结果的实际概率各为 $1/2$。于是 $M_1=\delta_1$ 非常值，并且
+$$
+\boxed{
+\mathbb P_d\!\left(\max_{0\le t\le1}\delta_t\ge a_*\right)
+=\frac12=\frac{\delta_0}{a_*}.
+} \tag{86.11}
+$$
+故式 (86.10) 在阈值 $\lambda=a_*$ 取等；同一个实验也排除逐路径缺陷非增及逐路径恒定预算。
+
+**证明。** 命题 85.3 的式 (85.8) 及 $\mathcal G=0$，经定理 86.2 的后验与费用识别，直接给出所列 $\delta_0,G_0,\delta_1$；由定义得 $A_0=A_1=0$。因为 $0<\delta_0=a_*/2<a_*$，阈值事件恰为结果 $A$，概率为 $1/2$，得到式 (86.11)。在该结果上 $M_1=\delta_1=2\delta_0>M_0$，而结果 $B$ 上 $M_1=0$；所以保持期望的鞅并非逐路径常量。这里只断言所示阈值取等。证毕。
+
+## 86.99 追加锚
