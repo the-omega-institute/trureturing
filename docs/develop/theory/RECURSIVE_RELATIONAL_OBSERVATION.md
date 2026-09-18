@@ -33011,3 +33011,374 @@ $$
 本节是既有项目声明与标准条件期望、Shannon 链式法则、有限维线性代数的桥接整理。各处引用只承担已列出的精确命题；事件方差、分区基数及满射推论另给推导。这里没有新增 Lean 声明，也没有把整节散文或用户提出的分层半群、热迹与 Gibbs 构造宣告为已形式化。本节不改变第 33、66、68 节的结论。
 
 ## 69.99 追加锚
+
+## 70. 有限观察塔的层速率、热迹与 Gibbs 熵
+
+本节在第 69 节的观察子空间上指定时间尺度。有限观察给出可见子空间及其正交细节层；各层的衰减速率是另加的数据。下面依次构造其生成元、条件平均半群及 Gibbs 态，并由累计可见秩推导热迹与熵的共同指数。全部对数未标底时均为自然对数，熵的单位为 nat；本节的 $\beta>0$ 专指逆温度。
+
+### 70.1 有限分区与可见 Hilbert 空间
+
+**定义 70.1（观察塔及其细节层）。** 设 $(X,\mathcal F,\mu)$ 为概率空间，$(\mathcal P_L)_{L\ge0}$ 为逐层加细的有限可测分区，$\mathcal P_0=\{X\}$。分区与加细均按零测集等价理解；每层删去零质量胞腔，记剩下的胞腔数为 $N_L$，故 $N_0=1$。记 $\mathcal N_\mu=\{B\in\mathcal F:\mu(B)=0\}$，令 $\mathcal F_L=\sigma(\mathcal P_L\cup\mathcal N_\mu)$；加入环境内的可测零集后，有真正的包含 $\mathcal F_L\subseteq\mathcal F_{L+1}\subseteq\mathcal F$。在复 Hilbert 空间 $L^2(X,\mu;\mathbb C)$ 中置
+$$
+H_L=\operatorname{span}_{\mathbb C}\{\mathbf1_C:C\in\mathcal P_L,\ \mu(C)>0\},
+\qquad
+H_{\mathrm{obs}}=\overline{\bigcup_{L\ge0}H_L}.
+$$
+内积取 $\langle f,g\rangle=\int_X\overline f g\,d\mu$。条件平均在零测集外写为
+$$
+\Pi_L f=\sum_{C\in\mathcal P_L,\ \mu(C)>0}
+\left(\frac1{\mu(C)}\int_C f\,d\mu\right)\mathbf1_C.
+$$
+以下算子均限制在 $H_{\mathrm{obs}}$ 上。定义
+$$
+\Delta_0=\Pi_0,\qquad
+\Delta_L=\Pi_L-\Pi_{L-1}\quad(L\ge1),\qquad
+V_L=\operatorname{ran}\Delta_L,
+$$
+并记 $m_0=1$、$m_L=N_L-N_{L-1}$（$L\ge1$）。允许 $m_L=0$，即该步没有新增正质量可见方向。
+
+### 70.2 指定层速率的最大自伴生成元
+
+**定理 70.2（层对角算子的自伴实现）。** 在定义 70.1 下，给定实数列
+$$
+0=a_0<a_1<a_2<\cdots,\qquad a_L\longrightarrow\infty.
+$$
+按最大定义域设置
+$$
+\mathcal D(A)=\left\{f\in H_{\mathrm{obs}}:
+\sum_{L\ge0}a_L^2\|\Delta_L f\|_2^2<\infty\right\},
+\qquad
+Af=\sum_{L\ge0}a_L\Delta_L f.
+$$
+则级数在 $H_{\mathrm{obs}}$ 中收敛，$A$ 是稠密定义的非负自伴算子；$\bigcup_L H_L$ 是它的图范数核心。
+
+证明。先落实用于这一定义的正交展开。每个正质量胞腔给出单位向量 $e_C=\mu(C)^{-1/2}\mathbf1_C$；同层的这些向量为 $H_L$ 的正交基。因此 $\dim_{\mathbb C}H_L=N_L$，且上式 $\Pi_L$ 就是到 $H_L$ 的正交投影，也就是复条件期望。加细给出 $H_{L-1}\subseteq H_L$，从而
+$$
+\Pi_{L-1}\Pi_L=\Pi_{L-1}=\Pi_L\Pi_{L-1}.
+$$
+这里直接使用钉版 Mathlib 的 [Submodule.starProjection_comp_starProjection_of_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Projection/Basic.lean)：取 $U=H_{L-1}$、$V=H_L$，两个子空间有限维而闭；另一乘法方向由取伴随得到。再取 $P=\Pi_{L-1}$、$Q=\Pi_L$，应用 [D5/S3/Quantum/Algebra/CommutingProjectionFourSector.commuting_projection_four_sector_criterion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Algebra/CommutingProjectionFourSector.lean) 的交换投影条件，可知其 $(1-P)Q=Q-P$ 扇区也是正交投影。因此
+$$
+V_L=H_L\cap H_{L-1}^{\perp}\quad(L\ge1),\qquad
+\dim_{\mathbb C}V_L=m_L,
+\qquad
+\Delta_j\Delta_L=0\quad(j\ne L).
+$$
+上述投影引用允许复标量，并不把 $Q-P$ 解释成保持非负函数的算子。
+
+在 [D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Completion/DenseTowerStrongCompletion.lean) 中，取标量 $K=\mathbb C$、空间 $H=H_{\mathrm{obs}}$、指标 $I=\mathbb N$、子空间族 $S(L)=H_L$。单调性来自加细，每层存在正交投影，闭上确界为整个 $H_{\mathrm{obs}}$ 则来自它的定义。故 $\Pi_n f\to f$ 对每个 $f\in H_{\mathrm{obs}}$ 成立。这是逐向量的强收敛。
+
+范数展开也可精确接到第 69 节的残差。写 $f=u+iv$；在实 $L^2$ 定理 [D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.conditional_expectation_refinement_pythagoras](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.lean) 中分别取目标 $u,v$，粗、细 $\sigma$-代数取 $\mathcal F_{L-1}\subseteq\mathcal F_L\subseteq\mathcal F$。将两个实恒等式相加，利用复范数平方为实部、虚部范数平方之和，得到
+$$
+\|f-\Pi_{L-1}f\|_2^2
+=\|f-\Pi_Lf\|_2^2+\|\Delta_Lf\|_2^2.
+$$
+实定理在这里仅分别作用于 $u,v$；胞腔平均公式保证 $\Pi_L$ 与取实部、虚部相容。逐层相加，再用 $f=\Pi_0f+(f-\Pi_0f)$ 的正交性及强收敛，得到
+$$
+f=\sum_{L\ge0}\Delta_Lf,
+\qquad
+\|f\|_2^2=\sum_{L\ge0}\|\Delta_Lf\|_2^2,
+\qquad
+H_{\mathrm{obs}}=\widehat{\bigoplus}_{L\ge0}V_L.
+$$
+这既证明定义域中的级数收敛，也使其定义域包含稠密的 $\bigcup_LH_L$。
+
+各层实标量 $a_L$ 使 $A$ 对称，而且 Cauchy–Schwarz 不等式给出
+$$
+\langle f,Af\rangle
+=\sum_{L\ge0}a_L\|\Delta_Lf\|_2^2\ge0
+\quad(f\in\mathcal D(A));
+$$
+该和有限，因为它不超过
+$\bigl(\sum_L\|\Delta_Lf\|_2^2\bigr)^{1/2}
+\bigl(\sum_La_L^2\|\Delta_Lf\|_2^2\bigr)^{1/2}$。
+若 $g\in\mathcal D(A^*)$ 且 $h=A^*g$，对每一层的全部向量 $v\in V_L\subseteq\mathcal D(A)$ 测试伴随定义，得到 $\Delta_Lh=a_L\Delta_Lg$。由范数展开，
+$$
+\sum_{L\ge0}a_L^2\|\Delta_Lg\|_2^2
+=\sum_{L\ge0}\|\Delta_Lh\|_2^2=\|h\|_2^2<\infty.
+$$
+故 $g\in\mathcal D(A)$ 且 $Ag=h$；结合对称性即得 $A=A^*$。最后，对 $f\in\mathcal D(A)$，$\Pi_nf\to f$ 且
+$$
+\|A(f-\Pi_nf)\|_2^2
+=\sum_{L>n}a_L^2\|\Delta_Lf\|_2^2\longrightarrow0,
+$$
+所以有限层向量构成图范数核心。证毕。
+
+可见空间的范围亦可在此明确。令 $\mathcal F_\infty=\sigma(\bigcup_L\mathcal F_L)$。有限层可测简单函数的闭包为 $L^2(X,\mathcal F_\infty,\mu;\mathbb C)$：指标函数的逼近先对代数 $\bigcup_L\mathcal F_L$ 成立，再以单调类和 $L^2$ 极限扩到其生成的 $\sigma$-代数，最后逼近一般 $L^2$ 函数。因此 $H_{\mathrm{obs}}$ 等于此子空间。它等于环境 $L^2(X,\mathcal F,\mu;\mathbb C)$ 的充要条件是：每个 $B\in\mathcal F$ 都与某个 $B_\infty\in\mathcal F_\infty$ 只差零测集。必要性可将 $\mathbf1_B$ 的 $\mathcal F_\infty$-可测代表元以实部大于 $1/2$ 取水平集得到。以下强连续性首先属于 $H_{\mathrm{obs}}$；向整个环境空间作同一断言时需要这一生成条件。
+
+### 70.3 从对角衰减到条件平均 Markov 半群
+
+**定理 70.3（强连续半群及其生成元）。** 对 $t>0$ 定义
+$$
+T_tf=\sum_{L\ge0}e^{-ta_L}\Delta_Lf,
+$$
+并单独定义 $T_0=I$。则 $(T_t)_{t\ge0}$ 是 $H_{\mathrm{obs}}$ 上的强连续自伴压缩半群，其生成元的定义域恰为 $\mathcal D(A)$，生成元为 $-A$；因此 $T_t=e^{-tA}$。
+
+证明。正交展开使级数对每个向量收敛，且 $\|T_tf\|_2\le\|f\|_2$。各层乘数相乘即给出 $T_tT_s=T_{t+s}$，实乘数给出自伴性。由
+$$
+\|T_tf-f\|_2^2
+=\sum_{L\ge0}|e^{-ta_L}-1|^2\|\Delta_Lf\|_2^2
+$$
+和可和控制项 $\|\Delta_Lf\|_2^2$，可知 $t\downarrow0$ 时右边趋零；半群律与压缩性再给出全部 $t\ge0$ 处的强连续性。
+
+若 $f\in\mathcal D(A)$，则对 $t>0$ 有 $0\le(1-e^{-ta_L})/t\le a_L$。逐层差商趋于 $-a_L\Delta_Lf$，差商与该极限之差的范数平方被 $a_L^2\|\Delta_Lf\|_2^2$ 控制，所以
+$$
+\lim_{t\downarrow0}\frac{T_tf-f}{t}=-Af.
+$$
+反之，若该强极限为 $g$，逐层应用有界投影 $\Delta_L$ 得 $\Delta_Lg=-a_L\Delta_Lf$。于是
+$\sum_La_L^2\|\Delta_Lf\|_2^2=\|g\|_2^2<\infty$，证明生成元定义域没有遗漏。证毕。
+
+**定理 70.4（条件平均混合式及其尾界）。** 对每个 $t>0$，有算子范数收敛的表示
+$$
+T_t=\sum_{L\ge0}w_L(t)\Pi_L,
+\qquad
+w_L(t)=e^{-ta_L}-e^{-ta_{L+1}}>0,
+\qquad
+\sum_{L\ge0}w_L(t)=1.
+$$
+若 $B_{t,n}=\sum_{L=0}^n w_L(t)\Pi_L$，则
+$$
+\|T_t-B_{t,n}\|_{H_{\mathrm{obs}}\to H_{\mathrm{obs}}}
+=e^{-ta_{n+1}}.
+$$
+每个 $T_t$ 保持常数与非负实函数，保持 $\mu$ 积分，并将 $0\le f\le1$ 的可见函数仍映入同一区间。因此它是关于 $\mu$ 对称且保守的 Markov 半群。
+
+证明。各权重为正且望远镜求和为一；$\|\Pi_L\|=1$，故混合级数在算子范数中绝对收敛。有限次换序给出
+$$
+B_{t,n}=\sum_{k=0}^n
+\bigl(e^{-ta_k}-e^{-ta_{n+1}}\bigr)\Delta_k,
+$$
+从而
+$$
+T_t-B_{t,n}
+=e^{-ta_{n+1}}\Pi_n+\sum_{k>n}e^{-ta_k}\Delta_k.
+$$
+正交展开给出范数至多为 $e^{-ta_{n+1}}$；将此差算子作用于范数为一的常数函数 $1$，达到同一下界。令 $n\to\infty$ 即得到表示与尾界。
+
+条件平均的胞腔公式保证 $\Pi_Lf\ge0$ 对非负实函数成立，且 $\Pi_L1=1$。混合的有限部分保持非负性，$L^2$ 中非负实函数锥闭，故极限亦保持非负性；权重总和为一使 $T_t1=1$。对 $0\le f\le1$ 同时作用于 $f$ 和 $1-f$ 即得 Markov 区间性质。最后，自伴性与 $T_t1=1$ 给出
+$\int_XT_tf\,d\mu=\langle1,T_tf\rangle=\langle1,f\rangle$。
+这里函数的保正性来自条件平均公式；一般正交投影的算子非负性不能替代此条件。在 $t=0$ 时所有差权重均为零，故混合公式限于 $t>0$，而 $T_0$ 按定理 70.3 另行定义。证毕。
+
+附引：Alexander Bendikov、Alexander Grigor’yan、Christophe Pittet、Wolfgang Woess，[*Isotropic Markov semigroups on ultra-metric spaces*](https://arxiv.org/abs/1304.6271)，[第 2.1、2.2 节](https://arxiv.org/html/1304.6271v3#S2)。该文用嵌套的球平均正交投影建立谱分解与对称 Markov 半群。上述条件平均构造采用这一已有机制的可数有限分区形式；本节的层索引、速率与累计秩估计由所列假设及证明确定，不以此引文作穷尽的文献断言。
+
+### 70.4 累计可见秩控制热迹
+
+**定理 70.5（累计计数的热迹指数）。** 再设存在常数 $c_-,c_+>0$、$\lambda>1$、$b>1$、$z>0$，使
+$$
+c_-\lambda^L\le N_L\le c_+\lambda^L\quad(L\ge0),
+\qquad
+a_0=0,\qquad a_L=b^{zL}\quad(L\ge1).
+$$
+记
+$$
+q=b^z>1,\qquad
+\gamma=\frac{\ln\lambda}{\ln q}=\frac{\log_b\lambda}{z}>0.
+$$
+则每个 $t>0$ 的 $T_t$ 为迹类算子，且
+$$
+Z(t):=\operatorname{Tr}_{H_{\mathrm{obs}}}(T_t)
+=\sum_{L\ge0}m_Le^{-ta_L}.
+$$
+存在只依赖上述常数的 $C_-,C_+>0$，使
+$$
+C_-t^{-\gamma}\le Z(t)\le C_+t^{-\gamma}
+\quad(0<t\le1).
+$$
+
+证明。各 $V_L$ 取有限正交基，其并由定理 70.2 构成 $H_{\mathrm{obs}}$ 的正交基。$T_t$ 在 $V_L$ 上的特征值为 $e^{-ta_L}$，重数为 $m_L$；对于正算子，所显示的非负特征值和有限恰给出迹类性。
+
+固定 $0<t\le1$，置 $n=\lfloor\log_q(1/t)\rfloor$。于是
+$$
+q^n\le t^{-1}<q^{n+1},\qquad
+q^{-1}<tq^n\le1,\qquad
+\lambda^{-1}t^{-\gamma}\le\lambda^n\le t^{-\gamma}.
+$$
+对 $L\le n$ 均有 $ta_L\le1$，包括 $a_0=0$。故累计前 $n$ 层给出
+$$
+\sum_{L\ge0}m_Le^{-ta_L}
+\ge e^{-1}\sum_{L=0}^nm_L
+=e^{-1}N_n
+\ge\frac{c_-}{e\lambda}t^{-\gamma}.
+$$
+另一方面，前 $n$ 层的和至多为 $N_n$；对尾部 $L=n+j$、$j\ge1$，有 $ta_L>q^{j-1}$ 和 $m_L\le N_L\le c_+\lambda^{n+j}$。因而
+$$
+\sum_{L\ge0}m_Le^{-ta_L}
+\le c_+\lambda^n
+\left(1+\sum_{j\ge1}\lambda^j e^{-q^{j-1}}\right)
+\le C_+t^{-\gamma},
+$$
+其中可取
+$$
+C_- =\frac{c_-}{e\lambda},\qquad
+C_+=c_+\left(1+\sum_{j\ge1}\lambda^j e^{-q^{j-1}}\right)<\infty.
+$$
+最后的正项级数相邻项比为 $\lambda\exp(-(q-1)q^{j-1})\to0$。若 $t>1$，则逐项比较给出 $Z(t)\le Z(1)<\infty$。这证明所有正时间的迹类性及界。整个下界只使用累计秩 $N_n$，没有推断单独增量 $m_L$ 与 $\lambda^L$ 可比。证毕。
+
+若采用热迹对数约定
+$$
+d_{\mathrm{sp}}:=2\lim_{t\downarrow0}
+\frac{\ln Z(t)}{\ln(1/t)},
+$$
+定理 70.5 的两侧界给出 $\ln Z(t)=\gamma\ln(1/t)+O(1)$，故此约定下 $d_{\mathrm{sp}}=2\gamma$。这一结论没有给出 $t^\gamma Z(t)$ 的极限或精确渐近系数，也未将上式替换成对数导数的极限。
+
+### 70.5 可数谱上的 Gibbs 态与有限能量
+
+**定义 70.6（Gibbs 态及扩展能量）。** 对定理 70.2 的一般速率，若 $\beta>0$ 且 $Z(\beta)<\infty$，定义
+$$
+\rho_\beta=Z(\beta)^{-1}e^{-\beta A},\qquad
+p_L(\beta)=\frac{e^{-\beta a_L}}{Z(\beta)}.
+$$
+这是正迹类、迹为一的算子，特征值 $p_L(\beta)$ 的重数为 $m_L$。由于常数层贡献一，$Z(\beta)\ge1$，每个出现的特征值均在 $(0,1]$ 中。先将能量定义为扩展非负和
+$$
+E_\beta=\sum_{L\ge0}m_La_Le^{-\beta a_L}\in[0,\infty],
+\qquad
+U_\beta=E_\beta/Z(\beta),
+$$
+并定义扩展 von Neumann 熵
+$$
+S(\rho_\beta)=\sum_{L\ge0}m_L\bigl(-p_L(\beta)\ln p_L(\beta)\bigr)\in[0,\infty].
+$$
+尚未证明 $E_\beta$ 有限时，不将 $U_\beta$ 当作有限的实数期望。
+
+**命题 70.7（无需微分的能量控制）。** 若 $Z(\beta/2)<\infty$，则 $E_\beta<\infty$，并有
+$$
+0\le\beta U_\beta
+\le\frac2e\frac{Z(\beta/2)}{Z(\beta)}.
+$$
+特别地，在定理 70.5 的假设下，所有 $\beta>0$ 均有有限配分函数与有限能量，且 $\beta\downarrow0$ 时 $\beta U_\beta=O(1)$。
+
+证明。逐项比较先给出 $Z(\beta)\le Z(\beta/2)<\infty$，故 $\rho_\beta$ 有定义。对 $x\ge0$，由 $e^{y-1}\ge1+(y-1)=y$ 并取 $y=x/2$ 得
+$$
+xe^{-x}\le\frac2e e^{-x/2}.
+$$
+取 $x=\beta a_L$，乘以重数后求非负和，得到
+$\beta E_\beta\le(2/e)Z(\beta/2)$。除以正数 $Z(\beta)$ 即为所求。定理 70.5 使右边对全部正 $\beta$ 有限；在 $0<\beta\le1$ 时又有
+$$
+\frac{Z(\beta/2)}{Z(\beta)}
+\le\frac{C_+}{C_-}2^\gamma,
+$$
+给出与 $\beta$ 无关的界。由于 $a_Le^{-\beta a_L}\le1/(e\beta)$，$\rho_\beta$ 将整个 $H_{\mathrm{obs}}$ 映入 $\mathcal D(A)$。能量有限后，$A\rho_\beta$ 的对角特征值 $a_Lp_L(\beta)$ 非负且可和，所以也可写 $U_\beta=\operatorname{Tr}(A\rho_\beta)$。证毕。
+
+**定理 70.8（Gibbs 熵恒等式与热迹指数）。** 若 $Z(\beta)<\infty$ 且 $E_\beta<\infty$，则
+$$
+S(\rho_\beta)=\beta U_\beta+\ln Z(\beta)<\infty.
+$$
+在定理 70.5 的规模与计数假设下，进一步有
+$$
+S(\rho_\beta)=\gamma\ln(1/\beta)+O(1)
+\qquad(\beta\downarrow0).
+$$
+
+证明。每个出现的特征值满足
+$$
+-\ln p_L(\beta)=\beta a_L+\ln Z(\beta).
+$$
+两项均非负，故可按重数求和而不作条件收敛换序。用 $\sum_Lm_Lp_L(\beta)=1$ 及能量有限，立即得到恒等式及有限熵。在规模与计数假设下，定理 70.5 给出 $\ln Z(\beta)=\gamma\ln(1/\beta)+O(1)$，命题 70.7 给出 $0\le\beta U_\beta=O(1)$，两式相加即得熵渐近。此推导不对热迹估计求导，也不需要 $U_\beta\sim\gamma/\beta$。证毕。
+
+### 70.6 有限矩阵恒等式与可数极限的接合
+
+**命题 70.9（Gibbs 截断的迹范数及熵收敛）。** 固定满足 $Z(\beta),E_\beta<\infty$ 的 $\beta>0$，令 $A_n=A|_{H_n}$，并置
+$$
+Z_n=\sum_{L=0}^nm_Le^{-\beta a_L},\qquad
+E_n=\sum_{L=0}^nm_La_Le^{-\beta a_L},\qquad
+\rho_{\beta,n}=Z_n^{-1}e^{-\beta A_n}.
+$$
+把 $\rho_{\beta,n}$ 在 $H_n^\perp$ 上延拓为零，则
+$$
+\|\rho_{\beta,n}-\rho_\beta\|_1
+=2\left(1-\frac{Z_n}{Z(\beta)}\right)\longrightarrow0,
+\qquad
+\frac{E_n}{Z_n}\longrightarrow U_\beta,
+\qquad
+S(\rho_{\beta,n})\longrightarrow S(\rho_\beta).
+$$
+
+证明。$Z_n\uparrow Z(\beta)$、$E_n\uparrow E_\beta$，且 $Z_n\ge1$，所以能量比收敛。两态在同一层基中对角化；$L\le n$ 上的差特征值为 $e^{-\beta a_L}(Z_n^{-1}-Z(\beta)^{-1})\ge0$，该部分绝对值总和为 $1-Z_n/Z(\beta)$。$L>n$ 上只余 $\rho_\beta$，其迹也为 $1-Z_n/Z(\beta)$，故有精确迹范数式。
+
+有限截断的熵公式直接使用 [D5/S3/Quantum/Divergence/GibbsVariationalIdentity.gibbs_variational_identity](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Divergence/GibbsVariationalIdentity.lean)。在 $H_n$ 的正交基下取有限非空指标集 $\{1,\ldots,N_n\}$、复自伴矩阵 $H=-\beta A_n$，并取 $\rho=\operatorname{gibbsState}(H)=\rho_{\beta,n}$。其配分函数为 $Z_n$，实迹项为 $-\beta E_n/Z_n$；相同态间的相对熵由定义中的 $\log\rho-\log\rho=0$ 消去。该恒等式于是给出
+$$
+S(\rho_{\beta,n})=\beta E_n/Z_n+\ln Z_n.
+$$
+利用前述两个非负级数的收敛，再用定理 70.8 识别极限，便得到熵收敛。这里用能量和的控制完成了可数极限步骤，未从一般的迹范数收敛直接推出无限维熵连续性。证毕。
+
+### 70.7 位置 Zeckendorf 柱的特化
+
+**命题 70.10（柱计数、Hilbert 维数与热指数）。** 取第 33.0 节的位置数字空间
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\},
+\qquad
+d(x,y)=2^{-\min\{j:x_j\ne y_j\}}
+\quad(x\ne y),
+$$
+相等点距离为零；取第 33.1 节的满支撑 Borel 概率 $\nu$。写 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，则非空长度 $L\ge1$ 柱的质量为
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1.
+\end{cases}
+$$
+令 $\mathcal P_L$ 为位置前 $L$ 位的柱分区，$\mathcal P_0=\{K\}$。则其累计可见秩是
+$$
+N_L=G_L,\qquad
+G_0=1,\quad G_1=2,\quad G_{L+2}=G_{L+1}+G_L,
+\qquad
+\phi^L\le G_L\le2\phi^L.
+$$
+此塔生成全部 $L^2(K,\nu;\mathbb C)$；该空间可分且无限维，其完备正交基的基数为 $\aleph_0$。对任意 $z>0$ 选择 $a_0=0$、$a_L=2^{zL}$（$L\ge1$），上述 Markov 半群满足
+$$
+Z_z(t)\asymp t^{-s/z},\qquad
+S(\rho_{\beta,z})=\frac{s}{z}\ln(1/\beta)+O(1),
+\qquad
+d_{\mathrm{sp}}(z)=\frac{2s}{z},
+\qquad s=\log_2\phi.
+$$
+热迹比较在 $t\downarrow0$，熵比较在 $\beta\downarrow0$；谱维数采用第 70.4 节的热迹对数约定。
+
+证明。长度 $L+2$ 的合法字按末位拆分：末位为零时任意长度 $L+1$ 合法字可延伸；末位为一时末两位只能为 $01$，其前部是任意长度 $L$ 合法字。这给出计数递推及初值。每个合法字均能补零延伸，且上列质量严格正，故没有柱因零测而被删去，$N_L=G_L$。由初值与 $\phi^{L+2}=\phi^{L+1}+\phi^L$ 归纳，得到所列两侧界。
+
+位置柱构成 $K$ 的可数拓扑基，并生成 Borel $\sigma$-代数。因此第 70.2 节的生成条件成立，$H_{\mathrm{obs}}=L^2(K,\nu;\mathbb C)$；对测度完备化亦不变。各有限层中以有理实部、虚部为系数的线性组合的并，是一个可数稠密集，故该空间可分；而 $N_L\to\infty$ 排除有限维。等价地，每个 $V_L$ 取有限正交基，其并是可数无限的完备正交基。这里 Hilbert 维数指正交基的基数；第 33.2 节的 $s=\dim_{\mathrm H}(K,d)$ 是度量空间的 Hausdorff 维数，两种维数的定义对象不同。
+
+在定理 70.5 中取 $\lambda=\phi$、$c_-=1$、$c_+=2$、$b=2$，便有 $\gamma=s/z$，其热迹结论及定理 70.8 的熵结论分别给出所列公式。此处使用的是第 33.1 节的几何柱测度 $\nu$；第 33.9、33.10 节的位置平稳最大熵测度是另一个测度，不参与本次替换。证毕。
+
+### 70.8 固定几何不固定层动力，胞腔态不等于热态
+
+**命题 70.11（同一观察几何的不同热指数）。** 在命题 70.10 的同一 $(K,d,\nu)$、同一位置柱塔和同一条件平均算子族上，分别选择
+$$
+a_L^{(1)}=2^L,\qquad a_L^{(2)}=2^{2L}\quad(L\ge1),
+\qquad a_0^{(1)}=a_0^{(2)}=0.
+$$
+两者都是关于 $\nu$ 对称且保守的强连续 Markov 半群，但有
+$$
+Z_1(t)\asymp t^{-s},\qquad Z_2(t)\asymp t^{-s/2},
+\qquad d_{\mathrm{sp}}^{(1)}=2s,\quad d_{\mathrm{sp}}^{(2)}=s.
+$$
+因此这一观察几何与测度不唯一决定热迹指数，也不唯一决定 Gibbs 熵的对数系数。
+
+证明。两速率列均满足定理 70.2 的严格递增与发散条件，故定理 70.3、70.4 分别适用。命题 70.10 分别取 $z=1,2$ 给出各热迹指数与谱维数；定理 70.8 给出的熵对数系数分别为 $s$ 与 $s/2$。由于 $s>0$，指数不同，而空间、测度与各层投影全都相同。证毕。
+
+上述 $T_t$ 按位置观察的整层 $V_L$ 指定标量衰减。第 40 节的算子 $(1-p)I+p(R_\theta)_\#$ 则按圆周旋转的随机迭代产生二项时间混合；它的定义中没有本节的层速率列。故本节的时间尺度来自对 $a_L$ 的额外选择，未由第 40 节的算术时间更新确定。
+
+**命题 70.12（胞腔概率态与 Gibbs 态的区别）。** 对命题 70.10 的有限柱分区，在胞腔基 $e_C=\nu(C)^{-1/2}\mathbf1_C$ 上定义
+$$
+\rho_L^{\mathrm{cell}}
+=\sum_{C\in\mathcal P_L}\nu(C)\,|e_C\rangle\langle e_C|.
+$$
+其熵是胞腔质量的 Shannon 熵
+$$
+S(\rho_L^{\mathrm{cell}})=-\sum_{C\in\mathcal P_L}\nu(C)\ln\nu(C).
+$$
+对于任意 $z>0$、$\beta>0$，第一层的这个态与命题 70.9 的 Gibbs 截断 $\rho_{\beta,1}$ 不相等；将任一有限 $\rho_L^{\mathrm{cell}}$ 延拓到整个观察空间后，它也不等于 $\rho_\beta$。
+
+证明。胞腔基正交，故 $\rho_L^{\mathrm{cell}}$ 的特征值正是 $\nu(C)$，直接按特征值计算熵即得首式。第一层两胞腔的质量为 $\alpha,\alpha^2$，且 $\alpha+\alpha^2=1$。在该胞腔基中，常数单位向量的坐标为
+$$
+u=(\sqrt\alpha,\alpha)^{\mathsf T},\qquad \Pi_0=uu^*.
+$$
+设 $r=e^{-\beta a_1}\in(0,1)$。由于第一层有一个常数方向与一个细节方向，
+$$
+\rho_{\beta,1}=\frac{rI+(1-r)uu^*}{1+r},
+\qquad
+\rho_1^{\mathrm{cell}}=\operatorname{diag}(\alpha,\alpha^2).
+$$
+前一矩阵的非对角元为 $(1-r)\alpha^{3/2}/(1+r)>0$，后一矩阵的非对角元为零，故二者不相等。最后，$\rho_L^{\mathrm{cell}}$ 的秩为有限的 $G_L$，而 $\rho_\beta$ 在可数无限层基的每个向量上都有严格正特征值，因而秩无限，也不可能相等。胞腔态编码各观察类的概率，Gibbs 态编码指定生成元的能级权重；它们不是一个态经坐标变换后的两种记法。证毕。
+
+## 70.99 追加锚

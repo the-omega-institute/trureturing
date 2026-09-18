@@ -1,0 +1,17 @@
+**定义 70.6（Gibbs 态及扩展能量）。** 对定理 70.2 的一般速率，若 $\beta>0$ 且 $Z(\beta)<\infty$，定义
+$$
+\rho_\beta=Z(\beta)^{-1}e^{-\beta A},\qquad
+p_L(\beta)=\frac{e^{-\beta a_L}}{Z(\beta)}.
+$$
+这是正迹类、迹为一的算子，特征值 $p_L(\beta)$ 的重数为 $m_L$。由于常数层贡献一，$Z(\beta)\ge1$，每个出现的特征值均在 $(0,1]$ 中。先将能量定义为扩展非负和
+$$
+E_\beta=\sum_{L\ge0}m_La_Le^{-\beta a_L}\in[0,\infty],
+\qquad
+U_\beta=E_\beta/Z(\beta),
+$$
+并定义扩展 von Neumann 熵
+$$
+S(\rho_\beta)=\sum_{L\ge0}m_L\bigl(-p_L(\beta)\ln p_L(\beta)\bigr)\in[0,\infty].
+$$
+尚未证明 $E_\beta$ 有限时，不将 $U_\beta$ 当作有限的实数期望。
+
