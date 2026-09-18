@@ -38110,3 +38110,223 @@ $$
 两种前提集合不同；第一式仍保留已交付的 $p$，没有删除输入前提。失效的是 (89.4c) 所需的后续保持，因此不能沿用 (89.2b) 的嵌套关系或用端点保守代替逐步保持。证毕。
 
 ## 89.99 追加锚
+
+## 90. 有限反模型测试、实际像紧致性与真值剖面覆盖
+
+**定义与假设 90.1（有限测试及其实际真值像）。** 沿用定义 88.5 的公式集、模型集、满足关系、映射
+$\tau:F_A\to F_B$、$\beta:\mathcal M_B\to\mathcal M_A$，以及满足条件 (SC)。
+保留其语义闭包 $S_A,S_B$ 和
+$$
+K_\tau^{\mathrm{sem}}(\Gamma)
+=\tau^{-1}[S_B(\tau[\Gamma])].
+$$
+这些算子不与另外指定的证明后承闭包 $C_A,C_B$ 混同；从语义结论转到证明后承仍使用推论 88.8 的桥接条件。
+
+称有限反模型存在性提升成立，记为 $\mathrm{CE}_{\mathrm{fin}}$，若
+$$
+\begin{aligned}
+\forall\Gamma\subseteq F_A\text{ 有限},\quad\forall\varphi\in F_A,\qquad
+&[\exists M\in\mathcal M_A,\ M\models_A\Gamma\ \land\ M\not\models_A\varphi]\\
+&\Longrightarrow
+[\exists N\in\mathcal M_B,\ N\models_B\tau[\Gamma]\ \land\ N\not\models_B\tau(\varphi)].
+\end{aligned}
+\tag{90.1a}
+$$
+有限前提包括 $\Gamma=\varnothing$，结论遍历全部 $F_A$。不限制前提集的同一条件仍记为 $\mathrm{CE}$。
+将定理 88.6 的逐前提反模型判据限制到有限前提，得到
+$$
+\mathrm{CE}_{\mathrm{fin}}
+\quad\Longleftrightarrow\quad
+\forall\Gamma\subseteq F_A\text{ 有限},\qquad
+K_\tau^{\mathrm{sem}}(\Gamma)=S_A(\Gamma).
+\tag{90.1b}
+$$
+这里的 $M\not\models_A\varphi$ 是经典元理论中的否定，不预设语言有否定联结词。
+
+记 $\mathbf2=\{0,1\}$，定义源模型的真值剖面
+$$
+e(M)(\varphi)=
+\begin{cases}
+1,&M\models_A\varphi,\\
+0,&M\not\models_A\varphi,
+\end{cases}
+\qquad
+X=e[\mathcal M_A],\qquad
+Y=(e\circ\beta)[\mathcal M_B]\subseteq X\subseteq\mathbf2^{F_A}.
+\tag{90.1c}
+$$
+赋予 $\mathbf2$ 离散拓扑，赋予乘积及 $X,Y$ 相应的积拓扑与子空间拓扑。
+模型载体本身不需拓扑；不同模型允许具有相同剖面。$\overline{Y}^{\,X}$ 表示在实际源剖面空间 $X$ 内的相对闭包。
+
+**定理 90.2（实际像上的紧致升级与布尔剖面判据）。** 在定义 90.1 下，有以下两组结论。
+
+（一）若实际目标剖面空间 $Y$ 紧致，则
+$$
+\mathrm{CE}_{\mathrm{fin}}\quad\Longleftrightarrow\quad\mathrm{CE}.
+\tag{90.2a}
+$$
+这部分不要求否定、恒假或合取联结词，不要求公式集可数、$X$ 紧致或 $\beta$ 对模型身份满射。
+
+（二）另设存在 $\nu:F_A\to F_A$ 及 $\bot\in F_A$，使全部 $x\in X$、$\varphi\in F_A$ 满足
+$$
+x(\nu\varphi)=1-x(\varphi),\qquad x(\bot)=0.
+\tag{90.2b}
+$$
+则无需任何紧致性假设，已有
+$$
+\boxed{
+\mathrm{CE}_{\mathrm{fin}}\ \Longleftrightarrow\ \overline{Y}^{\,X}=X,
+\qquad
+\mathrm{CE}\ \Longleftrightarrow\ Y=X.
+}
+\tag{90.2c}
+$$
+条件 (90.2b) 是充分的语义表达条件，不主张它最弱或必要；不另要求目标语言中的句法否定律。
+$Y=X$ 表示真值剖面覆盖，不表示 $\beta$ 对原模型身份满射。
+
+**证明。** 先证（一）。$\mathrm{CE}$ 限制到有限前提即给出 $\mathrm{CE}_{\mathrm{fin}}$。反向假设有限提升成立，给定任意前提集 $\Gamma$ 及其源反模型
+$$
+M\models_A\Gamma,\qquad M\not\models_A\varphi.
+$$
+在实际目标像中取切片
+$$
+K_\varphi=\{y\in Y:y(\varphi)=0\}.
+$$
+坐标求值连续且 $\{0\}\subseteq\mathbf2$ 闭，故 $K_\varphi$ 在 $Y$ 中闭；由 $Y$ 紧致，它作为子空间紧致。对每个有限 $\Gamma_0\subseteq\Gamma$，同一个 $M$ 满足 $\Gamma_0$ 并反驳 $\varphi$。有限提升及 (SC) 给出
+$$
+\exists y\in K_\varphi,\qquad
+\forall\gamma\in\Gamma_0,\quad y(\gamma)=1.
+\tag{90.2d}
+$$
+这也适用于 $\Gamma_0=\varnothing$，因此 $K_\varphi$ 非空。
+
+现在直接应用
+[`compact_local_realization`](https://github.com/the-omega-institute/trureturing/blob/1f6181fb8a59fc048513af617298e1921c231ce1/D5/S3/Observer/Completion/CompactLocalRealization.lean)：
+其状态空间取 $K_\varphi$，上下文取 $\Gamma$ 的元素，记录取 $\mathbf2$，读数族取 $(\gamma,y)\mapsto y(\gamma)$，目标记录恒为 $1$。每条目标等值纤维由坐标连续性在 $K_\varphi$ 中闭；每个有限上下文集由 (90.2d) 同时实现，包括空上下文集。因此该定理给出
+$$
+\exists y\in K_\varphi,\qquad\forall\gamma\in\Gamma,\quad y(\gamma)=1.
+$$
+因为所得 $y$ 属于实际像 $Y$，存在原来允许的目标模型 $N\in\mathcal M_B$ 使 $y=e(\beta(N))$。再次使用 (SC)，即得
+$$
+N\models_B\tau[\Gamma],\qquad N\not\models_B\tau(\varphi).
+$$
+这证明全部前提的反模型提升。所用紧致空间是实际像的闭切片；闭子空间的紧致性与闭集族的有限交性质亦见 [Stacks Project §5.12，Lemmas 5.12.3、5.12.6](https://stacks.math.columbia.edu/tag/0059)。
+
+再证（二）。对有限 $P,Q\subseteq F_A$，记
+$$
+U(P,Q)=\{x\in X:\ (\forall\gamma\in P,\ x(\gamma)=1)
+\ \land\ (\forall\psi\in Q,\ x(\psi)=0)\}.
+$$
+这些有限坐标柱集在 $X$ 中开闭并构成拓扑基，包含 $P=Q=\varnothing$ 的情形。
+这是离散因子的有限坐标乘积基及其子空间限制，直接见钉版 Mathlib 的
+[`isTopologicalBasis_pi`、`isTopologicalBasis_singletons`、`isTopologicalBasis_subtype`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Bases.lean)。
+
+若 $\overline{Y}^{\,X}=X$，且 $M$ 是有限 $\Gamma$ 对结论 $\varphi$ 的源反模型，则 $U(\Gamma,\{\varphi\})$ 是含 $e(M)$ 的非空开集。稠密性使它遇到 $Y$，其成员的目标模型代表由 (SC) 给出所需反模型，证明有限提升。
+
+反之，设有限提升成立，且 $U(P,Q)\ne\varnothing$。取其中一个源剖面 $x=e(M)$，并令
+$$
+\Gamma_0=P\cup\nu[Q].
+$$
+该前提集有限。由 (90.2b)，$M$ 满足 $\Gamma_0$ 且反驳 $\bot$。有限提升及 (SC) 给出 $y\in Y$，使 $y$ 在 $P\cup\nu[Q]$ 上全部为 $1$。对每个 $\psi\in Q$，
+$$
+1=y(\nu\psi)=1-y(\psi),
+$$
+故 $y(\psi)=0$，因此 $y\in U(P,Q)\cap Y$。每个非空基本开集都遇到 $Y$，得到 $\overline{Y}^{\,X}=X$。这里使用的稠密判据是
+[`dense_iff_inter_open`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Closure.lean)。
+
+若 $Y=X$，任意源反模型的剖面已有目标模型代表，故由 (SC) 直接得到 $\mathrm{CE}$。最后假设 $\mathrm{CE}$，任取 $x\in X$，令
+$$
+\Gamma_x=\{\varphi\in F_A:x(\varphi)=1\}.
+$$
+$x$ 的源模型代表满足 $\Gamma_x$，并反驳 $\bot$。全部前提的提升给出 $y\in Y$，满足 $y(\varphi)=1$ 对全部 $\varphi\in\Gamma_x$ 成立。若 $x(\varphi)=1$，立即有 $y(\varphi)=1$；若 $x(\varphi)=0$，则 $x(\nu\varphi)=1$，所以 $y(\nu\varphi)=1$，再由 (90.2b) 得 $y(\varphi)=0$。因此 $y=x$，证明 $X\subseteq Y$，反向包含本已成立。证毕。
+
+**命题 90.3（有限支撑模型通过全部有限测试，但遗漏无限前提反例）。** 令 $F$ 为由可数原子 $p_n$（$n\in\mathbb N$）、$\bot$、否定及二元合取生成的全部有限公式。取
+$$
+F_A=F_B=F,\qquad \tau=\mathrm{id},\qquad
+\mathcal M_A=\mathbf2^{\mathbb N},
+$$
+$$
+\mathcal M_B=\{v\in\mathbf2^{\mathbb N}:\{n:v(n)=1\}\text{ 有限}\},
+\qquad\beta:\mathcal M_B\hookrightarrow\mathcal M_A,
+$$
+满足关系采用通常的布尔求值。则 (SC)、(90.2b) 及 $\mathrm{CE}_{\mathrm{fin}}$ 成立，但 $\mathrm{CE}$ 失败。具体地，对
+$$
+\Gamma_\infty=\{p_n:n\in\mathbb N\}
+$$
+有
+$$
+\bot\in K_\tau^{\mathrm{sem}}(\Gamma_\infty)
+\setminus S_A(\Gamma_\infty).
+\tag{90.3a}
+$$
+其真值剖面空间满足：$X$ 紧致 Hausdorff，$Y$ 稠密但不等于 $X$，从而 $Y$ 不闭且不紧致。
+
+**证明。** 两侧求值相同，$\beta$ 为包含映射，故 (SC) 成立；句法否定与 $\bot$ 满足 (90.2b)。对每个有限公式 $\theta$，递归定义原子支撑
+$$
+\begin{aligned}
+\operatorname{supp}(p_n)&=\{n\},&
+\operatorname{supp}(\bot)&=\varnothing,\\
+\operatorname{supp}(\neg\theta)&=\operatorname{supp}(\theta),&
+\operatorname{supp}(\theta\land\psi)&=
+\operatorname{supp}(\theta)\cup\operatorname{supp}(\psi).
+\end{aligned}
+$$
+支撑总是有限。若两个赋值在 $\operatorname{supp}(\theta)$ 上相同，则它们对 $\theta$ 的真值相同：原子情形由相同坐标给出，$\bot$ 恒假，否定保持真值相等，合取由两个子公式的归纳结论给出。
+
+给定任意有限 $\Gamma$、任意结论 $\varphi$，以及源反模型 $v$，置
+$$
+D=\operatorname{supp}(\varphi)\cup
+\bigcup_{\gamma\in\Gamma}\operatorname{supp}(\gamma),
+\qquad
+w(n)=
+\begin{cases}
+v(n),&n\in D,\\
+0,&n\notin D.
+\end{cases}
+$$
+$D$ 有限，$w$ 的正支撑包含于 $D$，所以 $w\in\mathcal M_B$。上述归纳结论使 $w$ 保留 $\Gamma$ 中所有公式及结论 $\varphi$ 的真值，故仍是反模型。这覆盖空 $\Gamma$ 及全部结论公式，证明 $\mathrm{CE}_{\mathrm{fin}}$。
+
+全 $1$ 赋值满足 $\Gamma_\infty$ 并反驳 $\bot$，所以 $\bot\notin S_A(\Gamma_\infty)$。没有有限支撑赋值满足全部 $p_n$，因此目标侧在前提 $\Gamma_\infty$ 下无模型，其语义后承包含全部公式，特别包含 $\bot$。由 $\tau=\mathrm{id}$ 得 (90.3a)。
+
+考虑公式求值映射 $e:\mathbf2^{\mathbb N}\to X$。它按定义满射；原子坐标满足
+$$
+e(v)(p_n)=v(n),
+$$
+因而它单射，逆映射为 $x\mapsto(n\mapsto x(p_n))$。每个公式坐标的求值仅依赖其有限支撑，在离散布尔乘积上连续，故 $e$ 连续；逆映射的每个坐标也是连续的坐标求值。因此 $e$ 是同胚。$\mathbf2^{\mathbb N}$ 是紧致 Hausdorff 空间，故 $X$ 也是；乘积紧致性可直接采用钉版 Mathlib 的
+[`Pi.compactSpace`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean)。
+
+由有限提升和定理 90.2（二），$Y$ 在 $X$ 中稠密。全 $1$ 赋值的剖面不在 $Y$：若另一个赋值具有相同剖面，全部原子坐标相等会强制它也是全 $1$。所以 $Y\subsetneq X$，且其闭包等于 $X$，从而 $Y$ 不闭。若 $Y$ 紧致，则因 $X$ Hausdorff，$Y$ 必闭，与刚才结论矛盾；这里直接使用
+[`IsCompact.isClosed`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Separation/Hausdorff.lean)。
+
+在这个例子中，把 $Y$ 换成 $\overline{Y}^{\,X}=X$ 会加入原目标族禁止的剖面，其中包括全 $1$ 赋值。它给扩充后的模型族提供反例，不能据此宣称原目标族已经满足 $\mathrm{CE}$。一般地，$Y$ 与 $\overline{Y}^{\,X}$ 遇到相同的有限开闭柱集：一个柱集若遇到闭包，取交点的该开邻域即会遇到 $Y$；反向由 $Y\subseteq\overline{Y}^{\,X}$ 得到。因此有限柱测试不区分实际像与其闭包。
+若实际像本身在 $X$ 中闭，则其闭包点已经属于像，按像集定义已有原目标模型代表，这与第 6.1 节的闭像修正一致。相对闭包 $\overline{Y}^{\,X}$ 在任意 $X$ 中并不自动紧致；本例的紧致性来自已经证明的 $X$ 紧致。证毕。
+
+**命题 90.4（缺少语义补时，全部反例提升不要求剖面稠密）。** 取
+$$
+F_A=F_B=\{p,q,\bot\},\qquad\tau=\mathrm{id}.
+$$
+源模型为下表的三个真值剖面，目标模型只取后两个，$\beta$ 为包含映射，满足关系由表中真值定义。
+
+| 源模型 | $p$ | $q$ | $\bot$ | 是否属于目标族 |
+| --- | --- | --- | --- | --- |
+| $x_0$ | $0$ | $0$ | $0$ | 否 |
+| $x_p$ | $1$ | $0$ | $0$ | 是 |
+| $x_q$ | $0$ | $1$ | $0$ | 是 |
+
+则 (SC) 与 $\mathrm{CE}$ 成立，但
+$$
+Y=\{x_p,x_q\},\qquad
+\overline{Y}^{\,X}=Y\ne X=\{x_0,x_p,x_q\}.
+\tag{90.4}
+$$
+
+**证明。** 满足关系在包含映射下不变，所以 (SC) 成立。逐前提检验 $\mathrm{CE}$：若 $\Gamma$ 含 $\bot$ 或同时含 $p,q$，则无源模型满足 $\Gamma$，提升条件的前件为假。若 $\Gamma=\varnothing$，结论 $p$ 的反模型可取 $x_q$，结论 $q$ 的反模型可取 $x_p$，结论 $\bot$ 的反模型也可取 $x_p$，全部在目标族中。其余可满足前提只剩 $\{p\}$ 与 $\{q\}$：它们的唯一源模型分别为 $x_p$、$x_q$，本来就在目标族中，所以凡有源反模型就有目标反模型。这覆盖全部前提集和全部结论。
+
+另一方面，柱集
+$$
+\{x\in X:x(p)=0,\ x(q)=0\}=\{x_0\}
+$$
+非空且与 $Y$ 不交，故 $Y$ 不稠密。$X$ 是有限离散空间，$Y$ 闭，从而 (90.4) 成立。这里存在恒假公式，但不存在满足 (90.2b) 的语义补映射：$p$ 在三个源模型上的补真值为 $(1,0,1)$，表中没有任何公式列取这一组值。
+两个剖面空间均紧致，且有限提升与全部提升在此均成立；所以这个例子只说明不能无条件删除定理 90.2（二）的表达假设，并不反驳（一）的无联结词紧致升级。证毕。
+
+## 90.99 追加锚
