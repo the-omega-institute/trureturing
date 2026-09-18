@@ -626,3 +626,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The signed mass bound reaches the current source credit ceiling](profile-notes/155-the-signed-mass-bound-reaches-the-current-source-credit-ceiling.md)
 - [Exposing each loss gives exact rational joint price bounds](profile-notes/156-exposing-each-loss-gives-exact-rational-joint-price-bounds.md)
 - [A signed tail comparison covers the one-over-twenty-seven neighborhood](profile-notes/157-a-signed-tail-comparison-covers-the-one-over-twenty-seven-neighborhood.md)
+- [The seven-containing pair tails have one exposed source price](profile-notes/158-the-seven-containing-pair-tails-have-one-exposed-source-price.md)
