@@ -72,7 +72,11 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
                     + "is {0, 1}. Their cardinalities are three and two, so 000 does not "
                     + "minimize the condensed neighborhood.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()),
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "chauve-zhang-condensed-neighborhood-unary-minimality"),
+                    ResolutionKind.Refuted)),
             Node(
                 "super-condensed-unary-minimality-claim",
                 "Super condensed unary minimality",
@@ -90,7 +94,11 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
                     + "SCN(0011,1) is {001, 011}. Their cardinalities are three and two, "
                     + "so 0000 does not minimize the super condensed neighborhood.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()))));
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "chauve-zhang-super-condensed-neighborhood-unary-minimality"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -99,14 +107,16 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static string ClaimSourceText(string subject) =>
         "The closing question reads: \"It is thus natural to ask if a similar property holds "
