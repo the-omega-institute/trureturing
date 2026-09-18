@@ -559,3 +559,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A weighted source comparison on the broad slab](profile-notes/88-a-weighted-source-comparison-on-the-broad-slab.md)
 - [A marked-event cancellation improves global K](profile-notes/89-a-marked-event-cancellation-improves-global-k.md)
 - [Weighted marked events improve the global comparison](profile-notes/90-weighted-marked-events-improve-the-global-comparison.md)
+- [The next K escape layers and product exclusion](profile-notes/92-the-next-k-escape-layers-and-product-exclusion.md)
+- [Product escape and source mass improve global K](profile-notes/93-product-escape-and-source-mass-improve-global-k.md)
