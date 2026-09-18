@@ -36857,3 +36857,1256 @@ $$
 该载体仍只有一个粗标签，所以 $E_Ad_A=q_A$，后验缺陷为 $A_\star$。结果 $B$ 的活载体为 $J_B=\{3\}$，两后验均为唯一概率 $(1)$，故其缺陷为零。按实际结果概率加权得到 $A_\star/2$，而 $A_\star>A_\star/2$ 证明逐结果无权不增失败。最后，式 (85.2) 中其余项全部非负，保留任意一个后验加权项便得所述加权界；本例在结果 $A$ 上有 $b_AA_\star=A_\star/2$，等号成立。证毕。
 
 ## 85.99 追加锚
+
+## 86. 自适应观察下的后验缺陷预算与有限越界界
+
+**定义与假设 86.1（有限历史树、共同信道与活动支撑）。** 固定有限非空集合 $J,I$、满射 $r:J\to I$、实际先验 $d_0\in\Delta(J)$ 及严格正参考先验 $q_0\in\Delta(J)$。潜状态 $j$ 在全部观察期间保持不变，粗标签始终为同一个 $r(j)$；$d_0$ 允许零坐标。取确定的有限时域 $N\in\mathbb N=\{0,1,\ldots\}$，每步观察字母集 $Z_1,\ldots,Z_N$ 有限非空，置
+$$
+\mathscr H_t=\prod_{s=1}^t Z_s\quad(0\le t\le N),\qquad
+\mathscr H_0=\{\varnothing\}.
+$$
+对每个 $t<N$、$h\in\mathscr H_t$，给定两模型共同使用的有效观察核
+$$
+K_t(z\mid j,h)\ge0,\qquad
+\sum_{z\in Z_{t+1}}K_t(z\mid j,h)=1\quad(j\in J).
+$$
+共同性要求在同一潜状态 $j$、同一已记录历史 $h$ 下，两模型的条件核确为这个 $K_t$。它可以随历史改变；对各自后验使用同一策略函数，并不足以保证所得有效核相同。若策略含随机选择，可将已实现的选择纳入记录；若省略它，则共同性须对所保留历史下的有效核成立。
+
+对 $h=(z_1,\ldots,z_t)$，记 $h_s$ 为其长度 $s$ 的前缀，$hz$ 为追加一个结果，定义
+$$
+L_h(j)=\prod_{s=0}^{t-1}K_s(z_{s+1}\mid j,h_s),\qquad
+L_{\varnothing}(j)=1,
+$$
+$$
+P_d(h)=\sum_jd_{0j}L_h(j),\qquad
+P_q(h)=\sum_jq_{0j}L_h(j).
+$$
+在 $\Omega=J\times\mathscr H_N$ 及其全体子集上，对任意 $\nu\in\Delta(J)$ 定义联合律
+$$
+\mathbb P_\nu(\{(j,w)\})=\nu_jL_w(j).
+$$
+它非负归一化，且记隐藏坐标为 $X$、记录前缀为 $H_t(j,w)=w_t$ 时，有
+$$
+\mathbb P_\nu(X=j,H_t=h)=\nu_jL_h(j). \tag{86.1}
+$$
+以下将 $\mathbb P_{d_0},\mathbb P_{q_0}$ 简写为 $\mathbb P_d,\mathbb P_q$，故 $H_t$ 的两份边缘分别为 $P_d,P_q$。只取已记录历史生成的过滤族
+$$
+\mathcal F_t=\sigma(H_t),\qquad 0\le t\le N.
+$$
+它不额外包含隐藏坐标或粗标签的信息；以下对粗纤维的条件分解不假定 $r(X)$ 已被观察。
+
+对每个 $P_q(h)>0$ 的历史定义
+$$
+J_h=\{j\in J:L_h(j)>0\},\qquad
+I_h=r(J_h),\qquad r_h=r|_{J_h}:J_h\to I_h,
+$$
+$$
+q_j^h=\frac{q_{0j}L_h(j)}{P_q(h)}\quad(j\in J_h),\qquad
+p_i^h=\sum_{\substack{j\in J_h\\r(j)=i}}q_j^h\quad(i\in I_h).
+$$
+$J_h,I_h$ 非空，$r_h$ 满射，$q^h$ 是 $J_h$ 上严格正的概率，全部 $p_i^h>0$。在每个这样的参考历史上，沿用定义 74.1 的质量算子
+$$
+(C_hu)_i=\sum_{\substack{j\in J_h\\r(j)=i}}u_j,\qquad
+(B_hv)_j=\frac{q_j^h}{p_{r(j)}^h}v_{r(j)},\qquad
+E_h=B_hC_h.
+$$
+实际律满足 $\mathbb P_d\ll\mathbb P_q$，特别地 $P_d(h)>0\Rightarrow P_q(h)>0$。只在 $P_d(h)>0$ 时定义实际后验及其粗质量
+$$
+d_j^h=\frac{d_{0j}L_h(j)}{P_d(h)}\quad(j\in J_h),\qquad
+a_i^h=(C_hd^h)_i.
+$$
+$q^h,d^h$ 分别是两模型给定 $H_t=h$ 后在 $J_h$ 上的隐藏状态条件律，各自在其正概率定义域上使用；仅有 $P_q(h)>0$ 时不定义 $d^h$。
+
+对 $t<N$、$P_d(h)>0$，参考纤维的下一结果条件律对每个 $i\in I_h$ 定义为
+$$
+\kappa_{t,i}^{q,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h)}{p_i^h},
+$$
+实际条件律只在 $a_i^h>0$ 时定义为
+$$
+\kappa_{t,i}^{d,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}d_j^hK_t(z\mid j,h)}{a_i^h}.
+$$
+沿用定理 73.3 的自然对数及正实际支撑求和约定 $D(u\Vert v)=\sum_{x:u_x>0}u_x\ln(u_x/v_x)$，置
+$$
+\delta_t(h)=D(d^h\Vert E_hd^h),\qquad
+G_t(h)=\sum_{i:a_i^h>0}a_i^h
+ D(\kappa_{t,i}^{d,h}\Vert\kappa_{t,i}^{q,h}). \tag{86.2}
+$$
+其中 $\delta_t$ 定义到 $t=N$，$G_t$ 只定义于 $t<N$。这些值均有限非负。$G_t$ 比较给定潜粗标签后的结果预测，采用实际粗质量加权；它一般不等于两份无粗标签结果边缘之间的 KL。对 $P_d(h)=0$ 的历史，只将标量函数 $\delta_t(h)$、$G_t(h)$ 零延拓，不在那里指定实际后验。记相应随机变量为 $\delta_t=\delta_t(H_t)$、$G_t=G_t(H_t)$；后文过程等式均相对于 $\mathbb P_d$ 几乎处处成立。
+
+**证明（联合律、前缀与支撑）。** 固定 $j$ 及长度 $t$ 的前缀 $h$，对所有后缀逐层从 $z_N$ 向 $z_{t+1}$ 求和。每次在已固定的先前历史上使用 $\sum_zK_s(z\mid j,h_s)=1$，故
+$$
+\sum_{z_{t+1},\ldots,z_N}
+ \prod_{s=t}^{N-1}K_s(z_{s+1}\mid j,h_s)=1,
+$$
+这里 $h_s$ 由固定前缀和该后缀确定；$t=N$ 时为单个空乘积。因此
+$$
+\sum_{w\in\mathscr H_N:w_t=h}L_w(j)=L_h(j).
+$$
+乘 $\nu_j$ 即得式 (86.1)，取 $t=0$ 再对 $j$ 求和得总质量一。有限条件概率的比率于是给出上述后验公式。$H_t$ 是 $H_{t+1}$ 的截断，故 $\mathcal F_t\subseteq\mathcal F_{t+1}$。
+
+若 $\mathbb P_q(\{(j,w)\})=q_{0j}L_w(j)=0$，严格正 $q_{0j}$ 强制 $L_w(j)=0$，从而实际点质量也为零。在有限空间逐点求和，得到 $\mathbb P_d\ll\mathbb P_q$。同样，$P_q(h)>0$ 恰好表示 $J_h$ 非空；参考后验在此载体严格正且总和为一，$r_h$ 满射给出各 $p_i^h>0$。在 $P_d(h)>0$ 时，$d^h\ge0$ 且总和也为一。
+
+在 $(J_h,I_h,r_h,q^h)$ 上，$C_h,B_h,E_h$ 正是定理 74.2 的静态参考重建算子，非负列随机，故 $E_hd^h$ 是概率。若 $d_j^h>0$，则 $a_{r(j)}^h\ge d_j^h>0$，所以
+$$
+(E_hd^h)_j=\frac{q_j^h a_{r(j)}^h}{p_{r(j)}^h}>0.
+$$
+这给出 $d^h\ll E_hd^h$，也有 $d^h\ll q^h$。行随机性使各已定义的 $\kappa$ 非负归一化。若 $\kappa_{t,i}^{q,h}(z)=0$，其分子的每个非负项为零；由 $q_j^h>0$ 得该纤维上每个 $K_t(z\mid j,h)=0$。因此在 $a_i^h>0$ 时，$\kappa_{t,i}^{d,h}(z)=0$，即 $\kappa_{t,i}^{d,h}\ll\kappa_{t,i}^{q,h}$。全部 KL 的正分子都有正分母，有限载体保证其值有限；对这些归一化且绝对连续的概率对使用 [Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/0ab255d9f64bf6735d5da1930b2565e3944c635d/D5/S3/Divergence/GrandmotherTheorem.lean)，得到 $\delta_t,G_t\ge0$。这是定理 73.3、74.2 的支撑约定在每个活动载体上的使用。证毕。
+
+**定理 86.2（历史上的缺陷平衡、补偿鞅与有限期望预算）。** 在定义与假设 86.1 下，对每个 $t<N$ 及 $P_d(h)>0$，有
+$$
+\boxed{
+\delta_t(h)=G_t(h)+
+ \sum_{z:P_d(hz)>0}\frac{P_d(hz)}{P_d(h)}\delta_{t+1}(hz),
+\qquad
+\mathbb E_d[\delta_{t+1}\mid\mathcal F_t]=\delta_t-G_t.
+} \tag{86.3}
+$$
+定义
+$$
+A_t=\sum_{s=0}^{t-1}G_s,\qquad
+M_t=\delta_t+A_t\quad(0\le t\le N). \tag{86.4}
+$$
+则 $\delta$ 是非负超鞅，$M$ 是非负鞅，均相对于 $(\mathcal F_t)$ 及实际律 $\mathbb P_d$。$A_0=0$，$A$ 非负非减，$A_{t+1}-A_t=G_t$ 为 $\mathcal F_t$-可测；对 $t\ge1$，$A_t$ 为 $\mathcal F_{t-1}$-可测，故 $A$ 可预测。对每个 $0\le n\le N$，有
+$$
+\boxed{
+\mathbb E_d\delta_n+\sum_{s=0}^{n-1}\mathbb E_dG_s=\delta_0,
+\qquad \delta_0=D(d_0\Vert E_{\varnothing}d_0).
+} \tag{86.5}
+$$
+这是期望预算；它不主张逐路径的 $\delta_t+A_t=\delta_0$，也不主张 $\delta_t$ 逐路径非增。Doob 分解写成 $\delta=M-A$，其可预测部分是 $-A$。
+
+**证明。** 固定 $t<N$ 及实际正历史 $h$。将定理 85.2 的输入逐项取为
+$$
+(J,I,r,q,d,K)=(J_h,I_h,r_h,q^h,d^h,K_t(\,\cdot\mid\,\cdot,h)).
+$$
+定义 86.1 已给出有限非空载体、满射、严格正参考、实际概率及共同非负行随机核，允许实际零坐标。由 $L_{hz}(j)=L_h(j)K_t(z\mid j,h)$，两份下一结果质量恰为
+$$
+b_z=\sum_{j\in J_h}d_j^hK_t(z\mid j,h)
+=\frac{P_d(hz)}{P_d(h)},\qquad
+c_z=\sum_{j\in J_h}q_j^hK_t(z\mid j,h)
+=\frac{P_q(hz)}{P_q(h)}. \tag{86.6}
+$$
+
+对每个 $c_z>0$，定义 85.1 的活动载体及满射是
+$$
+(J_h)_z=\{j\in J_h:K_t(z\mid j,h)>0\}=J_{hz},\qquad
+(I_h)_z=I_{hz},\qquad (r_h)_z=r_{hz}.
+$$
+其参考后验满足
+$$
+(q_z^h)_j=\frac{q_j^hK_t(z\mid j,h)}{c_z}
+=\frac{q_{0j}L_{hz}(j)}{P_q(hz)}=q_j^{hz}\quad(j\in J_{hz}). \tag{86.7}
+$$
+这个识别对 $b_z=0<c_z$ 也成立，因为参考后验已在全部参考正历史上定义。进一步记
+$$
+n_{iz}^h=\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h).
+$$
+则 $I_{hz}=\{i\in I_h:n_{iz}^h>0\}$，且 $p_i^{hz}=n_{iz}^h/c_z$。所以定义 85.1 的更新重建核在 $J_{hz}\times I_{hz}$ 上恰为
+$$
+(B_z^h)_{ji}
+=\mathbf1_{r(j)=i}\frac{q_j^hK_t(z\mid j,h)}{n_{iz}^h}
+=\mathbf1_{r(j)=i}\frac{q_j^{hz}}{p_i^{hz}}
+=(B_{hz})_{ji}.
+$$
+粗化同为 $C_{hz}$，故更新投影是 $E_{hz}$。若 $b_z>0$，由实际绝对连续性得 $c_z>0$，并且
+$$
+(d_z^h)_j=\frac{d_j^hK_t(z\mid j,h)}{b_z}
+=\frac{d_{0j}L_{hz}(j)}{P_d(hz)}=d_j^{hz}.
+$$
+因此定理 85.2 中的后验缺陷正是 $\delta_{t+1}(hz)$，其条件证据项正是式 (86.2) 的 $G_t(h)$。直接应用式 (85.2)，即得式 (86.3) 的第一式；实际零结果不进入后验和。式 (86.1)、(86.6) 给出正历史原子上的实际下一结果条件概率 $b_z$，故第二式正是第一式的条件期望写法。
+
+所有标量过程由当前历史决定，因而适应。历史树有限，各节点的实数值有限，包括规定为零的实际零历史，所以各时间的 $\delta_t,G_t,A_t,M_t$ 均可积。由式 (86.3) 及 $G_t\ge0$，$\delta$ 满足单步超鞅不等式。有限次塔式条件化给出全部 $s\le t\le N$ 的超鞅关系。
+
+$A_{t+1}=A_t+G_t$ 给出非减性及增量可测性；$A_t$ 的每个加项在 $t\ge1$ 时均为 $\mathcal F_{t-1}$-可测，故得到可预测性。再由式 (86.3)，
+$$
+\mathbb E_d[M_{t+1}\mid\mathcal F_t]
+=\delta_t-G_t+A_t+G_t=M_t.
+$$
+非负性来自 $\delta_t,A_t\ge0$，有限次条件化给出鞅关系。空历史使 $\delta_0$ 确定，$M_0=\delta_0$；取期望并展开 $A_n$ 即得式 (86.5)。同时
+$$
+\sum_{s=0}^{t-1}\mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]
+=-\sum_{s=0}^{t-1}G_s=-A_t, \tag{86.8}
+$$
+所以 Doob 可预测部分的符号是负号。证毕。
+
+附引：Steven P. Lalley，*Conditional Expectation and Martingales*，[§1.1 的鞅与超鞅定义、§1.2 Corollary 1 的期望恒等式](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=1)。式 (86.8) 使用离散 Doob 分解的通常约定：可预测部分为条件增量之和，鞅部分为原过程减去该和，见 Mathlib 的 [predictablePart、martingalePart 及 martingale_martingalePart](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Martingale/Centering.lean)。
+
+**定理 86.3（有界停止预算与有限时域最大界）。** 在定义与假设 86.1 下，对每个取值于 $\{0,\ldots,N\}$ 的 $(\mathcal F_t)$-停止时刻 $\tau$，有
+$$
+\boxed{
+\mathbb E_d\delta_\tau+
+ \sum_{s=0}^{N-1}\mathbb E_d[\mathbf1_{\{\tau>s\}}G_s]
+=\mathbb E_d[\delta_\tau+A_\tau]=\delta_0.
+} \tag{86.9}
+$$
+费用只计 $s<\tau$，不包含 $G_\tau$。特别地，$\mathbb E_d\delta_\tau\le\delta_0$。对每个实数 $\lambda>0$，有
+$$
+\boxed{
+\mathbb P_d\!\left(\max_{0\le t\le N}\delta_t\ge\lambda\right)
+\le\min\!\left(1,\frac{\delta_0}{\lambda}\right).
+} \tag{86.10}
+$$
+
+**证明。** 有界停止值和全部有限和均可积。逐路径的有限望远镜恒等式为
+$$
+\delta_\tau=\delta_0+
+ \sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}(\delta_{s+1}-\delta_s),
+\qquad
+A_\tau=\sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}G_s.
+$$
+停止时刻条件给出 $\{\tau>s\}\in\mathcal F_s$。对第一式取期望，利用这个指示函数的可测性及式 (86.3)，得到
+$$
+\begin{aligned}
+\mathbb E_d\delta_\tau
+&=\delta_0+\sum_{s=0}^{N-1}
+ \mathbb E_d\!\left[\mathbf1_{\{\tau>s\}}
+   \mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]\right]\\
+&=\delta_0-\sum_{s=0}^{N-1}
+ \mathbb E_d[\mathbf1_{\{\tau>s\}}G_s].
+\end{aligned}
+$$
+这与 $A_\tau$ 的表达式给出式 (86.9)，再由非负费用得停止期望上界。
+
+令
+$$
+B_\lambda=\left\{\max_{0\le t\le N}\delta_t\ge\lambda\right\},
+\qquad
+\sigma(\omega)=
+\begin{cases}
+\min\{t\in\{0,\ldots,N\}:\delta_t(\omega)\ge\lambda\},
+ &\omega\in B_\lambda,\\
+N,&\omega\notin B_\lambda.
+\end{cases}
+$$
+对每个 $s<N$，
+$$
+\{\sigma>s\}=\bigcap_{t=0}^{s}\{\delta_t<\lambda\}\in\mathcal F_s,
+$$
+而 $\{\sigma\le N\}=\Omega$，故 $\sigma$ 是有界停止时刻。在 $B_\lambda$ 上，包括首次在 $N$ 命中的路径，$\delta_\sigma\ge\lambda$；在补集上 $\sigma=N$ 且 $\delta_\sigma\ge0$。因此不把事件 $B_\lambda$ 等同于 $\{\sigma\le N\}$，而是使用
+$$
+\lambda\mathbf1_{B_\lambda}\le\delta_\sigma.
+$$
+由式 (86.9) 得
+$$
+\lambda\mathbb P_d(B_\lambda)\le\mathbb E_d\delta_\sigma\le\delta_0.
+$$
+除以 $\lambda>0$，再结合概率至多为一，即得式 (86.10)。初始即命中时 $\sigma=0$；$N=0$ 时全部费用和为空、$\sigma=0$，上述两种事件分支和不等式仍成立。证明仅使用确定有限时域内的求和。证毕。
+
+附引：Lalley 同文，[§3.1 Theorem 1，PDF 第 7–8 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=7)给出有界停止期望，[§4 Proposition 7 证明中的有限 $n$ 最大界，PDF 第 12 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=12)给出式 (86.10) 的非负超鞅形式。Steven R. Howard、Aaditya Ramdas、Jon McAuliffe、Jasjeet Sekhon，*Time-uniform Chernoff bounds via nonnegative supermartingales*，[arXiv:1808.03204v8，Lemma 1、式 (2.11)，PDF 第 15 页](https://arxiv.org/pdf/1808.03204v8#page=15)，其[§6.1 式 (6.1)，PDF 第 45 页](https://arxiv.org/pdf/1808.03204v8#page=45)给出固定有限时域的首次越界停止论证；这里仅使用这一有限步骤。
+
+**推论 86.4（三状态边界的尖锐性与逐路径增加）。** 在命题 85.3 的同一三状态实验中，取 $N=1$，唯一粗标签下的先验为
+$$
+q_0=(1/4,1/4,1/2)^{\mathsf T},\qquad
+d_0=(9/20,1/20,1/2)^{\mathsf T},
+$$
+确定性观察 $A=\{1,2\}$ 或 $B=\{3\}$。记该命题的正二点 KL 标量为 $a_*:=A_\star>0$，则
+$$
+\delta_0=\frac{a_*}{2},\qquad G_0=0,\qquad A_0=A_1=0,
+\qquad
+\delta_1=
+\begin{cases}
+a_*,&H_1=A,\\
+0,&H_1=B,
+\end{cases}
+$$
+两种结果的实际概率各为 $1/2$。于是 $M_1=\delta_1$ 非常值，并且
+$$
+\boxed{
+\mathbb P_d\!\left(\max_{0\le t\le1}\delta_t\ge a_*\right)
+=\frac12=\frac{\delta_0}{a_*}.
+} \tag{86.11}
+$$
+故式 (86.10) 在阈值 $\lambda=a_*$ 取等；同一个实验也排除逐路径缺陷非增及逐路径恒定预算。
+
+**证明。** 命题 85.3 的式 (85.8) 及 $\mathcal G=0$，经定理 86.2 的后验与费用识别，直接给出所列 $\delta_0,G_0,\delta_1$；由定义得 $A_0=A_1=0$。因为 $0<\delta_0=a_*/2<a_*$，阈值事件恰为结果 $A$，概率为 $1/2$，得到式 (86.11)。在该结果上 $M_1=\delta_1=2\delta_0>M_0$，而结果 $B$ 上 $M_1=0$；所以保持期望的鞅并非逐路径常量。这里只断言所示阈值取等。证毕。
+
+## 86.99 追加锚
+
+## 87. 重复观察后的可识别类与残余纤维缺陷
+
+**定义与假设 87.1（有限共同 iid 信道与后验的定义域）。** 设 $J,I,Z$ 为有限非空集合，$r:J\to I$ 为固定满射。设实际先验 $d_0\in\Delta(J)$ 允许零坐标，参考先验 $q_0\in\Delta(J)$ 满足 $q_{0j}>0$ 对每个 $j\in J$。给定同一个行随机信道
+$$
+K(z\mid j)\ge0,\qquad \sum_{z\in Z}K(z\mid j)=1.
+$$
+在共同可测空间 $\Omega=J\times Z^{\mathbb N_{>0}}$ 上，取有限离散空间的乘积 $\sigma$-代数，定义两种概率律
+$$
+\mathbb P_a(\{j\}\times A)=a_jK_j^{\mathbb N_{>0}}(A),
+\qquad a\in\{d_0,q_0\},
+$$
+其中 $K_j=K(\cdot\mid j)$，$K_j^{\mathbb N_{>0}}$ 是该行的可数乘积概率；记 $\mathbb P_d=\mathbb P_{d_0}$、$\mathbb P_q=\mathbb P_{q_0}$。潜状态 $X$ 抽取一次后固定，观察坐标记为 $Z_1,Z_2,\ldots$。两律均由同一个条件 iid 核 $K_j^{\mathbb N_{>0}}$ 混合而成；在 $a_j>0$ 时，给定 $X=j$ 的条件律就是该乘积律。混合掉 $X$ 后不主张观察无条件独立。对每个有限时域，这也是定义 86.1 中取 $K_t(z\mid j,h)=K(z\mid j)$ 的历史模型。
+
+令 $s:J\twoheadrightarrow\mathcal S$ 为观察行等价类映射：
+$$
+s(j)=s(k)\quad\Longleftrightarrow\quad K_j=K_k.
+$$
+写
+$$
+J_c=s^{-1}(c),\qquad
+d_c=\sum_{j\in J_c}d_{0j},\qquad
+q_c=\sum_{j\in J_c}q_{0j}>0,
+$$
+并以 $K_c$ 表示该类的公共信道行。每个类都定义严格正的参考条件律
+$$
+q^c_j=q_{0j}/q_c\quad(j\in J_c).
+$$
+仅当 $d_c>0$ 时定义实际条件律
+$$
+d^c_j=d_{0j}/d_c\quad(j\in J_c).
+$$
+取 $r_c=r|_{J_c}:J_c\twoheadrightarrow r(J_c)$。这些条件向量在比较整个 $J$ 上的坐标时，只在类外作零延拓；$d_c=0$ 的类不定义实际条件概率。
+
+对有限概率向量 $a\ll p$，采用自然对数及正支撑求和
+$$
+D(a\Vert p)=\sum_{j:a_j>0}a_j\ln\frac{a_j}{p_j},
+\qquad
+a\ll p\ \Longleftrightarrow\ \forall j\ (p_j=0\Rightarrow a_j=0).
+$$
+若 $p$ 在当前载体上严格正，$v$ 是到其像的粗标签映射，则参考纤维恢复为
+$$
+(E_{p,v}a)_j=p_j
+\frac{\sum_{v(k)=v(j)}a_k}{\sum_{v(k)=v(j)}p_k}.
+$$
+该向量非负且按纤维求和得总质量一；每个正 $a_j$ 对应正恢复质量，所以 $a\ll E_{p,v}a$。定理 73.3 与定理 74.2 的静态恢复恒等式给出
+$$
+\delta_{p,v}(a):=D(a\Vert E_{p,v}a)
+=D(a\Vert p)-D(v_*a\Vert v_*p)\ge0.
+\tag{87.1}
+$$
+全部散度有限。这里仅用静态恒等式，不要求定理 74.2 中的动力学族保持条件。[^rro87-static]
+
+对历史 $h_n=(z_1,\ldots,z_n)$，定义
+$$
+L_n(j)=\prod_{t=1}^nK(z_t\mid j),\qquad
+D_n=\sum_jd_{0j}L_n(j),\qquad
+Q_n=\sum_jq_{0j}L_n(j),
+$$
+并令 $L_0(j)=1$、$D_0=Q_0=1$。由共同乘积核，有限联合质量为 $a_jL_n(j)$；对 $j$ 求和，以及按各观察坐标使用行随机性，得到
+$$
+\mathbb P_d(H_n=h_n)=D_n(h_n),\qquad
+\mathbb P_q(H_n=h_n)=Q_n(h_n),
+\qquad H_n=(Z_1,\ldots,Z_n),
+$$
+$$
+\sum_{h_n\in Z^n}D_n(h_n)=\sum_{h_n\in Z^n}Q_n(h_n)=1.
+\tag{87.2}
+$$
+因为 $q_0$ 严格正，$D_n>0\Rightarrow Q_n>0$：正的非负有限和 $D_n$ 中有正项，故该位置的 $L_n(j)>0$，进而在 $Q_n$ 中也有正项。
+
+参考后验在每个 $Q_n>0$ 的历史上定义，实际后验仅在 $D_n>0$ 的历史上定义：
+$$
+q_{n,j}=\frac{q_{0j}L_n(j)}{Q_n}\quad(Q_n>0),\qquad
+d_{n,j}=\frac{d_{0j}L_n(j)}{D_n}\quad(D_n>0).
+\tag{87.3}
+$$
+这些公式由有限联合质量除以相应正历史质量得到。参考活动载体及限制后的满射为
+$$
+J_n=\{j:L_n(j)>0\},\qquad
+r_n=r|_{J_n}:J_n\twoheadrightarrow r(J_n).
+$$
+在参考正历史上，$J_n$ 非空且 $q_n$ 在其上严格正；在实际正历史上，$d_n$ 是 $J_n$ 上的概率向量且 $d_n\ll q_n$。写整个 $J$ 上的向量时，仅把活动载体外的坐标置零，不要求 $q_n$ 在整个 $J$ 上严格正。粗化向量在 $I\setminus r(J_n)$ 上也作零延拓。
+
+定义实际正历史上的标量
+$$
+\delta_n=\delta_{q_n,r_n}(d_n).
+\tag{87.4}
+$$
+在实际零质量历史上仅将标量 $\delta_n$ 置零，不定义实际后验。每个有限 $n$ 的这类历史总质量为零，可数次取交后，以 $\mathbb P_d$-概率一，全部有限时刻同时满足 $D_n>0$。对每个 $d_c>0$，定义
+$$
+\delta_c=\delta_{q^c,r_c}(d^c).
+$$
+在 $d_c=0$ 的类上约定标量 $\delta_c=0$；这不定义实际条件概率。
+
+最后，令联合标签 $u=(r,s)$ 的陪域为像 $u(J)$。置
+$$
+J_{i,c}=\{j:r(j)=i,\ s(j)=c\},\qquad
+d_{i,c}=\sum_{j\in J_{i,c}}d_{0j},\qquad
+q_{i,c}=\sum_{j\in J_{i,c}}q_{0j}.
+$$
+每个非空胞腔都有 $q_{i,c}>0$，故
+$$
+(E_{q_0,u}d_0)_j=q_{0j}\frac{d_{r(j),s(j)}}{q_{r(j),s(j)}}
+\tag{87.5}
+$$
+良定义。
+
+**定理 87.2（共同有限 iid 观察下的双先验后验与纤维缺陷极限）。** 在定义与假设 87.1 下，存在关于无限记录可测的解码器
+$$
+\widehat s:Z^{\mathbb N_{>0}}\to\mathcal S
+$$
+使得 $\widehat s((Z_t)_{t\ge1})=s(X)$ 在 $\mathbb P_d$ 与 $\mathbb P_q$ 下均几乎处处成立。写 $S=s(X)$。在实际律 $\mathbb P_d$ 下，$d_S>0$ 几乎处处，且同步使用同一记录的后验在类外零延拓后满足
+$$
+d_{n,j}\longrightarrow d^S_j,\qquad
+q_{n,j}\longrightarrow q^S_j
+\quad\text{对所有 }j\in J\text{ 同时几乎处处成立}.
+\tag{87.6}
+$$
+进一步，
+$$
+\boxed{\delta_n\longrightarrow\delta_S
+\quad\text{几乎处处且在 }L^1(\mathbb P_d)\text{ 中}.}
+\tag{87.7}
+$$
+因此
+$$
+\boxed{
+\lim_{n\to\infty}\mathbb E_d\delta_n
+=\sum_{c:d_c>0}d_c\delta_c
+=D(d_0\Vert E_{q_0,(r,s)}d_0).
+}
+\tag{87.8}
+$$
+逐路径极限是依赖真实类的随机变量 $\delta_S$；式 (87.8) 是其确定的平均值。该定理识别的是观察行类，不是类内的个别状态。对 $d_c>0$ 的类，非单点类也不必留下正缺陷：若两条件先验相同，则该类缺陷为零；更一般地，定理 73.3 的纤维恢复等号条件给出 $\delta_c=0$ 当且仅当 $d^c=E_{q^c,r_c}d^c$。
+
+**证明。** 先识别观察行并确定后验极限。固定任意类 $c$，将公共似然记作 $L_n(c)=\prod_{t=1}^nK_c(z_t)$。在记录概率 $K_c^{\mathbb N_{>0}}$ 下，概率一地所有观察都落在 $\operatorname{supp}K_c$，所以 $L_n(c)>0$ 对全部有限 $n$ 同时成立。对不同类 $b\ne c$，分两种情形。
+
+若有符号 $z$ 满足 $K_c(z)>0=K_b(z)$，则前 $n$ 次都未出现该符号的概率为 $(1-K_c(z))^n\to0$。因此概率一地在某个有限时间出现该符号；从那时起 $L_n(b)=0$，故
+$$
+L_n(b)/L_n(c)\longrightarrow0.
+$$
+
+否则 $K_b$ 在 $\operatorname{supp}K_c$ 上处处为正。定义有限实函数
+$$
+g_{b,c}(z)=
+\begin{cases}
+\ln\bigl(K_b(z)/K_c(z)\bigr),&K_c(z)>0,\\
+0,&K_c(z)=0.
+\end{cases}
+$$
+它在有限字母表上有界，因而 $g_{b,c}(Z_t)$ 可积；在 $K_c^{\mathbb N_{>0}}$ 下，这些随机变量独立同分布。实值强大数律给出
+$$
+\frac1n\ln\frac{L_n(b)}{L_n(c)}
+=\frac1n\sum_{t=1}^ng_{b,c}(Z_t)
+\longrightarrow-D(K_c\Vert K_b)<0
+\quad\text{几乎处处}.
+\tag{87.9}
+$$
+严格不等式使用有限 Gibbs 非负性及等号条件：两行均非负归一化，当前分支给出 $K_c\ll K_b$，而不同类意味着 $K_c\ne K_b$。所以似然比仍趋于零。此论证允许不同观察行具有不同支撑；含零似然的分支已单独处理。强律的乘积律分离用法也见第 71.6 小节内的命题 71.7；这里的有界函数 $g_{b,c}$ 履行同一实值强律的前提。[^rro87-slln][^rro87-gibbs]
+
+类数有限，故对固定 $c$ 可以同时取全部竞争类的概率一事件。同类各状态的似然完全相同，因此
+$$
+\frac{Q_n}{L_n(c)}=\sum_bq_b\frac{L_n(b)}{L_n(c)}\longrightarrow q_c>0.
+$$
+于是参考后验在任意真类的记录律下满足
+$$
+q_n(J_c)\longrightarrow1,\qquad
+q_{n,j}\longrightarrow\mathbf1_{\{j\in J_c\}}q_{0j}/q_c.
+\tag{87.10}
+$$
+这一步对全部类成立，因为全部 $q_c>0$；不要求该类有实际先验质量。
+
+为明确构造可测解码器，对每个 $c$ 令 $A_c$ 为满足以下条件的无限记录集合：全部有限历史都有 $Q_n>0$，且 $q_n(J_c)\to1$。每个有限后验坐标在其正分母定义域上依赖有限前缀，故可测；极限条件可写成可数交并，所以 $A_c$ 可测。不同 $A_c$ 不交，因为有限后验的类质量之和为一，不可能同时有两个不同类质量趋于一。由式 (87.10)，$K_c^{\mathbb N_{>0}}(A_c)=1$。在 $A_c$ 上令 $\widehat s=c$，在 $\bigcup_cA_c$ 的补集上取任意固定类。该解码器可测，并在每个类记录律下识别该类，因而在两种先验混合律下都满足定理所述结论。这没有给零分母记录指定参考后验。
+
+现固定 $d_c>0$。同一似然比论证还给出
+$$
+D_n/L_n(c)\longrightarrow d_c>0,\qquad
+T_n:=D_n/Q_n\longrightarrow d_c/q_c>0,
+$$
+以及
+$$
+d_{n,j}\longrightarrow\mathbf1_{\{j\in J_c\}}d_{0j}/d_c.
+\tag{87.11}
+$$
+实际零先验的坐标始终为零。对有限个实际正类混合，即得式 (87.6)。同一行内的非零后验比例始终等于初始先验比例；这些观察不会进一步区分同一行内的不同状态。
+
+接着处理 KL 的支撑边界。置
+$$
+w_j=d_{0j}/q_{0j},\qquad M=\max_jw_j.
+$$
+因为 $\sum_jq_{0j}w_j=1$，有 $1\le M<\infty$。在每个实际正历史上，整个 $J$ 上的零延拓向量满足
+$$
+d_{n,j}=q_{n,j}w_j/T_n,\qquad
+T_n=\sum_jq_{n,j}w_j\in(0,M].
+\tag{87.12}
+$$
+定义 $\phi(0)=0$、$\phi(x)=x\ln x$ 对 $x>0$。此函数在 $[0,M]$ 上连续且有界。[^rro87-mullog] 对 $i\in I$，写
+$$
+p_{n,i}=\sum_{r(j)=i}q_{n,j},\qquad
+b_{n,i}=\sum_{r(j)=i}q_{n,j}w_j,\qquad
+\bar w_{n,i}=b_{n,i}/p_{n,i}\quad(p_{n,i}>0).
+$$
+有 $0\le\bar w_{n,i}\le M$。若 $p_{n,i}=0$，下面的对应加权项取零，不定义其比值。式 (87.1) 与正支撑上的对数展开给出
+$$
+D(d_n\Vert q_n)=\frac{\sum_jq_{n,j}\phi(w_j)}{T_n}-\ln T_n,
+$$
+$$
+D(r_*d_n\Vert r_*q_n)
+=\frac{\sum_{i:p_{n,i}>0}p_{n,i}\phi(\bar w_{n,i})}{T_n}-\ln T_n.
+$$
+所以
+$$
+\boxed{
+\delta_n=
+\frac{\sum_jq_{n,j}\phi(w_j)
+-\sum_{i:p_{n,i}>0}p_{n,i}\phi(\bar w_{n,i})}{T_n}.
+}
+\tag{87.13}
+$$
+$w_j=0$ 的项仅使用 $\phi(0)=0$，不计算 $\ln0$。
+
+在真类 $c$ 且 $d_c>0$ 的概率一事件上，第一有限和由式 (87.10) 收敛。第二有限和中，若 $p_{n,i}\to p_{\infty,i}>0$，则 $b_{n,i}$ 与 $p_{n,i}$ 的收敛和 $\phi$ 的连续性给出该项的极限。若 $p_{\infty,i}=0$，则
+$$
+|p_{n,i}\phi(\bar w_{n,i})|
+\le p_{n,i}\sup_{0\le x\le M}|\phi(x)|\longrightarrow0,
+$$
+其中 $p_{n,i}=0$ 时该加权项仍取零。最后由 $T_n\to d_c/q_c>0$，式 (87.13) 可以取极限。类内有 $d^c_j=q^c_jw_j/(d_c/q_c)$，故此极限正是以 $q^c,d^c,r_c$ 代入同一公式得到的 $\delta_c$。这证明 $\delta_n\to\delta_S$ 几乎处处。这里使用共同似然产生的固定比值结构，没有对边界参考分布使用无条件的 KL 连续性。
+
+为证明 $L^1$ 收敛，式 (87.1)、粗化后概率对的 Gibbs 非负性及式 (87.12) 给出
+$$
+0\le\delta_n\le D(d_n\Vert q_n)
+=\sum_{j:d_{n,j}>0}d_{n,j}\ln w_j-\ln T_n
+\le\ln\frac M{T_n}=:U_n.
+\tag{87.14}
+$$
+在实际正历史上 $U_n$ 有限非负；在实际零质量历史上仅将标量 $U_n$ 置零。对 $v\ge0$，用式 (87.2) 的有限历史质量求和，得到
+$$
+\begin{aligned}
+\mathbb P_d(U_n>v)
+&=\sum_{\substack{h\in Z^n:D_n(h)>0\\D_n(h)/Q_n(h)<Me^{-v}}}D_n(h)\\
+&\le Me^{-v}
+\sum_{\substack{h\in Z^n:D_n(h)>0\\D_n(h)/Q_n(h)<Me^{-v}}}Q_n(h)
+\le Me^{-v}.
+\end{aligned}
+\tag{87.15}
+$$
+因此对 $R\ge0$，尾积分公式给出
+$$
+\begin{aligned}
+\mathbb E_d[\delta_n\mathbf1_{\{\delta_n>R\}}]
+&\le\mathbb E_d[U_n\mathbf1_{\{U_n>R\}}]\\
+&=R\mathbb P_d(U_n>R)+\int_R^\infty\mathbb P_d(U_n>v)\,dv\\
+&\le M(R+1)e^{-R}.
+\end{aligned}
+\tag{87.16}
+$$
+这是一致于 $n$ 的尾界，故 $(\delta_n)$ 一致可积。后验密度比的上界是 $M/T_n$，不是 $M$；这里没有断言所有时刻和记录的 KL 有统一确定上界。
+
+随机极限 $\delta_S$ 只取有限个有限值。取
+$$
+R\ge\max_{c:d_c>0}\delta_c.
+$$
+由几乎处处收敛，$\min(\delta_n,R)\to\delta_S$ 几乎处处；差的绝对值不超过常数 $R$。有限前缀标量可测，$S$ 取有限值，且概率空间上的常数 $R$ 可积，所以支配收敛给出
+$$
+\mathbb E_d|\min(\delta_n,R)-\delta_S|\longrightarrow0.
+$$
+[^rro87-dct] 结合式 (87.16) 及 $0\le\delta_n-\min(\delta_n,R)\le\delta_n\mathbf1_{\{\delta_n>R\}}$，
+$$
+\limsup_{n\to\infty}\mathbb E_d|\delta_n-\delta_S|
+\le M(R+1)e^{-R}.
+$$
+令 $R\to\infty$，即得 $L^1$ 收敛，并得到期望收敛。
+
+最后计算该期望。对 $d_c>0$，在 $j\in J_c$ 且 $d_{0j}>0$ 的坐标上，类内恢复的比值为
+$$
+\frac{d^c_j}{(E_{q^c,r_c}d^c)_j}
+=\frac{d_{0j}q_{r(j),c}}{q_{0j}d_{r(j),c}}.
+$$
+这里 $d_{0j}>0$ 强制 $d_{r(j),c}>0$，严格正参考先验也保证相应 $q_{r(j),c}>0$。因此
+$$
+\begin{aligned}
+\sum_{c:d_c>0}d_c\delta_c
+&=\sum_{c:d_c>0}\sum_{\substack{j\in J_c\\d_{0j}>0}}
+d_{0j}\ln\frac{d_{0j}q_{r(j),c}}{q_{0j}d_{r(j),c}}\\
+&=\sum_{j:d_{0j}>0}d_{0j}
+\ln\frac{d_{0j}}{q_{0j}d_{r(j),s(j)}/q_{r(j),s(j)}}\\
+&=D(d_0\Vert E_{q_0,(r,s)}d_0).
+\end{aligned}
+$$
+与已证的期望收敛合并，得到式 (87.8)。证毕。
+
+[^rro87-static]: [定理 73.3 与定理 74.2](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的正支撑 KL 分解与静态恢复恒等式。用于每个后验时，载体为 $J_n$，粗映射陪域为 $r(J_n)$，满足参考严格正及满射条件；类内则取 $J_c,r(J_c),q^c$。这里只使用定义 74.1 的静态质量算子，若连同其动力学参数代入，可取恒等矩阵。
+
+[^rro87-slln]: [Mathlib/Probability/StrongLaw.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/StrongLaw.lean)，`ProbabilityTheory.strong_law_ae_real`：可积实随机变量、两两独立及同分布推出样本均值几乎处处收敛到积分。式 (87.9) 的 $g_{b,c}$ 在有限集合上有界，零真概率符号已赋有限值，故可积；条件 iid 乘积律履行独立及同分布前提，以 $X_i=g_{b,c}(Z_{i+1})$ 对应从零起始的序列。卷内的乘积律分离应用见第 71.6 小节的命题 71.7。
+
+[^rro87-gibbs]: [GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S3/Divergence/GrandmotherTheorem.lean) 与 [GibbsEquality.kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S3/Divergence/GibbsEquality.lean)：在有限载体、两输入非负归一化及第一输入绝对连续于第二输入的条件下，KL 非负，且为零当且仅当两向量相等。其全载体实值和与本文正支撑和一致：零第一质量项为零，正第一质量处第二质量严格正。
+
+[^rro87-mullog]: [Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean)，`Real.continuous_mul_log` 给出 $x\ln x$ 在零点取零后的连续性；这里只用其在非负紧区间 $[0,M]$ 上的连续性和有界性。
+
+[^rro87-dct]: [Mathlib/MeasureTheory/Integral/DominatedConvergence.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/DominatedConvergence.lean)，`MeasureTheory.tendsto_integral_of_dominated_convergence` 要求被积函数几乎处处强可测、共同可积控制和几乎处处收敛。这里用于有界截断的差 $|\min(\delta_n,R)-\delta_S|$，控制为常数 $R$，极限函数为零。
+
+**命题 87.3（相同单时边缘不能替代条件独立）。** 取两个潜状态 $J=\{1,2\}$、常值粗映射 $r$，并令
+$$
+q_0=(1/2,1/2),\qquad d_0=(2/3,1/3),
+$$
+$$
+K(1\mid1)=1/3,\qquad K(1\mid2)=2/3,
+\qquad K(2\mid j)=1-K(1\mid j).
+$$
+两行不同，故行类均为单点。给定真实状态 $X$ 后，只抽取一次 $Y\sim K(\cdot\mid X)$，再令 $Z_t=Y$ 对所有 $t\ge1$。两先验使用同一个这样的条件记录律。每个单时条件边缘仍为 $K(\cdot\mid X)$，但正确后验纤维缺陷在第一次观察后保持严格正值。因此定理 87.2 的条件 iid 假设不能替换为相同单时条件边缘。
+
+**证明。** 对任意 $n\ge1$，只有两个常值历史 $(1,\ldots,1)$、$(2,\ldots,2)$ 有正概率；给定 $X=j$，观察到常值 $y$ 历史的概率为 $K(y\mid j)$，而不是 $K(y\mid j)^n$。因此全部后续重复都不再更新第一次观察后的后验。
+
+当 $Y=1$ 时，实际概率与两后验为
+$$
+\mathbb P_d(Y=1)=\frac23\frac13+\frac13\frac23=\frac49,
+$$
+$$
+d_n=(1/2,1/2),\qquad q_n=(1/3,2/3)\quad(n\ge1).
+$$
+当 $Y=2$ 时，
+$$
+\mathbb P_d(Y=2)=\frac59,\qquad
+d_n=(4/5,1/5),\qquad q_n=(2/3,1/3)\quad(n\ge1).
+$$
+由于 $r$ 常值，$E_{q_n,r}d_n=q_n$，所以 $\delta_n=D(d_n\Vert q_n)$。两种结果下的后验向量均严格正且不同，有限 Gibbs 非负性及等号条件给出各自 KL 严格为正，并且此值对全部 $n\ge1$ 不变。[^rro87-gibbs] 另一方面，单点行类上的两条件先验都是该点的单位质量，故 iid 结论中的 $\delta_c$ 均为零。正概率事件上的上述恒正极限反驳了删除条件独立性后的结论。证毕。
+
+## 87.99 追加锚
+
+## 88. 公式运输、闭理论伴随与反例提升
+
+**定义与假设 88.1（固定公式集上的后承运输）。** 设 $F_A,F_B$ 为任意集合，$\tau:F_A\to F_B$ 为任意映射，$C_A,C_B$ 分别为 $\mathcal P(F_A),\mathcal P(F_B)$ 上的扩张、单调、幂等闭包算子。令
+$$
+\operatorname{Th}(C_X)=\{T\subseteq F_X:C_X(T)=T\}
+\qquad(X=A,B),
+$$
+并按集合包含排序。定义
+$$
+K_\tau(\Gamma)=\tau^{-1}[C_B(\tau[\Gamma])]
+\qquad(\Gamma\subseteq F_A).
+$$
+算子间的不等式一律为逐点集合包含。称 $\tau$ 保持后承、反射后承或保守，分别指
+$$
+C_A\le K_\tau,\qquad K_\tau\le C_A,\qquad C_A=K_\tau.
+$$
+所有前提集都允许为空或无限；不要求公式集有限、$\tau$ 单射或满射，也不预设联结词、可计算性或紧致性。闭理论载体与最小闭扩张采用 `TheoryIsConsequenceFixedPoint` 的 `ConsequenceOperator`、`Theory` 和 `consequenceClosure_isLeast_fixedPoint_above` 接口。[^rro88-consequence]
+
+[^rro88-consequence]: [`TheoryIsConsequenceFixedPoint`](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.lean)：`ConsequenceOperator Formula` 为 `ClosureOperator (Set Formula)`，`Theory Cn` 为 `Cn.Closeds`；`consequenceClosure_isLeast_fixedPoint_above Cn S` 断言 `Cn S` 是满足 $S\subseteq T$ 且 $Cn(T)=T$ 的最小集合。分别取 $Cn=C_A,C_B$，给出本节使用的最小闭理论性质。
+
+**定理 88.2（诱导闭包与有类型的闭理论伴随）。** $K_\tau$ 总是 $F_A$ 上的闭包算子。以下两项等价：
+$$
+C_A\le K_\tau;
+\qquad
+\forall U\in\operatorname{Th}(C_B),\quad
+\tau^{-1}[U]\in\operatorname{Th}(C_A).
+\tag{88.2a}
+$$
+在这些等价条件下，
+$$
+L:\operatorname{Th}(C_A)\to\operatorname{Th}(C_B),
+\quad L(T)=C_B(\tau[T]),
+$$
+$$
+R:\operatorname{Th}(C_B)\to\operatorname{Th}(C_A),
+\quad R(U)=\tau^{-1}[U]
+$$
+良定义，并满足
+$$
+L(T)\subseteq U
+\quad\Longleftrightarrow\quad
+T\subseteq R(U).
+\tag{88.2b}
+$$
+
+**证明。** 先不使用 $C_A$。在全体源前提集与目标闭理论之间定义
+$$
+L_0:\mathcal P(F_A)\to\operatorname{Th}(C_B),
+\quad L_0(\Gamma)=C_B(\tau[\Gamma]),
+$$
+$$
+R_0:\operatorname{Th}(C_B)\to\mathcal P(F_A),
+\quad R_0(U)=\tau^{-1}[U].
+$$
+它们单调；$L_0$ 的值由幂等性目标闭。对目标闭 $U$，闭包最小性与直接像／逆像的伴随给出
+$$
+\begin{aligned}
+L_0(\Gamma)\subseteq U
+&\Longleftrightarrow \tau[\Gamma]\subseteq U\\
+&\Longleftrightarrow \Gamma\subseteq R_0(U).
+\end{aligned}
+$$
+故 $L_0\dashv R_0$。由伴随复合的闭包构造，$R_0L_0$ 是闭包算子；它逐点正是 $K_\tau$。中间偏序在这里是目标闭理论。[^rro88-adjunction] 若只复合裸直接像与裸逆像，得到的是饱和化 $\tau^{-1}[\tau[\Gamma]]$，没有包含目标推理 $C_B$。
+
+若 $C_A\le K_\tau$ 且 $C_B(U)=U$，则
+$$
+\begin{aligned}
+C_A(\tau^{-1}[U])
+&\subseteq K_\tau(\tau^{-1}[U])\\
+&=\tau^{-1}[C_B(\tau[\tau^{-1}[U]])]\\
+&\subseteq\tau^{-1}[C_B(U)]
+=\tau^{-1}[U].
+\end{aligned}
+$$
+第三步使用 $\tau[\tau^{-1}[U]]\subseteq U$ 及 $C_B$、逆像的单调性。扩张性给出反向包含，所以 $\tau^{-1}[U]$ 源闭。
+
+反之，假设每个目标闭理论的逆像都源闭。对任意 $\Gamma$，$C_B(\tau[\Gamma])$ 目标闭，故其逆像 $K_\tau(\Gamma)$ 源闭。又因 $K_\tau$ 扩张，有 $\Gamma\subseteq K_\tau(\Gamma)$。应用最小源闭扩张性质，得
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma),
+$$
+证明式 (88.2a)。在这些条件下，$R$ 确实落入源闭理论；$L$ 的值仍由幂等性目标闭。将 $L_0\dashv R_0$ 的包含等价限制到源闭 $T$ 即得式 (88.2b)。证毕。
+
+[^rro88-adjunction]: 钉版 Mathlib 的 [`Set.image_preimage`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Lattice/Image.lean) 给出 `GaloisConnection (Set.image τ) (Set.preimage τ)`；[`ClosureOperator.gi`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean) 的下伴随为 `C_B.toCloseds`，上伴随为闭集子类型的包含映射。按 [`GaloisConnection.compose`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的顺序复合这两个伴随，得到下伴随 $C_B.\mathrm{toCloseds}\circ\tau[-]$ 与上伴随 $\tau^{-1}[-]$ 复合闭集包含映射。再用 [`GaloisConnection.closureOperator`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/Closure.lean)，其底层复合就是 $R_0L_0=K_\tau$；所需源偏序为 $\mathcal P(F_A)$，中间偏序为 $C_B.\mathrm{Closeds}$。
+
+**定理 88.3（源闭理论往返只检查反射）。** 不预设后承保持时，已经有
+$$
+K_\tau\le C_A
+\quad\Longleftrightarrow\quad
+\forall T\subseteq F_A,\quad
+[C_A(T)=T\Rightarrow K_\tau(T)=T].
+\tag{88.3a}
+$$
+若再满足 $C_A\le K_\tau$，则定理 88.2 的闭理论伴随良定义，而且
+$$
+C_A=K_\tau
+\quad\Longleftrightarrow\quad
+RL=\mathrm{id}_{\operatorname{Th}(C_A)}.
+\tag{88.3b}
+$$
+在同一保持条件下，对任意目标闭理论 $U$，目标侧往返为
+$$
+LR(U)=C_B(U\cap\tau[F_A])\subseteq U.
+\tag{88.3c}
+$$
+因此 $LR=\mathrm{id}_{\operatorname{Th}(C_B)}$ 恰须另有
+$$
+\forall U\in\operatorname{Th}(C_B),\quad
+C_B(U\cap\tau[F_A])=U.
+\tag{88.3d}
+$$
+源侧恒等式 (88.3b) 不自动给出这个目标侧条件。
+
+**证明。** 若 $K_\tau\le C_A$，对源闭 $T$ 有
+$$
+T\subseteq K_\tau(T)\subseteq C_A(T)=T,
+$$
+故原始往返恒等。反之，对任意 $\Gamma$，$C_A(\Gamma)$ 是源闭理论。由 $K_\tau$ 单调与原始往返假设，
+$$
+K_\tau(\Gamma)
+\subseteq K_\tau(C_A(\Gamma))
+=C_A(\Gamma).
+$$
+这证明式 (88.3a)，没有使用保持条件。加入 $C_A\le K_\tau$ 后，反射恰等价于两算子相等；且 $RL(T)=K_\tau(T)$，得到式 (88.3b)。
+
+最后，对目标闭 $U$，任意映射都满足 $\tau[\tau^{-1}[U]]=U\cap\tau[F_A]$，所以
+$$
+LR(U)=C_B(\tau[\tau^{-1}[U]])
+     =C_B(U\cap\tau[F_A])
+     \subseteq C_B(U)=U.
+$$
+这给出式 (88.3c)，逐点相等恰为式 (88.3d)。命题 88.7 给出源侧恒等而目标侧严格包含的模型见证。证毕。
+
+**命题 88.4（同一单公式闭包对分离保持与反射）。** 取 $F_A=F_B=\{p\}$、$\tau=\mathrm{id}$，并定义
+$$
+C_0(\Gamma)=\Gamma,\qquad C_+(\Gamma)=\Gamma\cup\{p\}.
+$$
+二者均扩张、单调、幂等。取 $C_A=C_0,C_B=C_+$ 时，$K_\tau=C_+$，所以保持成立，但
+$$
+p\in K_\tau(\varnothing)\setminus C_A(\varnothing),
+$$
+反射失败。反向取 $C_A=C_+,C_B=C_0$ 时，$K_\tau=C_0\le C_A$；唯一源闭理论为 $\{p\}$，并有 $K_\tau(\{p\})=\{p\}$，但
+$$
+C_A(\varnothing)=\{p\}\not\subseteq K_\tau(\varnothing)=\varnothing.
+$$
+所以全部源闭理论的原始往返测试通过，保持与保守性仍失败。
+
+**证明。** 闭包三律由并集的单调性与 $\{p\}\cup\{p\}=\{p\}$ 直接得到；$\tau=\mathrm{id}$ 使 $K_\tau=C_B$，上述包含及失败均由两算子在空集上的值给出。在第二个方向，目标空理论是 $C_0$-闭的，而
+$$
+R_0(\varnothing)=\varnothing
+\notin\operatorname{Th}(C_+).
+$$
+因此这里仅有式 (88.3a) 的原始集合测试，不能把 $R_0$ 称为两个闭理论偏序之间已经良定义的右伴随。证毕。
+
+**定义与假设 88.5（固定满足关系及其语义闭包）。** 另给模型集 $\mathcal M_A,\mathcal M_B$ 及满足关系
+$$
+\models_X\ \subseteq\mathcal M_X\times F_X
+\qquad(X=A,B).
+$$
+定义
+$$
+\operatorname{Mod}_X(\Gamma)
+=\{M\in\mathcal M_X:\forall\gamma\in\Gamma,\ M\models_X\gamma\},
+$$
+$$
+S_X(\Gamma)
+=\{\varphi\in F_X:
+      \forall M\in\operatorname{Mod}_X(\Gamma),\ M\models_X\varphi\}
+\qquad(X=A,B).
+$$
+简记 $M\models_X\Gamma$ 表示 $M$ 满足 $\Gamma$ 的全部成员。这些语义算子与前述任意闭包 $C_A,C_B$ 分开保留。给定 $\beta:\mathcal M_B\to\mathcal M_A$，要求满足条件
+$$
+N\models_B\tau(\varphi)
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\varphi
+\qquad(N\in\mathcal M_B,\ \varphi\in F_A).
+\tag{SC}
+$$
+置
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\tau^{-1}[S_B(\tau[\Gamma])].
+$$
+以下反模型的 $M\not\models_X\varphi$ 是经典元理论中的满足关系否定，不要求公式语言含有否定联结词。这里仅采用固定公式集与模型集上的满足接口。[^rro88-satisfaction]
+
+[^rro88-satisfaction]: Mossakowski、Goguen、Diaconescu、Tarlecki，[*What is a Logic?*，作者稿](https://cseweb.ucsd.edu/~goguen/pps/nel05.pdf)，Definitions 2.1、2.6、3.2：分别给出 institution 的满足条件、任意句子集上的语义后承及 comorphism 的句子向前／模型向后满足条件。式 (SC) 只取其固定签名上的映射方向与满足等价；完整 institution 或 comorphism 还需签名范畴、函子及自然性资料。
+
+**定理 88.6（语义反射恰为反模型存在性提升）。** $S_A,S_B$ 是语义后承闭包。在 (SC) 下，
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\{\varphi\in F_A:\quad
+  \forall M\in\beta[\mathcal M_B],\quad
+  [M\models_A\Gamma\Rightarrow M\models_A\varphi]\},
+\tag{88.6a}
+$$
+从而 $S_A\le K_\tau^{\rm sem}$。以下反模型存在性提升条件
+$$
+\begin{aligned}
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+&[\exists M\in\mathcal M_A,\quad
+     M\models_A\Gamma\land M\not\models_A\varphi]\\
+&\Longrightarrow
+[\exists N\in\mathcal M_B,\quad
+     N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi)]
+\end{aligned}
+\tag{CE}
+$$
+满足精确等价
+$$
+\mathrm{CE}
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}\le S_A
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}=S_A.
+\tag{88.6b}
+$$
+$\beta$ 对模型身份满射足以推出 CE，但 CE 不要求对每个指定源模型作同身份提升。
+
+**证明。** 对任意一侧 $X$，每个满足 $\Gamma$ 的模型满足 $\Gamma$ 的每个成员，故 $\Gamma\subseteq S_X(\Gamma)$。若 $\Gamma\subseteq\Delta$，则 $\operatorname{Mod}_X(\Delta)\subseteq\operatorname{Mod}_X(\Gamma)$，从而 $S_X(\Gamma)\subseteq S_X(\Delta)$，给出单调性。扩张性给出 $\operatorname{Mod}_X(S_X(\Gamma))\subseteq\operatorname{Mod}_X(\Gamma)$；反向包含由 $S_X(\Gamma)$ 的定义成立。所以
+$$
+\operatorname{Mod}_X(\Gamma)=\operatorname{Mod}_X(S_X(\Gamma)),
+$$
+两边对全部模型的共同真公式相同，即 $S_X(S_X(\Gamma))=S_X(\Gamma)$。这验证语义闭包三律。
+
+将 (SC) 对 $\Gamma$ 的每个成员使用，有
+$$
+N\models_B\tau[\Gamma]
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\Gamma.
+$$
+与结论公式的 (SC) 合用，得到
+$$
+\begin{aligned}
+\varphi\in K_\tau^{\rm sem}(\Gamma)
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[N\models_B\tau[\Gamma]\Rightarrow N\models_B\tau(\varphi)]\\
+&\Longleftrightarrow
+\forall N\in\mathcal M_B,\quad
+[\beta(N)\models_A\Gamma\Rightarrow\beta(N)\models_A\varphi],
+\end{aligned}
+$$
+即式 (88.6a)。在全部源模型上成立的后承也在子族 $\beta[\mathcal M_B]$ 上成立，所以 $S_A\le K_\tau^{\rm sem}$。
+
+设 CE 成立，且 $\varphi\in K_\tau^{\rm sem}(\Gamma)$。若 $\varphi\notin S_A(\Gamma)$，经典地否定定义中的全称命题，得到一个源反模型。CE 给出目标反模型，与 $\tau(\varphi)\in S_B(\tau[\Gamma])$ 矛盾。因此 $\varphi\in S_A(\Gamma)$，证明反射。
+
+反向设 $K_\tau^{\rm sem}\le S_A$，并给定 CE 前件中的源反模型。它保证 $\varphi\notin S_A(\Gamma)$，因而 $\varphi\notin K_\tau^{\rm sem}(\Gamma)$。经典地否定目标语义后承的全称定义，得到
+$$
+\exists N\in\mathcal M_B,\quad
+N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi),
+$$
+正是 CE。反射再与已证保持相合，得到式 (88.6b) 的等式。
+
+最后，若 $\beta$ 满射，给定源反模型 $M$，取 $\beta(N)=M$，再用 (SC) 即得目标反模型。这个充分条件比 CE 的“存在某个反模型”更强；命题 88.7 给出其非必要性。整个证明不要求公式集或模型集非空、紧致或前提集有限，也不产生有效选择反模型的算法。证毕。
+
+**命题 88.7（同一语义数据分离模型身份、源保守与目标往返）。** 取
+$$
+F_A=\{p_A\},\qquad F_B=\{p_B,q_B\},\qquad
+p_B\ne q_B,\qquad\tau(p_A)=p_B.
+$$
+源模型为三个不同对象 $m_T,m_F,m_F'$，$p_A$ 仅在 $m_T$ 为真。目标模型为两个不同对象 $n_T,n_F$，满足关系与模型映射为
+$$
+\begin{array}{c|cc|c}
+N & N\models_B p_B & N\models_B q_B & \beta(N)\\
+\hline
+n_T & \mathrm{true} & \mathrm{false} & m_T\\
+n_F & \mathrm{false} & \mathrm{true} & m_F
+\end{array}
+$$
+则 (SC) 与 CE 成立，$S_A,S_B$ 都是恒等闭包，且 $K_\tau^{\rm sem}=S_A$；但 $\beta$ 不满射。将定理 88.2 中的闭包取为 $C_A=S_A,C_B=S_B$，有
+$$
+RL=\mathrm{id}_{\operatorname{Th}(S_A)},
+\qquad
+LR(\{q_B\})=\varnothing\subsetneq\{q_B\}.
+\tag{88.7}
+$$
+若把允许的目标模型缩为 $\{n_T\}$，(SC) 仍成立，CE 与语义反射则失败。
+
+**证明。** $p_A$ 与 $p_B$ 在每对 $N,\beta(N)$ 上真值相同，故 (SC) 成立。源前提集只有 $\varnothing,\{p_A\}$ 两种。空前提下 $p_A$ 的反模型 $m_F,m_F'$ 均可由目标反模型 $n_F$ 见证相同失败；前提为 $\{p_A\}$ 时没有使结论 $p_A$ 为假的源模型。所以 CE 成立。不同对象 $m_F'$ 不在 $\beta$ 像中，故模型身份满射失败。
+
+源侧 $S_A(\varnothing)=\varnothing$、$S_A(\{p_A\})=\{p_A\}$。目标侧，两个模型的共同真公式为空；只满足 $p_B$ 的模型 $n_T$ 的真公式集为 $\{p_B\}$，只满足 $q_B$ 的模型 $n_F$ 的真公式集为 $\{q_B\}$；没有模型同时满足 $p_B,q_B$，其全部后果为 $F_B=\{p_B,q_B\}$。所以 $S_B$ 也在全部四个前提集上等于恒等闭包。又因 $\tau$ 将唯一源公式映到 $p_B$，$\tau^{-1}[\tau[\Gamma]]=\Gamma$，故 $K_\tau^{\rm sem}=S_A$。由定义 $RL(T)=K_\tau^{\rm sem}(T)=T$，给出源侧往返恒等；而 $\{q_B\}$ 是目标闭理论，并有
+$$
+R(\{q_B\})=\varnothing,\qquad
+L(R(\{q_B\}))=S_B(\varnothing)=\varnothing,
+$$
+证明严格包含。
+
+将目标族限制为 $\{n_T\}$ 后，原满足条件仍逐模型成立。令 $\widetilde S_B$ 为限制后的目标语义闭包，$\widetilde K_\tau^{\rm sem}(\Gamma)=\tau^{-1}[\widetilde S_B(\tau[\Gamma])]$。空前提的翻译结论 $p_B$ 在全部剩余目标模型上为真，源侧的 $p_A$ 仍被 $m_F$ 反驳。所以
+$$
+p_A\in\widetilde K_\tau^{\rm sem}(\varnothing),\qquad
+p_A\notin S_A(\varnothing);
+$$
+目标侧已经没有提升这一失败的反模型。$q_B$ 在此只是第二个公式，不预设一个将它与 $p_B$ 联系起来的否定联结词。源保守所覆盖的是源语言后承，不能据此识别全部目标闭理论。证毕。
+
+**推论 88.8（语义运输到证明后承的充分桥接条件）。** 在定义与假设 88.5 的数据与 (SC) 下，将 $C_A,C_B$ 解释为另外指定的证明后承闭包，仍与 $S_A,S_B$ 分开。下列两组条件分别充分：
+
+1. 若源系统可靠，即 $C_A\le S_A$，且目标系统对翻译前提与翻译结论完备，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in S_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+   $$
+   则 $C_A\le K_\tau$。
+2. 若 CE 成立，源系统完备，即 $S_A\le C_A$，且目标系统对翻译推理可靠，即
+   $$
+   \forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+   \tau(\varphi)\in C_B(\tau[\Gamma])
+   \Rightarrow\tau(\varphi)\in S_B(\tau[\Gamma]),
+   $$
+   则 $K_\tau\le C_A$。
+
+两组条件同时成立时，证明后承运输保守。
+
+**证明。** 对任意前提集 $\Gamma$ 和结论 $\varphi$，第一组条件依次给出
+$$
+\begin{aligned}
+\varphi\in C_A(\Gamma)
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+\end{aligned}
+$$
+中间一步为定理 88.6 的语义保持。第二组条件依次给出
+$$
+\begin{aligned}
+\tau(\varphi)\in C_B(\tau[\Gamma])
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\varphi\in C_A(\Gamma),
+\end{aligned}
+$$
+中间一步为 CE 所等价的语义反射。两条链分别证明保持与反射，其合取给出等式。
+
+这些条件是充分条件包，不主张各项必要。链中的完备性与可靠性均按所写的全部前提集量化，包括无限前提集；不能只检验有限前提后便无条件取得这里的结论。后承等式没有提供证明对象的可计算转换，也没有提供搜索时间、证书长度或转换成本界。证毕。
+
+## 88.99 追加锚
+
+## 89. 后承运输的复合、源可见增量与闭理论覆盖
+
+**定义与假设 89.1（两步运输及额外后果）。** 沿用[定义与假设 88.1](https://github.com/the-omega-institute/trureturing/blob/eb77ed8fcffbf0cacb6494eea514913cc19aede0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的任意公式集、后承闭包及保持、反射、保守的定义，给定
+$$
+F_A\xrightarrow{\tau}F_B\xrightarrow{\sigma}F_C
+$$
+与各自的闭包 $C_A,C_B,C_C$。对从 $F_X$ 到 $F_Y$ 的映射 $f$，仍记
+$$
+K_f(\Gamma)=f^{-1}[C_Y(f[\Gamma])],
+\qquad
+E_f(\Gamma)=K_f(\Gamma)\setminus C_X(\Gamma).
+$$
+$K_f$ 的闭包性直接采用定理 88.2。$E_f$ 只记录源语言中的额外后果；对全部 $\Gamma$ 有 $E_f(\Gamma)=\varnothing$ 恰好表示反射 $K_f\le C_X$，加入保持 $C_X\le K_f$ 后才等价于保守。
+
+以下前提集均可为空或无限，不要求 $\tau,\sigma$ 单射，也不预设联结词、有限后承性或有效呈示。任意前提的后承保持与保守翻译用语可参见 Jeřábek，*The ubiquity of conservative translations*，[arXiv:1108.6263v2，Definitions 2.1–2.2](https://arxiv.org/pdf/1108.6263v2)；其中有限后承性是另列的条件。
+
+**定理 89.2（复合增量的不交分解与源片段判据）。** 不加保持假设时，对任意 $\Gamma\subseteq F_A$ 已有
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\tag{89.2a}
+$$
+若两步都保持后承，即
+$$
+\mathrm P_\tau:\ C_A\le K_\tau,
+\qquad
+\mathrm P_\sigma:\ C_B\le K_\sigma,
+$$
+则
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma)
+                 \subseteq K_{\sigma\circ\tau}(\Gamma),
+\tag{89.2b}
+$$
+且有不交并
+$$
+E_{\sigma\circ\tau}(\Gamma)
+=E_\tau(\Gamma)\ \sqcup\
+  \tau^{-1}[E_\sigma(\tau[\Gamma])].
+\tag{89.2c}
+$$
+令 $S=\tau[F_A]$。在同一组保持假设下，复合保守 $K_{\sigma\circ\tau}=C_A$ 当且仅当 $K_\tau=C_A$，并且
+$$
+\begin{aligned}
+\forall\Delta\subseteq S,\ \forall\psi\in S,\qquad
+\sigma(\psi)\in C_C(\sigma[\Delta])
+\ \Longrightarrow\ \psi\in C_B(\Delta).
+\end{aligned}
+\tag{89.2d}
+$$
+$\mathrm P_\sigma$ 已给出 (89.2d) 的反向，因此该条件检查的是前提与结论都在 $S$ 中的后承双向保持。
+
+**证明。** 直接像与逆像的复合恒等式给出
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)
+&=(\sigma\circ\tau)^{-1}
+     [C_C(\sigma[\tau[\Gamma]])]\\
+&=\tau^{-1}
+     [\sigma^{-1}[C_C(\sigma[\tau[\Gamma]])]]\\
+&=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\end{aligned}
+$$
+此处 $K_\sigma$ 的输入是 $F_B$ 的子集 $\tau[\Gamma]$；两个诱导闭包作用于不同的幂集，不能将本式写成 $K_\sigma\circ K_\tau$。上述两步直接采用钉版 Mathlib 的 [Set.image_comp 与 Set.preimage_comp](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+(89.2b) 的第一包含是 $\mathrm P_\tau$。将 $\mathrm P_\sigma$ 用于 $\tau[\Gamma]$，再取 $\tau$-逆像，结合 (89.2a) 得到第二包含。对这三个嵌套集合，差集分解为
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus C_A(\Gamma)
+={}&\bigl(K_\tau(\Gamma)\setminus C_A(\Gamma)\bigr)\\
+&\sqcup
+\bigl(K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)\bigr).
+\end{aligned}
+$$
+第一项包含在 $K_\tau(\Gamma)$ 中，第二项与它不交。逆像保持差集，故
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)
+&=\tau^{-1}
+  [K_\sigma(\tau[\Gamma])\setminus C_B(\tau[\Gamma])]\\
+&=\tau^{-1}[E_\sigma(\tau[\Gamma])],
+\end{aligned}
+$$
+即 (89.2c)。这里的嵌套差集等式是 [Set.sdiff_union_sdiff_cancel](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/BooleanAlgebra/Set.lean) 在 $s=K_{\sigma\circ\tau}(\Gamma)$、$t=K_\tau(\Gamma)$、$u=C_A(\Gamma)$ 下的应用，再交换两并项；逆像等式使用 [Set.preimage_sdiff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+若复合保守，(89.2b) 夹出 $K_\tau=C_A$，而 (89.2c) 的第二项对全部 $\Gamma$ 为空。反之，第一步保守且这些第二项全部为空，由 (89.2b)–(89.2c) 得到复合保守。因此只须说明第二项处处为空等价于 (89.2d)。
+
+第二项处处为空等价于
+$$
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\qquad
+\tau(\varphi)\in K_\sigma(\tau[\Gamma])
+\ \Longrightarrow\
+\tau(\varphi)\in C_B(\tau[\Gamma]).
+\tag{89.2e}
+$$
+任意 $\Delta\subseteq S$ 都满足
+$$
+\tau[\tau^{-1}[\Delta]]=\Delta.
+$$
+这是 [Set.image_preimage_eq_of_subset](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean) 在 $\Delta\subseteq\operatorname{range}\tau$ 下的直接应用。在 (89.2e) 中取 $\Gamma=\tau^{-1}[\Delta]$，并对给定 $\psi\in S$ 取一个满足 $\tau(\varphi)=\psi$ 的见证，便得到 (89.2d)。反向取 $\Delta=\tau[\Gamma]$、$\psi=\tau(\varphi)$ 即可。这里不要求单射，也不需要同时选择一族代表。最后，$\mathrm P_\sigma$ 给出 $\psi\in C_B(\Delta)\Rightarrow\sigma(\psi)\in C_C(\sigma[\Delta])$，证明所述反向。证毕。
+
+**推论 89.3（有限保持链的源可见增量）。** 给定 $n\ge0$ 和有限链
+$$
+F_0\xrightarrow{\tau_1}F_1
+\xrightarrow{\tau_2}\cdots
+\xrightarrow{\tau_n}F_n,
+$$
+其中每个 $F_k$ 带闭包 $C_k$，且每一步满足
+$$
+C_{k-1}\le K_{\tau_k}\qquad(1\le k\le n).
+$$
+令 $f_0=\operatorname{id}_{F_0}$、$f_k=\tau_k\circ f_{k-1}$，并对任意 $\Gamma\subseteq F_0$ 定义
+$$
+H_k(\Gamma)=f_k^{-1}[C_k(f_k[\Gamma])],
+\qquad H_0(\Gamma)=C_0(\Gamma).
+$$
+则
+$$
+H_0(\Gamma)\subseteq H_1(\Gamma)\subseteq\cdots\subseteq H_n(\Gamma).
+$$
+令
+$$
+\begin{aligned}
+D_k(\Gamma)
+&=H_k(\Gamma)\setminus H_{k-1}(\Gamma)\\
+&=f_{k-1}^{-1}
+ \left[
+ K_{\tau_k}(f_{k-1}[\Gamma])
+ \setminus C_{k-1}(f_{k-1}[\Gamma])
+ \right].
+\end{aligned}
+$$
+那么
+$$
+H_n(\Gamma)\setminus C_0(\Gamma)
+=\bigsqcup_{k=1}^{n}D_k(\Gamma).
+\tag{89.3}
+$$
+最终复合 $f_n$ 对全部源前提保守，当且仅当对每个 $\Gamma\subseteq F_0$ 与 $1\le k\le n$ 均有 $D_k(\Gamma)=\varnothing$；此时每个前缀 $f_k$ 都相对于初始语言 $F_0$ 保守。
+
+**证明。** 对第 $k$ 步应用保持条件并取 $f_{k-1}$-逆像，得到
+$$
+\begin{aligned}
+H_{k-1}(\Gamma)
+&\subseteq
+ f_{k-1}^{-1}[K_{\tau_k}(f_{k-1}[\Gamma])]\\
+&=H_k(\Gamma),
+\end{aligned}
+$$
+末个等式是 (89.2a) 的复合公式。再用逆像保持差集得到 $D_k$ 的第二种表达。若 $k<\ell$，则
+$$
+D_k(\Gamma)\subseteq H_k(\Gamma)\subseteq H_{\ell-1}(\Gamma),
+\qquad
+D_\ell(\Gamma)\cap H_{\ell-1}(\Gamma)=\varnothing,
+$$
+所以各 $D_k$ 两两不交。任意属于 $H_n(\Gamma)\setminus H_0(\Gamma)$ 的公式，在有限嵌套链中有唯一首次进入的指标 $k$，恰属于 $D_k(\Gamma)$；反向每个 $D_k(\Gamma)$ 都属于该末端差集，证明 (89.3)。$n=0$ 时两边均为空，包含空并情形。
+
+由于 $H_0(\Gamma)\subseteq H_n(\Gamma)$，末端相等当且仅当差集为空，也就当且仅当每个 $D_k(\Gamma)$ 为空。对全部 $\Gamma$ 使用该结论，再由嵌套关系夹出 $H_k(\Gamma)=C_0(\Gamma)$，得到每个前缀保守。第 $k$ 步由此受到的反射限制只覆盖 $f_{k-1}[F_0]$ 内的前提与结论；没有覆盖条件时，不能升级为该箭头在整个 $F_{k-1}$ 上保守。证毕。
+
+**推论 89.4（闭理论覆盖下的逐步保守判据）。** 保留 $\mathrm P_\tau,\mathrm P_\sigma$，并假设每个中间闭理论都由某个源闭理论前推得到：
+$$
+\forall U\in\operatorname{Th}(C_B),\
+\exists T\in\operatorname{Th}(C_A),\qquad
+C_B(\tau[T])=U.
+\tag{89.4a}
+$$
+则
+$$
+K_{\sigma\circ\tau}=C_A
+\quad\Longleftrightarrow\quad
+K_\tau=C_A\ \text{且}\ K_\sigma=C_B.
+\tag{89.4b}
+$$
+$\tau$ 对公式满射足以保证 (89.4a)；这里不主张该覆盖条件是 (89.4b) 成立的必要条件。
+
+**证明。** 使用定理 88.2 的有类型伴随
+$$
+L_\tau\dashv R_\tau,\qquad
+L_\sigma\dashv R_\sigma,
+$$
+其中
+$$
+\begin{aligned}
+L_\tau(T)&=C_B(\tau[T]),&
+R_\tau(U)&=\tau^{-1}[U],\\
+L_\sigma(U)&=C_C(\sigma[U]),&
+R_\sigma(V)&=\sigma^{-1}[V].
+\end{aligned}
+$$
+保持条件保证各右伴随的值确实落在相应闭理论中。对任意 $\Delta\subseteq F_B$，扩张性给出
+$$
+C_C(\sigma[\Delta])
+\subseteq C_C(\sigma[C_B(\Delta)]).
+$$
+另一方面，$\mathrm P_\sigma$ 给出 $\sigma[C_B(\Delta)]\subseteq C_C(\sigma[\Delta])$；再用单调性与幂等性，得到反向包含。因此
+$$
+C_C(\sigma[C_B(\Delta)])=C_C(\sigma[\Delta]).
+\tag{89.4c}
+$$
+将其用于 $\Delta=\tau[T]$，并用逆像复合，得到
+$$
+L_{\sigma\circ\tau}=L_\sigma\circ L_\tau,
+\qquad
+R_{\sigma\circ\tau}=R_\tau\circ R_\sigma.
+\tag{89.4d}
+$$
+复合保持已由 (89.2b) 给出，所以这些映射均有指定的闭理论载体。其伴随方向也正是钉版 Mathlib 的 [GaloisConnection.compose](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean)。
+
+先由覆盖证明
+$$
+L_\tau R_\tau=\operatorname{id}_{\operatorname{Th}(C_B)}.
+\tag{89.4e}
+$$
+给定 $U=L_\tau(T)$，伴随的单位 $T\subseteq R_\tau L_\tau(T)$ 及 $L_\tau$ 单调给出 $U\subseteq L_\tau R_\tau(U)$；余单位给出反向包含 $L_\tau R_\tau(U)\subseteq U$。覆盖保证全部 $U$ 均可这样表示，故 (89.4e) 成立。这里单位与余单位分别直接采用 [GaloisConnection.le_u_l 与 GaloisConnection.l_u_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的序不等式。
+
+现在假设复合保守。由定理 88.3 的源闭理论往返判据和 (89.4d)，
+$$
+R_\tau R_\sigma L_\sigma L_\tau(T)=T
+\qquad(T\in\operatorname{Th}(C_A)).
+\tag{89.4f}
+$$
+任取 $U\in\operatorname{Th}(C_B)$，由覆盖写成 $U=L_\tau(T)$。$R_\sigma L_\sigma(U)$ 是中间闭理论，故可对它使用 (89.4e)，得到
+$$
+\begin{aligned}
+R_\sigma L_\sigma(U)
+&=L_\tau R_\tau R_\sigma L_\sigma(U)\\
+&=L_\tau R_\tau R_\sigma L_\sigma L_\tau(T)\\
+&=L_\tau(T)=U.
+\end{aligned}
+$$
+其中第三步使用 (89.4f)。于是 $R_\sigma L_\sigma$ 在全部中间闭理论上为恒等。由 $\mathrm P_\sigma$ 及定理 88.3，得到 $K_\sigma=C_B$，这里结论覆盖全部中间前提集。第一步保守 $K_\tau=C_A$ 则直接由 (89.2b) 和复合保守夹出。
+
+反向，若两步均保守，(89.2a) 给出
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[C_B(\tau[\Gamma])]
+=K_\tau(\Gamma)=C_A(\Gamma).
+$$
+最后，若 $\tau$ 对公式满射，对任意中间闭理论 $U$ 取 $T=R_\tau(U)=\tau^{-1}[U]$。由 $\mathrm P_\tau$ 与定理 88.2，$T$ 源闭；由满射有 $\tau[T]=U$，故 $L_\tau(T)=C_B(U)=U$，验证 (89.4a)。证毕。
+
+**命题 89.5（源片段覆盖与逐步保持的两个边界）。**
+
+**(a) 生成全部中间公式不保证闭理论覆盖。** 取不同公式 $a\ne b$，令
+$$
+F_A=\{a\},\qquad F_B=F_C=\{a,b\},
+$$
+$\tau$ 为包含映射，$\sigma=\operatorname{id}$，并定义
+$$
+C_A(\Gamma)=\Gamma,\qquad C_C(\Delta)=\Delta\cup\{b\},
+$$
+$$
+C_B(\Delta)=
+\begin{cases}
+\Delta\cup\{b\},&a\in\Delta,\\
+\Delta,&a\notin\Delta.
+\end{cases}
+$$
+则三者均为闭包，两步都保持，且
+$$
+K_\tau=K_{\sigma\circ\tau}=C_A,
+\qquad
+b\in K_\sigma(\varnothing)\setminus C_B(\varnothing).
+\tag{89.5a}
+$$
+同时，
+$$
+C_B(\tau[F_A])=F_B,
+$$
+但闭理论覆盖 (89.4a) 失败。
+
+**证明。** $C_A,C_C$ 的闭包三律由恒等和固定集合并直接成立。$C_B$ 扩张；若 $\Delta\subseteq\Delta'$ 且 $a\in\Delta$，则 $a\in\Delta'$，两边都增添 $b$；若 $a\notin\Delta$，则 $C_B(\Delta)=\Delta\subseteq\Delta'\subseteq C_B(\Delta')$。这证明单调性。$C_B$ 从不增添 $a$，所以第一次作用前后触发条件不变，而重复增添 $b$ 不改变集合，故幂等。
+
+对任意 $\Gamma\subseteq\{a\}$，两个目标闭包都不增添 $a$，从而
+$$
+\tau^{-1}[C_B(\tau[\Gamma])]
+=\Gamma
+=\tau^{-1}[C_C(\tau[\Gamma])].
+$$
+这给出第一步和复合保守，也给出第一步保持。对每个中间前提 $\Delta$，
+$$
+C_B(\Delta)\subseteq\Delta\cup\{b\}=K_\sigma(\Delta),
+$$
+故第二步保持；但空前提上 $C_B(\varnothing)=\varnothing$，$K_\sigma(\varnothing)=\{b\}$，所以第二步不反射。新增公式 $b$ 不在源像 $S=\{a\}$ 中，因而不造成源可见增量。
+
+中间闭理论恰为
+$$
+\operatorname{Th}(C_B)=\{\varnothing,\{b\},\{a,b\}\}.
+$$
+源闭理论只有 $\varnothing,\{a\}$，且
+$$
+L_\tau(\varnothing)=\varnothing,\qquad
+L_\tau(\{a\})=\{a,b\}.
+$$
+因此 $C_B(\tau[F_A])=F_B$ 确实成立，却没有源闭理论前推为 $\{b\}$。这证明闭理论覆盖失败，并说明最终保守在此不能推出第二步全域保守。证毕。
+
+**(b) 缺少后续保持时，端点保守可以掩盖中间强化。** 使用命题 88.4 的单公式闭包 $C_0(\Gamma)=\Gamma$、$C_+(\Gamma)=\Gamma\cup\{p\}$，取
+$$
+F_A=F_B=F_C=\{p\},\qquad
+\tau=\sigma=\operatorname{id},
+\qquad
+C_A=C_0,\ C_B=C_+,\ C_C=C_0.
+$$
+则第一步保持但不保守，第二步不保持，复合却保守。
+
+**证明。** 恒等映射使
+$$
+K_\tau=C_+,\qquad K_\sigma=C_0,\qquad
+K_{\sigma\circ\tau}=C_0=C_A.
+$$
+第一步由 $C_0\le C_+$ 保持，而空前提新增 $p$，所以不反射。第二步在空前提处要求的包含是 $\{p\}\subseteq\varnothing$，故保持失败。复合等式已给出端点保守。
+
+这里直接复合翻译只将 $\sigma[\tau[\Gamma]]$ 交给最终闭包。若把中间全部后果也交给下一步，则在空前提上实际得到
+$$
+C_C(\sigma[C_B(\varnothing)])=\{p\},
+\qquad
+C_C(\sigma[\varnothing])=\varnothing.
+\tag{89.5b}
+$$
+两种前提集合不同；第一式仍保留已交付的 $p$，没有删除输入前提。失效的是 (89.4c) 所需的后续保持，因此不能沿用 (89.2b) 的嵌套关系或用端点保守代替逐步保持。证毕。
+
+## 89.99 追加锚
