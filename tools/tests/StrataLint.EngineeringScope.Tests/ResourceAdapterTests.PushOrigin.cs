@@ -171,15 +171,17 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Theory]
-    [InlineData("shallow")]
-    [InlineData("missing")]
-    [InlineData("missing-registration")]
-    public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
+    [InlineData("shallow", false)]
+    [InlineData("missing", false)]
+    [InlineData("missing", true)]
+    [InlineData("missing-registration", false)]
+    public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect, bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        if (packed) SharedBuildContractTests.Git(fixture.Root, "repack", "-ad");
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
-        else if (defect == "missing") File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        else if (defect == "missing") parent = MissingEndpoint(fixture);
         else parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", parent + "^1");
         var result = PushPlan(fixture, parent);
         if (defect == "shallow")
@@ -205,16 +207,18 @@ public sealed partial class ResourceAdapterTests
         }
     }
 
-    [Fact]
-    public void PushMissingPromisorParentFailsWithoutContactingRemote()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PushMissingPromisorEndpointFailsWithoutContactingRemote(bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
-        File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        if (packed) SharedBuildContractTests.Git(fixture.Root, "repack", "-ad");
+        var before = MissingEndpoint(fixture);
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.promisor", "true");
         var environment = EnvironmentFor(fixture);
-        SetPushEvent(fixture, environment, parent);
+        SetPushEvent(fixture, environment, before);
         var helper = Path.Combine(environment["PATH"], "git-remote-push-probe");
         File.WriteAllText(helper, "#!/bin/bash\nprintf 'contacted\\n' > \"$PUSH_REMOTE_PROBE\"\nexit 1\n");
         SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", helper]);
@@ -228,6 +232,21 @@ public sealed partial class ResourceAdapterTests
         Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
         Assert.False(File.Exists(contacted), "Planning contacted the promisor remote for a missing object.");
         Assert.False(File.Exists(PushPlanPath(fixture)));
+        _ = SharedBuildContractTests.Process(fixture.Root, "git", ["cat-file", "-e", before], environment,
+            TestBudgets.WorkflowProcessHangGuard);
+        Assert.True(File.Exists(contacted), "The control must reach the promisor helper when lazy fetch is enabled.");
+    }
+
+    private static string MissingEndpoint(ResourceRouteTests.ResourceFixture fixture)
+    {
+        // event.before need not be an ancestor. Hash a valid commit without
+        // writing it so the missing endpoint is independent of Git storage.
+        fixture.Write("build/missing-endpoint.commit",
+            SharedBuildContractTests.Git(fixture.Root, "cat-file", "commit", "HEAD^1")
+                + "\nmissing push endpoint fixture\n");
+        var before = SharedBuildContractTests.Git(fixture.Root, "hash-object", "-t", "commit", "--", "build/missing-endpoint.commit");
+        Assert.NotEqual(0, SharedBuildContractTests.Process(fixture.Root, "git", ["cat-file", "-e", before]).Exit);
+        return before;
     }
 
     [Fact]
