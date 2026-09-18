@@ -1,6 +1,9 @@
 """Normal inspect entry remains authoritative when a lightweight seed is available."""
 from test_native_support import *
 from test_reuse import EXECUTION
+import copy
+import platform
+import shlex
 
 
 class NativeReuseTests:
@@ -16,10 +19,22 @@ class NativeReuseTests:
 
     def test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs(self):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_execution'] = EXECUTION
+        policy['report_execution'] = copy.deepcopy(EXECUTION)
+        policy['report_execution']['toolchain'] = dict(
+            pin=(self.root / 'lean-toolchain').read_text().strip(), identities=[dict(
+                platform={name: getattr(platform, name)() for name in EXECUTION['platform']},
+                tools={name: subprocess.check_output([str(Path(self.lake).with_name(name)), '--version'],
+                    text=True).strip() for name in EXECUTION['tools']})])
         policy['dependency_sources']['include'].append(dict(pattern='Audit.lean', optional=False))
-        for path in ['tools/lean-inspector/reuse.py', 'tools/lean-inspector/inspect.sh', 'utility.json']:
+        for path in ['tools/lean-inspector/reuse.py', 'tools/lean-inspector/inspect.sh',
+                     'tools/scripts/workflow/install-lean-toolchain.sh', 'utility.json']:
             policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
+        # Simulate activating the installed pinned toolchain only after a miss;
+        # ensuing report/default work still runs the real compiler and Lake.
+        self.write('tools/scripts/workflow/install-lean-toolchain.sh',
+            '#!/bin/bash\nset -euo pipefail\n[[ "$2" == --github-path ]]\n'
+            'printf "%s\\n" installed >> ' + shlex.quote(str(self.root / 'tool-installs')) + '\n'
+            'printf "%s\\n" ' + shlex.quote(str(Path(self.lake).parent)) + ' > "$3"\n')
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.build()  # installs the collection's private compiler stage
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
@@ -41,7 +56,11 @@ class NativeReuseTests:
         probe()
         shutil.rmtree(self.root / '.lake')
         self.env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
+        (self.root / 'bin/python3').symlink_to(sys.executable)
+        self.env['PATH'] = str(self.root / 'bin') + ':/usr/bin:/bin:/usr/sbin:/sbin'
+        self.env['LAKE_BIN'] = ''
         reused = self.inspect()
+        self.assertFalse((self.root / 'tool-installs').exists(), '[FAIL] reuse_must_not_activate_toolchain')
         self.assertNotIn('phase=ensure status=started', reused.stderr, '[FAIL] heavy_cache_not_required')
         self.assertNotIn('phase=report status=started', reused.stderr)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', reused.stdout)
@@ -65,6 +84,7 @@ class NativeReuseTests:
                     probe()
                 shutil.rmtree(self.root / '.lake')
                 recovered = self.inspect()
+                self.assertTrue((self.root / 'tool-installs').exists(), '[FAIL] miss_activates_toolchain')
                 self.assertIn('phase=ensure status=started', recovered.stderr)
                 self.assertIn('phase=report status=completed', recovered.stderr,
                               '[FAIL] invalid_seed_must_reenter_native_producer')

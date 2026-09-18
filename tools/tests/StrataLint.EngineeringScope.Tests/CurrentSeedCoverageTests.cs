@@ -8,6 +8,18 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Fact]
+    public void TransportedProducerCanSelectAndPublishWithoutLeanTools()
+    {
+        using var fixture = Prepare();
+        Producer(fixture, "prepare");
+        fixture.CommitPlan();
+        fixture.Processes();
+        FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        Producer(fixture, "probe-without-tools");
+    }
+
+    [Fact]
     public void CurrentProducerSeedSurvivesReusedChecksAndFollowingMetadataOnlyCurrent()
     {
         using var fixture = Prepare();
@@ -264,6 +276,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
             fixture.setUp()
             try:
                 if operation == 'prepare':
+                    fixture.register_toolchain()
                     paths = ('D5/A.lean', 'Audit.lean', 'Inspector.lean', 'producer.py',
                         'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', 'bin/lake', 'bin/lean',
                         'tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
@@ -284,18 +297,23 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                     if operation == 'renew':
                         assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'old producer must miss'
                     fixture.receipt()
-                elif operation in ('probe', 'probe-miss'):
+                elif operation in ('probe', 'probe-miss', 'probe-without-tools'):
                     sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
                     import lean_actions
-                    selected = lean_actions.report_seed(root, fixture.lake)
+                    lake = fixture.lake
+                    if operation == 'probe-without-tools':
+                        fixture.lake.unlink()
+                        fixture.lake.with_name('lean').unlink()
+                        lake = None
+                    selected = lean_actions.report_seed(root, lake)
                     if operation == 'probe-miss':
                         assert selected is None, 'damaged producer must return to normal production'
                         sys.exit(0)
                     expected = root / 'build/ci/current-check-seed' / relative
                     assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
-                    assert not reuse.probe(root, pathlib.Path(selected), fixture.lake)['needs_lake']
+                    assert not reuse.probe(root, pathlib.Path(selected), lake)['needs_lake']
                     output = root / 'build/reused-report' / publication.RAW
-                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.lake)['needs_lake']
+                    assert not reuse.reuse(root, pathlib.Path(selected), output, lake)['needs_lake']
                     assert output.read_bytes() == expected.read_bytes()
                 else:
                     raise AssertionError(operation)

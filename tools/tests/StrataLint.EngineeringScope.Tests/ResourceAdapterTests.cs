@@ -8,6 +8,33 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class ResourceAdapterTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void OptionalReportResourcesHonorTheRegisteredActivationPhase(bool reusable)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var result = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import pathlib, sys
+            from unittest.mock import patch
+            root = pathlib.Path(sys.argv[1])
+            sys.path.insert(0, str(root / 'tools/scripts/worktree'))
+            import lean_actions
+            hit = sys.argv[2] == 'true'
+            source = 'accepted/report.json' if hit else None
+            requirements = dict(tools=['lake'], cache_layers=['current', 'elan', 'project'],
+                cache_activation={'current':'stage-start', 'elan':'report-miss', 'project':'stage-start'})
+            with patch.object(lean_actions, 'report_seed', return_value=source):
+                selected, values = lean_actions.report_resources(root, {'execution':{'steps':['lean-report']}}, requirements)
+            assert selected == source
+            assert values['needs_lake'] == (not hit)
+            assert values['elan_required'] == (not hit), values
+            assert values['project_required'], 'stage-start is independent of report reuse'
+            assert not values['dependency_required'], 'undeclared resources cannot activate'
+            """, root, reusable ? "true" : "false"], hangGuard: TestBudgets.ScriptProcessHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+    }
+
+    [Theory]
     [InlineData("build")]
     [InlineData("engineering")]
     [InlineData("current")]

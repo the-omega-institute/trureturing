@@ -34,6 +34,41 @@ run_meta do
     let original ← IO.FS.readFile manifestPath
     let .ok manifest := Json.parse original | throwError "setup: invalid manifest"
     let .ok fields := manifest.getObj? | throwError "setup: manifest is not an object"
+    let .ok version := manifest.getObjValAs? Nat "report_semantic_version"
+      | throwError "setup: missing manifest version"
+    let manifestInputs := fun (rows : Array Json) => rows.mapM fun wire => do
+      let .ok inputs := wire.getObjValAs? (Array Json) "inputs"
+        | throwError "setup: missing source inputs"
+      let bindings := inputs.filter fun input =>
+        input.getObjValAs? String "path" == .ok manifestPath
+      unless bindings.size == 1 do throwError "setup: manifest binding is not unique"
+      let .ok sha256 := bindings[0]!.getObjValAs? String "sha256"
+        | throwError "setup: missing manifest digest"
+      pure ({ path := manifestPath, sha256 } : TemplateAudit.SourceInput)
+    let previousInputs ← manifestInputs wires
+    let originalHash := Sha256.hex original.toUTF8
+    unless previousInputs.all (·.sha256 == originalHash) do
+      throwError "setup: original wire does not bind manifest bytes"
+    let changed := original ++ "\n"
+    let currentHash := Sha256.hex changed.toUTF8
+    IO.FS.writeFile manifestPath changed
+    let rejected ← try
+      TemplateAudit.validateSourceInputs previousInputs
+      pure false
+    catch error => pure ((← error.toMessageData.toString).contains
+      "incomplete_closure:E7.stale_source:lean-report-inputs.json")
+    (if rejected then logInfo else logError)
+      m!"[{if rejected then "PASS" else "FAIL"}] manifest_byte_change_rejects_old_binding"
+    let refreshed ← reportJson modules
+    let currentInputs ← manifestInputs refreshed
+    let rebound := currentHash != originalHash && currentInputs.size == modules.size &&
+      currentInputs.all (·.sha256 == currentHash)
+    (if rebound then logInfo else logError)
+      m!"[{if rebound then "PASS" else "FAIL"}] manifest_byte_change_binds_current_bytes"
+    let sameVersion := refreshed.all fun wire =>
+      wire.getObjValAs? Nat "compatibility_version" == .ok version
+    (if sameVersion then logInfo else logError)
+      m!"[{if sameVersion then "PASS" else "FAIL"}] manifest_byte_change_preserves_compatibility"
     IO.FS.writeFile manifestPath ((Json.mkObj (fields.toList.map fun (key, value) =>
       (key, if key == "report_semantic_version" then toJson (7 : Nat) else value))).compress)
     let bumped ← reportJson modules

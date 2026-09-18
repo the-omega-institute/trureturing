@@ -13,7 +13,7 @@ import tomllib
 STAGES = ("build", "engineering", "current", "delta")
 TOOLS = {"bash", "dotnet", "git", "lake", "make", "python3"}
 CACHES = {"dependency", "project", "judge", "elan", "engineering", "current"}
-CACHE_PHASES = {"stage-start"}
+CACHE_PHASES = {"stage-start", "report-miss"}
 FILEMAP = "Meta/FILEMAP.toml"
 FILEMAP_FRAGMENT = re.compile(r"\AMeta/FILEMAP(?:\.[a-z][a-z0-9]*)+\.toml\Z")
 
@@ -174,7 +174,10 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
         for layer, phase in activation.items():
             if not isinstance(phase, str) or phase not in CACHE_PHASES:
                 raise ValueError(f"{rid}: unknown cache activation: {layer}")
-            if any(row["cache_activation"].get(layer, phase) != phase for row in resources.values()):
+            if phase == "report-miss" and (resource["stage"] != "current" or layer not in {"dependency", "elan", "project"}):
+                raise ValueError(f"{rid}: report-miss activation requires a current Lean cache: {layer}")
+            if any(row["stage"] == resource["stage"] and row["cache_activation"].get(layer, phase) != phase
+                    for row in resources.values()):
                 raise ValueError(f"conflicting cache activation: {layer}")
         materials = resource["materials"]
         if not isinstance(materials, list):

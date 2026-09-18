@@ -5,6 +5,28 @@ namespace StrataLint.Tests;
 
 public sealed class FileMapPlanningTests
 {
+    [Theory]
+    [InlineData("valid", 0)]
+    [InlineData("same-stage-conflict", 2)]
+    [InlineData("wrong-stage", 2)]
+    [InlineData("wrong-layer", 2)]
+    public void ReportCacheActivationHasExplicitStageAndLayerScope(string variant, int expected)
+    {
+        var source = FileMapPlanningFixture.Canonical["filemap"]!.GetValue<string>()
+            .Replace("project = \"stage-start\"", "project = \"report-miss\"", StringComparison.Ordinal)
+            .Replace("cache_layers = [\"judge\"], cache_activation = {judge = \"stage-start\"}",
+                "cache_layers = [\"project\"], cache_activation = {project = \"stage-start\"}", StringComparison.Ordinal);
+        if (variant == "same-stage-conflict") source = source.Replace("stage = \"engineering\"", "stage = \"current\"", StringComparison.Ordinal);
+        if (variant == "wrong-stage") source = source.Replace("stage = \"current\"", "stage = \"engineering\"", StringComparison.Ordinal);
+        if (variant == "wrong-layer") source = source.Replace("project", "judge", StringComparison.Ordinal);
+        using var fixture = new FileMapPlanningFixture(source);
+        fixture.Supply(fixture.Changes("README.md"));
+        Assert.Equal(expected, FileMapConformCommand.Run(["--producer-write-set", "none"], fixture.Root).ExitCode);
+        var result = fixture.MakePlan();
+        Assert.True(result.ExitCode == expected, FileMapPlanningFixture.Text(result));
+        fixture.AssertNoTools();
+    }
+
     [Fact]
     public void ReferenceOnlyParentlessCurrentReturnsHonestNoWorkWithoutToolsOrBase()
     {
