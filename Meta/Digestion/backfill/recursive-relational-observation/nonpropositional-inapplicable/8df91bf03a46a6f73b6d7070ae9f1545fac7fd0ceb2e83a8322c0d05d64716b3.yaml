@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8df91bf03a46a6f73b6d7070ae9f1545fac7fd0ceb2e83a8322c0d05d64716b3
+  normalized_sha256: sha256:8df91bf03a46a6f73b6d7070ae9f1545fac7fd0ceb2e83a8322c0d05d64716b3
+cas_ref: sha256:8df91bf03a46a6f73b6d7070ae9f1545fac7fd0ceb2e83a8322c0d05d64716b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Under the inherited RRO70.1 hypotheses: an arbitrary probability space, finite ambient-measurable partitions and refinement modulo null sets, surviving cells of positive mass, and P0={X}. The sigma algebras are literally generateFrom(range cells union {s | MeasurableSet[ambient] s and mu s=0}). generateFrom_le gives their ambient inclusion. Finite ae_all_iff, the fine a.e. cover and coarse a.e. disjointness derive each coarse cell equal a.e. to the union of its assigned fine cells. Both measurable differences are ambient null generators, so the exact identity C=(U\(U\C)) union (C\U) makes C measurable in the fine sigma algebra. generateFrom_le then gives genuine refinement inclusion. No completion or countable-generation premise is used. This fully closed mathematical claim has upstream closure and no usable accepted project GID or combination for this exact null-augmented inclusion; settled under CLAUDE 3.2.'
+    previous_atom_id: f8026f4732625b8c33cecf190403c866d6da0b69850e2faa650d9916e71a887d
+    next_atom_id: 3456bcebb3d6534580032e7f8b2619784a510011677b176b844eb8a0e566c3a6
