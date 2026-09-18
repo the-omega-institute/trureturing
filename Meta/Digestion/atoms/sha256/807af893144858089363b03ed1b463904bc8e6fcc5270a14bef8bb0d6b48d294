@@ -1,0 +1,9 @@
+因此
+$$
+V_L=H_L\cap H_{L-1}^{\perp}\quad(L\ge1),\qquad
+\dim_{\mathbb C}V_L=m_L,
+\qquad
+\Delta_j\Delta_L=0\quad(j\ne L).
+$$
+上述投影引用允许复标量，并不把 $Q-P$ 解释成保持非负函数的算子。
+

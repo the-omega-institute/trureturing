@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92ce648d49b4f220670f294da2f67691647ac12cdb1a08b5b8460ad84c05f590
+  normalized_sha256: sha256:92ce648d49b4f220670f294da2f67691647ac12cdb1a08b5b8460ad84c05f590
+cas_ref: sha256:92ce648d49b4f220670f294da2f67691647ac12cdb1a08b5b8460ad84c05f590
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Under the inherited RRO70.1 hypotheses: an arbitrary probability space, finite ambient-measurable partitions and refinement modulo null sets, surviving cells of positive mass, and P0={X}. The exact null-augmented sigma inclusion follows from finite a.e. refinement and measurable null differences. MeasureTheory.mem_lpMeas_indicatorConstLp, Submodule.span_le and the verified actual average=MeasureTheory.condExpL2 identity give H_(L-1)<=H_L without replacing Hobs by ambient L2. Submodule.comapSubtypeEquivOfLe and LinearIsometry.map_starProjection transport these actual spaces and projections into Hobs. FiniteDimensional.span_of_finite derives finite dimensionality and hence closedness and orthogonal projections. Submodule.starProjection_comp_starProjection_of_le gives P Q=P; range inclusion and Submodule.starProjection_eq_self_iff give Q P=P, equivalently the adjoint direction since orthogonal projections are selfadjoint. This whole mathematical claim is upstream-closed, with no usable accepted project GID or combination supplying this source refinement/closedness/product conjunction. Settlement follows CLAUDE 3.2. Carrier-search scope: D5 declarations for finite partitions/cell averages, conditional expectation, span/finrank and nested projections, including the finite-partition-cell-measure, orthogonal-complement-projection and innovation-energy alternatives; no usable frozen project GID or combination for this whole leaf was found in that scope.'
+    previous_atom_id: 692246b446e80d4a50ecb7779858dd96c74618568a82a38c970e586af458b684
+    next_atom_id: 533d0e7e7d59d4b8609da161e0dc4eada8f88e8e8c89eba11618394189907ebf
