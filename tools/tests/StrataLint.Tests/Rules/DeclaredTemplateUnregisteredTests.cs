@@ -67,6 +67,33 @@ public sealed class DeclaredTemplateUnregisteredTests
             new(Theorem + "__catalog_irredundant", "theorem", "True", [])]));
 
     [Fact]
+    public void generated_equation_and_congruence_companions_are_exempt() => Empty(Build(
+        source: "-- Lean compiler generated companions\n",
+        declarations: [new(Theorem + ".eq_def", "theorem", "True", []) { IsGeneratedCompanion = true },
+            new(Theorem + ".congr_simp", "theorem", "True", []) { IsGeneratedCompanion = true }]));
+
+    [Theory]
+    [InlineData("eq_def")]
+    [InlineData("congr_simp")]
+    public void authored_companion_suffix_is_selected_even_with_generated_origin(string suffix)
+    {
+        var theorem = Theorem + "." + suffix;
+        Block(Build(
+            source: Source.Replace("target0", "target0." + suffix, StringComparison.Ordinal),
+            declarations: [new(theorem, "theorem", "True", []) { IsGeneratedCompanion = true }]), theorem);
+    }
+
+    [Theory]
+    [InlineData("eq_def")]
+    [InlineData("congr_simp")]
+    public void unknown_companion_origin_remains_selected(string suffix)
+    {
+        var theorem = Theorem + "." + suffix;
+        Block(Build(source: "-- unknown declaration provenance\n",
+            declarations: [new(theorem, "theorem", "True", [])]), theorem);
+    }
+
+    [Fact]
     public void handwritten_companion_suffix_does_not_exempt_theorem() => Block(Build(
         source: Source.Replace("target0", "target0__catalog_irredundant", StringComparison.Ordinal),
         declarations: [new(Theorem + "__catalog_irredundant", "theorem", "True", [])]), Theorem + "__catalog_irredundant");

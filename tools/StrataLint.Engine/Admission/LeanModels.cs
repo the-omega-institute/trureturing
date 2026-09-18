@@ -33,6 +33,11 @@ public sealed record LeanDeclaration(
 
     public bool IncludeInStatement { get; init; } = true;
 
+    // Lean's inspector marks declarations whose names are recognized by the
+    // compiler as automatically generated or reserved companions.  Missing
+    // provenance remains false so callers fail closed for older reports.
+    public bool IsGeneratedCompanion { get; init; }
+
     public string StatementTypeAddress =>
         TypeRepresentation.Length > 0
             ? CanonicalStatementWriter.StatementTypeAddress(TypeRepresentation)
