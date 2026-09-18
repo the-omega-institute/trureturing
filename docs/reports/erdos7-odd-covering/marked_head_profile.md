@@ -666,3 +666,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The whole J reserve keeps each original family error](profile-notes/197-the-whole-j-reserve-keeps-each-original-family-error.md)
 - [The separate J family errors enter the complete global comparison](profile-notes/198-the-separate-j-family-errors-enter-the-complete-global-comparison.md)
 - [One six-label head controls the square and both complete crosses](profile-notes/199-one-six-label-head-controls-the-square-and-both-complete-crosses.md)
+- [The K and next source layers share the J exclusion](profile-notes/200-the-k-and-next-source-layers-share-the-j-exclusion.md)
