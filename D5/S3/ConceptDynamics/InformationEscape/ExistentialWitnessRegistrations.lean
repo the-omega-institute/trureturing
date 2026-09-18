@@ -198,4 +198,7 @@ run_meta do
       else
         logWarning diagnostic
 
+/-- Trigger probe: a new public theorem with no information registration. -/
+theorem probe_four_slot_true : ∀ x : Bool, x = x := fun _ => rfl
+
 end D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations
