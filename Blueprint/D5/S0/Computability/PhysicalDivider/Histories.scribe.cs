@@ -11,15 +11,57 @@ internal sealed class HistoriesDocument : IScribeDocumentDefinition
         + "same-capacity call histories while preserving the caller's tapes and retained storage extents.",
         H("Framed Physical Division"),
         Blocks(
+            Paragraph(Text(
+                "Let X be the set of tuples x = (w,a,d,capacity,oldQ,oldR,caller,frame) "
+                + "with natural w,a,d, Boolean lists capacity,oldQ,oldR, a map caller from "
+                + "CallerTape to Boolean tapes, and a map frame from CallerTape to Extent. "
+                + "Membership requires 1 <= w, a < 2^w, 0 < d < 2^w, length(capacity) = w, "
+                + "length(oldQ) <= w, length(oldR) <= w+1, and Within(caller(j),frame(j)) "
+                + "for every caller tape j. Tuple components in the formula below always "
+                + "belong to its quantified x. Let V(w) be the finite lists of natural "
+                + "pairs (u,v) satisfying u < 2^w and 0 < v < 2^w at every entry.")),
+            Paragraph(Text(
+                "For x in X, set A = fixedBits(w,a), B = fixedBits(w,d), "
+                + "Q = fixedBits(w,a/d), and R = fixedBits(w+1,a%d). Let "
+                + "E = callEntry(A,B,capacity,oldQ,oldR) and "
+                + "e(n) = prefixCharge((E,the constant zero map),initialCharge(w),n). "
+                + "Write P(x,n) for FramedCall(w,a,d,capacity,oldQ,oldR,caller,frame,"
+                + "initialCharge(w),n), and G(x,n,l) for "
+                + "RepeatedCalls(w,capacity,caller,frame,A,B,Q,R,e(n),l). "
+                + "These are the single-call and recursive call predicates described below.")),
+            Paragraph(Text(
+                "Let J mean that signedHeadDescription and describeControl are injective "
+                + "and that length(codeDescription) + length(describeControl(c)) = "
+                + "fixedCodeCharge for every finite-control state c. Write Tdiv(w) for "
+                + "divPositiveRunTime(w). In the existential quantifier, D and U range over "
+                + "maps from FramedCfg to optional FramedCfg; k, Cstep, Cframe and K are "
+                + "natural numbers. Thus the following statement fixes the machine and "
+                + "constants before quantifying over all inputs and finite histories.")),
             Describe.Lean(
                 DescribeId.Create("framed-physical-divider-histories"),
                 DeclarationHandle.Create(
                     "D5/S0/Computability/PhysicalDivider/Histories.framed_divider_histories"),
                 H("Uniform calls with persistent physical storage"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("Tcall"), Le, Sp, F.Id("Cstep"), Open, F.Id("Tdiv"), Open, F.Id("w"), Close,
-                    Plus, D(2), Close, Plus, D(3, 0, 1), Open, F.Id("w"), Plus, D(1), Close, Comma, Sp,
-                    F.Id("Space"), Le, Sp, F.Id("F"), Plus, F.Id("K"), Open, F.Id("w"), Plus, D(1), Close))),
+                    Exists, Sp, F.Id("D"), Comma, F.Id("U"), Comma, F.Id("k"), Comma,
+                    F.Id("Cstep"), Comma, F.Id("Cframe"), Comma, F.Id("K"), Comma, Sp,
+                    F.Id("D"), Eq, F.Id("framedStep"), Sp, Land, Sp,
+                    F.Id("U"), Eq, F.Id("framedAgain"), Sp, Land, Sp,
+                    F.Id("k"), Eq, Bar, F.Id("FramedTape"), Bar, Sp, Land, Sp,
+                    F.Id("k"), Eq, D(1, 6), Sp, Land, Sp,
+                    F.Id("Cstep"), Eq, F.Id("sourceStepBudget"), Sp, Land, Sp,
+                    F.Id("Cframe"), Eq, D(3, 0, 1), Sp, Land, Sp,
+                    F.Id("K"), Eq, F.Id("framedSpaceConstant"), Sp, Land, Sp,
+                    D(0), Lt, F.Id("Cstep"), Sp, Land, Sp,
+                    D(0), Lt, F.Id("Cframe"), Sp, Land, Sp,
+                    D(0), Lt, F.Id("K"), Sp, Land, Sp,
+                    Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("X"), Comma, Sp,
+                    Exists, Sp, F.Id("n"), InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    F.Id("J"), Sp, Land, Sp, F.Id("P"), Open, F.Id("x"), Comma, F.Id("n"), Close, Sp, Land, Sp,
+                    F.Id("n"), Le, Sp, F.Id("Cstep"), Open, F.Id("Tdiv"), Open, F.Id("w"), Close,
+                    Plus, D(2), Close, Plus, F.Id("Cframe"), Open, F.Id("w"), Plus, D(1), Close, Sp, Land, Sp,
+                    Forall, Sp, F.Id("l"), InMacro, Sp, F.Id("V"), Open, F.Id("w"), Close, Comma, Sp,
+                    F.Id("G"), Open, F.Id("x"), Comma, F.Id("n"), Comma, F.Id("l"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

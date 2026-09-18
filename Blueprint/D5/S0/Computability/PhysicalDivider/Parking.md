@@ -4,9 +4,13 @@
 
 The divider's bit-tape parking loop returns to the fixed origin without enlarging its charged extent.
 
+Fix an active tape k, a continuation next, a family of tapes t, Boolean lists b and a, and an integer H. Put n = length(b). Assume 2n <= H and Within(stackWithAbove(b,a),(2n,0,H)). Let S be accountedBlockStep extended to optional states by binding, and let P be physicalStep extended in the same way. Powers denote iteration and some denotes a present state.
+
+Let I = ((parkMarker,stackWithAbove(b,a)),(2n,0,H)). Let O be the tape at the origin with empty left list and right list [false,true], followed by [true,v] for each bit v of reverse(b), followed by a. Let E be the block configuration (finished none,O). For a block configuration x, write L(x) = liftBlockCfg(k,next,t,x). Let C be the physical configuration with control continueBlock(next,none) and tape family t updated at k to O. For an accounted state c, c1 and c2 denote its block configuration and extent; low(c), high(c) and head(c) are the fields of c2, and W(c) means Within(c1.tape,c2).
+
 **Theorem 1.1 (Counted parking with support and visited-position bounds).**
 
-$$T=3n+2, \forall i\le 3n+1, 0\le h_i\le 2n, L_i=0, H_i=H.$$
+$$S^{3n+1}(some(I))=some((E,(0,0,H))) \land P^{3n+2}(some(L(I_1)))=some(C) \land \forall i\in \mathbb{N}, i\le 3n+1 \implies \exists c\in BlockCfg\times Extent, S^i(some(I))=some(c) \land P^i(some(L(I_1)))=some(L(c_1)) \land low(c)=0 \land high(c)=H \land 0\le head(c)\le 2n \land W(c).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Computability/PhysicalDivider/Parking.park_preserves_extent` (`✓ std3`). ∎
 

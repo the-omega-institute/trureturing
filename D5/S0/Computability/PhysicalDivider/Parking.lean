@@ -195,33 +195,19 @@ theorem park_preserves_extent (k : ActiveTape) (next : Continuation)
             exact preserve previous c hc (ih previous he)
   have project : ∀ n c, (step^[n]) (some initial) = some c →
       ((fun o : Option BlockCfg => o.bind blockStep)^[n]) (some initial.1) = some c.1 := by
-    intro n
-    induction n with
-    | zero =>
-        intro c hc
-        simp only [Function.iterate_zero, id_eq, Option.some.injEq] at hc
-        subst c
-        rfl
-    | succ n ih =>
-        intro c hc
-        rw [Function.iterate_succ_apply'] at hc ⊢
-        cases he : (step^[n]) (some initial) with
-        | none => simp [he, step] at hc
-        | some previous =>
-            rw [he] at hc
-            rw [ih previous he]
-            change accountedBlockStep previous = some c at hc
-            unfold accountedBlockStep at hc
-            cases ha : blockAction previous.1.control with
-            | none => simp [ha] at hc
-            | some action =>
-                rw [ha] at hc
-                cases hb : blockStep previous.1 with
-                | none => simp [hb] at hc
-                | some result =>
-                    simp [hb] at hc
-                    subst c
-                    exact hb
+    have projection : Function.Semiconj (Option.map Prod.fst)
+        (fun o : Option (BlockCfg × Extent) => o.bind accountedBlockStep)
+        (fun o : Option BlockCfg => o.bind blockStep) := by
+      intro o
+      cases o with
+      | none => rfl
+      | some c =>
+        rcases c with ⟨⟨pc, tape⟩, e⟩
+        cases pc <;> simp [accountedBlockStep, blockStep, blockAction]
+    intro n c hc
+    have h := projection.iterate_right n (some initial)
+    rw [hc] at h
+    exact h.symm
   obtain ⟨hend, hp⟩ := bounded below above H hH
   refine ⟨hend, ?_, ?_⟩
   · have hr := block_lift_run k next tapes (3 * below.length + 1) _ _

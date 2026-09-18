@@ -4,9 +4,15 @@
 
 One finite-control divider on sixteen sequential bit tapes supports arbitrary finite same-capacity call histories while preserving the caller's tapes and retained storage extents.
 
+Let X be the set of tuples x = (w,a,d,capacity,oldQ,oldR,caller,frame) with natural w,a,d, Boolean lists capacity,oldQ,oldR, a map caller from CallerTape to Boolean tapes, and a map frame from CallerTape to Extent. Membership requires 1 <= w, a < 2^w, 0 < d < 2^w, length(capacity) = w, length(oldQ) <= w, length(oldR) <= w+1, and Within(caller(j),frame(j)) for every caller tape j. Tuple components in the formula below always belong to its quantified x. Let V(w) be the finite lists of natural pairs (u,v) satisfying u < 2^w and 0 < v < 2^w at every entry.
+
+For x in X, set A = fixedBits(w,a), B = fixedBits(w,d), Q = fixedBits(w,a/d), and R = fixedBits(w+1,a%d). Let E = callEntry(A,B,capacity,oldQ,oldR) and e(n) = prefixCharge((E,the constant zero map),initialCharge(w),n). Write P(x,n) for FramedCall(w,a,d,capacity,oldQ,oldR,caller,frame,initialCharge(w),n), and G(x,n,l) for RepeatedCalls(w,capacity,caller,frame,A,B,Q,R,e(n),l). These are the single-call and recursive call predicates described below.
+
+Let J mean that signedHeadDescription and describeControl are injective and that length(codeDescription) + length(describeControl(c)) = fixedCodeCharge for every finite-control state c. Write Tdiv(w) for divPositiveRunTime(w). In the existential quantifier, D and U range over maps from FramedCfg to optional FramedCfg; k, Cstep, Cframe and K are natural numbers. Thus the following statement fixes the machine and constants before quantifying over all inputs and finite histories.
+
 **Theorem 1.1 (Uniform calls with persistent physical storage).**
 
-$$Tcall\le Cstep(Tdiv(w)+2)+301(w+1), Space\le F+K(w+1)$$
+$$\exists D,U,k,Cstep,Cframe,K, D=framedStep \land U=framedAgain \land k=|FramedTape| \land k=16 \land Cstep=sourceStepBudget \land Cframe=301 \land K=framedSpaceConstant \land 0<Cstep \land 0<Cframe \land 0<K \land \forall x\in X, \exists n\in \mathbb{N}, J \land P(x,n) \land n\le Cstep(Tdiv(w)+2)+Cframe(w+1) \land \forall l\in V(w), G(x,n,l)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Computability/PhysicalDivider/Histories.framed_divider_histories` (`✓ std3`). ∎
 
