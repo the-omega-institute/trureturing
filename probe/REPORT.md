@@ -60,3 +60,5 @@ Proposed GID `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence`, path `D5/S1/W
 Compiled private lemma `westRun_perm`: the operational stack algorithm preserves the combined stack/input multiset, by induction over the actual pop/push recursion.
 
 Compiled private lemma `westRun_sentinel`: a bottom-of-stack element at least as large as all remaining input survives to the final flush. This is proved from the operational recursion, not assumed as a recursive definition of `s`.
+
+Compiled private lemma `westRun_split`: when a new maximum arrives, the earlier input and smaller pending stack are completely emitted before processing the suffix with that maximum on the stack.

@@ -71,4 +71,40 @@ private theorem westRun_sentinel (stack input : List ℕ) (m : ℕ)
       have ht : ∀ y ∈ xs, y ≤ m := fun y hy => bound y (by simp [hy])
       simpa only [List.cons_append, westRun, if_neg h] using ih ht
 
+private theorem westRun_split (stack X Y : List ℕ) (m : ℕ)
+    (hstack : ∀ x ∈ stack, x < m) (hX : ∀ x ∈ X, x < m) :
+    westRun stack (X ++ m :: Y) = westRun stack X ++ westRun [m] Y := by
+  fun_induction westRun stack X with
+  | case1 stack =>
+      simp only [List.nil_append, westRun]
+      have drain : ∀ st : List ℕ, (∀ x ∈ st, x < m) →
+          westRun st (m :: Y) = st ++ westRun [m] Y := by
+        intro st
+        induction st with
+        | nil => intro _; simp only [westRun, List.nil_append]
+        | cons a rest ih =>
+            intro hs
+            have ha := hs a (by simp)
+            have hr : ∀ x ∈ rest, x < m := fun x hx => hs x (by simp [hx])
+            simpa only [westRun, if_pos ha, List.cons_append] using
+              congrArg (a :: ·) (ih hr)
+      exact drain stack hstack
+  | case2 x xs ih =>
+      have hx := hX x (by simp)
+      have ht : ∀ y ∈ xs, y < m := fun y hy => hX y (by simp [hy])
+      simpa only [List.cons_append, westRun] using ih (by simpa using hx) ht
+  | case3 x xs a rest h ih =>
+      have hr : ∀ y ∈ rest, y < m := fun y hy => hstack y (by simp [hy])
+      simpa only [List.cons_append, westRun, if_pos h] using
+        congrArg (a :: ·) (ih hr hX)
+  | case4 x xs a rest h ih =>
+      have hx := hX x (by simp)
+      have ht : ∀ y ∈ xs, y < m := fun y hy => hX y (by simp [hy])
+      have hs : ∀ y ∈ x :: a :: rest, y < m := by
+        intro y hy
+        rcases List.mem_cons.mp hy with rfl | hy
+        · exact hx
+        · exact hstack y hy
+      simpa only [List.cons_append, westRun, if_neg h] using ih hs ht
+
 end SyyProbe
