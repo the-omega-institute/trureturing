@@ -1,0 +1,2 @@
+可见空间的范围亦可在此明确。令 $\mathcal F_\infty=\sigma(\bigcup_L\mathcal F_L)$。有限层可测简单函数的闭包为 $L^2(X,\mathcal F_\infty,\mu;\mathbb C)$：指标函数的逼近先对代数 $\bigcup_L\mathcal F_L$ 成立，再以单调类和 $L^2$ 极限扩到其生成的 $\sigma$-代数，最后逼近一般 $L^2$ 函数。因此 $H_{\mathrm{obs}}$ 等于此子空间。它等于环境 $L^2(X,\mathcal F,\mu;\mathbb C)$ 的充要条件是：每个 $B\in\mathcal F$ 都与某个 $B_\infty\in\mathcal F_\infty$ 只差零测集。必要性可将 $\mathbf1_B$ 的 $\mathcal F_\infty$-可测代表元以实部大于 $1/2$ 取水平集得到。以下强连续性首先属于 $H_{\mathrm{obs}}$；向整个环境空间作同一断言时需要这一生成条件。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d8556060a66338908ed4abf759c155ee9f0d3d9491e23372b7498548526cf04f
+  normalized_sha256: sha256:d8556060a66338908ed4abf759c155ee9f0d3d9491e23372b7498548526cf04f
+cas_ref: sha256:d8556060a66338908ed4abf759c155ee9f0d3d9491e23372b7498548526cf04f
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion
+    target_statement_id: sha256:e8e2db55475f58aeb38b7a955fefde57861f1f33d7e44fd3deb6781909bbdbe1
+receipts:
+  unresolved_subitems: []
