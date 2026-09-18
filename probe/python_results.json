@@ -1,0 +1,116 @@
+{
+  "range": "all S_n, 1 <= n <= 8",
+  "rows": [
+    {
+      "n": 1,
+      "permutations": 1,
+      "fixed_points": 1,
+      "sortable": 1,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 2,
+      "permutations": 2,
+      "fixed_points": 1,
+      "sortable": 2,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 3,
+      "permutations": 6,
+      "fixed_points": 2,
+      "sortable": 4,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 4,
+      "permutations": 24,
+      "fixed_points": 4,
+      "sortable": 8,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 5,
+      "permutations": 120,
+      "fixed_points": 9,
+      "sortable": 16,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 6,
+      "permutations": 720,
+      "fixed_points": 23,
+      "sortable": 32,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 7,
+      "permutations": 5040,
+      "fixed_points": 65,
+      "sortable": 64,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    },
+    {
+      "n": 8,
+      "permutations": 40320,
+      "fixed_points": 199,
+      "sortable": 128,
+      "potential_violations": [],
+      "nontrivial_cycles": []
+    }
+  ],
+  "anchors": {
+    "fixed_observed": [
+      1,
+      1,
+      2,
+      4,
+      9,
+      23,
+      65,
+      199
+    ],
+    "fixed_expected": [
+      1,
+      1,
+      2,
+      4,
+      9,
+      23,
+      65,
+      199
+    ],
+    "fixed_match": true,
+    "sortable_observed": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "sortable_expected": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "sortable_match": true
+  },
+  "nontrivial_cycle_count": 0,
+  "potential_violation_count": 0,
+  "wall_s": 0.2730676250066608
+}

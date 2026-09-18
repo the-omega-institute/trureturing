@@ -24,3 +24,7 @@ Checked arXiv:2411.11914v2 directly (PDF downloaded only to runner scratch), aga
 - The numerical anchors are Theorem 4.2 (one-pass sortable count 2^(n-1)) and Theorem 4.4 (fixed points, A007476).
 
 Locator correction only: in the fetched v2, Proposition 3.5 is on printed p. 6, not p. 5. Conjecture 6.2 is on printed p. 11 after its introduction on p. 10. This changes no mathematical clause and does not require a statement revision.
+
+## Independent exhaustive Python result
+
+`python3 probe/check_syy.py > probe/python_results.json` exited 0. All 46,233 permutations in S_1 through S_8 were inspected. Fixed-point counts were `1,1,2,4,9,23,65,199`; one-pass sortable counts were `1,2,4,8,16,32,64,128`. Both preregistered anchors match. Functional-graph traversal found 0 nontrivial cycles; direct comparison found 0 reversed-lex potential violations. Every image preserves its input multiset. The source examples `243 | 15` and West's `3124 -> 1234` also match. This is finite experimental evidence, not a proof of Conjecture 6.2.
