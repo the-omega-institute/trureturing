@@ -103,7 +103,8 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
       fail "primitive-count"
     let declared ← mkConstWithFreshMVarLevels row.realizationName
     let declaredType ← whnf (← inferType declared)
-    let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization then
+    let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization || declaredType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
         pure declaredType.appArg!
       else if declaredType.isAppOf ``PrimitiveRealization then pure declared
       else do fail "realization-type"; pure declared
