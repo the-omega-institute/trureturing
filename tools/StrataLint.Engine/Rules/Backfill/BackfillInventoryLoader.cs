@@ -673,7 +673,10 @@ internal static partial class BackfillInventoryLoader
                     projectBaselineReferences);
                 if (projectBaselineReferences)
                 {
-                    baselineAtomIds.Add(atomId, parsedEntry.AtomId);
+                    // The protected baseline is data, not a candidate: an atom filed under two
+                    // state directories is reported as `duplicate atom_id` by the evaluator,
+                    // never by throwing while the baseline is loaded.
+                    baselineAtomIds.TryAdd(atomId, parsedEntry.AtomId);
                 }
 
                 entries.Add(parsedEntry);
