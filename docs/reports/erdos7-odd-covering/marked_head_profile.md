@@ -654,3 +654,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The joint source gap and mass improve the complete global comparison](profile-notes/185-the-joint-source-gap-and-mass-improve-the-complete-global-comparison.md)
 - [The original survival margin pays its own target change](profile-notes/186-the-original-survival-margin-pays-its-own-target-change.md)
 - [The original denominator payment strengthens the complete source union](profile-notes/187-the-original-denominator-payment-strengthens-the-complete-source-union.md)
+- [The square-root product exclusion sharpens the complete source union](profile-notes/190-the-square-root-product-exclusion-sharpens-the-complete-source-union.md)
