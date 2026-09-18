@@ -98,6 +98,10 @@ Lean statement: `D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.result
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/loopy-generalized-degree-polynomial` (refuted) by `D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"loopy-generalized-degree-polynomial","declaration_gid":"D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

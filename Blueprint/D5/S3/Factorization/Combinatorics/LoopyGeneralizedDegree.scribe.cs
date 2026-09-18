@@ -64,7 +64,10 @@ internal sealed class LoopyGeneralizedDegreeDocument : IScribeDocumentDefinition
                         + "carrying a single loop: at orders three through seven every pair with a "
                         + "common ordinary Loopy polynomial also has a common exponent-triple "
                         + "multiset."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("loopy-generalized-degree-polynomial"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Def(string id, string title, string name, string prose) =>
