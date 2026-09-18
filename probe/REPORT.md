@@ -58,3 +58,22 @@ No sorry, native_decide, or new axioms occur in the source. The first draft fail
 The local D0 is `fun n => n.factorization.sum (fun p k => k * (n / p))`. Zero and one reduce via their empty factorizations; primes reduce through `Nat.Prime.factorization`; the nonzero product law follows from `Nat.factorization_mul`, sum distribution, and exact division on prime support. Zero inputs are handled separately. The statement is therefore non-vacuous.
 
 A local universally quantified fact derives D(125)=75, D(1066)=641, and D(75)=55 from the product axiom and prime values alone. The first two establish the commutation counterexample for any admissible D; D(75)=55 is an additionally checked consistency value, not needed to contradict squarefreeness. No witness value unfolds D0.
+
+## Judgement form for result
+
+- theorem: `result`
+- proof_shape: `bind-only`
+- direct frozen dependencies: none (only pinned Mathlib imports; no project D5 imports).
+- escape_witness: null.
+- admission_basis: `open-problem-resolution`, preregistration #8643.
+
+The concrete D0 existence argument is normalization of `Nat.factorization_mul` together with existing prime, support, division, and finite-sum identities. It is essential to establish non-vacuity but is not an escape witness. Source length, a new local function, and construction of an inhabitant do not change the §3.2 classification.
+
+Four tests on the tempting candidate “D0 satisfies the four axioms”:
+
+(i) The construction is a local proof term within `result`, and its Mathlib dependencies occur in that proof; there is no separately declared candidate witness constant.
+(ii) FAIL: the stated fact follows by the existing factorization identities, instantiation, distribution, and arithmetic normalization. No new non-binding mathematical fact is needed.
+(iii) Its proposition is distinct from `¬ claim`, rather than an alias or restatement; this alone does not satisfy the conjunctive witness criterion.
+(iv) The inhabitation proof is live: it supplies the admissibility premise when specializing the universally quantified claim. It is obtainable by bind-only operations, so live use does not make it an escape witness. `iv_mutant_compiled`: not run / not applicable to an escape claim (none is made). The unused third derivative value is explicitly not nominated as a witness.
+
+The only public theorem is the externally named problem's refutation. All supporting facts and D0 are local to its proof; no public or private companion theorem is introduced.
