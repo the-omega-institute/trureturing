@@ -33,17 +33,21 @@ private def block (tail : List Nat) : List (List Nat) :=
 '''
 for i, t in enumerate(base[:a.blocks]):
     b = [r for p in insert_all(3, t) for q in insert_all(2, p) for r in insert_all(1, q)]
-    expected = sum(stack_sort(p) == (7,6,5,4,3,2,1,8) for p in b)
-    text += f'-- Block {i}: 336 inputs, {expected} preimages.\n'
-    text += 'example : ((block ' + str(t).replace(' ', '') + ').filter\n'
-    text += '    (fun p => SC false p == [7,6,5,4,3,2,1,8])).length = ' + str(expected) + ' := by\n'
-    # Split the 336 individual evaluations before constructing the list count.
-    # simp reduces only the fixed insertion enumerator, retaining every SC call.
-    text += '''  simp only [block, List.permutations'Aux, List.flatMap_cons, List.flatMap_nil,
-    List.map_cons, List.map_nil, List.cons_append, List.nil_append]
-  decide +kernel
+    preimages = [p for p in b if stack_sort(p) == (7,6,5,4,3,2,1,8)]
+    text += f'-- Block {i}: 336 inputs, {len(preimages)} preimages.\n'
+    text += 'example : ∀ p ∈ block ' + str(t).replace(' ', '') + ',\n'
+    text += '    SC false p = [7,6,5,4,3,2,1,8] ↔ p ∈ (' + str(preimages).replace(' ', '') + ' : List (List Nat)) := by\n'
+    chunks = [b[j:j + 48] for j in range(0, len(b), 48)]
+    listing = ' ++ '.join(str(c).replace(' ', '') for c in chunks)
+    text += '  have hlist : block ' + str(t).replace(' ', '') + ' = ' + listing + ' := by decide +kernel\n'
+    text += """  rw [hlist]
+  simp only [List.forall_mem_append]
+  repeat' apply And.intro
+  all_goals simp only [List.forall_mem_cons]
+  all_goals repeat' apply And.intro
+  all_goals decide +kernel
 
-'''
+"""
 text += 'end ZhaoProbe\n'
 Path('probe/Zhao419Cost.lean').write_text(text)
 print(f'{a.blocks} blocks, {a.blocks * 336} map evaluations')
