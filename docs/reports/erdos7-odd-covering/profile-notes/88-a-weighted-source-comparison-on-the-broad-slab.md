@@ -18,6 +18,10 @@ so the source gain is at least409/48600 before the complete clipped tail
 T40 of87 is deducted. The fixed three-group argument below proves this
 uniformity across each beta simplex.
 
+Profile72's dedicated face estimate133/200 is sharper at that endpoint.
+The present formula retains every actual parameter throughout the broad
+small-r slab, providing an explicit source comparison away from the faces.
+
 The same pointwise bound is not everywhere smaller than the old source
 comparison. Exact parameter probes give negative differences in some
 deficit and carrier directions. These are retained below. The theorem

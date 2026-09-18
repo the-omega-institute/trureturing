@@ -558,3 +558,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A clipped full-load interface on the broad slab](profile-notes/87-a-clipped-full-load-interface-on-the-broad-slab.md)
 - [A weighted source comparison on the broad slab](profile-notes/88-a-weighted-source-comparison-on-the-broad-slab.md)
 - [A marked-event cancellation improves global K](profile-notes/89-a-marked-event-cancellation-improves-global-k.md)
+- [Weighted marked events improve the global comparison](profile-notes/90-weighted-marked-events-improve-the-global-comparison.md)
