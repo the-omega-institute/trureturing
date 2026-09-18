@@ -741,3 +741,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two new pure factorial observations improve the complete J comparison](profile-notes/279-two-pure-factorial-observations-improve-the-complete-j-comparison.md)
 - [Second-depth cofactors sharpen the complete J survival hinge](profile-notes/280-second-depth-cofactors-sharpen-the-complete-j-survival-hinge.md)
 - [Second-depth cofactors improve the complete J comparison](profile-notes/281-second-depth-cofactors-improve-the-complete-j-comparison.md)
+- [Seven retained old labels strengthen the complete J moments](profile-notes/282-seven-retained-old-labels-strengthen-the-complete-j-moments.md)
+- [Seven retained old labels improve the complete J comparison](profile-notes/283-seven-retained-old-labels-improve-the-complete-j-comparison.md)
+- [Exact retained head and slope sharpen the complete J factorial](profile-notes/284-exact-retained-head-and-slope-sharpen-the-complete-j-factorial.md)
+- [Exact retained head and slope improve the complete J comparison](profile-notes/285-exact-retained-head-and-slope-improve-the-complete-j-comparison.md)
