@@ -141,4 +141,45 @@ public sealed class SelectedEngineeringTests
         Assert.Equal(0, fixture.RunFullTests(calls));
         Assert.Equal(corrupt ? new[] { ResourceRouteTests.ResourceFixture.Bar } : [], calls);
     }
+
+    [Theory]
+    [InlineData("projects", false)]
+    [InlineData("projects", true)]
+    [InlineData("materials", false)]
+    [InlineData("materials", true)]
+    public void MalformedRetainedRowsDoNotPreventSavingAcceptedTests(string field, bool replace)
+    {
+        using var fixture = new SelectedEngineeringFixture();
+        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
+        {
+            fixture.Trx(results);
+            return 0;
+        }, TextWriter.Null, fixture.Build));
+        const string log = "build/ci/selected-tests.log";
+        File.WriteAllText(Path.Combine(fixture.Root, log), "selected tests passed\n");
+        CommonExecutionEvidence.SealEngineering(fixture.Root, fixture.Build, [new StageStep("tests", 0, 0, "executed", log)]);
+        fixture.AddUnselectedTestSeed();
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.TestSeedPath);
+        var previous = CommonExecutionEvidence.Read<TestExecutionRecord>(seed, "tests.json");
+        var unselected = previous.Projects.Single(project => project.Project == ResourceRouteTests.ResourceFixture.Bar);
+        var path = Path.Combine(seed, "tests.json");
+        var document = JsonNode.Parse(File.ReadAllText(path))!;
+        var rows = document[field]!.AsArray();
+        if (replace)
+        {
+            var row = rows.Single(row => field == "projects"
+                ? row!["project"]!.ToString() == unselected.Project
+                : row!["path"]!.ToString().StartsWith(unselected.Results + "/", StringComparison.Ordinal));
+            rows[rows.IndexOf(row)] = null;
+        }
+        else rows.Add((JsonNode?)null);
+        File.WriteAllText(path, document.ToJsonString());
+
+        using var output = new StringWriter();
+        Assert.True(CommonExecutionEvidence.ExportTestSeed(fixture.Root, output), output.ToString());
+        Assert.Contains("ENGINEERING_TEST_SEED_SAVED", output.ToString());
+        var calls = new List<string>();
+        Assert.Equal(0, fixture.RunFullTests(calls));
+        Assert.Equal(replace ? new[] { ResourceRouteTests.ResourceFixture.Bar } : [], calls);
+    }
 }

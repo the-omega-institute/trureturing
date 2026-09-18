@@ -302,6 +302,13 @@ internal static partial class CommonExecutionEvidence
                 if (previous.Version != 2 || !ValidCandidate(previous.Candidate) || !ValidRound(previous.Round)
                     || previous.Projects is null || previous.Materials is null)
                     throw new InvalidDataException("invalid retained test seed identity");
+                var retainedProjects = previous.Projects.Where(project => project is { Project: not null }).ToArray();
+                var retainedMaterials = previous.Materials.Where(material => material is { Path: not null, Sha256: not null }).ToArray();
+                if (retainedProjects.Length != previous.Projects.Length || retainedMaterials.Length != previous.Materials.Length)
+                    output.WriteLine("ENGINEERING_TEST_SEED_RETENTION_MISS reason=\"invalid retained project or material row\"");
+                // Invalid optional rows cannot prevent exporting this round's accepted
+                // results. Missing materials still reject their owning project below.
+                previous = previous with { Projects = retainedProjects, Materials = retainedMaterials };
                 var registered = EngineeringProjectRegistry.Read(Snapshot(root)).Projects.Where(project => project.Ci)
                     .ToDictionary(project => project.Path, StringComparer.Ordinal);
                 foreach (var group in previous.Projects.GroupBy(project => project.Project, StringComparer.Ordinal)
