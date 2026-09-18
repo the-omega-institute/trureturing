@@ -19,6 +19,7 @@ jobs:
     outputs:
       candidate_sha: ${{ steps.resolve.outputs.candidate_sha }}
       base_sha: ${{ steps.resolve.outputs.base_sha }}
+      no_work: ${{ steps.resolve.outputs.no_work }}
       plan_artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +32,7 @@ jobs:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: python3 -B tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
       - id: upload
+        if: steps.resolve.outputs.no_work != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ci-plan-${{ github.run_id }}-${{ github.run_attempt }}
@@ -48,6 +50,7 @@ jobs:
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
       plan_artifact_id: ${{ needs.resolve.outputs.plan_artifact_id }}
+      no_work: ${{ needs.resolve.result == 'success' && needs.resolve.outputs.no_work == 'true' }}
 
   delta:
     name: delta
@@ -62,21 +65,28 @@ jobs:
       CI_PLAN_PATH: build/ci/plan.json
       CI_CHANGES_PATH: build/ci/changes.json
       CI_NEEDS: '{"resolve":{"result":${{ toJSON(needs.resolve.result) }}},"push":{"result":${{ toJSON(needs.push.result) }}}}'
+      CI_NO_WORK: ${{ needs.resolve.result == 'success' && needs.push.result == 'success' && needs.resolve.outputs.no_work == 'true' }}
     steps:
+      - name: No registered resources
+        if: env.CI_NO_WORK == 'true'
+        run: echo "not-required — validated resource plan is empty for $CANDIDATE_SHA" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
+        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA || github.sha }}
           fetch-depth: 2
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: needs.resolve.outputs.plan_artifact_id != ''
+        if: env.CI_NO_WORK != 'true' && needs.resolve.outputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ needs.resolve.outputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate delta prerequisites and resource plan
+        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage delta --base "$BASE_SHA"
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
@@ -113,5 +123,5 @@ jobs:
         env:
           PR_HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: python3 tools/scripts/workflow/ci.py advisory --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD_BRANCH"
-      - if: always()
+      - if: always() && env.CI_NO_WORK != 'true'
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage delta

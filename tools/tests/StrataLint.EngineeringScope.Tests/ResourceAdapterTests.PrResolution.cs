@@ -6,6 +6,22 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class ResourceAdapterTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ResolverPublishesNoWorkOnlyForValidatedEmptyResourcePlan(bool required)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
+        fixture.PrPlan();
+        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
+        Assert.True(resolved.Exit == 0, resolved.Text);
+        var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
+        Assert.Contains("no_work=" + (required ? "false" : "true"), outputs);
+        var plan = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/plan.json")))!;
+        Assert.Equal(required, plan["resources"]!.AsArray().Count > 0);
+    }
+
     [Fact]
     public void LargePullRequestTransportsCompleteScopeWithoutProcessSizedOutputs()
     {

@@ -180,7 +180,8 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base,
+                                  "no_work": str(not expected_plan["resources"]).lower()}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))

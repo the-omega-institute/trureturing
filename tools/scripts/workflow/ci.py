@@ -180,7 +180,8 @@ def stage_input(args):
     if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
         raise ValueError("delta requires the validated plan's explicit immutable base")
     requirements = ci_plan.stage_requirements(root, value, stage)
-    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
+    result = {"required": requirements["required"], "no_work": not value["resources"],
+              "cache_layers": " ".join(requirements["cache_layers"]),
               "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
               "artifact_required": requirements["required"],
               "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}

@@ -19,6 +19,7 @@ public sealed partial class ResourceAdapterTests
         SetPushEvent(fixture, environment, before);
         var result = PlannerWithEnvironment(fixture, environment, "push-plan");
         Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("no_work=false", File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output")));
         var paths = PushScope(fixture)["changes"]!.AsArray().SelectMany(row =>
             new[] { row!["old"], row["new"] }.Where(value => value is not null).Select(value => value!["path"]!.ToString())).Distinct().Order(StringComparer.Ordinal).ToArray();
         Assert.Equal(new[] { "docs/push-range.md", "fixtures/selected.txt" }, paths);
