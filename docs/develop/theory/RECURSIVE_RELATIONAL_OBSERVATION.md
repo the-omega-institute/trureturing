@@ -41027,3 +41027,165 @@ $$
 任意粗读出也不享有同一保证：将已有[推论 93.4](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的三状态环取 $p=1/2,q=1/4$，则全部转移至少为 $1/4$、$c=\tfrac14\log2>0$；取 $d=3$、$\eta=1/4$、$c_0=c$ 即给出一个满足假设的参数选择，而常量读出使两份可见路径律对每个窗口都相同，最优可见错误率恒为 $1/2$。
 
 ## 102.99 追加锚
+
+## 103. 有界逐边分数下的非统一方向检验窗口
+
+**定义与假设 103.1（四状态有理族与已知方向模型）。** 固定状态集 $S=\{0,1,2,3\}$，以 $1\to2\to3\to1$ 为顺时针环。对整数 $k\ge2$，置 $\delta_k=1/k$、$a_k=1-1/(3k)$，按状态顺序 $0,1,2,3$ 定义
+$$
+K_k=
+\begin{pmatrix}
+1-1/k&1/(3k)&1/(3k)&1/(3k)\\
+1/(3k)&a_k/4&a_k/2&a_k/4\\
+1/(3k)&a_k/4&a_k/4&a_k/2\\
+1/(3k)&a_k/2&a_k/4&a_k/4
+\end{pmatrix},
+\qquad \pi_i=\frac14.
+\tag{103.1a}
+$$
+定义边流及其分数
+$$
+Q_k(i,j)=\pi_iK_k(i,j),\qquad
+A_k(i,j)=\log\frac{Q_k(i,j)}{Q_k(j,i)},\qquad
+c_k=D_{\rm KL}(Q_k\Vert Q_k^{\mathsf T}).
+\tag{103.1b}
+$$
+所有对数取自然底数。
+
+从初始律 $\pi$ 出发观察完整状态路径 $w=(x_0,\ldots,x_n)\in S^{n+1}$，其中整数 $n\ge0$ 计转移次数。正向与反向路径律分别为
+$$
+P_{k,n}(w)=\frac14\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad P_{k,n}^{R}(w)=P_{k,n}(w^R),\qquad
+w^R=(x_n,\ldots,x_0).
+\tag{103.1c}
+$$
+两份简单模型均已知，先验各为 $1/2$；检验者可以知道 $k$，未知的是本次轨迹的方向标签。允许随机化，最优平均错误率记为
+$$
+R_{k,n}=\inf_{\varphi:S^{n+1}\to[0,1]}
+\frac12\sum_{w\in S^{n+1}}
+\bigl[P_{k,n}(w)\varphi(w)+P_{k,n}^{R}(w)(1-\varphi(w))\bigr],
+\tag{103.1d}
+$$
+其中 $\varphi(w)$ 是报告反向的概率。采用总变差归一化
+$$
+\operatorname{TV}(\mu,\nu)=\frac12\sum_x|\mu(x)-\nu(x)|
+=\sup_F|\mu(F)-\nu(F)|,
+$$
+并记
+$$
+t_{{\rm mix},k}(1/4)=\min\left\{t\in\mathbb N_0:
+\sup_{x\in S}\operatorname{TV}(K_k^t(x,\cdot),\pi)\le\frac14\right\}.
+\tag{103.1e}
+$$
+
+**命题 103.2（有界分数与正 KL 率不保证统一窗口）。** 每个 $K_k$ 都是严格正的有理双随机核，以 $\pi$ 为平稳律，且不可约、非周期。它们满足
+$$
+\min_{i,j}K_k(i,j)=\frac1{3k},\qquad
+\max_{i,j}|A_k(i,j)|=\log2,
+\qquad c_k=\frac{3-1/k}{16}\log2\ge\frac18\log2.
+\tag{103.2a}
+$$
+对所有 $k\ge2$、$n\ge0$，
+$$
+R_{k,n}\ge\frac18\left(1-\frac1k\right)^n.
+\tag{103.2b}
+$$
+因此在固定 $d=4$、$B=\log2$、$c_0=(\log2)/8$ 下，没有达到任意目标 $0<\varepsilon<1/8$ 的统一有限窗口：
+$$
+\forall\varepsilon\in(0,1/8),\quad
+\forall n\in\mathbb N_0,\quad
+\exists k\ge2:\ R_{k,n}>\varepsilon.
+\tag{103.2c}
+$$
+对每个给定的 $k$ 和 $0<\varepsilon<1/8$，达到该误差的必要条件为
+$$
+R_{k,n}\le\varepsilon
+\quad\Longrightarrow\quad
+n\ge\left\lceil
+\frac{\log(1/(8\varepsilon))}{-\log(1-1/k)}
+\right\rceil.
+\tag{103.2d}
+$$
+同时，
+$$
+t_{{\rm mix},k}(1/4)\ge\frac{k}{4}.
+\tag{103.2e}
+$$
+
+**证明。** 第零行及第零列之和均为 $1-1/k+3/(3k)=1$；每个环状态的行、列之和均为 $1/(3k)+a_k=1$，所以 $K_k$ 双随机，均匀律平稳。全部矩阵元素和初始概率都是正有理数。又
+$$
+1-\frac1k\ge\frac12,
+\qquad \frac{a_k}{4}\ge\frac5{24}>\frac16\ge\frac1{3k},
+$$
+故最小转移概率恰为 $1/(3k)$。严格正性给不可约性，自环严格正给非周期性。
+
+由于 $\pi$ 均匀，边流比等于转移比。自环以及全部 $0\leftrightarrow i$ 边的比值为一；环内顺时针边与反向边的比值为二。因此 $A_k$ 在顺时针边上等于 $\log2$，在逆时针边上等于 $-\log2$，其余边上为零。三个环边对分别贡献
+$$
+\frac14a_k\left(\frac12-\frac14\right)\log2
+=\frac{a_k}{16}\log2,
+$$
+从而
+$$
+c_k=\frac{3a_k}{16}\log2
+=\frac{3-1/k}{16}\log2\ge\frac18\log2.
+$$
+这证明 (103.2a)。
+
+对这里的 $K_k,\pi,Q_k$ 直接应用已有[定理 93.3（平稳边流的路径 KL 与读出比较）](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。严格正性满足其双向支撑要求，平稳性已证，故
+$$
+\sigma_{k,n}(w)=\log\frac{P_{k,n}(w)}{P_{k,n}^{R}(w)}
+=\sum_{t=0}^{n-1}A_k(x_t,x_{t+1}),
+\qquad
+D_{\rm KL}(P_{k,n}\Vert P_{k,n}^{R})=nc_k.
+\tag{103.2f}
+$$
+平稳端点概率比在这里等于一。于是 (103.2a) 的 $c_k$ 确为每次转移的路径 KL 率。
+
+两份路径律在有限载体 $S^{n+1}$ 上都是单位质量概率。直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/D5/S3/Estimation/LeCamTight.lean)，得到
+$$
+R_{k,n}=\frac12\bigl(1-\operatorname{TV}(P_{k,n},P_{k,n}^{R})\bigr)
+=\frac12\sum_w\min\{P_{k,n}(w),P_{k,n}^{R}(w)\}.
+\tag{103.2g}
+$$
+每条路径的错误质量是 $\varphi(w)$ 的仿射函数，故随机化不降低这个最小值；似然比相等时公平抛币仍达到它。
+
+全零路径 $z_n=(0,\ldots,0)$ 在反序下不变，并且
+$$
+P_{k,n}(z_n)=P_{k,n}^{R}(z_n)
+=\frac14\left(1-\frac1k\right)^n.
+$$
+在 (103.2g) 的非负求和中只保留该项，即得 (103.2b)。这项共同质量对已知参数的任何随机化检验都贡献相同的等先验错误下界。
+
+给定 $0<\varepsilon<1/8$ 和整数 $n\ge0$，选择整数 $k\ge2$ 满足 $k>n/(1-8\varepsilon)$。Bernoulli 不等式给出
+$$
+\left(1-\frac1k\right)^n\ge1-\frac nk>8\varepsilon,
+$$
+所以 (103.2b) 蕴含 $R_{k,n}>\varepsilon$，证明 (103.2c)。$n=0$ 时该论证仍成立；此时两份路径律都是 $\pi$，实际错误率为 $R_{k,0}=1/2$。
+
+若 $R_{k,n}\le\varepsilon<1/8$，则 (103.2b) 给 $(1-1/k)^n\le8\varepsilon$。因为 $0<1-1/k<1$，取对数并除以正数 $-\log(1-1/k)$，得
+$$
+n\ge\frac{\log(1/(8\varepsilon))}{-\log(1-1/k)}.
+$$
+$n$ 为整数，故可向上取整，得到 (103.2d)。其分子为固定正数、分母随 $k\to\infty$ 趋于零，所以该必要窗口下界发散。
+
+最后，采用 Levin–Peres（Elizabeth L. Wilmer 参与撰写），[*Markov Chains and Mixing Times*, second edition](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf)，§7.2 的瓶颈比。对非空 $H\subseteq S$，置
+$$
+\Phi_k(H)=\frac{Q_k(H,H^c)}{\pi(H)},
+\qquad
+\Phi_{*,k}=\min_{0<\pi(H)\le1/2}\Phi_k(H).
+$$
+取 $H=\{0\}$，则 $\pi(H)=1/4$，且
+$$
+Q_k(H,H^c)=\frac1{4k},\qquad
+\Phi_k(H)=\frac1k,\qquad \Phi_{*,k}\le\frac1k.
+$$
+该书 Theorem 7.4（式 (7.9)，印刷第 90 页／PDF 第 106 页）适用于不可约、非周期链，不要求可逆性；这一边界亦见该章印刷第 99 页 Notes。直接代入，得到
+$$
+t_{{\rm mix},k}(1/4)\ge\frac1{4\Phi_{*,k}}\ge\frac{k}{4},
+$$
+即 (103.2e)。证毕。
+
+本族在平稳初态、完整状态读出和已知两模型下，仍有随参数延长的无方向信息停留。结论 (103.2c) 的目标范围是 $0<\varepsilon<1/8$；逐边分数界、正 KL 率下界与固定状态数不足以单独控制这一区间内的统一预算，而 (103.2e) 明确给出该族缺少统一混合控制。
+
+## 103.99 追加锚
