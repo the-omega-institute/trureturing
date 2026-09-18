@@ -195,9 +195,10 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.9 登记即声明模板与 delta 判官
 
 **每条信息登记显式声明它用的模板;判官不搜索、只判 delta;没有模板就加模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与源码绑定证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),文法不认的写法先改内容。
-**delta 律**:判官只评估候选相对受保护基线**新增、字节变化或首次取得 state pin** 的 D5 模块里的登记(与 SL-031 同一选择源);已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared` Block;声明了但未解析/证据缺失、陈旧或畸形 ⇒ `DTR-Evidence` Block;声明且验证通过 ⇒ `DTR-Declared` Observe。判词名单封闭,无别的名字。
+**delta 律**:判官只评估候选相对受保护基线**新增、字节变化或首次取得 state pin** 的 D5 模块里的登记(与 SL-031 同一选择源);已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared` Block;声明了但未解析/证据缺失、陈旧或畸形 ⇒ `DTR-Evidence` Block;声明且验证通过 ⇒ `DTR-Declared` Observe;新增公开定理无登记 ⇒ `DTR-Unregistered` Block(下款)。判词名单封闭为这四个,无别的名字。
 **没有模板就加模板**(τ=0 owner 2026-09-18 裁决,原话「默认就是没有模版就加模版, 以后也这样」):某条登记在现有模板下找不到合法归属时,唯一处置是**新写一个模板**(内容 PR)并声明它;不得留作未声明,不得硬套错误模板;所有者模块已冻结时,用 `declare_information_template_binding <定理> in <模块>` 的 sidecar 模块声明,不改冻结模块。存量未声明的登记按族由内容 PR 迁移;不设债务账本、不设兼容开关、不设宽限期。
-*成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、不可变冻结与 sidecar 追加(第 1.3、4.7 条)。〔守护:**硬**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记,三个判词的效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
+**新定理即登记**(τ=0 owner 2026-09-18 裁决,原话「delta是新增量啊, 新增量你改一下claude md, 人家写定理的时候就会自动写呀」):判官选中的模块里,相对受保护基线**新增的每条公开 `theorem`/`lemma`** 必须有信息登记——本模块 `register_information_theorem … readout via <已 enroll 模板>`,或 sidecar `declare_information_template_binding`——且验证通过;没有 ⇒ `DTR-Unregistered` Block。写定理时就写登记,这是 delta 门的意义:新增量自带审计,存量不判。`private` 声明、`def`/`instance`/`example`、机器生成的伴随名不在义务内:证明链上的辅助引理标 `private`,公开结果才登记。没有模板就加模板;登记的舞台须是有限对象空间,输出落在文法载体内,桥定理证与定理陈述等价(迁移 PR 的同一做法)。
+*成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、不可变冻结与 sidecar 追加(第 1.3、4.7 条)。〔守护:**硬**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记与新增公开定理,四个判词的效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
 
 ## 4. 结构、递归归属、投影与消化
 
