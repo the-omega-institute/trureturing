@@ -1,0 +1,157 @@
+[
+  {
+    "root": ".",
+    "label": "topic",
+    "pattern": "(?i)stack.?sort|vincular|2410\\.17057",
+    "command": "git grep -n -P '(?i)stack.?sort|vincular|2410\\.17057' -- D5 Blueprint Library Problems docs/develop/theory Evidence Meta/Digestion",
+    "exit": 1,
+    "line_hits": 0,
+    "file_hits": 0,
+    "sample": [],
+    "stderr": ""
+  },
+  {
+    "root": ".",
+    "label": "patterns",
+    "pattern": "(?i)permutation.{0,25}pattern|pattern.{0,25}avoid",
+    "command": "git grep -n -P '(?i)permutation.{0,25}pattern|pattern.{0,25}avoid' -- D5 Blueprint Library Problems docs/develop/theory Evidence Meta/Digestion",
+    "exit": 0,
+    "line_hits": 99,
+    "file_hits": 25,
+    "sample": [
+      "Blueprint/D5/S0/Tower/DBonacciGeneral/ChampionMidBridge.md:21:The pattern that would have avoided this is one directory over: the base itself is a short name whose body is the single source it delegates to, so the two can never drift. When a general form arrives for something already in the tree, it owes the specific form that link, and the debt falls due in the same change.",
+      "Blueprint/D5/S0/Tower/DBonacciGeneral/ChampionMidBridge.scribe.cs:50:                        \"The pattern that would have avoided this is one directory over: the \"",
+      "Blueprint/D5/S1/Words/Patterns/DerangementLimitsCofinal.md:71:*Acknowledgement.* Vincent Vatter (2026). *An Assortment of Problems in Permutation Patterns: Unimodality, Equivalence, Derangements, and Sorting*. URL: <https://arxiv.org/abs/2602.16355>.",
+      "Blueprint/D5/S1/Words/Patterns/DerangementRatioNonconvergence.md:153:*Citation.* Vincent Vatter (2026). *An Assortment of Problems in Permutation Patterns: Unimodality, Equivalence, Derangements, and Sorting*. URL: <https://arxiv.org/abs/2602.16355>.",
+      "Blueprint/D5/S1/Words/Patterns/DerangementRatioNonconvergence.md:165:*Citation.* Vincent Vatter (2026). *An Assortment of Problems in Permutation Patterns: Unimodality, Equivalence, Derangements, and Sorting*. URL: <https://arxiv.org/abs/2602.16355>.",
+      "Blueprint/D5/S1/Words/Patterns/NoncrossingNonnestingGraphRecurrence.scribe.cs:31:            Node(\"IsAvoiding\", \"Graphs avoiding both edge patterns\", AvoidingFormula(),",
+      "Blueprint/D5/S1/Words/TwoBooleanPersistenceRefutation.scribe.cs:93:            Definition(\"AvoidsTwoBooleanPatterns\", \"global-two-boolean-avoiders\",",
+      "Blueprint/D5/S1/Words/TwoBooleanPersistenceRefutation.scribe.cs:94:                \"Global avoidance of the four type-A patterns\", AvoidanceFormula(),",
+      "Blueprint/D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.md:11:*Formalization.* `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.pattern312` (`\u2713 std3`).",
+      "Blueprint/D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.md:15:*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).",
+      "Blueprint/D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.md:19:The zero-based values two, zero, one define the permutation pattern 312.",
+      "Blueprint/D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.md:25:*Formalization.* `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.pattern321` (`\u2713 std3`)."
+    ],
+    "stderr": ""
+  },
+  {
+    "root": ".",
+    "label": "reuse",
+    "pattern": "List\\.(Perm|permutations)|Equiv\\.Perm|card_le_card|card_le_card_of_injOn",
+    "command": "git grep -n -P 'List\\.(Perm|permutations)|Equiv\\.Perm|card_le_card|card_le_card_of_injOn' -- D5 Blueprint Library Problems docs/develop/theory Evidence Meta/Digestion",
+    "exit": 0,
+    "line_hits": 623,
+    "file_hits": 222,
+    "sample": [
+      "Blueprint/D5/S0/Automata/DistinguishingFamilyCardinalityBound.md:11:*Proof.* Machine-checked in Lean as `D5/S0/Automata/DistinguishingFamilyCardinalityBound.card_le_card_output_of_rigid_continuations` (`\u2713 std3`). \u220e",
+      "Blueprint/D5/S0/Automata/DistinguishingFamilyCardinalityBound.md:37:- Truth anchor: `D5/S0/Automata/DistinguishingFamilyCardinalityBound.card_le_card_output_of_rigid_continuations`",
+      "Blueprint/D5/S0/Automata/DistinguishingFamilyCardinalityBound.scribe.cs:9:    private const string CardinalityDeclaration = \"D5/S0/Automata/DistinguishingFamilyCardinalityBound.card_le_card_output_of_rigid_continuations\";",
+      "Blueprint/D5/S0/Diagonal/RecordExtensionCount.md:23:Pinned Mathlib was searched before proving. No direct theorem for functions agreeing with a fixed record was found. The proof wraps Fintype.card_fun, Fintype.card_subtype_compl, and Nat.card_le_card_of_injective after supplying the explicit record-extension equivalence.",
+      "Blueprint/D5/S0/Diagonal/RecordExtensionCount.scribe.cs:51:                        + \"Fintype.card_subtype_compl, and Nat.card_le_card_of_injective after supplying \"",
+      "Blueprint/D5/S0/History/Coding/MinimumRollbackAlphabet.md:21:Pinned Mathlib supplies Nat.card_le_card_of_injective, Finite.equivFin, Fin.castLEEmb, Finset.le_sup, and Finset.sup_le. Repository and pinned-Mathlib searches found no declaration packaging the complete lower bound and attaining construction.",
+      "Blueprint/D5/S0/History/Coding/MinimumRollbackAlphabet.scribe.cs:33:                        \"Pinned Mathlib supplies Nat.card_le_card_of_injective, \"",
+      "Blueprint/D5/S1/FixedPoints/ThreeCycleFixedPoint.md:19:The Lean proof specializes the pinned Mathlib theorem Equiv.Perm.exists_fixed_point_of_prime at the prime three. The only local step converts card(X) modulo three equal to one into the theorem's nondivisibility hypothesis.",
+      "Blueprint/D5/S1/FixedPoints/ThreeCycleFixedPoint.scribe.cs:29:                        + \"Equiv.Perm.exists_fixed_point_of_prime at the prime three. The only \"",
+      "Blueprint/D5/S1/Words/Patterns/DerangementLimitsCofinal.md:9:Perm(n) denotes Equiv.Perm(Fin(n)). Positions and values are numbered from zero; val is the underlying natural number of a Fin element or the underlying permutation of a subtype element, as appropriate. P(n,a) denotes tailPerm with the displayed assumption a<=n. C(k) denotes boundedTailClass(k). The containment relation Contains, the hereditary-class structure PermClass, the fixed-point-free predicate IsDerangement, and the real-valued ratio are those of `D5/S1/Words/Patterns/DerangementRatioNonconvergence`. Nonempty(S) means that the set S contains a permutation. Every cardinality is Fintype.card; all quotients of cardinalities or natural parameters in a real formula use their real casts.",
+      "Blueprint/D5/S1/Words/Patterns/DerangementLimitsCofinal.scribe.cs:25:                \"Perm(n) denotes Equiv.Perm(Fin(n)). Positions and values are numbered from zero; \"",
+      "Blueprint/D5/S1/Words/Patterns/DerangementRatioNonconvergence.md:9:Perm(n) denotes Equiv.Perm(Fin(n)), with positions numbered from zero. OrderEmbedding denotes an order embedding of positions. The record field mem is the length-indexed family; downset is its displayed closure law. rev(n) denotes Mathlib's Fin.revPerm, sending i to n-1-i. Every cardinality is Fintype.card. The quotient defining ratio is real division after casting both natural cardinalities to the reals. Length zero is included."
+    ],
+    "stderr": ""
+  },
+  {
+    "root": ".",
+    "label": "positive_control",
+    "pattern": "Nat\\.add_comm",
+    "command": "git grep -n -P 'Nat\\.add_comm' -- D5 Blueprint Library Problems docs/develop/theory Evidence Meta/Digestion",
+    "exit": 0,
+    "line_hits": 164,
+    "file_hits": 111,
+    "sample": [
+      "D5/S0/Asymptotics/WeightedProbability/DistinctCycleSizeLimit.lean:372:    simp [Nat.add_comm]",
+      "D5/S0/Certificates/ShinFourPointCompression.lean:94:      rw [countBytes, byte, ih, Nat.mul_succ, Nat.add_comm (8*w), count_bits_split]",
+      "D5/S0/Certificates/SkeletonSlotZeroResponse.lean:39:  rw [Nat.add_comm i j, Function.iterate_add_apply]",
+      "D5/S0/Computability/Coding/LengthProfileSeparation.lean:61:    (packedWord r u).length = d + r := by simp [packedWord, zeros, u.2, Nat.add_comm]",
+      "D5/S0/Computability/PhysicalDivider/Rounds.lean:205:      simpa [divisionScan, s', List.length_cons, Nat.add_mul, Nat.add_comm,",
+      "D5/S0/Computability/PhysicalDivider/StackGrowth.lean:52:        simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using h",
+      "D5/S0/Computability/PhysicalDivider/StackGrowth.lean:147:                Nat.add_comm, Nat.add_left_comm]",
+      "D5/S0/Tower/ErgodicBridge/General.lean:99:  simpa [Nat.add_comm] using",
+      "D5/S0/Tower/ErgodicBridge/Golden.lean:426:  simpa [Nat.add_comm] using golden_survivor_eq_orbit_arm Q hQ x state hcode n",
+      "D5/S0/Tower/ErgodicBridge/Tribonacci.lean:675:  simpa [Nat.add_comm] using tribonacci_survivor_eq_orbit_arm Q x state hcode n",
+      "D5/S0/Tower/GoldenGapFrequency.lean:435:  simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using",
+      "D5/S0/Tower/Tribonacci/Names.lean:228:          simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using"
+    ],
+    "stderr": ""
+  },
+  {
+    "root": ".lake/packages/mathlib",
+    "label": "topic",
+    "pattern": "(?i)stack.?sort|vincular|2410\\.17057",
+    "command": "git grep -n -P '(?i)stack.?sort|vincular|2410\\.17057' -- Mathlib",
+    "exit": 1,
+    "line_hits": 0,
+    "file_hits": 0,
+    "sample": [],
+    "stderr": ""
+  },
+  {
+    "root": ".lake/packages/mathlib",
+    "label": "patterns",
+    "pattern": "(?i)permutation.{0,25}pattern|pattern.{0,25}avoid",
+    "command": "git grep -n -P '(?i)permutation.{0,25}pattern|pattern.{0,25}avoid' -- Mathlib",
+    "exit": 0,
+    "line_hits": 1,
+    "file_hits": 1,
+    "sample": [
+      "Mathlib/Tactic/Linter/TextBased.lean:330:      -- We spell the bad string pattern this way to avoid the linter firing on itself."
+    ],
+    "stderr": ""
+  },
+  {
+    "root": ".lake/packages/mathlib",
+    "label": "reuse",
+    "pattern": "List\\.(Perm|permutations)|Equiv\\.Perm|card_le_card|card_le_card_of_injOn",
+    "command": "git grep -n -P 'List\\.(Perm|permutations)|Equiv\\.Perm|card_le_card|card_le_card_of_injOn' -- Mathlib",
+    "exit": 0,
+    "line_hits": 933,
+    "file_hits": 263,
+    "sample": [
+      "Mathlib/Algebra/AddConstMap/Equiv.lean:150:def toPerm : (G \u2243+c[a, a] G) \u2192* Equiv.Perm G :=",
+      "Mathlib/Algebra/AddConstMap/Equiv.lean:165:    { toEquiv := Equiv.Perm.equivUnitsEnd.symm <| Units.map AddConstMap.toEnd u",
+      "Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:421:theorem _root_.Equiv.Perm.prod_comp (\u03c3 : Equiv.Perm \u03b9) (s : Finset \u03b9) (f : \u03b9 \u2192 M)",
+      "Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:427:theorem _root_.Equiv.Perm.prod_comp' (\u03c3 : Equiv.Perm \u03b9) (s : Finset \u03b9) (f : \u03b9 \u2192 \u03b9 \u2192 M)",
+      "Mathlib/Algebra/BigOperators/Group/List/Basic.lean:13:public import Mathlib.Data.List.Perm.Basic",
+      "Mathlib/Algebra/BigOperators/Group/List/Lemmas.lean:14:public import Mathlib.Data.List.Perm.Basic",
+      "Mathlib/Algebra/Category/Grp/Basic.lean:567:def isoPerm {\u03b1 : Type u} : GrpCat.of (Aut \u03b1) \u2245 GrpCat.of (Equiv.Perm \u03b1) where",
+      "Mathlib/Algebra/Category/Grp/Basic.lean:579:def mulEquivPerm {\u03b1 : Type u} : Aut \u03b1 \u2243* Equiv.Perm \u03b1 :=",
+      "Mathlib/Algebra/Category/Grp/EpiMono.lean:98:open XWithInfinity Equiv.Perm",
+      "Mathlib/Algebra/Category/Grp/EpiMono.lean:104:local notation \"SX'\" => Equiv.Perm X'",
+      "Mathlib/Algebra/Group/Action/Basic.lean:22:assert_not_exists MonoidWithZero Equiv.Perm.permGroup",
+      "Mathlib/Algebra/Group/Action/Basic.lean:34:def MulAction.toPerm (a : \u03b1) : Equiv.Perm \u03b2 :="
+    ],
+    "stderr": ""
+  },
+  {
+    "root": ".lake/packages/mathlib",
+    "label": "positive_control",
+    "pattern": "Nat\\.add_comm",
+    "command": "git grep -n -P 'Nat\\.add_comm' -- Mathlib",
+    "exit": 0,
+    "line_hits": 92,
+    "file_hits": 54,
+    "sample": [
+      "Mathlib/Algebra/Divisibility/Basic.lean:186:  \u27e8a ^ (n - m), by rw [\u2190 pow_add, Nat.add_comm, Nat.sub_add_cancel h]\u27e9",
+      "Mathlib/Algebra/Group/Basic.lean:152:  rw [\u2190 pow_add, Nat.add_comm, Nat.sub_add_cancel h]",
+      "Mathlib/Algebra/Group/Defs.lean:437:  rw [Nat.add_comm, npowRec_add 1 n hn a ha, npowRec, npowRec, ha]",
+      "Mathlib/Algebra/Group/Defs.lean:738:  rw [\u2190 pow_add, \u2190 pow_add, Nat.add_comm]",
+      "Mathlib/Algebra/Group/Fin/Basic.lean:34:  add_comm := by simp [add_def, Nat.add_comm]",
+      "Mathlib/Algebra/Group/Fin/Basic.lean:76:    Fin.ext <| by simp [Fin.sub_def, Fin.neg_def, Fin.add_def, Nat.add_comm]",
+      "Mathlib/Algebra/Group/Nat/Defs.lean:36:  add_comm := Nat.add_comm",
+      "Mathlib/Algebra/Polynomial/PartialFractions.lean:317:      rw [Nat.add_one_mul, Nat.add_comm, Nat.cast_add, \u2190 degree_eq_natDegree (hg i hi).ne_zero]",
+      "Mathlib/Algebra/Ring/GeomSum.lean:85:      rw [\u2190 tsub_add_eq_tsub_tsub, Nat.add_comm, tsub_self, pow_zero, mul_one]",
+      "Mathlib/Analysis/Normed/Module/Bases.lean:417:  rw [hdisj, finrank_bot, add_zero, \u2190 hW, hrank, hrank, Nat.add_comm] at h_dim",
+      "Mathlib/Analysis/SpecialFunctions/Pow/NthRootLemmas.lean:36:  rcases n with _ | _ | _ <;> simp [nthRoot, nthRoot.go, Nat.add_comm 1]",
+      "Mathlib/Combinatorics/Enumerative/Catalan/Basic.lean:91:  rw [show n + 1 - i = n - i + 1 by rw [Nat.add_comm (n - i) 1, \u2190 (Nat.add_sub_assoc h 1),"
+    ],
+    "stderr": ""
+  }
+]

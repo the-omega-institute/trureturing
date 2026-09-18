@@ -41,3 +41,34 @@ All three predictions passed. The four anchors reproduce exactly. F(765432819) =
 The complete independent results, maximizers, histograms, and explicit witnesses are in enumeration.json. At n = 8 the three maxima are 65432718, 65432817, 76543218, each with 64 preimages. The preregistered n >= 2 uniqueness statement additionally fails at n = 2 (both permutations have fibre 1); the requested formal probe will still use n = 8.
 
 Python measured wall duration: 9.790535 s. These are executable enumeration results, not yet kernel proofs.
+
+## Reuse and literature checks
+
+Expected proof_shape is bind-only for each result: instantiate the closed conjecture at a finite n, check the requisite finite facts, and normalize cardinal inequalities. Admission is open-problem-resolution under issue #8634, not escape-witness.
+
+Queries and exact counts are in dedupe.json; search_reuse.py is the reproducible program. git grep -P is used with explicit path arguments and no unquoted globs.
+
+| scope | query | line hits | files | exit |
+|---|---|---:|---:|---:|
+| . | topic | 0 | 0 | 1 |
+| . | patterns | 99 | 25 | 0 |
+| . | reuse | 623 | 222 | 0 |
+| . | positive_control | 164 | 111 | 0 |
+| .lake/packages/mathlib | topic | 0 | 0 | 1 |
+| .lake/packages/mathlib | patterns | 1 | 1 | 0 |
+| .lake/packages/mathlib | reuse | 933 | 263 | 0 |
+| .lake/packages/mathlib | positive_control | 92 | 54 | 0 |
+
+Topic search: stack.?sort, vincular, and 2410.17057. Positive control: Nat.add_comm. Pinned Mathlib: db584cd6d46c92f209a44c0f1c829460d327499d (v4.33.0). Relevant repository pattern containment in DerangementRatioNonconvergence and ArcherBourneDecomposition is classical, with no adjacency or stack transition, so it does not close these conjectures. No project declaration is imported. Direct upstream reuse: List.mem_permutations, List.nodup_permutations, List.toFinset_card_of_nodup, Finset.card_le_card, and membership/filter rules.
+
+Authenticated GitHub code search `vincular language:Lean` returned total_count=0, incomplete_results=false (unauthenticated API was 401). No new third-party dependency is required. OEIS query of 1,2,4,8,16,32,64,144 returned only A274859 (set partitions, not these stack maps). Crossref DOI 10.1016/j.disc.2025.114834 confirms the title, March 2026 publication, zero indexed citations, and no update-to field. This is not proof of absence of a settlement. General web search was inaccessible: Google returned a JavaScript challenge, DuckDuckGo a CAPTCHA; the journal full-text API returned HTTP 400. The preregistration reports additional searches, which remain inherited evidence, ASSUMED-UNVERIFIED by this seat. Journal-version content and comprehensive literature openness remain ASSUMED-UNVERIFIED. No known settlement was found in the successfully searched scope.
+
+## Lean cache capability
+
+The initial worktree had no .lake/packages/mathlib; the first repository build door was make lean-cache-ensure with the exact requested PATH. Its exit was 0. Receipt:
+
+```text
+LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-zhao-vinc-probe","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+```
+
+No bare lake command ran before this stamp. All subsequent Lean invocations use the requested PATH and lake env lean.
