@@ -1,0 +1,51 @@
+**命题 74.6（三状态矩阵及其转置分离两个方向）。** 取 $J=\{1,2,3\}$，分区为 $\{1,2\}\mid\{3\}$，参考与矩阵为
+$$
+q=\begin{pmatrix}1/3\\1/3\\1/3\end{pmatrix},\qquad
+p=\begin{pmatrix}2/3\\1/3\end{pmatrix},\qquad
+P_0=\begin{pmatrix}1/2&0&1/2\\1/2&0&1/2\\0&1&0\end{pmatrix},
+\qquad T_0=P_0^{\mathsf T},\qquad T_+=P_0.
+$$
+两列质量动力学均固定 $q$。$T_0$ 粗自治且其粗行核对 $p$ 可逆，但不保持参考族；对 $d=(1/2,1/2,0)^{\mathsf T}$，有 $\delta(d)=0$、$\delta(T_0d)=(\ln2)/2>0$。相反，$T_+$ 的每个概率输出都具有零缺陷，却不粗自治，也不与 $E$ 交换。在满支撑平稳参考、满射确定性分区的范围内，三个细状态是这类方向分离的最小状态数。
+
+证明。本分区给出
+$$
+C=\begin{pmatrix}1&1&0\\0&0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1/2&0\\1/2&0\\0&1\end{pmatrix},\qquad
+E=\begin{pmatrix}1/2&1/2&0\\1/2&1/2&0\\0&0&1\end{pmatrix}.
+$$
+$P_0$ 的行和、列和都为一，且各项非负，故 $T_0,T_+$ 都列随机并固定均匀参考 $q$。直接相乘得到
+$$
+CT_0=\begin{pmatrix}1/2&1/2&1\\1/2&1/2&0\end{pmatrix}
+=S_0C,\qquad
+S_0=CT_0B=\begin{pmatrix}1/2&1\\1/2&0\end{pmatrix},
+\qquad
+K_0=S_0^{\mathsf T}=\begin{pmatrix}1/2&1/2\\1&0\end{pmatrix}.
+$$
+粗链两向的非对角平稳流量均为 $1/3$，所以 $K_0$ 对 $p$ 可逆。细链却有 $q_1(P_0)_{13}=1/6$、$q_3(P_0)_{31}=0$，不满足该详细平衡。
+
+令 $e_1$ 为第一个粗标准基，$d=Be_1$。则 $Ed=d$，而
+$$
+T_0d=\begin{pmatrix}1/2\\0\\1/2\end{pmatrix},\qquad
+ET_0d=BS_0e_1=\begin{pmatrix}1/4\\1/4\\1/2\end{pmatrix}.
+$$
+输出不被 $E$ 固定，因此参考族未被保持，且 $ET_0d\ne T_0Ed$。正输出坐标只有第 $1,3$ 项，参考在两处均正，故
+$$
+\delta(T_0d)=\frac12\ln\frac{1/2}{1/4}
++\frac12\ln\frac{1/2}{1/2}=\frac{\ln2}{2}>0,
+\qquad\delta(d)=0.
+$$
+初态的第三坐标及第二个粗质量为零，正是定理 74.2 所允许的边界初态。
+
+对转置列作用 $T_+=P_0$，前两行相等使 $ET_+=T_+$，故任意概率 $d$ 都满足 $ET_+d=T_+d$，从而 $\delta(T_+d)=0$，也有 $TE=ETE$ 在 $T=T_+$ 时成立。但
+$$
+CT_+=\begin{pmatrix}1&0&1\\0&1&0\end{pmatrix}
+$$
+的前两列分别为 $(1,0)^{\mathsf T}$ 与 $(0,1)^{\mathsf T}$。任何矩阵 $\widetilde S C$ 的前两列都相同，故不存在粗自治矩阵；命题 74.3 遂排除交换。
+
+最后，若 $1\le |J|\le2$，满射给出 $1\le |I|\le |J|\le2$。当 $|I|=1$ 时，$E=q\mathbf1^{\mathsf T}$，平稳性与列质量守恒分别给出
+$$
+TE=(Tq)\mathbf1^{\mathsf T}=E,\qquad
+ET=q(\mathbf1^{\mathsf T}T)=E.
+$$
+当 $|I|=2$ 时，必有 $|J|=2$；这两个有限等势集合间的满射是双射，每条纤维只有一点，故 $E=I_J$，仍与 $T$ 交换。两个方向由命题 74.3 同时成立，因此至多两个细状态不能实现所述分离，而上述三状态例已经实现。证毕。
+
