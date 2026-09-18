@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -67,9 +66,5 @@ internal sealed class FaceColourPropagationDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Imp(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Call(string name,params Formula[] args)
-    {
-        var p=new List<Formula>{F.Operatorname,F.Grp(F.Id(name)),F.Open};
-        for(var i=0;i<args.Length;i++){if(i>0)p.AddRange([F.Comma,F.Sp]);p.Add(args[i]);}
-        p.Add(F.Close);return F.Seq([..p]);
-    }
+        => new Formula.Apply(F.Id(name), [.. args]);
 }

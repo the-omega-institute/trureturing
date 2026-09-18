@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-real-transition-inequality)
    anchors: []
    utility: none
-   digest: Actual hyper-ideal upper faces with two short neighbours, and the sharper high-edge estimate with one short neighbour. -/
+   digest: Continuous upper-face bounds for two- and one-short-neighbour transitions. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 
@@ -20,8 +20,7 @@ CFMP_GEOMETRIC_REALIZATION.md Section 25. The second clause is the improved
 high-edge envelope needed for the occurrence budget at degree seventeen.
 
 The statement does not assume or construct a geometric manifold, co-volume,
-zero-curvature metric, or a solution of unrestricted CFMP. The source and its
-candidate dependency have not been elaborated in this runtime.
+zero-curvature metric, or a solution of unrestricted CFMP.
 -/
 
 set_option autoImplicit false

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -15,7 +14,8 @@ internal sealed class FourCycleCurvatureDocument : IScribeDocumentDefinition
         "The actual occurrence-counted curvature has a uniform inward margin on an explicit global four-cycle box.",
         H("From local angle envelopes to all global curvature faces"),
         Blocks(
-            Paragraph(Text("T and E are arbitrary finite types of tetrahedra and global edges. "
+            Paragraph(Text("T is an arbitrary finite type of tetrahedra. E is an arbitrary "
+                + "global-edge type with decidable equality. "
                 + "An incidence s has edge:T -> Fin(6) -> E and low:E -> Bool. In the local "
                 + "order (12,13,14,34,24,23), slots 0 and 3 are high and the other four are low. "
                 + "FourCycle(s) requires this equality at every local slot, degree eight for "
@@ -69,14 +69,15 @@ internal sealed class FourCycleCurvatureDocument : IScribeDocumentDefinition
         var nondeg=All([("o",Call("Product",F.Id("T"),Call("Fin",F.D(6))))],
             And(Lt(F.Seq(F.Minus,F.D(1)),c),Lt(c,F.D(1))));
         var faces=All([("e",F.Id("E"))],And(
-            Imp(Eq(Call("apply",x,e),Call("apply",lower,e)),Le(eta,k)),
-            Imp(Eq(Call("apply",x,e),Call("apply",upper,e)),Le(k,F.Seq(F.Minus,eta)))));
+            Imp(Eq(Apply(x,e),Apply(lower,e)),Le(eta,k)),
+            Imp(Eq(Apply(x,e),Apply(upper,e)),Le(k,F.Seq(F.Minus,eta)))));
         var conclusion=And(Lt(F.D(0),delta),Le(delta,Rat(1,8)),Lt(F.D(0),eta),
-            Call("Box",s,lower),All([("x",Call("Functions",F.Id("E"),F.Id("Real")))],
+            Call("Box",s,lower),All([("x",new Formula.TypeArrow(F.Id("E"),F.Id("Real")))],
                 Imp(Call("Box",s,x),And(nondeg,faces))));
-        return All([("T",F.Id("FiniteType")),("E",F.Id("FiniteType")),
+        return All([("T",F.Id("Type")),("E",F.Id("Type")),
             ("s",Call("Incidence",F.Id("T"),F.Id("E")))],
-            Imp(Call("FourCycle",s),conclusion));
+            Imp(And(Call("Fintype",F.Id("T")),Call("DecidableEq",F.Id("E")),
+                Call("FourCycle",s)),conclusion));
     }
 
     private static Formula All((string Name,Formula Type)[] variables,Formula body) =>
@@ -92,11 +93,14 @@ internal sealed class FourCycleCurvatureDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Lt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
-    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(F.D(n)),F.Grp(F.D(d)));
-    private static Formula Call(string name,params Formula[] args)
+    private static Formula Apply(Formula function,params Formula[] args)=>
+        new Formula.Apply(function,[..args]);
+    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(Number(n)),F.Grp(Number(d)));
+    private static Formula Number(int value) => value switch
     {
-        var p=new List<Formula>{F.Operatorname,F.Grp(F.Id(name)),F.Open};
-        for(var i=0;i<args.Length;i++){if(i>0)p.AddRange([F.Comma,F.Sp]);p.Add(args[i]);}
-        p.Add(F.Close);return F.Seq([..p]);
-    }
+        1 => F.D(1), 8 => F.D(8),
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+    private static Formula Call(string name,params Formula[] args)
+        => Apply(F.Id(name),args);
 }

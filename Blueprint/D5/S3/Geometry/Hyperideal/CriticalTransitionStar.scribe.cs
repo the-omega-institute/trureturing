@@ -15,7 +15,7 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
         "A six-occurrence critical edge has strict angle-sum margins on both continuous faces, allowing two transition occurrences.",
         H("Critical opposite floors and a mixed six-valent star"),
         Blocks(
-            Paragraph(Text("I is an arbitrary finite type with decidable equality and cardinality six. "
+            Paragraph(Text("I is an arbitrary finite type of cardinality six. "
                 + "The five functions y,z,o,v,w:I -> Real retain every local occurrence. The target "
                 + "coordinate is shared. At each occurrence the order is (12,13,14,34,24,23); "
                 + "o is opposite the target and y,z,v,w are its four neighbours. All five "
@@ -55,8 +55,8 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "manifold links, co-volume existence or the full CFMP conjecture. "
                         + "The ordinary application uses favourable opposites of the same degree "
                         + "class, so it is preserved by unbranched covers even when global "
-                        + "edge identities split. This candidate and its existing dependency "
-                        + "have no Lean compilation receipt here; this authored Scribe is also uncompiled."))),
+                        + "edge identities split. The statement itself does not certify the "
+                        + "cover construction or its geometric realization."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -64,19 +64,22 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
         var i=F.Id("i"); var I=F.Id("I"); var g=F.Id("good");
         string[] names=["y","z","o","v","w"];
         var fs=names.Select(name=>F.Id(name)).ToArray();
-        var values=fs.Select(f=>Call("apply",f,i)).ToArray();
+        var values=fs.Select(f=>Apply(f,i)).ToArray();
         var box=All([("i",I)],And([..values.Select(x=>In(x,F.D(1),F.D(2)))]));
         var small=All([("i",I)],Call("ThreeSmall",values[0],values[1],values[3],values[4]));
         var paired=All([("i",I)],Imp(Member(i,g),And(
             Le(values[0],Rat(5,4)),Le(values[1],Rat(5,4)),
             Le(values[3],Rat(5,4)),Le(values[4],Rat(5,4)),Le(Rat(4,3),values[2]))));
-        var premises=And(Eq(Call("card",I),F.D(6)),Le(F.D(4),Call("card",g)),box,small,paired);
+        var premises=And(Call("Fintype",I),
+            Eq(Apply(Qualified("Fintype","card"),I),F.D(6)),
+            Le(F.D(4),Apply(Qualified("Finset","card"),g)),box,small,paired);
         var m=F.Id("margin"); var twoPi=Call("mul",F.D(2),F.Id("pi"));
         var lower=Call("AngleSum",[Rat(4,3),..fs]);
         var upper=Call("AngleSum",[F.D(2),..fs]);
         var result=And(Lt(F.D(0),m),Le(lower,Call("sub",twoPi,m)),Le(Call("add",twoPi,m),upper));
-        var variables=new List<(string Name,Formula Type)>{("I",F.Id("FiniteType"))};
-        variables.AddRange(names.Select(name=>(name,Call("Functions",I,F.Id("Real")))));
+        var variables=new List<(string Name,Formula Type)>{("I",F.Id("Type"))};
+        variables.AddRange(names.Select(name=>(name,
+            (Formula)new Formula.TypeArrow(I,F.Id("Real")))));
         variables.Add(("good",Call("Finset",I)));
         return All([..variables],Imp(premises,result));
     }
@@ -96,11 +99,16 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Member(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
     private static Formula In(Formula x,Formula a,Formula b)=>Member(x,Call("Icc",a,b));
-    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(F.D(n)),F.Grp(F.D(d)));
-    private static Formula Call(string name,params Formula[] args)
+    private static Formula Apply(Formula function,params Formula[] args)=>
+        new Formula.Apply(function,[..args]);
+    private static Formula Qualified(string owner,string member)=>
+        F.Seq(F.Id(owner),F.Dot,F.Id(member));
+    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(Number(n)),F.Grp(Number(d)));
+    private static Formula Number(int value) => value switch
     {
-        var p=new List<Formula>{F.Operatorname,F.Grp(F.Id(name)),F.Open};
-        for(var j=0;j<args.Length;j++){if(j>0)p.AddRange([F.Comma,F.Sp]);p.Add(args[j]);}
-        p.Add(F.Close);return F.Seq([..p]);
-    }
+        3 => F.D(3), 4 => F.D(4), 5 => F.D(5),
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+    private static Formula Call(string name,params Formula[] args)
+        => Apply(F.Id(name),args);
 }

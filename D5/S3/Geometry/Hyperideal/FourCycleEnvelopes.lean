@@ -4,9 +4,10 @@
    mirror-E: none(waiver:universal-real-inequality)
    anchors: []
    utility: none
-   digest: Whole-face bounds for the actual six-variable hyper-ideal cosine, derived through its mixed-coordinate monotonicity. -/
+   digest: Uniform whole-face bounds for the six-variable hyper-ideal cosine. -/
 
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
 
@@ -68,7 +69,6 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
     have hp : 0 ≤ 2*x*y*z := by positivity
     unfold rad
     linarith
-
   -- Only one neighbouring coordinate needs calculus; the others follow by
   -- the actual two tetrahedral symmetries established later in this proof.
   have hm : ∀ x z o v w : ℝ,
@@ -86,29 +86,30 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
       have ht : 0 < Real.sqrt (rad x z v) := Real.sqrt_pos.2 hB
       have hs2 : (Real.sqrt (rad x y w))^2 = rad x y w :=
         Real.sq_sqrt hA.le
-
       have dA : HasDerivAt (fun t : ℝ => rad x t w) (2*x*w+2*y) y := by
         convert ((((((hasDerivAt_id y).const_mul (2*x)).mul_const w).add_const (x^2)).add
-          ((hasDerivAt_id y).pow 2)).add_const (w^2)).sub_const 1 using 1 <;>
-          simp only [rad, mul_one, one_mul, pow_one] <;> ring
+          ((hasDerivAt_id y).pow 2)).add_const (w^2)).sub_const 1 using 1
+        all_goals try rfl
+        all_goals simp only [id_eq, mul_one]
+        all_goals ring
       have dP : HasDerivAt (fun t : ℝ => numerator x t z o v w) (z+x*v) y := by
         convert (((((hasDerivAt_id y).mul_const z).add_const (v*w)).add
           (((hasDerivAt_id y).const_mul x).mul_const v)).add_const (x*z*w)).sub_const
-          ((x^2-1)*o) using 1 <;>
-          simp only [numerator, mul_one, one_mul] <;> ring
-      have dC := (dP.div (dA.sqrt hA.ne') hs.ne').div_const
+          ((x^2-1)*o) using 1
+        all_goals try rfl
+        all_goals simp only [mul_one, one_mul]
+      have dC := (dP.fun_div (dA.sqrt hA.ne') hs.ne').div_const
         (Real.sqrt (rad x z v))
-
       -- The derivative sign hinges on a genuinely coupled polynomial.
       let Q := x*o*w + x*v + y*o + y*v*w + z*(1-w^2)
       have hxo : 1 ≤ x*o := by
-        nlinarith [mul_nonneg (sub_nonneg.mpr hx.1) (sub_nonneg.mpr ho.1)]
+        exact one_le_mul_of_one_le_of_one_le hx.1 ho.1
       have hxv : 1 ≤ x*v := by
-        nlinarith [mul_nonneg (sub_nonneg.mpr hx.1) (sub_nonneg.mpr hv.1)]
+        exact one_le_mul_of_one_le_of_one_le hx.1 hv.1
       have hyo : 1 ≤ y*o := by
-        nlinarith [mul_nonneg (sub_nonneg.mpr hy.1) (sub_nonneg.mpr ho.1)]
+        exact one_le_mul_of_one_le_of_one_le hy.1 ho.1
       have hyv : 1 ≤ y*v := by
-        nlinarith [mul_nonneg (sub_nonneg.mpr hy.1) (sub_nonneg.mpr hv.1)]
+        exact one_le_mul_of_one_le_of_one_le hy.1 hv.1
       have h1 : w ≤ x*o*w := by
         simpa only [one_mul] using mul_le_mul_of_nonneg_right hxo (by linarith [hw.1])
       have h2 : w ≤ y*v*w := by
@@ -124,13 +125,11 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
         calc
           0 ≤ (x^2-1)*Q := mul_nonneg hxq hQ
           _ = _ := by dsimp [Q, rad, numerator]; ring
-
       let r := (z+x*v)*Real.sqrt (rad x y w) -
         numerator x y z o v w*((2*x*w+2*y)/(2*Real.sqrt (rad x y w)))
       have hc : ((2*x*w+2*y)/(2*Real.sqrt (rad x y w))) *
           Real.sqrt (rad x y w) = x*w+y := by
         field_simp [hs.ne']
-        <;> ring
       have hmultiply : r*Real.sqrt (rad x y w) =
           (z+x*v)*rad x y w - numerator x y z o v w*(x*w+y) := by
         calc
@@ -152,9 +151,8 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
         exact div_nonneg (div_nonneg hrnonneg (sq_nonneg _)) ht.le⟩
     exact monotoneOn_of_deriv_nonneg (convex_Icc 1 2)
       (fun t ht => (hd t ht).1.continuousAt.continuousWithinAt)
-      (fun t ht => (hd t (Set.interior_subset ht)).1.differentiableWithinAt)
-      (fun t ht => (hd t (Set.interior_subset ht)).2)
-
+      (fun t ht => (hd t (interior_subset ht)).1.differentiableWithinAt)
+      (fun t ht => (hd t (interior_subset ht)).2)
   -- Actual symmetries of the rational square-root expression. They do not
   -- identify distinct global edges or impose equality of their lengths.
   have hswap : ∀ x y z o v w : ℝ,
@@ -174,7 +172,6 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
     have hb : rad x z v = rad x v z := by unfold rad; ring
     unfold cosine
     rw [hp, ha, hb]
-
   have cmp : ∀ x y z o v w Y Z O V W : ℝ,
       x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
       o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
@@ -204,7 +201,6 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
           nlinarith [mul_nonneg hs (sub_nonneg.mpr hOo)]
         exact div_le_div_of_nonneg_right
           (div_le_div_of_nonneg_right hp (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
-
   exact cmp
 
 /-- Endpoint envelopes and the three uniform whole-face estimates used by
@@ -238,14 +234,11 @@ theorem fourcycle_envelopes :
     have hp : 0 ≤ 2*x*y*z := by positivity
     unfold rad
     linarith
-
   have cmp := cosine_mixed_comparison
-
   have hc1 : (1:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hc2 : (2:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hca : (5/4:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hcb : (8/5:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
-
   have hbase : ∀ x y z o v w : ℝ,
       x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
       o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
@@ -260,7 +253,7 @@ theorem fourcycle_envelopes :
       rw [hrw]
       unfold numerator
       field_simp [show x+1 ≠ 0 by linarith [hx.1]]
-      <;> ring
+      ; ring
     have hhi : cosine x 2 2 1 2 2 = (9-x)/(7+x) := by
       have hs := Real.sq_sqrt (hr x 2 2 hx.1 (by norm_num) (by norm_num)).le
       unfold cosine
@@ -270,7 +263,7 @@ theorem fourcycle_envelopes :
       unfold numerator
       field_simp [show x+1 ≠ 0 by linarith [hx.1], show x+7 ≠ 0 by linarith [hx.1],
         show 7+x ≠ 0 by linarith [hx.1]]
-      <;> ring
+      ; ring
     constructor
     · rw [← hlo]
       exact cmp x 1 1 2 1 1 y z o v w hx hc1 hc1 hc2 hc1 hc1 hy hz ho hv hw
@@ -278,7 +271,6 @@ theorem fourcycle_envelopes :
     · rw [← hhi]
       exact cmp x y z o v w 2 2 1 2 2 hx hy hz ho hv hw hc2 hc2 hc1 hc2 hc2
         hy.2 hz.2 ho.1 hv.2 hw.2
-
   refine ⟨hbase, ?_, ?_, ?_⟩
   · intro y z o v w hy hz ho hv hw
     have hy' : y ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hy.1], hy.2⟩

@@ -102,9 +102,7 @@ statements follow from the written proofs, not an enumeration of covers.
 Bounded primary-source searches did not locate the precise four-cycle
 incidence theorem. This is not an exhaustive priority certificate or an
 independent referee assessment. The co-volume, compactness and matrix tools
-are classical and credited above. The current delivery is ordinary proof:
-no Lean elaboration, Scribe compilation, kernel admission, CI result or new
-external open-conjecture resolution is claimed.
+are classical and credited above.
 
 The general CFMP obligation remains to handle all permitted local low-valence
 patterns and their shared variables, or to exclude flat tetrahedra in the
@@ -148,16 +146,12 @@ and the manifold-cover residual example are not formalized by this file.
 These boundaries prevent a real-expression theorem from being presented as
 a completed Lean proof of a geometric realization conjecture.
 
-Current validation: exact derivative-numerator and nonnegative-cone
-identities, exact symmetries, endpoint substitutions, and rational squared
-angle margins were checked independently. Ninety-six face corners and 1000
-interior samples were also evaluated as finite diagnostics. The latter do
-not prove a universal inequality. A lexical source scan is not elaboration.
-Lean/lake and .NET were absent in the active runtime; compiler installation
-was blocked by unavailable external DNS and no suitable connected prover
-was found. No Lean/kernel or Scribe compilation is claimed. The intended
-content/utility classification remains subject to source-bound elaboration
-and independent review; no admission or frozen state was authored.
+Exact derivative-numerator and nonnegative-cone identities, exact symmetries,
+endpoint substitutions, and rational squared angle margins were checked
+independently. Ninety-six face corners and 1000 interior samples were also
+evaluated as finite diagnostics. The latter do not prove a universal
+inequality. The formal theorem supplies the universal real estimate; the
+content and utility classification remains subject to independent review.
 
 ## Global incidence, quantitative margins and face-signature obstruction
 
@@ -217,7 +211,6 @@ Executed diagnostics validate six vertex frames, all 64 Boolean edge-colour
 patterns, 6144 paired-pattern/face-permutation cases, the original genuine
 six-tetrahedron packet, nine high-precision floor cases, 816 actual global
 boundary states, and 100 independent angle-relabel comparisons. The full
-unbounded proofs are separate from these finite checks. No Lean/lake or
-.NET executable was available, so neither candidate module nor either Scribe
-has an elaboration or compilation receipt. The initial envelope dependency
-is also uncompiled. No CI, freeze state or kernel-verification claim is added.
+unbounded proofs are separate from these finite checks. The Lean theorems
+cover the universal analytic and incidence statements described above, not
+the remaining manifold and co-volume obligations.

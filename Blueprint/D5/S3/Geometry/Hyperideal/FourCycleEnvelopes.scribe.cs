@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -131,16 +130,14 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
         new Formula.Relation(left,FormulaRelationOperator.LessThanOrEqual,right);
     private static Formula In(Formula value, Formula lower, Formula upper) =>
         new Formula.Relation(value,FormulaRelationOperator.MemberOf,Call("Icc",lower,upper));
-    private static Formula Rat(int n, int d) => F.Seq(F.Frac,F.Grp(F.D(n)),F.Grp(F.D(d)));
-    private static Formula Call(string name, params Formula[] args)
+    private static Formula Rat(int n, int d) => F.Seq(F.Frac,F.Grp(Number(n)),F.Grp(Number(d)));
+    private static Formula Number(int value) => value switch
     {
-        var pieces = new List<Formula>{F.Operatorname,F.Grp(F.Id(name)),F.Open};
-        for (var i=0;i<args.Length;i++)
-        {
-            if (i>0) pieces.AddRange([F.Comma,F.Sp]);
-            pieces.Add(args[i]);
-        }
-        pieces.Add(F.Close);
-        return F.Seq([.. pieces]);
-    }
+        4 => F.D(4), 5 => F.D(5), 8 => F.D(8), 37 => F.D(3, 7), 43 => F.D(4, 3),
+        293 => F.D(2, 9, 3), 400 => F.D(4, 0, 0),
+        1577 => F.D(1, 5, 7, 7), 2236 => F.D(2, 2, 3, 6),
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+    private static Formula Call(string name, params Formula[] args)
+        => new Formula.Apply(F.Id(name), [.. args]);
 }

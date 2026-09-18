@@ -93,11 +93,8 @@ modules. Repository searches did not locate this exact critical transition
 owner in the searched scope. That is a bounded dependency search, not an
 exhaustive novelty certificate.
 
-Neither Lean/lake nor .NET is installed in the current runtime. The new
-source, its existing dependency and the authored Scribe have no compilation
-receipt. No admission classification, frozen state, CI verdict or proof of
-the complete geometric realization interface is claimed. The manifold
-construction, covolume existence step and cover family are ordinary proofs.
-The full CFMP conjecture and unrestricted minimum-eight case remain outside
-the proved restricted hypotheses. The original independent-opposite-one
-obstruction is retained without alteration.
+The formal theorem covers the continuous six-occurrence angle estimate only.
+The manifold construction, co-volume existence step and cover family remain
+ordinary proofs. The full CFMP conjecture and unrestricted minimum-eight case
+remain outside the proved restricted hypotheses. The original
+independent-opposite-one obstruction is retained without alteration.

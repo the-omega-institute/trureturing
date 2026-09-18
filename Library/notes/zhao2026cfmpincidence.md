@@ -127,13 +127,10 @@ admission text. Also inspected other-contributor PR results, including
 loning's #7820 theory continuation, alongside the actual spacetime source.
 No assertion of having mathematically reviewed every current PR is made.
 
-The active runtime has no Lean/lake or .NET executable. The current delivery
-contains ordinary proofs and source provenance, not new Lean declarations,
-Scribe compilation, a frozen theorem, an independent referee report, or a
-CI result. No binding-only formal wrapper is added for an existing flow
-result. The unrestricted degree-eight target and original CFMP conjecture
-remain open in this work. The restricted theorem has no numerical hypothesis
-left unproved; its additional hypotheses are the explicit incidence rules.
+The theory volume contains ordinary proofs and source provenance. The
+unrestricted degree-eight target and original CFMP conjecture remain open.
+The restricted theorem has no numerical hypothesis left unproved; its
+additional hypotheses are the explicit incidence rules.
 
 ## Second increment: exact identification constraints and nonvacuous families
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -48,7 +47,7 @@ internal sealed class TransitionEnvelopesDocument : IScribeDocumentDefinition
                         + "realization proof in CFMP_GEOMETRIC_REALIZATION.md Section 25. "
                         + "The seventeen-degree angle budget, topological face pairing and "
                         + "global co-volume minimizer are outside this formal declaration. "
-                        + "Neither it nor its candidate dependency has a compilation receipt here."))),
+                        + "It does not certify those geometric steps."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -60,7 +59,7 @@ internal sealed class TransitionEnvelopesDocument : IScribeDocumentDefinition
             Le(Call("cosine",F.D(2),a[0],a[1],a[2],a[3],a[4]),Rat(70,99))));
         var one=ForAll(names,Imp(And([..intervals,Call("OneSmall",a[0],a[1],a[3],a[4])]),
             Le(Call("cosine",Rat(5,4),a[0],a[1],a[2],a[3],a[4]),
-                F.Seq(F.Frac,F.Grp(F.D(25)),F.Grp(Call("sqrt",F.D(726)))))));
+                F.Seq(F.Frac,F.Grp(F.D(2,5)),F.Grp(Call("sqrt",Number(726)))))));
         return And(two,one);
     }
 
@@ -79,11 +78,13 @@ internal sealed class TransitionEnvelopesDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula In(Formula x,Formula a,Formula b)=>new Formula.Relation(x,FormulaRelationOperator.MemberOf,Call("Icc",a,b));
-    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(F.D(n)),F.Grp(F.D(d)));
-    private static Formula Call(string name,params Formula[] args)
+    private static Formula Rat(int n,int d)=>F.Seq(F.Frac,F.Grp(Number(n)),F.Grp(Number(d)));
+    private static Formula Number(int value) => value switch
     {
-        var p=new List<Formula>{F.Operatorname,F.Grp(F.Id(name)),F.Open};
-        for(var i=0;i<args.Length;i++){if(i>0)p.AddRange([F.Comma,F.Sp]);p.Add(args[i]);}
-        p.Add(F.Close);return F.Seq([..p]);
-    }
+        4 => F.D(4), 5 => F.D(5), 70 => F.D(7, 0), 99 => F.D(9, 9),
+        726 => F.D(7, 2, 6),
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+    private static Formula Call(string name,params Formula[] args)
+        => new Formula.Apply(F.Id(name), [.. args]);
 }

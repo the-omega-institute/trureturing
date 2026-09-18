@@ -4,7 +4,7 @@
    mirror-E: none(waiver:arbitrary-connected-face-pairing)
    anchors: []
    utility: none
-   digest: Opposite-paired global edge colours force one face signature throughout a connected face-paired tetrahedral system. -/
+   digest: Connected face pairings preserve the opposite-pair colour signature. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleCurvature
 import Mathlib.Logic.Relation
@@ -92,7 +92,8 @@ theorem balanced_signature_constant (s : Incidence T E) (p : FacePairing s)
             intro j _
             unfold mark
             rw [p.preserves a j]
-      _ = _ := Equiv.sum_comp (p.permutation a) _
+      _ = _ := Equiv.sum_comp (p.permutation a)
+        (fun j => mark s (p.partner a).1 (faceEdges (p.partner a).2 j))
   have hstep : ∀ t u, Adjacent p t u → pairCount s t = pairCount s u := by
     intro t u h
     obtain ⟨f,hf⟩ := h

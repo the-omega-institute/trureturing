@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-continuous-star-inequality)
    anchors: []
    utility: none
-   digest: Two-sided actual six-occurrence angle sums with a positive opposite floor and four favourable occurrences. -/
+   digest: Two-sided angle-sum margins for a six-occurrence critical transition star. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -20,8 +20,7 @@ three short neighbours. No cosine/angle bound or desired sum is a premise.
 The derivative comparison is consumed from its existing single owner. This
 module proves the new endpoints, exact double-angle gap, and finite-star
 aggregation. Topological face gluing and the geometric co-volume existence
-argument are not encoded here. This source and its candidate dependency have
-not been compiled in this runtime. No kernel/admission status is claimed.
+argument are not encoded here.
 -/
 
 set_option autoImplicit false
@@ -43,7 +42,7 @@ def margin : ℝ := min (2*Real.pi - 6*Real.arccos (4/7))
   (4*gamma + 2*beta - 2*Real.pi)
 
 private theorem quotient_le (A B P q : ℝ) (hA : 0 < A) (hB : 0 < B)
-    (hq : 0 ≤ q) (hs : P^2 ≤ q^2*(A*B)) :
+    (hq : 0 ≤ q) (hs : P ^ 2 ≤ q ^ 2 * (A * B)) :
     P / Real.sqrt A / Real.sqrt B ≤ q := by
   let r := Real.sqrt A * Real.sqrt B
   have hr : 0 < r := mul_pos (Real.sqrt_pos.2 hA) (Real.sqrt_pos.2 hB)
@@ -65,14 +64,14 @@ private theorem quotient_le (A B P q : ℝ) (hA : 0 < A) (hB : 0 < B)
 /-- Uniform signed angle-sum margins on both faces of the shared critical
 coordinate. The same real neighbour vector is used on each face. -/
 theorem critical_transition_star
-    {I : Type*} [Fintype I] [DecidableEq I]
+    {I : Type*} [Fintype I]
     (y z o v w : I → ℝ) (good : Finset I)
     (hcard : Fintype.card I = 6) (hgood : 4 ≤ good.card)
     (hbox : ∀ i, y i ∈ Set.Icc 1 2 ∧ z i ∈ Set.Icc 1 2 ∧
       o i ∈ Set.Icc 1 2 ∧ v i ∈ Set.Icc 1 2 ∧ w i ∈ Set.Icc 1 2)
     (hsmall : ∀ i, ThreeSmall (y i) (z i) (v i) (w i))
-    (hpaired : ∀ i ∈ good, y i ≤ 5/4 ∧ z i ≤ 5/4 ∧
-      v i ≤ 5/4 ∧ w i ≤ 5/4 ∧ 4/3 ≤ o i) :
+    (hpaired : ∀ i ∈ good, y i ≤ 5 / 4 ∧ z i ≤ 5 / 4 ∧
+      v i ≤ 5 / 4 ∧ w i ≤ 5 / 4 ∧ 4 / 3 ≤ o i) :
     0 < margin ∧
     (∑ i : I, Real.arccos (cosine (4/3) (y i) (z i) (o i) (v i) (w i)))
       ≤ 2*Real.pi - margin ∧
@@ -118,7 +117,6 @@ theorem critical_transition_star
     linarith
   have hmpos : 0 < margin := by
     exact lt_min (by linarith) (by linarith)
-
   have hlo : ∀ i, (4:ℝ)/7 ≤ cosine (4/3) (y i) (z i) (o i) (v i) (w i) := by
     intro i
     obtain ⟨hy,hz,ho,hv,hw⟩ := hbox i
@@ -190,7 +188,6 @@ theorem critical_transition_star
         Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 99/8)]
       norm_num
     simpa only [he] using hh
-
   have hlowerSum : (∑ i : I, Real.arccos
       (cosine (4/3) (y i) (z i) (o i) (v i) (w i))) ≤ 6*Real.arccos (4/7) := by
     have hh := Finset.sum_le_sum (s := Finset.univ)
@@ -213,6 +210,7 @@ theorem critical_transition_star
         6*beta + (good.card:ℝ)*(gamma-beta) := by
       rw [Finset.sum_add_distrib]
       simp [Finset.sum_ite_mem, hcard, nsmul_eq_mul]
+      ring
     rw [he] at hh
     have hfour : (4:ℝ) ≤ good.card := by exact_mod_cast hgood
     have hprod := mul_nonneg (sub_nonneg.mpr hfour) (sub_nonneg.mpr hbg)

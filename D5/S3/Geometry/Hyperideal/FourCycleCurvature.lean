@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-finite-incidence-real-estimate)
    anchors: []
    utility: none
-   digest: An explicit global box has uniformly inward curvature on every face of a finite four-cycle incidence system. -/
+   digest: Uniform inward curvature margins on an explicit four-cycle incidence box. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
@@ -20,7 +20,7 @@ is assumed. The floor is explicitly constructed from the occurrence count.
 The result is an analytic statement about the tetrahedral incidence system.
 It does not certify vertex links, identify the formula with a geometric
 angle, or supply a formal Brouwer/co-volume existence theorem. The imported
-candidate source and this source have not been elaborated in this runtime.
+analytic source has the same geometric boundary.
 -/
 
 set_option autoImplicit false
@@ -44,7 +44,7 @@ def frame (i : Fin 6) : Fin 6 → Fin 6 :=
   ![![0,1,2,3,4,5], ![1,2,0,4,5,3], ![2,1,0,5,4,3],
     ![3,1,5,0,4,2], ![4,5,0,1,2,3], ![5,4,0,2,1,3]] i
 
-variable {T E : Type*} [Fintype T] [Fintype E] [DecidableEq E]
+variable {T E : Type*} [Fintype T] [DecidableEq E]
 
 def source (s : Incidence T E) (o : T × Fin 6) : E := s.edge o.1 o.2
 
@@ -137,7 +137,6 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
     change (n+2)*(Real.pi/(n+2)) = Real.pi
     field_simp [hden.ne']
   have htnt : n*t < Real.pi := by nlinarith
-
   -- Strict angular gaps from exact comparisons with sqrt(2)/2 and sqrt(3)/2.
   have hqlo : Real.cos (Real.pi/4) < (293:ℝ)/400 := by
     rw [Real.cos_pi_div_four]
@@ -170,8 +169,11 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
     (min_le_right _ _).trans ((min_le_right _ _).trans (min_le_left _ _))
   have hmhi : margin ≤ 12*Real.arccos ((37:ℝ)/43)-2*Real.pi :=
     (min_le_right _ _).trans ((min_le_right _ _).trans (min_le_right _ _))
-
   have hframe : ∀ i : Fin 6, frame i 0 = i := by decide
+  have hpattern : ∀ i : Fin 6, lowSlot i = true →
+      lowSlot (frame i 1) = true ∧ lowSlot (frame i 2) = false ∧
+      lowSlot (frame i 3) = true ∧ lowSlot (frame i 4) = true ∧
+      lowSlot (frame i 5) = false := by decide
   have hlowSlots : ∀ o : T × Fin 6, s.low (source s o) = true →
       s.low (coordinate s o 1) = true ∧ s.low (coordinate s o 2) = false ∧
       s.low (coordinate s o 3) = true ∧ s.low (coordinate s o 4) = true ∧
@@ -180,19 +182,19 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
     change s.low (s.edge tet i) = true at hi
     rw [hcolour] at hi
     simp only [coordinate, hcolour]
-    fin_cases i <;> norm_num [frame, lowSlot] at hi ⊢
+    exact hpattern i hi
   have hlole : ∀ e, lower s e ≤ upper s e := by
     intro e
     by_cases he : s.low e = true
     · norm_num [lower, upper, he]
-    · simp only [lower, upper, he, if_false]
+    · simp only [lower, upper, he]
       change 1+d ≤ 8/5
       linarith
   have hlopos : ∀ e, 1 < lower s e := by
     intro e
     by_cases he : s.low e = true
     · norm_num [lower, he]
-    · simp only [lower, he, if_false]
+    · simp only [lower, he]
       change 1 < 1+d
       linarith
   have hup2 : ∀ e, upper s e ≤ 2 := by
@@ -293,10 +295,11 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
             _ ≤ _ := Finset.sum_le_sum ha
         unfold curvature
         linarith
-    · have hef : s.low e = false := by cases hb : s.low e <;> simp_all
+    · have hef : s.low e = false := Bool.eq_false_iff.mpr he
       constructor
       · intro hxe
-        have hxv : x e = 1+d := by simpa only [lower, he, if_false, d] using hxe
+        have hxv : x e = 1+d := by
+          simpa only [lower, hef, Bool.false_eq_true, if_false, d] using hxe
         have ha : ∀ o ∈ star s e, angle s x o ≤ t := by
           intro o ho
           have hb := (hbaseO o).1
@@ -315,7 +318,8 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
         unfold curvature
         linarith
       · intro hxe
-        have hxv : x e = 8/5 := by simpa only [upper, he, if_false] using hxe
+        have hxv : x e = 8/5 := by
+          simpa only [upper, hef, Bool.false_eq_true, if_false] using hxe
         have ha : ∀ o ∈ star s e, Real.arccos ((37:ℝ)/43) ≤ angle s x o := by
           intro o ho
           have h := hhighFace (x (coordinate s o 1)) (x (coordinate s o 2))
