@@ -729,3 +729,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two original AP11 blocks use the complete second-depth interface](profile-notes/266-two-original-ap11-blocks-use-the-complete-second-depth-interface.md)
 - [Two second-depth survival bounds improve the full J comparison](profile-notes/267-two-second-depth-survival-bounds-improve-the-full-j-comparison.md)
 - [Three retained labels and complete raw paths improve the full J comparison](profile-notes/268-three-retained-labels-and-complete-raw-paths-improve-the-full-j-comparison.md)
+- [Shifted factorial heads strengthen three original J quadratic costs](profile-notes/270-shifted-factorial-heads-strengthen-three-original-j-quadratic-costs.md)
