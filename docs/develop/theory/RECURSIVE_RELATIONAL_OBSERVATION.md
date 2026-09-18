@@ -39366,3 +39366,359 @@ $$
 [^rro94-fixed-transport]: 不动点沿半共轭映射到不动点，参见项目 [不动点半共轭桥梁](https://github.com/the-omega-institute/trureturing/blob/38fe6e8aa82049fd2a568fa0bcd1a1586f1ce61c/D5/S3/Observer/Bridges/FixedPointSemiconjugacy.lean)。此处源变换为 $J_\infty$，目标变换为 $J_2$，假定的桥梁为 $s$；仅由源不动点与目标无不动点就已得到矛盾。
 
 ## 94.99 追加锚
+
+## 95. 倒置素数与有限剩余类逆极限的比较
+
+**定义 95.1（剩余类塔与单元素局部化）。** 在允许零环的含幺交换环范畴中工作，所有环同态均保持单位；以 $0$ 表示满足 $1=0$ 的零环。固定素数 $p\ge2$。对 $n\ge1$，令
+$$
+R_n=\mathbb Z/p^n\mathbb Z,\qquad
+\rho_{n+1,n}:R_{n+1}\longrightarrow R_n,\quad
+[a]_{p^{n+1}}\longmapsto[a]_{p^n},
+$$
+并记 $p_n=[p]_{p^n}$。令
+$$
+R=\left\{(a_n)_{n\ge1}\in\prod_{n\ge1}R_n:
+\rho_{n+1,n}(a_{n+1})=a_n\text{ 对所有 }n\ge1\right\},
+$$
+取逐坐标环运算，记投影为 $\pi_n:R\to R_n$，并记相容元素
+$$
+p_R=(p_n)_{n\ge1}.
+$$
+对任意含幺交换环 $A$，令 $p_A=p\cdot1_A$，并置
+$$
+L_p(A)=A[1/p]=S_A^{-1}A,\qquad
+S_A=\{p_A^k:k\ge0\}.
+$$
+这里允许乘法集 $S_A$ 含有零。$L_p(A)$ 是倒置元素 $p_A$ 的局部化，与取某个素理想的补集作为分母集不同；这里不假定 $(p_A)$ 是 $A$ 的素理想。记其规范态射为 $\lambda_A:A\to L_p(A)$；分数 $a/p_A^k$ 表示 $\lambda_A(a)\lambda_A(p_A)^{-k}$，始终在局部化环中解释。局部化的存在与唯一延拓性质采用 [Stacks Project，Proposition 10.9.3，00CP](https://stacks.math.columbia.edu/tag/00CP)；倒置单元素的约定见 [Example 10.9.8，02C5](https://stacks.math.columbia.edu/tag/02C5)，对应既有 [`IsLocalization.Away`、`IsLocalization.Away.lift`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean)。
+
+**定理 95.2（局部化与此剩余类塔的逆极限不交换）。** 定义 95.1 的各 $R_n$ 均有限，各约化态射均满射。存在由投影与局部化诱导的规范含幺环同态
+$$
+\Theta:L_p(R)\longrightarrow\varprojlim_{n\ge1}L_p(R_n).
+$$
+在规范环同构
+$$
+R\cong\mathbb Z_p,\qquad
+L_p(R)\cong\mathbb Z_p[1/p]\cong\mathbb Q_p,
+\qquad
+\varprojlim_{n\ge1}L_p(R_n)\cong0
+$$
+下，$\Theta$ 就是唯一的含幺环同态 $\mathbb Q_p\to0$。因此 $\Theta$ 满射，核为整个源环，但不单射，也不是环同构。与此同时，
+$$
+p_n^n=0\quad(n\ge1),\qquad
+p_R^m\ne0\quad(m\ge0).
+$$
+也就是说，各有限层中的 $p_n$ 都幂零，而极限中的 $p_R$ 没有任何零幂。
+
+**证明。** 自然约化保持 $0,1$、加法、乘法与负元，所以相容条件在这些逐坐标运算下封闭，$R$ 是乘积环的含幺子环，各 $\pi_n$ 是含幺环同态。$R_n$ 恰有 $p^n$ 个元素；给定 $[a]_{p^n}$，同一整数的类 $[a]_{p^{n+1}}$ 是其原像，故约化满射。相邻约化的复合给出任意 $1\le m\le n$ 的约化 $\rho_{n,m}$，并有
+$$
+\rho_{n,m}\circ\pi_n=\pi_m,
+\qquad
+\rho_{n,m}(p_n)=p_m.
+$$
+
+先将 $R$ 识别为通常的 $p$-进整数环。沿用 [定理 45.8](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的素幂剩余类模型，记标准约化为
+$$
+r_n:\mathbb Z_p\longrightarrow R_n.
+$$
+这些约化相容，因而给出含幺环同态
+$$
+\iota:\mathbb Z_p\longrightarrow R,\qquad
+\iota(z)=(r_n(z))_{n\ge1}.
+$$
+现有的环同态提升性质见 [`PadicInt.toZModPow`、`PadicInt.lift`、`PadicInt.lift_spec`、`PadicInt.lift_unique`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/RingHoms.lean)。其指标包含 $n=0$；为应用它，补入单元素环 $R_0=\mathbb Z/1\mathbb Z$ 及唯一投影 $\pi_0$。新增坐标唯一，不改变 $R$。相邻相容性已经通过复合给出全部 $m\le n$ 的相容性；涉及 $m=0$ 的等式因目标单元素而成立。因此该提升性质直接给出含幺环同态
+$$
+\psi:R\longrightarrow\mathbb Z_p,
+\qquad r_n\circ\psi=\pi_n\quad(n\ge0).
+$$
+对 $n\ge1$，
+$$
+\pi_n\circ\iota\circ\psi=r_n\circ\psi=\pi_n,
+$$
+逐坐标相等给出 $\iota\psi=\operatorname{id}_R$。另一方面，$\psi\iota$ 与 $\operatorname{id}_{\mathbb Z_p}$ 经每个 $r_n$ 后都等于 $r_n$；由同一提升的唯一性，
+$$
+\psi\iota=\operatorname{id}_{\mathbb Z_p}.
+$$
+故 $\iota$ 是环同构，并且 $\iota(p)=p_R$。
+
+每层都有 $p_n^n=[p^n]_{p^n}=0$。然而固定任意 $m\ge0$，在第 $m+1$ 个坐标，
+$$
+\pi_{m+1}(p_R^m)=[p^m]_{p^{m+1}}\ne0,
+$$
+因为 $0<p^m<p^{m+1}$，所以 $p^{m+1}$ 不整除 $p^m$。这也包括 $m=0$。因此 $p_R^m\ne0$ 对每个 $m\ge0$ 成立，有限层的幂零关系没有统一的幂次。
+
+现在计算有限层的局部化。记 $\ell_n=\lambda_{R_n}$。在 $L_p(R_n)$ 中，$\ell_n(p_n)$ 是单位，且
+$$
+\ell_n(p_n)^n=\ell_n(p_n^n)=0.
+$$
+以此单位的逆元的 $n$ 次幂相乘，得到 $1=0$，故
+$$
+L_p(R_n)\cong0\quad(n\ge1).
+$$
+这正是局部化的乘法集含零时成为零环的判据，见 [Stacks Project，Lemma 10.9.4，00CQ](https://stacks.math.columbia.edu/tag/00CQ) 与既有 [`IsLocalization.subsingleton`、`IsLocalization.subsingleton_iff`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Defs.lean)。这里消去的是局部化后的单位，没有在含零因子的 $R_n$ 内消去 $p_n$。每个局部化环只有一个元素，因而其相容坐标空间也只有一个元素：
+$$
+\varprojlim_{n\ge1}L_p(R_n)\cong0.
+$$
+
+再计算极限环的局部化。包含 $j:\mathbb Z_p\hookrightarrow\mathbb Q_p$ 把非零元素 $p$ 送到域中的单位，所以由局部化延拓性质得到含幺环同态
+$$
+\eta:\mathbb Z_p[1/p]\longrightarrow\mathbb Q_p,
+\qquad
+\eta(a/p^k)=j(a)p^{-k}.
+$$
+局部化中的每个元素都有 $a/p^k$ 的形式；这是倒置 $p$ 的幂这一分母集的分数表示，也由既有 [`IsLocalization.Away.surj`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean) 给出。若 $\eta(a/p^k)=0$，在域 $\mathbb Q_p$ 中乘以非零的 $p^k$，得到 $j(a)=0$。包含 $j$ 单射，所以 $a=0$，原分数为零。故 $\ker\eta=\{0\}$，$\eta$ 单射。
+
+为证满射，采用标准赋值归一化 $v_p(p)=1$，其中对非零 $x\in\mathbb Q_p$ 有 $v_p(x)\in\mathbb Z$，且 $x\in\mathbb Z_p$ 等价于 $v_p(x)\ge0$。这些赋值与范数关系见 [`Padic.valuation_p`、`Padic.valuation_mul`、`Padic.norm_le_one_iff_val_nonneg`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)。若 $x=0$，取分数 $0/1$。若 $x\ne0$，选自然数
+$$
+N\ge\max\{0,-v_p(x)\}.
+$$
+则
+$$
+v_p(xp^N)=v_p(x)+N\ge0,
+$$
+所以 $a=xp^N\in\mathbb Z_p$，并且
+$$
+x=\frac{a}{p^N}=\eta(a/p^N).
+$$
+因此仅用 $p$ 的幂就能清除每个 $p$-进数的分母；这一表示也见 [`PadicInt.isFractionRing`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicIntegers.lean) 的满射性构造。$\eta$ 遂为环同构。由 $\iota$ 保持 $p$，它与逆同构经局部化唯一延拓为互逆同态，故
+$$
+L_p(R)\cong\mathbb Z_p[1/p]\cong\mathbb Q_p\ne0.
+$$
+
+最后构造规范比较态射。记 $\lambda=\lambda_R$。复合 $\ell_n\pi_n$ 把 $p_R$ 送到单位 $\ell_n(p_n)$，故唯一延拓为
+$$
+\widetilde\pi_n:L_p(R)\longrightarrow L_p(R_n),
+\qquad
+\widetilde\pi_n\circ\lambda=\ell_n\circ\pi_n.
+$$
+同理，约化态射诱导含幺环同态
+$$
+\widetilde\rho_{n+1,n}:L_p(R_{n+1})\longrightarrow L_p(R_n),
+\qquad
+\widetilde\rho_{n+1,n}\circ\ell_{n+1}
+=\ell_n\circ\rho_{n+1,n}.
+$$
+这两种延拓采用同一局部化泛性质，亦对应既有 [`IsLocalization.Away.lift_comp`、`IsLocalization.Away.map`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean)。在 $R$ 上计算得
+$$
+\begin{aligned}
+\widetilde\rho_{n+1,n}\circ\widetilde\pi_{n+1}\circ\lambda
+&=\widetilde\rho_{n+1,n}\circ\ell_{n+1}\circ\pi_{n+1}\\
+&=\ell_n\circ\rho_{n+1,n}\circ\pi_{n+1}\\
+&=\ell_n\circ\pi_n
+=\widetilde\pi_n\circ\lambda.
+\end{aligned}
+$$
+延拓的唯一性于是给出
+$$
+\widetilde\rho_{n+1,n}\circ\widetilde\pi_{n+1}
+=\widetilde\pi_n.
+$$
+复合相邻约化得到任意 $m\le n$ 的局部化约化与相容等式。
+
+把 [定理 5.4](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的正向构造用于常值源系统 $L_p(R)$、恒等源过渡、目标系统 $(L_p(R_n),\widetilde\rho_{n+1,n})$ 及阶段映射 $\widetilde\pi_n$。常值源系统的相容坐标列全部为常值列，其逆极限经任一坐标投影与 $L_p(R)$ 环同构。前述相容等式正是该构造的阶段自然性条件，故得到
+$$
+\Theta(z)=(\widetilde\pi_n(z))_{n\ge1}.
+$$
+每个 $\widetilde\pi_n$ 都是含幺环同态，目标采用逐坐标运算，所以 $\Theta$ 保持 $0,1$、加法与乘法，也是含幺环同态。其分数坐标公式为
+$$
+\Theta(a/p_R^k)
+=\left(\frac{\pi_n(a)}{p_n^k}\right)_{n\ge1},
+$$
+右端各分数只在 $L_p(R_n)$ 中解释。若另一个含幺环同态在与 $\lambda$ 复合后具有相同的第 $n$ 个坐标 $\ell_n\pi_n$，则局部化延拓唯一性使其每个坐标都等于 $\widetilde\pi_n$，故它等于 $\Theta$。这确定了比较态射的规范性。
+
+在已建立的环同构下，源为 $\mathbb Q_p$，目标为零环，因而 $\Theta$ 是唯一映射 $\mathbb Q_p\to0$。该映射保持单位，因为目标中的 $1=0$。目标只有一个元素，故它满射；所有源元素都映为零，故核为整个 $\mathbb Q_p$。源中 $0\ne1$，所以它不单射，也不能是同构。反向不存在含幺环同态 $0\to\mathbb Q_p$，因为这样的同态会将零环中相等的 $0,1$ 分别送到域中不同的 $0,1$。若排除零环，有限层所需的局部化便不在所选范畴中，不能保留同一个比较图。证毕。
+
+**推论 95.3（单位理想完成与赋值度量完成的边界）。** 取 $A=\mathbb Z[1/p]$ 或 $A=\mathbb Q_p$。则对所有 $n\ge1$，
+$$
+p^nA=A,\qquad A/p^nA\cong0,
+\qquad
+\widehat A^{\,(p)}:=\varprojlim_{n\ge1}A/p^nA\cong0.
+$$
+这里是理想 $(p)$ 给出的完成。另一方面，$\mathbb Q$ 关于 $p$-进赋值度量的完成是非零域 $\mathbb Q_p$。
+
+**证明。** 两种 $A$ 中的 $p$ 均为单位，所以每个 $a\in A$ 都可写成
+$$
+a=p^n(p^{-n}a),
+$$
+从而 $p^nA=A$。各商环均为零环，其逆极限也是零环。这直接应用理想进完成 $\varprojlim_n A/I^n$ 的定义，见 [Stacks Project，§10.96，00M9](https://stacks.math.columbia.edu/tag/00M9)。由于 $(p)=A$，这些理想给出的零邻域只有全环，所定拓扑只有空集与全环为开集。
+
+赋值度量则为
+$$
+d_p(x,y)=|x-y|_p,
+$$
+在 $\mathbb Q$ 上满足 $d_p(0,1)=1$。其现有柯西完成构造是 [`Padic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)，即 $\mathbb Q_p$；有理数的等距嵌入保留 $0$ 与 $1$ 的正距离，故此完成非零。单位理想的商逆极限与这一赋值度量完成采用不同的邻域系统，以上两个结论各自成立。证毕。
+
+## 95.99 追加锚
+
+## 96. 有界游程并集的有限覆盖与零测性
+
+**定义 96.1（有界连续壹游程与有限语言）。** 对 $n\in\mathbb N_0$，令
+$$
+I_n=\{j\in\mathbb N_0:j<n\},\qquad
+\Sigma_n=\{0,1\}^{I_n},\qquad
+\Sigma=\{0,1\}^{\mathbb N_0}.
+$$
+特别地，$I_0=\varnothing$，$\Sigma_0$ 只含空词。$\Sigma$ 取离散二点空间的乘积拓扑，并配备公平独立 Bernoulli 的 Borel 乘积概率 $\mu$。记前缀读出为
+$$
+\pi_n:\Sigma\to\Sigma_n,\qquad \pi_n(x)=x|_{I_n}.
+$$
+因此对每个 $n\in\mathbb N_0$ 及每个 $w\in\Sigma_n$，
+$$
+\mu\bigl(\pi_n^{-1}(\{w\})\bigr)=2^{-n}.
+$$
+对整数 $k\ge2$，定义
+$$
+K_k=\left\{x\in\Sigma:
+\forall j\in\mathbb N_0,\ \exists i\in I_k,\ x_{j+i}=0\right\},
+\qquad
+U=\bigcup_{k\ge2}K_k,
+$$
+以及
+$$
+W_{k,n}=\left\{w\in\Sigma_n:
+\forall j\in\mathbb N_0,\
+j+k\le n\Longrightarrow\exists i\in I_k,\ w_{j+i}=0\right\}.
+$$
+$K_k$ 与 $W_{k,n}$ 分别禁止无限串与长度 $n$ 的词中出现连续块 $1^k$。沿用 [定义 66.0](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的记号，有 $K_k=Y_{k+1}$。
+
+对 $0\le m\le n$，记截断映射为
+$$
+t_{n,m}:\Sigma_n\to\Sigma_m,\qquad t_{n,m}(w)=w|_{I_m}.
+$$
+有限语言满足
+$$
+W_{k,n}\subseteq W_{k+1,n},\qquad
+t_{n,m}(W_{k,n})\subseteq W_{k,m},
+$$
+且其包含与截断相容：先包含再截断，与先截断再包含，所得有限词相同。以下各 $k$ 的有限语言均作为同一 $\Sigma_n$ 的子集；各逆极限均作为同一相容前缀空间的子集。所有并均为这些自然包含下的普通递增并。
+
+**命题 96.2（有限层最终覆盖与整体并集的严格边界）。** 对每个 $k\ge2$，$K_k$ 闭，且对每个 $n\in\mathbb N_0$，
+$$
+K_k\subsetneq K_{k+1},\qquad
+\pi_n(K_k)=W_{k,n},\qquad
+k>n\Longrightarrow W_{k,n}=\Sigma_n. \tag{96.1}
+$$
+并集 $U$ 是非空、稠密的真 Borel 子集，满足
+$$
+\pi_n(U)=\Sigma_n\quad(n\in\mathbb N_0),\qquad
+U\subsetneq\overline U=\Sigma, \tag{96.2}
+$$
+以及
+$$
+\mu(K_k)=0\quad(k\ge2),\qquad
+\mu(U)=0,\qquad
+\mu(\overline U)=1. \tag{96.3}
+$$
+通过相容前缀与无限串的自然识别，规范比较映射
+$$
+\bigcup_{k\ge2}\varprojlim_{n\ge0}W_{k,n}
+\longrightarrow
+\varprojlim_{n\ge0}\left(\bigcup_{k\ge2}W_{k,n}\right) \tag{96.4}
+$$
+就是 $U\hookrightarrow\Sigma$，因而单射而不满射。其量词形式为
+$$
+\begin{aligned}
+U
+&=\left\{x\in\Sigma:
+\exists k\ge2,\ \forall n\in\mathbb N_0,\
+\pi_n(x)\in W_{k,n}\right\}\\
+&\subsetneq
+\left\{x\in\Sigma:
+\forall n\in\mathbb N_0,\ \exists k\ge2,\
+\pi_n(x)\in W_{k,n}\right\}
+=\Sigma.
+\end{aligned} \tag{96.5}
+$$
+
+**证明。** 固定 $k\ge2$。对每个起点 $j\in\mathbb N_0$，令
+$$
+C_{j,k}=\{x\in\Sigma:x_{j+i}=1\text{ 对所有 }i\in I_k\}.
+$$
+这是只限制有限坐标的开闭柱集，且
+$$
+\Sigma\setminus K_k=\bigcup_{j\in\mathbb N_0}C_{j,k}.
+$$
+因此 $K_k$ 闭。任何 $1^{k+1}$ 都含有 $1^k$，所以 $K_k\subseteq K_{k+1}$，有限词也满足 $W_{k,n}\subseteq W_{k+1,n}$。截断不会新增禁块，因此 $t_{n,m}(W_{k,n})\subseteq W_{k,m}$；所有这些映射都只是坐标限制，故包含与截断相容。无限串
+$$
+1^k0^\infty
+$$
+属于 $K_{k+1}$ 而不属于 $K_k$，从而无限串空间的包含严格。
+
+若 $x\in K_k$，其每个前缀都不含 $1^k$，故 $\pi_n(K_k)\subseteq W_{k,n}$。反过来，给定 $w\in W_{k,n}$，令 $x=w0^\infty$。完全位于前缀内的长度 $k$ 块不是 $1^k$；任何进入零尾部的长度 $k$ 块都含有零。因此 $x\in K_k$，且 $\pi_n(x)=w$，得到
+$$
+\pi_n(K_k)=W_{k,n}.
+$$
+这也覆盖 $n=0$：空词延伸为 $0^\infty\in K_k$。若 $k>n$，没有 $j\in\mathbb N_0$ 满足 $j+k\le n$，所以 $W_{k,n}=\Sigma_n$。对任意固定 $n$，取
+$$
+k=\max\{2,n+1\}
+$$
+便得到 $\pi_n(U)=\Sigma_n$，证明式 (96.1) 与式 (96.2) 的有限层结论。全零串属于 $K_2$，故 $U$ 非空。
+
+现说明相容前缀的识别。若 $(w_n)_{n\ge0}$ 满足 $w_n\in\Sigma_n$ 及
+$$
+t_{n+1,n}(w_{n+1})=w_n\quad(n\ge0),
+$$
+定义
+$$
+x_j=(w_{j+1})_j\quad(j\in\mathbb N_0).
+$$
+反复截断给出 $t_{n,m}(w_n)=w_m$ 对所有 $m\le n$ 成立，所以当 $j<n$ 时有 $(w_n)_j=x_j$。于是 $\pi_n(x)=w_n$ 对每个 $n$ 成立。反之，每个无限串的前缀族显然相容；前缀包含每个坐标，故所构成的无限串唯一。因此
+$$
+\varprojlim_{n\ge0}\Sigma_n\cong\Sigma.
+$$
+这些识别把有限层柱集对应到通常前缀柱集，与 [定理 4.2](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的柱拓扑一致。
+
+固定 $k$ 时，$x\in K_k$ 已保证其全部前缀属于 $W_{k,n}$。反之，若全部前缀属于 $W_{k,n}$，而 $x$ 在起点 $j$ 出现 $1^k$，则该禁块已完整出现在长度 $j+k$ 的前缀中，违反 $\pi_{j+k}(x)\in W_{k,j+k}$。所以
+$$
+\varprojlim_{n\ge0}W_{k,n}\cong K_k.
+$$
+这一识别保持所有坐标，也保持随 $k$ 增大的自然包含。另一方面，每个固定 $n$ 都有
+$$
+\bigcup_{k\ge2}W_{k,n}=\Sigma_n.
+$$
+因此式 (96.4) 的源识别为 $U$，靶识别为 $\Sigma$；比较映射把同一相容前缀族送到自身，就是包含 $U\hookrightarrow\Sigma$。源要求同一个 $k$ 控制所有前缀，靶允许针对每个 $n$ 选择 $k=\max\{2,n+1\}$，得到式 (96.5) 的两个集合表达式。
+
+无限串
+$$
+x^*=0\,1\,0\,11\,0\,111\,0\,1111\,0\cdots
+$$
+在第 $k$ 段连续壹中出现 $1^k$，故对每个 $k\ge2$ 都不属于 $K_k$。因此 $x^*\notin U$，$U\subsetneq\Sigma$，并证明上述比较映射不满射及式 (96.5) 的严格包含。
+
+有限层全覆盖给出稠密性。具体地，将 [定理 3.4](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 应用于单个载体 $X=\Sigma$、满射前缀读出 $\pi_n$ 及子集 $U$；在刚才的相容前缀识别下，该定理给出
+$$
+\overline U
+=\bigcap_{n\ge0}\pi_n^{-1}\bigl(\pi_n(U)\bigr)
+=\bigcap_{n\ge0}\pi_n^{-1}(\Sigma_n)
+=\Sigma.
+$$
+等价地，每个前缀柱都有零尾延伸落在 $U$ 中。任一非空基本开集只限制有限个坐标，因而含有某个前缀柱，也就与 $U$ 相交。这里恢复的是闭包 $\overline U$；结合 $x^*\notin U$ 可知 $U$ 不闭，符合 [第 6.1 节](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的闭像边界。这完成式 (96.2)。
+
+最后计算测度。固定 $k\ge2$ 与 $m\ge1$，将前 $mk$ 位划为起点 $0,k,\ldots,(m-1)k$ 的 $m$ 个互不重叠的长度 $k$ 块，令
+$$
+B_{k,m}=\left\{x\in\Sigma:
+\forall r\in I_m,\ \exists i\in I_k,\ x_{rk+i}=0\right\}.
+$$
+$K_k$ 要求每个起点都不出现 $1^k$，所以特别满足这些对齐起点的条件，即
+$$
+K_k\subseteq B_{k,m}\quad(k\ge2,\ m\ge1).
+$$
+每个对齐块有 $2^k-1$ 个允许词；各块的坐标互不重叠，因此满足条件的长度 $mk$ 前缀恰有 $(2^k-1)^m$ 个。这些前缀柱两两不交，每个柱质量为 $2^{-mk}$，从而
+$$
+\mu(B_{k,m})=(2^k-1)^m2^{-mk}=(1-2^{-k})^m.
+$$
+这里只计数对齐块；跨越两个相邻块边界的窗口未被这个事件逐一检查，所用关系是 $K_k\subseteq B_{k,m}$。于是对所有 $m\ge1$，
+$$
+0\le\mu(K_k)\le(1-2^{-k})^m.
+$$
+由于 $0<1-2^{-k}<1$，令 $m\to\infty$ 得 $\mu(K_k)=0$。这种不重叠块的有限乘积估计见 Durrett，[*Probability: Theory and Examples*，第五版作者稿](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)，Theorem 2.3.7（印刷第 70 页、PDF 第 78 页）；同书 Example 2.3.12 “Head runs”（印刷第 74 页、PDF 第 82 页）给出游程问题的进一步结果。
+
+每个 $K_k$ 闭而 Borel 可测，$U$ 是可数个闭集的并，因而是 Borel 集。由可数次可加性，
+$$
+0\le\mu(U)\le\sum_{k=2}^{\infty}\mu(K_k)=0.
+$$
+又因 $\overline U=\Sigma$，有
+$$
+\mu(\overline U)=\mu(\Sigma)=1.
+$$
+这证明式 (96.3)。所有测度均取环境空间 $\Sigma$ 上已指定的公平独立乘积律；有限投影的满射性是集合层面的存在性结论。证毕。
+
+## 96.99 追加锚
