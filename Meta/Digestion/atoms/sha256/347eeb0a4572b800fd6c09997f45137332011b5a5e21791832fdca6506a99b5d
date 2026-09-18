@@ -1,0 +1,44 @@
+**定理 75.3（任意有限 CPTP 演化的精确族保持判据）。** 在定义与假设 75.1 下，令 $T:\mathcal B(\mathbb C^J)\to\mathcal B(\mathbb C^J)$ 为任意 CPTP 映射，并令 $S_T=cTb$。则 $S_T$ 是经典列随机矩阵，且
+$$
+\begin{aligned}
+T(\mathcal F)\subseteq\mathcal F
+&\ \Longleftrightarrow\ Tb=bS_T\\
+&\ \Longleftrightarrow\ TE=ETE\\
+&\ \Longleftrightarrow\ T(\operatorname{Im}b)\subseteq\operatorname{Im}b\\
+&\ \Longleftrightarrow\ \forall\rho\text{ 为密度矩阵},\quad
+\delta_Q(T\rho)\le\delta_Q(\rho).
+\end{aligned}
+$$
+这些条件成立时，对每个密度矩阵还有全部项有限的剩余不等式
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cTE\rho)
+=D(T\rho\Vert TE\rho)\le\delta_Q(\rho). \tag{75.2}
+$$
+这里不附加 $T(Q)=Q$、保单位元或初态内点条件；要求保持的只是指定族 $\mathcal F$。
+
+证明。每个粗标准基向量 $e_i$ 都是允许有零坐标的概率，$b(e_i)$ 是密度态；$T$ 与 $c$ 依次把它送到密度态和概率向量。它们就是 $S_T$ 的各列，故该矩阵非负且列和为一。
+
+前四个条件使用定理 74.2 的 $cb=I$ 代数，载体换成定义 75.1 所列空间。具体地，族保持给出 $Tb(e_i)=ETb(e_i)=bS_T(e_i)$；这些 $e_i$ 张成粗实空间，复线性延拓后亦张成粗复空间，故 $Tb=bS_T$。反向由 $S_T\Delta(I)\subseteq\Delta(I)$ 得到族保持。$Tb=bS_T$ 右复合 $c$ 给出 $TE=ETE$；该式右复合 $b$，由 $Eb=b$ 得到 $Tb=ETb=bS_T$。最后，$E$ 的实像为 $\operatorname{Im}b$ 且在其上为恒等，故 $TE=ETE$ 恰为此像不变；Hermitian 空间上的恒等式再按复线性延拓到全部矩阵。
+
+设族保持，置 $\sigma=E\rho$。定理 75.2 证明中的支配经正映射 $T$ 给出 $\operatorname{supp}T\rho\subseteq\operatorname{supp}T\sigma$；族保持又给出 $T\sigma=b(cT\sigma)$。将式 (75.1) 用于 $T\rho$ 和 $a=cT\sigma$，并应用量子数据处理不等式，得到
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cT\sigma)
+=D(T\rho\Vert T\sigma)
+\le D(\rho\Vert\sigma)=\delta_Q(\rho).
+$$
+这里量子不等式的外部输入是 Watrous，Theorem 5.35（定位见本节附引），作用于 PSD 对 $(\rho,E\rho)$ 与通道 $T$。前述支撑包含和式 (75.1) 同时保证量子项及粗 KL 项有限，即使 $T\sigma$ 奇异也成立。以经典 Gibbs 非负性去掉粗项即得普遍不增；经典信道 DPI 本身不能承担这一量子步骤。
+
+反之，普遍不增作用于每个 $b(e_i)$，由定理 75.2 得
+$$
+0\le\delta_Q(Tb(e_i))\le\delta_Q(b(e_i))=0.
+$$
+同一定理的零集判据给出 $Tb(e_i)=ETb(e_i)$，再线性延拓得 $Tb=bS_T$。此方向不需要量子 DPI，也没有删去边界制备。
+
+另一个方向仍是命题 74.3 的粗自治代数，在此载体上原样给出
+$$
+cT=S_Tc\ \Longleftrightarrow\ ET=ETE,\qquad
+ET=TE\ \Longleftrightarrow\
+\bigl(cT=S_Tc\ \text{且}\ Tb=bS_T\bigr).
+$$
+第一式分别左复合 $b$、$c$ 并用 $cb=I$、$cE=c$ 即得；第二式是 $ET=ETE$ 与 $TE=ETE$ 的合取。这与所证族保持是两个条件，不引入第 74.4–74.5 节额外的平稳性或详细平衡假设。证毕。
+

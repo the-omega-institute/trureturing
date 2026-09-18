@@ -1,0 +1,59 @@
+**定理 75.2（相干与校准纤维缺陷的有限分解）。** 在定义与假设 75.1 下，对每个密度矩阵 $\rho$，包括奇异态及有零粗质量的态，有
+$$
+\begin{aligned}
+\delta_Q(\rho)
+&=D(\rho\Vert\Delta\rho)+D_{\mathrm{KL}}(d\Vert b_{\mathrm{vec}}(c\rho))\\
+&=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(c\rho\Vert p)\\
+&=D(\rho\Vert Q)-D_{\mathrm{KL}}(c\rho\Vert p).
+\end{aligned}
+$$
+所列各相对熵均有限，第一行的两项均非负，并且
+$$
+\delta_Q(\rho)\ge0,\qquad
+\delta_Q(\rho)=0\ \Longleftrightarrow\ \rho=E\rho
+\ \Longleftrightarrow\ \rho\in\mathcal F.
+$$
+
+证明。置 $\alpha=c\rho$、$t=b_{\mathrm{vec}}(\alpha)$。正性与迹一使 $d,\alpha,t$ 都是概率向量；$t$ 的归一化沿用命题 73.2 的纤维求和。PSD 的二阶主子式给出 $|\rho_{jk}|^2\le d_jd_k$，所以 $d_j=0$ 时整行、整列均为零。又 $t_j=0$ 当且仅当 $\alpha_{r(j)}=0$，此时同纤维全部 $d_k=0$。因此
+$$
+\operatorname{supp}\rho\subseteq\operatorname{supp}\Delta\rho
+\subseteq\operatorname{supp}E\rho.
+$$
+这也可在证明内定量化。令 $n=|J|$、$M=\max_j p_{r(j)}/q_j<\infty$。对任意 $v\in\mathbb C^J$，
+$$
+v^*\rho v\le
+\left(\sum_j\sqrt{d_j}|v_j|\right)^2
+\le n\sum_jd_j|v_j|^2,
+\qquad d_j\le\alpha_{r(j)}\le M t_j,
+$$
+故 $0\le\rho\le n\Delta\rho\le nM E\rho$。任意正线性映射 $T$ 保持该支配；若 $T(E\rho)v=0$，则 $0\le v^*T(\rho)v\le0$，PSD 的零二次型判据给出 $T(\rho)v=0$，从而 $\operatorname{supp}T(\rho)\subseteq\operatorname{supp}T(E\rho)$。此判据的现成矩阵形式是钉版 Mathlib 的 [Matrix.PosSemidef.dotProduct_mulVec_zero_iff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/Order.lean)；这里没有假设任何输入或输出可逆。
+
+对概率向量 $s$，若 $\operatorname{supp}\rho\subseteq\operatorname{supp}\operatorname{diag}s$，谱对数在参考的正支撑上对角，因而
+$$
+D(\rho\Vert\operatorname{diag}s)
+=-S(\rho)-\sum_{j:d_j>0}d_j\ln s_j
+=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert s).
+$$
+零参考坐标处的输入行列已经为零，不能将这个有限表达式用于不满足支撑条件的态对。先取 $s=d$、再取 $s=t$，得到第一行。对 $(d,t)$，定理 74.2 的经典缺陷恒等式给出
+$D_{\mathrm{KL}}(d\Vert t)=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(\alpha\Vert p)$；它的确定信道代入及零纤维处理仍是式 (74.1) 的证明。最后取 $s=q$ 得末行。$q,p$ 严格正，$d\ll t$ 已证，故没有无穷相减。
+
+相干项的非负性复用第 72.90 节所引的公开相干删除恒等式：取 $U=I$、$\rho_k=\Delta^k\rho$ 及 $k=0$。其步进条件由这个轨道定义满足，得到 $S(\Delta\rho)-S(\rho)=D_{\mathrm{legacy}}(\rho\Vert\Delta\rho)\ge0$；前述支撑证明与该节的两个有限分支桥把它接到这里的 $D$。等号使用具体的 [SpectralReadoutEntropyEquality.spectral_readout_entropy_eq_iff_isDiag](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality.lean)：取实际谱分解 $\rho=V\operatorname{diag}(\lambda)V^*$，其中 $V$ 幺正、$\lambda_j\ge0$；[FreeNegentropyBudget.von_neumann_entropy_eq_shannon_state_spectrum](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Sharpness/FreeNegentropyBudget.lean) 给出 $S(\rho)=H(\lambda)$，有序谱与此谱之间只作保持重数的有限重排。因此 $H(d)-S(\rho)=0$ 当且仅当 $\rho=\Delta\rho$，允许零及重复特征值。经典项则对非负归一化且 $d\ll t$ 的 $(d,t)$，使用定理 74.2 所引的 Gibbs 非负性及 Gibbs 等号条件，得到其为零当且仅当 $d=t$。两非负项同时为零恰好是 $\rho=E\rho$；命题 73.4 识别其为 $\mathcal F$。没有使用一般量子 Klein 等号定理。
+
+同一计算还给出后续所需的恒等式。对任意 $a\in\Delta(I)$，$\operatorname{supp}\rho\subseteq\operatorname{supp}b(a)$ 当且仅当 $\alpha\ll a$：若 $a_i=0$，该纤维的参考对角元全零，支撑包含迫使其中全部 $d_j=0$；反向由上述零行列结论得到。在有限分支上只对 $d_j>0$ 拆对数，
+$$
+\ln t_j-\ln b_{\mathrm{vec}}(a)_j
+=\ln\frac{\alpha_{r(j)}}{a_{r(j)}},
+$$
+按纤维求和即得
+$$
+D(\rho\Vert b(a))=\delta_Q(\rho)+D_{\mathrm{KL}}(c\rho\Vert a). \tag{75.1}
+$$
+若 $\alpha\not\ll a$，左端与右端最后一项均为 $+\infty$，而 $\delta_Q(\rho)$ 仍有限，所以式 (75.1) 是扩展值加法恒等式，不作无穷相减。Gibbs 等号条件也说明 $b(c\rho)$ 是 $\mathcal F$ 中唯一使该相对熵最小的态。
+
+这里的熵增项是 $H(d)-S(\rho)$。直接比较两个迹对数式还可见
+$$
+\delta_Q(\rho)-\bigl(S(E\rho)-S(\rho)\bigr)
+=\sum_j(t_j-d_j)\ln q_j,
+$$
+因为 $\sum_{r(j)=i}(t_j-d_j)=0$ 消去了正粗纤维上的 $\ln\alpha_i-\ln p_i$，零粗纤维两质量均为零。二者相等恰在这个剩余项为零时成立，不能把一般加权制备的缺陷直接替换为单独的 $S(E\rho)-S(\rho)$。证毕。
+

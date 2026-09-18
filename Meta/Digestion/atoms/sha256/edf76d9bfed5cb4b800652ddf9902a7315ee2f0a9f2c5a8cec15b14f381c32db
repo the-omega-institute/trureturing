@@ -1,0 +1,17 @@
+**定义与假设 75.1（经典质量与矩阵制备的类型）。** 沿用第 73–74 节的有限非空集合 $J,I$、满射 $r:J\to I$、固定正交归一基及严格正概率 $q$，令 $p_i=\sum_{r(j)=i}q_j>0$、$Q=\operatorname{diag}q$。$\Delta(I)$ 仍指包括边界的粗概率单纯形；细基去相干简记为 $\Delta$。对细 Hermitian 矩阵 $X$ 和实粗向量 $a$，置
+$$
+c(X)_i=\sum_{r(j)=i}X_{jj},\qquad
+b_{\mathrm{vec}}(a)_j=\frac{q_j a_{r(j)}}{p_{r(j)}},
+\qquad b(a)=\operatorname{diag}b_{\mathrm{vec}}(a),\qquad E=bc.
+$$
+对密度矩阵 $\rho$，记 $d_j=\rho_{jj}$，故 $\Delta\rho=\operatorname{diag}d$。这里 $c:\operatorname{Herm}(\mathbb C^J)\to\mathbb R^I$、$b:\mathbb R^I\to\operatorname{Herm}(\mathbb C^J)$；命题 73.2、73.4 的制备族与右逆关系在这些载体上写作
+$$
+\mathcal F=b(\Delta(I)),\qquad cb=I_{\mathbb R^I},\qquad E^2=E.
+$$
+$\operatorname{Im}b$ 指实线性像，全部矩阵恒等式则使用 $c,b$ 的复线性延拓。在完整粗矩阵代数上，继承的公式仍是 $\mathcal C_r B_{r,q}=\Delta_I$，而非完整恒等映射；$E=B_{r,q}\mathcal C_r$ 总输出对角态，$Y\mapsto U_rYU_r^*$ 则是第 72.3 条的相干提升，不能混用。
+
+$D$ 使用定义 72.1 的带支撑 Umegaki 相对熵，$H,S$ 均用自然对数及 $0\ln0=0$。经典 $D_{\mathrm{KL}}(u\Vert v)$ 在 $u\ll v$ 时按定理 73.3 对正输入坐标求和，否则取 $+\infty$。定义
+$$
+\delta_Q(\rho)=D(\rho\Vert E\rho).
+$$
+
