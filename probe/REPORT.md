@@ -62,3 +62,5 @@ Compiled private lemma `westRun_perm`: the operational stack algorithm preserves
 Compiled private lemma `westRun_sentinel`: a bottom-of-stack element at least as large as all remaining input survives to the final flush. This is proved from the operational recursion, not assumed as a recursive definition of `s`.
 
 Compiled private lemma `westRun_split`: when a new maximum arrives, the earlier input and smaller pending stack are completely emitted before processing the suffix with that maximum on the stack.
+
+Compiled private lemma `s_split_max`: `s (X ++ m :: Y) = s X ++ s Y ++ [m]` when X < m and Y <= m. The source-route maximum identity is now derived from the stack algorithm.

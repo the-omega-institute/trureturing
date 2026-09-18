@@ -107,4 +107,12 @@ private theorem westRun_split (stack X Y : List ℕ) (m : ℕ)
         · exact hstack y hy
       simpa only [List.cons_append, westRun, if_neg h] using ih hs ht
 
+private theorem s_split_max (X Y : List ℕ) (m : ℕ)
+    (hX : ∀ x ∈ X, x < m) (hY : ∀ y ∈ Y, y ≤ m) :
+    s (X ++ m :: Y) = s X ++ s Y ++ [m] := by
+  rw [s, westRun_split [] X Y m (by simp) hX]
+  have hs := westRun_sentinel [] Y m hY
+  simpa only [List.nil_append, s, List.append_assoc] using
+    congrArg (westRun [] X ++ ·) hs
+
 end SyyProbe
