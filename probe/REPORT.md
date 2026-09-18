@@ -6,7 +6,7 @@
 2. There is no cycle of length at least two among permutations of 1,...,n for 1 <= n <= 8.
 3. At every non-fixed permutation in that range, the reversed output word is strictly larger in lexicographic order than the reversed input word.
 
-These are predictions, not measured results. The source fidelity check precedes execution of the Python experiment. The preregistration defines the barred-pattern stack map by the proved right-hand side of Proposition 3.5; that boundary is retained explicitly.
+These are predictions, not measured results. The source fidelity check precedes execution of the Python experiment. The preregistration defines the dotted-pattern stack map by the proved right-hand side of Proposition 3.5; that boundary is retained explicitly.
 
 ## Result
 
