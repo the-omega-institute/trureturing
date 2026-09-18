@@ -50,6 +50,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         var plan = Plan("Library/notes/probe2026note.md", "", mode);
         Assert.Equal(new[] { "build", "filemap", "lean", "lean-report", "scribe-library" }, Strings(plan["resources"]!));
         Assert.Equal(new[] { "filemap", "scribe-library" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "checks", "current", "dependency", "elan", "judge", "project" }, Strings(plan["cache_layers"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap" }, Strings(plan["execution"]!["steps"]!));
         Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
         Assert.DoesNotContain(Strings(plan["execution"]!["projects"]!), path => path.StartsWith("tools/tests/", StringComparison.Ordinal));
@@ -190,7 +191,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             Assert.Equal(new[] { "build", "current-metadata", "filemap" }, Strings(plan["resources"]!));
             Assert.Equal(new[] { "build", "current" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "bash", "dotnet", "git", "python3" }, Strings(plan["tools"]!));
-            Assert.Equal(new[] { "current", "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal(new[] { "checks", "judge" }, Strings(plan["cache_layers"]!));
             Assert.Equal(new[] { "tools/StrataLint.Cli/StrataLint.Cli.csproj" }, Strings(plan["execution"]!["projects"]!));
             Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" }, Strings(plan["execution"]!["checks"]!));
             Assert.Equal(new[] { "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
@@ -201,6 +202,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         {
             Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "filemap", "lean", "lean-report" },
                 Strings(plan["resources"]!));
+            Assert.Equal(new[] { "checks", "current", "dependency", "elan", "judge", "project" }, Strings(plan["cache_layers"]!));
             Assert.Equal(new[] { "build", "current", "delta" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "lean-report", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
             Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" },

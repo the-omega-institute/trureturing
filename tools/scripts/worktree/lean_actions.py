@@ -21,7 +21,7 @@ from cache_material import files, sha
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
-EXECUTION_LAYERS = ("engineering", "current")
+EXECUTION_LAYERS = ("engineering", "current", "checks")
 ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS, "elan")
 
 
@@ -847,8 +847,10 @@ def main():
         # Registration/producer errors are required failures, not optional cache
         # failures. A missing or rejected seed simply keeps the normal resources.
         try:
-            if "current" in args.layers:
-                restore(args.repository, actions_keys(args.repository), {"current": args.current_key}, ["current"])
+            profiles = [layer for layer in ("checks", "current") if layer in args.layers]
+            if profiles:
+                restore(args.repository, actions_keys(args.repository),
+                        {layer: getattr(args, layer + "_key") for layer in profiles}, profiles)
             source, resolved = report_resources(args.repository, plan, requirements)
             output(resolved)
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")

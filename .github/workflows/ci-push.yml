@@ -391,12 +391,21 @@ jobs:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
           restore-keys: ${{ steps.keys.outputs.current_restore_prefix }}
+      - id: checks
+        if: steps.keys.outputs.checks_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.checks_path }}
+          key: ${{ steps.keys.outputs.checks_key }}
+          restore-keys: ${{ steps.keys.outputs.checks_restore_prefix }}
       - id: report_resources
         name: Validate optional report seed and resolve remaining resources
         if: steps.route.outputs.required == 'true'
         env:
           CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
+          CHECKS_KEY: ${{ steps.checks.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY" --checks-key "$CHECKS_KEY"
       - id: elan
         if: steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.elan_required == 'true'
         continue-on-error: true
@@ -463,6 +472,20 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
+      - id: snapshot_checks
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.checks_key != ''
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+          PREPARED_SEED_ARCHIVE: ${{ steps.pack.outputs.checks_seed_archive }}
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer checks --bounded-cache --seed-archive "$PREPARED_SEED_ARCHIVE"
+      - if: steps.snapshot_checks.outcome == 'success' && steps.snapshot_checks.outputs.checks_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_checks.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.checks_path }}
+          key: ${{ steps.keys.outputs.checks_key }}
       - id: snapshot_project
         if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true

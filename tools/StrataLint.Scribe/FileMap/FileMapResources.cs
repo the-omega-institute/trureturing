@@ -12,7 +12,7 @@ internal static partial class FileMapLoader
 {
     private static readonly string[] ResourceStages = ["build", "engineering", "current", "delta"];
     private static readonly string[] ResourceTools = ["bash", "dotnet", "git", "lake", "make", "python3"];
-    private static readonly string[] ResourceCaches = ["dependency", "project", "judge", "elan", "engineering", "current"];
+    private static readonly string[] ResourceCaches = ["dependency", "project", "judge", "elan", "engineering", "current", "checks"];
 
     private static ImmutableArray<FileMapResource> ParseResources(TomlTable root, string location)
     {
