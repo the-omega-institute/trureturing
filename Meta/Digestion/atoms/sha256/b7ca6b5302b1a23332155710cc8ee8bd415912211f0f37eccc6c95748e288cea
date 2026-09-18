@@ -1,0 +1,8 @@
+逐层相加，再用 $f=\Pi_0f+(f-\Pi_0f)$ 的正交性及强收敛，得到
+$$
+f=\sum_{L\ge0}\Delta_Lf,
+\qquad
+\|f\|_2^2=\sum_{L\ge0}\|\Delta_Lf\|_2^2,
+\qquad
+H_{\mathrm{obs}}=\widehat{\bigoplus}_{L\ge0}V_L.
+$$
