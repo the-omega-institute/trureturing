@@ -9,6 +9,10 @@ internal enum InformationTemplateBindingState
     DeclaredValidated,
 }
 
+internal sealed record InformationEscapeFrom(string Name, string TypeIdentity, string ObjectIdentity);
+internal sealed record InformationEscapeContinuation(string Kind, string? DeclarationName,
+    string? StatementIdentity, string? ChainName);
+
 internal sealed record InformationTemplateOccurrence(
     InformationOccurrenceKey Key,
     string RegistrationSourcePath,
@@ -19,7 +23,14 @@ internal sealed record InformationTemplateOccurrence(
     string? Diagnostic,
     string? BindingSourcePath,
     string? UnitName = null,
-    string? RealizationName = null);
+    string? RealizationName = null,
+    InformationEscapeFrom? EscapeFrom = null,
+    InformationEscapeContinuation? EscapeContinues = null,
+    string BridgeKind = "legacy")
+{
+    internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
+        && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;
+}
 
 internal sealed record InformationTemplateUniverse(
     ImmutableDictionary<InformationOccurrenceKey, InformationTemplateOccurrence> Occurrences,
@@ -55,17 +66,21 @@ internal static class DeclaredTemplateBindingRule
                     var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
                     findings.Add(occurrence.State switch
                     {
+                        _ when occurrence.EscapeFrom is null || occurrence.EscapeContinues is null => new(path.Value,
+                            "DTR-Undeclared " + key, AdmissionEffect.Block),
                         InformationTemplateBindingState.Undeclared => new(path.Value,
                             "DTR-Undeclared " + key, AdmissionEffect.Block),
                         InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
-                            new(path.Value, "DTR-Declared " + key, AdmissionEffect.Observe),
+                            new(path.Value, "DTR-Declared " + key
+                                + " escape_from=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeFrom)
+                                + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
+                                + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
                         _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
                             ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Block),
                     });
                 }
                 var validated = occurrences.Values
-                    .Where(occurrence => occurrence.State == InformationTemplateBindingState.DeclaredValidated
-                        && occurrence.EvidenceRef is not null)
+                    .Where(occurrence => occurrence.HasFourSlots)
                     .Select(occurrence => occurrence.Key.Theorem).ToHashSet(StringComparer.Ordinal);
                 foreach (var theorem in newTheorems.Where(name => !validated.Contains(name)).Order(StringComparer.Ordinal))
                     findings.Add(new(path.Value, "DTR-Unregistered " + InformationTemplateEvidence.ModuleForSource(path.Value)
