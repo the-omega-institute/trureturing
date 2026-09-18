@@ -1,0 +1,8 @@
+设族保持，置 $\sigma=E\rho$。定理 75.2 证明中的支配经正映射 $T$ 给出 $\operatorname{supp}T\rho\subseteq\operatorname{supp}T\sigma$；族保持又给出 $T\sigma=b(cT\sigma)$。将式 (75.1) 用于 $T\rho$ 和 $a=cT\sigma$，并应用量子数据处理不等式，得到
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cT\sigma)
+=D(T\rho\Vert T\sigma)
+\le D(\rho\Vert\sigma)=\delta_Q(\rho).
+$$
+这里量子不等式的外部输入是 Watrous，Theorem 5.35（定位见本节附引），作用于 PSD 对 $(\rho,E\rho)$ 与通道 $T$。前述支撑包含和式 (75.1) 同时保证量子项及粗 KL 项有限，即使 $T\sigma$ 奇异也成立。以经典 Gibbs 非负性去掉粗项即得普遍不增；经典信道 DPI 本身不能承担这一量子步骤。
+

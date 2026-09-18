@@ -1,0 +1,6 @@
+### 75.90 来源与形式化边界
+
+对角参考分解及零相干条件是成熟结果（literature-attested）：Baumgratz–Cramer–Plenio，Quantifying Coherence，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 2 页 (C1')、第 3 页式 (8) 及其前一显示式；本节将参考代入为第 73–74 节的校准制备。量子 DPI 引自 Watrous，The Theory of Quantum Information，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 5.35，印刷第 280–281 页／PDF 第 288–289 页，式 (5.174)，其输入是任意 PSD 对和通道；Definition 5.18，印刷第 266 页／PDF 第 274 页式 (5.85)，规定有限／无穷的支撑语义。书中以二为底的值统一乘 $\ln2$ 换算为本节的 nats。Proposition 5.22 只陈述非负性，不作为这里的等号依据。校准组合、判据与成对边界由本节证明给出（repo-derived），不主张新颖性或穷尽文献。
+
+上述源码构件各自只承担所指定的输入：相干删除及其有限分支桥不包含任意 CPTP 的 DPI，经典 Gibbs 等号也不成为一般量子等号定理。在所检索的 D5 与钉版 Mathlib 源码范围内，尚未找到这里所需的一般带支撑量子 DPI；[SupportAwareRelativeEntropy](https://github.com/the-omega-institute/trureturing/blob/7a95f477ddcb11e00271020188bf354d998a838f/D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.lean) 也明确将 DPI 留作后续定理。因此式 (75.2) 及普遍不增的充分性依赖已核对的外部数学输入。本节的支撑支配、对角对数、载体和谱重排适配、完整等价与具体边界均未组成经编译的 Lean 证明；局部构件不覆盖这些完整命题。所有结论限于所给有限矩阵与概率载体。
+

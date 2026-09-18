@@ -1,0 +1,18 @@
+**定理 75.3（任意有限 CPTP 演化的精确族保持判据）。** 在定义与假设 75.1 下，令 $T:\mathcal B(\mathbb C^J)\to\mathcal B(\mathbb C^J)$ 为任意 CPTP 映射，并令 $S_T=cTb$。则 $S_T$ 是经典列随机矩阵，且
+$$
+\begin{aligned}
+T(\mathcal F)\subseteq\mathcal F
+&\ \Longleftrightarrow\ Tb=bS_T\\
+&\ \Longleftrightarrow\ TE=ETE\\
+&\ \Longleftrightarrow\ T(\operatorname{Im}b)\subseteq\operatorname{Im}b\\
+&\ \Longleftrightarrow\ \forall\rho\text{ 为密度矩阵},\quad
+\delta_Q(T\rho)\le\delta_Q(\rho).
+\end{aligned}
+$$
+这些条件成立时，对每个密度矩阵还有全部项有限的剩余不等式
+$$
+\delta_Q(T\rho)+D_{\mathrm{KL}}(cT\rho\Vert cTE\rho)
+=D(T\rho\Vert TE\rho)\le\delta_Q(\rho). \tag{75.2}
+$$
+这里不附加 $T(Q)=Q$、保单位元或初态内点条件；要求保持的只是指定族 $\mathcal F$。
+

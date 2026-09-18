@@ -1,0 +1,14 @@
+证明。置 $\alpha=c\rho$、$t=b_{\mathrm{vec}}(\alpha)$。正性与迹一使 $d,\alpha,t$ 都是概率向量；$t$ 的归一化沿用命题 73.2 的纤维求和。PSD 的二阶主子式给出 $|\rho_{jk}|^2\le d_jd_k$，所以 $d_j=0$ 时整行、整列均为零。又 $t_j=0$ 当且仅当 $\alpha_{r(j)}=0$，此时同纤维全部 $d_k=0$。因此
+$$
+\operatorname{supp}\rho\subseteq\operatorname{supp}\Delta\rho
+\subseteq\operatorname{supp}E\rho.
+$$
+这也可在证明内定量化。令 $n=|J|$、$M=\max_j p_{r(j)}/q_j<\infty$。对任意 $v\in\mathbb C^J$，
+$$
+v^*\rho v\le
+\left(\sum_j\sqrt{d_j}|v_j|\right)^2
+\le n\sum_jd_j|v_j|^2,
+\qquad d_j\le\alpha_{r(j)}\le M t_j,
+$$
+故 $0\le\rho\le n\Delta\rho\le nM E\rho$。任意正线性映射 $T$ 保持该支配；若 $T(E\rho)v=0$，则 $0\le v^*T(\rho)v\le0$，PSD 的零二次型判据给出 $T(\rho)v=0$，从而 $\operatorname{supp}T(\rho)\subseteq\operatorname{supp}T(E\rho)$。此判据的现成矩阵形式是钉版 Mathlib 的 [Matrix.PosSemidef.dotProduct_mulVec_zero_iff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/Order.lean)；这里没有假设任何输入或输出可逆。
+

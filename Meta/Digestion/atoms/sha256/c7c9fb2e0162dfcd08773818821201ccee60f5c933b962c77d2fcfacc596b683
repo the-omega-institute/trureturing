@@ -1,0 +1,8 @@
+另一个方向仍是命题 74.3 的粗自治代数，在此载体上原样给出
+$$
+cT=S_Tc\ \Longleftrightarrow\ ET=ETE,\qquad
+ET=TE\ \Longleftrightarrow\
+\bigl(cT=S_Tc\ \text{且}\ Tb=bS_T\bigr).
+$$
+第一式分别左复合 $b$、$c$ 并用 $cb=I$、$cE=c$ 即得；第二式是 $ET=ETE$ 与 $TE=ETE$ 的合取。这与所证族保持是两个条件，不引入第 74.4–74.5 节额外的平稳性或详细平衡假设。证毕。
+
