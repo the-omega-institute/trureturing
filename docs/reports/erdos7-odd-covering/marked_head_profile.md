@@ -735,3 +735,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint factorial crosses improve the complete J comparison](profile-notes/273-joint-factorial-crosses-improve-the-complete-j-comparison.md)
 - [Generalized factorial thresholds strengthen two original J costs](profile-notes/274-generalized-factorial-thresholds-strengthen-two-original-j-costs.md)
 - [Generalized factorial observations improve the complete J comparison](profile-notes/275-generalized-factorial-observations-improve-the-complete-j-comparison.md)
+- [Actual retained tail pairs strengthen original J costs, square and Phi5](profile-notes/276-actual-retained-tail-pairs-strengthen-original-j-costs-and-square.md)
+- [Actual retained pair information improves the complete J comparison](profile-notes/277-actual-retained-pairs-improve-the-complete-j-comparison.md)
