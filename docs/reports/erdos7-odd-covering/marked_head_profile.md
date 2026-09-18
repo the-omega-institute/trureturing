@@ -747,3 +747,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exact retained head and slope improve the complete J comparison](profile-notes/285-exact-retained-head-and-slope-improve-the-complete-j-comparison.md)
 - [Four pure hinges strengthen the complete J source](profile-notes/286-four-pure-hinges-strengthen-the-complete-j-source.md)
 - [Four pure hinges improve the complete J comparison](profile-notes/287-four-pure-hinges-improve-the-complete-j-comparison.md)
+- [Retaining375 strengthens the complete J survival hinge](profile-notes/288-retaining375-strengthens-the-complete-j-survival-hinge.md)
+- [Retaining375 improves the complete J comparison](profile-notes/289-retaining375-improves-the-complete-j-comparison.md)
