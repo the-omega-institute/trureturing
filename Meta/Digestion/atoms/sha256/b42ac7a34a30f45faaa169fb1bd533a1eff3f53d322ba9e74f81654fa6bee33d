@@ -1,0 +1,40 @@
+**定义与假设 82.1（质量坐标、似然比坐标与凸缺陷）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$，以及质量算子 $C,B,E=BC$；其粗参考为
+$$
+p_i=(Cq)_i=\sum_{r(j)=i}q_j>0.
+$$
+对任意非负归一化质量列向量 $d\in\Delta(J)$，记
+$$
+a=Cd,\qquad u_j=\frac{d_j}{q_j},\qquad m_i=\frac{a_i}{p_i}.
+$$
+在任意实函数 $v:J\to\mathbb R$ 上定义
+$$
+(\Pi v)_j=\frac1{p_{r(j)}}
+             \sum_{r(k)=r(j)}q_kv_k,
+\qquad D_q=\operatorname{diag}(q).
+$$
+于是
+$$
+\Pi u=m\circ r,\qquad Ed=D_q\Pi u,\qquad
+E=D_q\Pi D_q^{-1}.
+$$
+这里 $\Pi$ 作用于似然比或实读数，$E$ 作用于质量；二者的自然内积分别是
+$$
+\langle v,w\rangle_q=\sum_jq_jv_jw_j,
+\qquad
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+具体地，在有限概率空间 $(J,2^J,\mu_q)$ 上取
+$$
+\mu_q(A)=\sum_{j\in A}q_j,
+\qquad
+\mathcal F_r=\{r^{-1}(S):S\subseteq I\}.
+$$
+$\Pi$ 是命题 69.1、定理 76.1 的有限正加权条件投影。质量空间中的正交性使用命题 74.5 的证明及定理 76.1 中的 $q^{-1}$ 内积；$D_q$ 给出这两个带权空间之间的等距同构。
+
+令 $K\subseteq\mathbb R$ 为包含所有 $u_j$ 的凸区间，$\Phi:\mathbb R\to\mathbb R$ 在 $K$ 上凸。定义有限实数
+$$
+\mathcal J_\Phi(d;q,r)
+=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i).
+$$
+此处用 $\mathcal J_\Phi$ 表示凸缺陷，不与定义 72.1 的细基去相干 $\Delta_f$ 混用。以下 KL 与熵均采用自然对数，零质量项按正支撑求和约定处理。
+
