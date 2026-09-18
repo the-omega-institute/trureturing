@@ -179,19 +179,68 @@ def _git_snapshot(package_dir, entries, package, roots, excluded):
 def _descriptor(value):
     if isinstance(value, dict) and set(value) == {'descriptor', 'resolver'}:
         value = value['descriptor']
-    materials.require_keys(value, {'kind', 'packages', 'excluded_dirs', 'complete_defaults'},
+    materials.require_keys(value, {'kind', 'packages', 'excluded_dirs', 'complete_defaults', 'workspace_overrides'},
                            'native Lake input population')
     if value['kind'] != selection.NATIVE_INPUT_KIND or type(value['complete_defaults']) is not bool:
         raise ValueError('invalid native Lake population')
+    if (not isinstance(value['packages'], list) or not isinstance(value['workspace_overrides'], str)
+            or not isinstance(value['excluded_dirs'], list)
+            or any(not isinstance(path, str) for path in value['excluded_dirs'])):
+        raise ValueError('invalid native Lake population shape')
     owners, dirs = set(), set()
     for package in value['packages']:
         materials.require_keys(package, {'owner', 'dir', 'source_roots', 'config_paths', 'modules',
                                          'remote_url', 'scope', 'pin'}, 'native package input')
         if not isinstance(package['owner'], str) or not package['owner'] or package['owner'] in owners:
             raise ValueError('duplicate or invalid native owner')
+        if (not isinstance(package['dir'], str)
+                or any(not isinstance(package[key], list) or any(not isinstance(path, str) for path in package[key])
+                       for key in ('source_roots', 'config_paths'))
+                or not isinstance(package['modules'], list)):
+            raise ValueError('invalid native package paths')
+        for module in package['modules']:
+            materials.require_keys(module, {'name', 'path'}, 'native package module')
+            if any(not isinstance(item, str) or not item for item in module.values()):
+                raise ValueError('invalid native package module')
         if package['dir'] in dirs:
             raise ValueError('ambiguous native package directory')
         owners.add(package['owner']); dirs.add(package['dir'])
+    return value
+
+
+def validate_population(value):
+    """Validate decoded optional evidence before accessing any nested fields."""
+    materials.require_keys(value, {'kind', 'descriptor', 'resolver', 'packages'}, 'native source population')
+    descriptor = _descriptor(value['descriptor'])
+    if (value['kind'] != descriptor['kind'] or not isinstance(value['resolver'], dict)
+            or not isinstance(value['packages'], list)):
+        raise ValueError('invalid native source population shape')
+    owners = {package['owner']: package for package in descriptor['packages']}
+    seen = set()
+    for package in value['packages']:
+        if not isinstance(package, dict) or not isinstance(package.get('owner'), str):
+            raise ValueError('invalid native source package')
+        owner = package['owner']
+        if owner not in owners or owner in seen:
+            raise ValueError('invalid native source owner')
+        seen.add(owner)
+        expected = owners[owner]
+        materials.require_keys(package, set(expected) | {'status', 'sources', 'config', 'git'}, 'native source package')
+        if package['status'] != 'materialized' or any(package[key] != item for key, item in expected.items()):
+            raise ValueError('native source descriptor mismatch')
+        for key in ('sources', 'config'):
+            if not isinstance(package[key], list):
+                raise ValueError('invalid native source entries')
+            for item in package[key]:
+                materials.require_keys(item, {'path', 'mode', 'sha256', 'git_blob'}, 'native source entry')
+                if (type(item['mode']) is not int or any(not isinstance(item[k], str)
+                        for k in ('path', 'sha256', 'git_blob'))):
+                    raise ValueError('invalid native source entry')
+        git = materials.require_keys(package['git'], {'kind', 'immutable', 'head', 'tree', 'blobs'}, 'native Git snapshot')
+        if type(git['immutable']) is not bool or not isinstance(git['blobs'], dict):
+            raise ValueError('invalid native Git snapshot')
+    if seen != owners.keys():
+        raise ValueError('incomplete native source population')
     return value
 
 
@@ -211,6 +260,8 @@ def resolver_inputs(root, descriptor):
     inputs = selection.Selection(root)
     result['$root'] = {path: _regular_file(inputs.safe_file(path), root)
         for path in sorted(inputs.expand('config_inputs'))}
+    overrides = descriptor['workspace_overrides']
+    result['$workspace'] = {overrides: _regular_file(_safe_path(root, overrides), root)}
     return result
 
 
@@ -265,12 +316,20 @@ def native_population(root, descriptor):
 def current_population(root, previous=None):
     """Offline validation of producer-bound native resolution; never stored-snapshot fallback."""
     path = state(root) / 'lake-inputs.json'
+    if previous is not None:
+        validate_population(previous)
     if path.exists() or path.is_symlink():
         if path.is_symlink():
             raise ValueError('nonregular native resolver evidence')
         bound = public.read_json(path.read_bytes())
         materials.require_keys(bound, {'descriptor', 'resolver'}, 'native resolver evidence')
     elif previous is not None:
+        # A stored resolver is usable only for the wholly absent fetched
+        # snapshot. Any present checkout needs current Lake-owned resolution.
+        for package in previous['descriptor']['packages']:
+            if isinstance(package['pin'], dict) and package['pin'].get('type') == 'git':
+                if _safe_path(root, package['dir']).exists():
+                    raise ValueError('native resolver evidence is absent for materialized package')
         bound = {key: previous[key] for key in ('descriptor', 'resolver')}
     else:
         raise ValueError('native resolver evidence is absent')

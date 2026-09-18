@@ -5,6 +5,162 @@ import reuse
 
 
 class NativeReuseTests:
+    def fetched_entry(self):
+        self._configure_fetched_git_package()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        self.inspect()
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        return output
+
+    def test_fetched_workspace_override_reaches_native_error_and_restores(self):
+        output = self.fetched_entry()
+        package = self.root / '.lake/packages/fetched'
+        override = self.root / 'override-package'
+        shutil.copytree(package, override)
+        source = override / 'Foreign/Thing.lean'
+        source.write_text('def value : Nat := "wrong"\n')
+        path = self.root / '.lake/package-overrides.json'
+        path.write_text(json.dumps(dict(schemaVersion='1.2.0', packages=[dict(
+            name='fetched', type='path', scope='fixture', dir='override-package',
+            configFile='lakefile.toml', manifestFile='lake-manifest.json', inherited=False)])))
+        failed = self.inspect(success=False)
+        self.assertIn('phase=ensure status=started', failed.stderr)
+        self.assertIn('Foreign/Thing.lean', failed.stderr)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        path.unlink()
+        self.inspect()
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        # Even an empty override population has presence, bytes and mode.
+        path.write_text('{"schemaVersion":"1.2.0","packages":[]}')
+        self.assertIn('phase=ensure status=started', self.inspect().stderr)
+        path.chmod(0o755)
+        self.assertIn('phase=ensure status=started', self.inspect().stderr)
+        path.unlink()
+        self.assertIn('phase=ensure status=started', self.inspect().stderr)
+
+    def test_fetched_package_alias_retarget_is_rejected_on_fresh_and_reused_entry(self):
+        output = self.fetched_entry()
+        package = self.root / '.lake/packages/fetched'
+        saved = package.with_name('fetched-saved')
+        changed = package.with_name('fetched-next')
+        package.rename(saved)
+        shutil.copytree(saved, changed)
+        (changed / 'Foreign/Thing.lean').write_text('def value : Nat := "wrong"\n')
+        for target in (saved, changed):
+            package.symlink_to(target.name, target_is_directory=True)
+            try:
+                failed = self.inspect(success=False)
+                self.assertIn('phase=ensure status=started', failed.stderr)
+                self.assertFalse(publication.member(output, '.reuse.json').exists())
+                with self.assertRaises(ValueError):
+                    publication.verify_inputs(output, self.root)
+            finally:
+                package.unlink()
+        saved.rename(package)
+        self.inspect()
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+    def test_fetched_optional_json_shapes_reconstruct_through_entry(self):
+        output = self.fetched_entry()
+        provenance = publication.member(output, '.provenance.json')
+        for value in ([], None, {'native_inputs': []}, {'native_inputs': None},
+                      {'native_inputs': {'packages': [None]}}):
+            with self.subTest(provenance=value):
+                provenance.write_text(json.dumps(value))
+                recovered = self.inspect()
+                self.assertIn('phase=ensure status=started', recovered.stderr)
+                publication.validate_bundle(output, publication.coordinates(self.root), self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        policy = self.root / 'lean-report-inputs.json'
+        original = policy.read_bytes()
+        broken = json.loads(original)
+        broken['native_inputs'] = []
+        policy.write_text(json.dumps(broken))
+        rejected = self.inspect(success=False)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=inputs', rejected.stderr)
+        self.assertNotIn('phase=ensure status=started', rejected.stderr)
+        policy.write_bytes(original)
+        self.inspect()
+        publication.verify_inputs(output, self.root)
+
+    def test_fetched_missing_descriptor_with_materialization_requires_lake(self):
+        output = self.fetched_entry()
+        before = self.stamps()
+        (self.root / '.lake/build/lean-inspector/lake-inputs.json').unlink()
+        recovered = self.inspect()
+        self.assertIn('phase=ensure status=started', recovered.stderr)
+        self.assertIn('phase=report status=completed', recovered.stderr)
+        self.assertEqual(before, self.stamps())
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+    def test_fetched_modes_aliases_and_owner_evidence_through_entry(self):
+        output = self.fetched_entry()
+        package = self.root / '.lake/packages/fetched'
+        for relative in ('Foreign/Hidden.lean', 'lakefile.toml'):
+            with self.subTest(mode=relative):
+                path = package / relative
+                mode = path.stat().st_mode & 0o777
+                path.chmod(mode | 0o111)
+                entered = self.inspect()
+                self.assertIn('phase=ensure status=started', entered.stderr)
+                publication.verify_inputs(output, self.root)
+                self.assertFalse(publication.member(output, '.reuse.json').exists())
+                path.chmod(mode)
+                self.inspect()
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        for relative in ('Foreign/Thing.lean', 'Foreign'):
+            with self.subTest(alias=relative):
+                path = package / relative
+                saved = path.with_name(path.name + '-saved')
+                path.rename(saved)
+                path.symlink_to(saved.name, target_is_directory=saved.is_dir())
+                try:
+                    rejected = self.inspect(success=False)
+                    self.assertIn('phase=ensure status=started', rejected.stderr)
+                    self.assertFalse(publication.member(output, '.reuse.json').exists())
+                finally:
+                    path.unlink()
+                    saved.rename(path)
+                self.inspect()
+                publication.verify_inputs(output, self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        descriptor = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        for mutation in ('duplicate-owner', 'outside-owner', 'config'):
+            with self.subTest(owner=mutation):
+                data = json.loads(descriptor.read_bytes())
+                fetched = next(p for p in data['descriptor']['packages'] if p['owner'] == 'fetched')
+                if mutation == 'duplicate-owner':
+                    data['descriptor']['packages'].append(dict(fetched))
+                elif mutation == 'outside-owner':
+                    fetched['source_roots'] = ['../outside']
+                else:
+                    fetched['config_paths'].append('../outside')
+                descriptor.write_text(json.dumps(data))
+                repaired = self.inspect()
+                self.assertIn('phase=ensure status=started', repaired.stderr)
+                publication.verify_inputs(output, self.root)
+                self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        # Actual ambiguous library ownership must also fail Lake's fresh
+        # descriptor, rather than only rejecting tampered optional evidence.
+        config = self.root / 'lakefile.toml'
+        original = config.read_bytes()
+        config.write_bytes(original + b'\n[[lean_lib]]\nname = "Conflicting"\nroots = ["Foreign"]\n')
+        self.write('Foreign/Thing.lean', 'def conflict : Nat := 1\n')
+        rejected = self.inspect(success=False)
+        self.assertIn('ambiguous native module owner', rejected.stderr)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        config.write_bytes(original)
+        shutil.rmtree(self.root / 'Foreign')
+        self.inspect()
+        publication.verify_inputs(output, self.root)
+
     def inspect(self, *, success=True):
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         result = self.guarded_command(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
@@ -82,6 +238,11 @@ class NativeReuseTests:
         (partial / 'Thing.lean').write_text('def value : Nat := 9\n')
         captured = reuse.probe(self.root, seed, self.lake)
         self.assertTrue(captured['needs_lake'], captured)
+        repaired = self.inspect()
+        self.assertIn('phase=ensure status=started', repaired.stderr)
+        publication.verify_inputs(output, self.root)
+        self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        self.assertEqual(output.read_bytes(), seed.read_bytes())
 
     def test_fetched_default_only_failure_and_metadata_reuse(self):
         self._configure_fetched_git_package()

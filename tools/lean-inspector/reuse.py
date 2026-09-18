@@ -37,8 +37,12 @@ def _previous_native_inputs(repository, report):
     if not provenance.is_file() or provenance.is_symlink():
         return None
     try:
-        return publication.read_json(provenance.read_bytes()).get('native_inputs')
-    except (OSError, UnicodeError, ValueError, TypeError):
+        value = publication.read_json(provenance.read_bytes())
+        if not isinstance(value, dict) or value.get('native_inputs') is None:
+            return None
+        import native
+        return native.validate_population(value['native_inputs'])
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError):
         return None
 
 

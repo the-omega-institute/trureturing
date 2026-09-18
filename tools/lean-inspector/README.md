@@ -128,7 +128,12 @@ SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报�
 ensure 前的根输入捕获保留，外部输入在 native provisioning/resolution 后、默认目标和
 报告输出前捕获，并在接受、私有发布和封存时复核。缺失或陈旧的来源证据必须由原生
 producer 重建，不能把当前哈希附到旧输出，也不回退到存储的 `inputs.json` 快照。
-离线校验还要求 descriptor 所绑定的 resolver 配置仍然一致。
+离线校验还要求 descriptor 所绑定的 resolver 配置仍然一致，包括 Lake 提供的
+`Workspace.packageOverridesFile` 路径及其缺席、存在、字节和 mode。包目录保留
+`Package.relDir` 的字面路径，源码目录在规范化之前检查中间组件，不能用解析后的地址
+隐藏 symlink。optional provenance 或 native population 的 JSON 类型不合法时按 miss
+重建；登记输入和真实 Lean 错误仍失败。当前 descriptor 缺失且有 fetched checkout
+在场时必须重新进入 Lake，不借用旧 descriptor。
 
 源码新鲜与不可变 pin 资格分别判断：已修改的本地依赖可生成准确报告，但只有实际
 HEAD、tree、源码和配置的 Git blob 字节及可执行 mode 与 native pin 一致，才取得

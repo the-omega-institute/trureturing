@@ -84,25 +84,28 @@ private def packageInputDescriptor (ws : Workspace) (pkg : Package)
         ("path", Lean.toJson mod.relLeanFile.normalize.toString)]
   let mut sourceRoots : Array FilePath := #[]
   for lib in pkg.leanLibs do
+    -- Keep the lexical path supplied to Lake. pkg.dir/lib.srcDir have already
+    -- resolved/normalized aliases; the source validator must see every hop.
+    let sourceDir := pkg.relDir / pkg.config.srcDir / lib.config.srcDir
     for name in lib.roots do
-      sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
-      sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+      sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "lean")
+      sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "")
     for glob in lib.config.globs do
       match glob with
-      | .one name => sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
-      | .submodules name => sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+      | .one name => sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "lean")
+      | .submodules name => sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "")
       | .andSubmodules name =>
-        sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
-        sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+        sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "lean")
+        sourceRoots := sourceRoots.push (Lean.modToFilePath sourceDir name "")
   -- Producer executables retain their existing registered input population.
   -- An executable default is unaccounted for the entry shortcut below.
-  let roots := sourceRoots.map fun path => Lean.toJson (relPathFrom ws.dir path).normalize.toString
+  let roots := sourceRoots.map fun path => Lean.toJson path.toString
   pure <| Lean.Json.mkObj [
     ("owner", Lean.toJson pkg.baseName.toString),
-    ("dir", Lean.toJson (if pkg.isRoot then "." else (relPathFrom ws.dir pkg.dir).normalize.toString)),
+    ("dir", Lean.toJson pkg.relDir.toString),
     ("source_roots", Lean.Json.arr roots),
-    ("config_paths", Lean.toJson #[pkg.relConfigFile.normalize.toString,
-      pkg.relManifestFile.normalize.toString, defaultLeanConfigFile.toString,
+    ("config_paths", Lean.toJson #[pkg.relConfigFile.toString,
+      pkg.relManifestFile.toString, defaultLeanConfigFile.toString,
       defaultTomlConfigFile.toString, "lean-toolchain"]),
     ("remote_url", Lean.toJson pkg.remoteUrl),
     ("scope", Lean.toJson pkg.scope),
@@ -136,6 +139,7 @@ private def writeNativeInputDescriptor (ws : Workspace) (pkg : Package) (path : 
   let value := Lean.Json.mkObj [
     ("kind", Lean.toJson ("lake-fetched" : String)),
     ("complete_defaults", Lean.toJson complete),
+    ("workspace_overrides", Lean.toJson (relPathFrom ws.dir ws.packageOverridesFile).toString),
     ("excluded_dirs", Lean.Json.arr excluded),
     ("packages", Lean.Json.arr packages)]
   writeBinFileIfChanged path (String.toUTF8 value.compress)

@@ -1,16 +1,12 @@
-using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
-using Trureturing.Truth;
 using Xunit;
 
 namespace StrataLint.TestSupport;
 
 internal static class ProducerInputFixture
 {
-    private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string ProjectRegistrationPath = "Meta/engineering-projects.json";
     private const string LeanRegistrationPath = "Meta/ReportProducers/lean-report.json";
     private const string ScribeRegistrationPath = "Meta/ReportProducers/scribe-content.json";
@@ -67,11 +63,23 @@ internal static class ProducerInputFixture
         }
         paths.UnionWith(["lean-toolchain", "lakefile.toml", "lake-manifest.json", ".gitignore"]);
         var files = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(source, path)), StringComparer.Ordinal);
-        // These fabricated rows exercise local batch emission without a Lake
-        // workspace. Fetched-source evidence belongs to the real Git fixtures.
-        var leanInputs = JsonNode.Parse(files["lean-report-inputs.json"])!.AsObject();
-        leanInputs.Remove("native_inputs");
-        files["lean-report-inputs.json"] = Encoding.UTF8.GetBytes(leanInputs.ToJsonString());
+        // Match this synthetic report's local/core-only rows. Keep the actual
+        // native registration; the producer below captures this workspace and
+        // its separate package namespace with the production implementation.
+        files["lakefile.toml"] = Encoding.UTF8.GetBytes("""
+            name = "batchFixture"
+            defaultTargets = ["Batch"]
+            [[lean_lib]]
+            name = "Batch"
+            roots = ["D5", "Trureturing"]
+            [[require]]
+            name = "batchSupport"
+            path = ".lake/packages/batchSupport"
+            """);
+        files["lake-manifest.json"] = Encoding.UTF8.GetBytes("""
+            {"version":"1.2.0","name":"batchFixture","lakeDir":".lake","packagesDir":".lake/packages","packages":[
+              {"name":"batchSupport","type":"path","scope":"","dir":".lake/packages/batchSupport","configFile":"lakefile.toml","manifestFile":"lake-manifest.json","inherited":false}]}
+            """);
         files.Add(ProjectRegistrationPath, Encoding.UTF8.GetBytes(manifest.ToJsonString()));
         return files;
     }
@@ -79,6 +87,7 @@ internal static class ProducerInputFixture
     internal static IReadOnlyCollection<string> CopyBatchProducerInputs(string root)
     {
         var files = BatchProducerInputs.Value;
+        var source = TestRepositoryLayout.FindRoot();
         var registrationPath = Path.Combine(root, ProjectRegistrationPath);
         var existing = JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(registrationPath))!.AsObject();
         var added = JsonNode.Parse(files[ProjectRegistrationPath])!.AsObject();
@@ -97,6 +106,8 @@ internal static class ProducerInputFixture
             Assert.False(TemporaryFileSystem.File.Exists(destination), "producer input already supplied: " + relative);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             TemporaryFileSystem.File.WriteAllBytes(destination, bytes);
+            if (!OperatingSystem.IsWindows())
+                File.SetUnixFileMode(destination, File.GetUnixFileMode(Path.Combine(source, relative)));
         }
         TemporaryFileSystem.File.WriteAllText(registrationPath, existing.ToJsonString());
         return files.Keys.ToArray();
@@ -104,37 +115,47 @@ internal static class ProducerInputFixture
 
     internal static void AttestBatchReport(string root, string report)
     {
-        var result = TestProcessRunner.Run("/bin/bash",
-            [Path.Combine(root, InputHelperPath), "address", "--repository", root], root,
+        // Only fixture data are synthesized here. Hashes, modes, source
+        // population, coordinates and sidecars come from their existing owners.
+        var result = TestProcessRunner.Run("python3", ["-B", "-c", """
+            import json, sys
+            from pathlib import Path
+            root, report = map(Path, sys.argv[1:])
+            sys.path.insert(0, str(root / 'tools/lean-inspector'))
+            import native, publication, materials
+            support = root / '.lake/packages/batchSupport'
+            support.mkdir(parents=True, exist_ok=True)
+            (support / 'lakefile.toml').write_text('name = "batchSupport"\n[[lean_lib]]\nname = "BatchSupport"\n')
+            (support / 'BatchSupport.lean').write_text('def batchSupport : Nat := 1\n')
+            rows = publication.read_json(report.read_bytes())['modules']
+            pin = json.loads((root / 'lake-manifest.json').read_text())['packages'][0]
+            configs = ['lakefile.toml', 'lakefile.lean', 'lake-manifest.json', 'lean-toolchain']
+            descriptor = dict(kind='lake-fetched', complete_defaults=True,
+                workspace_overrides='.lake/package-overrides.json', excluded_dirs=['.lake'], packages=[
+                dict(owner='batchFixture', dir='.', source_roots=['D5', 'Trureturing.lean'],
+                     config_paths=configs, remote_url='', scope='', pin=None,
+                     modules=[dict(name=row['module'], path=row['source_path']) for row in rows]),
+                dict(owner='batchSupport', dir='.lake/packages/batchSupport',
+                     source_roots=['.lake/packages/batchSupport/BatchSupport.lean'],
+                     config_paths=configs, remote_url='', scope='', pin=pin,
+                     modules=[dict(name='BatchSupport', path='BatchSupport.lean')])])
+            population = native.native_population(root, descriptor)
+            native.write_if_changed(native.state(root) / 'lake-inputs.json', materials.canonical_json(
+                dict(descriptor=descriptor, resolver=population['resolver'])))
+            inputs = publication.coordinates(root)
+            origins = {}
+            for row in rows:
+                origins[row['module']] = dict(module=row['module'],
+                    report_sha256=publication.hashlib.sha256(materials.canonical_json(
+                        dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
+                    compatibility_sha256=inputs['producer'], producer_sources_sha256='1' * 64,
+                    inspector_executable_sha256='2' * 64,
+                    input_sources={row['source_path']: row['source_sha256'][7:]}, external_inputs=[])
+            publication.write_sidecars(report, inputs, origins, native_inputs=population)
+            publication.verify_inputs(report, root)
+            """, root, report], root,
             TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        var fields = Encoding.UTF8.GetString(result.StandardOutput).Trim().Split(' ');
-        var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
-        TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
-        WriteFixtureOrigins(report, fields[1]);
-        TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
-            "schema=stratalint-lean-report-input-attestation-v1\n"
-            + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
-    }
-
-    private static void WriteFixtureOrigins(string report, string compatibility)
-    {
-        using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));
-        var origins = document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
-            row => row.GetProperty("module").GetString()!, row => new
-            {
-                module = row.GetProperty("module").GetString(),
-                report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
-                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
-                compatibility_sha256 = compatibility,
-                producer_sources_sha256 = new string('1', 64),
-                inspector_executable_sha256 = new string('2', 64),
-                input_sources = new Dictionary<string, string>
-                {
-                    [row.GetProperty("source_path").GetString()!] = row.GetProperty("source_sha256").GetString()![7..],
-                },
-            }, StringComparer.Ordinal);
-        TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new { module_origins = origins }));
     }
 
 }

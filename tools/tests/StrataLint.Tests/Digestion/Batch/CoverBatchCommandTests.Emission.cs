@@ -1,4 +1,6 @@
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
@@ -39,6 +41,16 @@ public sealed partial class CoverBatchCommandTests
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
+        using (var policy = JsonDocument.Parse(File.ReadAllText(Path.Combine(batch.Root, "lean-report-inputs.json"))))
+            Assert.Equal("lake-fetched", policy.RootElement.GetProperty("native_inputs").GetProperty("kind").GetString());
+        using (var provenance = JsonDocument.Parse(File.ReadAllText(reportPath + ".provenance.json")))
+        {
+            Assert.Contains(provenance.RootElement.GetProperty("native_inputs").GetProperty("packages").EnumerateArray(),
+                package => package.GetProperty("owner").GetString() == "batchSupport"
+                    && package.GetProperty("sources").GetArrayLength() == 1);
+            Assert.All(provenance.RootElement.GetProperty("module_origins").EnumerateObject(),
+                origin => Assert.Empty(origin.Value.GetProperty("external_inputs").EnumerateArray()));
+        }
         foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
         {
             ReviewRegressionTests.RunGit(batch.Root, "ls-files", "--error-unmatch", path);
@@ -266,6 +278,40 @@ public sealed partial class CoverBatchCommandTests
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
+    }
+
+    [Theory]
+    [InlineData("source")]
+    [InlineData("population")]
+    [InlineData("row-inputs")]
+    public void FinalEmissionRequiresCurrentNativeSourceEvidence(string damage)
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        var report = world.WriteReportBundle();
+        var source = Path.Combine(world.Root, ".lake/packages/batchSupport/BatchSupport.lean");
+        var provenance = report + ".provenance.json";
+        var originalSource = File.ReadAllBytes(source);
+        var originalProvenance = File.ReadAllBytes(provenance);
+        if (damage == "source")
+            File.AppendAllText(source, "-- changed native input\n");
+        else
+        {
+            var data = JsonNode.Parse(originalProvenance)!.AsObject();
+            if (damage == "population") data.Remove("native_inputs");
+            else foreach (var row in data["module_origins"]!.AsObject()) row.Value!.AsObject().Remove("external_inputs");
+            File.WriteAllText(provenance, data.ToJsonString());
+        }
+        var rejected = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+        Assert.Equal(1, rejected.ExitCode);
+        Assert.Contains("COVER_BATCH_EMIT_FAILED", rejected.Error, StringComparison.Ordinal);
+        Assert.Contains("native", rejected.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
+        File.WriteAllBytes(source, originalSource);
+        File.WriteAllBytes(provenance, originalProvenance);
+        var restored = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+        Assert.True(restored.Success, restored.Error + restored.Output);
+        Assert.NotEmpty(File.ReadAllBytes(Path.Combine(world.Root, "Generated/DAG.md")));
     }
 
     private static void WriteEmissionInputs(string root)
