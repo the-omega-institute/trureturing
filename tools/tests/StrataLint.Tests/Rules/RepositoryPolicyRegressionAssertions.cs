@@ -137,6 +137,7 @@ internal static class RepositoryPolicyRegressionAssertions
         const string linkEntries = """
             [[files]]
             pattern = ".claude/skills"
+            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -148,6 +149,7 @@ internal static class RepositoryPolicyRegressionAssertions
 
             [[files]]
             pattern = ".codex/skills"
+            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -228,9 +230,9 @@ internal static class RepositoryPolicyRegressionAssertions
 
         (string Before, string After, string Marker)[] malformed =
         [
-            ("schema_version = 3", "schema_version = 2", "schema_version"),
-            ("schema_version = 3", "schema_version = 3\nunknown = true", "unknown"),
-            ("schema_version = 3", "schema_version = 3\nschema_version = 3", "TOML"),
+            ("schema_version = 5", "schema_version = 2", "schema_version"),
+            ("schema_version = 5", "schema_version = 5\nunknown = true", "unknown"),
+            ("schema_version = 5", "schema_version = 5\nschema_version = 5", "TOML"),
             ("profile = \"structured-json\"", "profile = \"structured-json\"\nprofile = \"opaque-text\"", "TOML"),
             ("profile = \"structured-json\"", "profile = \"unknown\"", "profile"),
             ("profile = \"structured-json\"", "profile = 1", "profile"),
@@ -289,7 +291,11 @@ internal static class RepositoryPolicyRegressionAssertions
         Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("Evidence/D5/Bad.json"), policy));
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "test");
         var extra = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical.Replace("pattern = \"Evidence/**\"", "pattern = \"Evidence/D5/**\"", StringComparison.Ordinal)), "test").Entries.Single(e => e.Pattern == "Evidence/D5/**");
-        var ambiguous = new FileMapManifest(manifest.ResidencePolicy, manifest.Entries.Add(extra).OrderBy(e => e.Pattern, StringComparer.Ordinal).ToImmutableArray(), manifest.ArtifactKinds);
+        var ambiguous = new FileMapManifest(
+            manifest.ResidencePolicy,
+            manifest.Entries.Add(extra).OrderBy(e => e.Pattern, StringComparer.Ordinal).ToImmutableArray(),
+            manifest.ArtifactKinds,
+            manifest.Resources);
         var ambiguousPolicy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(FileMapCanonicalWriter.Write(ambiguous).AsSpan(), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         Assert.Contains("matches=2", RepositoryPathPolicy.Validate(RepoPath.CreateKnown("Evidence/D5/S0/Carrier/Demo.result.json"), ambiguousPolicy)!.Message, StringComparison.Ordinal);
     }
@@ -328,6 +334,7 @@ internal static class RepositoryPolicyRegressionAssertions
         const string registeredEntry = """
             [[files]]
             pattern = "docs/GOVERNANCE.md"
+            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -339,8 +346,8 @@ internal static class RepositoryPolicyRegressionAssertions
             """ + "\n";
         var root = TestFileMap.Canonical
             .Replace(
-                "schema_version = 3\n\n",
-                "schema_version = 3\ninclude = [\"FILEMAP.sources.toml\"]\n\n",
+                "schema_version = 5\n",
+                "schema_version = 5\ninclude = [\"FILEMAP.sources.toml\"]\n",
                 StringComparison.Ordinal)
             .Replace(registeredEntry, string.Empty, StringComparison.Ordinal);
         var baseline = Snapshot(root, registeredEntry);
@@ -369,7 +376,7 @@ internal static class RepositoryPolicyRegressionAssertions
 
         static RepositorySnapshot Snapshot(string root, string entry)
         {
-            var fragment = "schema_version = 2\n" + entry;
+            var fragment = "schema_version = 5\n" + entry;
             return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
                 RawRepositorySnapshot.Create(
                 [

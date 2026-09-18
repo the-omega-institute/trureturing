@@ -428,7 +428,7 @@ public sealed class TypeModelTests
     [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
-        const string value = RuleFixture.HarnessGatePath;
+        const string value = RuleFixture.StageScriptPath;
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));

@@ -4,46 +4,64 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-The admission judge is selected before candidate policy, assemblies, or helpers are read.
-The steady-state workflow uses the native `pull_request` event and is configured for
-read-only PR behavior. It runs the candidate workflow on GitHub's post-merge tree;
-candidate checkout credentials are not persisted. GitHub supplies `github.sha` as the
-merge commit `M`; merge conflicts suppress `pull_request` workflow runs.
-The baseline is resolved from the checked object itself, never from the event payload:
-both PR merge commits and `dev` push commits carry their protected base as the first parent,
-so the baseline is `git -C candidate rev-parse HEAD^1` and the candidate is
-`git -C candidate rev-parse HEAD`. Only `head` and `base` are admissible git references. A Lean-native predecessor job builds the candidate tree and
-emits its source-bound canonical report. It uploads the report, SHA-256 sidecar, and
-complete phase logs. The .NET admission job downloads and verifies that artifact, builds
-the candidate judge with locked dependencies, and runs its DLL from the candidate repository
-with `check --protected-base <dev-baseline-sha> --candidate-lean-report <file>`. The admission
-job installs no Lean tooling and starts no Lean process. Candidate build, tests, and
-selftest are engineering signals only and cannot issue admission.
+CI and preflight execute the candidate's programs. A PR uses the read-only
+`pull_request` entry in `ci-pr.yml`; the first checkout uses the event's immutable
+`github.sha` merge commit M. Before publishing a plan, `ci.py resolve` verifies
+that checked-out HEAD equals `GITHUB_SHA`, has two parents, and has the triggering
+PR head H as its second parent. It takes B from M's first parent. Every downstream
+job checks out that same M; a later update to `refs/pull/N/merge` cannot select a
+different candidate. Base commits supply data to the candidate judge, never code
+that is restored, compiled, or executed.
 
-## D5-T0017: one-time bootstrap
+The resolver publishes the complete plan and changed-path manifests together as
+one Actions artifact. Job outputs carry only immutable candidate/base identities
+and the artifact ID. Each consuming job downloads the files and validates their
+complete scope and declared resource selection against the fixed candidate before
+routing work. Missing, corrupt, or mismatched manifests fail even for no-resource
+changes; path lists never travel through process arguments or environment values.
 
-The first C# harness has no earlier C# judge. Native `pull_request` can run a
-candidate workflow before it exists on the default branch; that run provides no
-predecessor harness verification. Therefore the initial placement is not machine admission. It is a
-one-time, human-authorized trusted bootstrap: an admin places the harness and this
-workflow on `dev` without claiming predecessor harness verification. Any bootstrap push
-run that selects the candidate is only a post-injection observation and says so in its
-annotation and job summary.
+Push checks the final commit H. Its lightweight planner uses the push event's
+complete before-to-after path range; initial pushes cover the registered current
+tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,
+and cache layers. The semantic `current` checks have no baseline or changes input;
+only PR `delta` checks compare B to M. Local PR preflight constructs an isolated
+merge-tree candidate from a clean checkout and an explicit base SHA.
 
-`StrataLint topology` queries `origin HEAD`, reads the workflow from that exact remote
-default-branch commit, and validates the `pull_request` trigger for that branch
-plus the `baseline-admission` job. Until those are reachable on `dev`, it exits through
-the human-gate path and reports
-`BOOTSTRAP-NOT-ACTIVE:baseline gate 尚未注入 dev,当前非机器门控态,须人类可信注入(D5-T0017)`.
-Only the reachable base workflow is reported as `STEADY-STATE-ACTIVE`.
+The common build stage restores locked packages, builds the selected candidate
+projects, and seals their identity and outputs. Engineering accepts verified test
+evidence and runs required selftests and negative compilations. Current enters the
+incremental Lean/report producers when required, then checks Scribe, FILEMAP, and
+current invariants. Delta consumes this round's validated common results and test
+coverage. Reports, DLLs, TRX, and check materials are bound to the candidate and
+production round before downstream use. Cache seeds are optional inputs to those
+validators and producers; cache hits do not issue a passing verdict. PR runs do
+not publish cache snapshots.
 
-After injection, the admin must configure `required_status_checks` for the baseline
-admission job and set `enforce_admins=true`. Those hosting changes are caller-owned human
-authorization under D5-T0017, not actions repository code can perform or verify by
-itself. D5-T0017 remains open until the injection and settings are externally verified.
-Afterward, the content-addressed dev-baseline harness adjudicates every later PR. If any
-earlier dev commit contained the harness, a missing baseline harness is an infrastructure
-failure and the trusted bootstrap path cannot recur.
+Report compatibility is the explicit `report_semantic_version` in the registered
+`lean-report-inputs.json`. Native Lake facets own report reuse and always require
+the default Lean/audit targets and current inspector build. Registered configuration
+bytes, module and utility-claim inputs, captured source hashes, and complete
+publication materials determine acceptance. Reused rows retain their actual producer
+origins. Native report artifacts travel with `.lake/build` in the project snapshot;
+there is no separate report cache or preparation shortcut. Remote seed compatibility
+remains the resolved mathlib revision, with OS/architecture binary isolation.
+
+PR required checks are `push / engineering`, `push / current`, and `delta`;
+push required checks are `engineering` and `current`. The shared build job is a
+prerequisite of its selected consumers. Truth release selects the two successful
+push checks and report artifact for one explicit dev commit. Workflow version,
+permissions, artifact handoff, and actual required-check names are verified in
+integration runs under CLAUDE.md §8.12; branch protection keeps `strict=false`.
+
+## D5-T0017: deployment boundary
+
+`StrataLint topology` reads the workflow at the resolved remote default-branch
+commit and checks its declared `pull_request` trigger and `delta` job. Its
+`STEADY-STATE-ACTIVE` result describes reachable workflow topology; it does not
+prove that a run executed that version or that branch protection is configured.
+Deployment and protection state need their own observed evidence. The original
+trusted-bootstrap boundary does not authorize executing a baseline judge or
+bypassing the current integration and PR requirements.
 
 SL-022 evaluates raw changed paths before candidate-controlled inputs. Git rename and
 copy records contribute both endpoints, so removing or moving a protected old path is
@@ -62,9 +80,13 @@ selectors and coordinate scopes, including reserved formats. `Meta/domains.yaml`
 remains the strict controlled domain vocabulary. Membership is followed by canonical
 path/GID and domain validation; ambiguous or missing membership fails closed.
 
+FILEMAP also declares each path's required resources and their explicit owners,
+tools, cache layers and materials. These registrations govern planning without
+discovering dependencies from code.
+
 Engine owns the pure current-schema model, parser and canonical policy writer. CLI
 acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
-Current writes use schema 3 and a deterministic TOML encoding. Canonical snapshots use
+Current writes use schema 5 and a deterministic TOML encoding. Canonical snapshots use
 schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
 bytes and structured Evidence are checked at the write boundary; unrelated deltas do
 not replay historical byte canonicality. Narrow historical admission-plane and symlink

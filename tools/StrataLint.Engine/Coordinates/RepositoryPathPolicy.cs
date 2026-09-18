@@ -17,13 +17,16 @@ internal static partial class RepositoryPathPolicy
     internal const string SpecRootPath = "docs/develop/spec/";
     internal const string ReportsRootPath = "docs/reports/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
-    internal const string WorkflowPath = ".github/workflows/ci.yml";
+    internal const string PrWorkflowPath = ".github/workflows/ci-pr.yml";
+    internal const string PushWorkflowPath = Trureturing.Truth.TruthReleasePushRunSelector.WorkflowPath;
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
     // Persistent truth-release publisher. `.github` remains an explicit allowlist.
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
+    internal const string PublicationVerificationWorkflowPath =
+        ".github/workflows/ci-publication-verify.yml";
     internal const string AnalysisFixturesWorkflowPath =
         ".github/workflows/lean-analysis-fixtures.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
@@ -154,12 +157,14 @@ internal static partial class RepositoryPathPolicy
             or "D5/X_Frontier/HeartsAuthorizations.md"
             or "Golden/values-kernels.toml" or "Golden/gate-authority-roots.toml"
             or "Meta/Digestion/atomizers.toml"
-            or WorkflowPath
+            or PrWorkflowPath
+            or PushWorkflowPath
             or CachePublicationWorkflowPath
             or TruthReleasePublicationWorkflowPath
+            or PublicationVerificationWorkflowPath
             or AnalysisFixturesWorkflowPath
-            or ".github/CODEOWNERS"
             or HarnessGatePath
+            or ".github/CODEOWNERS"
             || value.StartsWith("tools/", StringComparison.Ordinal)
             || FileMapDocuments.IsPolicyPath(value)
             || DigestionCasStore.IsCanonicalPath(value)

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
 using Tomlyn.Model;
@@ -37,6 +38,7 @@ internal sealed record FileMapEntry
         string? mode,
         string runtimeDisposition,
         string? historyRequirement,
+        ImmutableArray<string> require,
         FileMapSymlink? symlink,
         bool digestionSource = false)
     {
@@ -52,6 +54,7 @@ internal sealed record FileMapEntry
         Mode = mode;
         RuntimeDisposition = runtimeDisposition;
         HistoryRequirement = historyRequirement;
+        Require = require;
         Symlink = symlink;
         DigestionSource = digestionSource;
     }
@@ -78,6 +81,8 @@ internal sealed record FileMapEntry
 
     internal string? HistoryRequirement { get; }
 
+    internal ImmutableArray<string> Require { get; }
+
     internal FileMapSymlink? Symlink { get; }
 
     internal bool DigestionSource { get; }
@@ -90,11 +95,13 @@ internal sealed class FileMapManifest
     internal FileMapManifest(
         FileMapResidencePolicy residencePolicy,
         ImmutableArray<FileMapEntry> entries,
-        ImmutableDictionary<ArtifactKindId, ArtifactPolicy> artifactKinds)
+        ImmutableDictionary<ArtifactKindId, ArtifactPolicy> artifactKinds,
+        ImmutableArray<FileMapResource> resources)
     {
         ResidencePolicy = residencePolicy;
         Entries = entries;
         ArtifactKinds = artifactKinds;
+        Resources = resources;
     }
 
     internal FileMapResidencePolicy ResidencePolicy { get; }
@@ -102,6 +109,8 @@ internal sealed class FileMapManifest
     internal ImmutableArray<FileMapEntry> Entries { get; }
 
     internal ImmutableDictionary<ArtifactKindId, ArtifactPolicy> ArtifactKinds { get; }
+
+    internal ImmutableArray<FileMapResource> Resources { get; }
 
     internal ImmutableArray<FileMapEntry> Match(string path) =>
         Entries.Where(entry => entry.Matches(path)).ToImmutableArray();
@@ -111,15 +120,16 @@ internal static partial class FileMapLoader
 {
     internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
 
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex NamePattern = new(
-        "^[A-Za-z][A-Za-z0-9.-]*$",
+        "\\A[A-Za-z][A-Za-z0-9.-]*\\z",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly string[] EntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
     private static readonly string[] ResidenceEntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "residence_violation", "runtime_disposition", "verified_by"];
     private static readonly string[] RunLocalEntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
     private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
@@ -135,7 +145,9 @@ internal static partial class FileMapLoader
             return File.ReadAllBytes(path);
         }
 
-        return Parse(Read(RelativePath), RelativePath, Read);
+        var manifest = Parse(Read(RelativePath), RelativePath, Read);
+        ValidateResourceFiles(manifest, repositoryRoot);
+        return manifest;
     }
 
     internal static FileMapManifest LoadSnapshot(RepositorySnapshot snapshot)
@@ -155,12 +167,14 @@ internal static partial class FileMapLoader
         FileMapDocuments.RequireCanonicalBytes(bytes, location);
         var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
         var root = documents[0].Table;
-        var keys = new List<string> { "evidence", "residence_policy", "schema_version" };
-        if (root.ContainsKey("include")) keys.Add("include");
-        if (root.ContainsKey("files") || !root.ContainsKey("include")) keys.Add("files");
-        RequireExactKeys(root, location, keys.ToArray());
-        if (root["schema_version"] is not long schemaVersion || schemaVersion != 3)
-            throw Invalid(location, "schema_version must be 3");
+        var rootKeys = new List<string> { "evidence", "resources", "residence_policy", "schema_version" };
+        if (root.ContainsKey("include")) rootKeys.Add("include");
+        if (root.ContainsKey("files")) rootKeys.Add("files");
+        if (!root.ContainsKey("files") && !root.ContainsKey("include"))
+            throw Invalid(location, "files or include must be present");
+        RequireExactKeys(root, location, rootKeys.ToArray());
+        if (root["schema_version"] is not long schemaVersion || schemaVersion != 5)
+            throw Invalid(location, "schema_version must be 5");
         if (root["residence_policy"] is not TomlTable residenceTable)
             throw Invalid(location, "residence_policy must be a table");
         var residencePolicy = ParseResidencePolicy(residenceTable, $"{location}:residence_policy");
@@ -190,9 +204,14 @@ internal static partial class FileMapLoader
             throw Invalid(location, "artifact_id values other than none must be unique");
         }
 
+        var resources = ParseResources(root, location);
+        var ids = resources.Select(static resource => resource.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var entry in entries)
+            foreach (var id in entry.Require)
+                if (!ids.Contains(id)) throw Invalid(entry.Pattern, $"unknown resource {id}");
         FileMapSymlinkPolicy.ValidateCoverage(entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>(),
             path => entries.Count(entry => entry.Matches(path)), location);
-        return new FileMapManifest(residencePolicy, entries, ParseEvidence(root, location));
+        return new FileMapManifest(residencePolicy, entries, ParseEvidence(root, location), resources);
     }
 
     private static FileMapResidencePolicy ParseResidencePolicy(
@@ -337,6 +356,7 @@ internal static partial class FileMapLoader
             mode,
             runtimeDisposition,
             historyRequirement,
+            RequiredNames(table, "require", pattern, allowEmpty: true),
             symlink,
             digestionSource);
     }
@@ -344,9 +364,10 @@ internal static partial class FileMapLoader
     private static ImmutableArray<string> RequiredNames(
         TomlTable table,
         string key,
-        string location)
+        string location,
+        bool allowEmpty = false)
     {
-        if (!table.TryGetValue(key, out var raw) || raw is not TomlArray array || array.Count == 0)
+        if (!table.TryGetValue(key, out var raw) || raw is not TomlArray array || (!allowEmpty && array.Count == 0))
         {
             throw Invalid(location, $"{key} must be a non-empty string array");
         }

@@ -304,16 +304,9 @@ public sealed partial class FileMapPolicyTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 $$"""
-                schema_version = 3
-
-                [evidence.artifact_kinds.json]
-
-                profile = "structured-json"
-
-                selectors = ["result"]
-
-                path_selectors = ["formal"]
-
+                schema_version = 5
+                resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"
@@ -330,6 +323,7 @@ public sealed partial class FileMapPolicyTests
 
     private static string DataEntryVerifiedBy(string pattern, params string[] verifiedBy) => $$"""
         [[files]]
+        require = []
         pattern = "{{pattern}}"
         kind = "data"
         admission_plane = "content"
@@ -347,6 +341,7 @@ public sealed partial class FileMapPolicyTests
         string consumedBy,
         string verifiedBy) => $$"""
         [[files]]
+        require = []
         pattern = "{{pattern}}"
         kind = "{{kind}}"
         admission_plane = "judge"
@@ -366,6 +361,7 @@ public sealed partial class FileMapPolicyTests
         string runtimeDisposition,
         string artifactId) => $$"""
         [[files]]
+        require = []
         pattern = "{{pattern}}"
         kind = "{{kind}}"
         admission_plane = "judge"

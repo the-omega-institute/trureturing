@@ -5,6 +5,97 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapSymlinkTests
 {
+    [Theory]
+    [InlineData("AGENTS.md", "CLAUDE.md", "file")]
+    [InlineData(".codex/skills", "../skills", "directory")]
+    public void InlineFilesAndTableArraysDescribeTheSameLink(string path, string target, string kind)
+    {
+        var inline = $$"""
+            schema_version = 5
+            resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
+            files = [
+              { pattern = "{{path}}", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "{{target}}", kind = "{{kind}}" } },
+            ]
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n";
+        var inlineBytes = Encoding.UTF8.GetBytes(inline);
+        var tableBytes = Encoding.UTF8.GetBytes(Manifest(path, target, kind));
+        var expected = Assert.Single(FileMapLoader.Parse(tableBytes, "table.toml").Entries).Symlink;
+
+        Assert.Equal(expected, Assert.Single(FileMapLoader.Parse(inlineBytes, "inline.toml").Entries).Symlink);
+        Assert.Equal(expected, Assert.Single(FileMapSymlinkPolicy.Parse(tableBytes, "table.toml")));
+        Assert.Equal(expected, Assert.Single(FileMapSymlinkPolicy.Parse(inlineBytes, "inline.toml")));
+    }
+
+    [Fact]
+    public void HistoricalLinkDataDoesNotRelaxTheCurrentResourceSchema()
+    {
+        var historical = Manifest("AGENTS.md", "CLAUDE.md", "file")
+            .Replace("schema_version = 5", "schema_version = 2", StringComparison.Ordinal)
+            .Replace("resources = []\n", "", StringComparison.Ordinal)
+            .Replace("require = []\n", "", StringComparison.Ordinal);
+        var bytes = Encoding.UTF8.GetBytes(historical);
+
+        Assert.Equal("CLAUDE.md", Assert.Single(FileMapSymlinkPolicy.Parse(bytes, "history.toml")).Target);
+        Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "current.toml"));
+    }
+
+    [Theory]
+    [InlineData("schema_version = 5", "schema_version = 2")]
+    [InlineData("resources = []\n", "")]
+    [InlineData("require = []\n", "")]
+    public void CurrentLoaderStillRequiresSchema5AndResourceFields(string original, string replacement)
+    {
+        var source = Manifest("AGENTS.md", "CLAUDE.md", "file")
+            .Replace(original, replacement, StringComparison.Ordinal);
+
+        Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "current.toml"));
+    }
+
+    [Theory]
+    [InlineData("1")]
+    [InlineData("6")]
+    [InlineData("\"3\"")]
+    [InlineData("3.0")]
+    public void UnsupportedLinkManifestVersionsAreRejected(string version)
+    {
+        var source = Manifest("AGENTS.md", "CLAUDE.md", "file")
+            .Replace("schema_version = 5", $"schema_version = {version}", StringComparison.Ordinal);
+
+        Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+    }
+
+    [Theory]
+    [InlineData(2, "true")]
+    [InlineData(3, "true")]
+    [InlineData(2, "[1]")]
+    [InlineData(3, "[1]")]
+    [InlineData(3, "[{ pattern = \"AGENTS.md\" }, 1]")]
+    [InlineData(2, "[{ pattern = \"AGENTS.md\" }, 1]")]
+    public void UnsupportedLinkManifestFilesAreRejected(int version, string files)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"schema_version = {version}\nfiles = {files}\n");
+
+        Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(bytes, "fixture.toml"));
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(4)]
+    public void LinkManifestFilesWithoutSymlinksAreAccepted(int version)
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            $"schema_version = {version}\nfiles = [{{ pattern = \"AGENTS.md\" }}]\n");
+
+        Assert.Empty(FileMapSymlinkPolicy.Parse(bytes, "fixture.toml"));
+    }
+
     [Fact]
     public void EquivalentTomlTablesDescribeTheSameLink()
     {
@@ -24,12 +115,10 @@ public sealed class FileMapSymlinkTests
     {
         var tableBytes = Encoding.UTF8.GetBytes(Manifest(".codex/skills", "../skills", "directory"));
         var inlineBytes = Encoding.UTF8.GetBytes("""
-            schema_version = 3
-            files = [{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
-            [evidence.artifact_kinds.json]
-            profile = "structured-json"
-            selectors = ["result"]
-            path_selectors = ["formal"]
+            schema_version = 5
+            resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
+            files = [{ pattern = ".codex/skills", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"
@@ -103,12 +192,9 @@ public sealed class FileMapSymlinkTests
     }
 
     private static string Manifest(string path, string target, string kind) => $$"""
-        schema_version = 3
-        [evidence.artifact_kinds.json]
-        profile = "structured-json"
-        selectors = ["result"]
-        path_selectors = ["formal"]
-
+        schema_version = 5
+        resources = []
+        evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
         desired = "data-must-live-outside-tools"
@@ -116,6 +202,7 @@ public sealed class FileMapSymlinkTests
         status = "closed"
         [[files]]
         pattern = "{{path}}"
+        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"

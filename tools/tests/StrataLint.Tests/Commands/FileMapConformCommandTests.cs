@@ -119,16 +119,9 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(
             Path.Combine(meta, "FILEMAP.toml"),
             """
-            schema_version = 3
-
-            [evidence.artifact_kinds.json]
-
-            profile = "structured-json"
-
-            selectors = ["result"]
-
-            path_selectors = ["formal"]
-
+            schema_version = 5
+            resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "DATA-RESIDENCE-001"
@@ -137,6 +130,8 @@ public sealed class FileMapConformCommandTests
             status = "closed"
 
             [[files]]
+
+            require = []
             pattern = "Committed/ledger/**"
             kind = "ledger"
             admission_plane = "content"
@@ -147,6 +142,8 @@ public sealed class FileMapConformCommandTests
             runtime_disposition = "committed-ledger"
 
             [[files]]
+
+            require = []
             pattern = "Committed/source/**"
             kind = "data"
             admission_plane = "content"
@@ -157,6 +154,8 @@ public sealed class FileMapConformCommandTests
             runtime_disposition = "committed-source"
 
             [[files]]
+
+            require = []
             pattern = "Local/**"
             kind = "generated"
             admission_plane = "content"
@@ -167,6 +166,8 @@ public sealed class FileMapConformCommandTests
             runtime_disposition = "run-local"
 
             [[files]]
+
+            require = []
             pattern = "Other/source.txt"
             kind = "data"
             admission_plane = "content"
@@ -221,16 +222,9 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(
             Path.Combine(meta, "FILEMAP.toml"),
             $$"""
-            schema_version = 3
-
-            [evidence.artifact_kinds.json]
-
-            profile = "structured-json"
-
-            selectors = ["result"]
-
-            path_selectors = ["formal"]
-
+            schema_version = 5
+            resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -239,6 +233,8 @@ public sealed class FileMapConformCommandTests
             status = "closed"
 
             [[files]]
+
+            require = []
             pattern = "{{pattern}}"
             kind = "data"
             {{admissionPlaneLine}}produced_by = "none"

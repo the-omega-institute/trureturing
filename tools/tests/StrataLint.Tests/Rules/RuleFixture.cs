@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.TestSupport;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -76,8 +77,8 @@ internal sealed partial class RuleFixture
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
-    internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
-    internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
+    internal const string WorkflowPath = RepositoryPathPolicy.PrWorkflowPath;
+    internal const string StageScriptPath = "tools/scripts/ci-stage.sh";
     internal const string SyntheticProtectedPath =
         "tools/StrataLint.Engine/SyntheticProtected.cs";
     internal const string BannedApiCompileFailProofProjectPath =
@@ -124,8 +125,19 @@ internal sealed partial class RuleFixture
                 """ + "\n",
             [BannedApiCompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
             [CompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(
+                new EngineeringProjectFixture(ScribeProjectPath, "StrataLint.Scribe", "production", false,
+                    ["Blueprint/**/*.scribe.cs", "tools/StrataLint.Scribe/**/*.cs", "tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs"],
+                    OwnedTestAssembly: "StrataLint.Scribe.Tests"),
+                new EngineeringProjectFixture(BannedApiCompileFailProofProjectPath, "BannedApiCompileFailProof", "compile-fail-proof", false, ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
+                new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", false, ["tools/tests/CompileFailProof/**/*.cs"])),
         };
         foreach (var (path, text) in DeclaredTemplateReviewTests.PolicyFiles()) Files[path] = text;
+        var registration = System.Text.Json.Nodes.JsonNode.Parse(Files[EngineeringRegistrationFixture.Path])!;
+        registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(
+            RegisteredBuildInputs.Select(path => System.Text.Json.Nodes.JsonValue.Create(path)).ToArray());
+        Files[EngineeringRegistrationFixture.Path] = registration.ToJsonString();
+        foreach (var path in RegisteredBuildInputs) Files.TryAdd(path, path == "global.json" ? "{}" : "<Project />");
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -157,6 +169,11 @@ internal sealed partial class RuleFixture
         Baseline[ValuesKernelBindingValidator.RelativePath] = Files[ValuesKernelBindingValidator.RelativePath];
         Changes = new List<string> { BlueprintPath };
     }
+
+    internal static IReadOnlySet<string> RegisteredBuildInputs { get; } = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "global.json", "Directory.Build.props", "Directory.Packages.props",
+    };
 
     internal Dictionary<string, string> Files { get; }
 
@@ -265,10 +282,10 @@ internal sealed partial class RuleFixture
                 Changes.Add(BlueprintSourcePath);
                 break;
             case "base-judge":
-                Files[HarnessGatePath] =
+                Files[StageScriptPath] =
                     "git -C candidate worktree add --detach \"$RUNNER_TEMP/base\" \"$ENGINEERING_BASE\"\n";
                 Changes.Clear();
-                Changes.Add(HarnessGatePath);
+                Changes.Add(StageScriptPath);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
@@ -287,11 +304,11 @@ internal sealed partial class RuleFixture
         "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
         "future" => "D8/S0/Carrier/Ring.lean",
         "blueprint-skeleton" or "legacy-scribe" => BlueprintSourcePath,
-        "base-judge" => HarnessGatePath,
+        "base-judge" => StageScriptPath,
         _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
     };
 
-    internal RuleEvaluationContext Build(
+    internal DeltaRuleContext Build(
         ValidatedPolicy? suppliedPolicy = null,
         VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
         Build(
@@ -299,26 +316,19 @@ internal sealed partial class RuleFixture
             suppliedPolicy,
             verifiedScribeEmissions);
 
-    internal RuleEvaluationContext Build(
+    internal DeltaRuleContext BuildScopeProbe(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
         VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: true);
+        Build(changes, suppliedPolicy, verifiedScribeEmissions);
 
-    internal RuleEvaluationContext BuildScopeProbe(
+    internal DeltaRuleContext Build(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: false);
-
-    private RuleEvaluationContext Build(
-        RawChangeSet changes,
-        ValidatedPolicy? suppliedPolicy,
-        VerifiedScribeEmissions? verifiedScribeEmissions,
-        bool includeProjectFiles)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null)
     {
-        var current = Decode(Files, includeProjectFiles);
-        var baseline = Decode(Baseline, includeProjectFiles);
+        var current = Decode(Files);
+        var baseline = Decode(Baseline);
         var policy = suppliedPolicy;
         if (policy is null)
         {
@@ -338,7 +348,7 @@ internal sealed partial class RuleFixture
                 throw new InvalidOperationException(failure.Message),
             _ => throw new InvalidOperationException("unknown bootstrap outcome"),
         };
-        return RuleEvaluationContext.Create(
+        return DeltaRuleContext.Create(
             current,
             baseline,
             policy,
@@ -348,7 +358,7 @@ internal sealed partial class RuleFixture
             verifiedScribeEmissions);
     }
 
-    internal RuleEvaluationContext BuildForRuleCompatibility()
+    internal DeltaRuleContext BuildForRuleCompatibility()
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -358,7 +368,7 @@ internal sealed partial class RuleFixture
         var policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.Clear>(bootstrap).Capability;
-        return RuleEvaluationContext.Create(
+        return DeltaRuleContext.Create(
             current,
             baseline,
             policy,
@@ -368,7 +378,7 @@ internal sealed partial class RuleFixture
             null);
     }
 
-    internal RuleEvaluationContext BuildForRuleCompatibility(RawChangeSet changes)
+    internal DeltaRuleContext BuildForRuleCompatibility(RawChangeSet changes)
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -384,7 +394,7 @@ internal sealed partial class RuleFixture
                 MetaEvaluationProfile.ForProtectedSurface(protectedSurface.ChangeSet),
             _ => throw new InvalidOperationException("unexpected bootstrap outcome"),
         };
-        return RuleEvaluationContext.Create(
+        return DeltaRuleContext.Create(
             current,
             baseline,
             policy,
@@ -394,7 +404,7 @@ internal sealed partial class RuleFixture
             null);
     }
 
-    internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
+    internal DeltaRuleContext BuildForProtectedRuleCompatibility()
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -404,7 +414,7 @@ internal sealed partial class RuleFixture
         var policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(bootstrap).ChangeSet;
-        return RuleEvaluationContext.Create(
+        return DeltaRuleContext.Create(
             current,
             baseline,
             policy,
@@ -610,12 +620,9 @@ internal sealed partial class RuleFixture
     }
 
     private static RepositorySnapshot Decode(
-        IReadOnlyDictionary<string, string> files,
-        bool includeProjectFiles = true)
+        IReadOnlyDictionary<string, string> files)
     {
         var raw = RawRepositorySnapshot.Create(files
-            .Where(pair => includeProjectFiles
-                || !pair.Key.EndsWith(".csproj", StringComparison.Ordinal))
             .Select(pair =>
         {
             var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value));

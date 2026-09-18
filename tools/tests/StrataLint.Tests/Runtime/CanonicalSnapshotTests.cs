@@ -53,7 +53,7 @@ public sealed class CanonicalSnapshotTests
     {
         var fixture = new RuleFixture();
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
-            "schema_version = 3", "schema_version=3", StringComparison.Ordinal);
+            "schema_version = 5", "schema_version=5", StringComparison.Ordinal);
         var context = fixture.Build();
         var policy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
@@ -119,8 +119,8 @@ public sealed class CanonicalSnapshotTests
         if (mutateFileMap)
         {
             fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
-                "schema_version = 3",
-                "schema_version=3",
+                "schema_version = 5",
+                "schema_version=5",
                 StringComparison.Ordinal);
         }
         else

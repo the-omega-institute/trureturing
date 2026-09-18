@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
@@ -451,7 +452,7 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2 or 3", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
         }
     }
 
@@ -468,11 +469,13 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2 or 3", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
         }
 
         Assert.Null(EvaluateAdmissionPlane("schema_version = 2\n" + files, "docs/change.md"));
         Assert.Null(EvaluateAdmissionPlane("schema_version = 3\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 4\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 5\n" + files, "docs/change.md"));
     }
 
 
@@ -505,6 +508,14 @@ public sealed partial class ProductionEnvironmentTests
         bool includeNewPath,
         bool includeBaselineFileMap = true)
     {
+        const string project = "tools/new-lib/Fixture.csproj";
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            files[project] = "<Project />";
+            files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
+                files[EngineeringRegistrationFixture.Path],
+                new EngineeringProjectFixture(project, "Fixture", "test-support", false, ["tools/new-lib/**/*.cs"]));
+        }
         var baselinePaths = fixture.Baseline.Keys
             .Append(FileMapPath)
             .Distinct(StringComparer.Ordinal)
@@ -541,8 +552,10 @@ public sealed partial class ProductionEnvironmentTests
             entries.OrderBy(item => item.Pattern, StringComparer.Ordinal).Select(item => new FileMapEntry(
                 item.Pattern, FileMapKind.Program,
                 item.Plane == "judge" ? FileMapAdmissionPlane.Judge : FileMapAdmissionPlane.Content,
-                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, null,
-                policy.IsDigestionSource(RepoPath.CreateKnown(item.Pattern)))).ToImmutableArray(), policy.ArtifactKinds);
+                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, [], null,
+                policy.IsDigestionSource(RepoPath.CreateKnown(item.Pattern)))).ToImmutableArray(),
+            policy.ArtifactKinds,
+            policy.Manifest.Resources);
         return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(manifest).AsSpan());
     }
 

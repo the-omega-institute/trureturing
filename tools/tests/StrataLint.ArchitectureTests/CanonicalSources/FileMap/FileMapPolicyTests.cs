@@ -8,37 +8,109 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
+    public void LeanReportConfigurationIsAdmittedWithItsRuntimeVerifier()
+    {
+        const string path = "lean-report-inputs.json";
+        var root = RepositoryLayout.FindRoot();
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy));
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("LeanReportSelection", Assert.Single(entry.VerifiedBy));
+        Assert.Contains("lean-report", entry.Require);
+        Assert.DoesNotContain(FileMapPolicy.InspectRepository(root), finding =>
+            finding.Path == path && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Fact]
+    public void CanonicalFileMapPolicyReloadsWithArtifactKindsAndExactRootCoverage()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
+        var reloaded = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            policy.CanonicalFileMapBytes.AsSpan(),
+            policy.CanonicalDomainsBytes.AsSpan())).Policy;
+
+        Assert.Equal(policy.FileMapSha256, reloaded.FileMapSha256);
+        Assert.Equal(policy.CanonicalFileMapBytes.ToArray(), reloaded.CanonicalFileMapBytes.ToArray());
+        Assert.Equal(
+            ["csv", "json", "md", "py", "txt", "yaml", "yml"],
+            policy.ArtifactKinds.Keys.Select(static key => key.Value).Order(StringComparer.Ordinal).ToArray());
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("LICENSE"), policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("unregistered.json"), policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("agents/unregistered.md"), policy));
+    }
+
+    [Fact]
+    public void CommonExecutionManifestsHaveRegisteredDataVerifiers()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        string[] paths = ["Meta/ci-checks.json", "Meta/engineering-projects.json"];
+        Assert.All(paths, path =>
+        {
+            var entry = Assert.Single(manifest.Match(path));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Contains("CommonExecutionEvidence", entry.VerifiedBy);
+        });
+
+        var findings = FileMapPolicy.InspectRepository(root);
+
+        Assert.DoesNotContain(findings, finding =>
+            paths.Contains(finding.Path, StringComparer.Ordinal)
+            && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
+
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("CommonExecutionEvidence", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportConsumerScopesAreAdmittedByRegisteredRepositoryPolicy(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
+        var path = $"Meta/ReportConsumers/{scope}.json";
+
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy));
+        var entry = Assert.Single(FileMapLoader.LoadRepository(root).Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("CommonExecutionEvidence", Assert.Single(entry.VerifiedBy));
+    }
+
+    [Theory]
+    [InlineData("Meta/ReportConsumers/unregistered.json")]
+    [InlineData("Meta/ReportConsumers/nested/lean-report.json")]
+    [InlineData("Meta/unregistered.json")]
+    public void UnregisteredMetaArtifactsRemainRejected(string path)
     {
         var root = RepositoryLayout.FindRoot();
         var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
             RepositoryPolicyLoader.LoadRepository(root));
 
-        Assert.Null(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("lean-report-inputs.json"), policy.Policy));
-        var manifest = FileMapLoader.LoadRepository(root);
-        var entry = Assert.Single(manifest.Match("lean-report-inputs.json"));
-        Assert.Equal(FileMapKind.Data, entry.Kind);
-        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        var issue = RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy);
 
-        var reloaded = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
-            policy.Policy.CanonicalFileMapBytes.AsSpan(),
-            policy.Policy.CanonicalDomainsBytes.AsSpan())).Policy;
-        Assert.Equal(policy.Policy.FileMapSha256, reloaded.FileMapSha256);
-        Assert.Equal(
-            policy.Policy.CanonicalFileMapBytes.ToArray(),
-            reloaded.CanonicalFileMapBytes.ToArray());
-        Assert.Equal(
-            ["csv", "json", "md", "py", "txt", "yaml", "yml"],
-            policy.Policy.ArtifactKinds.Keys
-                .Select(static key => key.Value)
-                .Order(StringComparer.Ordinal)
-                .ToArray());
-        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("LICENSE"), policy.Policy));
-        Assert.NotNull(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("unregistered.json"), policy.Policy));
-        Assert.NotNull(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("agents/unregistered.md"), policy.Policy));
+        Assert.NotNull(issue);
+        Assert.Equal("SL-000", issue!.RuleId.Value);
+        Assert.Contains("matches=0", issue.Message, StringComparison.Ordinal);
     }
 
     [Fact]

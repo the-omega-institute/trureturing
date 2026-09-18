@@ -226,6 +226,7 @@ public sealed class AnchorReferenceRuleTests
             [helper] = "-- helper\n",
             [unrelated] = "-- unrelated\n",
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(),
             [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
             [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
             ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
@@ -253,7 +254,7 @@ public sealed class AnchorReferenceRuleTests
             Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var changes = RawChangeSet.CreateWithKinds(
             [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
-        var context = RuleEvaluationContext.Create(
+        var context = DeltaRuleContext.Create(
             SyntheticSnapshot(current),
             SyntheticSnapshot(baseline),
             policy,

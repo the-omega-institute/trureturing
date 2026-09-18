@@ -1,0 +1,33 @@
+**定理 70.4（条件平均混合式及其尾界）。** 对每个 $t>0$，有算子范数收敛的表示
+$$
+T_t=\sum_{L\ge0}w_L(t)\Pi_L,
+\qquad
+w_L(t)=e^{-ta_L}-e^{-ta_{L+1}}>0,
+\qquad
+\sum_{L\ge0}w_L(t)=1.
+$$
+若 $B_{t,n}=\sum_{L=0}^n w_L(t)\Pi_L$，则
+$$
+\|T_t-B_{t,n}\|_{H_{\mathrm{obs}}\to H_{\mathrm{obs}}}
+=e^{-ta_{n+1}}.
+$$
+每个 $T_t$ 保持常数与非负实函数，保持 $\mu$ 积分，并将 $0\le f\le1$ 的可见函数仍映入同一区间。因此它是关于 $\mu$ 对称且保守的 Markov 半群。
+
+证明。各权重为正且望远镜求和为一；$\|\Pi_L\|=1$，故混合级数在算子范数中绝对收敛。有限次换序给出
+$$
+B_{t,n}=\sum_{k=0}^n
+\bigl(e^{-ta_k}-e^{-ta_{n+1}}\bigr)\Delta_k,
+$$
+从而
+$$
+T_t-B_{t,n}
+=e^{-ta_{n+1}}\Pi_n+\sum_{k>n}e^{-ta_k}\Delta_k.
+$$
+正交展开给出范数至多为 $e^{-ta_{n+1}}$；将此差算子作用于范数为一的常数函数 $1$，达到同一下界。令 $n\to\infty$ 即得到表示与尾界。
+
+条件平均的胞腔公式保证 $\Pi_Lf\ge0$ 对非负实函数成立，且 $\Pi_L1=1$。混合的有限部分保持非负性，$L^2$ 中非负实函数锥闭，故极限亦保持非负性；权重总和为一使 $T_t1=1$。对 $0\le f\le1$ 同时作用于 $f$ 和 $1-f$ 即得 Markov 区间性质。最后，自伴性与 $T_t1=1$ 给出
+$\int_XT_tf\,d\mu=\langle1,T_tf\rangle=\langle1,f\rangle$。
+这里函数的保正性来自条件平均公式；一般正交投影的算子非负性不能替代此条件。在 $t=0$ 时所有差权重均为零，故混合公式限于 $t>0$，而 $T_0$ 按定理 70.3 另行定义。证毕。
+
+附引：Alexander Bendikov、Alexander Grigor’yan、Christophe Pittet、Wolfgang Woess，[*Isotropic Markov semigroups on ultra-metric spaces*](https://arxiv.org/abs/1304.6271)，[第 2.1、2.2 节](https://arxiv.org/html/1304.6271v3#S2)。该文用嵌套的球平均正交投影建立谱分解与对称 Markov 半群。上述条件平均构造采用这一已有机制的可数有限分区形式；本节的层索引、速率与累计秩估计由所列假设及证明确定，不以此引文作穷尽的文献断言。
+

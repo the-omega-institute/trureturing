@@ -10,7 +10,24 @@ internal static class FileMapCanonicalWriter
 {
     internal static ImmutableArray<byte> Write(FileMapManifest manifest)
     {
-        var text = new StringBuilder("schema_version = 3\n\n[residence_policy]\n");
+        var text = new StringBuilder("schema_version = 5\nresources = [\n");
+        foreach (var resource in manifest.Resources.OrderBy(static item => item.Id, StringComparer.Ordinal))
+        {
+            text.Append("  { id = ").Append(Quote(resource.Id))
+                .Append(", stage = ").Append(Quote(resource.Stage))
+                .Append(", owner = ").Append(Quote(resource.Owner))
+                .Append(", prerequisites = ").Append(InlineList(resource.Prerequisites))
+                .Append(", tools = ").Append(InlineList(resource.Tools))
+                .Append(", cache_layers = ").Append(InlineList(resource.CacheLayers))
+                .Append(", cache_activation = {");
+            if (resource.CacheActivation.Count != 0)
+            {
+                text.AppendJoin(", ", resource.CacheActivation.OrderBy(static pair => pair.Key, StringComparer.Ordinal)
+                    .Select(static pair => pair.Key + " = " + Quote(pair.Value)));
+            }
+            text.Append("}, materials = ").Append(InlineList(resource.Materials)).Append(" },\n");
+        }
+        text.Append("]\n\n[residence_policy]\n");
         Field("case_id", manifest.ResidencePolicy.CaseId);
         Field("desired", manifest.ResidencePolicy.Desired);
         text.Append("known_violation_count = ").Append(manifest.ResidencePolicy.KnownViolationCount).Append('\n');
@@ -32,6 +49,7 @@ internal static class FileMapCanonicalWriter
         {
             text.Append("[[files]]\n");
             Field("pattern", entry.Pattern);
+            List("require", entry.Require);
             Field("kind", entry.Kind.ToString().ToLowerInvariant());
             Field("admission_plane", entry.AdmissionPlane.ToString().ToLowerInvariant());
             Field("produced_by", entry.ProducedBy);
@@ -52,6 +70,8 @@ internal static class FileMapCanonicalWriter
         void Field(string key, string value) => text.Append(key).Append(" = ").Append(Quote(value)).Append('\n');
         void List(string key, IEnumerable<string> values) => text.Append(key).Append(" = [")
             .AppendJoin(", ", values.Order(StringComparer.Ordinal).Select(Quote)).Append("]\n");
+        static string InlineList(IEnumerable<string> values) => "["
+            + string.Join(", ", values.Order(StringComparer.Ordinal).Select(Quote)) + "]";
     }
 
     private static string Quote(string value) => new StringValueSyntax(value).ToString();
