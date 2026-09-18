@@ -78,8 +78,10 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
           right_inv := fun _ => rfl }
       have htop :
           (((P * Q).submatrix
-            (Subtype.val : {z // z ∈ (Finset.univ : Finset (Fin d ⊕ Unit))} → (Fin d ⊕ Unit))
-            (Subtype.val : {z // z ∈ (Finset.univ : Finset (Fin d ⊕ Unit))} → (Fin d ⊕ Unit))).det) =
+            (Subtype.val :
+              {z // z ∈ (Finset.univ : Finset (Fin d ⊕ Unit))} → (Fin d ⊕ Unit))
+            (Subtype.val :
+              {z // z ∈ (Finset.univ : Finset (Fin d ⊕ Unit))} → (Fin d ⊕ Unit))).det) =
             (P * Q).det := by
         simpa [e] using Matrix.det_submatrix_equiv_self e (P * Q)
       rw [htop] at hcoeff
@@ -91,7 +93,8 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
         Matrix.det ((((Matrix.diagonal w) * P.transpose) * P).submatrix
           (Subtype.val : s → (Fin d → Bool)) (Subtype.val : s → (Fin d → Bool))) =
           (∏ i : s, w i) *
-            (((P.submatrix id (Subtype.val : s → (Fin d → Bool))).submatrix e.symm id).det) ^ 2 := by
+            (((P.submatrix id (Subtype.val : s → (Fin d → Bool))).submatrix
+              e.symm id).det) ^ 2 := by
       let N : Matrix s s ℝ :=
         (P.submatrix id (Subtype.val : s → (Fin d → Bool))).submatrix e.symm id
       have hleft : Matrix.diagonal w * P.transpose =
@@ -159,9 +162,7 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
           simpa using (RingHom.map_det (Int.castRingHom ℝ) Z).symm
         rw [hdet]
         change (Z.det : ℝ) ^ 2 = (Int.natAbs Z.det : ℝ) ^ 2
-        have hz := congrArg (fun q : ℤ => (q : ℝ)) (Int.natAbs_sq Z.det).symm
-        simpa using hz
-
+        norm_num [← Int.cast_pow, Int.natAbs_sq]
   let A : Matrix (Fin d ⊕ Unit) (Fin d → Bool) ℝ
     | Sum.inl i, v => (v i).toNat
     | Sum.inr _, _ => 1
@@ -185,7 +186,8 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
             (Int.natAbs
               (((augmentedCube d).submatrix id
                 (Subtype.val : S.1 → (Fin d → Bool))).submatrix
-                  (Fintype.equivOfCardEq (by simpa using S.property.symm)).symm id).det : ℝ) ^ 2 := by
+                  (Fintype.equivOfCardEq (by simpa using S.property.symm)).symm
+                    id).det : ℝ) ^ 2 := by
     rw [show M = (A * Matrix.diagonal x) * A.transpose by rfl, Matrix.mul_assoc, hAmap]
     exact hExpansion
   have hWle : hypercubeWeight d x ≤ M.det := by
@@ -234,20 +236,26 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
     apply Matrix.ext_iff_blocks.mpr
     refine ⟨?_, ?_, ?_, ?_⟩
     · ext i j
-      simp [M, hAD, hAT, A, Q]
+      simp only [Matrix.toBlocks_fromBlocks₁₁]
+      dsimp [M, Q]
+      rw [hAD, hAT]
       apply Finset.sum_congr rfl
       intro v _
-      cases hvi : v i <;> cases hvj : v j <;> simp [hvi, hvj]
+      cases hvi : v i <;> cases hvj : v j <;> simp [A, hvi, hvj]
     · ext i j
-      simp [M, hAD, hAT, A, b, a]
+      simp only [Matrix.toBlocks_fromBlocks₁₂]
+      dsimp [M, b, a]
+      rw [hAD, hAT]
       apply Finset.sum_congr rfl
       intro v _
-      cases hvi : v i <;> simp [hvi]
+      cases hvi : v i <;> simp [A, hvi]
     · ext i j
-      simp [M, hAD, hAT, A, c, a]
+      simp only [Matrix.toBlocks_fromBlocks₂₁]
+      dsimp [M, c, a]
+      rw [hAD, hAT]
       apply Finset.sum_congr rfl
       intro v _
-      cases hvj : v j <;> simp [hvj]
+      cases hvj : v j <;> simp [A, hvj]
     · ext i j
       change M (Sum.inr i) (Sum.inr j) = D i j
       dsimp [M, D]
@@ -268,7 +276,7 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
     cases j
     simp_rw [Matrix.mul_apply]
     simp [E, D, hs]
-  letI : Invertible D := invertibleOfLeftInverse D E hED
+  let : Invertible D := invertibleOfLeftInverse D E hED
   have hDinv : ⅟D = E := invOf_eq_left_inv hED
   have hcb : c = bᴴ := by
     ext i j
@@ -291,10 +299,10 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
   have hDinvring : D⁻¹ = E := by
     rw [← Matrix.invOf_eq_nonsing_inv, hDinv]
   have hQdiag (i : Fin d) : Q i i = a i := by
-    simp [Q, a]
+    dsimp [Q, a]
     apply Finset.sum_congr rfl
     intro v _
-    cases hvi : v i <;> simp [hvi]
+    cases v i <;> simp
   have hCdiag (i : Fin d) : C i i = a i * (s - a i) := by
     rw [show C i i = s * (Q i i - (b * D⁻¹ * bᴴ) i i) by rfl]
     rw [hQdiag, hDinvring]
@@ -309,7 +317,7 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
     obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hCpsd.nonneg
     rw [hB]
     let basis := EuclideanSpace.basisFun (Fin d) ℝ
-    letI : Fact (Module.finrank ℝ (EuclideanSpace ℝ (Fin d)) = d) := ⟨by simp⟩
+    let : Fact (Module.finrank ℝ (EuclideanSpace ℝ (Fin d)) = d) := ⟨by simp⟩
     let orientation := basis.toBasis.orientation
     let vectors : Fin d → EuclideanSpace ℝ (Fin d) :=
       fun j => WithLp.toLp 2 (B.col j)
@@ -336,22 +344,23 @@ theorem result (d : ℕ) (hd : 1 ≤ d) (x : (Fin d → Bool) → ℝ)
   have hdetM : M.det = s * (Q - b * D⁻¹ * bᴴ).det := by
     rw [hblock, hcb, Matrix.det_fromBlocks₂₂, Matrix.invOf_eq_nonsing_inv, hDdet]
   have hdetC : C.det = s ^ d * (Q - b * D⁻¹ * bᴴ).det := by
-    simpa [C] using Matrix.det_smul (Q - b * D⁻¹ * bᴴ) s
+    simp [C]
   have hpowered : s ^ (d - 1) * M.det = C.det := by
     rw [hdetM, hdetC]
     rw [← mul_assoc, pow_sub_one_mul (Nat.ne_of_gt hd)]
   let f0 : Fin d → ℝ := fun i => ∑ v, if v i = false then x v else 0
   let f1 : Fin d → ℝ := fun i => ∑ v, if v i = true then x v else 0
   have ha1 (i : Fin d) : a i = f1 i := by
-    simp [a, f1]
+    dsimp [a, f1]
     apply Finset.sum_congr rfl
     intro v _
-    cases hvi : v i <;> simp [hvi]
+    cases v i <;> simp
   have hsplit (i : Fin d) : s = f0 i + f1 i := by
-    simp [s, f0, f1, ← Finset.sum_add_distrib]
+    dsimp [s, f0, f1]
+    rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro v _
-    cases hvi : v i <;> simp [hvi]
+    cases v i <;> simp
   have hCfacet (i : Fin d) : C i i = f0 i * f1 i := by
     rw [hCdiag, ha1, hsplit]
     ring
