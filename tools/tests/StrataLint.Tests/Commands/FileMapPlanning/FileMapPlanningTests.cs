@@ -28,13 +28,10 @@ public sealed class FileMapPlanningTests
     }
 
     [Fact]
-    public void ReferenceOnlyParentlessCurrentReturnsHonestNoWorkWithoutToolsOrBase()
+    public void CompleteReferenceOnlyPrReturnsHonestNoWorkWithoutTools()
     {
         using var fixture = new FileMapPlanningFixture();
-        var changes = fixture.Changes();
-        changes["change_count"] = 1;
-        changes["changes"]!.AsArray().Add(new JsonObject { ["status"] = "A", ["old"] = null,
-            ["new"] = fixture.Endpoint("README.md") });
+        var changes = fixture.Changes("README.md");
         fixture.Supply(changes);
         var planned = fixture.MakePlan();
         Assert.True(planned.ExitCode == 0, FileMapPlanningFixture.Text(planned));
@@ -171,7 +168,8 @@ public sealed class FileMapPlanningTests
         Assert.Equal("not-required", FileMapPlanningFixture.Read(fixture.Result)["status"]!.GetValue<string>());
         Assert.Equal(0, fixture.Cli("validate-no-work", "--commit", fixture.Commit, "--changes", fixture.Manifest,
             "--plan", fixture.Plan, "--result", fixture.Result, "--stage", "engineering").ExitCode);
-        Assert.Equal(2, fixture.NoWork("delta").ExitCode);
+        Assert.Equal(0, fixture.NoWork("delta").ExitCode);
+        Assert.Equal(2, fixture.NoWork("current").ExitCode);
         Assert.Equal(2, fixture.NoWork("build").ExitCode);
         fixture.AssertNoTools();
     }
@@ -232,7 +230,7 @@ public sealed class FileMapPlanningTests
             case "tree": changes["candidate"]!["tree"] = new string('a', 40); break;
             case "mode": record["new"]!["mode"] = "120000"; break;
             case "path": record["new"]!["path"] = "docs/../README.md"; break;
-            case "status": record["status"] = "M"; break;
+            case "status": record["status"] = "A"; break;
             case "duplicate-path": changes["changes"]!.AsArray().Add(record.DeepClone()); changes["change_count"] = 2; break;
             default: changes["extra"] = true; break;
         }

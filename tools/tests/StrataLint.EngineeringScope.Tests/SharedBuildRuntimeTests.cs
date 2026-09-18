@@ -366,12 +366,11 @@ public sealed class SharedBuildRuntimeTests
         void NarrowPlan()
         {
             var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
-            var entry = SharedBuildContractTests.Git(root, "ls-tree", "HEAD", "--", "global.json").Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
-            Write("build/narrow-changes.json", JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
-                candidate = new { commit, tree = SharedBuildContractTests.Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
-                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null, @new = new { path = "global.json", mode = entry[0], oid = entry[2] } } } }));
-            Run("python3", "-B", "tools/scripts/workflow/ci.py", "plan", "--repository", physicalRoot,
-                "--commit", commit, "--changes", "build/narrow-changes.json", "--output", "build/narrow-plan.json");
+            // Scope includes every local input; the registered build resource
+            // selects only the CLI project as an execution root.
+            Run("python3", "-B", "tools/scripts/workflow/ci.py", "push-plan", "--repository", physicalRoot, "--commit", commit);
+            File.Copy(Path.Combine(root, "build/ci/changes.json"), Path.Combine(root, "build/narrow-changes.json"), true);
+            File.Copy(Path.Combine(root, "build/ci/plan.json"), Path.Combine(root, "build/narrow-plan.json"), true);
             environment["CI_PLAN_PATH"] = "build/narrow-plan.json";
             environment["CI_CHANGES_PATH"] = "build/narrow-changes.json";
         }

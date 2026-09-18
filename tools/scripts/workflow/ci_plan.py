@@ -606,8 +606,10 @@ def make_plan(root, commit, changes_file):
     push = isinstance(data, dict) and data.get("mode") == "push"
     exact(data, {"schema_version", "mode", "candidate", "base", "head", "complete", "change_count", "changes"}
           | ({"origin"} if push else set()), "changed scope")
-    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"current", "push", "pr"}:
+    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"push", "pr"}:
         raise ValueError("invalid changed scope version/mode")
+    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" and data["mode"] != "pr":
+        raise ValueError("pull request requires its complete PR scope")
     exact(data["candidate"], {"commit", "tree"}, "candidate")
     paths = change_paths(data)
     actual = None
@@ -627,16 +629,15 @@ def make_plan(root, commit, changes_file):
             actual = push_paths(root, checked_head(root, commit), origin.get("before"), origin.get("after"))
     if data["candidate"] != (actual["candidate"] if push else candidate(root, commit)):
         raise ValueError("changed scope candidate identity mismatch")
-    if data["mode"] != "pr":
+    if push:
         if data["base"] is not None or data["head"] is not None:
-            raise ValueError("current scope must not contain base/head")
-    if push or data["mode"] == "pr":
-        actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
-        if push and not same_record(data["origin"], actual["origin"]):
-            raise ValueError("push origin does not match candidate's actual immutable event endpoints")
-        key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
-        if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
-            raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
+            raise ValueError("push scope must not contain base/head")
+    actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
+    if push and not same_record(data["origin"], actual["origin"]):
+        raise ValueError("push origin does not match candidate's actual immutable event endpoints")
+    key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
+    if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
+        raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
     local = push and actual["origin"].get("kind") in {"local-current-input", "local-range"}
     tree = tree_entries(root, candidate(root, commit)["tree"])
     if local:
