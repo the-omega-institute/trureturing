@@ -169,7 +169,8 @@ internal static partial class CommonExecutionEvidence
     internal static string Hash(string path)
     {
         Hashing.Value?.Invoke(Path.GetFullPath(path));
-        return Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+        using var input = File.OpenRead(path);
+        return Convert.ToHexStringLower(SHA256.HashData(input));
     }
 
     internal static void Write<T>(string root, string path, T value)

@@ -5,6 +5,33 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed class CommonStageContractTests
 {
+    [Fact]
+    public void EvidenceHashIncludesBytesBeyondTheArrayLengthLimit()
+    {
+        var directory = TemporaryFileSystem.Directory.CreateTempSubdirectory("large-evidence-");
+        try
+        {
+            var path = Path.Combine(directory.FullName, "provenance.json");
+            const long length = (long)int.MaxValue + 2;
+            using (var output = File.Open(path, FileMode.CreateNew, FileAccess.Write))
+                output.SetLength(length);
+            using var expected = System.Security.Cryptography.IncrementalHash.CreateHash(
+                System.Security.Cryptography.HashAlgorithmName.SHA256);
+            var zeros = new byte[1024 * 1024];
+            for (long remaining = length; remaining > 0; remaining -= Math.Min(remaining, zeros.Length))
+                expected.AppendData(zeros, 0, (int)Math.Min(remaining, zeros.Length));
+            var original = CommonExecutionEvidence.Hash(path);
+            Assert.Equal(Convert.ToHexStringLower(expected.GetHashAndReset()), original);
+            using (var output = File.Open(path, FileMode.Open, FileAccess.Write))
+            {
+                output.Position = length - 1;
+                output.WriteByte(1);
+            }
+            Assert.NotEqual(original, CommonExecutionEvidence.Hash(path));
+        }
+        finally { TemporaryFileSystem.Directory.Delete(directory.FullName, recursive: true); }
+    }
+
     [Theory]
     [InlineData(0, 0, "executed")]
     [InlineData(7, 2, "failed")]
