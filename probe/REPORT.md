@@ -37,3 +37,9 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-perrier-mc
 ## Witness-bypass mutant
 
 `lake env lean probe/PerrierNoEliminationMutant.lean` exited 0, with exactly `[propext, Classical.choice, Quot.sound]`. It proves the same universally quantified conjunction without the proposed coordinate-elimination lemma and additionally removes the local hbalance fact by inlining its ring-normalization calculation. It does not import the main probe or assume its conclusion. The proposed witness fails necessity test (iv). This is a bind-only path, not a replacement content witness, so no altered escape witness is being retrospectively preregistered.
+
+## Elaborated dependency audit and placement
+
+The final main file compiles with exit 0 after adding a checked-environment traversal (no mathematical declarations added). It visits 7,334 constants in the elaborated type/proof dependency closure; zero are in D5. Direct proof providers include Fin.sum_univ_succ, Fin.sum_univ_castSucc, and PowerSeries.eq_mul_inv_iff_mul_eq. Probe-owned constants are the result, its five definitions, and compiler-generated proof auxiliaries; no elimination lemma occurs. These readings establish no direct frozen dependencies; there are no GIDs or statement_ids to report. The closure audit checks presence, not the repository's whole semantic admission policy.
+
+Proposed GID: D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions. Proposed path adds `.lean`. Target directory has exactly 4 direct files, all Lean; adding one gives 5, within the brief's ≤12 admission band. Public delivery surface: Recurrence, R, D, P, Q, and ONE result. The no-elimination mutant and diagnostic commands are probe artifacts, not additional proposed public mathematics. No D5 mutation or admission operation has occurred.

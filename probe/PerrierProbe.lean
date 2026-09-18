@@ -117,4 +117,36 @@ theorem result (m a : Fin d → K) (r : ℕ → Fin (d+1) → K)
 end
 end PerrierProbe
 
+set_option maxHeartbeats 4000000 in
+run_cmd do
+  let env ← Lean.getEnv
+  let some info := env.checked.get.find? ``PerrierProbe.result
+    | throwError "Missing result"
+  let some value := info.value? (allowOpaque := true)
+    | throwError "Missing result proof"
+  for provider in [``Fin.sum_univ_succ, ``Fin.sum_univ_castSucc,
+      ``PowerSeries.eq_mul_inv_iff_mul_eq] do
+    unless value.getUsedConstants.contains provider do
+      throwError "Missing direct upstream provider: {provider}"
+    Lean.logInfo m!"DIRECT_UPSTREAM {provider}"
+  let mut pending := [``PerrierProbe.result]
+  let mut seen : Lean.NameSet := {}
+  let mut own : Array Lean.Name := #[]
+  let mut count : Nat := 0
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    if count >= 100000 then throwError "Dependency audit exceeded bound"
+    count := count + 1
+    seen := seen.insert name
+    if name.toString.startsWith "D5." then
+      throwError "Unexpected frozen-project dependency: {name}"
+    if name.toString.startsWith "PerrierProbe." then own := own.push name
+    let some dep := env.checked.get.find? name
+      | throwError "Missing dependency: {name}"
+    pending := dep.type.getUsedConstants.toList ++ pending
+    if let some body := dep.value? (allowOpaque := true) then
+      pending := body.getUsedConstants.toList ++ pending
+  Lean.logInfo m!"TRANSITIVE_CONSTANTS {count}; D5_DEPENDENCIES 0; PROBE_DECLARATIONS {own}"
+
 #print axioms PerrierProbe.result

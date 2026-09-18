@@ -1,0 +1,18 @@
+{
+  "gid": "D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions",
+  "path": "D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions.lean",
+  "directory_exists": true,
+  "files_before": 4,
+  "lean_files_before": 4,
+  "files_after_one_add": 5,
+  "rule": "4 <= 12; can add, resulting count 5 <= 12",
+  "surface": [
+    "Recurrence",
+    "R",
+    "D",
+    "P",
+    "Q",
+    "result"
+  ],
+  "status": "proposal only; no D5 files changed; route/admission checks not run"
+}

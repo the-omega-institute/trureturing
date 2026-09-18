@@ -1,1 +1,13 @@
+DIRECT_UPSTREAM Fin.sum_univ_succ
+DIRECT_UPSTREAM Fin.sum_univ_castSucc
+DIRECT_UPSTREAM PowerSeries.eq_mul_inv_iff_mul_eq
+TRANSITIVE_CONSTANTS 7334; D5_DEPENDENCIES 0; PROBE_DECLARATIONS [PerrierProbe.result,
+ PerrierProbe.Recurrence,
+ PerrierProbe.Recurrence._proof_1,
+ PerrierProbe.R,
+ PerrierProbe.P,
+ PerrierProbe.D,
+ PerrierProbe.Q,
+ PerrierProbe.result._proof_1_2,
+ PerrierProbe.result._proof_1_4]
 'PerrierProbe.result' depends on axioms: [propext, Classical.choice, Quot.sound]
