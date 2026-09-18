@@ -1,2 +1,0 @@
-前四个条件使用定理 74.2 的 $cb=I$ 代数，载体换成定义 75.1 所列空间。具体地，族保持给出 $Tb(e_i)=ETb(e_i)=bS_T(e_i)$；这些 $e_i$ 张成粗实空间，复线性延拓后亦张成粗复空间，故 $Tb=bS_T$。反向由 $S_T\Delta(I)\subseteq\Delta(I)$ 得到族保持。$Tb=bS_T$ 右复合 $c$ 给出 $TE=ETE$；该式右复合 $b$，由 $Eb=b$ 得到 $Tb=ETb=bS_T$。最后，$E$ 的实像为 $\operatorname{Im}b$ 且在其上为恒等，故 $TE=ETE$ 恰为此像不变；Hermitian 空间上的恒等式再按复线性延拓到全部矩阵。
-
