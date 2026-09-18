@@ -41,6 +41,33 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
+    [InlineData("pr")]
+    [InlineData("push")]
+    public void LibraryNotesKeepReferenceEvidenceWithoutEngineeringOrUnrelatedScribeChecks(string mode)
+    {
+        var plan = Plan("Library/notes/probe2026note.md", "", mode);
+        Assert.Equal(new[] { "build", "filemap", "lean", "lean-report", "scribe-library" }, Strings(plan["resources"]!));
+        Assert.Equal(new[] { "filemap", "scribe-library" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.DoesNotContain(Strings(plan["execution"]!["projects"]!), path => path.StartsWith("tools/tests/", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    public void LibraryNotesDoNotHideOtherRegisteredObligations(string changed)
+    {
+        var original = Plan(changed, "");
+        var mixed = Plan(changed, "Library/notes/probe2026note.md");
+        foreach (var field in new[] { "resources", "tools", "cache_layers" })
+            Assert.Empty(Strings(original[field]!).Except(Strings(mixed[field]!)));
+        foreach (var field in new[] { "checks", "steps", "projects" })
+            Assert.Empty(Strings(original["execution"]![field]!).Except(Strings(mixed["execution"]![field]!)));
+        Assert.Contains("scribe-library", Strings(mixed["execution"]!["checks"]!));
+    }
+
+    [Theory]
     [InlineData("Meta/ci-checks.json", false)]
     [InlineData("Meta/ci-checks.json", true)]
     [InlineData("Meta/ReportProducers/scribe-content.json", false)]

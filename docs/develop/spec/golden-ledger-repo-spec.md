@@ -369,6 +369,9 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 有选择的 delta 必须同时验证请求计划、完整差异、候选 SHA、显式 base 与构建 round,并核对 build/current 已绑定的资源计划一致。没有 `engineering` 资源时不要求或伪造 TRX;没有 report 资源时上下文不含 Lean capability,实际选中的语义谓词访问它必须明确失败。缺少计划、证据、登记或身份不符不得解释为免跑;未提供选择计划的直接入口保持完整证据要求。
 
+`Library/*/*.md` 的文献笔记显式登记 `filemap` 与 `scribe-library`。后者复用完整 Describe 校验的文献子谓词:元数据文法、bibkey/DOI 唯一性、文献 GID、文档文献引用、已核定位段及 Problems 来源一致性;不执行工程测试、投影或全仓 Markdown/发射检查。GID 可选择 Lean 具体声明,故保留正常 `lean-report` 入口与 source-bound 报告证据,不得以文件存在替代声明解析。缓存命中仍走 producer 验证,其 Lean 工具和重缓存按既定 `report-miss` 激活。混入其它路径按登记并集执行;完整 Describe 已成功执行同一文献谓词时,共享入口直接形成对应文献检查证据,不再次求值。所有检查、程序项目、材料、路径清单和报告依赖分别在 FILEMAP、`Meta/ci-resources.json` 与 `Meta/ci-checks.json` 登记。
+
+
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。
 
 工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。

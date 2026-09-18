@@ -16,6 +16,25 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
     private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
 
+    [Fact]
+    public void LibraryOwnerRejectsChangedMetadataAfterWarmEvidence()
+    {
+        using var fixture = new InvocationFixture(output);
+        const string note = "Library/notes/probe2026note.md";
+        fixture.Write(note, "---\nbibkey: probe2026note\nauthors: A. Author\nyear: 2026\ntitle: Library fixture\n"
+            + "doi: 10.1007/BF01389053\nclaim: A reference.\nstrata_touched: []\nlicense: citation-only\ntriage: anchor\n---\n");
+        var original = fixture.RunLibrary();
+        Assert.True(original.Exit == 0, original.Log);
+        fixture.Seed(CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current")));
+        Assert.Equal(0, fixture.RunLibrary().Exit);
+        var warm = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        Assert.Equal("reused", Assert.Single(warm.Units).Status);
+        fixture.Write(note, "invalid library metadata\n");
+        var invalid = fixture.RunLibrary();
+        Assert.Equal(1, invalid.Exit);
+        Assert.Contains("invalid-library-note", invalid.Log, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -164,6 +183,10 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                 row!["program_projects"] = registered["program_projects"]!.DeepClone();
                 row["report_inputs"] = registered["report_inputs"]!.DeepClone();
                 row["path_inventory"] = registered["path_inventory"]!.DeepClone();
+                if (row["id"]!.ToString() == "scribe-library")
+                    row["materials"] = new JsonArray(registered["materials"]!.AsArray()
+                        .Where(item => item!.GetValue<string>() is "Library/*/*.md" or "Problems/*.md")
+                        .Select(item => item!.DeepClone()).ToArray());
             }
             Write("Meta/ci-checks.json", checks.ToJsonString());
             Write("lean-toolchain", "leanprover/lean4:v4.33.0");
@@ -230,16 +253,17 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             return (CommonExecutionEvidence.ValidateChecks(Root, "current", build,
                 ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]), error);
         }
-        internal (int Exit, string Log) RunMarkdown()
+        internal (int Exit, string Log) RunMarkdown() => RunSelected("scribe-markdown");
+        internal (int Exit, string Log) RunLibrary() => RunSelected("scribe-library");
+        private (int Exit, string Log) RunSelected(string id)
         {
             Git("add", ".");
             Write("build/ci/fixture.log", "fixture build");
             var build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), ["build/ci/fixture.log"],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture.log")).ToArray());
-            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, "scribe-markdown"],
+            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, id],
                 Root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
-            var log = Assert.Single(Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
-            var text = File.ReadAllText(log);
+            var text = string.Join("\n", Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories).Select(File.ReadAllText));
             output.WriteLine($"exit={result.ExitCode}\n{text}{Encoding.UTF8.GetString(result.StandardError)}");
             return (result.ExitCode, text);
         }

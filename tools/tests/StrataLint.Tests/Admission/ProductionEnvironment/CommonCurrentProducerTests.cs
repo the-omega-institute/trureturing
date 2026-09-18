@@ -108,7 +108,7 @@ public sealed class CommonCurrentProducerTests
             });
             // This fixture targets the capability/predicate boundary; independent filemap
             // and markdown producer behavior is covered by their native command suites.
-            foreach (var id in selected ? Array.Empty<string>() : new[] { "filemap", "scribe-markdown" }) checks.Run(id, () => new([new(id, 0, "fixture boundary")]));
+            foreach (var id in selected ? Array.Empty<string>() : new[] { "filemap", "scribe-library", "scribe-markdown" }) checks.Run(id, () => new([new(id, 0, "fixture boundary")]));
             var result = Assert.IsType<RuleExecutionOutcome.Completed>(checks.ExecuteCurrentPredicates(policy, data.Lean)).Capability;
             Assert.DoesNotContain(result.Diagnostics, d => d.AdmissionEffect != AdmissionEffect.Observe);
             Assert.Equal(cycle == 0 ? selectedRuleIds : [], result.ExecutedRules.Select(rule => rule.Value).Order(StringComparer.Ordinal));
