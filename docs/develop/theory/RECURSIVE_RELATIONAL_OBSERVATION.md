@@ -33751,3 +33751,311 @@ $$
 本节给出了无限维位置迹、条件测度混合、冷热极限及其两个前缀实例的纸面证明；这些完整命题尚未在此获得 Lean 形式化或完整的既有声明覆盖。表中源码的有限乘积、强收敛和强大数律输入各限于其量词与拓扑，不能把局部输入的可复用性提升为整个无限维组合已验证。特别是正迹类部分和的迹范数极限、位置测度的构造及温度极限之间的接合，仍须由完整形式化承担。
 
 ## 71.99 追加锚
+
+## 72. 有限观察细化的算子运输与条件熵相干恒等式
+
+**定义与假设 72.1（同一有限细化的加权坐标）。** 设 $I,J$ 为有限非空集合，$r:J\to I$，给定
+$$
+q_j>0,\qquad \sum_{j\in J}q_j=1,\qquad
+p_i=\sum_{r(j)=i}q_j>0.
+$$
+于是 $r$ 满射。置 $t_{j\mid i}=q_j/p_i$（$r(j)=i$），并在标准复 Hilbert 空间
+$$
+\mathcal H_c=\mathbb C^I,\qquad \mathcal H_f=\mathbb C^J
+$$
+分别使用正交归一基 $(e_i)$、$(f_j)$。若粗细分区满足 $D_i=\bigsqcup_{r(j)=i}C_j$，且同一概率 $\mu$ 给出 $p_i=\mu(D_i)$、$q_j=\mu(C_j)$，这些坐标基对应
+$$
+e_i=\frac{\mathbf1_{D_i}}{\sqrt{p_i}},\qquad
+f_j=\frac{\mathbf1_{C_j}}{\sqrt{q_j}}
+$$
+所表示的 $L^2(\mu;\mathbb C)$ 向量。定义粗观察子空间到细观察子空间的坐标映射
+$$
+U_r e_i=\sum_{r(j)=i}\sqrt{\frac{q_j}{p_i}}\,f_j,
+\qquad
+\rho_p=\operatorname{diag}(p),\qquad
+\rho_q=\operatorname{diag}(q).
+$$
+向量、乘法观察量与密度矩阵分别属于 $\mathcal H$、$\mathcal B(\mathcal H)$ 与其中正且迹一的部分；同一张概率表在这些位置的作用须分别说明。第 70.12 条的胞腔概率态就是这里的对角态。也可在第 71 节固定一个 $\beta>0$，以 $q_j=\nu_\beta(C_j)$ 代入；此时归一化指示基属于 $L^2(\nu_\beta)$。若沿用原 $L^2(\mu)$ 的指示基，则其权重仍须取 $\mu(C_j)$，不能只替换概率而保留旧坐标公式。胞腔对角态不因此被识别为第 70–71 节的 Gibbs 算子态。
+
+以下一律用自然对数，$0\ln0=0$。对有限概率 $a$ 与密度矩阵 $\rho$，记
+$$
+H(a)=-\sum_xa_x\ln a_x,\qquad
+S(\rho)=-\operatorname{Tr}(\rho\log\rho).
+$$
+矩阵的支撑为其像空间；对同一空间上的两密度矩阵采用带支撑条件的相对熵
+$$
+D(\rho\Vert\eta)=
+\begin{cases}
+\operatorname{Tr}(\rho\log\rho)-\operatorname{Tr}(\rho\log\eta),
+&\operatorname{supp}\rho\subseteq\operatorname{supp}\eta,\\
++\infty,&\text{否则}.
+\end{cases}
+$$
+有限分支中的对数在各自正支撑上取通常值，在核上延零；只有满足所列支撑条件时才使用这个有限表达式。令 $F_j=|f_j\rangle\langle f_j|$，细基去相干为
+$$
+\Delta_f(Y)=\sum_{j\in J}F_jYF_j
+=\operatorname{diag}_j(Y_{jj}).
+$$
+若随机标签 $\mathsf J$ 的律为 $q$，父标签为 $r(\mathsf J)$，则
+$$
+H(\mathsf J\mid r(\mathsf J))
+=\sum_i p_i H(t_{\cdot\mid i}).
+$$
+
+**定理 72.2（加权等距包含、条件平均与复合消去）。** 在定义与假设 72.1 下，$U_r^*U_r=I_{\mathcal H_c}$。对任意 $g:J\to\mathbb C$，有
+$$
+U_r^*\operatorname{diag}(g)U_r
+=\operatorname{diag}_i\left(\sum_{r(j)=i}\frac{q_j}{p_i}g_j\right).
+$$
+特别地，$g=h\circ r$ 时右侧为 $\operatorname{diag}(h)$。再设 $K$ 为有限非空集合，$s:K\to J$，$u_k>0$，且 $q_j=\sum_{s(k)=j}u_k$。按相同定义构造 $U_s:\mathbb C^J\to\mathbb C^K$ 及 $U_{r\circ s}:\mathbb C^I\to\mathbb C^K$，则
+$$
+U_sU_r=U_{r\circ s},\qquad U_{\mathrm{id}}=I.
+$$
+
+证明。不同父纤维不交，而每列的平方范数为 $\sum_{r(j)=i}q_j/p_i=1$，故列向量正交归一。分区表示中，$\mathbf1_{D_i}=\sum_{r(j)=i}\mathbf1_{C_j}$ 恰给出所列系数，所以 $U_r$ 表示实际的子空间包含。压缩对角算子的 $(i,i')$ 元在 $i\ne i'$ 时为零，在 $i=i'$ 时为所列条件平均；代入 $g_j=h_i$ 即恢复粗观察量。复合的第 $(k,i)$ 元只有中间标签 $j=s(k)$ 能贡献，在 $r(s(k))=i$ 时其值为
+$$
+\sqrt{\frac{u_k}{q_{s(k)}}}\sqrt{\frac{q_{s(k)}}{p_i}}
+=\sqrt{\frac{u_k}{p_i}},
+$$
+否则为零。正权重保证约去的分母非零。恒等细化的每条纤维只有自身一个标签，系数为一。证毕。
+
+**命题 72.3（态提升与 Heisenberg 压缩的不同归一化）。** 在定义与假设 72.1 下，定义
+$$
+\mathcal E_r:\mathcal B(\mathcal H_c)\to\mathcal B(\mathcal H_f),
+\quad \mathcal E_r(X)=U_rXU_r^*,
+$$
+$$
+\Gamma_r:\mathcal B(\mathcal H_f)\to\mathcal B(\mathcal H_c),
+\quad \Gamma_r(Y)=U_r^*YU_r.
+$$
+$\mathcal E_r$ 完全正且保迹，即 CPTP；其迹配对伴随 $\Gamma_r$ 完全正且保单位元：
+$$
+\operatorname{Tr}_{\mathcal H_f}(\mathcal E_r(X)Y)
+=\operatorname{Tr}_{\mathcal H_c}(X\Gamma_r(Y)),
+\qquad \Gamma_r(I_{\mathcal H_f})=I_{\mathcal H_c}.
+$$
+对 $Y\ge0$，$0\le\operatorname{Tr}\Gamma_r(Y)\le\operatorname{Tr}Y$。特别地
+$$
+\Gamma_r(\rho_q)
+=\operatorname{diag}_i\frac{\sum_{r(j)=i}q_j^2}{p_i},
+\qquad
+\operatorname{Tr}\Gamma_r(\rho_q)
+=\sum_i p_i\sum_{r(j)=i}t_{j\mid i}^{\,2}\le1.
+$$
+等号成立当且仅当每个正质量父纤维没有两个正质量孩子；在本条严格正设置下等价于 $r$ 为双射。其迹缺口为
+$$
+1-\operatorname{Tr}\Gamma_r(\rho_q)
+=\sum_i p_i\left(1-\sum_{r(j)=i}t_{j\mid i}^{\,2}\right)
+=\sum_i\frac{\sum_{\substack{r(j)=r(k)=i\\j\ne k}}q_jq_k}{p_i}.
+$$
+
+证明。$\mathcal E_r$ 的单个 Kraus 算子为 $U_r$，定理 72.2 给出完整性 $U_r^*U_r=I$，故有限 Kraus 通道定理适用。$\Gamma_r$ 在每个有限放大上都是由 $I\otimes U_r$ 夹乘的压缩，因而完全正；保单位元与迹伴随关系分别由等距性和矩形乘积的迹循环性得到。置 $P_r=U_rU_r^*$，则 $P_r$ 是正交投影。对 $Y\ge0$，
+$$
+\operatorname{Tr}Y-\operatorname{Tr}\Gamma_r(Y)
+=\operatorname{Tr}\bigl(Y^{1/2}(I-P_r)Y^{1/2}\bigr)\ge0.
+$$
+将定理 72.2 中的 $g$ 取为 $q$ 即得对角公式。每条纤维有 $\sum_jt_{j\mid i}=1$，所以
+$$
+1-\sum_jt_{j\mid i}^{\,2}=\sum_{j\ne k}t_{j\mid i}t_{k\mid i}\ge0.
+$$
+该和为零恰好在条件律为点质量时发生；所有 $p_i>0$，故加权和为零恰好在每条纤维如此。证毕。
+
+这里 $\Gamma_r(\rho_q)$ 是次归一化正矩阵，不能把它无条件当作粗密度态 $\rho_p$。迹缺口是加权条件碰撞缺量，使用平方和；它与使用对数的条件熵并非同一个数。将它解释为某个失败概率还须另行指定相应的测量模型，本条没有这样的物理假设。
+
+**定理 72.4（经典标签通道的精确矩阵作用）。** 对定义与假设 72.1 的 $r$，令
+$$
+K_j=|e_{r(j)}\rangle\langle f_j|:\mathcal H_f\to\mathcal H_c,
+\qquad
+\mathcal C_r(Y)=\sum_{j\in J}K_jYK_j^*.
+$$
+则 $\sum_jK_j^*K_j=I_{\mathcal H_f}$，且 $\mathcal C_r:\mathcal B(\mathcal H_f)\to\mathcal B(\mathcal H_c)$ 是 CPTP 映射，满足
+$$
+\mathcal C_r(Y)_{ii'}
+=\mathbf1_{i=i'}\sum_{r(j)=i}Y_{jj},
+\qquad \mathcal C_r(\rho_q)=\rho_p.
+$$
+对任意有限非空 $K$ 和映射 $s:K\to J$，按同一 Kraus 公式定义 $\mathcal C_s$，则在全部复矩阵上
+$$
+\mathcal C_r\circ\mathcal C_s=\mathcal C_{r\circ s}.
+$$
+此构造与这些结论不依赖概率权重，也不要求标签映射满射。
+
+证明。逐项有 $K_j^*K_j=F_j$，而 $\sum_jF_j=I_{\mathcal H_f}$。有限 Kraus 通道定理于是给出完全正性、保迹性及其实际 Kraus 和作用。又
+$$
+K_jYK_j^*=Y_{jj}|e_{r(j)}\rangle\langle e_{r(j)}|,
+$$
+求和得矩阵条目公式，代入 $Y=\rho_q$ 得 $\rho_p$。对任意 $Z\in\mathcal B(\mathbb C^K)$，两次通道后第 $i$ 个对角元为
+$$
+\sum_{r(j)=i}\sum_{s(k)=j}Z_{kk}
+=\sum_{r(s(k))=i}Z_{kk},
+$$
+非对角元全为零。这是有限纤维求和复合式，所求和的质量取复数 $Z_{kk}$，故同时证明全部复矩阵上的复合律。以上计算没有使用权重或满射假设。证毕。
+
+**命题 72.5（恒等标签的去相干与量子扩张边界）。** 对有限非空标签集 $J$，有
+$$
+\mathcal C_{\mathrm{id}_J}=\Delta_f.
+$$
+它在整个矩阵代数上等于恒等映射，当且仅当 $|J|=1$。限制到各标签空间的对角矩阵代数后，$\mathcal C_r$ 就是经典质量推前，并同时保持复合与恒等映射。二标签恒等映射已有两个不同的 CPTP 扩张，即完整恒等通道与 $\Delta_f$；因此经典标签推前本身不能唯一指定一般的量子扩张。这个非唯一性断言不适用于每个标签映射：一维输出的保迹线性映射必为迹映射。
+
+证明。定理 72.4 的条目公式取 $r=\mathrm{id}_J$ 就是 $\Delta_f(Y)=\operatorname{diag}(Y_{jj})$。一维时每个矩阵都对角。若 $j\ne k$，令 $v=(f_j+f_k)/\sqrt2$，则
+$$
+|v\rangle\langle v|\ne
+\Delta_f(|v\rangle\langle v|)=\tfrac12(F_j+F_k),
+$$
+因为左边的 $(j,k)$ 元为 $1/2$，右边为零。对角代数上的条目公式恰为推前，恒等细化固定全部对角矩阵。取 $J$ 恰有两点，恒等通道与 $\Delta_f$ 均 CPTP，在全部对角态上一致，以上纯态区分二者。若输出空间一维，输出矩阵只有一个标量；保迹性强制该标量等于输入矩阵的迹，故映射唯一。证毕。
+
+**定理 72.6（指定提升的条件熵与细基相干）。** 在定义与假设 72.1 下，令
+$$
+v_i=U_re_i,\qquad R_i=|v_i\rangle\langle v_i|,
+\qquad \sigma_r=\mathcal E_r(\rho_p)=\sum_i p_iR_i.
+$$
+$\sigma_r$ 是密度矩阵；各父纤维的块为秩一块 $p_iR_i$，其非零特征值按重数恰为 $(p_i)_{i\in I}$。并且
+$$
+(\sigma_r)_{jk}=\mathbf1_{r(j)=r(k)}\sqrt{q_jq_k},
+\qquad \Delta_f(\sigma_r)=\rho_q,
+$$
+$$
+\boxed{
+D(\sigma_r\Vert\rho_q)
+=S(\rho_q)-S(\sigma_r)
+=H(q)-H(p)
+=H(\mathsf J\mid r(\mathsf J)).}
+$$
+共同值有限且非负。若只按父纤维投影，写 $Q_i=\sum_{r(j)=i}F_j$，则
+$$
+\sum_iQ_i\sigma_rQ_i=\sigma_r.
+$$
+故所列熵增使用的是细基的一维去相干。两态在细基测量下的分布都为 $q$，因而它们的该测量分布之间的经典 KL 散度为 $\sum_jq_j\ln(q_j/q_j)=0$。
+
+证明。由定理 72.2，$v_i$ 正交归一。因此 $R_i\ge0$、$\operatorname{Tr}R_i=1$、$R_i^2=R_i$，且 $R_iR_{i'}=0$ 对 $i\ne i'$ 成立。每个 $R_i$ 在 $\mathbb Cv_i$ 上为一、在其正交补上为零，故其谱为一个一和其余零，$S(R_i)=0$。这也可由自伴幂等元的谱包含于 $\{0,1\}$，对谱函数 $-x\ln x$ 作连续函数演算得到。正交支持混合熵公式于是给出完整的分量结算
+$$
+S(\sigma_r)=H(p)+\sum_i p_iS(R_i)=H(p).
+$$
+对细基投影 $(F_j)$ 用同一公式，每个分量仍为秩一且熵为零，得 $S(\rho_q)=H(q)$。同时 $\sigma_rv_i=p_iv_i$，在所有 $v_i$ 的共同正交补上为零，给出所列非零谱。展开 $p_iv_iv_i^*$ 得条目公式，故 $\Delta_f\sigma_r=\rho_q$；不同父纤维间本无矩阵元，故父块投影固定 $\sigma_r$。
+
+在第 72.90 节所列相干删除恒等式中，取幺正矩阵 $I_{\mathcal H_f}$、状态序列 $\tau_k=\Delta_f^{\,k}(\sigma_r)$，并取步数 $k=0$。迭代定义保证每一步都是恒等共轭后的细基去相干，所以该定理的全部步进假设成立；其单步结论为
+$$
+D_{\mathrm{legacy}}(\sigma_r\Vert\Delta_f\sigma_r)
+=S(\Delta_f\sigma_r)-S(\sigma_r)\ge0.
+$$
+这里旧密度载体与当前矩阵表示之间的转换不改变矩阵。$q_j>0$ 保证 $\ker\rho_q=\{0\}\subseteq\ker\sigma_r$，即正向支撑包含；无需假设 $\sigma_r$ 可逆。旧相对熵到有限迹对数分支的等式，再与带支撑相对熵的有限分支等式连接，才得到所声明的 $D(\sigma_r\Vert\rho_q)$。也可直接核对其中两项：
+$$
+\operatorname{Tr}(\sigma_r\log\sigma_r)=\sum_i p_i\ln p_i,
+\qquad
+\operatorname{Tr}(\sigma_r\log\rho_q)=\sum_j q_j\ln q_j.
+$$
+最后，对非负归一化质量 $q$ 与观察 $r$ 应用商纤维熵分解，其图律为 $\Pr(r(\mathsf J)=i,\mathsf J=j)=\mathbf1_{r(j)=i}q_j$，父边缘为 $p$，纤维条件律为 $t_{\cdot\mid i}$，从而
+$$
+H(q)=H(p)+\sum_i p_iH(t_{\cdot\mid i}).
+$$
+这些代入分别履行量子支撑条件与经典归一化条件。细基测量分布相同则由两态的对角元相同直接得到。证毕。
+
+**推论 72.7（有限细化塔的标量望远镜）。** 设 $N\ge1$，$I_0,\ldots,I_N$ 为有限非空标签集，各层有严格正概率 $p^{(\ell)}$，并有 $r_\ell:I_\ell\to I_{\ell-1}$ 满足 $p^{(\ell-1)}=(r_\ell)_*p^{(\ell)}$。令
+$$
+R=r_1\circ\cdots\circ r_N,\qquad
+\rho_\ell=\operatorname{diag}(p^{(\ell)}),
+\qquad
+\sigma_\ell=U_{r_\ell}\rho_{\ell-1}U_{r_\ell}^*.
+$$
+用端点权重构造 $U_R$，则
+$$
+U_R=U_{r_N}\cdots U_{r_1},
+\qquad
+D(U_R\rho_0U_R^*\Vert\rho_N)
+=H(p^{(N)})-H(p^{(0)})
+=\sum_{\ell=1}^N D(\sigma_\ell\Vert\rho_\ell).
+$$
+
+证明。有限推前复合使端点权重相容，定理 72.2 逐次消去中间权重即得 $U_R$。定理 72.6 对每条边给出 $D(\sigma_\ell\Vert\rho_\ell)=H(p^{(\ell)})-H(p^{(\ell-1)})$，对端点细化给出左端相对熵。有限求和中间熵逐项抵消。各相对熵使用各边指定的提升态与该层对角态；等式来自这些标量熵差，不是一条适用于任意三个量子态的相对熵链式法则。证毕。
+
+**命题 72.8（零质量标签的支撑约化与部分等距）。** 将定义与假设 72.1 的权重条件放宽为 $q_j\ge0$、$\sum_jq_j=1$，仍令 $p_i=\sum_{r(j)=i}q_j$，但不要求所有 $p_i>0$。置
+$$
+J_+=\{j:q_j>0\},\qquad I_+=\{i:p_i>0\}.
+$$
+限制 $r_+:J_+\to I_+$ 是满射；在这两个正支撑空间上，前述加权等距、压缩及熵恒等式适用。在全部原标签上定义延零矩阵
+$$
+(U_0)_{ji}=
+\begin{cases}
+\sqrt{q_j/p_i},&r(j)=i,\ p_i>0,\\
+0,&\text{否则}.
+\end{cases}
+$$
+则
+$$
+U_0^*U_0=\Pi_{I_+},
+\qquad \Pi_{I_+}=\sum_{i\in I_+}|e_i\rangle\langle e_i|.
+$$
+因此 $U_0$ 是部分等距；若存在零质量父标签，它不在整个 $\mathbb C^I$ 上等距，且 $X\mapsto U_0XU_0^*$ 不在整个矩阵代数上保迹。不过
+$$
+\sigma_0=U_0\rho_pU_0^*,\qquad
+\operatorname{Tr}\sigma_0=1,\qquad
+\Delta_f\sigma_0=\rho_q,\qquad
+\operatorname{supp}\sigma_0\subseteq\operatorname{supp}\rho_q,
+$$
+$$
+D(\sigma_0\Vert\rho_q)
+=S(\rho_q)-S(\sigma_0)
+=H(q)-H(p)
+=\sum_{i\in I_+}p_iH(t_{\cdot\mid i}).
+$$
+令 $\Gamma_0(Y)=U_0^*YU_0$，则
+$$
+\operatorname{Tr}\Gamma_0(\rho_q)
+=\sum_{i\in I_+}p_i\sum_{r(j)=i}t_{j\mid i}^{\,2};
+$$
+$\Gamma_0(\rho_q)$ 的零质量父标签对角元为零。$\mathcal C_r$ 仍按原标签定义并保持 CPTP 与经典推前性质。
+
+证明。若 $q_j>0$，则 $p_{r(j)}\ge q_j>0$；若 $p_i>0$，有限非负和中至少一项为正。因此限制映射确为满射且权重归一化。$U_0$ 在正支撑坐标上就是定理 72.2 的等距，在其余粗坐标上为零；列内积遂给出 $\Pi_{I_+}$。若 $p_i=0$，迹一矩阵 $|e_i\rangle\langle e_i|$ 被送到零，直接反驳全空间保迹。一般正矩阵的输出仍为正，其迹为 $\operatorname{Tr}(X\Pi_{I_+})$。
+
+由于 $\rho_p$ 支撑在 $I_+$，$\operatorname{Tr}\sigma_0=\operatorname{Tr}(\rho_p\Pi_{I_+})=1$。对 $i\in I_+$ 展开正支撑块，仍有 $(\sigma_0)_{jk}=\mathbf1_{r(j)=r(k)}\sqrt{q_jq_k}$；零质量行列全为零。因此去相干给出 $\rho_q$，且 $\sigma_0$ 的像包含在 $\operatorname{span}\{f_j:j\in J_+\}=\operatorname{supp}\rho_q$ 中，等价地 $\ker\rho_q\subseteq\ker\sigma_0$。在正支撑上应用定理 72.6，再添回零特征值，熵与有限迹对数项均不变；所证支撑条件保证这仍是扩展相对熵的有限分支。正质量父纤维内的零质量孩子贡献零；零父纤维的条件律没有被指定，只在加权熵中贡献零。压缩迹公式在正支撑上由命题 72.3 给出，延零后不增添项；Kraus 标签通道的完整性完全不涉及权重。证毕。
+
+**命题 72.9（反向相对熵与正质量分裂）。** 在命题 72.8 的非负权重设置下，若存在 $j\ne k$ 满足 $r(j)=r(k)$ 且 $q_j,q_k>0$，则
+$$
+D(\rho_q\Vert\sigma_0)=+\infty.
+$$
+若不存在这样的正质量分裂，则 $\sigma_0=\rho_q$，两向相对熵均为零，且 $\operatorname{Tr}\Gamma_0(\rho_q)=1$。反之，任一正质量分裂都使正向相对熵严格为正且该压缩迹严格小于一。
+
+证明。对所列两个孩子取非零向量
+$$
+w=\sqrt{q_k}f_j-\sqrt{q_j}f_k.
+$$
+它与所在父纤维的平方根权重向量正交，与其他父纤维也正交，所以 $\sigma_0w=0$。但 $\rho_qw$ 的第 $j$ 个坐标为 $q_j\sqrt{q_k}>0$，故 $\rho_qw\ne0$。于是 $\ker\sigma_0\not\subseteq\ker\rho_q$，反向支撑条件失败，带支撑相对熵的无穷分支给出结论。
+
+若无正质量分裂，每个正父块恰有一个正孩子，条目公式中的非对角项全部为零，故 $\sigma_0=\rho_q$；两向相对熵均为零，每条有效条件律的平方和为一。若有分裂，所在纤维至少两个条件概率在 $(0,1)$ 内，故其 $-t\ln t$ 和严格为正；其权重 $p_i>0$，命题 72.8 给出正向严格正性。同一纤维的碰撞缺量中含正项，命题 72.3 的正支撑公式给出压缩迹严格小于一。证毕。
+
+**命题 72.10（一个等权二分的四个读数）。** 取 $I$ 为单点，$J=\{0,1\}$，$r$ 为常值映射，$q_0=q_1=1/2$、$p=1$。则
+$$
+U_r=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\sigma_r=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\rho_q=\frac12I_2,
+$$
+$$
+\operatorname{Tr}\Gamma_r(\rho_q)=\tfrac12,\qquad
+\mathcal C_r(\rho_q)=[1],\qquad
+D(\sigma_r\Vert\rho_q)=\ln2,\qquad
+D(\rho_q\Vert\sigma_r)=+\infty.
+$$
+
+证明。代入 $U_r$ 与两态的条目公式即得矩阵。压缩给出一维矩阵 $[1/2]$，经典标签通道则将两个对角质量相加为一。$S(\sigma_r)=0$、$S(\rho_q)=\ln2$，由定理 72.6 得正向值；命题 72.9 的核向量可取 $f_0-f_1$，给出反向无穷值。两态的细基测量分布同为 $(1/2,1/2)$，其经典 KL 值仍为零。故压缩迹缺口 $1/2$、经典总质量一、正向相干相对熵 $\ln2$ 与反向无穷值是不同读数。证毕。
+
+### 72.90 数学来源与形式化边界
+
+有限 Kraus 判据与等距熵不变性属于成熟结果（`literature-attested`）：Watrous，*The Theory of Quantum Information*，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Corollary 2.27，印刷第 89 页／PDF 第 97 页式 (2.129)，给出矩形 Kraus 族的完整性与通道作用；Proposition 5.19，印刷第 268 页／PDF 第 276 页式 (5.93)，给出有限维等距映射下的熵不变，包括奇异正算子。Baumgratz–Cramer–Plenio，*Quantifying Coherence*，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 3 页式 (8) 及其前一显示式，给出相对于固定基的 $D(\rho\Vert\Delta\rho)=S(\Delta\rho)-S(\rho)$。换用自然对数时，两侧统一换算。本节在同一有限细化上识别这些现成结果的参数、支撑及运输方向；不作新颖性或穷尽文献的主张。
+
+以下源码引用固定于提交 `6dcc8b24cb208a3a0e06a657b3bf8111e5f70801`，只承担各行所列数学输入。
+
+| 第 72 节的现成输入 | 精确声明与代入范围 |
+| --- | --- |
+| 72·有限通道 | [D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean) 对 $\mathcal E_r$ 取唯一 Kraus 算子 $U_r$，对 $\mathcal C_r$ 取 $K_j=|e_{r(j)}\rangle\langle f_j|$；两次完整性分别在定理 72.2、72.4 中履行。此声明不把 $\Gamma_r$ 升为保迹态通道。 |
+| 72·标签复合 | [D5/S3/Entropy/Forgetting/PushforwardComposition.sum_indicator_comp](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Forgetting/PushforwardComposition.lean) 在定理 72.4 中取加法交换幺半群 $\mathbb C$、质量 $k\mapsto Z_{kk}$、两映射 $s,r$；同模块 `pushforward_comp` 是实质量版本，可用于推论 72.7 的权重相容性。 |
+| 72·正交混合熵 | [D5/S3/Quantum/Information/OrthogonalRecordEntropy.orthogonal_mixture_entropy](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Information/OrthogonalRecordEntropy.lean) 依次取 $(p_i,R_i)$、$(q_j,F_j)$；定理 72.6 已给分量正性、迹一、异分量乘积零及秩一分量熵为零，不省略其平均分量熵项。谱归约的现成输入为钉版 Mathlib 的 [isIdempotentElem_iff_spectrum_subset](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Projection.lean#L29)，其谓词取自伴性。 |
+| 72·相干删除 | [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.lean) 取 $U=I$、$\tau_k=\Delta_f^{\,k}(\sigma_r)$、$k=0$，使用单步等式与非负性；这里的相对熵仍是旧实值迹对数表达式。 |
+| 72·有限分支桥 | [D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.legacy_quantumRelativeEntropy_eq_finite_branch](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.lean) 通过不改变矩阵的 `toLegacyDensityState` 连接旧表达式与有限迹对数分支；还须结合下一行的实际支撑条件，不能单独获得 Umegaki 的无穷分支。 |
+| 72·支撑与方向 | [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy_eq_coe_of_support](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.lean) 的条件为第二态的核包含于第一态的核；定理 72.6 与命题 72.8 给出正向包含。同模块 `extendedQuantumRelativeEntropy_eq_top_of_not_support` 在命题 72.9 的显式核向量证出反向不包含后适用。 |
+| 72·经典条件熵 | [D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Fusion/QuotientFiberDecomposition.lean) 取源 $J$、父标签 $I$、质量 $q$、观察 $r$；只需非负归一化，不需全标签严格正。它给出经典熵差与纤维条件熵，不给出矩形算子构造。 |
+
+本节仍未形式化的是这份有限细化数据到上述接口的完整类型适配及组合证明，包括加权矩形包含与消去、观察量压缩和碰撞迹、标签通道的具体条目与恒等边界、指定秩一提升的熵和支撑接合、有限塔的端点适配，以及零质量延零和反向核向量。源码中通用声明的适用范围不等于这些完整命题已获编译核验；各处给出的纸面证明不替代该项形式化。
+
+所有等式的概率律均为输入，$\sigma_r$ 是归一化指示基指定的提升。经典质量和 Hilbert 坐标没有附带物理制备、测量公理或能量交换假设，故这里没有 Born 规则、物理实现或热耗散的推导。有限塔恒等式也没有断言无限塔的迹一极限、迹范数收敛或无限熵差；这些问题仍须各自的相容性、正规性与可积性假设。
+
+## 72.99 追加锚
