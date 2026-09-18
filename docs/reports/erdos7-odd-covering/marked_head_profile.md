@@ -583,3 +583,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The factorial tail retains one compatible original head](profile-notes/112-the-factorial-tail-retains-one-compatible-original-head.md)
 - [Quadratic hinges and the factorial tail share one head](profile-notes/113-quadratic-hinges-and-the-factorial-tail-share-one-head.md)
 - [A common source bridge has matching controller witnesses](profile-notes/114-a-common-source-bridge-has-matching-controller-witnesses.md)
+- [A dominated defect controls complete independent-label tails](profile-notes/115-a-dominated-defect-controls-complete-independent-label-tails.md)
