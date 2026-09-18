@@ -668,3 +668,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One six-label head controls the square and both complete crosses](profile-notes/199-one-six-label-head-controls-the-square-and-both-complete-crosses.md)
 - [The K and next source layers share the J exclusion](profile-notes/200-the-k-and-next-source-layers-share-the-j-exclusion.md)
 - [Two more seven labels and selected intersections control both heavy costs](profile-notes/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md)
+- [Eight original costs have an exact load-two remainder](profile-notes/202-eight-original-costs-have-an-exact-load-two-remainder.md)
+- [The expanded seven head improves the complete survival denominator](profile-notes/203-the-expanded-seven-head-improves-the-complete-survival-denominator.md)
