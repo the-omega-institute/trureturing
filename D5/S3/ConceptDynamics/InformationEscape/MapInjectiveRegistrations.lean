@@ -68,33 +68,46 @@ local instance opcodeFintype : Fintype Opcode :=
   ⟨{.gen, .enc, .norm, .decode, .length, .phase,
     .read, .ledger, .renorm, .complete, .reflect, .certify}, by intro x; cases x <;> simp⟩
 
-/-- The four binary digits of the original opcode index, most significant first. -/
-def opcodeReadout (o : Opcode) : Bool × Bool × Bool × Bool :=
-  Opcode.casesOn o
-    (false, false, false, false)
-    (false, false, false, true)
-    (false, false, true, false)
-    (false, false, true, true)
-    (false, true, false, false)
-    (false, true, false, true)
-    (false, true, true, false)
-    (false, true, true, true)
-    (true, false, false, false)
-    (true, false, false, true)
-    (true, false, true, false)
-    (true, false, true, true)
+/-- Twelve output indices, written using executable Nat constructors. -/
+private def opcodeCardinality : Nat :=
+  Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))))))
 
-def opcodeArena := mapInjectiveArena (Arena.ofFintype Opcode) (Bool × Bool × Bool × Bool)
+abbrev OpcodeCode := Fin opcodeCardinality
+
+/-- The original numeric opcode indices, bounded in their finite carrier. -/
+def opcodeReadout (o : Opcode) : OpcodeCode :=
+  Opcode.casesOn o
+    (⟨Nat.zero, (let h : Nat.lt 0 opcodeCardinality := (by change 0 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.zero), (let h : Nat.lt 1 opcodeCardinality := (by change 1 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.zero)), (let h : Nat.lt 2 opcodeCardinality := (by change 2 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.zero))), (let h : Nat.lt 3 opcodeCardinality := (by change 3 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))), (let h : Nat.lt 4 opcodeCardinality := (by change 4 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))), (let h : Nat.lt 5 opcodeCardinality := (by change 5 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))), (let h : Nat.lt 6 opcodeCardinality := (by change 6 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))), (let h : Nat.lt 7 opcodeCardinality := (by change 7 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))), (let h : Nat.lt 8 opcodeCardinality := (by change 8 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))), (let h : Nat.lt 9 opcodeCardinality := (by change 9 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))), (let h : Nat.lt 10 opcodeCardinality := (by change 10 < 12; omega); h)⟩)
+    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))))), (let h : Nat.lt 11 opcodeCardinality := (by change 11 < 12; omega); h)⟩)
+
+def opcodeArena := mapInjectiveArena (Arena.ofFintype Opcode) OpcodeCode
 def opcodeRealization :=
-  @mapInjectiveRealization Opcode (Bool × Bool × Bool × Bool)
-    (inferInstance : DecidableEq (Bool × Bool × Bool × Bool)) (fun o => opcodeReadout o)
+  @mapInjectiveRealization Opcode OpcodeCode
+    (instDecidableEqFin opcodeCardinality) (fun o => opcodeReadout o)
 theorem opcode_bridge : LegacyPrimitiveRealization opcodeArena
     (Function.Injective opcodeIndex) opcodeRealization := by
   constructor
   change Function.Injective opcodeIndex ↔ Function.Injective opcodeReadout
+  have original (o : Opcode) : (opcodeReadout o).val = opcodeIndex o := by
+    cases o <;> rfl
   have same_values (x y : Opcode) : opcodeIndex x = opcodeIndex y ↔
       opcodeReadout x = opcodeReadout y := by
-    cases x <;> cases y <;> simp [opcodeIndex, opcodeReadout]
+    constructor
+    · intro h
+      apply Fin.ext
+      simpa only [original] using h
+    · intro h
+      simpa only [original] using congrArg Fin.val h
   exact ⟨fun h _ _ e => h ((same_values _ _).mpr e),
     fun h _ _ e => h ((same_values _ _).mp e)⟩
 theorem opcode_lawSensitive : opcodeArena.Law opcodeRealization ∧
@@ -106,7 +119,7 @@ theorem opcode_slotSensitive : FiniteSlotSensitivity opcodeArena :=
     (opcode_bridge.equivalence.mp opcode_index_injective) .gen .enc
     (by decide : Opcode.gen ≠ Opcode.enc)
 register_information_theorem opcode_index_injective in opcodeArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization D5.S0.History.Opcode (Bool × Bool × Bool × Bool) (inferInstance : DecidableEq (Bool × Bool × Bool × Bool)) (fun o => D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeReadout o))
+  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization D5.S0.History.Opcode D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.OpcodeCode (instDecidableEqFin D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeCardinality) (fun o => D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeReadout o))
   primitives opcodeRealization.toPrimitiveBundle realization opcode_bridge
   variation opcode_lawSensitive sensitivity opcode_slotSensitive
 example : opcode_index_injective.__information_unit.Statement =
@@ -121,10 +134,15 @@ end Opcode
 section Rays
 open D5.S3.QuantumContext.ProjectionValuationObstruction
 
-/-- A coordinate is 0, -1, or 1, encoded respectively by none, some false, or some true. -/
-abbrev RayCode := Option Bool × Option Bool × Option Bool × Option Bool
+/-- There are 3^4 four-coordinate vectors over {-1, 0, 1}. -/
+private def rayCardinality : Nat :=
+  Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
-/-- The eighteen original rows, retaining all four coordinates in a finite carrier. -/
+abbrev RayCode := Fin rayCardinality
+
+/-- The original four coordinates, shifted by one and packed as four ternary digits.
+The code is 27*(v₀+1) + 9*(v₁+1) + 3*(v₂+1) + (v₃+1).
+All executable numerals use Nat constructors; index proofs have explicit Nat.lt types. -/
 def rayReadout (r : Fin 18) : RayCode :=
   Bool.casesOn (decide (r = (⟨0, (let h : Nat.lt 0 18 := (by change 0 < 18; omega); h)⟩ : Fin 18)))
     (Bool.casesOn (decide (r = (⟨1, (let h : Nat.lt 1 18 := (by change 1 < 18; omega); h)⟩ : Fin 18)))
@@ -143,43 +161,40 @@ def rayReadout (r : Fin 18) : RayCode :=
                               (Bool.casesOn (decide (r = (⟨14, (let h : Nat.lt 14 18 := (by change 14 < 18; omega); h)⟩ : Fin 18)))
                                 (Bool.casesOn (decide (r = (⟨15, (let h : Nat.lt 15 18 := (by change 15 < 18; omega); h)⟩ : Fin 18)))
                                   (Bool.casesOn (decide (r = (⟨16, (let h : Nat.lt 16 18 := (by change 16 < 18; omega); h)⟩ : Fin 18)))
-                                    ((some true, none, some false, none))
-                                    (some true, some false, some true, some false))
-                                  (some true, some true, some true, some false))
-                                (some true, none, none, some true))
-                              (none, some true, none, some true))
-                            (none, some true, none, some false))
-                          (some true, some true, some true, some true))
-                        (some true, some true, some false, some false))
-                      (some true, some false, some true, some true))
-                    (some true, some false, some false, some false))
-                  (none, none, some true, some false))
-                (some true, none, none, none))
-              (none, some true, some true, none))
-            (none, some true, some false, none))
-          (some true, some true, none, none))
-        (some true, some false, none, none))
-      (none, none, some true, none))
-    (none, none, none, some true)
+                                    (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 64 rayCardinality := (by change 64 < 81; omega); h)⟩)
+                                    ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 60 rayCardinality := (by change 60 < 81; omega); h)⟩)
+                                  ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 78 rayCardinality := (by change 78 < 81; omega); h)⟩)
+                                ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 68 rayCardinality := (by change 68 < 81; omega); h)⟩)
+                              ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 50 rayCardinality := (by change 50 < 81; omega); h)⟩)
+                            ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 48 rayCardinality := (by change 48 < 81; omega); h)⟩)
+                          ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 80 rayCardinality := (by change 80 < 81; omega); h)⟩)
+                        ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 72 rayCardinality := (by change 72 < 81; omega); h)⟩)
+                      ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 62 rayCardinality := (by change 62 < 81; omega); h)⟩)
+                    ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 54 rayCardinality := (by change 54 < 81; omega); h)⟩)
+                  ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 42 rayCardinality := (by change 42 < 81; omega); h)⟩)
+                ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 67 rayCardinality := (by change 67 < 81; omega); h)⟩)
+              ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 52 rayCardinality := (by change 52 < 81; omega); h)⟩)
+            ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 46 rayCardinality := (by change 46 < 81; omega); h)⟩)
+          ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 76 rayCardinality := (by change 76 < 81; omega); h)⟩)
+        ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero)))))))))))))))))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 58 rayCardinality := (by change 58 < 81; omega); h)⟩)
+      ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 43 rayCardinality := (by change 43 < 81; omega); h)⟩)
+    ⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.zero))))))))))))))))))))))))))))))))))))))))), (let h : Nat.lt 41 rayCardinality := (by change 41 < 81; omega); h)⟩
 
 def rayArena := mapInjectiveArena (Arena.ofFintype (Fin 18)) RayCode
 def rayRealization :=
   @mapInjectiveRealization (Fin 18) RayCode
-    (inferInstance : DecidableEq RayCode) (fun r => rayReadout r)
+    (instDecidableEqFin rayCardinality) (fun r => rayReadout r)
 theorem ray_bridge : LegacyPrimitiveRealization rayArena
     (Function.Injective ksVectors) rayRealization := by
   constructor
   change Function.Injective ksVectors ↔ Function.Injective rayReadout
-  let encodeDigit (z : Int) : Option Bool := if z = 0 then none else some (decide (z = 1))
-  let encode (v : KSVector) : RayCode :=
-    (encodeDigit (v 0), encodeDigit (v 1), encodeDigit (v 2), encodeDigit (v 3))
-  let decodeDigit : Option Bool → Int
-    | none => 0
-    | some false => -1
-    | some true => 1
+  let encode (v : KSVector) : Nat :=
+    27 * (v 0 + 1).toNat + 9 * (v 1 + 1).toNat +
+      3 * (v 2 + 1).toNat + (v 3 + 1).toNat
   let decode (v : RayCode) : KSVector :=
-    ![decodeDigit v.1, decodeDigit v.2.1, decodeDigit v.2.2.1, decodeDigit v.2.2.2]
-  have encoded (r : Fin 18) : encode (ksVectors r) = rayReadout r := by
+    ![(v.val / 27 : Int) - 1, ((v.val / 9) % 3 : Nat) - (1 : Int),
+      ((v.val / 3) % 3 : Nat) - (1 : Int), (v.val % 3 : Nat) - (1 : Int)]
+  have encoded (r : Fin 18) : (rayReadout r).val = encode (ksVectors r) := by
     fin_cases r <;> decide
   have decoded (r : Fin 18) : decode (rayReadout r) = ksVectors r := by
     fin_cases r <;> decide
@@ -187,7 +202,8 @@ theorem ray_bridge : LegacyPrimitiveRealization rayArena
       rayReadout r = rayReadout s := by
     constructor
     · intro h
-      rw [← encoded r, ← encoded s, h]
+      apply Fin.ext
+      rw [encoded r, encoded s, h]
     · intro h
       rw [← decoded r, ← decoded s, h]
   exact ⟨fun h _ _ e => h ((same_values _ _).mpr e),
@@ -201,7 +217,7 @@ theorem ray_slotSensitive : FiniteSlotSensitivity rayArena :=
     (ray_bridge.equivalence.mp ks_vectors_injective) (0 : Fin 18) (1 : Fin 18)
     (by decide : (0 : Fin 18) ≠ 1)
 register_information_theorem ks_vectors_injective in rayArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization (Fin 18) D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.RayCode (inferInstance : DecidableEq D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.RayCode) (fun r => D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.rayReadout r))
+  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization (Fin 18) D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.RayCode (instDecidableEqFin D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.rayCardinality) (fun r => D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.rayReadout r))
   primitives rayRealization.toPrimitiveBundle realization ray_bridge
   variation ray_lawSensitive sensitivity ray_slotSensitive
 example : ks_vectors_injective.__information_unit.Statement =
