@@ -1,8 +1,8 @@
 {
   "command": "/usr/bin/time -l lake env lean probe/SyyProbe.lean",
   "exit": 0,
-  "wall_s": 8.32,
-  "peak_rss_bytes": 1646919680,
-  "peak_rss_gb": 1.64691968,
-  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/verify-final-public-surface.log"
+  "wall_s": 7.59,
+  "peak_rss_bytes": 1647378432,
+  "peak_rss_gb": 1.647378432,
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/verify-clean-final-proof.log"
 }

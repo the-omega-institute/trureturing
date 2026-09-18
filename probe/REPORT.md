@@ -86,3 +86,5 @@ Compiled public theorem `SyyProbe.result`: for all n >= 1 and all words permutin
 `python3 probe/check_mutant.py` generated and compiled a mutant with the entire `potential_weak` declaration removed, replacing its use in `result` by `aesop` on the remaining finite-orbit context. Lean exited 1 with the unresolved inequality `Phi (M^[t] w) <= Phi (M (M^[t] w))`. The surviving maximality fact has the opposite direction. The check script exited 0 because this was the predicted semantic failure; the mutant itself did not compile. The error-recovery `sorryAx` printed for the failed mutant is not part of the successful main theorem. This test rejects this finiteness-only bypass; it does not prove that all alternative proofs are impossible.
 
 Final public surface: `IsValley`, `valleyRuns`, `r`, `s`, `M`, and the single theorem `result`. The potential and all proof helpers are private. Final compilation removes unused simp arguments and retains only the standard three axioms.
+
+The final main file compiles without warnings. The only public theorem remains the exact S_n convergence statement; all operational and potential lemmas remain private.

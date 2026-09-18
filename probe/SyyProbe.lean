@@ -51,7 +51,7 @@ private def Phi (w : List ℕ) : List ℕ := w.reverse
 private theorem westRun_perm (stack input : List ℕ) :
     (westRun stack input).Perm (stack ++ input) := by
   fun_induction westRun stack input with
-  | case1 stack => simp [westRun]
+  | case1 stack => simp
   | case2 x xs ih => simpa using ih
   | case3 x xs a rest h ih => simpa [westRun, h] using ih.cons a
   | case4 x xs a rest h ih =>
