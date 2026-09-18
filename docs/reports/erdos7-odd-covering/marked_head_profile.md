@@ -724,6 +724,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Independent positive-seven depths share one complete raw source](profile-notes/258-independent-positive-seven-depths-share-one-complete-raw-source.md)
 - [One complete raw-source pair bound improves the full J comparison](profile-notes/259-one-complete-raw-source-pair-bound-improves-the-full-j-comparison.md)
 - [A second seven depth improves the full J comparison](profile-notes/262-a-second-seven-depth-improves-the-full-j-comparison.md)
+- [Seven retained states and two seven depths control complete J heads](profile-notes/264-seven-retained-states-and-two-seven-depths-control-complete-j-heads.md)
 - [Complete raw prime paths improve the positive-seven pair block](profile-notes/265-complete-raw-prime-paths-improve-the-positive-seven-pair-block.md)
 - [Two original AP11 blocks use the complete second-depth interface](profile-notes/266-two-original-ap11-blocks-use-the-complete-second-depth-interface.md)
 - [Two second-depth survival bounds improve the full J comparison](profile-notes/267-two-second-depth-survival-bounds-improve-the-full-j-comparison.md)
+- [Three retained labels and complete raw paths improve the full J comparison](profile-notes/268-three-retained-labels-and-complete-raw-paths-improve-the-full-j-comparison.md)
