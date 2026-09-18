@@ -52,3 +52,7 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-syy-cycles
 ## Placement proposal
 
 Proposed GID `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence`, path `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence.lean`, adjacent to existing permutation-pattern modules. `git ls-files 'D5/**'` counted 5 tracked files directly in that directory; adding this module gives 6. `DirectoryFileLimit = 96` at `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs:65`. No D5 file is created by this probe.
+
+## Lean definitions
+
+`probe/SyyProbe.lean` compiles with the source-form definitions: `IsValley`, recursive maximal valley runs, `r`, West's explicit pop/push/flush stack algorithm `s`, composition `M`, and reversed-word potential `Phi`. The stack helper is private; the maximum-split identity is not used as a definition. The run-based definition scans until the first strictly smaller value, then starts the next run. On distinct words this is exactly the source's valley partition.
