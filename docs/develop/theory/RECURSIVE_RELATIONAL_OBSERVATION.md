@@ -35653,3 +35653,183 @@ $$
 若另一个解码器获准读取 $W$，则映射 $(b,w)\mapsto w$ 直接返回 $E_0$，命中概率为一。式 (80.5) 及其单点纤维判据限定于指定的 $R_B$ 抽样器，所比较的是有限实现标签及其保留记录。证毕。
 
 ## 80.99 追加锚
+
+## 81. 确定记忆更新的信息收支与有限历史恢复界
+
+**定义与假设 81.1（共同有限律与信息单位）。** 本节每个实验中的随机变量均取值于有限非空集合，全部边缘、条件量及更新前后读数来自该实验的同一个非负归一化联合律。不同实验不预设为同一时间过程。用 $\mathsf H$ 表示 Shannon 熵，以区别于目标随机变量 $H$；沿用命题 69.3a 的自然对数约定，单位为 nat，且 $0\ln0=0$。具体地，
+$$
+\mathsf H(X)=-\sum_x p_X(x)\ln p_X(x),\qquad
+\mathsf H(X\mid Z)=
+\sum_{z:p_Z(z)>0}p_Z(z)\,
+\mathsf H\!\left(\frac{p_{X,Z}(\,\cdot\,,z)}{p_Z(z)}\right),
+$$
+$$
+I(X;Y)=\mathsf H(X)+\mathsf H(Y)-\mathsf H(X,Y),\qquad
+I(X;Y\mid Z)=
+\mathsf H(X\mid Z)+\mathsf H(Y\mid Z)-\mathsf H((X,Y)\mid Z).
+$$
+零质量条件切片对条件熵和条件互信息贡献零，不在其上指定归一化后验。这与定义与假设 80.1 的支撑约定一致。若以 bit 为单位，则定义 $\mathsf H_2=\mathsf H/\ln2$、$I_2=I/\ln2$，整条熵或信息等式、不等式统一除以 $\ln2$；概率不作此换算。下述数据只指定一次更新或固定长度实验，不指定正反路径概率律，也不作物理时间箭头断言。
+
+**定理 81.2（固定目标的确定记忆更新收支）。** 设目标 $H$、旧记忆 $M$、新观察 $O$ 具有定义与假设 81.1 的共同联合律。给定全定义的确定映射
+$$
+F:\mathcal M\times\mathcal O\longrightarrow\mathcal M',
+\qquad U=(M,O),\qquad M'=F(M,O),
+$$
+其中 $\mathcal M'$ 也有限非空，且更新前后比较的是同一个目标随机变量 $H$。则
+$$
+\boxed{
+I(H;M')-I(H;M)
+=I(H;O\mid M)-I(H;U\mid M').
+} \tag{81.1}
+$$
+右侧两项分别非负，但左侧可正也可负。第一项是观察在旧记忆之外增加的目标信息；第二项是整个输入对 $U$ 中未由新记忆保留的目标信息，能够包含刚取得的观察信息，不能仅称为旧记忆的损失。本定理不要求均匀性、平稳性、独立性或记忆容量上界。
+
+证明。记 $p(h,u)=\Pr(H=h,U=u)$，将 $F(m,o)$ 简写为 $F(u)$。实际更新的三元联合律为
+$$
+P(h,u,m')=p(h,u)\mathbf1_{\{m'=F(u)\}}.
+$$
+对每个 $u$ 恰有一个 $F(u)\in\mathcal M'$，故
+$$
+\sum_{m'}\mathbf1_{\{m'=F(u)\}}=1,\qquad
+\sum_{m'}P(h,u,m')=p(h,u),\qquad
+\sum_{h,u,m'}P(h,u,m')=\sum_{h,u}p(h,u)=1.
+$$
+所以 $P$ 非负归一化，其 $(H,U)$ 边缘确为原律。令 $p_U(u)=\sum_h p(h,u)$。若 $p_U(u)>0$，则
+$$
+\Pr(H=h,M'=m'\mid U=u)
+=\frac{p(h,u)}{p_U(u)}\mathbf1_{\{m'=F(u)\}}.
+$$
+右侧两个因子分别是归一化的 $H\mid U=u$ 条件律和集中于 $F(u)$ 的 $M'\mid U=u$ 条件律，因而该切片是其两边缘的乘积。若 $p_U(u)=0$，非负和为零迫使每个 $p(h,u)=0$，于是对应的 $P$ 切片全零，条件量贡献零。对以 $U$ 为条件坐标的联合律，直接应用有限条件乘积判据
+[conditional_mutual_information_eq_zero_iff_conditional_product](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean)，得到
+$$
+I(H;M'\mid U)=0.
+$$
+此图律也是归一化通道 $W(u,m')=\mathbf1_{\{m'=F(u)\}}$ 生成的律；上面的行和与边缘等式正好满足同一出处中 markov_of_channel 的假设。
+
+现在对这个共同联合律按两个顺序使用
+[mutual_information_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean)。交换成对坐标只重排有限熵和，故
+$$
+\begin{aligned}
+I(H;(U,M'))
+&=I(H;U)+I(H;M'\mid U)=I(H;U),\\
+I(H;(U,M'))
+&=I(H;M')+I(H;U\mid M').
+\end{aligned}
+$$
+再在原来的 $(H,M,O)$ 律上用同一链式法则，
+$$
+I(H;U)=I(H;M)+I(H;O\mid M).
+$$
+合并移项即为式 (81.1)。两个条件互信息来自非负归一化联合律及其坐标重排，满足
+[conditional_mutual_information_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)
+的假设，故分别非负。
+
+为证明差值确可取两种符号，令 $H$ 在 $\{0,1\}$ 上均匀。若 $M$ 恒定、$O=H$、$F(m,o)=o$，则 $I(H;M)=0$、$I(H;M')=\mathsf H(H)=\ln2$，差为 $\ln2$。若 $M=H$、$O$ 恒定、$F$ 恒定，则两信息依次为 $\ln2,0$，差为 $-\ln2$。这些值直接由点质量熵为零及均匀二点熵为 $\ln2$ 得到。最后，仍取 $M$ 恒定、$O=H$，却使 $F$ 恒定；这时
+$$
+I(H;M)=I(H;M')=0,\qquad
+I(H;O\mid M)=I(H;U\mid M')=\ln2.
+$$
+旧记忆没有目标信息而被丢弃项严格为正，证明它不能只计旧记忆损失。证毕。
+
+**定理 81.3（均匀合法历史通过有限记忆的恢复与条件熵界）。** 固定 $n\in\mathbb N=\{0,1,\ldots\}$，令
+$$
+\mathcal W_n=\{w\in\{0,1\}^n:w\text{ 不含相邻的 }11\},
+\qquad N=|\mathcal W_n|=G_n\ge1,
+$$
+其中直接沿用命题 70.10 的计数 $G_n$；$\mathcal W_0$ 仅含空字，$G_0=1$。在本次固定 $n$ 的实验中，$H$ 均匀分布于 $\mathcal W_n$。记忆载体 $\mathcal M$ 有 $K\ge1$ 个状态，位预算为 $B\in\mathbb N$，且 $K\le2^B$。设非负编码核、解码核
+$$
+e:\mathcal W_n\times\mathcal M\to[0,\infty),\qquad
+d:\mathcal M\times\mathcal W_n\to[0,\infty)
+$$
+逐行满足
+$$
+\sum_m e(h,m)=1\quad(\forall h),\qquad
+\sum_{\widehat h}d(m,\widehat h)=1\quad(\forall m).
+$$
+要求实际三元联合律完整地分解为
+$$
+\boxed{
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\frac1N e(h,m)d(m,\widehat h).
+} \tag{81.2}
+$$
+这是本定理的无旁路条件：给定记忆后，解码使用同一行 $d(m,\cdot)$。它允许随机编码与随机解码，但不能仅由“所用随机种子与 $H$ 独立”代替。则恢复原历史的成功概率满足
+$$
+\boxed{
+\Pr(\widehat H=H)
+\le\min\!\left(1,\frac K{G_n}\right)
+\le\min\!\left(1,\frac{2^B}{G_n}\right).
+} \tag{81.3}
+$$
+同时有
+$$
+\boxed{
+\mathsf H(H\mid M)
+\ge\max(0,\ln G_n-\ln K)
+\ge\max(0,\ln G_n-B\ln2).
+} \tag{81.4}
+$$
+式 (81.4) 对任意均匀源 $H$ 与至多 $K$ 态记忆 $M$ 的联合律均成立，不需要解码器或式 (81.2)。式 (81.3) 的成功事件要求重建所抽取的整个原历史；命题 69.4 则只要求保留指定更新与读出的预测完成商。即使两个历史在该预测任务中等价，这里的恢复事件仍要求区分它们。若把本定理用于定理 81.2 的更新后记忆，须将 $M$、载体、$K$ 及编码核一致替换为 $M'$ 的对应数据。
+
+证明。$N\ge1$ 也可由全零字（$n=0$ 时为空字）直接见证。两核非负且行和为一，故式 (81.2) 的右侧确为概率律：
+$$
+\frac1N\sum_h\sum_m e(h,m)\sum_{\widehat h}d(m,\widehat h)
+=\frac1N\sum_h1=1.
+$$
+其 $H$ 边缘为 $1/N$，$(H,M)$ 边缘为 $e(h,m)/N$。编码行的非负性还给出
+$$
+0\le e(h,m)\le\sum_{m'}e(h,m')=1.
+$$
+于是仅以有限求和便得
+$$
+\begin{aligned}
+\Pr(\widehat H=H)
+&=\frac1N\sum_m\sum_h e(h,m)d(m,h)\\
+&\le\frac1N\sum_m\sum_h d(m,h)
+=\frac KN.
+\end{aligned}
+$$
+结合概率至多为一、$N=G_n>0$ 及 $K\le2^B$，得到式 (81.3)。此证明没有除以 $\Pr(M=m)$。未使用的记忆状态满足 $\sum_h e(h,m)=0$，故其编码列全零；无论该状态的解码行选哪一个归一化概率，都不影响成功率。$n=0$ 时解码只能返回空字，成功率为一，与上界相符。
+
+条件熵部分只使用 $(H,M)$ 联合律。对它及交换坐标后的律应用
+[entropy_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/ConditionalEntropy.lean)，得到
+$$
+\mathsf H(H)+\mathsf H(M\mid H)
+=\mathsf H(H,M)
+=\mathsf H(M)+\mathsf H(H\mid M).
+$$
+所有涉及的边缘非负归一化，源载体与记忆载体均非空。因此
+[entropy_eq_log_card_iff_uniform](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyEquality.lean)
+给出 $\mathsf H(H)=\ln N$；
+[entropy_le_log_card](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/MaxEntropy.lean)
+给出 $\mathsf H(M)\le\ln K$；若实际载体少于 $K$ 个状态，再用对数单调性即可。同一非负联合律上的
+[conditional_entropy_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyNonneg.lean)
+给出两个条件熵非负。故
+$$
+\mathsf H(H\mid M)
+=\ln N+\mathsf H(M\mid H)-\mathsf H(M)
+\ge\ln N-\ln K.
+$$
+与 $\mathsf H(H\mid M)\ge0$ 合并，得到第一个最大值界；$1\le K\le2^B$ 蕴含 $\ln K\le B\ln2$，再得第二个。$n=0$ 时源熵和条件熵都为零，右侧两个最大值也为零。依定义与假设 81.1 换成 bit 后，最后一界就是 $\mathsf H_2(H\mid M)\ge\max(0,\log_2G_n-B)$。
+
+为核实无旁路条件中随机性的边界，取 $n=1$，令 $H,S$ 为相互独立的均匀二点变量，置 $M=H\mathbin{\oplus}S$，其中 $\oplus$ 为模二加法。若解码器还可读取共享种子 $S$，则令 $\widehat H=M\mathbin{\oplus}S=H$。此时 $e(h,m)=1/2$，而
+$$
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\tfrac14\mathbf1_{\{\widehat h=h\}}.
+$$
+若式 (81.2) 成立，则对任意固定 $m$，取 $h=0$ 会迫使 $d(m,0)=1$，取 $h=1$ 又迫使 $d(m,1)=1$，违反解码行归一化。故种子独立本身不足以保证该式。使用额外可读记录时，须把它纳入实际记忆状态及容量条件，或另行指定扩展模型的联合律。式 (81.4) 的推导完全没有使用 $d$ 或 $\widehat H$，因而其适用范围不受这个解码边界影响。证毕。
+
+**命题 81.4（各长度均匀合法历史律不具投影相容性）。** 令 $u_n$ 为定理 81.3 中 $\mathcal W_n$ 上的均匀律，$t:\mathcal W_2\to\mathcal W_1$ 为保留首位的截断映射。按 $\mathcal W_1=(0,1)$ 排列，有
+$$
+t_*u_2=(2/3,1/3)\ne(1/2,1/2)=u_1.
+$$
+因此不存在一个取值于无限无相邻 $11$ 序列空间的概率过程，使全部长度 $n$ 的前缀律同时等于 $u_n$。
+
+证明。$\mathcal W_2=\{00,01,10\}$，每个字在 $u_2$ 下的质量为 $1/3$；首位为零的有两个，为一的有一个，故得到所列截断律。$\mathcal W_1=\{0,1\}$，其均匀律两点质量各为 $1/2$。若存在所述过程，记其律为 $\lambda$、长度一及长度二的前缀映射为 $\pi_1,\pi_2$，则逐点有 $\pi_1=t\circ\pi_2$。推前概率的复合性将强制
+$$
+u_1=(\pi_1)_*\lambda
+=t_*\bigl((\pi_2)_*\lambda\bigr)=t_*u_2,
+$$
+与上式矛盾。命题 71.8 给出的则是总长度趋于无穷时、固定短前缀的分布极限；它没有要求这些有限总长度的均匀律逐层相容，也不将定理 81.3 的均匀源替换为平稳 Parry 律。证毕。
+
+## 81.99 追加锚
