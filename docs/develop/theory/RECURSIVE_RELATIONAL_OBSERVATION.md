@@ -39548,3 +39548,177 @@ $$
 在 $\mathbb Q$ 上满足 $d_p(0,1)=1$。其现有柯西完成构造是 [`Padic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)，即 $\mathbb Q_p$；有理数的等距嵌入保留 $0$ 与 $1$ 的正距离，故此完成非零。单位理想的商逆极限与这一赋值度量完成采用不同的邻域系统，以上两个结论各自成立。证毕。
 
 ## 95.99 追加锚
+
+## 96. 有界游程并集的有限覆盖与零测性
+
+**定义 96.1（有界连续壹游程与有限语言）。** 对 $n\in\mathbb N_0$，令
+$$
+I_n=\{j\in\mathbb N_0:j<n\},\qquad
+\Sigma_n=\{0,1\}^{I_n},\qquad
+\Sigma=\{0,1\}^{\mathbb N_0}.
+$$
+特别地，$I_0=\varnothing$，$\Sigma_0$ 只含空词。$\Sigma$ 取离散二点空间的乘积拓扑，并配备公平独立 Bernoulli 的 Borel 乘积概率 $\mu$。记前缀读出为
+$$
+\pi_n:\Sigma\to\Sigma_n,\qquad \pi_n(x)=x|_{I_n}.
+$$
+因此对每个 $n\in\mathbb N_0$ 及每个 $w\in\Sigma_n$，
+$$
+\mu\bigl(\pi_n^{-1}(\{w\})\bigr)=2^{-n}.
+$$
+对整数 $k\ge2$，定义
+$$
+K_k=\left\{x\in\Sigma:
+\forall j\in\mathbb N_0,\ \exists i\in I_k,\ x_{j+i}=0\right\},
+\qquad
+U=\bigcup_{k\ge2}K_k,
+$$
+以及
+$$
+W_{k,n}=\left\{w\in\Sigma_n:
+\forall j\in\mathbb N_0,\
+j+k\le n\Longrightarrow\exists i\in I_k,\ w_{j+i}=0\right\}.
+$$
+$K_k$ 与 $W_{k,n}$ 分别禁止无限串与长度 $n$ 的词中出现连续块 $1^k$。沿用 [定义 66.0](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的记号，有 $K_k=Y_{k+1}$。
+
+对 $0\le m\le n$，记截断映射为
+$$
+t_{n,m}:\Sigma_n\to\Sigma_m,\qquad t_{n,m}(w)=w|_{I_m}.
+$$
+有限语言满足
+$$
+W_{k,n}\subseteq W_{k+1,n},\qquad
+t_{n,m}(W_{k,n})\subseteq W_{k,m},
+$$
+且其包含与截断相容：先包含再截断，与先截断再包含，所得有限词相同。以下各 $k$ 的有限语言均作为同一 $\Sigma_n$ 的子集；各逆极限均作为同一相容前缀空间的子集。所有并均为这些自然包含下的普通递增并。
+
+**命题 96.2（有限层最终覆盖与整体并集的严格边界）。** 对每个 $k\ge2$，$K_k$ 闭，且对每个 $n\in\mathbb N_0$，
+$$
+K_k\subsetneq K_{k+1},\qquad
+\pi_n(K_k)=W_{k,n},\qquad
+k>n\Longrightarrow W_{k,n}=\Sigma_n. \tag{96.1}
+$$
+并集 $U$ 是非空、稠密的真 Borel 子集，满足
+$$
+\pi_n(U)=\Sigma_n\quad(n\in\mathbb N_0),\qquad
+U\subsetneq\overline U=\Sigma, \tag{96.2}
+$$
+以及
+$$
+\mu(K_k)=0\quad(k\ge2),\qquad
+\mu(U)=0,\qquad
+\mu(\overline U)=1. \tag{96.3}
+$$
+通过相容前缀与无限串的自然识别，规范比较映射
+$$
+\bigcup_{k\ge2}\varprojlim_{n\ge0}W_{k,n}
+\longrightarrow
+\varprojlim_{n\ge0}\left(\bigcup_{k\ge2}W_{k,n}\right) \tag{96.4}
+$$
+就是 $U\hookrightarrow\Sigma$，因而单射而不满射。其量词形式为
+$$
+\begin{aligned}
+U
+&=\left\{x\in\Sigma:
+\exists k\ge2,\ \forall n\in\mathbb N_0,\
+\pi_n(x)\in W_{k,n}\right\}\\
+&\subsetneq
+\left\{x\in\Sigma:
+\forall n\in\mathbb N_0,\ \exists k\ge2,\
+\pi_n(x)\in W_{k,n}\right\}
+=\Sigma.
+\end{aligned} \tag{96.5}
+$$
+
+**证明。** 固定 $k\ge2$。对每个起点 $j\in\mathbb N_0$，令
+$$
+C_{j,k}=\{x\in\Sigma:x_{j+i}=1\text{ 对所有 }i\in I_k\}.
+$$
+这是只限制有限坐标的开闭柱集，且
+$$
+\Sigma\setminus K_k=\bigcup_{j\in\mathbb N_0}C_{j,k}.
+$$
+因此 $K_k$ 闭。任何 $1^{k+1}$ 都含有 $1^k$，所以 $K_k\subseteq K_{k+1}$，有限词也满足 $W_{k,n}\subseteq W_{k+1,n}$。截断不会新增禁块，因此 $t_{n,m}(W_{k,n})\subseteq W_{k,m}$；所有这些映射都只是坐标限制，故包含与截断相容。无限串
+$$
+1^k0^\infty
+$$
+属于 $K_{k+1}$ 而不属于 $K_k$，从而无限串空间的包含严格。
+
+若 $x\in K_k$，其每个前缀都不含 $1^k$，故 $\pi_n(K_k)\subseteq W_{k,n}$。反过来，给定 $w\in W_{k,n}$，令 $x=w0^\infty$。完全位于前缀内的长度 $k$ 块不是 $1^k$；任何进入零尾部的长度 $k$ 块都含有零。因此 $x\in K_k$，且 $\pi_n(x)=w$，得到
+$$
+\pi_n(K_k)=W_{k,n}.
+$$
+这也覆盖 $n=0$：空词延伸为 $0^\infty\in K_k$。若 $k>n$，没有 $j\in\mathbb N_0$ 满足 $j+k\le n$，所以 $W_{k,n}=\Sigma_n$。对任意固定 $n$，取
+$$
+k=\max\{2,n+1\}
+$$
+便得到 $\pi_n(U)=\Sigma_n$，证明式 (96.1) 与式 (96.2) 的有限层结论。全零串属于 $K_2$，故 $U$ 非空。
+
+现说明相容前缀的识别。若 $(w_n)_{n\ge0}$ 满足 $w_n\in\Sigma_n$ 及
+$$
+t_{n+1,n}(w_{n+1})=w_n\quad(n\ge0),
+$$
+定义
+$$
+x_j=(w_{j+1})_j\quad(j\in\mathbb N_0).
+$$
+反复截断给出 $t_{n,m}(w_n)=w_m$ 对所有 $m\le n$ 成立，所以当 $j<n$ 时有 $(w_n)_j=x_j$。于是 $\pi_n(x)=w_n$ 对每个 $n$ 成立。反之，每个无限串的前缀族显然相容；前缀包含每个坐标，故所构成的无限串唯一。因此
+$$
+\varprojlim_{n\ge0}\Sigma_n\cong\Sigma.
+$$
+这些识别把有限层柱集对应到通常前缀柱集，与 [定理 4.2](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的柱拓扑一致。
+
+固定 $k$ 时，$x\in K_k$ 已保证其全部前缀属于 $W_{k,n}$。反之，若全部前缀属于 $W_{k,n}$，而 $x$ 在起点 $j$ 出现 $1^k$，则该禁块已完整出现在长度 $j+k$ 的前缀中，违反 $\pi_{j+k}(x)\in W_{k,j+k}$。所以
+$$
+\varprojlim_{n\ge0}W_{k,n}\cong K_k.
+$$
+这一识别保持所有坐标，也保持随 $k$ 增大的自然包含。另一方面，每个固定 $n$ 都有
+$$
+\bigcup_{k\ge2}W_{k,n}=\Sigma_n.
+$$
+因此式 (96.4) 的源识别为 $U$，靶识别为 $\Sigma$；比较映射把同一相容前缀族送到自身，就是包含 $U\hookrightarrow\Sigma$。源要求同一个 $k$ 控制所有前缀，靶允许针对每个 $n$ 选择 $k=\max\{2,n+1\}$，得到式 (96.5) 的两个集合表达式。
+
+无限串
+$$
+x^*=0\,1\,0\,11\,0\,111\,0\,1111\,0\cdots
+$$
+在第 $k$ 段连续壹中出现 $1^k$，故对每个 $k\ge2$ 都不属于 $K_k$。因此 $x^*\notin U$，$U\subsetneq\Sigma$，并证明上述比较映射不满射及式 (96.5) 的严格包含。
+
+有限层全覆盖给出稠密性。具体地，将 [定理 3.4](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 应用于单个载体 $X=\Sigma$、满射前缀读出 $\pi_n$ 及子集 $U$；在刚才的相容前缀识别下，该定理给出
+$$
+\overline U
+=\bigcap_{n\ge0}\pi_n^{-1}\bigl(\pi_n(U)\bigr)
+=\bigcap_{n\ge0}\pi_n^{-1}(\Sigma_n)
+=\Sigma.
+$$
+等价地，每个前缀柱都有零尾延伸落在 $U$ 中。任一非空基本开集只限制有限个坐标，因而含有某个前缀柱，也就与 $U$ 相交。这里恢复的是闭包 $\overline U$；结合 $x^*\notin U$ 可知 $U$ 不闭，符合 [第 6.1 节](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的闭像边界。这完成式 (96.2)。
+
+最后计算测度。固定 $k\ge2$ 与 $m\ge1$，将前 $mk$ 位划为起点 $0,k,\ldots,(m-1)k$ 的 $m$ 个互不重叠的长度 $k$ 块，令
+$$
+B_{k,m}=\left\{x\in\Sigma:
+\forall r\in I_m,\ \exists i\in I_k,\ x_{rk+i}=0\right\}.
+$$
+$K_k$ 要求每个起点都不出现 $1^k$，所以特别满足这些对齐起点的条件，即
+$$
+K_k\subseteq B_{k,m}\quad(k\ge2,\ m\ge1).
+$$
+每个对齐块有 $2^k-1$ 个允许词；各块的坐标互不重叠，因此满足条件的长度 $mk$ 前缀恰有 $(2^k-1)^m$ 个。这些前缀柱两两不交，每个柱质量为 $2^{-mk}$，从而
+$$
+\mu(B_{k,m})=(2^k-1)^m2^{-mk}=(1-2^{-k})^m.
+$$
+这里只计数对齐块；跨越两个相邻块边界的窗口未被这个事件逐一检查，所用关系是 $K_k\subseteq B_{k,m}$。于是对所有 $m\ge1$，
+$$
+0\le\mu(K_k)\le(1-2^{-k})^m.
+$$
+由于 $0<1-2^{-k}<1$，令 $m\to\infty$ 得 $\mu(K_k)=0$。这种不重叠块的有限乘积估计见 Durrett，[*Probability: Theory and Examples*，第五版作者稿](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)，Theorem 2.3.7（印刷第 70 页、PDF 第 78 页）；同书 Example 2.3.12 “Head runs”（印刷第 74 页、PDF 第 82 页）给出游程问题的进一步结果。
+
+每个 $K_k$ 闭而 Borel 可测，$U$ 是可数个闭集的并，因而是 Borel 集。由可数次可加性，
+$$
+0\le\mu(U)\le\sum_{k=2}^{\infty}\mu(K_k)=0.
+$$
+又因 $\overline U=\Sigma$，有
+$$
+\mu(\overline U)=\mu(\Sigma)=1.
+$$
+这证明式 (96.3)。所有测度均取环境空间 $\Sigma$ 上已指定的公平独立乘积律；有限投影的满射性是集合层面的存在性结论。证毕。
+
+## 96.99 追加锚
