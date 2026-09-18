@@ -1,0 +1,28 @@
+[
+  {
+    "theorem": "PerrierProbe.result",
+    "proof_shape": "bind-only",
+    "frozen_deps": [],
+    "escape_witness": "none; the preregistered induction-on-j elimination lemma is absent and unnecessary. No replacement content witness is asserted. The second theorem is a probe-only mutant, not proposed delivery surface.",
+    "four_tests": {
+      "i": "Fails: no such elimination declaration occurs in the elaborated closure. Main closure checked: 7,334 constants, zero D5 dependencies.",
+      "ii": "Not established: no non-normalization fact is required. The actual calculation instantiates Fin.sum_univ_succ and Fin.sum_univ_castSucc, distributes sums, and normalizes the recurrence equations.",
+      "iii": "The proposed general-j identity differs from the final two-formula conjunction, but no corresponding declaration was elaborated; no kernel definitional-inequality test is claimed.",
+      "iv_mutant_compiled": true
+    },
+    "admission_basis": "open-problem-resolution"
+  },
+  {
+    "theorem": "PerrierNoEliminationMutant.result",
+    "proof_shape": "bind-only",
+    "frozen_deps": [],
+    "escape_witness": "none; the preregistered induction-on-j elimination lemma is absent and unnecessary. No replacement content witness is asserted. The second theorem is a probe-only mutant, not proposed delivery surface.",
+    "four_tests": {
+      "i": "Fails: no such elimination declaration occurs in the elaborated closure. Main closure checked: 7,334 constants, zero D5 dependencies.",
+      "ii": "Not established: no non-normalization fact is required. The actual calculation instantiates Fin.sum_univ_succ and Fin.sum_univ_castSucc, distributes sums, and normalizes the recurrence equations.",
+      "iii": "The proposed general-j identity differs from the final two-formula conjunction, but no corresponding declaration was elaborated; no kernel definitional-inequality test is claimed.",
+      "iv_mutant_compiled": true
+    },
+    "admission_basis": "open-problem-resolution"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "verdict": "faithful quantified strengthening; no binder, exponent, shift, or domain defect found",
+  "dimension": "Source k>=2 becomes d>=1 with k=d+1; d=0 is the explicitly preregistered extension.",
+  "domain": "Arbitrary K [Field K] and m,a:Fin d->K include the source real initial values and integer recurrence parameters; no positivity or eigenvector assumption is needed for the recurrence implication.",
+  "time_origin": "r n j equals source r_(j+1)^(n-1); r 0 is source time -1.",
+  "initial_values": "r 0 0=1; r 0 j.succ=a j, matching source p.14.",
+  "recurrence": "r(n+1,0)=r(n,last d); r(n+1,j.succ)=r(n,j.castSucc)+m(j)*r(n,last d), matching p.15.",
+  "generating_function": "R r j=PowerSeries.mk(fun n=>r n j); the shift is explicit on pp.8 and 12 and extended contextually to general k as disclosed in #8627.",
+  "D": "1-sum_j C(m j)*X^(d-j)-X^(d+1), matching reversed coefficients and degrees on p.15.",
+  "P": "1+sum_j C(a j-m j)*X^(d-j), matching R_1 numerator on p.15.",
+  "Q": "X^d+sum_j C(a j)*X^(d-1-j), matching R_k numerator on p.15.",
+  "inverse": "D has constant coefficient 1; proved in Lean, including d=0.",
+  "locator_correction": "The issue/brief says printed p.7 for the 2x2 shifted definition; it is on printed p.8. This does not change the preregistered mathematical statement.",
+  "scope": "Only the two displayed rational formulas; the subsequent equation-(7) conjecture and classification question are excluded."
+}

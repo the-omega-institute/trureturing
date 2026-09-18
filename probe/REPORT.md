@@ -43,3 +43,30 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-perrier-mc
 The final main file compiles with exit 0 after adding a checked-environment traversal (no mathematical declarations added). It visits 7,334 constants in the elaborated type/proof dependency closure; zero are in D5. Direct proof providers include Fin.sum_univ_succ, Fin.sum_univ_castSucc, and PowerSeries.eq_mul_inv_iff_mul_eq. Probe-owned constants are the result, its five definitions, and compiler-generated proof auxiliaries; no elimination lemma occurs. These readings establish no direct frozen dependencies; there are no GIDs or statement_ids to report. The closure audit checks presence, not the repository's whole semantic admission policy.
 
 Proposed GID: D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions. Proposed path adds `.lean`. Target directory has exactly 4 direct files, all Lean; adding one gives 5, within the brief's ≤12 admission band. Public delivery surface: Recurrence, R, D, P, Q, and ONE result. The no-elimination mutant and diagnostic commands are probe artifacts, not additional proposed public mathematics. No D5 mutation or admission operation has occurred.
+
+## Judgement-form report
+
+Verdict: **propose** — the complete preregistered conjunction and its witness-bypass mutant compile without sorry or new axioms, with only propext, Classical.choice, Quot.sound. This is a probe recommendation, not a freeze, admission, review consensus, or merge.
+
+Both public test declarations (PerrierProbe.result and the probe-only PerrierNoEliminationMutant.result) have proof_shape **bind-only**, direct frozen dependencies **none**, escape_witness **none**, and admission_basis **open-problem-resolution** (issue #8627). Only the main result is proposed for delivery.
+
+Four witness tests, applied to the preregistered induction-on-j elimination lemma:
+
+1. In elaborated dependency closure: **fails**. No such declaration occurs; the complete main closure was traversed.
+2. Not obtainable by upstream instantiation/projection/normalization: **not established**. Actual proof intermediates come from existing finite-sum boundary decompositions and normalization of the recurrence hypotheses. No non-normalization fact is claimed.
+3. Not definitionally the conclusion: the proposed general-j statement differs from the final conjunction, but no such declaration was elaborated, so no kernel definitional-inequality result is claimed.
+4. Live/necessary path: **fails**. The independently compiled witness-bypass mutant proves the same conjunction. iv_mutant_compiled = true.
+
+The observation is a successful bind-only approach, not a different escape witness. There is therefore no retrospectively relabelled content witness. The issue already preregisters open-problem-resolution if the content-witness assessment fails.
+
+Utility kind=none: the theorem quantifies over arbitrary dimension, field, parameters, and recurrence solutions. It is not bounded enumeration, a checker, numeric reduction, or a certified finite instance. The finite Python computations are probe evidence only.
+
+### Boundaries and reasoning discipline
+
+The reference frame is the literal shifted recurrence and the source formulas, fixed before computation. The known-good shapes are PowerSeries coefficient shifts and Fin's two decompositions of the same finite sum. 美不美: the matrix/charpoly route is structurally elegant but its searched APIs do not discharge these formulas; coordinate induction mirrors the source but introduces an unnecessary intermediate; weighted-sum cancellation is concise and fully instantiated from upstream identities. Aesthetic preference is not evidence: compilation, dependency traversal, and exact coefficient comparisons are the verified readings.
+
+ASSUMED-UNVERIFIED: comprehensive novelty/open status outside the inspected source and bounded pinned-library/repository search. The issue's independent literature-search claims were read, not independently reproduced. In particular its named WSU 2023 dissertation gap remains unverified. General-k use of the earlier shifted R definition is a contextual interpretation disclosed in the preregistration, not an explicit repeated definition on p.15.
+
+Depth-bound stop: complete main conjunction plus one successful witness-bypass mutant; no further claim about equation (7), classification of periodic continued fractions, or the unread dissertation. The dependency traversal bound was 100,000 constants and it completed at 7,334. No required CI gates, deposit, emission, preflight, PR, or other-seat review was run or claimed.
+
+Visible inputs: this brief + GoalArtifact + issue #8627 + source PDF; inherited prior: repo-prior-exposed (CLAUDE.md/AGENTS.md). Pinned Mathlib and repository sources were read for the requested search; no other probe seat output was accessed or requested.
