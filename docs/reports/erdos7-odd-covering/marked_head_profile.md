@@ -563,3 +563,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The next K escape layers and product exclusion](profile-notes/92-the-next-k-escape-layers-and-product-exclusion.md)
 - [Product escape and source mass improve global K](profile-notes/93-product-escape-and-source-mass-improve-global-k.md)
 - [Quadratic marked events and a common residual improve global K](profile-notes/94-quadratic-marked-events-and-a-common-residual-improve-global-k.md)
+- [Vector marked gains hold on the entire actual K faces](profile-notes/95-vector-marked-gains-hold-on-the-entire-actual-k-faces.md)
+- [Quadratic cell vectors retain deep deletion on the K faces](profile-notes/96-quadratic-cell-vectors-retain-deep-deletion-on-the-k-faces.md)
+- [Vector source margins improve the complete face comparison](profile-notes/97-vector-source-margins-improve-the-complete-face-comparison.md)
