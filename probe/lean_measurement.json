@@ -1,8 +1,8 @@
 {
   "command": "/usr/bin/time -l lake env lean probe/SyyProbe.lean",
   "exit": 0,
-  "wall_s": 4.31,
-  "peak_rss_bytes": 1649655808,
-  "peak_rss_gb": 1.649655808,
-  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-maximum-split-identity.log"
+  "wall_s": 3.82,
+  "peak_rss_bytes": 1644806144,
+  "peak_rss_gb": 1.644806144,
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-valley-reversal-permutation.log"
 }

@@ -115,4 +115,13 @@ private theorem s_split_max (X Y : List ℕ) (m : ℕ)
   simpa only [List.nil_append, s, List.append_assoc] using
     congrArg (westRun [] X ++ ·) hs
 
+private theorem r_perm (w : List ℕ) : (r w).Perm w := by
+  fun_induction valleyRuns w with
+  | case1 => simp [r, valleyRuns]
+  | case2 v tail ih =>
+      let p := fun x => decide (v ≤ x)
+      have h := (List.reverse_perm (v :: tail.takeWhile p)).append ih
+      simpa only [p, r, valleyRuns, List.map_cons, List.flatten_cons,
+        List.cons_append, List.takeWhile_append_dropWhile] using h
+
 end SyyProbe
