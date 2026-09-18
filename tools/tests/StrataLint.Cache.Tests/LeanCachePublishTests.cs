@@ -1,6 +1,9 @@
 using System.Text;
+using StrataLint.TestSupport;
+using Xunit;
+using FactAttribute = Xunit.SkippableFactAttribute;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Cache.Tests;
 
 public sealed class LeanCachePublishTests
 {
