@@ -699,3 +699,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete retained duals share one raw-source support](profile-notes/230-the-complete-retained-duals-share-one-raw-source-support.md)
 - [Fixed supports transport the complete punctured tails](profile-notes/231-fixed-supports-transport-the-complete-punctured-tails.md)
 - [Each complete fallback uses its own square bound](profile-notes/232-each-complete-fallback-uses-its-own-square-bound.md)
+- [Explicit pruning errors preserve all four face ceilings near the source](profile-notes/233-explicit-pruning-errors-preserve-all-four-face-ceilings-near-the-source.md)
