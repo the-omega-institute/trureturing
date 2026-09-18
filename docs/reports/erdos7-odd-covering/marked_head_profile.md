@@ -593,3 +593,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two complete deep-five families transport the mean credit](profile-notes/122-two-complete-deep-five-families-transport-the-mean-credit.md)
 - [Full-coordinate deep-five defects have complete moment tails](profile-notes/123-full-coordinate-deep-five-defects-have-complete-moment-tails.md)
 - [One original head transports the whole deep mean credit](profile-notes/124-one-original-head-transports-the-whole-deep-mean-credit.md)
+- [The complete off-face omitted tails recover every face constant](profile-notes/125-the-complete-off-face-omitted-tails-recover-every-face-constant.md)
+- [A complete off-face original cost has no unspecified tail](profile-notes/126-a-complete-off-face-original-cost-has-no-unspecified-tail.md)
