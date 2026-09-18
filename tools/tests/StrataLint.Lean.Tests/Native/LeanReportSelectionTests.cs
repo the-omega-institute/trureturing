@@ -10,8 +10,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
-                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
+                     ? new[] { "", "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "capture-final", "publish", "seal" }
+                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "capture-final", "publish", "seal" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -37,13 +37,19 @@ public sealed class LeanReportSelectionTests
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
               */native.py) phase=publish ;;
-              */reuse.py) phase="$2" ;;
+              */reuse.py)
+                phase="$2"
+                if [[ "$phase" == capture ]]; then
+                  for argument in "$@"; do
+                    [[ "$argument" != --root-snapshot ]] || phase=capture-final
+                  done
+                fi ;;
               *) exit 97 ;;
             esac
             printf '%s\n' "$phase" >> "$INSPECTOR_TEST_PHASES"
             [[ "$phase" != "$INSPECTOR_TEST_FAILURE" ]] || exit 23
             [[ "$phase" != reuse ]] || exit 3
-            if [[ "$phase" == capture ]]; then
+            if [[ "$phase" == capture || "$phase" == capture-final ]]; then
               while [[ $# -gt 0 ]]; do
                 if [[ "$1" == --snapshot ]]; then printf '{}\n' > "$2"; break; fi
                 shift
@@ -92,8 +98,8 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
-            : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
+            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "capture-final", "publish", "seal" }
+            : new[] { "inputs", "reuse", "capture", "ensure", "report", "capture-final", "publish", "seal" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0 || failedPhase == "seal", File.Exists(report));
