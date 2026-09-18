@@ -300,8 +300,13 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     {
         var build = CommonExecutionEvidence.ValidateBuild(root);
         RequireBinary(build, CommonExecutionEvidence.CliPath);
-        Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
-            "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
+        var arguments = new List<string> { CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha! };
+        if (resourcePlan is null || resourcePlan.CurrentSteps.Contains("lean-report"))
+            arguments.AddRange(["--candidate-lean-report", CommonExecutionEvidence.ReportPath]);
+        if (resourcePlan is not null)
+            arguments.AddRange(["--common-build-round", build.Round, "--common-plan", resourcePlan.PlanPath,
+                "--common-changes", resourcePlan.ChangesPath]);
+        Step("check-delta", "dotnet", arguments.ToArray(), allowAnnotation: true);
     }
 
     private static void RequireBinary(CommonStageRecord record, string path)

@@ -248,11 +248,13 @@ internal sealed record CandidateCommonResults(string Candidate, string Round);
 
 public sealed class DeltaRuleContext
 {
+    private readonly AcceptedLeanClosure? lean;
+    private IReadOnlySet<string>? leanReportInputs;
     private DeltaRuleContext(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
-        AcceptedLeanClosure lean,
+        AcceptedLeanClosure? lean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
@@ -261,7 +263,7 @@ public sealed class DeltaRuleContext
         Current = current;
         Baseline = baseline;
         Policy = policy;
-        Lean = lean;
+        this.lean = lean;
         Changes = changes;
         BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
             current,
@@ -276,6 +278,9 @@ public sealed class DeltaRuleContext
 
     internal IReadOnlySet<string> RegisteredRuleBuildInputs { get; }
 
+    internal IReadOnlySet<string> RegisteredLeanReportInputs => leanReportInputs ??=
+        ReportProducerScope.RegisteredInputs(Current, "Meta/ReportProducers/lean-report.json", Changes);
+
     internal RepositorySnapshot Current { get; }
 
     internal CurrentRuleContext CurrentFacts => CurrentRuleContext.Create(Current, Policy, Lean, VerifiedScribeEmissions);
@@ -287,7 +292,8 @@ public sealed class DeltaRuleContext
 
     internal ValidatedPolicy Policy { get; }
 
-    internal AcceptedLeanClosure Lean { get; }
+    internal AcceptedLeanClosure Lean => lean
+        ?? throw new InvalidOperationException("selected delta predicate requires Lean evidence");
 
     internal RawChangeSet Changes { get; }
 
@@ -341,6 +347,11 @@ public sealed class DeltaRuleContext
             metaEvaluation,
             verifiedScribeEmissions,
             commonResults);
+
+    internal static DeltaRuleContext CreateWithoutLean(
+        RepositorySnapshot current, RepositorySnapshot baseline, ValidatedPolicy policy,
+        RawChangeSet changes, MetaEvaluationProfile metaEvaluation, CandidateCommonResults commonResults) =>
+        new(current, baseline, policy, null, changes, metaEvaluation, null, commonResults);
 }
 
 internal sealed class RepositoryRule(

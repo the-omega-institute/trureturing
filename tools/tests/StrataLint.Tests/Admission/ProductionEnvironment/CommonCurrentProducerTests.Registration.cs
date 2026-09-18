@@ -136,6 +136,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             Write(manifest["registration"]!.GetValue<string>(), new JsonObject
             {
                 ["inspector_sources"] = new JsonObject { ["include"] = new JsonArray(), ["exclude"] = new JsonArray() },
+                ["config_inputs"] = new JsonObject { ["include"] = new JsonArray(), ["exclude"] = new JsonArray() },
                 ["producer_scopes"] = new JsonObject
                 {
                     ["lean-report"] = new JsonObject

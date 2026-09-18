@@ -10,6 +10,29 @@ public sealed class RegisteredImpactTests
     private const string Neighbor = "tools/Directory.Build.props";
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
 
+    [Theory]
+    [InlineData("Meta/ReportProducers/lean-report.json")]
+    [InlineData("lean-report-inputs.json")]
+    public void LeanDeltaDoesNotGuessMissingProducerRegistration(string missing)
+    {
+        var fixture = new RuleFixture();
+        fixture.Files.Remove(missing);
+        var outcome = RuleCatalog.Default.ExecuteDelta(fixture.Build(RawChangeSet.Create([
+            "tools/scripts/agent/openproblem/templates/impl-base-brief.md"])));
+        var failure = Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains(missing, failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedRegisteredProducerInputStillInvalidatesLeanPredicates()
+    {
+        const string deleted = "tools/lean-inspector/Inspector.lean";
+        var fixture = new RuleFixture();
+        fixture.Files.Remove(deleted);
+        var context = fixture.Build(RawChangeSet.CreateWithKinds([(deleted, RawChangeKind.Deleted)]));
+        Assert.Contains(deleted, context.RegisteredLeanReportInputs);
+    }
+
     [Fact]
     public void RegisteredPolicyReaderChangesInvalidateRuleCatalog()
     {
@@ -138,7 +161,7 @@ public sealed class RegisteredImpactTests
              "scope":"scribe-content","projects":["tools/StrataLint.Scribe/StrataLint.Scribe.csproj"]}
             """;
         fixture.Files["lean-report-inputs.json"] = """
-            {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+            {"config_inputs":{"include":[],"exclude":[]},"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
              "lean-report":{"include":[{"pattern":"unusual/config/compiler.settings","optional":false}],"exclude":[]},
              "scribe-content":{"include":[],"exclude":[]}}}
             """;
