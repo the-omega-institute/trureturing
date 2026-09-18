@@ -35248,3 +35248,839 @@ $$
 常值观察时，每层实际分区只有胞腔 $X$，完整标签也只有一个取值，其纤维为整个 $[0,1]$，质量为一。指示函数构造因此给出 $H_{\mathrm{obs}}=\mathbb C\mathbf1$ 及固定算子 $R_L=J$；Lebesgue 测度的每个环境单点质量仍为零。证毕。
 
 ## 78.99 追加锚
+
+## 79. 完整观察熵的扩展值极限
+
+**定义 79.1（有限观察熵与完整标签熵）。** 沿用定义与假设 78.1 的概率空间、实际有限分区 $\mathcal P_L$、相容标签逆极限 $Y$、可测映射 $q_\infty$ 及推前律 $\nu$；$A,a_y,a$ 仍表示完整观察律的正原子集、原子质量及其总和。算子 $R_L,R_{\mathrm{at}}$ 始终作用于同一个 $H_{\mathrm{obs}}$。使用自然对数，置
+$$
+\iota(t)=
+\begin{cases}
+-\ln t,&0<t\le1,\\
++\infty,&t=0,
+\end{cases}
+\qquad
+h_L=-\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)\ln\mu(C),
+$$
+$$
+\mathsf H(\nu)=\int_Y\iota\bigl(\nu(\{y\})\bigr)\,d\nu(y)
+\in[0,+\infty].
+$$
+被积函数的可测性由定理 79.2 给出。积分为非负扩展积分；非负无穷和均取有限部分和的上确界，允许值为 $+\infty$。有限熵和中的零质量胞腔贡献按 $0\ln0=0$ 处理，但信息函数在零质量处的值是 $+\infty$。这是完整标签的总观察熵，不是微分熵，也未除以层数成为熵率。对正迹类且迹一的算子 $T$，以其正特征值 $\lambda_i(T)$（按重数计）定义扩展谱熵
+$$
+S(T)=\sum_i-\lambda_i(T)\ln\lambda_i(T)\in[0,+\infty];
+$$
+零特征值贡献零。
+
+**定理 79.2（有限观察熵的单调极限及原子谱）。** 在定义 79.1 下，$y\mapsto\nu(\{y\})$ 是 Borel 可测函数，$A$ 是至多可数的 Borel 集，且 $\nu(A)=a$。有
+$$
+\boxed{
+h_L\uparrow\mathsf H(\nu)=
+\begin{cases}
+\displaystyle\sum_{y\in A}-a_y\ln a_y,&a=1,\\[1mm]
++\infty,&a<1.
+\end{cases}}
+$$
+纯原子分支的级数也允许发散到 $+\infty$。各有限层满足 $S(R_L)=h_L<\infty$；当 $a=1$ 时，同时有
+$$
+\|R_L-R_{\mathrm{at}}\|_1\longrightarrow0,
+\qquad
+S(R_L)\uparrow S(R_{\mathrm{at}})=\mathsf H(\nu)
+\quad\text{于 }[0,+\infty].
+$$
+当 $a<1$ 时，定理 78.2 的 $R_{\mathrm{at}}$ 仍是迹为 $a$ 的次归一化正算子，且 $\|R_L-R_{\mathrm{at}}\|_1\to1-a$；它不是这列密度态的迹范数极限。
+
+证明。对 $y\in Y$ 定义有限前缀柱集及其质量
+$$
+K_L(y)=\{z\in Y:z_\ell=y_\ell\text{ 对所有 }0\le\ell\le L\},
+\qquad g_L(y)=\nu(K_L(y)).
+$$
+每层只有有限个 Borel 前缀柱集，$g_L$ 在各柱集上为常数，故为 $[0,1]$ 值 Borel 可测函数。相容父映射 $r_\ell$ 保证，在此 $Y$ 上
+$$
+K_L(y)=\{z\in Y:z_L=y_L\},
+\qquad
+K_{L+1}(y)\subseteq K_L(y),
+\qquad
+\bigcap_{L\ge0}K_L(y)=\{y\}.
+$$
+由于 $\nu(K_0(y))\le1$，测度从上连续性给出
+$$
+g_L(y)\downarrow g(y):=\nu(\{y\}).
+$$
+因此 $g$ 可测。扩展函数 $\iota:[0,1]\to[0,+\infty]$ 可测，且在 $t\downarrow0$ 时 $\iota(t)\uparrow+\infty$，所以 $\iota\circ g$ 可测。这里的从上连续性可对照钉版 Mathlib 的 [MeasureTheory.tendsto_measure_iInter_atTop](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/MeasureSpace.lean#L672)：指标为 $\mathbb N$，柱集可测、递减，且初项测度有限。
+
+相容性还给出
+$$
+q_\infty^{-1}K_L(q_\infty(x))
+=q_L^{-1}\{q_L(x)\}=C_L(q_\infty(x)).
+$$
+故 $m_L(x):=\mu(C_L(q_\infty(x)))=g_L(q_\infty(x))$ 递减到 $\nu(\{q_\infty(x)\})$。令 $I_L=\iota\circ m_L$，则各 $I_L$ 非负扩展可测，并且逐点有
+$$
+I_L(x)\uparrow\iota\bigl(\nu(\{q_\infty(x)\})\bigr).
+$$
+有限层的零质量胞腔之并是零测集，$I_L$ 在其上取 $+\infty$ 对非负积分仍贡献零。对其余胞腔逐项积分，得
+$$
+\int_X I_L\,d\mu
+=\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)(-\ln\mu(C))=h_L<\infty.
+$$
+非负单调收敛及推前测度的非负积分换元于是给出
+$$
+h_L\uparrow
+\int_X\iota\bigl(\nu(\{q_\infty(x)\})\bigr)\,d\mu(x)
+=\int_Y\iota\bigl(\nu(\{y\})\bigr)\,d\nu(y)
+=\mathsf H(\nu).
+$$
+所用单调收敛可对照同一钉版的 [MeasureTheory.lintegral_tendsto_of_tendsto_of_monotone](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Lebesgue/Add.lean#L113)：上面已经给出各函数的可测性、逐点单调性及扩展值极限，因而满足其几乎处处版本的前提；无需假定极限可积。
+
+对每个 $n\ge1$，集合 $A_n=\{y:g(y)\ge1/n\}$ 至多有 $n$ 个点，否则这些单点的有限可加性将给出总质量大于一。每个正质量点属于某个 $A_n$，故 $A=\bigcup_{n\ge1}A_n$ 至多可数。单点 Borel 可测，因此 $A$ 是 Borel 集，且可数可加性给出 $\nu(A)=\sum_{y\in A}a_y=a$。在 $Y\setminus A$ 上，$\iota(g(y))=+\infty$。若 $a<1$，对每个实数 $M>0$ 都有
+$$
+\mathsf H(\nu)\ge M\nu(Y\setminus A)=M(1-a),
+$$
+令 $M\to\infty$ 即得无穷分支。若 $a=1$，补集为零测集，按可数原子积分得
+$$
+\mathsf H(\nu)=\sum_{y\in A}a_y(-\ln a_y),
+$$
+仍按非负扩展和理解。
+
+最后，定义与假设 78.1 的各 $e_C$ 正交归一，$R_Le_C=\mu(C)e_C$，且 $R_L$ 在 $H_L^\perp$ 上为零。因此其非零特征值按重数恰为各正胞腔质量，直接得到 $S(R_L)=h_L$；这正是定义与假设 72.1 的一般有限对角坐标在共同空间中的实现。$a=1$ 时，定理 78.2 给出迹范数收敛，$R_{\mathrm{at}}$ 的正交原子级数则给出非零特征值 $(a_y)_{y\in A}$，故其扩展谱熵等于上述级数。熵的单调收敛来自所指定观察塔中的信息函数单调收敛，不能将这一步换成一般的迹范数熵连续性。这里的原子始终属于完整观察律；只有另加逐点分离条件，才能把非空观察纤维识别为环境单点。证毕。
+
+**命题 79.3（迹范数收敛而原子熵无穷的观察塔）。** 取带全部子集 $\sigma$ 代数的可数空间
+$$
+X=\{(k,j):k\ge1,\ 1\le j\le2^k\},
+\qquad
+w_{k,j}:=\mu(\{(k,j)\})=\frac1{k(k+1)2^k}.
+$$
+令 $\mathcal P_L$ 由 $k\le L$ 的各单点及尾胞腔 $T_L=\{(k,j):k>L\}$ 组成，$\mathcal P_0=\{X\}$。这些分区构成分离点的实际有限观察塔，其完整观察律满足 $a=1$，且
+$$
+\tau_L:=\mu(T_L)=\frac1{L+1},
+\qquad
+\|R_L-R_{\mathrm{at}}\|_1\le\frac2{L+1}\longrightarrow0.
+$$
+其有限观察熵为
+$$
+h_L=
+\sum_{k=1}^{L}\frac{\ln(k(k+1))+k\ln2}{k(k+1)}
++\frac{\ln(L+1)}{L+1}
+\ge\ln2\sum_{k=1}^{L}\frac1{k+1}\longrightarrow+\infty.
+$$
+因此各 $S(R_L)$ 有限而 $S(R_{\mathrm{at}})=+\infty$；迹范数收敛无须原子熵有限，也不保证有限层熵一致有界。此例仍有 $S(R_L)\uparrow S(R_{\mathrm{at}})$ 的扩展值收敛。
+
+证明。第 $k$ 块的质量为 $1/[k(k+1)]=1/k-1/(k+1)$，故总质量由望远镜和得一，尾质量为 $1/(L+1)$。各 $\mathcal P_L$ 有限且可测，从第 $L$ 层到第 $L+1$ 层只将尾胞腔中的第 $L+1$ 块逐点分开；以胞腔为标签、包含关系为父映射便满足 78.1 的逐点相容性。任意两个不同点在足够深的有限层被分开，且每个单点都出现在某个有限分区中，故这些分区生成全部子集 $\sigma$ 代数。非空完整观察纤维恰为单点，$\nu$ 集中于可数集合 $q_\infty(X)$，从而 $a=1$，$H_{\mathrm{obs}}=L^2(X,\mu;\mathbb C)$。
+
+记原子正交基 $e_{k,j}=w_{k,j}^{-1/2}\mathbf1_{\{(k,j)\}}$。两态在已分开的原子上完全一致，与尾块之间均无交叉项，因此
+$$
+R_L-R_{\mathrm{at}}=A_L-B_L,
+\qquad
+A_L=|\mathbf1_{T_L}\rangle\langle\mathbf1_{T_L}|,
+\qquad
+B_L=\sum_{k>L}\sum_{j=1}^{2^k}w_{k,j}|e_{k,j}\rangle\langle e_{k,j}|.
+$$
+这里 $B_L$ 的级数按迹范数收敛，两个尾算子都正且迹类，并有
+$$
+\operatorname{Tr}A_L=\|\mathbf1_{T_L}\|_2^2=\tau_L,
+\qquad \operatorname{Tr}B_L=\tau_L.
+$$
+$A_L$ 保留尾胞腔内部的相干项，$B_L$ 则是原子基上的对角尾算子。以下估计不假定有符号差 $A_L-B_L$ 为正；使用迹类三角不等式及两个正算子的迹范数等于迹，得到
+$$
+\|R_L-R_{\mathrm{at}}\|_1
+\le\|A_L\|_1+\|B_L\|_1
+=2\tau_L=\frac2{L+1}.
+$$
+这些 Schatten 范数事实沿用定理 78.2 所引 Gerald Teschl，*Mathematical Methods in Quantum Mechanics: With Applications to Schrödinger Operators*，[2009-02-12 版本](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)，§6.3，results 6.12–6.16，印刷第 141–144 页。
+
+第 $k\le L$ 块的 $2^k$ 个等质量单点对熵的总贡献是
+$$
+2^k w_{k,j}(-\ln w_{k,j})
+=\frac{\ln(k(k+1))+k\ln2}{k(k+1)},
+$$
+尾胞腔贡献为 $-\tau_L\ln\tau_L=\ln(L+1)/(L+1)$，故得到所列精确有限公式，包括 $L=0$ 时空和为零的情形。丢去非负的 $\ln(k(k+1))$ 项及尾项，得调和下界。由于 $\ln2>0$ 且 $\sum_{k=1}^L1/(k+1)\to+\infty$，有限熵趋于无穷；定理 79.2 将其识别为 $S(R_{\mathrm{at}})=\mathsf H(\nu)=+\infty$。证毕。
+
+## 79.99 追加锚
+
+## 80. 参考条件重采样的联合恢复缺陷与原见证命中
+
+**定义与假设 80.1（完整实现、保留记录与指定耦合）。** 设 $E,W$ 为有限非空集合，$X,Y,Z$ 为集合，给定
+$$
+X\xleftarrow{s}E\xrightarrow{f}Y\xrightarrow{o}Z.
+$$
+$X$ 表示输入，$E$ 表示完整实现，$Y$ 表示完整输出，$Z$ 表示读出；同一输入下不同的实现由 $E$ 的不同元素区分。不要求完整输出映射 $f$ 单射。令
+$$
+r(e)=(s(e),o(f(e))),\qquad B=r[E],
+$$
+并将 $r$ 的陪域限制为实际像 $B$，故 $r:E\to B$ 满射，$B$ 也有限非空。给定严格正参考概率
+$$
+q_e>0,\qquad \sum_e q_e=1,\qquad
+p_b=\sum_{r(e)=b}q_e,\qquad
+R_b(e)=\mathbf1_{r(e)=b}\frac{q_e}{p_b}.
+$$
+在概率质量坐标上定义粗化及参考反向映射
+$$
+(C_r u)_b=\sum_{r(e)=b}u_e,\qquad
+(B_{r,q}v)_e=\frac{q_e}{p_{r(e)}}v_{r(e)}.
+$$
+这沿用 73.2–73.4 的概率坐标公式；参考 $q$ 按 73.5 作为指定数据给定。
+
+令 $J:E\times W\to[0,\infty)$ 是任意归一化联合律，即 $\sum_{e,w}J(e,w)=1$，并置
+$$
+d_e=\sum_wJ(e,w),\qquad
+a(b,w)=\sum_{r(e)=b}J(e,w),\qquad
+c_b=\sum_w a(b,w)=\sum_{r(e)=b}d_e,
+$$
+$$
+d^{\mathrm{rec}}_e=\frac{q_ec_{r(e)}}{p_{r(e)}}
+=(B_{r,q}C_r d)_e,\qquad
+J^{\mathrm{rec}}(e,w)=\frac{q_ea(r(e),w)}{p_{r(e)}}.
+$$
+$d$ 是实际实现边缘，$c$ 是实际粗边缘，$a$ 是实际保留记录 $(B,W)$ 的联合律；$d$ 与 $J$ 可有零质量。
+
+固定旧、新两份实现载体 $E_0,E_1$ 与 $E$ 的标识，在 $E_0\times E_1\times W$ 上定义
+$$
+\Omega(e_0,e_1,w)
+=J(e_0,w)\mathbf1_{r(e_1)=r(e_0)}\frac{q_{e_1}}{p_{r(e_0)}}
+=J(e_0,w)R_{r(e_0)}(e_1).
+$$
+这里 $W$ 是旧记录，抽样器只按保留的 $B=r(E_0)$ 与参考 $q$ 抽取 $E_1$；保留 $W$ 不把 $W$ 增添为抽样器的输入。比较 $J$ 与 $J^{\mathrm{rec}}$ 时始终使用上述固定标识。若保留多个记录，则以它们的实际联合元组为 $W$，并使用该元组与 $E$ 的实际联合律；各记录的单独边缘不指定元组联合律。共同见证及其纤维内耦合的含义沿用 56.6、57.13–57.15。
+
+以下用自然对数。对有限非负质量 $u$，置 $H(u)=-\sum_{x:u_x>0}u_x\ln u_x$；对 $u\ll v$，即 $v_x=0\Rightarrow u_x=0$，置
+$$
+D(u\Vert v)=\sum_{x:u_x>0}u_x\ln\frac{u_x}{v_x}.
+$$
+对有限联合律 $F$，记第一边缘为 $F_U(u)=\sum_vF(u,v)$，采用条件熵
+$$
+H_F(V\mid U)=\sum_{u:F_U(u)>0}F_U(u)
+ H\!\left(\frac{F(u,\cdot)}{F_U(u)}\right).
+$$
+零质量切片贡献零，不在该处指定归一化条件律。令
+$$
+P(b,(e,w))=\mathbf1_{b=r(e)}J(e,w)
+\quad\text{于 }B\times(E\times W),
+$$
+$$
+I_J(E;W\mid B)=H_P(E\mid B)+H_P(W\mid B)-H_P(E,W\mid B),
+$$
+其中前两项分别使用 $P$ 的 $(B,E)$、$(B,W)$ 投影。此为[有限条件熵](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Entropy/ConditionalEntropy.lean)及[条件互信息的条件熵缺陷定义](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)的首坐标条件约定；此处条件坐标是 $B$。
+
+**定理 80.2（联合恢复的两项缺陷与同时为零判据）。** 在定义与假设 80.1 下，$\Omega$ 是概率律，$(E_0,W)$ 与 $(E_1,W)$ 的律分别为 $J,J^{\mathrm{rec}}$，$E_0,E_1$ 的边缘分别为 $d,d^{\mathrm{rec}}$。两者的 $(B,W)$ 联合边缘均为 $a$，且 $r(E_1)=r(E_0)$ 几乎处处；在 $\Omega$ 下有 $E_1\perp(E_0,W)\mid B$。所有下列散度均有限，并有
+$$
+\boxed{
+D(J\Vert J^{\mathrm{rec}})
+=I_J(E;W\mid B)+D(d\Vert d^{\mathrm{rec}}).
+} \tag{80.1}
+$$
+右侧两项均非负，且
+$$
+\begin{aligned}
+D(J\Vert J^{\mathrm{rec}})=0
+&\ \Longleftrightarrow\ J=J^{\mathrm{rec}}\\
+&\ \Longleftrightarrow\ d=d^{\mathrm{rec}}
+\ \text{且在实际律 }J\text{ 下 }E\perp W\mid B.
+\end{aligned} \tag{80.2}
+$$
+这里的条件独立性恰为以下不含条件概率除法的条件：
+$$
+J(e,w)c_b=d_ea(b,w)
+\quad\text{对所有 }b,e,w\text{ 满足 }r(e)=b,\ c_b>0. \tag{80.3}
+$$
+若 $d=q$，则 $c=p$、$d^{\mathrm{rec}}=q$，因而
+$$
+D(J\Vert J^{\mathrm{rec}})=I_J(E;W\mid B),\qquad
+J=J^{\mathrm{rec}}\ \Longleftrightarrow\ E\perp W\mid B.
+$$
+
+证明。满射及 $q_e>0$ 给出 $p_b>0$，且 $\sum_eR_b(e)=1$。所有定义的质量均非负。先求旧、新联合边缘及两实现的联合边缘：
+$$
+\sum_{e_1}\Omega(e_0,e_1,w)=J(e_0,w),\qquad
+\sum_{e_0}\Omega(e_0,e_1,w)
+=\frac{q_{e_1}}{p_{r(e_1)}}a(r(e_1),w)
+=J^{\mathrm{rec}}(e_1,w),
+$$
+$$
+\sum_w\Omega(e_0,e_1,w)=d_{e_0}R_{r(e_0)}(e_1).
+$$
+于是 $\sum\Omega=\sum J=1$。进一步有
+$$
+\sum_{r(e)=b}J^{\mathrm{rec}}(e,w)
+=\frac{a(b,w)}{p_b}\sum_{r(e)=b}q_e=a(b,w),
+$$
+$$
+\sum_wJ^{\mathrm{rec}}(e,w)=d^{\mathrm{rec}}_e,\qquad
+\sum_eJ^{\mathrm{rec}}(e,w)=\sum_ba(b,w)=\sum_eJ(e,w),
+$$
+$$
+\sum_{r(e)=b}d^{\mathrm{rec}}_e=c_b,\qquad
+\sum_e d^{\mathrm{rec}}_e=\sum_b c_b
+=\sum_{b,w}a(b,w)=\sum_e d_e=1.
+$$
+这些等式同时证明 $J^{\mathrm{rec}}$ 归一化，并给出保留记录 $W$、粗坐标 $B$ 及所列全部边缘。$\Omega$ 的支撑满足 $r(e_1)=r(e_0)$；在任意 $c_b>0$ 的切片上，
+$$
+\Pr_\Omega(E_0=e_0,E_1=e_1,W=w\mid B=b)
+=\frac{\mathbf1_{r(e_0)=b}J(e_0,w)}{c_b}R_b(e_1).
+$$
+右侧为归一化的 $(E_0,W)$ 条件律与 $R_b$ 的乘积，故得到所述条件独立性。零 $c_b$ 不要求条件律。
+
+若 $J(e,w)>0$，则
+$$
+d_e>0,\quad a(r(e),w)>0,\quad c_{r(e)}>0,\quad
+J^{\mathrm{rec}}(e,w)>0,\quad d^{\mathrm{rec}}_e>0.
+$$
+若仅已知 $d_e>0$，仍有 $c_{r(e)}>0$ 及 $d^{\mathrm{rec}}_e>0$。故 $J\ll J^{\mathrm{rec}}$ 且 $d\ll d^{\mathrm{rec}}$。若 $c_b=0$，非负和为零强制该纤维上全部 $a(b,w),d_e,J(e,w)$ 为零，$d^{\mathrm{rec}},J^{\mathrm{rec}}$ 在该纤维也为零。若 $d_e=0$，则该实际行 $J(e,\cdot)$ 为零；同纤维其他行可有正质量，此时 $d^{\mathrm{rec}}_e>0$。因此零实际行只消去该行的第一质量加权项，不强制重建行也为零。有限载体及上述绝对连续性保证所用 KL 值有限。
+
+现在将条件熵定义展开为正支撑对数和。对每个 $(e,w)$ 恰有一个 $b=r(e)$，所以 $P\ge0$ 且 $\sum_{b,e,w}P(b,(e,w))=1$。其三个实际投影为
+$$
+A(b,e):=\sum_wP(b,(e,w))=\mathbf1_{b=r(e)}d_e,\qquad
+\sum_eP(b,(e,w))=a(b,w),\qquad
+\sum_{e,w}P(b,(e,w))=c_b.
+$$
+$A$ 与 $a$ 的第一边缘均为 $c$。在 $c_b>0$ 时置
+$$
+K_b(e,w)=\frac{\mathbf1_{b=r(e)}J(e,w)}{c_b},\qquad
+U_b(e)=\frac{\mathbf1_{b=r(e)}d_e}{c_b},\qquad
+V_b(w)=\frac{a(b,w)}{c_b}.
+$$
+三者均非负归一化，且 $\sum_wK_b(e,w)=U_b(e)$、$\sum_eK_b(e,w)=V_b(w)$。在 $c_b=0$ 时，$P,A,a$ 的该切片全零，对三个条件熵的贡献均为零。因此定义恰给出
+$$
+I_J(E;W\mid B)
+=\sum_{b:c_b>0}c_b\bigl(H(U_b)+H(V_b)-H(K_b)\bigr).
+$$
+$K_b(e,w)>0$ 蕴含 $U_b(e),V_b(w)>0$。由实际边缘求和，
+$$
+\sum_{K_b(e,w)>0}K_b(e,w)\ln U_b(e)
+=\sum_{U_b(e)>0}U_b(e)\ln U_b(e),
+$$
+并有对应的 $V_b$ 等式：零 $U_b$ 行或零 $V_b$ 列的 $K_b$ 全零；在正行或正列内加入零 $K_b$ 项不改变总和。故仅在正支撑使用对数运算，得到
+$$
+H(U_b)+H(V_b)-H(K_b)
+=\sum_{K_b(e,w)>0}K_b(e,w)
+ \ln\frac{K_b(e,w)}{U_b(e)V_b(w)}
+=D(K_b\Vert U_b\otimes V_b),
+$$
+其中 $(U_b\otimes V_b)(e,w)=U_b(e)V_b(w)$ 是归一化概率，且 $K_b\ll U_b\otimes V_b$。代入具体的三个切片、乘以 $c_b$ 并按唯一的 $b=r(e)$ 求和，便得
+$$
+I_J(E;W\mid B)
+=\sum_{J(e,w)>0}J(e,w)
+ \ln\frac{J(e,w)c_{r(e)}}{d_ea(r(e),w)}. \tag{80.4}
+$$
+这一步从条件熵展开得到该对数和；每个实际使用的分子、分母均严格正。
+
+对输入载体 $E\times W$、输出载体 $E$ 取确定信道
+$$
+T((u,w),e)=\mathbf1_{u=e}.
+$$
+它非负且每行和为一，输入 $J,J^{\mathrm{rec}}$ 的输出分别为 $d,d^{\mathrm{rec}}$。已证的归一化及绝对连续性满足[带零支撑的 KL 链恒等式](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/DivergenceSupport/ZeroSupportDPI.lean)的全部条件。在 $d_e>0$、$b=r(e)$ 时，两后验均支撑于 $\{e\}\times W$，具体为
+$$
+\Pi_e(u,w)=\mathbf1_{u=e}\frac{J(e,w)}{d_e},\qquad
+\widetilde\Pi_e(u,w)=\mathbf1_{u=e}
+\frac{q_ea(b,w)/p_b}{q_ec_b/p_b}
+=\mathbf1_{u=e}\frac{a(b,w)}{c_b}.
+$$
+其非负归一化及 $\Pi_e\ll\widetilde\Pi_e$ 由前述求和与支撑关系给出。去掉固定坐标的零项后，
+$$
+d_eD(\Pi_e\Vert\widetilde\Pi_e)
+=\sum_{w:J(e,w)>0}J(e,w)
+ \ln\frac{J(e,w)c_b}{d_ea(b,w)}.
+$$
+在 $d_e=0$ 时，链恒等式的零输出加权项为零，不论 $d^{\mathrm{rec}}_e$ 是否为零；该行右侧也是空和。于是该链恒等式成为
+$$
+D(J\Vert J^{\mathrm{rec}})
+=D(d\Vert d^{\mathrm{rec}})
++\sum_{e:d_e>0}d_eD(\Pi_e\Vert\widetilde\Pi_e),
+$$
+再用式 (80.4) 即得式 (80.1)。全程没有在零切片取 $\ln(0/0)$。
+
+[Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Divergence/GrandmotherTheorem.lean)应用于 $(d,d^{\mathrm{rec}})$ 及每个 $(K_b,U_b\otimes V_b)$，证明两项非负。[Gibbs 等号判据](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Divergence/GibbsEquality.lean)应用于已经归一化并满足绝对连续性的 $(J,J^{\mathrm{rec}})$、$(d,d^{\mathrm{rec}})$，分别给出零 KL 当且仅当两律相同。
+
+对上面的实际三变量律 $P$ 使用[条件互信息为零当且仅当条件切片为乘积](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean#L133)，其首坐标是 $B$，第一边缘是 $c$，故结论恰为每个 $c_b>0$ 上 $K_b=U_b\otimes V_b$。在 $r(e)\ne b$ 时两侧均为零；在 $r(e)=b$ 时，乘以正数 $c_b^2$ 就是式 (80.3)，反之除以它即得乘积分解。零切片不增添条件。两个非负缺陷同时为零的条件遂为式 (80.2)。若 $d=q$，直接求和得 $c=p$ 及 $d^{\mathrm{rec}}=q$，其边缘 KL 为零，得到校准专门化。
+
+上述联合律等式比较的是固定标识下的两个概率函数；原实现是否被抽中则指 $\Omega$ 中坐标事件 $\{E_1=E_0\}$。即使 $J=J^{\mathrm{rec}}$，若某个 $c_b>0$ 的纤维含至少两个实现，仍可取 $J(e_0,w)>0$ 及同纤维的 $e_1\ne e_0$，从而 $\Omega(e_0,e_1,w)>0$，命中概率小于一。因此联合律相等不蕴含本耦合中两实现相等。证毕。
+
+**命题 80.3（保留原见证副本时的条件熵与精确全变差）。** 在定义与假设 80.1 中，令 $W$ 为 $E$ 的一份固定副本，并取
+$$
+J(e,w)=q_e\mathbf1_{e=w}.
+$$
+仍使用同一个仅依赖 $B,q$ 的抽样器。此时在 $\Omega$ 中 $W=E_0$ 几乎处处，且
+$$
+d=d^{\mathrm{rec}}=q,\qquad c=p,\qquad
+J^{\mathrm{rec}}(e,w)=\mathbf1_{r(e)=r(w)}\frac{q_eq_w}{p_{r(e)}}.
+$$
+置 $H_q(E\mid B)=\sum_b p_bH(R_b)$，以及命题 72.3 中的条件碰撞标量
+$$
+C_q=\sum_e\frac{q_e^2}{p_{r(e)}}
+=\sum_b p_b\sum_{r(e)=b}\left(\frac{q_e}{p_b}\right)^2.
+$$
+则
+$$
+\boxed{
+D(J\Vert J^{\mathrm{rec}})=H_q(E\mid B),\qquad
+\Pr_\Omega(E_1=E_0)=C_q,\qquad
+d_{\mathrm{TV}}(J,J^{\mathrm{rec}})=1-C_q,
+} \tag{80.5}
+$$
+其中采用概率全变差的归一化
+$$
+d_{\mathrm{TV}}(J,J^{\mathrm{rec}})
+=\frac12\sum_{e,w}|J(e,w)-J^{\mathrm{rec}}(e,w)|.
+$$
+对这一抽样器，$\Pr_\Omega(E_1=E_0)=1$ 当且仅当每条 $r$ 纤维为单点，等价于 $r$ 单射。
+
+证明。复制联合律给出 $d=q$、$a(b,w)=\mathbf1_{r(w)=b}q_w$，因此 $c=p$，代入定义即得 $J^{\mathrm{rec}}$。定理 80.2 给出新实现边缘仍为 $q$；而 $\Omega$ 的全部质量都满足 $w=e_0$，所以记录确为未改变的原见证。$J$ 的正质量全在对角线上，且
+$$
+0<J^{\mathrm{rec}}(e,e)=\frac{q_e^2}{p_{r(e)}}\le q_e=J(e,e),
+$$
+其中不等式由 $q_e\le p_{r(e)}$ 给出。因此
+$$
+\begin{aligned}
+D(J\Vert J^{\mathrm{rec}})
+&=\sum_e q_e\ln\frac{q_e}{q_e^2/p_{r(e)}}
+=\sum_e q_e\ln\frac{p_{r(e)}}{q_e}\\
+&=\sum_b p_b\left[-\sum_{r(e)=b}\frac{q_e}{p_b}
+ \ln\frac{q_e}{p_b}\right]
+=H_q(E\mid B).
+\end{aligned}
+$$
+这里 $(B,E)$ 的实际律为 $\mathbf1_{b=r(e)}q_e$，第一边缘是 $p$，各条件律是 $R_b$，故最后一式恰为定义与假设 72.1 及 80.1 的条件熵。
+
+因为 $W=E_0$，事件 $\{E_1=E_0\}$ 恰为 $(E_1,W)$ 的对角事件，因而
+$$
+\Pr_\Omega(E_1=E_0)
+=\sum_eJ^{\mathrm{rec}}(e,e)
+=\sum_e\frac{q_e^2}{p_{r(e)}}=C_q.
+$$
+这仅使用命题 72.3 已给出的标量及其等号条件：每个正质量纤维的条件参考律为点质量时、且仅此时，$C_q=1$。由于所有 $q_e,p_b$ 严格正，此条件就是每条纤维为单点；满射 $r:E\to B$ 此时也是单射。
+
+原联合律的对角总质量为一，重建联合律的对角总质量为 $C_q$，并且每个重建对角项不超过原项。因此对角上的绝对差之和为 $1-C_q$。对角外 $J=0$，绝对差之和等于归一化的 $J^{\mathrm{rec}}$ 的非对角质量，也为 $1-C_q$。乘以 $1/2$ 即得式 (80.5) 的全变差恒等式。这也是[等总质量时全变差等于正超额之和](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/TotalVariation/Pinsker.lean)的对角情形；其等总质量前提已由两联合律的归一化满足。
+
+若另一个解码器获准读取 $W$，则映射 $(b,w)\mapsto w$ 直接返回 $E_0$，命中概率为一。式 (80.5) 及其单点纤维判据限定于指定的 $R_B$ 抽样器，所比较的是有限实现标签及其保留记录。证毕。
+
+## 80.99 追加锚
+
+## 81. 确定记忆更新的信息收支与有限历史恢复界
+
+**定义与假设 81.1（共同有限律与信息单位）。** 本节每个实验中的随机变量均取值于有限非空集合，全部边缘、条件量及更新前后读数来自该实验的同一个非负归一化联合律。不同实验不预设为同一时间过程。用 $\mathsf H$ 表示 Shannon 熵，以区别于目标随机变量 $H$；沿用命题 69.3a 的自然对数约定，单位为 nat，且 $0\ln0=0$。具体地，
+$$
+\mathsf H(X)=-\sum_x p_X(x)\ln p_X(x),\qquad
+\mathsf H(X\mid Z)=
+\sum_{z:p_Z(z)>0}p_Z(z)\,
+\mathsf H\!\left(\frac{p_{X,Z}(\,\cdot\,,z)}{p_Z(z)}\right),
+$$
+$$
+I(X;Y)=\mathsf H(X)+\mathsf H(Y)-\mathsf H(X,Y),\qquad
+I(X;Y\mid Z)=
+\mathsf H(X\mid Z)+\mathsf H(Y\mid Z)-\mathsf H((X,Y)\mid Z).
+$$
+零质量条件切片对条件熵和条件互信息贡献零，不在其上指定归一化后验。这与定义与假设 80.1 的支撑约定一致。若以 bit 为单位，则定义 $\mathsf H_2=\mathsf H/\ln2$、$I_2=I/\ln2$，整条熵或信息等式、不等式统一除以 $\ln2$；概率不作此换算。下述数据只指定一次更新或固定长度实验，不指定正反路径概率律，也不作物理时间箭头断言。
+
+**定理 81.2（固定目标的确定记忆更新收支）。** 设目标 $H$、旧记忆 $M$、新观察 $O$ 具有定义与假设 81.1 的共同联合律。给定全定义的确定映射
+$$
+F:\mathcal M\times\mathcal O\longrightarrow\mathcal M',
+\qquad U=(M,O),\qquad M'=F(M,O),
+$$
+其中 $\mathcal M'$ 也有限非空，且更新前后比较的是同一个目标随机变量 $H$。则
+$$
+\boxed{
+I(H;M')-I(H;M)
+=I(H;O\mid M)-I(H;U\mid M').
+} \tag{81.1}
+$$
+右侧两项分别非负，但左侧可正也可负。第一项是观察在旧记忆之外增加的目标信息；第二项是整个输入对 $U$ 中未由新记忆保留的目标信息，能够包含刚取得的观察信息，不能仅称为旧记忆的损失。本定理不要求均匀性、平稳性、独立性或记忆容量上界。
+
+证明。记 $p(h,u)=\Pr(H=h,U=u)$，将 $F(m,o)$ 简写为 $F(u)$。实际更新的三元联合律为
+$$
+P(h,u,m')=p(h,u)\mathbf1_{\{m'=F(u)\}}.
+$$
+对每个 $u$ 恰有一个 $F(u)\in\mathcal M'$，故
+$$
+\sum_{m'}\mathbf1_{\{m'=F(u)\}}=1,\qquad
+\sum_{m'}P(h,u,m')=p(h,u),\qquad
+\sum_{h,u,m'}P(h,u,m')=\sum_{h,u}p(h,u)=1.
+$$
+所以 $P$ 非负归一化，其 $(H,U)$ 边缘确为原律。令 $p_U(u)=\sum_h p(h,u)$。若 $p_U(u)>0$，则
+$$
+\Pr(H=h,M'=m'\mid U=u)
+=\frac{p(h,u)}{p_U(u)}\mathbf1_{\{m'=F(u)\}}.
+$$
+右侧两个因子分别是归一化的 $H\mid U=u$ 条件律和集中于 $F(u)$ 的 $M'\mid U=u$ 条件律，因而该切片是其两边缘的乘积。若 $p_U(u)=0$，非负和为零迫使每个 $p(h,u)=0$，于是对应的 $P$ 切片全零，条件量贡献零。对以 $U$ 为条件坐标的联合律，直接应用有限条件乘积判据
+[conditional_mutual_information_eq_zero_iff_conditional_product](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean)，得到
+$$
+I(H;M'\mid U)=0.
+$$
+此图律也是归一化通道 $W(u,m')=\mathbf1_{\{m'=F(u)\}}$ 生成的律；上面的行和与边缘等式正好满足同一出处中 markov_of_channel 的假设。
+
+现在对这个共同联合律按两个顺序使用
+[mutual_information_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean)。交换成对坐标只重排有限熵和，故
+$$
+\begin{aligned}
+I(H;(U,M'))
+&=I(H;U)+I(H;M'\mid U)=I(H;U),\\
+I(H;(U,M'))
+&=I(H;M')+I(H;U\mid M').
+\end{aligned}
+$$
+再在原来的 $(H,M,O)$ 律上用同一链式法则，
+$$
+I(H;U)=I(H;M)+I(H;O\mid M).
+$$
+合并移项即为式 (81.1)。两个条件互信息来自非负归一化联合律及其坐标重排，满足
+[conditional_mutual_information_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)
+的假设，故分别非负。
+
+为证明差值确可取两种符号，令 $H$ 在 $\{0,1\}$ 上均匀。若 $M$ 恒定、$O=H$、$F(m,o)=o$，则 $I(H;M)=0$、$I(H;M')=\mathsf H(H)=\ln2$，差为 $\ln2$。若 $M=H$、$O$ 恒定、$F$ 恒定，则两信息依次为 $\ln2,0$，差为 $-\ln2$。这些值直接由点质量熵为零及均匀二点熵为 $\ln2$ 得到。最后，仍取 $M$ 恒定、$O=H$，却使 $F$ 恒定；这时
+$$
+I(H;M)=I(H;M')=0,\qquad
+I(H;O\mid M)=I(H;U\mid M')=\ln2.
+$$
+旧记忆没有目标信息而被丢弃项严格为正，证明它不能只计旧记忆损失。证毕。
+
+**定理 81.3（均匀合法历史通过有限记忆的恢复与条件熵界）。** 固定 $n\in\mathbb N=\{0,1,\ldots\}$，令
+$$
+\mathcal W_n=\{w\in\{0,1\}^n:w\text{ 不含相邻的 }11\},
+\qquad N=|\mathcal W_n|=G_n\ge1,
+$$
+其中直接沿用命题 70.10 的计数 $G_n$；$\mathcal W_0$ 仅含空字，$G_0=1$。在本次固定 $n$ 的实验中，$H$ 均匀分布于 $\mathcal W_n$。记忆载体 $\mathcal M$ 有 $K\ge1$ 个状态，位预算为 $B\in\mathbb N$，且 $K\le2^B$。设非负编码核、解码核
+$$
+e:\mathcal W_n\times\mathcal M\to[0,\infty),\qquad
+d:\mathcal M\times\mathcal W_n\to[0,\infty)
+$$
+逐行满足
+$$
+\sum_m e(h,m)=1\quad(\forall h),\qquad
+\sum_{\widehat h}d(m,\widehat h)=1\quad(\forall m).
+$$
+要求实际三元联合律完整地分解为
+$$
+\boxed{
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\frac1N e(h,m)d(m,\widehat h).
+} \tag{81.2}
+$$
+这是本定理的无旁路条件：给定记忆后，解码使用同一行 $d(m,\cdot)$。它允许随机编码与随机解码，但不能仅由“所用随机种子与 $H$ 独立”代替。则恢复原历史的成功概率满足
+$$
+\boxed{
+\Pr(\widehat H=H)
+\le\min\!\left(1,\frac K{G_n}\right)
+\le\min\!\left(1,\frac{2^B}{G_n}\right).
+} \tag{81.3}
+$$
+同时有
+$$
+\boxed{
+\mathsf H(H\mid M)
+\ge\max(0,\ln G_n-\ln K)
+\ge\max(0,\ln G_n-B\ln2).
+} \tag{81.4}
+$$
+式 (81.4) 对任意均匀源 $H$ 与至多 $K$ 态记忆 $M$ 的联合律均成立，不需要解码器或式 (81.2)。式 (81.3) 的成功事件要求重建所抽取的整个原历史；命题 69.4 则只要求保留指定更新与读出的预测完成商。即使两个历史在该预测任务中等价，这里的恢复事件仍要求区分它们。若把本定理用于定理 81.2 的更新后记忆，须将 $M$、载体、$K$ 及编码核一致替换为 $M'$ 的对应数据。
+
+证明。$N\ge1$ 也可由全零字（$n=0$ 时为空字）直接见证。两核非负且行和为一，故式 (81.2) 的右侧确为概率律：
+$$
+\frac1N\sum_h\sum_m e(h,m)\sum_{\widehat h}d(m,\widehat h)
+=\frac1N\sum_h1=1.
+$$
+其 $H$ 边缘为 $1/N$，$(H,M)$ 边缘为 $e(h,m)/N$。编码行的非负性还给出
+$$
+0\le e(h,m)\le\sum_{m'}e(h,m')=1.
+$$
+于是仅以有限求和便得
+$$
+\begin{aligned}
+\Pr(\widehat H=H)
+&=\frac1N\sum_m\sum_h e(h,m)d(m,h)\\
+&\le\frac1N\sum_m\sum_h d(m,h)
+=\frac KN.
+\end{aligned}
+$$
+结合概率至多为一、$N=G_n>0$ 及 $K\le2^B$，得到式 (81.3)。此证明没有除以 $\Pr(M=m)$。未使用的记忆状态满足 $\sum_h e(h,m)=0$，故其编码列全零；无论该状态的解码行选哪一个归一化概率，都不影响成功率。$n=0$ 时解码只能返回空字，成功率为一，与上界相符。
+
+条件熵部分只使用 $(H,M)$ 联合律。对它及交换坐标后的律应用
+[entropy_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/ConditionalEntropy.lean)，得到
+$$
+\mathsf H(H)+\mathsf H(M\mid H)
+=\mathsf H(H,M)
+=\mathsf H(M)+\mathsf H(H\mid M).
+$$
+所有涉及的边缘非负归一化，源载体与记忆载体均非空。因此
+[entropy_eq_log_card_iff_uniform](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyEquality.lean)
+给出 $\mathsf H(H)=\ln N$；
+[entropy_le_log_card](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/MaxEntropy.lean)
+给出 $\mathsf H(M)\le\ln K$；若实际载体少于 $K$ 个状态，再用对数单调性即可。同一非负联合律上的
+[conditional_entropy_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyNonneg.lean)
+给出两个条件熵非负。故
+$$
+\mathsf H(H\mid M)
+=\ln N+\mathsf H(M\mid H)-\mathsf H(M)
+\ge\ln N-\ln K.
+$$
+与 $\mathsf H(H\mid M)\ge0$ 合并，得到第一个最大值界；$1\le K\le2^B$ 蕴含 $\ln K\le B\ln2$，再得第二个。$n=0$ 时源熵和条件熵都为零，右侧两个最大值也为零。依定义与假设 81.1 换成 bit 后，最后一界就是 $\mathsf H_2(H\mid M)\ge\max(0,\log_2G_n-B)$。
+
+为核实无旁路条件中随机性的边界，取 $n=1$，令 $H,S$ 为相互独立的均匀二点变量，置 $M=H\mathbin{\oplus}S$，其中 $\oplus$ 为模二加法。若解码器还可读取共享种子 $S$，则令 $\widehat H=M\mathbin{\oplus}S=H$。此时 $e(h,m)=1/2$，而
+$$
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\tfrac14\mathbf1_{\{\widehat h=h\}}.
+$$
+若式 (81.2) 成立，则对任意固定 $m$，取 $h=0$ 会迫使 $d(m,0)=1$，取 $h=1$ 又迫使 $d(m,1)=1$，违反解码行归一化。故种子独立本身不足以保证该式。使用额外可读记录时，须把它纳入实际记忆状态及容量条件，或另行指定扩展模型的联合律。式 (81.4) 的推导完全没有使用 $d$ 或 $\widehat H$，因而其适用范围不受这个解码边界影响。证毕。
+
+**命题 81.4（各长度均匀合法历史律不具投影相容性）。** 令 $u_n$ 为定理 81.3 中 $\mathcal W_n$ 上的均匀律，$t:\mathcal W_2\to\mathcal W_1$ 为保留首位的截断映射。按 $\mathcal W_1=(0,1)$ 排列，有
+$$
+t_*u_2=(2/3,1/3)\ne(1/2,1/2)=u_1.
+$$
+因此不存在一个取值于无限无相邻 $11$ 序列空间的概率过程，使全部长度 $n$ 的前缀律同时等于 $u_n$。
+
+证明。$\mathcal W_2=\{00,01,10\}$，每个字在 $u_2$ 下的质量为 $1/3$；首位为零的有两个，为一的有一个，故得到所列截断律。$\mathcal W_1=\{0,1\}$，其均匀律两点质量各为 $1/2$。若存在所述过程，记其律为 $\lambda$、长度一及长度二的前缀映射为 $\pi_1,\pi_2$，则逐点有 $\pi_1=t\circ\pi_2$。推前概率的复合性将强制
+$$
+u_1=(\pi_1)_*\lambda
+=t_*\bigl((\pi_2)_*\lambda\bigr)=t_*u_2,
+$$
+与上式矛盾。命题 71.8 给出的则是总长度趋于无穷时、固定短前缀的分布极限；它没有要求这些有限总长度的均匀律逐层相容，也不将定理 81.3 的均匀源替换为平稳 Parry 律。证毕。
+
+## 81.99 追加锚
+
+## 82. 参考纤维上的凸缺陷与共同恢复零集
+
+**定义与假设 82.1（质量坐标、似然比坐标与凸缺陷）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$，以及质量算子 $C,B,E=BC$；其粗参考为
+$$
+p_i=(Cq)_i=\sum_{r(j)=i}q_j>0.
+$$
+对任意非负归一化质量列向量 $d\in\Delta(J)$，记
+$$
+a=Cd,\qquad u_j=\frac{d_j}{q_j},\qquad m_i=\frac{a_i}{p_i}.
+$$
+在任意实函数 $v:J\to\mathbb R$ 上定义
+$$
+(\Pi v)_j=\frac1{p_{r(j)}}
+             \sum_{r(k)=r(j)}q_kv_k,
+\qquad D_q=\operatorname{diag}(q).
+$$
+于是
+$$
+\Pi u=m\circ r,\qquad Ed=D_q\Pi u,\qquad
+E=D_q\Pi D_q^{-1}.
+$$
+这里 $\Pi$ 作用于似然比或实读数，$E$ 作用于质量；二者的自然内积分别是
+$$
+\langle v,w\rangle_q=\sum_jq_jv_jw_j,
+\qquad
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+具体地，在有限概率空间 $(J,2^J,\mu_q)$ 上取
+$$
+\mu_q(A)=\sum_{j\in A}q_j,
+\qquad
+\mathcal F_r=\{r^{-1}(S):S\subseteq I\}.
+$$
+$\Pi$ 是命题 69.1、定理 76.1 的有限正加权条件投影。质量空间中的正交性使用命题 74.5 的证明及定理 76.1 中的 $q^{-1}$ 内积；$D_q$ 给出这两个带权空间之间的等距同构。
+
+令 $K\subseteq\mathbb R$ 为包含所有 $u_j$ 的凸区间，$\Phi:\mathbb R\to\mathbb R$ 在 $K$ 上凸。定义有限实数
+$$
+\mathcal J_\Phi(d;q,r)
+=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i).
+$$
+此处用 $\mathcal J_\Phi$ 表示凸缺陷，不与定义 72.1 的细基去相干 $\Delta_f$ 混用。以下 KL 与熵均采用自然对数，零质量项按正支撑求和约定处理。
+
+**命题 82.2（纤维 Jensen 缺陷、严格零集与两种特例）。** 在定义与假设 82.1 下，各 $m_i\in K$，且
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=\sum_i p_i\left[
+    \sum_{r(j)=i}\frac{q_j}{p_i}\Phi(u_j)-\Phi(m_i)
+  \right]\ge0.
+}
+$$
+若 $\Phi$ 在 $K$ 上严格凸，则
+$$
+\begin{aligned}
+\mathcal J_\Phi(d;q,r)=0
+&\ \Longleftrightarrow\
+  \forall j,k\ \bigl(r(j)=r(k)\Rightarrow u_j=u_k\bigr)\\
+&\ \Longleftrightarrow\ u=\Pi u
+\ \Longleftrightarrow\ d=Ed.
+\end{aligned}
+$$
+对任意 $\alpha,\beta\in\mathbb R$，有
+$$
+\mathcal J_{\Phi+\alpha\,\mathrm{id}+\beta}(d;q,r)
+=\mathcal J_\Phi(d;q,r).
+$$
+因此不要求 $\Phi(1)=0$。若只有凸性而没有严格凸性，上述零集刻画不由该假设保证；仿射生成函数的缺陷对每个 $d$ 都为零。各严格凸生成函数共享这里的恢复零集，但本命题不规定它们的共同数值尺度，也不要求不同生成函数在每个输入上给出不同数值。
+
+**二次特例。** 取 $\Phi(t)=t^2$，等价地取 $\Phi(t)=(t-1)^2$，则
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{t^2}(d;q,r)
+ &=\sum_j q_j\bigl(u_j-(\Pi u)_j\bigr)^2\\
+ &=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}\\
+ &=\chi^2(d\Vert q)-\chi^2(Cd\Vert p),
+\end{aligned}
+}
+$$
+其中对严格正参考质量 $w$，
+$$
+\chi^2(v\Vert w)=\sum_x\frac{(v_x-w_x)^2}{w_x}.
+$$
+这里的残差分母是 $q_j$；即使 $Ed$ 逐坐标正，它一般也不等于以 $(Ed)_j$ 为分母的 $\chi^2(d\Vert Ed)$。该残差是 $L^2(\mu_q)$ 中 $u$ 的条件投影残差平方，也是在质量空间 $\langle\cdot,\cdot\rangle_{q^{-1}}$ 中 $d-Ed$ 的范数平方。
+
+**KL 特例。** 取 $\Phi(t)=t\ln t$（$t>0$）及 $\Phi(0)=0$，在 $K=[0,\infty)$ 上使用其严格凸性，则
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p)
+=D_{\mathrm{KL}}(d\Vert Ed).
+}
+$$
+三个 KL 值均有限，包括 $d$ 或 $Cd$ 有零坐标的情形。这是定理 73.3、74.2 的支撑型 KL 缺陷在同一凸缺陷记号下的特化。
+
+**证明。** 对每个 $i$，满射保证纤维 $J_i=r^{-1}(i)$ 非空，参考正性给出 $p_i>0$。置
+$$
+\lambda_{j\mid i}=\frac{q_j}{p_i}\quad(j\in J_i).
+$$
+这些权重严格为正、总和为一，且
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}u_j
+=\frac1{p_i}\sum_{r(j)=i}d_j
+=m_i.
+$$
+因此 $m_i$ 是 $K$ 中有限个点的凸组合，属于 $K$。按纤维拆分第一项，便得到框中的缺陷分解。有限 Jensen 不等式逐纤维给出
+$$
+\Phi(m_i)\le\sum_{j\in J_i}\lambda_{j\mid i}\Phi(u_j).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在指标集 $J_i$、权重 $\lambda_{j\mid i}$ 和点 $u_j$ 上的应用；权重非负归一化及所有点的域内条件已逐项满足。再乘 $p_i>0$ 并求和，得到非负性。
+
+若 $\Phi$ 严格凸，所有方括号均非负且所有外权 $p_i$ 均为正，所以总和为零当且仅当每个纤维的 Jensen 等号成立。[StrictConvexOn.map_sum_eq_iff_of_pos](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在同一代入下适用，其严格正权重条件也已满足。它给出等号当且仅当该纤维的所有 $u_j$ 相等。若共同值为 $h_i$，上面的加权平均等式使 $h_i=m_i$，故恰为 $u=\Pi u$。反过来，$\Pi u$ 在每条纤维上为常值，故 $u=\Pi u$ 蕴含纤维常值。由 $d=D_qu$、$Ed=D_q\Pi u$ 及 $q_j>0$，这又等价于 $d=Ed$。
+
+若 $a_i=0$，则 $a_i$ 是该纤维所有非负 $d_j$ 的和，故整条纤维的 $d_j=0$，继而所有 $u_j=0$、$m_i=0$。它已满足纤维常值条件，不能因实际粗质量为零而另加一个未定义的后验条件。这里的平均权重是始终正的参考 $q_j/p_i$。
+
+对任意仿射函数 $\ell(t)=\alpha t+\beta$，每条纤维上都有
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}\ell(u_j)
+=\alpha m_i+\beta=\ell(m_i).
+$$
+因而加上仿射函数不改变任何方括号，证明仿射不变性，也给出仿射生成函数的恒零结论。
+
+为明确二次特例的 Hilbert 载体，任取实函数 $v$，$\Pi v$ 在各纤维上常值且
+$$
+\sum_{r(j)=i}q_j(\Pi v)_j
+=\sum_{r(j)=i}q_jv_j.
+$$
+每个 $\mathcal F_r$ 事件是若干纤维的不交并，故同一积分等式在这些事件上成立；$\Pi v$ 又是 $\mathcal F_r$-可测的。有限载体使 $v\in L^2(\mu_q)$，所以这正是命题 69.1、定理 76.1 中的条件正交投影。严格正的每个 $q_j$ 使几乎处处相等在此等价于逐点相等。
+
+坐标适配直接给出，对任意实质量向量 $x$，
+$$
+(D_q\Pi D_q^{-1}x)_j
+=\frac{q_j}{p_{r(j)}}\sum_{r(k)=r(j)}x_k
+=(Ex)_j,
+$$
+且
+$$
+\langle D_qv,D_qw\rangle_{q^{-1}}
+=\sum_jq_jv_jw_j=\langle v,w\rangle_q.
+$$
+所以这一变换是两个带权空间之间的等距同构，说明两个残差平方的精确对应；它不是相同 Euclidean 内积下的算子识别。
+
+下面直接计算全部二次公式。每条纤维的中心化和为零：
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)
+=a_i-p_im_i=0.
+$$
+展开 $u_j=(u_j-m_i)+m_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_ju_j^2
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2
+  +2m_i\sum_{r(j)=i}q_j(u_j-m_i)+p_im_i^2\\
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2+p_im_i^2.
+\end{aligned}
+$$
+按纤维求和并减去 $\sum_i p_im_i^2$，即得第一个二次等式。再用
+$$
+d_j-(Ed)_j=q_j\bigl(u_j-m_{r(j)}\bigr)
+$$
+得到第二个。由于
+$$
+\sum_jq_j=\sum_i p_i=1,
+\qquad
+\sum_jq_ju_j=\sum_i p_im_i=1,
+$$
+有
+$$
+\chi^2(d\Vert q)=\sum_jq_ju_j^2-1,
+\qquad
+\chi^2(Cd\Vert p)=\sum_i p_im_i^2-1.
+$$
+相减得到第三个等式。全部分母来自严格正参考，因此不要求 $d_j>0$。所用的条件投影勾股关系是命题 69.1 的范数恒等式，这里的坐标计算将其识别为所列 $\chi^2$ 差。
+
+最后取 $\Phi(t)=t\ln t$、$\Phi(0)=0$。[Real.strictConvexOn_mul_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean) 给出它在 $[0,\infty)$ 上的严格凸性，包含零点的连续值；所有 $u_j,m_i\ge0$，故适用。在 $d_j>0$ 时，
+$$
+q_j\Phi(u_j)=d_j\ln(d_j/q_j),
+$$
+而 $d_j=0$ 时该项为零；粗坐标同理。因此 $\mathcal J_\Phi$ 恰为两个参考 KL 之差。若 $d_j>0$，则 $a_{r(j)}>0$，从而 $(Ed)_j=q_ja_{r(j)}/p_{r(j)}>0$；若 $a_i=0$，该纤维上 $d$ 与 $Ed$ 全为零。$q,p$ 严格正，$d\ll Ed$，而 $Ed$ 是定理 74.2 中已归一化的概率，故三个 KL 都有限。对同一个 $C,B,E,q,p,d$ 直接应用定理 74.2 的缺陷差式，得到最后一个等号；其支撑与恢复条件正是定理 73.3 的条件。对数项始终只在正实际支撑上计算，零粗质量不需要归一化实际后验。若改用 bit，则将这一特例中的全部 KL 项一致除以 $\ln2$。证毕。
+
+**命题 82.3（族保持不推出所有凸缺陷的动力学单调性）。** 取四状态集 $J=\{1,2,3,4\}$，分区 $\{1,2\}\mid\{3,4\}$，并令
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},
+\qquad
+d=\begin{pmatrix}2/5\\1/10\\2/5\\1/10\end{pmatrix},
+\qquad
+T=\frac1{40}
+\begin{pmatrix}
+37&1&37&1\\
+1&37&1&37\\
+1&1&1&1\\
+1&1&1&1
+\end{pmatrix}.
+$$
+则 $T$ 严格正且列随机，满足 $TE=ET=ETE$；但二次凸缺陷严格增加：
+$$
+\mathcal J_{t^2}(d;q,r)=\frac9{25},
+\qquad
+\mathcal J_{t^2}(Td;q,r)=\frac{729}{1250}>\frac9{25}.
+$$
+这里
+$$
+Tq=\begin{pmatrix}19/40\\19/40\\1/40\\1/40\end{pmatrix}\ne q,
+$$
+故本命题不涉及另加平稳参考条件 $Tq=q$ 的结论。
+
+**证明。** 每个矩阵元至少为 $1/40>0$，每列的整数分子之和为 $40$。本分区的重采样矩阵为
+$$
+E=\frac12
+\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix}.
+$$
+直接相乘得到
+$$
+TE=ET=
+\begin{pmatrix}
+19/40&19/40&19/40&19/40\\
+19/40&19/40&19/40&19/40\\
+1/40&1/40&1/40&1/40\\
+1/40&1/40&1/40&1/40
+\end{pmatrix}.
+$$
+右侧每列在各对内相等，故左乘 $E$ 不变，证明 $TE=ETE$。同一乘法给出上述 $Tq$ 以及
+$$
+Td=\begin{pmatrix}149/200\\41/200\\1/40\\1/40\end{pmatrix},
+\qquad Ed=q,
+\qquad ETd=Tq.
+$$
+因此
+$$
+d-Ed=\begin{pmatrix}3/20\\-3/20\\3/20\\-3/20\end{pmatrix},
+\qquad
+Td-ETd=\begin{pmatrix}27/100\\-27/100\\0\\0\end{pmatrix}.
+$$
+应用命题 82.2 的二次残差公式，参考分母均为 $1/4$，于是
+$$
+\mathcal J_{t^2}(d;q,r)
+=4\cdot4\left(\frac3{20}\right)^2=\frac9{25},
+$$
+$$
+\mathcal J_{t^2}(Td;q,r)
+=4\cdot2\left(\frac{27}{100}\right)^2=\frac{729}{1250}.
+$$
+两值之差为 $279/1250>0$。定理 74.2 在 $TE=ETE$ 下保证的是 KL 特例的缺陷不增；以上同一参考、同一分区的精确计算表明，该动力学结论不能直接换成任意凸生成函数。证毕。
+
+## 82.99 追加锚
