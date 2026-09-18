@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:014457614141a6eee22d2b329effff89efa7fa867952e68c3b51f007b9f97b4f
+  normalized_sha256: sha256:014457614141a6eee22d2b329effff89efa7fa867952e68c3b51f007b9f97b4f
+cas_ref: sha256:014457614141a6eee22d2b329effff89efa7fa867952e68c3b51f007b9f97b4f
+coverage_gids:
+  - gid: D5/S3/Divergence/GibbsEquality.kl_divergence_eq_zero_iff
+    target_statement_id: sha256:ba7b06e0c5a31dbea17cee8512ca943141dc34ee2e63f82c1f5662d8dbee3d59
+  - gid: D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg
+    target_statement_id: sha256:2811f2905b53f8e74c7c7d666dc0dbc01e24ea1c0f503af4120dd64befc22259
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.channel_output_absolute_continuity
+    target_statement_id: sha256:90419923e57e6d732deb24d2ecaea1135bd7092460a31ae7aa281114438e5284
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
+    target_statement_id: sha256:1d1f07c23fa99f741789f3cf39a6cfc04affc13728a6927107d205b5f73e5cd5
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+    target_statement_id: sha256:2bec750f0e24b41141b6489925caf191ab445e94cd503f0220b1d621e05880f2
+receipts:
+  unresolved_subitems: []

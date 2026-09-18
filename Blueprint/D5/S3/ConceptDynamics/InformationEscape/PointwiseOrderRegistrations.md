@@ -4,7 +4,43 @@
 
 Exact pointwise registration programs over finite object states.
 
-**Definition 1.1 (objectArena).**
+**Definition 1.1 (lengthZero).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthZero`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthZero` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The shared Fin 3 zero constant represents the strict lower bound in the realization and readout declaration.
+
+**Definition 1.2 (lengthOne).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthOne`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthOne` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Fin 3 one constant encodes the substitution length of false.
+
+**Definition 1.3 (lengthTwo).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthTwo`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthTwo` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The shared Fin 3 two constant encodes the substitution length of true and the weak upper bound.
+
+**Definition 1.4 (objectArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.objectArena`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 Both bounds quantify over the same Boolean substitution letter.
 
-**Definition 1.2 (strictArena).**
+**Definition 1.5 (strictArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.strictArena`
 
@@ -26,9 +62,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The positivity law uses the strict branch of the order template.
+The positivity law compares Fin 3 codes using the strict branch of the homogeneous order arena.
 
-**Definition 1.3 (weakArena).**
+**Definition 1.6 (weakArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.weakArena`
 
@@ -38,9 +74,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The upper bound uses the weak branch over the same object arena.
+The upper bound compares Fin 3 codes using the weak branch over the same object arena.
 
-**Theorem 1.4 (strict_slotSensitive).**
+**Theorem 1.7 (strict_slotSensitive).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.strict_slotSensitive`
 
@@ -50,9 +86,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-Both slots carry checked sensitivity for the strict law.
+Fin 3 values zero and one witness sensitivity of both slots for the strict law.
 
-**Theorem 1.5 (weak_slotSensitive).**
+**Theorem 1.8 (weak_slotSensitive).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.weak_slotSensitive`
 
@@ -62,9 +98,21 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-Both slots carry checked sensitivity for the weak law.
+Fin 3 values zero and one witness sensitivity of both slots for the weak law.
 
-**Definition 1.6 (positiveRealization).**
+**Definition 1.9 (lengthReadout).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthReadout`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthReadout` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Boolean elimination returns Fin 3 code one at false and two at true; their natural values are the original substitution lengths.
+
+**Definition 1.10 (positiveRealization).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positiveRealization`
 
@@ -74,9 +122,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The readouts retain zero and the stated substitution length.
+The two readouts are the shared zero code and finite length code, also used by the explicit readout declaration.
 
-**Theorem 1.7 (positive_bridge).**
+**Theorem 1.11 (positive_bridge).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positive_bridge`
 
@@ -86,9 +134,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The bridge preserves positivity at every Boolean letter.
+Boolean cases identify each length code's natural value with the original list length. The defining Fin order transports strict positivity in both directions.
 
-**Theorem 1.8 (positive_lawSensitive).**
+**Theorem 1.12 (positive_lawSensitive).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positive_lawSensitive`
 
@@ -98,9 +146,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The source theorem satisfies the strict law; equal zero readouts falsify it.
+The source theorem satisfies the strict code law through the bridge; equal zero codes falsify it.
 
-**Definition 1.9 (upperRealization).**
+**Definition 1.13 (upperRealization).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.upperRealization`
 
@@ -110,9 +158,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The readouts retain the stated substitution length and the bound two.
+The two readouts are the finite length code and shared bound-two code, also used by the explicit readout declaration.
 
-**Theorem 1.10 (upper_bridge).**
+**Theorem 1.14 (upper_bridge).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.upper_bridge`
 
@@ -122,9 +170,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The bridge preserves the upper bound at every Boolean letter.
+Boolean cases identify each length code's natural value with the original list length. The defining Fin order transports the weak upper bound in both directions.
 
-**Theorem 1.11 (upper_lawSensitive).**
+**Theorem 1.15 (upper_lawSensitive).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.upper_lawSensitive`
 
@@ -134,10 +182,14 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrat
 
 *Commentary.*
 
-The source theorem satisfies the weak law; readouts one and zero falsify it.
+The source theorem satisfies the weak code law through the bridge; constant codes one and zero falsify it.
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthOne`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthReadout`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthTwo`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.lengthZero`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.objectArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positiveRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.positive_bridge`
