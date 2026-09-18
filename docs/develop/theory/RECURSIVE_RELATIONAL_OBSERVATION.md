@@ -37788,3 +37788,325 @@ $$
 这些条件是充分条件包，不主张各项必要。链中的完备性与可靠性均按所写的全部前提集量化，包括无限前提集；不能只检验有限前提后便无条件取得这里的结论。后承等式没有提供证明对象的可计算转换，也没有提供搜索时间、证书长度或转换成本界。证毕。
 
 ## 88.99 追加锚
+
+## 89. 后承运输的复合、源可见增量与闭理论覆盖
+
+**定义与假设 89.1（两步运输及额外后果）。** 沿用[定义与假设 88.1](https://github.com/the-omega-institute/trureturing/blob/eb77ed8fcffbf0cacb6494eea514913cc19aede0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的任意公式集、后承闭包及保持、反射、保守的定义，给定
+$$
+F_A\xrightarrow{\tau}F_B\xrightarrow{\sigma}F_C
+$$
+与各自的闭包 $C_A,C_B,C_C$。对从 $F_X$ 到 $F_Y$ 的映射 $f$，仍记
+$$
+K_f(\Gamma)=f^{-1}[C_Y(f[\Gamma])],
+\qquad
+E_f(\Gamma)=K_f(\Gamma)\setminus C_X(\Gamma).
+$$
+$K_f$ 的闭包性直接采用定理 88.2。$E_f$ 只记录源语言中的额外后果；对全部 $\Gamma$ 有 $E_f(\Gamma)=\varnothing$ 恰好表示反射 $K_f\le C_X$，加入保持 $C_X\le K_f$ 后才等价于保守。
+
+以下前提集均可为空或无限，不要求 $\tau,\sigma$ 单射，也不预设联结词、有限后承性或有效呈示。任意前提的后承保持与保守翻译用语可参见 Jeřábek，*The ubiquity of conservative translations*，[arXiv:1108.6263v2，Definitions 2.1–2.2](https://arxiv.org/pdf/1108.6263v2)；其中有限后承性是另列的条件。
+
+**定理 89.2（复合增量的不交分解与源片段判据）。** 不加保持假设时，对任意 $\Gamma\subseteq F_A$ 已有
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\tag{89.2a}
+$$
+若两步都保持后承，即
+$$
+\mathrm P_\tau:\ C_A\le K_\tau,
+\qquad
+\mathrm P_\sigma:\ C_B\le K_\sigma,
+$$
+则
+$$
+C_A(\Gamma)\subseteq K_\tau(\Gamma)
+                 \subseteq K_{\sigma\circ\tau}(\Gamma),
+\tag{89.2b}
+$$
+且有不交并
+$$
+E_{\sigma\circ\tau}(\Gamma)
+=E_\tau(\Gamma)\ \sqcup\
+  \tau^{-1}[E_\sigma(\tau[\Gamma])].
+\tag{89.2c}
+$$
+令 $S=\tau[F_A]$。在同一组保持假设下，复合保守 $K_{\sigma\circ\tau}=C_A$ 当且仅当 $K_\tau=C_A$，并且
+$$
+\begin{aligned}
+\forall\Delta\subseteq S,\ \forall\psi\in S,\qquad
+\sigma(\psi)\in C_C(\sigma[\Delta])
+\ \Longrightarrow\ \psi\in C_B(\Delta).
+\end{aligned}
+\tag{89.2d}
+$$
+$\mathrm P_\sigma$ 已给出 (89.2d) 的反向，因此该条件检查的是前提与结论都在 $S$ 中的后承双向保持。
+
+**证明。** 直接像与逆像的复合恒等式给出
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)
+&=(\sigma\circ\tau)^{-1}
+     [C_C(\sigma[\tau[\Gamma]])]\\
+&=\tau^{-1}
+     [\sigma^{-1}[C_C(\sigma[\tau[\Gamma]])]]\\
+&=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\end{aligned}
+$$
+此处 $K_\sigma$ 的输入是 $F_B$ 的子集 $\tau[\Gamma]$；两个诱导闭包作用于不同的幂集，不能将本式写成 $K_\sigma\circ K_\tau$。上述两步直接采用钉版 Mathlib 的 [Set.image_comp 与 Set.preimage_comp](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+(89.2b) 的第一包含是 $\mathrm P_\tau$。将 $\mathrm P_\sigma$ 用于 $\tau[\Gamma]$，再取 $\tau$-逆像，结合 (89.2a) 得到第二包含。对这三个嵌套集合，差集分解为
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus C_A(\Gamma)
+={}&\bigl(K_\tau(\Gamma)\setminus C_A(\Gamma)\bigr)\\
+&\sqcup
+\bigl(K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)\bigr).
+\end{aligned}
+$$
+第一项包含在 $K_\tau(\Gamma)$ 中，第二项与它不交。逆像保持差集，故
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)
+&=\tau^{-1}
+  [K_\sigma(\tau[\Gamma])\setminus C_B(\tau[\Gamma])]\\
+&=\tau^{-1}[E_\sigma(\tau[\Gamma])],
+\end{aligned}
+$$
+即 (89.2c)。这里的嵌套差集等式是 [Set.sdiff_union_sdiff_cancel](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/BooleanAlgebra/Set.lean) 在 $s=K_{\sigma\circ\tau}(\Gamma)$、$t=K_\tau(\Gamma)$、$u=C_A(\Gamma)$ 下的应用，再交换两并项；逆像等式使用 [Set.preimage_sdiff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+若复合保守，(89.2b) 夹出 $K_\tau=C_A$，而 (89.2c) 的第二项对全部 $\Gamma$ 为空。反之，第一步保守且这些第二项全部为空，由 (89.2b)–(89.2c) 得到复合保守。因此只须说明第二项处处为空等价于 (89.2d)。
+
+第二项处处为空等价于
+$$
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\qquad
+\tau(\varphi)\in K_\sigma(\tau[\Gamma])
+\ \Longrightarrow\
+\tau(\varphi)\in C_B(\tau[\Gamma]).
+\tag{89.2e}
+$$
+任意 $\Delta\subseteq S$ 都满足
+$$
+\tau[\tau^{-1}[\Delta]]=\Delta.
+$$
+这是 [Set.image_preimage_eq_of_subset](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean) 在 $\Delta\subseteq\operatorname{range}\tau$ 下的直接应用。在 (89.2e) 中取 $\Gamma=\tau^{-1}[\Delta]$，并对给定 $\psi\in S$ 取一个满足 $\tau(\varphi)=\psi$ 的见证，便得到 (89.2d)。反向取 $\Delta=\tau[\Gamma]$、$\psi=\tau(\varphi)$ 即可。这里不要求单射，也不需要同时选择一族代表。最后，$\mathrm P_\sigma$ 给出 $\psi\in C_B(\Delta)\Rightarrow\sigma(\psi)\in C_C(\sigma[\Delta])$，证明所述反向。证毕。
+
+**推论 89.3（有限保持链的源可见增量）。** 给定 $n\ge0$ 和有限链
+$$
+F_0\xrightarrow{\tau_1}F_1
+\xrightarrow{\tau_2}\cdots
+\xrightarrow{\tau_n}F_n,
+$$
+其中每个 $F_k$ 带闭包 $C_k$，且每一步满足
+$$
+C_{k-1}\le K_{\tau_k}\qquad(1\le k\le n).
+$$
+令 $f_0=\operatorname{id}_{F_0}$、$f_k=\tau_k\circ f_{k-1}$，并对任意 $\Gamma\subseteq F_0$ 定义
+$$
+H_k(\Gamma)=f_k^{-1}[C_k(f_k[\Gamma])],
+\qquad H_0(\Gamma)=C_0(\Gamma).
+$$
+则
+$$
+H_0(\Gamma)\subseteq H_1(\Gamma)\subseteq\cdots\subseteq H_n(\Gamma).
+$$
+令
+$$
+\begin{aligned}
+D_k(\Gamma)
+&=H_k(\Gamma)\setminus H_{k-1}(\Gamma)\\
+&=f_{k-1}^{-1}
+ \left[
+ K_{\tau_k}(f_{k-1}[\Gamma])
+ \setminus C_{k-1}(f_{k-1}[\Gamma])
+ \right].
+\end{aligned}
+$$
+那么
+$$
+H_n(\Gamma)\setminus C_0(\Gamma)
+=\bigsqcup_{k=1}^{n}D_k(\Gamma).
+\tag{89.3}
+$$
+最终复合 $f_n$ 对全部源前提保守，当且仅当对每个 $\Gamma\subseteq F_0$ 与 $1\le k\le n$ 均有 $D_k(\Gamma)=\varnothing$；此时每个前缀 $f_k$ 都相对于初始语言 $F_0$ 保守。
+
+**证明。** 对第 $k$ 步应用保持条件并取 $f_{k-1}$-逆像，得到
+$$
+\begin{aligned}
+H_{k-1}(\Gamma)
+&\subseteq
+ f_{k-1}^{-1}[K_{\tau_k}(f_{k-1}[\Gamma])]\\
+&=H_k(\Gamma),
+\end{aligned}
+$$
+末个等式是 (89.2a) 的复合公式。再用逆像保持差集得到 $D_k$ 的第二种表达。若 $k<\ell$，则
+$$
+D_k(\Gamma)\subseteq H_k(\Gamma)\subseteq H_{\ell-1}(\Gamma),
+\qquad
+D_\ell(\Gamma)\cap H_{\ell-1}(\Gamma)=\varnothing,
+$$
+所以各 $D_k$ 两两不交。任意属于 $H_n(\Gamma)\setminus H_0(\Gamma)$ 的公式，在有限嵌套链中有唯一首次进入的指标 $k$，恰属于 $D_k(\Gamma)$；反向每个 $D_k(\Gamma)$ 都属于该末端差集，证明 (89.3)。$n=0$ 时两边均为空，包含空并情形。
+
+由于 $H_0(\Gamma)\subseteq H_n(\Gamma)$，末端相等当且仅当差集为空，也就当且仅当每个 $D_k(\Gamma)$ 为空。对全部 $\Gamma$ 使用该结论，再由嵌套关系夹出 $H_k(\Gamma)=C_0(\Gamma)$，得到每个前缀保守。第 $k$ 步由此受到的反射限制只覆盖 $f_{k-1}[F_0]$ 内的前提与结论；没有覆盖条件时，不能升级为该箭头在整个 $F_{k-1}$ 上保守。证毕。
+
+**推论 89.4（闭理论覆盖下的逐步保守判据）。** 保留 $\mathrm P_\tau,\mathrm P_\sigma$，并假设每个中间闭理论都由某个源闭理论前推得到：
+$$
+\forall U\in\operatorname{Th}(C_B),\
+\exists T\in\operatorname{Th}(C_A),\qquad
+C_B(\tau[T])=U.
+\tag{89.4a}
+$$
+则
+$$
+K_{\sigma\circ\tau}=C_A
+\quad\Longleftrightarrow\quad
+K_\tau=C_A\ \text{且}\ K_\sigma=C_B.
+\tag{89.4b}
+$$
+$\tau$ 对公式满射足以保证 (89.4a)；这里不主张该覆盖条件是 (89.4b) 成立的必要条件。
+
+**证明。** 使用定理 88.2 的有类型伴随
+$$
+L_\tau\dashv R_\tau,\qquad
+L_\sigma\dashv R_\sigma,
+$$
+其中
+$$
+\begin{aligned}
+L_\tau(T)&=C_B(\tau[T]),&
+R_\tau(U)&=\tau^{-1}[U],\\
+L_\sigma(U)&=C_C(\sigma[U]),&
+R_\sigma(V)&=\sigma^{-1}[V].
+\end{aligned}
+$$
+保持条件保证各右伴随的值确实落在相应闭理论中。对任意 $\Delta\subseteq F_B$，扩张性给出
+$$
+C_C(\sigma[\Delta])
+\subseteq C_C(\sigma[C_B(\Delta)]).
+$$
+另一方面，$\mathrm P_\sigma$ 给出 $\sigma[C_B(\Delta)]\subseteq C_C(\sigma[\Delta])$；再用单调性与幂等性，得到反向包含。因此
+$$
+C_C(\sigma[C_B(\Delta)])=C_C(\sigma[\Delta]).
+\tag{89.4c}
+$$
+将其用于 $\Delta=\tau[T]$，并用逆像复合，得到
+$$
+L_{\sigma\circ\tau}=L_\sigma\circ L_\tau,
+\qquad
+R_{\sigma\circ\tau}=R_\tau\circ R_\sigma.
+\tag{89.4d}
+$$
+复合保持已由 (89.2b) 给出，所以这些映射均有指定的闭理论载体。其伴随方向也正是钉版 Mathlib 的 [GaloisConnection.compose](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean)。
+
+先由覆盖证明
+$$
+L_\tau R_\tau=\operatorname{id}_{\operatorname{Th}(C_B)}.
+\tag{89.4e}
+$$
+给定 $U=L_\tau(T)$，伴随的单位 $T\subseteq R_\tau L_\tau(T)$ 及 $L_\tau$ 单调给出 $U\subseteq L_\tau R_\tau(U)$；余单位给出反向包含 $L_\tau R_\tau(U)\subseteq U$。覆盖保证全部 $U$ 均可这样表示，故 (89.4e) 成立。这里单位与余单位分别直接采用 [GaloisConnection.le_u_l 与 GaloisConnection.l_u_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的序不等式。
+
+现在假设复合保守。由定理 88.3 的源闭理论往返判据和 (89.4d)，
+$$
+R_\tau R_\sigma L_\sigma L_\tau(T)=T
+\qquad(T\in\operatorname{Th}(C_A)).
+\tag{89.4f}
+$$
+任取 $U\in\operatorname{Th}(C_B)$，由覆盖写成 $U=L_\tau(T)$。$R_\sigma L_\sigma(U)$ 是中间闭理论，故可对它使用 (89.4e)，得到
+$$
+\begin{aligned}
+R_\sigma L_\sigma(U)
+&=L_\tau R_\tau R_\sigma L_\sigma(U)\\
+&=L_\tau R_\tau R_\sigma L_\sigma L_\tau(T)\\
+&=L_\tau(T)=U.
+\end{aligned}
+$$
+其中第三步使用 (89.4f)。于是 $R_\sigma L_\sigma$ 在全部中间闭理论上为恒等。由 $\mathrm P_\sigma$ 及定理 88.3，得到 $K_\sigma=C_B$，这里结论覆盖全部中间前提集。第一步保守 $K_\tau=C_A$ 则直接由 (89.2b) 和复合保守夹出。
+
+反向，若两步均保守，(89.2a) 给出
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[C_B(\tau[\Gamma])]
+=K_\tau(\Gamma)=C_A(\Gamma).
+$$
+最后，若 $\tau$ 对公式满射，对任意中间闭理论 $U$ 取 $T=R_\tau(U)=\tau^{-1}[U]$。由 $\mathrm P_\tau$ 与定理 88.2，$T$ 源闭；由满射有 $\tau[T]=U$，故 $L_\tau(T)=C_B(U)=U$，验证 (89.4a)。证毕。
+
+**命题 89.5（源片段覆盖与逐步保持的两个边界）。**
+
+**(a) 生成全部中间公式不保证闭理论覆盖。** 取不同公式 $a\ne b$，令
+$$
+F_A=\{a\},\qquad F_B=F_C=\{a,b\},
+$$
+$\tau$ 为包含映射，$\sigma=\operatorname{id}$，并定义
+$$
+C_A(\Gamma)=\Gamma,\qquad C_C(\Delta)=\Delta\cup\{b\},
+$$
+$$
+C_B(\Delta)=
+\begin{cases}
+\Delta\cup\{b\},&a\in\Delta,\\
+\Delta,&a\notin\Delta.
+\end{cases}
+$$
+则三者均为闭包，两步都保持，且
+$$
+K_\tau=K_{\sigma\circ\tau}=C_A,
+\qquad
+b\in K_\sigma(\varnothing)\setminus C_B(\varnothing).
+\tag{89.5a}
+$$
+同时，
+$$
+C_B(\tau[F_A])=F_B,
+$$
+但闭理论覆盖 (89.4a) 失败。
+
+**证明。** $C_A,C_C$ 的闭包三律由恒等和固定集合并直接成立。$C_B$ 扩张；若 $\Delta\subseteq\Delta'$ 且 $a\in\Delta$，则 $a\in\Delta'$，两边都增添 $b$；若 $a\notin\Delta$，则 $C_B(\Delta)=\Delta\subseteq\Delta'\subseteq C_B(\Delta')$。这证明单调性。$C_B$ 从不增添 $a$，所以第一次作用前后触发条件不变，而重复增添 $b$ 不改变集合，故幂等。
+
+对任意 $\Gamma\subseteq\{a\}$，两个目标闭包都不增添 $a$，从而
+$$
+\tau^{-1}[C_B(\tau[\Gamma])]
+=\Gamma
+=\tau^{-1}[C_C(\tau[\Gamma])].
+$$
+这给出第一步和复合保守，也给出第一步保持。对每个中间前提 $\Delta$，
+$$
+C_B(\Delta)\subseteq\Delta\cup\{b\}=K_\sigma(\Delta),
+$$
+故第二步保持；但空前提上 $C_B(\varnothing)=\varnothing$，$K_\sigma(\varnothing)=\{b\}$，所以第二步不反射。新增公式 $b$ 不在源像 $S=\{a\}$ 中，因而不造成源可见增量。
+
+中间闭理论恰为
+$$
+\operatorname{Th}(C_B)=\{\varnothing,\{b\},\{a,b\}\}.
+$$
+源闭理论只有 $\varnothing,\{a\}$，且
+$$
+L_\tau(\varnothing)=\varnothing,\qquad
+L_\tau(\{a\})=\{a,b\}.
+$$
+因此 $C_B(\tau[F_A])=F_B$ 确实成立，却没有源闭理论前推为 $\{b\}$。这证明闭理论覆盖失败，并说明最终保守在此不能推出第二步全域保守。证毕。
+
+**(b) 缺少后续保持时，端点保守可以掩盖中间强化。** 使用命题 88.4 的单公式闭包 $C_0(\Gamma)=\Gamma$、$C_+(\Gamma)=\Gamma\cup\{p\}$，取
+$$
+F_A=F_B=F_C=\{p\},\qquad
+\tau=\sigma=\operatorname{id},
+\qquad
+C_A=C_0,\ C_B=C_+,\ C_C=C_0.
+$$
+则第一步保持但不保守，第二步不保持，复合却保守。
+
+**证明。** 恒等映射使
+$$
+K_\tau=C_+,\qquad K_\sigma=C_0,\qquad
+K_{\sigma\circ\tau}=C_0=C_A.
+$$
+第一步由 $C_0\le C_+$ 保持，而空前提新增 $p$，所以不反射。第二步在空前提处要求的包含是 $\{p\}\subseteq\varnothing$，故保持失败。复合等式已给出端点保守。
+
+这里直接复合翻译只将 $\sigma[\tau[\Gamma]]$ 交给最终闭包。若把中间全部后果也交给下一步，则在空前提上实际得到
+$$
+C_C(\sigma[C_B(\varnothing)])=\{p\},
+\qquad
+C_C(\sigma[\varnothing])=\varnothing.
+\tag{89.5b}
+$$
+两种前提集合不同；第一式仍保留已交付的 $p$，没有删除输入前提。失效的是 (89.4c) 所需的后续保持，因此不能沿用 (89.2b) 的嵌套关系或用端点保守代替逐步保持。证毕。
+
+## 89.99 追加锚
