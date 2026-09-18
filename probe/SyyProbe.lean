@@ -47,4 +47,13 @@ def M (w : List ℕ) : List ℕ := s (r w)
 /-- The proposed potential, compared with the ordinary lexicographic order. -/
 def Phi (w : List ℕ) : List ℕ := w.reverse
 
+private theorem westRun_perm (stack input : List ℕ) :
+    (westRun stack input).Perm (stack ++ input) := by
+  fun_induction westRun stack input with
+  | case1 stack => simp [westRun]
+  | case2 x xs ih => simpa [westRun] using ih
+  | case3 x xs a rest h ih => simpa [westRun, h] using ih.cons a
+  | case4 x xs a rest h ih =>
+      simpa [westRun, h] using ih.trans List.perm_middle.symm
+
 end SyyProbe
