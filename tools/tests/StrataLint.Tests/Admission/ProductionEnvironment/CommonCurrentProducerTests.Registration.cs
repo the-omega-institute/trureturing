@@ -16,6 +16,43 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
     private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LibraryRechecksChangedPathInventoryWhenDescribeWasReused(bool removeTarget)
+    {
+        using var fixture = new InvocationFixture(output);
+        const string target = "Evidence/D5/S1/Phase/LibraryProbe.result.json";
+        fixture.Write(target, "{}\n");
+        fixture.Write("Library/notes/probe2026note.md", "---\nbibkey: probe2026note\nauthors: A. Author\nyear: 2026\ntitle: Library fixture\n"
+            + "doi: 10.1007/BF01389053\nclaim: A reference.\nstrata_touched:\n  - D5/E/S1/Phase/LibraryProbe.result--json\nlicense: citation-only\ntriage: anchor\n---\n");
+        var first = fixture.RunSelected("scribe-describe", "scribe-library");
+        Assert.True(first.Exit == 0, first.Log);
+        var original = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        Assert.All(original.Units, unit => Assert.Equal("executed", unit.Status));
+        Assert.Equal("library: validated by scribe-describe\n",
+            fixture.Read(original.Units.Single(unit => unit.Id == "scribe-library").Operations.Single().Log));
+        fixture.Seed(original);
+        if (removeTarget) File.Delete(Path.Combine(fixture.Root, target));
+        else fixture.Write("Evidence/D5/S1/Phase/Unrelated.result.json", "{}\n");
+
+        var changed = fixture.RunSelected("scribe-describe", "scribe-library");
+
+        Assert.True(changed.Exit == (removeTarget ? 1 : 0), changed.Log);
+        var describeLogs = Directory.GetFiles(Path.Combine(fixture.Root, "build/ci/check-material"), "0.log", SearchOption.AllDirectories)
+            .Where(path => Path.GetFileName(Path.GetDirectoryName(path)) == "scribe-describe");
+        Assert.Single(describeLogs); // The unchanged describe result remains reusable.
+        if (removeTarget) Assert.Contains("dangling-library-gid", changed.Log, StringComparison.Ordinal);
+        else
+        {
+            var current = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+            Assert.Equal("reused", current.Units.Single(unit => unit.Id == "scribe-describe").Status);
+            var library = current.Units.Single(unit => unit.Id == "scribe-library");
+            Assert.Equal("executed", library.Status);
+            Assert.Equal("library: findings=0\n", fixture.Read(library.Operations.Single().Log));
+        }
+    }
+
     [Fact]
     public void LibraryOwnerRejectsChangedMetadataAfterWarmEvidence()
     {
@@ -255,13 +292,13 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
         }
         internal (int Exit, string Log) RunMarkdown() => RunSelected("scribe-markdown");
         internal (int Exit, string Log) RunLibrary() => RunSelected("scribe-library");
-        private (int Exit, string Log) RunSelected(string id)
+        internal (int Exit, string Log) RunSelected(params string[] ids)
         {
             Git("add", ".");
             Write("build/ci/fixture.log", "fixture build");
             var build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), ["build/ci/fixture.log"],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture.log")).ToArray());
-            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, id],
+            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, .. ids],
                 Root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
             var text = string.Join("\n", Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories).Select(File.ReadAllText));
             output.WriteLine($"exit={result.ExitCode}\n{text}{Encoding.UTF8.GetString(result.StandardError)}");
