@@ -630,3 +630,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The optimized heavy margin fails late-factor Jensen](profile-notes/159-the-optimized-heavy-margin-fails-late-factor-jensen.md)
 - [One actual residual closes a hundredfold wider neighborhood](profile-notes/160-one-actual-residual-closes-a-hundredfold-wider-neighborhood.md)
 - [An actual repacking attains the full deep-five cap](profile-notes/161-an-actual-repacking-attains-the-full-deep-five-cap.md)
+- [Fixed supports preserve both heavy margins on the source slab](profile-notes/162-fixed-supports-preserve-both-heavy-margins-on-the-source-slab.md)

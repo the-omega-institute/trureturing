@@ -142,8 +142,9 @@ Disjointness, not just a union bound, therefore gives
     S_N=s_N-kappa_N*H_N ->53/360.                 (FC7)
 
 This proves that the modified actual families approach the same
-saturated K face. There is no surplus mass that could pay for a
-smaller cylinder coefficient.
+saturated K face. There is no limiting surplus mass that could pay for a
+smaller cylinder coefficient; finite N need not lie exactly on the
+saturated face.
 
 ## 4. All deeper five tests see only the already-retained deletion
 
