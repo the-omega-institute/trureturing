@@ -154,6 +154,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/PnimHeavyIntervalRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gottlieb-krnc-mursic-pnim-heavy-interval-refutation` (refuted) by `D5/S0/Certificates/Games/PnimHeavyIntervalRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gottlieb-krnc-mursic-pnim-heavy-interval-refutation","declaration_gid":"D5/S0/Certificates/Games/PnimHeavyIntervalRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eric Gottlieb; Matjaž Krnc; Peter Muršič (2025). *Nim on Integer Partitions and Hyperrectangles*. DOI: [10.48550/arXiv.2506.04991](https://doi.org/10.48550/arXiv.2506.04991). URL: <https://arxiv.org/abs/2506.04991>.
