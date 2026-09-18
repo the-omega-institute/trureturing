@@ -75,7 +75,9 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
 清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
-`producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
+`producer_scopes`，并可声明 `dependency_sources`、完整调用的 `report_execution` 环境，
+以及 `native_inputs = {"kind":"lake-fetched"}`。后者的所有者、库根、模块和配置由 Lake
+workspace 派生，不列包名或以 `.lake/` 前缀推断所有权。
 只有成功完成默认目标、report 和发布的入口才封存 `.reuse.json`；该证据随 current
 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为
@@ -85,7 +87,8 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
 清单中的单一正整数 `report_semantic_version` 是开发者维护的报告语义兼容版本，
-当前值为 `6`，与清单格式的 `schema_version` 分开。
+当前值为 `7`，与清单格式的 `schema_version` 分开。版本 7 要求外部源码来源绑定；
+兼容修复不再增加版本，也不以此坐标失效 Lean 编译工件或改变 statement identity。
 
 兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
@@ -101,7 +104,7 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | `report_semantic_version` 增加 | 所有模块报告及汇总。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；源码哈希也独立参与，包含只改注释的编辑。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
-| 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |
+| 登记的 `config_inputs` 文件字节变化 | 汇总重新校验配置；模块是否重编或重提取仍由 Lake 的实际依赖 trace 和逐行输入决定。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
 | 固定 Registry 驱动及其传递编译工件变化 | 全部模块报告；空注册清单也由该驱动判定。 |
 
@@ -116,7 +119,23 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 由 [native producer](native.py) 检查本地路径均在上述登记范围内，再记录路径到
 SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报告中的本地依赖；
 其他报告模块的源码由完整报告的成员与源码绑定覆盖，避免逐行重复整份闭包。
-外部包依赖由登记的 Lake manifest pin 约束。
+外部闭包覆盖直接与传递 import、固定 Registry 驱动和 utility claim。每行的
+`external_inputs` 绑定 native owner、模块名、包目录、包内常规源码路径、mode 与 SHA-256。
+包配置和源码命名空间在调用级捕获；新增、删除、被 Git 忽略的源码也参与比较。
+构建目录排除由 Lake 的实际目录配置提供，不按 `build`、`bin` 等目录名过滤源码。
+这份调用级清单不进入每行的 trace；无关行可继续复用。
+
+ensure 前的根输入捕获保留，外部输入在 native provisioning/resolution 后、默认目标和
+报告输出前捕获，并在接受、私有发布和封存时复核。缺失或陈旧的来源证据必须由原生
+producer 重建，不能把当前哈希附到旧输出，也不回退到存储的 `inputs.json` 快照。
+离线校验还要求 descriptor 所绑定的 resolver 配置仍然一致。
+
+源码新鲜与不可变 pin 资格分别判断：已修改的本地依赖可生成准确报告，但只有实际
+HEAD、tree、源码和配置的 Git blob 字节及可执行 mode 与 native pin 一致，才取得
+不可变源码资格。包目录完全缺席时，已封存输入可使用生产时的不可变 Git 快照；
+存在但不完整、已修改或路径不安全的 checkout 不适用该规则。未被这份源码清单涵盖的
+自定义默认目标、库的额外 target/plugin 等依赖使完整调用捷径不合格，仍执行普通 Lake。
+这些检查不构成 A17 的外部库、许可证或工具链准入判定。
 
 兼容身份与实际产地分别记录。[provenance-v2](publication.py) 的
 `producer_sha256`、`repository_inspector_sha256` 承载语义兼容标识；实际生成来源的摘要记在
@@ -125,7 +144,8 @@ SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报�
 多个真实来源；`mode=cached` 或 `produced` 描述本次发布工作，不把旧报告改称当前
 可执行文件新生成。
 
-导出的 bundle 保留 `module_origins.input_sources`。原生模块接受时核对本次 Lake
+导出的 bundle 保留 `module_origins.input_sources`、`external_inputs` 及调用级
+`native_inputs`。原生模块接受时核对本次 Lake
 捕获的依赖集合及当前哈希；发布和导出报告的
 [当前输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员、
 源码、claim 源码和捕获依赖的当前文件字节，拒绝未登记或陈旧的绑定。

@@ -28,7 +28,8 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
-    def _configure_fetched_git_package(self, package_name="fetched", library="Foreign", *, private_axiom=False, source_dir=None):
+    def _configure_fetched_git_package(self, package_name="fetched", library="Foreign", *,
+                                       private_axiom=False, source_dir=None, packages_dir='.lake/packages'):
         """Install a local Git package whose package and library names differ."""
         origin = self.root / 'fetched-origin'
         (origin / 'Foreign').mkdir(parents=True)
@@ -76,12 +77,14 @@ def value : Nat := visible
         self.write('D5/A.lean', f'import D5.B\nimport {library}.Thing\nnoncomputable def fetchedValue : Nat := D5.hidden + value\n')
         self.write('Audit.lean', f'import {library}.AuditOnly\ndef audit : Nat := auditOnly\n')
         lakefile = (self.root / 'lakefile.toml').read_text()
+        lakefile = f'packagesDir = "{packages_dir}"\n' + lakefile
         lakefile += f'''\n[[require]]\nname = "{package_name}"\nscope = "fixture"\ngit = "file://{origin}"\nrev = "{rev}"\n'''
         self.write('lakefile.toml', lakefile)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['native_inputs'] = {'kind': 'lake-fetched'}
         self.write('lean-report-inputs.json', json.dumps(policy))
         manifest = json.loads((self.root / 'lake-manifest.json').read_text())
+        manifest['packagesDir'] = packages_dir
         manifest['packages'].append(dict(url=f'file://{origin}', type='git', subDir=None,
             scope='fixture', rev=rev, name=package_name, manifestFile='lake-manifest.json',
             inputRev='fixture', inherited=False, configFile='lakefile.toml'))
@@ -191,7 +194,8 @@ def value : Nat := visible
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, set(before))
 
     def test_fetched_private_transitive_semantics_and_selective_reconstruction(self):
-        self._configure_fetched_git_package('sourceTwo', 'DifferentRoot', private_axiom=True, source_dir='build')
+        self._configure_fetched_git_package('sourceTwo', 'DifferentRoot', private_axiom=True,
+                                            source_dir='build', packages_dir='vendor-deps')
         self.build()
         self.publish()
         before = self.stamps()
@@ -202,7 +206,7 @@ def value : Nat := visible
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(origins, self.origins())
-        source = self.root / '.lake/packages/sourceTwo/build/DifferentRoot/Hidden.lean'
+        source = self.root / 'vendor-deps/sourceTwo/build/DifferentRoot/Hidden.lean'
         source.write_text(source.read_text().replace('axiom hidden : Nat', 'def hidden : Nat := 3'))
         with self.assertRaises(ValueError):
             publication.verify_inputs(self.root / 'public.json', self.root)
