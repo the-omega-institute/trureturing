@@ -38532,3 +38532,323 @@ $$
 [^rro91-prefix]: $A_0,A_1$ 及其满前缀、稠密和不交性质沿用本卷[命题 7.4 的第一组构造](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，其前缀长度 $n$ 在此取 $L+1$。
 
 ## 91.99 追加锚
+## 92. 反演相容的观察与指数倾斜的局部几何
+
+**定义与假设 92.1（反演、条件投影与三种 KL 量）。** 设 $\Omega$ 为有限非空集合，$\Theta:\Omega\to\Omega$ 满足 $\Theta^2=\mathrm{id}$，读出 $r:\Omega\to B$ 的陪域取为实际像 $B=r[\Omega]$。固定严格正概率 $\nu$，满足
+$$
+\nu(\Theta x)=\nu(x)\quad(x\in\Omega).
+$$
+所有对数均为自然对数。对质量函数 $d$ 和实函数 $g$，分别记
+$$
+(Cd)(b)=\sum_{r(x)=b}d(x),\qquad p=C\nu>0,
+\qquad d^R(x)=d(\Theta x),\qquad Rg=g\circ\Theta.
+$$
+沿用 [定义与假设 82.1](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的条件投影与参考恢复算子：
+$$
+(\Pi g)(x)=\frac{1}{p(r(x))}
+ \sum_{r(y)=r(x)}\nu(y)g(y),\qquad
+(Ed)(x)=\nu(x)\frac{(Cd)(r(x))}{p(r(x))}.
+$$
+因此
+$$
+Ed=\nu\,\Pi(d/\nu).
+$$
+$\Pi$ 作用于实函数空间
+$$
+\mathcal H_\nu=\mathbb R^\Omega,\qquad
+\langle g,h\rangle_\nu=\sum_x\nu(x)g(x)h(x),\qquad
+\|g\|_\nu^2=\langle g,g\rangle_\nu,
+$$
+是到可见子空间 $\mathcal V_r=\{k\circ r:k:B\to\mathbb R\}$ 的正交投影；$E$ 作用于质量。
+
+对满足 $\sum_x\nu(x)f(x)=0$ 的实函数 $f$，定义
+$$
+Z(t)=\sum_x\nu(x)e^{tf(x)},\qquad
+u_t(x)=\frac{e^{tf(x)}}{Z(t)},\qquad
+d_t(x)=\nu(x)u_t(x),\qquad t\in\mathbb R,
+$$
+另记
+$$
+f_-:=\frac{f-Rf}{2},\qquad M:=\max_{x\in\Omega}|f(x)|.
+$$
+对同一有限集合上的严格正概率 $a,b$，令
+$$
+D(a\Vert b)=\sum_x a(x)\log\frac{a(x)}{b(x)}.
+$$
+本节研究
+$$
+\Delta(t)=D(d_t\Vert Ed_t),\qquad
+A(t)=D(d_t\Vert d_t^R),\qquad
+A_r(t)=D(Cd_t\Vert Cd_t^R).
+$$
+它们均为有限统计 KL 量；这里不赋予物理熵产生的含义，也不将其等同于对称化混合的有界熵隙。
+
+**命题 92.2（反演下降与四分区的适用条件）。** 在定义与假设 92.1 下，
+$$
+\bigl(\exists\theta:B\to B,\ r\circ\Theta=\theta\circ r\bigr)
+\quad\Longleftrightarrow\quad \Pi R=R\Pi. \tag{92.1}
+$$
+若存在这样的 $\theta$，则它唯一且 $\theta^2=\mathrm{id}$。称式 (92.1) 的等价条件为读出的反演相容性。
+
+置 $P_+=(I+R)/2$、$P_-=(I-R)/2$。在相容条件下，
+$$
+f_{\mathrm{ve}}=\Pi P_+f,\qquad
+f_{\mathrm{vo}}=\Pi P_-f,\qquad
+f_{\mathrm{he}}=(I-\Pi)P_+f,\qquad
+f_{\mathrm{ho}}=(I-\Pi)P_-f
+$$
+分别为可见偶、可见奇、隐藏偶、隐藏奇分量。它们两两正交，并满足
+$$
+f=f_{\mathrm{ve}}+f_{\mathrm{vo}}+f_{\mathrm{he}}+f_{\mathrm{ho}},\qquad
+\|f\|_\nu^2=
+\|f_{\mathrm{ve}}\|_\nu^2+\|f_{\mathrm{vo}}\|_\nu^2+
+\|f_{\mathrm{he}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2. \tag{92.2}
+$$
+
+**证明。** 先设 $r\Theta=\theta r$。由 $r$ 满射及 $\Theta^2=\mathrm{id}$，下降映射唯一且为对合，这是 [InvolutionDescent](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.lean) 中 `descended_unique`、`involutive_descends` 的直接应用。$\Theta$ 因而给出纤维 $r^{-1}(b)$ 与 $r^{-1}(\theta b)$ 之间的双射；参考律不变性给出 $p(\theta b)=p(b)$。在条件平均中令 $z=\Theta y$，得到
+$$
+(\Pi Rg)(x)
+=\frac{1}{p(r(x))}\sum_{r(z)=\theta(r(x))}\nu(z)g(z)
+=(\Pi g)(\Theta x)=(R\Pi g)(x).
+$$
+反之，设 $\Pi R=R\Pi$。对每个 $b\in B$，可见指示函数 $v_b=\mathbf1_{\{r=b\}}$ 满足 $\Pi v_b=v_b$，故
+$$
+\Pi(Rv_b)=R\Pi v_b=Rv_b.
+$$
+于是 $Rv_b$ 在每条读出纤维上恒定。若 $r(x)=r(y)$，便有
+$$
+\mathbf1_{\{r(\Theta x)=b\}}=\mathbf1_{\{r(\Theta y)=b\}}
+\quad\text{对每个 }b\in B,
+$$
+从而 $r(\Theta x)=r(\Theta y)$。取同一来源的 `kernelStable_iff_exists_descended`，以 $r$ 的满射性和刚得到的纤维稳定性，得所需 $\theta$。
+
+由 $\nu\circ\Theta=\nu$ 换元，有
+$$
+\langle Rg,h\rangle_\nu=\langle g,Rh\rangle_\nu,
+\qquad \|Rg\|_\nu=\|g\|_\nu,
+\qquad R^2=I.
+$$
+所以 $P_\pm$ 是偶、奇子空间的正交投影。$\mathcal H_\nu$ 为有限维实 Hilbert 空间，故完备，且所有线性算子连续。相容性使 $\Pi$ 与 $P_+$ 交换。将 $P=\Pi$、$Q=P_+$ 代入 [CommutingProjectionFourSector](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/Quantum/Algebra/CommutingProjectionFourSector.lean) 的 `commuting_projection_four_sector_criterion`，得到上述四个乘积为正交投影，其像组成正交内部直和。式 (92.2) 即这一分解作用于 $f$ 后的结论。证毕。
+
+**定理 92.3（指数倾斜的二阶系数、统一余项与精确保留）。** 保持定义与假设 92.1，无须假定反演相容性。对所有 $|t|\le1$，
+$$
+\begin{aligned}
+\Delta(t)&=\frac{t^2}{2}\|(I-\Pi)f\|_\nu^2+R_\Delta(t),\\
+A(t)&=2t^2\|f_-\|_\nu^2+R_A(t),\\
+A_r(t)&=2t^2\|\Pi f_-\|_\nu^2+R_r(t),
+\end{aligned} \tag{92.3}
+$$
+其中
+$$
+B_M:=\frac{72M^4+64M^3}{6},\qquad
+\max\{|R_\Delta(t)|,|R_A(t)|,|R_r(t)|\}\le B_M|t|^3. \tag{92.4}
+$$
+若 $M=0$，三种 KL 量恒等于零。对每个实数 $t$，精确损失 $A(t)-A_r(t)$ 非负；在 $|t|\le1$ 上，
+$$
+A(t)-A_r(t)=2t^2\|(I-\Pi)f_-\|_\nu^2+R_{\mathrm{loss}}(t),
+\qquad |R_{\mathrm{loss}}(t)|\le2B_M|t|^3. \tag{92.5}
+$$
+
+若再有反演相容性，则式 (92.3)、(92.5) 中的二次项系数分别为
+$$
+\begin{array}{c|c}
+\text{量}&t^2\text{ 的系数}\\ \hline
+\Delta&\tfrac12\bigl(\|f_{\mathrm{he}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2\bigr)\\
+A&2\bigl(\|f_{\mathrm{vo}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2\bigr)\\
+A_r&2\|f_{\mathrm{vo}}\|_\nu^2\\
+A-A_r&2\|f_{\mathrm{ho}}\|_\nu^2.
+\end{array} \tag{92.6}
+$$
+没有相容性时，式 (92.3)、(92.5) 的投影残差仍成立，但不将这些乘积解释为四个正交奇偶分区。
+
+对所有 $t\in\mathbb R$，还有逐点恒等式
+$$
+\log\frac{d_t(x)}{d_t^R(x)}=2t f_-(x). \tag{92.7}
+$$
+因此对任意固定的 $t\ne0$，
+$$
+A(t)=A_r(t)
+\quad\Longleftrightarrow\quad (I-\Pi)f_-=0
+\quad\Longleftrightarrow\quad
+\forall s\in\mathbb R,\ A(s)=A_r(s). \tag{92.8}
+$$
+式 (92.8) 不需要相容性；有相容性时，中间条件等价于 $f_{\mathrm{ho}}=0$。条件 $\Pi f_-=0$ 只消去 $A_r$ 的二次项，不是 $A_r$ 精确为零的判据。
+
+**证明。** 先在本证明内计算归一化密度的 KL 二阶导数。设 $\rho$ 为有限集合上的严格正概率，$v_t,w_t$ 为正的光滑密度族，满足
+$$
+v_0=w_0=1,\qquad \sum_i\rho_i v_t(i)=\sum_i\rho_i w_t(i)=1,
+\qquad F(t)=\sum_i\rho_i v_t(i)\log\frac{v_t(i)}{w_t(i)}.
+$$
+函数 $\varphi(v,w)=v\log(v/w)$ 在 $(1,1)$ 的梯度和 Hessian 分别为
+$$
+\nabla\varphi(1,1)=(1,-1),\qquad
+\nabla^2\varphi(1,1)=
+\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+$$
+归一化的一、二阶导数之和均为零，故链式法则中的线性项消去，得到
+$$
+F(0)=F'(0)=0,\qquad
+F''(0)=\sum_i\rho_i\bigl(v'_0(i)-w'_0(i)\bigr)^2. \tag{92.9}
+$$
+
+由 $f$ 中心化，$Z(0)=1$、$Z'(0)=0$，所以 $u_0=1$、$u'_0=f$。分别取下列三组密度及参考律：
+$$
+\begin{array}{c|c|c|c}
+F&\rho&v_t&w_t\\ \hline
+\Delta&\nu&u_t&\Pi u_t\\
+A&\nu&u_t&Ru_t\\
+A_r&p&Cd_t/p&Cd_t^R/p.
+\end{array} \tag{92.10}
+$$
+第一组利用 $Ed_t=\nu\Pi u_t$；第二组利用 $d_t^R=\nu Ru_t$。三组密度都正且归一化，在 $t=0$ 都等于 $1$。第一、二组的导数差分别为 $(I-\Pi)f$ 与 $f-Rf=2f_-$。第三组的导数差在粗坐标 $b$ 上为
+$$
+\frac{1}{p(b)}\sum_{r(x)=b}\nu(x)\bigl(f(x)-Rf(x)\bigr).
+$$
+其沿 $r$ 的拉回正是 $2\Pi f_-$，不需要交换 $\Pi$ 与 $R$。对任意 $k:B\to\mathbb R$，
+$$
+\sum_b p(b)k(b)^2=\sum_x\nu(x)k(r(x))^2,
+$$
+故式 (92.9) 给出式 (92.3) 的三个二次系数。
+
+下面同时估计三组的余项。式 (92.10) 中每个密度坐标均可写成 $N(t)/Z(t)$，其中
+$$
+N(t)=\sum_j\lambda_j e^{tg_j},\qquad
+\lambda_j\ge0,\quad \sum_j\lambda_j=1,\quad |g_j|\le M.
+$$
+单点指数也属于这种形式；条件平均的权重为 $\nu(x)/p(b)$，反演密度的指数值为 $Rf(x)$。$Z$ 本身具有同样形式。以 $\lambda_j e^{tg_j}/N(t)$ 为概率权重，$\log N$ 的前三阶导数分别为 $g$ 的均值、方差与三阶中心矩，因而
+$$
+| (\log N)' |\le M,\qquad
+| (\log N)'' |\le M^2,\qquad
+| (\log N)''' |\le8M^3. \tag{92.11}
+$$
+其中方差不超过二阶矩 $M^2$，且 $|g-\mathbb E_tg|\le2M$。
+
+对任一密度坐标 $v=N/Z$，令 $\alpha=\log v$。由式 (92.11)，
+$$
+|\alpha'|\le2M,\qquad |\alpha''|\le2M^2,\qquad
+|\alpha'''|\le16M^3.
+$$
+于是由 $v'=v\alpha'$、$v''=v((\alpha')^2+\alpha'')$ 及
+$v'''=v((\alpha')^3+3\alpha'\alpha''+\alpha''')$，得
+$$
+|v'|\le2Mv,\qquad |v''|\le6M^2v,\qquad
+|v'''|\le36M^3v. \tag{92.12}
+$$
+在每组的同一坐标中，$v,w$ 具有共同分母 $Z$，所以 $h=\log(v/w)$ 是两个对数分子的差。式 (92.11) 给出
+$$
+|h'|\le2M,\qquad |h''|\le2M^2,\qquad |h'''|\le16M^3.
+$$
+又因 $h(0)=0$，有 $|h(t)|\le2M|t|$。因此在 $|t|\le1$ 上，逐项求导并用 $\sum_i\rho_i v_t(i)=1$ 得
+$$
+\begin{aligned}
+|F'''(t)|
+&=\left|\sum_i\rho_i
+  \bigl(v'''h+3v''h'+3v'h''+vh'''\bigr)(t,i)\right|\\
+&\le\sum_i\rho_i v_t(i)
+  \bigl(72M^4|t|+36M^3+12M^3+16M^3\bigr)\\
+&\le72M^4+64M^3. \tag{92.13}
+\end{aligned}
+$$
+所有分子、分母均为正的有限指数和，故这些函数在实轴上光滑。对 $t\ne0$，在连接 $0$ 与 $t$ 的无向闭区间上应用 [Taylor 定理 `taylor_mean_remainder_lagrange_iteratedDeriv`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Calculus/Taylor.lean)，取 $n=2$、$x_0=0$、$x=t$，得到位于两端点之间的 $\xi$，使
+$$
+F(t)=\frac{F''(0)}{2}t^2+\frac{F'''(\xi)}{3!}t^3.
+$$
+式 (92.13) 即给出式 (92.4)；$t=0$ 直接成立。若 $M=0$，则 $f=0$、$u_t=1$、$d_t=\nu$，三种 KL 量恒为零。
+
+将 [定理 73.3](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的确定读出 KL 缺陷公式用于输入 $d=d_t$、严格正参考 $q=d_t^R$，得到 $A(t)-A_r(t)\ge0$。两展开式相减，并用 $\Pi$ 的正交性
+$$
+\|f_-\|_\nu^2-\|\Pi f_-\|_\nu^2
+=\|(I-\Pi)f_-\|_\nu^2,
+$$
+得式 (92.5)，其中 $R_{\mathrm{loss}}=R_A-R_r$。有相容性时，命题 92.2 给出
+$$
+(I-\Pi)f=f_{\mathrm{he}}+f_{\mathrm{ho}},\qquad
+f_-=f_{\mathrm{vo}}+f_{\mathrm{ho}},\qquad
+\Pi f_-=f_{\mathrm{vo}},\qquad
+(I-\Pi)f_-=f_{\mathrm{ho}}.
+$$
+结合正交性，得到式 (92.6)。
+
+最后，$\nu(\Theta x)=\nu(x)$ 使
+$$
+\frac{d_t(x)}{d_t^R(x)}
+=\exp\bigl(t(f(x)-Rf(x))\bigr),
+$$
+即式 (92.7)。这里一般混合方向的反演律为 $\nu e^{tRf}/Z(t)$，不能直接以 $d_{-t}$ 代替。定理 73.3 在参考 $q=d_t^R$ 下的等号条件是 $d_t/d_t^R$ 在每条 $r$ 纤维上恒定；此处的参考恢复随 $t$ 改变，与定义 $\Delta$ 时固定参考 $\nu$ 的 $E$ 不同。对 $t\ne0$，由式 (92.7) 及对数的单射性，等号条件恰为 $f_-$ 在各纤维上恒定，即 $\Pi f_-=f_-$。这一条件又使每个实数 $s$ 的似然比 $e^{2sf_-}$ 在各纤维上恒定，故对所有 $s$ 都有 $A(s)=A_r(s)$，完成式 (92.8) 的证明。证毕。
+
+**命题 92.4（四态分区诊断与高阶可见反演）。** 取
+$$
+\Omega=\{-1,+1\}^2,\qquad \nu(a,b)=\frac14,\qquad
+\Theta(a,b)=(-a,b),\qquad r(a,b)=a.
+$$
+读出相容，下降反演为 $\theta(a)=-a$。置
+$$
+L(t)=t\tanh t-\log\cosh t,\qquad Q(t)=2t\tanh t.
+$$
+三条纯分区方向的精确值为
+
+| $f(a,b)$ | 分区 | $\Delta(t)$ | $A(t)$ | $A_r(t)$ |
+|---|---|---|---|---|
+| $b$ | 隐藏偶 | $L(t)$ | $0$ | $0$ |
+| $a$ | 可见奇 | $0$ | $Q(t)$ | $Q(t)$ |
+| $ab$ | 隐藏奇 | $L(t)$ | $Q(t)$ | $0$ |
+
+对混合方向 $f=b+ab=b(1+a)$，则
+$$
+f_-=ab,\qquad \Pi f_-=0,
+$$
+但对所有 $t\ne0$，
+$$
+A_r(t)=\tanh^2(t)\log\cosh(2t)>0,\qquad
+\lim_{\substack{t\to0\\t\ne0}}\frac{A_r(t)}{t^4}=2. \tag{92.14}
+$$
+三条纯方向 $b,a,ab$ 构成此模型中心化函数空间的一组基；可见偶分区只有常函数，故不存在第四条非零中心化纯分区方向。
+
+**证明。** 此时 $\Pi$ 对第二坐标作均匀平均，故 $\Pi b=\Pi(ab)=0$、$\Pi a=a$；同时 $Rb=b$、$Ra=-a$、$R(ab)=-ab$。这给出表中的分区。对三条纯方向，$f$ 的值均为等概率的 $-1,+1$，于是共同有
+$$
+Z(t)=\cosh t,\qquad
+\sum_{a,b}d_t(a,b)f(a,b)=\tanh t.
+$$
+当 $f=b$ 或 $f=ab$ 时，$a$ 边缘仍为均匀律，故 $Ed_t=\nu$，且
+$$
+\Delta(t)=\sum_{a,b}d_t(a,b)\bigl(tf(a,b)-\log\cosh t\bigr)=L(t).
+$$
+当 $f=a$ 时，$u_t$ 已经可见，故 $Ed_t=d_t$，于是 $\Delta(t)=0$。偶方向 $b$ 给出 $d_t^R=d_t$，所以 $A=A_r=0$；奇方向 $a,ab$ 由式 (92.7) 得 $A=2t\tanh t=Q(t)$。对 $a$，$f_-=a$ 可见，式 (92.8) 给出 $A_r=A$；对 $ab$，粗律与其反演均为均匀律，故 $A_r=0$。
+
+混合方向在均匀律下中心化，且
+$$
+Rf=b-ab,\qquad f_-=ab,\qquad \Pi f_-=0.
+$$
+令 $c=\cosh(2t)$，则 $a=+1$ 时的指数为 $2tb$，$a=-1$ 时的指数为零，所以
+$$
+Z(t)=\frac{c+1}{2},\qquad
+Cd_t=\left(\frac{c}{c+1},\frac{1}{c+1}\right),\qquad
+Cd_t^R=\left(\frac{1}{c+1},\frac{c}{c+1}\right),
+$$
+其中坐标按 $(+1,-1)$ 排列。这两个二点概率的 KL 值由 [FourLocalEvidenceClosedForms](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.lean) 中 `kl_divergence_closed_form` 直接给出：取
+$$
+\delta=\frac{c-1}{2(c+1)}=\frac{\tanh^2t}{2},
+\qquad 0\le\delta<\frac12,
+$$
+便有
+$$
+A_r(t)=2\delta\log\frac{1+2\delta}{1-2\delta}
+=\frac{c-1}{c+1}\log c
+=\tanh^2t\log\cosh(2t).
+$$
+有限实数 $t$ 满足 $|\tanh t|<1$，故上述公式的严格正性前提成立。若 $t\ne0$，则 $\tanh^2t>0$ 且 $c>1$，给出式 (92.14) 的严格正性。
+
+由 $\tanh(0)=0$、$\tanh'(0)=1$，有 $\tanh t/t\to1$。令 $g(t)=\log\cosh(2t)$，则
+$$
+g(0)=g'(0)=0,\qquad
+g''(t)=\frac{4}{\cosh^2(2t)},\qquad g''(0)=4.
+$$
+对 $t\ne0$ 作二阶 Taylor 展开，存在介于 $0$ 与 $t$ 之间的 $\eta_t$，使 $g(t)=g''(\eta_t)t^2/2$。$g''$ 的连续性给出 $g(t)/t^2\to2$，因此
+$$
+\frac{A_r(t)}{t^4}
+=\left(\frac{\tanh t}{t}\right)^2
+  \frac{\log\cosh(2t)}{t^2}\longrightarrow2.
+$$
+最后，$1,a,b,ab$ 在均匀加权内积下为正交归一基，后三者均中心化；只依赖 $a$ 且在 $a\mapsto-a$ 下为偶的函数必为常数。故三条纯方向恰好用尽中心化空间的三个分区方向，而混合方向以式 (92.14) 说明 $\Pi f_-=0$ 不蕴含精确的 $A_r=0$。证毕。
+
+## 92.99 追加锚
