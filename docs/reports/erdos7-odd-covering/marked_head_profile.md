@@ -572,3 +572,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Neighboring hinges strengthen complete AP11 survival](profile-notes/101-neighboring-hinges-strengthen-complete-ap11-survival.md)
 - [One root-imbalance charge reduces the deep-capacity penalty](profile-notes/102-one-root-imbalance-charge-reduces-the-deep-capacity-penalty.md)
 - [A smaller deep-capacity charge improves global K](profile-notes/103-a-smaller-deep-capacity-charge-improves-global-k.md)
+- [One test layout couples the hinges of each complete cost](profile-notes/104-one-test-layout-couples-the-hinges-of-each-complete-cost.md)
+- [Root0 shift thresholds remove the separate imbalance charge](profile-notes/105-root0-shift-thresholds-remove-the-separate-imbalance-charge.md)
+- [The actual denominator shares the carrier mass residual](profile-notes/106-the-actual-denominator-shares-the-carrier-mass-residual.md)
+- [Carrier mass and the shared residual improve global K](profile-notes/107-carrier-mass-and-the-shared-residual-improve-global-k.md)
