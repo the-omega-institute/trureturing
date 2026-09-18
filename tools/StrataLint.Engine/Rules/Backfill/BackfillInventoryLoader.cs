@@ -673,7 +673,19 @@ internal static partial class BackfillInventoryLoader
                     projectBaselineReferences);
                 if (projectBaselineReferences)
                 {
-                    baselineAtomIds.Add(atomId, parsedEntry.AtomId);
+                    if (baselineAtomIds.TryGetValue(atomId, out var existingAtomId))
+                    {
+                        if (!StringComparer.Ordinal.Equals(existingAtomId, parsedEntry.AtomId))
+                        {
+                            throw new FormatException(
+                                $"baseline atom_id {atomId} has conflicting projected references: "
+                                + $"{existingAtomId} and {parsedEntry.AtomId}");
+                        }
+                    }
+                    else
+                    {
+                        baselineAtomIds.Add(atomId, parsedEntry.AtomId);
+                    }
                 }
 
                 entries.Add(parsedEntry);

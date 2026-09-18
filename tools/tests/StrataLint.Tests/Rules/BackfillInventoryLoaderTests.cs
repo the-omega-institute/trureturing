@@ -344,6 +344,70 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void BaselineProjectionCoalescesIdenticalDuplicateReferences()
+    {
+        var residual = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var absorbed = (residual.Path.Replace("/residual-open/", "/absorbed-closed/", StringComparison.Ordinal), residual.Text);
+
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            residual,
+            absorbed));
+
+        Assert.Equal(2, document.RequireDigestionEntries().Length);
+        Assert.All(
+            document.RequireDigestionEntries(),
+            entry => Assert.Equal(FixtureAtomId("theorem/delta"), entry.AtomId));
+    }
+
+    [Fact]
+    public void BaselineProjectionRejectsConflictingDuplicateReferences()
+    {
+        var residual = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var conflicting = Atom("delta-v0.1", "absorbed-closed", "other-atom", "theorem/other");
+        conflicting = (residual.Path.Replace("/residual-open/", "/absorbed-closed/", StringComparison.Ordinal), conflicting.Text);
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            residual,
+            conflicting)));
+
+        Assert.Contains("conflicting projected references", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionDeltaAcceptsUniqueCandidateAgainstIdenticalBaselineDuplicate()
+    {
+        var fixture = DuplicateBaselineFixture(out var residualPath, out var absorbedPath, out var atomText);
+        fixture.Files.Remove(residualPath);
+        fixture.Files[absorbedPath] = atomText;
+
+        var evaluation = RuleCatalog.Default.EvaluateDeltaSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.CreateWithKinds([(residualPath, RawChangeKind.Deleted)])));
+
+        Assert.DoesNotContain(
+            evaluation.Diagnostics,
+            finding => finding.Message.StartsWith("Rule catalog execution failed closed", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ProductionDeltaRejectsCandidateDuplicateAtomIds()
+    {
+        var fixture = DuplicateBaselineFixture(out var residualPath, out var absorbedPath, out var atomText);
+        fixture.Files[residualPath] = atomText;
+        fixture.Files[absorbedPath] = atomText;
+
+        var evaluation = RuleCatalog.Default.EvaluateDeltaSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.CreateWithKinds([(residualPath, RawChangeKind.Modified)])));
+
+        Assert.Contains(
+            evaluation.Diagnostics,
+            finding => finding.Message.Contains("duplicate atom_id", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void SourceMetadataRejectsInvalidGenreRegistryProjections()
     {
         var invalidProjections = new[]
@@ -648,6 +712,25 @@ public sealed partial class BackfillInventoryLoaderTests
         var raw = RawRepositorySnapshot.Create(
             files.Select(static file => RawRepositoryEntry.FromText(file.Path, file.Text)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static RuleFixture DuplicateBaselineFixture(
+        out string residualPath,
+        out string absorbedPath,
+        out string atomText)
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        residualPath = fixture.Files.Keys.Single(path => path.Contains("/partial-open/", StringComparison.Ordinal));
+        absorbedPath = residualPath.Replace("/partial-open/", "/absorbed-closed/", StringComparison.Ordinal);
+        atomText = fixture.Files[residualPath].Replace(
+            "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+            "coverage_gids: []",
+            StringComparison.Ordinal);
+        fixture.Files[residualPath] = atomText;
+        fixture.Baseline[residualPath] = atomText;
+        fixture.Baseline[absorbedPath] = atomText;
+        return fixture;
     }
 
     private static void AssertGenreRegistryProjectionUnavailable(DigestionLedgerSource source)
