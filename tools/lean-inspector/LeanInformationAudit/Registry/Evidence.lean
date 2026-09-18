@@ -3,6 +3,46 @@ import LeanInformationAudit.Registry.Entries
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
+private abbrev EraseM := StateT Nat MetaM
+
+private partial def erase (e : Expr) (depth : Nat) : EraseM Expr := do
+  Core.checkMaxHeartbeats "template proof erasure"
+  if depth > 256 then throwError "incomplete_closure:E8.erasure_depth"
+  let remaining ← get
+  if remaining == 0 then throwError "incomplete_closure:E8.erasure_work"
+  set (remaining - 1)
+  -- Inference classifies the proposition; no visitor descends into a proof.
+  if ← isProof e then return proofPlaceholder (← erase (← inferType e) (depth + 1))
+  let child := fun e => erase e (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam n t b bi | .forallE n t b bi =>
+    let type ← child t
+    let body ← fun state => withLocalDecl n bi t fun x => do
+      let (body, state) ← (child (b.instantiate1 x)).run state
+      return (body.abstract #[x], state)
+    return if e.isLambda then .lam n type body bi else .forallE n type body bi
+  | .letE n t v b nd =>
+    let type ← child t
+    let value ← child v
+    let body ← fun state => withLetDecl n t v fun x => do
+      let (body, state) ← (child (b.instantiate1 x)).run state
+      return (body.abstract #[x], state)
+    return .letE n type value body nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | .mvar _ => throwError "incomplete_closure:E7.metavariable"
+  | .bvar _ => throwError "incomplete_closure:E7.open_expression"
+  | _ => return e
+
+/-- Preserve all data syntax and replace each proof by its proposition. Typing
+uses the original binder domains; the result retains no proof implementation.
+The caller charges this walk before any transformation or serialization. -/
+def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) := do
+  let limit := min fuel 524288
+  let (result, remaining) ← (erase e 0).run limit
+  return (result, limit - remaining)
+
 register_option informationTemplate.work : Nat := {
   defValue := 524288
   descr := "Lower-only DTR expression, substitution and byte-work quota" }
@@ -118,10 +158,26 @@ private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : Wir
 
 /-- Domain-separated, length-prefixed raw Expr/Level identity. Binder names are
 anonymous; instances, lets and metadata retain their complete structural bytes. -/
-def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except String (String × Nat) := do
+def erasedSyntaxIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except String (String × Nat) := do
+  let action : WireM Unit := do emit "DTR-proof-erased-expr-v2"; wireExpr params 0 e
+  let (_, state) ← action.run { remaining := min fuel 524288 }
+  return (Sha256.hex state.bytes, state.bytes.size)
+
+/-- Occurrence statements retain their established identity dialect. This is a
+statement address, not a descriptor/realization comparison or body digest. -/
+def rawStatementIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    Except String (String × Nat) := do
   let action : WireM Unit := do emit "DTR-raw-expr-v1"; wireExpr params 0 e
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
+
+/-- Typed identity stops at each proof and serializes its proposition instead.
+The pure wire encoder is exposed separately for synthetic encoding tests. -/
+def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    MetaM (Except String (String × Nat)) := do
+  let (erased, work) ← eraseProofs e fuel
+  return (erasedSyntaxIdentity params erased (fuel - work)).map fun (identity, bytes) =>
+    (identity, work + bytes)
 
 /-- Complete binding evidence uses the unshared raw-identity wire format.
 Dependency arrays are separate length-delimited inputs, not annotations
@@ -153,7 +209,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .atom e => emit "body"; raw e
   | .supplied _ => throw "incomplete_closure:E7.supplied_in_static_plan"
   | .expanded e body => emit "expanded"; raw e; child body
-  | .proofLeaf type e => emit "proof-leaf"; raw type; raw e
+  | .proofLeaf type => emit "proof-leaf"; raw type
   | .typeNode checked => emit "type-node"; child checked
   | .audit input body => emit "audit-input"; child input; child body
   | .app f a => emit "application"; child f; child a
@@ -163,13 +219,13 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .mdata m b => emit "metadata"; raw (.mdata m (.bvar 0)); child b
   | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
 
-/-- The canonical wire includes every retained plan node and raw proof/expansion,
+/-- The canonical wire includes every retained plan node and proof proposition/erased expansion,
 all slots, identities, policy and source references. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v3"
+    emit "DTR-checked-plan-v4"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
