@@ -194,4 +194,20 @@ private theorem r_split_min (X Y : List ℕ) (v : ℕ)
     List.flatten_cons, List.flatten_nil, List.append_nil, List.reverse_cons,
     List.append_assoc]
 
+private theorem append_le_of_length_eq {A B C D : List ℕ}
+    (hlen : A.length = B.length) (hab : A ≤ B) (hcd : C ≤ D) :
+    A ++ C ≤ B ++ D := by
+  rcases lt_or_eq_of_le hab with hab | rfl
+  · have strict_extend {U V : List ℕ} (h : List.Lex (· < ·) U V) :
+        ∀ C D : List ℕ, U.length = V.length →
+          List.Lex (· < ·) (U ++ C) (V ++ D) := by
+      induction h with
+      | nil => intro C D hlen; simp at hlen
+      | rel h => intro C D _; exact .rel h
+      | cons h ih => intro C D hlen; exact .cons (ih C D (Nat.succ.inj hlen))
+    exact le_of_lt (strict_extend hab C D hlen)
+  · rcases lt_or_eq_of_le hcd with hcd | rfl
+    · exact le_of_lt (List.Lex.append_left (· < ·) hcd A)
+    · exact le_rfl
+
 end SyyProbe

@@ -74,3 +74,5 @@ Compiled private lemma `input_le_reverse_s`: every word is lexicographically at 
 Compiled private lemma `valleyRuns_append_valley`: appending an entry smaller than every prefix entry starts a fresh valley run, and leaves the prefix partition unchanged.
 
 Compiled private lemma `r_split_min`: splitting at the first global minimum gives `r (X ++ v :: Y) = r X ++ reverse Y ++ [v]`, under the exact prefix and suffix comparison hypotheses.
+
+Compiled private lemma `append_le_of_length_eq`: weak lexicographic bounds combine across equal-length initial blocks. The local statement-shape search found no matching append inequality in pinned Mathlib or core; the proof uses structural induction on lexicographic evidence.
