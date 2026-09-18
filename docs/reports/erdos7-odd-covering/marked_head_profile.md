@@ -689,3 +689,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The assigned source losses share one complete J error budget](profile-notes/220-the-assigned-source-losses-share-one-complete-j-error-budget.md)
 - [The assigned J reserve enters the complete global comparison](profile-notes/221-the-assigned-j-reserve-enters-the-complete-global-comparison.md)
 - [Deep-five deletion retains the selected observation masks](profile-notes/222-deep-five-deletion-retains-the-selected-observation-masks.md)
+- [The original135 test enters the complete heavy bridge](profile-notes/223-the-original135-test-enters-the-complete-heavy-bridge.md)
+- [The retained135 test strengthens two complete survival bounds](profile-notes/224-the-retained135-test-strengthens-two-complete-survival-bounds.md)
