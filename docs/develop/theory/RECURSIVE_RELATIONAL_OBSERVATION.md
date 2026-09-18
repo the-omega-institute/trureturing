@@ -40610,3 +40610,263 @@ $$
 后一种同时整性是进入所选固定邻域 $U$ 的必要条件；它本身不是阿代尔收敛的充分条件。各项分别只有有限多个非整位置，与一条尾部共享一个有限异常位置集合也不同。式 (100.2c) 说明这些位置最终逃出每个固定有限集，并不声称不同 $B_n$ 两两不交。证毕。
 
 ## 100.99 追加锚
+
+## 101. 稀有循环的方向判别尺度与有限停止认证
+
+**定义与假设 101.1（三状态有理循环与已知方向假说）。** 对整数 $k\ge2$，令
+$$
+p_k=\frac1k,\qquad q_k=\frac1{k2^k},\qquad
+r_k=1-p_k-q_k.
+$$
+状态空间取 $S=\mathbb Z/3\mathbb Z$，定义转移核与初始概率
+$$
+K_k(i,i+1)=p_k,\qquad K_k(i,i-1)=q_k,\qquad
+K_k(i,i)=r_k,\qquad \pi(i)=\frac13.
+\tag{101.1a}
+$$
+对整数 $n\ge0$，观察完整状态词 $w=(x_0,\ldots,x_n)\in\Omega_n=S^{n+1}$；$n$ 计转移次数，故 $n=0$ 已观察初始状态。置
+$$
+P_{k,n}(w)=\frac13\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad
+Q_{k,n}(w)=P_{k,n}(w^R),
+\tag{101.1b}
+$$
+其中 $w^R=(x_n,\ldots,x_0)$，空积为一。$Q_{k,n}$ 也由均匀初始律与转置核 $K_k^{\mathsf T}$ 按原坐标顺序生成。记路径中的顺时针、逆时针与自环次数为 $N_+,N_-,N_0$，并置 $J_n=N_+-N_-$。另记
+$$
+A_n=\{(i,\ldots,i):i\in S\},\qquad
+U_n=\frac13\sum_{i\in S}\delta_{(i,\ldots,i)}.
+$$
+
+方向判别的两个假说为 $P_{k,n}$ 与 $Q_{k,n}$，各取先验 $1/2$。测试者可以知道 $k$、核与两份概率，未知的是本次轨迹的方向标签。若 $\delta:\Omega_n\to[0,1]$ 表示报告“反向”的概率，定义最优平均错误率
+$$
+R_{k,n}
+=\inf_\delta\frac12\sum_{w\in\Omega_n}
+\bigl[P_{k,n}(w)\delta(w)+Q_{k,n}(w)(1-\delta(w))\bigr].
+\tag{101.1c}
+$$
+总变差采用 $\operatorname{TV}(P,Q)=\frac12\sum_w|P(w)-Q(w)|$ 的归一化，KL 中的对数取自然底数。
+
+**命题 101.2（正 KL 率、稀有跳转与方向识别的观察尺度）。** 定义 101.1 的核坐标与平稳律均为有理数；每个核严格正、不可约、非周期，并以 $\pi$ 为平稳律。但因 $K_k(i,i-1)=q_k\to0$，有 $\inf_{k\ge2}\min_{i,j\in S}K_k(i,j)=0$；以下结论没有统一正转移下界假设。对所有 $k\ge2$、$n\ge0$，
+$$
+\log\frac{P_{k,n}(w)}{Q_{k,n}(w)}=k(\log2)J_n(w),
+\qquad
+D_{\rm KL}(P_{k,n}\Vert Q_{k,n})=nc_k,
+\tag{101.2a}
+$$
+其中
+$$
+c_k=(1-2^{-k})\log2\ge\frac34\log2>0,
+\qquad c_k\longrightarrow\log2.
+$$
+同时，
+$$
+\operatorname{TV}(P_{k,n},U_n)
+=\operatorname{TV}(Q_{k,n},U_n)=1-r_k^n,
+\tag{101.2b}
+$$
+$$
+\max\{0,1-r_k^n-2nq_k\}
+\le\operatorname{TV}(P_{k,n},Q_{k,n})
+\le1-r_k^n
+\le\frac{n(1+2^{-k})}{k}
+\le\frac{5n}{4k},
+\tag{101.2c}
+$$
+以及
+$$
+R_{k,n}=\frac12\bigl(1-\operatorname{TV}(P_{k,n},Q_{k,n})\bigr),
+\qquad
+\frac12r_k^n\le R_{k,n}
+\le\min\left\{\frac12,\frac12r_k^n+nq_k\right\}.
+\tag{101.2d}
+$$
+净计数为正时报正向、为负时报反向、为零时公平抛币，达到这个最优错误率。
+
+若整数 $n_k\ge0$ 随 $k\to\infty$ 变化，则有三种尺度：
+$$
+\bigl(\operatorname{TV}(P_{k,n_k},Q_{k,n_k}),R_{k,n_k}\bigr)
+\longrightarrow
+\begin{cases}
+(0,\tfrac12),&n_k/k\longrightarrow0,\\
+(1-e^{-\lambda},\tfrac12e^{-\lambda}),
+&n_k/k\longrightarrow\lambda\in(0,\infty),\\
+(1,0),&n_k/k\longrightarrow\infty.
+\end{cases}
+\tag{101.2e}
+$$
+特别地，每个固定有限 $n$ 都满足 $\sup_{k\ge2}R_{k,n}=1/2$，尽管全部模型共有正 KL 率下界 $(3/4)\log2$。因此，仅凭状态数三、这个共同率下界和目标错误率 $\delta<1/2$，不能选择对全族有效的有限观察窗口；这不排除由完整已知核或 $k$ 选取窗口，也不否认本例的精确值 $c_k$ 可以确定 $k$。取 $n_k=\lfloor\sqrt{k}\rfloor$，更有
+$$
+D_{\rm KL}(P_{k,n_k}\Vert Q_{k,n_k})\longrightarrow\infty,
+\qquad
+\operatorname{TV}(P_{k,n_k},Q_{k,n_k})\longrightarrow0,
+\qquad R_{k,n_k}\longrightarrow\frac12.
+\tag{101.2f}
+$$
+
+**证明。** 因为 $k\ge2$，
+$$
+0<p_k+q_k=\frac{1+2^{-k}}k\le\frac58<1,
+$$
+故 $p_k,q_k,r_k>0$。每行、每列之和均为一，所以均匀律平稳。逐次对路径末坐标求和，核的行和一与 $\sum_i\pi(i)=1$ 给出 $\sum_wP_{k,n}(w)=1$；反序是有限载体 $\Omega_n$ 上的双射，故 $\sum_wQ_{k,n}(w)=1$。两份路径律在 $\Omega_n$ 上处处严格正。任意两状态间转移均严格正，且各状态有自环，遂得不可约性与非周期性；有理性直接由定义得到。
+
+将已有[推论 93.4（三状态环的持续方向性）](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 中的 $p,q$ 取为 $p_k,q_k$，原式的净计数 $C_n$ 在本节记作 $J_n$。上述严格正性和平稳性满足其全部前提，而
+$$
+\frac{p_k}{q_k}=2^k,\qquad
+(p_k-q_k)\log\frac{p_k}{q_k}
+=(1-2^{-k})\log2.
+$$
+其路径似然比与 KL 公式立即给出 (101.2a)。$2^{-k}\le1/4$ 且 $2^{-k}\to0$，得到所述率界和极限。$n=0$ 时两份初始律相同，净计数和散度均为零。
+
+在每条常路径上，$P_{k,n}$ 与 $Q_{k,n}$ 的质量都为 $r_k^n/3$，因而
+$$
+P_{k,n}|_{A_n}=Q_{k,n}|_{A_n}=r_k^nU_n,
+\qquad
+P_{k,n}(A_n^c)=Q_{k,n}(A_n^c)=1-r_k^n.
+\tag{101.2g}
+$$
+与 $U_n$ 比较时，常路径上的总质量缺口为 $1-r_k^n$，非常路径上的总质量也为 $1-r_k^n$；半个绝对差之和即为 (101.2b)。比较 $P_{k,n}$ 与 $Q_{k,n}$ 时，它们在 $A_n$ 上相等，所以
+$$
+\begin{aligned}
+\operatorname{TV}(P_{k,n},Q_{k,n})
+&=\frac12\sum_{w\notin A_n}|P_{k,n}(w)-Q_{k,n}(w)|\\
+&\le\frac12\bigl[P_{k,n}(A_n^c)+Q_{k,n}(A_n^c)\bigr]
+=1-r_k^n.
+\end{aligned}
+$$
+又
+$$
+1-r_k^n=(1-r_k)\sum_{j=0}^{n-1}r_k^j
+\le n(1-r_k)=\frac{n(1+2^{-k})}{k}\le\frac{5n}{4k}.
+$$
+空和使这个计算也包含 $n=0$。
+
+对有限载体上的单位质量概率，直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/Estimation/LeCamTight.lean)，再除以等先验的因子二，得
+$$
+R_{k,n}=\frac12\sum_w\min\{P_{k,n}(w),Q_{k,n}(w)\}
+=\frac12(1-\operatorname{TV}(P_{k,n},Q_{k,n})).
+$$
+允许随机化不降低该值：每条轨迹的错误质量是 $\delta(w)$ 的仿射函数，其最小值在较小错误的一端达到；两质量相等时任选。报告反向的最优区域为 $P_{k,n}(w)<Q_{k,n}(w)$，相等时公平抛币。由 (101.2a)，这正是所述净计数规则。反序把 $J_n$ 变为 $-J_n$ 并交换两份律，公平处理零值使两个条件错误率相同，故
+$$
+R_{k,n}=P_{k,n}(J_n<0)+\frac12P_{k,n}(J_n=0).
+\tag{101.2h}
+$$
+
+常路径上 $J_n=0$，贡献 $r_k^n/2$。若路径非常且 $J_n\le0$，就必有一次逆时针转移：没有逆时针时，每次非自环转移都增加净计数。因此
+$$
+\begin{aligned}
+\frac12r_k^n\le R_{k,n}
+&=\frac12r_k^n+P_{k,n}(J_n<0)
+ +\frac12P_{k,n}(J_n=0,A_n^c)\\
+&\le\frac12r_k^n+P_{k,n}(N_->0)
+\le\frac12r_k^n+nq_k.
+\end{aligned}
+$$
+最后一步用并合界，每个时刻逆时针转移的概率为 $q_k$，不需要转移事件独立。始终公平猜测又给 $R_{k,n}\le1/2$，得到 (101.2d)。将其上界代入 $\operatorname{TV}=1-2R_{k,n}$，再与总变差非负性合用，得到 (101.2c) 的下界。
+
+现设 $n_k/k\to\lambda\in[0,\infty)$。令 $a_k=(1+2^{-k})/k$，则 $a_k\to0$、$ka_k\to1$，且由 $\log$ 在一处的导数为一，
+$$
+\frac{\log(1-a_k)}{a_k}\longrightarrow-1,
+\qquad k\log r_k\longrightarrow-1.
+$$
+这里的导数接口见 [hasDerivAt_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean)。于是
+$$
+n_k\log r_k=\frac{n_k}{k}\,k\log r_k\longrightarrow-\lambda,
+\qquad r_k^{n_k}\longrightarrow e^{-\lambda},
+\qquad n_kq_k=\frac{n_k}{k}2^{-k}\longrightarrow0.
+$$
+由 (101.2d) 夹逼，$R_{k,n_k}\to\tfrac12e^{-\lambda}$；再用 $\operatorname{TV}=1-2R$，得到 (101.2e) 的前两种尺度。
+
+若 $n_k/k\to\infty$，固定任意 $M>0$，则最终 $n_k\ge\lfloor Mk\rfloor$。两种方向的较长路径律投影到前缀，分别给出对应的较短路径律；测试可以忽略后缀，所以最优错误率随窗口不增。因此
+$$
+0\le\limsup_{k\to\infty}R_{k,n_k}
+\le\lim_{k\to\infty}R_{k,\lfloor Mk\rfloor}
+=\frac12e^{-M}.
+$$
+令 $M\to\infty$，得第三种尺度。这个前缀论证没有要求在任意超线性窗口下仍有 $n_kq_k\to0$。
+
+固定 $n$ 时，$r_k^n\to1$，(101.2d) 给 $R_{k,n}\to1/2$，而各项不超过 $1/2$，故上确界为 $1/2$。最后，$n_k=\lfloor\sqrt{k}\rfloor$ 满足 $n_k\to\infty$、$n_k/k\to0$，所以 (101.2a) 的共同正率下界使总 KL 趋于无穷，(101.2e) 给出其余两个极限，证明 (101.2f)。
+
+这项困难是从随机轨迹识别方向的观察时间：一次转移的精确词概率已经满足 $P_{k,1}(i,i+1)=p_k/3\ne q_k/3=Q_{k,1}(i,i+1)$。总 KL 的大值也不与小总变差矛盾；既有 [Pinsker 不等式](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/TotalVariation/Pinsker.lean) 的方向是 $2\operatorname{TV}^2\le D_{\rm KL}$，不能由 KL 下界反推出总变差下界。证毕。
+
+相关机制的背景见 Feng–Crooks，[Length of Time’s Arrow，Physical Review Letters **101**, 090602 (2008)](https://doi.org/10.1103/PhysRevLett.101.090602)，第 090602-3–4 页，尤其式 (14)–(16)：该文在物理驱动实验的语境中，以稀有的大耗散分量展示平均耗散与 Jensen–Shannon 方向信息的差别。此处将其作为机制背景引用；本节的有理三状态环、总变差最优风险与观察时间尺度结论由上述证明给出，不归于该文，也不赋予本例的 KL 物理熵意义。
+
+**定义与假设 101.3（同族的可逆零假设与适应性认证）。** 赋予 $S$ 离散 $\sigma$-代数，并在同一路径空间 $\Omega=S^{\mathbb N_0}$ 上取乘积 $\sigma$-代数。记 $P_k$ 为初始律 $\pi$、核 $K_k$ 的无限平稳 Markov 路径律，其 $n$ 次转移前缀律就是 $P_{k,n}$。该律使用既有 Ionescu–Tulcea 构造：每步以已观察前缀的末状态代入 $K_k$，再从 $\pi$ 出发迭代；有限离散域保证步核可测，行和一保证它是概率核。参见 [trajMeasure、traj_map_frestrictLe](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean)。定义
+$$
+Q_0=\frac13\sum_{i\in S}\delta_{(i,i,i,\ldots)}.
+\tag{101.3a}
+$$
+这是核 $I$、均匀初始律的可逆、非遍历路径律，前缀律为 $Q_{0,n}=U_n$。
+
+本次零假设为 $\{Q_0\}$，或任意包含 $Q_0$ 的可逆平稳过程类；替代假设包含全部 $\{P_k:k\ge2\}$。这与命题 101.2 的方向标签任务不同：该处的 $P_k$ 及其反向过程都不可逆，而此处判定的是可逆性。$Q_0$ 也不是该处记作 $Q_{k,n}$ 的反向前缀律。若零假设仅允许不可约或遍历链，则 $Q_0$ 不属于它，以下在 $Q_0$ 处的结论不承担该受限问题。
+
+固定一条对全部未知 $k$ 共用的认证规则。取共同的种子概率空间 $(E,\mathcal E,\nu)$；在 $\Omega\times E$ 上令辅助种子 $\xi$ 为第二坐标，在每个模型下均与轨迹独立，记
+$$
+\bar P_k=P_k\otimes\nu,\qquad
+\bar Q_0=Q_0\otimes\nu,
+\qquad
+\mathcal G_n=\sigma(X_0,\ldots,X_n,\xi).
+\tag{101.3b}
+$$
+这里取由所列观测生成的原始 $\sigma$-代数，不加入依赖模型的完备化。规则可知道模型族，但不另获真实 $k$ 或模型标签。一次性给出全部独立随机种子包含逐步随机化。
+
+令 $C_n\in\mathcal G_n$ 表示在时刻 $n$ 或更早已签发“可逆”证书，要求 $C_n\subseteq C_{n+1}$，并置
+$$
+C=\bigcup_{n\ge0}C_n.
+\tag{101.3c}
+$$
+若用停时 $\tau\in\mathbb N_0\cup\{\infty\}$ 和终端决定 $D$ 表述，则 $C_n=\{\tau\le n,D=\text{“可逆”}\}$；不仅 $\tau$ 是停时，决定也必须适应于截至停时的观测，满足上述可测性。停时采用既有 [IsStoppingTime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Process/Stopping.lean) 的含义。允许规则不终止或终止时弃权。对 $\delta\in[0,1]$，统一错误证书界指 $\bar P_k(C)\le\delta$ 对每个 $k\ge2$ 成立，约束的是曾在有限时刻签发证书的总概率。
+
+**命题 101.4（有限停止不能统一认证可逆零假设）。** 在定义与假设 101.3 下，
+$$
+\bar Q_0(C)
+\le\liminf_{k\to\infty}\bar P_k(C)
+\le\sup_{k\ge2}\bar P_k(C).
+\tag{101.4a}
+$$
+因此统一错误证书界 $\delta$ 必使 $\bar Q_0(C)\le\delta$。若规则在 $Q_0$ 下以概率一于有限时刻签发证书，则 $\bar P_k(C)\to1$。对零错误，单个固定替代模型已足够：
+$$
+\forall k\ge2,\qquad
+\bar P_k(C)=0\ \Longrightarrow\ \bar Q_0(C)=0.
+\tag{101.4b}
+$$
+这些界均不要求预先假设停时几乎处处有限。
+
+**证明。** $P_k$ 的各前缀概率与定义 101.1 相容，因为对最后一个状态求和使用核的行和一；既有轨迹构造给出这些前缀概率。均匀律平稳使所得过程平稳。$Q_0$ 的每条常轨迹在反序下不变，故 $Q_0$ 可逆；移位不变事件“最终恒为状态 $0$”在 $Q_0$ 下的概率为 $1/3$，所以它非遍历。每个 $P_k$ 则由 $p_k/3\ne q_k/3$ 的一步词概率判为不可逆。
+
+对有限前缀 $w\in S^{n+1}$，令 $a_n(w)\in[0,1]$ 为观察到 $w$ 时使规则在时刻 $n$ 或更早签发证书的种子集合之 $\nu$-概率。$C_n\in\mathcal G_n$ 保证这些种子截面可测，且不依赖未见的轨迹后缀。因此
+$$
+\bar P_k(C_n)=\sum_wP_{k,n}(w)a_n(w),
+\qquad
+\bar Q_0(C_n)=\frac13\sum_{i\in S}a_n(i,\ldots,i).
+$$
+第一项求和中常路径的部分恰为 $r_k^n\bar Q_0(C_n)$，其余部分非负。由 (101.2g)，
+$$
+\bar P_k(C_n)\ge r_k^n\bar Q_0(C_n).
+\tag{101.4c}
+$$
+进而
+$$
+\bar Q_0(C_n)-\bar P_k(C_n)
+\le(1-r_k^n)\bar Q_0(C_n)\le1-r_k^n,
+$$
+所以
+$$
+\bar Q_0(C_n)\le\bar P_k(C)+1-r_k^n.
+\tag{101.4d}
+$$
+这也是 (101.2b) 的有限总变差比较经过随机二元决定后的界；相应既有接口为 [total_variation_channel_le](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/TotalVariation/DataProcessing.lean)。$n=0$ 时 $r_k^0=1$，两份初始律完全相同，以上计算仍成立。
+
+保持 $n$ 固定，令 $k\to\infty$，有 $r_k^n\to1$，故
+$$
+\bar Q_0(C_n)\le\liminf_{k\to\infty}\bar P_k(C).
+$$
+再令 $n\to\infty$，用递增事件的测度连续性
+[tendsto_measure_iUnion_atTop](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/MeasureSpace.lean)，得到 (101.4a)。这里先对每个固定观测时刻取 $k$ 极限，再取事件递增极限，没有交换未经控制的联合极限。统一错误界随即给出 $\bar Q_0(C)\le\delta$；若左端为一，右侧概率序列的下极限至少为一，而各项至多为一，故其极限为一。
+
+最后固定 $k$。若 $\bar P_k(C)=0$，则各 $\bar P_k(C_n)=0$。有限 $n$ 下 $r_k^n>0$，所以 (101.4c) 强迫 $\bar Q_0(C_n)=0$；可数并给出 $\bar Q_0(C)=0$，证明 (101.4b)。这个论证只用有限前缀的单向支配，不要求无限路径律绝对连续。实际上常无限轨迹集合在 $Q_0$ 下概率一，在固定 $P_k$ 下概率 $\lim_n r_k^n=0$，二者在无限轨迹上可完全分离。
+
+规则若总是弃权，可以立即停止而从不签发证书；因此几乎处处有限停止本身不能替代对 $\bar Q_0(C)$ 的要求。反方向也不同：在仅比较 $Q_0$ 与此替代族时，第一次跳转在每个固定 $P_k$ 下几乎处处有限，在 $Q_0$ 下从不发生，故能零错误排除 $Q_0$；但可逆链也可以跳转，这不构成对任意可逆过程的反驳。证毕。
+
+## 101.99 追加锚
