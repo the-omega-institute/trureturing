@@ -1,7 +1,7 @@
 using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using Markdig.Syntax;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Policy.Tests;
 
 /// <summary>
 /// The conversation contract and the anchor registries of the codex-formal-answer skill.

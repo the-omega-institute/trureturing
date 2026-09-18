@@ -16,4 +16,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.Lean")]
 [assembly: InternalsVisibleTo("StrataLint.Lean.Tests")]
 
-[assembly: InternalsVisibleTo("StrataLint.Repository.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Policy.Tests")]

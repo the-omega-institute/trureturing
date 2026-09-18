@@ -2,7 +2,7 @@ using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using System.Text.RegularExpressions;
 using Markdig.Syntax;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Policy.Tests;
 
 public sealed partial class CodexFormalAnswerSkillTests
 {

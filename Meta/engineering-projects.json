@@ -368,6 +368,43 @@
       ]
     },
     {
+      "path": "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj",
+      "assembly": "StrataLint.Anchors.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Anchors.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Anchors.Tests",
+      "root_namespace": "StrataLint.Anchors.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Anchors.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Anchors.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "D5/**",
+        "skills/codex-formal-answer/SKILL.md"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
+    },
+    {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
       "assembly": "StrataLint.ArchitectureTests",
       "role": "cross-cutting-test",
@@ -640,6 +677,56 @@
       ]
     },
     {
+      "path": "tools/tests/StrataLint.Policy.Tests/StrataLint.Policy.Tests.csproj",
+      "assembly": "StrataLint.Policy.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Policy.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Policy.Tests",
+      "root_namespace": "StrataLint.Policy.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Policy.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Policy.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "**/*.cs",
+        "CLAUDE.md",
+        "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportConsumers/*.json",
+        "Meta/ReportProducers/*.json",
+        "Meta/domains.yaml",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "lean-report-inputs.json",
+        "skills/**",
+        "tools/**/*.csproj",
+        "tools/scripts/agent/batch_pr.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
+    },
+    {
       "path": "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj",
       "assembly": "StrataLint.Repository.Tests",
       "role": "cross-cutting-test",
@@ -649,7 +736,6 @@
       ],
       "exclude": [],
       "references": [
-        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
@@ -671,20 +757,8 @@
       ],
       "execution_inputs": [
         "**/*.cs",
-        "CLAUDE.md",
         "D5/**",
-        "Meta/FILEMAP.*.toml",
-        "Meta/FILEMAP.toml",
-        "Meta/ReportConsumers/*.json",
-        "Meta/ReportProducers/*.json",
-        "Meta/domains.yaml",
-        "Meta/judge-seed.json",
-        "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "lean-report-inputs.json",
-        "skills/**",
-        "tools/**/*.csproj",
-        "tools/scripts/agent/batch_pr.sh"
+        "tools/**/*.csproj"
       ],
       "execution_excludes": [],
       "execution_environment": [

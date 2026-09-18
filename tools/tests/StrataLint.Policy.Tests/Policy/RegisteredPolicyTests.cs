@@ -4,7 +4,7 @@ using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Policy.Tests;
 
 public sealed class RegisteredPolicyTests
 {

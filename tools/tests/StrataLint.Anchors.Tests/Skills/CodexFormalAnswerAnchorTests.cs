@@ -1,6 +1,6 @@
 using static StrataLint.TestSupport.FormalAnswerSkillContract;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Anchors.Tests;
 
 public sealed class CodexFormalAnswerAnchorTests
 {

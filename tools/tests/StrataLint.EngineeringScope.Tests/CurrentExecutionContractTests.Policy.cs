@@ -7,21 +7,29 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("CLAUDE.md", true)]
-    [InlineData("skills/codex-formal-answer/SKILL.md", true)]
-    [InlineData("skills/codex-theory-ingest/SKILL.md", true)]
-    [InlineData("tools/scripts/agent/batch_pr.sh", true)]
-    [InlineData("Meta/domains.yaml", true)]
-    [InlineData("Meta/registry.yaml", true)]
-    [InlineData("Meta/judge-seed.json", true)]
-    [InlineData("Meta/package-materials.json", true)]
-    [InlineData("tools/scripts/agent/merge-gate.sh", false)]
-    public void RegisteredRepositoryContractsInvalidateOnlyTheirDeclaredMaterials(string path, bool invalidates)
+    [InlineData("Policy", "CLAUDE.md", true)]
+    [InlineData("Policy", "skills/codex-formal-answer/SKILL.md", true)]
+    [InlineData("Policy", "skills/codex-theory-ingest/SKILL.md", true)]
+    [InlineData("Policy", "tools/scripts/agent/batch_pr.sh", true)]
+    [InlineData("Policy", "Meta/domains.yaml", true)]
+    [InlineData("Policy", "Meta/registry.yaml", true)]
+    [InlineData("Policy", "Meta/judge-seed.json", true)]
+    [InlineData("Policy", "Meta/package-materials.json", true)]
+    [InlineData("Policy", "tools/scripts/agent/merge-gate.sh", false)]
+    [InlineData("Policy", "D5/S0/Carrier/PolicyInputProbe.lean", false)]
+    [InlineData("Repository", "CLAUDE.md", false)]
+    [InlineData("Repository", "skills/codex-formal-answer/SKILL.md", false)]
+    [InlineData("Repository", "Meta/registry.yaml", false)]
+    [InlineData("Anchors", "D5/S0/Carrier/PolicyInputProbe.lean", true)]
+    [InlineData("Anchors", "skills/codex-formal-answer-answer/SKILL.md", false)]
+    [InlineData("Anchors", "skills/codex-formal-answer/SKILL.md", true)]
+    [InlineData("Anchors", "CLAUDE.md", false)]
+    public void RegisteredRepositoryContractsInvalidateOnlyTheirDeclaredMaterials(string project, string path, bool invalidates)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
-            == "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj")!;
+            == $"tools/tests/StrataLint.{project}.Tests/StrataLint.{project}.Tests.csproj")!;
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })

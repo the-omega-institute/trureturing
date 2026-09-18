@@ -4,4 +4,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
 
-[assembly: InternalsVisibleTo("StrataLint.Repository.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Policy.Tests")]

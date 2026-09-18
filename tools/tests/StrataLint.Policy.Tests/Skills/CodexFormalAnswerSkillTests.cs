@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Markdig.Extensions.Tables;
 using Markdig.Syntax;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Policy.Tests;
 
 public sealed partial class CodexFormalAnswerSkillTests
 {

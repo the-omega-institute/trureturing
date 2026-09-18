@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.Policy.Tests;
 
 public sealed class GovernanceInstructionTests
 {
