@@ -56,4 +56,19 @@ private theorem westRun_perm (stack input : List ℕ) :
   | case4 x xs a rest h ih =>
       simpa [westRun, h] using ih.trans List.perm_middle.symm
 
+private theorem westRun_sentinel (stack input : List ℕ) (m : ℕ)
+    (bound : ∀ x ∈ input, x ≤ m) :
+    westRun (stack ++ [m]) input = westRun stack input ++ [m] := by
+  fun_induction westRun stack input with
+  | case1 stack => simp [westRun]
+  | case2 x xs ih =>
+      have hx : ¬m < x := Nat.not_lt.mpr (bound x (by simp))
+      have ht : ∀ y ∈ xs, y ≤ m := fun y hy => bound y (by simp [hy])
+      simpa only [List.cons_append, List.nil_append, westRun, if_neg hx] using ih ht
+  | case3 x xs a rest h ih =>
+      simpa only [List.cons_append, westRun, if_pos h] using congrArg (a :: ·) (ih bound)
+  | case4 x xs a rest h ih =>
+      have ht : ∀ y ∈ xs, y ≤ m := fun y hy => bound y (by simp [hy])
+      simpa only [List.cons_append, westRun, if_neg h] using ih ht
+
 end SyyProbe

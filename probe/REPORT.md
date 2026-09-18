@@ -58,3 +58,5 @@ Proposed GID `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence`, path `D5/S1/W
 `probe/SyyProbe.lean` compiles with the source-form definitions: `IsValley`, recursive maximal valley runs, `r`, West's explicit pop/push/flush stack algorithm `s`, composition `M`, and reversed-word potential `Phi`. The stack helper is private; the maximum-split identity is not used as a definition. The run-based definition scans until the first strictly smaller value, then starts the next run. On distinct words this is exactly the source's valley partition.
 
 Compiled private lemma `westRun_perm`: the operational stack algorithm preserves the combined stack/input multiset, by induction over the actual pop/push recursion.
+
+Compiled private lemma `westRun_sentinel`: a bottom-of-stack element at least as large as all remaining input survives to the final flush. This is proved from the operational recursion, not assumed as a recursive definition of `s`.
