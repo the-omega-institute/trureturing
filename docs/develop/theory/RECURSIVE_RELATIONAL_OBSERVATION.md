@@ -36084,3 +36084,251 @@ $$
 两值之差为 $279/1250>0$。定理 74.2 在 $TE=ETE$ 下保证的是 KL 特例的缺陷不增；以上同一参考、同一分区的精确计算表明，该动力学结论不能直接换成任意凸生成函数。证毕。
 
 ## 82.99 追加锚
+
+## 83. 平稳参考下的 Bregman 纤维缺陷与粗预测差异
+
+**定义与假设 83.1（平稳似然比动力学与联合凸核）。** 沿用定义与假设 74.1、82.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$、粗参考 $p=Cq$，以及质量算子 $C,B,E=BC$、对角矩阵 $D_q$ 和条件投影 $\Pi=D_q^{-1}ED_q$。取非负列随机矩阵 $T$，要求同一参考平稳及参考恢复族保持：
+$$
+\sum_jT_{jk}=1\quad(k\in J),\qquad
+Tq=q,\qquad TE=ETE.
+$$
+按定义 74.1 置 $S=CTB$，并在似然比坐标中置
+$$
+L=D_q^{-1}TD_q,\qquad L_{jk}=\frac{T_{jk}q_k}{q_j}.
+$$
+取任意 $d\in\Delta(J)$，允许零坐标，记 $u=D_q^{-1}d$。令 $\mathcal K\subseteq\mathbb R$ 为包含全部 $u_j$ 的凸区间，$\Phi$ 在包含 $\mathcal K$ 的开区间上为实值凸 $C^1$ 函数。定义 Bregman 核
+$$
+B_\Phi(s,t)=\Phi(s)-\Phi(t)-\Phi'(t)(s-t),
+\qquad (s,t)\in\mathcal K\times\mathcal K,
+$$
+并要求 $B_\Phi$ 在 $\mathcal K\times\mathcal K$ 上联合凸。纤维缺陷 $\mathcal J_\Phi(d;q,r)$ 使用定义 82.1 的有限和；其生成函数只在这些似然比及纤维均值上取值。
+
+附引：Chafaï，*Entropies, convexity, and functional inequalities: On $\Phi$-entropies and $\Phi$-Sobolev inequalities*，J. Math. Kyoto Univ. 44(2) (2004), 325–363，[DOI:10.1215/kjm/1250283556](https://doi.org/10.1215/kjm/1250283556)，[arXiv:math/0211103v2，(H2)、式 (19)](https://arxiv.org/abs/math/0211103v2)，将二变量条件写为
+$$
+\Psi(t,h)=\Phi(t+h)-\Phi(t)-\Phi'(t)h.
+$$
+线性变换 $(s,t)\mapsto(t,s-t)$ 给出 $B_\Phi(s,t)=\Psi(t,s-t)$。这里的联合凸性是附加假设；单变量 $\Phi$ 的凸性或其透视函数的凸性均不替代这一假设。
+
+**定理 83.2（族保持下的纤维缺陷与粗预测差异不等式）。** 在定义与假设 83.1 下，全部下列项都是有限实数，且
+$$
+\boxed{
+\mathcal J_\Phi(Td;q,r)
++\sum_i p_i B_\Phi\!\left(
+  \frac{(CTd)_i}{p_i},\frac{(SCd)_i}{p_i}\right)
+\le\mathcal J_\Phi(d;q,r).
+}
+$$
+粗预测项非负，因此 $\mathcal J_\Phi(Td;q,r)\le\mathcal J_\Phi(d;q,r)$。若固定 $q$ 并在
+$$
+\mathcal K=[0,1/\min_jq_j]
+$$
+上满足上述函数假设，则该结论同时适用于所有 $d\in\Delta(J)$。
+
+**证明。** 先落实似然比坐标中的权重。由 $Tq=q$ 得
+$$
+\sum_k L_{jk}=\frac{(Tq)_j}{q_j}=1,
+$$
+而由 $T$ 的列随机性得
+$$
+\sum_jq_jL_{jk}
+=q_k\sum_jT_{jk}=q_k.
+$$
+所有 $L_{jk}\ge0$。这是命题 74.4 的同参考反向行核；质量更新与似然比更新满足 $D_qLu=Td$。再用 $E=D_q\Pi D_q^{-1}$ 共轭族保持等式，得到
+$$
+L\Pi=\Pi L\Pi.
+$$
+置 $v=Lu$、$z=L\Pi u$，于是 $\Pi z=z$，即 $z$ 在每条纤维上为常值。$\Pi$ 的纤维权重为 $q_k/p_i$，非负且和为一；$L$ 的各行也非负归一化。因此 $u,\Pi u,v,z,\Pi v$ 的全部坐标均为 $\mathcal K$ 中各点的凸组合，仍在 $\mathcal K$ 中。
+
+在输入端，记 $m_i=(Cd)_i/p_i$，则 $(\Pi u)_j=m_{r(j)}$，且
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)=0.
+$$
+由于 $\Phi'(m_i)$ 在纤维内为同一有限实数，Bregman 展开的线性项逐纤维相消：
+$$
+\begin{aligned}
+\sum_jq_jB_\Phi(u_j,(\Pi u)_j)
+&=\sum_jq_j\Phi(u_j)-\sum_i p_i\Phi(m_i)
+  -\sum_i\Phi'(m_i)\sum_{r(j)=i}q_j(u_j-m_i)\\
+&=\mathcal J_\Phi(d;q,r).
+\end{aligned}
+$$
+
+对 $L$ 的第 $j$ 行，以权重 $L_{jk}$ 对点对 $(u_k,(\Pi u)_k)\in\mathcal K\times\mathcal K$ 应用有限 Jensen。其权重非负、和为一，乘积域凸，核在该域联合凸，所以
+$$
+B_\Phi(v_j,z_j)
+\le\sum_k L_{jk}B_\Phi(u_k,(\Pi u)_k).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在实二维点对上的有限凸组合不等式。乘 $q_j$，有限换序，并用上面的加权不变性，得
+$$
+\begin{aligned}
+\sum_jq_jB_\Phi(v_j,z_j)
+&\le\sum_k\left(\sum_jq_jL_{jk}\right)
+       B_\Phi(u_k,(\Pi u)_k)\\
+&=\sum_kq_kB_\Phi(u_k,(\Pi u)_k)
+=\mathcal J_\Phi(d;q,r).
+\end{aligned}
+$$
+
+最后在输出端分离纤维缺陷与粗预测差异。对 $r(j)=i$，写
+$$
+\bar v_i=(\Pi v)_j=\frac{(CTd)_i}{p_i},\qquad
+\bar z_i=z_j.
+$$
+因 $z$ 纤维常值且 $D_qz=TEd$，有
+$$
+p_i\bar z_i
+=\sum_{r(j)=i}q_jz_j
+=(CTEd)_i=(SCd)_i.
+$$
+这里 $SCd=CTBCd=CTEd$ 仅由定义给出；把 $z_j$ 识别为每条纤维上的常数 $\bar z_i$ 才使用了族保持。对每个 $i$ 直接展开，并用 $\sum_{r(j)=i}q_jv_j=p_i\bar v_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_jB_\Phi(v_j,\bar z_i)
+&=\sum_{r(j)=i}q_j\Phi(v_j)-p_i\Phi(\bar z_i)
+  -p_i\Phi'(\bar z_i)(\bar v_i-\bar z_i)\\
+&=\left[\sum_{r(j)=i}q_j\Phi(v_j)-p_i\Phi(\bar v_i)\right]
+  +p_iB_\Phi(\bar v_i,\bar z_i).
+\end{aligned}
+$$
+按纤维求和即得精确恒等式
+$$
+\sum_jq_jB_\Phi(v_j,z_j)
+=\mathcal J_\Phi(Td;q,r)
++\sum_i p_iB_\Phi\!\left(
+  \frac{(CTd)_i}{p_i},\frac{(SCd)_i}{p_i}\right).
+$$
+结合前面的 Jensen 界得到所述加强不等式。凸可微函数的切线支撑不等式给出 $B_\Phi(s,t)\ge0$，所以粗预测项非负。
+
+若统一取所列 $\mathcal K$，每个概率 $d$ 都满足
+$$
+0\le u_j=\frac{d_j}{q_j}\le\frac1{q_j}\le\frac1{\min_kq_k}.
+$$
+所有后续坐标仍由已证的凸组合性质留在这个区间。分母始终为正参考 $q_j,p_i$；$C^1$ 假设保证各处导数有限，包括区间包含零点时的 $\Phi'(0)$。所以 $d$、$CTd$ 或 $SCd$ 的零坐标不产生未定义项，全部有限和均有意义。证毕。
+
+附引：反向核与输出似然比的关系见 Raginsky，*Strong Data Processing Inequalities and $\Phi$-Sobolev Inequalities for Discrete Channels*，[arXiv:1411.3575v4，§1.1 式 (1.2)、Lemma A.1](https://arxiv.org/abs/1411.3575v4)。输入端的纤维相消对应其 §2.1 式 (2.4)–(2.5)、Lemma A.4 的条件 $\Phi$ 熵及 Bregman 表达，也对应 Chafaï 同文式 (58) 的条件熵分解。这里的 $C^1$ 正则性由上述有限和证明承担。$\Phi(t)=t\ln t$ 在零点不满足本定理的有限导数假设；含零质量的 KL 缺陷不等式由定理 74.2 的支撑型结论给出。
+
+**推论 83.3（二次残差同时控制下一步缺陷与粗预测误差）。** 在定义与假设 83.1 的线性条件下，记
+$$
+\mathcal J_2(d;q,r):=\mathcal J_{t^2}(d;q,r)
+=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}.
+$$
+则对每个 $d\in\Delta(J)$，
+$$
+\boxed{
+\mathcal J_2(Td;q,r)
++\sum_i\frac{\bigl((CTd)_i-(SCd)_i\bigr)^2}{p_i}
+\le\mathcal J_2(d;q,r).
+}
+$$
+
+**证明。** $B_{t^2}(s,t)=(s-t)^2$ 在 $\mathbb R^2$ 上联合凸。取 $\mathcal K=\mathbb R$，在定理 83.2 中代入这一核，再用命题 82.2 的二次残差恒等式，即得结论。
+
+在命题 69.1、82.2 的带权正交残差几何中，$z=L\Pi u$ 属于 $\operatorname{Im}\Pi$，故输出端的精确分解就是
+$$
+\|Lu-z\|_q^2
+=\|(\mathrm{Id}-\Pi)Lu\|_q^2+\|\Pi Lu-z\|_q^2.
+$$
+右侧两项依次是下一步二次纤维缺陷和所列粗预测误差；它们共同受初始残差平方控制。证毕。
+
+**推论 83.4（完整交换使粗预测项消失）。** 在定义与假设 83.1 下，若再有 $TE=ET$，则对每个满足其函数定义域条件的 $d$，
+$$
+CTd=SCd,
+\qquad
+\mathcal J_\Phi(Td;q,r)\le\mathcal J_\Phi(d;q,r),
+$$
+且定理 83.2 的粗预测项逐项为零。
+
+**证明。** 共轭交换等式给出 $L\Pi=\Pi L$，因而定理 83.2 证明中的 $z=L\Pi u=\Pi Lu$。该证明已将这两个纤维常值向量分别识别为 $(SCd)_i/p_i$ 与 $(CTd)_i/p_i$，故粗质量相等，每项均为 $p_iB_\Phi(t,t)=0$。代入定理 83.2 即得。完整交换蕴含族保持，因为 $E^2=E$ 给出 $ETE=TE$；主定理只使用后一个条件。证毕。
+
+**命题 83.5（平稳且交换的四状态动力学仍可增大四次缺陷）。** 取 $J=\{1,2,3,4\}$、$I=\{1,2\}$，令 $r(1)=r(2)=1$、$r(3)=r(4)=2$，并置
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+d=\begin{pmatrix}3/8\\3/8\\3/16\\1/16\end{pmatrix},
+$$
+$$
+E=\frac12\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix},\qquad
+T=\frac12\begin{pmatrix}
+1&0&1&0\\
+0&1&0&1\\
+1&0&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+则 $q,d$ 都是严格正概率，$E$ 是指定参考的纤维重采样，$T$ 非负列随机、对称且幂等，满足
+$$
+Tq=q,\qquad TE=ET=ETE,
+$$
+但对凸生成函数 $\Phi(t)=t^4$，
+$$
+\boxed{
+\mathcal J_{t^4}(d;q,r)=\frac{25}{512},\qquad
+\mathcal J_{t^4}(Td;q,r)=\frac{385}{4096},\qquad
+\mathcal J_{t^4}(Td;q,r)-\mathcal J_{t^4}(d;q,r)
+=\frac{185}{4096}>0.
+}
+$$
+同一输入与同一动力学的二次缺陷则满足
+$$
+\mathcal J_2(d;q,r)=\frac1{32},\qquad
+\mathcal J_2(Td;q,r)=\frac1{64}.
+$$
+因此，平稳参考与完整交换不能使每个单变量凸生成函数的纤维缺陷都不增。
+
+**证明。** $q,d$ 的坐标均正，总和均为一。$p=(1/2,1/2)^{\mathsf T}$，故由定义 74.1 的 $E=BC$ 得到所列 $E$。$T$ 的每行、每列各有两个 $1/2$，其余为零；所以非负列随机并固定均匀参考 $q$，但 $T_{12}=0$。直接相乘有
+$$
+T^{\mathsf T}=T,\qquad T^2=T,\qquad
+TE=ET=\frac14\mathbf1\mathbf1^{\mathsf T},
+\qquad \mathbf1=(1,1,1,1)^{\mathsf T}.
+$$
+右侧每列被 $E$ 固定，所以还等于 $ETE$。均匀参考下 $D_q=\frac14\mathrm{Id}$，因而 $\Pi=E$、$L=T$。输入似然比及纤维均值为
+$$
+u=\begin{pmatrix}3/2\\3/2\\3/4\\1/4\end{pmatrix},\qquad
+\Pi u=\begin{pmatrix}3/2\\3/2\\1/2\\1/2\end{pmatrix}.
+$$
+输出为
+$$
+Td=\begin{pmatrix}9/32\\7/32\\9/32\\7/32\end{pmatrix},\qquad
+Lu=\begin{pmatrix}9/8\\7/8\\9/8\\7/8\end{pmatrix},\qquad
+\Pi Lu=\mathbf1.
+$$
+$\Phi''(t)=12t^2\ge0$ 保证 $t^4$ 在实线上凸。由定义 82.1，粗项也可写为 $\sum_jq_j\Phi((\Pi u)_j)$。逐项算得
+$$
+\begin{aligned}
+\sum_jq_ju_j^4
+&=\frac14\left[2\left(\frac32\right)^4
+                  +\left(\frac34\right)^4
+                  +\left(\frac14\right)^4\right]
+=\frac{1337}{512},\\
+\sum_jq_j(\Pi u)_j^4
+&=\frac14\left[2\left(\frac32\right)^4
+                  +2\left(\frac12\right)^4\right]
+=\frac{41}{16},\\
+\sum_jq_j(Lu)_j^4
+&=\frac12\left[\left(\frac98\right)^4
+                  +\left(\frac78\right)^4\right]
+=\frac{4481}{4096},\\
+\sum_jq_j(\Pi Lu)_j^4&=1.
+\end{aligned}
+$$
+因此输入缺陷为 $(1337-1312)/512=25/512$，输出缺陷为 $(4481-4096)/4096=385/4096$，两者之差为 $(385-200)/4096=185/4096$。
+
+二次残差分别是
+$$
+u-\Pi u=\begin{pmatrix}0\\0\\1/4\\-1/4\end{pmatrix},\qquad
+Lu-\Pi Lu=\begin{pmatrix}1/8\\-1/8\\1/8\\-1/8\end{pmatrix}.
+$$
+命题 82.2 给出
+$$
+\mathcal J_2(d;q,r)
+=\frac14\cdot2\left(\frac14\right)^2=\frac1{32},\qquad
+\mathcal J_2(Td;q,r)
+=\frac14\cdot4\left(\frac18\right)^2=\frac1{64}.
+$$
+在四次量中，细量下降 $6215/4096$，粗量下降 $6400/4096$；粗量下降更多，其差便增加 $185/4096$。两个凸量各自下降不蕴含它们之差下降，所列平稳交换矩阵与精确分数实现了这一障碍。证毕。
+
+## 83.99 追加锚
