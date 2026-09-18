@@ -2,6 +2,7 @@ import LeanInformationAudit.Syntax
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 
+
 namespace LeanInformationAudit.Tests.DeclaredKeywords
 open Lean Meta Elab Command TemplateAudit
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
