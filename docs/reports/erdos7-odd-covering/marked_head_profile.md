@@ -634,3 +634,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete local domain removes the zero-escape ceiling](profile-notes/163-the-complete-local-domain-removes-the-zero-escape-ceiling.md)
 - [The pure-five first and second moments have a sharp joint envelope](profile-notes/164-the-pure-five-first-and-second-moments-have-a-sharp-joint-envelope.md)
 - [The pure-five joint envelope enters both complete comparisons](profile-notes/165-the-pure-five-joint-envelope-enters-both-complete-comparisons.md)
+- [The complete local source domain crosses the outer strip](profile-notes/166-the-complete-local-source-domain-crosses-the-outer-strip.md)
+- [Two complete source neighborhoods remove the outer crossing](profile-notes/167-two-complete-source-neighborhoods-remove-the-outer-crossing.md)
