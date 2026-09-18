@@ -113,7 +113,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV4
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV5
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with

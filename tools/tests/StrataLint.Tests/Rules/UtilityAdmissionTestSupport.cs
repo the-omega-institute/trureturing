@@ -57,6 +57,11 @@ internal static class UtilityAdmissionTestSupport
 
     internal static string AddRefutationEvidence(RuleFixture fixture, string utility)
     {
+        // These tests change utility/coverage for an existing theorem. Keep the
+        // protected-base source aligned with the synthetic declaration report.
+        const string source = "\ndef proposed_law : Prop := False\ntheorem refuted_law : Not proposed_law := by intro h; exact h\n";
+        fixture.Files[RuleFixture.RingPath] += source;
+        fixture.Baseline[RuleFixture.RingPath] += source;
         fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
         {
             Declarations = fixture.Reports[RuleFixture.RingPath].Declarations.AddRange(new LeanDeclaration[] {
