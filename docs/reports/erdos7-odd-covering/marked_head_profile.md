@@ -619,3 +619,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Coupled source products sharpen the actual mass bound](profile-notes/148-coupled-source-products-sharpen-the-actual-mass-bound.md)
 - [Product mass and source credits improve the complete comparison](profile-notes/149-product-mass-and-source-credits-improve-the-complete-comparison.md)
 - [Signed source monotonicity strengthens the product mass bound](profile-notes/150-signed-source-monotonicity-strengthens-the-product-mass-bound.md)
+- [Shared source losses and signed masses strengthen the local comparison](profile-notes/151-shared-source-losses-and-signed-masses-strengthen-the-local-comparison.md)
+- [The six source losses share one actual concentration budget](profile-notes/153-the-six-source-losses-share-one-actual-concentration-budget.md)
