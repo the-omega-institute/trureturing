@@ -88,7 +88,7 @@ internal static class CiTransport
                 var destination = Path.GetFullPath(seedArchive);
                 try
                 {
-                    if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, stage, tests, checks, messages))
+                    if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, stage, common, tests, checks, messages))
                     {
                         var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
                         PackArchive(stage + "-seed", new(2, seed.Candidate, seed.Round, [], []), null, null, destination);
