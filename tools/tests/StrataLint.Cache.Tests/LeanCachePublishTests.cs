@@ -17,6 +17,7 @@ public sealed class LeanCachePublishTests
             root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(result.ExitCode != 0, "[FAIL] cache_fixture_execution_probe");
     }
 
     [Fact]
