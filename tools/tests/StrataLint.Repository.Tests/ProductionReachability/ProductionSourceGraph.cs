@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Repository.Tests;
 
 // A semantic source index for the two remaining retired-ledger assertions. It deliberately
 // does not build a transitive executable reachability graph.
