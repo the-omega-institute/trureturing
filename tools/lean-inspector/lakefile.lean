@@ -69,15 +69,12 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
-/-- Trace semantic compatibility and registered content configuration.
-Producer compilation remains a separate native obligation. -/
+/-- Trace semantic compatibility after validating registered inputs.
+Raw configuration identity belongs to the aggregate; module exports carry
+Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
-  let config ← readJson (← (← fetch <| pkg.facet `reportInputs).await)
-  let configs ← strings config "configs"
-  let mut deps := Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
-  for path in configs do
-    deps := deps.mix (← inputBinFile (pkg.dir / path))
-  return deps
+  discard <| (← fetch <| pkg.facet `reportInputs).await
+  return Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
 
 /-- A completed native build, not yet accepted by the canonical validator.
 Only private jobs carry this value; it is never a public report facet. -/
@@ -301,12 +298,14 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let mut members : Lean.NameSet := {}
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
+  try observePhase "lake-prepare-register" "start" catch _ => pure ()
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
+  try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
     let requests := artifacts.filterMap fun request =>

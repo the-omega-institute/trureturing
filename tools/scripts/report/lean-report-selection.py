@@ -14,6 +14,13 @@ import sys
 MANIFEST = 'lean-report-inputs.json'
 LOADER = 'tools/scripts/report/lean-report-selection.py'
 SCOPES = ('lean-report', 'scribe-content')
+# The report entry supports this one explicit execution contract. Extending
+# semantic inputs requires a registration/code change, never host discovery.
+REPORT_EXECUTION = {
+    'tools': ('lake', 'lean'),
+    'platform': ('system', 'machine'),
+    'environment': ('LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'ELAN_TOOLCHAIN', 'LEAN_OPTS'),
+}
 
 
 def fail(location, message):
@@ -26,13 +33,17 @@ def fields(value, expected, location):
         fail(location, f'expected fields {sorted(expected)}, got {actual}')
 
 
-def compile_glob(pattern, location):
-    # Same case-sensitive POSIX language as FileMapGlob, including literal [].
+def validate_pattern(pattern, location):
     if (not isinstance(pattern, str) or not pattern or pattern != pattern.strip()
             or pattern.startswith('/') or '\\' in pattern or '?' in pattern
             or any(ord(c) < 32 or ord(c) > 126 for c in pattern)
             or any(p in ('', '.', '..') for p in pattern.split('/'))):
         fail(location, f'unsafe path pattern {pattern!r}')
+
+
+def compile_glob(pattern, location):
+    # Same case-sensitive POSIX language as FileMapGlob, including literal [].
+    validate_pattern(pattern, location)
     expression, index = [], 0
     while index < len(pattern):
         if pattern[index:index + 3] == '**/':
@@ -88,6 +99,8 @@ class Selection:
                 'config_inputs', 'producer_scopes'}
         if 'dependency_sources' in self.data:
             keys.add('dependency_sources')
+        if 'report_execution' in self.data:
+            keys.add('report_execution')
         fields(self.data, keys, 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
@@ -100,6 +113,14 @@ class Selection:
         fields(self.data['producer_scopes'], SCOPES, 'producer_scopes')
         for scope, value in self.data['producer_scopes'].items():
             path_set(value, 'producer_scopes.' + scope)
+        if 'report_execution' in self.data:
+            execution = self.data['report_execution']
+            fields(execution, REPORT_EXECUTION, 'report_execution')
+            for field, supported in REPORT_EXECUTION.items():
+                value = execution[field]
+                if (not isinstance(value, list) or any(not isinstance(item, str) for item in value)
+                        or len(value) != len(supported) or set(value) != set(supported)):
+                    fail('report_execution.' + field, f'requires the explicit supported set {list(supported)}')
         # These required inputs keep policy and reader in the provenance/scope inventory.
         required = self.data['producer_scopes']['lean-report']['include']
         for anchor in (MANIFEST, LOADER):
@@ -113,7 +134,7 @@ class Selection:
         ).hexdigest()
 
     def safe_file(self, relative):
-        compile_glob(relative, 'path')
+        validate_pattern(relative, 'path')
         path = self.root
         for part in relative.split('/'):
             path = path / part
