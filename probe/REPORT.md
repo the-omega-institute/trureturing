@@ -92,3 +92,5 @@ The final main file compiles without warnings. The only public theorem remains t
 ## Elaborated live dependency
 
 `python3 probe/check_dependencies.py` exited 0. Lean's elaborated proof of `result` directly contains `potential_weak`; it still contains that constant after `Lean.Meta.reduce` with reducible transparency and all explicit-argument, type, and proof skipping disabled. Output: `POTENTIAL_DEPENDENCY raw=true reduced=true`. The proof uses its inequality as the second argument of antisymmetry, then injectivity of reversal returns the fixed-point equality. It is not an unused let-binding or discarded conjunction component.
+
+The potential-deletion mutant was rerun against the final public-surface revision and again failed at the same forward inequality (Lean exit 1; check script exit 0).
