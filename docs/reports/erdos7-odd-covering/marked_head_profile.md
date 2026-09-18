@@ -732,3 +732,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Shifted factorial heads strengthen three original J quadratic costs](profile-notes/270-shifted-factorial-heads-strengthen-three-original-j-quadratic-costs.md)
 - [Three shifted factorial costs improve the complete J comparison](profile-notes/271-three-shifted-factorial-costs-improve-the-complete-j-comparison.md)
 - [Joint raw and survivor crosses strengthen three original J costs](profile-notes/272-joint-raw-and-survivor-crosses-strengthen-three-original-j-costs.md)
+- [Joint factorial crosses improve the complete J comparison](profile-notes/273-joint-factorial-crosses-improve-the-complete-j-comparison.md)
