@@ -61,7 +61,7 @@ jobs:
     steps:
       - name: No registered resources
         if: env.CI_NO_WORK == 'true'
-        run: echo "not-required — validated resource plan is empty for $CANDIDATE_SHA" >> "$GITHUB_STEP_SUMMARY"
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
         if: env.CI_NO_WORK != 'true'
         with:
@@ -155,7 +155,7 @@ jobs:
     steps:
       - name: No registered resources
         if: env.CI_NO_WORK == 'true'
-        run: echo "not-required — validated resource plan is empty for $CANDIDATE_SHA" >> "$GITHUB_STEP_SUMMARY"
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
         if: env.CI_NO_WORK != 'true'
         with:
@@ -339,7 +339,7 @@ jobs:
     steps:
       - name: No registered resources
         if: env.CI_NO_WORK == 'true'
-        run: echo "not-required — validated resource plan is empty for $CANDIDATE_SHA" >> "$GITHUB_STEP_SUMMARY"
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
         if: env.CI_NO_WORK != 'true'
         with:
