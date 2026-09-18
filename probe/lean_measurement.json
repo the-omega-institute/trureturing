@@ -1,8 +1,8 @@
 {
   "command": "/usr/bin/time -l lake env lean probe/SyyProbe.lean",
   "exit": 0,
-  "wall_s": 4.13,
-  "peak_rss_bytes": 1648771072,
-  "peak_rss_gb": 1.648771072,
-  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-lexicographic-block-combination.log"
+  "wall_s": 9.5,
+  "peak_rss_bytes": 1642217472,
+  "peak_rss_gb": 1.642217472,
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-machine-potential-by-length-induction.log"
 }

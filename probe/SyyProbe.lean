@@ -210,4 +210,96 @@ private theorem append_le_of_length_eq {A B C D : List ℕ}
     · exact le_of_lt (List.Lex.append_left (· < ·) hcd A)
     · exact le_rfl
 
+private theorem M_last_max (X A : List ℕ) (v m : ℕ)
+    (hXmin : ∀ x ∈ X, v < x) (hAmin : ∀ a ∈ A, v ≤ a) (hvm : v ≤ m)
+    (hXmax : ∀ x ∈ X, x < m) (hAmax : ∀ a ∈ A, a ≤ m) :
+    M (X ++ v :: (A ++ [m])) = M X ++ s (A.reverse ++ [v]) ++ [m] := by
+  have htail : ∀ y ∈ A ++ [m], v ≤ y := by
+    intro y hy
+    rcases List.mem_append.mp hy with hy | hy
+    · exact hAmin y hy
+    · simpa using (List.mem_singleton.mp hy) ▸ hvm
+  have hrX : ∀ x ∈ r X, x < m := fun x hx => hXmax x ((r_perm X).mem_iff.mp hx)
+  have hrA : ∀ y ∈ A.reverse ++ [v], y ≤ m := by
+    intro y hy
+    rcases List.mem_append.mp hy with hy | hy
+    · exact hAmax y (List.mem_reverse.mp hy)
+    · simpa using (List.mem_singleton.mp hy) ▸ hvm
+  unfold M
+  rw [r_split_min X (A ++ [m]) v hXmin htail]
+  simpa only [List.reverse_append, List.reverse_singleton, List.append_assoc,
+    List.singleton_append, List.cons_append, List.nil_append] using s_split_max (r X) (A.reverse ++ [v]) m hrX hrA
+
+private theorem potential_weak (w : List ℕ) (nd : w.Nodup) : Phi w ≤ Phi (M w) := by
+  classical
+  by_cases hw : w = []
+  · subst w
+    simp [Phi, M, r, valleyRuns, s, westRun]
+  obtain ⟨W, a, rfl⟩ : ∃ W a, w = W ++ [a] :=
+    ⟨w.dropLast, w.getLast hw, (List.dropLast_concat_getLast hw).symm⟩
+  have hrne : r (W ++ [a]) ≠ [] := by
+    intro he
+    have hl := (r_perm (W ++ [a])).length_eq
+    simp [he] at hl
+  obtain ⟨b, m, hout, _, hb⟩ := s_ends_max (r (W ++ [a])) hrne
+  have bound : ∀ x ∈ W ++ [a], x ≤ m :=
+    fun x hx => hb x ((r_perm (W ++ [a])).mem_iff.mpr hx)
+  have ha := bound a (by simp)
+  rcases lt_or_eq_of_le ha with ha | he
+  · change (W ++ [a]).reverse ≤ (s (r (W ++ [a]))).reverse
+    rw [hout, List.reverse_append, List.reverse_append]
+    exact le_of_lt (List.Lex.rel ha)
+  · subst a
+    by_cases hWnil : W = []
+    · subst W
+      simp [Phi, M, r, valleyRuns, s, westRun]
+    have ndW : W.Nodup := (List.nodup_append.mp nd).1
+    have notm : m ∉ W := by
+      intro hm
+      exact (List.nodup_append.mp nd).2.2 m hm m (by simp) rfl
+    have maxW : ∀ x ∈ W, x < m := by
+      intro x hx
+      apply lt_of_le_of_ne (bound x (by simp [hx]))
+      intro he
+      subst x
+      exact notm hx
+    have hn : W.toFinset.Nonempty := by
+      obtain ⟨x, hx⟩ := List.exists_mem_of_ne_nil W hWnil
+      exact ⟨x, by simpa using hx⟩
+    obtain ⟨v, hv, hmin⟩ := W.toFinset.exists_min_image id hn
+    have hv' : v ∈ W := by simpa using hv
+    have minW : ∀ x ∈ W, v ≤ x := by simpa using hmin
+    obtain ⟨X, A, hWA, hvX⟩ := List.eq_append_cons_of_mem hv'
+    subst W
+    have hXmin : ∀ x ∈ X, v < x := by
+      intro x hx
+      apply lt_of_le_of_ne (minW x (by simp [hx]))
+      intro he
+      subst x
+      exact hvX hx
+    have hAmin : ∀ x ∈ A, v ≤ x := fun x hx => minW x (by simp [hx])
+    have hXmax : ∀ x ∈ X, x < m := fun x hx => maxW x (by simp [hx])
+    have hAmax : ∀ x ∈ A, x ≤ m := fun x hx => (maxW x (by simp [hx])).le
+    have hvm : v ≤ m := (maxW v (by simp)).le
+    have heq : M ((X ++ v :: A) ++ [m]) = M X ++ s (A.reverse ++ [v]) ++ [m] := by
+      simpa only [List.append_assoc, List.cons_append] using
+        M_last_max X A v m hXmin hAmin hvm hXmax hAmax
+    have ndX := (List.nodup_append.mp ndW).1
+    have hright := potential_weak X ndX
+    have hleft := input_le_reverse_s (A.reverse ++ [v])
+    have hlen : (A.reverse ++ [v]).length = (s (A.reverse ++ [v])).reverse.length := by
+      simpa only [s, List.length_reverse, List.nil_append] using
+        (westRun_perm [] (A.reverse ++ [v])).length_eq.symm
+    have combined := append_le_of_length_eq hlen hleft hright
+    change ((X ++ v :: A) ++ [m]).reverse ≤ (M ((X ++ v :: A) ++ [m])).reverse
+    rw [heq]
+    simpa only [List.reverse_append, List.reverse_cons, List.reverse_singleton,
+      List.singleton_append, List.cons_append, List.append_assoc, List.reverse_nil,
+      List.nil_append, Phi] using
+        List.cons_le_cons m combined
+termination_by w.length
+decreasing_by
+  simp_all only [List.length_append, List.length_cons, List.length_singleton]
+  omega
+
 end SyyProbe

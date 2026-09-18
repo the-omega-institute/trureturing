@@ -76,3 +76,5 @@ Compiled private lemma `valleyRuns_append_valley`: appending an entry smaller th
 Compiled private lemma `r_split_min`: splitting at the first global minimum gives `r (X ++ v :: Y) = r X ++ reverse Y ++ [v]`, under the exact prefix and suffix comparison hypotheses.
 
 Compiled private lemma `append_le_of_length_eq`: weak lexicographic bounds combine across equal-length initial blocks. The local statement-shape search found no matching append inequality in pinned Mathlib or core; the proof uses structural induction on lexicographic evidence.
+
+Compiled private lemmas `M_last_max` and `potential_weak`: the minimum/maximum decomposition yields, by strong induction on word length, `Phi w <= Phi (M w)` for every distinct word. The recursive branch uses the strictly shorter prefix before the global minimum.
