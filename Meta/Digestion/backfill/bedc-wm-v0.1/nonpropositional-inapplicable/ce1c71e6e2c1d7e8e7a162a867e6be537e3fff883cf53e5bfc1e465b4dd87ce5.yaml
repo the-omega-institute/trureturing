@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce1c71e6e2c1d7e8e7a162a867e6be537e3fff883cf53e5bfc1e465b4dd87ce5
+  normalized_sha256: sha256:ce1c71e6e2c1d7e8e7a162a867e6be537e3fff883cf53e5bfc1e465b4dd87ce5
+cas_ref: sha256:ce1c71e6e2c1d7e8e7a162a867e6be537e3fff883cf53e5bfc1e465b4dd87ce5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Mathematical upstream-only closure at pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. No useful frozen project GID for the whole clause was found by D5-wide searches for miscoverage, rare conditioning, conditional coverage, selection amplification, PMF.filter, filter_apply, condReal and p_min, with statement inspection of selected relevant conditioning, posterior-risk and rare-selection hits; this is a scoped search result, not a proof of global absence. The probability floor is substantive: for P=(1-2*epsilon,epsilon,epsilon), Q=(1-2*epsilon,3*epsilon/2,epsilon/2), w=(0,1,1), Fin.sum_univ_succ and real arithmetic normalize both selection masses to 2*epsilon, the half-L1 input distance to epsilon/2 and the selected distance to 1/4. Choosing epsilon=min(eta,min(rho/4,1/4)) for arbitrary eta>0 and rho>0 makes the input distance and selection masses arbitrarily small while the selected distance stays 1/4; a uniform positive probability floor therefore cannot be omitted from the stated stability guarantee. Separately, for every 0<alpha_conf<1 and rho>0, take r=min(alpha_conf/2,rho/2). PMF.ofFintype and PMF.ofFintype_apply give a Bool law with bad mass r and good mass 1-r; Fintype.sum_bool and ENNReal.ofReal_add verify normalization. Then 0<r<rho and r<=alpha_conf, while PMF.mem_support_iff, ENNReal.ofReal_ne_zero_iff, PMF.filter_apply and ENNReal.mul_inv_cancel give bad mass 1 after actual filtering on the bad singleton. Thus marginal alpha_conf miscoverage does not transfer to arbitrarily rare observer-exists subsamples. This marginal-error witness is separate from the TV family; no project TV GID is used for its ownership, and no empirical p_min estimate or confidence guarantee is asserted.'
+    previous_atom_id: d759d91767415baf2df461a54055f89fd70798ca896c9e4dbd9b3b8e65631315
+    next_atom_id: 40595d70c8aff2375058f4d93afdacc38fe5fcb636e9a82eebd790b7d3a6e76b
