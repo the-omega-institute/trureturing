@@ -72,3 +72,26 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-zhao-vinc-
 ```
 
 No bare lake command ran before this stamp. All subsequent Lean invocations use the requested PATH and lake env lean.
+
+## Compiled refutations: 4.14 and 5.2
+
+`ZhaoProbe.lean` compiles with exit 0 using the stamped cache and:
+
+```text
+/usr/bin/time -l lake env lean -Dprofiler=true probe/ZhaoProbe.lean
+```
+
+Measured whole file: wall 14.22 s, cumulative kernel type checking 6.66 s, peak RSS 2,177,564,672 bytes (2.177564672 GB; 2.028 GiB). Lean 4.33 labels the checked-time profiler bucket `type checking`; that is the checked_s measurement, not wall time or elaboration time. This is a local macOS ARM build on the supplied host and warm cloned dependency cache, not a CI measurement.
+
+```text
+'ZhaoProbe.C414.result' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZhaoProbe.C52.result' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+4.14 checks 129 explicit input permutations independently, checks their finite-set cardinality is 129, applies Mathlib's `Finset.card_le_card`, and contradicts the universal bound 128 at n = 9. No exact n = 9 upper bound is claimed by Lean. 5.2 checks F(32415) = 5 and F(43215) = 8 over all 120 inputs, then contradicts uniqueness of the distinct value above 4 in the definition of second largest. Its second clause is stated faithfully but never used in the refutation.
+
+Encoding: IsPerm is List.Perm with [1,...,n]; Sn uses Mathlib's structurally recursive `List.permutations'`. Membership is exactly IsPerm by `List.mem_permutations'`; absence of repeats follows from `List.permutations_perm_permutations'` and `List.nodup_permutations` applied to the distinct range. Fibre filters these inputs and converts to a Finset before taking its cardinality. Multiplicity counts output permutations in the same repetition-free enumeration. MaximumIs means attainment plus a bound on every permutation; the two attained maxima equal the same power in 4.14. SecondLargestIs means the value is attained and exactly one distinct larger value is attained, with every larger fibre equal to it. Thus zero fibres are included in the range, without multiplicity affecting the order statistic.
+
+Implementation constraint discovered by compilation: Mathlib's well-founded `List.permutations` did not kernel-reduce in this environment (stuck on Acc.rec), so the final implementation directly uses its existing structural `permutations'` variant and existing membership theorem. This changes enumeration order only. The 129 conjunctions are split before `decide +kernel`; there is no new helper theorem, sorry, native_decide, new axiom, or raised resource budget.
+
+The optional 4.19 upper-bound cost experiment is separate and does not yet establish a result. No D5 publication or required harness check is claimed.
