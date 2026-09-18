@@ -82,10 +82,6 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", true)]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs", false)]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs", true)]
-    [InlineData("tools/tests/JudgeSeedTask.Tests/JudgeSeedInputsTests.cs", false)]
-    [InlineData("tools/tests/JudgeSeedTask.Tests/JudgeSeedInputsTests.cs", true)]
-    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs", false)]
-    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs", true)]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj", false)]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj", true)]
     [InlineData("tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", false)]
@@ -96,8 +92,6 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py", true)]
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", false)]
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", true)]
-    [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
-    [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
@@ -131,7 +125,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs")]
     [InlineData("Meta/engineering-projects.json")]
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     public void AgentTemplateDoesNotExemptAdditionalEngineeringOrSemanticInput(string input)
@@ -219,7 +213,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [Theory]
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
-    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
     {
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);

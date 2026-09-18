@@ -806,7 +806,11 @@ def execution_selection(read, active, resources):
     order = ["lean", "lean-report", "scribe", "filemap", "check-current"]
     if steps - set(order):
         raise ValueError("unknown current step registration")
-    return {"projects": sorted(selected_projects - dependencies), "checks": sorted(selected_checks),
+    # A test project explicitly requested by a resource is an execution unit,
+    # even when another root also needs it as a compiler reference.
+    roots = {project for project in selected_projects
+             if project not in dependencies or projects[project]["ci"]}
+    return {"projects": sorted(roots), "checks": sorted(selected_checks),
             "steps": [step for step in order if step in steps]}
 
 

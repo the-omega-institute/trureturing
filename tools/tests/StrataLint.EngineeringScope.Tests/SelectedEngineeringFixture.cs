@@ -11,7 +11,7 @@ internal sealed class SelectedEngineeringFixture : IDisposable
     internal string Commit => fixture.Commit;
     internal CommonStageRecord Build { get; }
 
-    internal SelectedEngineeringFixture()
+    internal SelectedEngineeringFixture(bool referencedTest = false)
     {
         var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, "Meta/ci-resources.json")))!;
         var selected = mapping["resources"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!;
@@ -26,7 +26,8 @@ internal sealed class SelectedEngineeringFixture : IDisposable
         filemap = string.Join('\n', filemap.Split('\n').Select(line => line.StartsWith("  { id =", StringComparison.Ordinal) ? resourceRows.Dequeue() : line));
         fixture.Write("Meta/FILEMAP.toml", filemap);
         fixture.Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
-            new EngineeringProjectFixture(ResourceRouteTests.ResourceFixture.Foo, "Foo", "cross-cutting-test", true, ["tools/Foo/Program.cs"]),
+            new EngineeringProjectFixture(ResourceRouteTests.ResourceFixture.Foo, "Foo", "cross-cutting-test", true, ["tools/Foo/Program.cs"],
+                References: referencedTest ? [ResourceRouteTests.ResourceFixture.Bar] : []),
             new EngineeringProjectFixture(ResourceRouteTests.ResourceFixture.Bar, "Bar", "cross-cutting-test", true, ["tools/Bar/Program.cs"])));
         fixture.CommitPlan();
         var plan = ResourceExecutionPlan.Load(Root, fixture.Plan, fixture.Changes)!;

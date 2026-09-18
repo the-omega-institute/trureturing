@@ -21,6 +21,7 @@ public sealed partial class CurrentDeltaCliContractTests
     [InlineData("template-warm-overlimit", 1, "SL-003", "skills/codex-formal-answer/SKILL.md", "skills/**")]
     [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/merge-gate.sh", "tools/scripts/agent/merge-gate.sh")]
     [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/openproblem/erdos617.py", "tools/scripts/agent/openproblem/erdos617.py")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/tests/BannedApiCompileFailProof/CapacityProbe.cs", "tools/tests/**/*.cs")]
     [InlineData("metadata", 0, "SL-016")]
     [InlineData("metadata-invalid", 1, "SL-016")]
     [InlineData("metadata-missing-report", 2, "raw-lean-report.json")]
@@ -76,7 +77,7 @@ public sealed partial class CurrentDeltaCliContractTests
             + "]\n[residence_policy]\ncase_id = \"FIXTURE\"\ndesired = \"explicit\"\nknown_violation_count = 0\nstatus = \"closed\"\n"
             + string.Concat(fixture.Files.Keys.Append(template).Append("Meta/FILEMAP.toml").Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)
                 .Select(path => path.StartsWith("D5/", StringComparison.Ordinal) || path.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
-                    ? Entry(path, "content", "delta-metadata") : Entry(path, "judge", path.StartsWith("tools/tests/", StringComparison.Ordinal) ? "engineering" : "delta-data")));
+                    ? Entry(path, "content", "delta-metadata") : Entry(path, "judge", path != template && path.StartsWith("tools/tests/", StringComparison.Ordinal) ? "engineering" : "delta-data")));
         foreach (var (path, content) in fixture.Files) Write(path, content);
         Write(template, "Read the source.\n");
         Write(".gitignore", "build/\n.lake/\n__pycache__/\ntools/StrataLint.Cli/bin/\n");
