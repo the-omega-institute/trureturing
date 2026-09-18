@@ -53,10 +53,14 @@ internal sealed class JacoDomPathDiameterRefutationDocument
                     + "path graph on at most nine vertices has domination number at most three. "
                     + "A ten-vertex dom-path exists, so the contradiction is not caused by an "
                     + "empty notion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kok-jaco-dom-path-diameter-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
@@ -64,7 +68,8 @@ internal sealed class JacoDomPathDiameterRefutationDocument
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula VertexFormula()
     {
