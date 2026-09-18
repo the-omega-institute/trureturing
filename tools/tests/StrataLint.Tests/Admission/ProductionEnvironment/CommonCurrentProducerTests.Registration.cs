@@ -17,6 +17,51 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SelectedMarkdownReachesParserAndRejectsMalformedFormula(bool malformed)
+    {
+        using var fixture = new InvocationFixture(output);
+        fixture.Write("Blueprint/D5/S0/Synthetic/Invocation.md", malformed ? "$$u_{n}_{i}$$\n" : "$$x$$\n");
+        fixture.Write("Blueprint/D5/S0/Synthetic/Other.md", "$$y$$\n");
+
+        var result = fixture.RunMarkdown();
+
+        Assert.Equal(malformed ? 1 : 0, result.Exit);
+        Assert.Contains($"markdown: judged=2 formula(s)=2 red={(malformed ? 1 : 0)}", result.Log, StringComparison.Ordinal);
+        if (malformed) Assert.Contains("Double subscript", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SelectedMarkdownPathsPreserveSpacesUnicodeTabsQuotesAndNewlines()
+    {
+        using var fixture = new InvocationFixture(output);
+        fixture.Write("Blueprint/D5/S0/Synthetic/Invocation.md", "$$x$$\n");
+        string[] orphans = ["Blueprint/D5/S0/Synthetic/space ü\tquote\".md", "Blueprint/D5/S0/Synthetic/line\nbreak.md"];
+        foreach (var path in orphans) fixture.Write(path, "Orphan.\n");
+
+        var result = fixture.RunMarkdown();
+
+        Assert.Equal(1, result.Exit);
+        Assert.Contains("markdown: judged=1 formula(s)=1 red=2", result.Log, StringComparison.Ordinal);
+        foreach (var path in orphans)
+            Assert.Contains(path + ": no Scribe document renders this markdown", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EmptyMarkdownInventoryDoesNotBroadenTheScope()
+    {
+        using var fixture = new InvocationFixture(output);
+        fixture.Write("notes/unselected.md", "$$u_{n}_{i}$$\n");
+        fixture.Write("Blueprint/D5/S0/Synthetic/unselected.txt", "$$u_{n}_{i}$$\n");
+
+        var result = fixture.RunMarkdown();
+
+        Assert.Equal(0, result.Exit);
+        Assert.Contains("markdown: judged=0 formula(s)=0 red=0", result.Log, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(Invocation)]
     [InlineData(Verification)]
     public void ChangedRegisteredCliBytesExecuteChangedScribeBehaviorAndPreserveUnrelatedProvenance(string changed)
@@ -108,7 +153,8 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(projects.Select(path =>
                 new EngineeringProjectFixture(path, Path.GetFileNameWithoutExtension(path), "test-support", false,
                     path.Contains("StrataLint.Cli", StringComparison.Ordinal) ? [Invocation, Verification]
-                        : path.Contains("Scribe.Documents", StringComparison.Ordinal) ? ["Blueprint/D5/S0/Synthetic/Invocation.scribe.cs"] : [])).ToArray()));
+                        : path.Contains("Scribe.Documents", StringComparison.Ordinal)
+                            ? ["Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "Blueprint/D5/S0/Synthetic/Other.scribe.cs"] : [])).ToArray()));
             var checks = JsonNode.Parse(CommonCheckRegistrationFixture.Manifest("fixtures/Independent.csproj"))!;
             var actual = JsonNode.Parse(File.ReadAllText(Path.Combine(source, "Meta/ci-checks.json")))!["checks"]!.AsArray();
             foreach (var row in checks["checks"]!.AsArray().Where(row => row!["id"]!.ToString().StartsWith("scribe-", StringComparison.Ordinal)))
@@ -116,6 +162,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                 var registered = actual.Single(item => item!["id"]!.ToString() == row!["id"]!.ToString())!;
                 row!["program_projects"] = registered["program_projects"]!.DeepClone();
                 row["report_inputs"] = registered["report_inputs"]!.DeepClone();
+                row["path_inventory"] = registered["path_inventory"]!.DeepClone();
             }
             Write("Meta/ci-checks.json", checks.ToJsonString());
             Write("lean-toolchain", "leanprover/lean4:v4.33.0");
@@ -129,13 +176,17 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             // The namespace self-test scans source text lexically. Keep the
             // embedded fixture declaration opaque so it is not counted as a
             // declaration in this test file itself.
-            Write("Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "name" + "space StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n");
-            Write("D5/S0/Synthetic/Invocation.lean", "-- synthetic module\n");
+            foreach (var name in new[] { "Invocation", "Other" })
+            {
+                Write($"Blueprint/D5/S0/Synthetic/{name}.scribe.cs", "name" + "space StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n");
+                Write($"D5/S0/Synthetic/{name}.lean", "-- synthetic module\n");
+            }
             Write("Meta/Digestion/backfill/synthetic-source/source.toml", "source_id = \"synthetic-source\"\npath = \"docs/synthetic.md\"\natomizer = \"synthetic-v1\"\ngenre_registry_check = \"collected\"\nunregistered_genres = []\n");
             Write(".gitignore", "build/\n.lake/\n");
             Git("init", "-q"); Git("add", ".");
             RawLeanReportArtifact.WriteFile(Path.Combine(Root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(Root),
-                LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { ["D5/S0/Synthetic/Invocation.lean"] = new([], []) }));
+                LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+                    { ["D5/S0/Synthetic/Invocation.lean"] = new([], []), ["D5/S0/Synthetic/Other.lean"] = new([], []) }));
             Write(CommonExecutionEvidence.ReportPath + ".sha256", CommonExecutionEvidence.Hash(Path.Combine(Root, CommonExecutionEvidence.ReportPath))
                 + "  " + Path.GetFileName(CommonExecutionEvidence.ReportPath) + "\n");
             foreach (var suffix in new[] { ".input.attestation", ".provenance.json" })
@@ -178,6 +229,19 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             return (CommonExecutionEvidence.ValidateChecks(Root, "current", build,
                 ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]), error);
         }
+        internal (int Exit, string Log) RunMarkdown()
+        {
+            Git("add", ".");
+            Write("build/ci/fixture.log", "fixture build");
+            var build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), ["build/ci/fixture.log"],
+                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture.log")).ToArray());
+            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, "scribe-markdown"],
+                Root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+            var log = Assert.Single(Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
+            var text = File.ReadAllText(log);
+            output.WriteLine($"exit={result.ExitCode}\n{text}{Encoding.UTF8.GetString(result.StandardError)}");
+            return (result.ExitCode, text);
+        }
         internal void Seed(CommonCheckRecord record)
         {
             var seed = Path.Combine(Root, CommonExecutionEvidence.CheckSeedPath("current"));
@@ -206,10 +270,14 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             {{NamespaceKeyword}} StrataLint.Scribe.Documents { public sealed class DocumentAssembly { } }
             {{NamespaceKeyword}} StrataLint.Cli {
                 internal sealed class FixtureDocument : IScribeDocumentDefinition {
-                    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-                        DefinitionDsl.Header("D5/S0/Synthetic/Invocation", "Invocation fixture."), DefinitionDsl.H("Invocation"),
+                    public DocumentDefinition Create() => Create("Invocation");
+                    internal static DocumentDefinition Create(string name) => DocumentDefinition.Create(ScribeDocument.Create(
+                        DefinitionDsl.Header("D5/S0/Synthetic/" + name, "Invocation fixture."), DefinitionDsl.H(name),
                         DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Invocation body.")))),
-                        "Blueprint/D5/S0/Synthetic/Invocation.scribe.cs");
+                        "Blueprint/D5/S0/Synthetic/" + name + ".scribe.cs");
+                }
+                internal sealed class OtherFixtureDocument : IScribeDocumentDefinition {
+                    public DocumentDefinition Create() => FixtureDocument.Create("Other");
                 }
                 internal sealed record ExplicitCommandResult(int ExitCode, string Output, string Error);
                 internal sealed partial class ProductionCliEnvironment {
@@ -220,9 +288,12 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                     public static int Main(string[] args) {
                         var validation = CommonExecutionEvidence.ValidationScope.Create(args[0]);
                         var report = validation.Report(Path.Combine(args[0], CommonExecutionEvidence.ReportPath));
-                        var result = new ProductionCliEnvironment(args[0]).ExecuteCommonCurrent(args[1], validation, null!, null!, report,
-                            ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]);
-                        Console.Write(result.Output); Console.Error.Write(result.Error); return result.ExitCode;
+                        try {
+                            var result = new ProductionCliEnvironment(args[0]).ExecuteCommonCurrent(args[1], validation, null!, null!, report,
+                                args.Length > 2 ? args[2..] : ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]);
+                            Console.Write(result.Output); Console.Error.Write(result.Error); return result.ExitCode;
+                        }
+                        catch (InvalidDataException exception) { Console.Error.WriteLine(exception.Message); return 1; }
                     }
                 }
             }

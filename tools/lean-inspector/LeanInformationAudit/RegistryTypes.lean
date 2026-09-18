@@ -18,8 +18,8 @@ inductive SlotKind where
   | carrier | data | function | predicate | dictionary | proof | interface
   deriving BEq, Inhabited, Repr
 
-/-- Raw syntax is retained at proof and supplied-argument boundaries. Neither
-boundary grants normalization or permits walking a proof implementation. -/
+/-- Data syntax is retained at supplied-argument boundaries. Proof leaves retain
+only propositions, never proof implementations. -/
 inductive PlanNode where
   | atom (raw : Expr)
   | app (fn arg : PlanNode)
@@ -30,7 +30,7 @@ inductive PlanNode where
   | proj (typeName : Name) (index : Nat) (body : PlanNode)
   | expanded (raw : Expr) (checked : PlanNode)
   | supplied (raw : Expr)
-  | proofLeaf (type raw : Expr)
+  | proofLeaf (type : Expr)
   | typeNode (checked : PlanNode)
   /-- Checked E5 inputs remain obligations even when expansion discards them. -/
   | audit (input body : PlanNode)
@@ -39,6 +39,9 @@ inductive PlanNode where
 /- Construction is bounded independently of typing. A step is charged before
 visiting or allocating a node; binder cutoffs are not traversal depths. Cached
 Expr flags permit immutable no-op reuse, never an uncharged transformation. -/
+/-- Compiler-owned typing placeholder; never a delivered kernel proof. -/
+def proofPlaceholder (type : Expr) : Expr := mkApp (mkConst ``lcProof) type
+
 namespace PlanTransform
 
 private abbrev WorkM := StateT Nat (Except String)
@@ -176,7 +179,8 @@ private partial def materialize (p : PlanNode) (depth : Nat) : WorkM Expr := do
   step depth
   let child := fun q => materialize q (depth + 1)
   match p with
-  | .atom e | .supplied e | .proofLeaf _ e => return e
+  | .atom e | .supplied e => return e
+  | .proofLeaf type => return proofPlaceholder type
   | .expanded _ p | .typeNode p | .audit _ p => child p
   | .app f a => return .app (← child f) (← child a)
   | .lam t b bi => return .lam .anonymous (← child t) (← child b) bi
@@ -200,7 +204,7 @@ private partial def transform (operation : Operation) (replacement : Option Plan
         return ← transform (.lift cutoff) none argument 0 (depth + 1)
     return .atom (← expr (.bvar i))
   | .atom e => return .atom (← expr e)
-  | .proofLeaf t e => return .proofLeaf (← expr t) (← expr e)
+  | .proofLeaf t => return .proofLeaf (← expr t)
   | .expanded e p => return .expanded (← expr e) (← child p)
   | .typeNode p => return .typeNode (← child p)
   | .audit input body => return .audit (← child input) (← child body)
@@ -266,7 +270,7 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 5
+  compatibilityVersion : Nat := 6
   compiler : String
   toolchain : String
   policyIdentity : String
@@ -487,7 +491,7 @@ private partial def plan (depth : Nat := 0) : M PlanNode := do
   match ← token with
   | "body" => return .atom (← raw)
   | "expanded" => return .expanded (← raw) (← child)
-  | "proof-leaf" => return .proofLeaf (← raw) (← raw)
+  | "proof-leaf" => return .proofLeaf (← raw)
   | "type-node" => return .typeNode (← child)
   | "audit-input" => return .audit (← child) (← child)
   | "application" => return .app (← child) (← child)
@@ -519,8 +523,8 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v3"
-  for version in #[1, 1, 1, 5] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v4"
+  for version in #[1, 1, 1, 6] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
   let policyIdentity ← digest

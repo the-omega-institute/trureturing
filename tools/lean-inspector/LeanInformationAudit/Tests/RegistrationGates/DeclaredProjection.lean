@@ -46,7 +46,7 @@ run_meta do
   observe event ``DeclaredComparison.projectedRecord direct.value "selected_projection_receiver_accepted"
   observe event ``literalProjection direct.value "literal_projection_receiver_accepted"
   observe event ``dirtyProjection direct.value "discarded_projection_field_audited"
-    (some "reason=forbidden_dependency rule=E6.registered_identity site=")
+    (some "reason=forbidden_dependency rule=dtr.argument_audit site=")
   observe event ``runtimeOverride direct.value "extraction_runtime_override_rejected"
     (some "reason=unclassified_form rule=dtr.extraction_kind site=")
 

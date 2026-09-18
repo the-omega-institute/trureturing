@@ -53,7 +53,7 @@ run_meta do
   let .defnInfo declared ← getConstInfo ``descriptor | throwError "setup: descriptor"
   unless statement.levelParams == [`u, `v] && declared.levelParams == [`u, `v] do
     throwError "setup: independent rigid universe telescope"
-  let .ok (identity, _) := TemplateAudit.rawIdentity statement.levelParams statement.type
+  let .ok (identity, _) := TemplateAudit.rawStatementIdentity statement.levelParams statement.type
     | throwError "setup: statement identity"
   let event := { source with
     key := { source.key with theoremName := statement.name }
