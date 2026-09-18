@@ -198,17 +198,12 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
         previous_key = None
         for decl in row['declarations']:
             declaration_keys = {
-                'axioms', 'include_in_statement', 'kind', 'name', 'name_key',
+                'axioms', 'generated_companion', 'include_in_statement', 'kind', 'name', 'name_key',
                 'statement_id', 'type_sha256',
             }
-            # Older cached rows predate compiler-origin metadata.  Preserve
-            # their fail-closed default while accepting the bound field in
-            # newly produced rows.
-            if isinstance(decl, dict) and 'generated_companion' in decl:
-                declaration_keys.add('generated_companion')
             materials.require_keys(decl, declaration_keys, 'declaration')
             key = decl['name_key']
-            generated = decl.get('generated_companion', False)
+            generated = decl['generated_companion']
             if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
                     or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS
                     or type(decl['include_in_statement']) is not bool

@@ -57,7 +57,7 @@ public sealed class CompressedLeanMaterialTests
             base = {'schema': materials.SPOOL_SCHEMA, 'modules': [{
                 'module': 'D5.Fixture', 'source_path': 'D5/Fixture.lean',
                 'source_sha256': 'sha256:' + 'a' * 64, 'imports': [],
-                'declarations': [{'axioms': [], 'include_in_statement': True, 'kind': 'def',
+                'declarations': [{'axioms': [], 'generated_companion': False, 'include_in_statement': True, 'kind': 'def',
                     'material_file': f'{i}.statement.gz', 'name': f'Fixture.value{i}',
                     'name_key': f'key{i}'} for i in range(len(values))]}]}
             source = root / 'spool.json'
@@ -100,7 +100,7 @@ public sealed class CompressedLeanMaterialTests
             for suffix in ('', '.materials.zip'):
                 assert (root / ('plain.json' + suffix)).read_bytes() == (root / ('compressed.json' + suffix)).read_bytes()
             # Byte identities measured with the pre-compression compactor at 1630e64b0b.
-            assert hashlib.sha256((root / 'plain.json').read_bytes()).hexdigest() == 'd2d65db0580045627827f06fb44b290f111cb74d241cf1cf222c0d0f79b921e4'
+            assert hashlib.sha256((root / 'plain.json').read_bytes()).hexdigest() == 'fbde2eefbe685a3f4492fc85d1e2257456e3461fa9dac918c7a013a96356cb33'
             assert hashlib.sha256((root / 'plain.json.materials.zip').read_bytes()).hexdigest() == '3645dbf13d606a04f63ffb5704fab99ffcab588dd458f8e30540bee548f2416d'
             assert not list(plain.iterdir())
             assert not compressed.exists() if mode == 'overlap' else not list(compressed.iterdir())

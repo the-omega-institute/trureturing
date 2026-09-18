@@ -7,6 +7,10 @@ import Lean.PrivateName
 import Lean.Util.CollectAxioms
 import Lean.Meta
 import Lean.Elab.Term
+import Lean.DeclarationRange
+import Lean.Meta.Injective
+import Lean.Meta.SizeOf
+import Lean.Meta.CongrTheorems
 
 namespace LeanInformationAudit.InspectorProducer
 
@@ -191,6 +195,30 @@ structure ModuleReport where
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
   | _ => true
+
+/-- A closed subset of compiler companions, not `isAutoDeclOrPrivate_Internal`:
+that API also accepts arbitrary macro names and `proof_`/`match_` prefixes.
+Authored command ranges (including macro expansion ranges) veto the exemption.
+Constructor names must be the compiler's exact construction on a kernel ctor of
+the same module, with its inductive parent confirming membership. -/
+def isGeneratedCompanion (env : Environment) (name : Name) (info : ConstantInfo) : Bool := Id.run do
+  if !info.isTheorem || name.hasMacroScopes || name.isInternal then return false
+  if (declRangeExt.find? (level := .exported) env name).isSome ||
+      (declRangeExt.find? (level := .server) env name).isSome then return false
+  if let some (parent, suffix) := Meta.declFromEqLikeName env name then
+    return name == Meta.mkEqLikeNameFor env parent suffix
+  if (Meta.congrKindsExt.find? env name).isSome then
+    if let .str parent suffix := name then
+      return env.contains parent &&
+        (suffix == Meta.congrSimpSuffix || Meta.isHCongrReservedNameSuffix suffix)
+  let .str parent _ := name | return false
+  let some (.ctorInfo ctor) := env.find? parent | return false
+  let some (.inductInfo family) := env.find? ctor.induct | return false
+  let some owner := env.getModuleIdxFor? parent | return false
+  if env.getModuleIdxFor? name != some owner || !family.ctors.contains parent then return false
+  return name == Meta.mkInjectiveTheoremNameFor parent ||
+    name == Meta.mkInjectiveEqTheoremNameFor parent ||
+    name == Meta.mkSizeOfSpecLemmaName parent
 
 def kindOf : ConstantInfo → String
   | .axiomInfo _ => "axiom"
@@ -390,7 +418,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     if profiling then encodingNanos.modify (· + ((← IO.monoNanosNow) - encodeStart))
     return {
       axioms := sortedUnique (axioms.map Name.toString)
-      generatedCompanion := isReservedName environment name
+      generatedCompanion := isGeneratedCompanion environment name info
       includeInStatement := includeInStatement name info
       kind := kindOf info
       materialFile

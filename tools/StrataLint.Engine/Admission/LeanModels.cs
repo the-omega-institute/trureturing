@@ -33,9 +33,8 @@ public sealed record LeanDeclaration(
 
     public bool IncludeInStatement { get; init; } = true;
 
-    // Lean's inspector marks declarations whose names are recognized by the
-    // compiler as automatically generated or reserved companions.  Missing
-    // provenance remains false so callers fail closed for older reports.
+    // Source-bound inspector evidence from the closed compiler companion
+    // predicate. Required on the wire; constructed declarations default false.
     public bool IsGeneratedCompanion { get; init; }
 
     public string StatementTypeAddress =>

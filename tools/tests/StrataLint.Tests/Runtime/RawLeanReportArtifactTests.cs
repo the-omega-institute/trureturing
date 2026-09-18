@@ -21,6 +21,29 @@ public sealed class RawLeanReportArtifactTests
         + "\"sha256:da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4\"}], "
         + "\"schema\": \"stratalint-raw-lean-report-v2\"}\n";
 
+    [Theory]
+    [InlineData("")]
+    [InlineData("\"generated_companion\": null, ")]
+    [InlineData("\"generated_companion\": 1, ")]
+    [InlineData("\"generated_companion\": \"true\", ")]
+    public void CurrentCompilerOriginMetadataIsRequiredAndBoolean(string replacement)
+    {
+        var bytes = Encoding.UTF8.GetBytes(CanonicalReport.Replace(
+            "\"generated_companion\": false, ", replacement, StringComparison.Ordinal));
+        Assert.Throws<FormatException>(() => RawLeanReportArtifact.Read(bytes, Snapshot()));
+    }
+
+    [Fact]
+    public void CompilerOriginDoesNotChangeStatementIdentity()
+    {
+        var before = RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(CanonicalReport), Snapshot());
+        var after = RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(CanonicalReport.Replace(
+            "\"generated_companion\": false", "\"generated_companion\": true", StringComparison.Ordinal)), Snapshot());
+        Assert.True(after.Files.Single().Value.Declarations.Single().IsGeneratedCompanion);
+        Assert.Equal(before.Files.Single().Value.Declarations.Single().PrecomputedStatementId,
+            after.Files.Single().Value.Declarations.Single().PrecomputedStatementId);
+    }
+
     [Fact]
     public void CanonicalReportFeedsLeanFileReportAndTheExistingStatementWriter()
     {

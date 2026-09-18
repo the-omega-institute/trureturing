@@ -324,11 +324,9 @@ internal static class RawLeanReportArtifact
         {
             var declarationProperties = new List<string>
             {
-                "axioms", "include_in_statement", "kind", "name", "name_key",
+                "axioms", "generated_companion", "include_in_statement", "kind", "name", "name_key",
                 "statement_id", "type_sha256",
             };
-            if (declarationElement.TryGetProperty("generated_companion", out _))
-                declarationProperties.Add("generated_companion");
             RequireProperties(
                 declarationElement,
                 declarationProperties,
@@ -357,11 +355,7 @@ internal static class RawLeanReportArtifact
                     : () => materialArchive.Read(statementTypeAddress))
             {
                 IncludeInStatement = RequiredBoolean(declarationElement, "include_in_statement"),
-                IsGeneratedCompanion = declarationElement.TryGetProperty("generated_companion", out var generated)
-                    ? generated.ValueKind is JsonValueKind.True or JsonValueKind.False
-                        ? generated.GetBoolean()
-                        : throw new FormatException("Raw Lean report field generated_companion must be a boolean.")
-                    : false,
+                IsGeneratedCompanion = RequiredBoolean(declarationElement, "generated_companion"),
                 NameKey = nameKey,
             });
         }
