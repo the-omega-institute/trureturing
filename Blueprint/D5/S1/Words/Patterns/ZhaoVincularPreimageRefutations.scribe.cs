@@ -99,20 +99,29 @@ internal sealed class ZhaoVincularPreimageRefutationsDocument : IScribeDocumentD
                 "At n=9, 129 explicitly listed distinct permutations map to 765432819 under the "
                 + "false flag. Each mapping and permutation membership is checked separately. "
                 + "The claimed maximum would bound that fibre by 2^7=128, contradicting its "
-                + "cardinality lower bound. An exact maximum for n=9 is not needed.", DescribeRole.Theorem),
+                + "cardinality lower bound. An exact maximum for n=9 is not needed.", DescribeRole.Theorem,
+                false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhao-vincular-stack-maximum-preimages-refutation"),
+                    ResolutionKind.Refuted)),
             Node("resultSecondLargest", "The second-largest claim is false", Disp(new Formula.Not(Id("claimSecondLargest"))),
                 "Enumeration of all 120 input permutations at n=5 gives F(false,5,32415)=5 and "
                 + "F(false,5,43215)=8. These are distinct fibre values greater than 2^2=4, which "
                 + "contradicts the asserted uniqueness of a larger value. This refutes the "
                 + "conjunction through its first clause; the multiplicity clause is not separately refuted.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhao-vincular-stack-second-largest-preimages-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool literature = false) => Describe.Lean(
+        DescribeRole role, bool literature = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("zhao-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), literature
             ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ContainsFormula()
     {

@@ -192,6 +192,10 @@ $$\neg claimMaximum$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultMaximum` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhao-vincular-stack-maximum-preimages-refutation` (refuted) by `D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultMaximum`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhao-vincular-stack-maximum-preimages-refutation","declaration_gid":"D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultMaximum","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -203,6 +207,10 @@ At n=9, 129 explicitly listed distinct permutations map to 765432819 under the f
 $$\neg claimSecondLargest$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultSecondLargest` (`✓ std3`). ∎
+
+*Resolves.* `Problems/zhao-vincular-stack-second-largest-preimages-refutation` (refuted) by `D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultSecondLargest`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhao-vincular-stack-second-largest-preimages-refutation","declaration_gid":"D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations.resultSecondLargest","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
