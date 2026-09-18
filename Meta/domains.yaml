@@ -35,6 +35,9 @@ domains:
   Certificates:
     stratum: S0
     definition: Kernel-checkable refutation and infeasibility certificates such as LRAT propositional proofs and rational Farkas dual weights.
+  Combinatorics:
+    stratum: S3
+    definition: Named finite graph families and their invariants, including the hypercube and its extremal subgraph counts.
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
