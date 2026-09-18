@@ -16,22 +16,36 @@ namespace D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTem
 
 open LeanInformationAudit
 
+/-- The three slot labels are finite data; only Boolean eliminators dispatch them. -/
+def guardSlot : Fin 3 :=
+  (⟨Nat.zero, (let h : Nat.lt 0 3 := (by change 0 < 3; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ Nat.zero))))
+def leftSlot : Fin 3 :=
+  (⟨Nat.succ Nat.zero, (let h : Nat.lt 1 3 := (by change 1 < 3; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ Nat.zero))))
+def isGuardSlot (i : Fin 3) : Bool :=
+  @decide (i = guardSlot) (instDecidableEqFin 3 i guardSlot)
+def isLeftSlot (i : Fin 3) : Bool :=
+  @decide (i = leftSlot) (instDecidableEqFin 3 i leftSlot)
+
 /-- One ADMIT guard and two CUT terms; no state is removed by the guard. -/
-abbrev guardedEqSignature (X Y : Type) [DecidableEq Y] : PrimitiveSignature X where
+abbrev guardedEqSignature (X Y : Type) [dY : DecidableEq Y] : PrimitiveSignature X where
   Index := Fin 3
   indexFintype := inferInstance
   indexDecidableEq := inferInstance
-  Output | 0 => Bool | 1 => Y | 2 => Y
-  outputDecidableEq | 0 => inferInstance | 1 => inferInstance | 2 => inferInstance
-  axis | 0 => .admit | 1 => .cut | 2 => .cut
-  readoutAxisNotAnchor := by intro i; fin_cases i <;> simp
+  Output := fun i => Bool.rec Y Bool (isGuardSlot i)
+  outputDecidableEq := fun i => Bool.rec (motive := fun b => DecidableEq (Bool.rec Y Bool b))
+    dY instDecidableEqBool (isGuardSlot i)
+  axis := fun i => Bool.rec .cut .admit (isGuardSlot i)
+  readoutAxisNotAnchor := by intro i; fin_cases i <;> simp [isGuardSlot, guardSlot]
   AnchorIndex := Fin 0
   anchorFintype := inferInstance
   anchorDecidableEq := inferInstance
 
-def guardedEqRealization {X Y : Type} [DecidableEq Y]
+def guardedEqRealization {X Y : Type} [dY : DecidableEq Y]
     (guard : X → Bool) (f g : X → Y) : PrimitiveRealization (guardedEqSignature X Y) where
-  readout | 0 => guard | 1 => f | 2 => g
+  readout := fun i x => Bool.rec (motive := fun b => Bool.rec Y Bool b)
+    (Bool.rec (g x) (f x) (isLeftSlot i)) (guard x) (isGuardSlot i)
   anchor := Fin.elim0
 
 def guardedEqArena (A : Arena) (Y : Type) [DecidableEq Y] : PrimitiveLawArena where
