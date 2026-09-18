@@ -37123,3 +37123,332 @@ $$
 **证明。** 命题 85.3 的式 (85.8) 及 $\mathcal G=0$，经定理 86.2 的后验与费用识别，直接给出所列 $\delta_0,G_0,\delta_1$；由定义得 $A_0=A_1=0$。因为 $0<\delta_0=a_*/2<a_*$，阈值事件恰为结果 $A$，概率为 $1/2$，得到式 (86.11)。在该结果上 $M_1=\delta_1=2\delta_0>M_0$，而结果 $B$ 上 $M_1=0$；所以保持期望的鞅并非逐路径常量。这里只断言所示阈值取等。证毕。
 
 ## 86.99 追加锚
+
+## 87. 重复观察后的可识别类与残余纤维缺陷
+
+**定义与假设 87.1（有限共同 iid 信道与后验的定义域）。** 设 $J,I,Z$ 为有限非空集合，$r:J\to I$ 为固定满射。设实际先验 $d_0\in\Delta(J)$ 允许零坐标，参考先验 $q_0\in\Delta(J)$ 满足 $q_{0j}>0$ 对每个 $j\in J$。给定同一个行随机信道
+$$
+K(z\mid j)\ge0,\qquad \sum_{z\in Z}K(z\mid j)=1.
+$$
+在共同可测空间 $\Omega=J\times Z^{\mathbb N_{>0}}$ 上，取有限离散空间的乘积 $\sigma$-代数，定义两种概率律
+$$
+\mathbb P_a(\{j\}\times A)=a_jK_j^{\mathbb N_{>0}}(A),
+\qquad a\in\{d_0,q_0\},
+$$
+其中 $K_j=K(\cdot\mid j)$，$K_j^{\mathbb N_{>0}}$ 是该行的可数乘积概率；记 $\mathbb P_d=\mathbb P_{d_0}$、$\mathbb P_q=\mathbb P_{q_0}$。潜状态 $X$ 抽取一次后固定，观察坐标记为 $Z_1,Z_2,\ldots$。两律均由同一个条件 iid 核 $K_j^{\mathbb N_{>0}}$ 混合而成；在 $a_j>0$ 时，给定 $X=j$ 的条件律就是该乘积律。混合掉 $X$ 后不主张观察无条件独立。对每个有限时域，这也是定义 86.1 中取 $K_t(z\mid j,h)=K(z\mid j)$ 的历史模型。
+
+令 $s:J\twoheadrightarrow\mathcal S$ 为观察行等价类映射：
+$$
+s(j)=s(k)\quad\Longleftrightarrow\quad K_j=K_k.
+$$
+写
+$$
+J_c=s^{-1}(c),\qquad
+d_c=\sum_{j\in J_c}d_{0j},\qquad
+q_c=\sum_{j\in J_c}q_{0j}>0,
+$$
+并以 $K_c$ 表示该类的公共信道行。每个类都定义严格正的参考条件律
+$$
+q^c_j=q_{0j}/q_c\quad(j\in J_c).
+$$
+仅当 $d_c>0$ 时定义实际条件律
+$$
+d^c_j=d_{0j}/d_c\quad(j\in J_c).
+$$
+取 $r_c=r|_{J_c}:J_c\twoheadrightarrow r(J_c)$。这些条件向量在比较整个 $J$ 上的坐标时，只在类外作零延拓；$d_c=0$ 的类不定义实际条件概率。
+
+对有限概率向量 $a\ll p$，采用自然对数及正支撑求和
+$$
+D(a\Vert p)=\sum_{j:a_j>0}a_j\ln\frac{a_j}{p_j},
+\qquad
+a\ll p\ \Longleftrightarrow\ \forall j\ (p_j=0\Rightarrow a_j=0).
+$$
+若 $p$ 在当前载体上严格正，$v$ 是到其像的粗标签映射，则参考纤维恢复为
+$$
+(E_{p,v}a)_j=p_j
+\frac{\sum_{v(k)=v(j)}a_k}{\sum_{v(k)=v(j)}p_k}.
+$$
+该向量非负且按纤维求和得总质量一；每个正 $a_j$ 对应正恢复质量，所以 $a\ll E_{p,v}a$。定理 73.3 与定理 74.2 的静态恢复恒等式给出
+$$
+\delta_{p,v}(a):=D(a\Vert E_{p,v}a)
+=D(a\Vert p)-D(v_*a\Vert v_*p)\ge0.
+\tag{87.1}
+$$
+全部散度有限。这里仅用静态恒等式，不要求定理 74.2 中的动力学族保持条件。[^rro87-static]
+
+对历史 $h_n=(z_1,\ldots,z_n)$，定义
+$$
+L_n(j)=\prod_{t=1}^nK(z_t\mid j),\qquad
+D_n=\sum_jd_{0j}L_n(j),\qquad
+Q_n=\sum_jq_{0j}L_n(j),
+$$
+并令 $L_0(j)=1$、$D_0=Q_0=1$。由共同乘积核，有限联合质量为 $a_jL_n(j)$；对 $j$ 求和，以及按各观察坐标使用行随机性，得到
+$$
+\mathbb P_d(H_n=h_n)=D_n(h_n),\qquad
+\mathbb P_q(H_n=h_n)=Q_n(h_n),
+\qquad H_n=(Z_1,\ldots,Z_n),
+$$
+$$
+\sum_{h_n\in Z^n}D_n(h_n)=\sum_{h_n\in Z^n}Q_n(h_n)=1.
+\tag{87.2}
+$$
+因为 $q_0$ 严格正，$D_n>0\Rightarrow Q_n>0$：正的非负有限和 $D_n$ 中有正项，故该位置的 $L_n(j)>0$，进而在 $Q_n$ 中也有正项。
+
+参考后验在每个 $Q_n>0$ 的历史上定义，实际后验仅在 $D_n>0$ 的历史上定义：
+$$
+q_{n,j}=\frac{q_{0j}L_n(j)}{Q_n}\quad(Q_n>0),\qquad
+d_{n,j}=\frac{d_{0j}L_n(j)}{D_n}\quad(D_n>0).
+\tag{87.3}
+$$
+这些公式由有限联合质量除以相应正历史质量得到。参考活动载体及限制后的满射为
+$$
+J_n=\{j:L_n(j)>0\},\qquad
+r_n=r|_{J_n}:J_n\twoheadrightarrow r(J_n).
+$$
+在参考正历史上，$J_n$ 非空且 $q_n$ 在其上严格正；在实际正历史上，$d_n$ 是 $J_n$ 上的概率向量且 $d_n\ll q_n$。写整个 $J$ 上的向量时，仅把活动载体外的坐标置零，不要求 $q_n$ 在整个 $J$ 上严格正。粗化向量在 $I\setminus r(J_n)$ 上也作零延拓。
+
+定义实际正历史上的标量
+$$
+\delta_n=\delta_{q_n,r_n}(d_n).
+\tag{87.4}
+$$
+在实际零质量历史上仅将标量 $\delta_n$ 置零，不定义实际后验。每个有限 $n$ 的这类历史总质量为零，可数次取交后，以 $\mathbb P_d$-概率一，全部有限时刻同时满足 $D_n>0$。对每个 $d_c>0$，定义
+$$
+\delta_c=\delta_{q^c,r_c}(d^c).
+$$
+在 $d_c=0$ 的类上约定标量 $\delta_c=0$；这不定义实际条件概率。
+
+最后，令联合标签 $u=(r,s)$ 的陪域为像 $u(J)$。置
+$$
+J_{i,c}=\{j:r(j)=i,\ s(j)=c\},\qquad
+d_{i,c}=\sum_{j\in J_{i,c}}d_{0j},\qquad
+q_{i,c}=\sum_{j\in J_{i,c}}q_{0j}.
+$$
+每个非空胞腔都有 $q_{i,c}>0$，故
+$$
+(E_{q_0,u}d_0)_j=q_{0j}\frac{d_{r(j),s(j)}}{q_{r(j),s(j)}}
+\tag{87.5}
+$$
+良定义。
+
+**定理 87.2（共同有限 iid 观察下的双先验后验与纤维缺陷极限）。** 在定义与假设 87.1 下，存在关于无限记录可测的解码器
+$$
+\widehat s:Z^{\mathbb N_{>0}}\to\mathcal S
+$$
+使得 $\widehat s((Z_t)_{t\ge1})=s(X)$ 在 $\mathbb P_d$ 与 $\mathbb P_q$ 下均几乎处处成立。写 $S=s(X)$。在实际律 $\mathbb P_d$ 下，$d_S>0$ 几乎处处，且同步使用同一记录的后验在类外零延拓后满足
+$$
+d_{n,j}\longrightarrow d^S_j,\qquad
+q_{n,j}\longrightarrow q^S_j
+\quad\text{对所有 }j\in J\text{ 同时几乎处处成立}.
+\tag{87.6}
+$$
+进一步，
+$$
+\boxed{\delta_n\longrightarrow\delta_S
+\quad\text{几乎处处且在 }L^1(\mathbb P_d)\text{ 中}.}
+\tag{87.7}
+$$
+因此
+$$
+\boxed{
+\lim_{n\to\infty}\mathbb E_d\delta_n
+=\sum_{c:d_c>0}d_c\delta_c
+=D(d_0\Vert E_{q_0,(r,s)}d_0).
+}
+\tag{87.8}
+$$
+逐路径极限是依赖真实类的随机变量 $\delta_S$；式 (87.8) 是其确定的平均值。该定理识别的是观察行类，不是类内的个别状态。对 $d_c>0$ 的类，非单点类也不必留下正缺陷：若两条件先验相同，则该类缺陷为零；更一般地，定理 73.3 的纤维恢复等号条件给出 $\delta_c=0$ 当且仅当 $d^c=E_{q^c,r_c}d^c$。
+
+**证明。** 先识别观察行并确定后验极限。固定任意类 $c$，将公共似然记作 $L_n(c)=\prod_{t=1}^nK_c(z_t)$。在记录概率 $K_c^{\mathbb N_{>0}}$ 下，概率一地所有观察都落在 $\operatorname{supp}K_c$，所以 $L_n(c)>0$ 对全部有限 $n$ 同时成立。对不同类 $b\ne c$，分两种情形。
+
+若有符号 $z$ 满足 $K_c(z)>0=K_b(z)$，则前 $n$ 次都未出现该符号的概率为 $(1-K_c(z))^n\to0$。因此概率一地在某个有限时间出现该符号；从那时起 $L_n(b)=0$，故
+$$
+L_n(b)/L_n(c)\longrightarrow0.
+$$
+
+否则 $K_b$ 在 $\operatorname{supp}K_c$ 上处处为正。定义有限实函数
+$$
+g_{b,c}(z)=
+\begin{cases}
+\ln\bigl(K_b(z)/K_c(z)\bigr),&K_c(z)>0,\\
+0,&K_c(z)=0.
+\end{cases}
+$$
+它在有限字母表上有界，因而 $g_{b,c}(Z_t)$ 可积；在 $K_c^{\mathbb N_{>0}}$ 下，这些随机变量独立同分布。实值强大数律给出
+$$
+\frac1n\ln\frac{L_n(b)}{L_n(c)}
+=\frac1n\sum_{t=1}^ng_{b,c}(Z_t)
+\longrightarrow-D(K_c\Vert K_b)<0
+\quad\text{几乎处处}.
+\tag{87.9}
+$$
+严格不等式使用有限 Gibbs 非负性及等号条件：两行均非负归一化，当前分支给出 $K_c\ll K_b$，而不同类意味着 $K_c\ne K_b$。所以似然比仍趋于零。此论证允许不同观察行具有不同支撑；含零似然的分支已单独处理。强律的乘积律分离用法也见第 71.6 小节内的命题 71.7；这里的有界函数 $g_{b,c}$ 履行同一实值强律的前提。[^rro87-slln][^rro87-gibbs]
+
+类数有限，故对固定 $c$ 可以同时取全部竞争类的概率一事件。同类各状态的似然完全相同，因此
+$$
+\frac{Q_n}{L_n(c)}=\sum_bq_b\frac{L_n(b)}{L_n(c)}\longrightarrow q_c>0.
+$$
+于是参考后验在任意真类的记录律下满足
+$$
+q_n(J_c)\longrightarrow1,\qquad
+q_{n,j}\longrightarrow\mathbf1_{\{j\in J_c\}}q_{0j}/q_c.
+\tag{87.10}
+$$
+这一步对全部类成立，因为全部 $q_c>0$；不要求该类有实际先验质量。
+
+为明确构造可测解码器，对每个 $c$ 令 $A_c$ 为满足以下条件的无限记录集合：全部有限历史都有 $Q_n>0$，且 $q_n(J_c)\to1$。每个有限后验坐标在其正分母定义域上依赖有限前缀，故可测；极限条件可写成可数交并，所以 $A_c$ 可测。不同 $A_c$ 不交，因为有限后验的类质量之和为一，不可能同时有两个不同类质量趋于一。由式 (87.10)，$K_c^{\mathbb N_{>0}}(A_c)=1$。在 $A_c$ 上令 $\widehat s=c$，在 $\bigcup_cA_c$ 的补集上取任意固定类。该解码器可测，并在每个类记录律下识别该类，因而在两种先验混合律下都满足定理所述结论。这没有给零分母记录指定参考后验。
+
+现固定 $d_c>0$。同一似然比论证还给出
+$$
+D_n/L_n(c)\longrightarrow d_c>0,\qquad
+T_n:=D_n/Q_n\longrightarrow d_c/q_c>0,
+$$
+以及
+$$
+d_{n,j}\longrightarrow\mathbf1_{\{j\in J_c\}}d_{0j}/d_c.
+\tag{87.11}
+$$
+实际零先验的坐标始终为零。对有限个实际正类混合，即得式 (87.6)。同一行内的非零后验比例始终等于初始先验比例；这些观察不会进一步区分同一行内的不同状态。
+
+接着处理 KL 的支撑边界。置
+$$
+w_j=d_{0j}/q_{0j},\qquad M=\max_jw_j.
+$$
+因为 $\sum_jq_{0j}w_j=1$，有 $1\le M<\infty$。在每个实际正历史上，整个 $J$ 上的零延拓向量满足
+$$
+d_{n,j}=q_{n,j}w_j/T_n,\qquad
+T_n=\sum_jq_{n,j}w_j\in(0,M].
+\tag{87.12}
+$$
+定义 $\phi(0)=0$、$\phi(x)=x\ln x$ 对 $x>0$。此函数在 $[0,M]$ 上连续且有界。[^rro87-mullog] 对 $i\in I$，写
+$$
+p_{n,i}=\sum_{r(j)=i}q_{n,j},\qquad
+b_{n,i}=\sum_{r(j)=i}q_{n,j}w_j,\qquad
+\bar w_{n,i}=b_{n,i}/p_{n,i}\quad(p_{n,i}>0).
+$$
+有 $0\le\bar w_{n,i}\le M$。若 $p_{n,i}=0$，下面的对应加权项取零，不定义其比值。式 (87.1) 与正支撑上的对数展开给出
+$$
+D(d_n\Vert q_n)=\frac{\sum_jq_{n,j}\phi(w_j)}{T_n}-\ln T_n,
+$$
+$$
+D(r_*d_n\Vert r_*q_n)
+=\frac{\sum_{i:p_{n,i}>0}p_{n,i}\phi(\bar w_{n,i})}{T_n}-\ln T_n.
+$$
+所以
+$$
+\boxed{
+\delta_n=
+\frac{\sum_jq_{n,j}\phi(w_j)
+-\sum_{i:p_{n,i}>0}p_{n,i}\phi(\bar w_{n,i})}{T_n}.
+}
+\tag{87.13}
+$$
+$w_j=0$ 的项仅使用 $\phi(0)=0$，不计算 $\ln0$。
+
+在真类 $c$ 且 $d_c>0$ 的概率一事件上，第一有限和由式 (87.10) 收敛。第二有限和中，若 $p_{n,i}\to p_{\infty,i}>0$，则 $b_{n,i}$ 与 $p_{n,i}$ 的收敛和 $\phi$ 的连续性给出该项的极限。若 $p_{\infty,i}=0$，则
+$$
+|p_{n,i}\phi(\bar w_{n,i})|
+\le p_{n,i}\sup_{0\le x\le M}|\phi(x)|\longrightarrow0,
+$$
+其中 $p_{n,i}=0$ 时该加权项仍取零。最后由 $T_n\to d_c/q_c>0$，式 (87.13) 可以取极限。类内有 $d^c_j=q^c_jw_j/(d_c/q_c)$，故此极限正是以 $q^c,d^c,r_c$ 代入同一公式得到的 $\delta_c$。这证明 $\delta_n\to\delta_S$ 几乎处处。这里使用共同似然产生的固定比值结构，没有对边界参考分布使用无条件的 KL 连续性。
+
+为证明 $L^1$ 收敛，式 (87.1)、粗化后概率对的 Gibbs 非负性及式 (87.12) 给出
+$$
+0\le\delta_n\le D(d_n\Vert q_n)
+=\sum_{j:d_{n,j}>0}d_{n,j}\ln w_j-\ln T_n
+\le\ln\frac M{T_n}=:U_n.
+\tag{87.14}
+$$
+在实际正历史上 $U_n$ 有限非负；在实际零质量历史上仅将标量 $U_n$ 置零。对 $v\ge0$，用式 (87.2) 的有限历史质量求和，得到
+$$
+\begin{aligned}
+\mathbb P_d(U_n>v)
+&=\sum_{\substack{h\in Z^n:D_n(h)>0\\D_n(h)/Q_n(h)<Me^{-v}}}D_n(h)\\
+&\le Me^{-v}
+\sum_{\substack{h\in Z^n:D_n(h)>0\\D_n(h)/Q_n(h)<Me^{-v}}}Q_n(h)
+\le Me^{-v}.
+\end{aligned}
+\tag{87.15}
+$$
+因此对 $R\ge0$，尾积分公式给出
+$$
+\begin{aligned}
+\mathbb E_d[\delta_n\mathbf1_{\{\delta_n>R\}}]
+&\le\mathbb E_d[U_n\mathbf1_{\{U_n>R\}}]\\
+&=R\mathbb P_d(U_n>R)+\int_R^\infty\mathbb P_d(U_n>v)\,dv\\
+&\le M(R+1)e^{-R}.
+\end{aligned}
+\tag{87.16}
+$$
+这是一致于 $n$ 的尾界，故 $(\delta_n)$ 一致可积。后验密度比的上界是 $M/T_n$，不是 $M$；这里没有断言所有时刻和记录的 KL 有统一确定上界。
+
+随机极限 $\delta_S$ 只取有限个有限值。取
+$$
+R\ge\max_{c:d_c>0}\delta_c.
+$$
+由几乎处处收敛，$\min(\delta_n,R)\to\delta_S$ 几乎处处；差的绝对值不超过常数 $R$。有限前缀标量可测，$S$ 取有限值，且概率空间上的常数 $R$ 可积，所以支配收敛给出
+$$
+\mathbb E_d|\min(\delta_n,R)-\delta_S|\longrightarrow0.
+$$
+[^rro87-dct] 结合式 (87.16) 及 $0\le\delta_n-\min(\delta_n,R)\le\delta_n\mathbf1_{\{\delta_n>R\}}$，
+$$
+\limsup_{n\to\infty}\mathbb E_d|\delta_n-\delta_S|
+\le M(R+1)e^{-R}.
+$$
+令 $R\to\infty$，即得 $L^1$ 收敛，并得到期望收敛。
+
+最后计算该期望。对 $d_c>0$，在 $j\in J_c$ 且 $d_{0j}>0$ 的坐标上，类内恢复的比值为
+$$
+\frac{d^c_j}{(E_{q^c,r_c}d^c)_j}
+=\frac{d_{0j}q_{r(j),c}}{q_{0j}d_{r(j),c}}.
+$$
+这里 $d_{0j}>0$ 强制 $d_{r(j),c}>0$，严格正参考先验也保证相应 $q_{r(j),c}>0$。因此
+$$
+\begin{aligned}
+\sum_{c:d_c>0}d_c\delta_c
+&=\sum_{c:d_c>0}\sum_{\substack{j\in J_c\\d_{0j}>0}}
+d_{0j}\ln\frac{d_{0j}q_{r(j),c}}{q_{0j}d_{r(j),c}}\\
+&=\sum_{j:d_{0j}>0}d_{0j}
+\ln\frac{d_{0j}}{q_{0j}d_{r(j),s(j)}/q_{r(j),s(j)}}\\
+&=D(d_0\Vert E_{q_0,(r,s)}d_0).
+\end{aligned}
+$$
+与已证的期望收敛合并，得到式 (87.8)。证毕。
+
+[^rro87-static]: [定理 73.3 与定理 74.2](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的正支撑 KL 分解与静态恢复恒等式。用于每个后验时，载体为 $J_n$，粗映射陪域为 $r(J_n)$，满足参考严格正及满射条件；类内则取 $J_c,r(J_c),q^c$。这里只使用定义 74.1 的静态质量算子，若连同其动力学参数代入，可取恒等矩阵。
+
+[^rro87-slln]: [Mathlib/Probability/StrongLaw.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/StrongLaw.lean)，`ProbabilityTheory.strong_law_ae_real`：可积实随机变量、两两独立及同分布推出样本均值几乎处处收敛到积分。式 (87.9) 的 $g_{b,c}$ 在有限集合上有界，零真概率符号已赋有限值，故可积；条件 iid 乘积律履行独立及同分布前提，以 $X_i=g_{b,c}(Z_{i+1})$ 对应从零起始的序列。卷内的乘积律分离应用见第 71.6 小节的命题 71.7。
+
+[^rro87-gibbs]: [GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S3/Divergence/GrandmotherTheorem.lean) 与 [GibbsEquality.kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S3/Divergence/GibbsEquality.lean)：在有限载体、两输入非负归一化及第一输入绝对连续于第二输入的条件下，KL 非负，且为零当且仅当两向量相等。其全载体实值和与本文正支撑和一致：零第一质量项为零，正第一质量处第二质量严格正。
+
+[^rro87-mullog]: [Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean)，`Real.continuous_mul_log` 给出 $x\ln x$ 在零点取零后的连续性；这里只用其在非负紧区间 $[0,M]$ 上的连续性和有界性。
+
+[^rro87-dct]: [Mathlib/MeasureTheory/Integral/DominatedConvergence.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/DominatedConvergence.lean)，`MeasureTheory.tendsto_integral_of_dominated_convergence` 要求被积函数几乎处处强可测、共同可积控制和几乎处处收敛。这里用于有界截断的差 $|\min(\delta_n,R)-\delta_S|$，控制为常数 $R$，极限函数为零。
+
+**命题 87.3（相同单时边缘不能替代条件独立）。** 取两个潜状态 $J=\{1,2\}$、常值粗映射 $r$，并令
+$$
+q_0=(1/2,1/2),\qquad d_0=(2/3,1/3),
+$$
+$$
+K(1\mid1)=1/3,\qquad K(1\mid2)=2/3,
+\qquad K(2\mid j)=1-K(1\mid j).
+$$
+两行不同，故行类均为单点。给定真实状态 $X$ 后，只抽取一次 $Y\sim K(\cdot\mid X)$，再令 $Z_t=Y$ 对所有 $t\ge1$。两先验使用同一个这样的条件记录律。每个单时条件边缘仍为 $K(\cdot\mid X)$，但正确后验纤维缺陷在第一次观察后保持严格正值。因此定理 87.2 的条件 iid 假设不能替换为相同单时条件边缘。
+
+**证明。** 对任意 $n\ge1$，只有两个常值历史 $(1,\ldots,1)$、$(2,\ldots,2)$ 有正概率；给定 $X=j$，观察到常值 $y$ 历史的概率为 $K(y\mid j)$，而不是 $K(y\mid j)^n$。因此全部后续重复都不再更新第一次观察后的后验。
+
+当 $Y=1$ 时，实际概率与两后验为
+$$
+\mathbb P_d(Y=1)=\frac23\frac13+\frac13\frac23=\frac49,
+$$
+$$
+d_n=(1/2,1/2),\qquad q_n=(1/3,2/3)\quad(n\ge1).
+$$
+当 $Y=2$ 时，
+$$
+\mathbb P_d(Y=2)=\frac59,\qquad
+d_n=(4/5,1/5),\qquad q_n=(2/3,1/3)\quad(n\ge1).
+$$
+由于 $r$ 常值，$E_{q_n,r}d_n=q_n$，所以 $\delta_n=D(d_n\Vert q_n)$。两种结果下的后验向量均严格正且不同，有限 Gibbs 非负性及等号条件给出各自 KL 严格为正，并且此值对全部 $n\ge1$ 不变。[^rro87-gibbs] 另一方面，单点行类上的两条件先验都是该点的单位质量，故 iid 结论中的 $\delta_c$ 均为零。正概率事件上的上述恒正极限反驳了删除条件独立性后的结论。证毕。
+
+## 87.99 追加锚
