@@ -1,0 +1,126 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "0",
+      "rho": "0",
+      "rbar": "0",
+      "h1min": "1/3",
+      "v0": "0",
+      "v1": "0",
+      "gap": "1/45",
+      "tbar": "2",
+      "Cbar": "15/4",
+      "kbar": "2",
+      "budget_increments": [
+        "0",
+        "0",
+        "0"
+      ],
+      "c": [
+        "7/10",
+        "2/5",
+        "4/15",
+        "4/45"
+      ],
+      "H": [
+        "1/20",
+        "1/10",
+        "1/15",
+        "1/45"
+      ],
+      "positive7": "779/12600"
+    }
+  },
+  "coordinates": {
+    "kind": "inline",
+    "value": [
+      "E5-g*q5",
+      "E15-g*q15",
+      "E27",
+      "Ege4",
+      "E5deep",
+      "E15deep",
+      "omega"
+    ]
+  },
+  "uniform_factorial_pairs": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "479/3600",
+      "old_positive7": "121/720",
+      "positive7_positive7_distinct": "97/240",
+      "tail_distinct_pairs": "2539/3600",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "7/180",
+        "pure5": "1/100",
+        "root5": "7/150",
+        "cell5": "13/450"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_coefficient_upper": [
+        "1/4",
+        "5/36",
+        "1/12",
+        "3/4",
+        "1/2",
+        "1/3",
+        "1/9",
+        "1"
+      ],
+      "positive7_pair_prices": [
+        "1/30",
+        "3/10",
+        "17/30",
+        "29/540",
+        "11/120",
+        "13/40",
+        "67/120",
+        "109/2160"
+      ]
+    }
+  },
+  "uniform_factorial_heads_sha256": {
+    "kind": "inline",
+    "value": "09b31445c50beb339c77ecbef77df4baab615a3949aeb9991a658d8eafd7cf5f"
+  },
+  "joint_cost_results": {
+    "path": "content/004-radius_results/000000/item/006-joint_cost_results.json",
+    "sha256": "f33f3c4f484dab33c54f6add65d68fcde7136e2b6a53bc835ba74560663fabf0",
+    "kind": "array"
+  },
+  "retained_raw81_n2": {
+    "path": "content/004-radius_results/000000/item/007-retained_raw81_n2.json",
+    "sha256": "be091c128499c8300a846e408ff963d6b10d055caebc7dd379aa252aa1dd380f",
+    "kind": "value"
+  },
+  "shared_portfolio": {
+    "path": "content/004-radius_results/000000/item/008-shared_portfolio.json",
+    "sha256": "cc1ddba730767647681bafc5a8f7cdd13e45ddba3172591f3314deae7f5aa145",
+    "kind": "value"
+  },
+  "weighted_adopted_face_upper": {
+    "kind": "inline",
+    "value": "2111889246010484736362835017/167630845620786142795200000"
+  },
+  "weighted_uniform_excess": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "original_branch_evaluations": {
+    "kind": "inline",
+    "value": 1125000
+  },
+  "independent_rational_checks": {
+    "kind": "inline",
+    "value": 36
+  }
+}
