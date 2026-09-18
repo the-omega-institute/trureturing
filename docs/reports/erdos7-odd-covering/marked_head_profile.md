@@ -665,3 +665,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The actual J reserve crosses the paired-table capacity](profile-notes/196-the-actual-j-reserve-crosses-the-paired-table-capacity.md)
 - [The whole J reserve keeps each original family error](profile-notes/197-the-whole-j-reserve-keeps-each-original-family-error.md)
 - [The separate J family errors enter the complete global comparison](profile-notes/198-the-separate-j-family-errors-enter-the-complete-global-comparison.md)
+- [One six-label head controls the square and both complete crosses](profile-notes/199-one-six-label-head-controls-the-square-and-both-complete-crosses.md)
