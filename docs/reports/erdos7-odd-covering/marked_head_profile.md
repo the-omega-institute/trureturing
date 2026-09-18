@@ -581,3 +581,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One original AP11 block couples its count outcomes](profile-notes/110-one-original-ap11-block-couples-its-count-outcomes.md)
 - [Each AP11 block shares its mean and curvature](profile-notes/111-each-ap11-block-shares-its-mean-and-curvature.md)
 - [The factorial tail retains one compatible original head](profile-notes/112-the-factorial-tail-retains-one-compatible-original-head.md)
+- [Quadratic hinges and the factorial tail share one head](profile-notes/113-quadratic-hinges-and-the-factorial-tail-share-one-head.md)
+- [A common source bridge has matching controller witnesses](profile-notes/114-a-common-source-bridge-has-matching-controller-witnesses.md)
