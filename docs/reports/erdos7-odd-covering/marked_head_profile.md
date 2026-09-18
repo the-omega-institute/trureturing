@@ -627,3 +627,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Exposing each loss gives exact rational joint price bounds](profile-notes/156-exposing-each-loss-gives-exact-rational-joint-price-bounds.md)
 - [A signed tail comparison covers the one-over-twenty-seven neighborhood](profile-notes/157-a-signed-tail-comparison-covers-the-one-over-twenty-seven-neighborhood.md)
 - [The seven-containing pair tails have one exposed source price](profile-notes/158-the-seven-containing-pair-tails-have-one-exposed-source-price.md)
+- [The optimized heavy margin fails late-factor Jensen](profile-notes/159-the-optimized-heavy-margin-fails-late-factor-jensen.md)
