@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytope,
-     mathlib/module/Mathlib/Order/Extension/Linear]
+   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytope, mathlib/module/Mathlib/Order/Extension/Linear]
    utility: none
    digest: Crown exposed faces and connected compatible partitions are inverse constructions. -/
 
@@ -308,7 +307,8 @@ theorem crownPartitionRankPoint_mem {n : ℕ} (P : CrownConnectedCompatibleParti
     apply (div_le_div_iff_of_pos_right hden).2
     linarith
 
-private theorem augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
+/-- The augmented coordinates of the normalized quotient rank point, including both endpoints. -/
+theorem augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
     (P : CrownConnectedCompatiblePartition n)
     (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
     (u : CrownAugmentedVertex n) :
