@@ -628,3 +628,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A signed tail comparison covers the one-over-twenty-seven neighborhood](profile-notes/157-a-signed-tail-comparison-covers-the-one-over-twenty-seven-neighborhood.md)
 - [The seven-containing pair tails have one exposed source price](profile-notes/158-the-seven-containing-pair-tails-have-one-exposed-source-price.md)
 - [The optimized heavy margin fails late-factor Jensen](profile-notes/159-the-optimized-heavy-margin-fails-late-factor-jensen.md)
+- [One actual residual closes a hundredfold wider neighborhood](profile-notes/160-one-actual-residual-closes-a-hundredfold-wider-neighborhood.md)
+- [An actual repacking attains the full deep-five cap](profile-notes/161-an-actual-repacking-attains-the-full-deep-five-cap.md)
