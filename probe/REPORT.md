@@ -33,3 +33,7 @@ Exact cache receipt:
 ```text
 LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-perrier-mcf","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
 ```
+
+## Witness-bypass mutant
+
+`lake env lean probe/PerrierNoEliminationMutant.lean` exited 0, with exactly `[propext, Classical.choice, Quot.sound]`. It proves the same universally quantified conjunction without the proposed coordinate-elimination lemma and additionally removes the local hbalance fact by inlining its ring-normalization calculation. It does not import the main probe or assume its conclusion. The proposed witness fails necessity test (iv). This is a bind-only path, not a replacement content witness, so no altered escape witness is being retrospectively preregistered.
