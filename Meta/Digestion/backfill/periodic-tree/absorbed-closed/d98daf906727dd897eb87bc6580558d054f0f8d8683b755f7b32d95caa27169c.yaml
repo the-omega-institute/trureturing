@@ -4,6 +4,6 @@ fingerprints:
 cas_ref: sha256:d98daf906727dd897eb87bc6580558d054f0f8d8683b755f7b32d95caa27169c
 coverage_gids:
   - gid: D5/S1/Recurrence/CrossingMatrixDeterminant.crossing_det_pow_sub_one
-    target_statement_id: sha256:7943c6b0c9687c0534adfee5800cb92edf5bee6d3b5d3e775fe80ec4c4b12d21
+    target_statement_id: sha256:0000000000000000000000000000000000000000000000000000000000000000
 receipts:
   unresolved_subitems: []
