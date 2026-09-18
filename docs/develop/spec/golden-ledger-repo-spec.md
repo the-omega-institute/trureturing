@@ -415,6 +415,8 @@ FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，�
 
 下载前的 report probe 只核对登记输入、环境、receipt 与材料哈希,决定是否需要 Lake 缓存;它不接受报告或签发检查成功。正常 reuse 对私有快照执行完整 publication 校验,失败即进入实际生产;probe 后材料变化、哈希自洽的坏报告与构建失败均不得假绿。完整语义校验不在 probe 重复执行。
 
+current 小型种子以独立的显式 `producer-report.json` 登记已验收的报告及可选 `.reuse.json`,记录其原生产 candidate/round、固定报告路径和材料哈希。本轮生产了报告即从已验收的 current 记录复制,不要求某个使用报告的检查重新执行;复用检查保留自身原执行身份与材料,不得用新报告凭据改写旧检查证据。未请求报告的轮次只可保留上一份已验证种子的 producer 登记与原材料,不得把工作区残留报告记为本轮生产,也不得因 metadata-only push 丢弃可用报告种子。种子材料清单须精确等于检查材料、producer 材料及其描述文件的并集;旧种子无 producer 描述时仍支持原检查报告路径。probe 优先消费独立 producer 登记,损坏或输入不匹配仍走现役正常恢复/生产,不改变缓存分区或报告完整校验。
+
 current 对原生报告的五个发布材料、可选 `.reuse.json` 完整调用证据及本轮成功步骤作候选/run/attempt 绑定。Actions 的 dependency/project 保存只有在本轮接受的 current 证据证明所选 `lean` 或 `lean-report` 步骤成功后才获授权；逐项检查这些报告和执行证据的材料哈希与身份，不读取已退役的报告准备收据，也不把 Lean 重编数量当作构建义务是否执行。成功授权在共用 bounded worker 内完成，不复制、扫描或哈希 dependency/project 全目录；失败或超出剩余窗口仅跳过可选保存，不能改变已经验证的业务结果。通用显式运输接口保留自身生产成功契约。current 的普通 artifact 与可选 seed 可共用同一次已验证的执行记录；seed 消费仍须核对本轮候选、run/attempt 和完整材料，可选导出失败不撤销普通 artifact 的成功。
 
 project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,不以旧报告的 attestation 相同为由永久保留旧 olean 集合。dependency 可用随种子运输的小型输入记录决定是否保留本轮成功恢复的种子：只比较显式登记的依赖配置、工具链及执行环境,相同则省略重复上传,缺失或变化则保存。此记录只决定可选保存,不参与远端分区或种子兼容筛选,不证明目录完整或当前检查成功;正常 Lake/report 执行与严格报告校验仍为必需。PR 只读及无资源不运输的边界不变。
