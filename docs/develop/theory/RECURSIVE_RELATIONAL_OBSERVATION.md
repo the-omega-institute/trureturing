@@ -34608,3 +34608,175 @@ $$
 第二式给出 $ET_{\mathrm{read}}=T_{\mathrm{read}}$，故每个输出的缺陷为零，特别地保持 $\mathcal F$。然而 $|+\rangle\langle+|$ 与 $|-\rangle\langle-|$ 的粗输入同为 $(1/2,1/2)$，输出却分别为 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$，粗输出不同；因此不存在仅依赖粗输入的演化。由定理 75.3 证明末尾的两方向恒等式，两通道均不交换。若细维数为一，非空满射迫使粗维数也为一，唯一密度态及保迹线性映射使两个条件都成立。二维的上述两见证遂证明最小性；它与命题 74.6 只在经典质量动力学内的三状态最小性适用域不同。证毕。
 
 ## 75.99 追加锚
+
+## 76. 有限交替校准重采样、共同商与半步损失
+
+**定理 76.1（共同正参考下的交替极限与精确 KL 收支）。** 设 $J$ 为有限非空集合，$r_a:J\to I_a$ 为满射，$a=1,2$，不要求两观察嵌套。固定同一个严格正概率 $q$，即 $q_j>0$、$\sum_jq_j=1$。概率均为列向量，对数均为自然对数。按第 73–74 节的参考条件律定义
+$$
+p_i^{(a)}=\sum_{r_a(j)=i}q_j>0,\qquad
+(E_ax)_j=\frac{q_j}{p_{r_a(j)}^{(a)}}
+\sum_{r_a(h)=r_a(j)}x_h
+\quad(x\in\mathbb R^J).
+$$
+令
+$$
+R=\operatorname{EqvGen}(\ker r_1\cup\ker r_2),
+\qquad \mathscr C=J/R.
+$$
+这里 $\operatorname{EqvGen}$ 是包含所给关系的最小等价关系：两点等价恰在它们可由有限路径连接、每条边属于某个 $r_1$ 纤维或某个 $r_2$ 纤维时成立。记 $C(j)$ 为 $j$ 所在分量，并置
+$$
+Q_C=\sum_{j\in C}q_j,\qquad m_C(x)=\sum_{j\in C}x_j,
+\qquad
+(\mathcal Jx)_j=q_j\frac{m_{C(j)}(x)}{Q_{C(j)}}.
+$$
+商映射 $j\mapsto C(j)$ 是两观察的最细共同粗化；联合观察 $(r_1,r_2)$ 的核则为 $\ker r_1\cap\ker r_2$。
+
+在有符号质量空间上取内积及其诱导的向量、算子范数
+$$
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+则 $E_1,E_2,\mathcal J$ 都是正交投影，且
+$$
+M:=\operatorname{ran}E_1\cap\operatorname{ran}E_2
+=\operatorname{ran}\mathcal J,\qquad
+E_a\mathcal J=\mathcal JE_a=\mathcal J.
+$$
+令 $F_a=E_a-\mathcal J$、$c=\|F_2F_1\|_{q^{-1}}$。有 $0\le c<1$，并且
+$$
+\bigl\|(E_2E_1)^n-\mathcal J\bigr\|_{q^{-1}}
+\le c^{2n-1}\qquad(n\ge1). \tag{76.1}
+$$
+对任意非负归一化初态 $d$，包括有零坐标的初态，定义
+$$
+d_{2n}=(E_2E_1)^nd,\qquad d_{2n+1}=E_1d_{2n}\quad(n\ge0),
+\qquad s=\mathcal Jd.
+$$
+全部半步 $d_N$ 都收敛到 $s$，且
+$$
+\|d_{2n}-s\|_{q^{-1}}
+\le c^{2n-1}\|d-s\|_{q^{-1}}\qquad(n\ge1).
+$$
+$c=0$ 时一次完整周期即有 $E_2E_1=\mathcal J$。
+
+对有限概率 $x,v$，记 $x\ll v$ 为 $v_j=0\Rightarrow x_j=0$ 对所有 $j$ 成立；在此条件下置
+$D(x\Vert v)=\sum_{j:x_j>0}x_j\ln(x_j/v_j)$，否则置 $D(x\Vert v)=+\infty$，零质量项取零。每个 $N\ge0$ 都有全部项有限的恒等式
+$$
+D(d\Vert s)=\sum_{k=0}^{N-1}D(d_k\Vert d_{k+1})+D(d_N\Vert s), \tag{76.2}
+$$
+并且
+$$
+\sum_{k\ge0}D(d_k\Vert d_{k+1})
+=D(d\Vert s)=D(d\Vert q)-D(s\Vert q). \tag{76.3}
+$$
+每个半步损失非负，恰在该次重采样固定其输入时为零。
+
+证明。每条纤维非空，故 $p_i^{(a)}>0$。第 74.1–74.2 条的 $E=BC$ 计算逐个用于 $r_a$，给出 $E_a$ 非负列随机、$E_a^2=E_a$、$E_aq=q$，以及
+$\operatorname{ran}E_a=\{x:x_j/q_j\text{ 在每条 }r_a\text{ 纤维上恒定}\}$。同样结论用于共同分量观察，给出 $\mathcal J$ 的幂等性、保概率性与分量常值的像。
+
+联合核的交与共同粗化核的并生成关系，是[核序对偶定理](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.lean)在 $X=J$、两观察为 $r_1,r_2$ 时的两个核公式。具体地，每个 $r_a$ 纤维都包含于一个 $C$，故 $C(\cdot)$ 同时经两观察因子化；任何同时经两观察因子化的映射都沿上述路径恒定，遂经 $C(\cdot)$ 因子化。这证明最细共同粗化的性质。一个实函数同时在两种纤维上恒定，当且仅当在每个 $C$ 上恒定；这是[有限分区观察代数的反序关系](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraOrderReversal.lean)在两核及其等价闭包上的具体路径刻画。应用于密度 $x/q$ 即得所述共同像 $M$。
+
+矩阵元满足
+$$
+\frac{(E_a)_{jh}}{q_j}
+=\frac{\mathbf1_{\{r_a(j)=r_a(h)\}}}{p_{r_a(j)}^{(a)}},
+$$
+右侧关于 $j,h$ 对称，故 $E_a$ 在指定内积下自伴；幂等性使其为正交投影。共同分量的同一计算也适用于 $\mathcal J$。在密度坐标 $f_j=x_j/q_j$ 中，$(E_ax)_j/q_j$ 是 $q$ 在该纤维上的条件平均；这把命题 69.1 的[条件期望正交残差](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean)取有限离散测度 $\mu(\{j\})=q_j$、观察 $r_a$、目标 $f$ 时的投影具体写出。由 $M\subseteq\operatorname{ran}E_a$，有 $E_a\mathcal J=\mathcal J$，取伴随得到 $\mathcal JE_a=\mathcal J$。每次重采样也保留每个 $m_C$，因为它只在包含于 $C$ 的纤维内重新分配质量。
+
+因此 $F_a$ 是到 $\operatorname{ran}E_a\cap M^\perp$ 的正交投影，两个约化像的交集只有零。投影的压缩性给出 $c\le1$。若 $c=1$，有限维单位球面的紧致性使范数在某个单位向量 $z$ 处取到，于是
+$$
+1=\|F_2F_1z\|\le\|F_1z\|\le\|z\|=1.
+$$
+正交投影勾股分解的等号条件给出 $z=F_1z=F_2F_1z$，使非零 $z$ 落在两个约化像中，矛盾。故 $c<1$。
+
+置 $A=F_2F_1=E_2E_1-\mathcal J$，伴随相对于 $q^{-1}$ 内积。由投影幂等性及有限维算子范数的伴随恒等式，
+$$
+A^*=F_1F_2,\qquad AA^*=F_2F_1F_2,\qquad
+A^n=(AA^*)^{n-1}A\quad(n\ge1),\qquad
+\|AA^*\|=\|A\|^2=c^2.
+$$
+幂次式在 $n=1$ 时成立；由 $(AA^*)A=A^2$ 归纳得到其余情形。又 $A\mathcal J=\mathcal JA=0$，故 $(E_2E_1)^n-\mathcal J=A^n$。对乘积取范数即得式 (76.1)；当 $c=0$ 时直接由 $A=0$ 得到一次周期的结论。差算子消去 $s\in M$，所以向量界可取 $\|d-s\|$。偶数半步遂收敛到 $s$，而 $E_1s=s$ 及 $E_1$ 的压缩性给出奇数半步的同一极限。
+
+这是标准的两子空间交替正交投影估计。von Neumann 的收敛、Aronszajn 的上界及 Kayalar–Weinert 的更强精确范数公式，见 H. H. Bauschke、F. Deutsch、H. Hundal，*Characterizing Arbitrarily Slow Convergence in the Method of Alternating Projections*，[arXiv:0710.2387v1](https://arxiv.org/pdf/0710.2387v1)，印刷第 1–2 页，Theorems 1.1–1.2、式 (1.3) 与 Lemma 1.3；亦见 C. Badea、S. Grivaux、V. Müller，*The Rate of Convergence in the Method of Alternating Projections*，[arXiv:1006.2047v1](https://arxiv.org/pdf/1006.2047v1)，第 2 页 Definition 1.1 及其后的精确范数公式。
+
+再处理 KL。固定 $a$，令 $x,v$ 都是概率，明确假设 $E_av=v$ 且 $x\ll v$，并置 $y=E_ax$。在纤维 $i$ 上记
+$$
+b_i=\sum_{r_a(j)=i}x_j,\qquad t_i=\sum_{r_a(j)=i}v_j,
+\qquad y_j=\frac{q_jb_i}{p_i^{(a)}},\qquad
+v_j=\frac{q_jt_i}{p_i^{(a)}}\quad(r_a(j)=i).
+$$
+$t_i=0$ 时支撑条件迫使 $b_i=0$；$b_i>0$ 时 $t_i>0$。因此 $x\ll y\ll v$，且在 $x_j>0$ 的坐标上
+$$
+\ln\frac{x_j}{v_j}=\ln\frac{x_j}{y_j}+\ln\frac{b_i}{t_i}.
+$$
+按纤维求和，最后一项为 $b_i\ln(b_i/t_i)$，也正是该纤维对 $D(y\Vert v)$ 的贡献。$b_i=0$ 的纤维中 $x,y$ 全为零，无论 $t_i$ 是否为零都贡献零。于是
+$$
+D(x\Vert v)=D(x\Vert E_ax)+D(E_ax\Vert v). \tag{76.4}
+$$
+这是式 (74.1) 的同一条件分解，也是在[支撑相容的 KL 链式恒等式](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/DivergenceSupport/ZeroSupportDPI.lean)中取输入 $(x,v)$、确定信道 $W(j,i)=\mathbf1_{\{r_a(j)=i\}}$ 的代入；上述支撑与纤维计算分别识别其条件项和粗项。
+
+每个 $d_N$ 都有原来的分量质量 $m_C(d)$。若此质量为零，非负性使整个分量上的 $d_N$ 始终为零；若它为正，则 $s_j=q_jm_C(d)/Q_C>0$ 在该分量处处成立。故 $d_N\ll s$，且两投影都固定概率 $s$。式 (76.4) 取 $x=d_k,v=s$，对前 $N$ 个半步求和即得式 (76.2)。已占据的分量之并是固定有限支撑，在其上 $t\mapsto t\ln(t/s_j)$ 于零点连续延拓为零；由 $d_N\to s$ 得 $D(d_N\Vert s)\to0$。最后，对共同分量观察、输入 $d$ 和正参考 $q$ 用同一分解，得到
+$$
+D(d\Vert q)=D(d\Vert\mathcal Jd)+D(\mathcal Jd\Vert q).
+$$
+所以式 (76.3) 成立，不涉及无穷相减。每个半步的两律均非负归一化且满足前述支撑包含，[Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/Divergence/GrandmotherTheorem.lean)和[Gibbs 等号条件](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/Divergence/GibbsEquality.lean)给出所述非负与零损失判据。这里记的是校准重采样的损失；联合观察对应另一个核，这些 KL 项也不能一般地替换为 Shannon 熵增。
+
+最后给出同一常数 $c$ 的有限矩阵读数。取定义 72.1 的归一化纤维列，限制为实坐标，置
+$$
+(U_a)_{ji}=\mathbf1_{\{r_a(j)=i\}}\sqrt{q_j/p_i^{(a)}},\qquad
+G=U_2^*U_1,\qquad
+G_{hi}=\frac{\sum_{r_2(j)=h,\ r_1(j)=i}q_j}
+{\sqrt{p_h^{(2)}p_i^{(1)}}}.
+$$
+令 $k=|\mathscr C|$，$\kappa_a(i)$ 为纤维 $i$ 所在分量。共同分量的归一化列及其纤维系数为
+$$
+(U_0)_{jC}=\mathbf1_{\{j\in C\}}\sqrt{q_j/Q_C},\qquad
+(V_a)_{iC}=\mathbf1_{\{\kappa_a(i)=C\}}\sqrt{p_i^{(a)}/Q_C}.
+$$
+由定理 72.2 的列正交归一计算，$U_a,U_0,V_a$ 均为等距嵌入，且 $U_aV_a=U_0$，故 $GV_1=V_2$、$G^*V_2=V_1$。于是
+$$
+G_\perp=(I-V_2V_2^*)G(I-V_1V_1^*)=G-V_2V_1^*,\qquad
+c=\|G_\perp\|_2.
+$$
+范数等式来自 $R_q=\operatorname{diag}(q_j^{-1/2})$ 的等距共轭：
+$R_q(E_2E_1-\mathcal J)R_q^{-1}=U_2G_\perp U_1^*$。次乘性给出一个方向的界，反向以 $U_1z$ 为输入并用 $U_2$ 的等距性。又对任意 $z\in\mathbb R^{I_1}$，$\|Gz\|_2=\|z\|_2$ 当且仅当 $U_1z\in\operatorname{ran}U_2$，即 $z\in\operatorname{ran}V_1$。故 $G$ 恰有 $k$ 个单位奇异方向；把奇异值降序排列并计重数，去掉全部这 $k$ 个方向后，最大的剩余奇异值就是 $c$。具体为 $c=\sigma_{k+1}(G)$ 当 $k<\min(|I_1|,|I_2|)$，无剩余方向时 $c=0$。仅当 $k=1$ 且存在剩余奇异值时，这才是第二奇异值。证毕。
+
+**命题 76.2（固定有限分区的参考律可使速率趋于一）。** 取 $J=\{1,2,3\}$，两观察分区分别为 $12\mid3$ 与 $1\mid23$，并取
+$$
+q=(a,\varepsilon,a),\qquad a=\frac{1-\varepsilon}{2},\qquad0<\varepsilon<1.
+$$
+定理 76.1 的共同商只有一个分量，且
+$$
+c=\frac{1-\varepsilon}{1+\varepsilon},\qquad
+\lambda_{\mathrm{cycle}}=c^2\longrightarrow1
+\quad(\varepsilon\downarrow0).
+$$
+其中 $\lambda_{\mathrm{cycle}}$ 是约化周期算子的非零特征值。因此，即使状态集和两分区固定、并允许前因子依赖参考律和初态，也没有对全部正参考律统一的严格小于一的逐周期渐近几何因子。
+
+证明。两种纤维的并连接三个状态，故 $\mathcal Jd=q$ 对所有概率 $d$ 成立。在 $L^2(q)$ 中去掉常数后，两观察像分别由
+$\mathbf1_{\{3\}}-a$ 与 $\mathbf1_{\{1\}}-a$ 张成。它们的方差均为 $a(1-a)$，协方差为 $-a^2$，所以归一化向量 $f_1,f_2$ 满足
+$$
+\gamma:=\langle f_1,f_2\rangle_{L^2(q)}=-\frac{a}{1-a}.
+$$
+两个秩一投影的乘积将 $f_2$ 送到 $\gamma^2f_2$，范数为 $|\gamma|$，故由定理 76.1 的约化夹角读数得到上述 $c$ 与 $c^2$。令 $h_j=q_jf_2(j)$，则 $\sum_jh_j=0$、$\|h\|_{q^{-1}}=1$。因 $q>0$，充分小的非零 $t$ 使 $d=q+th$ 仍为概率，并且
+$$
+\|(E_2E_1)^nd-q\|_{q^{-1}}=|t|c^{2n}.
+$$
+任给 $0<\rho<1$，选 $\varepsilon$ 使 $c^2>\rho$，则 $|t|(c^2/\rho)^n\to\infty$，排除任何有限前因子对 $\rho^n$ 的控制。这是固定参考下的标准投影角速率在该三状态族中的边界，不否定每个固定 $\varepsilon>0$ 时的严格收敛。证毕。
+
+**命题 76.3（参考不相容时完整周期收敛而半步过程不收敛）。** 按 $00,01,10,11$ 排列四个状态，令 $r_1$ 读取第一位、$r_2$ 读取第二位；分别以
+$$
+q^{(1)}=(1,1,1,1)/4,\qquad q^{(2)}=(1,2,3,4)/10
+$$
+代入定理 76.1 的纤维公式定义 $E_1,E_2$。则对每个概率 $x$，
+$$
+E_2E_1x=v=(1/8,1/6,3/8,1/3),\qquad
+E_1v=u=(7/48,7/48,17/48,17/48)\ne v,\qquad E_2u=v.
+$$
+因此按相同次序交替时，$d_{2n}=v$、$d_{2n+1}=u$ 对所有 $n\ge1$ 成立。完整周期的子序列立即稳定，全部半步的序列不收敛；两重采样没有共同的归一化固定律。
+
+证明。第一种参考使 $E_1$ 在每一行内均分该行质量；任意概率 $x$ 经此作用后，两列质量都为 $1/2$。第二种参考在第一列按 $1:3$、第二列按 $1:2$ 分配，遂得到与 $x$ 无关的 $v$。再对 $v$ 逐行均分即得 $u$；其两列质量仍为 $1/2$，故 $E_2u=v$。这证明两子序列的取值及不同极限。
+
+若概率 $w$ 同时被二者固定，第一种校准要求
+$w_{00}=w_{01}=\alpha$、$w_{10}=w_{11}=\beta$；第二种校准要求 $\beta=3\alpha$ 且 $\beta=2\alpha$。所以 $\alpha=\beta=0$，与归一化矛盾。这里共同核商仍是一点，联合观察仍区分四个状态，缺少的是相容的共同固定律。同一个正参考 $q$ 是定理 76.1 的充分条件；不同参考律仍可在各自纤维上具有某个共同正律的条件比例，并由命题 73.4 的固定点判据共享该律，所以参考律相等不是必要条件。证毕。
+
+## 76.99 追加锚
