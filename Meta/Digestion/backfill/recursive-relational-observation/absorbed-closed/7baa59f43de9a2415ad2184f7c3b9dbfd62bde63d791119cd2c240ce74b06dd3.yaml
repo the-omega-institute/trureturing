@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7baa59f43de9a2415ad2184f7c3b9dbfd62bde63d791119cd2c240ce74b06dd3
+  normalized_sha256: sha256:7baa59f43de9a2415ad2184f7c3b9dbfd62bde63d791119cd2c240ce74b06dd3
+cas_ref: sha256:7baa59f43de9a2415ad2184f7c3b9dbfd62bde63d791119cd2c240ce74b06dd3
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResidueChildPrefixStructure.residue_child_prefix_structure
+    target_statement_id: sha256:3af3799e60d154b619ca9df91325c9b1f66b3d05fb14521e2be39b483a96a83a
+receipts:
+  unresolved_subitems: []
