@@ -13,4 +13,8 @@ The public definition will explicitly guard `k <= n` and preserve the source exp
 
 ## Current result
 
-Experiments and source verification have not yet run. Verdict is not yet determined.
+Source verification: issue #8645 was read through `gh issue view`; the source PDF was downloaded only into the runner scratch directory. Printed pages 16, 17, and 18 were extracted and visually inspected. The definition, six rows, both Proposition 13 identities, and Conjecture 15 match the preregistration clause by clause. The quantified natural row index and zero extension beyond the row follow the lower-triangular Riordan-array interpretation. Conjecture 14 is excluded.
+
+Independent experiment: `python3 probe/check.py` exited 0. All six rows match; both identities (21)/(22) and Conjecture 15 pass for every `0 <= n < 300`. Integer division was checked at every in-range evaluation. The three-term recurrence also passes for `0 <= n < 300, 0 <= k < n+3`, interpreting negative column indices as zero. The subtraction-trap input `d(1,3)` returns zero.
+
+The user-specific probe instructions take precedence over the formal-answer skill's ordinary rendering, extra specialization, D5 writing, and delegated audit defaults: this seat retains only its own work under `probe/`, publishes JSON, and performs no dispatch, reviews, deposits, or PRs. The exact claim is the single formalizable assertion; Python tests are finite evidence only.
