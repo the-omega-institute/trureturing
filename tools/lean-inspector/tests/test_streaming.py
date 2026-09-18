@@ -240,6 +240,8 @@ class PublicationTests(unittest.TestCase):
     def test_binding_batch_scope_expanded_once(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            native.state(root).mkdir(parents=True)
+            (native.state(root) / 'inputs.json').write_text('{}')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
             (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
                 report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),

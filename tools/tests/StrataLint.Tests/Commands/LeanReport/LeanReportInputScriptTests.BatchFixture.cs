@@ -66,6 +66,14 @@ public sealed partial class LeanReportInputScriptTests
             }
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, InputHelperPath),
                 File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath)));
+            // This synthetic report exercises local batch emission without a
+            // Lake workspace. Native fetched-source binding is covered by the
+            // real Git package fixtures, not claimed by these fabricated rows.
+            var registrationPath = Path.Combine(root, "lean-report-inputs.json");
+            var registration = System.Text.Json.Nodes.JsonNode.Parse(
+                TemporaryFileSystem.File.ReadAllText(registrationPath))!.AsObject();
+            registration.Remove("native_inputs");
+            TemporaryFileSystem.File.WriteAllText(registrationPath, registration.ToJsonString());
         }
     }
 }

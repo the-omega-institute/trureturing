@@ -164,6 +164,10 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                              if json.loads(line)['kind'] == 'extract'), 0)
         self.publish()
     def test_native_clonefile_seed_reuses_rows_and_keeps_donor_private(self):
+        # copy2 preserves the host toolchain file's permissions, while a Git
+        # checkout applies this process's umask. Keep this no-op fixture's
+        # source modes identical; changed modes correctly invalidate inputs.
+        (self.root / 'lean-toolchain').chmod((self.root / 'D5/A.lean').stat().st_mode & 0o777)
         self.build()
         donor = self.root
         expected = self.report()[1:]
