@@ -8,6 +8,8 @@ The generalized degree polynomial of Crew records, for every subset S of the ver
 
 The two graphs below are trees on the vertices 0 through 7 with one loop each. Both have degree multiset 1, 1, 1, 1, 2, 2, 3, 5. Running the deletion-contraction recursion of the ordinary Loopy polynomial to its 128 leaves gives one and the same polynomial of 25 monomials. The exponent triples separate them: among the subsets of size two that span two inside edges and two crossing edges there is exactly one for the first graph and exactly two for the second.
 
+Eight vertices is the smallest order at which this occurs among trees carrying a single loop. That is a reading from an enumeration outside Lean, not part of the theorem below, which quantifies over no other graph: orders three through seven were exhausted, with 2, 4, 9, 20 and 48 classes of ordinary Loopy polynomial and no separating pair. Graphs with several loops, with multiple edges, or with cycles among the non-loop edges were not enumerated.
+
 **Definition 1.1 (Edges inside a subset).**
 
 Lean statement: `D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.inside`
@@ -106,7 +108,7 @@ Lean statement: `D5/S3/Factorization/Combinatorics/LoopyGeneralizedDegree.result
 
 *Commentary.*
 
-Both encodings retain every endpoint and store no loops away from the vertex set. The deletion-contraction recursion, run to its leaves on each graph, yields the same polynomial, so the hypothesis of the claim is met. The exponent-triple multisets differ, which contradicts its conclusion. Eight vertices is the smallest order at which this happens among trees carrying a single loop: at orders three through seven every pair with a common ordinary Loopy polynomial also has a common exponent-triple multiset.
+Both encodings retain every endpoint and store no loops away from the vertex set. The deletion-contraction recursion, run to its leaves on each graph, yields the same polynomial, so the hypothesis of the claim is met. The exponent-triple multisets differ, which contradicts its conclusion. The statement quantifies over no other graph, and in particular asserts nothing about smaller orders.
 
 ## References
 

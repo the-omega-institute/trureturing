@@ -16,10 +16,12 @@ Problem 11.3 of `kirillov2026loopy` asks exactly:
 
 > Does L_G determine the generalized degree polynomial GD_G?
 
-Its next two sentences fix the domain. Theorem 4.3 of the same source reads
-"The loopy polynomial determines the degree sequence of every loopless graph",
-and Corollary 6.7 obtains GD_G from the refined polynomial. What the problem
-leaves open is therefore the ordinary polynomial on graphs carrying loops.
+The source's conventions admit every finite undirected multigraph, loops and
+parallel edges included, and Problem 11.3 adds no restriction; the sentences
+that follow it introduce the companion Problem 11.4 about degree sequences,
+which Theorem 4.3 settles in the loopless case and Theorem 6.15 settles through
+the refined polynomial. The pair delivered here carries loops and therefore
+lies inside the problem's own domain.
 
 In repository coordinates the target quantifies independently over finite
 vertex sets `V W`, edge-occurrence lists `E F` and accumulated-loop functions

@@ -26,6 +26,14 @@ internal sealed class LoopyGeneralizedDegreeDocument : IScribeDocumentDefinition
                     + "triples separate them: among the subsets of size two that span two inside "
                     + "edges and two crossing edges there is exactly one for the first graph and "
                     + "exactly two for the second.")),
+            Paragraph(Text(
+                "Eight vertices is the smallest order at which this occurs among trees carrying a "
+                    + "single loop. That is a reading from an enumeration outside Lean, not part of "
+                    + "the theorem below, which quantifies over no other graph: orders three "
+                    + "through seven were exhausted, with 2, 4, 9, 20 and 48 classes of ordinary "
+                    + "Loopy polynomial and no separating pair. Graphs with several loops, with "
+                    + "multiple edges, or with cycles among the non-loop edges were not "
+                    + "enumerated.")),
             Def("inside", "Edges inside a subset", "inside",
                 "inside E ell S counts the edge occurrences with both endpoints in S and adds the "
                     + "accumulated loops carried by the members of S."),
@@ -59,11 +67,9 @@ internal sealed class LoopyGeneralizedDegreeDocument : IScribeDocumentDefinition
                     "Both encodings retain every endpoint and store no loops away from the vertex "
                         + "set. The deletion-contraction recursion, run to its leaves on each graph, "
                         + "yields the same polynomial, so the hypothesis of the claim is met. The "
-                        + "exponent-triple multisets differ, which contradicts its conclusion. "
-                        + "Eight vertices is the smallest order at which this happens among trees "
-                        + "carrying a single loop: at orders three through seven every pair with a "
-                        + "common ordinary Loopy polynomial also has a common exponent-triple "
-                        + "multiset."))),
+                        + "exponent-triple multisets differ, which contradicts its conclusion. The "
+                        + "statement quantifies over no other graph, and in particular asserts "
+                        + "nothing about smaller orders."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("loopy-generalized-degree-polynomial"),
