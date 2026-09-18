@@ -1,0 +1,20 @@
+边变量总维数是 $2MN$，plaquette 秩为 $MN-1$，故 flat 空间维数 $MN+1$。为证明 holonomy 满射，给定 $h,v\in\mathbb F_2$，定义 seam 标签
+$$
+s_{i,j}=
+\begin{cases}
+h,&j=N-1,\\
+0,&\text{否则},
+\end{cases}
+\qquad
+u_{i,j}=
+\begin{cases}
+v,&i=M-1,\\
+0,&\text{否则}.
+\end{cases}
+$$
+每个 plaquette 若遇到水平 seam 就同时含两条值为 $h$ 的水平边，若遇到竖直 seam 就同时含两条值为 $v$ 的竖直边；在两条 seam 的交会处两种成对消去同时发生，因此总和仍为零，而其 holonomy 恰为 $(h,v)$。所以四个扇区均非空，且它们是零 holonomy 子空间的四个仿射陪集。零 holonomy 子空间恰为 $\operatorname{im}\delta$，周期图连通且有 $MN$ 个顶点，故其维数为 $MN-1$，每个扇区大小均为 $2^{MN-1}$。flat 总数因此为
+$$
+4\cdot2^{MN-1}=2^{MN+1}.
+$$
+相除即得第 4、5 项中的各比例。证毕。
+
