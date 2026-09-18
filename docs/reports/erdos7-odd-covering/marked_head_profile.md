@@ -672,3 +672,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The expanded seven head improves the complete survival denominator](profile-notes/203-the-expanded-seven-head-improves-the-complete-survival-denominator.md)
 - [A second seven depth strengthens both complete heavy costs](profile-notes/204-a-second-seven-depth-strengthens-both-complete-heavy-costs.md)
 - [Eleven independent original costs use the expanded seven interface](profile-notes/205-eleven-independent-original-costs-use-the-expanded-seven-interface.md)
+- [The second seven depth improves the first complete AP11 block](profile-notes/206-the-second-seven-depth-improves-the-first-complete-ap11-block.md)
