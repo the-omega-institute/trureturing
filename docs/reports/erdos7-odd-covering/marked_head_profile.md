@@ -604,3 +604,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Unchanged source budgets can move the best five slot](profile-notes/133-unchanged-source-budgets-can-move-the-best-five-slot.md)
 - [One complete cost is uniform on a nonzero K neighborhood](profile-notes/134-one-complete-cost-is-uniform-on-a-nonzero-k-neighborhood.md)
 - [An actual overlap forces nonlinear complete-tail prices](profile-notes/135-an-actual-overlap-forces-nonlinear-complete-tail-prices.md)
+- [A whole J source neighborhood has a complete labelwise bound](profile-notes/136-a-whole-j-source-neighborhood-has-a-complete-labelwise-bound.md)
+- [Eleven original costs share one uniform K neighborhood](profile-notes/137-eleven-original-costs-share-one-uniform-k-neighborhood.md)
+- [The complete factorial tail is uniform on a source neighborhood](profile-notes/138-the-complete-factorial-tail-is-uniform-on-a-source-neighborhood.md)

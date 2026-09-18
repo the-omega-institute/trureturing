@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "316e3e866bba85f12a6aaf73d8a4a631c9595d69e03b8b84b8b658be830c4561",
+  "parts_directory": "uniform_mean_cost_portfolio.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "9af7ff55acd1f1b372f1c5794754a0cb1a8f8ed26aeee55255896786d3be0737",
+    "kind": "object"
+  }
+}
