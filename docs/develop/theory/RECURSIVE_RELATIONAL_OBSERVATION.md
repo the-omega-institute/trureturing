@@ -40486,3 +40486,127 @@ $$
 则 $K_\epsilon(u,v)=(1-\epsilon)/2>0$，但 $v$ 的后 $L-1$ 位不等于 $u$ 的前 $L-1$ 位，所以 $K_\epsilon(v,u)=0$。因此本证明使用的是式 (99.5c) 给出的输出共同正支撑，没有调用第 93.3 条的隐藏路径有限 KL 公式。式 (99.5a) 是该明确例族的有限词公式，不依赖一般隐藏 Markov 相对熵率定理。证毕。
 
 ## 99.99 追加锚
+
+## 100. 阶乘有理列的逐处收敛与阿代尔边界
+
+**定义 100.1（同一有理列与两种拓扑）。** 对整数 $n\ge2$，置
+$$
+M_n=n!,\qquad D_n=1+M_n^2,
+\qquad e_n=\frac{M_n}{D_n}\in\mathbb Q,
+\qquad B_n=\{\ell\text{ 为素数}:\ell\mid D_n\}.
+$$
+所有实数与 $p$-进读数均取自规范嵌入
+$$
+\iota_\infty:\mathbb Q\hookrightarrow\mathbb R,
+\qquad
+\iota_p:\mathbb Q\hookrightarrow\mathbb Q_p,
+$$
+并使用 $v_p(p)=1$、$|p|_p=p^{-1}$ 的归一化。记
+$$
+T=\mathbb R\times\prod_{p\ {\rm prime}}\mathbb Q_p
+$$
+带通常乘积拓扑，记标准有理阿代尔环
+$$
+\mathbb A_{\mathbb Q}
+=\mathbb R\times\prod_{p\ {\rm prime}}'(\mathbb Q_p,\mathbb Z_p),
+\qquad
+\mathbb Z_p=\{x\in\mathbb Q_p:|x|_p\le1\}.
+$$
+这里受限直积的元素在除有限多个素位以外均属于 $\mathbb Z_p$；其零点邻域基为
+$$
+U_\infty\times\prod_{p\in S}U_p
+\times\prod_{p\notin S}\mathbb Z_p,
+\tag{100.1}
+$$
+其中 $S$ 是有限素数集，$U_\infty$ 与各 $U_p$ 是相应局部域的开零邻域。另以 $\mathbb A_{\rm prod}$ 表示同一阿代尔底集从 $T$ 取得的子空间拓扑。令
+$$
+\Delta:\mathbb Q\longrightarrow\mathbb A_{\mathbb Q},
+\qquad
+\Delta(x)=(\iota_\infty(x),(\iota_p(x))_p),
+$$
+为有理对角映射，令 $j:\mathbb A_{\mathbb Q}\hookrightarrow T$ 为自然包含。每个有理数的分母仅有有限多个素因子，故 $\Delta$ 确实取值于阿代尔底集。上述乘积与受限直积拓扑采用其标准定义。[^rro100-topology]
+
+[^rro100-topology]: Andrew V. Sutherland，[MIT 18.785, Fall 2021, Lecture 25: The ring of adeles, strong approximation](https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/mit18_785f21_lec25.pdf)，§25.1 与 Definition 25.1，PDF 第 1–2 页，给出乘积及受限直积拓扑、连续坐标投影，并区分受限直积拓扑与诱导子空间拓扑；Definition 25.7 与 Example 25.8，PDF 第 4–5 页，给出这里使用的有理阿代尔表示。
+
+**命题 100.2（逐处趋零而无阿代尔极限）。** 定义 100.1 的同一有理列满足
+$$
+\iota_\infty(e_n)\longrightarrow0,
+\qquad
+\forall p\text{ 为素数},\quad\iota_p(e_n)\longrightarrow0.
+\tag{100.2a}
+$$
+因此 $j(\Delta(e_n))\to0$ 于 $T$，且 $\Delta(e_n)\to0$ 于 $\mathbb A_{\rm prod}$。
+
+对每个 $n\ge2$，$B_n$ 是非空有限集合，并且恰为 $\Delta(e_n)$ 的非整有限坐标集，满足
+$$
+\varnothing\ne B_n\subseteq\{\ell\text{ 为素数}:\ell>n\}.
+\tag{100.2b}
+$$
+特别地，对每个有限素数集 $S$，
+$$
+n\ge N_S:=\max(\{2\}\cup S)
+\quad\Longrightarrow\quad
+B_n\cap S=\varnothing,
+\tag{100.2c}
+$$
+且不存在一个固定有限 $S$ 包含该列某条尾部的全部非整坐标。
+
+序列 $\Delta(e_n)$ 在标准阿代尔拓扑中没有任何极限。自然包含 $j$ 连续且单射，却不是到其像的拓扑嵌入；同一阿代尔底集上的受限直积拓扑严格细于从 $T$ 诱导的拓扑。
+
+**证明。** 先确定每项的非整坐标。因为
+$$
+\gcd(M_n,D_n)=\gcd(M_n,1+M_n^2)=1,
+\qquad D_n>1,
+$$
+所以分母无约消，$B_n$ 有限且非空。若 $\ell\mid D_n$ 且 $\ell\le n$，则 $\ell\mid n!$，从而 $D_n\equiv1\pmod\ell$，矛盾。因此每个 $\ell\in B_n$ 均大于 $n$，且
+$$
+v_\ell(e_n)=-v_\ell(D_n)<0.
+$$
+在 $p\notin B_n$ 时，分母赋值为零，分子赋值非负，所以 $\iota_p(e_n)\in\mathbb Z_p$。这证明 $B_n$ 恰为非整坐标集，也再次证明每个 $\Delta(e_n)$ 都是阿代尔。式 (100.2b) 立即给出式 (100.2c)，包括 $S=\varnothing$。若某个有限 $S$ 包含从 $N$ 开始的全部 $B_n$，取 $n\ge\max(N,N_S)$，就会同时有 $B_n\subseteq S$、$B_n\cap S=\varnothing$ 与 $B_n\ne\varnothing$，矛盾。
+
+实位置满足
+$$
+0<\iota_\infty(e_n)
+=\frac{n!}{1+(n!)^2}
+<\frac1{n!}\le\frac1n\longrightarrow0.
+$$
+现在固定一个素数 $p$。当 $n\ge p$ 时，$p\mid n!$ 且 $D_n\equiv1\pmod p$，于是
+$$
+v_p(e_n)=v_p(n!)
+\ge\left\lfloor\frac np\right\rfloor.
+$$
+最后的不等式只需数出 $1,\ldots,n$ 中的 $p$ 的倍数；这些因子各贡献至少一次 $p$。所以在这一阈值以后，
+$$
+|\iota_p(e_n)|_p
+\le p^{-\lfloor n/p\rfloor}\longrightarrow0.
+$$
+这证明式 (100.2a)，其中收敛阈值依赖所固定的 $p$ 与所要求的精度。
+
+$T$ 的每个零点乘积基本邻域只限制有限多个坐标。对这些坐标分别取式 (100.2a) 给出的阈值，再取有限最大值，所有更晚的项就同时满足该邻域的条件。因此 $j(\Delta(e_n))\to0$ 于 $T$。这些项与零点均属于阿代尔底集；把上述邻域与该底集相交，即得到 $\mathbb A_{\rm prod}$ 中的收敛。
+
+另一方面，式 (100.1) 使
+$$
+U=(-1,1)\times\prod_{p\ {\rm prime}}\mathbb Z_p
+$$
+成为标准阿代尔拓扑中的一个固定开零邻域。每个 $B_n$ 都非空，因此每个 $\Delta(e_n)$ 至少有一个坐标不整，故
+$$
+\Delta(e_n)\notin U\qquad(n\ge2).
+\tag{100.2d}
+$$
+这排除了阿代尔零极限。若该列在阿代尔拓扑中趋于某个 $a$，连续坐标投影会使其在每个局部域中趋于 $a$ 的相应坐标。由式 (100.2a) 及这些 Hausdorff 局部域中极限的唯一性，每个坐标都必须为零，即 $a=0$，与式 (100.2d) 矛盾。所以该列没有任何阿代尔极限。
+
+受限直积的各坐标投影连续，因而乘积拓扑的定义使 $j$ 连续；其作为自然包含也为单射。若 $j$ 是拓扑嵌入，则从 $j(\mathbb A_{\mathbb Q})$ 的诱导拓扑到 $\mathbb A_{\mathbb Q}$ 的逆映射连续。它会把已证明的收敛 $j(\Delta(e_n))\to0$ 送成阿代尔收敛 $\Delta(e_n)\to0$，矛盾。因此 $j$ 不是拓扑嵌入。连续性说明受限直积拓扑包含诱导拓扑，非嵌入性说明这两个拓扑不相等，故包含严格。
+
+这里的量词差别可在同一列上直接读出：
+$$
+\forall p\ \exists N_p\ \forall n\ge N_p,
+\quad \iota_p(e_n)\in\mathbb Z_p,
+$$
+但
+$$
+\nexists N\ \forall n\ge N\ \forall p,
+\quad \iota_p(e_n)\in\mathbb Z_p.
+$$
+后一种同时整性是进入所选固定邻域 $U$ 的必要条件；它本身不是阿代尔收敛的充分条件。各项分别只有有限多个非整位置，与一条尾部共享一个有限异常位置集合也不同。式 (100.2c) 说明这些位置最终逃出每个固定有限集，并不声称不同 $B_n$ 两两不交。证毕。
+
+## 100.99 追加锚
