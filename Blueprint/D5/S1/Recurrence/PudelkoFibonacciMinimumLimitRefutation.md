@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/PudelkoFibonacciMinimumLimitRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pudelko-fibonacci-minimum-limit-refutation` (refuted) by `D5/S1/Recurrence/PudelkoFibonacciMinimumLimitRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pudelko-fibonacci-minimum-limit-refutation","declaration_gid":"D5/S1/Recurrence/PudelkoFibonacciMinimumLimitRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marc T. Pudelko (2025). *Modular Periodicity of Random Initialized Recurrences*. URL: <https://arxiv.org/abs/2510.24882v5>.
