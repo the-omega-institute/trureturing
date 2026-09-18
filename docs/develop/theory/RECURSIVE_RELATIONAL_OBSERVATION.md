@@ -35387,7 +35387,7 @@ $$
 \le\|A_L\|_1+\|B_L\|_1
 =2\tau_L=\frac2{L+1}.
 $$
-这些 Schatten 范数事实沿用定理 78.2 所引 Gerald Teschl，*Mathematical Methods in Quantum Mechanics: With Applications to Schrödinger Operators*，[2009-02-12 版本](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)，§6.3，Lemmas 6.12–6.16，印刷第 141–144 页。
+这些 Schatten 范数事实沿用定理 78.2 所引 Gerald Teschl，*Mathematical Methods in Quantum Mechanics: With Applications to Schrödinger Operators*，[2009-02-12 版本](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)，§6.3，results 6.12–6.16，印刷第 141–144 页。
 
 第 $k\le L$ 块的 $2^k$ 个等质量单点对熵的总贡献是
 $$
