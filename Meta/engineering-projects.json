@@ -639,6 +639,46 @@
       ]
     },
     {
+      "path": "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj",
+      "assembly": "StrataLint.Repository.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Repository.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Repository.Tests",
+      "root_namespace": "StrataLint.Repository.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Repository.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Repository.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "**/*.cs",
+        "tools/**/*.csproj",
+        "D5/**",
+        "skills/codex-formal-answer/SKILL.md"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
+    },
+    {
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
       "assembly": "StrataLint.Scribe.Documents.Tests",
       "role": "owned-test",

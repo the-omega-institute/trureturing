@@ -8,3 +8,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.Cache.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Engine.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Lean.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Repository.Tests")]

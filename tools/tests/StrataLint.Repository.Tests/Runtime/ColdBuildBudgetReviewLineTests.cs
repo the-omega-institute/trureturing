@@ -1,4 +1,4 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Repository.Tests;
 
 /// <summary>
 /// #2535 的 `policy-override` 声明自己「**非永久**」。本类是那句声明的观察者。
@@ -59,7 +59,7 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void ColdBuildBudgetReviewLineHasNotBeenCrossed()
     {
-        var d5Files = GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), "D5");
+        var d5Files = GitIndexRepositoryFiles.EnumerateDeclared(TestRepositoryLayout.FindRoot(), "D5");
         var leanFiles = d5Files
             .Where(static file => file.RelativePath.EndsWith(".lean", StringComparison.Ordinal))
             .ToArray();
@@ -146,7 +146,7 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void EnumerateDeclaredReturnsEveryTrackedFileUnderThePrefix()
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
 
         var independent = GitIndexRepositoryFiles.Enumerate(root)
             .Where(static file => file.RelativePath.StartsWith("D5/", StringComparison.Ordinal))

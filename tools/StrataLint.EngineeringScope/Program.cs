@@ -58,10 +58,8 @@ internal static class Program
                 arguments = arguments.Take(2).ToArray();
             }
             var repository = RepositoryOption(arguments);
-            var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
-            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
-            var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
-            return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
+            var prepared = PrepareTests(repository, null, buildRound);
+            return ExecuteTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results), output, prepared);
         }
         catch (Exception exception)
         {
@@ -111,13 +109,27 @@ internal static class Program
         return [selected.Assembly];
     }
 
-    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
+    private sealed record PreparedTests(CommonStageRecord Build, IReadOnlyDictionary<string, RegisteredTestInput> Inputs,
+        IReadOnlyDictionary<string, string> Assemblies);
+
+    private static PreparedTests PrepareTests(string root, CommonStageRecord? build, string? round)
     {
-        var candidate = CommonExecutionEvidence.Candidate(root);
-        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
-        build ??= CommonExecutionEvidence.ValidateBuild(root);
-        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
-        _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
+        var validation = CommonExecutionEvidence.ValidationScope.Create(root);
+        if (build is null) build = CommonExecutionEvidence.ValidateBuild(root, validation, round);
+        else CommonExecutionEvidence.ValidateStartedBuild(root, build,
+            CommonExecutionEvidence.Candidate(root, validation.Snapshot), validation);
+        var inputs = CommonExecutionEvidence.TestInputs(root, validation.Snapshot, build);
+        return new(build, inputs, CommonExecutionEvidence.ValidateTestBuild(root, build, inputs));
+    }
+
+    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null) =>
+        ExecuteTests(root, run, output, PrepareTests(root, build, null));
+
+    private static int ExecuteTests(string root, Func<string, string, int> run, TextWriter output, PreparedTests prepared)
+    {
+        var build = prepared.Build;
+        var candidate = build.Candidate;
+        var inputs = prepared.Inputs;
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);
         var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();

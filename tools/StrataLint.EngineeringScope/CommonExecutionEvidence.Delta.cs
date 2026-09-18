@@ -18,9 +18,10 @@ internal static partial class CommonExecutionEvidence
         RequireSelection(build);
         RequireSelection(Read<CommonStageRecord>(root, CurrentPath));
         TestProjectExecution[] accepted = [];
-        if (plan.ResourceRequired("engineering"))
+        if (plan.StageRequired("engineering"))
         {
-            _ = ValidateEngineering(root, build, validation, out var tests, out _, baseProjects);
+            _ = ValidateEngineering(root, build, validation, out var tests, out _,
+                plan.ResourceRequired("engineering") ? baseProjects : null);
             accepted = tests.Projects;
         }
         return (ValidateCurrent(root, build, validation, out _), accepted);

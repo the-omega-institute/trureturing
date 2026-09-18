@@ -480,7 +480,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         }
         internal void Report() => CiTransportTests.Report(fixture.Root);
         internal void Write(string path, string text) => fixture.Write(path, text);
-        private void Executable(string path, string text)
+        internal void Executable(string path, string text)
         {
             Write(path, "#!/bin/bash\nset -euo pipefail\n" + text);
             if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(Path.Combine(Root, path), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);

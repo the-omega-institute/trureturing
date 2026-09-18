@@ -1,9 +1,7 @@
-using System.Text;
+using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using System.Text.RegularExpressions;
-using Markdig;
 using Markdig.Extensions.Tables;
 using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -15,10 +13,6 @@ public sealed partial class CodexFormalAnswerSkillTests
     private const string RepositoryConceptSearchHeading = "2. Search and model";
     private const string InferentialCompletionHeading = "4. Implement the inferential completion";
     private const string ProjectPersistenceHeading = "6. Persist project source and account for the worktree";
-
-    private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
-        .UsePipeTables()
-        .Build();
 
     private static readonly Regex FirstMatchPattern = new(
         @"\bfirst(?:\s+|-)match(?:ing)?\b",
@@ -547,123 +541,6 @@ public sealed partial class CodexFormalAnswerSkillTests
             " ",
             item.SelectMany(SelfAndDescendants).OfType<LeafBlock>().Select(PlainText)));
 
-    private static IReadOnlyList<Block> FindSection(
-        MarkdownDocument document,
-        string headingText)
-    {
-        var headings = document
-            .OfType<HeadingBlock>()
-            .Where(heading => PlainText(heading).Equals(headingText, StringComparison.Ordinal))
-            .ToArray();
-
-        return headings.Length == 1 ? SectionBlocks(document, headings[0]) : [];
-    }
-
-    private static IReadOnlyList<Block> SectionBlocks(
-        MarkdownDocument document,
-        HeadingBlock heading)
-    {
-        var section = new List<Block>();
-        var inside = false;
-
-        foreach (var block in document)
-        {
-            if (ReferenceEquals(block, heading))
-            {
-                inside = true;
-                continue;
-            }
-
-            if (!inside)
-            {
-                continue;
-            }
-
-            if (block is HeadingBlock nextHeading && nextHeading.Level <= heading.Level)
-            {
-                break;
-            }
-
-            section.Add(block);
-        }
-
-        return section;
-    }
-
-    private static IEnumerable<Block> SelfAndDescendants(Block block)
-    {
-        yield return block;
-
-        if (block is not ContainerBlock container)
-        {
-            yield break;
-        }
-
-        foreach (var child in container)
-        {
-            foreach (var descendant in SelfAndDescendants(child))
-            {
-                yield return descendant;
-            }
-        }
-    }
-
-    private static IEnumerable<string> InlineCodeValuesFromBlock(Block block)
-    {
-        foreach (var leaf in SelfAndDescendants(block).OfType<LeafBlock>())
-        {
-            foreach (var value in InlineCodeValuesFromInline(leaf.Inline?.FirstChild))
-            {
-                yield return value;
-            }
-        }
-    }
-
-    private static IEnumerable<string> InlineCodeValuesFromInline(Inline? inline)
-    {
-        for (var current = inline; current is not null; current = current.NextSibling)
-        {
-            if (current is CodeInline code)
-            {
-                yield return code.Content;
-            }
-
-            if (current is ContainerInline container)
-            {
-                foreach (var value in InlineCodeValuesFromInline(container.FirstChild))
-                {
-                    yield return value;
-                }
-            }
-        }
-    }
-
-    private static string PlainText(LeafBlock block)
-    {
-        var text = new StringBuilder();
-        AppendInlineText(block.Inline?.FirstChild, text);
-        return text.ToString();
-    }
-
-    private static void AppendInlineText(Inline? inline, StringBuilder text)
-    {
-        for (var current = inline; current is not null; current = current.NextSibling)
-        {
-            switch (current)
-            {
-                case LiteralInline literal:
-                    text.Append(literal.Content);
-                    break;
-                case CodeInline code:
-                    text.Append(code.Content);
-                    break;
-                case ContainerInline container:
-                    AppendInlineText(container.FirstChild, text);
-                    break;
-            }
-        }
-    }
-
     private static bool IsAcceptanceOrDecisionHeading(HeadingBlock heading)
     {
         var text = PlainText(heading);
@@ -674,5 +551,4 @@ public sealed partial class CodexFormalAnswerSkillTests
         text.Equals(word, StringComparison.OrdinalIgnoreCase)
         || text.StartsWith(word + " ", StringComparison.OrdinalIgnoreCase);
 
-    private static MarkdownDocument Parse(string markdown) => Markdown.Parse(markdown, Pipeline);
 }

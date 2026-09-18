@@ -72,6 +72,14 @@
       "steps": []
     },
     {
+      "id": "delta-content",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "delta-data",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -98,6 +106,7 @@
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
@@ -141,6 +150,15 @@
       "steps": [
         "lean-report"
       ]
+    },
+    {
+      "id": "repository",
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
     },
     {
       "id": "scribe",

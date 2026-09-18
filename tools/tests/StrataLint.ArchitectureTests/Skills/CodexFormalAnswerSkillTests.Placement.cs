@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using System.Text.RegularExpressions;
 using Markdig.Syntax;
 
