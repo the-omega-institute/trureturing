@@ -1,0 +1,6 @@
+Define the set of actual self-maps
+$$
+\mathcal I=\{T^n:n\in\mathbb N\},\qquad
+\mathscr E=\overline{\mathcal I}^{\,K^K},
+$$
+where $K^K$ has the product topology. 

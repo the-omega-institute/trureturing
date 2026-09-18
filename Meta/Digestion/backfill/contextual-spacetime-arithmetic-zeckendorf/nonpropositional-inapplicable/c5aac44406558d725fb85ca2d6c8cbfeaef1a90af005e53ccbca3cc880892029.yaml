@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5aac44406558d725fb85ca2d6c8cbfeaef1a90af005e53ccbca3cc880892029
+  normalized_sha256: sha256:c5aac44406558d725fb85ca2d6c8cbfeaef1a90af005e53ccbca3cc880892029
+cas_ref: sha256:c5aac44406558d725fb85ca2d6c8cbfeaef1a90af005e53ccbca3cc880892029
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义同号重叠函数、积分、累计量及归一化因子，空求和的范围是定义约定，没有待证明命题。
+    previous_atom_id: 773d3b00a85816e8532ef4788cff76d52f953e12479de84310663abd64a2c2d9
+    next_atom_id: 218e77cd60301599fa3657e869ffde224aa2c002885ffd7c6bc7661b2589bf76

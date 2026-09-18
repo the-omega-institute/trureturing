@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:882e0484df5b6408c8e68a8eace23d7c3a8b65666b6e8b4b015234e5c657ebe3
+  normalized_sha256: sha256:882e0484df5b6408c8e68a8eace23d7c3a8b65666b6e8b4b015234e5c657ebe3
+cas_ref: sha256:882e0484df5b6408c8e68a8eace23d7c3a8b65666b6e8b4b015234e5c657ebe3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅限定前述逆符号的使用域，不断言该逆在更大的域存在，因此属于定义域用语提示。
+    previous_atom_id: cee99e171617836e2c168b267e2d31c05d58d1ff46e23dfa8645e9f683ee5ff5
+    next_atom_id: 5035e621b6aefa6ac394e7e3cd59ba2e2bb8aca9b1e7fadd809c48b0022ef327

@@ -1,0 +1,24 @@
+**Proof.** First, $\ell^1(\mathbb N)^*=\ell^\infty(\mathbb N)$: a bounded functional is determined by its values on the vectors $\delta_n$, these values form a bounded sequence, and absolute convergence represents its action on any $\ell^1$ element. Conversely every bounded sequence defines such a functional with the same norm. Together with Theorem 32.7 this identifies $ba(\mathbb N)$ with the bidual of $\ell^1(\mathbb N)$.
+
+For the first order, the inner function satisfies
+$$
+\sup_m|q(n\mapsto f(m+n))|\le\|q\|\|f\|_\infty.
+$$
+Applying $p$ proves boundedness and the norm estimate; linearity at each stage proves bilinearity. The proof for the other order is identical. Dirac factors show the bilinear norms are exactly one. If $p,q$ are positive and $f\ge0$, both inner and outer evaluations are nonnegative, proving positivity. The constant-one calculation proves multiplicativity of mass, and substitution of $\delta_0$ proves both unit identities. Renaming the two variables and using $m+n=n+m$ proves the opposite-product identity $p\mathbin{\lozenge}q=q\mathbin{\square}p$.
+
+For associativity of the first order, evaluating $((p\mathbin{\square}q)\mathbin{\square}r)$ at $f$ gives
+$$
+p\bigl(i\mapsto q(j\mapsto r(k\mapsto f((i+j)+k)))\bigr).
+$$
+Evaluating $p\mathbin{\square}(q\mathbin{\square}r)$ gives the same expression with $f(i+(j+k))$. These functions are equal by associativity of natural addition. All functions on which a functional is applied are bounded, and no evaluation orders have been exchanged. This proves associativity. The second order is the opposite of an associative product, so it is associative as well.
+
+For $u\in\ell^1(\mathbb N)$ the series
+$$
+\sum_m u_m(n\mapsto f(m+n))
+$$
+converges uniformly in $n$, since its uniform tail is bounded by $\|f\|_\infty$ times the corresponding $\ell^1$ tail of $u$. A bounded functional may therefore pass through this series. This proves agreement of the two orders when the first factor is $u$; the opposite-product identity gives agreement when the second factor is in $\ell^1$. When both are in $\ell^1$, the absolutely convergent double series is the usual convolution pairing. Absolute summation also gives $\|u*v\|_1\le\|u\|_1\|v\|_1$.
+
+For a fixed $q$ and a fixed test $f$, the outer function $m\mapsto q(n\mapsto f(m+n))$ is a single member of $\ell^\infty$. This proves weak-star continuity in $p$ of the first order. The second continuity assertion is proved from its displayed formula in the same way. These are the exact continuity sides and base-factor agreement in Hennefeld, Lemmas 1.4–1.5.[^rro32-arens]
+
+For fixed finite $u_i$, agreement of the orders and their stated continuity give $u_i*v_j\to u_i\mathbin{\square}q$ as $j$ varies. Then first-variable continuity gives $u_i\mathbin{\square}q\to p\mathbin{\square}q$. For the reverse iteration, first let $i$ vary with finite $v_j$ fixed, obtaining $p\mathbin{\lozenge}v_j$, and then let $j$ vary using second-variable continuity. This proves both iterated formulas, the special case here of Hennefeld, Lemma 2.2.[^rro32-arens] QED.
+

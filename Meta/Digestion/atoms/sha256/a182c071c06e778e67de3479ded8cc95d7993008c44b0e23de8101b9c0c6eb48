@@ -1,0 +1,12 @@
+**Theorem.** Let ell>=7 be prime. Every prime divisor p of F_ell satisfies
+
+$$
+\rho(p)=\ell,\quad p\equiv1\pmod4,\quad
+\begin{cases}
+p\ge4\ell+1,&(5/p)=1,\\
+p\ge2\ell-1,&(5/p)=-1.
+\end{cases}\tag{LFO3}
+$$
+
+These are classical rank and golden-norm consequences.
+

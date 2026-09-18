@@ -1,0 +1,6 @@
+这是$\mathcal E$上的完全正保迹通道：对$\mathcal E$的任一正交基$(a_j)_{j=1}^{n+1}$，取
+$$
+K_*=\sqrt{\eta(\tau)}I_{\mathcal E},\qquad
+K_j=\sqrt{1-\eta(\tau)}|\bot\rangle\langle a_j|.
+$$
+它们满足$K_*^\dagger K_*+\sum_jK_j^\dagger K_j=I_{\mathcal E}$，其Kraus和恰为$\mathcal N_\tau$。替换映射$X\mapsto\operatorname{tr}(X)Q_\bot$幂等，故$\mathcal N_{\tau+\sigma}=\mathcal N_\tau\circ\mathcal N_\sigma$。

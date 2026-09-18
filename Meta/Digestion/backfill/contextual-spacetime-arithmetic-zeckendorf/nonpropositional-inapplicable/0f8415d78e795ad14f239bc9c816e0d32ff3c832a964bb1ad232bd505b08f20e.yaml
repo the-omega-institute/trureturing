@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f8415d78e795ad14f239bc9c816e0d32ff3c832a964bb1ad232bd505b08f20e
+  normalized_sha256: sha256:0f8415d78e795ad14f239bc9c816e0d32ff3c832a964bb1ad232bd505b08f20e
+cas_ref: sha256:0f8415d78e795ad14f239bc9c816e0d32ff3c832a964bb1ad232bd505b08f20e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在原五槽费用严格为正的域内，三个显示分式与原费用的比较都由正分母消除及线性归约闭合；仓内无冻结 GID。
+    previous_atom_id: f2cfd42d43334d0873d4725dcab6d606a21203f6706f309eb79ab87bab130a31
+    next_atom_id: f410e01c178c2a1f5916793d5976b120db1beefbc57fca74f879cb275016445e

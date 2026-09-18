@@ -1,0 +1,8 @@
+**Definition 37.3 (The phase-selecting operators).** For every $\theta\in\mathbb T$ and $s\in\Sigma$, define the actual function $P_\theta^s:K\to K$ by
+$$
+P_\theta^s(x)=
+\begin{cases}
+k_{H(x)+\theta},&H(x)+\theta\notin E,\\
+x_m^s,&H(x)+\theta=E_m.
+\end{cases}
+$$

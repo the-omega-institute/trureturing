@@ -1,0 +1,710 @@
+[
+  {
+    "low_residue": 107,
+    "low_probability": "13757948/1000000007",
+    "active_mixed_cofactors": [
+      3,
+      5,
+      7,
+      15,
+      21,
+      35
+    ],
+    "alpha": "3/8",
+    "g": "8/5",
+    "h": "8/5",
+    "natural_cap": "128/75",
+    "charge": "0",
+    "old_test_load": 8,
+    "families": {
+      "A": {
+        "bad_high_roots": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "densities": [
+          "0",
+          "0",
+          "0",
+          "8/5",
+          "0",
+          "0",
+          "0",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "3",
+          "square": "24",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "44/5",
+          "square": "416/5",
+          "square_increment": "96/5",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "densities": [
+          "8/5",
+          "0",
+          "0",
+          "0",
+          "8/5",
+          "0",
+          "0",
+          "0",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5",
+          "8/5"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "3",
+          "square": "24",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "44/5",
+          "square": "416/5",
+          "square_increment": "96/5",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "17/2",
+      "square": "76",
+      "square_increment": "12",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "0",
+        "1",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "1/16",
+        "1/16",
+        "1/16",
+        "1/16",
+        "0",
+        "1/16",
+        "1/16",
+        "1/16",
+        "0",
+        "0",
+        "1/16",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  },
+  {
+    "low_residue": 109,
+    "low_probability": "15599667/1000000007",
+    "active_mixed_cofactors": [],
+    "alpha": "0",
+    "g": "1",
+    "h": "0",
+    "natural_cap": "16/15",
+    "charge": "0",
+    "old_test_load": 1,
+    "families": {
+      "A": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "17/16",
+      "square": "19/16",
+      "square_increment": "3/16",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  },
+  {
+    "low_residue": 118,
+    "low_probability": "14691717/1000000007",
+    "active_mixed_cofactors": [],
+    "alpha": "0",
+    "g": "1",
+    "h": "0",
+    "natural_cap": "16/15",
+    "charge": "0",
+    "old_test_load": 1,
+    "families": {
+      "A": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "17/16",
+      "square": "19/16",
+      "square_increment": "3/16",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  },
+  {
+    "low_residue": 124,
+    "low_probability": "12561790/1000000007",
+    "active_mixed_cofactors": [],
+    "alpha": "0",
+    "g": "1",
+    "h": "0",
+    "natural_cap": "16/15",
+    "charge": "0",
+    "old_test_load": 1,
+    "families": {
+      "A": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "17/16",
+      "square": "19/16",
+      "square_increment": "3/16",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  },
+  {
+    "low_residue": 128,
+    "low_probability": "12746123/1000000007",
+    "active_mixed_cofactors": [
+      3,
+      7,
+      9,
+      21
+    ],
+    "alpha": "1/4",
+    "g": "4/3",
+    "h": "4/3",
+    "natural_cap": "64/45",
+    "charge": "0",
+    "old_test_load": 6,
+    "families": {
+      "A": {
+        "bad_high_roots": [
+          1,
+          3,
+          4,
+          6
+        ],
+        "densities": [
+          "0",
+          "4/3",
+          "0",
+          "0",
+          "4/3",
+          "0",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "3/2",
+          "square": "9",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "13/2",
+          "square": "45",
+          "square_increment": "9",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [
+          2,
+          4,
+          5,
+          7
+        ],
+        "densities": [
+          "4/3",
+          "0",
+          "4/3",
+          "0",
+          "0",
+          "4/3",
+          "0",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3",
+          "4/3"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "3/2",
+          "square": "9",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "13/2",
+          "square": "45",
+          "square_increment": "9",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "51/8",
+      "square": "171/4",
+      "square_increment": "27/4",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "1",
+        "0",
+        "1",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1/16",
+        "1/16",
+        "0",
+        "1/16",
+        "1/16",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  },
+  {
+    "low_residue": 136,
+    "low_probability": "14690784/1000000007",
+    "active_mixed_cofactors": [],
+    "alpha": "0",
+    "g": "1",
+    "h": "0",
+    "natural_cap": "16/15",
+    "charge": "0",
+    "old_test_load": 1,
+    "families": {
+      "A": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      },
+      "B": {
+        "bad_high_roots": [],
+        "densities": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "pre_kernel_overlap": {
+          "mean": "0",
+          "square": "0",
+          "square_increment": "0",
+          "pair": "0"
+        },
+        "post_kernel_moments": {
+          "mean": "17/16",
+          "square": "19/16",
+          "square_increment": "3/16",
+          "pair": "0"
+        }
+      }
+    },
+    "pre_kernel_moments": {
+      "mean": "17/16",
+      "square": "19/16",
+      "square_increment": "3/16",
+      "pair": "0",
+      "individual_test_marginals": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "post_kernel_square_difference_A_minus_B": "0"
+  }
+]

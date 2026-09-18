@@ -1,0 +1,41 @@
+**命题 74.5（同一参考下的详细平衡与加权投影）。** 在定义与假设 74.1 下，若
+$$
+q_jP_{jk}=q_kP_{kj}\quad(j,k\in J)
+$$
+且 $P$ 对 $r$ 强可并，则 $ET=TE$，并且粗核满足 $p_iK_{ih}=p_hK_{hi}$。
+
+证明。对详细平衡求和，利用 $P$ 的行和为一，得到 $(Tq)_j=\sum_kq_kP_{kj}=q_j$。因此这是命题 74.4 中的同一平稳参考，并有 $P^{\leftarrow}=P$。下面在质量空间的加权坐标中直接应用自伴投影下降判据。
+
+令
+$$
+D=\operatorname{diag}_{j\in J}(q_j^{-1/2}),\qquad
+D^{-1}=\operatorname{diag}_{j\in J}(\sqrt{q_j}),\qquad
+\widehat E=DED^{-1},\qquad\widehat T=DTD^{-1}.
+$$
+正 $q_j$ 保证两对角矩阵互逆。逐元计算给出
+$$
+\widehat E_{jk}
+=\mathbf1_{r(j)=r(k)}\frac{\sqrt{q_j}\sqrt{q_k}}{p_{r(j)}},
+\qquad
+\widehat T_{jk}=P_{kj}\frac{\sqrt{q_k}}{\sqrt{q_j}}.
+$$
+按定义 72.1，$\widehat E=U_rU_r^*$，而定理 72.2 给出 $U_r^*U_r=I_I$，故 $\widehat E$ 幂等且 Hermitian。这也说明原质量算子 $E$ 在内积 $\langle x,y\rangle_{q^{-1}}=\sum_j\overline{x_j}y_j/q_j$ 下为正交投影。详细平衡使
+$$
+P_{kj}\frac{\sqrt{q_k}}{\sqrt{q_j}}
+=P_{jk}\frac{\sqrt{q_j}}{\sqrt{q_k}},
+$$
+故实矩阵 $\widehat T$ 对称，视为复矩阵时也是 Hermitian。
+
+强可并性由命题 74.3 给出 $ET(I_J-E)=0$，共轭后为 $\widehat E\widehat T(I_J-\widehat E)=0$。在 [LinearProjectionDescentCriterion.linear_projection_descent_criterion](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.lean) 中取有限指标集 $J$、投影矩阵 $\widehat E$、动力学矩阵 $\widehat T$。已证的幂等性及两个 Hermitian 条件履行其前提，定理第二个合取给出 $\widehat E\widehat T-\widehat T\widehat E=0$。用 $D^{-1},D$ 共轭回来即得 $ET=TE$。这个坐标变换使用质量内积中的 $q^{-1}$ 权重；没有将未变换的 $E$ 当成普通 Euclidean 正交投影。
+
+最后，由强可并性及详细平衡，
+$$
+p_iK_{ih}
+=\sum_{r(j)=i}\sum_{r(k)=h}q_jP_{jk}
+=\sum_{r(k)=h}\sum_{r(j)=i}q_kP_{kj}
+=p_hK_{hi}.
+$$
+证毕。
+
+附引：可逆链的强可并粗链仍可逆，见 Wolfer–Watanabe 同文 [Proposition 4.2](https://arxiv.org/html/2203.04575v3#S4.Thmproposition2)，该处引 Kemeny–Snell 的 Theorem 6.4.7；其块平稳流量公式见 [Corollary 3.1](https://arxiv.org/html/2203.04575v3#S3.Thmcorollary1)。这些引文提供强可并性与可逆性构件；本节对指定 $q$ 的状态重采样 $B$、两个方向及 KL 缺陷的连接由上面的有限证明给出。该文以转移矩阵为输入的 Markov embedding 与这里以粗概率为输入的 $B$ 是不同映射。
+

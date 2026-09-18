@@ -1,0 +1,32 @@
+**theorem 42.12 (Exact linear functoriality and image).** A linear map $A:V\to W$ induces
+$$
+S(A):S(V)\to S(W),\qquad
+S(A)(p)(\lambda)=p(\lambda\circ A).
+\tag{42.16}
+$$
+This map is continuous, satisfies
+$$
+S(A)\sigma_V=\sigma_WA,\qquad
+S(BA)=S(B)S(A),\qquad S(\operatorname{id}_V)=\operatorname{id}_{S(V)},
+\tag{42.17}
+$$
+and has
+$$
+U_{S(A)(p)}=A(U_p),\qquad
+\operatorname{rank}S(A)(p)=\dim A(U_p).
+\tag{42.18}
+$$
+For a representing list, scan $Av_1,\ldots,Av_r$ in order and retain an entry exactly when it lies outside the span of previously retained entries. The resulting independent list represents $S(A)(p)$.
+
+For an inclusion $i:U\hookrightarrow W$, the map $S(i)$ is a homeomorphism onto the clopen subspace
+$$
+\{q\in S(W):q(z)=0\text{ for every }z\in U^\circ\}.
+\tag{42.19}
+$$
+Consequently
+$$
+S(A)[S(V)]=S(i)[S(\operatorname{im}A)]
+\tag{42.20}
+$$
+for the natural inclusion $i:\operatorname{im}A\hookrightarrow W$. In particular, surjective linear maps induce surjective maps of signature spaces.
+

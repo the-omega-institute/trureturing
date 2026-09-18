@@ -1,0 +1,1 @@
+指定版本已经有两个直接相关的 Lean 支点。`D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中的 `bounded_inverse_limit_reconstruction` 证明：单调子空间序列的有界、正交投影相容族，与累积闭子空间之间存在规范的线性等距双射；因此在 Hilbert 载体中，“逆极限线程”还必须带有统一有界性。

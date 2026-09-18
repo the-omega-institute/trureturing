@@ -1,0 +1,6 @@
+The Banach weak topology on the measure space is instead
+$$
+\sigma(M(K),M(K)^*),
+$$
+where $M(K)^*$ is the full norm-continuous dual of the total-variation Banach space. The norm topology is the topology of $\|\cdot\|_{\mathrm{TV}}$. These definitions distinguish the measure weak topology from the Banach weak topology.[^rro27-topology]
+

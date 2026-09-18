@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c10bcce238da1f18c571c4c150a19862c338825c9039cb8172afa1b6ccaa2cb
+  normalized_sha256: sha256:0c10bcce238da1f18c571c4c150a19862c338825c9039cb8172afa1b6ccaa2cb
+cas_ref: sha256:0c10bcce238da1f18c571c4c150a19862c338825c9039cb8172afa1b6ccaa2cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.1节的“这些等式没有断言微积分遗漏信息”说明公式的解释范围，并将“真实任务就是离散梯度下降”与物理建模分开；本叶不再加入数值恒等式或恢复定理，也没有在定义中放入物理信号结论。
+    previous_atom_id: d94c033e246e9d789ffa787531cec69f877138f00e48e4d570fe8f91b4b52bfa
+    next_atom_id: 693b13a55bfcd68f01012ebf3461e0fb223aec2119943b88130bbb97bfa0a6ee

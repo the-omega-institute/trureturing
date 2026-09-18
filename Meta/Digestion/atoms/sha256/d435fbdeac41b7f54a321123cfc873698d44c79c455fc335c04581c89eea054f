@@ -1,0 +1,203 @@
+**命题 138.1（未读最终记忆的分支凸顶与固定选基最优值）。** 沿用命题 130.1、137.1 的纯边界生成器，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+H_n=B^{\otimes n},\qquad H_0=\mathbb C,\qquad
+\Xi_0=m_0,\qquad \Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n.
+$$
+两份二维空间均取正交标准基。对每个整数 $g\ge0$，恰好发出 $g+2$ 个输出，次序为 $B_L\otimes H_g\otimes B_R\otimes M$。端点是第一个与最后一个已发出的 qubit，保留完整空间 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$，左端点之前没有被忽略的前缀。最终记忆不可访问，只取偏迹；生成途中无记忆读取、重置或反馈。
+
+对每个内部位置 $1\le k\le g$，事先固定一个局部正交标准基
+$$
+\mathcal B_k=(|\eta_{k,0}\rangle,|\eta_{k,1}\rangle),\qquad
+|\eta_{k,r}\rangle=\eta_{k,r,0}|0\rangle+\eta_{k,r,1}|1\rangle,
+\qquad \langle\eta_{k,r}|\eta_{k,t}\rangle=\delta_{rt}.
+$$
+允许的测量恰为这些内部位置上的局部正交秩一投影，选基不依赖任何结果，保留完整记录 $\mathbf r=(r_1,\ldots,r_g)\in\{0,1\}^g$。以下最大值只在这个固定非自适应选基族中取；不包含 POVM、一般仪器、端点滤波、Bell 转换或记忆操作，初始记忆始终是上述纯 $m_0$。
+
+记 $\operatorname{adj}$ 为共轭转置，$\operatorname{outer}(z)=z\operatorname{adj}(z)$，并按左端点为行、右端点为列定义
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L\otimes|j\rangle_R,
+\qquad J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad E_0=\operatorname{diag}(1,0).
+$$
+对一条记录，令 $|\eta_k\rangle=|\eta_{k,r_k}\rangle$，其分量简记为 $\eta_{k,j}=\eta_{k,r_k,j}$。直接采用命题 137.1 的实际分支公式：
+$$
+D_k=\operatorname{diag}(\overline{\eta_{k,0}},\overline{\eta_{k,1}}),\qquad
+C_{\mathbf r}=s^{g+3}JD_1JD_2\cdots JD_gJ,\qquad C_\varnothing=s^3J,
+$$
+$$
+v_{\mathbf r}=\operatorname{vec}_{LR}(C_{\mathbf r}),\qquad
+w_{\mathbf r}=s\operatorname{vec}_{LR}(C_{\mathbf r}E_0),\qquad
+Q_{\mathbf r}=\operatorname{outer}(v_{\mathbf r})+\operatorname{outer}(w_{\mathbf r}),
+$$
+$$
+q_{\mathbf r}=\operatorname{Tr}Q_{\mathbf r}
+=\|C_{\mathbf r}\|_F^2+\alpha\|C_{\mathbf r}E_0\|_F^2,\qquad
+\det C_{\mathbf r}=(-1)^{g+1}\alpha^{g+3}
+\prod_{k=1}^g\overline{\eta_{k,0}\eta_{k,1}}.
+$$
+这里 $\|C\|_F^2=\operatorname{Tr}(C\operatorname{adj}(C))$，$Q_{\mathbf r}$ 是实际内部复 bra 收缩后对最终记忆取偏迹的未归一化端点算子，$q_{\mathbf r}$ 是该记录的 Born 概率。命题 137.1 给出 $q_{\mathbf r}=0$ 当且仅当 $C_{\mathbf r}=0$；仅在 $q_{\mathbf r}>0$ 时定义 $\theta_{\mathbf r}=Q_{\mathbf r}/q_{\mathbf r}$。特别地，$q_\varnothing=1$；计算基记录 $(1,1)$ 及混合记录 $(|0\rangle,|-\rangle,|0\rangle)$ 的精确零事件均不定义条件密度，其中 $|-\rangle=(|0\rangle-|1\rangle)/\sqrt2$。
+
+对单位向量 $z=\operatorname{vec}_{LR}(Z)$ 定义纯态 concurrence 为 $c(z)=2|\det Z|$。对完整双 qubit 空间上的密度 $\theta$，定义其凸顶 concurrence 为
+$$
+\mathcal C(\theta)=\inf\left\{
+\sum_{\ell=1}^Np_\ell c(\psi_\ell):
+\begin{array}{l}
+N\ge1\text{ 为有限整数},\quad p_\ell\ge0,\quad \sum_{\ell=1}^Np_\ell=1,\\
+\|\psi_\ell\|=1,\quad
+\theta=\sum_{\ell=1}^Np_\ell\operatorname{outer}(\psi_\ell)
+\end{array}\right\}.
+$$
+下确界遍历所有有限复单位纯态系综，不限制于实际记忆列给出的分解；它是密度的数学定义，与对物理测量基的最大化是两个不同的取值域。谱分解保证上述集合非空。术语及纯态 concurrence 的约定见 William K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7) 及式 (19)–(22) 的系综平均讨论；期刊版为 *Physical Review Letters* **80**，2245–2248（1998），[DOI:10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245)。
+
+则 $0\le c(z)\le1$、$0\le\mathcal C(\theta)\le1$，且每条正概率记录满足精确公式
+$$
+\mathcal C(\theta_{\mathbf r})=\frac{2|\det C_{\mathbf r}|}{q_{\mathbf r}}.
+$$
+令
+$$
+B_k=\sum_{r=0}^1|\eta_{k,r,0}\eta_{k,r,1}|,\qquad
+A_g(\mathcal B_1,\ldots,\mathcal B_g)
+=\sum_{\substack{\mathbf r\in\{0,1\}^g\\q_{\mathbf r}>0}}
+q_{\mathbf r}\mathcal C(\theta_{\mathbf r}).
+$$
+则
+$$
+A_g=2\alpha^{g+3}\prod_{k=1}^gB_k,\qquad
+\max_{\mathcal B_1,\ldots,\mathcal B_g}A_g=2\alpha^{g+3}.
+$$
+当 $g\ge1$ 时取到最大值当且仅当每个局部基均平衡，即其两个基向量的两个计算基分量的模均为 $1/\sqrt2$。所有赤道基
+$$
+\left(\frac{|0\rangle+e^{i\varphi_k}|1\rangle}{\sqrt2},
+\frac{|0\rangle-e^{i\varphi_k}|1\rangle}{\sqrt2}\right),\qquad \varphi_k\in\mathbb R,
+$$
+以及它们逐向量改相位或互换次序后的基均取等，包括加减基。任一内部位置采用计算基（允许相位及次序改变）即有 $A_g=0$。$g=0$ 时空乘积为一，只有空记录及恒等仪器，$A_0=2\alpha^3$，无选基条件。最大值随 $g$ 以比值 $\alpha$ 几何衰减至零。
+
+对每个有限 $g\ge0$，全加减基的每条记录均有非零行列式、正概率和正 concurrence，因而其条件密度不可写成有限凸乘积密度和。不过对 $g\ge1$，命题 133.1、137.1 的无条件端点平均
+$$
+\overline\Theta_g=\operatorname{Tr}_{H_g,M}\operatorname{outer}(\Xi_{g+2})
+$$
+可分，故 $\mathcal C(\overline\Theta_g)=0$，而全加减基的条件 concurrence 的 Born 加权平均为 $2\alpha^{g+3}>0$。
+
+证明。若 $Z=(Z_{ij})_{i,j=0}^1$，三角不等式与 $2uv\le u^2+v^2$ 给出
+$$
+\begin{aligned}
+2|\det Z|&\le2|Z_{00}Z_{11}|+2|Z_{01}Z_{10}|\\
+&\le |Z_{00}|^2+|Z_{11}|^2+|Z_{01}|^2+|Z_{10}|^2
+=\operatorname{Tr}(Z\operatorname{adj}(Z)).
+\end{aligned}
+$$
+当 $\operatorname{vec}_{LR}(Z)$ 为单位向量时右侧为一。每个有限系综的平均也在 $[0,1]$ 内，结合谱分解的存在便得所述凸顶取值范围。
+
+固定一条 $q=q_{\mathbf r}>0$ 的记录，简写 $C,v,w,Q,\theta$。先设 $C$ 奇异。由 $q>0$ 可知 $C\ne0$，故 $C$ 秩一。按命题 137.1 的复秩一分解，存在非零复列向量 $a,b$ 使 $C=ab^{\mathsf T}$，其中 $\mathsf T$ 是普通转置。由行列约定，
+$$
+v=a\otimes b,\qquad w=s\,a\otimes E_0b.
+$$
+把 $v,w$ 中每个非零列 $h$ 化成单位向量 $h/\|h\|$，赋权 $\|h\|^2/q$；这些权重和为一，且所得外积加权和为 $\theta$。每个单位向量均为乘积向量，系数矩阵行列式为零；若 $w=0$ 就省去该列。因此这给出平均 concurrence 为零的有限系综，由非负性得 $\mathcal C(\theta)=0=2|\det C|/q$。
+
+再设 $C$ 可逆。若 $xv+yw=0$，向量化的单射性给出
+$$
+C(xI+s yE_0)=0.
+$$
+左乘 $C^{-1}$ 并比较两个对角元得 $x=0$、$x+s y=0$，而 $s>0$，所以 $y=0$。于是矩阵 $H=[\,v\ \ w\,]$ 满列秩，$Q=H\operatorname{adj}(H)$，且
+$$
+F=(\operatorname{adj}(H)H)^{-1}\operatorname{adj}(H),\qquad FH=I_2
+$$
+是其左逆。
+
+任取定义中一个有限单位纯态系综 $\theta=\sum_\ell p_\ell\operatorname{outer}(\psi_\ell)$，删去零权重，置 $z_\ell=\sqrt{q p_\ell}\,\psi_\ell$，于是
+$$
+Q=\sum_\ell\operatorname{outer}(z_\ell)=H\operatorname{adj}(H).
+$$
+对任意 $u\perp\operatorname{range}H$，
+$$
+0=\operatorname{adj}(u)Qu=\sum_\ell|\operatorname{adj}(u)z_\ell|^2.
+$$
+各项非负，故每个 $z_\ell$ 都正交于 $(\operatorname{range}H)^\perp$，即属于 $\operatorname{range}H$。满列秩保证唯一表示 $z_\ell=x_\ell v+y_\ell w$。记 $t_\ell=(x_\ell,y_\ell)^{\mathsf T}=Fz_\ell$，则
+$$
+\sum_\ell\operatorname{outer}(t_\ell)
+=FQ\operatorname{adj}(F)
+=FH\operatorname{adj}(H)\operatorname{adj}(F)=I_2.
+$$
+逐矩阵元读取此式，得到
+$$
+\sum_\ell|x_\ell|^2=\sum_\ell|y_\ell|^2=1,\qquad
+\sum_\ell\overline{x_\ell}y_\ell=0,\qquad
+\sum_\ell x_\ell\overline{y_\ell}=0.
+$$
+若 $z_\ell=\operatorname{vec}_{LR}(Z_\ell)$，线性性给
+$$
+Z_\ell=C(x_\ell I+s y_\ell E_0),\qquad
+\det Z_\ell=\det C\,x_\ell(x_\ell+s y_\ell).
+$$
+不必改变任何系综相位。由于 $|x_\ell|=|\overline{x_\ell}|$，包括 $x_\ell=0$，有
+$$
+\begin{aligned}
+\sum_\ell|\det Z_\ell|
+&=|\det C|\sum_\ell|x_\ell(x_\ell+s y_\ell)|\\
+&=|\det C|\sum_\ell|\overline{x_\ell}(x_\ell+s y_\ell)|\\
+&\ge |\det C|\left|\sum_\ell
+\bigl(|x_\ell|^2+s\overline{x_\ell}y_\ell\bigr)\right|
+=|\det C|.
+\end{aligned}
+$$
+二阶行列式的齐次性及 $z_\ell=\sqrt{q p_\ell}\,\psi_\ell$ 又给
+$$
+\sum_\ell p_\ell c(\psi_\ell)
+=\frac2q\sum_\ell|\det Z_\ell|
+\ge\frac{2|\det C|}{q}.
+$$
+所取系综任意，故这是全部有限复纯态系综的共同下界。另一方面，实际两列 $v,w$ 按范数平方除以 $q$ 赋权的单位纯态分解满足
+$$
+\det(sCE_0)=0,\qquad
+\frac{\|v\|^2}{q}c\left(\frac{v}{\|v\|}\right)
++\frac{\|w\|^2}{q}c\left(\frac{w}{\|w\|}\right)
+=\frac{2|\det C|}{q}.
+$$
+可逆情形两列均非零，所以此式无零除。它达到下界，证明 $\mathcal C(\theta)=2|\det C|/q$。这里的两列系综是已取记忆偏迹之密度的数学分解，不引入记忆测量；其最优性来自刚证的共同下界，不是对任意混合分解的最优性断言。整个分支公式由以上有限维论证得到。
+
+现在对固定的完整局部测量求平均。命题 137.1 的正交完备性恒等式为
+$$
+\sum_{\mathbf r\in\{0,1\}^g}Q_{\mathbf r}
+=\operatorname{Tr}_{H_g,M}\operatorname{outer}(\Xi_{g+2})
+=\overline\Theta_g,\qquad
+\sum_{\mathbf r\in\{0,1\}^g}q_{\mathbf r}=1.
+$$
+它由 $\sum_{r=0}^1\operatorname{outer}(|\eta_{k,r}\rangle)=I_B$ 的有限张量积及 $\|\Xi_{g+2}\|=1$ 给出，亦适用于 $g=0$。先用已证分支凸顶公式，得到每条正概率记录的 $q_{\mathbf r}\mathcal C(\theta_{\mathbf r})=2|\det C_{\mathbf r}|$。零概率记录有 $C_{\mathbf r}=0$，其行列式为零，故只在行列式之和中补入这些零项，而不定义它们的条件密度。命题 137.1 的行列式公式及有限乘积展开遂给
+$$
+\begin{aligned}
+A_g
+&=2\sum_{\mathbf r\in\{0,1\}^g}|\det C_{\mathbf r}|\\
+&=2\alpha^{g+3}\sum_{r_1=0}^1\cdots\sum_{r_g=0}^1
+\prod_{k=1}^g|\eta_{k,r_k,0}\eta_{k,r_k,1}|\\
+&=2\alpha^{g+3}\prod_{k=1}^g
+\left(\sum_{r=0}^1|\eta_{k,r,0}\eta_{k,r,1}|\right).
+\end{aligned}
+$$
+这里分解的是行列式权重之和；正交完备性不要求 Born 概率彼此相等，也不要求这些概率按位置分解。
+
+任意二维复正交标准基可写成
+$$
+\bigl((a,b)^{\mathsf T},\ e^{i\chi}(-\overline b,\overline a)^{\mathsf T}\bigr),
+\qquad |a|^2+|b|^2=1,\qquad \chi\in\mathbb R,
+$$
+因为第一向量的正交补是一维，所列第二向量是其中的单位向量。因此对应的局部因子及其精确差额为
+$$
+B=2|ab|,\qquad 1-B=(|a|-|b|)^2\ge0.
+$$
+故 $0\le B\le1$；$B=1$ 当且仅当 $|a|=|b|=1/\sqrt2$，而 $B=0$ 当且仅当 $a=0$ 或 $b=0$，也就是计算基相差相位及排列的情形。对 $g\ge1$，有限个 $[0,1]$ 因子的乘积为一当且仅当每个因子为一：若有 $B_k<1$，则乘积不大于该因子，严格小于一。平衡基同时实现所有因子为一，于是最大值存在，且等号条件恰如陈述。逐向量去整体相位可将任意平衡基写成所列赤道基；加减基是 $\varphi_k=0$ 的情形。任一计算基因子为零就使整个平均为零。
+
+当 $g=0$，由 $C_\varnothing=s^3J$ 得 $|\det C_\varnothing|=\alpha^3$，由 $q_\varnothing=1$ 得 $A_0=2\alpha^3$，与空乘积公式一致，不附加任何不存在的内部位置条件。若记上述最大值为 $M_g$，则
+$$
+M_{g+1}=\alpha M_g,\qquad M_g=2\alpha^{g+3}\longrightarrow0,
+$$
+因为 $0<\alpha<1$。这是一列有限协议的平均值极限，不对无限记录事件作条件化。
+
+最后，全加减基的每个选中向量都有两非零分量，故对每个有限 $g$ 及每条记录，命题 137.1 的行列式非零，进而 $q_{\mathbf r}>0$，已证分支公式给 $\mathcal C(\theta_{\mathbf r})>0$。若双 qubit 密度可分，即为有限凸乘积密度和，则分别谱分解每个乘积因子的两个局部密度，再分配有限求和，得到一个有限单位乘积纯态系综。每个乘积纯态的系数矩阵秩一，故 $c=0$，该密度的凸顶也为零。因此正凸顶排除了上述可分性。对 $g\ge1$，命题 133.1 取纯输入 $P_0=\operatorname{outer}(m_0)$、无前缀 $r=0$、左右块长均为一，正给出 $\overline\Theta_g$ 的有限凸乘积密度分解，故同一谱细化论证给 $\mathcal C(\overline\Theta_g)=0$；全加减基的 $A_g=2\alpha^{g+3}>0$ 则由平均公式得出。两者分别是平均密度的凸顶和保留完整结果记录时各条件密度凸顶的平均，取值顺序不同。证毕。
+

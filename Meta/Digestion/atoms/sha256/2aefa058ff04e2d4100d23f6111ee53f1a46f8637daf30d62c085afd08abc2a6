@@ -1,0 +1,9 @@
+**定量推论。** 令 $\varphi=(1+\sqrt5)/2$。对 $X\ge\varphi^6$，至少有
+
+$$
+\left\lfloor\log_3\left(\frac{\log X}{2\log\varphi}\right)\right\rfloor
+\tag{GP37}
+$$
+
+个不超过 $X$ 的不同素数，具有三的纯幂出现秩、模四余一且 WSS 初始深度为奇数。
+

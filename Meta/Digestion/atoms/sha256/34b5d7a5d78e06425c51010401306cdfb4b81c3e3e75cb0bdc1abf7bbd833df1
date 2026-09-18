@@ -1,0 +1,21 @@
+**theorem 37.7 (Centers, minimal ideals, idempotents, and units).** Define the center associated with continuity of fixed left multiplication by
+$$
+\mathfrak Z_{\mathrm{top}}(\mathscr E)
+=\{p\in\mathscr E:L_p:\mathscr E\to\mathscr E\text{ is continuous}\}.
+$$
+With the multiplication convention of Definition 37.0, this is the topological center specified by fixed left multiplication. Then
+$$
+Z_{\mathrm{alg}}(\mathscr E)=\mathfrak Z_{\mathrm{top}}(\mathscr E)=\mathcal I.
+$$
+Consequently $\mathscr E$ is neither a semitopological semigroup nor a jointly continuous topological monoid.
+
+The unique minimal left ideal and unique minimal two-sided ideal are $\mathscr D$. The two minimal right ideals are
+$$
+\mathscr D_s=\{P_\theta^s:\theta\in\mathbb T\},\qquad s\in\Sigma.
+$$
+Each $\mathscr D_s$ is algebraically a circle group, with identity $P_0^s$ and inverse $(P_\theta^s)^{-1}=P_{-\theta}^s$. The complete list of idempotents of $\mathscr E$ is
+$$
+\operatorname{id}_K,\qquad P_0^+,\qquad P_0^-.
+$$
+The only invertible element of the full monoid $\mathscr E$ is $\operatorname{id}_K$.[^rro37_double][^rro37_tame]
+

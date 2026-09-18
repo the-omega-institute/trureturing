@@ -97,7 +97,7 @@ class IncrementalTests(unittest.TestCase):
         graph, keys, imports = self.mixed_owner_fixture()
         names = sorted(graph)
         membership = {"candidate_keys": keys, "module_names": names,
-            "external_graph": sorted(graph.items()), "headers": [], "named": [], "evidence_modules": [],
+            "external_graph": sorted(graph.items()), "headers": [], "named": [], "evidence_modules": [], "errors": [],
             "assignment": {owner: owner for owner in imports},
             "scopes": [[owner, [names.index(m) for m in closure(graph, required)]]
                        for owner, required in imports.items()]}
@@ -132,6 +132,7 @@ class IncrementalTests(unittest.TestCase):
                         "candidates": [], "note": "fixture assessment"}}
                     for owner, name, identity in batch_request["keys"]]
                 value = {"entries": rows, "source_inputs": [],
+                    "key_binding_evidence": [[k[2], __import__("bindings").absent()] for k in batch_request["keys"]],
                     "key_source_inputs": [[k[2], []] for k in batch_request["keys"]],
                     "environment_modules": len(batch["modules"])}
                 atomic_json(folder / "candidates.json", value)

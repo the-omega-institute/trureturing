@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Run after make lean-cache-ensure. Lake builds the non-default analysis library
-# and its dependencies; the library's own traces are cleared to repeat exports.
+# Prepare through make lean-cache-ensure, then build the non-default analysis
+# library and its dependencies; clear only its own traces to repeat exports.
 # The recursive LeanInformationAuditAnalysis.+ glob covers this directory dedicated
 # to opt-in full analyses; adding an exporting fixture requires updating this
 # runner's artifact inventory.
@@ -24,6 +24,8 @@ fail() {
 [[ $# -eq 1 && -n $1 ]] || fail 64 "usage: $0 OUTPUT_DIRECTORY"
 command -v lake >/dev/null 2>&1 || fail 69 'missing command: lake'
 command -v shasum >/dev/null 2>&1 || fail 69 'missing command: shasum'
+command -v make >/dev/null 2>&1 || fail 69 'missing command: make'
+command -v dotnet >/dev/null 2>&1 || fail 69 'missing command: dotnet'
 
 script_directory=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 repository=$(cd -- "$script_directory/../../.." && pwd -P)
@@ -44,6 +46,7 @@ done
 
 mkdir -p -- "$output_directory" || fail 73 "cannot create output: $output_directory"
 [[ -w $output_directory ]] || fail 73 "output is not writable: $output_directory"
+make -C "$repository" lean-cache-ensure
 export IE_PROJECTION_OUTPUT_DIR=$output_directory
 export LC_ALL=C
 

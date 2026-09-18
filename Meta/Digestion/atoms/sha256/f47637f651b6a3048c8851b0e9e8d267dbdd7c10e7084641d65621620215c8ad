@@ -1,0 +1,20 @@
+**theorem 28.12 (Setwise Borel measurability does not give norm-Borel measurability).** The maps
+$$
+x\longmapsto\delta_x\in M(K),\qquad
+\theta\longmapsto\pi_\theta\in M(K)
+$$
+are not Borel maps when the target is given its total variation norm topology. Nevertheless, their Borel-set evaluations are Borel. Moreover, the map $\theta\mapsto\pi_\theta$ is not strongly measurable for normalized Haar measure in the total variation norm, and $L_t\lambda$ cannot be interpreted as its total-variation Bochner integral.
+
+**Proof.** Distinct Dirac measures have total variation distance two. Also, for $\theta\ne\eta$, contraction of phase pushforward gives
+$$
+\|\pi_\theta-\pi_\eta\|_{\mathrm{TV}}
+\ge\|\delta_\theta-\delta_\eta\|_{\mathrm{TV}}=2.
+$$
+For any subset $A\subseteq\mathbb T$, the norm-open set
+$$
+O_A=\bigcup_{\theta\in A}B_{\mathrm{TV}}(\pi_\theta,1)
+$$
+has inverse image exactly $A$ under the phase-slice map. The circle has non-Borel subsets, so this map cannot be norm-Borel. The same argument applies to the Dirac map on $K$. Indeed, $K$ has cardinality continuum because it maps onto the circle and is a subspace of $\{0,1\}^{\mathbb N}$; its Borel sigma-algebra has cardinality at most continuum, whereas its power set is larger. The scalar set evaluations were proved Borel in theorem 28.5, and are immediate for Dirac measures.
+
+A strongly measurable Banach-valued function is, outside a null set, contained in the closure of the countable union of the ranges of its simple approximations, hence in a norm-separable set. A norm-separable set contains at most countably many members of a family whose distinct elements are separated by distance at least two. Thus strong measurability of $\theta\mapsto\pi_\theta$ would force a full Haar-measure set of phases to be countable. This contradicts non-atomicity of $\lambda$. Since Bochner integrability requires strong measurability, the proposed Bochner interpretation is impossible. The setwise construction of $L_t\lambda$ is unaffected. QED.
+

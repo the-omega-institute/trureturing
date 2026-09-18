@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7209f116f357b49887973cec8aad8b5ce5c17b1f73b2b05e860f58f8af376505
+  normalized_sha256: sha256:7209f116f357b49887973cec8aad8b5ce5c17b1f73b2b05e860f58f8af376505
+cas_ref: sha256:7209f116f357b49887973cec8aad8b5ce5c17b1f73b2b05e860f58f8af376505
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “定义最优一致新报告界”通过可行算法集合的最小值定义目标，并用“若集合为空则取”无穷补足语义；未断言集合非空或最小值有限，因此没有把上界藏入定义。
+    previous_atom_id: 79db24616e1cebc5d57040e28c5fd810e8b3c84986e54cd9de96f26bf7a7037c
+    next_atom_id: f213b62c1b2b5e30d03f0538de9d376ff41c3912f1ccf401cb7d6c1863f2d390

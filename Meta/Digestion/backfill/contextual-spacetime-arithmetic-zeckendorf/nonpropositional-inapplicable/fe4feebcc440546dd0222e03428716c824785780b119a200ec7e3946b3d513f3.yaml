@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe4feebcc440546dd0222e03428716c824785780b119a200ec7e3946b3d513f3
+  normalized_sha256: sha256:fe4feebcc440546dd0222e03428716c824785780b119a200ec7e3946b3d513f3
+cas_ref: sha256:fe4feebcc440546dd0222e03428716c824785780b119a200ec7e3946b3d513f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只断言完全稳定深度处的商对应，探针在冻结签名商与全行为商定义上直接应用钉版 Mathlib 的 Quotient.congrRight，并验证每个代表类保持不变；未使用 D5 定理，仓内未找到可用于本叶的公开冻结 GID，不声称稳定深度存在。
+    previous_atom_id: 817d23af9a14f247e1566ede9b09395ec888d713b46c18a3058404470aa021c5
+    next_atom_id: 3b2eee018cd19c6c28cecbad1ea195fab6258a844981b402a8b23c176166f85d

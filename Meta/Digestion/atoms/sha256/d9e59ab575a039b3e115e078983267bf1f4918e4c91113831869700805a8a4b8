@@ -1,0 +1,21 @@
+**theorem 27.8 (Absence of every one-sided approximate identity).** The algebra $B_t$ has no left approximate identity and no right approximate identity in its norm topology, even when unbounded nets are allowed. Hence it has no two-sided approximate identity and no left or right unit.
+
+**Proof.** In $\mathcal B$, let $z=(0,\delta_1)$. For any $(f,g)\in\mathcal B$, the second coordinate of
+$$
+(f,g)\diamond z
+$$
+has first coefficient zero: positive integers cannot sum to one. The second coordinate of $z$ has first coefficient one. Therefore
+$$
+\|(f,g)\diamond z-z\|_{\oplus}\ge1.
+$$
+The identical argument gives
+$$
+\|z\diamond(f,g)-z\|_{\oplus}\ge1.
+$$
+Since $\Phi_t(u_1)=z$, the forward bound in theorem 27.7 yields, for every $a\in B$,
+$$
+\|a*_t u_1-u_1\|_1\ge\frac12,\qquad
+\|u_1*_t a-u_1\|_1\ge\frac12.
+$$
+No net can therefore approximate the identity on even this one element, on either side. The coefficient norm and the Banach-algebra norm induce the same topology. A one-sided unit would provide a constant one-sided approximate identity, so units are excluded as well. The element $(\delta_0,0)$ is nevertheless a unit on the first summand alone; it annihilates $z$ and is not a unit of the direct sum. QED.
+

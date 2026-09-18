@@ -71,4 +71,5 @@ An injective readout and two distinct states witness sensitivity of the only CUT
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrationTemplates.mapInjectiveRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrationTemplates.mapInjectiveSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MapInjectiveRegistrationTemplates.mapInjective_sensitivity`
+- Dependency: [D5/S0/History/HistoryCarrier](../../../S0/History/HistoryCarrier.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](RegistrationTemplates.md)

@@ -1,0 +1,13 @@
+**Definition 20.8 (Topological entropy).** For a continuous self-map $A$ of a compact space and a finite open cover $\mathcal U$, write
+$$
+\mathcal U_A^{(n)}
+=\bigvee_{j=0}^{n-1}A^{-j}\mathcal U,
+$$
+where the join consists of nonempty intersections. If $N(\mathcal U)$ is the least cardinality of a subcover, define, using natural logarithms,
+$$
+h_{\mathrm{top}}(A)
+=\sup_{\mathcal U}
+\limsup_{n\to\infty}\frac1n\log N(\mathcal U_A^{(n)}).
+$$
+For a finite partition, its number of nonempty atoms will be denoted by $\#\mathcal U$.
+

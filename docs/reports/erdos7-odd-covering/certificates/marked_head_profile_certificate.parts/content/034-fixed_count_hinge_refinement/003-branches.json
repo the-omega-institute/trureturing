@@ -1,0 +1,32 @@
+{
+  "length": 144,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 66,
+      "part": {
+        "path": "content/034-fixed_count_hinge_refinement/003-branches/000000-000066.json",
+        "sha256": "d0812280c311a05dd292a48f8fad513fa4afec37d6fe7757bdc5cc8ae48997ed",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 66,
+      "stop": 132,
+      "part": {
+        "path": "content/034-fixed_count_hinge_refinement/003-branches/000066-000132.json",
+        "sha256": "ca672872b1d7f6050c3600ffc26b17a2dd75e03b1bfc0c28744c2a97606fb100",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 132,
+      "stop": 144,
+      "part": {
+        "path": "content/034-fixed_count_hinge_refinement/003-branches/000132-000144.json",
+        "sha256": "2e1d058022649d91a373f308d44f6df8144b71233ac1934e3fa088349ad3c23c",
+        "kind": "value"
+      }
+    }
+  ]
+}

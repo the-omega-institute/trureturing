@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccbbdabe10b23b134636034becdb641aaed335a92489d6da00cdf2818a1a45a5
+  normalized_sha256: sha256:ccbbdabe10b23b134636034becdb641aaed335a92489d6da00cdf2818a1a45a5
+cas_ref: sha256:ccbbdabe10b23b134636034becdb641aaed335a92489d6da00cdf2818a1a45a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正整数卷积在第一个坐标没有正整数分拆，探针以同一逐坐标有限和公式表示任意两条系数序列，并规范化得到首坐标为零；没有引入新假设或有限表作为结论，仓内无冻结 GID。
+    previous_atom_id: 5e75438dc0bb1db5d786320c3ab06efb98e5e1db7e3fc04d867d6b95ec1550e3
+    next_atom_id: 70d65275a001b0e4150180033e339b92a518ff0d3351b00abe160c41b6f527e7

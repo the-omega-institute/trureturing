@@ -1,0 +1,46 @@
+**定理 72.6（指定提升的条件熵与细基相干）。** 在定义与假设 72.1 下，令
+$$
+v_i=U_re_i,\qquad R_i=|v_i\rangle\langle v_i|,
+\qquad \sigma_r=\mathcal E_r(\rho_p)=\sum_i p_iR_i.
+$$
+$\sigma_r$ 是密度矩阵；各父纤维的块为秩一块 $p_iR_i$，其非零特征值按重数恰为 $(p_i)_{i\in I}$。并且
+$$
+(\sigma_r)_{jk}=\mathbf1_{r(j)=r(k)}\sqrt{q_jq_k},
+\qquad \Delta_f(\sigma_r)=\rho_q,
+$$
+$$
+\boxed{
+D(\sigma_r\Vert\rho_q)
+=S(\rho_q)-S(\sigma_r)
+=H(q)-H(p)
+=H(\mathsf J\mid r(\mathsf J)).}
+$$
+共同值有限且非负。若只按父纤维投影，写 $Q_i=\sum_{r(j)=i}F_j$，则
+$$
+\sum_iQ_i\sigma_rQ_i=\sigma_r.
+$$
+故所列熵增使用的是细基的一维去相干。两态在细基测量下的分布都为 $q$，因而它们的该测量分布之间的经典 KL 散度为 $\sum_jq_j\ln(q_j/q_j)=0$。
+
+证明。由定理 72.2，$v_i$ 正交归一。因此 $R_i\ge0$、$\operatorname{Tr}R_i=1$、$R_i^2=R_i$，且 $R_iR_{i'}=0$ 对 $i\ne i'$ 成立。每个 $R_i$ 在 $\mathbb Cv_i$ 上为一、在其正交补上为零，故其谱为一个一和其余零，$S(R_i)=0$。这也可由自伴幂等元的谱包含于 $\{0,1\}$，对谱函数 $-x\ln x$ 作连续函数演算得到。正交支持混合熵公式于是给出完整的分量结算
+$$
+S(\sigma_r)=H(p)+\sum_i p_iS(R_i)=H(p).
+$$
+对细基投影 $(F_j)$ 用同一公式，每个分量仍为秩一且熵为零，得 $S(\rho_q)=H(q)$。同时 $\sigma_rv_i=p_iv_i$，在所有 $v_i$ 的共同正交补上为零，给出所列非零谱。展开 $p_iv_iv_i^*$ 得条目公式，故 $\Delta_f\sigma_r=\rho_q$；不同父纤维间本无矩阵元，故父块投影固定 $\sigma_r$。
+
+在第 72.90 节所列相干删除恒等式中，取幺正矩阵 $I_{\mathcal H_f}$、状态序列 $\tau_k=\Delta_f^{\,k}(\sigma_r)$，并取步数 $k=0$。迭代定义保证每一步都是恒等共轭后的细基去相干，所以该定理的全部步进假设成立；其单步结论为
+$$
+D_{\mathrm{legacy}}(\sigma_r\Vert\Delta_f\sigma_r)
+=S(\Delta_f\sigma_r)-S(\sigma_r)\ge0.
+$$
+这里旧密度载体与当前矩阵表示之间的转换不改变矩阵。$q_j>0$ 保证 $\ker\rho_q=\{0\}\subseteq\ker\sigma_r$，即正向支撑包含；无需假设 $\sigma_r$ 可逆。旧相对熵到有限迹对数分支的等式，再与带支撑相对熵的有限分支等式连接，才得到所声明的 $D(\sigma_r\Vert\rho_q)$。也可直接核对其中两项：
+$$
+\operatorname{Tr}(\sigma_r\log\sigma_r)=\sum_i p_i\ln p_i,
+\qquad
+\operatorname{Tr}(\sigma_r\log\rho_q)=\sum_j q_j\ln q_j.
+$$
+最后，对非负归一化质量 $q$ 与观察 $r$ 应用商纤维熵分解，其图律为 $\Pr(r(\mathsf J)=i,\mathsf J=j)=\mathbf1_{r(j)=i}q_j$，父边缘为 $p$，纤维条件律为 $t_{\cdot\mid i}$，从而
+$$
+H(q)=H(p)+\sum_i p_iH(t_{\cdot\mid i}).
+$$
+这些代入分别履行量子支撑条件与经典归一化条件。细基测量分布相同则由两态的对角元相同直接得到。证毕。
+

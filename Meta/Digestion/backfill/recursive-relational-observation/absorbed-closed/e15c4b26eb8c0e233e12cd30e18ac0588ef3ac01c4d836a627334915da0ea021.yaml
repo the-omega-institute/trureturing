@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e15c4b26eb8c0e233e12cd30e18ac0588ef3ac01c4d836a627334915da0ea021
+  normalized_sha256: sha256:e15c4b26eb8c0e233e12cd30e18ac0588ef3ac01c4d836a627334915da0ea021
+cas_ref: sha256:e15c4b26eb8c0e233e12cd30e18ac0588ef3ac01c4d836a627334915da0ea021
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace.finite_graph_cycle_space
+    target_statement_id: sha256:b257b164ea147e0393e66f95f55b81a99ca1f707b47c1cac8d507bee494b9760
+receipts:
+  unresolved_subitems: []

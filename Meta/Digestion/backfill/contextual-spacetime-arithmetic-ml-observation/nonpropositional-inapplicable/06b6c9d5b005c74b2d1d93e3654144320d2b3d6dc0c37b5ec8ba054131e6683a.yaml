@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06b6c9d5b005c74b2d1d93e3654144320d2b3d6dc0c37b5ec8ba054131e6683a
+  normalized_sha256: sha256:06b6c9d5b005c74b2d1d93e3654144320d2b3d6dc0c37b5ec8ba054131e6683a
+cas_ref: sha256:06b6c9d5b005c74b2d1d93e3654144320d2b3d6dc0c37b5ec8ba054131e6683a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “任务是这个有序的边际直方图元组”并明确“不包含联合记录律、自适应查询或计划外精度”，仅划定所求输出；没有宣称边际决定联合分布，未隐藏命题46.9的否定结论。
+    previous_atom_id: 609f7831e2234e3e448af8b62c4fccaec8bd10c222269b24ff40879fe68d456c
+    next_atom_id: 8e426ccc7196c92613bf40a3bd2c9966a1fdde77fc5e353a3ce085fd95b79935

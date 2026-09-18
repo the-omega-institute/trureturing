@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:062e317aa6e04ce95a2eb6d37be9774090048aec300b8ac20da96f9c119507b1
+  normalized_sha256: sha256:062e317aa6e04ce95a2eb6d37be9774090048aec300b8ac20da96f9c119507b1
+cas_ref: sha256:062e317aa6e04ce95a2eb6d37be9774090048aec300b8ac20da96f9c119507b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅列出数学文献和上游声明出处，并限定按原条件引用，没有待证明命题。
+    previous_atom_id: 36f2d4772d6886b1f419895bfdaddc2c95d66ace2acc847a53068c7ea11d5039
+    next_atom_id: ccb7526d6a7c43378b6267979fe22c66c22e4759d1765528d725c26fd48a9d71

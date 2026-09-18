@@ -1,0 +1,70 @@
+**theorem 27.11 (Exact continuity locus for the compact digit topology).** For each fixed parameter, the map
+$$
+K^2\longrightarrow M(K),\qquad (x,y)\longmapsto P^{(t)}_{x,y},
+$$
+with the digit topology on its domain and $\sigma(M(K),C(K))$ on its codomain, is continuous at $(x,y)$ if and only if $\Gamma(x,y)$ is a singleton. Equivalently, its continuity locus is exactly
+$$
+\{(x,y):H(x)+H(y)\notin E\}
+\ \cup\ 
+\{(x_m^s,x_n^s):m,n\ge1,\ s\in\{+1,-1\}\}.
+$$
+No parameter gives a jointly continuous map on all of $K^2$.
+
+**Proof.** First suppose $\Gamma(x,y)=\{w\}$. Normalization and support inclusion imply
+$$
+P^{(t)}_{x,y}=\delta_w.
+$$
+Let $U$ be any open neighborhood of $w$. The set
+$$
+\Gamma\cap\bigl(K^2\times(K\setminus U)\bigr)
+$$
+is compact: $K^3$ is compact and $\Gamma$ is closed. Its projection to $K^2$ is compact, hence closed, and does not contain $(x,y)$. Its complement therefore supplies a neighborhood $W$ of $(x,y)$ such that
+$$
+\Gamma(x',y')\subseteq U\qquad((x',y')\in W).
+$$
+
+Fix $f\in C(K)$ and $\epsilon>0$. Choose $U$ small enough that
+$$
+|f(z)-f(w)|<\frac{\epsilon}{C_t}\qquad(z\in U).
+$$
+For the corresponding neighborhood $W$, normalization of every row and theorem 27.2 give
+$$
+\begin{aligned}
+\left|\int_K f\,dP^{(t)}_{x',y'}-f(w)\right|
+&=\left|\int_K(f-f(w))\,dP^{(t)}_{x',y'}\right|\\
+&\le\int_K|f-f(w)|\,d|P^{(t)}_{x',y'}|\\
+&\le\|P^{(t)}_{x',y'}\|_{\mathrm{TV}}\,\frac{\epsilon}{C_t}
+\le\epsilon.
+\end{aligned}
+$$
+One may shrink $U$ further to make the last bound strict. Thus every continuous test integral is continuous at $(x,y)$, which is precisely continuity into $\sigma(M(K),C(K))$. This argument uses the uniform variation bound for signed rows; normalization alone would not control the absolute value of the integral.
+
+Conversely, suppose $\Gamma(x,y)$ has two points. By Assumption 25.1 there is an index $r$ such that these points are
+$$
+w^+=x_r^+,\qquad w^-=x_r^-,\qquad w^+\ne w^-.
+$$
+Use the maximum product metric on $K^3$. For each sign $s$ and each integer $j\ge1$, membership of $(x,y,w^s)$ in the closure defining $\Gamma$ supplies actual natural numbers $a_j^s,b_j^s$ such that
+$$
+\max\left\{
+ d_K(Z(a_j^s),x),\ d_K(Z(b_j^s),y),\ d_K(Z(a_j^s+b_j^s),w^s)
+\right\}<\frac1j.
+$$
+For each sign this is one simultaneous approximation by a genuine input pair and its genuine finite sum, not a choice of unrelated input and output approximations. In particular,
+$$
+(Z(a_j^s),Z(b_j^s))\longrightarrow(x,y),\qquad
+Z(a_j^s+b_j^s)\longrightarrow w^s.
+$$
+Finite-core consistency yields
+$$
+P^{(t)}_{Z(a_j^s),Z(b_j^s)}=\delta_{Z(a_j^s+b_j^s)}.
+$$
+For every $f\in C(K)$, its integral against the right side tends to $f(w^s)$. Thus these two sequences of output measures tend in the measure weak topology to $\delta_{w^+}$ and $\delta_{w^-}$, respectively. The continuity of point masses in this topology follows directly from evaluation on continuous functions.[^rro27-topology]
+
+The two limits are distinct: some digit $q$ satisfies $w_q^+\ne w_q^-$, and the continuous function $f_q(z)=z_q$ separates the corresponding Dirac measures. Interleave the two actual input-pair sequences. The interleaved sequence still converges to $(x,y)$, whereas the integrals of its output measures against $f_q$ have two different subsequential limits. Hence the output map is not continuous at $(x,y)$. This conclusion applies even if the particular row $P^{(t)}_{x,y}$ itself is a Dirac measure.
+
+It remains to identify the singleton locus. For a nonexceptional sum phase the exact graph formula in Assumption 25.1 gives a singleton. For an exceptional sum phase, the union of the two input sign sets is a singleton exactly when both inputs are exceptional and have the same sign. Their indices then add, producing precisely the second set in the displayed locus. Finally, $0_K$ is nonexceptional and
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\},
+$$
+so every parameter has at least this discontinuity. QED.
+

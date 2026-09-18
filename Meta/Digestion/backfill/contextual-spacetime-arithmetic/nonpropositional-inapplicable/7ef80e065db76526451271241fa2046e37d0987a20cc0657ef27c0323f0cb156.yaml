@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ef80e065db76526451271241fa2046e37d0987a20cc0657ef27c0323f0cb156
+  normalized_sha256: sha256:7ef80e065db76526451271241fa2046e37d0987a20cc0657ef27c0323f0cb156
+cas_ref: sha256:7ef80e065db76526451271241fa2046e37d0987a20cc0657ef27c0323f0cb156
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 空集合与任一集合的笛卡尔积均为空，直接用 Set.prod_empty 与 Set.empty_prod 闭合，仓内无冻结 GID。
+    previous_atom_id: 147b5042b038fb2878a5afb6c3ca8a65eda05ce33f2741c0da4bae2c76c0c116
+    next_atom_id: 13b6d7656695872432897a54a003cb09cf5ae4ede7b63320a1678fa3a7923941

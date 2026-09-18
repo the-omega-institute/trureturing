@@ -1,0 +1,16 @@
+**定义 41.2（有理网格与候选区间）。** 置
+$$
+k=\min\{1,4\varepsilon/d\},\qquad K=1+k,\qquad
+U(v)=\frac{Kv}{1+kv},\qquad L(v)=\frac{v}{K-kv}\quad(0\le v\le1),
+$$
+$$
+m=2\left\lceil\frac{K^3\eta}{rk}\right\rceil,\qquad
+N=m+1,\qquad q_j=r+\frac{\eta j}{m}\quad(0\le j\le m).
+$$
+取 $S=\{0,\ldots,m\}$、$s_*=m/2$、$y_j=h(q_j)$，$T_b(j)$ 为距 $F_b(q_j)$ 最近的网格点的编号，同距时取较小编号。候选区间为
+$$
+I_j=[\ell_j,u_j]
+=[\max\{r,L(q_j)\},\ \min\{1-r,U(q_j)\}].
+$$
+所有表项均为有理数或整数。由于网格步长为 $\eta/m$，$T_b(j)$ 也等于 $mB_b(q_j)$ 的最近整数，同距取小；用正分母整数对 $a/c=mB_b(q_j)$ 表示时，写 $a=tc+v$、$0\le v<c$，则仅在 $2v>c$ 时取 $t+1$，其余取 $t$。
+

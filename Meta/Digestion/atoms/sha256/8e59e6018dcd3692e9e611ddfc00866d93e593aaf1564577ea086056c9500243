@@ -1,0 +1,32 @@
+**定义 23.2（有限概率核与结合律）。** 对任意集合 $X$，定义
+$$
+\mathcal D_f(X)=
+\left\{\mu:X\to[0,1]:
+\operatorname{supp}\mu=\{x:\mu(x)>0\}\text{ 有限},
+\ \sum_{x\in\operatorname{supp}\mu}\mu(x)=1\right\}.
+$$
+记 $\delta_x$ 为集中在 $x$ 的分布，$\mu(x)$ 也记为 $\mu\{x\}$。一个可容许概率核是任意函数
+$$
+P:K\times K\to\mathcal D_f(K),\qquad
+\operatorname{supp}P_{x,y}\subseteq\Gamma(x,y).
+$$
+允许一个许可输出的质量为零；不预设连续性、Borel 可测性、交换律或单位律。相对于 $P$，定义有限卷积
+$$
+\mu*\nu=
+\sum_{x\in\operatorname{supp}\mu}
+\sum_{y\in\operatorname{supp}\nu}
+\mu(x)\nu(y)P_{x,y}.
+$$
+称 $P$ 结合，若对所有 $x,y,z\in K$，
+$$
+\sum_{u\in\operatorname{supp}P_{x,y}}P_{x,y}(u)P_{u,z}
+=
+\sum_{v\in\operatorname{supp}P_{y,z}}P_{y,z}(v)P_{x,v}.
+$$
+等号是分布逐点相等，而非支撑集合相等。这里的有限凸组合与展平采用有限分布单子的通常含义，其单位和展平分别为
+$$
+\eta_X(x)=\delta_x,\qquad
+m_X\left(\sum_i a_i\delta_{\mu_i}\right)=\sum_i a_i\mu_i.
+$$
+此处单子的单位是映射 $\eta_X$，不是二元操作 $P$ 的单位元。相关定义见 Bart Jacobs，*Duality for Convexity*，[arXiv:0911.3834，§2，Example 2(3)—(4)，PDF第3—4页](https://arxiv.org/pdf/0911.3834)。
+

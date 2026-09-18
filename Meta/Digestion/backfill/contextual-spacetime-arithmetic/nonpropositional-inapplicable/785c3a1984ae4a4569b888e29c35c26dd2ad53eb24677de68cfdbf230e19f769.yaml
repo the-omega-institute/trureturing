@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:785c3a1984ae4a4569b888e29c35c26dd2ad53eb24677de68cfdbf230e19f769
+  normalized_sha256: sha256:785c3a1984ae4a4569b888e29c35c26dd2ad53eb24677de68cfdbf230e19f769
+cas_ref: sha256:785c3a1984ae4a4569b888e29c35c26dd2ad53eb24677de68cfdbf230e19f769
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “主定义、命题、证明及区分见证来自”标明本次推理的作者来源、完成时间及源稿 pin；未在此重述或证明那些命题，也没有把模型身份写成数学前提，无定义偷带。
+    previous_atom_id: c46ca7478dcc3f7d7533a76984596bae20f83b0418e17b29ff3805d57e79b0ff
+    next_atom_id: 9e6948885aa596cd8bc5b8c0acafde5d99d9cc593c77613612ccabd7ea0d55f7

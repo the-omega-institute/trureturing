@@ -1,0 +1,30 @@
+**definition 60.3（单素数幂的残基树与局部探针）。** 固定素数 $p$ 与 $e\ge1$，写
+$$
+X_{p,e}=\mathbb Z/p^e\mathbb Z.
+$$
+对 $x_p\in\mathbb Z_p$ 定义目标叶
+$$
+a\equiv-x_p\pmod{p^e},
+$$
+对查询 $n$ 定义中心叶 $c\equiv n\pmod{p^e}$，并令
+$$
+h_c(a)=\max\{d\in\{0,\ldots,e\}:a\equiv c\pmod{p^d}\}.
+$$
+这里模 $p^0$ 的条件恒真。于是
+$$
+q_{p,n}(x)=h_c(a).
+$$
+对 $0\le d\le e$ 定义深度 $d$ 的球
+$$
+B_d(a)=\{b\in X_{p,e}:b\equiv a\pmod{p^d}\}.
+$$
+每个深度 $d<e$ 的球恰分成 $p$ 个深度 $d+1$ 的子球，深度 $e$ 的球是单点。定义
+$$
+d_{p,e}(a,b)=
+\begin{cases}
+0,&a=b,\\
+p^{-h_a(b)},&a\ne b.
+\end{cases}
+$$
+W. A. Zúñiga-Galindo 在 §4、印刷页 6--7 的残基树 $U(p)$ 中以各层 $\mathbb Z/p^\ell\mathbb Z$ 为顶点、以自然降模映射连接相邻层，并指出每个非根顶点向下连接其唯一降模像、每个顶点有 $p$ 个上一层前像，且无穷 stalk 与 $\mathbb Z_p$ 一一对应；见 [https://cs.uwaterloo.ca/journals/JIS/VOL6/Zuniga/zuniga51.pdf](https://cs.uwaterloo.ca/journals/JIS/VOL6/Zuniga/zuniga51.pdf)。这里只采用这一标准树背景，以下超度量性质、信息等价与精确最小值均直接证明。
+

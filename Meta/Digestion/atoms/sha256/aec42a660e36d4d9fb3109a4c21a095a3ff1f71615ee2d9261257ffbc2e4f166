@@ -1,0 +1,3 @@
+若二者有定义，对任意 $C\in\operatorname{Ctx}_\Sigma$，$C\circ B$ 仍属该族，于是
+$\operatorname{obs}_C(B(x))=\operatorname{obs}_C(B(y))$，即 $B(x)\approx_\Sigma B(y)$。
+

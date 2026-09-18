@@ -8,6 +8,8 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
+run_cmd TemplateAudit.initializeGrammarPins
+
 /-- Retain construction ownership before the builtin elaborator's structure eta
 compaction loses it. Metadata has no effect on kernel typing or definitional equality.
 Only live forwarding-head traversal consumes this marker; unused arguments do not. -/
@@ -161,47 +163,6 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   unless valid do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
-elab "information_theorem " theoremId:ident ppLine
-    "in " arenaId:ident ppLine
-    "primitives " primitives:term ppLine
-    variation:("variation " ident)? sensitivity:("sensitivity " ident)?
-    ": " statement:term " := " proof:term : command => do
-    let theoremName <- declarationName theoremId
-    let arenaName <- try
-      liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
-    catch _ =>
-      throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
-    let realizationName := theoremName.str primitiveRealizationSuffix
-    let unitName := theoremName.str theoremUnitSuffix
-    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
-      theoremName, unitName, arenaName, realizationName }
-    ensureRegisterableName (← getEnv) entry
-    let realizationId := absoluteIdentFrom theoremId realizationName
-    elabCommand (← `(command| def $realizationId :
-        D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
-          ($arenaId:ident).signature := $primitives))
-    checkNativeStatement theoremName arenaName realizationName statement
-    elabCommand (← `(command| theorem $theoremId : $statement := $proof))
-    let unitId := absoluteIdentFrom theoremId unitName
-    elabCommand (← `(command| def $unitId :
-        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
-      { primitives := ($realizationId:ident).toPrimitiveBundle
-        Statement := $statement
-        proof := $theoremId }))
-    registerEntry { entry with
-      variationWitness := ← optionalWitnessName (← getRef)[9]
-      sensitivityWitness := ← optionalWitnessName (← getRef)[10]
-    }
-
-syntax (name := registerInformationTheoremCmd)
-  "register_information_theorem " ident ppLine
-    "in " ident ppLine
-    "primitives " term " realization " ident
-    (" variation " ident)? (" sensitivity " ident)? : command
-
-syntax (name := registerInformationTheoremViaCmd)
-  "register_information_theorem " ident " via " term " in " ident (" output_evidence " term)? : command
-
 /-- Transaction boundary shared by registration and exception-injection controls. -/
 def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := do
   -- Command.tryCatch deliberately skips interrupts. At this boundary every
@@ -228,6 +189,56 @@ def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := 
       else m
     modify fun s => { s with messages := previousMessages ++ { messages with
       reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
+
+syntax (name := informationTheoremCmd)
+  "information_theorem " ident ppLine
+    "in " ident ppLine
+    &"primitives " term ppLine
+    ("variation " ident)? ("sensitivity " ident)?
+    ": " term " := " term : command
+
+@[command_elab informationTheoremCmd]
+private def elabInformationTheorem : CommandElab := fun stx => registrationTransaction do
+    let theoremId : TSyntax `ident := ⟨stx[1]⟩
+    let arenaId : TSyntax `ident := ⟨stx[3]⟩
+    let primitiveTerm : TSyntax `term := ⟨stx[5]⟩
+    let statement : TSyntax `term := ⟨stx[9]⟩
+    let proof : TSyntax `term := ⟨stx[11]⟩
+    let theoremName <- declarationName theoremId
+    let arenaName <- try
+      liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
+    catch _ =>
+      throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
+    let realizationName := theoremName.str primitiveRealizationSuffix
+    let unitName := theoremName.str theoremUnitSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+      theoremName, unitName, arenaName, realizationName }
+    ensureRegisterableName (← getEnv) entry
+    let realizationId := absoluteIdentFrom theoremId realizationName
+    elabCommand (← `(command| def $realizationId :
+        D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
+          ($arenaId:ident).signature := $primitiveTerm))
+    checkNativeStatement theoremName arenaName realizationName statement
+    elabCommand (← `(command| theorem $theoremId : $statement := $proof))
+    let unitId := absoluteIdentFrom theoremId unitName
+    elabCommand (← `(command| def $unitId :
+        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
+      { primitives := ($realizationId:ident).toPrimitiveBundle
+        Statement := $statement
+        proof := $theoremId }))
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName stx[6]
+      sensitivityWitness := ← optionalWitnessName stx[7]
+    }
+
+syntax (name := registerInformationTheoremCmd)
+  "register_information_theorem " ident ppLine
+    "in " ident ppLine
+    &"primitives " term " realization " ident
+    (" variation " ident)? (" sensitivity " ident)? : command
+
+syntax (name := registerInformationTheoremViaCmd)
+  "register_information_theorem " ident " via " term " in " ident (" output_evidence " term)? : command
 
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
@@ -267,7 +278,7 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => regist
   registerEntry entry
 
 @[command_elab registerInformationTheoremCmd]
-private def elabRegisterInformationTheorem : CommandElab := fun stx => do
+private def elabRegisterInformationTheorem : CommandElab := fun stx => registrationTransaction do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
     let arenaId : TSyntax `ident := ⟨stx[3]⟩
     let primitiveTerm : TSyntax `term := ⟨stx[5]⟩
@@ -325,12 +336,12 @@ syntax (name := informationTheoremOccurrenceCmd)
     "in " ident ppLine
     "object_arena " ident ppLine
     "catalog " ident ppLine
-    "primitives " term ppLine
+    &"primitives " term ppLine
     ("variation " ident)? ("sensitivity " ident)?
     ": " term " := " term : command
 
 @[command_elab informationTheoremOccurrenceCmd]
-private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
+private def elabInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
   let theoremId : TSyntax `ident := ⟨stx[1]⟩
   let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
@@ -381,11 +392,11 @@ syntax (name := registerInformationTheoremOccurrenceCmd)
     "in " ident ppLine
     "object_arena " ident ppLine
     "catalog " ident ppLine
-    "primitives " term " realization " ident
+    &"primitives " term " realization " ident
     (" variation " ident)? (" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremOccurrenceCmd]
-private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => do
+private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
   let theoremId : TSyntax `ident := ⟨stx[1]⟩
   let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
@@ -456,5 +467,138 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     variationWitness := ← optionalWitnessName stx[12]
     sensitivityWitness := ← optionalWitnessName stx[13]
   }
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Elab Command
+
+private def elaborateTemplateEnrollment (id : TSyntax `ident)
+    (version : Nat) (types : Array (TSyntax `ident)) : CommandElabM Unit := registrationTransaction do
+  let name ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+  unless version == 1 do
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} reason=unclassified_form rule=E4c.version"
+    return
+  let constructors ← types.mapM fun ast => liftCoreM <| realizeGlobalConstNoOverloadWithInfo ast
+  match ← TemplateAudit.enroll name constructors with
+  | .ok () => pure ()
+  | .error message =>
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields message}"
+
+elab "register_information_template " id:ident : command =>
+  elaborateTemplateEnrollment id 1 #[]
+
+elab "register_information_template " id:ident " constructors " version:num
+    " [" types:ident,* "]" : command =>
+  elaborateTemplateEnrollment id version.getNat types.getElems
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command Term
+
+private partial def descriptorHead (stx : Syntax) : Option Syntax :=
+  if stx.isIdent then some stx
+  else if stx.getKind == ``Parser.Term.paren then descriptorHead stx[1]
+  else if stx.getKind == ``Parser.Term.app then descriptorHead stx[0]
+  else none
+
+/-- Resolve the written head first so a missing template is evidence failure.
+Other term/type errors keep the standard elaborator's error/rollback behavior. -/
+def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Expr × Option String) := do
+  if let some head := descriptorHead term then
+    let resolved ← try
+      discard <| liftCoreM <| realizeGlobalConstNoOverloadWithInfo head
+      pure true
+    catch _ => pure false
+    unless resolved do return (none, some "unclassified_form:dtr.missing_template")
+  let value ← liftTermElabM do
+    let value ← elabTerm term none
+    synthesizeSyntheticMVarsNoPostponing
+    instantiateMVars value
+  return (some value, none)
+
+private def withReadout (theoremId arenaId : TSyntax `ident)
+    (objectArena : Option (TSyntax `ident)) (term : TSyntax `term)
+    (native : Bool) (command : TSyntax `command) : CommandElabM Unit := registrationTransaction do
+  let lawArena ← resolveArena arenaId
+  let arenaName ← match objectArena with
+    | none => pure lawArena
+    | some id => resolveArena id
+  let arena ← liftTermElabM <| resolveCanonicalArenaName arenaName
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor term
+  if (← get).messages.hasErrors then return
+  let theoremName ← if native then declarationName theoremId else resolveTheorem theoremId
+  TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic } <| elabCommand command
+
+syntax (name := registerInformationTheoremReadoutCmd)
+  "register_information_theorem " ident " in " ident
+  &"readout " "via " "(" term ")" &" primitives " term " realization " ident
+  (" variation " ident)? (" sensitivity " ident)? : command
+
+syntax (name := registerInformationTheoremViaReadoutCmd)
+  "register_information_theorem " ident " via " term " in " ident
+  &"readout " "via " "(" term ")" (" output_evidence " term)? : command
+
+syntax (name := registerInformationTheoremOccurrenceReadoutCmd)
+  "register_information_theorem " ident " in " ident " object_arena " ident " catalog " ident
+  &"readout " "via " "(" term ")" &" primitives " term " realization " ident
+  (" variation " ident)? (" sensitivity " ident)? : command
+
+syntax (name := informationTheoremReadoutCmd)
+  "information_theorem " ident " in " ident &"readout " "via " "(" term ")" &" primitives " term
+  (" variation " ident)? (" sensitivity " ident)? ": " term " := " term : command
+
+syntax (name := informationTheoremOccurrenceReadoutCmd)
+  "information_theorem " ident " in " ident " object_arena " ident " catalog " ident
+  &"readout " "via " "(" term ")" &" primitives " term
+  (" variation " ident)? (" sensitivity " ident)? ": " term " := " term : command
+
+/-- Remove just the declared readout syntax node and dispatch the established
+registration elaborator. All optional witnesses and their original syntax survive. -/
+private def lowerReadout (stx : Syntax) (kind : Name) (start : Nat) : TSyntax `command :=
+  ⟨Syntax.node stx.getHeadInfo kind ((stx.getArgs.extract 0 start) ++
+    stx.getArgs.extract (start + 5) stx.getNumArgs)⟩
+
+@[command_elab registerInformationTheoremReadoutCmd]
+private def elabRegisteredReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ false
+    (lowerReadout stx ``registerInformationTheoremCmd 4)
+
+@[command_elab registerInformationTheoremViaReadoutCmd]
+private def elabReifierReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[5]⟩ none ⟨stx[9]⟩ false
+    (lowerReadout stx ``registerInformationTheoremViaCmd 6)
+
+@[command_elab registerInformationTheoremOccurrenceReadoutCmd]
+private def elabOccurrenceReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ false
+    (lowerReadout stx ``registerInformationTheoremOccurrenceCmd 8)
+
+@[command_elab informationTheoremReadoutCmd]
+private def elabNativeReadout : CommandElab := fun stx => do
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ true
+    (lowerReadout stx ``informationTheoremCmd 4)
+
+@[command_elab informationTheoremOccurrenceReadoutCmd]
+private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true
+    (lowerReadout stx ``informationTheoremOccurrenceCmd 8)
+
+syntax (name := declareInformationTemplateBindingCmd)
+  "declare_information_template_binding " ident " in " ident
+  (" object_arena " ident " catalog " ident)? &"readout " "via " "(" term ")" : command
+
+@[command_elab declareInformationTemplateBindingCmd]
+private def elabBindingSidecar : CommandElab := fun stx => registrationTransaction do
+  let lawArena ← resolveArena ⟨stx[3]⟩
+  let explicitObject := stx[4].getNumArgs != 0
+  let objectArena ← if explicitObject then resolveArena ⟨stx[4][1]⟩ else pure lawArena
+  let arena ← liftTermElabM <| resolveCanonicalArenaName objectArena
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[8]⟩
+  if (← get).messages.hasErrors then return
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
+  let catalogId := if explicitObject then some (catalogIdFrom ⟨stx[4][3]⟩) else none
+  TemplateBinding.declareSidecar theoremName arena catalogId descriptor diagnostic
 
 end LeanInformationAudit

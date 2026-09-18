@@ -1,0 +1,18 @@
+### 74.1 有限视界的残差和界
+
+仓库的 `D5.S3.Observer.Hankel.ProjectedRealizationError` 已证明，在任意有限步 $n$，有
+
+$$
+\boxed{
+\|e_n\|
+\le
+\sum_{k=0}^{n-1}
+\|A\|^{n-1-k}
+\left(
+\|R_A\|\,\|\widetilde x_k\|
++
+\|R_B\|\,\|u_k\|
+\right).
+}
+$$
+

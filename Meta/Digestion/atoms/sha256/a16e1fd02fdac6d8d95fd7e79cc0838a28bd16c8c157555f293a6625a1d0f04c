@@ -1,0 +1,10 @@
+令
+
+$$
+\gamma(s,t)=
+\begin{cases}
+-\infty,&s=-\infty\text{ 或 }t=-\infty,\\
+\max(s,t)+1,&s,t\in\mathbb Z.
+\end{cases}
+$$
+

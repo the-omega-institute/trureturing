@@ -1,0 +1,31 @@
+**Proof.** Identify $\mathcal F_c$ with the compact relation
+$$
+\widetilde{\mathcal F}_c
+=
+\{(x,(y,r)):(x,y,Z(r))\in\mathcal F_c\}
+\subseteq K\times\mathcal Q_c.
+$$
+If $f$ exists, its equality with $g$ defines a closed equalizer because $Y$ is Hausdorff. That equalizer contains every actual fixed-divisor triple and hence $\widetilde{\mathcal F}_c$. Therefore $g$ is constant on every $Q_c(x)$.
+
+Conversely, suppose $g$ is constant on those fibers. They are nonempty by Theorem 44.9, so define $f(x)$ to be their common value. The projection $p:\widetilde{\mathcal F}_c\to K$ is a continuous surjection from a compact space onto a Hausdorff space. It is closed, since images of compact closed subsets are compact and therefore closed, and consequently it is a quotient map. If $o$ denotes output projection, then
+$$
+f\circ p=g\circ o
+$$
+is continuous. The quotient property implies that $f$ is continuous. It has the required equality on actual triples. This proves the first equivalence.
+
+Assume $c\ge2$. Fix any $\beta=E_M$ and, for example, remainder $r=0$. Of the $c$ roots of $c\theta=\beta$, at most one is split. Since $c\ge2$, an ordinary root exists. Let $y$ be its unique lift. Theorem 44.8 places the same output $(y,0)$ in both $Q_c(z_\beta^{+1})$ and $Q_c(z_\beta^{-1})$. Hence
+$$
+f(z_\beta^{+1})=g(y,0)=f(z_\beta^{-1}).
+$$
+Every other phase fiber is a singleton. Thus $f$ is constant on every fiber of $H$. The map $H:K\to\mathbb T$ is also a continuous compact-to-Hausdorff surjection and hence a quotient map. It follows that $f=h\circ H$ for a unique continuous $h:\mathbb T\to Y$.
+
+For any $(y,r)\in\mathcal Q_c$, put $\eta=P_c(y,r)$. There is an $x$ with $(x,y,Z(r))\in\mathcal F_c$: when $y$ is split with $H(y)=E_m$, $\eta=E_{cm-r}$ is split and its same-sign lift works; when $y$ is ordinary, any lift of $\eta$ works. Therefore
+$$
+g(y,r)=f(x)=h(H(x))=h(P_c(y,r)).
+$$
+This proves necessity of the factorization. Conversely, for any continuous $h$, take $g=h\circ P_c$ and $f=h\circ H$. The exact phase identity on $cn+r$ proves the required numerical equality. Surjectivity of $P_c$, already true on the component $r=0$, proves uniqueness of $h$.
+
+For $c=1$, Theorem 44.9 gives $Q_1(x)=\{(x,0)\}$, so every continuous $g$ descends by $f(x)=g(x,0)$, and no identification of different points of $K$ is forced. This proves the stated maximality in both cases.
+
+For $c\ge2$, every input fiber contains outputs with every remainder, so the label map $(y,r)\mapsto r$ cannot be constant on an input fiber. For $c=1$ it is the constant zero label. Finally, $\mathbb T$ is connected, so a continuous map from it into a finite discrete space is constant. The factorization theorem proves the finite-readout assertion, while $h$ equal to the identity on $\mathbb T$ gives the displayed nonconstant descending phase combination. $\square$
+

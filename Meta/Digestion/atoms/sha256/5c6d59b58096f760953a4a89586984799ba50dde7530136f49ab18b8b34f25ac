@@ -1,0 +1,56 @@
+**定理 9.1（可数有限观察塔的普遍单点拼接保真，等价于有限层已分清全部身份）。** 设 $Y\ne\varnothing$，给定满射
+
+$$
+q_n:Y\twoheadrightarrow Q_n
+\qquad(n\in\mathbb N),
+$$
+
+其中每个 $Q_n$ 有限离散，并有
+
+$$
+p_n:Q_{n+1}\to Q_n,
+\qquad
+q_n=p_n\circ q_{n+1}.
+$$
+
+令
+
+$$
+K_Y=\varprojlim_n Q_n,
+\qquad
+\iota_Y(y)=(q_n(y))_{n\in\mathbb N}.
+$$
+
+取端点 $X=Z=\{\ast\}$，均配常值精确塔。对任意 $A,B\subseteq Y$，定义
+
+$$
+R_A=\{\ast\}\times A,
+\qquad
+S_B=B\times\{\ast\}.
+$$
+
+则以下三个条件等价：
+
+$$
+\begin{aligned}
+\mathrm{(a)}\quad&
+\forall A,B\subseteq Y,\qquad
+\widehat{S_B\circ R_A} =
+\widehat S_B\circ\widehat R_A;
+\\
+\mathrm{(b)}\quad&
+Y\text{ 有限，且 }\iota_Y\text{ 单射};
+\\
+\mathrm{(c)}\quad&
+\exists N\in\mathbb N,\qquad q_N\text{ 单射}.
+\end{aligned}
+$$
+
+这些条件成立时，还有
+
+$$
+\iota_Y[Y]=K_Y,
+$$
+
+因而完成空间是与 $Y$ 双射的有限离散空间。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+  normalized_sha256: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+cas_ref: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 342.2 的本子句(逆 Fibonacci 权 1/F_{n+2} 为正且严格递减)完全由钉版 Mathlib 的既有声明经实例化闭合:正性由 Nat.fib_pos 在 n + 2 > 0 处给出,严格递减由 Nat.fib_add_two_strictMono 在 n < n + 1 处给出;仓内无冻结 D5 声明可作 cover,第 3.2 条禁止新增 bind-only 包装。按 τ=0 owner 2026-09-15 裁决(不新增终态、不做机器判形,文本标记即终结)以本收据结案;探针 scratch 编译过一次(exit 0,标准三公理),不入库。
+    previous_atom_id: a620b351812e67e348874f4fa2e1ecee921fb94c94e9b53b518f2323df677a66
+    next_atom_id: 3b51b873151c4b9561653c3149c90eec5cf7e73ab066fe61b8bfb5f6d4401475

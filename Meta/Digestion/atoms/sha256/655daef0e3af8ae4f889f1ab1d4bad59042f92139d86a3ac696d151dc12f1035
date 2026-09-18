@@ -1,0 +1,12 @@
+## 20. primitive 子空间到全外幂的投影与读回
+
+令 J 可逆且 J^t=−J，X^tJ=−JX。定义实际子空间和投影
+
+\[
+W_J=\{B:B^t=-B,\ \operatorname{tr}(JB)=0\},
+\qquad
+\pi_J(B)=B-\frac{\operatorname{tr}(JB)}nJ^{-1}.\tag{20.1}
+\]
+
+普通辛收缩在这些系数上的表达式与 tr(JB) 相差非零常数 −2，因此核就是 primitive 二阶外幂。假设 n≠0。
+

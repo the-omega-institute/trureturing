@@ -1,0 +1,212 @@
+{
+  "length": 701,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 30,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000000-000030.json",
+        "sha256": "99f19e8bc99cdd9642819990f8ad1fa24548c938ba091f5ecfbd234cc1194b25",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 30,
+      "stop": 60,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000030-000060.json",
+        "sha256": "8c9e046ce665a557d3cc7c630ce517e3e4a22c1c5ce8acc9dc8456161dc04132",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 60,
+      "stop": 90,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000060-000090.json",
+        "sha256": "b1e98f6ace6ca993f9efcfe7dacec3356fd00ffcb4bd1cce72ff6aed4ca0cef3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 90,
+      "stop": 120,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000090-000120.json",
+        "sha256": "e8340b4d064343c72b33c5cadc7ef6e5946713ea682264a66c2da09649238f7b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 120,
+      "stop": 150,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000120-000150.json",
+        "sha256": "3d6c0c86dcdc672d43eb9d63e4221ace4c49494853af102ba41521fc0e7d94c2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 150,
+      "stop": 180,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000150-000180.json",
+        "sha256": "125ff14393865ee5cd97f927fe084ca49e043dc9fa7fe5ba91c3dc7c49a6a137",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 180,
+      "stop": 210,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000180-000210.json",
+        "sha256": "7f12dc07e4807169d482b5f0fb7951b4b06859edde868a756518b64f99df238a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 210,
+      "stop": 241,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000210-000241.json",
+        "sha256": "eeaf42486e671a8065339e5995f8674aa8e9602dfafe5ba82f80407ba6d36742",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 241,
+      "stop": 271,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000241-000271.json",
+        "sha256": "f4c5421314cfaa6cae0e0b6df7532edcac253fa81096ce88fe789e5d56d3fe4e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 271,
+      "stop": 302,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000271-000302.json",
+        "sha256": "556cdfdb94c68f38aa5fb80364f61d84224354e01171dd131c36871b509abd26",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 302,
+      "stop": 332,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000302-000332.json",
+        "sha256": "c26fa4a48c02b786a9482a12fe3024de1a8f3cf9dff86c58986c294d6043506e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 332,
+      "stop": 362,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000332-000362.json",
+        "sha256": "f339aeded0d80fe807d20f1e2060b4349633658f7fba3d27882e5ef3d5f25cd8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 362,
+      "stop": 392,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000362-000392.json",
+        "sha256": "56b6e870e44a3aa5c151566c135b9fc812ea8ec4a61602e2576cdcb93bb2346d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 392,
+      "stop": 422,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000392-000422.json",
+        "sha256": "518c3e6bd23c6194894b41627638c830e63662283718cd2119c436469366dc4a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 422,
+      "stop": 453,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000422-000453.json",
+        "sha256": "d5ea15f1ed1ec10135080dcd9687137bb5803d3eaea32e45b0f533abaef93e97",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 453,
+      "stop": 484,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000453-000484.json",
+        "sha256": "25b7beefc4fd787d1ec6d5b2b67fc84fda0f68b6087e7ee0bf1c81055822d753",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 484,
+      "stop": 515,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000484-000515.json",
+        "sha256": "11d492a953985e0b44bccd5e00cd37fbbf1281e90ae872903427cc707368477d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 515,
+      "stop": 546,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000515-000546.json",
+        "sha256": "3d9e831c003342cab49416895157ff73cd2bff4fbd9f510afbec31d124107eac",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 546,
+      "stop": 577,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000546-000577.json",
+        "sha256": "9351f98cd997a304849a4d15dfb5c2181a5dfa5df2e4a4cc583587cd7b450ea5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 577,
+      "stop": 608,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000577-000608.json",
+        "sha256": "a5c285d55873e9cea4ed0289adc9c30ceb45e3f31a22d43e9c1bb9aee22c65f1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 608,
+      "stop": 640,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000608-000640.json",
+        "sha256": "78dcde29a24b4d68264a012bcb939795ac181f4929a9e8717226c5474ede6e92",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 640,
+      "stop": 672,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000640-000672.json",
+        "sha256": "03e369722ffd356d8eafd115ba892075be33fe678e2fa6f0b21dd0fd8cfe7d24",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 672,
+      "stop": 701,
+      "part": {
+        "path": "content/002-result/020-support_coverage/005-included_targets/000672-000701.json",
+        "sha256": "8d3dcca63e06745f63f1ee6902e8e08a913874102174a0a50609c69c0f1962c0",
+        "kind": "value"
+      }
+    }
+  ]
+}

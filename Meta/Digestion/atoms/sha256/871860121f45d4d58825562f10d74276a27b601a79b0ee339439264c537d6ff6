@@ -1,0 +1,1 @@
+**命题 78.3（全自由词稳定性与确定下降的限定）。** 对任意实线性生成作用 $(L_a)_a$，令 $E_\varnothing=I_d$、$E_{aw}=L_aE_w$，并用全部长度不超过 $H$ 的词定义 $V_H=\operatorname{span}_{\mathbb R}\{E_w:|w|\le H\}$。若 $V_H=V_{H+1}$，则每个生成作用都保持 $V_H$，且 $V_m=V_H$ 对所有 $m\ge H$ 成立。

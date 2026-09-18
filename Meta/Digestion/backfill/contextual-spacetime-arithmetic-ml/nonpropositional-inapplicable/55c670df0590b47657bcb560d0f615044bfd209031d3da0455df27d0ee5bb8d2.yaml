@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55c670df0590b47657bcb560d0f615044bfd209031d3da0455df27d0ee5bb8d2
+  normalized_sha256: sha256:55c670df0590b47657bcb560d0f615044bfd209031d3da0455df27d0ee5bb8d2
+cas_ref: sha256:55c670df0590b47657bcb560d0f615044bfd209031d3da0455df27d0ee5bb8d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “步长零同理”只重复本段零步长论证，探针仍以任意参数和任意迭代次数核验，未把结论设为假设或定义；由 Function.IsFixedPt.iterate 及零标量作用闭合，仓内无冻结 GID。
+    previous_atom_id: 7e1f30581614c377bd4eaadc9bf8430eba9b76c2ff09055acaeaca956dcbe848
+    next_atom_id: 75d39487fcda696d5e5cf2636a8d2721864151f2a5fcc69c075b8ff4d98804eb

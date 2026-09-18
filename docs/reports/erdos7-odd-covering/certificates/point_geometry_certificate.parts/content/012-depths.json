@@ -1,0 +1,23 @@
+{
+  "length": 270,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/012-depths/000000-000159.json",
+        "sha256": "218a6c36f9ad2d4b20e3cb3b92a211d6730e1eb717c9a47a0220fc99dc16de66",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 270,
+      "part": {
+        "path": "content/012-depths/000159-000270.json",
+        "sha256": "10a068a4f91716b84695ba1c2cc36a0eb2c1ba008dca656511cad6c4af5b0fd3",
+        "kind": "value"
+      }
+    }
+  ]
+}

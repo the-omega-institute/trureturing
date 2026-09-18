@@ -1,0 +1,12 @@
+**Citation for QR7.** The OEIS A339621 entry lists the initial even
+Fibonacci values and a sequence of least realizing inputs.
+
+These arguments require a primitive prime at each sufficiently large
+index, not a primitive prime to exponent one. All chosen primes can have
+their actual unknown Fibonacci depths. No WSS occurrence, nonoccurrence,
+or estimate on the fully exceptional block count H(X) follows from QR7.
+The role of the large-index primes here is to exclude unwanted Fibonacci
+divisors of a varying quadratic value; it does not control the exponents
+of a fixed Fibonacci value. The finite CRT step and the uniform tail
+estimate are separate and both are needed for the density conclusion.
+

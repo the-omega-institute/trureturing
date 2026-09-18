@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db49167ab734e4bc95799d5031d069587efda87e95f297341d7453ed988a8e31
+  normalized_sha256: sha256:db49167ab734e4bc95799d5031d069587efda87e95f297341d7453ed988a8e31
+cas_ref: sha256:db49167ab734e4bc95799d5031d069587efda87e95f297341d7453ed988a8e31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文断言两个签名“作为符号集合”而“互不包含”，并说“各自都是”空间补集语言的“子签名”。探针直接按本叶之前的三个定义构造符号集合，以负号与空区域筛选作为两个不包含的名字见证，再用 Set.subset_union_left 和集合成员规范化验证共同超签名；仓内无冻结 GID。这是已证明的集合关系，不是借定义暗置的观察核比较。
+    previous_atom_id: 062b09edd6e79f25bfb05836a76626243294905e81c8a841c1440638d7602bf2
+    next_atom_id: b9b0a571cc146383a159fb15767ae64d78b8379ff5e66619fc08628ce412c1e1

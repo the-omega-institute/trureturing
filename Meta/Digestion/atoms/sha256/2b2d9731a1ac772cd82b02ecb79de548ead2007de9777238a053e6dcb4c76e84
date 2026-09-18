@@ -1,0 +1,5 @@
+**Proof.** The recurrence gives $F_7\equiv13$, $F_{13}\equiv233$, and
+$F_{23}\equiv3457\pmod{5040}$. Exact modular division in S6 gives the
+second residues $853$, $4553$, and $3457$, respectively. Formula S7 then
+identifies the first two pairs as two-cycles and the last as constant.
+

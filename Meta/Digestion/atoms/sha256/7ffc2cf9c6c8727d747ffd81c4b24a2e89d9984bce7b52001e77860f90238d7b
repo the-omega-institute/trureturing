@@ -1,0 +1,8 @@
+$$
+\omega_{k,w}(T)=\sup_{x,y\in F_{k,w}}D(T(x),T(y)),\qquad
+\omega_k(T)=\max_{w\in W_k}\omega_{k,w}(T),
+$$
+$$
+f_{k,w}(\sigma)=\sup_{x\in F_{k,w}}D(T(x),\sigma),\qquad
+r_{k,w}(T)=\inf_{\sigma\in\mathcal D_d}f_{k,w}(\sigma).
+$$

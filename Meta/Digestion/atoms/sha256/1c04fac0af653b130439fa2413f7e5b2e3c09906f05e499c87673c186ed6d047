@@ -1,0 +1,191 @@
+**命题 139.1（固定次序自适应正交测量的平均最优值与最坏记录保证）。** 沿用命题 130.1 的纯边界生成器，令
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+H_n=B^{\otimes n},\qquad H_0=\mathbb C,\qquad
+\Xi_0=m_0,\qquad \Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n.
+$$
+两份二维空间均取正交标准基。对每个整数 $g\ge0$，在任何测量之前恰好生成 $g+2$ 个输出，次序为
+$$
+B_L\otimes B_1\otimes\cdots\otimes B_g\otimes B_R\otimes M.
+$$
+$L,R$ 是第一个与最后一个已发出的 qubit，左端点之前没有被忽略的前缀，端点保留完整空间 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$。最终记忆只以偏迹忽略，生成及测量均不读取、测量或重置记忆，也不对端点施加操作。
+
+定义策略类 $\mathfrak P_g$ 如下：每个内部位置只测量一次，次序固定为 $1,\ldots,g$；在已观察到历史 $h=(r_1,\ldots,r_t)\in\{0,1\}^t$、$0\le t<g$ 时，策略 $\mathcal P$ 为下一个位置 $t+1$ 指定一个正交标准基
+$$
+\mathcal B_h=(|\eta_{h,0}\rangle,|\eta_{h,1}\rangle),\qquad
+\langle\eta_{h,b}|\eta_{h,d}\rangle=\delta_{bd}\quad(b,d\in\{0,1\}).
+$$
+此选择只能依赖已知模型、$g$ 和历史 $h$，测量为该基的两个秩一正交投影，保留全部结果记录。零概率历史处可任意补齐正交标准基，使策略定义于整棵有限二叉树，但不为这些历史定义归一化条件态。以下两个最大值仅在 $\mathfrak P_g$ 中取；任意 LOCC、POVM、滤波、可变测量次序、重复测量同一位置及记忆访问均不属于此取值域。
+
+记 $\operatorname{adj}$ 为共轭转置，$\operatorname{outer}(z)=z\operatorname{adj}(z)$，并以左端点为行、右端点为列定义
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L\otimes|j\rangle_R,
+\qquad J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad E_0=\operatorname{diag}(1,0).
+$$
+对每个形式完整记录 $r=(r_1,\ldots,r_g)$，置 $r_{<k}=(r_1,\ldots,r_{k-1})$，并记该路径上实际选中的向量及其分量为
+$$
+|\eta_{r,k}\rangle:=|\eta_{r_{<k},r_k}\rangle
+=\eta_{r,k,0}|0\rangle+\eta_{r,k,1}|1\rangle,\qquad
+|\eta_r\rangle=\bigotimes_{k=1}^g|\eta_{r,k}\rangle.
+$$
+当 $g=0$ 时只有空记录 $\varnothing$，其空张量积是 $H_0$ 的单位向量。逐路径采用命题 137.1 的收缩约定，定义
+$$
+D_{r,k}=\operatorname{diag}(\overline{\eta_{r,k,0}},\overline{\eta_{r,k,1}}),\qquad
+C_r=s^{g+3}JD_{r,1}JD_{r,2}\cdots JD_{r,g}J,\qquad C_\varnothing=s^3J.
+$$
+实际分支、未归一化端点算子及其 Born 权重为
+$$
+\begin{aligned}
+\chi_r
+&=(I_{B_L}\otimes\langle\eta_r|\otimes I_{B_R}\otimes I_M)\Xi_{g+2}\\
+&=\operatorname{vec}_{LR}(C_r)\otimes|0\rangle
++s\operatorname{vec}_{LR}(C_rE_0)\otimes|1\rangle,\\
+Q_r&=\operatorname{Tr}_M\operatorname{outer}(\chi_r)
+=\operatorname{outer}(\operatorname{vec}_{LR}(C_r))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(C_rE_0)),\\
+q_r&=\operatorname{Tr}Q_r
+=\|C_r\|_F^2+\alpha\|C_rE_0\|_F^2,
+\qquad \|C\|_F^2=\sum_{i,j=0}^1|C_{ij}|^2.
+\end{aligned}
+$$
+有 $q_r=0$ 当且仅当 $C_r=0$，仅对 $q_r>0$ 定义 $\theta_r=Q_r/q_r$，且
+$$
+\det C_r=(-1)^{g+1}\alpha^{g+3}
+\prod_{k=1}^g\overline{\eta_{r,k,0}\eta_{r,k,1}}.
+$$
+这里的两个记忆列及其权重是实际振幅与偏迹所得，不分别归一化；路径公式不将自适应策略等同于一组固定局部基的笛卡尔积。
+
+采用命题 138.1 的 concurrence 定义，记作 $\mathcal C_{\rm conc}=\mathcal C$：单位向量 $z=\operatorname{vec}_{LR}(Z)$ 的纯态值为 $c(z)=2|\det Z|$，密度 $\theta$ 的值为
+$$
+\mathcal C_{\rm conc}(\theta)
+=\inf\left\{\sum_{\ell=1}^Np_\ell c(\psi_\ell):
+\begin{array}{l}
+N\ge1\text{ 为有限整数},\quad p_\ell\ge0,\quad\sum_{\ell=1}^Np_\ell=1,\\
+\|\psi_\ell\|=1,\quad
+\theta=\sum_{\ell=1}^Np_\ell\operatorname{outer}(\psi_\ell)
+\end{array}\right\}.
+$$
+下确界遍历全部有限复单位纯态系综。该定义及其本族恒等式 $\mathcal C_{\rm conc}(Q_r/q_r)=2|\det C_r|/q_r$ 均取自命题 138.1；该命题对全部系综的证明不以实际两记忆列限制取值域。纯态术语的文献约定亦见该命题所引 Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，Physical Review Letters 80，2245–2248（1998），[DOI:10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245)。
+
+定义平均值与最坏正概率记录保证为
+$$
+A_g(\mathcal P)=\sum_{\substack{r\in\{0,1\}^g\\q_r>0}}
+q_r\mathcal C_{\rm conc}(\theta_r),\qquad
+G_g(\mathcal P)=\min_{\substack{r\in\{0,1\}^g\\q_r>0}}
+\mathcal C_{\rm conc}(\theta_r).
+$$
+则对任意 $\mathcal P\in\mathfrak P_g$，形式记录向量 $|\eta_r\rangle$ 构成 $H_g$ 的正交标准基，并有
+$$
+\sum_rQ_r=\overline\Theta_g
+:=\operatorname{Tr}_{H_g,M}\operatorname{outer}(\Xi_{g+2}),\qquad
+\sum_rq_r=1.
+$$
+所以定义 $G_g$ 的有限集合非空，而且
+$$
+G_g(\mathcal P)\le A_g(\mathcal P)
+=2\sum_{r\in\{0,1\}^g}|\det C_r|
+\le2\alpha^{g+3}.
+$$
+存在仅使用既有经典记录的策略 $\mathcal P_*$，使每条完整记录都满足
+$$
+q_r=2^{-g},\qquad
+\mathcal C_{\rm conc}(\theta_r)=2\alpha^{g+3}.
+$$
+因此两个最大值均达到，且恰为命题 138.1 的固定选基平均最优值：
+$$
+\max_{\mathcal P\in\mathfrak P_g}G_g(\mathcal P)
+=\max_{\mathcal P\in\mathfrak P_g}A_g(\mathcal P)
+=2\alpha^{g+3}.
+$$
+在 $g=0$ 时唯一记录满足 $C_\varnothing=s^3J$、$q_\varnothing=1$、$\mathcal C_{\rm conc}(\theta_\varnothing)=2\alpha^3$，没有选基步骤。两个最优值随 $g$ 以比值 $\alpha$ 几何衰减至零，故不存在对所有 $g$ 一致严格为正的此类保证下界。$g$ 仅是内部输出数，不赋予物理距离或时间含义。
+
+这里逐记录相同的结论仅指这个纠缠量，不附加端点密度相同、谱相同、局部幺正等价、纯 Bell 对或同一校正操作的结论，也不定义 Bell 产率。遗忘全部记录时，对 $g\ge1$ 仍得到命题 133.1 的可分无条件端点密度，故其 concurrence 为零；此陈述只涉及指定态族与指定取值域，不是普适经典性结论。
+
+证明。固定任意策略及一条完整记录。在这条路径上，每个已选局部向量已确定，顺序投影作用在不同内部因子上，其乘积就是这些局部投影的张量积。去掉投影后保留的单位内部向量，端点及记忆的系数向量恰为 $\chi_r$；这一步不需要预先固定其他路径的基。命题 137.1 的复 bra 收缩公式逐路径适用，给出上述 $C_r$ 和两记忆列；取记忆偏迹给 $Q_r$ 及 $q_r$。两个平方范数之和为零当且仅当 $C_r=0$。又因 $\det J=-1$、$s^2=\alpha$，行列式的乘法性给出所列 $\det C_r$，包含空记录。这样保留了左行右列及所有 bra 的复共轭，概率也是整条分支的未归一化范数平方。
+
+任取两条不同形式记录 $r,r'$，令 $k$ 为首次分歧位置。它们在此之前的历史相同，因此第 $k$ 个位置采用同一个正交标准基，而两个结果标签不同，故
+$$
+\langle\eta_{r,k}|\eta_{r',k}\rangle=0,\qquad
+\langle\eta_r|\eta_{r'}\rangle
+=\prod_{j=1}^g\langle\eta_{r,j}|\eta_{r',j}\rangle=0.
+$$
+每个张量向量范数为一，共有 $2^g=\dim H_g$ 个，所以它们是正交标准基，$\sum_r\operatorname{outer}(|\eta_r\rangle)=I_{H_g}$。不可达历史处的任意正交补齐同样满足这一论证。把 $\Xi_{g+2}$ 在此内部基上展开后取内部偏迹，再取记忆偏迹，得到 $\sum_rQ_r=\overline\Theta_g$；由命题 130.1 的 $\|\Xi_{g+2}\|=1$，取迹得 $\sum_rq_r=1$。当 $g=0$ 时基仅含空张量积，两个等式仍成立。因此至少有一条正概率记录，且归一化条件密度只在这个非空有限子集上使用。
+
+由命题 138.1 已对全部有限系综证明的本族公式，每条正概率记录有 $q_r\mathcal C_{\rm conc}(\theta_r)=2|\det C_r|$。零概率记录有 $C_r=0$，只向行列式求和补入零项，便得
+$$
+A_g(\mathcal P)
+=2\alpha^{g+3}\sum_{r\in\{0,1\}^g}
+\prod_{k=1}^g|\eta_{r,k,0}\eta_{r,k,1}|.
+$$
+任一单位 qubit 向量满足
+$$
+2|\eta_{r,k,0}\eta_{r,k,1}|
+\le |\eta_{r,k,0}|^2+|\eta_{r,k,1}|^2=1.
+$$
+故每条形式记录的乘积不超过 $2^{-g}$，共有 $2^g$ 条，直接得到 $A_g(\mathcal P)\le2\alpha^{g+3}$。这个估计逐记录成立，不对含历史依赖的求和作逐位置因子分解。正概率权重之和为一，每个对应的 concurrence 均不小于其最小值，故 $G_g(\mathcal P)\le A_g(\mathcal P)$。
+
+现在构造达到这两个上界的策略。先定义仅由已知输出密度和已观察到的历史确定的条件密度。令
+$$
+\Omega_{\rm out}=\operatorname{Tr}_M\operatorname{outer}(\Xi_{g+2}).
+$$
+对于长度 $t<g$ 的历史 $h$，沿其已选路径置
+$$
+K_h=I_{B_L}\otimes
+\left(\bigotimes_{k=1}^t\langle\eta_{h_{<k},h_k}|\right)
+\otimes I_{B_{t+1}\otimes\cdots\otimes B_g\otimes B_R},
+\qquad X_h=K_h\Omega_{\rm out}\operatorname{adj}(K_h),\qquad q_h=\operatorname{Tr}X_h.
+$$
+这里 $q_h$ 是前缀事件的 Born 概率，空历史有 $K_\varnothing=I$、$q_\varnothing=1$。同一定义在 $t=g$ 时保留的末因子仅为 $B_R$，此时 $X_r=Q_r$。在 $q_h>0$ 且 $t<g$ 时，下一内部位置的归一化条件密度为
+$$
+\rho_h=\frac1{q_h}
+\operatorname{Tr}_{B_L,B_{t+2},\ldots,B_g,B_R}X_h
+=\begin{pmatrix}a&c\\\overline c&1-a\end{pmatrix},
+\qquad a\in[0,1],\quad c\in\mathbb C.
+$$
+$t=g-1$ 时上式只迹去 $B_L,B_R$。这一定义对已知 $\Omega_{\rm out}$ 收缩过去的投影，除以实际前缀权重，再迹去其余输出；没有读取隐藏记忆值、测定未知态、使用未来结果或访问最终记忆。由于此前投影仅在输出上，先对记忆取偏迹与这些收缩可交换，故它正是该事件下下一位置的 Born 密度。
+
+在每个已到达历史 $h$ 上，精确地定义
+$$
+\kappa_h=
+\begin{cases}
+i\,\overline c/|c|,&c\ne0,\\
+1,&c=0,
+\end{cases}
+\qquad
+|\eta_{h,0}\rangle=\frac{|0\rangle+\kappa_h|1\rangle}{\sqrt2},\qquad
+|\eta_{h,1}\rangle=\frac{|0\rangle-\kappa_h|1\rangle}{\sqrt2}.
+$$
+两种情形均有 $|\kappa_h|=1$，所以两向量范数为一，内积为 $(1-|\kappa_h|^2)/2=0$；它们构成平衡正交标准基。按照所写的非对角元约定 $\rho_{h,01}=c$，对两个标签直接计算得
+$$
+\begin{aligned}
+\Pr(0\mid h)&=\langle\eta_{h,0}|\rho_h|\eta_{h,0}\rangle
+=\frac12+\operatorname{Re}(\kappa_hc),\\
+\Pr(1\mid h)&=\langle\eta_{h,1}|\rho_h|\eta_{h,1}\rangle
+=\frac12-\operatorname{Re}(\kappa_hc).
+\end{aligned}
+$$
+若 $c\ne0$，则 $\kappa_hc=i|c|$，实部为零；若 $c=0$，则 $\kappa_hc=0$，实部也为零。故两个条件概率严格等于 $1/2$。这里 $c=0$ 是精确分支；任意非零复数 $c$，无论其模多小，均采用第一行公式。
+
+从 $q_\varnothing=1$ 开始按历史长度归纳。若长度 $t<g$ 的每个历史已满足 $q_h=2^{-t}>0$，则它们的 $\rho_h$ 全部存在，上述两个基向量也均已定义；对 $b=0,1$ 有
+$$
+q_{hb}=q_h\Pr(b\mid h)=2^{-(t+1)}>0.
+$$
+这同时证明下一层全部可达，并允许继续定义该策略，没有用尚未证明为正的权重归一化。有限归纳给出整棵树及其全部完整记录，且 $q_r=2^{-g}$。每个被选向量的两个计算基分量的模都为 $1/\sqrt2$，故路径行列式满足
+$$
+|\det C_r|=\alpha^{g+3}2^{-g}>0,\qquad
+\mathcal C_{\rm conc}(\theta_r)
+=\frac{2\alpha^{g+3}2^{-g}}{2^{-g}}=2\alpha^{g+3}.
+$$
+于是 $\mathcal P_*$ 同时达到 $A_g$ 和 $G_g$ 的上界。这一存在性构造不包含自适应性为必要条件的断言。平衡性本身也不蕴含等概率：$g=1$ 的固定实加减基由同一 $Q_r$ 公式给出 $q_+=1/2+\alpha^3$、$q_-=1/2-\alpha^3$，两者不同；上面的等概率来自所选相位与条件非对角元的关系。
+
+在 $g=0$ 时无内部测量，完备性给 $q_\varnothing=1$，而 $|\det(s^3J)|=\alpha^3$，命题 138.1 的本族公式给唯一 concurrence 为 $2\alpha^3$。令任一最优值为 $M_g=2\alpha^{g+3}$，则 $M_{g+1}=\alpha M_g$ 且 $M_g\to0$。因此对任意 $\varepsilon>0$，存在有限 $g$ 使每个允许策略都满足 $G_g(\mathcal P)\le M_g<\varepsilon$，排除跨全部 $g$ 的一致正下界。
+
+最后，任意策略遗忘记录后的密度都等于已证的 $\overline\Theta_g$。当 $g\ge1$，命题 133.1 取纯输入 $P_0=\operatorname{outer}(m_0)$、被忽略前缀长为零、左右块长均为一，给出该密度的有限凸乘积密度分解。将两个局部密度各自谱分解，可细化为有限单位乘积纯态系综，各项行列式为零，故 $\mathcal C_{\rm conc}(\overline\Theta_g)=0$。相反，上述策略保留记录时的条件 concurrence 平均为 $2\alpha^{g+3}>0$；这里分别是平均密度的 concurrence 与条件 concurrence 的平均。又因构造中每个 $C_r$ 可逆，命题 137.1 给每个条件密度秩二，故这些分支并非纯 Bell 对；同一 concurrence 等式没有比较端点密度、谱或局部幺正轨道，也未增加任何端点校正或转换操作。证毕。
+

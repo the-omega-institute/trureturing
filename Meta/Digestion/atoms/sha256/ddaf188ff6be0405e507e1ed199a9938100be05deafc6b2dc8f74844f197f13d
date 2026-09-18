@@ -1,0 +1,21 @@
+**命题 44.6（十报告的具体充分成员界；repo-derived）。** 取 $p=r=1/4$、$\varepsilon_a=1/16$、$\varepsilon_b=1/1024$。则
+$$
+m_a=28,\quad k_a=1/2,\quad m_b=526,\quad k_b=1/128,
+$$
+$$
+E_{ab}=\frac{793}{1578},\qquad
+\mu_{b,\rm env}=\frac4{16641},\qquad
+\mu_{b,\rm edge}=\frac1{20},\qquad\mu_b=\frac4{16641},
+$$
+$$
+\frac{\eta^{10}E_{ab}}4=\frac{793}{6463488}\le\frac4{16641},\qquad T_{\rm B}=522.
+$$
+故对每个旧区间成员及每个十报告词，重启轨迹在第十个报告后具有新成员证书，并在以后保持。十是充分值，不是最小时间主张。
+
+证明。网格参数代入ML 定义41.2，余量和初值代入定理44.2、44.4，即得所列有理数。正整数比较为 $793\cdot16641\le4\cdot6463488$。这里 $\eta/(1-\eta)=1$，且 $521<E_{ab}/(4\mu_b)-1\le522$，给出 Bernoulli 选择。重启的两个恰好同距值为
+$$
+\operatorname{nearest}_{\downarrow}(526\cdot7/28)=131,\qquad
+\operatorname{nearest}_{\downarrow}(526\cdot21/28)=394.
+$$
+新机中点 $263$ 的两个后继也为 $T^b_0(263)=394$、$T^b_1(263)=131$，其和为 $525$，而非 $526$；这具体说明不能以舍入后反射替代两个报告的证明。证毕。
+

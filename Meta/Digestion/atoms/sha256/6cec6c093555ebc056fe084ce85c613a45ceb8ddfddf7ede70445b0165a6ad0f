@@ -1,0 +1,30 @@
+**假设 14.0a（第 13 节的算术前置）。** 采用第 13.1 条的如下双槽保幂判据：
+$$
+J=\{(0,1)\}\quad \cup\quad
+\left\{(t,p):t\ge1,\quad
+\forall\,\ell^e\parallel p,\quad
+e\le t\quad \land\quad \ell-1\mid p
+\right\}.
+$$
+其中 $\ell$ 遍历素数。沿用 $\operatorname{Pr}(p)$ 表示 $p$ 的素因子集，并令
+$$
+h(p)=\max\bigl(\{0\}\cup\{v_\ell(p):\ell\in\operatorname{Pr}(p)\}\bigr).
+$$
+对每个 $p\ge1$，使用第 13.2 条的有限构造
+$$
+S_0=\operatorname{Pr}(p),
+\qquad
+S_{j+1}=S_j\cup\bigcup_{\ell\in S_j}\operatorname{Pr}(\ell-1)
+\quad(0\le j<p),
+$$
+$$
+P(p)=\operatorname{lcm}\bigl(\{p\}\cup\{\ell-1:\ell\in S_p\}\bigr),
+\qquad
+T(t,p)=
+\begin{cases}
+0,&(t,p)=(0,1),\\
+\max\{t,1,h(P(p))\},&(t,p)\ne(0,1),
+\end{cases}
+$$
+并定义 $\kappa(t,p)=(T(t,p),P(p))$。上述分类是本节明确采用的数学前置；下条证明给出所需的保幂充分性及该有限构造的最小性论证。参见[《递归关系观察》第 13.1—13.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。素因子条件 $\ell-1\mid p$ 与所有模 $p$ 单位的 $p$ 次幂均为 $1$ 的等价，是 [Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，arXiv:1706.07343v1，第 2 节引理 1](https://arxiv.org/html/1706.07343v1) 的判据；该引文只支持周期条件，不包含阈值条件或以下连续性结论。
+

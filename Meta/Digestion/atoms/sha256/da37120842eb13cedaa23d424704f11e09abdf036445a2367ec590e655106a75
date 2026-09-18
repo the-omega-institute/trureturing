@@ -1,0 +1,61 @@
+**theorem 28.7 (The integrated point kernel on all measures, with its sharp norm).** For every Borel $D\subseteq K$, the maps
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}(D),\qquad
+(x,y)\longmapsto|P^{(t)}_{x,y}|(D)
+$$
+are Borel on $K^2$. The exact pointwise formula is
+$$
+P^{(t)}_{x,y}
+=\pi_{H(x)+H(y)}
++\sum_{m,n\ge1}\frac{r_m(x)r_n(y)}{d'_{m+n}}v_{m+n}.
+$$
+At each input pair the sum has at most one nonzero term.
+
+For all $\mu,\eta\in M(K)$, the formula
+$$
+(\mu\star_t\eta)(D)
+=\int_K\int_K P^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+defines a bounded bilinear commutative operation on $M(K)$. Its outputs are finite signed regular Borel measures, and
+$$
+|\mu\star_t\eta|(D)
+\le\int_{K^2}|P^{(t)}_{x,y}|(D)\,d(|\mu|\otimes|\eta|)(x,y),
+$$
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad
+\|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+It satisfies
+$$
+\varepsilon_K(\mu\star_t\eta)=\varepsilon_K(\mu)\varepsilon_K(\eta),
+$$
+$$
+H_\#(\mu\star_t\eta)=(H_\#\mu)*_{\mathbb T}(H_\#\eta).
+$$
+It is the unique operation satisfying the displayed setwise kernel-integration law for every pair of measures and every Borel set. This assertion is not uniqueness from agreement on Dirac measures.
+
+The operation takes every pair of positive measures to a positive measure exactly when $t\in\{0,\infty\}$.
+
+**Proof.** The finite inverse basis formulas give, pointwise,
+$$
+\delta_x=\pi_{H(x)}+\sum_{m\ge1}\frac{r_m(x)}{d'_m}v_m,
+$$
+with at most one nonzero summand. Multiplying these two finite expressions, using the zero cross products and the coboundary identity of theorem 28.2, proves the displayed row formula.
+
+The base term is Borel in every set evaluation by theorem 28.5 and continuity of addition and $H$. Every scalar summand in the correction is Borel, so the pointwise finite countable sum is Borel. In particular, ordinary nonexceptional output phases use their singleton measure, exceptional phases use the specified signed slice, and the remaining corrections occur only on the countable Borel set $S\times S$.
+
+For variation measurability, outside $S\times S$ the row is exactly $\pi_{H(x)+H(y)}$, whose variation evaluations are Borel. On $S\times S$, its variation evaluation is obtained by replacing values at countably many Borel singleton input pairs by the variations of their actual finite rows. Such a replacement preserves Borel measurability. Thus both kernel hypotheses of theorem 28.4 hold, with bound $C_t$.
+
+Apply that theorem to the signed product measure $\mu\otimes\eta$ on $K^2$. It gives countable additivity, variation domination, finite total variation and regularity. Signed Fubini gives both displayed iterated-integral interpretations. It also proves independence from choices of positive-minus-positive decompositions. Bilinearity follows from intrinsic signed integration and bilinearity of the signed product measure. The symmetry of the finite rows, followed by signed Fubini, gives commutativity.
+
+The variation estimate proves the bilinear upper bound. Each attaining pair from theorem 28.2 consists of two norm-one Dirac measures, and their product is its actual row. Therefore the bilinear norm is exactly $C_t$.
+
+Every row has mass one, so integration with $D=K$ proves the mass identity. Every row is supported in the phase fiber of $H(x)+H(y)$ and has mass one; consequently
+$$
+P^{(t)}_{x,y}(H^{-1}(B))=\mathbf1_B(H(x)+H(y)).
+$$
+Integrating, and using the pushforward integration formula in each variable, proves the phase-convolution identity for every Borel $B$. Equality on all Borel sets also proves uniqueness under the stated integration contract.
+
+Finally, a real signed measure of mass one and total variation one is positive: its Jordan decomposition has negative mass zero. When $t\in\{0,\infty\}$, theorem 28.2 therefore makes every row positive, and integration against positive input measures preserves positivity. At every other parameter, $C_t>1$ and an attaining row has mass one but variation greater than one, so it is not positive. Its two positive Dirac inputs disprove positivity of the operation. QED.
+

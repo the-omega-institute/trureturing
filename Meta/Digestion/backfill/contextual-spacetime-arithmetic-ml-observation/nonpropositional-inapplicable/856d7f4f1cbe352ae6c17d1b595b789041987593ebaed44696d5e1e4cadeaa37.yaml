@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:856d7f4f1cbe352ae6c17d1b595b789041987593ebaed44696d5e1e4cadeaa37
+  normalized_sha256: sha256:856d7f4f1cbe352ae6c17d1b595b789041987593ebaed44696d5e1e4cadeaa37
+cas_ref: sha256:856d7f4f1cbe352ae6c17d1b595b789041987593ebaed44696d5e1e4cadeaa37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文只有标题“上下文时空算术：机器学习观察伴卷”，用于命名文档，没有变量量词或待证断言，也没有把数学结论藏进定义，因此无可证明的命题。
+    previous_atom_id: null
+    next_atom_id: c4766e3ee4c38162cb6d6baf7cd015f0c2e5dd8023ddd75d26e42c1b55837462

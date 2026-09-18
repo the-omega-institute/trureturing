@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3622693b0092e9a398301a482fabf4215afa9441da6e9506ee5f10b76d008e8
+  normalized_sha256: sha256:d3622693b0092e9a398301a482fabf4215afa9441da6e9506ee5f10b76d008e8
+cas_ref: sha256:d3622693b0092e9a398301a482fabf4215afa9441da6e9506ee5f10b76d008e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “同一个报告”同时驱动在用轨迹，且“没有各轨独立抽样或重排报告”，随后“按时间顺序记”复合更新；这是共同输入和复合顺序的约定，不是统计独立性或收缩定理。
+    previous_atom_id: 67cca323f4803c6235ddddd1edc136a1366c497ab430603df19d17458e7b6b0f
+    next_atom_id: 578cf2a1a9d334bd3379fa122698e39cb9cf6d64eb3d3e5d5dfb4a6be64d70ed

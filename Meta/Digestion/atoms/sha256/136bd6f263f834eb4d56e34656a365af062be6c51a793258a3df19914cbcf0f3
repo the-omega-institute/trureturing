@@ -1,0 +1,22 @@
+## 16. 实际构造 27 维 primitive 空间的独立精确实例
+
+对第 14 节稀疏八维 H，定义收缩映射
+
+\[
+c_H:\Lambda^2K^8\to K,\qquad c_H(e_i\wedge e_j)=H_{ij},
+\]
+
+并求出 W=ker(c_H) 的一个显式 27 维基。若收缩行的非零枢轴为 p，则其余每个基向量 q 取
+
+\[
+b_q=e_q-\frac{(c_H)_q}{(c_H)_p}e_p.
+\]
+
+基矩阵记为 B，并令 Δ_i 为 Λ²(1+N_i)−1 在该基上的矩阵，则
+
+\[
+B\Delta_i=(\Lambda^2(1+N_i)-1)B,
+\quad \Delta_i^2=0,
+\quad\operatorname{rank}\Delta_i=6.
+\]
+

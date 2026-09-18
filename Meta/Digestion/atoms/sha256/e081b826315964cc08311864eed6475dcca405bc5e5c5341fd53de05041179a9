@@ -1,0 +1,8 @@
+**Theorem.** For every prime ell>=7,
+
+$$
+\boxed{\gcd\{h_p:p\mid F_\ell,\ p\text{ prime}\}=1.}\tag{PBC8}
+$$
+
+Consequently a powerful F_ell has at least two distinct WSS prime divisors, and at least one has odd initial depth at least three.
+

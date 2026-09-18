@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:18f3b720fb2876f0b16d8718e2383a99fe887834a2b70c7ca8027c0282d1570e
+  normalized_sha256: sha256:18f3b720fb2876f0b16d8718e2383a99fe887834a2b70c7ca8027c0282d1570e
+cas_ref: sha256:18f3b720fb2876f0b16d8718e2383a99fe887834a2b70c7ca8027c0282d1570e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句只说明前述陈述未限制为有限或可数集合的量词范围，不增加独立命题，故按范围说明结算。
+    previous_atom_id: 11763d6eb842d17a11ad4835a01e6b7848bd977090bb0da923b92a760a913e37
+    next_atom_id: eec9fee70a2516eb047ef68662fcfe1684d85282d0035256288f53c68758dbe5

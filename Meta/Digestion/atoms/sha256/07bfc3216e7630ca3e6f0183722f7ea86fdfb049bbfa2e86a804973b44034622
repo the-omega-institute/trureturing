@@ -1,0 +1,5 @@
+**Theorem IP9.** The block $\mathcal C_n$ contains at most one prime
+whose rank is less than $n$. If present, that prime $q$ is the largest
+prime factor of $n$, its exponent in $\mathcal C_n$ is exactly one, and
+$n=r(q)q^j$ for some $j\ge1$.
+

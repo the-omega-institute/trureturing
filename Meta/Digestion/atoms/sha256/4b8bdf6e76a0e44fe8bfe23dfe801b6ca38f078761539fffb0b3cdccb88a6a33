@@ -1,0 +1,21 @@
+### 16.3 定义：被动 Laplace 观察的两个模型类
+
+固定 $0\leq E_-<E_+<\infty$、$0<\eta<1$。令 $\mathcal M_d$ 为 $[E_-,E_+]$ 上至多有 $d$ 个原子的概率测度，要求其最小支撑点 $g(\sigma)$ 的质量至少为 $\eta$。令 $\mathcal M_{\rm fin}=\bigcup_{j\geq1}\mathcal M_j$，并定义
+
+\[
+C_\sigma(t)=\int e^{-tE}\,\sigma(dE),\quad t\geq0,
+\qquad
+\mathcal R_d(\varepsilon)=\inf_{\widehat g}\sup_{\sigma\in\mathcal M_d}\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{16.4}
+\]
+
+估计函数可读取所有非负时间的被动观测，没有相干量子查询或直接矩阵访问。另定义只有一侧具有模态数约束的可辨识直径
+
+\[
+\Omega_d(\varepsilon)=\sup\{|g(\mu)-g(\nu)|:\mu\in\mathcal M_d,\ \nu\in\mathcal M_{\rm fin},\ \|C_\mu-C_\nu\|_\infty\leq\varepsilon\}.
+\tag{16.5}
+\]
+
+这里上确界同时遍历稀疏侧的全部位置和权重，允许接近碰撞；它不等同于固定一个已分离矩阵后的局部误差。
+

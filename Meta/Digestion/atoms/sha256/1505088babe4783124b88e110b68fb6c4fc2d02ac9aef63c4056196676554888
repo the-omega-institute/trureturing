@@ -1,0 +1,6 @@
+**命题 44.3（给定正余量的有限端点判据；repo-derived）。** 对ML 命题41.5中任意已满足普通端点条件的有理区间证书，另给有理数 $\nu>0$。追加下列 $4N$ 个标量比较即足以保证全部状态、两个报告的严格向内包含：
+$$
+\ell_{T_\beta(j)}+\nu\le F_\beta(\ell_j),\qquad
+F_\beta(u_j)\le u_{T_\beta(j)}-\nu
+\quad(0\le j<N,\ \beta=0,1).
+$$

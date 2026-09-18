@@ -1,0 +1,20 @@
+**定理 31.7（全部乘法观察及原测度公式）。** $A_t$ 的全部非零复线性乘法泛函恰为以下互不相交的两类：
+$$
+\mathcal P_\chi(\mu)=\chi(H_\#\mu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z(\mu)=\mathscr G_{R_t\mu}(z),\qquad 0<|z|\le1.
+$$
+无需另加连续性假设。对 $a_m^\pm=\mu(\{x_m^\pm\})$，第二类准确为
+$$
+\mathcal E_z(\mu)=\begin{cases}\displaystyle\sum_{m\ge1}z^m(a_m^++t^ma_m^-),&|t|<1,\\ \displaystyle\sum_{m\ge1}z^m(t^{-m}a_m^++a_m^-),&|t|>1,\\ \displaystyle\sum_{m\ge1}z^ma_m^-,&t=\infty.\end{cases}
+$$
+等价地，它是实际 Borel 读数
+$$
+\mathcal E_z(\mu)=\int_Kq_{t,z}\,d\mu,\qquad q_{t,z}(x)=\sum_{m\ge1}z^mr_m(x).
+$$
+在每个 $x$ 处，最后一个和至多有一项非零。两类泛函在 $N_t$ 范数下及原总变差范数下的算子范数分别准确为
+$$
+\|\mathcal P_\chi\|=1,\qquad \|\mathcal E_z\|=|z|.
+$$
+

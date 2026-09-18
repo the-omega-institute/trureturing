@@ -1,0 +1,2 @@
+取盒内点 $g^\circ=(1/(2K),\ldots,1/(2K))$。任意 $v\in\ker C$ 可乘足够小的 $\epsilon>0$，使 $g^\circ\pm\epsilon v$ 都在盒内；二者摘要相同，确定性解码器必须给出相同输出，故 $Fv=0$。于是 $\ker C\subseteq\ker F$，从而 $d\ge\operatorname{rank}C\ge\operatorname{rank}F$。这一步没有要求解码器线性、连续或可微。
+

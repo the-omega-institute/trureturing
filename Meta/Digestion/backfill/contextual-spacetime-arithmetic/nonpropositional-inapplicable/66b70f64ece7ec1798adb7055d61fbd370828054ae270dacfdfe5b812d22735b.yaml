@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66b70f64ece7ec1798adb7055d61fbd370828054ae270dacfdfe5b812d22735b
+  normalized_sha256: sha256:66b70f64ece7ec1798adb7055d61fbd370828054ae270dacfdfe5b812d22735b
+cas_ref: sha256:66b70f64ece7ec1798adb7055d61fbd370828054ae270dacfdfe5b812d22735b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “受限单射的充要条件及每个固定因子的全域失败：命题 47 → 命题 57 → 命题 63”列出命题标题和标签，不在本句提出单射判据；未用定义暗证不可逆性，按引用索引结算。
+    previous_atom_id: 6ef8690c0656e285d3807e1dfb522fc797e6113b6ececbd0687e1bbbf88ce1fa
+    next_atom_id: e79f43d0e68cb57be5bc8547104e5f52697e2e39f8db32fca5a6fefad3d36ae4

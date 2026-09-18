@@ -1,0 +1,127 @@
+name: CI publication verification
+
+on:
+  push:
+    branches: ['integration-ci-*-tests']
+    paths:
+      - '.github/workflows/ci-*.yml'
+      - '.github/workflows/lean-cache-publish.yml'
+      - '.github/workflows/truth-release-publish.yml'
+      - 'tools/scripts/workflow/**'
+      - 'tools/scripts/worktree/**'
+      - 'tools/StrataLint.EngineeringScope/TruthReleaseSelection.cs'
+      - 'tools/Trureturing.Truth/Release/TruthReleasePushRunSelector.cs'
+      - 'Meta/ReportProducers/**'
+      - 'Makefile'
+      - 'global.json'
+      - 'lake-manifest.json'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+
+permissions: {}
+
+# This native integration event verifies shared publication programs. Its checks
+# are separate from required CI; a source still running CI is not publishable.
+jobs:
+  cache:
+    name: verify cache publication and restore
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      actions: read
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - env:
+          CANDIDATE_SHA: ${{ github.sha }}
+        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: make -C tools dotnet
+      - id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.project_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional validated seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Try the same-partition Release fallback
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make lean-cache-from-github-without-mathlib || printf '%s\n' 'Optional Release seed unavailable; production continues'
+      - name: Publish and restore an isolated verification snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
+
+  truth:
+    name: verify truth source transport
+    # Temporarily disabled while the truth verification runner is unavailable.
+    if: ${{ false }}
+    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      actions: read
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - name: Prepare the self-hosted macOS toolchain PATH
+        run: |
+          printf '%s\n' '/opt/homebrew/opt/coreutils/libexec/gnubin' '/opt/homebrew/opt/gnu-tar/libexec/gnubin' '/opt/homebrew/bin' >> "$GITHUB_PATH"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install Python for the self-hosted truth runtime
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.10.12'
+          python-version: '3.12'
+          activate-environment: true
+          working-directory: ${{ runner.temp }}
+          enable-cache: false
+      - env:
+          CANDIDATE_SHA: ${{ github.sha }}
+        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: make -C tools dotnet
+      - name: Verify this protected source and its successful push report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make truth-release-verify SOURCE_REF="$GITHUB_REF" SOURCE_COMMIT="$GITHUB_SHA" OUT="$RUNNER_TEMP/truth-release-verification"

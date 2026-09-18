@@ -1,0 +1,7 @@
+**theorem 42.10 (Exact size and topology).** If $d=\dim V=0$, then $S(V)$ is a singleton. If $d=1$, it is a discrete three-point space. If $d\ge2$ and $\mathfrak c=|\mathbb R|$, then
+$$
+|S(V)|=\operatorname{dens}S(V)=w(S(V))=\mathfrak c.
+\tag{42.14}
+$$
+In every dimension the isolated points are exactly $\sigma_V[V]$, namely the zero point and the rank-one flags. Every point is first countable; every point of rank at least two has character exactly $\aleph_0$. For $d\ge2$, the space is nonseparable and nonmetrizable.
+

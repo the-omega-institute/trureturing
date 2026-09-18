@@ -1,0 +1,24 @@
+**theorem 51.12 (正整数生成元的自然点提升处处不连续).** 令
+$$
+\mathcal I_{\mathrm{fin}}=\{dR:d\in\mathbb N_{>0}\}\subseteq\mathcal I
+$$
+取子空间拓扑。每个 $I\in\mathcal I_{\mathrm{fin}}$ 有唯一的正整数生成元 $d$。定义
+$$
+\lambda:\mathcal I_{\mathrm{fin}}\to K,\qquad \lambda(dR)=j(d).
+$$
+则 $\lambda$ 在每一点都不连续。
+
+**证明。** 若 $dR=eR$ 且 $d,e$ 都是正整数，则 theorem 51.2.1 给出每个素数上的赋值相同。由算术基本定理，$d=e$，证明生成元唯一。
+
+固定 $d$，选择两两不同且均不整除 $d$ 的素数 $q_N$。这样的序列存在，因为素数无限，而 $d$ 只有有限个素因子。对于每个固定素数 $p$，充分大时 $q_N\ne p$，从而
+$$
+v_p(dq_N)=v_p(d)
+$$
+最终成立。因此在 $\mathcal I$ 的乘积拓扑、也在 $\mathcal I_{\mathrm{fin}}$ 的子空间拓扑中，
+$$
+dq_NR\longrightarrow dR.
+$$
+当 $d=1$ 时的这种素数序列收敛，亦见 Longhi–Mu–Saettone Lemma 4.5 后的说明（印页 27）；这里直接给出了任意 $d$ 的逐坐标证明（[Longhi–Mu–Saettone，v3，第 27 页](https://arxiv.org/pdf/2202.13478v3#page=27)）。
+
+若 $\lambda$ 在 $dR$ 连续，则 $j(dq_N)\to j(d)$。但是 $\{j(d)\}$ 是开集，而 $dq_N\ne d$ 对每个 $N$ 成立，所以该收敛不可能。故 $\lambda$ 在任意指定的 $dR$ 处均不连续。证毕。
+

@@ -39,28 +39,14 @@ internal static class DepositHeaderCheckCommand
                     $"deposit target is outside the registered SL-012 scope: {target}");
             }
 
-            var changes = RawChangeSet.Create([target]);
-            var metaClear = BootstrapGate.Evaluate(changes) switch
-            {
-                BootstrapOutcome.Clear clear => clear.Capability,
-                BootstrapOutcome.InfrastructureFailure failure =>
-                    throw new InvalidOperationException(failure.Message),
-                BootstrapOutcome.ProtectedSurfaceVerificationRequired =>
-                    throw new InvalidOperationException("deposit target unexpectedly enters protected surface"),
-            };
-            var context = RuleEvaluationContext.Create(
-                current,
-                current,
-                policy,
-                AcceptedLeanClosure.CreateWithoutReport(),
-                changes,
-                metaClear);
-            var evaluation = RuleCatalog.Default.EvaluateSingle(HeaderRuleId, context);
-            if (!evaluation.Diagnostics.IsEmpty)
+            var context = CurrentRuleContext.Create(current, policy, AcceptedLeanClosure.CreateWithoutReport());
+            var evaluation = RuleCatalog.Default.EvaluateCurrentSingle(HeaderRuleId, context);
+            var diagnostics = evaluation.Diagnostics.Where(diagnostic => diagnostic.Path == target).ToArray();
+            if (diagnostics.Length > 0)
             {
                 return new ExplicitCommandResult(
                     1,
-                    string.Concat(evaluation.Diagnostics.Select(diagnostic => diagnostic.Render() + "\n")),
+                    string.Concat(diagnostics.Select(diagnostic => diagnostic.Render() + "\n")),
                     string.Empty);
             }
 

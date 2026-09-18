@@ -1,0 +1,24 @@
+**命题 70.9（Gibbs 截断的迹范数及熵收敛）。** 固定满足 $Z(\beta),E_\beta<\infty$ 的 $\beta>0$，令 $A_n=A|_{H_n}$，并置
+$$
+Z_n=\sum_{L=0}^nm_Le^{-\beta a_L},\qquad
+E_n=\sum_{L=0}^nm_La_Le^{-\beta a_L},\qquad
+\rho_{\beta,n}=Z_n^{-1}e^{-\beta A_n}.
+$$
+把 $\rho_{\beta,n}$ 在 $H_n^\perp$ 上延拓为零，则
+$$
+\|\rho_{\beta,n}-\rho_\beta\|_1
+=2\left(1-\frac{Z_n}{Z(\beta)}\right)\longrightarrow0,
+\qquad
+\frac{E_n}{Z_n}\longrightarrow U_\beta,
+\qquad
+S(\rho_{\beta,n})\longrightarrow S(\rho_\beta).
+$$
+
+证明。$Z_n\uparrow Z(\beta)$、$E_n\uparrow E_\beta$，且 $Z_n\ge1$，所以能量比收敛。两态在同一层基中对角化；$L\le n$ 上的差特征值为 $e^{-\beta a_L}(Z_n^{-1}-Z(\beta)^{-1})\ge0$，该部分绝对值总和为 $1-Z_n/Z(\beta)$。$L>n$ 上只余 $\rho_\beta$，其迹也为 $1-Z_n/Z(\beta)$，故有精确迹范数式。
+
+有限截断的熵公式直接使用 [D5/S3/Quantum/Divergence/GibbsVariationalIdentity.gibbs_variational_identity](https://github.com/the-omega-institute/trureturing/blob/17b6aa6066f5a638c78662d911e469496ebde67e/D5/S3/Quantum/Divergence/GibbsVariationalIdentity.lean)。在 $H_n$ 的正交基下取有限非空指标集 $\{1,\ldots,N_n\}$、复自伴矩阵 $H=-\beta A_n$，并取 $\rho=\operatorname{gibbsState}(H)=\rho_{\beta,n}$。其配分函数为 $Z_n$，实迹项为 $-\beta E_n/Z_n$；相同态间的相对熵由定义中的 $\log\rho-\log\rho=0$ 消去。该恒等式于是给出
+$$
+S(\rho_{\beta,n})=\beta E_n/Z_n+\ln Z_n.
+$$
+利用前述两个非负级数的收敛，再用定理 70.8 识别极限，便得到熵收敛。这里用能量和的控制完成了可数极限步骤，未从一般的迹范数收敛直接推出无限维熵连续性。证毕。
+

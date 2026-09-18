@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1d7d599c930dede64816c40b711a433987fe176a09eb2cf4b219d7ce5343a9e
+  normalized_sha256: sha256:c1d7d599c930dede64816c40b711a433987fe176a09eb2cf4b219d7ce5343a9e
+cas_ref: sha256:c1d7d599c930dede64816c40b711a433987fe176a09eb2cf4b219d7ce5343a9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nat.fib_greatestFib_le、Nat.lt_fib_greatestFib_add_one、Nat.fib_add_one 与 Nat.fib_mono 给包含输入的窗口上端至多为输入的两倍，再由 Finset.le_sup'、Real.rpow_le_rpow 和 Real.mul_rpow 得反推常数为二的指数幂乘原窗口常数；覆盖全部正自然数且不增加假设，仓内无冻结 GID。
+    previous_atom_id: 3d0e05e1d052fbcd9bca670427ecf8787eb71dd60536a9cd46188c5b1eabba5f
+    next_atom_id: ba85c4053d4adafc6a5707bf91e77fc5b641adc19b10a97abdc8b0be13dd64aa

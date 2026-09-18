@@ -1,0 +1,31 @@
+**Definition 20.1 (The carrier and the two observations).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\beta=\alpha^2=1-\alpha,\qquad r=-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+Use the low-to-high digit carrier
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},
+$$
+with its product topology, and write $Z(n)$ for the finite Zeckendorf expansion of $n$, padded by zeros. The phase maps and rotation are
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi].
+$$
+The successor $T$ replaces the alternating prefix before the first occurrence $x_jx_{j+1}=00$ by zeros and sets position $j$ to one, leaving higher positions unchanged; if there is no such occurrence, it sends the sequence to $Z(0)$. Set
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad f(x)=x_0,\qquad
+v_t(x)=(f(T^i x))_{0\le i<t}.
+$$
+Both $q_0$ and $v_0$ have the single value given by the empty word. Let $\mathcal Q_L$ and $\mathcal V_t$ be their partitions into nonempty fibers. For a map $g$, its equality kernel is
+$$
+\ker(g)=\{(x,y)\in K^2:g(x)=g(y)\}.
+$$
+Finally, positional deletion is the different map $\sigma:K\to K$ defined by $(\sigma x)_j=x_{j+1}$.
+
+The carrier, phase maps and successor are those of the Zeckendorf theory volume, §§371–375; in particular, the established properties used below are compactness, density of $Z(\mathbb N)$, continuity and surjectivity of $T$, and $TZ(n)=Z(n+1)$, $HT=RH$. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+

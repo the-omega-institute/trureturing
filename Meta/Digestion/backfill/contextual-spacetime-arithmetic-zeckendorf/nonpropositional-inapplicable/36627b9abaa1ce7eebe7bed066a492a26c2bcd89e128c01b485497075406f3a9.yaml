@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36627b9abaa1ce7eebe7bed066a492a26c2bcd89e128c01b485497075406f3a9
+  normalized_sha256: sha256:36627b9abaa1ce7eebe7bed066a492a26c2bcd89e128c01b485497075406f3a9
+cas_ref: sha256:36627b9abaa1ce7eebe7bed066a492a26c2bcd89e128c01b485497075406f3a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶的两条加法历史分别编码为带标签列表，钉版 Mathlib 的有限列表判等与自然数正规化已编译验证两词不同而均将任意自然数送至原数加五，并验证标签二与三为素数；未使用 D5 定理，仓内没有本叶可用的冻结 GID。
+    previous_atom_id: 82d07df23e69e2833fe95d39adc638f1f2340124eac81024d9f821f72c5b1058
+    next_atom_id: 3a96c5f79636cb73654299c442440ab88fb323616c57f86e3a36ce1b73873bfa

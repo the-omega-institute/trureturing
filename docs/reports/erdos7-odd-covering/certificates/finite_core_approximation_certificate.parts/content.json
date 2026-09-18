@@ -1,0 +1,99 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-finite-core-actual-old-law-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_pg1_lifted_global_cap.py": "1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf",
+      "certificates/uniform_gamma_cofactor_certificate.json": "bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c",
+      "certificates/star_block_obstruction_certificate.json": "a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907"
+    }
+  },
+  "ordinary_source_commit": {
+    "kind": "inline",
+    "value": "0355c3cc98f5bd10e03b6d71108d820f56ebbf89"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Every arbitrary finite original forbidden family on primes3,5,7,11,13, at most one residue per original modulus. Start from uniform complete actual357 survivors, apply full-Haar T4 kernels at11 and13 with delta=1/2, then condition on complete actual survival. All original test labels remain present in the target Gamma2."
+  },
+  "verification_scope": {
+    "kind": "inline",
+    "value": "Exact constants and finite fixtures; ordinary CM8/SD/T4 and the adjacent continuity proof carry universal heights and layouts. The family-specific finite core law and its maximum are not enumerated by this certificate."
+  },
+  "construction": {
+    "kind": "inline",
+    "value": {
+      "Gamma357": "3849/106",
+      "ambient_357_density_lower": "53/432",
+      "source_Haar_density_upper": "432/53",
+      "physical_J11": "157809/2650",
+      "physical_J13": "578633/6360",
+      "charge11_upper": "3849/10600",
+      "charge13_upper": "52603/127200",
+      "actual_survivor_mass_lower": "28409/127200",
+      "physical_density_upper": "1728/53",
+      "final_supported_density_upper": "4147200/28409",
+      "final_supported_Gamma2_upper": "11473869/28409"
+    }
+  },
+  "Haar_moments": {
+    "kind": "inline",
+    "value": {
+      "prime_order": [
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "fourth_factors": [
+        "30",
+        "285/32",
+        "140/27",
+        "1914/625",
+        "2275/864"
+      ],
+      "complete_second": "7007/480",
+      "complete_fourth": "19304285/1728",
+      "final_law_fourth_from_density": "46330284000/28409",
+      "plus_current17_Haar_fourth": "37739877175/1572864",
+      "final_law_plus_current17_fourth_from_density": "25474417093125/7272704"
+    }
+  },
+  "admissible_law_moments": {
+    "path": "content/007-admissible_law_moments.json",
+    "sha256": "43ba7330ed374e9f470cbf17203f149fb8b6120517fb2f79c5591763d8e8730b",
+    "kind": "value"
+  },
+  "cubic_weighted_cylinder_tail": {
+    "path": "content/008-cubic_weighted_cylinder_tail.json",
+    "sha256": "d8179a91b94bfa7009c622504d006a6700f23091f8a49fa14e1158d389f33d14",
+    "kind": "value"
+  },
+  "actual_BB_current_continuity_obstruction": {
+    "path": "content/009-actual_BB_current_continuity_obstruction.json",
+    "sha256": "4c4ad033131e4a1a118e0f4fb2baa05826e88c089300ef70f3bd5d3ca11dc977",
+    "kind": "value"
+  },
+  "law_comparison": {
+    "kind": "inline",
+    "value": "For two families agreeing on the exponent box, L1(final laws)<=D*(6*T357+8*T11+12*T13). The finite-core family omits only high forbidden classes and its law is lifted with uniform suffixes. This approximating law is not asserted to avoid the full family tail."
+  },
+  "Gamma_comparison": {
+    "kind": "inline",
+    "value": "|Gamma_full(nu_full)-Gamma_box(nu_core)|<=D*(H2_Haar-H2_box)+sqrt(D*H4_Haar*L1_bound). Unit and every inside original test are retained; all other original pairs are included in the explicit tail."
+  },
+  "cutoffs": {
+    "path": "content/012-cutoffs.json",
+    "sha256": "faed6bfd1a65b2b9a057d0d80f038294eea618fb0fb49c6482db1e675ca18c20",
+    "kind": "value"
+  },
+  "finite_checks": {
+    "path": "content/013-finite_checks.json",
+    "sha256": "0e0a88881c923d3d4a936d7a8912c29aaeb0aff46b7c6ab6dd06377407e85960",
+    "kind": "value"
+  }
+}
