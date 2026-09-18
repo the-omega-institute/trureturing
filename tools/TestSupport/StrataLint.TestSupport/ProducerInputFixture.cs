@@ -67,6 +67,11 @@ internal static class ProducerInputFixture
         }
         paths.UnionWith(["lean-toolchain", "lakefile.toml", "lake-manifest.json", ".gitignore"]);
         var files = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(source, path)), StringComparer.Ordinal);
+        // These fabricated rows exercise local batch emission without a Lake
+        // workspace. Fetched-source evidence belongs to the real Git fixtures.
+        var leanInputs = JsonNode.Parse(files["lean-report-inputs.json"])!.AsObject();
+        leanInputs.Remove("native_inputs");
+        files["lean-report-inputs.json"] = Encoding.UTF8.GetBytes(leanInputs.ToJsonString());
         files.Add(ProjectRegistrationPath, Encoding.UTF8.GetBytes(manifest.ToJsonString()));
         return files;
     }
