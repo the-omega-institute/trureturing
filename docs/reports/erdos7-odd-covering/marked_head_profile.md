@@ -559,5 +559,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A weighted source comparison on the broad slab](profile-notes/88-a-weighted-source-comparison-on-the-broad-slab.md)
 - [A marked-event cancellation improves global K](profile-notes/89-a-marked-event-cancellation-improves-global-k.md)
 - [Weighted marked events improve the global comparison](profile-notes/90-weighted-marked-events-improve-the-global-comparison.md)
+- [Cell-vector markers retain the selected deep deletion](profile-notes/91-cell-vector-markers-retain-the-selected-deep-deletion.md)
 - [The next K escape layers and product exclusion](profile-notes/92-the-next-k-escape-layers-and-product-exclusion.md)
 - [Product escape and source mass improve global K](profile-notes/93-product-escape-and-source-mass-improve-global-k.md)
+- [Quadratic marked events and a common residual improve global K](profile-notes/94-quadratic-marked-events-and-a-common-residual-improve-global-k.md)
