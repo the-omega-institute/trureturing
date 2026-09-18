@@ -392,7 +392,10 @@ public sealed partial class MakeWorkflowTests
                 $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "make", "--no-print-directory", "-C", "tools", "test", $"TEST_PROJECT={target}",
                 $"TEST_FILTER={(filtered ? "FullyQualifiedName~Fixture" : "")}"],
-            root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            // This invokes the complete make -> dotnet-test -> TRX verification
+            // workflow; the timeout is infrastructure-only and must cover the
+            // workflow under the full parallel suite.
+            root, TestBudgets.WorkflowProcessHangGuard, 64 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
