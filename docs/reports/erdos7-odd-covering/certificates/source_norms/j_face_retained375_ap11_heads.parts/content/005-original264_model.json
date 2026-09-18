@@ -1,0 +1,110 @@
+{
+  "variables": {
+    "kind": "inline",
+    "value": 6531
+  },
+  "base244_model": {
+    "path": "content/005-original264_model/001-base244_model.json",
+    "sha256": "7c323baeb77f87ecdfdf23b7eac3791c38fe8e07bfede9ad33fab9ccb6d7ceb7",
+    "kind": "value"
+  },
+  "marked_state_bit_labels": {
+    "kind": "inline",
+    "value": [
+      135,
+      125,
+      225
+    ]
+  },
+  "marked_states": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "implicit_complement": {
+    "kind": "inline",
+    "value": 0
+  },
+  "marked_raw_variables": {
+    "kind": "inline",
+    "value": 2800
+  },
+  "marked_survivor_variables": {
+    "kind": "inline",
+    "value": 2800
+  },
+  "projection_variables": {
+    "kind": "inline",
+    "value": {
+      "135": 25,
+      "125": 5,
+      "225": 25
+    }
+  },
+  "survivor_caps": {
+    "kind": "inline",
+    "value": {
+      "135": "1/135",
+      "125": "13/3750",
+      "225": "1/225"
+    }
+  },
+  "raw_intersection_caps": {
+    "kind": "inline",
+    "value": {
+      "135": {
+        "25": "1/675",
+        "27": "1/135",
+        "75": "1/675",
+        "81": "1/405"
+      },
+      "125": {
+        "25": "1/125",
+        "27": "1/3375",
+        "75": "1/375",
+        "81": "1/10125"
+      },
+      "225": {
+        "25": "1/225",
+        "27": "1/675",
+        "75": "1/225",
+        "81": "1/2025"
+      }
+    }
+  },
+  "joint_raw_caps": {
+    "kind": "inline",
+    "value": {
+      "135/125": "1/3375",
+      "135/225": "1/675",
+      "125/225": "1/1125"
+    }
+  },
+  "complete_retained_tail": {
+    "kind": "inline",
+    "value": "6151/405000"
+  },
+  "unit_repair_rows": {
+    "kind": "inline",
+    "value": 6531
+  },
+  "inequalities": {
+    "kind": "inline",
+    "value": 11211
+  },
+  "equalities": {
+    "kind": "inline",
+    "value": 19
+  },
+  "rows_sha256": {
+    "kind": "inline",
+    "value": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  }
+}

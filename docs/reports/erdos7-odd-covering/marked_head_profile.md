@@ -749,3 +749,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Four pure hinges improve the complete J comparison](profile-notes/287-four-pure-hinges-improve-the-complete-j-comparison.md)
 - [Retaining375 strengthens the complete J survival hinge](profile-notes/288-retaining375-strengthens-the-complete-j-survival-hinge.md)
 - [Retaining375 improves the complete J comparison](profile-notes/289-retaining375-improves-the-complete-j-comparison.md)
+- [Two higher pure hinges strengthen the complete J source](profile-notes/290-two-higher-pure-hinges-strengthen-the-complete-j-source.md)
+- [Two higher pure hinges improve the complete J comparison](profile-notes/291-two-higher-pure-hinges-improve-the-complete-j-comparison.md)
+- [Retaining375 strengthens the complete J AP11 head](profile-notes/292-retaining375-strengthens-the-complete-j-ap11-head.md)
+- [The retained375 AP11 head improves the complete J comparison](profile-notes/293-the-retained375-ap11-head-improves-the-complete-j-comparison.md)
