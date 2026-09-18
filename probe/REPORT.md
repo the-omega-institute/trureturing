@@ -13,7 +13,7 @@ Success requires independent source fidelity, the Python anchors and witness, an
 
 ## Status
 
-Predictions recorded. Checks have not run.
+Verdict: propose. Source fidelity and full-range Python checks passed; the exact Lean refutation compiled with the standard three axioms. Integration is proposed only.
 
 ## Source fidelity
 
@@ -47,7 +47,7 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-bradshaw-p
 
 ## Lean verification
 
-`probe/BradshawProbe.lean` compiles under the cache-stamped pinned environment. Command (after exporting the required PATH): `/usr/bin/time -l lake env lean probe/BradshawProbe.lean`; exit 0. Wall time 2.56 seconds; maximum resident set size 1646854144 bytes = 1.646854144 GB (decimal). This covers the probe module and cached imports only.
+`probe/BradshawProbe.lean` compiles under the cache-stamped pinned environment. Command (after exporting the required PATH): `/usr/bin/time -l lake env lean probe/BradshawProbe.lean`; exit 0. Final-source wall time 17.79 seconds; maximum resident set size 1655455744 bytes = 1.655455744 GB (decimal). This covers the probe module and cached imports only. The final source uses two focused imports: `Mathlib.Data.Nat.Squarefree` and `Mathlib.Tactic.NormNum.Prime`; Squarefree already imports factorization.
 
 ```
 'result' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -77,3 +77,36 @@ Four tests on the tempting candidate “D0 satisfies the four axioms”:
 (iv) The inhabitation proof is live: it supplies the admissibility premise when specializing the universally quantified claim. It is obtainable by bind-only operations, so live use does not make it an escape witness. `iv_mutant_compiled`: not run / not applicable to an escape claim (none is made). The unused third derivative value is explicitly not nominated as a witness.
 
 The only public theorem is the externally named problem's refutation. All supporting facts and D0 are local to its proof; no public or private companion theorem is introduced.
+
+## Proposed integration surface (proposal only)
+
+Module GID: `D5/S0/Certificates/BradshawConjectureTwentyRefutation`.
+Path: `D5/S0/Certificates/BradshawConjectureTwentyRefutation.lean`.
+Future namespace: `D5.S0.Certificates.BradshawConjectureTwentyRefutation`.
+
+Measured with `git ls-files` at 0f6c3fc5fe8eb57eeca60d8963b9ef6fa8446a0c: the direct D5/S0/Certificates directory contains 58 files; adding this module yields 59. The direct Blueprint/D5/S0/Certificates directory contains 116 tracked files: 58 .scribe.cs plus 58 .md projections. `RepositoryRules.Structure.cs:65` sets DirectoryFileLimit=96, and its capacity exclusion omits Blueprint .md projections and frozen state files. Thus the Blueprint capacity count is also 58, projected to 59 after one companion Scribe file. No directory split is indicated by these measurements. The Certificates domain explicitly covers kernel-checkable refutations.
+
+Exact public surface, under the proposed namespace:
+
+```lean
+def IsArithmeticDerivative (D : ℕ → ℕ) : Prop :=
+  D 0 = 0 ∧ D 1 = 0 ∧ (∀ p, p.Prime → D p = 1) ∧
+    ∀ m n, D (m * n) = D m * n + m * D n
+
+def C (a b n : ℕ) : ℕ :=
+  if n % 2 = 1 then (a * n + b) / 2 else n / 2
+
+def claim : Prop :=
+  ∀ D : ℕ → ℕ, IsArithmeticDerivative D → ∀ a b n : ℕ,
+    a % 2 = b % 2 → 1 ≤ n → D (C a b n) = C a b (D n) → Squarefree n
+
+theorem result : ¬ claim
+```
+
+Proposed utility classification: `kind=certified-instance; basis=refutes`, with claim/result referring to the two corresponding GIDs above. No Scribe or D5 file is created in this probe.
+
+## Reasoning discipline and boundaries
+
+The numerical success criteria were committed before retrieval or computation. Full-range checks distinguish a reproduction of the printed examples from the independent nonsquarefree witness. The factorization construction addresses the logical non-vacuity gap; extra numerical search cannot replace it. Existing general identities dominate the construction, so no novelty is assigned to those steps. The successful compiler exit and exact axiom closure alone settle the formal negation; the failed draft establishes nothing. No problem statement was changed to fit the witness.
+
+The source match and non-vacuity are checked locally. Comprehensive publication novelty and any other seat's independent verification remain ASSUMED-UNVERIFIED. This is an isolated probe proposal, not admission, freezing, a PR, a merge, or a whole-repository check. The broader GoalArtifact KPI has no increment from this probe.

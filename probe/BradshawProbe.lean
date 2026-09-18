@@ -1,4 +1,3 @@
-import Mathlib.Data.Nat.Factorization.Defs
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Tactic.NormNum.Prime
 
