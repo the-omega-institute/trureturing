@@ -680,5 +680,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [All four selected labels can be retained above the first hinge](profile-notes/211-all-four-selected-labels-can-be-retained-above-the-first-hinge.md)
 - [A supporting affine margin sharpens the whole J reserve](profile-notes/212-a-supporting-affine-margin-sharpens-the-whole-j-reserve.md)
 - [The affine J reserve enters the complete global comparison](profile-notes/213-the-affine-j-reserve-enters-the-complete-global-comparison.md)
+- [The all-selected policy improves survival and linear costs](profile-notes/214-the-all-selected-policy-improves-survival-and-linear-costs.md)
 - [The source bridge covers a larger complete residual strip](profile-notes/215-the-source-bridge-covers-a-larger-complete-residual-strip.md)
 - [The expanded residual bridge improves the complete global bound](profile-notes/217-the-expanded-residual-bridge-improves-the-complete-global-bound.md)
