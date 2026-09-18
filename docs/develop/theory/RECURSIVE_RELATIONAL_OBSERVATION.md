@@ -34059,3 +34059,150 @@ $$
 所有等式的概率律均为输入，$\sigma_r$ 是归一化指示基指定的提升。经典质量和 Hilbert 坐标没有附带物理制备、测量公理或能量交换假设，故这里没有 Born 规则、物理实现或热耗散的推导。有限塔恒等式也没有断言无限塔的迹一极限、迹范数收敛或无限熵差；这些问题仍须各自的相容性、正规性与可积性假设。
 
 ## 72.99 追加锚
+
+## 73. 参考条件重采样与精确恢复边界
+
+**定义 73.1（指定参考的反向映射）。** 沿用定义与假设 72.1 的有限非空标签集 $J,I$、满射 $r:J\to I$、严格正概率 $q$ 及 $p=r_*q$，以及所选基 $(f_j)$、$(e_i)$。将细基去相干 $\Delta_f$ 也记作 $\Delta_J$，定义
+$$
+B_{r,q}:=\Delta_J\circ\mathcal E_r:
+\mathcal B(\mathcal H_c)\longrightarrow\mathcal B(\mathcal H_f).
+$$
+这里的参考条件律由 $q$ 指定；以下所有对数均为自然对数。
+
+**命题 73.2（参考校准与对角态上的右逆）。** 对任意粗矩阵 $Y$，有
+$$
+B_{r,q}(Y)
+=\operatorname{diag}_{j\in J}
+\left(\frac{q_j}{p_{r(j)}}Y_{r(j),r(j)}\right).
+$$
+此映射为 CPTP，且
+$$
+B_{r,q}(\operatorname{diag}p)=\operatorname{diag}q,
+\qquad
+\mathcal C_r B_{r,q}(Y)=\operatorname{diag}_{i\in I}(Y_{ii}).
+$$
+因此 $B_{r,q}$ 在粗对角态上是 $\mathcal C_r$ 的右逆；在全部粗矩阵上，复合是粗基去相干。
+
+证明。满射保证每条纤维含某个 $j$，故 $p_i\ge q_j>0$。命题 72.3 给出 $\mathcal E_r$ 为 CPTP，命题 72.5 与定理 72.4 给出 $\Delta_J=\mathcal C_{\mathrm{id}_J}$ 为 CPTP；复合仍为 CPTP。这里有限 Kraus 判据使用 [finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)，复合使用 [QuantumChannel.comp](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)。$U_r$ 的第 $j$ 行只有第 $r(j)$ 列非零，所以 $U_rYU_r^*$ 的第 $j$ 个对角元恰为所列值，去相干给出第一式。取 $Y=\operatorname{diag}p$ 得参考校准；再由定理 72.4，复合的第 $i$ 个对角元为
+$$
+\sum_{r(j)=i}\frac{q_j}{p_i}Y_{ii}=Y_{ii},
+$$
+而非对角元为零。证毕。
+
+**定理 73.3（一般输入支撑上的 KL 缺陷与精确恢复）。** 保持定义 73.1，令 $d_j\ge0$、$\sum_jd_j=1$，并置
+$$
+a_i=\sum_{r(j)=i}d_j,
+\qquad
+t_j=\frac{q_j}{p_{r(j)}}a_{r(j)}.
+$$
+对 $i\in I$，在整个 $J$ 上写参考后验与输入后验
+$$
+q^{(i)}_j=\mathbf1_{r(j)=i}\frac{q_j}{p_i},
+\qquad
+d^{(i)}_j=
+\begin{cases}
+\mathbf1_{r(j)=i}d_j/a_i,&a_i>0,\\
+0,&a_i=0.
+\end{cases}
+$$
+对有限非负质量 $u\ll v$，使用
+$$
+D_{\mathrm{KL}}(u\Vert v)
+=\sum_{x:u_x>0}u_x\ln\frac{u_x}{v_x},
+\qquad
+u\ll v\ \Longleftrightarrow\ (v_x=0\Rightarrow u_x=0)\text{ 对所有 }x.
+$$
+于是
+$$
+\boxed{
+D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(a\Vert p)
+=\sum_{i\in I}a_iD_{\mathrm{KL}}(d^{(i)}\Vert q^{(i)})\ge0.
+}
+$$
+并且以下条件等价：
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(d\Vert q)=D_{\mathrm{KL}}(a\Vert p)
+&\ \Longleftrightarrow\ \forall i\ (a_i>0\Rightarrow d^{(i)}=q^{(i)})\\
+&\ \Longleftrightarrow\ d=t\\
+&\ \Longleftrightarrow\ B_{r,q}\mathcal C_r(\operatorname{diag}d)=\operatorname{diag}d\\
+&\ \Longleftrightarrow\ \forall j,k\ (r(j)=r(k)\Rightarrow d_j/q_j=d_k/q_k).
+\end{aligned}
+$$
+若 $a_i=0$，则该纤维上所有 $d_j$ 均为零。此时 $d^{(i)}$ 只是零权项的零向量约定，该项贡献零，不要求它等于概率向量 $q^{(i)}$。
+
+证明。取确定信道
+$$
+W(j,i)=\mathbf1_{r(j)=i}.
+$$
+它非负，且对每个 $j$，唯一非零项位于 $i=r(j)$，所以 $\sum_iW(j,i)=1$。两输入的输出恰为 $a,p$，均非负且总和为一；$q_j>0$ 给出 $d\ll q$，满射与正 $q$ 给出所有 $p_i>0$。若 $a_i=0$，由有限非负和为零，每个 $r(j)=i$ 的 $d_j=0$。若 $a_i>0$，$d^{(i)}$ 与 $q^{(i)}$ 均归一化，且 $d^{(i)}\ll q^{(i)}$：纤维外两者均为零，纤维内参考后验严格为正。因此出现正分子的位置都有正分母，所列 KL 值有限。
+
+这里复用 theorem 63.3 的“限制先验再归一化”公式，以及 definition 63.101 下 theorem 63.102 证明中的 Bayes 计算：本例联合质量分别为 $d_j\mathbf1_{r(j)=i}$、$q_j\mathbf1_{r(j)=i}$，其输出质量为 $a_i,p_i$，除以正输出质量就得到上述后验。这里只用该有限条件概率计算，树形候选集与随机策略闭包不作为本定理的前提。在零输出处，通用后验的零分母约定给出零向量，和本条约定相同。
+
+对 [ZeroSupportDPI.classical_dpi_identity_zero_support](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/DivergenceSupport/ZeroSupportDPI.lean) 取 $X=J$、$Y=I$、第一输入 $d$、第二输入 $q$ 及上述 $W$。前段已逐项履行非负归一化、绝对连续性和行随机性，故其后验分解给出框中恒等式；相同代入的 [ZeroSupportDefect.dpi_defect_nonneg_zero_support](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/DivergenceSupport/ZeroSupportDefect.lean) 给出非负性。[ZeroSupportDefectEquality.dpi_defect_eq_zero_iff_zero_output_or_posteriors_eq](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/DivergenceSupport/ZeroSupportDefectEquality.lean) 在同一代入下给出第一条等价，包括零 $a_i$ 的分支。这些一般支撑命题允许确定信道的零条目。
+
+在 $a_i>0$ 的纤维上，后验相等恰好是 $d_j=q_j a_i/p_i$；在 $a_i=0$ 的纤维上两边都为零，因此该条件恰为 $d=t$。也可直接在 [Equality/PetzRecovery.dpi_defect_eq_zero_iff_exists_bayes_recovery](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/DivergenceSupport/Equality/PetzRecovery.lean) 中作同一代入：该存在量词附有反向核的逐点指定式；因 $p_i>0$，每个见证必满足 $R(i,j)=q^{(i)}_j$。于是
+$$
+\sum_i p_iR(i,j)=q_j,
+\qquad
+\sum_i a_iR(i,j)=t_j,
+$$
+其同时恢复两输入的结论正好是 $d=t$。参考条件核的归一化也由 $\sum_jq^{(i)}_j=1$ 给出。
+
+定理 72.4 与命题 73.2 给出
+$$
+B_{r,q}\mathcal C_r(\operatorname{diag}d)=\operatorname{diag}t,
+$$
+而对角嵌入为单射，故得到矩阵等价。若 $d=t$，每条纤维上的似然比均为 $a_i/p_i$；反之，若该比在纤维上常值 $c_i$，则求和得 $a_i=c_ip_i$，从而 $c_i=a_i/p_i$ 并得到 $d=t$。所有纤维非空且 $q_j,p_i>0$，所以此步也包括 $c_i=0$ 的边界。证毕。
+
+**命题 73.4（精确不动态与经典零缺陷的相位边界）。** 对任意细密度矩阵 $\rho$，取其对角概率 $d_j=\langle f_j,\rho f_j\rangle$，并按定理 73.3 定义 $a,t$，则
+$$
+B_{r,q}\mathcal C_r(\rho)=\operatorname{diag}t.
+$$
+因此该复合的全部密度不动态恰为
+$$
+\left\{
+\operatorname{diag}_{j\in J}\left(\frac{q_j a_{r(j)}}{p_{r(j)}}\right):
+a_i\ge0,\ \sum_i a_i=1
+\right\}.
+$$
+经典 KL 缺陷为零只判定对角分布满足定理 73.3 的条件，不能推出任意 $\rho$ 被恢复。
+
+具体地，在命题 72.10 的等权二分 $I=\{*\}$、$J=\{0,1\}$、$q=(1/2,1/2)$ 中，所有密度矩阵的标签输出均为 $[1]$，且 $B_{r,q}([1])=I_2/2$。基态 $|f_0\rangle\langle f_0|$、$|f_1\rangle\langle f_1|$ 的经典缺陷均为 $\ln2$；相位态
+$$
+|+\rangle=\frac{f_0+f_1}{\sqrt2},\qquad
+|-\rangle=\frac{f_0-f_1}{\sqrt2}
+$$
+的对角分布均为 $q$，经典缺陷均为零，但两者都不被 $B_{r,q}\mathcal C_r$ 恢复。任何单个仅依赖标签输出的映射，都不能同时恢复这两个不同相位态。
+
+证明。正性与迹一保证 $d_j\ge0$、$\sum_jd_j=1$。定理 72.4 只读取这些对角元，再由命题 73.2 得到 $\operatorname{diag}t$，所以每个不动态必为所列形状。反之，对任意非负归一化 $a$，所列 $t$ 非负，且
+$$
+\sum_{r(j)=i}t_j=a_i\sum_{r(j)=i}\frac{q_j}{p_i}=a_i.
+$$
+因此 $\sum_jt_j=1$，其标签输出为 $\operatorname{diag}a$，再应用 $B_{r,q}$ 就返回 $\operatorname{diag}t$，证明全部不动态的刻画。若 $r$ 双射，此族包含所有对角态；全矩阵上的去相干边界沿用命题 72.5。
+
+在等权二分中，基态的细分布为点质量，故 $D_{\mathrm{KL}}(d\Vert q)=\ln2$；粗分布均为 $p=(1)$，粗 KL 为零。两个相位态的矩阵分别为
+$$
+|\pm\rangle\langle\pm|
+=\frac12\begin{pmatrix}1&\pm1\\\pm1&1\end{pmatrix},
+$$
+其对角分布为 $q$，故细、粗经典 KL 都为零；非零的非对角元使它们均不同于 $I_2/2$。按定理 2.2 的同纤维因子化判据，两个不同输入共享输出 $[1]$，任何一个输出函数在该处只有一个值，因而不能同时返回二者。这个断言允许用先验指定一个已知态并以常值制备映射返回它；它排除的是同一输出映射对两态同时精确恢复。证毕。
+
+**命题 73.5（粗参考质量不能选择纤维内分配）。** $B_{r,q}$ 由所指定的参考条件律及基确定。若 $r$ 有一条至少含两个标签的纤维，则存在不同的严格正概率 $q,q'$，满足 $r_*q=r_*q'=p$，而其参考条件核及 $B_{r,q},B_{r,q'}$ 不同。因此仅有观测到的 $p$ 不能确定这个反向映射。
+
+证明。给定严格正 $q$，取 $j\ne k$ 且 $r(j)=r(k)=i$，再取 $0<\varepsilon<q_k$。令 $q'_j=q_j+\varepsilon$、$q'_k=q_k-\varepsilon$，其余坐标不变。新概率仍严格正、归一化，并有相同的全部父质量；但 $(q')^{(i)}_j-q^{(i)}_j=\varepsilon/p_i\ne0$。命题 73.2 表明，两反向映射作用于 $|e_i\rangle\langle e_i|$ 时，所得第 $j$ 个对角元正是这两个不同的条件概率。故参考 $q$ 提供了粗化所丢弃的纤维内分配。证毕。
+
+**推论 73.6（等格混合的有限分区读出）。** 在定义 71.1 的设置下，固定有限层 $m\ge n$。取 $I=\mathcal P_n$、$J=\mathcal P_m$，令 $r$ 将细格送到其父格，$q_D=\mu(D)$、$p_C=\mu(C)$，并令粗概率 $a_C=1/N_n$。则
+$$
+\operatorname{diag}_{D\in\mathcal P_m}\bigl(\eta_n(D)\bigr)
+=B_{r,q}\left(\operatorname{diag}_{C\in\mathcal P_n}(1/N_n)\right).
+$$
+
+证明。满支撑保证所有非空开闭格的参考质量为正，分区细化给出满射及相容推前。每个细格 $D$ 只包含于一个父格 $r(D)$，所以定义 71.1 直接给出
+$$
+\eta_n(D)=\frac1{N_n}\frac{\mu(D)}{\mu(r(D))}
+=\frac{q_D a_{r(D)}}{p_{r(D)}}.
+$$
+由命题 73.2 得所列矩阵等式。此处等式只识别 $\eta_n$ 的有限分区概率表，未将其识别为第 71 节 Gibbs 算子态的恢复。证毕。
+
+## 73.99 追加锚
