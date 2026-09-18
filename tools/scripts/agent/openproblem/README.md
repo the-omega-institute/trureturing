@@ -5,7 +5,7 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 
 ## 流程(每条 lane)
 1. **搜题**(nyxid-oracle,ChatGPT Pro):brief 必须写明**档位**(第一档新近小猜想 / 第二档计算前沿 / 第三档核心问题)与「文献是否已有此陈述」的核对要求;结果落 `results/rN.json`。
-2. **靶清查**(`TARGET-GATES.md`;已判条目见 `SCREENED-OUT.md`,别重筛):派席前四关,按成本升序——① curl OEIS 原文查是否已被证(语料的 `research open` 标注只说明没人改过那个文件,实测滞后文献三个月);② 对象级去重,**先查钉版 mathlib** 再查本仓(上游一般定理会静默实例化、不留标识符痕迹);③ 档位(悬赏题、名题的精确等价物、只剩有限残余的已发表结果,全部出局);④ 从**定义**而非猜想模式算数值。四关各自独立,过三关不算过。
+2. **靶清查**(`TARGET-GATES.md`;已判条目见 `SCREENED-OUT.md` 与归档 `SCREENED-OUT-1.md`,别重筛):派席前四关,按成本升序——① curl OEIS 原文查是否已被证(语料的 `research open` 标注只说明没人改过那个文件,实测滞后文献三个月);② 对象级去重,**先查钉版 mathlib** 再查本仓(上游一般定理会静默实例化、不留标识符痕迹);③ 档位(悬赏题、名题的精确等价物、只剩有限残余的已发表结果,全部出局);④ 从**定义**而非猜想模式算数值。四关各自独立,过三关不算过。
 3. **探针**(codex-cli,只读 worktree,scratch `/tmp/op-pNN/`):先用 Python 独立核算真假(可证伪预测写在跑之前),再 Lean 整证;`propose` 只认「主陈述以标准三公理编译且无 sorry」;`refuted` 也是结果。已知结果不派席(只 cover 或作前置桥)。
 4. **预登记**(理论卷增订 ingest):写档位、核对结果、逃逸见证与范围墙;`op-ingest-new-noalign.sh` 在新分支追加卷文并 ingest(绕开 issue #5606 的 align 重排问题)。
 5. **Stage A**(`op-resume-seat.sh … implementation`):模块 + Scribe 镜像 + `make lean`/`lean-report`/`emit`,**在任何门之前停下**(envelope `mirror-ready`)。brief 由 `gen_stage_briefs.py` 从实施 brief 切出;基底模板 `templates/impl-base-brief.md` 带产地类型化、import 最小化、公开面自觉、header 工具校验、emit 前刷新报告等块(`add_base_blocks.py` 可补进旧 brief)。
