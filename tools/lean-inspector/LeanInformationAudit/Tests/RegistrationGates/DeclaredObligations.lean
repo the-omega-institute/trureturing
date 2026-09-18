@@ -52,9 +52,9 @@ run_meta do
   (if decisionTypeRetained decisionPlan.plan then logInfo else logError) m!"[{if decisionTypeRetained decisionPlan.plan then "PASS" else "FAIL"}] decision_proposition_type_retained"
   let .ok plan := TemplateAudit.selectedPlan (← getEnv) ``boundTemplate
     | throwError "setup: missing checked template"
-  let retained := (plan.dependencies.find? (·.name == ``boundProof)).any fun input =>
-    !input.typeIdentity.isEmpty && input.bodyIdentity.isEmpty
-  (if retained then logInfo else logError) m!"[{if retained then "PASS" else "FAIL"}] enrollment_proof_input_retained"
+  let omitted := !(plan.dependencies.any (·.name == ``boundProof))
+  (if omitted then logInfo else logError)
+    m!"[{if omitted then "PASS" else "FAIL"}] enrollment_proof_head_omitted"
   for (name, label, shouldValidate) in #[
       (``target, "instantiated_proof_type_target_rejected", false),
       (``independent, "instantiated_independent_proof_type_accepted", true)] do
