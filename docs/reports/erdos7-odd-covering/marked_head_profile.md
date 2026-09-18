@@ -566,3 +566,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Vector marked gains hold on the entire actual K faces](profile-notes/95-vector-marked-gains-hold-on-the-entire-actual-k-faces.md)
 - [Quadratic cell vectors retain deep deletion on the K faces](profile-notes/96-quadratic-cell-vectors-retain-deep-deletion-on-the-k-faces.md)
 - [Vector source margins improve the complete face comparison](profile-notes/97-vector-source-margins-improve-the-complete-face-comparison.md)
+- [A complete stop-loss profile strengthens the whole-face comparison](profile-notes/98-a-complete-stop-loss-profile-strengthens-the-whole-face-comparison.md)
+- [Tied-root deep payments use one actual capacity budget](profile-notes/99-tied-root-deep-payments-use-one-actual-capacity-budget.md)
+- [Fractional deep payments improve the global comparison](profile-notes/100-fractional-deep-payments-improve-the-global-comparison.md)
