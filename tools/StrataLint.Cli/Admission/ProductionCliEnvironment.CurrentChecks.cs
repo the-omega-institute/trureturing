@@ -39,7 +39,7 @@ internal sealed partial class ProductionCliEnvironment
         {
             var declaration = validation.CheckManifest().Single(check => check.Id == "scribe-markdown");
             var paths = EngineeringProjectRegistry.ExpandInputs(snapshot.Files.Keys.Select(path => path.Value), declaration.PathInventory, [], declaration.Id);
-            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\n", paths) + "\n");
+            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", paths) + "\0");
             return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
                 "--paths-from", Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths)]);
         });

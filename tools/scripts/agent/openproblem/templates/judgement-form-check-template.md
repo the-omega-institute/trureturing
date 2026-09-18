@@ -37,7 +37,7 @@ declarations, using only:
   * normalisation — definitional unfolding, `simp` with existing lemmas, and, once every
     atomic fact is already supplied, `ring` / `linarith` / `omega` / `norm_num` / `decide`.
 
-If yes, the declaration is **bind-only** and the delivery must be refused — unless the module settles a preregistered external named open problem under `admission_basis: open-problem-resolution` (CLAUDE.md §3.2), in which case report the shape as bind-only and check that basis's conditions (a)–(d) instead.
+If yes, the declaration is **bind-only** and the delivery must be refused — unless the module settles a preregistered external named open problem under `admission_basis: open-problem-resolution` (CLAUDE.md §3.2), in which case report the shape as bind-only and check that basis's conditions (a)–(d) instead. The tree you review is in **Phase-A shape**: the `OpenProblemResolutionClaim` node and the `Problems/` dossier are added in Phase B, after `make deposit` has frozen the host (the emitter refuses a resolution claim whose host is not yet a frozen-state member), so their absence is not a condition-(c) finding — judge (a), (b), (d) and the honesty of the labels; report (c) only if a claim node or dossier is present and wrong.
 
 Watch for the two shapes that hide best:
 
