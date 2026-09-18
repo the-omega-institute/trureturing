@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b3750a3a4a8eb91aa6873c8202dc6afb698c7a6d6a1c6ce977d59d1522d3e2de
+  normalized_sha256: sha256:b3750a3a4a8eb91aa6873c8202dc6afb698c7a6d6a1c6ce977d59d1522d3e2de
+cas_ref: sha256:b3750a3a4a8eb91aa6873c8202dc6afb698c7a6d6a1c6ce977d59d1522d3e2de
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.conditional_expectation_refinement_pythagoras
+    target_statement_id: sha256:0d82b102228359af35d172ae9a9e716547d2f541d7b0f4d24ed8c9802afbb9e2
+receipts:
+  unresolved_subitems: []
