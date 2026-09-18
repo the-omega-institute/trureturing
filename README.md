@@ -2,6 +2,8 @@
 
 trureturing — the last line of the ledger is always the first line of the next round.
 
+<!-- Temporary post-merge CI entry probe; close without merging. -->
+
 The `Blueprint/` Markdown content of this repository is published as a browsable, searchable
 mdBook site at **<https://the-omega-institute.github.io/trureturing-mdbook/>**. That site is a
 derived projection, rebuilt daily from this repository by
