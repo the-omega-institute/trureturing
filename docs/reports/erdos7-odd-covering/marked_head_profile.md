@@ -637,3 +637,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete local source domain crosses the outer strip](profile-notes/166-the-complete-local-source-domain-crosses-the-outer-strip.md)
 - [Two complete source neighborhoods remove the outer crossing](profile-notes/167-two-complete-source-neighborhoods-remove-the-outer-crossing.md)
 - [The first-five support lowers the complete factorial bound](profile-notes/168-the-first-five-support-lowers-the-complete-factorial-bound.md)
+- [The complete source bound needs no independent slot-loss cutoff](profile-notes/169-the-complete-source-bound-needs-no-independent-slot-loss-cutoff.md)
+- [A complete head scan transports across source radii](profile-notes/170-a-complete-head-scan-transports-across-source-radii.md)
+- [The pure-three path has a joint complete moment bound](profile-notes/171-the-pure-three-path-has-a-joint-complete-moment-bound.md)
