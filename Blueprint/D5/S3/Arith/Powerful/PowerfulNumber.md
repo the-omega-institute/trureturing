@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Arith/Powerful/PowerfulNumber.Powerful`
 
 *Formalization.* `D5/S3/Arith/Powerful/PowerfulNumber.Powerful` (`✓ std3`).
 
-*Citation.* Solomon W. Golomb (1970). *Powerful numbers*. DOI: [10.1080/00029890.1970.11992654](https://doi.org/10.1080/00029890.1970.11992654). URL: <https://doi.org/10.1080/00029890.1970.11992654>.
+*Citation.* Solomon W. Golomb (1970). *Powerful numbers*. DOI: [10.1080/00029890.1970.11992654](https://doi.org/10.1080/00029890.1970.11992654).
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/Arith/Powerful/PowerfulNumber.golomb_representation`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Powerful/PowerfulNumber.golomb_representation` (`✓ std3`). ∎
 
-*Citation.* Solomon W. Golomb (1970). *Powerful numbers*. DOI: [10.1080/00029890.1970.11992654](https://doi.org/10.1080/00029890.1970.11992654). URL: <https://doi.org/10.1080/00029890.1970.11992654>.
+*Citation.* Solomon W. Golomb (1970). *Powerful numbers*. DOI: [10.1080/00029890.1970.11992654](https://doi.org/10.1080/00029890.1970.11992654).
 
 *Commentary.*
 
