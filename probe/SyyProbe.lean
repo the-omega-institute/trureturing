@@ -182,4 +182,16 @@ private theorem valleyRuns_append_valley (X Y : List ℕ) (v : ℕ)
       rw [(cut tail).1, (cut tail).2, ih hb]
       rw [valleyRuns]
 
+private theorem r_split_min (X Y : List ℕ) (v : ℕ)
+    (hX : ∀ x ∈ X, v < x) (hY : ∀ y ∈ Y, v ≤ y) :
+    r (X ++ v :: Y) = r X ++ Y.reverse ++ [v] := by
+  have ht : Y.takeWhile (fun y => decide (v ≤ y)) = Y :=
+    List.takeWhile_eq_self_iff.mpr (by simpa using hY)
+  have hd : Y.dropWhile (fun y => decide (v ≤ y)) = [] :=
+    List.dropWhile_eq_nil_iff.mpr (by simpa using hY)
+  simp only [r, valleyRuns_append_valley X Y v hX, List.map_append,
+    List.flatten_append, valleyRuns, ht, hd, List.map_cons, List.map_nil,
+    List.flatten_cons, List.flatten_nil, List.append_nil, List.reverse_cons,
+    List.append_assoc]
+
 end SyyProbe

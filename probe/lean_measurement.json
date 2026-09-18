@@ -1,8 +1,8 @@
 {
   "command": "/usr/bin/time -l lake env lean probe/SyyProbe.lean",
   "exit": 0,
-  "wall_s": 5.47,
-  "peak_rss_bytes": 1647558656,
-  "peak_rss_gb": 1.647558656,
-  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-valley-partition-split.log"
+  "wall_s": 6.08,
+  "peak_rss_bytes": 1652998144,
+  "peak_rss_gb": 1.652998144,
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/prove-last-valley-reversal-split.log"
 }

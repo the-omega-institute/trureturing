@@ -72,3 +72,5 @@ Compiled private lemma `s_ends_max`: on every nonempty word, including words wit
 Compiled private lemma `input_le_reverse_s`: every word is lexicographically at most the reverse of its West output. Substituting `reverse A ++ [v]` gives the weak inequality needed in the preregistered sublemma, without a smallness hypothesis or an equality-case classification.
 
 Compiled private lemma `valleyRuns_append_valley`: appending an entry smaller than every prefix entry starts a fresh valley run, and leaves the prefix partition unchanged.
+
+Compiled private lemma `r_split_min`: splitting at the first global minimum gives `r (X ++ v :: Y) = r X ++ reverse Y ++ [v]`, under the exact prefix and suffix comparison hypotheses.
