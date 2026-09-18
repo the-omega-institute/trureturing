@@ -9,8 +9,8 @@ applicable.
 
 ## Scope and versions
 
-This is a bounded source audit dated 2026-09-18. The D5 search and local import
-probes use trureturing commit
+The original bounded source audit is dated 2026-09-18. Its D5 search and local
+import probes use trureturing commit
 `2636f7c8202a04cfee1eb6516754c95dded5ebad`, Lean `4.33.0`, and
 [Mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`][mathlib].
 The inspected result records identify FormalConjectures catalog commit
@@ -22,19 +22,28 @@ whose Lean version is `4.33.1` and Mathlib pin is
 Availability in that snapshot does not imply admissibility or compatibility
 with the project's pin.
 
-Five accepted result records were read for scope: #272 strong, #108,
-#14(i), #196, and #18(b). Four published proof files (#272, #108, #14(i),
-#196) were sampled at their final dependency paths and key intermediate
-statements. The external proofs were not fully audited or locally replayed.
-Their verification status below is the site's report, not a new certification.
+The [19 September extension][extension], following PRs #8606/#8608 and the
+[density/Sidon correction][correction], uses the separate trureturing snapshot
+`1a467bbc6e27672f424674bcebbda8d51a204538` with the same project Lean/Mathlib
+pins. The original four source paths (#272 strong, #108, #14(i), #196) plus
+#18(b) and #653 give six accepted proof paths sampled in total. The two new
+files were read along relevant final dependency paths, not exhaustively
+audited. No full external proof replay or new certification was performed;
+the submissions' builds use their own pinned environments. Prior source and
+import/type checks remain evidence at their original snapshot, not current
+full verification.
 
-At this observation, the [results page][results] reports 32 submissions:
-27 Lean verified and 5 Lean rejected. Among the 27 verified table rows,
-17 have approved reviews, 5 partial awards for task defects, and 5 rejected
-reviews (2 prior formalizations, 2 prior solutions, 1 duplicate).
-Desktop/mobile copies are not separate records. These are submission counts,
-not the number of newly solved Erdős problems; the page also contains Green
-problems, variants, and parts.
+The original 18 September observation counted 32 submissions (27 Lean
+verified, 5 rejected). The extended observation on 19 September 2026
+(Singapore), reported in the [published extension][extension], counted
+33 submissions: 28 kernel verified and 5 rejected. Among the 28 unique
+verified rows: 17 approved, 5 partial awards, 5 review rejections, and 1 pending
+([#859][r859], excluded from the accepted-proof benchmark). Desktop/mobile
+copies are not separate records. The approved Erdős subset has 12 scopes
+across 11 problem numbers, not 11 new solutions; the page also includes Green
+problems, variants, and parts. The [approved #10 review][r10] explicitly uses
+the pre-existing Crocker covering-congruence construction; eligibility
+reflected its absence from the pinned Lean environment, not new mathematics.
 
 The site separates kernel acceptance from source/semantic review and reward
 eligibility. Inspected records say the independent Nanoda kernel was not run.
@@ -44,7 +53,7 @@ private search process nor its cost. Validator time cannot explain research
 productivity. The [selection description][how] additionally favors compact
 targets with a standard Mathlib surface, so this is a selected challenge set.
 
-## Four proof paths that expose useful capabilities
+## Six sampled proof paths
 
 | Accepted target | Source-level path used by the final result | Consequence for our work |
 | --- | --- | --- |
@@ -52,8 +61,10 @@ targets with a standard Mathlib surface, so this is a selected challenge set.
 | [#108][r108]: refutation at `r=5, k=7` | `model_badColor_probability_le` and `model_badSparse_probability_le`, with `model_sizes_exist`, feed `exists_avoiding_of_finiteProb_lt_one` inside `model_base_exists`; then `arc_counterexample_family → counterexample_family → target` in the [source][p108]. | This uses **probabilistic base-graph existence followed by deterministic arc-graph transport**. The hard estimates ensure both properties hold in the same realization. It is evidence for the user's combined probability/construction direction. |
 | [#14(i)][r14]: exception count for unique two-term sums | `finite_obstruction → set_scale_obstruction → uniform_sqrt_bound → part_i_positive → target` in the [source][p14]. The finite proof combines representation/triple counts, prefix estimates, and generating-function bounds. It gives `sqrt(N) < 12000 E_A(N)` for `N ≥ 2·10²⁴`, then `N^(1/2-ε) =O(E_A(N))` for every `ε>0`. | The representation convention is unordered pairs including the diagonal, with exceptions in `1..N`. The strong finite obstruction carries the mathematical content; the final Big-O conversion directly uses existing analysis. Part (ii) with a shared core is not an independent consumer. |
 | [#196][r196]: permutation avoiding four-term APs in both orientations | `finite_saturation`, `extend_closed`, and `extend_compatible` establish `finite_extension`; nested `stage` lists give `permFun_agrees`, injectivity, surjectivity, and AP avoidance before `counterexample → target` in the [source][p196]. | The key finite invariant must be strong enough to survive extension. Passing to a global object requires stability and eventual coverage; there is no unproved extension premise. This is distinct from finite-to-asymptotic transfer. |
+| [#18(b)][r18]: eventually `h(n!) < n^ε` for every `ε > 0` | In the [source][p18], `exists_dyadic_average_mixed_energy_decay` controls mixed additive energy for sets in `ZMod (2^J)` and unit dilates under residue-fiber nonconcentration at every relevant scale; `exists_dyadic_probability_flattening_iteration` chooses steps independently of `J`. `exists_dyadic_unit_product_fourier_decay` gives exponential decay, then `weighted_dyadic_mixing → target` supplies the final premise internally. | Energy, Plünnecke–Ruzsa and DFT interfaces do not by themselves supply the multiscale hypotheses or quantified saving. Exact reference-library coverage is unestablished, not proven absent. This scope does not settle the stronger polylogarithmic factorial question or all of #18. |
+| [#653][r653]: asymptotically almost all pins have different pinned-distance counts | In the [source][p653], `FineSelection.exists_selection` converts normalized coarse error `r(L) → 0` into bounded row/unary corrections and injective scores on `S`, with `|S| ≥ (1−δ)|good|L² − loss(L)L²` and `loss(L) → 0`. `PhysicalAssembly.exists_realization → exists_configuration` realizes adjusted scores plus one common constant with controlled point overhead. Padding preserves distinctions at every larger cardinality; `FinalConstruction.squareFamilies` supplies the finite construction before the all-n/little-o conclusion. | Averaging and injective-image counting apply after the cost and geometric preservation facts; they do not construct them. The final proof supplies these premises. The statistic counts different pinned-distance counts, not the total number of distances. Exact reference-library domination remains unestablished. |
 
-#108's `model_base_exists` states, for `q≥1` and `K≥4), the existence of
+#108's `model_base_exists` states, for `q >= 1` and `K >= 4`, the existence of
 a finite base graph that is not `2q`-colorable while every subgraph of maximum
 degree at most `K` is 4-colorable. The arc construction turns the appropriate
 four-cycle-free subgraphs into 6-colorable graphs and forces arbitrarily high
@@ -72,21 +83,29 @@ Here `Good` includes nodup, an AP closure condition, and a compatible binary
 preference system. “Every finite object extends” without those preservation
 conditions would not be the same theorem.
 
-The [#18(b) review][r18] supplies a fifth scope check: its final factorial
-bound `h(n!) < n^ε` eventually for every positive `ε` discharges the weighted
-dyadic-mixing premise internally. This audit did not inspect that proof file.
+#653's realization retains all original pins. Padding places a new point
+beyond all old distances, increasing every old pinned-distance count equally.
+Common-shift preservation and the added-point budget are essential to the
+final cardinality/loss transfer, not consequences of a generic transport name.
+Both new external proofs are existing reuse sources, not our new content.
 
 ## Existing library knowledge and precise limits
 
 Classification applies to individual obligations:
 
-* **A:** an existing frozen D5 declaration covers the exact obligation.
-* **B:** an existing upstream proof covers it; use the library, subject to the
-  exact version, domain, and hypotheses.
-* **C:** a repeatedly needed content statement remains after the dominating
-  theorem search, with two distinct live consumers.
+* **A:** an exact frozen D5 declaration covers the obligation with its
+  hypotheses discharged.
+* **B:** an exact independent upstream proof supplies it, subject to the
+  recorded version, domain, hypotheses, and import boundary.
+* **C:** shared missing non-bind-only content survives library-first
+  domination search (D5, pinned Mathlib, admissible external Lean), with two
+  independent live consumers.
 * **U:** coverage or transfer has not been established. This is an uncertainty
   marker, not a fourth source of mathematical content.
+
+Freeze the reference DAG/upstream corpus for each comparison. The benchmark
+solution cannot tautologically establish prior coverage of its own obligation;
+after inspection it can become a reuse source without new mathematical credit.
 
 The following are library entry points, not claims of complete coverage of
 any external proof.
@@ -104,20 +123,22 @@ any external proof.
 | Probability in D5's capture model | [`escape_bonferroni_bounds`][bonferroni]; [`capture_count_variance_and_lower_bound`][moment] | Frozen D5 results give union/Bonferroni bounds and `(E X)²/E(X²) ≤ P(X>0)` for the specific normalized listing/capture model. Cross-domain coverage of #108 is U; no identification of that model with the graph sample is claimed. |
 | Finite bounds to asymptotics | [`Asymptotics.IsBigO.of_bound`][bigO] and [power asymptotics][powers] | B for standard envelope/limit operations. A new error estimate can be content; a new name for an already supplied estimate plus this constructor is bind-only. |
 | Additive bases and natural density | [`Set.IsAsymptoticAddBasisOfOrder`][basis], [`Set.HasDensity`][density], and [finite averaging][finitemethod] in the external snapshot | Existing external definitions/proofs, but project import compatibility is U. `Set.HasDensity.hasLogDensity` there is `proof_wanted`, not a proved dependency. Audit declaration bodies, not just names. |
+| Density in D5 | Frozen [`AsymptoticDensity`][d5density]: `upperDensity`, `lowerDensity`, `HasDensity`, `upperDensity_union_le` | A for the stated natural-number density interface and union subadditivity. Counting uses `Finset.range n`; `HasDensity A d` is lower/upper equality at `d` via liminf/limsup, whereas external `Set.HasDensity` uses Tendsto. Exact transfer needs a predicate bridge, not a keyword match. |
+| Sidon counting in D5 | Frozen [`SidonSet`][d5sidon]: `IsSidon`, `card_mul_card_sub_one_le` | A for `A : Finset ℕ`, `A ⊆ Icc 1 N`, and unique pair sums up to exchange, including the diagonal: `|A|(|A|−1) ≤ 2(N−1)`. This is not an unrestricted representation, basis, or energy-flattening theorem. |
+| Eventual-cycle averaging in D5 | Frozen [`EventualCycleAverage.eventual_cycle_average`][d5cycle] | A for a real-valued observable on an orbit with a supplied entry time, positive finite period and exact cycle identity for every subsequent step. The horizon average tends to the uniform cycle average; eventual finite periodicity is a premise, not a general averaging principle. |
 | Graph invariant transport | [`chromaticNumber_mono_of_hom`, `Colorable.of_hom`][coloring]; [`egirth_anti`, `IsContained.egirth_le`][girth] | B. Natural-valued `girth` is zero on forests; `girth_anti` requires nonacyclicity. Use extended girth for unconditional monotonicity. Operation-specific statements in #108 remain separate obligations. |
 
-Local import/name-and-type probes checked the first eleven declarations listed
-in the validation paragraph below against the project pin. Source inspection
-supports the other entry points; it does not by itself certify an external
-proof's axiom closure or its transfer into D5.
+Prior local import/name-and-type probes covered the scope listed below against
+the original project pin. Source inspection supports the other entry points;
+it does not certify an external proof's axiom closure or its transfer into D5.
 
-The D5 keyword search found no `HasDensity` or
-`IsAsymptoticAddBasisOfOrder` occurrence in D5/Library at the audit commit.
-It did find chromatic-number use in
-[`DefectRelationMinimumColoring`][d5coloring], so “D5 has no graph interface”
-would be false. The [finite Nathanson refutation][nathanson] concerns finite
-h-fold sumsets, not the full asymptotic-basis framework. None of these text
-searches proves the absence of semantically equivalent statements.
+The early density keyword miss is superseded by the [published correction][correction]
+and the three frozen interfaces above, linked at the immutable extension SHA.
+Semantic absence never followed from that search. D5 also has chromatic-number
+use in [`DefectRelationMinimumColoring`][d5coloring]. The
+[finite Nathanson refutation][nathanson] concerns finite h-fold sumsets, not
+the full asymptotic-basis framework. None of these interfaces automatically
+supplies #18(b)'s dyadic flattening or #653's selection/geometry premises.
 
 ## What this means for our previous #272 work
 
@@ -166,6 +187,12 @@ Likewise, summing a supplied representation cap to obtain
    theorem; merely packaging an assumed chain into a limit may be routine.
    A second independent consumer is still needed for a shared abstraction.
 
+#18(b) adds a concrete multiscale estimate benchmark; #653 adds vanishing-loss
+selection and geometric score preservation with a size budget. #653 and #108
+do not establish one shared missing theorem: the latter needs simultaneous
+graph bad-event bounds and arc-specific transport. Assuming those distinct
+preservation facts and repackaging their consequences would be bind-only.
+
 This sample does not establish a repeated missing content theorem qualifying
 for class C. Nor does it justify a numerical ranking of the five research
 areas by expected solution rate. It establishes concrete questions to test:
@@ -183,14 +210,25 @@ most of its declarations are available.
 
 Current bounded results:
 
-* Five accepted target scopes inspected; four proof paths sampled.
-* Eleven pinned Mathlib declaration types checked locally: energy expansion
-  and sumset-energy inequality; finite Hall; local LYM; Sperner; chromatic
+* Six accepted source paths sampled: #272 strong, #108, #14(i), #196,
+  #18(b), #653; no exhaustive proof audit.
+* Prior pinned Mathlib import/type checks covered energy expansion and
+  sumset-energy inequality; finite Hall; local LYM; Sperner; chromatic
   homomorphism monotonicity; extended and natural girth monotonicity; both
-  first-moment existence directions; and `IsBigO.of_bound`.
-* No full external proof replay or exact end-to-end transfer into D5 completed.
-* Zero class-C generalizations established with two independent consumers.
+  first-moment existence directions; and `IsBigO.of_bound`. This retains the
+  supported listed scope, without asserting an expanded aggregate count.
+* Zero full external-proof transfers into D5; no fresh Lean probe, replay,
+  build, or new Lean code in this documentation synchronization.
+* Zero established class-C additions with two independent live consumers.
 * **New complete Erdős solutions: 0.**
+
+For source identification, the extension records parsed-source SHA-256
+`4d6ee89617415288e9f127beb3c0e0211c011f891889fcb43d0e16373bd14088`
+for #18(b) and
+`24c90fcc776a1bc5d3ce86fc30a2cf232c64c2c3a42f8f7c36f4b5795f0e3476`
+for #653. Source availability, type compatibility, kernel acceptance,
+semantic approval, prior-solution status and the complete-new-solution KPI
+remain separate. The broader solution goal remains active.
 
 Before selecting a new solution target, check the canonical page, ordinary
 discussion, dedicated claims, public formalizations, and these accepted
@@ -217,6 +255,16 @@ selected merely because its terminology matches a library module.
 [r196]: https://conjectures.io/results/e73b95f7-1d1b-42b5-a442-c07077741d73
 [p196]: https://conjectures.io/results/e73b95f7-1d1b-42b5-a442-c07077741d73/solution
 [r18]: https://conjectures.io/results/e93a2766-4c70-4564-b565-d0c556f35929
+[p18]: https://conjectures.io/results/e93a2766-4c70-4564-b565-d0c556f35929/solution
+[r653]: https://conjectures.io/results/257ce6dd-e3e5-4169-9d7e-2811092977ca
+[p653]: https://conjectures.io/results/257ce6dd-e3e5-4169-9d7e-2811092977ca/solution
+[r859]: https://conjectures.io/results/e060355f-a728-4b06-af11-6302b5780d19
+[r10]: https://conjectures.io/results/244ff2d0-399d-4e37-a307-4ff6f3cb3493
+[extension]: https://github.com/the-omega-institute/trureturing/issues/8450#issuecomment-5736408741
+[correction]: https://github.com/the-omega-institute/trureturing/issues/8450#issuecomment-5730875809
+[d5density]: https://github.com/the-omega-institute/trureturing/blob/1a467bbc6e27672f424674bcebbda8d51a204538/D5/S3/Arith/Density/AsymptoticDensity.lean
+[d5sidon]: https://github.com/the-omega-institute/trureturing/blob/1a467bbc6e27672f424674bcebbda8d51a204538/D5/S3/Arith/Additive/SidonSet.lean
+[d5cycle]: https://github.com/the-omega-institute/trureturing/blob/1a467bbc6e27672f424674bcebbda8d51a204538/D5/S3/ObserverMemory/Prediction/EventualCycleAverage.lean
 [mathlib]: https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d
 [fc]: https://github.com/google-deepmind/formal-conjectures/tree/dad8f20847def1241950d466768df630e74ad00d
 [convolution]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Combinatorics/Additive/Convolution.lean
