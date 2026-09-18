@@ -1,7 +1,10 @@
 ---
 bibkey: cfmp2026criticaltransition
+authors: Francesco Costantino; Roberto Frigerio; Bruno Martelli; Carlo Petronio; Xinrong Zhao; Ke Feng; Huabin Ge; Bobo Hua; Feng Luo; Tian Yang
 year: 2026
 title: Sources for critical six-valent transition stars and cover-stable realization
+doi: null
+claim: The cited geometric inputs support the explicitly restricted critical-star construction; the formal result proves its continuous six-occurrence angle estimate without claiming unrestricted CFMP.
 license: citation-only
 triage: anchor
 strata_touched: []

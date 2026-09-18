@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-real-inequality)
    anchors: []
    utility: none
-   digest: Uniform whole-face bounds for the six-variable hyper-ideal cosine. -/
+   digest: Mixed-coordinate monotonicity for the six-variable hyper-ideal cosine. -/
 
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Inv
@@ -26,7 +26,7 @@ It does not construct a tetrahedron, a face pairing, a co-volume function,
 a manifold or a Ricci-flow solution. The formula-to-tetrahedron realization
 and the global existence argument remain separate ordinary mathematics.
 
-The public comparisons are unbounded real inequalities. Numeric endpoint
+The public comparison is an unbounded real inequality. Numeric endpoint
 reductions are internal steps, not standalone finite-instance declarations.
 The intended utility classification is none: this is neither bounded
 enumeration, a certificate checker, a supplied-numeric-premise reduction,
@@ -203,112 +203,6 @@ theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
           (div_le_div_of_nonneg_right hp (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
   exact cmp
 
-/-- Endpoint envelopes and the three uniform whole-face estimates used by
- the four-cycle incidence theorem. All displayed intervals are closed. -/
-theorem fourcycle_envelopes :
-    (∀ x y z o v w : ℝ,
-      x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
-      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
-      2*(2-x)/(x+1) ≤ cosine x y z o v w ∧
-      cosine x y z o v w ≤ (9-x)/(7+x)) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
-      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
-      w ∈ Set.Icc 1 (8/5) →
-      (293:ℝ)/400 ≤ cosine (5/4) y z o v w) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
-      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
-      w ∈ Set.Icc 1 (8/5) →
-      cosine 2 y z o v w ≤ (1577:ℝ)/2236) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
-      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
-      cosine (8/5) y z o v w ≤ (37:ℝ)/43) := by
-  -- Positivity is established for the actual radicand, not postulated.
-  have hr : ∀ x y z : ℝ, 1 ≤ x → 1 ≤ y → 1 ≤ z → 0 < rad x y z := by
-    intro x y z hx hy hz
-    have hx2 : 1 ≤ x^2 := by nlinarith [sq_nonneg (x-1)]
-    have hy2 : 1 ≤ y^2 := by nlinarith [sq_nonneg (y-1)]
-    have hz2 : 1 ≤ z^2 := by nlinarith [sq_nonneg (z-1)]
-    have hp : 0 ≤ 2*x*y*z := by positivity
-    unfold rad
-    linarith
-  have cmp := cosine_mixed_comparison
-  have hc1 : (1:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
-  have hc2 : (2:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
-  have hca : (5/4:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
-  have hcb : (8/5:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
-  have hbase : ∀ x y z o v w : ℝ,
-      x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
-      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
-      2*(2-x)/(x+1) ≤ cosine x y z o v w ∧
-      cosine x y z o v w ≤ (9-x)/(7+x) := by
-    intro x y z o v w hx hy hz ho hv hw
-    have hlo : cosine x 1 1 2 1 1 = 2*(2-x)/(x+1) := by
-      have hs := Real.sq_sqrt (hr x 1 1 hx.1 (by norm_num) (by norm_num)).le
-      unfold cosine
-      rw [div_div, ← pow_two, hs]
-      have hrw : rad x 1 1 = (x+1)^2 := by unfold rad; ring
-      rw [hrw]
-      unfold numerator
-      field_simp [show x+1 ≠ 0 by linarith [hx.1]]
-      ; ring
-    have hhi : cosine x 2 2 1 2 2 = (9-x)/(7+x) := by
-      have hs := Real.sq_sqrt (hr x 2 2 hx.1 (by norm_num) (by norm_num)).le
-      unfold cosine
-      rw [div_div, ← pow_two, hs]
-      have hrw : rad x 2 2 = (x+1)*(x+7) := by unfold rad; ring
-      rw [hrw]
-      unfold numerator
-      field_simp [show x+1 ≠ 0 by linarith [hx.1], show x+7 ≠ 0 by linarith [hx.1],
-        show 7+x ≠ 0 by linarith [hx.1]]
-      ; ring
-    constructor
-    · rw [← hlo]
-      exact cmp x 1 1 2 1 1 y z o v w hx hc1 hc1 hc2 hc1 hc1 hy hz ho hv hw
-        hy.1 hz.1 ho.2 hv.1 hw.1
-    · rw [← hhi]
-      exact cmp x y z o v w 2 2 1 2 2 hx hy hz ho hv hw hc2 hc2 hc1 hc2 hc2
-        hy.2 hz.2 ho.1 hv.2 hw.2
-  refine ⟨hbase, ?_, ?_, ?_⟩
-  · intro y z o v w hy hz ho hv hw
-    have hy' : y ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hy.1], hy.2⟩
-    have hz' : z ∈ Set.Icc (1:ℝ) 2 := ⟨hz.1, by linarith [hz.2]⟩
-    have ho' : o ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [ho.1], ho.2⟩
-    have hv' : v ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hv.1], hv.2⟩
-    have hw' : w ∈ Set.Icc (1:ℝ) 2 := ⟨hw.1, by linarith [hw.2]⟩
-    have h := cmp (5/4) (5/4) 1 2 (5/4) 1 y z o v w
-      hca hca hc1 hc2 hca hc1 hy' hz' ho' hv' hw' hy.1 hz.1 ho.2 hv.1 hw.1
-    have he : cosine (5/4) (5/4) 1 2 (5/4) 1 = (293:ℝ)/400 := by
-      have hA : rad (5/4) (5/4) 1 = (25:ℝ)/4 := by norm_num [rad]
-      have hB : rad (5/4) 1 (5/4) = (25:ℝ)/4 := by norm_num [rad]
-      have hP : numerator (5/4) (5/4) 1 2 (5/4) 1 = (293:ℝ)/64 := by
-        norm_num [numerator]
-      rw [cosine, hA, hB, hP, div_div, ← pow_two, Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 25/4)]
-      norm_num
-    simpa only [he] using h
-  · intro y z o v w hy hz ho hv hw
-    have hy' : y ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hy.1], hy.2⟩
-    have hz' : z ∈ Set.Icc (1:ℝ) 2 := ⟨hz.1, by linarith [hz.2]⟩
-    have ho' : o ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [ho.1], ho.2⟩
-    have hv' : v ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hv.1], hv.2⟩
-    have hw' : w ∈ Set.Icc (1:ℝ) 2 := ⟨hw.1, by linarith [hw.2]⟩
-    have h := cmp 2 y z o v w 2 (8/5) (5/4) 2 (8/5)
-      hc2 hy' hz' ho' hv' hw' hc2 hcb hca hc2 hcb hy.2 hz.2 ho.1 hv.2 hw.2
-    have he : cosine 2 2 (8/5) (5/4) 2 (8/5) = (1577:ℝ)/2236 := by
-      have hA : rad 2 2 (8/5) = (559:ℝ)/25 := by norm_num [rad]
-      have hB : rad 2 (8/5) 2 = (559:ℝ)/25 := by norm_num [rad]
-      have hP : numerator 2 2 (8/5) (5/4) 2 (8/5) = (1577:ℝ)/100 := by
-        norm_num [numerator]
-      rw [cosine, hA, hB, hP, div_div, ← pow_two, Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 559/25)]
-      norm_num
-    simpa only [he] using h
-  · intro y z o v w hy hz ho hv hw
-    have h := (hbase (8/5) y z o v w hcb hy hz ho hv hw).2
-    norm_num at h ⊢
-    exact h
-
-#print axioms fourcycle_envelopes
+#print axioms cosine_mixed_comparison
 
 end D5.S3.Geometry.Hyperideal.FourCycleEnvelopes

@@ -107,7 +107,103 @@ theorem fourcycle_curvature_box (s : Incidence T E) (hs : FourCycle s) :
         (x e = upper s e → curvature s x e ≤ -margin))) := by
   classical
   rcases hs with ⟨hcolour, hlowDegree, hhighDegree⟩
-  obtain ⟨hbase, hlowFace, huppFace, hhighFace⟩ := fourcycle_envelopes
+  have hrad : ∀ x y z : ℝ, 1 ≤ x → 1 ≤ y → 1 ≤ z → 0 < rad x y z := by
+    intro x y z hx hy hz
+    have hx2 : 1 ≤ x^2 := by nlinarith [sq_nonneg (x-1)]
+    have hy2 : 1 ≤ y^2 := by nlinarith [sq_nonneg (y-1)]
+    have hz2 : 1 ≤ z^2 := by nlinarith [sq_nonneg (z-1)]
+    have hp : 0 ≤ 2*x*y*z := by positivity
+    unfold rad
+    linarith
+  have cmp := cosine_mixed_comparison
+  have hI1 : (1:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
+  have hI2 : (2:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
+  have hI54 : (5/4:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
+  have hI85 : (8/5:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
+  have hbase : ∀ x y z o v w : ℝ,
+      x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
+      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
+      2*(2-x)/(x+1) ≤ cosine x y z o v w ∧
+      cosine x y z o v w ≤ (9-x)/(7+x) := by
+    intro x y z o v w hx hy hz ho hv hw
+    have hlo : cosine x 1 1 2 1 1 = 2*(2-x)/(x+1) := by
+      have hs := Real.sq_sqrt (hrad x 1 1 hx.1 (by norm_num) (by norm_num)).le
+      unfold cosine
+      rw [div_div, ← pow_two, hs]
+      have hrw : rad x 1 1 = (x+1)^2 := by unfold rad; ring
+      rw [hrw]
+      unfold numerator
+      field_simp [show x+1 ≠ 0 by linarith [hx.1]]
+      ring
+    have hhi : cosine x 2 2 1 2 2 = (9-x)/(7+x) := by
+      have hs := Real.sq_sqrt (hrad x 2 2 hx.1 (by norm_num) (by norm_num)).le
+      unfold cosine
+      rw [div_div, ← pow_two, hs]
+      have hrw : rad x 2 2 = (x+1)*(x+7) := by unfold rad; ring
+      rw [hrw]
+      unfold numerator
+      field_simp [show x+1 ≠ 0 by linarith [hx.1], show x+7 ≠ 0 by linarith [hx.1],
+        show 7+x ≠ 0 by linarith [hx.1]]
+      ring
+    constructor
+    · rw [← hlo]
+      exact cmp x 1 1 2 1 1 y z o v w hx hI1 hI1 hI2 hI1 hI1 hy hz ho hv hw
+        hy.1 hz.1 ho.2 hv.1 hw.1
+    · rw [← hhi]
+      exact cmp x y z o v w 2 2 1 2 2 hx hy hz ho hv hw hI2 hI2 hI1 hI2 hI2
+        hy.2 hz.2 ho.1 hv.2 hw.2
+  have hlowFace : ∀ y z o v w : ℝ,
+      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
+      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
+      w ∈ Set.Icc 1 (8/5) →
+      (293:ℝ)/400 ≤ cosine (5/4) y z o v w := by
+    intro y z o v w hy hz ho hv hw
+    have hy' : y ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hy.1], hy.2⟩
+    have hz' : z ∈ Set.Icc (1:ℝ) 2 := ⟨hz.1, by linarith [hz.2]⟩
+    have ho' : o ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [ho.1], ho.2⟩
+    have hv' : v ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hv.1], hv.2⟩
+    have hw' : w ∈ Set.Icc (1:ℝ) 2 := ⟨hw.1, by linarith [hw.2]⟩
+    have h := cmp (5/4) (5/4) 1 2 (5/4) 1 y z o v w
+      hI54 hI54 hI1 hI2 hI54 hI1 hy' hz' ho' hv' hw' hy.1 hz.1 ho.2 hv.1 hw.1
+    have he : cosine (5/4) (5/4) 1 2 (5/4) 1 = (293:ℝ)/400 := by
+      have hA : rad (5/4) (5/4) 1 = (25:ℝ)/4 := by norm_num [rad]
+      have hB : rad (5/4) 1 (5/4) = (25:ℝ)/4 := by norm_num [rad]
+      have hP : numerator (5/4) (5/4) 1 2 (5/4) 1 = (293:ℝ)/64 := by
+        norm_num [numerator]
+      rw [cosine, hA, hB, hP, div_div, ← pow_two,
+        Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 25/4)]
+      norm_num
+    simpa only [he] using h
+  have huppFace : ∀ y z o v w : ℝ,
+      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
+      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
+      w ∈ Set.Icc 1 (8/5) →
+      cosine 2 y z o v w ≤ (1577:ℝ)/2236 := by
+    intro y z o v w hy hz ho hv hw
+    have hy' : y ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hy.1], hy.2⟩
+    have hz' : z ∈ Set.Icc (1:ℝ) 2 := ⟨hz.1, by linarith [hz.2]⟩
+    have ho' : o ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [ho.1], ho.2⟩
+    have hv' : v ∈ Set.Icc (1:ℝ) 2 := ⟨by linarith [hv.1], hv.2⟩
+    have hw' : w ∈ Set.Icc (1:ℝ) 2 := ⟨hw.1, by linarith [hw.2]⟩
+    have h := cmp 2 y z o v w 2 (8/5) (5/4) 2 (8/5)
+      hI2 hy' hz' ho' hv' hw' hI2 hI85 hI54 hI2 hI85 hy.2 hz.2 ho.1 hv.2 hw.2
+    have he : cosine 2 2 (8/5) (5/4) 2 (8/5) = (1577:ℝ)/2236 := by
+      have hA : rad 2 2 (8/5) = (559:ℝ)/25 := by norm_num [rad]
+      have hB : rad 2 (8/5) 2 = (559:ℝ)/25 := by norm_num [rad]
+      have hP : numerator 2 2 (8/5) (5/4) 2 (8/5) = (1577:ℝ)/100 := by
+        norm_num [numerator]
+      rw [cosine, hA, hB, hP, div_div, ← pow_two,
+        Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 559/25)]
+      norm_num
+    simpa only [he] using h
+  have hhighFace : ∀ y z o v w : ℝ,
+      y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 → o ∈ Set.Icc 1 2 →
+      v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
+      cosine (8/5) y z o v w ≤ (37:ℝ)/43 := by
+    intro y z o v w hy hz ho hv hw
+    have h := (hbase (8/5) y z o v w hI85 hy hz ho hv hw).2
+    norm_num at h ⊢
+    exact h
   have hpi := Real.pi_pos
   let n : ℝ := (Fintype.card (T × Fin 6) : ℝ)
   let t : ℝ := smallAngle T

@@ -997,7 +997,7 @@ $$\varphi_1(2,5/4,5/4,1,5/4,5/4)=17/33>1/2.$$
 
 局部六变量公式、长度域和单调性继续使用 Xinrong Zhao, *Combinatorial Ricci Flows and Hyperbolic Structures on a Class of Compact 3-Manifolds with Boundary*, arXiv:2601.15174v2，Lemma 2.2、Proposition 2.4、Lemma 3.4。该版本的 Theorem 1.1 给出一般最低九度结果。共同长度上的共体积及几何识别使用此前已注明的 Luo–Yang、Feng–Ge–Hua 工作。本卷未把这些既有输入计作新发现，也未由有限文献检索宣称优先权。
 
-`D5/S3/Geometry/Hyperideal/TransitionEnvelopes.lean` 的两个结论对应引理 25.1 的两个受控邻边上界 $70/99$ 和引理 25.2 的一个高色邻边上界 $25/\sqrt{726}$。其余角度预算、七度实现、边链环循环推导及混合流形族在此给出普通数学证明；它们未由这个局部解析 Lean 声明整体形式化。精确代数核对、面配对检查和数值诊断只承担各自的有限复核范围。完整 CFMP 的解决数量仍为零。
+引理 25.1 的受控邻边上界 $70/99$ 和引理 25.2 的高色邻边上界 $25/\sqrt{726}$ 由 `D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.lean` 中的混合坐标比较直接实例化并作端点代数化简得到，故不另立绑定式 Lean 声明。其余角度预算、七度实现、边链环循环推导及混合流形族在此给出普通数学证明。精确代数核对、面配对检查和数值诊断只承担各自的有限复核范围。完整 CFMP 的解决数量仍为零。
 
 ## 31. 六度过渡边星的正对边余量
 

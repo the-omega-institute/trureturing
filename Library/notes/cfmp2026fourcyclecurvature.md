@@ -1,7 +1,10 @@
 ---
 bibkey: cfmp2026fourcyclecurvature
+authors: Xinrong Zhao; Ke Feng; Huabin Ge; Bobo Hua; Feng Luo; Tian Yang
 year: 2026
 title: Sources for CFMP four-cycle barriers and cover-uniform curvature estimates
+doi: null
+claim: The cited analytic and co-volume inputs support the restricted four-cycle incidence theorem and its universal real curvature estimate without establishing general minimum-eight realization.
 license: citation-only
 triage: anchor
 strata_touched: []
@@ -113,19 +116,18 @@ criterion on a fixed object.
 ## Formal correspondence: universal real envelopes
 
 `D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.lean` contains one public
-candidate theorem, `fourcycle_envelopes`, paired with the same-name authored
-Scribe. It targets the analytic estimates already proved in theory Sections
+candidate theorem, `cosine_mixed_comparison`, paired with its authored
+Scribe. It targets the analytic monotonicity input used in theory Sections
 2 and 16. No mathematical conclusion of the theory is changed by this
 formalization, and the geometric theory remains the single ordinary-proof
 owner.
 
 The Lean definitions retain the exact six independent real coordinates,
 the original numerator, both radicands, and real square roots. The theorem
-quantifies over the whole closed cube and all three boundary faces. Its
-proof constructs the square-root/quotient derivative, proves its coupled
-polynomial sign on [1,2], derives the other coordinate comparisons by actual
-symmetries, and then derives the rational face bounds. Monotonicity,
-denominator positivity and the desired endpoint bounds are not hypotheses.
+quantifies over two points of the whole closed cube. Its proof constructs
+the square-root/quotient derivative, proves its coupled polynomial sign on
+[1,2], and derives the other coordinate comparisons by actual symmetries.
+Monotonicity and denominator positivity are not hypotheses.
 The new live estimate is the interval sign of
 `Q=xow+xv+yo+yvw+z(1-w^2)` within the derivative computation. The mean-value
 theorem alone does not provide that sign.
@@ -139,7 +141,9 @@ search did not locate a matching formal hyper-ideal cosine theorem. This
 is not a complete search of all Lean code or a priority claim. The ordinary
 monotonicity result is credited to the primary geometric sources above.
 
-The formal statement stops at rational bounds for the analytic cosine.
+The formal statement stops at mixed-coordinate comparison for the analytic
+cosine. Rational face bounds are direct instances used inside the later
+content theorem that needs them, rather than separate public declarations.
 Topological tetrahedron construction, the formula-to-geometry equivalence,
 strict trigonometric comparisons, global face gluing, the co-volume minimum,
 and the manifold-cover residual example are not formalized by this file.
@@ -165,8 +169,9 @@ eta on every lower and upper curvature face. No angle bound, small-enough
 parameter, curvature sign, co-volume function or solution is supplied as an
 extra hypothesis. The paired Scribe states the same quantifiers and constants.
 
-The earlier six-variable envelope remains a candidate dependency. The new
-proof consumes pinned `Real.arccos_cos`, `Real.arccos_le_arccos`,
+The six-variable mixed comparison is the candidate dependency; its endpoint
+instances are proved locally in the curvature theorem. The new proof consumes
+pinned `Real.arccos_cos`, `Real.arccos_le_arccos`,
 `Real.arccos_lt_arccos`, square-root comparisons and finite sums. The actual
 pinned trigonometric inverse source was inspected. The universal estimate
 is distinguished from the finite frame and numerical diagnostics used while

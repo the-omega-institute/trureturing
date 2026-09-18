@@ -120,10 +120,15 @@ theorem critical_transition_star
   have hlo : ∀ i, (4:ℝ)/7 ≤ cosine (4/3) (y i) (z i) (o i) (v i) (w i) := by
     intro i
     obtain ⟨hy,hz,ho,hv,hw⟩ := hbox i
-    have hh := (fourcycle_envelopes.1 (4/3) (y i) (z i) (o i) (v i) (w i)
-      hca hy hz ho hv hw).1
-    norm_num at hh ⊢
-    exact hh
+    have hh := cmp (4/3) 1 1 2 1 1 (y i) (z i) (o i) (v i) (w i)
+      hca hc1 hc1 hc2 hc1 hc1 hy hz ho hv hw hy.1 hz.1 ho.2 hv.1 hw.1
+    have he : cosine (4/3) 1 1 2 1 1 = (4:ℝ)/7 := by
+      have hA : rad (4/3) 1 1 = (49:ℝ)/9 := by norm_num [rad]
+      have hP : numerator (4/3) 1 1 2 1 1 = (28:ℝ)/9 := by norm_num [numerator]
+      rw [cosine, hA, hP, div_div, ← pow_two,
+        Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 49/9)]
+      norm_num
+    simpa only [he] using hh
   have hregular : ∀ i, cosine 2 (y i) (z i) (o i) (v i) (w i) ≤ q := by
     intro i
     obtain ⟨hy,hz,ho,hv,hw⟩ := hbox i
