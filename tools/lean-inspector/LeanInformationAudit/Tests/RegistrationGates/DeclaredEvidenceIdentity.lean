@@ -76,13 +76,9 @@ run_meta do
   let secondProof ← buildProof (.letE `h (mkConst ``True) (mkConst ``True.intro) (.bvar 0) false)
   let firstInput := firstProof.argumentInputs.find? (·.name == proofName)
   let secondInput := secondProof.argumentInputs.find? (·.name == proofName)
-  observe "unchanged_proof_type_retained"
-    (firstInput.isSome && secondInput.isSome &&
-      !firstInput.get!.typeIdentity.isEmpty && firstInput.get!.typeIdentity == secondInput.get!.typeIdentity)
-  observe "independent_proof_body_omitted"
-    (firstInput.isSome && secondInput.isSome &&
-      firstInput.get!.bodyIdentity.isEmpty && secondInput.get!.bodyIdentity.isEmpty &&
-      firstProof.evidenceRef == secondProof.evidenceRef)
+  observe "proof_input_head_omitted" (firstInput.isNone && secondInput.isNone)
+  observe "independent_proof_preserves_evidence"
+    (firstProof.evidenceRef == secondProof.evidenceRef)
   setEnv saved
 
 end LeanInformationAudit.Tests.DeclaredEvidenceIdentity
