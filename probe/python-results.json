@@ -1,0 +1,77 @@
+{
+  "method": "prime-power contribution sieve, trial-factor cross-check",
+  "range": [
+    1,
+    10000000
+  ],
+  "derivative_sieve_bound": 34999999,
+  "anchors": [
+    {
+      "a": 5,
+      "b": 1,
+      "solutions": [],
+      "matches_paper": true
+    },
+    {
+      "a": 5,
+      "b": 3,
+      "solutions": [
+        12419,
+        20171,
+        37727,
+        134579,
+        199259,
+        301799,
+        574319,
+        866891,
+        1580291,
+        1625411,
+        8014031
+      ],
+      "matches_paper": true
+    },
+    {
+      "a": 7,
+      "b": 1,
+      "solutions": [
+        429
+      ],
+      "matches_paper": true
+    },
+    {
+      "a": 7,
+      "b": 3,
+      "solutions": [],
+      "matches_paper": true
+    },
+    {
+      "a": 7,
+      "b": 5,
+      "solutions": [
+        29831,
+        38051,
+        76331,
+        568031,
+        888971,
+        1855871,
+        3095711
+      ],
+      "matches_paper": true
+    }
+  ],
+  "witness": {
+    "a": 17,
+    "b": 7,
+    "n": 125,
+    "D_n": 75,
+    "C_n": 1066,
+    "D_C_n": 641,
+    "C_D_n": 641,
+    "D_75": 55,
+    "factorization": {
+      "5": 3
+    },
+    "squarefree": false
+  },
+  "wall_s": 38.72645083302632
+}
