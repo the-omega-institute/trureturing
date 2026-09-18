@@ -615,3 +615,39 @@ A293715(Mills 反例 `A007755(34) = (2^16+1)^2`)、A330719(交叉引用 A330718 
 - 仓内去重有两层:文献标识(arXiv 号 / A 号)与**对象**(同一定义、同一见证);席位只搜本文件是第 3.1 条的失败形。一篇论文有多条猜想时,
   仓内结算了其中一条不等于其余的都结算了——逐条读 `Blueprint` 正文里的「Nothing about … is established」句。
 - 被多套求解器过筛过的公开池(OEIS Open)对反驳形几乎零产出(322 条 0 反例);反驳形的矿脉是新发表且未被计算过的猜想。
+
+## R46(2026-09-18):arXiv 2025–26 结尾栏、OEIS 新条目与一条答案印在同一篇论文另一页的问题
+
+### R46(ChatGPT Pro,arXiv math.NT 2025-09 → 2026-09 与 math.CO / cs.DM 2026-06 → 2026-09 结尾栏,OEIS `keyword:new` 猜想)
+
+提出 **Nathanson, *Problems in additive number theory, VII*, arXiv:2605.26425, Problem 12(2)**(printed page 9:
+「(2) If A ∈ \binom{Z}{k} with min(A)<0, then ℓ_h(A) < n_h^♭(k).」):取 `h=2, k=3, A={−1,1,2}` 得 `2A={−2,0,1,2,3,4}`,
+`ℓ_2(A)=4=n_2^♭(3)`(三元非负集覆盖 `[0,5]` 须含 0,1,再由第三元 `t` 分 `t≤3` 缺 5、`t≥4` 缺 3),严格不等式为 `4<4`。
+席位注明该论文第 7 页已把同一个集合及其和集印作反射例子,只是没有把它认作 Problem 12(2) 的答案——「答案印在同一篇论文的另一页」。
+仓内去重(orchestrator,`origin/dev`):`Nathanson|2605\.26425|segmentLength|nonnegativeMaximum|h-basis` 在 D5/Blueprint/Problems/Library
+无命中;结论形 `sSup {n` 仅 `D5/S1/Words/FibonacciMapBound.lean` 一处(词长上确界,无关)。开 lane:#8540 → PR #8561。
+Problem 12(1)(非严格不等式)未结算,不在交付面。
+
+已结算、不派席(席位读出,orchestrator 复核出处):
+
+- **arXiv:2606.17447**(Shtrezi):Theorem 1 对全部 `g ≥ 2` 证明贪心 `{1,g,g+1}` 三和无关序列的 Conjecture 16。仓内
+  `Problems/greedy-three-sumfree-two-parameter.md` 已明写「Conjecture 16 … deliberately out of scope」,该卷宗结算的是两参数成员公式,
+  不是 Conjecture 16;两者都不再是候选。
+- **arXiv:2607.10763**(Shi):已证 Bueno 等人的模乘法矩阵秩猜想。
+- **arXiv:2608.19886**(Mao–Zhao):已在 `l=4` 反驳 Chung–Graham–Spiro 的 `D_l = U_l`(9 ∈ U_4 ∖ D_4);这条小反例已经发表,不能再算一次。
+
+算过、无反例、不提出:
+
+- **OEIS A399308**(Lucas 表示动力系统):席位独立实现并跑全部正整数起点至 10⁶,只见既知的四个循环,无逃逸轨道;交叉引用
+  A399306 / A399307 取不到,源筛未完成。
+- **OEIS A397806 / A397807**(2026 TFJM 题):在猜想限定的区间族内精确计数复现 `n ≤ 9` 的极大值,`n = 7, 8, 9` 的无限制搜索无改进;
+  猜想本身未证,不提出。
+
+席位未取得的读数:GitHub 目录枚举、递归树 API 与代码搜索在该席全部失败,只能逐文件取 raw;精确钉版的仓内去重由 orchestrator 完成(见上),
+席位自报的「无命中」不作读数。
+
+### 方法学读数
+
+- 「答案印在同一篇论文的另一页」是「结算写在被引条目里」(R40/R44,三例)的论文版:一篇末尾提问的论文,其正文例子可能已经是答案。
+  第一关的固定动作再加一条:候选问题所在论文里,凡与问题同对象的显式例子(表、反射例、边界例)逐个代入问题陈述。
+- R46 的三条「已结算」全部来自席位读结尾栏时顺手核对的同题近作;这是搜题席该做的第一关,不是产出——它们不进 KPI,只进本文件。
