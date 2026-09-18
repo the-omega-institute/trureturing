@@ -21,7 +21,7 @@ open D5.S0.Certificates.JacoExponentialDominationRefutation
 /-
 proof_shape:
   result: content
-escape_witness: exists_walk_of_mem_within (form (1), a have inside result:
+escape_witness: exists_walk_of_mem_within (form (1), a private theorem consumed inside result:
   v ∈ within k u → ∃ p : Walk u v, p.length ≤ k)
 admission_basis: open-problem-resolution (issue #8569)
 Direct frozen dependencies: D5/S0/Certificates/JacoExponentialDominationRefutation
