@@ -359,13 +359,15 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 |---|---|
 | `make -C tools engineering` | 对登记需要的候选工程进入 locked restore 与 warnings-as-errors 增量 build;登记为 CI 执行成员的当前测试项目（保留 ScriptTests 排除）与 selftest、CompileFailProof、BannedApi 反证义务按登记输入和有效证据逐项结算。需要执行的测试不作用例级删减,反证须命中预期诊断,任意编译失败不能顶替。 |
 | `make current` | 按登记资源执行 Lean 增量 build/report、Scribe、filemap 与当前树不变量;复用本轮接受的候选 DLL、工程产物与有效检查证据,不重复 engineering。 |
-| `make delta BASE=<sha>` | 候选判官检查 base→candidate 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
+| `make delta BASE=<sha>` | 候选判官检查 base→candidate 的分区、保护面、首次冻结、棘轮及其余跨树约束;按已校验资源计划消费本轮 current 及所需 report/engineering 证据,不重跑共同工作。 |
 
 完整路径与输入范围经登记判为 no-resource 时,由 required-check 编排产出结构化 `not-required` 成功,无需安装 SDK、恢复重缓存或下载构建产物。`required` 必须进入所需共享入口并按真实退出码结算;无工作是经校验的路由结果,不能由缺文件、缓存命中或未知状态推出。
 
 `docs/develop/theory/**/*.md` 的理论正文显式登记为 no-resource。轻量规划继续校验完整变化范围、路径的唯一登记及 symlink 合法性,不为正文单独启动 filemap、判官构建、工程测试、Lean/report、Scribe 或缓存运输。该目录内未登记的其他文件类型仍失败;混入消化账本、Lean、冻结或判官变更时取各路径资源并集,正文的无资源结果不消除其它路径义务。
 
-消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求完整 engineering 证据和正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带其它 current 谓词或 Scribe。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 标签豁免其它路径。
+消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带工程测试、其它 current 谓词或 Scribe。`tools/scripts/agent/openproblem/templates/*.md` 显式登记 `current-data`、`delta-data` 与 `filemap`,请求候选判官构建、SL-003 当前容量、路径校验及适用的分区/保护面/跨树数据检查,不请求 Lean/report/Scribe/工程测试;SL-003 材料显式包含模板字节,修改后不得复用旧容量判词。Lean report producer 影响范围只取登记 manifest 的 config、inspector、producer scope 与显式项目输入,不以 tools/workflow 大目录代替。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 或模板标签豁免其它路径。
+
+有选择的 delta 必须同时验证请求计划、完整差异、候选 SHA、显式 base 与构建 round,并核对 build/current 已绑定的资源计划一致。没有 `engineering` 资源时不要求或伪造 TRX;没有 report 资源时上下文不含 Lean capability,实际选中的语义谓词访问它必须明确失败。缺少计划、证据、登记或身份不符不得解释为免跑;未提供选择计划的直接入口保持完整证据要求。
 
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。
 
@@ -373,7 +375,7 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 候选 version-1 工程行的 13 个字段均必填：原十字段加 `root_namespace`、`namespace_exclude`、`global_namespace_exceptions`；顶层 `rule_build_inputs` 必填并逐路径登记规则引擎配置输入，缺失、重复或指向不存在的文件均拒绝，不按 basename 或祖先目录推断配置成员。规则源码的现有窄域与 current/delta 谓词定义域保持。statement projection 的非空 changes 分支消费 `Meta/ReportProducers/scribe-content.json` 登记的项目及 scope 指针；脚本/材料范围由其指向的 `lean-report-inputs.json` 唯一声明，并结合显式项目引用闭包及 Compile include/exclude；空 changes（null）分支仍无条件验证，不宣称增量。工程登记文件和 producer 登记文件本身的修改会唤醒对应检查。producer/compiler 身份只取相关已登记项目及其引用闭包的 `path/assembly/include/exclude/references` 投影和所需材料字节，不纳入 namespace、CI/owner/partition 策略或无关项目行。base reader 由候选拥有，version-1 仅必读 `path/assembly/role/ci/references/owner/owned_test_assembly/test_partition`，忽略它不消费的 Compile/namespace/execution 策略字段；原十字段历史登记无需补候选字段，当前候选仍严格验证。base 实际项目覆盖与丢失项目的候选 TRX 地板不变。
 
-engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选登记确定;登记输入、编译依赖、材料、mode、执行环境及原成功证据验证一致时,允许增量复用原执行结果,并在本轮候选身份下接受。输入改变、证据损坏或无有效证据时执行受影响的登记项目/检查;selftest 与两项反证的实际执行和诊断义务不因缓存命中消失。delta 将 base 的测试项目集合仅作为数据读取,要求每个项目都具有**本轮候选已接受的成功覆盖**。新执行的 TRX 或经登记输入与完整性验证后接受的原成功 TRX 均须保留原执行来源及本轮候选绑定;裸历史 TRX、另一候选的绿、项目被删、漏跑或失败不能补证。delta 只验证证据,不重跑测试或引入 base 判官。base 尚无 manifest 时,候选 current/historical 显式登记寻址历史项目字节,不运行旧发现器。
+engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选登记确定;登记输入、编译依赖、材料、mode、执行环境及原成功证据验证一致时,允许增量复用原执行结果,并在本轮候选身份下接受。输入改变、证据损坏或无有效证据时执行受影响的登记项目/检查;selftest 与两项反证的实际执行和诊断义务不因缓存命中消失。delta 将 base 的测试项目集合仅作为数据读取;资源计划要求 `engineering` 时,每个项目都须具有**本轮候选已接受的成功覆盖**。新执行的 TRX 或经登记输入与完整性验证后接受的原成功 TRX 均须保留原执行来源及本轮候选绑定;裸历史 TRX、另一候选的绿、项目被删、漏跑或失败不能补证。不要求 engineering 的资源路径仍读取 base 项目数据并检查拓扑,不消费测试证据,不冒领已接受的测试覆盖。delta 只验证证据,不重跑测试或引入 base 判官。base 尚无 manifest 时,候选 current/historical 显式登记寻址历史项目字节,不运行旧发现器。
 
 共同检查的 `Meta/ci-checks.json` 使用 `ci-check-input-registration-v2`；每个 `report_inputs` 必须显式登记 `producer`、`consumer`、`artifact`、`materials`。`consumer` 指向 FILEMAP 登记的 `report-consumer-inputs-v1` 清单，其封闭字段为 `schema/producer/projects/materials`：producer 须与引用一致，项目与材料须显式存在、无重复，项目须已登记；缺项、冲突和未知对象在检查执行前失败。报告消费者缓存地址绑定该消费清单、登记的消费项目闭包及材料、候选已验证报告内容、现有检查输入与执行环境；不包含仅负责生产或传输报告的脚本字节。生产清单仍完整验证，报告源码/内容/材料/兼容性/运行时身份验证不变；原生报告配置 `lean-report-inputs.json` 和消费者接受材料仍进入消费地址。Scribe 下游引用须与 describe 单元的 producer 和 consumer 一致，保留其实际材料与原执行来源校验。
 

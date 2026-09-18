@@ -443,6 +443,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (template)
         {
             foreach (var pair in DeclaredTemplateReviewTests.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
+            fixture.RegisterLeanProducerInputs();
             fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
                 "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
             var templatePolicy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(

@@ -42,7 +42,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
     [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
-    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -55,6 +54,35 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Equal(mixed ? 2 : 1, plan["paths"]!.AsArray().Count);
         if (mixed)
             Assert.Empty(plan["paths"]!.AsArray().Single(row => row!["path"]!.GetValue<string>() == RegisteredNoResourceContent)!["require"]!.AsArray());
+    }
+
+    [Theory]
+    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md", "pr")]
+    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md", "push")]
+    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", "pr")]
+    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", "push")]
+    public void AgentTemplatesRequestOnlyCapacityDataDeltaAndPathValidation(string path, string mode)
+    {
+        var plan = Plan(path, "", mode);
+        Assert.Equal(mode == "pr" ? new[] { "build", "current-data", "delta-data", "filemap" }
+            : new[] { "build", "current-data", "filemap" }, Strings(plan["resources"]!));
+        Assert.Equal(mode == "pr" ? new[] { "build", "current", "delta" } : new[] { "build", "current" }, Strings(plan["selected_stages"]!));
+        Assert.Equal(new[] { "SL-003", "filemap" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
+        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.DoesNotContain("lake", Strings(plan["tools"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("Meta/engineering-projects.json")]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    public void AgentTemplateDoesNotExemptAdditionalEngineeringOrSemanticInput(string input)
+    {
+        var plan = Plan("tools/scripts/agent/openproblem/templates/impl-base-brief.md", input);
+        Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.Contains("delta", Strings(plan["resources"]!));
+        Assert.Contains("lean-report", Strings(plan["execution"]!["steps"]!));
     }
 
     [Theory]
@@ -120,13 +148,14 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         }
         else
         {
-            Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "engineering", "filemap", "lean", "lean-report" },
+            Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "filemap", "lean", "lean-report" },
                 Strings(plan["resources"]!));
-            Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
+            Assert.Equal(new[] { "build", "current", "delta" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "lean-report", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "banned-api-proof", "capability-proof", "filemap", "selftest-pair" },
+            Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" },
                 Strings(plan["execution"]!["checks"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+            Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
         }
     }
 

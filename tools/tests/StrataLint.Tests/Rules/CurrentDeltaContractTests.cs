@@ -8,6 +8,35 @@ namespace StrataLint.Tests;
 public sealed class CurrentDeltaContractTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AgentTemplateDeltaKeepsProtectionWithoutReportPredicates(bool reportAvailable)
+    {
+        const string path = "tools/scripts/agent/openproblem/templates/impl-base-brief.md";
+        var fixture = new RuleFixture();
+        fixture.Files[path] = "Use the current source statement.\n";
+        var context = fixture.Build(RawChangeSet.Create([path]));
+        if (!reportAvailable)
+            context = DeltaRuleContext.CreateWithoutLean(context.Current, context.Baseline, context.Policy,
+                context.Changes, context.MetaEvaluation, new CandidateCommonResults("candidate", "round"));
+        var outcome = RuleCatalog.Default.ExecuteDelta(context);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+        Assert.Contains(RuleId.CreateKnown(22), completed.ExecutedRules);
+        Assert.DoesNotContain(RuleId.CreateKnown(8), completed.ExecutedRules);
+        Assert.DoesNotContain(RuleId.CreateKnown(17), completed.ExecutedRules);
+    }
+
+    [Fact]
+    public void SelectedSemanticDeltaFailsWithoutLeanEvidence()
+    {
+        var data = new RuleFixture().Build(RawChangeSet.Create([RuleFixture.RingPath]));
+        var context = DeltaRuleContext.CreateWithoutLean(data.Current, data.Baseline, data.Policy,
+            data.Changes, data.MetaEvaluation, new CandidateCommonResults("candidate", "round"));
+        var failure = Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(RuleCatalog.Default.ExecuteDelta(context));
+        Assert.Contains("requires Lean evidence", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("Meta/judge-seed.json", true)]
     [InlineData("Meta/package-materials.json", true)]
     [InlineData("Meta/unregistered.json", false)]

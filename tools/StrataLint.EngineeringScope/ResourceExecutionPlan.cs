@@ -18,6 +18,8 @@ internal sealed class ResourceExecutionPlan
     private ResourceExecutionPlan(JsonElement document, string plan, string changes)
     { Document = document; PlanPath = plan; ChangesPath = changes; }
     internal bool StageRequired(string stage) => Document.GetProperty("stages").GetProperty(stage).GetProperty("status").GetString() == "required";
+    internal bool ResourceRequired(string resource) => Document.GetProperty("resources").EnumerateArray()
+        .Any(value => value.GetString() == resource);
 
     internal static ResourceExecutionPlan? Load(string root, string? path, string? changes = null)
     {

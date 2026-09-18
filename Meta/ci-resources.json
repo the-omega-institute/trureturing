@@ -38,6 +38,18 @@
       ]
     },
     {
+      "id": "current-data",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-003"
+      ],
+      "steps": [
+        "check-current"
+      ]
+    },
+    {
       "id": "current-metadata",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -53,6 +65,14 @@
     },
     {
       "id": "delta",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-data",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
       ],
