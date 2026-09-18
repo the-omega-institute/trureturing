@@ -631,3 +631,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One actual residual closes a hundredfold wider neighborhood](profile-notes/160-one-actual-residual-closes-a-hundredfold-wider-neighborhood.md)
 - [An actual repacking attains the full deep-five cap](profile-notes/161-an-actual-repacking-attains-the-full-deep-five-cap.md)
 - [Fixed supports preserve both heavy margins on the source slab](profile-notes/162-fixed-supports-preserve-both-heavy-margins-on-the-source-slab.md)
+- [The complete local domain removes the zero-escape ceiling](profile-notes/163-the-complete-local-domain-removes-the-zero-escape-ceiling.md)
+- [The pure-five first and second moments have a sharp joint envelope](profile-notes/164-the-pure-five-first-and-second-moments-have-a-sharp-joint-envelope.md)
+- [The pure-five joint envelope enters both complete comparisons](profile-notes/165-the-pure-five-joint-envelope-enters-both-complete-comparisons.md)
