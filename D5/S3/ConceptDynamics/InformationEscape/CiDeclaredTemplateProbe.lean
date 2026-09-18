@@ -27,9 +27,44 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
+def good : PrimitiveRealization arena.signature :=
+  cutRealization (fun x : Bool => x)
+
+def bad : PrimitiveRealization arena.signature :=
+  cutRealization (fun _ : Bool => true)
+
+theorem lawVariation : arena.Law good ∧ ¬arena.Law bad := by
+  constructor
+  · intro x
+    exact (Bool.not_not x).symm
+  · intro h
+    exact Bool.noConfusion (h false)
+
+theorem slotSensitivity : FiniteSlotSensitivity arena := by
+  constructor
+  · intro i
+    refine ⟨good, bad, ?_, ?_, ?_⟩
+    · intro j ne
+      cases i
+      cases j
+      exact (ne rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => lawVariation.2, fun _ => lawVariation.1⟩
+  · intro i
+    exact Fin.elim0 i
+
 information_theorem declared in arena
   primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  variation lawVariation sensitivity slotSensitivity
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
+
+open Lean in
+run_cmd Elab.Command.liftTermElabM do
+  let some entry := InformationRegistry.find? (← getEnv) ``declared
+    | throwError "DTR probe registration is missing"
+  if let some diagnostic ← RegistrationGates.validateFinite entry then
+    throwError "DTR probe registration gate failed: {diagnostic}"
 
 open Lean in
 run_meta do
