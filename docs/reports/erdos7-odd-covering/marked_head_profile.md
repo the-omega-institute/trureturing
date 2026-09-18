@@ -684,3 +684,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The source bridge covers a larger complete residual strip](profile-notes/215-the-source-bridge-covers-a-larger-complete-residual-strip.md)
 - [The survivor and extra deletions share the complete head](profile-notes/216-the-survivor-and-extra-deletions-share-the-complete-head.md)
 - [The expanded residual bridge improves the complete global bound](profile-notes/217-the-expanded-residual-bridge-improves-the-complete-global-bound.md)
+- [One late source split controls complete saturated J heads](profile-notes/219-one-late-source-split-controls-complete-saturated-j-heads.md)
