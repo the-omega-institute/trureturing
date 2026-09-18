@@ -72,7 +72,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             with self.subTest(report_required=report_required, reusable=reusable):
                 plan = {"execution": {"steps": ["lean-report"] if report_required else ["filemap"]}}
                 requirements = dict(cache_layers=["current", "dependency", "project"] if report_required else ["current"],
-                                    tools=["lake"] if report_required else [])
+                                    tools=["lake"] if report_required else [],
+                                    cache_activation={"current": "stage-start", **({"dependency": "report-miss", "project": "report-miss"} if report_required else {})})
                 selected = str(self.root / "build/ci/current-check-seed/report.json") if reusable else None
                 with mock.patch.dict(os.environ, dict(self.env, CANDIDATE_SHA=REV,
                         CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
