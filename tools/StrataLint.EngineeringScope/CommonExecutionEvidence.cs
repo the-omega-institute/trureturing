@@ -65,7 +65,7 @@ internal static partial class CommonExecutionEvidence
         return Candidate(root, snapshot);
     }
 
-    private static string Candidate(string root, RepositorySnapshot snapshot)
+    internal static string Candidate(string root, RepositorySnapshot snapshot)
     {
         var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
@@ -202,7 +202,7 @@ internal static partial class CommonExecutionEvidence
     internal static CommonStageRecord ValidateBuild(string root, string? round = null) =>
         ValidateBuild(root, Candidate(root), round);
 
-    internal static CommonStageRecord ValidateBuild(string root, ValidationScope validation, string round) =>
+    internal static CommonStageRecord ValidateBuild(string root, ValidationScope validation, string? round) =>
         ValidateBuild(root, Candidate(root, validation.Snapshot), round, validation);
 
     private static CommonStageRecord ValidateBuild(string root, string candidate, string? round, ValidationScope? validation = null)
@@ -236,11 +236,12 @@ internal static partial class CommonExecutionEvidence
     {
         RequirePassed(steps, EngineeringSteps);
         var candidate = Candidate(root, out var snapshot);
-        ValidateStartedBuild(root, build, candidate);
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
+        var validation = new ValidationScope(snapshot);
+        ValidateStartedBuild(root, build, candidate, validation);
+        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot, validation: validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
         var ids = SelectedEngineeringCheckIds(root, build);
-        var checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids);
+        var checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids, validation);
         var record = new CommonStageRecord(2, candidate, build.Round, steps,
             Materials(root, new[] { BuildPath, TestsPath }.Concat(SelectionPaths(build.Selection))
                 .Concat(checks is null ? [] : new[] { ChecksPath("engineering") })
