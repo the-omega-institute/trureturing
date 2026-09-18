@@ -672,15 +672,20 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
         for i in [:fields.size] do
           let domain ← inferType fields[i]!
           if i ≥ ind.numParams then
+            let (domain, next) ← (eraseInput domain).run current
+            current := next
             if domain.isAppOf name then
-              unless domain.getAppArgs.size == ind.numParams &&
-                  (domain.getAppArgs.zip (fields.extract 0 ind.numParams)).all
-                    (fun (a, b) => a.equal b) do
+              unless domain.getAppArgs.size == ind.numParams do
                 throwError "unclassified_form:E4c.recursive_parameters"
+              for (a, b) in domain.getAppArgs.zip (fields.extract 0 ind.numParams) do
+                let (expected, next) ← (eraseInput b).run current
+                current := next
+                unless a.equal expected do
+                  throwError "unclassified_form:E4c.recursive_parameters"
             else
               if (domain.find? fun e => e.isConstOf name).isSome then
                 throwError "unclassified_form:E4c.nested_recursion"
-              let (_, next) ← (do compileExpr (← eraseInput domain) 0 true).run current
+              let (_, next) ← (compileExpr domain 0 true).run current
               current := next
         return ((), current)
     inspect

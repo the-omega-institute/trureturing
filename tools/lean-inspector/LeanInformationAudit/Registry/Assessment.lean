@@ -71,8 +71,9 @@ private def isRealizationType (type : Expr) : Bool :=
   #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
     `LeanInformationAudit.StructuralPrimitiveRealization].contains (type.getAppFn.constName?.getD .anonymous)
 
-/-- Expose only a saturated forwarding spine. The parameter vector must contain
-every lambda variable exactly once, in its original order, as a whole argument.
+/-- Expose only a saturated forwarding spine. Every data parameter must occur
+exactly once, in its original order, as a whole argument. Proof parameters and
+arguments are opaque; their propositions still pass the shared compiler.
 No beta reduction is performed inside an actual supplied argument. -/
 private def forwardActual (theoremName selected : Name) (initial : Expr) : CompareM Expr := do
   let mut actual := initial
@@ -93,20 +94,23 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
     if actual.hasFVar || actual.hasLooseBVars || actual.hasMVar ||
         universeArgs.length != info.levelParams.length then
       throwError "incomplete_closure:dtr.extraction_open"
-    let mut body := info.value
-    let mut arity := 0
-    while let .lam _ _ tail _ := body do
-      debit
-      arity := arity + 1
-      body := tail
-    unless body.getAppFn.isConst && arity == arguments.size do return actual
-    let mut forwarded : Array Nat := #[]
-    for argument in body.getAppArgs do
-      debit
-      if argument.hasLooseBVars then
-        let .bvar index := argument | return actual
-        forwarded := forwarded.push index
-    unless forwarded == (List.range arity).reverse.toArray do return actual
+    let erasedValue ← eraseInput info.value
+    let forwarding : CompareM Bool := fun state =>
+      lambdaTelescope erasedValue fun parameters body => (do
+        unless body.getAppFn.isConst && parameters.size == arguments.size do return false
+        let mut expected : Array Expr := #[]
+        for parameter in parameters do
+          debit
+          unless ← isProof parameter do expected := expected.push parameter
+        let mut forwarded : Array Expr := #[]
+        for argument in body.getAppArgs do
+          debit
+          unless ← isProof argument do
+            if argument.hasFVar then
+              unless argument.isFVar do return false
+              forwarded := forwarded.push argument
+        return forwarded == expected).run state
+    unless ← forwarding do return actual
     let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining (← get).constructorTypes
     debit typeWork
     let indices := indexPositions info.type
@@ -125,7 +129,6 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
     let .ok (_, bodyWork) ← rawIdentity info.levelParams info.value (← get).remaining
       | throwError "incomplete_closure:E8.extraction_body"
     debit bodyWork
-    let erasedValue ← eraseInput info.value
     let mut value ← construct (fun fuel => PlanTransform.instantiateExpr erasedValue info.levelParams universeArgs fuel)
     for argument in arguments do
       let .lam _ _ tail _ := value | throwError "incomplete_closure:dtr.extraction_telescope"
