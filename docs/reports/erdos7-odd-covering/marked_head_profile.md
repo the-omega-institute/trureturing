@@ -713,4 +713,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Three complete J heads share raw, survivor and marked deletion](profile-notes/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md)
 - [The actual J survivor mass and H column sharpen the complete square](profile-notes/245-the-actual-j-survivor-mass-and-h-column-sharpen-the-complete-square.md)
 - [The joint J heads and square improve the complete cost comparison](profile-notes/246-the-joint-j-heads-and-square-improve-the-complete-cost-comparison.md)
+- [Two original J quadratic costs share hinges and factorial head](profile-notes/247-two-original-j-quadratic-costs-share-hinges-and-factorial-head.md)
 - [The complete J factorial tail retains both prime paths](profile-notes/248-the-complete-j-factorial-tail-retains-both-prime-paths.md)
+- [All four complete J AP11 blocks retain the same marked source](profile-notes/249-all-four-complete-j-ap11-blocks-retain-the-same-marked-source.md)
