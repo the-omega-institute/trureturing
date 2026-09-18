@@ -595,3 +595,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One original head transports the whole deep mean credit](profile-notes/124-one-original-head-transports-the-whole-deep-mean-credit.md)
 - [The complete off-face omitted tails recover every face constant](profile-notes/125-the-complete-off-face-omitted-tails-recover-every-face-constant.md)
 - [A complete off-face original cost has no unspecified tail](profile-notes/126-a-complete-off-face-original-cost-has-no-unspecified-tail.md)
+- [Complete-tail supports restore one shared convex budget](profile-notes/127-complete-tail-supports-restore-one-shared-convex-budget.md)
