@@ -716,3 +716,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two original J quadratic costs share hinges and factorial head](profile-notes/247-two-original-j-quadratic-costs-share-hinges-and-factorial-head.md)
 - [The complete J factorial tail retains both prime paths](profile-notes/248-the-complete-j-factorial-tail-retains-both-prime-paths.md)
 - [All four complete J AP11 blocks retain the same marked source](profile-notes/249-all-four-complete-j-ap11-blocks-retain-the-same-marked-source.md)
+- [Joint quadratic, factorial and survival bounds improve the complete J comparison](profile-notes/250-joint-quadratic-factorial-and-survival-bounds-improve-the-complete-j-comparison.md)
