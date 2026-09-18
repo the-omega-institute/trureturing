@@ -1,0 +1,10 @@
+相干项的非负性与等号条件可由谱分解直接得到。取实际谱分解 $\rho=V\operatorname{diag}(\lambda)V^*$，其中 $V$ 幺正、$\lambda_k\ge0$、$\sum_k\lambda_k=1$。谱熵公式给出 $S(\rho)=H(\lambda)$；谱值按重数计入求和，任何有限重排均不改变该熵。令 $w_{jk}=|V_{jk}|^2$，则 $w$ 双随机且 $d_j=\sum_k w_{jk}\lambda_k$。函数 $h(x)=-x\ln x$ 在 $[0,1]$ 上严格凹，并以 $h(0)=0$ 连续延拓，故逐行应用凹性后求和得到
+$$
+H(d)=\sum_j h\!\left(\sum_k w_{jk}\lambda_k\right)
+\ge\sum_{j,k}w_{jk}h(\lambda_k)
+=H(\lambda)=S(\rho).
+$$
+等号成立当且仅当每一行的正权重所对应的 $\lambda_k$ 全部相等，也即 $V_{jk}\ne0$ 时 $\lambda_k=d_j$。此时逐元有 $(\rho V)_{jk}=V_{jk}\lambda_k=d_jV_{jk}$，从而 $\rho V=\operatorname{diag}(d)V$，右乘 $V^*$ 得 $\rho=\Delta\rho$；反向由对角态的谱熵公式即得。因此 $H(d)-S(\rho)=0$ 当且仅当 $\rho=\Delta\rho$，零特征值及重复特征值均无须排除。前述支撑包含使这里的熵差恰为有限的 $D(\rho\Vert\Delta\rho)$。这一零相干条件见 Baumgratz–Cramer–Plenio 同文，第 2 页 (C1') 及第 3 页式 (8) 所在段落对相对熵相干量的说明。
+
+经典项则对非负归一化且 $d\ll t$ 的 $(d,t)$，使用定理 74.2 所引的 Gibbs 非负性及 Gibbs 等号条件，得到其为零当且仅当 $d=t$。两非负项同时为零恰好是 $\rho=E\rho$；命题 73.4 识别其为 $\mathcal F$。这个等号判据由上述谱凹性与经典 Gibbs 等号条件得到，不需要另用一般量子 Klein 等号定理。
+

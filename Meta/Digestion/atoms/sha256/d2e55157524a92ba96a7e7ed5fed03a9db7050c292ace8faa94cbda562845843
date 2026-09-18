@@ -1,0 +1,21 @@
+证明。两映射的 Kraus 族依次为
+$$
+\{|+\rangle\langle0|,\ |-\rangle\langle1|\},
+\qquad
+\{|0\rangle\langle+|,\ |1\rangle\langle-|\}.
+$$
+各族均满足 $\sum K^*K=I_2$，故相应的有限 Kraus 和完全正且保迹；也均有 $\sum KK^*=I_2$，故保单位元并固定 $I_2/2$。对任意 Hermitian 矩阵 $X=\begin{pmatrix}x&z\\\bar z&y\end{pmatrix}$，直接乘法给出
+$$
+T_{\mathrm{gen}}(X)=\frac12
+\begin{pmatrix}x+y&x-y\\x-y&x+y\end{pmatrix},
+\qquad
+T_{\mathrm{read}}(X)=\frac12\operatorname{diag}
+(x+y+z+\bar z,\ x+y-z-\bar z).
+$$
+由 $r=\operatorname{id}$，$b_{\mathrm{vec}}(c\rho)=d$，经典纤维缺陷恒为零，定理 75.2 给出 $\delta_Q(\rho)=H(d)-S(\rho)$。第一式说明
+$$
+cT_{\mathrm{gen}}=S_{\mathrm{gen}}c,\qquad
+S_{\mathrm{gen}}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix};
+$$
+对密度态 $x+y=1$，粗输出恒为 $(1/2,1/2)$。但 $T_{\mathrm{gen}}(|0\rangle\langle0|)=|+\rangle\langle+|$。输入对角且为纯态，缺陷为零；输出的谱为 $(1,0)$、对角为 $(1/2,1/2)$，所以其缺陷为 $\ln2$，且不属于对角族 $\mathcal F$。
+

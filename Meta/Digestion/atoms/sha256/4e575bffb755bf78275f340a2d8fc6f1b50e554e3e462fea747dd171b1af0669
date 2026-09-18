@@ -1,0 +1,9 @@
+对概率向量 $s$，若 $\operatorname{supp}\rho\subseteq\operatorname{supp}\operatorname{diag}s$，谱对数在参考的正支撑上对角，因而
+$$
+D(\rho\Vert\operatorname{diag}s)
+=-S(\rho)-\sum_{j:d_j>0}d_j\ln s_j
+=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert s).
+$$
+零参考坐标处的输入行列已经为零，不能将这个有限表达式用于不满足支撑条件的态对。此对角参考分解及 $s=d$ 时的相干恒等式见 Baumgratz–Cramer–Plenio，*Quantifying Coherence*，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 3 页式 (8) 及其前一显示式；换成自然对数时各项统一换算。先取 $s=d$、再取 $s=t$，得到第一行。对 $(d,t)$，定理 74.2 的经典缺陷恒等式给出
+$D_{\mathrm{KL}}(d\Vert t)=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(\alpha\Vert p)$；它的确定信道代入及零纤维处理仍是式 (74.1) 的证明。最后取 $s=q$ 得末行。$q,p$ 严格正，$d\ll t$ 已证，故没有无穷相减。
+

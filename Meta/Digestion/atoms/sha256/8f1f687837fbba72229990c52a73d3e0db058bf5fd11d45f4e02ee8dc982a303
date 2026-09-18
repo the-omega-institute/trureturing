@@ -1,0 +1,16 @@
+**定理 75.2（相干与校准纤维缺陷的有限分解）。** 在定义与假设 75.1 下，对每个密度矩阵 $\rho$，包括奇异态及有零粗质量的态，有
+$$
+\begin{aligned}
+\delta_Q(\rho)
+&=D(\rho\Vert\Delta\rho)+D_{\mathrm{KL}}(d\Vert b_{\mathrm{vec}}(c\rho))\\
+&=H(d)-S(\rho)+D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(c\rho\Vert p)\\
+&=D(\rho\Vert Q)-D_{\mathrm{KL}}(c\rho\Vert p).
+\end{aligned}
+$$
+所列各相对熵均有限，第一行的两项均非负，并且
+$$
+\delta_Q(\rho)\ge0,\qquad
+\delta_Q(\rho)=0\ \Longleftrightarrow\ \rho=E\rho
+\ \Longleftrightarrow\ \rho\in\mathcal F.
+$$
+
