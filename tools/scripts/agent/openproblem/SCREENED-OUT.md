@@ -986,3 +986,12 @@ R54 的 903 条无人认领集里再取「陈述短、无渐近记号、无悬�
 **下一步与预算**:当前实现是 O(N) 内存的 Python,推不到 `1.4×10^9` 以上。要真正推进已知范围
 需分段的 C 实现;该机器同时承载 base 的 CI runner,不得跑到干扰它的内存规模。未跑到超过
 已知范围之前,不得称部分进展(§3.6 ③)。
+
+## C3(2026-09-19):codex 搜题席读最新三个月的 NT/GR/RA/AC/FL/GT/CC/DS——1416 篇、5 条候选、3 条开 lane
+
+窗口:arXiv `math.NT`、`math.GR`、`math.RA`、`math.AC`、`cs.FL`、`cs.GT`、`cs.CC`、`math.DS` 各 2026-06-01..09-18(降序);清单 1512 条去重 1416 篇,PDF 文本 1109 份(席位自报数学级筛读未穷尽,`pdf-queued` 1106 篇未逐条裁定)。
+
+- **开 lane**:Mohan–Neetu, arXiv:2607.11194v1(2026-07-13),§6 **Conjectures 6.1/6.2/6.3**(任意 torsion-free 群的 small doubling `3k−3`/`3k−4` ⟹ ⟨S⟩ 交换)——Klein 瓶群 `Z ⋊ Z`(论文 §5 群律取 `q = −1`)中 `{e,(0,1),(1,1)}` 有 `|S²| = 6 = 3·3−3`、`e ∈ S` 而 `⟨S⟩` 非交换;论文自己的 Example 6.2(`k = 3`)拆成三个单点集反驳 6.2(#8686;orchestrator 按群律亲算三例)。Barket–Grimaldi–Hendi–Hirst–Onus–Singh, arXiv:2607.12026v1,**Conjecture 4.4**(幂零群 Cayley 图归一化 Laplacian 首个 `>1` 间隙指标 ∈ {|G|−1} ∪ {|G/Z_j|})——`Z/5`、`S = {1}` 的 `C₅` 谱 `[0,(5−√5)/4,(5−√5)/4,(5+√5)/4,(5+√5)/4]` 在 `k = 3`,允许值只有 4 与 1(#8688;orchestrator SymPy 精确复算 + 四个对照)。
+- **正向证明候选、暂缓**:Hughes, arXiv:2608.27755v1 §10「Iteration-Depth No-Gap Conjecture」(插入迭代深度谱是初始区间)——席位给出固定次数合并 + 空块填充的证明草图,`{ε,a,b}` 子集全对 64 组到深度 4 通过;定义(k-插入、迭代深度)转写量大,排在反驳型 lane 之后。
+- **已结算**:Das–Nath–Sarma, arXiv:2609.05302v1 Conjecture 5.1(`cφ₁₈(30n+19) ≡ cφ₁₈(30n+25) ≡ 0 (mod 16)`)已由 Saikia arXiv:2609.11813v1 Theorems 1.3–1.4 证明(同文 Conjecture 1.2 / 式 (7))。
+- **载体读数**:`chrono-chatgpt-pro-pool` 当日一次 `model_unavailable`(15 次尝试),同 brief 改投 `company-chatgpt-pro` 即答;派 GPT Pro 席前 `nyxid oracle pool show` 看 `online_workers`,失败后换池不换载体。
