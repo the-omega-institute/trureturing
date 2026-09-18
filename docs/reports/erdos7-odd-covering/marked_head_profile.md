@@ -692,3 +692,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The original135 test enters the complete heavy bridge](profile-notes/223-the-original135-test-enters-the-complete-heavy-bridge.md)
 - [The retained135 test strengthens two complete survival bounds](profile-notes/224-the-retained135-test-strengthens-two-complete-survival-bounds.md)
 - [The actual deletion-mask rows have one off-face error budget](profile-notes/227-the-actual-deletion-mask-rows-have-one-off-face-error-budget.md)
+- [The complete pure-three projection shares the deletion-row budget](profile-notes/228-the-complete-pure-three-projection-shares-the-deletion-row-budget.md)
