@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-exposed-concentration-prices-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/joint_concentration_loss_budget.py": "41dd03ec2ced1cd33643f2e2955ded85dd2113b633f72f9d5954d6862c2e8fa2",
+      "certificates/source_norms/joint_concentration_loss_budget.json": "1e8795d2380b186d40a9f4c866bbb5698db269c2055b9159a0d183584f05d725",
+      "frontier/monotone_product_carrier_mass.py": "4e8dd576a31b445445502e1bd089151919822e70cf57d3a473d4dc29d5f62747"
+    }
+  },
+  "examples": {
+    "path": "content/002-examples.json",
+    "sha256": "3a2f9222825bc60ac41f41c46160d0a9c52b5d92f78016cb524ef62127e66bfd",
+    "kind": "array"
+  },
+  "corner_failure_example": {
+    "kind": "inline",
+    "value": {
+      "sigma": "1/20",
+      "losses": [
+        "49/999",
+        "1/1000"
+      ],
+      "prices": [
+        "1",
+        "24/25"
+      ],
+      "gain": "113/12487500"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary six exposed concentration inequalities for0<=sigma<1/2 and exact rational support of their outer polytope. Joint prices add vectors before optimization. Sharpness refers to this polytope, or to the nonlinear relaxation only under the proved price-gap criterion. No original-family attainment, new complete comparison, Lean or unrestricted Erdos7 conclusion."
+  }
+}

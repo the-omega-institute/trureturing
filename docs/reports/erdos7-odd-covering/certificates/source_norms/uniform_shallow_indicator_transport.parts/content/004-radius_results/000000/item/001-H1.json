@@ -1,0 +1,41 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "bounded_labels": {
+    "path": "content/004-radius_results/000000/item/001-H1/003-bounded_labels.json",
+    "sha256": "a33203b6901d5b135fe520b85747fa0257dc6c5cba496e84fa67588ccca35db9",
+    "kind": "value"
+  },
+  "complete_exponent_tails": {
+    "path": "content/004-radius_results/000000/item/001-H1/004-complete_exponent_tails.json",
+    "sha256": "d3c235c1f6a1d11065815692194cccb8f11711d7af1751a0e4564eab74305382",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "11/72"
+  },
+  "previous_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "layout_rows": {
+    "path": "content/004-radius_results/000000/item/001-H1/008-layout_rows.json",
+    "sha256": "723bcf3d5dc757dd7c329da83dfd2da62c6063b340420011f62cc842c4fd31c4",
+    "kind": "array"
+  }
+}
