@@ -8,9 +8,9 @@
 
 These are predictions, not measured results. The source fidelity check precedes execution of the Python experiment. The preregistration defines the barred-pattern stack map by the proved right-hand side of Proposition 3.5; that boundary is retained explicitly.
 
-## Status
+## Result
 
-Unverified: source fidelity, numerical predictions, library reuse, and Lean proof. No mathematical conclusion is claimed yet.
+Verdict: **propose**. The exact preregistered S_n statement compiles without warnings, sorry, native_decide, or new axioms. The required potential-deletion mutant fails at the missing forward inequality. This is an isolated probe result; no integration or publication is claimed.
 
 ## Source fidelity
 
@@ -53,44 +53,51 @@ LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-syy-cycles
 
 Proposed GID `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence`, path `D5/S1/Words/Patterns/ShiehYangYuMachineConvergence.lean`, adjacent to existing permutation-pattern modules. `git ls-files 'D5/**'` counted 5 tracked files directly in that directory; adding this module gives 6. `DirectoryFileLimit = 96` at `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs:65`. No D5 file is created by this probe.
 
-## Lean definitions
+## Formal result and source surface
 
-`probe/SyyProbe.lean` compiles with the source-form definitions: `IsValley`, recursive maximal valley runs, `r`, West's explicit pop/push/flush stack algorithm `s`, composition `M`, and reversed-word potential `Phi`. The stack helper is private; the maximum-split identity is not used as a definition. The run-based definition scans until the first strictly smaller value, then starts the next run. On distinct words this is exactly the source's valley partition.
+Public definitions: `IsValley`, `valleyRuns`, `r`, `s`, `M`. The single public theorem is:
 
-Compiled private lemma `westRun_perm`: the operational stack algorithm preserves the combined stack/input multiset, by induction over the actual pop/push recursion.
+```lean
+theorem result (n : ℕ) (_hn : 1 ≤ n) (w : List ℕ)
+    (hw : w.Perm (List.range' 1 n)) :
+    ∃ t : ℕ, (M^[t + 1]) w = (M^[t]) w
+```
 
-Compiled private lemma `westRun_sentinel`: a bottom-of-stack element at least as large as all remaining input survives to the final flush. This is proved from the operational recursion, not assumed as a recursive definition of `s`.
+`valleyRuns` scans from the current valley until the next strictly smaller entry. The current valley is the minimum of the already scanned prefix, so each cut is precisely at an entry strictly smaller than every earlier entry. `s` uses the pop/push/flush algorithm; its stack top is the head. The potential and all proof helpers are private. No maximum decomposition is built into the definition of `s`.
 
-Compiled private lemma `westRun_split`: when a new maximum arrives, the earlier input and smaller pending stack are completely emitted before processing the suffix with that maximum on the stack.
+The operational proofs establish permutation preservation, persistence of a maximum at the bottom of the stack, and the derived identity `s (X ++ m :: Y) = s X ++ s Y ++ [m]` for X < m and Y <= m. Splitting the valley runs at their last valley gives the preregistered machine decomposition. Strong induction on word length proves `Phi w <= Phi (M w)` on distinct words. A maximal-potential reachable element of the finite permutation set is fixed, since its successor has equal potential and reversal is injective.
 
-Compiled private lemma `s_split_max`: `s (X ++ m :: Y) = s X ++ s Y ++ [m]` when X < m and Y <= m. The source-route maximum identity is now derived from the stack algorithm.
+The final command was `/usr/bin/time -l lake env lean probe/SyyProbe.lean`, with the exact required PATH. Exit 0, no warnings. On this macOS ARM64 worktree with the warmed cloned cache:
 
-Compiled private lemma `r_perm`: reversing each valley run preserves the whole word multiset.
+- Wall time: 7.59 seconds.
+- Peak RSS: 1647378432 bytes = 1.647378432 decimal GB.
 
-Compiled private lemma `s_ends_max`: on every nonempty word, including words with duplicates, the operational West map ends in a largest input entry.
+Exact kernel axiom output:
 
-Compiled private lemma `input_le_reverse_s`: every word is lexicographically at most the reverse of its West output. Substituting `reverse A ++ [v]` gives the weak inequality needed in the preregistered sublemma, without a smallness hypothesis or an equality-case classification.
+```text
+'SyyProbe.result' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
-Compiled private lemma `valleyRuns_append_valley`: appending an entry smaller than every prefix entry starts a fresh valley run, and leaves the prefix partition unchanged.
+## Judgement form
 
-Compiled private lemma `r_split_min`: splitting at the first global minimum gives `r (X ++ v :: Y) = r X ++ reverse Y ++ [v]`, under the exact prefix and suffix comparison hypotheses.
+- Public theorem: `SyyProbe.result`.
+- `proof_shape: content`.
+- Direct frozen project dependencies: **none** (no D5 imports; therefore no dependency GID or statement_id).
+- `admission_basis: escape-witness`.
+- Escape witness: private `potential_weak`, asserting `Phi w <= Phi (M w)` for every Nodup word, proved by genuine strong induction and the operational stack/run lemmas.
+- Test i: **passed**. Lean's elaborated `result` proof directly contains `potential_weak`. `probe/check_dependencies.py` also checks the reduced proof term.
+- Test ii: **passed in the searched scope, semantic judgement**. The searched frozen library and pinned Mathlib supply finite maximization, permutations and iterate facts, but no stack/run algorithm or its potential inequality. Expanding this delivery's helpers leaves the stack recursion and length induction, not just instantiation, projections or normalization of existing theorems.
+- Test iii: **passed**. The witness is a local one-step comparison on arbitrary distinct words; the public conclusion is eventual equality of iterates on S_n. They are not definitionally equal, aliases or restatements.
+- Test iv: **mutant did not compile**. Removing the entire `potential_weak` declaration and replacing its use by `aesop` leaves `Phi (M^[t] w) <= Phi (M (M^[t] w))` unsolved. Lean exits 1; the check script exits 0 for this expected semantic failure. The finite orbit and its maximality survive; maximality gives the opposite inequality. This checks the specified bypass, not the impossibility of every conceivable alternative proof.
 
-Compiled private lemma `append_le_of_length_eq`: weak lexicographic bounds combine across equal-length initial blocks. The local statement-shape search found no matching append inequality in pinned Mathlib or core; the proof uses structural induction on lexicographic evidence.
+The direct dependency survives `Lean.Meta.reduce` with reducible transparency, explicitOnly=false, skipTypes=false, skipProofs=false. Exact audit output: `POTENTIAL_DEPENDENCY raw=true reduced=true`. In the live proof, the inequality is consumed by antisymmetry, then reversal injectivity yields fixedness; it is not a dead let or discarded conjunction component. The failed mutant's error-recovery `sorryAx` is absent from the successful main theorem.
 
-Compiled private lemmas `M_last_max` and `potential_weak`: the minimum/maximum decomposition yields, by strong induction on word length, `Phi w <= Phi (M w)` for every distinct word. The recursive branch uses the strictly shorter prefix before the global minimum.
+## Witness versus preregistration
 
-Compiled public theorem `SyyProbe.result`: for all n >= 1 and all words permuting the list of integers 1 through n, consecutive machine iterates eventually agree. A maximal-potential reachable permutation is fixed by the compiled inequality and injectivity of reversal. The exact axiom output and timing are recorded with the final report.
+The length induction and reversed lexicographic potential are retained. The auxiliary lemma is strengthened to `w <= reverse (s w)` for every word, without a minimum hypothesis. Instantiating at `reverse A ++ [v]` supplies the necessary weak inequality. The proof does not need the preregistered equality-iff-increasing classification. It uses weak monotonicity plus reversal injectivity and finite maximization directly; at a non-fixed point those same facts imply strict increase. This is a disclosed proof restructuring, with no change to the preregistered statement or source definitions.
 
-## Mandatory mutant
+## Limits and persistence
 
-`python3 probe/check_mutant.py` generated and compiled a mutant with the entire `potential_weak` declaration removed, replacing its use in `result` by `aesop` on the remaining finite-orbit context. Lean exited 1 with the unresolved inequality `Phi (M^[t] w) <= Phi (M (M^[t] w))`. The surviving maximality fact has the opposite direction. The check script exited 0 because this was the predicted semantic failure; the mutant itself did not compile. The error-recovery `sorryAx` printed for the failed mutant is not part of the successful main theorem. This test rejects this finiteness-only bypass; it does not prove that all alternative proofs are impossible.
+No mathematical goals remain in this probe. Global literature absence remains unverified: the direct arXiv and GitHub searches have the bounded scopes recorded above; Google Scholar and a complete citation sweep were not run. The source-level Proposition 3.5 identification is deliberately not formalized. Orchestrator replay and independent review remain outside this isolated seat's result.
 
-Final public surface: `IsValley`, `valleyRuns`, `r`, `s`, `M`, and the single theorem `result`. The potential and all proof helpers are private. Final compilation removes unused simp arguments and retains only the standard three axioms.
-
-The final main file compiles without warnings. The only public theorem remains the exact S_n convergence statement; all operational and potential lemmas remain private.
-
-## Elaborated live dependency
-
-`python3 probe/check_dependencies.py` exited 0. Lean's elaborated proof of `result` directly contains `potential_weak`; it still contains that constant after `Lean.Meta.reduce` with reducible transparency and all explicit-argument, type, and proof skipping disabled. Output: `POTENTIAL_DEPENDENCY raw=true reduced=true`. The proof uses its inequality as the second argument of antisymmetry, then injectivity of reversal returns the fixed-point equality. It is not an unused let-binding or discarded conjunction component.
-
-The potential-deletion mutant was rerun against the final public-surface revision and again failed at the same forward inequality (Lean exit 1; check script exit 0).
+No claim is made for Conjecture 6.1, repository-wide gates, D5 admission, freezing, a PR, or a merged settlement. All authored sources, experiment data, and this report are committed and pushed on `lane/math/op-syy-cycles-probe`; the paper and all downloads remain only in runner scratch. The result envelope records the exact pushed commits.
