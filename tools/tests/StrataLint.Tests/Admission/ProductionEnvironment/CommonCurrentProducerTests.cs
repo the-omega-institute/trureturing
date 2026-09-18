@@ -47,9 +47,6 @@ public sealed class CommonCurrentProducerTests
             "scribe-content":{"include":[{"pattern":"Blueprint/**/*.scribe.cs","optional":false}],"exclude":[]}},
             "inspector_sources":{"include":[],"exclude":[]}}
             """;
-        fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
-        fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/lean-report.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
-        fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/scribe-content.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         foreach (var kind in new[] { "lean-report", "scribe-content" })
         {
             var path = "Meta/ReportConsumers/" + kind + ".json";
@@ -59,8 +56,6 @@ public sealed class CommonCurrentProducerTests
                 projects = kind == "scribe-content" ? new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" } : [],
                 materials = new[] { "global.json" },
             });
-            fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
-                "  - \"" + path + "\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         }
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         foreach (var file in fixture.Files)
@@ -73,8 +68,8 @@ public sealed class CommonCurrentProducerTests
         Git("init", "-q"); Git("add", ".");
         Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "current producer");
         var data = fixture.BuildForRuleCompatibility();
-        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-            System.Text.Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.Load(
+            System.Text.Encoding.UTF8.GetBytes(fixture.Files["Meta/FILEMAP.toml"]),
             System.Text.Encoding.UTF8.GetBytes(fixture.Files["Meta/domains.yaml"]))).Policy;
         var report = LeanAxiomReport.Create(fixture.Reports);
         var rawPath = Path.Combine(root, CommonExecutionEvidence.ReportPath);

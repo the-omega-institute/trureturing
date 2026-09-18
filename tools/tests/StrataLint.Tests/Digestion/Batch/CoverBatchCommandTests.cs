@@ -108,14 +108,18 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
     }
 
-    [Fact]
-    public void SharedContextFailureAfterSuccessKeepsCommittedAtoms()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SharedContextFailureAfterSuccessKeepsCommittedAtoms(bool deletePolicy)
     {
         using var world = new BatchWorld();
         world.DuringVerification = () =>
         {
-            if (world.VerificationCount == 2)
-                File.AppendAllText(Path.Combine(world.Root, "Meta/registry.yaml"), "# changed\n");
+            if (world.VerificationCount != 2) return;
+            var policyPath = Path.Combine(world.Root, "Meta/FILEMAP.toml");
+            if (deletePolicy) File.Delete(policyPath);
+            else File.AppendAllText(policyPath, "# changed\n");
         };
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid));
@@ -149,7 +153,7 @@ public sealed partial class CoverBatchCommandTests
         world.DuringVerification = () =>
         {
             if (change == "added") File.WriteAllText(Path.Combine(world.Root, "new-input.txt"), "new input");
-            else File.Delete(Path.Combine(world.Root, "Meta/registry.yaml"));
+            else File.Delete(Path.Combine(world.Root, "Meta/FILEMAP.toml"));
         };
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));

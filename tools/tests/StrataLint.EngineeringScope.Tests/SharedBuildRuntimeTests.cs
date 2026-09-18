@@ -87,8 +87,9 @@ public sealed class SharedBuildRuntimeTests
         Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1",
             resources = new[] { new { id = "build", projects = new[] { cliProject }, checks = Array.Empty<string>(), steps = Array.Empty<string>() } } }));
         Write("Meta/FILEMAP.toml", """
-            schema_version = 4
+            schema_version = 5
             resources = [{ id = "build", stage = "build", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] }]
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [residence_policy]
             case_id = "FIXTURE"
             desired = "registered"

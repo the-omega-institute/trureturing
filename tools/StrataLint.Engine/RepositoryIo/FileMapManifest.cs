@@ -3,8 +3,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
 using Tomlyn.Model;
+using Tomlyn.Parsing;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 internal enum FileMapKind
 {
@@ -38,7 +39,8 @@ internal sealed record FileMapEntry
         string runtimeDisposition,
         string? historyRequirement,
         ImmutableArray<string> require,
-        FileMapSymlink? symlink)
+        FileMapSymlink? symlink,
+        bool digestionSource = false)
     {
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
@@ -54,6 +56,7 @@ internal sealed record FileMapEntry
         HistoryRequirement = historyRequirement;
         Require = require;
         Symlink = symlink;
+        DigestionSource = digestionSource;
     }
 
     internal string Pattern { get; }
@@ -82,6 +85,8 @@ internal sealed record FileMapEntry
 
     internal FileMapSymlink? Symlink { get; }
 
+    internal bool DigestionSource { get; }
+
     internal bool Matches(string path) => glob.IsMatch(path);
 }
 
@@ -90,16 +95,20 @@ internal sealed class FileMapManifest
     internal FileMapManifest(
         FileMapResidencePolicy residencePolicy,
         ImmutableArray<FileMapEntry> entries,
+        ImmutableDictionary<ArtifactKindId, ArtifactPolicy> artifactKinds,
         ImmutableArray<FileMapResource> resources)
     {
         ResidencePolicy = residencePolicy;
         Entries = entries;
+        ArtifactKinds = artifactKinds;
         Resources = resources;
     }
 
     internal FileMapResidencePolicy ResidencePolicy { get; }
 
     internal ImmutableArray<FileMapEntry> Entries { get; }
+
+    internal ImmutableDictionary<ArtifactKindId, ArtifactPolicy> ArtifactKinds { get; }
 
     internal ImmutableArray<FileMapResource> Resources { get; }
 
@@ -158,14 +167,14 @@ internal static partial class FileMapLoader
         FileMapDocuments.RequireCanonicalBytes(bytes, location);
         var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
         var root = documents[0].Table;
-        var rootKeys = new List<string> { "resources", "residence_policy", "schema_version" };
+        var rootKeys = new List<string> { "evidence", "resources", "residence_policy", "schema_version" };
         if (root.ContainsKey("include")) rootKeys.Add("include");
         if (root.ContainsKey("files")) rootKeys.Add("files");
         if (!root.ContainsKey("files") && !root.ContainsKey("include"))
             throw Invalid(location, "files or include must be present");
         RequireExactKeys(root, location, rootKeys.ToArray());
-        if (root["schema_version"] is not long schemaVersion || schemaVersion != 4)
-            throw Invalid(location, "schema_version must be 4");
+        if (root["schema_version"] is not long schemaVersion || schemaVersion != 5)
+            throw Invalid(location, "schema_version must be 5");
         if (root["residence_policy"] is not TomlTable residenceTable)
             throw Invalid(location, "residence_policy must be a table");
         var residencePolicy = ParseResidencePolicy(residenceTable, $"{location}:residence_policy");
@@ -190,7 +199,7 @@ internal static partial class FileMapLoader
             .Where(static entry => entry.ArtifactId != "none")
             .Select(static entry => entry.ArtifactId)
             .ToArray();
-        if (artifactIds.Distinct(StringComparer.Ordinal).Count() != artifactIds.Length)
+        if (artifactIds.Distinct(StringComparer.OrdinalIgnoreCase).Count() != artifactIds.Length)
         {
             throw Invalid(location, "artifact_id values other than none must be unique");
         }
@@ -202,7 +211,7 @@ internal static partial class FileMapLoader
                 if (!ids.Contains(id)) throw Invalid(entry.Pattern, $"unknown resource {id}");
         FileMapSymlinkPolicy.ValidateCoverage(entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>(),
             path => entries.Count(entry => entry.Matches(path)), location);
-        return new FileMapManifest(residencePolicy, entries, resources);
+        return new FileMapManifest(residencePolicy, entries, ParseEvidence(root, location), resources);
     }
 
     private static FileMapResidencePolicy ParseResidencePolicy(
@@ -261,7 +270,14 @@ internal static partial class FileMapLoader
             && artifactIdValue != "none"
             && disposition is "committed-source";
         var expectedKeys = isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys;
-        RequireExactKeys(table, location, table.ContainsKey("symlink") ? [.. expectedKeys, "symlink"] : expectedKeys);
+        if (table.ContainsKey("symlink")) expectedKeys = [.. expectedKeys, "symlink"];
+        if (table.ContainsKey("digestion_source")) expectedKeys = [.. expectedKeys, "digestion_source"];
+        RequireExactKeys(table, location, expectedKeys);
+        var digestionSource = table.ContainsKey("digestion_source")
+            ? table["digestion_source"] is true
+                ? true
+                : throw Invalid(location, "digestion_source must be the canonical boolean true")
+            : false;
         var symlink = FileMapSymlinkPolicy.ParseEntry(table, location);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
@@ -341,7 +357,8 @@ internal static partial class FileMapLoader
             runtimeDisposition,
             historyRequirement,
             RequiredNames(table, "require", pattern, allowEmpty: true),
-            symlink);
+            symlink,
+            digestionSource);
     }
 
     private static ImmutableArray<string> RequiredNames(
@@ -360,9 +377,9 @@ internal static partial class FileMapLoader
                 : throw Invalid(location, $"{key} must contain only strings"))
             .ToImmutableArray();
         if (!values.SequenceEqual(values.Order(StringComparer.Ordinal), StringComparer.Ordinal)
-            || values.Distinct(StringComparer.Ordinal).Count() != values.Length)
+            || values.Distinct(StringComparer.OrdinalIgnoreCase).Count() != values.Length)
         {
-            throw Invalid(location, $"{key} must be unique and ordinally sorted");
+            throw Invalid(location, $"{key} must be unique (without case collisions) and ordinally sorted");
         }
 
         return values;

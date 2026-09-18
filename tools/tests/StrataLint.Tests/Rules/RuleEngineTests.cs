@@ -228,7 +228,7 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(
             completed.Capability.Diagnostics,
             diagnostic => diagnostic.Path == path && diagnostic.RuleId == sl000);
-        Assert.Equal("unknown Meta artifact", diagnostic.Message);
+        Assert.Equal("path must match exactly one FILEMAP entry; matches=0", diagnostic.Message);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
@@ -457,7 +457,6 @@ public sealed class RuleEngineTests
     [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs")]
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
     [InlineData("Directory.Build.props")]
-    [InlineData("Directory.Build.targets")]
     [InlineData("Directory.Packages.props")]
     [InlineData("global.json")]
     public void EveryAtomizerBuildInputWakesSl016BecauseItsProjectionCanDrift(string changedPath)

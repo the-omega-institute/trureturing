@@ -122,7 +122,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             Write("lakefile.toml", "name = \"fixture\"");
             Write("lake-manifest.json", "{\"packages\":[]}");
             var policyFixture = new RuleFixture();
-            Write("Meta/registry.yaml", policyFixture.Files["Meta/registry.yaml"]);
+            Write("Meta/FILEMAP.toml", policyFixture.Files["Meta/FILEMAP.toml"]);
             Write("Meta/domains.yaml", policyFixture.Files["Meta/domains.yaml"]);
             foreach (var name in new[] { "pilot", "expansion" }) Write($"Golden/Projection/statement-projection-{name}-v1.json",
                 "{\"schema\":\"statement-projection-" + name + "-fixture-v1\",\"declarations\":[]}");

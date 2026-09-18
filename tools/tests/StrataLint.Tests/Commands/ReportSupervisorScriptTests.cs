@@ -286,7 +286,9 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.LongRunningWorker,
-            "STRATALINT_BUILD_TIMEOUT_SECONDS=2", fixture.ClockEnvironment);
+            "STRATALINT_BUILD_TIMEOUT_SECONDS=2",
+            fixture.ClockEnvironment,
+            fixture.ClockAfterScratchEnvironment);
 
         // The fixture's five-minute process bound is only a runaway guard. The
         // verdict comes from the supervisor's state transition and artifacts.

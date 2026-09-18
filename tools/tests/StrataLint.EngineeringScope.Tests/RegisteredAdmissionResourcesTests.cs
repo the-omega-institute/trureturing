@@ -36,8 +36,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/admission-resource-probe.trx", true)]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py", false)]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py", true)]
-    [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", false)]
-    [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", true)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]

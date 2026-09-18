@@ -12,8 +12,9 @@ public sealed class FileMapManifestTests
         var tableArray = FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "table-array.toml");
         var inlineTableArray = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             files = [{ pattern = "Generated/partitions/*.md", require = [], kind = "generated", admission_plane = "content", produced_by = "PartitionEmitter", consumed_by = ["reader"], verified_by = ["PartitionEmitter"], artifact_id = "none", runtime_disposition = "run-local" }]
 
             [residence_policy]
@@ -34,7 +35,9 @@ public sealed class FileMapManifestTests
     [InlineData("files = [{ pattern = \"Generated/output.md\" }, 42]\n", "only tables")]
     public void FilesArrayRejectsEmptyWrongOrMixedElements(string files, string expected)
     {
-        var source = "schema_version = 4\nresources = []\n" + files + """
+        var source = "schema_version = 5\nresources = []\n"
+            + "evidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n"
+            + files + """
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"
@@ -118,8 +121,9 @@ public sealed class FileMapManifestTests
     public void SchemaTwoDispositionFieldsFailClosed(string dispositionLine, string expectedMessage)
     {
         var source = $$"""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -150,8 +154,9 @@ public sealed class FileMapManifestTests
     public void DuplicateArtifactIdIsRejected()
     {
         var source = """
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -219,8 +224,9 @@ public sealed class FileMapManifestTests
     public void CanonicalManifestLoadsAllFiveKindsAndMatchesRepositoryGlobs()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -313,8 +319,9 @@ public sealed class FileMapManifestTests
     }
 
     private static string DataKeyedRunLocalEntry() => """
-        schema_version = 4
+        schema_version = 5
         resources = []
+        evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
@@ -344,8 +351,9 @@ public sealed class FileMapManifestTests
     {
         var producedBy = extra.Length == 0 ? "none" : "ScribeEmitter";
         var source = $$"""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             {{extra}}
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -376,8 +384,9 @@ public sealed class FileMapManifestTests
     public void GeneratedDeclarationMustNameItsProducer()
     {
         var source = """
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -413,8 +422,9 @@ public sealed class FileMapManifestTests
         string expectedMessage)
     {
         var source = $$"""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -461,8 +471,9 @@ public sealed class FileMapManifestTests
     private static void AssertUnsafePatternRejected(string pattern)
     {
         var source = $$"""
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"

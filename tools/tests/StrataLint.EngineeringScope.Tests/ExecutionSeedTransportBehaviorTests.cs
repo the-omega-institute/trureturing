@@ -704,11 +704,12 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         if (plannedEngineering)
         {
             fixture.Write("Meta/FILEMAP.toml", """
-                schema_version = 4
+                schema_version = 5
                 resources = [
-                  { id = "build", stage = "build", owner = "tools/tests/First/First.csproj", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
-                  { id = "engineering", stage = "engineering", owner = "tools/tests/First/First.csproj", prerequisites = ["build"], tools = ["dotnet"], cache_layers = ["engineering"], cache_activation = { engineering = "stage-start" }, materials = [] }
+                  { id = "build", stage = "build", owner = "tools/tests/StrataLint.First/First.csproj", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+                  { id = "engineering", stage = "engineering", owner = "tools/tests/StrataLint.First/First.csproj", prerequisites = ["build"], tools = ["dotnet"], cache_layers = ["engineering"], cache_activation = { engineering = "stage-start" }, materials = [] }
                 ]
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 [residence_policy]
                 case_id = "fixture"
                 desired = "registered"

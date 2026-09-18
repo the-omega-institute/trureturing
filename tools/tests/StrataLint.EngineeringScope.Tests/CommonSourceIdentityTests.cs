@@ -36,14 +36,14 @@ public sealed class CommonSourceIdentityTests
         TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"),
             ".sshx-*\nlocal/\nrelease/\n**/obj/\n**/bin/\n");
         var before = CommonExecutionEvidence.Candidate(fixture.Root);
-        var path = Path.Combine(fixture.Root, "tools/tests/First", source);
+        var path = Path.Combine(fixture.Root, "tools/tests/StrataLint.First", source);
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
 
         var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
         var registration = TemporaryFileSystem.File.ReadAllText(manifest);
-        TemporaryFileSystem.File.WriteAllText(manifest, registration.Replace("tools/tests/First/**/*.cs",
-            "tools/tests/First/" + source, StringComparison.Ordinal));
+        TemporaryFileSystem.File.WriteAllText(manifest, registration.Replace("tools/tests/StrataLint.First/**/*.cs",
+            "tools/tests/StrataLint.First/" + source, StringComparison.Ordinal));
         var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
 
         Assert.Contains("registered Compile input is absent", error.Message, StringComparison.Ordinal);
@@ -60,7 +60,7 @@ public sealed class CommonSourceIdentityTests
         WriteProject(fixture.Root, false);
         TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"), "local/\n");
         var before = CommonExecutionEvidence.Candidate(fixture.Root);
-        var path = Path.Combine(fixture.Root, "tools/tests/First/Additional.cs");
+        var path = Path.Combine(fixture.Root, "tools/tests/StrataLint.First/Additional.cs");
         TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
         var dirty = CommonExecutionEvidence.Candidate(fixture.Root);
         Assert.NotEqual(before, dirty);

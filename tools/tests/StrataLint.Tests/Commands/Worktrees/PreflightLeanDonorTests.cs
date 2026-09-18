@@ -36,8 +36,9 @@ public sealed class PreflightLeanDonorTests
         Write(donor, "lean-toolchain", "leanprover/lean4:v4.33.0\n");
         Write(donor, "lake-manifest.json", LeanCacheFixtureFile.Manifest());
         Write(donor, "Meta/FILEMAP.toml", """
-            schema_version = 4
+            schema_version = 5
             resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [residence_policy]
             case_id = "FIXTURE"
             desired = "explicit"

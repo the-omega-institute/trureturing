@@ -419,7 +419,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "agents/**",
         "docs/develop/spec/**",
         "*.props",
@@ -667,7 +666,6 @@
         "Blueprint/**",
         "Library/**",
         "Meta/domains.yaml",
-        "Meta/registry.yaml",
         "tools/scripts/katex/**",
         "tools/scripts/renderer/**"
       ],
@@ -777,7 +775,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "D5/**",
         "Blueprint/**",
         "Library/**",

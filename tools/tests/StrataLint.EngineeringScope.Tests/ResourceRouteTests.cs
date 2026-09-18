@@ -331,8 +331,9 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             // The seed projects are retired below. Register their real old
             // tree before creating the resource candidate that deletes them.
             Write("Meta/FILEMAP.toml", """
-                schema_version = 4
+                schema_version = 5
                 resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 [residence_policy]
                 case_id = "FIXTURE"
                 desired = "registered"
@@ -382,7 +383,8 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 "  { id = \"" + row.id + "\", stage = \"" + (row.id == "build" ? "build" : "current")
                 + "\", owner = \"tools/scripts/workflow/ci.py\", prerequisites = " + (row.id == "build" ? "[]" : row.id == "lean-report" ? "[\"lean\"]" : row.id is "scribe" or "current" ? "[\"lean-report\"]" : "[\"build\"]")
                 + ", tools = [], cache_layers = [], cache_activation = {}, materials = [\"Meta/ci-checks.json\", \"Meta/ci-resources.json\", \"Meta/engineering-projects.json\"] },");
-            Write("Meta/FILEMAP.toml", "schema_version = 4\nresources = [\n" + string.Join("\n", rows) + "\n]\n"
+            Write("Meta/FILEMAP.toml", "schema_version = 5\nresources = [\n" + string.Join("\n", rows) + "\n]\n"
+                + "evidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n"
                 + "[residence_policy]\ncase_id = \"FIXTURE\"\ndesired = \"registered\"\nknown_violation_count = 0\nstatus = \"closed\"\n"
                 + "[[files]]\npattern = \"**\"\nrequire = " + JsonSerializer.Serialize(required.Order(StringComparer.Ordinal)) + "\n"
                 + "kind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"test\"]\nverified_by = [\"test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n");

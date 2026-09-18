@@ -90,11 +90,11 @@ public sealed partial class CommonCheckExecutionTests
         var consumer = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, ReportInputsFixture.LeanConsumer)))!;
         consumer["projects"] = new JsonArray(CurrentExecutionContractTests.CandidateFixture.Second);
         fixture.Tree.Write(ReportInputsFixture.LeanConsumer, consumer.ToJsonString());
-        fixture.Tree.Write("tools/tests/Second/Consumer.cs", "class Consumer { }");
+        fixture.Tree.Write("tools/tests/StrataLint.Second/Consumer.cs", "class Consumer { }");
         fixture.Tree.Track();
         fixture.Run();
         fixture.Seed();
-        fixture.Tree.Write("tools/tests/Second/Consumer.cs", "class Consumer { public int Version => 2; }");
+        fixture.Tree.Write("tools/tests/StrataLint.Second/Consumer.cs", "class Consumer { public int Version => 2; }");
         fixture.Tree.Track();
         fixture.Run();
         Assert.Equal(new[] { "SL-006" }, fixture.Calls);

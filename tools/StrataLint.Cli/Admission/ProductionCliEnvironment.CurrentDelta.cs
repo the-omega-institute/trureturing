@@ -47,12 +47,10 @@ internal sealed partial class ProductionCliEnvironment
             var report = !reportRequired ? null : !delta && commonRound is null
                 ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true)
                 : validation.Report(options.CandidateLeanReport!);
-            if (!current.TryGetFile("Meta/registry.yaml", out var registry) || !current.TryGetFile("Meta/domains.yaml", out var domains))
-                throw new InvalidDataException("candidate policy is missing");
-            var policy = RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
+            var policy = RepositoryPolicyLoader.Load(current) switch
             {
-                RegistryLoadOutcome.Accepted accepted => accepted.Policy,
-                RegistryLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
+                PolicyLoadOutcome.Accepted accepted => accepted.Policy,
+                PolicyLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
             };
             var lean = report is null ? null : LeanClosureValidator.Validate(current, report) switch
             {

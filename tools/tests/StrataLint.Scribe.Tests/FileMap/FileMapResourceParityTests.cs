@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Nodes;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 

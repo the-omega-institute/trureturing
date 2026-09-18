@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -142,22 +143,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         if (selected)
         {
-            const string producer = "Meta/ReportProducers/fixture.json";
-            const string consumer = "Meta/ReportConsumers/fixture.json";
+            const string producer = "Meta/ReportProducers/lean-report.json";
+            const string consumer = "Meta/ReportConsumers/lean-report.json";
             fixture.Files[producer] = "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}";
             fixture.Files["lean-report-inputs.json"] = "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}";
             fixture.Files[consumer] = JsonSerializer.Serialize(new
             {
                 schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
             });
-            if (metadata)
-                foreach (var path in new[] { producer, consumer, "lean-report-inputs.json" })
-                    fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
-                        "  - \"" + path + "\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
             var registration = JsonNode.Parse(fixture.Files[CommonExecutionEvidence.CheckManifestPath])!;
             registration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-012")!["report_inputs"] =
                 JsonSerializer.SerializeToNode(new[] { new { producer, consumer, artifact = "raw-lean-report", materials = new[] { "global.json" } } });
@@ -169,27 +164,33 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 schema = "ci-resource-execution-v1", resources = new[] {
                     new { id = "current", projects = new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" },
                         checks = selectedChecks, steps = metadata ? ["check-current"] : new[] { "check-current", "lean-report" } } } });
-            fixture.Files["Meta/FILEMAP.toml"] = """
-                schema_version = 4
-                resources = [
-                  { id = "current", stage = "current", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
-                ]
-                [residence_policy]
-                case_id = "FIXTURE"
-                desired = "explicit"
-                known_violation_count = 0
-                status = "closed"
-                [[files]]
-                pattern = "**"
-                require = ["current"]
-                kind = "program"
-                admission_plane = "judge"
-                produced_by = "none"
-                consumed_by = ["test"]
-                verified_by = ["test"]
-                artifact_id = "none"
-                runtime_disposition = "committed-source"
-                """ + "\n";
+            var policy = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "current fixture");
+            var entries = policy.Entries.Select(entry => new FileMapEntry(
+                entry.Pattern,
+                entry.Kind,
+                entry.AdmissionPlane,
+                entry.ProducedBy,
+                entry.ConsumedBy,
+                entry.VerifiedBy,
+                entry.ResidenceViolation,
+                entry.ArtifactId,
+                entry.Mode,
+                entry.RuntimeDisposition,
+                entry.HistoryRequirement,
+                ["current"],
+                entry.Symlink,
+                entry.DigestionSource)).ToImmutableArray();
+            var current = new FileMapResource(
+                "current",
+                "current",
+                "tools/scripts/workflow/ci.py",
+                [],
+                [],
+                [],
+                ImmutableDictionary<string, string>.Empty,
+                ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"]);
+            fixture.Files["Meta/FILEMAP.toml"] = Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+                new FileMapManifest(policy.ResidencePolicy, entries, policy.ArtifactKinds, [current])).AsSpan());
         }
         foreach (var pair in fixture.Files)
         {
@@ -393,7 +394,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("valid", 0, "")]
     [InlineData("reused", 0, "")]
     [InlineData("template-changed-undeclared", 1, "DTR-Undeclared")]
-    [InlineData("template-unchanged", 0, "")]
+    [InlineData("template-unchanged", 3, "SL-022")]
     [InlineData("template-missing-evidence", 1, "DTR-Evidence")]
     [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
@@ -443,12 +444,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (template)
         {
             foreach (var pair in DeclaredTemplateReviewTests.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
-            fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
-                "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
-            var templatePolicy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
-                Encoding.UTF8.GetBytes(fixture.Files["Meta/domains.yaml"]))).Policy;
-            fixture.Files["Meta/registry.yaml"] = Encoding.UTF8.GetString(templatePolicy.CanonicalRegistryBytes.AsSpan());
         }
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\ntools/StrataLint.Cli/bin/\n");
@@ -459,12 +454,12 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             path => File.ReadAllBytes(Path.Combine(repository, path)));
         foreach (var document in filemapDocuments)
             Write(document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
-        const string firstProject = "tools/tests/First/First.csproj";
+        const string firstProject = "tools/tests/StrataLint.First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
-        Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
+        Write("tools/tests/StrataLint.Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         var registration = JsonNode.Parse(fixture.Files[EngineeringRegistrationFixture.Path])!;
         var projects = registration["projects"]!.AsArray();
-        foreach (var (path, assembly) in new[] { (firstProject, "First"), ("tools/tests/Second/Second.csproj", "Second") })
+        foreach (var (path, assembly) in new[] { (firstProject, "First"), ("tools/tests/StrataLint.Second/Second.csproj", "Second") })
             projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
                 new EngineeringProjectFixture(path, assembly, "cross-cutting-test", true, [])))!["projects"]![0]!.DeepClone());
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());

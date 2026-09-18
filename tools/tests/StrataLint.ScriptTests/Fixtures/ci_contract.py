@@ -93,8 +93,9 @@ class Contracts(CacheFixture, unittest.TestCase):
         self.env["GITHUB_EVENT_NAME"] = "pull_request"
         self.git("init", "-q")
         (self.root / "Meta").mkdir(exist_ok=True)
-        (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 4
+        (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 5
 resources = []
+evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 [residence_policy]
 case_id = "fixture"
 desired = "registered"
@@ -252,14 +253,15 @@ runtime_disposition = "committed-source"
                         if change == "delete": old.unlink()
                         else: old.rename(root / "docs/renamed.md")
                         patterns = ["*", "Meta/**", "docs/**", *("retired/*", "retired/old.txt")[:match_count]]
-                        current = prefix.replace("schema_version = 2\n", "schema_version = 4\n" + resources)
+                        evidence = 'evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }\n'
+                        current = prefix.replace("schema_version = 2\n", "schema_version = 5\n" + resources + evidence)
                         for pattern in patterns:
                             require = '["filemap"]' if pattern.startswith("retired/") else "[]"
                             current += "[[files]]" + row.replace('pattern = "**"',
                                 'pattern = "' + pattern + '"\nrequire = ' + require)
                         (root / "Meta/FILEMAP.toml").write_text(current)
                         git("add", "-A")
-                        git("commit", "-qm", "schema four candidate")
+                        git("commit", "-qm", "schema five candidate")
                         head = git("rev-parse", "HEAD")
                         env = dict(self.env, GITHUB_EVENT_NAME="pull_request" if mode == "pr" else "push",
                                    GITHUB_OUTPUT=str(root / "outputs"), GITHUB_EVENT_PATH=str(root / "event.json"))
@@ -320,16 +322,17 @@ runtime_disposition = "committed-source"
         with self.assertRaisesRegex(ValueError, "same candidate snapshot"):
             planner.load_filemap(root)
 
-        delegated_root = b'''schema_version = 4
+        delegated_root = b'''schema_version = 5
 include = ["FILEMAP.fixture.toml"]
 resources = []
+evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 [residence_policy]
 case_id = "RESIDENCE-FIXTURE"
 desired = "registered"
 known_violation_count = 0
 status = "compliant"
 '''
-        delegated_fragment = b'''schema_version = 4
+        delegated_fragment = b'''schema_version = 5
 [[files]]
 pattern = "fixture/**"
 require = []

@@ -200,7 +200,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath,
-            "tools/tests/First/bin/Release/net10.0/First.dll", "tools/tests/Second/bin/Release/net10.0/Second.dll", CommonExecutionEvidence.LeanProducerPath };
+            "tools/tests/StrataLint.First/bin/Release/net10.0/First.dll", "tools/tests/StrataLint.Second/bin/Release/net10.0/Second.dll", CommonExecutionEvidence.LeanProducerPath };
         foreach (var binary in binaries) Write(binary, "synthetic runtime\n");
         CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, new[] {
             new BuiltTestProject(CurrentExecutionContractTests.CandidateFixture.First, binaries[3]),

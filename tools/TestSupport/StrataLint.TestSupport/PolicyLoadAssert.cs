@@ -12,17 +12,17 @@ namespace StrataLint.TestSupport;
 // 日后再混进复用会立刻可见。
 
 /// Asserting the outcome type alone reports which case was returned but not why. A
-/// registry that fails to load carries its reason in InfrastructureFailure.Message --
+/// repository policy that fails to load carries its reason in InfrastructureFailure.Message --
 /// for example the exact canonical-order violation in domains.yaml -- and a bare
 /// Assert.IsType discards it, leaving a reader with "expected Accepted, got
-/// InfrastructureFailure" and no path to the cause except reading RegistryPolicy.
+/// InfrastructureFailure" and no path to the cause except reading RepositoryPolicy.
 /// See #993: the judgement is right, the reported material is not the one judged.
-public static class RegistryLoadAssert
+public static class PolicyLoadAssert
 {
-    public static RegistryLoadOutcome.Accepted Accepted(RegistryLoadOutcome outcome) =>
-        outcome as RegistryLoadOutcome.Accepted
+    public static PolicyLoadOutcome.Accepted Accepted(PolicyLoadOutcome outcome) =>
+        outcome as PolicyLoadOutcome.Accepted
         ?? throw new Xunit.Sdk.XunitException(
-            outcome is RegistryLoadOutcome.InfrastructureFailure failure
-                ? $"registry load failed: {failure.Message}"
-                : $"registry load returned {outcome.GetType().Name}, expected Accepted");
+            outcome is PolicyLoadOutcome.InfrastructureFailure failure
+                ? $"repository policy load failed: {failure.Message}"
+                : $"repository policy load returned {outcome.GetType().Name}, expected Accepted");
 }

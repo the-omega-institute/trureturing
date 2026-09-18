@@ -245,8 +245,9 @@ public sealed class PreflightProcessContractTests
                 Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
             Write(".gitignore", "build/\n");
             Write("Meta/FILEMAP.toml", """
-                schema_version = 4
+                schema_version = 5
                 resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 [residence_policy]
                 case_id = "FIXTURE"
                 desired = "explicit"

@@ -113,8 +113,8 @@ public sealed partial class CurrentExecutionContractTests
 
     internal sealed class CandidateFixture : IDisposable
     {
-        internal const string First = "tools/tests/First/First.csproj";
-        internal const string Second = "tools/tests/Second/Second.csproj";
+        internal const string First = "tools/tests/StrataLint.First/First.csproj";
+        internal const string Second = "tools/tests/StrataLint.Second/Second.csproj";
         internal string Root { get; } = TemporaryFileSystem.Directory.CreateTempSubdirectory("current-contract-").FullName;
 
         internal CandidateFixture()
@@ -128,8 +128,8 @@ public sealed partial class CurrentExecutionContractTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(Root, "Meta"));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, EngineeringRegistrationFixture.Path),
                 EngineeringRegistrationFixture.Manifest(
-                    new EngineeringProjectFixture(First, "First", "cross-cutting-test", true, ["tools/tests/First/**/*.cs"]),
-                    new EngineeringProjectFixture(Second, "Second", "cross-cutting-test", true, ["tools/tests/Second/**/*.cs"])));
+                    new EngineeringProjectFixture(First, "First", "cross-cutting-test", true, ["tools/tests/StrataLint.First/**/*.cs"]),
+                    new EngineeringProjectFixture(Second, "Second", "cross-cutting-test", true, ["tools/tests/StrataLint.Second/**/*.cs"])));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, ".gitignore"), ".lake/\nbuild/\nbin/\nobj/\n");
             Write("global.json", "{\"sdk\":{\"version\":\"10.0.103\"}}");
             Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(First));

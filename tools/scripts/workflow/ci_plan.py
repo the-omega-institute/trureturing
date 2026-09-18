@@ -47,6 +47,31 @@ def names(value, where, allowed=None, empty=True):
     return value
 
 
+def evidence_policy(value, where):
+    exact(value, {"artifact_kinds"}, where)
+    kinds = value["artifact_kinds"]
+    if not isinstance(kinds, dict) or not kinds:
+        raise ValueError(where + ": artifact_kinds must be a nonempty table")
+    folded = set()
+    for kind, policy in kinds.items():
+        if (not isinstance(kind, str) or not re.fullmatch(r"[a-z][a-z0-9-]*", kind)
+                or kind.lower() in folded):
+            raise ValueError(where + f": invalid or case-colliding artifact kind: {kind}")
+        folded.add(kind.lower())
+        exact(policy, {"profile", "selectors", "path_selectors"}, where + ":" + kind)
+        if policy["profile"] not in {"structured-json", "structured-yaml", "opaque-text"}:
+            raise ValueError(where + f": unknown profile for {kind}")
+        for key, allowed in (("selectors", None),
+                             ("path_selectors", {"experiments", "formal", "kernels", "special", "values"})):
+            values = policy[key]
+            if (not isinstance(values, list) or not values
+                    or any(not isinstance(item, str)
+                           or (allowed is None and (item in {".", ".."} or not re.fullmatch(r"[A-Za-z0-9_.-]+", item)))
+                           or (allowed is not None and item not in allowed) for item in values)
+                    or len({item.lower() for item in values}) != len(values)):
+                raise ValueError(where + f": invalid or case-colliding {kind}:{key}")
+
+
 def path(value):
     # Preserve whitespace and Unicode, never normalize a different path into scope.
     if (not isinstance(value, str) or not value or value.startswith("/") or "\\" in value
@@ -116,8 +141,18 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
         raise ValueError("FILEMAP must be strict UTF-8 without BOM/CR and end in LF")
     data = tomllib.loads(raw.decode("utf-8"))
     schema = data.get("schema_version")
-    legacy = historical and schema == 2
-    root_keys = {"schema_version", "residence_policy"} | (set() if legacy else {"resources"})
+    supported = {2, 3, 4, 5} if historical else {5}
+    if type(schema) is not int or schema not in supported:
+        expected = "2, 3, 4, or 5" if historical else "5"
+        raise ValueError(f"FILEMAP schema_version must be {expected}")
+    has_evidence = schema in {3, 5}
+    has_resources = schema in {4, 5}
+    has_require = schema in {4, 5}
+    root_keys = {"schema_version", "residence_policy"}
+    if has_evidence:
+        root_keys.add("evidence")
+    if has_resources:
+        root_keys.add("resources")
     if "files" in data:
         root_keys.add("files")
     if "include" in data:
@@ -125,8 +160,6 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
     if "files" not in data and "include" not in data:
         raise ValueError("FILEMAP requires files or include")
     exact(data, root_keys, FILEMAP)
-    if type(schema) is not int or (schema != 4 and not legacy):
-        raise ValueError("FILEMAP schema_version must be 4")
     documents = [(FILEMAP, raw, data.get("files"))]
     if "include" in data:
         includes = data["include"]
@@ -158,8 +191,10 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
     count = residence["known_violation_count"]
     if type(count) is not int or not 0 <= count <= 2147483647:
         raise ValueError("invalid known_violation_count")
+    if has_evidence:
+        evidence_policy(data["evidence"], "evidence")
     resources = {}
-    if not legacy and not isinstance(data["resources"], list):
+    if has_resources and not isinstance(data["resources"], list):
         raise ValueError("resources must be an array")
     for resource in data.get("resources", []):
         exact(resource, {"id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials"}, "resource")
@@ -212,7 +247,7 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
         where = entry.get("pattern", "file row") if isinstance(entry, dict) else "file row"
         keys = {"pattern", "kind", "admission_plane", "produced_by", "consumed_by",
                 "verified_by", "artifact_id", "runtime_disposition"}
-        if not legacy:
+        if has_require:
             keys.add("require")
         generated = entry.get("kind") == "generated"
         local = entry.get("runtime_disposition") == "run-local"
@@ -225,11 +260,15 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
             keys.add("residence_violation")
         if "symlink" in entry:
             keys.add("symlink")
+        if "digestion_source" in entry:
+            keys.add("digestion_source")
         exact(entry, keys, where)
         glob(entry["pattern"])
         patterns.append(entry["pattern"])
-        if not legacy:
+        if has_require:
             names(entry["require"], where + ":require", resources)
+        if "digestion_source" in entry and entry["digestion_source"] is not True:
+            raise ValueError(f"{where}: digestion_source must be true")
         if entry["kind"] not in {"truth", "program", "data", "generated", "ledger"} or entry["admission_plane"] not in {"judge", "content"}:
             raise ValueError(f"{where}: invalid kind/admission_plane")
         for key in ("produced_by", "artifact_id"):

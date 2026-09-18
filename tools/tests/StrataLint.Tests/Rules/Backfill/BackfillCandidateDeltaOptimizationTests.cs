@@ -93,7 +93,7 @@ public sealed class BackfillCandidateDeltaOptimizationTests
             (BackfillInventoryLoader.RelativePath, "legacy\n"),
             (RuleFixture.RingPath, "lean\n"),
             ("D5/S0/Carrier/notes.txt", "outside\n"),
-            ("Meta/registry.yaml", "outside\n"),
+            ("Meta/FILEMAP.toml", "outside\n"),
             ("README.md", "outside\n"));
         var projected = BackfillInventoryLoader.ProjectInputSnapshot(snapshot);
 

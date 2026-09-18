@@ -1,8 +1,7 @@
 using System.Collections.Immutable;
-using StrataLint.Engine;
 using Tomlyn.Model;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 internal sealed record FileMapResource(string Id, string Stage, string Owner,
     ImmutableArray<string> Prerequisites, ImmutableArray<string> Tools,
