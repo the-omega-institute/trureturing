@@ -38330,3 +38330,205 @@ $$
 两个剖面空间均紧致，且有限提升与全部提升在此均成立；所以这个例子只说明不能无条件删除定理 90.2（二）的表达假设，并不反驳（一）的无联结词紧致升级。证毕。
 
 ## 90.99 追加锚
+
+## 91. 跨尺度相容双射的实际实现与隐藏纤维运输
+
+**定义 91.1（相容读数、实际线程与观察伪距离）。** 在 ZFC 中，取指标 $L\in\mathbb N_0$、有限非空集合 $Q_L$ 和映射
+$$
+r_L:Q_{L+1}\longrightarrow Q_L.
+$$
+不要求 $r_L$ 满射。另取集合 $X$，允许 $X=\varnothing$，以及满足 $r_Lq_{L+1}=q_L$ 的读数 $q_L:X\to Q_L$。记
+$$
+K=\left\{z\in\prod_{L\ge0}Q_L:
+       r_L(z_{L+1})=z_L\text{ 对每个 }L\right\},
+\qquad \pi_L(z)=z_L,
+$$
+$$
+\iota:X\longrightarrow K,\qquad
+\iota(x)=(q_L(x))_L,\qquad
+A=\iota[X],\qquad e:X\twoheadrightarrow A,\quad e(x)=\iota(x).
+\tag{91.1}
+$$
+最后一个等号按到实际像的陪域限制理解。对 $a\in A$，定义
+$$
+X_a=\{x\in X:e(x)=a\},\qquad
+x\sim x'\ \Longleftrightarrow\ \iota(x)=\iota(x').
+$$
+各层取离散结构，在 $K$ 上使用首差距离
+$$
+d(z,z')=
+\begin{cases}
+0,&z=z',\\
+2^{-\min\{L:z_L\ne z'_L\}},&z\ne z',
+\end{cases}
+\qquad d_X(x,x')=d(\iota(x),\iota(x')).
+\tag{91.2}
+$$
+这是可数离散乘积的标准超度量及其拉回伪度量；$d_X(x,x')=0$ 当且仅当 $\iota(x)=\iota(x')$，故 $d_X$ 分离原状态当且仅当 $\iota$ 单射。各个相容方程的解集闭，所以 $K$ 在该完备乘积中闭；观察商 $X/{\sim}$ 通过 $[x]\mapsto\iota(x)$ 等距识别为 $A$，故其度量完成可典范识别为 $\overline A^{\,K}$。在此嵌入下，整个 $K$ 是这个完成当且仅当 $A$ 在 $K$ 中稠密；定理 4.2 的非空原状态与满射有限读数条件是已有的充分情形。[^rro91-metric]
+
+**定理 91.2（相容层双射、实际像与纤维提升）。** 沿用定义 91.1。给定各层双射 $g_L:Q_L\to Q_L$，满足
+$$
+r_Lg_{L+1}=g_Lr_L\qquad(L\ge0).
+\tag{91.3}
+$$
+则以下结论成立。
+
+（一）存在唯一满足 $\pi_LG=g_L\pi_L$ 的映射 $G:K\to K$。它是双射且
+$$
+(Gz)_L=g_L(z_L),\qquad
+d(Gz,Gz')=d(z,z').
+\tag{91.4}
+$$
+反之，若只给出满足这些坐标等式的 $G:K\to K$，则（91.3）必在 $\pi_{L+1}[K]$ 上成立；若每个坐标投影满射，便在整个 $Q_{L+1}$ 上成立。这里投影满射是取得全层逆向结论的充分条件，不声称它对每个特殊观察塔均必要。
+
+（二）对任意 $F:X\to X$，有
+$$
+\iota F=G\iota
+\quad\Longleftrightarrow\quad
+\forall L,\ q_LF=g_Lq_L.
+\tag{91.5}
+$$
+满足该式的每个 $F$ 都保持 $d_X$。存在这样的全函数 $F$，当且仅当
+$$
+G(A)\subseteq A.
+\tag{91.6}
+$$
+在给定截面 $s:A\to X$、$es=\operatorname{id}_A$ 的版本中，充分方向的构造不需再次选择；仅从 $e$ 满射取得截面时使用选择公理。
+
+（三）若 $\iota$ 单射，则提升存在时唯一且单射，并且
+$$
+F\text{ 满射（亦即双射）}\quad\Longleftrightarrow\quad G(A)=A.
+\tag{91.7}
+$$
+无须 $\iota$ 单射，$G(A)=A$ 总给出观察商 $X/{\sim}$ 的典范等距自同构。
+
+（四）不要求 $\iota$ 单射时，存在满足（91.5）的原状态双射，当且仅当
+$$
+G(A)=A
+\quad\text{且存在一族双射}\quad
+(h_a:X_a\overset\sim\longrightarrow X_{G_Aa})_{a\in A},
+\tag{91.8}
+$$
+其中 $G_A:A\overset\sim\to A$ 是 $G$ 在实际像上的限制。一族双射作为整体数据给定后，其组装不再使用选择；由逐点等势选择出整族双射时使用选择公理。
+
+特别，若 $A=K$ 且 $\iota$ 单射，则每个这样的 $G$ 都经 $X\simeq K$ 共轭为原状态的等距自同构；对一份指定 $G$，$A=K$ 并非必要，原状态双射提升的条件仍是（91.8）。
+
+**证明。** 对 $i\le j$，把相邻限制复合为
+$$
+r_{i,i}=\operatorname{id},\qquad
+r_{i,j+1}=r_{i,j}r_j.
+$$
+由复合结合律及对 $k-j$ 的归纳，$r_{i,j}r_{j,k}=r_{i,k}$。相邻线程相容反复代入给出所有 $i\le j$ 的 $r_{i,j}(z_j)=z_i$，反向取 $j=i+1$ 即得相邻式。因此这些复合限制与线程分别满足既有逆系统及相容族接口。全指标自然性的归纳从 $r_{i,i}g_i=g_i$ 开始，归纳步为
+$$
+r_{i,j+1}g_{j+1}
+=r_{i,j}r_jg_{j+1}
+=r_{i,j}g_jr_j
+=g_ir_{i,j}r_j
+=g_ir_{i,j+1}.
+$$
+因此可直接应用定理 5.4 的逆极限下降，或既有 `inverse_limit_descent_and_independent_converse` 的正向部分，取得唯一的坐标相容映射 $G$。[^rro91-descent] 将（91.3）左复合 $g_L^{-1}$、右复合 $g_{L+1}^{-1}$，得
+$$
+r_Lg_{L+1}^{-1}=g_L^{-1}r_L.
+$$
+逆映射族同样下降，所得映射与 $G$ 的两个复合逐坐标都是恒等，故 $G$ 双射。又因
+$$
+g_L(z_L)=g_L(z'_L)\quad\Longleftrightarrow\quad z_L=z'_L,
+$$
+坐标相等模式与首次分歧层均被保持，得到（91.4）。
+
+若已给坐标相容的 $G$，对任意 $z\in K$ 有
+$$
+r_Lg_{L+1}(z_{L+1})
+=r_L(Gz)_{L+1}
+=(Gz)_L
+=g_Lr_L(z_{L+1}).
+$$
+这只检验到了 $\pi_{L+1}[K]$。投影满射时可代表每个 $Q_{L+1}$ 元素，得到全层等式；其条件边界沿用第 6.3 条。
+
+（91.5）是逐坐标相等。对任意提升，代入（91.4）得
+$$
+d_X(Fx,Fx')
+=d(G\iota(x),G\iota(x'))
+=d_X(x,x').
+\tag{91.9}
+$$
+实际像前向不变是既有 `realization_range_invariant` 对 $R=\iota$、$\nu=G$ 的应用：$a=\iota(x)$ 时，$Ga=\iota(Fx)\in A$。[^rro91-lift] 反之，若 $G(A)\subseteq A$，令 $G_A:A\to A$ 为相应限制。满射 $e:X\to A$ 有截面 $s:A\to X$；定义
+$$
+F=sG_Ae.
+\tag{91.10}
+$$
+由 $es=\operatorname{id}_A$ 得 $eF=G_Ae$，即（91.5）。这是已有 `sectionLift_isComplementLift` 的截面提升，其中底映射只需取 $G_A$，不需要对合假设。空集合情形使用空截面与空映射，同样成立。
+
+若 $\iota$ 单射，两份提升满足 $\iota F_1=\iota F_2$，故 $F_1=F_2$。若 $Fx=Fx'$，则 $G\iota(x)=G\iota(x')$，由 $G$ 与 $\iota$ 单射得 $x=x'$。满射 $F$ 给出
+$$
+G(A)=\iota(F[X])=A.
+$$
+反之，$G(A)=A$ 时，对任意 $y\in X$ 可取 $x$ 使
+$\iota(y)=G\iota(x)=\iota(Fx)$，再由 $\iota$ 单射得 $y=Fx$。这证明（91.7）。在此分离情形，$X\simeq A$ 正是既有 `Equiv.ofInjective` 的实际像等价；一般情形，则通过 `Setoid.quotientKerEquivRange` 将 $G_A$ 共轭到观察商。具体地，$[x]$ 映到非空集合 $\{y\in X:\iota(y)=G\iota(x)\}$ 所确定的唯一观察类；更换 $x$ 的代表不改变这个类。用 $G_A^{-1}$ 同样定义其逆，（91.4）给出等距性。输出是整个等价类，无须选择其成员，故这个商自同构不需选择原状态代表。[^rro91-range]
+
+若双射 $F$ 存在，同一像计算给出 $G(A)=A$。其限制 $F|_{X_a}$ 映入 $X_{G_Aa}$，并且单射。对 $y\in X_{G_Aa}$，由 $F$ 满射取 $x$ 使 $Fx=y$，则
+$$
+G\iota(x)=\iota(y)=Ga.
+$$
+由 $G$ 单射得 $e(x)=a$，所以限制也满射。这些限制共同给出（91.8）中的整族 $h_a$。
+
+反之，把 `canonicalDependentFiberEquiv` 应用于 $e$，并用 `Equiv.psigmaEquivSubtype` 将每个 $\operatorname{ConceptFiber}(e,a)$ 的 `PSigma` 依赖对转换成集合纤维 $X_a$，再以 `Equiv.sigmaCongrRight` 组装，得到典范依赖纤维分解
+$$
+E:X\simeq\sum_{a\in A}X_a,\qquad
+E(x)=(e(x),x),\qquad E^{-1}(a,x)=x.
+$$
+在该依赖和上以底空间等价 $G_A$ 和纤维等价 $h_a$ 应用 `Equiv.sigmaCongr`，其显式作用与逆作用为
+$$
+(a,x)\longmapsto(G_Aa,h_a(x)),
+\qquad
+(b,y)\longmapsto
+\bigl(G_A^{-1}b,h_{G_A^{-1}b}^{-1}(y)\bigr).
+\tag{91.11}
+$$
+式中纤维指标沿 $G_AG_A^{-1}b=b$ 作自然识别。两式互逆，输运回 $X$ 给出双射 $F$；其输出所在纤维是 $G_Aa$，故满足（91.5）。截面只选择每个目标纤维中的一个点，不能代替（91.8）所需的整纤维双射。[^rro91-fibers]
+
+最后，把 $(Q_L,q_L,r_L)$ 代入既有 `RefinementSystem`，其 `InverseThread` 按相同坐标及相容式识别为 $K$，`stateThread` 对应 $\iota$。若 $A=K$ 且 $\iota$ 单射，则线程完备及状态分离成立；`stateEquivInverseLimit` 给出 $\Phi:X\simeq K$，共轭 $F=\Phi^{-1}G\Phi$ 为原状态双射，并由（91.9）保持 $d_X$。[^rro91-completion] 全线程可实现并且观察分离，是让所有这种对称均提升为原状态等距自同构的充分条件。对一份指定 $G$，原状态双射提升只要求（91.8）；例如 $G=\operatorname{id}_K$ 保持任何实际像 $A\subsetneq K$，纤维恒等族给出 $F=\operatorname{id}_X$，所以此时不必有 $A=K$。证毕。
+
+**命题 91.3（层相容、实际像与隐藏纤维的三个独立障碍）。** 下列三种情形分别发生。
+
+（一）每层映射都是双射，但逐坐标作用不把线程映成线程。取 $Q_L=\{0,1\}$、$r_L=\operatorname{id}$，令 $g_0=\operatorname{id}$，而 $g_L(b)=1-b$ 对所有 $L\ge1$ 成立。
+
+（二）每层双射相容、每个有限读数满射且全部读数分离原状态，仍可能不存在原状态全函数提升。取命题 7.4 的最终恒零、最终恒一集合 $A_0,A_1\subseteq\{0,1\}^{\mathbb N_0}$，令 $X=A_0$，取全部二进制前缀
+$$
+Q_L=\{0,1\}^{L+1},\qquad
+q_L(x)=(x_0,\ldots,x_L),
+$$
+$r_L$ 删去末位，$g_L$ 对每位取补。
+
+（三）即使 $A=K$、$G(A)=A$，原状态全函数提升也可能存在而没有双射提升。取 $X=\{a,b,c\}$、常值二标签塔 $Q_L=\{0,1\}$、$r_L=\operatorname{id}$，令
+$$
+q_L(a)=0,\qquad q_L(b)=q_L(c)=1,
+\qquad g_L(t)=1-t.
+$$
+
+**证明。** （一）第一个相邻方块已有
+$r_0g_1=\mathrm{flip}\ne\operatorname{id}=g_0r_0$。常零线程逐坐标变为 $(0,1,1,\ldots)$，后者不属于常值线程空间。
+
+（二）沿用命题 7.4 的有限前缀满射、$A_0,A_1$ 稠密与不交结论，并把该处前缀长度 $n$ 改记为 $L+1$。相容前缀族识别为一条无限二进制序列，所以 $K=\{0,1\}^{\mathbb N_0}$、$A=A_0$；首个不同的比特位置 $k$ 正好是首个不同的层 $L=k$。全部前缀相等迫使每个比特相等，故读数分离原状态。取补与截断交换，故给出 $K$ 的等距自同构；它交换最终恒零与最终恒一条件，因此
+$$
+G(A_0)=A_1,\qquad A_0\cap A_1=\varnothing.
+$$
+由（91.6），没有原状态全函数提升。每个有限实际像都是 $Q_L$，故其逐层不变没有补足无限实际像的不变。[^rro91-prefix]
+
+（三）$K=A$ 是两条常值线程。任何提升都满足 $F(b)=F(c)=a$，因而不能单射；取 $F(a)=b$ 就得到一份全函数提升。对应纤维分别含一个与两个元素，不能以双射相配。证毕。
+
+[^rro91-metric]: 首差超度量及可数离散乘积完备性采用钉版 Mathlib [`PiNat.dist_eq_of_ne`、`PiNat.dist_triangle_nonarch`、`PiNat.metricSpace`、`PiNat.completeSpace`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/MetricSpace/PiNat.lean)，底数为 $1/2$。闭子空间继承完备性，$A$ 在其闭包中稠密；满射读数的充分情形见本卷[定理 4.2](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro91-descent]: [`IndependentDescentCriterion.inverse_limit_descent_and_independent_converse`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.lean) 分开全指标自然性的正向下降和带坐标投影满射的独立逆向；本节先把相邻限制复合，满足其 `InverseStageSystem` 接口；本卷[第 5.4、6.3 条](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 给出相应下降及反推边界。
+
+[^rro91-lift]: 实际像必要性复用 [`CanonicalMinimalRealization.realization_range_invariant`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.lean)。截面构造采用 [`ComplementFiberLift.sectionLift`、`sectionLift_isComplementLift`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/Negation/ComplementFiberLift.lean)，此提升等式不要求底映射对合。满射取得右逆的选择步骤是钉版 Mathlib [`Function.Surjective.hasRightInverse`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean)。
+
+[^rro91-range]: 实际像等价采用钉版 Mathlib [`Equiv.ofInjective`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Set.lean)；观察商与实际像的典范对应采用 [`Setoid.quotientKerEquivRange`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Setoid/Basic.lean)。
+
+[^rro91-fibers]: 依赖纤维分解采用 [`CanonicalDependentFiberEquivalence.canonicalDependentFiberEquiv`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.lean)；依赖对到集合纤维的转换及纤维族组装采用钉版 Mathlib [`Equiv.psigmaEquivSubtype`、`Equiv.sigmaCongrRight`、`Equiv.sigmaCongr`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Defs.lean)。
+
+[^rro91-completion]: [`InverseLimitCompletion.stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates`、`stateEquivInverseLimit`](https://github.com/the-omega-institute/trureturing/blob/3e9e5100eba8a28feb98020c8500dec67213c0c5/D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 提供观察分离、线程完备与原状态等价的既有接口。
+
+[^rro91-prefix]: $A_0,A_1$ 及其满前缀、稠密和不交性质沿用本卷[命题 7.4 的第一组构造](https://github.com/the-omega-institute/trureturing/blob/70aa89c3db46cdc999b6800bca8d0eb9547f07f4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，其前缀长度 $n$ 在此取 $L+1$。
+
+## 91.99 追加锚
