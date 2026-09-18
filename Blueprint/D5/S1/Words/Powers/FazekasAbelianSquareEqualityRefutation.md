@@ -50,7 +50,7 @@ $$(claim) \Leftrightarrow (\forall w \in \operatorname{List}\left(Bool\right),\;
 
 *Commentary.*
 
-For every binary word w, NatDiv(length(w),4) is at most the number of distinct abelian-square factors. If equality holds, every such factor is asserted to be trivial.
+Conjecture 4 (printed page 1) reads verbatim: “A binary word of length n contains at least ⌊n/4⌋ abelian squares and if it contains exactly ⌊n/4⌋ abelian squares then all the abelian squares are trivial.” The word is a list over the letters a ↦ false and b ↦ true; the number of abelian squares is the number of distinct abelian-square factors, as in the paper's example abaababa with six such factors. For every binary word w, NatDiv(length(w),4) is at most that number, and if equality holds, every such factor is asserted to be trivial.
 
 **Theorem 1.5 (The equality conclusion fails).**
 

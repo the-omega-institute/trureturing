@@ -66,6 +66,7 @@ counterexample settles the conjunction through its equality clause only.
 The mapping from the paper's natural-language definitions to the Lean
 encoding is a source-faithfulness judgment, not a kernel theorem. The
 literature search recorded in issue #8589 was bounded to the cited arXiv
-version, repository records, and arXiv search. Semantic Scholar and Google
-Scholar were not verified; exhaustive coverage and publication priority
-remain unverified.
+version, repository records, and arXiv search; the probe seat's Semantic
+Scholar graph query (citationCount 0) and Crossref title query (no record)
+are seat-reported readings, and Google Scholar was not queried. Exhaustive
+coverage and publication priority remain unverified.
