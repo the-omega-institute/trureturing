@@ -1,0 +1,25 @@
+**证明。** 先设 $r\Theta=\theta r$。由 $r$ 满射及 $\Theta^2=\mathrm{id}$，下降映射唯一且为对合，这是 [InvolutionDescent](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.lean) 中 `descended_unique`、`involutive_descends` 的直接应用。$\Theta$ 因而给出纤维 $r^{-1}(b)$ 与 $r^{-1}(\theta b)$ 之间的双射；参考律不变性给出 $p(\theta b)=p(b)$。在条件平均中令 $z=\Theta y$，得到
+$$
+(\Pi Rg)(x)
+=\frac{1}{p(r(x))}\sum_{r(z)=\theta(r(x))}\nu(z)g(z)
+=(\Pi g)(\Theta x)=(R\Pi g)(x).
+$$
+反之，设 $\Pi R=R\Pi$。对每个 $b\in B$，可见指示函数 $v_b=\mathbf1_{\{r=b\}}$ 满足 $\Pi v_b=v_b$，故
+$$
+\Pi(Rv_b)=R\Pi v_b=Rv_b.
+$$
+于是 $Rv_b$ 在每条读出纤维上恒定。若 $r(x)=r(y)$，便有
+$$
+\mathbf1_{\{r(\Theta x)=b\}}=\mathbf1_{\{r(\Theta y)=b\}}
+\quad\text{对每个 }b\in B,
+$$
+从而 $r(\Theta x)=r(\Theta y)$。取同一来源的 `kernelStable_iff_exists_descended`，以 $r$ 的满射性和刚得到的纤维稳定性，得所需 $\theta$。
+
+由 $\nu\circ\Theta=\nu$ 换元，有
+$$
+\langle Rg,h\rangle_\nu=\langle g,Rh\rangle_\nu,
+\qquad \|Rg\|_\nu=\|g\|_\nu,
+\qquad R^2=I.
+$$
+所以 $P_\pm$ 是偶、奇子空间的正交投影。$\mathcal H_\nu$ 为有限维实 Hilbert 空间，故完备，且所有线性算子连续。相容性使 $\Pi$ 与 $P_+$ 交换。将 $P=\Pi$、$Q=P_+$ 代入 [CommutingProjectionFourSector](https://github.com/the-omega-institute/trureturing/blob/d2156bc284087ecd89a109d391b587d58dca1306/D5/S3/Quantum/Algebra/CommutingProjectionFourSector.lean) 的 `commuting_projection_four_sector_criterion`，得到上述四个乘积为正交投影，其像组成正交内部直和。式 (92.2) 即这一分解作用于 $f$ 后的结论。证毕。
+
