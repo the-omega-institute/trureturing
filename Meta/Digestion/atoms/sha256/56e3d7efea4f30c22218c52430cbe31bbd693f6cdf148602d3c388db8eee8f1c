@@ -1,0 +1,10 @@
+**KL 特例。** 取 $\Phi(t)=t\ln t$（$t>0$）及 $\Phi(0)=0$，在 $K=[0,\infty)$ 上使用其严格凸性，则
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p)
+=D_{\mathrm{KL}}(d\Vert Ed).
+}
+$$
+三个 KL 值均有限，包括 $d$ 或 $Cd$ 有零坐标的情形。这是定理 73.3、74.2 的支撑型 KL 缺陷在同一凸缺陷记号下的特化。
+

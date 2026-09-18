@@ -141,11 +141,12 @@ public sealed class DeclaredTemplateBindingRuleTests
             Delta(declared: true),
             Delta(declared: true, invalid: true),
             Delta(missing: true),
+            DeclaredTemplateUnregisteredTests.Build(),
         };
         var names = contexts.SelectMany(context => DeclaredTemplateBindingRule.Evaluate(context))
             .Select(finding => finding.Message.Split(' ', 2)[0])
             .Distinct().Order(StringComparer.Ordinal).ToArray();
-        Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared" }),
+        Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared", "DTR-Unregistered" }),
             "[FAIL] deleted_finding_names_cannot_be_emitted: " + string.Join(", ", names));
     }
 }

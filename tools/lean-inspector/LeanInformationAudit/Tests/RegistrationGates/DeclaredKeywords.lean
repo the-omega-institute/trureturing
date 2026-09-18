@@ -14,7 +14,8 @@ elab "observe_declared_keywords" : command => do
   let initial ← get
   let mut identifiers := true
   for source in #["theorem sensitivity : True := True.intro",
-      "def variation : Bool := true", "def via : Nat := Nat.zero"] do
+      "def variation : Bool := true", "def via : Nat := Nat.zero",
+      "def escape : Bool := true", "def continues : Nat := Nat.zero"] do
     match Parser.runParserCategory (← getEnv) `command source with
     | .error _ => identifiers := false
     | .ok command =>
