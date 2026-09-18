@@ -1,0 +1,43 @@
+{
+  "mathlib": [
+    {
+      "cmd": "rg -n -i '\\b(?:LinearRecurrence|companion|charpoly)\\b' .lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean .lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly",
+      "hits": 130,
+      "exit_code": 0
+    },
+    {
+      "cmd": "rg -n -i '\\b(?:recurrence|companion|generating function)\\b' .lake/packages/mathlib/Mathlib/RingTheory/PowerSeries",
+      "hits": 5,
+      "exit_code": 0
+    },
+    {
+      "cmd": "rg -n -i '\\b(?:PowerSeries|generating|rational)\\b' .lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean",
+      "hits": 0,
+      "exit_code": 1
+    },
+    {
+      "cmd": "rg -n -i '\\b(?:generating function|rational generating|Perrier|Riordan|Jacobi.?Perron)\\b' .lake/packages/mathlib/Mathlib -g '*.lean'",
+      "hits": 67,
+      "exit_code": 0
+    }
+  ],
+  "repo": [
+    {
+      "cmd": "git grep -n -i -P '\\b(?:Perrier|Riordan|Jacobi.?Perron|multidimensional continued)\\b' -- 'D5/**/*.lean' 'Blueprint/**' 'Problems/**' 'Library/**'",
+      "hits": 15,
+      "exit_code": 0
+    },
+    {
+      "cmd": "git grep -n -i -P '\\b(?:LinearRecurrence|companion|generating_equation|generating_unique|rational_series)\\b' -- 'D5/**/*.lean'",
+      "hits": 686,
+      "exit_code": 0
+    }
+  ],
+  "positive_control": [
+    {
+      "cmd": "git grep -n -P '\\b(?:theorem|def)\\b' -- 'D5/S3/Arith/RationalCompositionParityPeriodTen.lean'",
+      "hits": 40,
+      "exit_code": 0
+    }
+  ]
+}

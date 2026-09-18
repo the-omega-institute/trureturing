@@ -1,0 +1,957 @@
+rg -n -i '\b(?:LinearRecurrence|companion|charpoly)\b' .lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean .lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:21:In this file, we define the structure `LinearRecurrence` so that
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:22:`LinearRecurrence.mk d a` represents the above relation, and we call
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:53:structure LinearRecurrence (R : Type*) [CommSemiring R] where
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:59:instance (R : Type*) [CommSemiring R] : Inhabited (LinearRecurrence R) :=
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:62:namespace LinearRecurrence
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:66:variable {R : Type*} [CommSemiring R] (E : LinearRecurrence R)
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:68:/-- We say that a sequence `u` is solution of `LinearRecurrence order coeffs` when we have
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:73:/-- A solution of a `LinearRecurrence` which satisfies certain initial conditions.
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:195:variable {R : Type*} [CommRing R] [StrongRankCondition R] (E : LinearRecurrence R)
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:205:variable {R : Type*} [CommRing R] (E : LinearRecurrence R)
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:209:def charPoly : R[X] :=
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:213:theorem charPoly_degree_eq_order [Nontrivial R] : (charPoly E).degree = E.order := by
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:214:  rw [charPoly, degree_sub_eq_left_of_degree_lt]
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:219:theorem charPoly_monic : charPoly E |>.Monic := by
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:221:  rw [Monic, leadingCoeff, natDegree_eq_of_degree_eq_some <| charPoly_degree_eq_order _, charPoly,
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:230:    (E.IsSolution fun n ↦ q ^ n) ↔ E.charPoly.IsRoot q := by
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:231:  rw [charPoly, Polynomial.IsRoot.def, Polynomial.eval]
+.lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean:243:end LinearRecurrence
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Minpoly.lean:8:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Minpoly.lean:45:  ⟨M.charpoly, ⟨charpoly_monic M, aeval_self_charpoly M⟩⟩
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Minpoly.lean:47:theorem minpoly_dvd_charpoly {K : Type*} [Field K] (M : Matrix n n K) : minpoly K M ∣ M.charpoly :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Minpoly.lean:76:    (leftMulMatrix h.basis h.gen).charpoly = minpoly R h.gen := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:67:    r ∈ spectrum R B ↔ ¬IsUnit (B.charpoly.eval r) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:72:theorem mem_spectrum_of_isRoot_charpoly [Nontrivial R] {r : R} (hr : IsRoot B.charpoly r) :
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:80:theorem mem_spectrum_iff_isRoot_charpoly {r : K} : r ∈ spectrum K A ↔ IsRoot A.charpoly r := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:83:theorem det_eq_prod_roots_charpoly_of_splits [IsDomain R] (hAps : B.charpoly.Splits) :
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:84:    B.det = (Matrix.charpoly B).roots.prod := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:89:theorem trace_eq_sum_roots_charpoly_of_splits [IsDomain R] (hAps : B.charpoly.Splits) :
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:90:    B.trace = (Matrix.charpoly B).roots.sum := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:98:theorem det_eq_prod_roots_charpoly [IsAlgClosed K] : A.det = (Matrix.charpoly A).roots.prod :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:99:  det_eq_prod_roots_charpoly_of_splits (IsAlgClosed.splits A.charpoly)
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:101:theorem trace_eq_sum_roots_charpoly [IsAlgClosed K] : A.trace = (Matrix.charpoly A).roots.sum :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:102:  trace_eq_sum_roots_charpoly_of_splits (IsAlgClosed.splits A.charpoly)
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Disc.lean:8:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Disc.lean:26:noncomputable def discr (A : Matrix n n R) : R := A.charpoly.discr
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:11:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:67:    (M.charpoly - ∏ i : n, (X - C (M i i))).degree < ↑(Fintype.card n - 1) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:68:  rw [charpoly, det_apply', ← insert_erase (mem_univ (Equiv.refl n)),
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:86:    M.charpoly.coeff k = (∏ i : n, (X - C (M i i))).coeff k := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:94:    M.charpoly.degree = Fintype.card n := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:97:    unfold charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:101:  rw [← sub_add_cancel M.charpoly (∏ i : n, (X - C (M i i)))]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:117:    M.charpoly.natDegree = Fintype.card n :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:120:theorem charpoly_monic (M : Matrix n n R) : M.charpoly.Monic := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:123:  · rw [charpoly, det_eq_one_of_card_eq_zero h]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:128:  rw [← sub_add_cancel (∏ i : n, (X - C (M i i))) M.charpoly] at mon
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:140:    trace M = -M.charpoly.coeff (Fintype.card n - 1) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:145:theorem trace_eq_neg_charpoly_nextCoeff (M : Matrix n n R) : M.trace = -M.charpoly.nextCoeff := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:152:    M.det = (-1) ^ Fintype.card n * M.charpoly.coeff 0 := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:153:  rw [coeff_zero_eq_eval_zero, charpoly, eval_det, matPolyEquiv_charmatrix, ← det_smul]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:214:    M.charpoly = X ^ 2 - C M.trace * X + C M.det := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:224:    suffices M.charpoly.coeff i = 0 by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:230:    M.charpoly = X ^ 2 - C M.trace * X + C M.det :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:249:/-- Any matrix polynomial `p` is equivalent under evaluation to `p %ₘ M.charpoly`; that is, `p`
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:252:    aeval M p = aeval M (p %ₘ M.charpoly) :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:259:    M ^ k = aeval M (X ^ k %ₘ M.charpoly) := by rw [← aeval_eq_aeval_mod_charpoly, map_pow, aeval_X]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:265:    M.charpoly.coeff k ∈ I ^ (Fintype.card n - k) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:266:  delta charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:295:    M.charpoly.reverse = M.charpolyRev := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:302:  have hp : toLaurentAlg M.charpoly = p := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:303:    simp [p, t, charpoly, charmatrix, AlgHom.map_det, map_sub]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:316:    A⁻¹.charpoly = (-1) ^ Fintype.card n * C A.det⁻¹ʳ * A.charpolyRev := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:362:    IsNilpotent (M.charpoly - X ^ (Fintype.card n)) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:370:  have aux : (M.charpoly - X ^ (Fintype.card n)).natDegree ≤ M.charpoly.natDegree :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:460:    M.charpoly.coeff (Fintype.card n - k) =
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:465:  have hrev : M.charpoly.coeff (Fintype.card n - k) = M.charpoly.reverse.coeff k := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:9:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:29:    (M ^ Fintype.card K).charpoly = M.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:38:    unfold charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:49:    (M ^ p).charpoly = M.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/LinearMap.lean:8:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/LinearMap.lean:219:    refine ⟨A.1.charpoly, A.1.charpoly_monic, by simp [hs_card],
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:9:public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:15:In this file we define the universal characteristic polynomial `Matrix.charpoly.univ`,
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:27:* `Matrix.charpoly.univ`: the universal characteristic polynomial
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:28:* `Matrix.charpoly.univ_map_eval₂Hom`: evaluating `univ` on the entries of a matrix `M`
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:30:* `Matrix.charpoly.univ_coeff_isHomogeneous`:
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:36:namespace Matrix.charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:46:see `Matrix.charpoly.univ_coeff_isHomogeneous`.
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:50:see `Matrix.charpoly.univ_map_eval₂Hom`. -/
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:53:  charpoly <| mvPolynomialX n n R
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:58:    (univ R n).map (eval₂Hom f M) = charpoly (Matrix.of M.curry) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:69:      (charpoly (Matrix.of M.curry)).coeff i := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:91:  simp only [aux, univ, charpoly, charmatrix, scalar_apply, RingHom.mapMatrix_apply, det_apply',
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Univ.lean:108:end Matrix.charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:20:See the file `Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean` for corollaries of this theorem.
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:24:* `Matrix.charpoly` is the characteristic polynomial of a matrix.
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:123:-- to this file, it may be worth extracting things out to Charpoly/Block.lean
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:134:def charpoly (M : Matrix n n R) : R[X] :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:138:    M.charpoly.eval t = (Matrix.scalar _ t - M).det := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:139:  rw [Matrix.charpoly, ← Polynomial.coe_evalRingHom, RingHom.map_det, Matrix.charmatrix]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:145:theorem charpoly_isEmpty [IsEmpty n] {A : Matrix n n R} : charpoly A = 1 := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:146:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:149:theorem charpoly_zero : charpoly (0 : Matrix n n R) = X ^ Fintype.card n := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:150:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:152:theorem charpoly_diagonal (d : n → R) : charpoly (diagonal d) = ∏ i, (X - C (d i)) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:153:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:155:theorem charpoly_one : charpoly (1 : Matrix n n R) = (X - 1) ^ Fintype.card n := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:156:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:159:    charpoly (k : Matrix n n R) = (X - (k : R[X])) ^ Fintype.card n := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:160:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:163:    charpoly (ofNat(k) : Matrix n n R) = (X - ofNat(k)) ^ Fintype.card n :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:167:theorem charpoly_transpose (M : Matrix n n R) : (Mᵀ).charpoly = M.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:168:  simp [charpoly]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:171:    (M : Matrix n n R) : (reindex e e M).charpoly = M.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:172:  unfold Matrix.charpoly
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:176:    (M.map f).charpoly = M.charpoly.map f := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:177:  rw [charpoly, charmatrix_map, ← Polynomial.coe_mapRingHom, charpoly, RingHom.map_det,
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:182:    (fromBlocks M₁₁ 0 M₂₁ M₂₂).charpoly = (M₁₁.charpoly * M₂₂.charpoly) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:183:  simp only [charpoly, charmatrix_fromBlocks, Matrix.map_zero _ (Polynomial.C_0), neg_zero,
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:188:    (fromBlocks M₁₁ M₁₂ 0 M₂₂).charpoly = (M₁₁.charpoly * M₂₂.charpoly) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:189:  simp only [charpoly, charmatrix_fromBlocks, Matrix.map_zero _ (Polynomial.C_0), neg_zero,
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:197:lemma BlockTriangular.charpoly {α : Type*} {b : n → α} [LinearOrder α] (h : M.BlockTriangular b) :
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:198:    M.charpoly = ∏ a ∈ image b univ, (M.toSquareBlock b a).charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:199:  simp only [Matrix.charpoly, h.charmatrix.det, charmatrix_toSquareBlock]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:202:    M.charpoly = ∏ i : n, (X - C (M i i)) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:203:  simp [charpoly, det_of_isUpperTriangular h.charmatrix]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:216:theorem aeval_self_charpoly (M : Matrix n n R) : aeval M M.charpoly = 0 := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:219:  have h : M.charpoly • (1 : Matrix n n R[X]) = adjugate (charmatrix M) * charmatrix M :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:241:See also `Matrix.charpoly_mul_comm_of_le` which has just `(A * B).charpoly` as the LHS.
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:244:    X ^ Fintype.card n * (A * B).charpoly = X ^ Fintype.card m * (B * A).charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:263:  dsimp only [charpoly, charmatrix, RingHom.mapMatrix_apply]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:268:    (A * B).charpoly = X ^ (Fintype.card m - Fintype.card n) * (B * A).charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:273:theorem charpoly_mul_comm (A B : Matrix n n R) : (A * B).charpoly = (B * A).charpoly :=
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:277:    (vecMulVec u v).charpoly = X ^ Fintype.card n - (u ⬝ᵥ v) • X ^ (Fintype.card n - 1) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:281:    rw [vecMulVec_eq (ι := Unit), charpoly_mul_comm_of_le (n := Unit) _ _ h, charpoly, charmatrix]
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:286:    (M.val * N * M.val⁻¹).charpoly = N.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:292:    (M.val⁻¹ * N * M.val).charpoly = N.charpoly := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:297:    (M - scalar n μ).charpoly = M.charpoly.comp (X + C μ) := by
+.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:298:  simp_rw [charpoly, det_apply, Polynomial.sum_comp, Polynomial.smul_comp, Polynomial.prod_comp]
+
+rg -n -i '\b(?:recurrence|companion|generating function)\b' .lake/packages/mathlib/Mathlib/RingTheory/PowerSeries
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:14:We introduce the Catalan generating function as a formal power series over `ℕ`:
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:18:* `PowerSeries.catalanSeries`: The Catalan generating function as a power series.
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:21:* `PowerSeries.catalanSeries_one_add_X_mul_self_sq`: The Catalan generating function satisfies the
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:25:* Find and prove the closed formula for the Catalan generating function:
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:35:/-- The Catalan generating function as a power series. -/
+
+rg -n -i '\b(?:PowerSeries|generating|rational)\b' .lake/packages/mathlib/Mathlib/Algebra/LinearRecurrence.lean
+
+rg -n -i '\b(?:generating function|rational generating|Perrier|Riordan|Jacobi.?Perron)\b' .lake/packages/mathlib/Mathlib -g '*.lean'
+.lake/packages/mathlib/Mathlib/Probability/Distributions/Gaussian/Real.lean:442:/-- The complex moment-generating function of a Gaussian distribution with mean `μ` and variance `v`
+.lake/packages/mathlib/Mathlib/Probability/Distributions/Gaussian/Real.lean:477:/-- The complex moment-generating function of a random variable with Gaussian distribution
+.lake/packages/mathlib/Mathlib/Probability/Distributions/Gaussian/Real.lean:493:/-- The moment-generating function of a random variable with Gaussian distribution
+.lake/packages/mathlib/Mathlib/Probability/Distributions/Gaussian/Real.lean:511:/-- The cumulant-generating function of a random variable with Gaussian distribution
+.lake/packages/mathlib/Mathlib/Probability/Moments/IntegrableExpMul.lean:12:# Domain of the moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/IntegrableExpMul.lean:16:points for which the moment-generating function `mgf X μ t` is well defined.
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:15:# The complex-valued moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:17:The moment-generating function (mgf) is `t : ℝ ↦ μ[fun ω ↦ rexp (t * X ω)]`. It can be extended to
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:41:* `eqOn_complexMGF_of_mgf`: if two random variables have the same moment-generating function,
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:70:/-- Complex extension of the moment-generating function. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:239:/-- If two random variables have the same moment-generating function then they have
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:251:/-- If two random variables have the same moment-generating function then they have
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:264:/-- If two random variables have the same moment-generating function then they have
+.lake/packages/mathlib/Mathlib/Probability/Moments/ComplexMGF.lean:297:/-- If two random variables have the same moment-generating function then they have
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:12:# Moments and moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:20:* `ProbabilityTheory.mgf X μ t`: moment-generating function of `X` with respect to measure `μ`,
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:22:* `ProbabilityTheory.cgf X μ t`: cumulant-generating function, logarithm of the moment-generating
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:35:  the cumulant-generating function exists, `ℙ(ε ≤ X) ≤ exp(- t*ε + cgf X ℙ t)`. See also
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:120:/-- Moment-generating function of a real random variable `X`: `fun t => μ[exp(t*X)]`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:124:/-- Cumulant-generating function of a real random variable `X`: `fun t => log μ[exp(t*X)]`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:263:/-- The moment-generating function is monotone in the random variable for `t ≥ 0`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/Basic.lean:273:/-- The moment-generating function is antitone in the random variable for `t ≤ 0`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:13:# The moment-generating function is analytic
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:15:The moment-generating function `mgf X μ` of a random variable `X` with respect to a measure `μ`
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:20:* `analyticOn_mgf`: the moment-generating function is analytic on the interior of the interval
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:24:* `analyticOn_cgf`: the cumulant-generating function is analytic on the interior of the interval
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:91:/-- The derivatives of the moment-generating function at zero are the moments. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:109:/-- The moment-generating function is analytic at every `t ∈ interior (integrableExpSet X μ)`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:118:/-- The moment-generating function is analytic on the interior of the interval on which it is
+.lake/packages/mathlib/Mathlib/Probability/Moments/MGFAnalytic.lean:179:/-- The cumulant-generating function is analytic on the interior of the interval
+.lake/packages/mathlib/Mathlib/Probability/Moments/Tilted.lean:15:linked to the moment-generating function (`mgf`) and the cumulant-generating function (`cgf`)
+.lake/packages/mathlib/Mathlib/Probability/Moments/Tilted.lean:21:  is the first derivative of the cumulant-generating function of `X` at `t`.
+.lake/packages/mathlib/Mathlib/Probability/Moments/Tilted.lean:24:  is the second derivative of the cumulant-generating function of `X` at `t`.
+.lake/packages/mathlib/Mathlib/Probability/Moments/Tilted.lean:131:the cumulant-generating function of `X` at `t`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/Tilted.lean:158:the cumulant-generating function of `X` at `t`. -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:32:random variable has sub-Gaussian moment-generating function (mgf) with constant `K₅` to mean that
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:55:* `Kernel.HasSubgaussianMGF`: a random variable `X` has a sub-Gaussian moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:57:  for all `t : ℝ`, the moment-generating function of `X` with respect to `κ ω'` is bounded by
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:61:  `t : ℝ`, `exp (t * X)` is `μ`-integrable and the moment-generating function of `X` conditioned
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:66:* `HasSubgaussianMGF`: a random variable `X` has a sub-Gaussian moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:68:  is `μ`-integrable and the moment-generating function of `X` is bounded by `exp (c * t ^ 2 / 2)`
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:138:/-- A random variable `X` has a sub-Gaussian moment-generating function with parameter `c`
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:140:the moment-generating function of `X` with respect to `κ ω'` is bounded by `exp (c * t ^ 2 / 2)`.
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:534:/-! ### Conditionally sub-Gaussian moment-generating function -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:540:/-- A random variable `X` has a conditionally sub-Gaussian moment-generating function
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:542:`exp (t * X)` is `μ`-integrable and the moment-generating function of `X` conditioned on `m` is
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:593:/-! ### Sub-Gaussian moment-generating function -/
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:597:/-- A random variable `X` has a sub-Gaussian moment-generating function with parameter `c`
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:599:the moment-generating function of `X` is bounded by `exp (c * t ^ 2 / 2)` for all `t : ℝ`.
+.lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean:841:sub-Gaussian moment-generating function with parameter `((b - a) / 2) ^ 2`. -/
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/Glaisher.lean:45:/-- The generating function of `Nat.Partition.restricted n p` is
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/Glaisher.lean:76:/-- The generating function of `Nat.Partition.countRestricted n m` is
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:15:of a part $i$ and the number of occurrences of the part $c$, the related generating function is
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:24:This generating function can be specialized to
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:25:* When $f(i, c) = 1$, this is the generating function for partition function $p(n)$
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:27:* When $f(i, 1) = 1$ and $f(i, c) = 0$ for $c > 1$, this is the generating function for
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:29:  the generating function for `#(Nat.Partition.countRestricted n m)`.
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:31:* When $f(i, c) = 1$ for odd $i$ and $f(i, c) = 0$ for even $i$, this is the generating function for
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:33:  `p : Prop` gives the generating function for `#(Nat.Partition.restricted n p)`.
+.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/GenFun.lean:50:/-- Generating function associated with character $f(i, c)$ for partition functions, where $i$ is a
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:14:We introduce the Catalan generating function as a formal power series over `ℕ`:
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:18:* `PowerSeries.catalanSeries`: The Catalan generating function as a power series.
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:21:* `PowerSeries.catalanSeries_one_add_X_mul_self_sq`: The Catalan generating function satisfies the
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:25:* Find and prove the closed formula for the Catalan generating function:
+.lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Catalan.lean:35:/-- The Catalan generating function as a power series. -/
+.lake/packages/mathlib/Mathlib/NumberTheory/Bernoulli.lean:157:/-- The exponential generating function for the Bernoulli numbers `bernoulli' n`. -/
+.lake/packages/mathlib/Mathlib/NumberTheory/Bernoulli.lean:267:/-- The exponential generating function for the Bernoulli numbers `bernoulli n`. -/
+
+git grep -n -i -P '\b(?:Perrier|Riordan|Jacobi.?Perron|multidimensional continued)\b' -- 'D5/**/*.lean' 'Blueprint/**' 'Problems/**' 'Library/**'
+Blueprint/D5/S1/Recurrence/Parity/QCatalanSquareSumParity.md:5:The square sum of a Carlitz-Riordan q-Catalan row is odd exactly one below a power of two.
+Blueprint/D5/S1/Recurrence/Parity/QCatalanSquareSumParity.md:7:The entry cited in hanna2024a376527 defines a(n) as the sum of the squared coefficients in row n of the Carlitz-Riordan q-Catalan triangle. It asks whether the odd rows are exactly those indexed by 2^k-1.
+Blueprint/D5/S1/Recurrence/Parity/QCatalanSquareSumParity.md:107:*Citation.* Paul D. Hanna (2024). *OEIS A376527, square sums of Carlitz-Riordan q-Catalan rows and parity conjecture*. URL: <https://oeis.org/A376527>.
+Blueprint/D5/S1/Recurrence/Parity/QCatalanSquareSumParity.scribe.cs:14:        "The square sum of a Carlitz-Riordan q-Catalan row is odd exactly one below a power of two.",
+Blueprint/D5/S1/Recurrence/Parity/QCatalanSquareSumParity.scribe.cs:18:                + "of the squared coefficients in row n of the Carlitz-Riordan q-Catalan "
+D5/S1/Recurrence/Parity/QCatalanSquareSumParity.lean:18:/-- The Carlitz-Riordan q-Catalan row polynomial, defined by coefficient extraction
+D5/S1/Recurrence/Parity/QCatalanSquareSumParity.lean:27:/-- The coefficient triangle of the Carlitz-Riordan q-Catalan row polynomials. -/
+D5/S1/Recurrence/Parity/QCatalanSquareSumParity.lean:164:/-- The square sum of the nth Carlitz-Riordan q-Catalan row is odd exactly one below
+Library/Recurrence/hanna2024a376527.md:5:title: "OEIS A376527, square sums of Carlitz-Riordan q-Catalan rows and parity conjecture"
+Library/Recurrence/hanna2024a376527.md:22:where A227543 is the Carlitz-Riordan q-Catalan triangle. Its row polynomials
+Library/Words/oeis2026triage0910.md:696:**A360753** — precise；对k≥1、n≥k，T(n,k)=U(n,k)−(n−1)U(n−1,k)，其中T=A360657的单位下三角逆阵、U=A354795（越界项0），等价主列EGF猜想3。 文献/裁决：全部主条目和一跳完整读。现场打开Fried《Proofs of conjectures concerning a triangle associated with 2-Stirling numbers》(2026)，12页全文已读；§2.4 p10 Lemma10从Riordan逆式求出Ŝ=R[1−x−Hbar,Hbar]，p11 Theorem11式(27)及末段完整证明用Hbar=−(1−x)log(1−x)、Hbar′=1+log(1−x)得到Ŝ=R[(1−x)Hbar′,Hbar]，而Dhat=R[Hbar′,Hbar]。逐列即乘1−x，取x^(n−1)系数明确得本目标；此前§2.1 pp2–5证明原2-Stirling构造与闭式，Lemma7 pp8–9建立所用Riordan表示，偏移均核过。不是仅凭2026-08-18“all true”评论降级；同定理也给两条矩阵积，整族不派。 主席另完整读同一12页PDF并核对§2.4证明。 bind med，疑似声明：钉版mathlib db584cd6d46c92f209a44c0f1c829460d327499d，只读源文并读下列声明，非真实bind探针；Matrix.mul_nonsing_inv（LinearAlgebra/Matrix/NonsingularInverse.lean:211）、nonsing_inv_mul（:217）已读，要求IsUnit det；对有限截断单位下三角可满足。PowerSeries.coeff_mul（RingTheory/PowerSeries/Basic.lean:249，前批源文已读）可取乘1−x的系数。none（Riordan/此Bell变换绑定），全Mathlib检索riordan无命中，bind med。。数值 yes：已执行：numeric05.py按原2-Stirling递推造A至61阶、整数单位下三角求逆B，再按主原有限和造A360657至n30并求逆T；另用Bell递推b_j=(j−1)^(j−1)构造A354794并独立求逆U。55主DATA、A360657的55DATA、A354794的55DATA及A354795的66DATA全匹配；n≤30全部465个正列格验证系数恒等，另核原矩阵逆乘积及T·A354794的二对角矩阵式。未执行：Lean编译与无限Riordan阵形式化；已有公开完整证明无需派题。 直接 A 号：A132013, A215534, A354794, A354795, A360657。
+Problems/oeis-a054096-stephan-triangle-second-column.md:62:The mandatory first lead was checked and refuted on two independent grounds: Tian-Xiao He and Louis W. Shapiro, *Row sums and alternating sums of Riordan arrays*, Linear Algebra and its Applications **507** (2016), 77–95, DOI `10.1016/j.laa.2016.05.035` — its OpenAlex-indexed full text has zero exact hits for A054096, A054090, A054091, A006183, Kimberling, Stephan, 1753618, the prefix "1,2,6,22,98,522", or "generated by its row sums", and its reference list carries only a generic OEIS citation; **and, independently of any search, A054090 is not an ordinary Riordan array — columns 0 and 1 would force the row-3 column-2 value to be 3, whereas A054090 has 2**, so the triangle is not in that paper's object class at all. Also checked: Paul Barry, arXiv:1804.06801 (full PDF; its covered-sequence list omits all three entries); OpenAlex global full-text for the three A-numbers, the exact `%N` phrase and the numeric prefix (all 0, with one unrelated biology false positive for A006183); the recurrence's combinatorial interpretations and A006183's references. No source proving the identity was found; the finding is bounded, not a claim of exhaustive search.
+Problems/oeis-a054096-stephan-triangle-second-column.md:113:Literature completeness outside the bounded scan of the named Riordan paper,
+Problems/oeis-a376527-q-catalan-square-sum-parity.md:24:Here A227543 is the Carlitz-Riordan q-Catalan triangle defined by
+Problems/oeis-a376527-q-catalan-square-sum-parity.md:36:Carlitz-Riordan q-Catalan development. The repository does contain the shifted
+
+git grep -n -i -P '\b(?:LinearRecurrence|companion|generating_equation|generating_unique|rational_series)\b' -- 'D5/**/*.lean'
+D5/S0/Automata/FiniteSampleSkeletonTotalization.lean:535:/-- Arithmetic companion for the capacity consumer. The hypothesis `3 ≤ signatures`
+D5/S0/Computability/Coding/PrefixFreeCode.lean:23:Both `IsPrefixFree` and the suffix-free companion are new: pinned mathlib
+D5/S0/Tower/Champions/BinaryBaseline.lean:8:import Mathlib.Algebra.LinearRecurrence
+D5/S0/Tower/Champions/BinaryBaseline.lean:15:     `LinearRecurrence` API for Fibonacci and Tribonacci recurrences.
+D5/S0/Tower/Champions/BinaryBaseline.lean:16:   * Pinned mathlib supplies `LinearRecurrence.solSpace`, its initial-value
+D5/S0/Tower/Champions/BinaryBaseline.lean:24:def binaryGeometricRecurrence : LinearRecurrence Complex where
+D5/S0/Tower/Champions/BinaryBaseline.lean:32:  rw [binaryGeometricRecurrence, LinearRecurrence.charPoly]
+D5/S0/Tower/Champions/BinaryBaseline.lean:41:  · rw [LinearRecurrence.geom_sol_iff_root_charPoly,
+D5/S0/Tower/Tribonacci/Values.lean:9:import Mathlib.Algebra.LinearRecurrence
+D5/S1/Deficit/DoubleFaceLength.lean:6:   digest: Defines the expansion-face length lambdaPlus (the φ-companion of dev's contraction-face lambdaMinus, both prime-exponent sums of the golden face readings) and proves the two-face identity λ₊(n) − λ₋(n) = √5 · log n for n ≠ 0. The core is the per-exponent identity betaReal v − betaContraction v = √5 · v (the expansion minus contraction face of the golden integer betaGolden v, whose φ-coordinate is v), lifted through the prime factorization by 2φ − 1 = √5. This is the two-face spread ("double-face length") difference of 定理 6.47's two closed forms λ± = log n_S − {ψ,φ}·log n, which cancels the hidden-face product n_S; the individual closed forms, the bound |λ₋| ≤ (1/φ)·log rad(n), and the displacement surface 𝔇 are not covered. -/
+D5/S1/Deficit/DoubleFaceLength.lean:72:/-- **Expansion-face length** `lambdaPlus`, the φ-companion of dev's contraction-face `lambdaMinus`:
+D5/S1/Deficit/DoubleFaceLength.lean:103:Only the two-face difference identity is recorded (together with the missing companion definition
+D5/S1/Deficit/LambdaMinusAdditive.lean:18:This is the exact companion of `lambdaMinus_almost_additive`: on coprimes the common-factor
+D5/S1/Digit/CompositeGasContraction.lean:6:   digest: Companion-root contraction criterion for the digit-gas characteristic root. -/
+D5/S1/Digit/CompositeGasContraction.lean:14:/-- The companion characteristic root has absolute value `e6Beta c - 1`.
+D5/S1/Digit/CompositeGasContraction.lean:45:/-- Strict escape: for `c ≥ 3` the companion root lies strictly outside the
+D5/S1/Digit/GoldenBase4ZeroResponse.lean:14:   not be inserted as oracle data for other candidates. The generic companion
+D5/S1/Ledger/BoundedTimeSlice.lean:95:This upstream-identity companion supplies the formula used by the nine-count table. -/
+D5/S1/Ledger/BoundedTimeSlice.lean:127:This is a bind-only companion of `time_slice_plateau_iff`, with no new escape witness. -/
+D5/S1/Ledger/BoundedTimeSlice.lean:163:This is a bind-only companion of `time_slice_plateau_trichotomy`. -/
+D5/S1/Phase/ThreeGap/Foundations.lean:41:companion paper is in `paper/three_gap_theorem_lean.tex`; for the related
+D5/S1/Phase/ThreeGap/Returns.lean:158:/-- Fractional-part subtraction identity (companion of `fract_add_fract_eq`). -/
+D5/S1/Recurrence/Bilateral/BilateralProductModFour.lean:375:theorem generating_equation (c : ℕ) (hc : 2 ≤ c) :
+D5/S1/Recurrence/Bilateral/BilateralProductModFour.lean:443:theorem generating_unique (c : ℕ) (hc : 2 ≤ c) (B : PowerSeries ℤ)
+D5/S1/Recurrence/Bilateral/BilateralProductModFour.lean:488:#print axioms generating_equation
+D5/S1/Recurrence/Bilateral/BilateralProductModFour.lean:498:#print axioms generating_unique
+D5/S1/Recurrence/Bilateral/BilateralQuarterDoubleShiftThetaModFour.lean:255:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Bilateral/BilateralQuarterDoubleShiftThetaModFour.lean:261:theorem generating_unique (B : PowerSeries ℤ) (_h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Bilateral/BilateralQuarterDoubleShiftThetaModFour.lean:522:    have hh := generating_equation.2 N
+D5/S1/Recurrence/Bilateral/BilateralQuarterDoubleShiftThetaModFour.lean:584:#print axioms generating_equation
+D5/S1/Recurrence/Bilateral/BilateralQuarterDoubleShiftThetaModFour.lean:585:#print axioms generating_unique
+D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.lean:253:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.lean:259:theorem generating_unique (B : PowerSeries ℤ) (_h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.lean:495:    have hh := generating_equation.2 N
+D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.lean:547:#print axioms generating_equation
+D5/S1/Recurrence/Bilateral/BilateralQuarterShiftThetaModFour.lean:548:#print axioms generating_unique
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:15:The literal Laurent summand is retained in `laurentTerm`; `generating_equation`
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:487:theorem generating_equation (c : ℕ) (hc : 1 ≤ c) :
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:555:theorem generating_unique (c : ℕ) (hc : 1 ≤ c) (B : PowerSeries ℤ)
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:576:  have hname := generating_equation c hc
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:619:#print axioms generating_equation
+D5/S1/Recurrence/Bilateral/ScaledBilateralProductModNine.lean:620:#print axioms generating_unique
+D5/S1/Recurrence/BilateralLiftClassification.lean:29:    Module.finrank Real (Real.fibRec : LinearRecurrence Real).solSpace = 2 /\
+D5/S1/Recurrence/BilateralLiftClassification.lean:30:      (Real.fibRec : LinearRecurrence Real).solSpace =
+D5/S1/Recurrence/BilateralLiftClassification.lean:55:      (Real.fibRec : LinearRecurrence Real).solSpace :=
+D5/S1/Recurrence/BilateralLiftClassification.lean:56:    (Real.fibRec : LinearRecurrence Real).basis.finiteDimensional_of_finite
+D5/S1/Recurrence/BilateralLiftClassification.lean:58:      Module.finrank Real (Real.fibRec : LinearRecurrence Real).solSpace = 2 := by
+D5/S1/Recurrence/BilateralLiftClassification.lean:59:    rw [Module.finrank_eq_card_basis (Real.fibRec : LinearRecurrence Real).basis]
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:32:    (Real.fibRec : LinearRecurrence ℝ).solSpace =
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:36:  letI : FiniteDimensional ℝ (Real.fibRec : LinearRecurrence ℝ).solSpace :=
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:37:    (Real.fibRec : LinearRecurrence ℝ).basis.finiteDimensional_of_finite
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:41:    · have h := (Real.fibRec : LinearRecurrence ℝ).solSpace.smul_mem
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:49:      have h := (Real.fibRec : LinearRecurrence ℝ).solSpace.smul_mem
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:80:      Module.finrank_eq_card_basis (Real.fibRec : LinearRecurrence ℝ).basis]
+D5/S1/Recurrence/BilateralLiftUniqueness.lean:151:    (Real.fibRec : LinearRecurrence ℝ).solSpace =
+D5/S1/Recurrence/CrossingMatrixDeterminant.lean:19:/-- The companion crossing matrix `D_k = !![2k+1, 2; 2k(k+1), 2k+1]`. -/
+D5/S1/Recurrence/CrossingMatrixDeterminant.lean:64:`det(C_k^n - I) = 2 - trace(C_k^n) < 0`, and both `C_k^n - I` and the companion `D_k^n - I`
+D5/S1/Recurrence/FibonacciPowerSumMod16Obstruction.lean:92:/-- A residue pair in `E16` cannot support an even perfect-power Fibonacci sum; the companion
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:137:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:150:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:155:    ext N; simpa only [step, coeff_mk] using generating_equation.2 N
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:160:      simpa only [← hb, ← ha] using step_agree h0 generating_equation.1 ih
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:175:      congrArg (PowerSeries.map hom) (invOfUnit_mul generatingSeries 1 generating_equation.1)
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:178:  have he := congrArg hom (generating_equation.2 N)
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:188:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.lean:189:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:98:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:110:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:118:      have hs := step_agree h0 generating_equation.1 ih
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:119:      simpa only [step, ← hB, ← generating_equation.2] using hs
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:139:      congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:142:      (by simp [generating_equation.1])
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:156:    simp [F, coeff_map, coeff_zero_eq_constantCoeff, generating_equation.1]
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:188:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity.lean:189:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.lean:64:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.lean:99:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.lean:274:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.lean:275:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:152:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:194:theorem generating_unique (f : PowerSeries ℤ) (h0 : constantCoeff f = 0)
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:248:    simp [f, coeff_map, coeff_zero_eq_constantCoeff, generating_equation.1]
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:250:    simp [f, coeff_map, generating_equation.2.1]
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:253:      simp [generating_equation.1]
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:257:        congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:348:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity.lean:349:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CatalanCubicCompositionParity.lean:32:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Invariants/CatalanCubicCompositionParity.lean:86:    simpa [y, c] using congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Invariants/CatalanCubicCompositionParity.lean:102:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CatalanDoubleCompositionPowersOfFour.lean:160:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CatalanDoubleCompositionPowersOfFour.lean:170:theorem generating_unique (f : PowerSeries ℤ) (h0 : constantCoeff f = 0)
+D5/S1/Recurrence/Invariants/CatalanDoubleCompositionPowersOfFour.lean:225:        (generatingSeries.subst plusArgument) ^ 2 := generating_equation.2.2
+D5/S1/Recurrence/Invariants/CatalanDoubleCompositionPowersOfFour.lean:342:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CatalanDoubleCompositionPowersOfFour.lean:343:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:140:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:160:theorem generating_unique (f : PowerSeries ℤ) (h0 : constantCoeff f = 0)
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:201:    binary_catalan_inverse (map_equation _ generating_equation.2.2)
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:244:  have h := generating_equation.2.2
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:307:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CatalanShiftSquareModFour.lean:308:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.lean:131:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.lean:245:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.lean:249:        congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.lean:250:      _ = step (generatingSeries.map hom) := map_step hom _ generating_equation.1
+D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.lean:261:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:35:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:45:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:51:    | zero => simpa only [coeff_zero_eq_constantCoeff, generating_equation.1] using h0
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:54:      conv_rhs => rw [generating_equation.2, coeff_step]
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:105:    have h := congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:123:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CubedBinaryProductModThree.lean:124:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:332:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:356:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:359:  solution_unique (by decide) hf generating_equation.1 hf1 generating_equation.2.1
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:360:    (sub_eq_zero.mpr he) (sub_eq_zero.mpr generating_equation.2.2)
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:367:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:369:    rw [coeff_map, generating_equation.2.1, map_one]
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:373:    have h := congrArg (PowerSeries.map hom) (sub_eq_zero.mpr generating_equation.2.2)
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:397:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.lean:398:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:111:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:119:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:176:  have hf := (cubic_iff_fixed generatingSeries generating_equation.1).mp
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:177:    generating_equation.2
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:191:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CubicNinthPowerSubstitutionModThree.lean:192:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/CubicTernarySubstitutionParity.lean:147:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/CubicTernarySubstitutionParity.lean:153:theorem generating_unique (B : PowerSeries ℤ) (hz : constantCoeff B = 0)
+D5/S1/Recurrence/Invariants/CubicTernarySubstitutionParity.lean:177:  have h := congrArg (coeff n) generating_equation.2
+D5/S1/Recurrence/Invariants/CubicTernarySubstitutionParity.lean:243:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/CubicTernarySubstitutionParity.lean:244:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/HalfScaledReflectionParity.lean:101:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/HalfScaledReflectionParity.lean:158:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Invariants/HalfScaledReflectionParity.lean:291:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/HalfScaledReflectionParity.lean:292:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:190:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:202:theorem generating_unique (f : PowerSeries ℤ) (hf : constantCoeff f = 0)
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:372:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:374:    have hm := congrArg (PowerSeries.map hom) generating_equation.2.2.1
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:377:      map_subst (.of_constantCoeff_zero (argument_zero generating_equation.1)) _
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:380:    rwa [map_argument hom generatingSeries generating_equation.1] at hm
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:390:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/QuadraticReversionDyadicSupportParity.lean:391:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:201:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:221:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:225:  equation_unique hf generating_equation.1 hf1 generating_equation.2.1 he generating_equation.2.2
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:300:      congrArg hom generating_equation.1
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:302:    simpa [f, coeff_map] using congrArg hom generating_equation.2.1
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:303:  have he := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:356:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/QuarticCubicCatalanQuotientParity.lean:357:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:222:theorem generating_equation (q : ℕ) :
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:230:theorem generating_unique (q : ℕ) (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:232:  solution_unique (q : ℤ) hf (generating_equation q).1
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:242:    rw [coeff_zero_eq_constantCoeff, (generating_equation q).2.1, map_zero]
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:252:  have he := congrArg (PowerSeries.map hom) (generating_equation q).1
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:271:    have he := congrArg (PowerSeries.map hom) (generating_equation q).1
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:295:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/ScaledReversionCongruence.lean:296:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:251:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:277:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:280:  solution_unique (by decide) hf generating_equation.1 hf1 generating_equation.2.1
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:281:    he generating_equation.2.2
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:424:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:426:    rw [coeff_map, generating_equation.2.1, map_one]
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:428:    simp [generating_equation.1]
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:439:  have he := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:462:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/SignedCatalanCubicSubstitutionModThree.lean:463:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/SubstitutionSquareCubeModFour.lean:56:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/SubstitutionSquareCubeModFour.lean:81:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Invariants/SubstitutionSquareCubeModFour.lean:121:  have he := congrArg (coeff (n + 1)) generating_equation.2.2
+D5/S1/Recurrence/Invariants/SubstitutionSquareCubeModFour.lean:256:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/SubstitutionSquareCubeModFour.lean:257:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:124:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:138:theorem generating_unique {B : PowerSeries ℤ} (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:140:  unique h0 generating_equation.1 hB generating_equation.2
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:184:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:186:    have h := congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:187:    simpa [step, map_iterates hom generating_equation.1] using h
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:197:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/ThreeFourIterateProductModSix.lean:198:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:389:theorem generating_equation :
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:394:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:402:      simpa only [coeff_zero_eq_constantCoeff, hf] using generating_equation.2.1.symm
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:405:      exact hf1.trans generating_equation.2.2.symm
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:406:    have ht := product_top (by omega : 1 < n) hf generating_equation.2.1
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:407:      hf1 generating_equation.2.2 ih
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:408:    rw [he, generating_equation.1, sub_self] at ht
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:449:  solution_four generatingSeries generating_equation.1 generating_equation.2.1
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:450:    generating_equation.2.2 n hn
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:452:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/TripleIterateProductModFour.lean:453:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:243:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:261:theorem generating_unique {f : PowerSeries ℤ}
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:264:  unique h0 generating_equation.1 h1 generating_equation.2.1 he generating_equation.2.2
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:300:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:302:    rw [coeff_map, generating_equation.2.1, map_one]
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:305:    have h := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:306:    simpa [map_iterates hom generating_equation.1] using h
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:317:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.lean:318:#print axioms generating_unique
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:187:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:220:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:270:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:272:    simpa [f] using congrArg hom generating_equation.2.1
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:277:      (by simp [generating_equation.1])
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:280:    have h := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:361:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:363:    simp [generating_equation.2.1]
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:368:#print axioms generating_equation
+D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lean:369:#print axioms generating_unique
+D5/S1/Recurrence/LinearRows/DoubledLinearExponentDyadicSupport.lean:192:    exact hanna_conjecture generatingSeries generating_equation n hn
+D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:466:theorem generating_equation : DefiningEquation generatingSeries := by
+D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:475:  refine ⟨generatingSeries, generating_equation, ?_⟩
+D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.lean:545:  have h : A=generatingSeries := integer_exists_unique.unique hA generating_equation
+D5/S1/Recurrence/LucasCompanion.lean:7:   digest: Companion traces have matrix periods and a dyadic positive-zero criterion. -/
+D5/S1/Recurrence/LucasCompanion.lean:16:The companion sequence is the trace of the frozen Lucas companion at integer powers.
+D5/S1/Recurrence/LucasCompanion.lean:29:/-- The companion Lucas sequence, including negative indices. -/
+D5/S1/Recurrence/LucasCompanion.lean:31:  Matrix.trace (↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R)
+D5/S1/Recurrence/LucasCompanion.lean:34:  ↑(companion p q ^ n)
+D5/S1/Recurrence/LucasCompanion.lean:40:/-- The shape of every integer companion power, exposed from the frozen unit definition. -/
+D5/S1/Recurrence/LucasCompanion.lean:45:  have hc : powerMatrix p q n * (companion p q : Matrix (Fin 2) (Fin 2) R) =
+D5/S1/Recurrence/LucasCompanion.lean:46:      (companion p q : Matrix (Fin 2) (Fin 2) R) * powerMatrix p q n := by
+D5/S1/Recurrence/LucasCompanion.lean:47:    exact congrArg Units.val (Commute.zpow_self (companion p q) n).eq
+D5/S1/Recurrence/LucasCompanion.lean:49:    simpa [companion, Matrix.mul_apply, Fin.sum_univ_two] using
+D5/S1/Recurrence/LucasCompanion.lean:53:    simpa [companion, Matrix.mul_apply, Fin.sum_univ_two] using
+D5/S1/Recurrence/LucasCompanion.lean:56:    simp [powerMatrix, companion]
+D5/S1/Recurrence/LucasCompanion.lean:75:    (↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R).det = (↑(q ^ n) : R) := by
+D5/S1/Recurrence/LucasCompanion.lean:77:      (companion p q) = q := by
+D5/S1/Recurrence/LucasCompanion.lean:79:    simp [companion, Matrix.det_fin_two]
+D5/S1/Recurrence/LucasCompanion.lean:82:      (companion p q) n)
+D5/S1/Recurrence/LucasCompanion.lean:86:/-- The bridge from the companion trace to the frozen Lucas sequence. -/
+D5/S1/Recurrence/LucasCompanion.lean:98:    by simp [lucasV, companion, Matrix.trace_fin_two], ?_⟩
+D5/S1/Recurrence/LucasCompanion.lean:107:/-- The companion determinant identity, obtained from the matrix determinant. -/
+D5/S1/Recurrence/LucasCompanion.lean:118:/-- Cayley--Hamilton turns a zero companion trace into a scalar double power. -/
+D5/S1/Recurrence/LucasCompanion.lean:121:    (↑(companion p q ^ (2 * r)) : Matrix (Fin 2) (Fin 2) R) =
+D5/S1/Recurrence/LucasCompanion.lean:137:noncomputable def matrixPeriod (p : R) (q : Rˣ) : ℕ := orderOf (companion p q)
+D5/S1/Recurrence/LucasCompanion.lean:141:    companion p q ^ k = 1 ↔ (matrixPeriod p q : ℤ) ∣ k :=
+D5/S1/Recurrence/LucasCompanion.lean:154:/-- Matrix periodicity passes to the companion trace. -/
+D5/S1/Recurrence/LucasCompanion.lean:160:/-- The least period of the entire companion sequence under translation by one. -/
+D5/S1/Recurrence/LucasCompanion.lean:173:/-- The least companion period characterizes all natural translation periods. -/
+D5/S1/Recurrence/LucasCompanion.lean:181:/-- The least companion period divides the matrix period: `pi_V ∣ pi_U`. -/
+D5/S1/Recurrence/LucasCompanion.lean:186:/-- The companion period is genuinely the least positive sequence period over a finite ring. -/
+D5/S1/Recurrence/LucasCompanion.lean:196:/-- If two is a unit and the companion trace has a zero, its least period is the matrix order. -/
+D5/S1/Recurrence/LucasCompanion.lean:257:  have hpow : companion p q ^ companionPeriod p q = 1 := by
+D5/S1/Recurrence/LucasCompanion.lean:267:/-- Natural companion traces for arbitrary integer parameters, including nonunit `q`. -/
+D5/S1/Recurrence/LucasCompanion.lean:274:  simp [lucasVInt, lucasV, zpow_natCast, Units.val_pow_eq_pow_val, companion]
+D5/S1/Recurrence/LucasCompanion.lean:349:/-- Every even-indexed companion term has exact two-adic valuation one. -/
+D5/S1/Recurrence/LucasCompanion.lean:372:/-- A positive companion zero modulo `2^v`, for `v ≥ 2`, exists exactly when `2^v ∣ p`. -/
+D5/S1/Recurrence/LucasCompanion.lean:409:/-- The integer divisibility criterion for the original companion sequence. -/
+D5/S1/Recurrence/LucasEvenDescent.lean:20:The companion matrix defines the two-parameter Lucas sequence at every integer index when
+D5/S1/Recurrence/LucasEvenDescent.lean:38:/-- The invertible Lucas companion matrix; its determinant is the unit `q`. -/
+D5/S1/Recurrence/LucasEvenDescent.lean:39:def companion (p : R) (q : Rˣ) : (Matrix (Fin 2) (Fin 2) R)ˣ where
+D5/S1/Recurrence/LucasEvenDescent.lean:53:  (↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R) 1 0
+D5/S1/Recurrence/LucasEvenDescent.lean:56:  ↑(companion p q ^ n)
+D5/S1/Recurrence/LucasEvenDescent.lean:66:  have hc : powerMatrix p q n * (companion p q : Matrix (Fin 2) (Fin 2) R) =
+D5/S1/Recurrence/LucasEvenDescent.lean:67:      (companion p q : Matrix (Fin 2) (Fin 2) R) * powerMatrix p q n := by
+D5/S1/Recurrence/LucasEvenDescent.lean:68:    exact congrArg Units.val (Commute.zpow_self (companion p q) n).eq
+D5/S1/Recurrence/LucasEvenDescent.lean:70:    simpa [companion, Matrix.mul_apply, Fin.sum_univ_two] using
+D5/S1/Recurrence/LucasEvenDescent.lean:74:    simpa [companion, Matrix.mul_apply, Fin.sum_univ_two] using
+D5/S1/Recurrence/LucasEvenDescent.lean:77:    simp [powerMatrix, companion]
+D5/S1/Recurrence/LucasEvenDescent.lean:98:  refine ⟨by simp [lucasU], by simp [lucasU, companion], ?_⟩
+D5/S1/Recurrence/LucasEvenDescent.lean:103:  simpa [powerMatrix, companion, Matrix.mul_apply, Fin.sum_univ_two, mul_comm, sub_eq_add_neg,
+D5/S1/Recurrence/LucasEvenDescent.lean:110:      (companion p q) = q := by
+D5/S1/Recurrence/LucasEvenDescent.lean:112:    simp [companion, Matrix.det_fin_two]
+D5/S1/Recurrence/LucasEvenDescent.lean:115:      (companion p q) n)
+D5/S1/Recurrence/LucasEvenDescent.lean:200:  have hz : lucasU p q (orderOf (companion p q)) = 0 := by
+D5/S1/Recurrence/LucasEvenDescent.lean:202:  have hp := orderOf_pos (companion p q)
+D5/S1/Recurrence/LucasEvenDescent.lean:205:    have hn : entryPoint p q ∣ orderOf (companion p q) := by exact_mod_cast hd
+D5/S1/Recurrence/LucasEvenDescent.lean:284:#print axioms companion
+D5/S1/Recurrence/LucasEvenPeriods.lean:7:   digest: Even Lucas companion periods agree except at the exceptional modulus four. -/
+D5/S1/Recurrence/LucasEvenPeriods.lean:19:CRT gives both periods as least common multiples. A companion zero makes the odd-part
+D5/S1/Recurrence/LucasEvenPeriods.lean:40:    Units.map f.mapMatrix.toMonoidHom (companion p q) =
+D5/S1/Recurrence/LucasEvenPeriods.lean:41:      companion (f p) (Units.map f.toMonoidHom q) := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:44:  change f ((companion p q : Matrix (Fin 2) (Fin 2) R) i j) = _
+D5/S1/Recurrence/LucasEvenPeriods.lean:45:  fin_cases i <;> fin_cases j <;> simp [companion]
+D5/S1/Recurrence/LucasEvenPeriods.lean:53:    (companion p q) n)
+D5/S1/Recurrence/LucasEvenPeriods.lean:56:  change (↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R).map f = _ at h
+D5/S1/Recurrence/LucasEvenPeriods.lean:91:      (companion (p : ZMod (a * b)) (reducedUnit (a * b) q))
+D5/S1/Recurrence/LucasEvenPeriods.lean:93:    change Nat.lcm (orderOf (F (companion _ _))) (orderOf (G (companion _ _))) = _ at h
+D5/S1/Recurrence/LucasEvenPeriods.lean:180:    have hn : (companion (p : ZMod s) (reducedUnit s 1) :
+D5/S1/Recurrence/LucasEvenPeriods.lean:234:    have hn : (companion (p : ZMod s) (reducedUnit s 1) :
+D5/S1/Recurrence/LucasEvenPeriods.lean:237:    have hpow : companion (p : ZMod s) (reducedUnit s 1) ^ (4 * r) = 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:254:    have hpow : companion (p : ZMod s) (reducedUnit s (-1)) ^ (2 * r) = 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:268:    (companion (0 : R) q : Matrix (Fin 2) (Fin 2) R) ^ 2 = -(q : R) • 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:274:    (p : R) (q : Rˣ) : companion p q ≠ 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:278:  simpa [companion] using h10
+D5/S1/Recurrence/LucasEvenPeriods.lean:283:  have hsq : companion (0 : R) (-1) ^ (2 : ℕ) = 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:302:  have hs : (↑(companion (0 : R) 1 ^ (2 : ℤ)) : Matrix (Fin 2) (Fin 2) R) = -1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:310:  have hs : (companion (0 : R) 1 : Matrix (Fin 2) (Fin 2) R) ^ 2 = -1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:312:  have hn : companion (0 : R) 1 ^ (2 : ℕ) ≠ 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:317:  have h4 : companion (0 : R) 1 ^ (4 : ℕ) = 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:414:  have hsq : companion (0 : ZMod 2) (reducedUnit 2 q) ^ (2 : ℕ) = 1 := by
+D5/S1/Recurrence/LucasEvenPeriods.lean:425:whenever a positive companion zero exists, the matrix and trace periods agree exactly
+D5/S1/Recurrence/LucasVerticalSlice.lean:16:A vertical slice exists exactly when two consecutive companion traces are minus two
+D5/S1/Recurrence/LucasVerticalSlice.lean:18:when these two traces occur at half the companion period. When the discriminant is
+D5/S1/Recurrence/LucasVerticalSlice.lean:19:a unit, a vertical slice exists exactly when minus one is an integer companion power.
+D5/S1/Recurrence/LucasVerticalSlice.lean:32:    (↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R) =
+D5/S1/Recurrence/LucasVerticalSlice.lean:39:    Matrix.trace ((↑(companion p q ^ n) : Matrix (Fin 2) (Fin 2) R) * A) =
+D5/S1/Recurrence/LucasVerticalSlice.lean:40:      lucasU p q n * Matrix.trace ((companion p q : Matrix (Fin 2) (Fin 2) R) * A) +
+D5/S1/Recurrence/LucasVerticalSlice.lean:43:  simp [companion, Matrix.trace_fin_two, Matrix.vecMul, dotProduct, Fin.sum_univ_two]
+D5/S1/Recurrence/LucasVerticalSlice.lean:49:  have hs : (companion p q : Matrix (Fin 2) (Fin 2) R) *
+D5/S1/Recurrence/LucasVerticalSlice.lean:50:      (↑(companion p q ^ s) : Matrix (Fin 2) (Fin 2) R) =
+D5/S1/Recurrence/LucasVerticalSlice.lean:51:        ↑(companion p q ^ (s + 1)) := by
+D5/S1/Recurrence/LucasVerticalSlice.lean:89:/-- When four is nonzero, the half companion period witnesses every existing slice. -/
+D5/S1/Recurrence/LucasVerticalSlice.lean:157:      ∃ s : ℤ, companion p q ^ s = -1 := by
+D5/S1/Recurrence/LucasVerticalSlice.lean:195:      ∃ s : ℤ, companion p q ^ s = -1
+D5/S1/Recurrence/LucasVerticalSlice.lean:197:private theorem witness_order : orderOf (companion (4 : ZMod 6) 1) = 6 := by
+D5/S1/Recurrence/LucasVerticalSlice.lean:205:    ¬ ∃ s : ℤ, companion (4 : ZMod 6) 1 ^ s = -1 := by
+D5/S1/Recurrence/LucasVerticalSlice.lean:207:  have hmod := zpow_mod_orderOf (companion (4 : ZMod 6) 1) s
+D5/S1/Recurrence/LucasVerticalSlice.lean:209:  have hr : companion (4 : ZMod 6) 1 ^ (s % 6) = -1 := hmod.trans hs
+D5/S1/Recurrence/LucasVerticalSlice.lean:214:/-- Modulo six, the trace slice exists but no integer companion power is minus one. -/
+D5/S1/Recurrence/NormOneLucasDouble.lean:65:difference of their `n`-th powers, divided by their difference, is the companion sequence. Squaring
+D5/S1/Recurrence/NormOneLucasDouble.lean:90:/-- The companion sequence, weighted by the discriminant, subtracts two at twice the index. -/
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:91:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:102:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:109:      have hs := step_agree h0 generating_equation.1 ih
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:110:      simpa only [step, ← hB, ← generating_equation.2] using hs
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:127:  simp [reduced, coeff_map, coeff_zero_eq_constantCoeff, generating_equation.1]
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:132:      (invOfUnit_mul generatingSeries 1 generating_equation.1)
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:137:      using congrArg (PowerSeries.map (Int.castRingHom (ZMod 2))) generating_equation.2
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:315:    _ = 1 := generating_equation.1
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:324:#print axioms generating_equation
+D5/S1/Recurrence/Parity/AbsoluteReciprocalCubeParity.lean:325:#print axioms generating_unique
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:85:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:96:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:103:      have hs := step_agree h0 generating_equation.1 ih
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:104:      simpa only [step, ← hB, ← generating_equation.2] using hs
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:121:      congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:124:      (by simp [generating_equation.1])
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:145:      StripThreeTernaryCatalanParity.generating_equation.2
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:167:    simp [F, coeff_map, coeff_zero_eq_constantCoeff, generating_equation.1]
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:191:    _ = 1 := generating_equation.1
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:313:#print axioms generating_equation
+D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.lean:314:#print axioms generating_unique
+D5/S1/Recurrence/Parity/BilateralQuarticPowerThetaModFour.lean:153:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/BilateralQuarticPowerThetaModFour.lean:175:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/BilateralQuarticPowerThetaModFour.lean:463:#print axioms generating_equation
+D5/S1/Recurrence/Parity/BilateralQuarticPowerThetaModFour.lean:464:#print axioms generating_unique
+D5/S1/Recurrence/Parity/BilateralThetaReversionModSixteen.lean:146:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/BilateralThetaReversionModSixteen.lean:151:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/BilateralThetaReversionModSixteen.lean:344:#print axioms generating_equation
+D5/S1/Recurrence/Parity/BilateralThetaReversionModSixteen.lean:345:#print axioms generating_unique
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:275:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:282:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:291:  have hg := generating_equation
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:463:  have hg := generating_equation
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:476:  rw [← mod_two_identity, ← map_iterate (Int.castRingHom (ZMod 2)) generating_equation.1,
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:481:#print axioms generating_equation
+D5/S1/Recurrence/Parity/DiagonalIterateEven.lean:482:#print axioms generating_unique
+D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity.lean:157:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity.lean:165:theorem generating_unique (B : PowerSeries ℤ) (_h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity.lean:219:  have he := congrArg (Int.castRingHom (ZMod 2)) (generating_equation.2 N)
+D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity.lean:289:#print axioms generating_equation
+D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity.lean:290:#print axioms generating_unique
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:203:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:212:theorem generating_unique (B : PowerSeries ℤ) (_h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:274:  have he := congrArg (Int.castRingHom (ZMod 2)) (generating_equation.2 N)
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:313:      coeff_zero_eq_constantCoeff, generating_equation.1, map_one]
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:317:      FactorialProductSumCatalanParity.generating_equation.1, map_one]
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:353:#print axioms generating_equation
+D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.lean:354:#print axioms generating_unique
+D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity.lean:46:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity.lean:55:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity.lean:95:    have he := congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity.lean:165:#print axioms generating_equation
+D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity.lean:166:#print axioms generating_unique
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:124:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:142:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:144:  unique h0 generating_equation.1 hB generating_equation.2.2
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:328:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:330:    have h := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:331:    simpa [step, map_iterates hom generating_equation.1] using h
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:367:    rw [map_iterates _ generating_equation.1, reduction, f_iter_two]
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:379:    rw [map_sub, map_mul, map_X, map_iterates _ generating_equation.1,
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:388:#print axioms generating_equation
+D5/S1/Recurrence/Parity/IterateProductTwoThreeModFour.lean:389:#print axioms generating_unique
+D5/S1/Recurrence/Parity/LogarithmicQuarterNormalizationModEight.lean:137:theorem generating_unique (b : ℕ → ℚ) (h : PowerSeries ℚ)
+D5/S1/Recurrence/Parity/LogarithmicQuarterNormalizationModEight.lean:265:#print axioms generating_unique
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:141:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:153:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:161:      simpa only [coeff_zero_eq_constantCoeff, generating_equation.1] using h0
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:164:    have he := pow_coeff_change h0 generating_equation.1 hag (prime n)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:165:    rw [hB n (by omega), generating_equation.2 n (by omega),
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:171:  prime_coeff _ generating_equation.1 (prime_is_prime n) hj hjp
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:179:  rw [logDerivative, mul_assoc, invOfUnit_mul _ 1 generating_equation.1, mul_one]
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:220:  rw [generating_equation.2 n hn1] at he
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:230:    (by simp [generating_equation.1]) (prime n) (n - 1) (by
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:239:    have h := generating_equation.2 1 (by omega)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:241:      generating_equation.1] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:244:    have h := generating_equation.2 2 (by omega)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:246:      generating_equation.1, h1] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:249:    have h := generating_equation.2 3 (by omega)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:251:      generating_equation.1, h1, h2] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:255:    simpa [coeff_derivative, generating_equation.1, h1] using h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:259:      generating_equation.1, h1, h2, hl0] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:264:      generating_equation.1, h1, h2, h3, hl0, hl1] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:271:#print axioms generating_equation
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean:272:#print axioms generating_unique
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.lean:48:  simp only [f, coeff_map, coeff_zero_eq_constantCoeff, generating_equation.1, map_one]
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.lean:51:  have h := generating_equation.2 1 (by omega)
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.lean:53:    generating_equation.1] at h
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.lean:72:        (generating_equation.2 (k + 1) (by omega))
+D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.lean:130:  rw [← map_mul, mul_invOfUnit _ 1 generating_equation.1, map_one]
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:185:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:191:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:236:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:238:    have hm := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:241:      map_subst (.of_constantCoeff_zero (argument_zero generating_equation.1)) _
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:244:    rw [hs, map_X, map_argument hom generatingSeries generating_equation.1] at hm
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:264:#print axioms generating_equation
+D5/S1/Recurrence/Parity/QuadraticSquareReversionDyadicSupportParity.lean:265:#print axioms generating_unique
+D5/S1/Recurrence/Parity/QuadraticSquareReversionModFour.lean:144:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/QuadraticSquareReversionModFour.lean:234:theorem generating_unique (B : PowerSeries ℤ)
+D5/S1/Recurrence/Parity/QuadraticSquareReversionModFour.lean:377:#print axioms generating_equation
+D5/S1/Recurrence/Parity/QuadraticSquareReversionModFour.lean:378:#print axioms generating_unique
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:100:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:115:theorem generating_unique (B : PowerSeries ℤ) (_h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:132:  have h := generating_equation.2
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:144:  have h := generating_equation.2
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:193:      coeff_zero_eq_constantCoeff, AbsoluteReciprocalCubeParity.generating_equation.1]
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:198:          AbsoluteReciprocalCubeParity.generating_equation.1)
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:202:        AbsoluteReciprocalCubeParity.generating_equation.2
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:233:#print axioms generating_equation
+D5/S1/Recurrence/Parity/ReflectedQuadraticQuarterParity.lean:234:#print axioms generating_unique
+D5/S1/Recurrence/Parity/ScaledQuadraticReversionModSixteen.lean:163:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/ScaledQuadraticReversionModSixteen.lean:179:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/ScaledQuadraticReversionModSixteen.lean:442:#print axioms generating_equation
+D5/S1/Recurrence/Parity/ScaledQuadraticReversionModSixteen.lean:443:#print axioms generating_unique
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:121:theorem generating_equation (r : ℕ) (_hr : 2 ≤ r) :
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:138:theorem generating_unique (r : ℕ) (hr : 2 ≤ r) (B : PowerSeries ℤ)
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:141:  fixed_unique r h0 (generating_equation r hr).1 hB (generating_equation r hr).2.2
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:168:      (generating_equation r hr).1, map_zero]
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:170:    have h := congrArg (PowerSeries.map hom) (generating_equation r hr).2.2
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:171:    simpa [step, map_iterates hom (generating_equation r hr).1] using h
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:195:#print axioms generating_equation
+D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.lean:196:#print axioms generating_unique
+D5/S1/Recurrence/Parity/SquareCubeSubstitutionOddIndexParity.lean:60:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Parity/SquareCubeSubstitutionOddIndexParity.lean:80:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
+D5/S1/Recurrence/Parity/SquareCubeSubstitutionOddIndexParity.lean:103:  have he := congrArg (coeff (n + 2)) generating_equation.2.2.2
+D5/S1/Recurrence/Parity/SquareCubeSubstitutionOddIndexParity.lean:148:#print axioms generating_equation
+D5/S1/Recurrence/Parity/SquareCubeSubstitutionOddIndexParity.lean:149:#print axioms generating_unique
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:84:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:93:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:104:        simpa only [this, coeff_zero_eq_constantCoeff, generating_equation.1] using h0
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:106:        simpa only [step, ← hB, ← generating_equation.2] using step_agree ih
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:121:    congrArg (PowerSeries.map (Int.castRingHom (ZMod 2))) generating_equation.2
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:259:      generating_equation.1, map_one]
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:272:#print axioms generating_equation
+D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity.lean:273:#print axioms generating_unique
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:139:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:154:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:156:  (solution_unique thetaSeries h0 generating_equation.2 hB).symm
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:224:  have he := congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:250:#print axioms generating_equation
+D5/S1/Recurrence/Parity/ThetaSelfCompositionModFour.lean:251:#print axioms generating_unique
+D5/S1/Recurrence/PellCompanionGcd.lean:7:   digest: Pell and companion Pell coprimality proves the A084068 gcd formula. -/
+D5/S1/Recurrence/PellCompanionGcd.lean:18:   The main gcd formula is a bind-only companion using the coprimality and
+D5/S1/Recurrence/PellCompanionGcd.lean:31:/-- Companion Pell numbers, with both initial values equal to one. -/
+D5/S1/Recurrence/PellCompanionGcd.lean:48:/-- Pell and companion Pell numbers at the same index are coprime. -/
+D5/S1/Recurrence/PellCompanionGcd.lean:58:/-- Every companion Pell number is odd, including the initial value. -/
+D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod.lean:136:theorem generating_equation :
+D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod.lean:155:generating_equation, with onset n >= m for every positive modulus. -/
+D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod.lean:165:#print axioms generating_equation
+D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.lean:228:theorem generating_equation (r : ℕ) :
+D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity.lean:259:#print axioms generating_equation
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:89:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:100:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:107:      have hs := step_agree h0 generating_equation.1 ih
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:108:      simpa only [step, ← hB, ← generating_equation.2] using hs
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:126:      (invOfUnit_mul generatingSeries 1 generating_equation.1)
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:130:    using congrArg (PowerSeries.map (Int.castRingHom (ZMod 2))) generating_equation.2
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:158:      D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity.generating_equation.2
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:269:#print axioms generating_equation
+D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity.lean:270:#print axioms generating_unique
+D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.lean:192:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.lean:221:theorem generating_unique (A : PowerSeries ℤ) (hA : constantCoeff A = 1)
+D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.lean:308:    have hk := generating_equation.2.2 k k (by omega)
+D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.lean:327:#print axioms generating_equation
+D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.lean:328:#print axioms generating_unique
+D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.lean:14:Its generating_equation proves A(0) = A'(0) = 1 and, for n > 1,
+D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.lean:15:`[x^n] A(x / A(x)^(d*(n-1)+1)) = 0`; generating_unique characterizes it.
+D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.lean:99:        (NegativePowerDiagonalModPrime.generating_equation (d + 1)).1
+D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.lean:100:    have hrec := (NegativePowerDiagonalModPrime.generating_equation (d + 1)).2.2 n hn2
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:126:theorem generating_equation : coeff 0 generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:157:theorem generating_unique (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:161:  exact equation_unique h0 generating_equation.1 h1 generating_equation.2.1
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:163:    (fun n hn => sub_eq_zero.mpr (generating_equation.2.2 n hn))
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:203:  · simp [coeff_map, generating_equation.1, hom]
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:205:  · simp [coeff_map, generating_equation.2.1, hom]
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:209:      sub_eq_zero.mpr (generating_equation.2.2 n hn), map_zero]
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:217:#print axioms generating_equation
+D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.lean:218:#print axioms generating_unique
+D5/S1/Recurrence/Residue/DiagonalPowerRatioModTwelve.lean:15:`DiagonalPowerRatioAllOdd`; its `generating_equation` and `generating_unique`
+D5/S1/Recurrence/Residue/DiagonalPowerRatioModTwelve.lean:86:  have hA0 : coeff 0 A = 1 := by simp [A, coeff_map, generating_equation.1]
+D5/S1/Recurrence/Residue/DiagonalPowerRatioModTwelve.lean:87:  have hA1 : coeff 1 A = 1 := by simp [A, coeff_map, generating_equation.2.1]
+D5/S1/Recurrence/Residue/DiagonalPowerRatioModTwelve.lean:90:    have h := congrArg (Int.castRingHom (ZMod m)) (generating_equation.2.2 n hn)
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:180:theorem generating_equation (e : ℕ → ℕ) : coeff 0 (generatingSeries e) = 1 ∧
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:198:theorem generating_unique (e : ℕ → ℕ) (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:331:        simpa only [coeff_zero_eq_constantCoeff] using (generating_equation e).1
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:366:  have h := generating_equation (fun m => m)
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:369:    apply NegativePowerDiagonalModPrime.generating_unique 2 _ h.1 h.2.1
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:384:#print axioms generating_equation
+D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean:385:#print axioms generating_unique
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:210:theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:218:theorem generating_unique (f : PowerSeries ℤ) (h0 : constantCoeff f = 0)
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:221:  exact equation_unique h0 generating_equation.1 h1 generating_equation.2.1
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:222:    hf generating_equation.2.2
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:371:    constantCoeff_subst_eq_zero harg _ generating_equation.1
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:372:  have he := congrArg (PowerSeries.map hom) generating_equation.2.2
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:386:      generating_equation.1, map_zero]
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:388:    rw [coeff_map, generating_equation.2.1, map_one]
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:409:#print axioms generating_equation
+D5/S1/Recurrence/Residue/DoubleCompositionModFourClassification.lean:410:#print axioms generating_unique
+D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.lean:131:theorem generating_unique (b : ℕ → ℚ) (m : PowerSeries ℚ)
+D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.lean:365:#print axioms generating_unique
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:389:theorem generating_equation :
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:394:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:402:      simpa only [coeff_zero_eq_constantCoeff, hf] using generating_equation.2.1.symm
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:405:      exact hf1.trans generating_equation.2.2.symm
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:406:    have ht := product_top (by omega : 1 < n) hf generating_equation.2.1
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:407:      hf1 generating_equation.2.2 ih
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:408:    rw [he, generating_equation.1, sub_self] at ht
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:449:  solution_three generatingSeries generating_equation.1 generating_equation.2.1
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:450:    generating_equation.2.2 n hn
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:453:#print axioms generating_equation
+D5/S1/Recurrence/Residue/IterateProductNineModThree.lean:454:#print axioms generating_unique
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:427:theorem generating_equation :
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:433:theorem generating_unique (f : PowerSeries ℤ)
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:441:      simpa only [coeff_zero_eq_constantCoeff, hf] using generating_equation.1.symm
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:444:      exact hf1.trans generating_equation.2.1.symm
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:445:    have ht := product_top (by omega : 1 < n) hf generating_equation.1
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:446:      hf1 generating_equation.2.1 ih
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:447:    rw [he, generating_equation.2.2, sub_self] at ht
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:488:  solution_five generatingSeries generating_equation.2.2 generating_equation.1
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:489:    generating_equation.2.1 n hn
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:496:#print axioms generating_equation
+D5/S1/Recurrence/Residue/IterateProductTwentyFiveModFive.lean:497:#print axioms generating_unique
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.lean:189:theorem generating_equation (p : ℕ) : coeff 0 (generatingSeries p) = 1 ∧
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.lean:207:theorem generating_unique (p : ℕ) (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.lean:285:    · simpa only [coeff_zero_eq_constantCoeff] using (generating_equation p).1
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.lean:302:#print axioms generating_equation
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.lean:303:#print axioms generating_unique
+D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.lean:133:theorem generating_unique (q : ℤ) (hq : q ≠ 0) (b : ℕ → ℚ) (m : PowerSeries ℚ)
+D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.lean:255:    apply generating_unique q hq f N hf0 hN0 hN1 hNshape
+D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.lean:417:#print axioms generating_unique
+D5/S1/Recurrence/Residue/PerturbedDiagonalSquareDivisibility.lean:225:theorem generating_equation : coeff 0 generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/PerturbedDiagonalSquareDivisibility.lean:248:theorem generating_unique (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/PerturbedDiagonalSquareDivisibility.lean:301:    generating_equation.2 n hn1
+D5/S1/Recurrence/Residue/PerturbedDiagonalSquareDivisibility.lean:308:#print axioms generating_equation
+D5/S1/Recurrence/Residue/PerturbedDiagonalSquareDivisibility.lean:309:#print axioms generating_unique
+D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.lean:119:        (DiagonalVanishingIndexDivisibility.generating_equation e).1
+D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.lean:120:    have hrec := (DiagonalVanishingIndexDivisibility.generating_equation e).2.2 n hn2
+D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.lean:160:  have h := DiagonalVanishingIndexDivisibility.generating_equation e
+D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.lean:163:    apply NegativePowerDiagonalModPrime.generating_unique (d + 1) _ h.1 h.2.1
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:82:theorem generating_equation : coeff 0 generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:125:theorem generating_unique (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:129:  equation_unique B generatingSeries h0 zero_coeff h1 one_coeff he generating_equation.2.2
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:186:      AbsoluteReciprocalSquareFibbinaryParity.generating_equation.1]
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:193:      Parity.StripThreeTernaryCatalanParity.generating_equation.1, map_one]
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:195:    have h := congrArg hom (generating_equation.2.2 n hn)
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:226:#print axioms generating_equation
+D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.lean:227:#print axioms generating_unique
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:162:theorem generating_equation : constantCoeff generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:177:theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:179:  (solution_unique thetaSeries generating_equation.1 h0 generating_equation.2 hB).symm
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:217:    D5.S1.Recurrence.Parity.ThetaSelfCompositionModFour.generating_equation.2
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:243:  have he := congrArg (PowerSeries.map hom) generating_equation.2
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:250:  rw [hm, map_mul, map_X, map_inverse hom generatingSeries generating_equation.1] at he
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:253:      generating_equation.1, map_one]
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:275:#print axioms generating_equation
+D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean:276:#print axioms generating_unique
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalModThree.lean:252:        congrArg (Int.castRingHom (ZMod 3)) (generating_equation.2.2.2 i hi)
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalModThree.lean:255:    have hinv := congrArg (PowerSeries.map (Int.castRingHom (ZMod 3))) generating_equation.1
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:163:theorem generating_equation : reciprocalSeries * generatingSeries = 1 ∧
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:221:theorem generating_unique (B A : PowerSeries ℤ) (h0 : coeff 0 B = 1)
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:227:      generating_equation.2.2.2
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:231:    A = (reciprocalSeries * generatingSeries) * A := by rw [generating_equation.1, one_mul]
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:245:    have h := congrArg (Int.castRingHom (ZMod 2)) (generating_equation.2.2.2 n hn)
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:252:    have h := congrArg (PowerSeries.map (Int.castRingHom (ZMod 2))) generating_equation.1
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:267:#print axioms generating_equation
+D5/S1/Recurrence/Residue/ReciprocalSquareExponentDiagonalParity.lean:268:#print axioms generating_unique
+D5/S1/Recurrence/SkolemOrderFiveModularExclusion.lean:9:import Mathlib.Algebra.LinearRecurrence
+D5/S1/Recurrence/SkolemOrderFiveModularExclusion.lean:33:/-- The companion step forced by coefficient residues `(1, 0, 0, 1, 0)`. -/
+D5/S1/Recurrence/SkolemOrderFiveModularExclusion.lean:47:def intRecurrence (a : Fin 5 → ℤ) : LinearRecurrence ℤ where
+D5/S1/Recurrence/SkolemOrderFiveModularExclusion.lean:55:/-- The binary companion orbit from the prescribed initial state. -/
+D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:516:theorem generating_equation : DefiningEquation generatingSeries := by
+D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:525:  refine ⟨generatingSeries, generating_equation, ?_⟩
+D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.lean:553:  have h : A = generatingSeries := integer_exists_unique.unique hA generating_equation
+D5/S1/Words/Expansions/BasePhiNegativePrefixTridentCore.lean:4:   mirror-E: none(waiver:frontier-support-companion)
+D5/S3/Analytic/Adelic/ToroidalJetDepth.lean:20:     vanishing order by the first nonzero iterated derivative. The companion
+D5/S3/Analytic/Certified/TrigEnvelopePhaseReduction.lean:384:norm bound. This companion is consumed by the L2c center-norm certificate. -/
+D5/S3/Analytic/Monotonicity/GoldenDisplacementSeriesStrictAntitone.lean:11:  companion, the public `nS_prime_pow` computation, and no public termwise parameter-order
+D5/S3/Analytic/Monotonicity/GoldenDisplacementSeriesStrictAntitone.lean:19:  The earlier frozen non-strict companion keeps its own private copy: revoking a valid
+D5/S3/Analytic/Zeta/ZetaEntropyDivergence.lean:185:     finite real value, which is stronger than the requested boundedness companion. Nothing in
+D5/S3/Arith/Congruence/LehmerTotientStructure.lean:182:divides the predecessor. This is the named companion for theorem 4.85. -/
+D5/S3/Arith/Congruence/LehmerTotientStructure.lean:191:divisibility condition. This is the named companion for theorem 4.86. -/
+D5/S3/Arith/DivisorGibbs/CofinalDivisibility.lean:42:   companion clause. No global ladder or cutoff definition is introduced. -/
+D5/S3/Arith/GoldenResource/ContinuousPrimeMaximum.lean:37:   Companion direction: continuous_prime_unique_maximum -> the derivative and
+D5/S3/Arith/GoldenResource/GoldenColossalClosure.lean:40:   Companion edges (consumer -> prerequisite): closure divisibility -> support price bound;
+D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison.lean:31:     Companion dependency: endpoint comparison -> single-layer delta. -/
+D5/S3/Arith/GoldenResource/GoldenResourcePriceInterval.lean:36:   Companion edges (consumer -> prerequisite): upper-price specification -> attainment;
+D5/S3/Arith/GoldenResource/GoldenResourceSupremum.lean:44:      Companion edges: supremum -> objective_at_optimal_eq_positive_part_sum;
+D5/S3/Arith/GoldenResource/GoldenResourceThresholdCriterion.lean:35:   Companion direction: the public iff consumes the strict-improvement witness. -/
+D5/S3/Arith/GoldenResource/HarmonicGammaTail.lean:10:proof_shape: content for harmonic_log_tail_lower and its named companion
+D5/S3/Arith/GoldenResource/HarmonicGammaTail.lean:18:  explicitly requested named companion, not an independent computational delivery.
+D5/S3/Arith/GoldenResource/HarmonicGammaUpperTail.lean:15:  The companion also uses harmonic_log_tail_lower,
+D5/S3/Arith/GoldenResource/HarmonicGammaUpperTail.lean:23:  The requested numerical consequence is a named companion of the uniform estimate,
+D5/S3/Arith/GoldenResource/RobinRationalBasis.lean:499:(logarithmic) quantity, formalized in the companion module `GoldenCell5040Certificate`; only the
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:307:theorem generating_equation (A : PowerSeries ℤ)
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:379:theorem generating_unique (F : PowerSeries F2)
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:405:  generating_unique (reduce A) (by
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:407:    rfl) (generating_equation A h0 hvanish)
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:413:  rw [generating_unique F h0 hF]
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:449:#print axioms generating_equation
+D5/S3/Arith/SelfReferentialInverseSeriesParity.lean:451:#print axioms generating_unique
+D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.lean:27:     equality-kernel law for arbitrary functions. The companion search
+D5/S3/ConceptDynamics/InformationEscape/SystemUnit.lean:13:   * `catalogIrredundant_iff_forall_pos` supplies the catalog-wide companion law.
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:117:/-- Deterministic enumeration companion for the agenda-power arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:130:/-- Deterministic enumeration companion for the adaptive-residue arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:140:/-- Deterministic enumeration companion for the five-atom spectrum arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:150:/-- Deterministic enumeration companion for the interpretation-context arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:169:/-- Deterministic enumeration companion for the counterfactual-intervention arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:187:/-- Deterministic enumeration companion for the observation-intervention arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:199:/-- Deterministic enumeration companion for the static exact-experiment arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:210:/-- Deterministic enumeration companion for the commuting-completion arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:221:/-- Deterministic enumeration companion for the local-law-gluing arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:233:/-- Deterministic enumeration companion for the preemption-trace arena. -/
+D5/S3/ConceptDynamics/InformationEscapeCounting/Enumerations.lean:248:/-- Deterministic enumeration companion for the two-stage system arena. -/
+D5/S3/ConceptDynamics/InvolutionLogic/InvolutionTransversal.lean:14:   * Atomic negation is reused from the companion rigidity module. -/
+D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.lean:17:Companion consumer -> prerequisite edges:
+D5/S3/ConceptDynamics/Spacetime/ContextExtensionComposition.lean:14:This is a companion API requirement, not an independent source coverage claim.
+D5/S3/ConceptDynamics/Spacetime/ContextExtensionComposition.lean:17:Companion consumer -> prerequisite edges:
+D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.lean:18:The coefficient and unit statements are companion source-identification
+D5/S3/ConceptDynamics/Spacetime/SpatialEquationCriterion.lean:14:factor branch. The principalMultiples_* statements are companion algebraic
+D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.lean:44:/-- The companion-shaped multiplication matrix determined by the coefficients of a monic
+D5/S3/Constants/Moments/CoefficientMultiplicationTraceMoments.lean:15:      companion and eigenvalue sums found no arbitrary-degree power-trace bridge.
+D5/S3/Constants/Moments/CoefficientMultiplicationTraceMoments.lean:28:      trace/pow, companion and Newton-identities searches returned no matches.
+D5/S3/Constants/Moments/GramSchmidtCoefficientField.lean:84:/-- With the normalized companion-trace Hankel inner product, every coordinate of the
+D5/S3/ContinuousObservables/CentralWinding.lean:19:   * Searches of the pinned Mathlib tree for weighted cyclic shifts, monomial matrices, companion
+D5/S3/DivergenceSupport/ZeroSupportDefectEquality.lean:14:     member summand zero. Its `Fintype` companion instead concludes that the summand function is
+D5/S3/Estimation/FanoErrorBound.lean:31:adds the genuine condition `2 ≤ card X`. A sharp companion uses `log (card X - 1)` and is
+D5/S3/Factorization/TauSigmaSolutionBound.lean:26:classification is a companion consumer of that bound; its finite hypothesis remains open.
+D5/S3/Midline/Cayley/CanonicalZetaCayleyKreinInverse.lean:22:companion identity `U J U* = J` without assuming ordinary unitarity or RH.
+D5/S3/Midline/Cayley/CanonicalZetaCayleyKreinInverse.lean:185:/-- The companion Krein conservation identity `U J U* = J`. -/
+D5/S3/Observer/BlockStructure/HiddenFieldResponse.lean:37:Preregistered companion uses (consumer -> prerequisite):
+D5/S3/Observer/BlockStructure/HiddenFieldResponse.lean:98:/-- Bind-only companion for effective_speed_parameter_comparison: the shift is
+D5/S3/Observer/BlockStructure/HiddenFieldResponse.lean:109:/-- Bind-only companion for effective_speed_parameter_comparison: the coefficient
+D5/S3/Observer/BlockStructure/HiddenFieldResponse.lean:127:/-- Bind-only companion for leading_order_characteristic_readout: the zero set
+D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean:68:/-- Companion: the argument times its hyperbolic cotangent is at least one. -/
+D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean:75:/-- Companion: the cotangent dominates the reciprocal of its argument. -/
+D5/S3/Observer/GoldenChronology/GoldenFactorParikhMagnusBridge.lean:16:The companion uploaded GoldenFactorHeisenbergReadout candidate is not copied:
+D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.lean:286:Unlike its companion this needs no orthogonality: `A A⁺` is visibly
+D5/S3/Observer/LinearMemory/DualGramKernels.lean:11:   * The exact family companion `DualGramVisibleRanges` fixes the canonical
+D5/S3/PrimeForms/PropagationLegs.lean:20:/-- `leg` is a √3-leg of the slot with companion `other` when `D − 3·leg² = other²`. -/
+D5/S3/Quantum/Entanglement/OccupationPhysicalPreparation.lean:525:/-- This companion uses the already compiled eight-slot, twelve-memory circuit. -/
+D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.lean:57:the companion zero-endpoint result. This records only the **saturation** clause `sharpness = 1 ⇔
+D5/S3/Quantum/Tomography/Cayley/CayleyInvariantComplexNeighborhood.lean:99:and its reciprocal companion have squared modulus strictly between 1/4 and 4.
+D5/S3/Quantum/Tomography/HolomorphicCayleyHadamard.lean:26:   companion, not pointwise conjugation of a holomorphic H-parameter.
+D5/S3/Quantum/Tomography/HolomorphicCayleyHadamard.lean:39:companion is `cayleyPhase (star s) (-z)`, away from the two poles. -/
+D5/S3/Quantum/Tomography/HolomorphicCayleyHadamard.lean:57:essential: the reciprocal companion has derivative -2 i conjugate(s)/(1+i z)^2. -/
+D5/S3/QuantumBounds/AffineEndpointPath.lean:21:      read Algebra.LinearRecurrence (all public declarations), Algebra.Ring.GeomSum,
+D5/S3/QuantumBounds/AffineEndpointPath.lean:22:      and searched BigOperators/Fin and interval sums. LinearRecurrence.toInit concerns
+D5/S3/RenyiDivergence/ZeroCharacterization.lean:11:     is `Real.geom_mean_eq_arith_mean2_weighted_iff_of_pos`; its inequality companion and
+D5/S3/StatisticalMechanics/HardCore/RadiusFourData.lean:4:   mirror-E: none(waiver:exact-data-consumed-by-companion-theorems)
+D5/S3/StatisticalMechanics/HardCore/RadiusThreeData.lean:4:   mirror-E: none(waiver:exact-data-consumed-by-companion-theorems)
+D5/S3/StatisticalMechanics/HardCore/RadiusThreeData.lean:15:The companion theorems check these actual data against geometry. -/
+D5/S3/Weil/Analytic/BaezDuarteContinuation.lean:24:the normalization and convergence bindings are its companion results.
+D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.lean:19:   * LeanSearch queries using Cayley-Hamilton, companion-matrix, unimodular, and
+D5/S3/Weil/GronwallLowerEnvelope.lean:20:The logarithmic Robin margin is a bind-only companion: the upper envelope
+D5/S3/Weil/GronwallLowerEnvelope.lean:22:arbitrarily late upper bounds. The source obligations, directed companion
+D5/S3/Weil/GronwallUpperEnvelope.lean:22:Companion edges (consumer -> prerequisite):
+D5/S3/Weil/PrimeAddress/VonMangoldtRecurrence.lean:13:import Mathlib.Algebra.LinearRecurrence
+D5/S3/Weil/PrimeAddress/VonMangoldtRecurrence.lean:127:  let E : LinearRecurrence ℂ := ⟨r, c⟩
+D5/S3/Weil/PrimeAddress/VonMangoldtRecurrence.lean:159:example : (LinearRecurrence.mk 0 (fun j => Fin.elim0 j) : LinearRecurrence ℂ).IsSolution 0 :=
+D5/S3/Weil/ZetaLinear/FullRankInertiaPullback.lean:15:increase under pullback. This module supplies the negative-index companion and
+D5/S3/Weil/ZetaPntBounds/NymanFractionalMellin.lean:15:and the real-parameter scaling companion from BDMellin.lean:169-363.
+D5/S3/Zeros/Convolution/FiniteConvolutionCoefficients.lean:12:Companion API for the arbitrary-degree definitions in #6065, used by
+D5/S3/Zeros/Convolution/FiniteFreeCommutatorDegreeFour.lean:23:bound. The coefficient expansion is a companion on that same proof path.
+D5/S3/Zeros/Convolution/FiniteFreeCommutatorDegreeFour.lean:123:/-- Normalization companion used by `centered_factorization` on its live path. -/
+D5/S3/Zeros/Convolution/GribinskiDegreeTwo.lean:39:Companion obligations and actual directed edges (consumer -> prerequisite):
+D5/S3/Zeros/ObserverCriteria/StopLossWeakCurvature.lean:79:/-- Companion for the finite defect product: finite weak curvature consumes the
+D5/S3/Zeros/ObserverCriteria/StopLossWeakCurvature.lean:202:/-- Named transport companion: all seven displayed source identities, with weak
+
+git grep -n -P '\b(?:theorem|def)\b' -- 'D5/S3/Arith/RationalCompositionParityPeriodTen.lean'
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:25:def N : PowerSeries ℚ :=
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:29:def D : PowerSeries ℚ :=
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:33:theorem denominator_expansion :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:40:theorem numerator_expansion :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:47:def a : Nat -> Int
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:61:private theorem a_recurrence (n : Nat) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:69:theorem rational_tail_equation (n : Nat) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:75:private theorem a_zero : a 0 = 0 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:76:private theorem a_one : a 1 = 1 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:77:private theorem a_two : a 2 = 6 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:78:private theorem a_three : a 3 = 33 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:79:private theorem a_four : a 4 = 174 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:80:private theorem a_five : a 5 = 892 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:81:private theorem a_six : a 6 = 4480 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:82:private theorem a_seven : a 7 = 22149 := by rfl
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:84:private theorem a_eight : a 8 = 108144 := by
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:89:private theorem a_nine : a 9 = 522685 := by
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:95:theorem initial_coefficient_equations :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:108:private def lag (b : ℕ → ℚ) (n k : ℕ) : ℚ := if k ≤ n then b (n - k) else 0
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:110:private theorem coeff_mul_D (b : ℕ → ℚ) (n : ℕ) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:146:private theorem coeff_mul_D_tail (b : ℕ → ℚ) (n : ℕ) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:154:private theorem numerator_expansion_C :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:166:private theorem coeff_N_tail (n : ℕ) : PowerSeries.coeff (n + 8) N = 0 := by
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:170:private theorem coeff_N_initial :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:180:theorem generating_function_identity :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:202:theorem generating_function :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:210:theorem coefficients_unique (b : ℕ → ℤ)
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:244:theorem reduced_recurrence (n : Nat) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:262:theorem parity_period_ten : Function.Periodic (fun n => (a n : ZMod 2)) 10 := by
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:276:private theorem initial_parities (i : Fin 10) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:282:private theorem initial_parity_characterization (i : Fin 10) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:288:theorem odd_iff_mod_ten (n : Nat) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:296:/-- The covered parity theorem for every integer sequence defined by formula (2). -/
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:297:theorem odd_iff_mod_ten_of_generating_function (b : ℕ → ℤ)
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:304:theorem even_at_even_index (n : Nat) (_hn : 1 <= n) : Even (a (2 * n)) := by
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:311:theorem even_at_odd_index_iff (n : Nat) (hn : 1 <= n) :
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:326:theorem even_at_even_index_of_generating_function (b : ℕ → ℤ)
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:333:theorem even_at_odd_index_iff_of_generating_function (b : ℕ → ℤ)
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:341:def Bf (y : RatFunc ℚ) : RatFunc ℚ := y / (1 - y) ^ 2
+D5/S3/Arith/RationalCompositionParityPeriodTen.lean:344:private theorem triple_B_eq_formula_two :
+
