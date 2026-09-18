@@ -576,3 +576,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Root0 shift thresholds remove the separate imbalance charge](profile-notes/105-root0-shift-thresholds-remove-the-separate-imbalance-charge.md)
 - [The actual denominator shares the carrier mass residual](profile-notes/106-the-actual-denominator-shares-the-carrier-mass-residual.md)
 - [Carrier mass and the shared residual improve global K](profile-notes/107-carrier-mass-and-the-shared-residual-improve-global-k.md)
+- [A complete second-factorial tail improves four quadratic costs](profile-notes/108-a-complete-second-factorial-tail-improves-four-quadratic-costs.md)
+- [The mean and all hinges share one original test](profile-notes/109-the-mean-and-all-hinges-share-one-original-test.md)
+- [One original AP11 block couples its count outcomes](profile-notes/110-one-original-ap11-block-couples-its-count-outcomes.md)
+- [Each AP11 block shares its mean and curvature](profile-notes/111-each-ap11-block-shares-its-mean-and-curvature.md)
+- [The factorial tail retains one compatible original head](profile-notes/112-the-factorial-tail-retains-one-compatible-original-head.md)
