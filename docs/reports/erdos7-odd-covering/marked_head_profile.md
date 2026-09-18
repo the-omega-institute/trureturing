@@ -695,3 +695,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The joint135/125 records strengthen two complete survival bounds](profile-notes/226-the-joint135125-records-strengthen-two-complete-survival-bounds.md)
 - [The actual deletion-mask rows have one off-face error budget](profile-notes/227-the-actual-deletion-mask-rows-have-one-off-face-error-budget.md)
 - [The complete pure-three projection shares the deletion-row budget](profile-notes/228-the-complete-pure-three-projection-shares-the-deletion-row-budget.md)
+- [Each complete fallback uses its own square bound](profile-notes/232-each-complete-fallback-uses-its-own-square-bound.md)
