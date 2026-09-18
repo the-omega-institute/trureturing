@@ -90,6 +90,8 @@ root = "Cache"
         # These native-facet fixtures test statement extraction and publication,
         # with no D5 registration library. Use the explicit statement-only API;
         # their reports cannot satisfy the declared-template admission reader.
+        # Producer/configuration reuse assertions here do not cover DTR's raw
+        # manifest byte binding. DeclaredExport tests that real driver contract.
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         source = inspector.read_text()
         entry = '  let statementOnly := args.head? == some "--statements-only"'
