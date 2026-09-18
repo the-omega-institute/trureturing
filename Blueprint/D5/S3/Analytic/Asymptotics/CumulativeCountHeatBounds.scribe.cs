@@ -29,8 +29,8 @@ internal sealed class CumulativeCountHeatBoundsDocument : IScribeDocumentDefinit
                             + "natural k, using natural subtraction (truncated at zero). Define "
                             + "a: Nat -> Real by a(0)=0 and a(k+1)=q^(k+1) for every natural k.")),
                     Paragraph(Text(
-                        "For real t and natural L, define F_t(L)=NatCast(m(L))*exp(-t*a(L)), "
-                            + "and define S(t) as the infinite sum of F_t(L) over all natural L, "
+                        "For real t and natural L, define F(t,L)=NatCast(m(L))*exp(-t*a(L)), "
+                            + "and define S(t) as the infinite sum of F(t,L) over all natural L, "
                             + "including L=0. Set gamma=log(lambda)/log(q). For natural k, put "
                             + "u(k)=lambda^(k+1)*exp(-(q^k)); U is the infinite sum of u(k) over "
                             + "all natural k, including k=0. This superexponential tail series converges. "
@@ -52,10 +52,40 @@ internal sealed class CumulativeCountHeatBoundsDocument : IScribeDocumentDefinit
         Formula lam = F.Id("lambda");
         Formula q = F.Id("q");
         Formula L = F.Id("L");
+        Formula k = F.Id("k");
         Formula t = F.Id("t");
         Formula gamma = F.Id("gamma");
         Formula Cminus = F.Id("Cminus");
         Formula Cplus = F.Id("Cplus");
+        Formula U = F.Id("U");
+        Formula successor = Seq(k, Sp, Plus, Sp, D(1));
+        Formula definitions = Seq(
+            Call("m", D(0)), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+            Open, Forall, Sp, k, Colon, Sp, natural, Comma, Sp,
+            Call("m", successor), Sp, Eq, Sp, Call("N", successor), Sp,
+            Minus, Underscore, Grp(natural), Sp, Call("N", k), Close,
+            Sp, Land, Sp, Call("a", D(0)), Sp, Eq, Sp, D(0), Sp, Land, Sp,
+            Open, Forall, Sp, k, Colon, Sp, natural, Comma, Sp,
+            Call("a", successor), Sp, Eq, Sp, Pow(q, successor), Close,
+            RowBreak, Nl, Amp, Quad, Land, Sp,
+            gamma, Sp, Eq, Sp, Frac, Grp(Call("log", lam)), Grp(Call("log", q)),
+            Sp, Land, Sp, Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            Forall, Sp, L, Colon, Sp, natural, Comma, Sp,
+            Call("F", t, L), Sp, Eq, Sp, Call("NatCast", Call("m", L)), Sp, Times, Sp,
+            Call("exp", Seq(Minus, t, Sp, Times, Sp, Call("a", L))), Close,
+            RowBreak, Nl, Amp, Quad, Land, Sp,
+            Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
+            Call("S", t), Sp, Eq, Sp, Sum, Apos, Underscore, Grp(L, Colon, Sp, natural),
+            Sp, Call("F", t, L), Close, Sp, Land, Sp,
+            Open, Forall, Sp, k, Colon, Sp, natural, Comma, Sp,
+            Call("u", k), Sp, Eq, Sp, Pow(lam, successor), Sp, Times, Sp,
+            Call("exp", Seq(Minus, Pow(q, k))), Close,
+            RowBreak, Nl, Amp, Quad, Land, Sp,
+            U, Sp, Eq, Sp, Sum, Apos, Underscore, Grp(k, Colon, Sp, natural), Sp, Call("u", k),
+            Sp, Land, Sp, Cminus, Sp, Eq, Sp,
+            Frac, Grp(cm), Grp(Call("exp", D(1)), Sp, Times, Sp, lam),
+            Sp, Land, Sp, Cplus, Sp, Eq, Sp, cp, Sp, Times, Sp,
+            Open, D(1), Sp, Plus, Sp, U, Close);
         Formula positive = Seq(D(0), Sp, Lt, Sp, cm, Sp, Land, Sp,
             D(0), Sp, Lt, Sp, cp, Sp, Land, Sp,
             D(1), Sp, Lt, Sp, lam, Sp, Land, Sp,
@@ -68,10 +98,11 @@ internal sealed class CumulativeCountHeatBoundsDocument : IScribeDocumentDefinit
             Open,
             Open, D(0), Sp, Lt, Sp, gamma, Sp, Land, Sp,
             D(0), Sp, Lt, Sp, Cminus, Sp, Land, Sp, D(0), Sp, Lt, Sp, Cplus, Close,
-            Sp, Land, Sp,
+            RowBreak, Nl, Amp, Quad, Land, Sp,
             Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp, D(0), Sp, Lt, Sp, t,
-            Sp, Rightarrow, Sp, Call("Summable", Seq(F.Id("F"), Underscore, Grp(t))), Close,
-            Sp, Land, Sp,
+            Sp, Rightarrow, Sp, Call("Summable", Seq(L, Colon, Sp, natural,
+                Sp, Mapsto, Sp, Call("F", t, L))), Close,
+            RowBreak, Nl, Amp, Quad, Land, Sp,
             Open, Forall, Sp, t, Colon, Sp, real, Comma, Sp,
             Open, D(0), Sp, Lt, Sp, t, Sp, Land, Sp, t, Sp, Leq, Sp, D(1), Close,
             Sp, Rightarrow, Sp, Open,
@@ -79,12 +110,27 @@ internal sealed class CumulativeCountHeatBoundsDocument : IScribeDocumentDefinit
             Sp, Land, Sp, Call("S", t), Sp, Leq, Sp,
             Cplus, Sp, Times, Sp, Pow(t, Seq(Minus, gamma)), Close, Close, Close);
         return Disp(Seq(
+            Begin, Grp(F.Id("aligned")), Nl, Amp,
             Forall, Sp, N, Colon, Sp, natural, Sp, To, Sp, natural, Comma, Sp,
             Forall, Sp, cm, Comma, Sp, cp, Comma, Sp, lam, Comma, Sp, q,
             Colon, Sp, real, Comma, Sp,
+            RowBreak, Nl, Amp,
+            Forall, Sp, F.Id("m"), Colon, Sp, natural, Sp, To, Sp, natural, Comma, Sp,
+            Forall, Sp, F.Id("a"), Comma, Sp, F.Id("u"), Colon, Sp,
+            natural, Sp, To, Sp, real, Comma, Sp,
+            RowBreak, Nl, Amp,
+            Forall, Sp, F.Id("F"), Colon, Sp, real, Sp, To, Sp, natural, Sp, To, Sp, real, Comma, Sp,
+            Forall, Sp, F.Id("S"), Colon, Sp, real, Sp, To, Sp, real, Comma, Sp,
+            RowBreak, Nl, Amp,
+            Forall, Sp, gamma, Comma, Sp, U, Comma, Sp, Cminus, Comma, Sp, Cplus,
+            Colon, Sp, real, Comma,
+            RowBreak, Nl, Amp,
             Open, Call("Monotone", N), Sp, Land, Sp, Call("N", D(0)), Sp, Eq, Sp, D(1), Sp,
-            Land, Sp, positive, Sp, Land, Sp, count, Close,
-            Sp, Rightarrow, Sp, conclusion, Dot));
+            Land, Sp, positive,
+            RowBreak, Nl, Amp, Quad, Land, Sp, count,
+            RowBreak, Nl, Amp, Quad, Land, Sp, definitions, Close,
+            RowBreak, Nl, Amp, Rightarrow, Sp, conclusion, Dot, Nl,
+            End, Grp(F.Id("aligned"))));
     }
 
     private static Formula Pow(Formula b, Formula e) => Seq(b, Caret, Grp(e));
