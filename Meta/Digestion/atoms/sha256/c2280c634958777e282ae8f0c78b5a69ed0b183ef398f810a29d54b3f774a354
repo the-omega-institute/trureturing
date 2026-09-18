@@ -1,0 +1,14 @@
+**证明。** 每条水平边 $s_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i-1,j}$ 中，每条竖直边 $u_{i,j}$ 恰出现在 $p_{i,j}$ 与 $p_{i,j-1}$ 中，所以所有 plaquette 求和为零。反过来，若系数 $\lambda_{i,j}\in\mathbb F_2$ 满足
+$$
+\sum_{i,j}\lambda_{i,j}p_{i,j}\equiv0
+$$
+作为边变量的恒等式，则比较 $s_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i-1,j}=0,
+$$
+比较 $u_{i,j}$ 的系数得到
+$$
+\lambda_{i,j}+\lambda_{i,j-1}=0.
+$$
+沿两个周期方向传播可知所有 $\lambda_{i,j}$ 相同，故关系空间恰为由全 $1$ 系数生成的一维空间，plaquette 秩为 $MN-1$。
+
