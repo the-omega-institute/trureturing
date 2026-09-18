@@ -674,3 +674,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Eleven independent original costs use the expanded seven interface](profile-notes/205-eleven-independent-original-costs-use-the-expanded-seven-interface.md)
 - [The second seven depth improves the first complete AP11 block](profile-notes/206-the-second-seven-depth-improves-the-first-complete-ap11-block.md)
 - [The expanded seven hinges and complete factorial tail share one head](profile-notes/207-the-expanded-seven-hinges-and-complete-factorial-tail-share-one-head.md)
+- [The expanded seven survival bound covers both wide source domains](profile-notes/208-the-expanded-seven-survival-bound-covers-both-wide-source-domains.md)
