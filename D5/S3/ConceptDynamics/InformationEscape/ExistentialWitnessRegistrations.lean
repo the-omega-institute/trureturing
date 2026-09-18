@@ -70,7 +70,6 @@ theorem captured_lawSensitive : capturedArena.Law capturedRealization ∧
 theorem captured_slotSensitive : FiniteSlotSensitivity capturedArena :=
   existentialWitness_sensitivity _ (id, fun _ _ => true)
 register_information_theorem exists_captured_listing_of_fixedPoint in capturedArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Unit → Unit → Bool)) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w) true))
   primitives capturedRealization.toPrimitiveBundle realization captured_bridge
   variation captured_lawSensitive sensitivity captured_slotSensitive
 example : exists_captured_listing_of_fixedPoint.__information_unit.Statement =
