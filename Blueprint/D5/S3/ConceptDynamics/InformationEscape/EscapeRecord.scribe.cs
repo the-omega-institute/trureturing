@@ -9,7 +9,6 @@ internal sealed class EscapeRecordDocument : IScribeDocumentDefinition
         H("EscapeRecord"),
         Blocks(
             Node("EscapePrimitiveRealization", "A forward bridge proves that the statement implies the law of the declared realization; equivalence is not claimed, so the unresolved part is recorded separately.", DescribeRole.Definition),
-            Node("EscapePrimitiveRealization.ofLegacy", "An equivalence bridge yields a forward bridge by its forward direction.", DescribeRole.Definition),
             Node("EscapeResidualWitness", "A residual witness is a pair of arena states that the finest listed kernel of a chain leaves unresolved; it names where the closed information keeps escaping.", DescribeRole.Definition),
             Node("EscapeResidualEmpty", "The closure leaves no residual when the finest listed kernel separates every pair.", DescribeRole.Definition),
             Node("escapeResidualEmpty_iff", "No residual holds exactly when the unresolved pair set is empty.", DescribeRole.Theorem),
@@ -17,7 +16,7 @@ internal sealed class EscapeRecordDocument : IScribeDocumentDefinition
 
     private static DocumentBlock.Describe Node(string declaration, string text, DescribeRole role) =>
         Describe.Lean(
-            DescribeId.Create(declaration.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+            DescribeId.Create(declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/ConceptDynamics/InformationEscape/EscapeRecord." + declaration),
             H(declaration),
             StatementSource.WithoutFormula(),
