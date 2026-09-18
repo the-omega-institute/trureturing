@@ -113,7 +113,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV3
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV4
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -175,6 +175,11 @@ private def construct (action : Nat → Except String (α × Nat)) : CompileM α
   charge work
   return result
 
+private def eraseInput (e : Expr) : CompileM Expr := do
+  let (erased, work) ← eraseProofs e (← get).remaining
+  charge work
+  return erased
+
 private def instantiate (body argument : Expr) : CompileM Expr :=
   construct (fun fuel => PlanTransform.substituteExpr body argument 0 fuel)
 
@@ -217,7 +222,7 @@ private partial def samePlan (a b : PlanNode) : CompileM Bool := do
   match a, b with
   | .atom a, .atom b => sameRaw a b
   | .typeNode a, .typeNode b => samePlan a b
-  | .proofLeaf t a, .proofLeaf u b => return (← sameRaw t u) && (← sameRaw a b)
+  | .proofLeaf t, .proofLeaf u => sameRaw t u
   | .expanded a p, .expanded b q => return (← sameRaw a b) && (← samePlan p q)
   | .app a b, .app c d | .audit a b, .audit c d =>
     return (← samePlan a c) && (← samePlan b d)
@@ -270,12 +275,12 @@ private def dependency (info : ConstantInfo) : CompileM Unit := do
   if state.dependencies.any (·.name == info.name) then return
   if state.dependencies.size ≥ 4096 then throwError "incomplete_closure:E8.definition_constants"
   let some owner := ownerOf (← getEnv) info.name | throwError "incomplete_closure:E7.owner"
-  let .ok (typeId, typeBytes) := rawIdentity info.levelParams info.type state.remaining
+  let .ok (typeId, typeBytes) ← rawIdentity info.levelParams info.type state.remaining
     | throwError "incomplete_closure:E7.type_identity"
   charge typeBytes
   let (bodyId, bodyBytes) ← if ← isProp info.type then pure ("", 0) else match info.value? with
     | some body =>
-      let .ok pair := rawIdentity info.levelParams body (← get).remaining
+      let .ok pair ← rawIdentity info.levelParams body (← get).remaining
         | throwError "incomplete_closure:E7.body_identity"
       pure pair
     | none => pure ("", 0)
@@ -378,16 +383,15 @@ private partial def compileNode (e : Expr) (depth : Nat)
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   if e.hasMVar then throwError "incomplete_closure:E7.metavariable"
-  occurrenceIdentity e
-  staticIdentity e
   -- Prop *values* are erased only after their entire proposition is classified.
   -- A proposition expression itself is not a proof value.
   if (← isProof e) then
     let type ← inferType e
     let checkedType ← compileExpr type (depth + 1) true
-    if let some name := e.getAppFn.constName? then dependency (← getConstInfo name)
     rule "E5.proof_leaf"
-    return .audit checkedType (.proofLeaf type e)
+    return .audit checkedType (.proofLeaf type)
+  occurrenceIdentity e
+  staticIdentity e
   let child := fun value => compileExpr value (depth + 1) typePosition
   match e with
   | .fvar _ => rule "E3.variable"; return .atom e
@@ -417,7 +421,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
     -- A known raw source is forbidden even when its function type has no E2
     -- rule. This check does not enter the value's implementation or erase it.
     charge
-    staticIdentity v
+    unless ← isProof v do staticIdentity v
     let tp ← compileExpr t (depth + 1) true
     let vp ← compileExpr v (depth + 1) false
     binder n .default t fun x => do
@@ -439,6 +443,14 @@ private partial def compileNode (e : Expr) (depth : Nat)
       return plan
     let .const name levels := head | throwError "unclassified_form:E3.application_head"
     let info ← getConstInfo name
+    -- Standard Nat order notation is the existing Nat.lt proposition grammar.
+    -- No user order dictionary or data-position operation is admitted here.
+    if typePosition && name == `LT.lt && args.size == 4 &&
+        args[0]!.isConstOf `Nat && args[1]!.isConstOf `instLTNat then
+      dependency info
+      dependency (← getConstInfo `instLTNat)
+      return .expanded e (← compileExpr (mkApp2 (mkConst `Nat.lt) args[2]! args[3]!)
+        (depth + 1) true)
     if name == `OfNat.ofNat then
       unless typePosition && args.size == 3 && args[0]!.isConstOf `Nat &&
           args[2]!.isAppOfArity `instOfNatNat 1 && args[2]!.getAppArgs[0]!.equal args[1]! do
@@ -488,7 +500,16 @@ private partial def compileNode (e : Expr) (depth : Nat)
     if fixedType || fixedCtor || fixedCase || recursiveCase || fixedProjection || dictionary || name == `Fin.elim0 then
       dependency info
       let mut plan := PlanNode.atom head
-      for arg in args do plan := .app plan (← compileExpr arg (depth + 1) (typePosition || fixedType || #[`Fin.fintype, `instDecidableEqFin].contains name))
+      -- Constructor parameters and indices occur in the result type. Only
+      -- implicit such arguments receive type context; explicit values do not.
+      let mut telescope := info.type
+      for arg in args do
+        let implicitIndex := match telescope with
+          | .forallE _ _ result bi => fixedCtor && bi.isImplicit && result.getForallBody.hasLooseBVar result.getForallArity
+          | _ => false
+        plan := .app plan (← compileExpr arg (depth + 1)
+          (typePosition || fixedType || implicitIndex || #[`Fin.fintype, `instDecidableEqFin].contains name))
+        if let .forallE _ _ tail _ := telescope then telescope ← instantiate tail arg
       rule (if fixedCase then "E4.cases" else if fixedType then "E2.type" else "E3.constructor")
       return plan
     if name == ``decide then
@@ -515,8 +536,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
       -- Check every raw argument before capture-avoiding expansion, including
       -- arguments unused by the definition body.
       let mut inputs ← args.mapM child
-      let mut value ← construct (fun fuel => PlanTransform.instantiateExpr defn.value defn.levelParams levels fuel)
-      let mut type ← construct (fun fuel => PlanTransform.instantiateExpr defn.type defn.levelParams levels fuel)
+      let erasedValue ← eraseInput defn.value
+      let mut value ← construct (fun fuel => PlanTransform.instantiateExpr erasedValue defn.levelParams levels fuel)
+      let erasedType ← eraseInput defn.type
+      let mut type ← construct (fun fuel => PlanTransform.instantiateExpr erasedType defn.levelParams levels fuel)
       for arg in args do
         let .lam _ bodyDomain body _ := value
           | throwError "unclassified_form:E5.unsaturated_definition:{name}"
@@ -566,9 +589,9 @@ def initializeGrammarPins : CommandElabM Unit := do
   for name in constructiveDictionaryNames do
     if let some info := (← getEnv).find? name then
       let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
-      let .ok (typeId, _) := rawIdentity info.levelParams info.type
+      let .ok (typeId, _) ← liftTermElabM <| rawIdentity info.levelParams info.type
         | throwError "DTR primitive type exceeds identity bound: {name}"
-      let .ok (bodyId, _) := rawIdentity info.levelParams (info.value?.getD info.type)
+      let .ok (bodyId, _) ← liftTermElabM <| rawIdentity info.levelParams (info.value?.getD info.type)
         | throwError "DTR primitive body exceeds identity bound: {name}"
       modifyEnv fun env => primitivePins.addEntry env {
         identity := { name, owner, typeIdentity := typeId, bodyIdentity := bodyId }
@@ -623,7 +646,7 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
     unless #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
         `LeanInformationAudit.StructuralPrimitiveRealization].contains name do
       throwError "unclassified_form:E1.return_interface"
-    discard <| compileExpr type 0 true
+    discard <| compileExpr (← eraseInput type) 0 true
     return #[]
 
 /-- Version 1 permits one non-mutual, unindexed inductive with only direct
@@ -676,14 +699,15 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
   let action : CompileM (Array Slot × PlanNode × PlanNode) := do
     dependency (.defnInfo info)
     for ast in constructors do checkConstructorType ast
-    let slots ← checkTelescope info.type
-    let typePlan ← compileExpr info.type 0 true
-    let plan ← compileExpr info.value 0 false slots.size
+    let erasedType ← eraseInput info.type
+    let slots ← checkTelescope erasedType
+    let typePlan ← compileExpr erasedType 0 true
+    let plan ← compileExpr (← eraseInput info.value) 0 false slots.size
     return (slots, typePlan, plan)
   let ((slots, typePlan, plan), state) ← action.run { remaining := limit }
-  let .ok (typeIdentity, typeBytes) := rawIdentity info.levelParams info.type state.remaining
+  let .ok (typeIdentity, typeBytes) ← rawIdentity info.levelParams info.type state.remaining
     | throwError "incomplete_closure:E7.type_identity"
-  let .ok (bodyIdentity, bodyBytes) := rawIdentity info.levelParams info.value (state.remaining - typeBytes)
+  let .ok (bodyIdentity, bodyBytes) ← rawIdentity info.levelParams info.value (state.remaining - typeBytes)
     | throwError "incomplete_closure:E7.body_identity"
   let inputs ← sourceInputs env state.dependencies
   let policyIdentity := sourceIdentity (inputs.filter fun input => policyPaths.contains input.path)
@@ -764,8 +788,8 @@ def indexPositions (type : Expr) : Array Bool := Id.run do
   return positions
 
 /-- Supplied arguments and every expanded executable dependency use exactly
- the enrollment compiler. Raw identity checks precede proof erasure, projection
- reduction and definition substitution. There is no carrier-decoding shortcut. -/
+ the enrollment compiler. Proof propositions are checked before data identity
+ checks, projection reduction and definition substitution. There is no carrier-decoding shortcut. -/
 def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Nat)
     (constructors : Array Name := #[]) (indices : Array Bool := #[]) : MetaM (Array Name × Nat) := do
   let limit := min (min 524288 available)
@@ -775,7 +799,7 @@ def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Na
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
     for i in [:arguments.size] do
-      discard <| compileExpr arguments[i]! 0 (indices[i]?.getD false)
+      discard <| compileExpr (← eraseInput arguments[i]!) 0 (indices[i]?.getD false)
   let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity }
   return (state.dependencies.map (·.name), limit - state.remaining)
 
@@ -786,7 +810,7 @@ def checkExtractionType (type : Expr) (available : Nat)
   let limit := min 524288 available
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
-    discard <| compileExpr type 0 true
+    discard <| compileExpr (← eraseInput type) 0 true
   let (_, state) ← action.run { remaining := limit }
   return (state.dependencies, limit - state.remaining)
 
