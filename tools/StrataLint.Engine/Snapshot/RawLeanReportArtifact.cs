@@ -164,6 +164,7 @@ internal static class RawLeanReportArtifact
                                 axioms = declaration.Axioms
                                     .Distinct(StringComparer.Ordinal)
                                     .Order(StringComparer.Ordinal),
+                                generated_companion = declaration.IsGeneratedCompanion,
                                 include_in_statement = declaration.IncludeInStatement,
                                 kind = declaration.Kind,
                                 name = declaration.Name,
@@ -321,12 +322,16 @@ internal static class RawLeanReportArtifact
         string? previousNameKey = null;
         foreach (var declarationElement in declarations.EnumerateArray())
         {
+            var declarationProperties = new List<string>
+            {
+                "axioms", "include_in_statement", "kind", "name", "name_key",
+                "statement_id", "type_sha256",
+            };
+            if (declarationElement.TryGetProperty("generated_companion", out _))
+                declarationProperties.Add("generated_companion");
             RequireProperties(
                 declarationElement,
-                [
-                    "axioms", "include_in_statement", "kind", "name", "name_key",
-                    "statement_id", "type_sha256",
-                ],
+                declarationProperties,
                 "raw Lean declaration");
             var nameKey = RequiredString(declarationElement, "name_key");
             RequireStrictOrder(previousNameKey, nameKey, "declarations");
@@ -352,6 +357,11 @@ internal static class RawLeanReportArtifact
                     : () => materialArchive.Read(statementTypeAddress))
             {
                 IncludeInStatement = RequiredBoolean(declarationElement, "include_in_statement"),
+                IsGeneratedCompanion = declarationElement.TryGetProperty("generated_companion", out var generated)
+                    ? generated.ValueKind is JsonValueKind.True or JsonValueKind.False
+                        ? generated.GetBoolean()
+                        : throw new FormatException("Raw Lean report field generated_companion must be a boolean.")
+                    : false,
                 NameKey = nameKey,
             });
         }

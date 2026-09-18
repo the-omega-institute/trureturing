@@ -309,12 +309,15 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             declarations: list[dict] = []
             previous_name_key: str | None = None
             for raw_declaration in module["declarations"]:
+                declaration_keys = {
+                    "axioms", "include_in_statement", "kind", "material_file",
+                    "name", "name_key",
+                }
+                if "generated_companion" in raw_declaration:
+                    declaration_keys.add("generated_companion")
                 declaration = require_keys(
                     raw_declaration,
-                    {
-                        "axioms", "include_in_statement", "kind", "material_file",
-                        "name", "name_key",
-                    },
+                    declaration_keys,
                     "Inspector spool declaration",
                 )
                 name = declaration["name"]
@@ -322,12 +325,14 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 name_key = declaration["name_key"]
                 material_file = declaration["material_file"]
                 include = declaration["include_in_statement"]
+                generated = declaration.get("generated_companion", False)
                 if (not isinstance(name, str) or not name
                         or not isinstance(kind, str) or not kind
                         or not isinstance(name_key, str) or not name_key
                         or previous_name_key is not None and name_key <= previous_name_key
                         or not isinstance(material_file, str)
-                        or not isinstance(include, bool)):
+                        or not isinstance(include, bool)
+                        or not isinstance(generated, bool)):
                     raise ValueError("Inspector spool declaration is malformed or unordered")
                 previous_name_key = name_key
                 if material_file in referenced_spools:
@@ -353,6 +358,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 declarations.append({
                     "axioms": require_sorted_strings(
                         declaration["axioms"], "Inspector spool declaration axioms"),
+                    "generated_companion": generated,
                     "include_in_statement": include,
                     "kind": kind,
                     "name": name,

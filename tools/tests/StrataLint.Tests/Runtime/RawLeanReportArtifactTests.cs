@@ -12,7 +12,7 @@ public sealed class RawLeanReportArtifactTests
     private const string Source = "axiom probe : False\n";
 
     private const string CanonicalReport =
-        "{\"modules\": [{\"declarations\": [{\"axioms\": [], \"include_in_statement\": true, "
+        "{\"modules\": [{\"declarations\": [{\"axioms\": [], \"generated_companion\": false, \"include_in_statement\": true, "
         + "\"kind\": \"axiom\", \"name\": \"probe\", \"name_key\": \"ns(n0,5:probe)\", "
         + "\"statement_id\": \"sha256:452d97f1469d85ac204ab83dbbb919e19289c28674b14ab9df96586c535b1763\", "
         + "\"type_sha256\": \"sha256:5f53330fdefb1897242ca642a5528fb5eefbf7ae094afd313bb56570e981095a\"}], "

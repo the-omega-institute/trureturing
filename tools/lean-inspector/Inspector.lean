@@ -152,6 +152,7 @@ structure ModuleInput where
 
 structure DeclarationReport where
   axioms : Array String
+  generatedCompanion : Bool
   includeInStatement : Bool
   kind : String
   materialFile : String
@@ -389,6 +390,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     if profiling then encodingNanos.modify (· + ((← IO.monoNanosNow) - encodeStart))
     return {
       axioms := sortedUnique (axioms.map Name.toString)
+      generatedCompanion := isReservedName environment name
       includeInStatement := includeInStatement name info
       kind := kindOf info
       materialFile
@@ -452,6 +454,8 @@ def renderStrings (values : Array String) : String :=
 
 def renderDeclaration (declaration : DeclarationReport) : String :=
   "{\"axioms\": " ++ renderStrings declaration.axioms
+    ++ ", \"generated_companion\": "
+    ++ (if declaration.generatedCompanion then "true" else "false")
     ++ ", \"include_in_statement\": "
     ++ (if declaration.includeInStatement then "true" else "false")
     ++ ", \"kind\": " ++ jsonString declaration.kind

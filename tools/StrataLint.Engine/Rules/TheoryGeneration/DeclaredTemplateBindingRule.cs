@@ -103,7 +103,14 @@ internal static class DeclaredTemplateBindingRule
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
         if (sourceNames.TryGetValue(declaration.Name, out var kind)) return kind is "theorem" or "lemma";
-        return !GeneratedCompanionSuffixes.Any(suffix => declaration.Name.EndsWith(suffix, StringComparison.Ordinal));
+        // Source names win over provenance so an authored theorem cannot escape
+        // merely because its spelling resembles a compiler companion.  Reports
+        // from the Lean inspector carry the compiler's reserved/automatic-name
+        // decision; absent provenance remains fail-closed.  The registration
+        // builder's own generated companions retain their established closed
+        // suffix vocabulary because they are not Lean compiler declarations.
+        return !declaration.IsGeneratedCompanion
+            && !GeneratedCompanionSuffixes.Any(suffix => declaration.Name.EndsWith(suffix, StringComparison.Ordinal));
     }
 
     // Closed naming alphabet of Registry/Entries and the seal proof builders.
