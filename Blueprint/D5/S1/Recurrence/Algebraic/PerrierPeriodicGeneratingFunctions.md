@@ -72,6 +72,10 @@ $$\forall K: \operatorname{Type}, \operatorname{Field}\left(K\right) \implies \f
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/perrier-mcf-period-one-generating-functions` (proved) by `D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"perrier-mcf-period-one-generating-functions","declaration_gid":"D5/S1/Recurrence/Algebraic/PerrierPeriodicGeneratingFunctions.result","resolution_kind":"proved"} -->
+
 *Citation.* Rachel Perrier (2026). *Multidimensional Continued Fractions and Riordan Arrays*. DOI: [10.54550/ECA2026V6S4R33](https://doi.org/10.54550/ECA2026V6S4R33). URL: <https://ecajournal.haifa.ac.il/Volume2026/ECA2026_S4R33.pdf>.
 
 *Commentary.*

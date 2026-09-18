@@ -80,7 +80,12 @@ internal sealed class PerrierPeriodicGeneratingFunctionsDocument : IScribeDocume
                 ? Blocks(Paragraph(Text(prose)),
                     Paragraph(Text("The two formulas quoted from printed p. 15, in the source notation, are:")),
                     new DocumentBlock.DisplayFormula(PrintedIdentities()))
-                : Blocks(Paragraph(Text(prose))), role);
+                : Blocks(Paragraph(Text(prose))), role,
+            name == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("perrier-mcf-period-one-generating-functions"),
+                    ResolutionKind.Proved)
+                : null);
 
     private static Formula K => F.Id("K");
     private static Formula Dim => F.Id("d");
