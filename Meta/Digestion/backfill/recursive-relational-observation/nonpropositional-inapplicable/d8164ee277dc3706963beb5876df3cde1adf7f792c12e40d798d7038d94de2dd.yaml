@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8164ee277dc3706963beb5876df3cde1adf7f792c12e40d798d7038d94de2dd
+  normalized_sha256: sha256:d8164ee277dc3706963beb5876df3cde1adf7f792c12e40d798d7038d94de2dd
+cas_ref: sha256:d8164ee277dc3706963beb5876df3cde1adf7f792c12e40d798d7038d94de2dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Notation only: Q(B,I;t) abbreviates Q(S(B,I),t), and Q(C,t) uses the same function on a complete node. The adjacent singleton, zero-cutoff and attainment assertions are separate mathematical children.'
+    previous_atom_id: 4101bb8a4b6905f5b3c8b0ff00a79414052c48554b8230b8124160ad836d9b77
+    next_atom_id: f736ad574d1e2970c2094443d9d10dd423831054f777396e2c336b8e82d87b52
