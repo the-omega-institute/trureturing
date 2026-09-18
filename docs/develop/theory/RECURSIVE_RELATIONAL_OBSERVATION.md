@@ -40240,3 +40240,249 @@ $$
 [^rro98-gibbs]: 有限概率 KL 的非负性采用 [kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GrandmotherTheorem.lean)，等号条件采用 [kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GibbsEquality.lean)。两者要求有限载体、两份非负归一化概率及输入对参考的绝对连续性；本文每次都在已声明的共同正支撑上应用。
 
 ## 98.99 追加锚
+
+## 99. 有限隐藏维数、词反序截止与任意延迟的输出方向性
+
+**定义 99.1（有限隐藏链的输出词律）。** 设 $S$ 是大小为 $d\ge1$ 的有限隐藏状态集，$K$ 是非负行随机矩阵，$\pi$ 是允许零坐标的平稳概率行向量：
+$$
+K\mathbf1=\mathbf1,
+\qquad
+\pi K=\pi,
+\qquad
+\pi\mathbf1=1.
+$$
+给定确定读出 $r:S\to A=r(S)$，令 $(X_t)_{t\ge0}$ 是初始律为 $\pi$、转移核为 $K$ 的链，$Y_t=r(X_t)$。对词 $w=a_0\cdots a_{m-1}\in A^m$，记
+$$
+p(w)=\Pr(Y_0=a_0,\ldots,Y_{m-1}=a_{m-1}),
+\qquad
+w^R=a_{m-1}\cdots a_0.
+$$
+空词记为 $\varnothing$，规定 $p(\varnothing)=1$。记长度 $m$ 的词律为 $P_m$，反序词律为 $P_m^R(w)=P_m(w^R)$。对每个字母 $a\in A$，置
+$$
+D_a=\operatorname{diag}_{i\in S}\mathbf1_{\{r(i)=a\}},
+\qquad
+M_a=D_aK,
+\qquad
+M_w=M_{a_0}\cdots M_{a_{m-1}},
+$$
+其中空积为 $I_d$。
+
+**定理 99.2（固定隐藏维数的精确反序截止）。** 在定义 99.1 下，
+$$
+\left[\forall w\in A^*,\ |w|\le2d-1\Longrightarrow p(w)=p(w^R)\right]
+\iff
+\left[\forall w\in A^*,\ p(w)=p(w^R)\right].
+\tag{99.2a}
+$$
+因此，若只知整数上界 $d\le D$，比较所有长度不超过 $2D-1$ 的词仍是充分判据。空词比较自动成立；非空词长 $m=n+1$ 对应 $n$ 次隐藏转移，所以式 (99.2a) 的观察窗截止是 $n\le2d-2$。
+
+这是固定模型下有限多个精确等式的判据；有限样本中的经验词频相等或接近相等，不等于这些模型概率的精确等式。若 $K$ 与 $\pi$ 的坐标都是有理数，枚举这些词并作精确有理矩阵运算给出有效判定；对任意实坐标只断言上述等式判据。此界不附带最优性或表示最小性的结论。
+
+**证明。** 对非空词，直接对隐藏路径求和并使用 $K\mathbf1=\mathbf1$，得到
+$$
+\begin{aligned}
+p(w)
+&=\pi D_{a_0}\left(\prod_{j=1}^{m-1}K D_{a_j}\right)\mathbf1\\
+&=\pi M_{a_0}\cdots M_{a_{m-1}}\mathbf1.
+\end{aligned}
+$$
+空词也满足该式，因为 $\pi I_d\mathbf1=1$。将反序词的标量概率转置，有
+$$
+\begin{aligned}
+p(w^R)
+&=\pi M_{a_{m-1}}\cdots M_{a_0}\mathbf1\\
+&=\mathbf1^{\mathsf T}M_{a_0}^{\mathsf T}\cdots
+M_{a_{m-1}}^{\mathsf T}\pi^{\mathsf T}.
+\end{aligned}
+\tag{99.2b}
+$$
+这给出同一字母表上两份各 $d$ 维的实线性表示：
+$$
+(\pi,(M_a)_{a\in A},\mathbf1),
+\qquad
+(\mathbf1^{\mathsf T},(M_a^{\mathsf T})_{a\in A},\pi^{\mathsf T}).
+$$
+这里交换了左右端点并转置每个字母矩阵；没有对 $\pi_i$ 作除法。上述表示与转置等式本身不使用平稳性，因而零概率坐标不妨碍它们成立。
+
+直接应用加权自动机的有限等价判据：两份维数为 $d_1,d_2$ 的线性表示若不等价，则存在长度至多 $d_1+d_2-1$ 的区别词。[^rro99-kiefer] 取 $d_1=d_2=d$，若式 (99.2a) 左侧成立，就不存在这种区别词，故两份表示对全部词相等。反向蕴含直接成立。用 $D\ge d$ 扩大检查范围仍包含该充分范围；有理矩阵与有理端点的有限次乘加及等号比较可精确执行，给出所述有理数据判定。证毕。
+
+[^rro99-kiefer]: Stefan Kiefer，[*Notes on Equivalence and Minimization of Weighted Automata*, arXiv:2009.01217v1](https://arxiv.org/pdf/2009.01217v1)，Theorem 2.3，PDF 第 4 页；任意域及有理算法输入的约定见 §1，PDF 第 1 页。该条直接提供两份有限维加权自动机的区别词长度界；式 (99.2b) 是本节将正向输出词律与其反序放入该定理的参数适配。
+
+**定义 99.3（带反序扰动的移位族）。** 取整数 $L\ge3$ 与实数 $0<\epsilon<1$，隐藏状态集为
+$$
+S_L=\{0,1\}^L,
+\qquad
+u=(u_0,\ldots,u_{L-1}).
+$$
+定义核
+$$
+K_\epsilon(u,v)=
+\begin{cases}
+\displaystyle\frac{1+\epsilon(-1)^{u_0+b}(u_1-u_{L-1})}{2},
+&v=(u_1,\ldots,u_{L-1},b),\quad b\in\{0,1\},\\[6pt]
+0,&\text{其他情形},
+\end{cases}
+\tag{99.3a}
+$$
+并置 $\pi(u)=2^{-L}$、$r(u)=u_0$。用二元长词作状态、沿移位续接边转移，是 de Bruijn 过程的标准状态表示；均匀短块与更高阶依赖也有既有构造背景。[^rro99-background] 以下核的平稳性及反序性质由具体计算给出。
+
+[^rro99-background]: 均匀短块与有限阶依赖的背景见 Boris Ryabko，[Two-faced processes and random number generators, arXiv:1512.06961v1](https://arxiv.org/pdf/1512.06961v1)，Theorem 1，PDF 第 6 页；移位字状态与 de Bruijn 过程见 Kimpton–Challenor–Wynn，[Binary De Bruijn Processes, arXiv:2211.16921v2](https://arxiv.org/pdf/2211.16921v2)，§§2–3。这里仅引用这些构造背景；式 (99.3a) 的首次反序差异及其词 KL 由下面的证明承担。
+
+**定理 99.4（均匀短窗与任意延迟的首次反序差异）。** 定义 99.3 的 $K_\epsilon$ 每行、每列之和均为 $1$，$\pi$ 是平稳律，并且
+$$
+(K_\epsilon^L)(u,v)
+\ge\left(\frac{1-\epsilon}{2}\right)^L>0
+\qquad(u,v\in S_L).
+\tag{99.4a}
+$$
+相应链不可约、非周期。其平稳输出在每个起点 $t\ge0$ 及每个 $0\le m\le L$ 满足
+$$
+\Pr(Y_t\cdots Y_{t+m-1}=w)=2^{-m}
+\qquad(w\in\{0,1\}^m).
+\tag{99.4b}
+$$
+长度 $L+1$ 的全部词概率为
+$$
+p(a_0\cdots a_L)
+=2^{-(L+1)}
+\left[1+\epsilon(-1)^{a_0+a_L}(a_1-a_{L-1})\right].
+\tag{99.4c}
+$$
+特别地，
+$$
+p(01\,0^{L-1})=\frac{1+\epsilon}{2^{L+1}},
+\qquad
+p(0^{L-1}10)=\frac{1-\epsilon}{2^{L+1}}.
+\tag{99.4d}
+$$
+所以首次输出词反序不对称恰在长度 $L+1$，对应含 $L$ 次隐藏转移的观察窗。
+
+不存在与隐藏状态数无关的统一词长截止：对每个整数 $B\ge0$，存在平稳、不可约、非周期、具有有理核及有理平稳律的有限隐藏链和二元确定读出，使所有 $|w|\le B$ 的词满足 $p(w)=p(w^R)$，但并非所有有限词都满足该等式。
+
+**证明。** 每条允许的移位边满足
+$$
+\frac{1-\epsilon}{2}
+\le K_\epsilon(u,v)
+\le\frac{1+\epsilon}{2},
+$$
+故其概率严格位于 $(0,1)$。固定 $u$ 后，对续接位 $b=0,1$ 求和，式 (99.3a) 的扰动项因 $(-1)^b$ 相消，因此每行和为 $1$。
+
+固定目标 $v=(v_0,\ldots,v_{L-1})$，它只有两个前驱
+$$
+u^{(c)}=(c,v_0,\ldots,v_{L-2}),\qquad c=0,1.
+$$
+相应概率为
+$$
+K_\epsilon(u^{(c)},v)
+=\frac{1+\epsilon(-1)^{c+v_{L-1}}(v_0-v_{L-2})}{2}.
+$$
+对 $c$ 求和，扰动项再次相消，所以每列和为 $1$。于是
+$$
+(\pi K_\epsilon)(v)
+=2^{-L}\sum_uK_\epsilon(u,v)=2^{-L}=\pi(v).
+$$
+从任意 $u$ 开始，依次续接目标 $v$ 的 $L$ 个比特，恰在 $L$ 步后到达 $v$。这条路径的每条边概率至少为 $(1-\epsilon)/2$，得到式 (99.4a)，也得到不可约性。全零状态有概率 $1/2$ 的自环，故不可约链非周期。
+
+记隐藏状态为 $U_t$。移位规则使
+$$
+(Y_t,\ldots,Y_{t+L-1})=U_t
+$$
+沿每条样本路径成立。平稳律使 $U_t$ 在 $\{0,1\}^L$ 上均匀；取其前 $m$ 个坐标的边缘，就得到式 (99.4b)。该结论针对连续块。
+
+若指定 $(Y_0,\ldots,Y_L)=(a_0,\ldots,a_L)$，前 $L$ 位唯一指定
+$$
+U_0=(a_0,\ldots,a_{L-1}),
+$$
+而 $Y_L$ 正是第一次移位转移时续接的比特。因此该事件的概率是初始质量 $2^{-L}$ 乘以这一续接概率；后续转移的可能性求和为 $1$。代入式 (99.3a) 得式 (99.4c)。这一个非平凡续接因子并不改变输出窗本身含有 $L$ 次隐藏转移的计数。
+
+反序保持端点奇偶 $(-1)^{a_0+a_L}$，并把 $a_1-a_{L-1}$ 变为其相反数。对 $w=01\,0^{L-1}$，因 $L\ge3$，第二位与倒数第二位是不同坐标，分别为 $1,0$，端点均为 $0$，从而得到式 (99.4d)。这两个概率不同，而式 (99.4b) 使所有更短词均与反序等概率。
+
+最后，给定 $B$，取 $L\ge\max(B,3)$、$\epsilon=1/2$。核与平稳律均为有理数，式 (99.4b) 认证全部长度不超过 $B$ 的等式，式 (99.4d) 给出一个更长区别词。因此没有统一于所有隐藏维数的截止。这里隐藏状态数 $d=2^L$ 随 $L$ 增长，与定理 99.2 的固定维数充分界相容；此构造没有断言 $2^L$ 是所需的最小隐藏状态数。证毕。
+
+**推论 99.5（移位族的精确输出词 KL）。** 对定义 99.3 的平稳输出及每个整数 $m\ge0$，$P_m$ 与 $P_m^R$ 在全部长度 $m$ 的二元词上均严格为正，并且以自然对数计量时，
+$$
+D_{\mathrm{KL}}(P_m\Vert P_m^R)
+=(m-L)_+\,c_\epsilon,
+\qquad
+c_\epsilon=\frac{\epsilon}{2}
+\log\frac{1+\epsilon}{1-\epsilon}>0,
+\tag{99.5a}
+$$
+其中 $(m-L)_+=\max\{m-L,0\}$。因此，对每个固定 $L\ge3$ 与 $0<\epsilon<1$，
+$$
+\lim_{m\to\infty}\frac1m
+D_{\mathrm{KL}}(P_m\Vert P_m^R)=c_\epsilon.
+\tag{99.5b}
+$$
+固定 $\epsilon$ 时，该正极限不依赖 $L$，而首次非零词散度所在的长度 $L+1$ 可任意增大。
+
+**证明。** 当 $m\le L$ 时，式 (99.4b) 使两份词律均为均匀律，故正支撑与零散度均成立。设 $m\ge L$，对 $w=a_0\cdots a_{m-1}$ 定义
+$$
+s_t(w)=(-1)^{a_t+a_{t+L}}
+(a_{t+1}-a_{t+L-1}),
+\qquad 0\le t<m-L.
+$$
+指定输出词就指定了初始 $L$ 位块及随后 $m-L$ 次续接的比特；其余隐藏转移求和归一化。由 Markov 乘积公式，
+$$
+\begin{aligned}
+P_m(w)
+&=2^{-L}\prod_{t=0}^{m-L-1}
+\frac{1+\epsilon s_t(w)}2\\
+&=2^{-m}\prod_{t=0}^{m-L-1}(1+\epsilon s_t(w)).
+\end{aligned}
+\tag{99.5c}
+$$
+$m=L$ 时使用空积 $1$。因为 $s_t\in\{-1,0,1\}$ 且 $0<\epsilon<1$，每个因子严格为正，故全部词与反序词均有正概率。
+
+反序逐一将窗口翻转并交换窗口次序，直接代入指标得到
+$$
+s_t(w^R)=-s_{m-L-1-t}(w).
+$$
+所以
+$$
+P_m^R(w)=2^{-m}\prod_{t=0}^{m-L-1}(1-\epsilon s_t(w)),
+$$
+以及
+$$
+\log\frac{P_m(w)}{P_m^R(w)}
+=\log\frac{1+\epsilon}{1-\epsilon}
+\sum_{t=0}^{m-L-1}s_t(w).
+\tag{99.5d}
+$$
+最后一个等式分别在 $s_t=1,-1,0$ 上成立，再对有限个因子相加。
+
+现取一个长度 $L+1$ 的窗口。均匀基准律下，内部坐标 $a_1,a_{L-1}$ 不同的概率为 $1/2$；因 $L\ge3$，两个端点与这两个内部坐标均不重合，其端点奇偶把非零分数的两个符号各分一半。因此基准分数概率为
+$$
+\Pr_0(s=1)=\Pr_0(s=-1)=\frac14,
+\qquad
+\Pr_0(s=0)=\frac12.
+$$
+式 (99.4c) 将这一基准按 $1+\epsilon s$ 倾斜，给出真实单窗口概率
+$$
+\Pr(s=1)=\frac{1+\epsilon}{4},
+\qquad
+\Pr(s=-1)=\frac{1-\epsilon}{4},
+\qquad
+\Pr(s=0)=\frac12.
+$$
+于是 $\mathbb E[s]=\epsilon/2$。由平稳性，每个 $s_t$ 都有这一边缘期望。对式 (99.5d) 取 $P_m$ 期望，只使用有限和的线性性，有
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(P_m\Vert P_m^R)
+&=\log\frac{1+\epsilon}{1-\epsilon}
+\sum_{t=0}^{m-L-1}\mathbb E_{P_m}[s_t]\\
+&=(m-L)\frac{\epsilon}{2}
+\log\frac{1+\epsilon}{1-\epsilon}.
+\end{aligned}
+$$
+重叠窗口不需要相互独立。合并 $m\le L$ 的情形得到式 (99.5a)，再对固定 $L$ 除以 $m$ 并取极限，得到式 (99.5b)。
+
+这里比较的是输出词律。隐藏移位核本身没有双向支撑：取
+$$
+u=0^{L-1}1,
+\qquad
+v=0^{L-2}10,
+$$
+则 $K_\epsilon(u,v)=(1-\epsilon)/2>0$，但 $v$ 的后 $L-1$ 位不等于 $u$ 的前 $L-1$ 位，所以 $K_\epsilon(v,u)=0$。因此本证明使用的是式 (99.5c) 给出的输出共同正支撑，没有调用第 93.3 条的隐藏路径有限 KL 公式。式 (99.5a) 是该明确例族的有限词公式，不依赖一般隐藏 Markov 相对熵率定理。证毕。
+
+## 99.99 追加锚
