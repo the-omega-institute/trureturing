@@ -98,7 +98,10 @@ internal sealed class LinkIrregularTournamentExistenceDocument
                             + "all tournament relations on Fin(n). It proves both existence from "
                             + "six onward and nonexistence below six; orders zero and one are "
                             + "outside the statement because their pairwise condition is vacuous."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bastien-khormali-link-irregular-tournaments"),
+                    ResolutionKind.Proved)))));
 
     private static Formula IsTournamentFormula()
     {
