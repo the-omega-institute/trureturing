@@ -85,6 +85,30 @@ def unique_object(items):
     return result
 
 
+def validate_toolchain(value):
+    where = 'report_execution.toolchain'
+    fields(value, ('pin', 'identities'), where)
+    def text(item):
+        return (isinstance(item, str) and item and item == item.strip()
+                and all(32 <= ord(c) <= 126 for c in item))
+    if not text(value['pin']):
+        fail(where + '.pin', 'requires an explicit toolchain pin')
+    identities = value['identities']
+    if not isinstance(identities, list) or not identities:
+        fail(where + '.identities', 'requires registered platform/tool identities')
+    seen = set()
+    for identity in identities:
+        fields(identity, ('platform', 'tools'), where + '.identities')
+        for field in ('platform', 'tools'):
+            fields(identity[field], REPORT_EXECUTION[field], where + '.' + field)
+            if not all(text(item) for item in identity[field].values()):
+                fail(where + '.' + field, 'requires exact nonempty identity strings')
+        key = tuple(identity['platform'][name] for name in REPORT_EXECUTION['platform'])
+        if key in seen:
+            fail(where + '.identities', 'duplicate platform identity')
+        seen.add(key)
+
+
 class Selection:
     def __init__(self, repository):
         self.root = Path(repository).resolve()
@@ -115,12 +139,17 @@ class Selection:
             path_set(value, 'producer_scopes.' + scope)
         if 'report_execution' in self.data:
             execution = self.data['report_execution']
-            fields(execution, REPORT_EXECUTION, 'report_execution')
+            fields(execution, set(REPORT_EXECUTION) | ({'toolchain'} if isinstance(execution, dict)
+                and 'toolchain' in execution else set()), 'report_execution')
             for field, supported in REPORT_EXECUTION.items():
                 value = execution[field]
                 if (not isinstance(value, list) or any(not isinstance(item, str) for item in value)
                         or len(value) != len(supported) or set(value) != set(supported)):
                     fail('report_execution.' + field, f'requires the explicit supported set {list(supported)}')
+            if 'toolchain' in execution:
+                validate_toolchain(execution['toolchain'])
+                if dict(pattern='lean-toolchain', optional=False) not in self.data['config_inputs']['include']:
+                    fail('report_execution.toolchain', 'requires lean-toolchain as a registered config input')
         # These required inputs keep policy and reader in the provenance/scope inventory.
         required = self.data['producer_scopes']['lean-report']['include']
         for anchor in (MANIFEST, LOADER):

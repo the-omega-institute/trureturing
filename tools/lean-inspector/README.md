@@ -76,6 +76,10 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
 清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
 `producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
+`report_execution.toolchain` 可显式登记 `pin` 和各 `platform` 对应的完整工具版本字符串。
+生产封存前实测 Lake/Lean 版本并核对该登记；工具未安装时，复用入口使用候选登记核对旧证据，
+仍完整验证报告材料，不取 donor 自报版本作为权威。缺登记、平台/pin/环境不匹配或材料损坏时
+进入正常生产；仅在该入口需要生产且 Lake 不可用时激活工具链，安装或实际构建失败照常失败。
 只有成功完成默认目标、report 和发布的入口才封存 `.reuse.json`；该证据随 current
 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为

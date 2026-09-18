@@ -535,7 +535,8 @@ class EntryPointTests(unittest.TestCase):
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
-        cases = [('inputs', 2, [], False), ('utility-input-build', 37, ['build'], False),
+        cases = [('inputs', 2, [], False), ('toolchain', 42, ['toolchain'], False),
+                 ('utility-input-build', 37, ['build'], False),
                  ('ensure', 38, ['build', 'ensure'], False),
                  ('report', 39, ['build', 'ensure', 'report'], False),
                  ('publish', 40, ['build', 'ensure', 'report', 'publish'], False),
@@ -565,6 +566,7 @@ class EntryPointTests(unittest.TestCase):
                 write('candidate producer.dll', 'fixture candidate producer')
                 shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
                 shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
+                shell_phase('tools/scripts/workflow/install-lean-toolchain.sh', 'toolchain', 42)
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
@@ -580,6 +582,10 @@ class EntryPointTests(unittest.TestCase):
                 env = dict(os.environ, PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
                     CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1',
                     STRATALINT_LEAN_PRODUCER_DLL=str(root / 'candidate producer.dll') if prebuilt else '')
+                if phase == 'toolchain':
+                    (root / 'bin/lake').unlink()
+                    (root / 'bin/python3').symlink_to(sys.executable)
+                    env.update(PATH=str(root / 'bin') + ':/usr/bin:/bin:/usr/sbin:/sbin', LAKE_BIN='')
                 result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
                 self.assertEqual(result.returncode, status, result.stdout + result.stderr)
