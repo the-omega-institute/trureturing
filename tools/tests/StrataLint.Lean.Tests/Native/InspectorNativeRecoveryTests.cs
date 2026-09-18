@@ -21,6 +21,7 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     [InlineData("test_native.NativeTests.test_fetched_default_only_failure_and_metadata_reuse")]
     [InlineData("test_native.NativeTests.test_fetched_entry_retains_preensure_root_capture")]
     [InlineData("test_native.NativeTests.test_fetched_fixed_judge_and_utility_claim_closures")]
+    [InlineData("test_native.NativeTests.test_fetched_git_capture_cannot_mix_commits")]
     [InlineData("test_native.NativeTests.test_native_recovery_and_required_failures")]
     [InlineData("test_native.NativeTests.test_native_recovers_only_row_with_damaged_deflate")]
     [InlineData("test_native.NativeTests.test_native_recovers_only_row_with_damaged_lzma")]

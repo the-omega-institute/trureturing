@@ -143,9 +143,10 @@ def _git_snapshot(package_dir, entries, package, roots, excluded):
         def git(*args):
             return subprocess.check_output(['git', '-C', str(package_dir), *args], stderr=subprocess.PIPE)
         head = git('rev-parse', '--verify', 'HEAD').decode().strip()
-        tree = git('rev-parse', '--verify', 'HEAD^{tree}').decode().strip()
+        tree = git('rev-parse', '--verify', head + '^{tree}').decode().strip()
         top = Path(git('rev-parse', '--show-toplevel').decode().strip()).resolve()
-        listing = git('ls-tree', '-r', '-z', 'HEAD', '--')
+        listing = git('ls-tree', '-r', '-z', head, '--')
+        stable_head = git('rev-parse', '--verify', 'HEAD').decode().strip() == head
     except (OSError, subprocess.SubprocessError):
         return unavailable
     blobs = {}
@@ -157,7 +158,7 @@ def _git_snapshot(package_dir, entries, package, roots, excluded):
         if kind == b'blob':
             blobs[path.decode('utf-8')] = dict(oid=oid.decode('ascii'), mode=mode.decode('ascii'))
     expected_dir = top / (pin.get('subDir') or '.')
-    immutable = (head == pin.get('rev') and expected_dir == package_dir
+    immutable = (stable_head and head == pin.get('rev') and expected_dir == package_dir
                  and package['remote_url'] == pin.get('url') and package['scope'] == pin.get('scope'))
     by_path = {item['path']: item for item in entries}
     for item in entries:

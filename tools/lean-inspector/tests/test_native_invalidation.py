@@ -50,7 +50,7 @@ def value : Nat := visible
             'private def hiddenClaim : Prop := False\ndef externalClaim : Prop := hiddenClaim\n')
         if private_axiom:
             self.write('fetched-origin/Foreign/Hidden.lean',
-                'module\npublic section\nnoncomputable section\nprivate axiom hidden : Nat\ndef visible : Nat := hidden\n')
+                'module\npublic section\nnoncomputable section\nprivate axiom hidden : Nat   \ndef visible : Nat := hidden\n')
             self.write('fetched-origin/Foreign/Thing.lean',
                 'module\npublic import Foreign.Hidden\npublic noncomputable def value : Nat := visible\n')
         if library != 'Foreign':
@@ -193,6 +193,32 @@ def value : Nat := visible
         self.build()
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, set(before))
 
+    def test_fetched_git_capture_cannot_mix_commits(self):
+        _, pin = self._configure_fetched_git_package()
+        self.build()
+        package = self.root / '.lake/packages/fetched'
+        source = package / 'Foreign/Hidden.lean'
+        source.write_text(source.read_text().replace(':= 1', ':= 2'))
+        descriptor = json.loads((self.root / '.lake/build/lean-inspector/lake-inputs.json').read_text())
+        check_output = subprocess.check_output
+        changed = False
+        def change_head(args, **kwargs):
+            nonlocal changed
+            if not changed and args[0] == 'git' and str(args[-1]).endswith('^{tree}'):
+                changed = True
+                subprocess.run(['git', '-C', str(package), 'add', 'Foreign/Hidden.lean'], check=True)
+                subprocess.run(['git', '-C', str(package), '-c', 'user.name=Fixture',
+                    '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                    'commit', '--quiet', '-m', 'capture race'], check=True)
+            return check_output(args, **kwargs)
+        with patch.object(native.subprocess, 'check_output', side_effect=change_head):
+            population = native.native_population(self.root, descriptor)
+        fetched = next(p for p in population['packages'] if p['owner'] == 'fetched')
+        actual_head = check_output(['git', '-C', str(package), 'rev-parse', 'HEAD'], text=True).strip()
+        self.assertTrue(changed)
+        self.assertNotEqual(pin, actual_head)
+        self.assertFalse(fetched['git']['immutable'], 'one snapshot must not mix HEAD and another commit tree')
+
     def test_fetched_private_transitive_semantics_and_selective_reconstruction(self):
         self._configure_fetched_git_package('sourceTwo', 'DifferentRoot', private_axiom=True,
                                             source_dir='build', packages_dir='vendor-deps')
@@ -207,7 +233,11 @@ def value : Nat := visible
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(origins, self.origins())
         source = self.root / 'vendor-deps/sourceTwo/build/DifferentRoot/Hidden.lean'
-        source.write_text(source.read_text().replace('axiom hidden : Nat', 'def hidden : Nat := 3'))
+        original = source.read_bytes()
+        stamp = source.stat()
+        source.write_bytes(original.replace(b'axiom hidden : Nat   ', b'def hidden : Nat := 3'))
+        self.assertEqual(source.stat().st_size, stamp.st_size)
+        os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
         with self.assertRaises(ValueError):
             publication.verify_inputs(self.root / 'public.json', self.root)
         self.build()
