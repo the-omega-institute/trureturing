@@ -737,3 +737,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Generalized factorial observations improve the complete J comparison](profile-notes/275-generalized-factorial-observations-improve-the-complete-j-comparison.md)
 - [Actual retained tail pairs strengthen original J costs, square and Phi5](profile-notes/276-actual-retained-tail-pairs-strengthen-original-j-costs-and-square.md)
 - [Actual retained pair information improves the complete J comparison](profile-notes/277-actual-retained-pairs-improve-the-complete-j-comparison.md)
+- [Two pure factorial observations strengthen the J source](profile-notes/278-two-pure-factorial-observations-strengthen-the-j-source.md)
+- [Two new pure factorial observations improve the complete J comparison](profile-notes/279-two-pure-factorial-observations-improve-the-complete-j-comparison.md)
+- [Second-depth cofactors sharpen the complete J survival hinge](profile-notes/280-second-depth-cofactors-sharpen-the-complete-j-survival-hinge.md)
+- [Second-depth cofactors improve the complete J comparison](profile-notes/281-second-depth-cofactors-improve-the-complete-j-comparison.md)
