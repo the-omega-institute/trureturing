@@ -15,6 +15,7 @@ structure ResolvedDeclaration where
   arena : Name
   descriptor : Option Expr
   diagnostic : Option String := none
+  escapeInput : EscapeRecordInput := {}
 
 private initialize pendingDeclaration : EnvExtension (Option ResolvedDeclaration) ←
   registerEnvExtension (pure none)
@@ -159,7 +160,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         throwError "unclassified_form:dtr.inline_occurrence"
       pure <| some {
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
-        resolutionDiagnostic := declaration.diagnostic, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
+        resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
   modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
   if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
@@ -169,7 +170,8 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
 /-- Claims join by their exact occurrence identity before authoritative assessment.
 An overlay retains the original registration owner and cannot replace an inline claim. -/
 def declareSidecar (theoremName arena : Name) (catalog : Option Name)
-    (descriptor : Option Expr) (resolutionDiagnostic : Option String) : Elab.Command.CommandElabM Unit := do
+    (descriptor : Option Expr) (resolutionDiagnostic : Option String)
+    (escapeInput : EscapeRecordInput := {}) : Elab.Command.CommandElabM Unit := do
   let env ← getEnv
   let matching := (inventory env).filter fun event => event.key.theoremName == theoremName &&
     event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
@@ -179,7 +181,7 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
     throwError "unclassified_form:dtr.duplicate_claim"
   let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
   let claim : TemplateBindingClaim := {
-    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic,
+    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
     owner := env.header.mainModule }
   let record ← Elab.Command.liftTermElabM <| assess event (some claim)
   modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
@@ -310,6 +312,9 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
   let env ← getEnv
   let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
     record.occurrence.realizationName, record.occurrence.key.objectArena]
+  if let some origin := record.escape.fromObject then pending := origin.name :: pending
+  if let some residual := record.escape.continuation then
+    pending := residual.declarationName.toList ++ residual.chainName.toList ++ pending
   if let some descriptor := record.descriptor then
     let erased ← TemplateAudit.eraseProofs descriptor
     pending := (erased.1.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
@@ -341,6 +346,16 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
 private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
   ("path", toJson input.path), ("sha256", toJson input.sha256)]
 
+private def escapeFromJson (origin : EscapeFromIdentity) : Json := Json.mkObj [
+  ("name", toJson origin.name.toString), ("type_identity", toJson origin.typeIdentity),
+  ("object_identity", toJson origin.objectIdentity)]
+
+private def escapeContinuationJson (residual : EscapeContinuationIdentity) : Json := Json.mkObj [
+  ("kind", toJson residual.kind),
+  ("declaration_name", toJson (residual.declarationName.map Name.toString)),
+  ("statement_identity", toJson residual.statementIdentity),
+  ("chain_name", toJson (residual.chainName.map Name.toString))]
+
 /-- Shared record wire for the inspector and census authoritative snapshots. -/
 def recordJson (record : BindingRecord) : MetaM Json := do
   let (state, diagnostic, certificate) := match record.result with
@@ -353,6 +368,9 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("statement_identity", toJson record.occurrence.statementIdentity),
     ("unit_name", toJson record.occurrence.unitName.toString),
     ("realization_name", toJson record.occurrence.realizationName.toString),
+    ("escape_from", record.escape.fromObject.map escapeFromJson |>.getD Json.null),
+    ("escape_continues", record.escape.continuation.map escapeContinuationJson |>.getD Json.null),
+    ("bridge_kind", toJson record.escape.bridgeKind),
     ("content_inputs", Json.arr ((← contentInputs record).map inputJson)),
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]

@@ -270,7 +270,7 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 6
+  compatibilityVersion : Nat := 7
   compiler : String
   toolchain : String
   policyIdentity : String
@@ -523,8 +523,8 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v4"
-  for version in #[1, 1, 1, 6] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v5"
+  for version in #[1, 1, 1, 7] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
   let policyIdentity ← digest
@@ -599,6 +599,32 @@ structure TemplateOccurrenceEvent where
   registrationSourceIdentity : String
   deriving Inhabited
 
+/-- Syntax input is retained for authoritative reassessment, never executed. -/
+structure EscapeRecordInput where
+  fromObject : Option Expr := none
+  continuation : Option Expr := none
+  openContinuation : Bool := false
+  deriving Inhabited, BEq
+
+structure EscapeFromIdentity where
+  name : Name
+  typeIdentity : String
+  objectIdentity : String
+  deriving Inhabited, BEq
+
+structure EscapeContinuationIdentity where
+  kind : String
+  declarationName : Option Name := none
+  statementIdentity : Option String := none
+  chainName : Option Name := none
+  deriving Inhabited, BEq
+
+structure EscapeRecordEvidence where
+  fromObject : Option EscapeFromIdentity := none
+  continuation : Option EscapeContinuationIdentity := none
+  bridgeKind : String := "legacy"
+  deriving Inhabited, BEq
+
 structure TemplateBindingCertificate where
   evidenceRef : String
   key : TemplateOccurrenceKey
@@ -607,6 +633,7 @@ structure TemplateBindingCertificate where
   actualIdentity : String
   argumentInputs : Array TemplateAudit.DependencyIdentity
   extractionInputs : Array TemplateAudit.DependencyIdentity
+  escape : EscapeRecordEvidence := {}
   deriving Inhabited
 
 inductive TemplateBindingResult where
@@ -617,11 +644,12 @@ inductive TemplateBindingResult where
 
 structure BindingRecord where
   schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 5
+  compatibilityVersion : Nat := 7
   occurrence : TemplateOccurrenceEvent
   descriptor : Option Expr
   bindingOwner : Option Name
   result : TemplateBindingResult
+  escape : EscapeRecordEvidence := {}
   deriving Inhabited
 
 structure TemplateBindingClaim where
@@ -629,6 +657,7 @@ structure TemplateBindingClaim where
   arena : Expr
   descriptor : Option Expr
   resolutionDiagnostic : Option String := none
+  escapeInput : EscapeRecordInput := {}
   owner : Name
   deriving Inhabited
 
