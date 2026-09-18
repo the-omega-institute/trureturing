@@ -50,6 +50,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/NathansonAdditiveHBasisRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nathanson-additive-h-bases-problem-12` (refuted) by `D5/S3/Arith/NathansonAdditiveHBasisRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nathanson-additive-h-bases-problem-12","declaration_gid":"D5/S3/Arith/NathansonAdditiveHBasisRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melvyn B. Nathanson (2026). *Problems in additive number theory, VII: The structure of additive h-bases for n*. URL: <https://arxiv.org/abs/2605.26425v3>.

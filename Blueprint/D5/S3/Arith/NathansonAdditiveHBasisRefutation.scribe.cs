@@ -49,7 +49,10 @@ internal sealed class NathansonAdditiveHBasisRefutationDocument : IScribeDocumen
                     + "whose double sumset covers 0 through 5 must contain 0 and 1. Representing 3 "
                     + "forces its third element to be 2 or 3, but neither {0,1,2} nor {0,1,3} "
                     + "represents 5. Hence n\u266d_2(3)=4, contradicting the proposed strict inequality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nathanson-additive-h-bases-problem-12"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -58,10 +61,11 @@ internal sealed class NathansonAdditiveHBasisRefutationDocument : IScribeDocumen
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula SegmentLengthFormula()
     {
