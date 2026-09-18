@@ -17,10 +17,17 @@ arXiv:2505.06893v2, Conjecture 3.3, printed page 6:
 
 > Let p ≠ q be integers with p, q > 1. Then N({p, q}, 2) = 5.
 
-Here N(T, 2) is the minimum size of a finite subset X of the unit circle
-whose harmonic strength Hst(X) is exactly T. In the complex-moment form used
-by the paper, Hst(X) consists of the natural indices k at which
-P_k(X) = sum of x^k over x in X vanishes.
+The quantity N(T, 2) is defined on the same printed page 6:
+
+> For a nonempty finite set T ⊂ N, define
+> N(T, 2) := min{|X| | X ⊂ S¹, Hst(X) = T}.
+
+and the harmonic strength is taken in the paper's working form (printed
+pages 2--3):
+
+> Finally, we identify S¹ with {z ∈ C | |z| = 1} and write P_k(X) := Σ_{x∈X} x^k
+> for the k-th complex moment of a finite set X ⊂ S¹. By [2, Lemma 1], for
+> X ⊂ S¹ one has Hst(X) = {k ∈ N | P_k(X) = 0}.
 
 ## Motivation
 
