@@ -684,6 +684,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The source bridge covers a larger complete residual strip](profile-notes/215-the-source-bridge-covers-a-larger-complete-residual-strip.md)
 - [The survivor and extra deletions share the complete head](profile-notes/216-the-survivor-and-extra-deletions-share-the-complete-head.md)
 - [The expanded residual bridge improves the complete global bound](profile-notes/217-the-expanded-residual-bridge-improves-the-complete-global-bound.md)
+- [The retained deletions control sixteen complete tests](profile-notes/218-the-retained-deletions-control-sixteen-complete-tests.md)
 - [One late source split controls complete saturated J heads](profile-notes/219-one-late-source-split-controls-complete-saturated-j-heads.md)
 - [The assigned source losses share one complete J error budget](profile-notes/220-the-assigned-source-losses-share-one-complete-j-error-budget.md)
 - [The assigned J reserve enters the complete global comparison](profile-notes/221-the-assigned-j-reserve-enters-the-complete-global-comparison.md)
