@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-jaco-dom-path-diameter-refutation` (refuted) by `D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-jaco-dom-path-diameter-refutation","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok (2025). *Integer sequences with conjectured relation with certain graph parameters of the family of linear Jaco graphs*. DOI: [10.48550/arXiv.2507.16500](https://doi.org/10.48550/arXiv.2507.16500).
