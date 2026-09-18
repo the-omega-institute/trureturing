@@ -60,6 +60,14 @@
       "steps": []
     },
     {
+      "id": "delta-metadata",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "engineering",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
