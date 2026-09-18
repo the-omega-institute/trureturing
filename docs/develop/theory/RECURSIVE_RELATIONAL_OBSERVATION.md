@@ -36610,3 +36610,250 @@ $$
 若存在所述 $F$，同一个 $F([1])$ 就必须同时等于这两个不同的概率，矛盾。这是定理 2.2 的同纤维因子化障碍在证据后验上的应用，排除了线性与非线性的统一恢复；其量词是同一函数对全部正证据先验成立，不是断言每个非校准先验分别都无法恢复。证毕。
 
 ## 84.99 追加锚
+
+## 85. 观察信道下的参考纤维 KL 缺陷收支
+
+**定义与假设 85.1（共同观察信道与正支撑后验）。** 设 $J,I,Z$ 为有限非空集合，$r:J\to I$ 满射，$q\in\Delta(J)$ 严格正，$d\in\Delta(J)$ 任意，允许 $d$ 有零坐标。沿用定义与假设 74.1 的粗化 $C$、参考重建 $B$ 及 $E=BC$，记
+$$
+p=Cq,\qquad a=Cd,\qquad
+p_i=\sum_{r(j)=i}q_j>0,\qquad
+a_i=\sum_{r(j)=i}d_j.
+$$
+对非负质量 $u\ll v$，使用定理 73.3 的自然对数与正支撑约定
+$$
+D(u\Vert v)=\sum_{x:u_x>0}u_x\ln\frac{u_x}{v_x},\qquad
+u\ll v\ \Longleftrightarrow\ \forall x\ (v_x=0\Rightarrow u_x=0),
+$$
+并将指定参考与分区的缺陷写为
+$$
+\delta_{q,r}(d)=D(d\Vert Ed).
+$$
+
+给定在两份先验下共同使用的非负行随机观察信道
+$$
+K(z\mid j)\ge0,\qquad
+\sum_{z\in Z}K(z\mid j)=1\quad(j\in J).
+$$
+定义粗标签与观察结果的联合质量及结果边缘
+$$
+m_{iz}=\sum_{r(j)=i}d_jK(z\mid j),\qquad
+n_{iz}=\sum_{r(j)=i}q_jK(z\mid j),\qquad
+b_z=\sum_i m_{iz},\qquad c_z=\sum_i n_{iz}.
+$$
+参考纤维中的结果条件律对每个 $i\in I$ 定义为
+$$
+\kappa_i^q(z)=\frac{n_{iz}}{p_i};
+$$
+实际条件律只在 $a_i>0$ 时定义为
+$$
+\kappa_i^d(z)=\frac{m_{iz}}{a_i}.
+$$
+
+对每个 $c_z>0$，定义活载体、限制后的满射及参考后验
+$$
+J_z=\{j\in J:K(z\mid j)>0\},\qquad
+I_z=r(J_z)=\{i\in I:n_{iz}>0\},\qquad
+r_z=r|_{J_z}:J_z\to I_z,
+$$
+$$
+(q_z)_j=\frac{q_jK(z\mid j)}{c_z}\quad(j\in J_z).
+$$
+在这些载体上置
+$$
+(C_z)_{ij}=\mathbf1_{r(j)=i},\qquad
+(B_z)_{ji}=\mathbf1_{r(j)=i}\frac{q_jK(z\mid j)}{n_{iz}},\qquad
+E_z=B_zC_z. \tag{85.1}
+$$
+因为 $(C_zq_z)_i=n_{iz}/c_z$，$B_z$ 正是 $q_z$ 的纤维条件核；这也与定理 84.3 取似然 $\ell_j=K(z\mid j)$ 后在 $J_z,I_z$ 上的限制相同。只有在 $b_z>0$ 时才定义实际后验及其缺陷
+$$
+(d_z)_j=\frac{d_jK(z\mid j)}{b_z}\quad(j\in J_z),\qquad
+\delta_{q_z,r_z}(d_z)=D(d_z\Vert E_zd_z).
+$$
+下证给出 $b_z>0\Rightarrow c_z>0$ 及各归一化条件。$q_z$ 的严格正性只指载体 $J_z$；在整个 $J$ 上作零延拓后不要求严格正。若 $b_z=0<c_z$，参考后验仍存在，实际 Bayes 后验无定义，后验缺陷的加权和省去这个结果。若 $c_z=0$，则 $J_z$ 为空且 $b_z=0$，不使用任何该结果的后验。
+
+**定理 85.2（条件证据差异与期望后验纤维缺陷的精确平衡）。** 在定义与假设 85.1 下，所有下列 KL 项均有限且非负，记条件证据差异为
+$$
+\mathcal G=\sum_{i:a_i>0}a_iD(\kappa_i^d\Vert\kappa_i^q).
+$$
+则
+$$
+\boxed{
+\delta_{q,r}(d)
+=\mathcal G+\sum_{z:b_z>0}b_z\delta_{q_z,r_z}(d_z).
+} \tag{85.2}
+$$
+特别地，按实际结果律 $b$ 加权的后验缺陷满足
+$$
+\boxed{
+\sum_{z:b_z>0}b_z\delta_{q_z,r_z}(d_z)
+\le\delta_{q,r}(d).
+} \tag{85.3}
+$$
+$\mathcal G$ 保留粗标签，比较输入 $d$ 与参考重建输入 $Ed$ 经共同 $(I,Z)$ 信道所得的联合律；它一般不能换成只比较结果边缘的 $D(b\Vert c)$。后验缺陷的参考由同一 $K$ 更新为 $q_z$。本结论不要求观察保持旧参考族或与旧 $E$ 交换；定理 74.2 在这里提供静态缺陷公式，不使用其固定参考动力学不等式。
+
+**证明。** 满射及 $q_j>0$ 保证 $p_i>0$；$p,a$ 均非负归一化。由行随机性与有限换序，
+$$
+\sum_zm_{iz}=a_i,\qquad
+\sum_zn_{iz}=p_i,\qquad
+\sum_zb_z=\sum_zc_z=1.
+$$
+因此 $m,n$ 是 $I\times Z$ 上的概率，$b,c$ 是 $Z$ 上的概率，所有 $\kappa_i^q$ 及正 $a_i$ 上的 $\kappa_i^d$ 也归一化。若 $a_i=0$，该纤维全部 $d_j=0$，故所有 $m_{iz}=0$。若 $n_{iz}=0$，非负和的各项 $q_jK(z\mid j)$ 在该纤维全为零；由 $q_j>0$ 得该纤维全部 $K(z\mid j)=0$，于是 $m_{iz}=0$。这证明
+$$
+a_i>0\ \Longrightarrow\ \kappa_i^d\ll\kappa_i^q.
+$$
+同理，$c_z=\sum_jq_jK(z\mid j)=0$ 迫使所有 $K(z\mid j)=0$，所以 $J_z=\varnothing$、$b_z=0$，并得到 $b_z>0\Rightarrow c_z>0$。
+
+令 $t=Ed$。由参考重建公式，
+$$
+t_j=\frac{q_j a_{r(j)}}{p_{r(j)}}\ge0,\qquad
+\sum_jt_j
+=\sum_i\frac{a_i}{p_i}\sum_{r(j)=i}q_j
+=\sum_i a_i=1.
+$$
+若 $d_j>0$，则 $a_{r(j)}\ge d_j>0$，所以 $t_j>0$，即 $d\ll t$，初始缺陷有限。
+
+对于 $c_z>0$，$J_z$ 非空；$n_{iz}>0$ 恰好表示纤维 $r^{-1}(i)$ 中有一个点属于 $J_z$，故 $I_z=r(J_z)$，$r_z$ 满射。$q_z$ 在 $J_z$ 上严格正，且
+$$
+\sum_{j\in J_z}(q_z)_j=\frac{c_z}{c_z}=1,\qquad
+(C_zq_z)_i=\frac{n_{iz}}{c_z}>0\quad(i\in I_z).
+$$
+$C_z$ 的每列恰有一个 $1$，$B_z$ 的第 $i$ 列之和为 $n_{iz}/n_{iz}=1$，所以二者及 $E_z$ 均非负列随机。若再有 $b_z>0$，则 $d_z\ge0$、$\sum_{j\in J_z}(d_z)_j=b_z/b_z=1$，且
+$$
+(C_zd_z)_i=\frac{m_{iz}}{b_z},\qquad
+(E_zd_z)_j
+=\frac{q_jK(z\mid j)}{n_{r(j),z}}\frac{m_{r(j),z}}{b_z}.
+$$
+当 $(d_z)_j>0$ 时，$m_{r(j),z}>0$，右侧严格为正。因此 $d_z\ll E_zd_z$，其缺陷有限。正 $b_z$ 仍允许 $m_{iz}=0<n_{iz}$；这样的活参考纤维具有零实际粗后验质量，不在其上归一化实际纤维条件律。
+
+现在取输入载体 $J$、输出载体 $I\times Z$，定义
+$$
+W(j,(i,z))=\mathbf1_{r(j)=i}K(z\mid j).
+$$
+它非负，每行之和为 $\sum_zK(z\mid j)=1$。输入 $d,t$ 的输出分别为 $m$ 与
+$$
+h_{iz}=\sum_jt_jW(j,(i,z))
+=\frac{a_i}{p_i}n_{iz}=a_i\kappa_i^q(z). \tag{85.4}
+$$
+$h\ge0$ 且 $\sum_{i,z}h_{iz}=\sum_i a_i=1$。若 $m_{iz}>0$，则 $a_i,n_{iz}>0$，所以 $h_{iz}>0$，即 $m\ll h$。在这些正实际输出上，两份条件概率为
+$$
+(\rho_{iz})_j=\mathbf1_{r(j)=i}\frac{d_jK(z\mid j)}{m_{iz}},\qquad
+(\sigma_{iz})_j=\mathbf1_{r(j)=i}\frac{t_jK(z\mid j)}{h_{iz}}
+=\mathbf1_{r(j)=i}\frac{q_jK(z\mid j)}{n_{iz}}.
+$$
+最后一次约分使用 $a_i/p_i>0$ 与 $n_{iz}>0$。两向量非负，总和分别为 $m_{iz}/m_{iz}=1$、$n_{iz}/n_{iz}=1$；$\rho_{iz}$ 的正质量位置必有 $q_jK(z\mid j)>0$，所以 $\rho_{iz}\ll\sigma_{iz}$。此处识别的是给定同一对 $(i,z)$ 的参考条件律。
+
+对已经归一化且满足 $d\ll t$ 的输入对 $(d,t)$ 及共同信道 $W$，应用
+[ZeroSupportDPI.classical_dpi_identity_zero_support](https://github.com/the-omega-institute/trureturing/blob/544abb3d37a644649198d83bd00267cd6fcf7dfd/D5/S3/DivergenceSupport/ZeroSupportDPI.lean)，得到
+$$
+D(d\Vert t)
+=D(m\Vert h)
+ +\sum_{(i,z):m_{iz}>0}m_{iz}D(\rho_{iz}\Vert\sigma_{iz}). \tag{85.5}
+$$
+这里所引实值公式的全载体和采用零分母除法及 $\log0$ 的总值化约定。对本证明中每一对非负质量 $u\ll v$，正 $u_x$ 必对应正 $v_x$，而零 $u_x$ 的乘积项为零，所以全载体和恰等于本节的正支撑和。链式公式中 $m_{iz}=0$ 的加权项为零，正是同一出处的 zero_output_weighted_posterior_kl；省略这些项不把总值化的零事件函数当作概率。已经证明的各支撑包含及有限载体保证这里没有无穷 KL 项。
+
+在 $m_{iz}>0$ 处，由式 (85.4)，
+$$
+\frac{m_{iz}}{h_{iz}}
+=\frac{m_{iz}/a_i}{n_{iz}/p_i}
+=\frac{\kappa_i^d(z)}{\kappa_i^q(z)}.
+$$
+按纤维求和得
+$$
+D(m\Vert h)
+=\sum_{i:a_i>0}a_i
+  \sum_{z:m_{iz}>0}\kappa_i^d(z)
+    \ln\frac{\kappa_i^d(z)}{\kappa_i^q(z)}
+=\mathcal G. \tag{85.6}
+$$
+实际与重建输入的粗边缘都为 $a$，故这是按 $a$ 加权的条件证据差异。即使只取 $h$ 的结果边缘，所得也是
+$$
+\widetilde c_z=\sum_i a_i\kappa_i^q(z),
+\qquad\text{而}\qquad c_z=\sum_i p_i\kappa_i^q(z).
+$$
+因此 $D(m\Vert h)$ 所保留的粗标签与所用参考输入均不能从 $D(b\Vert c)$ 的记号中省去。
+
+固定 $b_z>0$。在已证严格正参考的有限满射接口 $(J_z,I_z,q_z,r_z)$ 上，定理 74.2 的静态缺陷公式与定理 73.3 的纤维分解给出
+$$
+\begin{aligned}
+\delta_{q_z,r_z}(d_z)
+&=D(d_z\Vert q_z)-D(C_zd_z\Vert C_zq_z)\\
+&=\sum_{i:m_{iz}>0}\frac{m_{iz}}{b_z}
+       D(\rho_{iz}\Vert\sigma_{iz}).
+\end{aligned} \tag{85.7}
+$$
+确实，在这些纤维上，实际条件律的比率为
+$(d_jK(z\mid j)/b_z)/(m_{iz}/b_z)=d_jK(z\mid j)/m_{iz}$，参考条件律的比率为
+$(q_jK(z\mid j)/c_z)/(n_{iz}/c_z)=q_jK(z\mid j)/n_{iz}$。两者限制到 $J_z$ 后就是上述 $\rho_{iz},\sigma_{iz}$；在纤维外及 $J\setminus J_z$ 上作共同零延拓不改变正支撑 KL。若 $m_{iz}=0$，相应实际粗后验权重为零，第 73.3 条的该项贡献零。
+
+由 $m_{iz}\ge0$ 及 $b_z=\sum_i m_{iz}$，$b_z=0$ 时所有 $m_{iz}=0$；因此有限换序与式 (85.7) 给出
+$$
+\sum_{(i,z):m_{iz}>0}m_{iz}D(\rho_{iz}\Vert\sigma_{iz})
+=\sum_{z:b_z>0}b_z\delta_{q_z,r_z}(d_z).
+$$
+把此式及式 (85.6) 代入式 (85.5)，即得式 (85.2)。所有用于 KL 的概率对都已证明非负归一化及绝对连续性，故
+[GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/544abb3d37a644649198d83bd00267cd6fcf7dfd/D5/S3/Divergence/GrandmotherTheorem.lean)
+逐项给出非负性，消去 $\mathcal G\ge0$ 得式 (85.3)。证毕。
+
+附引：Yury Polyanskiy–Yihong Wu，*6.441 Information Theory*，MIT OpenCourseWare，Spring 2016，Chapter 2 “Information measures: mutual information”，[§2.2，Definition 2.2 及 Theorem 2.2(2)，印刷第 21 页；有限字母证明见第 22 页](https://ocw.mit.edu/courses/6-441-information-theory-spring-2016/184197ca5d5418da2415d37e929860b9_MIT6_441S16_chapter_2.pdf#page=2)。条件散度按第一份边缘律加权；该处提供通用 KL 链式法则，上述纤维缺陷公式由其共同信道后验分解与定理 73.3、74.2 的静态接口识别得到。
+
+**命题 85.3（严格正先验下单次结果可使缺陷加倍）。** 取
+$$
+J=\{1,2,3\},\qquad I=\{*\},\qquad r(j)=*,\qquad Z=\{A,B\},
+$$
+$$
+q=\left(\frac14,\frac14,\frac12\right)^{\mathsf T},\qquad
+d=\left(\frac9{20},\frac1{20},\frac12\right)^{\mathsf T},
+$$
+并令确定观察满足
+$$
+K(A\mid1)=K(A\mid2)=K(B\mid3)=1,
+$$
+其余条目为零。两先验均严格正，真实与参考结果律都为 $(1/2,1/2)$，条件证据差异 $\mathcal G=0$。置
+$$
+A_\star
+=D\!\left((9/10,1/10)\Vert(1/2,1/2)\right)
+=\frac9{10}\ln\frac95+\frac1{10}\ln\frac15>0.
+$$
+则
+$$
+\boxed{
+\delta_{q,r}(d)=\frac12A_\star,\qquad
+\delta_{q_A,r_A}(d_A)=A_\star,\qquad
+\delta_{q_B,r_B}(d_B)=0,
+} \tag{85.8}
+$$
+且
+$$
+\sum_{z\in\{A,B\}}b_z\delta_{q_z,r_z}(d_z)
+=\frac12A_\star=\delta_{q,r}(d).
+$$
+因此式 (85.3) 不能加强成每个正概率结果上的无权不增。它仍由式 (85.2) 保证逐结果的加权界
+$b_z\delta_{q_z,r_z}(d_z)\le\delta_{q,r}(d)$；本例的结果 $A$ 达到该界。
+
+**证明。** 所列 $q,d$ 的坐标均正且总和为一，观察核非负且每行和为一。唯一粗标签的质量满足 $a_*=p_*=1$，参考重建因而将每个概率映到 $q$，特别地 $Ed=q$。两先验在 $\{1,2\}$ 上的总质量均为 $1/2$，在 $\{3\}$ 上也均为 $1/2$，所以
+$$
+b_A=c_A=b_B=c_B=\frac12,\qquad
+\kappa_*^d=\kappa_*^q=(1/2,1/2),\qquad\mathcal G=0.
+$$
+$A_\star$ 中的两个二点概率非负归一化，参考严格正，且 $9/10\ne1/2$，故它们不同。由 Gibbs 非负性及
+[GibbsEquality.kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/544abb3d37a644649198d83bd00267cd6fcf7dfd/D5/S3/Divergence/GibbsEquality.lean)，该散度严格大于零。
+
+在初始载体上直接计算，第三坐标的质量比为一，故
+$$
+\begin{aligned}
+\delta_{q,r}(d)=D(d\Vert q)
+&=\frac9{20}\ln\frac{9/20}{1/4}
+  +\frac1{20}\ln\frac{1/20}{1/4}
+  +\frac12\ln1\\
+&=\frac9{20}\ln\frac95+\frac1{20}\ln\frac15
+=\frac12A_\star.
+\end{aligned}
+$$
+结果 $A$ 的活载体为 $J_A=\{1,2\}$，归一化后
+$$
+d_A=(9/10,1/10)^{\mathsf T},\qquad
+q_A=(1/2,1/2)^{\mathsf T}.
+$$
+该载体仍只有一个粗标签，所以 $E_Ad_A=q_A$，后验缺陷为 $A_\star$。结果 $B$ 的活载体为 $J_B=\{3\}$，两后验均为唯一概率 $(1)$，故其缺陷为零。按实际结果概率加权得到 $A_\star/2$，而 $A_\star>A_\star/2$ 证明逐结果无权不增失败。最后，式 (85.2) 中其余项全部非负，保留任意一个后验加权项便得所述加权界；本例在结果 $A$ 上有 $b_AA_\star=A_\star/2$，等号成立。证毕。
+
+## 85.99 追加锚
