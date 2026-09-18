@@ -30,11 +30,19 @@ internal static partial class DigestionStatusEvaluator
         casChanges ??= changes;
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
-        if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
+        var duplicates = PartitionDuplicateAtomIds(entries, baselineDocument);
+        if (duplicates.CandidateIntroduced is { } duplicateAtomId)
         {
             findings.Add($"duplicate atom_id: {duplicateAtomId}");
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
+
+        // A duplicate the protected baseline already carries is base-owned data: the
+        // candidate did not write it, so it is neither judged nor a cause of failure at
+        // this layer. It stays visible as an observation until a content PR settles it.
+        entries = entries
+            .Where(entry => !duplicates.Inherited.Contains(entry.AtomId))
+            .ToImmutableArray();
 
         if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
         {
@@ -111,6 +119,8 @@ internal static partial class DigestionStatusEvaluator
             .Select(static item =>
                 $"source {item.SourceId} has unregistered residual-open atom "
                 + $"{item.SuggestedAtomId}; run make ingest to close it")
+            .Concat(duplicates.Inherited.Select(static atomId =>
+                $"duplicate atom_id inherited from baseline (not judged): {atomId}"))
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
         return CompleteEvaluation(
@@ -155,6 +165,41 @@ internal static partial class DigestionStatusEvaluator
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .FirstOrDefault(static group => group.Count() > 1)
             ?.Key;
+
+    // Candidate-introduced duplicates keep the named `duplicate atom_id` finding; a duplicate
+    // that the baseline already holds at least as many times is inherited and only observed.
+    private static (string? CandidateIntroduced, ImmutableHashSet<string> Inherited) PartitionDuplicateAtomIds(
+        ImmutableArray<DigestionLedgerEntry> entries,
+        BackfillInventoryDocument? baselineDocument)
+    {
+        var duplicated = entries
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .Where(static group => group.Count() > 1)
+            .Select(static group => (AtomId: group.Key, Count: group.Count()))
+            .ToArray();
+        if (duplicated.Length == 0)
+        {
+            return (null, ImmutableHashSet<string>.Empty);
+        }
+
+        var baselineCounts = (baselineDocument?.RequireDigestionEntries()
+                ?? ImmutableArray<DigestionLedgerEntry>.Empty)
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
+        var inherited = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        foreach (var (atomId, count) in duplicated)
+        {
+            if (baselineCounts.TryGetValue(atomId, out var baselineCount) && baselineCount >= count)
+            {
+                inherited.Add(atomId);
+                continue;
+            }
+
+            return (atomId, ImmutableHashSet<string>.Empty);
+        }
+
+        return (null, inherited.ToImmutable());
+    }
 
     private static DigestionLedgerEvaluation CompleteEvaluation(
         IReadOnlyList<EntryWork> work,
