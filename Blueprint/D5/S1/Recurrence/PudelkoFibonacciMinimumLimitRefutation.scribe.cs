@@ -69,7 +69,11 @@ internal sealed class PudelkoFibonacciMinimumLimitRefutationDocument
                     + "choosing t as the maximum of three and that threshold supplies a later "
                     + "index N=6t and contradicts the required epsilon bound.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "pudelko-fibonacci-minimum-limit-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
