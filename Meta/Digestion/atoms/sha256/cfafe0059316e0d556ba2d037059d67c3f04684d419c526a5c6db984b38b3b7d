@@ -1,0 +1,17 @@
+**二次特例。** 取 $\Phi(t)=t^2$，等价地取 $\Phi(t)=(t-1)^2$，则
+$$
+\boxed{
+\begin{aligned}
+\mathcal J_{t^2}(d;q,r)
+ &=\sum_j q_j\bigl(u_j-(\Pi u)_j\bigr)^2\\
+ &=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}\\
+ &=\chi^2(d\Vert q)-\chi^2(Cd\Vert p),
+\end{aligned}
+}
+$$
+其中对严格正参考质量 $w$，
+$$
+\chi^2(v\Vert w)=\sum_x\frac{(v_x-w_x)^2}{w_x}.
+$$
+这里的残差分母是 $q_j$；即使 $Ed$ 逐坐标正，它一般也不等于以 $(Ed)_j$ 为分母的 $\chi^2(d\Vert Ed)$。该残差是 $L^2(\mu_q)$ 中 $u$ 的条件投影残差平方，也是在质量空间 $\langle\cdot,\cdot\rangle_{q^{-1}}$ 中 $d-Ed$ 的范数平方。
+

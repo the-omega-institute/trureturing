@@ -1,0 +1,79 @@
+**定理 86.2（历史上的缺陷平衡、补偿鞅与有限期望预算）。** 在定义与假设 86.1 下，对每个 $t<N$ 及 $P_d(h)>0$，有
+$$
+\boxed{
+\delta_t(h)=G_t(h)+
+ \sum_{z:P_d(hz)>0}\frac{P_d(hz)}{P_d(h)}\delta_{t+1}(hz),
+\qquad
+\mathbb E_d[\delta_{t+1}\mid\mathcal F_t]=\delta_t-G_t.
+} \tag{86.3}
+$$
+定义
+$$
+A_t=\sum_{s=0}^{t-1}G_s,\qquad
+M_t=\delta_t+A_t\quad(0\le t\le N). \tag{86.4}
+$$
+则 $\delta$ 是非负超鞅，$M$ 是非负鞅，均相对于 $(\mathcal F_t)$ 及实际律 $\mathbb P_d$。$A_0=0$，$A$ 非负非减，$A_{t+1}-A_t=G_t$ 为 $\mathcal F_t$-可测；对 $t\ge1$，$A_t$ 为 $\mathcal F_{t-1}$-可测，故 $A$ 可预测。对每个 $0\le n\le N$，有
+$$
+\boxed{
+\mathbb E_d\delta_n+\sum_{s=0}^{n-1}\mathbb E_dG_s=\delta_0,
+\qquad \delta_0=D(d_0\Vert E_{\varnothing}d_0).
+} \tag{86.5}
+$$
+这是期望预算；它不主张逐路径的 $\delta_t+A_t=\delta_0$，也不主张 $\delta_t$ 逐路径非增。Doob 分解写成 $\delta=M-A$，其可预测部分是 $-A$。
+
+**证明。** 固定 $t<N$ 及实际正历史 $h$。将定理 85.2 的输入逐项取为
+$$
+(J,I,r,q,d,K)=(J_h,I_h,r_h,q^h,d^h,K_t(\,\cdot\mid\,\cdot,h)).
+$$
+定义 86.1 已给出有限非空载体、满射、严格正参考、实际概率及共同非负行随机核，允许实际零坐标。由 $L_{hz}(j)=L_h(j)K_t(z\mid j,h)$，两份下一结果质量恰为
+$$
+b_z=\sum_{j\in J_h}d_j^hK_t(z\mid j,h)
+=\frac{P_d(hz)}{P_d(h)},\qquad
+c_z=\sum_{j\in J_h}q_j^hK_t(z\mid j,h)
+=\frac{P_q(hz)}{P_q(h)}. \tag{86.6}
+$$
+
+对每个 $c_z>0$，定义 85.1 的活动载体及满射是
+$$
+(J_h)_z=\{j\in J_h:K_t(z\mid j,h)>0\}=J_{hz},\qquad
+(I_h)_z=I_{hz},\qquad (r_h)_z=r_{hz}.
+$$
+其参考后验满足
+$$
+(q_z^h)_j=\frac{q_j^hK_t(z\mid j,h)}{c_z}
+=\frac{q_{0j}L_{hz}(j)}{P_q(hz)}=q_j^{hz}\quad(j\in J_{hz}). \tag{86.7}
+$$
+这个识别对 $b_z=0<c_z$ 也成立，因为参考后验已在全部参考正历史上定义。进一步记
+$$
+n_{iz}^h=\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h).
+$$
+则 $I_{hz}=\{i\in I_h:n_{iz}^h>0\}$，且 $p_i^{hz}=n_{iz}^h/c_z$。所以定义 85.1 的更新重建核在 $J_{hz}\times I_{hz}$ 上恰为
+$$
+(B_z^h)_{ji}
+=\mathbf1_{r(j)=i}\frac{q_j^hK_t(z\mid j,h)}{n_{iz}^h}
+=\mathbf1_{r(j)=i}\frac{q_j^{hz}}{p_i^{hz}}
+=(B_{hz})_{ji}.
+$$
+粗化同为 $C_{hz}$，故更新投影是 $E_{hz}$。若 $b_z>0$，由实际绝对连续性得 $c_z>0$，并且
+$$
+(d_z^h)_j=\frac{d_j^hK_t(z\mid j,h)}{b_z}
+=\frac{d_{0j}L_{hz}(j)}{P_d(hz)}=d_j^{hz}.
+$$
+因此定理 85.2 中的后验缺陷正是 $\delta_{t+1}(hz)$，其条件证据项正是式 (86.2) 的 $G_t(h)$。直接应用式 (85.2)，即得式 (86.3) 的第一式；实际零结果不进入后验和。式 (86.1)、(86.6) 给出正历史原子上的实际下一结果条件概率 $b_z$，故第二式正是第一式的条件期望写法。
+
+所有标量过程由当前历史决定，因而适应。历史树有限，各节点的实数值有限，包括规定为零的实际零历史，所以各时间的 $\delta_t,G_t,A_t,M_t$ 均可积。由式 (86.3) 及 $G_t\ge0$，$\delta$ 满足单步超鞅不等式。有限次塔式条件化给出全部 $s\le t\le N$ 的超鞅关系。
+
+$A_{t+1}=A_t+G_t$ 给出非减性及增量可测性；$A_t$ 的每个加项在 $t\ge1$ 时均为 $\mathcal F_{t-1}$-可测，故得到可预测性。再由式 (86.3)，
+$$
+\mathbb E_d[M_{t+1}\mid\mathcal F_t]
+=\delta_t-G_t+A_t+G_t=M_t.
+$$
+非负性来自 $\delta_t,A_t\ge0$，有限次条件化给出鞅关系。空历史使 $\delta_0$ 确定，$M_0=\delta_0$；取期望并展开 $A_n$ 即得式 (86.5)。同时
+$$
+\sum_{s=0}^{t-1}\mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]
+=-\sum_{s=0}^{t-1}G_s=-A_t, \tag{86.8}
+$$
+所以 Doob 可预测部分的符号是负号。证毕。
+
+附引：Steven P. Lalley，*Conditional Expectation and Martingales*，[§1.1 的鞅与超鞅定义、§1.2 Corollary 1 的期望恒等式](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=1)。式 (86.8) 使用离散 Doob 分解的通常约定：可预测部分为条件增量之和，鞅部分为原过程减去该和，见 Mathlib 的 [predictablePart、martingalePart 及 martingale_martingalePart](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Martingale/Centering.lean)。
+

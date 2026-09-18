@@ -1,0 +1,95 @@
+**定理 84.3（更新参考条件律的原标签 Bayes 运输）。** 在定义与假设 84.1 下，令
+$$
+I_+=\{i\in I:\bar\ell_i>0\},\qquad
+J_+=\{j\in J:\ell_j>0\}.
+$$
+对每个 $i\notin I_+$，选定概率 $v^{(i)}\in\Delta(J)$，使其支撑包含于 $r^{-1}(i)$，例如取 $v^{(i)}=b_i$。定义整个原标签集 $I$ 上的重建矩阵
+$$
+B^\ell_{ji}=
+\begin{cases}
+\displaystyle\mathbf1_{r(j)=i}\frac{q_j\ell_j}{p_i\bar\ell_i},&i\in I_+,\\
+v^{(i)}_j,&i\notin I_+.
+\end{cases}
+$$
+则 $B^\ell$ 非负列随机，每列的支撑包含于其指定纤维，且
+$$
+\boxed{
+CB^\ell=\mathrm{Id}_I,\qquad
+D_\ell B=B^\ell D_{\bar\ell}.
+}
+$$
+对每个 $a\in\Delta(I)$，令
+$$
+z(a)=\sum_i a_i\bar\ell_i.
+$$
+有 $Z_\ell(Ba)=z(a)$；只在 $z(a)>0$ 时定义
+$$
+U_{\bar\ell}(a)=\frac{D_{\bar\ell}a}{z(a)},
+$$
+并有
+$$
+\boxed{
+U_\ell(Ba)=B^\ell U_{\bar\ell}(a),\qquad
+C U_\ell(Ba)=U_{\bar\ell}(a).
+}
+$$
+所有非活标签的更新粗质量均为零，因此上述后验与非活列 $v^{(i)}$ 的选择无关。这些列是零质量条件律的版本选择，不是零分母归一化所得的后验。
+
+若 $Z_q:=Z_\ell(q)>0$，则更新参考及其粗质量为
+$$
+q^\ell_j=\frac{q_j\ell_j}{Z_q},\qquad
+p^\ell_i=(Cq^\ell)_i=\frac{p_i\bar\ell_i}{Z_q}.
+$$
+此时 $I_+=r(J_+)$，$q^\ell$ 的正支撑为 $J_+$，$p^\ell$ 的正支撑为 $I_+$，且对 $i\in I_+$，
+$$
+B^\ell_{ji}=\mathbf1_{r(j)=i}\frac{q^\ell_j}{p^\ell_i}.
+$$
+因此，先限制到满射 $r_+:J_+\to I_+$ 及其严格正概率 $q^\ell|_{J_+},p^\ell|_{I_+}$，才得到严格正参考接口中的反向条件核。整个 $J$ 上的 $q^\ell$ 可以有零坐标。
+
+即使 $Z_q>0$，也不保证每个粗先验都有 $z(a)>0$：若存在非活标签 $i$，取 $a=e_i$ 就有 $z(a)=0$。凡 $z(a)=0$，都有 $D_\ell Ba=0$、$D_{\bar\ell}a=0$，两个归一化更新均无定义。若 $Z_q=0$，则 $\ell\equiv0$，更新参考也无定义，而所列未归一化矩阵恒等式仍成立。
+
+**证明。** 若 $i\in I_+$，相应列非负，支撑包含于 $r^{-1}(i)$，且
+$$
+\sum_jB^\ell_{ji}
+=\frac{\sum_{r(j)=i}q_j\ell_j}{p_i\bar\ell_i}=1.
+$$
+若 $i\notin I_+$，$v^{(i)}$ 已是指定纤维上的概率。因此各列均非负归一化；对任意 $h,i\in I$，
+$$
+(CB^\ell)_{hi}
+=\sum_{r(j)=h}B^\ell_{ji}=\mathbf1_{h=i},
+$$
+给出 $CB^\ell=\mathrm{Id}_I$。
+
+在活列上，
+$$
+(B^\ell D_{\bar\ell})_{ji}
+=B^\ell_{ji}\bar\ell_i
+=\mathbf1_{r(j)=i}\frac{q_j\ell_j}{p_i}
+=(D_\ell B)_{ji}.
+$$
+在非活列上，$\bar\ell_i=0$；由于 $q_j/p_i>0$ 且 $\ell_j\ge0$，该纤维上的所有 $\ell_j$ 也为零。因此等式两边的整列都为零，没有使用零分母除法。这证明未归一化运输式。
+
+将它作用于 $a$ 并求总质量，利用 $B^\ell$ 的列和为一，得到
+$$
+Z_\ell(Ba)
+=\sum_j(B^\ell D_{\bar\ell}a)_j
+=\sum_i\bar\ell_i a_i=z(a).
+$$
+当 $z(a)>0$ 时除以这一共同标量，即得 $U_\ell(Ba)=B^\ell U_{\bar\ell}(a)$；再左乘 $C$ 得粗更新恒等式。对于 $i\notin I_+$，更新粗坐标为 $a_i\bar\ell_i/z(a)=0$，故这些列无论选择何种允许的版本，所得后验均相同。
+
+由 $Bp=q$ 及共同证据式，
+$$
+Z_q=\sum_i p_i\bar\ell_i=\sum_jq_j\ell_j.
+$$
+若它为正，逐纤维求和得到上述 $p^\ell$，并在活纤维上约去正数 $Z_q$，得到 $q^\ell_j/p^\ell_i=q_j\ell_j/(p_i\bar\ell_i)$。严格正的 $q_j$ 使 $q^\ell_j>0$ 等价于 $\ell_j>0$；同理，$p^\ell_i>0$ 等价于 $\bar\ell_i>0$。非负加权和为正恰好表示纤维中至少有一个正似然点，所以 $I_+=r(J_+)$。限制后的参考概率总和仍为一，粗化仍满射，且两端参考严格为正。
+
+若 $z(a)=0$，非负向量 $D_{\bar\ell}a$ 的总和为零，故该向量为零；运输式再给出 $D_\ell Ba=0$。若 $Z_q=0$，严格正 $q$ 下的非负和为零迫使每个 $\ell_j=0$，从而两对角矩阵均为零。此时仍有 $CB^\ell=\mathrm{Id}_I$，但没有正证据可供归一化。
+
+最后，对一般细先验 $d$ 代入 $a=Cd$，在 $Z_\ell(Ed)>0$ 时所得恒等式是
+$$
+B^\ell U_{\bar\ell}(Cd)=U_\ell(B(Cd))=U_\ell(Ed).
+$$
+当 $d$ 属于参考校准族时，$Ed=d$，于是恢复其证据后验。命题 84.4 排除同一粗质量输入对全部正证据细先验的统一恢复保证。证毕。
+
+附引：Maxim Raginsky，*Strong Data Processing Inequalities and $\Phi$-Sobolev Inequalities for Discrete Channels*，[arXiv:1411.3575v4，§1.1 式 (1.2)](https://arxiv.org/abs/1411.3575v4)，对严格正 admissible pair 给出反向核 $K^*(x\mid y)=K(y\mid x)\mu(x)/(\mu K)(y)$。在上述支撑限制后，取 $K(i\mid j)=\mathbf1_{r_+(j)=i}$、$\mu=q^\ell|_{J_+}$，其反向核正是 $B^\ell$ 的活列在 $J_+$ 上的限制。该严格正公式不指定原标签集中的非活列；零概率事件上的版本自由亦见 Lalley 同文[第 2 页 Definition 2 及其唯一性说明](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=2)。
+
