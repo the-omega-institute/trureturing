@@ -667,3 +667,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The separate J family errors enter the complete global comparison](profile-notes/198-the-separate-j-family-errors-enter-the-complete-global-comparison.md)
 - [One six-label head controls the square and both complete crosses](profile-notes/199-one-six-label-head-controls-the-square-and-both-complete-crosses.md)
 - [The K and next source layers share the J exclusion](profile-notes/200-the-k-and-next-source-layers-share-the-j-exclusion.md)
+- [Two more seven labels and selected intersections control both heavy costs](profile-notes/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md)
