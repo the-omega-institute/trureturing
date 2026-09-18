@@ -92,6 +92,8 @@ public sealed class DeclaredTemplateReviewTests
                         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
+                    escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                    escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                     unit_name = key.Theorem + ".unit", realization_name = key.Theorem + ".realization",
                     certificate = declared ? new
                     {
