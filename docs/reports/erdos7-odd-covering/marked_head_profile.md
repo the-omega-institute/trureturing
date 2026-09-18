@@ -676,3 +676,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The expanded seven hinges and complete factorial tail share one head](profile-notes/207-the-expanded-seven-hinges-and-complete-factorial-tail-share-one-head.md)
 - [The expanded seven survival bound covers both wide source domains](profile-notes/208-the-expanded-seven-survival-bound-covers-both-wide-source-domains.md)
 - [The selected indicators share one raw source](profile-notes/209-the-selected-indicators-share-one-raw-source.md)
+- [The survival tests use the same raw-source interface](profile-notes/210-the-survival-tests-use-the-same-raw-source-interface.md)
