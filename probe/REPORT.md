@@ -44,3 +44,17 @@ The supplied PATH was exported verbatim. `make lean-cache-ensure` exited 0 befor
 ```
 LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-bradshaw-probe","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
 ```
+
+## Lean verification
+
+`probe/BradshawProbe.lean` compiles under the cache-stamped pinned environment. Command (after exporting the required PATH): `/usr/bin/time -l lake env lean probe/BradshawProbe.lean`; exit 0. Wall time 2.56 seconds; maximum resident set size 1646854144 bytes = 1.646854144 GB (decimal). This covers the probe module and cached imports only.
+
+```
+'result' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+No sorry, native_decide, or new axioms occur in the source. The first draft failed elaboration on division normalization and the opaque squarefree decision instance; the final source uses explicit division rewrites and `Nat.squarefree_iff_prime_squarefree` with 5*5 dividing 125. Only the exit-0 run above supports the proof claim.
+
+The local D0 is `fun n => n.factorization.sum (fun p k => k * (n / p))`. Zero and one reduce via their empty factorizations; primes reduce through `Nat.Prime.factorization`; the nonzero product law follows from `Nat.factorization_mul`, sum distribution, and exact division on prime support. Zero inputs are handled separately. The statement is therefore non-vacuous.
+
+A local universally quantified fact derives D(125)=75, D(1066)=641, and D(75)=55 from the product axiom and prime values alone. The first two establish the commutation counterexample for any admissible D; D(75)=55 is an additionally checked consistency value, not needed to contradict squarefreeness. No witness value unfolds D0.
