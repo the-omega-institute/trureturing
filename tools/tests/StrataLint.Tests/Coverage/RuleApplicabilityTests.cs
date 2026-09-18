@@ -108,7 +108,7 @@ public sealed class RuleApplicabilityTests
         public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) =>
             predicate(artifact);
 
-        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
+        public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) =>
             ImmutableArray<RuleFinding>.Empty;
     }
 }

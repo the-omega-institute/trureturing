@@ -12,7 +12,7 @@ public sealed class DigestionEvaluationScopeTests
     {
         var scope = DigestionEvaluationScopes.ForChanges(
             RawChangeSet.Create(Array.Empty<string>()),
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
     }
@@ -23,7 +23,7 @@ public sealed class DigestionEvaluationScopeTests
         var scope = DigestionEvaluationScopes.ForChanges(
             RawChangeSet.Create(
                 ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.Scope.cs"]),
-            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs");
+            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs", RuleFixture.RegisteredBuildInputs);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
     }
@@ -34,7 +34,7 @@ public sealed class DigestionEvaluationScopeTests
         var scope = DigestionEvaluationScopes.ForChanges(
             RawChangeSet.Create(
                 ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.FuturePartial.cs"]),
-            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs");
+            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs", RuleFixture.RegisteredBuildInputs);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
     }
@@ -70,7 +70,7 @@ public sealed class DigestionEvaluationScopeTests
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
         var scope = DigestionEvaluationScopes.ForChanges(
             changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
         var evaluation = EvaluateMismatchedProjectedStatus(changes, scope);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
@@ -86,7 +86,7 @@ public sealed class DigestionEvaluationScopeTests
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
         var scope = DigestionEvaluationScopes.ForChanges(
             changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
         var evaluation = EvaluateMismatchedCoverageReceipt(changes, scope);
 
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
@@ -102,7 +102,7 @@ public sealed class DigestionEvaluationScopeTests
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
         var scope = DigestionEvaluationScopes.ForChanges(
             changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
         var sourceBytes = Encoding.UTF8.GetBytes("manual full scan CAS\n");
         var atom = Atom("manual/full-scan-cas", sourceBytes);
         var document = Ledger(

@@ -267,6 +267,9 @@ public sealed partial class DigestionAlignmentTests
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
     public void AdmissionRechecksWhenAtomizerBuildInputChanges(string changedPath)
     {
+        var registration = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest())!;
+        registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(changedPath);
+        var registrationBytes = Encoding.UTF8.GetBytes(registration.ToJsonString());
         var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
         var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
         var atom = Assert.Single(atomized.Claims);
@@ -277,10 +280,12 @@ public sealed partial class DigestionAlignmentTests
                 AtomizerRegistry.PzgId),
             atomized.GenreRegistryCheck);
         var baselineSnapshot = DigestionTestSupport.Snapshot(
+            (EngineeringRegistrationFixture.Path, registrationBytes),
             ("docs/source.md", sourceBytes),
             (captured.RelativePath, captured.Bytes.ToArray()),
             (changedPath, Encoding.UTF8.GetBytes("old")));
         var candidateSnapshot = DigestionTestSupport.Snapshot(
+            (EngineeringRegistrationFixture.Path, registrationBytes),
             ("docs/source.md", sourceBytes),
             (captured.RelativePath, captured.Bytes.ToArray()),
             (changedPath, Encoding.UTF8.GetBytes("new")));

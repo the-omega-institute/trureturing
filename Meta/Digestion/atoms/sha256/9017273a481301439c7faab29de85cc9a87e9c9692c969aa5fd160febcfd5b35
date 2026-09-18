@@ -1,0 +1,75 @@
+**定理 71.2（位置密度与等格条件混合）。** 在定义与假设 71.0 下，对每个 $\beta>0$ 有
+$$
+Z_\beta=\sum_{n\ge0}d_n(\beta)N_n,
+\qquad
+\sum_{n\ge0}w_n(\beta)=1,
+\qquad
+\nu_\beta=\sum_{n\ge0}w_n(\beta)\eta_n.
+$$
+其相对于 $\mu$ 的密度为
+$$
+\frac{d\nu_\beta}{d\mu}(x)
+=\frac1{Z_\beta}\sum_{n\ge0}\frac{d_n(\beta)}{\mu(C_n(x))}
+\quad\text{对 }\mu\text{-几乎所有 }x,
+$$
+右侧几乎处处有限。对每个有界 Borel 函数 $f$，有
+$$
+\operatorname{Tr}(\rho_\beta M_f)=\int_X f\,d\nu_\beta.
+$$
+
+证明。固定 $\beta$，暂略去 $d_n$ 的参数。由于 $N_n=\sum_{k=0}^n m_k$，非负双重级数可按 Tonelli 换序，得到
+$$
+\sum_{n\ge0}d_nN_n
+=\sum_{k\ge0}m_k\sum_{n\ge k}d_n
+=\sum_{k\ge0}m_ke^{-\beta a_k}
+=Z_\beta.
+$$
+这里尾和的望远镜恒等式使用 $a_n\to\infty$。令
+$$
+S_M=\sum_{n=0}^M d_n\Pi_n.
+$$
+这些有限秩正算子递增。第 70.4 条的层展开给出
+$$
+T_\beta-S_M
+=e^{-\beta a_{M+1}}\Pi_M
++\sum_{k>M}e^{-\beta a_k}\Delta_k\ge0.
+$$
+因此差算子为正迹类，且
+$$
+\|T_\beta-S_M\|_1
+=\operatorname{Tr}(T_\beta-S_M)
+=Z_\beta-\sum_{n=0}^M d_nN_n
+\longrightarrow0.
+$$
+这提供了逐项取迹所需的迹范数收敛。
+
+在 $H_n$ 中使用正交归一基 $e_C=\mu(C)^{-1/2}\mathbf1_C$，有限秩迹与循环性给出
+$$
+\operatorname{Tr}(\Pi_nM_E)
+=\operatorname{Tr}(\Pi_nM_E\Pi_n)
+=\sum_{C\in\mathcal P_n}\langle e_C,M_Ee_C\rangle
+=\sum_{C\in\mathcal P_n}\frac{\mu(E\cap C)}{\mu(C)}.
+$$
+正性属于夹心算子 $\Pi_nM_E\Pi_n$；乘积 $\Pi_nM_E$ 一般不自伴，不能将它本身当作正算子。利用
+$$
+\bigl|\operatorname{Tr}((T_\beta-S_M)M_E)\bigr|
+\le\|T_\beta-S_M\|_1\|M_E\|\longrightarrow0,
+$$
+可将有限秩公式求和取极限，得到
+$$
+\nu_\beta(E)
+=\frac1{Z_\beta}\sum_{n\ge0}d_n
+  \sum_{C\in\mathcal P_n}\frac{\mu(E\cap C)}{\mu(C)}
+=\sum_{n\ge0}w_n(\beta)\eta_n(E).
+$$
+非负函数
+$$
+h_\beta(x)=\frac1{Z_\beta}\sum_{n\ge0}\frac{d_n}{\mu(C_n(x))}
+$$
+可测；再次使用 Tonelli，得到 $\nu_\beta(E)=\int_Eh_\beta\,d\mu$ 以及
+$$
+\int_X h_\beta\,d\mu
+=\frac1{Z_\beta}\sum_{n\ge0}d_nN_n=1.
+$$
+故原迹读出具有可数可加性、总质量一，且 $h_\beta$ 几乎处处有限。最后，有界 Borel 函数可由简单函数一致逼近；积分连续性以及迹类算子对有界乘法算子的迹估计，将事件公式延伸到所述 $f$。证毕。
+
