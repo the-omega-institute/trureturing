@@ -11,3 +11,16 @@ These are predictions, not measured results. The source fidelity check precedes 
 ## Status
 
 Unverified: source fidelity, numerical predictions, library reuse, and Lean proof. No mathematical conclusion is claimed yet.
+
+## Source fidelity
+
+Checked arXiv:2411.11914v2 directly (PDF downloaded only to runner scratch), against issue #8639. The clauses agree:
+
+- The machine is the dotted-pattern stack map followed by West's map, composition `s ∘ s_{21-dot}` (printed p. 2).
+- A valley is strictly smaller than every earlier entry; the first entry is a valley vacuously. Runs are maximal consecutive blocks beginning at valleys (printed p. 3). The example is `243 | 15`.
+- Proposition 3.5 states reversal of each valley run. Using that proved expression as the definition retains the preregistered source-level identification; this probe does not formalize the dotted-pattern operational map or Proposition 3.5's identification with it.
+- West's stack is increasing from top to bottom, operating right greedily. On distinct entries, popping while top < input, then pushing, has exactly that behavior.
+- Conjecture 6.2 quantifies over all permutations in S_n and every n >= 1 and asserts eventual arrival at a fixed point. The requested consecutive-iterate equality is exactly that assertion; it does not assert sorting to the identity.
+- The numerical anchors are Theorem 4.2 (one-pass sortable count 2^(n-1)) and Theorem 4.4 (fixed points, A007476).
+
+Locator correction only: in the fetched v2, Proposition 3.5 is on printed p. 6, not p. 5. Conjecture 6.2 is on printed p. 11 after its introduction on p. 10. This changes no mathematical clause and does not require a statement revision.
