@@ -696,4 +696,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The actual deletion-mask rows have one off-face error budget](profile-notes/227-the-actual-deletion-mask-rows-have-one-off-face-error-budget.md)
 - [The complete pure-three projection shares the deletion-row budget](profile-notes/228-the-complete-pure-three-projection-shares-the-deletion-row-budget.md)
 - [The retained pair shares one off-face deletion budget](profile-notes/229-the-retained-pair-shares-one-off-face-deletion-budget.md)
+- [The complete retained duals share one raw-source support](profile-notes/230-the-complete-retained-duals-share-one-raw-source-support.md)
+- [Fixed supports transport the complete punctured tails](profile-notes/231-fixed-supports-transport-the-complete-punctured-tails.md)
 - [Each complete fallback uses its own square bound](profile-notes/232-each-complete-fallback-uses-its-own-square-bound.md)
