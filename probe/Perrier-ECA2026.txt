@@ -1,0 +1,1244 @@
+                      pplications
+ numerative
+                  A
+       ombinatorics
+
+ecajournal.haifa.ac.il
+                                    Enumerative Combinatorics and Applications                       ECA 6:4 (2026) Article #S2R33
+                                                                                                     https://doi.org/10.54550/ECA2026V6S4R33
+
+
+
+
+                                    Multidimensional Continued Fractions and Riordan Arrays
+
+                                                                         Rachel Perrier
+
+                                    Franciscan University of Steubenville, 1235 University Blvd., Steubenville, OH 43952, USA
+                                                                    rperrier@franciscan.edu
+
+                                       Received: February 6, 2025, Accepted: December 19, 2025, Published: July 17, 2026
+                                             The authors: Released under the CC BY-ND license (International 4.0)
+
+
+   Abstract: Continued fractions allow us to represent real numbers in terms of nested fractions, and these
+   fractions have been analyzed in many different contexts, including connections to Riordan arrays. However,
+   since the 1800s, mathematicians have expanded the concept of continued fractions to multidimensional contin-
+   ued fractions, which use matrices to encode algorithms for these analogs of continued fractions. We examine a
+   connection between purely periodic continued fractions produced by the Jacobi–Perron algorithm and the com-
+   binatorial construction of Riordan arrays. We then expand this connection to relate multidimensional continued
+   fractions to families of Riordan arrays in the case of purely periodic multidimensional continued fractions of
+   period 1.
+   Keywords: Jacobi-Perron algorithm; Multidimensional continued fractions; Riordan arrays
+   2020 Mathematics Subject Classification: primary 05A15; secondary 11A55
+
+
+   1         Introduction
+   A Riordan array A = R(d(t), h(t)) has entries
+                                                                    an,k = [tn ] d(t)h(t)k ,
+                                                                                          
+
+   where d(t) and h(t) are power series satisfying d(0) ̸= 0, h(0) = 0, and h′ (0) ̸= 0. Here, [tn ]f (t) = fn is
+   the extraction operator that gives the coefficient of tn in the series expansion of f (t). The Riordan property
+   guarantees that A is lower triangular; that is, for integers n and k with 0 ≤ n < k, we have an,k = 0.
+      Riordan arrays were first considered as a generalization of Pascal’s triangle [20, 25, 26]. The Pascal-triangle
+   Riordan array is                                                              
+                                                            1 0 0 0 0 ···
+                                                           1 1 0 0 0 · · ·
+                                                        1 2 1 0 0 · · ·
+                                                                                  
+                                           1      t
+                                    R         ,          = 1 3 3 1 0 · · · .
+                                                                                 
+                                         1−t 1−t                                 
+                                                           1 4 6 4 1 · · ·
+                                                             .. .. .. .. .. . .
+                                                                                 
+                                                              . . . . .         .
+   Riordan arrays have many combinatorial properties, but for the scope of this paper we focus our attention on
+   their row sums. Since Riordan arrays are lower triangular, each row sum consists of finitely many nonzero
+   entries. The closed form for the row sums in terms of d(t) and h(t) was introduced in [27]:
+                                                                   ∞
+                                                                   X                      d(t)
+                                                                         dn,k = [tn ]            .                                        (1)
+                                                                                        1 − h(t)
+                                                                   k=0
+
+   We have altered equation (1) to reflect our slight difference in the definition of h(t) from that used in [27].
+       Our goal is to explore connections between Riordan arrays and multidimensional continued fractions. Al-
+   though continued fractions were not originally studied from a combinatorial angle, Flajolet examined them from
+   this perspective [11]. More recent research has analyzed connections between continued fractions and Riordan
+   arrays [3–5, 12]. In Section 2, we give a brief overview of continued fractions and multidimensional continued
+   fractions. We then discuss matrix analogs of these fractions in Section 3. In Sections 4 and 5, we use matrix
+   analogs of periodic multidimensional continued fractions to connect these fractions to families of Riordan arrays
+   determined by their row sums. This work was developed as part of the author’s doctoral dissertation [22], and
+   some text and results may resemble or reproduce portions of the original dissertation.
+                                                   Rachel Perrier
+
+
+
+2     Overview of Continued Fractions and Multidimensional
+      Continued Fractions
+Although there are many types of continued fractions, we focus our attention on ordinary continued fractions.
+An ordinary continued fraction is a real number of the form
+                                                                1
+                                            a0 +                                      ,
+                                                                     1
+                                                   a1 +
+                                                                          1
+                                                          a2 +
+                                                                    ..         1
+                                                                         .+
+                                                                              an
+where ai ∈ Z for all i, and ai is positive for every i > 0 [17]. The notation
+                                               [a0 ; a1 : a2 : · · · : an ]
+is used to represent an ordinary continued fraction. This definition has finitely many ai values and therefore
+describes ordinary continued-fraction representations of rational numbers. We can also form representations
+                                                  [a0 ; a1 : a2 : · · · ]
+with an infinite sequence of ai values to describe irrational numbers. In these representations, fractions are
+continually added in the denominators. Our focus in this paper is on infinite ordinary continued fractions,
+although some initial results apply to both the finite and infinite cases.
+    All numerators are 1 in an ordinary continued fraction. Other types of continued fractions may have
+numerators other than 1 or may use subtraction rather than addition in their definitions [10, 11, 15, 29]. Unless
+stated otherwise, “continued fraction” means “ordinary continued fraction” throughout this paper.
+    The following algorithm, adapted from [17], finds the continued-fraction representation of a real number.
+Input. Start with α ∈ R.
+Step 1. If α ∈ Z, then α = [α]. If α ∈
+                                     / Z, write
+                                                                 1
+                                             α = ⌊α⌋ +                  .
+                                                            1/(α − ⌊α⌋)
+Let a0 = ⌊α⌋ and r1 = 1/(α − ⌊α⌋).
+Inductive Step k. Suppose the process has been performed k − 1 times and has produced values through ak−2
+and rk−1 . Then
+                                                             1
+                                    rk−1 = ⌊rk−1 ⌋ +                    .
+                                                     1/(rk−1 − ⌊rk−1 ⌋)
+Thus, ak−1 = ⌊rk−1 ⌋ and rk = 1/(rk−1 − ⌊rk−1 ⌋).
+Output. Stop once rn is an integer. The output is
+                                           α = [a0 ; a1 : · · · : an−1 : an ].
+If rn is never an integer, as occurs when α is irrational, the algorithm does not terminate.
+Example 1. Suppose we want to find the continued-fraction representation of 19/4. The algorithm gives
+                                           19      1                          1
+                                              =4+     =4+                                 ,
+                                            4     4/3                        1
+                                                                          1+
+                                                                             3
+so
+                                               19
+                                                   = [4; 1 : 3].
+                                                4
+   We are interested in continued fractions because they provide alternative representations of real numbers,
+as expressed by the following theorem. We focus on representations of positive numbers, although negative
+numbers also have continued-fraction representations.
+Theorem 1. Every real number r > 0 can be written uniquely as a continued fraction
+                                                                    1
+                                             r = a0 +                             ,
+                                                                         1
+                                                          a1 +
+                                                                        .
+                                                                    a2 + . .
+where a0 is a nonnegative integer and all remaining ai are positive integers.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                  2
+                                                              Rachel Perrier
+
+
+   A proof of the corresponding result for all real numbers appears as Theorem 1.17 in [17].
+   Since the algorithm for an irrational number never terminates, one may ask how its continued-fraction
+representation helps us analyze the number. The k-convergents provide one answer. They consist of a pair of
+polynomials Pk and Qk representing the first k iterations [17]:
+                       Pk (x0 , . . . , xk )
+                                             = [x0 ; x1 : · · · : xk ],     Pk (0, . . . , 0) + Qk (0, . . . , 0) = 1.
+                       Qk (x0 , . . . , xk )
+Let pk = Pk (a0 , . . . , ak ) and qk = Qk (a0 , . . . , ak ) for an infinite continued fraction [a0 ; a1 : · · · ] or a finite
+continued fraction [a0 ; a1 : · · · : an ]. The following recursive relationship will be used in Section 3.
+Proposition 1 (Proposition 1.13 of [17]). For every integer k,
+                                          (
+                                            pk = ak pk−1 + pk−2 ,
+                                            qk = ak qk−1 + qk−2 .
+    The k-convergents of the continued-fraction representation of a real number α provide the best Diophantine
+approximations to α [17]. Even when the full representation of an irrational number cannot be computed in
+finitely many steps, convergents still provide best approximations.
+    Continued-fraction representations of irrational numbers have also been studied to determine which produce
+periodic patterns. A continued fraction is periodic if there are positive integers k0 and h such that ak+h = ak
+for every k > k0 [17]. For example,                 √
+                                                      2 = [1; 2]
+is periodic, whereas the well-known expansions
+                     e = [2; 1 : 2 : 1 : 1 : 4 : 1 : 1 : 6 : · · · ]      and   π = [3; 7 : 15 : 1 : 292 : 1 : · · · ]
+are not periodic. We indicate the periodic portion with an overline.
+    Lagrange proved that eventual periodicity occurs if and only if the continued fraction represents a quadratic
+irrational, that is, a number of the form                    √
+                                                        a+b c
+                                                                ,
+                                                           d
+where a, b, c, d ∈ Z, b ̸= 0, d > 0, c > 1, and c is square-free [18].
+    In 1839, Hermite asked whether structures with similar periodic patterns could be found for cubic irrationals
+[9]. This question initiated the study of higher-dimensional analogs of continued fractions. Multidimensional
+continued fractions work with a pair of numbers, or more generally an n-tuple, depending on the dimension
+under consideration. A complete description of all pairs or n-tuples of real numbers that produce eventually
+periodic multidimensional continued fractions is not known.
+    Many algorithms generalize the process of finding continued-fraction representations. One of the best known
+is the Jacobi–Perron algorithm. We state the version used in [18].
+Input. Start with (x0 , y0 , z0 ) ∈ R3 .
+Step. If the previous step produced (xi , yi , zi ), define
+                                                                                
+                                                                    zi            xi
+                                 (xi+1 , yi+1 , zi+1 ) = yi , zi −     yi , xi −     yi .
+                                                                    yi            yi
+The ith element of the multidimensional continued fraction is
+                                                 
+                                                 zi     xi
+                                                     ,        .
+                                                 yi     yi
+Termination. Stop when yi = 0.
+    This is an extension of the algorithm for ordinary continued fractions. To study the interaction of two
+numbers, one takes x0 = 1. The Jacobi–Perron algorithm can also be extended to more than three inputs,
+producing higher-dimensional continued fractions. For more information about the Jacobi–Perron algorithm,
+including periodicity results and applications, see [2, 6, 16, 23]. For other multidimensional continued-fraction
+algorithms, see [24].
+
+
+3      Matrix Representations
+The steps of the Jacobi–Perron algorithm may be viewed as a sequence of vectors in R3 . More generally,
+continued fractions and multidimensional continued fractions can be represented by sequences of vectors and
+products of matrices. In this section, we first represent ordinary continued fractions using matrices and then
+extend the construction to multidimensional continued fractions.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                                3
+                                                        Rachel Perrier
+
+
+3.1    Matrix Representations of Continued Fractions
+We consider continued-fraction representations of positive numbers, although the ideas can be extended to
+negative numbers. Consider matrices             
+                                            0 1
+                                                   ,    k ∈ Z>0 .
+                                            1 k
+Products of these matrices have the form
+                                                  n                        
+                                                  Y  0        1     α       β
+                                                                  =             ,
+                                                        1     kj     γ      δ
+                                                  j=0
+
+where kj ∈ Z>0 for 0 ≤ j ≤ n and α, β, γ, δ are integers. Since each factor has determinant −1,
+
+                                                    αδ − βγ = (−1)n+1 .
+
+Another property of the convergents, found in the proof of Proposition 1.15 in [17], is
+
+                                                pk−1 qk − pk qk−1 = (−1)k ,
+
+which motivates the following proposition.
+Proposition 2. For every integer n ≥ 1,
+                                n                                                                 
+                                Y  0     1     Qn−1 (k0 , . . . , kn−1 )       Qn (k0 , . . . , kn )
+                                             =                                                         ,
+                                     1   kj     Pn−1 (k0 , . . . , kn−1 )      Pn (k0 , . . . , kn )
+                               j=0
+
+where kj ∈ Z>0 .
+Proof. We proceed by induction. For n = 1,
+                                                                                                 
+                        0 1 0 1            1                    k1         Q0 (k0 )       Q1 (k0 , k1 )
+                                        =                                =                                .
+                        1 k0 1 k1          k0                1 + k 0 k1     P0 (k0 )      P1 (k0 , k1 )
+
+Assume the result holds for some n ≥ 1. Then
+                               n+1
+                               Y                                      
+                                     0   1      Qn−1 Qn 0               1
+                                             =
+                                     1   kj      Pn−1 Pn 1 kn+1
+                               j=0
+                                                                         
+                                                Qn Qn−1 + kn+1 Qn
+                                             =
+                                                 Pn Pn−1 + kn+1 Pn
+                                                                                                
+                                                Qn (k0 , . . . , kn ) Qn+1 (k0 , . . . , kn+1 )
+                                             =                                                     ,
+                                                 Pn (k0 , . . . , kn ) Pn+1 (k0 , . . . , kn+1 )
+
+where the final step follows from Proposition 1.
+    Thus, multiplication of these 2 × 2 matrices encodes the convergents of [k0 ; k1 : · · · ], or of [k0 ; k1 : · · · : kn ]
+in the finite case. These matrices provide a matrix analog of continued fractions.
+    We can also use eigenvectors and eigenvalues to recover Lagrange’s result. Let
+                                                       
+                                                       1
+                                                       x
+
+be an eigenvector of                                                   
+                                                               α    β
+                                                                γ   δ
+with eigenvalue λ. Then                                              
+                                                 α      β     1   α + βx
+                                                                =           ,
+                                                  γ     δ     x    γ + δx
+so
+                                                                        γ + δx
+                                                  λ = α + βx =                 .
+                                                                          x
+Therefore,
+                                                 βx2 + (α − δ)x − γ = 0,
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                              4
+                                                          Rachel Perrier
+
+
+and the roots are
+                                                            p
+                                                    δ−α±        (α − δ)2 + 4βγ
+                                           x=
+                                                                 2β
+                                                            p
+                                                    δ−α±        (α + δ)2 − 4(αδ − βγ)
+                                                =
+                                                                    2β
+                                                            p
+                                                    δ−α±        (α + δ)2 − 4(−1)n+1
+                                                =                                   .
+                                                                   2β
+Let                                                          p
+                                                    δ−α+      (α + δ)2 − 4(−1)n+1
+                                            ξ=
+                                                                 2β
+be the positive root. If                                 m
+                                          n                               m                
+                                          Y  0      1              α    β             αm    βm
+                                                              =                  =               ,
+                                                1   kj               γ   δ              γm   δm
+                                          j=0
+
+then
+                           δm
+                              = [k0 ; k1 : · · · : kn : k0 : k1 : · · · : kn : · · · : k0 : k1 : · · · : kn ],
+                           βm
+with m repetitions of the block k0 , k1 , . . . , kn . Moreover,
+                                                                    δm
+                                                            lim          = ξ,
+                                                           m→∞ βm
+
+and hence
+                                                      ξ = [k0 ; k1 : · · · : kn ].
+Thus, the matrix representation preserves Lagrange’s result that periodic continued fractions represent quadratic
+irrationals.
+
+3.2    Matrix Representations for Multidimensional Continued Fractions
+We now use a 3 × 3 matrix to encode an equivalent version of the Jacobi–Perron algorithm, and then indicate
+how the construction generalizes to k × k matrices. The notation in this subsection largely follows [13].
+   Let α, β ∈ R≥0 , a = ⌊α⌋, and b = ⌊β⌋. Consider
+                                                                 
+                                            −a 1 0                  1
+                                      M =  −b 0 1 ,         v = α .
+                                             1 0 0                  β
+
+Then                                                                           
+                                                               0         0    1
+                                                       M −1 = 1         0    a
+                                                               0         1    b
+is the companion matrix of
+                                                     p(t) = t3 − bt2 − at − 1,
+and                                                                  
+                                                                 α−a
+                                                          M v = β − b .
+                                                                   1
+Our goal is to construct a sequence of vectors whose first entry is always 1. If α ∈
+                                                                                   / Z, then
+                                                                      
+                                                              1
+                                          1
+                                              M v = (β − b)/(α − a) .
+                                        α−a
+                                                         1/(α − a)
+
+If α ∈ Z, then                                                       
+                                                                   0
+                                                          M v = β − b .
+                                                                   1
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                    5
+                                                    Rachel Perrier
+
+
+Use                                                                 
+                                                        0     1    0
+                                                   H = 0     0    1
+                                                        1     0    0
+to permute the entries. Then                                 
+                                                          β−b
+                                                  HM v =  1  .
+                                                           0
+If β ∈
+     / Z, then                                                  
+                                                            1
+                                             1
+                                                HM v = 1/(β − b) .
+                                            β−b
+                                                            0
+If β ∈ Z, apply H once more to obtain                         
+                                                              1
+                                                   H 2 M v = 0 .
+                                                              0
+Repeating this process yields
+                                                                   T
+                                                     βn − b n      1
+                                                  1,          ,         , αn ∈ / Z,
+                                              
+                                              
+                                                     αn − an αn − an
+                                              
+                                              
+                                              
+                                              
+                                                              T
+                  vn+1 = (1, αn+1 , βn+1 )T =            1
+                                                 1,          ,0   ,      αn ∈ Z, βn ∈ / Z,
+                                              
+                                              
+                                              
+                                                    βn − b n
+                                              
+                                                (1, 0, 0)T ,              αn , βn ∈ Z,
+                                              
+
+where
+                        an = ⌊αn ⌋ ,       bn = ⌊βn ⌋ ,       v0 = (1, α0 , β0 )T = (1, α, β)T .
+We also define
+                                       wn = (1, ⌊αn ⌋ , ⌊βn ⌋)T = (1, an , bn )T .
+The vectors wn always have integer entries. Since continued fractions use integer entries, this is the sequence
+we follow for higher-dimensional analogs. For a deeper analysis of products of these companion matrices and of
+this vector form of the Jacobi–Perron algorithm, see [6].
+    If the process reaches (1, 0, 0)T , it remains there. We therefore terminate the sequence at that point;
+otherwise, the process continues indefinitely.
+                        √               √
+Example 2. Let α0 = 3 2 and β0 = 3. Then the first terms are
+                                                                      
+                                              √1
+                                               3
+                                                       √       1 √
+                                                                 3
+                                    vn :  √ 2 , ( 3 − 1)/(√     2 − 1) ,
+                                                             3
+                                                 3        1/( 2 − 1)
+                                                                         
+                                                     √     1
+                                                           √     √
+                                            (4 − 3 3 2)/( 3 − 2 3 2 + 1) , . . . ,
+                                                 √        √      √
+                                              ( 3 2 − 1)/( 3 − 2 3 2 + 1)
+
+and                                                 
+                                        1     1     1      1      1     1     1
+                                wn :   1 , 2 , 1 ,  5  , 0 , 0 , 1 , . . . .
+                                        1     3     1     26      1     2     7
+The algorithm does not terminate because this choice of α0 and β0 gives αn , βn ∈
+                                                                                / Z for every n. It expresses
+α0 and β0 as the ternary continued fractions
+
+                                             √
+                                             3                    1
+                                                 2=1+
+                                                                   1
+                                                              1+
+                                                          3+    26 + ···
+                                                                   5
+                                                             1+
+                                                                26 + · · ·
+
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                6
+                                                            Rachel Perrier
+
+
+and
+                                                                             1
+                                                                 2+
+                                                                5
+                                                   √                  1+
+                                           3=1+              26 + · · ·.
+                                                                1
+                                                         1+
+                                                    3+       26 + ···
+                                                                5
+                                                         1+
+                                                             26 + · · ·
+Information about ternary continued fractions arising from the Jacobi–Perron algorithm can be found in [19,21].
+    Periodicity in a multidimensional continued fraction occurs when a block of wi vectors repeats. The construc-
+tion generalizes to k × k matrices by expanding M so that M −1 remains a companion matrix with nonnegative
+integer entries. The algorithm then has the form
+
+                                         vn+1 = (1, α1,n+1 , α2,n+1 , . . . , αk−1,n+1 )T ,
+
+where
+                                                                   αj,n − aj,n
+                                                       αj,n+1 =                ,
+                                                                   αp,n − ap,n
+and p is the smallest index for which αp,n ∈
+                                           / Z. If no such p exists, then
+
+                                                       vn+1 = (1, 0, 0, . . . , 0)T
+
+and the algorithm stops. As in the 2 × 2 case, products of the companion matrices record the multidimensional
+continued fraction. These products will be used to connect multidimensional continued fractions and Riordan
+arrays.
+
+
+4       Connections Between Continued Fractions and Rior-
+        dan Arrays
+We now examine connections between Riordan arrays and matrix representations of ordinary continued fractions
+before turning to multidimensional continued fractions. We begin with recurrences obtained from eigenvalues
+and eigenvectors in the 2 × 2 case.
+   Suppose [k0 ; k1 : k2 : · · · ] is represented by the companion matrices, and let [1, a]T be an eigenvector of a
+product of these matrices. For one matrix,
+                                                                          
+                                     0 1 1            a              1            1
+                                                =            =a             = λ0     .
+                                     1 k0 a        1 + k0 a      k0 + 1/a         a
+
+Thus, λ0 = a and                                                                                p
+                                   1               2                                     k0 ±    k02 + 4
+                           a = k0 + ,           a − k0 a − 1 = 0,             a = λ0 =                   .
+                                   a                                                            2
+For two matrices,                                                   "             #
+                             
+                              0    1
+                                        
+                                          0   1
+                                                    
+                                                     1                    1               
+                                                                                          1
+                                                        = (1 + k1 a) k +    a       = λ1     .
+                              1    k0     1   k1     a                0                   a
+                                                                         1 + k1 a
+Hence,
+                                                                             a           λ0
+                                     λ1 = 1 + k1 a,           a = k0 +             = k0 + .
+                                                                          1 + k1 a       λ1
+Continuing, Proposition 2 gives
+            
+  n
+  Y 0 1  1 Qn−1 (k0 , . . . , kn−1 ) + aQn (k0 , . . . , kn )
+                 =
+      1 kj      a      Pn−1 (k0 , . . . , kn−1 ) + aPn (k0 , . . . , kn )
+  j=0
+
+                                                                                                         1
+                                                                                                                                       
+                                                                           
+                       = Qn−1 (k0 , . . . , kn−1 ) + aQn (k0 , . . . , kn )       Qn−2 (k1 , . . . , kn−1 ) + aQn−1 (k1 , . . . , kn )  .
+                                                                              k0 +
+                                                                                    Qn−1 (k0 , . . . , kn−1 ) + aQn (k0 , . . . , kn )
+Although the convergents describe the entries, eigenvalues, and eigenvectors at each step, the notation is cum-
+bersome. We therefore analyze period 1, so kj = k ∈ Z>0 for all j ≥ 0.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                                         7
+                                                               Rachel Perrier
+
+
+   Let                                                                     " (n) #    
+                                         0          1                       1   r1         1
+                                    Ak =                ,          An+1
+                                                                    k         = (n) = λn     .
+                                         1          k                       a   r2        sn
+
+      (−1)         (−1)
+Set r1       = 1, r2      = a, λ−1 = 1, and λ0 = a. Matrix multiplication gives
+                                                                         (n)       (n+1)
+                                                        λn+1 = r2              = r1         ,
+                                                                                      (n)                  (n)
+                                                                λn       r            r1
+                                     a = sn+1 = k +                 = k + 1(n) = k + (n+1) ,
+                                                               λn+1      r          r 2                1
+and
+                                          (n+1)              (n)           (n+1)            (n)       (n)
+                                         r1          = r2 ,              r2        = kr2          + r1 .
+To retain the stated initial values, define the shifted generating functions
+                                           X (n−1)                    X (n−1)
+                                 R1 (t) =     r1     tn ,    R2 (t) =    r2   tn .
+                                               n≥0                                              n≥0
+
+Then
+                                                              X (n−1)            X (n)
+                                        R1 (t) = 1 +           r1     tn = 1 + t  r1 tn
+                                                              n≥1                               n≥0
+                                                    X (n−1)
+                                               =1+t  r2     tn = 1 + tR2 (t),
+                                                               n≥0
+
+and
+                                                             X (n−1)            X (n)
+                                        R2 (t) = a +          r2     tn = a + t  r2 tn
+                                                             n≥1                                n≥0
+                                                        X (n−1)        X (n−1)
+                                               = a + kt  r2     tn + t  r1     tn
+                                                                   n≥0                      n≥0
+
+                                               = a + ktR2 (t) + tR1 (t).
+
+Substitution gives
+                                                                            t+a
+                                                            R2 (t) =                 ,                                         (2)
+                                                                         1 − kt − t2
+and consequently
+                                                     (a − k)t + 1
+                                                            R1 (t) =
+                                                                  .                                      (3)
+                                                      1 − kt − t2
+   If a and k are positive integers, these generating functions produce versions of the k-Fibonacci numbers.
+The Fibonacci recurrence is
+
+                                    Fn = Fn−1 + Fn−2                (n ≥ 2),              F0 = 0,      F1 = 1.
+
+The k-Fibonacci sequence is defined by
+
+                              Fk,n = kFk,n−1 + Fk,n−2                (n ≥ 2),               Fk,0 = 0,        Fk,1 = 1.
+
+Properties of these numbers are given in [7]. We use the generating functions
+                                                      ∞
+                                                      X                             t
+                                                              Fk,n tn =                                                        (4)
+                                                      n=0
+                                                                               1 − kt − t2
+
+and
+                                                    ∞
+                                                    X                               1
+                                                            Fk,n+1 tn =                    .                                   (5)
+                                                    n=0
+                                                                               1 − kt − t2
+                                                                                                                         (1)   (2)
+Theorem 2. The coefficient sequences of R1 (t) and R2 (t) satisfy the k-Fibonacci recurrence. If Fk,n and Fk,n
+denote these coefficient sequences, respectively, then their initial values are
+                              (1)             (1)                                  (2)                      (2)
+                            Fk,0 = 1,      Fk,1 = a,                 and         Fk,0 = a,             Fk,1 = 1 + ka,
+
+where k > 0.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                                   8
+                                                         Rachel Perrier
+
+
+Proof. Equation (3) can be written as
+                                                    t             1
+                          R1 (t) = (a − k)                 +             = (a − k)M (t) + N (t),
+                                               1 − kt − t2   1 − kt − t2
+where M (t) and N (t) are the generating functions in equations (4) and (5). Since both coefficient sequences
+satisfy the same recurrence, every linear combination does also. The first two coefficients of R1 (t) are
+
+                                       (a − k)(0) + 1 = 1,          (a − k)(1) + k = a.
+
+Similarly,
+                                                t              1
+                                R2 (t) =               +a             = M (t) + aN (t),
+                                           1 − kt − t2    1 − kt − t2
+whose first two coefficients are
+                                                      0 + a = a,     1 + ak.
+
+
+    Thus, the eigenvalue sequence follows a k-Fibonacci pattern, and the value sn in the eigenvector is a ratio
+of k-Fibonacci numbers. This also connects k-Fibonacci numbers with purely periodic continued fractions of
+period 1.
+    We now connect R1 (t) and R2 (t) to Riordan arrays.
+Theorem 3. The generating functions R1 (t) and R2 (t) are the row-sum generating functions of
+
+                           R (a − k)t + 1, kt + t2    and R t + a, kt + t2 ,
+                                                                         
+
+respectively, provided a, k ̸= 0.
+Proof. We have
+                                               (a − k)t + 1                        t+a
+                                    R1 (t) =                  ,     R2 (t) =                  .
+                                               1 − (kt + t2 )                  1 − (kt + t2 )
+Equation (1) gives the result. The condition a ̸= 0 ensures that the second array satisfies d(0) ̸= 0, and k ̸= 0
+ensures h′ (0) ̸= 0 for both arrays.
+   Theorem 3 does not describe all Riordan arrays having row sums represented by R1 (t) and R2 (t).
+Theorem 4. The generating functions R1 (t) and R2 (t) are also the row-sum generating functions of
+
+                                            (a − 1)t + (1 + k − a)t2
+                                                                      
+                                     1
+                               R         ,
+                                   1 − t 1 + (a − k − 1)t − (a − k)t2
+and                                                                               
+                                                     1 (a − 1) + (k + 1 − a)t
+                                           R            ,                              ,
+                                                    1−t   a − (a − 1)t − t2
+respectively, provided a ̸= 1 in the first case, and a = 1 and k ̸= 0 in the second case.
+Proof. Using d(t) = 1/(1 − t), we rewrite
+
+                                             (a − k)t + 1
+                                    R1 (t) =
+                                              1 − kt − t2
+                                               1     1 + (a − k − 1)t − (a − k)t2
+                                           =       ·
+                                             1−t              1 − kt − t2
+                                               1                     1
+                                           =       ·                                   .
+                                             1−t            (a − 1)t + (1 + k − a)t2
+                                                     1−
+                                                          1 + (a − k − 1)t − (a − k)t2
+
+Thus, R1 (t) is the row-sum generating function of the first array. Its second component has h(0) = 0, and
+
+                                                          h′ (0) = a − 1,
+
+so a ̸= 1 is necessary.
+    Similarly,
+                                                     1                  1
+                                       R2 (t) =         ·                             .
+                                                    1−t        (a − 1) + (k + 1 − a)t
+                                                            1−
+                                                                  a − (a − 1)t − t2
+
+ECA 6:4 (2026) Article #S2R33                                                                                  9
+                                                    Rachel Perrier
+
+
+For the second component to satisfy h(0) = 0, we must have a = 1. Under this restriction,
+
+                                                      kt
+                                           h(t) =          ,               h′ (0) = k,
+                                                    1 − t2
+so k ̸= 0.
+   Theorems 3 and 4 show that R1 (t) and R2 (t) are row-sum generating functions for different Riordan arrays.
+These are only two possible constructions, so each generating function corresponds to a family rather than a
+unique Riordan array.
+Example 3. Let a = 2 and k = 1. Theorems 3 and 4 give
+                                                                                                                       
+                                                 1 0 0                              0         0         0         ···
+                                                1 1 0
+                                                                                   0         0         0         · · ·
+                                                0 2 1                              0         0         0         · · ·
+                                           2
+                             R(t + 1, t + t ) = 0 1 3
+                                                                                                                       
+                                                                                   1         0         0         · · ·
+                                                0 0 3                              4         1         0         · · ·
+                                                  .. .. ..                          ..        ..        ..
+                                                                                                                       
+                                                                                                                  ..
+                                                   . . .                             .         .         .            .
+
+and                                                                                                                     
+                                                      1              0         0         0         0         0     ···
+                                                     1              1         0         0         0         0     · · ·
+                                                  1              1         1         0         0         0     · · ·
+                                       1     t
+                                 R        ,        =                                                                       .
+                                                                                                                        
+                                     1 − t 1 − t2
+                                                     1
+                                                                    2         1         1         0         0     · · ·
+                                                     1              2         3         1         1         0     · · ·
+                                                       ..            ..        ..        ..        ..        ..
+                                                     
+                                                                                                                   ..
+                                                        .             .         .         .         .         .        .
+Both have row-sum sequence
+                                                    1, 2, 3, 5, 8, . . . ,
+a shifted Fibonacci sequence.
+Example 4. Let a = 1 and k = 2. Then
+                                                                                                                     
+                                                      1        0          0          0          0            0 ···
+                                                     1
+                                                              2          0          0          0            0 · · · 
+                                                     0        3          4          0          0            0 · · ·
+                                                2
+                                 R(t + 1, 2t + t ) = 0
+                                                                                                                     
+                                                              1          8          8          0            0 · · · 
+                                                     0        0          5         20         16            0 · · ·
+                                                       ..      ..         ..         ..         ..           .. . .
+                                                                                                                     
+                                                        .       .          .          .          .            .     .
+
+and                                                                                                                   
+                                                     1          0           0            0 0                  0 ···
+                                                    1          2           0            0 0                  0 · · ·
+                                                 1          2           4            0 0                  0 · · ·
+                                                                                                                       
+                                      1     2t
+                                R        ,        =                                                                      .
+                                                                                                                      
+                                    1 − t 1 − t2
+                                                    1
+                                                               4           4            8 0                  0 · · · 
+                                                    1          4          12            8 16                 0 · · · 
+                                                      ..        ..          ..           .. ..                .. . .
+                                                    
+                                                       .         .           .            . .                  .     .
+Their common row-sum sequence is
+                                                  1, 3, 7, 17, 41, . . . .
+
+
+5      Connections Between Multidimensional Continued Frac-
+       tions and Riordan Arrays
+We now examine recurrences arising from the 3×3 matrix representation of multidimensional continued fractions.
+Suppose {kn } and {mn } are the sequences represented in the companion matrices, and let
+                                                     
+                                                     1
+                                                    a
+                                                     b
+
+ECA 6:4 (2026) Article #S2R33                                                                                                  10
+                                                           Rachel Perrier
+
+
+be a generic eigenvector. For one matrix,
+                                                                      
+                           0 0 1        1      b                1             1
+                          1 0 k0  a =  1 + k0 b  = b  k0 + 1/b  = λ0 a .
+                           0 1 m0       b  a + m0 b         m0 + a/b          b
+
+Thus, λ0 = b,
+                                                             1                     a
+                                              a = k0 +          ,          b = m0 + ,
+                                                             λ0                    b
+and therefore
+                                      λ20 = m0 λ0 + a,                  λ20 − m0 λ0 − a = 0.
+Consequently,                                                              p
+                                                               m0 ±         m20 + 4a
+                                                b = λ0 =                             .
+                                                                            2
+   For two companion matrices,
+                                                                     
+                                  0      0     1     0        0     1     1
+                                 1      0     k0  1        0     k1  a
+                                  0      1     m0    0        1     m1    b
+                                                                                      
+                                                                           1  
+                                                      
+                                                       k0 +     b    
+                                                                              1
+                                         = (a + bm1 ) 
+                                                            a + bm1  = λ1
+                                                                             a  .
+                                                             1 + bk1         b
+                                                       m0 +
+                                                             a + bm1
+Hence,
+                                                                                  b          λ0
+                                λ1 = a + bm1 ,               a = k0 +                  = k0 + ,
+                                                                               a + bm1       λ1
+and
+                                                           1 + bk1        1 + bk1
+                                         b = m0 +                  = m0 +         .
+                                                           a + bm1          λ1
+   Multiplying three companion matrices gives
+                                   
+                       Y2  0 0 1         1
+                      1 0 ki  a
+                       i=0 0 1 mi        b
+                                                                                  
+                                                                   1
+                                                                 a + bm2          
+                                                    k0 +
+                                                                                 
+                        = 1 + am1 + b(k2 + m2 m1 )       1 + am1 + b(k2 + m2 m1 )  .
+                                                                                   
+                                                                                  
+                                                             ak1 + b(1 + m2 k1 )  
+                                                    m0 +
+                                                          1 + am1 + b(k2 + m2 m1 )
+
+Thus, the eigenvalue of the three-matrix product is
+
+                                              λ2 = 1 + am1 + b(k2 + m2 m1 ).
+
+   For n + 1 companion matrices, write
+                                                            (n)               
+                                                                                 1
+                                   
+                                     0 0
+                                     n               1      1     r1
+                                     Y                                          (n) 
+                                 1 0               ki  a = r2(n)  = λn s1  .
+                                                                       
+                                 i=0 0 1             mi     b       (n)          (n)
+                                                                  r             s2
+                                                                                 3
+
+As in the 2 × 2 case, the general recurrences are unwieldy. We therefore assume period 1: ki = k ∈ Z and
+mi = m ∈ Z for all i ≥ 0. Set
+                       (−1)                  (−1)                   (−1)
+                      r1      = 1,       r2         = a,          r3       = b,            λ−1 = 1,   λ0 = b.
+
+Matrix multiplication gives
+                                                                    (n)        (n+1)
+                                                     λn+1 = r3            = r1         ,
+
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                   11
+                                                            Rachel Perrier
+
+
+                                                                                    (n)                    (n)
+                                           (n+1)             λn       r            r1
+                                   a = s1          =k+           = k + 1(n) = k + (n+1) ,
+                                                            λn+1      r          r  3                  1
+                                                             (n)         (n)
+                                                (n+1)      r           r2
+                                           b = s2     = m + 2(n) = m + (n+1) ,
+                                                           r3         r1
+and
+                        (n+1)       (n)            (n+1)         (n)          (n)            (n+1)           (n)          (n)
+                       r1       = r3 ,         r2          = r1        + kr3 ,              r3         = r2        + mr3 .
+Define the shifted generating functions
+                                                       X (n−1)
+                                            Ri (t) =    ri     tn ,                     i = 1, 2, 3.
+                                                       n≥0
+
+Then
+                                                       R1 (t) = 1 + tR3 (t),
+                                               R2 (t) = a + tR1 (t) + ktR3 (t),
+and
+                                               R3 (t) = b + tR2 (t) + mtR3 (t).
+Solving this system gives
+                                                           (a − k)t2 + (b − m)t + 1
+                                             R1 (t) =                               ,
+                                                              1 − mt − kt2 − t3
+                                                     (b − m)t2 + (1 + kb − ma)t + a
+                                          R2 (t) =                                  ,
+                                                           1 − mt − kt2 − t3
+and
+                                                    t2 + at + b
+                                                   R3 (t) =        .
+                                                 1 − mt − kt2 − t3
+   These generating functions correspond to the recurrence
+
+                            Ak,m,n+1 = mAk,m,n + kAk,m,n−1 + Ak,m,n−2 ,                                          n ≥ 2,         (6)
+
+with k, m ∈ Z and initial values Ak,m,0 , Ak,m,1 , Ak,m,2 ∈ Z. This recurrence combines features of k-Fibonacci
+and generalized Pell recurrences. The generalized Pell numbers in [8] satisfy
+                                                           (k)          (k)                      (k)
+                                            Pn(k) = 2Pn−1 + Pn−2 + · · · + Pn−k ,
+
+with the stated initial conditions. More generally, one might consider
+
+                                  Gn+1 = k1 Gn + k2 Gn−1 + · · · + kj Gn−j+1 + Gn−j .                                           (7)
+
+For the moment, we restrict attention to equation (6).
+Proposition 3. Let k, m ∈ Z, and let Ak,m,n satisfy equation (6). Then
+              X                   Ak,m,0 + (Ak,m,1 − mAk,m,0 )t + (Ak,m,2 − mAk,m,1 − kAk,m,0 )t2
+                    Ak,m,n tn =                                                                   .                             (8)
+                                                       1 − mt − kt2 − t3
+              n≥0
+
+   The proposition follows from the standard generating-function method described in Chapter 3 of [1].
+Theorem 5. The generating functions R1 (t), R2 (t), and R3 (t) satisfy equation (6) with the following initial
+values:
+                                   Ak,m,0 Ak,m,1              Ak,m,2
+                            R1 (t)   1           b            a + mb
+                            R2 (t)   a       1 + kb       b + ka + kmb
+                            R3 (t)   b       a + mb 1 + m(a + mb) + kb.
+Proof. Substituting the displayed initial values into equation (8) gives the numerators of R1 (t), R2 (t), and
+R3 (t), respectively.
+Example 5. When k = a = 1 and m = b = 2, the generating functions R1 (t) and R3 (t) produce shifted
+versions of the 3-Pell sequence.
+   We can now connect these generating functions to row sums of Riordan arrays.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                                   12
+                                                         Rachel Perrier
+
+
+Theorem 6. The generating functions R1 (t), R2 (t), and R3 (t) are the row-sum generating functions of
+
+                             R (a − k)t2 + (b − m)t + 1, mt + kt2 + t3 ,
+                                                                          
+
+
+                          R (b − m)t2 + (1 + kb − ma)t + a, mt + kt2 + t3 ,
+                                                                             
+
+and
+                                                 R t2 + at + b, mt + kt2 + t3 ,
+                                                                             
+
+respectively, provided a, b, m ̸= 0.
+Proof. Equation (1), together with the same rewriting used in the proof of Theorem 3, gives the result. The
+restrictions a ̸= 0 and b ̸= 0 ensure d(0) ̸= 0 for the second and third arrays, and m ̸= 0 ensures h′ (0) ̸= 0 for
+all three.
+Theorem 7. The generating functions R1 (t), R2 (t), and R3 (t) are also the row-sum generating functions of
+
+                                     (b − 1)t + (a − b + m)t2 + (k − a + 1)t3
+                                                                                  
+                           1
+                    R          ,                                                     ,
+                         1 − t 1 + (b − m − 1)t + (a − b − k + m)t2 − (a − k)t3
+
+                                    bkt + (k − bk + b − 1)t2 + (1 − b + m)t3
+                                                                              
+                               1
+                       R          ,                                              ,
+                             1 − t 1 + (bk − m)t + (b − 1 − bk)t2 + (m − b)t3
+and
+                                                  1 (m + a − 1)t + (k + 1 − a)t2
+                                                                                     
+                                        R            ,                                    ,
+                                                1 − t 1 + (a − 1)t + (1 − a)t2 − t3
+respectively, provided
+
+                         b ̸= 1;       a = 1 and b, k ̸= 0;          and     b = 1 and a + m ̸= 1,
+
+respectively.
+Proof. As in Theorem 4, use algebraic manipulation to place each generating function in the form of equation (1)
+with d(t) = 1/(1 − t).
+   For R1 (t),
+
+                               (a − k)t2 + (b − m)t + 1
+                       R1 (t) =
+                                   1 − mt − kt2 − t3
+                                 1     1 + (b − m − 1)t + (a − b − k + m)t2 − (a − k)t3
+                             =       ·
+                               1−t                     1 − mt − kt2 − t3
+                                 1                                1
+                             =       ·                                                      .
+                               1−t              (b − 1)t + (a − b + m)t2 + (k − a + 1)t3
+                                       1−
+                                           1 + (b − m − 1)t + (a − b − k + m)t2 − (a − k)t3
+
+The second component has h(0) = 0, and h′ (0) = b − 1, so b ̸= 1.
+   For R2 (t), before imposing restrictions, write
+                                                                 1       1
+                                                    R2 (t) =        ·         ,
+                                                               1 − t 1 − H(t)
+
+where H(t) = y(t)/z(t) with
+
+                                  y(t) = (a − 1) + (m + 1 − a + bk − am)t
+                                        + (k + am − bk + b − m − 1)t2 + (1 − b + m)t3 ,
+
+and
+
+                                     z(t) = a + (1 − a + bk − am)t
+                                                + (b − m − 1 + am − bk)t2 + (m − b)t3 .
+
+The condition H(0) = 0 forces a = 1. Under that restriction,
+
+                                             bkt + (k − bk + b − 1)t2 + (1 − b + m)t3
+                                   H(t) =                                              ,
+                                            1 + (bk − m)t + (b − 1 − bk)t2 + (m − b)t3
+
+and H ′ (0) = bk, so b, k ̸= 0.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                   13
+                                                              Rachel Perrier
+
+
+   Finally,
+                                          1                          1
+                           R3 (t) =          ·                                             .
+                                         1−t        (b − 1) + (m + a − b)t + (k + 1 − a)t2
+                                                 1−
+                                                         b + (a − b)t + (1 − a)t2 − t3
+The condition h(0) = 0 forces b = 1. The second component then becomes
+
+                                                 (m + a − 1)t + (k + 1 − a)t2
+                                                                               ,
+                                                 1 + (a − 1)t + (1 − a)t2 − t3
+whose derivative at zero is a + m − 1. Thus, a + m ̸= 1.
+Example 6. Consider period 1 with a = b = 1 and k = m = 2. Theorem 6 gives the arrays
+
+                                               R(−t2 − t + 1, 2t + 2t2 + t3 ),
+
+                                               R(−t2 + t + 1, 2t + 2t2 + t3 ),
+and
+                                                 R(t2 + t + 1, 2t + 2t2 + t3 ).
+Theorem 7 gives, respectively,
+                                                                  2t2 + 2t3
+                                                                                        
+                                                             1
+                                                   R            ,                              ,
+                                                           1 − t 1 − 2t + t3
+                                                                  2t + 2t3
+                                                                                          
+                                                            1
+                                                  R            ,                                ,
+                                                          1 − t 1 − 2t2 + t3
+and
+                                                                 1 2t + 2t2
+                                                                                      
+                                                    R               ,                      .
+                                                               1 − t 1 − t3
+Thus,
+                                                                                                      2t2 + 2t3
+                                                                                                                   
+                                 2                         2      3                              1
+                         R(−t − t + 1, 2t + 2t + t )                        and     R               ,
+                                                                                               1 − t 1 − 2t + t3
+have the common row-sum sequence
+                                                   1, 1, 3, 9, 25, 71, 201, . . . ,
+a shifted version of OEIS sequence A233828 [14]. Also,
+
+                                                                                                  1 2t + 2t2
+                                                                                                              
+                                     2                        2       3
+                            R(t + t + 1, 2t + 2t + t )                      and        R             ,
+                                                                                                1 − t 1 − t3
+have the same row sums. Finally,
+
+                                                                                                       2t + 2t3
+                                                                                                                   
+                                 2                        2       3                              1
+                        R(−t + t + 1, 2t + 2t + t )                       and      R                ,
+                                                                                               1 − t 1 − 2t2 + t3
+have row-sum sequence
+                                                  1, 3, 7, 21, 59, 167, 473, . . . .
+   The same method extends to higher dimensions. In the k × k case, consider
+                                                        
+                        0 0       0 ···      1           1        r
+                                                                    (n)
+                                                                              
+                                                                                   1
+                                                                                       
+                                                                   1
+                   n 1 0        0   · · · m 1,i  
+                                                     a 1 
+                                                                   (n)            (n)
+                                                                                s1 
+                                                             r2 
+                  Y                                                  
+                   0 1          0 ···     m2,i   a2  = 
+                                                   
+                                                                          = λ   ..  .
+                                                                                      
+                                                                 ..        n
+                                                                      
+                    ..     .
+                             ..  .    .
+                                   .. ..     .           .
+                                             ..   ..   . 
+                                                                               .  
+                  i=0  .
+                                                                    (n)           (n)
+                        0 ··· 0         1 mk−1,i       ak−1       rk            sk−1
+
+Assume period 1, so mj,i = mj for 1 ≤ j ≤ k − 1 and i ≥ 0. With initial values
+                                                          (−1)                     (−1)                         (−1)
+                λ−1 = 1,         λ0 = ak−1 ,           r1         = 1,            r2           = a1 ,   ...,   rk       = ak−1 ,
+
+we obtain
+                                                                      (n)         (n+1)
+                                                    λn+1 = rk               = r1           ,
+                                                        (n)                        (n)
+                                     (n+1)             rj+1                       rj+1
+                         aj = sj             = mj +       (n)
+                                                              = mj +              (n+1)
+                                                                                           ,        1 ≤ j ≤ k − 1,
+                                                       rk                     r1
+
+ECA 6:4 (2026) Article #S2R33                                                                                                      14
+                                                      Rachel Perrier
+
+
+and
+                                                       (n+1)      (n)
+                                                      r1       = rk ,
+                                     (n+1)      (n)        (n)
+                                    rj+1     = rj     + mj rk ,         1 ≤ j ≤ k − 1.
+We conjecture that solving these recurrences yields
+
+                                (a1 − m1 )tk−1 + (a2 − m2 )tk−2 + · · · + (ak−1 − mk−1 )t + 1
+                     R1 (t) =
+                                         1 − mk−1 t − mk−2 t2 − · · · − m1 tk−1 − tk
+and
+                                              tk−1 + a1 tk−2 + · · · + ak−2 t + ak−1
+                                Rk (t) =                                               .
+                                           1 − mk−1 t − mk−2 t2 − · · · − m1 tk−1 − tk
+We further conjecture that these recurrences produce generating functions for the generalized recurrence in
+equation (7). Although k Riordan arrays are associated with each k × k system, the arrays associated with
+R1 (t) and Rk (t) dominate in the sense that their row sums are shifted versions of the same sequence. It
+would be interesting to determine whether these two generating functions suffice to classify certain periodic
+multidimensional continued fractions.
+
+
+6     Future Directions
+We have exhibited a new connection between multidimensional continued fractions and families of Riordan
+arrays. These connections rely on purely periodic multidimensional continued fractions of period 1. One
+direction for future work is to study non-purely-periodic cases. Such cases alter the initial conditions and
+parts of the calculation, and consequently change the generating functions that connect the multidimensional
+continued fractions to families of Riordan arrays.
+    A second direction is to consider periods greater than 1. Even period 2 introduces an additional layer of
+complexity because odd- and even-indexed terms must be treated separately. Can these results be generalized
+to arbitrary periods? The connections between multidimensional continued fractions and Riordan arrays may
+provide a way to identify additional n-tuples that produce periodic multidimensional continued fractions. The
+associated families of Riordan arrays also deserve further study. What can they reveal about Riordan arrays
+that have the same row sums, or about periodic multidimensional continued fractions?
+Acknowledgements: Since this work was developed as part of the author’s doctoral dissertation, the author
+thanks her advisor, Matt Hudelson, for his help and guidance.
+
+
+References
+ [1] M. Aigner, A Course in Enumeration, Springer, 2007.
+ [2] P. Arnoux, V. Berthé, and S. Ito, Discrete planes, Z2 -actions, Jacobi–Perron algorithm and substitutions,
+     Ann. Inst. Fourier (Grenoble) 52 (2002), 305–349.
+ [3] P. Barry, Continued fractions and transformations of integer sequences, J. Integer Seq. 12 (2009), Article
+     09.7.6.
+ [4] P. Barry, Riordan pseudo-involutions, continued fractions and Somos-4 sequences, arXiv:1807.05794, 2018.
+ [5] P. Barry, Riordan arrays and Jacobi and Thron continued fractions, arXiv:2109.07333, 2021.
+ [6] L. Bernstein, The Jacobi–Perron Algorithm: Its Theory and Application, Lecture Notes in Mathematics,
+     Vol. 207, Springer-Verlag, 1971.
+ [7] C. Bolat and H. Köse, On the properties of k-Fibonacci numbers, Int. J. Contemp. Math. Sci. 5 (2010),
+     1097–1105.
+ [8] J. J. Bravo, J. L. Herrera, and J. L. Ramı́rez, Combinatorial interpretation of generalized Pell numbers, J.
+     Integer Seq. 23 (2020), Article 20.2.1.
+ [9] K. Dasaratha, L. Flapan, T. Garrity, C. Lee, C. Mihaila, N. Neumann-Chun, S. Peluse, and M. Stoffregen,
+     Cubic irrationals and periodicity via a family of multidimensional continued-fraction algorithms, Monatsh.
+     Math. 174 (2014), 549–566.
+[10] D. Dumont, Further triangles of Seidel–Arnold type and continued fractions related to Euler and Springer
+     numbers, Adv. in Appl. Math. 16 (1995), 275–296.
+[11] P. Flajolet, Combinatorial aspects of continued fractions, Discrete Math. 32 (1980), 125–161.
+[12] A. Hennessy, A Study of Riordan Arrays with Applications to Continued Fractions, Orthogonal Polynomials
+     and Lattice Paths, Ph.D. thesis, Waterford Institute of Technology, 2011.
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                 15
+                                                Rachel Perrier
+
+
+[13] M. Hudelson, Private communication.
+[14] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, https://oeis.org/.
+[15] M. E. H. Ismail and D. R. Masson, Generalized orthogonality and continued fractions, J. Approx. Theory
+     83 (1995), 1–40.
+[16] S. Ito and M. Ohtsuki, Parallelogram tilings and Jacobi–Perron algorithm, Tokyo J. Math. 17 (1994), 33–58.
+[17] O. Karpenkov, Geometry of Continued Fractions, Algorithms and Computation in Mathematics, Vol. 26,
+     Springer, 2013.
+[18] O. Karpenkov, On Hermite’s problem, Jacobi–Perron type algorithms, and Dirichlet groups,
+     arXiv:2101.12707, 2021.
+[19] J. T. Kent, Ternary continued fractions and the evenly tempered musical scale, CWI Newsletter 13 (1986),
+     21–33.
+[20] A. Luzón, D. Merlini, M. A. Morón, and R. Sprugnoli, Identities induced by Riordan arrays, Linear Algebra
+     Appl. 436 (2012), 631–647.
+[21] N. Murru, Linear recurrence sequences and periodicity of multidimensional continued fractions, Ramanujan
+     J. 44 (2017), 115–124.
+[22] R. Perrier, Using Higher Dimensional Extensions of TRIP Maps for Analyzing Periodicity of Multidimen-
+     sional Continued Fractions, Ph.D. thesis, Washington State University, 2023.
+[23] F. Schweiger, The Metrical Theory of Jacobi–Perron Algorithm, Lecture Notes in Mathematics, Vol. 334,
+     Springer-Verlag, 1973.
+[24] F. Schweiger, Multidimensional Continued Fractions, Oxford University Press, 2000.
+[25] L. Shapiro, R. Sprugnoli, P. Barry, G.-S. Cheon, T.-X. He, D. Merlini, and W. Wang, The Riordan Group
+     and Applications, Springer, 2022.
+[26] L. W. Shapiro, S. Getu, W.-J. Woan, and L. C. Woodson, The Riordan group, Discrete Appl. Math. 34
+     (1991), 229–239.
+[27] R. Sprugnoli, Riordan arrays and combinatorial sums, Discrete Math. 132 (1994), 267–290.
+[28] H. S. Wilf, Generatingfunctionology, Academic Press, 1990.
+[29] P. Wynn, On some recent developments in the theory and application of continued fractions, J. Soc. Indust.
+     Appl. Math. Ser. B Numer. Anal. 1 (1964), 177–197.
+
+
+
+
+ECA 6:4 (2026) Article #S2R33                                                                                16
+
