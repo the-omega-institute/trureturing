@@ -361,6 +361,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 完整路径与输入范围经登记判为 no-resource 时,由 required-check 编排产出结构化 `not-required` 成功,无需安装 SDK、恢复重缓存或下载构建产物。`required` 必须进入所需共享入口并按真实退出码结算;无工作是经校验的路由结果,不能由缺文件、缓存命中或未知状态推出。
 
+消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求完整 engineering 证据和正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带其它 current 谓词或 Scribe。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 标签豁免其它路径。
+
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。
 
 工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
@@ -410,6 +412,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，键集合须与 `cache_layers` 完全一致，现役阶段仅为 `stage-start`。缺项、额外项、未知阶段由 C# loader 与轻量 planner 同样拒绝；无工作仍须验证完整登记。Actions 仅恢复所选资源声明的层；需要原生报告时，由 `lean` 前置声明 dependency/project/elan，`.lake/build/lean-inspector` 随 project 一起运输，不再存在独立 report 层、prepare/resume 协议或晚启动缓存阶段。stage-start 先恢复 current 证据；A14.9 的 producer 输入与完整成功证据校验明确判定无需 Lake 时不下载 dependency/project，其余情况按原登记恢复。filemap 等无 Lean 资源的路径仍不物化 Lean 缓存。
 
 需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 的正常 producer 入口按 A14.9 校验完整调用成功证据，或进入原生 Lake facets；当前默认 Lean/audit 目标和 Inspector 编译须有全部登记输入及执行环境一致的成功证据，否则重新执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化不冒称零报告重检。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。
+
+下载前的 report probe 只核对登记输入、环境、receipt 与材料哈希,决定是否需要 Lake 缓存;它不接受报告或签发检查成功。正常 reuse 对私有快照执行完整 publication 校验,失败即进入实际生产;probe 后材料变化、哈希自洽的坏报告与构建失败均不得假绿。完整语义校验不在 probe 重复执行。
 
 current 对原生报告的五个发布材料、可选 `.reuse.json` 完整调用证据及本轮成功步骤作候选/run/attempt 绑定。Actions 的 dependency/project 保存只有在本轮接受的 current 证据证明所选 `lean` 或 `lean-report` 步骤成功后才获授权；逐项检查这些报告和执行证据的材料哈希与身份，不读取已退役的报告准备收据，也不把 Lean 重编数量当作构建义务是否执行。成功授权在共用 bounded worker 内完成，不复制、扫描或哈希 dependency/project 全目录；失败或超出剩余窗口仅跳过可选保存，不能改变已经验证的业务结果。通用显式运输接口保留自身生产成功契约。current 的普通 artifact 与可选 seed 可共用同一次已验证的执行记录；seed 消费仍须核对本轮候选、run/attempt 和完整材料，可选导出失败不撤销普通 artifact 的成功。
 

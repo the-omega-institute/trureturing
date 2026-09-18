@@ -111,9 +111,15 @@ class ReuseTests(unittest.TestCase):
 
     def test_complete_receipt_accepts_unchanged_input_without_lake_build(self):
         api = self.receipt()
-        self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
-        self.assertFalse((self.root / '.lake').exists())
-        self.assertFalse(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+        with patch.object(publication, 'validate_bundle', wraps=publication.validate_bundle) as validation, \
+                patch.object(publication, 'coordinates', wraps=publication.coordinates) as coordinates:
+            self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
+            self.assertEqual(validation.call_count, 0, '[FAIL] probe_must_not_repeat_publication_validation')
+            self.assertEqual(coordinates.call_count, 0, '[FAIL] probe_must_not_prepare_publication')
+            self.assertFalse(self.output.exists())
+            self.assertFalse((self.root / '.lake').exists())
+            self.assertFalse(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+            self.assertEqual(validation.call_count, 1, '[FAIL] normal_entry_must_validate_publication')
         publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
         self.assertEqual(json.loads(publication.member(self.output, '.provenance.json').read_text())['mode'], 'cached')
         self.assertFalse(api.probe(self.root, self.output, self.lake)['needs_lake'])
@@ -218,7 +224,11 @@ class ReuseTests(unittest.TestCase):
         record = json.loads(receipt.read_text())
         record['bundle']['.materials.zip'] = publication.digest(archive)
         receipt.write_text(json.dumps(record))
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+        self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'],
+                         '[FAIL] probe_only_selects_resources')
+        self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'],
+                        '[FAIL] sealed_hashes_cannot_authorize_bad_materials')
+        self.assertFalse(self.output.exists())
 
     def test_optional_decoder_damage_is_a_miss_but_programming_errors_escape(self):
         api = self.receipt()
@@ -229,13 +239,14 @@ class ReuseTests(unittest.TestCase):
             with self.subTest(error=type(error).__name__), patch.object(
                     publication, 'validate_bundle', side_effect=error):
                 try:
-                    self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+                    self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
                     self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
                 except type(error):
                     self.fail('[FAIL] optional_decoder_error_must_request_lake')
         with patch.object(publication, 'validate_bundle', side_effect=AssertionError('programming error')):
+            self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
             with self.assertRaisesRegex(AssertionError, 'programming error'):
-                api.probe(self.root, self.report, self.lake)
+                api.reuse(self.root, self.report, self.output, self.lake)
 
     def test_semantic_seed_miss_preserves_absent_destination_parents(self):
         api = self.receipt()
@@ -290,6 +301,8 @@ class ReuseTests(unittest.TestCase):
         self.write_policy()
         with self.assertRaisesRegex(ValueError, 'report_execution'):
             api.probe(self.root, self.report, self.lake)
+        with self.assertRaisesRegex(ValueError, 'report_execution'):
+            api.reuse(self.root, self.report, self.output, self.lake)
 
 
 if __name__ == '__main__':
