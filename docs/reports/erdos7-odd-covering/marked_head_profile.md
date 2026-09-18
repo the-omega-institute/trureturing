@@ -675,3 +675,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The second seven depth improves the first complete AP11 block](profile-notes/206-the-second-seven-depth-improves-the-first-complete-ap11-block.md)
 - [The expanded seven hinges and complete factorial tail share one head](profile-notes/207-the-expanded-seven-hinges-and-complete-factorial-tail-share-one-head.md)
 - [The expanded seven survival bound covers both wide source domains](profile-notes/208-the-expanded-seven-survival-bound-covers-both-wide-source-domains.md)
+- [The selected indicators share one raw source](profile-notes/209-the-selected-indicators-share-one-raw-source.md)
