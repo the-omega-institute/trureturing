@@ -1,0 +1,19 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-signed-g2-v1"
+  },
+  "source_joint_sha256": {
+    "kind": "inline",
+    "value": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff"
+  },
+  "rounded_Gamma13_upper": {
+    "kind": "inline",
+    "value": "148.650"
+  },
+  "result": {
+    "path": "content/003-result.json",
+    "sha256": "e732b75b6307b501cfd59224bac6080945acf50e93b76c7d63d810e1ea89f294",
+    "kind": "object"
+  }
+}

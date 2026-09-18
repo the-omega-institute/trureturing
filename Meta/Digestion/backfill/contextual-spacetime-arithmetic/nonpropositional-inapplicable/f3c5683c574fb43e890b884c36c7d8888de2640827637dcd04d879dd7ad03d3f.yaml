@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f3c5683c574fb43e890b884c36c7d8888de2640827637dcd04d879dd7ad03d3f
+  normalized_sha256: sha256:f3c5683c574fb43e890b884c36c7d8888de2640827637dcd04d879dd7ad03d3f
+cas_ref: sha256:f3c5683c574fb43e890b884c36c7d8888de2640827637dcd04d879dd7ad03d3f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此版本写“以下读数固定在追加本收据之前，不用本节自指自己的最终摘要”，最后带后节锚点。正文是摄入树、CAS 数和附录范围的工程记录，不借定义暗置数学断言；该建议仅针对记录类型，不复述其为当前机器状态。
+    previous_atom_id: 7cb58b293cc06d311af2722fcbdd08a3c278f9c9a3ba4914ec935226c1b3064e
+    next_atom_id: e98ae804bfc8b1b36f4ba8f76a0de99296b8992895855a4970f7a12ab4ec825a

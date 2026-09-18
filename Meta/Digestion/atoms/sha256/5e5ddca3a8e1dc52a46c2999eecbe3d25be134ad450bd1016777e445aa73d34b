@@ -1,0 +1,15 @@
+**定理 43.4（乘法满闭图及所有输入的共同尾部逼近）。** 对任意 $x,y,z\in K$，存在严格递增的正整数列 $t_k\ge k$，使
+$$
+Z(t_k)\longrightarrow x,\qquad
+Z(t_k^2)\longrightarrow y,\qquad
+Z(t_k^3)\longrightarrow z.
+$$
+因此，令 $a_k=t_k$、$b_k=t_k^2$，便有 $a_k,b_k\ge k$、$a_kb_k=t_k^3$，并且
+$$
+\Gamma_{\mathrm{mul}}=K^3,
+\qquad
+\overline{\{(Z(a),Z(b),Z(ab)):a,b\ge T\}}=K^3
+\quad(T\in\mathbb N_0).
+$$
+三个坐标可以独立指定任意分裂端点及其定向。结论包括 $x$ 或 $y$ 为 $0_K$、$Z(c)$ 的情形；这些点是极限目标，并非被固定不变的数值输入。
+

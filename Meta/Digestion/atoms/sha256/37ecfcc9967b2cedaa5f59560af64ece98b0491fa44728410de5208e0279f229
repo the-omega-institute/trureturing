@@ -1,0 +1,9 @@
+**theorem 20.2 (Exact positional cuts, including the split endpoints).** Write
+$$
+a=-\alpha,\qquad b=\beta,\qquad c=-\alpha^3,\qquad
+I=[a,b],\qquad u=(10)^\infty,\qquad v=(01)^\infty,
+$$
+and
+$$
+e_m=[-m\phi]\quad(m\ge1),\qquad E=\{e_m:m\ge1\}.
+$$

@@ -1,0 +1,19 @@
+**定义 46.2（实际共同像、商方程解与分别实际像）。** 设 $\Sigma$ 是有限系统 $P_j(\mathbf X)=0$，其中 $1\le j\le r$，$P_j\in\mathbb Z[X_1,\ldots,X_d]$。先合并同类项，再按系数符号唯一分拆
+$$
+P_j=P_j^+-P_j^-,\qquad P_j^+,P_j^-\in\mathbb N_0[\mathbf X].
+$$
+自然数域上的原方程等价于 $P_j^+=P_j^-$；有限半环及 $K$ 中一律解释后一个等式，不解释负系数或减法。记
+$$
+S_j=\{\mathbf n\in\mathbb N_0^d:P_j^+(\mathbf n)=P_j^-(\mathbf n)\},\qquad S=\bigcap_{j=1}^r S_j,
+$$
+$$
+A_\alpha=q_\alpha^d[S],\qquad
+B_\alpha=\{a\in Q_\alpha^d:\forall j,\ P_{j,\alpha}^+(a)=P_{j,\alpha}^-(a)\},\qquad
+C_\alpha=\bigcap_{j=1}^r q_\alpha^d[S_j],
+$$
+以及完成中的方程解集
+$$
+E_\Sigma=\{x\in K^d:\forall j,\ P_{j,K}^+(x)=P_{j,K}^-(x)\}.
+$$
+空系统的交取全空间；零个变量的元组空间取单点。$A_\alpha$ 才是原系统的实际共同像。仅在自然数中等价的其他多项式改写，未经证明不得替换 $B_\alpha$ 或 $E_\Sigma$。
+

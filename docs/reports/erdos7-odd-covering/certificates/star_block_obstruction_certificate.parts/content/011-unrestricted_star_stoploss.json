@@ -1,0 +1,63 @@
+{
+  "prime_cutoff": {
+    "kind": "inline",
+    "value": 2048
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 2039
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 309
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "2/5"
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 819
+  },
+  "charge_upper": {
+    "kind": "inline",
+    "value": "197210774016889569/500000000000000000"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "8993986745166125367/500000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "2622709946291465704821/1000000000000000000"
+  },
+  "supported_Gamma_upper": {
+    "kind": "inline",
+    "value": "2622315524743431925683/605578451966220862"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "10350367/2187"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "532955172528371903287633/1324400074450125025194"
+  },
+  "steps": {
+    "path": "content/011-unrestricted_star_stoploss/012-steps.json",
+    "sha256": "754e9dcba9a4773a11031c227bf575657aa8d9530b186303610b107abb04353f",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Finite directed certificate for the unrestricted-tail complete-star theorem; ordinary convex comparison and BBMST continuation are separate mathematical inputs."
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "5b818f287040e84a33ae66d650a297acca59260ddcdf58ac45d2198bb0c6f47f"
+  }
+}

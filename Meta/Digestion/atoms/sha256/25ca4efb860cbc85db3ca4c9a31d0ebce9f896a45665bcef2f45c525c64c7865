@@ -1,0 +1,39 @@
+### GAW.3. The zero residue of the totient problem retains the actual WSS branch
+
+**Definition.** For a prime q>5 and P=pi(q), let S(q) be the set of residues a modulo P such that q divides Euler's totient tot(F_m) for every positive integer m congruent to a modulo P. Only positive indices are used, so tot(F_0) is never invoked.
+
+**Theorem.** With h_q and q_q as in GAW.1,
+
+$$
+\boxed{
+v_q(\operatorname{tot}(F_P))
+=h_q-1+\sum_{\substack{p\mid F_P\ p\ne q\ p\text{ prime}}}v_q(p-1).
+}\tag{GAW4}
+$$
+
+Consequently
+
+$$
+\boxed{
+0\in S(q)\iff q\mid\operatorname{tot}(F_P)
+\iff q_q=0\ \text{or}\ \exists p\text{ aligned for }q.
+}\tag{GAW5}
+$$
+
+**Proof.** Since rho(q)|P and q does not divide P, the classical Fibonacci valuation formula gives v_q(F_P)=h_q. In tot(F_P)=product p^(v_p(F_P)-1)(p-1), the contribution of p=q is h_q-1. Every other prime p contributes only v_q(p-1). This proves GAW4. If q divides tot(F_P), then it divides tot(F_(uP)) for every u>=1: F_P divides F_(uP), and A|B for positive integers implies tot(A)|tot(B), directly from prime factorization. The reverse implication takes u=1. Nonnegativity in GAW4, the actual WSS criterion h_q>=2 iff q_q=0, and p|F_P iff rho(p)|P prove GAW5.
+
+**Corollary.** For every prime q>5,
+
+$$
+\boxed{0\in S(q)\iff q_q=0\ \text{or}\
+\bigl(2q+1\text{ prime and }\rho(2q+1)\mid\pi(q)\bigr)\ \text{or}\
+\exists p>200q+1:\ p\text{ prime},\ p\equiv1\pmod q,\ \rho(p)\mid\pi(q).}\tag{GAW6}
+$$
+
+**Proof.** Every aligned prime has p=kq+1 for an even k>=2. GAW2 leaves k=2 or k>200. Apply GAW5. Every branch conversely supplies the required totient divisibility.
+
+**Theorem.** Suppose a is a residue in S(q). If rho(q) does not divide a, every positive m congruent to a modulo P has a prime divisor p of F_m with p congruent to one modulo q. If rho(q)|a and h_q=1, at least a fraction (q-1)/q of that progression, measured by its progression parameter, necessarily has such a prime divisor. If rho(q)|a and h_q>=2, then a belongs to S(q) without requiring any such other-prime witness.
+
+**Proof.** In the first case q never divides F_m, so Euler's product forces a different prime p with q|p-1. In the second case v_q(F_m)=1+v_q(m/rho(q)). Because q is coprime to P/rho(q), exactly one progression-parameter class modulo q makes q divide m/rho(q). In the other q-1 classes the q-primary contribution to the totient is zero, so an external witness is forced. In the third case v_q(F_m)>=2 at every such index, and the q-primary factor alone gives the totient divisibility.
+
+The second conclusion is a positive-proportion assertion; it does not say that all but finitely many progression members lack the q^2 contribution. The proof never infers h_q=1 from a finite search for WSS primes. In particular GAW4-GAW6 retain the branch left unproved by that inference in Lemma 4.3 of the cited preprint. None of these identities proves that the WSS branch or the large-witness branch occurs, and none supplies an upper bound for the prime-index powerful-block count H_*(Y).

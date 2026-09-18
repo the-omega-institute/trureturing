@@ -1,0 +1,7 @@
+**定理 8。** 若 \(\underline d(\mathcal T)=0\)，则对每个 \(60\mid M\)，
+
+\[
+\boxed{\sum_{r\in\mathcal R_1(M)}\frac1r=\infty.}
+\tag{EMW-G1}
+\]
+

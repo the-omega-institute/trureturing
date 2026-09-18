@@ -1,0 +1,21 @@
+## RS.1 固定任务与实际状态
+
+令 U∈R^(m×q)、V∈R^(q×m)，固定损失为 ||VU||_F²/2。记
+
+$$W=VU,\quad A=U^TU,\quad B=VV^T,\quad
+\Gamma=\begin{pmatrix}A&W^T\\W&B\end{pmatrix}.$$
+
+真实状态恰好满足 Γ≽0、rankΓ≤m：反向因子分解 Γ=ZᵀZ 后，把 Z 的两组列分别作为 U、Vᵀ，不足 m 行补零。同步梯度下降的精确更新为
+
+$$\begin{aligned}
+A^+&=A-2hW^TW+h^2W^TBW,\\
+B^+&=B-2hWW^T+h^2WAW^T,\\
+W^+&=W-h(BW+WA)+h^2WW^TW.
+\end{aligned}\tag{RS.1}$$
+
+等价地 Γ⁺=C_h(W)ΓC_h(W)ᵀ，其中
+
+$$C_h(W)=I-h\begin{pmatrix}0&W^T\\W&0\end{pmatrix}.$$
+
+这些递推属于既有前置，不作为新颖性主张。所有实验都是一条被动轨迹；没有重置、修改标签或自由指定梯度。所有识别结论恢复 Gram，不恢复共同隐藏正交坐标。
+

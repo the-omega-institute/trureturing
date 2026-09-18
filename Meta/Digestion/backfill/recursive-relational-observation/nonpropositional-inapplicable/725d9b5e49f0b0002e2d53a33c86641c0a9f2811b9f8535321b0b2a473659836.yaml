@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:725d9b5e49f0b0002e2d53a33c86641c0a9f2811b9f8535321b0b2a473659836
+  normalized_sha256: sha256:725d9b5e49f0b0002e2d53a33c86641c0a9f2811b9f8535321b0b2a473659836
+cas_ref: sha256:725d9b5e49f0b0002e2d53a33c86641c0a9f2811b9f8535321b0b2a473659836
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以钉版 Mathlib 的实数 lp 空间且指数为一表示原文任意集合上的绝对可和族，其成员给出绝对可和性，再直接应用可和族支撑至多可数定理；量词覆盖任意指标类型，仓内无冻结 GID。
+    previous_atom_id: 0382b277aa3cb6802392856d319acde298ee01a962a2ca47a20b3710f04913e2
+    next_atom_id: 19e3f23a2ad7e56e555229f857b94aa0fd4a30a3b1244e12da3a51db4c8fa1cd

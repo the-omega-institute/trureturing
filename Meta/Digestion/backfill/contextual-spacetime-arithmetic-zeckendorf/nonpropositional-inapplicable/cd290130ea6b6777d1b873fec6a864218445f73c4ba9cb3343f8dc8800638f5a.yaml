@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd290130ea6b6777d1b873fec6a864218445f73c4ba9cb3343f8dc8800638f5a
+  normalized_sha256: sha256:cd290130ea6b6777d1b873fec6a864218445f73c4ba9cb3343f8dc8800638f5a
+cas_ref: sha256:cd290130ea6b6777d1b873fec6a864218445f73c4ba9cb3343f8dc8800638f5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: List.length_eq_zero_iff 将深度零的全部测试词归约为空词，展开 signedObservation、response 和 eval 后严格响应相等恰是当前 Möbius 读数相等；仓内无冻结 GID，未使用要求正视界的冻结分类定理。
+    previous_atom_id: 48f11e8a2755c640530990f8f8c20e18d3f66430301d1f5cc7f35369e98aec8e
+    next_atom_id: d32732d121e22fe98b65b8a69471d54b14d001f00a1455e6daa53eee5b72f10a

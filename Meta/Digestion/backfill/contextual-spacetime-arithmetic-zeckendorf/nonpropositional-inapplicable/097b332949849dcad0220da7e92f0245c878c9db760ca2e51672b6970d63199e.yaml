@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:097b332949849dcad0220da7e92f0245c878c9db760ca2e51672b6970d63199e
+  normalized_sha256: sha256:097b332949849dcad0220da7e92f0245c878c9db760ca2e51672b6970d63199e
+cas_ref: sha256:097b332949849dcad0220da7e92f0245c878c9db760ca2e51672b6970d63199e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句只定义数字关系的逐位置运输及有限观察域的限制约定，并区分局部后继这一另一关系，没有新增命题。
+    previous_atom_id: 70c0dec6a08598ee4f3801153cb869baa28201839b7700fbb857685661ff3709
+    next_atom_id: 0bf1b763abf4bd02230adc14cb63ac6e97b4157d25f9764a6c7cce00bb9ac190

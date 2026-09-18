@@ -1,0 +1,292 @@
+{
+  "schema": "erdos7-seven-digit-carrier-classification-v1",
+  "scope": "Complete actual low315 carriers on the six canonical old45 geometries; common nonzero7-root permutations and old3/5 carrier stabilizers; no universal moment target or covering-system resolution",
+  "canonical_source_schema": "erdos7-common-fibre-head-experiment-v1",
+  "source_geometry_sha256": "cf4ac2572e609b3d51e1175534f40d2c17ccad853028ae5de2189e745528edd2",
+  "digit_classification": {
+    "patterns": 203,
+    "patterns_by_blocks": {
+      "1": 1,
+      "2": 31,
+      "3": 90,
+      "4": 65,
+      "5": 15,
+      "6": 1
+    },
+    "concrete_digit_tuples": 16807,
+    "optional_nonzero_patterns": 52,
+    "patterns_sha256": "f5db2bf96f861318546fa1908d09d198c5619cab8748f3705328a8f21f7a9899"
+  },
+  "full_old_residue_choices_per_shape": 91125,
+  "full_labelled_digit_orbits_per_shape": 18498375,
+  "cases": [
+    {
+      "shape": "root1_same_other_column",
+      "old_points": 17,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        18
+      ],
+      "labelled_Bell6_patterns": 2630880,
+      "optional_Bell5_patterns": 673920,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        234,
+        3689,
+        165141
+      ],
+      "deletion_vectors": 27679,
+      "digit_union_states": 165141,
+      "old_carrier_automorphisms": 12,
+      "digit_union_orbits": 31833,
+      "deletion_vector_orbits": 5281,
+      "union_orbit_sizes": {
+        "1": 783,
+        "2": 9156,
+        "3": 2410,
+        "6": 15832,
+        "12": 3652
+      },
+      "union_states_sha256": "ef89d223089885469d718239b4c016a24bc5b751cc4e7ebbb9cd44bce4ef6979",
+      "union_orbits_sha256": "86945bd75b0dcfa07804e19cdbe82975750ae24de6f33ba4c3773d44c7877bbb",
+      "deletion_vectors_sha256": "fecb7b1e64e28431cfb2a0de5f68eba8b7e0320bc47af5215dbb3d1590ac88cd",
+      "old_maps_sha256": "a2f05e681ef9b565c2f99ee1a41b469dfa8b695815052692ff0d0cea5838d81d",
+      "maximum_union_states_per_vector": 37
+    },
+    {
+      "shape": "root1_other_same_column",
+      "old_points": 17,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        18
+      ],
+      "labelled_Bell6_patterns": 2630880,
+      "optional_Bell5_patterns": 673920,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        235,
+        3758,
+        168517
+      ],
+      "deletion_vectors": 28939,
+      "digit_union_states": 168517,
+      "old_carrier_automorphisms": 24,
+      "digit_union_orbits": 15451,
+      "deletion_vector_orbits": 2829,
+      "union_orbit_sizes": {
+        "1": 35,
+        "2": 161,
+        "3": 550,
+        "4": 37,
+        "6": 5009,
+        "12": 7959,
+        "24": 1700
+      },
+      "union_states_sha256": "1c4321318e08435f30e88cb4d8d282c99e7a4f026847d7c78f3f83b22cca6552",
+      "union_orbits_sha256": "b4de5728072f9ab2e44b2dcc9c9cad05e9b32d494056b9ffa9cd87e554c790a7",
+      "deletion_vectors_sha256": "b1f2d4abfde1cd7d884632e3596e11cf459fc85eb9018709c3acfec2ddb8441d",
+      "old_maps_sha256": "29dece12801a8171fb0f48ba1119a71b1fecf2aa979a625fc1110e402cf743b1",
+      "maximum_union_states_per_vector": 37
+    },
+    {
+      "shape": "root1_other_other_column",
+      "old_points": 17,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        18
+      ],
+      "labelled_Bell6_patterns": 2630880,
+      "optional_Bell5_patterns": 673920,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        235,
+        3758,
+        168695
+      ],
+      "deletion_vectors": 28735,
+      "digit_union_states": 168695,
+      "old_carrier_automorphisms": 8,
+      "digit_union_orbits": 40281,
+      "deletion_vector_orbits": 7082,
+      "union_orbit_sizes": {
+        "1": 603,
+        "2": 7526,
+        "4": 26044,
+        "8": 6108
+      },
+      "union_states_sha256": "208847aeff6f3e142d3fe2b91f8c6522ce80e3e700ca92bc9c20d8001f5005a7",
+      "union_orbits_sha256": "4cf97f9ce1eaee878b80dd3bfc78f1c222ab908a8a3e5bfddbb244064f7bdbce",
+      "deletion_vectors_sha256": "12046a646551fe5bf5bab077b3ea689162d45001cc55e869647312f511c66a16",
+      "old_maps_sha256": "1e0b4dff765097c773ee46fc71d87ff7fe094d4b5a580adea3bac6f633a66a1d",
+      "maximum_union_states_per_vector": 37
+    },
+    {
+      "shape": "root2_same_other_column",
+      "old_points": 16,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        17
+      ],
+      "labelled_Bell6_patterns": 2484720,
+      "optional_Bell5_patterns": 636480,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        234,
+        3737,
+        157010
+      ],
+      "deletion_vectors": 25813,
+      "digit_union_states": 157010,
+      "old_carrier_automorphisms": 8,
+      "digit_union_orbits": 36152,
+      "deletion_vector_orbits": 6063,
+      "union_orbit_sizes": {
+        "1": 206,
+        "2": 5706,
+        "4": 24132,
+        "8": 6108
+      },
+      "union_states_sha256": "4bf0807a4ab87d75e5e01a3f2d8045a845361d5b36d40d2dc2561e0da869a089",
+      "union_orbits_sha256": "52b8cd4704e6bdcc02922ecea15b812ae77cd552b9aa0546308f122d8e35f0df",
+      "deletion_vectors_sha256": "4a0caa40c7e029e0a96d506ece1ad280352033bff094a669db1b077f28c84602",
+      "old_maps_sha256": "1798e1ec4ac961f7d260545021e618fc9422cd35f79c265bd5090bc73d6b7899",
+      "maximum_union_states_per_vector": 37
+    },
+    {
+      "shape": "root2_other_same_column",
+      "old_points": 16,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        17
+      ],
+      "labelled_Bell6_patterns": 2484720,
+      "optional_Bell5_patterns": 636480,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        230,
+        3663,
+        152235
+      ],
+      "deletion_vectors": 25238,
+      "digit_union_states": 152235,
+      "old_carrier_automorphisms": 36,
+      "digit_union_orbits": 12692,
+      "deletion_vector_orbits": 2268,
+      "union_orbit_sizes": {
+        "1": 69,
+        "3": 2012,
+        "6": 3454,
+        "9": 1976,
+        "18": 4383,
+        "36": 798
+      },
+      "union_states_sha256": "ff810e4363225b3869497afb1e85c6d55a662c571edcb145cea4f933d8755d82",
+      "union_orbits_sha256": "b87954e4aba8b76e6a399526c01f87536ef923a24b7d6e7e5bc14b7ae16fbf70",
+      "deletion_vectors_sha256": "211145cada36dd35f1996f9725052c37c27b4be46e0e6ed7920ea02efa9e97f8",
+      "old_maps_sha256": "4830a6008a85937d7cb1ae3388e0b92eba180005013f1e31cdef255e384adc1f",
+      "maximum_union_states_per_vector": 37
+    },
+    {
+      "shape": "root2_other_other_column",
+      "old_points": 16,
+      "effective_cylinder_counts_including_empty": [
+        3,
+        5,
+        6,
+        8,
+        17
+      ],
+      "labelled_Bell6_patterns": 2484720,
+      "optional_Bell5_patterns": 636480,
+      "successive_label_widths": [
+        1,
+        3,
+        22,
+        233,
+        3683,
+        153997
+      ],
+      "deletion_vectors": 24971,
+      "digit_union_states": 153997,
+      "old_carrier_automorphisms": 12,
+      "digit_union_orbits": 34160,
+      "deletion_vector_orbits": 5718,
+      "union_orbit_sizes": {
+        "1": 2149,
+        "2": 12621,
+        "3": 2062,
+        "6": 14586,
+        "12": 2742
+      },
+      "union_states_sha256": "a5853bc7b22ddecf5b199de7982a246f955381beb0966cfae293e55cb9c8df59",
+      "union_orbits_sha256": "39a714de47b3d4f2cfceb872ac62e762326b1d9c8f64ea74a27b19fe0e06a8b7",
+      "deletion_vectors_sha256": "ef62ca7336b46fd74cd1ace87257bd719b420f50e86a1b097f599fa1a6f6c4b8",
+      "old_maps_sha256": "231c18cb57e9087f14c86b75976e9631f84860cf931977e5a3379f4ae127102e",
+      "maximum_union_states_per_vector": 37
+    }
+  ],
+  "totals": {
+    "deletion_vectors": 161375,
+    "digit_union_states": 965595,
+    "digit_union_orbits": 170569,
+    "deletion_vector_orbits": 29241,
+    "labelled_Bell6_patterns": 15346800,
+    "optional_Bell5_patterns": 3931200
+  },
+  "deletion_vector_collision": {
+    "shape": "root1_same_other_column",
+    "union_masks_a": [
+      66576,
+      103278
+    ],
+    "union_masks_b": [
+      8,
+      65828,
+      104018
+    ],
+    "b": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      2
+    ]
+  }
+}

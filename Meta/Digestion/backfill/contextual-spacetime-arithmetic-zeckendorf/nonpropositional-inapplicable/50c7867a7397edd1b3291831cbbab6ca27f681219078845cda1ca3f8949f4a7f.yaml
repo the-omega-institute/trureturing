@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50c7867a7397edd1b3291831cbbab6ca27f681219078845cda1ca3f8949f4a7f
+  normalized_sha256: sha256:50c7867a7397edd1b3291831cbbab6ca27f681219078845cda1ca3f8949f4a7f
+cas_ref: sha256:50c7867a7397edd1b3291831cbbab6ca27f681219078845cda1ca3f8949f4a7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶在冻结容量箱和特征定义上展开单位状态的单点支撑，使用钉版 Mathlib 的有限和化简与有理数正规化，已编译证明常数二分之一行对每个单位状态取圆上的二分之一；未使用 D5 定理，仓内没有本叶可用的冻结 GID。
+    previous_atom_id: 051b6c8317c65e4b33c380eb1b33cf35d37379240d55a1fdafc4590520038499
+    next_atom_id: c615909a8fe69754290b754a8f9524a296aa6fdcd5de750a234ca56eda5a8cf7

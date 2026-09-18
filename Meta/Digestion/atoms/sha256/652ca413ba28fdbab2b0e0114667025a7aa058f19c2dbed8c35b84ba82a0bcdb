@@ -1,0 +1,76 @@
+### QR.6 Every even-index Fibonacci value occurs with positive density
+
+For r>=1 put
+
+$$
+D_r=\{1\}\cup\{F_{2j+1}:1\le j<r\},\qquad K_r=\operatorname{lcm}(D_r).
+$$
+
+**Lemma.** D_F(K_r)=D_r, and x^2=-1 modulo K_r is soluble.
+
+**Proof.** If an odd prime q divides any odd-index F_n, the identity
+L_n^2-5F_n^2=-4 shows that (L_n/2)^2=-1 modulo q. Thus q=1 modulo four,
+including q=5. At an odd index the Fibonacci valuation at two is at
+most one, as follows from the complete period-six recurrence modulo four.
+Hence v_2(K_r)<=1 and every odd prime in K_r is1 modulo four; CRT and
+simple-root lifting prove the root assertion. Also three does not divide
+K_r, since its rank is four and all the target indices are odd.
+
+Now suppose F_k|K_r with k>=3. For k other than6,12 there is a prime of
+exact rank k, by QR.2's classical theorem and the listed small checks.
+It divides some target F_i with i odd and i<=2r-1. The entry-point theorem
+then gives k|i. Therefore k is odd and at most2r-1, so F_k is a target
+value. The exceptions F_6=8 and F_12=144 cannot divide K_r, since its
+two-valuation is at most one. The reverse containment is the definition
+of the least common multiple. This proves the exact divisor set.
+
+**Theorem.** For every r>=1 the natural density
+
+$$
+\boxed{d_r=\lim_{X\to\infty}\frac1X
+ \#\{0\le m\le X:\sigma_F(m^2+1)=F_{2r}\}>0}       \tag{QR7}
+$$
+
+exists. In particular every F_(2r) is attained infinitely often.
+Combined with Appendix FSP.3, the Fibonacci-valued part of A339621's range is
+EXACTLY {F_(2r):r>=1}.
+
+**Proof.** Apply QR6 to D_r, then use the classification in Appendix FSP.3:
+for every m, the displayed sum equals F_(2r) exactly when its full divisor
+set is D_r. The identity sum(D_r)=F_(2r) is the Fibonacci recurrence.
+
+**Explicit positive lower certificate.** For every
+J>=max(12,2r-1) satisfying the integer inequality
+
+$$
+512K_r(J-2)(J-1)3^{J-1}<4^{J-1},                  \tag{QR8}
+$$
+
+one has
+
+$$
+\boxed{d_r>\frac1{2K_r(J-2)(J-1)}.}               \tag{QR9}
+$$
+
+Such J always exist and can be found using integer arithmetic.
+
+**Proof.** Begin with one progression modulo6K_r on which K_r|m^2+1
+and three divides m. For r=1 choose the even progression; for r>=2 the
+root condition already forces m odd, since F_3=2 belongs to D_r.
+This deals with F_3 when forbidden, with F_4, and with the primitive
+exceptions F_6,F_12. For every other forbidden index5<=j<=J, choose a
+prime of exact rank j. It is coprime to6K_r: otherwise j would divide a
+target odd index and would itself be a target. These primes are distinct.
+Avoiding their at most two root classes gives a finite-good density at
+least
+
+$$
+\frac1{6K_r}\prod_{j=5}^{J}\left(1-\frac2{j-1}\right)
+=\frac1{K_r(J-2)(J-1)}.
+$$
+
+Including factors for desired or exceptional indices only lowers this
+bound, so the displayed complete product is legitimate. Subtract T_J
+from QR3. The condition QR8 says exactly that this tail is less than
+half the last lower bound, proving QR9.
+

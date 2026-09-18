@@ -1,0 +1,23 @@
+**定义 488.3（完整表、最短长度与共同容差）。** 对整数 $m\ge2$，以下始终取
+$$
+Q=\mathcal P(m),\qquad k=\pi(m),\qquad t=2^k,\qquad b=1+\lceil\log_2Q\rceil.
+$$
+完整表严格使用第 474.7 条的字段：全部升序约数 $1=a_1<\cdots<a_t=Q$，每个 $\mu(a_i)$，以 $b_0=0$ 为初值的全部部分和 $b_i=\sum_{j\le i}\mu(a_j)$，全部跳变 $\varepsilon_i=|b_i|-|b_{i-1}|$，实际素数标签 $p\le m$、行数以及所需轴数、类型、长度首部与界定符。首部按所在语法域解释；凡该表格式需要的元数据都计入长度，素数地址不换成素数序号。自然字段及其长度仍为
+$$
+\operatorname{Fr}(n)=\zeta(L(n)+1)\,1\,\zeta(n),\qquad
+|\operatorname{Fr}(n)|=L(n)+L(L(n)+1)+1,
+$$
+其中 $\zeta(n)$ 是原 Zeckendorf 规范字，$L(n)=|\zeta(n)|$，零的载荷为空；符号和绝对值各用一个自然字段。所有有理字段的分子、分母也用这个码，分母为正。
+
+还必须列出精确有理数 $c_Q$ 与 $z\alpha_Q$；第二个字段不是 $\alpha_Q$ 本身。第 474.8 条给出一种有界整数构造：
+$$
+A_Q=\sum_{i=1}^t\varepsilon_i\frac Q{a_i},\qquad
+c_Q=\frac{\Phi(Q)A_Q}{Q^2},\qquad
+z\alpha_Q=\frac{A_Q}{\prod_{p\mid Q}(p+1)}.
+\tag{488.3}
+$$
+固定第 474.7 条的完整字段格式。令 $\mathfrak T_m$ 为按该格式写出的全部正确完整表，包括用更大的未约分分子、分母表达同一有理数的表。表长 $|T|$ 是实际比特数。令 $T_0(m)$ 为直接采用 (488.3) 所示分子、分母及原首部构造的表，记
+$$
+S_0(m)=|T_0(m)|,\qquad S_{\min}(m)=\min_{T\in\mathfrak T_m}|T|.
+$$
+$T_0(m)$ 保证该类非空，

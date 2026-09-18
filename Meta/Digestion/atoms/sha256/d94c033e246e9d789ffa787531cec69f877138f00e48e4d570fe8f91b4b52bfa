@@ -1,0 +1,6 @@
+同步参数 Euler 步给出的乘积则精确为
+
+$$
+(V+h\dot V)(U+h\dot U)=VU+h(\dot VU+V\dot U)+h^2\dot V\dot U.
+$$
+

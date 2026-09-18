@@ -15,8 +15,7 @@ internal static class BlueprintIndexAssembler
     internal static ImmutableArray<byte> Assemble(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        var fileMapFile = RequiredFile(snapshot, FileMapLoader.RelativePath);
-        var fileMap = FileMapLoader.Parse(fileMapFile.RawBytes.AsSpan(), FileMapLoader.RelativePath);
+        var fileMap = FileMapLoader.LoadSnapshot(snapshot);
         var sources = snapshot.Files.Values
             .Where(static file => file.Path.Value.StartsWith(SourcePrefix, StringComparison.Ordinal)
                 && file.Path.Value.EndsWith(SourceSuffix, StringComparison.Ordinal))

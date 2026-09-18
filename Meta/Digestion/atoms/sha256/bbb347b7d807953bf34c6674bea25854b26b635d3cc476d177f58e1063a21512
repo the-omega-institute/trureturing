@@ -1,0 +1,29 @@
+
+
+以 $H_1$ 存储第一次结果，定义两个从 $S$ 到 $H_1S$ 的通道
+
+$$
+\mathcal A_{e,g}(\sigma)
+=\bigoplus_{i=0}^1\mathcal D_g(K_i\sigma K_i),
+\qquad
+\mathcal J_e(\sigma)
+=\bigoplus_{i=0}^1P_i\sigma P_i,
+$$
+
+以及 Hermitian 保持线性映射
+
+$$
+\mathcal F_c=c\mathcal A_{e,g}-\mathcal J_e.
+$$
+
+记保留 $H_1S$ 并允许惰性参考的加权差异为
+
+$$
+\mathcal B(c;e,g)
+=\sup_{\substack{1\le\dim R<\infty\\
+\omega_{SR}\ge0,\ \operatorname{tr}\omega_{SR}=1}}
+\left\|(\mathcal F_c\otimes\operatorname{id}_R)(\omega_{SR})\right\|_1.
+$$
+
+这里以保留 $H_1S$ 的固定通道定义放宽目标；其与原任务的关系由下述共同后处理建立，$\mathcal F_c$ 不再包含对控制表的优化。系数 $c$ 不是物理通道的成功概率，也不改变输入归一化。
+

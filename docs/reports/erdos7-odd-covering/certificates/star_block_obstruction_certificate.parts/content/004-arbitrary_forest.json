@@ -1,0 +1,50 @@
+[
+  {
+    "head": "arbitrary_357_head",
+    "tail_prime_minimum": 19,
+    "Gamma_bound": "1889/48",
+    "maximum_parent_factor": "95/81",
+    "saturation_energy_factor": "3/2",
+    "prime_square_upper": "167864949504642761860711/12036039018003000000000000",
+    "loss_upper": "6024840902671133365942778501/6239482626932755200000000000",
+    "retained_lower": "214641724261621834057221499/6239482626932755200000000000",
+    "finite_parent_coefficients": [
+      {
+        "height": 1,
+        "coefficient": "22/19"
+      },
+      {
+        "height": 2,
+        "coefficient": "423/361"
+      },
+      {
+        "height": 8,
+        "coefficient": "19918993689/16983563041"
+      }
+    ]
+  },
+  {
+    "head": "star_head",
+    "tail_prime_minimum": 79,
+    "Gamma_bound": "177",
+    "maximum_parent_factor": "1580/1521",
+    "saturation_energy_factor": "3/2",
+    "prime_square_upper": "2400198237/1000000000000",
+    "loss_upper": "11187323982657/16900000000000",
+    "retained_lower": "5712676017343/16900000000000",
+    "finite_parent_coefficients": [
+      {
+        "height": 1,
+        "coefficient": "82/79"
+      },
+      {
+        "height": 2,
+        "coefficient": "6483/6241"
+      },
+      {
+        "height": 8,
+        "coefficient": "1575957869593929/1517108809906561"
+      }
+    ]
+  }
+]

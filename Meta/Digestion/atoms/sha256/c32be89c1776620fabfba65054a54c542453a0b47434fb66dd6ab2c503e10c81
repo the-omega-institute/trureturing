@@ -1,0 +1,30 @@
+**theorem 24.2 (Exact uniform precision and finite sharpness).** For every $k\ge0$, $\mu_k(0)=0$. For every $k\ge0$, $L\ge1$, and $m\ge0$, the following are equivalent:
+$$
+\forall x,y\in K,\quad q_m(x)=q_m(y)\Longrightarrow q_L(T^kx)=q_L(T^ky);
+$$
+$$
+\exists!\,f_{k,L,m}:X_m\longrightarrow X_L,\qquad q_L\circ T^k=f_{k,L,m}\circ q_m;
+$$
+$$
+G_m\ge G_L+k.
+$$
+The same criterion holds if the fibre implication is required only for $x=Z(a)$ and $y=Z(b)$ with $a,b\in\mathbb N_0$. Whenever the factor exists, it is
+$$
+f_{k,L,m}(p)=q_L\bigl(Z(V_m(p)+k)\bigr).
+$$
+Consequently,
+$$
+\boxed{\ \mu_k(L)=\min\{m\ge0:G_m\ge G_L+k\}\quad(L\ge1).\ }
+$$
+For $J=\mu_k(L)$, there are distinct nonnegative integers $a,b<G_{L+k}$ such that $Z(a)$ and $Z(b)$ first differ at position $J-1$, whereas $Z(a+k)$ and $Z(b+k)$ first differ at position $L-1$. In particular these same integers refute every input depth $m<J$.
+
+All Fibonacci threshold equalities belong to the sufficient side: for $L\ge1$ and $m\ge1$,
+$$
+\mu_k(L)=m\quad\Longleftrightarrow\quad G_{m-1}<G_L+k\le G_m.
+$$
+In particular,
+$$
+\mu_0(L)=L,\qquad \mu_1(L)=L+1,\qquad L\le\mu_k(L)\le L+k\qquad(L\ge1).
+$$
+[Z, Sections 372.3-372.4 and 381-384; R, theorem 2.2.]
+

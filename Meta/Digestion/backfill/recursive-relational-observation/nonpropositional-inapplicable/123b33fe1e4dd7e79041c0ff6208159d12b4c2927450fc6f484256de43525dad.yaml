@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:123b33fe1e4dd7e79041c0ff6208159d12b4c2927450fc6f484256de43525dad
+  normalized_sha256: sha256:123b33fe1e4dd7e79041c0ff6208159d12b4c2927450fc6f484256de43525dad
+cas_ref: sha256:123b33fe1e4dd7e79041c0ff6208159d12b4c2927450fc6f484256de43525dad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条固定数字载体和相位约定，并定义单侧平移的 AP 与 Banach 弱 WAP 性质及连续观察序列，属于研究对象和性质的定义材料。
+    previous_atom_id: 4306c78dc9a3ba286810bfeead480012966566e96edaa4369fb08eb97d5cf9ac
+    next_atom_id: 1904982d17d6ded848a5172065ecd6c69ac745034633da76821fb691d829749f

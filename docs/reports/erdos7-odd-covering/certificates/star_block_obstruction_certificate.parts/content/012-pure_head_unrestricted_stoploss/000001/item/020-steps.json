@@ -1,0 +1,23 @@
+{
+  "length": 302,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000001/item/020-steps/000000-000159.json",
+        "sha256": "29f5b172dfe7b958580fbfd8c7a60386baddaff8ad757097f485e1a678998db5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 302,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000001/item/020-steps/000159-000302.json",
+        "sha256": "4d12d159d9b636c11da866c5786ec04adec8e2d51c6e00a416e451480cee869e",
+        "kind": "value"
+      }
+    }
+  ]
+}

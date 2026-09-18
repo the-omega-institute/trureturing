@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92a3bc0444201823b5429d4463bbbc0bacad6b8e9a30ff6fb71a8569d64fa04b
+  normalized_sha256: sha256:92a3bc0444201823b5429d4463bbbc0bacad6b8e9a30ff6fb71a8569d64fa04b
+cas_ref: sha256:92a3bc0444201823b5429d4463bbbc0bacad6b8e9a30ff6fb71a8569d64fa04b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句限定额外探针反例的适用语言，不提出新的数学命题，无待证明义务。
+    previous_atom_id: ad9d2c17e246b1251d146d528284f6b67c8dbec01def47e0ba12e92d3efaecc5
+    next_atom_id: 913b978cc1cd530deaaacbc70dbfde8ecede8893c3b8a4c7e50e2c33d1f7d0d3

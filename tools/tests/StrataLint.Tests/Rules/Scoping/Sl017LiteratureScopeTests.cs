@@ -12,6 +12,26 @@ public sealed class Sl017LiteratureScopeTests
         """;
 
     [Fact]
+    public void Sl017DoesNotRunInCurrentPhase()
+    {
+        var fixture = Fixture();
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace(
+            "anchors: []",
+            "anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]",
+            StringComparison.Ordinal);
+        fixture.Baseline[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath];
+        var current = fixture.Build().CurrentFacts;
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.ExecuteCurrent(current)).Capability;
+
+        Assert.DoesNotContain(
+            completed.Diagnostics,
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17));
+        Assert.DoesNotContain(RuleId.CreateKnown(17), completed.ExecutedRules);
+    }
+
+    [Fact]
     public void Sl017UnchangedInvalidLiteratureIsIgnoredOnManagedLeanDelta()
     {
         var fixture = Fixture();

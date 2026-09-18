@@ -1,0 +1,8 @@
+若这些孩子全为非叶，则对每个整数 $t\ge0$，
+$$
+Q(B,I;t)
+=
+\max_{\pi\in\mathfrak S_k}
+\sum_{j=1}^k
+Q(C_{\pi(j)},t-j+1).
+$$

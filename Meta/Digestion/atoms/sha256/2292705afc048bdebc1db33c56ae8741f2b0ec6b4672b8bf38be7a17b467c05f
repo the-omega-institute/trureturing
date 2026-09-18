@@ -1,0 +1,11 @@
+精确的全空间酉扩张可在共同有限ambient空间
+$$
+\mathcal A=\mathcal H_S\oplus(\mathcal H_{\mathcal T}\otimes\mathcal E),\qquad
+\iota_{\rm in}(x)=(x,0),\quad\iota_{\rm out}(y)=(0,y)
+$$
+中表述。两个映射$\iota_{\rm in}$及$\iota_{\rm out}W$都是从同一个$\mathcal H_S$到$\mathcal A$的等距嵌入，直接应用同一 [SequentialRegisterCircuit 的 exists_unitary_agree](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)，得到
+$$
+\mathscr U:\mathcal A\longrightarrow\mathcal A\text{ 酉},\qquad
+\mathscr U\iota_{\rm in}=\iota_{\rm out}W.
+$$
+其基底表述是把上述两组$|S|$个正交单位向量各自补成$\dim\mathcal A=|S|+|\mathcal T|\dim\mathcal E$个向量的正交基，再逐基对应。酉算符的定义域和值域是同一个$\mathcal A$；维数可能不同的$\mathcal H_S$与$\mathcal H_{\mathcal T}\otimes\mathcal E$之间只有所述等距$W$。额外ambient空间没有消除输出记录，$M_f$的最小性指确定性提升中该记录因子的维数。

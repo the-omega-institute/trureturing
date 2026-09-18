@@ -1,0 +1,16 @@
+**定义 54.2（$H$ 步预测等价）。** 定义
+
+$$
+x\mathrel{\sim_H}x'
+\quad\Longleftrightarrow\quad
+p_i(\,\cdot\mid x)=p_i(\,\cdot\mid x')
+\quad\text{对所有 }i=1,\ldots,m.
+$$
+
+把
+
+$$
+S_H(x)=\bigl(p_1(\,\cdot\mid x),\ldots,p_m(\,\cdot\mid x)\bigr)
+$$
+
+称为预测响应签名，并令 $Q_H=X/{\sim_H}$。

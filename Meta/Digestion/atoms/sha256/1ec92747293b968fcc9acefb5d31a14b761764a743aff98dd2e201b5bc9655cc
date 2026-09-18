@@ -1,0 +1,41 @@
+**theorem 50.7（全完成中 gcd 图闭包在一个固定边界输入上多值）。** 令
+$$
+D_{\mathrm{full}}=\prod_p p^\infty,
+\qquad
+K=K_{\infty,D_{\mathrm{full}}}.
+$$
+定义两个边界点
+$$
+\omega_0=\lim_{k\to\infty}j(k!),
+\qquad
+\omega_1=\lim_{k\to\infty}j(k!+1).
+$$
+令 gcd 图的闭包为
+$$
+\overline{\Gamma_g}
+=
+\overline{
+\left\{
+\bigl(j(a),j(b),j(\gcd(a,b))\bigr):
+a,b\in\mathbb N_0
+\right\}}
+\subseteq K^2\times K.
+$$
+则在同一个固定输入
+$$
+(\omega_0,\omega_1)
+$$
+上至少有两个不同输出：
+$$
+\bigl(\omega_0,\omega_1,j(1)\bigr)\in\overline{\Gamma_g},
+$$
+以及
+$$
+\bigl(\omega_0,\omega_1,\omega_1\bigr)\in\overline{\Gamma_g},
+$$
+且
+$$
+j(1)\ne\omega_1.
+$$
+此结论只断言图闭包在该输入处至少二值，不断言完整图闭包的等式描述，也不断言任意额外的整除刻画。
+

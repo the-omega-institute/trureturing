@@ -1,0 +1,40 @@
+**theorem 20.5 (Exact temporal complexity and temporal phase cuts).** For every $t\ge0$,
+$$
+|v_t[K]|=t+1.
+$$
+The temporal phase cut set is
+$$
+B_0^{\mathrm{time}}=\varnothing,\qquad
+B_t^{\mathrm{time}}=\{e_1,\ldots,e_{t+1}\}\quad(t\ge1).
+$$
+For positive $t$, the atoms of $\mathcal V_t$ are exactly
+$$
+A_J=\overline{\{Z(n):H(Z(n))\in J\}}^{\,K},
+$$
+where $J$ runs through the open arcs complementary to $B_t^{\mathrm{time}}$. Different arcs give different words. Thus the count includes both members of every split fiber without adding singleton boundary atoms.
+
+**Proof.** The empty observation has one value. For $t\ge1$, the possible cuts of the successive readouts are
+$$
+\bigcup_{i=0}^{t-1}R^{-i}\{e_1,e_2\}
+=\bigcup_{i=0}^{t-1}\{e_{i+1},e_{i+2}\}
+=\{e_1,\ldots,e_{t+1}\}.
+$$
+It remains to prove that no two resulting arcs carry the same word; the cut count alone does not establish this.
+
+Use the intercept coordinate from Theorem 20.4 and a representative $0\le\rho<1$. The cuts become zero and the $t$ distinct points
+$$
+c_j=\{-j\beta\},\qquad1\le j\le t,
+$$
+where braces denote fractional part. Away from these cuts, the partial sums of the first $t$ lower mechanical digits are
+$$
+\sum_{i=0}^{j-1}M^{\mathrm{lo}}_\rho(i)
+=\lfloor\rho+j\beta\rfloor,\qquad1\le j\le t.
+$$
+As $\rho$ increases from zero to one, the $j$-th function increases exactly once, at $c_j$, and never decreases. Consequently two different intervals between the sorted cuts have different vectors of partial sums. The digit word determines, and is determined by, those partial sums. Hence these $t+1$ intervals carry $t+1$ different words, including the intervals adjacent to zero on its two sides.
+
+The natural phase orbit is dense and avoids all cuts, so all these words occur on the natural core. Conversely, $v_t$ is continuous with finite discrete target. Every nonempty fiber is open and therefore meets the dense core; there can be no additional word supported only on split points. Each fiber is also closed, and its core intersection is exactly the core phases in the unique arc carrying its word. Density in this clopen fiber proves the formula for $A_J$ and proves that these are all its atoms.
+
+At an endpoint $e_m$, Theorem 20.4 assigns its two lifts the words of the corresponding adjacent arcs whenever $m\le t+1$. For $m>t+1$ the two lifts have the same word and lie in one atom. Continuity and compactness give $H[A_J]=\overline J$: the image is contained in this closed arc and contains the dense natural phases in $J$. Its phase boundaries are therefore exactly the displayed cut set. $\square$
+
+Attached reference: the classical complexity characterization of Sturmian words is stated in Glen–Justin, *Episturmian Words: A Survey*, §1.1, p. 1; Berstel, §2.1, p. 25, Theorem 1 gives the associated eventual-periodicity threshold. The concrete arc distinction and endpoint count here are proved directly. ([arxiv.org](https://arxiv.org/pdf/0801.1655))
+

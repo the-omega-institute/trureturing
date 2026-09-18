@@ -1,0 +1,38 @@
+**定义 25.2（归一化实有符号核与有限卷积）。** 令
+$$
+A=\mathbb R^{(K)}
+=\{a:K\to\mathbb R:\operatorname{supp}(a)\text{ 有限}\},\qquad
+\operatorname{supp}(a)=\{x:a(x)\ne0\},
+$$
+$$
+\delta_x(w)=
+\begin{cases}1,&w=x,\\0,&w\ne x,\end{cases}
+\qquad
+\varepsilon(a)=\sum_{x\in K}a(x),\qquad
+A_\theta=\{a\in A:\operatorname{supp}(a)\subseteq H^{-1}(\{\theta\})\}.
+$$
+所有和均为有限和。$\varepsilon(a)=1$ 表示仿射系数归一化，不要求各系数非负。[^rro25-affine] 一个满足精确闭图支撑条件的归一化实有符号核，是映射 $P:K^2\to A$，满足
+$$
+\varepsilon(P_{x,y})=1,\qquad
+\operatorname{supp}(P_{x,y})\subseteq\Gamma(x,y).
+$$
+这里要求的是支撑包含于准确的 $\Gamma(x,y)$，不要求支撑等于该集合。定义双线性乘法
+$$
+a*b=\sum_{x,y\in K}a(x)b(y)P_{x,y},
+\qquad \delta_x*\delta_y=P_{x,y}.
+$$
+称 $P$ 结合，若对每个有序三元组 $(x,y,z)\in K^3$，
+$$
+(\delta_x*\delta_y)*\delta_z
+=\delta_x*(\delta_y*\delta_z).
+$$
+交换律和单位律不属于此定义。用 $0_A$ 区别于点 $0_K$。另记 $\mathbb R[\mathbb T]$ 为基向量 $b_\theta$ 的有限实形式和，乘法由
+$$
+b_\theta b_\rho=b_{\theta+\rho}
+$$
+双线性扩张，并定义线性映射 $H_\#:A\to\mathbb R[\mathbb T]$，使
+$$
+H_\#(\delta_x)=b_{H(x)}.
+$$
+此处的群代数只使用有限形式和。[^rro25-algebra]
+

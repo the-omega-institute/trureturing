@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:334d9d8b2d9f979d78eb97c6d80bebda14923f61707475489291b4c3d4c61e2c
+  normalized_sha256: sha256:334d9d8b2d9f979d78eb97c6d80bebda14923f61707475489291b4c3d4c61e2c
+cas_ref: sha256:334d9d8b2d9f979d78eb97c6d80bebda14923f61707475489291b4c3d4c61e2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义约数阶梯部分和、互素计数、未过滤证书及系数，或单独规定参数为一时的分支；没有将三角上界及误差估计作为定义事实结算。
+    previous_atom_id: 75b7b2c0ec47b0ab47f23d956083193a89d55317d9f3c901f6db2ee67572dc39
+    next_atom_id: 9c8d5e566012abebe8f3a0b6c4d4090fb79e14c8c53eb5c8c1b9d04d364efbe6

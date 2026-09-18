@@ -1,0 +1,11 @@
+**Theorem.** For every odd n>3 with 5 not dividing n and R_n>1,
+
+$$
+\boxed{1<\frac{\sigma(R_n)}{R_n}
+<\exp\!\left(\frac{\log\phi}{2\log(2n-1)}\right).}
+\tag{S10}
+$$
+
+Thus along such indices tending to infinity the abundancy tends to one,
+independently of whether any initial depth is greater than one.
+

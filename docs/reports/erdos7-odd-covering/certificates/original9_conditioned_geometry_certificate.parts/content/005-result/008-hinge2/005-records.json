@@ -1,0 +1,50 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/005-result/008-hinge2/005-records/000000-000002.json",
+        "sha256": "735776766c22d749492f7ccb8e1aade75bc087771c08e5903cea5c268b09b99d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/005-result/008-hinge2/005-records/000002-000004.json",
+        "sha256": "5f5c3121d9a115dbb5959b5b11200d9f094172fa115c11016c89acbdf0eb86c6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/005-result/008-hinge2/005-records/000004-000006.json",
+        "sha256": "6b566b9ca93e37c62ffee0b74c697e797da99239ad7af933378c86c58342ce7c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 8,
+      "part": {
+        "path": "content/005-result/008-hinge2/005-records/000006-000008.json",
+        "sha256": "d1b16e37bbe18c89d349d0cf6d9f13ea2bb28baa6a65701e2bbf59a66b0e23de",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 10,
+      "part": {
+        "path": "content/005-result/008-hinge2/005-records/000008-000010.json",
+        "sha256": "42a1693f4692cc3e9bc7fda20eba3787a1845017ad6140be67d402497a956b31",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+**theorem 41.2 (Bounded orthonormal lexicographic realization).** A family of strict linear observations may be feasible on every finite subfamily without admitting one real direction satisfying all observations. In finite dimension, the exact replacement is a finite list of directions, ordered by decreasing asymptotic importance. The relevant bound is the rank of the forms on their common input space, not the cardinality of the family. All eventual assertions below are constraintwise.
+
+Finite feasibility, existence of a finite lexicographic witness, and existence of an eventually feasible polynomial curve in $tV[t]$ are equivalent.
+
+Whenever these conditions hold, there is an orthonormal lexicographic witness $v_1,\ldots,v_r$ contained in $W$, with
+$$
+0\le r\le m\le d.
+$$
+Consequently,
+$$
+\gamma(t)=tv_1+t^2v_2+\cdots+t^rv_r
+$$
+is eventually feasible and tends to zero. For a nonempty feasible family, $r\ge1$; the minimum possible witness length equals the minimum possible degree of a polynomial curve tending to zero and eventually feasible.
+
+These assertions hold for arbitrary set-indexed families.
+
+**Proof.** If $I=\varnothing$, then $m=0$, finite feasibility is automatic, and the empty list and zero curve suffice. If some $\ell_i$ is zero, the singleton subsystem indexed by $i$ is impossible; that row also excludes every lexicographic or eventual polynomial witness. In particular, when $V=\{0\}$, the assertions hold exactly when $I=\varnothing$. These observations settle the zero-rank case.
+
+Assume finite feasibility and $m\ge1$. We construct the orthonormal witness by induction on $m$. Projection onto $W$ preserves every evaluation:
+$$
+\ell_i(P_Wv)=\langle a_i,P_Wv\rangle=\langle a_i,v\rangle.
+$$
+On the compact, nonempty unit sphere $S(W)$, define the closed sets
+$$
+H_i=\{u\in S(W):\ell_i(u)\ge0\}.
+$$
+For every nonempty finite $F\subseteq I$, choose $v$ with $\ell_i(v)>0$ for all $i\in F$. Then $P_Wv\ne0$, and its normalization belongs to $\bigcap_{i\in F}H_i$. The empty intersection is $S(W)$ itself. The finite-intersection property therefore gives
+$$
+u\in\bigcap_{i\in I}H_i.
+$$
+This is the compactness of an ordinary finite-dimensional sphere; no enumeration of $I$ has been used.
+
+Thus $\|u\|=1$ and $\ell_i(u)\ge0$ for every $i$. At least one evaluation is strictly positive: otherwise $u$ would belong to both $W$ and $W^\perp$, contradicting its norm.
+
+Retain only the zero rows:
+$$
+J=\{i\in I:\ell_i(u)=0\},\qquad
+W'=\operatorname{span}_{\mathbb R}\{a_i:i\in J\}.
+$$
+For $i\in J$, the vector $a_i$ is orthogonal to $u$. Hence
+$$
+W'\subseteq W\cap u^\perp,\qquad \dim W'\le m-1.
+$$
+Finite feasibility survives this restriction and projection. Indeed, for finite $G\subseteq J$, choose an original feasible vector $v_G\in V$. Since $a_i\in W'$ for $i\in G$,
+$$
+\ell_i(P_{W'}v_G)=\ell_i(v_G)>0\qquad(i\in G).
+$$
+The Riesz representatives of the restricted forms on $W'$ are exactly the vectors $a_i$, so their rank is $\dim W'$.
+
+The induction hypothesis provides an orthonormal witness $w_1,\ldots,w_s$ in $W'$ for the residual family, with $s\le\dim W'$. If $J=\varnothing$, use $s=0$. The concatenated list
+$$
+u,w_1,\ldots,w_s
+$$
+is orthonormal and has length at most $m$. A row positive on $u$ is already settled at its first entry. A row zero on $u$ belongs to $J$ and has a positive first nonzero entry in the residual list. This proves the assertion for every row. Equivalently, every unresolved row is carried into a strictly lower-rank residual problem; at rank zero an unresolved nonzero row is impossible.
+
+For any finite lexicographic witness, form its polynomial curve. For fixed $i$, its first nonzero coefficient occurs at $k_i$, and
+$$
+t^{-k_i}\ell_i(\gamma(t))
+=\ell_i(v_{k_i})+\sum_{j>k_i}t^{j-k_i}\ell_i(v_j)
+\longrightarrow \ell_i(v_{k_i})>0.
+$$
+This proves eventual feasibility. For finite nonempty $F$, take a positive $t$ smaller than the minimum of the finitely many resulting $\varepsilon_i$, $i\in F$. The single vector $\gamma(t)$ belongs to $C_F$.
+
+Conversely, for an eventually feasible polynomial $\gamma(t)=\sum_{j=1}^qt^jv_j$, each scalar polynomial $\ell_i(\gamma(t))$ is nonzero and its coefficient of smallest nonzero degree is positive. Otherwise it would be zero or negative for all sufficiently small positive $t$. Thus its coefficient list is a lexicographic witness.
+
+Finally, a witness of length $r$ produces a polynomial of degree at most $r$, and a nonzero polynomial of degree $q$ produces a witness of length $q$. Taking the two minima proves their equality for nonempty feasible families.
+
+For a nonempty family, depth one is therefore equivalent to the existence of a simultaneous strict real solution. The higher-depth conclusion is genuinely different from such a solution. $\square$
+

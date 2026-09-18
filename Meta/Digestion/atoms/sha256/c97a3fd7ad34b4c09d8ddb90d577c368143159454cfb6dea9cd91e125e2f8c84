@@ -1,0 +1,22 @@
+**定义 23.8（两个固定符号操作）。** 对固定 $s\in\{-1,+1\}$，定义
+$$
+c_s(\theta)=
+\begin{cases}
+z_\theta^s,&\theta\in E,\\
+k_\theta,&\theta\notin E,
+\end{cases}
+\qquad
+R_s=c_s[\mathbb T],\qquad
+N_s=\{z_{E_m}^{-s}:m\ge1\}.
+$$
+假设23.1给出 $K=R_s\sqcup N_s$。定义
+$$
+A_s(x,y)=
+\begin{cases}
+z_{H(x)+H(y)}^{-s},&x,y\in N_s,\\
+c_s(H(x)+H(y)),&\text{其余情形},
+\end{cases}
+\qquad P^s_{x,y}=\delta_{A_s(x,y)}.
+$$
+第一分支由 $E+E\subseteq E$ 保证有定义。等价地，两个分裂输入都具有符号 $-s$ 时保留强制符号 $-s$；其余分裂输出一律取符号 $s$，非分裂输出取其唯一原像。
+

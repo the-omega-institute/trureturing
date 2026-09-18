@@ -1,0 +1,46 @@
+### U.7. A first-derivative obstruction to multiple-root lifting
+
+Let p be prime and R=Z/p^2Z. Let rho:R->F_p be the actual reduction homomorphism.
+
+**Lemma.** If rho(a)=rho(b)=0, then ab=0 in R.
+
+**Proof.** Integer representatives of a and b are multiples of p, so their product is a multiple of p^2.
+
+**Theorem.** Suppose f,g in R[X] reduce to `(X-1)^d,(X-1)^e`, respectively, with d,e>=2. Then
+
+\[
+fg\ne X^p-1.\tag{U.13}
+\]
+
+**Proof.** Reduction commutes with evaluation and formal differentiation. Thus `f(1),f'(1),g(1),g'(1)` all belong to the kernel of rho. The product rule and the lemma give
+
+\[
+(fg)'(1)=f'(1)g(1)+f(1)g'(1)=0.
+\]
+
+But `(X^p-1)'(1)=p`, which is nonzero in R. Equality of the polynomials is impossible.
+
+**Theorem.** For `2<=d<=p-2` and every f in R[X] reducing to `(X-1)^d`,
+
+\[
+\boxed{f\nmid X^p-1.}\tag{U.14}
+\]
+
+**Proof.** If a cofactor g existed, reducing and applying Frobenius gives
+
+\[
+(X-1)^d\overline g=(X-1)^p\quad\text{in }\mathbb F_p[X].
+\]
+
+Since `(X-1)^d` is nonzero, cancellation gives `bar(g)=(X-1)^(p-d)`. The complementary exponent is at least two, contradicting U.13.
+
+**Corollary and boundary.** For every prime p>=5, no polynomial reducing to `(X-1)^2` divides `X^p-1` over R, for any lifted coefficient choice. At p=3 the endpoint has a factor:
+
+\[
+X^3-1=(X-1)(X^2+X+1)\quad\text{in }(\mathbb Z/9\mathbb Z)[X].
+\]
+
+Its cofactor reduces to a simple root, so U.13 does not apply.
+
+The excluded quadratic lift is the construction proposed in section 4.3 of M. Shi, X. Wang, J. Bouazzaoui, H. K. Kim and P. Sole, *Second order Recurrences, quadratic number fields and cyclic codes*, arXiv:2603.25343v1, https://arxiv.org/html/2603.25343v1 . The theorem excludes all coefficients in that multiple-root construction. The polynomial X^2-X-1 has discriminant five and is separable modulo p for p!=5, so U.14 is not a WSS nonexistence result for the golden unit.
+

@@ -1,0 +1,52 @@
+**Proof.** If $|t|<1$, direct substitution gives
+$$
+d'_m(1-p_m)=1,\qquad -d'_mp_m=t^m.
+$$
+If $|t|>1$, it gives
+$$
+d'_m(1-p_m)=t^{-m},\qquad -d'_mp_m=1.
+$$
+For the formal parameter these two quantities are zero and one. This proves the formulas for $r_m$. Since the split fibers are pairwise disjoint and the displayed coefficients have absolute value at most one, the sum bound follows.
+
+For $|t|<1$, the coboundary identity follows by substituting $d'_m=1-t^m$. For $|t|>1$, one has $d'_m=t^{-m}(1-t^m)$, and the character factors cancel in the quotient. For $\infty$, the quotient is $-1$. In both finite cases, $|d'_m|$ is of the form $|1-s^m|$ with $|s|=\rho_t<1$, so
+$$
+1-\rho_t\le1-\rho_t^m\le|1-s^m|\le1+\rho_t^m\le1+\rho_t.
+$$
+The formal case has absolute value one.
+
+At a split phase, for finite $t$,
+$$
+\|\pi_{E_m}\|_{\mathrm{TV}}=\frac{1+|t|^m}{|1-t^m|}.
+$$
+For $|t|<1$, the reverse triangle inequality bounds this by $(1+\rho_t^m)/(1-\rho_t^m)\le C_t$. For $|t|>1$, divide numerator and denominator by $|t|^m$ and apply the same argument to $t^{-1}$. All other phase slices are Dirac measures. The formal parameter also gives only Dirac slices.
+
+Rows with at least one non-split input are phase slices, and equal-sign split inputs give Dirac measures. For the remaining mixed row, theorem 25.9 gives
+$$
+M_{m,n}(t):=\|P^{(t)}_{x_m^+,x_n^-}\|_{\mathrm{TV}}
+=\frac{|t|^n|t^m-1|+|t^n-1|}{|t^{m+n}-1|}.
+$$
+The other mixed type has norm $M_{n,m}(t)$. When $r=|t|<1$, triangle and reverse triangle inequalities give the sign-independent estimate
+$$
+M_{m,n}(t)
+\le\frac{1+2r^n+r^{m+n}}{1-r^{m+n}}
+\le\frac{1+2r+r^2}{1-r^2}
+=\frac{1+r}{1-r}=C_t.
+$$
+This includes $t=0$. When $|t|>1$, multiplication by $|t|^{m+n}$ in the formula at $t^{-1}$ gives
+$$
+M_{m,n}(t)=M_{n,m}(t^{-1}),
+$$
+which reduces the estimate to the preceding case. Formal-parameter mixed rows are Dirac measures. This proves the bound for every row without a positivity assumption.
+
+For finite $t\ge0$,
+$$
+\|P^{(t)}_{0_K,x_1^+}\|_{\mathrm{TV}}
+=\frac{1+t}{|1-t|}=C_t.
+$$
+For finite $t<0$, the actual first mixed row simplifies to
+$$
+P^{(t)}_{x_1^+,x_1^-}
+=\frac{t}{t+1}\delta_{x_2^+}+\frac1{t+1}\delta_{x_2^-},
+$$
+whose norm is $(1+|t|)/|t+1|=C_t$. The denominator is nonzero by the parameter restriction. Finally, $P^{(\infty)}_{0_K,0_K}=\delta_{0_K}$. These are actual input pairs, proving attainment. QED.
+

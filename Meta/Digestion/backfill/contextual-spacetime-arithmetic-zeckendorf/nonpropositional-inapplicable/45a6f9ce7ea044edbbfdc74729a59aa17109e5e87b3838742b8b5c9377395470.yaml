@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45a6f9ce7ea044edbbfdc74729a59aa17109e5e87b3838742b8b5c9377395470
+  normalized_sha256: sha256:45a6f9ce7ea044edbbfdc74729a59aa17109e5e87b3838742b8b5c9377395470
+cas_ref: sha256:45a6f9ce7ea044edbbfdc74729a59aa17109e5e87b3838742b8b5c9377395470
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 总图在每个自然指标保留库拉托夫斯基对，支撑外数字按定义为零；首坐标单射由 Ordinal.toZFSet_injective 和 ZFSet.pair_inj 给出，再用 Set.infinite_range_of_injective 得无限性，仓内无冻结 GID，探针保留所有零边而非仅非零支撑。
+    previous_atom_id: f66e9f63a4fe0e4afc2ab7ce0296927eb2f53a322254d82293c88f31e93600ec
+    next_atom_id: 4723d2b637264f95c9b7fbc25287816f8d3f167f483da322e804a5f45f66631a

@@ -1,0 +1,73 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "ordinary exact-arithmetic hinge bounds for the same actual clipped survivor law; full original 357 part divides 315; arbitrary finite 11/13 heights; no Lean or tail conclusion"
+  },
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  "normalized_hinge_costs": {
+    "path": "content/035-joint_cost_hinge_refinement/002-normalized_hinge_costs.json",
+    "sha256": "8e77f8c2fcbac89ad2a7322953ddaffdde7007215f673a7cff1b8061e9e777db",
+    "kind": "value"
+  },
+  "normalized_cost_count": {
+    "kind": "inline",
+    "value": 32
+  },
+  "old_layouts_verified": {
+    "kind": "inline",
+    "value": 27720
+  },
+  "layout_cost_count_bounds_verified": {
+    "kind": "inline",
+    "value": 21324800
+  },
+  "shared_branches_verified": {
+    "kind": "inline",
+    "value": 144
+  },
+  "cases": {
+    "path": "content/035-joint_cost_hinge_refinement/007-cases.json",
+    "sha256": "8e7d8ef5c3b162da495977d384d9d9db5e1af98d84d01e9b2510e53d96f67524",
+    "kind": "array"
+  },
+  "universal_full_hinge_upper_at_4_through_12": {
+    "kind": "inline",
+    "value": [
+      "1850731457651/1285518750000",
+      "285616505131/257103750000",
+      "321137/403528",
+      "205590443009/321379687500",
+      "242331326613/499400000000",
+      "129498094659/312125000000",
+      "881984754807/2497000000000",
+      "165110502807/565775000000",
+      "47555781251/205683000000"
+    ]
+  },
+  "full_hinge_maximizing_branches_at_4_through_12": {
+    "path": "content/035-joint_cost_hinge_refinement/009-full_hinge_maximizing_branches_at_4_through_12.json",
+    "sha256": "412dc3e68cd60f8a442d9bdb0d36081ad9e23797be5c72542aee4db9b9dd7c11",
+    "kind": "value"
+  },
+  "prime17_threshold6_charge_upper": {
+    "kind": "inline",
+    "value": "321137/4035280"
+  },
+  "interpolation": {
+    "kind": "inline",
+    "value": "adjacent certified knots may be joined linearly to upper-bound the convex actual hinge; the resulting upper curve is not asserted to be a probability comparator"
+  }
+}

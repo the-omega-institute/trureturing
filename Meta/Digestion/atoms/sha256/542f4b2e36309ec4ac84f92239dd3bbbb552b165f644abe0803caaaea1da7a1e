@@ -1,0 +1,8 @@
+**定义 124.3（固定有限维的静态态制备任务）。** 固定整数 $d\ge1$，输出态空间与距离为
+$$
+\mathcal D_d=\{\rho\in M_d(\mathbb C):\rho=\rho^*,\ \rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+这里 $\|A\|_1=\operatorname{tr}\sqrt{A^*A}$，允许任意混态，不限于纯态。
+任务是任意总函数 $T:X_{\rm fs}\to\mathcal D_d$，起初不假定连续。
+

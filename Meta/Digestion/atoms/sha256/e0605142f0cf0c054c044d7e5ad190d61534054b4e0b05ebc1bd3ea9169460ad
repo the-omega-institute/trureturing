@@ -1,0 +1,21 @@
+### FD.1 剩余像与单调性
+
+对素数 p 和整数 k>=1，定义
+
+\[
+S_k(p)=\{F_n\bmod p^k:n\ge0\},\qquad
+D_k(p)=|S_k(p)|/p^k,\qquad
+\delta(p)=\lim_{k\to\infty}D_k(p).
+\]
+
+**引理。** 上述极限存在，并满足
+
+\[
+0\le\delta(p)\le D_{k+1}(p)\le D_k(p)\le D_1(p)\le\pi(p)/p.
+\tag{FD1}
+\]
+
+**证明。** 降模映射 S_(k+1)(p)->S_k(p) 满射，每个纤维至多有 p 个元素。故 |S_(k+1)(p)|<=p|S_k(p)|，得到单调性。数列非负，因而收敛。模 p 的全部 Fibonacci 值都在一个长度 pi(p) 的周期中出现，故最后一个不等式成立。
+
+Bragman 和 Rowland 在 *Limiting density of the Fibonacci sequence modulo powers of a prime*, Research in Number Theory 11, 88 (2025), DOI 10.1007/s40993-025-00667-1 的引言中问，是否存在使 delta(p) 任意小的素数。他们的定理 1 还证明每个 delta(p) 为严格正有理数。以下回答前一个问题，只确定零这个聚点。
+

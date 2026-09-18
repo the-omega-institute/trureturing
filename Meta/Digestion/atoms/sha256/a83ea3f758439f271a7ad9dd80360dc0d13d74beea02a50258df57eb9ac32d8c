@@ -1,0 +1,2 @@
+**Definition.** For a positive integer N, let D_F(N) be the set of distinct positive Fibonacci values dividing N. The value F_1=F_2=1 is included once. Let tau(N) be the number of positive divisors of N.
+

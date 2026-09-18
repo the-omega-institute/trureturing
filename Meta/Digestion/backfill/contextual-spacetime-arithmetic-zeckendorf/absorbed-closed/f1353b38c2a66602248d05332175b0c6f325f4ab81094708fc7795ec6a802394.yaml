@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f1353b38c2a66602248d05332175b0c6f325f4ab81094708fc7795ec6a802394
+  normalized_sha256: sha256:f1353b38c2a66602248d05332175b0c6f325f4ab81094708fc7795ec6a802394
+cas_ref: sha256:f1353b38c2a66602248d05332175b0c6f325f4ab81094708fc7795ec6a802394
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxis/RawTableRewriting.table_rewriting_terminates
+    target_statement_id: sha256:7cef59f22a87ea45854759d896f4cc1029afc740fb906bcab73acb16d33effce
+receipts:
+  unresolved_subitems: []

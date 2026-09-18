@@ -1,0 +1,65 @@
+**theorem 39.3 (Empty, finite, natural, split, and phase-section cases).** The empty family and every finite or countable evaluation family fail to separate $\mathscr E$. The two conditions in Theorem 39.2 are independent in the following explicit senses.
+
+Write
+$$
+\mathcal N=Z(\mathbb N),\qquad
+S_s=\{x_m^s:m\ge1\},\qquad S=S_-\cup S_+,
+$$
+$$
+A=\{n\delta:n\ge0\},\qquad
+G=\{k\delta:k\in\mathbb Z\},\qquad R=K\setminus S.
+$$
+For a nonempty $D\subseteq\mathcal N$, let $k_0$ be the least integer with $Z(k_0)\in D$. Then
+$$
+U(D)=\{E_m:m>k_0\},\qquad N_+(D)=N_-(D)=\varnothing.
+\tag{39.6}
+$$
+In particular, $U(\mathcal N)=E$, and equality on the entire natural core is equivalent to equality of $e$.
+
+For the exceptional inputs,
+$$
+U(S)=U(S_+)=U(S_-)=G.
+\tag{39.7}
+$$
+The family $S$ satisfies (39.2) but not (39.1). Each $S_s$ lacks the opposite signed indices. No subset of $S$ satisfies (39.1).
+
+The family of all nonsplit inputs satisfies
+$$
+U(R)=\mathbb T\setminus A,
+\tag{39.8}
+$$
+and contains no exceptional input.
+
+More generally, for any signs $(\sigma_m)_{m\ge1}$ define the set-theoretic full phase section
+$$
+D_\sigma=\{k_\gamma:\gamma\notin E\}
+\cup\{x_m^{\sigma_m}:m\ge1\}.
+\tag{39.9}
+$$
+Then $H[D_\sigma]=\mathbb T$, so (39.1) always holds, and $\operatorname{Eval}_{D_\sigma}$ is injective exactly when each sign occurs infinitely often in $(\sigma_m)$. In particular, the all-plus section $D_+$ has cardinality $\mathfrak c$ and satisfies
+$$
+\operatorname{Eval}_{D_+}(T^n)
+=\operatorname{Eval}_{D_+}(P_{n\delta}^+)
+\qquad(n\ge0).
+\tag{39.10}
+$$
+The all-minus section has the analogous minus collision. Alternating the chosen signs gives an injectively separating full phase section.
+
+**Proof.** Empty evaluation is constant, while $\mathscr E$ contains distinct operators. Every translate $E-H(b)$ is countable. A countable union of such sets is countable in ZFC and cannot cover $\mathbb T$. Thus no countable $D$ satisfies (39.1). For finite $D$, both signed index sets are also finite, so (39.2) fails as well.
+
+At $Z(k)$ one has
+$$
+E-H(Z(k))=\{-(m+k)\delta:m\ge1\}.
+$$
+These sets decrease as $k$ increases; their union over the specified indices is the set for $k_0$. Natural points are nonsplit, proving (39.6). The identity $p(Z(k))=T^k(e(p))$ from Theorem 37.9 proves that equal $e$ gives agreement on $\mathcal N$; the converse uses $Z(0)\in\mathcal N$.
+
+At $x_l^s$, the sign does not change the phase, and
+$$
+E-H(x_l^s)=\{(l-m)\delta:m\ge1\}.
+$$
+Allowing $l,m\ge1$ gives all integer multiples of $\delta$, proving (39.7). This is a countable proper subset of the circle. Both signed index sets for $S$ equal the positive integers, whereas a fixed-sign family contains none of the opposite sign. Subsets of $S$ have their translated exceptional phases contained in $G$.
+
+For $\theta=n\delta\in A$, every phase $E_m-\theta=E_{m+n}$ is exceptional. Hence no nonsplit input can distinguish the selector signs at $\theta$. Conversely, if $\theta\notin A$, then $E_1-\theta\notin E$: otherwise $E_1-\theta=E_l$ would imply $\theta=(l-1)\delta\in A$. The nonsplit point $k_{E_1-\theta}$ therefore witnesses $\theta\in U(R)$. This proves (39.8).
+
+A full phase section contains an input at $E_1-\theta$ for every $\theta$, proving (39.1) for (39.9). Its signed exceptional index sets are exactly $\{m:\sigma_m=s\}$. A subset of the positive integers is unbounded exactly when it is infinite, so Theorem 39.2 gives the stated criterion. The all-plus section contains no negative exceptional input, making (39.10) an immediate instance of (39.4); the minus case is identical with signs reversed. Choosing alternating signs makes both index sets unbounded. Finally, $H$ restricts to a bijection from any full phase section onto the circle, so its cardinality is $\mathfrak c$. $\square$
+

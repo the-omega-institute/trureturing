@@ -1,0 +1,100 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Exact directed arithmetic; comparator proof and BBMST continuation are separate ordinary mathematical inputs."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 768
+  },
+  "first_tail_prime": {
+    "kind": "inline",
+    "value": 17
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 2903
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 420
+  },
+  "head_survival_lower": {
+    "kind": "inline",
+    "value": "2518319/2683200"
+  },
+  "head_raw_comparator_mass": {
+    "kind": "inline",
+    "value": "1585595/1538712"
+  },
+  "reference_mass_at_one": {
+    "kind": "inline",
+    "value": "6391/92880"
+  },
+  "reference_mass_at_two": {
+    "kind": "inline",
+    "value": "807835/2173392"
+  },
+  "reference_mean": {
+    "kind": "inline",
+    "value": "226440629/56347200"
+  },
+  "head_quantile_mass_at_two": {
+    "kind": "inline",
+    "value": "37653203663/101379967983"
+  },
+  "head_comparator_mean": {
+    "kind": "inline",
+    "value": "46851298771/11264440887"
+  },
+  "head_actual_second_upper": {
+    "kind": "inline",
+    "value": "51464038499033/2027599359660"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "4338221995505799121/250000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "1752250173289941013521/1000000000000000000"
+  },
+  "total_charge_upper": {
+    "kind": "inline",
+    "value": "205435101024428611/250000000000000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "44564898975571389/250000000000000000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "1751428432885843299077/178259595902285556"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "122918388246449766190100164885795928181/12500000000000000000000000000000000"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "4631701674835138000310178719933094966550564082413409/557061237194642362500000000000000000000000000000000"
+  },
+  "steps": {
+    "path": "content/028-arbitrary_holes12_tail17/021-steps.json",
+    "sha256": "51eb45173d19acabfc02d6aa2a1bb549e97595951d7300e13f44fdab6acf1597",
+    "kind": "array"
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "85d5b2752428864a4c1ba7428c1158a0ae8c4bc777fe765528d2f6766ce00069"
+  },
+  "threshold_runs": {
+    "path": "content/028-arbitrary_holes12_tail17/023-threshold_runs.json",
+    "sha256": "f0ad432eb9540798c6dd85113436f1781e5b3fa52c84e4115c85497a24546600",
+    "kind": "value"
+  }
+}

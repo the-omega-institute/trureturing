@@ -634,7 +634,7 @@ internal static partial class CleanLanesCommand
         && File.Exists(Path.Combine(path, "lean-toolchain"))
         && Directory.Exists(Path.Combine(path, "D5"))
         && Directory.Exists(Path.Combine(path, "tools"))
-        && File.Exists(Path.Combine(path, ".github", "scripts", "harness-gate.sh"));
+        && File.Exists(Path.Combine(path, "tools", "scripts", "ci-stage.sh"));
 
     private static string ResolveCommit(
         string repositoryRoot,

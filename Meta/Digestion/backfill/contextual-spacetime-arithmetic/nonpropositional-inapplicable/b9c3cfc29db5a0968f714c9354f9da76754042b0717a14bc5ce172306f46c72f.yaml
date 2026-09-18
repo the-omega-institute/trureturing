@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9c3cfc29db5a0968f714c9354f9da76754042b0717a14bc5ce172306f46c72f
+  normalized_sha256: sha256:b9c3cfc29db5a0968f714c9354f9da76754042b0717a14bc5ce172306f46c72f
+cas_ref: sha256:b9c3cfc29db5a0968f714c9354f9da76754042b0717a14bc5ce172306f46c72f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 尽管标题含“命题 53”，实际正文只有“对任意”区域“记”两个集合，并接着“定义条件”。它定义空间投影、属性集合和条件 H_B，没有说任意区域都满足该条件，也未写表达性充要式；没有在定义中夹带真假结论，故为纯定义叶。
+    previous_atom_id: f5d2d9a1ed9c8ad23e560fcb84cd63b23cdbde333a88aa5e9316a07d99ef95f4
+    next_atom_id: 01bc4c98f46aeacd3311834f8eefb7cdc68a05948a77c71cf9057a2d95cf9be4

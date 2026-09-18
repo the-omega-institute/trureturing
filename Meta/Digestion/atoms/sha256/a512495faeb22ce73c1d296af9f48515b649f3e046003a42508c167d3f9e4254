@@ -1,0 +1,7 @@
+**Example.** At p=7, q_p=F_8/7=3 modulo seven. At k=0 the only factor
+is13, so S_(7,0)=(-13-1)/7=-2=5 modulo seven. At k=1 the exact block
+is97*6168709, both initial depths one. The signed coefficients are
+-2 and125892, respectively. Hence S_(7,1)=125890=2 modulo seven,
+as predicted by the sign reversal. The sum contains both split and
+inert primes; restricting it to inert primes would invalidate NP8.
+

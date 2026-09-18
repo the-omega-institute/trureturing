@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e79f43d0e68cb57be5bc8547104e5f52697e2e39f8db32fca5a6fefad3d36ae4
+  normalized_sha256: sha256:e79f43d0e68cb57be5bc8547104e5f52697e2e39f8db32fca5a6fefad3d36ae4
+cas_ref: sha256:e79f43d0e68cb57be5bc8547104e5f52697e2e39f8db32fca5a6fefad3d36ae4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “十个子标题的局部定位”仅命名勘误表，没有数学断言，未借标题暗示某一定理已证，属于结构文字。
+    previous_atom_id: 66b70f64ece7ec1798adb7055d61fbd370828054ae270dacfdfe5b812d22735b
+    next_atom_id: 832e0d6c94e707e8b9c2ec313547168e46fa193099c0c915b3e2b823ede31f4d

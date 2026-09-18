@@ -1,0 +1,22 @@
+**theorem 51.13 (两个边界输入的全部联合歧义与双重提升).** 固定 $x,y\in R$，令 $G=xR+yR$、$L=xR\cap yR$。选择 $G$ 的任一生成元 $z_0$，并定义
+$$
+(w_0)_p=\begin{cases}x_py_p/(z_0)_p,&(z_0)_p\ne0,\\0,&(z_0)_p=0.\end{cases}
+$$
+则 $w_0R=L$、$z_0w_0=xy$。在输入为 $\tau(x),\tau(y)$ 且两个输出均在边界时，全部联合输出恰为
+$$
+\bigl(\tau(uz_0),\tau(u^{-1}w_0)\bigr),\qquad u\in R^\times.
+$$
+实际不同的输出由 theorem 51.4 的商 $R^\times/H_{x,y}$ 精确参数化。
+
+若存在正整数 $d$ 使 $G=dR$，则该 $d$ 唯一。令 $w_d$ 为 theorem 51.4 对生成元 $z=d$ 给出的唯一元素。全部联合输出此时可精确写为
+$$
+\left\{\bigl(\tau(ud),\tau(u^{-1}w_d)\bigr):u\in R^\times\right\}\ \cup\ \left\{\bigl(j(d),\tau(w_d)\bigr)\right\}.
+$$
+特别地，同一个最大公因数影子 $d$ 有两个不同的 $K$ 型输出 $j(d)$ 与 $\tau(d)$，它们都与同一个最小公倍数输出 $\tau(w_d)$ 耦合；其余单位扭曲必须按所列反对角方式配对。若不存在这样的正整数 $d$，则没有自然最大公因数输出。
+
+若 $G=0R$，则 $x=y=0$，唯一联合输出为
+$$
+(\tau(0),\tau(0)),
+$$
+而不是任何含自然最大公因数 $j(0)$ 的输出。
+

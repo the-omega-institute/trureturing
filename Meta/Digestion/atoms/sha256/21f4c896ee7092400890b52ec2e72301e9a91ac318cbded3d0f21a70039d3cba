@@ -1,0 +1,40 @@
+**theorem 57.12（任何有限确定标签都不能因子化全部整数平移测试）。** 设 $F$ 为任意有限集合，$\theta:R\to F$ 为任意函数，并令增强观察
+$$
+q(x)=(\rho(x),\theta(x))\in I\times F.
+$$
+则不可能存在一族函数
+$$
+\Phi_n:q[R]\to I\qquad(n\in\mathbb N_0)
+$$
+使得对所有 $x\in R$、所有 $n\in\mathbb N_0$ 都有
+$$
+\rho(x+n)=\Phi_n(q(x)).
+$$
+所以在 $\rho$ 旁再加一个有限确定标签，并只保留该增强状态，不能修复所有固定整数平移测试。此结论不排除保留实际共同代表、完整联合律、无限标签，或为某个固定有限任务设计专用有限状态。
+
+**证明。** 轨道纤维
+$$
+\rho^{-1}(\boldsymbol0)=U
+$$
+是无限集合，而 $F$ 有限，所以存在不同的 $x,y\in U$ 满足
+$$
+\theta(x)=\theta(y).
+$$
+于是
+$$
+q(x)=q(y)=(\boldsymbol0,\theta(x)).
+$$
+theorem 57.11 给出某个 $n\in\mathbb N_0$ 使
+$$
+\rho(x+n)\ne\rho(y+n).
+$$
+若所有 $\Phi_n$ 存在，则由 $q(x)=q(y)$ 应有
+$$
+\rho(x+n)=\Phi_n(q(x))=\Phi_n(q(y))=\rho(y+n),
+$$
+矛盾。这正是既有 framework theorem 2.2 的实际像因子化判据应用于
+$$
+T_n(x)=\rho(x+n)
+$$
+和输入观察 $q$：目标映射能下降到 $q[R]$ 当且仅当它在每个 $q$-纤维上常值。该 theorem 2.2 的精确文本见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。证毕。
+

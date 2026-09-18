@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:810821f6f9696c33ae8b7a8fc9e0996b2cbee82a7022831e54ae0b5547122aa9
+  normalized_sha256: sha256:810821f6f9696c33ae8b7a8fc9e0996b2cbee82a7022831e54ae0b5547122aa9
+cas_ref: sha256:810821f6f9696c33ae8b7a8fc9e0996b2cbee82a7022831e54ae0b5547122aa9
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws
+    target_statement_id: sha256:1f1deb9e739c9e2c00896ca5c35ecf14959d31e589f8537f8a91dd262ea689c0
+receipts:
+  unresolved_subitems: []

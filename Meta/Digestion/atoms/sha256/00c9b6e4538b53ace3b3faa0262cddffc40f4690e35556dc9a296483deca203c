@@ -1,0 +1,32 @@
+### EMW.1 初始商与简单素因子
+
+记
+
+\[
+\varphi^2=\varphi+1,\qquad
+\mathcal O_K=\mathbb Z[\varphi],\qquad
+\operatorname N(\varphi)=-1.
+\]
+
+对素数 \(p\)，定义
+
+\[
+\rho(p)=\min\{n\ge1:p\mid F_n\}.
+\]
+
+存在性、强整除性与黄金 Frobenius 给出
+
+\[
+p\mid F_n\iff\rho(p)\mid n,
+\qquad
+\rho(p)\mid p-\left(\frac5p\right)\quad(p\ne2,5).
+\tag{EMW-B1}
+\]
+
+此外 \(\rho(p)\ge3\)，且
+
+\[
+\rho(2)=3,\qquad\rho(3)=4,\qquad\rho(5)=5.
+\tag{EMW-B2}
+\]
+

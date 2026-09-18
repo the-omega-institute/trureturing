@@ -1,0 +1,39 @@
+### 定理 66.1（信息完备家族的有限子证书）
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并给定任意索引集上的 effect 家族
+
+$$
+\{F_i:i\in I\},
+$$
+
+其中每个 $F_i$ 是合法 effect。假设原始读出对密度态单射：
+
+$$
+\Bigl[
+\forall i,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+冻结定理 `finite_informational_effect_certificate` 保证存在有限子集
+
+$$
+S\subseteq I
+$$
+
+满足
+
+$$
+|S|\le d^2-1,
+$$
+

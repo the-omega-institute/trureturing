@@ -1,0 +1,8 @@
+### EMW.4 无限周期并集的密度
+
+记 \(\mathcal S=\{-2,-1,1,2\}\)。对 \(60\mid M\)、\(r\ge3\)，定义
+
+\[
+E_r(M)=\{k\ge1:\exists s\in\mathcal S,\ r\mid Mk+s\}.
+\]
+
