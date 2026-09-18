@@ -688,3 +688,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [One late source split controls complete saturated J heads](profile-notes/219-one-late-source-split-controls-complete-saturated-j-heads.md)
 - [The assigned source losses share one complete J error budget](profile-notes/220-the-assigned-source-losses-share-one-complete-j-error-budget.md)
 - [The assigned J reserve enters the complete global comparison](profile-notes/221-the-assigned-j-reserve-enters-the-complete-global-comparison.md)
+- [Deep-five deletion retains the selected observation masks](profile-notes/222-deep-five-deletion-retains-the-selected-observation-masks.md)
