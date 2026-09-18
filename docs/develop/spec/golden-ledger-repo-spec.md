@@ -361,6 +361,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 完整路径与输入范围经登记判为 no-resource 时,由 required-check 编排产出结构化 `not-required` 成功,无需安装 SDK、恢复重缓存或下载构建产物。`required` 必须进入所需共享入口并按真实退出码结算;无工作是经校验的路由结果,不能由缺文件、缓存命中或未知状态推出。
 
+`docs/develop/theory/**/*.md` 的理论正文显式登记为 no-resource。轻量规划继续校验完整变化范围、路径的唯一登记及 symlink 合法性,不为正文单独启动 filemap、判官构建、工程测试、Lean/report、Scribe 或缓存运输。该目录内未登记的其他文件类型仍失败;混入消化账本、Lean、冻结或判官变更时取各路径资源并集,正文的无资源结果不消除其它路径义务。
+
 消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求完整 engineering 证据和正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带其它 current 谓词或 Scribe。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 标签豁免其它路径。
 
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。

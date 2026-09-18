@@ -466,32 +466,15 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/**",
-        "Meta/Digestion/atomizers.toml",
-        "Meta/FILEMAP.toml",
-        "Meta/FILEMAP.*.toml",
-        "Meta/ReportConsumers/lean-report.json",
-        "Meta/ReportConsumers/scribe-content.json",
-        "Meta/ReportProducers/lean-report.json",
-        "Meta/ReportProducers/scribe-content.json",
-        "Meta/ci-checks.json",
-        "Meta/ci-resources.json",
-        "Meta/domains.yaml",
-        "Meta/engineering-projects.json",
-        "Meta/judge-seed.json",
-        "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "*.props",
-        "*.json",
-        "*.toml",
-        "Makefile",
-        "lean-toolchain",
-        ".gitignore"
+        "tools/lean-inspector/**",
+        "tools/scripts/lib/**",
+        "tools/scripts/report/**",
+        "tools/scripts/workflow/**",
+        "tools/scripts/worktree/**",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/**",
+        "Makefile"
       ],
-      "execution_excludes": [
-        "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
@@ -567,7 +550,13 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/scripts/**",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/preflight.sh",
+        "tools/scripts/lib/**",
+        "tools/scripts/report/**",
+        "tools/scripts/workflow/**",
+        "tools/scripts/worktree/**",
         "tools/Architecture/**",
         "tools/**/*.csproj",
         "tools/**/*.json",
@@ -583,10 +572,7 @@
         "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/**",
         "lean-report-inputs.json"
       ],
-      "execution_excludes": [
-        "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]

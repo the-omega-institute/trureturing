@@ -886,7 +886,7 @@ def plan_pr(root, commit, base, head):
           "changes_bytes": changes.stat().st_size, "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
     # Complete manifests travel as files. Job outputs remain bounded regardless
     # of the number or length of changed paths.
-    return {"candidate_sha": commit, "base_sha": base}
+    return {"candidate_sha": commit, "base_sha": base, "no_work": not value["resources"]}
 
 
 def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):
@@ -904,7 +904,8 @@ def plan_push(root, commit="", plan=None, changes=None, before=None, after=None)
     value = make_plan(root, commit, changes)
     write(plan, value)
     validate_plan(root, commit, plan, changes)
-    return {"candidate_sha": commit, "origin": value["origin"], "complete": True}
+    return {"candidate_sha": commit, "origin": value["origin"], "complete": True,
+            "no_work": not value["resources"]}
 
 
 def command(args):

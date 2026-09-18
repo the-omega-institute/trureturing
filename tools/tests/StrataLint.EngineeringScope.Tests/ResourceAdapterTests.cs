@@ -115,12 +115,26 @@ public sealed partial class ResourceAdapterTests
         var result = Route(fixture, "current", environment);
         Assert.True(result.Exit == 0, result.Text);
         var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
+        Assert.Contains("no_work=" + (resource == "none" ? "true" : "false"), outputs);
         Assert.Contains("required=" + (resource == "none" ? "false" : "true"), outputs);
         Assert.Contains("dotnet=" + (resource == "none" ? "false" : "true"), outputs);
         Assert.Contains("lake=false", outputs);
         Assert.Contains("cache_layers=" + (resource == "none" ? "" : "current"), outputs);
         Assert.Contains("report_required=false", outputs);
         Assert.Equal(File.ReadAllBytes(fixture.Plan), File.ReadAllBytes(Path.Combine(fixture.Root, "build/ci/plan.json")));
+    }
+
+    [Fact]
+    public void UnselectedStageCannotDeclareTheWholePlanHasNoWork()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        var environment = EnvironmentFor(fixture);
+        MaterializePlan(fixture, environment);
+        var result = Route(fixture, "engineering", environment);
+        Assert.True(result.Exit == 0, result.Text);
+        var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
+        Assert.Contains("required=false", outputs);
+        Assert.Contains("no_work=false", outputs);
     }
 
     [Theory]

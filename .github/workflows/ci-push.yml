@@ -11,6 +11,10 @@ on:
       plan_artifact_id:
         required: true
         type: string
+      no_work:
+        required: false
+        default: false
+        type: boolean
     outputs:
       engineering_artifact_id:
         value: ${{ jobs.engineering.outputs.artifact_id }}
@@ -39,6 +43,7 @@ env:
   STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
   CI_CHANGES_PATH: build/ci/changes.json
   CI_PLAN_PATH: build/ci/plan.json
+  CI_NO_WORK: ${{ inputs.no_work == true }}
 
 
 jobs:
@@ -47,26 +52,33 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     outputs:
+      no_work: ${{ inputs.no_work == true || steps.route.outputs.no_work == 'true' }}
       round: ${{ steps.pack.outputs.round }}
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       run_id: ${{ steps.pack.outputs.run_id }}
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
+      - name: No registered resources
+        if: env.CI_NO_WORK == 'true'
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
+        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: inputs.plan_artifact_id != ''
+        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route build
+        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage build
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -122,7 +134,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.judge_path }}
           key: ${{ steps.keys.outputs.judge_key }}
-      - if: always()
+      - if: always() && env.CI_NO_WORK != 'true'
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage build
 
   engineering:
@@ -132,6 +144,7 @@ jobs:
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
+      CI_NO_WORK: ${{ needs.build.result == 'success' && needs.build.outputs.no_work == 'true' }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     outputs:
@@ -140,20 +153,26 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
+      - name: No registered resources
+        if: env.CI_NO_WORK == 'true'
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
+        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: inputs.plan_artifact_id != ''
+        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route engineering
+        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage engineering
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -229,7 +248,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: always()
+      - if: always() && env.CI_NO_WORK != 'true'
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
       - name: Retain engineering diagnostics
         if: failure() || (success() && steps.route.outputs.required == 'true')
@@ -308,6 +327,7 @@ jobs:
     if: ${{ !cancelled() }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
+      CI_NO_WORK: ${{ needs.build.result == 'success' && needs.build.outputs.no_work == 'true' }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     outputs:
@@ -317,20 +337,26 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
+      - name: No registered resources
+        if: env.CI_NO_WORK == 'true'
+        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
+        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: inputs.plan_artifact_id != ''
+        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route current
+        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage current
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -473,7 +499,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: always()
+      - if: always() && env.CI_NO_WORK != 'true'
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
       - name: Retain current diagnostics
         if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'

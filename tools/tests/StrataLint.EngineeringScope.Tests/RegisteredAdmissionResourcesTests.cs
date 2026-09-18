@@ -77,6 +77,24 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
+    [InlineData("pr")]
+    [InlineData("push")]
+    public void TheoryTextNeedsNoHeavyResourcesAndCannotHideOtherRequirements(string mode)
+    {
+        const string theory = "docs/develop/theory/admission-resource-probe.md";
+        var textOnly = Plan("", theory, mode);
+        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers" })
+            Assert.Empty(textOnly[field]!.AsArray());
+        foreach (var field in new[] { "projects", "checks", "steps" })
+            Assert.Empty(textOnly["execution"]![field]!.AsArray());
+
+        var judgeOnly = Plan("Meta/ci-checks.json", "", mode);
+        var mixed = Plan("Meta/ci-checks.json", theory, mode);
+        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers", "execution" })
+            Assert.True(JsonNode.DeepEquals(judgeOnly[field], mixed[field]), field);
+    }
+
+    [Theory]
     [InlineData("Meta/Digestion/atoms/sha256/admission-resource-probe", "push")]
     [InlineData("Meta/Digestion/atoms/sha256/admission-resource-probe", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
@@ -86,7 +104,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         const string theory = "docs/develop/theory/admission-resource-probe.md";
         var plan = Plan(metadata, theory, mode);
         Assert.Equal(new[] { "current-metadata", "delta-metadata", "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Equal(new[] { "filemap" }, Strings(plan["paths"]!.AsArray()
+        Assert.Empty(Strings(plan["paths"]!.AsArray()
             .Single(row => row!["path"]!.GetValue<string>() == theory)!["require"]!));
         if (mode == "push")
         {
@@ -142,12 +160,23 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         return plan;
     }
 
-    [Fact]
-    public void UnregisteredReportContentCannotClaimNoResources()
+    [Theory]
+    [InlineData("docs/reports/ci-fixture-plane-probe.unregistered")]
+    [InlineData("docs/develop/theory/ci-fixture-plane-probe.unregistered")]
+    [InlineData("docs/develop/theory/ci-fixture-plane-probe.jsonl")]
+    public void UnregisteredContentCannotClaimNoResources(string path)
     {
-        var result = PlanResult("", "docs/reports/ci-fixture-plane-probe.unregistered");
+        var result = PlanResult("", path);
         Assert.NotEqual(0, result.Exit);
         Assert.Contains("FILEMAP match count 0", result.Text, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheoryRegistryRetainsItsExplicitResourceRequirement()
+    {
+        var plan = Plan("", "docs/develop/theory/PERIODIC_TREE_registry.jsonl");
+        Assert.Equal(new[] { "filemap" }, Strings(plan["declared_require"]!));
+        Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
     }
 
     private (int Exit, string Text) PlanResult(string judge, string content, string mode = "pr")

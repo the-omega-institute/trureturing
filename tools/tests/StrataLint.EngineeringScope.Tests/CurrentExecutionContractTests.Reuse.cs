@@ -7,11 +7,11 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests")]
-    [InlineData("StrataLint.EngineeringScope.Tests")]
-    [InlineData("StrataLint.ScriptTests")]
-    [InlineData("StrataLint.Tests")]
-    public void RegisteredAgentDocumentationPreservesTestInputsWhileScriptsAndTemplatesInvalidate(string project)
+    [InlineData("StrataLint.ArchitectureTests", true, true)]
+    [InlineData("StrataLint.EngineeringScope.Tests", false, false)]
+    [InlineData("StrataLint.ScriptTests", true, false)]
+    [InlineData("StrataLint.Tests", true, true)]
+    public void RegisteredAgentAndPolicyInputsInvalidateOnlyTheirDeclaredTestConsumers(string project, bool consumesAgent, bool consumesPolicy)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -32,7 +32,13 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
             (Path: "tools/scripts/preflight.sh", Invalidates: true),
-            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: true),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: consumesAgent),
+            (Path: "tools/scripts/agent/openproblem/templates/learner-brief.md", Invalidates: consumesAgent),
+            (Path: "tools/scripts/agent/openproblem/templates/impl-base-brief.md", Invalidates: consumesAgent),
+            (Path: "tools/scripts/agent/openproblem/lane.sh", Invalidates: consumesAgent),
+            (Path: "Meta/domains.yaml", Invalidates: consumesPolicy),
+            (Path: "tools/scripts/workflow/ci.py", Invalidates: true),
+            (Path: "tools/scripts/report/dotnet_producer.py", Invalidates: true),
         };
         foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
         fixture.Track();
@@ -45,7 +51,7 @@ public sealed partial class CurrentExecutionContractTests
             fixture.Track();
             var calls = Execute(fixture);
             var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
-            Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
+            Assert.True(change.Invalidates ? previous != current : previous == current, $"[FAIL] registered_test_input_isolation: {project}: {change.Path}: invalidates={change.Invalidates}");
             Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
             previous = current;
         }
