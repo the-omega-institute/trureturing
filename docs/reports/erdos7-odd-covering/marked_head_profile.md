@@ -720,5 +720,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two retained original tests sharpen the complete J heads](profile-notes/251-two-retained-original-tests-sharpen-the-complete-j-heads.md)
 - [Two complete prime-path blocks sharpen the J square](profile-notes/253-two-complete-prime-path-blocks-sharpen-the-j-square.md)
 - [Retained original heads and prime-path square improve the complete J comparison](profile-notes/254-retained-original-heads-and-prime-path-square-improve-the-complete-j-comparison.md)
+- [A second seven depth sharpens the complete retained J heads](profile-notes/256-a-second-seven-depth-sharpens-the-complete-retained-j-heads.md)
 - [Independent positive-seven depths share one complete raw source](profile-notes/258-independent-positive-seven-depths-share-one-complete-raw-source.md)
 - [One complete raw-source pair bound improves the full J comparison](profile-notes/259-one-complete-raw-source-pair-bound-improves-the-full-j-comparison.md)
+- [A second seven depth improves the full J comparison](profile-notes/262-a-second-seven-depth-improves-the-full-j-comparison.md)
