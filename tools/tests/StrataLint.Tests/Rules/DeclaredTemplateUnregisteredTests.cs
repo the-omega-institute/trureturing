@@ -72,6 +72,48 @@ public sealed class DeclaredTemplateUnregisteredTests
         declarations: [new(Theorem + ".eq_def", "theorem", "True", []) { IsGeneratedCompanion = true },
             new(Theorem + ".congr_simp", "theorem", "True", []) { IsGeneratedCompanion = true }]));
 
+    [Fact]
+    public void actual_compiler_companions_survive_publication_and_strict_loader_to_dtr()
+    {
+        using var output = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var run = TestProcessRunner.Run("env",
+            ["STRATALINT_NATIVE_RESULT_DIR=" + output.Path, "python3", "-B", "-m", "unittest",
+                "test_native.NativeTests.test_generated_companions", "-v"],
+            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+        Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardOutput)
+            + Encoding.UTF8.GetString(run.StandardError));
+        var published = Path.Combine(output.Path, "test_generated_companions/published");
+        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        files["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(published, "lean-report-inputs.json"));
+        foreach (var path in Directory.EnumerateFiles(published, "*.lean", SearchOption.AllDirectories))
+            files[Path.GetRelativePath(published, path).Replace('\\', '/')] = File.ReadAllText(path);
+        var report = RawLeanReportArtifact.ReadFile(Path.Combine(published, "public.json"), Tree(files));
+        var declarations = report.Files.Single(p => p.Key.Value == Target).Value.Declarations;
+        using var result = JsonDocument.Parse(File.ReadAllText(Path.Combine(published, "result.json")));
+        string[] Names(string key) => result.RootElement.GetProperty(key).EnumerateArray()
+            .Select(n => "D5.S0.Carrier.Target." + n.GetString()).ToArray();
+        var generated = Names("generated");
+        var controls = Names("controls");
+        var unclassified = Names("unclassified");
+        Assert.Equal(8, generated.Length);
+        Assert.Equal(10, controls.Length);
+        Assert.All(generated, n => Assert.True(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
+        Assert.All(controls, n => Assert.False(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
+        Assert.All(unclassified, n => Assert.False(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
+        // Empty registration inventories come from the rule fixture. All
+        // declaration metadata and material identities come from actual Lean
+        // extraction, native compaction/publication and the strict reader.
+        var findings = Findings(Build(source: files[Target], declarations: declarations.ToArray()));
+        Assert.Equal(controls.Concat(unclassified).Order(StringComparer.Ordinal), findings.Select(f =>
+            f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal));
+        Assert.All(findings, f => Assert.Equal(AdmissionEffect.Block, f.Effect));
+        files[Target] += "-- stale report\n";
+        Assert.Throws<FormatException>(() => RawLeanReportArtifact.ReadFile(
+            Path.Combine(published, "public.json"), Tree(files)));
+    }
+
     [Theory]
     [InlineData("eq_def")]
     [InlineData("congr_simp")]

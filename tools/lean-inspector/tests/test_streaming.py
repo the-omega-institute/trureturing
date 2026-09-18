@@ -199,7 +199,7 @@ class StreamingTests(unittest.TestCase):
                 spool.mkdir()
                 (spool / '0.statement').write_text('first')
                 (spool / '1.statement').write_text('second')
-                declarations = [dict(axioms=[], include_in_statement=False, kind='theorem',
+                declarations = [dict(axioms=[], generated_companion=False, include_in_statement=False, kind='theorem',
                     material_file=('0.statement' if duplicate else str(n) + '.statement'), name=str(n), name_key=str(n)) for n in range(2)]
                 report = directory / 'spool.json'
                 report.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X',
@@ -271,6 +271,49 @@ class PublicationTests(unittest.TestCase):
                 native.batch(request, result)
                 self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
                 self.assertEqual(selections.call_count, 1, '[FAIL] binding_batch_scope_expanded_once')
+
+    def test_companion_metadata_required_boolean_and_identity_neutral(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spool = root / 'spool'
+            spool.mkdir()
+            (spool / '0.statement').write_text('statement-v1(fixture)')
+            manifest = manifest_fixture(root)
+            declaration = dict(axioms=[], generated_companion=True, include_in_statement=True,
+                kind='theorem', material_file='0.statement', name='x', name_key='ns(n0,1:x)')
+            row = dict(module='X', source_path='X.lean', source_sha256='sha256:' + 'a'*64,
+                imports=[], declarations=[declaration])
+            source, report = root / 'spool.json', root / 'report.json'
+            def compact():
+                spool.mkdir(exist_ok=True)
+                (spool / '0.statement').write_text('statement-v1(fixture)')
+                source.write_bytes(materials.canonical_json(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
+                materials.compact(source, spool, report, manifest)
+                return publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest)
+            original = compact()[0]['declarations'][0]
+            self.assertTrue(original['generated_companion'])
+            declaration['generated_companion'] = False
+            other = compact()[0]['declarations'][0]
+            self.assertFalse(other['generated_companion'])
+            self.assertEqual(original['statement_id'], other['statement_id'])
+            self.assertEqual(original['type_sha256'], other['type_sha256'])
+            for invalid in ['missing', None, 1, 'true', [], {}]:
+                with self.subTest(invalid=invalid):
+                    if invalid == 'missing':
+                        declaration.pop('generated_companion', None)
+                    else:
+                        declaration['generated_companion'] = invalid
+                    with self.assertRaises(ValueError):
+                        compact()
+                    current = dict(other)
+                    if invalid == 'missing':
+                        current.pop('generated_companion')
+                    else:
+                        current['generated_companion'] = invalid
+                    report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA,
+                        modules=[dict(row, declarations=[current])])))
+                    with self.assertRaises(ValueError):
+                        publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest)
 
     def test_binding_evidence_survives_compaction_and_native_validation(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -355,7 +398,7 @@ class PublicationTests(unittest.TestCase):
             source = root / 'spool.json'
             source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[dict(
                 module='X', source_path='X.lean', source_sha256='sha256:' + 'a'*64, imports=[],
-                declarations=[dict(axioms=[], include_in_statement=False, kind='opaque',
+                declarations=[dict(axioms=[], generated_companion=False, include_in_statement=False, kind='opaque',
                     material_file='0.statement', name='x', name_key='ns(n0,1:x)')])])) )
             report = root / 'report.json'
             archive = publication.member(report, '.materials.zip')
@@ -420,7 +463,7 @@ class PublicationTests(unittest.TestCase):
                 spool = directory / 'spool'
                 spool.mkdir()
                 (spool / '0.statement').write_text('statement-v1(λ😀)')
-                declaration = dict(axioms=[], include_in_statement=False, kind='opaque',
+                declaration = dict(axioms=[], generated_companion=False, include_in_statement=False, kind='opaque',
                     material_file='0.statement', name='x', name_key='ns(n0,1:x)')
                 raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
                     source_sha256='sha256:' + 'a' * 64, imports=[], declarations=[declaration])])

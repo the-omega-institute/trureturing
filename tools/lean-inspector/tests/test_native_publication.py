@@ -28,6 +28,109 @@ import native
 from test_native_support import *
 
 class NativePublicationTests:
+    def test_generated_companions(self):
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_modules']['include'] = [dict(pattern='D5/**/*.lean', optional=False)]
+        policy['report_semantic_version'] = json.loads((ROOT / 'lean-report-inputs.json').read_text())['report_semantic_version']
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        target = 'D5/S0/Carrier/Target.lean'
+        source = """import Lean
+import Lean.AutoDecl
+open Lean Elab Command
+namespace D5.S0.Carrier.Target
+inductive Tree where
+  | leaf (n : Nat)
+  | fork (x y : Tree)
+def visited : Nat → Nat
+  | 0 => 0
+  | n + 1 => visited n + 1
+def equationWitness := @visited.eq_def
+def congruenceWitness := @visited.congr_simp
+theorem lookalike.eq_def : True := True.intro
+theorem lookalike.congr_simp : True := True.intro
+theorem lookalike.inj : True := True.intro
+theorem lookalike.injEq : True := True.intro
+theorem lookalike.sizeOf_spec : True := True.intro
+theorem proof_authored : True := True.intro
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+inductive Authored where
+  | mk (n : Nat)
+theorem Authored.mk.inj : True := True.intro
+macro "authoredCompanion" : command => `(theorem macro_authored : True := True.intro)
+authoredCompanion
+macro "namedCompanion" n:ident : command => `(theorem $n : True := True.intro)
+namedCompanion Authored.mk.sizeOf_spec
+namedCompanion macro_public
+run_elab do
+  addDecl <| Declaration.thmDecl {
+    name := `D5.S0.Carrier.Target.match_custom
+    levelParams := []
+    type := mkConst ``True
+    value := mkConst ``True.intro }
+  unless (← isAutoDeclOrPrivate_Internal `D5.S0.Carrier.Target.proof_authored) &&
+      (← isAutoDeclOrPrivate_Internal `D5.S0.Carrier.Target.match_custom) &&
+      (← isAutoDeclOrPrivate_Internal `D5.S0.Carrier.Target.Authored.mk.inj) do
+    throwError "fixture must distinguish broad AutoDecl positives"
+end D5.S0.Carrier.Target
+"""
+        self.write(target, source)
+        self.build()
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        executable_sha = hashlib.sha256(executable.read_bytes()).hexdigest()
+        origin = self.origins()['D5.S0.Carrier.Target']
+        self.assertEqual(origin['inspector_executable_sha256'], executable_sha)
+        self.assertEqual(origin['input_sources'][target], hashlib.sha256(source.encode()).hexdigest())
+        self.assertEqual(origin['compatibility_sha256'], publication.selection.Selection(self.root).compatibility())
+        rows = self.report()[0]
+        row = next(r for r in rows if r['source_path'] == target)
+        names = {d['name'].removeprefix('D5.S0.Carrier.Target.'): d for d in row['declarations']}
+        generated = [f'Tree.{ctor}.{suffix}' for ctor in ('leaf', 'fork')
+            for suffix in ('inj', 'injEq', 'sizeOf_spec')] + ['visited.eq_def', 'visited.congr_simp']
+        for name in generated:
+            self.assertTrue(names[name]['generated_companion'], name)
+        controls = [n for n, d in names.items() if d['kind'] == 'theorem' and d['include_in_statement']
+            and (n.startswith(('lookalike.', 'Authored.mk.', 'macro_public'))
+                 or n in ('proof_authored', 'match_custom'))]
+        self.assertEqual(len(controls), 10)
+        internal = [n for n in names if n.startswith('macro_authored.')]
+        self.assertEqual(len(internal), 1)
+        self.assertFalse(names[internal[0]]['generated_companion'])
+        self.assertFalse(names[internal[0]]['include_in_statement'])
+        for name in controls:
+            self.assertFalse(names[name]['generated_companion'], name)
+        # This additional recursive-inductive family has no predicate here;
+        # unknown compiler provenance remains selected by DTR.
+        unclassified = ['Tree.brecOn.eq']
+        for name in unclassified:
+            self.assertFalse(names[name]['generated_companion'], name)
+        self.publish()
+        self.record_result('published', dict(generated=generated, controls=controls,
+            unclassified=unclassified, origins=self.origins()),
+            [self.root / target, self.root / 'lean-report-inputs.json',
+             *[self.root / r['source_path'] for r in rows if r['source_path'] != target],
+             *[publication.member(self.root / 'public.json', s) for s in publication.SUFFIXES]])
+        stamps = self.stamps()
+        old_origin = self.origins()
+        self.build()
+        self.assertEqual(stamps, self.stamps())
+        self.write(target, source + '-- changed source binding\n')
+        with self.assertRaises(ValueError):
+            publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
+        self.build()
+        self.assertNotEqual(old_origin['D5.S0.Carrier.Target'], self.origins()['D5.S0.Carrier.Target'])
+        changed = next(r for r in self.report()[0] if r['source_path'] == target)
+        self.assertEqual([(d['name'], d['statement_id'], d['generated_companion']) for d in row['declarations']],
+            [(d['name'], d['statement_id'], d['generated_companion']) for d in changed['declarations']])
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_semantic_version'] += 1
+        before = self.origins()
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        self.assertNotEqual(before['D5.S0.Carrier.Target']['compatibility_sha256'],
+            self.origins()['D5.S0.Carrier.Target']['compatibility_sha256'])
+        self.publish()
+
     def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
         self.build()
         state = native.state(self.root)

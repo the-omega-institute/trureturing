@@ -310,11 +310,9 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             previous_name_key: str | None = None
             for raw_declaration in module["declarations"]:
                 declaration_keys = {
-                    "axioms", "include_in_statement", "kind", "material_file",
+                    "axioms", "generated_companion", "include_in_statement", "kind", "material_file",
                     "name", "name_key",
                 }
-                if "generated_companion" in raw_declaration:
-                    declaration_keys.add("generated_companion")
                 declaration = require_keys(
                     raw_declaration,
                     declaration_keys,
@@ -325,7 +323,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 name_key = declaration["name_key"]
                 material_file = declaration["material_file"]
                 include = declaration["include_in_statement"]
-                generated = declaration.get("generated_companion", False)
+                generated = declaration["generated_companion"]
                 if (not isinstance(name, str) or not name
                         or not isinstance(kind, str) or not kind
                         or not isinstance(name_key, str) or not name_key

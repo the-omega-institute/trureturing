@@ -105,8 +105,8 @@ internal static class DeclaredTemplateBindingRule
         if (sourceNames.TryGetValue(declaration.Name, out var kind)) return kind is "theorem" or "lemma";
         // Source names win over provenance so an authored theorem cannot escape
         // merely because its spelling resembles a compiler companion.  Reports
-        // from the Lean inspector carry the compiler's reserved/automatic-name
-        // decision; absent provenance remains fail-closed.  The registration
+        // from the Lean inspector carry its closed compiler-metadata predicate;
+        // unknown provenance remains fail-closed. The registration
         // builder's own generated companions retain their established closed
         // suffix vocabulary because they are not Lean compiler declarations.
         return !declaration.IsGeneratedCompanion
