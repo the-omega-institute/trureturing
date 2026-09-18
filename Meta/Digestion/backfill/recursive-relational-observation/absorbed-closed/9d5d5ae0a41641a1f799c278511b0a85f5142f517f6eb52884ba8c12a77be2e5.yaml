@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d5d5ae0a41641a1f799c278511b0a85f5142f517f6eb52884ba8c12a77be2e5
+  normalized_sha256: sha256:9d5d5ae0a41641a1f799c278511b0a85f5142f517f6eb52884ba8c12a77be2e5
+cas_ref: sha256:9d5d5ae0a41641a1f799c278511b0a85f5142f517f6eb52884ba8c12a77be2e5
+coverage_gids:
+  - gid: D5/S3/Divergence/GibbsEquality.kl_divergence_eq_zero_iff
+    target_statement_id: sha256:ba7b06e0c5a31dbea17cee8512ca943141dc34ee2e63f82c1f5662d8dbee3d59
+  - gid: D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.visible_projection_commutes_iff_cross_blocks_eq_zero
+    target_statement_id: sha256:42c1e103d9cf57dda172aa18217ea525f3666b3f0678e5be46008528363d5c23
+receipts:
+  unresolved_subitems: []

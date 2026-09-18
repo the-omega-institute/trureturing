@@ -1,0 +1,32 @@
+**命题 74.4（平稳参考下的正反强可并性）。** 在定义与假设 74.1 上另加 $Tq=q$。定义相对于同一参考的反向行核
+$$
+P^{\leftarrow}_{jk}=\frac{q_kP_{kj}}{q_j},\qquad
+K^{\leftarrow}_{hi}=\frac{p_iK_{ih}}{p_h}.
+$$
+则 $P^{\leftarrow},K^{\leftarrow}$ 均为行随机核，$Sp=p$，并且
+$$
+ET=TE
+\ \Longleftrightarrow\
+P\ \text{与}\ P^{\leftarrow}\ \text{都对}\ r\ \text{强可并}.
+$$
+等价条件成立时，反向细核的粗行核恰为 $K^{\leftarrow}$。
+
+证明。由 $Bp=q$ 得 $Sp=CTBp=CTq=p$。反向细核非负，且其第 $j$ 行之和为 $(Tq)_j/q_j=1$；同理反向粗核第 $h$ 行之和为 $(Sp)_h/p_h=1$。分母 $q_j,p_h$ 均严格为正。对 $h=r(j)$，直接展开有
+$$
+(TB)_{ji}=\frac{q_j}{p_i}\sum_{r(k)=i}P^{\leftarrow}_{jk},
+\qquad
+(BS)_{ji}=\frac{q_j}{p_h}K_{ih}.
+$$
+故 $TB=BS$ 当且仅当 $\sum_{r(k)=i}P^{\leftarrow}_{jk}=K^{\leftarrow}_{r(j),i}$。若 $ET=TE$，命题 74.3 给出正向强可并性以及 $TB=BS$，上式便给出反向强可并性及其指定粗核。
+
+反之，设两个细核都强可并。命题 74.3 给出正向粗核 $K$；设反向粗核为 $L$。对任意两个粗标签 $h,i$，有限块流量求和给出
+$$
+\begin{aligned}
+p_hL_{hi}
+&=\sum_{r(j)=h}\sum_{r(k)=i}q_jP^{\leftarrow}_{jk}\\
+&=\sum_{r(k)=i}q_k\sum_{r(j)=h}P_{kj}
+=p_iK_{ih}.
+\end{aligned}
+$$
+因此 $L=K^{\leftarrow}$，再由逐元公式得 $TB=BS$。结合正向 $CT=SC$ 与命题 74.3，得到 $ET=TE$。证毕。
+
