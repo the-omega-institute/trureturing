@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:abb78de6eb50e0f8f04e44dd2ba239da13c55317ee8efad3cc8a5700325584a0
+  normalized_sha256: sha256:abb78de6eb50e0f8f04e44dd2ba239da13c55317ee8efad3cc8a5700325584a0
+cas_ref: sha256:abb78de6eb50e0f8f04e44dd2ba239da13c55317ee8efad3cc8a5700325584a0
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.sum_indicator_comp
+    target_statement_id: sha256:397223f2b9c520527a137ae6149d7b22c8f484de9a17195f974c9d5b9b0a2206
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+receipts:
+  unresolved_subitems: []

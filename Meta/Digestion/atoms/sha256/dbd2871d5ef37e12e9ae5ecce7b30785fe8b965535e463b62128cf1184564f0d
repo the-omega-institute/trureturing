@@ -1,0 +1,8 @@
+### 72.90 数学来源与形式化边界
+
+有限 Kraus 判据与等距熵不变性属于成熟结果（`literature-attested`）：Watrous，*The Theory of Quantum Information*，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Corollary 2.27，印刷第 89 页／PDF 第 97 页式 (2.129)，给出矩形 Kraus 族的完整性与通道作用；Proposition 5.19，印刷第 268 页／PDF 第 276 页式 (5.93)，给出有限维等距映射下的熵不变，包括奇异正算子。Baumgratz–Cramer–Plenio，*Quantifying Coherence*，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 3 页式 (8) 及其前一显示式，给出相对于固定基的 $D(\rho\Vert\Delta\rho)=S(\Delta\rho)-S(\rho)$。换用自然对数时，两侧统一换算。本节在同一有限细化上识别这些现成结果的参数、支撑及运输方向；不作新颖性或穷尽文献的主张。
+
+以下源码引用固定于提交 `6dcc8b24cb208a3a0e06a657b3bf8111e5f70801`，只承担各行所列数学输入。
+
+| 第 72 节的现成输入 | 精确声明与代入范围 |
+| --- | --- |
