@@ -438,6 +438,65 @@
       ]
     },
     {
+      "path": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+      "assembly": "StrataLint.Cache.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Cache.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Cache.Tests",
+      "root_namespace": "StrataLint.Cache.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Cache.Tests/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Cache.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
+    },
+    {
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
       "assembly": "StrataLint.Engine.Tests",
       "role": "owned-test",
