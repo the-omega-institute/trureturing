@@ -100,7 +100,7 @@ or an optimal comparison over all possible methods.
 
 The [helper](../frontier/three_layer_global_comparison.py) and
 [certificate](../certificates/source_norms/three_layer_global_comparison.json)
-reconstruct both complete local comparisons, check all twelve
+retain both complete local comparisons, check all twelve
 endpoint margins and their signs, and retain all eight original
 fallbacks and both full terminal errors. Arbitrary labels and
 infinite tails are covered by the inherited ordinary proofs.

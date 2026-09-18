@@ -660,3 +660,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The two prime paths retain the same compulsory deletion](profile-notes/191-the-two-prime-paths-retain-the-same-compulsory-deletion.md)
 - [The next and J escape layers share one beta factor](profile-notes/192-the-next-and-j-escape-layers-share-one-beta-factor.md)
 - [Two beta-separated alternatives improve the complete source union](profile-notes/193-two-beta-separated-alternatives-improve-the-complete-source-union.md)
+- [The complete wider source rectangle moves the global controller](profile-notes/194-the-complete-wider-source-rectangle-moves-the-global-controller.md)
+- [The complete source comparison extends beyond the old radius domain](profile-notes/195-the-complete-source-comparison-extends-beyond-the-old-radius-domain.md)
+- [The actual J reserve crosses the paired-table capacity](profile-notes/196-the-actual-j-reserve-crosses-the-paired-table-capacity.md)
