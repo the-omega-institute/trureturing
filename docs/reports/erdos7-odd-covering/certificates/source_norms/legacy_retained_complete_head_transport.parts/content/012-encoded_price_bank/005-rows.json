@@ -1,0 +1,194 @@
+{
+  "length": 16391,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/000000-000798.json",
+        "sha256": "bf2adfe008cc5121ad9ab8f5c63875320aa4ef4de879e0e40825441dc74abca0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/000798-001596.json",
+        "sha256": "6ab0d0a0d7359f5eedf74a9b49d9420f0d24b47f5854ae1bedf002543adb18ef",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/001596-002394.json",
+        "sha256": "9b591280ee55bc2af016db5da1ce0e02146c46381787b660d440a7377c19b937",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/002394-003192.json",
+        "sha256": "87b0ed85d671b3a3b0f188c78bd692759f542fde4a297352a9da3081706301b9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/003192-003990.json",
+        "sha256": "ca5373cec19998abd11e1b6c21db29e971f3e2e212bfbd52c547d035b17bd618",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/003990-004788.json",
+        "sha256": "a1ccec407e3de7d0af7db358d673d2f16eb0032d53b3a7e8304b780105dfc55c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/004788-005586.json",
+        "sha256": "cd595c678a6026ff6e3dab3613c9434c2b5816e273f191df2b92273da60f81c2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 6384,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/005586-006384.json",
+        "sha256": "248577e93a1300742201fe1e00605f6937723ec6db81461087301f58fcb4df3e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6384,
+      "stop": 7182,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/006384-007182.json",
+        "sha256": "41b79b29057893b80dd3bffde457e0284998cc15ab9063883202c402d9977052",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7182,
+      "stop": 7980,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/007182-007980.json",
+        "sha256": "7bb7d567cc680804fb94821022811398469181f7c6b63dac42d9cd6806bd9c39",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7980,
+      "stop": 8778,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/007980-008778.json",
+        "sha256": "1244ce1d5108bec4f4706f1a5e79fa0bb48c81189979e3541541bd4bbbc73ed7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8778,
+      "stop": 9576,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/008778-009576.json",
+        "sha256": "c2190de47d0ba51518615ed6c12da9765456289eee44c339a2f949aa1c9eea1d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9576,
+      "stop": 10374,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/009576-010374.json",
+        "sha256": "719fef1e06d2f27e2b8aa5bdcaa9982c1e01a45013aa74c2851aadaccf3d3ecd",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10374,
+      "stop": 11172,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/010374-011172.json",
+        "sha256": "564a9ff75585a55f19f3f6cf0a374cc114db9128d9f4914f099809e7996661bb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11172,
+      "stop": 11970,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/011172-011970.json",
+        "sha256": "df51b59064c0dbc747a81165ccd5843c5b0af7a364711f386cc4a1ce34ab22d0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11970,
+      "stop": 12768,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/011970-012768.json",
+        "sha256": "747a31ca63ed17348a515f747c02cf4dbbca0d48da5dee84ccb51836fa9fb370",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 12768,
+      "stop": 13566,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/012768-013566.json",
+        "sha256": "8dc09606f6f4d5912ad88de3119fc8fe27c206f71506950a92e0bc88cca5335e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 13566,
+      "stop": 14364,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/013566-014364.json",
+        "sha256": "aeb80b161b2ea970c5dd1fa7e9f1e4211fbd790260be830d114b7824bf018bd4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14364,
+      "stop": 15162,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/014364-015162.json",
+        "sha256": "31a6af654aeaa8cf0dc7d8ac4dd832f62bdf0476c60365438e3aa28c3d40e034",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15162,
+      "stop": 15960,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/015162-015960.json",
+        "sha256": "bb4fb1d4800a463e0893e6b9fb96388bfdde0c7aaf5fb35f705322b2ad644902",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15960,
+      "stop": 16391,
+      "part": {
+        "path": "content/012-encoded_price_bank/005-rows/015960-016391.json",
+        "sha256": "604e568fcb9a086a00f5632e0e18eeb5dd0c5b900589229f61d35eefcd56a5ca",
+        "kind": "value"
+      }
+    }
+  ]
+}

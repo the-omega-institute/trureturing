@@ -703,3 +703,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Every retained dual transports on a generated small source domain](profile-notes/234-every-retained-dual-transports-on-a-generated-small-source-domain.md)
 - [Every original head candidate transports on a positive source box](profile-notes/235-every-original-head-candidate-transports-on-a-positive-source-box.md)
 - [The last missing9 branch uses a better AP threshold](profile-notes/236-the-last-missing9-branch-uses-a-better-ap-threshold.md)
+- [The sixteen legacy heads transport with their survivor-cap prices](profile-notes/237-the-sixteen-legacy-heads-transport-with-their-survivor-cap-prices.md)
+- [The shared square and complete factorial bound extend to the small source box](profile-notes/238-the-shared-square-and-complete-factorial-bound-extend-to-the-small-source-box.md)
+- [All fifty-two costs cross403 on the complete small source box](profile-notes/239-all-fifty-two-costs-cross403-on-the-complete-small-source-box.md)
