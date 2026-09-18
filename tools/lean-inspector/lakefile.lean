@@ -43,17 +43,11 @@ package_facet reportBatch (_pkg : Package) : ReportState := do
 private def validateArtifact (pkg : Package) (args : Array String) : JobM UInt32 := do
   return (← IO.Process.output (nativeCommand pkg (#["validate"] ++ args))).exitCode
 
-/-- Utility input is generated once per invocation by its existing .NET owner.
-This job deliberately has no content trace: each module traces its own record. -/
-package_facet reportInputs (pkg : Package) : FilePath := do
-  Job.async do
-    proc (nativeCommand pkg #["prepare", pkg.dir.toString])
-    return pkg.buildDir / "lean-inspector" / "inputs.json"
-
 private def readJson (path : FilePath) : IO Json := do
   IO.ofExcept (Json.parse (← IO.FS.readFile path))
 
 private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO Unit := do
+  IO.FS.createDirAll (path.parent.getD ".")
   let unchanged ← try
     pure ((← IO.FS.readBinFile path) == contents)
   catch _ =>
@@ -63,6 +57,45 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
+
+private def packageInputDescriptor (ws : Workspace) (pkg : Package) : IO Json := do
+  let mut modules : Array Json := #[]
+  for lib in pkg.leanLibs do
+    let found ← lib.getModuleArray
+    for mod in found do
+      modules := modules.push <| Lean.Json.mkObj [
+        ("name", Lean.toJson mod.name.toString),
+        ("path", Lean.toJson mod.relLeanFile.toString)]
+  let roots := pkg.leanLibs.map fun lib => Lean.toJson (relPathFrom ws.dir lib.srcDir).toString
+  pure <| Lean.Json.mkObj [
+    ("owner", Lean.toJson pkg.baseName.toString),
+    ("dir", Lean.toJson (relPathFrom ws.dir pkg.dir).toString),
+    ("source_roots", Lean.Json.arr roots),
+    ("config_paths", Lean.Json.arr #[Lean.toJson pkg.relConfigFile.toString,
+      Lean.toJson pkg.relManifestFile.toString]),
+    ("remote_url", Lean.toJson pkg.remoteUrl),
+    ("scope", Lean.toJson pkg.scope),
+    ("modules", Lean.Json.arr modules)]
+
+private def writeNativeInputDescriptor (ws : Workspace) (pkg : Package) (path : FilePath) : IO Unit := do
+  let mut packages : Array Json := #[]
+  for candidate in ws.packages do
+    if !candidate.isRoot && candidate.relDir.toString.startsWith ".lake/" then
+      packages := packages.push (← packageInputDescriptor ws candidate)
+  let value := Lean.Json.mkObj [
+    ("kind", Lean.toJson ("lake-fetched" : String)),
+    ("packages", Lean.Json.arr packages)]
+  writeBinFileIfChanged path (String.toUTF8 value.compress)
+
+/-- Utility input is generated once per invocation by its existing .NET owner.
+This job deliberately has no content trace: each module traces its own record. -/
+package_facet reportInputs (pkg : Package) : FilePath := do
+  let ws ← getWorkspace
+  Job.async do
+    let descriptor := pkg.buildDir / "lean-inspector" / "lake-inputs.json"
+    writeNativeInputDescriptor ws pkg descriptor
+    proc (nativeCommand pkg #["prepare", pkg.dir.toString, "--lake-inputs", descriptor.toString])
+    return pkg.buildDir / "lean-inspector" / "inputs.json"
 
 package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
   (← fetch <| pkg.facet `reportInputs).mapM fun path => do
@@ -161,6 +194,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut deps ← fetch <| pkg.facet `reportProducer
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
+  let directImports ← (← mod.imports.fetch).await
   let mut exports := #[(← mod.exportInfo.fetch)]
   let mut sourceModules := #[mod]
   sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
@@ -178,13 +212,24 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   -- Compiler/Lake owns this closure. Export only local registered source
   -- bindings; fetched packages are pinned by the registered Lake manifest.
   let mut sourcePaths : Array String := #[]
+  let mut externalSources : Array Json := #[]
   for dependency in sourceModules do
     if dependency.name != mod.name && reported.contains dependency.name then continue
-    let path := (relPathFrom pkg.dir dependency.leanFile).toString
-    unless path.startsWith ".lake/" || path.startsWith "../" do
-      sourcePaths := sourcePaths.push path
+    if dependency.pkg.isRoot then
+      let path := (relPathFrom pkg.dir dependency.leanFile).toString
+      unless path.startsWith ".lake/" || path.startsWith "../" do
+        sourcePaths := sourcePaths.push path
+  -- Direct fetched imports are bound per row; Lake's transitive export trace
+  -- remains the compiler invalidation authority for deeper dependencies.
+  for dependency in directImports do
+    if !dependency.pkg.isRoot then
+      externalSources := externalSources.push <| Lean.Json.mkObj [
+        ("owner", Lean.toJson dependency.pkg.baseName.toString),
+        ("module", Lean.toJson dependency.name.toString),
+        ("path", Lean.toJson dependency.relLeanFile.toString)]
   writeBinFileIfChanged (utility.addExtension "sources.json")
-    (String.toUTF8 (Lean.toJson sourcePaths).compress)
+    (String.toUTF8 (Lean.Json.mkObj [
+      ("local", Lean.toJson sourcePaths), ("external", Lean.Json.arr externalSources)]).compress)
   -- Await without mixing: recompilation must succeed, but its implementation
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch

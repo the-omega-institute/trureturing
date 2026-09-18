@@ -121,14 +121,31 @@ def write_origin(report, name, origin):
 
 
 def check_origin(origin, row, compatibility):
-    materials.require_keys(origin, {'module', 'report_sha256', 'compatibility_sha256',
-        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}, 'module production origin')
+    expected = {'module', 'report_sha256', 'compatibility_sha256',
+        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}
+    if isinstance(origin, dict) and 'external_inputs' in origin:
+        expected.add('external_inputs')
+    materials.require_keys(origin, expected, 'module production origin')
     bindings = origin['input_sources']
     if (not isinstance(bindings, dict) or bindings.get(row['source_path']) != row['source_sha256'][7:]
             or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
         raise ValueError('module dependency source binding mismatch')
     for path in bindings:
         selection.validate_pattern(path, 'dependency source binding')
+    external = origin.get('external_inputs', [])
+    if not isinstance(external, list):
+        raise ValueError('module external input binding is malformed')
+    previous = None
+    for item in external:
+        materials.require_keys(item, {'owner', 'module', 'path', 'package', 'mode', 'sha256'},
+                               'module external input binding')
+        key = (item['owner'], item['module'], item['path'])
+        if (any(not isinstance(item[field], str) or not item[field]
+                for field in ('owner', 'module', 'path', 'package', 'sha256'))
+                or not re.fullmatch(r'[0-9a-f]{64}', item['sha256'])
+                or type(item['mode']) is not int or previous is not None and key <= previous):
+            raise ValueError('invalid or unsorted module external input binding')
+        previous = key
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
@@ -145,7 +162,7 @@ def validate_origin(report, rows, compatibility):
     return origin
 
 
-def write_sidecars(report, inputs, origins, mode='produced'):
+def write_sidecars(report, inputs, origins, mode='produced', native_inputs=None):
     sha = digest(report)
     member(report, '.sha256').write_text(f'{sha}  {report.name}\n', encoding='ascii')
     member(report, '.input.attestation').write_text(
@@ -155,6 +172,8 @@ def write_sidecars(report, inputs, origins, mode='produced'):
         source_side='candidate', input_address='sha256:' + inputs['input'], producer_sha256=inputs['producer'],
         repository_inspector_sha256=inputs['producer'], lean_sources_sha256=inputs['sources'],
         lean_config_sha256=inputs['config'], report_sha256=sha, module_origins=origins)
+    if native_inputs is not None:
+        provenance['native_inputs'] = native_inputs
     member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
@@ -269,6 +288,73 @@ class _SourceValidation:
                 if self.digest(path) != sha:
                     raise ValueError('stale dependency source binding: ' + path)
 
+    def current_native_inputs(self):
+        descriptor = self.inputs.root / '.lake/build/lean-inspector/lake-inputs.json'
+        if descriptor.is_file() and not descriptor.is_symlink():
+            try:
+                import native
+                return native.native_population(self.inputs.root, read_json(descriptor.read_bytes()))
+            except (OSError, UnicodeError, ValueError, KeyError, TypeError):
+                return None
+        path = self.inputs.root / '.lake/build/lean-inspector/inputs.json'
+        if not path.is_file() or path.is_symlink():
+            return None
+        try:
+            value = read_json(path.read_bytes()).get('native_inputs')
+        except (OSError, UnicodeError, ValueError, TypeError):
+            return None
+        return value
+
+    def validate_external_population(self, expected):
+        if self.inputs.native_input_kind() is None:
+            return
+        if not isinstance(expected, dict) or expected.get('kind') != selection.NATIVE_INPUT_KIND:
+            raise ValueError('missing native fetched input population')
+        current = self.current_native_inputs()
+        if current is None:
+            # The complete-entry absence rule is handled by reuse.py. A
+            # wholly unmaterialized package snapshot may validate from its
+            # producer-bound Git evidence. A present checkout still requires
+            # the native facet to re-snapshot it.
+            if any((self.inputs.root / package.get('dir', '')).exists()
+                   or (self.inputs.root / package.get('dir', '')).is_symlink()
+                   for package in expected.get('packages', [])):
+                raise ValueError('native fetched input population is unavailable')
+            return
+        if current != expected:
+            raise ValueError('native fetched input population changed')
+
+    def validate_external_rows(self, origins):
+        current = self.current_native_inputs()
+        if current is None:
+            for origin in origins.values():
+                for item in origin.get('external_inputs', []):
+                    package = self.inputs.root / item.get('package', '')
+                    if package.exists() or package.is_symlink():
+                        raise ValueError('native external row inputs are unavailable')
+            return
+        by_key = {}
+        for package in current.get('packages', []):
+            for source in package.get('sources', []):
+                by_key[(package['owner'], None, source['path'])] = (package, source)
+            for module in package.get('modules', []):
+                source = next((entry for entry in package.get('sources', [])
+                               if entry['path'] == module['path']), None)
+                if source is not None:
+                    by_key[(package['owner'], module['name'], module['path'])] = (package, source)
+        for origin in origins.values():
+            if 'external_inputs' not in origin:
+                raise ValueError('missing native external row inputs')
+            for item in origin.get('external_inputs', []):
+                found = (by_key.get((item['owner'], item['module'], item['path']))
+                         or by_key.get((item['owner'], None, item['path'])))
+                if found is None:
+                    raise ValueError('native external row input is absent')
+                package, source = found
+                if (item['package'] != package['dir'] or item['mode'] != source['mode']
+                        or item['sha256'] != source['sha256']):
+                    raise ValueError('stale native external row input binding')
+
 
 def validate_sources(rows, repository):
     _SourceValidation(repository).validate_sources(rows)
@@ -322,6 +408,8 @@ def verify_inputs(report, repository):
     compatibility = sources.inputs.compatibility()
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
+    sources.validate_external_population(provenance.get('native_inputs'))
+    sources.validate_external_rows(origins)
     sources.validate_sources(rows)
     sources.validate_dependency_sources(origins)
 
@@ -340,8 +428,11 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     if member(report, '.sha256').read_text(encoding='ascii') != f'{sha}  {report.name}\n':
         raise ValueError('report SHA mismatch')
     provenance = read_json(member(report, '.provenance.json').read_bytes())
-    materials.require_keys(provenance, {'schema', 'side', 'mode', 'source_side', 'input_address', 'producer_sha256',
-        'repository_inspector_sha256', 'lean_sources_sha256', 'lean_config_sha256', 'report_sha256', 'module_origins'}, 'provenance')
+    expected_provenance = {'schema', 'side', 'mode', 'source_side', 'input_address', 'producer_sha256',
+        'repository_inspector_sha256', 'lean_sources_sha256', 'lean_config_sha256', 'report_sha256', 'module_origins'}
+    if isinstance(provenance, dict) and 'native_inputs' in provenance:
+        expected_provenance.add('native_inputs')
+    materials.require_keys(provenance, expected_provenance, 'provenance')
     if (provenance['schema'] != 'stratalint-lean-report-provenance-v2' or provenance['side'] != 'candidate'
             or provenance['source_side'] != 'candidate' or provenance['mode'] not in ('produced', 'cached')
             or provenance['report_sha256'] != sha or not SHA.fullmatch(provenance['input_address'])
@@ -373,6 +464,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
         check_origin(origins[row['module']], row, provenance['producer_sha256'])
     if repository is not None:
         sources = _SourceValidation(repository)
+        sources.validate_external_population(provenance.get('native_inputs'))
+        sources.validate_external_rows(origins)
         sources.validate_sources(rows)
         sources.validate_dependency_sources(origins)
     return rows

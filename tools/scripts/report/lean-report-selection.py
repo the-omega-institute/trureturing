@@ -14,6 +14,7 @@ import sys
 MANIFEST = 'lean-report-inputs.json'
 LOADER = 'tools/scripts/report/lean-report-selection.py'
 SCOPES = ('lean-report', 'scribe-content')
+NATIVE_INPUT_KIND = 'lake-fetched'
 # The report entry supports this one explicit execution contract. Extending
 # semantic inputs requires a registration/code change, never host discovery.
 REPORT_EXECUTION = {
@@ -101,6 +102,8 @@ class Selection:
             keys.add('dependency_sources')
         if 'report_execution' in self.data:
             keys.add('report_execution')
+        if 'native_inputs' in self.data:
+            keys.add('native_inputs')
         fields(self.data, keys, 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
@@ -121,12 +124,21 @@ class Selection:
                 if (not isinstance(value, list) or any(not isinstance(item, str) for item in value)
                         or len(value) != len(supported) or set(value) != set(supported)):
                     fail('report_execution.' + field, f'requires the explicit supported set {list(supported)}')
+        if 'native_inputs' in self.data:
+            value = self.data['native_inputs']
+            fields(value, ('kind',), 'native_inputs')
+            if value['kind'] != NATIVE_INPUT_KIND:
+                fail('native_inputs.kind', f'unsupported input population kind {value["kind"]!r}')
         # These required inputs keep policy and reader in the provenance/scope inventory.
         required = self.data['producer_scopes']['lean-report']['include']
         for anchor in (MANIFEST, LOADER):
             if dict(pattern=anchor, optional=False) not in required:
                 fail('producer_scopes.lean-report', f'missing required registration {anchor}')
         self.modules()
+
+    def native_input_kind(self):
+        value = self.data.get('native_inputs')
+        return None if value is None else value['kind']
 
     def compatibility(self):
         return hashlib.sha256(

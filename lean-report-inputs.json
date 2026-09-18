@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
-  "report_semantic_version": 6,
+  "report_semantic_version": 7,
+  "native_inputs": {"kind": "lake-fetched"},
   "report_execution": {
     "tools": ["lake", "lean"],
     "platform": ["system", "machine"],

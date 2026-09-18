@@ -30,7 +30,55 @@ if zipfile.lzma is not None:
     INVALID_SEED += (zipfile.lzma.LZMAError,)
 
 
-def capture(repository, lake):
+def _previous_native_inputs(repository, report):
+    if report is None:
+        return None
+    provenance = publication.member(report, '.provenance.json')
+    if not provenance.is_file() or provenance.is_symlink():
+        return None
+    try:
+        return publication.read_json(provenance.read_bytes()).get('native_inputs')
+    except (OSError, UnicodeError, ValueError, TypeError):
+        return None
+
+
+def _native_inputs(inputs, report):
+    if inputs.native_input_kind() is None:
+        return None
+    generated = inputs.root / '.lake/build/lean-inspector/inputs.json'
+    descriptor = inputs.root / '.lake/build/lean-inspector/lake-inputs.json'
+    if descriptor.is_file() and not descriptor.is_symlink():
+        try:
+            # The descriptor is emitted by Lake's workspace/package resolver;
+            # native.py only re-snapshots those owner roots and Git members.
+            import native
+            value = native.native_population(inputs.root,
+                publication.read_json(descriptor.read_bytes()))
+        except (OSError, UnicodeError, ValueError, KeyError, TypeError):
+            value = None
+        if value is not None:
+            return value
+    if generated.is_file() and not generated.is_symlink():
+        try:
+            value = publication.read_json(generated.read_bytes()).get('native_inputs')
+        except (OSError, UnicodeError, ValueError, TypeError):
+            value = None
+        if value is not None:
+            return value
+    previous = _previous_native_inputs(inputs.root, report)
+    if previous is None:
+        return None
+    # An accepted complete entry may be reused from a wholly unmaterialized
+    # package snapshot. A present checkout must be inspected by Lake; silently
+    # treating an incomplete tree as absence would reintroduce stale reuse.
+    for package in previous.get('packages', []):
+        directory = inputs.root / package.get('dir', '')
+        if directory.exists() or directory.is_symlink():
+            return None
+    return previous
+
+
+def capture(repository, lake, report=None):
     """Hash only the manifest's complete declared input population."""
     inputs = publication.selection.Selection(repository)
     inputs.validate('lean-report')  # Registration errors are not cache misses.
@@ -64,7 +112,11 @@ def capture(repository, lake):
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
+    native = _native_inputs(inputs, report)
+    if inputs.native_input_kind() is not None and native is None:
+        return dict(eligible=False, reason='native-inputs-unavailable')
     return dict(eligible=True, files=files,
+        **({'native_inputs': native} if native is not None else {}),
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
 
@@ -106,7 +158,7 @@ def validate(report, repository, captured):
 
 
 def probe(repository, report, lake):
-    captured = capture(repository, lake)
+    captured = capture(repository, lake, report)
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
@@ -130,7 +182,7 @@ def write_receipt(report, captured):
 
 
 def seal(repository, report, lake, captured):
-    current = capture(repository, lake)
+    current = capture(repository, lake, report)
     if current != captured:
         publication.member(report, SUFFIX).unlink(missing_ok=True)
         raise ValueError('registered inputs changed during report entry')
@@ -143,7 +195,7 @@ def seal(repository, report, lake, captured):
 
 
 def reuse(repository, report, output, lake):
-    captured = capture(repository, lake)
+    captured = capture(repository, lake, report)
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
@@ -158,7 +210,7 @@ def reuse(repository, report, output, lake):
         if Path(report).resolve() != Path(output).resolve():
             if receipt != read_receipt(report, captured):
                 raise ValueError('reuse receipt changed during publication')
-        if capture(repository, lake) != captured:
+        if capture(repository, lake, report) != captured:
             raise ValueError('registered inputs changed during reuse')
         write_receipt(output, captured)
     except INVALID_SEED as error:
@@ -183,7 +235,7 @@ def main():
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
     if args.command == 'capture':
-        args.snapshot.write_bytes(materials.canonical_json(capture(args.repository, args.lake)))
+        args.snapshot.write_bytes(materials.canonical_json(capture(args.repository, args.lake, args.report)))
     elif args.command == 'seal':
         seal(args.repository, args.report, args.lake, publication.read_json(args.snapshot.read_bytes()))
     elif args.command == 'probe':

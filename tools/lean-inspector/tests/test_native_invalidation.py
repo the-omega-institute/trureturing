@@ -28,6 +28,91 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def _configure_fetched_git_package(self):
+        """Install a local Git package whose package and library names differ."""
+        origin = self.root / 'fetched-origin'
+        (origin / 'Foreign').mkdir(parents=True)
+        self.write('fetched-origin/lakefile.toml', '''name = "different-package"
+[[lean_lib]]
+name = "Foreign"
+roots = ["Foreign"]
+globs = ["Foreign.+"]
+''')
+        self.write('fetched-origin/Foreign/Hidden.lean', '''private def hidden : Nat := 1
+def visible : Nat := hidden
+''')
+        self.write('fetched-origin/Foreign/Thing.lean', '''import Foreign.Hidden
+def value : Nat := visible
+''')
+        def git(*args):
+            result = subprocess.run(['git', *args], cwd=origin, env=self.env,
+                text=True, capture_output=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        git('init', '--quiet')
+        git('config', 'user.name', 'Fixture')
+        git('config', 'user.email', 'fixture@example.invalid')
+        git('add', '.')
+        git('-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'fetched fixture')
+        rev = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=origin, text=True).strip()
+        self.write('D5/A.lean', 'import D5.B\nimport Foreign.Thing\ndef fetchedValue : Nat := D5.hidden + value\n')
+        self.write('Audit.lean', 'import Foreign.Thing\ndef audit : Nat := value\n')
+        lakefile = (self.root / 'lakefile.toml').read_text()
+        lakefile += f'''\n[[require]]\nname = "fetched"\nscope = "fixture"\ngit = "file://{origin}"\nrev = "{rev}"\n'''
+        self.write('lakefile.toml', lakefile)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['native_inputs'] = {'kind': 'lake-fetched'}
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        manifest = json.loads((self.root / 'lake-manifest.json').read_text())
+        manifest['packages'].append(dict(url=f'file://{origin}', type='git', subDir=None,
+            scope='fixture', rev=rev, name='fetched', manifestFile='lake-manifest.json',
+            inputRev='fixture', inherited=False, configFile='lakefile.toml'))
+        self.write('lake-manifest.json', json.dumps(manifest))
+        return origin, rev
+
+    def test_native_fetched_git_sources_bind_and_invalidate(self):
+        origin, rev = self._configure_fetched_git_package()
+        self.build()
+        package = self.root / '.lake/packages/fetched'
+        self.assertTrue(package.is_dir())
+        origins = self.origins()
+        external = origins['D5.A']['external_inputs']
+        self.assertTrue(any(item['module'] == 'Foreign.Thing' and
+                            item['package'] == '.lake/packages/fetched' for item in external), external[:3])
+        before = self.stamps()
+        old_row = next(row for row in self.report()[0] if row['module'] == 'D5.A')
+        thing = package / 'Foreign/Thing.lean'
+        stat = thing.stat()
+        # A same-size/mtime rewrite is still a valid source replacement
+        # boundary for the native population check.
+        thing.write_text(thing.read_text().replace(
+            'def value : Nat := visible', 'def  value : Nat :=visible'))
+        os.utime(thing, ns=(stat.st_atime_ns, stat.st_mtime_ns))
+        self.write('activity.jsonl', '')
+        self.build()
+        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]},
+                         {'D5.A', 'Fixture'})
+        self.assertEqual(next(row for row in self.report()[0] if row['module'] == 'D5.A'), old_row)
+        self.assertNotEqual(origins['D5.A']['external_inputs'], self.origins()['D5.A']['external_inputs'])
+        hidden = package / 'Foreign/Hidden.lean'
+        hidden.write_text(hidden.read_text().replace(':= 1', ':= 2'))
+        self.write('activity.jsonl', '')
+        transitive = self.build()
+        self.assertIn('D5.A', transitive.stdout + transitive.stderr)
+        self.assertTrue(any(json.loads(line)['kind'] == 'extract'
+                            for line in (self.root / 'activity.jsonl').read_text().splitlines()))
+        self.publish()
+        hidden.write_text(hidden.read_text().replace(':= 2', ':= 3'))
+        expected_native = publication.read_json(publication.member(self.root / 'public.json',
+            '.provenance.json').read_bytes())['native_inputs']
+        current_native = publication._SourceValidation(self.root).current_native_inputs()
+        self.assertNotEqual(expected_native, current_native)
+        with self.assertRaisesRegex(ValueError, 'native fetched input population changed'):
+            publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
+        shutil.rmtree(package)
+        descriptor = publication.read_json(
+            (self.root / '.lake/build/lean-inspector/lake-inputs.json').read_bytes())
+        self.assertEqual(native.native_population(self.root, descriptor)['packages'][0]['status'], 'absent')
+
     def test_native_config_options_rebuild_and_fail_closed(self):
         # Origin evidence includes the actual executable hash. Inspector embeds
         # its source-adjacent fallback writer path, so both builds must compile

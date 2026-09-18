@@ -109,7 +109,8 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
 fi
 cat "$LOG_DIR/reuse.stdout.log"
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
-  --lake "$LAKE" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+  --lake "$LAKE" --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" \
+  --snapshot "$STARTUP_LOG_DIR/root-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 rm -f -- "${OUTPUT}.reuse.json"
 if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
@@ -121,6 +122,10 @@ open_logs
 # The package facet demands all ordinary defaults/audits and owns module work.
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
+# Native Lake has now resolved and captured fetched package inputs. Seal the
+# post-provisioning snapshot before publication and recheck it again at seal.
+run_phase capture-final python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
+  --lake "$LAKE" --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"

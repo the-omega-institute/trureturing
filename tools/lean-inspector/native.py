@@ -35,6 +35,7 @@ selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
+NATIVE_POPULATION_FIELDS = {'kind', 'packages'}
 
 
 def activity(kind, count):
@@ -79,8 +80,150 @@ def write_if_changed(path, data):
     os.replace(temporary, path)
 
 
+def _regular_file(path, root):
+    """Return a safe package-relative regular source entry, or none."""
+    try:
+        info = path.lstat()
+    except OSError:
+        return None
+    if not stat.S_ISREG(info.st_mode) or path.is_symlink():
+        return None
+    try:
+        relative = path.relative_to(root).as_posix()
+    except ValueError:
+        raise ValueError('native package source escapes its owner')
+    if not relative or relative.startswith('../') or '/.git/' in '/' + relative or relative.startswith('.git/'):
+        return None
+    if any(part in {'.git', '.lake', 'build', 'bin', 'obj'} for part in Path(relative).parts):
+        return None
+    return dict(path=relative, mode=stat.S_IMODE(info.st_mode),
+                sha256=public.digest(path))
+
+
+def _walk_regular(root):
+    """Enumerate the native-owned source/configuration population once."""
+    root = Path(root)
+    if not root.is_dir() or root.is_symlink():
+        return []
+    entries = []
+    for directory, dirs, files in os.walk(root, followlinks=False):
+        dirs[:] = [d for d in dirs if d not in {'.git', '.lake', 'build', 'bin', 'obj'}
+                   and not (Path(directory) / d).is_symlink()]
+        for filename in files:
+            item = _regular_file(Path(directory) / filename, root)
+            if item is not None:
+                entries.append(item)
+    return sorted(entries, key=lambda item: item['path'])
+
+
+def _git_snapshot(package_dir, entries):
+    """Bind source bytes to Git commit/tree/blob membership when available."""
+    package_dir = Path(package_dir)
+    try:
+        head = subprocess.check_output(['git', '-C', str(package_dir), 'rev-parse', '--verify', 'HEAD'],
+            text=True, stderr=subprocess.PIPE).strip()
+        tree = subprocess.check_output(['git', '-C', str(package_dir), 'rev-parse', '--verify', 'HEAD^{tree}'],
+            text=True, stderr=subprocess.PIPE).strip()
+        listing = subprocess.check_output(['git', '-C', str(package_dir), 'ls-tree', '-r', '-z', 'HEAD', '--'],
+            stderr=subprocess.PIPE)
+    except (OSError, subprocess.SubprocessError):
+        return dict(kind='unavailable', immutable=False, head=None, tree=None, blobs={})
+    blobs = {}
+    for record in listing.split(b'\0'):
+        if not record:
+            continue
+        try:
+            header, path = record.split(b'\t', 1)
+            mode, kind, oid = header.split(b' ', 2)
+            path = path.decode('utf-8')
+            if kind == b'blob' and mode in (b'100644', b'100755'):
+                blobs[path] = oid.decode('ascii')
+        except (UnicodeError, ValueError):
+            raise ValueError('malformed Git tree while binding fetched inputs')
+    immutable = bool(head and tree and all(entry['path'] in blobs for entry in entries))
+    for entry in entries:
+        entry['git_blob'] = blobs.get(entry['path'])
+        entry['git_member'] = entry['path'] in blobs
+    return dict(kind='git', immutable=immutable, head=head, tree=tree, blobs=blobs)
+
+
+def native_population(root, descriptor):
+    """Materialize the single native-derived package input population.
+
+    Lake supplies package ownership, source roots, and module membership. This
+    function only snapshots those native-owned roots and records bytes/modes;
+    it does not parse manifests or invent a dependency graph.
+    """
+    if descriptor is None:
+        return None
+    materials.require_keys(descriptor, NATIVE_POPULATION_FIELDS, 'native Lake input population')
+    if descriptor['kind'] != selection.NATIVE_INPUT_KIND or not isinstance(descriptor['packages'], list):
+        raise ValueError('invalid native Lake input population')
+    root = Path(root).resolve()
+    packages = []
+    for package in descriptor['packages']:
+        materials.require_keys(package, {'owner', 'dir', 'source_roots', 'config_paths', 'modules',
+                                         'remote_url', 'scope'},
+                               'native package input')
+        owner = package['owner']
+        if not isinstance(owner, str) or not owner:
+            raise ValueError('invalid native package owner')
+        package_dir = (root / package['dir']).resolve()
+        if not package_dir.is_relative_to(root) or package_dir == root:
+            raise ValueError('native package directory escapes workspace')
+        if not package_dir.is_dir() or package_dir.is_symlink():
+            packages.append(dict(owner=owner, dir=package['dir'], status='absent',
+                                 remote_url=package.get('remote_url', ''), scope=package.get('scope', ''),
+                                 source_roots=sorted(package['source_roots']),
+                                 config_paths=sorted(package['config_paths']),
+                                 modules=sorted(package['modules'], key=lambda item: item['name'])))
+            continue
+        roots = []
+        for source_root in package['source_roots']:
+            if not isinstance(source_root, str) or not source_root:
+                raise ValueError('invalid native source root')
+            source = (root / source_root).resolve()
+            if not source.is_relative_to(package_dir) or source.is_symlink():
+                raise ValueError('native source root escapes package owner')
+            roots.append(source)
+        entries = []
+        seen = set()
+        for source in roots:
+            for item in _walk_regular(source):
+                relative = str(Path(source.relative_to(package_dir)) / item['path'])
+                item['path'] = Path(relative).as_posix()
+                if item['path'] not in seen:
+                    seen.add(item['path'])
+                    entries.append(item)
+        configs = []
+        for relative in package['config_paths']:
+            if not isinstance(relative, str) or not relative or relative.startswith('/'):
+                raise ValueError('invalid native package configuration path')
+            path = package_dir / relative
+            item = _regular_file(path, package_dir)
+            if item is not None and item['path'] not in seen:
+                seen.add(item['path'])
+                configs.append(item)
+        entries.sort(key=lambda item: item['path'])
+        snapshot = _git_snapshot(package_dir, entries)
+        modules = []
+        for module in package['modules']:
+            materials.require_keys(module, {'name', 'path'}, 'native package module')
+            if not isinstance(module['name'], str) or not isinstance(module['path'], str):
+                raise ValueError('invalid native package module')
+            modules.append(dict(module))
+        packages.append(dict(owner=owner, dir=package['dir'], status='materialized',
+                             remote_url=package.get('remote_url', ''), scope=package.get('scope', ''),
+                             source_roots=sorted(package['source_roots']),
+                             config_paths=sorted(package['config_paths']),
+                             modules=sorted(modules, key=lambda item: item['name']),
+                             sources=entries, config=sorted(configs, key=lambda item: item['path']),
+                             git=snapshot))
+    return dict(kind=descriptor['kind'], packages=sorted(packages, key=lambda item: item['owner']))
+
+
 @phase('native-inputs')
-def prepare(root):
+def prepare(root, lake_inputs=None):
     root = Path(root).resolve()
     inputs = selection.Selection(root)
     inputs.validate('lean-report')
@@ -117,9 +260,14 @@ def prepare(root):
     write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
+    descriptor = None
+    if lake_inputs is not None:
+        descriptor = public.read_json(Path(lake_inputs).read_bytes())
+    population = native_population(root, descriptor)
     write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
         'modules': sorted(modules),
-        'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
+        'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root),
+        **({'native_inputs': population} if population is not None else {})}))
 
 
 @lru_cache(maxsize=None)
@@ -139,12 +287,43 @@ def input_sources(root, utility_path):
     """
     allowed, reported = source_inventory(str(root))
     record = public.read_json(Path(utility_path).read_bytes())
-    paths = public.read_json(Path(str(utility_path) + '.sources.json').read_bytes())
-    materials.require_sorted_strings(sorted(set(paths)), 'native dependency sources')
-    if set(paths) - allowed:
-        raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(paths) - allowed)))
-    selected = (set(paths) - reported) | {record['source_path']}
-    return {path: public.digest(Path(root) / path) for path in sorted(selected)}
+    source_data = public.read_json(Path(str(utility_path) + '.sources.json').read_bytes())
+    if isinstance(source_data, list):
+        local_paths, external = source_data, []
+    else:
+        materials.require_keys(source_data, {'local', 'external'}, 'native dependency source closure')
+        local_paths, external = source_data['local'], source_data['external']
+    materials.require_sorted_strings(sorted(set(local_paths)), 'native dependency sources')
+    if set(local_paths) - allowed:
+        raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(local_paths) - allowed)))
+    selected = (set(local_paths) - reported) | {record['source_path']}
+    local = {path: public.digest(Path(root) / path) for path in sorted(selected)}
+    if not isinstance(external, list):
+        raise ValueError('invalid native external dependency closure')
+    config_path = state(root) / 'inputs.json'
+    population = public.read_json(config_path.read_bytes()).get('native_inputs')
+    by_module = {}
+    by_owner_path = {}
+    if population is not None:
+        for package in population.get('packages', []):
+            for source in package.get('sources', []):
+                by_owner_path[(package['owner'], source['path'])] = package
+            for module in package.get('modules', []):
+                by_module[(package['owner'], module['name'], module['path'])] = package
+    bindings = []
+    for item in external:
+        materials.require_keys(item, {'owner', 'module', 'path'}, 'native external module binding')
+        key = (item['owner'], item['module'], item['path'])
+        package = by_module.get(key) or by_owner_path.get((item['owner'], item['path']))
+        if package is None or package.get('status') != 'materialized':
+            raise ValueError('native external module is outside the resolved population: ' + repr(key))
+        source = next((entry for entry in package.get('sources', []) if entry['path'] == item['path']), None)
+        if source is None:
+            raise ValueError('native external module source is not a regular package input: ' + repr(key))
+        bindings.append(dict(owner=item['owner'], module=item['module'], path=item['path'],
+                             package=package['dir'], mode=source['mode'], sha256=source['sha256'],
+                             ))
+    return local, sorted(bindings, key=lambda item: (item['owner'], item['module'], item['path']))
 
 
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
@@ -175,7 +354,7 @@ def module(root, name, source, utility_path, executable, output):
     with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
         directory = Path(directory)
         record = public.read_json(Path(utility_path).read_bytes())
-        bindings = input_sources(root, utility_path)
+        bindings, external_bindings = input_sources(root, utility_path)
         utility = directory / 'utility.json'
         utility.write_bytes(materials.canonical_json(record['utilities']))
         spool = directory / 'spool'
@@ -190,7 +369,7 @@ def module(root, name, source, utility_path, executable, output):
         row_binding(rows, root, name, utility_path)
         artifact = directory / 'module.zip'
         public.write_origin(report, name, dict(public.production_origin(root, executable),
-                                              input_sources=bindings))
+                                              input_sources=bindings, external_inputs=external_bindings))
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
         activity('extract', 1)
@@ -218,7 +397,8 @@ def produce_batch(requests):
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
-            bindings[name] = (utility_path, Path(output), input_sources(root, utility_path))
+            local_bindings, external_bindings = input_sources(root, utility_path)
+            bindings[name] = (utility_path, Path(output), local_bindings, external_bindings)
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
@@ -232,7 +412,7 @@ def produce_batch(requests):
             raise ValueError('incomplete native inspection batch')
         for row in raw['modules']:
             name = row['module']
-            utility_path, output, sources = bindings[name]
+            utility_path, output, sources, external_bindings = bindings[name]
             row_dir = directory / name
             row_dir.mkdir()
             row_spool = row_dir / 'spool'
@@ -248,7 +428,8 @@ def produce_batch(requests):
             row_binding(rows, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
-            public.write_origin(report, name, dict(origin, input_sources=sources))
+            public.write_origin(report, name, dict(origin, input_sources=sources,
+                                                  external_inputs=external_bindings))
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
         if list(spool.iterdir()):
@@ -393,7 +574,8 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
                             raise ValueError('truncated private material spool')
                         writer.write(block)
                         remaining -= len(block)
-        public.write_sidecars(report, config['coordinates'], origins)
+        public.write_sidecars(report, config['coordinates'], origins,
+                              native_inputs=config.get('native_inputs'))
         # The native aggregate facet validates the completed bundle before
         # exposing it. Do not repeat that complete pass inside its builder.
         artifact = directory / 'report.zip'
@@ -410,7 +592,8 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     # prepare validated the manifest before any facet could accept an artifact.
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
     origin = public.validate_origin(report, rows, compatibility)
-    if origin['input_sources'] != input_sources(root, utility):
+    local_bindings, external_bindings = input_sources(root, utility)
+    if origin['input_sources'] != local_bindings or origin.get('external_inputs', []) != external_bindings:
         raise ValueError('native dependency source binding mismatch')
     return rows, origin
 
@@ -452,7 +635,11 @@ def publish(root, destination):
 
 
 def main():
-    actions = {'prepare': prepare, 'module': module, 'aggregate': lambda root, output, *paths: aggregate(root, output, paths),
+    if len(sys.argv) >= 2 and sys.argv[1] == 'prepare':
+        if len(sys.argv) not in (3, 5) or (len(sys.argv) == 5 and sys.argv[3] != '--lake-inputs'):
+            raise ValueError('prepare expects ROOT [--lake-inputs FILE]')
+        return prepare(sys.argv[2], sys.argv[4] if len(sys.argv) == 5 else None)
+    actions = {'module': module, 'aggregate': lambda root, output, *paths: aggregate(root, output, paths),
                'validate': validate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, validate, or publish')

@@ -1,6 +1,7 @@
 """Normal inspect entry remains authoritative when a lightweight seed is available."""
 from test_native_support import *
 from test_reuse import EXECUTION
+import reuse
 
 
 class NativeReuseTests:
@@ -50,3 +51,34 @@ class NativeReuseTests:
         recovered = self.inspect()
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
+
+    def test_fetched_package_absence_reuses_only_wholly_unmaterialized_snapshot(self):
+        self._configure_fetched_git_package()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        policy['dependency_sources']['include'].append(dict(pattern='Audit.lean', optional=False))
+        for path in ['tools/lean-inspector/reuse.py', 'tools/lean-inspector/inspect.sh', 'utility.json']:
+            policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        self.inspect()
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        seed = self.root / 'lightweight-seed' / 'raw-lean-report.json'
+        seed.parent.mkdir()
+        for suffix in (*publication.SUFFIXES, '.reuse.json'):
+            shutil.copyfile(publication.member(output, suffix),
+                            publication.member(seed, suffix))
+        shutil.rmtree(self.root / '.lake')
+        self.env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        reused = self.inspect()
+        self.assertEqual(reused.returncode, 0, reused.stdout + reused.stderr)
+        self.assertNotIn('phase=ensure status=started', reused.stderr)
+        self.assertEqual(output.read_bytes(), seed.read_bytes())
+        # A present but incomplete checkout is a miss even though the
+        # producer-bound Git snapshot itself remains unchanged.
+        partial = self.root / '.lake/packages/fetched/Foreign'
+        partial.mkdir(parents=True)
+        (partial / 'Thing.lean').write_text('def value : Nat := 9\n')
+        captured = reuse.probe(self.root, seed, self.lake)
+        self.assertTrue(captured['needs_lake'], captured)
