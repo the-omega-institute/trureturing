@@ -110,6 +110,23 @@ public sealed class DeclaredTemplateUnregisteredTests
     [InlineData("def quote := '\"'\ntheorem D5.S0.Carrier.Target.target0 : True := by trivial\n")]
     public void quoted_identifiers_and_character_literals_preserve_base_names(string baseline) => Empty(Build(baseline: baseline));
 
+    [Theory]
+    [InlineData("r#")]
+    [InlineData("r##")]
+    public void raw_string_contents_are_not_base_declarations(string prefix) => Block(Build(
+        baseline: "def text := " + prefix + "\" \" theorem " + Theorem + " : True := by trivial \" \"" + prefix[1..] + "\n"));
+
+    [Theory]
+    [InlineData("s!")]
+    [InlineData("m!")]
+    public void interpolated_string_contents_are_not_base_declarations(string prefix) => Block(Build(
+        baseline: "def text := " + prefix + "\"{id \" theorem " + Theorem + " : True := by trivial \"}\"\n"));
+
+    [Fact]
+    public void supplementary_unicode_base_name_is_existing() => Empty(Build(
+        baseline: "theorem 𝒳 : True := by trivial\n", source: "theorem 𝒳 : True := by trivial\n",
+        declarations: [new("𝒳", "theorem", "True", [])]));
+
     [Fact]
     public void unvalidated_registration_does_not_cover_new_theorem() => Block(Build(binding: "undeclared"));
 
