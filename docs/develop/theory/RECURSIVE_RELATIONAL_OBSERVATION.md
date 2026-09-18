@@ -36332,3 +36332,281 @@ $$
 在四次量中，细量下降 $6215/4096$，粗量下降 $6400/4096$；粗量下降更多，其差便增加 $185/4096$。两个凸量各自下降不蕴含它们之差下降，所列平稳交换矩阵与精确分数实现了这一障碍。证毕。
 
 ## 83.99 追加锚
+
+## 84. 证据更新的固定参考交换与原标签运输
+
+**定义与假设 84.1（非负似然与正证据更新）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$、粗参考 $p=Cq$ 及质量算子
+$$
+C_{ij}=\mathbf1_{r(j)=i},\qquad
+B_{ji}=\mathbf1_{r(j)=i}\frac{q_j}{p_i},\qquad E=BC.
+$$
+概率均为列向量，$\Delta(J),\Delta(I)$ 包括有零坐标的概率。定理 74.2 给出 $C,B,E$ 非负列随机，且
+$$
+CB=\mathrm{Id}_I,\qquad E^2=E,\qquad EB=B,\qquad CE=C,\qquad Bp=q.
+$$
+称 $B\Delta(I)$ 中的先验为参考校准先验；记第 $i$ 个粗标准基为 $e_i$，相应参考条件概率为 $b_i=Be_i$，细点 $j$ 上的点质量记为 $\delta_j$。
+
+取有限实值非负似然 $\ell:J\to[0,\infty)$，定义
+$$
+D_\ell=\operatorname{diag}_{j\in J}(\ell_j),\qquad
+Z_\ell(d)=\sum_j\ell_jd_j,\qquad
+\bar\ell_i=\sum_{r(j)=i}\frac{q_j}{p_i}\ell_j,
+\qquad D_{\bar\ell}=\operatorname{diag}_{i\in I}(\bar\ell_i).
+$$
+似然可以大于 $1$；$D_\ell d$ 的总质量为 $Z_\ell(d)$。只在正证据定义域
+$$
+\mathcal D_\ell=\{d\in\Delta(J):Z_\ell(d)>0\}
+$$
+上定义概率更新
+$$
+U_\ell:\mathcal D_\ell\longrightarrow\Delta(J),\qquad
+U_\ell(d)=\frac{D_\ell d}{Z_\ell(d)}.
+$$
+在 $Z_\ell(d)=0$ 时不定义概率后验。由于 $E$ 在整个 $\Delta(J)$ 上有定义，两个复合的完整定义域分别为
+$$
+\operatorname{Dom}(E\circ U_\ell)=\mathcal D_\ell,
+\qquad
+\operatorname{Dom}(U_\ell\circ E)
+=\{d\in\Delta(J):Z_\ell(Ed)>0\}.
+$$
+在定义 82.1 的条件投影记号中，$(\Pi\ell)_j=\bar\ell_{r(j)}$。
+
+**定理 84.2（固定参考的证据交换充要条件）。** 在定义与假设 84.1 下，对每个 $d\in\Delta(J)$，有
+$$
+Z_\ell(Ed)=\sum_i(Cd)_i\bar\ell_i,
+\qquad
+Z_\ell(d)>0\ \Longrightarrow\ Z_\ell(Ed)>0.
+$$
+因此
+$$
+\operatorname{Dom}(E\circ U_\ell)
+\subseteq\operatorname{Dom}(U_\ell\circ E),
+$$
+且此包含可以严格。以下三个条件等价：
+$$
+\boxed{
+\begin{aligned}
+ED_\ell=D_\ell E
+&\ \Longleftrightarrow\
+\forall j,k\in J,\quad r(j)=r(k)\Rightarrow\ell_j=\ell_k\\
+&\ \Longleftrightarrow\
+\forall d\in\mathcal D_\ell,\quad
+E U_\ell(d)=U_\ell(Ed).
+\end{aligned}
+}
+$$
+等价条件成立时，对所有 $d\in\Delta(J)$ 都有 $Z_\ell(d)=Z_\ell(Ed)$，两个复合的完整定义域相同。定义域相同本身不蕴含交换，命题 84.4 给出两域均为整个单纯形的反例。对于事件似然 $\ell=\mathbf1_A$，上述等价条件成立当且仅当 $A\subseteq J$ 为完整 $r$-纤维的并。
+
+**证明。** 先按纤维求和，得到
+$$
+Z_\ell(Ed)
+=\sum_j\ell_j\frac{q_j}{p_{r(j)}}(Cd)_{r(j)}
+=\sum_i(Cd)_i\bar\ell_i.
+$$
+若 $Z_\ell(d)>0$，有限非负和中必有一项 $d_j\ell_j>0$。于是 $(Cd)_{r(j)}\ge d_j>0$，而严格正参考保证
+$$
+\bar\ell_{r(j)}\ge\frac{q_j}{p_{r(j)}}\ell_j>0.
+$$
+所以 $Z_\ell(Ed)>0$，证明定义域包含。若同一纤维中有 $j,k$ 满足 $\ell_j=0<\ell_k$，则 $Z_\ell(\delta_j)=0$，但
+$$
+Z_\ell(E\delta_j)=\bar\ell_{r(j)}>0,
+$$
+从而该包含严格。这种似然在任一至少含两点的纤维上均可取到。
+
+由 $E=BC$，其矩阵元为
+$$
+E_{jk}=\mathbf1_{r(j)=r(k)}\frac{q_j}{p_{r(j)}},
+\qquad
+(ED_\ell)_{jk}=E_{jk}\ell_k,\qquad
+(D_\ell E)_{jk}=\ell_jE_{jk}.
+$$
+异纤维的条目均为零，同纤维的 $E_{jk}$ 严格为正。因此两矩阵相等恰好要求同纤维的 $\ell_j,\ell_k$ 相等，证明前两个条件等价。
+
+若 $\ell$ 纤维常值，则该纤维上的常值恰为 $\bar\ell_i$。对所有概率 $d$，
+$$
+Z_\ell(d)=\sum_i\bar\ell_i\sum_{r(j)=i}d_j
+=\sum_i\bar\ell_i(Cd)_i=Z_\ell(Ed).
+$$
+所以完整定义域相同；在共同的正证据域上，
+$$
+E U_\ell(d)
+=\frac{ED_\ell d}{Z_\ell(d)}
+=\frac{D_\ell Ed}{Z_\ell(Ed)}
+=U_\ell(Ed).
+$$
+
+反过来，假设归一化交换对每个 $d\in\mathcal D_\ell$ 成立。逐个固定粗标签 $i$。若 $\bar\ell_i=0$，则严格正权重下的非负平均为零，故这条纤维上的每个 $\ell_j=0$。若 $\bar\ell_i>0$，取 $d=b_i$，则
+$$
+Eb_i=b_i,\qquad Z_\ell(b_i)=\bar\ell_i>0.
+$$
+概率 $U_\ell(b_i)$ 的支撑包含于 $r^{-1}(i)$，所以 $CU_\ell(b_i)=e_i$，继而 $EU_\ell(b_i)=b_i$。假设给出
+$$
+U_\ell(b_i)=U_\ell(Eb_i)=E U_\ell(b_i)=b_i.
+$$
+在该纤维的每个坐标，$(b_i)_j=q_j/p_i>0$，于是
+$$
+\frac{\ell_j(b_i)_j}{\bar\ell_i}=(b_i)_j
+\quad\Longrightarrow\quad \ell_j=\bar\ell_i.
+$$
+这同时处理活纤维与零似然纤维，证明必要性。特别地，若 $\ell\equiv0$，两个定义域均为空，归一化交换是空域上的全称命题；线性交换成立，但没有概率后验被构造。
+
+最后，$\mathbf1_A$ 纤维常值恰好表示每条纤维或者完全包含于 $A$，或者与 $A$ 不交，即 $A$ 是完整纤维的并。证毕。
+
+附引：纤维参考平均的条件期望公式见 Steven P. Lalley，[*Conditional Expectation*，第 1 页 Exercise 2](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=1)。纤维常值因子对应分区可测函数，其提出性质见同文[第 4 页 §2.1 property (4)](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=4)。这里有限实值函数自动可积，严格正参考使几乎处处等式等价于逐点等式；质量算子与条件投影的转换为定义 82.1 的 $E=D_q\Pi D_q^{-1}$。
+
+**定理 84.3（更新参考条件律的原标签 Bayes 运输）。** 在定义与假设 84.1 下，令
+$$
+I_+=\{i\in I:\bar\ell_i>0\},\qquad
+J_+=\{j\in J:\ell_j>0\}.
+$$
+对每个 $i\notin I_+$，选定概率 $v^{(i)}\in\Delta(J)$，使其支撑包含于 $r^{-1}(i)$，例如取 $v^{(i)}=b_i$。定义整个原标签集 $I$ 上的重建矩阵
+$$
+B^\ell_{ji}=
+\begin{cases}
+\displaystyle\mathbf1_{r(j)=i}\frac{q_j\ell_j}{p_i\bar\ell_i},&i\in I_+,\\
+v^{(i)}_j,&i\notin I_+.
+\end{cases}
+$$
+则 $B^\ell$ 非负列随机，每列的支撑包含于其指定纤维，且
+$$
+\boxed{
+CB^\ell=\mathrm{Id}_I,\qquad
+D_\ell B=B^\ell D_{\bar\ell}.
+}
+$$
+对每个 $a\in\Delta(I)$，令
+$$
+z(a)=\sum_i a_i\bar\ell_i.
+$$
+有 $Z_\ell(Ba)=z(a)$；只在 $z(a)>0$ 时定义
+$$
+U_{\bar\ell}(a)=\frac{D_{\bar\ell}a}{z(a)},
+$$
+并有
+$$
+\boxed{
+U_\ell(Ba)=B^\ell U_{\bar\ell}(a),\qquad
+C U_\ell(Ba)=U_{\bar\ell}(a).
+}
+$$
+所有非活标签的更新粗质量均为零，因此上述后验与非活列 $v^{(i)}$ 的选择无关。这些列是零质量条件律的版本选择，不是零分母归一化所得的后验。
+
+若 $Z_q:=Z_\ell(q)>0$，则更新参考及其粗质量为
+$$
+q^\ell_j=\frac{q_j\ell_j}{Z_q},\qquad
+p^\ell_i=(Cq^\ell)_i=\frac{p_i\bar\ell_i}{Z_q}.
+$$
+此时 $I_+=r(J_+)$，$q^\ell$ 的正支撑为 $J_+$，$p^\ell$ 的正支撑为 $I_+$，且对 $i\in I_+$，
+$$
+B^\ell_{ji}=\mathbf1_{r(j)=i}\frac{q^\ell_j}{p^\ell_i}.
+$$
+因此，先限制到满射 $r_+:J_+\to I_+$ 及其严格正概率 $q^\ell|_{J_+},p^\ell|_{I_+}$，才得到严格正参考接口中的反向条件核。整个 $J$ 上的 $q^\ell$ 可以有零坐标。
+
+即使 $Z_q>0$，也不保证每个粗先验都有 $z(a)>0$：若存在非活标签 $i$，取 $a=e_i$ 就有 $z(a)=0$。凡 $z(a)=0$，都有 $D_\ell Ba=0$、$D_{\bar\ell}a=0$，两个归一化更新均无定义。若 $Z_q=0$，则 $\ell\equiv0$，更新参考也无定义，而所列未归一化矩阵恒等式仍成立。
+
+**证明。** 若 $i\in I_+$，相应列非负，支撑包含于 $r^{-1}(i)$，且
+$$
+\sum_jB^\ell_{ji}
+=\frac{\sum_{r(j)=i}q_j\ell_j}{p_i\bar\ell_i}=1.
+$$
+若 $i\notin I_+$，$v^{(i)}$ 已是指定纤维上的概率。因此各列均非负归一化；对任意 $h,i\in I$，
+$$
+(CB^\ell)_{hi}
+=\sum_{r(j)=h}B^\ell_{ji}=\mathbf1_{h=i},
+$$
+给出 $CB^\ell=\mathrm{Id}_I$。
+
+在活列上，
+$$
+(B^\ell D_{\bar\ell})_{ji}
+=B^\ell_{ji}\bar\ell_i
+=\mathbf1_{r(j)=i}\frac{q_j\ell_j}{p_i}
+=(D_\ell B)_{ji}.
+$$
+在非活列上，$\bar\ell_i=0$；由于 $q_j/p_i>0$ 且 $\ell_j\ge0$，该纤维上的所有 $\ell_j$ 也为零。因此等式两边的整列都为零，没有使用零分母除法。这证明未归一化运输式。
+
+将它作用于 $a$ 并求总质量，利用 $B^\ell$ 的列和为一，得到
+$$
+Z_\ell(Ba)
+=\sum_j(B^\ell D_{\bar\ell}a)_j
+=\sum_i\bar\ell_i a_i=z(a).
+$$
+当 $z(a)>0$ 时除以这一共同标量，即得 $U_\ell(Ba)=B^\ell U_{\bar\ell}(a)$；再左乘 $C$ 得粗更新恒等式。对于 $i\notin I_+$，更新粗坐标为 $a_i\bar\ell_i/z(a)=0$，故这些列无论选择何种允许的版本，所得后验均相同。
+
+由 $Bp=q$ 及共同证据式，
+$$
+Z_q=\sum_i p_i\bar\ell_i=\sum_jq_j\ell_j.
+$$
+若它为正，逐纤维求和得到上述 $p^\ell$，并在活纤维上约去正数 $Z_q$，得到 $q^\ell_j/p^\ell_i=q_j\ell_j/(p_i\bar\ell_i)$。严格正的 $q_j$ 使 $q^\ell_j>0$ 等价于 $\ell_j>0$；同理，$p^\ell_i>0$ 等价于 $\bar\ell_i>0$。非负加权和为正恰好表示纤维中至少有一个正似然点，所以 $I_+=r(J_+)$。限制后的参考概率总和仍为一，粗化仍满射，且两端参考严格为正。
+
+若 $z(a)=0$，非负向量 $D_{\bar\ell}a$ 的总和为零，故该向量为零；运输式再给出 $D_\ell Ba=0$。若 $Z_q=0$，严格正 $q$ 下的非负和为零迫使每个 $\ell_j=0$，从而两对角矩阵均为零。此时仍有 $CB^\ell=\mathrm{Id}_I$，但没有正证据可供归一化。
+
+最后，对一般细先验 $d$ 代入 $a=Cd$，在 $Z_\ell(Ed)>0$ 时所得恒等式是
+$$
+B^\ell U_{\bar\ell}(Cd)=U_\ell(B(Cd))=U_\ell(Ed).
+$$
+当 $d$ 属于参考校准族时，$Ed=d$，于是恢复其证据后验。命题 84.4 排除同一粗质量输入对全部正证据细先验的统一恢复保证。证毕。
+
+附引：Maxim Raginsky，*Strong Data Processing Inequalities and $\Phi$-Sobolev Inequalities for Discrete Channels*，[arXiv:1411.3575v4，§1.1 式 (1.2)](https://arxiv.org/abs/1411.3575v4)，对严格正 admissible pair 给出反向核 $K^*(x\mid y)=K(y\mid x)\mu(x)/(\mu K)(y)$。在上述支撑限制后，取 $K(i\mid j)=\mathbf1_{r_+(j)=i}$、$\mu=q^\ell|_{J_+}$，其反向核正是 $B^\ell$ 的活列在 $J_+$ 上的限制。该严格正公式不指定原标签集中的非活列；零概率事件上的版本自由亦见 Lalley 同文[第 2 页 Definition 2 及其唯一性说明](https://www.stat.uchicago.edu/~lalley/Courses/385/ConditionalExpectation.pdf#page=2)。
+
+**命题 84.4（两状态上的交换失败、校准运输与任意先验恢复障碍）。** 在命题 73.4 的等权二分设置中，取
+$$
+J=\{0,1\},\qquad I=\{*\},\qquad r(0)=r(1)=*,
+\qquad q=\begin{pmatrix}1/2\\1/2\end{pmatrix},
+\qquad \ell=\begin{pmatrix}1\\1/2\end{pmatrix}.
+$$
+则
+$$
+C=\begin{pmatrix}1&1\end{pmatrix},\qquad B=q,\qquad
+E=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\bar\ell_*=\frac34,\qquad
+B^\ell=\begin{pmatrix}2/3\\1/3\end{pmatrix}.
+$$
+两个复合的完整定义域均为 $\Delta(J)$，但
+$$
+E U_\ell(q)=q\ne U_\ell(Eq)
+=\begin{pmatrix}2/3\\1/3\end{pmatrix}.
+$$
+另一方面，在原来的单个粗标签上，校准先验 $q=B[1]$ 满足
+$$
+U_{\bar\ell}([1])=[1],\qquad
+B^\ell U_{\bar\ell}([1])=U_\ell(q).
+$$
+对于已经固定的 $r,q,\ell$，却不存在任何函数 $F:\Delta(I)\to\Delta(J)$，使
+$$
+\forall d\in\Delta(J),\qquad
+Z_\ell(d)>0\ \Longrightarrow\ F(Cd)=U_\ell(d).
+$$
+该不存在结论允许 $F$ 依赖固定的 $r,q,\ell$，且不对 $F$ 作线性假设。
+
+**证明。** 两个似然值都严格为正，故每个概率 $d$ 都有 $Z_\ell(d)>0$；$Ed=q$ 同样具有正证据。因此两个完整定义域都是 $\Delta(J)$。直接计算
+$$
+D_\ell q=\begin{pmatrix}1/2\\1/4\end{pmatrix},\qquad
+Z_\ell(q)=\bar\ell_*=\frac34,\qquad
+U_\ell(q)=\begin{pmatrix}2/3\\1/3\end{pmatrix}=B^\ell.
+$$
+$E$ 将每个概率映到 $q$，所以所列归一化交换失败；定理 84.2 同时给出 $ED_\ell\ne D_\ell E$。唯一的粗概率为 $[1]$，以正数 $3/4$ 加权再归一化仍为 $[1]$，且
+$$
+D_\ell B=\begin{pmatrix}1/2\\1/4\end{pmatrix}
+=B^\ell D_{\bar\ell},
+$$
+从而更新参考条件律在同一标签上精确表示校准先验的后验。
+
+再取两个细点质量
+$$
+d^{(0)}=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+d^{(1)}=\begin{pmatrix}0\\1\end{pmatrix}.
+$$
+它们满足
+$$
+Cd^{(0)}=Cd^{(1)}=[1],\qquad
+Z_\ell(d^{(0)})=1,\qquad Z_\ell(d^{(1)})=\frac12,
+$$
+而正证据更新分别为
+$$
+U_\ell(d^{(0)})=d^{(0)},\qquad
+U_\ell(d^{(1)})=d^{(1)}.
+$$
+若存在所述 $F$，同一个 $F([1])$ 就必须同时等于这两个不同的概率，矛盾。这是定理 2.2 的同纤维因子化障碍在证据后验上的应用，排除了线性与非线性的统一恢复；其量词是同一函数对全部正证据先验成立，不是断言每个非校准先验分别都无法恢复。证毕。
+
+## 84.99 追加锚
