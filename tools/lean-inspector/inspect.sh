@@ -125,7 +125,8 @@ run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" 
 # Native Lake has now resolved and captured fetched package inputs. Seal the
 # post-provisioning snapshot before publication and recheck it again at seal.
 run_phase capture-final python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
-  --lake "$LAKE" --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
+  --lake "$LAKE" --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json" \
+  --root-snapshot "$LOG_DIR/root-inputs.json"
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"

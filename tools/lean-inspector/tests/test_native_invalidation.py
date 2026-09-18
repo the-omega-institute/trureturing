@@ -28,7 +28,7 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
-    def _configure_fetched_git_package(self):
+    def _configure_fetched_git_package(self, package_name="fetched", library="Foreign", *, private_axiom=False, source_dir=None):
         """Install a local Git package whose package and library names differ."""
         origin = self.root / 'fetched-origin'
         (origin / 'Foreign').mkdir(parents=True)
@@ -44,6 +44,25 @@ def visible : Nat := hidden
         self.write('fetched-origin/Foreign/Thing.lean', '''import Foreign.Hidden
 def value : Nat := visible
 ''')
+        self.write('fetched-origin/Foreign/AuditOnly.lean', 'def auditOnly : Nat := 1\n')
+        self.write('fetched-origin/Foreign/ClaimOnly.lean',
+            'private def hiddenClaim : Prop := False\ndef externalClaim : Prop := hiddenClaim\n')
+        if private_axiom:
+            self.write('fetched-origin/Foreign/Hidden.lean',
+                'module\npublic section\nnoncomputable section\nprivate axiom hidden : Nat\ndef visible : Nat := hidden\n')
+            self.write('fetched-origin/Foreign/Thing.lean',
+                'module\npublic import Foreign.Hidden\npublic noncomputable def value : Nat := visible\n')
+        if library != 'Foreign':
+            for source in origin.rglob('*.lean'):
+                source.write_text(source.read_text().replace('Foreign', library))
+            (origin / 'Foreign').rename(origin / library)
+            config = origin / 'lakefile.toml'
+            config.write_text(config.read_text().replace('Foreign', library))
+        if source_dir:
+            (origin / source_dir).mkdir()
+            (origin / library).rename(origin / source_dir / library)
+            config = origin / 'lakefile.toml'
+            config.write_text(config.read_text().replace('[[lean_lib]]', f'[[lean_lib]]\nsrcDir = "{source_dir}"'))
         def git(*args):
             result = subprocess.run(['git', *args], cwd=origin, env=self.env,
                 text=True, capture_output=True, timeout=120)
@@ -54,17 +73,17 @@ def value : Nat := visible
         git('add', '.')
         git('-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'fetched fixture')
         rev = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=origin, text=True).strip()
-        self.write('D5/A.lean', 'import D5.B\nimport Foreign.Thing\ndef fetchedValue : Nat := D5.hidden + value\n')
-        self.write('Audit.lean', 'import Foreign.Thing\ndef audit : Nat := value\n')
+        self.write('D5/A.lean', f'import D5.B\nimport {library}.Thing\nnoncomputable def fetchedValue : Nat := D5.hidden + value\n')
+        self.write('Audit.lean', f'import {library}.AuditOnly\ndef audit : Nat := auditOnly\n')
         lakefile = (self.root / 'lakefile.toml').read_text()
-        lakefile += f'''\n[[require]]\nname = "fetched"\nscope = "fixture"\ngit = "file://{origin}"\nrev = "{rev}"\n'''
+        lakefile += f'''\n[[require]]\nname = "{package_name}"\nscope = "fixture"\ngit = "file://{origin}"\nrev = "{rev}"\n'''
         self.write('lakefile.toml', lakefile)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['native_inputs'] = {'kind': 'lake-fetched'}
         self.write('lean-report-inputs.json', json.dumps(policy))
         manifest = json.loads((self.root / 'lake-manifest.json').read_text())
         manifest['packages'].append(dict(url=f'file://{origin}', type='git', subDir=None,
-            scope='fixture', rev=rev, name='fetched', manifestFile='lake-manifest.json',
+            scope='fixture', rev=rev, name=package_name, manifestFile='lake-manifest.json',
             inputRev='fixture', inherited=False, configFile='lakefile.toml'))
         self.write('lake-manifest.json', json.dumps(manifest))
         return origin, rev
@@ -76,6 +95,10 @@ def value : Nat := visible
         self.assertTrue(package.is_dir())
         origins = self.origins()
         external = origins['D5.A']['external_inputs']
+        self.assertIn('Foreign.Hidden', {item['module'] for item in external},
+                      'transitive fetched sources must be bound before extraction')
+        self.assertIn('Foreign.Hidden', {item['module'] for item in origins['Fixture']['external_inputs']},
+                      'imports through a repository helper retain fetched ownership')
         self.assertTrue(any(item['module'] == 'Foreign.Thing' and
                             item['package'] == '.lake/packages/fetched' for item in external), external[:3])
         before = self.stamps()
@@ -112,6 +135,176 @@ def value : Nat := visible
         descriptor = publication.read_json(
             (self.root / '.lake/build/lean-inspector/lake-inputs.json').read_bytes())
         self.assertEqual(native.native_population(self.root, descriptor)['packages'][0]['status'], 'absent')
+
+    def test_fetched_snapshot_rejects_dirty_git_and_invalid_resolver(self):
+        import reuse
+        self._configure_fetched_git_package()
+        self.build()
+        descriptor_path = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        descriptor = publication.read_json(descriptor_path.read_bytes())
+        package = self.root / '.lake/packages/fetched'
+        source = package / 'Foreign/Hidden.lean'
+        source.write_text(source.read_text().replace(':= 1', ':= 2'))
+        population = native.native_population(self.root, descriptor)
+        fetched = next(p for p in population['packages'] if p['owner'] == 'fetched')
+        self.assertFalse(fetched['git']['immutable'], 'path membership cannot certify changed bytes')
+        source.write_text(source.read_text().replace(':= 2', ':= 1'))
+        mode = source.stat().st_mode & 0o777
+        source.chmod(mode | 0o111)
+        fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
+        self.assertFalse(fetched['git']['immutable'], 'Git file mode must match')
+        source.chmod(mode)
+        subprocess.run(['git', '-C', str(package), '-c', 'user.name=Fixture',
+            '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+            'commit', '--quiet', '--allow-empty', '-m', 'different HEAD'], check=True)
+        fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
+        self.assertFalse(fetched['git']['immutable'], 'actual HEAD must equal the native pin')
+        descriptor_path.write_text('{broken')
+        self.assertIsNone(reuse._native_inputs(publication.selection.Selection(self.root), None),
+                          'invalid resolver evidence cannot fall back to a stored snapshot')
+
+    def test_fetched_fixed_judge_and_utility_claim_closures(self):
+        self._configure_fetched_git_package()
+        self.write('ClaimSupport.lean', 'import Foreign.ClaimOnly\ndef claimSupport : Prop := externalClaim\n')
+        self.write('LeanInformationAudit/Registry.lean',
+            'import Foreign.AuditOnly\ndef fixtureDriver : Nat := auditOnly\n')
+        self.build()
+        origins = self.origins()
+        before = self.stamps()
+        self.assertTrue(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+        self.assertTrue(all(any(item['module'] == 'Foreign.AuditOnly' for item in origin['external_inputs'])
+                            for origin in origins.values()))
+        self.assertIn('Foreign.ClaimOnly', {item['module'] for item in origins['Fixture']['external_inputs']})
+        claim = self.root / '.lake/packages/fetched/Foreign/ClaimOnly.lean'
+        claim.write_text(claim.read_text().replace('False', 'True'))
+        self.build()
+        self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'Fixture'})
+        self.assertEqual(origins['D5.Alone'], self.origins()['D5.Alone'])
+        self.publish()
+        before = self.stamps()
+        audit = self.root / '.lake/packages/fetched/Foreign/AuditOnly.lean'
+        audit.write_text(audit.read_text() + '-- fixed judge source input\n')
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(self.root / 'public.json', self.root)
+        self.build()
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, set(before))
+
+    def test_fetched_private_transitive_semantics_and_selective_reconstruction(self):
+        self._configure_fetched_git_package('sourceTwo', 'DifferentRoot', private_axiom=True, source_dir='build')
+        self.build()
+        self.publish()
+        before = self.stamps()
+        origins = self.origins()
+        rows = self.report()[0]
+        old_axioms = next(row for row in rows if row['module'] == 'D5.A')['declarations'][0]['axioms']
+        self.assertTrue(any('hidden' in name for name in old_axioms), old_axioms)
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(origins, self.origins())
+        source = self.root / '.lake/packages/sourceTwo/build/DifferentRoot/Hidden.lean'
+        source.write_text(source.read_text().replace('axiom hidden : Nat', 'def hidden : Nat := 3'))
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(self.root / 'public.json', self.root)
+        self.build()
+        new_axioms = next(row for row in self.report()[0] if row['module'] == 'D5.A')['declarations'][0]['axioms']
+        self.assertEqual(new_axioms, [])
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.A', 'Fixture'})
+        self.assertEqual(origins['D5.Alone'], self.origins()['D5.Alone'])
+        self.publish()  # Accurate changed local source is publishable, but not immutable.
+        population = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())['native_inputs']
+        self.assertFalse(native.immutable_population(population))
+        # Missing required origin evidence causes actual native extraction.
+        before = self.stamps()
+        artifact = self.root / '.lake/build/lean-inspector/modules/D5.A.zip'
+        with zipfile.ZipFile(artifact) as archive:
+            members = [(info, archive.read(info)) for info in archive.infolist()]
+        artifact.unlink()
+        with zipfile.ZipFile(artifact, 'w') as archive:
+            for info, data in members:
+                if info.filename.endswith('.provenance.json'):
+                    origin = json.loads(data)
+                    del origin['external_inputs']
+                    data = json.dumps(origin).encode()
+                archive.writestr(info, data)
+        self.build()
+        work = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in work if row['kind'] == 'extract'), 1)
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.A'})
+        self.record_result('private-fetched-semantics', dict(before_axioms=old_axioms,
+            after_axioms=new_axioms, affected=['D5.A', 'Fixture'], missing_origin_extractions=1))
+
+    def test_fetched_inventory_paths_ownership_and_publication_race(self):
+        self._configure_fetched_git_package()
+        self.build()
+        self.publish()
+        report = self.root / 'public.json'
+        package = self.root / '.lake/packages/fetched'
+        descriptor_path = self.root / '.lake/build/lean-inspector/lake-inputs.json'
+        descriptor_bytes = descriptor_path.read_bytes()
+        before = self.stamps()
+        # Ignored additions are part of the native namespace, independent of Git status.
+        (package / '.git/info/exclude').write_text('Foreign/Shadow.lean\n')
+        (package / 'Foreign/Shadow.lean').write_text('def shadow : Nat := 1\n')
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(report, self.root)
+        self.build()
+        self.assertEqual(before, self.stamps(), 'unimported source addition must not extract unrelated rows')
+        self.publish()
+        (package / 'Foreign/Shadow.lean').unlink()
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(report, self.root)
+        self.build()
+        self.publish()
+        source = package / 'Foreign/Thing.lean'
+        original = source.read_bytes()
+        source.unlink()
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(report, self.root)
+        source.symlink_to(package / 'Foreign/Hidden.lean')
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(report, self.root)
+        source.unlink(); source.write_bytes(original)
+        descriptor_bytes = descriptor_path.read_bytes()
+        for mutation in ('duplicate-owner', 'outside-owner', 'config'):
+            with self.subTest(mutation=mutation):
+                descriptor = json.loads(descriptor_bytes)
+                fetched = next(p for p in descriptor['descriptor']['packages'] if p['owner'] == 'fetched')
+                if mutation == 'duplicate-owner':
+                    descriptor['descriptor']['packages'].append(dict(fetched))
+                elif mutation == 'outside-owner':
+                    fetched['source_roots'] = ['../outside']
+                else:
+                    fetched['config_paths'].append('../outside')
+                descriptor_path.write_text(json.dumps(descriptor))
+                with self.assertRaises(ValueError):
+                    publication.verify_inputs(report, self.root)
+                descriptor_path.write_bytes(descriptor_bytes)
+        # Change real source after the private snapshot passed its first validation.
+        validate = publication.validate_bundle
+        def replace_source(*args, **kwargs):
+            result = validate(*args, **kwargs)
+            source.write_bytes(original + b'-- replacement after capture\n')
+            return result
+        destination = self.root / 'race.json'
+        with patch.object(publication, 'validate_bundle', side_effect=replace_source):
+            with self.assertRaises(ValueError):
+                publication.publish(report, destination, publication.coordinates(self.root), self.root)
+        self.assertFalse(destination.exists())
+        source.write_bytes(original)
+        # Current configuration must validate the resolver's origin; stale descriptors miss.
+        config = package / 'lakefile.toml'
+        original_config = config.read_text()
+        config.write_text(config.read_text() + '\n-- invalid TOML\n')
+        with self.assertRaises(ValueError):
+            publication.verify_inputs(report, self.root)
+        config.write_text(original_config)
+        # Native workspace resolution itself rejects competing source owners.
+        root_config = self.root / 'lakefile.toml'
+        root_config.write_text(root_config.read_text() + '\n[[lean_lib]]\nname = "Foreign"\n')
+        self.write('Foreign/Thing.lean', 'def competing : Nat := 0\n')
+        failed = self.build(success=False)
+        self.assertIn('ambiguous native module owner', failed.stdout + failed.stderr)
 
     def test_native_config_options_rebuild_and_fail_closed(self):
         # Origin evidence includes the actual executable hash. Inspector embeds

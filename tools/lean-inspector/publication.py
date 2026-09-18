@@ -288,66 +288,42 @@ class _SourceValidation:
                 if self.digest(path) != sha:
                     raise ValueError('stale dependency source binding: ' + path)
 
-    def current_native_inputs(self):
-        descriptor = self.inputs.root / '.lake/build/lean-inspector/lake-inputs.json'
-        if descriptor.is_file() and not descriptor.is_symlink():
-            try:
-                import native
-                return native.native_population(self.inputs.root, read_json(descriptor.read_bytes()))
-            except (OSError, UnicodeError, ValueError, KeyError, TypeError):
-                return None
-        path = self.inputs.root / '.lake/build/lean-inspector/inputs.json'
-        if not path.is_file() or path.is_symlink():
-            return None
+    def current_native_inputs(self, previous=None):
         try:
-            value = read_json(path.read_bytes()).get('native_inputs')
-        except (OSError, UnicodeError, ValueError, TypeError):
+            import native
+            return native.current_population(self.inputs.root, previous)
+        except (OSError, UnicodeError, ValueError, KeyError, TypeError):
             return None
-        return value
 
     def validate_external_population(self, expected):
         if self.inputs.native_input_kind() is None:
+            self.native_current = None
             return
         if not isinstance(expected, dict) or expected.get('kind') != selection.NATIVE_INPUT_KIND:
             raise ValueError('missing native fetched input population')
-        current = self.current_native_inputs()
+        current = self.current_native_inputs(expected)
         if current is None:
-            # The complete-entry absence rule is handled by reuse.py. A
-            # wholly unmaterialized package snapshot may validate from its
-            # producer-bound Git evidence. A present checkout still requires
-            # the native facet to re-snapshot it.
-            if any((self.inputs.root / package.get('dir', '')).exists()
-                   or (self.inputs.root / package.get('dir', '')).is_symlink()
-                   for package in expected.get('packages', [])):
-                raise ValueError('native fetched input population is unavailable')
-            return
+            raise ValueError('native fetched input population is unavailable')
         if current != expected:
             raise ValueError('native fetched input population changed')
+        self.native_current = current
 
     def validate_external_rows(self, origins):
-        current = self.current_native_inputs()
-        if current is None:
-            for origin in origins.values():
-                for item in origin.get('external_inputs', []):
-                    package = self.inputs.root / item.get('package', '')
-                    if package.exists() or package.is_symlink():
-                        raise ValueError('native external row inputs are unavailable')
+        if self.inputs.native_input_kind() is None:
             return
+        current = self.native_current
         by_key = {}
-        for package in current.get('packages', []):
-            for source in package.get('sources', []):
-                by_key[(package['owner'], None, source['path'])] = (package, source)
-            for module in package.get('modules', []):
-                source = next((entry for entry in package.get('sources', [])
-                               if entry['path'] == module['path']), None)
+        for package in current['packages']:
+            sources = {entry['path']: entry for entry in package.get('sources', [])}
+            for module in package['modules']:
+                source = sources.get(module['path'])
                 if source is not None:
                     by_key[(package['owner'], module['name'], module['path'])] = (package, source)
         for origin in origins.values():
             if 'external_inputs' not in origin:
                 raise ValueError('missing native external row inputs')
-            for item in origin.get('external_inputs', []):
-                found = (by_key.get((item['owner'], item['module'], item['path']))
-                         or by_key.get((item['owner'], None, item['path'])))
+            for item in origin['external_inputs']:
+                found = by_key.get((item['owner'], item['module'], item['path']))
                 if found is None:
                     raise ValueError('native external row input is absent')
                 package, source = found
@@ -534,6 +510,8 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         _require_bundle_files(staged)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed after validation')
+        if repository is not None:
+            verify_inputs(staged, repository)
         destination.parent.mkdir(parents=True, exist_ok=True)
         previous = Path(directory) / 'previous'
         previous.mkdir()

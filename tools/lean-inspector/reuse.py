@@ -45,37 +45,11 @@ def _previous_native_inputs(repository, report):
 def _native_inputs(inputs, report):
     if inputs.native_input_kind() is None:
         return None
-    generated = inputs.root / '.lake/build/lean-inspector/inputs.json'
-    descriptor = inputs.root / '.lake/build/lean-inspector/lake-inputs.json'
-    if descriptor.is_file() and not descriptor.is_symlink():
-        try:
-            # The descriptor is emitted by Lake's workspace/package resolver;
-            # native.py only re-snapshots those owner roots and Git members.
-            import native
-            value = native.native_population(inputs.root,
-                publication.read_json(descriptor.read_bytes()))
-        except (OSError, UnicodeError, ValueError, KeyError, TypeError):
-            value = None
-        if value is not None:
-            return value
-    if generated.is_file() and not generated.is_symlink():
-        try:
-            value = publication.read_json(generated.read_bytes()).get('native_inputs')
-        except (OSError, UnicodeError, ValueError, TypeError):
-            value = None
-        if value is not None:
-            return value
-    previous = _previous_native_inputs(inputs.root, report)
-    if previous is None:
+    try:
+        import native
+        return native.current_population(inputs.root, _previous_native_inputs(inputs.root, report))
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError):
         return None
-    # An accepted complete entry may be reused from a wholly unmaterialized
-    # package snapshot. A present checkout must be inspected by Lake; silently
-    # treating an incomplete tree as absence would reintroduce stale reuse.
-    for package in previous.get('packages', []):
-        directory = inputs.root / package.get('dir', '')
-        if directory.exists() or directory.is_symlink():
-            return None
-    return previous
 
 
 def capture(repository, lake, report=None):
@@ -113,9 +87,14 @@ def capture(repository, lake, report=None):
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
     native = _native_inputs(inputs, report)
-    if inputs.native_input_kind() is not None and native is None:
-        return dict(eligible=False, reason='native-inputs-unavailable')
-    return dict(eligible=True, files=files,
+    eligibility = dict(eligible=True)
+    if inputs.native_input_kind() is not None:
+        import native as producer
+        if native is None:
+            eligibility = dict(eligible=False, reason='native-inputs-unavailable')
+        elif not producer.immutable_population(native):
+            eligibility = dict(eligible=False, reason='native-inputs-not-immutable-or-defaults-unaccounted')
+    return dict(**eligibility, files=files,
         **({'native_inputs': native} if native is not None else {}),
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
@@ -189,6 +168,7 @@ def seal(repository, report, lake, captured):
     if not captured['eligible']:
         publication.member(report, SUFFIX).unlink(missing_ok=True)
         return
+    publication.validate_bundle(report, publication.coordinates(repository), repository)
     # The caller reaches this only after Lake's default+report facet and normal
     # private publication have succeeded. Bind the exact published five pieces.
     write_receipt(report, captured)
@@ -227,6 +207,7 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--root-snapshot', type=Path)
     args = parser.parse_args()
     if args.command in ('probe', 'reuse', 'seal') and args.report is None:
         parser.error('--report is required')
@@ -235,7 +216,12 @@ def main():
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
     if args.command == 'capture':
-        args.snapshot.write_bytes(materials.canonical_json(capture(args.repository, args.lake, args.report)))
+        captured = capture(args.repository, args.lake, args.report)
+        if args.root_snapshot:
+            original = publication.read_json(args.root_snapshot.read_bytes())
+            if any(original.get(key) != captured.get(key) for key in ('files', 'execution')):
+                raise ValueError('root inputs changed during report entry')
+        args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'seal':
         seal(args.repository, args.report, args.lake, publication.read_json(args.snapshot.read_bytes()))
     elif args.command == 'probe':

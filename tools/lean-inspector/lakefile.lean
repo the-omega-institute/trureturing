@@ -1,5 +1,6 @@
 import Lake
 import Lake.CLI.Build
+import Lake.Load.Manifest
 import Lake.Util.StoreInsts
 import Std.Sync.Mutex
 open Lake DSL System
@@ -58,32 +59,84 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
-private def packageInputDescriptor (ws : Workspace) (pkg : Package) : IO Json := do
+private def packageInputDescriptor (ws : Workspace) (pkg : Package)
+    (manifest : Manifest) : IO Json := do
   let mut modules : Array Json := #[]
+  let mut names : Lean.NameSet := {}
   for lib in pkg.leanLibs do
-    let found ← lib.getModuleArray
-    for mod in found do
+    let candidates ← IO.mkRef (← lib.getModuleArray)
+    -- Library globs select build defaults, whereas roots also own imported
+    -- submodules outside those globs (for example Batteries.CodeAction).
+    for name in lib.roots do
+      if let some mod := lib.findModule? name then
+        if ← mod.leanFile.pathExists then candidates.modify (·.push mod)
+      if ← (Lean.modToFilePath lib.srcDir name "").isDir then
+        (Glob.submodules name).forEachModuleIn lib.srcDir fun name => do
+          if let some mod := lib.findModule? name then
+            candidates.modify (·.push mod)
+    for mod in (← candidates.get) do
+      if names.contains mod.name then continue
+      names := names.insert mod.name
+      if (ws.findModules mod.name).size != 1 then
+        throw <| IO.userError s!"ambiguous native module owner: {mod.name}"
       modules := modules.push <| Lean.Json.mkObj [
         ("name", Lean.toJson mod.name.toString),
-        ("path", Lean.toJson mod.relLeanFile.toString)]
-  let roots := pkg.leanLibs.map fun lib => Lean.toJson (relPathFrom ws.dir lib.srcDir).toString
+        ("path", Lean.toJson mod.relLeanFile.normalize.toString)]
+  let mut sourceRoots : Array FilePath := #[]
+  for lib in pkg.leanLibs do
+    for name in lib.roots do
+      sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
+      sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+    for glob in lib.config.globs do
+      match glob with
+      | .one name => sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
+      | .submodules name => sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+      | .andSubmodules name =>
+        sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "lean")
+        sourceRoots := sourceRoots.push (Lean.modToFilePath lib.srcDir name "")
+  -- Producer executables retain their existing registered input population.
+  -- An executable default is unaccounted for the entry shortcut below.
+  let roots := sourceRoots.map fun path => Lean.toJson (relPathFrom ws.dir path).normalize.toString
   pure <| Lean.Json.mkObj [
     ("owner", Lean.toJson pkg.baseName.toString),
-    ("dir", Lean.toJson (relPathFrom ws.dir pkg.dir).toString),
+    ("dir", Lean.toJson (if pkg.isRoot then "." else (relPathFrom ws.dir pkg.dir).normalize.toString)),
     ("source_roots", Lean.Json.arr roots),
-    ("config_paths", Lean.Json.arr #[Lean.toJson pkg.relConfigFile.toString,
-      Lean.toJson pkg.relManifestFile.toString]),
+    ("config_paths", Lean.toJson #[pkg.relConfigFile.normalize.toString,
+      pkg.relManifestFile.normalize.toString, defaultLeanConfigFile.toString,
+      defaultTomlConfigFile.toString, "lean-toolchain"]),
     ("remote_url", Lean.toJson pkg.remoteUrl),
     ("scope", Lean.toJson pkg.scope),
+    ("pin", Lean.toJson (manifest.packages.find? (·.name == pkg.baseName))),
     ("modules", Lean.Json.arr modules)]
 
 private def writeNativeInputDescriptor (ws : Workspace) (pkg : Package) (path : FilePath) : IO Unit := do
+  let manifest ← Manifest.load ws.root.manifestFile
   let mut packages : Array Json := #[]
   for candidate in ws.packages do
-    if !candidate.isRoot && candidate.relDir.toString.startsWith ".lake/" then
-      packages := packages.push (← packageInputDescriptor ws candidate)
+    if candidate.isRoot || !candidate.leanLibs.isEmpty then
+      packages := packages.push (← packageInputDescriptor ws candidate manifest)
+  -- Only ordinary native Lean library defaults have a complete file population
+  -- here. Custom targets keep their normal Lake obligation on every entry.
+  let accounted (lib : LeanLib) :=
+    lib.pkg.config.extraDepTargets.isEmpty && lib.config.needs.isEmpty &&
+    lib.config.extraDepTargets.isEmpty && lib.moreLinkObjs.isEmpty &&
+    lib.moreLinkLibs.isEmpty && lib.plugins.isEmpty && lib.dynlibs.isEmpty &&
+    lib.defaultFacets.all (fun facet => #[LeanLib.leanArtsFacet, LeanLib.staticFacet,
+      LeanLib.sharedFacet].contains facet) &&
+    (lib.nativeFacets false).all (·.name == Module.oFacet) &&
+    (lib.nativeFacets true).all (·.name == Module.oExportFacet)
+  let complete := (ws.packages.all fun candidate => candidate.leanLibs.all accounted) &&
+    pkg.config.extraDepTargets.isEmpty && pkg.defaultTargets.all fun name =>
+    match pkg.findLeanLib? name with
+    | none => false
+    | some lib => accounted lib
+  let excluded := ws.packages.flatMap fun candidate =>
+    #[Lean.toJson (relPathFrom ws.dir candidate.buildDir).normalize.toString,
+      Lean.toJson (relPathFrom ws.dir candidate.lakeDir).normalize.toString]
   let value := Lean.Json.mkObj [
     ("kind", Lean.toJson ("lake-fetched" : String)),
+    ("complete_defaults", Lean.toJson complete),
+    ("excluded_dirs", Lean.Json.arr excluded),
     ("packages", Lean.Json.arr packages)]
   writeBinFileIfChanged path (String.toUTF8 value.compress)
 
@@ -137,7 +190,7 @@ private def requireRebuildAllowed : JobM Unit := do
 cache reads disabled for that reconstruction. Never write through a restored
 hard link or evict a blob. Required build and validation failures propagate. -/
 private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
-    (build? : Option (JobM PUnit) := none) : JobM FilePath := do
+    (build? : Option (JobM PUnit) := none) (validated := false) : JobM FilePath := do
   requireRebuildAllowed
   logWarning s!"inspector artifact rejected; rebuilding privately: {row.file}"
   removeFileIfExists row.file
@@ -146,8 +199,9 @@ private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
   setTrace row.inputTrace
   let recovered ← withCurrPackage? none <|
     buildArtifactUnlessUpToDate row.file (build?.getD row.build) (ext := "zip") (restore := true)
-  unless (← validateArtifact pkg (row.check ++ #[recovered.path.toString])) == 0 do
-    error s!"reconstructed Inspector artifact is invalid: {row.file}"
+  unless validated do
+    unless (← validateArtifact pkg (row.check ++ #[recovered.path.toString])) == 0 do
+      error s!"reconstructed Inspector artifact is invalid: {row.file}"
   row.outputTrace.set (← getTrace)
   return recovered.path
 
@@ -194,7 +248,6 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut deps ← fetch <| pkg.facet `reportProducer
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
-  let directImports ← (← mod.imports.fetch).await
   let mut exports := #[(← mod.exportInfo.fetch)]
   let mut sourceModules := #[mod]
   sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
@@ -209,20 +262,21 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       | error s!"utility claim module is not in the Lake workspace: {name}"
     exports := exports.push (← claim.exportInfo.fetch)
     sourceModules := sourceModules.push claim ++ (← (← claim.transImports.fetch).await)
-  -- Compiler/Lake owns this closure. Export only local registered source
-  -- bindings; fetched packages are pinned by the registered Lake manifest.
+  -- Bind the complete native import, fixed judge and utility claim closures.
   let mut sourcePaths : Array String := #[]
   let mut externalSources : Array Json := #[]
+  let ws ← getWorkspace
+  let mut seen : Lean.NameSet := {}
   for dependency in sourceModules do
+    if seen.contains dependency.name then continue
+    seen := seen.insert dependency.name
+    unless (ws.findModules dependency.name).size == 1 do
+      error s!"ambiguous native module owner: {dependency.name}"
     if dependency.name != mod.name && reported.contains dependency.name then continue
     if dependency.pkg.isRoot then
       let path := (relPathFrom pkg.dir dependency.leanFile).toString
-      unless path.startsWith ".lake/" || path.startsWith "../" do
-        sourcePaths := sourcePaths.push path
-  -- Direct fetched imports are bound per row; Lake's transitive export trace
-  -- remains the compiler invalidation authority for deeper dependencies.
-  for dependency in directImports do
-    if !dependency.pkg.isRoot then
+      sourcePaths := sourcePaths.push path
+    else
       externalSources := externalSources.push <| Lean.Json.mkObj [
         ("owner", Lean.toJson dependency.pkg.baseName.toString),
         ("module", Lean.toJson dependency.name.toString),
@@ -408,13 +462,19 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
       unless repairs.isEmpty do
         requireRebuildAllowed
         discard <| runBatch pkg repairs
+        -- Share one current namespace/configuration snapshot across repair
+        -- validation. The aggregate still validates the adopted rows again.
+        let checks := repairs.map fun (_, args) => ("validate", #[pkg.dir.toString,
+          "module", pkg.dir.toString, args[1]!, args[3]!, args[5]!])
+        unless (← runBatch pkg checks).all (· == 0) do
+          error "reconstructed Inspector batch is invalid"
       let mut repaired := false
       let mut trace := BuildTrace.nil "<collection>"
       for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
         if status != 0 then
           discard <| rebuildRejectedArtifact pkg row (some do
             IO.FS.rename (row.file.addExtension "repair") row.file
-            pure PUnit.unit)
+            pure PUnit.unit) (validated := true)
           repaired := true
         trace := trace.mix (← row.outputTrace.get).withoutInputs
       setTrace (mixTrace trace membership.getTrace)
