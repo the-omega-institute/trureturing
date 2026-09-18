@@ -59,7 +59,7 @@ internal static class Program
             }
             var repository = RepositoryOption(arguments);
             var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
-            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
+            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository), build);
             var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
             return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
         }
@@ -114,9 +114,9 @@ internal static class Program
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
     {
         var candidate = CommonExecutionEvidence.Candidate(root);
-        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
         build ??= CommonExecutionEvidence.ValidateBuild(root);
         CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
+        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root), build);
         _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);

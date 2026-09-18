@@ -99,7 +99,7 @@ internal static class CommonBuildOutputs
         }
     }
 
-    private static HashSet<string> RegisteredClosure(EngineeringProjectRegistry registry, IEnumerable<string> roots)
+    internal static HashSet<string> RegisteredClosure(EngineeringProjectRegistry registry, IEnumerable<string> roots)
     {
         var byPath = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var result = new HashSet<string>(StringComparer.Ordinal);

@@ -72,6 +72,14 @@
       "steps": []
     },
     {
+      "id": "delta-content",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "delta-data",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -146,6 +154,7 @@
     {
       "id": "repository",
       "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
         "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj"
       ],
       "checks": [],

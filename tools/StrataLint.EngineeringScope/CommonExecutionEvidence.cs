@@ -239,10 +239,13 @@ internal static partial class CommonExecutionEvidence
         ValidateStartedBuild(root, build, candidate);
         var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
-        var checks = ValidateChecks(root, "engineering", build);
+        var ids = SelectedEngineeringCheckIds(root, build);
+        var checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids);
         var record = new CommonStageRecord(2, candidate, build.Round, steps,
-            Materials(root, new[] { BuildPath, TestsPath, ChecksPath("engineering") }.Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path)).Concat(tests.Materials.Select(material => material.Path))
-                .Concat(steps.Select(step => step.Log))));
+            Materials(root, new[] { BuildPath, TestsPath }.Concat(SelectionPaths(build.Selection))
+                .Concat(checks is null ? [] : new[] { ChecksPath("engineering") })
+                .Concat(checks?.Units.SelectMany(unit => unit.Materials).Select(material => material.Path) ?? [])
+                .Concat(tests.Materials.Select(material => material.Path)).Concat(steps.Select(step => step.Log))), build.Selection);
         Write(root, EngineeringPath, record);
         // The consumer already has the shared build (directly, or in current's
         // standalone release bundle). Engineering transports only its own work.
@@ -252,7 +255,10 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, out _, out _);
 
-    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
+    internal static string[] SelectedEngineeringCheckIds(string root, CommonStageRecord build) =>
+        SelectedPlan(root, build)?.CheckUnits.Intersect(EngineeringCheckIds).ToArray() ?? EngineeringCheckIds;
+
+    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord? checks)
     {
         var candidate = Candidate(root, out var snapshot);
         var validation = new ValidationScope(snapshot);
@@ -260,16 +266,21 @@ internal static partial class CommonExecutionEvidence
     }
 
     private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
-        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
+        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord? checks, IEnumerable<string>? baseProjects = null)
     {
         tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
         var record = Read<CommonStageRecord>(root, EngineeringPath);
         ValidateRecord(root, record, build.Candidate, build.Round, validation);
         RequirePassed(record.Steps, EngineeringSteps);
-        checks = ValidateChecks(root, "engineering", build, null, validation);
-        if (!record.Materials.Any(material => material.Path == ChecksPath("engineering")))
+        if (record.Selection != build.Selection || SelectionPaths(record.Selection).Any(path => !record.Materials.Any(material => material.Path == path)))
+            throw new InvalidDataException("engineering has missing or different build selection");
+        var ids = SelectedEngineeringCheckIds(root, build);
+        checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids, validation);
+        if (checks is not null && !record.Materials.Any(material => material.Path == ChecksPath("engineering")))
             throw new InvalidDataException("engineering has no bound common check evidence");
+        if (checks is null && record.Materials.Any(material => material.Path == ChecksPath("engineering")))
+            throw new InvalidDataException("unrequested checks cannot be engineering evidence");
         if (!record.Materials.Any(material => material.Path == TestsPath)
             || !record.Materials.Any(material => material.Path == BuildPath))
             throw new InvalidDataException("engineering has no bound test or build evidence");

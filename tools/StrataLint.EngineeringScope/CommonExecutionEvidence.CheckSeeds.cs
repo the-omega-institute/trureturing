@@ -110,12 +110,11 @@ internal static partial class CommonExecutionEvidence
         TestExecutionRecord? tests = null;
         var common = stage == "engineering" ? ValidateEngineering(root, out tests, out checks) : stage == "current" ? ValidateCurrent(root, out checks)
             : throw new InvalidDataException("invalid common seed stage: " + stage);
-        checks ??= ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
         return CopyAcceptedCheckSeed(root, stage, common, tests, checks, output, destination);
     }
 
     internal static bool CopyAcceptedCheckSeed(string root, string stage, CommonStageRecord common, TestExecutionRecord? tests,
-        CommonCheckRecord checks, TextWriter output, string? destination = null)
+        CommonCheckRecord? checks, TextWriter output, string? destination = null)
     {
         // Copying consumes the accepted records, never their source hash scope.
         // Emit notifications only after both copies; output can invoke caller code.
@@ -127,12 +126,17 @@ internal static partial class CommonExecutionEvidence
             var available = false;
             try
             {
-                available = Hash(Path.Combine(seed, "tests.json")) == Hash(Path.Combine(root, TestsPath));
-                if (available) ValidateMaterials(seed, tests.Materials);
+                var saved = Read<TestExecutionRecord>(seed, "tests.json");
+                if (saved.Projects is null || saved.Materials is null || saved.Projects.Any(project => project is null)
+                    || saved.Materials.Any(material => material is null)) throw new InvalidDataException("invalid saved test seed inventory");
+                available = saved.Version == tests.Version && saved.Candidate == tests.Candidate && saved.Round == tests.Round
+                    && saved.Projects.Where(project => tests.Projects.Any(selected => selected.Project == project.Project)).SequenceEqual(tests.Projects);
+                if (available) ValidateMaterials(seed, saved.Materials);
             }
-            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException) { available = false; }
+            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException or JsonException) { available = false; }
             if (available || CopyTestSeed(root, tests, messages))
-                testMaterials = tests.Materials.Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
+                testMaterials = Read<TestExecutionRecord>(seed, "tests.json").Materials
+                    .Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
         }
         return CopyCheckSeed(root, stage, common, output, destination, testMaterials, checks, messages.ToString());
     }
@@ -142,7 +146,9 @@ internal static partial class CommonExecutionEvidence
     {
         // Stage validation accepted these exact units, build, plan and registry.
         // Retention only copies optional data; import validates it when selected.
-        var record = accepted ?? ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
+        // This is an optional cache inventory, not execution evidence. A tests-only
+        // stage has no current check units; its actual TRX seed travels alongside it.
+        var record = accepted ?? new CommonCheckRecord(2, stage, common.Candidate, common.Round, []);
         var registered = CheckIds(stage, Read<CommonCheckManifest>(root, CheckManifestPath).Checks);
         var selected = record.Units.Select(unit => unit.Id).ToHashSet(StringComparer.Ordinal);
         var sources = record.Units.Select(unit => (Unit: unit, Root: root)).ToList();

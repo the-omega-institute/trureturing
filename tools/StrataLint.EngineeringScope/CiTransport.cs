@@ -83,7 +83,7 @@ internal static class CiTransport
             // materials before exposing output callbacks; imports still validate
             // them against their recipient's registered inputs and environment.
             using var messages = new StringWriter();
-            if (seedArchive is not null && checks is not null)
+            if (seedArchive is not null)
             {
                 var destination = Path.GetFullPath(seedArchive);
                 try
