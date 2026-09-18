@@ -33382,3 +33382,372 @@ $$
 前一矩阵的非对角元为 $(1-r)\alpha^{3/2}/(1+r)>0$，后一矩阵的非对角元为零，故二者不相等。最后，$\rho_L^{\mathrm{cell}}$ 的秩为有限的 $G_L$，而 $\rho_\beta$ 在可数无限层基的每个向量上都有严格正特征值，因而秩无限，也不可能相等。胞腔态编码各观察类的概率，Gibbs 态编码指定生成元的能级权重；它们不是一个态经坐标变换后的两种记法。证毕。
 
 ## 70.99 追加锚
+
+## 71. Gibbs 位置边缘、参考权重与冷热极限
+
+### 71.1 完整位置空间与等格条件测度
+
+**定义与假设 71.0（位置乘法表示与分层热态）。** 设 $X$ 为非空紧可度量空间，$\mathcal P_n$ 是由非空开闭集组成的有限分区，满足
+$$
+\mathcal P_0=\{X\},\qquad
+\mathcal P_{n+1}\text{ 加细 }\mathcal P_n,
+\qquad
+\bigcup_{n\ge0}\mathcal P_n\text{ 分离点}.
+$$
+令 $\mu$ 为 $X$ 上满支撑的 Borel 概率，故每格 $C$ 均有 $\mu(C)>0$。记
+$$
+H=L^2(X,\mu;\mathbb C),\qquad
+H_n=\operatorname{span}\{\mathbf1_C:C\in\mathcal P_n\},\qquad
+N_n=|\mathcal P_n|.
+$$
+有限层柱函数的并是含常数、对共轭封闭且分离点的连续函数代数；Stone–Weierstrass 定理给出其在 $C(X)$ 中一致稠密。紧可度量空间上的有限 Borel 测度为正则测度，$C(X)$ 在 $H$ 中稠密，因而第 70 节的 $H_{\mathrm{obs}}$ 在此恰为完整的 $H$。特别地，每个有界 Borel 函数 $f$ 的乘法算子 $M_f:g\mapsto fg$ 都作用于此空间，且 $\|M_f\|\le\|f\|_\infty$。
+
+沿用第 70 节的条件平均投影 $\Pi_n$、层投影 $\Delta_0=\Pi_0$、$\Delta_n=\Pi_n-\Pi_{n-1}$（$n\ge1$）及分层自伴算子 $A$，写
+$$
+m_0=1,\qquad m_n=N_n-N_{n-1}\ (n\ge1),\qquad
+0=a_0<a_1<a_2<\cdots\longrightarrow\infty.
+$$
+本节 $\beta>0$ 表示逆温度，并始终假定
+$$
+Z_\beta:=\operatorname{Tr}(e^{-\beta A})
+=\sum_{n\ge0}m_ne^{-\beta a_n}<\infty
+\quad\text{对每个 }\beta>0.
+$$
+于是 $T_\beta=e^{-\beta A}$ 与 $\rho_\beta=T_\beta/Z_\beta$ 分别为热算子与 Gibbs 态。各层有限秩和 $a_n\to\infty$ 本身不代替上述迹类假设；允许某些 $m_n=0$。
+
+**定义 71.1（位置读出及等格混合）。** 对 Borel 集 $E\subseteq X$，记 $M_E=M_{\mathbf1_E}$，定义
+$$
+\nu_\beta(E)=\operatorname{Tr}(\rho_\beta M_E).
+$$
+若 $C_n(x)$ 是包含 $x$ 的唯一第 $n$ 层格，置
+$$
+d_n(\beta)=e^{-\beta a_n}-e^{-\beta a_{n+1}}>0,
+\qquad
+\eta_n=\frac1{N_n}\sum_{C\in\mathcal P_n}\mu(\,\cdot\mid C),
+\qquad
+\mu(E\mid C)=\frac{\mu(E\cap C)}{\mu(C)},
+$$
+$$
+w_n(\beta)=\frac{d_n(\beta)N_n}{Z_\beta}.
+$$
+$\eta_n$ 是在各格之间等权、在每格内部保留参考条件概率的 Borel 概率；特别地 $\eta_0=\mu$。以下证明 $\nu_\beta$ 也是概率，并采用
+$$
+d_{\mathrm{TV}}(\nu,\eta)
+=\sup_{E\text{ Borel}}|\nu(E)-\eta(E)|
+=\frac12\|\nu-\eta\|_{\mathrm{var}}.
+$$
+符号 $\Rightarrow$ 表示对全部连续函数积分的弱收敛。
+
+### 71.2 归一化热对角的尺度混合
+
+**定理 71.2（位置密度与等格条件混合）。** 在定义与假设 71.0 下，对每个 $\beta>0$ 有
+$$
+Z_\beta=\sum_{n\ge0}d_n(\beta)N_n,
+\qquad
+\sum_{n\ge0}w_n(\beta)=1,
+\qquad
+\nu_\beta=\sum_{n\ge0}w_n(\beta)\eta_n.
+$$
+其相对于 $\mu$ 的密度为
+$$
+\frac{d\nu_\beta}{d\mu}(x)
+=\frac1{Z_\beta}\sum_{n\ge0}\frac{d_n(\beta)}{\mu(C_n(x))}
+\quad\text{对 }\mu\text{-几乎所有 }x,
+$$
+右侧几乎处处有限。对每个有界 Borel 函数 $f$，有
+$$
+\operatorname{Tr}(\rho_\beta M_f)=\int_X f\,d\nu_\beta.
+$$
+
+证明。固定 $\beta$，暂略去 $d_n$ 的参数。由于 $N_n=\sum_{k=0}^n m_k$，非负双重级数可按 Tonelli 换序，得到
+$$
+\sum_{n\ge0}d_nN_n
+=\sum_{k\ge0}m_k\sum_{n\ge k}d_n
+=\sum_{k\ge0}m_ke^{-\beta a_k}
+=Z_\beta.
+$$
+这里尾和的望远镜恒等式使用 $a_n\to\infty$。令
+$$
+S_M=\sum_{n=0}^M d_n\Pi_n.
+$$
+这些有限秩正算子递增。第 70.4 条的层展开给出
+$$
+T_\beta-S_M
+=e^{-\beta a_{M+1}}\Pi_M
++\sum_{k>M}e^{-\beta a_k}\Delta_k\ge0.
+$$
+因此差算子为正迹类，且
+$$
+\|T_\beta-S_M\|_1
+=\operatorname{Tr}(T_\beta-S_M)
+=Z_\beta-\sum_{n=0}^M d_nN_n
+\longrightarrow0.
+$$
+这提供了逐项取迹所需的迹范数收敛。
+
+在 $H_n$ 中使用正交归一基 $e_C=\mu(C)^{-1/2}\mathbf1_C$，有限秩迹与循环性给出
+$$
+\operatorname{Tr}(\Pi_nM_E)
+=\operatorname{Tr}(\Pi_nM_E\Pi_n)
+=\sum_{C\in\mathcal P_n}\langle e_C,M_Ee_C\rangle
+=\sum_{C\in\mathcal P_n}\frac{\mu(E\cap C)}{\mu(C)}.
+$$
+正性属于夹心算子 $\Pi_nM_E\Pi_n$；乘积 $\Pi_nM_E$ 一般不自伴，不能将它本身当作正算子。利用
+$$
+\bigl|\operatorname{Tr}((T_\beta-S_M)M_E)\bigr|
+\le\|T_\beta-S_M\|_1\|M_E\|\longrightarrow0,
+$$
+可将有限秩公式求和取极限，得到
+$$
+\nu_\beta(E)
+=\frac1{Z_\beta}\sum_{n\ge0}d_n
+  \sum_{C\in\mathcal P_n}\frac{\mu(E\cap C)}{\mu(C)}
+=\sum_{n\ge0}w_n(\beta)\eta_n(E).
+$$
+非负函数
+$$
+h_\beta(x)=\frac1{Z_\beta}\sum_{n\ge0}\frac{d_n}{\mu(C_n(x))}
+$$
+可测；再次使用 Tonelli，得到 $\nu_\beta(E)=\int_Eh_\beta\,d\mu$ 以及
+$$
+\int_X h_\beta\,d\mu
+=\frac1{Z_\beta}\sum_{n\ge0}d_nN_n=1.
+$$
+故原迹读出具有可数可加性、总质量一，且 $h_\beta$ 几乎处处有限。最后，有界 Borel 函数可由简单函数一致逼近；积分连续性以及迹类算子对有界乘法算子的迹估计，将事件公式延伸到所述 $f$。证毕。
+
+### 71.3 有限温度的参考权重与低温极限
+
+**命题 71.3（测度等价与常数基态的冷极限）。** 对每个有限 $\beta>0$，有测度不等式及等价关系
+$$
+\nu_\beta\ge\frac1{Z_\beta}\mu,
+\qquad
+\nu_\beta\sim\mu.
+$$
+当 $\beta\to\infty$ 时，
+$$
+d_{\mathrm{TV}}(\nu_\beta,\mu)
+\le1-\frac1{Z_\beta}\longrightarrow0.
+$$
+
+证明。因 $\mu(X)=1$，常数函数 $1$ 是单位向量，$\Pi_0=|1\rangle\langle1|$ 的位置读出为 $\mu$。层速率在 $n\ge1$ 时严格为正，故
+$$
+R_\beta:=T_\beta-\Pi_0
+=\sum_{n\ge1}e^{-\beta a_n}\Delta_n\ge0,
+\qquad
+\operatorname{Tr}(R_\beta)=Z_\beta-1.
+$$
+对 Borel 集 $E$，正夹心迹满足
+$$
+Z_\beta\nu_\beta(E)-\mu(E)
+=\operatorname{Tr}(R_\beta M_E)
+=\operatorname{Tr}(R_\beta^{1/2}M_ER_\beta^{1/2})\ge0.
+$$
+定理 71.2 已给出 $\nu_\beta\ll\mu$，上述下界给出反向绝对连续性，也给出 $d\nu_\beta/d\mu\ge Z_\beta^{-1}$ 几乎处处。
+
+固定一个 $\beta_0>0$。对 $\beta\ge\beta_0$，正项级数
+$$
+Z_\beta=1+\sum_{n\ge1}m_ne^{-\beta a_n}
+$$
+由可和序列 $m_ne^{-\beta_0a_n}$ 支配，而每个尾层项趋零，故 $Z_\beta\to1$。若 $Z_\beta>1$，测度下界使
+$$
+\xi_\beta=\frac{Z_\beta\nu_\beta-\mu}{Z_\beta-1}
+$$
+成为概率，并有
+$$
+\nu_\beta=\frac1{Z_\beta}\mu
++\left(1-\frac1{Z_\beta}\right)\xi_\beta.
+$$
+任意两个概率的 $d_{\mathrm{TV}}$ 至多为一，遂得所列估计。若 $Z_\beta=1$，则 $R_\beta=0$，直接有 $\nu_\beta=\mu$。证毕。
+
+此冷极限使用了零能空间恰为一维常数空间。若另有零能模态，受控迹极限选择的是整个零能投影的归一化位置读出；它不能仅凭保守性识别为 $\mu$。
+
+### 71.4 不要求增长率的高温极限
+
+**定理 71.4（等格条件测度的弱极限传递）。** 在定义与假设 71.0 下，再设
+$$
+N_n\longrightarrow\infty,
+\qquad
+\eta_n\Rightarrow\eta
+$$
+其中 $\eta$ 为 $X$ 上的 Borel 概率。则
+$$
+\nu_\beta\Rightarrow\eta\qquad(\beta\downarrow0).
+$$
+除所有正逆温度的迹类条件外，本结论不要求 $N_n$ 或 $a_n$ 的指定增长率。
+
+证明。对任意固定 $M$，前 $M$ 层的全部模态给出
+$$
+Z_\beta
+\ge\sum_{k=0}^M m_ke^{-\beta a_k}
+\ge e^{-\beta a_M}N_M.
+$$
+先固定 $M$ 令 $\beta\downarrow0$，再令 $M\to\infty$，得 $Z_\beta\to\infty$。具体地，对任意 $R>0$ 可先选 $M$ 使 $N_M>2R$，再取足够小的 $\beta$ 使 $e^{-\beta a_M}>1/2$。另一方面，$N_n$ 单调且 $\sum_nd_n(\beta)=1$，故每个有限层集合的混合权重满足
+$$
+\sum_{n=0}^M w_n(\beta)
+\le\frac{N_M}{Z_\beta}\sum_{n=0}^M d_n(\beta)
+\le\frac{N_M}{Z_\beta}\longrightarrow0.
+$$
+由定理 71.2，对每个 $f\in C(X)$ 有显式估计
+$$
+\left|\int f\,d\nu_\beta-\int f\,d\eta\right|
+\le\frac{2\|f\|_\infty N_M}{Z_\beta}
++\sup_{n>M}\left|\int f\,d\eta_n-\int f\,d\eta\right|.
+$$
+固定 $M$ 时第一项随 $\beta\downarrow0$ 消失；第二项随 $M\to\infty$ 消失。这证明所需弱收敛。证毕。
+
+### 71.5 Bernoulli 柱的公平极限与同谱位置分离
+
+**命题 71.5（Bernoulli 高温极限与首位读出）。** 取 $X=\{0,1\}^{\mathbb N}$，$\mathcal P_n$ 为长度 $n$ 的柱分区，$\mu_p$ 为各位独立且 $\Pr(x_j=1)=p$ 的 Bernoulli 概率，$0<p<1$。固定 $z>0$，对全部 $p$ 使用共同速率
+$$
+a_0=0,\qquad a_n=2^{zn}\quad(n\ge1).
+$$
+以 $\nu_{\beta,p}$、$\eta_{n,p}$ 标明参考概率。则全部 $\beta>0$ 的热算子迹类；对任意长度 $m$ 的字 $u$，
+$$
+\eta_{n,p}([u])=2^{-m}\quad(n\ge m),
+\qquad
+\nu_{\beta,p}\Rightarrow\mu_{1/2}\quad(\beta\downarrow0).
+$$
+首位事件 $[1]=\{x:x_0=1\}$ 满足
+$$
+\nu_{\beta,p}([1])
+=\frac12+\left(p-\frac12\right)
+\frac{1-e^{-\beta a_1}}{Z_\beta}.
+$$
+低温有 $d_{\mathrm{TV}}(\nu_{\beta,p},\mu_p)\to0$。若 $p=1/2$，则全部 $\beta>0$ 已有 $\nu_{\beta,1/2}=\mu_{1/2}$。
+
+证明。全部柱质量为正，故 $\mu_p$ 满支撑，且
+$$
+N_n=2^n,\qquad m_0=1,\qquad m_n=2^{n-1}\ (n\ge1),
+\qquad
+Z_\beta=1+\sum_{n\ge1}2^{n-1}e^{-\beta2^{zn}}.
+$$
+对任意固定 $\beta>0$，最后级数相邻项之比为
+$$
+2\exp\bigl(-\beta(2^z-1)2^{zn}\bigr)\longrightarrow0,
+$$
+所以迹有限。$Z_\beta$ 与 $p$ 无关。
+
+当 $n\ge m$ 时，$[u]$ 恰为 $2^{n-m}$ 个第 $n$ 层格之并，每格的条件测度在此事件上取零或一，故其 $\eta_{n,p}$ 质量为 $2^{n-m}/2^n=2^{-m}$。空字的柱是 $X$，同式给出质量一。柱函数在 $C(X)$ 中一致稠密，所有固定柱的上述等式遂给出 $\eta_{n,p}\Rightarrow\mu_{1/2}$；结合 $N_n\to\infty$ 与定理 71.4 得高温结论。
+
+对首位柱，$\eta_{0,p}([1])=p$，而 $\eta_{n,p}([1])=1/2$ 对全部 $n\ge1$ 成立。因此定理 71.2 的混合式给出
+$$
+\nu_{\beta,p}([1])
+=w_0(\beta)p+(1-w_0(\beta))/2,
+\qquad
+w_0(\beta)=\frac{1-e^{-\beta a_1}}{Z_\beta},
+$$
+即所列精确式。低温结论由命题 71.3 得到。若 $p=1/2$，每个第 $n$ 层格的参考质量均为 $2^{-n}$，从 $\eta_{n,p}$ 的定义直接得到 $\eta_{n,1/2}=\mu_{1/2}$，再由混合式得到全部温度的等式。证毕。
+
+**命题 71.6（同谱热态不指定位置边缘）。** 对命题 71.5 的任意 $p,q\in(0,1)$，记相应算子为 $A_p,A_q$。它们在各自 $L^2(X,\mu_p;\mathbb C)$、$L^2(X,\mu_q;\mathbb C)$ 上酉等价，具有相同的层谱重数、配分函数和有限 Gibbs 谱熵。但若 $p\ne q$，则对每个有限 $\beta>0$，
+$$
+\nu_{\beta,p}([1])-\nu_{\beta,q}([1])
+=(p-q)\frac{1-e^{-\beta a_1}}{Z_\beta}\ne0,
+$$
+且低温极限分别为 $\mu_p$ 与 $\mu_q$。
+
+证明。各模型的第 $n$ 层维数同为 $m_n$。逐层选择正交归一基，将一组基映到另一组基，得到整个 Hilbert 空间之间的酉算子 $U$。共同速率使定义域条件 $\sum_na_n^2\|\Delta_nf\|_2^2<\infty$ 被 $U$ 保持，且 $UA_pU^*=A_q$，因此相应热态也由 $U$ 共轭。共同的 $Z_{\beta/2}<\infty$ 经命题 70.7 与定理 70.8 保证有限能量和有限 Gibbs 熵；这些量均由同一组特征值及重数确定。位置边缘的差与冷极限则由命题 71.5、71.3 给出。这里的酉等价是不同 $L^2$ 表示之间的谱等价；没有将两算子视为固定位置表示中的同一个算子，也没有要求 $U$ 交织全部 $M_f$。事实上，若还交织首位乘法观察，就会由迹不变性得到相同首位读出，与上式矛盾。证毕。
+
+### 71.6 高温弱收敛的全变差边界
+
+**命题 71.7（有限温度对公平律的全变差分离）。** 在命题 71.5 的模型中，若 $p\ne1/2$，则
+$$
+d_{\mathrm{TV}}(\nu_{\beta,p},\mu_{1/2})=1
+\quad\text{对每个有限 }\beta>0,
+$$
+尽管 $\nu_{\beta,p}\Rightarrow\mu_{1/2}$ 当 $\beta\downarrow0$。
+
+证明。对 $n\ge1$ 定义经验均值 $b_n(x)=n^{-1}\sum_{j<n}x_j$，并令
+$$
+E_p=\{x:b_n(x)\to p\}
+=\bigcap_{k\ge1}\bigcup_{N\ge1}\bigcap_{n\ge N}
+\{x:|b_n(x)-p|<1/k\}.
+$$
+每个 $b_n$ 连续，故 $E_p$ 是 Borel 集。在 $\mu_p$ 下，实值坐标 $X_j(x)=x_j$ 有界、可积、相互独立且同分布，均值为 $p$。直接应用强大数律得到 $\mu_p(E_p)=1$；对公平乘积概率作同一应用，得到 $\mu_{1/2}(E_{1/2})=1$。极限唯一性与 $p\ne1/2$ 给出 $E_p\cap E_{1/2}=\varnothing$，因而 $\mu_{1/2}(E_p)=0$。命题 71.3 给出 $\nu_{\beta,p}\ll\mu_p$，所以 $\nu_{\beta,p}(E_p)=1$。此单个事件使全变差距离至少为一，而两个概率的距离至多为一，故等号成立。高温弱收敛已由命题 71.5 证明。证毕。
+
+附引：这里使用的是实值强大数律的现成输入；其可积性、两两独立性与同分布假设已在证明中逐项落实，精确源码出处列于第 71.9 节。
+
+### 71.7 Zeckendorf 前缀的自然边界极限
+
+**命题 71.8（合法前缀计数选择自然边界测度）。** 取
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对全部 }j\},
+$$
+以全部长度 $n$ 的合法柱作为 $\mathcal P_n$，并令 $\mu$ 为 $K$ 上任意满支撑 Borel 概率，允许有原子。对满足定义与假设 71.0 的速率，记第 33.1 节的自然柱概率为 $\nu_{\mathrm{nat}}$。则
+$$
+\nu_\beta\Rightarrow\nu_{\mathrm{nat}}\qquad(\beta\downarrow0).
+$$
+具体地，写 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，以及
+$$
+G_{-1}=1,\qquad G_0=1,\qquad G_1=2,\qquad
+G_{n+2}=G_{n+1}+G_n\quad(n\ge0).
+$$
+对任意非空合法字 $u$，令 $m=|u|\ge1$，则当 $n\ge m$ 时
+$$
+\eta_n([u])=
+\begin{cases}
+G_{n-m}/G_n,&u_{m-1}=0,\\
+G_{n-m-1}/G_n,&u_{m-1}=1,
+\end{cases}
+\quad\longrightarrow\quad
+\nu_{\mathrm{nat}}([u])=
+\begin{cases}
+\alpha^m,&u_{m-1}=0,\\
+\alpha^{m+1},&u_{m-1}=1.
+\end{cases}
+$$
+空前缀质量恒为一，非法前缀的柱为空且质量恒为零。此高温极限的首位为一概率为 $\alpha^2$，与第 33.9–33.10 节的平稳 Parry 概率 $\alpha^2/(1+\alpha^2)$ 不同。
+
+证明。$K$ 是二进制紧可度量空间的非空闭子空间；合法柱为非空开闭集，逐层加细并分离点。其数目由命题 70.10 的计数递推给出 $N_n=G_n$；该计数只依赖合法字集合，满支撑保证每格均有正参考质量。
+
+固定上述 $u$。若末位为零，后接任意长度 $n-m$ 的合法字，故共有 $G_{n-m}$ 个补全。若末位为一且 $n>m$，下一位强制为零，再任取长度 $n-m-1$ 的合法字，共有 $G_{n-m-1}$ 个补全；若 $n=m$，唯一空补全由约定 $G_{-1}=1$ 表示。每个第 $n$ 层格对 $[u]$ 的条件质量为零或一，故除以总格数 $G_n$ 就得到所列 $\eta_n$ 公式，完全不依赖格内的参考条件概率。
+
+由相同递推与初值核定的 Binet 式为
+$$
+G_n=\frac{\phi^{n+2}-(-\alpha)^{n+2}}{\sqrt5}
+\qquad(n\ge-1).
+$$
+因 $|{-\alpha}|<1<\phi$，对每个固定非负整数 $r$ 有 $G_{n-r}/G_n\to\alpha^r$。分别取 $r=m,m+1$ 得柱质量极限，它们正是第 33.1 节的 $\nu_{\mathrm{nat}}$。对连续函数先以一个有限层柱函数一致逼近，再对该层有限个柱使用质量收敛，得到 $\eta_n\Rightarrow\nu_{\mathrm{nat}}$。又 $G_n\to\infty$，定理 71.4 遂给出所需 Gibbs 高温极限。
+
+迹类条件可由共同选择 $a_0=0$、$a_n=2^{zn}$（$n\ge1,z>0$）满足：$m_n\le G_n\le2^n$，故热迹尾和被命题 71.5 中同类的收敛级数控制。此验证对含原子的满支撑 $\mu$ 同样成立。有限温度仍有 $\nu_\beta\sim\mu$，低温仍由命题 71.3 以全变差趋于所选 $\mu$；高温所确定的是固定左边界的前缀弱极限。最后，对 $u=1$ 有极限质量 $\alpha^2$，而第 33.9 节的平稳初始律给出 $\alpha^2/(1+\alpha^2)$；二者严格不同。证毕。
+
+### 71.8 Gibbs 温度与 Markov 时间
+
+**命题 71.9（从参考概率出发的时间演化不产生 Gibbs 位置族）。** 在命题 71.5 的 Bernoulli 模型中，若 $p\ne1/2$，则对每个 $\beta>0$ 与每个 $t\ge0$，
+$$
+\nu_{\beta,p}\ne\mu_pT_t^{(p)},
+\qquad T_t^{(p)}=e^{-tA_p},
+$$
+其中 $(\mu_pT_t^{(p)})(E)=\int T_t^{(p)}\mathbf1_E\,d\mu_p$。
+
+证明。先在定义与假设 71.0 的一般模型中应用第 70.3–70.4 条：$T_t$ 自伴且 $T_t1=1$。因 $\mu$ 是概率，有界 Borel 函数 $f$ 属于 $L^2(\mu)$，故
+$$
+\int T_tf\,d\mu
+=\langle1,T_tf\rangle
+=\langle T_t1,f\rangle
+=\int f\,d\mu.
+$$
+因此 $\mu T_t=\mu$ 对每个时间成立。另一方面，命题 71.5 中
+$$
+0<w_0(\beta)=\frac{1-e^{-\beta a_1}}{Z_\beta}<1,
+\qquad
+\nu_{\beta,p}([1])-p
+=\left(\frac12-p\right)(1-w_0(\beta))\ne0.
+$$
+从 $\mu_p$ 出发的 Markov 演化始终保持其首位质量 $p$，而归一化热迹的首位读出不同，遂得结论。证毕。
+
+### 71.9 来源与形式化边界
+
+本节条件平均与逆格质量热核属于已有的超度量热核机制（`literature-attested`）。Bendikov、Grigor’yan、Pittet、Woess 的 *Isotropic Markov semigroups on ultra-metric spaces*，[arXiv:1304.6271，第 1–2 节](https://arxiv.org/html/1304.6271v3#S2)，在第 4 页式 (1.3)–(1.8) 给出球平均投影及其半群混合，在第 8 页定理 2.2、式 (2.7)–(2.8) 给出逆球质量热核，在第 11–13 页定义 2.8、定理 2.10、式 (2.15)、(2.18)、(2.20) 给出热对角的 Laplace 表示。该文允许无额外假设时对角值为无穷，故这里单独承担迹类假设与几乎处处有限性的证明。
+
+第 71.2–71.4 条的归一化迹计算和极限传递，以及其 Bernoulli、Zeckendorf 位置读出，按所列假设在本节推导（`repo-derived`）。上述文献定位承担平均投影和热核机制，不承担这些特定归一化极限的逐字结论；本节不作新颖性或穷尽文献的主张。
+
+| 第 71 节的现成输入 | 精确出处与适用范围 |
+| --- | --- |
+| 71·强大数律 | 钉版 Mathlib `db584cd6d46c92f209a44c0f1c829460d327499d` 的 [ProbabilityTheory.strong_law_ae_real](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/StrongLaw.lean#L598) 适用于可积、两两独立、同分布的实值随机变量；同文件第 787 行的 `ProbabilityTheory.strong_law_ae` 是 Banach 值版本。命题 71.7 只在证明内部应用实值版本。 |
+| 71·稠密层投影 | [D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion](https://github.com/the-omega-institute/trureturing/blob/0d7723ca71cd4d5e28421920f819e345647bb4e0/D5/S3/Quantum/Completion/DenseTowerStrongCompletion.lean) 取复标量、$H=L^2(X,\mu;\mathbb C)$、$S(n)=H_n$，给出逐向量强收敛；它不提供定理 71.2 的迹范数收敛。 |
+| 71·有限乘积绝对连续性 | [D5/S3/ConceptDynamics/Experiment/FiniteProductAbsoluteContinuity.absolutelyContinuous_pi_marginal](https://github.com/the-omega-institute/trureturing/blob/0d7723ca71cd4d5e28421920f819e345647bb4e0/D5/S3/ConceptDynamics/Experiment/FiniteProductAbsoluteContinuity.lean) 允许任意有限指标集、逐坐标不同的非退化 Bernoulli 参考律，并支配该有限空间上的任意测度；同模块 `finite_product_absolutelyContinuous` 是同分布特例。这些结论的有限指标前提不能覆盖无限位置空间上的 $\nu_{\beta,p}$。 |
+| 71·固定两偏置的完成律 | [D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.finite_prefix_infinite_completion_separation](https://github.com/the-omega-institute/trureturing/blob/0d7723ca71cd4d5e28421920f819e345647bb4e0/D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.lean) 的 `stateLaw false`、`stateLaw true` 固定为偏置 $1/3$、$2/3$ 的乘积律；它不能代替任意 $p$ 与公平律的强大数律应用，更未陈述 Gibbs 边缘。 |
+
+本节给出了无限维位置迹、条件测度混合、冷热极限及其两个前缀实例的纸面证明；这些完整命题尚未在此获得 Lean 形式化或完整的既有声明覆盖。表中源码的有限乘积、强收敛和强大数律输入各限于其量词与拓扑，不能把局部输入的可复用性提升为整个无限维组合已验证。特别是正迹类部分和的迹范数极限、位置测度的构造及温度极限之间的接合，仍须由完整形式化承担。
+
+## 71.99 追加锚
