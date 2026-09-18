@@ -37,13 +37,6 @@ internal static partial class DigestionStatusEvaluator
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
-        // A duplicate the protected baseline already carries is base-owned data: the
-        // candidate did not write it, so it is neither judged nor a cause of failure at
-        // this layer. It stays visible as an observation until a content PR settles it.
-        entries = entries
-            .Where(entry => !duplicates.Inherited.Contains(entry.AtomId))
-            .ToImmutableArray();
-
         if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
         {
             throw new ArgumentException(
@@ -56,6 +49,24 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             casChanges,
             isBaseFactAffected);
+        // A duplicate the protected baseline already carries is base-owned data: the
+        // candidate did not write it, so it is neither read by the aligner nor judged nor
+        // a cause of failure at this layer. It stays visible as an observation until a
+        // content PR settles the ledger. The CAS store above still saw every record, so
+        // the blobs behind the excluded records are not reported as orphans.
+        if (!duplicates.Inherited.IsEmpty)
+        {
+            document = document.WithDigestionSources(document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries
+                        .Where(entry => !duplicates.Inherited.Contains(entry.AtomId))
+                        .ToImmutableArray(),
+                })
+                .ToImmutableArray());
+            entries = document.RequireDigestionEntries();
+        }
+
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
             snapshot,

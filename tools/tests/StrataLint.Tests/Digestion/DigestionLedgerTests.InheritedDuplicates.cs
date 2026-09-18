@@ -39,6 +39,45 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void InheritedDuplicateParentChainingToInheritedDuplicateChildIsNotJudged()
+    {
+        var child = CompleteWitnessAtom();
+        var parent = CompleteWitnessAtom("parent clause receipt\n");
+        var other = CompleteWitnessAtom("second atom receipt\n");
+        var childId = AtomId(child);
+        var parentId = AtomId(parent);
+        var otherId = AtomId(other);
+        var document = DuplicateLedger(
+            DuplicateEntry(child, DigestionMigrationState.Partial),
+            DuplicateEntry(child, DigestionMigrationState.Absorbed),
+            WithChain(DuplicateEntry(parent, DigestionMigrationState.Partial), childId),
+            WithChain(DuplicateEntry(parent, DigestionMigrationState.Absorbed), childId),
+            // Fully covered and chain-free, so the full scan derives absorbed for it.
+            DuplicateEntry(other, DigestionMigrationState.Absorbed));
+
+        // Pins the entry and observation contract only: the unregistered fixture atomizer never
+        // reaches the aligner's clause-chain check. That path is pinned on a PZG fixture in
+        // DigestionAlignmentTests.AdmissionDoesNotJudgeClauseChainOfBaselineInheritedDuplicates.
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            DuplicateSnapshot(child, parent, other),
+            AcceptedLean(DuplicateProbePath),
+            baselineDocument: document,
+            baselineSnapshot: DuplicateSnapshot(child, parent, other),
+            changes: RawChangeSet.Create(["docs/source.md"]));
+
+        Assert.True(evaluation.Findings.IsEmpty, string.Join(" | ", evaluation.Findings));
+        Assert.Equal([otherId], evaluation.Entries.Select(static entry => entry.Entry.AtomId));
+        Assert.Equal(
+            [
+                $"duplicate atom_id inherited from baseline (not judged): {childId}",
+                $"duplicate atom_id inherited from baseline (not judged): {parentId}",
+            ],
+            evaluation.Observations.Where(static item => item.StartsWith("duplicate atom_id", StringComparison.Ordinal)).Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public void CandidateIntroducedDuplicateAtomStillBlocks()
     {
         var duplicated = CompleteWitnessAtom();
@@ -85,6 +124,9 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal($"duplicate atom_id: {duplicatedId}", Assert.Single(evaluation.Findings));
         Assert.Empty(evaluation.Entries);
     }
+
+    private static DigestionLedgerEntry WithChain(DigestionLedgerEntry entry, string childId) =>
+        entry with { Receipts = entry.Receipts with { ChainAtoms = [childId] } };
 
     private static string AtomId(DigestionAtom atom) =>
         atom.Fingerprints.RawSha256["sha256:".Length..];
