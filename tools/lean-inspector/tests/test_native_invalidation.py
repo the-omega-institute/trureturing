@@ -157,6 +157,19 @@ def value : Nat := visible
         fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
         self.assertFalse(fetched['git']['immutable'], 'Git file mode must match')
         source.chmod(mode)
+        config = package / 'lakefile.toml'
+        original_config = config.read_bytes()
+        config_mode = config.stat().st_mode & 0o777
+        config.write_bytes(original_config + b'\n# local configuration\n')
+        fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
+        self.assertFalse(fetched['git']['immutable'], 'tracked configuration bytes must match Git')
+        config.write_bytes(original_config)
+        config.chmod(config_mode | 0o111)
+        fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
+        self.assertFalse(fetched['git']['immutable'], 'tracked configuration mode must match Git')
+        config.chmod(config_mode)
+        fetched = next(p for p in native.native_population(self.root, descriptor)['packages'] if p['owner'] == 'fetched')
+        self.assertTrue(fetched['git']['immutable'], 'restored tracked bytes and modes remain eligible')
         subprocess.run(['git', '-C', str(package), '-c', 'user.name=Fixture',
             '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
             'commit', '--quiet', '--allow-empty', '-m', 'different HEAD'], check=True)
@@ -220,10 +233,19 @@ def value : Nat := visible
         self.assertFalse(fetched['git']['immutable'], 'one snapshot must not mix HEAD and another commit tree')
 
     def test_fetched_private_transitive_semantics_and_selective_reconstruction(self):
+        import reuse
+        from test_reuse import EXECUTION
         self._configure_fetched_git_package('sourceTwo', 'DifferentRoot', private_axiom=True,
                                             source_dir='build', packages_dir='vendor-deps')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        self.write('lean-report-inputs.json', json.dumps(policy))
         self.build()
         self.publish()
+        self.inspect()
+        entry_report = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        self.assertTrue(publication.member(entry_report, '.reuse.json').is_file())
+        entry_bytes = entry_report.read_bytes()
         before = self.stamps()
         origins = self.origins()
         rows = self.report()[0]
@@ -232,15 +254,24 @@ def value : Nat := visible
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(origins, self.origins())
+        unchanged = self.inspect()
+        self.assertNotIn('phase=ensure status=started', unchanged.stderr)
+        self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', unchanged.stdout)
+        self.assertEqual(entry_bytes, entry_report.read_bytes())
+        self.assertEqual(origins, self.origins())
         source = self.root / 'vendor-deps/sourceTwo/build/DifferentRoot/Hidden.lean'
         original = source.read_bytes()
         stamp = source.stat()
         source.write_bytes(original.replace(b'axiom hidden : Nat   ', b'def hidden : Nat := 3'))
         self.assertEqual(source.stat().st_size, stamp.st_size)
         os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+        self.assertTrue(reuse.probe(self.root, entry_report, self.lake)['needs_lake'])
         with self.assertRaises(ValueError):
             publication.verify_inputs(self.root / 'public.json', self.root)
-        self.build()
+        changed = self.inspect()
+        self.assertIn('phase=report status=completed', changed.stderr)
+        self.assertFalse(publication.member(entry_report, '.reuse.json').exists(),
+                         'changed source is fresh but lacks immutable pin eligibility')
         new_axioms = next(row for row in self.report()[0] if row['module'] == 'D5.A')['declarations'][0]['axioms']
         self.assertEqual(new_axioms, [])
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.A', 'Fixture'})
@@ -299,6 +330,20 @@ def value : Nat := visible
         with self.assertRaises(ValueError):
             publication.verify_inputs(report, self.root)
         source.unlink(); source.write_bytes(original)
+        # Both the package directory and an intermediate source directory must
+        # retain their lexical identity; resolving first would hide these aliases.
+        for directory in (package / 'Foreign', package):
+            with self.subTest(symlink_directory=str(directory)):
+                saved = directory.with_name(directory.name + '-saved')
+                directory.rename(saved)
+                directory.symlink_to(saved, target_is_directory=True)
+                try:
+                    with self.assertRaises(ValueError):
+                        publication.verify_inputs(report, self.root)
+                finally:
+                    directory.unlink()
+                    saved.rename(directory)
+        publication.verify_inputs(report, self.root)
         descriptor_bytes = descriptor_path.read_bytes()
         for mutation in ('duplicate-owner', 'outside-owner', 'config'):
             with self.subTest(mutation=mutation):
