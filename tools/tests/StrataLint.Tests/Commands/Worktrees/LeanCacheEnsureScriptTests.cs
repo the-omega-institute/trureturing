@@ -51,8 +51,8 @@ public sealed class LeanCacheEnsureScriptTests
         var project = Path.Combine(
             canonicalRepository,
             "tools",
-            "StrataLint.Cli",
-            "StrataLint.Cli.csproj");
+            "StrataLint.Lean",
+            "StrataLint.Lean.csproj");
         Assert.Equal(
             string.Join('\n',
                 "run",
@@ -61,7 +61,6 @@ public sealed class LeanCacheEnsureScriptTests
                 "--configuration",
                 "Release",
                 "--",
-                "worktree",
                 "ensure-cache") + "\n",
             installed.ArgumentsText);
         Assert.Equal(canonicalRepository + "\n", installed.DotnetCwdText);

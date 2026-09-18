@@ -24,11 +24,6 @@ namespace StrataLint.ArchitectureTests;
 /// </summary>
 public sealed class WorkflowTestProhibitionTests
 {
-    // 扫描面是 "tools/tests";**每处都直接写字面量,不抽成常量**——
-    // ScribeTestMapDeriver 只静态折叠字面量实参,传标识符会 fail-closed 记 VariablePath,
-    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after protected baseline"
-    // 而被 SL-003 拒绝(2026-08-29 实测,PR #4021 首轮 admission rc=1,三条全中)。
-
     /// <summary>
     /// 具名豁免,**removal-only**:新增一项必须先自行论证,不得靠扩充本集合让新的 workflow
     /// 测试通过。豁免的判据只有一条——**被测对象是消费 workflow 的生产逻辑,而不是 workflow
@@ -39,9 +34,6 @@ public sealed class WorkflowTestProhibitionTests
         {
             ["tools/tests/StrataLint.Tests/Admission/ReviewRegressionTests.Helpers.cs"] =
                 "在夹具仓内合成一份 workflow 喂 AdmissionTopology;不读本仓真实 workflow。",
-            ["tools/tests/StrataLint.Tests/Commands/LeanReport/LeanReportInputScriptTests.cs"] =
-                "生产脚本 lean-report-input.sh 自己解析 ci.yml(缺 job boundaries 即 SystemExit),"
-                + "夹具必须喂它;被测的是该脚本的 producer-paths 派生。",
         };
 
     private static readonly Regex WorkflowReference = new(
