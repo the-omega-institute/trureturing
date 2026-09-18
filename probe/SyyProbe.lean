@@ -302,4 +302,39 @@ decreasing_by
   simp_all only [List.length_append, List.length_cons, List.length_singleton]
   omega
 
+/-- Shieh–Yang–Yu Conjecture 6.2 in its preregistered S_n form. -/
+theorem result (n : ℕ) (_hn : 1 ≤ n) (w : List ℕ)
+    (hw : w.Perm (List.range' 1 n)) :
+    ∃ t : ℕ, (M^[t + 1]) w = (M^[t]) w := by
+  classical
+  have hnd : w.Nodup := hw.nodup_iff.mpr (List.nodup_range' 1)
+  have permM (u : List ℕ) : (M u).Perm u := by
+    have hs : (M u).Perm (r u) := by
+      simpa only [M, s, List.nil_append] using westRun_perm [] (r u)
+    exact hs.trans (r_perm u)
+  have orbitperm : ∀ t : ℕ, ((M^[t]) w).Perm w := by
+    intro t
+    induction t with
+    | zero => exact List.Perm.refl _
+    | succ t ih =>
+        rw [Function.iterate_succ_apply']
+        exact (permM _).trans ih
+  let orbit := w.permutations.toFinset.filter (fun u => ∃ t : ℕ, (M^[t]) w = u)
+  have memOrbit (t : ℕ) : (M^[t]) w ∈ orbit := by
+    simp only [orbit, Finset.mem_filter, List.mem_toFinset, List.mem_permutations]
+    exact ⟨orbitperm t, t, rfl⟩
+  obtain ⟨u, hu, hmax⟩ := orbit.exists_max_image Phi ⟨w, by simpa using memOrbit 0⟩
+  obtain ⟨t, ht⟩ := (Finset.mem_filter.mp hu).2
+  refine ⟨t, ?_⟩
+  have hnext := hmax ((M^[t + 1]) w) (memOrbit (t + 1))
+  rw [Function.iterate_succ_apply', ht] at hnext ⊢
+  have ndu : u.Nodup := by
+    rw [← ht]
+    exact (orbitperm t).nodup_iff.mpr hnd
+  have hwk := potential_weak u ndu
+  have hPhi : Phi (M u) = Phi u := le_antisymm hnext hwk
+  exact List.reverse_injective hPhi
+
+#print axioms result
+
 end SyyProbe

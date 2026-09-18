@@ -78,3 +78,5 @@ Compiled private lemma `r_split_min`: splitting at the first global minimum give
 Compiled private lemma `append_le_of_length_eq`: weak lexicographic bounds combine across equal-length initial blocks. The local statement-shape search found no matching append inequality in pinned Mathlib or core; the proof uses structural induction on lexicographic evidence.
 
 Compiled private lemmas `M_last_max` and `potential_weak`: the minimum/maximum decomposition yields, by strong induction on word length, `Phi w <= Phi (M w)` for every distinct word. The recursive branch uses the strictly shorter prefix before the global minimum.
+
+Compiled public theorem `SyyProbe.result`: for all n >= 1 and all words permuting the list of integers 1 through n, consecutive machine iterates eventually agree. A maximal-potential reachable permutation is fixed by the compiled inequality and injectivity of reversal. The exact axiom output and timing are recorded with the final report.
