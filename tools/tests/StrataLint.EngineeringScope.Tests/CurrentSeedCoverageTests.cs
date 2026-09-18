@@ -7,6 +7,126 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelper output)
 {
+    [Fact]
+    public void CurrentProducerSeedSurvivesReusedChecksAndFollowingMetadataOnlyCurrent()
+    {
+        using var fixture = Prepare();
+        const string producer = "producer.py";
+        Producer(fixture, "prepare");
+        fixture.CommitPlan();
+        fixture.Processes();
+        var oldReceipt = File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath + ".reuse.json"));
+        var original = FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var originalReport = File.ReadAllBytes(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath));
+
+        fixture.Write(producer, "# producer version two\n");
+        fixture.CommitPlan();
+        fixture.Processes();
+        Producer(fixture, "renew");
+        var newReceipt = File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath + ".reuse.json"));
+        Assert.NotEqual(oldReceipt, newReceipt);
+        var calls = new List<string>();
+        var current = FullCurrent(fixture, calls);
+        Assert.Empty(calls);
+        Assert.Equal(originalReport, File.ReadAllBytes(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath)));
+        Assert.All(current.Units, unit =>
+        {
+            var previous = original.Units.Single(row => row.Id == unit.Id);
+            Assert.Equal("reused", unit.Status);
+            Assert.Equal(previous.ExecutionCandidate, unit.ExecutionCandidate);
+            Assert.Equal(previous.ExecutionRound, unit.ExecutionRound);
+            Assert.Equal(previous.Materials, unit.Materials);
+        });
+        var accepted = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        var descriptorPath = Path.Combine(seed, "producer-report.json");
+        Assert.True(File.Exists(descriptorPath), "accepted canonical producer must survive reused report checks");
+        var descriptor = File.ReadAllText(descriptorPath);
+        var producerRecord = JsonNode.Parse(descriptor)!;
+        Assert.Equal(accepted.Candidate, producerRecord["candidate"]!.ToString());
+        Assert.Equal(accepted.Round, producerRecord["round"]!.ToString());
+        Assert.Equal(CommonExecutionEvidence.ReportPath, producerRecord["report"]!.ToString());
+        Assert.Equal(newReceipt, File.ReadAllText(Path.Combine(seed, CommonExecutionEvidence.ReportPath + ".reuse.json")));
+        var previousReport = original.Units.First(unit => unit.Report is not null).Report!;
+        Assert.Equal(oldReceipt, File.ReadAllText(Path.Combine(seed, previousReport + ".reuse.json")));
+        CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
+        Producer(fixture, "probe");
+
+        fixture.Write(Input, "metadata-only next candidate\n");
+        fixture.CommitPlan();
+        fixture.Processes(prepareReport: false);
+        RunSelectedWithoutOriginalMaterials(fixture);
+        // The selected route has no report producer. Even an unrelated stale
+        // canonical file must not replace the last accepted producer identity.
+        fixture.Write(CommonExecutionEvidence.ReportPath + ".reuse.json", "unaccepted stale receipt\n");
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        Assert.Equal(descriptor, File.ReadAllText(descriptorPath));
+        Assert.Equal(newReceipt, File.ReadAllText(Path.Combine(seed, CommonExecutionEvidence.ReportPath + ".reuse.json")));
+        CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
+        Producer(fixture, "probe");
+    }
+
+    [Fact]
+    public void ProducedReportExportsWhenEverySelectedCheckIsReportIndependent()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report", "filemap"]);
+        Producer(fixture, "prepare");
+        fixture.CommitPlan();
+        fixture.Processes(prepareReport: false);
+        using var stageOutput = new StringWriter();
+        Assert.True(fixture.Run("current", stageOutput) == 0, stageOutput.ToString());
+        var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        Assert.Null(Assert.Single(checks.Units).Report);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
+        Producer(fixture, "probe");
+    }
+
+    [Theory]
+    [InlineData("receipt")]
+    [InlineData("descriptor")]
+    public void DamagedProducerSeedCannotAuthorizeReportReuse(string defect)
+    {
+        using var fixture = Prepare();
+        Producer(fixture, "prepare");
+        fixture.CommitPlan();
+        fixture.Processes();
+        FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        var path = Path.Combine(seed, defect == "receipt" ? CommonExecutionEvidence.ReportPath + ".reuse.json" : "producer-report.json");
+        Assert.True(File.Exists(path), "producer evidence must be exported before damage");
+        if (defect == "receipt") File.WriteAllText(path, "damaged optional producer evidence\n");
+        else
+        {
+            var descriptor = JsonNode.Parse(File.ReadAllText(path))!;
+            descriptor["round"] = new string('z', 32);
+            File.WriteAllText(path, descriptor.ToJsonString());
+        }
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current"));
+        Producer(fixture, "probe-miss");
+    }
+
+    [Fact]
+    public void ProducerMutationAfterAcceptanceCannotReplacePreviousSeed()
+    {
+        using var fixture = Prepare();
+        fixture.Write(CommonExecutionEvidence.ReportPath + ".reuse.json", "accepted receipt\n");
+        var checks = FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var accepted = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        var previous = File.ReadAllText(Path.Combine(seed, "producer-report.json"));
+        fixture.Write(CommonExecutionEvidence.ReportPath + ".reuse.json", "changed after acceptance\n");
+        Assert.False(CommonExecutionEvidence.CopyAcceptedCheckSeed(fixture.Root, "current", accepted,
+            null, checks, TextWriter.Null));
+        Assert.Equal(previous, File.ReadAllText(Path.Combine(seed, "producer-report.json")));
+        Assert.Equal("accepted receipt\n", File.ReadAllText(Path.Combine(seed, CommonExecutionEvidence.ReportPath + ".reuse.json")));
+        CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
+    }
+
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
@@ -130,6 +250,61 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
     }
 
     private const string Input = "fixtures/filemap-input.txt";
+
+    private static void Producer(ResourceRouteTests.ResourceFixture fixture, string operation)
+    {
+        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+            import pathlib, shutil, sys
+            repository, root = map(pathlib.Path, sys.argv[1:3])
+            operation, relative = sys.argv[3:]
+            sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
+            from test_reuse import ReuseTests
+            import publication, reuse
+            fixture = ReuseTests()
+            fixture.setUp()
+            try:
+                if operation == 'prepare':
+                    paths = ('D5/A.lean', 'Audit.lean', 'Inspector.lean', 'producer.py',
+                        'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', 'bin/lake', 'bin/lean',
+                        'tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
+                        'tools/scripts/worktree/lean-cache-input.sh')
+                    for relative_source in paths:
+                        target = root / relative_source
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(fixture.root / relative_source, target)
+                    for name in ('reuse.py', 'publication.py', 'materials.py'):
+                        target = root / 'tools/lean-inspector' / name
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(repository / 'tools/lean-inspector' / name, target)
+                fixture.root = root
+                fixture.report = root / relative
+                fixture.report.parent.mkdir(parents=True, exist_ok=True)
+                fixture.lake = root / 'bin/lake'
+                if operation in ('prepare', 'renew'):
+                    if operation == 'renew':
+                        assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'old producer must miss'
+                    fixture.receipt()
+                elif operation in ('probe', 'probe-miss'):
+                    sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
+                    import lean_actions
+                    selected = lean_actions.report_seed(root, fixture.lake)
+                    if operation == 'probe-miss':
+                        assert selected is None, 'damaged producer must return to normal production'
+                        sys.exit(0)
+                    expected = root / 'build/ci/current-check-seed' / relative
+                    assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
+                    assert not reuse.probe(root, pathlib.Path(selected), fixture.lake)['needs_lake']
+                    output = root / 'build/reused-report' / publication.RAW
+                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.lake)['needs_lake']
+                    assert output.read_bytes() == expected.read_bytes()
+                else:
+                    raise AssertionError(operation)
+            finally:
+                fixture.doCleanups()
+            """, TestRepositoryLayout.FindRoot(), fixture.Root, operation, CommonExecutionEvidence.ReportPath],
+            hangGuard: TestBudgets.ScriptProcessHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+    }
 
     private static ResourceRouteTests.ResourceFixture Prepare()
     {
