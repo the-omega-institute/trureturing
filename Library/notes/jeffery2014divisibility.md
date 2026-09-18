@@ -25,4 +25,5 @@ Proposition 6 states `F_a | F_am` for positive integers `a` and `m`.
 Theorem 7 states `gcd(F_a,F_b)=F_gcd(a,b)`. Proposition 6 alone implies
 that, for each positive `a` and integer divisor `d`, divisibility of every
 `F_am` by `d` is equivalent to divisibility of `F_a` by `d`: one direction
-uses `m=1`, and the other uses transitivity.
+uses `m=1`, and the other uses
+transitivity.
