@@ -1,0 +1,9 @@
+{
+  "compiled": false,
+  "exit": 1,
+  "mutation": "Delete potential_weak; replace its use by aesop on remaining finite-orbit context.",
+  "retained": "All source definitions, operational lemmas, permutation invariance, orbit finiteness, maximal reachable potential.",
+  "removed": "The strong induction proving Phi u <= Phi (M u).",
+  "diagnostics": "probe/.SyyMutant.lean:262:34: error: unsolved goals\n\u22a2 Phi (M^[t] w) \u2264 Phi (M (M^[t] w))",
+  "log": "/var/folders/rm/8w0nylc12d909d_tl053wqkw0000gn/T/consensus-rnd/sshx/s6c2e-probe-syy-cycles-probe/attempt-1/scratch/mutant.log"
+}

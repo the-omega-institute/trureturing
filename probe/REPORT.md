@@ -80,3 +80,7 @@ Compiled private lemma `append_le_of_length_eq`: weak lexicographic bounds combi
 Compiled private lemmas `M_last_max` and `potential_weak`: the minimum/maximum decomposition yields, by strong induction on word length, `Phi w <= Phi (M w)` for every distinct word. The recursive branch uses the strictly shorter prefix before the global minimum.
 
 Compiled public theorem `SyyProbe.result`: for all n >= 1 and all words permuting the list of integers 1 through n, consecutive machine iterates eventually agree. A maximal-potential reachable permutation is fixed by the compiled inequality and injectivity of reversal. The exact axiom output and timing are recorded with the final report.
+
+## Mandatory mutant
+
+`python3 probe/check_mutant.py` generated and compiled a mutant with the entire `potential_weak` declaration removed, replacing its use in `result` by `aesop` on the remaining finite-orbit context. Lean exited 1 with the unresolved inequality `Phi (M^[t] w) <= Phi (M (M^[t] w))`. The surviving maximality fact has the opposite direction. The check script exited 0 because this was the predicted semantic failure; the mutant itself did not compile. The error-recovery `sorryAx` printed for the failed mutant is not part of the successful main theorem. This test rejects this finiteness-only bypass; it does not prove that all alternative proofs are impossible.
