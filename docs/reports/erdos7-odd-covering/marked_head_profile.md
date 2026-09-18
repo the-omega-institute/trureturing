@@ -636,3 +636,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The pure-five joint envelope enters both complete comparisons](profile-notes/165-the-pure-five-joint-envelope-enters-both-complete-comparisons.md)
 - [The complete local source domain crosses the outer strip](profile-notes/166-the-complete-local-source-domain-crosses-the-outer-strip.md)
 - [Two complete source neighborhoods remove the outer crossing](profile-notes/167-two-complete-source-neighborhoods-remove-the-outer-crossing.md)
+- [The first-five support lowers the complete factorial bound](profile-notes/168-the-first-five-support-lowers-the-complete-factorial-bound.md)
