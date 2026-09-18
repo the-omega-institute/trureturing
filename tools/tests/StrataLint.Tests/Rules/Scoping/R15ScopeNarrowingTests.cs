@@ -163,7 +163,7 @@ public sealed class R15ScopeNarrowingTests
         const string message = "canonical values projection must be Evidence/D5/values.json";
 
         var unrelated = ValuesPathHistory(historicalPath);
-        AssertNoFinding(Execute(unrelated, "global.json"), 18, message, historicalPath);
+        AssertFinding(Execute(unrelated, "global.json"), 18, message, historicalPath);
 
         var changed = ValuesPathHistory(historicalPath);
         AssertFinding(Execute(changed, historicalPath), 18, message, historicalPath);
@@ -188,7 +188,7 @@ public sealed class R15ScopeNarrowingTests
         var unrelated = AnomalyHistory(historicalPath);
         const string unrelatedPath = "Evidence/D5/S0/Carrier/Unrelated.run.json";
         SetHistorical(unrelated, unrelatedPath, "{}\n");
-        AssertNoFinding(Execute(unrelated, unrelatedPath), 19, message, historicalPath);
+        AssertFinding(Execute(unrelated, unrelatedPath), 19, message, historicalPath);
 
         var changed = AnomalyHistory(historicalPath);
         AssertFinding(Execute(changed, historicalPath), 19, message, historicalPath);
@@ -397,7 +397,7 @@ public sealed class R15ScopeNarrowingTests
         string implementationPath)
     {
         var unrelated = fixtureFactory();
-        AssertNoFinding(
+        AssertFinding(
             Execute(unrelated, UnrelatedLeanPath),
             ruleNumber,
             message,
