@@ -29,12 +29,17 @@ the conjecture's separate p-graphical clause.
 
 ## Dom-path diameter conjecture
 
-Observation 2.7 on printed pages 6--7 calls a `(v_1,v_n)` path a primary
-minimal dom-path when a gamma-set of the path itself is also a gamma-set of
-`J_n(x)`. Conjecture 2.9 on printed page 7 states verbatim:
+Observation 2.7 on printed pages 6--7 states verbatim:
 
-> For any linear Jaco graph Jn (x), n >= 1 the length of a diam-path and a
-> primary minimal dom-path Pd satisfy |Pd| - |diam(Jn (x))| <= 1.
+> For any finite linear Jaco graph Jn (x), n ≥ 2 there exists a pair of
+> vertices i.e. v1 , vn for which a minimal (v1 , vn )-path (not necessarily a
+> diam-path) i.e. Pd (Jn (x)) exists such that a γ-set of Pd (Jn (x)) is a
+> γ-set of Jn (x). We call the path Pd (Jn (x)) the primary minimal dom-path.
+
+Conjecture 2.9 on printed page 7 states verbatim:
+
+> For any linear Jaco graph Jn (x), n ≥ 1 the length of a diam-path and a
+> primary minimal dom-path Pd satisfy |Pd | − |diam(Jn (x))| ≤ 1.
 
 The paper measures path length in edges: its six-vertex path for `J_8(x)` is
 said to have length 5. The formal assertion uses the weakest consequence of

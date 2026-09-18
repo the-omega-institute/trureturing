@@ -11,12 +11,18 @@ motivation_gids:
 
 ## Problem
 
-Kok, arXiv:2507.16500v1, Observation 2.7 and Conjecture 2.9 on printed
-pages 6--7, defines a primary minimal dom-path by a shared gamma-set and
-states:
+Kok, arXiv:2507.16500v1, defines the object in Observation 2.7 on printed
+pages 6--7, verbatim:
 
-> For any linear Jaco graph Jn (x), n >= 1 the length of a diam-path and a
-> primary minimal dom-path Pd satisfy |Pd| - |diam(Jn (x))| <= 1.
+> For any finite linear Jaco graph Jn (x), n ≥ 2 there exists a pair of
+> vertices i.e. v1 , vn for which a minimal (v1 , vn )-path (not necessarily a
+> diam-path) i.e. Pd (Jn (x)) exists such that a γ-set of Pd (Jn (x)) is a
+> γ-set of Jn (x). We call the path Pd (Jn (x)) the primary minimal dom-path.
+
+and states Conjecture 2.9 on printed page 7, verbatim:
+
+> For any linear Jaco graph Jn (x), n ≥ 1 the length of a diam-path and a
+> primary minimal dom-path Pd satisfy |Pd | − |diam(Jn (x))| ≤ 1.
 
 The paper measures path length in edges. The formal target is the weakest
 selection-independent consequence: for every positive `n`, some dom-path has

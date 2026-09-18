@@ -50,7 +50,7 @@ $$\forall n \in \mathrm{Nat},\; \forall h \in 1 \le n,\; \forall w \in \operator
 
 *Commentary.*
 
-A dom-path is a simple walk from v_1 to v_n with one set D of walk vertices. The positions of D form a minimum dominating set of the path graph, and the same D is a minimum dominating set of the finite Jaco graph.
+Observation 2.7 (printed pages 6–7) reads verbatim: “For any finite linear Jaco graph Jn (x), n ≥ 2 there exists a pair of vertices i.e. v1 , vn for which a minimal (v1 , vn )-path (not necessarily a diam-path) i.e. Pd (Jn (x)) exists such that a γ-set of Pd (Jn (x)) is a γ-set of Jn (x). We call the path Pd (Jn (x)) the primary minimal dom-path.” A dom-path is a simple walk from v_1 to v_n with one set D of walk vertices. The positions of D form a minimum dominating set of the path graph, and the same D is a minimum dominating set of the finite Jaco graph.
 
 **Definition 1.5 (Kok's Conjecture 2.9).**
 
@@ -62,7 +62,7 @@ $$(claim) \Leftrightarrow (\forall n \in \mathrm{Nat},\; \forall h \in 1 \le n,\
 
 *Commentary.*
 
-For every positive n, the conjectured bound requires some dom-path whose edge length is at most the Mathlib diameter of jaco n plus one. This existential statement is the weakest consequence independent of how the source selects its primary minimal dom-path.
+Conjecture 2.9 (printed page 7) reads verbatim: “For any linear Jaco graph Jn (x), n ≥ 1 the length of a diam-path and a primary minimal dom-path Pd satisfy |Pd | − |diam(Jn (x))| ≤ 1.” For every positive n, the conjectured bound requires some dom-path whose edge length is at most the Mathlib diameter of jaco n plus one. This existential statement is the weakest consequence independent of how the source selects its primary minimal dom-path.
 
 **Theorem 1.6 (Conjecture 2.9 is false).**
 
