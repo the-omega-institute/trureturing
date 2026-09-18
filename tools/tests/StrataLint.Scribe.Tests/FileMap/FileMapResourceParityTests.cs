@@ -10,11 +10,12 @@ public sealed class FileMapResourceParityTests
     {
         var map = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
         foreach (var path in new[] { "README.md", "tools/lean-inspector/README.md",
+            "docs/develop/theory/input.md",
             "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
             "docs/develop/spec/trureturing_engineering_optimization_v1.md",
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
             Assert.Empty(Assert.Single(map.Match(path)).Require);
-        foreach (var path in new[] { "docs/develop/theory/input.md", "Library/Notes/input.md", "Problems/input.md",
+        foreach (var path in new[] { "docs/develop/theory/PERIODIC_TREE_registry.jsonl", "Library/Notes/input.md", "Problems/input.md",
             "Blueprint/D5/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
             "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
