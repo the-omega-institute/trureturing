@@ -1,0 +1,142 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-budgeted-coefficient-source-transport-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "dfda3f66f8d7396bec776bfa295a0cbdbebd830184e8f5b29717b4cdc83c9f80",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/26",
+      "rho": "1/940",
+      "rbar": "1/188",
+      "h1min": "155/468",
+      "v0": "97/4700",
+      "v1": "3797/145700",
+      "gap": "151/9165",
+      "tbar": "27/11",
+      "Cbar": "790/193",
+      "kbar": "155/76",
+      "budget_increments": [
+        "79/46800",
+        "1/936",
+        "1/300"
+      ],
+      "c": [
+        "369/520",
+        "73/180",
+        "7/26",
+        "7/78"
+      ],
+      "H": [
+        "609/6760",
+        "329/3042",
+        "83/1170",
+        "5719/243360"
+      ],
+      "positive7": "20389/327600"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/26",
+      "residual_radius": "1/940",
+      "actual_r_upper": "1/188",
+      "joint_source_Delta_upper": "1/100",
+      "source_z_upper": "79/104",
+      "availability_upper": "3/304",
+      "h1_lower": "155/468",
+      "first_beta_eta_lower": "17/156",
+      "h_upper": "235/468",
+      "five_actual_gap_lowers": [
+        "89/940",
+        "335/5499",
+        "151/9165",
+        "128473/6686784",
+        "2987/109980"
+      ],
+      "minimum_actual_gap": "151/9165",
+      "common_wrong_slot_gap": "151/9165",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "11/13",
+        "shallow_C_minus_1_t": "678/169",
+        "shallow_C_minus_k": "28357/676",
+        "pure3_maximizing_cell": "1433/676",
+        "root0_below_root1_reference": "1169/676"
+      },
+      "heavy_residual_price_coefficient": "65/9",
+      "heavy_slot_movement_coefficient": "13/9",
+      "independent_r_cutoff": null
+    }
+  },
+  "heavy_extension": {
+    "kind": "inline",
+    "value": {
+      "heavy_bounds": [
+        {
+          "index": 0,
+          "barrier": "630053335920064561120723361434337/15632787748921114278012443437500",
+          "weight": "1",
+          "margin_lower": "1193878489939499612/259995953549870913375",
+          "max_derivative": "2498381/1145144",
+          "slot_movement_price": "2498381/792792",
+          "original_marker_price_upper": "27594618145/2075000928",
+          "one_residual_price": "12491905/792792"
+        },
+        {
+          "index": 16,
+          "barrier": "113030172417388488839521339535147647/3510863581945200248270294588671875",
+          "weight": "15/17",
+          "margin_lower": "1088704788427803234124/300295326350100904948125",
+          "max_derivative": "3639413/2108106",
+          "slot_movement_price": "3639413/1459458",
+          "original_marker_price_upper": "40197316585/3819888072",
+          "one_residual_price": "18197065/1459458"
+        }
+      ],
+      "positive_r_proof": "The162 r=0 fixed-support floors apply to the new source slab. General85/91 first-label and packing guards are independently re-established. The fixed correction loses at most(13/9)vmax*r. The original marker costs at mostmax(1,hbar/(5G))vmax per epsilon=rho-(r+r1)/5. Taking P=(65/9)vmax pays both with one rho; no old positive-r wrapper is invoked."
+    }
+  },
+  "complete_H1": {
+    "path": "content/005-complete_H1.json",
+    "sha256": "5d173412da9ab5a9e70c43fad98276f1b7fd3cd4be29a11c8441c38ee498febe",
+    "kind": "object"
+  },
+  "complete_square": {
+    "path": "content/006-complete_square.json",
+    "sha256": "43c8ff1b6c9e212fc2581facbb8fc519ac80494a5d56f0ba2262aa2e52879044",
+    "kind": "value"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/007-joint_pure_five_transport.json",
+    "sha256": "f24184cdf634e66aac8eac9b40884da4b57b331f0008efe66c0772e688cc0528",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/008-complete_heads.json",
+    "sha256": "51523538ea9c74b95cf310238ce7cb7713272fe5a75a84285acccc8751d12725",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/009-comparison.json",
+    "sha256": "735f1ff572a3791e351a171314c12d51b6b1eb22a999241e89e9cb72847d734d",
+    "kind": "value"
+  },
+  "application_target": {
+    "kind": "inline",
+    "value": "509289/1000"
+  },
+  "application_target_margin": {
+    "kind": "inline",
+    "value": "225838229888085420620066240618554708662918891847623339829/874958727943837955380863364680061712084888772294192000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete actual-source bound for both K orientations, sigma<=1/26 and rho<=1/940, with only the actual r<=5rho. Reuses169 fresh original heads through170 general cap/budget/coefficient transport strengthened by the exact old-group support of coefficient increases, independently proves the larger-domain first-label/gap/heavy guards, and reconstructs all52 independent costs, five denominator objectives and every infinite tail. No new global K bound, Lean verification, unrestricted Erdos7 result, fresh head scan or actual attainment of the relaxed maxima is asserted."
+  }
+}

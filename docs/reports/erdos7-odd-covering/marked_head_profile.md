@@ -640,3 +640,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete source bound needs no independent slot-loss cutoff](profile-notes/169-the-complete-source-bound-needs-no-independent-slot-loss-cutoff.md)
 - [A complete head scan transports across source radii](profile-notes/170-a-complete-head-scan-transports-across-source-radii.md)
 - [The pure-three path has a joint complete moment bound](profile-notes/171-the-pure-three-path-has-a-joint-complete-moment-bound.md)
+- [The complete union removes the independent slot boundary](profile-notes/172-the-complete-union-removes-the-independent-slot-boundary.md)
+- [The full-slot source domain extends to one over twenty-six](profile-notes/173-the-full-slot-source-domain-extends-to-one-over-twenty-six.md)
+- [Old group budgets sharpen the complete source transport](profile-notes/176-old-group-budgets-sharpen-the-complete-source-transport.md)
+- [The marked branch pays only its actual slot cutoff](profile-notes/177-the-marked-branch-pays-only-its-actual-slot-cutoff.md)
