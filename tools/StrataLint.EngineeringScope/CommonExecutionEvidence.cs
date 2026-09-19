@@ -15,7 +15,7 @@ internal sealed record TestExecutionRecord(int Version, string Candidate, string
 internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log);
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials, ResourcePlanBinding? Selection = null, string[]? Projects = null);
 internal sealed record RegisteredCheckReport(string Producer, string Consumer, string Artifact, string[] Materials);
-internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
+internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] ProgramInputs, string[] Materials,
     string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs);
 internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
 
@@ -97,7 +97,7 @@ internal static partial class CommonExecutionEvidence
                 ?? throw new InvalidDataException("empty common check registration");
         }
         catch (JsonException exception) { throw new InvalidDataException($"invalid common check registration: {exception.Message}", exception); }
-        if (manifest.Schema != "ci-check-input-registration-v2" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
+        if (manifest.Schema != "ci-check-input-registration-v3" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
             throw new InvalidDataException("invalid common check registration schema");
         var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-library", "scribe-markdown", "filemap" };
         if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
@@ -113,6 +113,7 @@ internal static partial class CommonExecutionEvidence
                 throw new InvalidDataException($"missing common check registration fields: {check.Id}");
             foreach (var project in check.ProgramProjects)
                 if (!projects.Contains(project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {project}");
+            _ = RegisteredProgramInputs(paths, check.ProgramInputs, "check " + check.Id);
             ValidatePatterns(check.Materials, check.MaterialExcludes, check.Id);
             ValidatePatterns(check.PathInventory, [], check.Id);
             _ = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id);

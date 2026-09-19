@@ -324,8 +324,9 @@ public sealed partial class CommonCheckExecutionTests
             Tree.Write("fixtures/selftest.txt", "selftest");
             var ids = CommonCheckRegistrationFixture.Ids;
             CommonExecutionEvidence.Write(Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-                new CommonCheckManifest("ci-check-input-registration-v2", ids.Select(id => new RegisteredCommonCheck(id,
-                    [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
+                new CommonCheckManifest("ci-check-input-registration-v3", ids.Select(id => new RegisteredCommonCheck(id,
+                    [CurrentExecutionContractTests.CandidateFixture.First], [CurrentExecutionContractTests.CandidateFixture.First],
+                    id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
             Tree.Track();
         }
         internal CommonCheckRecord Run(string? failure = null)

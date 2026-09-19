@@ -117,6 +117,9 @@ class ReuseTests(unittest.TestCase):
     def test_registered_engine_friend_edit_reuses_but_report_source_edit_misses(self):
         self.assert_registered_friend_edit('StrataLint.Engine', 'AssemblyInfo.cs')
 
+    def test_registered_backfill_loader_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Engine', 'Rules/Backfill/BackfillInventoryLoader.cs')
+
     def assert_registered_friend_edit(self, project, friend_path):
         registration = publication.selection.Selection(ROOT).data['producer_scopes']['lean-report']
         scope = self.policy['producer_scopes']['lean-report']

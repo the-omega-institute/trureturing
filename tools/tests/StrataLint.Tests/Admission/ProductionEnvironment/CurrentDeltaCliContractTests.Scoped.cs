@@ -16,12 +16,12 @@ public sealed partial class CurrentDeltaCliContractTests
     [InlineData("staged-metadata", 0, "SL-016")]
     [InlineData("template-overlimit", 1, "SL-003")]
     [InlineData("template-warm-overlimit", 1, "SL-003")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "CLAUDE.md", "CLAUDE.md")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "agents/prover.md", "agents/**")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "skills/codex-formal-answer/SKILL.md", "skills/**")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/merge-gate.sh", "tools/scripts/agent/merge-gate.sh")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/openproblem/erdos617.py", "tools/scripts/agent/openproblem/erdos617.py")]
-    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/tests/BannedApiCompileFailProof/CapacityProbe.cs", "tools/tests/**/*.cs")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "CLAUDE.md")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "agents/prover.md")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "skills/codex-formal-answer/SKILL.md")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/merge-gate.sh")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/openproblem/erdos617.py")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/tests/BannedApiCompileFailProof/CapacityProbe.cs")]
     [InlineData("metadata", 0, "SL-016")]
     [InlineData("metadata-invalid", 1, "SL-016")]
     [InlineData("metadata-missing-report", 2, "raw-lean-report.json")]
@@ -38,7 +38,7 @@ public sealed partial class CurrentDeltaCliContractTests
     [InlineData("unbound-build-plan", 2, "selection")]
     [InlineData("unbound-current-plan", 2, "selection")]
     public void ScopedDeltaConsumesOnlyItsBoundRegisteredEvidence(string scenario, int expectedExit, string diagnostic,
-        string? governedPath = null, string? capacityPattern = null)
+        string? governedPath = null)
     {
         using var environmentScope = new CiFixtureEnvironment();
         using var temporary = new TemporaryDirectory();
@@ -54,7 +54,7 @@ public sealed partial class CurrentDeltaCliContractTests
         // A missing declaration must reproduce unsafe warm reuse, not be filled in here.
         var capacityInputs = JsonNode.Parse(TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(CommonExecutionEvidence.CheckManifestPath)))!["checks"]!.AsArray()
             .Single(row => row!["id"]!.GetValue<string>() == "SL-003")!["materials"]!.AsArray()
-            .Where(pattern => pattern!.GetValue<string>() == (capacityPattern ?? "tools/scripts/agent/openproblem/templates/*.md"))
+            .Where(pattern => FileMapGlob.Create(pattern!.GetValue<string>()).IsMatch(template))
             .Select(pattern => pattern!.DeepClone()).ToArray();
         var checkManifest = JsonNode.Parse(fixture.Files[CommonExecutionEvidence.CheckManifestPath])!;
         checkManifest["checks"]!.AsArray().Single(row => row!["id"]!.GetValue<string>() == "SL-003")!["materials"] = new JsonArray(capacityInputs);
