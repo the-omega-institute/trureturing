@@ -53,7 +53,8 @@ public sealed partial class CleanLanesCommandTests
                 "# clean lanes fixture\n",
                 new UTF8Encoding(false));
             Git(path, "add", "README.md");
-            Git(path, "commit", "-m", "fixture baseline");
+            // The template is copied immediately; maintenance must not keep modifying .git.
+            Git(path, "-c", "maintenance.auto=false", "commit", "-m", "fixture baseline");
             return path;
         }
 
