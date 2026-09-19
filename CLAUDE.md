@@ -42,7 +42,6 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ## 2. 认识论与科学方法
 
-
 ### 2.1 账必须平
 
 **账,必须平(诚实 > 速度)**:异常(意外数值、张力、失败尝试)须由读数检出并入账,或显式标永久案号/`ASSUMED-UNVERIFIED`/`deferred`,不得静默遗漏;“账平”即浮账集为空。产物形式服从第 2.10 条。
@@ -253,7 +252,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
   │ make ingest
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
-  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
+  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml
   │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出
   ▼
 D5/<GID 路径>.lean                           数学唯一真源
