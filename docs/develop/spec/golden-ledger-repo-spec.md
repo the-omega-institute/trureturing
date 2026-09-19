@@ -446,7 +446,9 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 工程证据缓存由 push 的独立可选 `engineering_cache` job 保存,避免完整工程检查耗尽其保存窗口。该 job 消费同一候选、本轮 build 与 engineering artifact,先经现役 transport 验证身份、轮次、材料及成功证据,再导出 seed;不重建或重跑检查,不恢复 Lean/依赖缓存。截止时间绑定保存 job 自身,不得借用或延长 engineering 检查的窗口;保存失败只影响后续增量起点,不改变 required checks。PR 不执行此保存 job。
 
-FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，键集合须与 `cache_layers` 完全一致，现役阶段仅为 `stage-start`。缺项、额外项、未知阶段由 C# loader 与轻量 planner 同样拒绝；无工作仍须验证完整登记。Actions 仅恢复所选资源声明的层；需要原生报告时，由 `lean` 前置声明 dependency/project/elan，`.lake/build/lean-inspector` 随 project 一起运输，不再存在独立 report 层、prepare/resume 协议或晚启动缓存阶段。stage-start 先恢复 current 证据；A14.9 的 producer 输入与完整成功证据校验明确判定无需 Lake 时不下载 dependency/project，其余情况按原登记恢复。filemap 等无 Lean 资源的路径仍不物化 Lean 缓存。
+FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，键集合须与 `cache_layers` 完全一致，候选现役阶段仅为 `stage-start`。候选执行登记的缺项、额外项、未知工具/缓存/阶段由 C# loader 与轻量 planner 同样拒绝；无工作仍须验证完整登记。历史 FILEMAP 只提供删除与重命名旧端的登记和 `require`；其工具、缓存及 activation 值按规范名称读取为数据，不套候选执行能力词表或 activation 调度一致性。历史字段、排序、资源与前置引用、闭包、路径及 activation 键集合仍须合法，不执行历史代码或激活历史资源。旧端 `require` 必须由候选资源显式承接，缺失即失败；兼容名称仅通过候选 FILEMAP 的既有 `prerequisites` 和执行 manifest 登记，不猜路径或退回全套。资源兼容名称不替代 delta 的 base 测试项目及原 TRX 约束。
+
+Actions 仅恢复所选候选资源声明的层；需要原生报告时，由 `lean` 前置声明 dependency/project/elan，`.lake/build/lean-inspector` 随 project 一起运输，不再存在独立 report 层、prepare/resume 协议或晚启动缓存阶段。stage-start 先恢复 current 证据；A14.9 的 producer 输入与完整成功证据校验明确判定无需 Lake 时不下载 dependency/project，其余情况按原登记恢复。filemap 等无 Lean 资源的路径仍不物化 Lean 缓存。
 
 需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 的正常 producer 入口按 A14.9 校验完整调用成功证据，或进入原生 Lake facets；当前默认 Lean/audit 目标和 Inspector 编译须有全部登记输入及执行环境一致的成功证据，否则重新执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化不冒称零报告重检。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。
 
