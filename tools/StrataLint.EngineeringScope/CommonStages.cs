@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Runtime;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -246,7 +248,12 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+            ValidateProducedReport(root);
+            // This process now waits while the child validates its own fresh
+            // snapshot. Reclaim the completed report validation's temporary
+            // snapshot before those independent heaps coexist in one cgroup.
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
         }
         else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
@@ -287,6 +294,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
         }
     }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void ValidateProducedReport(string root) =>
+        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath),
+            CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
 
     private void ValidateBase(string? baseSha)
     {
