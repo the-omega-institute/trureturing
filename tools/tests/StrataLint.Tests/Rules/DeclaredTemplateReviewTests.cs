@@ -107,7 +107,7 @@ public sealed class DeclaredTemplateReviewTests
                 (path == Registration ? ".unit" : ".realization"), "def", "True", [])).ToImmutableArray();
             string[] imports = path == Registration
                 ? indirectJudgePath
-                    ? ["tools.lean-inspector.LeanInformationAudit.Syntax"]
+                    ? ["LeanInformationAudit.Syntax"]
                     : [TargetModule, "LeanInformationAudit.Syntax"]
                 : [];
             reports[path] = new(imports.ToImmutableArray(), declarations)
@@ -284,8 +284,18 @@ public sealed class DeclaredTemplateReviewTests
         const string source = prefix + "InlineRealizationSource.lean";
         const string helper = prefix + "InlineProofHelper.lean";
         var root = TestRepositoryLayout.FindRoot();
-        var process = TestProcessRunner.Run("lake",
-            ["env", "lean", "--root=tools/lean-inspector", Path.Combine(root, registration)],
+        // Engineering restores only a seed, not this fixture's compiled imports.
+        // Lake owns the prerequisite closure; the canonical runner owns cache
+        // provisioning and locking. Do not build the whole inspector test library.
+        var build = TestProcessRunner.Run("make",
+            ["lean", "LEAN_TARGETS=LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource "
+                + "LeanInformationAudit.Tests.RegistrationGates.Positive LeanInformationAudit.Tests.SourceIsolation"],
+            root, TestBudgets.ReportSupervisorHangGuard, 2 * 1024 * 1024);
+        Assert.True(build.ExitCode == 0, Encoding.UTF8.GetString(build.StandardOutput)
+            + Encoding.UTF8.GetString(build.StandardError));
+        var process = TestProcessRunner.Run("/bin/bash",
+            [Path.Combine(root, "tools/scripts/worktree/lean-cache-run.sh"),
+                "lake", "env", "lean", "--root=tools/lean-inspector", Path.Combine(root, registration)],
             root, TestBudgets.LeanProcessHangGuard, 2 * 1024 * 1024);
         var output = Encoding.UTF8.GetString(process.StandardOutput)
             + Encoding.UTF8.GetString(process.StandardError);
@@ -349,7 +359,7 @@ public sealed class DeclaredTemplateReviewTests
         reportFiles[syntax] = new([TargetModule], []);
         var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
-        Assert.Equal("tools.lean-inspector.LeanInformationAudit.Syntax",
+        Assert.Equal("LeanInformationAudit.Syntax",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
         var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
         Assert.Contains(RepoPath.CreateKnown(Target), closure);

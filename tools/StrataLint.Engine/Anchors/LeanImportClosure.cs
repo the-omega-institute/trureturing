@@ -23,9 +23,6 @@ internal static class LeanImportClosure
             ModuleName,
             static path => path,
             StringComparer.Ordinal);
-        foreach (var path in report.Files.Keys)
-            if (path.Value.StartsWith("tools/lean-inspector/LeanInformationAudit/Tests/", StringComparison.Ordinal))
-                pathsByModule.Add(InformationTemplateEvidence.ModuleForSource(path.Value), path);
         var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
         var pending = new Stack<RepoPath>();
         pending.Push(startPath);
@@ -289,6 +286,11 @@ internal static class LeanImportClosure
     internal static string ModuleName(RepoPath path)
     {
         var value = path.Value;
+        // Both inspector libraries use this source root in lakefile.toml.
+        // Normalize module identity independently of content/tooling ownership.
+        const string inspectorRoot = "tools/lean-inspector/";
+        if (value.StartsWith(inspectorRoot, StringComparison.Ordinal))
+            value = value[inspectorRoot.Length..];
         return value.EndsWith(".lean", StringComparison.Ordinal)
             ? value[..^5].Replace('/', '.')
             : value.Replace('/', '.');
