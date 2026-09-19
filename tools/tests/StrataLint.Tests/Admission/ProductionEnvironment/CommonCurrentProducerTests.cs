@@ -54,8 +54,9 @@ public sealed class CommonCurrentProducerTests
             var path = "Meta/ReportConsumers/" + kind + ".json";
             fixture.Files[path] = System.Text.Json.JsonSerializer.Serialize(new
             {
-                schema = "report-consumer-inputs-v1", producer = "Meta/ReportProducers/" + kind + ".json",
+                schema = "report-consumer-inputs-v2", producer = "Meta/ReportProducers/" + kind + ".json",
                 projects = kind == "scribe-content" ? new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" } : [],
+                program_inputs = new[] { "global.json" },
                 materials = new[] { "global.json" },
             });
             fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
