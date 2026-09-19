@@ -813,3 +813,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Extremal odd-cover branches and source support](profile-notes/350-extremal-paired-branch-and-source-support.md)
 - [Multiple descendants: a fresh-prime budget and a local repair](profile-notes/351-multiple-descendants-fresh-prime-budget-and-local-repair.md)
 - [The complete private region exceeds the reserved transport palette](profile-notes/352-complete-private-region-exceeds-the-reserved-palette.md)
+- [Joint private demand survives arbitrary pure-power reassignment](profile-notes/353-joint-private-budget-with-all-pure3-reassignable.md)
