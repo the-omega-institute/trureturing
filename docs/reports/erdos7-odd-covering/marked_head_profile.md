@@ -792,3 +792,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A finite high-surplus source survives through29](profile-notes/330-a-finite-high-surplus-source-survives-through29.md)
 - [Complete physical hinges continue finite high-surplus sources through43](profile-notes/331-complete-physical-hinges-continue-finite-sources-through43.md)
 - [Common-mask capacity and the Kakeya interface](profile-notes/332-common-mask-capacity-and-the-kakeya-interface.md)
+- [Variable full-Haar thresholds retain more survivor mass through43](profile-notes/333-variable-full-haar-thresholds-retain-more-survivor-mass.md)
