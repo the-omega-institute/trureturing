@@ -7,6 +7,7 @@
    digest: Two frozen pointwise equations use one template, with exact statements and checked variation and support. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Tower.DBonacci.Substitution
 import D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
@@ -18,6 +19,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations
 
 open PointwiseRegistrationTemplates LeanInformationAudit
+open EscapeRecord D5.S3.ConceptDynamics.CIRPT
 
 register_information_template homogeneousPointwiseEqRealization
 
@@ -67,12 +69,23 @@ theorem substitution_lawSensitive : substitutionArena.Law substitutionRealizatio
     fun h => (by decide : (0 : Fin 3) ≠ 1) (h (0 : Fin 3))⟩
 theorem substitution_slotSensitive : FiniteSlotSensitivity substitutionArena :=
   homogeneousPointwiseEq_sensitivity _ (0 : Fin 3) (0 : Fin 3) 1 (by decide)
+
+private def substitutionChain : LayerChain substitutionArena.toArena where
+  length := 0
+  kernel := fun _ => cutKernel (fun label : Fin 3 => (label, label))
+  refines := fun r => Fin.elim0 r
+
+private theorem substitution_empty : EscapeResidualEmpty substitutionChain := by
+  change substitutionChain.unresolvedCount = 0
+  decide +kernel
+
 register_information_theorem gapLabelSubstitution_three_compatible in substitutionArena
   readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
     (fun label => label) (fun label => label))
   primitives substitutionRealization.toPrimitiveBundle realization substitution_bridge
   variation substitution_lawSensitive sensitivity substitution_slotSensitive
+  escape from (Fin 3) escape continues (substitution_empty)
 example : gapLabelSubstitution_three_compatible.__information_unit.Statement =
     (∀ label : Fin 3, (gapLabelSubstitution 3 label.1).map tribonacciGapLetterOfLabel =
       gapLetterSubstitution (tribonacciGapLetterOfLabel label.1)) := rfl
@@ -117,12 +130,26 @@ theorem recenter_lawSensitive : recenterArena.Law recenterRealization ∧
     fun h => (by decide : (0 : Fin 2) ≠ 1) (h (0 : Fin 3))⟩
 theorem recenter_slotSensitive : FiniteSlotSensitivity recenterArena :=
   homogeneousPointwiseEq_sensitivity _ (0 : Fin 3) (0 : Fin 2) 1 (by decide)
+
+private def recenterChain : LayerChain recenterArena.toArena where
+  length := 0
+  kernel := fun _ => cutKernel (fun d : Fin 3 => (recenterReadout d, recenterReadout d))
+  refines := fun r => Fin.elim0 r
+
+section
+private local instance : DecidableEq recenterArena.State := instDecidableEqFin 3
+
+private def recenterResidual : EscapeResidualWitness recenterChain :=
+  ⟨(0 : Fin 3), (1 : Fin 3), by decide +kernel⟩
+end
+
 register_information_theorem recenter_direction in recenterArena
   readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 2) (instDecidableEqFin 2)
     (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d) (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterReadout d))
   primitives recenterRealization.toPrimitiveBundle realization recenter_bridge
   variation recenter_lawSensitive sensitivity recenter_slotSensitive
+  escape from (Fin 3) escape continues (recenterResidual)
 example : recenter_direction.__information_unit.Statement =
     (∀ d : Fin 3, recenter d (direction d) = (0, 0)) := rfl
 #print axioms recenter_bridge
