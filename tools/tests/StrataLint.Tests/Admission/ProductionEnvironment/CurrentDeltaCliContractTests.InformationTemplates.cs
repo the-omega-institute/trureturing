@@ -28,7 +28,7 @@ public sealed partial class CurrentDeltaCliContractTests
             var own = pair.Key == RuleFixture.RingPath ? new[] { TemplateOccurrence } : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = 6,
+                schema_version = 1, compatibility_version = 8,
                 inputs = inputs.Select(input => new { path = input.Path, sha256 = input.Sha256 }),
                 inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
@@ -43,6 +43,8 @@ public sealed partial class CurrentDeltaCliContractTests
                         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
+                    escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                    escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                     unit_name = "goldenRing", realization_name = "goldenRing", certificate = (object?)null,
                 }),
             });

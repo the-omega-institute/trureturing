@@ -201,5 +201,6 @@ The source theorem satisfies the weak code law through the bridge; constant code
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.upper_lawSensitive`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.weakArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseOrderRegistrations.weak_slotSensitive`
+- Dependency: [D5/S3/ConceptDynamics/InformationEscape/EscapeRecord](EscapeRecord.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates](PointwiseRegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)

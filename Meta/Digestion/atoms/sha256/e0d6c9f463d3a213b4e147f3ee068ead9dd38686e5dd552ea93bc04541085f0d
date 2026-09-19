@@ -1,0 +1,60 @@
+**命题 84.4（两状态上的交换失败、校准运输与任意先验恢复障碍）。** 在命题 73.4 的等权二分设置中，取
+$$
+J=\{0,1\},\qquad I=\{*\},\qquad r(0)=r(1)=*,
+\qquad q=\begin{pmatrix}1/2\\1/2\end{pmatrix},
+\qquad \ell=\begin{pmatrix}1\\1/2\end{pmatrix}.
+$$
+则
+$$
+C=\begin{pmatrix}1&1\end{pmatrix},\qquad B=q,\qquad
+E=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\bar\ell_*=\frac34,\qquad
+B^\ell=\begin{pmatrix}2/3\\1/3\end{pmatrix}.
+$$
+两个复合的完整定义域均为 $\Delta(J)$，但
+$$
+E U_\ell(q)=q\ne U_\ell(Eq)
+=\begin{pmatrix}2/3\\1/3\end{pmatrix}.
+$$
+另一方面，在原来的单个粗标签上，校准先验 $q=B[1]$ 满足
+$$
+U_{\bar\ell}([1])=[1],\qquad
+B^\ell U_{\bar\ell}([1])=U_\ell(q).
+$$
+对于已经固定的 $r,q,\ell$，却不存在任何函数 $F:\Delta(I)\to\Delta(J)$，使
+$$
+\forall d\in\Delta(J),\qquad
+Z_\ell(d)>0\ \Longrightarrow\ F(Cd)=U_\ell(d).
+$$
+该不存在结论允许 $F$ 依赖固定的 $r,q,\ell$，且不对 $F$ 作线性假设。
+
+**证明。** 两个似然值都严格为正，故每个概率 $d$ 都有 $Z_\ell(d)>0$；$Ed=q$ 同样具有正证据。因此两个完整定义域都是 $\Delta(J)$。直接计算
+$$
+D_\ell q=\begin{pmatrix}1/2\\1/4\end{pmatrix},\qquad
+Z_\ell(q)=\bar\ell_*=\frac34,\qquad
+U_\ell(q)=\begin{pmatrix}2/3\\1/3\end{pmatrix}=B^\ell.
+$$
+$E$ 将每个概率映到 $q$，所以所列归一化交换失败；定理 84.2 同时给出 $ED_\ell\ne D_\ell E$。唯一的粗概率为 $[1]$，以正数 $3/4$ 加权再归一化仍为 $[1]$，且
+$$
+D_\ell B=\begin{pmatrix}1/2\\1/4\end{pmatrix}
+=B^\ell D_{\bar\ell},
+$$
+从而更新参考条件律在同一标签上精确表示校准先验的后验。
+
+再取两个细点质量
+$$
+d^{(0)}=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+d^{(1)}=\begin{pmatrix}0\\1\end{pmatrix}.
+$$
+它们满足
+$$
+Cd^{(0)}=Cd^{(1)}=[1],\qquad
+Z_\ell(d^{(0)})=1,\qquad Z_\ell(d^{(1)})=\frac12,
+$$
+而正证据更新分别为
+$$
+U_\ell(d^{(0)})=d^{(0)},\qquad
+U_\ell(d^{(1)})=d^{(1)}.
+$$
+若存在所述 $F$，同一个 $F([1])$ 就必须同时等于这两个不同的概率，矛盾。这是定理 2.2 的同纤维因子化障碍在证据后验上的应用，排除了线性与非线性的统一恢复；其量词是同一函数对全部正证据先验成立，不是断言每个非校准先验分别都无法恢复。证毕。
+

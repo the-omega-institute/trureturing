@@ -1,0 +1,88 @@
+**定理 81.3（均匀合法历史通过有限记忆的恢复与条件熵界）。** 固定 $n\in\mathbb N=\{0,1,\ldots\}$，令
+$$
+\mathcal W_n=\{w\in\{0,1\}^n:w\text{ 不含相邻的 }11\},
+\qquad N=|\mathcal W_n|=G_n\ge1,
+$$
+其中直接沿用命题 70.10 的计数 $G_n$；$\mathcal W_0$ 仅含空字，$G_0=1$。在本次固定 $n$ 的实验中，$H$ 均匀分布于 $\mathcal W_n$。记忆载体 $\mathcal M$ 有 $K\ge1$ 个状态，位预算为 $B\in\mathbb N$，且 $K\le2^B$。设非负编码核、解码核
+$$
+e:\mathcal W_n\times\mathcal M\to[0,\infty),\qquad
+d:\mathcal M\times\mathcal W_n\to[0,\infty)
+$$
+逐行满足
+$$
+\sum_m e(h,m)=1\quad(\forall h),\qquad
+\sum_{\widehat h}d(m,\widehat h)=1\quad(\forall m).
+$$
+要求实际三元联合律完整地分解为
+$$
+\boxed{
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\frac1N e(h,m)d(m,\widehat h).
+} \tag{81.2}
+$$
+这是本定理的无旁路条件：给定记忆后，解码使用同一行 $d(m,\cdot)$。它允许随机编码与随机解码，但不能仅由“所用随机种子与 $H$ 独立”代替。则恢复原历史的成功概率满足
+$$
+\boxed{
+\Pr(\widehat H=H)
+\le\min\!\left(1,\frac K{G_n}\right)
+\le\min\!\left(1,\frac{2^B}{G_n}\right).
+} \tag{81.3}
+$$
+同时有
+$$
+\boxed{
+\mathsf H(H\mid M)
+\ge\max(0,\ln G_n-\ln K)
+\ge\max(0,\ln G_n-B\ln2).
+} \tag{81.4}
+$$
+式 (81.4) 对任意均匀源 $H$ 与至多 $K$ 态记忆 $M$ 的联合律均成立，不需要解码器或式 (81.2)。式 (81.3) 的成功事件要求重建所抽取的整个原历史；命题 69.4 则只要求保留指定更新与读出的预测完成商。即使两个历史在该预测任务中等价，这里的恢复事件仍要求区分它们。若把本定理用于定理 81.2 的更新后记忆，须将 $M$、载体、$K$ 及编码核一致替换为 $M'$ 的对应数据。
+
+证明。$N\ge1$ 也可由全零字（$n=0$ 时为空字）直接见证。两核非负且行和为一，故式 (81.2) 的右侧确为概率律：
+$$
+\frac1N\sum_h\sum_m e(h,m)\sum_{\widehat h}d(m,\widehat h)
+=\frac1N\sum_h1=1.
+$$
+其 $H$ 边缘为 $1/N$，$(H,M)$ 边缘为 $e(h,m)/N$。编码行的非负性还给出
+$$
+0\le e(h,m)\le\sum_{m'}e(h,m')=1.
+$$
+于是仅以有限求和便得
+$$
+\begin{aligned}
+\Pr(\widehat H=H)
+&=\frac1N\sum_m\sum_h e(h,m)d(m,h)\\
+&\le\frac1N\sum_m\sum_h d(m,h)
+=\frac KN.
+\end{aligned}
+$$
+结合概率至多为一、$N=G_n>0$ 及 $K\le2^B$，得到式 (81.3)。此证明没有除以 $\Pr(M=m)$。未使用的记忆状态满足 $\sum_h e(h,m)=0$，故其编码列全零；无论该状态的解码行选哪一个归一化概率，都不影响成功率。$n=0$ 时解码只能返回空字，成功率为一，与上界相符。
+
+条件熵部分只使用 $(H,M)$ 联合律。对它及交换坐标后的律应用
+[entropy_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/ConditionalEntropy.lean)，得到
+$$
+\mathsf H(H)+\mathsf H(M\mid H)
+=\mathsf H(H,M)
+=\mathsf H(M)+\mathsf H(H\mid M).
+$$
+所有涉及的边缘非负归一化，源载体与记忆载体均非空。因此
+[entropy_eq_log_card_iff_uniform](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyEquality.lean)
+给出 $\mathsf H(H)=\ln N$；
+[entropy_le_log_card](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/MaxEntropy.lean)
+给出 $\mathsf H(M)\le\ln K$；若实际载体少于 $K$ 个状态，再用对数单调性即可。同一非负联合律上的
+[conditional_entropy_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/EntropyNonneg.lean)
+给出两个条件熵非负。故
+$$
+\mathsf H(H\mid M)
+=\ln N+\mathsf H(M\mid H)-\mathsf H(M)
+\ge\ln N-\ln K.
+$$
+与 $\mathsf H(H\mid M)\ge0$ 合并，得到第一个最大值界；$1\le K\le2^B$ 蕴含 $\ln K\le B\ln2$，再得第二个。$n=0$ 时源熵和条件熵都为零，右侧两个最大值也为零。依定义与假设 81.1 换成 bit 后，最后一界就是 $\mathsf H_2(H\mid M)\ge\max(0,\log_2G_n-B)$。
+
+为核实无旁路条件中随机性的边界，取 $n=1$，令 $H,S$ 为相互独立的均匀二点变量，置 $M=H\mathbin{\oplus}S$，其中 $\oplus$ 为模二加法。若解码器还可读取共享种子 $S$，则令 $\widehat H=M\mathbin{\oplus}S=H$。此时 $e(h,m)=1/2$，而
+$$
+\Pr(H=h,M=m,\widehat H=\widehat h)
+=\tfrac14\mathbf1_{\{\widehat h=h\}}.
+$$
+若式 (81.2) 成立，则对任意固定 $m$，取 $h=0$ 会迫使 $d(m,0)=1$，取 $h=1$ 又迫使 $d(m,1)=1$，违反解码行归一化。故种子独立本身不足以保证该式。使用额外可读记录时，须把它纳入实际记忆状态及容量条件，或另行指定扩展模型的联合律。式 (81.4) 的推导完全没有使用 $d$ 或 $\widehat H$，因而其适用范围不受这个解码边界影响。证毕。
+

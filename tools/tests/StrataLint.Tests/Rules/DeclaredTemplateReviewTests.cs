@@ -20,7 +20,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_semantic_version":6,
+            {"schema_version":1,"report_semantic_version":8,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
@@ -92,6 +92,8 @@ public sealed class DeclaredTemplateReviewTests
                         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
+                    escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                    escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                     unit_name = key.Theorem + ".unit", realization_name = key.Theorem + ".realization",
                     certificate = declared ? new
                     {
@@ -105,7 +107,7 @@ public sealed class DeclaredTemplateReviewTests
                 (path == Registration ? ".unit" : ".realization"), "def", "True", [])).ToImmutableArray();
             string[] imports = path == Registration
                 ? indirectJudgePath
-                    ? ["tools.lean-inspector.LeanInformationAudit.Syntax"]
+                    ? ["LeanInformationAudit.Syntax"]
                     : [TargetModule, "LeanInformationAudit.Syntax"]
                 : [];
             reports[path] = new(imports.ToImmutableArray(), declarations)
@@ -147,17 +149,15 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void manifest_only_bump_accepts_seven()
+    public void manifest_only_bump_accepts_eight()
     {
         var files = Files();
-        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
         var error = Record.Exception(() =>
         {
             var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
             Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
         });
-        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_seven: " + error?.Message);
+        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_eight: " + error?.Message);
     }
 
     private static Exception? ReadChangedManifest(string? manifest, int compatibility)
@@ -193,8 +193,6 @@ public sealed class DeclaredTemplateReviewTests
     public void invalid_evidence_version_uses_named_diagnostic(string? version)
     {
         var files = Files();
-        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
         var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
         foreach (var module in wire["modules"]!.AsArray())
         {
@@ -213,13 +211,12 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void bumped_manifest_rejects_six()
+    public void bumped_manifest_rejects_seven()
     {
-        var manifest = PolicyFiles()["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
-        var error = ReadChangedManifest(manifest, 6);
+        var manifest = PolicyFiles()["lean-report-inputs.json"];
+        var error = ReadChangedManifest(manifest, 7);
         Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
-            "[FAIL] bumped_manifest_rejects_six: " + error?.Message);
+            "[FAIL] bumped_manifest_rejects_seven: " + error?.Message);
     }
 
     [Theory]
@@ -228,14 +225,14 @@ public sealed class DeclaredTemplateReviewTests
     [InlineData("{")]
     [InlineData("[]")]
     [InlineData("{\"report_semantic_version\":null}")]
-    [InlineData("{\"report_semantic_version\":\"7\"}")]
+    [InlineData("{\"report_semantic_version\":\"8\"}")]
     [InlineData("{\"report_semantic_version\":true}")]
     [InlineData("{\"report_semantic_version\":0}")]
     [InlineData("{\"report_semantic_version\":-1}")]
     [InlineData("{\"report_semantic_version\":6.5}")]
     public void invalid_manifest_version_rejected(string? manifest)
     {
-        var error = ReadChangedManifest(manifest, 6);
+        var error = ReadChangedManifest(manifest, 7);
         Assert.True(error is FormatException && error.Message.Contains("DTR-ManifestVersion", StringComparison.Ordinal),
             "[FAIL] invalid_manifest_version_rejected: " + error?.Message);
     }
@@ -268,10 +265,78 @@ public sealed class DeclaredTemplateReviewTests
         var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
         var report = Report(after, omit: omitted);
         var diagnostics = Dispatch(Context(before, after, report, [Registration]));
-        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block
+        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Observe
                 && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
                 && d.Message.Contains(omitted, StringComparison.Ordinal)),
             "[FAIL] required_configuration_input_omission_rejected: " + omitted);
+    }
+
+    [Fact]
+    public void actual_inline_proof_helper_input_omission_rejected()
+    {
+        const string prefix = "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/";
+        const string registration = prefix + "InlineRealization.lean";
+        const string source = prefix + "InlineRealizationSource.lean";
+        const string helper = prefix + "InlineProofHelper.lean";
+        var root = TestRepositoryLayout.FindRoot();
+        // Engineering restores only a seed, not this fixture's compiled imports.
+        // Lake owns the prerequisite closure; the canonical runner owns cache
+        // provisioning and locking. Do not build the whole inspector test library.
+        var build = TestProcessRunner.Run("make",
+            ["lean", "LEAN_TARGETS=LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource "
+                + "LeanInformationAudit.Tests.RegistrationGates.Positive LeanInformationAudit.Tests.SourceIsolation"],
+            root, TestBudgets.ReportSupervisorHangGuard, 2 * 1024 * 1024);
+        Assert.True(build.ExitCode == 0, Encoding.UTF8.GetString(build.StandardOutput)
+            + Encoding.UTF8.GetString(build.StandardError));
+        var process = TestProcessRunner.Run("/bin/bash",
+            [Path.Combine(root, "tools/scripts/worktree/lean-cache-run.sh"),
+                "lake", "env", "lean", "--root=tools/lean-inspector", Path.Combine(root, registration)],
+            root, TestBudgets.LeanProcessHangGuard, 2 * 1024 * 1024);
+        var output = Encoding.UTF8.GetString(process.StandardOutput)
+            + Encoding.UTF8.GetString(process.StandardError);
+        Assert.True(process.ExitCode == 0, output);
+        const string marker = "INLINE_PROVENANCE_REPORT=";
+        var start = output.IndexOf(marker, StringComparison.Ordinal);
+        Assert.True(start >= 0, output);
+        start += marker.Length;
+        var end = output.IndexOf('\n', start);
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(output[start..(end < 0 ? output.Length : end)])!;
+        var inputs = wire["inputs"]!.AsArray();
+        Assert.Contains(inputs, input => input!["path"]!.GetValue<string>() == helper);
+
+        var entries = inputs.Select(input =>
+        {
+            var path = input!["path"]!.GetValue<string>();
+            return new RawRepositoryEntry(path,
+                ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
+        });
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(entries))).Snapshot;
+        var declarations = wire["records"]!.AsArray().SelectMany(record => new[]
+        {
+            new LeanDeclaration(record!["unit_name"]!.GetValue<string>(), "def", "True", []),
+            new LeanDeclaration(record["realization_name"]!.GetValue<string>(), "theorem", "True", []),
+        }).DistinctBy(declaration => declaration.Name).ToImmutableArray();
+        LeanAxiomReport WithWire(System.Text.Json.Nodes.JsonNode evidence) =>
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+            {
+                [registration] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource"], declarations)
+                { InformationTemplates = JsonSerializer.SerializeToElement(evidence) },
+                [source] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper"], []),
+                [helper] = new([], []),
+            });
+        var selected = new[] { RepoPath.CreateKnown(registration) };
+        Assert.Null(Record.Exception(() => InformationTemplateEvidence.Collect(
+            snapshot, WithWire(wire), selected)));
+
+        var omitted = wire.DeepClone();
+        var omittedInputs = omitted["inputs"]!.AsArray();
+        omittedInputs.RemoveAt(omittedInputs.ToList().FindIndex(input =>
+            input!["path"]!.GetValue<string>() == helper));
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
+            snapshot, WithWire(omitted), selected));
+        Assert.Contains("omitted required producer/source input " + helper, error.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -289,7 +354,7 @@ public sealed class DeclaredTemplateReviewTests
         reportFiles[syntax] = new([TargetModule], []);
         var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
-        Assert.Equal("tools.lean-inspector.LeanInformationAudit.Syntax",
+        Assert.Equal("LeanInformationAudit.Syntax",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
         var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
         Assert.Contains(RepoPath.CreateKnown(Target), closure);

@@ -1,0 +1,55 @@
+**命题 135.4（弱传感器的共同子测度下界）。** 对任意随机化检验 $\varphi:\{0,1\}^N\to[0,1]$，其公平先验风险满足
+
+$$
+R^\varepsilon_{k,N}(\varphi)
+\ge\frac12(1-2\varepsilon)^N
+\ge\frac12-N\varepsilon.
+$$
+
+**证明。** 令 $U$ 为公平 Bernoulli 律。对每个状态 $i$ 和读数 $y$，
+
+$$
+E_i(y)\ge\frac12-\varepsilon=(1-2\varepsilon)U(y).
+$$
+
+给定任意隐藏路径后，逐时独立性因此给出每个读数词上的概率质量下界
+
+$$
+\prod_{t=0}^{N-1}E_{X_t}(y_t)
+\ge(1-2\varepsilon)^N U^{\otimes N}(y).
+$$
+
+对任意方向的隐藏路径律混合，下界仍成立，所以两方向都包含同一个质量为 $(1-2\varepsilon)^N$ 的子测度。将风险的两项积分限制到该子测度，得到
+
+$$
+\begin{aligned}
+R^\varepsilon_{k,N}(\varphi)
+&=\tfrac12\left(\int\varphi\,dP_0^\varepsilon+
+\int(1-\varphi)\,dP_1^\varepsilon\right)\\
+&\ge\tfrac12(1-2\varepsilon)^N
+\int(\varphi+1-\varphi)\,dU^{\otimes N}\\
+&=\tfrac12(1-2\varepsilon)^N.
+\end{aligned}
+$$
+
+Bernoulli 不等式 $(1-2\varepsilon)^N\ge1-2N\varepsilon$ 给出第二个界。该线性界在右端为负时仅为空泛下界，前一乘幂界对整个所列区间仍有效。证毕。
+
+证明没有使用具体检验，也没有要求检验不知道 $\varepsilon$ 或 $k$。即使允许它知道二者，对每个固定有限 $N$、每个固定 $k\ge2$，仍有
+
+$$
+\sup_{0<\varepsilon<1/2}\inf_\varphi R^\varepsilon_{k,N}(\varphi)
+=\frac12.
+$$
+
+下界由 $\varepsilon\downarrow0$ 得到；上界由恒报一个方向的规则给出。任何要求在全部这些非退化传感器上达到风险 $r<1/2$ 的共同有限 $N$ 因而不存在。允许在至多 $N$ 个标签内根据既有记录随机停止，也不能改善这个结论：完整前缀和独立随机种子可以模拟该决策，所以仍属于上述随机化检验类。这里没有增加参数干预、额外标定或其他传感器权限。
+
+这不反驳现有正文：命题 110.2 给固定通道下 $C_E/N$ 的共同最坏参数界；命题 111.2 更给一个不使用通道数值的规则族，但量词明确为
+
+$$
+\exists(\Psi_n)\quad\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad\forall k,d,n:\quad
+\Pr^E_{d,k}(\Psi_n\ne d)\le\frac{C_{E,f}}{n+1}.
+$$
+
+它先固定共同规则，再对每个固定通道给相应常数，没有对通道类取统一上确界。有限记录下界表明：不能把 $\forall E\,\exists C_{E,f}$ 换成一个对任意弱通道都有效的共同常数或共同有限标签预算。
+

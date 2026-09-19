@@ -1,0 +1,43 @@
+**命题 118.2（共同下确界、有限非达与平稳原子达界）。** 在定义 118.1 下，$\mathcal G_0,\mathcal G_1,\mathcal G_{\rm com}$ 均非空，并且
+$$
+\boxed{\inf\mathcal G_0=\inf\mathcal G_1=\inf\mathcal G_{\rm com}
+=G_\delta:=1+6R.}
+\tag{118.2a}
+$$
+这三个集合的每个元素都严格大于 $G_\delta$，所以任意有限最大滞后的精确表示均不能取得下确界。
+
+具体地，对任意整数 $m\ge3$，置
+$$
+A_m=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m},\qquad
+B_m=H(1)^{-1}-A_m,\qquad
+p_m(z)=H(z)(A_mz^m+B_m)=\sum_{t=0}^{m+2}a_t^{(m)}z^t.
+\tag{118.2b}
+$$
+同一组系数在两个方向满足 $e_1p_m(K_{\delta,d})=e_0$，其总量精确为
+$$
+\Gamma_m=\sum_{t=0}^{m+2}|a_t^{(m)}|
+=G_\delta+\frac{2(1+3R)\lambda^m}{1-\lambda^m}
+\longrightarrow G_\delta.
+\tag{118.2c}
+$$
+两个方向的实际时间行都满足
+$$
+\mu_{t,d}:=e_1K_{\delta,d}^t\longrightarrow\pi,
+\qquad \mu_{t,d}\ne\pi\quad\text{对每个有限 }t\ge0.
+$$
+因此 $\pi$ 是原实际时间字典遗漏的极限原子。
+
+若按式 (118.1c) 将 $\pi$ 加为单位成本原子，则相同下界在两个单方向及共同表示中均可达到：
+$$
+\boxed{\min\mathcal G_0^\pi=\min\mathcal G_1^\pi
+=\min\mathcal G_{\rm com}^\pi=G_\delta.}
+\tag{118.2d}
+$$
+其中一份共同达界表示是
+$$
+e_0=(1+3R)\pi-\frac3{H(\lambda)}e_1H(K_{\delta,d}),
+\qquad d=0,1.
+\tag{118.2e}
+$$
+$\pi$ 本来已经属于原有限时间字典的有符号线性张成；式 (118.2d) 改变的是允许单独计费的原子，而非线性张成。
+

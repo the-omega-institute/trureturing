@@ -1,0 +1,39 @@
+**命题 83.5（平稳且交换的四状态动力学仍可增大四次缺陷）。** 取 $J=\{1,2,3,4\}$、$I=\{1,2\}$，令 $r(1)=r(2)=1$、$r(3)=r(4)=2$，并置
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+d=\begin{pmatrix}3/8\\3/8\\3/16\\1/16\end{pmatrix},
+$$
+$$
+E=\frac12\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix},\qquad
+T=\frac12\begin{pmatrix}
+1&0&1&0\\
+0&1&0&1\\
+1&0&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+则 $q,d$ 都是严格正概率，$E$ 是指定参考的纤维重采样，$T$ 非负列随机、对称且幂等，满足
+$$
+Tq=q,\qquad TE=ET=ETE,
+$$
+但对凸生成函数 $\Phi(t)=t^4$，
+$$
+\boxed{
+\mathcal J_{t^4}(d;q,r)=\frac{25}{512},\qquad
+\mathcal J_{t^4}(Td;q,r)=\frac{385}{4096},\qquad
+\mathcal J_{t^4}(Td;q,r)-\mathcal J_{t^4}(d;q,r)
+=\frac{185}{4096}>0.
+}
+$$
+同一输入与同一动力学的二次缺陷则满足
+$$
+\mathcal J_2(d;q,r)=\frac1{32},\qquad
+\mathcal J_2(Td;q,r)=\frac1{64}.
+$$
+因此，平稳参考与完整交换不能使每个单变量凸生成函数的纤维缺陷都不增。
+

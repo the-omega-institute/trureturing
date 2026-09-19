@@ -1,0 +1,7 @@
+**定义 122.3。** 给定观察 $q:X\to B$，将 $B$ 取为实际像 $q[X]$，故 $q$ 满射。任务族为 $f_\alpha:X\to Y_\alpha$，$\alpha\in J$。定义
+$$
+x\sim_qx'\iff q(x)=q(x'),\qquad
+x\sim_{\mathcal F}x'\iff\forall\alpha,\ f_\alpha(x)=f_\alpha(x').
+$$
+空任务族给出全体状态等价。集合 $X$ 为空时，实际像也为空，以下实际像上的唯一因子与双射仍成立。
+

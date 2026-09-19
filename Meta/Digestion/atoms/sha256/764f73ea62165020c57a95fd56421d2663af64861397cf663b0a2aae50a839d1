@@ -1,0 +1,21 @@
+**定义 79.1（有限观察熵与完整标签熵）。** 沿用定义与假设 78.1 的概率空间、实际有限分区 $\mathcal P_L$、相容标签逆极限 $Y$、可测映射 $q_\infty$ 及推前律 $\nu$；$A,a_y,a$ 仍表示完整观察律的正原子集、原子质量及其总和。算子 $R_L,R_{\mathrm{at}}$ 始终作用于同一个 $H_{\mathrm{obs}}$。使用自然对数，置
+$$
+\iota(t)=
+\begin{cases}
+-\ln t,&0<t\le1,\\
++\infty,&t=0,
+\end{cases}
+\qquad
+h_L=-\sum_{\substack{C\in\mathcal P_L\\\mu(C)>0}}
+\mu(C)\ln\mu(C),
+$$
+$$
+\mathsf H(\nu)=\int_Y\iota\bigl(\nu(\{y\})\bigr)\,d\nu(y)
+\in[0,+\infty].
+$$
+被积函数的可测性由定理 79.2 给出。积分为非负扩展积分；非负无穷和均取有限部分和的上确界，允许值为 $+\infty$。有限熵和中的零质量胞腔贡献按 $0\ln0=0$ 处理，但信息函数在零质量处的值是 $+\infty$。这是完整标签的总观察熵，不是微分熵，也未除以层数成为熵率。对正迹类且迹一的算子 $T$，以其正特征值 $\lambda_i(T)$（按重数计）定义扩展谱熵
+$$
+S(T)=\sum_i-\lambda_i(T)\ln\lambda_i(T)\in[0,+\infty];
+$$
+零特征值贡献零。
+
