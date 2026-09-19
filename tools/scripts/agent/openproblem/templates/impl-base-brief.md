@@ -3,6 +3,7 @@
 You are the single `implementation_worker` (codex-cli). Return exactly one result envelope (contract appended). Follow `skills/codex-formalize/SKILL.md` (state machine 0→8; Step 6 fidelity gate; Step 7–8 doors; 5⁗ report fields) and `CLAUDE.md` 5⁗. Long commands in the foreground; judge by bare exit codes; never pipe a judgment command.
 
 ## GoalArtifact (complete; cite in visible_inputs)
+
 ```yaml
 raw_user_input: |
   /goal 使用 /sshx 最高效率推进数学形式化工作, 1席gpt pro, 其他都使用codex cli, 实现使用codex cli, 独立复用worktree 工作,
