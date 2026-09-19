@@ -50,3 +50,11 @@ and flushes at end of input. The theorem gives a natural t with
 `(M^[t + 1]) w = (M^[t]) w` for every n ≥ 1 and every permutation w in Sₙ.
 The convergence proof is derived here; the citation credits the conjecture
 and definitions, not a published proof. Conjecture 6.1 is outside this result.
+
+## Verified locator
+
+- URL: https://arxiv.org/abs/2411.11914v2
+- PDF: https://arxiv.org/pdf/2411.11914v2
+- Valley and valley run definitions: Section 2, printed page 3.
+- Proposition 3.5: printed page 6.
+- Conjecture 6.2: Section 6, printed pages 10-11 (statement on page 11).
