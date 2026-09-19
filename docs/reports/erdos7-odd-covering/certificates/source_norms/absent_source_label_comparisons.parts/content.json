@@ -1,0 +1,139 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-absent-source-label-comparisons-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "ec5936ec86ee2b8dececc7a26ac6de47ca68c2bf2bd0f38d6622352dc37f8ef3",
+    "kind": "value"
+  },
+  "original_source_profile_sha256": {
+    "kind": "inline",
+    "value": "06820efd31fb6fa50e72a95f52aef3c586f8355e5909dc1bdd1a93179ed7da25"
+  },
+  "allocation_statistics": {
+    "path": "content/003-allocation_statistics.json",
+    "sha256": "0a12a15b336b2c540141f24238737d600ec23b4091095f82dc1dc753cbc89e0c",
+    "kind": "value"
+  },
+  "all_original_endpoint_rows_sha256": {
+    "kind": "inline",
+    "value": "a48d8c8f2f9e6619024b3b4b5bf61a72687299aedbc39bda8b3a6d5ad4b84cab"
+  },
+  "all_original_correction_rows_sha256": {
+    "kind": "inline",
+    "value": "15a479ab207946ffe13ef788663466c6fe550a9f2c0122963960feb2d43d0fbe"
+  },
+  "original_reference_target": {
+    "kind": "inline",
+    "value": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000"
+  },
+  "original_offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "survival_mass_coefficient": {
+    "kind": "inline",
+    "value": "23/42"
+  },
+  "numerator_slope": {
+    "kind": "inline",
+    "value": "228346993225947419780567399201686817638949/1072605337265510905929157007902980000000"
+  },
+  "original_signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "14005839092163790978433304199852525334431910915059219/258053321422020518900769276553892599223596620000000"
+  },
+  "correction_formula": {
+    "kind": "inline",
+    "value": "AC*Q_full+G_full+cG*m_g-R81"
+  },
+  "source_factor_names": {
+    "kind": "inline",
+    "value": [
+      "deficit",
+      "alpha",
+      "beta",
+      "late",
+      "z"
+    ]
+  },
+  "absent_label_source_caps": {
+    "kind": "inline",
+    "value": {
+      "27": "1/6",
+      "15": "1/20",
+      "45": "1/20",
+      "135": "7/1080",
+      "25": "79/100"
+    }
+  },
+  "minimal_sufficient_absence_cases": {
+    "kind": "inline",
+    "value": [
+      [
+        15
+      ],
+      [
+        27,
+        45
+      ],
+      [
+        27,
+        135
+      ],
+      [
+        45,
+        135
+      ]
+    ]
+  },
+  "additional_minimal_absence_pairs": {
+    "kind": "inline",
+    "value": [
+      [
+        27,
+        45
+      ],
+      [
+        27,
+        135
+      ],
+      [
+        45,
+        135
+      ]
+    ]
+  },
+  "source_cases": {
+    "kind": "inline",
+    "value": 16
+  },
+  "source_carrier_record_checks": {
+    "kind": "inline",
+    "value": 373248
+  },
+  "mass_endpoint_checks": {
+    "kind": "inline",
+    "value": 746496
+  },
+  "original_complete_core_errors": {
+    "path": "content/019-original_complete_core_errors.json",
+    "sha256": "f0011a02318862016cc070fc7fd012c7c26217e4efbafa265d7a5ae92987f698",
+    "kind": "value"
+  },
+  "results": {
+    "path": "content/020-results.json",
+    "sha256": "03d8ef889cbcae80a8f0994465ba5b3ab0334ecb535ba50907968d0e9777b408",
+    "kind": "array"
+  },
+  "branch_preservation": {
+    "kind": "inline",
+    "value": "The retained forbidden families contain exactly the same original3,5,9,15,25,27,45,135 labels when present. Effective9 and each listed absence restriction persist. No numerical source-budget restriction or ineffective-label generalization is assumed preserved."
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete source inequalities for the sixteen specified absent-label restrictions inside the effective9 source branch, with every independent original test and complete exponent tail retained. The two complete core-error comparisons apply to these preserved absent-label branches. The three additional minimal pairs are27+45,27+135,45+135; other successful rows lie inside the missing15 or a listed pair domain. No absence-free global403 result, actual attainment, later-prime continuation, Lean endpoint or unrestricted Erdos7 resolution."
+  }
+}
