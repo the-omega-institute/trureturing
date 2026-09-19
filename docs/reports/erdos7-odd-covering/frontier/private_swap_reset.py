@@ -289,6 +289,7 @@ def minimum_and_swaps():
     minimum = min(len(base_source(m['aps'], 3, 4)) for m in covers)
     check(minimum == 1, 'fixed-D survivor minimum')
     legal = failed = 0
+    all_depth_budgets = []
     for model in covers:
         swaps, budget = tuple_budget(model, 3, (6, 12))
         for s in swaps:
@@ -304,10 +305,47 @@ def minimum_and_swaps():
         lower = (lam / theta) * sum((1 - Fraction(1, s['power'])
                                      for s in swaps if not s['escape']), Fraction())
         check(lower <= Fraction(budget['actual_P_overlap']), 'strengthened tuple coefficient')
+        # Only these exhaustively minimized covers justify the zero-escape swap
+        # comparison. Keep the even-prime coefficient alpha, not the odd-only 1/2.
+        groups = {}
+        split_lhs = common_lhs = Fraction()
+        alpha_zero = Fraction()
+        for s in swaps:
+            q = min(factors(s['parent']))
+            groups.setdefault(q, []).append(s)
+        escape_budget = Fraction()
+        for q, members in groups.items():
+            denom = q - 1 + int(any(s['parent'] == q for s in members))
+            escape_roots = {model['residues'][s['parent']] % q
+                            for s in members if s['escape']}
+            escape_budget += Fraction(len(escape_roots) * len(model['private'][q]),
+                                      denom * model['period'])
+            for s in members:
+                m = s['parent']
+                a = model['residues'][m]
+                kappa = sum(d != m and (a - b) % gcd(m, d) == 0
+                            for b, d in model['aps'])
+                window = 2 ** (kappa + 1)
+                source = Fraction(len(s['C'] & s['R']), s['base'])
+                common_lhs += lam / theta / (window * denom)
+                if s['escape']:
+                    check(Fraction(len(s['escape']), model['period']) >= source / window,
+                          'all-depth actual source escape bound')
+                    split_lhs += source / (window * denom)
+                else:
+                    split_lhs += (1 - Fraction(1, s['power'])) * source / denom
+                    alpha_zero = max(alpha_zero, Fraction(1, denom))
+        split_rhs = alpha_zero * Fraction(budget['actual_P_overlap']) + escape_budget
+        check(common_lhs <= split_lhs <= split_rhs, 'all-depth split source budget')
+        all_depth_budgets.append(dict(residues=[a for a, d in model['aps']],
+                                      common_lhs=str(common_lhs), split_lhs=str(split_lhs),
+                                      split_rhs=str(split_rhs), overlap_coefficient=str(alpha_zero),
+                                      actual_escape_prime_charge=str(escape_budget)))
     check((legal, failed) == (4, 4), 'swap classification')
     return dict(normalized_candidates=4 * 6 * 12, whole_covers=len(covers),
                 residue_vectors=sorted(expected), minimum_R3_mass=str(Fraction(minimum, 4)),
                 legal_swaps=legal, escape_blocked_swaps=failed,
+                all_depth_budgets=all_depth_budgets,
                 normalization='Any fixed-D residue system has a CRT translation making A2=A3=0; translation preserves survivor mass.')
 
 
@@ -317,6 +355,7 @@ def private_windows(name, aps):
     cover_sets = [frozenset(d for a, d in aps if hits(y, (a, d)))
                   for y in range(period)]
     parent_count = prefix_count = positive_lower = large_prefix = zero_kappa = long_window = 0
+    nonempty_escape = shallow_positive = empty_escape = escape_long_window = 0
     for a, m in aps:
         private = {y for y, labels in enumerate(cover_sets) if labels == {m}}
         check(private, 'window fixture parent is not essential')
@@ -342,6 +381,21 @@ def private_windows(name, aps):
                 for residue in range(power):
                     escape_count = len(private) - inside_counts[residue]
                     check(Fraction(escape_count, period) >= lower, 'prefix escape density lower bound')
+                    if escape_count:
+                        nonempty_escape += 1
+                        shallow_positive += floor_count == 0
+                        escape_window = 2 * window
+                        escape_long_window += escape_window > parent_period
+                        escape_y = [y for y in y_private if (a + m * y) % power != residue]
+                        check(len(escape_y) == escape_count, 'parent escape parameterization')
+                        escape_gaps = [right - left for left, right in
+                                       zip(escape_y, escape_y[1:] + [escape_y[0] + parent_period])]
+                        check(max(escape_gaps) <= escape_window,
+                              'nonempty escape has an empty augmented-CVE window')
+                        check(Fraction(escape_count, period) >= Fraction(1, m * escape_window),
+                              'all-depth nonempty escape lower bound')
+                    else:
+                        empty_escape += 1
                     prefix_count += 1
                     positive_lower += floor_count > 0
                     if power >= 2 * window:
@@ -353,7 +407,10 @@ def private_windows(name, aps):
                 essential_parents=parent_count, prime_prefix_checks=prefix_count,
                 positive_prefix_lower_checks=positive_lower,
                 large_prefix_checks=large_prefix, zero_kappa_parents=zero_kappa,
-                window_longer_than_parent_period=long_window)
+                window_longer_than_parent_period=long_window,
+                nonempty_escape_checks=nonempty_escape, empty_escape_checks=empty_escape,
+                positive_all_depth_with_zero_floor_bound=shallow_positive,
+                escape_window_longer_than_parent_period=escape_long_window)
 
 
 def run():
@@ -413,7 +470,9 @@ def run():
     window_rows.append(odd_window)
     check(any(r['zero_kappa_parents'] for r in window_rows) and
           any(r['window_longer_than_parent_period'] for r in window_rows) and
-          any(r['large_prefix_checks'] for r in window_rows), 'window boundary cases missing')
+          any(r['large_prefix_checks'] for r in window_rows) and
+          any(r['positive_all_depth_with_zero_floor_bound'] for r in window_rows) and
+          any(r['empty_escape_checks'] for r in window_rows), 'window boundary cases missing')
     return dict(success=True,
                 scope='Exact complete-period checks on distinct EVEN whole covers, plus one explicitly NONCOVER odd list for private-window bounds. These are not odd-cover certificates or Lean proofs. Fixed-D minimization is only for the explicitly enumerated modulus set.',
                 multi_source_rule='composite original d with gcd(d, product(S)) > 1; |S| >= 2',

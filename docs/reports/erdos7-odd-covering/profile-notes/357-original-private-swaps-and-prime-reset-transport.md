@@ -334,15 +334,57 @@ This is a quantitative mass comparison on the original source; it is
 not a transition kernel. The bound remains valid for a raw subevent
 mass lambda_tau, since then lambda_tau/theta_tau<=H_X(U_tau).
 
+There is also a positive bound at every depth, conditional only on
+actual escape. Add K_r to the kappa_m restricted APs on the parent
+parameter line. The uncovered set of these kappa_m+1 APs is exactly
+the parameter copy of Z_r. If Z_r is nonempty, the augmented family
+does not cover. Apply the same cyclic interval count with window
+`W_r=2^(kappa_m+1)`. It gives
+
+    Z_r nonempty ==> z_r >= 1/(m_r W_r)
+                         >= v_r/W_r,
+    v_r=H_X(C_r intersect R_P).                       (PT14c)
+
+This includes shallow prefixes for which PT14a has zero right side.
+There is no assumption that private points are uniformly distributed;
+every count uses the complete original period. Nonemptiness is essential:
+PT14c makes no assertion about the zero-escape branch. Unlike PT4, this
+branch does not need the additional residue minimum.
+
+The two branches give a sharper combined source budget. Let
+`S={r:z_r=0}`, `T={r:z_r>0}`, `f_r=1-P^(-e_r)`, and keep the assignments
+q_r and corrected d_q from PT7--PT8. Let c_q^T count only the actual
+first-q roots of parents in T assigned to q, with zero for no such
+parent. Set `alpha_S=max_(r in S) 1/d_(q_r)`, or zero when S is empty.
+PT4 pays the S terms from disjoint original overlap regions; PT14c and
+the root-reset count pay the T terms from actual private escapes:
+
+    sum_(r in S) f_r v_r/d_(q_r)
+      + sum_(r in T) v_r/(W_r d_(q_r))
+      <= alpha_S v_P + sum_q (c_q^T/d_q) pi_q
+      <= v_P/2 + sum_(used q) pi_q.                  (PT14d)
+
+For odd support primes d_q>=2. Moreover f_r>=1/2>=1/W_r, and
+v_r>=lambda_base. Therefore a branch-independent consequence is
+
+    lambda_base sum_r 1/(W_r d_(q_r))
+      <= v_P/2 + sum_(used q) pi_q.                  (PT14e)
+
+Every coefficient is positive, at every original finite height. PT14d
+retains the stronger branch coefficients and actual source v_r; PT14e
+is only its common-source simplification. These inequalities by themselves
+do not specify a transport map or give a contradictory upper bound.
+
 ## 7. The unclosed global step
 
 PT9 controls a single transport from an *actual parent-private source*.
 It does not construct that source from a prime-private synchronized
 event with comparable mass. PT2 and PT4 are budget comparisons, not
 such a transition kernel. PT14a--PT14b supply a positive explicit mass
-comparison when beta_r>0, including the stated deep-prefix range;
-they still do not supply that kernel. When beta_r=0 the displayed
-escape comparison supplies no positive source-relative lower bound.
+comparison when beta_r>0, including the stated deep-prefix range.
+PT14c--PT14e remove the zero lower bound in the shallow nonempty-escape
+case and combine it with the legal-swap branch. These mass comparisons
+still do not by themselves supply that kernel.
 
 Directly resetting another prime p at a point already private to A_q
 preserves A_q membership and introduces A_p membership. Its image is
@@ -354,8 +396,9 @@ proved.
 
 The remaining obligation is a valid source-to-parent-private transition,
 or a whole-cover transformation or contradictory budget that avoids
-needing one. A nonempty escape alone need not have mass comparable to
-the synchronized source. All statements retain actual original labels
+needing one. The explicit comparison for a nonempty escape costs
+2^(kappa_m+1); no height- and label-independent comparison follows.
+All statements retain actual original labels
 and the full finite carrier; local examples cannot settle this obligation.
 
 ## 8. Verification scope
@@ -386,7 +429,13 @@ noncovering odd list `0 mod3, 0 mod5, 1 mod75`, which covers only 36 of
 escape mass is 19/75 and PT14a gives 12/75. These checks include zero
 kappa, windows longer than the parent period, and the stated deep range.
 They test the general interval consequence without asserting a whole
-odd cover. Uniform re-tail density PT9 is justified by the independently
+odd cover. Of the 406 prefix choices, 387 have nonempty escape and pass
+PT14c; 234 of those have zero in the older floor bound. The other 19
+choices have empty escape. In 139 nonempty-escape prefix configurations,
+the augmented window is longer than the parent period. All four exhaustively minimized
+period-12 covers also check the split budget PT14d, retaining its actual
+overlap coefficient rather than assuming odd support in an even fixture.
+Uniform re-tail density PT9 is justified by the independently
 reviewed proof, not by a numerical check in this program.
 
 Normal and physically relocated runs from `/` with isolated, optimized
