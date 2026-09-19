@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimages
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4; instance=D5/S3/ConceptDynamics/InformationEscape/CyclicStackPreimagesRegistrations.sourceRealization
+   utility: none
    digest: Finite cyclic-stack source readouts register the full symbolic proof declarations. -/
 
 import D5.S1.Words.Patterns.CyclicStackPreimages
@@ -74,26 +74,30 @@ private theorem actualCalibration : SourceCalibration cyclicStackSourceWord := b
   refine ⟨rfl, ?_⟩
   decide
 
-def sourceArena : PrimitiveLawArena where
+def sourceArenaFor (statement : Prop) : PrimitiveLawArena where
   toArena := Arena.ofFintype CyclicStackSourceWord
   signature := sourceSignature CyclicStackSourceWord
   Law realization :=
     let readWord : CyclicStackSourceWord := fun index =>
       realization.readout index cyclicStackSourceWord
-    SourceCalibration readWord
+    statement ↔ SourceCalibration readWord
 
-private theorem altered_not_law (changed : Fin 6) :
-    ¬sourceArena.Law (alteredRealization changed) := by
-  intro calibration
-  have equality := calibration.1
+private theorem altered_not_law (statement : Prop) (hstatement : statement) (changed : Fin 6) :
+    ¬(sourceArenaFor statement).Law (alteredRealization changed) := by
+  intro law
+  have equality := (law.mp hstatement).1
   have atChanged := congrFun equality changed
   apply bumpCode_ne (cyclicStackSourceWord changed)
   simpa [alteredRealization, sourceWordRealization, sourceSignature] using atChanged
 
-private theorem sourceVariation : FiniteLawVariation sourceArena := by
-  exact ⟨sourceRealization, alteredRealization 0, actualCalibration, altered_not_law 0⟩
+private theorem sourceVariation (statement : Prop) (hstatement : statement) :
+    FiniteLawVariation (sourceArenaFor statement) := by
+  exact ⟨sourceRealization, alteredRealization 0,
+    ⟨fun _ => actualCalibration, fun _ => hstatement⟩,
+    altered_not_law statement hstatement 0⟩
 
-private theorem sourceSensitivity : FiniteSlotSensitivity sourceArena := by
+private theorem sourceSensitivity (statement : Prop) (hstatement : statement) :
+    FiniteSlotSensitivity (sourceArenaFor statement) := by
   classical
   constructor
   · intro i
@@ -106,7 +110,8 @@ private theorem sourceSensitivity : FiniteSlotSensitivity sourceArena := by
       · rfl
     · intro j
       exact Fin.elim0 j
-    · exact ⟨fun _ => altered_not_law i, fun _ => actualCalibration⟩
+    · exact ⟨fun _ => altered_not_law statement hstatement i,
+        fun _ => ⟨fun _ => actualCalibration, fun _ => hstatement⟩⟩
   · intro i
     exact Fin.elim0 i
 
@@ -121,13 +126,15 @@ elab_rules : command
       let env ← getEnv
       let bridgeName := localCompanionName env theoremName primitiveRealizationSuffix
       let unitName := localCompanionName env theoremName theoremUnitSuffix
+      let arenaName := mkPrivateName env (theoremName.str "__source_arena")
+      let variationName := mkPrivateName env (theoremName.str "__source_variation")
+      let sensitivityName := mkPrivateName env (theoremName.str "__source_sensitivity")
       let descriptor ← liftTermElabM do
         let descriptor ← Term.elabTerm
           (← `(term| (@sourceWordRealization CyclicStackSourceWord
             (fun word index => word index)))) none
         Term.synthesizeSyntheticMVarsNoPostponing
         instantiateMVars descriptor
-      let arenaName ← liftTermElabM <| resolveCanonicalArenaName ``sourceArena
       let escapeInput : EscapeRecordInput := {
         fromObject := some (mkConst ``cyclicStackSourceWord)
         openContinuation := true
@@ -139,12 +146,26 @@ elab_rules : command
         escapeInput
       } do
         liftTermElabM do
-          let arena := mkConst ``sourceArena
+          let arenaType := mkConst ``PrimitiveLawArena [.zero, .zero, .zero]
+          let arenaValue := mkApp (mkConst ``sourceArenaFor) theoremInfo.type
+          addAndCompile (.defnDecl {
+            name := arenaName
+            levelParams := theoremInfo.levelParams
+            type := arenaType
+            value := arenaValue
+            hints := .abbrev
+            safety := .safe
+          })
+          let arena := mkConst arenaName (theoremInfo.levelParams.map Level.param)
           let realization := mkConst ``sourceRealization
           let bridgeType ← mkAppM ``EscapePrimitiveRealization
             #[arena, theoremInfo.type, realization]
+          let theoremProof := mkConst theoremName (theoremInfo.levelParams.map Level.param)
           let bridgeValue ← Term.elabTerm
-            (← `(term| by exact ⟨fun _ => actualCalibration⟩)) (some bridgeType)
+            (← `(term| by
+              constructor
+              intro h
+              exact ⟨fun _ => actualCalibration, fun _ => h⟩)) (some bridgeType)
           Term.synthesizeSyntheticMVarsNoPostponing
           let bridgeType ← instantiateMVars bridgeType
           let bridgeValue ← instantiateMVars bridgeValue
@@ -154,7 +175,6 @@ elab_rules : command
             type := bridgeType
             value := bridgeValue
           })
-          let theoremProof := mkConst theoremName (theoremInfo.levelParams.map Level.param)
           let objectArena := mkApp
             (mkConst ``PrimitiveLawArena.toArena [.zero, .zero, .zero]) arena
           let compiled ← compilePrimitiveBundle arena realization
@@ -173,13 +193,31 @@ elab_rules : command
             hints := .abbrev
             safety := .safe
           })
+          let variationType ← mkAppM ``FiniteLawVariation #[arena]
+          let variationValue := mkAppN (mkConst ``sourceVariation)
+            #[theoremInfo.type, theoremProof]
+          addDecl (.thmDecl {
+            name := variationName
+            levelParams := theoremInfo.levelParams
+            type := variationType
+            value := variationValue
+          })
+          let sensitivityType ← mkAppM ``FiniteSlotSensitivity #[arena]
+          let sensitivityValue := mkAppN (mkConst ``sourceSensitivity)
+            #[theoremInfo.type, theoremProof]
+          addDecl (.thmDecl {
+            name := sensitivityName
+            levelParams := theoremInfo.levelParams
+            type := sensitivityType
+            value := sensitivityValue
+          })
         registerValidatedEntry {
           theoremName
           unitName
-          arenaName := ``sourceArena
+          arenaName
           realizationName := bridgeName
-          variationWitness := ``sourceVariation
-          sensitivityWitness := ``sourceSensitivity
+          variationWitness := variationName
+          sensitivityWitness := sensitivityName
         }
 
 register_cyclic_stack_route ZhanBieConjectures34 for zhan_bie_conjectures_3_4
@@ -194,14 +232,14 @@ register_cyclic_stack_route DrainLowOverHigh for drain_low_over_high
 register_cyclic_stack_route NoTwoLowsAfterHigh for no_two_lows_after_high
 register_cyclic_stack_route PendingLowForcesHighIncrease for pending_low_forces_high_increase
 register_cyclic_stack_route DrainHighWhileLowRemains for drain_high_while_low_remains
-register_cyclic_stack_route PendingLowDrainsOnlyLow for pending_low_drains_only_low_while_low_remains
+register_cyclic_stack_route PendingLowDrainsOnlyLow for
+  pending_low_drains_only_low_while_low_remains
 register_cyclic_stack_route ProcessPendingLow for process_pending_low_while_low_remains
 register_cyclic_stack_route NoLowsBeforeFirstHigh for no_lows_before_first_high
 register_cyclic_stack_route SuccessfulHighEntriesFinalLow for successful_high_entries_final_low
 register_cyclic_stack_route SuccessfulHighEntries for successful_high_entries
 register_cyclic_stack_route AssembleInsertNoneEnds for assemble_insert_none_ends
 register_cyclic_stack_route SuccessfulHighLength for successful_high_length
-register_cyclic_stack_route GappedHeadHigh for Gapped.head_high
 register_cyclic_stack_route GappedFiltersSlots for gapped_filters_slots
 register_cyclic_stack_route SuccessPermRange for success_perm_range
 register_cyclic_stack_route SuccessfulGapped for successful_gapped

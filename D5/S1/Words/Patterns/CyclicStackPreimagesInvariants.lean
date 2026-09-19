@@ -71,15 +71,6 @@ private lemma assembleGaps_cons (high : ℕ) (highs : List ℕ)
       | cons slot slots =>
           cases slot <;> simp [assembleGaps, assembleTail, ih]
 
-lemma Gapped.head_high {m high : ℕ} {rest : List ℕ}
-    (hgapped : Gapped m (high :: rest)) :
-    let _sourceObject := cyclicStackSourceWord
-    m < high := by
-  cases hgapped with
-  | last hhigh => exact hhigh
-  | empty hhigh _ => exact hhigh
-  | filled hhigh _ _ => exact hhigh
-
 lemma gapped_filters_slots {m : ℕ} {input : List ℕ}
     (hgapped : Gapped m input) :
     let _sourceObject := cyclicStackSourceWord
@@ -91,7 +82,11 @@ lemma gapped_filters_slots {m : ℕ} {input : List ℕ}
   | @last high hhigh =>
       simp_all [assembleGaps, gapSlots, highEntries, lowEntries]
   | @empty high next rest hhigh tail ih =>
-      have hnext : m < next := tail.head_high
+      have hnext : m < next := by
+        cases tail with
+        | last hnext => exact hnext
+        | empty hnext _ => exact hnext
+        | filled hnext _ _ => exact hnext
       have hnle : ¬next ≤ m := by omega
       have ihAssemble : assembleGaps
           (next :: (highEntries m rest)) (gapSlots m (next :: rest)) = next :: rest := by
@@ -262,7 +257,11 @@ private lemma filled_gap_low_precedes {n high low later : ℕ}
     cases rest with
     | nil => simp [lowEntries] at hlaterMem
     | cons next tail => exact ⟨next, tail, rfl⟩
-  have hnext : n / 2 < next := hgapped.head_high
+  have hnext : n / 2 < next := by
+    cases hgapped with
+    | last hnext => exact hnext
+    | empty hnext _ => exact hnext
+    | filled hnext _ _ => exact hnext
   have hlaterData : later ∈ next :: tail ∧ later ≤ n / 2 := by
     simpa only [lowEntries, List.mem_filter, decide_eq_true_eq] using hlaterMem
   have hlaterLow : later ≤ n / 2 := hlaterData.2
@@ -312,7 +311,11 @@ lemma successful_lows_pairwise {n : ℕ} {input : List ℕ}
         simp [lowEntries, show ¬ high ≤ n / 2 by omega]
     | @empty high next rest hhigh tail ih =>
         intro pre hwhole
-        have hnext := tail.head_high
+        have hnext : n / 2 < next := by
+          cases tail with
+          | last hnext => exact hnext
+          | empty hnext _ => exact hnext
+          | filled hnext _ _ => exact hnext
         simpa [lowEntries, hhigh, hnext] using ih (pre ++ [high]) (by
           simpa [List.append_assoc] using hwhole)
     | @filled high low rest hhigh hlow tail ih =>
@@ -635,7 +638,11 @@ lemma successful_highs_of_filled_until_last {n : ℕ} {input : List ℕ}
         intro _ _
         simp [highEntries, hhigh]
     | @empty high next rest hhigh tail ih =>
-        have hnext := tail.head_high
+        have hnext : n / 2 < next := by
+          cases tail with
+          | last hnext => exact hnext
+          | empty hnext _ => exact hnext
+          | filled hnext _ _ => exact hnext
         have htailSlots : gapSlots (n / 2) (next :: rest) ≠ [] := tail.gapSlots_ne_nil
         simp only [gapSlots, if_neg (by omega : ¬next ≤ n / 2)] at hslots
         exact (FilledUntilLast.none_cons_false htailSlots hslots).elim
@@ -644,7 +651,11 @@ lemma successful_highs_of_filled_until_last {n : ℕ} {input : List ℕ}
         cases rest with
         | nil => simp [highEntries, hhigh, show ¬ n / 2 < low by omega]
         | cons next rest =>
-            have hnext := tail.head_high
+            have hnext : n / 2 < next := by
+              cases tail with
+              | last hnext => exact hnext
+              | empty hnext _ => exact hnext
+              | filled hnext _ _ => exact hnext
             have htailSlots : FilledUntilLast (gapSlots (n / 2) (next :: rest)) := by
               simp only [gapSlots, if_pos hlow] at hslots
               exact hslots.tail_some
