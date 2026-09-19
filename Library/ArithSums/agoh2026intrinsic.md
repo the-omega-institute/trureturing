@@ -36,6 +36,25 @@ is divisible by (X-1)^n. Since the common denominator evaluates to 1 for
 (X-2)^2, Bezout coprimality transfers this factor to the reduced numerator.
 The proof includes n=0 and does not use a finite-order boundary failure.
 
+## Formal resolution
+
+The frozen theorem
+`D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result` has the closed type
+`Not fullClaim`, with statement identity
+`sha256:2a75da54a52fd95296805f384b83c5fe22e153eff87d5ed70694a9ce4125d3fb`.
+Its witness is the actual polynomial f=(X-2)^2. The certificate proves that f
+is nonzero, splits over the reals, is nonconstant, and satisfies f(1)=1. It
+also proves for every natural n, including n=0, that (X-1)^n divides the
+reduced `RatFunc.num` of the literal Equation (3.1) sum, while f is neither a
+monomial nor a polynomial with only simple roots away from one. Thus the
+formal result refutes the full printed equivalence under the source's stated
+and contextual hypotheses, rather than a finite-order weakening.
+
+The typed Scribe resolution binds this theorem to
+`Problems/agoh-alternating-numerator-characterization` as `refuted`. This
+records the frozen mathematical resolution; it does not assert repository
+merge or KPI credit.
+
 ## Verified locator
 
 - DOI: https://doi.org/10.5281/zenodo.18154119
@@ -53,7 +72,8 @@ The candidate and proof sketch were released publicly in project handoff
 [7333, comment 5733245266](https://github.com/the-omega-institute/trureturing/issues/7333#issuecomment-5733245266).
 The complete all-order target is preregistered in
 [8702](https://github.com/the-omega-institute/trureturing/issues/8702).
-No first-discovery claim is made.
+These credits identify the preregistration and released route. No
+first-discovery or publication-priority claim is made.
 
 The supplied bounded source audit checked the journal volume, the official
 Zenodo version and DataCite record, and exact-title/author/topic arXiv queries;

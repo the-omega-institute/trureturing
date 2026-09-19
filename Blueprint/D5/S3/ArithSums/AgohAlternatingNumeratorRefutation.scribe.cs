@@ -87,16 +87,19 @@ internal sealed class AgohAlternatingNumeratorRefutationDocument : IScribeDocume
                 + "-4 rule out a monomial, while root 2 has multiplicity 2. Hence "
                 + "this nonconstant polynomial satisfies the all-order property but "
                 + "neither alternative in the conjectured characterization, so the "
-                + "full equivalence is false.", DescribeRole.Theorem))));
+                + "full equivalence is false.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("agoh-alternating-numerator-characterization"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula? statement,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("agoh-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             statement is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(statement),
             name is "Q" or "NumeratorProperty" or "IsMonomial" or "SimpleRootsAwayFromOne" or "fullClaim"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula QFormula()
     {

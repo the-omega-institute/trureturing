@@ -63,27 +63,35 @@ route. A finite collection of n tests would not establish the target.
 
 The source-specific Lean module is
 `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.lean`.
+Its frozen public theorem
+`D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result` has type
+`Not fullClaim` and statement identity
+`sha256:2a75da54a52fd95296805f384b83c5fe22e153eff87d5ed70694a9ce4125d3fb`.
 The number 413 encodes the three base-nine digits [8,0,5], from least to most
 significant. Subtracting four gives the actual coefficients [4,-4,1], which
 reconstruct 4-4X+X^2=(X-2)^2. This polynomial is nonzero, splitting and
 nonconstant, has value one at X=1, satisfies the actual reduced-numerator
 divisibility for every natural order, is not a monomial, and has a repeated
-root at 2. It therefore refutes the full conjectured equivalence.
+root at 2. The universal property includes n=0 and uses the reduced
+`RatFunc.num` of the literal Equation (3.1) rational sum. It therefore refutes
+the full conjectured equivalence under the printed and contextual source
+hypotheses, not a finite-order or common-numerator surrogate.
 
 ## Triage
 
 `theorem`, targeting a published named conjecture under the
 open-problem-resolution basis. Universal symbolic algebra is the mathematical
 content; the coefficient code is its actual witness, not a bounded
-enumeration offered as a substitute. Independent review and caller-owned
-freeze-last delivery remain required before solved-problem credit.
+enumeration offered as a substitute. The frozen `result` theorem carries the
+single typed `OpenProblemResolutionClaim` with `ResolutionKind.Refuted` for
+this dossier. Repository merge and solved-problem KPI credit are not asserted.
 
 ## ASSUMED-UNVERIFIED
 
-The supplied earlier external searches were not rerun in this implementation
-call. Crossref was noisy/DOI404, OpenAlex429 and Semantic Scholar unavailable
-remain explicit source-audit limits. Worldwide absence of a prior resolution
-is not proved. Current implementation review, freeze, remote CI and merge
-are not asserted here. After review and canonical freezing, add the Scribe
-OpenProblemResolutionClaim(Refuted); its current host must be frozen, so no
-prefreeze pin or resolution marker is fabricated.
+The bounded audit covered the journal volume, official Zenodo record,
+DataCite, and exact-title, author, and topic arXiv searches. Crossref did not
+index the Zenodo DOI and its title results were noisy; OpenAlex was
+rate-limited, and Semantic Scholar yielded no usable DOI record. Worldwide
+absence of a prior resolution is not proved, and no publication-priority
+claim is made. Preregistration #8702 credits the complete target, and project
+handoff #7333 comment 5733245266 credits the released counterexample route.

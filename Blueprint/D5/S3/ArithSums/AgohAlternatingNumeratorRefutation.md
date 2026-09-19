@@ -196,6 +196,10 @@ $$\neg fullClaim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/agoh-alternating-numerator-characterization` (refuted) by `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"agoh-alternating-numerator-characterization","declaration_gid":"D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Takashi Agoh (2026). *An Intrinsic Factor of an Alternating Sum Involving Certain Rational Functions*. DOI: [10.5281/zenodo.18154119](https://doi.org/10.5281/zenodo.18154119). URL: <https://math.colgate.edu/~integers/aa9/aa9.pdf>.
@@ -222,4 +226,3 @@ Take f=(X-2)^2. It is nonzero, real-rooted and nonconstant, with f(1)=1. For eac
 - Truth anchor: `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.polynomialOfWord`
 - Truth anchor: `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate](../ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate.md)
-- Dependency: [D5/S3/ConceptDynamics/InformationEscape/EscapeRecord](../ConceptDynamics/InformationEscape/EscapeRecord.md)
