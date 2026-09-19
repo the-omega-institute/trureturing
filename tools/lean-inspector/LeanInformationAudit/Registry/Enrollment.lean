@@ -472,6 +472,28 @@ private partial def compileNode (e : Expr) (depth : Nat)
       | .ctorInfo c => dataTypes.contains c.induct || interfaceTypes.contains c.induct ||
           constructorTypes.contains c.induct
       | _ => false
+    -- E4c.enumeration_dispatch: nullary constructors form a finite table;
+    -- its major premise needs no structural-descent authority.
+    if let .recInfo r := info then
+      if constructorTypes.contains (r.all.headD .anonymous) &&
+          r.numMotives == 1 && r.numIndices == 0 && r.all.length == 1 &&
+          args.size > r.getMajorIdx then
+        let .inductInfo ind ← getConstInfo (r.all.headD .anonymous)
+          | throwError "unclassified_form:E4c.inductive_description"
+        let enumeration ← ind.ctors.allM fun ctorName => do
+          let .ctorInfo ctor ← getConstInfo ctorName | return false
+          return ctor.numFields == 0
+        if enumeration then
+          let motive := args[r.numParams]!
+          -- Compiled match eta-expands its supplied constant motive. Retain
+          -- and check the raw argument below, including these beta redexes.
+          unless motive.isLambda && !motive.bindingBody!.headBeta.hasLooseBVar 0 do
+            throwError "unclassified_form:E4c.structural_descent"
+          rule "E4c.enumeration_dispatch"
+          dependency info
+          let mut plan := PlanNode.atom head
+          for arg in args do plan := .app plan (← child arg)
+          return plan
     let recursiveCase := match info with
       | .recInfo r => constructorTypes.contains (r.all.headD .anonymous)
       | _ => false
