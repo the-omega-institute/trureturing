@@ -41299,3 +41299,135 @@ $$
 本判据把独立平稳段数与段内转移次数分开；独立初态的制备成本未计入转移次数。这里 $m$ 计独立初态制备及正长度段；若只计首次制备后的重置，则为 $m-1$ 次。每段至少一条边以及真正的独立重启均是前提，不能由复制记录、切分同一轨迹或仅知道平稳分布来替代。
 
 ## 104.99 追加锚
+
+## 105. 确定环初态下的统一方向检验阶界
+
+**定义与假设 105.1（共同准备初态的两核实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态核 $K_k$，$k\ge2$，记 $\delta=1/k$、$a=1-\delta/3$。现在在两个假设下均将初态确定准备为状态 $1$，随后分别使用 $K_k$ 与 $K_k^{\mathsf T}$。观察 $n\ge0$ 次转移后的完整路径，载体为
+$$
+\Omega_{1,n}=\{(x_0,\ldots,x_n)\in\{0,1,2,3\}^{n+1}:x_0=1\}.
+$$
+在此载体上定义两份概率
+$$
+P^1_{k,n}(x)=\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad
+Q^1_{k,n}(x)=\prod_{t=0}^{n-1}K_k(x_{t+1},x_t).
+\tag{105.1a}
+$$
+两核的行和均为 $1$，故它们归一化；全部路径质量严格正。记 $R^1_{k,n}$ 为等先验、允许随机化检验的最优平均错误率，且
+$$
+\overline R^1_n=\sup_{k\ge2}R^1_{k,n},
+\qquad b=\frac{1+2\sqrt2}{4}<1.
+\tag{105.1b}
+$$
+该实验比较同一受控起点下的两个转移核。将两律延拓到全部路径载体并在 $x_0\ne1$ 处赋零后，整路径反序 $\Theta_n$ 满足
+$$
+(\Theta_n)_*P^1_{k,n}(x)
+=\mathbf1_{\{x_n=1\}}\prod_{t=0}^{n-1}K_k(x_{t+1},x_t).
+\tag{105.1c}
+$$
+因此 $n\ge1$ 时它不同于 $Q^1_{k,n}$：例如 $(1,0,\ldots,0)$ 在后者中为正，在前者中为零。这里不采用平稳初态的路径 KL 恒等式。
+
+**命题 105.2（最坏参数风险的 $1/n$ 阶）。** 对每个整数 $n\ge1$，
+$$
+\frac1{24n}\le\overline R^1_n
+\le\min\left\{\frac12,\frac4{5(1-b)(n+1)}\right\}.
+\tag{105.2a}
+$$
+所以 $\overline R^1_n=\Theta(1/n)$，其中常数不声称最优。$n=0$ 时 $R^1_{k,0}=1/2$。对所有 $k$，同一个不依赖 $k$ 的净环方向计数规则达到各自的最优风险。
+
+**证明。** 令 $J_n$ 为路径中 $1\to2,2\to3,3\to1$ 的经过次数减去三条逆向边的经过次数。其余边在两核中相同，故
+$$
+\frac{P^1_{k,n}(x)}{Q^1_{k,n}(x)}=2^{J_n(x)}.
+$$
+已有有限两点检验恒等式
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCam.lean)
+及 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCamTight.lean)
+直接给出
+$$
+R^1_{k,n}=\frac12\sum_{x\in\Omega_{1,n}}
+\min\{P^1_{k,n}(x),Q^1_{k,n}(x)\}.
+\tag{105.2b}
+$$
+逐记录的仿射最小化同样涵盖随机化检验。因此 $J_n>0$ 选 $P^1$，$J_n<0$ 选 $Q^1$，$J_n=0$ 时公平打破平局，即为每个 $k$ 的最优规则；它不需要估计 $k$。
+
+置非负矩阵
+$$
+M_{ij}=\sqrt{K_k(i,j)K_k(j,i)}.
+$$
+采用 Kazakos 的 Markov 路径亲和度公式，按 Daskalakis–Dikkala–Gravin，[*Testing Symmetric Markov Chains From a Single Trajectory*](https://proceedings.mlr.press/v75/daskalakis18a/daskalakis18a.pdf)，COLT 2018，§3 Lemma 5、式 (5) 的一般核与任意初始律版本，将两份初始律均取为 $\delta_1$，得到
+$$
+B_{k,n}:=\sum_{x\in\Omega_{1,n}}\sqrt{P^1_{k,n}(x)Q^1_{k,n}(x)}
+=e_1^{\mathsf T}M^n\mathbf1_4.
+\tag{105.2c}
+$$
+这里直接使用该有限路径恒等式，不使用该文对称核检验算法的额外假设；也不把相邻边视为独立样本。该文将公式归于 Kazakos，*The Bhattacharyya distance and detection between Markov chains*，IEEE Transactions on Information Theory 24(6), 747–754 (1978)，[DOI](https://doi.org/10.1109/TIT.1978.1055967)。
+
+按块 $\{0\}$ 与 $\{1,2,3\}$ 定义 $4\times2$ 矩阵 $L$：第 $0$ 行为 $(1,0)$，三个环状态行均为 $(0,1)$。直接将定义 103.1 的条目代入 $M$，得
+$$
+ML=LH,\qquad
+H=\begin{pmatrix}1-\delta&\delta\\ \delta/3&ab\end{pmatrix},
+\qquad L\mathbf1_2=\mathbf1_4.
+\tag{105.2d}
+$$
+其中环行的环内质量为 $a/4+2a\sqrt2/4=ab$。因而
+$$
+B_{k,n}=e_{\rm ring}^{\mathsf T}H^n\mathbf1_2,
+\qquad e_{\rm ring}^{\mathsf T}=(0,1).
+\tag{105.2e}
+$$
+$H$ 非负且 $H\mathbf1_2\le\mathbf1_2$：首行和为 $1$，次行和为 $\delta/3+ab\le\delta/3+a=1$。故它是次随机矩阵，且 $B_{k,n}$ 随 $n$ 不增。
+
+由 $1<\sqrt2<3/2$ 得 $0<b<1$。定义正向量
+$$
+u_{\rm ring}=\frac4{3a(1-b)},\qquad
+u_0=\frac1\delta+u_{\rm ring},\qquad
+u=\begin{pmatrix}u_0\\u_{\rm ring}\end{pmatrix}.
+\tag{105.2f}
+$$
+这里 $u$ 的两个分量均严格正。逐坐标计算得
+$$
+[(I-H)u]_0=\delta(u_0-u_{\rm ring})=1,
+$$
+$$
+[(I-H)u]_{\rm ring}
+=a(1-b)u_{\rm ring}-\frac13=1.
+$$
+因此 $(I-H)u=\mathbf1_2$。直接将钉版 Mathlib 的有限几何和恒等式
+[geom_sum_mul_neg](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Ring/GeomSum.lean)
+应用于实 $2\times2$ 矩阵环中的 $H$，取项数 $n+1$，得到
+$$
+\sum_{t=0}^{n}B_{k,t}
+=e_{\rm ring}^{\mathsf T}(I-H^{n+1})u
+=u_{\rm ring}-e_{\rm ring}^{\mathsf T}H^{n+1}u
+\le u_{\rm ring}.
+\tag{105.2g}
+$$
+只需有限和，不要求先证明无穷 Neumann 级数收敛。由不增性、$a\ge5/6$ 及 $\min\{v,w\}\le\sqrt{vw}$，
+$$
+(n+1)B_{k,n}\le\sum_{t=0}^{n}B_{k,t}
+\le\frac8{5(1-b)},
+\qquad
+R^1_{k,n}\le\frac12B_{k,n}
+\le\frac4{5(1-b)(n+1)}.
+\tag{105.2h}
+$$
+另可随机猜测取得错误率 $1/2$，这证明统一上界。尽管 $u_0$ 随 $k$ 无界，起点对应的分量 $u_{\rm ring}$ 一致有界，正是上述估计所需的量。
+
+另一方面，完整路径 $(1,0,\ldots,0)$ 在两份律中同有质量
+$$
+\frac\delta3(1-\delta)^{n-1}.
+$$
+在 (105.2b) 中只保留该路径，得到
+$$
+R^1_{k,n}\ge\frac\delta6(1-\delta)^{n-1}.
+$$
+对每个 $n\ge1$ 选取合法整数 $k=2n$。Bernoulli 不等式给
+$$
+\left(1-\frac1{2n}\right)^{n-1}
+\ge1-\frac{n-1}{2n}\ge\frac12,
+$$
+所以 $\overline R^1_n\ge R^1_{2n,n}\ge1/(24n)$，完成 (105.2a)。$n=0$ 时两份记录均为确定的初态，故风险为 $1/2$。证毕。
+
+这里确定准备环初态是额外的实验能力；结论不适用于未经制备的平稳起点，也不为取得该初态赋予零成本。上下界共同约束这份指定实验在全部 $k$ 上的风险阶，而非每个固定参数的最优指数率。
+
+## 105.99 追加锚
