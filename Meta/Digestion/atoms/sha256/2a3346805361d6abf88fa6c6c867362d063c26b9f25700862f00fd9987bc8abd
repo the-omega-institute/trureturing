@@ -1,0 +1,137 @@
+**证明。** 先说明这些序列的共同代数载体及嵌入。置
+$$
+h(X)=X^2-X-1\in\mathbb Q[X],\qquad
+\psi=1-\phi=-\phi^{-1}.
+$$
+$h$ 的两个实根 $\phi,\psi$ 均无理，见
+[Real.goldenRatio_irrational、Real.goldenConj_irrational](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Real/GoldenRatio.lean)。
+二次多项式若在 $\mathbb Q$ 上可约，必有一次因子，从而有有理根；因此 $h$ 不可约。由既有添根构造，
+$$
+A=\mathbb Q[X]/(h)
+$$
+是域，记 $\theta$ 为 $X$ 的类。对 $h$ 作带余除法说明 $A$ 中每个元素都能唯一写成 $a+b\theta$：余式次数小于二；两个这样的余式若同类，其差被 $h$ 整除，只能为零。
+
+在 $\phi$ 处求值给出保单位同态 $A\to K$。域同态的核是理想，且因 $1$ 映为 $1\ne0$ 而非全域，所以核为零。其像是包含 $\mathbb Q$ 和 $\phi$ 的子域，又包含于 $K=\mathbb Q(\phi)$，故恰为 $K$，于是得到 $A\simeq K$。在 $\varphi$ 处、以 $j_F$ 解释有理系数求值，同样给出保单位且单射的同态 $A\to F$；复合前一个同构的逆即得 $\kappa_\varphi$。上述坐标式也证明其唯一性：任何固定 $j_F$ 并把 $\phi$ 送到 $\varphi$ 的同态，在每个 $a+b\phi$ 上都必须取 (97.1c) 的值。这里直接使用
+[AdjoinRoot.lift、AdjoinRoot.lift_root、AdjoinRoot.lift_of、AdjoinRoot.algHom_ext、AdjoinRoot.instField](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/AdjoinRoot.lean)
+所给的商与求值接口；整数载体的对应商呈示已有
+[goldenAdjoinRootEquiv](https://github.com/the-omega-institute/trureturing/blob/5446b911a2f4f072834af6c23681dc31218a07b7/D5/S0/Carrier/AlgebraicModel.lean)。
+
+在同一商构造中改取目标根 $\psi\in K$，得到
+$$
+\sigma:K\to K,\qquad
+\sigma(a+b\phi)=a+b\psi\quad(a,b\in\mathbb Q).
+$$
+它固定有理数；又 $\sigma(\psi)=\sigma(1-\phi)=1-\psi=\phi$，所以 $\sigma^2=\mathrm{id}$，是 $K$ 的共轭自同构。其整数限制就是
+[conjEquiv、conj_phi](https://github.com/the-omega-institute/trureturing/blob/5446b911a2f4f072834af6c23681dc31218a07b7/D5/S0/Carrier/Conj.lean)
+所记录的黄金整数共轭。
+
+由 $\phi^2=\phi+1$ 得 $\phi^3=2\phi+1$，因而
+$$
+1-\phi^{-3}=2\phi^{-2}.
+$$
+有限望远镜求和给出
+$$
+S_N
+=\frac12\sum_{j=0}^{N-1}
+\phi^{-3j}(1-\phi^{-3})
+=\frac12(1-\phi^{-3N}).
+$$
+这也证明 $q=1/2$ 时 $S_N=T_N$。若 $\phi^{-3N}$ 为有理数，则共轭固定它，要求
+$$
+\phi^{-3N}=\sigma(\phi^{-3N})=\psi^{-3N}.
+$$
+但 $N\ge1$、$\phi>1$ 给出
+$$
+0<|\phi^{-3N}|_\infty<1,\qquad
+|\psi^{-3N}|_\infty=\phi^{3N}>1,
+$$
+矛盾。因此 $\phi^{-3N}$ 无理。$S_N$ 或 $T_N$ 若为有理数，由显示公式都能反解出有理的 $\phi^{-3N}$，再次矛盾，证明 (97.2a)。
+
+又 $0<\phi^{-3}<1$，所以
+$$
+\phi^{-3N}=(\phi^{-3})^N\longrightarrow0.
+$$
+代入两条有限公式即得 (97.2b) 和共同误差。这里应用的是
+[tendsto_pow_atTop_nhds_zero_of_lt_one](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecificLimits/Basic.lean)
+的实数情形。
+
+固定任意允许的局部数据。根关系给出 $\varphi\ne0$ 以及
+$$
+\varphi(\varphi-1)=1,\qquad \varphi^{-1}=\varphi-1.
+$$
+整数载体上同一逆元已有
+[phiUnit、phi_isUnit](https://github.com/the-omega-institute/trureturing/blob/5446b911a2f4f072834af6c23681dc31218a07b7/D5/S0/Carrier/Units.lean)；
+这里的局部绝对值结论还须使用所假设的乘法性与
+[非阿基米德不等式](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/Ring/IsNonarchimedean.lean)。
+令 $r=|\varphi|_F>0$。若 $r>1$，则
+$$
+r^2=|\varphi+1|_F\le\max(r,1)=r,
+$$
+与 $r>1$ 矛盾。故 $r\le1$，并且
+$$
+|\varphi^{-1}|_F=|\varphi-1|_F
+\le\max(r,1)\le1.
+$$
+乘法性使 $r|\varphi^{-1}|_F=1$，所以 $r\ge1$，合得 $r=1$。
+
+由于绝对值在整个基域上满足 (97.1b)，
+$$
+|T_N^{F,\varphi}-q_F|_F
+=|j_F(1/2)|_F\,|\varphi|_F^{-3N}
+=\left|\frac12\right|_p.
+$$
+$p\ne2$ 时 $p\nmid2$，故 $|2|_p=1$；$p=2$ 时 $|2|_2=1/2$。除法的范数公式给出 (97.2c)。所用标准值与整除判据为
+[padicNorm.padicNorm_p_of_prime、padicNorm.nat_eq_one_iff、padicNorm.mul、padicNorm.div](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNorm.lean)。
+该证明没有要求根在基域内，也没有使用非分歧条件，因而包含 $p=5$。
+
+把有限恒等式 $1-\phi^{-3}=2\phi^{-2}$ 沿 $\kappa_\varphi$ 运输，得到
+$$
+\begin{aligned}
+T_{N+1}^{F,\varphi}-T_N^{F,\varphi}
+&=j_F(1/2)\varphi^{-3N}(1-\varphi^{-3})\\
+&=\varphi^{-3N-2}.
+\end{aligned}
+$$
+其绝对值为一，证明 (97.2d)，包括 $p=2$。取柯西条件中的半径 $1/2$：对任意下标界，总可取晚于该界的相邻两项，它们的距离为一，故柯西条件失败。度量空间中的收敛序列必为柯西列，因此在 $F$ 中没有极限；此推论无需另用完备性。取 $q=1/2$ 即给出 $S_N^{F,\varphi}$ 的全部对应结论。并且
+$$
+|\varphi^{-2-3j}|_F=1\qquad(j\ge0),
+$$
+所以相关无穷级数的通项不趋零。有限求和恒等式没有赋予它在全部位上的收敛性。
+
+最后固定素数 $p$，记 $m_n=1+p^{2n}$。由于 $m_n>p^{2n}>0$，
+$$
+0<\epsilon_{p,n}=\frac{p^n}{m_n}<p^{-n}.
+$$
+$p\ge2$ 给出 $0<p^{-1}<1$，同一实几何幂极限定理使右端趋零。又 $m_n\equiv1\pmod p$，所以 $p\nmid m_n$，由上述有理范数整除判据及乘除法公式，
+$$
+|m_n|_p=1,\qquad
+|\epsilon_{p,n}|_p=\frac{|p^n|_p}{|m_n|_p}=p^{-n}.
+$$
+这证明 (97.2e)。
+
+对非零有理数 $x$，已有
+[rational_padic_product_formula 与 rational_padic_norm_hasFiniteMulSupport](https://github.com/the-omega-institute/trureturing/blob/5446b911a2f4f072834af6c23681dc31218a07b7/D5/S3/Factorization/Embeddings/RationalPadicProductFormula.lean)。
+前者原式在 $\mathbb Q$ 中成立：
+$$
+|x|_{\mathbb Q}\,
+\prod_{\ell\ {\rm prime}}\operatorname{padicNorm}(\ell,x)=1,
+$$
+后者保证只有有限多个范数值不为一。取包含这些素数及 $p$ 的有限集合 $A$，将乘积改写为 $A$ 上的有限乘积，再沿 $\mathbb Q\hookrightarrow\mathbb R$ 运输。该嵌入保持有限乘积和通常绝对值，而 Padic.eq_padicNorm 将每个范数因子识别为 $|x|_\ell$，于是得到
+$$
+|x|_\infty\prod_{\ell\in A}|x|_\ell=1.
+$$
+这一步使用的是有限乘积的运输，没有交换无穷乘积与嵌入。
+
+现在令 $x=\epsilon_{p,n}>0$。所有因子均为正，分离其中的 $p$ 因子，得到
+$$
+\begin{aligned}
+\prod_{\substack{\ell\ {\rm prime}\\\ell\ne p}}
+|\epsilon_{p,n}|_\ell
+&=\bigl(|\epsilon_{p,n}|_\infty
+|\epsilon_{p,n}|_p\bigr)^{-1}\\
+&=\left(\frac{p^n}{m_n}\,p^{-n}\right)^{-1}
+=m_n=1+p^{2n}.
+\end{aligned}
+$$
+若 $\ell\ne p$ 且 $\ell\nmid m_n$，则 $\ell$ 同时不整除分子和分母，其范数因子为一；非一因子只能来自 $m_n$ 的素因子。这个有限集合可随 $n$ 变化，因此所得补偿不推出某个固定其他素位的增长，更不推出任意两个位的反向单调律。这证明 (97.2f)。证毕。
+

@@ -1,0 +1,33 @@
+**定义与假设 101.1（三状态有理循环与已知方向假说）。** 对整数 $k\ge2$，令
+$$
+p_k=\frac1k,\qquad q_k=\frac1{k2^k},\qquad
+r_k=1-p_k-q_k.
+$$
+状态空间取 $S=\mathbb Z/3\mathbb Z$，定义转移核与初始概率
+$$
+K_k(i,i+1)=p_k,\qquad K_k(i,i-1)=q_k,\qquad
+K_k(i,i)=r_k,\qquad \pi(i)=\frac13.
+\tag{101.1a}
+$$
+对整数 $n\ge0$，观察完整状态词 $w=(x_0,\ldots,x_n)\in\Omega_n=S^{n+1}$；$n$ 计转移次数，故 $n=0$ 已观察初始状态。置
+$$
+P_{k,n}(w)=\frac13\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad
+Q_{k,n}(w)=P_{k,n}(w^R),
+\tag{101.1b}
+$$
+其中 $w^R=(x_n,\ldots,x_0)$，空积为一。$Q_{k,n}$ 也由均匀初始律与转置核 $K_k^{\mathsf T}$ 按原坐标顺序生成。记路径中的顺时针、逆时针与自环次数为 $N_+,N_-,N_0$，并置 $J_n=N_+-N_-$。另记
+$$
+A_n=\{(i,\ldots,i):i\in S\},\qquad
+U_n=\frac13\sum_{i\in S}\delta_{(i,\ldots,i)}.
+$$
+
+方向判别的两个假说为 $P_{k,n}$ 与 $Q_{k,n}$，各取先验 $1/2$。测试者可以知道 $k$、核与两份概率，未知的是本次轨迹的方向标签。若 $\delta:\Omega_n\to[0,1]$ 表示报告“反向”的概率，定义最优平均错误率
+$$
+R_{k,n}
+=\inf_\delta\frac12\sum_{w\in\Omega_n}
+\bigl[P_{k,n}(w)\delta(w)+Q_{k,n}(w)(1-\delta(w))\bigr].
+\tag{101.1c}
+$$
+总变差采用 $\operatorname{TV}(P,Q)=\frac12\sum_w|P(w)-Q(w)|$ 的归一化，KL 中的对数取自然底数。
+

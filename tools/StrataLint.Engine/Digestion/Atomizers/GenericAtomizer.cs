@@ -98,9 +98,10 @@ internal static class GenericAtomizer
     }
 
     /// <summary>
-    /// A claim table states one proposition per row — each with its own attestation and its
-    /// own truth status, 定理级 beside open — so a row is a claim and the table is not. The
-    /// header row names the columns rather than stating anything, and is not a claim.
+    /// Outside a numbered claim, a claim table states one proposition per row, each with
+    /// its own attestation and truth status. Scoped claims retain their internal tables;
+    /// MarkdownAstAtomizer resolves that ownership before emitting disjoint spans. The
+    /// header row names columns rather than stating anything, and is not a claim.
     /// </summary>
     private static string? IdentifyTableRow(MarkdownTableRow row) =>
         row.IsHeader || row.FirstCellText.Length == 0

@@ -1,0 +1,18 @@
+**定义与假设 88.1（固定公式集上的后承运输）。** 设 $F_A,F_B$ 为任意集合，$\tau:F_A\to F_B$ 为任意映射，$C_A,C_B$ 分别为 $\mathcal P(F_A),\mathcal P(F_B)$ 上的扩张、单调、幂等闭包算子。令
+$$
+\operatorname{Th}(C_X)=\{T\subseteq F_X:C_X(T)=T\}
+\qquad(X=A,B),
+$$
+并按集合包含排序。定义
+$$
+K_\tau(\Gamma)=\tau^{-1}[C_B(\tau[\Gamma])]
+\qquad(\Gamma\subseteq F_A).
+$$
+算子间的不等式一律为逐点集合包含。称 $\tau$ 保持后承、反射后承或保守，分别指
+$$
+C_A\le K_\tau,\qquad K_\tau\le C_A,\qquad C_A=K_\tau.
+$$
+所有前提集都允许为空或无限；不要求公式集有限、$\tau$ 单射或满射，也不预设联结词、可计算性或紧致性。闭理论载体与最小闭扩张采用 `TheoryIsConsequenceFixedPoint` 的 `ConsequenceOperator`、`Theory` 和 `consequenceClosure_isLeast_fixedPoint_above` 接口。[^rro88-consequence]
+
+[^rro88-consequence]: [`TheoryIsConsequenceFixedPoint`](https://github.com/the-omega-institute/trureturing/blob/4bead9b7eb68b655d89f284d49b9512291debf33/D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.lean)：`ConsequenceOperator Formula` 为 `ClosureOperator (Set Formula)`，`Theory Cn` 为 `Cn.Closeds`；`consequenceClosure_isLeast_fixedPoint_above Cn S` 断言 `Cn S` 是满足 $S\subseteq T$ 且 $Cn(T)=T$ 的最小集合。分别取 $Cn=C_A,C_B$，给出本节使用的最小闭理论性质。
+

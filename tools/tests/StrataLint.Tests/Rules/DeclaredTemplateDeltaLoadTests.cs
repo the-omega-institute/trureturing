@@ -256,6 +256,8 @@ public sealed class DeclaredTemplateDeltaLoadTests
             content_inputs = new[] { new { path = owner,
                 sha256 = InformationTemplateJson.Sha256(context.Current.Files[RepoPath.CreateKnown(owner)].RawBytes.AsSpan()) } },
             binding_source_path = producer, state = "declared_validated", diagnostic = (string?)null,
+            escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+            escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
             unit_name = ModuleName(owner) + ".unit", realization_name = ModuleName(owner) + ".realization",
             certificate = new
             {

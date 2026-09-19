@@ -178,13 +178,14 @@ public sealed partial class MakeWorkflowTests
         var watchRecipe = Recipe(makefile, "pr-watch");
 
         Assert.Contains("make pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]  Create from a message file, optionally arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
-        Assert.Contains("make pr-watch PR=n                Wait for required-CI verdict on an existing PR", makefile, StringComparison.Ordinal);
+        Assert.Contains("make pr-watch PR=n HEAD_SHA=sha   Wait for required-CI verdict on the explicit PR head", makefile, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
         Assert.Contains("$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", openRecipe, StringComparison.Ordinal);
         Assert.Contains("--pr \"$(PR)\"", watchRecipe, StringComparison.Ordinal);
+        Assert.Contains("--head-sha \"$(HEAD_SHA)\"", watchRecipe, StringComparison.Ordinal);
         Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", watchRecipe, StringComparison.Ordinal);
         Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", watchRecipe, StringComparison.Ordinal);
         foreach (var recipe in new[] { openRecipe, watchRecipe })
@@ -392,7 +393,10 @@ public sealed partial class MakeWorkflowTests
                 $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "make", "--no-print-directory", "-C", "tools", "test", $"TEST_PROJECT={target}",
                 $"TEST_FILTER={(filtered ? "FullyQualifiedName~Fixture" : "")}"],
-            root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            // This invokes the complete make -> dotnet-test -> TRX verification
+            // workflow; the timeout is infrastructure-only and must cover the
+            // workflow under the full parallel suite.
+            root, TestBudgets.WorkflowProcessHangGuard, 64 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");

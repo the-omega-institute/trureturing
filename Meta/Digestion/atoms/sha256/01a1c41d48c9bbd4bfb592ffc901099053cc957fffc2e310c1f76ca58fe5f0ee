@@ -1,0 +1,38 @@
+**命题 96.2（有限层最终覆盖与整体并集的严格边界）。** 对每个 $k\ge2$，$K_k$ 闭，且对每个 $n\in\mathbb N_0$，
+$$
+K_k\subsetneq K_{k+1},\qquad
+\pi_n(K_k)=W_{k,n},\qquad
+k>n\Longrightarrow W_{k,n}=\Sigma_n. \tag{96.1}
+$$
+并集 $U$ 是非空、稠密的真 Borel 子集，满足
+$$
+\pi_n(U)=\Sigma_n\quad(n\in\mathbb N_0),\qquad
+U\subsetneq\overline U=\Sigma, \tag{96.2}
+$$
+以及
+$$
+\mu(K_k)=0\quad(k\ge2),\qquad
+\mu(U)=0,\qquad
+\mu(\overline U)=1. \tag{96.3}
+$$
+通过相容前缀与无限串的自然识别，规范比较映射
+$$
+\bigcup_{k\ge2}\varprojlim_{n\ge0}W_{k,n}
+\longrightarrow
+\varprojlim_{n\ge0}\left(\bigcup_{k\ge2}W_{k,n}\right) \tag{96.4}
+$$
+就是 $U\hookrightarrow\Sigma$，因而单射而不满射。其量词形式为
+$$
+\begin{aligned}
+U
+&=\left\{x\in\Sigma:
+\exists k\ge2,\ \forall n\in\mathbb N_0,\
+\pi_n(x)\in W_{k,n}\right\}\\
+&\subsetneq
+\left\{x\in\Sigma:
+\forall n\in\mathbb N_0,\ \exists k\ge2,\
+\pi_n(x)\in W_{k,n}\right\}
+=\Sigma.
+\end{aligned} \tag{96.5}
+$$
+

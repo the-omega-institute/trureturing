@@ -1,0 +1,61 @@
+**命题 90.3（有限支撑模型通过全部有限测试，但遗漏无限前提反例）。** 令 $F$ 为由可数原子 $p_n$（$n\in\mathbb N$）、$\bot$、否定及二元合取生成的全部有限公式。取
+$$
+F_A=F_B=F,\qquad \tau=\mathrm{id},\qquad
+\mathcal M_A=\mathbf2^{\mathbb N},
+$$
+$$
+\mathcal M_B=\{v\in\mathbf2^{\mathbb N}:\{n:v(n)=1\}\text{ 有限}\},
+\qquad\beta:\mathcal M_B\hookrightarrow\mathcal M_A,
+$$
+满足关系采用通常的布尔求值。则 (SC)、(90.2b) 及 $\mathrm{CE}_{\mathrm{fin}}$ 成立，但 $\mathrm{CE}$ 失败。具体地，对
+$$
+\Gamma_\infty=\{p_n:n\in\mathbb N\}
+$$
+有
+$$
+\bot\in K_\tau^{\mathrm{sem}}(\Gamma_\infty)
+\setminus S_A(\Gamma_\infty).
+\tag{90.3a}
+$$
+其真值剖面空间满足：$X$ 紧致 Hausdorff，$Y$ 稠密但不等于 $X$，从而 $Y$ 不闭且不紧致。
+
+**证明。** 两侧求值相同，$\beta$ 为包含映射，故 (SC) 成立；句法否定与 $\bot$ 满足 (90.2b)。对每个有限公式 $\theta$，递归定义原子支撑
+$$
+\begin{aligned}
+\operatorname{supp}(p_n)&=\{n\},&
+\operatorname{supp}(\bot)&=\varnothing,\\
+\operatorname{supp}(\neg\theta)&=\operatorname{supp}(\theta),&
+\operatorname{supp}(\theta\land\psi)&=
+\operatorname{supp}(\theta)\cup\operatorname{supp}(\psi).
+\end{aligned}
+$$
+支撑总是有限。若两个赋值在 $\operatorname{supp}(\theta)$ 上相同，则它们对 $\theta$ 的真值相同：原子情形由相同坐标给出，$\bot$ 恒假，否定保持真值相等，合取由两个子公式的归纳结论给出。
+
+给定任意有限 $\Gamma$、任意结论 $\varphi$，以及源反模型 $v$，置
+$$
+D=\operatorname{supp}(\varphi)\cup
+\bigcup_{\gamma\in\Gamma}\operatorname{supp}(\gamma),
+\qquad
+w(n)=
+\begin{cases}
+v(n),&n\in D,\\
+0,&n\notin D.
+\end{cases}
+$$
+$D$ 有限，$w$ 的正支撑包含于 $D$，所以 $w\in\mathcal M_B$。上述归纳结论使 $w$ 保留 $\Gamma$ 中所有公式及结论 $\varphi$ 的真值，故仍是反模型。这覆盖空 $\Gamma$ 及全部结论公式，证明 $\mathrm{CE}_{\mathrm{fin}}$。
+
+全 $1$ 赋值满足 $\Gamma_\infty$ 并反驳 $\bot$，所以 $\bot\notin S_A(\Gamma_\infty)$。没有有限支撑赋值满足全部 $p_n$，因此目标侧在前提 $\Gamma_\infty$ 下无模型，其语义后承包含全部公式，特别包含 $\bot$。由 $\tau=\mathrm{id}$ 得 (90.3a)。
+
+考虑公式求值映射 $e:\mathbf2^{\mathbb N}\to X$。它按定义满射；原子坐标满足
+$$
+e(v)(p_n)=v(n),
+$$
+因而它单射，逆映射为 $x\mapsto(n\mapsto x(p_n))$。每个公式坐标的求值仅依赖其有限支撑，在离散布尔乘积上连续，故 $e$ 连续；逆映射的每个坐标也是连续的坐标求值。因此 $e$ 是同胚。$\mathbf2^{\mathbb N}$ 是紧致 Hausdorff 空间，故 $X$ 也是；乘积紧致性可直接采用钉版 Mathlib 的
+[`Pi.compactSpace`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean)。
+
+由有限提升和定理 90.2（二），$Y$ 在 $X$ 中稠密。全 $1$ 赋值的剖面不在 $Y$：若另一个赋值具有相同剖面，全部原子坐标相等会强制它也是全 $1$。所以 $Y\subsetneq X$，且其闭包等于 $X$，从而 $Y$ 不闭。若 $Y$ 紧致，则因 $X$ Hausdorff，$Y$ 必闭，与刚才结论矛盾；这里直接使用
+[`IsCompact.isClosed`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Separation/Hausdorff.lean)。
+
+在这个例子中，把 $Y$ 换成 $\overline{Y}^{\,X}=X$ 会加入原目标族禁止的剖面，其中包括全 $1$ 赋值。它给扩充后的模型族提供反例，不能据此宣称原目标族已经满足 $\mathrm{CE}$。一般地，$Y$ 与 $\overline{Y}^{\,X}$ 遇到相同的有限开闭柱集：一个柱集若遇到闭包，取交点的该开邻域即会遇到 $Y$；反向由 $Y\subseteq\overline{Y}^{\,X}$ 得到。因此有限柱测试不区分实际像与其闭包。
+若实际像本身在 $X$ 中闭，则其闭包点已经属于像，按像集定义已有原目标模型代表，这与第 6.1 节的闭像修正一致。相对闭包 $\overline{Y}^{\,X}$ 在任意 $X$ 中并不自动紧致；本例的紧致性来自已经证明的 $X$ 紧致。证毕。
+
