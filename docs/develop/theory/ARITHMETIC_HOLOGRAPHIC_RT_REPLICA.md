@@ -64,7 +64,7 @@ $$
 (y_0,y_1,y_2,y_3)=(t+a,t+2a+c,t,t+c).
 $$
 
-为验证充要性，先取 $s=x_0,t=y_2,a=y_0-y_2,c=y_3-y_2,b=y_1-y_2$。指标 $i=0,3,1$ 的第一类等式依次给出 $x_2=s+b$、$x_3=s+a$、$x_1=s+a+c-b$。其余等式化为 $b=2a+c$、$3a=0$、$3c=0$，继而得到所列参数化。反向代入八条等式逐项成立。因此解数为 $|G|^2|G[3]|^2$。每项包含八个振幅因子 $|G|^{-1}$，得到结论。证毕。
+为验证充要性，先取 $s=x_0,t=y_2,a=y_0-y_2,c=y_3-y_2,b=y_1-y_2$。指标 $i=0,3,1$ 的第一类等式依次给出 $x_2=s+b$、$x_3=s+a$、$x_1=s+c$。第二类等式依次给出 $2b=a+2c$、$b=2a+c$、$b+2c=2a$、$a=c+2b$，等价于 $b=2a+c$、$3a=0$、$3c=0$，继而得到所列参数化。反向代入八条等式逐项成立。因此解数为 $|G|^2|G[3]|^2$。每项包含八个振幅因子 $|G|^{-1}$，得到结论。证毕。
 
 **推论 2.3。** $T_9$ 与按参与方重组的 $T_3\otimes T_3$ 不局部幺正等价，因为
 
@@ -298,7 +298,7 @@ $$
 
 [BZ24] Conjecture 1 是另一个明确的外部目标：该文的 $\mathcal H(\alpha)$、$U_1$、$U_2$、$U_3(a)$ 四个 36 阶矩阵族，在其全部指定参数上两两既不局部幺正等价，也不 Hadamard 等价。论文给出了矩阵和参数化。局部幺正等价与 Hadamard 单项式等价是不同关系；本文四副本收缩可用于前者，不能未经证明就用于后者。该猜想在本篇检索的原文与相关来源中没有找到完整结算，不能将有限检索的未发现表述为已穷尽文献。
 
-本篇尚未证明或反驳 [BZ24] Conjecture 1。维数九的挠元不变量已经展示了可迁移的判别机制，但只有代入该文实际的六维矩阵并证明参数量词下的不变量分离，才构成对该猜想的进展。已解决的 AME$(4,3)$ 唯一性只作为 [RRKL23] 的现成定理使用。
+本篇尚未完整证明或反驳 [BZ24] Conjecture 1。维数九的挠元不变量给出可迁移的判别机制；第 8 节把它作用于该文的实际矩阵，并写清已知固定代表和仍未闭合的参数量词。已解决的 AME$(4,3)$ 唯一性只作为 [RRKL23] 的现成定理使用。
 
 目前具体可复用的数学产出是：有限群三挠元的四副本求值；任意独立局部量子通道的九维纯顶点粗化障碍；两条输出腿的精确进位修正；有限单环 Haar 纯度的全尺寸公式和精确非平坦样本。它们分别约束粗化操作、局部等价、可实现的纠缠谱与 RT 型熵数据，未补齐物理边界理论、连续几何和引力动力学。
 
@@ -311,3 +311,171 @@ $$
 [BZ24] W. Bruzda, K. Życzkowski. Two-unitary complex Hadamard matrices of order 36. Special Matrices 12 (2024), 20240010. DOI: 10.1515/spma-2024-0010. 使用第 4 节 Conjecture 1。
 
 [Tan26] I. Tan. Transversal gates of the ((3,3,2)) qutrit code and local symmetries of the absolutely maximally entangled state of four qutrits. arXiv:2601.19677 (2026). 作为完美 qutrit 顶点与量子纠错实际操作的相关文献，不以其替代本篇证明。
+
+## 8. 实际 36 阶矩阵上的精确证书及参数切片
+
+本节使用 [BZ24] 式 (10)–(15) 的原始矩阵。固定代表的不可等价性也已见于 [Rather24] 第 5.2 节；本节的固定三点证书属于已知结果的精确验证，不计作新的开放问题解决。该文矩阵与 [BZ24] 的形式相差两侧局部 Fourier 因子，不改变局部等价问题。
+
+令 $\zeta=e^{i\pi/3}$，$\lambda_j(a,b)$ 为 [BZ24] 的三个长度 36 相位向量按 $6\times6$ 排列后的整数指数。前两个向量的分母为六；第三个向量原分母为三，转成 $\zeta$ 指数时须乘以二。按该文的正指数 Fourier 约定，直接展开式 (13) 得
+
+$$
+(U_j)_{kl,mn}=\frac{\zeta^{lk+nm}}{36}
+\sum_{a,b=0}^5\zeta^{a(l-n)-b(k+m)+\lambda_j(a,b)}.
+$$
+
+因此 $H_j=6U_j$ 的每个元素都是六次单位根；对应归一化四方态为 $\psi_j=H_j/36$。
+
+**证书 8.1（固定三代表）。** 对定义 2.1 的同一四副本收缩，精确值为
+
+$$
+I(\psi_1)=\frac{35}{419904}=\frac{70}{839808},\qquad
+I(\psi_2)=\frac{79}{839808},\qquad
+I(\psi_3)=\frac1{15552}=\frac{54}{839808}.
+$$
+
+这三个不同值证明固定 $U_1,U_2,U_3(0)$ 两两不局部幺正等价。未归一化分子依次为
+
+$$
+235146240,\quad265379328,\quad181398528,
+$$
+
+公共分母为 $36^8=2821109907456$。这些值由附录的 $\mathbb Z[\zeta]/(\zeta^2-\zeta+1)$ 精确整数收缩得出，没有使用浮点拟合、奇异值阈值或优化失败来断言不等价。
+
+**证书 8.2（非恒等相位参数的精确谱缺陷）。** 用 $z\in U(1)$ 表示 [BZ24] 式 (15) 中实际乘到指定元素上的相位，避免其 $a$ 与 $2\pi a$ 的角度记法混淆。令 $M$ 是该式零一掩码，$U_3(z)=U_3\circ z^M$。则对全部 $|z|=1$，
+
+$$
+\|U_3(z)U_3(z)^*-I\|_F^2=0,
+$$
+
+$$
+\|U_3(z)^R(U_3(z)^R)^*-I\|_F^2
+=\|U_3(z)^\Gamma(U_3(z)^\Gamma)^*-I\|_F^2
+=\frac{17}{6}-\frac{17}{12}(z+z^{-1}).
+$$
+
+所以当 $z=e^{i\theta}$，任一相应二方约化态的纯度是
+
+$$
+\operatorname{Tr}(\rho_R(z)^2)
+=\frac1{36}+\frac{17}{7776}(1-\cos\theta).
+$$
+
+**精确验证。** 将掩码内、外的 $H_3$ 分成 $A+zB$。对三个重排分别计算
+
+$$
+(A+zB)(A^*+z^{-1}B^*)-36I
+$$
+
+的平方 Frobenius 范数，再除以 $36^2$。环内收缩给出的 $z^{-2},z^{-1},1,z,z^2$ 系数，对原排列全部为零，对另两种排列分别为
+
+$$
+(0,-17/12,17/6,-17/12,0).
+$$
+
+有限 Laurent 多项式的系数完全相等即覆盖整个单位圆。状态归一化还要除以 $36^2$，得到纯度式。附录给出可重放计算。证毕。
+
+**推论 8.3。** $z\ne1$ 时，$U_3(z)$ 不与任何二幺正矩阵局部幺正等价。因此对于 [BZ24] 的所有 $\alpha$，它不与 $\mathcal H(\alpha)$、$U_1$ 或 $U_2$ 局部幺正等价。$z=1$ 时与 $U_1,U_2$ 的分离由证书 8.1 给出，与 $\mathcal H(\alpha)$ 的关系仍未由本篇解决。
+
+[BZ24] 表 1 已提示非零相位通常破坏二幺正性，本节给出其实际相位 $z$ 的精确恒等式和所有周期回返 $z=1$ 的边界，不以该提示冒充新发现。仍缺少 $\mathcal H(\alpha)$ 与三个固定代表之间的全参数局部不等价证明，以及完整的 Hadamard 不等价部分。没有将本节证书登记成完整 Conjecture 1 的解决。
+
+[Rather24] S. A. Rather. Construction of perfect tensors using biunimodular vectors. Quantum 8 (2024), 1528. DOI: 10.22331/q-2024-11-20-1528. arXiv:2309.01504v2. 第 5.2 节已说明固定三个 biunimodular 代表的局部不等价性。
+
+## 附录 A. 证书 8.1 与 8.2 的精确整数重放
+
+以下 Python 程序依赖 NumPy 和 opt_einsum；后者仅决定收缩顺序。所有承重数组为带符号 64 位整数，根环元写为 $a+b\zeta$，乘法为 $(ac-bd)+(ad+bc+bd)\zeta$，共轭为 $(a+b)-b\zeta$。完整收缩最多有 $6^{16}$ 个单位根项，分量中间运算的保守界 $3\cdot6^{16}<2^{63}$，不会溢出。原始相位向量和掩码来自 [BZ24]；此程序是有限等式的计算证书，不是 Lean 内核检查。
+
+```python
+import itertools
+from fractions import Fraction
+import numpy as np
+import opt_einsum as oe
+
+perms = ((0,1,2,3),(1,0,3,2),(2,3,1,0),(3,2,0,1))
+units = np.array([(1,0),(0,1),(-1,1),(-1,0),(0,-1),(1,-1)], dtype=np.int64)
+vectors = [
+ [0,1,0,1,3,3,3,3,1,5,2,4,2,1,3,1,2,3,1,1,2,0,3,5,5,3,2,3,2,5,4,4,1,5,5,1],
+ [0,2,3,3,2,0,0,3,2,2,0,4,2,0,3,5,0,0,0,5,0,0,2,0,2,2,5,3,2,4,2,3,0,2,0,0],
+ [0,2,2,0,0,1,0,1,1,1,2,1,0,2,0,2,2,2,2,0,2,2,2,1,1,1,2,0,2,2,0,1,2,2,1,0]
+]
+
+def conj(a,b):
+    return a+b, -b
+
+def mm(a,b,c,d):
+    return a@c-b@d, a@d+b@c+b@d
+
+def make_h(j):
+    lam = np.array(vectors[j]).reshape(6,6)*(2 if j == 2 else 1)
+    a = np.zeros((6,)*4, dtype=np.int64)
+    b = a.copy()
+    for k,l,m,n in itertools.product(range(6), repeat=4):
+        v = sum((units[(x*(l-n)-y*(k+m)+int(lam[x,y]))%6]
+                 for x,y in itertools.product(range(6), repeat=2)),
+                np.zeros(2,dtype=np.int64))
+        assert np.all(v%6 == 0)
+        c,d = v//6
+        e,f = units[(l*k+n*m)%6]
+        value = (e*c-f*d, e*d+f*c+f*d)
+        assert value in [tuple(u) for u in units]
+        a[k,l,m,n], b[k,l,m,n] = value
+    return a,b
+
+def invariant(a,b):
+    labels = [[4*l+i for l in range(4)] for i in range(4)]
+    labels += [[4*l+perms[l][i] for l in range(4)] for i in range(4)]
+    expr = ','.join(''.join(oe.get_symbol(v) for v in ds) for ds in labels)+'->'
+    ac,bc = conj(a,b)
+    work = [(a,b)]*4+[(ac,bc)]*4
+    _,info = oe.contract_path(expr,*([a]*8),optimize='auto-hq')
+    for ids,_,eq,_,_ in info.contraction_list:
+        assert len(ids) == 2
+        (a,b),(c,d) = [work.pop(i) for i in ids]
+        ac = oe.contract(eq,a,c,optimize=False)
+        bd = oe.contract(eq,b,d,optimize=False)
+        ad = oe.contract(eq,a,d,optimize=False)
+        bc = oe.contract(eq,b,c,optimize=False)
+        work.append((ac-bd,ad+bc+bd))
+    assert len(work) == 1 and int(work[0][1]) == 0
+    return Fraction(int(work[0][0]),36**8)
+
+expected = [Fraction(35,419904),Fraction(79,839808),Fraction(1,15552)]
+axes_list = [(0,1,2,3),(0,2,1,3),(0,3,2,1)]
+for j in range(3):
+    a,b = make_h(j)
+    for axes in axes_list:
+        x = a.transpose(axes).reshape(36,36)
+        y = b.transpose(axes).reshape(36,36)
+        c,d = conj(x.T,y.T)
+        g,h = mm(x,y,c,d)
+        assert np.array_equal(g,36*np.eye(36,dtype=np.int64)) and not np.any(h)
+    assert invariant(a,b) == expected[j]
+    print('fixed invariant',j+1,expected[j])
+
+mask = np.zeros((36,36),dtype=np.int64)
+mask[[1,13,25],:] = [0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,1,0,0,
+                     0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,1,0,0]
+a,b = make_h(2)
+for index,axes in enumerate(axes_list):
+    x = a.transpose(axes).reshape(36,36)
+    y = b.transpose(axes).reshape(36,36)
+    m = mask.reshape((6,)*4).transpose(axes).reshape(36,36)
+    parts = [(x*(1-m),y*(1-m)),(x*m,y*m)]
+    coeff = {k:(np.zeros((36,36),np.int64),np.zeros((36,36),np.int64))
+             for k in (-1,0,1)}
+    for k,(x,y) in enumerate(parts):
+        for l,(v,w) in enumerate(parts):
+            v,w = conj(v.T,w.T)
+            value = mm(x,y,v,w)
+            coeff[k-l] = tuple(u+v for u,v in zip(coeff[k-l],value))
+    coeff[0] = (coeff[0][0]-36*np.eye(36,dtype=np.int64),coeff[0][1])
+    poly = {k:np.zeros(2,np.int64) for k in range(-2,3)}
+    for k,(x,y) in coeff.items():
+        for l,(v,w) in coeff.items():
+            v,w = conj(v,w)
+            poly[k-l] += [np.sum(x*v-y*w),np.sum(x*w+y*v+y*w)]
+    assert all(v[1] == 0 for v in poly.values())
+    values = [Fraction(int(poly[k][0]),36**2) for k in range(-2,3)]
+    target = [Fraction(0)]*5 if index == 0 else [0,Fraction(-17,12),Fraction(17,6),Fraction(-17,12),0]
+    assert values == target
+    print('Laurent coefficients',index,values)
+```
