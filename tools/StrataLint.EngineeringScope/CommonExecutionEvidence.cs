@@ -1,4 +1,6 @@
 using StrataLint.Engine;
+using System.Runtime;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -21,6 +23,16 @@ internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[
 
 internal static partial class CommonExecutionEvidence
 {
+    internal static void ReleaseTemporarySnapshots()
+    {
+        GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static IReadOnlyDictionary<string, RegisteredTestInput> ReadTestInputs(string root) =>
+        TestInputs(root, Snapshot(root));
+
     internal const string RootPath = "build/ci";
     internal const string TestsPath = RootPath + "/tests.json";
     internal const string TestSeedPath = RootPath + "/test-seed";
