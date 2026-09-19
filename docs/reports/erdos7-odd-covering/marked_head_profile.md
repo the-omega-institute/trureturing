@@ -787,3 +787,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [An explicit aligned parameter neighborhood keeps the complete comparison below400](profile-notes/325-an-explicit-aligned-parameter-neighborhood-keeps-the-complete-comparison-below400.md)
 - [Finite original-label tests preserve the explicit aligned source guard](profile-notes/326-finite-original-label-tests-preserve-the-explicit-aligned-source-guard.md)
 - [Actual two-prime survival needs a masked moment](profile-notes/327-actual-two-prime-survival-needs-a-masked-moment.md)
+- [Complete raw costs cover the high-surplus aligned face](profile-notes/328-complete-raw-costs-cover-the-high-surplus-aligned-face.md)
