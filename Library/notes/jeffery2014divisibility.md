@@ -6,7 +6,8 @@ title: Divisibility Properties of the Fibonacci, Lucas, and Related Sequences
 doi: 10.1155/2014/750325
 url: https://doi.org/10.1155/2014/750325
 claim: Proposition 6 proves that each Fibonacci number F_a divides F_am, and Theorem 7 proves that gcd(F_a,F_b) equals F_gcd(a,b).
-strata_touched: [D5/S0/Synthetic/Missing]
+strata_touched:
+  - D5/S0/Synthetic/Missing
 license: citation-only
 triage: anchor
 ---
