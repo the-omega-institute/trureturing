@@ -1,0 +1,24 @@
+**证明。** 若式(137.15)成立，引理137.7使每个竞争模型的 $D$ 同时消灭 $L$ 与 $\ker C$，故 $D=0$。于是 $E$ 在 $\widetilde C$ 下不变，输入位于 $E$，全部未来矩均等于式(137.9)。
+
+若式(137.15)失败，取非零线性映射 $D:E\to\mathbb R$ 消灭 $L+\ker C$。在 $C$ 的正特征子空间上按特征值取倒数、在其核上取零，定义 $C^\dagger$；同样定义 $C^{1/2}$ 与 $C^{\dagger/2}$。置
+$$
+A=DC^\dagger D^*,\qquad
+\widetilde C=\begin{pmatrix}C&D^*\\D&A\end{pmatrix}.
+$$
+由于 $D$ 消灭 $\ker C$，$DC^{\dagger/2}C^{1/2}=D$，因此
+$$
+\widetilde C=
+\binom{C^{1/2}}{DC^{\dagger/2}}
+\begin{pmatrix}C^{1/2}&C^{\dagger/2}D^*\end{pmatrix}
+\succeq0.
+\tag{137.17}
+$$
+引理137.7表明此扩张保持给定前缀。又 $E=L+e_r(U)$，而 $D\ne0$ 且 $D|_L=0$，故 $De_r\ne0$。式(137.14)于是给出一个不同的第 $2r+2$ 阶矩，全部未来不唯一。式(137.17)也是带核相容条件的广义 Schur 补在本情形中的平方分解；一般块正性判据见前引 Bolotnikov Lemma 2.4，446页。
+
+最后，$S_r$ 是向量族 $C^{1/2}e_j(U)$、$0\le j\le r$ 的 Gram 算子，而 $S_{r-1}$ 对应 $j<r$。所以
+$$
+\operatorname{rank}S_r=\dim C^{1/2}E,\qquad
+\operatorname{rank}S_{r-1}=\dim C^{1/2}L.
+$$
+两个像空间相等当且仅当每个 $x\in E$ 都能写成 $x=l+z$，其中 $l\in L$、$z\in\ker C^{1/2}=\ker C$。这证明式(137.15)与式(137.16)等价，也包含 $r=0$ 的情形。$\square$
+
