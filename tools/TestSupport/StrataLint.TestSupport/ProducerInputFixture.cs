@@ -24,11 +24,15 @@ internal static class ProducerInputFixture
         var rows = manifest["projects"]!.AsArray();
         var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
             path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
-        var selections = scopes.Values.Select(scope =>
+        var selections = scopes.Values.SelectMany(scope =>
         {
             var path = scope["registration"]!.GetValue<string>();
             var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!;
-            return (Path: path, Value: inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!);
+            return new[]
+            {
+                (Path: path, Value: inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!),
+                (Path: path, Value: inputs["config_inputs"]!),
+            };
         }).ToArray();
         // Restrict Git's output to declared inputs before the bounded reader sees it.
         var inventoryPatterns = rows.Select(row => row!["path"]!.GetValue<string>())
@@ -41,7 +45,7 @@ internal static class ProducerInputFixture
         var inventory = TestProcessRunner.Run("git", ["ls-files", "--cached", "-z", "--", .. inventoryPatterns], source,
             TestBudgets.ScriptProcessHangGuard, 4 * 1024 * 1024);
         Assert.True(inventory.ExitCode == 0, Encoding.UTF8.GetString(inventory.StandardError));
-        // Expand registered tool source globs only. BatchWorld supplies its own Blueprint
+        // Expand registered producer and config inputs only. BatchWorld supplies its own Blueprint
         // definitions and Lean/content payloads for the injected documents assembly.
         var available = Encoding.UTF8.GetString(inventory.StandardOutput).Split('\0', StringSplitOptions.RemoveEmptyEntries)
             .Where(path => File.Exists(Path.Combine(source, path))).ToArray();
@@ -65,7 +69,7 @@ internal static class ProducerInputFixture
             var excludes = selection["exclude"]!.AsArray().Select(item => item!.GetValue<string>()).Append("Blueprint/**").ToArray();
             paths.UnionWith(EngineeringProjectRegistry.ExpandInputs(available, includes, excludes, inputPath));
         }
-        paths.UnionWith(["lean-toolchain", "lakefile.toml", "lake-manifest.json", ".gitignore"]);
+        paths.Add(".gitignore");
         var files = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(source, path)), StringComparer.Ordinal);
         files.Add(ProjectRegistrationPath, Encoding.UTF8.GetBytes(manifest.ToJsonString()));
         return files;
