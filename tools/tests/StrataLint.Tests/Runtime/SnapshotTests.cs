@@ -6,6 +6,48 @@ namespace StrataLint.Tests;
 
 public sealed class SnapshotTests
 {
+    [Theory]
+    [InlineData("", false)]
+    [InlineData("\n\n", false)]
+    [InlineData("a\nb\n", false)]
+    [InlineData("a b\n", false)]
+    [InlineData("a\rb\n", false)]
+    [InlineData("\tvalue", false)]
+    [InlineData("\u00a0\n", false)]
+    [InlineData(" ", true)]
+    [InlineData("\t", true)]
+    [InlineData("\r", true)]
+    [InlineData("\r\n", true)]
+    [InlineData("a \nb", true)]
+    [InlineData("a\t\n\n", true)]
+    [InlineData("a\n ", true)]
+    [InlineData("\n\nb\r\n\n", true)]
+    public void TrailingWhitespacePreservesLineEndingBoundaries(string text, bool expected)
+    {
+        var decoded = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
+            [RawRepositoryEntry.FromText("sample.txt", text)]));
+
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(decoded).Snapshot;
+        Assert.Equal(expected, Assert.Single(snapshot.Files).Value.HasTrailingWhitespace);
+    }
+
+    [Fact]
+    public void TrailingWhitespaceInspectionDoesNotAllocatePerLine()
+    {
+        var text = string.Concat(Enumerable.Repeat("no trailing whitespace\n", 100_000));
+        var path = RepoPath.CreateKnown("large.txt");
+        var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(text));
+        _ = new RepositoryFile(path, bytes, "warm\nup\n");
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var file = new RepositoryFile(path, bytes, text);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        Assert.False(file.HasTrailingWhitespace);
+        Assert.True(allocated < text.Length,
+            $"Whitespace inspection allocated {allocated} bytes for {text.Length} existing characters.");
+    }
+
     [Fact]
     public void TheoryBytesAreOpaqueAndPreserveInvalidUtf8Exactly()
     {

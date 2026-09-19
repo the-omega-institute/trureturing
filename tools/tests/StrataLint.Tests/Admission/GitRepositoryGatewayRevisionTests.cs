@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed class GitRepositoryGatewayRevisionTests
 {
+    [Fact]
+    public void CurrentSnapshotOwnsOnePayloadBufferAndSurvivesDiskReplacement()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        var path = Path.Combine(repository.Path, "payload.txt");
+        File.WriteAllText(path, "warm reader\n");
+        _ = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var payload = Enumerable.Repeat((byte)'x', 4 * 1024 * 1024).ToArray();
+        File.WriteAllBytes(path, payload);
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var snapshot = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        File.WriteAllText(path, "replacement\n");
+        var entry = Assert.Single(snapshot.Entries);
+        Assert.Equal("payload.txt", entry.Path);
+        Assert.Equal(payload, entry.Bytes.ToArray());
+        Assert.True(allocated < payload.Length + payload.Length / 2,
+            $"Reading one {payload.Length}-byte file allocated {allocated} bytes.");
+    }
+
     private const string FirstOid = "1111111111111111111111111111111111111111";
     private const string SecondOid = "2222222222222222222222222222222222222222";
 
