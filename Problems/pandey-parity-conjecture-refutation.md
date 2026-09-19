@@ -34,13 +34,19 @@ root calculations.
 
 ## Gap
 
-The bounded prior-resolution screen supplied with
+There is no remaining gap in the resolution of this exact conjecture.
+The earlier public [refutation](https://github.com/demonstrandum-research/artifacts/blob/94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3/problems/p2-factory/kills/pandey-parity/WRITEUP.md)
+already gives `GP(3,1)` with polynomial `1+6x+6x^2` and an explicit
+opposite-parity isomorphism `GP(7,2) -> GP(7,3)` that contradicts the
+full biconditional. Its provider commit timestamp is
+`2026-06-13T01:23:03Z`; its internal June 11 date is unverified.
+The [Library note](../Library/Combinatorics/pandey2026parity.md) pins the
+commit, blob, and source hash and explains the edge map. This evidence
+supersedes the bounded no-hit screen for
 [issue 8619](https://github.com/the-omega-institute/trureturing/issues/8619)
-located no explicit resolution in source v1, the author's README/code,
-or the inspected exact identifier/title/author/public-repository searches.
-Unavailable citation APIs and challenged general engines limit this
-evidence. The Library note records the classical ingredients; their
-novelty is not a premise of this candidate.
+and invalidates the historical `open-problem-resolution` novelty
+admission. The local contribution is a formalization of a known
+refutation, not an eligible newly solved open problem.
 
 ## Route
 
@@ -61,9 +67,9 @@ and hence the full universal biconditional.
 
 A source restriction excluding `n=3,k=1`, an incorrect graph-to-source
 mapping, or a failure of the exact independent-set enumeration would
-invalidate this refutation. A located prior resolution of the exact
-literal conjecture would invalidate the proposed open-problem-resolution
-eligibility, without changing the mathematical counterexample.
+invalidate this refutation. The prior-resolution falsifier of novelty
+admission is satisfied by the exact public refutation cited above;
+that correction does not invalidate the mathematical counterexample.
 
 ## Evidence
 
@@ -71,8 +77,11 @@ The formal carrier and sole public result `result : Not claim` are in
 `D5/S3/Combinatorics/GeneralizedPetersen/ParityRefutation.lean`.
 The proof uses kernel `decide` for the configuration equality, the frozen
 evaluation bridge, finite-sum simplification, and exact complex arithmetic.
-The matching Scribe definition binds the result to this problem with
-`OpenProblemResolutionClaim(Refuted)`.
+The matching Scribe definition attributes the result to the earlier
+public refutation through the Library note and retains
+`OpenProblemResolutionClaim(Refuted)`. Under spec §11.20.5 this records
+the local theorem-to-problem binding, not worldwide novelty or the
+validity of historical novelty admission.
 
 Primary-source hashes: TeX
 `5147f84b91867223e59aa63486af9b4276eadd08dc785fa40ab3c670c80ef004`;
@@ -80,10 +89,14 @@ PDF `bae13d4946674f1149b74ef9095d04d9d7ec2d4010dbd8357de52ad88cd066e2`.
 
 ## Triage
 
-`theorem`; Tier 1 recent named external conjecture, preregistered in
-issue 8619 before proof implementation. The proposed admission is
-`open-problem-resolution`, with conservative `proof_shape: bind-only`
-and `escape_witness: none`. The computational use is a
+`theorem`; a published named conjecture with a known prior exact
+refutation. Its historical Tier 1 selection in issue 8619 did not
+establish eligibility: the `open-problem-resolution` admission basis
+was invalid because the exact assertion was already resolved. The
+conservative `proof_shape: bind-only` and `escape_witness: none`
+remain, without a replacement admission basis or escape-witness
+retrofit. The existing valid frozen mathematics is retained under
+CLAUDE §§1.3 and 3.2. The computational use remains a
 `certified-instance` refuting the closed full `claim`. The triangular
 prism, its polynomial, and its real-rootedness are classical, including
 the claw-free theorem of Chudnovsky and Seymour cited by the source.
@@ -91,9 +104,11 @@ No new family, technique, classification, or global priority is claimed.
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness is `ASSUMED-UNVERIFIED`: the bounded screen
-cannot exclude every prior resolution. Source-to-Lean fidelity requires
+The public note's internal June 11 date and its numerical, enumeration,
+Sturm, checker, and audit claims are unverified here; none is needed for
+the explicit isomorphism contradiction or the prior-art correction.
+Literature completeness beyond this exact hit is `ASSUMED-UNVERIFIED`;
+no earliest-priority claim is made. Source-to-Lean fidelity requires
 independent comparison with the cited version; the kernel checks the
-formal statement and proof, not that prose correspondence. Canonical
-admission, frozen membership, and publication are separate obligations;
-the authored resolution binding alone does not establish them.
+formal statement and proof, not that prose correspondence. The typed
+binding establishes neither worldwide novelty nor publication.

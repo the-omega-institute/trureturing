@@ -12,7 +12,8 @@ internal sealed class ParityRefutationDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Combinatorics/pandey2026parity");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The triangular prism has real-rooted independence polynomial 1+6X+6X^2 and odd step size.",
+        "A Lean formalization of the earlier public refutation: the triangular prism has "
+            + "real-rooted independence polynomial 1+6X+6X^2 and odd step size.",
         H("The Triangular Prism Refutes Pandey's Parity Conjecture"),
         Blocks(
             Paragraph(Text(
@@ -48,7 +49,7 @@ internal sealed class ParityRefutationDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("pandey-parity-refutation"),
                 DeclarationHandle.Create(Prefix + "result"), H("An odd-step real-rooted graph"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For n=3 and k=1 the graph is the triangular prism. Its independent sets "
                         + "are the empty set, six singletons, and six pairs u_i,v_j with i different "
@@ -59,12 +60,29 @@ internal sealed class ParityRefutationDocument : IScribeDocumentDefinition
                         + "is real, but k=1 is not even, contradicting the forward direction of "
                         + "the asserted biconditional.")),
                     Paragraph(Text(
-                        "The prism and its real-rooted polynomial are classical ingredients. "
-                            + "The prism is claw-free, so its real-rootedness also follows from "
-                            + "the Chudnovsky-Seymour theorem cited by Pandey. The argument here "
-                            + "uses direct finite counting and elementary arithmetic; it claims "
-                            + "no new graph family or root-location technique. It addresses the "
-                            + "literal later conjecture, without classifying other parameter pairs."))),
+                        "The earlier public refutation in demonstrandum-research/artifacts, "
+                            + "commit 94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3, "
+                            + "problems/p2-factory/kills/pandey-parity/WRITEUP.md, already gives "
+                            + "this exact counterexample. Its provider commit timestamp is "
+                            + "2026-06-13T01:23:03Z; its internal June 11 date is unverified. "
+                            + "The Library note pins both the conjecture and the prior refutation. "
+                            + "That note also explains the published map u_j to v'_(3j mod 7), "
+                            + "v_j to u'_(3j mod 7), an isomorphism GP(7,2) to GP(7,3). "
+                            + "Equal independence polynomials and opposite step parity contradict "
+                            + "the full biconditional without computing roots. No external "
+                            + "enumeration, Sturm, checker, or audit claims are adopted here.")),
+                    Paragraph(Text(
+                        "The prior exact resolution invalidates the historical "
+                            + "open-problem-resolution novelty-admission basis and supersedes "
+                            + "the bounded no-hit literature screen. This is not an eligible newly "
+                            + "solved open problem. The conservative proof_shape: bind-only "
+                            + "assessment remains; no replacement admission basis or escape witness "
+                            + "is asserted. The repository contribution is this Lean formalization "
+                            + "of the known refutation. Valid frozen mathematics is retained under "
+                            + "CLAUDE sections 1.3 and 3.2. Under spec section 11.20.5, the typed "
+                            + "Refuted record binds the local theorem to the problem; it does not "
+                            + "claim worldwide novelty. The graph and conjecture remain attributed "
+                            + "to Pandey; the refutation is attributed to the earlier public note."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("pandey-parity-conjecture-refutation"),
