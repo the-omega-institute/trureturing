@@ -1,6 +1,5 @@
 using StrataLint.Engine;
 using System.Runtime;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -28,10 +27,6 @@ internal static partial class CommonExecutionEvidence
         GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
         GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
     }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    internal static IReadOnlyDictionary<string, RegisteredTestInput> ReadTestInputs(string root) =>
-        TestInputs(root, Snapshot(root));
 
     internal const string RootPath = "build/ci";
     internal const string TestsPath = RootPath + "/tests.json";
@@ -276,13 +271,16 @@ internal static partial class CommonExecutionEvidence
     }
 
     internal static void SealEngineering(string root, CommonStageRecord build, StageStep[] steps)
+        => SealEngineering(root, build, steps, ValidationScope.Create(root));
+
+    private static void SealEngineering(string root, CommonStageRecord build, StageStep[] steps, ValidationScope validation)
     {
         RequirePassed(steps, EngineeringSteps);
-        var candidate = Candidate(root, out var snapshot);
-        ValidateStartedBuild(root, build, candidate);
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
+        var candidate = Candidate(root, validation.Snapshot);
+        ValidateStartedBuild(root, build, candidate, validation);
+        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, validation.Snapshot, validation: validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
-        var checks = ValidateChecks(root, "engineering", build);
+        var checks = ValidateChecks(root, "engineering", build, null, validation);
         var record = new CommonStageRecord(2, candidate, build.Round, steps,
             Materials(root, new[] { BuildPath, TestsPath, ChecksPath("engineering") }.Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path)).Concat(tests.Materials.Select(material => material.Path))
                 .Concat(steps.Select(step => step.Log))));

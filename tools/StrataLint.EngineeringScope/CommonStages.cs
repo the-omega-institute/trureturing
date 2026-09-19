@@ -204,8 +204,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 return new CheckWork([restore, Operation(id, ["build", project, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"])]);
             });
         }
-        _ = checks.Seal();
-        CommonExecutionEvidence.SealEngineering(root, build, steps.Where(step => step.Name == "tests").ToArray());
+        checks.SealEngineering(steps.Where(step => step.Name == "tests").ToArray());
         testSeedSaved = exportSeeds && CommonExecutionEvidence.ExportTestSeed(root, output);
         if (exportSeeds) _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
     }
