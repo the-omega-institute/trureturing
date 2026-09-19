@@ -12,6 +12,8 @@ public sealed class DeclaredTemplateUnregisteredTests
     private const string Target = DeclaredTemplateReviewTests.Target;
     internal const string Theorem = "D5.S0.Carrier.Target.target0";
     private const string Source = "namespace D5.S0.Carrier.Target\ntheorem target0 : True := by trivial\nend D5.S0.Carrier.Target\n";
+    private const string TwoTheoremSource = "namespace D5.S0.Carrier.Target\ntheorem target0 : True := by trivial\n"
+        + "theorem target0_second : True := by trivial\nend D5.S0.Carrier.Target\n";
 
     [Fact]
     public void new_public_theorem_without_registration_blocks() => Block(Build());
@@ -67,6 +69,11 @@ public sealed class DeclaredTemplateUnregisteredTests
             new(Theorem + "__catalog_irredundant", "theorem", "True", [])]));
 
     [Fact]
+    public void compiler_generated_theorems_are_exempt() => Empty(Build(
+        declarations: [new("legendreSym.congr_simp", "theorem", "True", []),
+            new(Theorem + ".eq_1", "theorem", "True", [])]));
+
+    [Fact]
     public void handwritten_companion_suffix_does_not_exempt_theorem() => Block(Build(
         source: Source.Replace("target0", "target0__catalog_irredundant", StringComparison.Ordinal),
         declarations: [new(Theorem + "__catalog_irredundant", "theorem", "True", [])]), Theorem + "__catalog_irredundant");
@@ -77,7 +84,7 @@ public sealed class DeclaredTemplateUnregisteredTests
     [Fact]
     public void candidate_new_module_judges_every_public_theorem()
     {
-        var findings = Findings(Build(added: true, declarations:
+        var findings = Findings(Build(added: true, source: TwoTheoremSource, declarations:
             [new(Theorem, "theorem", "True", []), new(Theorem + "_second", "theorem", "True", [])]));
         Assert.True(findings.Count(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Block) == 2, "[FAIL] candidate_new_module_judges_every_public_theorem");
@@ -132,7 +139,7 @@ public sealed class DeclaredTemplateUnregisteredTests
 
     [Fact]
     public void registration_for_other_theorem_does_not_cover_new_theorem() => Block(Build(binding: "inline",
-        declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
+        source: TwoTheoremSource, declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
 
     [Fact]
     public void unrelated_foreign_records_cannot_fail_selected_theorem() => Declared(Build(binding: "foreign", malformed: true));

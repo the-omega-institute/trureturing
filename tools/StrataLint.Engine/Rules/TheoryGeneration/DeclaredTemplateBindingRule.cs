@@ -102,16 +102,11 @@ internal static class DeclaredTemplateBindingRule
         // visibility field in the admission report.
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
-        if (sourceNames.TryGetValue(declaration.Name, out var kind)) return kind is "theorem" or "lemma";
-        return !GeneratedCompanionSuffixes.Any(suffix => declaration.Name.EndsWith(suffix, StringComparison.Ordinal));
+        // Only theorems the module's source spells out are authored. Everything the
+        // compiler or a command generates (congruence lemmas such as
+        // `legendreSym.congr_simp`, equation lemmas, registration companions) has no
+        // author who could register it, so it carries no obligation. A handwritten
+        // theorem whose name imitates a companion suffix is still in the source map.
+        return sourceNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma";
     }
-
-    // Closed naming alphabet of Registry/Entries and the seal proof builders.
-    // An explicitly authored theorem never gets a suffix-based exemption.
-    private static readonly string[] GeneratedCompanionSuffixes =
-    [
-        "__information_unit", "__primitive_realization", "__lowers_escape", "__trivial_in_catalog",
-        "__escape_enriched", "__information_catalog", "__catalog_irredundant", "__catalog_redundant",
-        "__system_catalog_irredundant", "__system_catalog_not_irredundant", "__information_registration_diagnostic",
-    ];
 }
