@@ -48,7 +48,7 @@ For n=3 and k=1 the graph is the triangular prism. Its independent sets are the 
 
 The earlier public refutation in demonstrandum-research/artifacts, commit 94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3, problems/p2-factory/kills/pandey-parity/WRITEUP.md, already gives this exact counterexample. Its provider commit timestamp is 2026-06-13T01:23:03Z; its internal June 11 date is unverified. The separate prior-refutation Library note pins that source. That note also explains the published map u_j to v'_(3j mod 7), v_j to u'_(3j mod 7), an isomorphism GP(7,2) to GP(7,3). Equal independence polynomials and opposite step parity contradict the full biconditional without computing roots. No external enumeration, Sturm, checker, or audit claims are adopted here.
 
-The prior exact resolution invalidates the historical open-problem-resolution novelty-admission basis and supersedes the bounded no-hit literature screen. This is not an eligible newly solved open problem. The conservative proof_shape: bind-only assessment remains; no replacement admission basis or escape witness is asserted. The repository contribution is this Lean formalization of the known refutation. Valid frozen mathematics is retained under CLAUDE sections 1.3 and 3.2. Under spec section 11.20.5, the typed Refuted record binds the local theorem to the problem; it does not claim worldwide novelty. The graph and conjecture remain attributed to Pandey; the refutation is attributed to the earlier public note.
+This Lean theorem formalizes the already published refutation; it is not a newly resolved open problem. The graph and conjecture are due to Pandey; the refutation is due to the distinct earlier public note cited above.
 
 ## References
 
