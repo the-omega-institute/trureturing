@@ -177,7 +177,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files[producer] = registration;
         fixture.Baseline[producer] = registration;
         const string inputs = """
-            {"config_inputs":{"include":[],"exclude":[]},"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+            {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
              "lean-report":{"include":[],"exclude":[]},
              "scribe-content":{"include":[],"exclude":[]}}}
             """;

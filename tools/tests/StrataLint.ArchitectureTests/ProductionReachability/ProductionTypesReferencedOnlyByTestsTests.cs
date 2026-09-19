@@ -1,11 +1,11 @@
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.ArchitectureTests;
 
 public sealed class ProductionTypesReferencedOnlyByTestsTests
 {
     [Fact]
     public void ProductionTypesAreNotReferencedOnlyByTests()
     {
-        var census = ProductionTestOnlyTypePolicy.InspectRepository(TestRepositoryLayout.FindRoot());
+        var census = ProductionTestOnlyTypePolicy.InspectRepository(RepositoryLayout.FindRoot());
         var findings = census.Where(static finding => !finding.IsAllowlisted).ToArray();
 
         Assert.True(

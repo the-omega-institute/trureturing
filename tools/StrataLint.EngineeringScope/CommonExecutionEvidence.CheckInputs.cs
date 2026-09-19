@@ -52,7 +52,7 @@ internal static partial class CommonExecutionEvidence
         var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         var checks = validation.CheckManifest(registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
-        _ = registry.Sources(files);
+        var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var registeredProjects = projects.Keys.ToHashSet(StringComparer.Ordinal);
@@ -82,7 +82,6 @@ internal static partial class CommonExecutionEvidence
             var selected = new HashSet<string>(StringComparer.Ordinal);
             foreach (var project in check.ProgramProjects) Add(project);
             var materialPaths = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id).ToHashSet(StringComparer.Ordinal);
-            materialPaths.UnionWith(RegisteredProgramInputs(paths, check.ProgramInputs, "check " + check.Id));
             foreach (var report in check.ReportInputs)
             {
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id));
@@ -93,15 +92,13 @@ internal static partial class CommonExecutionEvidence
                     if (!registeredProjects.Contains(project)) throw new InvalidDataException($"producer {report.Producer} references unregistered project: {project}");
                 var consumer = ReadConsumer(snapshot, report, registeredProjects, check.Id);
                 foreach (var project in consumer.Projects) Add(project);
-                materialPaths.UnionWith(RegisteredProgramInputs(paths, consumer.ProgramInputs, "consumer " + report.Consumer));
                 materialPaths.UnionWith(consumer.Materials);
                 materialPaths.Add(report.Consumer);
             }
             foreach (var project in selected.Select(path => projects[path]))
             {
                 materialPaths.Add(project.Path);
-                // Project registration retains build/configuration identity. Check
-                // program bytes come only from its authored input sets above.
+                materialPaths.UnionWith(sources[project.Path].Select(source => source.Path));
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
             }
             object ProjectProjection(EngineeringProjectRegistration project) => new
@@ -114,7 +111,7 @@ internal static partial class CommonExecutionEvidence
                 governance = check.Id == "selftest-pair" ? new { project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition, project.RootNamespace,
                     project.NamespaceExclude, project.GlobalNamespaceExceptions } : null,
             };
-            result.Add(check.Id, Digest(new { contract = "common-check-execution-v4", registration = check,
+            result.Add(check.Id, Digest(new { contract = "common-check-execution-v3", registration = check,
                 projects = selected.Order(StringComparer.Ordinal).Select(name => ProjectProjection(projects[name])),
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),
                 inventory = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id),
@@ -131,43 +128,9 @@ internal static partial class CommonExecutionEvidence
         return result;
     }
 
-    private sealed record CheckConsumer(string Schema, string Producer, string[] Projects, string[] ProgramInputs, string[] Materials);
+    private sealed record CheckConsumer(string Schema, string Producer, string[] Projects, string[] Materials);
 
-    private static void RequireProgramInputDeclaration(string[]? inputs, string context)
-    {
-        if (inputs is null || inputs.Length == 0 || inputs.Any(input => string.IsNullOrWhiteSpace(input) || input.Contains(':'))
-            || inputs.Distinct(StringComparer.Ordinal).Count() != inputs.Length)
-            throw new InvalidDataException($"missing or invalid program_inputs: {context}");
-    }
-
-    private static void ValidateProgramInputs(IReadOnlySet<string> paths, string[]? inputs, string context)
-    {
-        RequireProgramInputDeclaration(inputs, context);
-        try
-        {
-            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, inputs!, [], context + " program_inputs");
-        }
-        catch (FormatException exception)
-        {
-            throw new InvalidDataException($"invalid program_inputs: {context}: {exception.Message}", exception);
-        }
-    }
-
-    private static string[] RegisteredProgramInputs(IEnumerable<string> paths, string[]? inputs, string context)
-    {
-        RequireProgramInputDeclaration(inputs, context);
-        try
-        {
-            return EngineeringProjectRegistry.ExpandInputs(paths, inputs!, [], context + " program_inputs");
-        }
-        catch (FormatException exception)
-        {
-            throw new InvalidDataException($"invalid program_inputs: {context}: {exception.Message}", exception);
-        }
-    }
-
-    private static CheckConsumer ReadConsumer(RepositorySnapshot snapshot, RegisteredCheckReport report, IReadOnlySet<string> projects, string check,
-        IReadOnlySet<string>? paths = null)
+    private static CheckConsumer ReadConsumer(RepositorySnapshot snapshot, RegisteredCheckReport report, IReadOnlySet<string> projects, string check)
     {
         var path = report.Consumer;
         var context = $"check {check}: consumer {path}";
@@ -176,10 +139,9 @@ internal static partial class CommonExecutionEvidence
         try
         {
             var consumer = JsonSerializer.Deserialize<CheckConsumer>(file.Text, JsonOptions);
-            if (consumer is null || consumer.Schema != "report-consumer-inputs-v2" || consumer.Producer != report.Producer
+            if (consumer is null || consumer.Schema != "report-consumer-inputs-v1" || consumer.Producer != report.Producer
                 || consumer.Projects is null || consumer.Materials is null)
                 throw new InvalidDataException($"invalid {context}: producer {report.Producer}");
-            ValidateProgramInputs(paths ?? snapshot.Files.Keys.Select(input => input.Value).ToHashSet(StringComparer.Ordinal), consumer.ProgramInputs, context);
             var inputs = consumer.Projects.Concat(consumer.Materials).ToArray();
             foreach (var duplicate in inputs.GroupBy(input => input).Where(group => group.Count() > 1))
                 throw new InvalidDataException($"duplicate input in {context}: {duplicate.Key}");

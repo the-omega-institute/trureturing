@@ -696,54 +696,6 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         .Order(StringComparer.Ordinal).Select(path => (Path.GetRelativePath(root, path), CommonExecutionEvidence.Hash(path),
             OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(path))).ToArray();
 
-    [Fact]
-    public async Task ReportlessAndFullProfilesSaveConcurrentlyAndRestoreIndependently()
-    {
-        using var fixture = Prepare("current");
-        var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
-        var layers = new[] { "checks", "current" };
-        var saves = await Task.WhenAll(layers.Select((layer, index) => Task.Run(() =>
-            Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", layer],
-                Environment(commit, fixture.Root, (91 + index).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")))));
-        Assert.All(saves, result => Assert.True(result.Exit == 0 &&
-            (result.Text.Contains("\"status\": \"snapshot\"", StringComparison.Ordinal)
-                || result.Text.Contains("\"status\": \"save-failed\"", StringComparison.Ordinal)), result.Text));
-        // Optional concurrent writers may lose the shared publication lock. A
-        // retry of that profile must preserve the other profile's complete seed.
-        for (var index = 0; index < layers.Length; index++)
-        {
-            if (saves[index].Text.Contains("\"status\": \"snapshot\"", StringComparison.Ordinal)) continue;
-            var other = Path.Combine(fixture.Root, "build/lean-cache", layers[1 - index]);
-            var before = Directory.Exists(other) ? Inventory(other) : [];
-            AssertReceipt(Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", layers[index]],
-                Environment(commit, fixture.Root, "94", "1")), "snapshot");
-            if (before.Length != 0) Assert.Equal(before, Inventory(other));
-        }
-        var target = Destination(fixture, "profiles");
-        var keys = new Dictionary<string, string>();
-        foreach (var layer in layers)
-        {
-            var cached = Path.Combine(fixture.Root, "build/lean-cache", layer);
-            var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(cached, "manifest.json")))!;
-            keys[layer] = manifest["key"]!.ToString();
-            CopyDirectory(cached, Path.Combine(target, "build/lean-cache", layer));
-            var materialPaths = manifest["files"]!.AsArray().Select(row => row!["path"]!.ToString()).ToArray();
-            if (layer == "checks") Assert.DoesNotContain(materialPaths, path => path.Contains("raw-lean-report", StringComparison.Ordinal));
-            else Assert.Contains(materialPaths, path => path.Contains("raw-lean-report", StringComparison.Ordinal));
-        }
-        Assert.NotEqual(keys["checks"], keys["current"]);
-        AssertReceipt(Python(target, repository, ["restore", "--repository", target, "--layers", "checks", "--checks-key", keys["checks"]],
-            Environment(commit, target, "93", "1")), "restored");
-        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath("current"))));
-        var checks = CommonExecutionEvidence.BeginChecks(target, "current", CommonExecutionEvidence.ValidateBuild(target), TextWriter.Null, ["filemap"]);
-        checks.Run("filemap", () => throw new InvalidOperationException("checks profile must reuse without full seed"));
-        Assert.Equal("reused", Assert.Single(checks.Seal().Units).Status);
-        AssertReceipt(Python(target, repository, ["restore", "--repository", target, "--layers", "current", "--current-key", keys["current"]],
-            Environment(commit, target, "93", "1")), "restored");
-        AssertAccepted(fixture.Root, target, "current", "profiles");
-    }
-
     private static CurrentExecutionContractTests.CandidateFixture Prepare(string stage, bool plannedEngineering = false)
     {
         var fixture = new CurrentExecutionContractTests.CandidateFixture();

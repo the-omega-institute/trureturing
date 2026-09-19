@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.ArchitectureTests;
 
 internal sealed record ProductionTestOnlyTypeFinding(
     string QualifiedName,

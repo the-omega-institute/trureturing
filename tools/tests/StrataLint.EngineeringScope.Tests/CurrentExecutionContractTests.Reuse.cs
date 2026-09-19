@@ -7,12 +7,11 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests", true, false, true)]
-    [InlineData("StrataLint.Cache.Tests", false, false, false)]
-    [InlineData("StrataLint.EngineeringScope.Tests", false, false, true)]
-    [InlineData("StrataLint.ScriptTests", true, false, true)]
-    [InlineData("StrataLint.Tests", true, false, true)]
-    public void RegisteredAgentAndPolicyInputsInvalidateOnlyTheirDeclaredTestConsumers(string project, bool consumesAgent, bool consumesPolicy, bool consumesPreflight)
+    [InlineData("StrataLint.ArchitectureTests")]
+    [InlineData("StrataLint.EngineeringScope.Tests")]
+    [InlineData("StrataLint.ScriptTests")]
+    [InlineData("StrataLint.Tests")]
+    public void RegisteredAgentDocumentationPreservesTestInputsWhileScriptsAndTemplatesInvalidate(string project)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -32,18 +31,8 @@ public sealed partial class CurrentExecutionContractTests
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
-            (Path: "tools/scripts/agent/merge-gate.sh", Invalidates: project == "StrataLint.ScriptTests"),
-            (Path: "tools/scripts/agent/openproblem/erdos617.py", Invalidates: project == "StrataLint.ScriptTests"),
-            (Path: "tools/scripts/agent/openproblem/standing-check.py", Invalidates: project == "StrataLint.ScriptTests"),
-            (Path: "tools/scripts/agent/openproblem/TARGET-GATES.md", Invalidates: project == "StrataLint.ScriptTests"),
-            (Path: "tools/scripts/preflight.sh", Invalidates: consumesPreflight),
-            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: consumesAgent),
-            (Path: "tools/scripts/agent/openproblem/templates/learner-brief.md", Invalidates: consumesAgent),
-            (Path: "tools/scripts/agent/openproblem/templates/impl-base-brief.md", Invalidates: consumesAgent),
-            (Path: "tools/scripts/agent/openproblem/lane.sh", Invalidates: consumesAgent),
-            (Path: "Meta/domains.yaml", Invalidates: consumesPolicy),
-            (Path: "tools/scripts/workflow/ci.py", Invalidates: true),
-            (Path: "tools/scripts/report/dotnet_producer.py", Invalidates: true),
+            (Path: "tools/scripts/preflight.sh", Invalidates: true),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: true),
         };
         foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
         fixture.Track();
@@ -56,7 +45,7 @@ public sealed partial class CurrentExecutionContractTests
             fixture.Track();
             var calls = Execute(fixture);
             var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
-            Assert.True(change.Invalidates ? previous != current : previous == current, $"[FAIL] registered_test_input_isolation: {project}: {change.Path}: invalidates={change.Invalidates}");
+            Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
             Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
             previous = current;
         }
@@ -84,19 +73,18 @@ public sealed partial class CurrentExecutionContractTests
             "Meta/Digestion/atomizers.toml", "Meta/FILEMAP.toml", "Meta/FILEMAP.fixture.toml",
             "Meta/ReportConsumers/lean-report.json", "Meta/ReportConsumers/scribe-content.json",
             "Meta/ReportProducers/lean-report.json", "Meta/ReportProducers/scribe-content.json",
-            "Meta/ci-checks.json", "Meta/ci-resources.json",
-            EngineeringRegistrationFixture.Path, "Meta/judge-seed.json", "Meta/package-materials.json",
+            "Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/domains.yaml",
+            EngineeringRegistrationFixture.Path, "Meta/judge-seed.json", "Meta/package-materials.json", "Meta/registry.yaml",
         ];
         foreach (var path in governance)
             if (!File.Exists(Path.Combine(fixture.Root, path))) fixture.Write(path, "registered fixture material\n");
         fixture.Write("Meta/FILEMAP.toml", "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n");
         var atom = "Meta/Digestion/atoms/sha256/" + new string('a', 64);
         var backfill = "Meta/Digestion/backfill/theory/residual-open/" + new string('a', 64) + ".yaml";
-        var independent = new[] { atom, backfill, "Meta/registry.yaml", "Meta/domains.yaml", "agents/prover.md" };
-        foreach (var path in independent) fixture.Write(path, "original content\n");
+        foreach (var path in new[] { atom, backfill }) fixture.Write(path, "original content\n");
         fixture.Track();
         Execute(fixture);
-        foreach (var path in independent)
+        foreach (var path in new[] { atom, backfill })
             foreach (var mutation in new[] { "change", "delete", "add" })
             {
                 Seed(fixture);

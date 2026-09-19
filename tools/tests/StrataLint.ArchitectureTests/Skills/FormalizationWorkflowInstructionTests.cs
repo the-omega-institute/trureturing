@@ -1,4 +1,4 @@
-namespace StrataLint.Policy.Tests;
+namespace StrataLint.ArchitectureTests;
 
 public sealed class FormalizationWorkflowInstructionTests
 {
@@ -6,7 +6,7 @@ public sealed class FormalizationWorkflowInstructionTests
     public void WorktreeDisciplineDoesNotRequireCommittedBlobBeforeDeposit()
     {
         var instructions = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
+            RepositoryLayout.FindRoot(),
             "CLAUDE.md"));
 
         Assert.DoesNotContain("未提交 blob", instructions, StringComparison.Ordinal);
@@ -18,7 +18,7 @@ public sealed class FormalizationWorkflowInstructionTests
     public void BatchDepositLaneDocumentsFourArtifacts()
     {
         var script = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
+            RepositoryLayout.FindRoot(),
             "tools",
             "scripts",
             "agent",
@@ -34,7 +34,7 @@ public sealed class FormalizationWorkflowInstructionTests
     public void FormalAnswerSkillDoesNotImportRetiredFormalizationReceiptLedger()
     {
         var skill = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
+            RepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
@@ -50,7 +50,7 @@ public sealed class FormalizationWorkflowInstructionTests
     public void TheoryIngestSkillTreatsLedgerAsEvidenceRatherThanFormalizationReceipt()
     {
         var skill = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
+            RepositoryLayout.FindRoot(),
             "skills",
             "codex-theory-ingest",
             "SKILL.md"));

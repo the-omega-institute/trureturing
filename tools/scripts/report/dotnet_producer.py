@@ -63,9 +63,8 @@ def project_registry(root):
     root = root.resolve()
     try:
         data = json.loads((root / PROJECT_MANIFEST).read_text(), object_pairs_hook=unique_object)
-        if (not isinstance(data, dict) or set(data) != {"version", "test_parallelism", "projects", "historical_projects", "rule_build_inputs"}
+        if (not isinstance(data, dict) or set(data) != {"version", "projects", "historical_projects", "rule_build_inputs"}
                 or type(data["version"]) is not int or data["version"] != 1
-                or type(data["test_parallelism"]) is not int or not 1 <= data["test_parallelism"] <= 2_147_483_647
                 or not isinstance(data["projects"], list) or not isinstance(data["historical_projects"], list)):
             raise ValueError("invalid engineering manifest schema")
         inputs = data["rule_build_inputs"]

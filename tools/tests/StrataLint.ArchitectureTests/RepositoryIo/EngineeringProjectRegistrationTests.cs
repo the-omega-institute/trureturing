@@ -8,48 +8,6 @@ public sealed class EngineeringProjectRegistrationTests
     private const string Misleading = "<Project><PropertyGroup><AssemblyName>Wrong</AssemblyName><IsTestProject>false</IsTestProject></PropertyGroup></Project>";
 
     [Theory]
-    [InlineData(1)]
-    [InlineData(2)]
-    public void CandidateAcceptsExplicitTestParallelism(int parallelism)
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        manifest["test_parallelism"] = parallelism;
-        var snapshot = Snapshot(manifest.ToJsonString(), (Project, Misleading));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
-    }
-
-    [Theory]
-    [InlineData("missing")]
-    [InlineData("0")]
-    [InlineData("-1")]
-    [InlineData("null")]
-    [InlineData("1.5")]
-    [InlineData("\"2\"")]
-    [InlineData("true")]
-    [InlineData("2147483648")]
-    public void CandidateRejectsAbsentOrInvalidTestParallelism(string value)
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        if (value == "missing") manifest.AsObject().Remove("test_parallelism");
-        else manifest["test_parallelism"] = System.Text.Json.Nodes.JsonNode.Parse(value);
-        var failure = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
-            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
-        Assert.Contains("test_parallelism", failure.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void OldBaseProjectDataDoesNotRequireCandidateSchedulingConfiguration()
-    {
-        var baseline = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        baseline.AsObject().Remove("test_parallelism");
-        var candidate = baseline.DeepClone();
-        candidate["test_parallelism"] = 2;
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(
-            Snapshot(baseline.ToJsonString(), (Project, Misleading)),
-            Snapshot(candidate.ToJsonString(), (Project, Misleading)))).ToArray());
-    }
-
-    [Theory]
     [InlineData("execution_inputs")]
     [InlineData("execution_excludes")]
     [InlineData("execution_environment")]

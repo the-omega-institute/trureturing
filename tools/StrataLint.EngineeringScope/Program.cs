@@ -58,8 +58,10 @@ internal static class Program
                 arguments = arguments.Take(2).ToArray();
             }
             var repository = RepositoryOption(arguments);
-            var prepared = PrepareTests(repository, null, buildRound);
-            return ExecuteTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results), output, prepared);
+            var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
+            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
+            var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
+            return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
         }
         catch (Exception exception)
         {
@@ -109,48 +111,29 @@ internal static class Program
         return [selected.Assembly];
     }
 
-    private sealed record PreparedTests(CommonStageRecord Build, IReadOnlyDictionary<string, RegisteredTestInput> Inputs,
-        IReadOnlyDictionary<string, string> Assemblies, int Parallelism);
-
-    private static PreparedTests PrepareTests(string root, CommonStageRecord? build, string? round)
+    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
     {
-        var validation = CommonExecutionEvidence.ValidationScope.Create(root);
-        if (build is null) build = CommonExecutionEvidence.ValidateBuild(root, validation, round);
-        else CommonExecutionEvidence.ValidateStartedBuild(root, build,
-            CommonExecutionEvidence.Candidate(root, validation.Snapshot), validation);
-        var inputs = CommonExecutionEvidence.TestInputs(root, validation.Snapshot, build);
-        return new(build, inputs, CommonExecutionEvidence.ValidateTestBuild(root, build, inputs),
-            EngineeringProjectRegistry.Read(validation.Snapshot).TestParallelism);
-    }
-
-    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null) =>
-        ExecuteTests(root, run, output, PrepareTests(root, build, null));
-
-    private static int ExecuteTests(string root, Func<string, string, int> run, TextWriter output, PreparedTests prepared)
-    {
-        output = TextWriter.Synchronized(output);
-        var build = prepared.Build;
-        var candidate = build.Candidate;
-        var inputs = prepared.Inputs;
+        var candidate = CommonExecutionEvidence.Candidate(root);
+        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
+        build ??= CommonExecutionEvidence.ValidateBuild(root);
+        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
+        _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);
         var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();
         var invocation = Guid.NewGuid().ToString("N");
-        var records = new TestProjectExecution[projects.Length];
-        output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} parallelism={prepared.Parallelism} candidate={candidate}");
-        // Each slot owns one project's TRX directory and record. Joining precedes
-        // every aggregate write/validation; completion order never addresses evidence.
-        Parallel.For(0, projects.Length, new ParallelOptions { MaxDegreeOfParallelism = prepared.Parallelism }, index =>
+        var records = new List<TestProjectExecution>();
+        output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
+        foreach (var project in projects)
         {
-            var project = projects[index];
             if (reused.TryGetValue(project, out var prior))
             {
-                records[index] = prior;
+                records.Add(prior);
                 output.WriteLine($"ENGINEERING_TEST_REUSED project={JsonSerializer.Serialize(project)} origin_candidate={prior.ExecutionCandidate} origin_round={prior.ExecutionRound}");
-                return;
+                continue;
             }
             output.WriteLine($"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
-            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{candidate}/{build.Round}/{inputs[project].Fingerprint}/{invocation}/{index}";
+            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{candidate}/{build.Round}/{inputs[project].Fingerprint}/{invocation}/{records.Count}";
             var directory = Path.Combine(root, relative);
             Directory.CreateDirectory(directory);
             var exit = 2;
@@ -164,13 +147,13 @@ internal static class Program
                 if (exit != 0) failure = $"dotnet test exit={exit}";
             }
             catch (Exception exception) { failure = exception.Message; }
-            records[index] = new(project, inputs[project].Fingerprint, "executed", candidate, build.Round, relative, exit, executed, failure);
+            records.Add(new(project, inputs[project].Fingerprint, "executed", candidate, build.Round, relative, exit, executed, failure));
             output.WriteLine($"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(project)} raw_exit={exit} executed={executed} error={JsonSerializer.Serialize(failure)}");
-        });
+        }
         var paths = records.SelectMany(record => Directory.GetFiles(Path.Combine(root, record.Results), "*.trx"))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
-            new TestExecutionRecord(2, candidate, build.Round, records, CommonExecutionEvidence.Materials(root, paths)));
+            new TestExecutionRecord(2, candidate, build.Round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
         if (CommonExecutionEvidence.Candidate(root) != candidate) throw new InvalidDataException("candidate changed during test execution");
         CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
         try { CommonExecutionEvidence.ValidateTests(root); }

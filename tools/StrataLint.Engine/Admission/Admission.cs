@@ -211,7 +211,7 @@ public static class AdmissionPipeline
 
     public static RuleExecutionOutcome CheckDelta(DeltaRuleContext context) =>
         context.CommonResults is null
-            ? new RuleExecutionOutcome.InfrastructureFailure("delta requires validated common evidence for its registered obligations")
+            ? new RuleExecutionOutcome.InfrastructureFailure("delta requires validated current/engineering evidence")
             : RuleCatalog.Default.ExecuteDelta(context);
 
     public static AdmissionOutcome Evaluate(

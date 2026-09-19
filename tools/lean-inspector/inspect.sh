@@ -24,7 +24,7 @@ REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
 [[ -n "$LOG_DIR" ]] || LOG_DIR="${OUTPUT}.logs"
 [[ "$LOG_DIR" == /* ]] || LOG_DIR="$REPOSITORY/$LOG_DIR"
 LAKE="${LAKE_BIN:-$(command -v lake || true)}"
-[[ -z "$LAKE" || ( "$LAKE" == /* && -x "$LAKE" ) ]] \
+[[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
   || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; exit 2; }
 
 # This entry owns supervision as well as production, including direct callers.
@@ -94,9 +94,8 @@ open_logs() {
 }
 reuse_report() {
   local status=0
-  local arguments=(reuse --repository "$REPOSITORY" --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT")
-  if [[ -n "$LAKE" ]]; then arguments+=(--lake "$LAKE"); fi
-  python3 -B "$SCRIPT_DIR/reuse.py" "${arguments[@]}" || status=$?
+  python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
+    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" --lake "$LAKE" || status=$?
   printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
   # An optional seed miss is normal. Parser/registration failures still block.
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
@@ -109,25 +108,10 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   exit 0
 fi
 cat "$LOG_DIR/reuse.stdout.log"
-# A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
-# This producer owns the cold fallback even if an earlier optional probe hit.
-# Complete verified reuse needs no compiler installation or cache material.
-if [[ -z "$LAKE" ]]; then
-  run_phase toolchain /bin/bash "$REPOSITORY/tools/scripts/workflow/install-lean-toolchain.sh" \
-    "$REPOSITORY/lean-toolchain" --github-path "$STARTUP_LOG_DIR/toolchain-path"
-  while IFS= read -r tool_directory; do
-    [[ "$tool_directory" == /* && -d "$tool_directory" ]] \
-      || { echo 'inspect.sh: installer returned an invalid tool directory' >&2; exit 2; }
-    export PATH="$tool_directory:$PATH"
-  done < "$STARTUP_LOG_DIR/toolchain-path"
-  LAKE="$(command -v lake || true)"
-fi
-[[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
-  || { echo 'inspect.sh: the required Lake executable is unavailable after installation' >&2; exit 2; }
-export LAKE_BIN="$LAKE"
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --lake "$LAKE" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+# A failed new default/report run must not leave an apparent successful seal.
+rm -f -- "${OUTPUT}.reuse.json"
 if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
     --configuration Release --nologo --verbosity quiet

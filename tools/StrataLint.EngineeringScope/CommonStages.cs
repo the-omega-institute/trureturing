@@ -83,22 +83,20 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var planned = stage switch
         {
             "build" => CommonExecutionEvidence.BuildSteps,
-            "engineering" => [.. CommonExecutionEvidence.EngineeringSteps, .. CommonExecutionEvidence.EngineeringCheckIds],
+            "engineering" => [.. CommonExecutionEvidence.EngineeringSteps, .. engineeringChecks?.Ids ?? CommonExecutionEvidence.EngineeringCheckIds],
             "current" => CommonExecutionEvidence.CurrentSteps,
             "delta" => ["check-delta"],
             _ => [],
         };
         var required = resourcePlan is null || resourcePlan.StageRequired(stage);
-        var obligations = !required ? [] : stage == "current" && resourcePlan is not null ? resourcePlan.CurrentSteps
-            : stage == "engineering" && resourcePlan is not null
-                ? CommonExecutionEvidence.EngineeringSteps.Concat(CommonExecutionEvidence.EngineeringCheckIds.Where(resourcePlan.CheckUnits.Contains)).ToArray() : planned;
+        var obligations = !required ? [] : stage == "current" && resourcePlan is not null ? resourcePlan.CurrentSteps : planned;
         // Check units can be accepted from validated reuse without launching an
         // operation. A failed unit is attempted even when its validation fails
         // after zero-exit operations (for example, unequal selftest output).
-        var checkUnits = stage == "engineering" ? CommonExecutionEvidence.EngineeringCheckIds.Select(id =>
+        var checkUnits = stage == "engineering" ? (engineeringChecks?.Ids ?? CommonExecutionEvidence.EngineeringCheckIds).Select(id =>
         {
             var accepted = engineeringChecks?.Completed.SingleOrDefault(unit => unit.Id == id);
-            return new { id, status = !obligations.Contains(id) ? "not-required" : accepted?.Status
+            return new { id, status = !required ? "not-required" : accepted?.Status
                     ?? (attemptedEngineeringCheck == id ? "failed" : "not-executed"),
                 execution_candidate = accepted?.ExecutionCandidate, execution_round = accepted?.ExecutionRound };
         }).ToArray() : [];
@@ -175,12 +173,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             stage = "engineering";
         }
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
-        var selectedPlan = CommonExecutionEvidence.SelectedPlan(root, build);
-        if (resourcePlan is not null && (selectedPlan is null || !JsonElement.DeepEquals(resourcePlan.Document, selectedPlan.Document)))
-            throw new InvalidDataException("engineering resource selection differs from its build");
-        resourcePlan = selectedPlan;
-        var ids = CommonExecutionEvidence.SelectedEngineeringCheckIds(root, build);
-        var checks = engineeringChecks = ids.Length == 0 ? null : CommonExecutionEvidence.BeginChecks(root, "engineering", build, output, ids);
+        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
         try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
         finally
         {
@@ -191,27 +184,23 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 testsReused = tests.Projects.Count(project => project.Status == "reused");
             }
         }
-        if (ids.Contains("selftest-pair"))
-        {
-            attemptedEngineeringCheck = "selftest-pair";
-            checks!.Run(attemptedEngineeringCheck, () => new CheckWork([
-                Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
-                Operation("selftest-second", [CommonExecutionEvidence.CliPath, "selftest"])]));
-        }
+        attemptedEngineeringCheck = "selftest-pair";
+        checks.Run(attemptedEngineeringCheck, () => new CheckWork([
+            Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
+            Operation("selftest-second", [CommonExecutionEvidence.CliPath, "selftest"])]));
         foreach (var (id, project) in new[] {
             ("capability-proof", "tools/tests/CompileFailProof/CompileFailProof.csproj"),
             ("banned-api-proof", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj") })
         {
-            if (!ids.Contains(id)) continue;
             attemptedEngineeringCheck = id;
-            checks!.Run(id, () =>
+            checks.Run(id, () =>
             {
                 var restore = Operation("restore-" + Path.GetFileNameWithoutExtension(project), ["restore", project, "--locked-mode", "-nr:false"]);
                 if (restore.RawExit != 0) return new CheckWork([restore]);
                 return new CheckWork([restore, Operation(id, ["build", project, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"])]);
             });
         }
-        _ = checks?.Seal();
+        _ = checks.Seal();
         CommonExecutionEvidence.SealEngineering(root, build, steps.Where(step => step.Name == "tests").ToArray());
         testSeedSaved = exportSeeds && CommonExecutionEvidence.ExportTestSeed(root, output);
         if (exportSeeds) _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
@@ -311,13 +300,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     {
         var build = CommonExecutionEvidence.ValidateBuild(root);
         RequireBinary(build, CommonExecutionEvidence.CliPath);
-        var arguments = new List<string> { CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha! };
-        if (resourcePlan is null || resourcePlan.CurrentSteps.Contains("lean-report"))
-            arguments.AddRange(["--candidate-lean-report", CommonExecutionEvidence.ReportPath]);
-        if (resourcePlan is not null)
-            arguments.AddRange(["--common-build-round", build.Round, "--common-plan", resourcePlan.PlanPath,
-                "--common-changes", resourcePlan.ChangesPath]);
-        Step("check-delta", "dotnet", arguments.ToArray(), allowAnnotation: true);
+        Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
+            "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
     }
 
     private static void RequireBinary(CommonStageRecord record, string path)

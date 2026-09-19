@@ -12,8 +12,8 @@ import tomllib
 
 STAGES = ("build", "engineering", "current", "delta")
 TOOLS = {"bash", "dotnet", "git", "lake", "make", "python3"}
-CACHES = {"dependency", "project", "judge", "elan", "engineering", "current", "checks"}
-CACHE_PHASES = {"stage-start", "report-miss"}
+CACHES = {"dependency", "project", "judge", "elan", "engineering", "current"}
+CACHE_PHASES = {"stage-start"}
 FILEMAP = "Meta/FILEMAP.toml"
 FILEMAP_FRAGMENT = re.compile(r"\AMeta/FILEMAP(?:\.[a-z][a-z0-9]*)+\.toml\Z")
 
@@ -174,10 +174,7 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
         for layer, phase in activation.items():
             if not isinstance(phase, str) or phase not in CACHE_PHASES:
                 raise ValueError(f"{rid}: unknown cache activation: {layer}")
-            if phase == "report-miss" and (resource["stage"] != "current" or layer not in {"dependency", "elan", "project"}):
-                raise ValueError(f"{rid}: report-miss activation requires a current Lean cache: {layer}")
-            if any(row["stage"] == resource["stage"] and row["cache_activation"].get(layer, phase) != phase
-                    for row in resources.values()):
+            if any(row["cache_activation"].get(layer, phase) != phase for row in resources.values()):
                 raise ValueError(f"conflicting cache activation: {layer}")
         materials = resource["materials"]
         if not isinstance(materials, list):
@@ -606,10 +603,8 @@ def make_plan(root, commit, changes_file):
     push = isinstance(data, dict) and data.get("mode") == "push"
     exact(data, {"schema_version", "mode", "candidate", "base", "head", "complete", "change_count", "changes"}
           | ({"origin"} if push else set()), "changed scope")
-    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"push", "pr"}:
+    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"current", "push", "pr"}:
         raise ValueError("invalid changed scope version/mode")
-    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" and data["mode"] != "pr":
-        raise ValueError("pull request requires its complete PR scope")
     exact(data["candidate"], {"commit", "tree"}, "candidate")
     paths = change_paths(data)
     actual = None
@@ -629,15 +624,16 @@ def make_plan(root, commit, changes_file):
             actual = push_paths(root, checked_head(root, commit), origin.get("before"), origin.get("after"))
     if data["candidate"] != (actual["candidate"] if push else candidate(root, commit)):
         raise ValueError("changed scope candidate identity mismatch")
-    if push:
+    if data["mode"] != "pr":
         if data["base"] is not None or data["head"] is not None:
-            raise ValueError("push scope must not contain base/head")
-    actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
-    if push and not same_record(data["origin"], actual["origin"]):
-        raise ValueError("push origin does not match candidate's actual immutable event endpoints")
-    key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
-    if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
-        raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
+            raise ValueError("current scope must not contain base/head")
+    if push or data["mode"] == "pr":
+        actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
+        if push and not same_record(data["origin"], actual["origin"]):
+            raise ValueError("push origin does not match candidate's actual immutable event endpoints")
+        key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
+        if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
+            raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
     local = push and actual["origin"].get("kind") in {"local-current-input", "local-range"}
     tree = tree_entries(root, candidate(root, commit)["tree"])
     if local:
@@ -807,11 +803,7 @@ def execution_selection(read, active, resources):
     order = ["lean", "lean-report", "scribe", "filemap", "check-current"]
     if steps - set(order):
         raise ValueError("unknown current step registration")
-    # A test project explicitly requested by a resource is an execution unit,
-    # even when another root also needs it as a compiler reference.
-    roots = {project for project in selected_projects
-             if project not in dependencies or projects[project]["ci"]}
-    return {"projects": sorted(roots), "checks": sorted(selected_checks),
+    return {"projects": sorted(selected_projects - dependencies), "checks": sorted(selected_checks),
             "steps": [step for step in order if step in steps]}
 
 
@@ -894,7 +886,7 @@ def plan_pr(root, commit, base, head):
           "changes_bytes": changes.stat().st_size, "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
     # Complete manifests travel as files. Job outputs remain bounded regardless
     # of the number or length of changed paths.
-    return {"candidate_sha": commit, "base_sha": base, "no_work": not value["resources"]}
+    return {"candidate_sha": commit, "base_sha": base}
 
 
 def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):
@@ -912,8 +904,7 @@ def plan_push(root, commit="", plan=None, changes=None, before=None, after=None)
     value = make_plan(root, commit, changes)
     write(plan, value)
     validate_plan(root, commit, plan, changes)
-    return {"candidate_sha": commit, "origin": value["origin"], "complete": True,
-            "no_work": not value["resources"]}
+    return {"candidate_sha": commit, "origin": value["origin"], "complete": True}
 
 
 def command(args):

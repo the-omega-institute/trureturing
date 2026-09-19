@@ -11,10 +11,6 @@ on:
       plan_artifact_id:
         required: true
         type: string
-      no_work:
-        required: false
-        default: false
-        type: boolean
     outputs:
       engineering_artifact_id:
         value: ${{ jobs.engineering.outputs.artifact_id }}
@@ -43,7 +39,6 @@ env:
   STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
   CI_CHANGES_PATH: build/ci/changes.json
   CI_PLAN_PATH: build/ci/plan.json
-  CI_NO_WORK: ${{ inputs.no_work == true }}
 
 
 jobs:
@@ -52,33 +47,26 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     outputs:
-      no_work: ${{ inputs.no_work == true || steps.route.outputs.no_work == 'true' }}
       round: ${{ steps.pack.outputs.round }}
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       run_id: ${{ steps.pack.outputs.run_id }}
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
-      - name: No registered resources
-        if: env.CI_NO_WORK == 'true'
-        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
-        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
+        if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route build
-        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage build
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -134,7 +122,7 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.judge_path }}
           key: ${{ steps.keys.outputs.judge_key }}
-      - if: always() && env.CI_NO_WORK != 'true'
+      - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage build
 
   engineering:
@@ -144,7 +132,6 @@ jobs:
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
-      CI_NO_WORK: ${{ needs.build.result == 'success' && needs.build.outputs.no_work == 'true' }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     outputs:
@@ -153,26 +140,20 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
-      - name: No registered resources
-        if: env.CI_NO_WORK == 'true'
-        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
-        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
+        if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route engineering
-        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage engineering
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -248,7 +229,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: always() && env.CI_NO_WORK != 'true'
+      - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
       - name: Retain engineering diagnostics
         if: failure() || (success() && steps.route.outputs.required == 'true')
@@ -327,7 +308,6 @@ jobs:
     if: ${{ !cancelled() }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
-      CI_NO_WORK: ${{ needs.build.result == 'success' && needs.build.outputs.no_work == 'true' }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     outputs:
@@ -337,26 +317,20 @@ jobs:
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
     steps:
-      - name: No registered resources
-        if: env.CI_NO_WORK == 'true'
-        run: printf '{"stage":"%s","candidate":"%s","status":"not-required","exit":0}\n' "$GITHUB_JOB" "$CANDIDATE_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v4
-        if: env.CI_NO_WORK != 'true'
         with:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 0 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-        if: env.CI_NO_WORK != 'true'
       - uses: actions/download-artifact@v4
-        if: env.CI_NO_WORK != 'true' && inputs.plan_artifact_id != ''
+        if: inputs.plan_artifact_id != ''
         with:
           artifact-ids: ${{ inputs.plan_artifact_id }}
           path: build/ci
           merge-multiple: true
       - id: route
         name: Validate plan and route current
-        if: env.CI_NO_WORK != 'true'
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage current
       - id: cache_window
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
@@ -383,6 +357,13 @@ jobs:
       - id: keys
         if: steps.route.outputs.cache_layers != ''
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage current
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
       - id: current
         if: steps.keys.outputs.current_key != ''
         continue-on-error: true
@@ -391,33 +372,17 @@ jobs:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
           restore-keys: ${{ steps.keys.outputs.current_restore_prefix }}
-      - id: checks
-        if: steps.keys.outputs.checks_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ steps.keys.outputs.checks_path }}
-          key: ${{ steps.keys.outputs.checks_key }}
-          restore-keys: ${{ steps.keys.outputs.checks_restore_prefix }}
+      - name: Install required Lean toolchain
+        if: steps.route.outputs.lake == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: report_resources
         name: Validate optional report seed and resolve remaining resources
-        if: steps.route.outputs.required == 'true'
+        if: steps.route.outputs.cache_layers != ''
         env:
           CURRENT_KEY: ${{ steps.current.outputs.cache-matched-key }}
-          CHECKS_KEY: ${{ steps.checks.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY" --checks-key "$CHECKS_KEY"
-      - id: elan
-        if: steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.elan_required == 'true'
-        continue-on-error: true
-        uses: actions/cache/restore@v4
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - name: Install required Lean toolchain
-        if: steps.report_resources.outputs.needs_lake == 'true'
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+        run: python3 tools/scripts/worktree/lean_actions.py prepare-report --repository "$GITHUB_WORKSPACE" --stage current --current-key "$CURRENT_KEY"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.dependency_required == 'true'
+        if: steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
@@ -425,7 +390,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.project_required == 'true'
+        if: steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
@@ -433,14 +398,13 @@ jobs:
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build evidence
-        if: steps.report_resources.outputs.build_cache_layers != ''
+        if: steps.report_resources.outputs.needs_lake == 'true'
         env:
-          LEAN_CACHE_LAYERS: ${{ steps.report_resources.outputs.build_cache_layers }}
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers $LEAN_CACHE_LAYERS --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage current --layers dependency project --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         env:
@@ -472,20 +436,6 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
-      - id: snapshot_checks
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.checks_key != ''
-        continue-on-error: true
-        env:
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-          PREPARED_SEED_ARCHIVE: ${{ steps.pack.outputs.checks_seed_archive }}
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer checks --bounded-cache --seed-archive "$PREPARED_SEED_ARCHIVE"
-      - if: steps.snapshot_checks.outcome == 'success' && steps.snapshot_checks.outputs.checks_ready == 'true'
-        continue-on-error: true
-        timeout-minutes: ${{ fromJSON(steps.snapshot_checks.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.keys.outputs.checks_path }}
-          key: ${{ steps.keys.outputs.checks_key }}
       - id: snapshot_project
         if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != '' && steps.report_resources.outputs.needs_lake == 'true'
         continue-on-error: true
@@ -513,7 +463,7 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - id: save_elan
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.report_resources.outputs.elan_required == 'true' && steps.elan.outputs.cache-hit != 'true'
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
         continue-on-error: true
         run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage current --max-minutes 12
       - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
@@ -523,7 +473,7 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: always() && env.CI_NO_WORK != 'true'
+      - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
       - name: Retain current diagnostics
         if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'

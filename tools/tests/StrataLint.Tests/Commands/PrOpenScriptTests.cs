@@ -596,6 +596,18 @@ public sealed class PrOpenScriptTests
         Assert.Contains("PR_BASE=\"${PR_OPEN_BASE:-dev}\"", script, StringComparison.Ordinal);
         Assert.Equal(1, script.Split("PR_REPO=").Length - 1);
     }
+    [Fact]
+    public void PrToolDocumentationNoLongerRequiresCallerPolling()
+    {
+        var text = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "CLAUDE.md"), Encoding.UTF8);
+        Assert.Contains("`pr.sh` 为 `open`/`watch` 双动词", text, StringComparison.Ordinal);
+        Assert.Contains("缺省不 arm auto-merge", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("`make pr-open` 自带 auto-merge", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("create → App-token 隔离 → arm auto-merge → 等 required-CI 判词", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("需要重复由调用方 shell 循环", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("单动词(`update`", text, StringComparison.Ordinal);
+    }
     private static bool IsAutoMergeInvocation(string invocation) =>
         invocation.StartsWith("pr merge ", StringComparison.Ordinal);
     private static bool IsWatchInvocation(string invocation) =>

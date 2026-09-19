@@ -1,8 +1,7 @@
-using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using System.Text.RegularExpressions;
 using Markdig.Syntax;
 
-namespace StrataLint.Policy.Tests;
+namespace StrataLint.ArchitectureTests;
 
 public sealed partial class CodexFormalAnswerSkillTests
 {
@@ -29,7 +28,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerPlacesSourceByMathematicalOwnership()
     {
         var skill = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
+            RepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
