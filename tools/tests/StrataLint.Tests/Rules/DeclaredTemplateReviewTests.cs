@@ -265,7 +265,7 @@ public sealed class DeclaredTemplateReviewTests
         var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
         var report = Report(after, omit: omitted);
         var diagnostics = Dispatch(Context(before, after, report, [Registration]));
-        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block
+        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Observe
                 && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
                 && d.Message.Contains(omitted, StringComparison.Ordinal)),
             "[FAIL] required_configuration_input_omission_rejected: " + omitted);

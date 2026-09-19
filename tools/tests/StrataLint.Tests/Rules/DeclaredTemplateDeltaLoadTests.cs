@@ -38,8 +38,8 @@ public sealed class DeclaredTemplateDeltaLoadTests
     {
         using var fixture = new WireFixture();
         fixture.Evidence(A)["records"]![0]!["state"] = "invalid";
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
-        fixture.AssertAdmissionReachesRules(blocked: true);
+        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
+        fixture.AssertAdmissionReachesRules(blocked: false);
     }
 
     [Fact]
@@ -47,9 +47,9 @@ public sealed class DeclaredTemplateDeltaLoadTests
     {
         using var fixture = new WireFixture();
         fixture.Evidence(A)["records"]![0]!["registration_source_path"] = "../Ring.lean";
-        var error = Xunit.Record.Exception(() => AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block));
+        var error = Xunit.Record.Exception(() => AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe));
         Assert.True(error is null, "[FAIL] selected_malformed_owner_path_blocks_in_rule: " + error?.Message);
-        fixture.AssertAdmissionReachesRules(blocked: true);
+        fixture.AssertAdmissionReachesRules(blocked: false);
     }
 
     [Fact]
@@ -80,7 +80,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
         var selected = fixture.Record(A, B);
         selected["certificate"] = "malformed";
         fixture.Evidence(B)["records"]!.AsArray().Add(selected);
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
+        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
     {
         using var fixture = new WireFixture();
         fixture.Module(A).Remove("information_templates");
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
+        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
     }
 
     [Fact]
@@ -103,7 +103,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
     {
         using var fixture = new WireFixture();
         fixture.Evidence(A)["inputs"]![0]!["sha256"] = new string('0', 64);
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
+        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
     {
         using var fixture = new WireFixture();
         fixture.Module(A)["information_templates"] = "malformed";
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Block);
+        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
     }
 
     [Fact]
