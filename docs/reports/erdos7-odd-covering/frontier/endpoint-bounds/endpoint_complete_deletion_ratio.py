@@ -14,15 +14,15 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_complete_deletion_ratio.json'
 PINS = {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "7d1b33bae80d65112d9618e7a149e0de8747d219f35902f658b97cc2fe832a59",
-    "certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json": "a028c84fa753063c8f1be7e2645e2b845b9a7e1cc26efe57ecfb1ea9e6425387",
-    "frontier/endpoint-bounds/endpoint_uniform_ratio.py": "1cc6649e87281b6a6a0fe00f9d733ee9492abf60f1c9550a6c8f2a5a91850e49",
-    "certificates/source_norms/endpoint-bounds/endpoint_uniform_ratio.json": "794ea0d31abc973540c2f8c528e28d8981e8b83a3ca95b476d85d205b6a10ddc",
-    "frontier/endpoint-bounds/endpoint_survival_scalar_barrier.py": "7bc0f50220e87a43c1657d0a40984fb061fe9d0792ae03e76f048b8fc13f53f9",
-    "certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json": "7d75fa8f6d05f3603e564b1e1ea208e84d80ec6ed922f7e9de4ca0bf46f7740b",
-    "frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py": "7e68cb0f020625fdbd2d0854933415d0b631b43010df38350d2121858266db31",
-    "certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json": "0e8d181b3d686dbda3b8e993a85733f6f926cf95bcd78568652f183f6fba6924"
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6",
+    "certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json": "75154048adef87983ab5c776537f73e74f9864714b5cc24b54bfa674dcca26f6",
+    "frontier/endpoint-bounds/endpoint_uniform_ratio.py": "c5360becfe50bbd4f2bcd4246db7bcd3f2a582f76744ccba3545f614fe12175b",
+    "certificates/source_norms/endpoint-bounds/endpoint_uniform_ratio.json": "7bf9ac78825c4b7dedfcda601a6a7e2c6f3aaec937eff709a3fdd4a07f5df8ea",
+    "frontier/endpoint-bounds/endpoint_survival_scalar_barrier.py": "10e915082ee01cef1219125367fd455374c82c98d812654cc4283b2fe7ac3358",
+    "certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json": "a4a4092e9d198b126b85afe96d00b399105a35e73c1e309f3d364e19633ec430",
+    "frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py": "c0bba2c21ed9c1d6236bfee13ff2510f71b40b44bf63600f09be3b2807897bd5",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json": "7e5b2c9d2244a9aad0b1f3e1850a52bb1a1a1e7ffbe49cbf7bd42b8017bc2cfc"
 }
 
 

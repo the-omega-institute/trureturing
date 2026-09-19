@@ -13,11 +13,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PREVIOUS = 'certificates/source_norms/retained-transport/retained_quadratic_tests.json'
-PREVIOUS_PIN = '6a58a6155bb2f860fda843848d54397f0e4ece26cab40f8f1676a857631e8fec'
+PREVIOUS_PIN = '74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a'
 PREVIOUS_VERIFIER = 'frontier/retained-transport/verify_retained_quadratic_tests.py'
-PREVIOUS_VERIFIER_PIN = '063509eb7bf8279e90a95d23184ecf474396ead47866961cc4c3568778db342f'
+PREVIOUS_VERIFIER_PIN = '4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43'
 LOCAL_PINS = {
     'frontier/source-budgets/shared_source_deficits.py': 'e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883',
     'frontier/source-budgets/shared_source_consumer.py': '02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5',

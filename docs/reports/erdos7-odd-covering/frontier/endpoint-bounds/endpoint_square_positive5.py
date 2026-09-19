@@ -17,8 +17,8 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': 'b8cd504c29389cbd4cee15fb9403361de3d93cc57d47f1c5016705b2a78b3ff6',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': 'ac4fb2033f0b3d96fd358a369ddb0c87ab4c18a3ea72af1e0d277285a4e5dc2b',
+    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': '4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': '295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184',
 }
 
 

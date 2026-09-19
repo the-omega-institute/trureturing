@@ -18,9 +18,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/weighted_marker_global.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/broad_marked_identity_global.py': '02a9202d81951a0861bfdedb43127a375595028a26b1ac5002f8a0b195063998',
-    'certificates/source_norms/endpoint-bounds/broad_marked_identity_global.json': '62d60d6746dba0d99f9b81c5dab2fbfa7694bfddba8bd1e19868ad7b0dded8bc',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/broad_marked_identity_global.py': 'c5b6d4da2bd89a5e2d1554dd6da4066b159982861f7d5bccad9bc19a0238ebd7',
+    'certificates/source_norms/endpoint-bounds/broad_marked_identity_global.json': '3985aec64b93d63b20e64e97eef15ff0ba40c8dcec476c548b5ae74f1206e487',
 }
 CHOSEN = (4, 5, 6, 9, 11, 13, 14, 15, 20, 21, 22, 25, 27, 29, 30, 31, 34, 35, 37, 38, 39, 40)
 

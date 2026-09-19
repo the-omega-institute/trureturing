@@ -15,13 +15,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_uniform_ratio.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_numerator_common_costs.py': '7d1b33bae80d65112d9618e7a149e0de8747d219f35902f658b97cc2fe832a59',
-    'certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json': 'a028c84fa753063c8f1be7e2645e2b845b9a7e1cc26efe57ecfb1ea9e6425387',
-    'frontier/endpoint-bounds/endpoint_square_positive5.py': 'dd802c39783648767184e38da000de03700215d26e6de934a2858d054cb788a7',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_positive5.json': 'b337eabce44745f349165346e0ce7044e79b6785dfdab314b2613b23de1ae4f6',
-    'frontier/endpoint-bounds/endpoint_survival_scalar_barrier.py': '7bc0f50220e87a43c1657d0a40984fb061fe9d0792ae03e76f048b8fc13f53f9',
-    'certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json': '7d75fa8f6d05f3603e564b1e1ea208e84d80ec6ed922f7e9de4ca0bf46f7740b',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_numerator_common_costs.py': '1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6',
+    'certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json': '75154048adef87983ab5c776537f73e74f9864714b5cc24b54bfa674dcca26f6',
+    'frontier/endpoint-bounds/endpoint_square_positive5.py': 'e6d4a2ae2ac9f369048603d328da7e73cb719e9a622c2a6633ddd61e5609b00d',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_positive5.json': 'feb9333e4714f3408029d9e24711fb2886d016c0c4265c0f039ab99419b99405',
+    'frontier/endpoint-bounds/endpoint_survival_scalar_barrier.py': '10e915082ee01cef1219125367fd455374c82c98d812654cc4283b2fe7ac3358',
+    'certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json': 'a4a4092e9d198b126b85afe96d00b399105a35e73c1e309f3d364e19633ec430',
 }
 
 

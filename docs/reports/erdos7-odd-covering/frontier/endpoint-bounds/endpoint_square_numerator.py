@@ -20,10 +20,10 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'frontier/endpoint-bounds/endpoint_linear_numerator.py': '646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': 'c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be',
+    'frontier/endpoint-bounds/endpoint_linear_numerator.py': 'c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': '1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a',
     'frontier/source-budgets/sharp_source_mass_endpoints.py': '79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9',
-    'certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json': 'bb4b8b9246e84d93953591841f1c4f0c26024c6ab5a32358f3ffd77871bf3cfb',
+    'certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json': '23fa4a41ee72adafa5df06c2313d2234bde2031f3282cd234593665019b29dda',
 }
 
 

@@ -10,25 +10,25 @@
       "frontier/j-geometry/j_aligned_quadratic_sharp_source.py": "914cb1b631896ffdf415650e9a01d59881709ded371ae7f1e15e719c1270eaa9",
       "frontier/j-geometry/j_aligned_retained375_source.py": "b661bde412493fbd48326ea8f5b6841b62fbb898a47b4ece7df71ebcba7e40c4",
       "frontier/j-geometry/j_aligned_joint_selected_heads.py": "dcda5d59b7b168c06ddec177be223dfbbdfb304383b8087d8a8c123baca3c369",
-      "frontier/j-geometry/j_face_shared_square_factorial.py": "a36157d88e4bab3b11fc31b0921513f9b61508a4a3be2854461344c17cf6bdd1",
-      "frontier/j-geometry/j_face_coherent_positive7_pairs.py": "05362ea3cfd3ec2a4bf6aa8345d086b2334b6f96e6c11e85b662ebe47931a12a",
-      "frontier/j-geometry/j_face_raw_prime_path_pairs.py": "661566e5fe17a22f8a5287c738ef0c57d03bcf7261c9aa39d8cedbcd03052748",
-      "certificates/source_norms/j-geometry/j_aligned_raw_prime_path_moments.json": "6f6993fc7830ce33a981808ffe4cfafdfa1b2082158cdaa2e47982d3af2559ba",
+      "frontier/j-geometry/j_face_shared_square_factorial.py": "19f35e9bcac13999e3912fd5d5a2d43ddcef667e5913d4b6d8ec4c171c911e44",
+      "frontier/j-geometry/j_face_coherent_positive7_pairs.py": "e88cd1035ccb6e3283475233584fd0ff101cc12ce33cdbbee52ccced22e637f0",
+      "frontier/j-geometry/j_face_raw_prime_path_pairs.py": "8dbb4e0a76285263d8c14fc6f699e3a8d3ef33ebe73be2a218f352172d5ebc4b",
+      "certificates/source_norms/j-geometry/j_aligned_raw_prime_path_moments.json": "81aa5ef6cdbc19f77e21d81698a0ae4de47629d8800659028f91ab69fda90b34",
       "certificates/source_norms/j-geometry/j_aligned_retained375_heavy553_heads.json": "e058014436eb3385567887c86db80d94e2ae1bceb8504443922367185f796a59",
-      "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json": "05b66ac3ab1773bcd1c6d5bdcc6a7d7bc2b0fcb9f44ffa87ee247cf477a17024",
-      "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "5d85a05b5741c599bde83fc28921de3af41ccdd26fb69de8521439ca03f5cad4",
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "frontier/j-geometry/j_face_coupled_seven_heads.py": "375b207dad898b55ea0780277d47a94a4ebadd151dff798d86953d9f102c205a",
-      "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd",
-      "frontier/source-budgets/joint_selected_source_comparison.py": "27e01b28ef759fea1a3e8cb7ac336f71211fdd4fa9fd589c6270443ad9ec9355",
-      "frontier/retained-transport/retained_deletion_heavy_comparison.py": "bd8e4a4308df347e9303efca411014e90282b9bb8ecd8ad9b6dc87f8af1d4a66",
-      "frontier/j-geometry/j_face_joint_selected_heads.py": "9b106a0b397b8974e3ac56932d84e7bc1f8d79c9ef3f18eebcde71a55f7a3c2e",
+      "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json": "aa6d3fb5e36502e2fb227db6207179058fee50ec9d143646ce8667912c47d618",
+      "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
+      "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+      "frontier/source-budgets/joint_selected_source_comparison.py": "849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8",
+      "frontier/retained-transport/retained_deletion_heavy_comparison.py": "553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f",
+      "frontier/j-geometry/j_face_joint_selected_heads.py": "77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b",
       "profile-notes/257-320/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "ff1ed4852f7eb16e40b587aa4f1de491e39d335475f515c33edd965860931f3d",
-      "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c0da76f8f920590d79da892e2f7448d87753d8f27939f54b8bfa3734f7f8c170",
+      "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c82d4369189cbe84daa37b97a89e80d7f300bbdc0fcf132de9b334dd5d42128b",
       "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f",
-      "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json": "d91532dcb4c73f342500987f8909040408b373a1271c7322374ac577b6a89df9",
-      "frontier/j-geometry/j_face_joint_retained_square.py": "1abb36c75791a63caa625f77729f846ce7862a332b69a360e96b56e824d53a1b",
-      "frontier/moments-survival/complete_off_face_factorial_tail.py": "c3a0f508de3fc025f0418f0e496742410230204e77c160bfa7b3a20a33e53594"
+      "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json": "c2f07afe5f89f631326479f0ea8a88d91ab784917ad30cefc5c3c7337408fec3",
+      "frontier/j-geometry/j_face_joint_retained_square.py": "4f3bfcb82a0a330a62f6c791318473e0e24cf6abeb550d8648906d45116611ad",
+      "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498"
     }
   },
   "model": {
@@ -102,7 +102,7 @@
   "conditional_positive7": {
     "kind": "inline",
     "value": {
-      "source314_sha256": "6f6993fc7830ce33a981808ffe4cfafdfa1b2082158cdaa2e47982d3af2559ba",
+      "source314_sha256": "81aa5ef6cdbc19f77e21d81698a0ae4de47629d8800659028f91ab69fda90b34",
       "source314_endpoint_sha256": "f83d33dfc6053fa46516dc626211cd2c429ae7b7b2d5c252a8013faed0098bfb",
       "weights": [
         [
@@ -164,7 +164,7 @@
   },
   "encoded_rational_duals": {
     "path": "content/018-encoded_rational_duals.json",
-    "sha256": "089357839353cda611698b97153717f5313b12417684e4e82d8f0c946fa12beb",
+    "sha256": "affafb2c76b8d211c57fc2d8a59f4b1c8ed0e83b9fc5696a773917f7172c69da",
     "kind": "object"
   },
   "scope": {

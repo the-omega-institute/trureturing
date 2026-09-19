@@ -16,15 +16,15 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/cover-geometry/three_layer_product_escape.json'
 PINS = {
-    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'f71f686c04fb2738ba2a264ee505dbeebf8cf8070f8176bbc6d4f628b8363887',
-    'frontier/endpoint-bounds/k_next_escape_layers.py': '15317424f05c48bb4950563217ab893485a140ed14c9dc9586edc3b40f8a872b',
-    'certificates/source_norms/cover-geometry/joint_gap_denominator_escape.json': '93def910595b385a784101c4cb6ed683c1dc897402b40482303e82c7ccd7785a',
-    'frontier/cover-geometry/joint_gap_denominator_escape.py': 'af39ed8cf87a2579b44fe98c8485c8cc5fc92837631ae7a280938324b72325ee',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/cover-geometry/joint_gap_mass_escape.py': '11b3195c2c215ecd886216e15b387e8913692b9de37d9e96f00c6479a237a3b6',
-    'certificates/source_norms/cover-geometry/joint_gap_mass_escape.json': 'fac5fcbf784c91c5b66a80ecc3e652e75fde821adedbaae5ce8d532d49b75c80',
+    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'bcde35a6249003e95c6a39dc6b2bee3fa3d03be18291927385ae6dca4c896270',
+    'frontier/endpoint-bounds/k_next_escape_layers.py': 'd7c51cf6f2becc96392fdae6318661aab37ee204edd82769c2f3668e1d657500',
+    'certificates/source_norms/cover-geometry/joint_gap_denominator_escape.json': '414d035791892a6d9e8cf16e522b58e7257b99743e845ce5a882aa94bce783e5',
+    'frontier/cover-geometry/joint_gap_denominator_escape.py': 'bc5bd10d49a0e1df10fac0a5f6e6f6f931e0a87808e587aca35fcc55bebad52f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/cover-geometry/joint_gap_mass_escape.py': '0dbba25ea2058da3a2aa3936f0ad96fae6ef34fc085e6b0cba099225e64c9ffc',
+    'certificates/source_norms/cover-geometry/joint_gap_mass_escape.json': 'a942be9516a3626357445af191df6195f827be18008aa0d52ee43cdf5f68ca89',
     'frontier/comparison-bounds/allocated_seven_thresholds.py': 'b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
 }
 
 

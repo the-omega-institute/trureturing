@@ -15,14 +15,14 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/selected_deletion_mask_row_transport.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '16decabc92c504ef15a12ce7efff65786625d79dd3608049f182b1d355cdde36',
-    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': 'fb5abfd3bc05a85881a1556a6c9cd314f42bcf860982ae4f08c225859ed32578',
-    'certificates/source_norms/source-budgets/wide_fresh_full_slot_source_comparison.json': 'f5fa0d812a9a5330585948683fa9e93dc4a405a7e2d962973cb189b0ae1f3a04',
-    'certificates/source_norms/source-budgets/extended_source_bridge_comparison.json': '537a33d2748503601eee5ceefd41a47af5a1248f23535271aca614099fb5ac05',
-    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': '67cc9b5ab2f930baca853be93cb5ffa91b779fde1aeb75895ac5dacf5fe99a9c',
-    'frontier/source-budgets/wide_fresh_full_slot_source_comparison.py': 'f4cb79e71f5092d0eeca452aba9bbb31e9fc8ea929685cbdfa462ea269cd19d9',
-    'frontier/source-budgets/extended_source_bridge_comparison.py': '1f5901ff36605fea35633bc05251820dafe0911f9da50777a6f1bcbab2fb905a',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
+    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': '4251657492261cb125c28cace5cf2f76c022b19a415648f8387672cbbc2778a0',
+    'certificates/source_norms/source-budgets/wide_fresh_full_slot_source_comparison.json': '31f20d1d614a6b961fe00642340a9fc3b5ac61d16862e02617337dabbbd8d427',
+    'certificates/source_norms/source-budgets/extended_source_bridge_comparison.json': '381ee12bc564ba3c36fb1ff1b14de9d237bff16c5bf7875fdae8e2bf6c66bea2',
+    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': 'f5b6d2df57ee047a3d47660812e8fc3ff0a81239db15881634b4ad0b01633b0f',
+    'frontier/source-budgets/wide_fresh_full_slot_source_comparison.py': '4180ce2f7cb27179e7f8f10092d31c61f7da90e4c03623c07ff796c43f9a599d',
+    'frontier/source-budgets/extended_source_bridge_comparison.py': '2c40c799b23de126166ba8e95c942f36f27587896d536a2fece790b508ffe92a',
 }
 
 

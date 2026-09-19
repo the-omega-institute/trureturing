@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "12ae6ab624caad7a7a36c7e67696c8e4c9147838e969c4f0c2694068453a24a0",
+    "sha256": "3a6f633972809eecb31613b9f2a45fcbbe6e725693cea9dfe2d35f86a076fe7d",
     "kind": "value"
   },
   "geometry": {
@@ -195,7 +195,7 @@
   },
   "proof_data": {
     "path": "content/035-proof_data.json",
-    "sha256": "0d3d955a687e4539319087059bc0cf7eab369feb210052b76bb1521ee03f6399",
+    "sha256": "c2f6fe60489f2f29078ce8a9cb30b5e43c1c5205ed16298d5b4aa2063ef94084",
     "kind": "object"
   },
   "scope": {

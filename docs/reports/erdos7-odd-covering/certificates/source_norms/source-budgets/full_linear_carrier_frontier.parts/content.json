@@ -245,7 +245,7 @@
   },
   "source_sha256": {
     "path": "content/042-source_sha256.json",
-    "sha256": "cae920645afdbaeab53a21145da397ced9f966ab887f42ddf7d371abce7ca16c",
+    "sha256": "e5254fa47aa272ed13dbd8aa10128c983fb6cb44d17fa671ee8c8ffbdcf0d9a5",
     "kind": "value"
   },
   "helper_sha256": {
@@ -257,6 +257,6 @@
   },
   "verifier_sha256": {
     "kind": "inline",
-    "value": "f72e2ca85a548ddc620a54ef591ebcad14dda309925f80a5c34ffd171711a6e1"
+    "value": "f012753c39ea325be5b648c51c0e1e0739420b55d3749d8a99eea3a36f0a961d"
   }
 }

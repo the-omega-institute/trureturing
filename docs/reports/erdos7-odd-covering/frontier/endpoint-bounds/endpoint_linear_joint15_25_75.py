@@ -15,9 +15,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_linear_joint15_25_75.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py': '7e68cb0f020625fdbd2d0854933415d0b631b43010df38350d2121858266db31',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json': '0e8d181b3d686dbda3b8e993a85733f6f926cf95bcd78568652f183f6fba6924',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py': 'c0bba2c21ed9c1d6236bfee13ff2510f71b40b44bf63600f09be3b2807897bd5',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json': '7e5b2c9d2244a9aad0b1f3e1850a52bb1a1a1e7ffbe49cbf7bd42b8017bc2cfc',
 }
 
 

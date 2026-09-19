@@ -8,8 +8,8 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
-SOURCE_PINS = {'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f', 'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d', 'frontier/cover-geometry/layout_gap.py': 'f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a', 'verify_killed_core_continuity.py': 'e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023', 'certificates/layout_gap_frontier_certificate.json': 'cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898', 'certificates/pure_root_profile_certificate.json': 'abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753'}
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
+SOURCE_PINS = {'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765', 'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d', 'frontier/cover-geometry/layout_gap.py': 'f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a', 'verify_killed_core_continuity.py': '6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226', 'certificates/layout_gap_frontier_certificate.json': 'bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02', 'certificates/pure_root_profile_certificate.json': '045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a'}
 LOCAL_PINS = {'frontier/cover-geometry/ap_schedule.py': '40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f', 'frontier/cover-geometry/ap_schedule_core.py': '365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617', 'certificates/ap_schedule_norms.json': '7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8'}
 
 

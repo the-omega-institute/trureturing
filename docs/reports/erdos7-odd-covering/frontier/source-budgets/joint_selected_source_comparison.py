@@ -16,9 +16,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/joint_selected_source_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/expanded_seven_quadratic_comparison.py': '874f60de042a9663d17311c4bd8b4a1ef472fbf51ed8c4d3ceb215f6dcc5d098',
-    'certificates/source_norms/moments-survival/expanded_seven_quadratic_comparison.json': 'e083d127bb2ff304d298790048d693612589c8da5e5a33c5872183c0d22812e8',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/expanded_seven_quadratic_comparison.py': '4cdc959e2300e1d1d02eb7d910ef08349d9b36eb08397bfa2cf7286781219f84',
+    'certificates/source_norms/moments-survival/expanded_seven_quadratic_comparison.json': 'fdf28fe9fce96718198b8a7c1eeed6679ae86c353e3026a7c15dc9cf8c659692',
 }
 
 

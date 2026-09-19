@@ -17,7 +17,7 @@
   },
   "encoded_price_bank": {
     "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank.json",
-    "sha256": "169b6a47db7007e1569a7ab51fdda897d0d3ba8e1ee599405f1ce46b1ecdfa99",
+    "sha256": "095cbc8b9f2a2707143a98e20df7141e2b8221299d5681f654b3f76218726d50",
     "kind": "object"
   }
 }

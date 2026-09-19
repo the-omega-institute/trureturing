@@ -11,17 +11,17 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/cover-geometry/uniform_square_and_raw81_neighborhood.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/uniform_ap_survival_denominator.py': '191f9fdc7507b6774010af6672abb3159cb59e8c7607cabbe923b4070b307780',
-    'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json': '9b53845d4ed4e830793b98d210bc596b6864287927a8b72e83ab60e59ae8c4a2',
-    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': 'd99e2b890d4393eb2545f2e73d04cd74a9f12eafd8d1f8113a2fa1784cec844f',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': 'c3a0f508de3fc025f0418f0e496742410230204e77c160bfa7b3a20a33e53594',
-    'frontier/cover-geometry/complete_off_face_omitted_tails.py': 'ff157414ae99b5bb47ce58f7b59870bc13827fbfb1d726fc6655435fdce1f91d',
-    'frontier/endpoint-bounds/k_face_complete_ratio.py': 'e94a6532ff6951d464a224f1a56415aaea90251c520c7b06fc9afe4e6a82c5db',
-    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': 'ccb1debedef1dc49cbc6a31e01c712f156992dc238bd0576e4f51ee8dd6f6888',
-    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'ed24ce03bd65f29684a606ba601f88b06040562e7dd7a690d360cea5aa4a2852',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/uniform_ap_survival_denominator.py': '181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180',
+    'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json': '080ecc953d56c722d9026fcc8517fa08dbd67ae7381a5af581c3afc20d48db3a',
+    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': '5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
+    'frontier/cover-geometry/complete_off_face_omitted_tails.py': '33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d',
+    'frontier/endpoint-bounds/k_face_complete_ratio.py': '00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160',
+    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': '2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a',
+    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
 }
 
 

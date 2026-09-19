@@ -16,13 +16,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/whole_block_ap11_survival.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'a43c2d8ec4228d1a58e8d8511db17f91c8f47470c0114460656be59ccfce2327',
-    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '8d2770aa7147105fe03c4428293b588feae64b140afe80585583c786146bbbc5',
-    'frontier/moments-survival/whole_face_second_factorial_tail.py': '22719d229784f56d72ec22037163756f520fe46b4fa8eafc353eff14ace7f49e',
-    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': 'cae2588d128708ece05769b2162b189fadb2bf222c746f43388e49d97ab587c4',
-    'frontier/moments-survival/whole_face_ap11_survival.py': '73547fa6455e9e3c613f3c7166537c1f048177998c611ade97996720a549cf76',
-    'certificates/source_norms/moments-survival/whole_face_ap11_survival.json': '17259c5e49d417f5fa58dc794ac3a2447e3f5c7396447ef5dccf89ce4b0f1a16',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'c220594349efc9a422b25e9bd434bb4508d4665b7ae80459e5cd14277d6df850',
+    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '25fa8fd2564e2da46575f04405d6e4d8eba56bc8e6df67a563a14ec887b6753e',
+    'frontier/moments-survival/whole_face_second_factorial_tail.py': '106e081ed80b09a176ca63aa382c5486d3a980c34c04617115f764131b84a0cf',
+    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': '2cf56c20350e698147a3ed004f23bde00990766fe876c18b61e4444f16e99465',
+    'frontier/moments-survival/whole_face_ap11_survival.py': 'aeaf0a414a0d189496cf3d6719578cbd0a7e44242d5462ee08efe0d1879bdea4',
+    'certificates/source_norms/moments-survival/whole_face_ap11_survival.json': '313f09483ede47ae3d43a9692bbabf5b6db1c514066e5480f39114d9ab0183c0',
 }
 
 

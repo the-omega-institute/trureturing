@@ -31,7 +31,7 @@
   },
   "encoded_price_bank": {
     "path": "content/003-domains/000001/item/006-banks/000-heavy/007-encoded_price_bank.json",
-    "sha256": "b2a2337264d6c2135caef2924598af200d019799dc822f1a19420ffea07d8822",
+    "sha256": "3a54cdfb59732ed5a4f5f8447910e35c5c0734d77750499ab508ba2a91030568",
     "kind": "object"
   },
   "maximizing_raw_primal_dual_witnesses": {

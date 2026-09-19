@@ -10,8 +10,8 @@ import sys
 sys.dont_write_bytecode = True
 
 # Filled from complete logical predecessor inputs, including split certificates.
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
-SOURCE_PINS = {'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f', 'certificates/joint_frontier_certificate.json': 'a98b906b189ef80d4352f77583721dc7445c63fe48a5179df74cd966149e1e53', 'certificates/fixed_cost_frontier_certificate.json': '7906160593e1e08fead9606402509c5160ae1d1a04e415e34cec328e4d4903b9'}
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
+SOURCE_PINS = {'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765', 'certificates/joint_frontier_certificate.json': 'abee2fd2a2038029cf74c59615501463a4b289d5e071d2c17de2ede6288d6ce8', 'certificates/fixed_cost_frontier_certificate.json': 'afe46a8aa3cf44780b2d6bb91682f531646f738f245b7bc0b98ee3180ad7b200'}
 LOCAL_PINS = {'frontier/cover-geometry/layout_gap.py': 'f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a', 'certificates/layout_gap_norms.json': 'a5ca5849e50702035e6812311d2191beb13498e2dc81b7dbb13eab27ffc2ebf5'}
 
 

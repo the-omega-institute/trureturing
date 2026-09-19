@@ -11,16 +11,16 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/expanded_seven_survival_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/load_two_cost_remainders.py': '46573a7effb28fac5eb6036991523f2fd34e5df54822b3ed09cca538e7d13d69',
-    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'ec6674b8507503f64616098d80047a0600f46fa513420020667516e61c89ce95',
-    'frontier/comparison-bounds/expanded_seven_pair_comparison.py': 'a87399cd2b88dafa12ecaeb84fa2ea240537ded21815cb198f13c3e7a3083784',
-    'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '89cdaf8085de7b8d35489e7352cc8ad1907c56a989f2504229947a7c3c99e1fa',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/load_two_cost_remainders.py': '4bb1f09f0768f92b9dc447156ad0c816e1858c7a1e553c2b422ebe878d7d0ec2',
+    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'f4224aa378cf67701c4d67bc6e7781277163ad429970727013673aa4e3b2a9e3',
+    'frontier/comparison-bounds/expanded_seven_pair_comparison.py': '5a51e611c2e9b981bfe0ba1450795d13e1cf734aa32b05f1c46c3d34f7bfd503',
+    'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '14eb81c7551671092f42a87532d77f58e392c2474daf05c69d09147a7a731986',
     'profile-notes/193-256/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md': 'bfe4561a41e7d35ce0a9e1410bcdd92e3f732b2cfb7c86bc798ab4cd7cc0ab10',
-    'frontier/moments-survival/whole_block_mean_survival.py': 'c82087240db64211520f9e268c177fb73a44ff6bb4117e7cd424c5251bee8510',
-    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'fb2194587d5a4297afd05dbcbfba6ecfd09cbac919a2c221373a94817ec95455',
-    'frontier/moments-survival/whole_block_ap11_survival.py': 'fbefa044091efe0cac30fa1e173edc0d0abd523e7f19490f494221cf22171fbd',
-    'certificates/source_norms/moments-survival/whole_block_ap11_survival.json': '5d28dc74ed4578eec27deace152fb0a0cc35fefa2f559037fd62fd44a6b1f1fc',
+    'frontier/moments-survival/whole_block_mean_survival.py': '16928973f324bebbfa8abb8a0ca85a2cc7b2e7f64df17663f3e29b8447531bef',
+    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd',
+    'frontier/moments-survival/whole_block_ap11_survival.py': '790367449f23163ba915572fa9fcae4d0b70417b26c9c7acc57f200733bfa550',
+    'certificates/source_norms/moments-survival/whole_block_ap11_survival.json': 'a34ebb65808fd465a053bfe33565d349fa7989dd626bfba4040e68723520c263',
 }
 
 

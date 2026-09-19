@@ -13,9 +13,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/exhaustive_shared_tail_cost.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/shared_budget_affine_tail.py': '6e84343bcb162656fecf5bea73bf0d10a66fe8690f7274ad2165b58944771a08',
-    'certificates/source_norms/comparison-bounds/complete_off_face_cost.json': '93944ba0f621d430132186339758aab9f573be73e4f24622e7c919045e5bfc4c',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/shared_budget_affine_tail.py': 'bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd',
+    'certificates/source_norms/comparison-bounds/complete_off_face_cost.json': 'c561f2695611eafe761ad8d1a70d41433a9dda6e8534ef5d9d6e1617a94b0736',
 }
 MEAN_PRICES = ('E27_price', 'Ege4_price', 'E5deep_price', 'E15deep_price')
 COORDINATE_MAP = (0, 0, 1, 2, 3, 4, 0)

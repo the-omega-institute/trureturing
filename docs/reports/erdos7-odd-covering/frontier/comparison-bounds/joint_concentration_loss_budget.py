@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/source-budgets/monotone_product_carrier_mass.py': '93e42b490c753a4b4b6bd2cb0cc764b48184dfe2d069ca4ac0240f70f38a61b6', 'frontier/source-budgets/carrier_mass_residual_bound.py': '0478f224ae2d59dcd4e0f7d9d0c4b23eca7c6bd632bd6ffb12bce5420fd5ef16'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/monotone_product_carrier_mass.py': '320fb41c8422ac579e18563d2f776470d9caf109ff5cd84248080b5f285160ac', 'frontier/source-budgets/carrier_mass_residual_bound.py': 'b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c'}
 ORDER = ('alpha', 'z', 'beta', 'deficit', 'late', 'carrier')
 
 

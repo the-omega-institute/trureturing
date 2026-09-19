@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "96e2ec50b93a9bee040109c8518a912e7b83a7193ba1e40ea8fa24cf4d44c0b8",
+    "sha256": "3906ca85d150f62f1f7317421410dce4001008b77c125f3de73052b8846f50f9",
     "kind": "value"
   },
   "domain": {
@@ -62,7 +62,7 @@
   },
   "encoded_price_bank": {
     "path": "content/012-encoded_price_bank.json",
-    "sha256": "7c544319aa67def79acfbd1f90d012fa098052ce710d78a9b2468e5433085778",
+    "sha256": "e058fc6e82cf46c9743db38ab0711bb3baa57d71f18f1cf924c8caa75e51baa1",
     "kind": "object"
   },
   "independent_specializations": {

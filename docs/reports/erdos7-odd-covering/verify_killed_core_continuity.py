@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -26,9 +26,9 @@ import json
 
 HERE=Path(__file__).resolve().parent
 PINS={
- 'certificates/shared_cell_hinges_certificate.json':'8289e1dc3ceabffeeee03d04ce93ed2bbea62b415dd9b245c7fd7855a681a8b3',
- 'certificates/pure_root_profile_certificate.json':'abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753',
- 'certificates/ap_core_stability_certificate.json':'08c45f4aa2d6ab6ea9921d9912bdac49a7922b54b05067f1fdc2364c8374707f',
+ 'certificates/shared_cell_hinges_certificate.json':'7e7227e0b859ad6e30fd17915f40571eacea82cd9aadce09984ed6b7bd790674',
+ 'certificates/pure_root_profile_certificate.json':'045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a',
+ 'certificates/ap_core_stability_certificate.json':'f7e074399e356d55cbe99765e941f8c83603523b70e01e5d2e27fde09db2aa2f',
 }
 
 def require(condition,message):

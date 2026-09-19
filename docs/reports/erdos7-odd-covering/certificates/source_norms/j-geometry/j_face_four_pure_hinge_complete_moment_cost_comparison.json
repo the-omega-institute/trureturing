@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "3ff221c388ab3cdf5ebfaa3206f55fa1f0e59a09104780a6a2c0258ed42ba9e4",
+  "logical_sha256": "f89f5345f8614279d96b76f1768e23e9342f54eeaa909f24d2bb3f41dbaf3713",
   "parts_directory": "j_face_four_pure_hinge_complete_moment_cost_comparison.parts",
   "root": {
     "path": "content.json",
-    "sha256": "dbeb8c14be25215535fa91dedfa6bf049a7535200b91ff2495bf71b793b182b3",
+    "sha256": "d75f714f00c63afe27eb76739152962dee15e4bc219d4da13d455b6b0f669a25",
     "kind": "object"
   }
 }

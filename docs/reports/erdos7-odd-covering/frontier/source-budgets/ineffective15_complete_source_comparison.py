@@ -12,9 +12,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/ineffective15_complete_source_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
-    'frontier/comparison-bounds/verify_allocated_seven_thresholds.py': 'e4a6b42b03d01366bf7fc3e9302d992971743d90e94f52bd492f9e68c703967e',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
+    'frontier/comparison-bounds/verify_allocated_seven_thresholds.py': '3703d61f0f10775934f831e54c13b4bbdbb7fb06c5ca3c860cd2b50548fc0e84',
     'profile-notes/001-064/49-full-linear-and-quadratic-carriers-refine-the-frontier.md': '8a34e4b32351d3c115d0f79fa6711b4971b15308a53c5be9bc15c75865a43427',
     'profile-notes/001-064/53-allocated-seven-thresholds-sharpen-actual-survival.md': '0a2f0864562331c3f6f7e35186496a3a27039e2c3e2fe286badc2d8666b9a8d6',
     'profile-notes/001-064/35-ap45-layout-costs-and-complete-core-tails.md': '5b7569bc8a8ac2c03287e8cba51140c390327405126ea2291d7b3073e14f1c20',

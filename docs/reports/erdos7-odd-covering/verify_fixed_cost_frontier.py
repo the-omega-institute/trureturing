@@ -11,10 +11,10 @@ import importlib.util
 import json
 import sys
 
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 SOURCE_PINS = {
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'certificates/joint_frontier_certificate.json': 'a98b906b189ef80d4352f77583721dc7445c63fe48a5179df74cd966149e1e53',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'certificates/joint_frontier_certificate.json': 'abee2fd2a2038029cf74c59615501463a4b289d5e071d2c17de2ede6288d6ce8',
     'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
     'certificates/fixed_cost_norms.json': 'dc4f440a5718bbf9c2ded831b6cb10c687e18df972270ab7b5f521430b225797',
 }

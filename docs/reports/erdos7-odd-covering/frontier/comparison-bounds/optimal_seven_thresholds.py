@@ -34,16 +34,16 @@ def load(name, path):
 def calculate(base):
     # Use the certificate's existing bindings for the mathematical helpers.
     require(sha256((base/'certificate_io.py').read_bytes()).hexdigest() ==
-            '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
+            '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
             'Pinned certificate IO')
     io = load('optimal_seven_io', base/'certificate_io.py')
     raw = io.read_artifact_bytes(base/'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json')
     require(sha256(raw).hexdigest() ==
-            'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+            '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
             'Pinned profile53 logical certificate')
     cert = json.loads(raw)
     pins = {'verify_joint_frontier.py':
-            '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+            '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
             'frontier/comparison-bounds/allocated_seven_thresholds.py':
             cert['helper_sha256']['frontier/comparison-bounds/allocated_seven_thresholds.py']}
     for name, pin in pins.items():

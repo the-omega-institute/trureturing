@@ -18,13 +18,13 @@ ROOT = (0, 0, 1, 1, 1)
 HEAD = frozenset(product(range(3), range(2)))
 CERTIFICATE = 'certificates/source_norms/moments-survival/complete_off_face_factorial_tail.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'frontier/retained-transport/finite_source_face_transport.py': '4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf',
-    'frontier/comparison-bounds/complete_off_face_cost.py': 'ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7',
-    'frontier/cover-geometry/complete_off_face_omitted_tails.py': 'ff157414ae99b5bb47ce58f7b59870bc13827fbfb1d726fc6655435fdce1f91d',
-    'frontier/moments-survival/whole_factorial_same_head.py': '02b5af74e00afc26b940d8c6b485fbea654a4d2f9dd52d986875c303a79faacd',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/cover-geometry/complete_off_face_omitted_tails.py': '33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d',
+    'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
 }
 
 

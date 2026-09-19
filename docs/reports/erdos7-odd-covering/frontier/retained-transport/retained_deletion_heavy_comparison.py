@@ -10,7 +10,7 @@ from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained_deletion_heavy_comparison.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/moments-survival/all_selected_survival_comparison.py': '4b68c78d30d26b31dbd230a23ba3a17d73e1a3c1ffd6f443512b99e877ff00c7', 'certificates/source_norms/moments-survival/all_selected_survival_comparison.json': 'b106d831db69c8894a7811d8d55496bb0696b6c33855fccc9f59aaa24e62771c'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/moments-survival/all_selected_survival_comparison.py': '87c2e1de36092d35e0b7778cfdef2c1029b7e27e9c4a6b1b3558b7870792b835', 'certificates/source_norms/moments-survival/all_selected_survival_comparison.json': 'd22dd6fd914cb4e8238e3c5e7b0e50b25c9602e98f20b9fea9ce146238f1ce99'}
 
 
 def require(condition,message):

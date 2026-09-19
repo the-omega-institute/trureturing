@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "a9c8e4242d2044563da48910d67f0304aa6feeb88d3184936300465aa0085bfa",
+    "sha256": "0cf59f694f25771f60f2687dc1e218d6b39a616ab29a9f42a7da0cede754c253",
     "kind": "value"
   },
   "geometry": {
@@ -168,7 +168,7 @@
   },
   "prefix_ledger": {
     "path": "content/019-prefix_ledger.json",
-    "sha256": "483fb85eff2ae5a6580bd9bbacede7a17a75549a73ee63a06cc2ce62c38c3e6c",
+    "sha256": "900b8b4a4c7bec9150ec7606a01ba75c9e30d11dcfa3718022cc0fcd52357135",
     "kind": "object"
   },
   "residual_leaf_results": {
@@ -227,8 +227,8 @@
   },
   "encoded_rational_duals": {
     "path": "content/026-encoded_rational_duals.json",
-    "sha256": "b89710b542ed8b3150ea27af8d5a56dabc663785cf0e6bc7cb84f8f2f2fe0054",
-    "kind": "value"
+    "sha256": "391747070b5ef00d292ec9860169de2039cbef5dcfe3efb461c25f2f6cfed380",
+    "kind": "value-zlib-base85"
   },
   "distinct_dual_count": {
     "kind": "inline",

@@ -9,7 +9,7 @@ from pathlib import Path
 import sys
 sys.dont_write_bytecode=True
 CERTIFICATE='certificates/source_norms/j-geometry/j_face_raw_prime_path_pairs.json'
-PINS={'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/j-geometry/j_face_coherent_positive7_pairs.py': '05362ea3cfd3ec2a4bf6aa8345d086b2334b6f96e6c11e85b662ebe47931a12a', 'certificates/source_norms/j-geometry/j_face_coherent_positive7_pairs.json': 'b8f1faeec93d609fce7ef53815286e16163e1da8faa4b645cb27af759f21b58e', 'profile-notes/257-320/258-independent-positive-seven-depths-share-one-complete-raw-source.md': 'b73e21d5f79bf242403f8ba8f463486319cdebfa6b7a9b3743ba3d6e97667c75', 'frontier/j-geometry/j_face_pure_path_square.py': '3757763cf825554b5ea19d0a0fdbd5b5a6fc923894ea202f3112b20d6528d0bc', 'profile-notes/193-256/253-two-complete-prime-path-blocks-sharpen-the-j-square.md': '630c9bd4f1375ae70e7612a6efaea26eb3934fd657e515f4487040199fd7107c'}
+PINS={'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/j-geometry/j_face_coherent_positive7_pairs.py': 'e88cd1035ccb6e3283475233584fd0ff101cc12ce33cdbbee52ccced22e637f0', 'certificates/source_norms/j-geometry/j_face_coherent_positive7_pairs.json': 'c3476d1aec97ab3be8fada4155d736b4a90bdd11f80230524d78d42304f6b074', 'profile-notes/257-320/258-independent-positive-seven-depths-share-one-complete-raw-source.md': 'b73e21d5f79bf242403f8ba8f463486319cdebfa6b7a9b3743ba3d6e97667c75', 'frontier/j-geometry/j_face_pure_path_square.py': '08cfded9d14294958bea613816f376eb822c6977ceef767e988a8b682b350030', 'profile-notes/193-256/253-two-complete-prime-path-blocks-sharpen-the-j-square.md': '630c9bd4f1375ae70e7612a6efaea26eb3934fd657e515f4487040199fd7107c'}
 
 
 def require(ok,message):

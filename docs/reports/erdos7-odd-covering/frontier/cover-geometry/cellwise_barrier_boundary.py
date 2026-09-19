@@ -14,7 +14,7 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-PIN = '50d348871313a936f6f247b0c2d6322fc88f5e0ae0ff7acc19a6732b78b685de'
+PIN = '522ebc3e22a3676db5945a8fa273756d3634d10b1c302f87ab7d924d7d024329'
 
 
 def require(condition, message):

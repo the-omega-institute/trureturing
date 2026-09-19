@@ -21,8 +21,8 @@
   },
   "4": {
     "path": "content/009-rational_duals/004-dual_buckets/003-3/004-4.json",
-    "sha256": "354b0e2779d983d8d0834faa278f7e41af41ac427321080b5d1025ea8046dbf4",
-    "kind": "value"
+    "sha256": "d1ba979f42ee5f4def182418283fdb4488bd777b2e8a69717284bb1d5956b6ea",
+    "kind": "value-zlib-base85"
   },
   "5": {
     "path": "content/009-rational_duals/004-dual_buckets/003-3/005-5.json",
@@ -46,8 +46,8 @@
   },
   "9": {
     "path": "content/009-rational_duals/004-dual_buckets/003-3/009-9.json",
-    "sha256": "e2d5313616cb7d62c47542231bd9c0b9080391dfb3fcf82c9bc52e881a7789b8",
-    "kind": "value"
+    "sha256": "fa9f4d2c0e47c82434f99025e3700ecd22177ca0c12286d51b6d5f9b99f87a49",
+    "kind": "value-zlib-base85"
   },
   "a": {
     "path": "content/009-rational_duals/004-dual_buckets/003-3/010-a.json",

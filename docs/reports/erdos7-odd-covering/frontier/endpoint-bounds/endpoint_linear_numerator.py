@@ -16,11 +16,11 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/source-budgets/sharp_source_mass_endpoints.py': '79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
 }
-FRONTIER_PIN = '98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c'
+FRONTIER_PIN = 'e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529'
 ROOT = (0, 0, 1, 1, 1)
 ETA = tuple(map(F, ('1/18', '1/9', '1/9', '1/9', '1/9')))
 MASS = tuple(map(F, ('1/24', '1/12', '1/36', '1/24', '1/18')))

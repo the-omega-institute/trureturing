@@ -13,8 +13,8 @@
   },
   "rational_table": {
     "path": "content/009-rational_duals/003-rational_table.json",
-    "sha256": "3646adab7dbc7af9057cf18d0dac3373c8dca7c4511a01bca5c5d758842e7289",
-    "kind": "value"
+    "sha256": "fb7df94546c944e8f96dcc3672b7172836dfb820a8b0afe512148fe927e2e58c",
+    "kind": "value-zlib-base85"
   },
   "dual_buckets": {
     "path": "content/009-rational_duals/004-dual_buckets.json",

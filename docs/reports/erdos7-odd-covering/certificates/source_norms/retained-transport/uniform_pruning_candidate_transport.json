@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "767d31ccf9316bc0e790479cf2f81c891cce79b64f9629ecc324935d408cbdc9",
+  "logical_sha256": "3be3d7e61ca2927ede54dca28315b6205e543aba1ea73cf688da44381937703e",
   "parts_directory": "uniform_pruning_candidate_transport.parts",
   "root": {
     "path": "content.json",
-    "sha256": "e8ee4cc079fa0fa4d70633e92e2e3569916d57ff890897ac0e01632cd72432b6",
+    "sha256": "dbc459055c08162a6ca8a566e7e8f469a2f3dee2e076a04958edd57d4fefb19e",
     "kind": "object"
   }
 }

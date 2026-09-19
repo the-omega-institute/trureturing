@@ -16,13 +16,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/shared_root_global.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/quadratic_marked_global.py': '71c7b94fa6ca7748481d9415363552402e21dcfdd755c78781dbeffe121d905f',
-    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'ef92b42ce4cc28f7a8d3e9cca5628bb30dd7f3bb9cd3f49fa2bb7dd7cbebcd37',
-    'frontier/source-budgets/shared_root_imbalance_payment.py': '18ef3aeffba4c8cf06b0387ef5af2a369a1825c8bccdb18deabc9a1a09457299',
-    'certificates/source_norms/source-budgets/shared_root_imbalance_payment.json': 'c27a0a5ce09edc44f2892411d11705fe59d466b0911ae4fee97b00a5ef6bf402',
-    'frontier/source-budgets/fractional_deep_global.py': '606806608ba57a7278016a278b5389f01c32b26e23b98a505c8d054253bf8217',
-    'certificates/source_norms/source-budgets/fractional_deep_global.json': 'c5fc2539482be6d7f028442e252a56adb32549d1f91a7d7d7b4b9c8a431b4d6a',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/quadratic_marked_global.py': '1a08b16f36862c66c4e2b568a8a09ee2d296e3ddeb9e9eaad2a80ff4c8073626',
+    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'f2dfcc7e37c71bb4e419273f99597db926e89da0e09b65f93800f87c8f364c4b',
+    'frontier/source-budgets/shared_root_imbalance_payment.py': 'a7edda92e493cacfbd1b4665e03ef6fc0db7c8b1ef2febd17af4a1a609a4997a',
+    'certificates/source_norms/source-budgets/shared_root_imbalance_payment.json': 'e00636fcfca0f68e632b19333e8d534c99006a2e5942ecac59f93f67f7138a5e',
+    'frontier/source-budgets/fractional_deep_global.py': 'a3fcf9559712e1643138660217ca6c0a6c06d774ee523858a50661781ef2068f',
+    'certificates/source_norms/source-budgets/fractional_deep_global.json': 'f44573cffb249ceb7ca492c533ea135e0bb5d301166540fa1d0b35fbc5a8659d',
 }
 OLD = (3, 4, 5, 6, 9, 11, 13, 14, 15, 19, 20, 21, 22, 25, 27,
        29, 30, 31, 34, 35, 37, 38, 39, 40, 42, 43, 45)

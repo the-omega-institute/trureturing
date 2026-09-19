@@ -55,7 +55,7 @@
   },
   "banks": {
     "path": "content/003-domains/000001/item/006-banks.json",
-    "sha256": "4a9fa38604519abce75643f9c36c162df814f2667c4ca52d1b416ebcf75add09",
+    "sha256": "1ff32a83e42394c2546a2cb74435eadb4e54f3a8b5ecee4a3f8c6e1488b0625c",
     "kind": "object"
   }
 }

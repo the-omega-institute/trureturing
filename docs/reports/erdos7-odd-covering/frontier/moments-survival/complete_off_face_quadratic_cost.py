@@ -18,17 +18,17 @@ CERTIFICATE = 'certificates/source_norms/moments-survival/complete_off_face_quad
 POSITIVE_INDICES = (41, 42, 43, 44, 45, 47, 48, 49, 50, 51)
 FACE_MASS = F(53, 360)
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'frontier/retained-transport/finite_source_face_transport.py': '4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf',
-    'frontier/comparison-bounds/complete_off_face_cost.py': 'ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7',
-    'frontier/cover-geometry/complete_off_face_omitted_tails.py': 'ff157414ae99b5bb47ce58f7b59870bc13827fbfb1d726fc6655435fdce1f91d',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': 'c3a0f508de3fc025f0418f0e496742410230204e77c160bfa7b3a20a33e53594',
-    'frontier/retained-transport/joint_deep_mean_transport.py': '4da7a68610d2414aaabff397adc34796cee610d45ccc5906af29e6ac7ff0ddb3',
-    'frontier/moments-survival/whole_quadratic_same_head.py': 'ba2de9c8850b1936ebac15ab9e4cc546a052de6139289343e0de5d2dec560938',
-    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1',
-    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'ed24ce03bd65f29684a606ba601f88b06040562e7dd7a690d360cea5aa4a2852',
-    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': '01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/cover-geometry/complete_off_face_omitted_tails.py': '33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
+    'frontier/retained-transport/joint_deep_mean_transport.py': 'efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0',
+    'frontier/moments-survival/whole_quadratic_same_head.py': '84d7995521352aebd522659d189081eee31dbd200ccb4b1f638e7881d3c145b7',
+    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
+    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
+    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6',
 }
 
 

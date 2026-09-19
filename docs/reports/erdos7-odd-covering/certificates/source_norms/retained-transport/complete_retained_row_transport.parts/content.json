@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "dcae042bb5026813f5112afeaf9a442d74f8886441534546ad18f1dedb9ce738",
+    "sha256": "8f99585e173a53b53cc1a0284eb3c02ec908ed8cdb720980334bab6d290d7f66",
     "kind": "value"
   },
   "constraint_inventory": {
@@ -25,7 +25,7 @@
   },
   "domains": {
     "path": "content/003-domains.json",
-    "sha256": "7294c1bf589abacb2eb14eb055ed59bdb6e873180db9d976c95ef2b3ddd62ae5",
+    "sha256": "7a57d208d0944e598cadc561ed7fafd528413ef557bec75bc8a1fce99a085067",
     "kind": "array"
   },
   "scope": {

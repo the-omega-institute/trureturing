@@ -18,9 +18,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/quadratic_marked_global.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/product_escape_global.py': '60ce92044998de414ca77b628b54e46423278e60ca42c8c4a1aae80c10ef7c45',
-    'certificates/source_norms/source-budgets/product_escape_global.json': '86c61cf90550e0fbc668129f04f18b23160d0d1e689a2772db0fcee1cc619ed3',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/product_escape_global.py': 'c7364768dee0ce136044a88d22cc20781a17343c39ac90de4b76b12215627575',
+    'certificates/source_norms/source-budgets/product_escape_global.json': '4ab42b8d780ea9859ac41bc3b448a47bba5360023a2e434a2949d60a93f03a90',
 }
 CHOSEN = (3, 4, 5, 6, 9, 11, 12, 13, 14, 15, 19, 20, 21, 22, 25, 27,
           28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45)

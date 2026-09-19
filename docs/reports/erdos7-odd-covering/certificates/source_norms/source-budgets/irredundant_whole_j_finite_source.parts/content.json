@@ -14,11 +14,11 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f",
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
-      "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "5c18ba0a23668b8e151598f1c307d20e4264894b2ef5278d56e50ffbad6f9855"
+      "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "192881db2a35f97ab9d786b2ec18f2c07064ffe83158e6b14a40daee29373a19"
     }
   },
   "ordinary_proof": {

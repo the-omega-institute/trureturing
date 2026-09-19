@@ -12,8 +12,8 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/absent_source_label_comparisons.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/ineffective15_complete_source_comparison.py': 'e4767e7c858b4a83af3a97c85271810d048e8dec3922f87a9ac9866969aa0f7a',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/ineffective15_complete_source_comparison.py': 'd480e7165bad0808f43eeb2998785f92c25d7e3e315b06d9479f48e2af88b3bd',
 }
 SOURCE_LABELS = (27, 15, 45, 135, 25)
 CASES = tuple((label,) for label in SOURCE_LABELS) + tuple(

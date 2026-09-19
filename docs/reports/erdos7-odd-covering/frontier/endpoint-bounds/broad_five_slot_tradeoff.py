@@ -18,13 +18,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/moments-survival/joint_survival_carriers.py': '4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d',
-    'frontier/cover-geometry/common_deleted_measure_coupling.py': 'c1cd866a3e68727b43a29a6d48eb5c64e1d8a75e27fa99b46ddbe2f1dacdc474',
-    'certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json': 'd174d73255d27c937f22d140e3c131613c1a21b3c586c641ce6667735dd14b44',
-    'frontier/source-budgets/global_control_faces.py': '1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35',
-    'certificates/source_norms/source-budgets/global_control_faces.json': 'f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1',
+    'frontier/cover-geometry/common_deleted_measure_coupling.py': 'e0998fbf794788c0d36c912875a0a4726e8a496b3106978731a3dda14d05755a',
+    'certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json': '97e24c96d6fcea0e47f335d0f3ab18680df2d8ce1ecc1a03fbc4f3478a6dff51',
+    'frontier/source-budgets/global_control_faces.py': '3a7adacc726e957b12bc742b43f4a6d9d11c5c3950168a43a0ccb49b0f04b026',
+    'certificates/source_norms/source-budgets/global_control_faces.json': '9450bd7aa5ea8353a0b9b07bf13536aa3fac4fdba73ce0f4558331405a37b36b',
 }
 ROOT = (0, 0, 1, 1, 1)
 DELTA0 = F(1, 18)

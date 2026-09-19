@@ -76,7 +76,7 @@
   },
   "f": {
     "path": "content/009-rational_duals/004-dual_buckets/013-d/015-f.json",
-    "sha256": "8159bcea30c8253b8b7f24f5207b426a04875cd2adc7e7537200714b94c7ea64",
-    "kind": "value"
+    "sha256": "ec6dc665397de20d72102011579a86cc32fe6e756c49fdf322ec78dfebd3ba8d",
+    "kind": "value-zlib-base85"
   }
 }

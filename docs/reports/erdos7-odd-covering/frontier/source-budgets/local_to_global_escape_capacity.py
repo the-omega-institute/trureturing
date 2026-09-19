@@ -15,9 +15,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/local_to_global_escape_capacity.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/shared_slot_gap_global.py': '9cf33d7af330eb181c7588b35f5be079187ffa8e192bce22bd7d3101c0b24a74',
-    'certificates/source_norms/source-budgets/shared_slot_gap_global.json': 'c920fcbcf3b970dc9d41191db6ae7e22cf1cb03f141cf864c15388809d86d605',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/shared_slot_gap_global.py': '74adeac6d398ad9c82d3aec395ef077e2be78a560f0a446958fee9d415eeabd6',
+    'certificates/source_norms/source-budgets/shared_slot_gap_global.json': '4aaf98ae262a469d4a0c0ca9e51efbb053bd49fb17cf3203a546bdf103450b6f',
 }
 
 

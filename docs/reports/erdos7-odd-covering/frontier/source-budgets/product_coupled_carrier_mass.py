@@ -11,7 +11,7 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/product_coupled_carrier_mass.json'
 EARLY_LIMIT, SLOPE, FACE_MASS = F(3, 61), F(61, 360), F(53, 360)
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/source-budgets/carrier_mass_residual_bound.py': '0478f224ae2d59dcd4e0f7d9d0c4b23eca7c6bd632bd6ffb12bce5420fd5ef16', 'certificates/source_norms/source-budgets/carrier_mass_residual_bound.json': 'f43db53a004d7d9b3a6c8b298609256e128a8cc0435987e3bb14d5216cc0627b'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/carrier_mass_residual_bound.py': 'b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c', 'certificates/source_norms/source-budgets/carrier_mass_residual_bound.json': '5ec6d2857f0dfe90bce554944fa29d72413e9bb0c359de77b7daf54ca4ceb32b'}
 
 
 def require(condition, message):

@@ -7,7 +7,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -44,7 +44,7 @@ parser.add_argument('--source-directory', type=Path, default=HERE)
 parser.add_argument('--write', action='store_true')
 args = parser.parse_args()
 pins = {
-    'certificates/uniform_gamma_cofactor_certificate.json': '90814b5b2435d0f8ae48e29fe0427c43d15ff93fb8d2116589906e0fb54e7f59',
+    'certificates/uniform_gamma_cofactor_certificate.json': '1739213682c47464c2d0a4e72f90ef98fb0813dcddae96bea250b355fbaea366',
     'certificates/star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
     'certificates/joint_density_certificate.json': 'de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c',
 }

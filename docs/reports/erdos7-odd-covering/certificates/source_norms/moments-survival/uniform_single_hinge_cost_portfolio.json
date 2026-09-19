@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "8852fa358a62ae19598d44c65622010a8ab771f38628b7c50a9f3c39f1852d41",
+  "logical_sha256": "6c726d71fa95860740a742d98ae6441194bb9947b2e5adf62da64ce8f965be71",
   "parts_directory": "uniform_single_hinge_cost_portfolio.parts",
   "root": {
     "path": "content.json",
-    "sha256": "2d0934fa07e16b4a2262b7103ab435e3074d0b096de173f7b426edc332184af4",
+    "sha256": "fc2c96b753340f7b5bdede6f4d761cbae26c935631f95c019b28c91b31f54f0e",
     "kind": "object"
   }
 }

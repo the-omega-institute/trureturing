@@ -11,10 +11,10 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/selected_deletion_mask_heavy_comparison.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-        'frontier/retained-transport/retained_deletion_heavy_comparison.py': 'bd8e4a4308df347e9303efca411014e90282b9bb8ecd8ad9b6dc87f8af1d4a66',
-        'frontier/retained-transport/retained_deletion_survival_comparison.py': '6eda37c629bf7ec5a8318cf4ccce883b99203318e313bf7b0d0afc966396a6c7',
-        'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '1e79e0d833b7690589decb871de09f972b06f036ab0a490205658eea8efffde0',
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+        'frontier/retained-transport/retained_deletion_heavy_comparison.py': '553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f',
+        'frontier/retained-transport/retained_deletion_survival_comparison.py': 'bf265663d663f4e681e79efdca61af3607917cac3a47f9c8fbc1dd19f911abab',
+        'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '646acfad14cbb6e3476c7d33a1fb2ce3ba068305dc02fa75635df8c8509fff87',
         'profile-notes/065-128/109-the-mean-and-all-hinges-share-one-original-test.md': '8bdfd8d0830de3b2ef5fd554b55308854118e74f0b89f511efdfdcf0297314d7'}
 BRANCHES = ('nested', 'disjoint')
 ETA = (F(1, 18), F(1, 9), F(1, 9), F(1, 9), F(1, 9))

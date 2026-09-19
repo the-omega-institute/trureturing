@@ -1,12 +1,12 @@
 {
   "heavy": {
     "path": "content/003-domains/000000/item/006-banks/000-heavy.json",
-    "sha256": "8c3fd949c054d2663b495b5b5c20d57eb290b0a859c02d0709dc503e775cf3f7",
+    "sha256": "881633a9843d6a158809dc8c12ce8e4a9bfb6c00dc1b455c96fd61667805321e",
     "kind": "object"
   },
   "survival": {
     "path": "content/003-domains/000000/item/006-banks/001-survival.json",
-    "sha256": "387b85825381d81b122c55d60251f67b9a963079f399676621cdca5df6e15c72",
+    "sha256": "61314cb9d9d2ed34c464d9da2fb83cb2ca709efc5cb434a0232ea38b4f766ad2",
     "kind": "object"
   }
 }

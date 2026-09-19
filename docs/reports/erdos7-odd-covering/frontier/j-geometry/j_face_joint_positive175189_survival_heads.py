@@ -11,7 +11,7 @@ sys.dont_write_bytecode=True
 CERTIFICATE='certificates/source_norms/j-geometry/j_face_joint_positive175189_survival_heads.json'
 MODEL='4da5961945a50079d14a49fc0017409abeba79624086971f2c0747d63e8e494d'
 U,L,N=12941,32141,32151
-PINS={'frontier/j-geometry/j_face_retained375_survival_heads.py': '4a873f67f2ea4040555873a2777dcb8780c35816e5168704eeca5ac8cce0748e', 'certificates/source_norms/j-geometry/j_face_retained375_survival_heads.json': 'e92c74eab962d2b58235c2de020222c135bc1844447791b96269ea9197f00e4f', 'profile-notes/257-320/288-retaining375-strengthens-the-complete-j-survival-hinge.md': 'acc7d5308c0d8e9bf513623b98e338ddc2cb5e4da4891602dc942b5db7e7701d'}
+PINS={'frontier/j-geometry/j_face_retained375_survival_heads.py': 'af5772e88a6496e44d8de677575e2212a438884797c58009510730529eb08ec4', 'certificates/source_norms/j-geometry/j_face_retained375_survival_heads.json': '6af788eeccbc2d4e570c9bd08a88fe724cc26dc4c4c6c687399dbf1e5e671d81', 'profile-notes/257-320/288-retaining375-strengthens-the-complete-j-survival-hinge.md': 'acc7d5308c0d8e9bf513623b98e338ddc2cb5e4da4891602dc942b5db7e7701d'}
 
 def require(ok,message):
  if not ok:raise ValueError(message)

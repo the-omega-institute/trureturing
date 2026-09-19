@@ -9,7 +9,7 @@
   },
   "source_classification": {
     "path": "content/003-dual_price_inventory/002-source_classification.json",
-    "sha256": "3523aadebed4bdcb705323a9af84720145fbd5145196c7e8999a252711e52395",
+    "sha256": "7532a488f27eab2dfd4c7db3a112b900ba77e2d7700c9d4a2b7c2dc177da21a1",
     "kind": "value"
   },
   "priced_bank_count": {
@@ -99,7 +99,7 @@
   },
   "source_banks": {
     "path": "content/003-dual_price_inventory/015-source_banks.json",
-    "sha256": "34b5f23f09cf5422abc28360dfcab6d33882ec3bc0c0d9bf8299fbc1076d8a52",
+    "sha256": "97297a1d1c33c76973bc45bcfbe97ca7a925b10d1b8bdffa548228dc4d5fb528",
     "kind": "value"
   },
   "small101_row_mapping": {

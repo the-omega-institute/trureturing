@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "f3efce3a12551b390ac756663f4e56257152783cf614e513cf87533a8809655d",
+    "sha256": "ed265facdeb0602e48c70fcb7c369492dbbab18d7e7171d3818840e257c45be7",
     "kind": "value"
   },
   "parameters": {

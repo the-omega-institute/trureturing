@@ -17,10 +17,10 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': '1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json': 'a5102c4c9959033802c24108710ba5e3c829c53cbcd91b4fff2db4904e22f16d',
-    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': 'b8cd504c29389cbd4cee15fb9403361de3d93cc57d47f1c5016705b2a78b3ff6',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': 'ac4fb2033f0b3d96fd358a369ddb0c87ab4c18a3ea72af1e0d277285a4e5dc2b',
+    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json': 'f715fee37ae6c26170d9d9cb43ed2cc2b48e04dc516eb5a5021088f2aee2509e',
+    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': '4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': '295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184',
     'frontier/source-budgets/shared_square_barrier.py': '6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1',
 }
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_square_neighborhood.json'

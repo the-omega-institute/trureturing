@@ -15,7 +15,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/all_selected_heavy_comparison.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/source-budgets/joint_selected_source_comparison.py': '27e01b28ef759fea1a3e8cb7ac336f71211fdd4fa9fd589c6270443ad9ec9355', 'certificates/source_norms/source-budgets/joint_selected_source_comparison.json': '245e6e5902c7b30cd246d3910c4e773f5f2fef99aff1d3dc939f60550dd11696', 'frontier/moments-survival/joint_selected_survival_comparison.py': 'edc51eff3060aac8ec22c43d27f37754d7052fd025f77713b0514bfbab5cce7b', 'certificates/source_norms/moments-survival/joint_selected_survival_comparison.json': '85e228b6fc8ef13ebf2fab6cb4f4e8ff8413a98afa6aeed9ef853666951240ab'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/joint_selected_source_comparison.py': '849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8', 'certificates/source_norms/source-budgets/joint_selected_source_comparison.json': '6dc35e873880cadf39cb519c5f28c0f5bcca72b48ce29972f05ae13c3ddf9622', 'frontier/moments-survival/joint_selected_survival_comparison.py': '8ff81723f38d23c0c7cb26f081dbdacd8085f0d1724381d7e2ef729d534e0c20', 'certificates/source_norms/moments-survival/joint_selected_survival_comparison.json': 'ebcce45e9ddd4dae7d7eb504bc7e1d0571b31de13d8e70a9ca69570882b455e2'}
 
 
 def require(condition, message):

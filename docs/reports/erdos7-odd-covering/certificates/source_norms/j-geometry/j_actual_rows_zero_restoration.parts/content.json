@@ -6,11 +6,11 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "frontier/j-geometry/j_face_retained375_survival_heads.py": "4a873f67f2ea4040555873a2777dcb8780c35816e5168704eeca5ac8cce0748e",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/j-geometry/j_face_retained375_survival_heads.py": "af5772e88a6496e44d8de677575e2212a438884797c58009510730529eb08ec4",
       "frontier/j-geometry/j_face_retained375_heavy_heads.py": "4809f39bbe050d670250d82b8937e0b175d97fa34128a388053169929d951f4e",
-      "frontier/comparison-bounds/second_depth_seven_comparison.py": "b49a13dde9aa26ce8b1a132c11f3a9bc125d995b9497567c7bff26eb2f4bb239",
-      "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json": "05b66ac3ab1773bcd1c6d5bdcc6a7d7bc2b0fcb9f44ffa87ee247cf477a17024",
+      "frontier/comparison-bounds/second_depth_seven_comparison.py": "81af9f9f98c43ec3a7b0291ce7ee2b9fb133c63314ca5b2416aabf804f15cbfb",
+      "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json": "aa6d3fb5e36502e2fb227db6207179058fee50ec9d143646ce8667912c47d618",
       "profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md": "cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1",
       "profile-notes/065-128/116-signed-face-duals-transport-one-shared-finite-source.md": "35a43120d9f0e9f17799ad0432bb118e4a53e4b130f49b285fb99bee19dede17",
       "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",

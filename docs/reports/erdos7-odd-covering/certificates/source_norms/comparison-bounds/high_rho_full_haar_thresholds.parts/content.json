@@ -10,12 +10,12 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
-      "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "5c18ba0a23668b8e151598f1c307d20e4264894b2ef5278d56e50ffbad6f9855",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "192881db2a35f97ab9d786b2ec18f2c07064ffe83158e6b14a40daee29373a19",
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
       "frontier/j-geometry/j_whole_face_high_rho_finite_guard.py": "72e4a5d9621a46bc446e3e98ed5b85b621426a72842e73926c3cce164d2f2dea",
-      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "1ba3e177255bac28143e22f88476a87655e8e591f9ff6d76ffd66f9cb24e2015",
+      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "c0ce9c9fddf8f095fb8ee01d623825cf6a13d52936b0eab913800682a31afd7d",
       "profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md": "2bd45308ba5e7e9ee95a04d93eb193710fde7de7495897cd21a2e555fa4d779f",
       "frontier/moments-survival/high_rho_physical_hinge_prime_scan.py": "547fed8f12e70dccdd4b3fd9222ede06e992e7946a3e85b59e6e8b93b46c6f8c",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",

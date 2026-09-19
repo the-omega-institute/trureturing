@@ -15,9 +15,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/root0_shift_threshold.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/shared_root_imbalance_payment.py': '18ef3aeffba4c8cf06b0387ef5af2a369a1825c8bccdb18deabc9a1a09457299',
-    'certificates/source_norms/source-budgets/shared_root_imbalance_payment.json': 'c27a0a5ce09edc44f2892411d11705fe59d466b0911ae4fee97b00a5ef6bf402',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/shared_root_imbalance_payment.py': 'a7edda92e493cacfbd1b4665e03ef6fc0db7c8b1ef2febd17af4a1a609a4997a',
+    'certificates/source_norms/source-budgets/shared_root_imbalance_payment.json': 'e00636fcfca0f68e632b19333e8d534c99006a2e5942ecac59f93f67f7138a5e',
 }
 ROOT = (0, 0, 1, 1, 1)
 THRESHOLD_FACTOR = F(89, 180)

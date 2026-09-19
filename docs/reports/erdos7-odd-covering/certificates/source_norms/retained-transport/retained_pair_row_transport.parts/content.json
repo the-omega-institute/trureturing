@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "5ea4026f716d43edaf1e51f913929d75add2192756e080ada253ef35c7501f15",
+    "sha256": "83b371d7ab1a39233a6e66c75a5e9910b610872a36d4cc55fdb1c63daf8edb82",
     "kind": "value"
   },
   "inherited_priced_constraints": {
@@ -82,7 +82,7 @@
   },
   "domains": {
     "path": "content/010-domains.json",
-    "sha256": "e0ff97581b5b1b3ef7dfaadcf37bba213f1173a297953fd6d6c44251176904b7",
+    "sha256": "cbcfa0e5340a620ecfdcee544127cf9c14353587e25e1c25476c470655c80bd2",
     "kind": "array"
   },
   "scope": {

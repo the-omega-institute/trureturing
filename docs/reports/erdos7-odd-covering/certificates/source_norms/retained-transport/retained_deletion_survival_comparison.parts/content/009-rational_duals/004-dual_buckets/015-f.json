@@ -46,8 +46,8 @@
   },
   "9": {
     "path": "content/009-rational_duals/004-dual_buckets/015-f/009-9.json",
-    "sha256": "962179b1f9f4ab8c53d31b34f81b9691084a9f66cb2b49c303af971f14c48ac7",
-    "kind": "value"
+    "sha256": "15023b76fac47cc1f7ecd4dbb173f47d9b072383117fcad07c4bd8bc5850a397",
+    "kind": "value-zlib-base85"
   },
   "a": {
     "path": "content/009-rational_duals/004-dual_buckets/015-f/010-a.json",

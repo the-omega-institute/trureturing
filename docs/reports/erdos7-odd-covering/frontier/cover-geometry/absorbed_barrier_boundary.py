@@ -18,12 +18,12 @@ sys.dont_write_bytecode = True
 CERTIFICATE41 = 'certificates/source_norms/moments-survival/survival_hinge_deficit.json'
 CERTIFICATE43 = 'certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
     'frontier/source-budgets/shared_square_barrier.py': '6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1',
-    CERTIFICATE41: '484ee018b5f7fee564317a37975fabb5d5ae7e8046fce0c88714209af67145c0',
-    CERTIFICATE43: '4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84',
+    CERTIFICATE41: '1545539894d8b6390dad78918d2961ef6292935765886b3742aff61a12143af8',
+    CERTIFICATE43: 'af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030',
 }
 ROOT = (0, 0, 1, 1, 1)
 LAYOUTS = tuple(tuple(1+int(ROOT[l] == r)+int(l == j) for l in range(5))

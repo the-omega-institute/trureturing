@@ -10,9 +10,9 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
-      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "16ea2c3667b29817cc9a4af329ced16773adca2c2081efafb8b44eb7e150212b",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "573cff9d649494d0c512789d2dae3c15da68edab9672f5184df5f9476918e517",
       "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
       "frontier/comparison-bounds/high_rho_full_haar_thresholds.py": "877ce197e1634d5814f33166761602a3b4a12c0dd1cb3c9e31709be8e3d956e2",
       "profile-notes/001-064/06-a-common-matrix-bound-for-all-actual-rectangles.md": "44b9f31e2464f0cdfb77a81876ac8c7800346bf157bb21f9b24814a56fdfc840",

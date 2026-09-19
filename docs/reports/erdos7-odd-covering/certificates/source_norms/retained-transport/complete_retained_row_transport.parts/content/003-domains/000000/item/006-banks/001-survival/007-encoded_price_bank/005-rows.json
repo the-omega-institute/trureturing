@@ -6,8 +6,8 @@
       "stop": 798,
       "part": {
         "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/000000-000798.json",
-        "sha256": "dbb5af7989761a0a595ff073e7af5b49f818dcb9c9fddb5484b5114437fec21f",
-        "kind": "value"
+        "sha256": "365710c9e7028118c34344beaa3169349cce25c8a606525650c3cc9c444a0085",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -15,8 +15,8 @@
       "stop": 1596,
       "part": {
         "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/000798-001596.json",
-        "sha256": "5be620f8e3fd9c0920426689d53cfd4863728ec78feac7237786031d72581913",
-        "kind": "value"
+        "sha256": "f55faee48276f1eea105f2ae98dd487e5285c53a7ec6d8493d72f0fb985ecf14",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -24,8 +24,8 @@
       "stop": 2394,
       "part": {
         "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/001596-002394.json",
-        "sha256": "d089cfc5a4ba06de81298de64253e63cfaa335944816612cc7a03329810d165f",
-        "kind": "value"
+        "sha256": "851efe9bb2049448d61060ebd307d4c0d493fc3abb3c2dd92c5b56510c16266c",
+        "kind": "value-zlib-base85"
       }
     },
     {

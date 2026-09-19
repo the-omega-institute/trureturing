@@ -10,9 +10,9 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
-      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "bb8f955a08fe66ccee9802978cdd7125afae622eb420590db91cf1dd71318738",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
       "profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md": "f3190a7c8656a2e20dbf1172517caa2fdc1c9cc6366cd87d1a51c8bde9ccf629",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
       "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",

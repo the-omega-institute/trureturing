@@ -10,12 +10,12 @@
       "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
       "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d",
       "certificates/pg1_joint_tail_certificate.json": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff",
-      "verify_point_geometry.py": "5215a33921ff00a3053a773149c9eafffaa4ba62c04d38b29bbb60f5a6166127",
-      "verify_original9_convex_transfer.py": "e4757b331d7d6c17afcce4c966d033580c06655c092579b78c4094b662a73300",
-      "verify_pg1_exact_zero_depth.py": "0e8acc877f7d362d59f0e5e2071909e3776e8bce3bee48ac8ff7c4746516528d",
-      "pg1_signed_score_oracle.py": "f27cca460df6a931b5dfa34bfea9e270b03685691996f2808d89d934bdca86dc",
+      "verify_point_geometry.py": "a29dfce24ec1a2eaf73ea37289b7c5ef8ab5c3e8259b06533b20988f434ce8e4",
+      "verify_original9_convex_transfer.py": "08d4c971796d72301308dd38ad4fb326b5f8c65a885563c31c1cc87ba7a04936",
+      "verify_pg1_exact_zero_depth.py": "00e5d4574420dee655bd600f8fa7c65337bca27876c7504434d8990f38ee623c",
+      "pg1_signed_score_oracle.py": "ccd439d6cc2f04dbef4dfc901b3313385462d42e9b5e290c14ccdfdde613fe3d",
       "pg1_signed_score_oracle.cpp": "a2c802870c6260f19c900b7e733ca43356d3131518682c424dd2cf51e8659d2f",
-      "exact_signed_digit_dp.py": "dea5039b7fc95024f1c8ad62ac3e8ee84e7cdb87fd56b3ca38ddb391b58a5dd9"
+      "exact_signed_digit_dp.py": "329e48d41a7d66c4e394d00672ca073274079c799202f74497017d1081c5f8dd"
     }
   },
   "result": {

@@ -21,9 +21,9 @@ HEAD_CERTIFICATE = 'certificates/source_norms/source-budgets/expanded_source_ori
 DELTA, RHO = F(1, 22), F(1, 20000)
 EXPANDED_RHO = F(1, 15000)
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '45c1b016e68eb5397a78a6540c4f8ee5287c214b6bb35625d4d0232224dd2314',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'e0d124f375efa0567777973a2ba468d368285807aed054ada2e57727b896d4f2',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
 }
 
 

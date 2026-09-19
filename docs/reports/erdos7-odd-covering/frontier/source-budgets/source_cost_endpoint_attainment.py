@@ -17,7 +17,7 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/moments-survival/full_absorbed_survival_hinges.py': '3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d',
     'frontier/source-budgets/sharp_source_mass_endpoints.py': '79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9',
 }

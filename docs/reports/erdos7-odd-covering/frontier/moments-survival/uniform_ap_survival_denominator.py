@@ -11,11 +11,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b',
-    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': '0b17d19eceaf7097f29800d9a69000c1fc37736c8f50f5453dc71380642af5f9',
-    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'fb2194587d5a4297afd05dbcbfba6ecfd09cbac919a2c221373a94817ec95455',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': 'b008312fc1c2d7debbc57e794f6b444135cd4876872f4fe77e52c69922deeed9',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238',
+    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': '59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79',
 }
 
 

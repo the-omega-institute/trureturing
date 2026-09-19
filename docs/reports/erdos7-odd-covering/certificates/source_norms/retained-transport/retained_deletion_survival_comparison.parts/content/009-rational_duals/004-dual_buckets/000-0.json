@@ -61,13 +61,13 @@
   },
   "c": {
     "path": "content/009-rational_duals/004-dual_buckets/000-0/012-c.json",
-    "sha256": "cd034bf0654169e57337f8fd01ce35d06f9edc3f777d6c34d2574506e2a2fd83",
-    "kind": "value"
+    "sha256": "e1d5fea95723eadc8f8d335119123357c55b645213dab03d1b86654e55a97aee",
+    "kind": "value-zlib-base85"
   },
   "d": {
     "path": "content/009-rational_duals/004-dual_buckets/000-0/013-d.json",
-    "sha256": "2aedc28c8d670413e8c0ef405abc450b7d4c7941b85b39983f20bbbcef599fff",
-    "kind": "value"
+    "sha256": "c0dfb3fb9706fd2666fce7cb473190a4ae91078503dcca6e27f22895511bf04a",
+    "kind": "value-zlib-base85"
   },
   "e": {
     "path": "content/009-rational_duals/004-dual_buckets/000-0/014-e.json",

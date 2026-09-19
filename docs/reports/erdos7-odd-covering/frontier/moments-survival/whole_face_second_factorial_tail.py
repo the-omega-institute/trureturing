@@ -17,11 +17,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'a43c2d8ec4228d1a58e8d8511db17f91c8f47470c0114460656be59ccfce2327',
-    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '8d2770aa7147105fe03c4428293b588feae64b140afe80585583c786146bbbc5',
-    'frontier/endpoint-bounds/k_face_complete_ratio.py': 'e94a6532ff6951d464a224f1a56415aaea90251c520c7b06fc9afe4e6a82c5db',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'c220594349efc9a422b25e9bd434bb4508d4665b7ae80459e5cd14277d6df850',
+    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '25fa8fd2564e2da46575f04405d6e4d8eba56bc8e6df67a563a14ec887b6753e',
+    'frontier/endpoint-bounds/k_face_complete_ratio.py': '00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
 }
 HEAD = ((0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1))
 

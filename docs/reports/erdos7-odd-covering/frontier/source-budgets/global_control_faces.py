@@ -17,7 +17,7 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/global_control_faces.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
     'frontier/comparison-bounds/allocated_seven_thresholds.py': 'b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d',
 }
 SIZES = (6, 3, 6, 6, 2)
@@ -185,7 +185,7 @@ def calculate(base):
     read = lambda path: json.loads(io.read_artifact_bytes(base/path))
     previous53 = read('certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json')
     pins = previous53['source_sha256'] | previous53['helper_sha256'] | PINS
-    pins['certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json'] = 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5'
+    pins['certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json'] = '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2'
     for path, pin in pins.items():
         require(sha256(io.read_artifact_bytes(base/path)).hexdigest() == pin, 'Pinned input: '+path)
     source = module('control_source', base/'verify_joint_frontier.py')

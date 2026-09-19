@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "e0fa421041f6b54a3927ac9f60bdec88792db6eaed0af160eff90da03fe77b85",
+    "sha256": "683bdd82b831f6ac37909364777a621e7323cb6c3e815d176e0916f89cea7ec7",
     "kind": "value"
   },
   "concentration_delta": {

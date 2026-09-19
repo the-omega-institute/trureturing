@@ -11,11 +11,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/seven_pair_source_prices.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/exposed_concentration_prices.py': 'c0e4f94c5916b8286f534411ab57e231ed5268a5e5f4135b0b3e4720e56fbab8',
-    'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '7943196a402ce431337cf4174d01fcb50c9ada9852d627806c0b153f125b756d',
-    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': 'e8e389095edfd5588234801e321f2d66a06cea82e82edd6ab24b85a69c2e8b64',
-    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '306f506e83342b0171f6845cb93019e622f23badec6dbef5abea706d3e0d4418',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/exposed_concentration_prices.py': '9c2e6d7ea0777df07559c90a506dcd19d40e2af6febadaee7833a0d66b20488a',
+    'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '4cbde5374198bbf645157ef6bb7765e3b8fed57569cd2c99b85c25741f38fd25',
+    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '248c4af165fc4e636c4f4a3c61947384afd9128cae6c652b07819e20a55da484',
+    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '4fa3ff52514576814c380e21caaeb2cc9341180815cab34e5b64c8c6e896bade',
 }
 SOURCE_ORDER = ('s', 'N3', 'N9', 'D', 'h', 'h1', 'eta_max', 'constant')
 

@@ -17,12 +17,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/quadratic_vector_marked_source.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/vector_marked_source.py': 'e9917c725b8f910a0524ccae99dfffb5949f3af568980a70b5299e7fb1c71b39',
-    'certificates/source_norms/endpoint-bounds/vector_marked_source.json': '01f58d319ca57688a219d24296d8ba8aebba91f6091e6bf1bda0f34ceb10180f',
-    'frontier/moments-survival/quadratic_marked_global.py': '71c7b94fa6ca7748481d9415363552402e21dcfdd755c78781dbeffe121d905f',
-    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'ef92b42ce4cc28f7a8d3e9cca5628bb30dd7f3bb9cd3f49fa2bb7dd7cbebcd37',
-    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': 'ccb1debedef1dc49cbc6a31e01c712f156992dc238bd0576e4f51ee8dd6f6888',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/vector_marked_source.py': 'c8fb3eb6fd743d14942fe44a3999749585bbf29e52b825ef68e7955cc0640c79',
+    'certificates/source_norms/endpoint-bounds/vector_marked_source.json': '51e797f906aefdf2bb1d99d21694a85bca4e7a3d5f117133aad2900afbe3050f',
+    'frontier/moments-survival/quadratic_marked_global.py': '1a08b16f36862c66c4e2b568a8a09ee2d296e3ddeb9e9eaad2a80ff4c8073626',
+    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'f2dfcc7e37c71bb4e419273f99597db926e89da0e09b65f93800f87c8f364c4b',
+    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': '2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a',
 }
 ALPHA, SIGMA = F(6, 5), F(40, 3645)
 FACE_VERTICES = ((F(1, 4), F(0), F(0)), (F(1, 5), F(1, 20), F(0)),

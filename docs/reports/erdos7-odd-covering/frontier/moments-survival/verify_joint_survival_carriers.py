@@ -15,11 +15,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PREVIOUS = 'certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json'
-PREVIOUS_PIN = '4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84'
+PREVIOUS_PIN = 'af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030'
 PREVIOUS_VERIFIER = 'frontier/moments-survival/verify_full_absorbed_survival_hinges.py'
-PREVIOUS_VERIFIER_PIN = 'a534b9cc2e8dea91cac97dfecf01620cb573608dfeb453ef172911ab7647cb63'
+PREVIOUS_VERIFIER_PIN = 'fb2d6b8e99918eec23e1554624050a68782b7da78fa42d46e71017e97ce4d92c'
 HELPER = 'frontier/moments-survival/joint_survival_carriers.py'
 HELPER_PIN = '4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d'
 CERTIFICATE = 'certificates/source_norms/moments-survival/joint_survival_carriers.json'

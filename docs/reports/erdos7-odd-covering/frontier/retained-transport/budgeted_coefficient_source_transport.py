@@ -19,11 +19,11 @@ CERTIFICATE = 'certificates/source_norms/retained-transport/budgeted_coefficient
 DELTA, RHO = F(1, 26), F(1, 940)
 TARGET = F(509289, 1000)
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/full_slot_radius_source_comparison.py': 'fac5400fa27868f790fae4d762488f52061a5ecbc580eacd406d65c00f7ce750',
-    'certificates/source_norms/source-budgets/full_slot_radius_source_comparison.json': '19356548e96024d02fbd1c24f1d0138bde17c2f498c286ff478bade95d2753ff',
-    'certificates/source_norms/source-budgets/full_slot_radius_source_heads.json': '9c917e5739bf52fe6c7ed87169373a2623c68b3cf08f579a2dec383a6a968dc7',
-    'frontier/retained-transport/transported_source_complete_comparison.py': '361c6ba33a0d78abae5238656412a4caa8470f5a10ee1c9667245bb72c4bd8c2',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/full_slot_radius_source_comparison.py': '3ee344da8324f5b4ec7bc84e96e14fdcea57cb1ec0667b933300dbf33a8e100f',
+    'certificates/source_norms/source-budgets/full_slot_radius_source_comparison.json': '8d49ea3f3d9ca0ec9e69f617da7637234b96105da266a4b4fc7c63d921a4e142',
+    'certificates/source_norms/source-budgets/full_slot_radius_source_heads.json': 'aeb57d4883a06dff4d9df05eff3affd7887ab2df813144ceaa818ab242d71b15',
+    'frontier/retained-transport/transported_source_complete_comparison.py': '68eff34e6592cfc5c6dbac23aacef6bfb1f5bed1c8ff8f74560c6ec387299418',
 }
 
 

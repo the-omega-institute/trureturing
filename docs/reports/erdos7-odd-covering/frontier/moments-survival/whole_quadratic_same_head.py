@@ -17,13 +17,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/whole_quadratic_same_head.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/whole_block_mean_survival.py': 'c82087240db64211520f9e268c177fb73a44ff6bb4117e7cd424c5251bee8510',
-    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'fb2194587d5a4297afd05dbcbfba6ecfd09cbac919a2c221373a94817ec95455',
-    'frontier/comparison-bounds/whole_cost_mean_stop_loss.py': '21caf2496428ab1772ffd544c38a82a65b3336d32b8f4aa99307810f54478ac0',
-    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': '01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26',
-    'frontier/moments-survival/whole_factorial_same_head.py': '02b5af74e00afc26b940d8c6b485fbea654a4d2f9dd52d986875c303a79faacd',
-    'certificates/source_norms/moments-survival/whole_factorial_same_head.json': 'b22d62e4c137abc20668305d67bf86f87345077f0ecf3d481e1bf83b2dedbd3c',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/whole_block_mean_survival.py': '16928973f324bebbfa8abb8a0ca85a2cc7b2e7f64df17663f3e29b8447531bef',
+    'certificates/source_norms/moments-survival/whole_block_mean_survival.json': 'cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd',
+    'frontier/comparison-bounds/whole_cost_mean_stop_loss.py': '3098c95dcd0c8ef6d27a5d78e4bfad13441d20dd2491e3ea21c76a6acc6c9b70',
+    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6',
+    'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
+    'certificates/source_norms/moments-survival/whole_factorial_same_head.json': 'c47a8913749f560346af5ab2c3db756ff5b6f831863c897a87f377c9dd3c7c08',
 }
 
 

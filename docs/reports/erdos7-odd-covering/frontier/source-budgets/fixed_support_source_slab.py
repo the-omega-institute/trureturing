@@ -12,13 +12,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/fixed_support_source_slab.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/vector_marked_source.py': 'e9917c725b8f910a0524ccae99dfffb5949f3af568980a70b5299e7fb1c71b39',
-    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/vector_marked_source.py': 'c8fb3eb6fd743d14942fe44a3999749585bbf29e52b825ef68e7955cc0640c79',
+    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
     'frontier/source-budgets/full_linear_carrier_frontier.py': '98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888',
     'frontier/source-budgets/source_barrier_saturation.py': '6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64',
-    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'ed24ce03bd65f29684a606ba601f88b06040562e7dd7a690d360cea5aa4a2852',
-    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '028c510517bb3e6cd5ff0261254c116a65d1879a3bb9dcf66ce9bfe659d94f68',
+    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
+    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '1e1b972b2756007c1f259232d4d03c49b527d5e88242b98e4300f48c3fa08f2f',
 }
 DELTA, PMAX, R_CUTOFF = F(1, 18), F(1, 20), F(1, 2500)
 ROOT = (0, 0, 1, 1, 1)

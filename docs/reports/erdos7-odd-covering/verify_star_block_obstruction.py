@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -31,10 +31,10 @@ HEAD_PRIMES = (3, 5, 7, 11, 13, 17, 19, 23, 29, 31,
 
 
 # The entrypoint source pin transitively binds every split arithmetic module.
-_SPLIT_SOURCE_SHA256 = {'star_block/base.py': '4c297e9df73860240770c96fd66b64ad32c2f7baac83e610367d24574848c0c0',
- 'star_block/density.py': '0bb2f9bb7f4eedea9e53efac665492e2a2605d3d033f6a226dff1412f0e9d389',
- 'star_block/ranks.py': 'a97e457b48e080b5fd52082cf1821aa401a4988527a41f0f96ad6fa73909a53f',
- 'star_block/stoploss.py': 'ceda5556d5bcdff861254dd57523a9b3a4486c26618c8a4ec6be8ac7ffd9043a'}
+_SPLIT_SOURCE_SHA256 = {'star_block/base.py': '8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff',
+ 'star_block/density.py': 'c07e02a5984c8908b2b95ef67e39ab19196ce005fa16a35a28ac0e7a1d7de4ec',
+ 'star_block/ranks.py': 'f9047ed34e492323240241f92a607a09f1e48a88d2f89e2e96dcdc524559d052',
+ 'star_block/stoploss.py': 'f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce'}
 for _relative, _pin in _SPLIT_SOURCE_SHA256.items():
     if _certificate_sha256((_certificate_root / _relative).read_bytes()).hexdigest() != _pin:
         raise ValueError("split arithmetic source SHA-256 mismatch: " + _relative)

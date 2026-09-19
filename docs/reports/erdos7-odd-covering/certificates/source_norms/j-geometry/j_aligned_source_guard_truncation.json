@@ -1,8 +1,8 @@
 {
   "schema": "erdos7-aligned-source-guard-truncation-v1",
   "source_sha256": {
-    "certificates/source_norms/j-geometry/j_aligned_explicit_parameter_neighborhood.json": "88b6b931ff864ab69e794d28cc9ceb1eebc60eea936c62b017037603b6676792",
-    "profile-notes/001-064/46-one-forbidden-carrier-mixture-strengthens-survival.md": "f13160a014c27d9ea0fab0f4c9b17bac6634332919f0fde193b95372caf6397a",
+    "certificates/source_norms/j-geometry/j_aligned_explicit_parameter_neighborhood.json": "f4e75deb0d10ae191f35d3e3eda9257f0c74bc1e87afb5b9a4eff6e40e701287",
+    "profile-notes/001-064/46-one-forbidden-carrier-mixture-strengthens-survival.md": "2b710bfecd65562571bb6b9a62b23ea14b6d0319edbb3945e038a80376b7869c",
     "profile-notes/001-064/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md": "b4c9a60a2c4a13147177e747d24dfb16a29e42eb2278f5948f22d49c0001563e",
     "profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md": "cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1",
     "profile-notes/257-320/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md": "87a657138aaf281ad788f5d1c13e395af64f5766bb87ae76a6d0a1ad5c904d3d",

@@ -168,7 +168,7 @@
     }
   ],
   "source_sha256": {
-    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
     "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d"
   },
   "scope": "Exact optima of the fixed source envelope over all real threshold arrays. Not optima of actual integrals or a new global K bound; no Lean claim."

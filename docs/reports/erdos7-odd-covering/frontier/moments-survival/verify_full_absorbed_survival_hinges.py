@@ -14,11 +14,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PREVIOUS = 'certificates/source_norms/moments-survival/absorbed_survival_hinges.json'
-PREVIOUS_PIN = '51f51e59123004239e7315b2d94e36a482da5334df1f49639d039a7be31f4fc3'
+PREVIOUS_PIN = '244ccad2968a7c9c10fab1dcfc742d8860edce05a0f62dac0fbada6fb7a431a6'
 PREVIOUS_VERIFIER = 'frontier/moments-survival/verify_absorbed_survival_hinges.py'
-PREVIOUS_VERIFIER_PIN = 'c5170c0e3597ef83b0fb242be1e3c81ca0f93549d6d5bfb348be843c96c5c1a8'
+PREVIOUS_VERIFIER_PIN = '34c767c38ed8af68ebdcaa30a103501a2748322e0c6d9cb8480f9e53e5745cc2'
 LOCAL_PINS = {
     'frontier/moments-survival/full_absorbed_survival_hinges.py': '3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d',
     'frontier/moments-survival/full_absorbed_survival_consumer.py': '29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935',

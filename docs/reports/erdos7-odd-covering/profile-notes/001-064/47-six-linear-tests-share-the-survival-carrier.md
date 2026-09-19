@@ -402,7 +402,7 @@ payment established here does not by itself establish a conditional
 payment theorem for all five quadratic tests or for the square term.
 
 The [logical certificate](../../certificates/source_norms/source-budgets/joint_linear_carriers.json)
-has SHA256 `4063b63f8bdf0dc3cfcc90679d7ff3d2c325f03bfb36be99760570d1a714f6fd`.
+has SHA256 `4015bb61396aa4369c4960c2728f20abe345d290f63f6c7b7dbdb4c43382c0c1`.
 Its verifier checks139968 conditional linear values, both cost modes,
 233280 target endpoint inequalities per mode, eight fallbacks and two
 complete cores. Independent control arithmetic checks all conditional

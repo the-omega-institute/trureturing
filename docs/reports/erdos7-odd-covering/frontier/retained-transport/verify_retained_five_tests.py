@@ -14,11 +14,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PARENT = 'certificates/ap_schedule_frontier_certificate.json'
-PARENT_PIN = '8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785'
+PARENT_PIN = '15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05'
 PARENT_VERIFIER = 'frontier/cover-geometry/verify_ap_schedule.py'
-PARENT_VERIFIER_PIN = '8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5'
+PARENT_VERIFIER_PIN = '70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6'
 HELPER = 'frontier/retained-transport/retained_five_tests.py'
 HELPER_PIN = '3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60'
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained_five_tests.json'

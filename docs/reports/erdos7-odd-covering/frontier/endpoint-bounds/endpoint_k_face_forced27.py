@@ -15,9 +15,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': '71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '1e55513fa608217d3d0b7868505c390e401e80f3f63200627576ae32b55535c7',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': 'e298f636e8f54c5b13c839647fe8494e90713964b9e23bdfc9e52ff22373b9c4',
     'frontier/source-budgets/source_mass_compatibility.py': 'f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645',
 }
 

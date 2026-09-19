@@ -17,12 +17,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/comparison-bounds/allocated_seven_thresholds.py': 'b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d',
-    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': '71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '1e55513fa608217d3d0b7868505c390e401e80f3f63200627576ae32b55535c7',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': 'e298f636e8f54c5b13c839647fe8494e90713964b9e23bdfc9e52ff22373b9c4',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
 }
 ROOT = (0, 0, 1, 1, 1)
 ETA = (F(1, 18),)+(F(1, 9),)*4

@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "7cd672baeb50c19af2d39d535e94b190a21297912ab2333d9830a90bc60eb5eb",
+    "sha256": "f9350d897b383488c9568bef59624bb3485213c3040211b5af8cc9fd6630df72",
     "kind": "value"
   },
   "domain": {
@@ -42,7 +42,7 @@
   },
   "shared_price_banks": {
     "path": "content/007-shared_price_banks.json",
-    "sha256": "17fb562ce5f6fdd3ab2ad1b88d40b002426b7c5f6e1a1c449039d33f5efd49f1",
+    "sha256": "60c51e78fc687b1a553de52944a6f77cdaf39eedfcc8037c0ce708e51c43adf3",
     "kind": "object"
   },
   "tests": {

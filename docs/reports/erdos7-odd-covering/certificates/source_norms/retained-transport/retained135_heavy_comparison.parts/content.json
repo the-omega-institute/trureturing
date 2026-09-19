@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "efe2f98d3921a10e717ef50d268c177d4dfcde6f7786572f6a027f2ddd33fcd2",
+    "sha256": "e236da02937cda3065e196432616bd106d3eb3cf047ab5cb2e8bc4f4cee7d65e",
     "kind": "value"
   },
   "faces": {
@@ -62,7 +62,7 @@
   },
   "encoded_rational_duals": {
     "path": "content/009-encoded_rational_duals.json",
-    "sha256": "85fd2de17cf0b597d9d7c3f2a3c803f701f517f81378f492b936b2bc999af60b",
+    "sha256": "37b0df8e12047fa253abadef29b41d430596192d793befb9c99f1ccd26c6a153",
     "kind": "object"
   },
   "selected_policy": {

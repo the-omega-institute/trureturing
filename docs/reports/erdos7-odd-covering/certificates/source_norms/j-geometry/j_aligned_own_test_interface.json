@@ -4,9 +4,9 @@
     "profile-notes/001-064/57-common-deleted-measure-coupling.md": "d21cccdff1069cf7f1f15d14ad616cd259e0071b8c2a20244b22b88da7974be7",
     "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
     "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f",
-    "certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json": "d174d73255d27c937f22d140e3c131613c1a21b3c586c641ce6667735dd14b44",
-    "certificates/source_norms/j-geometry/j_face_alignment.json": "e2cb661d80b10f76d4a40c482d233e26b0979c3a116602d81e97a95532247485",
-    "certificates/source_norms/j-geometry/j_leading_alignment_surplus.json": "2db6ca27422b8de6d772ec5a36fcfaec253f3b7c1536772fe8885bf463266c53"
+    "certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json": "97e24c96d6fcea0e47f335d0f3ab18680df2d8ce1ecc1a03fbc4f3478a6dff51",
+    "certificates/source_norms/j-geometry/j_face_alignment.json": "75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5",
+    "certificates/source_norms/j-geometry/j_leading_alignment_surplus.json": "8be57ff7cc2565cc53a5eaf5db9ad8360e30fc9673b76dd55bca48c3dfc7e2af"
   },
   "residual_interface": {
     "rho_floor": "2/675",

@@ -11,10 +11,10 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/uniform_mean_cost_portfolio.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b',
-    'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json': 'f2661ac0ed3731b1a3da5cb09e234924cd751dfc5724d65a3745af5d1a108745',
-    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': '01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json': '06dfe1b20c2d4e08a61585bc654efc00c4d3461030917699a29996d387655482',
+    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6',
 }
 INDICES = (1, 2, 7, 10, 17, 18, 23, 26, 32, 33, 36)
 

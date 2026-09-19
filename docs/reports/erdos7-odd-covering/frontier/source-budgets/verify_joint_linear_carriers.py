@@ -16,11 +16,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PREVIOUS = 'certificates/source_norms/moments-survival/joint_survival_carriers.json'
-PREVIOUS_PIN = 'ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54'
+PREVIOUS_PIN = '9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a'
 PREVIOUS_VERIFIER = 'frontier/moments-survival/verify_joint_survival_carriers.py'
-PREVIOUS_VERIFIER_PIN = 'cbf73fe570b1ef250800ce9e6a569f2bf7c53aa79dd6fefaaa86ec279d11f077'
+PREVIOUS_VERIFIER_PIN = '23914aa7e4775000b01fdea1037e2559bc26c0b596104966e53b102a558ed7de'
 SATURATION = 'frontier/source-budgets/source_barrier_saturation.py'
 SATURATION_PIN = '6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64'
 HELPER = 'frontier/source-budgets/joint_linear_carriers.py'

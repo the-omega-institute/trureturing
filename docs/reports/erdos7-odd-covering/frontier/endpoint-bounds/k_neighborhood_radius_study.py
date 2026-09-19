@@ -12,10 +12,10 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_study.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/uniform_complete_k_comparison.py': '912ed6598fa390a53e0a4bfa5b8c7ad2b2f05d007a310c6ce174edcbc377ae98',
-    'certificates/source_norms/comparison-bounds/uniform_complete_k_comparison.json': '7168f4229ac6659c237b972e0213876e3065a74ace7bdb0668892bcb22889ab0',
-    'frontier/source-budgets/carrier_mass_residual_bound.py': '0478f224ae2d59dcd4e0f7d9d0c4b23eca7c6bd632bd6ffb12bce5420fd5ef16',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/uniform_complete_k_comparison.py': '75db40896f9a0fb1d7cd6ee17f6f8b7af5ef4c2bf074811b6df8ca3327809fd3',
+    'certificates/source_norms/comparison-bounds/uniform_complete_k_comparison.json': '0df6d4d58c94097993ac4f424d6c11a4be3197f483f5a61ad6bf840abf2af4ad',
+    'frontier/source-budgets/carrier_mass_residual_bound.py': 'b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c',
 }
 
 

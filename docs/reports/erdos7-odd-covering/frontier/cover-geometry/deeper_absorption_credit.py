@@ -18,12 +18,12 @@ sys.dont_write_bytecode = True
 PREVIOUS = 'certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json'
 PURE = 'certificates/pure_root_profile_certificate.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/cover-geometry/ap_schedule_core.py': '365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617',
-    'verify_killed_core_continuity.py': 'e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023',
-    PREVIOUS: '4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84',
-    PURE: 'abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753',
+    'verify_killed_core_continuity.py': '6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226',
+    PREVIOUS: 'af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030',
+    PURE: '045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a',
 }
 CAPS = ((11, F(5, 3)), (13, F(12, 7)))
 

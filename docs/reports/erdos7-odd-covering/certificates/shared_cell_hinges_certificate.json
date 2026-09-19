@@ -1,7 +1,7 @@
 {
   "schema": "shared-cell-hinge-v1",
   "source_sha256": {
-    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753"
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a"
   },
   "vertex_count": 1296,
   "minimum_raw_survivor_denominator": "53/432",

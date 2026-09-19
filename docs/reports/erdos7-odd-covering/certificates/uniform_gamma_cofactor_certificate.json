@@ -505,7 +505,7 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "7c4049bfc59f10d4fb49557164362571a54d96a64038fa590db25c63b5ad8b1a",
+    "verifier_sha256": "1b712586842ab42b09ba80f6a1e037f1373ead8de7d5c79f3bcd12426c5961f1",
     "scope": "Same actual probability and original-label floors; full geometric tails and separately concave target margins; ordinary proof, not Lean, sharpness or unrestricted resolution."
   },
   "same_original5_deletion_three_prime_parameters": {
@@ -658,7 +658,7 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "7c4049bfc59f10d4fb49557164362571a54d96a64038fa590db25c63b5ad8b1a",
+    "verifier_sha256": "1b712586842ab42b09ba80f6a1e037f1373ead8de7d5c79f3bcd12426c5961f1",
     "scope": "The same original5 event constrains selected square and pure3 deletion; global positive7 square retains its independent test; complete tails and separately concave endpoint reduction; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
   },
   "same_original5_six_cofactor_three_prime_parameters": {
@@ -855,7 +855,7 @@
         "three_prime_square": "14543/438"
       }
     ],
-    "verifier_sha256": "7c4049bfc59f10d4fb49557164362571a54d96a64038fa590db25c63b5ad8b1a",
+    "verifier_sha256": "1b712586842ab42b09ba80f6a1e037f1373ead8de7d5c79f3bcd12426c5961f1",
     "scope": "One actual original5 event pays through retained or removed mass in the joint selected-square/deletion expression; independent original labels and complete tails remain; ordinary proof, not Lean, actual-family sharpness or unrestricted resolution."
   }
 }

@@ -12,15 +12,15 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/pure_axis_joint_square_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/pure_three_joint_factorial_comparison.py': '135c77770cfb09752ff9ab82508ddd1e377f49b5ec783d8e85d2d7638cb0cef8',
-    'certificates/source_norms/moments-survival/pure_three_joint_factorial_comparison.json': 'cd6f257de24931fc8aa0ecc2bf95e87ad4327cc72b77c401a325572dca22f3c6',
-    'frontier/cover-geometry/pure_axis_cross_sharpness.py': '6d5fd1228ae82ffef81e117d7d19d7a7cfd6eb7609764f805ff900d10b802bb1',
-    'certificates/source_norms/cover-geometry/pure_axis_cross_sharpness.json': 'e1e9de1d112f4bc84fbb5d73a06650b70599d40dc4f0e0cc3e87536b760eaa3d',
-    'frontier/moments-survival/whole_factorial_same_head.py': '02b5af74e00afc26b940d8c6b485fbea654a4d2f9dd52d986875c303a79faacd',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
-    'frontier/moments-survival/pure_three_joint_moments.py': 'dcd5dae8b9ff0ef9c79f7ad7a52183079226815d2bf229f3ebcae349b9d70351',
-    'frontier/moments-survival/pure_five_joint_moments.py': 'ce2e635e296e720d241fa413ab18efe8cbeb4c2f80ecdc21e25573ee728d1ea7',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/pure_three_joint_factorial_comparison.py': 'cbd49a3802f32a8f0f2212767686b672eb6e02ccbf19bbf66091dcaf3b9db48c',
+    'certificates/source_norms/moments-survival/pure_three_joint_factorial_comparison.json': 'adeff8644a09506b2c833d371145433f56955e6237644eb78ea0155bbd791b4a',
+    'frontier/cover-geometry/pure_axis_cross_sharpness.py': '28316bd090142ee92e3f0cf1e6ea943d8a640fbe751cdaf0c5262d60ddff04c8',
+    'certificates/source_norms/cover-geometry/pure_axis_cross_sharpness.json': '6ca8c598be49ffe61703821f413a69bb08447235c8bdac6c15c5db6a6161abe3',
+    'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
+    'frontier/moments-survival/pure_three_joint_moments.py': '0831f231c4d0d0d6cad5c9f4eb730365ac6c3fcebe968b4aee9d56f3fa82aed6',
+    'frontier/moments-survival/pure_five_joint_moments.py': '4d2491befab31bd869fdf037677ea796f40c9941d1d90fbf752fb1c396913306',
     'profile-notes/065-128/128-the-complete-factorial-tail-retains-its-head-off-the-face.md': '79ae5ce60d7121afdc3fe0eaa3a87abecf21709d15e7627c2425dd7bdb4926cc',
 }
 

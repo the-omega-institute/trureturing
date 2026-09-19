@@ -8,7 +8,7 @@ from pathlib import Path
 sys.dont_write_bytecode=True
 CERTIFICATE='certificates/source_norms/j-geometry/j_face_higher_pure_hinge_heads.json'
 THRESHOLDS=(8,7)
-PINS={'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/j-geometry/j_face_triple_second_depth_heads.py': '4b3f190c4a8bf31d92b03cdadedba3644c66e258e583180f9868f449cab4d16c', 'certificates/source_norms/j-geometry/j_face_triple_second_depth_heads.json': '9740095781d0faa76071b8c39cb849b415ee9dbb0f63372aa27cd46451d15c2b', 'profile-notes/257-320/264-seven-retained-states-and-two-seven-depths-control-complete-j-heads.md': '137e1d47e3b589ea20555456b3d959f0abd70d6ff1394bf3e371fcb177d6f14f'}
+PINS={'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/j-geometry/j_face_triple_second_depth_heads.py': 'a3b8a6fa2b395af673fe0de0facadd6a21f54929a78561b6dbed52a663e9c119', 'certificates/source_norms/j-geometry/j_face_triple_second_depth_heads.json': '4abd3c37d2ee11b58991775c39fbd07fb2968020f5d85c652b97f0b7aff28ec5', 'profile-notes/257-320/264-seven-retained-states-and-two-seven-depths-control-complete-j-heads.md': '137e1d47e3b589ea20555456b3d959f0abd70d6ff1394bf3e371fcb177d6f14f'}
 
 def require(ok,message):
     if not ok:raise ValueError(message)

@@ -16,11 +16,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/fractional_deep_global.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/quadratic_marked_global.py': '71c7b94fa6ca7748481d9415363552402e21dcfdd755c78781dbeffe121d905f',
-    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'ef92b42ce4cc28f7a8d3e9cca5628bb30dd7f3bb9cd3f49fa2bb7dd7cbebcd37',
-    'frontier/cover-geometry/tied_root_deep_payment.py': 'fbc30594b7930d33b72fe69e59fd7a22f48bcf9d923d4c1ef7d7d0e6e2c894b0',
-    'certificates/source_norms/cover-geometry/tied_root_deep_payment.json': 'cfc696136e02c878f93491d5f7e23bb4aff8b5eb8f297074ca3194ac2af9bd08',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/quadratic_marked_global.py': '1a08b16f36862c66c4e2b568a8a09ee2d296e3ddeb9e9eaad2a80ff4c8073626',
+    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'f2dfcc7e37c71bb4e419273f99597db926e89da0e09b65f93800f87c8f364c4b',
+    'frontier/cover-geometry/tied_root_deep_payment.py': 'c2bf22b6d9ebb330574b0b0d0ed632583b6764f90d45a6ab9f784a926746b60c',
+    'certificates/source_norms/cover-geometry/tied_root_deep_payment.json': '20095a3abe10441d0d5ae746df8beb246f4adbf7554ac6e46940fec3f86bfba2',
 }
 OLD = (3, 4, 5, 6, 9, 11, 12, 13, 14, 15, 19, 20, 21, 22, 25, 27,
        28, 29, 30, 31, 34, 35, 37, 38, 39, 40, 42, 43, 44, 45)

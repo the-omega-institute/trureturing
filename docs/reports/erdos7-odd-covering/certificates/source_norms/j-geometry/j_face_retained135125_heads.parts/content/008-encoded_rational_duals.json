@@ -13,12 +13,12 @@
   },
   "rational_table": {
     "path": "content/008-encoded_rational_duals/003-rational_table.json",
-    "sha256": "c733565ebc3fd069187eab9c20bc1bc859a537b78f98a7ec55bd84d0ed95ad9b",
-    "kind": "value"
+    "sha256": "2e77a99cab49547fea80e192218b2fb4421b738978d99ccd20a5aaba7aaad7dc",
+    "kind": "value-zlib-base85"
   },
   "dual_buckets": {
     "path": "content/008-encoded_rational_duals/004-dual_buckets.json",
-    "sha256": "0596b147ea79c689d9cd2ab243ce5adc30647743f35ac11c62b07937031f4e26",
-    "kind": "value"
+    "sha256": "dd69145a020c3e6b89705c470795a6bff4b197b6f0024dec518788bcd0b2589d",
+    "kind": "value-zlib-base85"
   }
 }

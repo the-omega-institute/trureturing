@@ -1,8 +1,8 @@
 {
   "schema": "erdos7-shared-cell-square-v1",
   "source_sha256": {
-    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
-    "certificates/shared_cell_hinges_certificate.json": "8289e1dc3ceabffeeee03d04ce93ed2bbea62b415dd9b245c7fd7855a681a8b3"
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "certificates/shared_cell_hinges_certificate.json": "7e7227e0b859ad6e30fd17915f40571eacea82cd9aadce09984ed6b7bd790674"
   },
   "same_actual_law_inputs": {
     "G357": "3849/106",

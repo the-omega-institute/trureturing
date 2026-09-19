@@ -13,11 +13,11 @@ import json
 import sys
 
 sys.dont_write_bytecode = True
-IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 PREVIOUS = 'certificates/source_norms/retained-transport/retained_five_tests.json'
-PREVIOUS_PIN = '3f30d24b9d66c6c24a3ee8361b0fb2c5fe6e86ebe4f4b9332fd0b5602954a30e'
+PREVIOUS_PIN = '7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655'
 PREVIOUS_VERIFIER = 'frontier/retained-transport/verify_retained_five_tests.py'
-PREVIOUS_VERIFIER_PIN = '538de506f0d4b9628654b2a64f3771259ae7a56bead7ac4e88a743ba4a81c90a'
+PREVIOUS_VERIFIER_PIN = '80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace'
 HELPER = 'frontier/retained-transport/retained_quadratic_tests.py'
 HELPER_PIN = '712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670'
 INPUTS = 'certificates/source_norms/retained-transport/retained_quadratic_inputs.json'

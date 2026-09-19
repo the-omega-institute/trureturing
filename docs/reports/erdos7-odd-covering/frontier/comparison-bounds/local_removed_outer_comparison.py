@@ -11,11 +11,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/local_removed_outer_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/joint_mass_outer_comparison.py': 'c4515e429dd5c09818345749bedebbc4661e7fd6b736baff93aef1841381943b',
-    'certificates/source_norms/comparison-bounds/joint_mass_outer_comparison.json': 'd7f507c9cf95e764d5885ddbc3f3bdb27a7025775b262c12a0fdc5d5ef215699',
-    'frontier/comparison-bounds/residual_shell_k_comparison.py': '7f50cc2211318271dcacdfa702010374038f5e437ae2ac04425b29ea4883de65',
-    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '028c510517bb3e6cd5ff0261254c116a65d1879a3bb9dcf66ce9bfe659d94f68',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/joint_mass_outer_comparison.py': 'c637a858ab8fba9a0141378c353fb9fe8a3fadbff6c91d1e33e35b871d0cdc73',
+    'certificates/source_norms/comparison-bounds/joint_mass_outer_comparison.json': 'a85c799a883b994348ef8495c4b2a19d380ca5cc5299ada0c6cce101cf1c2726',
+    'frontier/comparison-bounds/residual_shell_k_comparison.py': '172e74c59a974c25ec9e77b4ee7cd2d4c84ac314f3cca4e3906160a7b065034b',
+    'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json': '1e1b972b2756007c1f259232d4d03c49b527d5e88242b98e4300f48c3fa08f2f',
 }
 
 

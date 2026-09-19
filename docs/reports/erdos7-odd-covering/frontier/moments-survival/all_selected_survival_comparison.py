@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/all_selected_survival_comparison.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/source-budgets/all_selected_heavy_comparison.py': '88e121a2b88e7f0abbf83e848c4b02581bfa7443f85c136f7589be8a2b9c3e11', 'certificates/source_norms/source-budgets/all_selected_heavy_comparison.json': '48ae436cbbf439efd7db0110ce93ac28e40a833392d64eb06dc78de7511d6a9e'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/all_selected_heavy_comparison.py': '973b470e212950ee46269f5b05f9c9dae07828d31cee84e868cc1e4a5495fa8c', 'certificates/source_norms/source-budgets/all_selected_heavy_comparison.json': 'ef7103327f5b1ea56a798ef915144581112148c69d0293e78e1f6bc7480c3d94'}
 
 
 def require(condition, message):

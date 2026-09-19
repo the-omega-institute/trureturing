@@ -17,12 +17,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/carrier_mass_residual_bound.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'frontier/source-budgets/global_control_faces.py': '1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35',
-    'certificates/source_norms/source-budgets/global_control_faces.json': 'f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'frontier/source-budgets/global_control_faces.py': '3a7adacc726e957b12bc742b43f4a6d9d11c5c3950168a43a0ccb49b0f04b026',
+    'certificates/source_norms/source-budgets/global_control_faces.json': '9450bd7aa5ea8353a0b9b07bf13536aa3fac4fdba73ce0f4558331405a37b36b',
     'frontier/comparison-bounds/allocated_seven_thresholds.py': 'b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d',
-    'certificates/source_norms/moments-survival/joint_survival_carriers.json': 'ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54',
+    'certificates/source_norms/moments-survival/joint_survival_carriers.json': '9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a',
 }
 ROOT = (0, 0, 1, 1, 1)
 CARRIERS = tuple(product((-1, 0, 1), (-1, 0, 1, 2, 3, 4)))

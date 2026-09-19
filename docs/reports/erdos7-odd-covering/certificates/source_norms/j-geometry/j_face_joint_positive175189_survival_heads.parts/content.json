@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "70cdfbe7d0ace88f7964d9493ff137a9a3047cf282e9cd2c037f9f328781d5b3",
+    "sha256": "7349a9b6bad34570aca50d1049d5ea633124bb502455701181cf65ea90240c51",
     "kind": "value"
   },
   "geometry": {
@@ -165,7 +165,7 @@
   },
   "prefix_ledger": {
     "path": "content/023-prefix_ledger.json",
-    "sha256": "dbe6f666af19b592a2622310897f904111578c148078f7e8b3d3c5dcb6385922",
+    "sha256": "10ca567f83e8ea51671c047fca42c2ed6e919c854f393e02dfb6b8f5f4ceb4b9",
     "kind": "object"
   },
   "prefix_bounded_original_choices": {
@@ -204,7 +204,7 @@
   },
   "encoded_rational_duals": {
     "path": "content/032-encoded_rational_duals.json",
-    "sha256": "9f085e85a0f0235547163c194a13d154ef49942dd5efd0e547c109af176e9fda",
+    "sha256": "3dbee844295f5b041cdc9558298942e4650cf854ea8235f29a142b61eb49c5a7",
     "kind": "object"
   },
   "distinct_dual_count": {

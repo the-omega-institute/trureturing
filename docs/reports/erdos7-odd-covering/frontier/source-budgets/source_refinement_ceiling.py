@@ -19,10 +19,10 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/source_cost_endpoint_attainment.py': '860816267cfc11da898d207f1eb48486c6630d1dd3d00a785417a244188af47d',
-    'certificates/source_norms/source-budgets/full_linear_carrier_frontier.json': '98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/source_cost_endpoint_attainment.py': '9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2',
+    'certificates/source_norms/source-budgets/full_linear_carrier_frontier.json': 'e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
 }
 BASELINE = (1, 1, 2, 2, 3)
 WEIGHTS, CARRIER = (1, 2, 0, 0, 0), (0, 1)

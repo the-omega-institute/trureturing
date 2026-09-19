@@ -6,8 +6,8 @@
       "stop": 798,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/000000-000798.json",
-        "sha256": "4baffd3d5603d4303d9c56c13a14eeaad2e57bd578e1ca650dc81da3086b928c",
-        "kind": "value"
+        "sha256": "d1515b585be0a46850c66196663a3ae21aab324aa4e1e66f99fe2d67c9f88c2c",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -15,8 +15,8 @@
       "stop": 1596,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/000798-001596.json",
-        "sha256": "b40b495d206594b0e8f12da3ffea2de38a9079a7d5629fd9147730648ba4aa85",
-        "kind": "value"
+        "sha256": "6acaf40c614fa816d468431185ce5ce66aba378fbd22fc0e9be840d0e55aaddf",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -24,8 +24,8 @@
       "stop": 2394,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/001596-002394.json",
-        "sha256": "d2a530fcc23273ec330b6b9dc072e4a2169f16c8f8fc814fc7e5451278458d52",
-        "kind": "value"
+        "sha256": "b39023b47f71371e4564b1cbd1d3408e299d06de5fd1b3b946981dd1895a432d",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -33,8 +33,8 @@
       "stop": 3192,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/002394-003192.json",
-        "sha256": "575b61003a35fcfe07803d85e0133136c30b8bd2d1403c84273f19657a15e240",
-        "kind": "value"
+        "sha256": "59ecb6b23f1a5e15e3cbef49808f49905139e3a2b4bff9f2815259ea88671bb1",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -42,8 +42,8 @@
       "stop": 3990,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/003192-003990.json",
-        "sha256": "14acb17c891424f7799e4cb95a296ee86940290a9d7e3605d15e947456af7ba5",
-        "kind": "value"
+        "sha256": "b73d55adcfa631bd7e05eede34248630f6187266ece779dec4377fbec916a195",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -51,8 +51,8 @@
       "stop": 4788,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/003990-004788.json",
-        "sha256": "b35be27604a5be13021686cc571e61d8f319a60bded147e5335df65a07ab0b56",
-        "kind": "value"
+        "sha256": "9abff3b932394076028881dce28ee641ca242753dd378074a889ed9e46a2d4a6",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -60,8 +60,8 @@
       "stop": 5586,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/004788-005586.json",
-        "sha256": "f07a1d89722b8adfaf0dd29a9a8b0c62406c7070bb548851e6998cd4e49b76d8",
-        "kind": "value"
+        "sha256": "1b757554b4e0bf6b4d3aeedbb8aea7bf508e43b433878128f75ac07094a56a72",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -69,8 +69,8 @@
       "stop": 6292,
       "part": {
         "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/005586-006292.json",
-        "sha256": "81d545e95be195758428c08901f18131c4272a5f9d77d16b4180071dc1724b44",
-        "kind": "value"
+        "sha256": "51f512dcad24a3a53a048b9f5e2f474c1b622658368362ce6bc2c537dbaa039d",
+        "kind": "value-zlib-base85"
       }
     }
   ]

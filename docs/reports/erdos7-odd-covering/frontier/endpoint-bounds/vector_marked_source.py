@@ -17,14 +17,14 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/vector_marked_source.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
     'frontier/source-budgets/source_barrier_saturation.py': '6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64',
     'frontier/source-budgets/full_linear_carrier_frontier.py': '98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888',
-    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1',
-    'certificates/source_norms/endpoint-bounds/broad_weighted_identity_source.json': '6bab3011a7a09305ddac664cf9202a9801fc9dc121ff9de82c36ff4beac2bde0',
-    'frontier/endpoint-bounds/broad_five_slot_tradeoff.py': '73a23d45c240ac9cd59216243127030e86f188d7dca930f689c44437799c59c5',
-    'certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json': '563dd67bdd067108b08c0f9290d55271104559c1b01af7ba97cb61f97a6dc15c',
+    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
+    'certificates/source_norms/endpoint-bounds/broad_weighted_identity_source.json': 'dd2dc39aec759adf0c21efd9fb3ccda24de7dcf595f036d222dcc6374a83c55e',
+    'frontier/endpoint-bounds/broad_five_slot_tradeoff.py': 'aa930dbc975c4a6a10f25e32f9da195dfc3d8a55089b2b59eea6eb7598a011d1',
+    'certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json': 'fef05428a73f6328ac2b1eef6a76440a7d52b31b13ba2adca9be23b2e627659f',
 }
 SIGMA = F(13, 1215)
 R_CUTOFF = F(1, 2500)

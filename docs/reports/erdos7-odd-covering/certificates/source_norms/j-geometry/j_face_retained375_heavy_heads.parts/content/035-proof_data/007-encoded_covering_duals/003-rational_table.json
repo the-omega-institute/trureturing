@@ -6,8 +6,8 @@
       "stop": 798,
       "part": {
         "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/000000-000798.json",
-        "sha256": "204f08fd9fce25b472227d4791e39790538d8dc956ef61af5c1296a90f680fe7",
-        "kind": "value"
+        "sha256": "42192f971a1742894c982fa0463a827ab3171fb803bf2545cc714241585c8e21",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -15,8 +15,8 @@
       "stop": 1596,
       "part": {
         "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/000798-001596.json",
-        "sha256": "6d80238de01cd33f5a908b97aca40da9ad6801c33186d2bd36a649a75976f851",
-        "kind": "value"
+        "sha256": "eb17a33d254157cdeb073fc677762140b591d24b02b2318b7296bfaff8046520",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -24,8 +24,8 @@
       "stop": 2313,
       "part": {
         "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/001596-002313.json",
-        "sha256": "6a67f988d0bf4c9c9658efff2a8274d4ceec6d5c94ed9b2089ffe3c31b3dbffa",
-        "kind": "value"
+        "sha256": "5477f93c1e3c61b18fd9567e871dca983dd769556614a7776d104edf2350702c",
+        "kind": "value-zlib-base85"
       }
     }
   ]

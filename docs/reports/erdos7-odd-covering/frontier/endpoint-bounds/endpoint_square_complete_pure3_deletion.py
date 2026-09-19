@@ -14,11 +14,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_square_complete_pure3_deletion.json'
 PINS = {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-    "frontier/endpoint-bounds/endpoint_square_positive5.py": "dd802c39783648767184e38da000de03700215d26e6de934a2858d054cb788a7",
-    "certificates/source_norms/endpoint-bounds/endpoint_square_positive5.json": "b337eabce44745f349165346e0ce7044e79b6785dfdab314b2613b23de1ae4f6",
-    "frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py": "7e68cb0f020625fdbd2d0854933415d0b631b43010df38350d2121858266db31",
-    "certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json": "0e8d181b3d686dbda3b8e993a85733f6f926cf95bcd78568652f183f6fba6924"
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/endpoint_square_positive5.py": "e6d4a2ae2ac9f369048603d328da7e73cb719e9a622c2a6633ddd61e5609b00d",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_positive5.json": "feb9333e4714f3408029d9e24711fb2886d016c0c4265c0f039ab99419b99405",
+    "frontier/endpoint-bounds/endpoint_linear_complete_pure3_deletion.py": "c0bba2c21ed9c1d6236bfee13ff2510f71b40b44bf63600f09be3b2807897bd5",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_complete_pure3_deletion.json": "7e5b2c9d2244a9aad0b1f3e1850a52bb1a1a1e7ffbe49cbf7bd42b8017bc2cfc"
 }
 
 

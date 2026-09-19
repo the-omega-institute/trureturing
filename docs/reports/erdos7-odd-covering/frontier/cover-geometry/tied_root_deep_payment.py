@@ -17,9 +17,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/cover-geometry/tied_root_deep_payment.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/quadratic_marked_global.py': '71c7b94fa6ca7748481d9415363552402e21dcfdd755c78781dbeffe121d905f',
-    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'ef92b42ce4cc28f7a8d3e9cca5628bb30dd7f3bb9cd3f49fa2bb7dd7cbebcd37',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/quadratic_marked_global.py': '1a08b16f36862c66c4e2b568a8a09ee2d296e3ddeb9e9eaad2a80ff4c8073626',
+    'certificates/source_norms/moments-survival/quadratic_marked_global.json': 'f2dfcc7e37c71bb4e419273f99597db926e89da0e09b65f93800f87c8f364c4b',
 }
 ROOT = (0, 0, 1, 1, 1)
 QMIN, D1MAX, ROOT_GAP = F(25, 36), F(5, 9), F(5, 36)

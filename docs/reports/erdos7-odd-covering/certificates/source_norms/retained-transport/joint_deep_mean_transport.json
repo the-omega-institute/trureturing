@@ -1,12 +1,12 @@
 {
   "schema": "erdos7-joint-deep-mean-transport-v1",
   "source_sha256": {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-    "frontier/cover-geometry/pure_three_root_spill.py": "052ab85338a093712e0ab023f74b7e4add998748e9519a87e3a9af183316fbc8",
-    "frontier/cover-geometry/quantitative_forced27.py": "4305dff47684212969e4fc291601a7e6e72bbfd62855bb76a011ddc189cb0b22",
-    "frontier/retained-transport/deep_five_mean_transport.py": "f1fdd8d7cb194049209cbc586b5d0edb788bbc30796be7c221e5e9c6fe94f26a",
-    "frontier/retained-transport/finite_source_face_transport.py": "4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf",
-    "frontier/comparison-bounds/whole_cost_mean_stop_loss.py": "21caf2496428ab1772ffd544c38a82a65b3336d32b8f4aa99307810f54478ac0"
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/cover-geometry/pure_three_root_spill.py": "983968544c404112fe6d6c62a0ba82d32ce7ea3a06e727c9975f30ee5858bdfe",
+    "frontier/cover-geometry/quantitative_forced27.py": "23551c4ae4b01624be33175524899b97f34464ea4b6383dda56ecc408128a947",
+    "frontier/retained-transport/deep_five_mean_transport.py": "d47b692dfdaaafb08b864fe26eca18b476c09e0bb546c2ef5efffacee8ef211a",
+    "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+    "frontier/comparison-bounds/whole_cost_mean_stop_loss.py": "3098c95dcd0c8ef6d27a5d78e4bfad13441d20dd2491e3ea21c76a6acc6c9b70"
   },
   "same_head_face_recoveries": 12500,
   "joint_price_comparisons": [

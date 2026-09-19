@@ -12,17 +12,17 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/expanded_bridge_global_comparison.json'
 PINS = {
-    'frontier/j-geometry/j_affine_global_comparison.py': '706b0364f31a24c9f316c278b29a14873432eb768a340ee0c0d2520faefa7437',
-    'certificates/source_norms/j-geometry/j_affine_global_comparison.json': 'd6efb6d6084084969dcaf94957c7f7b39b96be928deac53e67d1117154262951',
-    'frontier/comparison-bounds/expanded_bridge_residual_comparison.py': '8b131276231ffb7efb31b75f8fc98e0f0f63e83a405cae1d0fd4a3a41f07a3cd',
-    'certificates/source_norms/comparison-bounds/expanded_bridge_residual_comparison.json': '891cef0342b092ea24ccd55999acef709227638ba32ed49e633e6db6225f2e99',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/j-geometry/j_aggregate_layer_global_comparison.py': '94e670d36d06cae30f7d79c74e74862711e26db3f03a2101ae98aa7d4565d2ff',
-    'certificates/source_norms/j-geometry/j_aggregate_layer_global_comparison.json': '5c3dc5f819ef003bab7a0ee2f515053b9ec34e5827a249dcf6f39069602c4b2a',
-    'frontier/j-geometry/j_affine_margin_reserve.py': 'a4acf2224003a6f8cd04b4cada10818a113644812406c20dcb125a81a998d659',
-    'certificates/source_norms/j-geometry/j_affine_margin_reserve.json': '16b4d4e4ba7a9f6bcc5304f68917c58780ba5516feb5ae7e6efde5ea7b8d00c9',
-    'frontier/moments-survival/wide_expanded_seven_survival.py': '9452f1bf5842005a7ded859b8a04e6d87eede4c777c458dcc695fd022e0e6ffc',
-    'certificates/source_norms/moments-survival/wide_expanded_seven_survival.json': 'a8d97bfdd11929187531d77fb826e30525021c29c48272a9aa508f6157516176',
+    'frontier/j-geometry/j_affine_global_comparison.py': 'f7a4b91d41640900c68461eaa64a7706c35bd4f3d9ed3d73381e05e494acd2fa',
+    'certificates/source_norms/j-geometry/j_affine_global_comparison.json': '34c1b138d902232919cdcd9b40529277d56c02a9921ae2561f621c7ecc662b54',
+    'frontier/comparison-bounds/expanded_bridge_residual_comparison.py': '587c298f3990161974eaee890ba26f153ad295e15747b9959aca3c063df4a6cb',
+    'certificates/source_norms/comparison-bounds/expanded_bridge_residual_comparison.json': 'eef5e7aa20f28f5804cb0585baeff45b1191b7818a978e05760fbd58a7d780df',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/j-geometry/j_aggregate_layer_global_comparison.py': 'cd50ae6d9165f254fe35dd3cadc3f15f02da79b2a32624ff7c0455662125cabd',
+    'certificates/source_norms/j-geometry/j_aggregate_layer_global_comparison.json': 'c711a02b8ddfa20f9e8657ba7513b8e05ca0501c09142b46b6cb96dcfebc78b6',
+    'frontier/j-geometry/j_affine_margin_reserve.py': '627dcee1ac3b667b4f7fa6ca40a724bb26bb0c415fe8da8409a2691b47557979',
+    'certificates/source_norms/j-geometry/j_affine_margin_reserve.json': 'd01e44a1d4264e1a4d959848e21481dfa517b2d1a8683d026d382fefa2a9aa10',
+    'frontier/moments-survival/wide_expanded_seven_survival.py': 'f34e659d2ac3070dc58bc7f54427beaae2edf34b36e1d7f7109ee2f7c8d4dce2',
+    'certificates/source_norms/moments-survival/wide_expanded_seven_survival.json': '61260300e44a592bf87c6fcce57f4208a6ed63e1cf27d18937c6dbe71fa086ba',
 }
 
 

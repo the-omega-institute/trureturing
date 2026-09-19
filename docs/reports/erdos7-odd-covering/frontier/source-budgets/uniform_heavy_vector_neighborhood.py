@@ -10,20 +10,20 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/uniform_heavy_vector_neighborhood.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b',
-    'frontier/comparison-bounds/complete_off_face_cost.py': 'ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7',
-    'frontier/retained-transport/finite_source_face_transport.py': '4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf',
-    'frontier/source-budgets/shared_budget_affine_tail.py': '6e84343bcb162656fecf5bea73bf0d10a66fe8690f7274ad2165b58944771a08',
-    'frontier/retained-transport/joint_deep_mean_transport.py': '4da7a68610d2414aaabff397adc34796cee610d45ccc5906af29e6ac7ff0ddb3',
-    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': 'd99e2b890d4393eb2545f2e73d04cd74a9f12eafd8d1f8113a2fa1784cec844f',
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
+    'frontier/source-budgets/shared_budget_affine_tail.py': 'bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd',
+    'frontier/retained-transport/joint_deep_mean_transport.py': 'efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0',
+    'frontier/endpoint-bounds/broad_weighted_identity_source.py': 'bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'frontier/moments-survival/uniform_quadratic_cost_portfolio.py': '5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1',
     'frontier/source-budgets/source_barrier_saturation.py': '6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64',
     'frontier/source-budgets/full_linear_carrier_frontier.py': '98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888',
-    'frontier/endpoint-bounds/vector_marked_source.py': 'e9917c725b8f910a0524ccae99dfffb5949f3af568980a70b5299e7fb1c71b39',
-    'certificates/source_norms/endpoint-bounds/vector_marked_face.json': '5283295effd38457803d6ebef55c09fdefd4656f77bdf86a544630db54b98a60',
-    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': '01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26'}
+    'frontier/endpoint-bounds/vector_marked_source.py': 'c8fb3eb6fd743d14942fe44a3999749585bbf29e52b825ef68e7955cc0640c79',
+    'certificates/source_norms/endpoint-bounds/vector_marked_face.json': 'adf0746b9a11e99ab23e096c9777a54c4a586de2a9f4085ef5a83ce3f4bb14a3',
+    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6'}
 SIGMA = F(13, 1215)
 INDICES = (0, 16)
 

@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "acbe899250ec78fb8d08cbc8cafb7c460ff8f37c36bc5fbfce15079c4ec88bfe",
+    "sha256": "ecfe35dc69b0e0bdf4450505d0ebfa54b0daada4cc64f13c330bf45c889154cf",
     "kind": "value"
   },
   "global_raw_mass_floor": {

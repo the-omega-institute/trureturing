@@ -15,10 +15,10 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_numerator_common_costs.py': '7d1b33bae80d65112d9618e7a149e0de8747d219f35902f658b97cc2fe832a59',
-    'certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json': 'a028c84fa753063c8f1be7e2645e2b845b9a7e1cc26efe57ecfb1ea9e6425387',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_numerator_common_costs.py': '1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6',
+    'certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json': '75154048adef87983ab5c776537f73e74f9864714b5cc24b54bfa674dcca26f6',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
 }
 
 

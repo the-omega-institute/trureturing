@@ -18,15 +18,15 @@ CERTIFICATE = 'certificates/source_norms/endpoint-bounds/vector_face_complete_ra
 LINEAR = 'certificates/source_norms/endpoint-bounds/vector_marked_face.json'
 QUADRATIC = 'certificates/source_norms/moments-survival/quadratic_vector_marked_source.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/vector_marked_face.py': '5dccdefcf9ee3836d62a01da4db3190a17d079351f2edd9eb33c5b684243c38d',
-    LINEAR: '5283295effd38457803d6ebef55c09fdefd4656f77bdf86a544630db54b98a60',
-    'frontier/moments-survival/quadratic_vector_marked_source.py': '558355784f1334f0ba57c73df492588cc9174c9eb7ea611536f27bc33b752322',
-    QUADRATIC: 'd8f9e368de10504974e4d7e6abf98c85bc958764d33b36b4b6085c9cacfd3f40',
-    'frontier/endpoint-bounds/k_face_complete_ratio.py': 'e94a6532ff6951d464a224f1a56415aaea90251c520c7b06fc9afe4e6a82c5db',
-    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': 'ccb1debedef1dc49cbc6a31e01c712f156992dc238bd0576e4f51ee8dd6f6888',
-    'frontier/endpoint-bounds/k_face_surviving_tail_ratio.py': '8939d32f56b42c7d02dbafbf316fdd3c79160d47f3190cc50badbc2277ad5096',
-    'certificates/source_norms/endpoint-bounds/k_face_surviving_tail_ratio.json': 'b9c283262fd9c06798d4082f30da570d97926c271768e4790f94be7c6e70cb09',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/vector_marked_face.py': '44c4a9ef68eaeaf13c1a4be068d25eda65666143d24968cd461cd812b8c53ddc',
+    LINEAR: 'adf0746b9a11e99ab23e096c9777a54c4a586de2a9f4085ef5a83ce3f4bb14a3',
+    'frontier/moments-survival/quadratic_vector_marked_source.py': '0a2ab619f08a1f645b7f9a6a3dc6a83ba893d533ae35b35b1c3821cb084a5f84',
+    QUADRATIC: '2ea921f980c5e63b0bbad6f95fc700e6a9abd99d546463642bca892ce28c19be',
+    'frontier/endpoint-bounds/k_face_complete_ratio.py': '00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160',
+    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': '2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a',
+    'frontier/endpoint-bounds/k_face_surviving_tail_ratio.py': '0dbbb26b60f0c531c73646587993fa4204e85d3fbf4582c457279601ec69f548',
+    'certificates/source_norms/endpoint-bounds/k_face_surviving_tail_ratio.json': '4966673ce7e86748a3c900ed651b899f43d2da6aeb59c05bc1740d30bbe7a90a',
 }
 
 

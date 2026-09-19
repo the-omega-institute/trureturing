@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/comparison-bounds/joint_concentration_loss_budget.py': '3ee64556bb587d1ded8b64c27c8e9767cfe44681c419c67b8315b73c7a6ab9e3', 'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json': '08c10509d39dfb1b4c7d2bfab0d41c7b60b04a782ecf727e1f6c54c09f51a7e4', 'frontier/source-budgets/monotone_product_carrier_mass.py': '93e42b490c753a4b4b6bd2cb0cc764b48184dfe2d069ca4ac0240f70f38a61b6'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/comparison-bounds/joint_concentration_loss_budget.py': '9b67c8a9b430ac2457f51a80274817011eb2cd4c94cb40c26e351b26753ba028', 'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json': 'ebd0dc133c9d3c04efd087ac28e020a326d21bd4e43563e0fcce880d6f6c7751', 'frontier/source-budgets/monotone_product_carrier_mass.py': '320fb41c8422ac579e18563d2f776470d9caf109ff5cd84248080b5f285160ac'}
 ORDER = ('alpha', 'z', 'beta', 'deficit', 'late', 'carrier')
 
 

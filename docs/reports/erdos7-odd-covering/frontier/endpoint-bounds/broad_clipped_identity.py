@@ -16,12 +16,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/broad_clipped_identity.json'
 PINS = {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
-    "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "73a23d45c240ac9cd59216243127030e86f188d7dca930f689c44437799c59c5",
-    "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "563dd67bdd067108b08c0f9290d55271104559c1b01af7ba97cb61f97a6dc15c",
-    "frontier/source-budgets/global_k_face_gain.py": "c812fd6aba07ba15f100c85e85595661b8447448f67a6c0d95a1c9a1861ad96d",
-    "certificates/source_norms/source-budgets/global_k_face_gain.json": "124d4428a67f5193f3814849c527e30c331a0757328836756aec088a87fdcbc8"
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "aa930dbc975c4a6a10f25e32f9da195dfc3d8a55089b2b59eea6eb7598a011d1",
+    "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "fef05428a73f6328ac2b1eef6a76440a7d52b31b13ba2adca9be23b2e627659f",
+    "frontier/source-budgets/global_k_face_gain.py": "824d8e3d245484674c0bcb4c5446a2e4d6710be64cb705558f3d4c39613341c9",
+    "certificates/source_norms/source-budgets/global_k_face_gain.json": "de7dff81b092a5f2b917094063ca3905442016040fa9de61d75f01108a0ff591"
 }
 CUT = 40
 

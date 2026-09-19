@@ -74,7 +74,7 @@
   },
   "encoded_price_bank": {
     "path": "content/010-domains/000001/item/010-encoded_price_bank.json",
-    "sha256": "b4aeb06aa6feeea03ef89b7526737aa93e5879e261f6a95cba3790dee93b19a2",
+    "sha256": "dc4c85abaabec3dc5b37097be7f5bba6a88a877f23ca02e84663a8e8671b9ddf",
     "kind": "object"
   },
   "selected_raw_primal_dual_witnesses": {

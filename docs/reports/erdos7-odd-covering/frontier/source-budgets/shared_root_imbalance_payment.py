@@ -16,9 +16,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/shared_root_imbalance_payment.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/cover-geometry/tied_root_deep_payment.py': 'fbc30594b7930d33b72fe69e59fd7a22f48bcf9d923d4c1ef7d7d0e6e2c894b0',
-    'certificates/source_norms/cover-geometry/tied_root_deep_payment.json': 'cfc696136e02c878f93491d5f7e23bb4aff8b5eb8f297074ca3194ac2af9bd08',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/cover-geometry/tied_root_deep_payment.py': 'c2bf22b6d9ebb330574b0b0d0ed632583b6764f90d45a6ab9f784a926746b60c',
+    'certificates/source_norms/cover-geometry/tied_root_deep_payment.json': '20095a3abe10441d0d5ae746df8beb246f4adbf7554ac6e46940fec3f86bfba2',
 }
 
 

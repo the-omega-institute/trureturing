@@ -16,12 +16,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/global_k_face_gain.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/global_control_faces.py': '1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35',
-    'certificates/source_norms/source-budgets/global_control_faces.json': 'f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1',
-    'frontier/endpoint-bounds/endpoint_k_face_neighborhood.py': '75577c2050d77c48f3cce7640534a7021e4f9e1a12bd7e22386022262b233728',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_neighborhood.json': '35aaced8b84aa75f80f5ec22935bb51cbf1395bdba0e38d6378af0ce2aaf1353',
-    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': 'ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/global_control_faces.py': '3a7adacc726e957b12bc742b43f4a6d9d11c5c3950168a43a0ccb49b0f04b026',
+    'certificates/source_norms/source-budgets/global_control_faces.json': '9450bd7aa5ea8353a0b9b07bf13536aa3fac4fdba73ce0f4558331405a37b36b',
+    'frontier/endpoint-bounds/endpoint_k_face_neighborhood.py': 'a16e027987f748ab23a6cc3dc5d51e86a52837e7e41d8e073f965859f33b0c0f',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_neighborhood.json': 'ec0287b3a1dccd1497999bab2374f105e64bb0a37ba1a5a263703457dc61fb91',
+    'certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json': '3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2',
 }
 
 

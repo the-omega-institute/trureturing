@@ -16,7 +16,7 @@ import sys
 sys.dont_write_bytecode = True
 
 PINS = {'frontier/source-budgets/source_cost_endpoint_attainment.py':
-        '860816267cfc11da898d207f1eb48486c6630d1dd3d00a785417a244188af47d'}
+        '9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2'}
 
 
 def require(condition, message):

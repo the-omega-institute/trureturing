@@ -17,9 +17,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/cover-geometry/joint_gap_mass_escape.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/k_next_escape_layers.py': '15317424f05c48bb4950563217ab893485a140ed14c9dc9586edc3b40f8a872b',
-    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'f71f686c04fb2738ba2a264ee505dbeebf8cf8070f8176bbc6d4f628b8363887',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/k_next_escape_layers.py': 'd7c51cf6f2becc96392fdae6318661aab37ee204edd82769c2f3668e1d657500',
+    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'bcde35a6249003e95c6a39dc6b2bee3fa3d03be18291927385ae6dca4c896270',
     'profile-notes/001-064/49-full-linear-and-quadratic-carriers-refine-the-frontier.md': '8a34e4b32351d3c115d0f79fa6711b4971b15308a53c5be9bc15c75865a43427',
     'profile-notes/001-064/53-allocated-seven-thresholds-sharpen-actual-survival.md': '0a2f0864562331c3f6f7e35186496a3a27039e2c3e2fe286badc2d8666b9a8d6',
     'profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md': 'cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1',

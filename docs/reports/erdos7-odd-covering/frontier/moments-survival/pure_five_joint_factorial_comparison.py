@@ -13,17 +13,17 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/pure_five_joint_factorial_comparison.json'
 PINS = {
-    'certificates/source_norms/moments-survival/complete_off_face_factorial_tail.json': '183ff955b1469e37b9c33841b526aa2eb4fe233cb345442dcc324979c47b0af5',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/whole_factorial_same_head.py': '02b5af74e00afc26b940d8c6b485fbea654a4d2f9dd52d986875c303a79faacd',
-    'certificates/source_norms/moments-survival/whole_factorial_same_head.json': 'b22d62e4c137abc20668305d67bf86f87345077f0ecf3d481e1bf83b2dedbd3c',
-    'frontier/moments-survival/whole_quadratic_same_head.py': 'ba2de9c8850b1936ebac15ab9e4cc546a052de6139289343e0de5d2dec560938',
-    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'ed24ce03bd65f29684a606ba601f88b06040562e7dd7a690d360cea5aa4a2852',
-    'frontier/moments-survival/pure_five_joint_moments.py': 'ce2e635e296e720d241fa413ab18efe8cbeb4c2f80ecdc21e25573ee728d1ea7',
-    'certificates/source_norms/moments-survival/pure_five_joint_moments.json': '672543e3f551cf12e8d4a1c87c72c2f274d2d8a1ea93f327b7ca96afb8b6bc54',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '45c1b016e68eb5397a78a6540c4f8ee5287c214b6bb35625d4d0232224dd2314',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'e0d124f375efa0567777973a2ba468d368285807aed054ada2e57727b896d4f2',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': 'c3a0f508de3fc025f0418f0e496742410230204e77c160bfa7b3a20a33e53594',
+    'certificates/source_norms/moments-survival/complete_off_face_factorial_tail.json': 'e3318b7a4ed57e0cb0a15f01a8852ffd2014568fa27a929198bed9bbad692aa4',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
+    'certificates/source_norms/moments-survival/whole_factorial_same_head.json': 'c47a8913749f560346af5ab2c3db756ff5b6f831863c897a87f377c9dd3c7c08',
+    'frontier/moments-survival/whole_quadratic_same_head.py': '84d7995521352aebd522659d189081eee31dbd200ccb4b1f638e7881d3c145b7',
+    'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
+    'frontier/moments-survival/pure_five_joint_moments.py': '4d2491befab31bd869fdf037677ea796f40c9941d1d90fbf752fb1c396913306',
+    'certificates/source_norms/moments-survival/pure_five_joint_moments.json': 'e17242d61ea209ce8c26538f71acc041ef0ab8f5e29e4e5e5f3930ce991fc2d2',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
 }
 
 

@@ -17,13 +17,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/whole_face_stop_loss_generator.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/vector_face_complete_ratio.py': 'fa0387a38436b575628c850099e4826ded791613c4cf150793b56d7c03e3427f',
-    'certificates/source_norms/endpoint-bounds/vector_face_complete_ratio.json': 'e5a4781cb7eed36ce862f06d099bfefa296d45c1391edbe2b81db2d437130dc5',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
-    'certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json': '3acdaa029a606ff79e483294f52390a0fed1df0ddbf444f5b42e1c982ca1d8eb',
-    'frontier/endpoint-bounds/k_face_surviving_tail_ratio.py': '8939d32f56b42c7d02dbafbf316fdd3c79160d47f3190cc50badbc2277ad5096',
-    'certificates/source_norms/endpoint-bounds/k_face_surviving_tail_ratio.json': 'b9c283262fd9c06798d4082f30da570d97926c271768e4790f94be7c6e70cb09',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/vector_face_complete_ratio.py': '08aa9c7a84e48e3ff90cc4baf1bcc918ee70deb551aed8de3480214ee39823c6',
+    'certificates/source_norms/endpoint-bounds/vector_face_complete_ratio.json': '63f1a5dccefd06a21fc05be4cf3bb3bf05caffcc8c6a3019775785075a4b05d1',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
+    'certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json': '69de90d2cbe7dae4fbce090ab4b3e7d29ccce45e107a4179bbea17edb9bb8270',
+    'frontier/endpoint-bounds/k_face_surviving_tail_ratio.py': '0dbbb26b60f0c531c73646587993fa4204e85d3fbf4582c457279601ec69f548',
+    'certificates/source_norms/endpoint-bounds/k_face_surviving_tail_ratio.json': '4966673ce7e86748a3c900ed651b899f43d2da6aeb59c05bc1740d30bbe7a90a',
 }
 NEW_THRESHOLDS = (2, 3, 6, 7, 8)
 COST_SCALE = 5*7**7

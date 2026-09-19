@@ -13,12 +13,12 @@
   },
   "rational_table": {
     "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table.json",
-    "sha256": "e280f0264484f1aafd976e95021d8a2cf20b3b1207cc0c160e9cc416aed40f76",
+    "sha256": "2192c943400956ff19c3ee1cc8c3e760a026f3f67d1bb5eb31675ec9418526d6",
     "kind": "array"
   },
   "dual_buckets": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets.json",
-    "sha256": "5d9c64892e24a4a20177097037d9ea1998751a015c5e90dd4ba72a32ae61f6e2",
+    "sha256": "5846674417318e40a8b14e45a8972b1fcde6e05ab3095696046f9ae322be7f1f",
     "kind": "object"
   }
 }

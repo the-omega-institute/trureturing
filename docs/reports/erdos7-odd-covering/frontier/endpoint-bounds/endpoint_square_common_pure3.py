@@ -18,12 +18,12 @@ import sys
 
 sys.dont_write_bytecode = True
 PINS = {
-    'frontier/endpoint-bounds/endpoint_linear_numerator.py': '646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': 'c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be',
-    'frontier/endpoint-bounds/endpoint_square_numerator.py': '5973de37d2d74e2ddb7783baa514709e236f9a894000ca79ec8d66db79174235',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json': 'a3cb0072765f1e10ce4642f1d46b1bd49ab71de339941a4065938ab59e7fcbea',
-    'frontier/endpoint-bounds/endpoint_square_coherent_head.py': '49a216c2e61faddb88a914fb4d8338cdc5df05fbaa50435cff7be5c32f30e5de',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json': '3108dafb33924ea416b59fb7c493531f2d35c3d69304c6e37398ddd8af70ecd6',
+    'frontier/endpoint-bounds/endpoint_linear_numerator.py': 'c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': '1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a',
+    'frontier/endpoint-bounds/endpoint_square_numerator.py': 'c58ef20557da4bebeb741e27feddc59f6f2925a2992f00316c94c52376961d68',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json': '9217c081fcb0bf511d4bd1de134f0d8aacfff2fd09573e4c21519e2f9a563a00',
+    'frontier/endpoint-bounds/endpoint_square_coherent_head.py': '24229193f185d132d2ef0917b0257ddcd20d374b6333dfae327cc70d665ceedb',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json': 'd9f23c6b5ca3fbe8b4e1411b845356c6aea1ea4b2af541a6261b840057573f15',
 }
 
 

@@ -1,82 +1,82 @@
 {
   "0": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/000-0.json",
-    "sha256": "d4b5572913ebb7470713394d6757bf6a7c2bc1c5bfebaaf15e92fd8900ab2dbf",
-    "kind": "value"
+    "sha256": "b7fafa3bcd17e3c2c01132a9b4572deed942f7727e63f55a825affdfd87dd602",
+    "kind": "value-zlib-base85"
   },
   "1": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/001-1.json",
-    "sha256": "cdc8f68c4f07997fb49d0663d3c7f78b824c94d3b02acfd50d8b66414540ab9c",
-    "kind": "value"
+    "sha256": "8323675335d3c4a8a8d1fb3b82fc05f430e3e3636327a0749be322f1714c1fd6",
+    "kind": "value-zlib-base85"
   },
   "2": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/002-2.json",
-    "sha256": "794589b79eaea765aad92738ced35e9f79bfc54051c4858b750d6fdaeed0093c",
-    "kind": "value"
+    "sha256": "0fac53a229149639c66661cf52e7bfa94aa4ebe90bbd9be34931d1e75496548b",
+    "kind": "value-zlib-base85"
   },
   "3": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/003-3.json",
-    "sha256": "5153ac8b56ccd0b69c1fa34fb382815b9bf46a21a3919eab8f1d8736a312d297",
-    "kind": "value"
+    "sha256": "86b0f923e39ab84147f451303a6340a594ad94cb7a608a3fbe1d7c22a20c27f4",
+    "kind": "value-zlib-base85"
   },
   "4": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/004-4.json",
-    "sha256": "b6711b0e32bbb711b5fd83820e93a01606fa46ff757826856d355f2a8ea68a13",
-    "kind": "value"
+    "sha256": "c614c45cfea48ee8f92dc859525251652beddf6d7a5a32f3cdcf6452a11a8271",
+    "kind": "value-zlib-base85"
   },
   "5": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/005-5.json",
-    "sha256": "0c0ceeba5e72866c3911da347b48d22a0e2ccabf82cf5c9a535d3ef427748b22",
-    "kind": "value"
+    "sha256": "551b3f09c0f24f60ac840ecae3a327e3f88a31f014c5073944314e70a49d7d1c",
+    "kind": "value-zlib-base85"
   },
   "6": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/006-6.json",
-    "sha256": "ad4fdcf344d5ff9f76993a6cf9806f07b69ed2941f69b51b98d59262cd5b90f1",
-    "kind": "value"
+    "sha256": "3491a483760cf10142cbd8053b0342aa3a72d810f57a3c9dea8fe074302b1dd2",
+    "kind": "value-zlib-base85"
   },
   "7": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/007-7.json",
-    "sha256": "7b2ef6c54db20f5242a9b04bf2c9846c52828c010afaa0f5a6728178d66c1c2b",
-    "kind": "value"
+    "sha256": "41da6527b3a29069bc3ee8b38b55a11ce8a8b53ea54539fe66c55f260ee4a1be",
+    "kind": "value-zlib-base85"
   },
   "8": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/008-8.json",
-    "sha256": "9868999dd9bfdf148bb5110ee94424497730d6d46688059516e87af9d283a9a4",
-    "kind": "value"
+    "sha256": "e5437f7d52bac73d93af2de9bce8c94f30f8d2d3185b5e72fefc0e9bbbf0d855",
+    "kind": "value-zlib-base85"
   },
   "9": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/009-9.json",
-    "sha256": "b03982d338312ce32fcc1ba94a04ce47fea275fe108f068b662eaf2ab7da055a",
-    "kind": "value"
+    "sha256": "e81e69704b395799ba0a21a13ad44bfb90147e8742cc5894b9969075e25536e4",
+    "kind": "value-zlib-base85"
   },
   "a": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/010-a.json",
-    "sha256": "a6cf6ede892e5b88d3abc12f442f328f30d881a5d9e113a3dbc4ba78ccc2c8d1",
-    "kind": "value"
+    "sha256": "12507276af5b821c3edea09bddc48e7fb911aaccc48e7f273f0c80940d2fb09e",
+    "kind": "value-zlib-base85"
   },
   "b": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/011-b.json",
-    "sha256": "25a9d6f9df2e8e5c7e7e5c4086b94ca5fbf19ea4dad9dda175a0491e4121ba6e",
-    "kind": "value"
+    "sha256": "d22cd4a6fc48ff26798b257b7ef3a6a2c9bac225afed6b1c97e5c0d3bd821431",
+    "kind": "value-zlib-base85"
   },
   "c": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/012-c.json",
-    "sha256": "c27c5aa685fd369fe468604e84e206f56fe46d31ea146b4bd2f45e16bb1beaf2",
-    "kind": "value"
+    "sha256": "c6cf1baa846b0c8c409c006368867ef392b6a6a07e810b2518b5c224aa98f703",
+    "kind": "value-zlib-base85"
   },
   "d": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/013-d.json",
-    "sha256": "d78d92d6fbcc9653f184602fd1dcdad9ca40346ae34255740b333786d643aece",
-    "kind": "value"
+    "sha256": "6013677e4eed01b23ad1fc32f86bc40e16c8ef1d82d6605093c0f41f01d58f7f",
+    "kind": "value-zlib-base85"
   },
   "e": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/014-e.json",
-    "sha256": "98b1595d15ef5541576b682505c4c3e408435d39dc8799793a6d8493a803f230",
-    "kind": "value"
+    "sha256": "1231907288b11d83f7627fceb8da4866445d0c65143ef1e8bc1e3886a7ec0f05",
+    "kind": "value-zlib-base85"
   },
   "f": {
     "path": "content/035-proof_data/007-encoded_covering_duals/004-dual_buckets/015-f.json",
-    "sha256": "e4fc26e6fad9552d63b2b0fb7a362960c8aabb70a42df5fb579c192ec9d9d54a",
-    "kind": "value"
+    "sha256": "e834c977756d289fe2f9e3400e3bdf2b14fc063f5bdb8efd007cb47e6d1edbaf",
+    "kind": "value-zlib-base85"
   }
 }

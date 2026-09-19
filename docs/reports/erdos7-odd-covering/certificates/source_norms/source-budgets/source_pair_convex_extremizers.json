@@ -2,7 +2,7 @@
   "schema": "erdos7-source-pair-convex-extremizers-v1",
   "scope": "Exact finite original source and load arithmetic. Ordinary proof establishes simultaneous convex maximality among arbitrary original residues. Outside the effective9 source guard of333. No future bad-event intersection, raw333/335 upper attainment, or Lean claim.",
   "source_sha256": {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
     "profile-notes/001-064/26-conditional-head-deletion-with-a-priced-arbitrary-cofactor-tail.md": "10e034a4ff1dd2c07353aed3f1250bf636b9e71303d020755397247f692a6a71",
     "profile-notes/257-320/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "fc8ef65d93e920ffaee81a1846d320cb1879bd97f4291b196e97d01a5ce10168",
     "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6"

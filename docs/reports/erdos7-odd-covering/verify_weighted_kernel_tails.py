@@ -12,7 +12,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -26,7 +26,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SOURCE_NAME = 'certificates/arbitrary_head_profile_certificate.json'
-SOURCE_SHA256 = 'b9bfa158feeeefe0c82474b3bc2185011479fdf523a7a25ccc9ba4b6f12ed276'
+SOURCE_SHA256 = '5767510d3259316435f6154b1c35ecf450e51d694a3d3fd93412deff4df32404'
 
 
 def require(condition, message):

@@ -11,11 +11,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_family_error_reserve.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/j-geometry/j_source_labelwise_neighborhood.py': '8569c38190dc48089a7e4587467564cc00cb69e916f0cf89a0bb5d8c294fe67a',
-    'certificates/source_norms/j-geometry/j_source_labelwise_neighborhood.json': 'd6b2ecef58fa93ac79d1e15845fa5a4dd1c9fb9ae69b40d15c411ba49b68b328',
-    'certificates/source_norms/j-geometry/j_face_alignment.json': 'e2cb661d80b10f76d4a40c482d233e26b0979c3a116602d81e97a95532247485',
-    'certificates/source_norms/j-geometry/j_face_surplus_transport.json': '0fc6b0b65ca1e2a10892da031197e239b2e6557e0d6bacde9b1908c84c4dad18',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/j-geometry/j_source_labelwise_neighborhood.py': '8c0936bf71a26897ac2156ec4878cb5695d816931264f924764e534436bacdca',
+    'certificates/source_norms/j-geometry/j_source_labelwise_neighborhood.json': 'e0332bb28d282bc9429cc135f74c232fb8d2a4df31416ed3edd2367184ba4902',
+    'certificates/source_norms/j-geometry/j_face_alignment.json': '75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5',
+    'certificates/source_norms/j-geometry/j_face_surplus_transport.json': '96589a85c161e46169d22f1f1711c21c43f97a48863293b5fd9c4cb73b4355fc',
 }
 
 

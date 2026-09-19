@@ -17,15 +17,15 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json'
 PINS = {
-    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
-    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
-    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "7d1b33bae80d65112d9618e7a149e0de8747d219f35902f658b97cc2fe832a59",
-    "frontier/endpoint-bounds/endpoint_k_face_forced27.py": "2c904c4616434408e26794cfb31d44bfbf3e2bdb0a96d1e1158cd6409aee3f1b",
-    "certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json": "b008312fc1c2d7debbc57e794f6b444135cd4876872f4fe77e52c69922deeed9",
-    "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd",
-    "certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json": "3acdaa029a606ff79e483294f52390a0fed1df0ddbf444f5b42e1c982ca1d8eb",
-    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c",
-    "certificates/source_norms/endpoint-bounds/endpoint_joint_geometry_ratio.json": "7b256b1fb3941a4f20fc01712a0c57821154bd5045268526a4423c4592a58573",
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6",
+    "frontier/endpoint-bounds/endpoint_k_face_forced27.py": "8ea52815e6ae5b9b4df5733a8c8bae8f0704a12da0d531d794873406f0f29c87",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json": "59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79",
+    "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+    "certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json": "69de90d2cbe7dae4fbce090ab4b3e7d29ccce45e107a4179bbea17edb9bb8270",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+    "certificates/source_norms/endpoint-bounds/endpoint_joint_geometry_ratio.json": "d751b27d2478513255bfcea3fc79805da48bcfe83baedd852815270931946e2a",
     "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
     "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
     "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8"

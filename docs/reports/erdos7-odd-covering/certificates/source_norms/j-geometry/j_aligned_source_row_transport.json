@@ -1,10 +1,10 @@
 {
   "schema": "erdos7-aligned-source-row-transport-v1",
   "source_sha256": {
-    "certificates/source_norms/j-geometry/j_actual_rows_zero_restoration.json": "83ece9ee32550f166c2fd741c46fa010861ac790abc1245b56c01cd9aa5f2b06",
+    "certificates/source_norms/j-geometry/j_actual_rows_zero_restoration.json": "c8a22970a4b7494074b615457386e34f71615316e202ed0eade84ddeb0872afe",
     "certificates/source_norms/j-geometry/j_aligned_retained375_heavy553_heads.json": "e058014436eb3385567887c86db80d94e2ae1bceb8504443922367185f796a59",
     "certificates/source_norms/j-geometry/j_aligned_retained375_h4_heads.json": "571cee21028841677d4fee195d23b621607fb8851c6679349beafd491cf6b416",
-    "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json": "e837a9ad43a668c9c8e811c72a58dc144591e0251d81af71a0af093499352f8d"
+    "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json": "7bd27e1dce49f74bd5fa67d35c5e53af634a446c02b681def0071ba64bab23da"
   },
   "domain": {
     "delta_max": "1/1000",

@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
-PIN = '1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3'
+PIN = 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d'
 
 
 def require(condition, message):

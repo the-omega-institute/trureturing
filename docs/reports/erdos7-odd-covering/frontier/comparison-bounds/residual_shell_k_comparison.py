@@ -13,17 +13,17 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json'
 HEAD_CERTIFICATE = 'certificates/source_norms/cover-geometry/residual_shell_original_heads.json'
 PINS = {
-    HEAD_CERTIFICATE: 'f72bdc3529f267860d5c2017466787ef5b8f0f6b4df45b93f39dd0f779624af7',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': '67cc9b5ab2f930baca853be93cb5ffa91b779fde1aeb75895ac5dacf5fe99a9c',
-    'frontier/comparison-bounds/exposed_concentration_prices.py': 'c0e4f94c5916b8286f534411ab57e231ed5268a5e5f4135b0b3e4720e56fbab8',
-    'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '7943196a402ce431337cf4174d01fcb50c9ada9852d627806c0b153f125b756d',
-    'frontier/source-budgets/seven_pair_source_prices.py': '1eb83320c6a053d0a52f9f97d4c01160d64f0dbb3d0e2cee71508c3c18052d8c',
-    'certificates/source_norms/source-budgets/seven_pair_source_prices.json': '2d923d61320a031c6d4d75c16c8bb36c389b5a082a77f6c14ea1470f910be174',
-    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': 'e8e389095edfd5588234801e321f2d66a06cea82e82edd6ab24b85a69c2e8b64',
-    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '306f506e83342b0171f6845cb93019e622f23badec6dbef5abea706d3e0d4418',
-    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'fc1a14955478d7d6c440500a0aa320f51d8e2a08dafc37f99730ff478eefbfce',
-    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '1b8e5d54411ccf04a3a7ebb1b044f624e6df84584a449568a58a6541ed8a25da',
+    HEAD_CERTIFICATE: '39ba4181d8017340ac46dbdb4e8ddbb146a1b8aa568e27eda69a924484e2159d',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': 'f5b6d2df57ee047a3d47660812e8fc3ff0a81239db15881634b4ad0b01633b0f',
+    'frontier/comparison-bounds/exposed_concentration_prices.py': '9c2e6d7ea0777df07559c90a506dcd19d40e2af6febadaee7833a0d66b20488a',
+    'certificates/source_norms/comparison-bounds/exposed_concentration_prices.json': '4cbde5374198bbf645157ef6bb7765e3b8fed57569cd2c99b85c25741f38fd25',
+    'frontier/source-budgets/seven_pair_source_prices.py': '020dc470117d84f1a0646ad034ffc6bd2a10b1e18d17b20704f1bb99317c230f',
+    'certificates/source_norms/source-budgets/seven_pair_source_prices.json': '052e3376ed1b3b4fb46bbb032e8bc5156c7f468a807e496e05fb312f452110f1',
+    'frontier/comparison-bounds/wide_k_signed_tail_comparison.py': '248c4af165fc4e636c4f4a3c61947384afd9128cae6c652b07819e20a55da484',
+    'certificates/source_norms/comparison-bounds/wide_k_signed_tail_comparison.json': '4fa3ff52514576814c380e21caaeb2cc9341180815cab34e5b64c8c6e896bade',
+    'frontier/retained-transport/uniform_shallow_indicator_transport.py': 'c30be3b622143fbd629eed504642faede14664abbfc393c0d1a93246e087a765',
+    'certificates/source_norms/retained-transport/uniform_shallow_indicator_transport.json': '07c1562ec4ef340c70dfa30c7b4e427d16d19e8e28190c09abb450f44c2ab0ee',
 }
 DELTA = F(1, 27)
 SHELLS = ((F(0), F(1, 20000)), (F(1, 20000), F(1, 1000)))

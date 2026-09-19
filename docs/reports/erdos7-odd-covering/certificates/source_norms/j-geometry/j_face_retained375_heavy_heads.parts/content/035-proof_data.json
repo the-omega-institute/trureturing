@@ -6,8 +6,8 @@
   },
   "encoded_prefix_seed_duals": {
     "path": "content/035-proof_data/001-encoded_prefix_seed_duals.json",
-    "sha256": "1d0b899566611692b20b722184a762a38ff6d4108bf8fbcb043b31281a2332ac",
-    "kind": "value"
+    "sha256": "517954558fc7d61357985653907192ab7421a0768d89f67b14d6cd6b54e6c566",
+    "kind": "value-zlib-base85"
   },
   "independent_prefix_reconstruction": {
     "path": "content/035-proof_data/002-independent_prefix_reconstruction.json",
@@ -35,7 +35,7 @@
   },
   "encoded_covering_duals": {
     "path": "content/035-proof_data/007-encoded_covering_duals.json",
-    "sha256": "9254a5d919d926749d63fb61b29d393c116070a0009684982a4d1b500419802d",
+    "sha256": "c077cc3d83d5e9e0611702b5824446e1479f7d45b795a21b9161feafad03dc3a",
     "kind": "object"
   }
 }

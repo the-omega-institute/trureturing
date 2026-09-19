@@ -31,7 +31,7 @@
   },
   "encoded_price_bank": {
     "path": "content/003-domains/000001/item/006-banks/001-survival/007-encoded_price_bank.json",
-    "sha256": "ff7b2892e13166e3c3a0d184bb450bd78b55db6794d250617cc9292a146e2e53",
+    "sha256": "2ece8adb056bcbe69068347aed78b9c8a1d0f94ecf2ee0a3347fd443f8fc8ef0",
     "kind": "object"
   },
   "maximizing_raw_primal_dual_witnesses": {

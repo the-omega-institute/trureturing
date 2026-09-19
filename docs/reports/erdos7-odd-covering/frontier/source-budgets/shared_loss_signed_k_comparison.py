@@ -11,12 +11,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/shared_loss_signed_k_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': '67cc9b5ab2f930baca853be93cb5ffa91b779fde1aeb75895ac5dacf5fe99a9c',
-    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_1_50.json': 'd169347897a98649128b387dbaadc1d2c049cec5c63f3eeff0d661810f507695',
-    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_obstruction_1_27.json': 'd9ab46bb8fd95c1db7ab7f22552083a4742e49ec72450bdc206ca503853451e2',
-    'frontier/comparison-bounds/joint_concentration_loss_budget.py': '3ee64556bb587d1ded8b64c27c8e9767cfe44681c419c67b8315b73c7a6ab9e3',
-    'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json': '08c10509d39dfb1b4c7d2bfab0d41c7b60b04a782ecf727e1f6c54c09f51a7e4',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/k_neighborhood_radius_study.py': 'f5b6d2df57ee047a3d47660812e8fc3ff0a81239db15881634b4ad0b01633b0f',
+    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_1_50.json': '72de469bb9a4aec09c8135626bb6a9897bff4f98f42878a0d803e90cae03e2d7',
+    'certificates/source_norms/endpoint-bounds/k_neighborhood_radius_obstruction_1_27.json': '6cf21cbc8d195cfcdb5fa1495f6c9409b14c4f6a9c17e6864a27c41ca6ec1928',
+    'frontier/comparison-bounds/joint_concentration_loss_budget.py': '9b67c8a9b430ac2457f51a80274817011eb2cd4c94cb40c26e351b26753ba028',
+    'certificates/source_norms/comparison-bounds/joint_concentration_loss_budget.json': 'ebd0dc133c9d3c04efd087ac28e020a326d21bd4e43563e0fcce880d6f6c7751',
 }
 
 

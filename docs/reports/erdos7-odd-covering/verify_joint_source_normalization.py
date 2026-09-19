@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -27,12 +27,12 @@ import json
 BASE = Path(__file__).resolve().parent
 G = F(3849, 106)
 PINS = {
-    'verify_shared_cell_hinges.py': '0b65c89b753b3619514c8ad96bfce8243cb8546489b37ac5054e28a5e836287d',
-    'verify_shared_cell_square.py': '72ea37e4b35cbf0d4b2ec508a6a39b30c45f9068f693f7a30fcd35cbdb89aefb',
-    'certificates/pure_root_profile_certificate.json': 'abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753',
-    'certificates/shared_cell_hinges_certificate.json': '8289e1dc3ceabffeeee03d04ce93ed2bbea62b415dd9b245c7fd7855a681a8b3',
-    'certificates/shared_cell_square_certificate.json': '26530cd48f6244cd8622efdaed09f5af77375b6e4152e122dec2ebf798d61925',
-    'certificates/shared_square_continuation_certificate.json': '529f2cf3470505f0b37b2c36d6aca5333f93dffa841bb305c6d4f2d3e6b1235d',
+    'verify_shared_cell_hinges.py': '6011ceedba7ae157c8aa9f51d7f272901465114cdcf3a31bad276f0631cd94ad',
+    'verify_shared_cell_square.py': '5c8bf6f4cdfcc939c6b74fcf1811f8b94712932c956d1e1d3990790e66aaccd0',
+    'certificates/pure_root_profile_certificate.json': '045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a',
+    'certificates/shared_cell_hinges_certificate.json': '7e7227e0b859ad6e30fd17915f40571eacea82cd9aadce09984ed6b7bd790674',
+    'certificates/shared_cell_square_certificate.json': '5018f24fd0766b33591eeedf4889cd6c7e8881ef7223f1fe63092e192c373a3b',
+    'certificates/shared_square_continuation_certificate.json': 'a6c71f4c41d87171956ba67343e571f3dae1bc510b5143544dd9f89b6d31f6a4',
 }
 
 

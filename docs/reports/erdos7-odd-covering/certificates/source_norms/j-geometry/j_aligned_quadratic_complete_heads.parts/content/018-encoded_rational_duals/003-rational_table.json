@@ -6,8 +6,8 @@
       "stop": 798,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/000000-000798.json",
-        "sha256": "244dcd34e5765d956a91982fb9657c72f2f3990b0f8e36d6d881e27c1ed06128",
-        "kind": "value"
+        "sha256": "b6213bfa892a2af763c3560ecff991f0bf91a8008e0e700dabf0d0de4d096288",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -15,8 +15,8 @@
       "stop": 1596,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/000798-001596.json",
-        "sha256": "53dff02b813efe64317550ac59c3ae873d21fc045dc1b8b95178d081bbafc759",
-        "kind": "value"
+        "sha256": "96f41aa2347bcbb54b162bca7ae38c2cf5a604f238c09f2789ec075e58254f70",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -24,8 +24,8 @@
       "stop": 2394,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/001596-002394.json",
-        "sha256": "f7273a015e2962c3ba2b4ce4d9db9efd23a8ba9623b193b8c42a4fc3d3f94ed5",
-        "kind": "value"
+        "sha256": "d084867f7351469a4fdec4c60bd5da4875b9574e60f894304e7f195c86631b7c",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -33,8 +33,8 @@
       "stop": 3192,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/002394-003192.json",
-        "sha256": "b5aa66cd4520c8af54bba6ade4790206430c334d89c20d9f984104aadea1d0b9",
-        "kind": "value"
+        "sha256": "5cdd82584abcc616797b588c40e520b856030ef49073931a4c6915c4b5e74614",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -42,8 +42,8 @@
       "stop": 3990,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/003192-003990.json",
-        "sha256": "200be1a3b164c5aae2fa069735998ef4e36dd041fe96daa9d027042db1ef11b5",
-        "kind": "value"
+        "sha256": "2fa67fb8c1fed1fa00a613db5723aa3a4e4cb4b14bb65efd8ea1b209cb391b6f",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -51,8 +51,8 @@
       "stop": 4788,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/003990-004788.json",
-        "sha256": "29471613c0a49826c29d7c846a724d12b6d11b443f19febc34323c300d1b7529",
-        "kind": "value"
+        "sha256": "d30d26fec8d78e568321275c00c867bf93182b05960ddc9918a3b1a10f7ea2e2",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -60,8 +60,8 @@
       "stop": 5586,
       "part": {
         "path": "content/018-encoded_rational_duals/003-rational_table/004788-005586.json",
-        "sha256": "f78782b39f678242f2adb8f37aba91806589b417306cc40e661c883b94b1bf23",
-        "kind": "value"
+        "sha256": "7c2e8ad6e3780376b0a563afdd5d6f82922d29de2e3be7be4a6fad3ef4857894",
+        "kind": "value-zlib-base85"
       }
     },
     {

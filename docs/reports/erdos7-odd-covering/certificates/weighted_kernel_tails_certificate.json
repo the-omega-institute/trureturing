@@ -1,7 +1,7 @@
 {
   "schema": "erdos7-weighted-kernel-tails-v1",
   "source_sha256": {
-    "certificates/arbitrary_head_profile_certificate.json": "b9bfa158feeeefe0c82474b3bc2185011479fdf523a7a25ccc9ba4b6f12ed276"
+    "certificates/arbitrary_head_profile_certificate.json": "5767510d3259316435f6154b1c35ecf450e51d694a3d3fd93412deff4df32404"
   },
   "scope": "Ordinary proof and exact constants for truncating only forbidden masks at AP17/8 and AP19/8, from the full actual supported AP(4,6) law on3571113. Arbitrary original heights/residues and every original test label remain. Neither the incoming13 law nor test inventories are made finite by this certificate. No unrestricted Erdos7 or Lean-kernel conclusion.",
   "incoming_law": {

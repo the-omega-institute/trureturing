@@ -19,12 +19,12 @@ HEAD_SCALE = 5400
 PAIR_TAIL_UPPER = F(2539, 3600)
 Q_SLOTS = (F(0), F(1, 5), F(1, 5), F(3, 20), F(1, 5))
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/whole_face_second_factorial_tail.py': '22719d229784f56d72ec22037163756f520fe46b4fa8eafc353eff14ace7f49e',
-    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': 'cae2588d128708ece05769b2162b189fadb2bf222c746f43388e49d97ab587c4',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
-    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '2c904c4616434408e26794cfb31d44bfbf3e2bdb0a96d1e1158cd6409aee3f1b',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': 'b008312fc1c2d7debbc57e794f6b444135cd4876872f4fe77e52c69922deeed9',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/whole_face_second_factorial_tail.py': '106e081ed80b09a176ca63aa382c5486d3a980c34c04617115f764131b84a0cf',
+    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': '2cf56c20350e698147a3ed004f23bde00990766fe876c18b61e4444f16e99465',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
+    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '8ea52815e6ae5b9b4df5733a8c8bae8f0704a12da0d531d794873406f0f29c87',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': '59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79',
 }
 
 

@@ -152,9 +152,9 @@
   "old_positive5_correction": "831/1200500",
   "old_threshold5_total_gap": "4043/3601500",
   "source_sha256": {
-    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
     "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
-    "frontier/source-budgets/positive_seven_source_extrema.py": "a3d67ed4cd887027957aeb6c59c7eb5396b96594af32eb3ef2cfad8efb6dc269"
+    "frontier/source-budgets/positive_seven_source_extrema.py": "91eed002cf667cc74e5d5b7bbbee0afc777d5404c24c297ace387aa7158423e9"
   },
   "scope": "Positive gaps for the fixed absorbed carrier source comparison. Exact optima and global K improvement are not claimed."
 }

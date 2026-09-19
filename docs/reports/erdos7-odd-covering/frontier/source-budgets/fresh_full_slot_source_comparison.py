@@ -16,12 +16,12 @@ HEAD_CERTIFICATE = 'certificates/source_norms/source-budgets/fresh_full_slot_sou
 DELTA, RHO = F(1, 25), F(1, 1000)
 TARGET = F(101857, 200)
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/expanded_source_complete_comparison.py': 'd5eaeb60aa63d06c8b0d515079d51f7dc76444d91182ef1ac9a286ffe184b50b',
-    'frontier/source-budgets/fixed_support_source_slab.py': '90ed2e911d98d325688cb3b2891510c881fc90a7df686e8fd50548d651aa35a9',
-    'certificates/source_norms/source-budgets/fixed_support_source_slab.json': '63b2b9e3959f43f95abedeb956e9e0dc03596670ded5c175f25d1e318677967d',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '45c1b016e68eb5397a78a6540c4f8ee5287c214b6bb35625d4d0232224dd2314',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'e0d124f375efa0567777973a2ba468d368285807aed054ada2e57727b896d4f2',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/expanded_source_complete_comparison.py': '409a9ef1a59b4ab0164b9917daaec01872c9253bf6d50684c444e504b61c5944',
+    'frontier/source-budgets/fixed_support_source_slab.py': 'f8a0073ff44d3e72456f92869f106647729bd098240d44d8bb72b771c5a0f99d',
+    'certificates/source_norms/source-budgets/fixed_support_source_slab.json': '2d759db1497bc09d0ba3031d55fdfd42dc9f2fac27e2406dcaa60f90e7c256fc',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
 }
 
 

@@ -17,13 +17,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/k_face_surviving_tail_ratio.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '2c904c4616434408e26794cfb31d44bfbf3e2bdb0a96d1e1158cd6409aee3f1b',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': 'b008312fc1c2d7debbc57e794f6b444135cd4876872f4fe77e52c69922deeed9',
-    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': '3128cab9f43ad9c89a5f129b7c7d0115a6f73684f613111a07a56f0bd71ddcdd',
-    'certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json': '3acdaa029a606ff79e483294f52390a0fed1df0ddbf444f5b42e1c982ca1d8eb',
-    'frontier/endpoint-bounds/k_face_complete_ratio.py': 'e94a6532ff6951d464a224f1a56415aaea90251c520c7b06fc9afe4e6a82c5db',
-    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': 'ccb1debedef1dc49cbc6a31e01c712f156992dc238bd0576e4f51ee8dd6f6888',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '8ea52815e6ae5b9b4df5733a8c8bae8f0704a12da0d531d794873406f0f29c87',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': '59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79',
+    'frontier/endpoint-bounds/k_face_common_seven_hinges.py': 'c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3',
+    'certificates/source_norms/endpoint-bounds/k_face_common_seven_hinges.json': '69de90d2cbe7dae4fbce090ab4b3e7d29ccce45e107a4179bbea17edb9bb8270',
+    'frontier/endpoint-bounds/k_face_complete_ratio.py': '00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160',
+    'certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json': '2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a',
 }
 FACES = (((398, 410, 422), (1, 1)), ((616, 628, 640), (1, 0)))
 LAYOUT_DIGEST = '284eded39badbe55b2f93c39e9bd3a3dc16f62fd476f3af089340cd34894be16'

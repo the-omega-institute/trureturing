@@ -18,13 +18,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'a43c2d8ec4228d1a58e8d8511db17f91c8f47470c0114460656be59ccfce2327',
-    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '8d2770aa7147105fe03c4428293b588feae64b140afe80585583c786146bbbc5',
-    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '2c904c4616434408e26794cfb31d44bfbf3e2bdb0a96d1e1158cd6409aee3f1b',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': 'b008312fc1c2d7debbc57e794f6b444135cd4876872f4fe77e52c69922deeed9',
-    'frontier/moments-survival/whole_face_second_factorial_tail.py': '22719d229784f56d72ec22037163756f520fe46b4fa8eafc353eff14ace7f49e',
-    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': 'cae2588d128708ece05769b2162b189fadb2bf222c746f43388e49d97ab587c4',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/whole_cost_common_stop_loss.py': 'c220594349efc9a422b25e9bd434bb4508d4665b7ae80459e5cd14277d6df850',
+    'certificates/source_norms/comparison-bounds/whole_cost_common_stop_loss.json': '25fa8fd2564e2da46575f04405d6e4d8eba56bc8e6df67a563a14ec887b6753e',
+    'frontier/endpoint-bounds/endpoint_k_face_forced27.py': '8ea52815e6ae5b9b4df5733a8c8bae8f0704a12da0d531d794873406f0f29c87',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json': '59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79',
+    'frontier/moments-survival/whole_face_second_factorial_tail.py': '106e081ed80b09a176ca63aa382c5486d3a980c34c04617115f764131b84a0cf',
+    'certificates/source_norms/moments-survival/whole_face_second_factorial_tail.json': '2cf56c20350e698147a3ed004f23bde00990766fe876c18b61e4444f16e99465',
 }
 SCALE = 5*7**7
 TOTAL = SCALE*16200

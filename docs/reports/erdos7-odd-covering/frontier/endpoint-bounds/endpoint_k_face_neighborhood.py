@@ -16,11 +16,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_k_face_neighborhood.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': '1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json': 'a5102c4c9959033802c24108710ba5e3c829c53cbcd91b4fff2db4904e22f16d',
-    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46',
-    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': '71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json': 'f715fee37ae6c26170d9d9cb43ed2cc2b48e04dc516eb5a5021088f2aee2509e',
+    'frontier/endpoint-bounds/endpoint_k_face_linear.py': '1e55513fa608217d3d0b7868505c390e401e80f3f63200627576ae32b55535c7',
+    'certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json': 'e298f636e8f54c5b13c839647fe8494e90713964b9e23bdfc9e52ff22373b9c4',
     'frontier/source-budgets/source_mass_compatibility.py': 'f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645',
 }
 

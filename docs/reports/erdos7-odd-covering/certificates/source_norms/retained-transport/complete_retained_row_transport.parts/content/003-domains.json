@@ -6,7 +6,7 @@
       "stop": 1,
       "part": {
         "path": "content/003-domains/000000/single.json",
-        "sha256": "42ba2fb6e9e461f6d50c2aecab054f4e725e359d585cdc3a96ecb804525f991c",
+        "sha256": "5cc1cfe00af44cea3990fcb0cef181d2ea456538c680b1a536e0711bc42465a7",
         "kind": "singleton"
       }
     },
@@ -15,7 +15,7 @@
       "stop": 2,
       "part": {
         "path": "content/003-domains/000001/single.json",
-        "sha256": "c7b0130b9005c06ae81c704cf2b33b04c0b11902cd6eac44462b336510dea6b4",
+        "sha256": "70e5c48a5a304e9f0450fe0457778c1796b0ed8ddad3489bb04c152c43f6407f",
         "kind": "singleton"
       }
     }

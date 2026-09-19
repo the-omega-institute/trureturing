@@ -18,12 +18,12 @@
   },
   "rational_table": {
     "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/004-rational_table.json",
-    "sha256": "94fcd39e6a6c8a21666b30667dfc6131df3ce97e08c12976f79221215c8c23be",
-    "kind": "value"
+    "sha256": "9831cfdde6e5081fb7cccb182fd12c8cc5ad1aa8a832ed10f68f41f7a4d27601",
+    "kind": "value-zlib-base85"
   },
   "rows": {
     "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank/005-rows.json",
-    "sha256": "f4a51bbc10c7c4ba3e238d8f129ea0187cbd18272778202e1953262768a6ffbc",
+    "sha256": "295d6e6c28149048f376a13ae594d34b6a171f4bd8ba928b5ca4657fda10650e",
     "kind": "array"
   }
 }

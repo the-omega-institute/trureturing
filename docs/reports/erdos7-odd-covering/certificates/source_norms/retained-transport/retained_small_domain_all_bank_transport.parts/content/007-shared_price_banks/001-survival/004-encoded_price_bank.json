@@ -18,12 +18,12 @@
   },
   "rational_table": {
     "path": "content/007-shared_price_banks/001-survival/004-encoded_price_bank/004-rational_table.json",
-    "sha256": "63c60d278e3029711aaec2dba82f1b371a134f5457f5110ccda5211da53a451d",
-    "kind": "value"
+    "sha256": "7a339661165afcebebb9866cbe499c7040a91e75fd929150bf1bc940707e2c95",
+    "kind": "value-zlib-base85"
   },
   "rows": {
     "path": "content/007-shared_price_banks/001-survival/004-encoded_price_bank/005-rows.json",
-    "sha256": "cd3533903184b8b00d3610942b573a46823c06bef3ea892e712f75b2c151deeb",
+    "sha256": "a35376f54f0546849606c67c60387462c14022c61895941895d455d539c0ebbb",
     "kind": "array"
   }
 }

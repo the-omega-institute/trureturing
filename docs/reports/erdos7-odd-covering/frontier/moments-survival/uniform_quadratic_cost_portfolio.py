@@ -14,11 +14,11 @@ CERTIFICATE = 'certificates/source_norms/moments-survival/uniform_quadratic_cost
 INDICES = (41, 42, 43, 44, 45, 47, 48, 49, 50, 51)
 JOINT_INDICES = tuple(i for i in INDICES if i != 47)
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/complete_off_face_quadratic_cost.py': 'bb45fbe75918662fd63829f881b9951165c8fb766e5a1d7ea81bd90b578283c8',
-    'frontier/moments-survival/uniform_factorial_neighborhood.py': 'f950e40bf24f76eef45a40789632ee0a531a9f69d4d7b7e0a06b5cb504d9597b',
-    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b',
-    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': '0b17d19eceaf7097f29800d9a69000c1fc37736c8f50f5453dc71380642af5f9',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/complete_off_face_quadratic_cost.py': 'f3f4065f5334810da2af00f0f8d29463024ec53e2d7f32d0ffa5d02cc74436da',
+    'frontier/moments-survival/uniform_factorial_neighborhood.py': 'f88deae1854a1fc5af0a40a0a3bbf5918c813959145c5d45dcb8cd91a5c31d3c',
+    'frontier/comparison-bounds/uniform_k_neighborhood_cost.py': '365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b',
+    'frontier/comparison-bounds/uniform_mean_cost_portfolio.py': 'ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238',
 }
 
 

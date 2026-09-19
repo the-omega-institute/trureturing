@@ -11,11 +11,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_affine_margin_reserve.json'
 PINS = {
-    'certificates/source_norms/j-geometry/j_family_error_reserve.json': '03ed2fecfe3894437f686cf30abf1b228bb7252afde856ed328837220fdcde30',
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
-    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': '1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3',
-    'frontier/j-geometry/j_family_error_reserve.py': 'b13e04593cf9e13fe2dce5a0bfed3b71806c533a447200453329a50fbf0db540',
+    'certificates/source_norms/j-geometry/j_family_error_reserve.json': 'ab5043b757c5c79e11276bd7fc6b2cf9c9f36a530b9b59bbb6eaaa51bdbd578c',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d',
+    'frontier/j-geometry/j_family_error_reserve.py': '8f531511ef044a1dc881852ea502af42a49cc59036a39c134fe13eaf3412170b',
     'profile-notes/065-128/66-explicit-linear-endpoint-neighborhood.md': '40f806a9438493aeb51d181059f0c64190bf28ef8d22837f8c515f7bad79216d',
     'profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md': 'c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8',
     'profile-notes/129-192/136-a-whole-j-source-neighborhood-has-a-complete-labelwise-bound.md': '845d9a84f41391240f05f8c5be35cf074d6614abf1dfc493046e8619521f3945',

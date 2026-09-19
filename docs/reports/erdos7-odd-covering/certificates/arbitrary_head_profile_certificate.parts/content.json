@@ -6,7 +6,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/uniform_gamma_cofactor_certificate.json": "90814b5b2435d0f8ae48e29fe0427c43d15ff93fb8d2116589906e0fb54e7f59",
+      "certificates/uniform_gamma_cofactor_certificate.json": "1739213682c47464c2d0a4e72f90ef98fb0813dcddae96bea250b355fbaea366",
       "certificates/star_block_obstruction_certificate.json": "a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907",
       "certificates/joint_density_certificate.json": "de89179f6a15e78501c7568f3df125c3af53cb9d176066e6937eca9932878b9c"
     }

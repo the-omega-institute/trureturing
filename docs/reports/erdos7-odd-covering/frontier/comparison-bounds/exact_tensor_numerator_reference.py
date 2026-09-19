@@ -19,10 +19,10 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/exact_tensor_numerator_reference.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/moments-survival/exact_survival_comparison_boundary.py': 'c31ed6805aef8e8a157d5bbeb6176ee7c3fe5972a9c335d42017ea9e31c8afd1',
-    'certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json': 'bb4b8b9246e84d93953591841f1c4f0c26024c6ab5a32358f3ffd77871bf3cfb',
-    'certificates/source_norms/source-budgets/full_linear_carrier_frontier.json': '98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/moments-survival/exact_survival_comparison_boundary.py': 'e84d2f45275a8be328a7bb8bdcb0ef0d6d413148231517d9f457aeb278e7dd79',
+    'certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json': '23fa4a41ee72adafa5df06c2313d2234bde2031f3282cd234593665019b29dda',
+    'certificates/source_norms/source-budgets/full_linear_carrier_frontier.json': 'e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529',
     'frontier/cover-geometry/ap_schedule.py': '40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f',
     'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
     'certificates/ap_schedule_norms.json': '7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8',

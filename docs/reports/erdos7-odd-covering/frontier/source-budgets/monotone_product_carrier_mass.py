@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/monotone_product_carrier_mass.json'
-PINS = {'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2', 'frontier/source-budgets/product_coupled_carrier_mass.py': '960c2d0f12c40f487ce940cbe287b0ec48f4c39267ea008bf6bb6cea2c3f07ae', 'certificates/source_norms/source-budgets/product_coupled_carrier_mass.json': 'f2567ec6065f45937605e60d4241f29b5550479de43c0851bfc896dbf958806b'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/source-budgets/product_coupled_carrier_mass.py': '49f585b464cf29b6497cd33df39b5b7c4b27261f4b085903305a4600f7c711ac', 'certificates/source_norms/source-budgets/product_coupled_carrier_mass.json': '1bedb9f7c14fe0df11bb99e55a78f5a8b7035b35debc36289d83f01bad875c50'}
 EARLY_LIMIT, SLOPE, FACE_MASS = F(6, 49), F(1, 10), F(53, 360)
 
 

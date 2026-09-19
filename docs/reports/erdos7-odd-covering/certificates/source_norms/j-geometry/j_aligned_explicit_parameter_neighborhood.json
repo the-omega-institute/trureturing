@@ -1,16 +1,16 @@
 {
   "schema": "erdos7-aligned-explicit-parameter-neighborhood-v1",
   "source_sha256": {
-    "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "bb8f955a08fe66ccee9802978cdd7125afae622eb420590db91cf1dd71318738",
-    "certificates/source_norms/j-geometry/j_aligned_source_row_transport.json": "0f816cc92c04ac44626ad264502b632d8c7f96d7e3539df0fc1907d5dc45c672",
-    "certificates/source_norms/j-geometry/j_actual_rows_zero_restoration.json": "83ece9ee32550f166c2fd741c46fa010861ac790abc1245b56c01cd9aa5f2b06",
+    "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
+    "certificates/source_norms/j-geometry/j_aligned_source_row_transport.json": "7e580ca1b11c028f93cf4087b6ab0ae2ae2f387e5c369bde3438d5a45513335e",
+    "certificates/source_norms/j-geometry/j_actual_rows_zero_restoration.json": "c8a22970a4b7494074b615457386e34f71615316e202ed0eade84ddeb0872afe",
     "certificates/source_norms/j-geometry/j_aligned_retained375_heavy553_heads.json": "e058014436eb3385567887c86db80d94e2ae1bceb8504443922367185f796a59",
     "certificates/source_norms/j-geometry/j_aligned_retained375_h4_heads.json": "571cee21028841677d4fee195d23b621607fb8851c6679349beafd491cf6b416",
-    "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json": "e837a9ad43a668c9c8e811c72a58dc144591e0251d81af71a0af093499352f8d",
-    "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "5d85a05b5741c599bde83fc28921de3af41ccdd26fb69de8521439ca03f5cad4",
-    "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json": "d91532dcb4c73f342500987f8909040408b373a1271c7322374ac577b6a89df9",
-    "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c0da76f8f920590d79da892e2f7448d87753d8f27939f54b8bfa3734f7f8c170",
-    "certificates/source_norms/j-geometry/j_aligned_remaining_hinges.json": "631f89e561a4f2f5e7cf3226383c3e5d0711b34c14cd573739a338210bb58aea",
+    "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json": "7bd27e1dce49f74bd5fa67d35c5e53af634a446c02b681def0071ba64bab23da",
+    "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab",
+    "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json": "c2f07afe5f89f631326479f0ea8a88d91ab784917ad30cefc5c3c7337408fec3",
+    "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c82d4369189cbe84daa37b97a89e80d7f300bbdc0fcf132de9b334dd5d42128b",
+    "certificates/source_norms/j-geometry/j_aligned_remaining_hinges.json": "edd3c6ddccf3ad080063ba8845633bcbe14e4794cc4c32ef6417abecceb76aa0",
     "certificates/source_norms/j-geometry/j_aligned_retained375_h4_prefix.json": "1b3ee8aaf6b05cc478a21072da591f6e650b17e0e72d1f91f8fd8c8b5c01c48b",
     "certificates/source_norms/j-geometry/j_aligned_retained375_heavy553_prefix.json": "9db87d7f3e888d6a0785c92eb667c76fddca6d0eaa9dc648bf8c46398da6c7f7",
     "profile-notes/321-384/323-actual-aligned-source-and-row-transport.md": "559c2545c14c8d2db44d414fe877794ede1c605ea61365c891979f837f4ebc46",
@@ -21,8 +21,8 @@
     "frontier/j-geometry/j_aligned_source_row_transport.py": "8cbaeb2944bbf6808364c90964fb2a8f2e371e5368d425b2b70f8edb57c37e00",
     "frontier/j-geometry/j_aligned_retained375_heads.py": "fbd294af41e423b23450c8ab7a147739f2ea31ee9fe5600203ec46a1007d4430",
     "frontier/j-geometry/j_aligned_quadratic_complete_heads.py": "c3cddda534b86f437176fe8b719efde791caff372e735f09282ab4c4f0c2a435",
-    "frontier/j-geometry/j_explicit_actual_neighborhood.py": "36558f7e414da06fa4167cc51240a1966b32b3a4a56230d7fe12efc11518a5f1",
-    "frontier/retained-transport/retained135_heavy_comparison.py": "16decabc92c504ef15a12ce7efff65786625d79dd3608049f182b1d355cdde36"
+    "frontier/j-geometry/j_explicit_actual_neighborhood.py": "824800ad053becf819459efcdc2d94f1203d21f63a4a111f95baa14c3ac23eca",
+    "frontier/retained-transport/retained135_heavy_comparison.py": "93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac"
   },
   "source_domain": {
     "epsilon": "1/100000000000000",
@@ -297,7 +297,7 @@
         "maximizing_key": "782c44a415589bc3b2cc38b1b5cb6e743dd114a4658c748a90ae5b96b5ff8bed",
         "distinct_price_rationals": 2416,
         "source": "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json",
-        "sha256": "d91532dcb4c73f342500987f8909040408b373a1271c7322374ac577b6a89df9",
+        "sha256": "c2f07afe5f89f631326479f0ea8a88d91ab784917ad30cefc5c3c7337408fec3",
         "bank_field": "rational_duals",
         "dimensions": [
           876,
@@ -314,7 +314,7 @@
         "maximizing_key": "39dc6f5a4c8c3b883d53973be1478253afee14568a0c8c5ad57a44aa7c1acd1a",
         "distinct_price_rationals": 719030,
         "source": "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json",
-        "sha256": "e837a9ad43a668c9c8e811c72a58dc144591e0251d81af71a0af093499352f8d",
+        "sha256": "7bd27e1dce49f74bd5fa67d35c5e53af634a446c02b681def0071ba64bab23da",
         "bank_field": "encoded_rational_duals",
         "dimensions": [
           12941,
@@ -331,7 +331,7 @@
         "maximizing_key": "5ff0a1a550f1edb71586b9ebc8fe8f083ca3176870b1aa470d42de48e4d050e8",
         "distinct_price_rationals": 799,
         "source": "certificates/source_norms/j-geometry/j_aligned_remaining_hinges.json",
-        "sha256": "631f89e561a4f2f5e7cf3226383c3e5d0711b34c14cd573739a338210bb58aea",
+        "sha256": "edd3c6ddccf3ad080063ba8845633bcbe14e4794cc4c32ef6417abecceb76aa0",
         "bank_field": "rational_duals",
         "dimensions": [
           876,

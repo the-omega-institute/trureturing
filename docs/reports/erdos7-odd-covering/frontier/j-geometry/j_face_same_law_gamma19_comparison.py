@@ -18,9 +18,9 @@ CERTIFICATE = 'certificates/source_norms/j-geometry/j_face_same_law_gamma19_comp
 SOURCE299 = 'certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json'
 SCHEMA = 'erdos7-j-face-same-law-gamma19-comparison-v1'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    SOURCE299: '5d85a05b5741c599bde83fc28921de3af41ccdd26fb69de8521439ca03f5cad4',
-    'verify_pg1_scalar_schedule.py': 'db856fc6529916e7a59258540bcfaa1f79f4862cea059e4940b42b6b5da8e9ef',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    SOURCE299: '4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab',
+    'verify_pg1_scalar_schedule.py': 'ff5c6d067f417ed2bfd66d034a8e6cab13fadc3ca3ed4cd6e239c7c2964325e9',
     'profile-notes/001-064/35-ap45-layout-costs-and-complete-core-tails.md': '5b7569bc8a8ac2c03287e8cba51140c390327405126ea2291d7b3073e14f1c20',
     'profile-notes/001-064/07-a-common-weighted-low-layout-and-a-nonnegative-tail-correction.md': '1ae70b104e326431601e769bc8f77c8721c694368fdab53a0854e8bc88058281',
     'profile-notes/001-064/20-genuine-current-kernels-and-positive-charge.md': '2a66a59fc7e533de30dc997db4a998dbab42f67e3b5dd63754a300cbee62da58',

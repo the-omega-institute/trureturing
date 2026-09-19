@@ -11,7 +11,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -50,7 +50,7 @@ def compute():
   probability=prod(F(1,q-1) if bit else 1-F(1,q-1) for q,bit in zip(OTHER,bits))
   other_states.append((2**sum(bits),probability))
  source_T81=sum(pr*ps*max(F(((j+1)*v)**2-81),F(0)) for j,pr in enumerate(P) for v,ps in other_states)
- pins={'certificates/shared_square_continuation_certificate.json':'529f2cf3470505f0b37b2c36d6aca5333f93dffa841bb305c6d4f2d3e6b1235d','certificates/shared_cell_square_certificate.json':'26530cd48f6244cd8622efdaed09f5af77375b6e4152e122dec2ebf798d61925'}
+ pins={'certificates/shared_square_continuation_certificate.json':'a6c71f4c41d87171956ba67343e571f3dae1bc510b5143544dd9f89b6d31f6a4','certificates/shared_cell_square_certificate.json':'5018f24fd0766b33591eeedf4889cd6c7e8881ef7223f1fe63092e192c373a3b'}
  sources={}
  for name,pin in pins.items():
   raw=read_artifact_bytes(HERE/name);need(sha256(raw).hexdigest()==pin,'source SHA-256: '+name)

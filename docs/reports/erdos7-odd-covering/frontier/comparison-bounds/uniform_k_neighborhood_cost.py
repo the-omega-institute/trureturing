@@ -13,10 +13,10 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/uniform_k_neighborhood_cost.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/complete_off_face_cost.py': 'ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7',
-    'frontier/source-budgets/shared_budget_affine_tail.py': '6e84343bcb162656fecf5bea73bf0d10a66fe8690f7274ad2165b58944771a08',
-    'frontier/source-budgets/actual_five_slot_source_modulus.py': '3a0d8ce0c4be4cb41886fe60f8a9fc9b81cfaece2f846b9a1edc22527bac39e0',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/complete_off_face_cost.py': '0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8',
+    'frontier/source-budgets/shared_budget_affine_tail.py': 'bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd',
+    'frontier/source-budgets/actual_five_slot_source_modulus.py': '4dd89f4919d2150fa27ba405e586f6bfe74f76b6037b934441ca7ff5357afa86',
 }
 COORDINATES = ('E5-g*q5', 'E15-g*q15', 'E27', 'Ege4', 'E5deep', 'E15deep', 'omega')
 PROBES = frozenset(((0, 1, 2, 0, 2, 1, 2), (1, 0, 0, 0, 0, 1, 1),

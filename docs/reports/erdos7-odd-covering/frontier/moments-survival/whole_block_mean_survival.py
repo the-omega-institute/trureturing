@@ -16,11 +16,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/whole_block_mean_survival.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/whole_cost_mean_stop_loss.py': '21caf2496428ab1772ffd544c38a82a65b3336d32b8f4aa99307810f54478ac0',
-    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': '01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26',
-    'frontier/moments-survival/whole_block_ap11_survival.py': 'fbefa044091efe0cac30fa1e173edc0d0abd523e7f19490f494221cf22171fbd',
-    'certificates/source_norms/moments-survival/whole_block_ap11_survival.json': '5d28dc74ed4578eec27deace152fb0a0cc35fefa2f559037fd62fd44a6b1f1fc',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/whole_cost_mean_stop_loss.py': '3098c95dcd0c8ef6d27a5d78e4bfad13441d20dd2491e3ea21c76a6acc6c9b70',
+    'certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json': 'cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6',
+    'frontier/moments-survival/whole_block_ap11_survival.py': '790367449f23163ba915572fa9fcae4d0b70417b26c9c7acc57f200733bfa550',
+    'certificates/source_norms/moments-survival/whole_block_ap11_survival.json': 'a34ebb65808fd465a053bfe33565d349fa7989dd626bfba4040e68723520c263',
 }
 
 

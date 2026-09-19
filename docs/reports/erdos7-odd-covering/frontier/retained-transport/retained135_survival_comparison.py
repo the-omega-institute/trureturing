@@ -11,13 +11,13 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/retained-transport/retained135_survival_comparison.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/retained-transport/retained135_heavy_comparison.py': '16decabc92c504ef15a12ce7efff65786625d79dd3608049f182b1d355cdde36',
-    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': 'fb5abfd3bc05a85881a1556a6c9cd314f42bcf860982ae4f08c225859ed32578',
-    'frontier/retained-transport/retained_deletion_survival_comparison.py': '6eda37c629bf7ec5a8318cf4ccce883b99203318e313bf7b0d0afc966396a6c7',
-    'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '1e79e0d833b7690589decb871de09f972b06f036ab0a490205658eea8efffde0',
-    'frontier/comparison-bounds/load_two_cost_remainders.py': '46573a7effb28fac5eb6036991523f2fd34e5df54822b3ed09cca538e7d13d69',
-    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'ec6674b8507503f64616098d80047a0600f46fa513420020667516e61c89ce95',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/retained-transport/retained135_heavy_comparison.py': '93ad67489e6ce429f45bd8888cfd8f6e5ac91b0bc3d4fbeebfedef9f7d4b84ac',
+    'certificates/source_norms/retained-transport/retained135_heavy_comparison.json': '4251657492261cb125c28cace5cf2f76c022b19a415648f8387672cbbc2778a0',
+    'frontier/retained-transport/retained_deletion_survival_comparison.py': 'bf265663d663f4e681e79efdca61af3607917cac3a47f9c8fbc1dd19f911abab',
+    'certificates/source_norms/retained-transport/retained_deletion_survival_comparison.json': '646acfad14cbb6e3476c7d33a1fb2ce3ba068305dc02fa75635df8c8509fff87',
+    'frontier/comparison-bounds/load_two_cost_remainders.py': '4bb1f09f0768f92b9dc447156ad0c816e1858c7a1e553c2b422ebe878d7d0ec2',
+    'certificates/source_norms/comparison-bounds/load_two_cost_remainders.json': 'f4224aa378cf67701c4d67bc6e7781277163ad429970727013673aa4e3b2a9e3',
 }
 
 

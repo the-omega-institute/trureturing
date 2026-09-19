@@ -6,8 +6,8 @@
       "stop": 798,
       "part": {
         "path": "content/020-encoded_rational_duals/003-rational_table/000000-000798.json",
-        "sha256": "da72553295b3cb53ea3c0cc8610cc44133518c8a4c7c1ec888cfe0767667e062",
-        "kind": "value"
+        "sha256": "b12cfb288f2d7a0e29d1acb9e96ea287996c6c7856b1d641796a30f1c952badf",
+        "kind": "value-zlib-base85"
       }
     },
     {
@@ -15,8 +15,8 @@
       "stop": 1596,
       "part": {
         "path": "content/020-encoded_rational_duals/003-rational_table/000798-001596.json",
-        "sha256": "fc56e9b8e7b29cf69c203ea170aa08d73ffc9bdfad17e33cc61a6c4461f7fdd1",
-        "kind": "value"
+        "sha256": "aa705a8619b6fa63894947ae0bfcf58553cf66c9c4e21451859e9a773a0d61be",
+        "kind": "value-zlib-base85"
       }
     },
     {

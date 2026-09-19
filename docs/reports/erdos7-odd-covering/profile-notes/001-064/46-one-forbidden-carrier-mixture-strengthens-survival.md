@@ -485,7 +485,7 @@ python3 -I -O docs/reports/erdos7-odd-covering/frontier/moments-survival/verify_
 It exits zero. The source-row digest is
 `06820efd31fb6fa50e72a95f52aef3c586f8355e5909dc1bdd1a93179ed7da25`;
 the logical certificate digest is
-`ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54`.
+`9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a`.
 Its row blocks group the twelve late-deficit/z vertices for each
 source prefix. They reconstruct one logical artifact, not separate
 coverage units. This is exact arithmetic accompanying the ordinary

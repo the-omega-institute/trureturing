@@ -11,12 +11,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_source_labelwise_neighborhood.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/j-geometry/j_face_alignment.py': '188bd133ac91906fce843d481162a261972ed0f475d708141b3a3046ff467cff',
-    'frontier/j-geometry/j_face_surplus_transport.py': '92830b056842a849e3b085de9e6bd309992568276cb79341aba3fcaeb2761658',
-    'frontier/retained-transport/finite_source_face_transport.py': '4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf',
-    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': '1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3',
-    'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/j-geometry/j_face_alignment.py': '05074f0937efcb2cccc1a172e0717b89656f976d3e50543d31a27e7591b927ab',
+    'frontier/j-geometry/j_face_surplus_transport.py': '8caed7decd0cd0f61536433b48118d97cdd96bb302f4bf4835b1fac428a31d05',
+    'frontier/retained-transport/finite_source_face_transport.py': '04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291',
+    'frontier/endpoint-bounds/endpoint_linear_neighborhood.py': 'f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
 }
 
 

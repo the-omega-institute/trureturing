@@ -16,12 +16,12 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/comparison-bounds/exact_tensor_numerator_reference.py': '4f5bddd486e3a87ab4bd5a273b5b53c924807081c3d4a75ffbbe46b4a4e8d484',
-    'frontier/endpoint-bounds/endpoint_linear_numerator.py': '646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314',
-    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': 'c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be',
-    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': 'b8cd504c29389cbd4cee15fb9403361de3d93cc57d47f1c5016705b2a78b3ff6',
-    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': 'ac4fb2033f0b3d96fd358a369ddb0c87ab4c18a3ea72af1e0d277285a4e5dc2b',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/comparison-bounds/exact_tensor_numerator_reference.py': '3b0e5106da53afc055f72554587feb6e0f40784e0ce849d96343163e4d86e892',
+    'frontier/endpoint-bounds/endpoint_linear_numerator.py': 'c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5',
+    'certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json': '1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a',
+    'frontier/endpoint-bounds/endpoint_square_common_pure3.py': '4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09',
+    'certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json': '295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184',
 }
 MAJORANTS = (
     (2, '0', ((2, '1'),)),

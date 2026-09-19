@@ -17,11 +17,11 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/product_escape_global.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/source-budgets/weighted_marker_global.py': '45af170a773b9ccf82e3c8f5e29c6f2efd3bb54dc14fe11556884a27ff57e9ee',
-    'certificates/source_norms/source-budgets/weighted_marker_global.json': 'eee3546b160075eba8f045f5d9af3aa94143da734ac5bbcc5602c6598afd06ce',
-    'frontier/endpoint-bounds/k_next_escape_layers.py': '15317424f05c48bb4950563217ab893485a140ed14c9dc9586edc3b40f8a872b',
-    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'f71f686c04fb2738ba2a264ee505dbeebf8cf8070f8176bbc6d4f628b8363887',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/source-budgets/weighted_marker_global.py': '2c0c1e5b5792fa8b84f4f040c7693b473bb52cd43a56e9c06ab440b6ea424288',
+    'certificates/source_norms/source-budgets/weighted_marker_global.json': '8197398c673e73a71d969113b8eb4a89bffefea2688e8e8949cd9da99f261a64',
+    'frontier/endpoint-bounds/k_next_escape_layers.py': 'd7c51cf6f2becc96392fdae6318661aab37ee204edd82769c2f3668e1d657500',
+    'certificates/source_norms/endpoint-bounds/k_next_escape_layers.json': 'bcde35a6249003e95c6a39dc6b2bee3fa3d03be18291927385ae6dca4c896270',
 }
 
 

@@ -17,7 +17,7 @@
   },
   "encoded_price_bank": {
     "path": "content/007-shared_price_banks/001-survival/004-encoded_price_bank.json",
-    "sha256": "99cb5a43ef7dca1aa4e022cfedea57f0cd47038fdbdf8af730b2e276e5b1ff9e",
+    "sha256": "6c9a874ed3f39a034b087a75a6840d5fcc42f1dd8a7d2674bfcf30cb86ffcc19",
     "kind": "object"
   }
 }

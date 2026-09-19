@@ -1,9 +1,9 @@
 {
   "schema": "erdos7-actual-ap-core-stability-v1",
   "source_sha256": {
-    "certificates/shared_cell_hinges_certificate.json": "8289e1dc3ceabffeeee03d04ce93ed2bbea62b415dd9b245c7fd7855a681a8b3",
-    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
-    "certificates/weighted_kernel_tails_certificate.json": "4019ff2ca0cd849dec514a13e621e3fc29ba2c16323506d3744fdd3ec5a6d319"
+    "certificates/shared_cell_hinges_certificate.json": "7e7227e0b859ad6e30fd17915f40571eacea82cd9aadce09984ed6b7bd790674",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "certificates/weighted_kernel_tails_certificate.json": "8a84dea7a4a19f38971ac3f23ba977f28945a44873b5b4e9b099ddcbdcac4e42"
   },
   "scope": "Every finite actual distinct family on3,5,7,11,13; full uniform357 source and actual pure-base11/4,13/6 kernels, one final conditioning. The core deletes original forbidden labels outside the exponent box; every test tail is paid. No AO-law substitution, no computed finite-core maximum, no unrestricted Erdos7 or Lean endpoint.",
   "source_inputs": {

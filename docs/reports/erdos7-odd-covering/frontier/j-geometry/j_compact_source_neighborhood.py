@@ -15,7 +15,7 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_compact_source_neighborhood.json'
 SOURCE = 'certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json'
-SOURCE_SHA256 = '5d85a05b5741c599bde83fc28921de3af41ccdd26fb69de8521439ca03f5cad4'
+SOURCE_SHA256 = '4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab'
 ANCHORS = (
     'profile-notes/001-064/46-one-forbidden-carrier-mixture-strengthens-survival.md',
     'profile-notes/001-064/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md',

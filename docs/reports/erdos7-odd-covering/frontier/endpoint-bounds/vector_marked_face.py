@@ -16,9 +16,9 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/endpoint-bounds/vector_marked_face.json'
 PINS = {
-    'certificate_io.py': '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2',
-    'frontier/endpoint-bounds/vector_marked_source.py': 'e9917c725b8f910a0524ccae99dfffb5949f3af568980a70b5299e7fb1c71b39',
-    'certificates/source_norms/endpoint-bounds/vector_marked_source.json': '01f58d319ca57688a219d24296d8ba8aebba91f6091e6bf1bda0f34ceb10180f',
+    'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
+    'frontier/endpoint-bounds/vector_marked_source.py': 'c8fb3eb6fd743d14942fe44a3999749585bbf29e52b825ef68e7955cc0640c79',
+    'certificates/source_norms/endpoint-bounds/vector_marked_source.json': '51e797f906aefdf2bb1d99d21694a85bca4e7a3d5f117133aad2900afbe3050f',
 }
 VERTICES = ((F(1, 4), F(0), F(0)), (F(1, 5), F(1, 20), F(0)),
             (F(1, 5), F(0), F(1, 20)))
