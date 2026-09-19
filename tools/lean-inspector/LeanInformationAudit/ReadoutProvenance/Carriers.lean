@@ -2,6 +2,34 @@ import LeanInformationAudit.ReadoutProvenance.State
 namespace LeanInformationAudit.RegistrationGates
 open Lean
 
+/-- Retained syntax from one successful statement-alias walk. No argument
+inference, provenance verdict, or caller-local expression is shared. -/
+private structure StatementAliasMemo where
+  theoremName : Name
+  statement : Expr
+  constants : ConstMap
+  isExporting : Bool
+  forms : Array Expr
+  recognized : ProvenanceAdmissionWitness
+
+private initialize statementAliasMemo : EnvExtension (Bool × Option StatementAliasMemo) ←
+  registerEnvExtension (pure (false, none))
+
+/-- The binding validator performs several audits of the same immutable theorem.
+Scope syntax reuse to that validation only; restore the enclosing state on every
+exit, including exceptions. The validator does not replace declarations. -/
+def withStatementAliasMemo (action : MetaM α) : MetaM α := do
+  let previous := statementAliasMemo.getState (← getEnv)
+  modifyEnv fun env => statementAliasMemo.setState env (true, none)
+  try action
+  finally modifyEnv fun env => statementAliasMemo.setState env previous
+
+-- Pointer equality is only a sufficient cache-hit key. A miss runs the original
+-- bounded normalizer; unlike hash equality, it cannot confuse distinct syntax.
+private def sameStatementObject {α : Type} (a b : α) : Bool := unsafe ptrEq a b
+
+
+
 partial def aliasBody (value : Expr) (args : Array Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   if args.isEmpty then return some value
@@ -268,7 +296,7 @@ partial def dataCarrier (env : Environment) (type : Expr)
 
 -- Record explicit proposition-alias spellings only as rejection witnesses.
 -- These hashes never certify non-mention and never normalize data operands.
-def statementAliases (env : Environment) : WalkM Unit := do
+private def statementAliasesCore (env : Environment) : WalkM Unit := do
   let mut current := (← get).statement
   let mut seen : Std.HashSet UInt64 := {}
   repeat
@@ -285,6 +313,32 @@ def statementAliases (env : Environment) : WalkM Unit := do
       return
     | .unclassified site => noteUnclassified site; return
     | .incomplete => noteIncomplete `incomplete_classification `type_classification; return
+
+/-- Reuse a completed normalization only inside its binding-validation scope.
+Every hit pays a lookup debit; all subsequent occurrence checks still run. -/
+def statementAliases (env : Environment) : WalkM Unit := do
+  let state ← get
+  let (enabled, cached) := statementAliasMemo.getState (← getEnv)
+  if enabled then
+    if let some cached := cached then
+      if cached.theoremName == state.theoremName &&
+          sameStatementObject cached.statement state.statement &&
+          sameStatementObject cached.constants env.constants &&
+          cached.isExporting == env.isExporting then
+        unless ← chargeTraversal do return
+        modify fun s => { s with
+          statementForms := cached.forms
+          recognizedStatement := some cached.recognized }
+        return
+  statementAliasesCore env
+  let state ← get
+  if enabled && !state.incomplete && state.unclassified.isNone then
+    if let some recognized := state.recognizedStatement then
+      let cached : StatementAliasMemo :=
+        { theoremName := state.theoremName, statement := state.statement,
+          constants := env.constants, isExporting := env.isExporting,
+          forms := state.statementForms, recognized }
+      modifyEnv fun env => statementAliasMemo.setState env (true, some cached)
 
 -- The final supported outer spelling is used for structural family fences.
 -- Computed operands remain untouched and cannot establish non-mention.
@@ -529,7 +583,11 @@ def checkedStatementType (env : Environment) (type : Expr) :
   -- admission-exit: checkedStatementType.1 rule=retained-witness.rule
   if let some evidence := (← get).apartPropositions[type]? then return some evidence
   modify fun s => { s with identityUnknown := none }
-  let evidence ← statementApart env type (← get).statement
+  -- statementAliases already paid for this outer reduction in the same query.
+  -- Reuse its checked form; unresolved heads retain the original fallback.
+  let state ← get
+  let statement := state.recognizedStatement.map (·.matchedType) |>.getD state.statement
+  let evidence ← statementApart env type statement
   if evidence.isNone then
     if let some site := (← get).identityUnknown then noteUnclassified site
   if evidence.isNone && !(← get).identityFailureTraced then
