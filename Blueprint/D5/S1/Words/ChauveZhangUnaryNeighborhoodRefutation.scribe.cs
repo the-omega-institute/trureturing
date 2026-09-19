@@ -132,7 +132,10 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
                     + "is {0, 1}. Their cardinalities are three and two, so 000 does not "
                     + "minimize the condensed neighborhood.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()),
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chauve-zhang-unary-neighborhood-minimality"),
+                    ResolutionKind.Refuted)),
             Node(
                 "super-condensed-unary-minimality-claim",
                 "Super condensed unary minimality",

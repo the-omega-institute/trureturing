@@ -154,6 +154,10 @@ $$\neg claimCondensed$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chauve-zhang-unary-neighborhood-minimality` (refuted) by `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chauve-zhang-unary-neighborhood-minimality","declaration_gid":"D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
