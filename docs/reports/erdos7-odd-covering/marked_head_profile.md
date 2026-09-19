@@ -777,3 +777,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Eight retained labels bound the aligned heavy cost and fourth hinge](profile-notes/315-eight-retained-labels-bound-the-aligned-heavy-cost-and-fourth-hinge.md)
 - [Complete quadratic observations on the actual aligned source](profile-notes/316-complete-quadratic-observations-on-the-actual-aligned-source.md)
 - [The complete actual aligned J comparison crosses403](profile-notes/317-the-complete-actual-aligned-j-comparison-crosses403.md)
+- [A finite aligned source neighborhood keeps J below403](profile-notes/318-a-finite-aligned-source-neighborhood-keeps-j-below403.md)
