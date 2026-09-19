@@ -478,7 +478,7 @@ $$
 \|C_FR_{z_0}x\|^2\le
 \frac{2M_0}{\pi\rho}r_A^{2s}e^{2\pi(|v_0|+\rho)}\|x\|^2.
 $$
-**证明。** 全纯有限向量函数的范数平方次调和，在半径 $\rho$ 圆盘用面积平均。圆盘位于 $[s,s+T_0]\times[v_0-\rho,v_0+\rho]$。固定虚部时，半群律把实轴积分化为对初态 $R_sV_vx$ 的原窗口观测，至多 $M_0r_A^{2s}e^{2\pi|v|}\|x\|^2$。再积虚部得结论。证毕。
+**证明。** 全纯有限向量函数的范数平方次调和，在半径 $\rho$ 圆盘用面积平均。圆盘位于 $[s,s+T_0]\times[v_0-\rho,v_0+\rho]$。固定虚部时，半群律把实轴积分化为对初态 $R_sV_vx$ 的原窗口观测，至多 $M_0r_A^{2s}e^{2\pi|v|}\|x\|^2。再积虚部得结论。证毕。
 
 常数在右半平面的每个紧集上可统一，且独立于有限 $F$。对平方和单调取极限，完整正时间分析映射 $\mathcal C(z)x=(\langle R_zx,g_j\rangle)_j$ 属于 $\ell^2$ 并局部一致有界。
 
@@ -1135,3 +1135,286 @@ $$
 仍独立的义务包括：非线性预测商的全局存在和非退化性；相关轨迹而非独立制备的有限样本预算；未知生成元与传感器联合辨识；实际量子测量的反作用、噪声及可取得性；无限场论的边界和无界生成元条件；正定二次模型外的热恢复与有效复杂度。每个义务继续追加在本主卷，不另开同一研究线的重复伴卷。
 
 ## 追加锚（后续内容在本行以下使用新编号）
+
+<a id="sec-nonlinear-closure"></a>
+## 10. 非线性预测闭包：表达误差、隐藏涨落与热条件恢复
+
+**增订范围（2026-09-20）。** 本章将第 5 节的相关曲率和第 8 节的热条件信息推进到非线性、非 Gaussian 的确定性平稳演化。旧章正定二次/Gaussian 结论保持原前件；本章分别声明生成元域、光滑性、条件密度及有界性。条件期望投影、力匹配分解和平均力势是既有构件 [KHKP15, LTPL23, ASDN22, GS21, PCR26]。新增的是在同一观察下连接相关缺陷、真正的预测下限、二阶条件响应和热恢复系数的证明链与显式非线性磁模型。这里不认领新的外部具名猜想解答或全局优先权。
+
+### 10.1 两种投影下的相关缺陷
+
+设完整流 $\Phi_t$ 保持概率 $\mu$，在实 $L^2(\mu)$ 上诱导强连续酉群 $\mathsf U_t f=f\circ\Phi_t$，生成元记 $\mathscr L$。向量观测 $u$ 的各分量属于 $\operatorname{Dom}\mathscr L^2$，并且 $\mathbb E u=0$、$\mathbb E uu^T=I_r$。所有范数和期望均使用这个固定参考；一般非退化协方差可以先作固定白化。定义
+\[
+F(t)=\mathbb E[(\mathsf U_tu)u^T],\quad D=F'(0),\quad v=\mathscr Lu,
+\quad b(u)=\mathbb E[v\mid u],\quad r_u=v-b(u),
+\]
+\[
+N=\mathbb E[r_ur_u^T],\qquad
+E_{\rm expr}=\mathbb E[(b(u)-Du)(b(u)-Du)^T].
+\]
+$\mathsf P f=\mathbb E[f\mid u]$ 是到全部当前观测可测函数的正交投影。到 $u$ 各分量线性跨度的投影通常更小。
+
+**定理 10.1（相关曲率的非线性分解）。**
+\[
+D^T=-D,\quad F''(0)=-\mathbb E[vv^T],\qquad
+\boxed{M:=D^2-F''(0)=N+E_{\rm expr}\succeq0.}
+\]
+对任意平方可积当前漂移拟合器 $g(u)$，
+\[
+\mathbb E\|v-g(u)\|^2=\operatorname{tr}N+\mathbb E\|b(u)-g(u)\|^2.
+\]
+固定 $t$，最佳线性预测为 $F(t)u$，最佳任意可测预测为 $\mathsf P\mathsf U_tu$，两者的风险差恰为 $\|\mathsf P\mathsf U_tu-F(t)u\|_{L^2}^2$。
+
+**证明。** 生成元的反对称性给 $D_{ij}=-D_{ji}$ 及 $\langle\mathscr L^2u_i,u_j\rangle=-\langle\mathscr Lu_i,\mathscr Lu_j\rangle$。展开 $\mathbb E[(v-Du)(v-Du)^T]$ 得 $\mathbb E[vv^T]+D^2$。再写 $v-Du=r_u+(b(u)-Du)$，由 $\mathbb E[r_u\mid u]=0$ 使交叉矩阵为零。其余风险等式都是同一正交分解。证毕。
+
+$E_{\rm expr}$ 衡量当前变量已足够表达、但线性函数没有利用的非线性部分；$N$ 衡量给定当前变量后仍存在的速度不确定性。第 5 节的线性 Gaussian 情况有 $b(u)=Du$，故 $E_{\rm expr}=0$、$M=N$。一般非线性系统不能直接把 $M$ 全部当作信息缺失。回归误差只给 $\operatorname{tr}N$ 的上界，除非额外控制了回归近似误差。
+
+### 10.2 真正的短时间 Bayes 下限和精确闭合
+
+令 $n_u=\operatorname{tr}N$、$c_2=\|\mathscr L^2u\|_{L^2}$。风险使用平方欧氏误差，不含二分之一。
+
+**定理 10.2（条件隐藏方差的有限时间保证）。** 设
+\[
+\mathcal R_*(t)=\inf_f\mathbb E\|\mathsf U_tu-f(u)\|^2.
+\]
+则对 $t\ge0$，
+\[
+\boxed{\left|\sqrt{\mathcal R_*(t)}-t\sqrt{n_u}\right|\le\tfrac12t^2c_2,}
+\quad
+\mathcal R_*(t)=t^2n_u+O(t^3).
+\]
+最佳线性风险的首项为 $t^2\operatorname{tr}M$，线性与非线性最佳风险之差为 $t^2\operatorname{tr}E_{\rm expr}+O(t^3)$。
+
+**证明。** 酉群的两次积分 Taylor 公式在 $L^2$ 中给
+\[
+\mathsf U_tu=u+tv+R_t,\qquad\|R_t\|_{L^2}\le t^2c_2/2.
+\]
+对两边作用 $I-\mathsf P$，得到最优残差 $tr_u+(I-\mathsf P)R_t$；投影收缩和范数反三角不等式给有限时间界。换成线性投影得对应线性风险；或者对两个最优预测之差作同一 Taylor 展开。证毕。
+
+若再假设状态空间为光滑流形、$\mu$ 对每个非空开集赋正质量、$u$ 为光滑观察映射，且 $b$ 存在局部 Lipschitz 版本、$\mathscr Lu-b(u)$ 连续，则 $N=0$ 当且仅当观察沿整个流按 $\dot u=b(u)$ 精确自治（限制在相应解存在区间）。证明：$N=0$ 先给几乎处处零残差，连续性和满支撑将其升级为处处；链式法则及 ODE 唯一性给全部未来。反向由自治方程求零时导数。不满足这些正则性时，仅将 $N=0$ 报作参考概率下的瞬时闭合。
+
+### 10.3 热分布与隐藏方差共同确定二阶记忆响应
+
+本节不要求观测白化。设观测的边缘具有正 $C^1$ 密度 $\rho(u)$，$b$ 为 $C^1$，并有足够可积性使下列弱分部积分成立。令
+\[
+\mathcal C(u)=\mathbb E[r_ur_u^T\mid u],\qquad
+k_i(u)=\rho(u)^{-1}\sum_j\partial_{u_j}[\rho(u)\mathcal C_{ij}(u)].
+\]
+假定 $r_u\in\operatorname{Dom}\mathscr L$，相关条件期望与 $k$ 属于 $L^2$。
+
+**定理 10.3（条件涨落的局部响应恒等式）。**
+\[
+\boxed{\mathbb E[\mathscr Lr_u\mid u]=k(u),\qquad
+\mathbb E[\mathscr L^2u\mid u]=Db(u)b(u)+k(u).}
+\]
+同时 $\nabla_u\cdot(\rho b)=0$。当 $\rho\propto e^{-\beta\mathcal A(u)}$ 时，
+\[
+k_i=\sum_j\partial_{u_j}\mathcal C_{ij}
+-\beta\sum_j\mathcal C_{ij}\partial_{u_j}\mathcal A.
+\]
+
+**证明。** 对紧支光滑标量 $\psi(u)$，生成元反对称性给
+\[
+\mathbb E[\psi\mathscr Lr_i]
+=-\mathbb E[(\mathscr L\psi)r_i]
+=-\mathbb E\sum_j(\partial_j\psi)v_jr_i
+=-\int\rho\sum_j(\partial_j\psi)\mathcal C_{ij}\,du.
+\]
+最后一步用条件零均值消掉 $b_jr_i$，分部积分得到 $k_i$。再对 $\mathscr Lu=b(u)+r_u$ 求生成元，条件平均给 $Db\,b+k$。对任意 $\psi$，平稳性给 $\mathbb E\mathscr L\psi=\int\rho b\cdot\nabla\psi=0$，即边缘连续方程。证毕。
+
+因此只演化平均漂移 $b$ 可以保持正确的静态边缘，同时漏掉条件均值的二阶项。令 $u\in\operatorname{Dom}\mathscr L^3$、$c_3=\|\mathscr L^3u\|_{L^2}$，定义
+\[
+g_{2,t}(u)=u+tb(u)+\tfrac12t^2[Db(u)b(u)+k(u)].
+\]
+三次积分 Taylor 公式和条件期望收缩给
+\[
+\boxed{\|\mathbb E[u_t\mid u]-g_{2,t}(u)\|_{L^2}\le t^3c_3/6,}
+\]
+\[
+\mathbb E\|u_t-g_{2,t}(u)\|^2-\mathcal R_*(t)\le t^6c_3^2/36.
+\]
+这是局部条件均值预测器的保证；不宣称截断更新是辛积分器，也不把它迭代为已经证明长期稳定的 Markov 动力学。$k$ 是二阶投影响应，不能单凭它恢复全部非线性记忆核。
+
+### 10.4 非线性平均力势、磁耦合与精确闭合的条件
+
+取单位质量、Cartesian 分块位置 $q=(x,y)$ 和机械动量 $p=(p_x,p_y)$，光滑势 $U(x,y)$。常数带电磁耦合矩阵 $\mathcal B$ 反对称，电荷已吸收入系数；其分块记为 $\mathcal B_{xx},\mathcal B_{xy}$。Hamilton–Lorentz 方程为
+\[
+\dot q=p,\qquad\dot p=-\nabla U(q)+\mathcal Bp.
+\]
+假定完整 Gibbs 分布可归一、满支撑，势与其相关导数允许积分下微分。观察 $u=(x,p_x)$，定义平均力势
+\[
+A_\beta(x)=-\beta^{-1}\log\int e^{-\beta U(x,y)}dy.
+\]
+
+**定理 10.4（同一观测的平均力与隐藏协方差）。**
+\[
+b(x,p_x)=(p_x,-\nabla A_\beta(x)+\mathcal B_{xx}p_x),
+\]
+\[
+\boxed{\mathcal C_{p_xp_x}(x,p_x)
+=\operatorname{Cov}(\nabla_xU\mid x)
++\beta^{-1}\mathcal B_{xy}\mathcal B_{xy}^T,}
+\]
+其余位置及交叉块为零。并有
+\[
+\boxed{\nabla^2A_\beta(x)
+=\mathbb E[\nabla_x^2U\mid x]
+-\beta\operatorname{Cov}(\nabla_xU\mid x).}
+\]
+在连通乘积位置域与以上光滑满支撑条件下，$N=0$ 当且仅当 $\mathcal B_{xy}=0$ 且 $U(x,y)=U_1(x)+U_2(y)$。此时当前观察精确自治。
+
+**证明。** Gibbs 机械动量是独立于位置的 $N(0,\beta^{-1}I)$，条件均值直接给 $b$。未知势力的中心化残差与 $\mathcal B_{xy}p_y$ 独立，条件协方差相加得到第二式。对配分积分先求一次导数给平均力，再求一次给 Hessian–协方差身份。
+
+若平均协方差迹为零，两项正半定矩阵均为零，先有 $\mathcal B_{xy}=0$。条件势力方差为零、条件满支撑和连续性说明 $\nabla_xU$ 与 $y$ 无关；在连通 $x$ 域沿路径积分，得到势的加性分离。反向直接代回方程。证毕。
+
+产品 Gibbs 分布本身不排除跨子系统磁耦合。势能耦合与 Poisson 配对耦合在这个条件中分别出现。一般非线性反应坐标有额外 Jacobian 与几何项，不能把 Cartesian 公式原样套用；一般量子条件期望也不自动具有这里的经典协方差解释。
+
+### 10.5 静态热分布完全相同的一族非线性反例
+
+取平面磁系统
+\[
+H=\tfrac12(p_x^2+p_y^2)+\tfrac14x^4+\tfrac\kappa2(y-a x^2)^2,
+\quad\kappa>0,\quad c\in\mathbb R,
+\]
+\[
+\dot x=p_x,\quad\dot y=p_y,\quad
+\dot p_x=-x^3+2\kappa ax(y-a x^2)+cp_y,
+\quad\dot p_y=-\kappa(y-a x^2)-cp_x.
+\]
+势能子水平集紧，能量守恒给完整光滑流；Gibbs 分布有全部所需多项式矩。记 $z=y-a x^2$，则 $x,p_x,z,p_y$ 在 Gibbs 参考下相互独立，$z\sim N(0,(\beta\kappa)^{-1})$。
+
+**命题 10.5（相同平均力、不同预测下限）。** 所有 $a,c$ 的可见 Gibbs 密度均为
+\[
+\rho(x,p_x)\propto\exp[-\beta(x^4/4+p_x^2/2)],
+\quad A_\beta(x)=x^4/4+\text{常数},
+\quad b=(p_x,-x^3).
+\]
+但
+\[
+\mathcal C_{p_xp_x}=4\kappa a^2x^2/\beta+c^2/\beta,
+\quad k=(0,-(4\kappa a^2x^2+c^2)p_x).
+\]
+令 $v_\beta=\mathbb E x^2=2\beta^{-1/2}\Gamma(3/4)/\Gamma(1/4)$，用白化观察 $u=(x/\sqrt{v_\beta},\sqrt\beta p_x)$，则
+\[
+\boxed{N=\operatorname{diag}(0,4\kappa a^2v_\beta+c^2),}
+\qquad
+\boxed{E_{\rm expr}=\operatorname{diag}(0,3v_\beta-1/(\beta v_\beta)).}
+\]
+因此当前状态的真正短时风险系数随 $a,c$ 改变，而所有静态可见热统计与平均力相同。
+
+**证明。** 坐标变换 $y=z+a x^2$ 的 Jacobian 为一；积分掉 Gaussian $z,p_y$ 给边缘。残差为 $2\kappa axz+cp_y$，用条件 Gaussian 二阶矩得到协方差，代入定理 10.3 得 $k$。Gibbs 分部积分给 $\mathbb E x^4=1/\beta$、$\mathbb E x^6=3v_\beta/\beta$。因此白化线性投影的频率为 $1/\sqrt{\beta v_\beta}$，其表达残差平方均值为 $\beta\mathbb E x^6-1/(\beta v_\beta)$；与隐藏项分别组成上述两块。证毕。
+
+特别地，$a=c=0$ 时当前两个变量已经完全自治，所有未来可精确预测，然而 $M=E_{\rm expr}\ne0$。$\beta=1$ 时非零值约为 $0.5485971606075344$。它是非线性漂移的线性拟合误差，不是遗漏状态证据。这个反例阻止把第 5 节的 Gaussian 特例无条件外推。
+
+此外，非线性情形的 $\operatorname{rank}N$ 仅计量独立的残差函数方向，不能直接当作隐藏坐标数。一个隐藏标量 $w$ 的两个函数 $(w,w^2-\mathbb Ew^2)$ 就可以具有秩二协方差；这里不继承线性 Gramian 的状态维数下界。
+
+### 10.6 条件配对实验和有限延迟认证
+
+给定同一 $u$，独立抽取完整初态 $Z,Z'$ 的条件参考分布，并分别演化。定义 $d_h(Z)=[u(\Phi_h Z)-u(Z)]/h$，$N_h=\mathbb E\operatorname{Cov}(d_h\mid u)$。
+
+**定理 10.6（不依赖回归器的配对证书）。**
+\[
+N=\tfrac12\mathbb E[(v(Z)-v(Z'))(v(Z)-v(Z'))^T],
+\]
+\[
+N_h=\frac1{2h^2}\mathbb E[(u(\Phi_hZ)-u(\Phi_hZ'))(u(\Phi_hZ)-u(\Phi_hZ'))^T],
+\]
+\[
+\left|\sqrt{\operatorname{tr}N_h}-\sqrt{n_u}\right|\le hc_2/2,
+\quad\|N_h-N\|\le h\sqrt{n_u}c_2+h^2c_2^2/4.
+\]
+
+**证明。** 条件独立且同条件均值的两个随机向量，其差的条件外积期望是协方差两倍。对有限差分使用定理 10.2 的 Taylor 余项后再作条件中心化，$L^2$ 差至多 $hc_2/2$；范数反三角不等式和外积差的 Cauchy–Schwarz 给两条误差界。证毕。
+
+若另有 $\|\mathscr Lu\|_\infty\le K_1$、$\|\mathscr L^2u\|_\infty\le K_2$，取 $m$ 组彼此独立的上述配对，样本平方差的一半除以 $h^2$ 的平均记为 $\widehat n_h$。每项在 $[0,2K_1^2]$；Hoeffding 给至少 $1-\alpha$ 的概率下
+\[
+|\widehat n_h-n_u|\le hK_1K_2+h^2K_2^2/4
++K_1^2\sqrt{2\log(2/\alpha)/m}.
+\]
+这是一种指定的条件重复制备或条件微观采样实验。普通相邻轨迹点不会自动满足同一当前读数及条件独立性。导数无界的第 10.5 节 Gibbs 例可以用 $L^2$ 偏差界，却不能直接使用这里的有界 Hoeffding 预算；传感器噪声也须另计。
+
+### 10.7 非 Gaussian 热恢复的三阶信息系数
+
+本节使用同一不变参考 $\mu$ 的正则条件分布 $\mu(dZ\mid u)$，不要求可见和隐藏先验独立。假设观测的一、二阶生成元导数分别本质有界于 $K_1,K_2$，并保留 $L^2$ 前件。取独立 $\varepsilon\sim N(0,I_r)$、固定噪声方差 $s>0$，使用一个单位 $L^2(0,T)$ 范数的时间权重：
+\[
+Y_T=S_T(Z)+\sqrt s\,\varepsilon,\qquad
+S_T(Z)=\frac{\sqrt3}{T^{3/2}}\int_0^T t\,u(\Phi_t Z)dt.
+\]
+该实验仅有 $r$ 个积分读数。令完整后验为 $\mu_{Y_T}$、当前观察的后验边缘为 $\nu_{Y_T}$，恢复时沿当前纤维使用原条件热参考：$\mathcal R\nu=\nu(du)\mu(dZ\mid u)$。
+
+**定理 10.7（条件热恢复的非线性延拓）。**
+\[
+\Delta_T:=\mathbb E D(\mu_{Y_T}\Vert\mathcal R\nu_{Y_T})
+=I(Z;Y_T\mid u),
+\qquad
+\boxed{\Delta_T=\frac{T^3}{6s}n_u+O(T^4).}
+\]
+一个显式余项为
+\[
+\left|\Delta_T-\frac{T^3}{6s}n_u\right|
+\le\frac{T^4\sqrt{n_u}K_2}{8s}
++\frac{3T^5K_2^2}{128s}
++\frac{8K_1^4T^6}{9s^2}
+ \exp\!\left(\frac{4K_1^2T^3}{3s}\right).
+\]
+
+**证明。** 对先验和后验作条件密度比分解，得到平均条件 KL 等于条件互信息；这不使用乘积先验。积分 Taylor 给
+\[
+S_T=\tfrac{\sqrt3}2T^{1/2}u+\tfrac1{\sqrt3}T^{3/2}v+R_T^S,
+\quad\|R_T^S\|_{L^2}\le\tfrac{\sqrt3}8T^{5/2}K_2.
+\]
+条件中心化后 $X_T=S_T-\mathbb E[S_T\mid u]$ 满足
+\[
+\left|\mathbb E\|X_T\|^2-\tfrac13T^3n_u\right|
+\le\tfrac14T^4\sqrt{n_u}K_2+\tfrac3{64}T^5K_2^2.
+\]
+同时逐点速度界给 $\|X_T\|\le 2K_1T^{3/2}/\sqrt3$。
+
+以给定 $u$ 的均值加噪声 Gaussian 为比较参考，KL 链式恒等式给
+\[
+I(Z;Y_T\mid u)
+=\frac{\mathbb E\|X_T\|^2}{2s}
+-\mathbb E_uD(P_{X_T+\sqrt s\varepsilon\mid u}\Vert N(0,sI)).
+\]
+对条件独立复制 $X_T'$，Gaussian 似然比积分给
+\[
+\chi^2(P_{X_T+\sqrt s\varepsilon\mid u}\Vert N(0,sI))
+=\mathbb E[e^{X_T\cdot X_T'/s}\mid u]-1.
+\]
+条件中心化令线性项为零。若 $a_T=4K_1^2T^3/(3s)$，则剩余至多 $a_T^2e^{a_T}/2$，因为 $|X_T\cdot X_T'/s|\le a_T$；再用 $D\le\log(1+\chi^2)\le\chi^2$。与方差余项合并即得结论。证毕。
+
+因此第 8 节的 Gaussian 三阶热信息系数在这里由真正条件隐藏方差 $N$ 接管，表达误差 $E_{\rm expr}$ 不进入该首项。物理自由能尺度仍需乘 $\beta^{-1}$；这是条件概率恢复量，没有指定真实测量与擦除的耗热协议。第 10.5 节的无界多项式例不直接满足本定理的有界余项前件，不能仅因存在全部矩就自动使用该显式常数。
+
+### 10.8 本次算例、算法接口和边界
+
+第 10.5 节取 $\beta=\kappa=1,a=0.5,c=0.7$，精确 Gibbs 矩给
+\[
+\operatorname{tr}N=1.1659782400672847,\quad
+\operatorname{tr}E_{\rm expr}=0.5485971606075344,\quad
+\operatorname{tr}M=1.7145754006748191.
+\]
+使用可见位置的 60 点积分、其余变量的 Gaussian 10 点乘积积分，条件均值在每个固定可见初态上对隐藏变量积分；轨迹以向量化 RK4 演化，并作步长减半核对。所得风险如下，未将求积当作一般证明。
+
+| 时间 | 任意当前状态预测器的 Bayes 风险估计 | 风险除以时间平方 | 一阶条件 Taylor 的超额风险 | 二阶条件 Taylor 的超额风险 |
+|---:|---:|---:|---:|---:|
+| 0.01 | 0.0001165806795134 | 1.1658067951 | 5.4719164e-8 | 8.0631174e-12 |
+| 0.02 | 0.0004661171019559 | 1.1652927549 | 8.7523442e-7 | 5.1587306e-10 |
+| 0.04 | 0.0018611856074090 | 1.1632410046 | 1.3986353e-5 | 3.2973320e-8 |
+
+二阶预测器只缩小超出 Bayes 下限的部分，不消除当前观测留下的风险。它需要学习或估计 $b(u)$、条件协方差 $\mathcal C(u)$ 和边缘 score $\nabla\log\rho(u)$，再按定理 10.3 构造二阶项；所有估计误差仍需另行传播。单独拟合更大的 $b_\theta$ 不提供条件隐藏信息，单独增加记忆结构也不证明长时可恢复。
+
+本次脚本实际通过 55 项符号、矩积分和有限轨迹检查，涵盖能量与参考分布、相关缺陷分解、平均力 Hessian、条件响应、配对协方差以及局部风险界。另以一个有界的平稳相位/双速度模型，70 位精度核验定理 10.7 的非 Gaussian 信息首项和 Gaussian 混合的 chi-square 界；该检错模型使用指定不变概率，并非平滑满支撑 Gibbs 密度，不能承担第 10.4 节的势分离结论。没有独立同行或异模型审定、Lean kernel、Scribe、canonical ingest、CI、硬件实验或神经网络 benchmark。
+
+### 10.9 本章来源和归属
+
+[KHKP15] E. Kalligiannaki, V. Harmandaris, M. A. Katsoulakis, P. Plechac. *The geometry of generalized force matching in coarse-graining and related information metrics*. arXiv:1504.02152. 条件期望投影、力匹配与热力学积分的既有基础；本章 Cartesian 平均力导数直接从条件配分积分推导。
+
+[LTPL23] Y. T. Lin, Y. Tian, D. Perez, D. Livescu. *Regression-Based Projection for Learning Mori–Zwanzig Operators*. SIAM Journal on Applied Dynamical Systems (2023), DOI 10.1137/22M1506146; arXiv:2205.05135. 线性和非线性回归投影连接 Mori 与 Zwanzig 的已有方法。本章不将投影选择或误差正交分解本身认领为新算法。
+
+[ASDN22] C. Ayaz, L. Scalfi, B. A. Dalton, R. R. Netz. *Generalized Langevin equation with a nonlinear potential of mean force and nonlinear memory friction from a hybrid projection scheme*. Physical Review E 105, 054138 (2022), DOI 10.1103/PhysRevE.105.054138. 平均力势与非线性记忆的已有组合。
+
+[GS21] F. Glatzel, T. Schilling. *The Interplay between Memory and Potentials of Mean Force: A Discussion on the Structure of Equations of Motion for Coarse Grained Observables*. Europhysics Letters 136, 36001 (2021); arXiv:2107.01111. 其对非线性平均力、简单记忆和涨落耗散组合的限制，是本章只给局部条件响应而不擅自闭合全时记忆的文献边界。
+
+[PCR26] A. Park, S. Chennakesavalu, G. M. Rotskoff. *Scaling transferable coarse-graining with mean force matching*. Journal of Chemical Physics 164, 244117 (2026), DOI 10.1063/5.0329526; arXiv:2602.14531. 使用其条件均值力与瞬时投影力噪声的区分，不据其非线性坐标形式推导本章结果，也不将该文实验性能认领为本项目读数。
+
+本章补齐第 9.4 节中“非线性观察下哪些误差真正来自隐藏状态”的一部分义务。全局最小非线性预测状态的构造、有限历史所需长度、实际 noisy sensor 的联合置信保证，以及量子非对易条件恢复的对应仍需分别证明。
