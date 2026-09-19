@@ -778,3 +778,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Complete quadratic observations on the actual aligned source](profile-notes/316-complete-quadratic-observations-on-the-actual-aligned-source.md)
 - [The complete actual aligned J comparison crosses403](profile-notes/317-the-complete-actual-aligned-j-comparison-crosses403.md)
 - [A finite aligned source neighborhood keeps J below403](profile-notes/318-a-finite-aligned-source-neighborhood-keeps-j-below403.md)
+- [Near-aligned deep-five leakage and persistent hole caps](profile-notes/319-near-aligned-deep-five-leakage-and-persistent-hole-caps.md)
