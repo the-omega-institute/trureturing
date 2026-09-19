@@ -8,6 +8,57 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Fact]
+    public void ReportlessProfileContainsOnlyRegisteredIndependentChecksAndPreservesFullSeed()
+    {
+        using var fixture = Prepare();
+        var original = FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var full = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        var before = Directory.GetFiles(full, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal)
+            .Select(path => (path, CommonExecutionEvidence.Hash(path))).ToArray();
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "checks", TextWriter.Null));
+        var selected = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "checks");
+        var registered = CommonExecutionEvidence.Read<CommonCheckManifest>(fixture.Root, CommonExecutionEvidence.CheckManifestPath).Checks;
+        var expected = original.Units.Where(unit => registered.Single(check => check.Id == unit.Id).ReportInputs.Length == 0).ToArray();
+        Assert.True(JsonNode.DeepEquals(System.Text.Json.JsonSerializer.SerializeToNode(expected),
+            System.Text.Json.JsonSerializer.SerializeToNode(selected.Units)));
+        Assert.NotEmpty(selected.Units);
+        Assert.All(selected.Units, unit => Assert.Null(unit.Report));
+        var small = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("checks"));
+        Assert.False(File.Exists(Path.Combine(small, "producer-report.json")));
+        Assert.DoesNotContain(Directory.GetFiles(small, "*", SearchOption.AllDirectories), path => path.Contains("raw-lean-report", StringComparison.Ordinal));
+        Assert.Equal(before, Directory.GetFiles(full, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal)
+            .Select(path => (path, CommonExecutionEvidence.Hash(path))).ToArray());
+        Directory.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "check-material"), true);
+        var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        var checks = CommonExecutionEvidence.BeginChecks(fixture.Root, "current", build, TextWriter.Null, ["filemap"]);
+        checks.Run("filemap", () => throw new InvalidOperationException("reportless seed must reuse registered filemap"));
+        Assert.Equal("reused", Assert.Single(checks.Seal().Units).Status);
+    }
+
+    [Theory]
+    [InlineData("report-unit")]
+    [InlineData("producer")]
+    [InlineData("corrupt-material")]
+    public void ReportlessProfileRejectsMixedOrCorruptMaterials(string defect)
+    {
+        using var fixture = Prepare();
+        FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "checks", TextWriter.Null));
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("checks"));
+        var record = CommonExecutionEvidence.Read<CommonCheckRecord>(seed, "checks.json");
+        if (defect == "report-unit")
+            CommonExecutionEvidence.Write(seed, "checks.json", record with { Units = [record.Units[0] with { Report = CommonExecutionEvidence.ReportPath }, .. record.Units.Skip(1)] });
+        else if (defect == "producer") fixture.Write(CommonExecutionEvidence.CheckSeedPath("checks") + "/producer-report.json", "{}");
+        else File.AppendAllText(Path.Combine(seed, record.Units[0].Materials[0].Path), "corrupt\n");
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "checks"));
+        var id = record.Units[0].Id;
+        var checks = CommonExecutionEvidence.BeginChecks(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root), TextWriter.Null, [id]);
+        Assert.True(checks.IsSelected(id));
+        Assert.Throws<InvalidDataException>(() => checks.Run(id, () => new([new(id, 1, "actual current check rejected")])));
+    }
+
+    [Fact]
     public void TransportedProducerCanSelectAndPublishWithoutLeanTools()
     {
         using var fixture = Prepare();

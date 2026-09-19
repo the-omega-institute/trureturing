@@ -12,7 +12,7 @@ import tomllib
 
 STAGES = ("build", "engineering", "current", "delta")
 TOOLS = {"bash", "dotnet", "git", "lake", "make", "python3"}
-CACHES = {"dependency", "project", "judge", "elan", "engineering", "current"}
+CACHES = {"dependency", "project", "judge", "elan", "engineering", "current", "checks"}
 CACHE_PHASES = {"stage-start", "report-miss"}
 FILEMAP = "Meta/FILEMAP.toml"
 FILEMAP_FRAGMENT = re.compile(r"\AMeta/FILEMAP(?:\.[a-z][a-z0-9]*)+\.toml\Z")
