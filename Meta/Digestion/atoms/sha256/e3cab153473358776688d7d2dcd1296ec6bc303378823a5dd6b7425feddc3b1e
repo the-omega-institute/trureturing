@@ -1,0 +1,7 @@
+矩阵元满足
+$$
+\frac{(E_a)_{jh}}{q_j}
+=\frac{\mathbf1_{\{r_a(j)=r_a(h)\}}}{p_{r_a(j)}^{(a)}},
+$$
+右侧关于 $j,h$ 对称，故 $E_a$ 在指定内积下自伴；幂等性使其为正交投影。共同分量的同一计算也适用于 $\mathcal J$。在密度坐标 $f_j=x_j/q_j$ 中，$(E_ax)_j/q_j$ 是 $q$ 在该纤维上的条件平均；这把命题 69.1 的[条件期望正交残差](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean)取有限离散测度 $\mu(\{j\})=q_j$、观察 $r_a$、目标 $f$ 时的投影具体写出。由 $M\subseteq\operatorname{ran}E_a$，有 $E_a\mathcal J=\mathcal J$，取伴随得到 $\mathcal JE_a=\mathcal J$。每次重采样也保留每个 $m_C$，因为它只在包含于 $C$ 的纤维内重新分配质量。
+

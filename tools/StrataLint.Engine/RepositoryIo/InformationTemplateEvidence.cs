@@ -133,7 +133,7 @@ internal static class InformationTemplateEvidence
             var escapeFrom = ReadEscapeFrom(record.GetProperty("escape_from"));
             var escapeContinues = ReadEscapeContinues(record.GetProperty("escape_continues"));
             var bridgeKind = InformationTemplateJson.String(record, "bridge_kind");
-            if (bridgeKind is not ("legacy" or "forward"))
+            if (bridgeKind is not ("legacy" or "forward" or "witness"))
                 throw new FormatException("DTR-Evidence: unknown bridge_kind");
             var certificate = record.GetProperty("certificate");
             var state = InformationTemplateJson.String(record, "state") switch
@@ -216,15 +216,8 @@ internal static class InformationTemplateEvidence
         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}";
 
-    // The inspector library has its own Lean source root in lakefile.toml.
-    // This also permits its real command fixtures to cross the same wire reader.
-    internal static string ModuleForSource(string path)
-    {
-        const string inspectorRoot = "tools/lean-inspector/";
-        var relative = path.StartsWith(inspectorRoot, StringComparison.Ordinal)
-            ? path[inspectorRoot.Length..] : path;
-        return LeanImportClosure.ModuleName(RepoPath.CreateKnown(relative));
-    }
+    internal static string ModuleForSource(string path) =>
+        LeanImportClosure.ModuleName(RepoPath.CreateKnown(path));
 
     // Binding compatibility is the manual report_semantic_version tag, not
     // an Inspector source fingerprint. These are configuration/toolchain inputs.
@@ -245,9 +238,14 @@ internal static class InformationTemplateEvidence
                 || module.InformationTemplates is not { } payload)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
             var evidence = Read(selection.Project(payload, source), source, snapshot);
+            // Match Registry.moduleSourceInputs/isRecordedModule: traversal can
+            // cross tooling, but theorem evidence records content and the real
+            // command fixtures. Inspector implementation identity belongs to
+            // report production, not each theorem's source-input contract.
             var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
                 .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                    || path.Value == "Trureturing.lean")
+                    || path.Value == "Trureturing.lean"
+                    || ModuleForSource(path.Value).StartsWith("LeanInformationAudit.Tests.", StringComparison.Ordinal))
                 .Select(path => path.Value).Concat(PolicyInputs).ToHashSet(StringComparer.Ordinal);
             foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
                 if (!evidence.Inputs.Any(input => input.Path == required))

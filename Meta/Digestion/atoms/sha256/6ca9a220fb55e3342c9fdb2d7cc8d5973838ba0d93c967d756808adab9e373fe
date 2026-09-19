@@ -1,0 +1,2 @@
+这是标准的两子空间交替正交投影估计。von Neumann 的收敛、Aronszajn 的上界及 Kayalar–Weinert 的更强精确范数公式，见 H. H. Bauschke、F. Deutsch、H. Hundal，*Characterizing Arbitrarily Slow Convergence in the Method of Alternating Projections*，[arXiv:0710.2387v1](https://arxiv.org/pdf/0710.2387v1)，印刷第 1–2 页，Theorems 1.1–1.2、式 (1.3) 与 Lemma 1.3；亦见 C. Badea、S. Grivaux、V. Müller，*The Rate of Convergence in the Method of Alternating Projections*，[arXiv:1006.2047v1](https://arxiv.org/pdf/1006.2047v1)，第 2 页 Definition 1.1 及其后的精确范数公式。
+
