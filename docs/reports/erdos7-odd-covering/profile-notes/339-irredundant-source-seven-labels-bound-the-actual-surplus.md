@@ -190,3 +190,38 @@ Finally, using the same established cap C and S0>=s-C/5,
 which proves IR1. The five selected mixed layers and the complete pure7
 tail remain present throughout. The high-qJ region with smaller rho,
 and all other source charts, remain unclosed by this result.
+
+## The remaining source region contains an actual irredundant benchmark
+
+The existing N=12 finite source in329 already lies in the remaining
+region. Keep all its204 original classes:311's literal raw35 classes,
+pure7 cylinders G_(6,e), and mixed3*7^e and9*7^e cylinders G_(1,e)
+and G_(2,e), respectively, for1<=e<=12. Here
+G_(j,e)=[j*7^(e-1)] mod7^e; the old carriers remain root0 and cell1.
+
+Pairwise noncontainment alone would not establish irredundancy relative
+to the union of all other classes. The
+[benchmark helper](../frontier/irredundant_whole_j_finite_source.py)
+constructs a private integer for EACH of the204 original classes and
+directly checks that integer modulo ALL204 original moduli. Every
+integer belongs to its designated class and avoids the other203.
+Thus every class is necessary to this family's forbidden union.
+
+The finite prefix partitions are used to find candidates: the raw35
+search visits all49*49 leaf pairs, with seven coordinate fixed at3.
+Those leaves partition the raw35 coordinates for original-label
+membership. Seven-ending classes use the surviving old point(3,2).
+The final41616 direct modular checks, independently of the search
+partition, certify the private-witness property. An additional integer
+avoids all204 classes, so this irredundant family is NOT a cover.
+
+Exact reconstruction agrees with329's existing mass calculation:
+delta=1-qJ=0.00003388634450980418...<1/4000 and
+rho=0.05833338038722376..., below the same-delta IR1 upper
+0.0695220535624771... . This supplies an actual benchmark within the
+remaining region; it asserts no extremality or later-prime coverage.
+The [certificate](../certificates/source_norms/irredundant_whole_j_finite_source.json)
+retains every original label, private integer, search partition and
+exact mass, and binds this proof and the311/329 construction sources.
+The helper supports external working directories and explicit
+`--base`, `--proof`, `--certificate` paths; no Lean result is asserted.
