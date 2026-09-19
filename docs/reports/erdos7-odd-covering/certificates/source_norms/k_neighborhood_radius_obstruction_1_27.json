@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "2bb8a9e3069f1393c1d0e03a639751570df9e6da743dc44182539a2db005024d",
+  "parts_directory": "k_neighborhood_radius_obstruction_1_27.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "d4b1209e0d1d576cd2bc53443cf3d0961209cf4a07ab338f1d149f01c000adbc",
+    "kind": "object"
+  }
+}

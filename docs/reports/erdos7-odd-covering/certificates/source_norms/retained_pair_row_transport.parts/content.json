@@ -1,0 +1,92 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-retained-pair-row-transport-v2"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "ff60d4834c67ce224d1dfc54e3c5fbc7d86656c9c3b0a3e360e01a43506eeca6",
+    "kind": "value"
+  },
+  "inherited_priced_constraints": {
+    "kind": "inline",
+    "value": 883
+  },
+  "added_priced_constraints": {
+    "kind": "inline",
+    "value": 1610
+  },
+  "added_constraint_classes": {
+    "kind": "inline",
+    "value": {
+      "moving_profile_rows": 9,
+      "state_density_rows": 1600,
+      "retained125_cap": 1
+    }
+  },
+  "added_zero_error_inequalities": {
+    "kind": "inline",
+    "value": 4556
+  },
+  "exact_added_profile_equalities": {
+    "kind": "inline",
+    "value": 2
+  },
+  "exact_old_aggregation_rows": {
+    "kind": "inline",
+    "value": 25
+  },
+  "priced_constraint_count": {
+    "kind": "inline",
+    "value": 2493
+  },
+  "complete_tail_interface": {
+    "kind": "inline",
+    "value": {
+      "zero7_omitted_depths_t_ge2": {
+        "pure3": [
+          3,
+          4
+        ],
+        "pure5": [
+          2,
+          3
+        ],
+        "root5": [
+          2
+        ],
+        "cell5": []
+      },
+      "remaining_mixed_cap": "7/1080",
+      "face_zero7_t_ge2": "7579/405000",
+      "positive7_coefficient_order": [
+        "N3",
+        "N9",
+        "D",
+        "h",
+        "h1",
+        "max_eta"
+      ],
+      "positive7_coefficients": [
+        "1/245",
+        "1/35",
+        "1/90",
+        "53/4900",
+        "11/700",
+        "1/20"
+      ],
+      "positive7_constant": "1/360",
+      "face_positive7": "2669/88200",
+      "included_in_priced_row_error": false
+    }
+  },
+  "domains": {
+    "path": "content/010-domains.json",
+    "sha256": "e0ff97581b5b1b3ef7dfaadcf37bba213f1173a297953fd6d6c44251176904b7",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One common raw-source field, one W field and one seven-coordinate residual for883 old deletion/link rows and1610 moving retained135/125 rows. Every6292 original225 dual is priced on both208 domains. Other inherited raw/selected constraints, signed mass, all tails and pruning still require compatible complete transport. No complete off-face or global K, Lean verification or unrestricted Erdos7 conclusion."
+  }
+}

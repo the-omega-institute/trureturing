@@ -1,629 +1,1137 @@
-# 辛预测完成：余切提升、量子闭包与采样可辨识性
+# 统一预测几何：动力学、热恢复、量子与电磁
 
-**版本：** v1.0，2026-09-20。
+> `generic-v1` 理论正文。本文是本研究线的唯一继续增补主卷。原分卷路径保留为章节跳转入口。已知文献构件、仓库推导、数值检错和 Lean 证明身份分别记录；本卷没有配套的完整 Lean 证明项，不产生冻结或开放问题结算身份。
 
-**证明层级：** 本卷给出定义、条件明确的纸面证明、反例和可重建的代数算例。本文定理尚未由本卷配套的 Lean 证明项闭合；文中已有 Lean 声明仅作为各自陈述范围内的接口，不赋予本卷定理机器验证状态。余切提升、伴随方程、Koopman–von Neumann 表示、几何量子力学和结构保持降阶均有既有文献；本卷不作优先权主张。
+**版本：** v2.0，2026-09-20。合编来源为 #8891 的四份理论正文与 #8899 的《预测充分性、热力学恢复与隐藏纤维复杂度》。重复定义和重复证明在这里合并，原结果的前件、结论、证明方法与反例在相应章节保留；后续新增结果在末尾追加锚下递增编号。
 
-## 0. 对象、约定与理论关系
+## 阅读入口与共同问题
 
-本卷研究以下问题：给定演化规律与初始观测，为了预测其全部未来而补全的状态，何时自动具有辛结构；该结构怎样同时组织前向演化、伴随梯度、概率输运和量子观测。
+| 章节 | 研究对象 | 要回答的问题 |
+|---|---|---|
+| [1](#sec-flow) | 生成元、余切提升、量子与耗散结构 | 一个演化规律怎样作用于状态、梯度、概率与振幅？ |
+| [2](#sec-predictive) | 辛预测完成与 Gibbs 分解 | 哪些观测足以形成自治状态，什么几何与热结构随之保留？ |
+| [3](#sec-windows) | 时间窗与全部导数层 | 有限时间和噪声下，哪些状态方向真正可恢复？ |
+| [4](#sec-normal) | 正规算子连续幂帧 | 一个正时间窗上的稳定恢复能否传到任意正时间窗？ |
+| [5](#sec-correlation) | 热相关、隐藏记忆及数据证书 | 从边界相关数据能认证多少遗漏状态与预测误差？ |
+| [6](#sec-thermal) | 完整量子代数、热恢复和复杂度 | 完美预测还缺少什么，才能恢复热态或高效计算？ |
+| [7](#sec-em) | Lorentz 曲率、磁场与可辨识性 | 电磁耦合怎样改变观测能力，哪些参数仍不可辨识？ |
+| [8](#sec-unified-results) | 本次合编后的综合推论 | 隐藏热信息、总信息、恢复风险与磁耦合如何共同变化？ |
+| [9](#sec-sources) | 原结果迁移、引用与证明边界 | 各结论依赖哪些来源，哪些工作仍未完成？ |
 
-一般观察商与 carry 的定义沿用 [动力接口余量卷](FORMAL_DYNAMICAL_INTERFACE_RESIDUALS.md) 第 1–4 节。本卷的主要额外假设是有限维、正定二次 Hamilton 函数和线性观测；这些假设使一般预测商具有可计算的非退化配对和最小能量提升。
+共同数据是状态空间、演化生成元、观测映射、参考概率或热态、允许实验和误差度量。预测充分性、热恢复充分性、计算可达性分别判断。相同数值或形式不代替对象映射与假设核对。
 
-默认列向量、实矩阵转置为 $T$、复矩阵伴随为 $\dagger$。标准 Poisson 矩阵与辛形式取
-
+实矩阵转置记为 $T$，复伴随记为 $\dagger$；所有对数为自然对数。$\|\cdot\|$ 为欧氏算子范数，$\|\cdot\|_1$ 为不含二分之一的迹范数。标准 Poisson 矩阵
 $$
-J=\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix},
-\qquad \omega(u,v)=u^TJv,
-\qquad \iota_{X_H}\omega=dH,
+J=\begin{pmatrix}0&I\\-I&0\end{pmatrix}
 $$
+配合辛约定 $\omega(u,v)=u^TJv$、$\iota_{X_H}\omega=dH$，给出 $X_H=J\nabla H$。一般可逆反对称 Poisson 矩阵 $J_r$ 对应的辛形式矩阵为 $-J_r^{-1}$。符号 $M$、$G$ 等仅在所在章节定义，不把不同载体的缺陷当成同一个物理量。数学上的所有等价关系均限于所列载体。
 
-所以 $X_H=J\nabla H$。对一般可逆反对称 Poisson 矩阵 $J_r$，对应辛形式的矩阵为 $-J_r^{-1}$。$\|v\|_M=(v^TMv)^{1/2}$ 只在 $M\succ0$ 时使用。
+<a id="sec-flow"></a>
+## 1. 同一生成元的状态、梯度、概率与振幅
 
-训练参数、演化时间和物理解释分别指定；同一数学变换可以有不同实现。下文每个等价关系均给出其对象与保持的结构。
+### 1.1 余切 Hamilton 提升与伴随配对
 
-## 1. 向量场的余切提升与目标敏感度
-
-### 定理 1.1（前向流与伴随流的共同 Hamilton 函数）
-
-设 $f_\theta:\mathbb R^d\to\mathbb R^d$ 为 $C^2$ 向量场，$\Phi_t$ 为其局部流。所有公式限制在流和导数存在的区间。定义
-
+**定理 1.1。** 对 $C^2$ 向量场 $f_\theta:\mathbb R^d\to\mathbb R^d$，在局部流 $\Phi_t$ 存在且对变量、参数可微的区间，函数
 $$
 \mathcal H_\theta(x,p)=p^Tf_\theta(x)
-\quad\text{于 }T^*\mathbb R^d.
 $$
-
-则 Hamilton 方程为
-
+生成
 $$
-\dot x=f_\theta(x),\qquad
-\dot p=-Df_\theta(x)^Tp,
-$$
-
-其流为
-
-$$
-\widetilde\Phi_t(x,p)
-=\bigl(\Phi_t(x),D\Phi_t(x)^{-T}p\bigr).
-$$
-
-该流保持典范一形式 $\alpha=p^Tdx$，因此保持 $\omega=-d\alpha$。
-
-**证明。** 对 $\mathcal H$ 分别求 $p$ 与 $x$ 的偏导即得方程。变分矩阵 $M(t)=D\Phi_t(x)$ 满足 $\dot M=Df_\theta(x(t))M$，故 $M^{-T}p$ 满足伴随方程。拉回一形式时有
-
-$$
-(M^{-T}p)^T M\,dx=p^Tdx.
-$$
-
-于是 $\widetilde\Phi_t^*\alpha=\alpha$，外微分给出辛形式保持。$\square$
-
-### 推论 1.2（扰动与目标敏感度的配对守恒）
-
-若 $\dot{\delta x}=Df_\theta(x)\delta x$，则
-
-$$
-\frac d{dt}(p^T\delta x)=0.
-$$
-
-给定 $C^1$ 终端损失 $\ell(x(T))$，令 $p(T)=\nabla\ell(x(T))$，则
-
-$$
-p(t)=D\Phi_{T-t}(x(t))^Tp(T).
-$$
-
-若初态与 $\theta$ 无关、损失无显式参数依赖，并且流对参数可微，则
-
-$$
-\nabla_\theta\ell(x(T))
-=\int_0^T (\partial_\theta f_\theta(x(t)))^Tp(t)\,dt.
-$$
-
-**证明。** 第一式由乘积求导使两项抵消。参数变分 $s$ 满足 $\dot s=Df_\theta s+(\partial_\theta f_\theta)\delta\theta$、$s(0)=0$；积分 $d(p^Ts)/dt=p^T(\partial_\theta f_\theta)\delta\theta$ 即得梯度公式。$\square$
-
-这与连续伴随和自动微分的既有理论相接 [SS16, CRBD18]。初态或损失显式依赖参数时，分别加上初态拉回项或显式偏导项。
-
-### 命题 1.3（离散拉回与可逆性条件）
-
-若 $F$ 为微分同胚，则
-
-$$
-(x,p)\mapsto\bigl(F(x),DF(x)^{-T}p\bigr)
-$$
-
-保持典范一形式。反向写成 $p_k=DF(x_k)^Tp_{k+1}$，恰为链式法则的协向量拉回。
-
-**证明。** 与定理 1.1 的一形式计算相同。非可逆映射仍允许协向量拉回，但逆转置公式不再定义同维辛微分同胚。$\square$
-
-**例。** $\dot x=-ax$ 的提升为 $\mathcal H=-axp$、$\dot p=ap$；$x$ 的收缩与 $p$ 的伸长保持面积。此构造本身不提供数值条件数改善。
-
-## 2. 相同向量场的振幅表示
-
-### 定理 2.1（完整流的半密度酉表示）
-
-设光滑向量场 $f$ 在 $\mathbb R^d$ 上生成完整微分同胚流。于 $L^2(\mathbb R^d,dx)$ 定义
-
-$$
-(U_t\psi)(x)=|\det D\Phi_{-t}(x)|^{1/2}\psi(\Phi_{-t}(x)).
-$$
-
-则 $U_t$ 构成强连续酉群。在 $C_c^\infty$ 测试函数上，生成微分表达式为
-
-$$
-\left.\frac d{dt}U_t\psi\right|_{t=0}
-=-f\cdot\nabla\psi-\tfrac12(\operatorname{div}f)\psi.
-$$
-
-相应 Schrödinger 形式是
-
-$$
-i\hbar\partial_t\psi=\widehat{\mathcal H}_f\psi,
+\dot x=f_\theta(x),\qquad \dot p=-Df_\theta(x)^Tp,
 \qquad
-\widehat{\mathcal H}_f
-=-i\hbar\bigl(f\cdot\nabla+\tfrac12\operatorname{div}f\bigr).
+\widetilde\Phi_t(x,p)=(\Phi_t(x),D\Phi_t(x)^{-T}p).
 $$
+这个提升保持典范一形式 $p^Tdx$，因而保持辛形式。若 $\dot{\delta x}=Df_\theta(x)\delta x$，则 $p^T\delta x$ 守恒。
 
-**证明。** 以 $y=\Phi_{-t}(x)$ 换元，Jacobian 正好抵消，得到 $\|U_t\psi\|_2=\|\psi\|_2$。流复合律与 Jacobian 链式法则给出群性质。对紧支光滑函数，在充分小时间区间内，支集的流像落在共同紧集内；光滑性和控制收敛给出强连续性。再由稠密性与等距性推广到 $L^2$。在零时刻微分流与 Jacobian，即得生成表达式。自伴生成元由这个强连续酉群确定；这里不把形式对称性单独当作自伴性证明。$\square$
+**证明。** 分别对 $p,x$ 求偏导得到两条方程。$D\Phi_t$ 满足变分方程，逆转置的导数给出伴随方程。拉回一形式得到 $(D\Phi_t^{-T}p)^TD\Phi_tdx=p^Tdx$；对 $p^T\delta x$ 求导时两项相消。证毕。
 
-### 推论 2.2（概率输运与对称排序）
-
-上述演化满足
-
+终端损失 $\ell(x(T))$ 对应 $p(T)=\nabla\ell(x(T))$。初态与损失无显式参数依赖时，参数变分 $s$ 满足 $\dot s=Df_\theta s+\partial_\theta f_\theta\,\delta\theta$，因此
 $$
-\partial_t|\psi|^2+\operatorname{div}(f|\psi|^2)=0.
+\nabla_\theta\ell=\int_0^T(\partial_\theta f_\theta)^Tp(t)dt.
 $$
+其他情形加入初态拉回或显式偏导。对微分同胚离散层 $F$，$(x,p)\mapsto(F(x),DF(x)^{-T}p)$ 同样保持一形式；反向读为 $p_k=DF(x_k)^Tp_{k+1}$。非可逆层仍可拉回协向量，但不再自动定义同维辛微分同胚。这些构件属于余切提升、伴随法和 Neural ODE 的既有理论 [SS16, CRBD18]。
 
-且令 $\widehat p_j=-i\hbar\partial_j$，有
+例：$\dot x=-ax$ 提升为 $\mathcal H=-axp$、$\dot p=ap$。压缩与对偶伸长保持完整面积；该构造本身没有改善数值条件数的保证。当前位置和一个点上的切线也不决定完整规律，例如 $\dot x=1$ 与 $\dot x=1+x$ 在 $x=0$ 有相同初始速度。
 
+### 1.2 半密度的酉表示
+
+**定理 1.2。** 光滑完整向量场在 $\mathbb R^d$ 上生成流时，
 $$
-\widehat{\mathcal H}_f
-=\tfrac12\sum_j(f_j\widehat p_j+\widehat p_jf_j).
+(U_t\psi)(x)=|\det D\Phi_{-t}(x)|^{1/2}\psi(\Phi_{-t}(x))
 $$
-
-**证明。** 将振幅演化式与其复共轭相加，得到密度方程；对称排序式由乘积求导展开。$\square$
-
-这给出同一个向量场在轨迹、余切、密度和振幅上的相容作用，属于广义 Koopman–von Neumann 表示 [J20]。原始读数 $a(x)$ 仍由相互对易的乘法算子表示；一般量子模型还须指定其可观测代数。
-
-## 3. 有限维量子态的实辛表示与下降流
-
-### 定理 3.1（Hermitian 演化的实化）
-
-本节取 $\hbar=1$。令 $\widehat H=A_0+iB_0$ 为 Hermitian 矩阵，其中 $A_0^T=A_0$、$B_0^T=-B_0$，写 $\psi=(q+ip)/\sqrt2$。则 $i\dot\psi=\widehat H\psi$ 等价于
-
+是 $L^2(dx)$ 上的强连续酉群。在紧支光滑测试函数上，其生成微分表达式为
 $$
-\frac d{dt}\binom qp
-=\begin{pmatrix}B_0&A_0\\-A_0&B_0\end{pmatrix}\binom qp
-=J S_{\widehat H}\binom qp,
+\partial_t\psi=-f\cdot\nabla\psi-\tfrac12(\operatorname{div}f)\psi,
 \qquad
-S_{\widehat H}=\begin{pmatrix}A_0&-B_0\\B_0&A_0\end{pmatrix}.
+\widehat{\mathcal H}_f=-i\hbar(f\cdot\nabla+\tfrac12\operatorname{div}f).
 $$
-
-$S_{\widehat H}$ 对称，$JS_{\widehat H}$ 反对称；故流同时保持辛形式和欧氏内积。
-
-**证明。** 分离 Schrödinger 方程的实部与虚部得矩阵公式。转置逐块计算得到两条对称性。对流的内积与辛配对求导，分别由 $G^T+G=0$ 和 $G^TJ+JG=0$ 得到守恒，其中 $G=JS_{\widehat H}$。$\square$
-
-归一化态除去整体相位后得到复射影空间，其 Kähler 结构给出通常量子力学的几何表达 [AS97]。此处的 $S_{\widehat H}$ 无须正定；第 4–9 节的正定假设另行声明。
-
-### 定理 3.2（归一化虚时间的能量下降）
-
-设 $\|\psi\|=1$、$E(\psi)=\langle\psi,\widehat H\psi\rangle$。方程
-
+它满足
 $$
-\partial_\tau\psi=-(\widehat H-E)\psi
-$$
-
-保持归一化，并满足
-
-$$
-\partial_\tau E
-=-2\bigl(\langle\widehat H^2\rangle-E^2\bigr)\le0.
-$$
-
-射影实时间方向为 $-i(\widehat H-E)\psi$；两种方向由复结构相连。
-
-**证明。** 对范数平方求导得 $-2(\langle\widehat H\rangle-E)=0$。对期望值求导并使用 Hermitian 性，得到所述方差。方差非负由 $\| (\widehat H-E)\psi\|^2\ge0$。$\square$
-
-梯度的数值尺度依赖所选射影度量约定。虚时间变分优化的既有算法见 [McA19]。
-
-## 4. 正定二次系统的规范预测商
-
-本节起固定 $n\ge1$、$S=S^T\succ0$，定义
-
-$$
-H(z)=\tfrac12z^TSz,\qquad A=JS,\qquad \dot z=Az,
-\qquad b=Cz.
-$$
-
-$C$ 是给定线性观测，不预先假定其可观测。定义协向量闭包
-
-$$
-W_0=\operatorname{im}C^T,\qquad
-W_{k+1}=W_k+A^TW_k,\qquad
-W=\operatorname{span}\{(A^T)^kc:c\in W_0,\ k\ge0\}.
-$$
-
-由 Cayley–Hamilton，$W=W_{2n-1}$。设 $r=\dim W$，取满行秩 $O\in\mathbb R^{r\times2n}$ 使 $\operatorname{im}O^T=W$。$C=0$ 时取零维平凡商；以下涉及逆矩阵的非平凡陈述取 $r>0$。
-
-### 定理 4.1（未来等价与最小线性预测状态）
-
-对任意 $z,z'$，以下等价：
-
-$$
-Ce^{At}z=Ce^{At}z'\quad(\forall t\ge0),
+\partial_t|\psi|^2+\operatorname{div}(f|\psi|^2)=0,
 \qquad
-CA^k(z-z')=0\quad(\forall k\ge0),
-\qquad
-Oz=Oz'.
+\widehat{\mathcal H}_f=\tfrac12\sum_j(f_j\widehat p_j+\widehat p_jf_j),
+\quad\widehat p_j=-i\hbar\partial_j.
 $$
 
-存在唯一 $K\in\mathbb R^{r\times r}$ 满足 $OA=KO$，并存在 $D$ 使 $C=DO$。所以 $y=Oz$ 满足自治方程 $\dot y=Ky$，且原观测为 $b=Dy$。
+**证明。** 换元 $y=\Phi_{-t}(x)$ 时 Jacobian 抵消，给出等距性；链式法则给出群律。小时间内紧支集的流像位于共同紧集，由控制收敛及稠密性得强连续。微分流和 Jacobian 得到生成表达式。振幅方程与其复共轭相加给出输运式，乘积求导给出对称排序。自伴生成元由酉群确定，不能仅用形式对称性代替自伴性。证毕。
 
-若另一线性编码 $Rz$ 能决定所有 $Ce^{At}z$，则 $\operatorname{rank}R\ge r$。
+这是广义 Koopman–von Neumann 表示 [J20]。原始经典读数 $a(x)$ 仍是相互对易的乘法算子；一般量子可观测代数另行指定。
 
-**证明。** 相同未来读数在零点的所有右导数相同，得到第二式。反向由矩阵指数级数成立。第二与第三式由 $W$ 定义等价。$A^TW\subseteq W$ 保证 $OA$ 的每一行可由 $O$ 表达；$O$ 满行秩给出 $K$ 唯一性。$W_0\subseteq W$ 给出 $C=DO$。任何充分的 $R$ 必须满足 $\ker R\subseteq\ker O$，故由秩与零空间维数公式得下界。$\square$
+### 1.3 量子实化与虚时间下降
 
-于是 $W$ 是算子 $V\mapsto W_0+A^TV$ 的最小不动点。最小性指全部连续未来读数及线性编码类；任意不连续集合编码不包含在维数下界中。
-
-## 5. 预测闭包自动继承非退化辛配对
-
-### 定理 5.1（正定预测闭包的非退化性）
-
-在第 4 节假设下，双线性配对 $\sigma(a,b)=a^TJb$ 在 $W$ 上非退化。因此 $r$ 为偶数，且
-
+**定理 1.3。** 取 $\hbar=1$，令 $\widehat H=A_0+iB_0$ Hermitian，$A_0^T=A_0$、$B_0^T=-B_0$，$\psi=(q+ip)/\sqrt2$。Schrödinger 方程等价于
 $$
-J_r=OJO^T
+\dot z=JS_{\widehat H}z,
+\quad S_{\widehat H}=\begin{pmatrix}A_0&-B_0\\B_0&A_0\end{pmatrix},
+\quad JS_{\widehat H}=\begin{pmatrix}B_0&A_0\\-A_0&B_0\end{pmatrix}.
 $$
-
-可逆。
-
-**证明。** 假设非零 $a\in W$ 位于限制配对的根空间。由 $A^Ta\in W$，有 $a^TJA^Ta=0$。但 $A^T=-SJ$，从而
-
+该流同时保持欧氏内积与辛形式。对归一化态的能量 $E=\langle\widehat H\rangle$，虚时间方程 $\partial_\tau\psi=-(\widehat H-E)\psi$ 保持范数，且
 $$
-a^TJA^Ta=-a^TJSJa=(Ja)^TS(Ja)>0,
+\partial_\tau E=-2\operatorname{Var}_\psi(\widehat H)\le0.
 $$
 
-其中使用 $J$ 可逆及 $S\succ0$，矛盾。故配对非退化。可逆反对称实矩阵只能为偶数阶：奇数阶时 $\det J_r=\det(-J_r^T)=-\det J_r$。$\square$
+**证明。** 分离实虚部得到矩阵，其生成元反对称且 Hamilton；求内积与辛配对导数即得保持律。虚时间范数导数为零，能量导数为 $-2(\langle\widehat H^2\rangle-E^2)$。证毕。
 
-### 反例 5.2（去掉正定性后的一维预测商）
+射影实时间方向是 $-i(\widehat H-E)\psi$，与下降方向由复结构连接；归一化并模去整体相位给出 Kähler 纯态空间 [AS97, McA19]。本节 $S_{\widehat H}$ 不必正定，第 2 节的正定假设另行承担。
 
-令 $H(q,p)=qp$。则 $\dot q=q$、$\dot p=-p$，仅保留 $q$ 就得到一维自治预测状态，而其 Poisson 配对退化。因此定理 5.1 的正定性不可直接删除。
+### 1.4 耗散、端口与热参考
 
-## 6. 最小能量、辛提升与逐层约化的一致性
-
-### 定理 6.1（约化 Hamilton 函数等于纤维最小能量）
-
-在第 4 节假设下，令
-
+对光滑储能 $V$，模型
 $$
-P=OS^{-1}O^T\succ0,\qquad
-L=S^{-1}O^TP^{-1},\qquad
-N=I-LO.
+\dot z=(J-R)\nabla V+Bu,\quad J^T=-J,\ R\succeq0,
+\quad y=B^T\nabla V
+$$
+满足 $\dot V=-\nabla V^TR\nabla V+y^Tu$。反对称性负责这项能量平衡；一般变量 Poisson 结构还须满足 Jacobi。封闭 GENERIC 模型 $\dot z=L\nabla E+M\nabla S$，在 $L^T=-L$、$M\succeq0$、$L\nabla S=0$、$M\nabla E=0$ 下满足 $\dot E=0$、$\dot S=\nabla S^TM\nabla S\ge0$，均由链式法则得到 [G97, VSM02]。
+
+**定理 1.4（被动隐藏记忆）。** 设
+$$
+\dot x=(J_x-R_x)e-Ch+Bu,\quad
+\dot h=C^Te+(J_h-R_h)h,\qquad e=\nabla V_x(x),
+$$
+其中矩阵固定、$J$ 反对称、$R$ 半正定。总储能 $V_x+|h|^2/2$ 的导数为 $-e^TR_xe-h^TR_hh+e^TBu$。消去 $h$ 后，记忆核为
+$$
+K(t)=Ce^{tA_h}C^T,\quad A_h=J_h-R_h,
+$$
+且保留项包括 $-Ce^{tA_h}h_0$ 与 $-\int_0^tK(t-s)e(s)ds$。其 Laplace 响应在 $\operatorname{Re}s>0$ 正实：若 $w=(sI-A_h)^{-1}C^Tv$，则
+$$
+\operatorname{Re}(v^\dagger\widehat K(s)v)
+=(\operatorname{Re}s)\|w\|^2+w^\dagger R_hw\ge0.
 $$
 
+**证明。** 交叉功率 $-e^TCh+h^TC^Te$ 抵消。变参数公式给出消元；由 $A_h+A_h^T=-2R_h$ 计算 resolvent 二次型实部得到最后一式。证毕。
+
+例：$A_h=\left(\begin{smallmatrix}-\gamma&\omega\\-\omega&-\gamma\end{smallmatrix}\right)$、$C=(g,0)$ 给出 $K(t)=g^2e^{-\gamma t}\cos\omega t$；正实性允许时域核变号。隐藏热浴加噪声 $\sqrt{2\beta^{-1}R_h}dW$，平稳协方差 $\beta^{-1}I$ 解 Lyapunov 方程，消元随机力协方差为 $\beta^{-1}K(t-s)$，$t\ge s$。可见耗散也需配套热噪声 [L16]。
+
+若 $R_h\succeq\alpha I>0$、$U^TU=I$、$P_U=UU^T$，压缩 $A_r=U^TA_hU,C_r=CU$ 保持被动性。令 $\epsilon_0=\|(I-P_U)C^T\|$、$\epsilon_1=\|(I-P_U)A_hU\|$。对两半群的差使用 Duhamel，得到
+$$
+\|K(t)-K_r(t)\|\le\|C\|e^{-\alpha t}
+(\epsilon_0+t\epsilon_1\|U^TC^T\|),
+$$
+$$
+\int_0^\infty\|K-K_r\|dt\le
+\|C\|(\epsilon_0/\alpha+\epsilon_1\|U^TC^T\|/\alpha^2)=:\epsilon_K.
+$$
+可见线性耗散 $R_x\succeq\zeta I>0$、直接输入、零初态时，两个 resolvent 的范数至多 $1/\zeta$，逆算子恒等式给出 $\|G-G_r\|_{H^\infty}\le\epsilon_K/\zeta^2$ 及对应 $L^2$ 输出误差。这些界不含未知模型的辨识误差。
+
+量子有限维 Markov 生成元可使用 GKSL 形式；完全正性是额外结构 [L76]。例如 Bloch 收缩率 $(1,1,3)$ 虽保持 Bloch 球，其归一 Choi 特征值 $(1-2e^{-t}+e^{-3t})/4$ 在小正时间为负。Gibbs 不变的 CPTP 演化使相对熵收缩，而 $F(\rho)-F(\gamma_\beta)=\beta^{-1}D(\rho\Vert\gamma_\beta)$。满足相应详细平衡的类还有非交换梯度流表述 [CM17]。电路的双边对称化涨落耗散关系 $S_{VV}^{\rm sym}(\omega)=\hbar\omega\coth(\beta\hbar\omega/2)\operatorname{Re}Z(\omega)$ 给出一个实验接口 [C10]，不能与单边谱系数混用。
+
+<a id="sec-predictive"></a>
+## 2. 预测完成、辛约化与热分解
+
+### 2.1 最小连续线性预测商
+
+固定 $S=S^T\succ0$、$A=JS$、$H=z^TSz/2$、读数 $b=Cz$。定义
+$$
+W_0=\operatorname{im}C^T,\quad W_{k+1}=W_k+A^TW_k,
+\quad W=\operatorname{span}\{(A^T)^kW_0:k\ge0\}.
+$$
+Cayley–Hamilton 给出 $W=W_{2n-1}$。取满行秩 $O$ 使其行空间为 $W$；$C=0$ 时单独取零维平凡商。
+
+**定理 2.1。** 对全部 $t\ge0$ 有 $Ce^{At}z=Ce^{At}z'$，当且仅当 $Oz=Oz'$。存在唯一 $K$ 及某个 $D_0$ 使 $OA=KO,C=D_0O$。任何能决定全部未来读数的线性编码 $Rz$ 均满足 $\operatorname{rank}R\ge\operatorname{rank}O$。
+
+**证明。** 相同未来在零时刻的各阶导数相同，即 $CA^k(z-z')=0$；反向由指数级数。行空间定义给出与 $O$ 的等价。闭包不变性给出 $K$，满行秩给出唯一性。充分的 $R$ 有 $\ker R\subseteq\ker O$，由秩公式得最小性。证毕。
+
+这是一般观察商、无 carry 条件与未来词完成在连续线性载体上的实现；相关仓库接口见第 9 节。维数下界不针对任意不连续集合编码。
+
+### 2.2 自动辛配对、最小能量提升及嵌套一致性
+
+**定理 2.2。** 配对 $a^TJb$ 在 $W$ 上非退化。因此 $r=\dim W$ 为偶数，$J_r=OJO^T$ 可逆。令
+$$
+P=OS^{-1}O^T,\quad L=S^{-1}O^TP^{-1},\quad N=I-LO.
+$$
 则
-
 $$
-K=J_rP^{-1},\qquad
-H_r(y)=\tfrac12y^TP^{-1}y
-=\min_{Oz=y}\tfrac12z^TSz.
+K=J_rP^{-1},\quad OL=I,\quad AL=LK,\quad AN=NA,
+\quad NJO^T=0,\quad L^TJL=-J_r^{-1},
 $$
-
-极小点唯一，为 $Ly$。并有
-
 $$
-OL=I_r,\quad ON=0,\quad L^TSN=0,
-$$
-
-$$
+H_r(y)=\tfrac12y^TP^{-1}y=\min_{Oz=y}H(z),\qquad
 H(z)=H_r(Oz)+\tfrac12(Nz)^TS(Nz).
 $$
+极小提升唯一，为 $Ly$。
 
-**证明。** 满行秩与正定性给出 $P\succ0$。由 $OA=KO$ 与 $AS^{-1}=J$，
+**证明。** 若非零 $a\in W$ 与全部 $W$ 配对为零，由 $A^Ta\in W$ 应有 $a^TJA^Ta=0$，但该值为 $(Ja)^TS(Ja)>0$，矛盾。奇数阶反对称矩阵行列式为零，故维数偶。
 
+满行秩给出 $P\succ0$。由 $AS^{-1}=J$ 得 $KP=J_r$。又 $L^TS=P^{-1}O$，故 $L^TSN=0$；每个约束纤维唯一写成 $Ly+w,Ow=0$，完成平方得极小值和能量分解。恒等式 $AS^{-1}+S^{-1}A^T=0$ 与 $KP+PK^T=0$ 给出
 $$
-KP=OAS^{-1}O^T=J_r.
+LK=-S^{-1}O^TK^TP^{-1}=-S^{-1}A^TO^TP^{-1}=JO^TP^{-1}=AL.
 $$
+因此 $AN=NA$，并由 $JO^T=LJ_r$ 得 $NJO^T=0$。左乘 $L^TJ$ 得 $L^TJLJ_r=-I$，即辛提升公式。证毕。
 
-其余代数关系由 $L,N$ 的定义得到，特别是 $L^TS=P^{-1}O$，故 $L^TSN=0$。每个 $Oz=y$ 的状态唯一写成 $z=Ly+w$、$Ow=0$；展开能量得
-
+若再用满行秩 $D$ 约化，且 $DK=K_2D$，则直接观测 $O_2=DO$ 与分步约化给出相同的
 $$
-\tfrac12z^TSz=\tfrac12y^TP^{-1}y+\tfrac12w^TSw.
+P_2=DPD^T,\quad J_2=DJ_rD^T,\quad K_2=J_2P_2^{-1},
+\quad L_2=PD^TP_2^{-1},\quad LL_2=S^{-1}O_2^TP_2^{-1}.
 $$
+证明是 $O_2A=K_2O_2$ 后应用同一构造并逐项相乘。它同时追踪能量与状态提升，和 Schur 消元次序接口相容。
 
-正定性给出唯一极小点与结论。$\square$
+去掉正定性时，$H=qp$ 给出 $\dot q=q,\dot p=-p$，一维 $q$ 已自治，故自动辛结论不再成立。
 
-### 定理 6.2（最小能量提升与动力学、辛配对相容）
+### 2.3 同一分解的 Gibbs、条件恢复与正则量子版本
 
-上述矩阵进一步满足
+取 $R$ 为 $\ker O$ 的欧氏正交基矩阵，$C_h=R^TSR$，$u=R^TNz$。坐标 $z=Ly+Ru$ 可逆。由第 2.2 节，$\dot y=Ky$、$\dot u=A_hu$，其中 $AR=RA_h$。
 
+**定理 2.3。** Gibbs 概率在这些坐标中精确分解为
 $$
-AL=LK,\qquad AN=NA,\qquad NJO^T=0,
+\gamma_r\otimes\gamma_h,
+\quad\gamma_r=N(0,\beta^{-1}P),\quad
+\gamma_h=N(0,\beta^{-1}C_h^{-1}).
 $$
-
+Lebesgue 配分函数为
 $$
-L^TJL=-J_r^{-1}.
+Z=\kappa Z_rZ_h,\quad\kappa=|\det[L\ R]|,
+\quad Z_r=(2\pi/\beta)^{r/2}\sqrt{\det P},
+\quad Z_h=(2\pi/\beta)^{(2n-r)/2}/\sqrt{\det C_h}.
 $$
-
-因此最小能量提升与流交换；隐藏余量不影响可见 Poisson 读数，且提升保持第 0 节约定下的辛形式。
-
-**证明。** 先有
-
+两因子各由自身流保持。若 $D(\mu\Vert\pi_\beta)<\infty$，$\nu$ 为 $y$ 边缘，则恢复 $\mathcal R\nu=\nu\otimes\gamma_h$ 满足
 $$
-AS^{-1}+S^{-1}A^T=0,\qquad KP+PK^T=0.
+D(\mu\Vert\pi_\beta)-D(\nu\Vert\gamma_r)
+=\int D(\mu(\cdot|y)\Vert\gamma_h)d\nu(y)
+=D(\mu\Vert\mathcal R\nu).
 $$
+这是给定可见边缘的唯一最小超额自由能提升；该缺陷沿本节解耦可逆流守恒。
 
-第二式推出 $P^{-1}K=-K^TP^{-1}$。所以
+**证明。** 交叉能量为零，常数 Jacobian 在归一概率中抵消，在配分函数中保留。两块生成元分别满足协方差不变方程。条件密度比拆成边缘密度比与条件密度比，积分给出 KL 链式等式；非负性与零值条件给出唯一性。完整流和边缘流都可逆并保留对应参考，相对熵各自守恒。证毕。
 
+**定理 2.4。** 有限个正则量子模式，采用 Schrödinger 表示、Weyl 对称二次量子化及共同 Schwartz 域。$\widehat y=O\widehat z$ 满足
 $$
-LK=-S^{-1}O^TK^TP^{-1}
-=-S^{-1}A^TO^TP^{-1}
-=JO^TP^{-1}=AL.
-$$
-
-结合 $OA=KO$ 得 $AN=NA$。又由 $AL=LK$ 及 $K=J_rP^{-1}$，得 $JO^T=LJ_r$，于是
-
-$$
-NJO^T=(I-LO)LJ_r=0.
-$$
-
-最后将 $JO^T=LJ_r$ 左乘 $L^TJ$：
-
-$$
-L^TJLJ_r=L^TJJ O^T=-L^TO^T=-I_r.
-$$
-
-右乘 $J_r^{-1}$ 即得辛形式公式。$\square$
-
-### 定理 6.3（嵌套预测约化的一致性）
-
-设 $D$ 满行秩，且 $DK=K_2D$。第二层观测为 $v=Dy$，其直接观测矩阵是 $O_2=DO$。令
-
-$$
-P_2=DPD^T,\qquad J_2=DJ_rD^T,\qquad
-L_2=PD^TP_2^{-1}.
-$$
-
-则两层约化与直接约化给出相同的 $P_2,J_2,K_2$，且
-
-$$
-K_2=J_2P_2^{-1},\qquad
-LL_2=S^{-1}O_2^TP_2^{-1}.
-$$
-
-**证明。** $O_2A=DKO=K_2O_2$，因此 $O_2$ 的行空间是完整系统的一个不变观测空间。定理 5.1 的证明适用于任何这样的空间，故 $J_2$ 非退化。代入定义有
-
-$$
-O_2S^{-1}O_2^T=DPD^T,\qquad O_2JO_2^T=DJ_rD^T.
-$$
-
-$K_2P_2=DKPD^T=DJ_rD^T$；提升公式由 $P^{-1}P=I_r$ 直接消去。$\square$
-
-该命题把预测完成的分层与能量约化置于同一个相容系统中。其消元次序问题与仓库的 Schur 消元接口相接，具体状态提升由这里的矩阵公式给出。
-
-## 7. 二次量子观测使用同一闭包
-
-### 定理 7.1（相同观测矩阵的 CCR 与 Heisenberg 闭合）
-
-考虑有限个正则量子模式，在 Schrödinger 表示及共同不变 Schwartz 域上取算子列 $\widehat z$，满足
-
-$$
-[\widehat z_i,\widehat z_j]=i\hbar J_{ij}I.
-$$
-
-令 $\widehat H=\tfrac12\widehat z^TS\widehat z$ 为 Weyl 对称二次算子，$S\succ0$。沿用第 4–6 节的 $O,P,J_r,K,L,N$。则
-
-$$
-\widehat y=O\widehat z,\qquad
 [\widehat y_i,\widehat y_j]=i\hbar(J_r)_{ij}I,
+\qquad \partial_t\widehat y=K\widehat y.
+$$
+可见 Weyl 子代数不变，约化 Hamilton 算子是 $\widehat y^TP^{-1}\widehat y/2$。存在与预测子空间相容的正则坐标及 metaplectic 酉实现，使
+$$
+\widehat H=\widehat H_r\otimes I+I\otimes\widehat H_h,
+\quad \gamma_\beta=\gamma_{r,\beta}\otimes\gamma_{h,\beta},
+\quad Z_\beta=Z_{r,\beta}Z_{h,\beta}.
+$$
+各正定块的配分函数为 $\prod_j[2\sinh(\beta\hbar\omega_j/2)]^{-1}$。有限二阶矩态还满足 $\Sigma_r=O\Sigma O^T$ 和 $\Sigma_r+i\hbar J_r/2\succeq0$，该条件由约化流保持。
+
+**证明。** CCR 对二次对称乘积的交换子给出 $\partial_t\widehat z=JS\widehat z$，再用 $OA=KO$。$NJO^T=0$ 使隐藏与可见线性算子对易。$\operatorname{im}L$ 与 $\ker O$ 辛正交，各自非退化；在两块选 Darboux 基，能量交叉项仍为零。有限模 metaplectic 协变性和 Williamson 对角化给出两个张量因子与振子谱；几何级数证明热迹收敛。对 $X=\sum_jc_j(\widehat y_j-\langle\widehat y_j\rangle)$ 用 $\langle X^\dagger X\rangle\ge0$ 得不确定性式；$KJ_r+J_rK^T=0$ 保证其合同保持。证毕。[W12, ZGPG18, ZLDP23]
+
+有限模不等于有限 Hilbert 维数；有限维矩阵不能承担非零常数 CCR。均值闭合不认领一般量子态的完整恢复。
+
+### 2.4 有限误差的预测与辛结构余量
+
+现在只要求 $O$ 满行秩，不假设闭合，仍定义 $P,J_r,K$。令
+$$
+\epsilon=\|P^{-1/2}(OA-KO)S^{-1/2}\|,
+\quad Q=P^{-1/2}OS^{-1/2},\quad
+\Omega=S^{1/2}JS^{1/2},\quad D=Q\Omega Q^T.
+$$
+**定理 2.5。** 对 $t\ge0$，
+$$
+\|Oe^{At}z_0-e^{Kt}Oz_0\|_{P^{-1}}
+\le t\epsilon\|z_0\|_S.
+$$
+若 $\omega_*:=\sigma_{\min}(\Omega)>\epsilon$，则
+$$
+\sigma_{\min}(D)\ge\sqrt{\omega_*^2-\epsilon^2}>0.
+$$
+因而潜状态维数为偶数。奇数维的任何 $O$ 必有 $\epsilon\ge\omega_*$。
+
+**证明。** $A^TS+SA=0$ 与 $K^TP^{-1}+P^{-1}K=0$ 给出两边能量范数等距。误差满足 $\dot e=Ke+(OA-KO)e^{At}z_0,e(0)=0$，Duhamel 积分给第一式。$QQ^T=I$，$\Pi=Q^TQ$，且
+$$
+\epsilon=\|(I-\Pi)\Omega Q^T\|.
+$$
+对单位 $v$ 正交分解
+$$
+\|\Omega Q^Tv\|^2=\|Dv\|^2+\|(I-\Pi)\Omega Q^Tv\|^2
+$$
+即得第二式；奇数阶反对称 $D$ 有核。证毕。
+
+四维 $S=I$、$Q=\left(\begin{smallmatrix}1&0&0&0\\0&4/5&3/5&0\end{smallmatrix}\right)$ 给 $\epsilon=4/5,\sigma_{\min}(D)=3/5,\omega_*=1$，精确取等。单行 $Q=(1,0,0,0)$ 给奇数维等号。给定矩阵的界不包括辨识误差。
+
+### 2.5 非线性条件与可重建算例
+
+对满射次浸没 $\Phi$，两个独立条件
+$$
+D\Phi J\nabla H=J_r\nabla h\circ\Phi,
+\qquad D\Phi J D\Phi^T=J_r
+$$
+分别保证自治预测与 Poisson 配对保持。第一式由链式法则，第二式代入 $\nabla(a\circ\Phi)^TJ\nabla(b\circ\Phi)$ 得括号相容。它们没有从重建精度自动成立 [BGH23]。
+
+非线性反例：在去掉原点的谐振平面，$\Phi(q,p)=(q+ip)/\sqrt{q^2+p^2}\in S^1$ 满足 $\Phi(z_t)=e^{-it}\Phi(z_0)$。相位是自治的一维预测状态，一维流形没有非退化二形式。
+
+保留原六维有理算例：
+$$
+B_s=\begin{pmatrix}1&2&0\\2&-1&1\\0&1&2\end{pmatrix},
+\quad T_s=\begin{pmatrix}I&B_s\\0&I\end{pmatrix},
+\quad S_0=\operatorname{diag}(1,4,9,1,1,1),
+$$
+$$
+S=T_s^{-T}S_0T_s^{-1},\quad
+C=(1,1,0,0,0,0)T_s^{-1},\quad
+O=\operatorname{rows}(C,CA,CA^2,CA^3).
+$$
+有 $T_s^TJT_s=J$、$CA^4=-4C-5CA^2$，且
+$$
+OJO^T=\begin{pmatrix}0&2&0&-5\\-2&0&5&0\\0&-5&0&17\\5&0&-17&0\end{pmatrix},
+\qquad\det(OJO^T)=81.
+$$
+因此闭包维数为四；第 2.2 节的全部矩阵可在有理数域重建。
+
+<a id="sec-windows"></a>
+## 3. 时间窗、噪声与整个信息谱
+
+### 3.1 一个窗口强迫有限稳定导数深度
+
+令非零实或复 Hilbert 空间上的 $B,C$ 有界，$b=\max(1,\|B\|),c=\|C\|$，定义
+$$
+(\mathcal T_Tx)(t)=Ce^{tB}x,\quad
+ a(T)=\inf_{\|x\|=1}\|\mathcal T_Tx\|_{L^2(0,T)}^2,
+\quad\mu_N=\inf_{\|x\|=1}\sum_{k=0}^N\|CB^kx\|^2.
+$$
+**定理 3.1。** 对 $p_N(t;x)=\sum_{k=0}^Nt^kCB^kx/k!$，
+$$
+\|\mathcal T_Tx-p_N\|_{L^2}\le R_N(T)\|x\|,
+\quad R_N(T)=\frac{ce^{bT}b^{N+1}T^{N+3/2}}{(N+1)!\sqrt{2N+3}}.
+$$
+若 $a(T_0)\ge a_0>0$，取使 $R_N(T_0)\le\sqrt{a_0}/2$ 的 $N$，则
+$$
+\mu_N\ge\frac{a_0}{4L_N(T_0)^2},
+\quad L_N(T_0)^2=\sum_{k=0}^N\frac{T_0^{2k+1}}{(2k+1)(k!)^2}.
+$$
+这样的有限 $N$ 总存在。
+
+**证明。** 指数级数余项至多 $ce^{bt}(bt)^{N+1}/(N+1)!$，平方积分给 $R_N$。固定 $T_0$ 时阶乘使其趋零。三角不等式给 $\|p_N\|\ge\sqrt{a_0}\|x\|/2$；对多项式有限和用 Cauchy–Schwarz 并积分，给出 $\|p_N\|^2\le L_N^2\sum_k\|CB^kx\|^2$。证毕。
+
+若开始只给可数传感向量 $g_j$ 的积分上界 $M_0$，不预设完整分析算子有界：对有限集合 $F$ 比较常值轨迹 $C_Fx$ 与 $C_Fe^{tB}x$。取 $d=\min(T_0,\log(3/2)/b)$，二者算子差至多 $\sqrt d\|C_F\|/2$，而动态轨迹范数至多 $\sqrt{M_0}$。故 $\|C_F\|^2\le4M_0/d$，对有限和取极限得到初始 Bessel 性。
+
+### 3.2 任意正窗、匹配幂次和最坏噪声
+
+令 $H_N=(1/(i+j+1))_{0\le i,j\le N}$、$\lambda_N=\lambda_{\min}(H_N)>0$。若 $\mu_N\ge\mu>0$，设
+$$
+d_N=\sqrt{\lambda_N\mu}/N!,\quad
+r_N=ce^bb^{N+1}/((N+1)!\sqrt{2N+3}),
+$$
+$$
+\tau_N=\min(1,d_N/(2r_N)),\quad
+\alpha_N=\lambda_N\mu/(4(N!)^2).
+$$
+则
+$$
+a(T)\ge\alpha_N\min(T,\tau_N)^{2N+1}>0.
+$$
+**证明。** 对 $t=Ts$ 的向量值多项式应用有限 Hilbert Gram 下界，得 $\|p_N\|^2\ge d_N^2T^{2N+1}\|x\|^2$，$T\le1$。余项至多 $r_NT^{N+3/2}\|x\|$；$T\le\tau_N$ 时不超过主项一半。较长时间用非负积分单调性。证毕。
+
+于是存在一个稳定正窗、存在有限 $\mu_N>0$、全部正窗稳定三者等价。最小稳定深度 $m=\min\{N:\mu_N>0\}$ 有限时，
+$$
+a(T)=\Theta(T^{2m+1}).
+$$
+下界如上。上界由 $m\ge1$ 时 $\mu_{m-1}=0$ 的单位近核向量列，把低阶 Taylor 项送零，余项给出
+$$
+a(T)\le\frac{c^2e^{2b}b^{2m}}{(m!)^2(2m+1)}T^{2m+1},\quad T\le1.
+$$
+$m=0$ 用直接上界。这个证明也适用于无限维的统一稳定深度。
+
+$L^2$ 加性噪声预算为 $\delta$、状态无先验限制时，所有重建器的最优最坏误差恰为 $\delta/\sqrt{a(T)}$。Moore–Penrose 左逆达到上界；反向取近似最弱单位方向 $v$，状态 $\pm\delta v/\|\mathcal T_Tv\|$ 各配相反噪声产生同一零数据，得下界。
+
+取归一多项式 $\ell_0,\ldots,\ell_N$，有限积分矩
+$$
+(\mathcal M_Tx)_k=T^{-1/2}\int_0^T\ell_k(t/T)Ce^{tB}xdt
+$$
+保留以上短窗下界，噪声总范数不增加。证明是投影保持 $p_N$，投影余项收缩。数值求积误差另计，不需要高阶噪声差分。
+
+### 3.3 全部分层、行列式与积分矩首项
+
+有限维可观测 $(C,B)$ 中，令
+$$
+V_j=\bigcap_{k<j}\ker(CB^k),\quad
+E_j=V_j\cap V_{j+1}^\perp,\quad d_j=\dim E_j,
+\quad V_0=\mathbb R^d.
+$$
+令 $m$ 为 $V_{m+1}=0$ 的最小值，$D_T|_{E_j}=T^{j+1/2}I$。定义
+$$
+G_T=\int_0^Te^{tB^T}C^TCe^{tB}dt,
+\quad \mathcal P(s)x=\sum_{j=0}^m\frac{s^j}{j!}CB^jx_j,
+\quad M_*=\int_0^1\mathcal P(s)^T\mathcal P(s)ds.
+$$
+**定理 3.2。** $M_*\succ0$，且
+$$
+D_T^{-1}G_TD_T^{-1}=M_*+O(T),
+\qquad\det G_T=T^{\sum_j(2j+1)d_j}(\det M_*+O(T)).
+$$
+每层有 $d_j$ 个排序特征值为 $\Theta(T^{2j+1})$。有限正交积分矩的 Gram 矩阵具有相同缩放极限和行列式首项。
+
+**证明。** 对 $x_j\in E_j$，低于 $j$ 阶的导数为零，故 $\sqrt TCe^{TsB}D_T^{-1}x=\mathcal P(s)x+O(T)\|x\|$，在 $[0,1]$ 一致。若多项式的平方积分为零，每个系数 $CB^jx_j=0$；结合 $x_j\in V_j\cap V_{j+1}^\perp$ 得 $x_j=0$。于是极限正定，上下 Loewner 界及 Courant–Fischer 给整个谱幂次，行列式给首项。多项式投影保留极限，故积分矩亦然。证毕。
+
+全谱幂次已有可控 Gramian 的对偶理论 [SJP15]；这里保留显式极限矩阵供热信息计算。
+
+标量输出且 $m=d-1$、$V=\operatorname{rows}(C,CB,\ldots,CB^m/m!)$ 可逆时，
+$$
+\lim_{T\downarrow0}\frac{a(T)}{T^{2m+1}}
+=\frac1{(H_m^{-1})_{mm}\|V^{-1}e_m\|^2}.
+$$
+证明：令 $D'_T=\operatorname{diag}(1,T,\ldots,T^m)$，$Ce^{TsB}V^{-1}(D'_T)^{-1}\to(1,s,\ldots,s^m)$，于是 $G_T=TV^TD'_TH(T)D'_TV,H(T)\to H_m$。缩放逆矩阵趋于 $(H_m^{-1})_{mm}(V^{-1}e_m)(V^{-1}e_m)^T$，取最大特征值。
+
+### 3.4 Gaussian 信息、能量风险和恢复阈值
+
+从轨迹像的正交积分坐标得到有限矩阵 $L_T$，使 $L_T^TL_T=G_T$。取 $X\sim N(0,\beta^{-1}I)$，数据 $Y=L_TX+\sigma\xi$，其中 $\xi$ 独立标准 Gaussian。这里噪声方差是每个归一积分坐标的方差，没有把白噪声当普通 $L^2$ 随机函数。
+
+**定理 3.3。**
+$$
+\Sigma_T=(\beta I+\sigma^{-2}G_T)^{-1},\quad
+\widehat X=\sigma^{-2}\Sigma_TL_T^TY,
+$$
+$$
+I_T=\tfrac12\log\det(I+G_T/(\beta\sigma^2)),
+\quad \mathcal R_T=\inf_{\widehat x}\mathbb E\tfrac12\|X-\widehat x(Y)\|^2
+=\tfrac12\operatorname{tr}\Sigma_T.
+$$
+对于 $\mathcal F(p)=\mathbb E_p\|X\|^2/2-\beta^{-1}h(p)$，
+$$
+\mathbb E_Y[\mathcal F(p_{X|Y})-\mathcal F(p_X)]=\beta^{-1}I_T.
+$$
+若 $B^T=-B$，已知动力学下的未来最优能量风险仍为 $\mathcal R_T$。
+
+**证明。** 先验与似然完成平方给后验；条件期望的正交性给风险。Gaussian 熵差给行列式。平均条件能量等于先验能量，条件熵差等于互信息，给自由能身份。正交流保持误差范数，且条件期望随已知线性映射交换。证毕。[SD14]
+
+这是条件概率描述的自由能泛函，不直接等于实验已经耗散的热量。实测、反馈、擦除协议另定。
+
+若 $\sigma^2=T^\alpha$，则
+$$
+I_T=\tfrac12\sum_jd_j(\alpha-2j-1)_+\log(1/T)+O(1).
+$$
+避开阈值 $\alpha=2j+1$ 时，$\mathcal R_T\to(2\beta)^{-1}\sum_{2j+1>\alpha}d_j$。全部风险趋零当且仅当 $\sigma^2=o(T^{2m+1})$。这些式子由各特征值逐项代入后验和互信息得到；阈值处不能只凭幂次给通用常数。固定噪声时 $I_T=T\operatorname{tr}(C^TC)/(2\beta\sigma^2)+O(T^2)$，首阶信息不识别深层方向。
+
+### 3.5 两振子和采样时钟
+
+取 $B=\operatorname{diag}(J_2,2J_2)$，$C_{\rm sum}=(1,0,1,0)$ 或分别读两个位置。前者深度 $m=3$，后者 $m=1$，并有
+$$
+a_{\rm sum}(T)\sim T^7/14000,\quad
+\det G_{\rm sum}(T)\sim T^{16}/2688000,
+$$
+$$
+a_{\rm sep}(T)\sim T^3/12,\quad
+\det G_{\rm sep}(T)\sim T^8/36.
+$$
+常数来自 $(H_3^{-1})_{33}=2800$、$V^{-1}e_3=(0,2,0,-1)^T$、$\det V=3/2$、$\det H_3=1/6048000$；分别观测的频率块最小特征值为 $(T-|\sin\omega T|/\omega)/2$，行列式为 $(T^2-\sin^2(\omega T)/\omega^2)/4$。
+
+二者 $\operatorname{tr}C^TC=2$，固定噪声首阶信息相同；噪声 $T^4$ 时，信息对数系数分别为 2 和 4，风险极限分别为 $1/\beta$ 和零。原高精度样本：$T=.1$ 时两种 $a(T)$ 为 $7.14507890954\times10^{-12}$ 与 $8.32916765859\times10^{-5}$；$T=.01$ 时为 $7.14287936503\times10^{-19}$ 与 $8.33329166677\times10^{-8}$。
+
+**定理 3.4（时钟的共同闭包）。** 离散 $F=e^{\Delta A}$ 的观测闭包包含于连续闭包。若 $A$ 可对角化，且不同特征值的 $e^{\Delta\lambda}$ 不碰撞，则两闭包相同。对正定 Hamilton $A$，两正间隔之比无理时，混合词闭包
+$$
+\operatorname{span}\{(F_1^T)^k(F_2^T)^\ell W_0:k,\ell\ge0\}
+$$
+等于连续闭包。
+
+**证明。** 连续不变空间对指数不变。单时钟无碰撞时，有限谱插值得 $A=p(F)$；两时钟时，不同纯虚频率不能同时具有相同相位对，否则频差给出两间隔的有理比。有限谱上的二元插值得 $A=p(F_1,F_2)$；可取实系数。故反向不变性成立。证毕。
+
+单振子以周期采样只见恒定位置，离散闭包可降为一维。两条独立序列也不能代替混合词：令 $a=2\pi/\Delta_1,b=2\pi/\Delta_2$，函数
+$$
+g(t)=\cos((\omega+a+b)t)-\cos((\omega+a)t)
+-\cos((\omega+b)t)+\cos(\omega t)
+$$
+在两个采样栅格均为零，但 $g''(0)=-2ab\ne0$。四个正定独立振子即可实现。精确无理比去混叠不提供有限噪声的统一条件数。
+
+### 3.6 无界生成元的适用边界
+
+圆周 $\mathbb R/2\mathbb Z$ 上平移群 $U_tf(s)=f(s+t)$，观察算子为乘以 $1_{[0,1]}$。Fubini 给 $\int_0^2\|CU_tf\|^2dt=\|f\|^2$，但 $T<1$ 时支撑于 $(1+T,2)$ 的非零函数在整个短窗不可见。其无界生成元不满足第 3.1 节的有界前件。仅有酉性不能删除最小观测时间。
+
+<a id="sec-normal"></a>
+## 4. 正规连续幂帧的时间窗不变性
+
+本章保留 #8891 的具名问题证明稿，不把合编当成独立审定或新的问题结算。[AHP19, Conjecture 5.6] 及 [ACKM26, Conjecture 2] 提出从可逆自伴到 normal reductive 的推广。本章命题覆盖全部有界正规算子，不要求有界逆或 reductive 性。这里的存在性下界不附带第 3 节针对有界生成元的统一有限导数幂次。
+
+### 4.1 精确陈述与解析族
+
+令 $A$ 为非零复 Hilbert 空间上的有界正规算子，$g_j$ 为可数族。按 $\ell(\lambda)=\log|\lambda|+i\operatorname{Arg}\lambda$、$\operatorname{Arg}\lambda\in[-\pi,\pi)$ 定义谱幂，零谱点在 $t>0$ 取零。记
+$$
+\mathcal E_T(x)=\sum_j\int_0^T|\langle x,A^tg_j\rangle|^2dt.
+$$
+**定理 4.1。** 若一个有限 $T_0>0$ 上有 $a_0\|x\|^2\le\mathcal E_{T_0}(x)\le M_0\|x\|^2$，$a_0>0$，则每个有限 $T>0$ 上都有正的上下帧界。
+
+内积对第一变量线性。令 $E_A$ 为谱测度、$r_A=\max(1,\|A\|)$，在 $\operatorname{Re}z>0$ 取
+$$
+R_z=\int_{\lambda\ne0}e^{z\overline{\ell(\lambda)}}dE_A(\lambda),
+\quad R_0=I,
+\quad V_v=\int_{\lambda\ne0}e^{iv\overline{\ell(\lambda)}}dE_A(\lambda)+E_A(\{0\}).
+$$
+则 $R_t=(A^t)^*$、$\|R_t\|\le r_A^t$、$\|V_v\|\le e^{\pi|v|}$，并有 $R_{u+iv}=R_uV_v$、$R_{s+u}=R_uR_s$，$u>0,s\ge0$。
+
+$R_z$ 算子范数全纯：在 $\operatorname{Re}z\ge\varepsilon>0$ 的紧邻域，各阶乘子导数由 $\rho^{\operatorname{Re}z}(|\log\rho|+\pi)^ke^{\pi|\operatorname{Im}z|}$ 一致控制，并在 $\rho\downarrow0$ 时趋零；用较大紧邻域的二阶余项控制谱上确界差商。该证明不在零时刻对无界 $\log A$ 求算子范数导数。
+
+### 4.2 初始分析映射可以无界的局部观测控制
+
+对有限 $F$ 令 $C_Fx=(\langle x,g_j\rangle)_{j\in F}$。只使用原积分上界，取 $z_0=u_0+iv_0$、$\rho=\min(u_0/2,T_0/4)$、$s=\max(0,u_0-T_0/2)$，则
+$$
+\|C_FR_{z_0}x\|^2\le
+\frac{2M_0}{\pi\rho}r_A^{2s}e^{2\pi(|v_0|+\rho)}\|x\|^2.
+$$
+**证明。** 全纯有限向量函数的范数平方次调和，在半径 $\rho$ 圆盘用面积平均。圆盘位于 $[s,s+T_0]\times[v_0-\rho,v_0+\rho]$。固定虚部时，半群律把实轴积分化为对初态 $R_sV_vx$ 的原窗口观测，至多 $M_0r_A^{2s}e^{2\pi|v|}\|x\|^2$。再积虚部得结论。证毕。
+
+常数在右半平面的每个紧集上可统一，且独立于有限 $F$。对平方和单调取极限，完整正时间分析映射 $\mathcal C(z)x=(\langle R_zx,g_j\rangle)_j$ 属于 $\ell^2$ 并局部一致有界。
+
+### 4.3 解析传播与主证明
+
+标量全纯函数列若在右半平面局部一致有界，且在一个内部实区间的平方积分趋零，则在每个紧集一致趋零。证明是 Cauchy 估计、Arzelà–Ascoli 和紧集穷竭选出局部一致收敛子列；极限在该区间为零，由恒等定理全为零；每个子列都如此，故原列亦如此。
+
+若单位有界 $x_n$ 的 $\int_0^T\|\mathcal C(t)x_n\|^2dt\to0$，则其完整系数范数在每个紧集一致趋零。否则选择违例点 $z_n$、有限 $F_n$ 和单位测试向量 $v_n$，使 $|\langle C_{F_n}R_{z_n}x_n,v_n\rangle|$ 保持正下界；这些标量全纯函数有上一节统一界，在 $[T/4,T/2]$ 的积分趋零，与标量传播矛盾。没有使用无限维值域的错误 Montel 紧性。
+
+较长窗口的上界用 $N=\lceil T/T_0\rceil$ 分块可取 $M_T=M_0\sum_{k=0}^{N-1}r_A^{2kT_0}$。$T\ge T_0$ 的下界直接来自单调性。若 $0<T<T_0$ 的下界失败，取单位 $x_n$ 使 $\mathcal E_T(x_n)\to0$，置 $d=T/2$；前述传播使 $\sup_{[d,T_0]}\|\mathcal C(t)x_n\|\to0$。于是
+$$
+\mathcal E_{T_0}(x_n)\le\mathcal E_T(x_n)
++(T_0-d)\sup_{[d,T_0]}\|\mathcal C(t)x_n\|^2\to0,
+$$
+与 $a_0$ 矛盾。定理 4.1 得证。
+
+若 $A$ 有非零核，正时间读数在核上全零，主假设已排除它；零仍可为连续谱点。负实谱上只用 $(A^t)^*$，不能偷换为同主值分支的 $(A^*)^t$。
+
+### 4.4 有界对数特例与零谱聚集实例
+
+$A$ 有有界逆时，$Q=(\log|z|+i\operatorname{Arg}z)(A)$ 是有界 Borel 演算，不要求谱邻域有全纯对数，且 $A^t=e^{tQ}$。第 3.1 节的 Bessel 引理与任意正窗定理立即给出可逆特例。
+
+在 $\ell^2(\mathbb N_{\ge1})$ 上取 $Ae_n=e^{-n}e_n$、$g_n=\sqrt{2n}e_n$，则
+$$
+\mathcal E_T(x)=\sum_{n\ge1}(1-e^{-2nT})|x_n|^2,
+\quad a(T)=1-e^{-2T},\quad M(T)=1.
+$$
+初始族非 Bessel，$A^{-1}$ 无界，但所有正窗均稳定。该实例由逐坐标积分得到。
+
+<a id="sec-correlation"></a>
+## 5. 热相关、隐藏记忆和有限数据证书
+
+### 5.1 从相关曲率读取闭包缺陷
+
+正定二次系统中取 Gibbs 初态 $z_0\sim N(0,\beta^{-1}S^{-1})$，$y_t=Oz_t$，$O$ 满行秩。令
+$$
+C(t)=\mathbb E[y_ty_0^T],\quad
+F(t)=C(0)^{-1/2}C(t)C(0)^{-1/2}.
+$$
+第 2 节坐标给 $F(t)=Qe^{t\Omega}Q^T$、$QQ^T=I$、$\Omega^T=-\Omega$。因此 $F(0)=I,F(-t)=F(t)^T,\|F(t)\|\le1$。这是假定的平稳 Gibbs 初态，不推出单条轨迹遍历性。
+
+**定理 5.1。** 令 $\Pi=Q^TQ$、$D=F'(0)$，则
+$$
+M:=D^2-F''(0)=((I-\Pi)\Omega Q^T)^T((I-\Pi)\Omega Q^T)\succeq0,
+\quad \epsilon^2=\|M\|.
+$$
+$M=0$ 等价于精确闭包。未白化的表达为
+$$
+M=C(0)^{-1/2}[C'(0)C(0)^{-1}C'(0)-C''(0)]C(0)^{-1/2}.
+$$
+**证明。** $F''(0)=Q\Omega^2Q^T$，用 $\Omega^T=-\Omega$ 展开右侧 Gram 得 $D^2-Q\Omega^2Q^T$。零 Gram 等价于不变子空间，转回坐标即 $OA=KO$。证毕。
+
+### 5.2 记忆、随机力与当前状态预测风险
+
+取 $V$ 使 $\binom QV$ 正交，$\xi_0=\sqrt\beta S^{1/2}z_0\sim N(0,I)$，$u=Q\xi,v=V\xi$。设 $B_h=V\Omega Q^T,E_h=V\Omega V^T$。则
+$$
+\dot u=Du-B_h^Tv,\quad\dot v=B_hu+E_hv.
+$$
+变参数消元给
+$$
+\dot u(t)=Du(t)-\int_0^t\Lambda(t-s)u(s)ds+\eta(t),
+\quad\Lambda(t)=B_h^Te^{tE_h}B_h,
+\quad\eta(t)=-B_h^Te^{tE_h}v_0.
+$$
+独立标准高斯 $u_0,v_0$ 及 $E_h$ 反对称给出
+$$
+\mathbb E\eta(t)\eta(s)^T=\Lambda(t-s),\quad
+\Lambda(0)=M,\quad\|\Lambda(t)\|\le\|M\|.
+$$
+乘以 $u_0^T$ 取期望，得 $F'=DF-\Lambda*F$。再一次 Duhamel 与三角域积分得到
+$$
+\|F(t)-e^{tD}\|\le\tfrac12t^2\|M\|.
+$$
+这是条件均值的界，不能替代任意隐藏初态的 $O(\epsilon t)$ 轨迹界。有限封闭系统的记忆可不衰减 [M65, M65C, LL26, LL25]。
+
+**定理 5.2。** 对任意可测平方可积 $f(u_0)$，
+$$
+\mathbb E\|u_t-f(u_0)\|^2=\operatorname{tr}G_t+
+\mathbb E\|F(t)u_0-f(u_0)\|^2,
+\quad G_t=I-F(t)F(t)^T.
+$$
+故最小风险为 $\operatorname{tr}G_t=t^2\operatorname{tr}M+O(t^4)$。
+
+**证明。** 分解初态 $\xi_0=Q^Tu_0+V^Tv_0$，得到条件均值 $F(t)u_0$ 和协方差 $Qe^{t\Omega}(I-\Pi)e^{-t\Omega}Q^T=G_t$。条件期望正交性给风险分解。矩阵 Taylor 首项为 $t^2M+O(t^3)$，而迹 $r-\|F(t)\|_F^2$ 是偶函数，故迹余项从四阶开始。证毕。
+
+这是当前输入和 Gibbs 先验下所有预测器的共同下限。增加历史或传感器会改变条件化对象。
+
+### 5.3 从相关导数恢复必要状态秩
+
+块矩阵
+$$
+\mathcal H_m=[(-1)^iF^{(i+j)}(0)]_{i,j=0}^m
+$$
+等于 $[Q^T,\Omega Q^T,\ldots,\Omega^mQ^T]^T[Q^T,\Omega Q^T,\ldots,\Omega^mQ^T]$。每个块由反对称性直接核对，故其秩就是相应预测闭包维数。特别地
+$$
+\mathcal H_1=\begin{pmatrix}I&D\\-D&-F''(0)\end{pmatrix},
+\qquad\operatorname{rank}\mathcal H_1=r+\operatorname{rank}M,
+$$
+因为消去首块后的 Schur 补为 $M$。这只给第一轮增加的方向，最终维数须继续补全；有限精度应使用谱余量而非精确秩。
+
+### 5.4 一个有限延迟的偏差与最优误差阶
+
+已知 $\|\Omega\|\le b$，定义
+$$
+W_h=\frac{2I-F(h)F(h)^T-F(h)^TF(h)}{2h^2}.
+$$
+**定理 5.3。** $W_h\succeq0$。若 $\|\widehat F_h-F(h)\|\le\delta$，则
+$$
+\|\widehat W_h-M\|\le
+\eta(h,\delta):=\tfrac23b^4h^2+(2\delta+\delta^2)/h^2.
+$$
+大于 $\eta$ 的估计特征值个数是 $\operatorname{rank}M$ 的可靠下界。
+
+**证明。** $F$ 收缩给出半正定性。对 $P_t=F(t)F(t)^T$，有 $P''_0=-2M$ 和 $\|P_t^{(4)}\|\le16b^4$；双向 Taylor 给 $2b^4h^2/3$。每个乘积的数据扰动至多 $2\delta+\delta^2$。对称特征值的极小极大表述给最后结论。证毕。
+
+该上界在 $h_*^4=3(2\delta+\delta^2)/(2b^4)$ 处最小。带宽不可省：$\omega h=2\pi$ 的振子有 $F(h)=1,W_h=0$，但 $M=\omega^2$。
+
+**定理 5.4。** 只给一个标量延迟值 $d$、$|d-F(h)|\le\delta$，$F(0)=1$ 已知，模型为频率在 $[1,3]$ 内的有限正定振子，允许 $0<h\le h_0$ 且 $h_0$ 固定充分小。估计 $M=-F''(0)$ 的最优最坏误差为 $\Theta(\sqrt\delta)$。
+
+**证明。** 上界取 $b=3,h\asymp\delta^{1/4}$。下界第一组为 $F_a(t)=\cos2t$ 与 $F_b(t)=(1-p_h)\cos t+p_h\cos3t$，其中 $p_h=(\cos h-\cos2h)/(\cos h-\cos3h)$。充分小 $h$ 时权重合法、延迟完全相同，而曲率差为 $5h^2/4+O(h^4)$。第二组 $F_x(t)=\cos(\sqrt x t)$，$x_0=4,x_1=4+4\delta/h^2$，$\delta\le h^2$；由 $|\partial_xF_x(h)|\le h^2/2$，中点数据同时相容，曲率风险至少 $2\delta/h^2$。$\delta>h^2$ 时取 $x_1=8$ 得常数风险。合并 $h^2$ 与 $\delta/h^2$ 的下界即得平方根阶。证毕。
+
+这是单延迟信息模型的下限，不外推到多延迟或额外谱先验。
+
+### 5.5 白化、有限样本和误差传播
+
+设 $C_0\succ0$，相对估计误差为
+$$
+\|C_0^{-1/2}(\widehat C_0-C_0)C_0^{-1/2}\|\le\rho<1,
+\quad\|C_0^{-1/2}(\widehat C_h-C_h)C_0^{-1/2}\|\le\nu.
+$$
+则存在正交 $U$，使
+$$
+\|U^T\widehat C_0^{-1/2}\widehat C_h\widehat C_0^{-1/2}U-F(h)\|
+\le(\rho+\nu)/(1-\rho).
+$$
+证明：对 $L=\widehat C_0^{-1/2}C_0^{1/2}$ 作右极分解 $L=UR$，$R=(I+E_0)^{-1/2}$。对齐估计为 $R(F+E_h)R$；用谱界 $\|R\|\le(1-\rho)^{-1/2}$ 展开误差。范数和特征值证书不需要另行恢复 $U$。
+
+$N$ 次独立零均值 Gibbs 配对样本、未中心化协方差估计下，取 $0<\alpha<1$、$\kappa=2\sqrt{r(r+1)/(N\alpha)}<1$。以至少 $1-\alpha$ 的概率可用 $\rho=\nu=\kappa$，从而相关误差预算 $\delta_N=2\kappa/(1-\kappa)$。证明：真白化联合协方差 $\Gamma=\left(\begin{smallmatrix}I&F^T\\F&I\end{smallmatrix}\right)$ 满足 $\|\Gamma\|\le2,\operatorname{tr}\Gamma=2r$，Gaussian 四阶矩给
+$$
+\mathbb E\|\widehat\Gamma-\Gamma\|_F^2
+=((\operatorname{tr}\Gamma)^2+\operatorname{tr}\Gamma^2)/N
+\le4r(r+1)/N.
+$$
+Markov 不等式和块范数得到预算。这是保守充分界；固定 $r,\alpha$ 时组合给 $h\asymp N^{-1/8}$、曲率半径 $O(N^{-1/4})$，不是最优样本复杂度认领。相邻时间样本不自动独立，未知均值、测量噪声和相关采样另定。
+
+令
+$$
+\widehat D_h=(\widehat F_h-\widehat F_h^T)/(2h),
+\quad\gamma=b^3h^2/6+\delta/h,
+\quad M_+=\max(0,\lambda_{\max}\widehat W_h+\eta).
+$$
+中心差分给 $\|\widehat D_h-D\|\le\gamma$，两反对称生成元的 Duhamel 比较给
+$$
+\|F(t)-e^{t\widehat D_h}\|\le\tfrac12M_+t^2+\gamma t,
+$$
+$$
+\mathbb E\|u_t-e^{t\widehat D_h}u_0\|^2
+\le\operatorname{tr}G_t+r(\tfrac12M_+t^2+\gamma t)^2.
+$$
+若 $\sigma_{\min}(\widehat D_h)>\gamma$，则真实配对非退化；若另知 $M_+<\omega_*^2$，定理 2.5 给更具体的辛余量。有限精度近零值不证明精确闭合。
+
+### 5.6 Kubo 相关与同一矩阵几何
+
+有限正则量子模式、正定 Weyl 二次 $\widehat H=\widehat z^TS\widehat z/2$ 的 Gibbs 态下，定义
+$$
+C^K_{ij}(t)=\beta^{-1}\int_0^\beta
+\operatorname{Tr}[\rho_\beta e^{s\widehat H}\widehat y_i(t)e^{-s\widehat H}\widehat y_j]ds.
+$$
+则
+$$
+C^K(t)=\beta^{-1}Oe^{At}S^{-1}O^T.
+$$
+**证明。** 线性源 $\widehat H_f=\widehat H-f^T\widehat z$ 经 Weyl 位移完成平方，$Z(f)=Z(0)\exp(\beta f^TS^{-1}f/2)$。Duhamel 二阶导数为 $\beta^2C_z^K(0)$，与 Hessian $\beta S^{-1}$ 比较，再用 Heisenberg 线性演化。正定二次热迹与线性源导数有限；可先在共同 Schwartz 域计算再热迹延拓。证毕。[H14]
+
+Kubo 相关与经典 Gibbs 相关同形，但普通单模对称位置方差为 $\hbar\coth(\beta\hbar\omega/2)/(2\omega)$，Kubo 方差为 $1/(\beta\omega^2)$。经典条件概率风险和独立 Gaussian 样本保证不自动成为量子测量结论。
+
+保留两模相关算例：$\Omega=\operatorname{diag}(J_2,2J_2)$、$Q=\left(\begin{smallmatrix}1&0&0&0\\0&3/5&4/5&0\end{smallmatrix}\right)$ 给 $D=3J_2/5,M=\operatorname{diag}(16/25,64/25)$，首轮闭包四维。$t=.1,.25,.5$ 的当前读数最小均方风险分别为 $0.0316905865,0.1881986417,0.6264800864$。$b=2,\delta=.001$ 时，延迟 $.01,.05,.1,.2,.5$ 的证书半径分别为 $20.0110667,.8270667,.3067667,.4766917,2.6746707$；中间延迟能认证方向而两端可能不能。零认证数不表示零真实缺陷。
+
+<a id="sec-thermal"></a>
+## 6. 完整观测代数、热恢复与计算复杂度
+
+本章吸收 #8899 第 3–4 节；其辛/Gibbs 分解和全谱 Gaussian 结果已经分别并入第 2、3 节。量子部分现在取有限维子系统 $\mathbb C^d\otimes\mathbb C^e$，$d,e\ge2$，$\hbar=1$，不与正则无限维模式混用。
+
+### 6.1 有限 Weyl 证书与相互作用
+
+对 Hermitian $H$ 定义
+$$
+h_0=\operatorname{Tr}H/(de),\quad
+H_A=e^{-1}\operatorname{Tr}_BH-h_0I_A,\quad H_B=d^{-1}\operatorname{Tr}_AH,
+$$
+$$
+H_0=H_A\otimes I+I\otimes H_B,\quad V=H-H_0,
+\quad\mathbb E_A(X)=e^{-1}\operatorname{Tr}_B(X)\otimes I.
+$$
+因此 $\operatorname{Tr}_AV=\operatorname{Tr}_BV=0$。取 $d$ 维 Weyl 族 $W_{ab}=X^aZ^b$，定义 $R_{ab}=(\operatorname{id}-\mathbb E_A)[H,W_{ab}\otimes I]$，$\delta(H)=\max\|R_{ab}\|$，$\|M\|_{2,n}^2=\operatorname{Tr}M^\dagger M/(de)$。
+
+**定理 6.1。**
+$$
+R_{ab}=[V,W_{ab}\otimes I],\quad
+\|V\|\le\delta(H)\le2\|V\|,
+\quad\frac1{2d^2}\sum_{a,b}\|R_{ab}\|_{2,n}^2=\|V\|_{2,n}^2.
+$$
+完整可见矩阵代数对 $[H,\cdot]$ 闭合，当且仅当 $V=0$，亦当且仅当 $\delta(H)=0$。
+
+**证明。** 条件期望的双模性质与 $\mathbb E_A(V)=0$ 给第一式。对矩阵单位求有限几何和，Weyl twirl 为 $d^{-2}\sum(W\otimes I)V(W^\dagger\otimes I)=d^{-1}I\otimes\operatorname{Tr}_AV=0$。故 $V=d^{-2}\sum R_{ab}(W_{ab}^\dagger\otimes I)$，给左界，交换子范数给右界。展开平方后两个平方项各为 $\|V\|_{2,n}^2$，平均交叉项为零。Weyl 族张成整个可见矩阵代数，得到闭合等价。证毕。
+
+有限证书不自动具有多项式于量子比特数的测量成本。
+
+### 6.2 同一证书的预测、自由能和恢复界
+
+令 $U_t=e^{-itH}$、$f_\beta(H)=-\beta^{-1}\log\operatorname{Tr}e^{-\beta H}$、$\gamma_H=e^{-\beta H}/Z_H$、$G_H(\rho)=\beta^{-1}D(\rho\Vert\gamma_H)$。
+
+**定理 6.2。** 对包括相关初态在内的任意联合态，
+$$
+\|\operatorname{Tr}_B(U_t\rho U_t^\dagger)-e^{-itH_A}\rho_Ae^{itH_A}\|_1
+\le\min(2,2|t|\delta(H)),
+$$
+$$
+|f_\beta(H)-f_\beta(H_0)|\le\delta(H),
+\qquad |G_H(\rho)-G_{H_0}(\rho)|\le2\delta(H).
+$$
+**证明。** Duhamel 给 $\|U_t-U_t^0\|\le|t|\|V\|$，插入中间项给态迹距离至多两倍，偏迹收缩。特征值扰动 $|\lambda_j(H)-\lambda_j(H_0)|\le\|V\|$ 给配分函数比在 $e^{\pm\beta\|V\|}$ 内。最后用 $G_H=\operatorname{Tr}\rho H-\beta^{-1}S(\rho)-f_\beta(H)$。没有假设一般矩阵指数算子单调。证毕。
+
+**定理 6.3。** 记 $\gamma_A,\gamma_B$ 为局部 Gibbs 态，恢复 $\mathcal R\rho_A=\rho_A\otimes\gamma_B$。则
+$$
+D(\rho\Vert\gamma_A\otimes\gamma_B)-D(\rho_A\Vert\gamma_A)
+=I(A:B)_\rho+D(\rho_B\Vert\gamma_B)
+=D(\rho\Vert\mathcal R\rho_A).
+$$
+零缺陷等价于恢复精确，$V=0$ 时缺陷守恒。一般情况下令 $\Delta_H=G_H(\rho)-\beta^{-1}D(\rho_A\Vert\gamma_A)$，则
+$$
+|\Delta_H-\beta^{-1}D(\rho\Vert\mathcal R\rho_A)|\le2\delta(H),
+$$
+$$
+\|\rho-\mathcal R\rho_A\|_1
+\le\min\{2,\sqrt{2\beta(\Delta_H+2\delta(H))}\}.
+$$
+**证明。** 展开张量对数与熵即得等式。若 $\rho_A$ 奇异，正性保证 $\operatorname{supp}\rho\subseteq\operatorname{supp}\rho_A\otimes\mathcal H_B$：对应核方向的非负对角项总和为零，故该子空间被联合正算子消去。可在支持上合法展开。非负性给恢复刻画；局部酉保持边缘、联合熵与参考，给守恒。用定理 6.2 比较 $G_H$，再用自然对数下量子 Pinsker $\|\rho-\sigma\|_1^2\le2D(\rho\Vert\sigma)$，得两界并保证根号内非负。证毕。[MR17]
+
+$V\ne0$ 时 $\Delta_H$ 本身不被断言为非负数据处理缺陷。
+
+### 6.3 少量读数闭合的反例
+
+$H=Z\otimes Z$ 中 $\operatorname{span}\{I,Z\}\otimes I$ 闭合，但 $V=H,\delta=2$。$|+\rangle\langle+|\otimes|0\rangle\langle0|$ 与隐藏态 $|1\rangle$ 的版本有相同可见初态，之后可见因子分别按 $e^{-itZ}$ 与 $e^{itZ}$ 旋转；$t=\pi/4$ 的 $Y$ 期望相反，$Z$ 读数却始终相同。热态
+$$
+\gamma_H=\tfrac14(I-\tanh\beta\,Z\otimes Z)
+$$
+具有混合局部边缘而非乘积联合态。这区分不变线性观测空间与完整子系统代数。
+
+### 6.4 完美预测留下的热风险和精确计数
+
+允许任意有限轮局部于 $A$ 的量子仪器、等待及自适应分支，输出只含可见记录。若 $H=H_A\otimes I_B$、初态 $\rho_A\otimes\sigma_B$，归纳每一轮可见分支概率，全部数据与 $\sigma_B$ 无关。目标
+$$
+\theta(\sigma_B)=\beta^{-1}(\log e-S(\sigma_B))
+$$
+的最优最坏期望绝对风险恰为 $\log e/(2\beta)$：纯态与最大混合态给同一数据及目标区间两端，三角不等式给半区间下界，恒输出中点达到。
+
+对 $n$ 变量、$m$ 子句的 3CNF，取违反子句的对角投影 $\Pi_j$，
+$$
+H_F=(n+1)\sum_j\Pi_j,\quad
+H=|1\rangle\langle1|_A\otimes I+I\otimes H_F,
+\quad\beta=\log2.
+$$
+令 $N_k$ 为违反 $k$ 子句的赋值数，则 $Z_F=\sum_kN_k2^{-(n+1)k}$，$0\le Z_F-N_0\le1/2$，可见 $Z_A=3/2$，故
+$$
+\#\mathrm{SAT}(F)=\left\lfloor\frac23Z_H\right\rfloor.
+$$
+公共分母和分子的位数为多项式，投影至多三局域且相互对易，系数可用多项式个单位项替代。可见泄漏严格为零，仍携带精确计数困难。恢复公式使用隐藏 Gibbs 态不提供高效制备算法。此归约不承担固定格点、每点总强度或衰减前件，也没有证明固定精度自由能近似同样困难；它不属于正定二次 Gaussian 族 [GL11, ZP25, S25]。
+
+<a id="sec-em"></a>
+## 7. 电磁曲率、热响应与磁场设计
+
+### 7.1 最小耦合、Jacobi 与场约束
+
+带符号电荷 $e$、质量 $m>0$，光滑势给作用量
+$$
+L=m|\dot r|^2/2+eA\cdot\dot r-e\phi-U,
+\quad p=m\dot r+eA,
+\quad H=|p-eA|^2/(2m)+e\phi+U.
+$$
+Euler–Lagrange 的矢势偏导差给
+$$
+m\ddot r=-\nabla U+e(E+\dot r\times B),
+\quad E=-\nabla\phi-\partial_tA,\quad B=\nabla\times A.
+$$
+规范变换使 $L$ 增加全导数 $ed\chi/dt$。磁功率为零，物质能量导数为 $e\dot r\cdot E$。
+
+在静态动力学动量 $\pi=mv$ 中，令 $\mathcal B_{ij}=\varepsilon_{ijk}B_k$，即 $\mathcal Bv=v\times B$，Poisson 矩阵为
+$$
+J_B=\begin{pmatrix}0&I\\-I&e\mathcal B\end{pmatrix}.
+$$
+其坐标括号为 $\{r_i,\pi_j\}=\delta_{ij}$、$\{\pi_i,\pi_j\}=e\varepsilon_{ijk}B_k$。三个动量的 Jacobiator 为 $-e\nabla\cdot B$，其余坐标组合为零；一般函数的 Jacobiator 由坐标张量与一阶导数组合，因此 $e\ne0$ 时 Jacobi 当且仅当无散。处处可逆，辛形式
+$$
+\omega_B=\sum_i dr_i\wedge d\pi_i-\frac e2\sum_{ij}\mathcal B_{ij}dr_i\wedge dr_j
+$$
+的外微分正是 $-e(\nabla\cdot B)dr_1\wedge dr_2\wedge dr_3$。
+
+时空一形式 $a=A\cdot dr-\phi dt$ 的曲率 $\mathcal F=da$，由 $d^2=0$ 得 $\nabla\cdot B=0$ 和 $\partial_tB+\nabla\times E=0$；逆向势的存在先是局部 Poincaré 引理，全局需拓扑条件。源方程还需要场作用量、度量和电流 [Tong, GEMPIC]。
+
+### 7.2 场能、量子交换子与全局相位
+
+无源真空横向规范、周期或充分衰减边界下，$\Pi=-\epsilon_0E_T$，
+$$
+H_{\rm EM}=\int(|\Pi|^2/(2\epsilon_0)+|\nabla\times A_T|^2/(2\mu_0))dr
+$$
+的变分导数给 Maxwell 演化。一般有源有限域能量律为
+$$
+\frac d{dt}\int_\Omega(\epsilon_0|E|^2/2+|B|^2/(2\mu_0))dr
+=-\int_{\partial\Omega}(E\times B)/\mu_0\cdot n\,dS-\int_\Omega j\cdot E\,dr.
+$$
+它由两条旋度方程点乘并使用散度恒等式得到，边界项不能丢弃。
+
+共同光滑测试域上，$\widehat\pi_i=-i\hbar\partial_i-eA_i$ 满足
+$$
+[\widehat r_i,\widehat\pi_j]=i\hbar\delta_{ij}I,
+\qquad[\widehat\pi_i,\widehat\pi_j]=ie\hbar\varepsilon_{ijk}B_k.
+$$
+微分交换子消去二阶项即得；规范与 $\psi\mapsto e^{ie\chi/\hbar}\psi$ 相容。半径 $R$ 的通量环，局部 $B=0$ 仍可有 holonomy $e^{ie\Phi/\hbar}$，能谱
+$$
+E_n=\frac{\hbar^2}{2mR^2}(n-e\Phi/(2\pi\hbar))^2.
+$$
+对常切向势的 Fourier 模直接求平方即得 [AB59]。局部 Lorentz 场不决定全部全局量子相位。
+
+### 7.3 恒温磁耦合和摩擦的相关分离
+
+假设存在性、光滑性、可积性及分部积分无边界余项。静态 $B$、常数对称 $\Gamma\succeq0$ 下，
+$$
+dr=\pi\,dt/m,
+\quad d\pi=(-\nabla U+e\mathcal B\pi/m-\Gamma\pi/m)dt
++\sqrt{2\beta^{-1}\Gamma}\,dW.
+$$
+Gibbs 密度 $g_\beta\propto e^{-\beta(|\pi|^2/(2m)+U)}$ 不变，且
+$$
+\frac d{dt}D(\rho\Vert g_\beta)
+=-\beta^{-1}\int\rho\,\nabla_\pi\log(\rho/g_\beta)^T\Gamma
+\nabla_\pi\log(\rho/g_\beta)\le0.
+$$
+证明：Hamilton–Lorentz 漂移无散并与能量梯度正交，摩擦扩散写为 $\beta^{-1}\nabla_\pi\cdot[\Gamma\rho\nabla_\pi\log(\rho/g_\beta)]$；分部积分。固定磁场不自动具有普通详细平衡，物理时间反演也翻转磁场；变温或消惯性另有条件 [Bir17]。
+
+常数磁场、平衡初态下，$K_v(t)=\beta m\mathbb E[v_tv_0^T]$ 满足
+$$
+K_v'(0+)=(e\mathcal B-\Gamma)/m.
+$$
+位置速度独立、速度零均值使势力交叉项为零，噪声增量与初态无关，直接用生成元求导得到。因此反对称部分读取磁耦合，对称部分读取摩擦；这一式允许非二次势。
+
+### 7.4 一个可校准的带电振子
+
+固定 $U=m\omega_0^2(x^2+y^2)/2$，$c=eB_0/m$ 为带符号回旋频率，取 $\xi=(\omega_0x,\omega_0y,v_x,v_y)$，则
+$$
+\dot\xi=\Omega_c\xi,
+\quad\Omega_c=\begin{pmatrix}0&0&\omega_0&0\\0&0&0&\omega_0\\-\omega_0&0&0&c\\0&-\omega_0&-c&0\end{pmatrix}.
+$$
+$\Omega_c$ 反对称，能量 $m|\xi|^2/2$ 守恒，Gibbs 协方差 $(\beta m)^{-1}I$ 与 $c$ 无关。正则 Lebesgue 配分函数 $Z_{\rm cl}=(2\pi)^2/(\beta^2\omega_0^2)$，未除相空间量子归一因子。
+
+特征多项式为 $\lambda^4+(2\omega_0^2+c^2)\lambda^2+\omega_0^4$，正频率
+$$
+\omega_\pm=\sqrt{\omega_0^2+c^2/4}\pm c/2,
+\quad\omega_+\omega_-=\omega_0^2.
+$$
+对称规范的二次量子 Hamiltonian 是频率 $\sqrt{\omega_0^2+c^2/4}$ 的各向同性振子减 $cL_z/2$。圆偏振算子对角化给 Fock–Darwin 谱 $E_{n_+,n_-}=\hbar\omega_+(n_++1/2)+\hbar\omega_-(n_-+1/2)$，因而
+$$
+Z_q=[4\sinh(\beta\hbar\omega_+/2)\sinh(\beta\hbar\omega_-/2)]^{-1}.
+$$
+高温首项与 $Z_{\rm cl}/(2\pi\hbar)^2$ 一致。$c=\omega_0$ 时频率比为 $\varphi,\varphi^{-1}$，这是参数实例，不是普遍黄金常数 [LFO90]。
+
+### 7.5 磁激活、短窗常数和有限最优场
+
+读数 $y=C\xi$、$C=(1,0,0,0)$，参数已知。导数观测矩阵为
+$$
+\mathcal O=\begin{pmatrix}1&0&0&0\\0&0&\omega_0&0\\-\omega_0^2&0&0&c\omega_0\\0&-c\omega_0^2&-\omega_0(c^2+\omega_0^2)&0\end{pmatrix},
+\quad\det\mathcal O=-c^2\omega_0^4.
+$$
+$c=0$ 时闭包二维，$c\ne0$ 时四维且每个正窗稳定；恢复为
+$$
+\xi_1=y,\quad\xi_3=y'/\omega_0,\quad
+\xi_4=(y''+\omega_0^2y)/(c\omega_0),
+\quad\xi_2=-[y'''+(c^2+\omega_0^2)y']/(c\omega_0^2).
+$$
+矩阵可逆与解析性排除非零不可见初态，有限维紧性给正 Gram 下界。对固定 $c\ne0$，由第 3.3 节 $V^{-1}e_3=(0,-6/(c\omega_0^2),0,0)^T$ 得
+$$
+a_c(T)\sim\omega_0^4c^2T^7/100800.
+$$
+它是固定参数短窗极限，不能把 $c\to\infty$ 一并代入。
+
+对每个固定 $T>0$，$a_c(T)$ 连续且
+$$
+a_0(T)=0,\qquad0\le a_c(T)\le
+\frac{\omega_0^2T}{\omega_0^2+c^2/4}.
+$$
+证明上界时取单位初态 $e_3$，复位置 $X=\xi_1+i\xi_2$ 满足
+$$
+X(t)=\frac{\omega_0}{i(\omega_++\omega_-)}(e^{i\omega_-t}-e^{-i\omega_+t}).
+$$
+其模长平方的上界积分即得。两端 $c\to0,\infty$ 都趋零，而非零处为正，因此 $c>0$ 上取得有限非零全局最大值；不主张唯一性。这个设计目标是最弱方向恢复，不等于第 8 节的总互信息。
+
+### 7.6 已知状态模型与未知场参数必须分开
+
+令 $f_c(t)=Ce^{t\Omega_c}C^T$，$R=\operatorname{diag}(1,-1,1,-1)$。由于 $R\Omega_cR=\Omega_{-c}$、$CR=C$、Gibbs 初态在反射下不变，整个单通道被动平衡路径分布在 $c$ 与 $-c$ 下完全相同。等先验符号判别的错误率至少 $1/2$。这是参数不可辨识，不冲突于参数已知时的初态可观测性。
+
+直接计算得到
+$$
+f_c''(0)=-\omega_0^2,\quad f_c^{(4)}(0)=\omega_0^2(\omega_0^2+c^2).
+$$
+第一轮缺陷与磁场无关，四阶信息可恢复 $|c|$。两个位置的定向交叉相关满足 $F_{pp,c}^{(3)}(0)=-c\omega_0^2J_2$，两个速度满足 $F_{vv,c}'(0)=cJ_2$，可以区分方向。额外受控初态也能改变观测等价类。
+
+学习势 $A_\theta,\phi_\theta,U_\theta$ 并用旋度和梯度生成场，能在光滑局部图内保持齐次 Maxwell 约束；源、材料、边界和全局 holonomy 仍需另外约束。仓库 `GoldenLorentzUpdate` 的不定二次型命名不承担这里的电磁力证明。
+
+### 7.7 Tesla 与实际能流
+
+tesla 是 $B$ 的 SI 单位，$1\,\mathrm T=1\,\mathrm{Wb/m^2}=1\,\mathrm{N/(A\,m)}$ [NIST]。Tesla 的 US381968A 专利用错相交流产生旋转磁极。理想两相模型 $B(t)=B_0(\cos\nu t\,e_x+\sin\nu t\,e_y)$ 幅值固定而方向旋转；它将相位与旋转结构变成机电耦合。输入电功、场能、机械功和损耗必须平衡 [Tesla1888]。
+
+<a id="sec-unified-results"></a>
+## 8. 合编后的新推论：同一耦合的热信息、总信息和磁设计
+
+本章由第 3 节 Gaussian 实验、第 5 节相关缺陷和 #8899 的条件 KL 恢复身份共同推导。固定有限维 $\xi_0\sim N(0,I_n)$、$\dot\xi=\Omega\xi$、$\Omega^T=-\Omega$，$Q\in\mathbb R^{r\times n}$ 满行正交。取 $V$ 使 $\binom QV$ 正交，$u=Q\xi_0,v=V\xi_0$ 独立标准 Gaussian。这里温度已吸收进坐标；物理自由能缺陷需再乘 $\beta^{-1}$。
+
+固定 $T>0$，$\mathcal O_T\xi(t)=Qe^{t\Omega}\xi$。在其有限维轨迹像上取正交积分坐标，用同一 $s>0$ 表示每个积分坐标的噪声方差：
+$$
+Y=L_T\xi_0+\sqrt s\,\varepsilon,
+\quad L_T^TL_T=G_T:=\int_0^Te^{-t\Omega}Q^TQe^{t\Omega}dt.
+$$
+令 $L_u=L_TQ^T,L_v=L_TV^T$。这个实验可以用有限充分积分坐标表述；比较不同已校准设计时可用它们轨迹像的共同有限维和空间，额外纯噪声坐标不改变信息。
+
+### 8.1 隐藏热恢复缺陷就是条件信息
+
+**定理 8.1。** 令 $\mu_Y$ 为完整后验，$\nu_Y$ 为其当前可见变量 $u$ 的边缘，$\gamma_v=N(0,I_{n-r})$。用恢复 $\mathcal R\nu_Y=\nu_Y\otimes\gamma_v$，则平均热恢复缺陷
+$$
+\boxed{\Delta_T:=\mathbb E_YD(\mu_Y\Vert\nu_Y\otimes\gamma_v)
+=I(v;Y\mid u)
+=\tfrac12\log\det(I_{n-r}+L_v^TL_v/s).}
+$$
+它也等于 $I(\xi_0;Y)-I(u;Y)$。固定 $s$ 时，令 $M$ 为第 5.1 节同一相关曲率，
+$$
+\boxed{\Delta_T=\frac{T^3}{6s}\operatorname{tr}M+O(T^5).}
+$$
+对任意 $T>0$，$\Delta_T=0$ 当且仅当当前子空间精确闭合。
+
+**证明。** KL 链式恒等式与 $u,v$ 的先验独立性给
+$$
+\Delta_T=h(v)-h(v|u,Y)=I(v;Y|u).
+$$
+条件在 $u$ 上时，数据减去 $L_uu$ 即为 $L_vv+\sqrt s\varepsilon$，Gaussian 熵差给行列式。链式互信息给另一表达。
+
+$L_v^TL_v=\int_0^T V e^{-t\Omega}Q^TQe^{t\Omega}V^Tdt$，其范数为 $O(T^3)$。其迹等于 $\int_0^T\operatorname{tr}(I-F(t)F(t)^T)dt$，第 5.2 节给 $T^3\operatorname{tr}M/3+O(T^5)$。对 logdet 展开，平方余项为 $O(T^6)$，得到公式。零行列式信息等价于 $Qe^{t\Omega}V^T=0$ 在整个窗口成立；其导数使隐藏耦合为零，反向由不变子空间成立。证毕。
+
+这把可观测曲率、隐藏热恢复和历史信息放在同一个实现中。较大的 $\Delta_T$ 表示后验已经包含更多不能仅用当前边缘加平衡隐藏态复原的信息，不能将它误读为算法损失更大或真实耗热更多。非 Gibbs 先验时，第 2.3、6.3 节还有隐藏非平衡与相关性项，不能仅用本式替代。
+
+### 8.2 固定观测预算下的总信息及最优能量风险
+
+设 $\Pi=Q^TQ$。比较基线是同一传感器持续测一个不再旋转的子空间，Gram 为 $T\Pi$，信息与风险为
+$$
+I_{\rm fixed}=\tfrac r2\log(1+T/s),\quad
+R_{\rm fixed}=\tfrac12(n-r+r/(1+T/s)).
+$$
+**定理 8.2。** 对任意反对称 $\Omega$，
+$$
+\frac r2\log(1+T/s)\le I_T\le
+\frac n2\log(1+rT/(ns)),
+$$
+$$
+\frac{n}{2(1+rT/(ns))}\le R_T\le
+\tfrac12(n-r+r/(1+T/s)).
+$$
+左信息界或右风险界取等，当且仅当 $M=0$。对固定 $s>0$，
+$$
+\boxed{I_T-I_{\rm fixed}=\frac{T^4}{24s^2}\operatorname{tr}M+O(T^5),}
+$$
+$$
+\boxed{R_{\rm fixed}-R_T=\frac{T^4}{12s^2}\operatorname{tr}M+O(T^5).}
 $$
 
+**证明。** $P_t=e^{-t\Omega}\Pi e^{t\Omega}$ 是秩 $r$ 正交投影，故 $0\preceq G_T\preceq TI$、$\operatorname{tr}G_T=rT$。对每个特征值在 $[0,T]$ 使用严格凹函数 $\log(1+x/s)$ 的弦下界，以及严格凸函数 $(1+x/s)^{-1}$ 的弦上界，求和得对应端点界；Jensen 给另一端界。
+
+端点取等要求 $G_T$ 的特征值仅为零或 $T$。由
 $$
-\partial_t\widehat y=K\widehat y=J_rP^{-1}\widehat y.
+rT^2-\operatorname{tr}G_T^2
+=\tfrac12\int_0^T\int_0^T\|P_t-P_u\|_F^2dtdu
 $$
+知这当且仅当所有 $P_t$ 相同，即 $[\Omega,\Pi]=0$，等价于 $M=0$。
 
-约化二次 Hamilton 算子为
-
+又
 $$
-\widehat H_r=\tfrac12\widehat y^TP^{-1}\widehat y.
+\operatorname{tr}G_T^2=\int_0^T\int_0^T\|F(t-u)\|_F^2dtdu
+=rT^2-\tfrac16\operatorname{tr}M\,T^4+O(T^6).
 $$
+这里 $\int\int(t-u)^2=T^4/6$。对 $k\ge3$，$G_T/T=\Pi+(T/2)[\Pi,\Omega]+O(T^2)$；对迹幂的一阶项为零，因此 $\operatorname{tr}G_T^k=rT^k+O(T^{k+2})$。分别展开 $\tfrac12\operatorname{tr}\log(I+G_T/s)$ 和 $\tfrac12\operatorname{tr}(I+G_T/s)^{-1}$，最早差异来自平方项，得到两个四阶常数。证毕。
 
-**证明。** CCR 对二次对称乘积给出 $\partial_t\widehat z=(i/\hbar)[\widehat H,\widehat z]=JS\widehat z$。线性组合的交换子由 $OJO^T$ 给出，动力学由 $OA=KO$ 闭合。有效 Hamilton 算子的同一交换子计算产生 $J_rP^{-1}\widehat y$。$\square$
+与定理 8.1 合并可见：隐藏条件信息以三阶出现，而总信息相对固定子空间的净增益以四阶出现。信息既向隐藏方向重新分配，也影响当前可见边缘的精度；不能把条件信息全部当作净增益。该结论在指定 Gaussian 观测中证明，不从一般 I-MMSE 关系自动移植到任意场或量子测量 [GSV05]。
 
-进一步，$NJO^T=0$ 给出 $N\widehat z$ 与每个 $\widehat y_i$ 对易。定理 6.1 的对称二次能量分解因而也在共同域上成立。对相应 Weyl 算子代数，演化的线性标签始终留在 $W$ 中，故可见子代数保持不变。量子 Kalman 分解的相关文献为 [ZGPG18, ZLDP23]。
+### 8.3 磁场可观测性与总信息的反向偏好
 
-### 推论 7.2（协方差的不确定性约束）
+在第 7.4 节磁振子中，用热归一初态 $N(0,I_4)$、$Q=(1,0,0,0)$ 和相同积分噪声方差 $s$。定义 $I_c(T),R_c(T)$ 为第 3.4 节的信息及全状态能量风险。所有生成元、频率和状态范数均固定，$T\downarrow0$。
 
-对具有有限二阶矩的态，令 $\Sigma$ 为对称协方差。约化协方差满足
-
+**定理 8.3。** 固定 $c\ne0$、$s>0$，
 $$
-\Sigma_r=O\Sigma O^T,\qquad
-\Sigma_r+\tfrac{i\hbar}{2}J_r\succeq0.
+\boxed{I_c(T)-I_0(T)=-\frac{\omega_0^2c^2}{720s^2}T^6+O(T^7),}
 $$
-
-该约束由约化流保持。
-
-**证明。** 对任意复系数 $c$，算子 $X=\sum_jc_j(\widehat y_j-\langle\widehat y_j\rangle)$ 满足 $\langle X^\dagger X\rangle\ge0$，展开即得半正定式。又 $KJ_r+J_rK^T=0$，所以 $e^{Kt}J_re^{K^Tt}=J_r$。协方差和不确定性矩阵均按这个实可逆流作合同变换，保持半正定性。$\square$
-
-这里有限的是正则模式数，每个模式的 Hilbert 空间仍为无限维；有限维矩阵不能满足非零常数的完整 CCR，因为交换子的迹为零。本节证明子代数的动力学闭合，不从均值与协方差认领任意量子态的完整恢复。
-
-## 8. 不完全闭包的预测误差预算
-
-### 定理 8.1（闭包残差的线性时间界）
-
-保留 $S\succ0$、$A=JS$，现在只要求 $O$ 满行秩，不要求其行空间不变。定义
-
 $$
-P=OS^{-1}O^T,\quad J_r=OJO^T,\quad K=J_rP^{-1},
-\quad E_{\mathrm{cl}}=OA-KO,
+\boxed{R_c(T)-R_0(T)=\frac{\omega_0^2c^2}{360s^2}T^6+O(T^7).}
 $$
+因此充分短的固定噪声窗口中，非零磁场虽然把精确预测闭包从二维提升到四维，却给出较低总信息和较高平均全状态风险。
 
+**证明。** 单通道相关满足
 $$
-\epsilon_{\mathrm{cl}}
-=\|P^{-1/2}E_{\mathrm{cl}}S^{-1/2}\|_2.
+f_c(t)=1-\tfrac12\omega_0^2t^2
++\tfrac1{24}\omega_0^2(\omega_0^2+c^2)t^4+O(t^6).
 $$
-
-则对全部 $z_0$ 与 $t\ge0$，
-
+故 $f_c(t)^2-f_0(t)^2=\omega_0^2c^2t^4/12+O(t^6)$。对两个时间积分，$\int_0^T\int_0^T(t-u)^4dtdu=T^6/15$，于是
 $$
-\boxed{\|Oe^{At}z_0-e^{Kt}Oz_0\|_{P^{-1}}
-\le t\,\epsilon_{\mathrm{cl}}\|z_0\|_S.}
+\operatorname{tr}G_{c,T}^2-\operatorname{tr}G_{0,T}^2
+=\omega_0^2c^2T^6/180+O(T^8).
 $$
+迹的一次项都精确等于 $T$。因为传感器秩一，$k$ 次迹幂可写成 $k$ 个时间积分中的环乘积 $\prod_j f_c(t_j-t_{j+1})$；单个相关差从四阶出现，故 $k\ge3$ 的差为 $O(T^{k+4})$。logdet 与逆矩阵的级数最早差异来自平方项，其系数分别为 $-1/(4s^2)$ 和 $1/(2s^2)$，得到结论。证毕。
 
-即使 $J_r$ 退化，该估计仍成立；$J_r$ 可逆时约化系统具有非退化辛形式。
+这与定理 8.2 不矛盾：零磁场仍有位置到速度的振动信息传输，已经不是固定子空间基线。比较不同磁场不满足耦合强弱的单调信息定理。
 
-**证明。** 由于
-
+**推论 8.4（改变噪声日程会反转设计偏好）。** 若改取 $s=T^8$，固定 $c\ne0$，则
 $$
-A^TS+SA=0,\qquad K^TP^{-1}+P^{-1}K=0,
+I_c(T)=8\log(1/T)+O(1),\quad R_c(T)\to0,
 $$
-
-原流和约化流在各自能量范数中等距。误差 $e(t)=Oe^{At}z_0-e^{Kt}Oz_0$ 满足
-
 $$
-\dot e=Ke+E_{\mathrm{cl}}e^{At}z_0,\qquad e(0)=0.
+I_0(T)=6\log(1/T)+O(1),\quad R_0(T)\to1.
 $$
+**证明。** 非零磁场的四层指数为 $1,3,5,7$；零磁场只存在 $1,3$ 两个可见层，另两维永远不被观测。把这些指数代入第 3.4 节，得信息系数与标准 Gaussian 先验下的风险极限。证毕。
 
-Duhamel 公式给出
+因此“有没有完整预测状态”“给定噪声下信息有多少”“最弱方向恢复多稳”是不同设计目标。先指定目标和噪声尺度，才能比较传感器或磁场；不能把单个信息指标当作所有目标的排序。
 
+### 8.4 本次可重复检错
+
+本章附属程序以符号矩阵级数核验六阶信息和风险系数，使用 85 位精度 block exponential 计算 Gramian；随机有限例验证投影信息界、风险界及条件 KL/互信息恒等式。它只检验有限实例与代数，不替代一般证明。
+
+在 $\omega_0=c=s=1$、$T=.003$ 时，实际计算
 $$
-e(t)=\int_0^t e^{K(t-s)}E_{\mathrm{cl}}e^{As}z_0\,ds.
+I_1-I_0=-1.0094685016119447432\times10^{-18},
+\quad R_1-R_0=2.0159176546122207828\times10^{-18}.
 $$
+与各自六阶首项的比值为 $0.9970059275$ 与 $0.9955148912$，符号方向均吻合。这个小量使用高精度计算，普通双精度不足以在该时间窗可靠分辨。数值不是硬件实验，未训练或比较神经网络。
 
-对积分逐项使用两边的等距性及诱导算子范数，得结论。$\square$
+<a id="sec-sources"></a>
+## 9. 原结果迁移、来源和未完成义务
 
-该界针对给定 $A,S,O$；由数据估计这些对象时，必须另外计算辨识误差。它也不直接覆盖非线性模型的有限时间误差。
+### 9.1 统一迁移表
 
-## 9. 观察时钟、联合更新与混叠
+| 原正文 | 在本主卷的对应位置 |
+|---|---|
+| `SYMPLECTIC_PREDICTIVE_COMPLETION.md` v1 §1–3 | §1.1–1.3 |
+| 同卷 §4–8、§10–11 | §2.1–2.5 |
+| 同卷 §9 | §3.5 |
+| `PREDICTIVE_OBSERVABILITY_TIME_WINDOWS.md` §1–8、§10 | §3.1–3.6，相关余量在 §2.4 |
+| 同卷 §12–20 | §5.1–5.6 |
+| `NORMAL_POWER_FRAME_TIME_INVARIANCE.md` | §4 的完整证明与实例 |
+| `ELECTROMAGNETIC_PREDICTIVE_GEOMETRY.md` | §7 |
+| #8899 `PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md` §2 | §2.3 |
+| #8899 §3–4 | §6 |
+| #8899 §5–6 | §3.3–3.5 |
+| 本次共同推导 | §8 |
 
-### 命题 9.1（单时钟的精确闭包条件）
+来源快照：#8891 `8d58dc56d0e6283e725054b5a25c6d5ce8104cc6`，#8899 `e300b5df71f5ce08d857e8f2000a9e495813cdaf`。这次是对尚在 PR 中的正文作合编，不修改已冻结 Lean 或机器账本。旧正文可由 Git 历史恢复；旧文件名只提供主卷跳转，后续数学内容仅在主卷追加。
 
-令 $F=e^{\Delta A}$、$\Delta>0$。离散观测闭包总包含于连续观测闭包。若 $A$ 在复数域可对角化，且 $\lambda\mapsto e^{\Delta\lambda}$ 在不同特征值上单射，则两者相同。
+### 9.2 仓库接口
 
-**证明。** 有限维不变空间对矩阵指数保持不变，给出第一方向。无碰撞时，对有限集合 $e^{\Delta\lambda}$ 作 Lagrange 插值，得到多项式 $p$ 满足 $p(e^{\Delta\lambda})=\lambda$；可对角化性给出 $A=p(F)$。矩阵均实，取该多项式与其系数共轭的平均可使系数实。因此任何 $F^T$ 不变空间也对 $A^T$ 不变，得到反向包含。$\square$
+`FORMAL_DYNAMICAL_INTERFACE_RESIDUALS.md` 给一般目标商和 carry 障碍。
 
-**反例。** $H=(q^2+p^2)/2$、观测 $q$ 的连续闭包为二维；$\Delta=2\pi$ 时 $F=I$，采样预测只需一维。这不与定理 5.1 冲突，因为离散闭包不再要求对 $A^T$ 闭合。
+`D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.lean` 给有限状态的预测等价与唯一商更新；它不直接证明连续空间维数下界。
 
-### 定理 9.2（两种无理比间隔的共同闭包）
+`D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.lean` 和 `AnalyticFlowGeneration.lean` 给有限矩阵的观测轨道与交换子闭包；正则模式部分另有无限维算子域。
 
-令 $A=JS$、$S\succ0$，$\Delta_1,\Delta_2>0$，且 $\Delta_2/\Delta_1$ 无理。设 $F_j=e^{\Delta_jA}$，定义
+`D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean` 给逆算子前件下的消元结合性。`D5/S3/Observer/Hankel/HoKalmanPerturbation.lean` 给观测逆裕量及后验线性求解误差；本卷未把它们冒认为全部新增理论已形式化。
 
-$$
-W_{12}=\operatorname{span}\{(F_1^T)^k(F_2^T)^\ell c:
- c\in W_0,\ k,\ell\ge0\}.
-$$
+### 9.3 参考文献
 
-则 $W_{12}=W$。
+[SS16] J. M. Sanz-Serna. *Symplectic Runge–Kutta Schemes for Adjoint Equations, Automatic Differentiation, Optimal Control, and More*. SIAM Review 58(1), 3–33 (2016). DOI: https://doi.org/10.1137/151002769.
 
-**证明。** $A$ 相似于实反对称矩阵 $S^{1/2}JS^{1/2}$，因此可对角化且具有有限纯虚谱。若两个不同频率 $\omega,\omega'$ 的相位对相同，则
+[CRBD18] R. T. Q. Chen et al. *Neural Ordinary Differential Equations*. NeurIPS 2018. https://arxiv.org/abs/1806.07366.
 
-$$
-(\omega-\omega')\Delta_j=2\pi m_j\quad(j=1,2)
-$$
+[J20] I. Joseph. *Koopman–von Neumann approach to quantum simulation of nonlinear classical dynamics*. Physical Review Research 2, 043102 (2020). https://doi.org/10.1103/PhysRevResearch.2.043102.
 
-且 $m_1,m_2$ 为非零整数，于是 $\Delta_2/\Delta_1=m_2/m_1$，矛盾。
+[AS97] A. Ashtekar, T. A. Schilling. *Geometrical Formulation of Quantum Mechanics*. https://arxiv.org/abs/gr-qc/9706069.
 
-因此有限谱上的相位对两两不同。对每个谱点，逐一选择能够区分它与其他点的一个坐标，乘起相应的一元线性因子，可构造在该点为 1、其余点为 0 的二元多项式。线性组合得到 $p$ 满足
+[McA19] S. McArdle et al. *Variational ansatz-based quantum simulation of imaginary time evolution*. npj Quantum Information 5, 75 (2019). https://doi.org/10.1038/s41534-019-0187-2.
 
-$$
-A=p(F_1,F_2).
-$$
+[G97] M. Grmela, H. C. Öttinger. *Dynamics and thermodynamics of complex fluids. I. Development of a general formalism*. Physical Review E 56, 6620 (1997). https://doi.org/10.1103/PhysRevE.56.6620.
 
-取系数共轭平均可令 $p$ 为实系数。故共同更新闭包对 $A^T$ 不变；连续闭包又对两个指数不变，得到相等。$\square$
+[VSM02] A. van der Schaft, B. Maschke. *Hamiltonian formulation of distributed-parameter systems with boundary energy flow*. Journal of Geometry and Physics 42 (2002), 166–194. https://doi.org/10.1016/S0393-0440(01)00083-3.
 
-本定理需要混合词，即观测时间 $k\Delta_1+\ell\Delta_2$ 所定义的联合更新闭包。无理比可以选黄金比，也可以选其他无理数。精确谱分离不提供统一有限噪声条件数。
+[L16] H. Lei, N. A. Baker, X. Li. *Data-driven parameterization of the generalized Langevin equation*. https://arxiv.org/abs/1606.02596.
 
-### 反例 9.3（两条独立采样序列不足以替代共同闭包）
+[L76] G. Lindblad. *On the generators of quantum dynamical semigroups*. Communications in Mathematical Physics 48, 119–130 (1976). https://doi.org/10.1007/BF01608499.
 
-令 $\alpha=2\pi/\Delta_1$、$\beta=2\pi/\Delta_2$、$\omega_0>0$，且两个间隔之比无理。定义
+[CM17] E. A. Carlen, J. Maas. *Gradient flow and entropy inequalities for quantum Markov semigroups with detailed balance*. https://arxiv.org/abs/1609.01254.
 
-$$
-g(t)=\cos((\omega_0+\alpha+\beta)t)
--\cos((\omega_0+\alpha)t)
--\cos((\omega_0+\beta)t)+\cos(\omega_0t).
-$$
+[C10] A. A. Clerk et al. *Introduction to Quantum Noise, Measurement, and Amplification*. https://arxiv.org/abs/0810.4729.
 
-则对全部非负整数 $k,\ell$，
+[W12] C. Weedbrook et al. *Gaussian Quantum Information*. Reviews of Modern Physics 84, 621–669 (2012). https://arxiv.org/abs/1110.3234. 使用 Williamson、正则酉及张量热分解。
 
-$$
-g(k\Delta_1)=g(\ell\Delta_2)=0,
-\qquad g''(0)=-2\alpha\beta\ne0.
-$$
+[ZGPG18] G. Zhang, S. Grivopoulos, I. R. Petersen, J. E. Gough. *The Kalman Decomposition for Linear Quantum Systems*. IEEE TAC 63, 331–346 (2018). https://arxiv.org/abs/1606.05719v4.
 
-所以两条独立采样序列都无法把 $g$ 与零轨迹区分。
+[ZLDP23] G. Zhang, J. Li, Z. Dong, I. R. Petersen. *The Quantum Kalman Decomposition: A Gramian Matrix Approach*. https://arxiv.org/abs/2312.16082v1.
 
-**证明。** 对第一条序列，$\alpha k\Delta_1=2\pi k$，余弦项成对抵消；第二条由 $\beta\ell\Delta_2=2\pi\ell$ 同理。二阶导数直接展开得非零值。它是四个不同正频率的实线性组合，可由四个独立正定振子 $H_j=(p_j^2+\nu_j^2q_j^2)/2$、零初始动量及相应的 $\pm1$ 初始位置实现；观测取 $\sum_jq_j$。$\square$
+[BGH23] P. Buchfink, S. Glas, B. Haasdonk. *Symplectic Model Reduction of Hamiltonian Systems on Nonlinear Manifolds and Approximation with Weakly Symplectic Autoencoder*. https://doi.org/10.1137/21M1466657.
 
-本反例位于正定 Hamilton 系统内部，明确区分 $W_{12}$ 与两条独立序列各自闭包的线性和。
+[AHP19] A. Aldroubi, L. X. Huang, A. Petrosyan. *Frames induced by the action of continuous powers of an operator*. JMAA 478(2), 1059–1084 (2019). https://arxiv.org/abs/1801.10103; https://doi.org/10.1016/j.jmaa.2019.05.066. 使用其幂分支及 Conjecture 5.6。
 
-## 10. 非线性观测的闭合条件及其边界
+[ACKM26] A. Aldroubi, C. Cabrelli, I. Krishtal, U. Molter. *Dynamical Sampling: A Survey*. https://arxiv.org/abs/2511.10769v3; https://doi.org/10.1007/s44007-026-00215-y. Conjecture 2 为本研究线原问题来源；本文不将合编当作独立确认问题状态。
 
-### 命题 10.1（非线性预测与 Poisson 配对的相容条件）
+[DMM21] R. Díaz Martín, I. Medri, U. Molter. *Continuous and discrete dynamical sampling*. https://arxiv.org/abs/2006.08046; https://doi.org/10.1016/j.jmaa.2021.125060. 既有连续/离散关系不认领为新增结果。
 
-令 $\Phi:U\subset\mathbb R^{2n}\to V\subset\mathbb R^r$ 为光滑满射次浸没，$J_r$ 为常数可逆反对称矩阵。若
+[SJP15] E. Schmerling, L. Janson, M. Pavone. *Optimal Sampling-Based Motion Planning under Differential Constraints: the Drift Case with Linear Affine Dynamics*. CDC 2015，2574–2581. https://pmc.ncbi.nlm.nih.gov/articles/PMC4795843/; https://doi.org/10.1109/CDC.2015.7402604. 全谱小时间 Gramian 幂次已有该文的可控对偶结果。
 
-$$
-D\Phi(z)J\nabla H(z)=J_r\nabla h(\Phi(z)),
-$$
+[SD14] Y. Subasi, M. Demirekler. *Quantitative measure of observability for linear stochastic systems*. Automatica 50(6), 1669–1674 (2014). https://doi.org/10.1016/j.automatica.2014.04.008. 互信息可观测性是既有概念。
 
-$$
-D\Phi(z)J D\Phi(z)^T=J_r,
-$$
+[GSV05] D. Guo, S. Shamai, S. Verdú. *Mutual Information and Minimum Mean-square Error in Gaussian Channels*. IEEE Transactions on Information Theory 51(4), 1261–1282 (2005). https://arxiv.org/abs/cs/0412108; https://doi.org/10.1109/TIT.2005.844072. 本文第 8 节直接计算指定 Gaussian 实验，未将一般 I-MMSE 换成任意潜变量或量子测量的断言。
 
-则 $y=\Phi(z)$ 的演化在潜空间中精确闭合，并且 $\Phi$ 是对所指定 Poisson 括号的映射：对任意光滑 $a,b$，
+[M65] H. Mori. *Transport, Collective Motion, and Brownian Motion*. https://doi.org/10.1143/PTP.33.423.
 
-$$
-\{a\circ\Phi,b\circ\Phi\}_J
-=\{a,b\}_{J_r}\circ\Phi.
-$$
+[M65C] H. Mori. *A Continued-Fraction Representation of the Time-Correlation Functions*. https://doi.org/10.1143/PTP.34.399.
 
-**证明。** 演化式由链式法则得到。括号式由
+[LL26] Q. Lang, J. Lu. *Learning Memory Kernels in Generalized Langevin Equations*. SIAM Journal on Mathematics of Data Science 8(1), 141–166 (2026). https://doi.org/10.1137/24M1651101.
 
-$$
-\nabla(a\circ\Phi)^TJ\nabla(b\circ\Phi)
-=(\nabla a)^TD\Phi J D\Phi^T\nabla b
-$$
+[LL25] Q. Lang, J. Lu. *Error Analysis of Generalized Langevin Equations with Approximated Memory Kernels*. https://arxiv.org/abs/2512.10256. 其白噪声与衰减假设不自动适用于有限封闭热初态。
 
-及第二个假设得到。$\square$
+[H14] A. Horikoshi. *External Source Method for Kubo-Transformed Quantum Correlation Functions*. https://arxiv.org/abs/1401.0983.
 
-两项分别约束动力学因子化与配对保持。符号上的重建精度不自动给出这两个条件。对非线性流形的结构保持约化已有 [BGH23]；此处把目标相对的预测闭合作为独立条件明确列出。
+[MR17] A. Müller-Hermes, D. Reeb. *Monotonicity of the Quantum Relative Entropy Under Positive Maps*. https://arxiv.org/abs/1512.06117. 用于测量数据处理和 Pinsker 的既有前置。
 
-### 反例 10.2（非线性预测最小性不自动给出偶数维）
+[GL11] A. García-Sáez, J. I. Latorre. *An exact tensor network for the 3SAT problem*. https://arxiv.org/abs/1105.3201. 计数背景；本文另外给出固定温度的对角 Hamilton 归约。
 
-在去掉原点的平面上取 $H=(q^2+p^2)/2$。观测 $\Phi(q,p)=(q+ip)/\sqrt{q^2+p^2}\in S^1$。则
+[ZP25] H. Zhao, Y. Zhang, J. Preskill. *Learning to erase quantum states: thermodynamic implications of quantum learning theory*. https://arxiv.org/abs/2504.07341. 其密码学前件不被替换成已证的 P/NP 分离。
 
-$$
-\Phi(z(t))=e^{-it}\Phi(z(0)).
-$$
+[S25] S. O. Scalet et al. *Classical Estimation of the Free Energy and Quantum Gibbs Sampling from the Markov Entropy Decomposition*. https://arxiv.org/abs/2504.17405. 有效相互作用衰减、边缘估计和恢复算法的前件不由一个全局二分的零泄漏自动推出。
 
-因此相位是一个一维流形上的自治预测状态，且当前相位包含在目标族中。它不可能具有非退化二形式，因为一维切空间上的交替二形式恒为零。
+[PV25] S. Pérez-Vieites et al. *Online Bayesian Experimental Design for Partially Observed Dynamical Systems*. https://arxiv.org/abs/2511.04403. 贝叶斯设计背景，本卷未运行该文算法。
 
-**证明。** Hamilton 方程为 $\dot q=p$、$\dot p=-q$，故 $q+ip$ 乘以 $e^{-it}$，而模长守恒。维数结论由交替性得到。$\square$
+[Tong] D. Tong. Dynamics、Quantum Field Theory 与 General Relativity 原始讲义：https://www.damtp.cam.ac.uk/user/tong/dynamics/dynhtml/S4.html ; https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S6.html ; https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S2.html . 最小耦合、场作用量与曲率是既有物理构件。
 
-所以第 5 节的自动辛结论须同时保留线性观测与正定二次生成元的范围。一般非线性扩展必须另证配对非退化、全局相容性与所需误差界。
+[GEMPIC] M. Kraus et al. *GEMPIC: Geometric ElectroMagnetic Particle-In-Cell Methods*. https://arxiv.org/abs/1609.03053.
 
-## 11. 可重建的有理代数算例
+[AB59] Y. Aharonov, D. Bohm. *Significance of Electromagnetic Potentials in the Quantum Theory*. Physical Review 115, 485 (1959). https://doi.org/10.1103/PhysRev.115.485.
 
-取 $n=3$，令
+[LFO90] X. L. Li, G. W. Ford, R. F. O'Connell. *Magnetic-field effects on the motion of a charged particle in a harmonic potential*. Physical Review A 42, 4519 (1990). https://doi.org/10.1103/PhysRevA.42.4519.
 
-$$
-B=\begin{pmatrix}1&2&0\\2&-1&1\\0&1&2\end{pmatrix},\qquad
-T=\begin{pmatrix}I_3&B\\0&I_3\end{pmatrix},
-$$
+[Bir17] J. Birrell. *Entropy Anomaly in Langevin-Kramers Dynamics with a Temperature Gradient, Matrix Drag, and Magnetic Field*. https://arxiv.org/abs/1709.06981.
 
-$$
-S_0=\operatorname{diag}(1,4,9,1,1,1),\qquad
-S=T^{-T}S_0T^{-1},\qquad A=JS,
-$$
+[NIST] NIST Guide to the SI, Chapter 4, derived SI units. https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-4-two-classes-si-units-and-si-prefixes.
 
-$$
-C=(1,1,0,0,0,0)T^{-1},\qquad
-O=\begin{pmatrix}C\\CA\\CA^2\\CA^3\end{pmatrix}.
-$$
+[Tesla1888] N. Tesla. US381968A, *Electro-magnetic motor*. https://patents.google.com/patent/US381968A/en.
 
-$B$ 对称，所以 $T^TJT=J$；$S_0\succ0$ 给出 $S\succ0$。由于初始读数只涉及频率 1 与 2 的两个振子，直接相乘得
+原检索还引用 [GP26] E. A. Gallardo-Gutiérrez, J. R. Partington, https://arxiv.org/abs/2605.29671；[KP26] I. A. Krishtal, G. E. Pfander, https://arxiv.org/abs/2606.20848；[KM26] I. A. Krishtal, B. Miller, https://arxiv.org/abs/2607.18491。相关已发表反例作为外部来源，不计为本研究的额外猜想结算。
 
-$$
-CA^4=-4C-5CA^2,
-$$
+### 9.4 证明状态与研究边界
 
-且
+全部新增一般结论是带前件的纸面推导。本次有符号代数和 85 位精度的有限实例检错，没有独立模型或同行审定、Lean kernel 验证、canonical ingest、Scribe 发射或 CI 验证。数值不能证明全称或极限命题。既有文献构件与 repo-derived 组合均不自动确立全球首创。
 
-$$
-J_r=OJO^T
-=\begin{pmatrix}
-0&2&0&-5\\
--2&0&5&0\\
-0&-5&0&17\\
-5&0&-17&0
-\end{pmatrix},
-\qquad \det J_r=81.
-$$
+仍独立的义务包括：非线性预测商的全局存在和非退化性；相关轨迹而非独立制备的有限样本预算；未知生成元与传感器联合辨识；实际量子测量的反作用、噪声及可取得性；无限场论的边界和无界生成元条件；正定二次模型外的热恢复与有效复杂度。每个义务继续追加在本主卷，不另开同一研究线的重复伴卷。
 
-由非零行列式可知 $\operatorname{rank}O=4$，闭包严格小于六维完整状态。用第 6 节定义构造 $P,K,L,N$，即可在有理数域中直接核验 $OA=KO$、$OL=I_4$、$AL=LK$、$NJO^T=0$ 和能量分解。该算例检验符号与坐标变换；一般结论由前述证明承担。
-
-## 12. 与仓库既有接口的对应
-
-[动力接口余量卷](FORMAL_DYNAMICAL_INTERFACE_RESIDUALS.md) 提供一般未来观测商和下降障碍的定义。本卷定理 4.1 是连续线性载体上的显式构造，定理 5.1 以正定性补上其辛非退化结构。
-
-[`LocalCertificateCanonicalMinimality.lean`](../../../D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.lean) 中的 `local_certificate_canonical_minimality` 处理有限状态的预测等价、唯一商更新和状态数最小性。本卷的秩最小性是在不同载体上给出的证明，不把有限状态声明直接当作连续维数定理。
-
-[`HamiltonianEffectCompletionGenerator.lean`](../../../D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.lean) 中的 `hamiltonian_effect_completion_generator` 把有限矩阵观测轨道跨度与交换子幂闭包连接。第 7 节改用正则模式的线性观测与 CCR，其共同结构是生成元作用下的最小观测闭包；两者的 Hilbert 空间与算子域条件分别保留。
-
-[`SchurComplementAssociativity.lean`](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean) 处理具有逆算子见证的分步与一次消元一致性；本卷定理 6.3 同时追踪具体观测、能量矩阵和状态提升。
-
-## 13. 参考文献与使用范围
-
-[SS16] J. M. Sanz-Serna. *Symplectic Runge–Kutta Schemes for Adjoint Equations, Automatic Differentiation, Optimal Control, and More*. SIAM Review 58(1), 3–33, 2016. DOI: [10.1137/151002769](https://doi.org/10.1137/151002769). 用于伴随配对与辛积分的既有背景。
-
-[CRBD18] R. T. Q. Chen, Y. Rubanova, J. Bettencourt, D. Duvenaud. *Neural Ordinary Differential Equations*. NeurIPS 2018. [arXiv:1806.07366](https://arxiv.org/abs/1806.07366). 用于参数化连续演化与伴随训练的背景，不据此认领本卷误差界覆盖数值求解器误差。
-
-[J20] I. Joseph. *Koopman–von Neumann approach to quantum simulation of nonlinear classical dynamics*. Physical Review Research 2, 043102, 2020. DOI: [10.1103/PhysRevResearch.2.043102](https://doi.org/10.1103/PhysRevResearch.2.043102). 用于非 Hamilton 向量场的振幅表示；本卷不据此推断计算加速。
-
-[AS97] A. Ashtekar, T. A. Schilling. *Geometrical Formulation of Quantum Mechanics*. [arXiv:gr-qc/9706069](https://arxiv.org/abs/gr-qc/9706069), 1997. 用于射影量子态空间的 Kähler 表述。
-
-[McA19] S. McArdle et al. *Variational ansatz-based quantum simulation of imaginary time evolution*. npj Quantum Information 5, 75, 2019. DOI: [10.1038/s41534-019-0187-2](https://doi.org/10.1038/s41534-019-0187-2). 用于虚时间变分优化的背景。
-
-[ZGPG18] G. Zhang, S. Grivopoulos, I. R. Petersen, J. E. Gough. *The Kalman Decomposition for Linear Quantum Systems*. IEEE Transactions on Automatic Control 63, 331–346, 2018. [arXiv:1606.05719v4](https://arxiv.org/abs/1606.05719v4); DOI: [10.1109/TAC.2017.2713343](https://doi.org/10.1109/TAC.2017.2713343). 用于量子可观测分解与允许坐标变换的既有范围。
-
-[ZLDP23] G. Zhang, J. Li, Z. Dong, I. R. Petersen. *The Quantum Kalman Decomposition: A Gramian Matrix Approach*. [arXiv:2312.16082v1](https://arxiv.org/abs/2312.16082v1), 2023. 用于以 Gramian 描述量子子空间和辛坐标分解的背景。
-
-[BGH23] P. Buchfink, S. Glas, B. Haasdonk. *Symplectic Model Reduction of Hamiltonian Systems on Nonlinear Manifolds and Approximation with Weakly Symplectic Autoencoder*. SIAM Journal on Scientific Computing, 2023. DOI: [10.1137/21M1466657](https://doi.org/10.1137/21M1466657). 用于非线性辛流形降阶与误差估计的既有路线；本卷的非线性条件不构成该领域的首次方法声明。
+## 追加锚（后续内容在本行以下使用新编号）

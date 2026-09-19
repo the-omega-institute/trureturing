@@ -1,0 +1,547 @@
+[
+  {
+    "start": 704,
+    "stop": 768,
+    "rows": [
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          13933
+        ],
+        "dual_id": "83731f54afab0994893273341f90052cff7c1647ea4d011e9986e553b3348e36",
+        "complete_upper": "3793235282853062642161110309797092993/776844798455587633972200000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          13940
+        ],
+        "dual_id": "4c1b1885ed170fbbc26b0e2dda9e8b2012cbd67267841097deb2b31838288782",
+        "complete_upper": "14145307503912465406929206819568206189/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          13944
+        ],
+        "dual_id": "5e52defa9dd07cd319fbdd9b4499a2d0cc3400b855f3db15c313a90ab63b06c4",
+        "complete_upper": "56589816832693654331228930914978042691/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14423
+        ],
+        "dual_id": "16a05bd13d3ee137b5846ce9f79d12253bf79f855b7a073c472d2cff12845b62",
+        "complete_upper": "28341197917503294724672613104826125613/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14730
+        ],
+        "dual_id": "aba8ec9d1b3778d1ae75ea3c4e4a7e0e4f01140f6a7c21af3b351e845b3d923a",
+        "complete_upper": "224702041796882198071350192468922631/46240761812832597260250000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14732
+        ],
+        "dual_id": "cdbc8409e36368e5bfc25ddc0e8b1428cf8e14cc7dbd2d822e60dd5a71212042",
+        "complete_upper": "1769528579152060053340198390065482071/364145999276056703424468750000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14734
+        ],
+        "dual_id": "3ffa86773de35faa18d094b293585034d736c14ca0f8094581e8d1f997d79415",
+        "complete_upper": "56594976443387832043649675295873026329/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14739
+        ],
+        "dual_id": "f5ce501f0761d8d8a0e692bc4708a464ce50b66d1f79c84ccc1b86d6b165f254",
+        "complete_upper": "4725770616234543123412948764101843921/971055998069484542465250000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14740
+        ],
+        "dual_id": "b1a8f301462e501ac3d1d824c2dd2f0326d9ce8bedb150a46599803ccc5d6de6",
+        "complete_upper": "128605287708892794309016755488180959/26483345401895032976325000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14748
+        ],
+        "dual_id": "8ea66967252e815d98c88ff098c6c604efe6a0314eeec0d0fa32876e652a9901",
+        "complete_upper": "1012956898212293694635493677883835333/208083428157746687671125000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14752
+        ],
+        "dual_id": "a3a758508f66fa2ab4ecdf6eea3ba84b0367d56df37c5401d6d6d7065c4a6d8d",
+        "complete_upper": "7114322386775346379620509436064348003/1456583997104226813697875000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14757
+        ],
+        "dual_id": "0def176abf88478b51b2983328b3105410e58221eaa64624fc1b1e55dd7933da",
+        "complete_upper": "7118810896638764407592103949355487103/1456583997104226813697875000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14768
+        ],
+        "dual_id": "4de6bb5d7f4ed90c4d1bd2cf0f3abda1b2c6f0e45ecebd2c6cae4513590b6122",
+        "complete_upper": "28252148575683881537561100623738940251/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          14771
+        ],
+        "dual_id": "b8d736dd2ed592a5d9b8774e6c266c24d100be41bcaa927673dccf043cd7c573",
+        "complete_upper": "543655819523964216714189167561786513/112044922854171293361375000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15089
+        ],
+        "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38",
+        "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15100
+        ],
+        "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff",
+        "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15114
+        ],
+        "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38",
+        "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15125
+        ],
+        "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff",
+        "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15141
+        ],
+        "dual_id": "e8071b1a855c2620376041894f9a778b7720b72429ee2d1583fdccd19ab31cfd",
+        "complete_upper": "1050661905722095675296119798307971257/215790221793218787214500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15143
+        ],
+        "dual_id": "d2b24a9680d6bab9234979e18a577f5a653a945d69daf2a0fd01bbb4a5a62917",
+        "complete_upper": "4721219842278033948253254947057161817/971055998069484542465250000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15145
+        ],
+        "dual_id": "917b1cce93c9cbcb87031fc27f3a544aaf4a67042f94da1d2c32de17aa6dd640",
+        "complete_upper": "2834527309374072440897503036773147983/582633598841690725479150000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15160
+        ],
+        "dual_id": "182e586c0b1213e9d001b41936cb3f8a4d24384f09913b1ebea48468786db310",
+        "complete_upper": "948308820749738707908410540956477367/194211199613896908493050000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15163
+        ],
+        "dual_id": "c017fa10dc412d805e55e5ebe6aecc2447ee4977ac9cbd0111926f492119cc60",
+        "complete_upper": "5620107433063290239272401113244504539/1165267197683381450958300000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15168
+        ],
+        "dual_id": "12d8e7f2f2d826b90458dc907fa7833bc585f050776f82522d074dd4a6503ff9",
+        "complete_upper": "1886041000579394656450622332938448801/388422399227793816986100000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15172
+        ],
+        "dual_id": "509eb93e628a2dbdd1ec9c9d38c550e6af9dfaec9e4ba95f1847cb0b11bed2f4",
+        "complete_upper": "11317963366718066810370200031262258207/2330534395366762901916600000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15651
+        ],
+        "dual_id": "e0da01f4d3069e8af44e72d306e0b71d78067ee5bec28a3f70e058c3a3948595",
+        "complete_upper": "28301586632423005248565063227218012867/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15969
+        ],
+        "dual_id": "427af96505ad6f9e204e720daf3dde352f9d5f97e6a4909fe274c5a800273a88",
+        "complete_upper": "28312457266077282200291242538045736449/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15971
+        ],
+        "dual_id": "3c15af380ffedf47dd36e9f685adbedcf48752d9f37609f998181f10a0f3ee8d",
+        "complete_upper": "3145828585110004833326800029318308261/647370665379656361643500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15973
+        ],
+        "dual_id": "f8bc059cfb4e6520e204dd0e5b346b0367a9459a60f1ae4a24bfa53a2c21a4d3",
+        "complete_upper": "150919937188157969674343472184153063/31073791938223505358888000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15978
+        ],
+        "dual_id": "85db67a3f6c998b529a7e3cf125538520691790f19f7b58bdf99d817119acdb7",
+        "complete_upper": "9451541232607989911146344207485359871/1942111996138969084930500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15979
+        ],
+        "dual_id": "b72aa47dbf7eb2129911221dafb88def26b774a4c6d0e738baa7c5b628143a44",
+        "complete_upper": "28293163296875631581401552637095954457/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15987
+        ],
+        "dual_id": "6a7e60e6acf65e9980ccbe90a7a9edd9162e65f3c971675522a07d2df5d1d558",
+        "complete_upper": "4051827592953508364286035606474499773/832333712630986750684500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15991
+        ],
+        "dual_id": "0e6d2c307c3fda9657ba286e2f617e2d422580a8db80b693774ae90b43f18aa6",
+        "complete_upper": "28457289546855148654551622514130372047/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          15996
+        ],
+        "dual_id": "0213b8ee9d03a83250ae7c15cf54cc43c1b54e0b53e4c8026c3dbc564e3b1420",
+        "complete_upper": "5695048717168458198244567567123304129/1165267197683381450958300000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16007
+        ],
+        "dual_id": "2a6983877ae1eed5027cf77fd738ef40f4e3d7e30bf71f258991c6309fcc8d2f",
+        "complete_upper": "523187936594438616390036308744991307/107895110896609393607250000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16010
+        ],
+        "dual_id": "354827c96d2550fc617c4ffa2022256ccc33b37f908d84e313894c3a3126c029",
+        "complete_upper": "21813350783618990540781435371118007/4495629620692058066968750000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16327
+        ],
+        "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38",
+        "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16338
+        ],
+        "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff",
+        "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16352
+        ],
+        "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38",
+        "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16363
+        ],
+        "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff",
+        "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16386
+        ],
+        "dual_id": "9f11c84f961fda7a009af3ae6d33303d97af6d623593b9bf7f8568756480c07e",
+        "complete_upper": "56853811910481963114904044269623645471/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16400
+        ],
+        "dual_id": "5fb9d041c08301d6c7b7d8edfb10a05c9bfbe3f57cd2a07a7c0e4574339121db",
+        "complete_upper": "56583969160026878872340766177484659161/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16409
+        ],
+        "dual_id": "d9f0eb76fda154d96b6455c7ff2b0f61c326322e8fd95af3d5910382e414e110",
+        "complete_upper": "14140149551071675646043153710656838719/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          16413
+        ],
+        "dual_id": "ad0e8cc0f0581a994a6b2a7d242d3254ddba40be17415d65b03ba5413924925b",
+        "complete_upper": "14164281309848684737836803432322739219/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17314
+        ],
+        "dual_id": "f97d0bec613b63130c62bf6f48dccc762fe180050e1659bd373e4dfece553541",
+        "complete_upper": "1349342272012776975836476973555367347/277444570876995583561500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17317
+        ],
+        "dual_id": "a08f01077c81c47b6a345e893d8a641abe77647d0752aba75de627e5fcc5cf8e",
+        "complete_upper": "28431751932726775544061534066427053563/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17320
+        ],
+        "dual_id": "09c515fff87b5d1ead3b02d0f03bca9c3431e7516dd3facad70462b84702ea00",
+        "complete_upper": "28449705972006737473558088649746526383/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17341
+        ],
+        "dual_id": "281e67146ba08788ebfe93b0c09a517e63e1f0f24d0a1c962940606fbeead275",
+        "complete_upper": "56587377041500472314103195013073807637/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17344
+        ],
+        "dual_id": "1797cf1f8bbddbe04c064abc6561f030bb5bb99add380878c0064dfe320ac79f",
+        "complete_upper": "28263883766241151924475889362257593713/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17854
+        ],
+        "dual_id": "eaae184e8b53b8f559b3f292f532e3b20bf01bb9446a53593cebbbda2e67c691",
+        "complete_upper": "9513909871505914867025239600602732493/1942111996138969084930500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17862
+        ],
+        "dual_id": "007045535461dccb0a3c63d144177b2f98d5c407326a1eb5072b40da117c677b",
+        "complete_upper": "716576614354172832053912526854677549/145658399710422681369787500000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17865
+        ],
+        "dual_id": "1c3d1f0e834637885bc337782509ad8867a4f408e83ed3d542d87d362db13dce",
+        "complete_upper": "9527883917365154772089123098034975543/1942111996138969084930500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17868
+        ],
+        "dual_id": "f3f97a8bc31e11d30f6dd582cbb5d9d568c4fa3383b65b454e01d34065ccf3ea",
+        "complete_upper": "9549023336412493425222595591248878927/1942111996138969084930500000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17880
+        ],
+        "dual_id": "2c91c10845dbaec2b93a1263a4fde08af0d38dc6e943ef1db749aa21b2ebd657",
+        "complete_upper": "14361470375593062352745896381909108529/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17883
+        ],
+        "dual_id": "9538114f69fe603532e73dc4fcfd11e5bfc12937c56fc72d1bf42ef23102b1aa",
+        "complete_upper": "955287498489725453828418121152958673/194211199613896908493050000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17896
+        ],
+        "dual_id": "773df641c591d6f80d48ea0277c36f8f04dc3b5882a8fcadd9b9dd8839a731d4",
+        "complete_upper": "57169881077698312534770973956823864487/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          17899
+        ],
+        "dual_id": "4498d3f1aa7b121e8bfa4a2f7c5c003c28b7006f701b9c8c906ef05873f14486",
+        "complete_upper": "57244436963160206092372450894355560841/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          18845
+        ],
+        "dual_id": "7b3f99cdd8d3cd7d91094172720e0e6fd9074a3559be6f78116a0de7f3b32f90",
+        "complete_upper": "14334513143254650358310400027165322409/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          19162
+        ],
+        "dual_id": "0ca22539fa822de91f5f55c4feb02d2b50da24d4a61294721d1e44fbd5784aee",
+        "complete_upper": "3582826907361181725504199341244973281/728291998552113406848937500000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          19575
+        ],
+        "dual_id": "5d3445869af6735982643c3ff1611e14ec46fe90418b7b59dd8237e821c0b16d",
+        "complete_upper": "25553788068497881393874849422885663/5202085703943667191778125000000000"
+      },
+      {
+        "kind": "stage1",
+        "original_leaf_indices": [
+          19581
+        ],
+        "dual_id": "9a42dc5b26fe10497b4bcf3d176fa74a888a7fbe1efebedf9e93316eef843681",
+        "complete_upper": "5746311446260795639798863337496114159/1165267197683381450958300000000000000"
+      },
+      {
+        "kind": "stage2",
+        "original_leaf_indices": [
+          5797,
+          5798,
+          5799,
+          5800,
+          5801,
+          5802,
+          5803,
+          5804,
+          5805,
+          5806
+        ],
+        "dual_id": "b60e252734d3de1699666d38288360b9d53246d5aba4663cd47abddeccb5ea50",
+        "complete_upper": "1755405581220454961824608509717786081/332933485052394700273800000000000000"
+      },
+      {
+        "kind": "stage2",
+        "original_leaf_indices": [
+          5807,
+          5808,
+          5809,
+          5810,
+          5811,
+          5812,
+          5813,
+          5814,
+          5815,
+          5816
+        ],
+        "dual_id": "e27896842a9bb5d5c85ae5a61f53b6f4ce0d540adb02d7a25eb5196bb2e1ebc0",
+        "complete_upper": "8805089276391143252819297838348420611/1664667425261973501369000000000000000"
+      },
+      {
+        "kind": "stage2",
+        "original_leaf_indices": [
+          5817,
+          5818,
+          5819,
+          5820,
+          5821,
+          5822,
+          5823,
+          5824,
+          5825,
+          5826
+        ],
+        "dual_id": "5924ef144a23ad57456c561400b322ea973ea7b6b7322a7452ca88262dc7842e",
+        "complete_upper": "8796755882677974506150938577059590167/1664667425261973501369000000000000000"
+      }
+    ]
+  }
+]

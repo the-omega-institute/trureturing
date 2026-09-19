@@ -1,0 +1,123 @@
+{
+  "combined_source_upper": 0,
+  "E3_source_upper": 1,
+  "E5_source_upper": 2,
+  "survivor_cap_prices_25_27_75_81": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "survivor_cap_source_upper": 7,
+  "survivor_cap_primitive_prices": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "survivor_cap_wrong_slot_coefficients": [
+    15,
+    16
+  ],
+  "old_profile_source_uppers_25_75_27_81": [
+    17,
+    18,
+    19,
+    20
+  ],
+  "raw_base_prices": [
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "raw_face_subtraction": 46,
+  "raw_mass_price": 47,
+  "primitive_prices": {
+    "shallow_five_shifted_defect": 48,
+    "shallow_alpha_shifted_defect": 49,
+    "pure_three_27_defect": 50,
+    "pure_three_later_defect": 51,
+    "pure_deep_five_defect": 52,
+    "alpha_deep_five_defect": 53,
+    "union_overlap": 54
+  },
+  "common_raw_node_prices": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79
+  ],
+  "common_atom_fields_sha256": "$hash",
+  "triangle_vertices": [
+    {
+      "q": [
+        80,
+        81
+      ],
+      "signed_raw_transport": 82,
+      "survivor_cap_wrong_slot_upper": 83
+    },
+    {
+      "q": [
+        84,
+        85
+      ],
+      "signed_raw_transport": 86,
+      "survivor_cap_wrong_slot_upper": 87
+    },
+    {
+      "q": [
+        88,
+        89
+      ],
+      "signed_raw_transport": 90,
+      "survivor_cap_wrong_slot_upper": 91
+    }
+  ]
+}

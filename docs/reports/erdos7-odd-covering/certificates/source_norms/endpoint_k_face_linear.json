@@ -1,0 +1,397 @@
+{
+  "schema": "erdos7-endpoint-k-face-linear-v1",
+  "source_sha256": {
+    "frontier/endpoint_linear_neighborhood.py": "e9d1eb6487f95874b2c577496b41083ff140138ef5a59d630144d1c72aae279a",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/endpoint_linear_numerator.py": "5c83f0a6277079323120ce0a31ac220c884f92ff555506f9dcaf926d3335e133",
+    "frontier/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source_barrier_saturation.py": "92076ee71a6be16655bbe5c2ac223db6502da1ab5c3553a7f83bb555dbbb8363",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "face_vertices": [
+    398,
+    410,
+    422
+  ],
+  "carrier": [
+    1,
+    1
+  ],
+  "symmetric_face_vertices": [
+    616,
+    628,
+    640
+  ],
+  "symmetric_carrier": [
+    1,
+    0
+  ],
+  "beta_simplex_mass": "1/4",
+  "actual_first_beta_mass": "1/5",
+  "first_beta_slot_tables": [
+    {
+      "first_beta_cell": 2,
+      "pre_coefficients": [
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ]
+      ],
+      "columns": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "root_columns": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ]
+    },
+    {
+      "first_beta_cell": 3,
+      "pre_coefficients": [
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ]
+      ],
+      "columns": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "root_columns": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ]
+    },
+    {
+      "first_beta_cell": 4,
+      "pre_coefficients": [
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "1/5",
+          "1/5",
+          "3/20",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "1/5",
+          "1/10",
+          "1/5"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1/10",
+          "1/5"
+        ]
+      ],
+      "columns": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "root_columns": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ]
+    }
+  ],
+  "affine_vertex_checks": [
+    {
+      "index": 398,
+      "data": [
+        [
+          "3/4",
+          "3/4",
+          "1/4",
+          "1/2",
+          "1/2"
+        ],
+        [
+          "1/36",
+          "1/12",
+          "1/36",
+          "1/18",
+          "1/18"
+        ],
+        [
+          "1/18",
+          "1/9",
+          "1/9",
+          "1/9",
+          "1/9"
+        ],
+        "1/4",
+        "53/360"
+      ],
+      "ternary_cell_caps": [
+        "1/40",
+        "11/180",
+        "1/90",
+        "1/30",
+        "1/30"
+      ],
+      "deep3_coefficients": [
+        "7/10",
+        "11/20",
+        "1/10",
+        "3/10",
+        "3/10"
+      ],
+      "old_layout_U": "8/9",
+      "old_layout_T": "12991/9720",
+      "old_layout_carrier": "23/30",
+      "old_margin_upper": "9257/48600"
+    },
+    {
+      "index": 410,
+      "data": [
+        [
+          "3/4",
+          "3/4",
+          "1/2",
+          "1/4",
+          "1/2"
+        ],
+        [
+          "1/36",
+          "1/12",
+          "1/18",
+          "1/36",
+          "1/18"
+        ],
+        [
+          "1/18",
+          "1/9",
+          "1/9",
+          "1/9",
+          "1/9"
+        ],
+        "1/4",
+        "53/360"
+      ],
+      "ternary_cell_caps": [
+        "1/40",
+        "11/180",
+        "1/30",
+        "1/90",
+        "1/30"
+      ],
+      "deep3_coefficients": [
+        "7/10",
+        "11/20",
+        "3/10",
+        "1/10",
+        "3/10"
+      ],
+      "old_layout_U": "8/9",
+      "old_layout_T": "12991/9720",
+      "old_layout_carrier": "23/30",
+      "old_margin_upper": "9257/48600"
+    },
+    {
+      "index": 422,
+      "data": [
+        [
+          "3/4",
+          "3/4",
+          "1/2",
+          "1/2",
+          "1/4"
+        ],
+        [
+          "1/36",
+          "1/12",
+          "1/18",
+          "1/18",
+          "1/36"
+        ],
+        [
+          "1/18",
+          "1/9",
+          "1/9",
+          "1/9",
+          "1/9"
+        ],
+        "1/4",
+        "53/360"
+      ],
+      "ternary_cell_caps": [
+        "1/40",
+        "11/180",
+        "1/30",
+        "1/30",
+        "1/90"
+      ],
+      "deep3_coefficients": [
+        "7/10",
+        "11/20",
+        "3/10",
+        "3/10",
+        "1/10"
+      ],
+      "old_layout_U": "8/9",
+      "old_layout_T": "12991/9720",
+      "old_layout_carrier": "23/30",
+      "old_margin_upper": "9257/48600"
+    }
+  ],
+  "old_fixed_layouts": [
+    [
+      2,
+      3,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      2,
+      2,
+      2,
+      2
+    ]
+  ],
+  "complete_test_categories": {
+    "unit": "53/360",
+    "test3": "31/360",
+    "test9": "11/180",
+    "test5": "29/450",
+    "test15": "8/225",
+    "pure3_deep": "7/180",
+    "pure5_deep": "37/1800",
+    "3_times_deep5": "1/60",
+    "9_times5": "1/36",
+    "deep35": "1/72",
+    "positive7": "11/72"
+  },
+  "linear_upper": "133/200",
+  "signed_barrier": 6,
+  "margin_lower": "131/600",
+  "old_margin_upper": "9257/48600",
+  "strict_margin_gain": "677/24300",
+  "scope": "Ordinary actual endpoint theorem uniform along both full controlling beta faces at saturated mass. No assertion that all relaxed beta points are realizable, no neighborhood or global K update."
+}

@@ -1,0 +1,41 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "57313409585226327261182553959/116342151640446600000000000000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "47217166650945261182553959/116342151640446600000000000000"
+  },
+  "bounded_labels": {
+    "path": "content/004-radius_results/000001/item/001-H1/003-bounded_labels.json",
+    "sha256": "7bf6ab85209578f2c8dd5b906eb0fcbfe6fd16d9a6a262d46b5f4c30acfb1b9f",
+    "kind": "value"
+  },
+  "complete_exponent_tails": {
+    "path": "content/004-radius_results/000001/item/001-H1/004-complete_exponent_tails.json",
+    "sha256": "b751f15ea75fe9da2c45977c7a52b726da17d0e0b7098c9df65e462fa69ea3c2",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "18337/120000"
+  },
+  "previous_upper": {
+    "kind": "inline",
+    "value": "90100796087148144919/182237850000000000000"
+  },
+  "layout_rows": {
+    "path": "content/004-radius_results/000001/item/001-H1/008-layout_rows.json",
+    "sha256": "4e060055da25b5c6a5ff1900ea769d59f715a757ed1193c59746c4f20d8c0a6a",
+    "kind": "array"
+  }
+}

@@ -30,6 +30,19 @@ and the i-th prime of a k-chain is confined to
 
     t*phi/F  <  p_i  <  (k-i+1) * t*phi/F.
 
+THE LAST SEARCHED PRIME IS NOT SEARCHED EITHER.  For the prime q chosen just
+before the solved-for p_k, put D = F(S u {q}) = q*F - t*phi.  Then q = (D+t*phi)/F
+and q - 1 = (D+S)/F, so p_k = (t*phi*(q-1) + a')/D rearranges to
+
+    D * (F*p_k - t*phi) = N,        N = t*phi(S)*S + a'*F(S),
+
+a single fixed integer.  So D ranges over the DIVISORS of N, and both
+q = (D + t*phi)/F and p_k = (t*phi + N/D)/F follow.  This is what makes the
+search tractable: the widest interval in the whole walk is the F=1 Fermat-type
+branch, where the prefix 3*5*17*257*65537 has phi = 2^31 and the next prime
+would have to be scanned over (2^32, 2^33] -- some 2*10^8 primes.  As a divisor
+condition that branch is just the factorisation of N = 2^64 - 2^32 - 7.
+
 The empty prefix has phi = 1, S = 1, F = t-1, so for t = 2 the smallest prime
 obeys p_1 < 2k.  Every level is a finite interval, so the enumeration is
 complete for each k with no bound on the size of the primes.  Each step uses
@@ -49,7 +62,9 @@ from __future__ import annotations
 
 import sys
 
-from sympy import isprime, primerange
+from fractions import Fraction
+
+from sympy import divisors, isprime, primerange
 
 # Primes examined per (ap, t, k) before the run is declared inconclusive.
 BUDGET = 4_000_000
@@ -68,15 +83,26 @@ def chains(ap: int, t: int, k: int, budget: int = BUDGET) -> tuple[list[int], bo
     def rec(i: int, m: int, phi: int, last: int) -> None:
         nonlocal examined, capped
         f = t * phi - m
-        if i == k - 1:
-            if f >= 1:
-                num = t * phi + ap
-                if num > 0 and num % f == 0:
-                    p = num // f
-                    if p > last and isprime(p):
-                        out.append(m * p)
-            return
         if f < 1 or capped:
+            return
+        if i == k - 2:
+            # Last searched prime: solve D | N instead of scanning an interval.
+            n_fixed = t * phi * m + ap * f
+            if n_fixed <= 0:
+                return
+            tphi = t * phi
+            for d in divisors(n_fixed):
+                if (d + tphi) % f:
+                    continue
+                q = (d + tphi) // f
+                if q <= last or not isprime(q):
+                    continue
+                co = tphi + n_fixed // d
+                if co % f:
+                    continue
+                p = co // f
+                if p > q and isprime(p):
+                    out.append(m * q * p)
             return
         lo = max((t * phi) // f, last) + 1
         hi = ((k - i) * t * phi) // f
@@ -89,18 +115,38 @@ def chains(ap: int, t: int, k: int, budget: int = BUDGET) -> tuple[list[int], bo
                 return
             rec(i + 1, m * q, phi * (q - 1), q)
 
-    rec(0, 1, 1, 2)
+    if k >= 2:
+        rec(0, 1, 1, 2)
     return sorted(set(out)), capped
 
 
-A050474 = {3, 15, 255, 65535, 83623935, 4294967295, 6992962672132095}
+# A050474 from k = 2 upward; k = 1 is the single prime 3, which has no
+# searched prime and so no chain to enumerate.
+A050474 = {15, 255, 65535, 83623935, 4294967295, 6992962672132095}
+
+
+def max_ratio(k: int) -> Fraction:
+    """Sup of A/phi(A) over odd squarefree A with k prime factors.
+
+    Attained in the limit by the k smallest odd primes.  Since A + a' = t*phi(A)
+    forces A/phi(A) > t, this caps t as a function of k: t <= 2 for k <= 7,
+    t <= 3 for k <= 20.  Reporting an empty result for a (t, k) pair above this
+    cap would be vacuous, not evidence, so main() skips those pairs instead of
+    printing them.
+    """
+    r = Fraction(1)
+    for i, q in enumerate(primerange(3, 10 ** 6)):
+        if i >= k:
+            break
+        r *= Fraction(q, q - 1)
+    return r
 
 
 def main() -> int:
     failures: list[str] = []
 
     got: set[int] = set()
-    for k in range(1, 7):
+    for k in range(2, 7):
         found, capped = chains(1, 2, k)
         got |= set(found)
         if capped:
@@ -112,18 +158,26 @@ def main() -> int:
     print(f"control verdict: A050474 {'PASS' if not missing else 'FAIL'}")
     print()
 
-    for ap in (-7, -11, -13, -37):
+    targets = [int(x) for x in sys.argv[1:]] or [-7]
+    for ap in targets:
         for t in (2, 3):
-            hits, capped_at = [], []
+            hits, capped_at, live = [], [], []
             for k in range(2, 8):
+                if max_ratio(k) <= t:
+                    continue        # A/phi(A) cannot exceed t with k factors
+                live.append(k)
                 found, capped = chains(ap, t, k)
                 if found:
                     hits.append((k, found))
                 if capped:
                     capped_at.append(k)
+            if not live:
+                print(f"a={ap:4d} t={t}: no k in [2,7] admits this t "
+                      f"(A/phi(A) tops out at {float(max_ratio(7)):.4f})")
+                continue
             verdict = hits if hits else "EMPTY"
             note = f"; inconclusive at k in {capped_at}" if capped_at else "; complete"
-            print(f"a={ap:4d} t={t} k in [2,7]: {verdict}{note}")
+            print(f"a={ap:4d} t={t} k in {live}: {verdict}{note}")
 
     if failures:
         print()
