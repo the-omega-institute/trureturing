@@ -579,7 +579,8 @@ public sealed class LeanCacheRunScriptTests
             script);
         WriteExecutable(
             Path.Combine(bin, "dotnet"),
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nexit 97");
+            "#!/usr/bin/env bash\n[[ \"${MSBUILDDISABLENODEREUSE:-}\" == 1 ]] || exit 98\n"
+                + "printf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nexit 97");
         WriteExecutable(
             wrapped,
             "#!/usr/bin/env bash\ntouch \"$WRAPPED_MARKER\"\nexit 23");

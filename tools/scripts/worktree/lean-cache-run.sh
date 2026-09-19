@@ -25,6 +25,9 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || { echo 'lean-cache-run: candidate producer DLL is absent' >&2; exit 2; }
   cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
 else
+  # Captured callers need output EOF when this invocation ends. Reusable
+  # MSBuild nodes otherwise outlive dotnet run while holding its output pipes.
+  export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
 donor=()

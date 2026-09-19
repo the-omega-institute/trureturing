@@ -274,6 +274,9 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
     [InlineData("raw-missing-origin")]
     [InlineData("wrong-law")]
     [InlineData("witness-scope")]
+    [InlineData("legacy-bridge")]
+    [InlineData("forward-bridge")]
+    [InlineData("witness-bridge")]
     [InlineData("cross-mode")]
     [InlineData("copied-plan")]
     [InlineData("stale-source")]
@@ -298,6 +301,9 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
             case "raw-missing-origin": record["escape_from"] = null; break;
             case "wrong-law": material["law_identity"] = new string('0', 64); break;
             case "witness-scope": material["sensitivity_identity"] = new string('0', 64); break;
+            case "legacy-bridge": record["bridge_kind"] = "legacy"; break;
+            case "forward-bridge": record["bridge_kind"] = "forward"; break;
+            case "witness-bridge": record["bridge_kind"] = "witness"; break;
             case "cross-mode": record["key"]!["mode"] = "fixed-state-v1"; break;
             case "copied-plan": record["certificate"]!["plan_identity"] = new string('0', 64); break;
             case "stale-source": material["source_sha256"] = new string('0', 64); break;
@@ -317,6 +323,8 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamily", report));
         if (mutation == "old-report")
             Assert.StartsWith("DTR-EvidenceVersion:", error.Message, StringComparison.Ordinal);
+        if (mutation.EndsWith("-bridge", StringComparison.Ordinal))
+            Assert.Equal("DTR-Evidence: unknown bridge_kind", error.Message);
     }
 
     [Theory]

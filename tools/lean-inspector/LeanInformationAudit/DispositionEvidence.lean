@@ -191,7 +191,7 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
       catalogValue index do failClass key className "seal_certificate.proposition"
   checkWithKernel certificate
   let lawArena ← mkConstWithFreshMVarLevels registration.arenaName
-  let arena ← mkAppM ``PrimitiveLawArena.toArena #[lawArena]
+  let arena := (← RegistrationGates.normalizeArena lawArena).finite
   let _ ← typed modules key className "nondegeneracy_certificate"
     payload.nondegeneracyCertificate (← mkAppM ``Arena.Nondegenerate #[arena])
   let _ ← typed modules key className "state_enumeration_certificate"
@@ -729,8 +729,9 @@ private def validateUnreachable (modules : Array Name) (registrations : Array (N
     let name : Name ← reduceEval candidate.getAppArgs[1]!
     let arena ← constant modules key className "candidate_arena" name
     let type ← inferType arena
-    unless type.isConstOf ``Arena || type.isConstOf ``StructuralArena ||
-        type.isConstOf ``PrimitiveLawArena do failClass key className "candidate_arena"
+    unless type.isConstOf ``StructuralArena do
+      try discard <| RegistrationGates.normalizeArena arena
+      catch _ => failClass key className "candidate_arena"
 
 private def validateObserved (head : String) (root : Name) (modules : Array Name)
     (registrations : Array (Name × Expr)) (key : StatementKey)
