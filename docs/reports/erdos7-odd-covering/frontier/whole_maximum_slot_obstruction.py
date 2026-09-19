@@ -6,11 +6,14 @@ Enumerates all original points and all full/truncated matching menus, with
 full CRT tails and independent Hall-cut rank checks. Three actual sources
 must use only two actual residual slots, even without forced-edge conditions.
 Full binary relations have complete projections but their triple join is empty.
+It also constructs a compatible truncated family after one local rank loss,
+and verifies its full-source integrated budgets on the same original cover.
 This refutes a general whole-cover gluing assertion. It does not settle
 Erdos #7, assert an odd extremal counterexample, certify a whole-AP
 replacement, or constitute a Lean proof. Checks remain active under -O.
 """
 from collections import Counter, defaultdict
+from fractions import Fraction
 from itertools import combinations, product
 from math import gcd, lcm
 import json
@@ -24,10 +27,17 @@ APS = ((0, 2), (0, 3), (0, 5), (5, 6), (0, 7), (7, 9),
 MODES = ('full', 'truncated')
 CRITICAL = ((3, 351), (5, 3025), (7, 1351))
 COUNTS = Counter()
+REPAIR_COUNTS = Counter()
 
 
 def check(condition, name):
     COUNTS['checks'] += 1
+    if not condition:
+        raise ArithmeticError(name)
+
+
+def repair_check(condition, name):
+    REPAIR_COUNTS['checks'] += 1
     if not condition:
         raise ArithmeticError(name)
 
@@ -203,6 +213,160 @@ def critical_control(A, primes, hits, records):
     return critical, controls
 
 
+def construct_repair(A, hits, records):
+    """Solve actual shared-slot components, keeping every original source."""
+    domains, owners = {}, defaultdict(set)
+    for key, record in sorted(records.items()):
+        menus = [(6,)] if key == CRITICAL[0] else record['truncated']['forced_maximum_menus']
+        domains[key] = [(ds, footprint(record, ds, A, hits)) for ds in menus]
+        for _, slots in domains[key]:
+            for slot in slots:
+                owners[slot].add(key)
+    neighbors = {key: set() for key in records}
+    for keys in owners.values():
+        for left, right in combinations(sorted(keys), 2):
+            neighbors[left].add(right)
+            neighbors[right].add(left)
+
+    def solve(remaining, occupied):
+        REPAIR_COUNTS['search_nodes'] += 1
+        if not remaining:
+            return {}
+        choices = [(len(available), key, available) for key in sorted(remaining)
+                   for available in [[(ds, slots) for ds, slots in domains[key]
+                                      if occupied.isdisjoint(slots)]]]
+        _, key, available = min(choices, key=lambda item: (item[0], item[1]))
+        for labels, slots in available:
+            REPAIR_COUNTS['search_branches'] += 1
+            result = solve(remaining - {key}, occupied | slots)
+            if result is not None:
+                return {key: labels, **result}
+        return None
+
+    pending, selected, components = set(records), {}, []
+    while pending:
+        start = min(pending)
+        component, stack = {start}, [start]
+        while stack:
+            key = stack.pop()
+            unseen = neighbors[key] - component
+            component.update(unseen)
+            stack.extend(sorted(unseen))
+        result = solve(component, frozenset())
+        repair_check(result is not None, 'the one-loss truncated component has no solution')
+        selected.update(result)
+        pending.difference_update(component)
+        components.append(sorted(component))
+    repair_check(set(selected) == set(records), 'construction omitted an original source')
+    return selected, dict(component_count=len(components),
+                          component_size_counts=dict(Counter(map(len, components))),
+                          nontrivial_components=[xs for xs in components if len(xs) > 1])
+
+
+def verify_repair(A, Q, primes, records, selected):
+    """Recompute literal memberships and CRT lifts, independently of menus."""
+    exact = lambda value: int(value) if value.denominator == 1 else str(value)
+    literal_hits = lambda z: {d for d, a in A.items() if z % d == a}
+    slots, per_prime, group_sums, rank_losses = Counter(), Counter(), Counter(), []
+    forced_count, private_count, cutoff_violations = 0, 0, 0
+    groups, prime_forced, expected_sources = {}, {}, set()
+    for q in primes:
+        H, power = height(Q, q), q ** height(Q, q)
+        B = Q // power
+        R = {x for x in range(B) if all(x % d != a for d, a in A.items() if d % q)}
+        prime_forced[q] = set()
+        for root in range(1, q):
+            labels = [d for d, a in A.items() if d % q == 0 and a % q == root]
+            if len(labels) == 1:
+                prime_forced[q].add(labels[0])
+        for x in sorted(R):
+            compatible = defaultdict(list)
+            for d, a in A.items():
+                e = height(d, q)
+                m = d // q ** e
+                if e and m > 1 and x % m == a % m:
+                    compatible[m].append(e)
+            cutoff = sorted(map(max, compatible.values()), reverse=True)[q-2]
+            groups[q, x] = (H, cutoff, q ** (H-1))
+            for tail in range(q ** (H-1)):
+                residue = q * tail
+                y = residue + power * (((x-residue) * pow(power, -1, B)) % B)
+                expected_sources.add((q, y))
+    repair_check(set(selected) == expected_sources, 'repair omitted an actual cofactor or full tail')
+    for (q, y), labels in sorted(selected.items()):
+        r = records[q, y]
+        H, power = height(Q, q), q ** height(Q, q)
+        B, x, tail = Q // power, y % (Q // power), (y % power) // q
+        cutoff = groups[q, x][1]
+        repair_check(literal_hits(y) == {q}, 'selected source is not original prime-private')
+        repair_check(r['cutoff'] == cutoff, 'cached cutoff differs from literal recomputation')
+        repair_check(len(labels) == len(set(labels)) and all(d in A for d in labels), 'invalid original labels')
+        repair_check(len({A[d] % q for d in labels}) == len(labels), 'two selected edges share a root')
+        repair_check(len({d // q ** height(d, q) for d in labels}) == len(labels), 'two selected edges share a color')
+        repair_check(prime_forced[q].issubset(labels), 'repair dropped a forced singleton child')
+        loss = r['truncated']['rank'] - len(labels)
+        repair_check(loss == (1 if (q, y) == CRITICAL[0] else 0), 'an unauthorized source rank changed')
+        if loss:
+            rank_losses.append(dict(source=[q, y], selected=labels, lost_rank=loss))
+        else:
+            repair_check(labels in r['truncated']['forced_maximum_menus'], 'retained source is not a truncated maximum')
+        per_prime[q] += len(labels)
+        group_sums[q, x] += len(labels)
+        for d in labels:
+            e, root = height(d, q), A[d] % q
+            repair_check(1 <= e <= H and d // q ** e > 1 and root != 0, 'selected edge is not nonpure')
+            cutoff_violations += e > cutoff
+            repair_check(e <= cutoff, 'selected edge exceeds the actual local cutoff')
+            residue = q * tail + root
+            z = residue + power * (((x-residue) * pow(power, -1, B)) % B)
+            hit = literal_hits(z)
+            repair_check(z % d == A[d] and z % B == x and (z % power) // q == tail,
+                         'selected label fails its original CRT lift')
+            repair_check(not hit.intersection(primes), 'a selected lift meets an original prime')
+            if len(hit) >= 2:
+                slots[z, d] += 1
+            else:
+                private_count += 1
+                repair_check(hit == {d}, 'a selected private target belongs to another label')
+            if d in prime_forced[q]:
+                forced_count += 1
+                repair_check(e == 1 and hit == {d}, 'a forced singleton child does not lift privately')
+    repair_check(max(slots.values(), default=0) <= 1, 'repaired family exceeds an actual residual slot')
+    repair_check(dict(per_prime) == {2: 397, 3: 323, 5: 94, 7: 48}, 'integrated selected totals changed')
+    base, cutoff_totals, surplus, deficit, deviations = Counter(), Counter(), Counter(), Counter(), []
+    for (q, x), (H, cutoff, tails) in sorted(groups.items()):
+        old = tails * (q-2 + Fraction(1, q ** (H-1)))
+        low = tails * (q-2 + Fraction(1, q ** (cutoff-1)))
+        total = group_sums[q, x]
+        repair_check(total >= old, 'an original-height cofactor quota was lost')
+        base[q] += old
+        cutoff_totals[q] += low
+        surplus[q] += max(0, total-low)
+        deficit[q] += max(0, low-total)
+        if total != low:
+            deviations.append(dict(q=q, cofactor=x, cofactor_period=Q // q ** H,
+                                   cutoff=cutoff, full_tails=tails, selected_sum=total,
+                                   cutoff_quota=exact(low), difference=exact(total-low)))
+    repair_check(base == {2: 397, 3: 220, 5: 80, 7: 48}, 'original-height integrated quotas changed')
+    repair_check(cutoff_totals == {2: 397, 3: 318, 5: 92, 7: 48}, 'ST2 integrated quotas changed')
+    for q in primes:
+        repair_check(per_prime[q] >= cutoff_totals[q], 'a prime integrated ST2 quota was lost')
+        repair_check(per_prime[q]-cutoff_totals[q] == surplus[q]-deficit[q], 'cofactor accounting does not balance')
+    return dict(selected_total=sum(per_prime.values()), per_prime_selected=dict(per_prime),
+                full_truncated_rank_total=sum(r['truncated']['rank'] for r in records.values()),
+                local_rank_losses=rank_losses, cutoff_violations=cutoff_violations,
+                selected_private_targets=private_count, selected_forced_incidences=forced_count,
+                used_residual_slots=len(slots), maximum_residual_slot_load=max(slots.values(), default=0),
+                base_quotas={q: exact(base[q]) for q in primes},
+                integrated_ST2_quotas={q: exact(cutoff_totals[q]) for q in primes},
+                integrated_ST2_slack={q: exact(per_prime[q]-cutoff_totals[q]) for q in primes},
+                cofactor_surplus={q: exact(surplus[q]) for q in primes},
+                cofactor_deficit={q: exact(deficit[q]) for q in primes},
+                cofactor_deviations=deviations,
+                selected_family=[[q, y, labels] for (q, y), labels in sorted(selected.items())],
+                selected_family_order='[prime, original private source, selected original moduli]')
+
+
 def main():
     A, Q, primes, hits, private = prepare()
     records = source_menus(A, Q, primes, hits, private)
@@ -216,12 +380,17 @@ def main():
                                 forced_maximum_menus=877, independent_minimum_height=879), 'full menu totals changed')
     check(totals['truncated'] == dict(rank_sum=863, all_maximum_menus=853,
                                      forced_maximum_menus=849, independent_minimum_height=879), 'truncated menu totals changed')
+    selected, components = construct_repair(A, hits, records)
+    repair = verify_repair(A, Q, primes, records, selected)
+    repair['components'] = components
+    repair['counts'] = dict(sorted(REPAIR_COUNTS.items()))
     print(json.dumps(dict(scope=__doc__.strip(), period=Q, original_classes=len(A), aps=APS,
                           aps_order='[residue, modulus]', counts=dict(sorted(COUNTS.items())),
                           private_witnesses={d: zs[0] for d, zs in private.items()},
                           prime_source_counts={q: len(private[q]) for q in primes},
                           actual_target=dict(point=1, active_labels=sorted(hits[1])),
                           critical_sources=critical, controls=controls, all_source_totals=totals,
+                          one_loss_truncated_repair=repair,
                           conclusion='No unit-slot-compatible family of local maximum matchings exists in either graph; the obstruction does not require forced-edge obligations.'),
                      indent=2, sort_keys=True))
 
