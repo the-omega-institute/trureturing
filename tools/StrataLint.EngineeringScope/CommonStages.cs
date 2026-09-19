@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Runtime;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -246,7 +248,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+            ValidateCurrentReport();
         }
         else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
@@ -269,6 +271,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 arguments.AddRange(["--common-build-round", build.Round]);
                 if (resourcePlan is not null)
                     arguments.AddRange(["--common-plan", resourcePlan.PlanPath, "--common-changes", resourcePlan.ChangesPath]);
+                // The CLI builds its own snapshot and report. Reclaim the dead
+                // parent preparation graphs only at this separate-process handoff.
+                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
                 Step(obligations.Contains("check-current") ? "check-current" : "scribe", "dotnet", arguments.ToArray());
                 // The CLI owned these units once; their original evidence supplies the
                 // corresponding stage obligations without launching them a second time.
@@ -287,6 +293,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
         }
     }
+
+    // End the validation frame before collection; no snapshot or report escapes.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private void ValidateCurrentReport() =>
+        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
 
     private void ValidateBase(string? baseSha)
     {

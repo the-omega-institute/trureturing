@@ -122,6 +122,60 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         Assert.Equal("failed", result["status"]!.ToString());
     }
 
+    [Theory]
+    [InlineData("current", 0, 0)]
+    [InlineData("scribe", 0, 0)]
+    [InlineData("current", 1, 1)]
+    [InlineData("current", 3, 2)]
+    [InlineData("current", 17, 2)]
+    public void CurrentCliHandoffPreservesChildOutputAndExit(string resource, int childExit, int expectedExit)
+    {
+        using var fixture = new ResourceFixture([resource]);
+        fixture.Processes();
+        fixture.CompleteCheckBoundary(resource == "scribe" ? ["scribe-describe", "scribe-markdown", "scribe-projections"] : ["SL-015"]);
+        File.AppendAllText(Path.Combine(fixture.Root, "build/bin/dotnet"),
+            $"printf 'child-out'\nprintf 'child-error' >&2\nexit {childExit}\n");
+        using var output = new StringWriter();
+        Assert.Equal(expectedExit, fixture.Run("current", output));
+        var stepName = resource == "scribe" ? "scribe" : "check-current";
+        Assert.Equal("child-outchild-error", File.ReadAllText(Path.Combine(fixture.Root, "build/ci/logs/current/" + stepName + ".log")));
+        Assert.Contains("child-out", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("child-error", output.ToString(), StringComparison.Ordinal);
+        Assert.Equal(new[] { "make --no-print-directory lean-report", "dotnet check-current" },
+            File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
+        if (childExit == 0)
+            Assert.Equal(new[] { "lean-report", stepName }, CommonExecutionEvidence.ValidateCurrent(fixture.Root).Steps.Select(step => step.Name));
+        else
+        {
+            var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/current-result.json")))!;
+            var child = summary["steps"]!.AsArray().Last()!;
+            Assert.Equal(childExit, child["raw_exit"]!.GetValue<int>());
+            Assert.Equal(expectedExit, child["exit"]!.GetValue<int>());
+            Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        }
+    }
+
+    [Theory]
+    [InlineData("report", "Raw Lean report is not valid JSON")]
+    [InlineData("materials", "archive")]
+    [InlineData("source", "candidate identity")]
+    public void CurrentFinalSealRejectsDamageByCliChild(string damage, string diagnostic)
+    {
+        using var fixture = new ResourceFixture(["current"]);
+        fixture.Processes();
+        fixture.CompleteCheckBoundary(["SL-015"]);
+        var damagedPath = damage == "source" ? "fixtures/selected.txt"
+            : CommonExecutionEvidence.ReportPath + (damage == "materials" ? ".materials.zip" : "");
+        File.AppendAllText(Path.Combine(fixture.Root, "build/bin/dotnet"), $"printf 'invalid' > '{damagedPath}'\n");
+        using var output = new StringWriter();
+        Assert.Equal(2, fixture.Run("current", output));
+        Assert.Equal(new[] { "make --no-print-directory lean-report", "dotnet check-current" },
+            File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
+        Assert.Contains(diagnostic, output.ToString(), StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("CURRENT_FINALIZE phase=seal status=started", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
     [Fact]
     public void PrScopeIsTheExactImmutableBaseToMergeDifference()
     {

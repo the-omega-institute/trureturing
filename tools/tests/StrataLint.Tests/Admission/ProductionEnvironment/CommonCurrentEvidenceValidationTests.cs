@@ -10,6 +10,87 @@ namespace StrataLint.Tests;
 [Collection("CI fixture environment")]
 public sealed partial class CommonCurrentEvidenceValidationTests
 {
+    [Fact]
+    public void CurrentCliHandoffReclaimsTemporaryValidationState()
+    {
+        using var fixture = new EvidenceFixture(currentStage: true);
+        using var deadline = new CancellationTokenSource();
+        var previous = RawLeanReportArtifact.Reading.Value;
+        WeakReference? temporary = null;
+        var live = new byte[256 * 1024];
+        var liveReference = new WeakReference(live);
+        var reads = 0;
+        var readsAtHandoff = 0;
+        bool? temporaryAlive = null;
+        bool? liveAlive = null;
+        using var output = new HandoffOutput(() =>
+        {
+            readsAtHandoff = reads;
+            temporaryAlive = temporary?.IsAlive;
+            liveAlive = liveReference.IsAlive;
+            // Stop at the actual second Step boundary. Child execution and final
+            // sealing are exercised by the native-apphost ResourceRouteTests.
+            deadline.Cancel();
+        });
+        try
+        {
+            RawLeanReportArtifact.Reading.Value = () =>
+            {
+                if (++reads == 1) temporary = PromotedTemporaryState();
+            };
+            Assert.Equal(2, fixture.RunCurrent(output, deadline.Token));
+        }
+        finally { RawLeanReportArtifact.Reading.Value = previous; }
+        Assert.Equal(1, readsAtHandoff);
+        Assert.Equal(false, temporaryAlive);
+        Assert.Equal(true, liveAlive);
+        Assert.Equal(1, reads);
+        Assert.Contains("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        GC.KeepAlive(live);
+    }
+
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    private static WeakReference PromotedTemporaryState()
+    {
+        // The existing read observer cannot expose the reader's private graph.
+        // This models dead large preparation state at the actual parent handoff.
+        var state = new byte[1024 * 1024];
+        var reference = new WeakReference(state);
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true);
+        GC.KeepAlive(state);
+        return reference;
+    }
+
+    [Theory]
+    [InlineData("missing-report", "Could not find file")]
+    [InlineData("invalid-report", "Raw Lean report is not valid JSON")]
+    [InlineData("canonical-material", "archive")]
+    [InlineData("candidate", "source hash")]
+    public void CurrentRejectsProducerReportDamageBeforeSecondStep(string damage, string diagnostic)
+    {
+        using var fixture = new EvidenceFixture(currentStage: true);
+        using var output = new StringWriter();
+        Assert.Equal(2, fixture.RunCurrent(output, processExited: _ => fixture.Damage(damage)));
+        Assert.Contains(diagnostic, output.ToString(), StringComparison.OrdinalIgnoreCase);
+        var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/current-result.json")))!;
+        Assert.Equal("lean-report", Assert.Single(summary["steps"]!.AsArray())!["name"]!.ToString());
+        Assert.DoesNotContain("\"name\":\"check-current\"", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
+    private sealed class HandoffOutput(Action handoff) : StringWriter
+    {
+        private bool observed;
+        public override void Flush()
+        {
+            base.Flush();
+            if (observed || !ToString().Contains("\"name\":\"check-current\"", StringComparison.Ordinal)) return;
+            observed = true;
+            handoff();
+        }
+    }
+
     [Theory]
     [InlineData("validate")]
     [InlineData("export")]
@@ -104,12 +185,18 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         private readonly string retained;
         private readonly CommonStageRecord build;
         internal string Root => temporary.Path;
-        internal EvidenceFixture()
+        internal EvidenceFixture(bool currentStage = false)
         {
             Write(Project, "<Project />\n");
             Write(Source, "-- synthetic report input\n");
             Write("global.json", "{\"sdk\":{\"version\":\"10.0.103\"}}\n");
-            Write(".gitignore", "build/\n.lake/\n");
+            Write(".gitignore", "build/\n.lake/\n**/bin/\n");
+            if (currentStage)
+            {
+                Write("Makefile", "lean-report:\n\t@true\n");
+                Write(CommonExecutionEvidence.CliPath, "fixture CLI binary");
+                Write(CommonExecutionEvidence.LeanProducerPath, "fixture producer binary");
+            }
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
                 new EngineeringProjectFixture(Project, "Producer", "test-support", false, [])));
             const string producer = "Meta/ReportProducers/fixture.json";
@@ -141,7 +228,8 @@ public sealed partial class CommonCurrentEvidenceValidationTests
             foreach (var suffix in new[] { ".input.attestation", ".provenance.json" })
                 Write(CommonExecutionEvidence.ReportPath + suffix, "fixture companion\n");
             Write(Log, "fixture build\n");
-            build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), [Log],
+            build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
+                !currentStage ? [Log] : [Log, CommonExecutionEvidence.CliPath, CommonExecutionEvidence.LeanProducerPath],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", Log)).ToArray());
             var checks = CommonExecutionEvidence.BeginChecks(Root, "current", build, TextWriter.Null);
             foreach (var id in checks.Ids)
@@ -154,6 +242,12 @@ public sealed partial class CommonCurrentEvidenceValidationTests
             CommonExecutionEvidence.SealCurrent(Root, build,
                 CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", Log)).ToArray());
             Run("pack");
+        }
+        internal int RunCurrent(TextWriter output, CancellationToken deadline = default,
+            Action<System.Diagnostics.Process>? processExited = null)
+        {
+            using var environment = new CiFixtureEnvironment();
+            return new CommonStages(Root, output, deadline, processExited, seedExport: SeedExportMode.Deferred).Run("current", null);
         }
         internal void Run(string entry)
         {
@@ -176,6 +270,13 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         internal byte[] Read(string path) => File.ReadAllBytes(Path.Combine(Root, path));
         internal void Damage(string damage)
         {
+            if (damage is "missing-report" or "invalid-report")
+            {
+                var report = Path.Combine(Root, CommonExecutionEvidence.ReportPath);
+                if (damage == "missing-report") File.Delete(report);
+                else File.WriteAllText(report, "not JSON");
+                return;
+            }
             if (damage is "input" or "round")
             {
                 var checkPath = CommonExecutionEvidence.ChecksPath("current");
