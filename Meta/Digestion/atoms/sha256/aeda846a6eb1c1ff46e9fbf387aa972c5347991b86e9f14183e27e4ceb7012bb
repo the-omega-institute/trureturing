@@ -1,0 +1,17 @@
+### 123.1 有向链的边界及其消去律
+
+固定一个有限单纯复形及顶点的全序，以递增排列的 $k$ 维单形为实向量空间 $C_k$ 的基。交换两个顶点改变基向量符号，重复顶点的符号单形取零。定义
+$$
+\partial_k[v_0,\ldots,v_k]
+=\sum_{i=0}^k(-1)^i[v_0,\ldots,\widehat v_i,\ldots,v_k]
+\quad(k\ge1),\qquad \partial_0=0.
+$$
+则 $\partial_{k-1}\partial_k=0$。对每个基单形，删去两个原始位置 $i<j$ 的面出现两次：先删 $i$ 再删 $j$ 的符号为 $(-1)^{i+j-1}$，先删 $j$ 再删 $i$ 的符号为 $(-1)^{i+j}$，两者抵消。全部双删面按此成对，证明结论；线性延拓适用于任意链。
+
+对余链空间 $C^k=\operatorname{Hom}(C_k,\mathbb R)$，定义 $d_k\alpha=\alpha\circ\partial_{k+1}$。于是
+$$
+\langle d\alpha,c\rangle=\langle\alpha,\partial c\rangle,
+\qquad d_{k+1}d_k=0.
+$$
+前式是离散 Stokes 配对，后式由前述边界消去律成立。这里配对取代几何积分；没有假定这份有限复形已是物理流形或时空。
+

@@ -1,0 +1,13 @@
+**定理 122.4（任务充分性与精确任务商）。** 下列两条件等价：
+$$
+\sim_q\ \subseteq\ \sim_{\mathcal F},
+\qquad
+\forall\alpha\ \exists!\bar f_\alpha:B\to Y_\alpha,
+\quad f_\alpha=\bar f_\alpha q.
+$$
+若进一步 $\sim_q=\sim_{\mathcal F}$，则存在唯一双射
+$$
+\Phi:B\longrightarrow X/{\sim_{\mathcal F}},\qquad
+\Phi(q(x))=[x].
+$$
+

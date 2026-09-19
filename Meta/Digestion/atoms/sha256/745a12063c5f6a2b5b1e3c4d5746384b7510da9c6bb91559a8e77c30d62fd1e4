@@ -1,0 +1,21 @@
+**定理 122.5。** 设 $X$ 有限非空，约束指标集有限，每个 $v_i:X\to[0,\infty)$ 满足 $v_i(x)=0\iff x\in A_i$，权重 $\lambda_i>0$。定义
+$$
+E(x)=\sum_i\lambda_i v_i(x),\qquad E_*:=\min_xE(x),
+\qquad M=\{x:E(x)=E_*\}.
+$$
+则 $E_*=0$ 当且仅当存在共同实现。取严格正先验 $\mu_x$、$\sum_x\mu_x=1$，并令
+$$
+\rho_\beta(x)=\frac{\mu_x e^{-\beta E(x)}}{Z_\beta},
+\qquad Z_\beta=\sum_x\mu_xe^{-\beta E(x)},\qquad\beta\ge0.
+$$
+有逐点极限
+$$
+\rho_\beta(x)\longrightarrow\frac{\mu_x1_M(x)}{\mu(M)}
+\quad(\beta\to\infty).
+$$
+若 $M\ne X$，令 $\Delta=\min_{x\notin M}(E(x)-E_*)>0$，则
+$$
+\rho_\beta(X\setminus M)
+\le\frac{1-\mu(M)}{\mu(M)}e^{-\beta\Delta}.
+$$
+

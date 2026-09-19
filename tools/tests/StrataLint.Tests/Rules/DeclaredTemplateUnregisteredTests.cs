@@ -16,7 +16,7 @@ public sealed class DeclaredTemplateUnregisteredTests
         + "theorem target0_second : True := by trivial\nend D5.S0.Carrier.Target\n";
 
     [Fact]
-    public void new_public_theorem_without_registration_blocks() => Block(Build());
+    public void new_public_theorem_without_registration_blocks() => Observes(Build());
 
     [Fact]
     public void validated_readout_registration_covers_new_theorem() => Declared(Build(binding: "inline"));
@@ -314,7 +314,7 @@ public sealed class DeclaredTemplateUnregisteredTests
     }
 
     [Fact]
-    public void handwritten_companion_suffix_does_not_exempt_theorem() => Block(Build(
+    public void handwritten_companion_suffix_does_not_exempt_theorem() => Observes(Build(
         source: Source.Replace("target0", "target0__catalog_irredundant", StringComparison.Ordinal),
         declarations: [new(Theorem + "__catalog_irredundant", "theorem", "True", [])]), Theorem + "__catalog_irredundant");
 
@@ -327,17 +327,17 @@ public sealed class DeclaredTemplateUnregisteredTests
         var findings = Findings(Build(added: true, source: TwoTheoremSource, declarations:
             [new(Theorem, "theorem", "True", []), new(Theorem + "_second", "theorem", "True", [])]));
         Assert.True(findings.Count(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Block) == 2, "[FAIL] candidate_new_module_judges_every_public_theorem");
+            && f.Effect == AdmissionEffect.Observe) == 2, "[FAIL] candidate_new_module_judges_every_public_theorem");
     }
 
     [Fact]
-    public void lemma_is_a_public_theorem() => Block(Build(source: Source.Replace("theorem", "lemma", StringComparison.Ordinal)));
+    public void lemma_is_a_public_theorem() => Observes(Build(source: Source.Replace("theorem", "lemma", StringComparison.Ordinal)));
 
     [Fact]
     public void first_pin_uses_base_theorem_names() => Empty(Build(baseline: Source, firstPin: true));
 
     [Fact]
-    public void rename_destination_has_no_same_path_base_theorem() => Block(Build(added: true, renamed: true));
+    public void rename_destination_has_no_same_path_base_theorem() => Observes(Build(added: true, renamed: true));
 
     [Theory]
     [InlineData("-- theorem D5.S0.Carrier.Target.target0 : True := by trivial\n")]
@@ -345,7 +345,7 @@ public sealed class DeclaredTemplateUnregisteredTests
     [InlineData("def text := \"theorem D5.S0.Carrier.Target.target0 : True := by trivial\"\n")]
     [InlineData("namespace Other\ntheorem target0 : True := by trivial\nend Other\n")]
     [InlineData("def D5.S0.Carrier.Target.target0 : True := by trivial\n")]
-    public void nonmatching_base_text_does_not_grandfather_theorem(string baseline) => Block(Build(baseline: baseline));
+    public void nonmatching_base_text_does_not_grandfather_theorem(string baseline) => Observes(Build(baseline: baseline));
 
     [Theory]
     [InlineData("namespace D5\nnamespace S0.Carrier.Target\n  lemma target0 : True := by trivial\nend S0.Carrier.Target\nend D5\n")]
@@ -360,13 +360,13 @@ public sealed class DeclaredTemplateUnregisteredTests
     [Theory]
     [InlineData("r#")]
     [InlineData("r##")]
-    public void raw_string_contents_are_not_base_declarations(string prefix) => Block(Build(
+    public void raw_string_contents_are_not_base_declarations(string prefix) => Observes(Build(
         baseline: "def text := " + prefix + "\" \" theorem " + Theorem + " : True := by trivial \" \"" + prefix[1..] + "\n"));
 
     [Theory]
     [InlineData("s!")]
     [InlineData("m!")]
-    public void interpolated_string_contents_are_not_base_declarations(string prefix) => Block(Build(
+    public void interpolated_string_contents_are_not_base_declarations(string prefix) => Observes(Build(
         baseline: "def text := " + prefix + "\"{id \" theorem " + Theorem + " : True := by trivial \"}\"\n"));
 
     [Fact]
@@ -375,10 +375,10 @@ public sealed class DeclaredTemplateUnregisteredTests
         declarations: [new("𝒳", "theorem", "True", [])]));
 
     [Fact]
-    public void unvalidated_registration_does_not_cover_new_theorem() => Block(Build(binding: "undeclared"));
+    public void unvalidated_registration_does_not_cover_new_theorem() => Observes(Build(binding: "undeclared"));
 
     [Fact]
-    public void registration_for_other_theorem_does_not_cover_new_theorem() => Block(Build(binding: "inline",
+    public void registration_for_other_theorem_does_not_cover_new_theorem() => Observes(Build(binding: "inline",
         source: TwoTheoremSource, declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
 
     [Fact]
@@ -389,15 +389,15 @@ public sealed class DeclaredTemplateUnregisteredTests
     {
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, Build()).Diagnostics;
         Assert.True(diagnostics.Any(d => d.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + Theorem
-            && d.AdmissionEffect == AdmissionEffect.Block), "[FAIL] sl031_dispatch_blocks_unregistered_theorem");
+            && d.AdmissionEffect == AdmissionEffect.Observe), "[FAIL] sl031_dispatch_blocks_unregistered_theorem");
     }
 
     internal static ImmutableArray<RuleFinding> Findings(DeltaRuleContext context) => DeclaredTemplateBindingRule.Evaluate(context);
     private static void Empty(DeltaRuleContext context, [CallerMemberName] string name = "") =>
         Assert.True(Findings(context).IsEmpty, "[FAIL] " + name + ": " + string.Join("; ", Findings(context).Select(f => f.Message)));
-    private static void Block(DeltaRuleContext context, string theorem = Theorem, [CallerMemberName] string name = "") =>
+    private static void Observes(DeltaRuleContext context, string theorem = Theorem, [CallerMemberName] string name = "") =>
         Assert.True(Findings(context).Any(f => f.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + theorem
-            && f.Effect == AdmissionEffect.Block), "[FAIL] " + name);
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] " + name);
     private static void Declared(DeltaRuleContext context, [CallerMemberName] string name = "")
     {
         var findings = Findings(context);

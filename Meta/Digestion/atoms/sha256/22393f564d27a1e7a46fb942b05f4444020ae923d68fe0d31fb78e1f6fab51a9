@@ -1,0 +1,25 @@
+**结构部分。** 因 $P,L$ 自伴，$(PLQ)^*=QLP$。若 $PLQ=0$，两个交叉块均零，故交换；反向立即成立。与条件 5 的等价已由式（127.24）证明。
+
+若交换，定义
+
+$$
+S_t=\mathsf CT_t\mathsf U.
+\tag{127.27}
+$$
+
+$\mathsf C,\mathsf U,T_t$ 都将概率送到概率，所以 $S_t$ 非负且列和为一。由 $P\mathsf U=\mathsf U$ 以及交换性，
+
+$$
+\begin{aligned}
+S_tS_s
+&=\mathsf CT_tPT_s\mathsf U
+=\mathsf CT_{t+s}\mathsf U=S_{t+s},\\
+\mathsf CT_t
+&=\mathsf CT_tP=S_t\mathsf C,
+\qquad S_t\bar\pi=\bar\pi.
+\end{aligned}
+\tag{127.28}
+$$
+
+这里 $\mathsf CT_tQ=0$ 使用了交换性；没有它，压缩得到的每个 $\mathsf CT_t\mathsf U$ 虽是随机矩阵，未必组成半群。反之，条件 4 使 $\mathsf CT_th=S_t\mathsf Ch=0$ 对每个 $h\in\ker P$ 成立；在 $t=0$ 求导并乘 $\mathsf U$ 得 $PLh=0$，故条件 2 成立。
+

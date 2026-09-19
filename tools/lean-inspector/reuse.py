@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Validate optional evidence that the complete report entry has no new work.
 
-The registered input set, the explicitly registered execution environment and
-the complete five-piece report are sealed only after defaults/report/publication
-succeed. A receipt selects no rules and grants no check success. A miss returns
+The report semantic version, the report module and configuration inputs, the explicitly
+registered execution environment and the complete five-piece report are sealed
+only after defaults/report/publication succeed. Producer program bytes are not
+part of the seal; the semantic version is their compatibility contract. A receipt selects no rules and grants no check success. A miss returns
 to the normal Lake entry; malformed authored registration remains an error.
 """
 import argparse
@@ -56,15 +57,18 @@ def capture(repository, lake):
             versions[name] = version
     except (OSError, UnicodeError, ValueError, subprocess.SubprocessError) as error:
         return dict(eligible=False, reason='toolchain-unavailable', detail=str(error))
-    # dependency_sources includes every report module; producer_paths includes
-    # inspector/default-audit sources. Addition/deletion changes the exact map.
-    paths = sorted(set(inputs.producer_paths('lean-report') + inputs.dependency_sources()
-                       + inputs.expand('config_inputs')))
+    # Report bytes are a function of the reported Lean modules (data), the build
+    # configuration and the execution environment. Every program that produces or
+    # judges the report -- the Lean inspector and judge library, C#, scripts, build
+    # properties -- is never hashed here: its compatibility is the explicit
+    # report_semantic_version, bumped by hand in the change that alters report
+    # content. Addition/deletion of a report module changes the exact map.
+    paths = sorted(set(inputs.expand('report_modules') + inputs.expand('config_inputs')))
     files = {}
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, files=files, compiler_input_sha256=publication.compiler_identity(str(repository)),
+    return dict(eligible=True, semantic_version=inputs.data['report_semantic_version'], files=files,
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
 

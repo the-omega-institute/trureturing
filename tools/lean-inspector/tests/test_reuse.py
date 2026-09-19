@@ -150,8 +150,7 @@ class ReuseTests(unittest.TestCase):
 
     def test_input_changes_additions_deletions_and_environment_invalidate_receipt(self):
         api = self.receipt()
-        for path in ['D5/A.lean', 'Audit.lean', 'Inspector.lean', 'producer.py',
-                     'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json']:
+        for path in ['D5/A.lean', 'lean-toolchain', 'lakefile.toml']:
             with self.subTest(changed=path):
                 source = self.root / path
                 original, stamp = source.read_bytes(), source.stat()
@@ -177,12 +176,41 @@ class ReuseTests(unittest.TestCase):
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
         captured = api.capture(self.root, self.lake)
-        producer = self.root / 'producer.py'
-        producer.chmod(0o755)
+        source = self.root / 'D5/A.lean'
+        source.chmod(0o755)
         self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'],
-                        '[FAIL] producer_mode_change_invalidates_reuse')
+                        '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
             api.seal(self.root, self.report, self.lake, captured)
+
+    def test_producer_program_bytes_never_gate_reuse(self):
+        api = self.receipt()
+        captured = api.capture(self.root, self.lake)
+        # The Lean inspector and judge library are programs too: version-gated, never hashed.
+        producer_only = ['producer.py', 'tools/scripts/report/lean-report-selection.py',
+                         'Inspector.lean', 'Audit.lean']
+        self.assertTrue(all(path.startswith('D5/') or path in ('lean-toolchain', 'lakefile.toml')
+                            for path in captured['files']),
+                        '[FAIL] receipt_population_is_report_modules_and_configuration_only: '
+                        + repr(sorted(captured['files'])))
+        self.assertFalse(set(producer_only + ['lean-report-inputs.json']) & set(captured['files']),
+                         '[FAIL] producer_and_judge_programs_not_hashed')
+        for path in producer_only:
+            with self.subTest(changed=path):
+                source = self.root / path
+                original, mode = source.read_bytes(), source.stat().st_mode
+                source.write_bytes(original + b'\n# producer-only edit\n')
+                source.chmod(0o700)
+                self.assertEqual(api.probe(self.root, self.report, self.lake),
+                                 dict(needs_lake=False, reason='receipt-matched'),
+                                 '[FAIL] producer_program_change_keeps_receipt')
+                source.write_bytes(original)
+                source.chmod(mode)
+        self.policy['report_semantic_version'] += 1
+        self.write_policy()
+        result = api.probe(self.root, self.report, self.lake)
+        self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',
+                        '[FAIL] semantic_version_bump_rejects_seed: ' + repr(result))
 
     def test_legacy_and_corrupt_receipts_and_bundles_require_lake(self):
         api = self.receipt()
@@ -281,14 +309,15 @@ class ReuseTests(unittest.TestCase):
     def test_seal_and_reuse_reject_input_changes_during_work(self):
         api = self.receipt()
         captured = api.capture(self.root, self.lake)
-        self.write('Audit.lean', 'def audit := 2\n')
+        self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
             api.seal(self.root, self.report, self.lake, captured)
+        self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
         def mutate_after_publish(*args, **kwargs):
             publish(*args, **kwargs)
-            self.write('Audit.lean', 'def audit := 3\n')
+            self.write('D5/A.lean', 'def a := 3\n')
         with patch.object(publication, 'publish', side_effect=mutate_after_publish):
             self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())

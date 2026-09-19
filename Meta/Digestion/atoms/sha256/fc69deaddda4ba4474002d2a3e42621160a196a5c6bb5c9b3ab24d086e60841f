@@ -1,0 +1,87 @@
+### 129.7 条件观察使隐藏内积成为平均条件协方差
+
+固定有限非空 $\Omega$、严格正概率 $\nu$，以及满射读出 $r:\Omega\to B$。令
+
+$$
+V=\mathbb R^\Omega,
+\qquad\langle f,g\rangle_\nu=\sum_x\nu(x)f(x)g(x),
+\qquad\nu_b=\sum_{r(x)=b}\nu(x)>0.
+\tag{129.25}
+$$
+
+定义条件投影
+
+$$
+(Pf)(x)=\frac1{\nu_{r(x)}}\sum_{r(y)=r(x)}\nu(y)f(y).
+\tag{129.26}
+$$
+
+它线性，输出在每个纤维上常值，且对这种常值函数保持不变，所以 $P^2=P$。按纤维求和还给
+
+$$
+\langle Pf,g\rangle_\nu
+=\sum_b\frac{\bigl(\sum_{r(x)=b}\nu(x)f(x)\bigr)
+\bigl(\sum_{r(y)=b}\nu(y)g(y)\bigr)}{\nu_b}
+=\langle f,Pg\rangle_\nu.
+\tag{129.27}
+$$
+
+因此它是正交投影。此外，$P1_\Omega=1_\Omega$、$f\ge0\Rightarrow Pf\ge0$，且 $\mathbb E_\nu Pf=\mathbb E_\nu f$。这些概率性质是条件期望结构提供的，任意正交投影并不具备。
+
+下文在此 $V$ 上构造式（129.1）的正 Clifford 代数。函数内的乘法明确记为逐点乘法；例如 $fg$ 表示 $x\mapsto f(x)g(x)$，而 Clifford 积始终写 $\iota_Q(f)\iota_Q(g)$。
+
+因 $Pf,Pg$ 在纤维上常值，
+
+$$
+\mathbb E_\nu[f(Pg)]=\mathbb E_\nu[(Pf)(Pg)]
+=\mathbb E_\nu[(Pf)g].
+$$
+
+展开残差积并约去交叉项得
+
+$$
+\begin{aligned}
+\langle f-Pf,g-Pg\rangle_\nu
+&=\mathbb E_\nu[fg]-\mathbb E_\nu[(Pf)(Pg)]\\
+&=\mathbb E_\nu\bigl[P(fg)-(Pf)(Pg)\bigr].
+\end{aligned}
+\tag{129.28}
+$$
+
+方括号内是条件协方差函数 $\operatorname{Cov}_\nu(f,g\mid r)$。因此式（129.15）在此模型中成为
+
+$$
+\boxed{
+\mathcal E_P(\iota_Q(f)\iota_Q(g))
+-\mathcal E_P(\iota_Q(f))\mathcal E_P(\iota_Q(g))
+=\mathbb E_\nu[\operatorname{Cov}_\nu(f,g\mid r)]\,1_{\rm Cl}.
+}
+\tag{129.29}
+$$
+
+条件协方差通常随读数而变；它的**期望**才是 Clifford 向量缺陷中的标量。
+
+例如四个等权状态分成 $\{1,2\}$、$\{3,4\}$ 两条纤维，取
+
+$$
+f=g=(-1,1,-2,2).
+$$
+
+有 $Pf=0$，但
+
+$$
+\operatorname{Cov}_\nu(f,f\mid r)=(1,1,4,4),
+\qquad\mathbb E_\nu[\operatorname{Cov}_\nu(f,f\mid r)]=\frac52.
+\tag{129.30}
+$$
+
+不能把可见函数 $(1,1,4,4)$、它作为 Clifford 一阶向量的嵌入，以及标量 $(5/2)1_{\rm Cl}$ 写成同一个对象。
+
+尤其 $1_\Omega\in V$ 是一个常量函数，但 $\iota_Q(1_\Omega)$ 仍是 Clifford 一阶向量；$1_{\rm Cl}$ 是零阶单位。式（129.4）分别把它们送到 $\Lambda^1V$ 中的 $1_\Omega$ 和 $\Lambda^0V$ 中的标量 $1$，所以二者不同。虽然
+
+$$
+\iota_Q(1_\Omega)^2=\|1_\Omega\|_\nu^2 1_{\rm Cl}=1_{\rm Cl},
+$$
+
+平方相等并不使一阶常量函数变成代数单位。
+

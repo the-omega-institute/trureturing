@@ -1,0 +1,78 @@
+### 127.9 一个明确的反向准备，把完整熵增连接到路径 KL
+
+回到图热流。固定有限时间网格
+
+$$
+0=t_0<t_1<\cdots<t_n=T,
+\qquad \Delta_k=t_k-t_{k-1}>0,
+\qquad K_k=T_{\Delta_k}.
+\tag{127.57}
+$$
+
+这里 $K_k$ 是采样转移核，与连续记忆核 $K(t)$ 的含义不同；以下用下标区分。路径载体为 $V^{n+1}$。定义正向实验
+
+$$
+\mathbb P(x_0,\ldots,x_n)
+=p_0(x_0)\prod_{k=1}^n(K_k)_{x_kx_{k-1}}.
+\tag{127.58}
+$$
+
+其末态边缘是 $p_T$。另行声明反向准备实验：从 $p_T$ 出发，以逆序的间隔运行同一图热核，
+
+$$
+\widetilde{\mathbb P}(y_0,\ldots,y_n)
+=p_T(y_0)\prod_{k=1}^n(K_{n+1-k})_{y_ky_{k-1}}.
+\tag{127.59}
+$$
+
+令 $\Theta(y_0,\ldots,y_n)=(y_n,\ldots,y_0)$，并把 $\mathbb R=\Theta_*\widetilde{\mathbb P}$ 写到正向路径坐标上，得到
+
+$$
+\mathbb R(x_0,\ldots,x_n)
+=p_T(x_n)\prod_{k=1}^n(K_k)_{x_{k-1}x_k}.
+\tag{127.60}
+$$
+
+式（127.4）保证每个 $K_k$ 对称且严格正，$p_0,p_T$ 也严格正，所以两份路径律互相绝对连续。逐因子利用对称性，
+
+$$
+\boxed{\log\frac{\mathbb P(\omega)}{\mathbb R(\omega)}
+=\log p_0(x_0)-\log p_T(x_n)}.
+\tag{127.61}
+$$
+
+取正向期望，用首末边缘求和，即得
+
+$$
+\boxed{
+D(\mathbb P\|\mathbb R)
+=H(p_T)-H(p_0)
+=D(p_0\|\pi)-D(p_T\|\pi)
+=\int_0^T\sigma(p_t)\,dt.
+}
+\tag{127.62}
+$$
+
+每个有限采样网格都满足这条等式；固定终点 $T$ 后，改变或细化网格不改变它的值，因为每个对称转移因子已经逐项相消。这是普通有限采样路径上的等式，不是对连续时间完整路径测度的已证声明。网格间隔反序是实验定义的一部分；不是只将同一初始准备的记录倒放。
+
+现在取完整粗历史
+
+$$
+r(x_0,\ldots,x_n)=(q(x_0),\ldots,q(x_n)).
+\tag{127.63}
+$$
+
+它与坐标顺序反演相容。用式（127.55）分解式（127.62），得到
+
+$$
+\boxed{
+\int_0^T\sigma(p_t)\,dt
+=D(r_*\mathbb P\|r_*\mathbb R)
++\mathbb E_{y\sim r_*\mathbb P}
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr).
+}
+\tag{127.64}
+$$
+
+右边分别是这对已声明实验在完整粗历史上的方向可区分性，以及相同粗历史之内仍被隐藏的路径区别。它们不等于单个时刻的 $D_c(p_t),D_h(p_t)$；它们比较的是两份路径实验。
+

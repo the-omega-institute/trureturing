@@ -1,0 +1,15 @@
+### 130.9 保留观察纤维的坐标变换
+
+设 $T\in GL_a(\mathbb R)$、$R\in GL_d(\mathbb R)$，$L_0:\mathbb R^a\to\mathbb R^d$ 任意，取
+
+$$
+x=Tu,\qquad y=L_0u+Rv.
+$$
+
+这个变换保留可见接口：给定 $u$，旧可见量 $x=Tu$ 已定，而 $v\mapsto y$ 在同一旧纤维中为双射。新二次型为 $Q'(u,v)=Q(Tu,L_0u+Rv)$，隐藏块和耦合块为
+
+$$
+D'=R^TDR,\qquad
+B_0'=T^TB_0R+L_0^TDR.
+$$
+

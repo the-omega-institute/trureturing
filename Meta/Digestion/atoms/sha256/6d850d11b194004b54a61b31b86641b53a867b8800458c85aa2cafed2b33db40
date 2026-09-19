@@ -1,0 +1,21 @@
+**证明。** 展开有序和，用对称性合并两项得到
+$$
+\mathcal D_q(f,g)=\sum_x\mu_xf_xg_x-\sum_{x,y}w_{xy}f_xg_y.
+$$
+后一个和等于 $\sum_bp_b\bar f_b\bar g_b=\langle f,Pg\rangle_\mu$，给出首式；正交投影性质给第二式。指标的平方差在跨事件边上为一、其余为零，两种有序方向相同，故 $\mathcal D_q(1_A)=\operatorname{Cut}_q(A)$。逐纤维计算又得
+$$
+\sum_{x\in A\cap X_b,y\in A^c\cap X_b}w_{xy}
+=\frac{\mu(A\cap X_b)\mu(A^c\cap X_b)}{p_b}
+=p_ba_b(1-a_b),
+$$
+于是等于残差。证毕。
+
+满支撑保证同一纤维内任意两点的边权都正。一个点属于观察拓扑前沿，当且仅当它连到某个事件取值相反的点；因此集合边界、图上的跨事件关系及方差的正贡献对齐。加权 cut 衡量的是这条已指定纤维图中的关系，不是另行假定的空间邻接图。
+
+仓内 `conditionalLogicalImpurity` 使用有序不同目标点对的质量，二值特化为
+$$
+\sum_b\frac{\sum_{x,y\in X_b,\,1_A(x)\ne1_A(y)}\mu_x\mu_y}{p_b}
+=2\mathcal B_q(A).
+$$
+系数二不可省略。该量与此处 cut 的关系来自两种方向，而不是定义不同造成可忽略的常数。
+
