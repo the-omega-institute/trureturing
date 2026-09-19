@@ -592,7 +592,7 @@ private noncomputable def markedCompositionPartFiberEquiv {N blocks : ℕ} [NeZe
   rw [← compositionCyclePartition_eq_marked hN hblocks P]
   exact compositionPartFiberEquiv data.1 data.2 j
 
-private noncomputable def actualOddCycleBlocks {N : ℕ} (P : ConnectedCyclePartition N) :
+noncomputable def actualOddCycleBlocks {N : ℕ} (P : ConnectedCyclePartition N) :
     Finset (Quotient P.toSetoid) := by
   classical
   exact (Finset.univ.image fun v : Fin N =>
@@ -671,12 +671,12 @@ private noncomputable def markedPrescribedOddCompositionEquiv
       left_inv := by intro data; rfl
       right_inv := by intro data; rfl }
 
-private abbrev PrescribedOddConnectedCyclePartition
+abbrev PrescribedOddConnectedCyclePartition
     (N blocks oddCount : ℕ) [NeZero N] :=
   {P : ConnectedCyclePartition N //
     (cycleBoundaryCuts P).card = blocks ∧ (actualOddCycleBlocks P).card = oddCount}
 
-private theorem card_prescribedOddConnectedCyclePartition_identity
+theorem card_prescribedOddConnectedCyclePartition_identity
     (n i m : ℕ) [NeZero (2 * n)] (hn : 2 ≤ n) (hi : 2 ≤ i) :
     i * Nat.card (PrescribedOddConnectedCyclePartition (2 * n) i (2 * m)) =
       2 * n * Nat.choose i (2 * m) * Nat.choose (n + m - 1) (i - 1) := by
@@ -744,7 +744,7 @@ private theorem card_prescribedOddConnectedCyclePartition_identity
     _ = 2 * n * Nat.choose i (2 * m) * Nat.choose (n + m - 1) (i - 1) := by
       simp only [Nat.mul_assoc]
 
-private theorem actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
+theorem actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
     (P : ConnectedCyclePartition (2 * n)) :
     Even (actualOddCycleBlocks P).card := by
   classical
@@ -778,7 +778,7 @@ private theorem actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
       Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C})).mp
   simpa [hsum]
 
-private theorem quotient_card_eq_boundaryCuts_card {N : ℕ} [NeZero N]
+theorem quotient_card_eq_boundaryCuts_card {N : ℕ} [NeZero N]
     (hN : 3 ≤ N) (P : ConnectedCyclePartition N)
     (hcuts : 2 ≤ (cycleBoundaryCuts P).card) :
     Nat.card (Quotient P.toSetoid) = (cycleBoundaryCuts P).card := by

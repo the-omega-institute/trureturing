@@ -29,7 +29,7 @@ def crownCycleBlockRel {n : ℕ} (P : ConnectedCyclePartition (2 * n))
 
 /- Between distinct quotient blocks, every directed crown relation crosses an actual
    cyclic boundary cut, and every such directed boundary witnesses the quotient relation. -/
-private theorem crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+theorem crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
     (P : ConnectedCyclePartition (2 * n)) (C D : Quotient P.toSetoid) (hne : C ≠ D) :
     crownCycleBlockRel P C D ↔
       ∃ i j : Fin (2 * n),
@@ -829,7 +829,7 @@ private theorem mixedBoundaryCuts_of_crownPartition {n : ℕ} [NeZero (2 * n)] (
 
 /- Compatibility and nontriviality exclude both the no-cut and singleton-cut
    exceptions.  This is the cardinality form used by the marked-cut count. -/
-private theorem cycleBoundaryCuts_card_ge_two_of_crownCycleCompatible
+theorem cycleBoundaryCuts_card_ge_two_of_crownCycleCompatible
     {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
     (P : ConnectedCyclePartition (2 * n))
     (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)

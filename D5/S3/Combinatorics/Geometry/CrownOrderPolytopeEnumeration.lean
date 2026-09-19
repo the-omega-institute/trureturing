@@ -511,7 +511,7 @@ private theorem succ_mod_of_pred_mod {N a b : ℕ} (hN : 0 < N) (ha : a < N) (hb
     rw [hform, hsum] at hba
     rw [hba, show a - 1 + 1 = a by omega, Nat.mod_eq_of_lt ha]
 
-private theorem crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
+theorem crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
     (i j : Fin (2 * n)) :
     crownRelation n i j ∨ crownRelation n j i ↔
       (SimpleGraph.cycleGraph (2 * n)).Adj i j := by
