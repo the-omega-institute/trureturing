@@ -796,3 +796,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Same-chain overlap and future-risk certificates](profile-notes/334-same-chain-overlap-and-future-risk-certificates.md)
 - [Original AP blocks sharpen the fixed full-Haar account](profile-notes/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md)
 - [Maximal-label Fourier overlap and uncovered density](profile-notes/336-maximal-label-fourier-overlap-and-uncovered-density.md)
+- [Fixed original groups retain the complete count law](profile-notes/337-fixed-original-groups-retain-the-complete-count-law.md)
