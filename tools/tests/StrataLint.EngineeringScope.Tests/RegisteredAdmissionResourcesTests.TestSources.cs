@@ -48,7 +48,6 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("tools/tests/StrataLint.Lean.Tests/packages.lock.json")]
     [InlineData("tools/tests/Directory.Build.props")]
     [InlineData("Meta/engineering-projects.json")]
-    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs")]
     public void TestSourcesDoNotHideFullEngineeringObligations(string input)
     {
         var plan = Plan("tools/tests/StrataLint.Engine.Tests/AdmissionResourceProbe.cs", input);

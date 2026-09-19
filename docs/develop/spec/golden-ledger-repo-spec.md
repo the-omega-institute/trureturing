@@ -371,7 +371,9 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 测试项目的 `.cs` 路径逐项目登记完整执行单元,同时请求 `architecture`、`repository`、`current-data`、`delta-data` 与 filemap。项目文件、锁文件、props、登记文件及反证源码保持完整工程资源;混合修改取资源并集。测试源码本身不请求候选 Lean build/report/Scribe;确需 Lean 的 CLI/Lean 测试项目仍显式请求 Lake 工具与 elan 安装缓存。既定 ScriptTests 排除保持不变。编译依赖闭包仅提供构建和运行材料,不能将被引用测试项目变成执行单元;显式请求的 CI 测试根即使同时被其它根引用也保留,完整工程仍覆盖全部 CI 测试项目。SL-003 材料包含测试源码字节,同路径变化必须使容量证据失效。
 
-有选择的 delta 必须同时验证请求计划、完整差异、候选 SHA、显式 base 与构建 round,并核对 build/current 已绑定的资源计划一致。没有 engineering 阶段资源时不要求或伪造 TRX;选中 `repository` 等工程资源时,必须消费其完整测试项目的真实 TRX 与本轮执行证据。只有完整 `engineering` 资源要求全部工程测试、selftest、反证编译及 base 项目覆盖底线;没有 report 资源时上下文不含 Lean capability,实际选中的语义谓词访问它必须明确失败。缺少计划、证据、登记或身份不符不得解释为免跑;未提供选择计划的直接入口保持完整证据要求。
+生产 C# 源码按八个已登记项目分别请求属主完整测试项目,以及显式公共消费者 `architecture`、`policy`、`repository`、`test-cli`;CLI 属主与公共消费者去重。JudgeSeedTask 另请求已登记消费其源码的 `test-cache`、`test-engineering-scope`。`engineering-guards` 单独保留 selftest 双跑及两类反证编译;`delta-judge` 保留 current、filemap、Scribe 与原 delta 谓词,不经前置隐式扩大到全部测试项目。项目文件、锁文件、Vendor 与全局配置仍按完整 engineering 登记,未知项目或源路径拒绝而不回退全量。PR/push 按现有阶段规则选择,编译引用只决定构建与输入身份,不自动扩大测试执行集合。
+
+有选择的 delta 必须同时验证请求计划、完整差异、候选 SHA、显式 base 与构建 round,并核对 build/current 已绑定的资源计划一致。没有 engineering 阶段资源时不要求或伪造 TRX;选中 `repository` 等工程资源时,必须消费其完整测试项目的真实 TRX 与本轮执行证据。完整 `engineering` 资源要求全部工程测试、selftest、反证编译及 base 项目覆盖底线;`engineering-guards` 只独立请求其中 selftest 与反证编译,选中的测试项目仍各自保留完整证据。没有 report 资源时上下文不含 Lean capability,实际选中的语义谓词访问它必须明确失败。缺少计划、证据、登记或身份不符不得解释为免跑;未提供选择计划的直接入口保持完整证据要求。
 
 `Library/*/*.md` 的文献笔记显式登记 `filemap` 与 `scribe-library`。后者复用完整 Describe 校验的文献子谓词:元数据文法、bibkey/DOI 唯一性、文献 GID、文档文献引用、已核定位段及 Problems 来源一致性;不执行工程测试、投影或全仓 Markdown/发射检查。GID 可选择 Lean 具体声明,故保留正常 `lean-report` 入口与 source-bound 报告证据,不得以文件存在替代声明解析。缓存命中仍走 producer 验证,其 Lean 工具和重缓存按既定 `report-miss` 激活。混入其它路径按登记并集执行;完整 Describe 已成功执行同一文献谓词时,共享入口直接形成对应文献检查证据,不再次求值。所有检查、程序项目、材料、路径清单和报告依赖分别在 FILEMAP、`Meta/ci-resources.json` 与 `Meta/ci-checks.json` 登记。
 
