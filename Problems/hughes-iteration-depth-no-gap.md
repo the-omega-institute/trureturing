@@ -37,10 +37,15 @@ length, then asks on page 11 whether the finite case implies the arbitrary
 case. That maximum-length argument is unavailable for arbitrary languages.
 
 The bounded prior-art inspection found no exact resolution in the searched
-repository, pinned Mathlib, or inspected external sources. The older Hughes
-and Ito-Sugiura full texts were unavailable, and the 2025 Ibarra-McQuillan
-source was available only at abstract level. This is a bounded search result,
-not a worldwide absence claim.
+repository, pinned Mathlib, or inspected external sources. The 2025
+Ibarra–McQuillan accepted manuscript was inspected through its definitions,
+15 propositions, seven corollaries and conclusion; its binary-operation
+decision, closure and transducer results do not state the repeated
+fixed-degree minimum-depth spectrum theorem. The relevant portions of the
+2007 and 2023 UCF notes and arXiv:2603.26162v2 likewise concern different
+decision or shuffle questions. Source URLs, inspected ranges and hashes are
+recorded in the [library note](../Library/Words/hughes2026a27755.md).
+This is a bounded search result, not a worldwide absence claim.
 
 ## Route
 
@@ -80,6 +85,9 @@ alphabets and arbitrary languages, including empty and epsilon-only cases.
 
 ## ASSUMED-UNVERIFIED
 
-The unavailable older full texts and abstract-only 2025 source remain outside
-the verified literature scope. No claim is made about sources beyond the
-bounded search.
+The final publisher version of Ibarra–McQuillan (2025) was not compared with
+the accepted manuscript. The Ito–Sugiura full chapter, Ito's older book, the
+1981 Hughes–Selkow original and the 2005 CS-TR05 original remain outside
+the verified literature scope; later public notes do not replace them.
+Semantic Scholar was rate-limited and general search engines were unusable.
+No claim is made about sources beyond the bounded search.

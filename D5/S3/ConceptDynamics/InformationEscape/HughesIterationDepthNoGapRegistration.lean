@@ -48,14 +48,6 @@ abbrev depthNoGapArena : PrimitiveLawArena where
           q ∈ iterationDepthSpectrumAt
             (realization.readout () closedSourceZero) A B
 
-private theorem depth_no_gap_bridge : LegacyPrimitiveRealization depthNoGapArena
-    (∀ (α : Type) [Finite α]
-      (A B : D5.S1.Words.HughesIterationDepthNoGap.Language α) (r : Nat),
-      r ∈ iterationDepthSpectrumAt closedSourceZero A B →
-        ∀ q ≤ r, q ∈ iterationDepthSpectrumAt closedSourceZero A B)
-    depthOriginRealization :=
-  ⟨Iff.rfl⟩
-
 private def emptyLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 0) := ∅
 
 private def epsilonLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 0) := {[]}
@@ -116,11 +108,11 @@ register_information_template depthOriginTemplate
 
 register_information_theorem result in depthNoGapArena
   readout via (depthOriginTemplate (fun origin => origin))
-  primitives depthOriginRealization.toPrimitiveBundle realization depth_no_gap_bridge
+  primitives depthOriginRealization.toPrimitiveBundle
+  realization inline depthOriginRealization := by exact ⟨Iff.rfl⟩
   variation depth_law_variation sensitivity depth_slot_sensitivity
   escape from (closedSourceZero) escape continues (open)
 
-#print axioms depth_no_gap_bridge
 #print axioms depth_law_variation
 #print axioms depth_slot_sensitivity
 
