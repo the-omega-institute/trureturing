@@ -793,6 +793,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
   已编 olean 的有效性受 `[[require]]` mathlib rev 与 `[leanOptions]` 影响;name/version/keywords/defaultTargets/lean_lib roots|globs 不影响已编 olean。样本仅测试 metadata-only,leanOptions/mathlib rev 改动的重编规模未测,ASSUMED-UNVERIFIED;它回答 lake 重编语义,不外推 CI 时长。全文/目录进 key 须证明相关字段,commit SHA 同样违反最小充分输入原则。
   *成熟锚*:Bazel 的 action key 只含真正的 input(而非整个 workspace)、Nix derivation 的输入闭包、增量构建的最小重算集、over-approximation 的成本 vs under-approximation 的风险、cache 不是真源。
   〔守护:**软 + 硬投影**·「某项输入是否影响产物」不可 lint,靠对手官评审与本条;硬投影有二:①凡 key 的输入含**某文件全文**,PR 说明须写明「该文件的哪些字段影响产物、哪些不影响」,写不出即判该 key 未经论证;②凡以「命中率低 / 缓存失效」为由改动缓存机制,须附**两层读数**——cache 层的命中或 key 变化,与下游增量层的重算规模(如本判例的 `Built` 计数),**只给其一者按第 2.9 条禁模糊措辞判无效**〕
+  **【永久禁令·τ=0 owner 2026-09-20】程序字节不得作数据产物的复用条件。** 报告、种子、收据等数据产物的复用资格只由两样东西决定:①真正决定产物字节的数据输入(Lean 源、构建配置、显式执行环境);②显式语义版本号(`report_semantic_version` 一类)。生产者或判官程序(C#、脚本、构建属性、lint 配置)的兼容性只由版本号表达——改动改变产物语义者 bump 版本号,不改变者不应使任何缓存失效。禁止把程序文件、程序目录或其内容哈希放进复用条件或 cache key;评审见即拒,已有者见即删。owner 原话:「不是有缓存版本号了吗, 如果不兼容会bump那个版本号呀」「把这个鸡肋检测删了 … 并且要永远拒绝这种行为」。判例:报告复用收据曾哈希 `producer_scopes.lean-report` 全集(含整个 `tools/StrataLint.Engine/**/*.cs`),任何规则改动即 `seed-rejected`;同窗口读数:内容 PR #8869 reuse 38 s、current 7 min,只改规则的判官 PR #8727/#8735 report 183 s/200 s、current 15–16 min。〔守护:**硬投影**·`test_producer_program_bytes_never_gate_reuse` 钉住收据全集只含 Lean 源与配置、生产程序字节或 mode 改动不失效、版本号 bump 必失效;其余缓存键靠评审按本款拒绝,不可 lint 不豁免〕
 
 ### 10.5 git 已入账事实与重放禁令
 
