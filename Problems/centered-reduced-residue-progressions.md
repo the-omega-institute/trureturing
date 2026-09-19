@@ -67,12 +67,17 @@ The Lean module is
 theorem derives the complete factorization facts from the source hypotheses,
 constructs the lower progression, proves the three exhaustive upper cases,
 and proves the rational-floor identity without additional public assumptions.
+The canonical freeze records module identity
+`e61fb1dce201b59f0aa8d8428428c8d232a37885503018230857905b33a8123b`
+and result statement identity
+`ed91b7bf43b9864cca5816d00ba09b81ed5b209556c21e13b8f0c7ec5744df16`.
 
 ## Triage
 
 `theorem`; resolution kind `proved` for every modulus satisfying the literal
 source domain. The calibration `n=30` is an instance of the theorem, not a
-premise.
+premise. The `result` theorem node carries the typed `Proved` claim for this
+problem slug.
 
 ## ASSUMED-UNVERIFIED
 

@@ -28,6 +28,10 @@ The formal result uses a total supremum definition for the greatest prime
 factor, then proves from the stated domain that its prime-factor set is
 nonempty. It retains the fixed centered representatives, positive natural
 steps, natural lengths, and the literal rational floor in the conjecture.
+The result is canonically frozen with statement identity
+`ed91b7bf43b9864cca5816d00ba09b81ed5b209556c21e13b8f0c7ec5744df16`,
+and its Scribe theorem node carries the typed `Proved` resolution claim for
+`centered-reduced-residue-progressions`.
 
 ## Verified locator
 
@@ -37,5 +41,7 @@ steps, natural lengths, and the literal rational floor in the conjecture.
 
 The related 2018 work of Pongsriiam addresses a different maximum problem for
 representative systems and is not used as a settlement of this conjecture.
-No claim of exhaustive literature coverage or independent first discovery is
-made.
+The bounded source and literature check is recorded in preregistration issue
+8677, and the arithmetic route credits the released handoff in issue 7333. No
+claim of exhaustive literature coverage, worldwide priority, or independent
+first discovery is made.

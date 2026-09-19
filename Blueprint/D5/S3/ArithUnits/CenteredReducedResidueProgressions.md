@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{let} p = \operatorname{GreatestPrime
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/CenteredReducedResidueProgressions.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/centered-reduced-residue-progressions` (proved) by `D5/S3/ArithUnits/CenteredReducedResidueProgressions.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"centered-reduced-residue-progressions","declaration_gid":"D5/S3/ArithUnits/CenteredReducedResidueProgressions.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chaninat Phothila; Natthakan Thoket; Narakorn Rompurk Kanasri (2026). *Length of the Longest Arithmetic Progressions in a Certain Reduced Residue System*. DOI: [10.5281/zenodo.18154061](https://doi.org/10.5281/zenodo.18154061). URL: <https://math.colgate.edu/~integers/aa6/aa6.pdf>.
