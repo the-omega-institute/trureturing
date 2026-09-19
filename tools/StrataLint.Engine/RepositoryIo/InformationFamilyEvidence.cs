@@ -6,7 +6,8 @@ namespace StrataLint.Engine;
 
 internal sealed record InformationFamilyBinding(string Source, string SourcePath, string Identity,
     ImmutableArray<int> Coordinates, ImmutableArray<string> StatePath, ImmutableArray<string> OutputPath,
-    string RegistrationIdentity, int LevelArity, JsonElement RegistrationInput);
+    string RegistrationIdentity, int LevelArity, JsonElement RegistrationInput,
+    string StatementIdentity, string LawIdentity, string ArenaName);
 
 // This reader validates current native evidence, never proves a family claim.
 // Source bytes and exact wire bindings remain mandatory for selected delta rows.
@@ -101,7 +102,8 @@ internal static class InformationFamilyEvidence
         if (BindingIdentity(key, statement, identity, certificate) != Hash(certificate, "evidence_ref"))
             throw new FormatException("DTR-Evidence: family certificate binding mismatch");
         return new(source, path, identity, coordinates, statePath, outputPath,
-            Hash(material, "registration_identity"), levels.Length, registrationInputs[0].Clone());
+            Hash(material, "registration_identity"), levels.Length, registrationInputs[0].Clone(),
+            Hash(material, "statement_identity"), Hash(material, "law_identity"), key.ObjectArena);
     }
 
     // This is an independent join against the native declaration report, not
@@ -113,7 +115,7 @@ internal static class InformationFamilyEvidence
         if (declaration.FamilyRegistration is not { } native)
             throw new FormatException("DTR-Evidence: family registration declaration identity missing");
         InformationTemplateJson.Fields(native, "schema", "owner", "type_identity", "body_identity",
-            "registration_identity", "level_arity");
+            "registration_identity", "level_arity", "family_relation");
         var input = family.RegistrationInput;
         if (Text(native, "schema") != "dtr-family-declaration-v1"
             || Text(native, "owner") != InformationTemplateEvidence.ModuleForSource(owner.Value)
@@ -123,6 +125,19 @@ internal static class InformationFamilyEvidence
             || family.RegistrationIdentity != Hash(native, "registration_identity")
             || family.LevelArity != Nat(native.GetProperty("level_arity"), 64))
             throw new FormatException("DTR-Evidence: family registration declaration identity mismatch");
+        var relation = native.GetProperty("family_relation");
+        if (relation.ValueKind != JsonValueKind.Object)
+            throw new FormatException("DTR-Evidence: family source relation missing");
+        InformationTemplateJson.Fields(relation, "mode", "source_name", "source_statement_identity",
+            "arena_name", "arena_identity", "law_identity", "registration_name", "exact_source_law");
+        if (Text(relation, "mode") != "dependent-family-v1"
+            || InformationTemplateJson.Name(Text(relation, "source_name")) != family.Source
+            || Hash(relation, "source_statement_identity") != family.StatementIdentity
+            || InformationTemplateJson.Name(Text(relation, "arena_name")) != family.ArenaName
+            || Hash(relation, "law_identity") != family.LawIdentity
+            || InformationTemplateJson.Name(Text(relation, "registration_name")) != declaration.Name
+            || relation.GetProperty("exact_source_law").ValueKind != JsonValueKind.True)
+            throw new FormatException("DTR-Evidence: family source relation mismatch");
     }
 
     // Recompute the current native certificate framing for this mode. Rehashing

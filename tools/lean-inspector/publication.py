@@ -200,6 +200,9 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
             materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}
                                    | ({'family_registration'} if isinstance(decl, dict)
                                       and 'family_registration' in decl else set()), 'declaration')
+            if 'family_registration' in decl:
+                materials.validate_family_registration(decl['family_registration'],
+                                                       'family declaration')
             key = decl['name_key']
             if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
                     or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS

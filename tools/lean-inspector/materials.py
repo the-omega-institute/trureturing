@@ -23,6 +23,7 @@ SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
 REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
+HEX = re.compile(r"[0-9a-f]{64}")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 BUFFER_BYTES = 64 * 1024
@@ -137,6 +138,37 @@ def require_sorted_strings(value: object, context: str) -> list[str]:
             or value != sorted(set(value))):
         raise ValueError(f"{context} must be sorted and unique strings")
     return value
+
+
+def validate_family_registration(value: object, context: str) -> None:
+    """Validate the native source/declaration relation before compacting it."""
+    family = require_keys(value, {
+        "schema", "owner", "type_identity", "body_identity", "registration_identity",
+        "level_arity", "family_relation",
+    }, context)
+    if (family["schema"] != "dtr-family-declaration-v1"
+            or any(not isinstance(family[field], str) or not family[field]
+                   for field in ("owner",))
+            or any(not isinstance(family[field], str)
+                   or not HEX.fullmatch(family[field])
+                   for field in ("type_identity", "body_identity", "registration_identity"))
+            or type(family["level_arity"]) is not int
+            or family["level_arity"] < 0 or family["level_arity"] > 64):
+        raise ValueError(f"{context} is malformed")
+    relation = family["family_relation"]
+    if relation is None:
+        return
+    relation = require_keys(relation, {
+        "mode", "source_name", "source_statement_identity", "arena_name",
+        "arena_identity", "law_identity", "registration_name", "exact_source_law",
+    }, context + " relation")
+    if (relation["mode"] != "dependent-family-v1"
+            or any(not isinstance(relation[field], str) or not relation[field]
+                   for field in ("source_name", "arena_name", "registration_name"))
+            or any(not isinstance(relation[field], str) or not HEX.fullmatch(relation[field])
+                   for field in ("source_statement_identity", "arena_identity", "law_identity"))
+            or type(relation["exact_source_law"]) is not bool):
+        raise ValueError(f"{context} relation is malformed")
 
 
 def regular_spool_file(spool: pathlib.Path, relative: str) -> pathlib.Path:
@@ -318,6 +350,9 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                          and "family_registration" in raw_declaration else set()),
                     "Inspector spool declaration",
                 )
+                if "family_registration" in declaration:
+                    validate_family_registration(declaration["family_registration"],
+                                                 "Inspector family declaration")
                 name = declaration["name"]
                 kind = declaration["kind"]
                 name_key = declaration["name_key"]

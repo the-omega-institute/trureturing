@@ -481,7 +481,25 @@ def reportWithDeclarations (modules : Array (Name × Array TemplateOccurrenceKey
       | throwError "incomplete_closure:dtr.declaration_owner"
     let mut declarations := #[]
     for name in env.header.moduleData[index]!.constNames do
-      if let some identity ← familyDeclarationIdentity name then
+      let info ← getConstInfo name
+      let arenaName := if info.type.isAppOfArity
+          `LeanInformationAudit.DependentFamily.Registration 2 then
+        info.type.getAppArgs[0]!.getAppFn.constName?.getD .anonymous
+      else .anonymous
+      let familyEvents := (inventory env).filter fun event =>
+        event.key.mode == .dependentFamily &&
+          event.realizationName == name &&
+          event.key.objectArena == arenaName
+      let relations ← familyEvents.mapM (familyDeclarationRelation name)
+      let relation ← match relations with
+        | #[] => pure Json.null
+        | #[relation] => pure relation
+        | relations =>
+          let first := relations[0]!
+          unless relations.all (·.compress == first.compress) do
+            throwError "unclassified_form:dtr.family_declaration_relation_ambiguous"
+          pure first
+      if let some identity ← familyDeclarationIdentity name relation then
         declarations := declarations.push (name, identity)
     return (row, declarations)
   TemplateAudit.NativeCoherence.validate roots

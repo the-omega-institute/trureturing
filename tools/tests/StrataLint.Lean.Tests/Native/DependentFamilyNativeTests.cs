@@ -175,6 +175,73 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         Assert.Equal(new[] { "𝒰", "𝒱" }, material.GetProperty("rigid_levels").EnumerateArray().Select(l => l.GetString()));
     }
 
+    [Fact]
+    public void coherent_unicode_retarget_to_existing_typed_registration_is_rejected()
+    {
+        var payload = JsonNode.Parse(fixture.Payload("DependentFamilyUnicode").GetRawText())!;
+        var record = payload["records"]![0]!;
+        var material = record["family_binding"]!["material"]!;
+        var certificate = record["certificate"]!;
+        const string original = "LeanInformationAudit.Tests.DependentFamilyUnicode.registration";
+        const string target = "LeanInformationAudit.Tests.DependentFamily.registration";
+        var actual = fixture.Report.Files[DependentFamilyNativeFixture.Source("DependentFamily")]
+            .Declarations.Single(declaration => declaration.Name == target).FamilyRegistration!.Value;
+        record["unit_name"] = target;
+        record["realization_name"] = target;
+        material["registration_name"] = target;
+        material["registration_identity"] = actual.GetProperty("registration_identity").GetString();
+        var input = Assert.Single(certificate["extraction_inputs"]!.AsArray(),
+            value => value!["name"]!.GetValue<string>() == original)!;
+        input["name"] = target;
+        foreach (var field in new[] { "owner", "type_identity", "body_identity" })
+            input[field] = actual.GetProperty(field).GetString();
+        var identity = InformationFamilyEvidence.Identity(JsonSerializer.SerializeToElement(material));
+        record["family_binding"]!["identity"] = identity;
+        record["escape_from"]!["scope_identity"] = identity;
+        certificate["evidence_ref"] = InformationFamilyEvidence.BindingIdentity(
+            InformationTemplateJson.ReadKey(JsonSerializer.SerializeToElement(record["key"])),
+            record["statement_identity"]!.GetValue<string>(), identity,
+            JsonSerializer.SerializeToElement(certificate));
+        var report = fixture.Change(("DependentFamilyUnicode", JsonSerializer.SerializeToElement(payload)));
+        var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamilyUnicode", report));
+        Assert.Contains("family source relation mismatch", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void unresolved_family_cannot_be_promoted_by_transplanting_full_certificate()
+    {
+        var donor = JsonNode.Parse(fixture.Payload("DependentFamily").GetRawText())!["records"]![0]!;
+        var payload = JsonNode.Parse(fixture.Payload("DependentFamilyUnresolved").GetRawText())!;
+        var record = payload["records"]![0]!;
+        const string weakened = "LeanInformationAudit.Tests.DependentFamilyControls.weakenedRegistration";
+        var actual = fixture.Report.Files[DependentFamilyNativeFixture.Source("DependentFamilyControls")]
+            .Declarations.Single(declaration => declaration.Name == weakened).FamilyRegistration!.Value;
+        record["state"] = "declared_validated";
+        record["diagnostic"] = null;
+        foreach (var field in new[] { "certificate", "family_binding", "escape_from" })
+            record[field] = donor[field]!.DeepClone();
+        record["certificate"]!["key"] = record["key"]!.DeepClone();
+        var material = record["family_binding"]!["material"]!;
+        material["registration_name"] = weakened;
+        material["registration_identity"] = actual.GetProperty("registration_identity").GetString();
+        var input = Assert.Single(record["certificate"]!["extraction_inputs"]!.AsArray(),
+            value => value!["name"]!.GetValue<string>() ==
+                "LeanInformationAudit.Tests.DependentFamily.registration")!;
+        input["name"] = weakened;
+        foreach (var field in new[] { "owner", "type_identity", "body_identity" })
+            input[field] = actual.GetProperty(field).GetString();
+        var identity = InformationFamilyEvidence.Identity(JsonSerializer.SerializeToElement(material));
+        record["family_binding"]!["identity"] = identity;
+        record["escape_from"]!["scope_identity"] = identity;
+        record["certificate"]!["evidence_ref"] = InformationFamilyEvidence.BindingIdentity(
+            InformationTemplateJson.ReadKey(JsonSerializer.SerializeToElement(record["key"])),
+            record["statement_identity"]!.GetValue<string>(), identity,
+            JsonSerializer.SerializeToElement(record["certificate"]));
+        var report = fixture.Change(("DependentFamilyUnresolved", JsonSerializer.SerializeToElement(payload)));
+        var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamilyUnresolved", report));
+        Assert.Contains("family source relation mismatch", error.Message, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("dropped-source")]
     [InlineData("dropped-levels")]

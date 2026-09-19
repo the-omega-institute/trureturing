@@ -707,6 +707,7 @@ structure FamilyRegistrationDriver where
   resolve : ConstantInfo → FamilySourceSelection → Nat → Meta.MetaM (FamilySourceScope × Nat)
   extract : TemplateOccurrenceEvent → Nat → Meta.MetaM (Expr × Nat)
   validate : TemplateOccurrenceEvent → EscapeRecordInput → Nat → Meta.MetaM (EscapeRecordEvidence × Nat)
+  relation : TemplateOccurrenceEvent → Name → Meta.MetaM Json
   deriving Inhabited
 
 structure TemplateBindingCertificate where
