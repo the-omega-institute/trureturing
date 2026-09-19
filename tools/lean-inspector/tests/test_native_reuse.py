@@ -73,9 +73,15 @@ class NativeReuseTests:
         for suffix, data in sealed.items():
             publication.member(seed, suffix).write_bytes(data)
         probe()
-        # A successful planning probe never exempts the normal entry from the
-        # default-only input obligation. A changed audit must reach Lake/fail.
+        # Audit programs, like the inspector, are version-gated. Changing their
+        # bytes alone must preserve a complete same-version invocation receipt.
         self.write('Audit.lean', 'def audit : False := True.intro\n')
+        compatible = self.inspect()
+        self.assertNotIn('phase=report status=started', compatible.stderr)
+        self.assertEqual(expected, output.read_bytes())
+        # When native production is required, default build failures still block.
+        policy['report_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
         failed = self.inspect(success=False)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())
