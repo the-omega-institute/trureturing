@@ -60,28 +60,19 @@ def evaluateBranch (branch : Option Bool) (n h : Nat) : Nat :=
   | some false => n + h - 1
   | none => n + h
 
-private theorem pyramidal_zero (k : Nat) : pyramidal k 0 = 0 := by
-  simp [pyramidal, Nat.choose]
-
-private theorem pyramidal_succ (k m : Nat) :
-    pyramidal k (m + 1) = pyramidal k m + (k - 2) * Nat.choose (m + 1) 2 + (m + 1) := by
-  simp only [pyramidal, Nat.choose_succ_succ']
-  simp [Nat.choose_one_right]
-  ring
-
-private theorem pyramidal_strictMono (k : Nat) : StrictMono (pyramidal k) := by
-  apply strictMono_nat_of_lt_succ
-  intro m
-  rw [pyramidal_succ]
-  omega
-
 private theorem pyramidal_cast (k m : Nat) (hk : 5 ≤ k) :
     (pyramidal k m : Rat) =
       (m : Rat) * (m + 1) * ((m : Rat) * (k - 2) - (k - 5)) / 6 := by
   induction m with
-  | zero => simp [pyramidal_zero]
+  | zero => simp [pyramidal, Nat.choose]
   | succ m ih =>
-      rw [pyramidal_succ]
+      have hsucc :
+          pyramidal k (m + 1) =
+            pyramidal k m + (k - 2) * Nat.choose (m + 1) 2 + (m + 1) := by
+        simp only [pyramidal, Nat.choose_succ_succ']
+        simp [Nat.choose_one_right]
+        ring
+      rw [hsucc]
       push_cast [Nat.cast_sub (by omega : 2 ≤ k)]
       rw [ih, Nat.choose_two_right]
       rw [Nat.cast_div_charZero (by
@@ -103,7 +94,7 @@ private theorem upper_threshold_identity (k h : Nat) (hk : 9 ≤ k) :
 private theorem lower_threshold_identity (k h : Nat) (hk : 9 ≤ k) :
     lowerThreshold k h + 6 * h = 6 * pyramidal k h := by
   rcases h with _ | h
-  · simp [lowerThreshold, pyramidal_zero]
+  · simp [lowerThreshold, pyramidal, Nat.choose]
   · have hr : (lowerThreshold k (h + 1) : Rat) + 6 * (h + 1) =
         6 * pyramidal k (h + 1) := by
       rw [pyramidal_cast k (h + 1) (by omega)]
@@ -111,40 +102,6 @@ private theorem lower_threshold_identity (k h : Nat) (hk : 9 ≤ k) :
       push_cast [Nat.cast_sub (by omega : 2 ≤ k), Nat.cast_sub (by omega : 5 ≤ k)]
       ring
     exact_mod_cast hr
-
-private theorem root_bounds (k n : Nat) (hk : 9 ≤ k) :
-    (k - 2) * (rootIndex k n) ^ 3 ≤ 6 * n ∧
-      6 * n < (k - 2) * (rootIndex k n + 1) ^ 3 := by
-  have hd : 0 < k - 2 := by omega
-  constructor
-  · have hp := Nat.pow_nthRoot_le (n := 3) (a := (6 * n) / (k - 2)) (Or.inl (by decide))
-    simpa [rootIndex, Nat.mul_comm] using (Nat.le_div_iff_mul_le hd).mp hp
-  · have hp := Nat.lt_pow_nthRoot_add_one (n := 3) (by decide) ((6 * n) / (k - 2))
-    simpa [rootIndex, Nat.mul_comm] using (Nat.div_lt_iff_lt_mul hd).mp hp
-
-private theorem real_root_floor_eq_rootIndex (k n : Nat) (hk : 9 ≤ k) :
-    Nat.floor ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹)) =
-      rootIndex k n := by
-  let h := rootIndex k n
-  have hb := root_bounds k n hk
-  have hd : (0 : Real) < (k - 2 : Nat) := by exact_mod_cast (show 0 < k - 2 by omega)
-  have hx : (0 : Real) ≤ ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) := by positivity
-  apply (Nat.floor_eq_iff (Real.rpow_nonneg hx _)).mpr
-  constructor
-  · apply (Real.le_rpow_inv_iff_of_pos (Nat.cast_nonneg h) hx
-      (by norm_num : (0 : Real) < 3)).mpr
-    change (h : Real) ^ ((3 : Nat) : Real) ≤
-      ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)
-    rw [Real.rpow_natCast]
-    apply (le_div_iff₀ hd).mpr
-    exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.1)
-  · apply (Real.rpow_inv_lt_iff_of_pos hx (by positivity : (0 : Real) ≤ (h : Real) + 1)
-      (by norm_num : (0 : Real) < 3)).mpr
-    change ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) <
-      ((h : Real) + 1) ^ ((3 : Nat) : Real)
-    rw [Real.rpow_natCast]
-    apply (div_lt_iff₀ hd).mpr
-    exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.2)
 
 private theorem previous_below_alpha (k h : Nat) (hk : 9 ≤ k) (hh : 1 ≤ h) :
     6 * pyramidal k (h - 1) ≤ (k - 2) * h ^ 3 := by
@@ -193,8 +150,19 @@ private theorem count_complement_at_gap (k t a : Nat)
     Nat.count (complement k) a = a - 1 - t := by
   classical
   let f := pyramidal k
-  have hf : StrictMono f := pyramidal_strictMono k
-  have hf0 : f 0 = 0 := pyramidal_zero k
+  have hf : StrictMono f := by
+    apply strictMono_nat_of_lt_succ
+    intro m
+    have hsucc :
+        pyramidal k (m + 1) =
+          pyramidal k m + (k - 2) * Nat.choose (m + 1) 2 + (m + 1) := by
+      simp only [pyramidal, Nat.choose_succ_succ']
+      simp [Nat.choose_one_right]
+      ring
+    dsimp only [f]
+    rw [hsucc]
+    omega
+  have hf0 : f 0 = 0 := by simp [f, pyramidal, Nat.choose]
   have hleft' : f t < a := hleft
   have hright' : a < f (t + 1) := hright
   let good : Nat → Prop := complement k
@@ -261,7 +229,14 @@ private theorem branch_gap (k n : Nat) (hk : 9 ≤ k) (hn : 1 ≤ n) :
     evaluateBranch (branchSelector (some true) (some false) none k n h) n h <
       pyramidal k (t + 1) ∧
     evaluateBranch (branchSelector (some true) (some false) none k n h) n h = n + t
-  have hb := root_bounds k n hk
+  have hb : (k - 2) * (rootIndex k n) ^ 3 ≤ 6 * n ∧
+      6 * n < (k - 2) * (rootIndex k n + 1) ^ 3 := by
+    have hd : 0 < k - 2 := by omega
+    constructor
+    · have hp := Nat.pow_nthRoot_le (n := 3) (a := (6 * n) / (k - 2)) (Or.inl (by decide))
+      simpa [rootIndex, Nat.mul_comm] using (Nat.le_div_iff_mul_le hd).mp hp
+    · have hp := Nat.lt_pow_nthRoot_add_one (n := 3) (by decide) ((6 * n) / (k - 2))
+      simpa [rootIndex, Nat.mul_comm] using (Nat.div_lt_iff_lt_mul hd).mp hp
   have hb' : (k - 2) * h ^ 3 ≤ 6 * n ∧ 6 * n < (k - 2) * (h + 1) ^ 3 := by
     simpa [h] using hb
   have hnext := next_above_alpha k (h + 1) hk
@@ -299,35 +274,6 @@ private theorem branch_gap (k n : Nat) (hk : 9 ≤ k) (hn : 1 ≤ n) :
         simp only [branchSelector, if_neg hu, if_neg hl, evaluateBranch]
         omega
       · simp only [branchSelector, if_neg hu, if_neg hl, evaluateBranch]
-
-/-- Wu's Conjecture 1: Equation (6) gives the `n`-th positive integer outside the
-positive `k`-gonal-pyramidal image for every `k ≥ 9` and `n ≥ 1`. -/
-theorem wu_conjecture_one (k n : Nat) (hk : 9 ≤ k) (hn : 1 ≤ n) :
-    Nat.nth (complement k) (n - 1) =
-      let h := Nat.floor
-        ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹))
-      evaluateBranch (branchSelector (some true) (some false) none k n h) n h := by
-  rw [real_root_floor_eq_rootIndex k n hk]
-  obtain ⟨t, hleft, hright, ha⟩ := branch_gap k n hk hn
-  let a := evaluateBranch
-    (branchSelector (some true) (some false) none k n (rootIndex k n)) n (rootIndex k n)
-  have hca : complement k a := by
-    constructor
-    · omega
-    · intro m hm heq
-      by_cases hmt : m ≤ t
-      · have := (pyramidal_strictMono k).monotone hmt
-        omega
-      · have htm : t + 1 ≤ m := by omega
-        have := (pyramidal_strictMono k).monotone htm
-        omega
-  have hcount : Nat.count (complement k) a = n - 1 := by
-    calc
-      Nat.count (complement k) a = a - 1 - t := by
-        exact count_complement_at_gap k t a hleft hright
-      _ = n - 1 := by omega
-  rw [← hcount]
-  exact Nat.nth_count hca
 
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
@@ -369,32 +315,115 @@ private def identityReadout : PrimitiveRealization branchSignature :=
 private def constantLowerReadout : PrimitiveRealization branchSignature :=
   branchRealization (fun _ : Option Bool => some false)
 
-private theorem identityLaw : branchArena.Law identityReadout := by
-  intro k n hk hn
-  exact wu_conjecture_one k n hk hn
-
-private theorem constantLower_not_law : ¬ branchArena.Law constantLowerReadout := by
-  intro law
-  have hbad := law 9 1 (by omega) (by omega)
-  have hgood := wu_conjecture_one 9 1 (by omega) (by omega)
-  rw [real_root_floor_eq_rootIndex 9 1 (by omega)] at hbad hgood
-  change Nat.nth (complement 9) 0 = 0 at hbad
-  norm_num [rootIndex, branchSelector, upperThreshold, lowerThreshold, evaluateBranch] at hbad hgood
-  omega
-
-private theorem branchBridge : LegacyPrimitiveRealization branchArena
-    (∀ (k n : Nat), 9 ≤ k → 1 ≤ n →
-      Nat.nth (complement k) (n - 1) =
-        let h := Nat.floor
-          ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹))
-        evaluateBranch (branchSelector (some true) (some false) none k n h) n h)
-    identityReadout := by
-  exact ⟨Iff.rfl⟩
-
-private theorem branchVariation : FiniteLawVariation branchArena :=
-  ⟨identityReadout, constantLowerReadout, identityLaw, constantLower_not_law⟩
-
 private theorem branchSensitivity : FiniteSlotSensitivity branchArena := by
+  have identityLaw : branchArena.Law identityReadout := by
+    intro k n hk hn
+    have hroot :
+        Nat.floor ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹)) =
+          rootIndex k n := by
+      let h := rootIndex k n
+      have hb : (k - 2) * (rootIndex k n) ^ 3 ≤ 6 * n ∧
+          6 * n < (k - 2) * (rootIndex k n + 1) ^ 3 := by
+        have hd : 0 < k - 2 := by omega
+        constructor
+        · have hp :=
+            Nat.pow_nthRoot_le (n := 3) (a := (6 * n) / (k - 2)) (Or.inl (by decide))
+          simpa [rootIndex, Nat.mul_comm] using (Nat.le_div_iff_mul_le hd).mp hp
+        · have hp := Nat.lt_pow_nthRoot_add_one (n := 3) (by decide) ((6 * n) / (k - 2))
+          simpa [rootIndex, Nat.mul_comm] using (Nat.div_lt_iff_lt_mul hd).mp hp
+      have hd : (0 : Real) < (k - 2 : Nat) := by
+        exact_mod_cast (show 0 < k - 2 by omega)
+      have hx : (0 : Real) ≤ ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) := by
+        positivity
+      apply (Nat.floor_eq_iff (Real.rpow_nonneg hx _)).mpr
+      constructor
+      · apply (Real.le_rpow_inv_iff_of_pos (Nat.cast_nonneg h) hx
+          (by norm_num : (0 : Real) < 3)).mpr
+        change (h : Real) ^ ((3 : Nat) : Real) ≤
+          ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)
+        rw [Real.rpow_natCast]
+        apply (le_div_iff₀ hd).mpr
+        exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.1)
+      · apply (Real.rpow_inv_lt_iff_of_pos hx (by positivity : (0 : Real) ≤ (h : Real) + 1)
+            (by norm_num : (0 : Real) < 3)).mpr
+        change ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) <
+          ((h : Real) + 1) ^ ((3 : Nat) : Real)
+        rw [Real.rpow_natCast]
+        apply (div_lt_iff₀ hd).mpr
+        exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.2)
+    rw [hroot]
+    obtain ⟨t, hleft, hright, ha⟩ := branch_gap k n hk hn
+    let a := evaluateBranch
+      (branchSelector (some true) (some false) none k n (rootIndex k n)) n (rootIndex k n)
+    have hf : StrictMono (pyramidal k) := by
+      apply strictMono_nat_of_lt_succ
+      intro m
+      have hsucc :
+          pyramidal k (m + 1) =
+            pyramidal k m + (k - 2) * Nat.choose (m + 1) 2 + (m + 1) := by
+        simp only [pyramidal, Nat.choose_succ_succ']
+        simp [Nat.choose_one_right]
+        ring
+      rw [hsucc]
+      omega
+    have hca : complement k a := by
+      constructor
+      · omega
+      · intro m hm heq
+        by_cases hmt : m ≤ t
+        · have := hf.monotone hmt
+          omega
+        · have htm : t + 1 ≤ m := by omega
+          have := hf.monotone htm
+          omega
+    have hcount : Nat.count (complement k) a = n - 1 := by
+      calc
+        Nat.count (complement k) a = a - 1 - t := by
+          exact count_complement_at_gap k t a hleft hright
+        _ = n - 1 := by omega
+    rw [← hcount]
+    exact Nat.nth_count hca
+  have constantLower_not_law : ¬ branchArena.Law constantLowerReadout := by
+    intro law
+    have hbad := law 9 1 (by omega) (by omega)
+    have hgood := identityLaw 9 1 (by omega) (by omega)
+    have hroot :
+        Nat.floor ((((6 * 1 : Nat) : Real) / ((9 - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹)) =
+          rootIndex 9 1 := by
+      let h := rootIndex 9 1
+      have hb : (9 - 2) * (rootIndex 9 1) ^ 3 ≤ 6 * 1 ∧
+          6 * 1 < (9 - 2) * (rootIndex 9 1 + 1) ^ 3 := by
+        have hd : 0 < 9 - 2 := by omega
+        constructor
+        · have hp :=
+            Nat.pow_nthRoot_le (n := 3) (a := (6 * 1) / (9 - 2)) (Or.inl (by decide))
+          simpa [rootIndex, Nat.mul_comm] using (Nat.le_div_iff_mul_le hd).mp hp
+        · have hp := Nat.lt_pow_nthRoot_add_one (n := 3) (by decide) ((6 * 1) / (9 - 2))
+          simpa [rootIndex, Nat.mul_comm] using (Nat.div_lt_iff_lt_mul hd).mp hp
+      have hd : (0 : Real) < (9 - 2 : Nat) := by norm_num
+      have hx : (0 : Real) ≤ ((6 * 1 : Nat) : Real) / ((9 - 2 : Nat) : Real) := by
+        positivity
+      apply (Nat.floor_eq_iff (Real.rpow_nonneg hx _)).mpr
+      constructor
+      · apply (Real.le_rpow_inv_iff_of_pos (Nat.cast_nonneg h) hx
+          (by norm_num : (0 : Real) < 3)).mpr
+        change (h : Real) ^ ((3 : Nat) : Real) ≤
+          ((6 * 1 : Nat) : Real) / ((9 - 2 : Nat) : Real)
+        rw [Real.rpow_natCast]
+        apply (le_div_iff₀ hd).mpr
+        exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.1)
+      · apply (Real.rpow_inv_lt_iff_of_pos hx (by positivity : (0 : Real) ≤ (h : Real) + 1)
+            (by norm_num : (0 : Real) < 3)).mpr
+        change ((6 * 1 : Nat) : Real) / ((9 - 2 : Nat) : Real) <
+          ((h : Real) + 1) ^ ((3 : Nat) : Real)
+        rw [Real.rpow_natCast]
+        apply (div_lt_iff₀ hd).mpr
+        exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.2)
+    rw [hroot] at hbad hgood
+    change Nat.nth (complement 9) 0 = 0 at hbad
+    norm_num [branchArena, identityReadout, branchRealization, rootIndex, branchSelector,
+      upperThreshold, lowerThreshold, evaluateBranch] at hbad hgood
+    omega
   constructor
   · intro i
     refine ⟨identityReadout, constantLowerReadout, ?_, ?_, ?_⟩
@@ -408,14 +437,94 @@ private theorem branchSensitivity : FiniteSlotSensitivity branchArena := by
   · intro i
     exact Fin.elim0 i
 
+private theorem branchVariation : FiniteLawVariation branchArena := by
+  obtain ⟨r, r', _, _, hr⟩ := branchSensitivity.1 ()
+  by_cases hp : branchArena.Law r
+  · exact ⟨r, r', hp, hr.mp hp⟩
+  · have hp' : branchArena.Law r' := Classical.byContradiction (fun hn => hp (hr.mpr hn))
+    exact ⟨r', r, hp', hp⟩
+
 register_information_template branchRealization
 
-register_information_theorem wu_conjecture_one in branchArena
+/- Wu's Conjecture 1: Equation (6) gives the `n`-th positive integer outside the
+positive `k`-gonal-pyramidal image for every `k ≥ 9` and `n ≥ 1`. -/
+information_theorem wu_conjecture_one in branchArena
   readout via
     (branchRealization (fun branch : Option Bool => branch))
-  primitives identityReadout.toPrimitiveBundle realization branchBridge
+  primitives identityReadout
   variation branchVariation sensitivity branchSensitivity
   escape from (some true) escape continues (open)
+  : ∀ (k n : Nat), 9 ≤ k → 1 ≤ n →
+      Nat.nth (complement k) (n - 1) =
+        let h := Nat.floor
+          ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹))
+        evaluateBranch (branchSelector (some true) (some false) none k n h) n h := by
+  intro k n hk hn
+  have hroot :
+      Nat.floor ((((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)) ^ ((3 : Real)⁻¹)) =
+        rootIndex k n := by
+    let h := rootIndex k n
+    have hb : (k - 2) * (rootIndex k n) ^ 3 ≤ 6 * n ∧
+        6 * n < (k - 2) * (rootIndex k n + 1) ^ 3 := by
+      have hd : 0 < k - 2 := by omega
+      constructor
+      · have hp :=
+          Nat.pow_nthRoot_le (n := 3) (a := (6 * n) / (k - 2)) (Or.inl (by decide))
+        simpa [rootIndex, Nat.mul_comm] using (Nat.le_div_iff_mul_le hd).mp hp
+      · have hp := Nat.lt_pow_nthRoot_add_one (n := 3) (by decide) ((6 * n) / (k - 2))
+        simpa [rootIndex, Nat.mul_comm] using (Nat.div_lt_iff_lt_mul hd).mp hp
+    have hd : (0 : Real) < (k - 2 : Nat) := by
+      exact_mod_cast (show 0 < k - 2 by omega)
+    have hx : (0 : Real) ≤ ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) := by
+      positivity
+    apply (Nat.floor_eq_iff (Real.rpow_nonneg hx _)).mpr
+    constructor
+    · apply (Real.le_rpow_inv_iff_of_pos (Nat.cast_nonneg h) hx
+        (by norm_num : (0 : Real) < 3)).mpr
+      change (h : Real) ^ ((3 : Nat) : Real) ≤
+        ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real)
+      rw [Real.rpow_natCast]
+      apply (le_div_iff₀ hd).mpr
+      exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.1)
+    · apply (Real.rpow_inv_lt_iff_of_pos hx (by positivity : (0 : Real) ≤ (h : Real) + 1)
+          (by norm_num : (0 : Real) < 3)).mpr
+      change ((6 * n : Nat) : Real) / ((k - 2 : Nat) : Real) <
+        ((h : Real) + 1) ^ ((3 : Nat) : Real)
+      rw [Real.rpow_natCast]
+      apply (div_lt_iff₀ hd).mpr
+      exact_mod_cast (by simpa [h, Nat.mul_comm] using hb.2)
+  rw [hroot]
+  obtain ⟨t, hleft, hright, ha⟩ := branch_gap k n hk hn
+  let a := evaluateBranch
+    (branchSelector (some true) (some false) none k n (rootIndex k n)) n (rootIndex k n)
+  have hf : StrictMono (pyramidal k) := by
+    apply strictMono_nat_of_lt_succ
+    intro m
+    have hsucc :
+        pyramidal k (m + 1) =
+          pyramidal k m + (k - 2) * Nat.choose (m + 1) 2 + (m + 1) := by
+      simp only [pyramidal, Nat.choose_succ_succ']
+      simp [Nat.choose_one_right]
+      ring
+    rw [hsucc]
+    omega
+  have hca : complement k a := by
+    constructor
+    · omega
+    · intro m hm heq
+      by_cases hmt : m ≤ t
+      · have := hf.monotone hmt
+        omega
+      · have htm : t + 1 ≤ m := by omega
+        have := hf.monotone htm
+        omega
+  have hcount : Nat.count (complement k) a = n - 1 := by
+    calc
+      Nat.count (complement k) a = a - 1 - t := by
+        exact count_complement_at_gap k t a hleft hright
+      _ = n - 1 := by omega
+  rw [← hcount]
+  exact Nat.nth_count hca
 
 open Lean in
 run_meta do
