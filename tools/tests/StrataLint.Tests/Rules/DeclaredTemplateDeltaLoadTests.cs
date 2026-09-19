@@ -241,7 +241,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
             return JsonSerializer.SerializeToNode(new
             {
                 root = module, registration_module = module, theorem = module + ".target",
-                object_arena = module + ".arena", catalog = module + ".catalog",
+                object_arena = module + ".arena", catalog = module + ".catalog", mode = "fixed-state-v1",
             })!;
         }
 

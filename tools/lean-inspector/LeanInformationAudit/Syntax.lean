@@ -668,3 +668,58 @@ private def elabBindingSidecar : CommandElab := fun stx => registrationTransacti
     (← elaborateEscapeInput stx[10] stx[11])
 
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command Term
+
+elab register_information_templateKeyword id:ident &" dependent_family " : command =>
+  registrationTransaction do
+    let name ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+    match ← TemplateAudit.enroll name #[] .dependentFamily with
+    | .ok () => pure ()
+    | .error reason => logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields reason}"
+
+/-- Paths are explicit raw AST edges. Coordinates refer to the source telescope;
+they are never interpreted as executable template arguments. -/
+syntax (name := registerInformationFamilyCmd)
+  "register_information_family " ident &" in " ident
+  &" readout " &"via " "(" term ")" &" realization " ident
+  &" escape " &"from " &"coordinates " "[" num,* "]"
+  &" state " "[" str,* "]" &" output " "[" str,* "]"
+  &" escape " &"continues " "(" &"open" ")" : command
+
+syntax (name := declareInformationFamilyBindingCmd)
+  "declare_information_family_binding " ident &" in " ident
+  &" readout " &"via " "(" term ")" &" realization " ident
+  &" escape " &"from " &"coordinates " "[" num,* "]"
+  &" state " "[" str,* "]" &" output " "[" str,* "]"
+  &" escape " &"continues " "(" &"open" ")" : command
+
+@[command_elab registerInformationFamilyCmd, command_elab declareInformationFamilyBindingCmd]
+private def elabFamilyRegistration : CommandElab := fun stx => registrationTransaction do
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
+  let arena ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let record ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[10]
+  let info ← getConstInfo theoremName
+  let descriptor ← liftTermElabM do
+    let recordInfo ← getConstInfo record
+    unless recordInfo.levelParams.length == info.levelParams.length do
+      throwError "unclassified_form:family.registration.rigid_levels"
+    let recordExpr := Lean.mkConst record (info.levelParams.map Level.param)
+    let realization ← mkAppM ``DependentFamily.Registration.realization #[recordExpr]
+    -- Infer every descriptor universe from the original source-level interface.
+    -- A generic template may have more universe arguments than the source.
+    let expected ← inferType realization
+    let value ← elabTermEnsuringType stx[7] expected
+    synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    unless value.getAppFn.isConst do throwError "unclassified_form:dtr.descriptor_head"
+    checkWithKernel value
+    return value
+  let selection : FamilySourceSelection := {
+    coordinates := stx[15].getSepArgs.map (fun s => s.isNatLit?.getD 0)
+    statePath := stx[19].getSepArgs.map (fun s => s.isStrLit?.getD "")
+    outputPath := stx[23].getSepArgs.map (fun s => s.isStrLit?.getD "") }
+  TemplateBinding.publishFamily theoremName arena record selection (some descriptor) none
+
+end LeanInformationAudit

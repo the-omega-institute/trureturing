@@ -109,10 +109,12 @@ internal static class InformationTemplateEvidence
         var keys = new HashSet<InformationOccurrenceKey>();
         foreach (var record in Array(value, "records"))
         {
-            InformationTemplateJson.Fields(record, "key", "registration_source_path", "statement_identity",
-                "content_inputs", "binding_source_path", "state", "diagnostic", "certificate",
-                "unit_name", "realization_name", "escape_from", "escape_continues", "bridge_kind");
             var key = InformationTemplateJson.ReadKey(record.GetProperty("key"));
+            var familyMode = key.Mode == "dependent-family-v1";
+            string[] fields = ["key", "registration_source_path", "statement_identity",
+                "content_inputs", "binding_source_path", "state", "diagnostic", "certificate",
+                "unit_name", "realization_name", "escape_from", "escape_continues", "bridge_kind"];
+            InformationTemplateJson.Fields(record, familyMode ? [.. fields, "family_binding"] : fields);
             if (!keys.Add(key)) throw new FormatException("DTR-Evidence: duplicate binding record");
             var registration = InformationTemplateJson.String(record, "registration_source_path");
             // Generated names are compiler display spellings, not source-level
@@ -130,10 +132,10 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: registration/content source not in current input closure");
             var binding = OptionalString(record, "binding_source_path");
             var diagnostic = OptionalString(record, "diagnostic");
-            var escapeFrom = ReadEscapeFrom(record.GetProperty("escape_from"));
+            var escapeFrom = familyMode ? null : ReadEscapeFrom(record.GetProperty("escape_from"));
             var escapeContinues = ReadEscapeContinues(record.GetProperty("escape_continues"));
             var bridgeKind = InformationTemplateJson.String(record, "bridge_kind");
-            if (bridgeKind is not ("legacy" or "forward"))
+            if (familyMode ? bridgeKind != "family-forward" : bridgeKind is not ("legacy" or "forward"))
                 throw new FormatException("DTR-Evidence: unknown bridge_kind");
             var certificate = record.GetProperty("certificate");
             var state = InformationTemplateJson.String(record, "state") switch
@@ -173,8 +175,10 @@ internal static class InformationTemplateEvidence
                     || state == InformationTemplateBindingState.DeclaredUnresolved && diagnostic is null)
                     throw new FormatException("DTR-Evidence: binding owner/diagnostic is missing or wrong");
             }
+            var family = familyMode ? InformationFamilyEvidence.Read(record, key, statement, state,
+                contentInputs, escapeContinues) : null;
             records.Add(new(key, registration, statement, contentInputs, state, reference, diagnostic, binding, unit, realization,
-                escapeFrom, escapeContinues, bridgeKind));
+                escapeFrom, escapeContinues, bridgeKind, family));
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered, inputs);
     }
@@ -285,10 +289,14 @@ internal static class InformationTemplateEvidence
             var original = originals[0];
             var ownerReport = report.Files[RepoPath.CreateKnown(original.RegistrationSourcePath)];
             var realizationOwners = LeanImportClosure.RepositoryPaths(report,
-                RepoPath.CreateKnown(original.RegistrationSourcePath));
+                RepoPath.CreateKnown(original.RegistrationSourcePath), original.Key.Mode == "dependent-family-v1"
+                    ? path => ModuleForSource(path.Value) : null);
+            var unitDeclarations = original.Key.Mode == "dependent-family-v1"
+                ? realizationOwners.SelectMany(path => report.Files[path].Declarations)
+                : ownerReport.Declarations;
             if (original.UnitName is null || original.RealizationName is null
-                || ownerReport.Declarations.Count(declaration => declaration.Name == original.UnitName) != 1
-                || !ownerReport.Declarations.Any(declaration => declaration.Name == original.UnitName
+                || unitDeclarations.Count(declaration => declaration.Name == original.UnitName) != 1
+                || !unitDeclarations.Any(declaration => declaration.Name == original.UnitName
                     && declaration.Kind == "def")
                 || realizationOwners.Sum(path => report.Files[path].Declarations.Count(
                     declaration => declaration.Name == original.RealizationName)) != 1)
@@ -298,7 +306,8 @@ internal static class InformationTemplateEvidence
             var selected = declared.SingleOrDefault() ?? original;
             if (selected.StatementIdentity != original.StatementIdentity
                 || selected.RegistrationSourcePath != original.RegistrationSourcePath
-                || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
+                || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName
+                || selected.Key.Mode != original.Key.Mode)
                 throw new FormatException("DTR-Evidence: sidecar retargets the occurrence");
             joined.Add(key, selected);
         }

@@ -5,7 +5,8 @@ using System.Text.Json;
 namespace StrataLint.Engine;
 
 internal sealed record InformationOccurrenceKey(
-    string Root, string RegistrationModule, string Theorem, string ObjectArena, string Catalog);
+    string Root, string RegistrationModule, string Theorem, string ObjectArena, string Catalog,
+    string Mode = "fixed-state-v1");
 
 internal sealed record InformationTemplateContentInput(string Path, string Sha256);
 
@@ -16,15 +17,18 @@ internal static class InformationTemplateJson
 
     internal static JsonElement KeyJson(InformationOccurrenceKey key) => JsonSerializer.SerializeToElement(new
     {
-        root = key.Root, registration_module = key.RegistrationModule, theorem = key.Theorem,
+        mode = key.Mode, root = key.Root, registration_module = key.RegistrationModule, theorem = key.Theorem,
         object_arena = key.ObjectArena, catalog = key.Catalog,
     });
 
     internal static InformationOccurrenceKey ReadKey(JsonElement value)
     {
-        InformationTemplateJson.Fields(value, "root", "registration_module", "theorem", "object_arena", "catalog");
+        InformationTemplateJson.Fields(value, "root", "registration_module", "theorem", "object_arena", "catalog", "mode");
         string Name(string field) => InformationTemplateJson.Name(InformationTemplateJson.String(value, field));
-        return new(Name("root"), Name("registration_module"), Name("theorem"), Name("object_arena"), Name("catalog"));
+        var mode = InformationTemplateJson.String(value, "mode");
+        if (mode is not ("fixed-state-v1" or "dependent-family-v1"))
+            throw new FormatException("DTR-Evidence: unknown registration mode");
+        return new(Name("root"), Name("registration_module"), Name("theorem"), Name("object_arena"), Name("catalog"), mode);
     }
 
     internal static void Fields(JsonElement value, params string[] expected)

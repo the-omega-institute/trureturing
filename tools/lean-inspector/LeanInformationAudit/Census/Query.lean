@@ -71,7 +71,9 @@ def bindingEvidence (index : Index) (theoremName : Name)
       root := entry.registrationModule, registrationModule := entry.registrationModule,
       theoremName, objectArena := entry.canonicalArena,
       «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-    let registered := finite ++ structural
+    let family := (TemplateBinding.familyKeys (← getEnv)).filter fun key =>
+      key.theoremName == theoremName && index.modules.contains key.registrationModule
+    let registered := finite ++ structural ++ family
     unless registered.size == selected.size &&
         registered.all (fun key => selected.any (·.occurrence.key == key)) do
       throwError "incomplete_closure:dtr.census_inventory"

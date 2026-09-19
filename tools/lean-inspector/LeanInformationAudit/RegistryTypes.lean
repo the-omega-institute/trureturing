@@ -8,6 +8,54 @@ open Lean
 
 abbrev CatalogId := Name
 
+inductive RegistrationMode where
+  | fixedState | dependentFamily
+  deriving BEq, Hashable, Inhabited, Repr
+
+def RegistrationMode.wireName : RegistrationMode → String
+  | .fixedState => "fixed-state-v1"
+  | .dependentFamily => "dependent-family-v1"
+
+structure FamilySourceSelection where
+  coordinates : Array Nat
+  statePath : Array String
+  outputPath : Array String
+  deriving BEq, Inhabited
+
+structure FamilySourceBinder where
+  name : Name
+  info : BinderInfo
+  domain : Expr
+  kind : String := "forall"
+  value : Option Expr := none
+  nondep : Bool := false
+  deriving BEq, Inhabited
+
+structure FamilySourceOccurrence where
+  path : Array String
+  context : Array FamilySourceBinder
+  raw : Expr
+  deriving BEq, Inhabited
+
+structure FamilySourceScope where
+  selection : FamilySourceSelection
+  sourceType : Expr
+  levels : List Name
+  telescope : Array FamilySourceBinder
+  state : FamilySourceOccurrence
+  output : FamilySourceOccurrence
+  coordinateDomains : Array FamilySourceBinder
+  stateFiber : Expr
+  outputFiber : Expr
+  deriving BEq, Inhabited
+
+/-- Structured source and kernel identities, recomputed by the native producer.
+The JSON value is data; it is never an enrollment or proof authority. -/
+structure FamilyBindingEvidence where
+  material : Json
+  identity : String
+  deriving BEq, Inhabited
+
 namespace TemplateAudit
 
 inductive Origin where
@@ -58,6 +106,7 @@ private def run (action : WorkM α) (fuel : Nat) : Except String (α × Nat) := 
   return (value, limit - remaining)
 
 private inductive Operation where
+  | coordinates (slots : Array Nat) (sourceDepth : Nat) (inverse : Bool)
   | lift (amount : Nat)
   | substitute (argument : Expr)
   | abstract (localId : FVarId)
@@ -139,6 +188,7 @@ private partial def level (u : Level) (parameters : List Name) (values : List Le
 private partial def raw (operation : Operation) (e : Expr) (cutoff depth : Nat) : WorkM Expr := do
   step depth
   match operation with
+  | .coordinates .. => pure ()
   | .lift amount => if amount == 0 || !e.hasLooseBVars then return e
   | .substitute _ => if !e.hasLooseBVars then return e
   | .abstract _ => if !e.hasFVar then return e
@@ -149,6 +199,19 @@ private partial def raw (operation : Operation) (e : Expr) (cutoff depth : Nat) 
   match e with
   | .bvar i =>
     match operation with
+    | .coordinates slots sourceDepth inverse =>
+      if i < cutoff then return e
+      let external := i - cutoff
+      if inverse then
+        if external ≥ slots.size then throw "unclassified_form:family.map.target_loose"
+        let coordinate := slots[slots.size - 1 - external]!
+        if coordinate ≥ sourceDepth then throw "unclassified_form:family.map.source_bounds"
+        return .bvar (cutoff + sourceDepth - 1 - coordinate)
+      if external ≥ sourceDepth then throw "unclassified_form:family.source.loose_binder"
+      let coordinate := sourceDepth - 1 - external
+      let some target := slots.toList.idxOf? coordinate
+        | throw "unclassified_form:family.source.unmapped_dependency"
+      return .bvar (cutoff + slots.size - 1 - target)
     | .lift amount => return .bvar (if i ≥ cutoff then i + amount else i)
     | .substitute argument =>
       if i == cutoff then return ← raw (.lift cutoff) argument 0 (depth + 1)
@@ -156,6 +219,7 @@ private partial def raw (operation : Operation) (e : Expr) (cutoff depth : Nat) 
     | _ => return e
   | .fvar id =>
     match operation with
+    | .coordinates .. => throw "unclassified_form:family.source.unresolved"
     | .abstract localId => return if id == localId then .bvar cutoff else e
     | _ => return e
   | .sort u =>
@@ -215,6 +279,10 @@ private partial def transform (operation : Operation) (replacement : Option Plan
   | .mdata m b => return .mdata m (← child b)
   | .proj n i b => return .proj n i (← child b)
 
+def projectCoordinates (slots : Array Nat) (sourceDepth : Nat) (e : Expr)
+    (inverse : Bool := false) (fuel : Nat := 524288) :=
+  run (raw (.coordinates slots sourceDepth inverse) e 0 0) fuel
+
 def substituteExpr (body argument : Expr) (cutoff : Nat := 0) (fuel : Nat := 524288) :=
   run (raw (.substitute argument) body cutoff 0) fuel
 
@@ -267,10 +335,11 @@ structure Slot where
 /-- Serialized data, not an enrollment authority. Only the private producer
 extension in Registry accepts a result of its checked-plan constructor. -/
 structure TemplatePlanData where
+  mode : RegistrationMode := .fixedState
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 7
+  compatibilityVersion : Nat := 8
   compiler : String
   toolchain : String
   policyIdentity : String
@@ -523,8 +592,12 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v5"
-  for version in #[1, 1, 1, 7] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v6"
+  for version in #[1, 1, 1, 8] do unless (← natural) == version do fail
+  let mode ← match ← token with
+    | "fixed-state-v1" => pure RegistrationMode.fixedState
+    | "dependent-family-v1" => pure RegistrationMode.dependentFamily
+    | _ => fail
   let compiler ← token
   let toolchain ← token
   let policyIdentity ← digest
@@ -562,7 +635,7 @@ private def payload : M TemplatePlanData := do
   let typePlan ← plan
   let bodyPlan ← plan
   return {
-    compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
+    mode, compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
     dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 
@@ -580,6 +653,7 @@ end PlanDecoder
 end TemplateAudit
 
 structure TemplateOccurrenceKey where
+  mode : RegistrationMode := .fixedState
   root : Name
   registrationModule : Name
   theoremName : Name
@@ -597,6 +671,7 @@ structure TemplateOccurrenceEvent where
   arena : Expr
   registrationSource : String
   registrationSourceIdentity : String
+  familyScope : Option FamilySourceScope := none
   deriving Inhabited
 
 /-- Syntax input is retained for authoritative reassessment, never executed. -/
@@ -623,6 +698,7 @@ structure EscapeRecordEvidence where
   fromObject : Option EscapeFromIdentity := none
   continuation : Option EscapeContinuationIdentity := none
   bridgeKind : String := "legacy"
+  family : Option FamilyBindingEvidence := none
   deriving Inhabited, BEq
 
 structure TemplateBindingCertificate where
@@ -644,7 +720,7 @@ inductive TemplateBindingResult where
 
 structure BindingRecord where
   schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 7
+  compatibilityVersion : Nat := 8
   occurrence : TemplateOccurrenceEvent
   descriptor : Option Expr
   bindingOwner : Option Name

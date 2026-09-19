@@ -259,15 +259,17 @@ outside the evidence identity. The evidence reference itself is not encoded. -/
 def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingCertificate)
     (fuel : Nat) : Except String (String × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-binding-evidence-v2"
+    emit "DTR-binding-evidence-v3"
     for name in #[certificate.key.root, certificate.key.registrationModule,
         certificate.key.theoremName, certificate.key.objectArena, certificate.key.catalog] do
       wireName name
+    emit certificate.key.mode.wireName
     emit statementIdentity
     emit certificate.planIdentity
     emit certificate.descriptorIdentity
     emit certificate.actualIdentity
     emit certificate.escape.bridgeKind
+    emit (certificate.escape.family.map (·.identity) |>.getD "fixed")
     match certificate.escape.fromObject with
     | none => emit "missing-from"
     | some origin =>
@@ -311,9 +313,10 @@ outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v5"
+    emit "DTR-checked-plan-v6"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
+    emit plan.mode.wireName
     emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
     wireName plan.name; wireName plan.definitionOwner; wireName plan.enrollmentOwner
     emit (toString plan.levelParams.length)

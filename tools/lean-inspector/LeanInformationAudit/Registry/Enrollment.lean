@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Evidence
+import LeanInformationAudit.DependentFamilyRealization
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
@@ -113,7 +114,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV5
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV6
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -150,6 +151,7 @@ namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
 private structure CompileState where
+  mode : RegistrationMode := .fixedState
   remaining : Nat := 524288
   identityState : Option RegistrationGates.WalkState := none
   dependencies : Array DependencyIdentity := #[]
@@ -298,17 +300,27 @@ private def interfaceTypes : Array Name := #[
   `LeanInformationAudit.StructuralPrimitiveSignature,
   `LeanInformationAudit.StructuralPrimitiveRealization]
 
+private def familyInterfaces : Array Name := #[
+  `LeanInformationAudit.DependentFamily.Signature,
+  `LeanInformationAudit.DependentFamily.Realization]
+
+private def admittedInterface (name : Name) : CompileM Bool := do
+  return interfaceTypes.contains name ||
+    ((← get).mode == .dependentFamily && familyInterfaces.contains name)
+
 private def dataTypes : Array Name :=
   #[`Unit, `PUnit, `Bool, `Nat, `Fin, `Prod, `Sum, `Option, `Subtype]
 
 private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
 private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
 
-private def interfaceProjection (env : Environment) (name : Name) : Bool :=
+private def interfaceProjection (env : Environment) (name : Name) (family : Bool) : Bool :=
   match env.getProjectionFnInfo? name with
-  | some p => interfaceTypes.contains p.ctorName.getPrefix &&
+  | some p => (interfaceTypes.contains p.ctorName.getPrefix ||
+      (family && familyInterfaces.contains p.ctorName.getPrefix)) &&
       #["State", "Index", "Output", "AnchorIndex", "indexFintype", "indexDecidableEq",
-        "outputDecidableEq", "anchorFintype", "anchorDecidableEq", "axis", "readout", "anchor"].contains
+        "outputDecidableEq", "anchorFintype", "anchorDecidableEq", "axis", "readout", "anchor",
+        "Θ", "Role", "Anchor", "finiteRole", "nonemptyRole", "finiteAnchor"].contains
           name.getString!
   | none => false
 
@@ -332,7 +344,54 @@ private def constructiveDictionaryNames : Array Name := #[
   `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
   `Option.instDecidableEq, `Subtype.instDecidableEq]
 
+private def familyPrimitiveNames : Array Name := #[
+  `Fin.val, `Fintype.instEmpty,
+  `LeanInformationAudit.DependentFamily.Signature, `LeanInformationAudit.DependentFamily.Signature.mk,
+  `LeanInformationAudit.DependentFamily.Signature.Θ, `LeanInformationAudit.DependentFamily.Signature.State,
+  `LeanInformationAudit.DependentFamily.Signature.Role, `LeanInformationAudit.DependentFamily.Signature.Output,
+  `LeanInformationAudit.DependentFamily.Signature.Anchor,
+  `LeanInformationAudit.DependentFamily.Signature.finiteRole,
+  `LeanInformationAudit.DependentFamily.Signature.nonemptyRole,
+  `LeanInformationAudit.DependentFamily.Signature.finiteAnchor,
+  `LeanInformationAudit.DependentFamily.Realization, `LeanInformationAudit.DependentFamily.Realization.mk,
+  `LeanInformationAudit.DependentFamily.Realization.readout, `LeanInformationAudit.DependentFamily.Realization.anchor]
+
+private def checkedPin (info : ConstantInfo) : CompileM Unit := do
+  let some pin := (primitivePins.getState (← getEnv)).find? (·.identity.name == info.name)
+    | throwError "incomplete_closure:E2.family_pin"
+  dependency info
+  let some current := (← get).dependencies.find? (·.name == info.name)
+    | throwError "incomplete_closure:E2.family_identity"
+  unless current.owner == pin.identity.owner && current.typeIdentity == pin.identity.typeIdentity &&
+      current.bodyIdentity == pin.identity.bodyIdentity && info.levelParams.length == pin.levelCount do
+    throwError "unclassified_form:E2.family_identity"
+  if info.name == `Fin.val && current.owner != `Init.Prelude then
+    throwError "unclassified_form:E2.fin_val_owner"
+
+/-- The builtin index projection has no value-position or alias rule. -/
+private def finiteIndex (e : Expr) (typePosition : Bool) : CompileM Unit := do
+  unless (← get).mode == .dependentFamily && typePosition do
+    throwError "unclassified_form:E3.fin_val_nonindex"
+  let (n, x) ← match e with
+    | .proj `Fin 0 x => do
+      let type ← inferType x
+      unless type.isAppOfArity `Fin 1 do throwError "unclassified_form:E3.fin_val_input"
+      pure (type.getAppArgs[0]!, x)
+    | _ =>
+      unless e.isAppOfArity `Fin.val 2 do throwError "unclassified_form:E3.fin_val_head"
+      pure (e.getAppArgs[0]!, e.getAppArgs[1]!)
+  unless x.isFVar do throwError "unclassified_form:E3.fin_val_neutral"
+  unless (← inferType x).equal (mkApp (mkConst `Fin) n) &&
+      (← inferType e).equal (mkConst `Nat) do
+    throwError "unclassified_form:E3.fin_val_domain"
+  checkedPin (← getConstInfo `Fin.val)
+  rule "E3.family_fin_index"
+
 private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
+  if (← get).mode == .dependentFamily && info.name == `Fintype.instEmpty then
+    checkedPin info
+    rule "E2.family_empty_dictionary"
+    return true
   unless constructiveDictionaryNames.contains info.name do return false
   let some pin := (primitivePins.getState (← getEnv)).find? (·.identity.name == info.name)
     | throwError "incomplete_closure:E2.dictionary_pin"
@@ -430,7 +489,11 @@ private partial def compileNode (e : Expr) (depth : Nat)
       return .letE tp vp (← abstractPlan bp x) nd
   | .mdata m b => rule "E3.metadata"; return .mdata m (← child b)
   | .proj n i b =>
-    unless interfaceTypes.contains n || #[`Prod, `Subtype].contains n do
+    if n == `Fin && (← get).mode == .dependentFamily then
+      finiteIndex e typePosition
+      return .proj n i (← child b)
+    unless (← admittedInterface n) || #[`Prod, `Subtype].contains n ||
+        ((← get).mode == .dependentFamily && n == `Sigma) do
       throwError "unclassified_form:E3.projection"
     rule "E3.projection"; return .proj n i (← child b)
   | .app .. | .const .. =>
@@ -459,13 +522,21 @@ private partial def compileNode (e : Expr) (depth : Nat)
       dependency (← getConstInfo `instOfNatNat)
       rule "E3.nat_index_encoding"
       return .expanded e (← compileExpr args[1]! (depth + 1) true)
+    if name == `Fin.val && (← get).mode == .dependentFamily then
+      finiteIndex e typePosition
+      let mut plan := PlanNode.atom head
+      for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
+      return plan
     if info.isUnsafe then throwError "unclassified_form:E1.unsafe_definition"
+    let family := (← get).mode == .dependentFamily
     let fixedType := dataTypes.contains name || propTypes.contains name ||
-      dictionaryTypes.contains name || interfaceTypes.contains name ||
+      dictionaryTypes.contains name || (← admittedInterface name) ||
+      (family && #[`Empty, `Sigma, `Nonempty].contains name) ||
       (← get).constructorTypes.contains name
     let constructorTypes := (← get).constructorTypes
     let fixedCtor := match info with
       | .ctorInfo c => dataTypes.contains c.induct || interfaceTypes.contains c.induct ||
+          (family && (familyInterfaces.contains c.induct || #[`Empty, `Sigma].contains c.induct)) ||
           constructorTypes.contains c.induct
       | _ => false
     let recursiveCase := match info with
@@ -493,11 +564,13 @@ private partial def compileNode (e : Expr) (depth : Nat)
       return plan
     let fixedCase := match info with
       | .recInfo r => #[`Unit, `PUnit, `Bool, `Option, `Sum, `Prod, `Subtype].contains
-          (r.all.headD .anonymous)
+          (r.all.headD .anonymous) || (family && r.all.headD .anonymous == `Empty)
       | _ => false
-    let fixedProjection := interfaceProjection (← getEnv) name || #[`Prod.fst, `Prod.snd, `Subtype.val].contains name
+    let fixedProjection := interfaceProjection (← getEnv) name family || #[`Prod.fst, `Prod.snd, `Subtype.val].contains name ||
+      (family && #[`Sigma.fst, `Sigma.snd, `Empty.elim].contains name)
     let dictionary ← checkedDictionary info
     if fixedType || fixedCtor || fixedCase || recursiveCase || fixedProjection || dictionary || name == `Fin.elim0 then
+      if family && familyPrimitiveNames.contains name then checkedPin info
       dependency info
       let mut plan := PlanNode.atom head
       -- Constructor parameters and indices occur in the result type. Only
@@ -523,6 +596,8 @@ private partial def compileNode (e : Expr) (depth : Nat)
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
     | .defnInfo defn =>
+      if family && typePosition && (← inferType e).isConstOf `Nat then
+        throwError "unclassified_form:E3.family_index_alias"
       -- The fixed E2 proposition constructors were handled above. A closed
       -- proposition name cannot acquire a rule by spelling an admitted formula
       -- in its body, even if that body is available and reducible.
@@ -586,13 +661,17 @@ open Lean Meta Elab Command
 def initializeGrammarPins : CommandElabM Unit := do
   unless (← getEnv).header.mainModule == `LeanInformationAudit.Syntax do
     throwError "incomplete_closure:E2.pin_producer_owner"
-  for name in constructiveDictionaryNames do
+  for name in constructiveDictionaryNames ++ familyPrimitiveNames do
     if let some info := (← getEnv).find? name then
       let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
       let .ok (typeId, _) ← liftTermElabM <| rawIdentity info.levelParams info.type
         | throwError "DTR primitive type exceeds identity bound: {name}"
-      let .ok (bodyId, _) ← liftTermElabM <| rawIdentity info.levelParams (info.value?.getD info.type)
-        | throwError "DTR primitive body exceeds identity bound: {name}"
+      let bodyId ← if ← liftTermElabM <| isProp info.type then pure "" else match info.value? with
+        | none => pure ""
+        | some value => do
+          let .ok (identity, _) ← liftTermElabM <| rawIdentity info.levelParams value
+            | throwError "DTR primitive body exceeds identity bound: {name}"
+          pure identity
       modifyEnv fun env => primitivePins.addEntry env {
         identity := { name, owner, typeIdentity := typeId, bodyIdentity := bodyId }
         levelCount := info.levelParams.length }
@@ -630,7 +709,7 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
           if domain.isAppOf `Decidable then
             throwError "unclassified_form:E1.closed_decision_slot"
           pure .dictionary
-        else if interfaceTypes.contains (domain.getAppFn.constName?.getD .anonymous) then pure .interface
+        else if ← admittedInterface (domain.getAppFn.constName?.getD .anonymous) then pure .interface
         else pure .data
     if bi == .instImplicit && kind != .dictionary then
       throwError "unclassified_form:E1.instance_slot"
@@ -643,8 +722,10 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
       return #[{ kind, binderInfo := bi, type := domain }] ++ tail
   | _ =>
     let name := type.getAppFn.constName?.getD .anonymous
-    unless #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
-        `LeanInformationAudit.StructuralPrimitiveRealization].contains name do
+    let family := (← get).mode == .dependentFamily
+    unless (if family then name == `LeanInformationAudit.DependentFamily.Realization else
+        #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+          `LeanInformationAudit.StructuralPrimitiveRealization].contains name) do
       throwError "unclassified_form:E1.return_interface"
     discard <| compileExpr (← eraseInput type) 0 true
     return #[]
@@ -693,7 +774,7 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
 
 /-- Finite enrollment. The constructor is private and only its checked output
 can enter the persistent extension; public query data never grants insertion. -/
-private def compileTemplate (name : Name) (constructors : Array Name) : MetaM CheckedTemplatePlan := do
+private def compileTemplate (name : Name) (constructors : Array Name) (mode : RegistrationMode) : MetaM CheckedTemplatePlan := do
   let env ← getEnv
   let .defnInfo info ← getConstInfo name | throwError "unclassified_form:E1.definition_kind"
   if info.safety != .safe || info.all.length > 1 || (← isRecursiveDefinition name) then
@@ -709,7 +790,7 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     let typePlan ← compileExpr erasedType 0 true
     let plan ← compileExpr (← eraseInput info.value) 0 false slots.size
     return (slots, typePlan, plan)
-  let ((slots, typePlan, plan), state) ← action.run { remaining := limit }
+  let ((slots, typePlan, plan), state) ← action.run { remaining := limit, mode }
   let .ok (typeIdentity, typeBytes) ← rawIdentity info.levelParams info.type state.remaining
     | throwError "incomplete_closure:E7.type_identity"
   let .ok (bodyIdentity, bodyBytes) ← rawIdentity info.levelParams info.value (state.remaining - typeBytes)
@@ -717,7 +798,7 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
   let inputs ← sourceInputs env state.dependencies
   let policyIdentity := sourceIdentity (inputs.filter fun input => policyPaths.contains input.path)
   let data : TemplatePlanData := {
-    compiler := Lean.versionString, toolchain := Lean.versionString,
+    mode, compiler := Lean.versionString, toolchain := Lean.versionString,
     policyIdentity, sourceInputs := inputs,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
     levelParams := info.levelParams, slots, constructorTypes := constructors,
@@ -761,11 +842,12 @@ def withCumulativeBudget (action : MetaM α) : MetaM α :=
       return result
 
 /-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
-def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
+def enroll (name : Name) (constructors : Array Name := #[])
+    (mode : RegistrationMode := .fixedState) : CommandElabM (Except String Unit) := do
   let saved ← getEnv
   let answer ← liftTermElabM <| tryCatchRuntimeEx
     (withCumulativeBudget do
-      let checkedPlan ← compileTemplate name constructors
+      let checkedPlan ← compileTemplate name constructors mode
       let current := templateIndexExt.getState (← getEnv)
       match current.lookup name (pure () : Id Unit) with
       | .ok _ => throwError "unclassified_form:E7.duplicate_enrollment"
@@ -796,7 +878,8 @@ def indexPositions (type : Expr) : Array Bool := Id.run do
  the enrollment compiler. Proof propositions are checked before data identity
  checks, projection reduction and definition substitution. There is no carrier-decoding shortcut. -/
 def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Nat)
-    (constructors : Array Name := #[]) (indices : Array Bool := #[]) : MetaM (Array Name × Nat) := do
+    (constructors : Array Name := #[]) (indices : Array Bool := #[])
+    (mode : RegistrationMode := .fixedState) : MetaM (Array Name × Nat) := do
   let limit := min (min 524288 available)
     (RegistrationGates.provenanceExpressionLimit.get (← getOptions))
   if limit == 0 then throwError "incomplete_closure:E8.argument_work"
@@ -805,18 +888,18 @@ def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Na
     for ast in constructors do checkConstructorType ast
     for i in [:arguments.size] do
       discard <| compileExpr (← eraseInput arguments[i]!) 0 (indices[i]?.getD false)
-  let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity }
+  let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity, mode }
   return (state.dependencies.map (·.name), limit - state.remaining)
 
 /-- Extraction helper types satisfy the same E2/E6 judgment. This examines a
 helper's type, not the selected template body, and returns its actual work debit. -/
 def checkExtractionType (type : Expr) (available : Nat)
-    (constructors : Array Name := #[]) : MetaM (Array DependencyIdentity × Nat) := do
+    (constructors : Array Name := #[]) (mode : RegistrationMode := .fixedState) : MetaM (Array DependencyIdentity × Nat) := do
   let limit := min 524288 available
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
     discard <| compileExpr (← eraseInput type) 0 true
-  let (_, state) ← action.run { remaining := limit }
+  let (_, state) ← action.run { remaining := limit, mode }
   return (state.dependencies, limit - state.remaining)
 
 end LeanInformationAudit.TemplateAudit
@@ -826,11 +909,12 @@ open Lean
 
 /-- Current declared argument entry, shared with enrollment's finite grammar. -/
 def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
-    (availableWork : Nat) (constructors : Array Name := #[]) (indices : Array Bool := #[]) :
+    (availableWork : Nat) (constructors : Array Name := #[]) (indices : Array Bool := #[])
+    (mode : RegistrationMode := .fixedState) :
     CoreM (Except String (Array Name × Nat)) :=
   Meta.MetaM.run' <| tryCatchRuntimeEx
     (TemplateAudit.withCumulativeBudget <| .ok <$> TemplateAudit.checkArguments
-      theoremName arguments availableWork constructors indices)
+      theoremName arguments availableWork constructors indices mode)
     (fun error => do
       let message ← error.toMessageData.toString
       return .error (if message.startsWith "unclassified_form:" ||

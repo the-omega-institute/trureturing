@@ -836,7 +836,8 @@ def informationTemplateReportDriver : InformationTemplateReportDriver := fun mod
         (·.registrationModule == moduleName) |>.map fun entry => {
           root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
           objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-      return (moduleName, finite ++ structural)
+      return (moduleName, finite ++ structural ++ (TemplateBinding.familyKeys env).filter
+        (·.registrationModule == moduleName))
     let rows ← TemplateBinding.reportJson modules
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
     return rows

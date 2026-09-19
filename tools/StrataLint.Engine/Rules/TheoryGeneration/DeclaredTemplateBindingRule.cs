@@ -26,9 +26,11 @@ internal sealed record InformationTemplateOccurrence(
     string? RealizationName = null,
     InformationEscapeFrom? EscapeFrom = null,
     InformationEscapeContinuation? EscapeContinues = null,
-    string BridgeKind = "legacy")
+    string BridgeKind = "legacy",
+    InformationFamilyBinding? Family = null)
 {
-    internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
+    internal bool HasOrigin => Key.Mode == "dependent-family-v1" ? Family is not null : EscapeFrom is not null;
+    internal bool HasFourSlots => HasOrigin && EscapeContinues is not null
         && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;
 }
 
@@ -63,21 +65,7 @@ internal static class DeclaredTemplateBindingRule
                 foreach (var occurrence in occurrences.Values.OrderBy(
                     occurrence => InformationTemplateJson.KeyJson(occurrence.Key).GetRawText(), StringComparer.Ordinal))
                 {
-                    var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
-                    findings.Add(occurrence.State switch
-                    {
-                        _ when occurrence.EscapeFrom is null || occurrence.EscapeContinues is null => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Block),
-                        InformationTemplateBindingState.Undeclared => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Block),
-                        InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
-                            new(path.Value, "DTR-Declared " + key
-                                + " escape_from=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeFrom)
-                                + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
-                                + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
-                        _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
-                            ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Block),
-                    });
+                    findings.Add(EvaluateOccurrence(path, occurrence));
                 }
                 var validated = occurrences.Values
                     .Where(occurrence => occurrence.HasFourSlots)
@@ -92,6 +80,27 @@ internal static class DeclaredTemplateBindingRule
             }
         }
         return findings.ToImmutable();
+    }
+
+    // Shared verdict emission after the strict native evidence join. Owner
+    // selection remains exclusively in Evaluate above.
+    internal static RuleFinding EvaluateOccurrence(RepoPath path, InformationTemplateOccurrence occurrence)
+    {
+        var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
+        return occurrence.State switch
+        {
+            _ when !occurrence.HasOrigin || occurrence.EscapeContinues is null => new(path.Value,
+                "DTR-Undeclared " + key, AdmissionEffect.Block),
+            InformationTemplateBindingState.Undeclared => new(path.Value,
+                "DTR-Undeclared " + key, AdmissionEffect.Block),
+            InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
+                new(path.Value, "DTR-Declared " + key
+                    + " escape_from=" + System.Text.Json.JsonSerializer.Serialize<object?>(occurrence.Family ?? (object?)occurrence.EscapeFrom)
+                    + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
+                    + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
+            _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
+                ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Block),
+        };
     }
 
     private static bool IsPublicTheorem(LeanDeclaration declaration, ImmutableDictionary<string, string> sourceNames)

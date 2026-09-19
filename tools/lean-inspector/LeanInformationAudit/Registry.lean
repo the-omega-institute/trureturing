@@ -3,6 +3,12 @@ import LeanInformationAudit.Registry.Assessment
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
 
+private initialize familyRegistrations : SimplePersistentEnvExtension TemplateOccurrenceKey (Array TemplateOccurrenceKey) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+def familyKeys (env : Environment) : Array TemplateOccurrenceKey := familyRegistrations.getState env
+
 private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
@@ -112,7 +118,8 @@ def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord
         occurrence.arena.equal event.arena && occurrence.unitName == event.unitName &&
         occurrence.realizationName == event.realizationName &&
         occurrence.registrationSource == event.registrationSource &&
-        occurrence.registrationSourceIdentity == event.registrationSourceIdentity do
+        occurrence.registrationSourceIdentity == event.registrationSourceIdentity &&
+        occurrence.familyScope == event.familyScope do
       throw "incomplete_closure:dtr.cached_record_inputs"
     match claim, record.descriptor with
     | none, none =>
@@ -167,6 +174,38 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
+/-- Explicit family registration, including registrations in source sidecars.
+The typed record remains separate from all finite theorem-unit/catalog registries. -/
+def publishFamily (theoremName arenaName recordName : Name) (selection : FamilySourceSelection)
+    (descriptor : Option Expr) (diagnostic : Option String) : Elab.Command.CommandElabM Unit := do
+  let env ← getEnv
+  let info ← getConstInfo theoremName
+  let owner := env.header.mainModule
+  let (scope, _) ← Elab.Command.liftTermElabM <| FamilySource.resolve info selection
+  let .ok (statementIdentity, _) := TemplateAudit.rawStatementIdentity info.levelParams info.type
+    | throwError "incomplete_closure:family.source.identity"
+  let path := sourcePath owner
+  let input ← Elab.Command.liftCoreM <| TemplateAudit.readSourceInput path
+  let event : TemplateOccurrenceEvent := {
+    key := {
+      mode := .dependentFamily, root := owner, registrationModule := owner, theoremName, objectArena := arenaName, catalog := arenaName }
+    unitName := recordName, realizationName := recordName,
+    statement := info.type, levelParams := info.levelParams, statementIdentity,
+    arena := mkConst arenaName (info.levelParams.map Level.param),
+    registrationSource := path, registrationSourceIdentity := input.sha256,
+    familyScope := some scope }
+  if (inventory env).any (·.key == event.key) then
+    throwError "unclassified_form:dtr.duplicate_occurrence"
+  let (descriptor, diagnostic) ← eraseDescriptor descriptor diagnostic
+  let claim : TemplateBindingClaim := {
+    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic := diagnostic,
+    escapeInput := { openContinuation := true }, owner }
+  let result ← Elab.Command.liftTermElabM <| assess event (some claim)
+  modifyEnv fun current => familyRegistrations.addEntry
+    (bindingRecords.addEntry (bindingClaims.addEntry
+      (occurrenceInventory.addEntry current event) claim) result) event.key
+  if let .declaredUnresolved diagnostic := result.result then logWarning diagnostic
+
 /-- Claims join by their exact occurrence identity before authoritative assessment.
 An overlay retains the original registration owner and cannot replace an inline claim. -/
 def declareSidecar (theoremName arena : Name) (catalog : Option Name)
@@ -220,9 +259,10 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
       info.type.equal event.statement do
     throwError "incomplete_closure:dtr.event_statement"
-  unless env.contains event.unitName &&
-      (RegistrationReifier.declaringModuleOf env event.unitName).getD env.header.mainModule ==
-        event.key.registrationModule do
+  let unitOwner := (RegistrationReifier.declaringModuleOf env event.unitName).getD env.header.mainModule
+  unless env.contains event.unitName && (if event.key.mode == .dependentFamily then
+      ownerReachable env event.key.registrationModule unitOwner else
+      unitOwner == event.key.registrationModule) do
     throwError "incomplete_closure:dtr.event_unit_owner"
   let realizationOwner := (RegistrationReifier.declaringModuleOf env event.realizationName).getD
     env.header.mainModule
@@ -259,6 +299,7 @@ def exportSnapshot : MetaM JoinedRecords := do
   return { selected, originals }
 
 def keyJson (key : TemplateOccurrenceKey) : Json := Json.mkObj [
+  ("mode", toJson key.mode.wireName),
   ("root", toJson key.root.toString), ("registration_module", toJson key.registrationModule.toString),
   ("theorem", toJson key.theoremName.toString), ("object_arena", toJson key.objectArena.toString),
   ("catalog", toJson key.catalog.toString)]
@@ -330,9 +371,14 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
     seen := seen.insert name
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    -- The family content slice ends at native-validated judge/toolchain/package
+    -- owners. Those immutable inputs have their separate version/pin closure;
+    -- following their implementations cannot discover later content modules.
+    if record.occurrence.key.mode == .dependentFamily && !isRecordedModule owner then continue
     if isRepositoryModule owner then
       let path := sourcePath owner
-      unless paths.contains path || path.startsWith "tools/" do paths := paths.push path
+      unless paths.contains path ||
+          (record.occurrence.key.mode == .fixedState && path.startsWith "tools/") do paths := paths.push path
     let (type, work) ← TemplateAudit.eraseProofs info.type remaining
     remaining := remaining - work
     pending := (type.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
@@ -362,18 +408,26 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     | .undeclared => ("undeclared", toJson (missingDeclarationDiagnostic record.occurrence.key), Json.null)
     | .declaredUnresolved diagnostic => ("declared_unresolved", toJson diagnostic, Json.null)
     | .declaredValidated certificate => ("declared_validated", Json.null, certificateJson certificate)
-  return Json.mkObj [
+  let base := [
     ("key", keyJson record.occurrence.key),
     ("registration_source_path", toJson record.occurrence.registrationSource),
     ("statement_identity", toJson record.occurrence.statementIdentity),
     ("unit_name", toJson record.occurrence.unitName.toString),
     ("realization_name", toJson record.occurrence.realizationName.toString),
-    ("escape_from", record.escape.fromObject.map escapeFromJson |>.getD Json.null),
+    ("escape_from", if record.occurrence.key.mode == .dependentFamily then
+      record.escape.family.map (fun evidence => Json.mkObj [
+        ("kind", toJson "source-occurrence"), ("source", toJson record.occurrence.key.theoremName.toString),
+        ("scope_identity", toJson evidence.identity)]) |>.getD Json.null
+      else record.escape.fromObject.map escapeFromJson |>.getD Json.null),
     ("escape_continues", record.escape.continuation.map escapeContinuationJson |>.getD Json.null),
     ("bridge_kind", toJson record.escape.bridgeKind),
     ("content_inputs", Json.arr ((← contentInputs record).map inputJson)),
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
+  return Json.mkObj (base ++ if record.occurrence.key.mode == .dependentFamily then
+    [("family_binding", record.escape.family.map (fun evidence => Json.mkObj [
+      ("identity", toJson evidence.identity), ("material", evidence.material)]) |>.getD Json.null)]
+    else [])
 
 /-- Records are partitioned by their actual producing module. An original
 undeclared row and a sidecar overlay remain distinguishable until the final join. -/
@@ -438,7 +492,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
         objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
           TemplateOccurrenceKey }
-    return (moduleName, registered)
+    return (moduleName, registered ++ (TemplateBinding.familyKeys env).filter
+      (·.registrationModule == moduleName))
   TemplateBinding.reportJson modules
 
 end LeanInformationAudit

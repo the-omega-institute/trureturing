@@ -16,11 +16,12 @@ internal static class LeanImportClosure
 
     internal static ImmutableHashSet<RepoPath> RepositoryPaths(
         LeanAxiomReport report,
-        RepoPath startPath)
+        RepoPath startPath,
+        Func<RepoPath, string>? moduleName = null)
     {
         ArgumentNullException.ThrowIfNull(report);
         var pathsByModule = report.Files.Keys.ToDictionary(
-            ModuleName,
+            moduleName ?? ModuleName,
             static path => path,
             StringComparer.Ordinal);
         var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
