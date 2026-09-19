@@ -111,7 +111,6 @@ private lemma successful_odd_eq_candidate {m : ℕ} (hm : 0 < m) {input : List �
 the target of size `2m` has one element, while the full fibre over the target
 of size `2m+1` has `m+1` elements. -/
 theorem zhan_bie_conjectures_3_4 (m : ℕ) (hm : 2 ≤ m) :
-    let _sourceObject := cyclicStackSourceWord
     (fibre (2 * m)).length = 1 ∧ (fibre (2 * m + 1)).length = m + 1 := by
   have hevenSubset : fibre (2 * m) ⊆ [candidate m m m] := by
     intro input hinput

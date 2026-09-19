@@ -179,7 +179,6 @@ private lemma highEntries_target (n : ℕ) :
 lemma successful_high_entries_final_low {n : ℕ} {input : List ℕ}
     (hgapped : Gapped (n / 2) input) (hlast : EndsWithLow (n / 2) input)
     (houtput : cyclicStackSort input = target n) :
-    let _sourceObject := cyclicStackSourceWord
     highEntries (n / 2) input = List.range' (n / 2 + 1) (n - n / 2) := by
   have hprocess : (process input []).Sublist (target n) := by
     change (cyclicStackSort input).Sublist (target n)
@@ -223,7 +222,6 @@ lemma successful_high_entries_final_low {n : ℕ} {input : List ℕ}
 lemma successful_high_entries {m q : ℕ} {input : List ℕ}
     (hperm : input.Perm (List.range' 1 (m + q)))
     (hhighs : (highEntries m input).Pairwise (fun x y => x < y)) :
-    let _sourceObject := cyclicStackSourceWord
     highEntries m input = List.range' (m + 1) q := by
   have hp := hperm.filter (fun x => decide (m < x))
   change (highEntries m input).Perm
@@ -264,7 +262,6 @@ private lemma assemble_map_some_ends {m : ℕ} {highs lows : List ℕ}
 lemma assemble_insert_none_ends {m omitted : ℕ} {highs lows : List ℕ}
     (hlen : highs.length = lows.length + 1) (homitted : omitted < lows.length)
     (hlow : ∀ low ∈ lows, low ≤ m) :
-    let _sourceObject := cyclicStackSourceWord
     EndsWithLow m (assembleGaps highs (insertNone omitted lows)) := by
   induction lows generalizing highs omitted with
   | nil => simp at homitted
@@ -293,7 +290,6 @@ lemma assemble_insert_none_ends {m omitted : ℕ} {highs lows : List ℕ}
 
 lemma successful_high_length {m q : ℕ} {input : List ℕ}
     (hperm : input.Perm (List.range' 1 (m + q))) :
-    let _sourceObject := cyclicStackSourceWord
     (highEntries m input).length = q := by
   have hp := hperm.filter (fun x => decide (m < x))
   change (highEntries m input).Perm

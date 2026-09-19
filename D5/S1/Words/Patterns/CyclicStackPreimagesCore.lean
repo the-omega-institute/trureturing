@@ -1,13 +1,12 @@
 /- GID: D5/S1/Words/Patterns/CyclicStackPreimagesCore
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimages
+   mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimagesCore
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.Ring.Parity, mathlib/module/Mathlib.Data.List.Permutation]
    utility: none
    digest: Literal cyclic-stack semantics and converse barrier infrastructure. -/
 
 import Mathlib.Algebra.Ring.Parity
-import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.List.Permutation
 import Mathlib.Data.List.Sort
 import Mathlib.Data.List.TakeWhile
@@ -33,21 +32,6 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Patterns.CyclicStackPreimages
-
-/-- Finite source data used by the information-registration sidecar. Each
-coordinate packs one forbidden-pattern bit and three base-five digits. -/
-abbrev CyclicStackSourceWord := Fin 6 → Fin 250
-
-def sourceCode (forbiddenBit : Bool) (input output gap : Fin 5) : Fin 250 :=
-  ⟨(if forbiddenBit then 125 else 0) + input * 25 + output * 5 + gap, by
-    split <;> omega⟩
-
-/-- The forbidden-pattern truth table, Figure 3 input/output, and the first
-even gap candidate in one closed finite word. -/
-def cyclicStackSourceWord : CyclicStackSourceWord :=
-  ![sourceCode true 3 4 3, sourceCode false 1 2 1,
-    sourceCode false 2 1 4, sourceCode true 4 3 2,
-    sourceCode true 0 0 0, sourceCode false 0 0 0]
 
 /-- Whether the incoming value and the top two stack entries form one of the
 three forbidden consecutive cyclic patterns. -/
@@ -94,7 +78,6 @@ private lemma run_append (pre suffix stack : List ℕ) :
       simp only [List.append_assoc]
 
 lemma process_eq_run (input stack : List ℕ) :
-    let _sourceObject := cyclicStackSourceWord
     process input stack = (run input stack).1 ++ (run input stack).2 := by
   induction input generalizing stack with
   | nil => rfl
@@ -105,7 +88,6 @@ lemma process_eq_run (input stack : List ℕ) :
       simp only [List.append_assoc]
 
 lemma process_append (pre suffix stack : List ℕ) :
-    let _sourceObject := cyclicStackSourceWord
     process (pre ++ suffix) stack =
       (run pre stack).1 ++ process suffix (run pre stack).2 := by
   rw [process_eq_run, run_append, process_eq_run]
@@ -167,7 +149,6 @@ private lemma stack_sublist_process (input stack : List ℕ) :
       simpa only [step, drain_append] using hwhole
 
 lemma process_perm (input stack : List ℕ) :
-    let _sourceObject := cyclicStackSourceWord
     (process input stack).Perm (input ++ stack) := by
   induction input generalizing stack with
   | nil => exact List.Perm.refl stack
@@ -257,7 +238,6 @@ private lemma target_pairwise_lows (n : ℕ) :
 lemma target_low_order {n earlier later : ℕ}
     (hearlier : earlier ≤ n / 2) (hlater : later ≤ n / 2)
     (hpair : [earlier, later].Sublist (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     earlier < later := by
   exact (target_pairwise_lows n).forall_sublist hpair hearlier hlater
 
@@ -279,7 +259,6 @@ private lemma barrier_sublist {n high low : ℕ} (hhigh : n / 2 < high)
 lemma drain_low_over_high {n low high : ℕ}
     (hlow : low ≤ n / 2) (hhigh : n / 2 < high) {input stack : List ℕ}
     (houtput : (process (low :: input) (high :: stack)).Sublist (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     drain low (high :: stack) = ([], high :: stack) := by
   cases stack with
   | nil => rfl
@@ -315,7 +294,6 @@ lemma no_two_lows_after_high {n low₁ low₂ high : ℕ}
     (hne : low₁ ≠ low₂) (hhigh : n / 2 < high) {input stack : List ℕ}
     (houtput : (process (low₁ :: low₂ :: input) (high :: stack)).Sublist
       (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     False := by
   have hfirst := drain_low_over_high hlow₁ hhigh houtput
   have htail : (process (low₂ :: input) (low₁ :: high :: stack)).Sublist
@@ -374,7 +352,6 @@ lemma pending_low_forces_high_increase {n low high next : ℕ}
     {input stack : List ℕ}
     (houtput : (process (next :: input) (low :: high :: stack)).Sublist
       (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     high < next := by
   simp only [process, drain] at houtput
   split at houtput
@@ -398,7 +375,6 @@ lemma drain_high_while_low_remains {n x high futureLow : ℕ}
     (hhigh : n / 2 < high) (hlow : futureLow ≤ n / 2)
     {input stack : List ℕ} (hmem : futureLow ∈ input)
     (houtput : (process (x :: input) (high :: stack)).Sublist (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     drain x (high :: stack) = ([], high :: stack) := by
   cases stack with
   | nil => rfl
@@ -448,7 +424,6 @@ lemma pending_low_drains_only_low_while_low_remains
     (hmem : futureLow ∈ input)
     (houtput : (process (next :: input) (low :: high :: stack)).Sublist
       (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     drain next (low :: high :: stack) = ([low], high :: stack) := by
   have hshape := pending_low_drain_shape hlow hhigh hnext houtput
   have htail : (process (next :: input) (high :: stack)).Sublist (target n) := by
@@ -469,7 +444,6 @@ lemma process_pending_low_while_low_remains
     (hmem : futureLow ∈ input)
     (houtput : (process (next :: input) (low :: high :: stack)).Sublist
       (target n)) :
-    let _sourceObject := cyclicStackSourceWord
     process (next :: input) (low :: high :: stack) =
       low :: process input (next :: high :: stack) := by
   rw [process, pending_low_drains_only_low_while_low_remains hlow hhigh hnext
@@ -501,7 +475,6 @@ would leave a low below that first high, contradicting the barrier. -/
 lemma no_lows_before_first_high {n high : ℕ} {pre rest : List ℕ}
     (hpre : ∀ low ∈ pre, low ≤ n / 2) (hhigh : n / 2 < high)
     (houtput : cyclicStackSort (pre ++ high :: rest) = target n) :
-    let _sourceObject := cyclicStackSourceWord
     pre = [] := by
   by_contra hne
   let first := run pre []

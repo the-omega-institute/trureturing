@@ -9,7 +9,9 @@ internal sealed class CyclicStackPreimagesCandidatesDocument : IScribeDocumentDe
         H("Cyclic-Stack Fibre Candidates"),
         Blocks(
             Paragraph(Text(
-                "The candidate word interleaves the increasing high entries with increasing low "
+                "The fibre is defined by filtering the complete list of permutations of "
+                    + "1,...,n by equality of the actual stack output to the target. The candidate "
+                    + "family is constructed separately. Its words interleave increasing high entries with increasing low "
                     + "entries and leaves one chosen gap empty. Its gap decomposition is literal: "
                     + "the even candidate has no empty gap, while an odd candidate has exactly the "
                     + "selected empty gap.")),

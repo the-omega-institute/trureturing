@@ -48,10 +48,57 @@ cardinalities at sizes `2m` and `2m+1` are `1` and `m+1`.
 - Volume index: https://math.colgate.edu/~integers/vol26.html, entry A15.
 - Article PDF: https://math.colgate.edu/~integers/aa15/aa15.pdf.
 - Authors and title: Alex Zhan and Stella Bie, *Cyclic-Pattern-Avoiding Stacks*.
-- Mathematical locators: Figure 3 and Conjectures 3 and 4.
+- Mathematical locators: the consecutive-stack definition and Figure 3 on
+  page 4; Conjectures 3 and 4 on page 12.
 - Repository preregistration: issue #8660.
 - Locally checked PDF SHA-256:
   `874a257ffcfa64e0ede1c8e1f3c502c5d456d463610f021a89ec30a3536b55a3`.
 
 The source states these cardinalities as conjectures; it does not supply the
 all-size inverse classification proved by the repository theorem.
+
+## Source-to-formal mapping
+
+The source convention is represented literally by `forbidden`, `drain`,
+`process`, and `cyclicStackSort` in
+`D5/S1/Words/Patterns/CyclicStackPreimagesCore.lean`. The three inequalities
+are respectively `x < a < b`, `b < x < a`, and `a < b < x`, with `x` the
+incoming value and `a,b` the top two existing stack entries. Each drain
+retests after one pop; processing flushes the stack when input is empty.
+The same module's `target n` uses integer division `n / 2` for the floor.
+
+`fibre n` in `CyclicStackPreimagesCandidates.lean` filters
+`(List.range' 1 n).permutations` by `cyclicStackSort input = target n`.
+It does not filter the proposed candidates. The range has no duplicates,
+and Mathlib's permutation enumeration and filtering preserve this fact,
+so its list length is the cardinality of the complete source fibre.
+The candidate family is used to prove lower bounds and the converse
+classification, not to define the domain.
+
+`CyclicStackPreimagesInvariants.lean` proves the gap and low-order
+invariants. `CyclicStackPreimagesFinalLow.lean` identifies the high range
+when the input ends low. `CyclicStackPreimages.lean` combines this with
+the final-empty-gap case and proves
+`zhan_bie_conjectures_3_4`: for every natural `m >= 2`, the lengths at
+`2*m` and `2*m+1` are respectively `1` and `m+1`. These cases cover every
+`n >= 4`, with the odd count equal to `ceil(n/2)`.
+
+The definitions of the map, Figure 3, and the conjecture statements are
+literature-attested. The barrier argument, inverse classification, and
+proof of the counts are repository-derived; the source is acknowledged
+without attributing that proof to the authors.
+
+## Bounded prior-art and reuse scope
+
+The earlier repository, pinned Mathlib, and admissible Lean-library searches
+and the all-size proof design are caller-supplied prior evidence; issue
+#8660 is the supplied preregistration locator. In the named local scope,
+the exact conjecture theorem is the five-module implementation listed
+above; Mathlib supplies the reused list permutation, no-duplicates,
+ordering, and cardinality machinery. The primary article presents the two
+claims as conjectures. Its bytes were independently fetched on 2026-09-20
+with HTTP 200 and the SHA-256 above.
+
+This is a bounded source and reuse statement. The earlier external
+prior-resolution search is caller-supplied; no exhaustive absence of a
+later proof or worldwide priority is asserted.
