@@ -11,7 +11,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
     public void CurrentProducerSeedSurvivesReusedChecksAndFollowingMetadataOnlyCurrent()
     {
         using var fixture = Prepare();
-        const string producer = "producer.py";
+        const string registration = "lean-report-inputs.json";
         Producer(fixture, "prepare");
         fixture.CommitPlan();
         fixture.Processes();
@@ -20,7 +20,11 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
         var originalReport = File.ReadAllBytes(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath));
 
-        fixture.Write(producer, "# producer version two\n");
+        // Producer programs are versioned, never hashed: only a semantic version
+        // bump (or a Lean/configuration input change) retires the previous receipt.
+        var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, registration)))!;
+        manifest["report_semantic_version"] = manifest["report_semantic_version"]!.GetValue<int>() + 1;
+        fixture.Write(registration, manifest.ToJsonString());
         fixture.CommitPlan();
         fixture.Processes();
         Producer(fixture, "renew");
@@ -282,7 +286,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                 fixture.lake = root / 'bin/lake'
                 if operation in ('prepare', 'renew'):
                     if operation == 'renew':
-                        assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'old producer must miss'
+                        assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'previous semantic version must miss'
                     fixture.receipt()
                 elif operation in ('probe', 'probe-miss'):
                     sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
