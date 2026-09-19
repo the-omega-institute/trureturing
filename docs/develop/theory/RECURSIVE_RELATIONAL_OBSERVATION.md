@@ -42713,3 +42713,460 @@ $j=0$ 及没有完整块的情形也包含在内，因为 $D\ge L_0$。令 $N=n+
 [^rro110-markov]: Richard Weber, [*Markov Chains*](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf) (2011), Theorem 4.4。此处只需其确定块起点的 Markov 重启特例；过去读数由独立发射扩充，给定当前隐藏状态后不改变未来隐藏转移及尚未读取的发射。
 
 ## 110.99 追加锚
+
+## 111. 仅给读数函数与方向符号的共同 $1/n$ 规则
+
+**定义与假设 111.1（部分标定下的共同规则）。** 沿用定义 109.1 的四态核族、共同准备态 $X_0=1$ 及逐时条件独立发射，改变通道的已知信息：固定非空有限字母表 $\mathcal A$，只给定函数 $f:\mathcal A\to[0,1]$ 和符号 $b\in\{-1,1\}$，不提供通道 $E$ 的各行。记
+$$
+\theta_i(E)=\sum_yE_i(y)f(y),\qquad
+V_f(E)=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1),
+$$
+$$
+\mathcal C_{f,b}
+=\{E:\ E_i\text{ 为 }\mathcal A\text{ 上的概率分布},\ bV_f(E)>0\}.
+$$
+实际通道是该类中某个固定的 $E$，允许零发射概率。原有窗口恒等式和势估计只用 $0\le f\le1$，所以包含端点。一般已知有界实值读数也可作正向仿射归一化到此区间；该归一化不需要 $E$，并保持 $V_f$ 的符号。
+
+固定
+$$
+B=64,\quad L_j=2^j,\quad T_j=L_j+3,\quad
+S_j=B(2^j-1+3j),\qquad j\ge0,
+$$
+$$
+t(L)=192\sqrt{L\log(eL)},\qquad L\ge1,
+\tag{111.1a}
+$$
+其中 $\log$ 为自然对数。第 $j$ 阶段使用 $B$ 个连续块，块首为 $S_j+aT_j$，$a=0,\ldots,B-1$。块首 $u$ 的分数为
+$$
+F_{u,L}
+=b\sum_{t=u}^{u+L-1}
+(1-f(Y_t))(1-f(Y_{t+3}))(f(Y_{t+2})-f(Y_{t+1})).
+$$
+分数大于 $t(L)$ 时声明方向 $0$，小于 $-t(L)$ 时声明方向 $1$，否则不声明。对 $N=n+1$ 个读数，只处理完整块，保存最后一次声明；没有声明则报告 $0$。阈值相等和不完整块均保留此前结果。记所得确定规则为
+$\Psi^{f,b}_n:\mathcal A^{n+1}\to\{0,1\}$。
+每块使用 $L+3$ 个标签，不同块不共享标签；规则从 $L=1$ 开始，不使用 $E$、任何均值间隔或 $k$。
+
+**命题 111.2（无需通道数值的共同最坏参数阶）。** 定义 111.1 的同一规则族满足
+$$
+\exists(\Psi^{f,b}_n)_{n\ge0}\quad
+\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad
+\forall k\ge2,\ d\in\{0,1\},\ n\ge0:
+\quad
+\Pr^{E,1}_{d,k}(\Psi^{f,b}_n\ne d)
+\le\frac{C_{E,f}}{n+1}.
+\tag{111.2a}
+$$
+这里先固定共同规则，再固定通道；不对通道取上确界。
+
+具体地，对给定 $E\in\mathcal C_{f,b}$，仅在常数及证明中定义
+$$
+c_*=\frac{(5/6)^3|V_f(E)|}{192},\qquad
+j_0=\min\{j\ge0:c_*L_j\ge4t(L_j)\},\qquad
+\overline L=2^{j_0},
+$$
+$$
+Q=5+\frac{40B}{3},\qquad
+A=(10B)^2\max\{Q,\overline L^2\},\qquad
+C_{\rm trap}=\frac{2A}{3},\qquad U=\frac{4A}{B^2},
+$$
+$$
+P=5B,\qquad
+D=\max\{\overline L,U+2C_{\rm trap},4P\},\qquad
+C_{E,f}=5B(D+P).
+\tag{111.2b}
+$$
+所有这些常数有限。规则不计算 $c_*,j_0$ 或 $\overline L$。对每个固定相容通道，其最坏参数平均风险满足
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^E_{k,n}(\Psi^{f,b}_n)
+\le\frac{C_{E,f}}{n+1},\qquad n\ge1,
+\tag{111.2c}
+$$
+因而为 $\Theta_{E,f}(1/n)$。
+
+**证明。** 固定 $E,k,d$，记 $\delta=1/k$、$a=1-\delta/3$。因为 $bV_f(E)>0$，式 (109.2p)–(109.2s) 的有向势分解仍给
+$$
+(-1)^dF_{u,L}
+=cA_L+M_L+\Delta h+N_L,\qquad
+c=\frac{a^3|V_f|}{192}\ge c_*,
+$$
+$$
+A_L\ge0,\quad |\Delta h|<12,\qquad
+\Pr(M_L\le-z)\le e^{-z^2/(288L)},\quad
+\Pr(N_L\le-z)\le4e^{-z^2/(128L)}.
+\tag{111.2d}
+$$
+这些 Azuma–Hoeffding 尾界[^rro111-azuma] 对每个 $L\ge1$ 成立，也成立于任意重启隐藏起点和块首当前发射尚未读取的条件历史；不需要 $L$ 达到原通道相关的 $L_0$。势函数本身虽依赖 $E$，其范数统一小于 $6$，规则无需计算它。
+
+由于 $t(L)\ge192$，两个残差都不低于 $-t(L)/4$ 时，有向分数大于 $-12-t(L)/2>-t(L)$。代入 (111.2d)，得到全部尺度上的统一错向尾
+$$
+\begin{aligned}
+\Pr(\text{单块错向声明})
+&\le e^{-t(L)^2/(4608L)}
+ +4e^{-t(L)^2/(2048L)}\\
+&\le5(eL)^{-8}.
+\end{aligned}
+\tag{111.2e}
+$$
+这里 $192^2/4608=8$。
+
+函数 $L/\log(eL)$ 在 $L\ge1$ 上不减且趋于无穷，而
+$$
+c_*L\ge4t(L)
+\quad\Longleftrightarrow\quad
+L/\log(eL)\ge(768/c_*)^2.
+$$
+故 $j_0$ 有限，且该不等式对所有 $L\ge\overline L$ 成立。从任意环状态重启，由 §109 的占用估计，
+$\Pr(A_L\ge L/2)\ge1/2$。在此事件及两个残差均不低于 $-t(L)/4$ 的事件上，
+$$
+(-1)^dF_{u,L}
+>c_*L/2-12-t(L)/2
+\ge3t(L)/2-12>t(L).
+$$
+因此，无须事件独立，对 $L\ge\overline L$ 有
+$$
+\Pr(\text{环起点单块正确声明})
+\ge\frac12-5(eL)^{-8}\ge\frac14.
+\tag{111.2f}
+$$
+最后一步使用 $e^8>20$。
+
+纯环核 $R_d$ 的窗口均值为 $c_\infty=|V_f|/192\ge c_*$，势范数至多 $8/3$，见 (110.2e)。[^rro111-block] 其漂移为 $c_\infty L$，不损失占用比例。相同残差界于是给
+$$
+\Pr(\text{纯环块没有正确声明})
+\le5(eL)^{-8},\qquad L\ge\overline L.
+\tag{111.2g}
+$$
+这里包括无声明和错向声明。
+
+令 $\tau=\inf\{t\ge1:X_t=0\}$。复用 (110.2h) 的条件分解：
+$$
+\Pr(\tau=m)=a^{m-1}\delta/3;
+$$
+给定 $\tau=m$，此前是从 $1$ 出发的纯环路径，此后从 $0$ 按原核重启。离环概率与离开的环状态无关，发射仍逐时条件独立。
+
+至多一个完整标签块跨越 $m$。按 §110 的分段方法，两段势差及至多三个跨越窗口造成的总确定损失小于 $20$；纯环段和原核段漂移均非负。对两段的四个残差分别用阈值 $z=t(L)/8$，段长 $\ell\le L$，空段残差为零。四个残差均不低于 $-t(L)/8$ 时，整块有向分数大于 $-20-t(L)/2>-t(L)$。因此
+$$
+\begin{aligned}
+\Pr(\text{跨越块错向}\mid\tau=m)
+&\le2e^{-t(L)^2/(18432L)}
+ +8e^{-t(L)^2/(8192L)}\\
+&\le10(eL)^{-2},\qquad L\ge1.
+\end{aligned}
+\tag{111.2h}
+$$
+这里 $192^2/18432=2$。纯环段可由纯环延拓计算其有限边缘，未把 $X_m=0$ 当成纯环状态；两段无需独立。
+
+调度仍满足 $S_{j+1}\le5BL_j$。若 $4=T_0\le m\le N-1$，首次入陷阱前的最后完整块存在，设尺度为 $r$，则 $m<10BL_r$。若 $r\ge j_0$，该块正确声明且此后没有错向声明，最终保存值便正确。每个后续尺度至多 $B$ 个块，故由 (111.2e)、(111.2g)、(111.2h)，
+$$
+\begin{aligned}
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)
+&\le5L_r^{-2}
+ +10B\sum_{\ell\ge0}(2^\ell L_r)^{-2}\\
+&=QL_r^{-2}.
+\end{aligned}
+\tag{111.2i}
+$$
+加入未来未读块的并集只会放宽当前错误事件。若 $r<j_0$，或 $m<T_0$，则 $m<10B\overline L$，用概率不超过一处理。
+
+在 $\tau>N-1$ 上，已读的 $N$ 个标签是纯环前缀。若有完整块，最后完整块的尺度满足 $N<10BL_r$；达到 $j_0$ 时使用 (111.2g)，否则 $N<10B\overline L$。没有完整块时同样使用概率不超过一。由 $A$ 的定义，全部情形统一为
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)\le A/m^2
+\quad(1\le m\le N-1),
+$$
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau>N-1)\le A/N^2.
+\tag{111.2j}
+$$
+第二个事件包含 $\tau=N$，此时整个已读前缀仍在环上。对 $N<4$，$A/N^2\ge1$ 也覆盖缺块情形。
+
+按首次入陷阱时刻条件求和，使用 $\sum_{m\ge1}m^{-2}\le2$，得到
+$$
+\varepsilon_d(N,\delta)
+:=\Pr(\Psi^{f,b}_{N-1}\ne d)
+\le\frac{A}{N^2}+\frac{A\delta}{3}\sum_{m\ge1}m^{-2}
+\le\frac{A}{N^2}+C_{\rm trap}\delta.
+\tag{111.2k}
+$$
+未把错误与入陷阱事件独立化；可求和的二次尾已足够。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，可将 (111.2f) 代入 (110.2m) 的两块条件法：给定块对开始前历史，第二块首在环的概率大于 $1/2$；再条件于该块首历史，正确声明概率至少 $1/4$。所以每对至少有 $1/8$ 的声明概率。此前各对均无声明的事件在下一对开始前可测，逐次条件化给
+$$
+\Pr(\text{阶段完全无声明}\mid\text{阶段前历史})
+\le(7/8)^{32}<1/4.
+\tag{111.2l}
+$$
+此处不先条件于第一块无声明来估计第二块的环概率，也不要求块对独立。
+
+令 $e_j$ 为读取完前 $j$ 个完整阶段、共用 $S_j$ 个标签后保存值错误的概率；$e_0\le1$。全部尺度都由 (111.2e) 给
+$$
+p_j:=5B(eL_j)^{-8}\le P/L_j
+\tag{111.2m}
+$$
+作为本阶段出现任意错向声明的上界。在 (111.2l) 可用的尺度，旧错误在阶段前历史中可测，故
+$$
+e_{j+1}\le e_j/4+p_j.
+\tag{111.2n}
+$$
+
+仅在证明中设
+$$
+j_\delta=\min\{j\ge0:\delta T_j\ge1\},\qquad
+J=\max\{j_0,j_\delta\}.
+$$
+对 $j\ge1$，$S_j\ge BL_j/2$，所以
+$$
+A/S_j^2\le4A/(B^2L_j^2)\le U/L_j.
+$$
+对所有 $0\le j\le j_0$，直接有
+$e_j\le1\le\overline L/L_j\le D/L_j$，包括 $j=0$，不需要把 (111.2k) 用于 $N=0$。
+
+若 $j_\delta>j_0$，则对 $j_0<j<j_\delta$，有 $j\ge1$ 及 $\delta<1/L_j$，由 (111.2k) 得
+$e_j\le(U+C_{\rm trap})/L_j$。
+在 $j=j_\delta\ge1$，前一尺度未触发给
+$\delta(L_j/2+3)<1$，所以 $\delta<2/L_j$，得到
+$e_j\le(U+2C_{\rm trap})/L_j$。
+若 $j_\delta\le j_0$，则 $J=j_0$ 的起点已由直接界覆盖。因此全部 $j\le J$ 均有 $e_j\le D/L_j$。
+
+对 $j\ge J$，用 (111.2m)–(111.2n) 及 $D\ge4P$ 归纳：
+$$
+e_{j+1}\le\frac{D/4+P}{L_j}
+\le\frac{D}{2L_j}=\frac{D}{L_{j+1}}.
+$$
+故全部阶段、参数和方向都满足 $e_j\le D/L_j$。未知小尺度中的任意错误已由 $D\ge\overline L$ 吸收，规则不判断自己是否超过 $j_0$。
+
+最后，任意 $N\ge1$ 有唯一 $j$ 使 $S_j\le N<S_{j+1}$。除已完成阶段外，至多再使用当前尺度的 $B-1$ 个完整块；此前保存值正确时，只有新的错向声明能造成错误。因而
+$$
+\varepsilon_d(N,\delta)
+\le e_j+p_j
+\le\frac{D+P}{L_j}
+\le\frac{5B(D+P)}{N}.
+\tag{111.2o}
+$$
+无完整块、阶段首精确相等、未完成最后阶段、无声明及阈值等号都由同一规则涵盖。取 $N=n+1$ 得 (111.2a)。平均风险不超过每方向上界；对这条规则应用 (109.2g) 的既有完整路径下界，即得 (111.2c)。证毕。
+
+完全不提供方向标定时，仍有既有反射障碍：令 $s$ 交换环状态 $2,3$，固定 $0,1$，并令 $E^s_i=E_{s(i)}$。直接复用 §§106、109 的反射路径恒等式，有 $P^{E,1}_{d,k,n}=P^{E^s,1}_{1-d,k,n}$ 及 $V_f(E^s)=-V_f(E)$。同一无标定检验遂满足 $R^E(\varphi)+R^{E^s}(\varphi)=1$，不能对这两个固定通道都趋于零。该段只是原反射恒等式的通道参数替换；符号比特恰好区分这对通道，不等于提供整个 $E$。
+
+[^rro111-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。此处使用 (109.2q)–(109.2s) 已给的有界鞅差尾界；窗口残差按模 $4$ 分组处理。已发布 §109 的固定来源为 [commit 4d98ee11](https://github.com/the-omega-institute/trureturing/blob/4d98ee11bd91a8235d0c026c20f7acf446e7cc36/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro111-block]: 本卷命题 110.2，固定来源为 [commit 28e3f966](https://github.com/the-omega-institute/trureturing/blob/28e3f966a7258170a6c5e1f45b280fff1f7329ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。此处复用 (110.2e) 的纯环势分解、(110.2h) 的首次入陷阱条件律、(110.2j) 的调度几何及 (110.2m) 的两块条件法；新的阈值、尾界和未知信号尺度的衔接由本命题给出。
+
+## 111.99 追加锚
+
+## 112. 未知有限 Markov 记忆下的共同方向规则
+
+**定义与假设 112.1（有记忆传感器与可见窗口签名）。** 沿用第 103 节的四态核族，写 $\delta=1/k$、$a=1-\delta/3$，方向 $d=0,1$ 分别使用 $K_{\delta,0}=K_k$、$K_{\delta,1}=K_k^{\mathsf T}$，共同准备于 $X_0=1$。为定义极限签名，将同一矩阵公式延拓到 $0\le\delta\le1/2$。
+
+固定有限读数字母表 $\mathcal A$、整数 $r\ge1$、已知窗口函数 $W:\mathcal A^{r+1}\to[-1,1]$ 及已知位 $b\in\{-1,1\}$。模型另含固定有限集合 $M$ 上的不可约核 $T$，允许周期，平稳律为 $\eta$；$Z_0\sim\eta$，整个传感器过程 $(Z_t)$ 独立于整个隐藏过程 $(X_t)$。给定 $(X,Z)$ 的完整路径，读数逐时独立，条件律为固定发射行 $E_{X_t,Z_t}$，允许零发射项。两个方向使用相同的 $T,E$。产品核与其固定平稳律记为
+$$
+Q_{\delta,d}=K_{\delta,d}\otimes T,\qquad
+\mu(x,z)=\eta_z/4.
+$$
+平稳律只用于下列签名，实际隐藏初态仍为 $1$。定义
+$$
+q_{\delta,d}(x,z)
+=\mathbb E^{x,z}_{\delta,d}W(Y_0,\ldots,Y_r),\qquad
+c_{\delta,d}=\frac43(-1)^db\,\mu q_{\delta,d}.
+$$
+假设纯陷阱实验 $X_t\equiv0$、$Z_0\sim\eta$ 的窗口均值为零，并且
+$$
+\gamma:=\inf_{\substack{0\le\delta\le1/2\\d\in\{0,1\}}}c_{\delta,d}>0.
+\tag{112.1a}
+$$
+这里比较的是两个隐藏方向；不以传感器自身的时间不可逆性代替 (112.1a)。$q,c$ 都是 $\delta$ 的次数至多 $r$ 的多项式，因此给定模型后的签名条件是有限窗口均值与区间正性条件。
+
+规则只取得 $W,r,b$，不取得 $M,T,E,\eta,\gamma$、混合速度或势函数界。取
+$$
+B=64,\quad L_j=2^j,\quad T_j=L_j+r,\quad
+S_j=B(2^j-1+rj),\qquad
+ t(L)=192\sqrt L\log(eL).
+\tag{112.1b}
+$$
+第 $j$ 阶段有 $B$ 个连续块，块首为 $S_j+aT_j$，$a=0,\ldots,B-1$。块首 $u$ 的分数为
+$$
+F_{u,L}=b\sum_{t=u}^{u+L-1}W(Y_t,\ldots,Y_{t+r}).
+$$
+分数大于 $t(L)$ 时声明 $0$，小于 $-t(L)$ 时声明 $1$，否则不声明。对 $N=n+1$ 个读数，只处理完整块，保存最后一次声明；没有声明则报告 $0$。阈值相等和不完整块均保留此前结果。所得规则记为 $\Psi^{W,r,b}_n$，相邻块不共享读数。
+
+**命题 112.2（无需传感器参数的共同最坏参数阶）。** 定义 112.1 的同一规则满足
+$$
+\forall(T,E)\text{ 满足定义 112.1}\quad
+\exists C_{T,E,W,r,b}<\infty\quad
+\forall k\ge2,d\in\{0,1\},n\ge0:
+\quad
+\Pr_{d,k}(\Psi^{W,r,b}_n\ne d)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2a}
+$$
+常数允许依赖固定模型，规则不使用这些依赖量。记公平方向平均风险为 $R^{T,E}_{k,n}$，则对 $n\ge1$，
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^{T,E}_{k,n}(\Psi^{W,r,b}_n)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2b}
+$$
+该模型类包含传感器确实造成读数时间相关的子族，其中有周期传感器，且非周期部分的混合可以任意慢：可取二元读数、$r=3$、$b=1$、$W(y_0,y_1,y_2,y_3)=(1-y_0)(1-y_3)(y_2-y_1)$，并取
+$$
+\kappa_0=125/1327104,\quad \alpha=\kappa_0/64,\quad
+(p_0,p_1,p_2,p_3)=(1/2,1/4,1/2,3/4),
+$$
+$$
+M=\{-1,1\},\quad
+T_\varepsilon(z,z')=(1-\varepsilon)/2+
+ \varepsilon\mathbf1_{\{z=z'\}},\quad
+E_{x,z}(1)=p_x+\alpha z,
+\qquad -1\le\varepsilon<1,\qquad\varepsilon\ne0.
+\tag{112.2c}
+$$
+纯陷阱下该子族有 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$，并满足 $\gamma\ge5\kappa_0/6$。
+
+**证明。** 首先建立统一于 $\delta$ 的产品链势。令 $\Pi=\mathbf1\eta$、$P=I_4\otimes\Pi$，则 $P$ 与 $Q_{\delta,d}$ 交换。置
+$$
+A_{\delta,d}=I-Q_{\delta,d}+P.
+$$
+对全部 $0\le\delta\le1/2$，此矩阵均可逆。事实上，若 $A_{\delta,d}h=0$，施加 $P$ 得 $(2I-K_{\delta,d})Ph=0$；由行随机矩阵的无穷范数至多为 $1$，必有 $Ph=0$，进而 $Q_{\delta,d}h=h$。当 $\delta>0$ 时，$K_{\delta,d}$ 全正且 $T$ 不可约，产品链不可约，有限不可约链的调和函数为常数。当 $\delta=0$ 时，产品链有陷阱 $\times M$ 和环 $\times M$ 两个不可约闭类，因为纯环核 $R_d$ 全正；调和函数在每类上为常数。两种情形都由 $Ph=0$ 迫使 $h=0$。这些事实不要求 $T$ 非周期。
+
+有限维矩阵逆连续，参数区间紧，故
+$$
+C_\perp:=\max_{\substack{0\le\delta\le1/2\\d=0,1}}
+\|A_{\delta,d}^{-1}(I-P)\|_\infty<\infty.
+$$
+下列构造将有限 Markov Poisson 方程的传感器中心化、环内零和与陷阱慢模分别解出。[^rro112-poisson]
+
+固定 $\delta>0,d$，置 $\widehat q=(-1)^dbq_{\delta,d}$、$c=c_{\delta,d}$、$g=\widehat q-c\mathbf1_{\rm ring}$。因为 $\mu(\mathrm{ring})=3/4$，有 $\mu g=0$。令 $\bar g(x)=\sum_z\eta_zg(x,z)$。传感器中心化部分由
+$$
+h^\perp=A_{\delta,d}^{-1}(I-P)\widehat q
+$$
+解出，满足 $Ph^\perp=0$、$(I-Q)h^\perp=g-\bar g\otimes\mathbf1$ 及 $\|h^\perp\|_\infty\le C_\perp$。
+
+写 $u_0=\bar g(0)$、$u_R=\tfrac13\sum_{i=1}^3\bar g(i)$，则 $u_0+3u_R=0$。令 $w_i=\bar g(i)-u_R$，故 $\sum_iw_i=0$、$\|w\|_\infty\le2$。若 $C_d$ 表示三环正/反循环矩阵，$\chi=a/4\le1/4$，环内零和势为
+$$
+h^{\rm ring}(0)=0,\qquad
+h^{\rm ring}|_{\rm ring}
+=\frac{w+\chi C_dw+\chi^2C_d^2w}{1-\chi^3},
+\qquad \|h^{\rm ring}\|_\infty\le8/3.
+$$
+唯一慢模为 $\zeta=(-3,1,1,1)$，满足
+$K_{\delta,d}\zeta=(1-4\delta/3)\zeta$，所以类常数部分的势为
+$$
+h^{\rm slow}=-\frac{u_0}{4\delta}\zeta.
+$$
+从陷阱、传感器平稳律开始，前 $r$ 步均不离开陷阱的事件独立于传感器路径，条件窗口正是零均值的纯陷阱实验。因此
+$$
+|u_0|\le1-(1-\delta)^r\le r\delta.
+$$
+合并三部分得到
+$$
+(I-Q_{\delta,d})H_{\delta,d}
+=\widehat q-c_{\delta,d}\mathbf1_{\rm ring},\qquad
+\|H_{\delta,d}\|_\infty\le H:=C_\perp+8/3+3r/4.
+\tag{112.2d}
+$$
+此处只要求陷阱均值在 $\eta$ 下为零，不要求每个传感器起点的陷阱均值都为零。纯环核 $R_d\otimes T$ 的均值为 $c_{0,d}$：在 $\delta=0$ 时，$\mu$ 的陷阱质量为 $1/4$、环质量为 $3/4$，而陷阱平均为零。在 $\delta=0$ 的产品核中限制到环闭类，去掉类常数后，同一传感器逆与环内逆给
+$$
+(I-R_d\otimes T)H^R_d=\widehat q^R_d-c_{0,d},
+\qquad \|H^R_d\|_\infty\le H_R:=C_\perp+8/3.
+$$
+
+令 $\overline H=\max\{1,H,H_R\}$、$m=r+1$。采用产品链的发射前滤过，窗口残差
+$D_t=(-1)^dbW_t-\widehat q(X_t,Z_t)$ 的绝对值至多 $2$，在给定窗口起点历史后的条件均值为零，并在 $m$ 步后可测。按 $t\bmod m$ 分组，加上 (112.2d) 的望远镜求和，得到
+$$
+(-1)^dF_{u,L}
+=c_{\delta,d}A_L+M_L+\Delta H+N_L,
+\quad
+A_L=\sum_{t=u}^{u+L-1}\mathbf1_{\{X_t\ne0\}},
+$$
+$$
+|\Delta H|\le2\overline H,\quad
+\Pr(M_L\le-z)\le e^{-z^2/(8\overline H^2L)},\quad
+\Pr(N_L\le-z)\le m e^{-z^2/(8m^2L)}.
+\tag{112.2e}
+$$
+这些有界鞅差界[^rro112-azuma] 对任意产品起点及块首发射前历史条件化后成立；分组之间无需独立。纯环块同样成立，其漂移改为 $c_{0,d}L$。
+
+再令 $\tau=\inf\{t\ge1:X_t=0\}$。仍有 $\Pr(\tau=h)=a^{h-1}\delta/3$。条件于 $\tau=h$，陷阱前隐藏路径为纯环路径，之后从隐藏状态 $0$ 按原核重启。传感器不在边界重置；由于 $\tau$ 只涉及独立的 $X$，它仍按 $T$ 演化，而上述势与尾界对任意传感器起点统一。
+
+跨越 $h$ 的块分成纯环窗口段、原核窗口段和至多 $r$ 个跨越窗口。有向漂移为 $c_{0,d}\ell_-+c_{\delta,d}A_+\ge0$，两份势差及跨越窗口的确定性损失至多
+$$
+D_0=2H_R+2H+r.
+$$
+前后两段各有一个隐藏鞅和一个窗口残差，段长均不超过 $L$；无需两段独立，也不把跨越块当作一个齐次核。
+
+普通块将两个随机残差各界于 $-t(L)/4$，跨越块将四个残差各界于 $-t(L)/8$。由 (112.2e)，相关坏事件概率均至多
+$$
+\rho(L)=2(1+m)\exp[-a_*\log^2(eL)],\qquad
+ a_*:=\min\{72/\overline H^2,72/m^2\}>0.
+$$
+由于 $t(L)/L\to0$、$t(L)\to\infty$，且 $\rho(L)=o(L^{-p})$ 对每个固定 $p>0$ 成立，可选有限二进制尺度 $\overline L=2^{j_0}$，使全部 $L\ge\overline L$ 满足
+$$
+t(L)\ge\max\{8\overline H,4D_0\},\qquad
+\gamma L\ge4t(L),\qquad
+\rho(L)\le\min\{1/4,L^{-4}\}.
+\tag{112.2f}
+$$
+$\overline L,j_0$ 只在证明中使用，规则仍从 $L=1$ 开始。
+
+因漂移非负，任意产品起点的块在残差好事件上不能错向越阈，故错向概率至多 $L^{-4}$；条件跨越块也有同一界。纯环块的漂移至少 $4t(L)$，故不作正确声明的概率至多 $L^{-4}$。从环起点出发，原隐藏环指示链仍给 $\mathbb EA_L\ge3L/4$，于是 $\Pr(A_L\ge L/2)\ge1/2$。该事件上漂移至少 $2t(L)$，扣除好事件损失仍超过正确阈值；再扣至多 $1/4$ 的坏事件，正确声明概率至少 $1/4$。
+
+以下用这些产品链局部界完成最后声明的结算；阶段几何与第 110、111 节相同。[^rro112-last]
+置 $G=B(r+2)$，则
+$$
+S_{j+1}\le GL_j,\qquad S_j\ge(B/2)L_j\quad(j\ge1).
+\tag{112.2g}
+$$
+若前缀含完整块，最后完整块的尺度 $L$ 满足其前缀长度小于 $2GL$：该块结束时刻不超过所在阶段末 $GL$，下一块尺度至多 $2L$、跨度至多 $(r+2)L\le GL$。
+
+条件于 $\tau=h\le N-1$，当 $h\ge2G\overline L$ 时，陷阱前最后完整纯环块的尺度 $L$ 至少为 $\overline L$，且 $h<2GL$。若它正确声明而后续完整块均不作错向声明，最终方向必正确。每尺度至多 $B$ 块，至多一块跨越陷阱时刻；故条件错误率至多
+$$
+\frac1{L^4}+B\sum_{j\ge0}\frac1{(2^jL)^4}
+\le\frac{(1+16B/15)(2G)^4}{h^4}.
+$$
+较小 $h$ 用概率不超过 $1$。若 $\tau>N-1$，前缀条件律是纯环产品过程，对最后完整块同理。因此，取
+$$
+A=\max\{1,(2G\overline L)^4,(1+16B/15)(2G)^4\},
+\quad C_{\rm trap}=2A/3,
+$$
+并用 $\sum_{h\ge1}h^{-4}<2$，对首次入陷阱时刻条件求和，得到
+$$
+\varepsilon_d(N,\delta)
+\le A/N^4+C_{\rm trap}\delta.
+\tag{112.2h}
+$$
+该式覆盖没有完整块的情形，不假设错误事件与陷阱时刻独立。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，一对相邻块中第二块的隐藏起点在环上的条件概率大于 $1/2$；给定该起点及全部传感器历史，其正确声明概率至少 $1/4$。逐对条件化，整阶段完全无声明的概率至多 $(7/8)^{32}<1/4$。令 $e_j$ 为读完 $S_j$ 个读数后的错误率，则
+$$
+e_{j+1}\le e_j/4+B/L_j^4.
+\tag{112.2i}
+$$
+其中阶段错向事件按 $B$ 个块取并集，没有使用块独立性。
+
+置
+$$
+U=16A/B^4+2C_{\rm trap},\qquad
+D=\max\{\overline L,U,4B\}.
+$$
+对 $j<j_0$，直接用 $e_j\le1\le\overline L/L_j$。对 $j\ge j_0$ 且 $\delta T_j<1$，(112.2g)–(112.2h) 及 $\delta<1/L_j$ 给 $e_j\le U/L_j$；$j=0$ 用 $e_0\le1$。令 $j_*$ 为首个同时满足 $j\ge j_0$、$\delta T_j\ge1$ 的阶段。若 $j_*=j_0$，用 $D\ge\overline L=L_{j_*}$ 起步；否则前一阶段给 $\delta<2/L_{j_*}$，再用 (112.2h) 得 $e_{j_*}\le U/L_{j_*}$。随后由 (112.2i)、$L_{j+1}=2L_j$ 与 $D\ge4B$ 归纳得到全部 $j$ 的
+$$
+e_j\le D/L_j.
+$$
+最后，取 $S_j\le N<S_{j+1}$。若 $j\ge j_0$，不完整阶段增加的错误概率至多 $B/L_j^4$，故 $\varepsilon_d(N,\delta)\le(D+B)/L_j$；若 $j<j_0$，直接以概率 $1$ 和 $D\ge\overline L$ 得到同一界，没有把大尺度尾界用于早期阶段。由 $N<GL_j$，
+$$
+\varepsilon_d(N,\delta)\le\frac{G(D+B)}N.
+$$
+取 $C_{T,E,W,r,b}=G(D+B)$ 证明 (112.2a)。所有模型相关量均仅用于证明常数的有限性。
+
+对下界，独立传感器和相同发射使 $Y_0,\ldots,Y_n$ 成为完整隐藏路径 $X_0,\ldots,X_n$ 的同一个随机后处理：给定隐藏路径后，先按共同律生成 $Z$，再按共同发射生成读数，所得条件核不依赖方向。第 105 节的共同隐藏路径 $(1,0,\ldots,0)$ 在两方向都有质量 $\delta(1-\delta)^{n-1}/3$，推前仍给共同子测度。因此任意可见规则的公平均误差至少为 $\delta(1-\delta)^{n-1}/6$。取 $k=2n$ 并用 Bernoulli 不等式，得到 $1/(24n)$，证明 (112.2b)。
+
+最后核对 (112.2c)。忽略传感器项时，三个环 Bernoulli 参数的 Vandermonde 为 $1/32$，由式 (109.2l) 得有向 $c$ 在全区间至少为 $\kappa_0$。$T_\varepsilon$ 对均匀律可逆，故纯陷阱的平稳观察过程可逆；$W$ 对窗口反序变号，纯陷阱均值精确为零。将真实发射与忽略传感器的 Bernoulli $p_x$ 逐时耦合，每时刻的不一致概率为 $\alpha$，四窗的差异概率至多 $4\alpha$，分数均值变化至多 $8\alpha$，有向 $c$ 的变化至多 $32\alpha/3=\kappa_0/6$。因此 $\gamma\ge5\kappa_0/6$。纯陷阱下 $\mathbb E[Y_t\mid Z_t]=1/2+\alpha Z_t$，传感器满足 $\mathbb E[Z_0Z_1]=\varepsilon$，条件发射独立遂给 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$。当 $\varepsilon=-1$ 时传感器为周期二的确定交换；其非周期子族的非平凡特征值为 $\varepsilon$，故 $\varepsilon\uparrow1$ 时不存在共同混合速度。证毕。
+
+条件 (112.1a) 仍是模型的实质限制。独立不可逆传感器可能产生自己的时间箭头，所以反序反对称分数的非零均值本身不推出该条件。这里不包括传感器随 $k$ 变化、与隐藏链耦合演化或给定 $(X,Z)$ 后仍有额外发射记忆的情形，也不提供未知模型是否满足签名条件的认证算法。
+
+[^rro112-poisson]: Jeffrey J. Hunter, [*Generalized inverses of Markovian kernels in terms of properties of the Markov chain*](https://arxiv.org/pdf/1209.3533v1) (2012), §2，给出有限 Markov 基本矩阵 $[I-P+\Pi]^{-1}$ 与群逆 $[I-P+\Pi]^{-1}-\Pi$。这里对产品核显式分离传感器中心化、环内零和与陷阱慢模，并估计各部分；有限维 Poisson 方程及广义逆方法不作新颖性主张。
+
+[^rro112-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。使用每项绝对值至多 $b$ 的 $\ell$ 项鞅差和下尾 $\exp[-z^2/(2\ell b^2)]$，窗口残差按模 $r+1$ 分组。
+
+[^rro112-last]: [已发布 RRO](https://github.com/the-omega-institute/trureturing/blob/0b2398a77f9df4804156fc869afd24b772bf91a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 第 110 节 的首次入陷阱条件化与阶段收缩，以及同一快照第 111 节的分析用起用尺度。这里的传感器具有状态，局部块、纯环与跨越界由产品链重新建立；阈值采用 $\sqrt L\log(eL)$，使任意固定未知势范数产生的尾界最终快于每个指定幂。
+
+## 112.99 追加锚
