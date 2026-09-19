@@ -252,10 +252,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            ValidateProducedReport(root);
-            // This process now waits while the child validates its own fresh
-            // snapshot. Reclaim the completed report validation's temporary
-            // snapshot before those independent heaps coexist in one cgroup.
+            // The candidate checker validates its report input. Finalization also
+            // validates it before sealing, including stages with no check units.
+            // Do not materialize a discarded snapshot/report in this parent.
             CommonExecutionEvidence.ReleaseTemporarySnapshots();
         }
         else if (obligations.Contains("lean"))
