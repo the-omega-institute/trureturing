@@ -105,7 +105,7 @@ internal static partial class CommonExecutionEvidence
                 + "] unexpected-or-duplicate=[" + string.Join(",", manifest.Checks.GroupBy(check => check.Id).Where(group => group.Count() != 1 || !expected.Contains(group.Key)).Select(group => group.Key)) + "]");
         registry ??= EngineeringProjectRegistry.Read(snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray());
         var projects = registry.Projects.Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
-        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToHashSet(StringComparer.Ordinal);
         foreach (var check in manifest.Checks)
         {
             if (check.ProgramProjects is null || check.Materials is null || check.MaterialExcludes is null
@@ -113,11 +113,11 @@ internal static partial class CommonExecutionEvidence
                 throw new InvalidDataException($"missing common check registration fields: {check.Id}");
             foreach (var project in check.ProgramProjects)
                 if (!projects.Contains(project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {project}");
-            _ = RegisteredProgramInputs(paths, check.ProgramInputs, "check " + check.Id);
+            ValidateProgramInputs(paths, check.ProgramInputs, "check " + check.Id);
             ValidatePatterns(check.Materials, check.MaterialExcludes, check.Id);
             ValidatePatterns(check.PathInventory, [], check.Id);
-            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
-            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id);
+            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
+            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, check.PathInventory, [], check.Id);
             if (check.ProgramProjects.Distinct(StringComparer.Ordinal).Count() != check.ProgramProjects.Length)
                 throw new InvalidDataException("duplicate common check declaration: " + check.Id);
             var artifacts = new HashSet<string>(StringComparer.Ordinal);
@@ -132,9 +132,9 @@ internal static partial class CommonExecutionEvidence
                     throw new InvalidDataException($"duplicate or conflicting report input: {check.Id}: {report.Artifact}: {report.Producer}");
                 if (!snapshot.Files.ContainsKey(RepoPath.CreateKnown(report.Producer)))
                     throw new InvalidDataException($"check {check.Id} references missing producer: {report.Producer}");
-                _ = ReadConsumer(snapshot, report, projects, check.Id);
+                _ = ReadConsumer(snapshot, report, projects, check.Id, paths);
                 ValidatePatterns(report.Materials, [], check.Id);
-                _ = EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id);
+                _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, report.Materials, [], check.Id);
             }
         }
         // Verified emissions come from the shared describe unit. Its registered
