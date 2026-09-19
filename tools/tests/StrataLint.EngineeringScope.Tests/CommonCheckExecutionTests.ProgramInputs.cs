@@ -175,6 +175,64 @@ public sealed partial class CommonCheckExecutionTests
     }
 
     [Theory]
+    [InlineData("program")]
+    [InlineData("material")]
+    [InlineData("inventory")]
+    [InlineData("consumer")]
+    public void SuccessfulRegistrationDoesNotHideDeletedInputInAnotherSnapshot(string kind)
+    {
+        using var fixture = new ReportInputsFixture();
+        const string input = "fixtures/registered-required.txt";
+        fixture.Tree.Write(input, "registered input\n");
+        if (kind == "consumer")
+        {
+            var consumer = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, ReportInputsFixture.LeanConsumer)))!;
+            consumer["program_inputs"] = new JsonArray(input);
+            fixture.Tree.Write(ReportInputsFixture.LeanConsumer, consumer.ToJsonString());
+        }
+        else fixture.Edit(rows => rows.Single(row => row!["id"]!.ToString() == "SL-015")![kind switch
+        {
+            "program" => "program_inputs",
+            "material" => "materials",
+            _ => "path_inventory",
+        }] = new JsonArray(input));
+        fixture.Tree.Track();
+        _ = CommonExecutionEvidence.ValidationScope.Create(fixture.Root).CheckManifest();
+        File.Delete(Path.Combine(fixture.Root, input));
+        fixture.Tree.Track();
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            CommonExecutionEvidence.ValidationScope.Create(fixture.Root).CheckManifest());
+
+        Assert.Contains(input, error.Message, StringComparison.Ordinal);
+        Assert.Contains(kind == "consumer" ? ReportInputsFixture.LeanConsumer : "SL-015", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IncludedAndExcludedLiteralInputsKeepTheirDistinctValidationRoles()
+    {
+        using var fixture = new ReportInputsFixture();
+        const string present = "fixtures/present.txt";
+        const string absent = "fixtures/absent.txt";
+        fixture.Tree.Write(present, "present\n");
+        fixture.Edit(rows =>
+        {
+            var first = rows.Single(row => row!["id"]!.ToString() == "SL-015")!;
+            first["materials"] = new JsonArray(present);
+            first["material_excludes"] = new JsonArray(absent);
+            var second = rows.Single(row => row!["id"]!.ToString() == "SL-019")!;
+            second["materials"] = new JsonArray(absent);
+            second["material_excludes"] = new JsonArray(present);
+        });
+        fixture.Tree.Track();
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            CommonExecutionEvidence.ValidationScope.Create(fixture.Root).CheckManifest());
+
+        Assert.Equal("registered input is absent: SL-019: " + absent, error.Message);
+    }
+
+    [Theory]
     [InlineData("reference-source", 0)]
     [InlineData("reference-project", 22)]
     [InlineData("build-config", 22)]

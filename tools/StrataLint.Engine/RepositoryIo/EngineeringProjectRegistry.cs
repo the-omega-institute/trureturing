@@ -255,12 +255,19 @@ internal sealed class EngineeringProjectRegistry
     internal static string[] ExpandInputs(IEnumerable<string> paths, string[] includes, string[] excludes, string project)
     {
         var available = paths.ToHashSet(StringComparer.Ordinal);
+        var (include, exclude) = ValidateExpandedInputs(available, includes, excludes, project);
+        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
+            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
+    }
+
+    internal static (FileMapGlob[] Include, FileMapGlob[] Exclude) ValidateExpandedInputs(
+        IReadOnlySet<string> available, string[] includes, string[] excludes, string project)
+    {
         var include = includes.Select(FileMapGlob.Create).ToArray();
         var exclude = excludes.Select(FileMapGlob.Create).ToArray();
         foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
             if (!available.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
-        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
-            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
+        return (include, exclude);
     }
 
     private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)

@@ -133,14 +133,19 @@ internal static partial class CommonExecutionEvidence
 
     private sealed record CheckConsumer(string Schema, string Producer, string[] Projects, string[] ProgramInputs, string[] Materials);
 
-    private static string[] RegisteredProgramInputs(IEnumerable<string> paths, string[]? inputs, string context)
+    private static void RequireProgramInputDeclaration(string[]? inputs, string context)
     {
         if (inputs is null || inputs.Length == 0 || inputs.Any(input => string.IsNullOrWhiteSpace(input) || input.Contains(':'))
             || inputs.Distinct(StringComparer.Ordinal).Count() != inputs.Length)
             throw new InvalidDataException($"missing or invalid program_inputs: {context}");
+    }
+
+    private static void ValidateProgramInputs(IReadOnlySet<string> paths, string[]? inputs, string context)
+    {
+        RequireProgramInputDeclaration(inputs, context);
         try
         {
-            return EngineeringProjectRegistry.ExpandInputs(paths, inputs, [], context + " program_inputs");
+            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, inputs!, [], context + " program_inputs");
         }
         catch (FormatException exception)
         {
@@ -148,7 +153,21 @@ internal static partial class CommonExecutionEvidence
         }
     }
 
-    private static CheckConsumer ReadConsumer(RepositorySnapshot snapshot, RegisteredCheckReport report, IReadOnlySet<string> projects, string check)
+    private static string[] RegisteredProgramInputs(IEnumerable<string> paths, string[]? inputs, string context)
+    {
+        RequireProgramInputDeclaration(inputs, context);
+        try
+        {
+            return EngineeringProjectRegistry.ExpandInputs(paths, inputs!, [], context + " program_inputs");
+        }
+        catch (FormatException exception)
+        {
+            throw new InvalidDataException($"invalid program_inputs: {context}: {exception.Message}", exception);
+        }
+    }
+
+    private static CheckConsumer ReadConsumer(RepositorySnapshot snapshot, RegisteredCheckReport report, IReadOnlySet<string> projects, string check,
+        IReadOnlySet<string>? paths = null)
     {
         var path = report.Consumer;
         var context = $"check {check}: consumer {path}";
@@ -160,7 +179,7 @@ internal static partial class CommonExecutionEvidence
             if (consumer is null || consumer.Schema != "report-consumer-inputs-v2" || consumer.Producer != report.Producer
                 || consumer.Projects is null || consumer.Materials is null)
                 throw new InvalidDataException($"invalid {context}: producer {report.Producer}");
-            _ = RegisteredProgramInputs(snapshot.Files.Keys.Select(input => input.Value), consumer.ProgramInputs, context);
+            ValidateProgramInputs(paths ?? snapshot.Files.Keys.Select(input => input.Value).ToHashSet(StringComparer.Ordinal), consumer.ProgramInputs, context);
             var inputs = consumer.Projects.Concat(consumer.Materials).ToArray();
             foreach (var duplicate in inputs.GroupBy(input => input).Where(group => group.Count() > 1))
                 throw new InvalidDataException($"duplicate input in {context}: {duplicate.Key}");
