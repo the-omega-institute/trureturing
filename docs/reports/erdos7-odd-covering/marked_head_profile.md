@@ -829,3 +829,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Complete shallow-tail coverage and the actual source mean](profile-notes/whole-cover/366-shallow-tail-truncation-on-the-actual-source.md)
 - [Actual prime-parent eligibility and the limit of minimizing height](profile-notes/whole-cover/367-prime-parent-eligibility-and-height-ties.md)
 - [Joint source selection can require strictly greater height](profile-notes/whole-cover/368-joint-selection-can-require-extra-height.md)
+- [Whole maximum matchings can have no common slot assignment](profile-notes/369-whole-maximum-matchings-can-have-no-common-slots.md)
+- [Integrated source budgets survive a one-edge rank loss](profile-notes/370-integrated-source-budgets-with-one-rank-loss.md)
+- [Private top fans and original ancestor cuts at every height](profile-notes/arithmetic/371-private-top-fans-and-ancestor-cuts.md)
+- [Original ancestor complements, lower ladders and prime support](profile-notes/arithmetic/372-height-two-ancestor-complements-and-prime-support.md)
