@@ -90,6 +90,14 @@ public sealed class RegistrationImportDirectionTests
     }
 
     [Fact]
+    public void RemovingDuplicateImportDoesNotReduceDebt()
+    {
+        Assert.Contains(Evaluate(Files((Source, Imports(Judge, Judge))),
+            Files((Source, Imports(Judge))), Reports((Source, [Judge]))), d =>
+                d.AdmissionEffect == AdmissionEffect.Block && d.Message.Contains("must strictly reduce", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void TouchedModuleRemovingOneOfTwoEdgesPasses()
     {
         AssertNoBlock(Evaluate(Files((Source, Imports(Judge, Analysis))),
@@ -146,8 +154,57 @@ public sealed class RegistrationImportDirectionTests
     [Fact]
     public void BaseMultilineImportsAndNestedCommentsPreserveDebt()
     {
-        var text = $"/- outer /- import Reg.Fake -/ -/\nimport\n  {Judge}\n  {Analysis}\n";
+        var text = $"/- outer /- import Reg.Fake -/ -/\nimport\n  {Judge}\nimport\n  {Analysis}\n";
         AssertNoBlock(Evaluate(Files((Source, text)), Files((Source, Imports(Judge))), Reports((Source, [Judge]))));
+    }
+
+    [Fact]
+    public void BaseCommandAfterImportsDoesNotGrantDebt()
+    {
+        var text = $"import Mathlib\n#check {Judge}\n";
+        AssertNewEdge(Evaluate(Files((Source, text)), Files((Source, Imports(Judge))),
+            Reports((Source, [Judge]))), Source, Judge);
+    }
+
+    [Theory]
+    [InlineData("public import")]
+    [InlineData("meta import")]
+    [InlineData("public meta import")]
+    [InlineData("import all")]
+    public void BaseModuleImportModifiersPreserveDebt(string command)
+    {
+        var text = $"module\n{command} {Judge}\n";
+        var files = Files((Source, text));
+        AssertNoBlock(Evaluate(files, new(files), Reports((Source, [Judge]))));
+    }
+
+    [Theory]
+    [InlineData("«LeanInformationAudit».Syntax")]
+    [InlineData("LeanInformationAudit.«Syntax»")]
+    [InlineData("«LeanInformationAudit».«Syntax»")]
+    public void BaseQuotedModuleIdentifiersPreserveDebt(string module)
+    {
+        var files = Files((Source, Imports(module)));
+        AssertNoBlock(Evaluate(files, new(files), Reports((Source, [Judge]))));
+    }
+
+    [Fact]
+    public void QuotedDifferentRootDoesNotGrantDebt()
+    {
+        AssertNewEdge(Evaluate(Files((Source, Imports("«LeanInformation Audit».Syntax"))),
+            Files((Source, Imports(Judge))), Reports((Source, [Judge]))), Source, Judge);
+    }
+
+    [Theory]
+    [InlineData(Source, true)]
+    [InlineData("tools/lean-inspector/Inspector.lean", true)]
+    [InlineData("lean-report-inputs.json", true)]
+    [InlineData("lake-manifest.json", true)]
+    [InlineData("Blueprint/D5/S0/Carrier/Source.md", false)]
+    public void RegistrationDeltaDeclaresSourceAndReportInputClosure(string path, bool affected)
+    {
+        var rule = RepositoryRules.CreateRegistrations().Single(r => r.Descriptor.Id == RuleId.CreateKnown(1)).Rule;
+        Assert.Equal(affected, rule.IsAffectedBy(Context(Files(), Files(), Reports(), [path])));
     }
 
     private static string Imports(params string[] modules) =>
@@ -162,6 +219,11 @@ public sealed class RegistrationImportDirectionTests
 
     private static ImmutableArray<Diagnostic> Evaluate(Dictionary<string, string> baseline,
         Dictionary<string, string> head, LeanAxiomReport report, string[]? changedPaths = null)
+        => RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1),
+            Context(baseline, head, report, changedPaths)).Diagnostics;
+
+    private static DeltaRuleContext Context(Dictionary<string, string> baseline,
+        Dictionary<string, string> head, LeanAxiomReport report, string[]? changedPaths = null)
     {
         var registration = EngineeringRegistrationFixture.Manifest();
         baseline[EngineeringRegistrationFixture.Path] = registration;
@@ -170,10 +232,15 @@ public sealed class RegistrationImportDirectionTests
             .Where(path => baseline.GetValueOrDefault(path) != head.GetValueOrDefault(path)));
         var policy = ValidatedPolicy.Create([], [], [], ImmutableDictionary<DomainId, Stratum>.Empty,
             ImmutableDictionary<ArtifactKindId, ArtifactPolicy>.Empty, [], []);
-        var meta = Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes)).Capability;
-        var context = DeltaRuleContext.Create(Tree(head), Tree(baseline), policy,
+        var meta = BootstrapGate.Evaluate(changes) switch
+        {
+            BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
+            BootstrapOutcome.ProtectedSurfaceVerificationRequired required =>
+                MetaEvaluationProfile.ForProtectedSurface(required.ChangeSet),
+            _ => throw new InvalidOperationException("invalid synthetic bootstrap"),
+        };
+        return DeltaRuleContext.Create(Tree(head), Tree(baseline), policy,
             AcceptedLeanClosure.Create(report), changes, meta);
-        return RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), context).Diagnostics;
     }
 
     private static RepositorySnapshot Tree(Dictionary<string, string> files) =>

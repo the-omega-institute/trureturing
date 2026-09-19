@@ -56,30 +56,31 @@ internal static partial class RepositoryRules
             foreach (var edge in candidate.OrderBy(edge => edge.Path.Value, StringComparer.Ordinal)
                 .ThenBy(edge => edge.Module, StringComparer.Ordinal))
                 findings.Add(new RuleFinding(edge.Path.Value, $"D5 may not add forbidden import {edge.Module}"));
-            return findings.ToImmutable();
         }
-
-        // Edge identity includes the source path. Counts cannot prevent substitution
-        // within one source or moving a debt edge to another source.
-        foreach (var edge in candidate.Except(baseline)
-            .OrderBy(edge => edge.Path.Value, StringComparer.Ordinal)
-            .ThenBy(edge => edge.Module, StringComparer.Ordinal))
-            findings.Add(new RuleFinding(edge.Path.Value, $"D5 may not add forbidden import {edge.Module}"));
-
-        foreach (var debt in baseline.GroupBy(edge => edge.Path)
-            .OrderBy(group => group.Key.Value, StringComparer.Ordinal))
+        else
         {
-            var remaining = candidate.Count(edge => edge.Path == debt.Key);
-            // Together with subset above: each indebted source is byte-identical or
-            // strictly loses edges. Deletion has zero remaining edges and is allowed.
-            if (context.Current.Files.TryGetValue(debt.Key, out var current)
-                && !current.RawBytes.AsSpan().SequenceEqual(context.Baseline.Files[debt.Key].RawBytes.AsSpan())
-                && remaining >= debt.Count())
-                findings.Add(new RuleFinding(debt.Key.Value,
-                    "changed D5 module must strictly reduce its forbidden imports"));
+            // Edge identity includes the source path. Counts cannot prevent substitution
+            // within one source or moving a debt edge to another source.
+            foreach (var edge in candidate.Except(baseline)
+                .OrderBy(edge => edge.Path.Value, StringComparer.Ordinal)
+                .ThenBy(edge => edge.Module, StringComparer.Ordinal))
+                findings.Add(new RuleFinding(edge.Path.Value, $"D5 may not add forbidden import {edge.Module}"));
 
-            findings.Add(new RuleFinding(debt.Key.Value,
-                $"registration import debt: base={debt.Count()}, candidate={remaining}", AdmissionEffect.Observe));
+            foreach (var debt in baseline.GroupBy(edge => edge.Path)
+                .OrderBy(group => group.Key.Value, StringComparer.Ordinal))
+            {
+                var remaining = candidate.Count(edge => edge.Path == debt.Key);
+                // Together with subset above: each indebted source is byte-identical or
+                // strictly loses edges. Deletion has zero remaining edges and is allowed.
+                if (context.Current.Files.TryGetValue(debt.Key, out var current)
+                    && !current.RawBytes.AsSpan().SequenceEqual(context.Baseline.Files[debt.Key].RawBytes.AsSpan())
+                    && remaining >= debt.Count())
+                    findings.Add(new RuleFinding(debt.Key.Value,
+                        "changed D5 module must strictly reduce its forbidden imports"));
+
+                findings.Add(new RuleFinding(debt.Key.Value,
+                    $"registration import debt: base={debt.Count()}, candidate={remaining}", AdmissionEffect.Observe));
+            }
         }
 
         return findings.ToImmutable();

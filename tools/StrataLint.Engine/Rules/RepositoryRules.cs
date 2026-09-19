@@ -57,7 +57,7 @@ internal static partial class RepositoryRules
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
     [
         Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports,
-            evaluateDelta: RegistrationImportDirection)),
+            RegistrationImportsAffected, RegistrationImportDirection)),
         Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry)),
         Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, CurrentCapacity, CapacityAffected, Capacity)),
         Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors)),
