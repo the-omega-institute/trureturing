@@ -757,5 +757,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The exact seven-factorial head improves the complete J comparison](profile-notes/295-the-exact-seven-factorial-head-improves-the-complete-j-comparison.md)
 - [Joint positive175/189 strengthens the complete J survival hinge](profile-notes/296-joint-positive175189-strengthens-the-complete-j-survival-hinge.md)
 - [Joint positive175/189 improves the complete J comparison](profile-notes/297-joint-positive175189-improves-the-complete-j-comparison.md)
+- [Retaining375 certifies the complete heavy cost](profile-notes/298-retaining375-certifies-the-complete-heavy-cost.md)
+- [The complete saturated J comparison crosses403](profile-notes/299-the-complete-saturated-j-comparison-crosses403.md)
 - [Ineffective15 clears a complete source and two core branches](profile-notes/300-ineffective15-clears-a-complete-source-and-two-core-branches.md)
 - [Three missing-source pairs clear both complete core comparisons](profile-notes/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md)
