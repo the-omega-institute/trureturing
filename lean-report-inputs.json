@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "report_semantic_version": 10,
+  "report_semantic_version": 11,
   "report_execution": {
     "tools": ["lake", "lean"],
     "platform": ["system", "machine"],

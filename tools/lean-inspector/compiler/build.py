@@ -190,7 +190,10 @@ def copy_material(src, dst):
     # A shared inode can resolve through another compiler stage while that
     # stage is being removed. Keep Mach-O images private to their distribution.
     if sys.platform == 'darwin' and (src.parent.name == 'bin' or src.suffix == '.dylib'):
-        shutil.copy2(src, dst)
+        # APFS clones retain separate inode/loader identity while sharing only
+        # copy-on-write storage. Unsupported filesystems use a private copy.
+        if not _clonefile(src.resolve(), dst):
+            shutil.copy2(src, dst)
         return
     # Hard links are never changed in place. Every patched/replaced artifact is
     # unlinked first; immutable stock artifacts remain read-only inputs.

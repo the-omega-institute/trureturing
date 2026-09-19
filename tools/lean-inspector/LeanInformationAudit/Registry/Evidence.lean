@@ -177,9 +177,89 @@ into the finite seal closure. Both bridges retain the exact statement check. -/
 def escapeForwardBridge : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
 
+def escapeWitnessBridge : Name := RegistrationGates.witnessBridgeName
+
 def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
   let type := (← getConstInfo event.realizationName).type
-  return if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
+  return if type.isAppOfArity escapeWitnessBridge 3 then "witness"
+    else if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
+
+/-- Only closed, zero-parameter Prop definitions occurring in the original
+statement qualify. A definition discovered in one of their bodies is not visited. -/
+def statementDefinitions (statement : Expr) : MetaM (Array Name) := do
+  let originalNames := statement.getUsedConstants
+  let (statement, _) ← eraseProofs statement
+  let mut names := #[]
+  for name in statement.getUsedConstants do
+    unless originalNames.contains name do continue
+    if let .defnInfo info ← getConstInfo name then
+      if info.levelParams.isEmpty && (← RegistrationGates.bounded (isDefEq info.type (mkSort .zero))) &&
+          !info.value.hasFVar && !info.value.hasMVar && !info.value.hasLooseBVars then
+        names := names.push name
+  return names
+
+private partial def bodyContainsOrigin (body origin : Expr) (depth : Nat := 0) : MetaM Bool := do
+  if depth > 256 then throwError "incomplete_closure:dtr.statement_depth"
+  if ← isProof body then return false
+  if body.equal origin then return true
+  let child := fun e => bodyContainsOrigin e origin (depth + 1)
+  match body with
+  | .app f a => return (← child f) || (← child a)
+  | .lam name type body bi | .forallE name type body bi =>
+    if ← child type then return true
+    withLocalDecl name bi type fun x => child (body.instantiate1 x)
+  | .letE name type value body _ =>
+    if (← child type) || (← child value) then return true
+    withLetDecl name type value fun x => child (body.instantiate1 x)
+  | .mdata _ body | .proj _ _ body => child body
+  | _ => return false
+
+def statementContainsOrigin (statement origin : Expr) : MetaM Bool := do
+  if (statement.find? (·.equal origin)).isSome then return true
+  for name in ← statementDefinitions statement do
+    let .defnInfo info ← getConstInfo name | continue
+    if ← RegistrationGates.budget (bodyContainsOrigin info.value origin) then return true
+  return false
+
+/-- Semantic inputs used outside template extraction must also bind evidence
+and its cache. These are names only; the content module is never imported here. -/
+def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
+  let mut roots ← statementDefinitions event.statement
+  if (← bridgeKind event) == "witness" then
+    roots := roots ++ event.arena.getUsedConstants
+    let type := (← getConstInfo event.realizationName).type
+    roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
+    let arena := RegistrationGates.witnessArenaName
+    roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
+      "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
+    roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
+  return roots
+
+/-- Retain the inspected definitions and their repository data/type closure.
+Proof leaves contribute their types only; upstream data bodies remain pinned
+by the existing native/source checks. -/
+def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
+  let mut pending := (← inspectionRoots event).toList
+  let mut seen : NameSet := {}
+  let mut remaining := 524288
+  while let name :: rest := pending do
+    pending := rest
+    if name == ``lcProof || seen.contains name then continue
+    if remaining == 0 then throwError "incomplete_closure:dtr.inspection_inputs"
+    remaining := remaining - 1
+    seen := seen.insert name
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
+    let (type, work) ← eraseProofs info.type remaining
+    remaining := remaining - work
+    pending := type.getUsedConstants.toList ++ pending
+    if (owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit.") &&
+        !(← isProp info.type) then
+      if let some value := info.value? then
+        let (value, work) ← eraseProofs value remaining
+        remaining := remaining - work
+        pending := value.getUsedConstants.toList ++ pending
+  return seen.toArray
 
 private def escapeIdentity (params : List Name) (value : Expr) : MetaM String := do
   let .ok (identity, _) := rawStatementIdentity params value
@@ -190,19 +270,28 @@ private def escapeIdentity (params : List Name) (value : Expr) : MetaM String :=
 No state, chain, certificate body, or residual count is evaluated. -/
 def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInput) :
     MetaM EscapeRecordEvidence := do
-  let mut arena := event.arena
-  if (← inferType arena).isAppOf
-      `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
-    arena ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena #[arena]
+  let kind ← bridgeKind event
+  if kind == "witness" then
+    let type := (← getConstInfo event.realizationName).type
+    discard <| RegistrationGates.witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
+  -- Structural registrations without escape slots do not consume a finite arena.
+  if input.fromObject.isNone && input.continuation.isNone then
+    let continuation := if input.openContinuation then
+      some ({ kind := "open" } : EscapeContinuationIdentity) else none
+    return { bridgeKind := kind, continuation }
+  let normalized ← RegistrationGates.normalizeArena event.arena
+  let arena := normalized.finite
   let fromObject ← input.fromObject.mapM fun origin => do
-    unless (event.statement.find? (·.equal origin)).isSome do
+    unless ← statementContainsOrigin event.statement origin do
       throwError "unclassified_form:dtr.escape_from_absent"
     let some name := origin.getAppFn.constName?
       | throwError "unclassified_form:dtr.escape_from_identity"
     if origin.hasFVar || origin.hasMVar || origin.hasLooseBVars then
       throwError "unclassified_form:dtr.escape_from_identity"
     let type ← inferType origin
-    let state ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
+    let state ← if normalized.witness then
+        mkAppM (RegistrationGates.witnessArenaName.str "Domain") #[normalized.original]
+      else mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
     let represented := if ← isType origin then origin else type
     unless ← isDefEq represented state do
       throwError "unclassified_form:dtr.escape_from_state"

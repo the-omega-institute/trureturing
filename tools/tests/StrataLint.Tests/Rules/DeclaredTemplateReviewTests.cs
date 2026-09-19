@@ -20,7 +20,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_semantic_version":6,
+            {"schema_version":1,"report_semantic_version":8,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
@@ -149,17 +149,15 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void manifest_only_bump_accepts_seven()
+    public void manifest_only_bump_accepts_eight()
     {
         var files = Files();
-        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
         var error = Record.Exception(() =>
         {
             var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
             Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
         });
-        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_seven: " + error?.Message);
+        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_eight: " + error?.Message);
     }
 
     private static Exception? ReadChangedManifest(string? manifest, int compatibility)
@@ -195,8 +193,6 @@ public sealed class DeclaredTemplateReviewTests
     public void invalid_evidence_version_uses_named_diagnostic(string? version)
     {
         var files = Files();
-        files["lean-report-inputs.json"] = files["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
         var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
         foreach (var module in wire["modules"]!.AsArray())
         {
@@ -215,13 +211,12 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void bumped_manifest_rejects_six()
+    public void bumped_manifest_rejects_seven()
     {
-        var manifest = PolicyFiles()["lean-report-inputs.json"].Replace(
-            "\"report_semantic_version\":6", "\"report_semantic_version\":7", StringComparison.Ordinal);
-        var error = ReadChangedManifest(manifest, 6);
+        var manifest = PolicyFiles()["lean-report-inputs.json"];
+        var error = ReadChangedManifest(manifest, 7);
         Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
-            "[FAIL] bumped_manifest_rejects_six: " + error?.Message);
+            "[FAIL] bumped_manifest_rejects_seven: " + error?.Message);
     }
 
     [Theory]
@@ -230,14 +225,14 @@ public sealed class DeclaredTemplateReviewTests
     [InlineData("{")]
     [InlineData("[]")]
     [InlineData("{\"report_semantic_version\":null}")]
-    [InlineData("{\"report_semantic_version\":\"7\"}")]
+    [InlineData("{\"report_semantic_version\":\"8\"}")]
     [InlineData("{\"report_semantic_version\":true}")]
     [InlineData("{\"report_semantic_version\":0}")]
     [InlineData("{\"report_semantic_version\":-1}")]
     [InlineData("{\"report_semantic_version\":6.5}")]
     public void invalid_manifest_version_rejected(string? manifest)
     {
-        var error = ReadChangedManifest(manifest, 6);
+        var error = ReadChangedManifest(manifest, 7);
         Assert.True(error is FormatException && error.Message.Contains("DTR-ManifestVersion", StringComparison.Ordinal),
             "[FAIL] invalid_manifest_version_rejected: " + error?.Message);
     }
