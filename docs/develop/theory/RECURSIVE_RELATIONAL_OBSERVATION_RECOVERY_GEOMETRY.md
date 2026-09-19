@@ -1420,3 +1420,792 @@ $$
 **证明。** 第一组陈述由可行性、式（9.14）和定理9.7直接得到。方差公式由有限和的双线性协方差展开，依赖整份共同联合律。定理9.7只含确定系数与原子，因此不能确定未指定的协方差；取全部误差恒零或取一个方差正的误差即得不同方差。证毕。
 
 ## 9.99 追加锚
+## 10. 实际时间采样的正实现与带误差合法修复
+
+**定义 10.1（带谱条件的共同采样关系）。** 设 $U$ 为维数 $m\ge1$ 的实 Euclidean 空间，$E$ 为任意有限维实内积空间，$J:U\to E$ 为线性映射。固定已知采样间隔 $h>0$ 与谱界 $0\le a\le b<\infty$，要求自伴算子 $C:E\to E$ 满足
+$$
+aI\preceq C\preceq bI.
+$$
+边界记忆核与实际等步读数为
+$$
+K(t)=J^*e^{-tC}J\quad(t\ge0),\qquad
+M_j=K(jh)\quad(0\le j\le N),\qquad N=2r+1,
+\tag{10.1}
+$$
+其中 $r\ge0$ 为整数。令
+$$
+T=e^{-hC},\qquad u=e^{-hb},\qquad v=e^{-ha},
+\qquad 0<u\le v\le1.
+\tag{10.2}
+$$
+有限维实谱定理给出 $uI\preceq T\preceq vI$，以及
+$$
+M_j=J^*T^jJ.
+\tag{10.3}
+$$
+这里的矩是实际时间采样，不是默认已经取得的 $K^{(j)}(0)$。$h,a,b$ 是所研究实现类的条件，不能仅由有限个边界数值宣称已知。若把 $K$ 用作记忆项，还须说明输入、初态及允许的卷积操作；本定义不由核单独恢复任意未知初态。
+
+**定理 10.2（有限采样前缀的闭凸可实现锥）。** 对一列实自伴输入算子 $Z=(Z_0,\ldots,Z_N)$，定义
+$$
+H_r(Z)=(Z_{i+j})_{0\le i,j\le r},\qquad
+S_r(Z)=(Z_{i+j+1})_{0\le i,j\le r},
+$$
+以及
+$$
+\mathcal Q_{r,u,v}
+=\{Z:H_r(Z)\succeq0,\quad uH_r(Z)\preceq S_r(Z)\preceq vH_r(Z)\}.
+\tag{10.4}
+$$
+则 $Z\in\mathcal Q_{r,u,v}$ 当且仅当存在定义10.1中的有限维实现，使 $Z_j=K(jh)$ 对全部 $j\le N$ 成立。这个集合是有限维实向量空间 $\operatorname{Sym}(U)^{N+1}$ 中非空的闭凸锥。
+
+每个 $Z\in\mathcal Q_{r,u,v}$ 都有维数为 $\operatorname{rank}H_r(Z)$ 的规范实现；该维数是匹配此采样前缀的最小内部维数，且不超过 $(r+1)m$。它不表示有限前缀在任意维数竞争实现之间决定了全部未来。
+
+证明。定义10.1的任一实现由式（10.3）给出 $[u,v]$ 谱内的正矩实现，故 [主卷](RECURSIVE_RELATIONAL_OBSERVATION.md) 定理137.5给式（10.4）。反过来，同一定理和定理137.2构造 $E,J,T$，使 $uI\preceq T\preceq vI$ 且矩匹配。因为 $u>0$，按实谱分解定义
+$$
+C=-h^{-1}\log T.
+\tag{10.5}
+$$
+函数 $-h^{-1}\log x$ 将 $[u,v]$ 映到 $[a,b]$，所以 $C$ 自伴并满足所需谱界，且 $e^{-hC}=T$。零维实现时式（10.5）按唯一空算子解释。$T^j=e^{-jhC}$ 给出样本匹配。主卷的 Gram 维数下界和规范商给最小维数。全部未来唯一性另由主卷137.8及下文命题10.6对区间 $[u,v]$ 的平移判据判断。
+
+$H_r,S_r$ 是有限维空间之间的线性映射；正半定锥闭且凸。因此式（10.4）的三个逆像交为闭凸锥，并包含零。证毕。
+
+**定义 10.3（整份前缀的误差几何）。** 固定正权重 $\omega_j>0$，在 $\operatorname{Sym}(U)^{N+1}$ 上取
+$$
+\langle Z,W\rangle_\omega
+=\sum_{j=0}^{N}\omega_j\operatorname{Tr}(Z_jW_j),\qquad
+\|Z\|_\omega^2=\sum_{j=0}^{N}\omega_j\|Z_j\|_F^2.
+\tag{10.6}
+$$
+$\|\cdot\|_F$ 是 Frobenius 范数。原始读数记为 $Y$，真实但未知的合法前缀为 $M\in\mathcal Q_{r,u,v}$，共同确定误差条件为 $\|Y-M\|_\omega\le\epsilon$，$\epsilon\ge0$。它没有假设各时刻误差独立。若仪器先给非对称实矩阵，可先取 $(Y_j+Y_j^*)/2$；这是矩阵 Hilbert 空间到自伴子空间的正交投影，对真实自伴 $M_j$ 不增加 Frobenius 误差。
+
+**定理 10.4（修复在前缀空间中不扩张）。** 对每个 $Y$，问题
+$$
+P(Y)=\underset{Z\in\mathcal Q_{r,u,v}}{\operatorname{argmin}}\ \|Y-Z\|_\omega^2
+\tag{10.7}
+$$
+存在唯一解。它满足
+$$
+\langle Y-P(Y),Z-P(Y)\rangle_\omega\le0
+\quad(Z\in\mathcal Q_{r,u,v}),
+\tag{10.8}
+$$
+$$
+\|P(Y)-P(Y')\|_\omega\le\|Y-Y'\|_\omega.
+\tag{10.9}
+$$
+因而定义10.3的误差条件给
+$$
+\boxed{\|P(Y)-M\|_\omega\le\epsilon.}
+\tag{10.10}
+$$
+这是修复后前缀的稳定性，不包含内部秩或内部坐标的连续识别结论。
+
+证明。零前缀可行，故极小化列可限制在有界集。有限维紧性与可行集闭性给最小值取得。若两个不同点都最优，严格凸的平方距离在其中点严格更小，矛盾。对任意可行 $Z$，线段 $P(Y)+s(Z-P(Y))$ 在 $0\le s\le1$ 内可行；极小性使平方距离在 $s=0$ 的右导数非负，得到式（10.8）。
+
+分别在 $Y$ 的变分不等式中取 $Z=P(Y')$，在 $Y'$ 的不等式中取 $Z=P(Y)$，相加并整理，得到
+$$
+\|P(Y)-P(Y')\|_\omega^2
+\le\langle P(Y)-P(Y'),Y-Y'\rangle_\omega.
+$$
+Cauchy–Schwarz 不等式给式（10.9），零距离情形直接成立。合法 $M$ 满足 $P(M)=M$，再代入即得式（10.10）。证明所用成熟结果是闭凸集的 Hilbert 投影定理；钉版 Mathlib 的 [Projection/Minimal.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Projection/Minimal.lean) 中 `exists_norm_eq_iInf_of_complete_convex` 承担非空完备凸集上的存在性，上述有限维证明同时给出这里需要的唯一性与非扩张性。证毕。
+
+**定理 10.5（实际可行拟合的有限精度证书）。** 设 $\widehat M\in\mathcal Q_{r,u,v}$，并已取得一个下界 $\ell$，满足
+$$
+\ell\le\inf_{Z\in\mathcal Q_{r,u,v}}\|Y-Z\|_\omega^2,
+\qquad
+\|Y-\widehat M\|_\omega^2-\ell\le\eta,
+\qquad\eta\ge0.
+\tag{10.11}
+$$
+则
+$$
+\|\widehat M-P(Y)\|_\omega\le\sqrt\eta,
+\qquad
+\|\widehat M-M\|_\omega\le\epsilon+\sqrt\eta.
+\tag{10.12}
+$$
+相应每阶算子范数误差满足
+$$
+\|\widehat M_j-M_j\|\le
+\frac{\epsilon+\sqrt\eta}{\sqrt{\omega_j}}
+\quad(0\le j\le N).
+\tag{10.13}
+$$
+若仅知道 $\widehat M$ 合法且 $\|Y-\widehat M\|_\omega\le\epsilon$，则不使用最优性证书也有 $\|\widehat M-M\|_\omega\le2\epsilon$。
+
+可行性、最优值下界及误差是三个分别给定的数学条件。若把此拟合用作第8节的可执行恢复接口，其取得、计算与证书检查费用作为另外的非负资源数据；式（10.7）的存在性不规定这些费用为零。
+
+证明。对任何可行 $Z$ 展开平方，并使用式（10.8），得
+$$
+\|Y-Z\|_\omega^2
+\ge\|Y-P(Y)\|_\omega^2+\|Z-P(Y)\|_\omega^2.
+$$
+取 $Z=\widehat M$，式（10.11）使最后一项不超过 $\eta$。结合式（10.10）与三角不等式得到式（10.12）。由式（10.6）每个非负求和项不超过总和，再用 $\|A\|\le\|A\|_F$ 得式（10.13）。最后一个结论是经过 $Y$ 的三角不等式。证毕。
+
+**命题 10.6（完整正演化的对数唯一性及有限前缀边界）。** 在固定有限内积空间内，映射 $C\mapsto e^{-hC}$ 在实自伴算子上单射，其逆在正定自伴算子上由式（10.5）给出。但是，有限个压缩读数 $J^*T^jJ$ 并未给出整个 $T$；同一有限前缀的两个规范最小实现可按主卷137.4正交识别，任意更高维竞争实现的未来则须另判。具体地，对定理10.2的规范离散实现 $(E,T,J)$，置
+$$
+L=\operatorname{span}\{T^jJ\xi:0\le j<r,\ \xi\in U\},
+$$
+$r=0$ 时取 $L=0$。该有限前缀在全部谱位于 $[u,v]$ 的有限维竞争实现中决定全部未来采样矩，当且仅当
+$$
+E=L+\ker(T-uI)+\ker(vI-T).
+\tag{10.13a}
+$$
+若删去自伴条件，等步记录甚至可能产生时间混叠。
+
+证明。实谱定理逐特征子空间给 $\log(e^{-hC})=-hC$，所以正定对数确为逆映射。最小实现唯一性直接用主卷137.4。对区间内任意竞争模型，将 $T$ 平移为 $A=T-uI$，其谱在 $[0,v-u]$，而前缀经可逆二项变换变为
+$$
+\widetilde M_j=\sum_{\ell=0}^j\binom j\ell(-u)^{j-\ell}M_\ell.
+$$
+次数小于 $r$ 的 Krylov 空间不因这一平移改变。对 $A$ 应用主卷137.11的有上界正实现判据，得到 $E=L+\ker A+\ker((v-u)I-A)$，即式（10.13a）。可逆二项变换也逐阶保持全部未来矩的相等。这里必须保留下端 $u$：例如 $r=0,M_0=1,M_1=u>0$，在 $[u,v]$ 类中输入只能位于下端特征空间，未来已经唯一；漏掉 $\ker(T-uI)$ 就丢失这一约束。全部采样矩一致还推出全部连续响应一致：对任意两份有限模型，在两谱的有限并集上用多项式插值 $x^{t/h}$，夹心响应便由相同矩决定。不能将有限压缩读数当作整个算子。为证明最后一项，取 $E=\mathbb R^2$、$J1=(1,0)$，比较动力学生成元
+$$
+A_0=0,\qquad
+A_1=\frac{2\pi}{h}\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+边界分别为 $J^*e^{tA_0}J=1$ 和 $J^*e^{tA_1}J=\cos(2\pi t/h)$。它们在全部整数倍 $jh$ 相同，在 $t=h/2$ 不同。$A_1$ 不属于定义10.1的负自伴生成元类，故不与正定对数唯一性矛盾。证毕。
+
+**命题 10.7（漏读快速模态使采样间恢复失去统一控制）。** 固定 $h>0$ 与任意有限样本数 $N+1$。若不指定共同有限谱上界 $b$，即使比较双方都是一维严格正实现、输入均为 $J=1$，也可以使全部样本差趋于零，而在 $[0,h]$ 上的响应差上确界恒为 $1/4$。
+
+证明。取 $C_R=R$、$\widehat C_R=2R$，$R\to\infty$。零时刻样本同为一；任意 $1\le j\le N$ 满足
+$$
+|e^{-Rjh}-e^{-2Rjh}|\le e^{-Rh}\longrightarrow0.
+$$
+对充分大的 $R$，时间 $t_R=(\log2)/R$ 属于 $[0,h]$，此时响应差为 $1/2-1/4=1/4$。对任何 $t\ge0$，令 $q=e^{-Rt}\in[0,1]$，响应差为 $q-q^2\le1/4$，所以所述上确界恰为 $1/4$。对应的离散谱 $e^{-Rh}$ 趋零，因而正是缺少统一下端 $u>0$。证毕。
+
+**命题 10.8（闭包中的零离散谱不对应有限衰减率）。** 若把式（10.4）的下端放宽为 $u=0$，前缀
+$$
+Z_0=1,\qquad Z_j=0\quad(1\le j\le2r+1)
+\tag{10.14}
+$$
+属于每个 $0\le v\le1$ 对应的离散可实现锥，却不来自任何有限维自伴有限生成元的式（10.1）。它可以由有限生成元的真实采样前缀逼近；若要求逼近者也留在同一个 $[0,v]$ 谱类内，则须 $v>0$。
+
+证明。取一维 $T=0,J=1$，即得离散实现并满足 $0\preceq T\preceq vI$。若式（10.14）由有限自伴 $C$ 实现，则 $e^{-hC}$ 正定，而 $J^*J=1$ 使 $J1\ne0$，故
+$$
+Z_1=\langle J1,e^{-hC}J1\rangle>0,
+$$
+矛盾。取 $C_R=R,J=1$，其零阶样本为一，全部正阶样本趋零，即得逼近。若 $v>0$，充分大的 $R$ 使 $e^{-Rh}\le v$；若 $v=0$，该谱类只允许离散零算子，有限生成元的正定指数不能属于其中，故此时的逼近须在更大的谱类内进行。证毕。
+
+## 10.99 追加锚
+
+## 11. 等步边界记录的响应逼近与有限记忆
+
+**定义 11.1（等步正谱响应）。** 设 $U,E$ 为有限维实内积空间，$J:U\to E$，并给共同谱合同
+$$
+C=C^*,\qquad aI\preceq C\preceq bI,
+\qquad 0\le a\le b<\infty.
+$$
+固定已知采样间隔 $h>0$，记
+$$
+T=e^{-hC},\qquad u=e^{-hb},\qquad v=e^{-ha},
+\qquad 0<u\le v\le1.
+\tag{11.1}
+$$
+边界响应及等步记录为
+$$
+K(t)=J^*e^{-tC}J=J^*T^{t/h}J,\qquad
+M_j=K(jh)=J^*T^jJ.
+\tag{11.2}
+$$
+采样数据 $M_j$ 由式（11.2）的同一响应在指定时间取得；高阶导数不包含在这份数据中，其观测和取得费用另给。谱上下界、采样单位及矩阵条目误差作为实验和模型的共同给定条件。每个候选模型单独具有正谱，并不蕴含候选族具有同一个 $a,b$。
+
+固定 $r\ge0$、$N=2r+1$。对合法的 $M_0,\ldots,M_N$，直接使用主卷定理137.2和137.5得到规范实现 $(E_r,T_r,J_r)$。令
+$$
+d_r=\operatorname{rank}(M_{i+j})_{0\le i,j\le r},\qquad
+C_r=-h^{-1}\log T_r,\qquad
+K_r(t)=J_r^*e^{-tC_r}J_r.
+\tag{11.3}
+$$
+因 $uI\preceq T_r\preceq vI$，谱对数良定义且 $aI\preceq C_r\preceq bI$。该规范模型满足
+$$
+\dim E_r=d_r\le(r+1)\dim U,\qquad
+K_r(jh)=M_j\quad(0\le j\le N).
+\tag{11.4}
+$$
+主卷引理137.7还将 $E_r$ 与原实现的
+$$
+\mathcal K_r=\operatorname{span}\{T^jJ\xi:0\le j\le r,\ \xi\in U\}
+$$
+等距识别，$T_r$ 是 $T$ 在该子空间上的正交压缩，$J_r$ 是原输入的对应表示。这里压缩的是采样算子 $e^{-hC}$；一般不能把 $-h^{-1}\log T_r$ 改写成 $C$ 的正交压缩。规范实现及正交识别由上述主卷§137的结果保证。
+
+零维 $E_r$ 允许：此时 $M_0=0$，对应响应恒零。若 $u=v$，全部候选 $T=uI$，响应已经为 $u^{t/h}M_0$，不需要下文的非退化区间逼近。以下涉及区间多项式时取 $u<v$。
+
+矩阵函数及 Krylov 表示使用 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3.1.6、5.1、7.1的成熟结构。原内部坐标不列入式（11.4）的已知数据；重建算法的运算费用须另给，不由状态维数界单独确定。
+
+**定理 11.2（不同维数实现之间的函数响应证书）。** 给两份有限维实现 $(E,T,J)$、$(\widehat E,\widehat T,\widehat J)$，使用同一个边界空间 $U$，两演化均自伴且谱在 $[u,v]$。令
+$$
+M_j=J^*T^jJ,\qquad
+\widehat M_j=\widehat J^*\widehat T^j\widehat J,
+\qquad m=\|M_0\|,\quad\widehat m=\|\widehat M_0\|.
+$$
+设 $\|M_j-\widehat M_j\|\le\delta_j$ 对 $0\le j\le N$ 成立。对连续实函数 $f:[u,v]\to\mathbb R$ 及任意多项式 $p(x)=\sum_{j=0}^N c_jx^j$，有
+$$
+\boxed{
+\|J^*f(T)J-\widehat J^*f(\widehat T)\widehat J\|
+\le (m+\widehat m)\|f-p\|_{\infty,[u,v]}
++\sum_{j=0}^N|c_j|\delta_j.
+}
+\tag{11.5}
+$$
+若已经证明加权 Frobenius 前缀误差
+$$
+\sum_{j=0}^N w_j\|M_j-\widehat M_j\|_{\mathrm F}^2\le\eta^2,
+\qquad w_j>0,
+$$
+则式（11.5）的最后一项可以替换为
+$$
+\eta\left(\sum_{j=0}^N\frac{|c_j|^2}{w_j}\right)^{1/2}.
+\tag{11.6}
+$$
+
+第二份实现可取第10节任意合法拟合前缀的规范实现，第一份取真实模型。此时实际前缀误差仍须满足 $\delta_j$ 或式（11.6）的条件；拟合模型精确重现自身数据，不蕴含它与真实响应之间的误差为零。
+
+**证明。** 对有限维自伴算子作正交谱分解，有
+$$
+\|f(T)-p(T)\|\le\|f-p\|_{\infty,[u,v]}.
+$$
+又 $\|J\|^2=\|J^*J\|=m$，故输入输出夹心后的误差至多 $m\|f-p\|_\infty$，第二实现同理。中间两项的差是
+$$
+J^*p(T)J-\widehat J^*p(\widehat T)\widehat J
+=\sum_{j=0}^N c_j(M_j-\widehat M_j).
+$$
+三角不等式给式（11.5）。式（11.6）由算子范数不超过 Frobenius 范数及加权 Cauchy–Schwarz 得到。式（11.5）、（11.6）不要求两个内部空间的坐标识别或 Gram 逆。证毕。
+
+**推论 11.3（有限前缀的精确压缩误差）。** 对定义11.1中的原模型及其规范压缩，令
+$$
+\mathcal E_N(f;[u,v])
+=\inf_{\deg p\le N}\|f-p\|_{\infty,[u,v]}.
+$$
+则
+$$
+\|J^*f(T)J-J_r^*f(T_r)J_r\|
+\le2m\mathcal E_N(f;[u,v]).
+\tag{11.7}
+$$
+
+**证明。** 式（11.4）给所有 $\delta_j=0$，零次矩相同给 $\widehat m=m$。在式（11.5）中对所有次数至多 $N$ 的 $p$ 取下确界即可；不要求先证明最佳多项式取得。证毕。
+
+**定理 11.4（正谱采样的 Bernstein 响应证书）。** 设 $0<u<v\le1$、$N\ge1$。对 $t\ge0$ 置 $\tau=t/h$、$f_t(x)=x^\tau$，在 $[u,v]$ 上取 Bernstein 多项式
+$$
+p_{N,t}(x)=\sum_{k=0}^N
+\left(u+(v-u)\frac{k}{N}\right)^{t/h}
+\binom Nk z^k(1-z)^{N-k},
+\qquad z=\frac{x-u}{v-u}.
+\tag{11.8}
+$$
+则对每个有限 $T_0\ge0$，
+$$
+\sup_{0\le t\le T_0}\|f_t-p_{N,t}\|_\infty
+\le\frac{(v-u)T_0}{2hu\sqrt N}.
+\tag{11.9}
+$$
+若还有共同谱隙 $a>0$，即 $v=e^{-ha}<1$，则
+$$
+\sup_{t\ge0}\|f_t-p_{N,t}\|_\infty
+\le\frac{v-u}{2e\,u(-\log v)\sqrt N}
+=\frac{v-u}{2e\,uha\sqrt N}.
+\tag{11.10}
+$$
+因此对精确规范压缩有
+$$
+\sup_{0\le t\le T_0}\|K(t)-K_r(t)\|
+\le\frac{m(v-u)T_0}{hu\sqrt{2r+1}},
+\tag{11.11}
+$$
+以及在 $a>0$ 时
+$$
+\sup_{t\ge0}\|K(t)-K_r(t)\|
+\le\frac{m(v-u)}{e\,uha\sqrt{2r+1}}.
+\tag{11.12}
+$$
+上述结论为充分误差界，近似阶的最优性不属于结论。
+
+在精确采样、共同谱合同固定时，式（11.11）给满足指定有限窗误差的明确充分记录阶数；$a>0$ 时式（11.12）、（11.20）再给全部未来及有界输入记忆误差。这些保证允许真实实现维数未知且任意大。若数据带固定非零误差，须同时检查式（11.14）的噪声项，不能仅让 $r$ 增大宣称风险趋零。没有共同正下界时，主卷命题137.18的 $e^{-\epsilon t}$ 与 $e^{-2\epsilon t}$ 已表明有限窗趋近不推出全时间或积分趋近；它们同样在每个固定等步采样前缀上趋近。有限 $b$ 则确保 $u>0$，支撑本节对任意非整数时间幂及有限生成算子对数的统一区间控制。
+
+**证明。** 对 $x=u+(v-u)z$，式（11.8）是 $f_t(u+(v-u)X/N)$ 的平均，其中 $X$ 具有参数 $(N,z)$ 的二项分布。等价地，可只用 Bernstein 权重的非负性、权重和为一及方差恒等式。若 $f$ 的 Lipschitz 常数为 $L$，则 Cauchy–Schwarz 给
+$$
+|p_N(x)-f(x)|
+\le L(v-u)\mathbb E|X/N-z|
+\le L(v-u)\sqrt{z(1-z)/N}
+\le\frac{L(v-u)}{2\sqrt N}.
+\tag{11.13}
+$$
+这些归一化与方差关系正是钉版 Mathlib [`bernstein.probability`、`bernstein.variance`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Bernstein.lean) 的成熟 Bernstein 接口。
+
+对 $\tau\ge0$，
+$$
+|f_t'(x)|=\tau x^{\tau-1}
+\le\tau/u\le T_0/(hu)
+\quad(0\le t\le T_0).
+$$
+当 $v<1$ 时，另有
+$$
+\tau x^{\tau-1}\le\tau v^\tau/u,
+\qquad
+\sup_{\tau\ge0}\tau v^\tau=\frac1{e(-\log v)}.
+$$
+代入式（11.13）得到式（11.9）和（11.10）。最后使用式（11.7），并取 $N=2r+1$。证毕。
+
+**推论 11.5（带噪证书的表示基与阶数选择）。** 将式（11.8）展开为原始幂基
+$$
+p_{N,t}(x)=\sum_{j=0}^N c_j(t)x^j.
+$$
+在定理11.2的条件下，对每个 $t$ 有
+$$
+\|K(t)-\widehat K(t)\|
+\le(m+\widehat m)\|f_t-p_{N,t}\|_\infty
++\sum_{j=0}^N|c_j(t)|\delta_j.
+\tag{11.14}
+$$
+对时间窗或全部时间取上确界时，两项均须按同一个时间范围取上界。Bernstein 基中的节点系数位于 $[0,1]$，不意味着原始幂矩 $M_j$ 的噪声放大也不超过一。增加 $N$ 降低这里的逼近项，却不保证降低总误差。
+
+令 $R=(2+u+v)/(v-u)>1$。对全部 $t\ge0$，有可直接核对的粗界
+$$
+\sum_{j=0}^N|c_j(t)|\le R^N.
+\tag{11.14a}
+$$
+若每个采样矩误差均不超过 $\delta$，则噪声项至多 $\delta R^N$。在共同谱隙 $a>0$、共同 $m+\widehat m\le A_0$ 下，任意 $N\ge1$ 给
+$$
+\sup_{t\ge0}\|K(t)-\widehat K(t)\|
+\le\frac{A_0(v-u)}{2e\,uha\sqrt N}+\delta R^N.
+\tag{11.14b}
+$$
+若一系列实验在固定误差单位中满足 $0<\delta\to0$，并且确实取得随 $N$ 增长的整段样本，可取不超过 $\log(1/\delta)/(2\log R)$ 的最大正奇数 $N$；当 $\delta$ 足够小时该数存在、趋于无穷，且 $\delta R^N\le\sqrt\delta$。该选取允许内部阶数未知，记录阶数及压缩维数上界随 $\log(1/\delta)$ 增长，所得总界趋零。取得这些更精确、更长样本的费用另给；统计速率的最优性不属于结论。
+
+**证明。** 式（11.14）直接使用定理11.2。原始观测为 $J^*T^jJ$，而 Bernstein 基包含 $(T-uI)^k(vI-T)^{N-k}$；后者须先由有符号的幂矩线性组合取得。对这些组合使用原始读数误差，得到的正是幂基系数绝对值和，不能将两种系数互换。
+
+多项式系数绝对和对乘法次乘性成立，而 $x-u$ 与 $v-x$ 的系数绝对和分别为 $1+u$、$1+v$。式（11.8）的节点值均在 $[0,1]$，所以
+$$
+\sum_j|c_j(t)|
+\le\frac1{(v-u)^N}\sum_{k=0}^N\binom Nk(1+u)^k(1+v)^{N-k}
+=R^N.
+$$
+结合式（11.10）得式（11.14b）。所给 $N$ 选择使 $R^N\le\delta^{-1/2}$，得到最后的收敛结论。还可对任意 $n\le N$ 使用仅取前 $n+1$ 个样本的多项式证书，再选择已实际计算出的最小有效上界。证毕。
+
+**命题 11.6（同一输入下的有限维记忆状态）。** 对规范模型取局部可积输入 $g:[0,\infty)\to U$，定义
+$$
+z_r(t)=\int_0^t e^{-(t-s)C_r}J_rg(s)\,ds,
+\qquad y_r(t)=J_r^*z_r(t).
+\tag{11.15}
+$$
+则 $z_r(0)=0$，且几乎处处满足
+$$
+\dot z_r=-C_rz_r+J_rg,\qquad
+y_r(t)=\int_0^t K_r(t-s)g(s)\,ds.
+\tag{11.16}
+$$
+其动态状态维数为 $d_r\le(r+1)\dim U$。若真实卷积输出为 $y(t)=\int_0^tK(t-s)g(s)ds$，且 $\|K(s)-K_r(s)\|\le\varepsilon(s)$，则
+$$
+\|y(t)-y_r(t)\|
+\le\int_0^t\varepsilon(t-s)\|g(s)\|\,ds.
+\tag{11.17}
+$$
+特别地，$\|g(s)\|\le G$ 时，有限窗 $[0,T_0]$ 上的统一核误差 $\varepsilon_0$ 给 $\|y(t)-y_r(t)\|\le Gt\varepsilon_0$。
+
+这里比较的是同一个外给输入 $g$。若把记忆核接回 $\dot x=-Ax+K*x$ 这样的反馈方程，两个模型的实际输入轨迹也会不同，必须再给闭环误差或稳定证书，不能直接用式（11.17）宣布整个闭环轨迹同误差。未知隐藏初态产生的 $J^*e^{-tC}h_0$ 也不属于式（11.15）的零初态卷积；它须由另外的初态观测、运输或误差界处理，完整核本身不恢复这次实验的 $h_0$。
+
+**证明。** 式（11.15）是有限维变常数公式；可积输入下的积分绝对连续，求导给状态方程。将 $J_r^*$ 移入积分得到输出恒等式。两输出相减后用积分三角不等式和算子范数界，得到式（11.17）。状态维数来自式（11.4）。变常数表示见主卷§126.6的精确记忆消元公式；式（11.17）的误差对象为边界输出，内部状态误差需要另行估计。证毕。
+
+**命题 11.7（谱隙给历史尾和统一卷积误差）。** 设 $a>0$，两模型都具有共同下界 $C,\widehat C\succeq aI$，令 $A=m+\widehat m$。若已有统一核误差 $\|K(t)-\widehat K(t)\|\le\varepsilon$，则
+$$
+\|K(t)-\widehat K(t)\|
+\le\min\{\varepsilon,Ae^{-at}\}.
+\tag{11.18}
+$$
+对 $A>0$ 定义
+$$
+\Phi_a(A,\varepsilon)=
+\begin{cases}
+0,&\varepsilon=0,\\
+\dfrac{\varepsilon}{a}\left(1+\log\dfrac A\varepsilon\right),&0<\varepsilon<A,\\
+\dfrac A a,&\varepsilon\ge A.
+\end{cases}
+\tag{11.19}
+$$
+$A=0$ 时取 $\Phi_a=0$。则
+$$
+\int_0^\infty\|K(t)-\widehat K(t)\|\,dt
+\le\Phi_a(A,\varepsilon).
+\tag{11.20}
+$$
+所以对相同有界输入 $\|g\|_\infty\le G$，全部非负时间上的零初态卷积输出误差至多 $G\Phi_a(A,\varepsilon)$。
+
+另外，若只保留最近 $L\ge0$ 的实际输入历史，并用压缩核计算
+$$
+\widehat y_L(t)=\int_{\max\{0,t-L\}}^t\widehat K(t-s)g(s)\,ds,
+$$
+则
+$$
+\|y(t)-\widehat y_L(t)\|
+\le G\left(\int_0^L\|K(s)-\widehat K(s)\|\,ds
++\frac m a e^{-aL}\right)
+\le G\left(L\varepsilon+\frac m a e^{-aL}\right).
+\tag{11.21}
+$$
+
+有限模态状态可以在线递推而不存储全部旧输入；从一个事后给定的有限窗口重置状态时则仍有式（11.21）的历史尾误差。严格滑窗本身还须记住被移出窗口的输入，不能把该删除操作免费认作同一低维自治递推。维数 $d_r$、采样记录数 $2r+2$、观测总时长 $(2r+1)h$、在线输入历史长度 $L$、矩阵计算和记录取得费用分别为不同资源坐标。前四者由上述关系约束，计算和记录取得费用仍须另给；代数维数不单独确定算法运行时间。
+
+**证明。** 谱定理给 $\|K(t)\|\le me^{-at}$，第二模型同理，三角不等式得到式（11.18）。当 $0<\varepsilon<A$ 时，两上界在 $t_*=(\log(A/\varepsilon))/a$ 相交；分别在 $[0,t_*]$ 和 $[t_*,\infty)$ 积分得式（11.19）。其余情形直接积分或用零上界。将式（11.20）代入式（11.17）给统一输出界。式（11.21）把真实卷积分成最近 $L$ 时间段和更旧部分：前段用模型差，旧段只用真实核的指数尾。证毕。
+
+**命题 11.8（由采样函数逼近静态记忆积分）。** 若共同 $a>0$，则在 $[u,v]$ 上
+$$
+g_0(x)=\frac h{-\log x}
+$$
+连续，且
+$$
+\int_0^\infty K(t)\,dt=J^*g_0(T)J.
+\tag{11.22}
+$$
+其 Lipschitz 常数可取 $1/(hu a^2)$。因此对精确规范压缩，
+$$
+\left\|\int_0^\infty(K(t)-K_r(t))\,dt\right\|
+\le\frac{m(v-u)}{hu a^2\sqrt{2r+1}}.
+\tag{11.23}
+$$
+带噪版本对同一个 $g_0$ 使用定理11.2的幂基噪声项。
+
+对 $C_r$ 作正交谱分解，将 $J_r$ 在各特征空间的分量合并，可写
+$$
+K_r(t)=\sum_{\ell=1}^{s_r}e^{-\lambda_\ell t}W_\ell,
+\qquad W_\ell\succeq0,\quad
+a\le\lambda_\ell\le b,
+\tag{11.24}
+$$
+其中 $s_r\le d_r$，并可取 $W_\ell=J_r^*P_\ell J_r$。这是同一压缩系统的有限模态表达，不是另选独立方向的标量近似。各矩阵权重可同时作用于全部边界方向，因而保持共同实现。
+
+**证明。** 谱定理对每个特征值积分给式（11.22），与主卷§126.7的 $J^*C^{-1}J$ 相同。直接微分得
+$$
+g_0'(x)=\frac h{x(-\log x)^2}
+\le\frac h{u(-\log v)^2}=\frac1{hu a^2}.
+$$
+使用式（11.13）和（11.7）得式（11.23）。这里是积分算子的范数误差，不能当作式（11.20）的核差范数积分；两者方向不同。证毕。
+
+## 11.99 追加锚
+
+## 12. Gram 间隔下的内部白化与记忆核稳定性
+
+**定义 12.1（合法采样前缀与共同系数空间）。** 固定有限维实内积空间 $U$、整数 $r\ge0$、采样间隔 $h>0$ 及
+$$
+0<u\le v\le1,\qquad
+a=-\frac{\log v}{h},\qquad b=-\frac{\log u}{h}.
+$$
+两份自伴采样前缀分别为 $M_0,\ldots,M_{2r+1}$ 和 $M'_0,\ldots,M'_{2r+1}$。在同一个带指定内积的系数空间 $\mathcal P=U^{r+1}$ 上，写
+$$
+H=(M_{i+j})_{i,j=0}^r,\qquad
+S=(M_{i+j+1})_{i,j=0}^r,
+$$
+并同样定义 $H',S'$。假设两份前缀均合法：
+$$
+H\succeq0,\quad uH\preceq S\preceq vH,
+\qquad
+H'\succeq0,\quad uH'\preceq S'\preceq vH'.
+\tag{12.1}
+$$
+所有矩不等式与范数都使用这份共同系数几何，不将两份数据分别缩放后仍认作同一误差。
+
+记 $\|\cdot\|_{\rm op}$ 为 Euclidean 算子范数，$\|\cdot\|_F$ 为 Frobenius 范数。取给定常数 $0<\gamma\le R<\infty$，另假设
+$$
+\operatorname{spec}(H),\operatorname{spec}(H')
+\subseteq\{0\}\cup[\gamma,R].
+\tag{12.2}
+$$
+这是两份被比较合法数据的非零 Gram 谱间隔条件；不预设它们具有相同的核或像。令
+$$
+\delta_H=\|H-H'\|_F,\qquad
+\delta_S=\|S-S'\|_F.
+$$
+记 $P,P'$ 为 $\operatorname{ran}H,\operatorname{ran}H'$ 的正交投影；$H^{\dagger/2}$ 在正特征值 $\lambda$ 上取 $\lambda^{-1/2}$，在零特征值上取零，$H'^{\dagger/2}$ 同理。令 $E_0:U\to\mathcal P$ 为零次系数插入，定义
+$$
+T=H^{\dagger/2}SH^{\dagger/2},\qquad J=H^{1/2}E_0,
+\qquad
+T'=H'^{\dagger/2}S'H'^{\dagger/2},\qquad J'=H'^{1/2}E_0.
+\tag{12.3}
+$$
+这些映射暂以整个 $\mathcal P$ 为陪域；其有效状态空间分别是 $P\mathcal P$ 和 $P'\mathcal P$。
+
+**定理 12.2（允许像空间转动的白化稳定界）。** 在定义12.1下，式(12.3)是主卷定理137.2规范商实现的一份等距坐标表达，并满足
+$$
+uP\preceq T\preceq vP,\quad T=PTP,\quad PJ=J,
+\qquad M_k=J^*T^kJ\quad(0\le k\le2r+1),
+\tag{12.4}
+$$
+另一份数据同理。置
+$$
+d_P=\frac{\delta_H}{\gamma},\qquad
+d_J=\frac{\delta_H}{\sqrt\gamma},\qquad
+d_T=\frac{\delta_S}{\gamma}
+       +\frac{2v\sqrt R}{\gamma^{3/2}}\delta_H.
+\tag{12.5}
+$$
+则
+$$
+\|P-P'\|_F\le d_P,\qquad
+\|J-J'\|_F\le d_J,\qquad
+\|T-T'\|_F\le d_T.
+\tag{12.6}
+$$
+这些上界也分别控制对应算子范数，但没有将数据侧的 Frobenius 误差无条件替换为算子范数误差。
+
+**证明。** 主卷定理137.2的商内积为 $\langle[x],[y]\rangle=\langle x,Hy\rangle$。映射
+$$
+[x]\longmapsto H^{1/2}x
+$$
+保内积且满射到 $P\mathcal P$。式(12.1)使 $S$ 消灭 $\ker H$；在上述识别下，其演化配对由
+$$
+H^{1/2}TH^{1/2}=PSP=S
+$$
+承担，零次输入变为 $J$。故式(12.4)是该规范实现及主卷定理137.5的谱区间结论。
+
+为估计非交换矩阵函数，取 $H$ 的正交特征基 $(x_i)$ 与 $H'$ 的正交特征基 $(y_j)$，相应特征值为 $\lambda_i,\mu_j$。对谱集合上的任意实函数 $f$，
+$$
+\langle x_i,(f(H)-f(H'))y_j\rangle
+=(f(\lambda_i)-f(\mu_j))\langle x_i,y_j\rangle,
+$$
+而
+$$
+\langle x_i,(H-H')y_j\rangle
+=(\lambda_i-\mu_j)\langle x_i,y_j\rangle.
+$$
+若 $|f(s)-f(t)|\le L|s-t|$ 对两个谱中的每一对 $s,t$ 成立，逐项平方求和便给
+$$
+\|f(H)-f(H')\|_F\le L\|H-H'\|_F.
+\tag{12.7}
+$$
+这里左右分别使用两组正交基，Frobenius 范数仍保持不变。
+
+在 $\{0\}\cup[\gamma,R]$ 上，函数
+$$
+\mathbf1_{\{x>0\}},\qquad \sqrt x,\qquad
+f_-(x)=
+\begin{cases}x^{-1/2},&x>0,\\0,&x=0\end{cases}
+$$
+的 Lipschitz 常数可分别取 $\gamma^{-1}$、$\gamma^{-1/2}$、$\gamma^{-3/2}$。正参数之间，平方根之差除以参数之差为 $1/(\sqrt s+\sqrt t)$；逆平方根相应比值为 $1/(\sqrt s\sqrt t(\sqrt s+\sqrt t))$。一端为零时，两个比值分别为 $s^{-1/2}$ 与 $s^{-3/2}$。因此式(12.7)给
+$$
+\|P-P'\|_F\le d_P,\quad
+\|H^{1/2}-H'^{1/2}\|_F\le d_J,\quad
+\|H^{\dagger/2}-H'^{\dagger/2}\|_F
+\le\frac{\delta_H}{\gamma^{3/2}}.
+\tag{12.8}
+$$
+由 $\|E_0\|_{\rm op}\le1$ 得输入界。
+
+记 $F=H^{\dagger/2}$、$F'=H'^{\dagger/2}$。有
+$$
+\|F\|_{\rm op},\|F'\|_{\rm op}\le\gamma^{-1/2},
+\qquad
+\|SF\|_{\rm op},\|F'S'\|_{\rm op}\le v\sqrt R,
+$$
+因为 $S=H^{1/2}TH^{1/2}$，所以 $SF=H^{1/2}T$；另一份同理。展开
+$$
+T-T'=(F-F')SF+F'(S-S')F+F'S'(F-F').
+$$
+逐项使用 $\|AXB\|_F\le\|A\|_{\rm op}\|X\|_F\|B\|_{\rm op}$ 与式(12.8)，便得到 $d_T$。最后 $\|A\|_{\rm op}\le\|A\|_F$ 给算子范数结论。$\square$
+
+**定理 12.3（连续生成元及边界记忆核）。** 在定义12.1下，令
+$$
+\overline T=T+u(I-P),\qquad
+\overline T'=T'+u(I-P'),\qquad
+A=-h^{-1}\log\overline T,\qquad
+A'=-h^{-1}\log\overline T'.
+\tag{12.9}
+$$
+则 $aI\preceq A,A'\preceq bI$。在有效空间上，$A$ 恰为 $-h^{-1}\log(T|_{P\mathcal P})$；正交补上的填充值不参与边界响应。定义
+$$
+K(t)=J^*e^{-tA}J,\qquad K'(t)=J'^*e^{-tA'}J'
+\quad(t\ge0),
+$$
+便有 $K(kh)=M_k$、$K'(kh)=M'_k$ 对全部给定采样指标成立。置
+$$
+d_A=\frac{d_T+u\,d_P}{hu}.
+\tag{12.10}
+$$
+则
+$$
+\|A-A'\|_F\le d_A,
+\qquad
+\boxed{\|K(t)-K'(t)\|_F
+\le e^{-at}\bigl(2\sqrt R\,d_J+Rt\,d_A\bigr).}
+\tag{12.11}
+$$
+若 $a>0$，还得到
+$$
+\sup_{t\ge0}\|K(t)-K'(t)\|_F
+\le2\sqrt R\,d_J+\frac{R\,d_A}{ea},
+\tag{12.12}
+$$
+以及绝对可积误差界
+$$
+\int_0^\infty\|K(t)-K'(t)\|_F\,dt
+\le\frac{2\sqrt R\,d_J}{a}+\frac{R\,d_A}{a^2}.
+\tag{12.13}
+$$
+
+**证明。** 由式(12.4)，$\overline T$ 与 $\overline T'$ 的谱均在 $[u,v]$ 内，矩阵对数良定义，其谱映射给 $aI\preceq A,A'\preceq bI$。$P$ 与 $T$ 交换，且 $PJ=J$，故 $\overline T$ 在 $P^\perp\mathcal P$ 上的填充值 $u$ 不能被 $J$ 激发；它也没有与有效空间耦合。因此
+$$
+e^{-khA}J=\overline T^kJ=T^kJ,
+$$
+给出采样匹配及有效生成元表达。
+
+函数 $\log x$ 在 $[u,v]$ 上满足 $|\log x-\log y|\le|x-y|/u$。将式(12.7)的双特征基证明用于 $\overline T,\overline T'$，得
+$$
+\|A-A'\|_F
+\le\frac{\|\overline T-\overline T'\|_F}{hu}
+\le\frac{\|T-T'\|_F+u\|P-P'\|_F}{hu}
+\le d_A.
+$$
+
+对 $0\le s\le t$，微分 $e^{-(t-s)A}e^{-sA'}$ 后积分，得到
+$$
+e^{-tA}-e^{-tA'}
+=\int_0^t e^{-(t-s)A}(A'-A)e^{-sA'}\,ds.
+$$
+因 $\|e^{-sA}\|_{\rm op},\|e^{-sA'}\|_{\rm op}\le e^{-as}$，
+$$
+\|e^{-tA}-e^{-tA'}\|_F\le te^{-at}d_A.
+\tag{12.14}
+$$
+又 $\|J\|_{\rm op},\|J'\|_{\rm op}\le\sqrt R$。写 $\Delta J=J-J'$，将核差展开为
+$$
+\Delta J^*e^{-tA}J
++J'^*e^{-tA}\Delta J
++J'^*(e^{-tA}-e^{-tA'})J',
+$$
+逐项估计给式(12.11)。若 $a>0$，使用 $\sup_{t\ge0}te^{-at}=1/(ea)$、$\int_0^\infty e^{-at}dt=1/a$ 与 $\int_0^\infty te^{-at}dt=1/a^2$，得到余下两式。$\square$
+
+**定理 12.4（最小状态空间的正交对齐）。** 在定义12.1下，若进一步有 $d_P<1$，则 $\operatorname{rank}H=\operatorname{rank}H'$，且存在整个 $\mathcal P$ 上的正交映射 $O$，满足
+$$
+OP=P'O,\qquad \|O-I\|_F\le2d_P.
+\tag{12.15}
+$$
+因而 $O|_{P\mathcal P}:P\mathcal P\to P'\mathcal P$ 是有效内积空间的等距同构，并有
+$$
+\|J-O^*J'\|_F\le d_J+2\sqrt R\,d_P,
+\qquad
+\|T-O^*T'O\|_F\le d_T+4v\,d_P.
+\tag{12.16}
+$$
+记有效生成元为
+$$
+C=-h^{-1}\log(T|_{P\mathcal P}),\qquad
+C'=-h^{-1}\log(T'|_{P'\mathcal P}),
+$$
+则在 $P\mathcal P$ 上有
+$$
+\boxed{\|C-O^*C'O\|_F
+\le\frac{d_T+4v\,d_P}{hu}.}
+\tag{12.17}
+$$
+正交对齐保持内积；式(12.16)控制其输入及演化交织缺陷，不断言两份不同数据的模型精确交织。
+
+所用极分解为标准有限矩阵极分解：N. J. Higham, “Computing the Polar Decomposition—with Applications”, *SIAM Journal on Scientific and Statistical Computing* 7(4) (1986), 1160–1174，[DOI 10.1137/0907079](https://doi.org/10.1137/0907079)，Theorem 1.1；该文§2.4研究其扰动。下证直接给出这里由两投影构成的极分解及所需误差，不以一般扰动结论替代具体常数。
+
+**证明。** 令 $D=P-P'$、
+$$
+W=P'P+(I-P')(I-P).
+$$
+投影恒等式给
+$$
+WP=P'W,\qquad
+W-I=(P'-P)(2P-I),\qquad
+W^*W=I-D^2.
+\tag{12.18}
+$$
+其中 $D^2$ 与 $P$ 交换。由 $\|D\|_{\rm op}\le d_P<1$，$W^*W$ 正定。取
+$$
+O=W(W^*W)^{-1/2}.
+$$
+它是正交映射；$(W^*W)^{-1/2}$ 与 $P$ 交换，所以 $OP=P'O$。这同时证明有效空间同维。
+
+$2P-I$ 正交，故 $\|W-I\|_F=\|D\|_F$。记 $|W|=(I-D^2)^{1/2}$，则 $W=O|W|$。对每个 $|\lambda|<1$，
+$$
+0\le1-\sqrt{1-\lambda^2}\le|\lambda|.
+$$
+在 $D$ 的特征基中逐项求和，得到
+$$
+\|O-W\|_F=\|I-|W|\|_F\le\|D\|_F.
+$$
+于是 $\|O-I\|_F\le2\|D\|_F\le2d_P$。
+
+输入差分解为 $J-J'+(I-O^*)J'$。演化差分解为
+$$
+T-T'+(I-O^*)T'O+T'(I-O).
+$$
+由 $\|J'\|_{\rm op}\le\sqrt R$、$\|T'\|_{\rm op}\le v$ 得式(12.16)。$O$ 把有效空间等距对齐后，$T$ 与 $O^*T'O$ 在同一个有效空间上均具有 $[u,v]$ 内的谱；矩阵对数与正交运输交换。再次使用式(12.7)及对数的 $1/u$ 常数，得到式(12.17)。$\square$
+
+**推论 12.5（原始记录与已选合法拟合的误差接口）。** 设原始对称块记录为 $\widehat H,\widehat S$，一份真实合法前缀为 $H,S$，一份已经取得的合法拟合为 $H',S'$。若已知
+$$
+\|H-\widehat H\|_F\le\varepsilon_H,\quad
+\|S-\widehat S\|_F\le\varepsilon_S,
+\qquad
+\|H'-\widehat H\|_F\le\eta_H,\quad
+\|S'-\widehat S\|_F\le\eta_S,
+\tag{12.19}
+$$
+且两份合法前缀满足式(12.1)及(12.2)，则定理12.2–12.4中可以分别用
+$$
+\varepsilon_H+\eta_H,\qquad\varepsilon_S+\eta_S
+$$
+替换 $\delta_H,\delta_S$。上界 $R$ 可取任何不小于
+$$
+\|H'\|_{\rm op}+\varepsilon_H+\eta_H
+$$
+的数；非零谱下界 $\gamma$ 仍须对两份合法前缀成立。
+
+若两份自伴矩前缀逐矩误差满足 $\|M_k-M'_k\|_F\le\varepsilon$，则
+$$
+\delta_H,\delta_S\le(r+1)\varepsilon.
+\tag{12.20}
+$$
+这些结论不要求各块误差独立。
+
+**证明。** 式(12.19)经三角不等式给所列 $\delta_H,\delta_S$ 上界，且
+$$
+\|H\|_{\rm op}\le\|H'\|_{\rm op}+\|H-H'\|_{\rm op}
+\le\|H'\|_{\rm op}+\varepsilon_H+\eta_H.
+$$
+各稳定界的右端对两个非负误差单调。对式(12.20)，块矩阵 Frobenius 范数平方是全部 $(r+1)^2$ 个块的 Frobenius 范数平方之和，每一项至多 $\varepsilon^2$；移位块同理。这只是确定性误差集合上的计算，不使用概率或独立性。$\square$
+
+**命题 12.6（拟合存在、秩与真实未来的边界）。** 下列三项不由上述误差界取消：
+
+1. 任意小的矩记录误差不保证原始记录满足式(12.1)；合法拟合及其谱间隔也不是同一个条件。
+2. 两份合法前缀各自有固定秩，不保证有共同正的非零 Gram 谱下界。只有一份拟合具有谱间隔，也不能由小误差排除真实前缀中的额外弱方向。
+3. 相同有限前缀、共同谱区间与 Gram 谱间隔，不保证较大实际模型的全部未来等于规范最小模型的未来。
+
+**证明。** 对第一项，在标量 $r=0$ 时取任意 $m>0$，合法数据为 $H=m,S=um$。原始记录 $\widehat H=m,\widehat S=um-\epsilon$ 与它的误差为 $\epsilon>0$，却违反 $u\widehat H\preceq\widehat S$。对第二项，合法一维前缀
+$$
+H_\delta=\delta,\qquad S_\delta=t\delta,\qquad u\le t\le v
+$$
+对每个 $\delta>0$ 都有相同秩一，但其非零 Gram 特征值趋零。
+
+为检验额外弱方向，设 $u<v$，选不同 $\lambda_1,\lambda_2\in[u,v]$。标量原子测度
+$$
+\mu_\delta=(1-\delta)\delta_{\lambda_1}+\delta\delta_{\lambda_2},
+\qquad 0<\delta<1,
+$$
+的任意固定有限矩前缀趋向 $\delta_{\lambda_1}$ 的前缀。对 $r=1$，其 $H_1$ 行列式为
+$$
+\delta(1-\delta)(\lambda_1-\lambda_2)^2>0.
+$$
+因此真实前缀可有秩二，而秩一拟合与其任意接近；拟合唯一的非零特征值有正下界，真实额外特征值却趋零。
+
+对第三项，仍取 $u<v$，置 $m=(u+v)/2$，比较
+$$
+\mu=\delta_m,\qquad
+\nu=\tfrac12\delta_u+\tfrac12\delta_v.
+$$
+$r=0$ 时它们具有完全相同的 $M_0=1,M_1=m$，所以 $H=H'=1$、$S=S'=m$，Gram 间隔可取 $\gamma=R=1$。规范模型为单点 $T=m$；两点模型的响应在时间 $2h$ 为
+$$
+\tfrac12(u^2+v^2)
+=m^2+\tfrac14(v-u)^2>m^2.
+$$
+因而定理12.3比较的是两份前缀各自的规范模型。若将它用于某实际内部的全部未来，还须另有把实际未来等同于规范未来的依据，例如实际有效维数等于 $\operatorname{rank}H$，或满足主卷定理137.8在非负类中的条件，或本卷命题10.6在 $[u,v]$ 类中的平移后未来唯一性条件；也可以另行给出实际模型与规范模型之间的响应误差。$\square$
+
+**命题 12.7（未知初态仍需独立信息）。** 即使 $J,C$ 及全部记忆核 $J^*e^{-tC}J$ 已知，它们也不单独确定未知初态所引起的边界响应。
+
+**证明。** 对输入函数 $f$，状态方程 $\dot x=-Cx+Jf$、输出 $y=J^*x$ 给
+$$
+y(t)=J^*e^{-tC}x_0
++\int_0^tJ^*e^{-(t-s)C}Jf(s)\,ds.
+$$
+记忆核确定第二项，第一项还含 $x_0$。例如 $E=U=\mathbb R$、$C=J=1$、$f=0$ 时，初态 $x_0=1$ 和 $x_0=-1$ 具有同一核 $e^{-t}$，输出却分别为 $e^{-t}$ 和 $-e^{-t}$。$\square$
+
+## 12.99 追加锚
