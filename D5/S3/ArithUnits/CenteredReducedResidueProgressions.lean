@@ -78,35 +78,6 @@ def sourceCorrectionArena : PrimitiveLawArena where
 local instance : DecidableEq sourceCorrectionArena.State :=
   instDecidableEqBool
 
-private lemma centered_even_iff {n : ℕ} (hn : Even n) (x : ℤ) :
-    CenteredReducedResidue n x ↔
-      -(n / 2 : ℤ) + 1 ≤ x ∧ x ≤ (n / 2 : ℤ) ∧ x.gcd n = 1 := by
-  obtain ⟨m, rfl⟩ := hn
-  simp [CenteredReducedResidue]
-  omega
-
-private lemma progression_span {n s h : ℕ} {a : ℤ}
-    (hn : Even n) (hs : 0 < s)
-    (ha : ∀ i : ℕ, i < s → CenteredReducedResidue n (a + (i * h : ℕ))) :
-    ((s - 1) * h : ℕ) ≤ n - 1 := by
-  have hzero := (centered_even_iff hn a).mp (by simpa using ha 0 hs)
-  have hlast := (centered_even_iff hn (a + ((s - 1) * h : ℕ))).mp
-    (ha (s - 1) (Nat.sub_lt hs (by omega)))
-  have hnpos : 0 < n := by
-    by_contra hz
-    have : n = 0 := by omega
-    subst n
-    omega
-  have hz : (-(n / 2 : ℤ) + 1) ≤ a := hzero.1
-  have hu : a + (((s - 1) * h : ℕ) : ℤ) ≤ (n / 2 : ℤ) := hlast.2.1
-  obtain ⟨m, hm⟩ := hn
-  have heven : 2 * (n / 2) = n := by omega
-  have hevenZ : (2 : ℤ) * ((n / 2 : ℕ) : ℤ) = n := by exact_mod_cast heven
-  have hhalf : (n : ℤ) / 2 = ((n / 2 : ℕ) : ℤ) := (Int.natCast_div n 2).symm
-  rw [hhalf] at hz hu
-  have hspanZ : (((s - 1) * h : ℕ) : ℤ) ≤ (n - 1 : ℕ) := by omega
-  exact_mod_cast hspanZ
-
 private lemma prime_dvd_progression_term {q s h : ℕ} {a : ℤ}
     (hq : q.Prime) (hh : ¬ q ∣ h) (hs : q ≤ s) :
     ∃ i : ℕ, i < s ∧ (q : ℤ) ∣ a + (i * h : ℕ) := by
@@ -247,7 +218,29 @@ private lemma no_long_progression_of_large_multiple
     (ha : ∀ i : ℕ, i < s → CenteredReducedResidue n (a + (i * h : ℕ))) :
     s ≤ p - 1 - (2 * p / d) := by
   have hn_even : Even n := hn.symm ▸ hd_even.mul_right p
-  have hspan := progression_span hn_even hs ha
+  have hspan : ((s - 1) * h : ℕ) ≤ n - 1 := by
+    have centered_even (x : ℤ) : CenteredReducedResidue n x ↔
+        -(n / 2 : ℤ) + 1 ≤ x ∧ x ≤ (n / 2 : ℤ) ∧ x.gcd n = 1 := by
+      obtain ⟨m, rfl⟩ := hn_even
+      simp [CenteredReducedResidue]
+      omega
+    have hzero := (centered_even a).mp (by simpa using ha 0 hs)
+    have hlast := (centered_even (a + ((s - 1) * h : ℕ))).mp
+      (ha (s - 1) (Nat.sub_lt hs (by omega)))
+    have hnpos : 0 < n := by
+      by_contra hz
+      have : n = 0 := by omega
+      subst n
+      omega
+    have hz : (-(n / 2 : ℤ) + 1) ≤ a := hzero.1
+    have hu : a + (((s - 1) * h : ℕ) : ℤ) ≤ (n / 2 : ℤ) := hlast.2.1
+    obtain ⟨m, hm⟩ := hn_even
+    have heven : 2 * (n / 2) = n := by omega
+    have hevenZ : (2 : ℤ) * ((n / 2 : ℕ) : ℤ) = n := by exact_mod_cast heven
+    have hhalf : (n : ℤ) / 2 = ((n / 2 : ℕ) : ℤ) := (Int.natCast_div n 2).symm
+    rw [hhalf] at hz hu
+    have hspanZ : (((s - 1) * h : ℕ) : ℤ) ≤ (n - 1 : ℕ) := by omega
+    exact_mod_cast hspanZ
   have hdpos : 0 < d := by omega
   have hnpos : 0 < n := by rw [hn]; positivity
   have hmul_lt : ((s - 1) * t) * d < p * d := by
@@ -290,7 +283,12 @@ private lemma no_long_progression_of_step
   have hpodd : Odd p := hp.odd_of_ne_two (by omega)
   let _ : Fact p.Prime := ⟨hp⟩
   have hn_even : Even n := hn.symm ▸ (hde ▸ even_two_mul e).mul_right p
-  have ha0 := (centered_even_iff hn_even a).mp (by simpa using ha 0 hs)
+  have centered_even (x : ℤ) : CenteredReducedResidue n x ↔
+      -(n / 2 : ℤ) + 1 ≤ x ∧ x ≤ (n / 2 : ℤ) ∧ x.gcd n = 1 := by
+    obtain ⟨m, rfl⟩ := hn_even
+    simp [CenteredReducedResidue]
+    omega
+  have ha0 := (centered_even a).mp (by simpa using ha 0 hs)
   have hhalf : n / 2 = e * p := by
     calc
       n / 2 = (2 * (e * p)) / 2 := by rw [hn, hde]; ring_nf
@@ -417,8 +415,8 @@ private lemma no_long_progression_of_step
       rw [htd] at this
       norm_num at this
   have hzrange : -(e : ℤ) + 2 ≤ z ∧ z ≤ e - 2 := by omega
-  have halast := (centered_even_iff hn_even
-    (a + ((s - 1) * d : ℕ))).mp (ha (s - 1) (Nat.sub_lt hs (by omega)))
+  have halast := (centered_even (a + ((s - 1) * d : ℕ))).mp
+    (ha (s - 1) (Nat.sub_lt hs (by omega)))
   rw [hhalfZ] at halast
   have hnot_between : ¬(a ≤ t ∧ t ≤ a + (((s - 1) * d : ℕ) : ℤ)) := by
     rintro ⟨hat, htl⟩
@@ -599,6 +597,11 @@ private lemma attained_progression
   obtain ⟨v, hv⟩ := hpodd
   have hp5 : 5 ≤ p := by omega
   have hn_even : Even n := hn.symm ▸ (hde ▸ even_two_mul e).mul_right p
+  have centered_even (x : ℤ) : CenteredReducedResidue n x ↔
+      -(n / 2 : ℤ) + 1 ≤ x ∧ x ≤ (n / 2 : ℤ) ∧ x.gcd n = 1 := by
+    obtain ⟨m, rfl⟩ := hn_even
+    simp [CenteredReducedResidue]
+    omega
   have hhalf : n / 2 = e * p := by
     calc
       n / 2 = (2 * (e * p)) / 2 := by rw [hn, hde]; ring_nf
@@ -652,7 +655,7 @@ private lemma attained_progression
   have hterm : y + (d : ℤ) + ((i * d : ℕ) : ℤ) = y + ((j * d : ℕ) : ℤ) := by
     dsimp [j]
     ring
-  rw [hterm, centered_even_iff hn_even, hhalfZ]
+  rw [hterm, centered_even, hhalfZ]
   have hlower : -(e * p : ℤ) + 1 ≤ y + ((j * d : ℕ) : ℤ) := by
     dsimp [y]
     rw [hde]
@@ -729,18 +732,69 @@ private lemma attained_progression
       omega
     · exact (hp.coprime_iff_not_dvd.mp hdp.symm) hpd
 
-/-- The source conjecture: for an even squarefree modulus with at least three
-prime factors and short complementary factor, the stated length is attained,
-bounds every positive-step progression, and equals the source's rational floor. -/
-theorem result (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
-    (hn_factors : 3 ≤ n.primeFactors.card)
-    (hn_short : n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n) :
-    let p := GreatestPrimeFactor n
-    let d := n / p
-    IsGreatest {s : ℕ | AdmissibleLength n s}
-        (decodeSourceCorrection SourceCorrection p (2 * p / d)) ∧
-      ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
-        (decodeSourceCorrection SourceCorrection p (2 * p / d) : ℕ) := by
+def actualSourceCorrectionRealization :
+    PrimitiveRealization (cutSignature Bool Bool) :=
+  sourceCorrectionRealization (fun x : Bool => x)
+
+def alternateSourceCorrectionRealization :
+    PrimitiveRealization (cutSignature Bool Bool) :=
+  sourceCorrectionRealization (fun _ => true)
+
+
+private theorem alternateSourceCorrection_not_law :
+    ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
+  intro h
+  have hpf : (30 : ℕ).primeFactors = {2, 3, 5} := by
+    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    ext q
+    simp [Nat.prime_two.primeFactors, (by decide : Nat.Prime 3).primeFactors,
+      (by decide : Nat.Prime 5).primeFactors]
+    constructor
+    · intro hq
+      rcases hq with rfl | rfl | rfl <;> simp
+    · intro hq
+      rcases hq with rfl | rfl | rfl <;> simp
+  have hsq : Squarefree (30 : ℕ) := by
+    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+    rw [Nat.squarefree_mul_iff, Nat.squarefree_mul_iff]
+    exact ⟨by decide, Nat.prime_two.squarefree, by decide,
+      (by decide : Nat.Prime 3).squarefree, (by decide : Nat.Prime 5).squarefree⟩
+  have hcard : 3 ≤ (30 : ℕ).primeFactors.card := by
+    rw [hpf]
+    norm_num
+  have hshort : 30 / GreatestPrimeFactor 30 < 2 * GreatestPrimeFactor 30 := by
+    rw [GreatestPrimeFactor, hpf]
+    norm_num
+  have h30 := h 30 (by norm_num) hsq hcard hshort
+  dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
+    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
+    GreatestPrimeFactor, hpf] at h30
+  have hfloor := h30.2
+  norm_num [sourceCorrectionArena, alternateSourceCorrectionRealization,
+    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
+    GreatestPrimeFactor, hpf] at hfloor
+
+
+private theorem sourceCorrection_sensitivity_core :
+    sourceCorrectionArena.Law actualSourceCorrectionRealization ∧
+      FiniteSlotSensitivity sourceCorrectionArena := by
+  suffices actualLaw : sourceCorrectionArena.Law actualSourceCorrectionRealization by
+    refine ⟨actualLaw, ?_⟩
+    constructor
+    · intro i
+      cases i
+      refine ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
+        ?_, ?_, ?_⟩
+      · intro j hne
+        exact (hne rfl).elim
+      · intro j
+        exact Fin.elim0 j
+      · exact ⟨fun _ => alternateSourceCorrection_not_law, fun _ => actualLaw⟩
+    · intro i
+      exact Fin.elim0 i
+  intro n hn_even hn_squarefree hn_factors hn_short
   let p := GreatestPrimeFactor n
   let d := n / p
   change IsGreatest {s : ℕ | AdmissibleLength n s} (p - 1 - (2 * p / d)) ∧
@@ -885,99 +939,33 @@ theorem result (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
           hprime_lt hdh hhpos ha
   · exact source_floor_identity hdpos hrem hquot
 
-def actualSourceCorrectionRealization :
-    PrimitiveRealization (cutSignature Bool Bool) :=
-  sourceCorrectionRealization (fun x : Bool => x)
+private theorem sourceCorrection_sensitivity : FiniteSlotSensitivity sourceCorrectionArena :=
+  sourceCorrection_sensitivity_core.2
 
-def alternateSourceCorrectionRealization :
-    PrimitiveRealization (cutSignature Bool Bool) :=
-  sourceCorrectionRealization (fun _ => true)
+private theorem sourceCorrection_variation : FiniteLawVariation sourceCorrectionArena :=
+  ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
+    sourceCorrection_sensitivity_core.1, alternateSourceCorrection_not_law⟩
 
-private theorem sourceCorrectionBridge :
-    LegacyPrimitiveRealization sourceCorrectionArena
-      (∀ (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
-        (hn_factors : 3 ≤ n.primeFactors.card)
-        (hn_short : n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n),
-        let p := GreatestPrimeFactor n
-        let d := n / p
-        IsGreatest {s : ℕ | AdmissibleLength n s}
-            (decodeSourceCorrection SourceCorrection p (2 * p / d)) ∧
-          ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
-            (decodeSourceCorrection SourceCorrection p (2 * p / d) : ℕ))
-      actualSourceCorrectionRealization := by
-  refine ⟨?_⟩
-  constructor
-  · intro h n hn_even hn_squarefree hn_factors hn_short
-    have h' := h n hn_even hn_squarefree hn_factors hn_short
-    simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
-      sourceCorrectionRealization, cutRealization, decodeSourceCorrection, SourceCorrection] using h'
-  · intro h n hn_even hn_squarefree hn_factors hn_short
-    have h' := h n hn_even hn_squarefree hn_factors hn_short
-    simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
-      sourceCorrectionRealization, cutRealization, decodeSourceCorrection, SourceCorrection] using h'
-
-private theorem alternateSourceCorrection_not_law :
-    ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
-  intro h
-  have hpf : (30 : ℕ).primeFactors = {2, 3, 5} := by
-    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
-    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
-    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
-    ext q
-    simp [Nat.prime_two.primeFactors, (by decide : Nat.Prime 3).primeFactors,
-      (by decide : Nat.Prime 5).primeFactors]
-    constructor
-    · intro hq
-      rcases hq with rfl | rfl | rfl <;> simp
-    · intro hq
-      rcases hq with rfl | rfl | rfl <;> simp
-  have hsq : Squarefree (30 : ℕ) := by
-    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
-    rw [Nat.squarefree_mul_iff, Nat.squarefree_mul_iff]
-    exact ⟨by decide, Nat.prime_two.squarefree, by decide,
-      (by decide : Nat.Prime 3).squarefree, (by decide : Nat.Prime 5).squarefree⟩
-  have hcard : 3 ≤ (30 : ℕ).primeFactors.card := by
-    rw [hpf]
-    norm_num
-  have hshort : 30 / GreatestPrimeFactor 30 < 2 * GreatestPrimeFactor 30 := by
-    rw [GreatestPrimeFactor, hpf]
-    norm_num
-  have h30 := h 30 (by norm_num) hsq hcard hshort
-  dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
-    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
-    GreatestPrimeFactor, hpf] at h30
-  have hactual := result 30 (by norm_num) hsq hcard hshort
-  dsimp [decodeSourceCorrection, SourceCorrection, GreatestPrimeFactor, hpf] at hactual
-  simp [SourceCorrection, hpf] at h30 hactual
-  have hattained : AdmissibleLength 30 5 := by simpa using h30.1.1
-  have hle : 5 ≤ 3 := hactual.1.2 hattained
-  omega
-
-private theorem sourceCorrection_variation :
-    FiniteLawVariation sourceCorrectionArena := by
-  refine ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
-    sourceCorrectionBridge.equivalence.mp result, alternateSourceCorrection_not_law⟩
-
-private theorem sourceCorrection_sensitivity :
-    FiniteSlotSensitivity sourceCorrectionArena := by
-  constructor
-  · intro i
-    cases i
-    refine ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
-      ?_, ?_, ?_⟩
-    · intro j hne
-      exact (hne rfl).elim
-    · intro j
-      exact Fin.elim0 j
-    · exact ⟨fun _ => alternateSourceCorrection_not_law,
-        fun _ => sourceCorrectionBridge.equivalence.mp result⟩
-  · intro i
-    exact Fin.elim0 i
-
-register_information_theorem result in sourceCorrectionArena
+/- The source conjecture: for an even squarefree modulus with at least three
+prime factors and short complementary factor, the stated length is attained,
+bounds every positive-step progression, and equals the source's rational floor. -/
+information_theorem result in sourceCorrectionArena
   readout via (sourceCorrectionRealization (fun x : Bool => x))
-  primitives actualSourceCorrectionRealization.toPrimitiveBundle realization sourceCorrectionBridge
+  primitives actualSourceCorrectionRealization
   variation sourceCorrection_variation sensitivity sourceCorrection_sensitivity
   escape from (SourceCorrection) escape continues (open)
-
+  : ∀ (n : ℕ), Even n → Squarefree n →
+      3 ≤ n.primeFactors.card →
+      n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n →
+      let p := GreatestPrimeFactor n
+      let d := n / p
+      IsGreatest {s : ℕ | AdmissibleLength n s}
+          (decodeSourceCorrection SourceCorrection p (2 * p / d)) ∧
+        ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
+          (decodeSourceCorrection SourceCorrection p (2 * p / d) : ℕ) := by
+  intro n hn_even hn_squarefree hn_factors hn_short
+  have h := sourceCorrection_sensitivity_core.1 n hn_even hn_squarefree
+    hn_factors hn_short
+  simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
+    sourceCorrectionRealization, cutRealization, SourceCorrection] using h
 end D5.S3.ArithUnits.CenteredReducedResidueProgressions
