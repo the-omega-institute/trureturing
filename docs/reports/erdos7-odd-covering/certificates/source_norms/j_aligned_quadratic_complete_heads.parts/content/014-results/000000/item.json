@@ -1,0 +1,55 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "square"
+  },
+  "target_scheduling_upper": {
+    "kind": "inline",
+    "value": "5631/1250"
+  },
+  "complete_uniform_upper": {
+    "kind": "inline",
+    "value": "2565377442951193237/567000000000000000"
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "at_one": "1",
+      "positive_hinges": {
+        "1": "3"
+      },
+      "factorial_coefficient": "2",
+      "factorial_threshold": 2
+    }
+  },
+  "complete_prefix": {
+    "kind": "inline",
+    "value": {
+      "original_choices": 3125000000,
+      "counts": {
+        "layouts": 12500,
+        "pure_layout_bounded": 0,
+        "two": 125000,
+        "two_bounded": 124960,
+        "four": 2000,
+        "four_bounded": 424
+      },
+      "coarse_choices_closed": 3124212000,
+      "conditional_choices_closed": 688107,
+      "residual_choices": 99893,
+      "remaining_first_profiles": 403,
+      "maximum_complete_prefix_upper": "7151819/1587600",
+      "closed_prefix_digest": "c7b2e620d0a96f06127e9a55aaf739cce1195f507866ee4ca5eba9c46c2bc326",
+      "remaining_groups_sha256": "45bf946dd01ec28f660e1fbea10b8e0ced0ba10fa79669e8027c72e78782bbb2"
+    }
+  },
+  "closed_node_count": {
+    "kind": "inline",
+    "value": 668
+  },
+  "closed_node_batches": {
+    "path": "content/014-results/000000/item/006-closed_node_batches.json",
+    "sha256": "f9d8a7d656e58ddf907ffec7b840f8291faa22ffdd07bae51665ba42ad6da719",
+    "kind": "array"
+  }
+}

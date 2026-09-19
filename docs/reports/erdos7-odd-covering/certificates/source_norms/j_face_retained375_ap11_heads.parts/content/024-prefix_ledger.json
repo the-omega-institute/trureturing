@@ -1,0 +1,88 @@
+{
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "two_seen": 125000,
+      "two_old_bounded": 124977,
+      "two_enhanced_bounded": 6,
+      "four_seen": 850,
+      "four_old_bounded": 841,
+      "four_enhanced_bounded": 5,
+      "six_seen": 40,
+      "six_old_bounded": 8,
+      "six_enhanced_bounded": 15,
+      "six_known_dual_bounded": 14,
+      "seven_seen": 15,
+      "seven_bounded": 0,
+      "eight_seen": 150,
+      "eight_bounded": 18,
+      "seed_bounded": 50,
+      "lp_remaining": 82
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "fixed_pruning_benchmark": {
+    "kind": "inline",
+    "value": "12119695377815344789/70619948437500000000"
+  },
+  "remaining_eight_projection_leaves": {
+    "path": "content/024-prefix_ledger/003-remaining_eight_projection_leaves.json",
+    "sha256": "7d315fd6e44b19d61ff0c2ddeb390f9412c8626918dd2fb3bb0c34fa64206f99",
+    "kind": "array"
+  },
+  "maximum_pruned_bounds": {
+    "kind": "inline",
+    "value": {
+      "two_old_bounded": "6635841691/38740086000",
+      "four_old_bounded": "38075297213/221875038000",
+      "two_enhanced_bounded": "139472634649/813541806000",
+      "six_old_bounded": "6627620081/38740086000",
+      "six_enhanced_bounded": "59804107949/348660774000",
+      "six_known_dual_bounded": "801108028297364936209/4669563937500000000000",
+      "four_enhanced_bounded": "417183568663/2440625418000",
+      "eight_bounded": "418814925511/2440625418000",
+      "seed_bounded": "12119695377815344789/70619948437500000000"
+    }
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "f8c947bd81ee178aa2a031c47139e0077264aad48d82c9351b22043754480d28"
+  },
+  "existing_source_duals_rechecked": {
+    "path": "content/024-prefix_ledger/006-existing_source_duals_rechecked.json",
+    "sha256": "bb63d69a844718f98f856eac24f980fab1bf23b976f03543a0b52db597eaf0ed",
+    "kind": "value"
+  },
+  "existing_source_dual_counts": {
+    "kind": "inline",
+    "value": {
+      "251": 0,
+      "266": 17,
+      "264": 0
+    }
+  },
+  "existing_source_column_checks": {
+    "kind": "inline",
+    "value": 56202
+  },
+  "seed_column_checks": {
+    "kind": "inline",
+    "value": 647050
+  },
+  "independent_direct_seed_column_checks": {
+    "kind": "inline",
+    "value": 647050
+  },
+  "independent_fractional_affine_checks": {
+    "kind": "inline",
+    "value": 626
+  },
+  "infinite_bridge_transition_checks": {
+    "kind": "inline",
+    "value": 5200
+  }
+}

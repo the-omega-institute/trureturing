@@ -1,0 +1,22 @@
+**推论 9.3（接触符号与字典扰动）。** 设 $b,\varepsilon,\rho$ 满足定理9.2的成本与残差假设。对饱和指标 $|z_i|=1$，若 $b_i z_i<0$，其在 $D(b)$ 中的贡献为 $2|b_i|$；故这些错误符号的系数总量不超过 $(\varepsilon+\|\varphi\|_*\rho)/2$。若使用扰动原子 $\widetilde v_i$ 和目标 $\widetilde v$，并且
+$$
+\max_i\|\widetilde v_i-v_i\|\le\tau,\quad
+\|\widetilde v-v\|\le\nu,\quad
+\left\|\sum_i b_i\widetilde v_i-\widetilde v\right\|\le\widetilde\rho,
+\quad \Gamma(b)\le\gamma^*+\varepsilon,
+$$
+其中 $\tau,\nu,\widetilde\rho,\varepsilon\ge0$，则式（9.3）—（9.5）仍成立，只须使用
+$$
+\rho=\widetilde\rho+\nu+\tau(\gamma^*+\varepsilon).
+\tag{9.7}
+$$
+这里成本上界是相对于原精确最优值的明确前提。
+
+**证明。** 饱和且符号相反时 $b_iz_i=-|b_i|$，于是对应余量为 $2|b_i|$，利用式（9.6）即可。另一方面，
+$$
+\left\|\sum_i b_i v_i-v\right\|
+\le\widetilde\rho+\nu+\sum_i|b_i|\|v_i-\widetilde v_i\|
+\le\widetilde\rho+\nu+\tau(\gamma^*+\varepsilon).
+$$
+代入定理9.2即得结论。证毕。
+

@@ -1,0 +1,253 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-k-neighborhood-cost-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/complete_off_face_cost.py": "6ab17509f6946409cef6b431cdfb316cc35c9055d21de93eb2906c723d93e234",
+      "frontier/shared_budget_affine_tail.py": "0b0a509626dda7f44ecccf56825c2a3027fce2e4269c64a0419e65da3bce1136",
+      "frontier/actual_five_slot_source_modulus.py": "dab8cbce31dd85d8a6476c1b13a8146159ff748fa6ce94d78775febf4f3832c0",
+      "frontier/finite_source_face_transport.py": "aa4099317ddf1b7cca16df4916166b1399d0b6e44cbe6459dde081075db8d332",
+      "frontier/joint_deep_mean_transport.py": "a63225e637c6e926e80b04822ab8c83b79f8b99d3069b283375838df69ea4534",
+      "frontier/complete_off_face_omitted_tails.py": "0dc92761c65f6729dfe45770b02dae327d5ddfa1d4b0a79dcc45fb9deb8b81f8",
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/broad_weighted_identity_source.py": "e0a89669a6b8b6ff732391b4c27dddd21bf5517f8a37928120e75955349dd98f",
+      "certificates/source_norms/whole_cost_mean_stop_loss.json": "d535a2f69617536a06655c61a1166813bfd2ce3e17416fc329dcead0ba3201da",
+      "frontier/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645"
+    }
+  },
+  "cost_index": {
+    "kind": "inline",
+    "value": 1
+  },
+  "cost_name": {
+    "kind": "inline",
+    "value": "R17"
+  },
+  "cost_tuple": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/10000",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "59999/180000",
+      "v0": "7/40000",
+      "v1": "539997/2399960000",
+      "gap": "9977/450000",
+      "tbar": "10001/4998",
+      "Cbar": "60002/15997",
+      "kbar": "59999/29998",
+      "budget_increments": [
+        "16667/2400000000",
+        "1/360000",
+        "1/40000"
+      ],
+      "c": [
+        "28001/40000",
+        "360013/900000",
+        "40001/150000",
+        "40001/450000"
+      ],
+      "H": [
+        "25052499/500000000",
+        "150031667/1500000000",
+        "6001/90000",
+        "800119999/36000000000"
+      ],
+      "positive7": "259789/4200000"
+    }
+  },
+  "capacity_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/900000",
+      "1/900000",
+      "13/1200000",
+      "1/900000",
+      "0",
+      "0",
+      "0",
+      "7/360000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "179999/7199880000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "179999/7199880000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "179999/7199880000",
+      "0"
+    ]
+  },
+  "uniform_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "10001/900000",
+      "10001/900000",
+      "10013/1200000",
+      "10001/900000",
+      "0",
+      "1/45",
+      "1/45",
+      "6007/360000",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "240535997/21599640000",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "240535997/21599640000",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "240535997/21599640000",
+      "1/45"
+    ]
+  },
+  "uniform_budgets": {
+    "kind": "inline",
+    "value": [
+      "200050001/7200000000",
+      "30001/360000",
+      "50009/360000"
+    ]
+  },
+  "uniform_score_lower": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "9999/10000",
+      "9999/10000",
+      "9999/10000",
+      "9999/10000"
+    ]
+  },
+  "coordinates": {
+    "kind": "inline",
+    "value": [
+      "E5-g*q5",
+      "E15-g*q15",
+      "E27",
+      "Ege4",
+      "E5deep",
+      "E15deep",
+      "omega"
+    ]
+  },
+  "exhaustive_vertices": {
+    "path": "content/011-exhaustive_vertices.json",
+    "sha256": "4a230af4535a90bc3775bff304eee9174e7ef5d87bc10ae00a465c3c00c0af21",
+    "kind": "value"
+  },
+  "cut_candidates": {
+    "path": "content/012-cut_candidates.json",
+    "sha256": "d0e1d252eba4e5b5546f1aac112e157ac44a8f27eeacd5ff7aa416ef63301a51",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/013-selected_support.json",
+    "sha256": "9d49ec2cf8327920acc1fa553dc3e2d0d8d3a399632b6e5d6550586511d77380",
+    "kind": "value"
+  },
+  "uniform_complete_upper": {
+    "kind": "inline",
+    "value": "21719638057873309713367061660960047/13922097554992082355900000000000000"
+  },
+  "face_complete_upper": {
+    "kind": "inline",
+    "value": "18079750684152397381/11601941328182205000"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "8099610634705301371560553653349/4640699184997360785300000000000000"
+  },
+  "upper_rational_comparison": {
+    "kind": "inline",
+    "value": "157/100"
+  },
+  "margin_below_comparison": {
+    "kind": "inline",
+    "value": "138055103464259585395938339039953/13922097554992082355900000000000000"
+  },
+  "actual_finite_example": {
+    "kind": "inline",
+    "value": {
+      "height": 12,
+      "sigma": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "rho": "156083618015809532761042909399/828565439352138357242506259765625000",
+      "r": "0",
+      "q": [
+        "1/69206436005",
+        "1/69206436005"
+      ]
+    }
+  },
+  "full_radius_checked_constants": {
+    "kind": "inline",
+    "value": {
+      "delta": "2/27",
+      "rho": "1/2600",
+      "rbar": "1/520",
+      "h1min": "80/243",
+      "v0": "1/20",
+      "v1": "22987/374400",
+      "gap": "6133/568620",
+      "tbar": "58/19",
+      "Cbar": "415/93",
+      "kbar": "160/77",
+      "budget_increments": [
+        "137/26244",
+        "1/486",
+        "1/54"
+      ],
+      "c": [
+        "97/135",
+        "499/1215",
+        "22/81",
+        "22/243"
+      ],
+      "H": [
+        "1847/14580",
+        "1519/13122",
+        "91/1215",
+        "1619/65610"
+      ],
+      "positive7": "28373/340200"
+    }
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 375000
+  },
+  "rational_comparisons": {
+    "kind": "inline",
+    "value": 12
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary continuum theorem plus exhaustive exact arithmetic for one original complete AP cost, uniformly over actual concentrated sources with sigma<=1/10000, rho<=1/100000 and r<=1/520. Both K orientations and every feasible beta distribution are included by group domination and relabeling; all original heads, common q polygon, seven residual coordinates and infinite exponent tails are retained. No global K improvement, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

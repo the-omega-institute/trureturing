@@ -1,0 +1,160 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-ap-survival-denominator-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/uniform_k_neighborhood_cost.py": "2868fc48d2b02e889402f7c2cbf89cd4236d28a3d575b53cf3cbdf48cd2dd781",
+      "frontier/uniform_mean_cost_portfolio.py": "80a69842341990cf1eabf0e278c0cd79646440c4e449cd684db33a471c86c7e6",
+      "certificates/source_norms/whole_block_mean_survival.json": "909d3aa9ef603b8f066bf64ced71309f51959a6b251781c89f1b7b15f633e5ae",
+      "certificates/source_norms/endpoint_k_face_forced27.json": "8f4c5fe37ed46d45c914f21872b2e4d00a2091adf028a0497cdd1817f82f8da0",
+      "frontier/complete_off_face_cost.py": "6ab17509f6946409cef6b431cdfb316cc35c9055d21de93eb2906c723d93e234",
+      "frontier/shared_budget_affine_tail.py": "0b0a509626dda7f44ecccf56825c2a3027fce2e4269c64a0419e65da3bce1136",
+      "frontier/actual_five_slot_source_modulus.py": "dab8cbce31dd85d8a6476c1b13a8146159ff748fa6ce94d78775febf4f3832c0",
+      "certificates/source_norms/uniform_k_neighborhood_cost.json": "69cf1b2ccfc8ac27bec748a0f3738092a6283646c69ce872c6b02543ee4162c4",
+      "certificates/source_norms/whole_cost_mean_stop_loss.json": "d535a2f69617536a06655c61a1166813bfd2ce3e17416fc329dcead0ba3201da",
+      "frontier/finite_source_face_transport.py": "aa4099317ddf1b7cca16df4916166b1399d0b6e44cbe6459dde081075db8d332",
+      "frontier/joint_deep_mean_transport.py": "a63225e637c6e926e80b04822ab8c83b79f8b99d3069b283375838df69ea4534",
+      "frontier/complete_off_face_omitted_tails.py": "0dc92761c65f6729dfe45770b02dae327d5ddfa1d4b0a79dcc45fb9deb8b81f8",
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/broad_weighted_identity_source.py": "e0a89669a6b8b6ff732391b4c27dddd21bf5517f8a37928120e75955349dd98f",
+      "frontier/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645"
+    }
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/10000",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "59999/180000",
+      "v0": "7/40000",
+      "v1": "539997/2399960000",
+      "gap": "9977/450000",
+      "tbar": "10001/4998",
+      "Cbar": "60002/15997",
+      "kbar": "59999/29998",
+      "budget_increments": [
+        "16667/2400000000",
+        "1/360000",
+        "1/40000"
+      ],
+      "c": [
+        "28001/40000",
+        "360013/900000",
+        "40001/150000",
+        "40001/450000"
+      ],
+      "H": [
+        "25052499/500000000",
+        "150031667/1500000000",
+        "6001/90000",
+        "800119999/36000000000"
+      ],
+      "positive7": "259789/4200000"
+    }
+  },
+  "coordinates": {
+    "kind": "inline",
+    "value": [
+      "E5-g*q5",
+      "E15-g*q15",
+      "E27",
+      "Ege4",
+      "E5deep",
+      "E15deep",
+      "omega"
+    ]
+  },
+  "fixed_cut_candidates": {
+    "kind": "inline",
+    "value": [
+      [
+        8,
+        6,
+        6,
+        5
+      ],
+      [
+        10,
+        10,
+        10,
+        10
+      ],
+      [
+        12,
+        12,
+        12,
+        12
+      ]
+    ]
+  },
+  "cost_results": {
+    "path": "content/005-cost_results.json",
+    "sha256": "65fb5336fadf9f9d0b58d3e37a77c9c01569511c9aa63c14fdf66fcdea6662f2",
+    "kind": "array"
+  },
+  "shared_finite_cost": {
+    "path": "content/006-shared_finite_cost.json",
+    "sha256": "1827f012ad3cbc17785d107716c6c88f2c9607e4da84758bac20a22da59b8d62",
+    "kind": "value"
+  },
+  "H1": {
+    "path": "content/007-H1.json",
+    "sha256": "c8ebc32940a35d47d0ee33d149c18c17a88bd1bf8ba9f38521f2b23d97422d2c",
+    "kind": "value"
+  },
+  "zero_H1": {
+    "path": "content/008-zero_H1.json",
+    "sha256": "7a0d9e7bf6648d49db5f92430ff824a79fb9b269730f93168de0fe7cf702aa85",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_H1_coefficient": "1/7986",
+      "remaining_S_coefficient": "1/87846"
+    }
+  },
+  "S_lower": {
+    "kind": "inline",
+    "value": "264899/1800000"
+  },
+  "combined_mass_coefficient": {
+    "kind": "inline",
+    "value": "614921/614922"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "91885945376775823449884846527429/1153099411660494594450000000000000"
+  },
+  "zero_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "uniform_denominator_loss": {
+    "kind": "inline",
+    "value": "163438302692423840040153472571/1153099411660494594450000000000000"
+  },
+  "positive_head_evaluations": {
+    "kind": "inline",
+    "value": 1875000
+  },
+  "zero_head_evaluations": {
+    "kind": "inline",
+    "value": 625000
+  },
+  "rational_comparisons": {
+    "kind": "inline",
+    "value": 80
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete source-uniform AP11/AP13 denominator on134 actual K neighborhood, both orientations and whole beta face. Four AP11 blocks, separate AP13 U4, all count and exponent tails retained. Five costs share one q and one residual coordinate. H1 transports75 adopted label caps. Exact111 denominator recovered at zero radius. Ordinary proof plus rational verification; no Lean, full numerator, global K or unrestricted Erdos7 claim."
+  }
+}

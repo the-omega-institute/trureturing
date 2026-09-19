@@ -1,0 +1,241 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-source-deficits-v1"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "102715/2916"
+  },
+  "source_comparison_barrier": {
+    "kind": "inline",
+    "value": "45"
+  },
+  "predecessor_H16": {
+    "kind": "inline",
+    "value": "62105726056910993/940100384223000"
+  },
+  "predecessor_H41": {
+    "kind": "inline",
+    "value": "138463094971779285596846788846625500699/933733674416003479362197458605000000"
+  },
+  "H41_increase": {
+    "kind": "inline",
+    "value": "254374752977690590476788497009/32345410191822068673772440000"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "31623610525587809/470050192111500"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "178944068667597492407421033833838271159/1145945873146913361035424153742500000"
+  },
+  "cG": {
+    "kind": "inline",
+    "value": "23559508993421/769588792096410"
+  },
+  "A81": {
+    "kind": "inline",
+    "value": "3302895385270708541/2448027743712364814"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "257787510372387370702237634438495708893436047/596448832486283607258003870271985343336000"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "16576626808033653103/111216316031036073"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "2883297827951118028284278009969928743/29939333273322567008721948589573125"
+  },
+  "combined": {
+    "kind": "inline",
+    "value": "2927018573453057402458694077259604877035833273/5538453444515490638824321652525578188120000"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "15447272417/31495117500"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "41814413058613945190957053256431879440845686628489/212420856931647549007335241080025050847470000000",
+      "Gamma13": "118448789027151445373164783/1820847428099626466665125",
+      "T13_81": "2612426325914840837704891711933985513567/27663943944550051916059080496765567500",
+      "combined": "61870362420214903690613896560174271741634456816489/212420856931647549007335241080025050847470000000"
+    }
+  },
+  "survival_D_coefficient": {
+    "kind": "inline",
+    "value": "7938708479/15747558750"
+  },
+  "minimum_margins": {
+    "kind": "inline",
+    "value": {
+      "bound": "0",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "0"
+    }
+  },
+  "combined_target_gain": {
+    "kind": "inline",
+    "value": "565407204153520525317262786712813955090548/30832069137091067419830983658013665841132875"
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "16576626808033653103/111216316031036073",
+      "rho13": "15447272417/31495117500",
+      "D13": "733471200000/15447272417"
+    }
+  },
+  "fallbacks": {
+    "path": "content/020-fallbacks.json",
+    "sha256": "95621e2d3589a05351dd2ca9f8cb15ba5c3eee2c48f78b60d0b87873a9beb85a",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/021-core_errors.json",
+    "sha256": "17405fbbfc90406b7d19b827e094fd24b8cc3f9f962918baf6e593148b2822e2",
+    "kind": "value"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": {
+      "bound": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "Gamma13": [
+        386,
+        592
+      ],
+      "T13_81": [
+        386,
+        592
+      ],
+      "combined": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ]
+    }
+  },
+  "consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "consumer_target_margin_checks": {
+    "kind": "inline",
+    "value": 5184
+  },
+  "predecessor_consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "fallback_checks": {
+    "kind": "inline",
+    "value": 8
+  },
+  "complete_core_checks": {
+    "kind": "inline",
+    "value": 2
+  },
+  "consumer_margin_sha256": {
+    "kind": "inline",
+    "value": "20235e55c859080bb35aebeb0cc153adb4d119fa290e4a8706fa6ccac4560053"
+  },
+  "row_sha256": {
+    "kind": "inline",
+    "value": "a3ead177f78b7914c37032cb835ea85cc25b7bbd8d72fa6ba6973ecf16151743"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary same-law raw-mass inequalities and exact rational arithmetic. All finite original heights and independent labels retained. Negative Q, arbitrary later-prime continuation and unrestricted Erdos7 remain open."
+  },
+  "source_profiles": {
+    "kind": "inline",
+    "value": {
+      "margin_checks": {
+        "source": 129600,
+        "quadratic": 648000,
+        "linear": 531360
+      },
+      "source_margin_sha256": "8751c5ef93b7f0a8ce360544fe8a526614179b1a0a3dc9e0b754d71e79a2db3d",
+      "quadratic_margin_sha256": [
+        "ab6a4b220d3973af99d6c859180969094f29ed74e10c69d215bd9502523920e9",
+        "bc826a27fc3b1a5c6b030ffb625742e7fa6115c091ce4bcd8128c968d4bdda98",
+        "924608c67a73bcc9bf8dc43b9dd471ac5c64dff3842797e3f9fb7ec42d715c20",
+        "66d862dba27a595445d319361c074237b804cf0a2f8da3ef8a1147e3a81394de",
+        "2e336e6641d60e059d490169d33f1c1708d5f140dc5323fa8434c13c76b2adfb"
+      ],
+      "linear_margin_sha256": "986fba4fae5bb7fbb6a33b5867d73be22483662719eac1cc975ba66334a5f679",
+      "linear_tail_weight": "94212612766226/1174116234095805",
+      "quadratic_tail_weight": "1600217/12882870"
+    }
+  },
+  "linear_refinement": {
+    "path": "content/032-linear_refinement.json",
+    "sha256": "d5e00f52de00f82d898cbf067cb9b09fba9e27644765eb89020a5773ec0e6eff",
+    "kind": "object"
+  },
+  "square_barrier_refinement": {
+    "path": "content/033-square_barrier_refinement.json",
+    "sha256": "6981a1f8b84bf119e6f6ed5f2ff8f2d77a3a8618c7e23fddb0990397edfbe0cf",
+    "kind": "value"
+  },
+  "source_profile_sha256": {
+    "kind": "inline",
+    "value": "06820efd31fb6fa50e72a95f52aef3c586f8355e5909dc1bdd1a93179ed7da25"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+      "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+      "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+      "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+      "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70",
+      "frontier/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained_five_tests.json": "3fac691eb1f3081ab54559a0c396a88abd244efc73e4b6ca1875753a50b8dbc4",
+      "frontier/verify_retained_five_tests.py": "920dd25084bb7670149e7c23ad5057b408326a4c937ce69630ca3889b4ca5f23",
+      "frontier/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+      "certificates/source_norms/retained_quadratic_tests.json": "cfcac117e8988e6b3e37dfde961e6f35cb64a05aab700c09297424dadd534e29",
+      "frontier/verify_retained_quadratic_tests.py": "2ba3c805a4cad11c9a004782e8104c01f7a8c0f9bf06058f8f80da55e772d31f"
+    }
+  },
+  "helper_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+      "frontier/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+      "frontier/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+      "frontier/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "01accc355e7fc50ee313b08c948874d83252fabcdd08f6dfd4ff533f6f440d5e"
+  }
+}

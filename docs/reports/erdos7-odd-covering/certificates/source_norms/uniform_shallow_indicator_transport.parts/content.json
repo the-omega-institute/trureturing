@@ -1,0 +1,53 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-shallow-indicator-transport-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/uniform_k_neighborhood_cost.py": "2868fc48d2b02e889402f7c2cbf89cd4236d28a3d575b53cf3cbdf48cd2dd781",
+      "frontier/uniform_ap_survival_denominator.py": "5d1da05fd2e805761d92bc2b0bdd698df9d463e782f299d0f5696fb73bd2d3a5",
+      "frontier/uniform_square_and_raw81_neighborhood.py": "999fcf90320c04e21de34a7228d00fc8f9682318e9054bf0502d67a23e0285fc",
+      "frontier/finite_source_face_transport.py": "aa4099317ddf1b7cca16df4916166b1399d0b6e44cbe6459dde081075db8d332",
+      "frontier/broad_weighted_identity_source.py": "e0a89669a6b8b6ff732391b4c27dddd21bf5517f8a37928120e75955349dd98f",
+      "frontier/complete_off_face_cost.py": "6ab17509f6946409cef6b431cdfb316cc35c9055d21de93eb2906c723d93e234",
+      "frontier/complete_off_face_factorial_tail.py": "8447e1cd50d6452a881413067858188344d22631c7b73b74734b3006a244d047",
+      "frontier/complete_off_face_omitted_tails.py": "0dc92761c65f6729dfe45770b02dae327d5ddfa1d4b0a79dcc45fb9deb8b81f8",
+      "frontier/quantitative_forced27.py": "63010b29185482dea406386e18e12635d4879641fe839e69377555042cdaada2",
+      "frontier/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/shared_budget_affine_tail.py": "0b0a509626dda7f44ecccf56825c2a3027fce2e4269c64a0419e65da3bce1136",
+      "frontier/actual_five_slot_source_modulus.py": "dab8cbce31dd85d8a6476c1b13a8146159ff748fa6ce94d78775febf4f3832c0",
+      "frontier/uniform_mean_cost_portfolio.py": "80a69842341990cf1eabf0e278c0cd79646440c4e449cd684db33a471c86c7e6",
+      "certificates/source_norms/whole_block_mean_survival.json": "909d3aa9ef603b8f066bf64ced71309f51959a6b251781c89f1b7b15f633e5ae",
+      "certificates/source_norms/endpoint_k_face_forced27.json": "8f4c5fe37ed46d45c914f21872b2e4d00a2091adf028a0497cdd1817f82f8da0",
+      "certificates/source_norms/uniform_ap_survival_denominator.json": "d3beb15523a41e2437e995d5747bed3b9d39dcb113024cf4eb3b966fc0e571f9",
+      "frontier/uniform_quadratic_cost_portfolio.py": "b048b643172621a583e12efbccf0d7a2b64167799b87d2887aa4cbee3058460c",
+      "frontier/k_face_complete_ratio.py": "d856e5c2face117c993b7bd308903a3fb149293d254046f76b6ff5f42ec9b478",
+      "certificates/source_norms/k_face_complete_ratio.json": "7041b3c1b2d61e2063c2c97f89daccbd65b75b444a296bbc8badf4b8ffa8e426",
+      "certificates/source_norms/whole_quadratic_same_head.json": "b77b50ff8961dcfafaefdb004b538a1a2409e69944f894048ae25b1ae0bede3a",
+      "frontier/k_face_common_seven_hinges.py": "8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97"
+    }
+  },
+  "face_audit": {
+    "path": "content/002-face_audit.json",
+    "sha256": "b56454211efed3674d6b32749474cff58510da0253543869ea5b28f412d92c13",
+    "kind": "object"
+  },
+  "actual_source_checks": {
+    "path": "content/003-actual_source_checks.json",
+    "sha256": "0d2c2b729a055a855cab09ecf7422b06a90f3a13e177f76fa68a5cc6ba724571",
+    "kind": "value"
+  },
+  "radius_results": {
+    "path": "content/004-radius_results.json",
+    "sha256": "698419fe0a0081f8e44fd804d98866b0133768c112eed67214c27f274f4d9b23",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary independent-cylinder transport using the actual simultaneous DP14 identities, frozen source-only capacity duals and one actual residual. All47 independent shallow layouts and3 first-beta cells; complete H1 and positive weighted LCM tails. No new global K, actual relaxation attainment, Lean or unrestricted Erdos7 claim."
+  }
+}

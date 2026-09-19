@@ -1,0 +1,77 @@
+{
+  "length": 5631,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "244dcd34e5765d956a91982fb9657c72f2f3990b0f8e36d6d881e27c1ed06128",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/000798-001596.json",
+        "sha256": "53dff02b813efe64317550ac59c3ae873d21fc045dc1b8b95178d081bbafc759",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/001596-002394.json",
+        "sha256": "f7273a015e2962c3ba2b4ce4d9db9efd23a8ba9623b193b8c42a4fc3d3f94ed5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/002394-003192.json",
+        "sha256": "b5aa66cd4520c8af54bba6ade4790206430c334d89c20d9f984104aadea1d0b9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/003192-003990.json",
+        "sha256": "200be1a3b164c5aae2fa069735998ef4e36dd041fe96daa9d027042db1ef11b5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/003990-004788.json",
+        "sha256": "29471613c0a49826c29d7c846a724d12b6d11b443f19febc34323c300d1b7529",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/004788-005586.json",
+        "sha256": "f78782b39f678242f2adb8f37aba91806589b417306cc40e661c883b94b1bf23",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 5631,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/005586-005631.json",
+        "sha256": "eb48721b03216acdbd449669c1ccb3f1819357cc5cbba3dbc911c3f10a18cf6a",
+        "kind": "value"
+      }
+    }
+  ]
+}

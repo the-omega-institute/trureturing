@@ -1,0 +1,192 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-whole-quadratic-same-head-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "46af0896728e763f88e8d3bdc66421e9b5fff5e0da1596e6bb650a81935300e3",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "quadratic_results": {
+    "path": "content/007-quadratic_results.json",
+    "sha256": "4146aaf464eebf7a0d98354d81c9d7e05a1fd717bb8651ed7a3acf7a7a863ccb",
+    "kind": "array"
+  },
+  "joint_layout_checks": {
+    "kind": "inline",
+    "value": 1250000
+  },
+  "joint_objectives_sha256": {
+    "kind": "inline",
+    "value": "df52e7543a1fe820cc67baf1408bfbcc9849bab963c803b59fd364f09af0e05a"
+  },
+  "factorial_head_scale": {
+    "kind": "inline",
+    "value": 5400
+  },
+  "common_objective_scale": {
+    "kind": "inline",
+    "value": 66706983000
+  },
+  "factorial_head_components_sha256": {
+    "kind": "inline",
+    "value": "e7f15402f20cc35b0a7fde7c41635de3336993395c2ca42b3f2382a8904a54c7"
+  },
+  "complete_tail_distinct_pairs": {
+    "kind": "inline",
+    "value": "2539/3600"
+  },
+  "cost_weights": {
+    "path": "content/014-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "direct_cost_upper_bounds": {
+    "path": "content/015-direct_cost_upper_bounds.json",
+    "sha256": "f8002bc8229936a001aecb43191127a453906e43babd1589107e7c8016094529",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/016-majorants.json",
+    "sha256": "e3f998c44df56443659de6aee4d9d0bf2a71fb48852da934d7f3cd3e3e02daff",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/017-improved_cost_bounds.json",
+    "sha256": "f8002bc8229936a001aecb43191127a453906e43babd1589107e7c8016094529",
+    "kind": "value"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "374/75"
+  },
+  "direct_numerator_improvement_over111": {
+    "kind": "inline",
+    "value": "829414479633015302854496767913693428057/3790110501206299971744011718750000000000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "total_numerator_improvement_over111": {
+    "kind": "inline",
+    "value": "829414479633015302854496767913693428057/3790110501206299971744011718750000000000"
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "138926206317862779142362029175860155778966279743/3952702451597549034231858077472656250000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "2524547854381128907264555471562966542931/72277987686355182340239690559500000000"
+  },
+  "AP11_block_results": {
+    "path": "content/027-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "716020231464391949601467270622222202138228324564859/1550226018570636964494686632704752572265625000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "3253808038485254109147885098089939401708907/7086747513465768980547138892364583187500"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "829414479633015302854496767913693428057/302556164876302842880748419921875000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary uniform result on both complete actual saturated K faces. Positive hinge terms and the whole factorial head of each original quadratic cost use one original layout; different cost tests remain independent. Complete polynomial tails, all old/seven pair complements, all52 signed costs and the whole111 denominator are retained. The raw81n1 row with negative middle hinges keeps its old bound. No off-face extension, new global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

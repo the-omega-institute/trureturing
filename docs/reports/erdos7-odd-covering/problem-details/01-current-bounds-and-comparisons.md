@@ -490,7 +490,7 @@ improved moment bound to the other low configurations, and obtaining
 a general tail continuation, remain open.
 
 For another explicit75-point low configuration, [retaining actual
-seven-digit positions](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-seven-digit-positions-at-arbitrary357-heights)
+seven-digit positions](../marked_head_profile.md#actual-seven-digit-positions-at-arbitrary357-heights)
 gives `Gamma<=105976769844774468812903/2920804491373837228125`
 `<36.283418<3849/106`, also at arbitrary finite original3/5/7 heights.
 Its point weights can differ within the old45 fibres. One square bound

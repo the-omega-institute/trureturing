@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "a81892ca70b51a8402c67ffca901c7acf57fa993b9deeccf0037b6eaaec70ff8",
+  "parts_directory": "survival_hinge_deficit.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "698da280527f072f34778289defef0dead03dc0a9936b65709932dc9b86a36df",
+    "kind": "object"
+  }
+}

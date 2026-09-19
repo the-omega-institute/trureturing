@@ -1,0 +1,24 @@
+{
+  "codec": {
+    "kind": "inline",
+    "value": "exact-rational-table-rle-duals-v1"
+  },
+  "inequality_count": {
+    "kind": "inline",
+    "value": 6354
+  },
+  "equality_count": {
+    "kind": "inline",
+    "value": 18
+  },
+  "rational_table": {
+    "path": "content/020-encoded_rational_duals/003-rational_table.json",
+    "sha256": "c5dc56fc9c912a05da3a63e19546a4fc9e57f5a11337146eee090f230e7f739a",
+    "kind": "array"
+  },
+  "dual_buckets": {
+    "path": "content/020-encoded_rational_duals/004-dual_buckets.json",
+    "sha256": "d6ef934d731d4604556f387fd52f67418ddf2bb9b4d017932634b7334935b32e",
+    "kind": "object"
+  }
+}

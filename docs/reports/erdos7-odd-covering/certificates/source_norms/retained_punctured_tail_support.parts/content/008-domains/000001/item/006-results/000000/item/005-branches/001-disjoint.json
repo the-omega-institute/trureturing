@@ -1,0 +1,32 @@
+{
+  "dual_key": {
+    "kind": "inline",
+    "value": "c34177cdfc4d573986d2a59f06baae459e1f673f22cd334469e08fc879024408"
+  },
+  "original_raw_dual_upper": {
+    "kind": "inline",
+    "value": "8292464929114796540687049943701718057/2913167994208453627395750000000000000"
+  },
+  "original_face_branch_upper": {
+    "kind": "inline",
+    "value": "418676066732173500325465046009946387539/78655535843628247939685250000000000000"
+  },
+  "complete_row_record": {
+    "path": "content/008-domains/000001/item/006-results/000000/item/005-branches/001-disjoint/003-complete_row_record.json",
+    "sha256": "f477b9058676aac5484a83cf4b9d4c8fc2142a3ae6b76a8bafff65ff07a887ca",
+    "kind": "value"
+  },
+  "support_choice": {
+    "path": "content/008-domains/000001/item/006-results/000000/item/005-branches/001-disjoint/004-support_choice.json",
+    "sha256": "a9cc812d6a55a5fb5580bfb6ec48c63539b2223e37e0afb5c660532e553d2254",
+    "kind": "object"
+  },
+  "fixed_controller_row_and_tail_upper": {
+    "kind": "inline",
+    "value": "58253021552462327142000734975687905729037/9747566042003093417398084800000000000000"
+  },
+  "increment_over_face_branch_upper": {
+    "kind": "inline",
+    "value": "145864270944995174757047342798434084811/223288684843885938341064000000000000000"
+  }
+}

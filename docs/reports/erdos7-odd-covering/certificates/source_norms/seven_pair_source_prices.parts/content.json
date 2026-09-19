@@ -1,0 +1,35 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-seven-pair-source-prices-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "4ffdf3dbbd5e7a61fb2727c5bc35527bd31c3eba815fea4cf45a95d3dc588d91",
+    "kind": "value"
+  },
+  "source_coefficients": {
+    "path": "content/002-source_coefficients.json",
+    "sha256": "400a27639a613c1c2faf77b614d768cafafd9eb77d991a686afe58c99cde8e58",
+    "kind": "value"
+  },
+  "raw_mass_polynomial": {
+    "path": "content/003-raw_mass_polynomial.json",
+    "sha256": "8daf42282795e8670418243451762aa6403fff1fed33ab7d57636860e5863bec",
+    "kind": "value"
+  },
+  "source_radius_examples": {
+    "path": "content/004-source_radius_examples.json",
+    "sha256": "c270227ef4c158aa975b0b652055a4f1baebfd10b6594f37ce2ce0500b8729ff",
+    "kind": "array"
+  },
+  "complete157_consumer": {
+    "path": "content/005-complete157_consumer.json",
+    "sha256": "e127d676bb5227590d934ae88921fce3677e99defa6904eb664d54a2fc249d10",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary actual-source price vectors for the entire positive-seven complement and both seven-containing factorial pair subseries on0<=sigma<=delta<=2/27. Complete geometric series reconstructed from the original definitions; one156 joint source price in the complete157 signed comparison. Every old-old defect-min tail, finite head, original52 test and the one residual is unchanged. No original-family attainment, new globalK, Lean theorem or unrestricted Erdos7 resolution."
+  }
+}

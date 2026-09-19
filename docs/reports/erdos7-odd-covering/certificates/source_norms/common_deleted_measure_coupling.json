@@ -1,0 +1,150 @@
+{
+  "schema": "erdos7-common-deleted-measure-coupling-v1",
+  "source_sha256": {
+    "frontier/source_cost_endpoint_attainment.py": "b7daf5ab9c8656d922681e298b030c199c5f9bcc36af7a43e84a5bef156fb68f",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "nested_moments": {
+    "0": "1",
+    "1": "15/8",
+    "2": "45/8",
+    "3": "3795/128",
+    "4": "4275/16",
+    "5": "965055/256"
+  },
+  "joint_cost_moment_constants": {
+    "(1, 1)": "2227/640",
+    "(1, 2)": "13481/320",
+    "(2, 1)": "13481/320",
+    "(2, 2)": "884579/1280"
+  },
+  "cases": [
+    {
+      "height": 3,
+      "mode": "canonical",
+      "S": "15017/87750",
+      "D": "22501/135000",
+      "virtual_mass": "21318/214375",
+      "deleted_mass": "323/3250",
+      "measure_gap": "323/5573750",
+      "seven_cap_loss": "323/5573750",
+      "overlap_loss": "0",
+      "cost_integrals_virtual_then_true": {
+        "h4": [
+          "9272/214375",
+          "2318/53625"
+        ],
+        "h5": [
+          "2698/91875",
+          "9443/321750"
+        ],
+        "square": [
+          "180842/643125",
+          "90421/321750"
+        ],
+        "joint": [
+          "14410493/1061156250",
+          "14410493/1061775000"
+        ]
+      },
+      "bounded_point_checks": 10956,
+      "joint_second_moment_bound": "8364076331/13939200000"
+    },
+    {
+      "height": 3,
+      "mode": "overlap",
+      "S": "15869/64350",
+      "D": "22501/135000",
+      "virtual_mass": "45182/643125",
+      "deleted_mass": "23083/965250",
+      "measure_gap": "76711123/1655403750",
+      "seven_cap_loss": "3069998/275900625",
+      "overlap_loss": "33989/965250",
+      "cost_integrals_virtual_then_true": {
+        "h4": [
+          "0",
+          "0"
+        ],
+        "h5": [
+          "0",
+          "0"
+        ],
+        "square": [
+          "228/8575",
+          "1927/107250"
+        ],
+        "joint": [
+          "57/214375",
+          "1927/10725000"
+        ]
+      },
+      "bounded_point_checks": 10956,
+      "joint_second_moment_bound": "8364076331/13939200000"
+    },
+    {
+      "height": 3,
+      "mode": "cap-loss",
+      "S": "913/3375",
+      "D": "22501/135000",
+      "virtual_mass": "21318/214375",
+      "deleted_mass": "0",
+      "measure_gap": "21318/214375",
+      "seven_cap_loss": "21318/214375",
+      "overlap_loss": "0",
+      "cost_integrals_virtual_then_true": {
+        "h4": [
+          "9272/214375",
+          "0"
+        ],
+        "h5": [
+          "2698/91875",
+          "0"
+        ],
+        "square": [
+          "180842/643125",
+          "0"
+        ],
+        "joint": [
+          "14410493/1061156250",
+          "0"
+        ]
+      },
+      "bounded_point_checks": 10956,
+      "joint_second_moment_bound": "8364076331/13939200000"
+    },
+    {
+      "height": 3,
+      "mode": "scrambled",
+      "S": "115876/482625",
+      "D": "22501/135000",
+      "virtual_mass": "86614/1929375",
+      "deleted_mass": "14683/482625",
+      "measure_gap": "11976061/827701875",
+      "seven_cap_loss": "11276341/827701875",
+      "overlap_loss": "136/160875",
+      "cost_integrals_virtual_then_true": {
+        "h4": [
+          "41656/1929375",
+          "9452/482625"
+        ],
+        "h5": [
+          "28276/1929375",
+          "983/74250"
+        ],
+        "square": [
+          "2432/25725",
+          "83497/965250"
+        ],
+        "joint": [
+          "402404/63669375",
+          "6088067/1061775000"
+        ]
+      },
+      "bounded_point_checks": 10956,
+      "joint_second_moment_bound": "8364076331/13939200000"
+    }
+  ],
+  "scope": "Exact finite probes and complete moment constants. Universal claims are supplied by the ordinary proof; no positive uniform gain or global K target is inferred from these probes."
+}

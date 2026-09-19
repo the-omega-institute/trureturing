@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "51aef7270e9f585a5ae3b7d921326358053e2f076f03715f8b8631f820b84ecc",
+  "parts_directory": "whole_face_stop_loss_generator.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "d7bce5813f37b8bd4d8696a76c0acf73df806d7d87c58c1395a1b61edf28e46c",
+    "kind": "object"
+  }
+}

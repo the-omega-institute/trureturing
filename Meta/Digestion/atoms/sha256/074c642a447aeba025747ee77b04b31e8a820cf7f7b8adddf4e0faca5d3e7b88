@@ -1,0 +1,35 @@
+**证明。** 在 $E=P_r/\ker H_r$ 上取 Gram 内积，并仍以 $e_j$ 表示各次插入。由平坦性，次数小于 $r$ 的系数串之类已张成 $E$。用形式多项式表示系数串，对 $\deg p<r$ 定义
+$$
+C[p]=[xp].
+$$
+若 $[p]=0$，则对任意 $\deg q<r$，Hankel 配对给
+$$
+\langle[xp],[q]\rangle_E=\langle[p],[xq]\rangle_E=0.
+$$
+这批 $[q]$ 张成 $E$，故 $[xp]=0$，定义良好。同一等式给自伴性。若 $p$ 的系数向量为 $v\in U^r$，则
+$$
+\langle[p],C[p]\rangle_E=\langle v,S_{r-1}v\rangle\ge0,
+$$
+故 $C\succeq0$。取 $J=e_0$，逐次插入给 $C^jJ=e_j$ 对 $j\le r$ 成立；将 $k\le2r$ 分成两个至多为 $r$ 的指标，Gram 配对便给全部矩匹配。
+
+对任一匹配偶数前缀的自伴实现，其次数小于 $r$ 及次数至多 $r$ 的 Krylov 空间维数分别为 $\operatorname{rank}H_{r-1}$ 和 $\operatorname{rank}H_r$。前者包含于后者，而维数相等，故二者相同。该共同空间包含输入，且在演化下不变。将其按共同 Gram 配对与 $E$ 等距识别后，演化在生成元 $e_j$、$j<r$ 上都满足 $e_j\mapsto e_{j+1}$，所以正好是上述 $C$；全部未来因而相同。
+
+为证明式(137.23)，观察
+$$
+H_r=\begin{pmatrix}G&h\\h^*&M_{2r}\end{pmatrix}\succeq0.
+$$
+若 $v\in\ker G$，则 $(v,0)$ 在此正算子下二次型为零，故 $h^*v=0$。于是 $\operatorname{ran}h\subseteq(\ker G)^\perp=\operatorname{ran}G$，方程 $GR=h$ 可解。对该块矩阵作可逆合同变换得到
+$$
+\begin{pmatrix}I&0\\-R^*&I\end{pmatrix}
+H_r
+\begin{pmatrix}I&-R\\0&I\end{pmatrix}
+=\begin{pmatrix}G&0\\0&M_{2r}-R^*GR\end{pmatrix}.
+$$
+平坦秩迫使右下块为零。因此商中的插入满足 $e_r=e_{<r}R$，其中 $e_{<r}(v_0,\ldots,v_{r-1})=\sum_{j<r}e_jv_j$。于是
+$$
+J^*C^{2r+1}J=e_r^*Ce_r
+=R^*e_{<r}^*Ce_{<r}R
+=R^*S_{r-1}R.
+$$
+左端已由规范实现唯一确定，故右端与解 $R$ 的选择无关。$\square$
+

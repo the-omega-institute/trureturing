@@ -1,0 +1,33 @@
+**定义 1.1（读数字典与两侧范数）。** 设 $V$ 为有限维实向量空间，$m\ge1$，实际可调用的读数字典为 $q_1,\ldots,q_m\in V^*$。取正权重 $w_i>0$，定义
+
+$$
+Q:V\longrightarrow\mathbb R^m,
+\qquad Qv=(q_i(v))_{i=1}^m,
+$$
+
+$$
+\|z\|_{\infty,w}=\max_{1\le i\le m}\frac{|z_i|}{w_i},
+\qquad p_Q(v)=\|Qv\|_{\infty,w}.
+\tag{1.1}
+$$
+
+系数侧使用
+
+$$
+\|a\|_{1,w}=\sum_{i=1}^m w_i|a_i|,
+\qquad
+Q^*a=\sum_{i=1}^m a_iq_i.
+\tag{1.2}
+$$
+
+对线性目标 $h\in V^*$，记
+
+$$
+\Gamma_w(h)=\inf\{\|a\|_{1,w}:Q^*a=h\},
+\tag{1.3}
+$$
+
+空可行集的值为 $+\infty$。字典的可表示目标空间为 $E=\operatorname{ran}Q^*=\operatorname{span}\{q_1,\ldots,q_m\}$。系数 $a_i$ 可以为负，权重与成本均非负；带负系数的表示只是一项线性恒等式，不由此成为概率混合或物理准备。
+
+这里的 $w_i$ 确定一个具体盒形噪声单位：$\|e\|_{\infty,w}\le\epsilon$ 等价于 $|e_i|\le\epsilon w_i$。当系数价格也取 $w_i$ 时，价格与噪声放大具有下述精确对偶。独立指定的实验费用不必采用这组权重；第 4 章分别处理两种计价。
+

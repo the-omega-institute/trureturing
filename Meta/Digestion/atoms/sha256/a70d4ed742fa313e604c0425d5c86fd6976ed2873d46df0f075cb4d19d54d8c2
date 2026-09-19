@@ -1,0 +1,38 @@
+### 126.7 静态边界消元恰取记忆核的积分
+
+对固定边界值 $x$，二次能量为
+
+$$
+E(x,h)=\frac12\langle x,Ax\rangle_U+\langle x,Bh\rangle_U
++\frac12\langle h,Ch\rangle_H.
+$$
+
+因 $C>0$，配方给
+
+$$
+\begin{aligned}
+E(x,h)
+={}&\frac12\langle x,(A-BC^{-1}B^*)x\rangle_U\\
+&+\frac12\langle h+C^{-1}B^*x,
+ C(h+C^{-1}B^*x)\rangle_H.
+\end{aligned}
+$$
+
+所以唯一静态内部解是 $h_*(x)=-C^{-1}B^*x$，有效边界能量及响应算子由
+
+$$
+\boxed{S_{\mathrm{stat}}=A-BC^{-1}B^*}
+$$
+
+给出；若 $\mathsf L\ge0$，则 $S_{\mathrm{stat}}\ge0$。
+
+有限维正定性提供某个 $c_0>0$，使 $C\ge c_0I$。因此 $\|e^{-tC}\|\le e^{-c_0t}$，下列积分在算子范数下收敛。由谱定理逐个正特征值积分，或积分 $\frac{d}{dt}e^{-tC}=-Ce^{-tC}$，有
+
+$$
+\int_0^\infty e^{-tC}\,dt=C^{-1},\qquad
+\boxed{\int_0^\infty K(t)\,dt=BC^{-1}B^*,\qquad
+S_{\mathrm{stat}}=A-\int_0^\infty K(t)\,dt.}
+$$
+
+故静态消元与记忆消元确实来自同一内部关系，但读取的是不同边界信息：静态只保留时间核的总积分，动态关系保留其时间形状和初态强迫。将历史积分直接替换成静态算子作用于当前 $x(t)$，不是上述精确消元恒等式。
+

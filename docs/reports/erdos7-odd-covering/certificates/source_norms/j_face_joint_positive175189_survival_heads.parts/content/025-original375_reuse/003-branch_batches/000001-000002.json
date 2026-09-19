@@ -1,0 +1,120 @@
+[
+  [
+    {
+      "leaf_index": 939,
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        1,
+        1,
+        4
+      ],
+      "dual_key": "d1b73d18923d0719c13e256caa7df71b176e16b968fa6b545c30d37bcea8ebac",
+      "complete375_upper": "767417631249640781/3969000000000000000",
+      "complete_tail_constant": "774979/19845000"
+    },
+    {
+      "leaf_index": 949,
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        2,
+        1,
+        4
+      ],
+      "dual_key": "5aff2fd2e8924791c155444f9f63eadf0418bd8b021aa3bcbaf64221ba8a040f",
+      "complete375_upper": "765785288633572253/3969000000000000000",
+      "complete_tail_constant": "774979/19845000"
+    },
+    {
+      "leaf_index": 959,
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        4
+      ],
+      "dual_key": "24facef03a53a69350334cda2bfe7a01524d4d5f22b521f10dd7d30be52a63d7",
+      "complete375_upper": "1789352340037641271/9261000000000000000",
+      "complete_tail_constant": "774979/19845000"
+    },
+    {
+      "leaf_index": 969,
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        4
+      ],
+      "dual_key": "63abc426371526e1df87536a431b1000c6ff107b18dc82b553db10bb62747a98",
+      "complete375_upper": "767945288466086119/3969000000000000000",
+      "complete_tail_constant": "774979/19845000"
+    }
+  ]
+]

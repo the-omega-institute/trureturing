@@ -1,0 +1,23 @@
+{
+  "length": 64,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 53,
+      "part": {
+        "path": "content/035-proof_data/006-covering_node_batches/000017/item/002-rows/000000-000053.json",
+        "sha256": "5d20c3dfc4d181be4f4467c0dc1cf237e818d6b3fe0b294981242d2d5e4be426",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 53,
+      "stop": 64,
+      "part": {
+        "path": "content/035-proof_data/006-covering_node_batches/000017/item/002-rows/000053-000064.json",
+        "sha256": "dd262c7179dd264b2a935e37c565cffe7ae3e873f748f3ea8f7f4c11760b63dd",
+        "kind": "value"
+      }
+    }
+  ]
+}
