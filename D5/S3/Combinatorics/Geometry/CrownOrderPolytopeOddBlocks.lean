@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeOddBlocks
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCyclePartitions]
+   anchors: []
    utility: none
-   digest: Actual odd crown blocks have a one-vertex parity majority and are extremal.
-   -/
+   digest: Actual odd crown blocks have a one-vertex parity majority and are extremal. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeCyclePartitions
 

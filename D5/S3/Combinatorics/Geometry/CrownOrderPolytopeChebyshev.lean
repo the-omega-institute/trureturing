@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeChebyshev
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeScalar]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Taylor, mathlib/module/Mathlib.RingTheory.Polynomial.Chebyshev]
    utility: none
-   digest: The auxiliary scalar-weight polynomial is a shifted Chebyshev polynomial.
-   -/
+   digest: The auxiliary scalar-weight polynomial is a shifted Chebyshev polynomial. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeScalar
 import Mathlib.Algebra.Polynomial.Taylor

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytope
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib/Analysis/Convex/Exposed, mathlib/module/Mathlib/LinearAlgebra/AffineSpace/AffineMap, mathlib/module/Mathlib/Data/Fintype/Powerset]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.Exposed, mathlib/module/Mathlib.Analysis.Convex.Combination, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.LinearAlgebra.AffineSpace.AffineMap, mathlib/module/Mathlib.Topology.Instances.Real.Lemmas]
    utility: none
    digest: Crown inequalities give finite faces with block-constant coordinates. -/
 

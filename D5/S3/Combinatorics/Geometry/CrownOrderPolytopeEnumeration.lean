@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeEnumeration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP, mathlib/module/Mathlib.Combinatorics.Enumerative.Composition, mathlib/module/Mathlib/Combinatorics/SimpleGraph/CycleGraph]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Composition, mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph, mathlib/module/Mathlib.Data.Fintype.Powerset]
    utility: none
    digest: Fixed-length parity compositions are counted, and endpoint-free crown blocks are connected cycle subgraphs. -/
 

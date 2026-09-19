@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeFaceCounts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeSelectionCounts, D5/S3/Combinatorics/Geometry/CrownOrderPolytopeTwoExceptions, D5/S3/Combinatorics/Geometry/CrownOrderPolytopeDimension]
+   anchors: []
    utility: none
-   digest: Actual geometric crown face counts follow from the odd-profile enumeration.
-   -/
+   digest: Actual geometric crown face counts follow from the odd-profile enumeration. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeSelectionCounts
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeTwoExceptions

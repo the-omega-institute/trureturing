@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytope, mathlib/module/Mathlib/Order/Extension/Linear]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Sort, mathlib/module/Mathlib.Order.Extension.Linear, mathlib/module/Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd]
    utility: none
    digest: Crown exposed faces and connected compatible partitions are inverse constructions. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeCyclePartitions
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP]
+   anchors: []
    utility: none
    digest: Connected crown partitions are reconstructed exactly from their cyclic boundary cuts. -/
 

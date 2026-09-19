@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeTwoExceptions
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeEndpointRecovery]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Sum]
    utility: none
-   digest: The two full endpoint fibers are precisely the missing two-block crown partitions.
-   -/
+   digest: The two full endpoint fibers are precisely the missing two-block crown partitions. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEndpointRecovery
 import Mathlib.Data.Fintype.Sum

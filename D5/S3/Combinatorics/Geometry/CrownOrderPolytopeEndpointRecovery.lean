@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeEndpointRecovery
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeEndpointMergers]
+   anchors: []
    utility: none
-   digest: Cycle partitions and selected odd blocks are recovered from endpoint mergers.
-   -/
+   digest: Cycle partitions and selected odd blocks are recovered from endpoint mergers. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEndpointMergers
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeCycleCuts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeEnumeration]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph]
    utility: none
    digest: Connected cycle partitions are reconstructed exactly from their boundary cuts. -/
 

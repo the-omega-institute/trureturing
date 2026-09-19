@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeCycleIntervals
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph]
    utility: none
    digest: Proper original-vertex crown blocks are cyclic intervals after cutting outside them. -/
 

@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeSelectionCounts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts, D5/S3/Combinatorics/Geometry/CrownOrderPolytopeEndpointRecovery]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
-   digest: Actual odd-block selections are counted with explicit nonnegative binomial support.
-   -/
+   digest: Actual odd-block selections are counted with explicit nonnegative binomial support. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeMarkedCuts
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEndpointRecovery

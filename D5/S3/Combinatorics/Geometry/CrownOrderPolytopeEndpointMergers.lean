@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeEndpointMergers
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCyclePartitions]
+   anchors: []
    utility: none
-   digest: Lower-heavy and upper-heavy crown blocks merge through the two endpoints.
-   -/
+   digest: Lower-heavy and upper-heavy crown blocks merge through the two endpoints. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopeOddBlocks
 

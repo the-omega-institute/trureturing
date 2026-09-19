@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/CrownOrderPolytopeScalar
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopePositive]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Coeff, mathlib/module/Mathlib.Algebra.BigOperators.Intervals]
    utility: none
-   digest: Rational scalar polynomial representation of the actual geometric crown face counts.
-   -/
+   digest: Rational scalar polynomial representation of the actual geometric crown face counts. -/
 
 import D5.S3.Combinatorics.Geometry.CrownOrderPolytopePositive
 import Mathlib.Algebra.Polynomial.Coeff
