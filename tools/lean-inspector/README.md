@@ -85,7 +85,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
 清单中的单一正整数 `report_semantic_version` 是开发者维护的报告语义兼容版本，
-当前值为 `6`，与清单格式的 `schema_version` 分开。
+其值以清单为准，与清单格式的 `schema_version` 分开。
 
 兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
@@ -95,6 +95,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 materials 的内容字节相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
+逐模块工件 trace 只取模块及 utility claim 的编译闭包与语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
 
 | 输入变化 | 失效范围 |
 | --- | --- |
@@ -103,7 +104,7 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| 固定 Registry 驱动及其传递编译工件变化 | 全部模块报告；空注册清单也由该驱动判定。 |
+| 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
 
 版本 4 的 `information_templates` 分区携带 occurrence inventory、BindingRecord 和
 当前源码输入。原生复用和发布检查这些输入的字节绑定；陈旧或缺失输入使工件失效。
