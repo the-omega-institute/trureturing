@@ -136,7 +136,10 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         File.AppendAllText(Path.Combine(fixture.Root, "build/bin/dotnet"),
             $"printf 'child-out'\nprintf 'child-error' >&2\nexit {childExit}\n");
         using var output = new StringWriter();
-        Assert.Equal(expectedExit, fixture.Run("current", output));
+        var exit = fixture.Run("current", output);
+        foreach (var line in output.ToString().Split('\n').Where(line => line.StartsWith("CURRENT_HANDOFF_", StringComparison.Ordinal)))
+            testOutput.WriteLine(line);
+        Assert.Equal(expectedExit, exit);
         var stepName = resource == "scribe" ? "scribe" : "check-current";
         Assert.Equal("child-outchild-error", File.ReadAllText(Path.Combine(fixture.Root, "build/ci/logs/current/" + stepName + ".log")));
         Assert.Contains("child-out", output.ToString(), StringComparison.Ordinal);
@@ -152,6 +155,41 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             Assert.Equal(childExit, child["raw_exit"]!.GetValue<int>());
             Assert.Equal(expectedExit, child["exit"]!.GetValue<int>());
             Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void HandoffDiagnosticOutputFailureDoesNotEscape(bool failFlush)
+    {
+        using var output = new FailingHandoffWriter(failFlush);
+        var stages = new CommonStages("unused", output);
+        stages.WriteCurrentDiagnostic("CURRENT_HANDOFF_MEMORY", () => new { value = 1 });
+        Assert.Equal(1, output.Failures);
+        stages.WriteCurrentDiagnostic("CURRENT_HANDOFF_MEMORY", () => throw new IOException("observation unavailable"));
+        output.WriteLine("ordinary output");
+        output.Flush();
+        Assert.Contains("ordinary output", output.ToString(), StringComparison.Ordinal);
+    }
+
+    private sealed class FailingHandoffWriter(bool failFlush) : StringWriter
+    {
+        private bool pending;
+        internal int Failures { get; private set; }
+        public override void WriteLine(string? value)
+        {
+            if (value?.StartsWith("CURRENT_HANDOFF_", StringComparison.Ordinal) == true)
+            {
+                if (failFlush) pending = true;
+                else { Failures++; throw new IOException("diagnostic output unavailable"); }
+            }
+            base.WriteLine(value);
+        }
+        public override void Flush()
+        {
+            if (pending) { pending = false; Failures++; throw new IOException("diagnostic flush unavailable"); }
+            base.Flush();
         }
     }
 

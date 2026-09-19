@@ -7,6 +7,65 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CommonStageContractTests
 {
     [Theory]
+    [InlineData("unsupported")]
+    [InlineData("denied")]
+    [InlineData("missing")]
+    [InlineData("partial")]
+    public void UnavailableMemoryReaderNeverReportsZeroOrPartialSuccess(string failure)
+    {
+        IEnumerable<string> Read()
+        {
+            if (failure == "partial") yield return "Rss: 12 kB";
+            throw failure switch
+            {
+                "unsupported" => new PlatformNotSupportedException(),
+                "denied" => new UnauthorizedAccessException(),
+                "missing" => new FileNotFoundException(),
+                _ => new IOException(),
+            };
+        }
+        var values = CommonStages.ReadMemoryCounters(Read, ["Rss", "Swap"], kibibytes: true);
+        foreach (var value in values.Values)
+        {
+            var parsed = System.Text.Json.JsonSerializer.SerializeToElement(value);
+            Assert.False(string.IsNullOrEmpty(parsed.GetProperty("unavailable").GetString()));
+        }
+    }
+
+    [Fact]
+    public void MemoryCountersDistinguishRealZeroMissingAndInvalidValues()
+    {
+        var values = CommonStages.ReadMemoryCounters(() =>
+            ["Rss: 12 kB", "Swap: 0 kB", "Anonymous: -1 kB", "Private_Dirty: 9223372036854775807 kB", "not-requested: secret"],
+            ["Rss", "Swap", "Anonymous", "Private_Dirty", "LazyFree"], kibibytes: true);
+        Assert.Equal(12288L, values["Rss"]);
+        Assert.Equal(0L, values["Swap"]);
+        foreach (var field in new[] { "Anonymous", "Private_Dirty", "LazyFree" })
+            Assert.True(System.Text.Json.JsonSerializer.SerializeToElement(values[field]).TryGetProperty("unavailable", out _));
+        Assert.Equal(5, values.Count);
+        Assert.Equal(123L, CommonStages.ReadMemoryCounters(() => ["anon 123"], ["anon"], kibibytes: false)["anon"]);
+    }
+
+    [Theory]
+    [InlineData("0::/jobs/run", "29 1 0:1 / /sys/fs/cgroup rw - cgroup2 cgroup rw", "/sys/fs/cgroup/jobs/run/memory.stat")]
+    [InlineData("0::/jobs/run", "29 1 0:1 /jobs /private/cgroup rw - cgroup2 cgroup rw", "/private/cgroup/run/memory.stat")]
+    [InlineData("0::/", "29 1 0:1 / /sys/fs/cgroup rw - cgroup2 cgroup rw", "/sys/fs/cgroup/memory.stat")]
+    [InlineData("7:cpu,memory:/jobs/run", "29 1 0:1 / /sys/fs/cgroup/memory rw - cgroup cgroup rw,memory", "/sys/fs/cgroup/memory/jobs/run/memory.stat")]
+    [InlineData("0::/jobs/run", "29 1 0:1 /jobs /private/cgroup\\040space rw - cgroup2 cgroup rw", "/private/cgroup space/run/memory.stat")]
+    public void MemoryStatUsesMembershipAndActualMountRoot(string membership, string mount, string expected)
+    {
+        Assert.Equal(expected, CommonStages.ResolveMemoryStat([membership], [mount]).Replace('\\', '/'));
+    }
+
+    [Fact]
+    public void UndiscoverableCgroupIsUnavailableInsteadOfReadingMountRoot()
+    {
+        var values = CommonStages.ReadMemoryCounters(() => File.ReadLines(CommonStages.ResolveMemoryStat(
+            ["0::/another/job"], ["29 1 0:1 /jobs /sys/fs/cgroup rw - cgroup2 cgroup rw"])), ["anon"], kibibytes: false);
+        Assert.True(System.Text.Json.JsonSerializer.SerializeToElement(values["anon"]).TryGetProperty("unavailable", out _));
+    }
+
+    [Theory]
     [InlineData(0, 0, "executed")]
     [InlineData(7, 2, "failed")]
     public void RealCommandPreservesExitAndBothOutputStreams(int commandExit, int rawExit, string status)

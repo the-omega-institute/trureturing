@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Runtime;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -274,7 +276,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 // The CLI builds its own snapshot and report. Reclaim the dead
                 // parent preparation graphs only at this separate-process handoff.
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+                ObserveCurrentMemory("before-collection", build);
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
+                ObserveCurrentMemory("after-collection", build);
                 Step(obligations.Contains("check-current") ? "check-current" : "scribe", "dotnet", arguments.ToArray());
                 // The CLI owned these units once; their original evidence supplies the
                 // corresponding stage obligations without launching them a second time.
@@ -298,6 +302,128 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void ValidateCurrentReport() =>
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+
+    // Observations are not acceptance evidence. Keep readers and output failures
+    // outside the validation/child exit contract; never print exception messages.
+    private void ObserveCurrentMemory(string boundary, CommonStageRecord build) =>
+        WriteCurrentDiagnostic("CURRENT_HANDOFF_MEMORY", () => new
+        {
+            boundary, unix_time_ms = (timeProvider ?? TimeProvider.System).GetUtcNow().ToUnixTimeMilliseconds(),
+            parent_pid = Environment.ProcessId, candidate, build_round = build.Round,
+            plan_present = resourcePlan is not null,
+            assembly_sha256 = ObserveMemoryValue(() =>
+            {
+                using var assembly = File.OpenRead(typeof(CommonStages).Assembly.Location);
+                return Convert.ToHexStringLower(SHA256.HashData(assembly));
+            }),
+            runtime_version = Environment.Version.ToString(), framework = RuntimeInformation.FrameworkDescription,
+            process_architecture = RuntimeInformation.ProcessArchitecture.ToString(),
+            server_gc = GCSettings.IsServerGC, latency_mode = GCSettings.LatencyMode.ToString(),
+            managed_bytes = GC.GetTotalMemory(false),
+            gc = ObserveMemoryValue(() =>
+            {
+                var info = GC.GetGCMemoryInfo();
+                return new
+                {
+                    heap_size_bytes = info.HeapSizeBytes, fragmented_bytes = info.FragmentedBytes,
+                    total_committed_bytes = info.TotalCommittedBytes, index = info.Index,
+                    generation = info.Generation, compacted = info.Compacted,
+                    pause_ms = info.PauseDurations.ToArray().Select(pause => pause.TotalMilliseconds).ToArray(),
+                    pause_time_percentage = info.PauseTimePercentage,
+                    collection_counts = Enumerable.Range(0, GC.MaxGeneration + 1).Select(GC.CollectionCount).ToArray(),
+                };
+            }),
+            rss_bytes = ObserveMemoryValue(() =>
+            {
+                using var process = Process.GetCurrentProcess();
+                return process.WorkingSet64;
+            }),
+            smaps_rollup_bytes = ReadMemoryCounters(() => LinuxLines("/proc/self/smaps_rollup"),
+                ["Rss", "Anonymous", "Private_Dirty", "LazyFree", "Swap"], kibibytes: true),
+            cgroup_memory_stat_bytes = ReadMemoryCounters(() =>
+                File.ReadLines(ResolveMemoryStat(LinuxLines("/proc/self/cgroup"), LinuxLines("/proc/self/mountinfo"))),
+                ["anon", "file", "kernel"], kibibytes: false),
+        });
+
+    internal void WriteCurrentDiagnostic(string name, Func<object> observation)
+    {
+        try
+        {
+            output.WriteLine(name + " " + JsonSerializer.Serialize(observation()));
+            output.Flush();
+        }
+        catch (Exception) { } // Best-effort diagnostics must not affect stage behavior.
+    }
+
+    private static object UnavailableMemory(string reason) => new { unavailable = reason };
+
+    private static object ObserveMemoryValue<T>(Func<T> read)
+    {
+        try { return read()!; }
+        catch (Exception exception) { return UnavailableMemory(exception.GetType().Name); }
+    }
+
+    private static IEnumerable<string> LinuxLines(string path)
+    {
+        if (!OperatingSystem.IsLinux()) throw new PlatformNotSupportedException();
+        return File.ReadLines(path);
+    }
+
+    internal static Dictionary<string, object> ReadMemoryCounters(Func<IEnumerable<string>> read, string[] fields, bool kibibytes)
+    {
+        var values = fields.ToDictionary(field => field, _ => UnavailableMemory("missing-field"), StringComparer.Ordinal);
+        try
+        {
+            foreach (var line in read())
+            {
+                var words = line.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+                if (words.Length == 0 || !values.ContainsKey(words[0].TrimEnd(':'))) continue;
+                var field = words[0].TrimEnd(':');
+                values[field] = words.Length == (kibibytes ? 3 : 2) && (!kibibytes || words[2] == "kB")
+                    && long.TryParse(words[1], System.Globalization.NumberStyles.None,
+                        System.Globalization.CultureInfo.InvariantCulture, out var value) && value >= 0
+                    && value <= long.MaxValue / (kibibytes ? 1024 : 1)
+                    ? value * (kibibytes ? 1024 : 1) : UnavailableMemory("invalid-value");
+            }
+        }
+        catch (Exception exception)
+        {
+            // A partial read is not a complete observation, including on access denial.
+            foreach (var field in fields) values[field] = UnavailableMemory(exception.GetType().Name);
+        }
+        return values;
+    }
+
+    internal static string ResolveMemoryStat(IEnumerable<string> memberships, IEnumerable<string> mounts)
+    {
+        var groups = memberships.Select(line => line.Split(':', 3)).Where(parts => parts.Length == 3).ToArray();
+        foreach (var line in mounts)
+        {
+            var halves = line.Split(" - ", 2, StringSplitOptions.None);
+            if (halves.Length != 2) continue;
+            var mount = halves[0].Split(' ');
+            var filesystem = halves[1].Split(' ');
+            if (mount.Length < 6 || filesystem.Length < 3) continue;
+            var group = filesystem[0] == "cgroup2" ? groups.FirstOrDefault(parts => parts[0] == "0" && parts[1] == "")
+                : filesystem[0] == "cgroup" && filesystem[2].Split(',').Contains("memory")
+                    ? groups.FirstOrDefault(parts => parts[1].Split(',').Contains("memory")) : null;
+            if (group is null) continue;
+            var mountRoot = UnescapeMount(mount[3]);
+            var mountPoint = UnescapeMount(mount[4]);
+            var groupPath = group[2];
+            if (!mountRoot.StartsWith('/') || !mountPoint.StartsWith('/') || !groupPath.StartsWith('/')
+                || groupPath.Split('/').Any(part => part is "." or "..")) continue;
+            var relative = mountRoot == "/" ? groupPath.TrimStart('/')
+                : groupPath == mountRoot ? ""
+                : groupPath.StartsWith(mountRoot + "/", StringComparison.Ordinal) ? groupPath[(mountRoot.Length + 1)..] : null;
+            if (relative is not null) return Path.Combine(mountPoint, relative, "memory.stat");
+        }
+        throw new NotSupportedException("memory cgroup mount unavailable");
+    }
+
+    private static string UnescapeMount(string value) => value.Replace("\\040", " ", StringComparison.Ordinal)
+        .Replace("\\011", "\t", StringComparison.Ordinal).Replace("\\012", "\n", StringComparison.Ordinal)
+        .Replace("\\134", "\\", StringComparison.Ordinal);
 
     private void ValidateBase(string? baseSha)
     {
@@ -368,6 +494,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var startedAt = clock.GetTimestamp();
         double Elapsed() => clock.GetElapsedTime(startedAt).TotalMilliseconds;
         using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);
+        if (stage == "current" && arguments.Length >= 2 && arguments[0] == CommonExecutionEvidence.CliPath && arguments[1] == "check-current")
+            WriteCurrentDiagnostic("CURRENT_HANDOFF_CHILD", () => new
+            {
+                unix_time_ms = clock.GetUtcNow().ToUnixTimeMilliseconds(), parent_pid = Environment.ProcessId,
+                child_pid = process.Id, candidate,
+                build_round = arguments.SkipWhile(argument => argument != "--common-build-round").Skip(1).FirstOrDefault(),
+                plan_present = resourcePlan is not null,
+            });
         var startedElapsed = Elapsed();
         using var timer = new CancellationTokenSource(timeout, clock);
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(deadlineCancellation, timer.Token);
