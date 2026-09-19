@@ -199,8 +199,8 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       ∀ y : answers read C q, (fiber read C q y.val).card < C.card) ∧
     (let eligible := fun q => 2 ≤ (answers read C q).card ∧ price q ≤ B
      let branch := fun q => ⨆ y : answers read C q,
-       rawValue read price Legal tp (fun l x => ENNReal.ofReal (dist (out l) (target x)))
-         (fiber read C q y.val) (B-price q)
+       ENNReal.ofReal (realRawValue read price Legal tp out target
+         (fiber read C q y.val) (B-price q))
      ((¬ ∃ q, eligible q) → (⨅ q, ⨅ (_ : eligible q), branch q) = ⊤) ∧
      ((∃ q, eligible q) → ∃ q, eligible q ∧ (⨅ q, ⨅ (_ : eligible q), branch q) = branch q)) ∧
     (ENNReal.ofReal (realRawValue read price Legal tp out target C B) =
@@ -915,10 +915,10 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
 
   have finite_query_minimum (read : (q : Q) → W → Y q) (price : Q → Nat)
       (Legal : Finset W → L → Prop) (tp : Finset W → L → Nat)
-      (loss : L → W → ENNReal) (C : Finset W) (B : Nat) :
+      (out : L → Z) (target : W → Z) (C : Finset W) (B : Nat) :
       let eligible := fun q => 2 ≤ (answers read C q).card ∧ price q ≤ B
       let branch := fun q => ⨆ y : answers read C q,
-        rawValue read price Legal tp loss (fiber read C q y.val) (B-price q)
+        ENNReal.ofReal (realRawValue read price Legal tp out target (fiber read C q y.val) (B-price q))
       ((¬ ∃ q, eligible q) → (⨅ q, ⨅ (_ : eligible q), branch q) = ⊤) ∧
       ((∃ q, eligible q) → ∃ q, eligible q ∧ (⨅ q, ⨅ (_ : eligible q), branch q) = branch q) := by
     classical
@@ -931,11 +931,12 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       let I := {q : Q // 2 ≤ (answers read C q).card ∧ price q ≤ B}
       have : Nonempty I := ⟨⟨q,hq⟩⟩
       obtain ⟨a,ha⟩ := exists_eq_ciInf_of_finite (f := fun q : I =>
-        ⨆ y : answers read C q.val, rawValue read price Legal tp loss (fiber read C q.val y.val) (B-price q.val))
+        ⨆ y : answers read C q.val,
+          ENNReal.ofReal (realRawValue read price Legal tp out target (fiber read C q.val y.val) (B-price q.val)))
       exact ⟨a.val,a.property,by simpa only [I,iInf_subtype] using ha.symm⟩
   have values := source_value_clauses read price Legal tp out target C hC B freeC freeReply
   refine ⟨?_,values.1,values.2.1,values.2.2,
-    finite_query_minimum read price Legal tp (fun l x => ENNReal.ofReal (dist (out l) (target x))) C B,
+    finite_query_minimum read price Legal tp out target C B,
     metric_value_correspondence read price Legal tp out target C B freeC⟩
   intro policy feasible
   choose fuel trace label hrun hlegal hbudget using feasible
