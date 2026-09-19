@@ -139,7 +139,10 @@ internal sealed class GridAntidiagonalTrafficBoundDocument : IScribeDocumentDefi
                         + "remain literature inputs, not Lean grid/path theorems here. "
                         + "Only the sufficient implication from R<1 is used; no converse "
                         + "or assertion excluding other tied maximizers is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gil-liang-odetola-weiner-antidiagonal-traffic"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Ratio()
     {

@@ -28,6 +28,10 @@ $$\forall n \in \mathbb{N}, a \in \mathbb{N},\; \left(496 \le n \land \left(1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gil-liang-odetola-weiner-antidiagonal-traffic` (proved) by `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gil-liang-odetola-weiner-antidiagonal-traffic","declaration_gid":"D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Juan Gil, Zhenni Liang, Ayodeji Odetola, Michael Weiner (2026). *Points of maximal traffic on a grid with obstruction*. URL: <https://arxiv.org/abs/2609.01562>.

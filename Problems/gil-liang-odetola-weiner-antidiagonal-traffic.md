@@ -44,8 +44,8 @@ finite checks through n=2000. This dossier does not introduce a new target.
 The existing `ContinuousPrimeMaximum` result provides a related analytic
 pattern: locate a maximum by the derivative signs of a logarithmic
 objective. It is methodological motivation, not an imported dependency or
-a bound for this binomial ratio. Here the missing work is the discrete
-same-parity peak location and the uniform estimates for those peaks.
+a bound for this binomial ratio. The proof locates the discrete same-parity
+peaks and establishes uniform estimates for them.
 
 ## Gap
 
@@ -103,10 +103,16 @@ instance. The three local certificates serve the unbounded proof, and are
 not separately exported. The other utility fields are
 `not-applicable(kind=none)`.
 
-These are implementation classifications for subsequent independent
-review. No Freeze or typed open-problem-resolution declaration is made by
-this delivery. Required CI, merge, main-cache verification and completion
-audit remain outside this implementation; no new KPI is claimed.
+The mathematical Scribe binds `ResolutionKind.Proved` for this problem to
+the frozen public declaration
+`D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result`, with
+statement identity
+`sha256:f673d96f4a9458dac2934c5347b3871b8fd9419b97cea17345420ddd6e04a1d5`.
+This resolves the full strict arithmetic assertion; the complete published
+Conjecture 7.4 follows through the literature-audited sufficient implication
+described above. The typed binding does not turn the grid/path inputs into
+Lean theorems. Required remote CI, merge, main-cache verification and
+completion audit remain pending; no new KPI is claimed.
 
 ## Triage
 
@@ -121,4 +127,4 @@ Publication priority beyond the bounded search is ASSUMED-UNVERIFIED.
 The unusable general-search response and the nonexhaustive scope of the
 public Lean declaration index are recorded in the source note. The
 published grid/path inputs have not been formalized in this module.
-Independent review and the remaining integration gates are still required.
+The remaining integration gates are required before delivery is complete.

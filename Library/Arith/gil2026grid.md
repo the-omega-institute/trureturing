@@ -95,5 +95,10 @@ new problem-count credit follows from this note.
 The unbounded arithmetic proof is repository-derived. Its one private
 `uniform_peak_bound` establishes the uniform analytic peak estimate and is
 used directly by `result`; there is no new standalone Stirling theorem.
-Admission classification and the remaining delivery boundary are recorded
-in `Problems/gil-liang-odetola-weiner-antidiagonal-traffic.md`.
+The mathematical Scribe's typed `Proved` resolution binds
+`D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result` to
+`Problems/gil-liang-odetola-weiner-antidiagonal-traffic.md`. Its full
+Conjecture 7.4 consequence uses the literature-only grid implication above.
+The dossier records the exact statement identity and admission
+classification. Remote CI, merge, main-cache verification and completion
+audit remain pending; this binding confers no problem-count credit.
