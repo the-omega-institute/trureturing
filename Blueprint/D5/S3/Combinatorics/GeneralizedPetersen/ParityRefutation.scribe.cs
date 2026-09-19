@@ -75,8 +75,8 @@ internal sealed class ParityRefutationDocument : IScribeDocumentDefinition
                             + "enumeration, Sturm, checker, or audit claims are adopted here.")),
                     Paragraph(Text(
                         "This Lean theorem formalizes the already published refutation; it is "
-                            + "not a newly resolved open problem. The graph and conjecture are "
-                            + "due to Pandey; the refutation is due to the distinct earlier "
+                            + "not a newly resolved open problem. The graph definition and conjecture "
+                            + "are taken from Pandey; the refutation is due to the distinct earlier "
                             + "public note cited above."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
