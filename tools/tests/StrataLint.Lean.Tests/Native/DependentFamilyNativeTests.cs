@@ -182,7 +182,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         Assert.False(occurrence.HasFourSlots);
         var finding = DeclaredTemplateBindingRule.EvaluateOccurrence(
             DependentFamilyNativeFixture.Source("DependentFamilyUnresolved"), occurrence);
-        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
         Assert.Equal("DTR-Evidence " + occurrence.Diagnostic, finding.Message);
         Assert.Contains("family.registration.exact_source_law", finding.Message, StringComparison.Ordinal);
     }
