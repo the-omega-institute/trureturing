@@ -812,3 +812,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Private cylinders in a complete odd cover obstruct root transport](profile-notes/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)
 - [Extremal odd-cover branches and source support](profile-notes/350-extremal-paired-branch-and-source-support.md)
 - [Multiple descendants: a fresh-prime budget and a local repair](profile-notes/351-multiple-descendants-fresh-prime-budget-and-local-repair.md)
+- [The complete private region exceeds the reserved transport palette](profile-notes/352-complete-private-region-exceeds-the-reserved-palette.md)

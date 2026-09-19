@@ -45,3 +45,14 @@ This checks the finite geometry and rational budgets from their definitions.
 It does not independently establish the full arbitrary-height reduction or
 replace a Lean build and fresh kernel replay. The whole theorem remains an
 attributed source result with that local verification boundary.
+
+The same pinned manuscript's corollary labelled `cor:uncovered-density`
+(`paper/main.tex`) states the quantitative bound: any finite family with
+at most eight distinct odd prime divisors across its pairwise distinct
+nonunit moduli leaves natural density at least `1/1,002,375` uncovered.
+The proof transfers final surviving mass at least `1/33,750` through the
+Haar density cap `297/10`. It explicitly uses global surplus four, rather
+than the larger terminal surplus eleven. The archive identity above and
+the source attribution and local kernel-verification boundary remain the
+same; reading this corollary is not an independent verification of the
+whole arbitrary-height argument.
