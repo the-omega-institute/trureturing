@@ -814,3 +814,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Multiple descendants: a fresh-prime budget and a local repair](profile-notes/351-multiple-descendants-fresh-prime-budget-and-local-repair.md)
 - [The complete private region exceeds the reserved transport palette](profile-notes/352-complete-private-region-exceeds-the-reserved-palette.md)
 - [Joint private demand survives arbitrary pure-power reassignment](profile-notes/353-joint-private-budget-with-all-pure3-reassignable.md)
+- [Synchronized prime-private cofactor matching on the actual live source](profile-notes/354-synchronized-prime-private-cofactor-matching.md)
