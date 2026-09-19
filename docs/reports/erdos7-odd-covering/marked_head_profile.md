@@ -753,3 +753,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Two higher pure hinges improve the complete J comparison](profile-notes/291-two-higher-pure-hinges-improve-the-complete-j-comparison.md)
 - [Retaining375 strengthens the complete J AP11 head](profile-notes/292-retaining375-strengthens-the-complete-j-ap11-head.md)
 - [The retained375 AP11 head improves the complete J comparison](profile-notes/293-the-retained375-ap11-head-improves-the-complete-j-comparison.md)
+- [Exact seven-retained head and slope sharpen the complete J factorial](profile-notes/294-exact-seven-retained-head-and-slope-sharpen-the-complete-j-factorial.md)
+- [The exact seven-factorial head improves the complete J comparison](profile-notes/295-the-exact-seven-factorial-head-improves-the-complete-j-comparison.md)
