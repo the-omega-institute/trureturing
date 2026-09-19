@@ -90,33 +90,32 @@ private theorem indexed_deletion (n i : ℕ) (hi : i ∈ range (n + 1))
   rw [coeff_zero_eq_eval_zero]
   simp [q, s, eval_prod]
 
-private theorem finite_difference (p : ℝ[X]) (n : ℕ) :
-    (∑ i ∈ range (n + 1), (-1 : ℝ[X]) ^ i * (n.choose i : ℝ[X]) *
-      p.comp (X ^ i)) =
-    ∑ r ∈ p.support, C (p.coeff r) * (1 - X ^ r) ^ n := by
-  simp_rw [comp_eq_sum_left, Polynomial.sum_def, mul_sum]
-  rw [sum_comm]
-  apply sum_congr rfl
-  intro r hr
-  have binomial :
-      (∑ i ∈ range (n + 1), (-1 : ℝ[X]) ^ i * (n.choose i : ℝ[X]) *
-        (X ^ i) ^ r) = (1 - X ^ r) ^ n := by
-    have h := add_pow (- (X ^ r : ℝ[X])) 1 n
-    simp only [one_pow, mul_one] at h
-    rw [show -(X ^ r : ℝ[X]) + 1 = 1 - X ^ r by ring] at h
-    rw [h]
-    apply sum_congr rfl
-    intro i hi
-    rw [neg_pow (X ^ r : ℝ[X]) i]
-    rw [← pow_mul, ← pow_mul, Nat.mul_comm i r]
-    ring
-  rw [← binomial, mul_sum]
-  apply sum_congr rfl
-  intro i hi
-  ring
-
 private theorem common_numerator_divisible (f : ℝ[X]) (n : ℕ) :
     (X - C (1 : ℝ)) ^ n ∣ commonNumerator f n := by
+  have finite_difference (p : ℝ[X]) :
+      (∑ i ∈ range (n + 1), (-1 : ℝ[X]) ^ i * (n.choose i : ℝ[X]) *
+        p.comp (X ^ i)) =
+      ∑ r ∈ p.support, C (p.coeff r) * (1 - X ^ r) ^ n := by
+    simp_rw [comp_eq_sum_left, Polynomial.sum_def, mul_sum]
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro r hr
+    have binomial :
+        (∑ i ∈ range (n + 1), (-1 : ℝ[X]) ^ i * (n.choose i : ℝ[X]) *
+          (X ^ i) ^ r) = (1 - X ^ r) ^ n := by
+      have h := add_pow (- (X ^ r : ℝ[X])) 1 n
+      simp only [one_pow, mul_one] at h
+      rw [show -(X ^ r : ℝ[X]) + 1 = 1 - X ^ r by ring] at h
+      rw [h]
+      apply sum_congr rfl
+      intro i hi
+      rw [neg_pow (X ^ r : ℝ[X]) i]
+      rw [← pow_mul, ← pow_mul, Nat.mul_comm i r]
+      ring
+    rw [← binomial, mul_sum]
+    apply sum_congr rfl
+    intro i hi
+    ring
   have difference_dvd (p : ℝ[X]) :
       (X - C (1 : ℝ)) ^ n ∣
         ∑ i ∈ range (n + 1), (-1 : ℝ[X]) ^ i * (n.choose i : ℝ[X]) *
