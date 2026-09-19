@@ -23,7 +23,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
             {
                 record!["escape_from"] = mode == "old" ? null : JsonSerializer.SerializeToNode(FromSlot);
                 record["escape_continues"] = mode == "old" ? null : JsonSerializer.SerializeToNode(OpenSlot);
-                record["bridge_kind"] = "legacy";
+                record["bridge_kind"] = mode is "witness" or "forward" or "unknown" ? mode : "legacy";
                 if (mode == "malformed") record["escape_continues"]!["kind"] = "guessed";
             }
             if (mode == "two" && wire["records"]!.AsArray().Count > 0)
@@ -88,5 +88,29 @@ public sealed class DeclaredTemplateEscapeRecordTests
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "malformed"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Block), "[FAIL] malformed_escape_evidence_blocks");
+    }
+
+    [Theory]
+    [InlineData("legacy")]
+    [InlineData("forward")]
+    [InlineData("witness")]
+    public void bridge_vocabulary_preserves_declared_verdict(string kind)
+    {
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateUnregisteredTests.Build(binding: "inline"), kind));
+        var finding = Assert.Single(findings);
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
+        Assert.Contains("bridge_kind=" + kind, finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void unknown_bridge_kind_blocks_selected_only()
+    {
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateBindingRuleTests.Delta(declared: true), "unknown"));
+        Assert.Contains(findings, f => f.Effect == AdmissionEffect.Block
+            && f.Message.Contains("unknown bridge_kind", StringComparison.Ordinal));
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateBindingRuleTests.Delta(declared: true, changed: false), "unknown")));
     }
 }
