@@ -23,6 +23,8 @@ public sealed class RuleEngineCapacityTests
     [InlineData("Results/sample.csv")]
     [InlineData("Results/sample.tsv")]
     [InlineData("Results/sample.xml")]
+    [InlineData("Results/sample.jsonl.xz.b64")]
+    [InlineData("Results/sample.trx")]
     public void Sl003ExemptsDataFilesFromSoftAndHardLineLimits(string path)
     {
         foreach (var lines in new[] { 801, 1001 })

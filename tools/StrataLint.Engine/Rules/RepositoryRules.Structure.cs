@@ -125,7 +125,7 @@ internal static partial class RepositoryRules
         IsCapacityExcluded(path)
         || Path.GetExtension(path).ToLowerInvariant() is
             ".json" or ".jsonl" or ".ndjson" or ".json5" or ".jsonc"
-            or ".yaml" or ".yml" or ".toml" or ".csv" or ".tsv" or ".xml";
+            or ".yaml" or ".yml" or ".toml" or ".csv" or ".tsv" or ".xml" or ".trx" or ".b64";
 
     // The canonical artifact line count: newline-delimited lines, not counting a
     // trailing terminator. Shared with RepositoryCapacityAudit so both tiers agree exactly.

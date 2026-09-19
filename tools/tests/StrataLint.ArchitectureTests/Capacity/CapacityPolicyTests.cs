@@ -17,6 +17,8 @@ public sealed class CapacityPolicyTests
     [InlineData("Results/sample.csv")]
     [InlineData("Results/sample.tsv")]
     [InlineData("Results/sample.xml")]
+    [InlineData("Results/sample.jsonl.xz.b64")]
+    [InlineData("Results/sample.trx")]
     public void CapacityAuditExemptsDataFileLength(string path)
     {
         var text = string.Concat(Enumerable.Repeat("data\n", 1001));
