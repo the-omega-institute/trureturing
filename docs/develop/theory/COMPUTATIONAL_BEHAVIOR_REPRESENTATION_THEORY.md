@@ -1641,3 +1641,241 @@ Pierre Monmarché、Lihan Wang，*On the entropic convergence for piecewise dete
 **约定 32.3（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷，数学推导、原文核对、实施及有限检错均由本会话 ChatGPT 单席串行完成，无独立同行或异模型评审。八条结果均给出纸面证明。仅原理论文件是本次远端变更目标；检错脚本保留本地。未新增 Lean、Scribe、冻结记录或机器消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。既有时间窗与信息公式的来源分别保留，有限样本核对不代替任意输入分布、所有状态与极限量词。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 增补六·外部记忆下的熵收缩与可分态反例
+
+**本批导航。** 本批接续原卷 `e8105c47b7b6edf23b58f1f65a174c019daa2b0f`，读取 `dev@b585e69b2f039201b4a60f6080638e929ece86ec` 及 PR #8891 的 `854d003ed8f06c535b9afcb4680449a1543f00ef`。后者已把非线性相关缺陷分成真实隐藏条件方差与表达误差，本批不重复该线。这里继续第 28–31 节留下的附加量子记忆义务：先证明一般单比特公式不能直接放大量子记忆，再构造一种对任意记忆维数保真的双去相干分解，进而将原卷受驱动比特与经典振子的共同曲线扩展到时变控制和相关寄存器。第 36 节比较结构已知与一般信道证书的精度。旧条目与字节全部保留，原有无辅助系统的结论不改判。
+
+**定义 33.1（带被动记忆的参考缺陷）。** 本批量子载体均有限维，记 $\tau_A=I_A/d_A$，$R$ 是任意有限维外部记忆。演化只作用于 $A$，记忆不参与 Hamilton 耦合、反馈或重置。对联合态定义
+\[
+ \mathcal D_{A|R}(\rho)=D(\rho_{AR}\Vert\tau_A\otimes\rho_R)
+ =\log d_A-S(A|R)_\rho
+ =D(\rho_A\Vert\tau_A)+I(A:R)_\rho.
+\]
+相对熵使用自然对数及支持约定；$\operatorname{supp}\rho_{AR}\subseteq\mathcal H_A\otimes\operatorname{supp}\rho_R$，所以本式总是有限。对保单位信道 $\Phi$，定义
+\[
+ \eta^{\rm c}(\Phi)=\sup_{R,\ \mathcal D_{A|R}(\rho)>0}
+ \frac{\mathcal D_{A|R}((\Phi\otimes\operatorname{id}_R)\rho)}
+      {\mathcal D_{A|R}(\rho)}.
+\]
+完整量词包括相关态、纠缠态和任意有限记忆维数；上确界中的参考随输入的 $\rho_R$ 改变，但在一次局部演化中固定。若 $R$ 是有正交标签的经典寄存器，只取块对角联合态，则称为经典标签版本。该区别是完全强数据处理文献的既有定义结构。[^tcs6-complete]
+
+**定理 33.2（经典侧信息与经典标签不改变原系数）。** 对标准 Borel 概率空间上保持参考 $\pi$ 的 Markov 核 $K$，在全部有限条件 KL 的联合分布中，
+\[
+ \sup_{p_{XR}}
+ \frac{D((K\otimes\operatorname{id})p_{XR}\Vert\pi\otimes p_R)}
+      {D(p_{XR}\Vert\pi\otimes p_R)}=\eta_\pi(K),
+\]
+其中只取正分母，$R$ 也是标准 Borel 空间。类似地，对保持满秩参考 $\tau_A$ 的量子信道，附加任意有限经典标签的最坏系数仍为原来的 $\eta_{\tau_A}(\Phi)$。所以第 28.2 条的 Gaussian 平方范数公式在任意被动经典侧信息下仍精确，第 28.3 条在经典标签下也保持。
+
+**证明。** 正则条件分布给
+\[
+ D(p_{XR}\Vert\pi\otimes p_R)=\int D(p_{X|r}\Vert\pi)\,dp_R(r).
+\]
+核只作用于 $X$，在每个条件分布上应用原系数再积分即得上界。令 $R$ 为常量并逼近原上确界，得到匹配下界。有限经典标签的量子态为 $\sum_rp_r\rho_r\otimes|r\rangle\langle r|$；块对角矩阵对数给相同的条件和，因此证明逐项适用。本条不把任意量子记忆当作具有共同对角基的标签。证毕。
+
+**命题 33.3（无纠缠也能破坏单比特平方系数）。** 对单比特退极化信道 $\Delta_s(\rho)=s\rho+(1-s)I_2/2$，$0<s<1$，有
+\[
+ \eta_{I_2/2}(\Delta_s)=s^2<\eta^{\rm c}(\Delta_s)\le s.
+\]
+严格不等号可由两个比特的可分输入实现。特别在 $s=1/2$ 时，可以取联合态
+\[
+ \rho_*=(I_4/6)+|\Omega\rangle\langle\Omega|/3,
+ \qquad |\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+\]
+其两个边缘都为 $I_2/2$，并有
+\[
+ \frac{\mathcal D_{A|R}((\Delta_{1/2}\otimes\operatorname{id})\rho_*)}
+      {\mathcal D_{A|R}(\rho_*)}
+ =\frac{3\log(3/2)+5\log(5/6)}{4\log(4/3)}
+ \approx0.2648649060>\frac14.
+\]
+
+**证明。** 记 $\rho_a=(1-a)I_4/4+a|\Omega\rangle\langle\Omega|$。其边缘固定为最大混合态，局部退极化将 $a$ 变为 $sa$。直接对角化得到
+\[
+ f(a):=D(\rho_a\Vert I_4/4)
+ =\tfrac14[(1+3a)\log(1+3a)+3(1-a)\log(1-a)]
+ =\tfrac32a^2-a^3+O(a^4).
+\]
+所以对每个固定 $0<s<1$，$f(sa)/f(a)=s^2[1+\tfrac23(1-s)a+O(a^2)]>s^2$ 对充分小正 $a$ 成立。设 $P_{j,\pm}=(I\pm\sigma_j)/2$，则
+\[
+ \rho_{1/3}=\frac16\sum_{j=x,y,z}\sum_{\epsilon=\pm}
+             P_{j,\epsilon}\otimes\overline{P_{j,\epsilon}}.
+\]
+右式各项均为产品态，故 $\rho_{1/3}$ 可分；$0\le a\le1/3$ 的 $\rho_a$ 是它与 $I_4/4$ 的凸组合，亦可分。$a=1/3,s=1/2$ 的本征值直接给所列对数比；它大于 $1/4$ 等价于 $253125>248832$。最后，对任意联合态置 $\sigma=I_2/2\otimes\rho_R$，输出为 $s\rho+(1-s)\sigma$；KL 凸性给 $D(s\rho+(1-s)\sigma\Vert\sigma)\le sD(\rho\Vert\sigma)$。未附记忆的等式由第 28.3 条。该反例中全部缺陷都在相关性中，不能从局部已经平衡推断联合缺陷为零；可分也不等于记忆寄存器在某个基底上是经典标签。普通与完全退极化收缩可以分离是文献已有边界，本条给出其显式可分见证和任意 $s$ 的局部展开。证毕。[^tcs6-cporder]
+
+## 34. 二元对称、互补条件期望与精确完全收缩
+
+**定义 34.1（二元去相干）。** 令 $U=U^\dagger$、$U^2=I$，其正负本征空间均非零，定义迹保持条件期望及其部分去相干
+\[
+ E_U(X)=\tfrac12(X+UXU),\qquad
+ \mathcal Z_{U,s}=s\operatorname{id}+(1-s)E_U,\quad0\le s\le1.
+\]
+附加记忆时全部映射替换为与 $\operatorname{id}_R$ 的张量积。相对于 $E_U$ 的缺陷是 $D(\rho\Vert E_U\rho)$，它保留 $E_U\rho$ 本身，通常不同于定义 33.1 的全局热替换缺陷。
+
+**引理 34.2（二元对称缺陷的平方收缩与完整系数）。** 对定义 34.1 的全部数据和任意联合态，
+\[
+ D(\mathcal Z_{U,s}\rho\Vert E_U\rho)
+ \le s^2D(\rho\Vert E_U\rho).
+\]
+该不等式对任意有限记忆维数一致有效，最优系数精确为 $s^2$。对满秩 $\rho$，另有
+\[
+ \operatorname{Tr}[(\rho-E_U\rho)\log\rho]
+ \ge2D(\rho\Vert E_U\rho).
+\]
+
+**证明。** 先取满秩 $\rho$，记 $\sigma=E_U\rho$、$X=\rho-\sigma$，则 $U\sigma U=\sigma$、$UXU=-X$。置 $f(v)=D(\sigma+vX\Vert\sigma)$，$|v|\le1$，有 $f(0)=f'(0)=0$。由矩阵对数的积分微分公式，
+\[
+ f''(v)=\int_0^\infty
+ \operatorname{Tr}\{K_u^2(I+vK_u)^{-2}\}\,du,
+ \quad K_u=(\sigma+uI)^{-1/2}X(\sigma+uI)^{-1/2}.
+\]
+这是 BKM 二次型的直接表示，没有假设 $X$ 与 $\sigma$ 对易。$UK_uU=-K_u$ 使其谱按 $\kappa,-\kappa$ 成对，而 $\sigma\pm X\succeq0$ 给 $|\kappa|<1$ 对 $u>0$ 成立。每对对被积函数的贡献为
+\[
+ \kappa^2[(1+v\kappa)^{-2}+(1-v\kappa)^{-2}],
+\]
+在 $0\le v\le1$ 上非减。因此 $f''$ 非减，且
+\[
+ \frac{f(v)}{v^2}=\int_0^1(1-r)f''(vr)dr
+\]
+对 $v>0$ 非减，得到 $f(s)\le s^2f(1)$。在 $v=1$ 求左导数得到 $f'(1)\ge2f(1)$；$\operatorname{Tr}X\log\sigma=0$ 由二元对称成立，所以 $f'(1)=\operatorname{Tr}X\log\rho$。
+
+对任意半正定态，先与全空间最大混合态作正凸混合，再令混合量趋零。$D(\rho\Vert E_U\rho)=S(E_U\rho)-S(\rho)$ 及有限维熵连续性处理可能的零谱，得到端点和奇异态版本。所有步骤同样适用于 $U\otimes I_R$，常数不依赖 $R$。最后，在 $U$ 的正负本征空间各选一个向量，以二者间的 Hermitian 非零交叉块 $X$ 扰动最大混合态；小扰动相对熵的二阶项为正，输入缩为 $sX$ 后其比趋于 $s^2$，故上界为最优。该证明采用文献的条件期望/BKM 方法，在二元对称下利用谱成对给出当前精确常数。证毕。[^tcs6-complete]
+
+**引理 34.3（互补观察的完全熵分解界）。** 对一个比特及任意记忆 $R$，令 $E_x,E_z$ 为 Pauli $X,Z$ 的完全去相干，$E_0\rho=I_2/2\otimes\rho_R$。则
+\[
+ E_xE_z=E_zE_x=E_0,\qquad
+ D(\rho\Vert E_0\rho)\le D(\rho\Vert E_x\rho)+D(\rho\Vert E_z\rho).
+\]
+对于 $n$ 个比特和任意 $R$，记 $E_i$ 为将第 $i$ 个比特替换为 $I_2/2$ 的条件期望，则
+\[
+ D(\rho\Vert E_1\cdots E_n\rho)
+ \le\sum_{i=1}^nD(\rho\Vert E_i\rho).
+\]
+这些不等式允许所有初始量子相关。
+
+**证明。** Pauli 基计算给出首个乘法等式。条件期望的对数在其像代数中；按迹配对展开得 Pythagoras 身份
+\[
+ D(\rho\Vert E_0\rho)
+ =D(\rho\Vert E_x\rho)+D(E_x\rho\Vert E_0\rho).
+\]
+对 $E_x$ 用数据处理，并以 $E_xE_z\rho=E_0\rho$ 代入，得到 $D(E_x\rho\Vert E_0\rho)\le D(\rho\Vert E_z\rho)$。奇异态用熵差身份及正则化处理。多比特时，各 $E_i$ 交换；逐个应用同一 Pythagoras 身份使总缺陷望远镜分解，每一项再由此前条件期望的数据处理界控制为 $D(\rho\Vert E_i\rho)$。这是文献中 commuting-square 熵张量化的当前特例；常数一的结构是后续精确计算的前件。证毕。[^tcs6-complete]
+
+**定理 34.4（双轴部分去相干的精确完全系数）。** 对 $0\le a,b\le1$，定义单比特信道
+\[
+ \Psi_{a,b}=\mathcal Z_{X,a}\mathcal Z_{Z,b}.
+\]
+其 Bloch 矩阵为 $\operatorname{diag}(b,ab,a)$，且
+\[
+ \boxed{\eta^{\rm c}(\Psi_{a,b})=\max\{a^2,b^2\}.}
+\]
+所以这一两参数族的原平方范数公式在任意被动量子记忆下保持精确。
+
+**证明。** 先取 $a,b>0$，置 $r_x=-\log a$、$r_z=-\log b$。$E_x,E_z$ 交换，故 $\Psi_{a,b}=e^{\mathcal L}$，其中
+\[
+ \mathcal L=r_x(E_x-\operatorname{id})+r_z(E_z-\operatorname{id}).
+\]
+在演化 $\rho_t=(e^{t\mathcal L}\otimes\operatorname{id}_R)\rho$ 中，$\sigma=E_0\rho$ 不变。引理 34.2 的导数界及引理 34.3 给
+\[
+ -\frac d{dt}D(\rho_t\Vert\sigma)
+ \ge2r_xD(\rho_t\Vert E_x\rho_t)+2r_zD(\rho_t\Vert E_z\rho_t)
+ \ge2\min(r_x,r_z)D(\rho_t\Vert\sigma).
+\]
+积分到一得到 $\max(a^2,b^2)$ 上界，对任何记忆维数相同。满秩正则化延至所有态。若某参数为零，用信道和有限维熵的连续性取极限。下界只需常量记忆，在最慢 Bloch 方向上取趋近 $I/2$ 的小扰动；第 28.3 条的二阶展开给匹配比值。注意 $a=b=s$ 给 Bloch 缩放 $(s,s^2,s)$，与命题 33.3 的 $(s,s,s)$ 不同。证毕。
+
+## 35. 受控经典与量子共同曲线的记忆稳定性
+
+**定义 35.1（固定旋转轴的时变控制）。** 取在每个有限区间上有界且分段连续的实函数 $\gamma(t)\ge0$、$\omega(t)$，令
+\[
+ A(t)=\begin{pmatrix}-\gamma(t)&\omega(t)\\-\omega(t)&0\end{pmatrix},\quad
+ \dot F(t)=A(t)F(t),\quad F(0)=I_2,\quad
+ \Gamma(t)=\int_0^t\gamma(s)ds.
+\]
+经典过程为 $dX=A(t)Xdt+(\sqrt{2\gamma(t)},0)^{\mathsf T}dW$。量子过程为
+\[
+ \dot\rho=-i[(\omega(t)/2)\sigma_y,\rho]
+   +(\gamma(t)/2)(\sigma_z\rho\sigma_z-\rho),
+\]
+记从零时刻到 $t$ 的信道为 $\Phi_t$。控制预先给定且不依赖测量记录，外部 $R$ 无耦合；固定旋转轴与固定去相干轴是本定义的实质限制。
+
+**定理 35.2（任意被动量子记忆下的精确共同曲线）。** 在定义 35.1 中，$\|F(t)\|\le1$、$\det F(t)=e^{-\Gamma(t)}$，并有
+\[
+ \boxed{\eta^{\rm c}(\Phi_t)=\|F(t)\|^2
+ =\eta_{\gamma_2}(\mathcal P_{t,0}),}
+\]
+其中经典一侧也允许定理 33.2 的任意被动经典侧信息。对任意联合态，
+\[
+ \mathcal D_{A|R}((\Phi_t\otimes\operatorname{id})\rho)
+ \le\|F(t)\|^2\mathcal D_{A|R}(\rho),\qquad
+ \|F(t)\|^2\ge e^{-\Gamma(t)}.
+\]
+因此原第 30.2 条的闭式曲线及其三阶起始律，对任意有限量子记忆仍为精确系数。固定 $\gamma>0$、目标时刻 $T>0$、仅优化常数 $\omega$ 时，第 30.3 条的最优值 $e^{-\gamma T}$、达到频率和幅值限制也保持不变。
+
+**证明。** $A+A^{\mathsf T}=-2\gamma(t)\operatorname{diag}(1,0)$ 给范数收缩，Jacobi 行列式公式给正行列式 $e^{-\Gamma}$。量子 Bloch 的 $x,z$ 平面传播矩阵为 $F(t)$，$y$ 分量乘以 $e^{-\Gamma(t)}$。若 $a\ge b>0$ 为 $F(t)$ 的两个奇异值，则 $ab=e^{-\Gamma(t)}$、$a,b\le1$。完整 Bloch 矩阵的奇异值是 $a,b,ab$，其行列式为正。实奇异值分解可以选择左右两因子均为 $SO(3)$ 旋转：若初始两因子均为负定向，同时翻转同一奇异向量即可。每个这样的旋转由单比特酉共轭实现。因此 $\Phi_t$ 由输入、输出局部酉与某个 Bloch 对角为 $(a,ab,b)$ 的 $\Psi_{b,a}$ 组成。
+
+局部酉保持最大混合参考及记忆边缘，故完全系数在前后局部酉下不变。定理 34.4 给 $\eta^{\rm c}=a^2=\|F\|^2$。经典线性随机解的协方差为 $I-F(t)F(t)^{\mathsf T}$：它与随机积分协方差满足同一初值为零的 Lyapunov 方程，或由保持协方差 $I$ 直接验证。第 28.2、33.2 条于是给经典等式。最后 $a^2\ge ab=e^{-\Gamma}$ 给下界。常系数后果直接代入原第 30 节的显式 $F$，无需为未知记忆维数另付常数。此处对每个终点构造等价去相干分解，不主张整个受控过程与固定对角生成元相同。证毕。[^tcs6-laracuente]
+
+**定理 35.3（相关寄存器的精确张量化与可恢复信息界）。** 对 $n$ 个比特，每个局部信道 $\Phi_i$ 都是定义 35.1 的某个终点信道，或任意前后局部酉修饰的 $\Psi_{a_i,b_i}$，令 $c_i=\eta^{\rm c}(\Phi_i)$。则允许任意跨寄存器纠缠及任意有限外部记忆时，
+\[
+ \boxed{\eta^{\rm c}(\Phi_1\otimes\cdots\otimes\Phi_n)=\max_i c_i.}
+\]
+记 $c=\max_i c_i$、$\sigma=I_{2^n}/2^n\otimes\rho_R$，则
+\[
+ \|(\Phi_1\otimes\cdots\otimes\Phi_n\otimes\operatorname{id})\rho-\sigma\|_1
+ \le\min\{2,\sqrt{2c\,\mathcal D_{A_1\cdots A_n|R}(\rho)}\}
+ \le\min\{2,2\sqrt{c\,n\log2}\}.
+\]
+
+**证明。** 先去掉前后局部酉，设所有 $a_i,b_i>0$。所有局部 Pauli 去相干条件期望作为超算子互相交换，产品信道是它们按速率 $-\log a_i,-\log b_i$ 相加的生成元在时间一的演化。对每项使用引理 34.2，再在每个比特使用引理 34.3 的互补界，并对全部比特使用同引理的张量界，得到总参考缺陷的导数至少以 $2\min_i\{-\log a_i,-\log b_i\}$ 的比例耗散。积分给 $\max_i\{a_i^2,b_i^2\}=c$ 上界。零参数由连续性处理。仅在达到最大 $c_i$ 的单个比特上放置趋近参考的最慢方向扰动，其他比特取最大混合态、记忆取独立固定态，得到匹配下界。
+
+Pinsker 给首个迹距离界。由 Araki–Lieb 与 $S(A_1\cdots A_n)\le n\log2$，有 $S(A_1\cdots A_n|R)\ge-n\log2$，所以 $\mathcal D\le2n\log2$，得到最后界。独立局部信道与被动记忆是结论前件；加入跨比特纠错、记忆反馈或共同环境后不再具有所用的产品映射。这里的常数不随记忆维数增长，也没有将寄存器整体初态假设为产品。证毕。
+
+## 36. 完全正序证书及其短时间精度代价
+
+**定理 36.1（一般保单位比特信道的稳健 Choi 下界）。** 对任意保单位单比特信道 $\Phi$，用归一化 $|\Omega\rangle$ 定义 Choi 态 $J_\Phi=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)$。令
+\[
+ a_\Phi=4\lambda_{\min}(J_\Phi)\in[0,1].
+\]
+则
+\[
+ \eta^{\rm c}(\Phi)\le1-a_\Phi.
+\]
+若 Hermitian 估计 $\widehat J$ 满足 $\|\widehat J-J_\Phi\|\le\varepsilon$，则可安全使用
+\[
+ a_{\rm cert}=\max\{0,\min\{1,4(\lambda_{\min}(\widehat J)-\varepsilon)\}\},
+ \qquad \eta^{\rm c}(\Phi)\le1-a_{\rm cert}.
+\]
+这给所有辅助维数相同的上界，不要求待估信道属于双轴分解族。
+
+**证明。** 完全替换信道 $E_0(\rho)=I_2/2$ 的归一 Choi 态为 $I_4/4$。因此 $J_\Phi-a_\Phi J_{E_0}\succeq0$。当 $a_\Phi<1$ 时，Choi 完全正判据给
+\[
+ \Phi=a_\Phi E_0+(1-a_\Phi)\Psi,
+\]
+其中 $\Psi$ 完全正、迹保持且保单位，后两项由两边的线性约束直接得到。对任意联合态，$E_0\otimes\operatorname{id}$ 的输出是 $\sigma=I_2/2\otimes\rho_R$，而 $\Psi\otimes\operatorname{id}$ 保持该参考。先用相对熵凸性，再用数据处理，得到输出缺陷至多 $(1-a_\Phi)D(\rho\Vert\sigma)$。$a_\Phi=1$ 时信道恰为完全替换。特征值扰动界给 $a_{\rm cert}\le a_\Phi$，证明稳健式。该式为完全正序文献方法的明确有限维证书，没有证明 Choi 层面的下界是最优相对熵系数。证毕。[^tcs6-cporder]
+
+**命题 36.2（通用证书与结构证书可以损失一个短时阶）。** 对原第 30 节固定 $\gamma>0,\omega\ne0$ 的受驱动比特，令 $s_1(t)\ge s_2(t)$ 为 $e^{tA_{\gamma,\omega}}$ 的奇异值。则定理 36.1 的最佳完全替换比例是
+\[
+ a_{\Phi_t}=(1-s_1(t))(1-s_2(t)),
+\]
+而精确完全系数为 $\eta^{\rm c}(\Phi_t)=s_1(t)^2$。小正时间时有
+\[
+ a_{\Phi_t}=\frac{\gamma^2\omega^2}{12}t^4+O(t^5),\qquad
+ 1-\eta^{\rm c}(\Phi_t)=\frac{\gamma\omega^2}{6}t^3+O(t^4).
+\]
+因此仅用通用 Choi 完全替换证书，能认证的初始收缩为第四阶；利用已验证的模型结构，可认证真实的第三阶。前者的充分测量误差要求为 $o(t^4)$，基于 $F_t$ 范数的结构证书相应要求为 $o(t^3)$；这两个说法仅为所述确定性证书的精度充分条件，不是样本复杂度最优性声明。
+
+**证明。** 定理 35.2 的局部酉分解不改变 Choi 态谱。Bloch 缩放 $(s_1,s_1s_2,s_2)$ 的 Pauli 信道具有四个 Choi 本征值 $(1\pm s_1)(1\pm s_2)/4$，两个符号独立。因此最小值是 $(1-s_1)(1-s_2)/4$，给第一式。由第 30.2 条，$s_1=1-\gamma\omega^2t^3/12+O(t^4)$，而 $s_1s_2=e^{-\gamma t}$，故 $1-s_2=\gamma t+O(t^2)$，相乘得到第四阶。第三阶沿用定理 35.2 的精确记忆扩展。若 Choi 估计误差为 $\varepsilon$，定理 36.1 的保证至少为 $a_{\Phi_t}-8\varepsilon$；若 $F$ 的估计误差为 $\varepsilon_F$，可用 $(\|\widehat F\|+\varepsilon_F)^2$ 作上界，至少需其扰动小于 $1-s_1$。代入两种首项得到所列充分精度阶。通用证书为零仅说明该方法的精度不足，不能据此否定耗散。证毕。
+
+## 37. 本批文献比较与证明范围
+
+**出处 37.1（已有文献与本轮结果的关系）。** 完全强数据处理、条件期望熵分解、BKM 对数微分和完全正序均是已有研究。本批第 33.3 条给出已知普通/完全系数分离的可分态见证；第 34 节在二元对称和精确互补条件下推导所需常数；第 35 节利用原卷受控传播矩阵的特殊奇异值乘法关系，把这些构件接入时变经典/量子共同曲线；第 36 节比较两种实际证书的精度阶。九条结果按正文直接推导列为 `repo-derived`，下列既有框架列为 `literature-attested`。本批没有求出所有保单位单比特信道的完全系数，也没有认领其一般分类或原卷统计样本预算的最优性。
+
+[^tcs6-complete]: Li Gao、Cambyse Rouzé，*Complete Entropic Inequalities for Quantum Markov Chains*，Archive for Rational Mechanics and Analysis 245, 183–238 (2022)，DOI [10.1007/s00205-022-01785-1](https://doi.org/10.1007/s00205-022-01785-1)，[作者预印本 v3](https://arxiv.org/pdf/2102.04146)。本批核对作者 PDF 的 Theorems 1.1–1.3、§2.1–2.3、§5 的条件期望及熵张量化，包括 PDF 第 3、4 页图像。一般完全性及 commuting-square 背景归于文献；第 34.2 条额外利用 $UXU=-X$ 的成对谱计算本批所需的二元精确常数，不从该文一般非尖锐界直接宣称精确性。
+
+[^tcs6-cporder]: Li Gao、Marius Junge、Nicholas LaRacuente、Haojian Li，*Complete positivity order and relative entropy decay*，Forum of Mathematics, Sigma 13, e31 (2025)，DOI [10.1017/fms.2024.117](https://doi.org/10.1017/fms.2024.117)。核对出版方全文的完全正序、熵差和 §6 讨论；该文已明确指出单比特退极化的普通与完全 MLSI 常数可分离。本文的可分输入矩阵、终点比值及四阶/三阶证书比较分别直接计算，不将一般分离本身表述为新发现。本文第 36.1 条仅需完全正分解与 KL 凸性，未照搬该文含不同生成元归一化的速率常数。
+
+[^tcs6-laracuente]: Nicholas LaRacuente，*Self-restricting Noise and Exponential Relative Entropy Decay Under Unital Quantum Markov Semigroups*，Quantum 10, 2010 (2026)，DOI [10.22331/q-2026-03-04-2010](https://doi.org/10.22331/q-2026-03-04-2010)，[作者全文 v5](https://arxiv.org/html/2203.03745v5)。实际读取 Introduction 的 Propositions/Theorems 1.1–1.3、§2.1 的完全正序与条件期望、§3 的有限时间结论。该文已在任意有限辅助系统下证明有限时间尺度上的可重复收缩，并指出不交换 Hamilton 项可使零时刻的标准指数界失效。本批在更窄的固定轴受驱动单比特族中算出精确终点系数，三阶起始律与文献的早期边界相容；没有将有限时间收缩误写为带正速率、前因子一的全时间线性指数界。
+
+**约定 37.2（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 在原卷追加，数学推导、文献核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，无独立同行或异模型审定。正文保留全部记忆量词和模型前件，九条结果均配套纸面证明。计算中的矩阵样本只用于检错，不代替任意辅助维数、全部联合态和连续时间的证明。未新增 Lean、Scribe、冻结记录或消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。
+
+## 追加锚（本行以下为增补区）
