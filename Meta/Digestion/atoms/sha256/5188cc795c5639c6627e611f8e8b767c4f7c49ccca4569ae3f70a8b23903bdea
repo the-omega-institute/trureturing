@@ -1,0 +1,47 @@
+**定义与假设 103.1（四状态有理族与已知方向模型）。** 固定状态集 $S=\{0,1,2,3\}$，以 $1\to2\to3\to1$ 为顺时针环。对整数 $k\ge2$，置 $\delta_k=1/k$、$a_k=1-1/(3k)$，按状态顺序 $0,1,2,3$ 定义
+$$
+K_k=
+\begin{pmatrix}
+1-1/k&1/(3k)&1/(3k)&1/(3k)\\
+1/(3k)&a_k/4&a_k/2&a_k/4\\
+1/(3k)&a_k/4&a_k/4&a_k/2\\
+1/(3k)&a_k/2&a_k/4&a_k/4
+\end{pmatrix},
+\qquad \pi_i=\frac14.
+\tag{103.1a}
+$$
+定义边流及其分数
+$$
+Q_k(i,j)=\pi_iK_k(i,j),\qquad
+A_k(i,j)=\log\frac{Q_k(i,j)}{Q_k(j,i)},\qquad
+c_k=D_{\rm KL}(Q_k\Vert Q_k^{\mathsf T}).
+\tag{103.1b}
+$$
+所有对数取自然底数。
+
+从初始律 $\pi$ 出发观察完整状态路径 $w=(x_0,\ldots,x_n)\in S^{n+1}$，其中整数 $n\ge0$ 计转移次数。正向与反向路径律分别为
+$$
+P_{k,n}(w)=\frac14\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad P_{k,n}^{R}(w)=P_{k,n}(w^R),\qquad
+w^R=(x_n,\ldots,x_0).
+\tag{103.1c}
+$$
+两份简单模型均已知，先验各为 $1/2$；检验者可以知道 $k$，未知的是本次轨迹的方向标签。允许随机化，最优平均错误率记为
+$$
+R_{k,n}=\inf_{\varphi:S^{n+1}\to[0,1]}
+\frac12\sum_{w\in S^{n+1}}
+\bigl[P_{k,n}(w)\varphi(w)+P_{k,n}^{R}(w)(1-\varphi(w))\bigr],
+\tag{103.1d}
+$$
+其中 $\varphi(w)$ 是报告反向的概率。采用总变差归一化
+$$
+\operatorname{TV}(\mu,\nu)=\frac12\sum_x|\mu(x)-\nu(x)|
+=\sup_F|\mu(F)-\nu(F)|,
+$$
+并记
+$$
+t_{{\rm mix},k}(1/4)=\min\left\{t\in\mathbb N_0:
+\sup_{x\in S}\operatorname{TV}(K_k^t(x,\cdot),\pi)\le\frac14\right\}.
+\tag{103.1e}
+$$
+

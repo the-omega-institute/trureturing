@@ -1,0 +1,52 @@
+**命题 93.2（固定端点权重的有界方向性）。** 固定正函数 $a,b:S\to(0,\infty)$，不随 $n$ 改变。对每个 $n\ge0$，取非负、非零权重 $B_n:S^{n+1}\to[0,\infty)$，满足 $B_n\circ\Theta_n=B_n$。置
+$$
+Z_n=\sum_{w\in S^{n+1}}B_n(w)a(x_0)b(x_n),\qquad
+P_n(w)=\frac{B_n(w)a(x_0)b(x_n)}{Z_n},\qquad
+\Omega_n=\{w:B_n(w)>0\},
+$$
+$$
+g(i)=\log a(i)-\log b(i),\qquad
+\operatorname{osc}(g)=\max_{i\in S}g(i)-\min_{i\in S}g(i).
+$$
+则 $Z_n>0$，$P_n,P_n^R$ 在 $\Omega_n$ 上有共同正支撑，并且
+$$
+\sigma_n(w)=g(x_0)-g(x_n)
+=\sum_{i<j}J_{ij}(w)(g(i)-g(j)). \tag{93.1}
+$$
+因而
+$$
+0\le D(P_n\Vert P_n^R)\le\operatorname{osc}(g),\qquad
+\lim_{n\to\infty}\frac{D(P_n\Vert P_n^R)}{n}=0,\qquad
+\lim_{n\to\infty}\frac{D(P_n\Vert P_n^R)}{n+1}=0, \tag{93.2}
+$$
+其中除以 $n$ 的表达只用于 $n\ge1$。当 $n=0$ 时散度为零。端点读出 $T_n(w)=(x_0,x_n)$ 与净计数读出分别精确保留该正反实验的 KL：
+$$
+D((T_n)_*P_n\Vert(T_n)_*P_n^R)
+=D(J_*P_n\Vert J_*P_n^R)
+=D(P_n\Vert P_n^R). \tag{93.3}
+$$
+这里不要求 $B_n$ 来自 Markov 链，不要求平稳性，也不要求不同长度的 $P_n$ 是同一无限过程的边缘。
+
+**证明。** $B_n$ 非零且端点权重严格为正，所以 $Z_n>0$，归一化得到概率。$B_n$ 的反演不变性使 $\Omega_n$ 反演不变，并给出
+$$
+\frac{P_n(w)}{P_n^R(w)}
+=\frac{a(x_0)b(x_n)}{a(x_n)b(x_0)}.
+$$
+取对数即得式 (93.1) 的第一个等式。内部端点抵消，故
+$$
+g(x_0)-g(x_n)=\sum_{t=0}^{n-1}(g(x_t)-g(x_{t+1}))
+=\sum_{i,j}N_{ij}(w)(g(i)-g(j)).
+$$
+对角项为零，将 $i\to j$ 与 $j\to i$ 两项配对，即得式 (93.1) 的第二个等式。$n=0$ 时这些和均为空和，且 $\Theta_0$ 为恒等。
+
+在共同正支撑上应用已有 Gibbs 非负性，得到散度下界；所用有限概率与绝对连续性假设见 [`kl_divergence_nonneg`](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/D5/S3/Divergence/GrandmotherTheorem.lean)。另一方面，逐路径有 $g(x_0)-g(x_n)\le\operatorname{osc}(g)$，故
+$$
+D(P_n\Vert P_n^R)=\sum_{w\in\Omega_n}P_n(w)\sigma_n(w)
+\le\operatorname{osc}(g).
+$$
+固定有限上界分别除以 $n$、$n+1$，夹逼得到两个极限。
+
+最后，式 (93.1) 表明似然比在每条端点纤维以及每条净计数纤维上恒定。分别应用 [定理 73.3](https://github.com/the-omega-institute/trureturing/blob/b662280db14e39b5023864c27c2e6ea733b52c58/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)：细载体取 $\Omega_n$，输入取 $d=P_n$，参考取 $q=P_n^R$，粗载体取相应读出的实际像。细载体有限，参考严格正，读出满射，因而粗参考质量也严格正；该定理的等号判据恰由上述似然比满足，给出式 (93.3)。
+
+若另允许端点权重随 $n$ 改变，同一证明只给出 $D(P_n\Vert P_n^R)\le\operatorname{osc}(g_n)$。条件 $\operatorname{osc}(g_n)=o(n)$ 是每次转移的散度趋零的充分条件；缺少该条件时，这个上界本身不能推出该极限。证毕。
+

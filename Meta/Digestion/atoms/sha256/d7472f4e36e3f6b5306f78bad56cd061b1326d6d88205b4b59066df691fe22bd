@@ -1,0 +1,22 @@
+**定义 95.1（剩余类塔与单元素局部化）。** 在允许零环的含幺交换环范畴中工作，所有环同态均保持单位；以 $0$ 表示满足 $1=0$ 的零环。固定素数 $p\ge2$。对 $n\ge1$，令
+$$
+R_n=\mathbb Z/p^n\mathbb Z,\qquad
+\rho_{n+1,n}:R_{n+1}\longrightarrow R_n,\quad
+[a]_{p^{n+1}}\longmapsto[a]_{p^n},
+$$
+并记 $p_n=[p]_{p^n}$。令
+$$
+R=\left\{(a_n)_{n\ge1}\in\prod_{n\ge1}R_n:
+\rho_{n+1,n}(a_{n+1})=a_n\text{ 对所有 }n\ge1\right\},
+$$
+取逐坐标环运算，记投影为 $\pi_n:R\to R_n$，并记相容元素
+$$
+p_R=(p_n)_{n\ge1}.
+$$
+对任意含幺交换环 $A$，令 $p_A=p\cdot1_A$，并置
+$$
+L_p(A)=A[1/p]=S_A^{-1}A,\qquad
+S_A=\{p_A^k:k\ge0\}.
+$$
+这里允许乘法集 $S_A$ 含有零。$L_p(A)$ 是倒置元素 $p_A$ 的局部化，与取某个素理想的补集作为分母集不同；这里不假定 $(p_A)$ 是 $A$ 的素理想。记其规范态射为 $\lambda_A:A\to L_p(A)$；分数 $a/p_A^k$ 表示 $\lambda_A(a)\lambda_A(p_A)^{-k}$，始终在局部化环中解释。局部化的存在与唯一延拓性质采用 [Stacks Project，Proposition 10.9.3，00CP](https://stacks.math.columbia.edu/tag/00CP)；倒置单元素的约定见 [Example 10.9.8，02C5](https://stacks.math.columbia.edu/tag/02C5)，对应既有 [`IsLocalization.Away`、`IsLocalization.Away.lift`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean)。
+
