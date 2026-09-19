@@ -126,14 +126,14 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs")]
-    [InlineData("Meta/engineering-projects.json")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
-    public void AgentTemplateDoesNotExemptAdditionalEngineeringOrSemanticInput(string input)
+    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs", "delta-judge")]
+    [InlineData("Meta/engineering-projects.json", "delta")]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "delta-content")]
+    public void AgentTemplateDoesNotExemptAdditionalEngineeringOrSemanticInput(string input, string deltaResource)
     {
         var plan = Plan("tools/scripts/agent/openproblem/templates/impl-base-brief.md", input);
         Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
-        Assert.Contains(input.StartsWith("D5/", StringComparison.Ordinal) ? "delta-content" : "delta", Strings(plan["resources"]!));
+        Assert.Contains(deltaResource, Strings(plan["resources"]!));
         Assert.Contains("lean-report", Strings(plan["execution"]!["steps"]!));
     }
 
@@ -221,7 +221,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);
         Assert.Contains("current", Strings(plan["resources"]!));
         var content = input.StartsWith("D5/", StringComparison.Ordinal) || input.StartsWith("Golden/", StringComparison.Ordinal);
-        Assert.Contains(content ? "delta-content" : "delta", Strings(plan["resources"]!));
+        Assert.Contains(content ? "delta-content" : "delta-judge", Strings(plan["resources"]!));
         Assert.Contains("scribe", Strings(plan["resources"]!));
         Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => !content || !CommonExecutionEvidence.EngineeringCheckIds.Contains(id)).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
