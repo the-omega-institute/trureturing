@@ -1,0 +1,23 @@
+### 131.2 楔配对、定向与二重向量 Hodge 星
+
+令 $\Omega=b_1\wedge b_2\wedge b_3\wedge b_4$。其自然长度为
+
+$$
+\|\Omega\|=\sqrt{\det C}=\sqrt5.
+$$
+
+先选 $+\Omega$ 的定向，单位顶次向量为 $\omega=\Omega/\sqrt5$。定义楔配对矩阵 $B$，使
+
+$$
+\alpha\wedge\beta=(\Psi\alpha)^TB(\Psi\beta)\,\Omega.
+$$
+
+唯一非零条目为 $B_{16}=B_{61}=1$、$B_{25}=B_{52}=-1$、$B_{34}=B_{43}=1$；故 $B^T=B$、$B^2=I$。楔配对对二重向量是对称的，因为交换两个二重向量的符号为 $(-1)^{2\cdot2}=1$。
+
+Hodge 星 $*_+:W\to W$ 按以下关系定义：
+
+$$
+\alpha\wedge *_+\beta=\langle\alpha,\beta\rangle\,\omega
+\qquad(\alpha,\beta\in W).
+$$
+

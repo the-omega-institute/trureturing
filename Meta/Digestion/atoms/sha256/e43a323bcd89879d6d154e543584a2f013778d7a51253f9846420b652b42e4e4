@@ -1,0 +1,9 @@
+#### 134.4.5 增加联合探针可以填补具体盲区
+
+在群范畴中取由 $F_1$ 与自由二生成元群 $F_2$ 组成的全子范畴。现在
+
+$$
+\operatorname{Hom}(F_1,G)\cong G,
+\qquad \operatorname{Hom}(F_2,G)\cong G^2.
+$$
+

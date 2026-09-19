@@ -1,0 +1,65 @@
+### 126.5 相同全部边界响应的正交唯一性
+
+设第二个实现 $(H',C',B')$ 满足相同假设，使用相同边界内积空间 $U$。记其有效空间为 $\mathcal R'$。若
+
+$$
+Be^{-tC}B^*=B'e^{-tC'}B'^*\qquad(t\ge0),
+$$
+
+则全部矩相同。对有效隐藏生成元规定
+
+$$
+S\left(\sum_jC^jB^*u_j\right)
+=\sum_jC'^jB'^*u_j.
+$$
+
+这一定义不是凭选取表示成立的：若左边括号中的和为零，该词的 $\gamma_K(v,v)$ 为零；相同矩使右边的和具有同一个零平方范数，因此也为零。于是 $S$ 良定义且线性。相同配对进一步给
+
+$$
+\langle Sx,Sy\rangle_{H'}=\langle x,y\rangle_H\qquad(x,y\in\mathcal R).
+$$
+
+生成定义使 $S$ 满射到 $\mathcal R'$，所以它是正交同构。对生成词右移及零次插入，得到
+
+$$
+\boxed{SC_{\mathcal R}=C'_{\mathcal R'}S,\qquad
+SB^*=B'^*,\qquad B' S=B|_{\mathcal R}.}
+$$
+
+最后一个等式也可由内积直接验证：
+
+$$
+\langle u,B'Sx\rangle_U
+=\langle B'^*u,Sx\rangle_{H'}
+=\langle SB^*u,Sx\rangle_{H'}
+=\langle u,Bx\rangle_U.
+$$
+
+任何同时交织 $C$ 且保持 $B^*$ 的线性映射，在每个 $C^jB^*u$ 上都被强制为 $C'^jB'^*u$，因此在生成空间上唯一。
+
+若两个实现都最小，即 $\mathcal R=H$、$\mathcal R'=H'$，就得到唯一的全空间正交同构 $S:H\to H'$。反过来，若存在这样的正交同构且满足 $SC=C'S$、$SB^*=B'^*$，则由指数幂级数
+
+$$
+Se^{-tC}=e^{-tC'}S,\qquad B'S=B,
+$$
+
+从而 $B'e^{-tC'}B'^*=Be^{-tC}B^*$。这证明双向等价。
+
+这里正交性来自响应矩本身就是隐藏生成向量的 Gram 配对：自伴 $C$ 与伴随输入输出耦合共同承担这一点。对于任意独立的输入矩阵和输出矩阵，通常的最小实现唯一性只给相似变换，不能将本证明的正交结论无条件移植过去。
+
+由有限维谱定理，还可将所确定的内容写成
+
+$$
+C=\sum_{\lambda>0}\lambda P_\lambda,\qquad
+K(t)=\sum_{\lambda>0}e^{-\lambda t}W_\lambda,
+\qquad W_\lambda=BP_\lambda B^*\ge0.
+$$
+
+有效空间分解为 $\mathcal R=\bigoplus_\lambda\operatorname{ran}(P_\lambda B^*)$：谱投影是 $C$ 的多项式，故这些分量属于 $\mathcal R$；反向由各个 $C^jB^*u$ 的谱展开成立。在 $\lambda$ 分量上的有效重数为
+
+$$
+\dim\operatorname{ran}(P_\lambda B^*)=\operatorname{rank}W_\lambda.
+$$
+
+所以完整响应确定的是可见谱及其边界权重；$W_\lambda=0$ 的纯不可见谱不能恢复。上述正交唯一性已经保证这一谱描述不依赖最小实现的选择。
+
