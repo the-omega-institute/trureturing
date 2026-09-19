@@ -7,6 +7,23 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class SelectedEngineeringTests
 {
     [Fact]
+    public void ReferencedTestProjectIsNotAnExecutionSelection()
+    {
+        using var fixture = new SelectedEngineeringFixture(referencedTest: true);
+        var calls = new List<string>();
+        using var output = new StringWriter();
+        Assert.True(Program.RunCurrentTests(fixture.Root, (project, results) =>
+        {
+            calls.Add(project);
+            fixture.Trx(results);
+            return 0;
+        }, output, fixture.Build) == 0, output.ToString());
+        Assert.Equal([ResourceRouteTests.ResourceFixture.Foo], calls);
+        Assert.Equal(ResourceRouteTests.ResourceFixture.Foo,
+            Assert.Single(CommonExecutionEvidence.ValidateTests(fixture.Root).Projects).Project);
+    }
+
+    [Fact]
     public void DeclaredRepositoryUnitRunsWithoutUnselectedFixtureProjects()
     {
         using var fixture = new SelectedEngineeringFixture();

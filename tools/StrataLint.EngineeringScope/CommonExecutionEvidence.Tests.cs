@@ -18,7 +18,7 @@ internal static partial class CommonExecutionEvidence
         // Selection comes only from a validated FILEMAP plan, never from the
         // runtime inventory or whichever test binaries happen to be present.
         var selected = build is not null && SelectedPlan(root, build) is { } plan
-            ? CommonBuildOutputs.RegisteredClosure(registry, plan.Projects) : null;
+            ? plan.Projects.ToHashSet(StringComparer.Ordinal) : null;
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
         var materials = new Dictionary<string, object>(StringComparer.Ordinal);
