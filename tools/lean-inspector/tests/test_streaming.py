@@ -579,6 +579,7 @@ class EntryPointTests(unittest.TestCase):
                 record = root / 'calls'
                 env = dict(os.environ, PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
                     CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1',
+                    STRATALINT_LEAN_BUILD_TARGETS='[]',
                     STRATALINT_LEAN_PRODUCER_DLL=str(root / 'candidate producer.dll') if prebuilt else '')
                 result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
