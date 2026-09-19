@@ -408,7 +408,7 @@ private theorem card_compositionAsSetEquiv {total : ℕ} (htotal : 0 < total)
   dsimp [s] at hlen
   omega
 
-private def fixedLengthCompositionEquiv (total length : ℕ) (htotal : 0 < total)
+def fixedLengthCompositionEquiv (total length : ℕ) (htotal : 0 < total)
     (hlength : 0 < length) :
     {c : Composition total // c.length = length} ≃
       {s : Finset (Fin (total - 1)) // s.card = length - 1} := by

@@ -422,4 +422,31 @@ private theorem cycleBoundaryCuts_singletonCut {N : ℕ} [NeZero N] (hN : 3 ≤ 
     simpa only [Nat.reduceAdd] using (SimpleGraph.cycleGraph_connected (n := M + 2))
   exact (hconnected.connected_delete_edge_of_not_isBridge hnotBridge).preconnected u v
 
+/-- For a cycle of size at least three, connected vertex partitions with at least
+    two actual boundary cuts are equivalent to their actual cut sets.  Both maps
+    use `cycleBoundaryCuts`; the inverse is the connected-component partition of
+    the cycle graph after deleting precisely those successor edges. -/
+noncomputable def connectedCyclePartitionCutsEquiv (N : ℕ) [NeZero N] (hN : 3 ≤ N) :
+    {P : ConnectedCyclePartition N // 2 ≤ (cycleBoundaryCuts P).card} ≃
+      {cuts : Finset (Fin N) // 2 ≤ cuts.card} where
+  toFun P := ⟨cycleBoundaryCuts P.1, P.2⟩
+  invFun cuts := ⟨connectedCyclePartitionOfCuts cuts.1, by
+    rw [cycleBoundaryCuts_ofCuts_eq hN cuts.1 cuts.2]
+    exact cuts.2⟩
+  left_inv P := by
+    apply Subtype.ext
+    apply (show ∀ {P Q : ConnectedCyclePartition N}, P.toSetoid = Q.toSetoid → P = Q from by
+      intro P Q h
+      cases P with
+      | mk s hs =>
+          cases Q with
+          | mk t ht =>
+              simp only at h
+              subst t
+              rfl)
+    exact connectedCyclePartitionOfCuts_boundaryCuts hN P.1
+  right_inv cuts := by
+    apply Subtype.ext
+    exact cycleBoundaryCuts_ofCuts_eq hN cuts.1 cuts.2
+
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration
