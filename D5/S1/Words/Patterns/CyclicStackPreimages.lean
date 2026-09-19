@@ -26,16 +26,74 @@ private lemma successful_even_eq_candidate {m : ℕ} (hm : 0 < m) {input : List 
     simpa only [hhalf] using successful_lows_pairwise hgappedN houtput
   have hperm : input.Perm (List.range' 1 (m + m)) := by
     simpa [show 2 * m = m + m by omega] using success_perm_range houtput
-  have hlows : lowEntries m input = List.range' 1 m :=
-    successful_low_entries hperm hlowsPair
+  have hlows : lowEntries m input = List.range' 1 m := by
+    have hp := hperm.filter (fun x => decide (x ≤ m))
+    change (lowEntries m input).Perm (lowEntries m (List.range' 1 (m + m))) at hp
+    have hrange : lowEntries m (List.range' 1 (m + m)) = List.range' 1 m := by
+      have hsplit : List.range' 1 (m + m) =
+          List.range' 1 m ++ List.range' (m + 1) m := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := m)).symm
+      rw [hsplit, lowEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
+          List.range' 1 m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      have hright : (List.range' (m + 1) m).filter (fun x => decide (x ≤ m)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, _, rfl⟩ := hx
+        simp only [decide_eq_true_eq, not_le]
+        omega
+      rw [hleft, hright, List.append_nil]
+    rw [hrange] at hp
+    exact List.Perm.eq_of_sortedLE (hlowsPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' 1 m (by omega)).sortedLE hp
   have hdata := gapped_filters_slots hgapped
-  have hhighLen : (highEntries m input).length = m := successful_high_length hperm
+  have hhighPerm : (highEntries m input).Perm (List.range' (m + 1) m) := by
+    have hp := hperm.filter (fun x => decide (m < x))
+    change (highEntries m input).Perm (highEntries m (List.range' 1 (m + m))) at hp
+    have hrange : highEntries m (List.range' 1 (m + m)) = List.range' (m + 1) m := by
+      have hsplit : List.range' 1 (m + m) =
+          List.range' 1 m ++ List.range' (m + 1) m := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := m)).symm
+      rw [hsplit, highEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        simp
+        omega
+      have hright : (List.range' (m + 1) m).filter (fun x => decide (m < x)) =
+          List.range' (m + 1) m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      rw [hleft, hright, List.nil_append]
+    rw [hrange] at hp
+    exact hp
+  have hhighLen : (highEntries m input).length = m := by
+    simpa using hhighPerm.length_eq
   have hslotLen : (gapSlots m input).length =
       ((gapSlots m input).filterMap id).length := by
     rw [hdata.2.1, hdata.2.2, hlows]
     simp [hhighLen]
   have hslots : gapSlots m input = (List.range' 1 m).map some := by
-    rw [options_all_some hslotLen, hdata.2.2, hlows]
+    have hsome : gapSlots m input = ((gapSlots m input).filterMap id).map some := by
+      symm
+      rw [List.map_filterMap_some_eq_filter_map_isSome, List.map_id]
+      exact List.filter_eq_self.mpr (List.filterMap_length_eq_length.mp hslotLen.symm)
+    rw [hsome, hdata.2.2, hlows]
   have hfilled : FilledUntilLast (gapSlots m input) := by
     rw [hslots]
     exact filledUntilLast_map_some _
@@ -45,7 +103,8 @@ private lemma successful_even_eq_candidate {m : ℕ} (hm : 0 < m) {input : List 
     simpa only [hhalf] using
       successful_highs_of_filled_until_last hgappedN hfilledN houtput
   have hhighs : highEntries m input = List.range' (m + 1) m :=
-    successful_high_entries hperm hhighPair
+    List.Perm.eq_of_sortedLE (hhighPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' (m + 1) m (by omega)).sortedLE hhighPerm
   calc
     input = assembleGaps (highEntries m input) (gapSlots m input) := hdata.1.symm
     _ = assembleGaps (List.range' (m + 1) m) (candidateSlots m 0 m) := by
@@ -64,10 +123,64 @@ private lemma successful_odd_eq_candidate {m : ℕ} (hm : 0 < m) {input : List �
     simpa only [hhalf] using successful_lows_pairwise hgappedN houtput
   have hperm : input.Perm (List.range' 1 (m + (m + 1))) := by
     simpa [show 2 * m + 1 = m + (m + 1) by omega] using success_perm_range houtput
-  have hlows : lowEntries m input = List.range' 1 m :=
-    successful_low_entries hperm hlowsPair
+  have hlows : lowEntries m input = List.range' 1 m := by
+    have hp := hperm.filter (fun x => decide (x ≤ m))
+    change (lowEntries m input).Perm (lowEntries m (List.range' 1 (m + (m + 1)))) at hp
+    have hrange : lowEntries m (List.range' 1 (m + (m + 1))) = List.range' 1 m := by
+      have hsplit : List.range' 1 (m + (m + 1)) =
+          List.range' 1 m ++ List.range' (m + 1) (m + 1) := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := (m + 1))).symm
+      rw [hsplit, lowEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
+          List.range' 1 m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      have hright : (List.range' (m + 1) (m + 1)).filter (fun x => decide (x ≤ m)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, _, rfl⟩ := hx
+        simp only [decide_eq_true_eq, not_le]
+        omega
+      rw [hleft, hright, List.append_nil]
+    rw [hrange] at hp
+    exact List.Perm.eq_of_sortedLE (hlowsPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' 1 m (by omega)).sortedLE hp
   have hdata := gapped_filters_slots hgapped
-  have hhighLen : (highEntries m input).length = m + 1 := successful_high_length hperm
+  have hhighPerm : (highEntries m input).Perm (List.range' (m + 1) (m + 1)) := by
+    have hp := hperm.filter (fun x => decide (m < x))
+    change (highEntries m input).Perm (highEntries m (List.range' 1 (m + (m + 1)))) at hp
+    have hrange : highEntries m (List.range' 1 (m + (m + 1))) = List.range' (m + 1) (m + 1) := by
+      have hsplit : List.range' 1 (m + (m + 1)) =
+          List.range' 1 m ++ List.range' (m + 1) (m + 1) := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := (m + 1))).symm
+      rw [hsplit, highEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        simp
+        omega
+      have hright : (List.range' (m + 1) (m + 1)).filter (fun x => decide (m < x)) =
+          List.range' (m + 1) (m + 1) := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      rw [hleft, hright, List.nil_append]
+    rw [hrange] at hp
+    exact hp
+  have hhighLen : (highEntries m input).length = m + 1 := by
+    simpa using hhighPerm.length_eq
   have hslotLen : (gapSlots m input).length = (List.range' 1 m).length + 1 := by
     rw [hdata.2.1, hhighLen]
     simp
@@ -83,9 +196,11 @@ private lemma successful_odd_eq_candidate {m : ℕ} (hm : 0 < m) {input : List �
         simpa using filledUntilLast_insertNone_last (List.range' 1 m)
       have hfilledN : FilledUntilLast (gapSlots ((2 * m + 1) / 2) input) := by
         simpa only [hhalf] using hfilled
-      exact successful_high_entries hperm
-        (by simpa only [hhalf] using
-          successful_highs_of_filled_until_last hgappedN hfilledN houtput)
+      have hhighPair : (highEntries m input).Pairwise (fun x y => x < y) := by
+        simpa only [hhalf] using
+          successful_highs_of_filled_until_last hgappedN hfilledN houtput
+      exact List.Perm.eq_of_sortedLE (hhighPair.imp (by omega)).sortedLE
+        (List.sortedLT_range' (m + 1) (m + 1) (by omega)).sortedLE hhighPerm
     · have homittedLt : omitted < m := by omega
       have hends : EndsWithLow m input := by
         rw [← hdata.1, hslots]

@@ -190,76 +190,85 @@ def cyclicStackSort (input : List ℕ) : List ℕ :=
 def target (n : ℕ) : List ℕ :=
   List.range' 1 (n / 2) ++ (List.range' (n / 2 + 1) (n - n / 2)).reverse
 
-private lemma target_pairwise_barrier (n : ℕ) :
-    (target n).Pairwise fun earlier later =>
-      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
-  let m := n / 2
-  let lows := List.range' 1 m
-  let highs := (List.range' (m + 1) (n - m)).reverse
-  have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
-    apply List.pairwise_of_forall_mem_list
-    intro earlier hearlier later _
-    simp only [lows, List.mem_range'] at hearlier
-    omega
-  have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
-    apply List.pairwise_of_forall_mem_list
-    intro earlier _ later hlater
-    simp only [highs, List.mem_reverse, List.mem_range'] at hlater
-    omega
-  rw [show target n = lows ++ highs by rfl, List.pairwise_append]
-  refine ⟨hlows, hhighs, ?_⟩
-  intro earlier hearlier later _
-  simp only [lows, List.mem_range'] at hearlier
-  omega
-
-private lemma target_pairwise_lows (n : ℕ) :
-    (target n).Pairwise fun earlier later =>
-      earlier ≤ n / 2 → later ≤ n / 2 → earlier < later := by
-  let m := n / 2
-  let lows := List.range' 1 m
-  let highs := (List.range' (m + 1) (n - m)).reverse
-  have hlows : lows.Pairwise fun earlier later =>
-      earlier ≤ m → later ≤ m → earlier < later := by
-    apply (List.pairwise_lt_range' (s := 1) (n := m)).imp
-    intro earlier later hlt _ _
-    exact hlt
-  have hhighs : highs.Pairwise fun earlier later =>
-      earlier ≤ m → later ≤ m → earlier < later := by
-    apply List.pairwise_of_forall_mem_list
-    intro earlier hearlier
-    simp only [highs, List.mem_reverse, List.mem_range'] at hearlier
-    omega
-  rw [show target n = lows ++ highs by rfl, List.pairwise_append]
-  refine ⟨hlows, hhighs, ?_⟩
-  intro earlier _ later hlater _ hlaterLow
-  simp only [highs, List.mem_reverse, List.mem_range'] at hlater
-  omega
-
-lemma target_low_order {n earlier later : ℕ}
-    (hearlier : earlier ≤ n / 2) (hlater : later ≤ n / 2)
-    (hpair : [earlier, later].Sublist (target n)) :
-    earlier < later := by
-  exact (target_pairwise_lows n).forall_sublist hpair hearlier hlater
-
 private lemma barrier {n high low : ℕ} (hhigh : n / 2 < high)
     (hlow : low ≤ n / 2) {input stack : List ℕ}
     (hpair : [high, low].Sublist stack)
     (houtput : process input stack = target n) : False := by
+  have hbarrier : (target n).Pairwise fun earlier later =>
+      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier later _
+      simp only [lows, List.mem_range'] at hearlier
+      omega
+    have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier _ later hlater
+      simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier hearlier later _
+    simp only [lows, List.mem_range'] at hearlier
+    omega
   have hfuture := hpair.trans (stack_sublist_process input stack)
   rw [houtput] at hfuture
-  exact (target_pairwise_barrier n).forall_sublist hfuture ⟨hhigh, hlow⟩
+  exact hbarrier.forall_sublist hfuture ⟨hhigh, hlow⟩
 
 private lemma barrier_sublist {n high low : ℕ} (hhigh : n / 2 < high)
     (hlow : low ≤ n / 2) {input stack : List ℕ}
     (hpair : [high, low].Sublist stack)
     (houtput : (process input stack).Sublist (target n)) : False := by
+  have hbarrier : (target n).Pairwise fun earlier later =>
+      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier later _
+      simp only [lows, List.mem_range'] at hearlier
+      omega
+    have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier _ later hlater
+      simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier hearlier later _
+    simp only [lows, List.mem_range'] at hearlier
+    omega
   have hfuture := hpair.trans (stack_sublist_process input stack)
-  exact (target_pairwise_barrier n).forall_sublist (hfuture.trans houtput) ⟨hhigh, hlow⟩
+  exact hbarrier.forall_sublist (hfuture.trans houtput) ⟨hhigh, hlow⟩
 
 lemma drain_low_over_high {n low high : ℕ}
     (hlow : low ≤ n / 2) (hhigh : n / 2 < high) {input stack : List ℕ}
     (houtput : (process (low :: input) (high :: stack)).Sublist (target n)) :
     drain low (high :: stack) = ([], high :: stack) := by
+  have hbarrier : (target n).Pairwise fun earlier later =>
+      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier later _
+      simp only [lows, List.mem_range'] at hearlier
+      omega
+    have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier _ later hlater
+      simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier hearlier later _
+    simp only [lows, List.mem_range'] at hearlier
+    omega
   cases stack with
   | nil => rfl
   | cons below rest =>
@@ -282,7 +291,7 @@ lemma drain_low_over_high {n low high : ℕ}
             high :: (step.1 ++ process input (low :: step.2)) := by
           simp [process, drain, hforbidden, step]
         rw [hshape] at houtput
-        exact (target_pairwise_barrier n).forall_sublist
+        exact hbarrier.forall_sublist
           (hpair.trans houtput) ⟨hhigh, hlow⟩
       next _ => rfl
 
@@ -295,6 +304,27 @@ lemma no_two_lows_after_high {n low₁ low₂ high : ℕ}
     (houtput : (process (low₁ :: low₂ :: input) (high :: stack)).Sublist
       (target n)) :
     False := by
+  have htargetLows : (target n).Pairwise fun earlier later =>
+      earlier ≤ n / 2 → later ≤ n / 2 → earlier < later := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later =>
+        earlier ≤ m → later ≤ m → earlier < later := by
+      apply (List.pairwise_lt_range' (s := 1) (n := m)).imp
+      intro earlier later hlt _ _
+      exact hlt
+    have hhighs : highs.Pairwise fun earlier later =>
+        earlier ≤ m → later ≤ m → earlier < later := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier
+      simp only [highs, List.mem_reverse, List.mem_range'] at hearlier
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier _ later hlater _ hlaterLow
+    simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+    omega
   have hfirst := drain_low_over_high hlow₁ hhigh houtput
   have htail : (process (low₂ :: input) (low₁ :: high :: stack)).Sublist
       (target n) := by
@@ -322,7 +352,7 @@ lemma no_two_lows_after_high {n low₁ low₂ high : ℕ}
       hlowTail.cons_cons low₁
     have htarget : [low₁, low₂].Sublist (target n) := by
       exact hpair.trans (by simpa only [step, List.cons_append] using htail)
-    have := target_low_order hlow₁ hlow₂ htarget
+    have := htargetLows.forall_sublist htarget hlow₁ hlow₂
     omega
   next hallowed =>
     have hincreasing : low₁ < low₂ := by
@@ -341,7 +371,7 @@ lemma no_two_lows_after_high {n low₁ low₂ high : ℕ}
       hstackPair.trans (stack_sublist_process input _)
     have htarget : [low₂, low₁].Sublist (target n) := by
       exact hfuture.trans (by simpa only [List.nil_append] using htail)
-    have := target_low_order hlow₂ hlow₁ htarget
+    have := htargetLows.forall_sublist htarget hlow₂ hlow₁
     omega
 
 /-- If a high arrives while a low is pending directly above the preceding
@@ -353,6 +383,26 @@ lemma pending_low_forces_high_increase {n low high next : ℕ}
     (houtput : (process (next :: input) (low :: high :: stack)).Sublist
       (target n)) :
     high < next := by
+  have hbarrier : (target n).Pairwise fun earlier later =>
+      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier later _
+      simp only [lows, List.mem_range'] at hearlier
+      omega
+    have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier _ later hlater
+      simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier hearlier later _
+    simp only [lows, List.mem_range'] at hearlier
+    omega
   simp only [process, drain] at houtput
   split at houtput
   next hforbidden =>
@@ -369,13 +419,33 @@ lemma pending_low_forces_high_increase {n low high next : ℕ}
       hstackPair.trans (stack_sublist_process input _)
     have htarget : [next, low].Sublist (target n) := by
       exact hfuture.trans (by simpa only [List.nil_append] using houtput)
-    exact (target_pairwise_barrier n).forall_sublist htarget ⟨hnext, hlow⟩
+    exact hbarrier.forall_sublist htarget ⟨hnext, hlow⟩
 
 lemma drain_high_while_low_remains {n x high futureLow : ℕ}
     (hhigh : n / 2 < high) (hlow : futureLow ≤ n / 2)
     {input stack : List ℕ} (hmem : futureLow ∈ input)
     (houtput : (process (x :: input) (high :: stack)).Sublist (target n)) :
     drain x (high :: stack) = ([], high :: stack) := by
+  have hbarrier : (target n).Pairwise fun earlier later =>
+      ¬(n / 2 < earlier ∧ later ≤ n / 2) := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier later _
+      simp only [lows, List.mem_range'] at hearlier
+      omega
+    have hhighs : highs.Pairwise fun earlier later => ¬(m < earlier ∧ later ≤ m) := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier _ later hlater
+      simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier hearlier later _
+    simp only [lows, List.mem_range'] at hearlier
+    omega
   cases stack with
   | nil => rfl
   | cons below rest =>
@@ -400,7 +470,7 @@ lemma drain_high_while_low_remains {n x high futureLow : ℕ}
             high :: (step.1 ++ process input (x :: step.2)) := by
           simp [process, drain, hforbidden, step]
         rw [hshape] at houtput
-        exact (target_pairwise_barrier n).forall_sublist
+        exact hbarrier.forall_sublist
           (hpair.trans houtput) ⟨hhigh, hlow⟩
       next _ => rfl
 
@@ -449,26 +519,6 @@ lemma process_pending_low_while_low_remains
   rw [process, pending_low_drains_only_low_while_low_remains hlow hhigh hnext
     hfutureLow hmem houtput]
   rfl
-
-private lemma drain_greater_over_descending_top {next high below : ℕ}
-    (hbelow : below < high) (hnext : high < next) (stack : List ℕ) :
-    drain next (high :: below :: stack) = ([], high :: below :: stack) := by
-  have hallowed : forbidden next high below = false := by
-    simp [forbidden]
-    omega
-  simp [drain, hallowed]
-
-private lemma pending_low_drains_only_low_over_descending_top
-    {n low high next below : ℕ}
-    (hlow : low ≤ n / 2) (hhigh : n / 2 < high) (hnext : n / 2 < next)
-    (hbelow : below < high) {input : List ℕ} (stack : List ℕ)
-    (houtput : (process (next :: input) (low :: high :: below :: stack)).Sublist
-      (target n)) :
-    drain next (low :: high :: below :: stack) =
-      ([low], high :: below :: stack) := by
-  have hinc := pending_low_forces_high_increase hlow hnext houtput
-  rw [pending_low_drain_shape hlow hhigh hnext houtput,
-    drain_greater_over_descending_top hbelow hinc]
 
 /-- A successful input starts with a high: a nonempty initial block of lows
 would leave a low below that first high, contradicting the barrier. -/

@@ -16,26 +16,6 @@ namespace D5.S1.Words.Patterns.CyclicStackPreimages
 def EndsWithLow (m : ℕ) (input : List ℕ) : Prop :=
   ∃ pre low, input = pre ++ [low] ∧ low ≤ m
 
-private lemma endsWithLow_tail {m a : ℕ} {tail : List ℕ} (hne : tail ≠ [])
-    (h : EndsWithLow m (a :: tail)) : EndsWithLow m tail := by
-  obtain ⟨pre, low, heq, hlow⟩ := h
-  cases pre with
-  | nil =>
-      simp only [List.nil_append, List.cons.injEq] at heq
-      exact (hne heq.2).elim
-  | cons first pre =>
-      simp only [List.cons_append, List.cons.injEq] at heq
-      exact ⟨pre, low, heq.2, hlow⟩
-
-private lemma endsWithLow_mem_tail {m high : ℕ} {tail : List ℕ}
-    (hhigh : m < high) (h : EndsWithLow m (high :: tail)) :
-    ∃ low ∈ tail, low ≤ m := by
-  obtain ⟨pre, low, heq, hlow⟩ := h
-  refine ⟨low, ?_, hlow⟩
-  have hmem : low ∈ high :: tail := by rw [heq]; simp
-  apply (List.mem_cons.mp hmem).resolve_left
-  omega
-
 private lemma successful_run_final_low {n : ℕ} {suffix : List ℕ}
     (hgapped : Gapped (n / 2) suffix) (hlast : EndsWithLow (n / 2) suffix) :
     ∀ (prior : List ℕ) (pending : Option ℕ),
@@ -55,9 +35,20 @@ private lemma successful_run_final_low {n : ℕ} {suffix : List ℕ}
       | cons first pre => simp at heq
   | @empty high next rest hhigh tail ih =>
       intro prior pending hprior hpending hpendingPrior houtput
-      obtain ⟨finalLow, hfinalMem, hfinalLow⟩ := endsWithLow_mem_tail hhigh hlast
-      have htailLast : EndsWithLow (n / 2) (next :: rest) :=
-        endsWithLow_tail (by simp) hlast
+      obtain ⟨finalLow, hfinalMem, hfinalLow⟩ :
+          ∃ finalLow ∈ next :: rest, finalLow ≤ n / 2 := by
+        obtain ⟨pre, finalLow, heq, hfinalLow⟩ := hlast
+        refine ⟨finalLow, ?_, hfinalLow⟩
+        have hmem : finalLow ∈ high :: next :: rest := by rw [heq]; simp
+        apply (List.mem_cons.mp hmem).resolve_left
+        omega
+      have htailLast : EndsWithLow (n / 2) (next :: rest) := by
+        obtain ⟨pre, finalLow, heq, hfinalLow⟩ := hlast
+        cases pre with
+        | nil => simp at heq
+        | cons first pre =>
+            simp only [List.cons_append, List.cons.injEq] at heq
+            exact ⟨pre, finalLow, heq.2, hfinalLow⟩
       have hdrain : drain high (pending.toList ++ prior) =
           (pending.toList, prior) := by
         cases pending with
@@ -99,7 +90,13 @@ private lemma successful_run_final_low {n : ℕ} {suffix : List ℕ}
       simp [highEntries, hhigh, List.reverse_cons, List.append_assoc]
   | @filled high low rest hhigh hlow tail ih =>
       intro prior pending hprior hpending hpendingPrior houtput
-      obtain ⟨finalLow, hfinalMem, hfinalLow⟩ := endsWithLow_mem_tail hhigh hlast
+      obtain ⟨finalLow, hfinalMem, hfinalLow⟩ :
+          ∃ finalLow ∈ low :: rest, finalLow ≤ n / 2 := by
+        obtain ⟨pre, finalLow, heq, hfinalLow⟩ := hlast
+        refine ⟨finalLow, ?_, hfinalLow⟩
+        have hmem : finalLow ∈ high :: low :: rest := by rw [heq]; simp
+        apply (List.mem_cons.mp hmem).resolve_left
+        omega
       have hdrain : drain high (pending.toList ++ prior) =
           (pending.toList, prior) := by
         cases pending with
@@ -138,8 +135,16 @@ private lemma successful_run_final_low {n : ℕ} {suffix : List ℕ}
           rw [run, hdrain, run, hlowDrain]
           simp [run, highEntries, hhigh, show ¬ n / 2 < low by omega]
       | cons next rest =>
-          have hrestLast : EndsWithLow (n / 2) (next :: rest) :=
-            endsWithLow_tail (by simp) (endsWithLow_tail (by simp) hlast)
+          have hrestLast : EndsWithLow (n / 2) (next :: rest) := by
+            obtain ⟨pre, finalLow, heq, hfinalLow⟩ := hlast
+            cases pre with
+            | nil => simp at heq
+            | cons first pre =>
+                cases pre with
+                | nil => simp at heq
+                | cons second pre =>
+                    simp only [List.cons_append, List.cons.injEq] at heq
+                    exact ⟨pre, finalLow, heq.2.2, hfinalLow⟩
           obtain ⟨last, hlastLow, hrun⟩ := ih hrestLast (high :: prior) (some low)
             hnewPrior (by intro value hEq; cases hEq; exact hlow) (by simp)
             (by simpa using hafterLow)
@@ -152,29 +157,6 @@ private lemma successful_run_final_low {n : ℕ} {suffix : List ℕ}
           rw [hrun']
           simp [highEntries, hhigh, show ¬ n / 2 < low by omega,
             List.reverse_cons, List.append_assoc]
-
-private lemma highEntries_target (n : ℕ) :
-    highEntries (n / 2) (target n) =
-      (List.range' (n / 2 + 1) (n - n / 2)).reverse := by
-  unfold highEntries target
-  rw [List.filter_append, List.filter_reverse]
-  have hlow : (List.range' 1 (n / 2)).filter
-      (fun x => decide (n / 2 < x)) = [] := by
-    apply List.filter_eq_nil_iff.mpr
-    intro x hx
-    rw [List.mem_range'] at hx
-    obtain ⟨i, hi, rfl⟩ := hx
-    simp
-    omega
-  have hhigh : (List.range' (n / 2 + 1) (n - n / 2)).filter
-      (fun x => decide (n / 2 < x)) = List.range' (n / 2 + 1) (n - n / 2) := by
-    apply List.filter_eq_self.mpr
-    intro x hx
-    rw [decide_eq_true_eq]
-    rw [List.mem_range'] at hx
-    obtain ⟨i, hi, rfl⟩ := hx
-    omega
-  rw [hlow, hhigh, List.nil_append]
 
 lemma successful_high_entries_final_low {n : ℕ} {input : List ℕ}
     (hgapped : Gapped (n / 2) input) (hlast : EndsWithLow (n / 2) input)
@@ -205,30 +187,66 @@ lemma successful_high_entries_final_low {n : ℕ} {input : List ℕ}
     exact hx'
   change (highEntries (n / 2) (highEntries (n / 2) input).reverse).Sublist
     (highEntries (n / 2) (target n)) at hfilteredSub
-  rw [hleft, highEntries_target] at hfilteredSub
+  have htarget : highEntries (n / 2) (target n) =
+      (List.range' (n / 2 + 1) (n - n / 2)).reverse := by
+    unfold highEntries target
+    rw [List.filter_append, List.filter_reverse]
+    have hlow : (List.range' 1 (n / 2)).filter
+        (fun x => decide (n / 2 < x)) = [] := by
+      apply List.filter_eq_nil_iff.mpr
+      intro x hx
+      rw [List.mem_range'] at hx
+      obtain ⟨i, hi, rfl⟩ := hx
+      simp
+      omega
+    have hhigh : (List.range' (n / 2 + 1) (n - n / 2)).filter
+        (fun x => decide (n / 2 < x)) = List.range' (n / 2 + 1) (n - n / 2) := by
+      apply List.filter_eq_self.mpr
+      intro x hx
+      rw [decide_eq_true_eq]
+      rw [List.mem_range'] at hx
+      obtain ⟨i, hi, rfl⟩ := hx
+      omega
+    rw [hlow, hhigh, List.nil_append]
+  rw [hleft, htarget] at hfilteredSub
   have hp := (success_perm_range houtput).filter (fun x => decide (n / 2 < x))
   have hm : n / 2 + (n - n / 2) = n := Nat.add_sub_of_le (Nat.div_le_self n 2)
   change (highEntries (n / 2) input).Perm
     (highEntries (n / 2) (List.range' 1 n)) at hp
   have hrange : List.range' 1 n = List.range' 1 (n / 2 + (n - n / 2)) := by
     rw [hm]
-  rw [hrange, highEntries_range] at hp
+  have hhighRange : highEntries (n / 2) (List.range' 1 (n / 2 + (n - n / 2))) =
+      List.range' (n / 2 + 1) (n - n / 2) := by
+    let m := n / 2
+    let q := n - n / 2
+    change highEntries m (List.range' 1 (m + q)) = List.range' (m + 1) q
+    have hsplit : List.range' 1 (m + q) =
+        List.range' 1 m ++ List.range' (m + 1) q := by
+      simpa [Nat.add_comm] using
+        (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
+    rw [hsplit, highEntries, List.filter_append]
+    have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
+      apply List.filter_eq_nil_iff.mpr
+      intro x hx
+      rw [List.mem_range'] at hx
+      obtain ⟨i, hi, rfl⟩ := hx
+      simp
+      omega
+    have hright : (List.range' (m + 1) q).filter (fun x => decide (m < x)) =
+        List.range' (m + 1) q := by
+      apply List.filter_eq_self.mpr
+      intro x hx
+      rw [decide_eq_true_eq]
+      rw [List.mem_range'] at hx
+      obtain ⟨i, hi, rfl⟩ := hx
+      omega
+    rw [hleft, hright, List.nil_append]
+  rw [hrange, hhighRange] at hp
   have hlen : (highEntries (n / 2) input).reverse.length =
       ((List.range' (n / 2 + 1) (n - n / 2)).reverse).length := by
     simpa using hp.length_eq
   have heq := hfilteredSub.eq_of_length hlen
   simpa using congrArg List.reverse heq
-
-lemma successful_high_entries {m q : ℕ} {input : List ℕ}
-    (hperm : input.Perm (List.range' 1 (m + q)))
-    (hhighs : (highEntries m input).Pairwise (fun x y => x < y)) :
-    highEntries m input = List.range' (m + 1) q := by
-  have hp := hperm.filter (fun x => decide (m < x))
-  change (highEntries m input).Perm
-    (highEntries m (List.range' 1 (m + q))) at hp
-  rw [highEntries_range] at hp
-  exact List.Perm.eq_of_sortedLE (hhighs.imp (by omega)).sortedLE
-    (List.sortedLT_range' (m + 1) q (by omega)).sortedLE hp
 
 private lemma assemble_map_some_ends {m : ℕ} {highs lows : List ℕ}
     (hlen : highs.length = lows.length) (hne : lows ≠ [])
@@ -287,15 +305,5 @@ lemma assemble_insert_none_ends {m omitted : ℕ} {highs lows : List ℕ}
                   exact hlow value (by simp [hmem]))
               obtain ⟨pre, low', heq, hlow'⟩ := htail
               exact ⟨high :: low :: pre, low', by simp [heq], hlow'⟩
-
-lemma successful_high_length {m q : ℕ} {input : List ℕ}
-    (hperm : input.Perm (List.range' 1 (m + q))) :
-    (highEntries m input).length = q := by
-  have hp := hperm.filter (fun x => decide (m < x))
-  change (highEntries m input).Perm
-    (highEntries m (List.range' 1 (m + q))) at hp
-  rw [highEntries_range] at hp
-  simpa using hp.length_eq
-
 
 end D5.S1.Words.Patterns.CyclicStackPreimages

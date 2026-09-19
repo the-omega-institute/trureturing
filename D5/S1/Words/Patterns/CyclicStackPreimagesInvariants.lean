@@ -109,7 +109,19 @@ lemma success_perm_range {n : ℕ} {input : List ℕ}
   have hp : (cyclicStackSort input).Perm input := by
     simpa only [cyclicStackSort, List.append_nil] using process_perm input []
   rw [houtput] at hp
-  exact hp.symm.trans (target_perm_range n)
+  have htarget : (target n).Perm (List.range' 1 n) := by
+    let m := n / 2
+    have hm : m ≤ n := Nat.div_le_self n 2
+    have hreverse : (List.range' (m + 1) (n - m)).reverse.Perm
+        (List.range' (m + 1) (n - m)) := List.reverse_perm _
+    have happ := hreverse.append_left (List.range' 1 m)
+    have hrange : List.range' 1 m ++ List.range' (m + 1) (n - m) =
+        List.range' 1 n := by
+      rw [show m + 1 = 1 + m by omega, List.range'_append_1]
+      congr 1
+      omega
+    simpa only [target, m] using happ.trans (List.Perm.of_eq hrange)
+  exact hp.symm.trans htarget
 
 private lemma success_entry_bounds {n x : ℕ} {input : List ℕ}
     (houtput : cyclicStackSort input = target n) (hx : x ∈ input) :
@@ -290,7 +302,28 @@ private lemma filled_gap_low_precedes {n high low later : ℕ}
       (low :: process tail (next :: high :: highStep.2)) := by
     exact (List.singleton_sublist.mpr hlaterOut).cons_cons low
   rw [← hshape] at hpair
-  exact target_low_order hlow hlaterLow (hpair.trans hafterLow)
+  have htargetLows : (target n).Pairwise fun earlier later =>
+      earlier ≤ n / 2 → later ≤ n / 2 → earlier < later := by
+    let m := n / 2
+    let lows := List.range' 1 m
+    let highs := (List.range' (m + 1) (n - m)).reverse
+    have hlows : lows.Pairwise fun earlier later =>
+        earlier ≤ m → later ≤ m → earlier < later := by
+      apply (List.pairwise_lt_range' (s := 1) (n := m)).imp
+      intro earlier later hlt _ _
+      exact hlt
+    have hhighs : highs.Pairwise fun earlier later =>
+        earlier ≤ m → later ≤ m → earlier < later := by
+      apply List.pairwise_of_forall_mem_list
+      intro earlier hearlier
+      simp only [highs, List.mem_reverse, List.mem_range'] at hearlier
+      omega
+    rw [show target n = lows ++ highs by rfl, List.pairwise_append]
+    refine ⟨hlows, hhighs, ?_⟩
+    intro earlier _ later hlater _ hlaterLow
+    simp only [highs, List.mem_reverse, List.mem_range'] at hlater
+    omega
+  exact htargetLows.forall_sublist (hpair.trans hafterLow) hlow hlaterLow
 
 lemma successful_lows_pairwise {n : ℕ} {input : List ℕ}
     (hgapped : Gapped (n / 2) input)
@@ -329,86 +362,10 @@ lemma successful_lows_pairwise {n : ℕ} {input : List ℕ}
         · exact htail
   exact go hgapped [] (by simp)
 
-private lemma lowEntries_range (m q : ℕ) :
-    lowEntries m (List.range' 1 (m + q)) = List.range' 1 m := by
-  have hsplit : List.range' 1 (m + q) =
-      List.range' 1 m ++ List.range' (m + 1) q := by
-    simpa [Nat.add_comm] using
-      (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
-  rw [hsplit, lowEntries, List.filter_append]
-  have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
-      List.range' 1 m := by
-    apply List.filter_eq_self.mpr
-    intro x hx
-    rw [decide_eq_true_eq]
-    rw [List.mem_range'] at hx
-    obtain ⟨i, hi, rfl⟩ := hx
-    omega
-  have hright : (List.range' (m + 1) q).filter (fun x => decide (x ≤ m)) = [] := by
-    apply List.filter_eq_nil_iff.mpr
-    intro x hx
-    rw [List.mem_range'] at hx
-    obtain ⟨i, _, rfl⟩ := hx
-    simp only [decide_eq_true_eq, not_le]
-    omega
-  rw [hleft, hright, List.append_nil]
-
-lemma highEntries_range (m q : ℕ) :
-    highEntries m (List.range' 1 (m + q)) = List.range' (m + 1) q := by
-  have hsplit : List.range' 1 (m + q) =
-      List.range' 1 m ++ List.range' (m + 1) q := by
-    simpa [Nat.add_comm] using
-      (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
-  rw [hsplit, highEntries, List.filter_append]
-  have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
-    apply List.filter_eq_nil_iff.mpr
-    intro x hx
-    rw [List.mem_range'] at hx
-    obtain ⟨i, hi, rfl⟩ := hx
-    simp
-    omega
-  have hright : (List.range' (m + 1) q).filter (fun x => decide (m < x)) =
-      List.range' (m + 1) q := by
-    apply List.filter_eq_self.mpr
-    intro x hx
-    rw [decide_eq_true_eq]
-    rw [List.mem_range'] at hx
-    obtain ⟨i, hi, rfl⟩ := hx
-    omega
-  rw [hleft, hright, List.nil_append]
-
-lemma successful_low_entries {m q : ℕ} {input : List ℕ}
-    (hperm : input.Perm (List.range' 1 (m + q)))
-    (hlows : (lowEntries m input).Pairwise (fun x y => x < y)) :
-    lowEntries m input = List.range' 1 m := by
-  have hp := hperm.filter (fun x => decide (x ≤ m))
-  change (lowEntries m input).Perm
-    (lowEntries m (List.range' 1 (m + q))) at hp
-  rw [lowEntries_range] at hp
-  exact List.Perm.eq_of_sortedLE (hlows.imp (by omega)).sortedLE
-    (List.sortedLT_range' 1 m (by omega)).sortedLE hp
-
 def insertNone : ℕ → List ℕ → List (Option ℕ)
   | 0, lows => none :: lows.map some
   | _ + 1, [] => [none]
   | i + 1, low :: lows => some low :: insertNone i lows
-
-lemma options_all_some {slots : List (Option ℕ)}
-    (hlen : slots.length = (slots.filterMap id).length) :
-    slots = (slots.filterMap id).map some := by
-  induction slots with
-  | nil => rfl
-  | cons slot slots ih =>
-      cases slot with
-      | none =>
-          change slots.length + 1 = (slots.filterMap id).length at hlen
-          have hle := List.length_filterMap_le id slots
-          omega
-      | some low =>
-          change slots.length + 1 = (low :: slots.filterMap id).length at hlen
-          have htail : slots.length = (slots.filterMap id).length := by simpa using hlen
-          change some low :: slots = some low :: (slots.filterMap id).map some
-          exact congrArg (some low :: ·) (ih htail)
 
 lemma options_one_none {slots : List (Option ℕ)} {lows : List ℕ}
     (hfilter : slots.filterMap id = lows)
@@ -426,7 +383,10 @@ lemma options_one_none {slots : List (Option ℕ)} {lows : List ℕ}
             omega
           refine ⟨0, by simp, ?_⟩
           change none :: slots = none :: (slots.filterMap id).map some
-          exact congrArg (none :: ·) (options_all_some htailLen)
+          apply congrArg (none :: ·)
+          symm
+          rw [List.map_filterMap_some_eq_filter_map_isSome, List.map_id]
+          exact List.filter_eq_self.mpr (List.filterMap_length_eq_length.mp htailLen.symm)
       | some low =>
           change low :: slots.filterMap id = lows at hfilter
           subst lows
@@ -552,11 +512,6 @@ inductive FilledUntilLast : List (Option ℕ) → Prop
   | cons_some (low : ℕ) {rest : List (Option ℕ)}
       (tail : FilledUntilLast rest) : FilledUntilLast (some low :: rest)
 
-private lemma FilledUntilLast.none_cons_false {rest : List (Option ℕ)}
-    (hne : rest ≠ []) (h : FilledUntilLast (none :: rest)) : False := by
-  cases h with
-  | last_none => exact hne rfl
-
 lemma filledUntilLast_map_some (lows : List ℕ) :
     FilledUntilLast (lows.map some) := by
   induction lows with
@@ -573,14 +528,6 @@ lemma filledUntilLast_insertNone_last (lows : List ℕ) :
   | cons low lows ih =>
       simp only [List.length_cons, insertNone]
       exact FilledUntilLast.cons_some low ih
-
-private lemma Gapped.gapSlots_ne_nil {m high : ℕ} {rest : List ℕ}
-    (h : Gapped m (high :: rest)) : gapSlots m (high :: rest) ≠ [] := by
-  cases rest with
-  | nil => simp [gapSlots]
-  | cons next rest =>
-      simp only [gapSlots]
-      split <;> simp
 
 private lemma filled_gap_high_increase {n high low next : ℕ}
     (hhigh : n / 2 < high) (hlow : low ≤ n / 2)
@@ -626,9 +573,18 @@ lemma successful_highs_of_filled_until_last {n : ℕ} {input : List ℕ}
           | last hnext => exact hnext
           | empty hnext _ => exact hnext
           | filled hnext _ _ => exact hnext
-        have htailSlots : gapSlots (n / 2) (next :: rest) ≠ [] := tail.gapSlots_ne_nil
+        have htailSlots : gapSlots (n / 2) (next :: rest) ≠ [] := by
+          cases rest with
+          | nil => simp [gapSlots]
+          | cons value rest =>
+              simp only [gapSlots]
+              split <;> simp
         simp only [gapSlots, if_neg (by omega : ¬next ≤ n / 2)] at hslots
-        exact (FilledUntilLast.none_cons_false htailSlots hslots).elim
+        have hfalse : False := by
+          generalize hslotsEq : gapSlots (n / 2) (next :: rest) = slots at hslots
+          cases hslots with
+          | last_none => exact htailSlots hslotsEq
+        exact hfalse.elim
     | @filled high low rest hhigh hlow tail ih =>
         intro pre hwhole
         cases rest with

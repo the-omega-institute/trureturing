@@ -61,43 +61,6 @@ private lemma highStack_eq (m i : ℕ) :
       congr 1
       omega
 
-private lemma drain_next_high (m i : ℕ) :
-    drain (m + i + 1) (highStack m i) = ([], highStack m i) := by
-  cases i with
-  | zero => rfl
-  | succ i =>
-      cases i with
-      | zero => rfl
-      | succ i =>
-          have hf : forbidden (m + (i + 1 + 1) + 1) (m + (i + 1) + 1)
-              (m + i + 1) = false := by
-            simp [forbidden]
-          simp [highStack, drain, hf]
-
-private lemma drain_low (m i low : ℕ) (_hlow : low ≤ m) :
-    drain low (highStack m i) = ([], highStack m i) := by
-  cases i with
-  | zero => rfl
-  | succ i =>
-      cases i with
-      | zero => rfl
-      | succ i =>
-          have hf : forbidden low (m + (i + 1) + 1) (m + i + 1) = false := by
-            simp [forbidden]
-            omega
-          simp [highStack, drain, hf]
-
-private lemma drain_pending_low (m i low : ℕ) (hlow : low ≤ m) :
-    drain (m + i + 2) (low :: highStack m (i + 1)) =
-      ([low], highStack m (i + 1)) := by
-  have ht : forbidden (m + i + 2) low (m + i + 1) = true := by
-    simp [forbidden]
-    omega
-  have hd : drain (m + i + 2) ((m + i + 1) :: highStack m i) =
-      ([], (m + i + 1) :: highStack m i) := by
-    simpa only [highStack, Nat.add_assoc] using drain_next_high m (i + 1)
-  simp [highStack, drain, ht, hd]
-
 private lemma candidateTail_process (m omitted i remaining : ℕ)
     (hlows : ∀ j, i ≤ j → j ≤ i + remaining → j ≠ omitted → gapLow omitted j ≤ m) :
     process (candidateTail m omitted i remaining) (highStack m (i + 1)) =
@@ -107,7 +70,17 @@ private lemma candidateTail_process (m omitted i remaining : ℕ)
       by_cases hi : i = omitted
       · simp [candidateTail, candidateLows, hi, process]
       · have hlow := hlows i (by omega) (by omega) hi
-        simp [candidateTail, candidateLows, hi, process, drain_low, hlow]
+        have hd : drain (gapLow omitted i) (highStack m (i + 1)) =
+            ([], highStack m (i + 1)) := by
+          cases i with
+          | zero => rfl
+          | succ i =>
+              have hf : forbidden (gapLow omitted (i + 1))
+                  (m + (i + 1) + 1) (m + i + 1) = false := by
+                simp [forbidden]
+                omega
+              simp [highStack, drain, hf]
+        simp [candidateTail, candidateLows, hi, process, hd]
   | succ remaining ih =>
       have hnext : ∀ j, i + 1 ≤ j → j ≤ i + 1 + remaining → j ≠ omitted →
           gapLow omitted j ≤ m := by
@@ -124,7 +97,13 @@ private lemma candidateTail_process (m omitted i remaining : ℕ)
         rw [process]
         have hd : drain (m + omitted + 2) (highStack m (omitted + 1)) =
             ([], highStack m (omitted + 1)) := by
-          simpa only [Nat.add_assoc] using drain_next_high m (omitted + 1)
+          cases omitted with
+          | zero => rfl
+          | succ omitted =>
+              have hf : forbidden (m + (omitted + 1) + 2)
+                  (m + (omitted + 1) + 1) (m + omitted + 1) = false := by
+                simp [forbidden]
+              simp [highStack, drain, hf]
         rw [hd]
         simp only [List.nil_append]
         change process (candidateTail m omitted (omitted + 1) remaining)
@@ -140,9 +119,34 @@ private lemma candidateTail_process (m omitted i remaining : ℕ)
           gapLow omitted i ::
             (candidateLows omitted (i + 1) (remaining + 1) ++
               highStack m (i + (remaining + 1) + 1))
-        rw [process, drain_low _ _ _ hlow]
+        have hlowDrain : drain (gapLow omitted i) (highStack m (i + 1)) =
+            ([], highStack m (i + 1)) := by
+          cases i with
+          | zero => rfl
+          | succ i =>
+              have hf : forbidden (gapLow omitted (i + 1))
+                  (m + (i + 1) + 1) (m + i + 1) = false := by
+                simp [forbidden]
+                omega
+              simp [highStack, drain, hf]
+        rw [process, hlowDrain]
         simp only [List.nil_append]
-        rw [process, drain_pending_low _ _ _ hlow]
+        have hnextDrain : drain (m + i + 2) ((m + i + 1) :: highStack m i) =
+            ([], (m + i + 1) :: highStack m i) := by
+          cases i with
+          | zero => rfl
+          | succ i =>
+              have hf : forbidden (m + (i + 1) + 2)
+                  (m + (i + 1) + 1) (m + i + 1) = false := by
+                simp [forbidden]
+              simp [highStack, drain, hf]
+        have hpendingDrain : drain (m + i + 2) (gapLow omitted i :: highStack m (i + 1)) =
+            ([gapLow omitted i], highStack m (i + 1)) := by
+          have ht : forbidden (m + i + 2) (gapLow omitted i) (m + i + 1) = true := by
+            simp [forbidden]
+            omega
+          simp [highStack, drain, ht, hnextDrain]
+        rw [process, hpendingDrain]
         simp only [List.cons_append, List.nil_append]
         change gapLow omitted i ::
             process (candidateTail m omitted (i + 1) remaining) (highStack m (i + 2)) = _
@@ -282,20 +286,6 @@ private lemma oddCandidate_maps_to_target (m omitted : ℕ) (hm : 0 < m)
   simp only [hhalf]
   rw [show 2 * m + 1 - m = m + 1 by omega]
 
-lemma target_perm_range (n : ℕ) :
-    (target n).Perm (List.range' 1 n) := by
-  let m := n / 2
-  have hm : m ≤ n := Nat.div_le_self n 2
-  have hreverse : (List.range' (m + 1) (n - m)).reverse.Perm
-      (List.range' (m + 1) (n - m)) := List.reverse_perm _
-  have happ := hreverse.append_left (List.range' 1 m)
-  have hrange : List.range' 1 m ++ List.range' (m + 1) (n - m) =
-      List.range' 1 n := by
-    rw [show m + 1 = 1 + m by omega, List.range'_append_1]
-    congr 1
-    omega
-  simpa only [target, m] using happ.trans (List.Perm.of_eq hrange)
-
 private lemma evenCandidate_mem_fibre (m : ℕ) (hm : 0 < m) :
     candidate m m m ∈ fibre (2 * m) := by
   have hmaps := evenCandidate_maps_to_target m hm
@@ -305,8 +295,22 @@ private lemma evenCandidate_mem_fibre (m : ℕ) (hm : 0 < m) :
       simpa only [cyclicStackSort, List.append_nil] using hpermOutput
     rw [hmaps] at hp0
     exact hp0
+  have htarget : (target (2 * m)).Perm (List.range' 1 (2 * m)) := by
+    let n := 2 * m
+    change (target n).Perm (List.range' 1 n)
+    let m := n / 2
+    have hm : m ≤ n := Nat.div_le_self n 2
+    have hreverse : (List.range' (m + 1) (n - m)).reverse.Perm
+        (List.range' (m + 1) (n - m)) := List.reverse_perm _
+    have happ := hreverse.append_left (List.range' 1 m)
+    have hrange : List.range' 1 m ++ List.range' (m + 1) (n - m) =
+        List.range' 1 n := by
+      rw [show m + 1 = 1 + m by omega, List.range'_append_1]
+      congr 1
+      omega
+    simpa only [target, m] using happ.trans (List.Perm.of_eq hrange)
   have hperm : (candidate m m m).Perm (List.range' 1 (2 * m)) :=
-    hp.symm.trans (target_perm_range (2 * m))
+    hp.symm.trans htarget
   simp [fibre, List.mem_permutations.mpr hperm, hmaps]
 
 private lemma oddCandidate_mem_fibre (m omitted : ℕ) (hm : 0 < m)
@@ -320,8 +324,22 @@ private lemma oddCandidate_mem_fibre (m omitted : ℕ) (hm : 0 < m)
       simpa only [cyclicStackSort, List.append_nil] using hpermOutput
     rw [hmaps] at hp0
     exact hp0
+  have htarget : (target (2 * m + 1)).Perm (List.range' 1 (2 * m + 1)) := by
+    let n := 2 * m + 1
+    change (target n).Perm (List.range' 1 n)
+    let m := n / 2
+    have hm : m ≤ n := Nat.div_le_self n 2
+    have hreverse : (List.range' (m + 1) (n - m)).reverse.Perm
+        (List.range' (m + 1) (n - m)) := List.reverse_perm _
+    have happ := hreverse.append_left (List.range' 1 m)
+    have hrange : List.range' 1 m ++ List.range' (m + 1) (n - m) =
+        List.range' 1 n := by
+      rw [show m + 1 = 1 + m by omega, List.range'_append_1]
+      congr 1
+      omega
+    simpa only [target, m] using happ.trans (List.Perm.of_eq hrange)
   have hperm : (candidate m (m + 1) omitted).Perm (List.range' 1 (2 * m + 1)) :=
-    hp.symm.trans (target_perm_range (2 * m + 1))
+    hp.symm.trans htarget
   simp [fibre, List.mem_permutations.mpr hperm, hmaps]
 
 private lemma oddCandidate_nodup (m : ℕ) :
@@ -345,9 +363,5 @@ lemma oddCandidate_lower_bound (m : ℕ) (hm : 0 < m) :
 lemma evenCandidate_lower_bound (m : ℕ) (hm : 0 < m) :
     1 ≤ (fibre (2 * m)).length := by
   exact List.length_pos_of_mem (evenCandidate_mem_fibre m hm)
-
-private def candidates (n : ℕ) : List (List ℕ) :=
-  if Even n then [candidate (n / 2) (n - n / 2) (n - n / 2)]
-  else (List.range (n - n / 2)).map (candidate (n / 2) (n - n / 2))
 
 end D5.S1.Words.Patterns.CyclicStackPreimages
