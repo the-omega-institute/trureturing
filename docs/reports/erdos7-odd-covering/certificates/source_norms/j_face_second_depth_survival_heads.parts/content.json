@@ -1,0 +1,155 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-second-depth-survival-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "669f617fbe665daee2bc69b4bf9ad48a1f35b337debf214b01aa8daea312836d",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "model": {
+    "path": "content/006-model.json",
+    "sha256": "f3a8508c61cf4dc914b135abd6cca5bccc9251222944a21f4ee7fc3fea74d688",
+    "kind": "object"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "retained_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      21,
+      35,
+      63,
+      105,
+      147,
+      245
+    ]
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "results": {
+    "path": "content/010-results.json",
+    "sha256": "5c42069e3d1419149de406c5c0e5c354129ec5b8e3b9bc2b3853e6fdc5e3648e",
+    "kind": "value"
+  },
+  "unchanged_AP11_bounds": {
+    "kind": "inline",
+    "value": [
+      {
+        "name": "AP11-2",
+        "adopted_upper": "83986122521866785419/14942604600000000000000"
+      },
+      {
+        "name": "AP11-3",
+        "adopted_upper": "102528125119760399/177888150000000000000"
+      }
+    ]
+  },
+  "complete_AP13_upper": {
+    "kind": "inline",
+    "value": "5415097003260174967/27783000000000000000"
+  },
+  "previous_AP11_sum": {
+    "kind": "inline",
+    "value": "4004565709269940526273/17433038700000000000000"
+  },
+  "complete_AP11_sum": {
+    "kind": "inline",
+    "value": "3615885085218909817049/15889488398437500000000"
+  },
+  "complete_count_tail_upper": {
+    "kind": "inline",
+    "value": "277/4392300"
+  },
+  "previous_survival_denominator": {
+    "kind": "inline",
+    "value": "206698075029868967782693/2440625418000000000000000"
+  },
+  "complete_survival_denominator": {
+    "kind": "inline",
+    "value": "7260628877086249501291723/85421889630000000000000000"
+  },
+  "survival_denominator_improvement": {
+    "kind": "inline",
+    "value": "6549062760208907224367/21355472407500000000000000"
+  },
+  "encoded_rational_duals": {
+    "path": "content/019-encoded_rational_duals.json",
+    "sha256": "46df87af0ff39168085590afe55920e38a1233c1729c35c740a7c31959fb07f0",
+    "kind": "value"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 58
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 191748
+  },
+  "previous251_duals_used": {
+    "kind": "inline",
+    "value": []
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 125000000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 38
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both entire actual saturated J faces. Original AP11 blocks0/1 retain the unchanged256 actual-source135/125 model and independent147/245 projections, all62500000 original choices per block and every exponent tail. Original249 blocks2/3 remain. The denominator keeps the same256 AP13, exact actual mass and complete infinite count law. No joint attainment, off-face extension, full52-cost comparison, Lean verification or unrestricted Erdos7 result."
+  }
+}

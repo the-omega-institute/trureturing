@@ -1,0 +1,45 @@
+#### 135.6.3 §119 已给固定时间窗的唯一最优解
+
+对字典时刻 $0,\ldots,L$，命题 119.2 证明两个单方向及共同可行集非空当且仅当 $L\ge3$。若 $j=L\bmod3$、$\ell=L-j$，实际共同轨道为
+
+$$
+r_L=R\lambda^L+c^\ell(1-R\lambda^j),\qquad
+r_0=r_1=r_2=1>r_3>r_4>\cdots>0,
+\qquad r_L\to0.
+$$
+
+每个固定 $L\ge3$ 的三个优化问题具有同一个唯一优化器，其支撑恰为 $\{0,1,2,L\}$，三个低次系数严格负，第 $L$ 个系数严格正。准确最优值为
+
+$$
+\Gamma^*_{\delta,L}=\frac{G+r_L}{1-r_L},\qquad
+\Gamma^*_{\delta,L}-G=\frac{(G+1)r_L}{1-r_L}>0.
+$$
+
+因此，对 $\epsilon>0$，固定窗最优值的准确误差条件是
+
+$$
+\Gamma^*_{\delta,L}-G\le\epsilon
+\quad\Longleftrightarrow\quad
+r_L\le\frac{\epsilon}{G+1+\epsilon},
+$$
+
+最小允许滞后为
+
+$$
+L^*_\epsilon
+=\min\left\{L\in\mathbb Z:\ L\ge3,\quad
+R\lambda^L+c^{L-(L\bmod3)}
+\bigl(1-R\lambda^{L\bmod3}\bigr)
+\le\frac{\epsilon}{G+1+\epsilon}\right\}.
+$$
+
+正性、严格单调性和趋零保证这个整数最小值存在。严格误差目标对应同一集合中的严格不等号；没有把涉及 $L\bmod3$ 的准确阈值替换成上一小节的单几何幂公式。
+
+还可以准确比较两者。对任意 $m\ge3$，§118 的 $p_m$ 在时间 $m,m+1$ 都有严格正系数，而固定 $L=m+2$ 的唯一优化器在这些中间时刻系数为零。两向量不同，由唯一性得到
+
+$$
+\Gamma^*_{\delta,m+2}<\Gamma_m.
+$$
+
+所以 $L^*_\epsilon\le L_{\rm family}$，但不能把后者称为整个时间字典的最小滞后。目标在 $L=3$ 已有有限精确表示；固定每个 $L\ge3$ 的最小值也都可达；允许所有有限 $L$ 后的共同下确界 $G$ 却不由任何有限表示达到。这三句话的量词不同，完全相容。
+

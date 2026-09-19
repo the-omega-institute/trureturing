@@ -1,0 +1,206 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-vector-face-complete-ratio-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "f32300b463e44652db74604ac82d6c9a1cbf8caea0a55c4d49897d6f9d664093",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "square_sums": {
+    "kind": "inline",
+    "value": {
+      "raw35_pair_sum": "173/48",
+      "zero7_pair_sum": "4651/1800",
+      "positive7_factor": "2/3",
+      "full_square_upper": "374/75",
+      "finite_boxes_and_complete_tails": [
+        {
+          "cut": 3,
+          "prefix": "29179783/6615000",
+          "complete_tail": "3807017/6615000"
+        },
+        {
+          "cut": 5,
+          "prefix": "834776803291/170170875000",
+          "complete_tail": "13808626709/170170875000"
+        },
+        {
+          "cut": 9,
+          "prefix": "309345415302930199153/62053128639140625000",
+          "complete_tail": "92852844251050847/62053128639140625000"
+        }
+      ]
+    }
+  },
+  "linear_cost_updates": {
+    "path": "content/008-linear_cost_updates.json",
+    "sha256": "a9ac3bc6fcbc8c2d19f237f2b19b1a666b39ee27aa613def34e03ee411b132a3",
+    "kind": "value"
+  },
+  "quadratic_cost_updates": {
+    "path": "content/009-quadratic_cost_updates.json",
+    "sha256": "3c33ab12950eafc02b7054c0294cd720bcaf38065f86a03373f85ab81a4ee1fd",
+    "kind": "value"
+  },
+  "direct_cost_bounds": {
+    "path": "content/010-direct_cost_bounds.json",
+    "sha256": "ccc1af9c2882b7434f379e12a8ee9ace1949e8c7ba320d10bdb3ebbec1027a9b",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/011-majorants.json",
+    "sha256": "37fd8e80dbf96db3227799f85792506a739381b4290a6ba3080edb994f5eedbe",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/012-improved_cost_bounds.json",
+    "sha256": "2ac72367930fd0d73d6d54041e49dd45c4be931584982107e18a8d28eb5d3830",
+    "kind": "value"
+  },
+  "cost_weights": {
+    "path": "content/013-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "linear_direct_numerator_gain": {
+    "kind": "inline",
+    "value": "8627577205613326039286845075631489/720420499726946075006749800000000000"
+  },
+  "quadratic_direct_numerator_gain": {
+    "kind": "inline",
+    "value": "10407081038453971/483480197600400000"
+  },
+  "direct_numerator_gain": {
+    "kind": "inline",
+    "value": "217213933089021651037954691436183401/6483784497542514675060748200000000000"
+  },
+  "propagated_numerator_gain": {
+    "kind": "inline",
+    "value": "14346221120444945311257727225730747/3602102498634730375033749000000000000"
+  },
+  "total_numerator_gain": {
+    "kind": "inline",
+    "value": "774990851740505588642278700390621/20675333219204447305678406250000000"
+  },
+  "improved_cost_indices": {
+    "path": "content/021-improved_cost_indices.json",
+    "sha256": "a0ccb7414617ceaf4a0726b630e85d82f151cd11e6b46a1eac4c7fff2d521d3b",
+    "kind": "value"
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "3063088142288715515239590374589329147633938418059/84324318967414379396946305652750000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "9179782029399638996550960877298472801218799254177/252972956902243138190838916958250000000000000000"
+  },
+  "uniform_hinge_uppers": {
+    "kind": "inline",
+    "value": {
+      "4": "938213/4630500",
+      "5": "1523903/9724050"
+    }
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282"
+    }
+  },
+  "denominator_coefficients": {
+    "kind": "inline",
+    "value": {
+      "mass": "945008/922383",
+      "linear": "45253/1844766",
+      "hinge4": "346061/1844766",
+      "hinge5": "4/33"
+    }
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "40455251803/517708422000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "15748028966320650441134999631351803076320851947923867/32373472435536555119847075443009967375000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "47197499880208999734343547153150683794373898235771601/97120417306609665359541226329029902125000000000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "37974551735284773843471656319140429/79165922402549748443815304578125000"
+  },
+  "reused_layout_count": {
+    "kind": "inline",
+    "value": 250000
+  },
+  "reused_layout_sha256": {
+    "kind": "inline",
+    "value": "284eded39badbe55b2f93c39e9bd3a3dc16f62fd476f3af089340cd34894be16"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary proof on both complete actual K-control faces at r=rho=0 and saturated mass53/360. Uses the whole-face linear and quadratic vector theorems, all52 cost bounds and one simultaneous all-load majorant substitution. Retains all signed and tail terms and the complete denominator. No off-face neighborhood, new global K, Lean verification or unrestricted Erdos7 solution."
+  }
+}

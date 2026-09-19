@@ -430,6 +430,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
       return .letE tp vp (← abstractPlan bp x) nd
   | .mdata m b => rule "E3.metadata"; return .mdata m (← child b)
   | .proj n i b =>
+    if !(interfaceTypes.contains n || #[`Prod, `Subtype].contains n) &&
+        (← get).constructorTypes.contains n && !Lean.isClass (← getEnv) n then
+      rule "E3.constructor_projection"
+      return .proj n i (← child b)
     unless interfaceTypes.contains n || #[`Prod, `Subtype].contains n do
       throwError "unclassified_form:E3.projection"
     rule "E3.projection"; return .proj n i (← child b)
@@ -468,6 +472,28 @@ private partial def compileNode (e : Expr) (depth : Nat)
       | .ctorInfo c => dataTypes.contains c.induct || interfaceTypes.contains c.induct ||
           constructorTypes.contains c.induct
       | _ => false
+    -- E4c.enumeration_dispatch: nullary constructors form a finite table;
+    -- its major premise needs no structural-descent authority.
+    if let .recInfo r := info then
+      if constructorTypes.contains (r.all.headD .anonymous) &&
+          r.numMotives == 1 && r.numIndices == 0 && r.all.length == 1 &&
+          args.size > r.getMajorIdx then
+        let .inductInfo ind ← getConstInfo (r.all.headD .anonymous)
+          | throwError "unclassified_form:E4c.inductive_description"
+        let enumeration ← ind.ctors.allM fun ctorName => do
+          let .ctorInfo ctor ← getConstInfo ctorName | return false
+          return ctor.numFields == 0
+        if enumeration then
+          let motive := args[r.numParams]!
+          -- Compiled match eta-expands its supplied constant motive. Retain
+          -- and check the raw argument below, including these beta redexes.
+          unless motive.isLambda && !motive.bindingBody!.headBeta.hasLooseBVar 0 do
+            throwError "unclassified_form:E4c.structural_descent"
+          rule "E4c.enumeration_dispatch"
+          dependency info
+          let mut plan := PlanNode.atom head
+          for arg in args do plan := .app plan (← child arg)
+          return plan
     let recursiveCase := match info with
       | .recInfo r => constructorTypes.contains (r.all.headD .anonymous)
       | _ => false
@@ -519,6 +545,17 @@ private partial def compileNode (e : Expr) (depth : Nat)
       for arg in args do plan := .app plan (← child arg)
       rule "E3.symbolic_decide"
       return plan
+    -- A field may itself be a function: only parameters and self must be
+    -- supplied before projecting. E4c descent authority is unchanged.
+    if let some p := (← getEnv).getProjectionFnInfo? name then
+      if !p.fromClass && (← get).constructorTypes.contains p.ctorName.getPrefix &&
+          args.size > p.numParams then
+        dependency info
+        let mut plan := PlanNode.proj p.ctorName.getPrefix p.i (← child args[p.numParams]!)
+        for arg in args.extract (p.numParams + 1) args.size do
+          plan := .app plan (← child arg)
+        rule "E3.constructor_projection"
+        return plan
     match info with
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"

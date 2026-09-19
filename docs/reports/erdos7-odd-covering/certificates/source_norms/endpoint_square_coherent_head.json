@@ -1,0 +1,217 @@
+{
+  "schema": "erdos7-endpoint-square-coherent-head-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "frontier/endpoint_linear_numerator.py": "5c83f0a6277079323120ce0a31ac220c884f92ff555506f9dcaf926d3335e133",
+    "certificates/source_norms/endpoint_linear_numerator.json": "1d5c0a6a2e9ba8e4d615f6963caa717f35e803ff531ab798420929d1d39bb981",
+    "frontier/endpoint_square_numerator.py": "cc1fb15acadf6eb0240ae76706d820d5a33008d6d16cf310bde74880cb889441",
+    "certificates/source_norms/endpoint_square_numerator.json": "694608bda8790b5f8016195457e305b19f4a5036d2222bec66c9819d0c98cb66"
+  },
+  "head_original_moduli": [
+    1,
+    3,
+    9,
+    5,
+    15,
+    45
+  ],
+  "head_ordered_pairs": 36,
+  "zero7_replaced_nonunit_pairs": 35,
+  "layout_bounds": {
+    "layout_fields": [
+      "root3",
+      "cell9",
+      "slot5",
+      "root15",
+      "slot15",
+      "cell45",
+      "slot45"
+    ],
+    "slot_names": [
+      "pure5_first",
+      "alpha_first",
+      "beta_first",
+      "higher_tail",
+      "source_free"
+    ],
+    "integer_scale": 1800,
+    "entry_caps": [
+      "0",
+      "2/225",
+      "2/225",
+      "1/150",
+      "1/150",
+      "0",
+      "1/75",
+      "1/75",
+      "1/100",
+      "2/225",
+      "0",
+      "0",
+      "0",
+      "1/180",
+      "1/75",
+      "0",
+      "0",
+      "1/90",
+      "1/90",
+      "1/75",
+      "0",
+      "0",
+      "1/45",
+      "1/90",
+      "1/75"
+    ],
+    "row_caps": [
+      "11/360",
+      "2/45",
+      "1/60",
+      "11/360",
+      "2/45"
+    ],
+    "total_mass_cap": "3/20",
+    "layout_count": 12500,
+    "primal_feasible_dual_equality_checks": 12500,
+    "raw_endpoint_checks": 25000,
+    "zero7_nonconstant_head_bound": "467/360",
+    "raw35_head_bound": "769/360",
+    "zero7_maximizers": [
+      [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ]
+    ],
+    "raw35_maximizers": [
+      [
+        [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        0
+      ],
+      [
+        [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        1
+      ]
+    ],
+    "one_zero7_maximizing_witness": {
+      "scaled_value": 2335,
+      "allocation": [
+        0,
+        16,
+        16,
+        12,
+        11,
+        0,
+        24,
+        24,
+        2,
+        0,
+        0,
+        0,
+        0,
+        10,
+        20,
+        0,
+        0,
+        20,
+        20,
+        15,
+        0,
+        0,
+        40,
+        20,
+        20
+      ],
+      "gamma": 0,
+      "beta": [
+        0,
+        0,
+        3,
+        3,
+        8
+      ],
+      "alpha": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        12,
+        0,
+        0,
+        0,
+        0,
+        12,
+        0,
+        0,
+        0,
+        0,
+        27,
+        0,
+        0
+      ]
+    },
+    "all_primal_dual_sha256": "21a62dff80f144730a3fc161fd9c52be5ca1947406717ad5f54f9e60a4f55e1d",
+    "all_raw_endpoint_values_sha256": "32cc83e1519b820f57b7cbccb23fdb4d2ff70a35c4a130e0dd03de90899839c7"
+  },
+  "old_zero7_head_budget": "2443/1800",
+  "old_raw35_head_budget": "91/40",
+  "zero7_gain": "3/50",
+  "positive7_pair_factor": "2/3",
+  "positive7_gain": "5/54",
+  "positive7_tail_checks": [
+    {
+      "cut": 1,
+      "finite_ordered_pair_factor": "18/35",
+      "complete_tail_factor": "16/105"
+    },
+    {
+      "cut": 3,
+      "finite_ordered_pair_factor": "162/245",
+      "complete_tail_factor": "4/735"
+    },
+    {
+      "cut": 7,
+      "finite_ordered_pair_factor": "2745126/4117715",
+      "complete_tail_factor": "52/12353145"
+    }
+  ],
+  "preceding_full_square_upper": "4559/900",
+  "full_square_upper": "2653/540",
+  "improvement_over62": "103/675",
+  "barrier": "45",
+  "absolute_square_margin": "248/135",
+  "old49_square_margin": "5701/3888",
+  "margin_improvement_over49": "7207/19440",
+  "scope": "Ordinary uniform endpoint and approaching-sequence theorem for all independently labelled original357 tests. Complete tails are inherited from62 and the positive-seven ordered depth pairs are summed explicitly. Exact shallow source relaxations do not assert an attainable full-square extremizer. No quantitative neighborhood, global K replacement or Lean result is claimed."
+}

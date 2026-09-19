@@ -1,0 +1,87 @@
+{
+  "variables": {
+    "kind": "inline",
+    "value": 3306
+  },
+  "base244_model": {
+    "path": "content/006-model/001-base244_model.json",
+    "sha256": "7c323baeb77f87ecdfdf23b7eac3791c38fe8e07bfede9ad33fab9ccb6d7ceb7",
+    "kind": "value"
+  },
+  "marked_states": {
+    "kind": "inline",
+    "value": [
+      "135-only",
+      "125-only",
+      "both"
+    ]
+  },
+  "implicit_complement": {
+    "kind": "inline",
+    "value": "neither"
+  },
+  "marked_raw_variables": {
+    "kind": "inline",
+    "value": 1200
+  },
+  "marked_survivor_variables": {
+    "kind": "inline",
+    "value": 1200
+  },
+  "projection135_variables": {
+    "kind": "inline",
+    "value": 25
+  },
+  "projection125_variables": {
+    "kind": "inline",
+    "value": 5
+  },
+  "survivor_caps": {
+    "kind": "inline",
+    "value": {
+      "135": "1/135",
+      "125": "13/3750"
+    }
+  },
+  "raw_intersection_caps": {
+    "kind": "inline",
+    "value": {
+      "135": {
+        "25": "1/675",
+        "27": "1/135",
+        "75": "1/675",
+        "81": "1/405"
+      },
+      "125": {
+        "25": "1/125",
+        "27": "1/3375",
+        "75": "1/375",
+        "81": "1/10125"
+      }
+    }
+  },
+  "joint_raw_cap": {
+    "kind": "inline",
+    "value": "1/3375"
+  },
+  "complete_retained_tail": {
+    "kind": "inline",
+    "value": "7951/405000"
+  },
+  "unit_repair_rows": {
+    "kind": "inline",
+    "value": 3306
+  },
+  "inequalities": {
+    "kind": "inline",
+    "value": 6354
+  },
+  "equalities": {
+    "kind": "inline",
+    "value": 18
+  },
+  "rows_sha256": {
+    "kind": "inline",
+    "value": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  }
+}

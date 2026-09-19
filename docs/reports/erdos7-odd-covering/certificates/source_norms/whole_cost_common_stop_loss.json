@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "e362df450b9e8f5ad6b8a478811498b4e4a3ec33bbb4b081fa5c3840db9af854",
+  "parts_directory": "whole_cost_common_stop_loss.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "983288d3f5e3b40b03ceb00734a396e19a45444e93853c69c6fe3611ee300206",
+    "kind": "object"
+  }
+}

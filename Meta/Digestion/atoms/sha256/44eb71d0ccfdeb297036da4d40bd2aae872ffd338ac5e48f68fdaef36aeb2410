@@ -1,0 +1,21 @@
+**证明。** 堆叠似然的二次项为
+$(\mathbf y_n-\mathbf H_nz)^T\mathbf R_n^{-1}(\mathbf y_n-\mathbf H_nz)$。
+按定理 128.1 同样展开和完整平方即得后验；其协方差固定，再用定理 128.4 的熵差。证毕。
+
+因此不能在相关情况下只取各边缘 $R_t^{-1}$ 相加。逐步读取仍可以写成独立创新，但必须先消去噪声相关性。将过去与下一次噪声分块为
+$$
+\begin{pmatrix}\epsilon_{\mathrm p}\\\epsilon_{\mathrm n}\end{pmatrix}
+\sim N\left(0,
+\begin{pmatrix}R_{\mathrm{pp}}&R_{\mathrm{pn}}\\
+R_{\mathrm{np}}&R_{\mathrm{nn}}\end{pmatrix}\right),
+$$
+整个块矩阵正定。令
+$$
+L=R_{\mathrm{np}}R_{\mathrm{pp}}^{-1},\qquad
+\widetilde R=R_{\mathrm{nn}}-R_{\mathrm{np}}R_{\mathrm{pp}}^{-1}R_{\mathrm{pn}}\succ0,
+$$
+$$
+\widetilde Y=Y_{\mathrm n}-L\mathbf Y_{\mathrm p},\qquad
+\widetilde H=H_{\mathrm n}-L\mathbf H_{\mathrm p}.
+$$
+

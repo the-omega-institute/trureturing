@@ -1,0 +1,140 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-whole-quadratic-same-source-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "d43a2c8767e3942a2ee8226e63d922c21dc3015c57bd6dedc4caba4970ebb952",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "source_geometry_layout_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "all_source_geometries_sha256": {
+    "kind": "inline",
+    "value": "e138211ce5b546656c672dab0ddd69ba94d93e1f58f887bac0ca30d6a0151fc4"
+  },
+  "complete_tail_distinct_pairs": {
+    "kind": "inline",
+    "value": "2539/3600"
+  },
+  "quadratic_results": {
+    "path": "content/010-quadratic_results.json",
+    "sha256": "c406c5a2b89408421f6069ec69684133dd64c7c60693f0cc3c9df45e9923a766",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/011-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/012-improved_cost_bounds.json",
+    "sha256": "f8002bc8229936a001aecb43191127a453906e43babd1589107e7c8016094529",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "374/75"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "2524547854381128907264555471562966542931/72277987686355182340239690559500000000"
+  },
+  "additional_numerator_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "AP11_block_results": {
+    "path": "content/018-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "3253808038485254109147885098089939401708907/7086747513465768980547138892364583187500"
+  },
+  "additional_comparison_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary stronger same-source bridge on both complete actual saturated K faces. For all ten positive quadratic generators the new operator is pointwise dominated by113 and an explicit matching LP primal/dual reaches its113 maximum; hence this refinement has no additional gain. All original residues,52 signed costs, polynomial and geometric tails and the full111 denominator remain. No actual covering-family attainment, off-face extension, Lean verification, global K or unrestricted Erdos7 resolution."
+  }
+}

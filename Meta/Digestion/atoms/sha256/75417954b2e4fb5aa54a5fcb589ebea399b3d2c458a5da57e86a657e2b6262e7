@@ -1,0 +1,27 @@
+#### 134.2.1 共同操作语言上的系统比较
+
+固定操作标签集合 $A$。一个系统由集合 $X$、实际读数满射 $q:X\twoheadrightarrow Q$、总操作 $T_a:X\to X$ 组成。另一系统写为 $(X',Q',q',T'_a)$。比较 $(F,H)$ 的类型和合同是
+
+$$
+F:X\to X',\qquad H:Q\to Q',\qquad
+q'F=Hq,\qquad FT_a=T'_aF\quad(a\in A).
+\tag{134.5}
+$$
+
+这样的比较按分量复合。若 $(G,J)$ 是后一比较，则
+
+$$
+(GF)T_a=G(T'_aF)=T''_a(GF),\qquad
+q''GF=Jq'F=JHq;
+$$
+
+故它们构成固定操作语言下的系统范畴。
+
+有限词 $w=a_1\cdots a_n$ 按执行顺序表示
+
+$$
+T_w=T_{a_n}\cdots T_{a_1},\qquad T_\varepsilon=\mathrm{id}.
+$$
+
+特别地，$T_{av}=T_vT_a$，且 $T_{uv}=T_vT_u$。
+

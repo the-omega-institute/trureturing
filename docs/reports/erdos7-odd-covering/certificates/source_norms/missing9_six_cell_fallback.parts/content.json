@@ -1,0 +1,34 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-missing9-six-cell-fallback-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "3e590354f92be7a3ebbad8c1ee74dc1d1589b3b025d189c8ba1d915c165c121f",
+    "kind": "value"
+  },
+  "six_cell_source": {
+    "path": "content/002-six_cell_source.json",
+    "sha256": "89d1a5d84a5f4613f00247a2c320100c6af52f918e54c6209c4d94ce0e3f82fd",
+    "kind": "object"
+  },
+  "new_last_branch_comparison": {
+    "path": "content/003-new_last_branch_comparison.json",
+    "sha256": "7352957e2a0a881a4badee8414f68d9bc809f01536762831ad65ab0acd2bdfba",
+    "kind": "value"
+  },
+  "fallbacks": {
+    "path": "content/004-fallbacks.json",
+    "sha256": "92aa301a6462e9137072157ff2e84b03977bae9d5344fdc9b4721ec056fc2861",
+    "kind": "value"
+  },
+  "previous_last_complete_bound": {
+    "kind": "inline",
+    "value": "2067798683059000695610477008251208202322203/5021258689796464979957877553768798800000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Six actual missing/ineffective9 source cells; fixed-C full continuous-domain ordinary proof supported by24696 exact signed margins and2058 mass margins. Complete same-source AP(4,4) last fallback and both full core errors are below403. The other seven236 fallback records retain their own AP(4,5) laws and exact bounds. No effective9/global conclusion, new threshold optimization, Lean or unrestricted Erdos7 resolution."
+  }
+}

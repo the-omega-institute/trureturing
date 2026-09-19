@@ -1,0 +1,318 @@
+{
+  "schema": "erdos7-broad-five-slot-tradeoff-v1",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/common_deleted_measure_coupling.py": "8d3cf988e05dfe0467a8f3cf83c6bc745156b989774c686349bb043e72a32ef2",
+    "certificates/source_norms/common_deleted_measure_coupling.json": "949b92e13b4d1f72804fac7c15b9aa1f016e920d22137fd5b540ef9f61c2d4f6",
+    "frontier/global_control_faces.py": "649e9c395ed07896ccc93064c8634e402e1a277b2a96c06a3688e8b566f85c93",
+    "certificates/source_norms/global_control_faces.json": "d99736841c20977095c5c397c5949dec20960a4ee1afd72a3f926f2e773b8817",
+    "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+    "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+    "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+    "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+    "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70",
+    "frontier/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained_five_tests.json": "3fac691eb1f3081ab54559a0c396a88abd244efc73e4b6ca1875753a50b8dbc4",
+    "frontier/verify_retained_five_tests.py": "920dd25084bb7670149e7c23ad5057b408326a4c937ce69630ca3889b4ca5f23",
+    "frontier/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained_quadratic_tests.json": "cfcac117e8988e6b3e37dfde961e6f35cb64a05aab700c09297424dadd534e29",
+    "frontier/verify_retained_quadratic_tests.py": "2ba3c805a4cad11c9a004782e8104c01f7a8c0f9bf06058f8f80da55e772d31f",
+    "frontier/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/shared_source_deficits.json": "bd47e5157698faaaed4ddfb5fadf93f51dc11c69fe89e15a3a74e14117445588",
+    "frontier/verify_shared_source_deficits.py": "01accc355e7fc50ee313b08c948874d83252fabcdd08f6dfd4ff533f6f440d5e",
+    "frontier/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/survival_hinge_deficit.json": "a81892ca70b51a8402c67ffca901c7acf57fa993b9deeccf0037b6eaaec70ff8",
+    "frontier/verify_survival_hinge_deficit.py": "b6b80b99c728382e5e3f34fbc07e3ae8a2655d0e3777b03db2307e0422db9843",
+    "frontier/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/absorbed_survival_hinges.json": "fd0b0803e8adf197beca896dc0667230be5ba30765eefe39dd9633b554535edc",
+    "frontier/verify_absorbed_survival_hinges.py": "f38ea3bb39fc3f8dacb8fffa3cd2072afdb5e8baf02778be2190f4970efbaaf9",
+    "frontier/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/full_absorbed_survival_hinges.json": "3b9ac3f0a8ce3b5e11c5f32165c713cd8307f7bf09f0d49426a5f719a18fcef7",
+    "frontier/verify_full_absorbed_survival_hinges.py": "b8cbb274c237f4bc7bf83f997b4fbd34429951d41326f2c086118a2851fab844",
+    "certificates/source_norms/joint_survival_carriers.json": "9b8b6f5bfabed669cea810b759d2d02f19e47cce1999851dcd031cfa77115a72",
+    "frontier/verify_joint_survival_carriers.py": "778b5a597d57b8aef9ed8e7ba68b74c0b17d90729f87ed8dd36fb8f9ee8ae6f9",
+    "frontier/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source_barrier_saturation.py": "92076ee71a6be16655bbe5c2ac223db6502da1ab5c3553a7f83bb555dbbb8363",
+    "certificates/source_norms/joint_linear_carriers.json": "3c1ccbe0a79dfe5c3b01424b1fd615999a162b5b7df2451936f554b3517a2385",
+    "frontier/verify_joint_linear_carriers.py": "b1a460bee98749567e55e6a554286405a78a5faf2793ee09e88efdd60c1954e6",
+    "frontier/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "certificates/source_norms/full_linear_carrier_frontier.json": "237ed11241550037c69c855742d3f6e0a3a9c362ae2a861a173d3450e32375c0",
+    "frontier/verify_full_linear_carrier_frontier.py": "1a97de206716b5ae1822ffca4b94e5affb3be78e763002bdf554d3a95ac8f948",
+    "frontier/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/allocated_seven_thresholds.json": "9400e4fae0a400edcc7ee7459103af677e512592823b683f67e7c896f8d345b8",
+    "frontier/source_cost_endpoint_attainment.py": "b7daf5ab9c8656d922681e298b030c199c5f9bcc36af7a43e84a5bef156fb68f",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "actual_definitions": {
+    "p": "z-3/4",
+    "a": "1/4-alpha1",
+    "b": "1/4-(beta2+beta3+beta4)",
+    "Delta": "p+a+b",
+    "r": "min_j(h/5-Lambda(F_j))",
+    "m": "Lambda(F_H)=h/5-r",
+    "E5": "h/25-V5(1)",
+    "E15": "h1/25-V15(1)",
+    "omega": "(V-delta)(1)",
+    "S0": "sum_c pi_c D_c(theta)",
+    "rho": "S-S0",
+    "r1": "h1/5-Lambda(root1 times F_H)"
+  },
+  "general_hypotheses": [
+    "Actual first source labels5,15,45 are present, with15 on root1 and45 in a root1 cell.",
+    "Their first-five slots P,A,B are pairwise distinct.",
+    "r<min(h/5,h1/5,eta_star/5).",
+    "Every expression dividing byG additionally requiresG>0."
+  ],
+  "source_domain": {
+    "vertex_count": 1296,
+    "deficit_vertices": [
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/2"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/2",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "1/2",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1/2",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "h_range": [
+      "1/2",
+      "5/9"
+    ],
+    "h1_range": [
+      "5/18",
+      "1/3"
+    ],
+    "h1_minus_h0_lower": "1/18",
+    "eta_range": [
+      "1/18",
+      "1/9"
+    ],
+    "justification": "The asserted domain inequalities are affine in each simplex; vertex verification extends to every parameter point by convex combinations."
+  },
+  "complete_tail_checks": [
+    {
+      "cut": 1,
+      "five_prefix": 0,
+      "five_tail": "1/20",
+      "seven_prefix": "6/35",
+      "seven_tail": "1/35"
+    },
+    {
+      "cut": 3,
+      "five_prefix": "6/125",
+      "five_tail": "1/500",
+      "seven_prefix": "342/1715",
+      "seven_tail": "1/1715"
+    },
+    {
+      "cut": 8,
+      "five_prefix": "19531/390625",
+      "five_tail": "1/1562500",
+      "seven_prefix": "1152960/5764801",
+      "seven_tail": "1/28824005"
+    }
+  ],
+  "slab": {
+    "delta_upper": "1/18",
+    "r_split": "1/12000",
+    "source_slot_gap_lower": "397/36000",
+    "four_gap_guards": [
+      "1199/12000",
+      "1997/36000",
+      "397/36000",
+      "1973/162000"
+    ],
+    "wrong_root15_gap_guard": "397/36000",
+    "m_over5_lower": "1199/60000",
+    "m_upper": "1/9",
+    "residual_coefficient_upper": "4000/397",
+    "large_r_mass_residual_lower": "1/60000",
+    "first_label_forcing_margin": "13/90",
+    "positive_part_breakpoints": [
+      "159991/180000000",
+      "476003/240000000"
+    ]
+  },
+  "concentration": {
+    "zero_boxes": [
+      [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          1
+        ],
+        [
+          0
+        ],
+        [
+          14
+        ]
+      ],
+      [
+        [
+          2
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          2
+        ],
+        [
+          0
+        ],
+        [
+          13
+        ]
+      ]
+    ],
+    "zeta_lower": "25/27",
+    "outside_zero_mass_upper": "2/27",
+    "individual_p_a_b_upper": "1/54",
+    "delta_upper": "1/18",
+    "factor_formulas": {
+      "p": "(1-z0)/4",
+      "a": "(1-alpha2)/4",
+      "b": "(1-beta345)/4"
+    },
+    "justification": "The zero union is contained in each common factor event, so its product mass cannot exceed any of their three weights."
+  },
+  "bounded_head_interface": {
+    "original_head_moduli": [
+      1,
+      3,
+      9,
+      5,
+      15,
+      45
+    ],
+    "column_checks": 125000,
+    "all_head_columns_sha256": "e31a5cd2f663f37d2308b9f382f11b61abe7878a4e659f0d7ff7e4c4dddac104",
+    "maximum_column_hinges": {
+      "4": 2,
+      "5": 1
+    },
+    "maximizing_witnesses": {
+      "4": {
+        "layout": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "slot": 0,
+        "column": [
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "5": {
+        "layout": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "slot": 0,
+        "column": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "raw_column_integral_uppers": {
+      "4": "2/45",
+      "5": "1/45"
+    },
+    "rho_coefficients": {
+      "4": "1600/397",
+      "5": "800/397"
+    },
+    "base_rho_coefficient": "800/397",
+    "scope": "The enumeration checks bounded head functions, not actual covering families. The ordinary proof gives the arbitrary-source integral and single shared residual charge."
+  },
+  "shared_capacity_inequality": "E5+E15+omega<=rho; these are actual measures and deficits, not independent probability parameters.",
+  "single_slot_tradeoff": "mu(F_J)<=m-[min(g0,A0-c0*(rho-r/5))]_+ whenDelta<=1/18 andr<1/12000.",
+  "bounded_head_hypotheses": [
+    "Delta<=1/18 and r<1/12000.",
+    "B is the actual six-label test head with moduli1,3,9,5,15,45; missing labels contribute zero.",
+    "phi=(B-t)_+ with t=4 or5; all measures and capacity defects are from the same actual source."
+  ],
+  "bounded_head_tradeoff": "mu(phi)<=Lambda((1-(1_H+1_root1H)/5)*phi)-V3(phi)-V9(phi)+(6-t)*(800/397)*(rho-(r+r1)/5), phi=(B-t)_+,t=4or5.",
+  "scope": "Ordinary actual-source theorem on the broad deficit slab, with complete tails and one shared virtual-to-actual loss. It gives conditional slot and bounded-head constraints, not an added old m40 margin, global K improvement, actual covering construction, or Lean verification."
+}

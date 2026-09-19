@@ -1,0 +1,106 @@
+{
+  "raw25": {
+    "prices": [
+      "19/36",
+      "5",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "exact_slope": "5",
+    "containing_slope": 6
+  },
+  "density": {
+    "prices": [
+      "1",
+      "10",
+      "10",
+      "0",
+      "0",
+      "0",
+      "1"
+    ],
+    "exact_slope": "10",
+    "containing_slope": 11
+  },
+  "e3_root1": {
+    "prices": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "3",
+      "0"
+    ],
+    "exact_slope": "3",
+    "containing_slope": 3
+  },
+  "e3_slot": {
+    "prices": [
+      "1/72",
+      "2/9",
+      "0",
+      "0",
+      "0",
+      "4",
+      "0"
+    ],
+    "exact_slope": "4",
+    "containing_slope": 5
+  },
+  "e5_cell": {
+    "prices": [
+      "1/450",
+      "0",
+      "0",
+      "1",
+      "5",
+      "0",
+      "0"
+    ],
+    "exact_slope": "5",
+    "containing_slope": 6
+  },
+  "marked27_81": {
+    "prices": [
+      "901/900",
+      "10",
+      "10",
+      "1",
+      "5",
+      "0",
+      "1"
+    ],
+    "exact_slope": "10",
+    "containing_slope": 17
+  },
+  "marked25_75": {
+    "prices": [
+      "361/360",
+      "91/9",
+      "10",
+      "0",
+      "0",
+      "7",
+      "1"
+    ],
+    "exact_slope": "91/9",
+    "containing_slope": 19
+  },
+  "pretable": {
+    "prices": [
+      "1/36",
+      "20/27",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "exact_slope": "20/27",
+    "containing_slope": 1
+  }
+}

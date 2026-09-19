@@ -1,0 +1,25 @@
+#### 134.3.4 向外读数使用对偶方向
+
+观察 $q:X\to B$ 是从对象向外的读数，而 $h_X(Z)$ 中的元素是从探针向对象的箭头。这两个方向不能不加说明地合并。
+
+若要使用全部向外读数，定义协变函子
+
+$$
+k_X:\mathcal C\to\mathsf{Set}_{\mathcal U},\qquad
+k_X(Z)=\operatorname{Hom}_{\mathcal C}(X,Z).
+$$
+
+对自然变换 $\theta:k_X\Rightarrow k_Y$，在 $X$ 处求值
+
+$$
+u=\theta_X(\mathrm{id}_X):Y\to X.
+$$
+
+对任意 $f:X\to Z$，自然性给 $\theta_Z(f)=f\circ u$。反之，任意 $u:Y\to X$ 均按此式产生自然变换。于是
+
+$$
+\operatorname{Nat}(k_X,k_Y)\cong\operatorname{Hom}_{\mathcal C}(Y,X).
+$$
+
+因此 $X\mapsto k_X$ 是定义在 $\mathcal C^{\mathrm{op}}$ 上的全忠实表示。一个有限选定的读数族 $(q_j:X\to B_j)$ 并不自动等于这个完整函子；它还没有包含所有目标对象、所有向外箭头及其后复合相容性。
+

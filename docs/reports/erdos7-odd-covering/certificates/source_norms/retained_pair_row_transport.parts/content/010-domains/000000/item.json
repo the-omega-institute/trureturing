@@ -1,0 +1,85 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "wide_fresh_full_slot_source_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "1/60"
+  },
+  "raw_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "7/600",
+      "7/600",
+      "29/2850",
+      "7/600",
+      "0",
+      "1/45",
+      "1/45",
+      "329/17100",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45"
+    ]
+  },
+  "raw_budgets": {
+    "kind": "inline",
+    "value": [
+      "821/27360",
+      "61/720",
+      "49/342"
+    ]
+  },
+  "dual_count": {
+    "kind": "inline",
+    "value": 6292
+  },
+  "joint_row_error_maximum": {
+    "kind": "inline",
+    "value": "2835585438320310678433/2441880000000000000000"
+  },
+  "maximizing_dual_keys": {
+    "kind": "inline",
+    "value": [
+      "b63b2ad721b21cc4907a23d23b2b1662343b438a1fd8580078be8b579c399450"
+    ]
+  },
+  "complete_heavy_controllers": {
+    "path": "content/010-domains/000000/item/009-complete_heavy_controllers.json",
+    "sha256": "765cd5fac7f5cda92bffea226ca03cf1df3941148cfa00f3b28991951b2bd46e",
+    "kind": "value"
+  },
+  "encoded_price_bank": {
+    "path": "content/010-domains/000000/item/010-encoded_price_bank.json",
+    "sha256": "2d2a5b61fb319d509abb76392eb4f46c3c4b627812d06e55934af01c3fbf8b3c",
+    "kind": "object"
+  },
+  "selected_raw_primal_dual_witnesses": {
+    "path": "content/010-domains/000000/item/011-selected_raw_primal_dual_witnesses.json",
+    "sha256": "e7919f692583286fab7d621881f85608f52dffd743dbade0cef488a16c32b9dc",
+    "kind": "object"
+  }
+}

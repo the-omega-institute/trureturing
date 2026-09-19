@@ -38,6 +38,8 @@ internal sealed record InformationTemplateUniverse(
 
 internal static class DeclaredTemplateBindingRule
 {
+    // τ=0 owner ruling (2026-09-20): every DTR finding is an observation. The
+    // obligation collects registration state as warnings and never blocks admission.
     internal static bool IsAffectedBy(DeltaRuleContext context) =>
         RepositoryRules.ChangedOrFirstPinD5Modules(context).Any();
 
@@ -67,16 +69,16 @@ internal static class DeclaredTemplateBindingRule
                     findings.Add(occurrence.State switch
                     {
                         _ when occurrence.EscapeFrom is null || occurrence.EscapeContinues is null => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Block),
+                            "DTR-Undeclared " + key, AdmissionEffect.Observe),
                         InformationTemplateBindingState.Undeclared => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Block),
+                            "DTR-Undeclared " + key, AdmissionEffect.Observe),
                         InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
                             new(path.Value, "DTR-Declared " + key
                                 + " escape_from=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeFrom)
                                 + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
                                 + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
                         _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
-                            ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Block),
+                            ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Observe),
                     });
                 }
                 var validated = occurrences.Values
@@ -84,11 +86,11 @@ internal static class DeclaredTemplateBindingRule
                     .Select(occurrence => occurrence.Key.Theorem).ToHashSet(StringComparer.Ordinal);
                 foreach (var theorem in newTheorems.Where(name => !validated.Contains(name)).Order(StringComparer.Ordinal))
                     findings.Add(new(path.Value, "DTR-Unregistered " + InformationTemplateEvidence.ModuleForSource(path.Value)
-                        + "/" + theorem, AdmissionEffect.Block));
+                        + "/" + theorem, AdmissionEffect.Observe));
             }
             catch (Exception error) when (error is FormatException or IOException or InvalidOperationException or ArgumentException)
             {
-                findings.Add(new(path.Value, "DTR-Evidence " + error.Message, AdmissionEffect.Block));
+                findings.Add(new(path.Value, "DTR-Evidence " + error.Message, AdmissionEffect.Observe));
             }
         }
         return findings.ToImmutable();
@@ -102,16 +104,11 @@ internal static class DeclaredTemplateBindingRule
         // visibility field in the admission report.
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
-        if (sourceNames.TryGetValue(declaration.Name, out var kind)) return kind is "theorem" or "lemma";
-        return !GeneratedCompanionSuffixes.Any(suffix => declaration.Name.EndsWith(suffix, StringComparison.Ordinal));
+        // Only theorems the module's source spells out are authored. Everything the
+        // compiler or a command generates (congruence lemmas such as
+        // `legendreSym.congr_simp`, equation lemmas, registration companions) has no
+        // author who could register it, so it carries no obligation. A handwritten
+        // theorem whose name imitates a companion suffix is still in the source map.
+        return sourceNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma";
     }
-
-    // Closed naming alphabet of Registry/Entries and the seal proof builders.
-    // An explicitly authored theorem never gets a suffix-based exemption.
-    private static readonly string[] GeneratedCompanionSuffixes =
-    [
-        "__information_unit", "__primitive_realization", "__lowers_escape", "__trivial_in_catalog",
-        "__escape_enriched", "__information_catalog", "__catalog_irredundant", "__catalog_redundant",
-        "__system_catalog_irredundant", "__system_catalog_not_irredundant", "__information_registration_diagnostic",
-    ];
 }

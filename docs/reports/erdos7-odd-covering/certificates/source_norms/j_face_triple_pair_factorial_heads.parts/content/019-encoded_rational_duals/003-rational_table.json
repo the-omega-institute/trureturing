@@ -1,0 +1,41 @@
+{
+  "length": 2981,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/019-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "4fdbaa92bfb2e827e6ba6f6282ca2d91ffc4052337f8d33aee554df918018e33",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/019-encoded_rational_duals/003-rational_table/000798-001596.json",
+        "sha256": "33693e639de1fb706adbf21aa836683421b30c5683216225e0461b3258b1cc5a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/019-encoded_rational_duals/003-rational_table/001596-002394.json",
+        "sha256": "05ab4144ac3c72435b46205649e12eb617255c983378da81357075a37792480b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 2981,
+      "part": {
+        "path": "content/019-encoded_rational_duals/003-rational_table/002394-002981.json",
+        "sha256": "b37341927b1f82d7e75dd3ddbb5ada046cfff6d07a11ad9f8f3231c4c8e9225d",
+        "kind": "value"
+      }
+    }
+  ]
+}

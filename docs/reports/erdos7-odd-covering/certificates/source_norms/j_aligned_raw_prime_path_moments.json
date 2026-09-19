@@ -1,0 +1,458 @@
+{
+  "schema": "erdos7-aligned-raw-prime-path-moments-v1",
+  "domain": "Actual aligned312 endpoint, own independent old tests, complete source paths and pair tails.",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "frontier/j_face_coupled_seven_heads.py": "d2794b380770dcd5529bacc0fb134d0e7ea82c26c572339b65e30c8222e24946",
+    "frontier/k_face_common_seven_hinges.py": "8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97",
+    "frontier/joint_selected_source_comparison.py": "68ac25a9801c1ea946bad2780ed2fda457737bd3bdeeb99da91df642a2745055",
+    "frontier/retained_deletion_heavy_comparison.py": "294fe1254ce3209a072e6bf462d00d4e106e5b1e987d911ff786736370062d75",
+    "frontier/j_face_joint_selected_heads.py": "01033d19b43910a667954005342d2a03fe57dd6f621bf319398cfdb77ec821ec",
+    "certificates/source_norms/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "5d746cc187d5b5cfb3b9eec0a02cfa6e9b55fe3dd8a61b51882c529c9fdb5505",
+    "profile-notes/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "1e10b2ef81352086405414637c19bffe7b54a1d3852010a29b075462ec1ba387",
+    "certificates/source_norms/j_aligned_own_test_interface.json": "4acd11a4171dee81f627747608850be94521d25de4f2c128b686406280e532de",
+    "profile-notes/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "a1d842dfbe05f3a251ce969a84b02be64128672121cadb5ea2c258befeb1ebc4",
+    "frontier/j_aligned_joint_selected_heads.py": "803b2152f054c8d981e04aea67184ff1c89c763781ccb63732657d7a5d04a675",
+    "certificates/source_norms/j_aligned_joint_selected_heads.json": "4ad31d0efb64a96179f832672e2964f5ef6e09350e8f706f6ce4b43343ad65da",
+    "frontier/j_face_shared_square_factorial.py": "ff44159c9765bcdc54139f0840ee984bd4d223647b6434b805e852519df570f6",
+    "frontier/j_face_raw_prime_path_pairs.py": "63563f4034949eeb4cb7c5b9bc4b4d19174939a682c60993a0a54a85a2bf651a",
+    "frontier/j_face_coherent_positive7_pairs.py": "d643cc68b0c0d076a29246e78c75d1f6d6778617a852fa0bb738a18d2554619c",
+    "frontier/j_face_joint_retained_square.py": "7f4bcecb86c0cdb53b06f4b338366324d61a6acd13a1c566645ccfc0cf34f7f0",
+    "frontier/complete_off_face_factorial_tail.py": "8447e1cd50d6452a881413067858188344d22631c7b73b74734b3006a244d047"
+  },
+  "actual_raw_mass": "1/4",
+  "actual_survivor_mass": "413/2700",
+  "theta_interval": [
+    "1/405",
+    "1/270"
+  ],
+  "original_head_count": 12500,
+  "endpoint_records": 25000,
+  "all_endpoint_bounds_sha256": "f83d33dfc6053fa46516dc626211cd2c429ae7b7b2d5c252a8013faed0098bfb",
+  "complete_raw_pair_upper": "1093/864",
+  "complete_raw_square_upper": "2321/720",
+  "maximizing_relaxation_witnesses": {
+    "pair": [
+      {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "theta": "1/270",
+        "complete_raw_old_cross": "73/180",
+        "block_changes": {
+          "pair": "-1/144",
+          "square": "-1/36"
+        },
+        "complete_bounds": {
+          "pair": "1093/864",
+          "square": "2321/720"
+        },
+        "complete_prime_blocks": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "square_block": false,
+            "discount": "1/3",
+            "initial_weight": "1/27",
+            "diagonal_geometric_weight": "1/18",
+            "distinct_geometric_weight": "1/36",
+            "old_head_cross": "7/60",
+            "old_distinct_pairs": "1/48",
+            "old_diagonal": "0",
+            "old_complete_block": "11/80",
+            "new_complete_block": "47/360",
+            "block_change": "-1/144",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "19/20",
+                "reward_count_coefficient": "3/4",
+                "potential_constant": "159/80",
+                "potential_count_coefficient": "9/8",
+                "unchanged_component_reward_slack": "3/8",
+                "complete_path_upper": "53/720"
+              },
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "19/20",
+                "reward_count_coefficient": "3/4",
+                "potential_constant": "159/80",
+                "potential_count_coefficient": "9/8",
+                "unchanged_component_reward_slack": "3/8",
+                "complete_path_upper": "53/720"
+              },
+              {
+                "raw_head_cross_coefficient": "1",
+                "raw_density_cap": "3/10",
+                "reward_constant": "1",
+                "reward_count_coefficient": "3/10",
+                "potential_constant": "69/40",
+                "potential_count_coefficient": "9/20",
+                "unchanged_component_reward_slack": "3/20",
+                "complete_path_upper": "23/360"
+              },
+              {
+                "raw_head_cross_coefficient": "7/5",
+                "raw_density_cap": "1/2",
+                "reward_constant": "7/5",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "99/40",
+                "potential_count_coefficient": "3/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "11/120"
+              },
+              {
+                "raw_head_cross_coefficient": "21/10",
+                "raw_density_cap": "1/2",
+                "reward_constant": "21/10",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "141/40",
+                "potential_count_coefficient": "3/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "47/360"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "square_block": false,
+            "discount": "1/5",
+            "initial_weight": "1/25",
+            "diagonal_geometric_weight": "1/20",
+            "distinct_geometric_weight": "1/80",
+            "old_head_cross": "17/180",
+            "old_distinct_pairs": "1/160",
+            "old_diagonal": "0",
+            "old_complete_block": "29/288",
+            "new_complete_block": "29/288",
+            "block_change": "0",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "0",
+                "raw_density_cap": "0",
+                "reward_constant": "0",
+                "reward_count_coefficient": "0",
+                "potential_constant": "0",
+                "potential_count_coefficient": "0",
+                "unchanged_component_reward_slack": "0",
+                "complete_path_upper": "0"
+              },
+              {
+                "raw_head_cross_coefficient": "1/6",
+                "raw_density_cap": "1/6",
+                "reward_constant": "1/6",
+                "reward_count_coefficient": "1/6",
+                "potential_constant": "25/96",
+                "potential_count_coefficient": "5/24",
+                "unchanged_component_reward_slack": "1/24",
+                "complete_path_upper": "1/96"
+              },
+              {
+                "raw_head_cross_coefficient": "13/18",
+                "raw_density_cap": "7/18",
+                "reward_constant": "13/18",
+                "reward_count_coefficient": "7/18",
+                "potential_constant": "295/288",
+                "potential_count_coefficient": "35/72",
+                "unchanged_component_reward_slack": "7/72",
+                "complete_path_upper": "59/1440"
+              },
+              {
+                "raw_head_cross_coefficient": "17/18",
+                "raw_density_cap": "1/2",
+                "reward_constant": "17/18",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "385/288",
+                "potential_count_coefficient": "5/8",
+                "unchanged_component_reward_slack": "1/8",
+                "complete_path_upper": "77/1440"
+              },
+              {
+                "raw_head_cross_coefficient": "17/9",
+                "raw_density_cap": "1/2",
+                "reward_constant": "17/9",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "725/288",
+                "potential_count_coefficient": "5/8",
+                "unchanged_component_reward_slack": "1/8",
+                "complete_path_upper": "29/288"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "square": [
+      {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "theta": "1/270",
+        "complete_raw_old_cross": "73/180",
+        "block_changes": {
+          "pair": "-1/144",
+          "square": "-1/36"
+        },
+        "complete_bounds": {
+          "pair": "1093/864",
+          "square": "2321/720"
+        },
+        "complete_prime_blocks": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "square_block": true,
+            "discount": "1/3",
+            "initial_weight": "1/27",
+            "diagonal_geometric_weight": "1/18",
+            "distinct_geometric_weight": "1/36",
+            "old_head_cross": "7/30",
+            "old_distinct_pairs": "1/24",
+            "old_diagonal": "1/24",
+            "old_complete_block": "19/60",
+            "new_complete_block": "13/45",
+            "block_change": "-1/36",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "53/20",
+                "reward_count_coefficient": "3/2",
+                "potential_constant": "51/10",
+                "potential_count_coefficient": "9/4",
+                "unchanged_component_reward_slack": "3/4",
+                "complete_path_upper": "17/90"
+              },
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "53/20",
+                "reward_count_coefficient": "3/2",
+                "potential_constant": "51/10",
+                "potential_count_coefficient": "9/4",
+                "unchanged_component_reward_slack": "3/4",
+                "complete_path_upper": "17/90"
+              },
+              {
+                "raw_head_cross_coefficient": "1",
+                "raw_density_cap": "3/10",
+                "reward_constant": "23/10",
+                "reward_count_coefficient": "3/5",
+                "potential_constant": "39/10",
+                "potential_count_coefficient": "9/10",
+                "unchanged_component_reward_slack": "3/10",
+                "complete_path_upper": "13/90"
+              },
+              {
+                "raw_head_cross_coefficient": "7/5",
+                "raw_density_cap": "1/2",
+                "reward_constant": "33/10",
+                "reward_count_coefficient": "1",
+                "potential_constant": "57/10",
+                "potential_count_coefficient": "3/2",
+                "unchanged_component_reward_slack": "1/2",
+                "complete_path_upper": "19/90"
+              },
+              {
+                "raw_head_cross_coefficient": "21/10",
+                "raw_density_cap": "1/2",
+                "reward_constant": "47/10",
+                "reward_count_coefficient": "1",
+                "potential_constant": "39/5",
+                "potential_count_coefficient": "3/2",
+                "unchanged_component_reward_slack": "1/2",
+                "complete_path_upper": "13/45"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "square_block": true,
+            "discount": "1/5",
+            "initial_weight": "1/25",
+            "diagonal_geometric_weight": "1/20",
+            "distinct_geometric_weight": "1/80",
+            "old_head_cross": "17/90",
+            "old_distinct_pairs": "1/80",
+            "old_diagonal": "1/40",
+            "old_complete_block": "163/720",
+            "new_complete_block": "163/720",
+            "block_change": "0",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "0",
+                "raw_density_cap": "0",
+                "reward_constant": "0",
+                "reward_count_coefficient": "0",
+                "potential_constant": "0",
+                "potential_count_coefficient": "0",
+                "unchanged_component_reward_slack": "0",
+                "complete_path_upper": "0"
+              },
+              {
+                "raw_head_cross_coefficient": "1/6",
+                "raw_density_cap": "1/6",
+                "reward_constant": "1/2",
+                "reward_count_coefficient": "1/3",
+                "potential_constant": "35/48",
+                "potential_count_coefficient": "5/12",
+                "unchanged_component_reward_slack": "1/12",
+                "complete_path_upper": "7/240"
+              },
+              {
+                "raw_head_cross_coefficient": "13/18",
+                "raw_density_cap": "7/18",
+                "reward_constant": "11/6",
+                "reward_count_coefficient": "7/9",
+                "potential_constant": "365/144",
+                "potential_count_coefficient": "35/36",
+                "unchanged_component_reward_slack": "7/36",
+                "complete_path_upper": "73/720"
+              },
+              {
+                "raw_head_cross_coefficient": "17/18",
+                "raw_density_cap": "1/2",
+                "reward_constant": "43/18",
+                "reward_count_coefficient": "1",
+                "potential_constant": "475/144",
+                "potential_count_coefficient": "5/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "19/144"
+              },
+              {
+                "raw_head_cross_coefficient": "17/9",
+                "raw_density_cap": "1/2",
+                "reward_constant": "77/18",
+                "reward_count_coefficient": "1",
+                "potential_constant": "815/144",
+                "potential_count_coefficient": "5/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "163/720"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "complete_raw_omitted_tail": {
+    "raw_pure_coefficients": [
+      "3/4",
+      "1/2",
+      "1/3",
+      "1/9"
+    ],
+    "weighted_pure_blocks_before_halving": {
+      "pure3": "1/24",
+      "pure5": "1/80",
+      "root5": "7/120",
+      "cell5": "13/360"
+    },
+    "weighted_mixed_before_halving": "17/120",
+    "raw_omitted_distinct_pairs": "209/1440",
+    "raw_omitted_diagonal": "37/360",
+    "independent_lcm_prefix_checks": [
+      {
+        "maximum_three_depth": 3,
+        "maximum_five_depth": 2,
+        "old_label_count": 12,
+        "omitted_label_count": 6,
+        "raw_omitted_pair_prefix": "31/675",
+        "complete_pair_remainder": "2143/21600",
+        "raw_omitted_diagonal_prefix": "67/900",
+        "complete_diagonal_remainder": "17/600"
+      },
+      {
+        "maximum_three_depth": 5,
+        "maximum_five_depth": 4,
+        "old_label_count": 30,
+        "omitted_label_count": 24,
+        "raw_omitted_pair_prefix": "77761/607500",
+        "complete_pair_remainder": "83287/4860000",
+        "raw_omitted_diagonal_prefix": "4063/40500",
+        "complete_diagonal_remainder": "199/81000"
+      },
+      {
+        "maximum_three_depth": 8,
+        "maximum_five_depth": 7,
+        "old_label_count": 72,
+        "omitted_label_count": 66,
+        "raw_omitted_pair_prefix": "295687831/2050312500",
+        "complete_pair_remainder": "15137977/16402500000",
+        "raw_omitted_diagonal_prefix": "52640938/512578125",
+        "complete_diagonal_remainder": "325621/4100625000"
+      }
+    ]
+  },
+  "complete_positive7_partition": {
+    "old_raw_complete_assigned_pair_cap": "45/32",
+    "old_raw_complete_assigned_square_cap": "57/16",
+    "old_raw_complete_assigned_diagonal_cap": "3/4",
+    "complete_same_depth_weight": "1/5",
+    "complete_cross_depth_weight": "1/30",
+    "old_PZZ": "2/5",
+    "complete_tail_checks": [
+      {
+        "maximum_seven_depth": 1,
+        "original_label_count": 20,
+        "direct_distinct_pair_cap_sum": "21499/94500",
+        "finite_same_depth_weight": "6/35",
+        "finite_cross_depth_weight": 0,
+        "remaining_same_depth_weight": "1/35",
+        "remaining_cross_depth_weight": "1/30"
+      },
+      {
+        "maximum_seven_depth": 3,
+        "original_label_count": 60,
+        "direct_distinct_pair_cap_sum": "1433821/3858750",
+        "finite_same_depth_weight": "342/1715",
+        "finite_cross_depth_weight": "54/1715",
+        "remaining_same_depth_weight": "1/1715",
+        "remaining_cross_depth_weight": "19/10290"
+      },
+      {
+        "maximum_seven_depth": 7,
+        "original_label_count": 140,
+        "direct_distinct_pair_cap_sum": "1052343667/2779457625",
+        "finite_same_depth_weight": "823542/4117715",
+        "finite_cross_depth_weight": "27450/823543",
+        "remaining_same_depth_weight": "1/4117715",
+        "remaining_cross_depth_weight": "43/24706290"
+      }
+    ]
+  },
+  "complete_PZZ_upper": "3893/10800",
+  "complete_POO_upper": "111/800",
+  "complete_POZ_upper": "121/720",
+  "complete_survivor_tail_distinct_pairs": "14413/21600",
+  "complete_survivor_tail_square": "3391/2160",
+  "scope": "Fresh actual aligned source bounds. Numerical saturated raw moment maxima are not reused. All finite heights pass through complete positive geometric tails. No source realization of LP maxima, full403 consumer, explicit neighborhood or unrestricted resolution."
+}
