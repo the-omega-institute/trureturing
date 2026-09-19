@@ -42713,3 +42713,243 @@ $j=0$ 及没有完整块的情形也包含在内，因为 $D\ge L_0$。令 $N=n+
 [^rro110-markov]: Richard Weber, [*Markov Chains*](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf) (2011), Theorem 4.4。此处只需其确定块起点的 Markov 重启特例；过去读数由独立发射扩充，给定当前隐藏状态后不改变未来隐藏转移及尚未读取的发射。
 
 ## 110.99 追加锚
+
+## 111. 仅给读数函数与方向符号的共同 $1/n$ 规则
+
+**定义与假设 111.1（部分标定下的共同规则）。** 沿用定义 109.1 的四态核族、共同准备态 $X_0=1$ 及逐时条件独立发射，改变通道的已知信息：固定非空有限字母表 $\mathcal A$，只给定函数 $f:\mathcal A\to[0,1]$ 和符号 $b\in\{-1,1\}$，不提供通道 $E$ 的各行。记
+$$
+\theta_i(E)=\sum_yE_i(y)f(y),\qquad
+V_f(E)=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1),
+$$
+$$
+\mathcal C_{f,b}
+=\{E:\ E_i\text{ 为 }\mathcal A\text{ 上的概率分布},\ bV_f(E)>0\}.
+$$
+实际通道是该类中某个固定的 $E$，允许零发射概率。原有窗口恒等式和势估计只用 $0\le f\le1$，所以包含端点。一般已知有界实值读数也可作正向仿射归一化到此区间；该归一化不需要 $E$，并保持 $V_f$ 的符号。
+
+固定
+$$
+B=64,\quad L_j=2^j,\quad T_j=L_j+3,\quad
+S_j=B(2^j-1+3j),\qquad j\ge0,
+$$
+$$
+t(L)=192\sqrt{L\log(eL)},\qquad L\ge1,
+\tag{111.1a}
+$$
+其中 $\log$ 为自然对数。第 $j$ 阶段使用 $B$ 个连续块，块首为 $S_j+aT_j$，$a=0,\ldots,B-1$。块首 $u$ 的分数为
+$$
+F_{u,L}
+=b\sum_{t=u}^{u+L-1}
+(1-f(Y_t))(1-f(Y_{t+3}))(f(Y_{t+2})-f(Y_{t+1})).
+$$
+分数大于 $t(L)$ 时声明方向 $0$，小于 $-t(L)$ 时声明方向 $1$，否则不声明。对 $N=n+1$ 个读数，只处理完整块，保存最后一次声明；没有声明则报告 $0$。阈值相等和不完整块均保留此前结果。记所得确定规则为
+$\Psi^{f,b}_n:\mathcal A^{n+1}\to\{0,1\}$。
+每块使用 $L+3$ 个标签，不同块不共享标签；规则从 $L=1$ 开始，不使用 $E$、任何均值间隔或 $k$。
+
+**命题 111.2（无需通道数值的共同最坏参数阶）。** 定义 111.1 的同一规则族满足
+$$
+\exists(\Psi^{f,b}_n)_{n\ge0}\quad
+\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad
+\forall k\ge2,\ d\in\{0,1\},\ n\ge0:
+\quad
+\Pr^{E,1}_{d,k}(\Psi^{f,b}_n\ne d)
+\le\frac{C_{E,f}}{n+1}.
+\tag{111.2a}
+$$
+这里先固定共同规则，再固定通道；不对通道取上确界。
+
+具体地，对给定 $E\in\mathcal C_{f,b}$，仅在常数及证明中定义
+$$
+c_*=\frac{(5/6)^3|V_f(E)|}{192},\qquad
+j_0=\min\{j\ge0:c_*L_j\ge4t(L_j)\},\qquad
+\overline L=2^{j_0},
+$$
+$$
+Q=5+\frac{40B}{3},\qquad
+A=(10B)^2\max\{Q,\overline L^2\},\qquad
+C_{\rm trap}=\frac{2A}{3},\qquad U=\frac{4A}{B^2},
+$$
+$$
+P=5B,\qquad
+D=\max\{\overline L,U+2C_{\rm trap},4P\},\qquad
+C_{E,f}=5B(D+P).
+\tag{111.2b}
+$$
+所有这些常数有限。规则不计算 $c_*,j_0$ 或 $\overline L$。对每个固定相容通道，其最坏参数平均风险满足
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^E_{k,n}(\Psi^{f,b}_n)
+\le\frac{C_{E,f}}{n+1},\qquad n\ge1,
+\tag{111.2c}
+$$
+因而为 $\Theta_{E,f}(1/n)$。
+
+**证明。** 固定 $E,k,d$，记 $\delta=1/k$、$a=1-\delta/3$。因为 $bV_f(E)>0$，式 (109.2p)–(109.2s) 的有向势分解仍给
+$$
+(-1)^dF_{u,L}
+=cA_L+M_L+\Delta h+N_L,\qquad
+c=\frac{a^3|V_f|}{192}\ge c_*,
+$$
+$$
+A_L\ge0,\quad |\Delta h|<12,\qquad
+\Pr(M_L\le-z)\le e^{-z^2/(288L)},\quad
+\Pr(N_L\le-z)\le4e^{-z^2/(128L)}.
+\tag{111.2d}
+$$
+这些 Azuma–Hoeffding 尾界[^rro111-azuma] 对每个 $L\ge1$ 成立，也成立于任意重启隐藏起点和块首当前发射尚未读取的条件历史；不需要 $L$ 达到原通道相关的 $L_0$。势函数本身虽依赖 $E$，其范数统一小于 $6$，规则无需计算它。
+
+由于 $t(L)\ge192$，两个残差都不低于 $-t(L)/4$ 时，有向分数大于 $-12-t(L)/2>-t(L)$。代入 (111.2d)，得到全部尺度上的统一错向尾
+$$
+\begin{aligned}
+\Pr(\text{单块错向声明})
+&\le e^{-t(L)^2/(4608L)}
+ +4e^{-t(L)^2/(2048L)}\\
+&\le5(eL)^{-8}.
+\end{aligned}
+\tag{111.2e}
+$$
+这里 $192^2/4608=8$。
+
+函数 $L/\log(eL)$ 在 $L\ge1$ 上不减且趋于无穷，而
+$$
+c_*L\ge4t(L)
+\quad\Longleftrightarrow\quad
+L/\log(eL)\ge(768/c_*)^2.
+$$
+故 $j_0$ 有限，且该不等式对所有 $L\ge\overline L$ 成立。从任意环状态重启，由 §109 的占用估计，
+$\Pr(A_L\ge L/2)\ge1/2$。在此事件及两个残差均不低于 $-t(L)/4$ 的事件上，
+$$
+(-1)^dF_{u,L}
+>c_*L/2-12-t(L)/2
+\ge3t(L)/2-12>t(L).
+$$
+因此，无须事件独立，对 $L\ge\overline L$ 有
+$$
+\Pr(\text{环起点单块正确声明})
+\ge\frac12-5(eL)^{-8}\ge\frac14.
+\tag{111.2f}
+$$
+最后一步使用 $e^8>20$。
+
+纯环核 $R_d$ 的窗口均值为 $c_\infty=|V_f|/192\ge c_*$，势范数至多 $8/3$，见 (110.2e)。[^rro111-block] 其漂移为 $c_\infty L$，不损失占用比例。相同残差界于是给
+$$
+\Pr(\text{纯环块没有正确声明})
+\le5(eL)^{-8},\qquad L\ge\overline L.
+\tag{111.2g}
+$$
+这里包括无声明和错向声明。
+
+令 $\tau=\inf\{t\ge1:X_t=0\}$。复用 (110.2h) 的条件分解：
+$$
+\Pr(\tau=m)=a^{m-1}\delta/3;
+$$
+给定 $\tau=m$，此前是从 $1$ 出发的纯环路径，此后从 $0$ 按原核重启。离环概率与离开的环状态无关，发射仍逐时条件独立。
+
+至多一个完整标签块跨越 $m$。按 §110 的分段方法，两段势差及至多三个跨越窗口造成的总确定损失小于 $20$；纯环段和原核段漂移均非负。对两段的四个残差分别用阈值 $z=t(L)/8$，段长 $\ell\le L$，空段残差为零。四个残差均不低于 $-t(L)/8$ 时，整块有向分数大于 $-20-t(L)/2>-t(L)$。因此
+$$
+\begin{aligned}
+\Pr(\text{跨越块错向}\mid\tau=m)
+&\le2e^{-t(L)^2/(18432L)}
+ +8e^{-t(L)^2/(8192L)}\\
+&\le10(eL)^{-2},\qquad L\ge1.
+\end{aligned}
+\tag{111.2h}
+$$
+这里 $192^2/18432=2$。纯环段可由纯环延拓计算其有限边缘，未把 $X_m=0$ 当成纯环状态；两段无需独立。
+
+调度仍满足 $S_{j+1}\le5BL_j$。若 $4=T_0\le m\le N-1$，首次入陷阱前的最后完整块存在，设尺度为 $r$，则 $m<10BL_r$。若 $r\ge j_0$，该块正确声明且此后没有错向声明，最终保存值便正确。每个后续尺度至多 $B$ 个块，故由 (111.2e)、(111.2g)、(111.2h)，
+$$
+\begin{aligned}
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)
+&\le5L_r^{-2}
+ +10B\sum_{\ell\ge0}(2^\ell L_r)^{-2}\\
+&=QL_r^{-2}.
+\end{aligned}
+\tag{111.2i}
+$$
+加入未来未读块的并集只会放宽当前错误事件。若 $r<j_0$，或 $m<T_0$，则 $m<10B\overline L$，用概率不超过一处理。
+
+在 $\tau>N-1$ 上，已读的 $N$ 个标签是纯环前缀。若有完整块，最后完整块的尺度满足 $N<10BL_r$；达到 $j_0$ 时使用 (111.2g)，否则 $N<10B\overline L$。没有完整块时同样使用概率不超过一。由 $A$ 的定义，全部情形统一为
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)\le A/m^2
+\quad(1\le m\le N-1),
+$$
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau>N-1)\le A/N^2.
+\tag{111.2j}
+$$
+第二个事件包含 $\tau=N$，此时整个已读前缀仍在环上。对 $N<4$，$A/N^2\ge1$ 也覆盖缺块情形。
+
+按首次入陷阱时刻条件求和，使用 $\sum_{m\ge1}m^{-2}\le2$，得到
+$$
+\varepsilon_d(N,\delta)
+:=\Pr(\Psi^{f,b}_{N-1}\ne d)
+\le\frac{A}{N^2}+\frac{A\delta}{3}\sum_{m\ge1}m^{-2}
+\le\frac{A}{N^2}+C_{\rm trap}\delta.
+\tag{111.2k}
+$$
+未把错误与入陷阱事件独立化；可求和的二次尾已足够。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，可将 (111.2f) 代入 (110.2m) 的两块条件法：给定块对开始前历史，第二块首在环的概率大于 $1/2$；再条件于该块首历史，正确声明概率至少 $1/4$。所以每对至少有 $1/8$ 的声明概率。此前各对均无声明的事件在下一对开始前可测，逐次条件化给
+$$
+\Pr(\text{阶段完全无声明}\mid\text{阶段前历史})
+\le(7/8)^{32}<1/4.
+\tag{111.2l}
+$$
+此处不先条件于第一块无声明来估计第二块的环概率，也不要求块对独立。
+
+令 $e_j$ 为读取完前 $j$ 个完整阶段、共用 $S_j$ 个标签后保存值错误的概率；$e_0\le1$。全部尺度都由 (111.2e) 给
+$$
+p_j:=5B(eL_j)^{-8}\le P/L_j
+\tag{111.2m}
+$$
+作为本阶段出现任意错向声明的上界。在 (111.2l) 可用的尺度，旧错误在阶段前历史中可测，故
+$$
+e_{j+1}\le e_j/4+p_j.
+\tag{111.2n}
+$$
+
+仅在证明中设
+$$
+j_\delta=\min\{j\ge0:\delta T_j\ge1\},\qquad
+J=\max\{j_0,j_\delta\}.
+$$
+对 $j\ge1$，$S_j\ge BL_j/2$，所以
+$$
+A/S_j^2\le4A/(B^2L_j^2)\le U/L_j.
+$$
+对所有 $0\le j\le j_0$，直接有
+$e_j\le1\le\overline L/L_j\le D/L_j$，包括 $j=0$，不需要把 (111.2k) 用于 $N=0$。
+
+若 $j_\delta>j_0$，则对 $j_0<j<j_\delta$，有 $j\ge1$ 及 $\delta<1/L_j$，由 (111.2k) 得
+$e_j\le(U+C_{\rm trap})/L_j$。
+在 $j=j_\delta\ge1$，前一尺度未触发给
+$\delta(L_j/2+3)<1$，所以 $\delta<2/L_j$，得到
+$e_j\le(U+2C_{\rm trap})/L_j$。
+若 $j_\delta\le j_0$，则 $J=j_0$ 的起点已由直接界覆盖。因此全部 $j\le J$ 均有 $e_j\le D/L_j$。
+
+对 $j\ge J$，用 (111.2m)–(111.2n) 及 $D\ge4P$ 归纳：
+$$
+e_{j+1}\le\frac{D/4+P}{L_j}
+\le\frac{D}{2L_j}=\frac{D}{L_{j+1}}.
+$$
+故全部阶段、参数和方向都满足 $e_j\le D/L_j$。未知小尺度中的任意错误已由 $D\ge\overline L$ 吸收，规则不判断自己是否超过 $j_0$。
+
+最后，任意 $N\ge1$ 有唯一 $j$ 使 $S_j\le N<S_{j+1}$。除已完成阶段外，至多再使用当前尺度的 $B-1$ 个完整块；此前保存值正确时，只有新的错向声明能造成错误。因而
+$$
+\varepsilon_d(N,\delta)
+\le e_j+p_j
+\le\frac{D+P}{L_j}
+\le\frac{5B(D+P)}{N}.
+\tag{111.2o}
+$$
+无完整块、阶段首精确相等、未完成最后阶段、无声明及阈值等号都由同一规则涵盖。取 $N=n+1$ 得 (111.2a)。平均风险不超过每方向上界；对这条规则应用 (109.2g) 的既有完整路径下界，即得 (111.2c)。证毕。
+
+完全不提供方向标定时，仍有既有反射障碍：令 $s$ 交换环状态 $2,3$，固定 $0,1$，并令 $E^s_i=E_{s(i)}$。直接复用 §§106、109 的反射路径恒等式，有 $P^{E,1}_{d,k,n}=P^{E^s,1}_{1-d,k,n}$ 及 $V_f(E^s)=-V_f(E)$。同一无标定检验遂满足 $R^E(\varphi)+R^{E^s}(\varphi)=1$，不能对这两个固定通道都趋于零。该段只是原反射恒等式的通道参数替换；符号比特恰好区分这对通道，不等于提供整个 $E$。
+
+[^rro111-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。此处使用 (109.2q)–(109.2s) 已给的有界鞅差尾界；窗口残差按模 $4$ 分组处理。已发布 §109 的固定来源为 [commit 4d98ee11](https://github.com/the-omega-institute/trureturing/blob/4d98ee11bd91a8235d0c026c20f7acf446e7cc36/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro111-block]: 本卷命题 110.2，固定来源为 [commit 28e3f966](https://github.com/the-omega-institute/trureturing/blob/28e3f966a7258170a6c5e1f45b280fff1f7329ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。此处复用 (110.2e) 的纯环势分解、(110.2h) 的首次入陷阱条件律、(110.2j) 的调度几何及 (110.2m) 的两块条件法；新的阈值、尾界和未知信号尺度的衔接由本命题给出。
+
+## 111.99 追加锚
