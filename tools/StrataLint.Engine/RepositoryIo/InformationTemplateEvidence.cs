@@ -133,7 +133,7 @@ internal static class InformationTemplateEvidence
             var escapeFrom = ReadEscapeFrom(record.GetProperty("escape_from"));
             var escapeContinues = ReadEscapeContinues(record.GetProperty("escape_continues"));
             var bridgeKind = InformationTemplateJson.String(record, "bridge_kind");
-            if (bridgeKind is not ("legacy" or "forward"))
+            if (bridgeKind is not ("legacy" or "forward" or "witness"))
                 throw new FormatException("DTR-Evidence: unknown bridge_kind");
             var certificate = record.GetProperty("certificate");
             var state = InformationTemplateJson.String(record, "state") switch
