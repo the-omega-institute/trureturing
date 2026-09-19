@@ -1,0 +1,65 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-scalar19-finite-capacities-v1"
+  },
+  "method": {
+    "kind": "inline",
+    "value": "Existing all-height T6 with arbitrary continuous delta in (0,1/2]"
+  },
+  "rows": {
+    "path": "content/002-rows.json",
+    "sha256": "c3cf6304c932441b4575d0d6ce60014c40c26e50a27a34ca3a6e2bbe1105761e",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "The existing actual finite star family forces every supported19 law above the exact capacity of the inherited full-height worst-case scalar T6 through101, even with continuous controls. This excludes an unqualified universal scalar restart at19. Family-aware skipping, finite-height bounds, joint estimates and actual noncoverage are not refuted; the star itself has explicit survivors."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/star_survivor_obstruction_certificate.json": "423c440beceb2805b69905c0f07aece3a6412eb453f673648b10d11fbd95a1e8",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "c0a7a684c04fec1760dcaca0acd31395efe5dae8b1b17c8e1b63c7b0f72b6103",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7"
+    }
+  },
+  "actual_star": {
+    "kind": "inline",
+    "value": {
+      "head_primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "height3": 31,
+      "other_heights": 8,
+      "original_coordinate_floors": [
+        44425,
+        25593,
+        17916,
+        13925,
+        13125,
+        12215,
+        11932
+      ],
+      "branch_a_potential": "12103/2",
+      "branch_b_potential_lower": "17363644962783768829467/320000000000000000000",
+      "mixture_weight_a": "1/100",
+      "mixture_weight_b": "99/100",
+      "uniform_gamma_lower": "1719000851315593114117233/32000000000000000000000"
+    }
+  },
+  "first_obstructed_horizon": {
+    "kind": "inline",
+    "value": 101
+  },
+  "star_lower_minus_capacity_upper": {
+    "kind": "inline",
+    "value": "606267915098161227214965729434871629/1000000000000000000000000000000000000"
+  }
+}
