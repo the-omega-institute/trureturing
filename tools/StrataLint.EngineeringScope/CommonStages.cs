@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -173,7 +174,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             stage = "engineering";
         }
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
-        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
+        CommonExecutionEvidence.ReleaseTemporarySnapshots();
         try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
         finally
         {
@@ -184,6 +185,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 testsReused = tests.Projects.Count(project => project.Status == "reused");
             }
         }
+        // Test execution owns its own validated inputs. Keep this independent
+        // check snapshot out of the parent while the test processes are running.
+        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
         attemptedEngineeringCheck = "selftest-pair";
         checks.Run(attemptedEngineeringCheck, () => new CheckWork([
             Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
@@ -246,7 +250,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+            ValidateProducedReport(root);
+            // This process now waits while the child validates its own fresh
+            // snapshot. Reclaim the completed report validation's temporary
+            // snapshot before those independent heaps coexist in one cgroup.
+            CommonExecutionEvidence.ReleaseTemporarySnapshots();
         }
         else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
@@ -287,6 +295,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
         }
     }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void ValidateProducedReport(string root) =>
+        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath),
+            CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
 
     private void ValidateBase(string? baseSha)
     {

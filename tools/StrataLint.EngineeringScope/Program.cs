@@ -59,7 +59,7 @@ internal static class Program
             }
             var repository = RepositoryOption(arguments);
             var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
-            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
+            var inputs = CommonExecutionEvidence.ReadTestInputs(repository);
             var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
             return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
         }
@@ -114,7 +114,7 @@ internal static class Program
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
     {
         var candidate = CommonExecutionEvidence.Candidate(root);
-        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
+        var inputs = CommonExecutionEvidence.ReadTestInputs(root);
         build ??= CommonExecutionEvidence.ValidateBuild(root);
         CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
         _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
@@ -123,6 +123,9 @@ internal static class Program
         var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();
         var invocation = Guid.NewGuid().ToString("N");
         var records = new List<TestProjectExecution>();
+        // Only the registered fingerprints and receipts survive planning. The
+        // next process must not coexist with those completed snapshot heaps.
+        CommonExecutionEvidence.ReleaseTemporarySnapshots();
         output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
         foreach (var project in projects)
         {

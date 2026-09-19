@@ -5,6 +5,40 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed class CommonSourceIdentityTests
 {
+    [Fact]
+    public void CandidateRejectsInvalidTextButPreservesOpaqueBytesInIdentity()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        fixture.Write("docs/report.txt", "valid\n");
+        var textPath = Path.Combine(fixture.Root, "docs/report.txt");
+        TemporaryFileSystem.File.WriteAllBytes(textPath, [0xff]);
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+        Assert.Contains("strict UTF-8: docs/report.txt", error.Message, StringComparison.Ordinal);
+        TemporaryFileSystem.File.Delete(textPath);
+
+        fixture.Write("docs/develop/theory/opaque.bin", "initial\n");
+        var opaquePath = Path.Combine(fixture.Root, "docs/develop/theory/opaque.bin");
+        TemporaryFileSystem.File.WriteAllBytes(opaquePath, [0xff]);
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        TemporaryFileSystem.File.WriteAllBytes(opaquePath, [0xfe]);
+        Assert.NotEqual(before, CommonExecutionEvidence.Candidate(fixture.Root));
+    }
+
+    [Fact]
+    public void FreshIdentityIncludesUnregisteredDataBytesAndExecutableMode()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        fixture.Write("docs/report.json", "{\"value\":1}\n");
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        fixture.Write("docs/report.json", "{\"value\":2}\n");
+        var changed = CommonExecutionEvidence.Candidate(fixture.Root);
+        Assert.NotEqual(before, changed);
+        if (OperatingSystem.IsWindows()) return;
+        var path = Path.Combine(fixture.Root, "docs/report.json");
+        File.SetUnixFileMode(path, File.GetUnixFileMode(path) | UnixFileMode.UserExecute);
+        Assert.NotEqual(changed, CommonExecutionEvidence.Candidate(fixture.Root));
+    }
+
     [Theory]
     [InlineData("absent", "missing engineering project registration")]
     [InlineData("duplicate", "duplicate engineering project registration")]

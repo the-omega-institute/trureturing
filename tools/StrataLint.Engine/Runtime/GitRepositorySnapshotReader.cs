@@ -9,6 +9,19 @@ internal static class GitRepositorySnapshotReader
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null)
+        => ReadCurrentCore(repositoryRoot, include, null);
+
+    // Visit every file while retaining only the bytes needed for the same link
+    // validation as a full snapshot. Identity consumers need the complete path
+    // inventory, but do not need all file bodies alive at once.
+    internal static void VisitCurrent(string repositoryRoot, Action<RawRepositoryEntry> visit)
+    {
+        ArgumentNullException.ThrowIfNull(visit);
+        _ = ReadCurrentCore(repositoryRoot, null, visit);
+    }
+
+    private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
+        Action<RawRepositoryEntry>? visit)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
@@ -26,6 +39,12 @@ internal static class GitRepositorySnapshotReader
         var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
         var links = new HashSet<string>(StringComparer.Ordinal);
         var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
+        void Retain(RawRepositoryEntry entry, bool link = false)
+        {
+            visit?.Invoke(entry);
+            entries.Add(visit is null || link || FileMapDocuments.IsPolicyPath(entry.Path)
+                ? entry : entry with { Bytes = [] });
+        }
         foreach (var path in paths)
         {
             if (include is not null && !include(path)) continue;
@@ -47,7 +66,7 @@ internal static class GitRepositorySnapshotReader
             if (info.LinkTarget is { } target)
             {
                 links.Add(path);
-                entries.Add(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))));
+                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))), link: true);
                 continue;
             }
 
@@ -62,7 +81,7 @@ internal static class GitRepositorySnapshotReader
                     $"non-regular repository entry {path} is not a plain file");
             }
 
-            entries.Add(new RawRepositoryEntry(
+            Retain(new RawRepositoryEntry(
                 path,
                 ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
         }
