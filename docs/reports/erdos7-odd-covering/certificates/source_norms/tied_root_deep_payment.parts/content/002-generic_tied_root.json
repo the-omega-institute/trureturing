@@ -1,0 +1,42 @@
+{
+  "cone_coordinates": {
+    "kind": "inline",
+    "value": [
+      "f1",
+      "v1",
+      "v2-v1",
+      "v3-v2",
+      "C-f3-3v3"
+    ]
+  },
+  "original_labels": {
+    "path": "content/002-generic_tied_root/001-original_labels.json",
+    "sha256": "9b81864d6459213ec96160ebfbe9c9bb4085212dffa042dd38e4c16ca19f0e72",
+    "kind": "value"
+  },
+  "nonnested_baseline_count": {
+    "kind": "inline",
+    "value": 5
+  },
+  "layout_pair_count": {
+    "kind": "inline",
+    "value": 100
+  },
+  "unsafe_comparison_count": {
+    "kind": "inline",
+    "value": 190
+  },
+  "coefficient_checks": {
+    "kind": "inline",
+    "value": 950
+  },
+  "coefficient_rows": {
+    "path": "content/002-generic_tied_root/006-coefficient_rows.json",
+    "sha256": "40b2bf2688135c28e6662dd217c94e596b312a39d7c1b9363a4adca2beb54c3f",
+    "kind": "array"
+  },
+  "statement": {
+    "kind": "inline",
+    "value": "For tied d0=d1=q>=25/36 and root1 d<=5/9: max(z+v/5)-max(z)<=min(v0,v1)/5."
+  }
+}

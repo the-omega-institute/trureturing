@@ -1,0 +1,580 @@
+{
+  "schema": "erdos7-j-face-coupled-seven-heads-v1",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "frontier/j_face_alignment.py": "bb4e3a82f954538aad042ef6940204947d7b7a5ef69b2ef2bd791d36466aa991",
+    "certificates/source_norms/j_face_alignment.json": "6874e71b0846d973fedd330f5a8a54bfa457b2cdfe896943db407b8d89bec611",
+    "profile-notes/130-the-whole-j-face-forces-source-anti-alignment.md": "a57717f7d0432a2d0365d85b4fa471729e52630fff2be75aafe6b3c4e4db7db7",
+    "frontier/k_face_common_seven_hinges.py": "8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97",
+    "profile-notes/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md": "b364509b1de6829c57707e8ffbfff33a41b4a62115ea56c2a5fe27bde331ba1b",
+    "frontier/endpoint_linear_neighborhood.py": "e9d1eb6487f95874b2c577496b41083ff140138ef5a59d630144d1c72aae279a",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/endpoint_linear_numerator.py": "5c83f0a6277079323120ce0a31ac220c884f92ff555506f9dcaf926d3335e133",
+    "frontier/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source_barrier_saturation.py": "92076ee71a6be16655bbe5c2ac223db6502da1ab5c3553a7f83bb555dbbb8363",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+    "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+    "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+    "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+    "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70",
+    "frontier/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained_five_tests.json": "3fac691eb1f3081ab54559a0c396a88abd244efc73e4b6ca1875753a50b8dbc4",
+    "frontier/verify_retained_five_tests.py": "920dd25084bb7670149e7c23ad5057b408326a4c937ce69630ca3889b4ca5f23",
+    "frontier/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained_quadratic_tests.json": "cfcac117e8988e6b3e37dfde961e6f35cb64a05aab700c09297424dadd534e29",
+    "frontier/verify_retained_quadratic_tests.py": "2ba3c805a4cad11c9a004782e8104c01f7a8c0f9bf06058f8f80da55e772d31f",
+    "frontier/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/shared_source_deficits.json": "bd47e5157698faaaed4ddfb5fadf93f51dc11c69fe89e15a3a74e14117445588"
+  },
+  "geometry": {
+    "source_mass": "1/4",
+    "survivor_mass": "3/20",
+    "root_group_budgets": [
+      "1/24",
+      "1/12",
+      "1/8"
+    ],
+    "late_split_interval": [
+      "1/135",
+      "1/90"
+    ],
+    "canonical_beta_late_cells": [
+      2,
+      3,
+      4
+    ],
+    "endpoint_source_tables": [
+      {
+        "theta": "1/135",
+        "absolute_caps": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "2/135",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/54",
+            "1/90",
+            "1/45"
+          ]
+        ]
+      },
+      {
+        "theta": "1/90",
+        "absolute_caps": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/90",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/45"
+          ]
+        ]
+      }
+    ],
+    "normalized_deep_ternary_coefficients": [
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ]
+    ],
+    "absolute_descendant_five_coefficients": [
+      [
+        "0",
+        "1/18",
+        "1/18",
+        "1/18",
+        "1/18"
+      ],
+      [
+        "0",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ]
+    ],
+    "retained_survivor_density": [
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "3/5"
+      ],
+      [
+        "3/5",
+        "3/5",
+        "3/5",
+        "3/5",
+        "2/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ]
+    ],
+    "root1_cap_surplus": "1/120",
+    "root1_positive_support": [
+      13,
+      14,
+      17,
+      18,
+      19,
+      22,
+      23,
+      24
+    ],
+    "complete_zero7_categories_after_head": [
+      "11/360",
+      "13/600",
+      "1/60",
+      "1/180",
+      "1/72"
+    ],
+    "selected_caps": [
+      "13/750",
+      "11/540",
+      "1/75",
+      "11/1620"
+    ],
+    "complete_zero7_remainders": [
+      "53/600",
+      "71/1000",
+      "1367/27000",
+      "1007/27000",
+      "2471/81000"
+    ],
+    "complete_raw_cofactor_caps": [
+      "1/8",
+      "1/12",
+      "1/24",
+      "1/10",
+      "1/40",
+      "1/15",
+      "1/60",
+      "1/45",
+      "1/180",
+      "1/72"
+    ],
+    "positive7_two_projection_remainder": "43/700",
+    "positive7_four_projection_remainder": "1/28",
+    "deep3_deletion_slot_marginal": [
+      "0",
+      "1/450",
+      "1/450",
+      "1/600",
+      "1/450"
+    ],
+    "deep5_deletion_cell_marginal": [
+      "1/1800",
+      "1/900",
+      "1/450",
+      "1/450",
+      "1/450"
+    ],
+    "mixed_intersection_caps": [
+      "1/675",
+      "1/2025"
+    ],
+    "transported_layout_permutations": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        4,
+        3
+      ],
+      [
+        0,
+        1,
+        3,
+        2,
+        4
+      ],
+      [
+        0,
+        1,
+        3,
+        4,
+        2
+      ],
+      [
+        0,
+        1,
+        4,
+        2,
+        3
+      ],
+      [
+        0,
+        1,
+        4,
+        3,
+        2
+      ],
+      [
+        1,
+        0,
+        2,
+        3,
+        4
+      ]
+    ]
+  },
+  "complete_mean_upper": "16/25",
+  "hinge1_upper": "49/100",
+  "results": [
+    {
+      "index": "AP13",
+      "at_one": "0",
+      "scan": {
+        "coefficients": {
+          "4": "1"
+        },
+        "primitive_coefficients": {
+          "4": 1
+        },
+        "factor": "1",
+        "common_scale": 66706983000,
+        "complete_hinge_upper": "29483/147000",
+        "original_head_projection_branches": 125000,
+        "expanded_branches": 22,
+        "bounded_without_extra_projections": 124978,
+        "expanded_objective_count_including_seed": 1600,
+        "strict_crossing_branches_including_seed": 0,
+        "complete_affine_branch_evaluations": 126610,
+        "independent_rational_checks": 10,
+        "maximum_unexpanded_upper": "1814377/9261000",
+        "all_branch_decisions_sha256": "cbdadb0670d6f2ba4a0c69c1b51aafcd49008b9fb782d2a19b1bc16bb9f40454",
+        "maximizing_witness": {
+          "layout": [
+            1,
+            4,
+            2,
+            1,
+            2,
+            4,
+            2
+          ],
+          "seven21_root": 1,
+          "seven35_slot": 4,
+          "seven63_cell": 4,
+          "seven105_root": 1,
+          "seven105_slot": 4,
+          "normalized_late_coordinate": "1",
+          "theta": "1/90",
+          "two_projection_endpoints": [
+            13202587587,
+            13696713387
+          ],
+          "four_projection_endpoints": [
+            12842581647,
+            13379061087
+          ],
+          "primitive_scaled_upper": 13379061087,
+          "complete_bounds_at_theta": [
+            "10061/49000",
+            "29483/147000"
+          ]
+        },
+        "old_complete_tail_constant": "18659/189000",
+        "new_complete_tail_constant": "13799/189000"
+      },
+      "complete_head_upper": "29483/147000",
+      "complete_mean_only_upper": "49/100",
+      "adopted_upper": "29483/147000",
+      "improvement_over_mean_only": "42547/147000"
+    },
+    {
+      "index": 0,
+      "at_one": "0",
+      "scan": {
+        "coefficients": {
+          "1": "298469622484874903/2311075142665519230",
+          "2": "12386341040791428463/9244300570662076920",
+          "3": "525174571/736900164",
+          "4": "9522349/858858",
+          "5": "1580/4719",
+          "6": "3160/42471",
+          "7": "395/3861",
+          "8": "282583/7722"
+        },
+        "primitive_coefficients": {
+          "1": 1193878489939499612,
+          "2": 12386341040791428463,
+          "3": 6588235182415445130,
+          "4": 102493609298328079260,
+          "5": 3095146196576834400,
+          "6": 687810265905963200,
+          "7": 945739115620699400,
+          "8": 338290881657524175380
+        },
+        "factor": "1/9244300570662076920",
+        "common_scale": 66706983000,
+        "complete_hinge_upper": "772380280559124323560020499/127120057929096158286360000",
+        "original_head_projection_branches": 125000,
+        "expanded_branches": 12764,
+        "bounded_without_extra_projections": 112236,
+        "expanded_objective_count_including_seed": 638700,
+        "strict_crossing_branches_including_seed": 0,
+        "complete_affine_branch_evaluations": 763710,
+        "independent_rational_checks": 10,
+        "maximum_unexpanded_upper": "15670831726988139113673511/2594286896512166495640000",
+        "all_branch_decisions_sha256": "b12d7d956161fa5b8a0ef790d058bcd487a33feefbdfe8737d92b101493cde06",
+        "maximizing_witness": {
+          "layout": [
+            1,
+            4,
+            4,
+            1,
+            4,
+            4,
+            4
+          ],
+          "seven21_root": 1,
+          "seven35_slot": 4,
+          "seven63_cell": 4,
+          "seven105_root": 1,
+          "seven105_slot": 4,
+          "normalized_late_coordinate": "1",
+          "theta": "1/90",
+          "two_projection_endpoints": [
+            4130557719894481450411752780249,
+            4138558307476719056902840032549
+          ],
+          "four_projection_endpoints": [
+            3733443126574619239451785079349,
+            3746816740992312093589659440649
+          ],
+          "primitive_scaled_upper": 3746816740992312093589659440649,
+          "complete_bounds_at_theta": [
+            "853135087090645033375147399/127120057929096158286360000",
+            "772380280559124323560020499/127120057929096158286360000"
+          ]
+        },
+        "old_complete_tail_constant": "10202643203395328981143/2133300131691248520000",
+        "new_complete_tail_constant": "7439257639950986701843/2133300131691248520000"
+      },
+      "complete_head_upper": "772380280559124323560020499/127120057929096158286360000",
+      "complete_mean_only_upper": "19747/800",
+      "adopted_upper": "772380280559124323560020499/127120057929096158286360000",
+      "improvement_over_mean_only": "2365419449348202973540918151/127120057929096158286360000"
+    },
+    {
+      "index": 16,
+      "at_one": "0",
+      "scan": {
+        "coefficients": {
+          "1": "272176197106950808531/2669291789778674710650",
+          "2": "4273128063469824929081/4003937684668012065975",
+          "3": "1259781626/2260943685",
+          "4": "4258739/479115",
+          "5": "35392/150579",
+          "6": "70784/1656369",
+          "7": "35392/637065",
+          "8": "6232942/212355"
+        },
+        "primitive_coefficients": {
+          "1": 816528591320852425593,
+          "2": 8546256126939649858162,
+          "3": 4461930794878461124220,
+          "4": 71180094846812832150270,
+          "5": 1882166338410671913600,
+          "6": 342212061529213075200,
+          "7": 444875679987976997760,
+          "8": 235043312944362114972780
+        },
+        "factor": "1/8007875369336024131950",
+        "common_scale": 66706983000,
+        "complete_hinge_upper": "802051869914440232698722784579/165176625271619320673339025000",
+        "original_head_projection_branches": 125000,
+        "expanded_branches": 12948,
+        "bounded_without_extra_projections": 112052,
+        "expanded_objective_count_including_seed": 647900,
+        "strict_crossing_branches_including_seed": 0,
+        "complete_affine_branch_evaluations": 772910,
+        "independent_rational_checks": 10,
+        "maximum_unexpanded_upper": "797621458024022731371622212769/165176625271619320673339025000",
+        "all_branch_decisions_sha256": "90f4f91ba682e670479026b09b0ddff0d88a93a1fc1b98718e588c18ff0b309b",
+        "maximizing_witness": {
+          "layout": [
+            1,
+            4,
+            4,
+            1,
+            4,
+            4,
+            4
+          ],
+          "seven21_root": 1,
+          "seven35_slot": 4,
+          "seven63_cell": 4,
+          "seven105_root": 1,
+          "seven105_slot": 4,
+          "normalized_late_coordinate": "1",
+          "theta": "1/90",
+          "two_projection_endpoints": [
+            2860120747976443863533433619746246,
+            2865653544820692635601945081767346
+          ],
+          "four_projection_endpoints": [
+            2584591492485332459966293408229586,
+            2593835747303299712547669485328486
+          ],
+          "primitive_scaled_upper": 2593835747303299712547669485328486,
+          "complete_bounds_at_theta": [
+            "886101900068241383921442511369/165176625271619320673339025000",
+            "802051869914440232698722784579/165176625271619320673339025000"
+          ]
+        },
+        "old_complete_tail_constant": "63627242148589472495618263/16631741151697896274050000",
+        "new_complete_tail_constant": "46392006389387109699624163/16631741151697896274050000"
+      },
+      "complete_head_upper": "802051869914440232698722784579/165176625271619320673339025000",
+      "complete_mean_only_upper": "19747/1000",
+      "adopted_upper": "802051869914440232698722784579/165176625271619320673339025000",
+      "improvement_over_mean_only": "307461368665528311579712867762/20647078158952415084167378125"
+    }
+  ],
+  "scope": "Ordinary complete AP13 and original heavy0/heavy16 bounds on both saturated actual J faces. Each scan covers all6250000 containing head/projection branches and the entire common late-split interval using both endpoints and any exact crossing of the two complete affine bounds. Absolute raw caps and normalized deep-ternary operators are distinct. Every original independent label, complete cap-series tail, one actual source and survivor and both J-specific deletion families remain. No K forced27 assumption, actual-attainment assertion, off-face transport, complete52-cost/global comparison, Lean verification or unrestricted Erdos7 resolution."
+}

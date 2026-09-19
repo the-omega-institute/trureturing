@@ -1,0 +1,291 @@
+{
+  "delta": "1/25",
+  "source_price_matrix": [
+    [
+      "1/12",
+      "1/8",
+      "1/36",
+      "7/100",
+      "1/72",
+      "0"
+    ],
+    [
+      "1/12",
+      "1/12",
+      "1/36",
+      "1/72",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "1/36",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "1/4",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "1/18",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ]
+  ],
+  "Z_price": {
+    "factor_order": [
+      "alpha",
+      "z",
+      "beta",
+      "deficit",
+      "late",
+      "carrier"
+    ],
+    "prices": [
+      "1/420",
+      "3/280",
+      "1/1260",
+      "2/1575",
+      "0",
+      "0"
+    ],
+    "sorted_indices": [
+      1,
+      0,
+      3,
+      2,
+      4,
+      5
+    ],
+    "delta": "1/25",
+    "upper": "3/7000",
+    "corner_criterion": true,
+    "vertices": [
+      {
+        "active_count": 1,
+        "coordinate": "1/25",
+        "price_upper": "3/7000",
+        "outer_polytope_witness": [
+          "0",
+          "1/25",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 2,
+        "coordinate": "1/49",
+        "price_upper": "11/41160",
+        "outer_polytope_witness": [
+          "1/49",
+          "1/49",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 3,
+        "coordinate": "1/73",
+        "price_upper": "181/919800",
+        "outer_polytope_witness": [
+          "1/73",
+          "1/73",
+          "0",
+          "1/73",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 4,
+        "coordinate": "1/97",
+        "price_upper": "191/1222200",
+        "outer_polytope_witness": [
+          "1/97",
+          "1/97",
+          "1/97",
+          "1/97",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 5,
+        "coordinate": "1/121",
+        "price_upper": "191/1524600",
+        "outer_polytope_witness": [
+          "1/121",
+          "1/121",
+          "1/121",
+          "1/121",
+          "1/121",
+          "0"
+        ]
+      },
+      {
+        "active_count": 6,
+        "coordinate": "1/145",
+        "price_upper": "191/1827000",
+        "outer_polytope_witness": [
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145"
+        ]
+      }
+    ],
+    "scope": "Exact support of the proved outer polytope; nonlinear support is asserted only under corner_criterion."
+  },
+  "pair_price": {
+    "factor_order": [
+      "alpha",
+      "z",
+      "beta",
+      "deficit",
+      "late",
+      "carrier"
+    ],
+    "prices": [
+      "1/36",
+      "13/180",
+      "1/108",
+      "731/54000",
+      "1/2160",
+      "0"
+    ],
+    "sorted_indices": [
+      1,
+      0,
+      3,
+      2,
+      4,
+      5
+    ],
+    "delta": "1/25",
+    "upper": "13/4500",
+    "corner_criterion": true,
+    "vertices": [
+      {
+        "active_count": 1,
+        "coordinate": "1/25",
+        "price_upper": "13/4500",
+        "outer_polytope_witness": [
+          "0",
+          "1/25",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 2,
+        "coordinate": "1/49",
+        "price_upper": "1/490",
+        "outer_polytope_witness": [
+          "1/49",
+          "1/49",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 3,
+        "coordinate": "1/73",
+        "price_upper": "6131/3942000",
+        "outer_polytope_witness": [
+          "1/73",
+          "1/73",
+          "0",
+          "1/73",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 4,
+        "coordinate": "1/97",
+        "price_upper": "6631/5238000",
+        "outer_polytope_witness": [
+          "1/97",
+          "1/97",
+          "1/97",
+          "1/97",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "active_count": 5,
+        "coordinate": "1/121",
+        "price_upper": "416/408375",
+        "outer_polytope_witness": [
+          "1/121",
+          "1/121",
+          "1/121",
+          "1/121",
+          "1/121",
+          "0"
+        ]
+      },
+      {
+        "active_count": 6,
+        "coordinate": "1/145",
+        "price_upper": "416/489375",
+        "outer_polytope_witness": [
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145",
+          "1/145"
+        ]
+      }
+    ],
+    "scope": "Exact support of the proved outer polytope; nonlinear support is asserted only under corner_criterion."
+  },
+  "Z_upper": "1961/31500",
+  "pair_upper": "647/1125"
+}

@@ -1,0 +1,68 @@
+{
+  "length": 5578,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "d4821ff5fa6036d4a4f9c8fd9ccbabc8e3e4d9d3005f337efc5e76f04f10ae6c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/000798-001596.json",
+        "sha256": "3583ba7da217b7da6f971c3b70864bb64631ee10ad61cd69f147a82a5e0956c7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/001596-002394.json",
+        "sha256": "006eb558e470b935a9b7f419c94dea1f375189e477190e80ce545ad52378d3ce",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/002394-003192.json",
+        "sha256": "5515388a287659041e6e334d1300202a033c45a993e601a742a9581e9d82cf4e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/003192-003990.json",
+        "sha256": "e9232b2db35d22deaf0b7f6ac2cf1b6ffc417e483d3e13490a5b87aed7ee577d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/003990-004788.json",
+        "sha256": "4fcf3753d690243687c99e9a8ca40e3f85c45d55338a603407d576cdae19f085",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5578,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/004788-005578.json",
+        "sha256": "3a48d24be36ff9da36d8336b7cea6c8769cd532551be6b22971490c1ea683a33",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "length": 6292,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/000000-000798.json",
+        "sha256": "e8bf17932993fe49c8e8cb9669708c31b4540cd77e3fecd22f5eb078f67b5637",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/000798-001596.json",
+        "sha256": "925b39c31f984817e41e6c3a09373aadb563453e8638f4e1c8d0d773e3b9c852",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/001596-002394.json",
+        "sha256": "492f6fd59389f12e91ee0384fbcf8237fc63dddaaf7f24bae4be11b17dbca57d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/002394-003192.json",
+        "sha256": "40d2591ccdfa4dcbe28601f879bf986ee615fd379ae561475daecb2b2f06bebe",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/003192-003990.json",
+        "sha256": "55a9acdffe0d11d149bb4df994cb90c33d324a48170e6498d872c74bde72f898",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/003990-004788.json",
+        "sha256": "fb6d4c1bb213c81661f866dea398a92c8c2ef9f5f8db7875be5ca8b46cc49369",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/004788-005586.json",
+        "sha256": "cc71d38f913a71883ebc3f576e597234d56a67f78d080fceb9831599a56e8fe7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 6292,
+      "part": {
+        "path": "content/007-shared_price_banks/000-heavy/004-encoded_price_bank/005-rows/005586-006292.json",
+        "sha256": "22c6903d6c3eeb59590545db4884a0a4b1404ff897a33d4023f8aaea22abc9d3",
+        "kind": "value"
+      }
+    }
+  ]
+}
