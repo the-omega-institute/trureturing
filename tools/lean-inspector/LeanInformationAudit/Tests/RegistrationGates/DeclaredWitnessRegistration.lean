@@ -1,6 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 import LeanInformationAudit.Tests.RegistrationGates.EscapeRecords
 import LeanInformationAudit.Tests.SourceIsolation
+import Mathlib.Algebra.Polynomial.Basic
 
 namespace LeanInformationAudit.Tests.DeclaredWitnessRegistration
 open Lean Meta Elab Command
@@ -226,5 +227,34 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
       logInfo m!"[PASS] witness_stale_{label}_bytes_rejected"
     finally IO.FS.writeFile path original
   setEnv primed
+
+namespace UpstreamTypeBoundary
+noncomputable section
+-- The domain's semiring has a large upstream body. Its pinned implementation
+-- is a cache/source dependency, not another extracted readout to serialize.
+def predicate (p : Polynomial Int) : Prop :=
+  letI := Polynomial.semiring (R := Int)
+  p ^ 2 ≠ p ^ 2
+def claim : Prop := ∀ p : Polynomial Int, predicate p
+theorem result : ¬ claim := fun h => h 0 rfl
+def arena := WitnessArena.ofCarrier (Fin 1) (Polynomial Int) predicate
+  (fun _ => 0) (fun _ => .isFalse (fun h => h rfl))
+theorem law : arena.Law reads := ⟨(0 : Fin 1), rfl⟩
+theorem bridge : WitnessPrimitiveRealization arena (¬ claim) reads := ⟨arena.law_refutes⟩
+theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue := arena.variation law
+theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena := arena.sensitivity law
+register_information_theorem result in arena
+  readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
+  primitives reads.toPrimitiveBundle realization bridge
+  variation variation sensitivity sensitivity
+  escape from (Polynomial Int) escape continues (open)
+run_meta do
+  let some row := (TemplateBinding.records (← getEnv)).find?
+    (·.occurrence.key.theoremName == ``result) | throwError "missing polynomial witness"
+  unless row.result matches .declaredValidated _ do
+    throwError "[FAIL] witness_upstream_type_dependency"
+  logInfo "[PASS] witness_upstream_type_dependency"
+end
+end UpstreamTypeBoundary
 
 end LeanInformationAudit.Tests.DeclaredWitnessRegistration

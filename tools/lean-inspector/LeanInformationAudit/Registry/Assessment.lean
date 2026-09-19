@@ -525,7 +525,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
     let mut retained := (← get).extractionNames.insert event.realizationName
-    for name in ← inspectionDependencies event do retained := retained.insert name
+    -- Fingerprint the inspected roots here. Their transitive data/type closure
+    -- is retained below without serializing pinned upstream implementations.
+    for name in ← inspectionRoots event do retained := retained.insert name
     let extractionNames := retained.toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
@@ -646,6 +648,7 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   let env ← getEnv
   let .ok plan := selectedPlan env name | return
   let mut names : NameSet := {}
+  for name in ← inspectionDependencies record.occurrence do names := names.insert name
   for value in claim.escapeInput.fromObject.toArray ++ claim.escapeInput.continuation.toArray do
     for name in value.getUsedConstants do names := names.insert name
   if let some residual := record.escape.continuation then
