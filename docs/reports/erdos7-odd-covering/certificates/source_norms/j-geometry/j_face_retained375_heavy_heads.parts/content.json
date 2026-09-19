@@ -1,0 +1,205 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-retained375-heavy-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "12ae6ab624caad7a7a36c7e67696c8e4c9147838e969c4f0c2694068453a24a0",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "name": {
+    "kind": "inline",
+    "value": "cost0"
+  },
+  "original_coefficients": {
+    "kind": "inline",
+    "value": {
+      "1": "298469622484874903/2311075142665519230",
+      "2": "12386341040791428463/9244300570662076920",
+      "3": "525174571/736900164",
+      "4": "9522349/858858",
+      "5": "1580/4719",
+      "6": "3160/42471",
+      "7": "395/3861",
+      "8": "282583/7722"
+    }
+  },
+  "at_one": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "complete_late_slope": {
+    "kind": "inline",
+    "value": "403/8"
+  },
+  "model": {
+    "kind": "inline",
+    "value": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0",
+      "preserved_original_rows": 11211,
+      "preserved_original_equalities": 19,
+      "new_raw_intersection_variables": 3200,
+      "new_survivor_intersection_variables": 3200,
+      "independent_profile_coordinates": 10
+    }
+  },
+  "original264_model": {
+    "path": "content/011-original264_model.json",
+    "sha256": "4f69d59ab95f848afcfe0aafd7e6700d0d8bd3ae0aed50519be88b8c8a2a58bd",
+    "kind": "object"
+  },
+  "retained_old_labels": {
+    "kind": "inline",
+    "value": [
+      25,
+      27,
+      75,
+      81,
+      135,
+      125,
+      225,
+      375
+    ]
+  },
+  "retained_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      21,
+      35,
+      63,
+      105,
+      147,
+      245,
+      441,
+      735
+    ]
+  },
+  "complete_old_tail": {
+    "kind": "inline",
+    "value": "5071/405000"
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "13/490"
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "312316537/158760000"
+  },
+  "previous_complete_upper": {
+    "kind": "inline",
+    "value": "1747623922413605093240428858165191004949/314622143374512991758741000000000000000"
+  },
+  "complete_upper": {
+    "kind": "inline",
+    "value": "543/100"
+  },
+  "improvement": {
+    "kind": "inline",
+    "value": "39225683889999547990465228165191004949/314622143374512991758741000000000000000"
+  },
+  "target_closed": {
+    "kind": "inline",
+    "value": true
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "original_residual_leaf_count": {
+    "kind": "inline",
+    "value": 20429
+  },
+  "prefix_ledger": {
+    "path": "content/023-prefix_ledger.json",
+    "sha256": "a180734864ba729e618fefebb9402c06af37834ee5003bde19205886993360c6",
+    "kind": "object"
+  },
+  "own_bound_closed_leaves": {
+    "kind": "inline",
+    "value": 2768
+  },
+  "covering_leaf_counts": {
+    "kind": "inline",
+    "value": {
+      "prior70": 305,
+      "stage1": 13569,
+      "stage2": 3611,
+      "stage3": 161,
+      "final": 15
+    }
+  },
+  "covering_node_counts": {
+    "kind": "inline",
+    "value": {
+      "prior70": 152,
+      "stage1": 613,
+      "stage2": 367,
+      "stage3": 33,
+      "final": 12
+    }
+  },
+  "distinct_covering_duals": {
+    "kind": "inline",
+    "value": 981
+  },
+  "strong_zero_columns": {
+    "kind": "inline",
+    "value": 4634
+  },
+  "strong_zero_induction_rows": {
+    "kind": "inline",
+    "value": 2645
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 15231557
+  },
+  "independent_rational_column_checks": {
+    "kind": "inline",
+    "value": 15231557
+  },
+  "physical_column_maximum_comparisons": {
+    "kind": "inline",
+    "value": 18055680
+  },
+  "original_member_cell_checks": {
+    "kind": "inline",
+    "value": 441525
+  },
+  "verified_node_batches": {
+    "path": "content/034-verified_node_batches.json",
+    "sha256": "4cbf06199696ab2add2c66eec21d07462e9ab224d4f793bcf0cf1c76713869a1",
+    "kind": "array"
+  },
+  "proof_data": {
+    "path": "content/035-proof_data.json",
+    "sha256": "0d3d955a687e4539319087059bc0cf7eab369feb210052b76bb1521ee03f6399",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original heavy0 function on both saturated J faces with actual raw and survivor masses, all original independent labels, and every infinite tail. Original329 failed5000 rule is unchanged. Exact rational certificate, not actual attainment, off-face extension, Lean verification or unrestricted Erdos7."
+  }
+}

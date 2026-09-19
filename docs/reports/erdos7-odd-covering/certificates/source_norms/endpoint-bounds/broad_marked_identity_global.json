@@ -1,0 +1,498 @@
+{
+  "schema": "erdos7-broad-marked-identity-global-v1",
+  "source_sha256": {
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "73a23d45c240ac9cd59216243127030e86f188d7dca930f689c44437799c59c5",
+    "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "563dd67bdd067108b08c0f9290d55271104559c1b01af7ba97cb61f97a6dc15c",
+    "frontier/source-budgets/global_k_face_gain.py": "c812fd6aba07ba15f100c85e85595661b8447448f67a6c0d95a1c9a1861ad96d",
+    "certificates/source_norms/source-budgets/global_k_face_gain.json": "124d4428a67f5193f3814849c527e30c331a0757328836756aec088a87fdcbc8",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/cover-geometry/common_deleted_measure_coupling.py": "c1cd866a3e68727b43a29a6d48eb5c64e1d8a75e27fa99b46ddbe2f1dacdc474",
+    "certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json": "d174d73255d27c937f22d140e3c131613c1a21b3c586c641ce6667735dd14b44",
+    "frontier/source-budgets/global_control_faces.py": "1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023",
+    "certificates/layout_gap_frontier_certificate.json": "cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898",
+    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785",
+    "frontier/cover-geometry/verify_ap_schedule.py": "8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "3f30d24b9d66c6c24a3ee8361b0fb2c5fe6e86ebe4f4b9332fd0b5602954a30e",
+    "frontier/retained-transport/verify_retained_five_tests.py": "538de506f0d4b9628654b2a64f3771259ae7a56bead7ac4e88a743ba4a81c90a",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "6a58a6155bb2f860fda843848d54397f0e4ece26cab40f8f1676a857631e8fec",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "063509eb7bf8279e90a95d23184ecf474396ead47866961cc4c3568778db342f",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "3bbc1f2d50a48132410cfeef44a1461f2633a2e4facbe7e9080aced11ce64e4f",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "317a9abfb90b644125766d89af6589a36e4c6cfd5a748da3e015ece898c5ce7f",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "484ee018b5f7fee564317a37975fabb5d5ae7e8046fce0c88714209af67145c0",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "6159205f227d913376f35c223a0be07d5b7fc0a79732bac04f68564ff95bca16",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "51f51e59123004239e7315b2d94e36a482da5334df1f49639d039a7be31f4fc3",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "c5170c0e3597ef83b0fb242be1e3c81ca0f93549d6d5bfb348be843c96c5c1a8",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "a534b9cc2e8dea91cac97dfecf01620cb573608dfeb453ef172911ab7647cb63",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "cbf73fe570b1ef250800ce9e6a569f2bf7c53aa79dd6fefaaa86ec279d11f077",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4063b63f8bdf0dc3cfcc90679d7ff3d2c325f03bfb36be99760570d1a714f6fd",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "5fdbde7ef2ec7feccddd68bba985f0c407cdc2da30feba725e68b7065ffd8f27",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f72e2ca85a548ddc620a54ef591ebcad14dda309925f80a5c34ffd171711a6e1",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5",
+    "frontier/source-budgets/source_cost_endpoint_attainment.py": "860816267cfc11da898d207f1eb48486c6630d1dd3d00a785417a244188af47d",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "frontier/endpoint-bounds/endpoint_k_face_neighborhood.py": "75577c2050d77c48f3cce7640534a7021e4f9e1a12bd7e22386022262b233728",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_neighborhood.json": "35aaced8b84aa75f80f5ec22935bb51cbf1395bdba0e38d6378af0ce2aaf1353",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json": "a5102c4c9959033802c24108710ba5e3c829c53cbcd91b4fff2db4904e22f16d",
+    "frontier/endpoint-bounds/endpoint_k_face_linear.py": "4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json": "71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314"
+  },
+  "identity_direction": 40,
+  "barrier": "6",
+  "identity_cost_coefficient": "94212612766226/1174116234095805",
+  "fixed_layout_floor_checks": 500,
+  "selected_pure3_depths": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "selected_deep_sum": "13/243",
+  "remaining_pure3_tail": "1/486",
+  "complete_seven_sum": "1/5",
+  "exact_carrier_payment_shifts": [
+    {
+      "carrier": [
+        -1,
+        -1
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        -1,
+        0
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        -1,
+        1
+      ],
+      "eta_coefficients": [
+        "0",
+        "1/25",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        -1,
+        2
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "1/25",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        -1,
+        3
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "0",
+        "1/25",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        -1,
+        4
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        -1
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "1/25",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        0
+      ],
+      "eta_coefficients": [
+        "2/25",
+        "1/25",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        1
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "2/25",
+        "0",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        2
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "1/25",
+        "1/25",
+        "0",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        3
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "1/25",
+        "0",
+        "1/25",
+        "0"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        0,
+        4
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "1/25",
+        "0",
+        "0",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        -1
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "1/25",
+        "1/25",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        0
+      ],
+      "eta_coefficients": [
+        "1/25",
+        "0",
+        "1/25",
+        "1/25",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        1
+      ],
+      "eta_coefficients": [
+        "0",
+        "1/25",
+        "1/25",
+        "1/25",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        2
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "2/25",
+        "1/25",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        3
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "1/25",
+        "2/25",
+        "1/25"
+      ],
+      "constant": "13/6075"
+    },
+    {
+      "carrier": [
+        1,
+        4
+      ],
+      "eta_coefficients": [
+        "0",
+        "0",
+        "1/25",
+        "1/25",
+        "2/25"
+      ],
+      "constant": "13/6075"
+    }
+  ],
+  "uniform_old_marked_payment": "121/6075",
+  "exact_selected_deep_payment": "13/6075",
+  "shallow_virtual_density_upper": "2/5",
+  "retained_source_loss_coefficient": "3/5",
+  "uniform_slot_credit": "397/60000",
+  "best_slot_mass_over5_lower": "1199/60000",
+  "uniform_marked_gain_before_residual": "21757/4860000",
+  "zero_box_mass_cutoff": "25/27",
+  "slab_deficit_upper": "1/18",
+  "best_slot_loss_cutoff": "1/12000",
+  "uniform_slot_gap_lower": "397/36000",
+  "common_residual_coefficient": "4000/397",
+  "conservative_mass_coefficient": "891280654301453988360055325182031459823273341359752932599709/16421574999583123930048953962520438132410694000000000000000",
+  "broad_positive_residual_slope": "348567665665298261662091981046033804789365753319821914242084473/6519365274834500200229434723120613938567045518000000000000000",
+  "broad_signed_reserve": "1024891907977389541/2853102448852806150000",
+  "refined_concentration_delta": "13/500",
+  "refined_slot_loss_cutoff": "1/8000",
+  "refined_source_loss_coefficient": "1987/2500",
+  "refined_gap_guards": {
+    "pure5_slot": "799/8000",
+    "alpha_slot": "2627/40000",
+    "beta_slot": "2617/120000",
+    "remaining_slot": "52469/2000000"
+  },
+  "refined_slot_gap_lower": "2617/120000",
+  "refined_common_residual_coefficient": "40000/7851",
+  "refined_marked_gain_before_residual": "369198299/24300000000",
+  "positive_residual_slope": "2314912291998975181815431509163934047822593790338473424613438453/42975261773909035324938112519915986592518786198000000000000000",
+  "gamma_K": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000",
+  "three_case_reserves": {
+    "outside_concentrated_zero_faces": "15240056495574031935365456355486859072608164346131/12484437417611055583007705687174291205786000000000000",
+    "large_best_slot_loss": "891280654301453988360055325182031459823273341359752932599709/656862999983324957201958158500817525296427760000000000000000000",
+    "concentrated_small_slot_loss": "1023033422871656583811/839147779074354750000000"
+  },
+  "global_signed_reserve_at_K0": "1023033422871656583811/839147779074354750000000",
+  "reserve_at_previous_target": "19771019504925618675213737723454861229243452572453869/16229768642894372257910017393326578567521800000000000000",
+  "old_K0": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000",
+  "previous_K74": "22568217816217004360116518544046903128084609044833213567458397/44298251856966694946173286363007489167908113000000000000000",
+  "decrease_from_K0": "1023033422871656583811/932386421193727500000000",
+  "improvement_over74": "9877889724215022321639186133549687185085422204053869/9016538134941317921061120774070321426401000000000000000",
+  "new_K": "33908684762398767967218824063093944440044324845639/66558143848442620628509895712956736352500000000",
+  "positive_denominator_lower_factor": "40593580507/80223412500",
+  "comparison_denominator_upper": "5/9",
+  "new_signed_margin_lower": "1023033422871656583811/1678295558148709500000000",
+  "new_mass_coefficient": "3501421009638510538910970669104026744442106850996529137/64513330355505129725192319138473149805899155000000000",
+  "fallbacks": [
+    {
+      "branch": "3-absent/5-absent/7-absent",
+      "complete_bound": "10623721541541098531398006957413515968436614038803995147/48604529927104449376459453468816706205357963404880000",
+      "new_gap": "21635684423758365941104193069053974320711793956153902003391398389047/74378857728397310280122588804825389359508189196198439607500000000"
+    },
+    {
+      "branch": "3-absent/5-absent/7-present",
+      "complete_bound": "274655976598502681815467966359053974332998333315688773/1166651480453367767693627980400737481893436220720000",
+      "new_gap": "6360139450521726978181715351480702504915104206973432153551416893709/23209043683259210542602334541802565476022659689083002802500000000"
+    },
+    {
+      "branch": "3-absent/5-present/7-absent",
+      "complete_bound": "2381350404993261077427780898586784156827491228162671061/9686765730344163334324599918746939270472623899440000",
+      "new_gap": "23123311439227423394156285628997578420642638137207418390002754969/87713178538493029692359462118399232489503111406640152500000000"
+    },
+    {
+      "branch": "3-absent/5-present/7-present",
+      "complete_bound": "7648549441109159275023077311619968094720716395293174339/28434535675936494345970249002679290491834286810960000",
+      "new_gap": "10463636394435095495088395934621263665471395074759786835316612066999/43512987097816218225479979271667675355525125306985925327500000000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-absent",
+      "complete_bound": "709482385330342838679666295724505275573793823702566240181/2427856787562415133414925307244895534083855238696240000",
+      "new_gap": "807092310915326797699037468846800031278463206693458973931021396147681/3715316552960365082380331109168017238767423951918978866972500000000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-present",
+      "complete_bound": "118486841368476751897599111084939956657784488842841582801/349896108706649529993683856898242365454245461430640000",
+      "new_gap": "91466889927406763874209745949682887606468407941614237670152097382541/535441304097437285962679424783864715078905512947313400322500000000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-absent",
+      "complete_bound": "95071493091965158923104912659267096224040724906003709301/263665054311273887607454910313867237711908271221040000",
+      "new_gap": "60071700527084352702885605663685181695465435273423946034165028128801/403483082584699652926969266477941420738248275212493450172500000000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-present",
+      "complete_bound": "16025256609792923789017273811086946633827223715428789321/36750866636855548319852923366192605334740462931440000",
+      "new_gap": "4128445100278803773755982429231035556517241420490305231744281873061/56239356394920000625646142049639927539892953126176655022500000000"
+    }
+  ],
+  "complete_cores": [
+    {
+      "box": [
+        [
+          3,
+          20
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          11,
+          20
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          17,
+          20
+        ],
+        [
+          19,
+          20
+        ]
+      ],
+      "unchanged_error": "18991066484526553535616665014766541606498475498415351673730712853724798226291341890112453090044199512276028276745811947516332859861953639269455893356400775581/33027923438191785509648339887176402512935211081024774046560717099807773692853598920870845972552296908764122807339978282210749381847166809013002400000000000000000",
+      "combined_gap": "845936782348613026311973372638630088487049859214604422167661245433517319626888062628284617827995906965784260326189454997203018429052843261944989448370659390504614712966504039/7946040399748476627427138870763113685571396235465565055611977414400535557296040623242161077609713932886277954327249283873665734669378480305564510640514245600000000000000000"
+    },
+    {
+      "box": [
+        [
+          3,
+          17
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          19,
+          6
+        ]
+      ],
+      "unchanged_error": "17351608553457661109217368573484078694167681875704922959013906473541547321078691/78684819668590109973764061819287119927780638345294580679588953162888888320000000",
+      "combined_gap": "252437533533112156747125355509296665705995014745601716900829305843250669119385813943656609025141/2366303610880943524664913131214918688248860252888446892112263019071635413986890229760000000000"
+    }
+  ],
+  "scope": "Ordinary full-domain K theorem, with all eight fallback branches. Retains exactly one original zero-seven modulus5 event and cancels its old shallow carrier payment against the same actual virtual deletion. Subtracts the remaining complete selected deep payment. Uses profile85 broad-slab source packing with one cap/union deficiency. Same actual mass, independent labels, all source and AP exponent tails and prior signed comparison. No sharpness, Lean verification or unrestricted Erdos7 resolution."
+}

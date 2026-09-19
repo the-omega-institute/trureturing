@@ -1,0 +1,72 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-single-hinge-cost-portfolio-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+      "frontier/comparison-bounds/uniform_k_neighborhood_cost.py": "75ee1c64408773a857dc92e6ab659c2ecb129fffd61f059a4a663af9f7ed791b",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7",
+      "frontier/retained-transport/finite_source_face_transport.py": "4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf",
+      "frontier/source-budgets/shared_budget_affine_tail.py": "6e84343bcb162656fecf5bea73bf0d10a66fe8690f7274ad2165b58944771a08",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "4da7a68610d2414aaabff397adc34796cee610d45ccc5906af29e6ac7ff0ddb3",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1",
+      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "frontier/moments-survival/uniform_ap_survival_denominator.py": "191f9fdc7507b6774010af6672abb3159cb59e8c7607cabbe923b4070b307780",
+      "certificates/source_norms/comparison-bounds/whole_face_stop_loss_generator.json": "f9cbfcee82a6011e83dfb5571fb89f28a6eacbfee89c98fb8216c1e41a52a644",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26"
+    }
+  },
+  "indices": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15,
+      19,
+      20,
+      21,
+      22,
+      24,
+      25,
+      27,
+      28,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37,
+      38,
+      39,
+      40
+    ]
+  },
+  "radii": {
+    "path": "content/003-radii.json",
+    "sha256": "e5e3dfcd251918bb88b05c97bd4e84b3bd98d3bb9f2ae50280c3bbfb4a255bbd",
+    "kind": "array"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 500000
+  },
+  "rational_comparisons": {
+    "kind": "inline",
+    "value": 16
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary continuum bound for exactly27 adopted98 single-second-hinge costs and the original affine cost, uniformly on134 actual K rectangle. Each original test keeps independent residues and every infinite tail. Uses139 complete H1 and134 fixed supports for H2, with exact zero-radius recovery. No new global K, Lean verification or unrestricted Erdos7 conclusion."
+  }
+}

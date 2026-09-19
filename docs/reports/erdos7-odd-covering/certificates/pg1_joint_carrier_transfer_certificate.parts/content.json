@@ -16,9 +16,9 @@
       "certificates/pg1_weighted_carrier_transfer_certificate.json": "e23a4912526fb64a36fdfae2c5b6af5169c45d104261bd8186ab2f9070a6f41b",
       "certificates/row_weighted_geometry_certificate.json": "c102a148e6ab1510d3fd9617e576adea37f05d6faefbd5384130c6530c07042a",
       "certificates/uniform_profile_box_certificate.json": "f82b969a30f3a9ac13568c510960146672df3422a73858dd3560b670c0df2c54",
-      "verify_carrier_dominance.py": "ff518237b350e94d80d48643701f64aad3502441f2b297d28f276d99d0b116f1",
-      "verify_point_geometry.py": "4896a0d9987c9167c2170994e7447ea0266d8148ed6c9856721acbf7e32b9a24",
-      "verify_seven_digit_classification.py": "4622826a4ced325b057db613565015329f619f2e2f3cd1c50e928400c7590d0a"
+      "verify_carrier_dominance.py": "fee1df01194f666629c6f5e6d2e0aea8703e7ae844700a23049c64aba2796864",
+      "verify_point_geometry.py": "5215a33921ff00a3053a773149c9eafffaa4ba62c04d38b29bbb60f5a6166127",
+      "verify_seven_digit_classification.py": "46a666990b765c1c7e03ad8e829c3e1c66dec8026197f3c4217570e9f3eae505"
     }
   },
   "result": {

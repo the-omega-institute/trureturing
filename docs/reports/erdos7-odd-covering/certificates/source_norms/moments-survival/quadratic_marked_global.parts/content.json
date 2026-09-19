@@ -1,0 +1,227 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-quadratic-marked-global-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "5200557d14589455ac3b373b2047f7aa7065b79de6a1663640186a2acf61d589",
+    "kind": "value"
+  },
+  "concentration_delta": {
+    "kind": "inline",
+    "value": "1/44"
+  },
+  "slot_loss_cutoff": {
+    "kind": "inline",
+    "value": "1/840"
+  },
+  "carrier_density_upper": {
+    "kind": "inline",
+    "value": "9/44"
+  },
+  "source_guards": {
+    "kind": "inline",
+    "value": {
+      "pure5": "83/840",
+      "alpha": "299/4620",
+      "beta": "8/385",
+      "remaining": "8117/325248"
+    }
+  },
+  "slot_gap_lower": {
+    "kind": "inline",
+    "value": "8/385"
+  },
+  "best_slot_credit_lower": {
+    "kind": "inline",
+    "value": "83/4200"
+  },
+  "cost_rows": {
+    "path": "content/008-cost_rows.json",
+    "sha256": "5bdfb8ef2b259bc916458fe2e83180a8065b67e0dab9303a6f1ec6ce144cc9b7",
+    "kind": "array"
+  },
+  "chosen_cost_indices": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15,
+      19,
+      20,
+      21,
+      22,
+      25,
+      27,
+      28,
+      29,
+      30,
+      31,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      42,
+      43,
+      44,
+      45
+    ]
+  },
+  "chosen_cost_count": {
+    "kind": "inline",
+    "value": 32
+  },
+  "chosen_linear_count": {
+    "kind": "inline",
+    "value": 28
+  },
+  "chosen_quadratic_count": {
+    "kind": "inline",
+    "value": 4
+  },
+  "total_layout_cell_floor_checks": {
+    "kind": "inline",
+    "value": 23000
+  },
+  "total_prefix_increment_checks": {
+    "kind": "inline",
+    "value": 365
+  },
+  "weighted_gain_before_residual": {
+    "kind": "inline",
+    "value": "22037845256986549574060722303/1707837658128205225975184832000"
+  },
+  "combined_residual_penalty": {
+    "kind": "inline",
+    "value": "845440521863452293058853/77588735303934049029120"
+  },
+  "conservative_mass_coefficient": {
+    "kind": "inline",
+    "value": "891280654301453988360055325182031459823273341359752932599709/16421574999583123930048953962520438132410694000000000000000"
+  },
+  "positive_remaining_mass_coefficient": {
+    "kind": "inline",
+    "value": "712344048580501706163936116300981311471027087437487307599709/16421574999583123930048953962520438132410694000000000000000"
+  },
+  "JK_union_raw_mass_controls": {
+    "path": "content/019-JK_union_raw_mass_controls.json",
+    "sha256": "091d99a2cccca982d4fffe6f552974862fabe86cbce59ffa5bb4b7492668b3e3",
+    "kind": "value"
+  },
+  "all_source_vertex_count": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "joint_denominator_constant": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "joint_denominator_outside_union_coefficient": {
+    "kind": "inline",
+    "value": "11/36"
+  },
+  "joint_denominator_statement": {
+    "kind": "inline",
+    "value": "E <= 1/4+(11/36)*(1-qK-qJ)"
+  },
+  "outside_linear_coefficient": {
+    "kind": "inline",
+    "value": "13786810052871910698756920579887034441878452990697/24344652964341558386865026089989867851282700000000"
+  },
+  "outside_negative_quadratic_coefficient": {
+    "kind": "inline",
+    "value": "4250018761581128841547734908647233617288349803273/8183076626669431390542865912601636252532000000000"
+  },
+  "concentrated_denominator_upper": {
+    "kind": "inline",
+    "value": "37/144"
+  },
+  "signed_branch_margins": {
+    "kind": "inline",
+    "value": {
+      "concentrated_small_slot_loss": "96875343533912990351750503/1707837658128205225975184832000",
+      "concentrated_large_slot_loss": "5199836615614592967830517621032818928612977609752932599709/68970614998249120506205606642585840156124914800000000000000000",
+      "outside_near_endpoint": "193409390943779979182654511361967737207110037037233/1885249925558610281478827620408815366403332288000000000",
+      "outside_far_endpoint": "11182614334850438870887952007155214430727714346131/324595372857887445158200347866531571350436000000000"
+    }
+  },
+  "new_signed_margin_lower": {
+    "kind": "inline",
+    "value": "96875343533912990351750503/1707837658128205225975184832000"
+  },
+  "old_K0": {
+    "kind": "inline",
+    "value": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000"
+  },
+  "previous_K93": {
+    "kind": "inline",
+    "value": "108500925396987280791285809842909962533821349/212986060315016386011231666281461556328000"
+  },
+  "decrease_from_K0": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "new_K": {
+    "kind": "inline",
+    "value": "108497375629315363851518955981805271507882549/212986060315016386011231666281461556328000"
+  },
+  "improvement_over93": {
+    "kind": "inline",
+    "value": "1/60"
+  },
+  "new_mass_coefficient": {
+    "kind": "inline",
+    "value": "13998773346458188035653878374423073513262693388559219/258053321422020518900769276553892599223596620000000"
+  },
+  "scalar_template_ideal_cost_gains": {
+    "path": "content/035-scalar_template_ideal_cost_gains.json",
+    "sha256": "8adc53a1cb52b036da5c1c2fc85db84b661aa9531cb5949ca446ae16f09633fd",
+    "kind": "value"
+  },
+  "scalar_template_ideal_gain": {
+    "kind": "inline",
+    "value": "10115878772922446403539237/705718040548845134700489600"
+  },
+  "scalar_template_decrement_upper": {
+    "kind": "inline",
+    "value": "10115878772922446403539237/176429510137211283675122400"
+  },
+  "scalar_template_additional_decrement_upper": {
+    "kind": "inline",
+    "value": "1294403266061882219783117/176429510137211283675122400"
+  },
+  "scalar_template_scope": {
+    "kind": "inline",
+    "value": "Upper capacity of this fixed vmin/vmax, scalar packing and positive-subset sufficient criterion only. Not a lower bound on actual K; vector and other changed comparisons are outside its scope."
+  },
+  "positive_denominator_lower_factor": {
+    "kind": "inline",
+    "value": "40593580507/80223412500"
+  },
+  "fallbacks": {
+    "path": "content/041-fallbacks.json",
+    "sha256": "d88e01b8dd1942397ccace733e989cd5764d0c971eb8b5bcf7f12838df48ce3b",
+    "kind": "value"
+  },
+  "complete_cores": {
+    "path": "content/042-complete_cores.json",
+    "sha256": "08bebb0613c2f4828a210f6d5065164205e9e5f66ca56ea1d176f67cb7e81422",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary quadratic and linear marked-source theorem using all original event payments, unchanged quadratic curvature and complete exponent tails. A fixed28 linear/four quadratic set shares one actual residual budget and the same K/J product mass. All original test layouts remain independent. The target is recomputed once from K0; eight fallbacks and two full errors remain. No Lean verification, sharpness or unrestricted Erdos7 resolution."
+  }
+}

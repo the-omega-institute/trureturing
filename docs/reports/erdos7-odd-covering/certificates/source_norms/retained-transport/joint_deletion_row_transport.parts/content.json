@@ -1,0 +1,43 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-joint-deletion-row-transport-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "f6c91d084ed7081c918db2935dce05e3b4f5ce4b91232494ed56ccd92f665e49",
+    "kind": "value"
+  },
+  "included_constraints": {
+    "kind": "inline",
+    "value": {
+      "E5_totals": 5,
+      "marked_marginals": 8,
+      "fixed_H": 5,
+      "E5_forbidden_slots": 15,
+      "mask_links": 400,
+      "old_survivor_links": 400,
+      "coarse_deletion_links": 25,
+      "E3_root1_zero": 15,
+      "E3_root0_equalities": 5,
+      "E3_cell1_lower": 5
+    }
+  },
+  "priced_constraint_count": {
+    "kind": "inline",
+    "value": 883
+  },
+  "exact_aggregation_rows": {
+    "kind": "inline",
+    "value": 25
+  },
+  "domains": {
+    "path": "content/005-domains.json",
+    "sha256": "23c28478169b351f5abe77b1e7a2d5fb35c739af1bfb82ca1b5843ec6548e929",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Only883 old E3/E5 and shared-link row residuals. One common actual measure and residual. Raw/selected margins, scalar mass/caps, retained135/125, complete tails, pruning and whole-objective transportation remain. No complete off-face K or unrestricted Erdos7 conclusion."
+  }
+}

@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "4c6042eaaef211e4991e350ddc128f910316c467bc3dd1630b3c0468f270a133",
+  "logical_sha256": "7906160593e1e08fead9606402509c5160ae1d1a04e415e34cec328e4d4903b9",
   "parts_directory": "fixed_cost_frontier_certificate.parts",
   "root": {
     "path": "content.json",
-    "sha256": "d637500a5d436094910476ccbf2ed9bd25819a387e0920b86e570e269f7dba1d",
+    "sha256": "62122ddcf7dc6129fae0c34e3cc97f9b348496959a8d7e09251347b0d8efe3a0",
     "kind": "object"
   }
 }

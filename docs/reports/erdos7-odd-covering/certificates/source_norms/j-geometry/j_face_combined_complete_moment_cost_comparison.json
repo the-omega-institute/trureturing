@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "3b195ebfece33164fd8eb23a8d2944c62c0733dbea8bbb8d433235cdba26efa6",
+  "parts_directory": "j_face_combined_complete_moment_cost_comparison.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "0c82e0af6a98999f761ce56aea0d66fce266c703477958b4ae4f8d8396bab518",
+    "kind": "object"
+  }
+}

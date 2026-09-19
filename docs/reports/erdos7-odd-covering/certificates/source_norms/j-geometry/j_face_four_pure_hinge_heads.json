@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "bf4cf47fab332b8e378985bc440fd0020ecd99d65050ea9bc43ed5891e83b59e",
+  "parts_directory": "j_face_four_pure_hinge_heads.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "f1c44cf63d910daf5967007d61b972ce9beb520d32964a3045efb7f0285e399f",
+    "kind": "object"
+  }
+}

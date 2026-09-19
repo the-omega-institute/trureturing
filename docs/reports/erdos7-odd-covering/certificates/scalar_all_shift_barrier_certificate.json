@@ -1,8 +1,8 @@
 {
   "schema": "erdos7-scalar-all-shift-barrier-v1",
   "source_sha256": {
-    "certificates/shared_square_continuation_certificate.json": "5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099",
-    "certificates/shared_cell_square_certificate.json": "df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d"
+    "certificates/shared_square_continuation_certificate.json": "529f2cf3470505f0b37b2c36d6aca5333f93dffa841bb305c6d4f2d3e6b1235d",
+    "certificates/shared_cell_square_certificate.json": "26530cd48f6244cd8622efdaed09f5af77375b6e4152e122dec2ebf798d61925"
   },
   "abstract_source": {
     "law": {

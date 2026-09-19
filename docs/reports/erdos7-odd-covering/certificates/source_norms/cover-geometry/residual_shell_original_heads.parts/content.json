@@ -1,0 +1,20 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-residual-shell-original-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "f3aeb72a2959fa61428df100e5346752eaeeb3db4c1f0e54b4ad1cffda5f136e",
+    "kind": "value"
+  },
+  "shells": {
+    "path": "content/002-shells.json",
+    "sha256": "fe401cbfefb58522d20fe91bf2ddbfaafc604c92244e65eec279077e40d14eeb",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete finite integer head scans at the two fixed residual radii. Every original125000 head per objective and vertex, with four independent exact rational comparisons. These maxima are numerical certificates consumed by the continuous-source shell argument; no actual attainment or global claim."
+  }
+}

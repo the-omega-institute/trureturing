@@ -1,0 +1,370 @@
+{
+  "schema": "erdos7-pure-five-joint-moments-v1",
+  "source_sha256": {
+    "frontier/cover-geometry/full_family_five_cap_sharpness.py": "496c56e41467437a4da82282c05eca5f27dad0ced4c8c012507078e063339bde",
+    "certificates/source_norms/cover-geometry/full_family_five_cap_sharpness.json": "e02d99267f8e22953c4e52f3391a4e929f5814e30e371a2d991e02620b3e8fd5",
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "profile-notes/065-128/75-forced27-and-complete-pure3-deletion-on-the-k-faces.md": "bf21f845032d56fb86f86dfdecd5426e58eceac63a1c4e44d6fe0a16d7070f33",
+    "profile-notes/001-064/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md": "b4c9a60a2c4a13147177e747d24dfb16a29e42eb2278f5948f22d49c0001563e"
+  },
+  "slot_order": [
+    "P",
+    "A",
+    "B",
+    "Q",
+    "H"
+  ],
+  "first_caps": [
+    "0",
+    "2/75",
+    "14/225",
+    "7/150",
+    "7/150"
+  ],
+  "deep_density_caps": [
+    "0",
+    "2/15",
+    "14/45",
+    "2/5",
+    "7/30"
+  ],
+  "candidate_lines": [
+    {
+      "first": "P",
+      "deep": "P",
+      "intercept": "0",
+      "slope": "0"
+    },
+    {
+      "first": "P",
+      "deep": "A",
+      "intercept": "1/100",
+      "slope": "1/150"
+    },
+    {
+      "first": "P",
+      "deep": "B",
+      "intercept": "7/300",
+      "slope": "7/450"
+    },
+    {
+      "first": "P",
+      "deep": "Q",
+      "intercept": "3/100",
+      "slope": "1/50"
+    },
+    {
+      "first": "P",
+      "deep": "H",
+      "intercept": "7/400",
+      "slope": "7/600"
+    },
+    {
+      "first": "A",
+      "deep": "P",
+      "intercept": "2/75",
+      "slope": "2/75"
+    },
+    {
+      "first": "A",
+      "deep": "A",
+      "intercept": "1/20",
+      "slope": "1/30"
+    },
+    {
+      "first": "A",
+      "deep": "B",
+      "intercept": "1/20",
+      "slope": "19/450"
+    },
+    {
+      "first": "A",
+      "deep": "Q",
+      "intercept": "17/300",
+      "slope": "7/150"
+    },
+    {
+      "first": "A",
+      "deep": "H",
+      "intercept": "53/1200",
+      "slope": "23/600"
+    },
+    {
+      "first": "B",
+      "deep": "P",
+      "intercept": "14/225",
+      "slope": "14/225"
+    },
+    {
+      "first": "B",
+      "deep": "A",
+      "intercept": "13/180",
+      "slope": "31/450"
+    },
+    {
+      "first": "B",
+      "deep": "B",
+      "intercept": "7/60",
+      "slope": "7/90"
+    },
+    {
+      "first": "B",
+      "deep": "Q",
+      "intercept": "83/900",
+      "slope": "37/450"
+    },
+    {
+      "first": "B",
+      "deep": "H",
+      "intercept": "287/3600",
+      "slope": "133/1800"
+    },
+    {
+      "first": "Q",
+      "deep": "P",
+      "intercept": "7/150",
+      "slope": "7/150"
+    },
+    {
+      "first": "Q",
+      "deep": "A",
+      "intercept": "17/300",
+      "slope": "4/75"
+    },
+    {
+      "first": "Q",
+      "deep": "B",
+      "intercept": "7/100",
+      "slope": "14/225"
+    },
+    {
+      "first": "Q",
+      "deep": "Q",
+      "intercept": "7/60",
+      "slope": "1/15"
+    },
+    {
+      "first": "Q",
+      "deep": "H",
+      "intercept": "77/1200",
+      "slope": "7/120"
+    },
+    {
+      "first": "H",
+      "deep": "P",
+      "intercept": "7/150",
+      "slope": "7/150"
+    },
+    {
+      "first": "H",
+      "deep": "A",
+      "intercept": "17/300",
+      "slope": "4/75"
+    },
+    {
+      "first": "H",
+      "deep": "B",
+      "intercept": "7/100",
+      "slope": "14/225"
+    },
+    {
+      "first": "H",
+      "deep": "Q",
+      "intercept": "23/300",
+      "slope": "1/15"
+    },
+    {
+      "first": "H",
+      "deep": "H",
+      "intercept": "7/80",
+      "slope": "7/120"
+    }
+  ],
+  "envelope_switch": "11/2",
+  "sharp_lines": [
+    {
+      "intercept": "7/60",
+      "slope": "7/90"
+    },
+    {
+      "intercept": "83/900",
+      "slope": "37/450"
+    }
+  ],
+  "finite_allocation_checks": [
+    {
+      "lambda": "0",
+      "first": "P",
+      "finite_discounted_max": "58586/78125",
+      "infinite_discounted_max": "3/4",
+      "complete_upper": "3/100"
+    },
+    {
+      "lambda": "0",
+      "first": "A",
+      "finite_discounted_max": "58586/78125",
+      "infinite_discounted_max": "3/4",
+      "complete_upper": "17/300"
+    },
+    {
+      "lambda": "0",
+      "first": "B",
+      "finite_discounted_max": "21266/15625",
+      "infinite_discounted_max": "49/36",
+      "complete_upper": "7/60"
+    },
+    {
+      "lambda": "0",
+      "first": "Q",
+      "finite_discounted_max": "27342/15625",
+      "infinite_discounted_max": "7/4",
+      "complete_upper": "7/60"
+    },
+    {
+      "lambda": "0",
+      "first": "H",
+      "finite_discounted_max": "31899/31250",
+      "infinite_discounted_max": "49/48",
+      "complete_upper": "7/80"
+    },
+    {
+      "lambda": "2",
+      "first": "P",
+      "finite_discounted_max": "27342/15625",
+      "infinite_discounted_max": "7/4",
+      "complete_upper": "7/100"
+    },
+    {
+      "lambda": "2",
+      "first": "A",
+      "finite_discounted_max": "27342/15625",
+      "infinite_discounted_max": "7/4",
+      "complete_upper": "3/20"
+    },
+    {
+      "lambda": "2",
+      "first": "B",
+      "finite_discounted_max": "1503838/703125",
+      "infinite_discounted_max": "77/36",
+      "complete_upper": "49/180"
+    },
+    {
+      "lambda": "2",
+      "first": "Q",
+      "finite_discounted_max": "214834/78125",
+      "infinite_discounted_max": "11/4",
+      "complete_upper": "1/4"
+    },
+    {
+      "lambda": "2",
+      "first": "H",
+      "finite_discounted_max": "27342/15625",
+      "infinite_discounted_max": "7/4",
+      "complete_upper": "21/100"
+    },
+    {
+      "lambda": "11/2",
+      "first": "P",
+      "finite_discounted_max": "273427/78125",
+      "infinite_discounted_max": "7/2",
+      "complete_upper": "7/50"
+    },
+    {
+      "lambda": "11/2",
+      "first": "A",
+      "finite_discounted_max": "273427/78125",
+      "infinite_discounted_max": "7/2",
+      "complete_upper": "47/150"
+    },
+    {
+      "lambda": "11/2",
+      "first": "B",
+      "finite_discounted_max": "2460857/703125",
+      "infinite_discounted_max": "7/2",
+      "complete_upper": "49/90"
+    },
+    {
+      "lambda": "11/2",
+      "first": "Q",
+      "finite_discounted_max": "351551/78125",
+      "infinite_discounted_max": "9/2",
+      "complete_upper": "29/60"
+    },
+    {
+      "lambda": "11/2",
+      "first": "H",
+      "finite_discounted_max": "273427/78125",
+      "infinite_discounted_max": "7/2",
+      "complete_upper": "133/300"
+    },
+    {
+      "lambda": "10",
+      "first": "P",
+      "finite_discounted_max": "449206/78125",
+      "infinite_discounted_max": "23/4",
+      "complete_upper": "23/100"
+    },
+    {
+      "lambda": "10",
+      "first": "A",
+      "finite_discounted_max": "449206/78125",
+      "infinite_discounted_max": "23/4",
+      "complete_upper": "157/300"
+    },
+    {
+      "lambda": "10",
+      "first": "B",
+      "finite_discounted_max": "449206/78125",
+      "infinite_discounted_max": "23/4",
+      "complete_upper": "823/900"
+    },
+    {
+      "lambda": "10",
+      "first": "Q",
+      "finite_discounted_max": "105466/15625",
+      "infinite_discounted_max": "27/4",
+      "complete_upper": "47/60"
+    },
+    {
+      "lambda": "10",
+      "first": "H",
+      "finite_discounted_max": "449206/78125",
+      "infinite_discounted_max": "23/4",
+      "complete_upper": "223/300"
+    }
+  ],
+  "actual_CRT_witnesses": [
+    {
+      "geometry": "all_nested_B",
+      "height": 3,
+      "period": 1157625,
+      "histogram": [
+        100559,
+        51520,
+        10304,
+        2576
+      ],
+      "first_moment": "39928/482625",
+      "second_moment": "1288/10725"
+    },
+    {
+      "geometry": "first_B_nested_Q",
+      "height": 3,
+      "period": 1157625,
+      "histogram": [
+        84244,
+        77452,
+        3263,
+        0
+      ],
+      "first_moment": "41989/482625",
+      "second_moment": "1676/17875"
+    }
+  ],
+  "old_pure_five_square_with_unit_cross": "89/300",
+  "new_pure_five_square_with_unit_cross": "49/180",
+  "complete_square_saving": "11/450",
+  "full_face_square_upper": "2233/450",
+  "scope": "Ordinary all-depth theorem on both saturated actual K faces and their complete beta distributions. Sharp positive affine first/second-moment envelope of pure-five tests, with actual full-original-family limiting witnesses. The complete face-square substitution retains every other LCM category. No off-face or full52/global comparison, Lean theorem or unrestricted Erdos7 conclusion."
+}

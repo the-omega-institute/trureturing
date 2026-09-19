@@ -1,0 +1,128 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-actual-rows-zero-restoration-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+      "frontier/j-geometry/j_face_retained375_survival_heads.py": "4a873f67f2ea4040555873a2777dcb8780c35816e5168704eeca5ac8cce0748e",
+      "frontier/j-geometry/j_face_retained375_heavy_heads.py": "4809f39bbe050d670250d82b8937e0b175d97fa34128a388053169929d951f4e",
+      "frontier/comparison-bounds/second_depth_seven_comparison.py": "b49a13dde9aa26ce8b1a132c11f3a9bc125d995b9497567c7bff26eb2f4bb239",
+      "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json": "05b66ac3ab1773bcd1c6d5bdcc6a7d7bc2b0fcb9f44ffa87ee247cf477a17024",
+      "profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md": "cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1",
+      "profile-notes/065-128/116-signed-face-duals-transport-one-shared-finite-source.md": "35a43120d9f0e9f17799ad0432bb118e4a53e4b130f49b285fb99bee19dede17",
+      "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
+      "profile-notes/129-192/132-the-whole-j-face-has-a-quantitative-surplus-neighborhood.md": "c3910e2031037cfe8481f6d82130778148b5b138a92928ba577593513a44ff7b",
+      "profile-notes/129-192/136-a-whole-j-source-neighborhood-has-a-complete-labelwise-bound.md": "845d9a84f41391240f05f8c5be35cf074d6614abf1dfc493046e8619521f3945",
+      "profile-notes/193-256/219-one-late-source-split-controls-complete-saturated-j-heads.md": "d0f78950c8ca3040b2a90c5b5d470655cd53e68f39b54d531f793915490ff73d",
+      "profile-notes/193-256/220-the-assigned-source-losses-share-one-complete-j-error-budget.md": "e3390e9620f534b7ed2c6818123cb82372a34a8b74c3b439712fcb3e2c9f3a0f",
+      "profile-notes/193-256/227-the-actual-deletion-mask-rows-have-one-off-face-error-budget.md": "a1b273513205a14dc10dd35e338aa482bb525000467bff210131dc7bad4dfe03",
+      "profile-notes/193-256/244-three-complete-j-heads-share-raw-survivor-and-marked-deletion.md": "56f83856783c4e3c68ac919a6bed36a0d00e41f19d1d78f3d83b3cc950c66118",
+      "profile-notes/193-256/251-two-retained-original-tests-sharpen-the-complete-j-heads.md": "956114312252a12381562ce4b4dfd789108fe19c526411c4166b00e7b56243c2",
+      "profile-notes/193-256/256-a-second-seven-depth-sharpens-the-complete-retained-j-heads.md": "8b51d3dbd5328bfe55cad1909a7321deb9fe7f9f0be08230240ae4fede5d91be",
+      "profile-notes/257-320/264-seven-retained-states-and-two-seven-depths-control-complete-j-heads.md": "137e1d47e3b589ea20555456b3d959f0abd70d6ff1394bf3e371fcb177d6f14f",
+      "profile-notes/257-320/288-retaining375-strengthens-the-complete-j-survival-hinge.md": "acc7d5308c0d8e9bf513623b98e338ddc2cb5e4da4891602dc942b5db7e7701d",
+      "profile-notes/257-320/296-joint-positive175189-strengthens-the-complete-j-survival-hinge.md": "533c267b6d02ee50b30c5e40b6e399b8dea6c61debe7fcf00ae53db72dfd6148",
+      "profile-notes/257-320/298-retaining375-certifies-the-complete-heavy-cost.md": "eb9653780fb5eeeb47dce97e1e3a9de80c172e7b769c284b63e9b83690ff9cc6"
+    }
+  },
+  "model": {
+    "kind": "inline",
+    "value": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0",
+      "preserved_original_rows": 11211,
+      "preserved_original_equalities": 19,
+      "new_raw_intersection_variables": 3200,
+      "new_survivor_intersection_variables": 3200,
+      "independent_profile_coordinates": 10
+    }
+  },
+  "hypothesis": {
+    "kind": "inline",
+    "value": "x>=0; every original inequality residual and absolute equality residual <=r"
+  },
+  "zero_columns": {
+    "kind": "inline",
+    "value": 4634
+  },
+  "zero_rows": {
+    "kind": "inline",
+    "value": 2645
+  },
+  "column_bound_batches": {
+    "path": "content/006-column_bound_batches.json",
+    "sha256": "b5e4202b19a391188b141da8656c691efc5fe245290c5110f0111bff7bfe0d8f",
+    "kind": "array"
+  },
+  "maximum_column_bound": {
+    "kind": "inline",
+    "value": "17"
+  },
+  "sum_column_bounds": {
+    "kind": "inline",
+    "value": "56866/5"
+  },
+  "original_objective_coefficient_bound": {
+    "kind": "inline",
+    "value": "2821/4"
+  },
+  "uniform_restoration_price": {
+    "kind": "inline",
+    "value": "80209493/10"
+  },
+  "restoration_price": {
+    "kind": "inline",
+    "value": "1866086460287338944252337/3851791904442532050"
+  },
+  "objective_specification_caps": {
+    "path": "content/012-objective_specification_caps.json",
+    "sha256": "f37f84f7d813ee54c21f8aad380a90b86962b67f9eeaa5dd06ce4fd8050c9a31",
+    "kind": "value"
+  },
+  "row_residual_arithmetic": {
+    "path": "content/013-row_residual_arithmetic.json",
+    "sha256": "e73070a0b69d0f58f3e2ac7c53c6943ff9ab6abcd87246f8d16ea8417adb599f",
+    "kind": "value"
+  },
+  "covering_node_count": {
+    "kind": "inline",
+    "value": 1177
+  },
+  "covering_dual_count": {
+    "kind": "inline",
+    "value": 981
+  },
+  "maximum_covering_price": {
+    "kind": "inline",
+    "value": "375573528414630698967865160948169578054701/2913167994208453627395750000000000000"
+  },
+  "maximum_covering_key": {
+    "kind": "inline",
+    "value": "0e8313c9777c1d010ca235ea917bd284f10566f22a2019d92a733595372fe6a0"
+  },
+  "maximum_seed_price": {
+    "kind": "inline",
+    "value": "47304088126262314010962682197159391997481/485527999034742271232625000000000000"
+  },
+  "maximum_seed_key": {
+    "kind": "inline",
+    "value": "c5f4c59c920c56190a5515b83f6a5048a8b6b02153d738567a03dd70ef0bd28c"
+  },
+  "complete_covering_error_price": {
+    "kind": "inline",
+    "value": "1786922709626849452590071419103169578054701/2913167994208453627395750000000000000"
+  },
+  "row_error_100t_covering_price": {
+    "kind": "inline",
+    "value": "1786922709626849452590071419103169578054701/29131679942084536273957500000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Conditional error for all1177 existing covering nodes and50 seeds. Full original columns restored. The fixed face tail constant has not been transported. No full prefix/tail/basis transport or numerical J radius, no new LP, no Lean result."
+  }
+}

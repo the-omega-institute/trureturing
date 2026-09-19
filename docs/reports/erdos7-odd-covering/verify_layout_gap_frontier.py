@@ -10,9 +10,9 @@ import sys
 sys.dont_write_bytecode = True
 
 # Filled from complete logical predecessor inputs, including split certificates.
-IO_PIN = '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232'
-SOURCE_PINS = {'verify_joint_frontier.py': 'a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe', 'certificates/joint_frontier_certificate.json': 'be01369024cf8a3a43efdfa5e18334d8ba3d07c96f25801c9a919a364c55a583', 'certificates/fixed_cost_frontier_certificate.json': '4c6042eaaef211e4991e350ddc128f910316c467bc3dd1630b3c0468f270a133'}
-LOCAL_PINS = {'frontier/layout_gap.py': 'f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a', 'certificates/layout_gap_norms.json': 'a5ca5849e50702035e6812311d2191beb13498e2dc81b7dbb13eab27ffc2ebf5'}
+IO_PIN = '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2'
+SOURCE_PINS = {'verify_joint_frontier.py': '85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f', 'certificates/joint_frontier_certificate.json': 'a98b906b189ef80d4352f77583721dc7445c63fe48a5179df74cd966149e1e53', 'certificates/fixed_cost_frontier_certificate.json': '7906160593e1e08fead9606402509c5160ae1d1a04e415e34cec328e4d4903b9'}
+LOCAL_PINS = {'frontier/cover-geometry/layout_gap.py': 'f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a', 'certificates/layout_gap_norms.json': 'a5ca5849e50702035e6812311d2191beb13498e2dc81b7dbb13eab27ffc2ebf5'}
 
 
 def require(condition, message):
@@ -55,7 +55,7 @@ def main():
             'Current layout-gap component and fixed-norm source pins')
     source = module('layout_gap_source', src / 'verify_joint_frontier.py')
     source.source_pins(src)
-    math = module('layout_gap_math', base / 'frontier/layout_gap.py')
+    math = module('layout_gap_math', base / 'frontier/cover-geometry/layout_gap.py')
     consumer = json.loads(inputs['certificates/joint_frontier_certificate.json'], object_pairs_hook=unique)
     previous = json.loads(inputs['certificates/fixed_cost_frontier_certificate.json'], object_pairs_hook=unique)
     norms = json.loads((base / 'certificates/layout_gap_norms.json').read_text(), object_pairs_hook=unique)

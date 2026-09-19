@@ -1,0 +1,30 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-k-neighborhood-radius-study-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "b1a32ffd9e3e3aafc98ab75f26e947fc1a2346828c7fd0046d9b2f3c4029bc9c",
+    "kind": "value"
+  },
+  "global_mass_floor": {
+    "path": "content/002-global_mass_floor.json",
+    "sha256": "4d10d0318dedbfeb41d2f1e77aba962ea8b367d10aee78d798ebca3c55fc7f64",
+    "kind": "value"
+  },
+  "scalar_sensitivity": {
+    "path": "content/003-scalar_sensitivity.json",
+    "sha256": "704063cac401be7247d50830c0609cc1aa646f86d4a87e66396469b5883cec53",
+    "kind": "value"
+  },
+  "complete_radius": {
+    "path": "content/004-complete_radius.json",
+    "sha256": "b6c7b885b340f88451790ac97ce194a91db7ddbe9ce02844154f138eb91ab9fe",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary global lower bound for the complete actual carrier mass S0, plus exact cancellation of common source terms in142 and a source-uniform expanded K rectangle. All source factors,18 carriers,52 original costs and complete exponent/count tails retained. Actual packing is a subset of the source product relaxation; vertices need not be realizable. No joint-concavity assertion, new global K, Lean or unrestricted Erdos7 result."
+  }
+}

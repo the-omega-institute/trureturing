@@ -217,15 +217,15 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-      "certificates/joint_frontier_certificate.json": "be01369024cf8a3a43efdfa5e18334d8ba3d07c96f25801c9a919a364c55a583",
-      "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "certificates/joint_frontier_certificate.json": "a98b906b189ef80d4352f77583721dc7445c63fe48a5179df74cd966149e1e53",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
       "certificates/fixed_cost_norms.json": "dc4f440a5718bbf9c2ded831b6cb10c687e18df972270ab7b5f521430b225797",
-      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232"
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2"
     }
   },
   "verifier_sha256": {
     "kind": "inline",
-    "value": "123f13d71164008d682517d2ef45133a268c0b7fbc0c318f780a0ff2ea7755c2"
+    "value": "1faf4309b3313517e6ced06858f162b5eaf3a39ca8510a297ad42145ddfb7cc4"
   }
 }

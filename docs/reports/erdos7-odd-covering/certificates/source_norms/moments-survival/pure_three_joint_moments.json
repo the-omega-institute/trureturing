@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "ed70ad34510621ef839a4dc770c5fe0c7000f6995141d64f2e3e300bc4aa9e4b",
+  "parts_directory": "pure_three_joint_moments.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "d0ac5ba29b32308d934dca9eeb551e051e8915ceecfab1e1ab8239566c45330f",
+    "kind": "object"
+  }
+}

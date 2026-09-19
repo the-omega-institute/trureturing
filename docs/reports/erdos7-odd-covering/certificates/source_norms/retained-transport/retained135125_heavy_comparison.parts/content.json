@@ -1,0 +1,258 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-retained135125-heavy-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "4f3792442cecafeadc644072a9fdaaed5376a44f11c8d09f9ffc4e8b71279ba7",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "8201/1800"
+  },
+  "branch_lps": {
+    "path": "content/008-branch_lps.json",
+    "sha256": "15487ca31b91fc61c3cf337d38ff1b90c47815e0201dc2aa743f7fe4464c4bf8",
+    "kind": "object"
+  },
+  "encoded_rational_duals": {
+    "path": "content/009-encoded_rational_duals.json",
+    "sha256": "efd855ebfa4c75322a7aca36a52020beac6f5320453aa88d6cc6b89e3f9440c4",
+    "kind": "object"
+  },
+  "selected_policy": {
+    "path": "content/010-selected_policy.json",
+    "sha256": "90455b4dedf2fd3a070e66708dc500b0ad7a2ebd63fb5b2568396c144d4f3618",
+    "kind": "value"
+  },
+  "assigned135_surviving_cap": {
+    "kind": "inline",
+    "value": "1/135"
+  },
+  "assigned125_surviving_cap": {
+    "kind": "inline",
+    "value": "2/625"
+  },
+  "remaining_old_tail_t_ge2": {
+    "kind": "inline",
+    "value": "7579/405000"
+  },
+  "previous_prefix_duals_used": {
+    "kind": "inline",
+    "value": [
+      "3a32c7c4d8e6f1ce7d395c43cc1c10d7c4b7ee4b66439688024d837136e7efd1",
+      "43a1a7fac8cde32af953b7d3e27cb3c7363bfd0e694e1a4e26d84fbe383d25ea",
+      "4bb389fa763a77d0ffaabb9014ea0b0345f6f5adcf55e0727034902e79978a9c",
+      "625f193022a18c0e10c62a07da37b4ffb9d1bde7fb5969386ec20f64d0b16088",
+      "7e8ba2b17c3968312f73db67810891a1c07a3b2a7b20369f7ef0b4407b349fa9",
+      "95683ebdc7a97d7b5c5b7db493b38b8c60f83a177615748ace739c980da5a193",
+      "aed8aa5f2ccbfbd626d7d705929b7f6b62f76e0d6e449f5d6b8aa134ca6544ba",
+      "b047893af87fa614c2580ab5211e94deae33e983a6caf86a5024e5aa32ea405c",
+      "b308d8df7c598f79334f61c6e4599fa5784e972c2431c97a5b2bb3ace4b3bbcc",
+      "ef940688fb7caf81932bc9493ba0d62e706801e13ac1e595461d6b3e36867412",
+      "f357ec1b9318ea9892c635a2820a20cd1527fc6d5a5566d1709ab38aca3d8812",
+      "f37d7b39c54f57d59965ed512382493d441d6681abb4e65161ebc3083e4694a1"
+    ]
+  },
+  "heavy_results": {
+    "path": "content/015-heavy_results.json",
+    "sha256": "cc1e665c3c450276007158f7605bb74820178c62cf60fff795927b5d3dc2d809",
+    "kind": "value"
+  },
+  "all_original_indices": {
+    "path": "content/016-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/017-original_cost_tags.json",
+    "sha256": "b3ec81441579b24fdc6cb17f75e4be4bf675104c062a5844a0d0b6b69ad077c9",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/018-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/019-previous_cost_bounds.json",
+    "sha256": "f0060cd574cf5eb7c3a95760f53d5129bacca8bbeb55bcd17b2f63508a185d1c",
+    "kind": "value"
+  },
+  "direct_cost_bounds": {
+    "path": "content/020-direct_cost_bounds.json",
+    "sha256": "25e80c882c5b5091a602776b9f836d2c7201904d127e3213f0df82e89e2e175f",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/021-improved_cost_bounds.json",
+    "sha256": "25e80c882c5b5091a602776b9f836d2c7201904d127e3213f0df82e89e2e175f",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/022-majorants.json",
+    "sha256": "52ec98ce16af64bd06abb1ceec776772322b9fdd6ca7e40f1e6a3e023370c663",
+    "kind": "array"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      0,
+      16
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "previous_numerator_upper": {
+    "kind": "inline",
+    "value": "1846341551821162022223663441545954411989329203/56216212644942919597964203768500000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "1836301120269463608077386122701475200034013223/56216212644942919597964203768500000000000000"
+  },
+  "numerator_improvement": {
+    "kind": "inline",
+    "value": "249478615873075858273347209226515653/1396826704915335457238475000000000000"
+  },
+  "AP11_block_results": {
+    "path": "content/029-AP11_block_results.json",
+    "sha256": "761fb9d59687fe921a44016f7463642439cd4d9a7378d3a4c469539ba4f2daec",
+    "kind": "value"
+  },
+  "AP13_result": {
+    "path": "content/030-AP13_result.json",
+    "sha256": "8676799bc6dab1c6c930bdc43a4c069af1569311cc25e37e541842bf8b450f41",
+    "kind": "value"
+  },
+  "count_probabilities": {
+    "kind": "inline",
+    "value": {
+      "1": "28/33",
+      "2": "50/363",
+      "3": "50/3993",
+      "4": "50/43923"
+    }
+  },
+  "all_load_identities": {
+    "kind": "inline",
+    "value": {
+      "1": {
+        "5": "1"
+      },
+      "2": {
+        "2": "1",
+        "3": "1"
+      },
+      "3": {
+        "1": "1",
+        "2": "2"
+      },
+      "4": {
+        "1": "3",
+        "2": "1"
+      }
+    }
+  },
+  "uniform_raw_square9_upper": {
+    "kind": "inline",
+    "value": "17859883/4630500"
+  },
+  "second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "2303/2700"
+  },
+  "uniform_hinge4_upper": {
+    "kind": "inline",
+    "value": "63562525007112781/347287500000000000"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "63562525007112781/2083725000000000000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "146547090151856332806443/1708437792600000000000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "306645313836100089109961927191524063787886993167631/758117209355329672087641395540731792073789603280"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "305066797349268271231540792232070420001120036055951/758117209355329672087641395540731792073789603280"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "17962460342861461795680999064309127016/8626866061828338870288297128086323811"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both complete actual saturated K faces. The independent original135 and125 tests are retained on three disjoint marked raw/survivor states and their complement. Both nested and disjoint27/81 branches remain. Every62,500,000 original head/seven-projection choice is evaluated or has a complete certified alternative for each heavy cost. All3705 rational dual columns, all52 independent original costs, signed actual mass, the complete square, independent224 survival tests and every infinite tail remain. No common optimizer across costs, actual-family attainment, off-face/global extension, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

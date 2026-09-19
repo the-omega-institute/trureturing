@@ -19,7 +19,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -581,11 +581,11 @@ W5 = ((5, F(1)),)
 
 
 COMMIT = "343e9dcbdd69550d23c465807064738bbcf31a6f"
-ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': '44c89672e97868325e7c7d6bb409a0facc1d158263f379253b4096fbead4fe38', 'verify_shared_cell_square.py': '0a58af421ba54c427b6414caae32880f8b42625d6a43231aea97f69e899c407d', 'verify_joint_source_normalization.py': 'b369bc6e157183fa2145fabdf4bf03274cfb8fa2a1a5ba782d8e6a48bd757d8a', 'certificates/pure_root_profile_certificate.json': 'b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196', 'certificates/shared_cell_hinges_certificate.json': '585fd5cc59e7c121e64141aec6717ead06b3d5dfd00e2a40a2278e796f7f8845', 'certificates/shared_cell_square_certificate.json': 'df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d', 'certificates/shared_square_continuation_certificate.json': '5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099', 'certificates/joint_source_normalization_certificate.json': '6d20b947850c8ae3cc08faf72021a71347e16dc6a855907009422257f41c39dd'}
+ORIGINAL_SOURCE_PINS = {'verify_shared_cell_hinges.py': '0b65c89b753b3619514c8ad96bfce8243cb8546489b37ac5054e28a5e836287d', 'verify_shared_cell_square.py': '72ea37e4b35cbf0d4b2ec508a6a39b30c45f9068f693f7a30fcd35cbdb89aefb', 'verify_joint_source_normalization.py': 'be493de384937eff27d63232086be53b84365eff1e8566102854213218be0bae', 'certificates/pure_root_profile_certificate.json': 'abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753', 'certificates/shared_cell_hinges_certificate.json': '8289e1dc3ceabffeeee03d04ce93ed2bbea62b415dd9b245c7fd7855a681a8b3', 'certificates/shared_cell_square_certificate.json': '26530cd48f6244cd8622efdaed09f5af77375b6e4152e122dec2ebf798d61925', 'certificates/shared_square_continuation_certificate.json': '529f2cf3470505f0b37b2c36d6aca5333f93dffa841bb305c6d4f2d3e6b1235d', 'certificates/joint_source_normalization_certificate.json': '6bd9e3bb93ed18206507a596e21d60ab1aace0387120d30ae59bdd3fe9c96c8f'}
 SOURCE_PINS = {
     **ORIGINAL_SOURCE_PINS,
-    'verify_uniform_gamma_cofactor_coupling.py': '4e3fe85cbd6b2b28137676a72bb593aa48640ef74bf3d1c789435df5846ea3e3',
-    'certificates/uniform_gamma_cofactor_certificate.json': 'bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c',
+    'verify_uniform_gamma_cofactor_coupling.py': '7c4049bfc59f10d4fb49557164362571a54d96a64038fa590db25c63b5ad8b1a',
+    'certificates/uniform_gamma_cofactor_certificate.json': '90814b5b2435d0f8ae48e29fe0427c43d15ff93fb8d2116589906e0fb54e7f59',
 }
 TARGET=F(405160558934792762657900543938490087303057,903040178702837237170365507410765404800)
 TARGET_GAMMA=F(74165888355209854559,475902450448556274)

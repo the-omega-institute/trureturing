@@ -1,0 +1,259 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-retained135125-survival-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "e6e4eb73ba8f79417e389504170a57006ca426dee5b5067c0d85fd9865778e8e",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "8201/1800"
+  },
+  "branch_lps": {
+    "path": "content/008-branch_lps.json",
+    "sha256": "15487ca31b91fc61c3cf337d38ff1b90c47815e0201dc2aa743f7fe4464c4bf8",
+    "kind": "object"
+  },
+  "rational_duals": {
+    "path": "content/009-rational_duals.json",
+    "sha256": "95b9f6c81de8b6d252fb2b218f2af24b00da341b0838eebb3203cbc83ced7e80",
+    "kind": "object"
+  },
+  "selected_policy": {
+    "path": "content/010-selected_policy.json",
+    "sha256": "90455b4dedf2fd3a070e66708dc500b0ad7a2ebd63fb5b2568396c144d4f3618",
+    "kind": "value"
+  },
+  "newly_scanned_survival_tests": {
+    "kind": "inline",
+    "value": [
+      "AP13",
+      "AP11-block0"
+    ]
+  },
+  "inherited_AP11_blocks": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      3
+    ]
+  },
+  "count_probabilities": {
+    "kind": "inline",
+    "value": {
+      "1": "28/33",
+      "2": "50/363",
+      "3": "50/3993",
+      "4": "50/43923"
+    }
+  },
+  "all_load_identities": {
+    "kind": "inline",
+    "value": {
+      "1": {
+        "5": "1"
+      },
+      "2": {
+        "2": "1",
+        "3": "1"
+      },
+      "3": {
+        "1": "1",
+        "2": "2"
+      },
+      "4": {
+        "1": "3",
+        "2": "1"
+      }
+    }
+  },
+  "AP11_block_results": {
+    "path": "content/015-AP11_block_results.json",
+    "sha256": "9d1e249b031914fbccb162668190ecee5268c4cea3a7739d8051a26d7ca61348",
+    "kind": "value"
+  },
+  "AP13_result": {
+    "path": "content/016-AP13_result.json",
+    "sha256": "7f96210e74b8f3857d3931d3c5b30eb337bedf725ab1d895c05d41f9ea12cb7f",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "1261295471736052561/41674500000000000000"
+  },
+  "uniform_hinge4_upper": {
+    "kind": "inline",
+    "value": "1261295471736052561/6945750000000000000"
+  },
+  "uniform_raw_square9_upper": {
+    "kind": "inline",
+    "value": "17859883/4630500"
+  },
+  "second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "2303/2700"
+  },
+  "previous_denominator_lower": {
+    "kind": "inline",
+    "value": "146547090151856332806443/1708437792600000000000000"
+  },
+  "uniform_denominator_gain": {
+    "kind": "inline",
+    "value": "70512711358645860859/152539088625000000000000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "81853795843929536915591/949132107000000000000000"
+  },
+  "integer_identity_feedback": {
+    "path": "content/025-integer_identity_feedback.json",
+    "sha256": "35106e32de6e18cb04039412c610b96e5262ac9210548853aabd81042b3c84d2",
+    "kind": "value"
+  },
+  "all_original_indices": {
+    "path": "content/026-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/027-original_cost_tags.json",
+    "sha256": "37193fd9e16e748a4306185460e3893c0753a8fe93537c11eaa78aae3c49beb5",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/028-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/029-previous_cost_bounds.json",
+    "sha256": "25e80c882c5b5091a602776b9f836d2c7201904d127e3213f0df82e89e2e175f",
+    "kind": "value"
+  },
+  "direct_cost_bounds": {
+    "path": "content/030-direct_cost_bounds.json",
+    "sha256": "2f22cd73fc024257bb7e0dc7922144e5c7cae700abdba6e14d8e9cabeffdeb39",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/031-improved_cost_bounds.json",
+    "sha256": "2f22cd73fc024257bb7e0dc7922144e5c7cae700abdba6e14d8e9cabeffdeb39",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/032-majorants.json",
+    "sha256": "656334fc6431972d1f3f53ea2c3b0d8e521a02247af8d9df2f3e322223cbbf2b",
+    "kind": "array"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "previous_numerator_upper": {
+    "kind": "inline",
+    "value": "1836301120269463608077386122701475200034013223/56216212644942919597964203768500000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "73434455197278081200470750848458681382270438899/2248648505797716783918568150740000000000000000"
+  },
+  "numerator_improvement": {
+    "kind": "inline",
+    "value": "1864666415737488778231/238378140000000000000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "305066797349268271231540792232070420001120036055951/758117209355329672087641395540731792073789603280"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "1525429429089836694161505919795127725092279951226687/3811013517527643475906837007488553854129829700240"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "8655128345881409648853744859331038281355096967885180009198064696977/4059877159162765570928170855181906639461026881076845158974209623380"
+  },
+  "previous_prefix_duals_used": {
+    "kind": "inline",
+    "value": []
+  },
+  "joint_dual_uses": {
+    "kind": "inline",
+    "value": 1398
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Two independent complete survival tests, AP13 and AP11 block0, use225 common raw-source, actual-survivor and joint135/125 LP, each over62,500,000 original containing choices and both27/81 branches. AP11 blocks1,2,3 retain218 bounds without new scans. All3705 dual columns, the full count tail, all52 independent original costs, negative actual mass and the complete square remain. The uniform h4 bound feeds202 exact identities separately for each original cost. No shared optimizer, positive load-two mass, actual-family attainment, off-face/global extension, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

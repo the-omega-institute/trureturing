@@ -1,0 +1,91 @@
+{
+  "schema": "erdos7-endpoint-square-numerator-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json": "bb4b8b9246e84d93953591841f1c4f0c26024c6ab5a32358f3ffd77871bf3cfb"
+  },
+  "cost": "f(v)=v^2",
+  "barrier": "45",
+  "surviving_mass": "3/20",
+  "complete_pair_sums": {
+    "raw35_categories": {
+      "unit": "1/4",
+      "3": "3/8",
+      "9": "5/12",
+      "deep3": "1/3",
+      "pure5": "7/16",
+      "3_times5": "7/8",
+      "9_times5": "35/72",
+      "deep35": "7/18"
+    },
+    "raw35_pair_cap_sum": "57/16",
+    "surviving_cap_losses": {
+      "unit_mass": "1/10",
+      "3": "1/10",
+      "9": "7/36",
+      "5": "2/15",
+      "15": "6/25",
+      "deep3": "4/45",
+      "deep5": "11/720"
+    },
+    "total_loss": "3139/3600",
+    "zero7_square_upper": "4843/1800",
+    "positive7_pair_factor": "2/3",
+    "positive7_square_upper": "19/8",
+    "full_square_upper": "4559/900",
+    "finite_box_and_complete_tail": [
+      {
+        "cut": 3,
+        "finite_box_sum": "5968439/1323000",
+        "complete_tail": "733291/1323000"
+      },
+      {
+        "cut": 5,
+        "finite_box_sum": "33954899207/6806835000",
+        "complete_tail": "525501643/6806835000"
+      },
+      {
+        "cut": 9,
+        "finite_box_sum": "314245859060581742461/62053128639140625000",
+        "complete_tail": "87711457020601289/62053128639140625000"
+      }
+    ]
+  },
+  "absolute_square_margin": "379/225",
+  "old_square_margin": "5701/3888",
+  "absolute_margin_improvement": "21203/97200",
+  "finite_actual_pair_checks": {
+    "source_height": 2,
+    "period": 11025,
+    "source_labels": 26,
+    "test_labels": 27,
+    "ordered_pairs": 729,
+    "normalized_survivor_mass": "2023/9225",
+    "cases": [
+      {
+        "mode": "nested",
+        "actual_square_integral": "32573/9225",
+        "ordered_pair_integral": "32573/9225",
+        "compatible_pair_upper": "37913/9225",
+        "all_pair_upper": "37913/9225",
+        "incompatible_ordered_pairs": 0
+      },
+      {
+        "mode": "independent",
+        "actual_square_integral": "8362/9225",
+        "ordered_pair_integral": "8362/9225",
+        "compatible_pair_upper": "7537/3075",
+        "all_pair_upper": "37913/9225",
+        "incompatible_ordered_pairs": 516
+      }
+    ]
+  },
+  "scope": "Uniform ordinary theorem over all independently labelled original357 tests at the specified source/mass/carrier endpoint, and limiting finite families. The full square is rebuilt from actual-cylinder caps. No quantitative neighborhood, global K replacement, or Lean verification is claimed."
+}

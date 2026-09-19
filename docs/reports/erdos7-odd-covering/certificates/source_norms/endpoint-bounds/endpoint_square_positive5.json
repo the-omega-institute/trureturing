@@ -1,0 +1,92 @@
+{
+  "schema": "erdos7-endpoint-square-positive5-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "frontier/endpoint-bounds/endpoint_square_common_pure3.py": "b8cd504c29389cbd4cee15fb9403361de3d93cc57d47f1c5016705b2a78b3ff6",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json": "ac4fb2033f0b3d96fd358a369ddb0c87ab4c18a3ea72af1e0d277285a4e5dc2b",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be",
+    "frontier/endpoint-bounds/endpoint_square_numerator.py": "5973de37d2d74e2ddb7783baa514709e236f9a894000ca79ec8d66db79174235",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json": "a3cb0072765f1e10ce4642f1d46b1bd49ab71de339941a4065938ab59e7fcbea",
+    "frontier/endpoint-bounds/endpoint_square_coherent_head.py": "49a216c2e61faddb88a914fb4d8338cdc5df05fbaa50435cff7be5c32f30e5de",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json": "3108dafb33924ea416b59fb7c493531f2d35c3d69304c6e37398ddd8af70ecd6"
+  },
+  "surviving_mass": "3/20",
+  "barrier": 45,
+  "descendant5_cell_caps": [
+    [
+      "0",
+      "2/45",
+      "2/45",
+      "2/45",
+      "1/30"
+    ],
+    [
+      "0",
+      "1/15",
+      "1/15",
+      "1/15",
+      "2/45"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "1/9",
+      "1/15"
+    ],
+    [
+      "0",
+      "0",
+      "1/18",
+      "1/9",
+      "1/15"
+    ],
+    [
+      "0",
+      "0",
+      "1/9",
+      "1/9",
+      "1/15"
+    ]
+  ],
+  "tail_mass": "1/20",
+  "tail_self_pair_weight": "3/40",
+  "old_added_pair_budgets": [
+    "13/60",
+    "67/360"
+  ],
+  "new_added_pair_constants": [
+    "7/180",
+    "11/360"
+  ],
+  "coherent_zero_prefix_maximum": "6856267/3936600",
+  "raw_expanded_head_upper": "212153/87480",
+  "unreplaced_pair_remainder": "109/90",
+  "common_layout_threshold": "138187/52488",
+  "layout_checks": 12500,
+  "minimum_quadratic_slack": "495114037/9685512225",
+  "minimum_slack_layouts": [
+    [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  ],
+  "all_inherited_primal_dual_sha256": "21a62dff80f144730a3fc161fd9c52be5ca1947406717ad5f54f9e60a4f55e1d",
+  "all_inherited_pure3_tails_sha256": "45a01d73999f58035c08e5e8cf0e499b9f36c6704c105987cbfed66a4759b6ca",
+  "all_positive5_prefix_bounds_sha256": "ee15bcd70eebc33051e7bc65577a13f728c6b75b72d6e59c5bdd5eadfe17fd15",
+  "all_common_layout_checks_sha256": "1f025c5714e51ee1b2229fee789298b59200110825cae37e5c653fb2f88cf0c6",
+  "full_square_upper": "114/25",
+  "absolute_square_margin": "219/100",
+  "improvement_over64": "13/100",
+  "scope": "Uniform actual endpoint square bound; arbitrary independently labelled tests and complete exponent tails. No global K, denominator or Lean claim."
+}

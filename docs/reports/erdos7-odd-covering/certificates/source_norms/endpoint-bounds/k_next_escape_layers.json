@@ -1,0 +1,769 @@
+{
+  "schema": "erdos7-k-next-escape-layers-v1",
+  "source_sha256": {
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/source-budgets/global_control_faces.py": "1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "certificates/source_norms/endpoint-bounds/k_signed_gap_dictionary.json": "425876003311557cec40e46a1155c2e6474144357e20e88ba07523014ceb73ae",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023",
+    "certificates/layout_gap_frontier_certificate.json": "cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898",
+    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785",
+    "frontier/cover-geometry/verify_ap_schedule.py": "8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "3f30d24b9d66c6c24a3ee8361b0fb2c5fe6e86ebe4f4b9332fd0b5602954a30e",
+    "frontier/retained-transport/verify_retained_five_tests.py": "538de506f0d4b9628654b2a64f3771259ae7a56bead7ac4e88a743ba4a81c90a",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "6a58a6155bb2f860fda843848d54397f0e4ece26cab40f8f1676a857631e8fec",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "063509eb7bf8279e90a95d23184ecf474396ead47866961cc4c3568778db342f",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "3bbc1f2d50a48132410cfeef44a1461f2633a2e4facbe7e9080aced11ce64e4f",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "317a9abfb90b644125766d89af6589a36e4c6cfd5a748da3e015ece898c5ce7f",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "484ee018b5f7fee564317a37975fabb5d5ae7e8046fce0c88714209af67145c0",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "6159205f227d913376f35c223a0be07d5b7fc0a79732bac04f68564ff95bca16",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "51f51e59123004239e7315b2d94e36a482da5334df1f49639d039a7be31f4fc3",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "c5170c0e3597ef83b0fb242be1e3c81ca0f93549d6d5bfb348be843c96c5c1a8",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "a534b9cc2e8dea91cac97dfecf01620cb573608dfeb453ef172911ab7647cb63",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "cbf73fe570b1ef250800ce9e6a569f2bf7c53aa79dd6fefaaa86ec279d11f077",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4063b63f8bdf0dc3cfcc90679d7ff3d2c325f03bfb36be99760570d1a714f6fd",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "5fdbde7ef2ec7feccddd68bba985f0c407cdc2da30feba725e68b7065ffd8f27",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f72e2ca85a548ddc620a54ef591ebcad14dda309925f80a5c34ffd171711a6e1",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5"
+  },
+  "complete_original_endpoint_table_sha256": "a48d8c8f2f9e6619024b3b4b5bf61a72687299aedbc39bda8b3a6d5ad4b84cab",
+  "signed_endpoint_checks": 46656,
+  "lower_endpoint_controls": 23328,
+  "carriers": [
+    [
+      -1,
+      -1
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      -1,
+      3
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ]
+  ],
+  "signed_mass_coefficient": "14005839092163790978433304199852525334431910915059219/258053321422020518900769276553892599223596620000000",
+  "minimum_upper_minus_lower_gap": "14005839092163790978433304199852525334431910915059219/4644959785596369340213846977970066786024739160000000",
+  "first_positive_gap": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000",
+  "K_zero_count": 6,
+  "J_zero_count": 18,
+  "union_count": 24,
+  "union_maximal_cartesian_boxes": [
+    [
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        1
+      ],
+      [
+        0
+      ],
+      [
+        14
+      ]
+    ],
+    [
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        0
+      ],
+      [
+        8
+      ]
+    ],
+    [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        2
+      ],
+      [
+        0
+      ],
+      [
+        13
+      ]
+    ],
+    [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        0
+      ],
+      [
+        7
+      ]
+    ]
+  ],
+  "union_source_face_dimensions": [
+    2,
+    4,
+    2,
+    4
+  ],
+  "gap_outside_JK_union": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+  "upper_endpoint_minimum_outside_JK_union": "10404469215266192550589870824517068547271248397812561/1689076285671407032805035264716387922190814240000000",
+  "next_layer_controls": [
+    {
+      "index": 386,
+      "factors": [
+        1,
+        2,
+        2,
+        1,
+        0
+      ],
+      "carrier": [
+        1,
+        1
+      ],
+      "carrier_index": 14,
+      "endpoint": "D_c",
+      "gap": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 592,
+      "factors": [
+        2,
+        2,
+        1,
+        2,
+        0
+      ],
+      "carrier": [
+        1,
+        0
+      ],
+      "carrier_index": 13,
+      "endpoint": "D_c",
+      "gap": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "0",
+          "1/2",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "1/4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/72",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    }
+  ],
+  "next_gap_ratio_to_original": "566349690037529602520027672472697408028699769627880/45720169486722095806096369066460577217824493038393",
+  "extended_union_count": 26,
+  "extended_maximal_cartesian_boxes": [
+    [
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1
+      ],
+      [
+        0
+      ],
+      [
+        14
+      ]
+    ],
+    [
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        0
+      ],
+      [
+        8
+      ]
+    ],
+    [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2
+      ],
+      [
+        0
+      ],
+      [
+        13
+      ]
+    ],
+    [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        0
+      ],
+      [
+        7
+      ]
+    ]
+  ],
+  "extended_source_face_dimensions": [
+    3,
+    4,
+    3,
+    4
+  ],
+  "gap_outside_extended_union": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+  "upper_endpoint_minimum_outside_extended_union": "2966280230629713792057382129493236310613313010555834141/464495978559636934021384697797006678602473916000000000",
+  "following_layer_controls": [
+    {
+      "index": 386,
+      "factors": [
+        1,
+        2,
+        2,
+        1,
+        0
+      ],
+      "carrier": [
+        1,
+        2
+      ],
+      "carrier_index": 15,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 386,
+      "factors": [
+        1,
+        2,
+        2,
+        1,
+        0
+      ],
+      "carrier": [
+        1,
+        3
+      ],
+      "carrier_index": 16,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 386,
+      "factors": [
+        1,
+        2,
+        2,
+        1,
+        0
+      ],
+      "carrier": [
+        1,
+        4
+      ],
+      "carrier_index": 17,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "1/2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "0",
+          "1/4",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/72",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 592,
+      "factors": [
+        2,
+        2,
+        1,
+        2,
+        0
+      ],
+      "carrier": [
+        1,
+        2
+      ],
+      "carrier_index": 15,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "0",
+          "1/2",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "1/4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/72",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 592,
+      "factors": [
+        2,
+        2,
+        1,
+        2,
+        0
+      ],
+      "carrier": [
+        1,
+        3
+      ],
+      "carrier_index": 16,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "0",
+          "1/2",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "1/4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/72",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    },
+    {
+      "index": 592,
+      "factors": [
+        2,
+        2,
+        1,
+        2,
+        0
+      ],
+      "carrier": [
+        1,
+        4
+      ],
+      "carrier_index": 17,
+      "endpoint": "D_c",
+      "gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "D_c": "53/360",
+      "raw_mass": "1/4",
+      "source_vertex": [
+        [
+          "0",
+          "1/2",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "1/4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/72",
+          "0",
+          "0",
+          "0"
+        ],
+        "3/4"
+      ]
+    }
+  ],
+  "union_mass_polynomial": "a2*z0*b345*(d1*(l1*pi11+l345*pi01)+d2*(l2*pi10+l345*pi00))",
+  "extra_mass_polynomial": "a2*z0*(d1*b2*l1*pi11+d2*b1*l2*pi10)",
+  "first_layered_bound": "B_K >= gamma1*q(Z_J)+gamma2*(1-q(Z_K)-q(Z_J))",
+  "second_layered_bound": "B_K >= gamma1*q(Z_J)+gamma2*q(A)+gamma3*(1-q(Z_K)-q(Z_J)-q(A))",
+  "independent_separating_events": {
+    "K_late_indices": [
+      1,
+      2
+    ],
+    "K_carrier_indices": [
+      13,
+      14
+    ],
+    "J_late_indices": [
+      3,
+      4,
+      5
+    ],
+    "J_carrier_indices": [
+      7,
+      8
+    ]
+  },
+  "product_mass_constraints": [
+    "qK <= LK*PK",
+    "qJ <= (1-LK)*(1-PK)",
+    "sqrt(qK)+sqrt(qJ) <= 1",
+    "qJ <= (1-qK)^2"
+  ],
+  "escape_polynomial_in_sigma": {
+    "constant": "0",
+    "linear": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+    "quadratic": "-4375037987821911821125473137867536393368699803273/8183076626669431390542865912601636252532000000000"
+  },
+  "joint_denominator_bound": {
+    "constant": "1/4",
+    "sigma_coefficient": "11/36"
+  },
+  "paired_target_change_bound": "Phi_new >= -h/4+(gamma2-11*h/36)*sigma-(gamma2-gamma1)*sigma^2 + other_valid_reserve",
+  "paired_bound_hypothesis": "Retain E<=1/4+11*sigma/36 with the same product weights and sigma=1-qK; do not count old escape twice.",
+  "scope": "Exact further escape classification of the already certified profile71 K table, including all full/partial/empty carriers and both mass endpoints. Maximal product regions and layered product-mass inequalities are ordinary consequences of the same old separately concave source functions. No new actual-face cost improvement, source realizability, global K target, Lean verification or unrestricted Erdos7 resolution."
+}

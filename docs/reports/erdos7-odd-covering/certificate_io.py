@@ -226,3 +226,15 @@ def write_certificate_text(path, text, encoding='utf-8', errors=None):
                 os.replace(previous_parts, directory)
             raise
     return len(text)
+
+
+def named_artifact(directory, name):
+    """Locate one explicitly named artifact among the directory's topic groups."""
+    directory, name = Path(directory), str(name)
+    if not name or Path(name).name != name or name in ('.', '..'):
+        raise ValueError('artifact name must be a single filename')
+    matches = [group / name for group in directory.iterdir()
+               if group.is_dir() and (group / name).is_file()]
+    if len(matches) != 1:
+        raise ValueError('expected one topic owner for artifact: ' + name)
+    return matches[0]

@@ -1,0 +1,198 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-expanded-seven-pair-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "320910be09be893d731e09ed0f149baf8a96344c6a14491732bc001aed6c1030",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "8201/1800"
+  },
+  "added_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      63,
+      105
+    ]
+  },
+  "removed_assigned_tail_caps": {
+    "kind": "inline",
+    "value": [
+      "1/70",
+      "2/175"
+    ]
+  },
+  "remaining_positive7_tail": {
+    "kind": "inline",
+    "value": "13/360"
+  },
+  "selected_labels": {
+    "kind": "inline",
+    "value": [
+      25,
+      27,
+      75,
+      81
+    ]
+  },
+  "mixed_intersection_caps": {
+    "kind": "inline",
+    "value": {
+      "27_with25_or75": "1/675",
+      "81_with25_or75": "1/2025"
+    }
+  },
+  "heavy_results": {
+    "path": "content/013-heavy_results.json",
+    "sha256": "9df6ff6d2c2f59a82386aaaff261fc5624fca525c1f9768d84d14e28296975dd",
+    "kind": "value"
+  },
+  "all_original_indices": {
+    "path": "content/014-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/015-original_cost_tags.json",
+    "sha256": "b25e601ddbc6ce6127aa4ee5ba5302f61cc704b4861603a2b237dd4baa2da93b",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/016-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/017-previous_cost_bounds.json",
+    "sha256": "40b638c676c083101353bc44e73dd698d07c5f342f5afb29bf9dd8e3db743aa6",
+    "kind": "value"
+  },
+  "direct_cost_bounds": {
+    "path": "content/018-direct_cost_bounds.json",
+    "sha256": "4c230186321be8a1f010c8596fb5538b460dca627ef1b4d655f26f9c130a9aa3",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/019-improved_cost_bounds.json",
+    "sha256": "4c230186321be8a1f010c8596fb5538b460dca627ef1b4d655f26f9c130a9aa3",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/020-majorants.json",
+    "sha256": "b95a2d4b9b4e3d216b4198e26b296ce43ab899d0d7d3f087f9b3ca41f09666a3",
+    "kind": "array"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      0,
+      16
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "58208782178833766309755046494777041501067851251029/1686486379348287587938926113055000000000000000000"
+  },
+  "numerator_improvement": {
+    "kind": "inline",
+    "value": "24371839809732202720609289602472299/486486455581236804213151763381250000"
+  },
+  "AP11_block_results": {
+    "path": "content/026-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "902033522738934218547984261300578265995197609588916431/1984289303770415314553198889862083292500000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "300262746236495996567844728508827341127777603196305477/661429767923471771517732963287361097500000000000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "24371839809732202720609289602472299/38835141143794628743075648786228125"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete heavy-cost and52-cost comparison on both saturated actual K faces. Retains63/105 in one arbitrary-residue seven bridge and bounds selected old-label increments through actual mixed intersections. Every source branch and infinite exponent tail remains covered; branch pruning uses a separate valid upper. No actual-family attainment, off-face/global extension, Lean or unrestricted Erdos7 resolution."
+  }
+}

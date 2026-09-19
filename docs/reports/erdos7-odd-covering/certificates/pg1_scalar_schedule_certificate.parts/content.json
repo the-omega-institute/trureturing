@@ -6,21 +6,21 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "exact_signed_digit_dp.py": "29d364453963581d97face3b65bef8365e7a9ac58788814534f687ecce3c4307",
+      "exact_signed_digit_dp.py": "dea5039b7fc95024f1c8ad62ac3e8ee84e7cdb87fd56b3ca38ddb391b58a5dd9",
       "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
       "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
       "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d",
       "certificates/pg1_common_source_floor_certificate.json": "85ad4a1c8cf5ed09ba750906a62648a7bff01a02ed7a2e45f0bb964d32412b2a",
-      "certificates/pg1_exact_depth100_certificate.json": "f4a19cb3c3561f22cc8f42cd1c8e057f6f52ce39b04915ad2bf0670a887e4437",
+      "certificates/pg1_exact_depth100_certificate.json": "b811f8eb1895e55e2c02d962a30f4242adcc4bfc5e2d80a3f89041a54fde5e10",
       "certificates/pg1_exact_zero_depth_certificate.json": "06ea453a891b41737b19e20f1b1eb2d43db19c6064e91c67c32f39ab22977427",
-      "certificates/pg1_integer_hinges_certificate.json": "1b9b37ff3991f9e87ba87c7ba924948f7a33a5432289687f47df1e405b676e1e",
+      "certificates/pg1_integer_hinges_certificate.json": "2700e19ae94268bc21b091e07da57bd35ce4542fe970da09eed4168cb4b62a7c",
       "certificates/pg1_joint_tail_certificate.json": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff",
       "certificates/pg1_signed_g2_certificate.json": "bea46c0f0b687ae6846ddfe905d33ce888e7b66d48d1aceb96760de41a42366c",
       "pg1_signed_score_oracle.cpp": "a2c802870c6260f19c900b7e733ca43356d3131518682c424dd2cf51e8659d2f",
-      "pg1_signed_score_oracle.py": "1b2675c52f4f2994789f3d89dbb9a4468fc09a68a497459d80b1d915a122c5c0",
-      "verify_original9_convex_transfer.py": "b858aceb4a70b9fd9272d5c782715722dd465a127675b6f131e002eb338607be",
-      "verify_pg1_exact_zero_depth.py": "3a1e8c992f88b3353c393b7ba899a9b0691e3e89f6b4f3b70ee6cf0547ef2f29",
-      "verify_point_geometry.py": "4896a0d9987c9167c2170994e7447ea0266d8148ed6c9856721acbf7e32b9a24"
+      "pg1_signed_score_oracle.py": "f27cca460df6a931b5dfa34bfea9e270b03685691996f2808d89d934bdca86dc",
+      "verify_original9_convex_transfer.py": "e4757b331d7d6c17afcce4c966d033580c06655c092579b78c4094b662a73300",
+      "verify_pg1_exact_zero_depth.py": "0e8acc877f7d362d59f0e5e2071909e3776e8bce3bee48ac8ff7c4746516528d",
+      "verify_point_geometry.py": "5215a33921ff00a3053a773149c9eafffaa4ba62c04d38b29bbb60f5a6166127"
     }
   },
   "result": {

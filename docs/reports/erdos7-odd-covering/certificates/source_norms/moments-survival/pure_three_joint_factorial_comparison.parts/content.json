@@ -1,0 +1,260 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pure-three-joint-factorial-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "87168af96dc8e450d3ab94a936de3e4a099fb54752453ee9209905b3ff03ef29",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "deep_density_caps": {
+    "kind": "inline",
+    "value": [
+      "7/10",
+      "11/20",
+      "3/10",
+      "3/10",
+      "3/10"
+    ]
+  },
+  "removed_pure_three_pair_upper": {
+    "kind": "inline",
+    "value": "7/360"
+  },
+  "original128_pair_partition": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "479/3600",
+      "old_positive7": "121/720",
+      "positive7_positive7_distinct": "97/240",
+      "tail_distinct_pairs": "2539/3600",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "7/180",
+        "pure5": "1/100",
+        "root5": "7/150",
+        "cell5": "13/450"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_old_linear_cap": "55/72",
+      "raw_old_square_cap": "173/48"
+    }
+  },
+  "complete_tail_distinct_pairs": {
+    "kind": "inline",
+    "value": "2539/3600"
+  },
+  "strictly_improved_head_layouts": {
+    "kind": "inline",
+    "value": 494
+  },
+  "unchanged_head_layouts": {
+    "kind": "inline",
+    "value": 12006
+  },
+  "head_components_sha256": {
+    "kind": "inline",
+    "value": "af5f89378fdd5ee8a1612f29d723cb2a7f4dccaed71b8d5f910c12b9556e3717"
+  },
+  "head_operator_maximum": {
+    "kind": "inline",
+    "value": "319/2160"
+  },
+  "head_maximizing_witnesses": {
+    "path": "content/015-head_maximizing_witnesses.json",
+    "sha256": "5f8f17732e7d67203432148589e846e2dbd26df25d13b48d8b28ed99dc87c814",
+    "kind": "value"
+  },
+  "second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "2303/2700"
+  },
+  "previous_second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "3091/3600"
+  },
+  "quadratic_results": {
+    "path": "content/018-quadratic_results.json",
+    "sha256": "84ea06c3219dae8d62d4952bfd73cd542a9a7524a66755a53b2002a56c4c0960",
+    "kind": "array"
+  },
+  "joint_layout_checks": {
+    "kind": "inline",
+    "value": 1250000
+  },
+  "joint_objectives_sha256": {
+    "kind": "inline",
+    "value": "2d40760fc318334c3ed84a24ee72593b4e3cbdc9fb08a61672c0f2679b37c210"
+  },
+  "common_objective_scale": {
+    "kind": "inline",
+    "value": 266827932000
+  },
+  "all_original_indices": {
+    "path": "content/022-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/023-original_cost_tags.json",
+    "sha256": "a4754337a027240679f15e8329da87507e97a12deca4e4577354bc4e338d1eeb",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/024-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/025-previous_cost_bounds.json",
+    "sha256": "101c41350657cd61a0a4e36cf1c24fb97c488f15896e6e87fa432c2884fb63f8",
+    "kind": "value"
+  },
+  "direct_cost_upper_bounds": {
+    "path": "content/026-direct_cost_upper_bounds.json",
+    "sha256": "ad4caf06349779538e47eef77d2d4b74571c40c00fa3d318beec019d24def809",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/027-majorants.json",
+    "sha256": "d07118db7097cd3925f174cdf8387e7a6dbc35ebe86576ccc463e6e9463f884e",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/028-improved_cost_bounds.json",
+    "sha256": "ad4caf06349779538e47eef77d2d4b74571c40c00fa3d318beec019d24def809",
+    "kind": "value"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "2203/450"
+  },
+  "direct_numerator_improvement": {
+    "kind": "inline",
+    "value": "396401658301258447/20686546731551500800"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "total_numerator_improvement_over171": {
+    "kind": "inline",
+    "value": "396401658301258447/20686546731551500800"
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "1261651752792304150478204171182564632403/36138993843177591170119845279750000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "5043836987293375601605894349756960638987/144555975372710364680479381119000000000"
+  },
+  "AP11_block_results": {
+    "path": "content/038-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "13009118668303710697799613546610783059407503/28346990053863075922188555569458332750000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "26004628209305414561091317661497753582174381/56693980107726151844377111138916665500000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "679828843986658236605/2832084828242773660128"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary uniform comparison on both complete actual saturated K faces, retaining one original head in each cost separately. The pure-three head cross and entire deep-three pair block are bounded jointly, while retaining168 pure-five correction on each same layout. All52 independent costs, every other pair class, full polynomial and geometric tails, the171 square bound and the full111 denominator remain. No off-face extension, new global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

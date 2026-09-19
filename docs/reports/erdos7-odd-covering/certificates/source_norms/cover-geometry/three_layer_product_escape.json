@@ -1,0 +1,171 @@
+{
+  "schema": "erdos7-three-layer-product-escape-v1",
+  "source_sha256": {
+    "certificates/source_norms/endpoint-bounds/k_next_escape_layers.json": "f71f686c04fb2738ba2a264ee505dbeebf8cf8070f8176bbc6d4f628b8363887",
+    "frontier/endpoint-bounds/k_next_escape_layers.py": "15317424f05c48bb4950563217ab893485a140ed14c9dc9586edc3b40f8a872b",
+    "certificates/source_norms/cover-geometry/joint_gap_denominator_escape.json": "93def910595b385a784101c4cb6ed683c1dc897402b40482303e82c7ccd7785a",
+    "frontier/cover-geometry/joint_gap_denominator_escape.py": "af39ed8cf87a2579b44fe98c8485c8cc5fc92837631ae7a280938324b72325ee",
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/cover-geometry/joint_gap_mass_escape.py": "11b3195c2c215ecd886216e15b387e8913692b9de37d9e96f00c6479a237a3b6",
+    "certificates/source_norms/cover-geometry/joint_gap_mass_escape.json": "fac5fcbf784c91c5b66a80ecc3e652e75fde821adedbaae5ce8d532d49b75c80",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5",
+    "profile-notes/001-064/49-full-linear-and-quadratic-carriers-refine-the-frontier.md": "8a34e4b32351d3c115d0f79fa6711b4971b15308a53c5be9bc15c75865a43427",
+    "profile-notes/001-064/53-allocated-seven-thresholds-sharpen-actual-survival.md": "0a2f0864562331c3f6f7e35186496a3a27039e2c3e2fe286badc2d8666b9a8d6",
+    "profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md": "cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1",
+    "profile-notes/065-128/94-quadratic-marked-events-and-a-common-residual-improve-global-k.md": "7bb42f85e0a2aa19bfe28b1b8e85eaf3527bdd4378423b48a1606d5aa2178726",
+    "profile-notes/065-128/106-the-actual-denominator-shares-the-carrier-mass-residual.md": "52a160f306181cccd0813e1b46968f7e7678ee910a57f184f583cca777c8a207",
+    "frontier/source-budgets/global_control_faces.py": "1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "certificates/source_norms/endpoint-bounds/k_signed_gap_dictionary.json": "425876003311557cec40e46a1155c2e6474144357e20e88ba07523014ceb73ae",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023",
+    "certificates/layout_gap_frontier_certificate.json": "cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898",
+    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785",
+    "frontier/cover-geometry/verify_ap_schedule.py": "8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "3f30d24b9d66c6c24a3ee8361b0fb2c5fe6e86ebe4f4b9332fd0b5602954a30e",
+    "frontier/retained-transport/verify_retained_five_tests.py": "538de506f0d4b9628654b2a64f3771259ae7a56bead7ac4e88a743ba4a81c90a",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "6a58a6155bb2f860fda843848d54397f0e4ece26cab40f8f1676a857631e8fec",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "063509eb7bf8279e90a95d23184ecf474396ead47866961cc4c3568778db342f",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "3bbc1f2d50a48132410cfeef44a1461f2633a2e4facbe7e9080aced11ce64e4f",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "317a9abfb90b644125766d89af6589a36e4c6cfd5a748da3e015ece898c5ce7f",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "484ee018b5f7fee564317a37975fabb5d5ae7e8046fce0c88714209af67145c0",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "6159205f227d913376f35c223a0be07d5b7fc0a79732bac04f68564ff95bca16",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "51f51e59123004239e7315b2d94e36a482da5334df1f49639d039a7be31f4fc3",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "c5170c0e3597ef83b0fb242be1e3c81ca0f93549d6d5bfb348be843c96c5c1a8",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "a534b9cc2e8dea91cac97dfecf01620cb573608dfeb453ef172911ab7647cb63",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "cbf73fe570b1ef250800ce9e6a569f2bf7c53aa79dd6fefaaa86ec279d11f077",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4063b63f8bdf0dc3cfcc90679d7ff3d2c325f03bfb36be99760570d1a714f6fd",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "5fdbde7ef2ec7feccddd68bba985f0c407cdc2da30feba725e68b7065ffd8f27",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f72e2ca85a548ddc620a54ef591ebcad14dda309925f80a5c34ffd171711a6e1"
+  },
+  "original_allocation_conditional_sha256": "62356b03d8d352f688155299d4c2cb704072a78936088e762cbf29746451b80f",
+  "fresh_old_margin_reconstruction_checks": 46656,
+  "same_source_denominator_table_sha256": "0c860b61ceacf8bb75bd638ca3070fc158f474d6986bfd8c880a5904156d9262",
+  "complete_original_endpoint_table_sha256": "a48d8c8f2f9e6619024b3b4b5bf61a72687299aedbc39bda8b3a6d5ad4b84cab",
+  "original_endpoint_checks": 46656,
+  "old_K0": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000",
+  "old_offset": "185694867601/8599322160",
+  "signed_mass_coefficient": "14005839092163790978433304199852525334431910915059219/258053321422020518900769276553892599223596620000000",
+  "survival_mass_coefficient": "23/42",
+  "first_escape_gap": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000",
+  "next_escape_gap": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+  "third_escape_gap": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+  "K_denominator_payment": "240585528019/3208936500000",
+  "J_denominator_payment": "40593580507/534822750000",
+  "next_denominator_payment": "34755559087/458419500000",
+  "third_denominator_payment": "11635969547/152806500000",
+  "decrement_capacity": "15240056495574031935365456355486859072608164346131/24637112763633066609402747307132045210251692688000",
+  "complete_decrement_endpoint_checks": [
+    {
+      "decrement": "0",
+      "K_floor": "0",
+      "J_floor": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000",
+      "next_floor": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+      "outside_floor": "131097134374357952846687928903046514235992135314423/162297686428943722579100173933265785675218000000000",
+      "outside_controllers": [
+        [
+          386,
+          15
+        ],
+        [
+          386,
+          16
+        ],
+        [
+          386,
+          17
+        ],
+        [
+          592,
+          15
+        ],
+        [
+          592,
+          16
+        ],
+        [
+          592,
+          17
+        ]
+      ],
+      "lower_checks": 23328,
+      "upper_checks": 23328,
+      "minimum_outside_slack": "0"
+    },
+    {
+      "decrement": "15240056495574031935365456355486859072608164346131/24637112763633066609402747307132045210251692688000",
+      "K_floor": "-15240056495574031935365456355486859072608164346131/328610498947361541089220668973229085850648000000000",
+      "J_floor": "0",
+      "next_floor": "58569035074877103714692235228610232014794056594413/109536832982453847029740222991076361950216000000000",
+      "outside_floor": "15302029804497157614732065897390069133146498339/20116957388880412677638241137020452148800000000",
+      "outside_controllers": [
+        [
+          386,
+          15
+        ],
+        [
+          386,
+          16
+        ],
+        [
+          386,
+          17
+        ],
+        [
+          592,
+          15
+        ],
+        [
+          592,
+          16
+        ],
+        [
+          592,
+          17
+        ]
+      ],
+      "lower_checks": 23328,
+      "upper_checks": 23328,
+      "minimum_outside_slack": "0"
+    }
+  ],
+  "beta_product_constraints": [
+    "qK=b*k",
+    "qJ=b*j",
+    "qA<=(1-b)*k",
+    "sqrt(k)+sqrt(j)<=1"
+  ],
+  "fixed_qK_optimization": "max over t in [sqrt(qK),1] of u*t^2+v*qK*(1/t-1)^2; u=fC-fB>0,v=fC-fJ>0",
+  "auxiliary_second_derivative": "2u+v*qK*(6/t^4-4/t^3)>0",
+  "next_layer_alternative": "fK*(1-sigma)+fB*sigma",
+  "J_layer_alternative": "fK*t^2+fJ*(1-t)^2+2*fC*t*(1-t), t=sqrt(1-sigma)",
+  "joint_lower_bound": "Phi(K0-h)>=min(next_layer_alternative,J_layer_alternative)+(A-q*h)*rho",
+  "scope": "Ordinary complete actual-source theorem preserving the original beta, late and carrier product factors. The next and J layer masses cannot be independently maximized. A convex one-variable auxiliary optimization gives two endpoint alternatives, both concave in sqrt(qK). All four joint gap/denominator layer floors are checked at both h endpoints against every original row. Original labels, one actual residual and full tails remain. No complete global join, actual-family attainment, Lean verification or Erdos7 resolution."
+}

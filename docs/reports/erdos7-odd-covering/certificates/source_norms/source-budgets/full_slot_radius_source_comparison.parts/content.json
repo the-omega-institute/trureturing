@@ -1,0 +1,131 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-full-slot-radius-source-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "5ec2bc0c495a75e9b44b6f1d4f843663a5e7c80838f88152a858da78eed8045f",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/1000",
+      "rbar": "1/200",
+      "h1min": "161/486",
+      "v0": "51/2600",
+      "v1": "10343/418600",
+      "gap": "817/48600",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "14/225"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/27",
+      "residual_radius": "1/1000",
+      "actual_r_upper": "1/200",
+      "joint_source_Delta_upper": "1/104",
+      "source_z_upper": "41/54",
+      "availability_upper": "3/316",
+      "five_actual_gap_lowers": [
+        "19/200",
+        "2977/48600",
+        "817/48600",
+        "76721/3839400",
+        "1337/48600"
+      ],
+      "minimum_actual_gap": "817/48600",
+      "common_wrong_slot_gap": "817/48600",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "23/27",
+        "shallow_C_minus_1_t": "2981/729",
+        "shallow_C_minus_k": "30583/729",
+        "pure3_maximizing_cell": "523/243",
+        "root0_below_root1_reference": "1268/729"
+      },
+      "heavy_residual_price_coefficient": "65/9",
+      "heavy_slot_movement_coefficient": "13/9",
+      "independent_r_cutoff": null
+    }
+  },
+  "heavy_extension": {
+    "kind": "inline",
+    "value": {
+      "heavy_bounds": [
+        {
+          "index": 0,
+          "barrier": "630053335920064561120723361434337/15632787748921114278012443437500",
+          "weight": "1",
+          "margin_lower": "1193878489939499612/259995953549870913375",
+          "max_derivative": "2498381/1145144",
+          "slot_movement_price": "2498381/792792",
+          "original_marker_price_upper": "1524012410/116947831",
+          "one_residual_price": "12491905/792792"
+        },
+        {
+          "index": 16,
+          "barrier": "113030172417388488839521339535147647/3510863581945200248270294588671875",
+          "weight": "15/17",
+          "margin_lower": "1088704788427803234124/300295326350100904948125",
+          "max_derivative": "3639413/2108106",
+          "slot_movement_price": "3639413/1459458",
+          "original_marker_price_upper": "8880167720/861161301",
+          "one_residual_price": "18197065/1459458"
+        }
+      ],
+      "positive_r_proof": "Keep162 r=0 floors and fixed supports. General85/91 marker identities hold because the five actual gaps and forced labels are re-established. Non-H Q cap movement costs at most(13/9)vmax*r; the H movement is smaller. The remaining same-measure epsilon=rho-(r+r1)/5 is nonnegative. P=max(hbar/(5G),65/9)vmax pays both effects once."
+    }
+  },
+  "complete_H1": {
+    "path": "content/005-complete_H1.json",
+    "sha256": "7887ede98a9773e5d9f34cdaf9add2b3b9c76059157c4691d3456a32b6f8c4ef",
+    "kind": "object"
+  },
+  "complete_square": {
+    "path": "content/006-complete_square.json",
+    "sha256": "51f86bff68fd97a167e5ac29ff61e0662a564f00ade09993aca62c9d7f699924",
+    "kind": "value"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/007-joint_pure_five_transport.json",
+    "sha256": "71ea9b7e6b610f360d2e67586db471885598a833e75c6ffee8e30c53ec1f0fbd",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/008-complete_heads.json",
+    "sha256": "aededdc72a20c3f6021dbe96efd83ea643137cb91eb5458acef3670964d4973f",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/009-comparison.json",
+    "sha256": "f212033498e1902fe94a47e1eee4cb5410d814660c4f70271fdd2cdcf25effe0",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete actual-source bound for both K orientations, sigma<=1/27 and rho<=1/1000. The only slot-loss bound is the globally valid r<=5rho. All52 independent original tests, the actual S coefficient, five denominator objectives and every infinite tail remain. No unrestricted Erdos7 solution, Lean verification, global K conclusion or realization of relaxation extrema is asserted."
+  }
+}

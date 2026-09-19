@@ -1,0 +1,101 @@
+{
+  "schema": "erdos7-endpoint-square-common-pure3-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "c6d20392e71b3fb73b87d40b390b02fe50e9b92bd3245831bfa4d0b96e4875be",
+    "frontier/endpoint-bounds/endpoint_square_numerator.py": "5973de37d2d74e2ddb7783baa514709e236f9a894000ca79ec8d66db79174235",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json": "a3cb0072765f1e10ce4642f1d46b1bd49ab71de339941a4065938ab59e7fcbea",
+    "frontier/endpoint-bounds/endpoint_square_coherent_head.py": "49a216c2e61faddb88a914fb4d8338cdc5df05fbaa50435cff7be5c32f30e5de",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json": "3108dafb33924ea416b59fb7c493531f2d35c3d69304c6e37398ddd8af70ecd6"
+  },
+  "barrier": 45,
+  "surviving_mass": "3/20",
+  "head": "all pure3 labels, including the unit, plus5,15,45",
+  "layout_count": 12500,
+  "primal_dual_equality_checks": 12500,
+  "affine_tail_checks": 25000,
+  "affine_tail_entrance_counts": {
+    "3": 16818,
+    "4": 1976,
+    "5": 2332,
+    "6": 1742,
+    "7": 1296,
+    "8": 594,
+    "9": 226,
+    "10": 16
+  },
+  "maximum_affine_tail_entrance": 10,
+  "zero_head_upper": "6068947/3936600",
+  "raw_head_upper": "212153/87480",
+  "zero_head_maximizers": [
+    [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  ],
+  "raw_head_maximizers": [
+    [
+      1,
+      4,
+      4,
+      1,
+      4,
+      4,
+      4
+    ]
+  ],
+  "old_zero_head_budget": "1001/600",
+  "old_raw_head_budget": "107/40",
+  "unreplaced_pair_remainder": "581/360",
+  "one_zero_depth_pair_factor": "2/5",
+  "both_positive_depth_pair_factor": "4/15",
+  "common_layout_threshold": "3187861/1312200",
+  "rational_common_layout_checks": 12500,
+  "minimum_quadratic_slack": "8715944851/619872782400",
+  "minimum_quadratic_slack_layouts": [
+    [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  ],
+  "one_common_layout_witness": {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "Z": "6068947/3936600",
+    "R": "177161/87480",
+    "threshold_minus_Z": "873659/984150",
+    "product_R_Rmax": "37585237633/7652750400",
+    "quadratic_slack": "8715944851/619872782400"
+  },
+  "all_primal_dual_sha256": "21a62dff80f144730a3fc161fd9c52be5ca1947406717ad5f54f9e60a4f55e1d",
+  "all_affine_tail_bounds_sha256": "45a01d73999f58035c08e5e8cf0e499b9f36c6704c105987cbfed66a4759b6ca",
+  "all_rational_common_checks_sha256": "2f643d1fc304f0a36f8de0a647acdaa69aeab2d0ddd1e82c342a76f858c48d12",
+  "full_square_upper": "469/100",
+  "absolute_square_margin": "103/50",
+  "improvement_over63": "301/1350",
+  "auxiliary_third_moment_upper": "3874891/57600",
+  "third_moment_scope": "Auxiliary ordered-triple cap bound; not used in the square theorem.",
+  "scope": "Ordinary uniform endpoint and approaching-sequence theorem over arbitrary independent original357 labels. Complete pure3 and positive7 tails are retained; all final comparisons are rational. No quantitative neighborhood, global K replacement, physical denominator bound or Lean verification is claimed."
+}

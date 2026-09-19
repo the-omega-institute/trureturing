@@ -1,0 +1,835 @@
+{
+  "schema": "erdos7-product-escape-global-v1",
+  "source_sha256": {
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/source-budgets/weighted_marker_global.py": "45af170a773b9ccf82e3c8f5e29c6f2efd3bb54dc14fe11556884a27ff57e9ee",
+    "certificates/source_norms/source-budgets/weighted_marker_global.json": "eee3546b160075eba8f045f5d9af3aa94143da734ac5bbcc5602c6598afd06ce",
+    "frontier/endpoint-bounds/k_next_escape_layers.py": "15317424f05c48bb4950563217ab893485a140ed14c9dc9586edc3b40f8a872b",
+    "certificates/source_norms/endpoint-bounds/k_next_escape_layers.json": "f71f686c04fb2738ba2a264ee505dbeebf8cf8070f8176bbc6d4f628b8363887",
+    "frontier/endpoint-bounds/broad_marked_identity_global.py": "02a9202d81951a0861bfdedb43127a375595028a26b1ac5002f8a0b195063998",
+    "certificates/source_norms/endpoint-bounds/broad_marked_identity_global.json": "62d60d6746dba0d99f9b81c5dab2fbfa7694bfddba8bd1e19868ad7b0dded8bc",
+    "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "73a23d45c240ac9cd59216243127030e86f188d7dca930f689c44437799c59c5",
+    "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "563dd67bdd067108b08c0f9290d55271104559c1b01af7ba97cb61f97a6dc15c",
+    "frontier/source-budgets/global_k_face_gain.py": "c812fd6aba07ba15f100c85e85595661b8447448f67a6c0d95a1c9a1861ad96d",
+    "certificates/source_norms/source-budgets/global_k_face_gain.json": "124d4428a67f5193f3814849c527e30c331a0757328836756aec088a87fdcbc8",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "98631aaec7edbf0bbec41befad13df4ae9bcab2f6163675da10d8d7c9273c44c",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/cover-geometry/common_deleted_measure_coupling.py": "c1cd866a3e68727b43a29a6d48eb5c64e1d8a75e27fa99b46ddbe2f1dacdc474",
+    "certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json": "d174d73255d27c937f22d140e3c131613c1a21b3c586c641ce6667735dd14b44",
+    "frontier/source-budgets/global_control_faces.py": "1558ad83f42b2879336445ab80c4d525df58560734cc45f8bcbbbb0a3ece9c35",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "f2843dc163436de4f24291e5f311f3904e38272707b44bc9516ef2afc207e4f1",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023",
+    "certificates/layout_gap_frontier_certificate.json": "cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898",
+    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785",
+    "frontier/cover-geometry/verify_ap_schedule.py": "8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "3f30d24b9d66c6c24a3ee8361b0fb2c5fe6e86ebe4f4b9332fd0b5602954a30e",
+    "frontier/retained-transport/verify_retained_five_tests.py": "538de506f0d4b9628654b2a64f3771259ae7a56bead7ac4e88a743ba4a81c90a",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "6a58a6155bb2f860fda843848d54397f0e4ece26cab40f8f1676a857631e8fec",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "063509eb7bf8279e90a95d23184ecf474396ead47866961cc4c3568778db342f",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "3bbc1f2d50a48132410cfeef44a1461f2633a2e4facbe7e9080aced11ce64e4f",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "317a9abfb90b644125766d89af6589a36e4c6cfd5a748da3e015ece898c5ce7f",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "484ee018b5f7fee564317a37975fabb5d5ae7e8046fce0c88714209af67145c0",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "6159205f227d913376f35c223a0be07d5b7fc0a79732bac04f68564ff95bca16",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "51f51e59123004239e7315b2d94e36a482da5334df1f49639d039a7be31f4fc3",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "c5170c0e3597ef83b0fb242be1e3c81ca0f93549d6d5bfb348be843c96c5c1a8",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "4da2cd7261df906d0e0c431b6414196beead74233a2647e2e33e021a9d348f84",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "a534b9cc2e8dea91cac97dfecf01620cb573608dfeb453ef172911ab7647cb63",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "ffd9fa982a7cb43ebb413ecb77218f47b869ac3d90557952dd46ed865a681e54",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "cbf73fe570b1ef250800ce9e6a569f2bf7c53aa79dd6fefaaa86ec279d11f077",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4063b63f8bdf0dc3cfcc90679d7ff3d2c325f03bfb36be99760570d1a714f6fd",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "5fdbde7ef2ec7feccddd68bba985f0c407cdc2da30feba725e68b7065ffd8f27",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f72e2ca85a548ddc620a54ef591ebcad14dda309925f80a5c34ffd171711a6e1",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "ec6c4cf8b2c2f53179eead3d0a7499ca69fb796d57df6b65a91b0d672745a1b5",
+    "frontier/source-budgets/source_cost_endpoint_attainment.py": "860816267cfc11da898d207f1eb48486c6630d1dd3d00a785417a244188af47d",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "frontier/endpoint-bounds/endpoint_k_face_neighborhood.py": "75577c2050d77c48f3cce7640534a7021e4f9e1a12bd7e22386022262b233728",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_neighborhood.json": "35aaced8b84aa75f80f5ec22935bb51cbf1395bdba0e38d6378af0ce2aaf1353",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_neighborhood.json": "a5102c4c9959033802c24108710ba5e3c829c53cbcd91b4fff2db4904e22f16d",
+    "frontier/endpoint-bounds/endpoint_k_face_linear.py": "4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json": "71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314",
+    "certificates/source_norms/endpoint-bounds/k_signed_gap_dictionary.json": "425876003311557cec40e46a1155c2e6474144357e20e88ba07523014ceb73ae"
+  },
+  "concentration_delta": "2/125",
+  "slot_loss_cutoff": "1/1250",
+  "source_loss_coefficient": "498/625",
+  "source_guards": {
+    "pure5": "62/625",
+    "alpha": "49/750",
+    "beta": "239/11250",
+    "remaining": "1289/46875"
+  },
+  "slot_gap_lower": "239/11250",
+  "minimum_source_credit": "19837/1171875",
+  "common_residual_coefficient": "1250/239",
+  "cost_rows": [
+    {
+      "index": 0,
+      "name": "R17",
+      "tuple": [
+        0,
+        0
+      ],
+      "weight": "1",
+      "vmin": "298469622484874903/2311075142665519230",
+      "vmax": "2498381/1145144",
+      "gain_before_residual": "-11525909987346766662449/4642784884819123453125000",
+      "residual_penalty": "1561488125/136844708",
+      "chosen": false
+    },
+    {
+      "index": 1,
+      "name": "R17",
+      "tuple": [
+        0,
+        1
+      ],
+      "weight": "1",
+      "vmin": "2191066581337/17538837986670",
+      "vmax": "39159/26026",
+      "gain_before_residual": "-34068365254612834/30829988648443359375",
+      "residual_penalty": "24474375/3110107",
+      "chosen": false
+    },
+    {
+      "index": 2,
+      "name": "R17",
+      "tuple": [
+        0,
+        2
+      ],
+      "weight": "1",
+      "vmin": "93430123067/1594439816970",
+      "vmax": "93/182",
+      "gain_before_residual": "-121992618300976/1201168388900390625",
+      "residual_penalty": "58125/21749",
+      "chosen": false
+    },
+    {
+      "index": 3,
+      "name": "R17",
+      "tuple": [
+        0,
+        3
+      ],
+      "weight": "1",
+      "vmin": "11662836167/1594439816970",
+      "vmax": "93/2366",
+      "gain_before_residual": "333859917865568/8408178722302734375",
+      "residual_penalty": "58125/282737",
+      "chosen": true
+    },
+    {
+      "index": 4,
+      "name": "R17",
+      "tuple": [
+        0,
+        4
+      ],
+      "weight": "1",
+      "vmin": "2482232267/1594439816970",
+      "vmax": "93/30758",
+      "gain_before_residual": "167177059982468/8408178722302734375",
+      "residual_penalty": "58125/3675581",
+      "chosen": true
+    },
+    {
+      "index": 5,
+      "name": "R17",
+      "tuple": [
+        0,
+        5
+      ],
+      "weight": "1",
+      "vmin": "4946897/28989814854",
+      "vmax": "93/399854",
+      "gain_before_residual": "365503891988/152875976769140625",
+      "residual_penalty": "58125/47782553",
+      "chosen": true
+    },
+    {
+      "index": 6,
+      "name": "R17",
+      "tuple": [
+        0,
+        6
+      ],
+      "weight": "1",
+      "vmin": "461429/28989814854",
+      "vmax": "93/5198102",
+      "gain_before_residual": "35337206516/152875976769140625",
+      "residual_penalty": "58125/621173189",
+      "chosen": true
+    },
+    {
+      "index": 7,
+      "name": "R17",
+      "tuple": [
+        1,
+        0
+      ],
+      "weight": "1",
+      "vmin": "2048574445495/16183432951686",
+      "vmax": "148305/88088",
+      "gain_before_residual": "-3164428880344739/2167424056029375000",
+      "residual_penalty": "92690625/10526516",
+      "chosen": false
+    },
+    {
+      "index": 8,
+      "name": "R17",
+      "tuple": [
+        1,
+        1
+      ],
+      "weight": "1",
+      "vmin": "5009435/40938898",
+      "vmax": "155/154",
+      "gain_before_residual": "-32056666718/388599695859375",
+      "residual_penalty": "96875/18403",
+      "chosen": false
+    },
+    {
+      "index": 9,
+      "name": "R17",
+      "tuple": [
+        1,
+        2
+      ],
+      "weight": "1",
+      "vmin": "208545/3721718",
+      "vmax": "155/2002",
+      "gain_before_residual": "3950857532/5046749296875",
+      "residual_penalty": "96875/239239",
+      "chosen": true
+    },
+    {
+      "index": 10,
+      "name": "R17",
+      "tuple": [
+        2,
+        0
+      ],
+      "weight": "1",
+      "vmin": "87693892465/1244879457822",
+      "vmax": "2015/2904",
+      "gain_before_residual": "-3071117999533799/10503670425373125000",
+      "residual_penalty": "1259375/347028",
+      "chosen": false
+    },
+    {
+      "index": 11,
+      "name": "R17",
+      "tuple": [
+        2,
+        1
+      ],
+      "weight": "1",
+      "vmin": "208545/3149146",
+      "vmax": "155/1694",
+      "gain_before_residual": "3950857532/4270326328125",
+      "residual_penalty": "96875/202433",
+      "chosen": true
+    },
+    {
+      "index": 12,
+      "name": "R17",
+      "tuple": [
+        3,
+        0
+      ],
+      "weight": "1",
+      "vmin": "1043019655/95759958294",
+      "vmax": "2015/31944",
+      "gain_before_residual": "39906959499767/807974648105625000",
+      "residual_penalty": "1259375/3817308",
+      "chosen": true
+    },
+    {
+      "index": 13,
+      "name": "R17",
+      "tuple": [
+        4,
+        0
+      ],
+      "weight": "1",
+      "vmin": "1114248295/383039833176",
+      "vmax": "2015/351384",
+      "gain_before_residual": "3733891101359/100996831013203125",
+      "residual_penalty": "1259375/41990388",
+      "chosen": true
+    },
+    {
+      "index": 14,
+      "name": "R17",
+      "tuple": [
+        5,
+        0
+      ],
+      "weight": "1",
+      "vmin": "145786735/383039833176",
+      "vmax": "2015/3865224",
+      "gain_before_residual": "2152097526913/403987324052812500",
+      "residual_penalty": "1259375/461894268",
+      "chosen": true
+    },
+    {
+      "index": 15,
+      "name": "R17",
+      "tuple": [
+        6,
+        0
+      ],
+      "weight": "1",
+      "vmin": "2304955/54719976168",
+      "vmax": "2015/42517464",
+      "gain_before_residual": "35298107789/57712474864687500",
+      "residual_penalty": "1259375/5080836948",
+      "chosen": true
+    },
+    {
+      "index": 16,
+      "name": "R19",
+      "tuple": [
+        0,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "272176197106950808531/2669291789778674710650",
+      "vmax": "3639413/2108106",
+      "gain_before_residual": "-249358274609630037893227709/126687090803948819274990234375",
+      "residual_penalty": "2274633125/251918667",
+      "chosen": false
+    },
+    {
+      "index": 17,
+      "name": "R19",
+      "tuple": [
+        0,
+        1
+      ],
+      "weight": "15/17",
+      "vmin": "3544710516238/35874895881825",
+      "vmax": "12722/10647",
+      "gain_before_residual": "-143411564281496384/162157732501552734375",
+      "residual_penalty": "15902500/2544633",
+      "chosen": false
+    },
+    {
+      "index": 18,
+      "name": "R19",
+      "tuple": [
+        0,
+        2
+      ],
+      "weight": "15/17",
+      "vmin": "558313934146/11958298627275",
+      "vmax": "186/455",
+      "gain_before_residual": "-3550693100506144/42040893611513671875",
+      "residual_penalty": "46500/21749",
+      "chosen": false
+    },
+    {
+      "index": 19,
+      "name": "R19",
+      "tuple": [
+        0,
+        3
+      ],
+      "weight": "15/17",
+      "vmin": "208676745038/35874895881825",
+      "vmax": "186/5915",
+      "gain_before_residual": "1310558003975056/42040893611513671875",
+      "residual_penalty": "46500/282737",
+      "chosen": true
+    },
+    {
+      "index": 20,
+      "name": "R19",
+      "tuple": [
+        0,
+        4
+      ],
+      "weight": "15/17",
+      "vmin": "44603858918/35874895881825",
+      "vmax": "186/76895",
+      "gain_before_residual": "667194242637616/42040893611513671875",
+      "residual_penalty": "46500/3675581",
+      "chosen": true
+    },
+    {
+      "index": 21,
+      "name": "R19",
+      "tuple": [
+        0,
+        5
+      ],
+      "weight": "15/17",
+      "vmin": "978719494/7174979176365",
+      "vmax": "186/999635",
+      "gain_before_residual": "16066973883728/8408178722302734375",
+      "residual_penalty": "46500/47782553",
+      "chosen": true
+    },
+    {
+      "index": 22,
+      "name": "R19",
+      "tuple": [
+        0,
+        6
+      ],
+      "weight": "15/17",
+      "vmin": "10148174/797219908485",
+      "vmax": "186/12995255",
+      "gain_before_residual": "1554254354992/8408178722302734375",
+      "residual_penalty": "46500/621173189",
+      "chosen": true
+    },
+    {
+      "index": 23,
+      "name": "R19",
+      "tuple": [
+        1,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "374092820950987/3738373011839466",
+      "vmax": "216761/162162",
+      "gain_before_residual": "-206968438272221353493/177426687866599655859375",
+      "residual_penalty": "135475625/19378359",
+      "chosen": false
+    },
+    {
+      "index": 24,
+      "name": "R19",
+      "tuple": [
+        1,
+        1
+      ],
+      "weight": "15/17",
+      "vmin": "1623026/16747731",
+      "vmax": "62/77",
+      "gain_before_residual": "-14589455392/176636225390625",
+      "residual_penalty": "77500/18403",
+      "chosen": false
+    },
+    {
+      "index": 25,
+      "name": "R19",
+      "tuple": [
+        1,
+        2
+      ],
+      "weight": "15/17",
+      "vmin": "204586/4567563",
+      "vmax": "62/1001",
+      "gain_before_residual": "10046773696/16057838671875",
+      "residual_penalty": "77500/239239",
+      "chosen": true
+    },
+    {
+      "index": 26,
+      "name": "R19",
+      "tuple": [
+        2,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "16130515994959/287567154756882",
+      "vmax": "403/726",
+      "gain_before_residual": "-120479088360427163/505489139221081640625",
+      "residual_penalty": "251875/86757",
+      "chosen": false
+    },
+    {
+      "index": 27,
+      "name": "R19",
+      "tuple": [
+        2,
+        1
+      ],
+      "weight": "15/17",
+      "vmin": "204586/3864861",
+      "vmax": "62/847",
+      "gain_before_residual": "10046773696/13587401953125",
+      "residual_penalty": "77500/202433",
+      "chosen": true
+    },
+    {
+      "index": 28,
+      "name": "R19",
+      "tuple": [
+        3,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "7467902659237/862701464270646",
+      "vmax": "403/7986",
+      "gain_before_residual": "19483969157603122/505489139221081640625",
+      "residual_penalty": "251875/954327",
+      "chosen": true
+    },
+    {
+      "index": 29,
+      "name": "R19",
+      "tuple": [
+        4,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "2004111615757/862701464270646",
+      "vmax": "403/87846",
+      "gain_before_residual": "4971792978839539/168496379740360546875",
+      "residual_penalty": "251875/10497597",
+      "chosen": true
+    },
+    {
+      "index": 30,
+      "name": "R19",
+      "tuple": [
+        5,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "20189926261/66361651097742",
+      "vmax": "403/966306",
+      "gain_before_residual": "165551670861916/38883779940083203125",
+      "residual_penalty": "251875/115473567",
+      "chosen": true
+    },
+    {
+      "index": 31,
+      "name": "R19",
+      "tuple": [
+        6,
+        0
+      ],
+      "weight": "15/17",
+      "vmin": "248393569/7373516788638",
+      "vmax": "403/10629366",
+      "gain_before_residual": "19018487003701/38883779940083203125",
+      "residual_penalty": "251875/1270209237",
+      "chosen": true
+    },
+    {
+      "index": 32,
+      "name": "R5",
+      "tuple": [
+        0,
+        0
+      ],
+      "weight": "13299/1360",
+      "vmin": "1233407537/52688361726",
+      "vmax": "113/429",
+      "gain_before_residual": "-279063799746587/1667092695236718750",
+      "residual_penalty": "141250/102531",
+      "chosen": false
+    },
+    {
+      "index": 33,
+      "name": "R5",
+      "tuple": [
+        0,
+        1
+      ],
+      "weight": "13299/1360",
+      "vmin": "458324/24191167",
+      "vmax": "12/91",
+      "gain_before_residual": "29485313576/765423643359375",
+      "residual_penalty": "15000/21749",
+      "chosen": true
+    },
+    {
+      "index": 34,
+      "name": "R5",
+      "tuple": [
+        0,
+        2
+      ],
+      "weight": "13299/1360",
+      "vmin": "10324/2199197",
+      "vmax": "12/1183",
+      "gain_before_residual": "4019086576/69583967578125",
+      "residual_penalty": "15000/282737",
+      "chosen": true
+    },
+    {
+      "index": 35,
+      "name": "R5",
+      "tuple": [
+        0,
+        3
+      ],
+      "weight": "13299/1360",
+      "vmin": "1380/2199197",
+      "vmax": "12/15379",
+      "gain_before_residual": "124587824/13916793515625",
+      "residual_penalty": "15000/3675581",
+      "chosen": true
+    },
+    {
+      "index": 36,
+      "name": "R5",
+      "tuple": [
+        1,
+        0
+      ],
+      "weight": "13299/1360",
+      "vmin": "6313865/311765454",
+      "vmax": "5/33",
+      "gain_before_residual": "36669674777/1972890763593750",
+      "residual_penalty": "6250/7887",
+      "chosen": true
+    },
+    {
+      "index": 37,
+      "name": "R5",
+      "tuple": [
+        1,
+        1
+      ],
+      "weight": "13299/1360",
+      "vmin": "2260/143143",
+      "vmax": "20/1001",
+      "gain_before_residual": "610084744/2717480390625",
+      "residual_penalty": "25000/239239",
+      "chosen": true
+    },
+    {
+      "index": 38,
+      "name": "R5",
+      "tuple": [
+        2,
+        0
+      ],
+      "weight": "13299/1360",
+      "vmin": "1655/263538",
+      "vmax": "5/363",
+      "gain_before_residual": "128127019/1667701406250",
+      "residual_penalty": "6250/86757",
+      "chosen": true
+    },
+    {
+      "index": 39,
+      "name": "R5",
+      "tuple": [
+        3,
+        0
+      ],
+      "weight": "13299/1360",
+      "vmin": "8035/7993986",
+      "vmax": "5/3993",
+      "gain_before_residual": "2175466529/151760827968750",
+      "residual_penalty": "6250/954327",
+      "chosen": true
+    },
+    {
+      "index": 40,
+      "name": "linear",
+      "tuple": null,
+      "weight": "94212612766226/1174116234095805",
+      "vmin": "1",
+      "vmax": "1",
+      "gain_before_residual": "1403672/94921875",
+      "residual_penalty": "1250/239",
+      "chosen": true
+    }
+  ],
+  "chosen_cost_indices": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    19,
+    20,
+    21,
+    22,
+    25,
+    27,
+    28,
+    29,
+    30,
+    31,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "chosen_cost_count": 28,
+  "weighted_gain_before_residual": "4420337790413827756721045171/510502054795171538411812500000",
+  "combined_residual_penalty": "21225037375/1073704632",
+  "conservative_mass_coefficient": "891280654301453988360055325182031459823273341359752932599709/16421574999583123930048953962520438132410694000000000000000",
+  "positive_remaining_mass_coefficient": "135431329769371550197244723411629095730512426303730950891330451/3924756424900366619281699997042384713646155866000000000000000",
+  "escape_linear_coefficient": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000",
+  "escape_negative_quadratic_coefficient": "4375037987821911821125473137867536393368699803273/8183076626669431390542865912601636252532000000000",
+  "denominator_constant": "1/4",
+  "denominator_escape_coefficient": "11/36",
+  "concentrated_denominator_upper": "1147/4500",
+  "outside_interval": [
+    "2/125",
+    "1"
+  ],
+  "signed_branch_margins": {
+    "concentrated_small_slot_loss": "82961073005962908140682671/510502054795171538411812500000",
+    "concentrated_large_slot_loss": "19264611499516805593103927264858194180909173859752932599709/102634843747394524562805962265752738327566837500000000000000000",
+    "outside_near_endpoint": "284174692151611803053815939064338089802975105572557/422650225075374277549740036284546316862546875000000000",
+    "outside_far_endpoint": "9229031072279819987991375839439978121674164346131/324595372857887445158200347866531571350436000000000"
+  },
+  "new_signed_margin_lower": "82961073005962908140682671/510502054795171538411812500000",
+  "old_K0": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000",
+  "previous_K90": "12186762786791794283131839768461516202460812017109414958397/23921056002762015270933574636024044150670381020000000000",
+  "decrease_from_K0": "1/30",
+  "new_K": "108500925396987280791285809842909962533821349/212986060315016386011231666281461556328000",
+  "improvement_over90": "147057629933369690643734717577778926602609835653869/4868930592868311677373005217997973570256540000000000",
+  "new_mass_coefficient": "14001128595026722349913686982899557453652432564059219/258053321422020518900769276553892599223596620000000",
+  "positive_denominator_lower_factor": "40593580507/80223412500",
+  "fallbacks": [
+    {
+      "branch": "3-absent/5-absent/7-absent",
+      "complete_bound": "10623721541541098531398006957413515968436614038803995147/48604529927104449376459453468816706205357963404880000",
+      "new_gap": "692265175632078228544772306081852940180695427669900521440010509/2380123447308713928963922841754412459504262054278350067440000"
+    },
+    {
+      "branch": "3-absent/5-absent/7-present",
+      "complete_bound": "274655976598502681815467966359053974332998333315688773/1166651480453367767693627980400737481893436220720000",
+      "new_gap": "203500520997407932472993588236507203836187258906336189781074103/742689397864294737363274705337682095232725110050656089680000"
+    },
+    {
+      "branch": "3-absent/5-present/7-absent",
+      "complete_bound": "2381350404993261077427780898586784156827491228162671061/9686765730344163334324599918746939270472623899440000",
+      "new_gap": "739855485033608857745134570575694756658756484267896071257643/2806821713231776950155502787788775439664099565012484880000"
+    },
+    {
+      "branch": "3-absent/5-present/7-present",
+      "complete_bound": "7648549441109159275023077311619968094720716395293174339/28434535675936494345970249002679290491834286810960000",
+      "new_gap": "334791478555837340174382164517885015081404838484265945504929733/1392415587130118983215359336693365611376804009823549610480000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-absent",
+      "complete_bound": "709482385330342838679666295724505275573793823702566240181/2427856787562415133414925307244895534083855238696240000",
+      "new_gap": "25823121393645618752488142796404499701788897505858823083500914307/118890129694731682636170595493376551640557566461407323743120000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-present",
+      "complete_bound": "118486841368476751897599111084939956657784488842841582801/349896108706649529993683856898242365454245461430640000",
+      "new_gap": "2926388140194261886444659290443039169710315051834692759244291847/17134121731117993150805741593083670882524976414314028810320000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-absent",
+      "complete_bound": "95071493091965158923104912659267096224040724906003709301/263665054311273887607454910313867237711908271221040000",
+      "new_gap": "1921878201628047605311975044761498863471778805285842083120298947/12911458642710388893663016527294125463623944806799790405520000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-present",
+      "complete_bound": "16025256609792923789017273811086946633827223715428789321/36750866636855548319852923366192605334740462931440000",
+      "new_gap": "132052229185152546218575831113732879775008430686653006652174287/1799659404637440020020676545588477681276574500037652960720000"
+    }
+  ],
+  "complete_cores": [
+    {
+      "box": [
+        [
+          3,
+          20
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          11,
+          20
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          17,
+          20
+        ],
+        [
+          19,
+          20
+        ]
+      ],
+      "unchanged_error": "18991066484526553535616665014766541606498475498415351673730712853724798226291341890112453090044199512276028276745811947516332859861953639269455893356400775581/33027923438191785509648339887176402512935211081024774046560717099807773692853598920870845972552296908764122807339978282210749381847166809013002400000000000000000",
+      "combined_gap": "845680632893091636229342878248651676184451207488873447589240540045940372411743393151968559033174684899268143693032726279102853497684926521076269396167286128657046536006504039/7946040399748476627427138870763113685571396235465565055611977414400535557296040623242161077609713932886277954327249283873665734669378480305564510640514245600000000000000000"
+    },
+    {
+      "box": [
+        [
+          3,
+          17
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          19,
+          6
+        ]
+      ],
+      "unchanged_error": "17351608553457661109217368573484078694167681875704922959013906473541547321078691/78684819668590109973764061819287119927780638345294580679588953162888888320000000",
+      "combined_gap": "2018890024821841374925549005381774102295901269693414714443367561671628821016956854573684983129/18930428887047548197319305049719349505990882023107575136898104152573083311895121838080000000"
+    }
+  ],
+  "scope": "Ordinary global comparison using the same product weights for K/J exclusion, source mass and all28 retained linear marked gains. Complete independent original tests, infinite tails, eight fallbacks and two terminal errors remain. No prior target gain is added again; no new quadratic or deep-event gain is assumed. No Lean verification or unrestricted Erdos7 resolution."
+}

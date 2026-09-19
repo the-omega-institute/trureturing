@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "7b256b1fb3941a4f20fc01712a0c57821154bd5045268526a4423c4592a58573",
+  "parts_directory": "endpoint_joint_geometry_ratio.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "be0660831c8777a6685b21ad79e6f739bd1c6d8544759d96391aa5f7faa87140",
+    "kind": "object"
+  }
+}

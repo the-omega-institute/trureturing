@@ -1,0 +1,235 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pure-three-joint-moments-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "0e7ce7080dfb65f8b55c22aeab8d8429782281870b2650adf24ed9230ec3d175",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "root_of_cell": {
+    "kind": "inline",
+    "value": [
+      0,
+      0,
+      1,
+      1,
+      1
+    ]
+  },
+  "root_caps": {
+    "kind": "inline",
+    "value": [
+      "7/90",
+      "7/90"
+    ]
+  },
+  "cell_caps": {
+    "kind": "inline",
+    "value": [
+      "1/40",
+      "1/18",
+      "1/30",
+      "1/30",
+      "1/30"
+    ]
+  },
+  "deep_density_caps": {
+    "kind": "inline",
+    "value": [
+      "7/10",
+      "11/20",
+      "3/10",
+      "3/10",
+      "3/10"
+    ]
+  },
+  "candidate_lines": {
+    "path": "content/011-candidate_lines.json",
+    "sha256": "3e83663a7161d0c38b8ffdf79285a83363a1a90fb20bbd89503fe1966d79846a",
+    "kind": "value"
+  },
+  "envelope_switch": {
+    "kind": "inline",
+    "value": "10/3"
+  },
+  "envelope_lines": {
+    "kind": "inline",
+    "value": [
+      [
+        "77/180",
+        "59/360"
+      ],
+      [
+        "2/5",
+        "31/180"
+      ]
+    ]
+  },
+  "finite_allocation_checks": {
+    "path": "content/014-finite_allocation_checks.json",
+    "sha256": "e9d19f7693aa460a5450abc8c356d60a597882370298c1f3166e9aa162a3baa9",
+    "kind": "value"
+  },
+  "old_pure_three_square_with_unit_cross": {
+    "kind": "inline",
+    "value": "37/45"
+  },
+  "new_pure_three_square_with_unit_cross": {
+    "kind": "inline",
+    "value": "34/45"
+  },
+  "complete_square_saving": {
+    "kind": "inline",
+    "value": "1/15"
+  },
+  "previous_complete_square_upper": {
+    "kind": "inline",
+    "value": "2233/450"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "2203/450"
+  },
+  "all_original_indices": {
+    "path": "content/020-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/021-original_cost_tags.json",
+    "sha256": "bcb206fc2c71cfc0c8e0ec2d3cbc0d3a4d510c2c767935a68e697025abe82b3b",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/022-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/023-previous_cost_bounds.json",
+    "sha256": "101c41350657cd61a0a4e36cf1c24fb97c488f15896e6e87fa432c2884fb63f8",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/024-improved_cost_bounds.json",
+    "sha256": "101c41350657cd61a0a4e36cf1c24fb97c488f15896e6e87fa432c2884fb63f8",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/025-majorants.json",
+    "sha256": "c01400c71e8a1a2a88d443c93c8f3dcb2943a53d9fcc1781328662a8fbd58419",
+    "kind": "array"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": []
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "direct_numerator_improvement": {
+    "kind": "inline",
+    "value": "2061512697931813067/232723650729954384000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "1261651752792304150478204171182564632403/36138993843177591170119845279750000000"
+  },
+  "AP11_block_results": {
+    "path": "content/032-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "13012264230740567888670983489185758334438753/28346990053863075922188555569458332750000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "13009118668303710697799613546610783059407503/28346990053863075922188555569458332750000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "707098855390611881981/6372190863546240735288"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary all-depth moment bound and complete comparison on both actual saturated K faces. Independent pure-three labels may change cells at every depth. Retains168 factorial gains, all52 costs, every other LCM category and all infinite tails. No actual-family sharpness, off-face extension, global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

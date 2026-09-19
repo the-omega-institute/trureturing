@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -26,9 +26,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PINS = {
     'certificates/shared_square_continuation_certificate.json':
-        '5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099',
+        '529f2cf3470505f0b37b2c36d6aca5333f93dffa841bb305c6d4f2d3e6b1235d',
     'certificates/shared_cell_square_certificate.json':
-        'df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d',
+        '26530cd48f6244cd8622efdaed09f5af77375b6e4152e122dec2ebf798d61925',
 }
 
 

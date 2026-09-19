@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "c27a0a5ce09edc44f2892411d11705fe59d466b0911ae4fee97b00a5ef6bf402",
+  "parts_directory": "shared_root_imbalance_payment.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "174878da618e85322cdd45a2cc1b4d4259b8e7fb7a289a01cb2405f060c99f0c",
+    "kind": "object"
+  }
+}

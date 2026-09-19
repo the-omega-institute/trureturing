@@ -1,8 +1,8 @@
 {
   "schema": "actual-first-exit-killed-maximum-v1",
   "source_pins": {
-    "certificates/actual_zero_block_certificate.json": "a2793e67cac77cd7db19e024cc4f446d32a8695ed3fa070991473e692db169de",
-    "verify_actual_zero_block.py": "edd6284c0cbaee2e32903d3f20b27ef9e5880834c5e0c47c8d6e9b9fc10685fe"
+    "certificates/actual_zero_block_certificate.json": "7db7119c895b74badd180d906c99a5d8f1931018236c1943285bf68743025e63",
+    "verify_actual_zero_block.py": "df37c82a107b4d4731f671e752eae4f182dd42077b4f9de484ba2511a6ea2fd6"
   },
   "rows": [
     {

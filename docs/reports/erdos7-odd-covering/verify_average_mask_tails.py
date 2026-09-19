@@ -12,7 +12,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -29,7 +29,7 @@ import sys
 HERE = Path(__file__).resolve().parent
 CERTIFICATE = 'certificates/average_mask_tails_certificate.json'
 SOURCE_PINS = {
-    'verify_pg1_lifted_global_cap.py': '1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf',
+    'verify_pg1_lifted_global_cap.py': '80ecc37faa73293708e4b0d2c6700c990a81beec21bcba799cbb96174dba8b9e',
     'certificates/pg1_lifted_global_cap_certificate.json': 'cf365032f6447be1fe010fdca00d90444a09bbf19b3654a1b089c7d06f2fe35d',
     'certificates/mod3_conditioned_geometry_certificate.json': '9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a',
 }

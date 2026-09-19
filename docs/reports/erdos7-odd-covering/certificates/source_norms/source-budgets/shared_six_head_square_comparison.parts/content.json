@@ -1,0 +1,426 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-six-head-square-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "aaacae468331df7927656108b2ba63396306a652193c0f317da50c31042baead",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "source_pre": {
+    "kind": "inline",
+    "value": [
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ]
+    ]
+  },
+  "source_descendant": {
+    "kind": "inline",
+    "value": [
+      [
+        "0",
+        "1/18",
+        "1/18",
+        "1/18",
+        "1/18"
+      ],
+      [
+        "0",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ]
+    ]
+  },
+  "selected_density_weights": {
+    "kind": "inline",
+    "value": [
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "4/5"
+      ],
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "3/5"
+      ],
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "2/5"
+      ],
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "2/5"
+      ],
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "2/5"
+      ]
+    ]
+  },
+  "source_caps": {
+    "kind": "inline",
+    "value": [
+      [
+        "0",
+        "1/90",
+        "1/90",
+        "1/120",
+        "1/90"
+      ],
+      [
+        "0",
+        "1/45",
+        "1/45",
+        "1/60",
+        "1/45"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/90",
+        "1/45"
+      ],
+      [
+        "0",
+        "0",
+        "1/45",
+        "1/90",
+        "1/45"
+      ],
+      [
+        "0",
+        "0",
+        "1/45",
+        "1/90",
+        "1/45"
+      ]
+    ]
+  },
+  "source_group_budgets": {
+    "kind": "inline",
+    "value": [
+      "1/36",
+      "1/12",
+      "5/36"
+    ]
+  },
+  "forced27_deletion_coefficient": {
+    "kind": "inline",
+    "value": "1/135"
+  },
+  "pure_five_complement_in_slots": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/5",
+      "1/5",
+      "3/20",
+      "1/5"
+    ]
+  },
+  "head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "rational_lp_count": {
+    "kind": "inline",
+    "value": 612500
+  },
+  "all_head_components_sha256": {
+    "kind": "inline",
+    "value": "3e84ffdd1feaab9b112af43a7e378dbc9c8e3b8b641d763d714c8e355b00fb36"
+  },
+  "head_maximizing_witnesses": {
+    "kind": "inline",
+    "value": [
+      {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "components": {
+          "head_square_before27": 7980,
+          "forced27_square_deletion": 486,
+          "head_square": 7494,
+          "old_cross": 1656,
+          "raw_row_head_terms": [
+            208,
+            142,
+            114,
+            96,
+            64,
+            48
+          ],
+          "raw_row_tail_terms": [
+            57,
+            24,
+            16,
+            12,
+            30
+          ],
+          "positive7_raw_row": 12165,
+          "combined_numerator_over27000": 78360
+        }
+      }
+    ]
+  },
+  "combined_head_upper": {
+    "kind": "inline",
+    "value": "653/225"
+  },
+  "separate_head_component_uppers": {
+    "kind": "inline",
+    "value": {
+      "head_square": "1249/900",
+      "old_cross": "17/50",
+      "positive7_raw_row": "31/12"
+    }
+  },
+  "complete_tail_partition": {
+    "path": "content/020-complete_tail_partition.json",
+    "sha256": "a32e2b74f103ee5c58399ede659b3f75c0592f3214a18aee735dc71d073417be",
+    "kind": "value"
+  },
+  "complete_tail_square_upper": {
+    "kind": "inline",
+    "value": "2977/1800"
+  },
+  "previous_complete_square_upper": {
+    "kind": "inline",
+    "value": "13109/2700"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "8201/1800"
+  },
+  "complete_square_saving": {
+    "kind": "inline",
+    "value": "323/1080"
+  },
+  "all_original_indices": {
+    "path": "content/025-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/026-original_cost_tags.json",
+    "sha256": "599ba627cd6131ce357a626b69ef148af893d0d21daada76339c3e8707f62b17",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/027-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/028-previous_cost_bounds.json",
+    "sha256": "38b8041398c5521412a9ddc90a504382eb5588be9d53232e7c419cdd32e77761",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/029-improved_cost_bounds.json",
+    "sha256": "40b638c676c083101353bc44e73dd698d07c5f342f5afb29bf9dd8e3db743aa6",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/030-majorants.json",
+    "sha256": "57f511be8010bd041c3ce6ee85337957bb6169ac84a40733a2d121b090f61e29",
+    "kind": "array"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      49,
+      50,
+      51
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "direct_numerator_improvement": {
+    "kind": "inline",
+    "value": "665868601431975620641/16756102852556715648000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "1359747088696419301952788994461297692842887/4851341441544063963832335000000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "174879813670522513837559476096196836412803553753087/5059459138044862763816778339165000000000000000000"
+  },
+  "AP11_block_results": {
+    "path": "content/037-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "10399866722898697544974622986709693690268831574139/22677592043090460737750844455566666200000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "902033522738934218547984261300578265995197609588916431/1984289303770415314553198889862083292500000000000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "1552533918019147485036615540047235192842887/387271891041667638887357977500000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete square and52-cost comparison on both actual saturated K faces. One original six-label head controls B squared and both B-old-tail and B-positive7 crosses before maximization. Every original tail pair and independent label remains. The complete square replaces191 instead of adding its pure-axis saving. No actual-family attainment, off-face/global extension, Lean or unrestricted Erdos7 resolution."
+  }
+}

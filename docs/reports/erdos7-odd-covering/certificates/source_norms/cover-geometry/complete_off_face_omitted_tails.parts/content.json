@@ -1,0 +1,34 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-complete-off-face-omitted-tails-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+      "frontier/source-budgets/source_cost_endpoint_attainment.py": "860816267cfc11da898d207f1eb48486c6630d1dd3d00a785417a244188af47d",
+      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+      "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+    }
+  },
+  "whole_face_checks": {
+    "path": "content/002-whole_face_checks.json",
+    "sha256": "c0cab2d7e252ba71ca7b6f864af733cfbf7d97a0560b98164eea70c306bf5576",
+    "kind": "value"
+  },
+  "actual_finite_cases": {
+    "path": "content/003-actual_finite_cases.json",
+    "sha256": "8357130ac6ff31029ac4048d2d60557afa7b2ad06a750d860fc3caac1ff3b14d",
+    "kind": "array"
+  },
+  "cylinder_checks": {
+    "kind": "inline",
+    "value": 2241
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary computable complete omitted-tail interface for116/124, recovering all98/109 R_k and Zplus exactly. Actual source, independent original residues, whole exponent tails and one common defect vector. No new global K or Lean claim."
+  }
+}

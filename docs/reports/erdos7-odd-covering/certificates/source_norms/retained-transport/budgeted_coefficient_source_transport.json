@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "56208b36d2695066513472bb2e7cc8d0afc9bedec83b5a49f0a89c19b54785ff",
+  "parts_directory": "budgeted_coefficient_source_transport.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "d1be3449270a93a1f6514214e3ae2e49dea37aca3a910a9110bcf79eba997a85",
+    "kind": "object"
+  }
+}

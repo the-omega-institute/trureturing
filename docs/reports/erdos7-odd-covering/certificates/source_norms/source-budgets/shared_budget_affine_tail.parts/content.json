@@ -1,0 +1,63 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-budget-affine-tail-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "ddc54ac54d21c00a885bfd0ab83adcaa31d4a9b4302844b2e432d069bac70ac7",
+      "frontier/retained-transport/finite_source_face_transport.py": "4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "4da7a68610d2414aaabff397adc34796cee610d45ccc5906af29e6ac7ff0ddb3",
+      "frontier/cover-geometry/complete_off_face_omitted_tails.py": "ff157414ae99b5bb47ce58f7b59870bc13827fbfb1d726fc6655435fdce1f91d",
+      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "ac969b33f833eb1cea191bdb74434ad6199077cfed1e551f0c5e0e7f286d3df1",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "01f227f4a8ae19cfec1e2394b242d0fd30e14b442bebaa3299acde78907c2b26",
+      "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645"
+    }
+  },
+  "support_algebra": {
+    "kind": "inline",
+    "value": {
+      "support_checks": 864,
+      "exact_crossing_equalities": 72,
+      "digest": "d1aef07e221adef9cb06f7f72ad4a88345d4fffd8ceda5ab24af9e328d5ac8a8",
+      "support_order_refutation": {
+        "interval": [
+          "0",
+          "1/100"
+        ],
+        "interior": "1/125",
+        "interior_value": "21/1000",
+        "incorrect_vertex_upper": "1/50",
+        "valid_fixed_support_upper": "11/500"
+      }
+    }
+  },
+  "actual_cases": {
+    "path": "content/003-actual_cases.json",
+    "sha256": "dde4e904d10fae39b305d1a15a64bcb124e29fb308178775638d2096d3581170",
+    "kind": "array"
+  },
+  "complete_tail_checks": {
+    "kind": "inline",
+    "value": 6
+  },
+  "same_head_cost_checks": {
+    "kind": "inline",
+    "value": 48
+  },
+  "shared_coordinate_equalities": {
+    "kind": "inline",
+    "value": 15
+  },
+  "jensen_checks": {
+    "kind": "inline",
+    "value": 6
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete-tail affine support theorem and common-coordinate cost reduction. Infinite tails retained. Exact finite arithmetic supplements the general proof; no new global K or Lean claim."
+  }
+}

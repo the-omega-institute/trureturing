@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "2e6ef022a71cce9b2123e09667cfd68e8c6b14f15209b7a93c7667b29ba3c313",
+  "parts_directory": "retained_pair_row_transport.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "4729d10857875bd9f1e8e21ca6b62ccb34a823c5223a140cb1f0a07e6e7f2a18",
+    "kind": "object"
+  }
+}

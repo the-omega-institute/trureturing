@@ -1,0 +1,160 @@
+{
+  "schema": "erdos7-finite-outer-jensen-compatibility-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "rows": [
+    {
+      "threshold": 4,
+      "block": 0,
+      "sharp_value": "382661/2572500",
+      "baseline_gaps": [
+        "2428339/138915000",
+        "716279/138915000",
+        "376823/11907000",
+        "2617511/83349000",
+        "2597261/83349000",
+        "51546599/2083725000",
+        "46680331/2083725000",
+        "37/4725",
+        "1/420",
+        "0"
+      ]
+    },
+    {
+      "threshold": 4,
+      "block": 1,
+      "old_value": "482/8575",
+      "sharp_value": "482/8575",
+      "baseline_gaps": [
+        "1/140",
+        "0",
+        "89/8575",
+        "149/14700",
+        "509/51450",
+        "691/102900",
+        "22/5145",
+        "697/102900",
+        "113/25725",
+        "69/34300"
+      ],
+      "gamma": "264/1715",
+      "tensor_minus_value": "1859/34300"
+    },
+    {
+      "threshold": 4,
+      "block": 2,
+      "old_value": "187/17150",
+      "sharp_value": "187/17150",
+      "baseline_gaps": [
+        "1/980",
+        "0",
+        "12/8575",
+        "17/14700",
+        "47/51450",
+        "103/102900",
+        "1/5145",
+        "2/1575",
+        "41/44100",
+        "13/22050"
+      ],
+      "gamma": "12/1715",
+      "tensor_minus_value": "347/34300"
+    },
+    {
+      "threshold": 5,
+      "block": 0,
+      "sharp_value": "179394011/1620675000",
+      "baseline_gaps": [
+        "936789967/72930375000",
+        "404221217/72930375000",
+        "741197083/31255875000",
+        "1289690989/54697781250",
+        "5129148331/218791125000",
+        "5062504499/273488906250",
+        "18608290459/1093955625000",
+        "1013/158760",
+        "1/735",
+        "0"
+      ]
+    },
+    {
+      "threshold": 5,
+      "block": 1,
+      "old_value": "110031/2401000",
+      "sharp_value": "108369/2401000",
+      "baseline_gaps": [
+        "7793/1200500",
+        "1913/1200500",
+        "2321/257250",
+        "64013/7203000",
+        "31519/3601500",
+        "383/96040",
+        "4391/1800750",
+        "13/3675",
+        "1/735",
+        "0"
+      ],
+      "gamma": "1941/12005",
+      "tensor_minus_value": "108369/2401000"
+    },
+    {
+      "threshold": 5,
+      "block": 2,
+      "old_value": "4523/480200",
+      "sharp_value": "4523/480200",
+      "baseline_gaps": [
+        "1/980",
+        "0",
+        "1039/720300",
+        "269/205800",
+        "211/180075",
+        "1411/1440600",
+        "59/144060",
+        "361/308700",
+        "64/77175",
+        "151/308700"
+      ],
+      "gamma": "177/12005",
+      "tensor_minus_value": "4269/480200"
+    },
+    {
+      "threshold": 5,
+      "block": 3,
+      "old_value": "771/480200",
+      "sharp_value": "771/480200",
+      "baseline_gaps": [
+        "1/6860",
+        "0",
+        "143/720300",
+        "11/68600",
+        "22/180075",
+        "69/480200",
+        "1/48020",
+        "19/102900",
+        "1/7350",
+        "3/34300"
+      ],
+      "gamma": "9/12005",
+      "tensor_minus_value": "713/480200"
+    }
+  ],
+  "gap_lower": {
+    "4": "1/1225",
+    "5": "31/72030"
+  },
+  "gap_upper": {
+    "4": "24/8575",
+    "5": "39/60025"
+  },
+  "old_positive5_correction": "831/1200500",
+  "old_threshold5_total_gap": "4043/3601500",
+  "source_sha256": {
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "frontier/source-budgets/positive_seven_source_extrema.py": "a3d67ed4cd887027957aeb6c59c7eb5396b96594af32eb3ef2cfad8efb6dc269"
+  },
+  "scope": "Positive gaps for the fixed absorbed carrier source comparison. Exact optima and global K improvement are not claimed."
+}

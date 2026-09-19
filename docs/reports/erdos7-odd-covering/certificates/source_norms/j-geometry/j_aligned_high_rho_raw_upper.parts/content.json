@@ -1,0 +1,189 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-high-rho-raw-upper-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual countable-label qJ=1 aligned source containing beta=1/5 e_L+1/20 simplex and late=1/135 e_L+7/1080 simplex. All original raw source cost operators; no survivor LP rows, no deletion credit except exact at-one centering. Nine-vertex interpolation of separately convex raw operators, complete exponent and count tails. rho equal to the exact threshold gives J<=403; strictly larger rho gives J<403. No finite actual source attains qJ=1; no numerical off-face neighborhood is supplied."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+      "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "bb8f955a08fe66ccee9802978cdd7125afae622eb420590db91cf1dd71318738",
+      "profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md": "f3190a7c8656a2e20dbf1172517caa2fdc1c9cc6366cd87d1a51c8bde9ccf629",
+      "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
+      "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
+      "profile-notes/257-320/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "fc8ef65d93e920ffaee81a1846d320cb1879bd97f4291b196e97d01a5ce10168",
+      "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f"
+    }
+  },
+  "ordinary_proof": {
+    "kind": "inline",
+    "value": {
+      "sha256": "ff996cb611578d0e922098ce23b4ef6607645c0f280a3618d56ccdc2a5c08eb0",
+      "byte_count": 9114
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "9161bf8bb0a39eacf54053ce0e0ac47f781501bbb9c4b5171e1d06b668e37fff"
+  },
+  "actual_mass_interval": {
+    "kind": "inline",
+    "value": [
+      "413/2700",
+      "1/4"
+    ]
+  },
+  "target_offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "original_cost_tags": {
+    "path": "content/007-original_cost_tags.json",
+    "sha256": "fe48cdeffefbc930b88acece135341582c36c31cebd12e61999febb24aa0b494",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/008-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "costs_at_one": {
+    "path": "content/009-costs_at_one.json",
+    "sha256": "e3d18a01475eb31df628d26e1d9daade59d0f15b01937b666bc2afed4546953f",
+    "kind": "value"
+  },
+  "original_signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "original_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "centered_numerator_mass_coefficient": {
+    "kind": "inline",
+    "value": "742754686136309887178461/5393494724947082158204800"
+  },
+  "denominator_mass_coefficient": {
+    "kind": "inline",
+    "value": "614921/614922"
+  },
+  "positive403_mass_coefficient": {
+    "kind": "inline",
+    "value": "10102918572711673951243633060687/26498239583665014643260182400"
+  },
+  "aligned_raw_mean_upper": {
+    "kind": "inline",
+    "value": "397/450"
+  },
+  "rows": {
+    "path": "content/017-rows.json",
+    "sha256": "e2fd8010b343e6ea82b5effd188f33fd96a3d3132721a0d25b5216a882043342",
+    "kind": "array"
+  },
+  "uniform_mass_threshold": {
+    "kind": "inline",
+    "value": "188862285349948051804075778194870734661201649/1083110170950420907768636916953101981408750000"
+  },
+  "uniform_rho_threshold": {
+    "kind": "inline",
+    "value": "26395759707384915638780240651905437449889149/1083110170950420907768636916953101981408750000"
+  },
+  "controlling_vertices": {
+    "kind": "inline",
+    "value": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        4
+      ]
+    ]
+  },
+  "uniform_numerator_constant": {
+    "kind": "inline",
+    "value": "13892689289759908173789898167640162501/367593071513567360916667212000000000"
+  },
+  "uniform_denominator_constant": {
+    "kind": "inline",
+    "value": "973507751009/12942710550000"
+  },
+  "denominator_lower_at_exact_threshold": {
+    "kind": "inline",
+    "value": "6003540746602272585555413370402268366335778403189/60548024776470429586082340931512306964711942500000"
+  },
+  "simple_strict_guard": {
+    "kind": "inline",
+    "value": {
+      "rho": "61/2500",
+      "S": "109/625",
+      "N_upper": "21867087547838353020599949060866887872073/578223901490841458721917524476000000000",
+      "E_lower": "14120670280061/142369816050000",
+      "margin403_lower": "1889909635609088869088242455897111557903/167106707530853181570634164573564000000000",
+      "J_upper": "6677492630788730933466240776510775783882097/16574150224378014943760121635153034480000"
+    }
+  },
+  "covers_high_rho": {
+    "kind": "inline",
+    "value": true
+  }
+}

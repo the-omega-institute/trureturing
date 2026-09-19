@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "a028c84fa753063c8f1be7e2645e2b845b9a7e1cc26efe57ecfb1ea9e6425387",
+  "parts_directory": "endpoint_numerator_common_costs.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "6d00af903124712a798e1e2c25945e4e0ec9beade4b1c0d28121b5e907072667",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-retained-punctured-tail-support-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "89fc09653d7b446c9629418809c9672cb71d7a8011ec47d2b40f85d0173fe27a",
+    "kind": "value"
+  },
+  "families": {
+    "kind": "inline",
+    "value": [
+      "pure3",
+      "pure5",
+      "root5",
+      "cell5"
+    ]
+  },
+  "bases": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      5,
+      5
+    ]
+  },
+  "first_unpunctured_depths": {
+    "kind": "inline",
+    "value": [
+      3,
+      2,
+      2,
+      2
+    ]
+  },
+  "first_punctured_depths": {
+    "kind": "inline",
+    "value": [
+      5,
+      4,
+      3,
+      2
+    ]
+  },
+  "primitive_order": {
+    "kind": "inline",
+    "value": [
+      "shallow_five_shifted_defect",
+      "shallow_alpha_shifted_defect",
+      "pure_three_27_defect",
+      "pure_three_later_defect",
+      "pure_deep_five_defect",
+      "alpha_deep_five_defect",
+      "union_overlap"
+    ]
+  },
+  "constraint_inventory": {
+    "kind": "inline",
+    "value": {
+      "nested": {
+        "inequalities": {
+          "transported": 2516,
+          "exact": 4643,
+          "zero_price": 4
+        },
+        "equalities": {
+          "transported": 24,
+          "exact": 31,
+          "zero_price": 1
+        }
+      },
+      "disjoint": {
+        "inequalities": {
+          "transported": 2516,
+          "exact": 4643,
+          "zero_price": 4
+        },
+        "equalities": {
+          "transported": 24,
+          "exact": 31,
+          "zero_price": 1
+        }
+      }
+    }
+  },
+  "domains": {
+    "path": "content/008-domains.json",
+    "sha256": "cfd483ce7b0a556f6cac3b3425c1efcc0299ac990e3708f0fca054c56c97b51e",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete fixed-row residual plus complete infinite tails for eight original225/226 maximizing-controller duals on two208 source domains.81 fixed supports per controller are individually maximized over the whole domain before the smallest is selected. Finite support-library optimum only; current230 zero survivor-mass guard. No new full head scan, no transport of every other dual or pruned alternative, no off-face/global52-cost K bound, no actual-family attainment, no Lean verification or unrestricted Erdos7 resolution."
+  }
+}

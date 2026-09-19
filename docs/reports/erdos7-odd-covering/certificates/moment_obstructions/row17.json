@@ -112,18 +112,18 @@
   },
   "optimum": "2223498946943730400848934820152878371/10795621729005211913709172662384000",
   "source_sha256": {
-    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-    "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
-    "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
-    "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
-    "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
-    "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
-    "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
-    "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "e6b3e9631aa3d4e16093fc5ea51017e16d021486bca96240f87a01771f940023",
+    "certificates/layout_gap_frontier_certificate.json": "cbebf345342fd7744e6b41571db03cf5a77795045c39406be69b083b169ad898",
+    "certificates/pure_root_profile_certificate.json": "abab1e6acc05ecfb0365fd9af015a3140c0d42e7b46d9f16c05b64bcc1a64753",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
     "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
-    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
-    "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
-    "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70"
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "certificates/ap_schedule_frontier_certificate.json": "8abd7b9ae0eb01a68defab52bb2129d5d47fde20548b2e035554370fcb49d785",
+    "frontier/cover-geometry/verify_ap_schedule.py": "8b0077be1090f099a391cc5ba4ce3218dbec85d20a49926f4e88f09943f350b5"
   },
-  "verifier_sha256": "2c2e6b1f1529d4f34cc6656e13f7afbc2999f55efe332186a05a836420e80fdd"
+  "verifier_sha256": "68006b39d3fad963988a67520654827b63b1d162de8b3f89dec009619af7f581"
 }

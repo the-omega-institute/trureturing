@@ -1,0 +1,106 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-quadratic-vector-marked-source-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "7f8d151cd92a19c32a5f268d06579656924f52d8e3a01682b8df938878a2e5a7",
+    "kind": "value"
+  },
+  "source_payment_multiplier": {
+    "kind": "inline",
+    "value": "6/5"
+  },
+  "selected_deep_exponents": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "selected_deep_coefficient": {
+    "kind": "inline",
+    "value": "8/729"
+  },
+  "unchanged_unselected_mass_tail_coefficient": {
+    "kind": "inline",
+    "value": "1/7290"
+  },
+  "slab_Delta_upper": {
+    "kind": "inline",
+    "value": "1/18"
+  },
+  "r_cutoff_strict": {
+    "kind": "inline",
+    "value": "1/2500"
+  },
+  "general_comparison": {
+    "kind": "inline",
+    "value": "actual_margin >= old_carrier_average + [source_gain - uniform_residual_coefficient*(rho-(r+r1)/5)]_+"
+  },
+  "shared_budget": {
+    "kind": "inline",
+    "value": "(E5-r/5)+(E15-r1/5)+Edeep6+omega<=rho-(r+r1)/5"
+  },
+  "deep_lemma": {
+    "kind": "inline",
+    "value": "Vdeep6(v*I_J)>=sigma6*min_l[v_l*X_lJ/eta_l+kappa*(dmax-d_l)]-kappa*Edeep6, kappa>=vmax"
+  },
+  "canonical_parameter_index": {
+    "kind": "inline",
+    "value": 398
+  },
+  "canonical_carrier": {
+    "kind": "inline",
+    "value": [
+      1,
+      1
+    ]
+  },
+  "canonical_r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "canonical_quadratic_costs": {
+    "path": "content/014-canonical_quadratic_costs.json",
+    "sha256": "5d2d1931f7d7a1538adff89f24f507ac9fb7e92135271820e2b1092cc2f825e9",
+    "kind": "array"
+  },
+  "comparison_weight": {
+    "kind": "inline",
+    "value": "2371/2880"
+  },
+  "weighted_canonical_gain": {
+    "kind": "inline",
+    "value": "6140967005013173/241740098800200000"
+  },
+  "uniform_scalar_ideal00_gain": {
+    "kind": "inline",
+    "value": "-220447397/223833424815"
+  },
+  "weighted_canonical_residual_coefficient": {
+    "kind": "inline",
+    "value": "2714915121973/117904026240"
+  },
+  "whole_face": {
+    "path": "content/019-whole_face.json",
+    "sha256": "91732fd2f7b5a46aa95515ca9c032aecf0e8cb035fdc4eae6b436d555ce94cb3",
+    "kind": "value"
+  },
+  "comparison_to84": {
+    "path": "content/020-comparison_to84.json",
+    "sha256": "a39770c68429d80c596ba12d7edb80da920391ed47116d3b32166258c610ee6d",
+    "kind": "value"
+  },
+  "weighted_usable_improvement_over84": {
+    "kind": "inline",
+    "value": "10407081038453971/483480197600400000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary pointwise quadratic vector-marker theorem and whole-face absolute-margin bounds retain alpha=6/5 source payment, all original curvature and six cofactor tails. Independent original tests use the same actual source, carrier mixture and residual. Canonical relative gains are not constant whole-face gains. No covering construction, neighborhood extension, new global K or Lean verification."
+  }
+}

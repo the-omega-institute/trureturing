@@ -381,12 +381,12 @@
   ],
   "scope": "Original labels and complete tails on unchanged actual AP(4,6). Ordinary Jensen/distance proof with exact arithmetic; no Lean or unrestricted conclusion.",
   "source_sha256": {
-    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-    "certificates/joint_frontier_certificate.json": "be01369024cf8a3a43efdfa5e18334d8ba3d07c96f25801c9a919a364c55a583",
-    "certificates/fixed_cost_frontier_certificate.json": "4c6042eaaef211e4991e350ddc128f910316c467bc3dd1630b3c0468f270a133",
-    "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "certificates/joint_frontier_certificate.json": "a98b906b189ef80d4352f77583721dc7445c63fe48a5179df74cd966149e1e53",
+    "certificates/fixed_cost_frontier_certificate.json": "7906160593e1e08fead9606402509c5160ae1d1a04e415e34cec328e4d4903b9",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
     "certificates/layout_gap_norms.json": "a5ca5849e50702035e6812311d2191beb13498e2dc81b7dbb13eab27ffc2ebf5",
-    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232"
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2"
   },
-  "verifier_sha256": "7b51668f49edafeac34c5a86e6388da25a8409946674312925c865f2a4b97418"
+  "verifier_sha256": "0d4f23050b025ace5cbc4107864a4596da60b90fbd63446fc70a8f147f3ea3a8"
 }

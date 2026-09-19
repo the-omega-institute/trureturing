@@ -1,0 +1,390 @@
+{
+  "schema": "erdos7-endpoint-k-face-forced27-v1",
+  "source_sha256": {
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/endpoint-bounds/endpoint_k_face_linear.py": "4fa0effc17c4f42a419f96f76931f389b8ca0af3ff3a4f60fd227ddbe6fc8b46",
+    "certificates/source_norms/endpoint-bounds/endpoint_k_face_linear.json": "71244eac4f9cce79585c17663f80fcc7e16a03fcfcfda373c9747acc5c844682",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "1c8ccd9850a12019081181f53440606583bcd9781fd9949a30cd2d8e5a2503b3",
+    "verify_joint_frontier.py": "85341d7f8fa2d0b109697bc17b005a7e75f7f6ec412fd2eb3d26383cf9fce24f",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "646c6dce65185917554f77441c8c9d6373bb20021c1204cce01fd71f9a95e314",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "face_vertices": [
+    398,
+    410,
+    422
+  ],
+  "carrier": [
+    1,
+    1
+  ],
+  "symmetric_face_vertices": [
+    616,
+    628,
+    640
+  ],
+  "symmetric_carrier": [
+    1,
+    0
+  ],
+  "raw_deep3_cap": "1/24",
+  "complete_deep3_deletion": "1/120",
+  "deep3_five_complement_coefficient": "1/90",
+  "forbidden27_cap": "1/36",
+  "depth3_late_mass": "1/135",
+  "depth3_third_child_eta": "1/54",
+  "excluded_forbidden27_caps": [
+    "0",
+    "11/540",
+    "1/72",
+    "1/54"
+  ],
+  "forced27_cell1_deletion": "1/180",
+  "affine_beta_checks": [
+    {
+      "beta": [
+        "1/4",
+        "0",
+        "0"
+      ],
+      "cell_caps": [
+        "1/40",
+        "1/18",
+        "1/90",
+        "1/30",
+        "1/30"
+      ],
+      "root_caps": [
+        "7/90",
+        "7/90"
+      ]
+    },
+    {
+      "beta": [
+        "0",
+        "1/4",
+        "0"
+      ],
+      "cell_caps": [
+        "1/40",
+        "1/18",
+        "1/30",
+        "1/90",
+        "1/30"
+      ],
+      "root_caps": [
+        "7/90",
+        "7/90"
+      ]
+    },
+    {
+      "beta": [
+        "0",
+        "0",
+        "1/4"
+      ],
+      "cell_caps": [
+        "1/40",
+        "1/18",
+        "1/30",
+        "1/30",
+        "1/90"
+      ],
+      "root_caps": [
+        "7/90",
+        "7/90"
+      ]
+    }
+  ],
+  "first_beta_slot_tables": [
+    {
+      "first_beta_cell": 2,
+      "selected_cell_slot_caps": [
+        [
+          "0",
+          "1/90",
+          "1/90",
+          "1/120",
+          "2/225"
+        ],
+        [
+          "0",
+          "4/225",
+          "4/225",
+          "1/75",
+          "1/75"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ]
+      ],
+      "first5_before_deep3": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "pure5_complement_in_slots": [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      "first5_after_deep3": [
+        "0",
+        "2/75",
+        "14/225",
+        "7/150",
+        "7/150"
+      ],
+      "first15_root_caps": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ],
+      "first45_cap": "4/225"
+    },
+    {
+      "first_beta_cell": 3,
+      "selected_cell_slot_caps": [
+        [
+          "0",
+          "1/90",
+          "1/90",
+          "1/120",
+          "2/225"
+        ],
+        [
+          "0",
+          "4/225",
+          "4/225",
+          "1/75",
+          "1/75"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ]
+      ],
+      "first5_before_deep3": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "pure5_complement_in_slots": [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      "first5_after_deep3": [
+        "0",
+        "2/75",
+        "14/225",
+        "7/150",
+        "7/150"
+      ],
+      "first15_root_caps": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ],
+      "first45_cap": "4/225"
+    },
+    {
+      "first_beta_cell": 4,
+      "selected_cell_slot_caps": [
+        [
+          "0",
+          "1/90",
+          "1/90",
+          "1/120",
+          "2/225"
+        ],
+        [
+          "0",
+          "4/225",
+          "4/225",
+          "1/75",
+          "1/75"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "4/225",
+          "2/225",
+          "2/225"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "2/225",
+          "2/225"
+        ]
+      ],
+      "first5_before_deep3": [
+        "0",
+        "13/450",
+        "29/450",
+        "29/600",
+        "11/225"
+      ],
+      "pure5_complement_in_slots": [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      "first5_after_deep3": [
+        "0",
+        "2/75",
+        "14/225",
+        "7/150",
+        "7/150"
+      ],
+      "first15_root_caps": [
+        [
+          "0",
+          "13/450",
+          "13/450",
+          "13/600",
+          "1/45"
+        ],
+        [
+          "0",
+          "0",
+          "8/225",
+          "2/75",
+          "2/75"
+        ]
+      ],
+      "first45_cap": "4/225"
+    }
+  ],
+  "complete_descendant5_coefficients": [
+    "2/5",
+    "4/15",
+    "4/45"
+  ],
+  "complete_nonunit_zero7_categories": {
+    "test3": "7/90",
+    "test9": "1/18",
+    "pure3_deep": "7/180",
+    "test5": "14/225",
+    "pure5_deep": "1/50",
+    "test15": "8/225",
+    "3_times_deep5": "1/75",
+    "test45": "4/225",
+    "9_times_deep5": "1/225",
+    "deep35": "1/72"
+  },
+  "nonunit_zero7_upper": "611/1800",
+  "surviving_mass": "53/360",
+  "positive7_upper": "11/72",
+  "linear_upper": "1151/1800",
+  "signed_barrier": 6,
+  "margin_lower": "439/1800",
+  "improvement_over72": "23/900",
+  "old49_margin_upper": "9257/48600",
+  "gain_over_old49": "649/12150",
+  "uncoupled_upper": "293/360",
+  "gain_over_uncoupled": "157/900",
+  "actual398_height3_check": {
+    "height": 3,
+    "variant": 398,
+    "labels": 63,
+    "s": "913/3375",
+    "cells": [
+      "157/3375",
+      "94/1125",
+      "32/1125",
+      "7/125",
+      "7/125"
+    ],
+    "H": "1687/3375",
+    "S": "164959/965250",
+    "D": "22469/135000",
+    "S_minus_D": "86113/19305000",
+    "direct_CRT_union": true
+  },
+  "actual398_complete_limit": {
+    "s": "1/4",
+    "H": "37/72",
+    "S": "53/360"
+  },
+  "scope": "Ordinary uniform endpoint linear theorem on both entire actual K beta faces. Forced27 and complete deep3 deletion retain original labels. No claim that the whole relaxed beta simplex is realizable, no new neighborhood, global K or Lean result."
+}

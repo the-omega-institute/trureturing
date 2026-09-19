@@ -1,0 +1,359 @@
+{
+  "schema": "erdos7-joint-deep-mean-transport-v1",
+  "source_sha256": {
+    "certificate_io.py": "3bab29ebc23defcae75e775fb182d2aa0d83d71ba1ae3b168ed8e9bc7a8c1fe2",
+    "frontier/cover-geometry/pure_three_root_spill.py": "052ab85338a093712e0ab023f74b7e4add998748e9519a87e3a9af183316fbc8",
+    "frontier/cover-geometry/quantitative_forced27.py": "4305dff47684212969e4fc291601a7e6e72bbfd62855bb76a011ddc189cb0b22",
+    "frontier/retained-transport/deep_five_mean_transport.py": "f1fdd8d7cb194049209cbc586b5d0edb788bbc30796be7c221e5e9c6fe94f26a",
+    "frontier/retained-transport/finite_source_face_transport.py": "4d0cc0e0d01b7da3b874466d36b359415594e6d1f23fdf51216a333ed0226bbf",
+    "frontier/comparison-bounds/whole_cost_mean_stop_loss.py": "21caf2496428ab1772ffd544c38a82a65b3336d32b8f4aa99307810f54478ac0"
+  },
+  "same_head_face_recoveries": 12500,
+  "joint_price_comparisons": [
+    {
+      "sigma": "0",
+      "head_checks": 12500,
+      "strict_price_improvements": 5900,
+      "maximum_price_saving": "23/4",
+      "maximizing_example": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "additional_full_head_improvements": 2975,
+      "deeper_family_improvements": 3125,
+      "strict_source_coefficient_improvements": 1800
+    },
+    {
+      "sigma": "1/27",
+      "head_checks": 12500,
+      "strict_price_improvements": 5900,
+      "maximum_price_saving": "404/67",
+      "maximizing_example": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "additional_full_head_improvements": 2925,
+      "deeper_family_improvements": 3125,
+      "strict_source_coefficient_improvements": 1800
+    },
+    {
+      "sigma": "2/27",
+      "head_checks": 12500,
+      "strict_price_improvements": 5900,
+      "maximum_price_saving": "197/31",
+      "maximizing_example": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "additional_full_head_improvements": 2925,
+      "deeper_family_improvements": 3125,
+      "strict_source_coefficient_improvements": 1800
+    }
+  ],
+  "actual_finite_families": [
+    {
+      "mode": "good",
+      "source_height": 5,
+      "sigma": "28800389514256941173/389490222930908203125",
+      "z": "2344/3125",
+      "dmax": "2344/3125",
+      "root1_max": "1563/3125",
+      "eta": [
+        "14/243",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      "qslots": [
+        "0",
+        "1/5",
+        "1/5",
+        "469/3125",
+        "1/5"
+      ],
+      "present_seven_original_labels": 70,
+      "uncredited_shallow_labels": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "pure7_residue_rule": "6*7^(e-1)",
+      "mixed7_residue_rule": "0 for every label",
+      "complete_defects": [
+        "2344/7090453125",
+        "1313812/4254271875",
+        "1063291/127628156250",
+        "17431/3151312500"
+      ],
+      "head_checks": 12500,
+      "positive_credits": 12500,
+      "minimum_margin": "73806571/486202500000",
+      "minimum_positive_credit": "17553806298263/2658069067500000",
+      "positive_witness": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "mode": "wrong27-and-wrong15",
+      "source_height": 5,
+      "sigma": "28800389514256941173/389490222930908203125",
+      "z": "2344/3125",
+      "dmax": "2344/3125",
+      "root1_max": "1563/3125",
+      "eta": [
+        "14/243",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      "qslots": [
+        "0",
+        "1/5",
+        "1/5",
+        "469/3125",
+        "1/5"
+      ],
+      "present_seven_original_labels": 70,
+      "uncredited_shallow_labels": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "pure7_residue_rule": "6*7^(e-1)",
+      "mixed7_residue_rule": "0 for every label",
+      "complete_defects": [
+        "1406/1418090625",
+        "1313812/4254271875",
+        "1063291/127628156250",
+        "470957/85085437500"
+      ],
+      "head_checks": 12500,
+      "positive_credits": 12500,
+      "minimum_margin": "521601197/3403417500000",
+      "minimum_positive_credit": "17545000367063/2658069067500000",
+      "positive_witness": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "mode": "root1-and-absent",
+      "source_height": 5,
+      "sigma": "28800389514256941173/389490222930908203125",
+      "z": "2344/3125",
+      "dmax": "2344/3125",
+      "root1_max": "1563/3125",
+      "eta": [
+        "14/243",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      "qslots": [
+        "0",
+        "1/5",
+        "1/5",
+        "469/3125",
+        "1/5"
+      ],
+      "present_seven_original_labels": 69,
+      "uncredited_shallow_labels": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "pure7_residue_rule": "6*7^(e-1)",
+      "mixed7_residue_rule": "0 for every label",
+      "complete_defects": [
+        "11716/7090453125",
+        "6583124/21271359375",
+        "1063291/127628156250",
+        "470957/85085437500"
+      ],
+      "head_checks": 12500,
+      "positive_credits": 12500,
+      "minimum_margin": "520851437/3403417500000",
+      "minimum_positive_credit": "17532699804503/2658069067500000",
+      "positive_witness": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "scope": "Complete off-face mean correction and a shared finite residual interface. Ordinary proof retains all original exponent tails. Full tail/cost optimization and unrestricted Erdos7 remain unresolved; no new global constant or Lean result."
+}
