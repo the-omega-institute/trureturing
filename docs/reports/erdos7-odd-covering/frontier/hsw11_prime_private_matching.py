@@ -6,6 +6,9 @@ Each label denotes one whole prefix cylinder modulo p**(e-1); (e,m) must
 be unique and gcd(p,m)=1. It certifies each non-prime root's entire finite
 tail by a disjoint minimal-prefix antichain, without enumerating p**(H-1).
 The returned matching keeps original input indices and has a common tail.
+Its depth is at most L-1, where L is the (p-1)-st largest maximum exponent
+among active nontrivial cofactor columns; a taller pure column does not
+alter L. Finite fixtures check this stronger bound without truncating H.
 
 The HSW fixtures use the complete source height 22 and its literal normal
 and closing families. They are selected private old-coordinate states,
@@ -208,6 +211,7 @@ def analyze_local(p, height, prime_root, input_labels):
     antichains = {}
     neighbors = {r: set() for r in roots}
     raw_mass = {r: F(0) for r in roots}
+    nonpure_heights = {}
     for r in roots:
         prefixes = [(e-1, a) for e, _, root, a in labels if root == r]
         antichains[r] = minimal_prefix_antichain(p, prefixes)
@@ -219,10 +223,16 @@ def analyze_local(p, height, prime_root, input_labels):
         raw_mass[root] += F(1, p**(e-1))
         if m > 1:
             neighbors[root].add(m)
+            nonpure_heights[m] = max(e, nonpure_heights.get(m, 0))
     require(all(mass >= 1 for mass in raw_mass.values()), 'tail union exceeds raw mass')
     hall_matching = augmenting_matching(roots, neighbors)
+    ordered_height = sorted(nonpure_heights.values(), reverse=True)[p-2]
     greedy = greedy_common_tail(p, height, prime_root, labels)
     require(greedy['tail_mass'] >= F(1, p**(height-1)), 'finite-tail mass bound failed')
+    require(greedy['depth'] <= ordered_height-1,
+            'greedy exceeded the ordered nonpure cofactor height')
+    ordered_tail_bound = F(1, p**(ordered_height-1))
+    require(greedy['tail_mass'] >= ordered_tail_bound, 'ordered-height tail bound failed')
     tail_neighbors = {r: set() for r in roots}
     for e, m, r, residue in labels:
         if m > 1 and greedy['tail'] % p**(e-1) == residue:
@@ -231,7 +241,9 @@ def analyze_local(p, height, prime_root, input_labels):
     return dict(labels=labels, roots=roots, antichains=antichains,
                 neighbors=neighbors, hall_matching=hall_matching,
                 raw_mass=raw_mass, common_tail=greedy,
-                tail_neighbors=tail_neighbors, at_tail_matching=at_tail_matching)
+                tail_neighbors=tail_neighbors, at_tail_matching=at_tail_matching,
+                nonpure_heights=nonpure_heights, ordered_height=ordered_height,
+                ordered_tail_bound=ordered_tail_bound)
 
 
 def finite_gap_checks():
@@ -363,6 +375,178 @@ def sharp_local_checks():
                 comparable_label_disjointness_checks=comparable_checks)
 
 
+def tall_column_fixture_checks():
+    """Full local tails with arbitrarily scalable H and fixed L=1 or L=2.
+
+    All cofactors are the actual odd primes 5 and 7. At a fixed old point
+    congruent to 0 modulo both, CRT realizes every label as one literal AP.
+    Comparable original numerical moduli have disjoint root/tail classes.
+    These local families do not assert global odd coverage or minimality.
+    """
+    examples = []
+    for kind in ('pure_tall_L1', 'pure_and_one_nonpure_tall_L2'):
+        for height in (2, 3, 22, 100):
+            if kind == 'pure_tall_L1':
+                labels = [(1, 5, 1, 0), (1, 7, 2, 0)]
+                labels += [(e, 1, 1, 3**(e-2)) for e in range(2, height+1)]
+                expected_height, expected_mass = 1, F(1)
+            else:
+                labels = [(1, 5, 1, 0), (2, 5, 2, 0),
+                          (2, 1, 2, 1), (2, 7, 2, 2)]
+                labels += [(e, 5, 2, 2+3**(e-2)) for e in range(3, height+1)]
+                labels += [(e, 1, 1, 3**(e-2)) for e in range(3, height+1)]
+                expected_height, expected_mass = 2, F(1, 3)
+            result = analyze_local(3, height, 0, labels)
+            require(result['ordered_height'] == expected_height,
+                    'tall-column fixture changed its ordered height')
+            comparable_checks = 0
+            for i, (e, m, r, a) in enumerate(labels):
+                for ee, mm, rr, aa in labels[i+1:]:
+                    modulus, other = 3**e*m, 3**ee*mm
+                    if modulus % other != 0 and other % modulus != 0:
+                        continue
+                    require(r != rr or (a-aa) % 3**(min(e, ee)-1) != 0,
+                            'comparable tall-column labels overlap')
+                    comparable_checks += 1
+            # For two roots, union all compatible distinct-cofactor pairs.
+            # Each intersection is the longer p-adic prefix. No tail-period
+            # enumeration occurs, including at height 100.
+            choices = {r: [(e, m, a) for e, m, rr, a in labels if rr == r and m > 1]
+                       for r in (1, 2)}
+            good_prefixes = []
+            for (e, m, a), (ee, mm, aa) in product(choices[1], choices[2]):
+                if m == mm or (a-aa) % 3**(min(e, ee)-1) != 0:
+                    continue
+                good_prefixes.append((e-1, a) if e >= ee else (ee-1, aa))
+            good_mass = prefix_union_mass(3, good_prefixes)
+            require(good_mass == expected_mass == trie_union_mass(3, good_prefixes),
+                    'tall-column exact good-tail mass changed')
+            examples.append(dict(kind=kind, p=3, height=height,
+                                 ordered_height=result['ordered_height'],
+                                 nonpure_column_heights=result['nonpure_heights'],
+                                 active_labels=len(labels),
+                                 greedy_depth=result['common_tail']['depth'],
+                                 exact_good_mass=good_mass,
+                                 comparable_pair_checks=comparable_checks))
+    return dict(scope='literal local full-tail fixtures; not a whole odd cover',
+                examples=examples)
+
+
+def inventory_sharp_family(p, height, column_height):
+    """Actual APs attaining H+(p-1)(L+1), including off-source parents."""
+    colors = []
+    candidate = max(p, height+2)+1
+    while len(colors) < p-1:
+        if candidate % 2 and all(candidate % d for d in range(2, isqrt(candidate)+1)):
+            colors.append(candidate)
+        candidate += 1
+    rows = []
+
+    def add(e, m, root=0, tail=0, cofactor_residue=0):
+        power = p**e
+        primary = 0 if e == 0 else root+p*tail
+        residue = primary if m == 1 else primary+power*((cofactor_residue-primary)*pow(power, -1, m) % m)
+        rows.append(dict(e=e, m=m, modulus=power*m, residue=residue))
+
+    add(1, 1)
+    for e in range(2, height+1):
+        add(e, 1, root=p-1, tail=(p-1)*p**(e-2)-1)
+    for index, m in enumerate(colors[:-1], 1):
+        add(0, m, cofactor_residue=1)
+        add(1, m, root=index)
+        for e in range(2, column_height+1):
+            add(e, m, root=p-1, tail=index*p**(e-2)-1)
+    final_color = colors[-1]
+    add(0, final_color, cofactor_residue=column_height)
+    for e in range(1, column_height):
+        add(e, final_color, root=p-1, tail=p**(e-1)-1, cofactor_residue=e)
+    add(column_height, final_color, root=p-1, tail=p**(column_height-1)-1)
+    return rows, colors
+
+
+def inventory_sharp_checks():
+    """Exactly seven finite inventory cases; no expansion of the old scan."""
+    examples = []
+    cases = ((2, 1, 1), (2, 5, 2), (3, 1, 1), (3, 5, 2),
+             (3, 4, 4), (5, 3, 2), (5, 3, 3))
+    for p, height, column_height in cases:
+        rows, colors = inventory_sharp_family(p, height, column_height)
+        for m in colors:
+            prime_integer(m)
+            require(m > height+2 and m != p, 'inventory cofactor prime is too small')
+        moduli = {row['modulus'] for row in rows}
+        require(len(moduli) == len(rows) == height+(p-1)*(column_height+1),
+                'sharp original inventory count changed')
+        for row in rows:
+            require(0 <= row['residue'] < row['modulus'], 'noncanonical AP residue')
+            for e in range(row['e']+1):
+                for m in {1, row['m']}:
+                    divisor = p**e*m
+                    if divisor > 1:
+                        require(divisor in moduli, 'a required divisor modulus is absent')
+        for i, first in enumerate(rows):
+            for second in rows[i+1:]:
+                a, b = first['modulus'], second['modulus']
+                if a % b == 0 or b % a == 0:
+                    require((first['residue']-second['residue']) % gcd(a, b) != 0,
+                            'comparable numerical inventory APs intersect')
+        require(all(row['residue'] % row['m'] != 0 for row in rows if row['e'] == 0),
+                'old state x=0 meets a p-free original')
+        live, source_indices, global_heights = [], [], {}
+        for index, row in enumerate(rows):
+            e, m, residue = row['e'], row['m'], row['residue']
+            if not e:
+                continue
+            if m > 1:
+                global_heights[m] = max(e, global_heights.get(m, 0))
+            if residue % m:
+                continue
+            root = residue % p
+            if root == 0:
+                require(m == 1 and e == 1, 'another active label meets the prime root')
+                continue
+            live.append((e, m, root, (residue % p**e-root)//p))
+            source_indices.append(index)
+        result = analyze_local(p, height, 0, live)
+        global_l = sorted(global_heights.values(), reverse=True)[p-2]
+        require(result['ordered_height'] == global_l == column_height,
+                'local/global inventory order statistics disagree')
+        good = []
+        for tail in range(p**(height-1)):
+            neighbors = {r: set() for r in result['roots']}
+            for e, m, r, residue in live:
+                if m > 1 and tail % p**(e-1) == residue:
+                    neighbors[r].add(m)
+            if recursive_matching_exists(result['roots'], neighbors):
+                good.append(tail)
+        period = p**(column_height-1)
+        expected = [tail for tail in range(p**(height-1)) if tail % period == period-1]
+        require(good == expected, 'inventory has the wrong whole good cylinder')
+        require(F(len(good), p**(height-1)) == result['ordered_tail_bound'],
+                'inventory conditional mass is not sharp')
+        greedy = result['common_tail']
+        require(greedy['depth'] == column_height-1 and greedy['tail'] == period-1,
+                'greedy returned a different sharp inventory cylinder')
+        # A real common CRT point misses every original class in the full
+        # inventory: -1 at p^H and L+1 at every prime cofactor. This makes
+        # the local-only scope independently checkable on the actual APs.
+        uncovered, full_period = p**height-1, p**height
+        for m in colors:
+            uncovered += full_period*((column_height+1-uncovered)*pow(full_period, -1, m) % m)
+            full_period *= m
+        require(all((uncovered-row['residue']) % row['modulus'] != 0 for row in rows),
+                'the purported noncoverage witness meets an original class')
+        examples.append(dict(p=p, height=height, ordered_height=column_height,
+                             original_count=len(rows), good_mass=result['ordered_tail_bound'],
+                             old_height_bound=F(1, p**(height-1)),
+                             good_tail_cylinder=[period-1, period],
+                             modulus_rows=rows, live_labels=live,
+                             live_original_indices=source_indices,
+                             uncovered_integer=uncovered, full_period=full_period))
+    return dict(scope='downward-closed literal AP inventories with local full tails; '
+                      'each full family has the displayed uncovered integer', examples=examples)
+
+
 def load_constructor():
     path = Path(__file__).resolve().with_name('hsw11_family.py')
     spec = importlib.util.spec_from_file_location('literal_hsw_matching_source', path)
@@ -460,6 +644,8 @@ def hsw_fixture_checks():
     counts, witnesses = private_mask_witnesses(family)
     cases = label_count = hall_checks = literal_checks = 0
     depth_counts = Counter()
+    ordered_height_counts = Counter()
+    height_drop_counts = Counter()
     samples = []
     for mask, digits in sorted(witnesses.items()):
         for root11 in range(4):
@@ -507,6 +693,8 @@ def hsw_fixture_checks():
                     cases += 1
                     label_count += len(labels)
                     depth_counts[result['common_tail']['depth']] += 1
+                    ordered_height_counts[result['ordered_height']] += 1
+                    height_drop_counts[HEIGHT-result['ordered_height']] += 1
     return dict(scope='selected private old states; complete 3-height and literal local tails',
                 source='HSW arXiv:2104.00602v1 Theorem 4.2 and Figures 18--22',
                 original_height=HEIGHT, full_tail_period=3**(HEIGHT-1),
@@ -514,6 +702,12 @@ def hsw_fixture_checks():
                 cases=cases, literal_active_labels_checked=label_count,
                 exact_hall_subset_checks=hall_checks, matched_literal_AP_checks=literal_checks,
                 common_tail_depth_counts=dict(sorted(depth_counts.items())),
+                ordered_height_counts=dict(sorted(ordered_height_counts.items())),
+                ordered_height_drop_counts=dict(sorted(height_drop_counts.items())),
+                maximum_ordered_height=max(ordered_height_counts),
+                minimum_ordered_height=min(ordered_height_counts),
+                maximum_ordered_height_drop=max(height_drop_counts),
+                ordered_height_improved_cases=sum(v for k, v in height_drop_counts.items() if k > 0),
                 endpoint_mixed_height_examples=samples)
 
 
@@ -528,6 +722,8 @@ def main():
                   invalid_inputs_rejected=invalid_input_checks(),
                   translated_even_fixture=translated_even_fixture(),
                   sharp_local_fixtures=sharp_local_checks(),
+                  tall_column_fixtures=tall_column_fixture_checks(),
+                  downclosed_inventory_fixtures=inventory_sharp_checks(),
                   hsw=hsw_fixture_checks(),
                   conclusion='local finite-tail certificates; unrestricted Erdős #7 remains unresolved',
                   verification='exact standard-library arithmetic, not Lean verification')
