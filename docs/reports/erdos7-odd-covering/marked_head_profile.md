@@ -785,3 +785,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Actual aligned source and row transport](profile-notes/323-actual-aligned-source-and-row-transport.md)
 - [Complete aligned source prefixes and tails have an explicit modulus](profile-notes/324-complete-aligned-source-prefixes-and-tails-have-an-explicit-modulus.md)
 - [An explicit aligned parameter neighborhood keeps the complete comparison below400](profile-notes/325-an-explicit-aligned-parameter-neighborhood-keeps-the-complete-comparison-below400.md)
+- [Finite original-label tests preserve the explicit aligned source guard](profile-notes/326-finite-original-label-tests-preserve-the-explicit-aligned-source-guard.md)
