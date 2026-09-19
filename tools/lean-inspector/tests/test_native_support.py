@@ -6,6 +6,7 @@ import os
 import signal
 from pathlib import Path
 import shutil
+import shlex
 import struct
 import subprocess
 import sys
@@ -181,7 +182,7 @@ root = "Cache"
             identities[pid] = rows[pid]['identity']
         return [rows[pid] for pid in owned if not rows[pid]['state'].startswith('Z')]
 
-    def command_diagnostics(self, command, args, stdout, stderr):
+    def command_diagnostics(self, command, args, stdout, stderr, timeout=120):
         roots = [self.root / '.lake/build/stratalint', self.root / 'tmp']
         supervisor = Path(self.env.get('STRATALINT_SUPERVISOR_ROOT', self.root / 'tmp/supervisor'))
         if supervisor.is_relative_to(self.root):
@@ -194,7 +195,7 @@ root = "Cache"
                         logs[str(path.relative_to(self.root))] = path.read_bytes()[-16384:].decode('utf-8', 'replace')
                     except FileNotFoundError:
                         pass  # A live phase may be moving startup logs to final.
-        diagnostic = dict(command=list(args), timeout_seconds=120, fixture=str(self.root),
+        diagnostic = dict(command=list(args), timeout_seconds=timeout, fixture=str(self.root),
             processes=self.owned_processes(command, sessions=True), logs=logs,
             stdout=stdout, stderr=stderr)
         self.last_command_diagnostic = diagnostic
@@ -237,8 +238,8 @@ root = "Cache"
         self.temporary.cleanup()
 
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
-        if timeout != 120 or not text or not capture_output:
-            raise ValueError('native fixture commands require the 120s guard and text capture')
+        if not 0 < timeout < float('inf') or not text or not capture_output:
+            raise ValueError('native fixture commands require a finite positive guard and text capture')
         temporary = self.root / 'tmp'
         temporary.mkdir(exist_ok=True)
         environment = dict(self.env if env is None else env, TMPDIR=str(temporary))
@@ -258,7 +259,7 @@ root = "Cache"
                     if self.command_clock() - started >= timeout:
                         stdout.seek(0); stderr.seek(0)
                         out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
-                        self.command_diagnostics(command, args, out, err)
+                        self.command_diagnostics(command, args, out, err, timeout)
                         raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
                     if process.poll() is not None:
                         break
@@ -334,12 +335,12 @@ root = "Cache"
                 shutil.copyfile(path, destination)
             (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     def publish(self):
-        result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
+        result = self.guarded_command([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
             'publish', str(self.root), str(self.root / 'public.json')], env=self.env,
             text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
-        result = subprocess.run(['bash', str(self.root / 'tools/scripts/report/lean-report-input.sh'),
+        result = self.guarded_command(['bash', str(self.root / 'tools/scripts/report/lean-report-input.sh'),
             'verify', '--repository', str(self.root), '--report', str(self.root / 'public.json')],
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -449,14 +450,17 @@ def stage_compiler(output):
         for path in output.iterdir():
             path.chmod(path.stat().st_mode & ~0o222)
     finally:
-        fixture.doCleanups()
+        if not fixture.doCleanups():
+            raise RuntimeError('native compiler stage fixture cleanup failed')
 
 
 
 class GuardedCommandTests(unittest.TestCase):
     """Lifecycle tests need no Lean build, network, or host timing verdict."""
     def setUp(self):
-        self.fixture = NativeTestSupport()
+        class Fixture(NativeTestSupport, unittest.TestCase):
+            pass
+        self.fixture = Fixture()
         self.fixture.temporary = tempfile.TemporaryDirectory(prefix='inspector-lifecycle.')
         self.fixture.root = Path(self.fixture.temporary.name)
         self.fixture.env = dict(os.environ)
@@ -469,7 +473,76 @@ class GuardedCommandTests(unittest.TestCase):
                     f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
 
+    def test_scope_cleanup_failure_prevents_success_receipt(self):
+        # Run the real CLI lifecycle in another process. Substitute only the
+        # expensive Lean workload; doCleanups retains unittest's error capture.
+        probe = '''import json, shutil, subprocess, sys
+from pathlib import Path
+import compiler_origin_scope as scope
+root, fail = Path(sys.argv[1]), sys.argv[2] == 'failure'
+root.mkdir()
+(root / 'lake-manifest.json').write_text('{"packages": []}')
+sources = root / 'sources'
+sources.mkdir()
+(sources / 'Input.lean').write_text('theorem input : True := True.intro\\n')
+rows = [dict(module='Input', declarations=[])]
+class Fixture(scope.ScopeFixture):
+    @classmethod
+    def setUpClass(cls): pass
+    def setUp(self):
+        self.root = root / 'fixture'
+        self.root.mkdir()
+        self.addCleanup(shutil.rmtree, self.root)
+        if fail:
+            def ordinary_failure(): raise RuntimeError('injected ordinary cleanup failure')
+            self.addCleanup(ordinary_failure)
+        self.lake, self.env = 'fixture-lake', {}
+        self.write('lean-report-inputs.json', '{"report_modules": {}, "dependency_sources": {}}')
+    def ensure(self): pass
+    def guarded_command(self, argv, **kwargs):
+        if '--output' in argv:
+            Path(argv[argv.index('--output') + 1]).write_text(json.dumps(dict(modules=rows)))
+            Path(argv[argv.index('--material-spool') + 1]).mkdir()
+        return subprocess.CompletedProcess(argv, 0, '', '')
+    def publish(self):
+        for suffix in scope.publication.SUFFIXES:
+            scope.publication.member(self.root / 'public.json', suffix).write_text('fixture')
+    def report(self): return rows, b'', b''
+scope.ROOT, scope.ScopeFixture = root, Fixture
+scope.materials.compact = lambda source, spool, dest, policy: shutil.copyfile(source, dest)
+output = root / 'output'
+output.mkdir()
+(output / 'result.json').write_text('{"exit": 0, "stale": true}')
+sys.argv = ['compiler_origin_scope.py', '--sources', str(sources), '--output', str(output)]
+scope.main()
+'''
+        for mode in ['success', 'failure']:
+            with self.subTest(mode=mode):
+                root = self.fixture.root / mode
+                result = self.fixture.guarded_command([sys.executable, '-B', '-c', probe, str(root), mode],
+                    cwd=HERE / 'tests')
+                receipt = root / 'output/result.json'
+                self.assertFalse((root / 'fixture').exists())
+                if mode == 'success':
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                    self.assertEqual(json.loads(receipt.read_text())['exit'], 0)
+                    self.assertNotIn('stale', json.loads(receipt.read_text()))
+                else:
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn('compiler origin scope fixture cleanup failed', result.stderr)
+                    self.assertFalse(receipt.exists())
+                    self.assertFalse(receipt.with_suffix('.json.tmp').exists())
+
     def test_timeout_joins_writers_across_groups_before_removal(self):
+        self.check_timeout_joins_writers('command')
+
+    def test_publication_timeout_joins_descendants(self):
+        self.check_timeout_joins_writers('publish')
+
+    def test_verification_timeout_joins_descendants(self):
+        self.check_timeout_joins_writers('verify')
+
+    def check_timeout_joins_writers(self, phase):
         root = self.fixture.root
         writer = '''import os, signal, sys, time
 from pathlib import Path
@@ -518,9 +591,21 @@ for child in children: child.wait()
             if time.monotonic() - started > 120:
                 raise RuntimeError('infrastructure-hang-guard expired: writers never ready')
             return 121 if all((root / (name + '.ready')).exists() for name in ['same', 'separate']) else 0
-        with patch.object(self.fixture, 'command_clock', side_effect=deadline_after_ready):
+        if phase == 'publish':
+            self.fixture.write('tools/lean-inspector/native.py', parent.replace('sys.argv[1]', 'sys.argv[2]'))
+        elif phase == 'verify':
+            self.fixture.write('tools/lean-inspector/native.py', 'pass\n')
+            self.fixture.write('parent.py', parent)
+            self.fixture.write('tools/scripts/report/lean-report-input.sh',
+                'exec ' + ' '.join(shlex.quote(p) for p in
+                    [sys.executable, str(root / 'parent.py'), str(root)]) + '\n')
+        with patch.object(self.fixture, 'command_clock', side_effect=deadline_after_ready), \
+                patch.object(publication, 'validate_bundle'), patch.object(publication, 'coordinates'):
             with self.assertRaises(subprocess.TimeoutExpired) as expired:
-                self.fixture.guarded_command([sys.executable, '-c', parent, str(root)])
+                if phase == 'command':
+                    self.fixture.guarded_command([sys.executable, '-c', parent, str(root)])
+                else:
+                    self.fixture.publish()
         self.assertEqual(expired.exception.timeout, 120)
         pids = [int((root / (name + '.ready')).read_text()) for name in ['same', 'separate']]
         for pid in pids:

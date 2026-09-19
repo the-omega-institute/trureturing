@@ -23,8 +23,8 @@ class ScopeFixture(NativeTestSupport, unittest.TestCase):
     pass
 
 
-def measure_scope():
-    """Pinned parser import closure for the complete declared default libraries."""
+def measure_scope(sources=None):
+    """Pinned import closure for supplied sources or complete default libraries."""
     candidates = {p.relative_to(ROOT).with_suffix('').as_posix().replace('/', '.'): p
                   for p in (ROOT / 'D5').rglob('*.lean')}
     candidates['Trureturing'] = ROOT / 'Trureturing.lean'
@@ -34,6 +34,11 @@ def measure_scope():
     if (audit / 'LeanInformationAudit.lean').is_file():
         candidates['LeanInformationAudit'] = audit / 'LeanInformationAudit.lean'
     roots = set(candidates)
+    if sources is not None:
+        supplied = {p.relative_to(sources).with_suffix('').as_posix().replace('/', '.'): p
+                    for p in sources.rglob('*.lean')}
+        candidates.update(supplied)
+        roots = set(supplied)
     for package in (ROOT / '.lake/packages').iterdir():
         for p in package.rglob('*.lean'):
             relative = p.relative_to(package)
@@ -60,7 +65,9 @@ def measure_scope():
     return dict(excluded_unreachable_parse_errors=len(errors), default_source_roots=len(roots), indexed_sources=len(candidates),
         requested_source_closure=len(closure), d5_sources=sum(n.startswith('D5.') for n in closure),
         mathlib_sources=sum(n.startswith('Mathlib.') for n in closure),
-        method='pinned lean --deps-json --stdin; default D5 and audit library globs; transitive source closure',
+        method='pinned lean --deps-json --stdin; '
+            + ('supplied source roots' if sources is not None else 'default D5 and audit library globs')
+            + '; transitive source closure',
         boundary='source rebuild requirement on compiler hash change; not a whole-project timing')
 
 
@@ -69,15 +76,18 @@ def main():
     parser.add_argument('--measure', action='store_true')
     parser.add_argument('--sources', type=Path)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--command-timeout', type=float, default=900)
     args = parser.parse_args()
     if args.measure:
-        print(json.dumps(measure_scope()))
+        print(json.dumps(measure_scope(args.sources)))
         return
     if args.sources is None or args.output is None:
         parser.error('--sources and --output are required')
     sources = args.sources.resolve()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
+    result_path = output / 'result.json'
+    result_path.unlink(missing_ok=True)
     fixture = ScopeFixture()
     fixture.setUpClass()
     started = time.monotonic()
@@ -134,19 +144,15 @@ globs = ["LeanInformationAudit.+"]
         policy['dependency_sources']['include'] = [dict(pattern='LeanInformationAudit/Registry.lean', optional=False)]
         fixture.write('lean-report-inputs.json', json.dumps(policy))
         def command(argv):
-            # Keep the existing 900s scope guard and the native fixture's
-            # process ownership/join contract, including timeout descendants.
-            args = [str(a) for a in argv]
-            process = subprocess.Popen(args, cwd=fixture.root, env=fixture.env, start_new_session=True)
-            owned = (process, {})
-            fixture._commands.append(owned)
-            try:
-                code = process.wait(timeout=900)
-                if code != 0:
-                    raise subprocess.CalledProcessError(code, args)
-            finally:
-                fixture.join_command(owned)
-                fixture._commands.remove(owned)
+            argv = [str(a) for a in argv]
+            phase_started = time.monotonic()
+            print('SCOPE_COMMAND ' + json.dumps(argv), flush=True)
+            completed = fixture.guarded_command(argv, timeout=args.command_timeout)
+            print(completed.stdout, end='', flush=True)
+            print(completed.stderr, end='', file=sys.stderr, flush=True)
+            print('SCOPE_COMMAND_RESULT ' + json.dumps(dict(command=argv,
+                exit=completed.returncode, seconds=round(time.monotonic() - phase_started, 3))), flush=True)
+            completed.check_returncode()
         # The untouched compiler supplies the independent identity baseline.
         command([fixture.lake, 'build', *names])
         recipe = fixture.root / 'tools/lean-inspector/compiler/build.py'
@@ -182,10 +188,13 @@ globs = ["LeanInformationAudit.+"]
         for suffix in publication.SUFFIXES:
             shutil.copy2(publication.member(fixture.root / 'public.json', suffix),
                          publication.member(output / 'public.json', suffix))
-        (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
-        print(json.dumps(result))
     finally:
-        fixture.doCleanups()
+        if not fixture.doCleanups():
+            raise RuntimeError('compiler origin scope fixture cleanup failed')
+    temporary_result = result_path.with_suffix('.json.tmp')
+    temporary_result.write_text(json.dumps(result, indent=2) + '\n')
+    temporary_result.replace(result_path)
+    print(json.dumps(result))
 
 
 if __name__ == '__main__':

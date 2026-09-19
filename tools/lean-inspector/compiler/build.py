@@ -142,18 +142,23 @@ def patch_native_archive(base, directory, objects):
 def build(root, base, descriptor, identity):
     directory = root / 'build/compiler-origin' / identity
     receipt = directory / 'artifacts.json'
-    if receipt.is_file():
+    try:
         expected = json.loads(receipt.read_text())
         required = {'bin/frontend', 'bin/lean', 'bin/leanc', 'driver.json', 'descriptor.json',
             'lib/lean/libLean.a', 'lib/lean/Lean/CompanionOrigin.olean',
             'lib/lean/Lean/CompanionOrigin.o', 'LICENSE', 'LICENSES'}
         actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*')
                   if p.is_file() and p != receipt}
-        if required <= set(expected) and actual == set(expected) and all(
+        if isinstance(expected, dict) and required <= set(expected) and actual == set(expected) and all(
                             (directory / p).is_file() and not (directory / p).is_symlink()
                             and dict(sha256=sha(directory / p), mode=stat.S_IMODE((directory / p).stat().st_mode)) == h
                             for p, h in expected.items()):
             return directory
+    except (OSError, ValueError):
+        # This is an optional cache receipt, read under ensure's build lock.
+        # Missing, unreadable or truncated metadata requests the same private
+        # rebuild as damaged outputs; required compiler inputs still fail.
+        pass
     if directory.exists():
         shutil.rmtree(directory)
     directory.mkdir(parents=True)
@@ -205,7 +210,9 @@ def build(root, base, descriptor, identity):
                  for p in sorted(directory.rglob('*')) if p.is_file()}
     if inputs(root)[2] != identity:
         raise ValueError('compiler inputs changed during build')
-    receipt.write_bytes(canonical(artifacts))
+    temporary_receipt = receipt.with_suffix('.json.tmp')
+    temporary_receipt.write_bytes(canonical(artifacts))
+    temporary_receipt.replace(receipt)
     return directory
 
 

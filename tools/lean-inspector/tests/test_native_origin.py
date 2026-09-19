@@ -47,6 +47,23 @@ unsafe def main : IO Unit := do
         self.build()
         self.run_lake('build', 'originNative')
         self.run_lake('env', str(self.root / '.lake/build/bin/originNative'))
+        # Source/olean instrumentation alone does not replace the compiler
+        # generators linked into a native frontend. Link the same consumer
+        # against the untouched archive plus only the provenance registry.
+        compiler = self.root / 'build/compiler-origin' / self.origins()['D5.Origin']['compiler_input_sha256']
+        driver = json.loads((compiler / 'driver.json').read_text())
+        compiled = self.guarded_command([str(compiler / 'bin/lean'),
+            '-c', 'OriginNative.c', 'OriginNative.lean'], env=dict(self.env,
+                LEAN_SYSROOT=str(compiler), LEAN_PATH=str(compiler / 'lib/lean')))
+        self.assertEqual(compiled.returncode, 0, compiled.stdout + compiled.stderr)
+        source_only = self.root / 'source-only-native'
+        linked = self.guarded_command([driver['leanc'],
+            '-Wl,-export_dynamic' if sys.platform == 'darwin' else '-Wl,--export-dynamic',
+            '-o', str(source_only), 'OriginNative.c', str(compiler / 'lib/lean/Lean/CompanionOrigin.o')],
+            env=dict(self.env, LEAN_SYSROOT=driver['base']))
+        self.assertEqual(linked.returncode, 0, linked.stdout + linked.stderr)
+        control = self.run_lake('env', str(source_only), success=False)
+        self.assertIn('native archive did not retain generator instrumentation', control.stdout + control.stderr)
         rows = self.report()[0]
         origin_row = next(r for r in rows if r['module'] == 'D5.Origin')
         declarations = {d['name']: d for d in origin_row['declarations']}
@@ -79,7 +96,7 @@ unsafe def main : IO Unit := do
                             data = json.dumps(origin).encode()
                         archive.writestr(info, data)
             rejected = self.root / ('rejected-' + damage + '.json')
-            result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
+            result = self.guarded_command([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
                 'publish', str(self.root), str(rejected)], env=self.env, capture_output=True, timeout=120)
             self.assertNotEqual(result.returncode, 0, damage)
             self.assertFalse(rejected.exists(), damage)
@@ -100,3 +117,25 @@ unsafe def main : IO Unit := do
         registry.write_bytes(b'corrupt compiler output')
         self.build()
         self.assertEqual(publication.digest(registry), expected)
+        # Optional compiler receipts have the same recovery contract as outputs.
+        # Exercise the canonical entry after a valid build, including its lock.
+        report_before = self.report()
+        origins_before = self.origins()
+        receipt = selected / 'artifacts.json'
+        receipt_before = receipt.read_bytes()
+        # Root can read mode-000 files; only claim the permission-denied
+        # injection on hosts where that filesystem failure is enforceable.
+        damages = ('truncated', 'unreadable') if os.geteuid() != 0 else ('truncated',)
+        for damage in damages:
+            with self.subTest(receipt=damage):
+                if damage == 'truncated':
+                    receipt.write_bytes(b'{"truncated":')
+                else:
+                    receipt.chmod(0)
+                    with self.assertRaises(PermissionError):
+                        receipt.read_bytes()
+                self.build()
+                self.assertEqual(receipt.read_bytes(), receipt_before)
+                self.assertFalse(receipt.with_suffix('.json.tmp').exists())
+                self.assertEqual(self.report(), report_before)
+                self.assertEqual(self.origins(), origins_before)
