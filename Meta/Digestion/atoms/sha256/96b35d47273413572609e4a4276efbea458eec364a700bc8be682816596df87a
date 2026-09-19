@@ -1,0 +1,18 @@
+**定理 76.1（共同正参考下的交替极限与精确 KL 收支）。** 设 $J$ 为有限非空集合，$r_a:J\to I_a$ 为满射，$a=1,2$，不要求两观察嵌套。固定同一个严格正概率 $q$，即 $q_j>0$、$\sum_jq_j=1$。概率均为列向量，对数均为自然对数。按第 73–74 节的参考条件律定义
+$$
+p_i^{(a)}=\sum_{r_a(j)=i}q_j>0,\qquad
+(E_ax)_j=\frac{q_j}{p_{r_a(j)}^{(a)}}
+\sum_{r_a(h)=r_a(j)}x_h
+\quad(x\in\mathbb R^J).
+$$
+令
+$$
+R=\operatorname{EqvGen}(\ker r_1\cup\ker r_2),
+\qquad \mathscr C=J/R.
+$$
+这里 $\operatorname{EqvGen}$ 是包含所给关系的最小等价关系：两点等价恰在它们可由有限路径连接、每条边属于某个 $r_1$ 纤维或某个 $r_2$ 纤维时成立。记 $C(j)$ 为 $j$ 所在分量，并置
+$$
+Q_C=\sum_{j\in C}q_j,\qquad m_C(x)=\sum_{j\in C}x_j,
+\qquad
+(\mathcal Jx)_j=q_j\frac{m_{C(j)}(x)}{Q_{C(j)}}.
+$$
