@@ -10,6 +10,68 @@ public sealed class RuleEngineCapacityTests
 {
     private const int L = RepositoryRules.DirectoryFileLimit;
 
+    [Theory]
+    [InlineData("measurements.json")]
+    [InlineData("Results/sample.JSON")]
+    [InlineData("Results/sample.jsonl")]
+    [InlineData("Results/sample.ndjson")]
+    [InlineData("Results/sample.json5")]
+    [InlineData("Results/sample.jsonc")]
+    [InlineData("Results/sample.yaml")]
+    [InlineData("Results/sample.yml")]
+    [InlineData("Results/sample.toml")]
+    [InlineData("Results/sample.csv")]
+    [InlineData("Results/sample.tsv")]
+    [InlineData("Results/sample.xml")]
+    public void Sl003ExemptsDataFilesFromSoftAndHardLineLimits(string path)
+    {
+        foreach (var lines in new[] { 801, 1001 })
+        {
+            var fixture = new RuleFixture();
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", lines));
+            fixture.Changes.Add(path);
+
+            Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        }
+    }
+
+    [Theory]
+    [InlineData("Results/sample.json.cs")]
+    [InlineData("Results/sample.json.lean")]
+    [InlineData("Results/sample.json.md")]
+    [InlineData("Results/sample.json.py")]
+    [InlineData("Results/data.json/source")]
+    public void Sl003StillBoundsSourceAndProseWithDataNames(string path)
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[path] = string.Concat(Enumerable.Repeat("line\n", 1001));
+        fixture.Changes.Add(path);
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(path, finding.Path);
+        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
+    }
+
+    [Fact]
+    public void Sl003StillCountsDataFilesForDirectoryAdmission()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 0; index <= L; index++)
+        {
+            var path = $"Results/sample{index}.json";
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", 1001));
+            fixture.Changes.Add(path);
+        }
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal("Results", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+        Assert.Contains($"directory contains {L + 1} files", finding.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Sl003CapacityHardBlocksPastTheHardLimitAndSoftWarnsPastTheSoftLimit()
     {
