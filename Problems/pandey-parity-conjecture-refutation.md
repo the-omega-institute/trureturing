@@ -40,7 +40,7 @@ already gives `GP(3,1)` with polynomial `1+6x+6x^2` and an explicit
 opposite-parity isomorphism `GP(7,2) -> GP(7,3)` that contradicts the
 full biconditional. Its provider commit timestamp is
 `2026-06-13T01:23:03Z`; its internal June 11 date is unverified.
-The [Library note](../Library/Combinatorics/pandey2026parity.md) pins the
+The [prior-refutation Library note](../Library/Combinatorics/demonstrandum2026pandeyrefutation.md) pins the
 commit, blob, and source hash and explains the edge map. This evidence
 supersedes the bounded no-hit screen for
 [issue 8619](https://github.com/the-omega-institute/trureturing/issues/8619)
@@ -78,10 +78,11 @@ The formal carrier and sole public result `result : Not claim` are in
 The proof uses kernel `decide` for the configuration equality, the frozen
 evaluation bridge, finite-sum simplification, and exact complex arithmetic.
 The matching Scribe definition attributes the result to the earlier
-public refutation through the Library note and retains
+public refutation through its separate Library note and retains
 `OpenProblemResolutionClaim(Refuted)`. Under spec §11.20.5 this records
 the local theorem-to-problem binding, not worldwide novelty or the
 validity of historical novelty admission.
+The graph and claim retain the [Pandey Library source](../Library/Combinatorics/pandey2026parity.md).
 
 Primary-source hashes: TeX
 `5147f84b91867223e59aa63486af9b4276eadd08dc785fa40ab3c670c80ef004`;

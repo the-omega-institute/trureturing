@@ -62,6 +62,10 @@ proof instead performs exact counting and real/imaginary-part arithmetic.
 
 ## Prior exact refutation and attribution
 
+The distinct [prior-refutation Library note](demonstrandum2026pandeyrefutation.md)
+provides the structured source for the local result; this note remains
+the source for Pandey's graph definition and conjecture.
+
 The public note [*Refutation of the Parity Conjecture for Independence
 Polynomials of Generalized Petersen Graphs (arXiv:2601.03293, Conjecture 4.1)*](https://github.com/demonstrandum-research/artifacts/blob/94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3/problems/p2-factory/kills/pandey-parity/WRITEUP.md)
 in `demonstrandum-research/artifacts` already gives a complete refutation
