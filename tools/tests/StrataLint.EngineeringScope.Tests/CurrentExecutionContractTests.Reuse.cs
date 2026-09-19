@@ -7,15 +7,18 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests")]
-    [InlineData("StrataLint.EngineeringScope.Tests")]
-    [InlineData("StrataLint.ScriptTests")]
-    [InlineData("StrataLint.Tests")]
-    public void RegisteredAgentDocumentationPreservesTestInputsWhileScriptsAndTemplatesInvalidate(string project)
+    [InlineData("StrataLint.ArchitectureTests", true)]
+    [InlineData("StrataLint.Cache.Tests", true)]
+    [InlineData("StrataLint.EngineeringScope.Tests", true)]
+    [InlineData("StrataLint.Lean.Tests", false)]
+    [InlineData("StrataLint.ScriptTests", true)]
+    [InlineData("StrataLint.Tests", true)]
+    public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project, bool generalScripts)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
+        Assert.Equal(project != "StrataLint.ScriptTests", declaration["ci"]!.GetValue<bool>());
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
@@ -31,8 +34,10 @@ public sealed partial class CurrentExecutionContractTests
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
-            (Path: "tools/scripts/preflight.sh", Invalidates: true),
-            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: true),
+            (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: true),
         };
         foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
         fixture.Track();
@@ -47,6 +52,7 @@ public sealed partial class CurrentExecutionContractTests
             var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
             Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
             Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
+            CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]);
             previous = current;
         }
     }
