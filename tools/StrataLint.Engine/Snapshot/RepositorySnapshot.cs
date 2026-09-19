@@ -43,9 +43,19 @@ public sealed class RepositoryFile
         GitBlobOid = gitBlobOid;
         HasBom = text.StartsWith('\uFEFF');
         HasCarriageReturn = text.Contains('\r');
-        HasTrailingWhitespace = text
-            .Split('\n')
-            .Any(static line => line.EndsWith(' ') || line.EndsWith('\t') || line.EndsWith('\r'));
+        HasTrailingWhitespace = ContainsTrailingWhitespace(text.AsSpan());
+    }
+
+    private static bool ContainsTrailingWhitespace(ReadOnlySpan<char> remaining)
+    {
+        while (true)
+        {
+            var newline = remaining.IndexOf('\n');
+            var length = newline < 0 ? remaining.Length : newline;
+            if (length > 0 && remaining[length - 1] is ' ' or '\t' or '\r') return true;
+            if (newline < 0) return false;
+            remaining = remaining[(newline + 1)..];
+        }
     }
 
     public RepoPath Path { get; }
