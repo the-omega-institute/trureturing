@@ -765,3 +765,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The same-law Gamma19 scalar comparison needs joint observations](profile-notes/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md)
 - [An actual star blocks a universal scalar restart at19](profile-notes/304-an-actual-star-blocks-a-universal-scalar-restart-at19.md)
 - [Ineffective leading pairs retain the complete core bounds](profile-notes/305-ineffective-leading-pairs-retain-the-complete-core-bounds.md)
+- [Common actual J rows restore the vanished columns](profile-notes/306-common-actual-j-rows-restore-the-vanished-columns.md)
