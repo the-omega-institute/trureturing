@@ -39966,3 +39966,1336 @@ $$
 若 $\ell\ne p$ 且 $\ell\nmid m_n$，则 $\ell$ 同时不整除分子和分母，其范数因子为一；非一因子只能来自 $m_n$ 的素因子。这个有限集合可随 $n$ 变化，因此所得补偿不推出某个固定其他素位的增长，更不推出任意两个位的反向单调律。这证明 (97.2f)。证毕。
 
 ## 97.99 追加锚
+
+## 98. 平稳二元观察的短词反序盲区与六环边界
+
+**定义 98.1（平稳二元块概率与反序）。** 令字母表为 $\mathcal A=\{0,1\}$。对 $m=1,2,3,4$，给定有限集合 $\mathcal A^m$ 上的概率律 $L_m$；对词 $w\in\mathcal A^m$，简记 $L_w=L_m(w)$。另记空词为 $\varepsilon$，置 $L_\varepsilon=1$。假设对每个长度 $0\le |w|<4$ 的词都有左右边缘一致性
+$$
+L_w=\sum_{a\in\mathcal A}L_{aw}
+=\sum_{a\in\mathcal A}L_{wa}.
+\tag{98.1}
+$$
+任意平稳二元过程的连续块概率都满足这些等式；以下只使用这组有限概率及其边缘关系，允许某些词的概率为零，不要求 Markov 性或遍历性。
+
+若 $w=a_1\cdots a_m$，记其反序为 $w^R=a_m\cdots a_1$，并定义
+$$
+L_m^R(w)=L_m(w^R).
+$$
+称 $L_m$ 反序对称，是指 $L_m=L_m^R$。这里 $m$ 计输出字母数；当词来自一条状态路径时，相应转移数为 $n=m-1$。式 (98.1) 是概率律的精确等式，不把任意有限样本的经验词频视为自动满足它。
+
+**定理 98.2（三字以内的反序对称与四字判据）。** 在定义 98.1 下，
+$$
+L_m=L_m^R\qquad(m=1,2,3).
+\tag{98.2a}
+$$
+这是平稳二元词的短词反序障碍。[^rro98-binary] 对四字词，令
+$$
+J=L_{0010}-L_{0100}.
+$$
+则
+$$
+\begin{aligned}
+J
+&=L_{0101}-L_{1010}\\
+&=L_{1011}-L_{1101}\\
+&=-(L_{0011}-L_{1100}),
+\end{aligned}
+\tag{98.2b}
+$$
+并且
+$$
+L_{0001}=L_{1000},\qquad L_{0111}=L_{1110}.
+\tag{98.2c}
+$$
+因此
+$$
+L_4=L_4^R\quad\Longleftrightarrow\quad J=0.
+\tag{98.2d}
+$$
+这里由一个参数刻画的是反序差向量 $L_4-L_4^R$；整个四字概率律仍含其他数据，结论也没有把其 KL 数值表达成仅依赖 $J$ 的公式。
+
+**证明。** 单字反序等于自身。将式 (98.1) 用于词 $0$，得到
+$$
+L_{00}+L_{01}=L_0=L_{00}+L_{10},
+$$
+故 $L_{01}=L_{10}$。二字中的另外两个词 $00,11$ 自反，所以 $L_2=L_2^R$。
+
+对词 $00$ 和 $11$，左右边缘关系分别给出
+$$
+L_{000}+L_{001}=L_{00}=L_{000}+L_{100},
+$$
+$$
+L_{011}+L_{111}=L_{11}=L_{110}+L_{111}.
+$$
+于是 $L_{001}=L_{100}$、$L_{011}=L_{110}$。其余三字词 $000,010,101,111$ 均自反，因而 $L_3=L_3^R$，证明式 (98.2a)。
+
+对四字词，先在三字 $000,111$ 处写出边缘关系：
+$$
+L_{0000}+L_{0001}=L_{000}=L_{0000}+L_{1000},
+$$
+$$
+L_{0111}+L_{1111}=L_{111}=L_{1110}+L_{1111}.
+$$
+消去共同项即得式 (98.2c)。再对三字 $010,101$ 使用式 (98.1)：
+$$
+L_{0010}+L_{1010}=L_{010}=L_{0100}+L_{0101},
+$$
+$$
+L_{0101}+L_{1101}=L_{101}=L_{1010}+L_{1011}.
+$$
+移项得到
+$$
+L_{0010}-L_{0100}
+=L_{0101}-L_{1010}
+=L_{1011}-L_{1101}.
+$$
+最后，已证的 $L_{001}=L_{100}$ 与相应右、左边缘展开给出
+$$
+L_{0010}+L_{0011}
+=L_{001}
+=L_{100}
+=L_{0100}+L_{1100}.
+$$
+故 $L_{0010}-L_{0100}=-(L_{0011}-L_{1100})$，完成式 (98.2b)。
+
+四字的六对非自反词为
+$$
+(0001,1000),\ (0010,0100),\ (0011,1100),
+(0101,1010),\ (0111,1110),\ (1011,1101).
+$$
+剩下的四个词为 $0000,0110,1001,1111$，它们都自反。式 (98.2b)–(98.2c) 因此穷尽十六个词的反序差：其中两对差为零，其余四对的差分别为 $J,-J,J,J$。所以 $J=0$ 时所有反序差为零；反之，$L_4=L_4^R$ 立即给出 $J=0$。这也说明差向量落在同一条直线上。整个推导只有有限概率的加减，允许零概率项，证毕。
+
+[^rro98-binary]: L. Arola-Fernández 与 L. Lacasa，[*Irreversibility of symbolic time series: A cautionary tale*](https://doi.org/10.1103/PhysRevE.108.014201)，Physical Review E **108**, 014201 (2023)；[arXiv:2303.11868v1](https://arxiv.org/pdf/2303.11868v1)，§III.A，PDF 第 4 页的未编号定理及第 5 页讨论，给出二元词长度小于 $4$ 时的反序障碍，并已使用短序列 $0010110010$ 说明四字可出现不对称。这里用精确平稳块概率表述该结论；式 (98.2b)–(98.2c) 的全部等式由所列有限边缘计算给出。
+
+**定义 98.3（有噪声六环及其二元观察）。** 取 $S=\mathbb Z/6\mathbb Z$，按 $0,1,\ldots,5$ 标记状态。固定
+$$
+p,q>0,\qquad p+q=1,
+$$
+令行核 $K$ 满足
+$$
+K(i,i+1)=p,\qquad K(i,i-1)=q,
+$$
+其余项为零，状态下标按模 $6$ 计算。取初始律 $\pi_i=1/6$，并定义确定性标签
+$$
+\bigl(r(0),r(1),r(2),r(3),r(4),r(5)\bigr)=(0,0,1,0,1,1).
+$$
+对 $n\ge0$，细路径律为
+$$
+P_n(x_0,\ldots,x_n)
+=\frac16\prod_{t=0}^{n-1}K(x_t,x_{t+1}),
+$$
+其正支撑记为 $\Omega_n$，反序映射为
+$$
+\Theta_n(x_0,\ldots,x_n)=(x_n,\ldots,x_0).
+$$
+对 $m=n+1\ge1$，令 $L_m$ 为标签路径 $(r(x_0),\ldots,r(x_n))$ 在 $P_n$ 下的推前律，仍写 $L_w=L_m(w)$、$L_m^R(w)=L_m(w^R)$。记实际正词集
+$$
+W_m=\{w\in\mathcal A^m:L_w>0\}.
+$$
+下述证明说明 $W_m$ 在反序下不变，因而正反词律在同一有限集合 $W_m$ 上严格为正。其有限 KL 记为
+$$
+D_m=D(L_m\Vert L_m^R)
+=\sum_{w\in W_m}L_w\log\frac{L_w}{L_{w^R}},
+\tag{98.3}
+$$
+其中对数取自然底数，不对正支撑以外的词取对数。
+
+另定义单时刻标签律与单步标签边流
+$$
+\bar\pi_a=\sum_{r(i)=a}\pi_i,\qquad
+\bar Q_{ab}=\sum_{\substack{r(i)=a\\r(j)=b}}\pi_iK(i,j),
+\qquad a,b\in\{0,1\},
+$$
+以及由它们确定的行核
+$$
+\widehat K_{ab}=\frac{\bar Q_{ab}}{\bar\pi_a}.
+$$
+两个标签纤维均非空，故分母为正。由初态 $\bar\pi$ 和核 $\widehat K$ 定义新的 Markov 词律
+$$
+\widehat L_m(a_1\cdots a_m)
+=\bar\pi_{a_1}\prod_{t=1}^{m-1}\widehat K_{a_ta_{t+1}}.
+$$
+这是由单边流构成的一步 Markov 化；是否等于实际观察词律 $L_m$ 是另一个命题。
+
+**定理 98.4（四字显露的方向性与单边 Markov 化边界）。** 定义 98.3 中的均匀初态平稳，$K$ 对标签分区 $r$ 在全部允许的 $p,q$ 下都不强可并，包括 $p=q$。正反观察词律具有共同正支撑，且
+$$
+D_m=0\qquad(m=1,2,3),
+\tag{98.4a}
+$$
+$$
+L_{0011}=\frac{q^3}{6},\qquad
+L_{1100}=\frac{p^3}{6},\qquad
+J:=L_{0010}-L_{0100}=\frac{p^3-q^3}{6}.
+\tag{98.4b}
+$$
+因此
+$$
+D_4>0\quad\Longleftrightarrow\quad p\ne q.
+\tag{98.4c}
+$$
+当 $p=q$ 时，全部有限词律都反序对称：
+$$
+L_m=L_m^R,\qquad D_m=0\qquad(m\ge1).
+\tag{98.4d}
+$$
+
+单边数据及其 Markov 化与参数的取值无关，具体为
+$$
+\bar\pi=(1/2,1/2),\qquad
+\bar Q=
+\begin{pmatrix}
+1/6&1/3\\
+1/3&1/6
+\end{pmatrix},\qquad
+\widehat K=
+\begin{pmatrix}
+1/3&2/3\\
+2/3&1/3
+\end{pmatrix}.
+\tag{98.4e}
+$$
+这个新的平稳 Markov 链的每个有限词律都反序对称，但 $\widehat K$ 不是 $K$ 关于 $r$ 的强可并粗核。特别地，$p\ne q$ 时，在四字、即三次转移处，
+$$
+D(L_4\Vert L_4^R)>0
+=3D(\bar Q\Vert\bar Q^{\mathsf T}),
+\qquad
+D(\widehat L_4\Vert\widehat L_4^R)=0.
+\tag{98.4f}
+$$
+所以平稳观察的单边流对称，不能单独保证整个观察路径的反序对称；把观察词律替换成其一步 Markov 化，会在此处丢失四字方向性。
+
+**证明。** 每行恰有概率 $p,q$，每列也恰有来自两相邻状态的概率 $p,q$，故行和、列和都为一。于是 $K$ 为行随机矩阵，且
+$$
+(\pi K)_j=\frac16\sum_iK(i,j)=\frac16=\pi_j.
+$$
+逐次对末坐标求和说明 $P_n$ 为概率。删去末坐标时用行和为一，删去首坐标时用 $\pi K=\pi$，得到平稳路径的左右边缘一致性；经标签推前后，$L_1,\ldots,L_4$ 满足式 (98.1)。
+
+因为 $p,q>0$，每条正转移边的反向边也为正。若 $x\in\Omega_n$，则 $\Theta_nx\in\Omega_n$；反序是对合，故 $\Theta_n[\Omega_n]=\Omega_n$。逐时标签与反序交换：
+$$
+\bigl(r(x_n),\ldots,r(x_0)\bigr)
+=\bigl(r(x_0),\ldots,r(x_n)\bigr)^R.
+$$
+有限非负路径概率求和为正，当且仅当至少有一条正概率路径实现该词。因此 $L_w>0$ 蕴含 $L_{w^R}>0$，反向同理，$W_m$ 确为共同正支撑。两份词律限制到 $W_m$ 后仍归一化，故式 (98.3) 是有限实数。这一论证不要求所有二元词都出现。
+
+接着检查强可并性。在标签为 $0$ 的三个状态 $0,1,3$，下一步标签为 $1$ 的概率依次为
+$$
+\sum_{r(j)=1}K(0,j)=q,\qquad
+\sum_{r(j)=1}K(1,j)=p,\qquad
+\sum_{r(j)=1}K(3,j)=p+q=1.
+$$
+由 $p,q>0$、$p+q=1$，两者 $p,q$ 均严格小于一，所以上述三行不可能相同。按 [命题 74.3](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的逐块行和判据，$K$ 不强可并。具体代入其既有因子化判据 [strongly_lumpable_iff_exact_quotient_kernel](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 时，标签映射取 $r$，实际观察行取
+$$
+F(i,b)=\sum_{r(j)=b}K(i,j).
+$$
+这三行的不一致排除 $F(i,\cdot)$ 经 $r(i)$ 因子化，且在 $p=q$ 时仍然排除它。
+
+由定理 98.2，$L_m=L_m^R$ 对 $m=1,2,3$ 成立，式 (98.3) 中每个比值都为一，故得到式 (98.4a)。
+
+为计算四字 $0011$，先确定其前两个零标签所对应的正转移。标签为零的状态只有 $0,1,3$，其中唯一相邻的一对是 $0,1$，所以起始状态对只能为 $0\to1$ 或 $1\to0$。若从 $0\to1$ 开始，第三个标签为一迫使下一状态为 $2$；但 $2$ 的两个相邻状态 $1,3$ 都标为零，无法得到最后一个一。若从 $1\to0$ 开始，第三个标签为一迫使下一状态为 $5$，最后一个一再迫使下一状态为 $4$。因此唯一实现路径是
+$$
+1\longrightarrow0\longrightarrow5\longrightarrow4,
+$$
+三次转移全为逆向，概率为 $q^3/6$。反序路径给出 $1100$ 的唯一实现
+$$
+4\longrightarrow5\longrightarrow0\longrightarrow1,
+$$
+概率为 $p^3/6$；唯一性也由正路径反序的双射性保证。再用式 (98.2b)，得到
+$$
+J=-(L_{0011}-L_{1100})=\frac{p^3-q^3}{6},
+$$
+证明式 (98.4b)。
+
+由于 $p,q>0$，$p^3=q^3$ 等价于 $p=q$。结合式 (98.2d)，四字律反序对称恰好发生在 $p=q$。在共同有限正支撑 $W_4$ 上，$L_4,L_4^R$ 非负且归一化，绝对连续性由严格正性满足，所以可直接应用已有 Gibbs 非负性与等号判据：[^rro98-gibbs]
+$$
+D_4\ge0,\qquad
+D_4=0\quad\Longleftrightarrow\quad L_4=L_4^R.
+$$
+这给出式 (98.4c)。
+
+当 $p=q$ 时，$K(i,j)=K(j,i)$，均匀 $\pi$ 因而满足
+$$
+\pi_iK(i,j)=\pi_jK(j,i).
+$$
+按 [定理 93.3](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，详细平衡使每个有限细路径律反序不变；其正平稳初态与双向支撑前提已在上面验证。标签读出与反序交换，所以其推前律也满足 $L_m=L_m^R$ 对全部 $m\ge1$ 成立。再由式 (98.3) 得到式 (98.4d)。这与前面已证的不可强并性同时成立。
+
+最后计算单边流。每个标签纤维有三个状态，故 $\bar\pi=(1/2,1/2)$。零标签内部的正边只有 $0\leftrightarrow1$，一标签内部的正边只有 $4\leftrightarrow5$，所以
+$$
+\bar Q_{00}=\bar Q_{11}=\frac{p+q}{6}=\frac16.
+$$
+从零标签到一标签，三个零状态贡献分别为 $q,p,p+q$，故
+$$
+\bar Q_{01}=\frac{q+p+(p+q)}6=\frac13.
+$$
+从一标签到零标签，状态 $2,4,5$ 的贡献分别为 $p+q,q,p$，同样得到 $\bar Q_{10}=1/3$。除以 $\bar\pi_a=1/2$，即得式 (98.4e) 中的 $\widehat K$。
+
+$\widehat K$ 的行和为一，$\bar\pi\widehat K=\bar\pi$，所有转移为正，其平稳边流正是对称的 $\bar Q$。对这个新 Markov 链应用同一定理 93.3，得到对每个 $m\ge1$，
+$$
+D(\widehat L_m\Vert\widehat L_m^R)
+=(m-1)D(\bar Q\Vert\bar Q^{\mathsf T})=0.
+$$
+由 Gibbs 等号条件，$\widehat L_m=\widehat L_m^R$。另一方面，强可并的逐块行和条件已经失败，所以 $\widehat K$ 不能充当 $K$ 对 $r$ 的强可并粗核。
+
+若 $p\ne q$，式 (98.4c) 给出实际四字散度严格为正，而 $\bar Q=\bar Q^{\mathsf T}$ 及新 Markov 链的公式给出另外两项为零，证明式 (98.4f)。这里先以实际四字概率确认差异，再与新的 Markov 词律比较；没有从不可强并性本身推出给定平稳初态下的观察过程必然非 Markov。故这个例子排除了仅凭任意平稳读出的单边流，就把 Markov 路径散度公式应用到其全部词律的做法。证毕。
+
+[^rro98-gibbs]: 有限概率 KL 的非负性采用 [kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GrandmotherTheorem.lean)，等号条件采用 [kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GibbsEquality.lean)。两者要求有限载体、两份非负归一化概率及输入对参考的绝对连续性；本文每次都在已声明的共同正支撑上应用。
+
+## 98.99 追加锚
+
+## 99. 有限隐藏维数、词反序截止与任意延迟的输出方向性
+
+**定义 99.1（有限隐藏链的输出词律）。** 设 $S$ 是大小为 $d\ge1$ 的有限隐藏状态集，$K$ 是非负行随机矩阵，$\pi$ 是允许零坐标的平稳概率行向量：
+$$
+K\mathbf1=\mathbf1,
+\qquad
+\pi K=\pi,
+\qquad
+\pi\mathbf1=1.
+$$
+给定确定读出 $r:S\to A=r(S)$，令 $(X_t)_{t\ge0}$ 是初始律为 $\pi$、转移核为 $K$ 的链，$Y_t=r(X_t)$。对词 $w=a_0\cdots a_{m-1}\in A^m$，记
+$$
+p(w)=\Pr(Y_0=a_0,\ldots,Y_{m-1}=a_{m-1}),
+\qquad
+w^R=a_{m-1}\cdots a_0.
+$$
+空词记为 $\varnothing$，规定 $p(\varnothing)=1$。记长度 $m$ 的词律为 $P_m$，反序词律为 $P_m^R(w)=P_m(w^R)$。对每个字母 $a\in A$，置
+$$
+D_a=\operatorname{diag}_{i\in S}\mathbf1_{\{r(i)=a\}},
+\qquad
+M_a=D_aK,
+\qquad
+M_w=M_{a_0}\cdots M_{a_{m-1}},
+$$
+其中空积为 $I_d$。
+
+**定理 99.2（固定隐藏维数的精确反序截止）。** 在定义 99.1 下，
+$$
+\left[\forall w\in A^*,\ |w|\le2d-1\Longrightarrow p(w)=p(w^R)\right]
+\iff
+\left[\forall w\in A^*,\ p(w)=p(w^R)\right].
+\tag{99.2a}
+$$
+因此，若只知整数上界 $d\le D$，比较所有长度不超过 $2D-1$ 的词仍是充分判据。空词比较自动成立；非空词长 $m=n+1$ 对应 $n$ 次隐藏转移，所以式 (99.2a) 的观察窗截止是 $n\le2d-2$。
+
+这是固定模型下有限多个精确等式的判据；有限样本中的经验词频相等或接近相等，不等于这些模型概率的精确等式。若 $K$ 与 $\pi$ 的坐标都是有理数，枚举这些词并作精确有理矩阵运算给出有效判定；对任意实坐标只断言上述等式判据。此界不附带最优性或表示最小性的结论。
+
+**证明。** 对非空词，直接对隐藏路径求和并使用 $K\mathbf1=\mathbf1$，得到
+$$
+\begin{aligned}
+p(w)
+&=\pi D_{a_0}\left(\prod_{j=1}^{m-1}K D_{a_j}\right)\mathbf1\\
+&=\pi M_{a_0}\cdots M_{a_{m-1}}\mathbf1.
+\end{aligned}
+$$
+空词也满足该式，因为 $\pi I_d\mathbf1=1$。将反序词的标量概率转置，有
+$$
+\begin{aligned}
+p(w^R)
+&=\pi M_{a_{m-1}}\cdots M_{a_0}\mathbf1\\
+&=\mathbf1^{\mathsf T}M_{a_0}^{\mathsf T}\cdots
+M_{a_{m-1}}^{\mathsf T}\pi^{\mathsf T}.
+\end{aligned}
+\tag{99.2b}
+$$
+这给出同一字母表上两份各 $d$ 维的实线性表示：
+$$
+(\pi,(M_a)_{a\in A},\mathbf1),
+\qquad
+(\mathbf1^{\mathsf T},(M_a^{\mathsf T})_{a\in A},\pi^{\mathsf T}).
+$$
+这里交换了左右端点并转置每个字母矩阵；没有对 $\pi_i$ 作除法。上述表示与转置等式本身不使用平稳性，因而零概率坐标不妨碍它们成立。
+
+直接应用加权自动机的有限等价判据：两份维数为 $d_1,d_2$ 的线性表示若不等价，则存在长度至多 $d_1+d_2-1$ 的区别词。[^rro99-kiefer] 取 $d_1=d_2=d$，若式 (99.2a) 左侧成立，就不存在这种区别词，故两份表示对全部词相等。反向蕴含直接成立。用 $D\ge d$ 扩大检查范围仍包含该充分范围；有理矩阵与有理端点的有限次乘加及等号比较可精确执行，给出所述有理数据判定。证毕。
+
+[^rro99-kiefer]: Stefan Kiefer，[*Notes on Equivalence and Minimization of Weighted Automata*, arXiv:2009.01217v1](https://arxiv.org/pdf/2009.01217v1)，Theorem 2.3，PDF 第 4 页；任意域及有理算法输入的约定见 §1，PDF 第 1 页。该条直接提供两份有限维加权自动机的区别词长度界；式 (99.2b) 是本节将正向输出词律与其反序放入该定理的参数适配。
+
+**定义 99.3（带反序扰动的移位族）。** 取整数 $L\ge3$ 与实数 $0<\epsilon<1$，隐藏状态集为
+$$
+S_L=\{0,1\}^L,
+\qquad
+u=(u_0,\ldots,u_{L-1}).
+$$
+定义核
+$$
+K_\epsilon(u,v)=
+\begin{cases}
+\displaystyle\frac{1+\epsilon(-1)^{u_0+b}(u_1-u_{L-1})}{2},
+&v=(u_1,\ldots,u_{L-1},b),\quad b\in\{0,1\},\\[6pt]
+0,&\text{其他情形},
+\end{cases}
+\tag{99.3a}
+$$
+并置 $\pi(u)=2^{-L}$、$r(u)=u_0$。用二元长词作状态、沿移位续接边转移，是 de Bruijn 过程的标准状态表示；均匀短块与更高阶依赖也有既有构造背景。[^rro99-background] 以下核的平稳性及反序性质由具体计算给出。
+
+[^rro99-background]: 均匀短块与有限阶依赖的背景见 Boris Ryabko，[Two-faced processes and random number generators, arXiv:1512.06961v1](https://arxiv.org/pdf/1512.06961v1)，Theorem 1，PDF 第 6 页；移位字状态与 de Bruijn 过程见 Kimpton–Challenor–Wynn，[Binary De Bruijn Processes, arXiv:2211.16921v2](https://arxiv.org/pdf/2211.16921v2)，§§2–3。这里仅引用这些构造背景；式 (99.3a) 的首次反序差异及其词 KL 由下面的证明承担。
+
+**定理 99.4（均匀短窗与任意延迟的首次反序差异）。** 定义 99.3 的 $K_\epsilon$ 每行、每列之和均为 $1$，$\pi$ 是平稳律，并且
+$$
+(K_\epsilon^L)(u,v)
+\ge\left(\frac{1-\epsilon}{2}\right)^L>0
+\qquad(u,v\in S_L).
+\tag{99.4a}
+$$
+相应链不可约、非周期。其平稳输出在每个起点 $t\ge0$ 及每个 $0\le m\le L$ 满足
+$$
+\Pr(Y_t\cdots Y_{t+m-1}=w)=2^{-m}
+\qquad(w\in\{0,1\}^m).
+\tag{99.4b}
+$$
+长度 $L+1$ 的全部词概率为
+$$
+p(a_0\cdots a_L)
+=2^{-(L+1)}
+\left[1+\epsilon(-1)^{a_0+a_L}(a_1-a_{L-1})\right].
+\tag{99.4c}
+$$
+特别地，
+$$
+p(01\,0^{L-1})=\frac{1+\epsilon}{2^{L+1}},
+\qquad
+p(0^{L-1}10)=\frac{1-\epsilon}{2^{L+1}}.
+\tag{99.4d}
+$$
+所以首次输出词反序不对称恰在长度 $L+1$，对应含 $L$ 次隐藏转移的观察窗。
+
+不存在与隐藏状态数无关的统一词长截止：对每个整数 $B\ge0$，存在平稳、不可约、非周期、具有有理核及有理平稳律的有限隐藏链和二元确定读出，使所有 $|w|\le B$ 的词满足 $p(w)=p(w^R)$，但并非所有有限词都满足该等式。
+
+**证明。** 每条允许的移位边满足
+$$
+\frac{1-\epsilon}{2}
+\le K_\epsilon(u,v)
+\le\frac{1+\epsilon}{2},
+$$
+故其概率严格位于 $(0,1)$。固定 $u$ 后，对续接位 $b=0,1$ 求和，式 (99.3a) 的扰动项因 $(-1)^b$ 相消，因此每行和为 $1$。
+
+固定目标 $v=(v_0,\ldots,v_{L-1})$，它只有两个前驱
+$$
+u^{(c)}=(c,v_0,\ldots,v_{L-2}),\qquad c=0,1.
+$$
+相应概率为
+$$
+K_\epsilon(u^{(c)},v)
+=\frac{1+\epsilon(-1)^{c+v_{L-1}}(v_0-v_{L-2})}{2}.
+$$
+对 $c$ 求和，扰动项再次相消，所以每列和为 $1$。于是
+$$
+(\pi K_\epsilon)(v)
+=2^{-L}\sum_uK_\epsilon(u,v)=2^{-L}=\pi(v).
+$$
+从任意 $u$ 开始，依次续接目标 $v$ 的 $L$ 个比特，恰在 $L$ 步后到达 $v$。这条路径的每条边概率至少为 $(1-\epsilon)/2$，得到式 (99.4a)，也得到不可约性。全零状态有概率 $1/2$ 的自环，故不可约链非周期。
+
+记隐藏状态为 $U_t$。移位规则使
+$$
+(Y_t,\ldots,Y_{t+L-1})=U_t
+$$
+沿每条样本路径成立。平稳律使 $U_t$ 在 $\{0,1\}^L$ 上均匀；取其前 $m$ 个坐标的边缘，就得到式 (99.4b)。该结论针对连续块。
+
+若指定 $(Y_0,\ldots,Y_L)=(a_0,\ldots,a_L)$，前 $L$ 位唯一指定
+$$
+U_0=(a_0,\ldots,a_{L-1}),
+$$
+而 $Y_L$ 正是第一次移位转移时续接的比特。因此该事件的概率是初始质量 $2^{-L}$ 乘以这一续接概率；后续转移的可能性求和为 $1$。代入式 (99.3a) 得式 (99.4c)。这一个非平凡续接因子并不改变输出窗本身含有 $L$ 次隐藏转移的计数。
+
+反序保持端点奇偶 $(-1)^{a_0+a_L}$，并把 $a_1-a_{L-1}$ 变为其相反数。对 $w=01\,0^{L-1}$，因 $L\ge3$，第二位与倒数第二位是不同坐标，分别为 $1,0$，端点均为 $0$，从而得到式 (99.4d)。这两个概率不同，而式 (99.4b) 使所有更短词均与反序等概率。
+
+最后，给定 $B$，取 $L\ge\max(B,3)$、$\epsilon=1/2$。核与平稳律均为有理数，式 (99.4b) 认证全部长度不超过 $B$ 的等式，式 (99.4d) 给出一个更长区别词。因此没有统一于所有隐藏维数的截止。这里隐藏状态数 $d=2^L$ 随 $L$ 增长，与定理 99.2 的固定维数充分界相容；此构造没有断言 $2^L$ 是所需的最小隐藏状态数。证毕。
+
+**推论 99.5（移位族的精确输出词 KL）。** 对定义 99.3 的平稳输出及每个整数 $m\ge0$，$P_m$ 与 $P_m^R$ 在全部长度 $m$ 的二元词上均严格为正，并且以自然对数计量时，
+$$
+D_{\mathrm{KL}}(P_m\Vert P_m^R)
+=(m-L)_+\,c_\epsilon,
+\qquad
+c_\epsilon=\frac{\epsilon}{2}
+\log\frac{1+\epsilon}{1-\epsilon}>0,
+\tag{99.5a}
+$$
+其中 $(m-L)_+=\max\{m-L,0\}$。因此，对每个固定 $L\ge3$ 与 $0<\epsilon<1$，
+$$
+\lim_{m\to\infty}\frac1m
+D_{\mathrm{KL}}(P_m\Vert P_m^R)=c_\epsilon.
+\tag{99.5b}
+$$
+固定 $\epsilon$ 时，该正极限不依赖 $L$，而首次非零词散度所在的长度 $L+1$ 可任意增大。
+
+**证明。** 当 $m\le L$ 时，式 (99.4b) 使两份词律均为均匀律，故正支撑与零散度均成立。设 $m\ge L$，对 $w=a_0\cdots a_{m-1}$ 定义
+$$
+s_t(w)=(-1)^{a_t+a_{t+L}}
+(a_{t+1}-a_{t+L-1}),
+\qquad 0\le t<m-L.
+$$
+指定输出词就指定了初始 $L$ 位块及随后 $m-L$ 次续接的比特；其余隐藏转移求和归一化。由 Markov 乘积公式，
+$$
+\begin{aligned}
+P_m(w)
+&=2^{-L}\prod_{t=0}^{m-L-1}
+\frac{1+\epsilon s_t(w)}2\\
+&=2^{-m}\prod_{t=0}^{m-L-1}(1+\epsilon s_t(w)).
+\end{aligned}
+\tag{99.5c}
+$$
+$m=L$ 时使用空积 $1$。因为 $s_t\in\{-1,0,1\}$ 且 $0<\epsilon<1$，每个因子严格为正，故全部词与反序词均有正概率。
+
+反序逐一将窗口翻转并交换窗口次序，直接代入指标得到
+$$
+s_t(w^R)=-s_{m-L-1-t}(w).
+$$
+所以
+$$
+P_m^R(w)=2^{-m}\prod_{t=0}^{m-L-1}(1-\epsilon s_t(w)),
+$$
+以及
+$$
+\log\frac{P_m(w)}{P_m^R(w)}
+=\log\frac{1+\epsilon}{1-\epsilon}
+\sum_{t=0}^{m-L-1}s_t(w).
+\tag{99.5d}
+$$
+最后一个等式分别在 $s_t=1,-1,0$ 上成立，再对有限个因子相加。
+
+现取一个长度 $L+1$ 的窗口。均匀基准律下，内部坐标 $a_1,a_{L-1}$ 不同的概率为 $1/2$；因 $L\ge3$，两个端点与这两个内部坐标均不重合，其端点奇偶把非零分数的两个符号各分一半。因此基准分数概率为
+$$
+\Pr_0(s=1)=\Pr_0(s=-1)=\frac14,
+\qquad
+\Pr_0(s=0)=\frac12.
+$$
+式 (99.4c) 将这一基准按 $1+\epsilon s$ 倾斜，给出真实单窗口概率
+$$
+\Pr(s=1)=\frac{1+\epsilon}{4},
+\qquad
+\Pr(s=-1)=\frac{1-\epsilon}{4},
+\qquad
+\Pr(s=0)=\frac12.
+$$
+于是 $\mathbb E[s]=\epsilon/2$。由平稳性，每个 $s_t$ 都有这一边缘期望。对式 (99.5d) 取 $P_m$ 期望，只使用有限和的线性性，有
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(P_m\Vert P_m^R)
+&=\log\frac{1+\epsilon}{1-\epsilon}
+\sum_{t=0}^{m-L-1}\mathbb E_{P_m}[s_t]\\
+&=(m-L)\frac{\epsilon}{2}
+\log\frac{1+\epsilon}{1-\epsilon}.
+\end{aligned}
+$$
+重叠窗口不需要相互独立。合并 $m\le L$ 的情形得到式 (99.5a)，再对固定 $L$ 除以 $m$ 并取极限，得到式 (99.5b)。
+
+这里比较的是输出词律。隐藏移位核本身没有双向支撑：取
+$$
+u=0^{L-1}1,
+\qquad
+v=0^{L-2}10,
+$$
+则 $K_\epsilon(u,v)=(1-\epsilon)/2>0$，但 $v$ 的后 $L-1$ 位不等于 $u$ 的前 $L-1$ 位，所以 $K_\epsilon(v,u)=0$。因此本证明使用的是式 (99.5c) 给出的输出共同正支撑，没有调用第 93.3 条的隐藏路径有限 KL 公式。式 (99.5a) 是该明确例族的有限词公式，不依赖一般隐藏 Markov 相对熵率定理。证毕。
+
+## 99.99 追加锚
+
+## 100. 阶乘有理列的逐处收敛与阿代尔边界
+
+**定义 100.1（同一有理列与两种拓扑）。** 对整数 $n\ge2$，置
+$$
+M_n=n!,\qquad D_n=1+M_n^2,
+\qquad e_n=\frac{M_n}{D_n}\in\mathbb Q,
+\qquad B_n=\{\ell\text{ 为素数}:\ell\mid D_n\}.
+$$
+所有实数与 $p$-进读数均取自规范嵌入
+$$
+\iota_\infty:\mathbb Q\hookrightarrow\mathbb R,
+\qquad
+\iota_p:\mathbb Q\hookrightarrow\mathbb Q_p,
+$$
+并使用 $v_p(p)=1$、$|p|_p=p^{-1}$ 的归一化。记
+$$
+T=\mathbb R\times\prod_{p\ {\rm prime}}\mathbb Q_p
+$$
+带通常乘积拓扑，记标准有理阿代尔环
+$$
+\mathbb A_{\mathbb Q}
+=\mathbb R\times\prod_{p\ {\rm prime}}'(\mathbb Q_p,\mathbb Z_p),
+\qquad
+\mathbb Z_p=\{x\in\mathbb Q_p:|x|_p\le1\}.
+$$
+这里受限直积的元素在除有限多个素位以外均属于 $\mathbb Z_p$；其零点邻域基为
+$$
+U_\infty\times\prod_{p\in S}U_p
+\times\prod_{p\notin S}\mathbb Z_p,
+\tag{100.1}
+$$
+其中 $S$ 是有限素数集，$U_\infty$ 与各 $U_p$ 是相应局部域的开零邻域。另以 $\mathbb A_{\rm prod}$ 表示同一阿代尔底集从 $T$ 取得的子空间拓扑。令
+$$
+\Delta:\mathbb Q\longrightarrow\mathbb A_{\mathbb Q},
+\qquad
+\Delta(x)=(\iota_\infty(x),(\iota_p(x))_p),
+$$
+为有理对角映射，令 $j:\mathbb A_{\mathbb Q}\hookrightarrow T$ 为自然包含。每个有理数的分母仅有有限多个素因子，故 $\Delta$ 确实取值于阿代尔底集。上述乘积与受限直积拓扑采用其标准定义。[^rro100-topology]
+
+[^rro100-topology]: Andrew V. Sutherland，[MIT 18.785, Fall 2021, Lecture 25: The ring of adeles, strong approximation](https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/mit18_785f21_lec25.pdf)，§25.1 与 Definition 25.1，PDF 第 1–2 页，给出乘积及受限直积拓扑、连续坐标投影，并区分受限直积拓扑与诱导子空间拓扑；Definition 25.7 与 Example 25.8，PDF 第 4–5 页，给出这里使用的有理阿代尔表示。
+
+**命题 100.2（逐处趋零而无阿代尔极限）。** 定义 100.1 的同一有理列满足
+$$
+\iota_\infty(e_n)\longrightarrow0,
+\qquad
+\forall p\text{ 为素数},\quad\iota_p(e_n)\longrightarrow0.
+\tag{100.2a}
+$$
+因此 $j(\Delta(e_n))\to0$ 于 $T$，且 $\Delta(e_n)\to0$ 于 $\mathbb A_{\rm prod}$。
+
+对每个 $n\ge2$，$B_n$ 是非空有限集合，并且恰为 $\Delta(e_n)$ 的非整有限坐标集，满足
+$$
+\varnothing\ne B_n\subseteq\{\ell\text{ 为素数}:\ell>n\}.
+\tag{100.2b}
+$$
+特别地，对每个有限素数集 $S$，
+$$
+n\ge N_S:=\max(\{2\}\cup S)
+\quad\Longrightarrow\quad
+B_n\cap S=\varnothing,
+\tag{100.2c}
+$$
+且不存在一个固定有限 $S$ 包含该列某条尾部的全部非整坐标。
+
+序列 $\Delta(e_n)$ 在标准阿代尔拓扑中没有任何极限。自然包含 $j$ 连续且单射，却不是到其像的拓扑嵌入；同一阿代尔底集上的受限直积拓扑严格细于从 $T$ 诱导的拓扑。
+
+**证明。** 先确定每项的非整坐标。因为
+$$
+\gcd(M_n,D_n)=\gcd(M_n,1+M_n^2)=1,
+\qquad D_n>1,
+$$
+所以分母无约消，$B_n$ 有限且非空。若 $\ell\mid D_n$ 且 $\ell\le n$，则 $\ell\mid n!$，从而 $D_n\equiv1\pmod\ell$，矛盾。因此每个 $\ell\in B_n$ 均大于 $n$，且
+$$
+v_\ell(e_n)=-v_\ell(D_n)<0.
+$$
+在 $p\notin B_n$ 时，分母赋值为零，分子赋值非负，所以 $\iota_p(e_n)\in\mathbb Z_p$。这证明 $B_n$ 恰为非整坐标集，也再次证明每个 $\Delta(e_n)$ 都是阿代尔。式 (100.2b) 立即给出式 (100.2c)，包括 $S=\varnothing$。若某个有限 $S$ 包含从 $N$ 开始的全部 $B_n$，取 $n\ge\max(N,N_S)$，就会同时有 $B_n\subseteq S$、$B_n\cap S=\varnothing$ 与 $B_n\ne\varnothing$，矛盾。
+
+实位置满足
+$$
+0<\iota_\infty(e_n)
+=\frac{n!}{1+(n!)^2}
+<\frac1{n!}\le\frac1n\longrightarrow0.
+$$
+现在固定一个素数 $p$。当 $n\ge p$ 时，$p\mid n!$ 且 $D_n\equiv1\pmod p$，于是
+$$
+v_p(e_n)=v_p(n!)
+\ge\left\lfloor\frac np\right\rfloor.
+$$
+最后的不等式只需数出 $1,\ldots,n$ 中的 $p$ 的倍数；这些因子各贡献至少一次 $p$。所以在这一阈值以后，
+$$
+|\iota_p(e_n)|_p
+\le p^{-\lfloor n/p\rfloor}\longrightarrow0.
+$$
+这证明式 (100.2a)，其中收敛阈值依赖所固定的 $p$ 与所要求的精度。
+
+$T$ 的每个零点乘积基本邻域只限制有限多个坐标。对这些坐标分别取式 (100.2a) 给出的阈值，再取有限最大值，所有更晚的项就同时满足该邻域的条件。因此 $j(\Delta(e_n))\to0$ 于 $T$。这些项与零点均属于阿代尔底集；把上述邻域与该底集相交，即得到 $\mathbb A_{\rm prod}$ 中的收敛。
+
+另一方面，式 (100.1) 使
+$$
+U=(-1,1)\times\prod_{p\ {\rm prime}}\mathbb Z_p
+$$
+成为标准阿代尔拓扑中的一个固定开零邻域。每个 $B_n$ 都非空，因此每个 $\Delta(e_n)$ 至少有一个坐标不整，故
+$$
+\Delta(e_n)\notin U\qquad(n\ge2).
+\tag{100.2d}
+$$
+这排除了阿代尔零极限。若该列在阿代尔拓扑中趋于某个 $a$，连续坐标投影会使其在每个局部域中趋于 $a$ 的相应坐标。由式 (100.2a) 及这些 Hausdorff 局部域中极限的唯一性，每个坐标都必须为零，即 $a=0$，与式 (100.2d) 矛盾。所以该列没有任何阿代尔极限。
+
+受限直积的各坐标投影连续，因而乘积拓扑的定义使 $j$ 连续；其作为自然包含也为单射。若 $j$ 是拓扑嵌入，则从 $j(\mathbb A_{\mathbb Q})$ 的诱导拓扑到 $\mathbb A_{\mathbb Q}$ 的逆映射连续。它会把已证明的收敛 $j(\Delta(e_n))\to0$ 送成阿代尔收敛 $\Delta(e_n)\to0$，矛盾。因此 $j$ 不是拓扑嵌入。连续性说明受限直积拓扑包含诱导拓扑，非嵌入性说明这两个拓扑不相等，故包含严格。
+
+这里的量词差别可在同一列上直接读出：
+$$
+\forall p\ \exists N_p\ \forall n\ge N_p,
+\quad \iota_p(e_n)\in\mathbb Z_p,
+$$
+但
+$$
+\nexists N\ \forall n\ge N\ \forall p,
+\quad \iota_p(e_n)\in\mathbb Z_p.
+$$
+后一种同时整性是进入所选固定邻域 $U$ 的必要条件；它本身不是阿代尔收敛的充分条件。各项分别只有有限多个非整位置，与一条尾部共享一个有限异常位置集合也不同。式 (100.2c) 说明这些位置最终逃出每个固定有限集，并不声称不同 $B_n$ 两两不交。证毕。
+
+## 100.99 追加锚
+
+## 101. 稀有循环的方向判别尺度与有限停止认证
+
+**定义与假设 101.1（三状态有理循环与已知方向假说）。** 对整数 $k\ge2$，令
+$$
+p_k=\frac1k,\qquad q_k=\frac1{k2^k},\qquad
+r_k=1-p_k-q_k.
+$$
+状态空间取 $S=\mathbb Z/3\mathbb Z$，定义转移核与初始概率
+$$
+K_k(i,i+1)=p_k,\qquad K_k(i,i-1)=q_k,\qquad
+K_k(i,i)=r_k,\qquad \pi(i)=\frac13.
+\tag{101.1a}
+$$
+对整数 $n\ge0$，观察完整状态词 $w=(x_0,\ldots,x_n)\in\Omega_n=S^{n+1}$；$n$ 计转移次数，故 $n=0$ 已观察初始状态。置
+$$
+P_{k,n}(w)=\frac13\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad
+Q_{k,n}(w)=P_{k,n}(w^R),
+\tag{101.1b}
+$$
+其中 $w^R=(x_n,\ldots,x_0)$，空积为一。$Q_{k,n}$ 也由均匀初始律与转置核 $K_k^{\mathsf T}$ 按原坐标顺序生成。记路径中的顺时针、逆时针与自环次数为 $N_+,N_-,N_0$，并置 $J_n=N_+-N_-$。另记
+$$
+A_n=\{(i,\ldots,i):i\in S\},\qquad
+U_n=\frac13\sum_{i\in S}\delta_{(i,\ldots,i)}.
+$$
+
+方向判别的两个假说为 $P_{k,n}$ 与 $Q_{k,n}$，各取先验 $1/2$。测试者可以知道 $k$、核与两份概率，未知的是本次轨迹的方向标签。若 $\delta:\Omega_n\to[0,1]$ 表示报告“反向”的概率，定义最优平均错误率
+$$
+R_{k,n}
+=\inf_\delta\frac12\sum_{w\in\Omega_n}
+\bigl[P_{k,n}(w)\delta(w)+Q_{k,n}(w)(1-\delta(w))\bigr].
+\tag{101.1c}
+$$
+总变差采用 $\operatorname{TV}(P,Q)=\frac12\sum_w|P(w)-Q(w)|$ 的归一化，KL 中的对数取自然底数。
+
+**命题 101.2（正 KL 率、稀有跳转与方向识别的观察尺度）。** 定义 101.1 的核坐标与平稳律均为有理数；每个核严格正、不可约、非周期，并以 $\pi$ 为平稳律。但因 $K_k(i,i-1)=q_k\to0$，有 $\inf_{k\ge2}\min_{i,j\in S}K_k(i,j)=0$；以下结论没有统一正转移下界假设。对所有 $k\ge2$、$n\ge0$，
+$$
+\log\frac{P_{k,n}(w)}{Q_{k,n}(w)}=k(\log2)J_n(w),
+\qquad
+D_{\rm KL}(P_{k,n}\Vert Q_{k,n})=nc_k,
+\tag{101.2a}
+$$
+其中
+$$
+c_k=(1-2^{-k})\log2\ge\frac34\log2>0,
+\qquad c_k\longrightarrow\log2.
+$$
+同时，
+$$
+\operatorname{TV}(P_{k,n},U_n)
+=\operatorname{TV}(Q_{k,n},U_n)=1-r_k^n,
+\tag{101.2b}
+$$
+$$
+\max\{0,1-r_k^n-2nq_k\}
+\le\operatorname{TV}(P_{k,n},Q_{k,n})
+\le1-r_k^n
+\le\frac{n(1+2^{-k})}{k}
+\le\frac{5n}{4k},
+\tag{101.2c}
+$$
+以及
+$$
+R_{k,n}=\frac12\bigl(1-\operatorname{TV}(P_{k,n},Q_{k,n})\bigr),
+\qquad
+\frac12r_k^n\le R_{k,n}
+\le\min\left\{\frac12,\frac12r_k^n+nq_k\right\}.
+\tag{101.2d}
+$$
+净计数为正时报正向、为负时报反向、为零时公平抛币，达到这个最优错误率。
+
+若整数 $n_k\ge0$ 随 $k\to\infty$ 变化，则有三种尺度：
+$$
+\bigl(\operatorname{TV}(P_{k,n_k},Q_{k,n_k}),R_{k,n_k}\bigr)
+\longrightarrow
+\begin{cases}
+(0,\tfrac12),&n_k/k\longrightarrow0,\\
+(1-e^{-\lambda},\tfrac12e^{-\lambda}),
+&n_k/k\longrightarrow\lambda\in(0,\infty),\\
+(1,0),&n_k/k\longrightarrow\infty.
+\end{cases}
+\tag{101.2e}
+$$
+特别地，每个固定有限 $n$ 都满足 $\sup_{k\ge2}R_{k,n}=1/2$，尽管全部模型共有正 KL 率下界 $(3/4)\log2$。因此，仅凭状态数三、这个共同率下界和目标错误率 $\delta<1/2$，不能选择对全族有效的有限观察窗口；这不排除由完整已知核或 $k$ 选取窗口，也不否认本例的精确值 $c_k$ 可以确定 $k$。取 $n_k=\lfloor\sqrt{k}\rfloor$，更有
+$$
+D_{\rm KL}(P_{k,n_k}\Vert Q_{k,n_k})\longrightarrow\infty,
+\qquad
+\operatorname{TV}(P_{k,n_k},Q_{k,n_k})\longrightarrow0,
+\qquad R_{k,n_k}\longrightarrow\frac12.
+\tag{101.2f}
+$$
+
+**证明。** 因为 $k\ge2$，
+$$
+0<p_k+q_k=\frac{1+2^{-k}}k\le\frac58<1,
+$$
+故 $p_k,q_k,r_k>0$。每行、每列之和均为一，所以均匀律平稳。逐次对路径末坐标求和，核的行和一与 $\sum_i\pi(i)=1$ 给出 $\sum_wP_{k,n}(w)=1$；反序是有限载体 $\Omega_n$ 上的双射，故 $\sum_wQ_{k,n}(w)=1$。两份路径律在 $\Omega_n$ 上处处严格正。任意两状态间转移均严格正，且各状态有自环，遂得不可约性与非周期性；有理性直接由定义得到。
+
+将已有[推论 93.4（三状态环的持续方向性）](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 中的 $p,q$ 取为 $p_k,q_k$，原式的净计数 $C_n$ 在本节记作 $J_n$。上述严格正性和平稳性满足其全部前提，而
+$$
+\frac{p_k}{q_k}=2^k,\qquad
+(p_k-q_k)\log\frac{p_k}{q_k}
+=(1-2^{-k})\log2.
+$$
+其路径似然比与 KL 公式立即给出 (101.2a)。$2^{-k}\le1/4$ 且 $2^{-k}\to0$，得到所述率界和极限。$n=0$ 时两份初始律相同，净计数和散度均为零。
+
+在每条常路径上，$P_{k,n}$ 与 $Q_{k,n}$ 的质量都为 $r_k^n/3$，因而
+$$
+P_{k,n}|_{A_n}=Q_{k,n}|_{A_n}=r_k^nU_n,
+\qquad
+P_{k,n}(A_n^c)=Q_{k,n}(A_n^c)=1-r_k^n.
+\tag{101.2g}
+$$
+与 $U_n$ 比较时，常路径上的总质量缺口为 $1-r_k^n$，非常路径上的总质量也为 $1-r_k^n$；半个绝对差之和即为 (101.2b)。比较 $P_{k,n}$ 与 $Q_{k,n}$ 时，它们在 $A_n$ 上相等，所以
+$$
+\begin{aligned}
+\operatorname{TV}(P_{k,n},Q_{k,n})
+&=\frac12\sum_{w\notin A_n}|P_{k,n}(w)-Q_{k,n}(w)|\\
+&\le\frac12\bigl[P_{k,n}(A_n^c)+Q_{k,n}(A_n^c)\bigr]
+=1-r_k^n.
+\end{aligned}
+$$
+又
+$$
+1-r_k^n=(1-r_k)\sum_{j=0}^{n-1}r_k^j
+\le n(1-r_k)=\frac{n(1+2^{-k})}{k}\le\frac{5n}{4k}.
+$$
+空和使这个计算也包含 $n=0$。
+
+对有限载体上的单位质量概率，直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/Estimation/LeCamTight.lean)，再除以等先验的因子二，得
+$$
+R_{k,n}=\frac12\sum_w\min\{P_{k,n}(w),Q_{k,n}(w)\}
+=\frac12(1-\operatorname{TV}(P_{k,n},Q_{k,n})).
+$$
+允许随机化不降低该值：每条轨迹的错误质量是 $\delta(w)$ 的仿射函数，其最小值在较小错误的一端达到；两质量相等时任选。报告反向的最优区域为 $P_{k,n}(w)<Q_{k,n}(w)$，相等时公平抛币。由 (101.2a)，这正是所述净计数规则。反序把 $J_n$ 变为 $-J_n$ 并交换两份律，公平处理零值使两个条件错误率相同，故
+$$
+R_{k,n}=P_{k,n}(J_n<0)+\frac12P_{k,n}(J_n=0).
+\tag{101.2h}
+$$
+
+常路径上 $J_n=0$，贡献 $r_k^n/2$。若路径非常且 $J_n\le0$，就必有一次逆时针转移：没有逆时针时，每次非自环转移都增加净计数。因此
+$$
+\begin{aligned}
+\frac12r_k^n\le R_{k,n}
+&=\frac12r_k^n+P_{k,n}(J_n<0)
+ +\frac12P_{k,n}(J_n=0,A_n^c)\\
+&\le\frac12r_k^n+P_{k,n}(N_->0)
+\le\frac12r_k^n+nq_k.
+\end{aligned}
+$$
+最后一步用并合界，每个时刻逆时针转移的概率为 $q_k$，不需要转移事件独立。始终公平猜测又给 $R_{k,n}\le1/2$，得到 (101.2d)。将其上界代入 $\operatorname{TV}=1-2R_{k,n}$，再与总变差非负性合用，得到 (101.2c) 的下界。
+
+现设 $n_k/k\to\lambda\in[0,\infty)$。令 $a_k=(1+2^{-k})/k$，则 $a_k\to0$、$ka_k\to1$，且由 $\log$ 在一处的导数为一，
+$$
+\frac{\log(1-a_k)}{a_k}\longrightarrow-1,
+\qquad k\log r_k\longrightarrow-1.
+$$
+这里的导数接口见 [hasDerivAt_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean)。于是
+$$
+n_k\log r_k=\frac{n_k}{k}\,k\log r_k\longrightarrow-\lambda,
+\qquad r_k^{n_k}\longrightarrow e^{-\lambda},
+\qquad n_kq_k=\frac{n_k}{k}2^{-k}\longrightarrow0.
+$$
+由 (101.2d) 夹逼，$R_{k,n_k}\to\tfrac12e^{-\lambda}$；再用 $\operatorname{TV}=1-2R$，得到 (101.2e) 的前两种尺度。
+
+若 $n_k/k\to\infty$，固定任意 $M>0$，则最终 $n_k\ge\lfloor Mk\rfloor$。两种方向的较长路径律投影到前缀，分别给出对应的较短路径律；测试可以忽略后缀，所以最优错误率随窗口不增。因此
+$$
+0\le\limsup_{k\to\infty}R_{k,n_k}
+\le\lim_{k\to\infty}R_{k,\lfloor Mk\rfloor}
+=\frac12e^{-M}.
+$$
+令 $M\to\infty$，得第三种尺度。这个前缀论证没有要求在任意超线性窗口下仍有 $n_kq_k\to0$。
+
+固定 $n$ 时，$r_k^n\to1$，(101.2d) 给 $R_{k,n}\to1/2$，而各项不超过 $1/2$，故上确界为 $1/2$。最后，$n_k=\lfloor\sqrt{k}\rfloor$ 满足 $n_k\to\infty$、$n_k/k\to0$，所以 (101.2a) 的共同正率下界使总 KL 趋于无穷，(101.2e) 给出其余两个极限，证明 (101.2f)。
+
+这项困难是从随机轨迹识别方向的观察时间：一次转移的精确词概率已经满足 $P_{k,1}(i,i+1)=p_k/3\ne q_k/3=Q_{k,1}(i,i+1)$。总 KL 的大值也不与小总变差矛盾；既有 [Pinsker 不等式](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/TotalVariation/Pinsker.lean) 的方向是 $2\operatorname{TV}^2\le D_{\rm KL}$，不能由 KL 下界反推出总变差下界。证毕。
+
+相关机制的背景见 Feng–Crooks，[Length of Time’s Arrow，Physical Review Letters **101**, 090602 (2008)](https://doi.org/10.1103/PhysRevLett.101.090602)，第 090602-3–4 页，尤其式 (14)–(16)：该文在物理驱动实验的语境中，以稀有的大耗散分量展示平均耗散与 Jensen–Shannon 方向信息的差别。此处将其作为机制背景引用；本节的有理三状态环、总变差最优风险与观察时间尺度结论由上述证明给出，不归于该文，也不赋予本例的 KL 物理熵意义。
+
+**定义与假设 101.3（同族的可逆零假设与适应性认证）。** 赋予 $S$ 离散 $\sigma$-代数，并在同一路径空间 $\Omega=S^{\mathbb N_0}$ 上取乘积 $\sigma$-代数。记 $P_k$ 为初始律 $\pi$、核 $K_k$ 的无限平稳 Markov 路径律，其 $n$ 次转移前缀律就是 $P_{k,n}$。该律使用既有 Ionescu–Tulcea 构造：每步以已观察前缀的末状态代入 $K_k$，再从 $\pi$ 出发迭代；有限离散域保证步核可测，行和一保证它是概率核。参见 [trajMeasure、traj_map_frestrictLe](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean)。定义
+$$
+Q_0=\frac13\sum_{i\in S}\delta_{(i,i,i,\ldots)}.
+\tag{101.3a}
+$$
+这是核 $I$、均匀初始律的可逆、非遍历路径律，前缀律为 $Q_{0,n}=U_n$。
+
+本次零假设为 $\{Q_0\}$，或任意包含 $Q_0$ 的可逆平稳过程类；替代假设包含全部 $\{P_k:k\ge2\}$。这与命题 101.2 的方向标签任务不同：该处的 $P_k$ 及其反向过程都不可逆，而此处判定的是可逆性。$Q_0$ 也不是该处记作 $Q_{k,n}$ 的反向前缀律。若零假设仅允许不可约或遍历链，则 $Q_0$ 不属于它，以下在 $Q_0$ 处的结论不承担该受限问题。
+
+固定一条对全部未知 $k$ 共用的认证规则。取共同的种子概率空间 $(E,\mathcal E,\nu)$；在 $\Omega\times E$ 上令辅助种子 $\xi$ 为第二坐标，在每个模型下均与轨迹独立，记
+$$
+\bar P_k=P_k\otimes\nu,\qquad
+\bar Q_0=Q_0\otimes\nu,
+\qquad
+\mathcal G_n=\sigma(X_0,\ldots,X_n,\xi).
+\tag{101.3b}
+$$
+这里取由所列观测生成的原始 $\sigma$-代数，不加入依赖模型的完备化。规则可知道模型族，但不另获真实 $k$ 或模型标签。一次性给出全部独立随机种子包含逐步随机化。
+
+令 $C_n\in\mathcal G_n$ 表示在时刻 $n$ 或更早已签发“可逆”证书，要求 $C_n\subseteq C_{n+1}$，并置
+$$
+C=\bigcup_{n\ge0}C_n.
+\tag{101.3c}
+$$
+若用停时 $\tau\in\mathbb N_0\cup\{\infty\}$ 和终端决定 $D$ 表述，则 $C_n=\{\tau\le n,D=\text{“可逆”}\}$；不仅 $\tau$ 是停时，决定也必须适应于截至停时的观测，满足上述可测性。停时采用既有 [IsStoppingTime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Process/Stopping.lean) 的含义。允许规则不终止或终止时弃权。对 $\delta\in[0,1]$，统一错误证书界指 $\bar P_k(C)\le\delta$ 对每个 $k\ge2$ 成立，约束的是曾在有限时刻签发证书的总概率。
+
+**命题 101.4（有限停止不能统一认证可逆零假设）。** 在定义与假设 101.3 下，
+$$
+\bar Q_0(C)
+\le\liminf_{k\to\infty}\bar P_k(C)
+\le\sup_{k\ge2}\bar P_k(C).
+\tag{101.4a}
+$$
+因此统一错误证书界 $\delta$ 必使 $\bar Q_0(C)\le\delta$。若规则在 $Q_0$ 下以概率一于有限时刻签发证书，则 $\bar P_k(C)\to1$。对零错误，单个固定替代模型已足够：
+$$
+\forall k\ge2,\qquad
+\bar P_k(C)=0\ \Longrightarrow\ \bar Q_0(C)=0.
+\tag{101.4b}
+$$
+这些界均不要求预先假设停时几乎处处有限。
+
+**证明。** $P_k$ 的各前缀概率与定义 101.1 相容，因为对最后一个状态求和使用核的行和一；既有轨迹构造给出这些前缀概率。均匀律平稳使所得过程平稳。$Q_0$ 的每条常轨迹在反序下不变，故 $Q_0$ 可逆；移位不变事件“最终恒为状态 $0$”在 $Q_0$ 下的概率为 $1/3$，所以它非遍历。每个 $P_k$ 则由 $p_k/3\ne q_k/3$ 的一步词概率判为不可逆。
+
+对有限前缀 $w\in S^{n+1}$，令 $a_n(w)\in[0,1]$ 为观察到 $w$ 时使规则在时刻 $n$ 或更早签发证书的种子集合之 $\nu$-概率。$C_n\in\mathcal G_n$ 保证这些种子截面可测，且不依赖未见的轨迹后缀。因此
+$$
+\bar P_k(C_n)=\sum_wP_{k,n}(w)a_n(w),
+\qquad
+\bar Q_0(C_n)=\frac13\sum_{i\in S}a_n(i,\ldots,i).
+$$
+第一项求和中常路径的部分恰为 $r_k^n\bar Q_0(C_n)$，其余部分非负。由 (101.2g)，
+$$
+\bar P_k(C_n)\ge r_k^n\bar Q_0(C_n).
+\tag{101.4c}
+$$
+进而
+$$
+\bar Q_0(C_n)-\bar P_k(C_n)
+\le(1-r_k^n)\bar Q_0(C_n)\le1-r_k^n,
+$$
+所以
+$$
+\bar Q_0(C_n)\le\bar P_k(C)+1-r_k^n.
+\tag{101.4d}
+$$
+这也是 (101.2b) 的有限总变差比较经过随机二元决定后的界；相应既有接口为 [total_variation_channel_le](https://github.com/the-omega-institute/trureturing/blob/f35c45414cbccfd54aeb5519c40ba5249c32cade/D5/S3/TotalVariation/DataProcessing.lean)。$n=0$ 时 $r_k^0=1$，两份初始律完全相同，以上计算仍成立。
+
+保持 $n$ 固定，令 $k\to\infty$，有 $r_k^n\to1$，故
+$$
+\bar Q_0(C_n)\le\liminf_{k\to\infty}\bar P_k(C).
+$$
+再令 $n\to\infty$，用递增事件的测度连续性
+[tendsto_measure_iUnion_atTop](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/MeasureSpace.lean)，得到 (101.4a)。这里先对每个固定观测时刻取 $k$ 极限，再取事件递增极限，没有交换未经控制的联合极限。统一错误界随即给出 $\bar Q_0(C)\le\delta$；若左端为一，右侧概率序列的下极限至少为一，而各项至多为一，故其极限为一。
+
+最后固定 $k$。若 $\bar P_k(C)=0$，则各 $\bar P_k(C_n)=0$。有限 $n$ 下 $r_k^n>0$，所以 (101.4c) 强迫 $\bar Q_0(C_n)=0$；可数并给出 $\bar Q_0(C)=0$，证明 (101.4b)。这个论证只用有限前缀的单向支配，不要求无限路径律绝对连续。实际上常无限轨迹集合在 $Q_0$ 下概率一，在固定 $P_k$ 下概率 $\lim_n r_k^n=0$，二者在无限轨迹上可完全分离。
+
+规则若总是弃权，可以立即停止而从不签发证书；因此几乎处处有限停止本身不能替代对 $\bar Q_0(C)$ 的要求。反方向也不同：在仅比较 $Q_0$ 与此替代族时，第一次跳转在每个固定 $P_k$ 下几乎处处有限，在 $Q_0$ 下从不发生，故能零错误排除 $Q_0$；但可逆链也可以跳转，这不构成对任意可逆过程的反驳。证毕。
+
+## 101.99 追加锚
+
+## 102. 统一正转移下界下的方向检验预算
+
+**定义与假设 102.1（已知平稳模型的完整状态方向检验）。** 设 $S$ 是有限状态集，$d=|S|\ge3$。给定已知行随机矩阵 $K$、已知平稳概率 $\pi$ 及常数 $\eta,c_0>0$，满足
+$$
+\sum_{j\in S}K_{ij}=1,\qquad K_{ij}\ge\eta\quad(i,j\in S),
+\qquad \sum_{i\in S}\pi_iK_{ij}=\pi_j.
+\tag{102.1a}
+$$
+定义平稳边流、反序边流与边分数
+$$
+Q_{ij}=\pi_iK_{ij},\qquad Q^{\mathsf T}_{ij}=Q_{ji},
+\qquad A(i,j)=\log\frac{Q_{ij}}{Q_{ji}},
+\qquad c=D_{\rm KL}(Q\Vert Q^{\mathsf T})\ge c_0>0.
+\tag{102.1b}
+$$
+平稳性与正转移下界保证 $\pi_j\ge\eta$，故这些对数均有定义；所有对数取自然底数。
+
+观察完整状态路径 $w=(x_0,\ldots,x_n)\in S^{n+1}$，其中 $n\ge0$ 计转移次数，初始状态服从 $\pi$。两份已知简单假设是
+$$
+P_n(w)=\pi_{x_0}\prod_{t=0}^{n-1}K_{x_tx_{t+1}},
+\qquad P_n^R(w)=P_n(w^R),\qquad w^R=(x_n,\ldots,x_0),
+\tag{102.1c}
+$$
+各取先验 $1/2$。未知的是本次轨迹的方向标签。允许随机化；若 $\varphi:S^{n+1}\to[0,1]$ 表示报告反向的概率，则最优平均错误率为
+$$
+R_n=\inf_\varphi\frac12\sum_{w\in S^{n+1}}
+\bigl[P_n(w)\varphi(w)+P_n^R(w)(1-\varphi(w))\bigr].
+\tag{102.1d}
+$$
+总变差采用 $\operatorname{TV}(\mu,\nu)=\tfrac12\sum_x|\mu(x)-\nu(x)|=\sup_F|\mu(F)-\nu(F)|$。记
+$$
+B=2\log(1/\eta),\qquad \alpha=d\eta,
+\qquad T_\eta=\left\lceil\frac{\log4}{d\eta}\right\rceil.
+\tag{102.1e}
+$$
+
+**命题 102.2（统一的指数风险界与转移次数预算）。** 在定义与假设 102.1 下，必有 $0<d\eta<1$、$B>0$ 及 $c_0\le B$。对每个整数 $n\ge1$，
+$$
+R_n\le\min\left\{\frac12,
+\exp\left(-\frac{nc_0^2}{72B^2T_\eta}\right)\right\}.
+\tag{102.2a}
+$$
+因此，对任意 $0<\delta<1/2$，
+$$
+n\ge\left\lceil\frac{72B^2T_\eta}{c_0^2}
+                  \log\frac1\delta\right\rceil
+\quad\Longrightarrow\quad R_n\le\delta.
+\tag{102.2b}
+$$
+这个预算按 $n$ 次转移、$n+1$ 个完整状态读数计算，在固定 $d,\eta,c_0$ 的模型类上统一；所给常数不主张最优。$n=0$ 时 $R_0=1/2$。
+
+**证明。** 首先，由平稳性及 $\sum_i\pi_i=1$，
+$$
+\pi_j=\sum_i\pi_iK_{ij}\ge\eta.
+$$
+行归一化给 $d\eta\le1$。若 $d\eta=1$，每行中 $d$ 个不小于 $\eta=1/d$ 的数之和为一，故 $K_{ij}=1/d$；平稳性随即给 $\pi_j=1/d$，于是 $Q=Q^{\mathsf T}$、$c=0$，与 $c\ge c_0>0$ 矛盾。因此 $0<d\eta<1$，特别是 $0<\eta<1/d<1$，故 $B>0$，排除了后续分母退化的情形。
+
+$Q$ 是概率，且对所有 $i,j$ 有 $\eta^2\le Q_{ij}\le1$，所以
+$$
+|A(i,j)|\le2\log(1/\eta)=B,
+\qquad c=\sum_{i,j}Q_{ij}A(i,j)\le B.
+\tag{102.2c}
+$$
+这也给出 $c_0\le B$。所有状态初始概率和转移概率均严格正，故整个笛卡尔积 $S^{n+1}$ 上的路径概率严格正。
+
+将已有[定理 93.3（平稳边流的路径 KL 与读出比较）](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的核、平稳律及边流取为这里的 $K,\pi,Q$；严格正性满足其双向支撑要求。该定理直接给出
+$$
+\begin{aligned}
+\sigma_n(w)
+&=\log\frac{P_n(w)}{P_n^R(w)}
+=\sum_{t=0}^{n-1}A(x_t,x_{t+1})\\
+&=\log\frac{\pi_{x_0}}{\pi_{x_n}}
+ +\sum_{t=0}^{n-1}\log\frac{K_{x_tx_{t+1}}}{K_{x_{t+1}x_t}},
+\qquad \mathbb E_{P_n}\sigma_n=nc.
+\end{aligned}
+\tag{102.2d}
+$$
+因此边分数包含平稳端点项。
+
+在有限载体 $S^{n+1}$ 上，$P_n,P_n^R$ 均为单位质量概率。直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/D5/S3/Estimation/LeCamTight.lean)，得最优平均风险
+$$
+R_n=\frac12\bigl(1-\operatorname{TV}(P_n,P_n^R)\bigr).
+$$
+逐路径的错误质量是 $\varphi(w)$ 的仿射函数，故允许随机化不降低该最小值；在两份路径概率相等时公平抛币也达到它。因此可取 $\sigma_n>0$ 时判正向、$\sigma_n<0$ 时判反向、$\sigma_n=0$ 时公平抛币的规则。反序变换交换两份律，并满足 $\sigma_n(w^R)=-\sigma_n(w)$，所以两种条件错误率相等，得到
+$$
+R_n=P_n(\sigma_n<0)+\frac12P_n(\sigma_n=0)
+\le P_n(\sigma_n\le0).
+\tag{102.2e}
+$$
+始终公平猜测还给出 $R_n\le1/2$。以下只需控制正向链的一次下尾。
+
+令 $\nu$ 为 $S$ 上均匀概率。对每个 $i\in S$ 和 $F\subseteq S$，
+$$
+K(i,F)=\sum_{j\in F}K_{ij}\ge\eta|F|=\alpha\nu(F).
+$$
+直接应用 Roberts–Rosenthal，[*General state space Markov chains and MCMC algorithms*](https://arxiv.org/pdf/math/0404033v4)，arXiv:math/0404033v4，Theorem 8（PDF 第 17 页／刊印第 36 页）：全空间 minorization 的参数取 $n_0=1$、$\epsilon=\alpha$，平稳概率取 $\pi$，得到对整数 $t\ge0$，
+$$
+\sup_{x\in S}\operatorname{TV}(K^t(x,\cdot),\pi)
+\le(1-\alpha)^t\le e^{-\alpha t}.
+\tag{102.2f}
+$$
+采用 Paulin 的 $t_{\rm mix}=t_{\rm mix}(1/4)$ 约定，即
+$$
+t_{\rm mix}=\min\left\{t\in\mathbb N_0:
+ \sup_{x\in S}\operatorname{TV}(K^t(x,\cdot),\pi)\le\frac14\right\},
+$$
+便有 $t_{\rm mix}\le T_\eta$。这里的 TV 归一化与两份来源相同。
+
+现在在原状态序列 $X_0,\ldots,X_n$ 上对函数 $f=\sigma_n$ 应用 Paulin 的集中界。仅改变 $x_0$ 或 $x_n$ 时影响一个边分数，变化至多 $2B$；仅改变任一内部坐标 $x_j$、$1\le j\le n-1$ 时影响两个边分数，变化至多 $4B$。逐次替换坐标因而给出全域 $S^{n+1}$ 上的 bounded-difference 条件
+$$
+|f(x)-f(y)|\le\sum_{j=0}^{n}b_j\mathbf1_{\{x_j\ne y_j\}},
+\qquad b_0=b_n=2B,\quad b_j=4B\ (1\le j\le n-1),
+$$
+并且
+$$
+\|\mathbf b\|_2^2
+=2(2B)^2+(n-1)(4B)^2
+=(16n-8)B^2\le16nB^2.
+\tag{102.2g}
+$$
+$n=1$ 时恰有两个端点而无内部坐标，此式仍成立。
+
+直接使用 Daniel Paulin，[*Concentration inequalities for Markov chains by Marton couplings and spectral methods*](https://arxiv.org/pdf/1212.2015v5)，arXiv:1212.2015v5，Corollary 2.11 及 Remarks 2.10、2.12（PDF 第 9 页，式 (2.7)–(2.9)）。该推论的混合参数 $\tau_{\min}$ 满足
+$$
+\tau_{\min}\le9t_{\rm mix}\le9T_\eta;
+$$
+其单侧版本对 $u>0$ 给出
+$$
+P_n(f-\mathbb E_{P_n}f\le-u)
+\le\exp\left(-\frac{2u^2}{\|\mathbf b\|_2^2\tau_{\min}}\right).
+\tag{102.2h}
+$$
+这里用 Remark 2.10 去掉双侧界前的系数二。取 $u=nc>0$，结合 (102.2d)、(102.2g)，有
+$$
+\begin{aligned}
+P_n(\sigma_n\le0)
+&\le\exp\left(-\frac{2n^2c^2}{\|\mathbf b\|_2^2\tau_{\min}}\right)\\
+&\le\exp\left(-\frac{2n^2c^2}{16nB^2\,9T_\eta}\right)
+\le\exp\left(-\frac{nc_0^2}{72B^2T_\eta}\right).
+\end{aligned}
+$$
+与 (102.2e) 及 $R_n\le1/2$ 合并，得到 (102.2a)。这次应用直接作用于 $n+1$ 个状态坐标，不要求相邻边独立，也不要求反向核具有同一个 $\eta$ 下界。
+
+若 $n$ 满足 (102.2b)，则
+$$
+\frac{nc_0^2}{72B^2T_\eta}\ge\log\frac1\delta,
+$$
+从而 (102.2a) 的指数项至多为 $\delta$。由于括号内的预算严格正，向上取整后至少为一次转移。各界仅依赖 $d,\eta,c_0$，因此在指定模型类上统一。$n=0$ 时只有初始状态，$P_0=P_0^R=\pi$，故 $R_0=1/2$。证毕。
+
+这里增加的统一正转移下界为命题 101.2 所缺少的统一窗口提供了一组充分条件，不作必要性主张。本应用针对完整状态读出下的两份已知方向模型；它不提供未知核的学习或可逆性认证预算。每个有限窗口仍有 $R_n=\tfrac12\sum_w\min\{P_n(w),P_n^R(w)\}>0$，因为两份路径律均处处为正，因此该预算不提供零错误证书。
+
+任意粗读出也不享有同一保证：将已有[推论 93.4](https://github.com/the-omega-institute/trureturing/blob/bb1d5f0ce8121ba443a49918d825a1473d09f86d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的三状态环取 $p=1/2,q=1/4$，则全部转移至少为 $1/4$、$c=\tfrac14\log2>0$；取 $d=3$、$\eta=1/4$、$c_0=c$ 即给出一个满足假设的参数选择，而常量读出使两份可见路径律对每个窗口都相同，最优可见错误率恒为 $1/2$。
+
+## 102.99 追加锚
+
+## 103. 有界逐边分数下的非统一方向检验窗口
+
+**定义与假设 103.1（四状态有理族与已知方向模型）。** 固定状态集 $S=\{0,1,2,3\}$，以 $1\to2\to3\to1$ 为顺时针环。对整数 $k\ge2$，置 $\delta_k=1/k$、$a_k=1-1/(3k)$，按状态顺序 $0,1,2,3$ 定义
+$$
+K_k=
+\begin{pmatrix}
+1-1/k&1/(3k)&1/(3k)&1/(3k)\\
+1/(3k)&a_k/4&a_k/2&a_k/4\\
+1/(3k)&a_k/4&a_k/4&a_k/2\\
+1/(3k)&a_k/2&a_k/4&a_k/4
+\end{pmatrix},
+\qquad \pi_i=\frac14.
+\tag{103.1a}
+$$
+定义边流及其分数
+$$
+Q_k(i,j)=\pi_iK_k(i,j),\qquad
+A_k(i,j)=\log\frac{Q_k(i,j)}{Q_k(j,i)},\qquad
+c_k=D_{\rm KL}(Q_k\Vert Q_k^{\mathsf T}).
+\tag{103.1b}
+$$
+所有对数取自然底数。
+
+从初始律 $\pi$ 出发观察完整状态路径 $w=(x_0,\ldots,x_n)\in S^{n+1}$，其中整数 $n\ge0$ 计转移次数。正向与反向路径律分别为
+$$
+P_{k,n}(w)=\frac14\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad P_{k,n}^{R}(w)=P_{k,n}(w^R),\qquad
+w^R=(x_n,\ldots,x_0).
+\tag{103.1c}
+$$
+两份简单模型均已知，先验各为 $1/2$；检验者可以知道 $k$，未知的是本次轨迹的方向标签。允许随机化，最优平均错误率记为
+$$
+R_{k,n}=\inf_{\varphi:S^{n+1}\to[0,1]}
+\frac12\sum_{w\in S^{n+1}}
+\bigl[P_{k,n}(w)\varphi(w)+P_{k,n}^{R}(w)(1-\varphi(w))\bigr],
+\tag{103.1d}
+$$
+其中 $\varphi(w)$ 是报告反向的概率。采用总变差归一化
+$$
+\operatorname{TV}(\mu,\nu)=\frac12\sum_x|\mu(x)-\nu(x)|
+=\sup_F|\mu(F)-\nu(F)|,
+$$
+并记
+$$
+t_{{\rm mix},k}(1/4)=\min\left\{t\in\mathbb N_0:
+\sup_{x\in S}\operatorname{TV}(K_k^t(x,\cdot),\pi)\le\frac14\right\}.
+\tag{103.1e}
+$$
+
+**命题 103.2（有界分数与正 KL 率不保证统一窗口）。** 每个 $K_k$ 都是严格正的有理双随机核，以 $\pi$ 为平稳律，且不可约、非周期。它们满足
+$$
+\min_{i,j}K_k(i,j)=\frac1{3k},\qquad
+\max_{i,j}|A_k(i,j)|=\log2,
+\qquad c_k=\frac{3-1/k}{16}\log2\ge\frac18\log2.
+\tag{103.2a}
+$$
+对所有 $k\ge2$、$n\ge0$，
+$$
+R_{k,n}\ge\frac18\left(1-\frac1k\right)^n.
+\tag{103.2b}
+$$
+因此在固定 $d=4$、$B=\log2$、$c_0=(\log2)/8$ 下，没有达到任意目标 $0<\varepsilon<1/8$ 的统一有限窗口：
+$$
+\forall\varepsilon\in(0,1/8),\quad
+\forall n\in\mathbb N_0,\quad
+\exists k\ge2:\ R_{k,n}>\varepsilon.
+\tag{103.2c}
+$$
+对每个给定的 $k$ 和 $0<\varepsilon<1/8$，达到该误差的必要条件为
+$$
+R_{k,n}\le\varepsilon
+\quad\Longrightarrow\quad
+n\ge\left\lceil
+\frac{\log(1/(8\varepsilon))}{-\log(1-1/k)}
+\right\rceil.
+\tag{103.2d}
+$$
+同时，
+$$
+t_{{\rm mix},k}(1/4)\ge\frac{k}{4}.
+\tag{103.2e}
+$$
+
+**证明。** 第零行及第零列之和均为 $1-1/k+3/(3k)=1$；每个环状态的行、列之和均为 $1/(3k)+a_k=1$，所以 $K_k$ 双随机，均匀律平稳。全部矩阵元素和初始概率都是正有理数。又
+$$
+1-\frac1k\ge\frac12,
+\qquad \frac{a_k}{4}\ge\frac5{24}>\frac16\ge\frac1{3k},
+$$
+故最小转移概率恰为 $1/(3k)$。严格正性给不可约性，自环严格正给非周期性。
+
+由于 $\pi$ 均匀，边流比等于转移比。自环以及全部 $0\leftrightarrow i$ 边的比值为一；环内顺时针边与反向边的比值为二。因此 $A_k$ 在顺时针边上等于 $\log2$，在逆时针边上等于 $-\log2$，其余边上为零。三个环边对分别贡献
+$$
+\frac14a_k\left(\frac12-\frac14\right)\log2
+=\frac{a_k}{16}\log2,
+$$
+从而
+$$
+c_k=\frac{3a_k}{16}\log2
+=\frac{3-1/k}{16}\log2\ge\frac18\log2.
+$$
+这证明 (103.2a)。
+
+对这里的 $K_k,\pi,Q_k$ 直接应用已有[定理 93.3（平稳边流的路径 KL 与读出比较）](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。严格正性满足其双向支撑要求，平稳性已证，故
+$$
+\sigma_{k,n}(w)=\log\frac{P_{k,n}(w)}{P_{k,n}^{R}(w)}
+=\sum_{t=0}^{n-1}A_k(x_t,x_{t+1}),
+\qquad
+D_{\rm KL}(P_{k,n}\Vert P_{k,n}^{R})=nc_k.
+\tag{103.2f}
+$$
+平稳端点概率比在这里等于一。于是 (103.2a) 的 $c_k$ 确为每次转移的路径 KL 率。
+
+两份路径律在有限载体 $S^{n+1}$ 上都是单位质量概率。直接应用已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/D5/S3/Estimation/LeCam.lean)
+与 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/176cfa93ded45b6e22b8571bd69fdcbf9b4e9aa1/D5/S3/Estimation/LeCamTight.lean)，得到
+$$
+R_{k,n}=\frac12\bigl(1-\operatorname{TV}(P_{k,n},P_{k,n}^{R})\bigr)
+=\frac12\sum_w\min\{P_{k,n}(w),P_{k,n}^{R}(w)\}.
+\tag{103.2g}
+$$
+每条路径的错误质量是 $\varphi(w)$ 的仿射函数，故随机化不降低这个最小值；似然比相等时公平抛币仍达到它。
+
+全零路径 $z_n=(0,\ldots,0)$ 在反序下不变，并且
+$$
+P_{k,n}(z_n)=P_{k,n}^{R}(z_n)
+=\frac14\left(1-\frac1k\right)^n.
+$$
+在 (103.2g) 的非负求和中只保留该项，即得 (103.2b)。这项共同质量对已知参数的任何随机化检验都贡献相同的等先验错误下界。
+
+给定 $0<\varepsilon<1/8$ 和整数 $n\ge0$，选择整数 $k\ge2$ 满足 $k>n/(1-8\varepsilon)$。Bernoulli 不等式给出
+$$
+\left(1-\frac1k\right)^n\ge1-\frac nk>8\varepsilon,
+$$
+所以 (103.2b) 蕴含 $R_{k,n}>\varepsilon$，证明 (103.2c)。$n=0$ 时该论证仍成立；此时两份路径律都是 $\pi$，实际错误率为 $R_{k,0}=1/2$。
+
+若 $R_{k,n}\le\varepsilon<1/8$，则 (103.2b) 给 $(1-1/k)^n\le8\varepsilon$。因为 $0<1-1/k<1$，取对数并除以正数 $-\log(1-1/k)$，得
+$$
+n\ge\frac{\log(1/(8\varepsilon))}{-\log(1-1/k)}.
+$$
+$n$ 为整数，故可向上取整，得到 (103.2d)。其分子为固定正数、分母随 $k\to\infty$ 趋于零，所以该必要窗口下界发散。
+
+最后，采用 Levin–Peres（Elizabeth L. Wilmer 参与撰写），[*Markov Chains and Mixing Times*, second edition](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf)，§7.2 的瓶颈比。对非空 $H\subseteq S$，置
+$$
+\Phi_k(H)=\frac{Q_k(H,H^c)}{\pi(H)},
+\qquad
+\Phi_{*,k}=\min_{0<\pi(H)\le1/2}\Phi_k(H).
+$$
+取 $H=\{0\}$，则 $\pi(H)=1/4$，且
+$$
+Q_k(H,H^c)=\frac1{4k},\qquad
+\Phi_k(H)=\frac1k,\qquad \Phi_{*,k}\le\frac1k.
+$$
+该书 Theorem 7.4（式 (7.9)，印刷第 90 页／PDF 第 106 页）适用于不可约、非周期链，不要求可逆性；这一边界亦见该章印刷第 99 页 Notes。直接代入，得到
+$$
+t_{{\rm mix},k}(1/4)\ge\frac1{4\Phi_{*,k}}\ge\frac{k}{4},
+$$
+即 (103.2e)。证毕。
+
+本族在平稳初态、完整状态读出和已知两模型下，仍有随参数延长的无方向信息停留。结论 (103.2c) 的目标范围是 $0<\varepsilon<1/8$；逐边分数界、正 KL 率下界与固定状态数不足以单独控制这一区间内的统一预算，而 (103.2e) 明确给出该族缺少统一混合控制。
+
+## 103.99 追加锚
+
+## 104. 独立平稳重启下的统一方向检验判据
+
+**定义与假设 104.1（共享方向标签的独立分段实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态核 $K_k$、均匀平稳律 $\pi$、$k\ge2$ 及完整状态路径律 $P_{k,n},P_{k,n}^{R}$。增加如下实验能力：给定同一个未知方向标签后，每段独立从 $\pi$ 抽取初态，再按该方向的核演化；标签只抽取一次，在全部段之间共享，先验各为 $1/2$。这里反向核为 $K_k^{\mathsf T}$。
+
+一个设计为
+$$
+\mathcal D=(m;\ell_1,\ldots,\ell_m),\qquad
+m\ge1,\quad\ell_s\in\mathbb N_{>0},\qquad
+L=\sum_{s=1}^{m}\ell_s,
+\tag{104.1a}
+$$
+其中每个 $\ell_s$ 计转移次数；段数和段长均预先确定，与 $k$ 和观测数据无关。两份完整记录律为
+$$
+\mathcal P_{k,\mathcal D}
+ =\bigotimes_{s=1}^{m}P_{k,\ell_s},
+\qquad
+\mathcal P_{k,\mathcal D}^{R}
+ =\bigotimes_{s=1}^{m}P_{k,\ell_s}^{R}.
+\tag{104.1b}
+$$
+记 $R_{k,\mathcal D}$ 为这两份已知简单模型的最优等先验平均错误率，允许任意随机化检验使用全部分段记录；记
+$$
+\overline R(\mathcal D)=\sup_{k\ge2}R_{k,\mathcal D},
+\qquad
+\beta=\frac{17+10\sqrt2}{32}.
+\tag{104.1c}
+$$
+独立平稳重启是额外的制备能力；将同一相关轨迹切段并不满足 (104.1b)。段内仍允许 Markov 依赖。
+
+**命题 104.2（统一一致性恰由独立段数决定）。** 在定义与假设 104.1 下，$0<\beta<1$，且对每个设计 $\mathcal D$ 和 $k\ge2$，
+$$
+\frac1{2\cdot4^m}\left(1-\frac1k\right)^L
+\le R_{k,\mathcal D}\le\frac12\beta^m.
+\tag{104.2a}
+$$
+因此
+$$
+\frac1{2\cdot4^m}
+\le\overline R(\mathcal D)\le\frac12\beta^m.
+\tag{104.2b}
+$$
+上界可由只读取各段首边、且不依赖 $k$ 的同一个方向计数规则实现。对任意满足上述条件的确定性设计序列
+$\mathcal D_N=(m_N;\ell_{N,1},\ldots,\ell_{N,m_N})$，
+$$
+\overline R(\mathcal D_N)\longrightarrow0
+\quad\Longleftrightarrow\quad
+m_N\longrightarrow\infty.
+\tag{104.2c}
+$$
+不要求 $m_N$ 单调；各段长度可任意增长。
+
+**证明。** 给定方向后，各段独立，且每段初态均为 $\pi$，所以每段首边的正、反律分别为
+$$
+Q_k(i,j)=\frac14K_k(i,j),\qquad Q_k^{R}(i,j)=Q_k(j,i).
+$$
+它们是同一有限载体 $S\times S$ 上的非负归一化概率。令 $\delta=1/k$、$a=1-\delta/3$。单边 Bhattacharyya 亲和度为
+$$
+\begin{aligned}
+b_k
+&=\sum_{i,j}\sqrt{Q_k(i,j)Q_k^{R}(i,j)}\\
+&=\frac{1-\delta}{4}+\frac{\delta}{2}
+  +\frac{3a}{16}+\frac{6a\sqrt2}{16}\\
+&=\frac{7+6\sqrt2}{16}
+  +\delta\frac{3-2\sqrt2}{16}.
+\end{aligned}
+\tag{104.2d}
+$$
+第二行的四项依次来自 $0\to0$、六条连接 $0$ 与环的有向边、三个环内自环及六条有向环边。由于
+$3-2\sqrt2=(\sqrt2-1)^2>0$，且 $0<\delta\le1/2$，
+$$
+0<b_k\le\frac{17+10\sqrt2}{32}=\beta<1;
+$$
+最后一个不等式由 $\sqrt2<3/2$ 得到。
+
+$m$ 个首边的两份条件联合律为 $Q_k^{\otimes m}$ 与 $(Q_k^{R})^{\otimes m}$。直接将既有
+[bhattacharyya_iidPower_multiplicative](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/BhattacharyyaExponent.lean)
+的载体、两律及幂次取为 $S\times S$、$Q_k,Q_k^{R}$ 及 $m$；逐点乘积非负的前提已由概率非负性履行，故其亲和度恰为 $b_k^m$。
+
+对这里的有限归一化概率，已有
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCam.lean)
+及 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/D5/S3/Estimation/LeCamTight.lean)
+给出最优等先验错误率 $\tfrac12\sum\min\{P,Q\}$；逐记录的仿射最小化允许随机化而不改变此值。由于对非负数有 $\min\{u,v\}\le\sqrt{uv}$，首边记录的最优错误率至多为
+$$
+\frac12\operatorname{BC}\bigl(Q_k^{\otimes m},(Q_k^{R})^{\otimes m}\bigr)
+=\frac12 b_k^m\le\frac12\beta^m.
+\tag{104.2e}
+$$
+完整记录允许采用同一个首边检验，故 $R_{k,\mathcal D}$ 也满足该上界。
+
+具体地，将首边中的 $1\to2,2\to3,3\to1$ 各计为 $+1$，逆向三边各计为 $-1$，其余计零，总和记为 $J$。定义 103.1 的核给出首边记录的似然比恰为 $2^J$，与 $k$ 无关。因此取 $J>0$ 时报告正向、$J<0$ 时报告反向、$J=0$ 时公平抛币，即为同时适用于全部 $k$ 的最优首边检验，实现 (104.2e)。这条规则只判断共享方向标签，不识别参数 $k$。
+
+另一方面，在完整记录中考虑每段全部为零的那一个联合结果。沿用命题 103.2 中的单段路径质量，并利用段间条件独立性，该结果在两份律下都具有质量
+$$
+\prod_{s=1}^{m}\frac14\left(1-\frac1k\right)^{\ell_s}
+=4^{-m}\left(1-\frac1k\right)^L.
+$$
+在已有最优重叠质量公式的非负和中只保留该结果，得到 (104.2a) 的下界。它约束使用全部段内数据的任何检验，不仅约束首边规则。
+
+固定一个设计 $\mathcal D$ 后，$m,L$ 是与 $k$ 无关的有限整数。令合法整数 $k\to\infty$，有 $(1-1/k)^L\to1$；故对 $k$ 取上确界后得到 (104.2b) 的下界，上界则已经统一。此处未将 $\delta=0$ 的退化核加入模型族，也不要求某个有限 $k$ 取得上确界。
+
+若 $m_N\to\infty$，由 $0<\beta<1$ 与 (104.2b) 得 $\overline R(\mathcal D_N)\to0$。反之，若 $m_N$ 不趋于无穷，则存在有限整数 $M$ 和无限子序列 $N_j$，使 $m_{N_j}\le M$。于是
+$$
+\overline R(\mathcal D_{N_j})\ge\frac1{2\cdot4^M}>0,
+$$
+排除统一一致性，证明 (104.2c)。下界是在每个固定设计内先取 $k$ 的上确界，再考察设计序列的极限。证毕。
+
+本判据把独立平稳段数与段内转移次数分开；独立初态的制备成本未计入转移次数。这里 $m$ 计独立初态制备及正长度段；若只计首次制备后的重置，则为 $m-1$ 次。每段至少一条边以及真正的独立重启均是前提，不能由复制记录、切分同一轨迹或仅知道平稳分布来替代。
+
+## 104.99 追加锚
