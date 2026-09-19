@@ -805,3 +805,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original-prefix SAT reductions and transport obstructions](profile-notes/343-original-prefix-sat-reductions-and-transport-obstructions.md)
 - [Original Fourier moments and finite-probe obstructions](profile-notes/344-original-fourier-moments-and-finite-probe-obstructions.md)
 - [Fixed-prime Fourier obstruction and digit-relation masks](profile-notes/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md)
+- [Old-cylinder tree gluing and source corrections](profile-notes/346-old-cylinder-tree-gluing-and-source-corrections.md)
+- [External uniform reciprocal excess and bounded original overlap](../../../Library/Arith/filaseta2026reciprocalgap.md)
