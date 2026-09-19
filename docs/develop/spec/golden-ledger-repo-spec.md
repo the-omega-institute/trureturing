@@ -474,6 +474,8 @@ project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,�
 
 注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-023:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律,SL-022 为元层门,SL-023 为 Describe LaTeX epoch 规则。
 
+**SL-001 包导入方向与债务收缩。** D5 数学模块不得新增对 `LeanInformationAudit`、`LeanInformationAuditAnalysis`、`LeanInformationAuditInterface`、`Reg` 本身或其点分子模块的 import；`Reg` 可导入 D5 与判官，不作为地层。现有 D5 地层检查保持原判据。SL-001 的 delta 判据从受保护 snapshot 的源码数据解析 `D_base`，从候选 Lean report 读取 `D_head`，边身份为 `(source path, imported module)`，强制 `D_head ⊆ D_base`；base 数据不执行。对每个 `D_base(p) ≠ ∅` 的源模块，须满足 `bytes_head(p) = bytes_base(p)` 或 `|D_head(p)| < |D_base(p)|`，删除模块视为零边；集合包含使等量换债、移往另一模块以及减量换债均被拒绝。`D_base = ∅` 时同一判据对全树拒绝所有禁止边，不按 changed paths 缩域；具名回归测试检出删除集合包含、改作计数比较、跳过触及模块减债以及删除零债全树分支的变异。
+
 ## 4.2 生命周期状态机(四台;状态机无台账,git 历史即台账)
 ```
 定理:Frontier(sorry)→echoed(回声过审)
