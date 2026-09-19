@@ -1,0 +1,44 @@
+**定理 92.3（指数倾斜的二阶系数、统一余项与精确保留）。** 保持定义与假设 92.1，无须假定反演相容性。对所有 $|t|\le1$，
+$$
+\begin{aligned}
+\Delta(t)&=\frac{t^2}{2}\|(I-\Pi)f\|_\nu^2+R_\Delta(t),\\
+A(t)&=2t^2\|f_-\|_\nu^2+R_A(t),\\
+A_r(t)&=2t^2\|\Pi f_-\|_\nu^2+R_r(t),
+\end{aligned} \tag{92.3}
+$$
+其中
+$$
+B_M:=\frac{72M^4+64M^3}{6},\qquad
+\max\{|R_\Delta(t)|,|R_A(t)|,|R_r(t)|\}\le B_M|t|^3. \tag{92.4}
+$$
+若 $M=0$，三种 KL 量恒等于零。对每个实数 $t$，精确损失 $A(t)-A_r(t)$ 非负；在 $|t|\le1$ 上，
+$$
+A(t)-A_r(t)=2t^2\|(I-\Pi)f_-\|_\nu^2+R_{\mathrm{loss}}(t),
+\qquad |R_{\mathrm{loss}}(t)|\le2B_M|t|^3. \tag{92.5}
+$$
+
+若再有反演相容性，则式 (92.3)、(92.5) 中的二次项系数分别为
+$$
+\begin{array}{c|c}
+\text{量}&t^2\text{ 的系数}\\ \hline
+\Delta&\tfrac12\bigl(\|f_{\mathrm{he}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2\bigr)\\
+A&2\bigl(\|f_{\mathrm{vo}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2\bigr)\\
+A_r&2\|f_{\mathrm{vo}}\|_\nu^2\\
+A-A_r&2\|f_{\mathrm{ho}}\|_\nu^2.
+\end{array} \tag{92.6}
+$$
+没有相容性时，式 (92.3)、(92.5) 的投影残差仍成立，但不将这些乘积解释为四个正交奇偶分区。
+
+对所有 $t\in\mathbb R$，还有逐点恒等式
+$$
+\log\frac{d_t(x)}{d_t^R(x)}=2t f_-(x). \tag{92.7}
+$$
+因此对任意固定的 $t\ne0$，
+$$
+A(t)=A_r(t)
+\quad\Longleftrightarrow\quad (I-\Pi)f_-=0
+\quad\Longleftrightarrow\quad
+\forall s\in\mathbb R,\ A(s)=A_r(s). \tag{92.8}
+$$
+式 (92.8) 不需要相容性；有相容性时，中间条件等价于 $f_{\mathrm{ho}}=0$。条件 $\Pi f_-=0$ 只消去 $A_r$ 的二次项，不是 $A_r$ 精确为零的判据。
+

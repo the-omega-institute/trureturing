@@ -1,0 +1,61 @@
+**定理 81.2（固定目标的确定记忆更新收支）。** 设目标 $H$、旧记忆 $M$、新观察 $O$ 具有定义与假设 81.1 的共同联合律。给定全定义的确定映射
+$$
+F:\mathcal M\times\mathcal O\longrightarrow\mathcal M',
+\qquad U=(M,O),\qquad M'=F(M,O),
+$$
+其中 $\mathcal M'$ 也有限非空，且更新前后比较的是同一个目标随机变量 $H$。则
+$$
+\boxed{
+I(H;M')-I(H;M)
+=I(H;O\mid M)-I(H;U\mid M').
+} \tag{81.1}
+$$
+右侧两项分别非负，但左侧可正也可负。第一项是观察在旧记忆之外增加的目标信息；第二项是整个输入对 $U$ 中未由新记忆保留的目标信息，能够包含刚取得的观察信息，不能仅称为旧记忆的损失。本定理不要求均匀性、平稳性、独立性或记忆容量上界。
+
+证明。记 $p(h,u)=\Pr(H=h,U=u)$，将 $F(m,o)$ 简写为 $F(u)$。实际更新的三元联合律为
+$$
+P(h,u,m')=p(h,u)\mathbf1_{\{m'=F(u)\}}.
+$$
+对每个 $u$ 恰有一个 $F(u)\in\mathcal M'$，故
+$$
+\sum_{m'}\mathbf1_{\{m'=F(u)\}}=1,\qquad
+\sum_{m'}P(h,u,m')=p(h,u),\qquad
+\sum_{h,u,m'}P(h,u,m')=\sum_{h,u}p(h,u)=1.
+$$
+所以 $P$ 非负归一化，其 $(H,U)$ 边缘确为原律。令 $p_U(u)=\sum_h p(h,u)$。若 $p_U(u)>0$，则
+$$
+\Pr(H=h,M'=m'\mid U=u)
+=\frac{p(h,u)}{p_U(u)}\mathbf1_{\{m'=F(u)\}}.
+$$
+右侧两个因子分别是归一化的 $H\mid U=u$ 条件律和集中于 $F(u)$ 的 $M'\mid U=u$ 条件律，因而该切片是其两边缘的乘积。若 $p_U(u)=0$，非负和为零迫使每个 $p(h,u)=0$，于是对应的 $P$ 切片全零，条件量贡献零。对以 $U$ 为条件坐标的联合律，直接应用有限条件乘积判据
+[conditional_mutual_information_eq_zero_iff_conditional_product](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean)，得到
+$$
+I(H;M'\mid U)=0.
+$$
+此图律也是归一化通道 $W(u,m')=\mathbf1_{\{m'=F(u)\}}$ 生成的律；上面的行和与边缘等式正好满足同一出处中 markov_of_channel 的假设。
+
+现在对这个共同联合律按两个顺序使用
+[mutual_information_chain_rule](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean)。交换成对坐标只重排有限熵和，故
+$$
+\begin{aligned}
+I(H;(U,M'))
+&=I(H;U)+I(H;M'\mid U)=I(H;U),\\
+I(H;(U,M'))
+&=I(H;M')+I(H;U\mid M').
+\end{aligned}
+$$
+再在原来的 $(H,M,O)$ 律上用同一链式法则，
+$$
+I(H;U)=I(H;M)+I(H;O\mid M).
+$$
+合并移项即为式 (81.1)。两个条件互信息来自非负归一化联合律及其坐标重排，满足
+[conditional_mutual_information_nonneg](https://github.com/the-omega-institute/trureturing/blob/f95a140dc698a9872b63591647c6da70795e75f4/D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)
+的假设，故分别非负。
+
+为证明差值确可取两种符号，令 $H$ 在 $\{0,1\}$ 上均匀。若 $M$ 恒定、$O=H$、$F(m,o)=o$，则 $I(H;M)=0$、$I(H;M')=\mathsf H(H)=\ln2$，差为 $\ln2$。若 $M=H$、$O$ 恒定、$F$ 恒定，则两信息依次为 $\ln2,0$，差为 $-\ln2$。这些值直接由点质量熵为零及均匀二点熵为 $\ln2$ 得到。最后，仍取 $M$ 恒定、$O=H$，却使 $F$ 恒定；这时
+$$
+I(H;M)=I(H;M')=0,\qquad
+I(H;O\mid M)=I(H;U\mid M')=\ln2.
+$$
+旧记忆没有目标信息而被丢弃项严格为正，证明它不能只计旧记忆损失。证毕。
+

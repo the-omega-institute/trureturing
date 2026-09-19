@@ -1,0 +1,39 @@
+**命题 111.2（无需通道数值的共同最坏参数阶）。** 定义 111.1 的同一规则族满足
+$$
+\exists(\Psi^{f,b}_n)_{n\ge0}\quad
+\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad
+\forall k\ge2,\ d\in\{0,1\},\ n\ge0:
+\quad
+\Pr^{E,1}_{d,k}(\Psi^{f,b}_n\ne d)
+\le\frac{C_{E,f}}{n+1}.
+\tag{111.2a}
+$$
+这里先固定共同规则，再固定通道；不对通道取上确界。
+
+具体地，对给定 $E\in\mathcal C_{f,b}$，仅在常数及证明中定义
+$$
+c_*=\frac{(5/6)^3|V_f(E)|}{192},\qquad
+j_0=\min\{j\ge0:c_*L_j\ge4t(L_j)\},\qquad
+\overline L=2^{j_0},
+$$
+$$
+Q=5+\frac{40B}{3},\qquad
+A=(10B)^2\max\{Q,\overline L^2\},\qquad
+C_{\rm trap}=\frac{2A}{3},\qquad U=\frac{4A}{B^2},
+$$
+$$
+P=5B,\qquad
+D=\max\{\overline L,U+2C_{\rm trap},4P\},\qquad
+C_{E,f}=5B(D+P).
+\tag{111.2b}
+$$
+所有这些常数有限。规则不计算 $c_*,j_0$ 或 $\overline L$。对每个固定相容通道，其最坏参数平均风险满足
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^E_{k,n}(\Psi^{f,b}_n)
+\le\frac{C_{E,f}}{n+1},\qquad n\ge1,
+\tag{111.2c}
+$$
+因而为 $\Theta_{E,f}(1/n)$。
+

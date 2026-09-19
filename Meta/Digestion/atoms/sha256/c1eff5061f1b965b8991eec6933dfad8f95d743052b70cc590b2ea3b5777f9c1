@@ -1,0 +1,94 @@
+**定义与假设 86.1（有限历史树、共同信道与活动支撑）。** 固定有限非空集合 $J,I$、满射 $r:J\to I$、实际先验 $d_0\in\Delta(J)$ 及严格正参考先验 $q_0\in\Delta(J)$。潜状态 $j$ 在全部观察期间保持不变，粗标签始终为同一个 $r(j)$；$d_0$ 允许零坐标。取确定的有限时域 $N\in\mathbb N=\{0,1,\ldots\}$，每步观察字母集 $Z_1,\ldots,Z_N$ 有限非空，置
+$$
+\mathscr H_t=\prod_{s=1}^t Z_s\quad(0\le t\le N),\qquad
+\mathscr H_0=\{\varnothing\}.
+$$
+对每个 $t<N$、$h\in\mathscr H_t$，给定两模型共同使用的有效观察核
+$$
+K_t(z\mid j,h)\ge0,\qquad
+\sum_{z\in Z_{t+1}}K_t(z\mid j,h)=1\quad(j\in J).
+$$
+共同性要求在同一潜状态 $j$、同一已记录历史 $h$ 下，两模型的条件核确为这个 $K_t$。它可以随历史改变；对各自后验使用同一策略函数，并不足以保证所得有效核相同。若策略含随机选择，可将已实现的选择纳入记录；若省略它，则共同性须对所保留历史下的有效核成立。
+
+对 $h=(z_1,\ldots,z_t)$，记 $h_s$ 为其长度 $s$ 的前缀，$hz$ 为追加一个结果，定义
+$$
+L_h(j)=\prod_{s=0}^{t-1}K_s(z_{s+1}\mid j,h_s),\qquad
+L_{\varnothing}(j)=1,
+$$
+$$
+P_d(h)=\sum_jd_{0j}L_h(j),\qquad
+P_q(h)=\sum_jq_{0j}L_h(j).
+$$
+在 $\Omega=J\times\mathscr H_N$ 及其全体子集上，对任意 $\nu\in\Delta(J)$ 定义联合律
+$$
+\mathbb P_\nu(\{(j,w)\})=\nu_jL_w(j).
+$$
+它非负归一化，且记隐藏坐标为 $X$、记录前缀为 $H_t(j,w)=w_t$ 时，有
+$$
+\mathbb P_\nu(X=j,H_t=h)=\nu_jL_h(j). \tag{86.1}
+$$
+以下将 $\mathbb P_{d_0},\mathbb P_{q_0}$ 简写为 $\mathbb P_d,\mathbb P_q$，故 $H_t$ 的两份边缘分别为 $P_d,P_q$。只取已记录历史生成的过滤族
+$$
+\mathcal F_t=\sigma(H_t),\qquad 0\le t\le N.
+$$
+它不额外包含隐藏坐标或粗标签的信息；以下对粗纤维的条件分解不假定 $r(X)$ 已被观察。
+
+对每个 $P_q(h)>0$ 的历史定义
+$$
+J_h=\{j\in J:L_h(j)>0\},\qquad
+I_h=r(J_h),\qquad r_h=r|_{J_h}:J_h\to I_h,
+$$
+$$
+q_j^h=\frac{q_{0j}L_h(j)}{P_q(h)}\quad(j\in J_h),\qquad
+p_i^h=\sum_{\substack{j\in J_h\\r(j)=i}}q_j^h\quad(i\in I_h).
+$$
+$J_h,I_h$ 非空，$r_h$ 满射，$q^h$ 是 $J_h$ 上严格正的概率，全部 $p_i^h>0$。在每个这样的参考历史上，沿用定义 74.1 的质量算子
+$$
+(C_hu)_i=\sum_{\substack{j\in J_h\\r(j)=i}}u_j,\qquad
+(B_hv)_j=\frac{q_j^h}{p_{r(j)}^h}v_{r(j)},\qquad
+E_h=B_hC_h.
+$$
+实际律满足 $\mathbb P_d\ll\mathbb P_q$，特别地 $P_d(h)>0\Rightarrow P_q(h)>0$。只在 $P_d(h)>0$ 时定义实际后验及其粗质量
+$$
+d_j^h=\frac{d_{0j}L_h(j)}{P_d(h)}\quad(j\in J_h),\qquad
+a_i^h=(C_hd^h)_i.
+$$
+$q^h,d^h$ 分别是两模型给定 $H_t=h$ 后在 $J_h$ 上的隐藏状态条件律，各自在其正概率定义域上使用；仅有 $P_q(h)>0$ 时不定义 $d^h$。
+
+对 $t<N$、$P_d(h)>0$，参考纤维的下一结果条件律对每个 $i\in I_h$ 定义为
+$$
+\kappa_{t,i}^{q,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}q_j^hK_t(z\mid j,h)}{p_i^h},
+$$
+实际条件律只在 $a_i^h>0$ 时定义为
+$$
+\kappa_{t,i}^{d,h}(z)
+=\frac{\sum_{j\in J_h:r(j)=i}d_j^hK_t(z\mid j,h)}{a_i^h}.
+$$
+沿用定理 73.3 的自然对数及正实际支撑求和约定 $D(u\Vert v)=\sum_{x:u_x>0}u_x\ln(u_x/v_x)$，置
+$$
+\delta_t(h)=D(d^h\Vert E_hd^h),\qquad
+G_t(h)=\sum_{i:a_i^h>0}a_i^h
+ D(\kappa_{t,i}^{d,h}\Vert\kappa_{t,i}^{q,h}). \tag{86.2}
+$$
+其中 $\delta_t$ 定义到 $t=N$，$G_t$ 只定义于 $t<N$。这些值均有限非负。$G_t$ 比较给定潜粗标签后的结果预测，采用实际粗质量加权；它一般不等于两份无粗标签结果边缘之间的 KL。对 $P_d(h)=0$ 的历史，只将标量函数 $\delta_t(h)$、$G_t(h)$ 零延拓，不在那里指定实际后验。记相应随机变量为 $\delta_t=\delta_t(H_t)$、$G_t=G_t(H_t)$；后文过程等式均相对于 $\mathbb P_d$ 几乎处处成立。
+
+**证明（联合律、前缀与支撑）。** 固定 $j$ 及长度 $t$ 的前缀 $h$，对所有后缀逐层从 $z_N$ 向 $z_{t+1}$ 求和。每次在已固定的先前历史上使用 $\sum_zK_s(z\mid j,h_s)=1$，故
+$$
+\sum_{z_{t+1},\ldots,z_N}
+ \prod_{s=t}^{N-1}K_s(z_{s+1}\mid j,h_s)=1,
+$$
+这里 $h_s$ 由固定前缀和该后缀确定；$t=N$ 时为单个空乘积。因此
+$$
+\sum_{w\in\mathscr H_N:w_t=h}L_w(j)=L_h(j).
+$$
+乘 $\nu_j$ 即得式 (86.1)，取 $t=0$ 再对 $j$ 求和得总质量一。有限条件概率的比率于是给出上述后验公式。$H_t$ 是 $H_{t+1}$ 的截断，故 $\mathcal F_t\subseteq\mathcal F_{t+1}$。
+
+若 $\mathbb P_q(\{(j,w)\})=q_{0j}L_w(j)=0$，严格正 $q_{0j}$ 强制 $L_w(j)=0$，从而实际点质量也为零。在有限空间逐点求和，得到 $\mathbb P_d\ll\mathbb P_q$。同样，$P_q(h)>0$ 恰好表示 $J_h$ 非空；参考后验在此载体严格正且总和为一，$r_h$ 满射给出各 $p_i^h>0$。在 $P_d(h)>0$ 时，$d^h\ge0$ 且总和也为一。
+
+在 $(J_h,I_h,r_h,q^h)$ 上，$C_h,B_h,E_h$ 正是定理 74.2 的静态参考重建算子，非负列随机，故 $E_hd^h$ 是概率。若 $d_j^h>0$，则 $a_{r(j)}^h\ge d_j^h>0$，所以
+$$
+(E_hd^h)_j=\frac{q_j^h a_{r(j)}^h}{p_{r(j)}^h}>0.
+$$
+这给出 $d^h\ll E_hd^h$，也有 $d^h\ll q^h$。行随机性使各已定义的 $\kappa$ 非负归一化。若 $\kappa_{t,i}^{q,h}(z)=0$，其分子的每个非负项为零；由 $q_j^h>0$ 得该纤维上每个 $K_t(z\mid j,h)=0$。因此在 $a_i^h>0$ 时，$\kappa_{t,i}^{d,h}(z)=0$，即 $\kappa_{t,i}^{d,h}\ll\kappa_{t,i}^{q,h}$。全部 KL 的正分子都有正分母，有限载体保证其值有限；对这些归一化且绝对连续的概率对使用 [Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/0ab255d9f64bf6735d5da1930b2565e3944c635d/D5/S3/Divergence/GrandmotherTheorem.lean)，得到 $\delta_t,G_t\ge0$。这是定理 73.3、74.2 的支撑约定在每个活动载体上的使用。证毕。
+

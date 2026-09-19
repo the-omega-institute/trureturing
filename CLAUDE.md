@@ -195,9 +195,17 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.9 登记即声明模板与 delta 判官
 
 **每条信息登记显式声明它用的模板;判官不搜索、只判 delta;没有模板就加模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与源码绑定证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),文法不认的写法先改内容。
-**delta 律**:判官只评估候选相对受保护基线**新增、字节变化或首次取得 state pin** 的 D5 模块里的登记(与 SL-031 同一选择源);已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared` Block;声明了但未解析/证据缺失、陈旧或畸形 ⇒ `DTR-Evidence` Block;声明且验证通过 ⇒ `DTR-Declared` Observe。判词名单封闭,无别的名字。
+**delta 律**:判官只评估候选相对受保护基线**新增、字节变化或首次取得 state pin** 的 D5 模块里的登记(与 SL-031 同一选择源);已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared` Block;声明了但未解析/证据缺失、陈旧或畸形 ⇒ `DTR-Evidence` Block;声明且验证通过 ⇒ `DTR-Declared` Observe;新增公开定理无登记 ⇒ `DTR-Unregistered` Block(下款)。判词名单封闭为这四个,无别的名字。
 **没有模板就加模板**(τ=0 owner 2026-09-18 裁决,原话「默认就是没有模版就加模版, 以后也这样」):某条登记在现有模板下找不到合法归属时,唯一处置是**新写一个模板**(内容 PR)并声明它;不得留作未声明,不得硬套错误模板;所有者模块已冻结时,用 `declare_information_template_binding <定理> in <模块>` 的 sidecar 模块声明,不改冻结模块。存量未声明的登记按族由内容 PR 迁移;不设债务账本、不设兼容开关、不设宽限期。
-*成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、不可变冻结与 sidecar 追加(第 1.3、4.7 条)。〔守护:**硬**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记,三个判词的效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
+**新定理即四槽逃逸登记**(τ=0 owner 2026-09-18 裁决,原话「你就只判delta就可以, 很简单新定理需要给出几个东西, 原来逃逸在哪里, 把逃逸怎么处理的, 出来什么新信息, 新信息在哪里继续逃逸.」及「应该至少一种吧, 就是这个本质上就是你写了能过机器验证肯定是对的, 至于有没有其他种类, 那你写两种就有两种逃逸方式?」):选中模块里,相对受保护基线新增的每条公开 `theorem`/`lemma` 须有**至少一条** `declared_validated` 四槽登记;同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。四槽各有机器消费者:
+
+- **原来逃逸在哪里**:`escape from (<term>)` 指明常量或 binder 类型;检查其在 elaborate 后的定理陈述中出现,并与闭合舞台 State 所代表的对象作身份核对,不搜索。
+- **把逃逸怎么处理**:`readout via (<已 enroll 模板应用>)` 由现役 DTR 的 E1–E8、精确提取与源码绑定证据核对;没有模板就加内容模板,不为语料放宽判官。
+- **出来什么新信息**:`realization <桥>` 核对原陈述、闭合 Law 和实现参数;既有 `LegacyPrimitiveRealization` 等价桥继续有效,`EscapePrimitiveRealization` 只要求陈述 ⇒ Law,但强制有效 variation·sensitivity,否则报 `dtr.forward_bridge_requires_sensitivity`。native 形式保留精确 Law 检查。
+- **新信息在哪里继续逃逸**:`escape continues (<term>)` 是闭合舞台上具名 `LayerChain` 的 `EscapeResidualWitness` 值、`EscapeResidualEmpty` 证明,或字面 `open`。前两者核对证书声明、类型及链所属舞台,内核检查 membership/empty 证明;判官不求值证书。`open` 仅声明 Gödel 顶层,不伪造证书。
+
+登记可在本模块或精确 sidecar 完成。旧文法仍可解析并保留既有登记状态;选中登记缺任一逃逸槽为 `DTR-Undeclared` Block,证据不成立为 `DTR-Evidence` Block,新增公开定理无至少一条完整有效登记为 `DTR-Unregistered` Block,完整验证为 `DTR-Declared` Observe(含 `escape_from`/`escape_continues`/`bridge_kind`)。这四名封闭。新旧定理只按同路径 base 字节中的同名 `theorem`/`lemma` 判定,只读数据、不执行 base。`private`、internal-detail、`def`、具名 `instance`、`example` 和机器伴随名豁免;源文件显式写出的伴随后缀定理不借后缀豁免。已知边界:匿名命题值 instance 在报告中与 theorem 不可区分,本门不修复该报告限制。
+*成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、不可变冻结与 sidecar 追加(第 1.3、4.7 条)。〔守护:**硬**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记与新增公开定理,四个判词的效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
 
 ## 4. 结构、递归归属、投影与消化
 
@@ -413,7 +421,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **成本与收益并列**:N PR 对应 N 轮 required CI、N worktree(缓存随 ff-merge 作废)、N 正文。同文重复只证明重复评审/冲突成本,不证明全批同判或总收益为零。纯新增回滚便利、没有文件数红规则,也不能推出整个 PR 必放行;说拆分由机器要求时须点名红判词,否则给真实理由或不拆。
 **有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
 **唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
-**硬软分列**:同案事件账本样本中 `ValidateChangedAcceptedFreezePins` 对新增/修改 accepted 事件要求同 PR 状态片,缺则硬红;`DagLedgerLoader.DependenciesPlaced` 仅由 CLI writer 调用,不在规则面,223 条悬空 `prerequisite_frozen_node_ids` 与三门绿并存(#5214)。事件/状态片硬配对不等于依赖闭包软成组;把软说成机器必须、硬说成建议同样错误,软评审纪律仍有约束力。
+**硬软分列**:同案事件账本样本中 `ValidateChangedAcceptedFreezePins` 对新增/修改 accepted 事件要求同 PR 状态片,缺则硬红;`DagLedgerLoader.DependenciesPlaced` 位于 CLI 路径,不在规则面。当前 loader 同时接受事件身份与派生的 `FrozenNodeId`,仅按 accepted 事件文件名扫描不能判定前置悬空;完整闭合性须由实际 DAG loader 核验(#5214)。事件/状态片硬配对不等于依赖闭包软成组;把软说成机器必须、硬说成建议同样错误,软评审纪律仍有约束力。
 *成熟锚*:Goodhart、避免 cargo cult、精益、判据化例外、bulkhead 故障隔离;“风险为零则拆分收益为零”只限所论冲突维。〔守护:**软+硬投影**·零冲突五项可由 RawChangeKind/changed-path/producer 确定性重放判,但当前无此规则,记 open。全批同判须真实判词读数;理由适用性靠评审。明知五项全真且全批同判仍按文件数拆,与攒大 PR 同属阈值代替理由;混合判词仍须分区,不可 lint 不豁免〕
 
 ### 6.4 运行中的不变量先立门后补账
@@ -608,7 +616,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 ### 8.11 PR open/watch 的消息与退出契约
 
-**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr-open HEAD=b MESSAGE=file [AUTO_MERGE=1]` 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。在同一有界前台进程内 create → App-token 隔离 → 按显式 `--auto-merge` 决定 arm(缺省不 arm auto-merge) → 等 required CI,可辨退出码返回;`make pr-watch PR=n` 复用同能力。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr-open HEAD=b MESSAGE=file [AUTO_MERGE=1]` 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 按显式 `--auto-merge` 决定 arm(缺省不 arm auto-merge) → 等 required CI,可辨退出码返回;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 
 ### 8.12 CI 分类、持续集成与真实事件验证

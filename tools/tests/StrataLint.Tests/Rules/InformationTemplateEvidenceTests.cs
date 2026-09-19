@@ -48,6 +48,8 @@ public sealed class InformationTemplateEvidenceTests
             records = new[] { new
             {
                 key = InformationTemplateJson.KeyJson(Key),
+                escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                 unit_name = Unit,
                 realization_name = Realization,
                 registration_source_path = PathA,

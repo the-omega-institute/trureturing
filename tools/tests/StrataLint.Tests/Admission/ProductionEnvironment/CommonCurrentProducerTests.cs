@@ -8,6 +8,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
+[Collection("CI fixture environment")]
 public sealed class CommonCurrentProducerTests
 {
     [Theory]

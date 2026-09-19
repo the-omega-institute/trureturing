@@ -382,7 +382,8 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
       let compiledBundle <- compilePrimitiveBundle arenaExpr realizationExpr
       unless ← isDefEq primitivesExpr compiledBundle do
         return .error (statementMismatchError entry.theoremName)
-    else if realizationHead == some legacyPrimitiveRealizationName then
+    else if realizationHead == some legacyPrimitiveRealizationName ||
+        realizationHead == some `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
       match env.find? entry.realizationName with
       | some (.thmInfo _) =>
         let legacyArgs := realizationType.getAppArgs
@@ -501,6 +502,10 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
       let diagnostic ← RegistrationGates.validateFinite entry
+      let type := (← getConstInfo entry.realizationName).type
+      if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
+          diagnostic.isSome then
+        throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity: {diagnostic.get!}"
       if entry.derivedCertificate.isSome && diagnostic.isSome then
         RegistrationReifier.checkDiagnostic diagnostic.get!
       RegistrationGates.publishDiagnostic entry.unitName diagnostic

@@ -22,7 +22,7 @@ term. They never enter an importing module's global identifier vocabulary. -/
 def registrationTerm : Parser.Parser := {
   Parser.termParser with
   fn := Parser.adaptUncacheableContextFn (fun context =>
-    { context with tokens := (#["realization", "variation", "sensitivity", "output_evidence"].foldl
+    { context with tokens := (#["realization", "variation", "sensitivity", "output_evidence", "escape"].foldl
         (fun tokens word => tokens.insert word word) context.tokens) }) Parser.termParser.fn }
 
 @[combinator_formatter registrationTerm]
@@ -328,8 +328,9 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     let realizationType <- liftTermElabM do
       instantiateMVars (← whnfR (← inferType realizationExpr))
     let legacyArgs := realizationType.getAppArgs
-    unless realizationType.getAppFn.constName? ==
-        some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+    unless (realizationType.getAppFn.constName? ==
+        (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge) &&
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
@@ -341,9 +342,14 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
-    let unitValue <- `(term|
-      D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-        $realizationId:ident $theoremId:ident)
+    if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
+        (stx[8].getNumArgs == 0 || stx[9].getNumArgs == 0) then
+      throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
+    let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+        `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+      else `(term|
+        D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+          $realizationId:ident $theoremId:ident)
     if isPrivateName unitName then
       elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
     else
@@ -460,8 +466,9 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let realizationType <- liftTermElabM do
     instantiateMVars (← whnfR (← inferType realizationExpr))
   let legacyArgs := realizationType.getAppArgs
-  unless realizationType.getAppFn.constName? ==
-      some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+  unless (realizationType.getAppFn.constName? ==
+      (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge) &&
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
@@ -477,13 +484,18 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     type := suppliedRealizationInfo.type
     value := mkConst suppliedRealizationName realizationLevels
   }
-  let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)
-  let unitValue <- `(term|
-    D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-      $qualifiedRealizationId:ident $theoremId:ident)
+  if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
+      (stx[12].getNumArgs == 0 || stx[13].getNumArgs == 0) then
+    throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
+  let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
+  let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+      `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
+    else `(term|
+      D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+        $qualifiedRealizationId:ident $theoremId:ident)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
   registerEntry { entry with
     variationWitness := ← optionalWitnessName stx[12]
@@ -540,9 +552,26 @@ def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Exp
     instantiateMVars value
   return (some value, none)
 
+declare_syntax_cat informationEscapeContinuation
+syntax (name := escapeOpenContinuation) &"open" : informationEscapeContinuation
+syntax (name := escapeCertifiedContinuation) term : informationEscapeContinuation
+
+private def elaborateEscapeInput (origin residual : Syntax) : CommandElabM EscapeRecordInput := do
+  let elaborate (stx : Syntax) : CommandElabM Expr := liftTermElabM do
+    let value ← elabTerm stx none
+    synthesizeSyntheticMVarsNoPostponing
+    instantiateMVars value
+  let fromObject ← if origin.getNumArgs == 0 then pure none
+    else some <$> elaborate origin[3]
+  if residual.getNumArgs == 0 then return { fromObject }
+  let node := residual[3]
+  if node.getKind == ``escapeOpenContinuation then return { fromObject, openContinuation := true }
+  return { fromObject, continuation := some (← elaborate node[0]) }
+
 private def withReadout (theoremId arenaId : TSyntax `ident)
     (objectArena : Option (TSyntax `ident)) (term : TSyntax `term)
-    (native : Bool) (command : TSyntax `command) : CommandElabM Unit := registrationTransaction do
+    (native : Bool) (origin residual : Syntax) (command : TSyntax `command) :
+    CommandElabM Unit := registrationTransaction do
   let lawArena ← resolveArena arenaId
   let arenaName ← match objectArena with
     | none => pure lawArena
@@ -551,65 +580,79 @@ private def withReadout (theoremId arenaId : TSyntax `ident)
   let (descriptor, diagnostic) ← elaborateReadoutDescriptor term
   if (← get).messages.hasErrors then return
   let theoremName ← if native then declarationName theoremId else resolveTheorem theoremId
-  TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic } <| elabCommand command
+  let escapeInput ← elaborateEscapeInput origin residual
+  TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic, escapeInput } <| elabCommand command
 
 syntax (name := registerInformationTheoremReadoutCmd)
   register_information_theoremKeyword ident &" in " ident
   &"readout " &"via " "(" term ")" &" primitives " registrationTerm &" realization " ident
-  (&" variation " ident)? (&" sensitivity " ident)? : command
+  (&" variation " ident)? (&" sensitivity " ident)?
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 syntax (name := registerInformationTheoremViaReadoutCmd)
   register_information_theoremKeyword ident &" via " term &" in " ident
-  &"readout " &"via " "(" term ")" (&" output_evidence " term)? : command
+  &"readout " &"via " "(" term ")" (&" output_evidence " registrationTerm)?
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 syntax (name := registerInformationTheoremOccurrenceReadoutCmd)
   register_information_theoremKeyword ident &" in " ident &" object_arena " ident &" catalog " ident
   &"readout " &"via " "(" term ")" &" primitives " registrationTerm &" realization " ident
-  (&" variation " ident)? (&" sensitivity " ident)? : command
+  (&" variation " ident)? (&" sensitivity " ident)?
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 syntax (name := informationTheoremReadoutCmd)
   information_theoremKeyword ident &" in " ident &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  (&" variation " ident)? (&" sensitivity " ident)? ": " term " := " term : command
+  (&" variation " ident)? (&" sensitivity " ident)?
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
 
 syntax (name := informationTheoremOccurrenceReadoutCmd)
   information_theoremKeyword ident &" in " ident &" object_arena " ident &" catalog " ident
   &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  (&" variation " ident)? (&" sensitivity " ident)? ": " term " := " term : command
+  (&" variation " ident)? (&" sensitivity " ident)?
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
 
 /-- Remove just the declared readout syntax node and dispatch the established
 registration elaborator. All optional witnesses and their original syntax survive. -/
-private def lowerReadout (stx : Syntax) (kind : Name) (start : Nat) : TSyntax `command :=
+private def lowerReadout (stx : Syntax) (kind : Name) (start escapeStart : Nat) : TSyntax `command :=
   ⟨Syntax.node stx.getHeadInfo kind ((stx.getArgs.extract 0 start) ++
-    stx.getArgs.extract (start + 5) stx.getNumArgs)⟩
+    stx.getArgs.extract (start + 5) escapeStart ++
+    stx.getArgs.extract (escapeStart + 2) stx.getNumArgs)⟩
 
 @[command_elab registerInformationTheoremReadoutCmd]
 private def elabRegisteredReadout : CommandElab := fun stx =>
-  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ false
-    (lowerReadout stx ``registerInformationTheoremCmd 4)
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ false stx[15] stx[16]
+    (lowerReadout stx ``registerInformationTheoremCmd 4 15)
 
 @[command_elab registerInformationTheoremViaReadoutCmd]
 private def elabReifierReadout : CommandElab := fun stx =>
-  withReadout ⟨stx[1]⟩ ⟨stx[5]⟩ none ⟨stx[9]⟩ false
-    (lowerReadout stx ``registerInformationTheoremViaCmd 6)
+  withReadout ⟨stx[1]⟩ ⟨stx[5]⟩ none ⟨stx[9]⟩ false stx[12] stx[13]
+    (lowerReadout stx ``registerInformationTheoremViaCmd 6 12)
 
 @[command_elab registerInformationTheoremOccurrenceReadoutCmd]
 private def elabOccurrenceReadout : CommandElab := fun stx =>
-  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ false
-    (lowerReadout stx ``registerInformationTheoremOccurrenceCmd 8)
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ false stx[19] stx[20]
+    (lowerReadout stx ``registerInformationTheoremOccurrenceCmd 8 19)
 
 @[command_elab informationTheoremReadoutCmd]
 private def elabNativeReadout : CommandElab := fun stx => do
-  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ true
-    (lowerReadout stx ``informationTheoremCmd 4)
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ none ⟨stx[7]⟩ true stx[13] stx[14]
+    (lowerReadout stx ``informationTheoremCmd 4 13)
 
 @[command_elab informationTheoremOccurrenceReadoutCmd]
 private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
-  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true
-    (lowerReadout stx ``informationTheoremOccurrenceCmd 8)
+  withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
+    (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
 
 syntax (name := declareInformationTemplateBindingCmd)
   declare_information_template_bindingKeyword ident &" in " ident
-  (&" object_arena " ident &" catalog " ident)? &"readout " &"via " "(" term ")" : command
+  (&" object_arena " ident &" catalog " ident)? &"readout " &"via " "(" term ")"
+  (&" escape " &"from " "(" term ")")?
+  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 @[command_elab declareInformationTemplateBindingCmd]
 private def elabBindingSidecar : CommandElab := fun stx => registrationTransaction do
@@ -622,5 +665,6 @@ private def elabBindingSidecar : CommandElab := fun stx => registrationTransacti
   let theoremName ← resolveTheorem ⟨stx[1]⟩
   let catalogId := if explicitObject then some (catalogIdFrom ⟨stx[4][3]⟩) else none
   TemplateBinding.declareSidecar theoremName arena catalogId descriptor diagnostic
+    (← elaborateEscapeInput stx[10] stx[11])
 
 end LeanInformationAudit

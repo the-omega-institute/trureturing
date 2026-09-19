@@ -1,0 +1,36 @@
+**定义与假设 84.1（非负似然与正证据更新）。** 沿用定义与假设 74.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$、粗参考 $p=Cq$ 及质量算子
+$$
+C_{ij}=\mathbf1_{r(j)=i},\qquad
+B_{ji}=\mathbf1_{r(j)=i}\frac{q_j}{p_i},\qquad E=BC.
+$$
+概率均为列向量，$\Delta(J),\Delta(I)$ 包括有零坐标的概率。定理 74.2 给出 $C,B,E$ 非负列随机，且
+$$
+CB=\mathrm{Id}_I,\qquad E^2=E,\qquad EB=B,\qquad CE=C,\qquad Bp=q.
+$$
+称 $B\Delta(I)$ 中的先验为参考校准先验；记第 $i$ 个粗标准基为 $e_i$，相应参考条件概率为 $b_i=Be_i$，细点 $j$ 上的点质量记为 $\delta_j$。
+
+取有限实值非负似然 $\ell:J\to[0,\infty)$，定义
+$$
+D_\ell=\operatorname{diag}_{j\in J}(\ell_j),\qquad
+Z_\ell(d)=\sum_j\ell_jd_j,\qquad
+\bar\ell_i=\sum_{r(j)=i}\frac{q_j}{p_i}\ell_j,
+\qquad D_{\bar\ell}=\operatorname{diag}_{i\in I}(\bar\ell_i).
+$$
+似然可以大于 $1$；$D_\ell d$ 的总质量为 $Z_\ell(d)$。只在正证据定义域
+$$
+\mathcal D_\ell=\{d\in\Delta(J):Z_\ell(d)>0\}
+$$
+上定义概率更新
+$$
+U_\ell:\mathcal D_\ell\longrightarrow\Delta(J),\qquad
+U_\ell(d)=\frac{D_\ell d}{Z_\ell(d)}.
+$$
+在 $Z_\ell(d)=0$ 时不定义概率后验。由于 $E$ 在整个 $\Delta(J)$ 上有定义，两个复合的完整定义域分别为
+$$
+\operatorname{Dom}(E\circ U_\ell)=\mathcal D_\ell,
+\qquad
+\operatorname{Dom}(U_\ell\circ E)
+=\{d\in\Delta(J):Z_\ell(Ed)>0\}.
+$$
+在定义 82.1 的条件投影记号中，$(\Pi\ell)_j=\bar\ell_{r(j)}$。
+
