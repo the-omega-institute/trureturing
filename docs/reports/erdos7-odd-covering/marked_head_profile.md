@@ -797,3 +797,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original AP blocks sharpen the fixed full-Haar account](profile-notes/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md)
 - [Maximal-label Fourier overlap and uncovered density](profile-notes/336-maximal-label-fourier-overlap-and-uncovered-density.md)
 - [Fixed original groups retain the complete count law](profile-notes/337-fixed-original-groups-retain-the-complete-count-law.md)
+- [Simultaneous convex extremizers can have disjoint high-load regions](profile-notes/338-simultaneous-convex-extremizers-can-have-disjoint-high-load-regions.md)
