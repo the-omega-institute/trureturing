@@ -44143,3 +44143,400 @@ w_{2n,n}=\left(1-\frac1{6n}\right)^n\ge\frac56=:w_0.
 [^rro115-stopping]: 共同子测度检验、停止记录比较与 Jensen 均为成熟概率工具。一般非独立序贯检验的渐近下界见 Georgios Fellouris、Alexander G. Tartakovsky，[*Multichannel Sequential Detection—Part I: Non-i.i.d. Data*](https://arxiv.org/abs/1601.03379v1)，§III Theorem 3.1 与 Remark 3.1。这里直接对有限停止叶使用 (115.2j) 的完整前缀支配，再运输条件风险与实际成本，不把通用序贯下界作为新的概率方法。
 
 ## 115.99 追加锚
+
+## 116. 有限参数干预的纯陷阱均值重建
+
+**定义与假设 116.1（同一传感器的有限参数准备实验）。** 沿用第 103、113 节的四态隐藏核、独立平稳传感器及纯陷阱基线。[^rro116-model] 状态集为 $S=\{0,1,2,3\}$，按此顺序写
+$$
+K_{\delta,0}=
+\begin{pmatrix}
+1-\delta&\delta/3&\delta/3&\delta/3\\
+\delta/3&\alpha/4&\alpha/2&\alpha/4\\
+\delta/3&\alpha/4&\alpha/4&\alpha/2\\
+\delta/3&\alpha/2&\alpha/4&\alpha/4
+\end{pmatrix},\qquad
+K_{\delta,1}=K_{\delta,0}^{\mathsf T},\qquad
+\alpha=1-\delta/3.
+\tag{116.1a}
+$$
+实际参数为 $\delta=1/k$，整数 $k\ge2$；分析用核公式仍延拓到 $0\le\delta\le1/2$。方向 $d\in\{0,1\}$ 未知，但在以下全部实验中固定。
+
+固定非空有限传感器状态集 $M$、不可约 Markov 核 $T$ 及其平稳律 $\eta$，允许周期。传感器过程独立于隐藏过程。给定两条完整路径，有限字母表 $\mathcal A$ 上的读数逐时条件独立，概率发射行为 $E_{x,z}$。传感器核、平稳律和发射行在全部参数设置中相同，均不要求已知。固定已知整数 $r\ge1$ 和窗口函数 $W:\mathcal A^{r+1}\to[-1,1]$。纯陷阱参考使用同一传感器的平稳副本、隐藏状态恒为 $0$、发射仍为 $E_{0,z}$，记其窗口均值为
+$$
+\tau=\mathbb E^{\rm tr}W(V_0,\ldots,V_r).
+\tag{116.1b}
+$$
+本节不要求第 113 节的正校准签名条件。
+
+实验接口另允许预先选择互异整数 $k_0,\ldots,k_r\ge2$，置 $\delta_j=1/k_j$。在每个设置 $j$ 取得一个实际主实验：隐藏链按 $K_{\delta_j,d}$ 从 $X^{(j)}_0=1$ 出发，传感器取同一固定模型的平稳副本 $Z^{(j)}_0\sim\eta$，并取得前缀
+$$
+Y^{(j)}_0,\ldots,Y^{(j)}_{r+3}.
+\tag{116.1c}
+$$
+这些设置可由相互独立的平稳副本实现；以下仅要求各设置具有上述边缘实验律，设置之间的耦合不影响所述期望恒等式。每个设置内部仍允许传感器记忆及重叠窗口。重复这一批实验时保持相同的准备条件。选择参数和重复平稳准备是本节声明的额外实验能力，不由一条给定 $k$ 的主记录提供，也不为其准备赋予零成本。没有取得纯陷阱参考记录的要求。定义四个实际主窗口均值
+$$
+m_{j,t}=\mathbb E^{1,\eta}_{\delta_j,d}
+ W(Y_t,\ldots,Y_{t+r}),\qquad 0\le j\le r,\quad 0\le t\le3.
+\tag{116.1d}
+$$
+这些均值是模型的期望量，有限前缀直接给出的只是相应窗口分数。
+
+**命题 116.2（共同三次运输与有限外推）。** 在定义 116.1 下，对 $0<\delta\le1/2$，置
+$$
+c_\delta=\frac{1-\delta/3}{4},\qquad
+\lambda_\delta=1-4\delta/3,\qquad
+H_\delta(z)=z^2+c_\delta z+c_\delta^2,
+$$
+$$
+A_\delta=
+\frac{H_\delta(1)^{-1}+3H_\delta(\lambda_\delta)^{-1}}
+     {1-\lambda_\delta},\qquad
+B_\delta=H_\delta(1)^{-1}-A_\delta,
+$$
+$$
+p_\delta(z)=H_\delta(z)(A_\delta z+B_\delta)
+           =\sum_{t=0}^3a_t(\delta)z^t.
+\tag{116.2a}
+$$
+这些系数均有限、不依赖传感器或方向，且两个方向同时满足
+$$
+\boxed{e_1p_\delta(K_{\delta,d})=e_0,\qquad d=0,1,}
+\qquad \sum_{t=0}^3a_t(\delta)=1,
+\tag{116.2b}
+$$
+其中 $e_i$ 是集中于状态 $i$ 的行概率向量。
+
+令 $Q_d(\delta)$ 为隐藏链按实际 $K_{\delta,d}$ 从状态 $0$ 出发、传感器从 $\eta$ 出发时的 $W$ 窗口均值。它是 $\delta$ 的次数至多 $r$ 的多项式，且 $Q_d(0)=\tau$。定义
+$$
+\ell_j=
+\prod_{\substack{0\le i\le r\\i\ne j}}
+\frac{-\delta_i}{\delta_j-\delta_i}
+=\frac{k_j^r}{\displaystyle\prod_{i\ne j}(k_j-k_i)}.
+\tag{116.2c}
+$$
+则实际准备实验的期望满足
+$$
+Q_d(\delta_j)=\sum_{t=0}^3a_t(\delta_j)m_{j,t},\qquad
+\boxed{\tau=\sum_{j=0}^r\sum_{t=0}^3
+                 \ell_j a_t(\delta_j)m_{j,t}.}
+\tag{116.2d}
+$$
+特别地，对定义 116.1 的一批实际前缀，确定的有符号统计量
+$$
+\widehat\tau_{\rm batch}
+=\sum_{j=0}^r\sum_{t=0}^3
+  \ell_j a_t(\delta_j)
+  W(Y^{(j)}_t,\ldots,Y^{(j)}_{t+r})
+\tag{116.2e}
+$$
+满足 $\mathbb E\widehat\tau_{\rm batch}=\tau$。其系数只使用 $r$ 和预选的 $k_0,\ldots,k_r$。
+
+**证明。** 首先复用第 112 节对实际隐藏核的环零和作用与唯一慢模的分解，并以行向量写出所需运输。置
+$$
+\rho=(0,1/3,1/3,1/3),\qquad
+\pi=(1/4,1/4,1/4,1/4),\qquad
+w=e_0-\rho,\qquad h=e_1-\rho.
+$$
+则
+$$
+e_1=\pi-\frac14w+h,\qquad e_0=\pi+\frac34w.
+\tag{116.2f}
+$$
+在本段中简写 $K=K_{\delta,d}$、$c=c_\delta$、$\lambda=\lambda_\delta$。双随机性给 $\pi K=\pi$；陷阱行及三条环行的平均给
+$$
+e_0K=(1-\delta)e_0+\delta\rho,\qquad
+\rho K=(\delta/3)e_0+\alpha\rho,\qquad
+wK=\lambda w.
+\tag{116.2g}
+$$
+令 $C_d$ 为对应方向的三环置换矩阵。核的环块为 $c(\mathbf1\mathbf1^{\mathsf T}+C_d)$。陷阱坐标为零、环坐标和为零的行向量 $v=(0,v_R)$ 经 $K$ 作用后仍在该子空间，环坐标变为 $cv_RC_d$。因为
+$$
+I_3+C_d+C_d^2=\mathbf1\mathbf1^{\mathsf T},
+$$
+在这个子空间上有
+$$
+vH_\delta(K)=0.
+\tag{116.2h}
+$$
+特别地，$hH_\delta(K)=0$。
+
+由 $c>0$、$1-\lambda=4\delta/3>0$ 及
+$$
+H_\delta(x)=(x+c/2)^2+3c^2/4>0
+\qquad(x\in\mathbb R),
+$$
+式 (116.2a) 的全部分母均非零。定义给出
+$$
+p_\delta(1)=1,\qquad
+p_\delta(\lambda)
+=H_\delta(\lambda)
+ \left[H_\delta(1)^{-1}-A_\delta(1-\lambda)\right]
+=-3.
+\tag{116.2i}
+$$
+故 (116.2f)–(116.2h) 蕴含
+$$
+e_1p_\delta(K)
+=\pi p_\delta(1)-\frac14w p_\delta(\lambda)+hp_\delta(K)
+=\pi+\frac34w=e_0.
+$$
+系数和等于 $p_\delta(1)=1$。环方向只改变 $C_d$ 为其逆，而二者满足同一二次消去式，证明 (116.2b)。若需直接计算系数，展开得到
+$$
+(a_0,a_1,a_2,a_3)
+=(B_\delta c_\delta^2,
+  A_\delta c_\delta^2+B_\delta c_\delta,
+  A_\delta c_\delta+B_\delta,
+  A_\delta).
+\tag{116.2j}
+$$
+
+现在固定同一个 $T,E,\eta,W,d$。沿用第 113 节的窗口条件均值，写
+$$
+q_{\delta,d}(x,z)
+=\mathbb E^{x,z}_{\delta,d}W(Y_0,\ldots,Y_r),\qquad
+ g_{\delta,d}(x)=\sum_z\eta_zq_{\delta,d}(x,z).
+\tag{116.2k}
+$$
+在实际准备于状态 $1$ 的实验中，独立性及 $\eta T^t=\eta$ 给出 $(X_t,Z_t)$ 的联合律为 $(e_1K_{\delta,d}^t)\otimes\eta$。给定这一产品状态，未来窗口的条件均值为 $q_{\delta,d}$。因此
+$$
+\mathbb E^{1,\eta}_{\delta,d}W(Y_t,\ldots,Y_{t+r})
+=e_1K_{\delta,d}^t g_{\delta,d}.
+\tag{116.2l}
+$$
+这是无条件期望等式；没有把已观察历史下传感器的条件分布替换为 $\eta$。将 (116.2b) 作用于同一列向量 $g_{\delta,d}$，即得
+$$
+g_{\delta,d}(0)
+=\sum_{t=0}^3a_t(\delta)
+ \mathbb E^{1,\eta}_{\delta,d}W(Y_t,\ldots,Y_{t+r}).
+\tag{116.2m}
+$$
+左边正是 $Q_d(\delta)$，证明 (116.2d) 的第一式。此时隐藏链可在窗口内离开陷阱，尚未将 $Q_d(\delta)$ 等同于 $\tau$。
+
+为验证有限外推的条件，对隐藏词 $x=(x_0,\ldots,x_r)$ 定义
+$$
+F(x)=
+\sum_{z_0,\ldots,z_r}\eta_{z_0}
+ \prod_{i=0}^{r-1}T(z_i,z_{i+1})
+ \sum_{y_0,\ldots,y_r}
+ W(y_0,\ldots,y_r)
+ \prod_{i=0}^r E_{x_i,z_i}(y_i).
+\tag{116.2n}
+$$
+该有限和仅由固定的传感器、发射和窗口决定，与 $\delta,d$ 无关。按隐藏词分解期望，得
+$$
+Q_d(\delta)=
+\sum_{x_1,\ldots,x_r\in S}
+ F(0,x_1,\ldots,x_r)
+ \prod_{i=0}^{r-1}K_{\delta,d}(x_i,x_{i+1}),
+\qquad x_0=0.
+\tag{116.2o}
+$$
+每个隐藏转移因子都是 $\delta$ 的仿射函数，每项恰有 $r$ 个因子，故 $Q_d$ 是次数至多 $r$ 的多项式。传感器的全部转移位于不随 $\delta$ 改变的 $F$ 内，不增加这一次数。在 $\delta=0$ 时，状态 $0$ 吸收，式 (116.2o) 仅余全零隐藏词，因而
+$$
+Q_d(0)=F(0,\ldots,0)=\tau.
+\tag{116.2p}
+$$
+这一步只在分析中求多项式的常数项，不要求取得 $k=\infty$ 的实验。
+
+节点 $\delta_0,\ldots,\delta_r$ 互异且全部合法。直接应用有限次数多项式的 Lagrange 插值公式，在零点求值得[^rro116-extrapolation]
+$$
+Q_d(0)=\sum_{j=0}^r\ell_jQ_d(\delta_j).
+$$
+对每项代入 (116.2m)，得到 (116.2d) 的第二式。式 (116.2e) 的求和有限、窗口有界、系数有限，故统计量可积；逐项取期望即得 $\mathbb E\widehat\tau_{\rm batch}=\tau$。同一个设置内的四个窗口可以重叠，此处未使用窗口独立性。证毕。
+
+本结果保留跨设置的同一模型与同一方向。三次运输系数不需要知道 $d$，不表示插值节点可以使用不同方向：插值针对的是同一个多项式 $Q_d$。同理，更换传感器、发射或窗口会改变式 (116.2n)，不能继续将不同实验当作同一多项式的取值；依据过去读数选择重启或窗口时，也须重新核对式 (116.2l) 的平稳产品起点条件。
+
+这里恢复的是目标期望，不把有符号系数解释为概率权重。事实上，$t\ge1$ 时 $e_1K_{\delta,d}^t$ 在全部环状态上严格为正，而 $t=0$ 时在状态 $1$ 上有质量一；其任何非负单位质量组合都不能等于 $e_0$。式 (116.2e) 的一次观测值不必等于 $\tau$，也不构造独立纯陷阱参考记录。结论不赋予有限抽样误差为零或新的风险、成本保证；第 115 节针对单条给定参数主记录和计费参考接口的下界不因此改变。
+
+[^rro116-model]: [已发布 RRO](https://github.com/the-omega-institute/trureturing/blob/7b1757adc586d41116a109e022c087ae881a696a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(103.1a) 给出实际隐藏核；第 112 节证明给出环零和作用及慢模 $1-4\delta/3$；(113.1a) 给出同一平稳传感器的纯陷阱基线。本节复用这些结构，另行说明有限参数选择与实际准备期望之间的运输。
+
+[^rro116-extrapolation]: 有限次数插值直接见钉版 Mathlib [Lagrange.eq_interpolate](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Lagrange.lean)。不同可实施参数处的期望作有符号消阶，是已有的 Richardson 外推机制；例如 Kristan Temme、Sergey Bravyi、Jay M. Gambetta，[*Error mitigation for short-depth quantum circuits*](https://arxiv.org/abs/1612.02058v2)，PDF 第 2 页式 (2)–(6)。该文的物理缩放假设不替代本节的共同传感器及准备条件；这里由 (116.2o) 验证严格有限次数，因此代数截断余项为零，而有限观测的抽样误差仍须另行处理。
+
+## 116.99 追加锚
+
+## 117. 有符号时间准备的滞后与系数总量
+
+**定义与假设 117.1（实际时间行分布与系数总量）。** 沿用式 (116.1a) 的四态行核 $K_{\delta,d}$，状态集为 $S=\{0,1,2,3\}$，方向 $d\in\{0,1\}$，实际共同准备于状态 $1$。[^rro117-model] 核公式取 $0<\delta\le1/2$；实际离散参数仍为 $\delta=1/k$、整数 $k\ge2$。置
+$$
+\lambda_\delta=1-4\delta/3,\qquad
+c_\delta=(1-\delta/3)/4,\qquad
+H_\delta(z)=z^2+c_\delta z+c_\delta^2,
+\qquad \mu_{t,d}=e_1K_{\delta,d}^t,
+\tag{117.1a}
+$$
+其中 $e_i$ 是集中于状态 $i$ 的行概率向量。给定整数 $L\ge0$ 和实系数 $a=(a_0,\ldots,a_L)$，若
+$$
+\sum_{t=0}^L a_t\mu_{t,d}=e_0,
+\tag{117.1b}
+$$
+则称其在方向 $d$ 下给出最大滞后不超过 $L$ 的精确有符号时间准备；若同一组系数对两个方向均成立，则称为共同准备。定义系数总量
+$$
+\Gamma(a)=\sum_{t=0}^L|a_t|.
+\tag{117.1c}
+$$
+这是一份线性表示的系数总变差，不将负系数解释成实际准备概率，也不以 $\Gamma$ 定义样本成本。
+
+**命题 117.2（有限滞后下界与统一有界的延迟构造）。** 对每个 $0<\delta\le1/2$，$L=0$ 时不存在式 (117.1b) 的表示。对任意 $L\ge1$，只要该式对至少一个方向成立，就有
+$$
+\sum_{t=0}^L a_t=1,\qquad
+\boxed{\Gamma(a)\ge\frac{8}{1-\lambda_\delta^L}-1.}
+\tag{117.2a}
+$$
+特别地，在 $\delta=1/k$ 下，右侧至少为 $6k/L-1$；固定最大滞后无法对全部 $k$ 同时保持精确准备和统一有界的系数总量。
+
+另一方面，对每个实际整数 $k\ge2$，以下系数只依赖 $k$，可在两个方向共同实现精确准备。简写 $\lambda=\lambda_{1/k}$、$c=c_{1/k}$、$H=H_{1/k}$，定义
+$$
+A_k=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^k},
+\qquad B_k=H(1)^{-1}-A_k,
+$$
+$$
+p_k(z)=H(z)(A_kz^k+B_k)
+      =\sum_{t=0}^{k+2}a_t^{(k)}z^t.
+\tag{117.2b}
+$$
+则 $A_k>0$，多项式次数恰为 $k+2$，并且
+$$
+\boxed{e_1p_k(K_{1/k,d})=e_0\quad(d=0,1),
+\qquad \Gamma(a^{(k)})\le\frac{5507}{86}<65.}
+\tag{117.2c}
+$$
+上界只声称这一具体构造统一有效，不声称常数最优或刻画所有滞后下的最小系数总量。
+
+**证明。** 先从实际核计算时间行分布的陷阱坐标，令 $b_t=\mu_{t,d}(0)$。两个方向均有陷阱入口概率 $\delta/3$ 和陷阱自环概率 $1-\delta$，故
+$$
+b_0=0,\qquad
+b_{t+1}=(1-\delta)b_t+(\delta/3)(1-b_t)
+       =\delta/3+\lambda_\delta b_t.
+$$
+归纳得到
+$$
+b_t=\frac{1-\lambda_\delta^t}{4}.
+\tag{117.2d}
+$$
+这使用状态 $1$ 的实际准备，没有将其替换为隐藏链的平稳初态。
+
+核保持总质量，所以对式 (117.1b) 右乘全一列向量即得 $\sum_ta_t=1$。当 $L=0$ 时，左边仅为 $a_0e_1$，不可能等于 $e_0$。以下设 $L\ge1$；此时 $0<\lambda_\delta<1$，因而 $0\le b_t\le b_L$ 且 $b_L>0$。定义状态函数
+$$
+f_L(x)=\frac{2\mathbf1_{\{x=0\}}}{b_L}-1.
+$$
+对全部 $0\le t\le L$，有
+$$
+\mu_{t,d}f_L=2b_t/b_L-1\in[-1,1],
+\qquad e_0f_L=2/b_L-1.
+$$
+将此线性泛函作用于式 (117.1b)，直接使用有限和三角不等式，得到[^rro117-dual]
+$$
+\frac{2}{b_L}-1
+=\sum_{t=0}^L a_t\mu_{t,d}f_L
+\le\sum_{t=0}^L|a_t|
+=\Gamma(a).
+\tag{117.2e}
+$$
+代入 (117.2d) 即为 (117.2a)。对 $\delta=1/k$，Bernoulli 不等式给
+$$
+1-\lambda_{1/k}^L
+=1-\left(1-\frac4{3k}\right)^L
+\le\frac{4L}{3k},
+$$
+故 (117.2a) 的右侧至少为 $6k/L-1$。这只给出必要条件，没有断言任意给定 $L$ 都存在精确表示。
+
+下面证明所列延迟构造。固定 $k\ge2$，继续简写 $K=K_{1/k,d}$、$\lambda,c,H$。由于 $c>0$、$0<\lambda<1$，且
+$$
+H(x)=(x+c/2)^2+3c^2/4>0
+\qquad(x\in\mathbb R),
+$$
+式 (117.2b) 的分母均非零，$A_k>0$，并且
+$$
+B_k=-\frac{\lambda^kH(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^k}<0.
+$$
+系数是在变量 $u=z^k$ 的两个节点 $1,\lambda^k$ 上作一次插值得到的；[^rro117-interpolation] 由定义直接核对
+$$
+p_k(1)=1,\qquad
+p_k(\lambda)
+=H(\lambda)\left[H(1)^{-1}-A_k(1-\lambda^k)\right]
+=-3.
+\tag{117.2f}
+$$
+
+复用第 112 节的模式分解及式 (116.2f)–(116.2h) 的行向量关系。具体地，令
+$$
+\rho=(0,1/3,1/3,1/3),\quad
+\pi=(1/4,1/4,1/4,1/4),\quad
+w=e_0-\rho,\quad h=e_1-\rho.
+$$
+已有关系在两个方向均为
+$$
+e_1=\pi-\tfrac14w+h,\qquad e_0=\pi+\tfrac34w,
+\qquad \pi K=\pi,\quad wK=\lambda w,\quad hH(K)=0.
+\tag{117.2g}
+$$
+同一个 $H$ 消去两个方向的环零和作用。因此
+$$
+e_1p_k(K)
+=\pi p_k(1)-\tfrac14w p_k(\lambda)+hp_k(K)
+=\pi+\tfrac34w=e_0.
+$$
+多项式最高次项为 $A_kz^{k+2}$，所以最大非零滞后恰为 $k+2$，也由 $p_k(1)=1$ 得系数和为一。
+
+为控制系数总量，注意 $H$ 的三个系数均为正，系数和为 $H(1)$；乘以 $z^k$ 只移动它们的位置。逐个系数使用三角不等式，得到
+$$
+\begin{aligned}
+\Gamma(a^{(k)})
+&\le (A_k+|B_k|)H(1)\\
+&=(2A_k-H(1)^{-1})H(1)\\
+&=\frac{2(1+3H(1)/H(\lambda))}{1-\lambda^k}-1.
+\end{aligned}
+\tag{117.2h}
+$$
+这是系数绝对和的标准范数估计。[^rro117-interpolation] 当 $k=2$ 时，$H(z)$ 与 $z^kH(z)$ 的支撑在二次项处重叠，上式仍然成立；证明没有把不相交时的系数范数等号用于该边界。
+
+全部合法 $k$ 均满足
+$$
+\frac5{24}\le c\le\frac14,\qquad \lambda\ge\frac13,
+$$
+所以
+$$
+H(1)\le\frac{21}{16},\qquad
+H(\lambda)\ge\frac19+\frac5{72}+\frac{25}{576}
+             =\frac{43}{192},\qquad
+\frac{H(1)}{H(\lambda)}\le\frac{252}{43}.
+\tag{117.2i}
+$$
+再由 Bernoulli 不等式，
+$$
+\lambda^{-k}
+=\left(1+\frac4{3k-4}\right)^k
+\ge1+\frac{4k}{3k-4}\ge\frac73,
+\qquad 1-\lambda^k\ge\frac47.
+\tag{117.2j}
+$$
+对 (117.2h) 代入 (117.2i)–(117.2j)，便得
+$$
+\Gamma(a^{(k)})
+\le\frac72\left(1+\frac{756}{43}\right)-1
+=\frac{5507}{86}<65,
+$$
+证明 (117.2c)。证毕。
+
+这份取舍涉及同一个实际核的可访问时间跨度和线性表示的系数总量。若沿用第 116 节同一个固定平稳独立传感器及跨度为 $r$ 的窗口，并额外取得同一模型在实际准备态 $1$ 下的前缀 $Y_0,\ldots,Y_{L+r}$，记 $0\le t\le L$ 时的窗口均值为 $m_t$，则式 (116.2l) 对上述系数给
+$$
+\sum_{t=0}^L a_tm_t=Q_d(\delta).
+$$
+这里 $Q_d(\delta)$ 是从陷阱状态 $0$ 出发后继续按 $K_{\delta,d}$ 演化的窗口均值；纯陷阱基线 $\tau$ 则在整个窗口中将隐藏状态保持为 $0$。时间准备恒等式本身没有将二者等同。第 116 节取得 $\tau$ 还使用了不同合法参数之间的共同模型及多项式外推，不能将其省略为某个固定 $k$ 下的纯陷阱校准。
+
+对于均值扰动 $\Delta_t$，有限和三角不等式给
+$$
+\left|\sum_{t=0}^L a_t\Delta_t\right|
+\le\Gamma(a)\max_{0\le t\le L}|\Delta_t|.
+$$
+实际窗口的方差还取决于全部协方差，重叠窗口和传感器记忆不能被当成独立样本。[^rro117-statistics] 按完整前缀读取标签时，滞后 $L$ 的最晚窗口需要读到时间 $L+r$，共 $L+r+1$ 个标签；少量非零系数不使中间等待和标签取得免费。以上结果没有给出独立样本数、总实验成本或任意统计算法的风险下界，也没有生成非负准备通道或独立纯陷阱参考流。
+
+[^rro117-model]: [RRO 公开版本](https://github.com/the-omega-institute/trureturing/blob/6db30c04f155a331e167a74558ccd5a0e6e085cd/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(103.1a)、第 112 节证明及 (116.1a) 给出同一四态核；(116.2f)–(116.2h) 明确给出共同模式分解，(116.2l) 给出平稳独立传感器下的期望运输。这里复用这些结构，研究给定时间字典的系数总量。
+
+[^rro117-dual]: 有限和不等式可直接使用钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)。以线性泛函约束字典原子、下界化系数绝对和，是成熟弱对偶；一般原子规范的框架见 Venkat Chandrasekaran、Benjamin Recht、Pablo A. Parrilo、Alan S. Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1，式 (2)、(3)、(5)、(6)。本节只使用显式函数 $f_L$ 的有限字典证书，不使用该文的随机测量恢复保证或强对偶结论。
+
+[^rro117-interpolation]: 两节点插值直接属于钉版 Mathlib [Lagrange.eval_interpolate_at_node](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Lagrange.lean)。系数绝对和是第 31.6 条已使用的解析 Wiener 代数范数；式 (117.2h) 仅使用其有限多项式三角不等式及次数平移。这里不把插值或范数估计另作通用新定理。
+
+[^rro117-statistics]: Hakop Pashayan、Joel J. Wallman、Stephen D. Bartlett，[*Estimating outcome probabilities of quantum circuits using quasiprobabilities*](https://arxiv.org/abs/1503.07525v2)，PDF 第 2–3 页，式 (4)、(8)–(12)，使用系数 $1$-范数、绝对权重归一化采样及指定的独立重复。其采样保证依赖这些实际实验条件，不由本节的系数范数单独推出。
+
+## 117.99 追加锚
