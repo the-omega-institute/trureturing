@@ -1,0 +1,21 @@
+**命题 106.2（环上单射恰为逐模型一致性的条件）。** 在定义与假设 106.1 下，对每个固定 $k\ge2$，
+$$
+R^r_{k,n}\longrightarrow0\quad(n\to\infty)
+\quad\Longleftrightarrow\quad
+r(1),r(2),r(3)\text{ 两两不同}.
+\tag{106.2a}
+$$
+若右侧不成立，则对所有 $k\ge2$、$n\ge1$，
+$$
+R^r_{k,n}\ge\frac{a_k}{8}\ge\frac5{48},
+\qquad
+R^r_{k,\infty}\ge\frac{a_k}{8}\ge\frac5{48}.
+\tag{106.2b}
+$$
+若右侧成立，同一个不依赖 $k$ 的可见净边计数规则，对每个固定 $k$ 都有两类错误概率趋于零。因此能够一致辨别方向的静态确定传感器，最小有效字母数恰为 $3$；可取
+$$
+r(0)=r(1)=A,\qquad r(2)=B,\qquad r(3)=C.
+\tag{106.2c}
+$$
+这里不主张统一于 $k$ 的收敛速度。
+

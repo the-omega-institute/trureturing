@@ -409,6 +409,38 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 hangGuard: TestBudgets.ScriptProcessHangGuard);
             Assert.True(result.Exit == 0, result.Text);
         }
+        internal void RemoveObject(string oid)
+        {
+            var result = SharedBuildContractTests.Process(Root, "python3", ["-c", """
+                import os, pathlib, subprocess, sys, tempfile
+                environment = {**os.environ, 'GIT_NO_LAZY_FETCH': '1'}
+                def git(*arguments, **options):
+                    return subprocess.run(['git', '-c', 'protocol.allow=never', *arguments],
+                        env=environment, check=True, stdout=subprocess.PIPE, **options).stdout
+                def inventory():
+                    return set(git('cat-file', '--batch-all-objects', '--batch-check=%(objectname)').decode().splitlines())
+                oid = sys.argv[1]
+                before = inventory()
+                assert oid in before, 'Fixture object was already unavailable: ' + oid
+                objects = pathlib.Path(git('rev-parse', '--git-path', 'objects').decode().strip())
+                # Git maintenance may have packed the designated object. Move the
+                # packs out of the object database so unpack-objects restores them.
+                with tempfile.TemporaryDirectory(dir='build') as temporary:
+                    packs = objects / 'pack'
+                    if packs.exists():
+                        saved = pathlib.Path(temporary) / 'pack'
+                        packs.rename(saved)
+                        for pack in saved.glob('*.pack'):
+                            with pack.open('rb') as stream:
+                                git('unpack-objects', stdin=stream)
+                    (objects / oid[:2] / oid[2:]).unlink()
+                    assert inventory() == before - {oid}, 'Fixture removed the wrong object set'
+                missing = subprocess.run(['git', '-c', 'protocol.allow=never', 'cat-file', '-e', oid],
+                    env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                assert missing.returncode == 1, (missing.returncode, missing.stderr)
+                """, oid]);
+            Assert.True(result.Exit == 0, result.Text);
+        }
         internal void InputOnlyProjects()
         {
             var registry = File.ReadAllText(Path.Combine(Root, EngineeringRegistrationFixture.Path));

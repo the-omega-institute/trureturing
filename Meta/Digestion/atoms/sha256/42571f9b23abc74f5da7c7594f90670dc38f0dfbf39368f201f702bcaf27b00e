@@ -1,0 +1,34 @@
+**定义与假设 102.1（已知平稳模型的完整状态方向检验）。** 设 $S$ 是有限状态集，$d=|S|\ge3$。给定已知行随机矩阵 $K$、已知平稳概率 $\pi$ 及常数 $\eta,c_0>0$，满足
+$$
+\sum_{j\in S}K_{ij}=1,\qquad K_{ij}\ge\eta\quad(i,j\in S),
+\qquad \sum_{i\in S}\pi_iK_{ij}=\pi_j.
+\tag{102.1a}
+$$
+定义平稳边流、反序边流与边分数
+$$
+Q_{ij}=\pi_iK_{ij},\qquad Q^{\mathsf T}_{ij}=Q_{ji},
+\qquad A(i,j)=\log\frac{Q_{ij}}{Q_{ji}},
+\qquad c=D_{\rm KL}(Q\Vert Q^{\mathsf T})\ge c_0>0.
+\tag{102.1b}
+$$
+平稳性与正转移下界保证 $\pi_j\ge\eta$，故这些对数均有定义；所有对数取自然底数。
+
+观察完整状态路径 $w=(x_0,\ldots,x_n)\in S^{n+1}$，其中 $n\ge0$ 计转移次数，初始状态服从 $\pi$。两份已知简单假设是
+$$
+P_n(w)=\pi_{x_0}\prod_{t=0}^{n-1}K_{x_tx_{t+1}},
+\qquad P_n^R(w)=P_n(w^R),\qquad w^R=(x_n,\ldots,x_0),
+\tag{102.1c}
+$$
+各取先验 $1/2$。未知的是本次轨迹的方向标签。允许随机化；若 $\varphi:S^{n+1}\to[0,1]$ 表示报告反向的概率，则最优平均错误率为
+$$
+R_n=\inf_\varphi\frac12\sum_{w\in S^{n+1}}
+\bigl[P_n(w)\varphi(w)+P_n^R(w)(1-\varphi(w))\bigr].
+\tag{102.1d}
+$$
+总变差采用 $\operatorname{TV}(\mu,\nu)=\tfrac12\sum_x|\mu(x)-\nu(x)|=\sup_F|\mu(F)-\nu(F)|$。记
+$$
+B=2\log(1/\eta),\qquad \alpha=d\eta,
+\qquad T_\eta=\left\lceil\frac{\log4}{d\eta}\right\rceil.
+\tag{102.1e}
+$$
+
