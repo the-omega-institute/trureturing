@@ -392,9 +392,9 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [Theory]
     [InlineData("valid", 0, "")]
     [InlineData("reused", 0, "")]
-    [InlineData("template-changed-undeclared", 0, "DTR-Undeclared")]
+    [InlineData("template-changed-undeclared", 1, "DTR-Undeclared")]
     [InlineData("template-unchanged", 0, "")]
-    [InlineData("template-missing-evidence", 0, "DTR-Evidence")]
+    [InlineData("template-missing-evidence", 1, "DTR-Evidence")]
     [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
@@ -697,6 +697,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
         if (scenario == "template-unchanged")
             Assert.DoesNotContain("DTR-", console.Output + console.Error, StringComparison.Ordinal);
+        if (scenario is "template-changed-undeclared" or "template-missing-evidence")
+        {
+            // The registration judge only observes; the exit 1 here comes from
+            // UTILITY-MISSING on the same fixture module, never from a DTR finding.
+            var effects = System.Text.RegularExpressions.Regex.Matches(console.Output,
+                "\"AdmissionEffect\":(\\d+),\"Path\":\"[^\"]*\",\"Message\":\"DTR-");
+            Assert.True(effects.Count > 0 && effects.All(m => m.Groups[1].Value == ((int)AdmissionEffect.Observe).ToString()),
+                "[FAIL] dtr_findings_observe_only: " + console.Output);
+        }
         if (scenario is "valid" or "reused")
         {
             Assert.All(hashes, row => Assert.Equal(1, row.Value));
