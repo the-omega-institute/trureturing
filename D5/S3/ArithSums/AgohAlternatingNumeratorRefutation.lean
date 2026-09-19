@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ArithSums/AgohAlternatingNumeratorRefutation
    mirror-E: none(waiver:universal-algebraic-proof)
    anchors: [mathlib/module/Mathlib.FieldTheory.RatFunc.Basic, mathlib/module/Mathlib.RingTheory.Polynomial.Vieta]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.fullClaim; result=D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result; claim=D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.fullClaim
    digest: A repeated real root does not obstruct the all-order alternating reduced-numerator factor. -/
 
 import Mathlib.FieldTheory.RatFunc.Basic
