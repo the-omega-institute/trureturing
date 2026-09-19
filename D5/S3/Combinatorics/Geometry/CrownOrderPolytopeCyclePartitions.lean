@@ -338,6 +338,72 @@ private theorem cycleBoundaryCuts_noCuts {N : ℕ} [NeZero N] (hN : 3 ≤ N) :
   rw [hgraph]
   exact SimpleGraph.cycleGraph_preconnected u v
 
+/- Deleting one cyclic edge leaves the actual cycle connected.  The edge occurs on
+   Mathlib's canonical cycle, so it is not a bridge. -/
+private theorem cycleBoundaryCuts_singletonCut {N : ℕ} [NeZero N] (hN : 3 ≤ N)
+    (c : Fin N) :
+    cycleBoundaryCuts (connectedCyclePartitionOfCuts ({c} : Finset (Fin N))) = ∅ := by
+  obtain ⟨M, rfl⟩ := Nat.exists_eq_add_of_le' hN
+  apply (cycleBoundaryCuts_eq_empty_iff hN _).mpr
+  intro u v
+  change (cycleGraphWithCuts ({c} : Finset (Fin (M + 3)))).Reachable u v
+  have hgraph :
+      cycleGraphWithCuts ({c} : Finset (Fin (M + 3))) =
+        (SimpleGraph.cycleGraph (M + 3)).deleteEdges {s(c, c + 1)} := by
+    ext x y
+    simp only [cycleGraphWithCuts, SimpleGraph.deleteEdges_adj, Set.mem_singleton_iff,
+      Finset.mem_singleton]
+    constructor
+    · rintro ⟨hxy, hcut⟩
+      refine ⟨hxy, ?_⟩
+      intro hedge
+      rcases Sym2.eq_iff.mp hedge with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+      · exact hcut (Or.inl ⟨rfl, rfl⟩)
+      · exact hcut (Or.inr ⟨rfl, rfl⟩)
+    · rintro ⟨hxy, hedge⟩
+      refine ⟨hxy, ?_⟩
+      rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩)
+      · exact hedge (Sym2.eq_iff.mpr (Or.inl ⟨rfl, rfl⟩))
+      · exact hedge (Sym2.eq_iff.mpr (Or.inr ⟨rfl, rfl⟩))
+  rw [hgraph]
+  let p : (SimpleGraph.cycleGraph (M + 3)).Walk (0 : Fin (M + 3)) 0 :=
+    SimpleGraph.cycleGraph.cycle M
+  have hpCycle : p.IsCycle := SimpleGraph.cycleGraph.isCycle_cycle
+  have hpEdge : s(c, c + 1) ∈ p.edges := by
+    rw [SimpleGraph.Walk.mk_mem_edges_iff_exists]
+    let k := M + 3 - 1 - c.val
+    refine ⟨k, ?_, ?_⟩
+    · simpa [p, k] using (show M + 3 - 1 - c.val < M + 3 from by omega)
+    · have hk : k < M + 3 := by simp [k]; omega
+      have hk1 : k + 1 ≤ M + 3 := by omega
+      change s((SimpleGraph.cycleGraph.cycle M).getVert k,
+        (SimpleGraph.cycleGraph.cycle M).getVert (k + 1)) = s(c, c + 1)
+      rw [SimpleGraph.cycleGraph.getVert_cycle (hm := Nat.le_of_lt hk),
+        SimpleGraph.cycleGraph.getVert_cycle (hm := hk1)]
+      rw [Sym2.eq_iff]
+      right
+      constructor
+      · apply Fin.ext
+        dsimp [k]
+        by_cases hlast : c.val = M + 2
+        · simp [Fin.add_def, hlast]
+        · have hc : c.val < M + 2 := by omega
+          have hcalc : M + 3 - (M + 2 - c.val) = c.val + 1 := by omega
+          rw [hcalc]
+          simp [Fin.add_def]
+      · apply Fin.ext
+        dsimp [k]
+        have hcalc : M + 3 - (M + 2 - c.val + 1) = c.val := by omega
+        rw [hcalc]
+        simp [Nat.mod_eq_of_lt c.isLt]
+  have hnotBridge : ¬ (SimpleGraph.cycleGraph (M + 3)).IsBridge s(c, c + 1) := by
+    intro hbridge
+    exact (SimpleGraph.isBridge_iff_forall_cycle_notMem
+      (p.edges_subset_edgeSet hpEdge)).mp hbridge p hpCycle hpEdge
+  have hconnected : (SimpleGraph.cycleGraph (M + 3)).Connected := by
+    simpa only [Nat.reduceAdd] using (SimpleGraph.cycleGraph_connected (n := M + 2))
+  exact (hconnected.connected_delete_edge_of_not_isBridge hnotBridge).preconnected u v
+
 /-- The directed quotient relation induced by the actual crown order on a connected
     cyclic partition. -/
 private def crownCycleBlockRel {n : ℕ} (P : ConnectedCyclePartition (2 * n))
@@ -391,5 +457,344 @@ private theorem crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (h
       exact fun hji => hnrel (P.toSetoid.symm hji)
   · rintro ⟨i, j, hi, hj, hij, _⟩
     exact ⟨i, j, hi, hj, hij⟩
+
+/- Reachability in the directed crown relation on cyclic partition blocks. -/
+private def crownCycleBlockLE {n : ℕ} (P : ConnectedCyclePartition (2 * n))
+    (C D : Quotient P.toSetoid) : Prop :=
+  Relation.ReflTransGen (crownCycleBlockRel P) C D
+
+/- Compatibility for an unaugmented connected crown partition. -/
+private def crownCycleCompatible {n : ℕ} (P : ConnectedCyclePartition (2 * n)) : Prop :=
+  ∀ {C D : Quotient P.toSetoid}, crownCycleBlockLE P C D →
+    crownCycleBlockLE P D C → C = D
+
+private theorem crownCycleBlockLE_succ_of_evenCuts {n : ℕ} [NeZero (2 * n)]
+    (P : ConnectedCyclePartition (2 * n))
+    (heven : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) (i : Fin (2 * n)) :
+    crownCycleBlockLE P (Quotient.mk'' i) (Quotient.mk'' (i + 1)) := by
+  by_cases hi : i.val % 2 = 0
+  · apply Relation.ReflTransGen.single
+    refine ⟨i, i + 1, rfl, rfl, hi, Or.inl ?_⟩
+    simp [Fin.add_def]
+  · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (heven i hcut)
+    have hsame : P.toSetoid.r i (i + 1) := by
+      by_contra hne
+      exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
+    have hq : Quotient.mk'' i = Quotient.mk'' (i + 1) := Quotient.sound hsame
+    unfold crownCycleBlockLE
+    rw [hq]
+
+/- If every actual boundary cut starts at an even vertex, following cyclic successors
+   gives a directed quotient cycle.  The `N - 1` return path includes the two-block case. -/
+private theorem not_crownCycleCompatible_of_evenCuts {n : ℕ} [NeZero (2 * n)]
+    (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
+    (heven : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) :
+    ¬ crownCycleCompatible P := by
+  have hcuts : cycleBoundaryCuts P ≠ ∅ := by
+    intro hempty
+    obtain ⟨u, v, huv⟩ := hnontrivial
+    exact huv ((cycleBoundaryCuts_eq_empty_iff (by omega) P).mp hempty u v)
+  obtain ⟨c, hc⟩ := Finset.nonempty_iff_ne_empty.mpr hcuts
+  let C : Quotient P.toSetoid := Quotient.mk'' c
+  let D : Quotient P.toSetoid := Quotient.mk'' (c + 1)
+  have hCD : C ≠ D := by
+    intro h
+    have hsame : P.toSetoid.r c (c + 1) := Quotient.exact h
+    have hboundary : ¬ P.toSetoid.r c (c + 1) := by
+      simpa [cycleBoundaryCuts] using hc
+    exact hboundary hsame
+  have hforward : crownCycleBlockLE P C D :=
+    crownCycleBlockLE_succ_of_evenCuts P heven c
+  have hreturn : crownCycleBlockLE P D C := by
+    have hreach : ∀ k : ℕ,
+        Relation.ReflTransGen (crownCycleBlockRel P) D
+          (Quotient.mk'' (c + 1 + Fin.ofNat (2 * n) k)) := by
+      intro k
+      induction k with
+      | zero =>
+          simpa [D] using
+            (Relation.ReflTransGen.refl :
+              Relation.ReflTransGen (crownCycleBlockRel P) D D)
+      | succ k ih =>
+          have hstep := crownCycleBlockLE_succ_of_evenCuts P heven
+            (c + 1 + Fin.ofNat (2 * n) k)
+          change Relation.ReflTransGen (crownCycleBlockRel P) _ _ at hstep
+          simpa [Fin.ofNat, Fin.add_def, add_assoc] using ih.trans hstep
+    have hlast := hreach (2 * n - 1)
+    have hfin : c + 1 + Fin.ofNat (2 * n) (2 * n - 1) = c := by
+      apply Fin.ext
+      simp only [Fin.add_def, Fin.val_one', Fin.val_ofNat]
+      have hNm1 : (2 * n - 1) % (2 * n) = 2 * n - 1 :=
+        Nat.mod_eq_of_lt (by omega)
+      rw [hNm1]
+      have hone : 1 % (2 * n) = 1 := Nat.mod_eq_of_lt (by omega)
+      rw [hone]
+      by_cases hlast : c.val = 2 * n - 1
+      · rw [hlast]
+        have hzero : (2 * n - 1 + 1) % (2 * n) = 0 := by
+          rw [show 2 * n - 1 + 1 = 2 * n by omega, Nat.mod_self]
+        rw [hzero, zero_add, hNm1]
+      · have hlt : c.val + 1 < 2 * n := by omega
+        rw [Nat.mod_eq_of_lt hlt]
+        have hsum : c.val + 1 + (2 * n - 1) = c.val + 2 * n := by omega
+        rw [hsum, Nat.add_mod_right, Nat.mod_eq_of_lt c.isLt]
+    change Relation.ReflTransGen (crownCycleBlockRel P) D C
+    rw [hfin] at hlast
+    simpa [C] using hlast
+  intro hcompatible
+  exact hCD (hcompatible hforward hreturn)
+
+private theorem crownCycleBlockLE_pred_of_oddCuts {n : ℕ} [NeZero (2 * n)]
+    (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
+    (hodd : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 1) (i : Fin (2 * n)) :
+    crownCycleBlockLE P (Quotient.mk'' (i + 1)) (Quotient.mk'' i) := by
+  by_cases hi : i.val % 2 = 1
+  · apply Relation.ReflTransGen.single
+    refine ⟨i + 1, i, rfl, rfl, ?_⟩
+    have hsucc : (i + 1).val = (i.val + 1) % (2 * n) := by
+      simp [Fin.add_def]
+    constructor
+    · rw [hsucc]
+      rw [Nat.mod_mod_of_dvd]
+      · omega
+      · exact dvd_mul_right 2 n
+    · right
+      by_cases hwrap : i.val + 1 < 2 * n
+      · rw [hsucc, Nat.mod_eq_of_lt hwrap]
+        rw [show i.val + 1 + 2 * n - 1 = i.val + 2 * n by omega,
+          Nat.add_mod_right, Nat.mod_eq_of_lt i.isLt]
+      · have hlast : i.val + 1 = 2 * n := by omega
+        rw [hsucc, hlast, Nat.mod_self, zero_add,
+          Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
+        omega
+  · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (hodd i hcut)
+    have hsame : P.toSetoid.r i (i + 1) := by
+      by_contra hne
+      exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
+    have hq : Quotient.mk'' (i + 1) = Quotient.mk'' i :=
+      (Quotient.sound hsame).symm
+    unfold crownCycleBlockLE
+    rw [hq]
+
+/- If every actual boundary cut starts at an odd vertex, directed quotient edges
+   traverse the cyclic blocks in the opposite direction and again form a cycle. -/
+private theorem not_crownCycleCompatible_of_oddCuts {n : ℕ} [NeZero (2 * n)]
+    (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
+    (hodd : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 1) :
+    ¬ crownCycleCompatible P := by
+  have hcuts : cycleBoundaryCuts P ≠ ∅ := by
+    intro hempty
+    obtain ⟨u, v, huv⟩ := hnontrivial
+    exact huv ((cycleBoundaryCuts_eq_empty_iff (by omega) P).mp hempty u v)
+  obtain ⟨c, hc⟩ := Finset.nonempty_iff_ne_empty.mpr hcuts
+  let C : Quotient P.toSetoid := Quotient.mk'' (c + 1)
+  let D : Quotient P.toSetoid := Quotient.mk'' c
+  have hCD : C ≠ D := by
+    intro h
+    have hsame : P.toSetoid.r (c + 1) c := Quotient.exact h
+    have hboundary : ¬ P.toSetoid.r c (c + 1) := by
+      simpa [cycleBoundaryCuts] using hc
+    exact hboundary (P.toSetoid.symm hsame)
+  have hforward : crownCycleBlockLE P C D :=
+    crownCycleBlockLE_pred_of_oddCuts hn P hodd c
+  have hreturn : crownCycleBlockLE P D C := by
+    have hreach : ∀ k : ℕ,
+        Relation.ReflTransGen (crownCycleBlockRel P) D
+          (Quotient.mk'' (c - Fin.ofNat (2 * n) k)) := by
+      intro k
+      induction k with
+      | zero =>
+          simpa [D] using
+            (Relation.ReflTransGen.refl :
+              Relation.ReflTransGen (crownCycleBlockRel P) D D)
+      | succ k ih =>
+          have hstep := crownCycleBlockLE_pred_of_oddCuts hn P hodd
+            (c - Fin.ofNat (2 * n) (k + 1))
+          change Relation.ReflTransGen (crownCycleBlockRel P) _ _ at hstep
+          have hsource :
+              c - Fin.ofNat (2 * n) (k + 1) + 1 =
+                c - Fin.ofNat (2 * n) k := by
+            have hk : Fin.ofNat (2 * n) (k + 1) =
+                Fin.ofNat (2 * n) k + 1 := by
+              apply Fin.ext
+              simp [Fin.ofNat, Fin.add_def, Nat.add_mod]
+            rw [hk]
+            abel
+          rw [hsource] at hstep
+          exact ih.trans hstep
+    have hlast := hreach (2 * n - 1)
+    have hfin : c - Fin.ofNat (2 * n) (2 * n - 1) = c + 1 := by
+      apply Fin.ext
+      simp only [Fin.sub_def, Fin.add_def, Fin.val_one', Fin.val_ofNat]
+      have hNm1 : (2 * n - 1) % (2 * n) = 2 * n - 1 :=
+        Nat.mod_eq_of_lt (by omega)
+      rw [hNm1]
+      rw [show 2 * n - (2 * n - 1) = 1 by omega]
+      simp [Nat.add_comm]
+    change Relation.ReflTransGen (crownCycleBlockRel P) D C
+    rw [hfin] at hlast
+    simpa [C] using hlast
+  intro hcompatible
+  exact hCD (hcompatible hforward hreturn)
+
+/- Every nontrivial compatible cyclic crown partition has boundary cuts of both
+   parities.  Uniform parity is excluded by the two explicit quotient cycles. -/
+private theorem mixedBoundaryCuts_of_crownCycleCompatible {n : ℕ} [NeZero (2 * n)]
+    (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
+    (hcompatible : crownCycleCompatible P) :
+    (∃ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) ∧
+      ∃ c ∈ cycleBoundaryCuts P, c.val % 2 = 1 := by
+  have hcuts : cycleBoundaryCuts P ≠ ∅ := by
+    intro hempty
+    obtain ⟨u, v, huv⟩ := hnontrivial
+    exact huv ((cycleBoundaryCuts_eq_empty_iff (by omega) P).mp hempty u v)
+  obtain ⟨c, hc⟩ := Finset.nonempty_iff_ne_empty.mpr hcuts
+  have hparity : c.val % 2 = 0 ∨ c.val % 2 = 1 := by omega
+  rcases hparity with hcEven | hcOdd
+  · refine ⟨⟨c, hc, hcEven⟩, ?_⟩
+    by_contra hnone
+    push Not at hnone
+    have hallEven : ∀ d ∈ cycleBoundaryCuts P, d.val % 2 = 0 := by
+      intro d hd
+      have hdlt : d.val % 2 < 2 := Nat.mod_lt _ (by omega)
+      have hdne : d.val % 2 ≠ 1 := hnone d hd
+      omega
+    exact not_crownCycleCompatible_of_evenCuts hn P hnontrivial hallEven hcompatible
+  · refine ⟨?_, ⟨c, hc, hcOdd⟩⟩
+    by_contra hnone
+    push Not at hnone
+    have hallOdd : ∀ d ∈ cycleBoundaryCuts P, d.val % 2 = 1 := by
+      intro d hd
+      have hdlt : d.val % 2 < 2 := Nat.mod_lt _ (by omega)
+      have hdne : d.val % 2 ≠ 0 := hnone d hd
+      omega
+    exact not_crownCycleCompatible_of_oddCuts hn P hnontrivial hallOdd hcompatible
+
+/- Restrict an actual augmented-crown CCP to its original vertices when the
+   bottom and top blocks contain no original vertex. -/
+private def crownVertexSetoid {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
+    Setoid (Fin (2 * n)) where
+  r i j := P.toSetoid.r (.vertex i) (.vertex j)
+  iseqv :=
+    { refl := fun i => P.toSetoid.refl (.vertex i)
+      symm := fun h => P.toSetoid.symm h
+      trans := fun h₁ h₂ => P.toSetoid.trans h₁ h₂ }
+
+private noncomputable def connectedCyclePartitionOfCrown {n : ℕ} (hn : 2 ≤ n)
+    (P : CrownConnectedCompatiblePartition n)
+    (hbottom : ∀ i, ¬ P.toSetoid.r (.vertex i) .bottom)
+    (htop : ∀ i, ¬ P.toSetoid.r (.vertex i) .top) :
+    ConnectedCyclePartition (2 * n) where
+  toSetoid := crownVertexSetoid P
+  connected := by
+    intro u v huv
+    let S : Set (Fin (2 * n)) := {j | P.toSetoid.r (.vertex u) (.vertex j)}
+    have hconn := crownPartition_originalBlock_cycleGraph_connected hn P u
+      (hbottom u) (htop u)
+    let a : S := ⟨u, P.toSetoid.refl _⟩
+    let b : S := ⟨v, huv⟩
+    obtain ⟨w⟩ := hconn.preconnected a b
+    let f : ((SimpleGraph.cycleGraph (2 * n)).induce S) →g
+        cyclePartitionGraph (crownVertexSetoid P) :=
+      { toFun := fun x => x.1
+        map_rel' := by
+          intro x y hxy
+          exact ⟨P.toSetoid.trans (P.toSetoid.symm x.2) y.2, hxy⟩ }
+    change Nonempty ((cyclePartitionGraph (crownVertexSetoid P)).Walk u v)
+    have w' := w.map f
+    change (cyclePartitionGraph (crownVertexSetoid P)).Walk u v at w'
+    exact ⟨w'⟩
+
+private theorem crownCycleCompatible_connectedCyclePartitionOfCrown {n : ℕ}
+    (hn : 2 ≤ n) (P : CrownConnectedCompatiblePartition n)
+    (hbottom : ∀ i, ¬ P.toSetoid.r (.vertex i) .bottom)
+    (htop : ∀ i, ¬ P.toSetoid.r (.vertex i) .top) :
+    crownCycleCompatible (connectedCyclePartitionOfCrown hn P hbottom htop) := by
+  let Q := connectedCyclePartitionOfCrown hn P hbottom htop
+  let q : Quotient Q.toSetoid → Quotient P.toSetoid :=
+    Quotient.map (fun i => CrownAugmentedVertex.vertex i) (by
+      intro a b hab
+      exact hab)
+  have hq_mk (i : Fin (2 * n)) :
+      q (Quotient.mk'' i) = Quotient.mk'' (.vertex i) := rfl
+  have hmapRel {C D : Quotient Q.toSetoid} (hCD : crownCycleBlockRel Q C D) :
+      crownPartitionBlockRel P.toSetoid (q C) (q D) := by
+    rcases hCD with ⟨i, j, hi, hj, hij⟩
+    refine ⟨.vertex i, .vertex j, ?_, ?_, Or.inr hij⟩
+    · rw [← hq_mk, hi]
+    · rw [← hq_mk, hj]
+  have hmapLE {C D : Quotient Q.toSetoid} (hCD : crownCycleBlockLE Q C D) :
+      crownPartitionBlockLE P.toSetoid (q C) (q D) := by
+    induction hCD with
+    | refl => exact Relation.ReflTransGen.refl
+    | tail hCE hED ih => exact ih.tail (hmapRel hED)
+  have hqInjective : Function.Injective q := by
+    intro C D hCD
+    revert hCD
+    refine Quotient.inductionOn₂ C D ?_
+    intro i j hij
+    apply Quotient.sound
+    change (Quotient.mk'' (.vertex i) : Quotient P.toSetoid) =
+      Quotient.mk'' (.vertex j) at hij
+    change P.toSetoid.r (.vertex i) (.vertex j)
+    exact @Quotient.exact _ P.toSetoid _ _ hij
+  intro C D hCD hDC
+  apply hqInjective
+  exact P.compatible (hmapLE hCD) (hmapLE hDC)
+
+/- For an actual CCP with singleton augmented endpoint blocks, nontriviality forces
+   cyclic boundaries of both parities.  This is the actual-partition half of the
+   source's odd-block criterion before boundary gaps are converted to block sizes. -/
+private theorem mixedBoundaryCuts_of_crownPartition {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+    (P : CrownConnectedCompatiblePartition n)
+    (hbottom : ∀ i, ¬ P.toSetoid.r (.vertex i) .bottom)
+    (htop : ∀ i, ¬ P.toSetoid.r (.vertex i) .top)
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r (.vertex u) (.vertex v)) :
+    let Q := connectedCyclePartitionOfCrown hn P hbottom htop
+    (∃ c ∈ cycleBoundaryCuts Q, c.val % 2 = 0) ∧
+      ∃ c ∈ cycleBoundaryCuts Q, c.val % 2 = 1 := by
+  let Q := connectedCyclePartitionOfCrown hn P hbottom htop
+  exact mixedBoundaryCuts_of_crownCycleCompatible hn Q hnontrivial
+    (crownCycleCompatible_connectedCyclePartitionOfCrown hn P hbottom htop)
+
+/- Compatibility and nontriviality exclude both the no-cut and singleton-cut
+   exceptions.  This is the cardinality form used by the marked-cut count. -/
+private theorem cycleBoundaryCuts_card_ge_two_of_crownCycleCompatible
+    {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+    (P : ConnectedCyclePartition (2 * n))
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
+    (hcompatible : crownCycleCompatible P) :
+    2 ≤ (cycleBoundaryCuts P).card := by
+  obtain ⟨⟨ce, hce, heven⟩, ⟨co, hco, hodd⟩⟩ :=
+    mixedBoundaryCuts_of_crownCycleCompatible hn P hnontrivial hcompatible
+  have hne : ce ≠ co := by
+    intro h
+    subst co
+    omega
+  have hpair : ({ce, co} : Finset (Fin (2 * n))) ⊆ cycleBoundaryCuts P := by
+    intro c hc
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hc
+    rcases hc with rfl | rfl
+    · exact hce
+    · exact hco
+  have hcard : ({ce, co} : Finset (Fin (2 * n))).card = 2 := by
+    simp [hne]
+  have hle := Finset.card_le_card hpair
+  simpa [hcard] using hle
+
+private theorem cycleBoundaryCuts_card_ge_two_of_crownPartition
+    {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+    (P : CrownConnectedCompatiblePartition n)
+    (hbottom : ∀ i, ¬ P.toSetoid.r (.vertex i) .bottom)
+    (htop : ∀ i, ¬ P.toSetoid.r (.vertex i) .top)
+    (hnontrivial : ∃ u v, ¬ P.toSetoid.r (.vertex u) (.vertex v)) :
+    let Q := connectedCyclePartitionOfCrown hn P hbottom htop
+    2 ≤ (cycleBoundaryCuts Q).card := by
+  let Q := connectedCyclePartitionOfCrown hn P hbottom htop
+  exact cycleBoundaryCuts_card_ge_two_of_crownCycleCompatible hn Q hnontrivial
+    (crownCycleCompatible_connectedCyclePartitionOfCrown hn P hbottom htop)
 
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration
