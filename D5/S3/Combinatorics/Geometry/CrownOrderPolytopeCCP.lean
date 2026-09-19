@@ -41,6 +41,28 @@ private theorem augmentedCoordinate_le_of_faceBlockRel {n : ℕ} (F : CrownExpos
     (hb : (crownFaceTightGraph F).connectedComponentMk b = D)
     {x : Fin (2 * n) → ℝ} (hx : x ∈ F.1) :
     augmentedCoordinate x a ≤ augmentedCoordinate x b := by
+  have augmentedCoordinate_mono {n : ℕ} {x : Fin (2 * n) → ℝ}
+      (hx : x ∈ crownOrderPolytope n) {u v : CrownAugmentedVertex n}
+      (huv : crownAugmentedLE u v) : augmentedCoordinate x u ≤ augmentedCoordinate x v := by
+    cases u with
+    | bottom =>
+        cases v with
+        | bottom => simp [augmentedCoordinate]
+        | vertex j => exact (hx.1 j).1
+        | top => norm_num [augmentedCoordinate]
+    | top =>
+        cases v with
+        | bottom => simp [crownAugmentedLE] at huv
+        | vertex j => simp [crownAugmentedLE] at huv
+        | top => simp [augmentedCoordinate]
+    | vertex i =>
+        cases v with
+        | bottom => simp [crownAugmentedLE] at huv
+        | top => exact (hx.1 i).2
+        | vertex j =>
+            rcases huv with hij | hij
+            · simpa [hij]
+            · exact hx.2 i j hij
   obtain ⟨u, v, hu, hv, huv⟩ := hCD
   have hau : augmentedCoordinate x a = augmentedCoordinate x u :=
     augmentedCoordinate_eq_of_tightComponent F (ha.trans hu.symm) hx
@@ -48,7 +70,6 @@ private theorem augmentedCoordinate_le_of_faceBlockRel {n : ℕ} (F : CrownExpos
     augmentedCoordinate_eq_of_tightComponent F (hb.trans hv.symm) hx
   rw [hau, hbv]
   exact augmentedCoordinate_mono (F.2.subset hx) huv
-
 private theorem augmentedCoordinate_le_of_faceBlockLE {n : ℕ} (F : CrownExposedFace n)
     {C D : CrownFaceBlock F} (hCD : crownFaceBlockLE F C D)
     {a b : CrownAugmentedVertex n}
@@ -66,6 +87,28 @@ private theorem augmentedCoordinate_le_of_faceBlockLE {n : ℕ} (F : CrownExpose
 private theorem faceBlockRel_eq_of_reverse {n : ℕ} (F : CrownExposedFace n)
     {C D : CrownFaceBlock F} (hCD : crownFaceBlockRel F C D)
     (hDC : crownFaceBlockLE F D C) : C = D := by
+  have augmentedCoordinate_mono {n : ℕ} {x : Fin (2 * n) → ℝ}
+      (hx : x ∈ crownOrderPolytope n) {u v : CrownAugmentedVertex n}
+      (huv : crownAugmentedLE u v) : augmentedCoordinate x u ≤ augmentedCoordinate x v := by
+    cases u with
+    | bottom =>
+        cases v with
+        | bottom => simp [augmentedCoordinate]
+        | vertex j => exact (hx.1 j).1
+        | top => norm_num [augmentedCoordinate]
+    | top =>
+        cases v with
+        | bottom => simp [crownAugmentedLE] at huv
+        | vertex j => simp [crownAugmentedLE] at huv
+        | top => simp [augmentedCoordinate]
+    | vertex i =>
+        cases v with
+        | bottom => simp [crownAugmentedLE] at huv
+        | top => exact (hx.1 i).2
+        | vertex j =>
+            rcases huv with hij | hij
+            · simpa [hij]
+            · exact hx.2 i j hij
   obtain ⟨u, v, hu, hv, huv⟩ := hCD
   by_cases huv_eq : u = v
   · subst v
@@ -80,7 +123,6 @@ private theorem faceBlockRel_eq_of_reverse {n : ℕ} (F : CrownExposedFace n)
     exact ⟨huv_eq, Or.inl ⟨huv, heq⟩⟩
   exact hu.symm.trans <|
     (SimpleGraph.ConnectedComponent.connectedComponentMk_eq_of_adj hadj).trans hv
-
 /-- For every actual face, directed cycles in the quotient block relation collapse to
     one tight component.  Thus the reflexive transitive quotient relation is antisymmetric. -/
 theorem crownFaceBlockLE_antisymm {n : ℕ} (F : CrownExposedFace n) :
@@ -183,23 +225,6 @@ def crownPartitionTopBlock {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
     Quotient P.toSetoid :=
   Quotient.mk'' CrownAugmentedVertex.top
 
-private theorem crownPartition_bottom_le {n : ℕ} (P : CrownConnectedCompatiblePartition n)
-    (C : Quotient P.toSetoid) :
-    crownPartitionBlockLE P.toSetoid (crownPartitionBottomBlock P) C := by
-  refine Quotient.inductionOn C ?_
-  intro v
-  apply Relation.ReflTransGen.single
-  exact ⟨.bottom, v, rfl, rfl, by simp [crownAugmentedLE]⟩
-
-private theorem crownPartition_le_top {n : ℕ} (P : CrownConnectedCompatiblePartition n)
-    (C : Quotient P.toSetoid) :
-    crownPartitionBlockLE P.toSetoid C (crownPartitionTopBlock P) := by
-  refine Quotient.inductionOn C ?_
-  intro v
-  apply Relation.ReflTransGen.single
-  refine ⟨v, .top, rfl, rfl, ?_⟩
-  cases v <;> simp [crownAugmentedLE]
-
 private def linearExtensionFintype (α : Type*) [Fintype α] : Fintype (LinearExtension α) :=
   Fintype.ofEquiv α
     { toFun := fun x => x
@@ -216,32 +241,6 @@ noncomputable def crownPartitionBlockRank {n : ℕ} (P : CrownConnectedCompatibl
   exact ((monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl).symm
     (toLinearExtension C)).val
 
-private theorem crownPartitionBlockRank_mono {n : ℕ} (P : CrownConnectedCompatiblePartition n)
-    {C D : Quotient P.toSetoid} (hCD : crownPartitionBlockLE P.toSetoid C D) :
-    crownPartitionBlockRank P C ≤ crownPartitionBlockRank P D := by
-  letI := P.blockPartialOrder
-  letI : Fintype (Quotient P.toSetoid) := Fintype.ofFinite _
-  letI : Fintype (LinearExtension (Quotient P.toSetoid)) := linearExtensionFintype _
-  let e := monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl
-  have hlinear : toLinearExtension C ≤ toLinearExtension D := toLinearExtension.monotone hCD
-  have hfin : e.symm (toLinearExtension C) ≤ e.symm (toLinearExtension D) :=
-    e.symm.monotone hlinear
-  change (e.symm (toLinearExtension C)).val ≤ (e.symm (toLinearExtension D)).val
-  exact hfin
-
-private theorem crownPartitionBlockRank_injective {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n) :
-    Function.Injective (crownPartitionBlockRank P) := by
-  intro C D h
-  letI := P.blockPartialOrder
-  letI : Fintype (Quotient P.toSetoid) := Fintype.ofFinite _
-  letI : Fintype (LinearExtension (Quotient P.toSetoid)) := linearExtensionFintype _
-  let e := monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl
-  have hfin : e.symm (toLinearExtension C) = e.symm (toLinearExtension D) := by
-    apply Fin.ext
-    simpa only [crownPartitionBlockRank] using h
-  exact e.symm.injective hfin
-
 /-- Normalize linear-extension ranks so that the bottom and top blocks have coordinates zero and
     one.  It is used only when those endpoint blocks are distinct. -/
 noncomputable def crownPartitionRankPoint {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
@@ -251,108 +250,6 @@ noncomputable def crownPartitionRankPoint {n : ℕ} (P : CrownConnectedCompatibl
     ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
       crownPartitionBlockRank P (crownPartitionBottomBlock P))
 
-private theorem crownPartition_rank_denominator_pos {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n)
-    (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
-    (0 : ℝ) < (crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
-      crownPartitionBlockRank P (crownPartitionBottomBlock P) := by
-  have hle := crownPartitionBlockRank_mono P
-    (crownPartition_bottom_le P (crownPartitionTopBlock P))
-  have hne : crownPartitionBlockRank P (crownPartitionBottomBlock P) ≠
-      crownPartitionBlockRank P (crownPartitionTopBlock P) :=
-    fun h => hendpoints (crownPartitionBlockRank_injective P h)
-  have hlt := lt_of_le_of_ne hle hne
-  have hltR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) <
-      crownPartitionBlockRank P (crownPartitionTopBlock P) := by
-    exact_mod_cast hlt
-  linarith
-
-private theorem crownPartition_block_le_of_augmentedLE {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n) {u v : CrownAugmentedVertex n}
-    (huv : crownAugmentedLE u v) :
-    crownPartitionBlockLE P.toSetoid (Quotient.mk'' u) (Quotient.mk'' v) :=
-  Relation.ReflTransGen.single ⟨u, v, rfl, rfl, huv⟩
-
-/-- The normalized linear-extension rank point is an actual point of the crown order polytope
-    whenever the endpoint blocks are distinct. -/
-theorem crownPartitionRankPoint_mem {n : ℕ} (P : CrownConnectedCompatiblePartition n)
-    (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
-    crownPartitionRankPoint P ∈ crownOrderPolytope n := by
-  have hden := crownPartition_rank_denominator_pos P hendpoints
-  constructor
-  · intro i
-    have hbottom := crownPartitionBlockRank_mono P
-      (crownPartition_bottom_le P (Quotient.mk'' (.vertex i)))
-    have htop := crownPartitionBlockRank_mono P
-      (crownPartition_le_top P (Quotient.mk'' (.vertex i)))
-    have hbottomR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) ≤
-        crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) := by
-      exact_mod_cast hbottom
-    have htopR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
-        crownPartitionBlockRank P (crownPartitionTopBlock P) := by
-      exact_mod_cast htop
-    constructor
-    · apply div_nonneg
-      · exact sub_nonneg.mpr hbottomR
-      · exact le_of_lt hden
-    · apply (div_le_one hden).2
-      linarith
-  · intro i j hij
-    have hmono := crownPartitionBlockRank_mono P
-      (crownPartition_block_le_of_augmentedLE P
-        (u := CrownAugmentedVertex.vertex i) (v := CrownAugmentedVertex.vertex j) (Or.inr hij))
-    have hmonoR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
-        crownPartitionBlockRank P (Quotient.mk'' (.vertex j)) := by
-      exact_mod_cast hmono
-    apply (div_le_div_iff_of_pos_right hden).2
-    linarith
-
-/-- The augmented coordinates of the normalized quotient rank point, including both endpoints. -/
-theorem augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n)
-    (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
-    (u : CrownAugmentedVertex n) :
-    augmentedCoordinate (crownPartitionRankPoint P) u =
-      ((crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
-          crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
-        ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
-          crownPartitionBlockRank P (crownPartitionBottomBlock P)) := by
-  have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
-  cases u with
-  | bottom => simp [augmentedCoordinate, crownPartitionBottomBlock]
-  | vertex i => rfl
-  | top =>
-      simp only [augmentedCoordinate, crownPartitionTopBlock]
-      exact (div_self hden).symm
-
-/-- The normalized rank point has no accidental equality between distinct quotient blocks. -/
-theorem augmentedCoordinate_crownPartitionRankPoint_eq_iff {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n)
-    (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
-    (u v : CrownAugmentedVertex n) :
-    augmentedCoordinate (crownPartitionRankPoint P) u =
-      augmentedCoordinate (crownPartitionRankPoint P) v ↔ P.toSetoid.r u v := by
-  rw [augmentedCoordinate_crownPartitionRankPoint P hendpoints u,
-    augmentedCoordinate_crownPartitionRankPoint P hendpoints v]
-  have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
-  constructor
-  · intro h
-    have hnum : (crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
-        crownPartitionBlockRank P (crownPartitionBottomBlock P) =
-        (crownPartitionBlockRank P (Quotient.mk'' v) : ℝ) -
-          crownPartitionBlockRank P (crownPartitionBottomBlock P) :=
-      (div_left_inj' hden).mp h
-    have hrank : crownPartitionBlockRank P (Quotient.mk'' u) =
-        crownPartitionBlockRank P (Quotient.mk'' v) := by
-      exact_mod_cast (sub_left_inj.mp hnum)
-    exact Quotient.exact (crownPartitionBlockRank_injective P hrank)
-  · intro huv
-    exact congrArg (fun C =>
-      ((crownPartitionBlockRank P C : ℝ) -
-          crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
-        ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
-          crownPartitionBlockRank P (crownPartitionBottomBlock P))) (Quotient.sound huv)
-
 private def crownComparableTightSet {n : ℕ} (u v : CrownAugmentedVertex n) :
     Set (Fin (2 * n) → ℝ) :=
   {x | x ∈ crownOrderPolytope n ∧ augmentedCoordinate x u = augmentedCoordinate x v}
@@ -360,6 +257,20 @@ private def crownComparableTightSet {n : ℕ} (u v : CrownAugmentedVertex n) :
 private theorem crownComparableTightSet_isExposed {n : ℕ} {u v : CrownAugmentedVertex n}
     (huv : crownAugmentedLE u v) :
     IsExposed ℝ (crownOrderPolytope n) (crownComparableTightSet u v) := by
+  have zero_mem_crown_order_polytope (n : ℕ) :
+      (0 : Fin (2 * n) → ℝ) ∈ crownOrderPolytope n := by
+    constructor
+    · intro i
+      simp
+    · intro i j hij
+      simp
+  have one_mem_crown_order_polytope (n : ℕ) :
+      (1 : Fin (2 * n) → ℝ) ∈ crownOrderPolytope n := by
+    constructor
+    · intro i
+      simp
+    · intro i j hij
+      simp
   cases u with
   | bottom =>
       cases v with
@@ -439,7 +350,6 @@ private theorem crownComparableTightSet_isExposed {n : ℕ} {u v : CrownAugmente
       | top =>
           simpa [crownComparableTightSet, augmentedCoordinate] using
             (IsExposed.refl (𝕜 := ℝ) (crownOrderPolytope n))
-
 private noncomputable def crownPartitionInternalPairs {n : ℕ}
     (P : CrownConnectedCompatiblePartition n) :
     Finset (CrownAugmentedVertex n × CrownAugmentedVertex n) := by
@@ -511,21 +421,162 @@ noncomputable def crownPartitionFace {n : ℕ} (P : CrownConnectedCompatiblePart
     CrownExposedFace n :=
   ⟨crownPartitionFaceSet P, crownPartitionFaceSet_isExposed P⟩
 
-private theorem crownPartition_all_related_of_endpoints_eq {n : ℕ}
-    (P : CrownConnectedCompatiblePartition n)
-    (hendpoints : crownPartitionBottomBlock P = crownPartitionTopBlock P)
-    (u v : CrownAugmentedVertex n) : P.toSetoid.r u v := by
-  apply Quotient.exact
-  apply P.compatible
-  · exact (crownPartition_le_top P (Quotient.mk'' u)).trans <|
-      hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' v)
-  · exact (crownPartition_le_top P (Quotient.mk'' v)).trans <|
-      hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' u)
-
 /-- The tight graph of the inverse face has exactly the prescribed connected blocks. -/
 theorem crownPartitionFace_tightComponent_iff {n : ℕ}
     (P : CrownConnectedCompatiblePartition n) (u v : CrownAugmentedVertex n) :
     (crownFaceTightGraph (crownPartitionFace P)).Reachable u v ↔ P.toSetoid.r u v := by
+  have crownFaceTightGraph_adj_eq {n : ℕ} (F : CrownExposedFace n)
+      {u v : CrownAugmentedVertex n} (huv : (crownFaceTightGraph F).Adj u v)
+      {x : Fin (2 * n) → ℝ} (hx : x ∈ F.1) :
+      augmentedCoordinate x u = augmentedCoordinate x v := by
+    rcases (SimpleGraph.fromRel_adj _ _ _).mp huv with ⟨_, h | h⟩
+    · exact h.2 x hx
+    · exact (h.2 x hx).symm
+  have crownPartition_bottom_le {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid (crownPartitionBottomBlock P) C := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    exact ⟨.bottom, v, rfl, rfl, by simp [crownAugmentedLE]⟩
+  have crownPartition_le_top {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid C (crownPartitionTopBlock P) := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    refine ⟨v, .top, rfl, rfl, ?_⟩
+    cases v <;> simp [crownAugmentedLE]
+  have crownPartitionBlockRank_mono {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      {C D : Quotient P.toSetoid} (hCD : crownPartitionBlockLE P.toSetoid C D) :
+      crownPartitionBlockRank P C ≤ crownPartitionBlockRank P D := by
+    letI := P.blockPartialOrder
+    letI : Fintype (Quotient P.toSetoid) := Fintype.ofFinite _
+    letI : Fintype (LinearExtension (Quotient P.toSetoid)) :=
+        Fintype.ofEquiv (Quotient P.toSetoid)
+          { toFun := fun x => x
+            invFun := fun x => x
+            left_inv := fun _ => rfl
+            right_inv := fun _ => rfl }
+    let e := monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl
+    have hlinear : toLinearExtension C ≤ toLinearExtension D := toLinearExtension.monotone hCD
+    have hfin : e.symm (toLinearExtension C) ≤ e.symm (toLinearExtension D) :=
+      e.symm.monotone hlinear
+    change (e.symm (toLinearExtension C)).val ≤ (e.symm (toLinearExtension D)).val
+    exact hfin
+  have crownPartitionBlockRank_injective {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) :
+      Function.Injective (crownPartitionBlockRank P) := by
+    intro C D h
+    letI := P.blockPartialOrder
+    unfold crownPartitionBlockRank at h
+    have hCD : toLinearExtension C = toLinearExtension D :=
+      OrderIso.injective _ (Fin.ext h)
+    exact hCD
+  have crownPartition_rank_denominator_pos {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      (0 : ℝ) < (crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+        crownPartitionBlockRank P (crownPartitionBottomBlock P) := by
+    have hle := crownPartitionBlockRank_mono P
+      (crownPartition_bottom_le P (crownPartitionTopBlock P))
+    have hne : crownPartitionBlockRank P (crownPartitionBottomBlock P) ≠
+        crownPartitionBlockRank P (crownPartitionTopBlock P) :=
+      fun h => hendpoints (crownPartitionBlockRank_injective P h)
+    have hlt := lt_of_le_of_ne hle hne
+    have hltR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) <
+        crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+      exact_mod_cast hlt
+    linarith
+  have crownPartition_block_le_of_augmentedLE {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) {u v : CrownAugmentedVertex n}
+      (huv : crownAugmentedLE u v) :
+      crownPartitionBlockLE P.toSetoid (Quotient.mk'' u) (Quotient.mk'' v) := by
+    exact
+      Relation.ReflTransGen.single ⟨u, v, rfl, rfl, huv⟩
+  have crownPartitionRankPoint_mem {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      crownPartitionRankPoint P ∈ crownOrderPolytope n := by
+    have hden := crownPartition_rank_denominator_pos P hendpoints
+    constructor
+    · intro i
+      have hbottom := crownPartitionBlockRank_mono P
+        (crownPartition_bottom_le P (Quotient.mk'' (.vertex i)))
+      have htop := crownPartitionBlockRank_mono P
+        (crownPartition_le_top P (Quotient.mk'' (.vertex i)))
+      have hbottomR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) := by
+        exact_mod_cast hbottom
+      have htopR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+        exact_mod_cast htop
+      constructor
+      · apply div_nonneg
+        · exact sub_nonneg.mpr hbottomR
+        · exact le_of_lt hden
+      · apply (div_le_one hden).2
+        linarith
+    · intro i j hij
+      have hmono := crownPartitionBlockRank_mono P
+        (crownPartition_block_le_of_augmentedLE P
+          (u := CrownAugmentedVertex.vertex i) (v := CrownAugmentedVertex.vertex j) (Or.inr hij))
+      have hmonoR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex j)) := by
+        exact_mod_cast hmono
+      apply (div_le_div_iff_of_pos_right hden).2
+      linarith
+  have augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        ((crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) := by
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    cases u with
+    | bottom => simp [augmentedCoordinate, crownPartitionBottomBlock]
+    | vertex i => rfl
+    | top =>
+        simp only [augmentedCoordinate, crownPartitionTopBlock]
+        exact (div_self hden).symm
+  have augmentedCoordinate_crownPartitionRankPoint_eq_iff {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        augmentedCoordinate (crownPartitionRankPoint P) v ↔ P.toSetoid.r u v := by
+    rw [augmentedCoordinate_crownPartitionRankPoint P hendpoints u,
+      augmentedCoordinate_crownPartitionRankPoint P hendpoints v]
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    constructor
+    · intro h
+      have hnum : (crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+          crownPartitionBlockRank P (crownPartitionBottomBlock P) =
+          (crownPartitionBlockRank P (Quotient.mk'' v) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P) :=
+        (div_left_inj' hden).mp h
+      have hrank : crownPartitionBlockRank P (Quotient.mk'' u) =
+          crownPartitionBlockRank P (Quotient.mk'' v) := by
+        exact_mod_cast (sub_left_inj.mp hnum)
+      exact Quotient.exact (crownPartitionBlockRank_injective P hrank)
+    · intro huv
+      exact congrArg (fun C =>
+        ((crownPartitionBlockRank P C : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P))) (Quotient.sound huv)
+  have crownPartition_all_related_of_endpoints_eq {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P = crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) : P.toSetoid.r u v := by
+    apply Quotient.exact
+    apply P.compatible
+    · exact (crownPartition_le_top P (Quotient.mk'' u)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' v)
+    · exact (crownPartition_le_top P (Quotient.mk'' v)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' u)
   classical
   constructor
   · intro huv
@@ -559,29 +610,39 @@ theorem crownPartitionFace_tightComponent_iff {n : ℕ}
       refine ⟨hne, Or.inr ⟨h.2, ?_⟩⟩
       intro x hx
       exact (mem_crownPartitionFaceSet_iff P x).1 hx |>.2 b a h.1
-
-/-- The inverse face is nonempty exactly when its bottom and top blocks are distinct. -/
-theorem crownPartitionFace_nonempty_iff {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
-    (crownPartitionFace P).1.Nonempty ↔
-      crownPartitionBottomBlock P ≠ crownPartitionTopBlock P := by
-  constructor
-  · rintro ⟨x, hx⟩ hendpoints
-    have hall := crownPartition_all_related_of_endpoints_eq P hendpoints
-      CrownAugmentedVertex.bottom CrownAugmentedVertex.top
-    have heq := (mem_crownPartitionFaceSet_iff P x).1 hx |>.2 _ _ hall
-    norm_num [augmentedCoordinate] at heq
-  · intro hendpoints
-    refine ⟨crownPartitionRankPoint P, ?_⟩
-    exact (mem_crownPartitionFaceSet_iff P _).2
-      ⟨crownPartitionRankPoint_mem P hendpoints,
-        fun u v huv => (augmentedCoordinate_crownPartitionRankPoint_eq_iff
-          P hendpoints u v).2 huv⟩
-
 private theorem crownFace_mem_of_partition_constraints {n : ℕ} (F : CrownExposedFace n)
     (hF : F.1.Nonempty) {x : Fin (2 * n) → ℝ}
     (hxpoly : x ∈ crownOrderPolytope n)
     (hxblocks : ∀ u v, (crownFaceTightGraph F).Reachable u v →
       augmentedCoordinate x u = augmentedCoordinate x v) : x ∈ F.1 := by
+  have crown_affine_slack_feasible_eq (n : ℕ) :
+      (crownAffineSlackFamily n).feasible = crownOrderPolytope n := by
+    classical
+    ext x
+    let e := Fintype.equivFin (CrownConstraint n)
+    constructor
+    · intro hx
+      constructor
+      · intro i
+        constructor
+        · have h := hx (e (Sum.inl i))
+          simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
+        · have h := hx (e (Sum.inr (Sum.inl i)))
+          simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
+      · intro i j hij
+        let p : {p : Fin (2 * n) × Fin (2 * n) // crownRelation n p.1 p.2} :=
+          ⟨(i, j), hij⟩
+        have h := hx (e (Sum.inr (Sum.inr p)))
+        simpa [crownAffineSlackFamily, crownConstraintSlack, e, p] using h
+    · rintro ⟨hbounds, horder⟩ i
+      let c := e.symm i
+      have hi : i = e c := by simp [c]
+      rw [hi]
+      rcases c with i | i | p
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).1
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).2
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using
+          (sub_nonneg.mpr (horder p.1.1 p.1.2 p.2))
   classical
   obtain ⟨anchor, hanchor⟩ := hF
   have hFex : IsExposed ℝ (crownAffineSlackFamily n).feasible F.1 := by
@@ -639,10 +700,169 @@ private theorem crownFace_mem_of_partition_constraints {n : ℕ} (F : CrownExpos
         have heq := hxblocks (.vertex p.1.1) (.vertex p.1.2) hadj.reachable
         simpa [crownAffineSlackFamily, crownConstraintSlack, e,
           augmentedCoordinate] using sub_eq_zero.mpr heq.symm
-
 /-- Taking tight blocks of an actual face and then applying the CCP inverse recovers that face. -/
 theorem crownPartitionFace_crownFacePartition {n : ℕ} (F : CrownExposedFace n) :
     crownPartitionFace (crownFacePartition F) = F := by
+  have crownPartition_bottom_le {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid (crownPartitionBottomBlock P) C := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    exact ⟨.bottom, v, rfl, rfl, by simp [crownAugmentedLE]⟩
+  have crownPartition_le_top {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid C (crownPartitionTopBlock P) := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    refine ⟨v, .top, rfl, rfl, ?_⟩
+    cases v <;> simp [crownAugmentedLE]
+  have crownPartitionBlockRank_mono {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      {C D : Quotient P.toSetoid} (hCD : crownPartitionBlockLE P.toSetoid C D) :
+      crownPartitionBlockRank P C ≤ crownPartitionBlockRank P D := by
+    letI := P.blockPartialOrder
+    letI : Fintype (Quotient P.toSetoid) := Fintype.ofFinite _
+    letI : Fintype (LinearExtension (Quotient P.toSetoid)) :=
+        Fintype.ofEquiv (Quotient P.toSetoid)
+          { toFun := fun x => x
+            invFun := fun x => x
+            left_inv := fun _ => rfl
+            right_inv := fun _ => rfl }
+    let e := monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl
+    have hlinear : toLinearExtension C ≤ toLinearExtension D := toLinearExtension.monotone hCD
+    have hfin : e.symm (toLinearExtension C) ≤ e.symm (toLinearExtension D) :=
+      e.symm.monotone hlinear
+    change (e.symm (toLinearExtension C)).val ≤ (e.symm (toLinearExtension D)).val
+    exact hfin
+  have crownPartitionBlockRank_injective {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) :
+      Function.Injective (crownPartitionBlockRank P) := by
+    intro C D h
+    letI := P.blockPartialOrder
+    unfold crownPartitionBlockRank at h
+    have hCD : toLinearExtension C = toLinearExtension D :=
+      OrderIso.injective _ (Fin.ext h)
+    exact hCD
+  have crownPartition_rank_denominator_pos {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      (0 : ℝ) < (crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+        crownPartitionBlockRank P (crownPartitionBottomBlock P) := by
+    have hle := crownPartitionBlockRank_mono P
+      (crownPartition_bottom_le P (crownPartitionTopBlock P))
+    have hne : crownPartitionBlockRank P (crownPartitionBottomBlock P) ≠
+        crownPartitionBlockRank P (crownPartitionTopBlock P) :=
+      fun h => hendpoints (crownPartitionBlockRank_injective P h)
+    have hlt := lt_of_le_of_ne hle hne
+    have hltR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) <
+        crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+      exact_mod_cast hlt
+    linarith
+  have crownPartition_block_le_of_augmentedLE {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) {u v : CrownAugmentedVertex n}
+      (huv : crownAugmentedLE u v) :
+      crownPartitionBlockLE P.toSetoid (Quotient.mk'' u) (Quotient.mk'' v) := by
+    exact
+      Relation.ReflTransGen.single ⟨u, v, rfl, rfl, huv⟩
+  have crownPartitionRankPoint_mem {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      crownPartitionRankPoint P ∈ crownOrderPolytope n := by
+    have hden := crownPartition_rank_denominator_pos P hendpoints
+    constructor
+    · intro i
+      have hbottom := crownPartitionBlockRank_mono P
+        (crownPartition_bottom_le P (Quotient.mk'' (.vertex i)))
+      have htop := crownPartitionBlockRank_mono P
+        (crownPartition_le_top P (Quotient.mk'' (.vertex i)))
+      have hbottomR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) := by
+        exact_mod_cast hbottom
+      have htopR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+        exact_mod_cast htop
+      constructor
+      · apply div_nonneg
+        · exact sub_nonneg.mpr hbottomR
+        · exact le_of_lt hden
+      · apply (div_le_one hden).2
+        linarith
+    · intro i j hij
+      have hmono := crownPartitionBlockRank_mono P
+        (crownPartition_block_le_of_augmentedLE P
+          (u := CrownAugmentedVertex.vertex i) (v := CrownAugmentedVertex.vertex j) (Or.inr hij))
+      have hmonoR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex j)) := by
+        exact_mod_cast hmono
+      apply (div_le_div_iff_of_pos_right hden).2
+      linarith
+  have augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        ((crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) := by
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    cases u with
+    | bottom => simp [augmentedCoordinate, crownPartitionBottomBlock]
+    | vertex i => rfl
+    | top =>
+        simp only [augmentedCoordinate, crownPartitionTopBlock]
+        exact (div_self hden).symm
+  have augmentedCoordinate_crownPartitionRankPoint_eq_iff {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        augmentedCoordinate (crownPartitionRankPoint P) v ↔ P.toSetoid.r u v := by
+    rw [augmentedCoordinate_crownPartitionRankPoint P hendpoints u,
+      augmentedCoordinate_crownPartitionRankPoint P hendpoints v]
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    constructor
+    · intro h
+      have hnum : (crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+          crownPartitionBlockRank P (crownPartitionBottomBlock P) =
+          (crownPartitionBlockRank P (Quotient.mk'' v) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P) :=
+        (div_left_inj' hden).mp h
+      have hrank : crownPartitionBlockRank P (Quotient.mk'' u) =
+          crownPartitionBlockRank P (Quotient.mk'' v) := by
+        exact_mod_cast (sub_left_inj.mp hnum)
+      exact Quotient.exact (crownPartitionBlockRank_injective P hrank)
+    · intro huv
+      exact congrArg (fun C =>
+        ((crownPartitionBlockRank P C : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P))) (Quotient.sound huv)
+  have crownPartition_all_related_of_endpoints_eq {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P = crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) : P.toSetoid.r u v := by
+    apply Quotient.exact
+    apply P.compatible
+    · exact (crownPartition_le_top P (Quotient.mk'' u)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' v)
+    · exact (crownPartition_le_top P (Quotient.mk'' v)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' u)
+  have crownPartitionFace_nonempty_iff {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
+      (crownPartitionFace P).1.Nonempty ↔
+        crownPartitionBottomBlock P ≠ crownPartitionTopBlock P := by
+    constructor
+    · rintro ⟨x, hx⟩ hendpoints
+      have hall := crownPartition_all_related_of_endpoints_eq P hendpoints
+        CrownAugmentedVertex.bottom CrownAugmentedVertex.top
+      have heq := (mem_crownPartitionFaceSet_iff P x).1 hx |>.2 _ _ hall
+      norm_num [augmentedCoordinate] at heq
+    · intro hendpoints
+      refine ⟨crownPartitionRankPoint P, ?_⟩
+      exact (mem_crownPartitionFaceSet_iff P _).2
+        ⟨crownPartitionRankPoint_mem P hendpoints,
+          fun u v huv => (augmentedCoordinate_crownPartitionRankPoint_eq_iff
+            P hendpoints u v).2 huv⟩
   apply Subtype.ext
   by_cases hF : F.1.Nonempty
   · ext x
@@ -672,6 +892,4 @@ theorem crownPartitionFace_crownFacePartition {n : ℕ} (F : CrownExposedFace n)
         crownPartitionTopBlock (crownFacePartition F) :=
       SimpleGraph.ConnectedComponent.sound hbottomtop
     exact ((crownPartitionFace_nonempty_iff (crownFacePartition F)).1 ⟨x, hx⟩) hendpoints
-
-
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytope

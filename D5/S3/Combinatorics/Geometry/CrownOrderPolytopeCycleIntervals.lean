@@ -20,74 +20,6 @@ open D5.S3.Combinatorics.Geometry.CrownOrderPolytope
 private def cycleCutRank {N : ℕ} (c v : Fin N) : ℕ :=
   if v.val ≤ c.val then v.val + (N - 1 - c.val) else v.val - c.val - 1
 
-private theorem cycleCutRank_lt {N : ℕ} (c v : Fin N) (hv : v ≠ c) :
-    cycleCutRank c v < N - 1 := by
-  unfold cycleCutRank
-  by_cases hvc : v.val ≤ c.val
-  · simp only [if_pos hvc]
-    have hne : v.val ≠ c.val := fun h => hv (Fin.ext h)
-    omega
-  · simp only [if_neg hvc]
-    omega
-
-private theorem cycleCutRank_injective {N : ℕ} (c : Fin N) :
-    Function.Injective (cycleCutRank c) := by
-  intro u v h
-  unfold cycleCutRank at h
-  by_cases huc : u.val ≤ c.val <;> by_cases hvc : v.val ≤ c.val
-  · simp only [if_pos huc, if_pos hvc] at h
-    exact Fin.ext (by omega)
-  · simp only [if_pos huc, if_neg hvc] at h
-    exfalso
-    omega
-  · simp only [if_neg huc, if_pos hvc] at h
-    exfalso
-    omega
-  · simp only [if_neg huc, if_neg hvc] at h
-    exact Fin.ext (by omega)
-
-private theorem cycleGraph_adj_cycleCutRank {N : ℕ} (hN : 4 ≤ N)
-    (c u v : Fin N) (hu : u ≠ c) (hv : v ≠ c)
-    (hadj : (SimpleGraph.cycleGraph N).Adj u v) :
-    cycleCutRank c u + 1 = cycleCutRank c v ∨
-      cycleCutRank c v + 1 = cycleCutRank c u := by
-  have hedges :
-      u.val = v.val + 1 ∨ v.val = u.val + 1 ∨
-        (u.val = 0 ∧ v.val = N - 1) ∨ (v.val = 0 ∧ u.val = N - 1) := by
-    rw [SimpleGraph.cycleGraph_adj'] at hadj
-    rcases hadj with huv | hvu
-    · by_cases hvleu : v ≤ u
-      · left
-        have hdiff : u.val - v.val = 1 := by
-          simpa [Fin.sub_val_of_le hvleu] using huv
-        omega
-      · right
-        right
-        left
-        have hcast : ((u - v).val : ℤ) = 1 := congrArg Int.ofNat huv
-        rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
-        simp [show ¬v ≤ u from hvleu] at hcast
-        constructor <;> omega
-    · by_cases hulev : u ≤ v
-      · right
-        left
-        have hdiff : v.val - u.val = 1 := by
-          simpa [Fin.sub_val_of_le hulev] using hvu
-        omega
-      · right
-        right
-        right
-        have hcast : ((v - u).val : ℤ) = 1 := congrArg Int.ofNat hvu
-        rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
-        simp [show ¬u ≤ v from hulev] at hcast
-        constructor <;> omega
-  have huc : u.val ≠ c.val := fun h => hu (Fin.ext h)
-  have hvc : v.val ≠ c.val := fun h => hv (Fin.ext h)
-  unfold cycleCutRank
-  rcases hedges with h | h | h | h <;>
-    by_cases hule : u.val ≤ c.val <;> by_cases hvle : v.val ≤ c.val <;>
-      simp only [hule, hvle, if_true, if_false] <;> omega
-
 /- Removing a vertex outside a proper actual block turns that block into one interval. -/
 private theorem crownPartition_originalBlock_cycleCutInterval {n : ℕ} (hn : 2 ≤ n)
     (P : CrownConnectedCompatiblePartition n) (i c : Fin (2 * n))
@@ -98,6 +30,71 @@ private theorem crownPartition_originalBlock_cycleCutInterval {n : ℕ} (hn : 2 
       ∀ v : Fin (2 * n),
         P.toSetoid.r (.vertex i) (.vertex v) ↔
           a ≤ cycleCutRank c v ∧ cycleCutRank c v ≤ b := by
+  have cycleCutRank_lt {N : ℕ} (c v : Fin N) (hv : v ≠ c) :
+      cycleCutRank c v < N - 1 := by
+    unfold cycleCutRank
+    by_cases hvc : v.val ≤ c.val
+    · simp only [if_pos hvc]
+      have hne : v.val ≠ c.val := fun h => hv (Fin.ext h)
+      omega
+    · simp only [if_neg hvc]
+      omega
+  have cycleCutRank_injective {N : ℕ} (c : Fin N) :
+      Function.Injective (cycleCutRank c) := by
+    intro u v h
+    unfold cycleCutRank at h
+    by_cases huc : u.val ≤ c.val <;> by_cases hvc : v.val ≤ c.val
+    · simp only [if_pos huc, if_pos hvc] at h
+      exact Fin.ext (by omega)
+    · simp only [if_pos huc, if_neg hvc] at h
+      exfalso
+      omega
+    · simp only [if_neg huc, if_pos hvc] at h
+      exfalso
+      omega
+    · simp only [if_neg huc, if_neg hvc] at h
+      exact Fin.ext (by omega)
+  have cycleGraph_adj_cycleCutRank {N : ℕ} (hN : 4 ≤ N)
+      (c u v : Fin N) (hu : u ≠ c) (hv : v ≠ c)
+      (hadj : (SimpleGraph.cycleGraph N).Adj u v) :
+      cycleCutRank c u + 1 = cycleCutRank c v ∨
+        cycleCutRank c v + 1 = cycleCutRank c u := by
+    have hedges :
+        u.val = v.val + 1 ∨ v.val = u.val + 1 ∨
+          (u.val = 0 ∧ v.val = N - 1) ∨ (v.val = 0 ∧ u.val = N - 1) := by
+      rw [SimpleGraph.cycleGraph_adj'] at hadj
+      rcases hadj with huv | hvu
+      · by_cases hvleu : v ≤ u
+        · left
+          have hdiff : u.val - v.val = 1 := by
+            simpa [Fin.sub_val_of_le hvleu] using huv
+          omega
+        · right
+          right
+          left
+          have hcast : ((u - v).val : ℤ) = 1 := congrArg Int.ofNat huv
+          rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
+          simp [show ¬v ≤ u from hvleu] at hcast
+          constructor <;> omega
+      · by_cases hulev : u ≤ v
+        · right
+          left
+          have hdiff : v.val - u.val = 1 := by
+            simpa [Fin.sub_val_of_le hulev] using hvu
+          omega
+        · right
+          right
+          right
+          have hcast : ((v - u).val : ℤ) = 1 := congrArg Int.ofNat hvu
+          rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
+          simp [show ¬u ≤ v from hulev] at hcast
+          constructor <;> omega
+    have huc : u.val ≠ c.val := fun h => hu (Fin.ext h)
+    have hvc : v.val ≠ c.val := fun h => hv (Fin.ext h)
+    unfold cycleCutRank
+    rcases hedges with h | h | h | h <;>
+      by_cases hule : u.val ≤ c.val <;> by_cases hvle : v.val ≤ c.val <;>
+        simp only [hule, hvle, if_true, if_false] <;> omega
   classical
   let block : Finset (Fin (2 * n)) :=
     Finset.univ.filter fun v => P.toSetoid.r (.vertex i) (.vertex v)
@@ -164,5 +161,4 @@ private theorem crownPartition_originalBlock_cycleCutInterval {n : ℕ} (hn : 2 
     obtain ⟨witness, hwitness_block, hwitness_rank⟩ := Finset.mem_image.mp hv_rank
     have hvw : v = witness := cycleCutRank_injective c hwitness_rank.symm
     simpa [block, hvw] using hwitness_block
-
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration

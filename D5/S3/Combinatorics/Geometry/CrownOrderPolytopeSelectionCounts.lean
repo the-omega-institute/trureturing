@@ -205,6 +205,39 @@ theorem crownOddBlockSelection_card (n d : ℕ) [NeZero (2 * n)] (hn : 2 ≤ n) 
             ((2 * n * Nat.choose i.val (2 * m.val) *
               Nat.choose (n + m.val - 1) (i.val - 1)) *
                 (if d ≤ i.val then Nat.choose (2 * m.val) (i.val - d) else 0)) / i.val := by
+  have actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
+      (P : ConnectedCyclePartition (2 * n)) :
+      Even (actualOddCycleBlocks P).card := by
+    classical
+    have himage :
+        Finset.univ.image (fun v : Fin (2 * n) =>
+          (Quotient.mk'' v : Quotient P.toSetoid)) = Finset.univ := by
+      ext C
+      refine Quotient.inductionOn C ?_
+      intro v
+      simp
+    have hfiber (C : Quotient P.toSetoid) :
+        Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C} =
+          (Finset.univ.filter fun v : Fin (2 * n) => Quotient.mk'' v = C).card := by
+      rw [Set.ncard_eq_toFinset_card]
+      congr 1
+      ext v
+      simp
+    have hsum :
+        (∑ C : Quotient P.toSetoid,
+            Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C}) = 2 * n := by
+      simp_rw [hfiber]
+      symm
+      simpa using (Finset.card_eq_sum_card_fiberwise
+        (s := Finset.univ) (t := Finset.univ)
+        (f := fun v : Fin (2 * n) => (Quotient.mk'' v : Quotient P.toSetoid)) (by simp))
+    unfold actualOddCycleBlocks
+    rw [himage]
+    apply (Finset.even_sum_iff_even_card_odd
+      (s := Finset.univ)
+      (fun C : Quotient P.toSetoid =>
+        Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C})).mp
+    simpa [hsum]
   classical
   let A := CrownOddBlockSelectionOfCard n (d + 2)
   let I := {i : ℕ // i ∈ Finset.Icc 2 (2 * n)}
@@ -324,5 +357,4 @@ theorem crownOddBlockSelection_card (n d : ℕ) [NeZero (2 * n)] (hn : 2 ≤ n) 
   have hdiv := congrArg (fun x => x / i.val) h
   rw [Nat.mul_div_cancel_left _ hi] at hdiv
   exact hdiv
-
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration

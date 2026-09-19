@@ -57,63 +57,61 @@ private def rootedCutsOfInternal {N : ℕ} [NeZero N] (root : Fin N)
     (s : Finset (Fin (N - 1))) : Finset (Fin N) :=
   (rootRotation N root).symm.finsetCongr s.insertNone
 
-private theorem rootedCutsOfInternal_internalCuts {N : ℕ} [NeZero N]
-    (root : Fin N) (cuts : Finset (Fin N)) (hroot : root ∈ cuts) :
-    rootedCutsOfInternal root (internalCuts root cuts) = cuts := by
-  unfold rootedCutsOfInternal internalCuts
-  rw [← Equiv.finsetCongr_symm]
-  apply (rootRotation N root).finsetCongr.injective
-  rw [(rootRotation N root).finsetCongr.apply_symm_apply]
-  rw [Finset.insertNone_eraseNone]
-  apply Finset.insert_eq_of_mem
-  have hrotation : rootRotation N root root = none := by simp [rootRotation]
-  rw [← hrotation]
-  simp [hroot]
-
-private theorem internalCuts_rootedCutsOfInternal {N : ℕ} [NeZero N]
-    (root : Fin N) (s : Finset (Fin (N - 1))) :
-    internalCuts root (rootedCutsOfInternal root s) = s := by
-  unfold internalCuts rootedCutsOfInternal
-  rw [← Equiv.finsetCongr_symm]
-  rw [(rootRotation N root).finsetCongr.apply_symm_apply]
-  exact Finset.eraseNone_insertNone s
-
 /-- Rooting one cut turns a cyclic cut set with `blocks` cuts into a root vertex
     and the `blocks - 1` internal boundaries of the resulting linear interval. -/
 def rootedCycleCutSetEquiv (N blocks : ℕ) [NeZero N] (hblocks : 0 < blocks) :
-    RootedCycleCutSet N blocks ≃ Fin N × PositionSet (N - 1) (blocks - 1) where
-  toFun R := (R.root, ⟨rootedInternalCuts R, by
-    unfold rootedInternalCuts internalCuts
-    rw [Finset.card_eraseNone_of_mem]
-    · rw [Equiv.finsetCongr_apply, Finset.card_map, R.cuts_card]
-    · have hrotation : rootRotation N R.root R.root = none := by simp [rootRotation]
-      rw [← hrotation]
-      simp [R.root_mem]⟩)
-  invFun data :=
-    { cuts := rootedCutsOfInternal data.1 data.2.1
-      root := data.1
-      root_mem := by
-        unfold rootedCutsOfInternal
-        rw [Equiv.finsetCongr_apply]
-        apply Finset.mem_map.mpr
-        refine ⟨none, by simp, ?_⟩
-        simp [rootRotation]
-      cuts_card := by
-        simp only [rootedCutsOfInternal, Equiv.finsetCongr_apply, Finset.card_map,
-          Finset.card_insertNone]
-        rw [data.2.2]
-        omega }
-  left_inv R := by
-    apply RootedCycleCutSet.ext
-    · exact rootedCutsOfInternal_internalCuts R.root R.cuts R.root_mem
-    · rfl
-  right_inv data := by
-    rcases data with ⟨root, s, hs⟩
-    apply Prod.ext
-    · rfl
-    · apply Subtype.ext
-      exact internalCuts_rootedCutsOfInternal root s
-
+    RootedCycleCutSet N blocks ≃ Fin N × PositionSet (N - 1) (blocks - 1) := by
+  have rootedCutsOfInternal_internalCuts {N : ℕ} [NeZero N]
+      (root : Fin N) (cuts : Finset (Fin N)) (hroot : root ∈ cuts) :
+      rootedCutsOfInternal root (internalCuts root cuts) = cuts := by
+    unfold rootedCutsOfInternal internalCuts
+    rw [← Equiv.finsetCongr_symm]
+    apply (rootRotation N root).finsetCongr.injective
+    rw [(rootRotation N root).finsetCongr.apply_symm_apply]
+    rw [Finset.insertNone_eraseNone]
+    apply Finset.insert_eq_of_mem
+    have hrotation : rootRotation N root root = none := by simp [rootRotation]
+    rw [← hrotation]
+    simp [hroot]
+  have internalCuts_rootedCutsOfInternal {N : ℕ} [NeZero N]
+      (root : Fin N) (s : Finset (Fin (N - 1))) :
+      internalCuts root (rootedCutsOfInternal root s) = s := by
+    unfold internalCuts rootedCutsOfInternal
+    rw [← Equiv.finsetCongr_symm]
+    rw [(rootRotation N root).finsetCongr.apply_symm_apply]
+    exact Finset.eraseNone_insertNone s
+  exact {
+    toFun R := (R.root, ⟨rootedInternalCuts R, by
+      unfold rootedInternalCuts internalCuts
+      rw [Finset.card_eraseNone_of_mem]
+      · rw [Equiv.finsetCongr_apply, Finset.card_map, R.cuts_card]
+      · have hrotation : rootRotation N R.root R.root = none := by simp [rootRotation]
+        rw [← hrotation]
+        simp [R.root_mem]⟩)
+    invFun data :=
+      { cuts := rootedCutsOfInternal data.1 data.2.1
+        root := data.1
+        root_mem := by
+          unfold rootedCutsOfInternal
+          rw [Equiv.finsetCongr_apply]
+          apply Finset.mem_map.mpr
+          refine ⟨none, by simp, ?_⟩
+          simp [rootRotation]
+        cuts_card := by
+          simp only [rootedCutsOfInternal, Equiv.finsetCongr_apply, Finset.card_map,
+            Finset.card_insertNone]
+          rw [data.2.2]
+          omega }
+    left_inv R := by
+      apply RootedCycleCutSet.ext
+      · exact rootedCutsOfInternal_internalCuts R.root R.cuts R.root_mem
+      · rfl
+    right_inv data := by
+      rcases data with ⟨root, s, hs⟩
+      apply Prod.ext
+      · rfl
+      · apply Subtype.ext
+        exact internalCuts_rootedCutsOfInternal root s }
 private noncomputable def markedPartitionCutEquiv (N blocks : ℕ) [NeZero N]
     (hN : 3 ≤ N) (hblocks : 2 ≤ blocks) :
     MarkedConnectedCyclePartition N blocks ≃ RootedCycleCutSet N blocks where
@@ -249,145 +247,6 @@ private noncomputable def compositionCyclePartition {N blocks : ℕ} [NeZero N]
       exact (rootSuccessorRotation N root).apply_symm_apply v
     exact hx ▸ hy ▸ w'
 
-private theorem mem_compositionInternalCuts_iff_index_ne {N : ℕ} (hN : 0 < N)
-    (d : Composition N) (x : Fin (N - 1)) :
-    x ∈ compositionAsSetEquiv N d.toCompositionAsSet ↔
-      d.index (⟨x.val, by omega⟩ : Fin N) ≠
-        d.index (⟨x.val + 1, by omega⟩ : Fin N) := by
-  unfold compositionAsSetEquiv
-  change x ∈ ({i : Fin (N - 1) |
-    (⟨1 + i.val, by omega⟩ : Fin (N + 1)) ∈ d.toCompositionAsSet.boundaries} : Set _).toFinset ↔ _
-  rw [Set.mem_toFinset]
-  change (⟨1 + x.val, by omega⟩ : Fin (N + 1)) ∈ d.toCompositionAsSet.boundaries ↔ _
-  rw [Composition.toCompositionAsSet_boundaries]
-  let X : Fin N := ⟨x.val, by omega⟩
-  let Y : Fin N := ⟨x.val + 1, by omega⟩
-  constructor
-  · intro hx
-    obtain ⟨a, _, ha⟩ := Finset.mem_map.mp hx
-    have haVal : d.sizeUpTo a.val = x.val + 1 := by
-      have := congrArg Fin.val ha
-      simpa [Composition.boundary, Nat.add_comm] using this
-    have haPos : 0 < a.val := by
-      by_contra h
-      have : a.val = 0 := by omega
-      rw [this, d.sizeUpTo_zero] at haVal
-      omega
-    have haLt : a.val < d.length := by
-      have haLe : a.val ≤ d.length := by omega
-      by_contra h
-      have : a.val = d.length := by omega
-      rw [this, d.sizeUpTo_length] at haVal
-      omega
-    let i₀ : Fin d.length := ⟨a.val - 1, by omega⟩
-    let i₁ : Fin d.length := ⟨a.val, haLt⟩
-    have hi₀succ : i₀.val + 1 = a.val := by dsimp [i₀]; omega
-    have hstrict₀ := d.sizeUpTo_strict_mono i₀.isLt
-    have hstrict₁ := d.sizeUpTo_strict_mono i₁.isLt
-    have hX : d.index X = i₀ := by
-      symm
-      rw [← d.mem_range_embedding_iff']
-      rw [d.mem_range_embedding_iff]
-      dsimp [X]
-      constructor
-      · rw [hi₀succ, haVal] at hstrict₀
-        omega
-      · rw [hi₀succ, haVal]
-        omega
-    have hY : d.index Y = i₁ := by
-      symm
-      rw [← d.mem_range_embedding_iff']
-      rw [d.mem_range_embedding_iff]
-      dsimp [Y, i₁]
-      constructor
-      · rw [haVal]
-      · rw [haVal] at hstrict₁
-        omega
-    rw [hX, hY]
-    intro h
-    have := congrArg Fin.val h
-    dsimp [i₀, i₁] at this
-    omega
-  · intro hne
-    let i₀ := d.index X
-    let i₁ := d.index Y
-    have hiNe : i₀ ≠ i₁ := by simpa [i₀, i₁, X, Y] using hne
-    have hXlow := d.sizeUpTo_index_le X
-    have hXhigh := d.lt_sizeUpTo_index_succ X
-    have hYlow := d.sizeUpTo_index_le Y
-    have hYhigh := d.lt_sizeUpTo_index_succ Y
-    change d.sizeUpTo i₀.val ≤ x.val at hXlow
-    change x.val < d.sizeUpTo (i₀.val + 1) at hXhigh
-    change d.sizeUpTo i₁.val ≤ x.val + 1 at hYlow
-    change x.val + 1 < d.sizeUpTo (i₁.val + 1) at hYhigh
-    have hiLt : i₀ < i₁ := by
-      have hiLe : i₀ ≤ i₁ := by
-        by_contra h
-        have hsucc : i₁.val + 1 ≤ i₀.val := by omega
-        have hmono := d.monotone_sizeUpTo hsucc
-        change d.sizeUpTo (i₁.val + 1) ≤ d.sizeUpTo i₀.val at hmono
-        omega
-      have hiNeVal : i₀.val ≠ i₁.val := fun h => hiNe (Fin.ext h)
-      have hiLeVal : i₀.val ≤ i₁.val := hiLe
-      exact Fin.mk_lt_mk.mpr (lt_of_le_of_ne hiLeVal hiNeVal)
-    have hmono := d.monotone_sizeUpTo (show i₀.val + 1 ≤ i₁.val by omega)
-    have hboundary : d.sizeUpTo i₁.val = x.val + 1 := by omega
-    apply Finset.mem_map.mpr
-    refine ⟨⟨i₁.val, by omega⟩, Finset.mem_univ _, ?_⟩
-    apply Fin.ext
-    simpa [Composition.boundary, i₁, Nat.add_comm] using hboundary
-
-private theorem internalCuts_compositionCyclePartition {N blocks : ℕ} [NeZero N]
-    (hN : 3 ≤ N) (root : Fin N) (c : IndexedComposition N blocks) :
-    internalCuts root (cycleBoundaryCuts (compositionCyclePartition root c)) =
-      compositionAsSetEquiv N (linearComposition c).toCompositionAsSet := by
-  ext x
-  rw [mem_compositionInternalCuts_iff_index_ne (by omega)]
-  unfold internalCuts
-  rw [Finset.mem_eraseNone, Equiv.finsetCongr_apply, Finset.mem_map_equiv]
-  have hpreimage : (rootRotation N root).symm (some x) =
-      rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) := by
-    apply (rootRotation N root).injective
-    rw [(rootRotation N root).apply_symm_apply]
-    symm
-    unfold rootRotation
-    simp only [Equiv.trans_apply, Equiv.coe_addRight, finCongr_apply]
-    rw [finSuccEquiv_eq_some]
-    apply Fin.ext
-    simp only [Fin.val_cast, Fin.val_succ]
-    have hcancel :
-        rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + (-root) =
-          (⟨x.val, by omega⟩ : Fin N) + 1 := by
-      simp [rootSuccessorRotation, finRotate_apply, add_assoc]
-    have hcancelVal := congrArg Fin.val hcancel
-    have hxlt : x.val + 1 < N := by omega
-    have hrhs : (((⟨x.val, by omega⟩ : Fin N) + 1).val) = x.val + 1 := by
-      simp [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega), Nat.mod_eq_of_lt hxlt]
-    exact hcancelVal.trans hrhs
-  rw [hpreimage]
-  simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
-  change (compositionCycleIndex root (linearComposition c)
-      (rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N)) ≠
-    compositionCycleIndex root (linearComposition c)
-      (rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + 1)) ↔ _
-  unfold compositionCycleIndex
-  simp only [Equiv.symm_apply_apply]
-  have hsuccessor :
-      rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + 1 =
-        rootSuccessorRotation N root (⟨x.val + 1, by omega⟩ : Fin N) := by
-    let X : Fin N := ⟨x.val, by omega⟩
-    let Y : Fin N := ⟨x.val + 1, by omega⟩
-    have hY : Y = X + 1 := by
-      apply Fin.ext
-      change x.val + 1 = (x.val + (1 % N)) % N
-      rw [Nat.mod_eq_of_lt (show 1 < N by omega), Nat.mod_eq_of_lt (by omega)]
-    change rootSuccessorRotation N root X + 1 = rootSuccessorRotation N root Y
-    rw [hY]
-    simp only [rootSuccessorRotation, Equiv.trans_apply, Equiv.coe_addRight, finRotate_apply]
-    abel
-  rw [hsuccessor]
-  simp only [Equiv.symm_apply_apply]
-
 private def compositionBlockRepresentative {N blocks : ℕ} [NeZero N]
     (root : Fin N) (c : IndexedComposition N blocks) (j : Fin blocks) : Fin N :=
   let d := linearComposition c
@@ -481,6 +340,155 @@ private theorem compositionCyclePartition_eq_marked {N blocks : ℕ} [NeZero N]
     (hN : 3 ≤ N) (hblocks : 2 ≤ blocks) (P : MarkedConnectedCyclePartition N blocks) :
     let data := markedCyclePartitionCompositionEquiv N blocks hN hblocks P
     compositionCyclePartition data.1 data.2 = P.partition := by
+  have rootedCutsOfInternal_internalCuts {N : ℕ} [NeZero N]
+      (root : Fin N) (cuts : Finset (Fin N)) (hroot : root ∈ cuts) :
+      rootedCutsOfInternal root (internalCuts root cuts) = cuts := by
+    unfold rootedCutsOfInternal internalCuts
+    rw [← Equiv.finsetCongr_symm]
+    apply (rootRotation N root).finsetCongr.injective
+    rw [(rootRotation N root).finsetCongr.apply_symm_apply]
+    rw [Finset.insertNone_eraseNone]
+    apply Finset.insert_eq_of_mem
+    have hrotation : rootRotation N root root = none := by simp [rootRotation]
+    rw [← hrotation]
+    simp [hroot]
+  have mem_compositionInternalCuts_iff_index_ne {N : ℕ} (hN : 0 < N)
+      (d : Composition N) (x : Fin (N - 1)) :
+      x ∈ compositionAsSetEquiv N d.toCompositionAsSet ↔
+        d.index (⟨x.val, by omega⟩ : Fin N) ≠
+          d.index (⟨x.val + 1, by omega⟩ : Fin N) := by
+    unfold compositionAsSetEquiv
+    change x ∈ ({i : Fin (N - 1) |
+      (⟨1 + i.val, by omega⟩ : Fin (N + 1)) ∈ d.toCompositionAsSet.boundaries} : Set _).toFinset ↔ _
+    rw [Set.mem_toFinset]
+    change (⟨1 + x.val, by omega⟩ : Fin (N + 1)) ∈ d.toCompositionAsSet.boundaries ↔ _
+    rw [Composition.toCompositionAsSet_boundaries]
+    let X : Fin N := ⟨x.val, by omega⟩
+    let Y : Fin N := ⟨x.val + 1, by omega⟩
+    constructor
+    · intro hx
+      obtain ⟨a, _, ha⟩ := Finset.mem_map.mp hx
+      have haVal : d.sizeUpTo a.val = x.val + 1 := by
+        have := congrArg Fin.val ha
+        simpa [Composition.boundary, Nat.add_comm] using this
+      have haPos : 0 < a.val := by
+        by_contra h
+        have : a.val = 0 := by omega
+        rw [this, d.sizeUpTo_zero] at haVal
+        omega
+      have haLt : a.val < d.length := by
+        have haLe : a.val ≤ d.length := by omega
+        by_contra h
+        have : a.val = d.length := by omega
+        rw [this, d.sizeUpTo_length] at haVal
+        omega
+      let i₀ : Fin d.length := ⟨a.val - 1, by omega⟩
+      let i₁ : Fin d.length := ⟨a.val, haLt⟩
+      have hi₀succ : i₀.val + 1 = a.val := by dsimp [i₀]; omega
+      have hstrict₀ := d.sizeUpTo_strict_mono i₀.isLt
+      have hstrict₁ := d.sizeUpTo_strict_mono i₁.isLt
+      have hX : d.index X = i₀ := by
+        symm
+        rw [← d.mem_range_embedding_iff']
+        rw [d.mem_range_embedding_iff]
+        dsimp [X]
+        constructor
+        · rw [hi₀succ, haVal] at hstrict₀
+          omega
+        · rw [hi₀succ, haVal]
+          omega
+      have hY : d.index Y = i₁ := by
+        symm
+        rw [← d.mem_range_embedding_iff']
+        rw [d.mem_range_embedding_iff]
+        dsimp [Y, i₁]
+        constructor
+        · rw [haVal]
+        · rw [haVal] at hstrict₁
+          omega
+      rw [hX, hY]
+      intro h
+      have := congrArg Fin.val h
+      dsimp [i₀, i₁] at this
+      omega
+    · intro hne
+      let i₀ := d.index X
+      let i₁ := d.index Y
+      have hiNe : i₀ ≠ i₁ := by simpa [i₀, i₁, X, Y] using hne
+      have hXlow := d.sizeUpTo_index_le X
+      have hXhigh := d.lt_sizeUpTo_index_succ X
+      have hYlow := d.sizeUpTo_index_le Y
+      have hYhigh := d.lt_sizeUpTo_index_succ Y
+      change d.sizeUpTo i₀.val ≤ x.val at hXlow
+      change x.val < d.sizeUpTo (i₀.val + 1) at hXhigh
+      change d.sizeUpTo i₁.val ≤ x.val + 1 at hYlow
+      change x.val + 1 < d.sizeUpTo (i₁.val + 1) at hYhigh
+      have hiLt : i₀ < i₁ := by
+        have hiLe : i₀ ≤ i₁ := by
+          by_contra h
+          have hsucc : i₁.val + 1 ≤ i₀.val := by omega
+          have hmono := d.monotone_sizeUpTo hsucc
+          change d.sizeUpTo (i₁.val + 1) ≤ d.sizeUpTo i₀.val at hmono
+          omega
+        have hiNeVal : i₀.val ≠ i₁.val := fun h => hiNe (Fin.ext h)
+        have hiLeVal : i₀.val ≤ i₁.val := hiLe
+        exact Fin.mk_lt_mk.mpr (lt_of_le_of_ne hiLeVal hiNeVal)
+      have hmono := d.monotone_sizeUpTo (show i₀.val + 1 ≤ i₁.val by omega)
+      have hboundary : d.sizeUpTo i₁.val = x.val + 1 := by omega
+      apply Finset.mem_map.mpr
+      refine ⟨⟨i₁.val, by omega⟩, Finset.mem_univ _, ?_⟩
+      apply Fin.ext
+      simpa [Composition.boundary, i₁, Nat.add_comm] using hboundary
+  have internalCuts_compositionCyclePartition {N blocks : ℕ} [NeZero N]
+      (hN : 3 ≤ N) (root : Fin N) (c : IndexedComposition N blocks) :
+      internalCuts root (cycleBoundaryCuts (compositionCyclePartition root c)) =
+        compositionAsSetEquiv N (linearComposition c).toCompositionAsSet := by
+    ext x
+    rw [mem_compositionInternalCuts_iff_index_ne (by omega)]
+    unfold internalCuts
+    rw [Finset.mem_eraseNone, Equiv.finsetCongr_apply, Finset.mem_map_equiv]
+    have hpreimage : (rootRotation N root).symm (some x) =
+        rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) := by
+      apply (rootRotation N root).injective
+      rw [(rootRotation N root).apply_symm_apply]
+      symm
+      unfold rootRotation
+      simp only [Equiv.trans_apply, Equiv.coe_addRight, finCongr_apply]
+      rw [finSuccEquiv_eq_some]
+      apply Fin.ext
+      simp only [Fin.val_cast, Fin.val_succ]
+      have hcancel :
+          rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + (-root) =
+            (⟨x.val, by omega⟩ : Fin N) + 1 := by
+        simp [rootSuccessorRotation, finRotate_apply, add_assoc]
+      have hcancelVal := congrArg Fin.val hcancel
+      have hxlt : x.val + 1 < N := by omega
+      have hrhs : (((⟨x.val, by omega⟩ : Fin N) + 1).val) = x.val + 1 := by
+        simp [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega), Nat.mod_eq_of_lt hxlt]
+      exact hcancelVal.trans hrhs
+    rw [hpreimage]
+    simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
+    change (compositionCycleIndex root (linearComposition c)
+        (rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N)) ≠
+      compositionCycleIndex root (linearComposition c)
+        (rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + 1)) ↔ _
+    unfold compositionCycleIndex
+    simp only [Equiv.symm_apply_apply]
+    have hsuccessor :
+        rootSuccessorRotation N root (⟨x.val, by omega⟩ : Fin N) + 1 =
+          rootSuccessorRotation N root (⟨x.val + 1, by omega⟩ : Fin N) := by
+      let X : Fin N := ⟨x.val, by omega⟩
+      let Y : Fin N := ⟨x.val + 1, by omega⟩
+      have hY : Y = X + 1 := by
+        apply Fin.ext
+        change x.val + 1 = (x.val + (1 % N)) % N
+        rw [Nat.mod_eq_of_lt (show 1 < N by omega), Nat.mod_eq_of_lt (by omega)]
+      change rootSuccessorRotation N root X + 1 = rootSuccessorRotation N root Y
+      rw [hY]
+      simp only [rootSuccessorRotation, Equiv.trans_apply, Equiv.coe_addRight, finRotate_apply]
+      abel
+    rw [hsuccessor]
+    simp only [Equiv.symm_apply_apply]
   let data := markedCyclePartitionCompositionEquiv N blocks hN hblocks P
   let root := data.1
   let c := data.2
@@ -577,7 +585,6 @@ private theorem compositionCyclePartition_eq_marked {N blocks : ℕ} [NeZero N]
       exact hcuts
     exact congrArg Subtype.val hsubtype
   exact hpartition
-
 private noncomputable def markedCompositionPartFiberEquiv {N blocks : ℕ} [NeZero N]
     (hN : 3 ≤ N) (hblocks : 2 ≤ blocks) (P : MarkedConnectedCyclePartition N blocks)
     (j : Fin blocks) :
@@ -744,40 +751,6 @@ theorem card_prescribedOddConnectedCyclePartition_identity
     _ = 2 * n * Nat.choose i (2 * m) * Nat.choose (n + m - 1) (i - 1) := by
       simp only [Nat.mul_assoc]
 
-theorem actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
-    (P : ConnectedCyclePartition (2 * n)) :
-    Even (actualOddCycleBlocks P).card := by
-  classical
-  have himage :
-      Finset.univ.image (fun v : Fin (2 * n) =>
-        (Quotient.mk'' v : Quotient P.toSetoid)) = Finset.univ := by
-    ext C
-    refine Quotient.inductionOn C ?_
-    intro v
-    simp
-  have hfiber (C : Quotient P.toSetoid) :
-      Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C} =
-        (Finset.univ.filter fun v : Fin (2 * n) => Quotient.mk'' v = C).card := by
-    rw [Set.ncard_eq_toFinset_card]
-    congr 1
-    ext v
-    simp
-  have hsum :
-      (∑ C : Quotient P.toSetoid,
-          Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C}) = 2 * n := by
-    simp_rw [hfiber]
-    symm
-    simpa using (Finset.card_eq_sum_card_fiberwise
-      (s := Finset.univ) (t := Finset.univ)
-      (f := fun v : Fin (2 * n) => (Quotient.mk'' v : Quotient P.toSetoid)) (by simp))
-  unfold actualOddCycleBlocks
-  rw [himage]
-  apply (Finset.even_sum_iff_even_card_odd
-    (s := Finset.univ)
-    (fun C : Quotient P.toSetoid =>
-      Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C})).mp
-  simpa [hsum]
-
 theorem quotient_card_eq_boundaryCuts_card {N : ℕ} [NeZero N]
     (hN : 3 ≤ N) (P : ConnectedCyclePartition N)
     (hcuts : 2 ≤ (cycleBoundaryCuts P).card) :
@@ -808,80 +781,113 @@ private noncomputable def compatibleConnectedCyclePartitionProfileEquiv
     (n i : ℕ) [NeZero (2 * n)] (hn : 2 ≤ n) (hi : 2 ≤ i) :
     CompatibleConnectedCyclePartition n i ≃
       Σ m : {m : ℕ // m ∈ Finset.Icc 1 (i / 2)},
-        PrescribedOddConnectedCyclePartition (2 * n) i (2 * m.1) where
-  toFun P := by
+        PrescribedOddConnectedCyclePartition (2 * n) i (2 * m.1) := by
+  have actualOddCycleBlocks_card_even (n : ℕ) [NeZero (2 * n)]
+      (P : ConnectedCyclePartition (2 * n)) :
+      Even (actualOddCycleBlocks P).card := by
     classical
-    have hnontrivial : ∃ u v, ¬ P.1.toSetoid.r u v := by
-      by_contra h
-      push Not at h
-      have hempty := (cycleBoundaryCuts_eq_empty_iff (by omega) P.1).mpr h
-      have : (cycleBoundaryCuts P.1).card = 0 := by rw [hempty]; simp
-      omega
-    have heven := actualOddCycleBlocks_card_even n P.1
-    let m := (actualOddCycleBlocks P.1).card / 2
-    have htwice : 2 * m = (actualOddCycleBlocks P.1).card := by
-      exact Nat.two_mul_div_two_of_even heven
-    let C := ((crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mp
-      P.2.2).choose
-    have hC : Set.ncard {v : Fin (2 * n) |
-        (Quotient.mk'' v : Quotient P.1.toSetoid) = C} % 2 = 1 :=
-      ((crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mp
-        P.2.2).choose_spec
-    have hCmem : C ∈ actualOddCycleBlocks P.1 := by
-      revert hC
+    have himage :
+        Finset.univ.image (fun v : Fin (2 * n) =>
+          (Quotient.mk'' v : Quotient P.toSetoid)) = Finset.univ := by
+      ext C
       refine Quotient.inductionOn C ?_
-      intro v hv
-      unfold actualOddCycleBlocks
-      exact Finset.mem_filter.mpr ⟨Finset.mem_image.mpr ⟨v, Finset.mem_univ _, rfl⟩,
-        Nat.odd_iff.mpr hv⟩
-    have hmpos : 1 ≤ m := by
-      have := Finset.card_pos.mpr ⟨C, hCmem⟩
-      omega
-    have hoddLe : (actualOddCycleBlocks P.1).card ≤
-        Nat.card (Quotient P.1.toSetoid) := by
-      rw [Nat.card_eq_fintype_card]
-      exact Finset.card_le_univ _
-    rw [quotient_card_eq_boundaryCuts_card (by omega) P.1 (by rw [P.2.1]; exact hi),
-      P.2.1] at hoddLe
-    have hmle : m ≤ i / 2 := by omega
-    exact ⟨⟨m, Finset.mem_Icc.mpr ⟨hmpos, hmle⟩⟩,
-      ⟨P.1, P.2.1, htwice.symm⟩⟩
-  invFun data := by
-    classical
-    let P := data.2
-    have hnontrivial : ∃ u v, ¬ P.1.toSetoid.r u v := by
-      by_contra h
-      push Not at h
-      have hempty := (cycleBoundaryCuts_eq_empty_iff (by omega) P.1).mpr h
-      have : (cycleBoundaryCuts P.1).card = 0 := by rw [hempty]; simp
-      omega
-    have hpos : 0 < (actualOddCycleBlocks P.1).card := by
-      rw [P.2.2]
-      have hmpos := (Finset.mem_Icc.mp data.1.2).1
-      omega
-    let C := (Finset.card_pos.mp hpos).choose
-    have hCmem : C ∈ actualOddCycleBlocks P.1 :=
-      (Finset.card_pos.mp hpos).choose_spec
-    have hodd : Odd (Set.ncard {v : Fin (2 * n) |
-        (Quotient.mk'' v : Quotient P.1.toSetoid) = C}) := by
-      unfold actualOddCycleBlocks at hCmem
-      exact (Finset.mem_filter.mp hCmem).2
-    have hcompatible : crownCycleCompatible P.1 :=
-      (crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mpr
-        ⟨C, Nat.odd_iff.mp hodd⟩
-    exact ⟨P.1, P.2.1, hcompatible⟩
-  left_inv P := by
-    apply Subtype.ext
-    rfl
-  right_inv data := by
-    rcases data with ⟨m, P⟩
-    apply Sigma.ext
-    · apply Subtype.ext
-      dsimp
-      rw [P.2.2]
+      intro v
       simp
-    · simp +contextual [Subtype.heq_iff_coe_eq, P.2.2]
-
+    have hfiber (C : Quotient P.toSetoid) :
+        Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C} =
+          (Finset.univ.filter fun v : Fin (2 * n) => Quotient.mk'' v = C).card := by
+      rw [Set.ncard_eq_toFinset_card]
+      congr 1
+      ext v
+      simp
+    have hsum :
+        (∑ C : Quotient P.toSetoid,
+            Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C}) = 2 * n := by
+      simp_rw [hfiber]
+      symm
+      simpa using (Finset.card_eq_sum_card_fiberwise
+        (s := Finset.univ) (t := Finset.univ)
+        (f := fun v : Fin (2 * n) => (Quotient.mk'' v : Quotient P.toSetoid)) (by simp))
+    unfold actualOddCycleBlocks
+    rw [himage]
+    apply (Finset.even_sum_iff_even_card_odd
+      (s := Finset.univ)
+      (fun C : Quotient P.toSetoid =>
+        Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C})).mp
+    simpa [hsum]
+  exact {
+    toFun P := by
+      classical
+      have hnontrivial : ∃ u v, ¬ P.1.toSetoid.r u v := by
+        by_contra h
+        push Not at h
+        have hempty := (cycleBoundaryCuts_eq_empty_iff (by omega) P.1).mpr h
+        have : (cycleBoundaryCuts P.1).card = 0 := by rw [hempty]; simp
+        omega
+      have heven := actualOddCycleBlocks_card_even n P.1
+      let m := (actualOddCycleBlocks P.1).card / 2
+      have htwice : 2 * m = (actualOddCycleBlocks P.1).card := by
+        exact Nat.two_mul_div_two_of_even heven
+      let C := ((crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mp
+        P.2.2).choose
+      have hC : Set.ncard {v : Fin (2 * n) |
+          (Quotient.mk'' v : Quotient P.1.toSetoid) = C} % 2 = 1 :=
+        ((crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mp
+          P.2.2).choose_spec
+      have hCmem : C ∈ actualOddCycleBlocks P.1 := by
+        revert hC
+        refine Quotient.inductionOn C ?_
+        intro v hv
+        unfold actualOddCycleBlocks
+        exact Finset.mem_filter.mpr ⟨Finset.mem_image.mpr ⟨v, Finset.mem_univ _, rfl⟩,
+          Nat.odd_iff.mpr hv⟩
+      have hmpos : 1 ≤ m := by
+        have := Finset.card_pos.mpr ⟨C, hCmem⟩
+        omega
+      have hoddLe : (actualOddCycleBlocks P.1).card ≤
+          Nat.card (Quotient P.1.toSetoid) := by
+        rw [Nat.card_eq_fintype_card]
+        exact Finset.card_le_univ _
+      rw [quotient_card_eq_boundaryCuts_card (by omega) P.1 (by rw [P.2.1]; exact hi),
+        P.2.1] at hoddLe
+      have hmle : m ≤ i / 2 := by omega
+      exact ⟨⟨m, Finset.mem_Icc.mpr ⟨hmpos, hmle⟩⟩,
+        ⟨P.1, P.2.1, htwice.symm⟩⟩
+    invFun data := by
+      classical
+      let P := data.2
+      have hnontrivial : ∃ u v, ¬ P.1.toSetoid.r u v := by
+        by_contra h
+        push Not at h
+        have hempty := (cycleBoundaryCuts_eq_empty_iff (by omega) P.1).mpr h
+        have : (cycleBoundaryCuts P.1).card = 0 := by rw [hempty]; simp
+        omega
+      have hpos : 0 < (actualOddCycleBlocks P.1).card := by
+        rw [P.2.2]
+        have hmpos := (Finset.mem_Icc.mp data.1.2).1
+        omega
+      let C := (Finset.card_pos.mp hpos).choose
+      have hCmem : C ∈ actualOddCycleBlocks P.1 :=
+        (Finset.card_pos.mp hpos).choose_spec
+      have hodd : Odd (Set.ncard {v : Fin (2 * n) |
+          (Quotient.mk'' v : Quotient P.1.toSetoid) = C}) := by
+        unfold actualOddCycleBlocks at hCmem
+        exact (Finset.mem_filter.mp hCmem).2
+      have hcompatible : crownCycleCompatible P.1 :=
+        (crownCycleCompatible_iff_exists_oddBlock hn P.1 hnontrivial).mpr
+          ⟨C, Nat.odd_iff.mp hodd⟩
+      exact ⟨P.1, P.2.1, hcompatible⟩
+    left_inv P := by
+      apply Subtype.ext
+      rfl
+    right_inv data := by
+      rcases data with ⟨m, P⟩
+      apply Sigma.ext
+      · apply Subtype.ext
+        dsimp
+        rw [P.2.2]
+        simp
+      · simp +contextual [Subtype.heq_iff_coe_eq, P.2.2] }
 private theorem card_compatibleConnectedCyclePartition_eq_profile_sum
     (n i : ℕ) [NeZero (2 * n)] (hn : 2 ≤ n) (hi : 2 ≤ i) :
     Nat.card (CompatibleConnectedCyclePartition n i) =

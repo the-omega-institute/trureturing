@@ -1,25 +1,23 @@
-# Strong Newton inequalities for real split polynomials
+# Newton inequalities from the upstream symmetric-function proof
 
 ## Abstract
 
-Real splitting gives strong coefficient Newton inequalities.
+Newton inequalities for elementary symmetric functions of real multisets.
 
-**Theorem 1.1 (Strong Newton inequality at every coefficient).**
+**Theorem 1.1 (The reduced Newton inequality).**
 
-Lean statement: `D5/S3/Analytic/RealRootedCoefficientNewton.split_polynomial_coefficient_newton`
+Lean statement: `D5/S3/Analytic/RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/RealRootedCoefficientNewton.split_polynomial_coefficient_newton` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Teemu Lundström and Leonardo Saud Maia Leite (2025). *Order polytopes of crown posets*. DOI: [10.48550/arXiv.2504.05123](https://doi.org/10.48550/arXiv.2504.05123). URL: <https://arxiv.org/abs/2504.05123v3>.
+*Citation.* Terence Tao (2026). *The Newton and Maclaurin inequalities for symmetric polynomials*. URL: <https://github.com/leanprover-community/mathlib4/blob/e3c1793d0e097d9b8d782a323e91c99c2ef0d64c/Mathlib/Analysis/MeanInequalitiesSymmetric.lean>.
 
 *Commentary.*
 
-For every real polynomial p that splits over the reals and every natural k, (k+1) times the square of coefficient k+1 is at least (k+2) times the product of coefficients k and k+2. No nonnegativity, simplicity of roots, nonzero polynomial or degree bound is assumed. This is the strong unnormalized coefficient form of the classical Newton inequalities; it is not a claim of a new classical inequality.
+For a multiset s of N real numbers and every natural k, the product (k+2)(N-k)e_k e_(k+2) is at most (k+1)(N-k-1)e_(k+1)^2, where e_j is its j-th elementary symmetric function. No sign or distinctness assumption is imposed on the entries, and indices beyond N are included.
 
-Rolle's root-count theorem with multiplicities proves that derivatives of split real polynomials split. Induction on products of real linear and constant factors proves Laguerre positivity at every real point. Evaluating this at zero and inducting on derivatives proves the coefficient inequality with the factorial factors. Applied to the auxiliary scalar polynomial, this gives the Newton inequalities used in the crown log-concavity theorem. The coefficient inequality omits the extra finite-degree factor of the degree-sharp normalized Newton inequalities.
+The upstream proof represents elementary symmetric functions by a product of linear factors. The derivative has real roots with multiplicities; normalizing its leading coefficient reduces the number of entries while preserving normalized symmetric functions. Strong induction, the second-degree sum-of-squares inequality, and inversion at the last index prove Newton's inequality. In the Crown theorem, Vieta's formula for the negated root multiset converts this result to the needed coefficient inequalities. The license note identifies the immutable source and preserves its complete Apache license.
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/RealRootedCoefficientNewton.split_polynomial_coefficient_newton`
+- Truth anchor: `D5/S3/Analytic/RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm`

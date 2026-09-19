@@ -33,6 +33,29 @@ theorem crownSplitEndpointPartition_merge {n : ℕ} (hn : 2 ≤ n)
     (hcompatible : crownCycleCompatible P) :
     crownSplitEndpointPartition
       (twoSidedMergeCCP hn P selected hselected hcompatible).toSetoid = P := by
+  have crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
+      (i j : Fin (2 * n)) :
+      crownRelation n i j ∨ crownRelation n j i ↔
+        (SimpleGraph.cycleGraph (2 * n)).Adj i j := by
+    have hs (a : Fin (2 * n)) :
+        (a.val + 1) % (2 * n) = if a.val + 1 = 2 * n then 0 else a.val + 1 := by
+      split_ifs with h
+      · simp [h]
+      · exact Nat.mod_eq_of_lt (by omega)
+    have hp (a : Fin (2 * n)) :
+        (a.val + 2 * n - 1) % (2 * n) = if a.val = 0 then 2 * n - 1 else a.val - 1 := by
+      split_ifs with h
+      · simp [h, Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
+      · rw [show a.val + 2 * n - 1 = (a.val - 1) + 2 * n by omega]
+        simp [Nat.mod_eq_of_lt (show a.val - 1 < 2 * n by omega)]
+    rw [SimpleGraph.cycleGraph_adj']
+    have hij := Fin.intCast_val_sub_eq_sub_add_ite i j
+    have hji := Fin.intCast_val_sub_eq_sub_add_ite j i
+    simp only [crownRelation, hs, hp]
+    have heven : (2 * n) % 2 = 0 := by omega
+    by_cases hij' : j ≤ i <;> by_cases hji' : i ≤ j <;>
+      simp only [hij', hji', if_true, if_false] at hij hji <;>
+      split_ifs <;> omega
   classical
   let : NeZero (2 * n) := ⟨by omega⟩
   let lower := crownSelectedLowerBlocks P selected
@@ -98,7 +121,6 @@ theorem crownSplitEndpointPartition_merge {n : ℕ} (hn : 2 ≤ n)
     cases h
     rfl
   exact hext _ _ hs
-
 /-- The source pairs before imposing the block-count equation defining each A_k.
     The selected finset is dependent on the original partition's actual quotient. -/
 abbrev CrownOddBlockSelection (n : ℕ) :=
@@ -157,6 +179,29 @@ theorem crownSplitEndpointPartition_geometry {n : ℕ} (hn : 2 ≤ n)
         Q.toSetoid.r i j) ∧
       (∀ i j, crownRelation n i j → P.toSetoid.r .top (.vertex i) →
         Q.toSetoid.r i j) := by
+  have crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
+      (i j : Fin (2 * n)) :
+      crownRelation n i j ∨ crownRelation n j i ↔
+        (SimpleGraph.cycleGraph (2 * n)).Adj i j := by
+    have hs (a : Fin (2 * n)) :
+        (a.val + 1) % (2 * n) = if a.val + 1 = 2 * n then 0 else a.val + 1 := by
+      split_ifs with h
+      · simp [h]
+      · exact Nat.mod_eq_of_lt (by omega)
+    have hp (a : Fin (2 * n)) :
+        (a.val + 2 * n - 1) % (2 * n) = if a.val = 0 then 2 * n - 1 else a.val - 1 := by
+      split_ifs with h
+      · simp [h, Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
+      · rw [show a.val + 2 * n - 1 = (a.val - 1) + 2 * n by omega]
+        simp [Nat.mod_eq_of_lt (show a.val - 1 < 2 * n by omega)]
+    rw [SimpleGraph.cycleGraph_adj']
+    have hij := Fin.intCast_val_sub_eq_sub_add_ite i j
+    have hji := Fin.intCast_val_sub_eq_sub_add_ite j i
+    simp only [crownRelation, hs, hp]
+    have heven : (2 * n) % 2 = 0 := by omega
+    by_cases hij' : j ≤ i <;> by_cases hji' : i ≤ j <;>
+      simp only [hij', hji', if_true, if_false] at hij hji <;>
+      split_ifs <;> omega
   classical
   dsimp only
   let Q := crownSplitEndpointPartition P.toSetoid
@@ -227,7 +272,6 @@ theorem crownSplitEndpointPartition_geometry {n : ℕ} (hn : 2 ≤ n)
         (Quotient.mk'' (.vertex i))
       rw [heq]
       exact Relation.ReflTransGen.single ⟨.vertex j, .top, rfl, rfl, trivial⟩
-
 /-- Every proper component cut from the bottom fiber has one more lower vertex;
     every proper component cut from the top fiber has one more upper vertex.
     In particular these inverse-selected blocks really have odd cardinality. -/
@@ -242,6 +286,29 @@ theorem crownSplitEndpointPartition_endpoint_parity {n : ℕ} (hn : 2 ≤ n)
       Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C} % 2 = 1) ∧
     (P.toSetoid.r .top (.vertex C.out) → O = E + 1 ∧
       Set.ncard {v : Fin (2 * n) | Quotient.mk'' v = C} % 2 = 1) := by
+  have crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
+      (i j : Fin (2 * n)) :
+      crownRelation n i j ∨ crownRelation n j i ↔
+        (SimpleGraph.cycleGraph (2 * n)).Adj i j := by
+    have hs (a : Fin (2 * n)) :
+        (a.val + 1) % (2 * n) = if a.val + 1 = 2 * n then 0 else a.val + 1 := by
+      split_ifs with h
+      · simp [h]
+      · exact Nat.mod_eq_of_lt (by omega)
+    have hp (a : Fin (2 * n)) :
+        (a.val + 2 * n - 1) % (2 * n) = if a.val = 0 then 2 * n - 1 else a.val - 1 := by
+      split_ifs with h
+      · simp [h, Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
+      · rw [show a.val + 2 * n - 1 = (a.val - 1) + 2 * n by omega]
+        simp [Nat.mod_eq_of_lt (show a.val - 1 < 2 * n by omega)]
+    rw [SimpleGraph.cycleGraph_adj']
+    have hij := Fin.intCast_val_sub_eq_sub_add_ite i j
+    have hji := Fin.intCast_val_sub_eq_sub_add_ite j i
+    simp only [crownRelation, hs, hp]
+    have heven : (2 * n) % 2 = 0 := by omega
+    by_cases hij' : j ≤ i <;> by_cases hji' : i ≤ j <;>
+      simp only [hij', hji', if_true, if_false] at hij hji <;>
+      split_ifs <;> omega
   classical
   dsimp only
   let : NeZero (2 * n) := ⟨by omega⟩
@@ -405,7 +472,6 @@ theorem crownSplitEndpointPartition_endpoint_parity {n : ℕ} (hn : 2 ≤ n)
       exact ⟨hside _ (hneighbor v).1 (by rw [hsucc]; omega),
         hside _ (hneighbor v).2 (hpred v)⟩)
     exact ⟨heq, by rw [← hsum]; omega⟩
-
 /-- Select exactly the components of the two endpoint fibers after removing the
     endpoints. Membership is independent of the chosen quotient representative. -/
 noncomputable def crownEndpointComponentSelection {n : ℕ}

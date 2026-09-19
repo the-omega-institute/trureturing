@@ -326,7 +326,45 @@ theorem crownGeometricFVector_log_concave (n : ℕ) (hn : 0 < n)
     have hnew (j : ℕ) : (j+1 : ℚ) * (crownScalarPolynomial n).coeff (j+1)^2 ≥
         (j+2 : ℚ) * (crownScalarPolynomial n).coeff j *
           (crownScalarPolynomial n).coeff (j+2) := by
-      have h := split_polynomial_coefficient_newton (crownScalarReal n) (scalar_splits n) j
+      let p := crownScalarReal n
+      have hp : p.Splits := scalar_splits n
+      have h :
+      (j + 1 : ℝ) * p.coeff (j + 1) ^ 2 ≥
+            (j + 2 : ℝ) * p.coeff j * p.coeff (j + 2) := by
+        by_cases hdeg : j + 2 ≤ p.natDegree
+        · let s := p.roots.map Neg.neg
+          let r := p.natDegree - j - 2
+          have hcard : s.card = p.natDegree := by
+            simp only [s, Multiset.card_map, hp.natDegree_eq_card_roots]
+          have hcoeff (i : ℕ) (hi : i ≤ p.natDegree) :
+              p.coeff i = p.leadingCoeff * s.esymm (p.natDegree - i) := by
+            rw [p.coeff_eq_esymm_roots_of_splits hp hi]
+            simp only [s, Multiset.esymm_neg, mul_assoc]
+          have h0 : p.natDegree - j = r + 2 := by dsimp [r]; omega
+          have h1 : p.natDegree - (j + 1) = r + 1 := by dsimp [r]; omega
+          have h2 : p.natDegree - (j + 2) = r := by dsimp [r]; omega
+          have hdegree : p.natDegree = r + j + 2 := by dsimp [r]; omega
+          have hs := D5.S3.Analytic.RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm s r
+          rw [hcard, hdegree] at hs
+          push_cast at hs
+          have hs' : (r + 2 : ℝ) * (j + 2) * (s.esymm r * s.esymm (r + 2)) ≤
+              (r + 1 : ℝ) * (j + 1) * s.esymm (r + 1) ^ 2 := by
+            nlinarith only [hs]
+          have hlc := mul_le_mul_of_nonneg_left hs' (sq_nonneg p.leadingCoeff)
+          rw [hcoeff j (by omega), hcoeff (j+1) (by omega), hcoeff (j+2) hdeg,
+            h0, h1, h2]
+          have hh : (r + 2 : ℝ) *
+                ((j + 2) * (p.leadingCoeff * s.esymm (r + 2)) *
+                  (p.leadingCoeff * s.esymm r)) ≤
+              (r + 2 : ℝ) *
+                ((j + 1) * (p.leadingCoeff * s.esymm (r + 1)) ^ 2) := by
+            nlinarith only [hlc, mul_nonneg (show (0 : ℝ) ≤ j+1 by positivity)
+              (sq_nonneg (p.leadingCoeff * s.esymm (r+1)))]
+          exact (mul_le_mul_iff_right₀ (show (0 : ℝ) < r+2 by positivity)).mp hh
+        · rw [p.coeff_eq_zero_of_natDegree_lt (by omega : p.natDegree < j+2)]
+          simp only [mul_zero]
+          positivity
+      dsimp only [p] at h
       simp only [crownScalarReal, coeff_map] at h
       change (j+1 : ℝ) * ((crownScalarPolynomial n).coeff (j+1) : ℝ)^2 ≥
         (j+2 : ℝ) * ((crownScalarPolynomial n).coeff j : ℝ) *

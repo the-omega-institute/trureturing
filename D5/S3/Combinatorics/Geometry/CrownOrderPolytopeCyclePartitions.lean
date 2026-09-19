@@ -29,51 +29,6 @@ def crownCycleBlockRel {n : ℕ} (P : ConnectedCyclePartition (2 * n))
 
 /- Between distinct quotient blocks, every directed crown relation crosses an actual
    cyclic boundary cut, and every such directed boundary witnesses the quotient relation. -/
-theorem crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
-    (P : ConnectedCyclePartition (2 * n)) (C D : Quotient P.toSetoid) (hne : C ≠ D) :
-    crownCycleBlockRel P C D ↔
-      ∃ i j : Fin (2 * n),
-        Quotient.mk'' i = C ∧ Quotient.mk'' j = D ∧ crownRelation n i j ∧
-          ((i ∈ cycleBoundaryCuts P ∧ j = i + 1) ∨
-            (j ∈ cycleBoundaryCuts P ∧ i = j + 1)) := by
-  constructor
-  · rintro ⟨i, j, hi, hj, hij⟩
-    have hnrel : ¬ P.toSetoid.r i j := by
-      intro hrel
-      apply hne
-      rw [← hi, ← hj]
-      exact Quotient.sound hrel
-    refine ⟨i, j, hi, hj, hij, ?_⟩
-    rcases hij.2 with hnext | hprev
-    · left
-      have hsucc : j = i + 1 := by
-        apply Fin.ext
-        simpa [Fin.add_def] using hnext
-      refine ⟨?_, hsucc⟩
-      simpa [cycleBoundaryCuts, hsucc] using hnrel
-    · right
-      have hpred : i = j + 1 := by
-        apply Fin.ext
-        simp only [Fin.add_def, Fin.val_one',
-          Nat.mod_eq_of_lt (show 1 < 2 * n by omega)]
-        by_cases hi0 : i.val = 0
-        · rw [hi0, zero_add, Nat.mod_eq_of_lt (by omega)] at hprev
-          rw [hprev, show 2 * n - 1 + 1 = 2 * n by omega, Nat.mod_self]
-          exact hi0
-        · have hipos : 0 < i.val := Nat.pos_of_ne_zero hi0
-          have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
-          have himod : ((i.val - 1) + 2 * n) % (2 * n) = i.val - 1 := by
-            rw [Nat.add_mod_right]
-            exact Nat.mod_eq_of_lt (by omega)
-          rw [hform, himod] at hprev
-          rw [hprev, show i.val - 1 + 1 = i.val by omega, Nat.mod_eq_of_lt i.isLt]
-      refine ⟨?_, hpred⟩
-      simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
-      rw [← hpred]
-      exact fun hji => hnrel (P.toSetoid.symm hji)
-  · rintro ⟨i, j, hi, hj, hij, _⟩
-    exact ⟨i, j, hi, hj, hij⟩
-
 /- Reachability in the directed crown relation on cyclic partition blocks. -/
 def crownCycleBlockLE {n : ℕ} (P : ConnectedCyclePartition (2 * n))
     (C D : Quotient P.toSetoid) : Prop :=
@@ -84,22 +39,6 @@ def crownCycleCompatible {n : ℕ} (P : ConnectedCyclePartition (2 * n)) : Prop 
   ∀ {C D : Quotient P.toSetoid}, crownCycleBlockLE P C D →
     crownCycleBlockLE P D C → C = D
 
-private theorem crownCycleBlockLE_succ_of_evenCuts {n : ℕ} [NeZero (2 * n)]
-    (P : ConnectedCyclePartition (2 * n))
-    (heven : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) (i : Fin (2 * n)) :
-    crownCycleBlockLE P (Quotient.mk'' i) (Quotient.mk'' (i + 1)) := by
-  by_cases hi : i.val % 2 = 0
-  · apply Relation.ReflTransGen.single
-    refine ⟨i, i + 1, rfl, rfl, hi, Or.inl ?_⟩
-    simp [Fin.add_def]
-  · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (heven i hcut)
-    have hsame : P.toSetoid.r i (i + 1) := by
-      by_contra hne
-      exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
-    have hq : Quotient.mk'' i = Quotient.mk'' (i + 1) := Quotient.sound hsame
-    unfold crownCycleBlockLE
-    rw [hq]
-
 /- If every actual boundary cut starts at an even vertex, following cyclic successors
    gives a directed quotient cycle.  The `N - 1` return path includes the two-block case. -/
 private theorem not_crownCycleCompatible_of_evenCuts {n : ℕ} [NeZero (2 * n)]
@@ -107,6 +46,21 @@ private theorem not_crownCycleCompatible_of_evenCuts {n : ℕ} [NeZero (2 * n)]
     (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
     (heven : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) :
     ¬ crownCycleCompatible P := by
+  have crownCycleBlockLE_succ_of_evenCuts {n : ℕ} [NeZero (2 * n)]
+      (P : ConnectedCyclePartition (2 * n))
+      (heven : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 0) (i : Fin (2 * n)) :
+      crownCycleBlockLE P (Quotient.mk'' i) (Quotient.mk'' (i + 1)) := by
+    by_cases hi : i.val % 2 = 0
+    · apply Relation.ReflTransGen.single
+      refine ⟨i, i + 1, rfl, rfl, hi, Or.inl ?_⟩
+      simp [Fin.add_def]
+    · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (heven i hcut)
+      have hsame : P.toSetoid.r i (i + 1) := by
+        by_contra hne
+        exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
+      have hq : Quotient.mk'' i = Quotient.mk'' (i + 1) := Quotient.sound hsame
+      unfold crownCycleBlockLE
+      rw [hq]
   have hcuts : cycleBoundaryCuts P ≠ ∅ := by
     intro hempty
     obtain ⟨u, v, huv⟩ := hnontrivial
@@ -160,39 +114,6 @@ private theorem not_crownCycleCompatible_of_evenCuts {n : ℕ} [NeZero (2 * n)]
     simpa [C] using hlast
   intro hcompatible
   exact hCD (hcompatible hforward hreturn)
-
-private theorem crownCycleBlockLE_pred_of_oddCuts {n : ℕ} [NeZero (2 * n)]
-    (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
-    (hodd : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 1) (i : Fin (2 * n)) :
-    crownCycleBlockLE P (Quotient.mk'' (i + 1)) (Quotient.mk'' i) := by
-  by_cases hi : i.val % 2 = 1
-  · apply Relation.ReflTransGen.single
-    refine ⟨i + 1, i, rfl, rfl, ?_⟩
-    have hsucc : (i + 1).val = (i.val + 1) % (2 * n) := by
-      simp [Fin.add_def]
-    constructor
-    · rw [hsucc]
-      rw [Nat.mod_mod_of_dvd]
-      · omega
-      · exact dvd_mul_right 2 n
-    · right
-      by_cases hwrap : i.val + 1 < 2 * n
-      · rw [hsucc, Nat.mod_eq_of_lt hwrap]
-        rw [show i.val + 1 + 2 * n - 1 = i.val + 2 * n by omega,
-          Nat.add_mod_right, Nat.mod_eq_of_lt i.isLt]
-      · have hlast : i.val + 1 = 2 * n := by omega
-        rw [hsucc, hlast, Nat.mod_self, zero_add,
-          Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
-        omega
-  · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (hodd i hcut)
-    have hsame : P.toSetoid.r i (i + 1) := by
-      by_contra hne
-      exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
-    have hq : Quotient.mk'' (i + 1) = Quotient.mk'' i :=
-      (Quotient.sound hsame).symm
-    unfold crownCycleBlockLE
-    rw [hq]
-
 /- If every actual boundary cut starts at an odd vertex, directed quotient edges
    traverse the cyclic blocks in the opposite direction and again form a cycle. -/
 private theorem not_crownCycleCompatible_of_oddCuts {n : ℕ} [NeZero (2 * n)]
@@ -200,6 +121,37 @@ private theorem not_crownCycleCompatible_of_oddCuts {n : ℕ} [NeZero (2 * n)]
     (hnontrivial : ∃ u v, ¬ P.toSetoid.r u v)
     (hodd : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 1) :
     ¬ crownCycleCompatible P := by
+  have crownCycleBlockLE_pred_of_oddCuts {n : ℕ} [NeZero (2 * n)]
+      (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
+      (hodd : ∀ c ∈ cycleBoundaryCuts P, c.val % 2 = 1) (i : Fin (2 * n)) :
+      crownCycleBlockLE P (Quotient.mk'' (i + 1)) (Quotient.mk'' i) := by
+    by_cases hi : i.val % 2 = 1
+    · apply Relation.ReflTransGen.single
+      refine ⟨i + 1, i, rfl, rfl, ?_⟩
+      have hsucc : (i + 1).val = (i.val + 1) % (2 * n) := by
+        simp [Fin.add_def]
+      constructor
+      · rw [hsucc]
+        rw [Nat.mod_mod_of_dvd]
+        · omega
+        · exact dvd_mul_right 2 n
+      · right
+        by_cases hwrap : i.val + 1 < 2 * n
+        · rw [hsucc, Nat.mod_eq_of_lt hwrap]
+          rw [show i.val + 1 + 2 * n - 1 = i.val + 2 * n by omega,
+            Nat.add_mod_right, Nat.mod_eq_of_lt i.isLt]
+        · have hlast : i.val + 1 = 2 * n := by omega
+          rw [hsucc, hlast, Nat.mod_self, zero_add,
+            Nat.mod_eq_of_lt (show 2 * n - 1 < 2 * n by omega)]
+          omega
+    · have hnotCut : i ∉ cycleBoundaryCuts P := fun hcut => hi (hodd i hcut)
+      have hsame : P.toSetoid.r i (i + 1) := by
+        by_contra hne
+        exact hnotCut (by simpa [cycleBoundaryCuts] using hne)
+      have hq : Quotient.mk'' (i + 1) = Quotient.mk'' i :=
+        (Quotient.sound hsame).symm
+      unfold crownCycleBlockLE
+      rw [hq]
   have hcuts : cycleBoundaryCuts P ≠ ∅ := by
     intro hempty
     obtain ⟨u, v, huv⟩ := hnontrivial
@@ -254,7 +206,6 @@ private theorem not_crownCycleCompatible_of_oddCuts {n : ℕ} [NeZero (2 * n)]
     simpa [C] using hlast
   intro hcompatible
   exact hCD (hcompatible hforward hreturn)
-
 /- Every nontrivial compatible cyclic crown partition has boundary cuts of both
    parities.  Uniform parity is excluded by the two explicit quotient cycles. -/
 private theorem mixedBoundaryCuts_of_crownCycleCompatible {n : ℕ} [NeZero (2 * n)]
@@ -291,30 +242,6 @@ private theorem mixedBoundaryCuts_of_crownCycleCompatible {n : ℕ} [NeZero (2 *
 
 /- The arc between an even and a later odd boundary is closed under the actual
    directed crown comparisons: neither of its two boundary edges points out. -/
-private theorem crownRelation_preserves_evenOddArc {n : ℕ} (hn : 2 ≤ n)
-    (e o i j : Fin (2 * n))
-    (he : e.val % 2 = 0) (ho : o.val % 2 = 1)
-    (hi : e.val < i.val ∧ i.val ≤ o.val) (hij : crownRelation n i j) :
-    e.val < j.val ∧ j.val ≤ o.val := by
-  rcases hij with ⟨hieven, hsucc | hpred⟩
-  · by_cases hwrap : i.val + 1 < 2 * n
-    · rw [Nat.mod_eq_of_lt hwrap] at hsucc
-      omega
-    · have hlast : i.val + 1 = 2 * n := by omega
-      rw [hlast, Nat.mod_self] at hsucc
-      have hoddLast : i.val % 2 = 1 := by omega
-      omega
-  · by_cases hi0 : i.val = 0
-    · omega
-    · have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
-      rw [hform, Nat.add_mod_right,
-        Nat.mod_eq_of_lt (show i.val - 1 < 2 * n by omega)] at hpred
-      have hboundary : i.val ≠ e.val + 1 := by
-        intro heq
-        have hevenNext : i.val % 2 = 1 := by omega
-        omega
-      omega
-
 /- On the quotient of actual connected blocks, entering the arc from an outside
    block is possible, but leaving it along a crown comparison is not. -/
 private theorem crownCycleBlockLE_preserves_evenOddArc {n : ℕ} [NeZero (2 * n)]
@@ -326,6 +253,29 @@ private theorem crownCycleBlockLE_preserves_evenOddArc {n : ℕ} [NeZero (2 * n)
     (hij : crownCycleBlockLE P (Quotient.mk'' i) (Quotient.mk'' j))
     (hi : e.val < i.val ∧ i.val ≤ o.val) :
     e.val < j.val ∧ j.val ≤ o.val := by
+  have crownRelation_preserves_evenOddArc {n : ℕ} (hn : 2 ≤ n)
+      (e o i j : Fin (2 * n))
+      (he : e.val % 2 = 0) (ho : o.val % 2 = 1)
+      (hi : e.val < i.val ∧ i.val ≤ o.val) (hij : crownRelation n i j) :
+      e.val < j.val ∧ j.val ≤ o.val := by
+    rcases hij with ⟨hieven, hsucc | hpred⟩
+    · by_cases hwrap : i.val + 1 < 2 * n
+      · rw [Nat.mod_eq_of_lt hwrap] at hsucc
+        omega
+      · have hlast : i.val + 1 = 2 * n := by omega
+        rw [hlast, Nat.mod_self] at hsucc
+        have hoddLast : i.val % 2 = 1 := by omega
+        omega
+    · by_cases hi0 : i.val = 0
+      · omega
+      · have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
+        rw [hform, Nat.add_mod_right,
+          Nat.mod_eq_of_lt (show i.val - 1 < 2 * n by omega)] at hpred
+        have hboundary : i.val ≠ e.val + 1 := by
+          intro heq
+          have hevenNext : i.val % 2 = 1 := by omega
+          omega
+        omega
   let inside (C : Quotient P.toSetoid) : Prop :=
     ∃ v : Fin (2 * n), Quotient.mk'' v = C ∧ e.val < v.val ∧ v.val ≤ o.val
   have step {C D : Quotient P.toSetoid} (hCD : crownCycleBlockRel P C D)
@@ -344,37 +294,8 @@ private theorem crownCycleBlockLE_preserves_evenOddArc {n : ℕ} [NeZero (2 * n)
   obtain ⟨v, hv, hvArc⟩ := reach hij ⟨i, rfl, hi⟩
   exact (cyclePartitionBlock_arc_constant (by omega) P e o heo heCut hoCut v j
     (Quotient.exact hv)).mp hvArc
-
 /- If the earlier cut is odd and the later cut is even, both boundary
    comparisons point out of the intervening arc, so its complement is closed. -/
-private theorem crownRelation_preserves_oddEvenArcOutside {n : ℕ} (hn : 2 ≤ n)
-    (o e i j : Fin (2 * n)) (ho : o.val % 2 = 1) (he : e.val % 2 = 0)
-    (hi : ¬ (o.val < i.val ∧ i.val ≤ e.val)) (hij : crownRelation n i j) :
-    ¬ (o.val < j.val ∧ j.val ≤ e.val) := by
-  rcases hij with ⟨hieven, hsucc | hpred⟩
-  · by_cases hwrap : i.val + 1 < 2 * n
-    · rw [Nat.mod_eq_of_lt hwrap] at hsucc
-      have hnotOdd : i.val ≠ o.val := by
-        intro h
-        omega
-      omega
-    · have hlast : i.val + 1 = 2 * n := by omega
-      rw [hlast, Nat.mod_self] at hsucc
-      omega
-  · by_cases hi0 : i.val = 0
-    · have hlast : (2 * n - 1) % (2 * n) = 2 * n - 1 :=
-        Nat.mod_eq_of_lt (by omega)
-      have hj : j.val = 2 * n - 1 := by simpa [hi0, hlast] using hpred
-      rw [hj]
-      omega
-    · have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
-      rw [hform, Nat.add_mod_right,
-        Nat.mod_eq_of_lt (show i.val - 1 < 2 * n by omega)] at hpred
-      have hnotEven : i.val ≠ e.val + 1 := by
-        intro h
-        omega
-      omega
-
 private theorem crownCycleBlockLE_preserves_oddEvenArcOutside {n : ℕ} [NeZero (2 * n)]
     (hn : 2 ≤ n) (P : ConnectedCyclePartition (2 * n))
     (o e : Fin (2 * n)) (hoe : o < e)
@@ -384,6 +305,33 @@ private theorem crownCycleBlockLE_preserves_oddEvenArcOutside {n : ℕ} [NeZero 
     (hij : crownCycleBlockLE P (Quotient.mk'' i) (Quotient.mk'' j))
     (hi : ¬ (o.val < i.val ∧ i.val ≤ e.val)) :
     ¬ (o.val < j.val ∧ j.val ≤ e.val) := by
+  have crownRelation_preserves_oddEvenArcOutside {n : ℕ} (hn : 2 ≤ n)
+      (o e i j : Fin (2 * n)) (ho : o.val % 2 = 1) (he : e.val % 2 = 0)
+      (hi : ¬ (o.val < i.val ∧ i.val ≤ e.val)) (hij : crownRelation n i j) :
+      ¬ (o.val < j.val ∧ j.val ≤ e.val) := by
+    rcases hij with ⟨hieven, hsucc | hpred⟩
+    · by_cases hwrap : i.val + 1 < 2 * n
+      · rw [Nat.mod_eq_of_lt hwrap] at hsucc
+        have hnotOdd : i.val ≠ o.val := by
+          intro h
+          omega
+        omega
+      · have hlast : i.val + 1 = 2 * n := by omega
+        rw [hlast, Nat.mod_self] at hsucc
+        omega
+    · by_cases hi0 : i.val = 0
+      · have hlast : (2 * n - 1) % (2 * n) = 2 * n - 1 :=
+          Nat.mod_eq_of_lt (by omega)
+        have hj : j.val = 2 * n - 1 := by simpa [hi0, hlast] using hpred
+        rw [hj]
+        omega
+      · have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
+        rw [hform, Nat.add_mod_right,
+          Nat.mod_eq_of_lt (show i.val - 1 < 2 * n by omega)] at hpred
+        have hnotEven : i.val ≠ e.val + 1 := by
+          intro h
+          omega
+        omega
   let outside (C : Quotient P.toSetoid) : Prop :=
     ∃ v : Fin (2 * n), Quotient.mk'' v = C ∧ ¬ (o.val < v.val ∧ v.val ≤ e.val)
   have step {C D : Quotient P.toSetoid} (hCD : crownCycleBlockRel P C D)
@@ -403,7 +351,6 @@ private theorem crownCycleBlockLE_preserves_oddEvenArcOutside {n : ℕ} [NeZero 
   obtain ⟨v, hv, hvOutside⟩ := reach hij ⟨i, rfl, hi⟩
   exact (cyclePartitionBlock_arc_constant (by omega) P o e hoe hoCut heCut v j
     (Quotient.exact hv)).mpr.mt hvOutside
-
 /- Every comparison across an actual boundary has a one-way barrier.  The
    opposite-parity boundary closes either the intervening arc or its complement;
    the directed edge itself points from the open side to the closed side. -/
@@ -413,6 +360,50 @@ private theorem crownCycleBlockRel_no_reverse_of_mixedCuts {n : ℕ} [NeZero (2 
       ∃ c ∈ cycleBoundaryCuts P, c.val % 2 = 1)
     {C D : Quotient P.toSetoid} (hCD : crownCycleBlockRel P C D)
     (hne : C ≠ D) : ¬ crownCycleBlockLE P D C := by
+  have crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+      (P : ConnectedCyclePartition (2 * n)) (C D : Quotient P.toSetoid) (hne : C ≠ D) :
+      crownCycleBlockRel P C D ↔
+        ∃ i j : Fin (2 * n),
+          Quotient.mk'' i = C ∧ Quotient.mk'' j = D ∧ crownRelation n i j ∧
+            ((i ∈ cycleBoundaryCuts P ∧ j = i + 1) ∨
+              (j ∈ cycleBoundaryCuts P ∧ i = j + 1)) := by
+    constructor
+    · rintro ⟨i, j, hi, hj, hij⟩
+      have hnrel : ¬ P.toSetoid.r i j := by
+        intro hrel
+        apply hne
+        rw [← hi, ← hj]
+        exact Quotient.sound hrel
+      refine ⟨i, j, hi, hj, hij, ?_⟩
+      rcases hij.2 with hnext | hprev
+      · left
+        have hsucc : j = i + 1 := by
+          apply Fin.ext
+          simpa [Fin.add_def] using hnext
+        refine ⟨?_, hsucc⟩
+        simpa [cycleBoundaryCuts, hsucc] using hnrel
+      · right
+        have hpred : i = j + 1 := by
+          apply Fin.ext
+          simp only [Fin.add_def, Fin.val_one',
+            Nat.mod_eq_of_lt (show 1 < 2 * n by omega)]
+          by_cases hi0 : i.val = 0
+          · rw [hi0, zero_add, Nat.mod_eq_of_lt (by omega)] at hprev
+            rw [hprev, show 2 * n - 1 + 1 = 2 * n by omega, Nat.mod_self]
+            exact hi0
+          · have hipos : 0 < i.val := Nat.pos_of_ne_zero hi0
+            have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
+            have himod : ((i.val - 1) + 2 * n) % (2 * n) = i.val - 1 := by
+              rw [Nat.add_mod_right]
+              exact Nat.mod_eq_of_lt (by omega)
+            rw [hform, himod] at hprev
+            rw [hprev, show i.val - 1 + 1 = i.val by omega, Nat.mod_eq_of_lt i.isLt]
+        refine ⟨?_, hpred⟩
+        simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
+        rw [← hpred]
+        exact fun hji => hnrel (P.toSetoid.symm hji)
+    · rintro ⟨i, j, hi, hj, hij, _⟩
+      exact ⟨i, j, hi, hj, hij⟩
   obtain ⟨⟨e, heCut, heEven⟩, ⟨o, hoCut, hoOdd⟩⟩ := hmixed
   obtain ⟨a, b, ha, hb, hab, hcut⟩ :=
     (crownCycleBlockRel_iff_boundaryCut hn P C D hne).mp hCD
@@ -478,7 +469,6 @@ private theorem crownCycleBlockRel_no_reverse_of_mixedCuts {n : ℕ} [NeZero (2 
         omega
       exact (crownCycleBlockLE_preserves_oddEvenArcOutside hn P b e hbe
         hbCut heCut hbOdd heEven b (b + 1) (hreverse hDC) houtside) hinside
-
 /- No directed cycle of distinct actual connected blocks survives a mixed-parity
    pair of cuts.  In particular, parallel boundary edges in a two-block quotient
    cannot point in opposite directions. -/

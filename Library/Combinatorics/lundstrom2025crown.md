@@ -80,7 +80,7 @@ asymptotic qualification, or finite cutoff in the target's hypotheses.
 | Source | Formal content and scope |
 | --- | --- |
 | Section 2; Theorem 3.1, attributed there to Stanley [20] | `CrownOrderPolytope`, `CCP`, and `Dimension` construct the actual face/connected-compatible-partition correspondence and prove dimension equals quotient-block cardinality minus two for nonempty faces. |
-| Lemma 3.2 and its proof | `CycleIntervals`, `CycleCuts`, `CyclePartitions`, and `OddBlocks` express connected cyclic blocks, parity, compatibility, and lower/upper extremality. Cycle arguments explicitly require `n>=2`. |
+| Lemma 3.2 and its proof | `CycleCuts`, `CyclePartitions`, and `OddBlocks` express connected cyclic blocks, parity, compatibility, and lower/upper extremality. `CycleIntervals` separately proves the interval description and has no D5 importer. Cycle arguments explicitly require `n>=2`. |
 | Proposition 3.3(i)-(iii) | `EndpointMergers`, `EndpointRecovery`, and `TwoExceptions` implement source-selected endpoint merging, its inverse, all quotient sizes at least three, and the two exceptional two-block partitions. |
 | Lemmas 3.4 and 3.5 | `Enumeration`, `MarkedCuts`, and `SelectionCounts` construct parity-adjusted compositions, marked cuts, actual quotient-block counts, and the selection sum, including the one-block edge. |
 | Theorem 3.6 | `FaceCounts` proves the geometric formula for `n>=2`; `Positive` supplies the separate chain case and proves the same formula for every `n>0`. |
@@ -113,7 +113,7 @@ Write `A(n,m)=(n/m) choose(n+m-1,2m-1)` and
 
 The final proof factors `T_n-1` by parity, retaining squared factors and
 their repeated roots. It obtains real splitting of the auxiliary `S_n`
-from the pinned Chebyshev root API. Classical Newton/Laguerre inequalities
+from the pinned Chebyshev root API. The licensed upstream Newton inequality
 give `(j+1)s_(j+1)^2 >= (j+2)s_j s_(j+2)`.
 For `n>=2`, the additional bounds `s_0>=n^2` and
 `s_0<=s_1<=2n s_0` prove all three affected comparisons:
@@ -121,13 +121,16 @@ For `n>=2`, the additional bounds `s_0>=n^2` and
 `(s_1+1)s_3 <= s_2^2`. All other comparisons follow from Newton.
 The actual `n=1` vector supplies both internal inequalities separately.
 
-`RealRootedCoefficientNewton.split_polynomial_coefficient_newton`
-is a reusable formal proof of a classical inequality, not novel
-mathematics. It allows arbitrary real coefficients, zero polynomials,
-and repeated roots. Its live proof uses multiplicity-aware Rolle root
-counting, induction on split factors for Laguerre positivity, and
-derivative induction. This coefficient form omits the additional
-finite-degree factor of the degree-sharp normalized Newton inequalities.
+`RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm` is the reduced
+elementary-symmetric Newton inequality transplanted from the immutable
+upstream source identified in `tao2026newton.md`. It is classical
+mathematics. Its derivative-root reduction and strong induction retain
+multiplicities. The Crown proof applies it to `p.roots.map Neg.neg` at
+index `p.natDegree-k-2`; the pinned Vieta formula supplies the coefficient
+conversion inside that proof. The leading coefficient is squared, and
+the extra degree factor is discarded by a nonnegative-square estimate.
+When `k+2` exceeds the degree, that coefficient vanishes. There is no
+standalone coefficient-conversion theorem or independent Newton reproof.
 
 Remark 3.8, PDF page 13, explicitly says the actual f-polynomials displayed in Table 1
 are not real-rooted, even under the alternative convention omitting the
@@ -162,15 +165,16 @@ defines `Multiset.nesymm` and proves
 `Multiset.nesymm_mul_nesymm_le_sq_nesymm` for every real multiset and
 natural index, together with the degree-sharp unnormalized forms
 `esymm_mul_esymm_le_sq_esymm` and `esymm_mul_esymm_le_sq_esymm'`.
-The public source was inspected, including its derivative/root argument
-and use of elementary-symmetric prerequisites. This is a concrete candidate
-for reuse through Vieta's formulas, not an absence result. It is outside
-the pinned dependency set. Its immutable `lean-toolchain` is
+The public source supplies the derivative/root argument and its
+elementary-symmetric prerequisites. It is outside the pinned dependency
+set. Its immutable `lean-toolchain` is
 `leanprover/lean4:v4.34.0-rc1`, whereas this repository uses `v4.33.0`;
 thus direct dependency admission fails the toolchain-equality requirement.
-A licensed transplant and the exact coefficient adaptation have not been
-compiled or validated here. Reuse must be assessed before freezing the
-generic Newton module. No dependency or mathematical source was changed.
+The local port retains the reduced Newton result, with its normalization
+prerequisites internal to the proof. The full Apache license, all source
+copyrights, immutable source hashes, modifications, and the condition for
+retirement at this repository's future Mathlib pin are preserved in
+`tao2026newton.md`. The toolchain and dependency pins are unchanged.
 The GitHub issue/PR query `repo:leanprover-community/mathlib4 Newton inequality`
 returned seven entries (`incomplete_results=false`); these are a bounded
 API search, not all third-party Lean libraries.
@@ -200,5 +204,5 @@ The metadata searches do not rule out an unindexed proof or a resolution
 inside a work with a different title. The caller identifies issue 8670
 as preregistration and PR 8714 as publication context; their remote contents
 and chronology were not reverified in this artifact-only lane. Independent
-review of prior-resolution eligibility and the upstream reuse candidate
+review of prior-resolution eligibility and source admission
 remains required before final resolution admission.

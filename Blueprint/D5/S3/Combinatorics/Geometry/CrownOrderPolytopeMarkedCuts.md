@@ -20,21 +20,9 @@ Lean statement: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.card_
 
 For n at least two and i at least two, multiplying the number of connected partitions of the 2n-cycle into i blocks with 2m odd blocks by i gives 2n times choose(i,2m) times choose(n+m-1,i-1). The factor i counts markings; all natural support cases are included.
 
-**Theorem 1.2 (The number of odd blocks is even).**
+In the profile construction, the sum of the actual fiber cardinalities is the even cycle size. The library parity-of-sum equivalence therefore makes the number of odd blocks even and allows profiles to be indexed by 2m.
 
-Lean statement: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.actualOddCycleBlocks_card_even`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.actualOddCycleBlocks_card_even` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Teemu Lundström and Leonardo Saud Maia Leite (2025). *Order polytopes of crown posets*. DOI: [10.48550/arXiv.2504.05123](https://doi.org/10.48550/arXiv.2504.05123). URL: <https://arxiv.org/abs/2504.05123v3>.
-
-*Commentary.*
-
-In every connected partition of a nonzero cycle of even size, the number of actual odd-cardinality blocks is even. This is the parity constraint needed to index profiles by 2m.
-
-**Theorem 1.3 (Cuts count the actual quotient blocks).**
+**Theorem 1.2 (Cuts count the actual quotient blocks).**
 
 Lean statement: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.quotient_card_eq_boundaryCuts_card`
 
@@ -50,7 +38,6 @@ For a cycle of size at least three with at least two boundary cuts, the actual q
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.actualOddCycleBlocks_card_even`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.card_prescribedOddConnectedCyclePartition_identity`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.quotient_card_eq_boundaryCuts_card`
 - Dependency: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCyclePartitions](CrownOrderPolytopeCyclePartitions.md)

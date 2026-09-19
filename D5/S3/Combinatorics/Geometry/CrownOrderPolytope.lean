@@ -29,40 +29,6 @@ def crownRelation (n : ℕ) (i j : Fin (2 * n)) : Prop :=
 def crownOrderPolytope (n : ℕ) : Set (Fin (2 * n) → ℝ) :=
   {x | (∀ i, 0 ≤ x i ∧ x i ≤ 1) ∧ ∀ i j, crownRelation n i j → x i ≤ x j}
 
-theorem crown_order_polytope_convex (n : ℕ) :
-    Convex ℝ (crownOrderPolytope n) := by
-  intro x hx y hy a b ha hb hab
-  refine ⟨?_, ?_⟩
-  · intro i
-    constructor <;> simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-    · have h₁ : 0 ≤ a * x i := mul_nonneg ha (hx.1 i).1
-      have h₂ : 0 ≤ b * y i := mul_nonneg hb (hy.1 i).1
-      linarith
-    · have h₁ : a * x i ≤ a * 1 := mul_le_mul_of_nonneg_left (hx.1 i).2 ha
-      have h₂ : b * y i ≤ b * 1 := mul_le_mul_of_nonneg_left (hy.1 i).2 hb
-      linarith
-  · intro i j hij
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-    have h₁ := mul_le_mul_of_nonneg_left (hx.2 i j hij) ha
-    have h₂ := mul_le_mul_of_nonneg_left (hy.2 i j hij) hb
-    linarith
-
-theorem zero_mem_crown_order_polytope (n : ℕ) :
-    (0 : Fin (2 * n) → ℝ) ∈ crownOrderPolytope n := by
-  constructor
-  · intro i
-    simp
-  · intro i j hij
-    simp
-
-theorem one_mem_crown_order_polytope (n : ℕ) :
-    (1 : Fin (2 * n) → ℝ) ∈ crownOrderPolytope n := by
-  constructor
-  · intro i
-    simp
-  · intro i j hij
-    simp
-
 structure AffineSlackFamily (E : Type*) [AddCommGroup E] [Module ℝ E] (m : ℕ) where
   slack : Fin m → AffineMap ℝ E ℝ
 
@@ -74,14 +40,6 @@ def AffineSlackFamily.tightlyHolds {E : Type*} [AddCommGroup E] [Module ℝ E]
     {m : ℕ} (A : AffineSlackFamily E m) (F : Set E) (i : Fin m) : Prop :=
   ∀ y, y ∈ F → A.slack i y = 0
 
-private theorem affine_map_lineMap {E : Type*} [AddCommGroup E] [Module ℝ E]
-    (f : E →ᵃ[ℝ] ℝ) (x y : E) (t : ℝ) :
-    f (AffineMap.lineMap x y t) = AffineMap.lineMap (f x) (f y) t := by
-  rw [AffineMap.lineMap_apply, AffineMap.lineMap_apply]
-  rw [f.map_vadd, map_smulₛₗ, f.linearMap_vsub]
-  simp only [map_smulₛₗ, vadd_eq_add, smul_eq_mul]
-  simp only [RingHom.id_apply]
-
 theorem finite_extension_of_active_slacks
     {d m : ℕ} (A : AffineSlackFamily (Fin d → ℝ) m) (F : Set (Fin d → ℝ))
     (hF : IsExposed ℝ A.feasible F) (anchor : Fin d → ℝ) (hanchor : anchor ∈ F) :
@@ -89,6 +47,13 @@ theorem finite_extension_of_active_slacks
       ∀ z, z ∈ A.feasible →
         (∀ i, A.tightlyHolds F i → A.slack i z = 0) →
         ∃ z', z' ∈ A.feasible ∧ center ∈ openSegment ℝ z z' := by
+  have affine_map_lineMap {E : Type} [AddCommGroup E] [Module ℝ E]
+      (f : E →ᵃ[ℝ] ℝ) (x y : E) (t : ℝ) :
+      f (AffineMap.lineMap x y t) = AffineMap.lineMap (f x) (f y) t := by
+    rw [AffineMap.lineMap_apply, AffineMap.lineMap_apply]
+    rw [f.map_vadd, map_smulₛₗ, f.linearMap_vsub]
+    simp only [map_smulₛₗ, vadd_eq_add, smul_eq_mul]
+    simp only [RingHom.id_apply]
   classical
   have hconv : Convex ℝ A.feasible := by
     intro x hx y hy a b ha hb hab
@@ -257,37 +222,29 @@ theorem finite_extension_of_active_slacks
       rw [← heq]
       exact lineMap_mem_openSegment ℝ z z' ⟨by norm_num, by norm_num⟩
     exact ⟨z', hz'_feasible, hsegment⟩
-
-/-- A finite affine-slack face has exactly the points satisfying the slacks that vanish on it,
-    provided the finite extension point exists.  The extension premise is the geometric place
-    where the finite average of one fixed face anchor and inactive-constraint witnesses is proved.
-    The conclusion itself uses the exposed-face extremality, so no polyhedral classification is
-    hidden in a definition. -/
-theorem exposed_eq_active_of_finite_extension
-    {E : Type*} [AddCommGroup E] [Module ℝ E] [TopologicalSpace E]
-    {m : ℕ} (A : AffineSlackFamily E m) (F : Set E)
-    (hF : IsExposed ℝ A.feasible F) (center : E) (hcenter : center ∈ F)
-    (hExtension : ∀ z, z ∈ A.feasible →
-      (∀ i, A.tightlyHolds F i → A.slack i z = 0) →
-      ∃ z', z' ∈ A.feasible ∧ center ∈ openSegment ℝ z z') :
-    F = {z | z ∈ A.feasible ∧ ∀ i, A.tightlyHolds F i → A.slack i z = 0} := by
-  apply Set.Subset.antisymm
-  · intro z hz
-    refine ⟨hF.subset hz, ?_⟩
-    intro i hi
-    exact hi z hz
-  · rintro z ⟨hz, hactive⟩
-    obtain ⟨z', hz', hsegment⟩ := hExtension z hz hactive
-    exact hF.isExtreme.left_mem_of_mem_openSegment hz hz' hcenter hsegment
-
 theorem exposed_eq_active_of_finite_slacks
     {d m : ℕ} (A : AffineSlackFamily (Fin d → ℝ) m) (F : Set (Fin d → ℝ))
     (hF : IsExposed ℝ A.feasible F) (anchor : Fin d → ℝ) (hanchor : anchor ∈ F) :
     F = {z | z ∈ A.feasible ∧ ∀ i, A.tightlyHolds F i → A.slack i z = 0} := by
+  have exposed_eq_active_of_finite_extension
+      {E : Type} [AddCommGroup E] [Module ℝ E] [TopologicalSpace E]
+      {m : ℕ} (A : AffineSlackFamily E m) (F : Set E)
+      (hF : IsExposed ℝ A.feasible F) (center : E) (hcenter : center ∈ F)
+      (hExtension : ∀ z, z ∈ A.feasible →
+        (∀ i, A.tightlyHolds F i → A.slack i z = 0) →
+        ∃ z', z' ∈ A.feasible ∧ center ∈ openSegment ℝ z z') :
+      F = {z | z ∈ A.feasible ∧ ∀ i, A.tightlyHolds F i → A.slack i z = 0} := by
+    apply Set.Subset.antisymm
+    · intro z hz
+      refine ⟨hF.subset hz, ?_⟩
+      intro i hi
+      exact hi z hz
+    · rintro z ⟨hz, hactive⟩
+      obtain ⟨z', hz', hsegment⟩ := hExtension z hz hactive
+      exact hF.isExtreme.left_mem_of_mem_openSegment hz hz' hcenter hsegment
   obtain ⟨center, hcenter, hExtension⟩ :=
     finite_extension_of_active_slacks A F hF anchor hanchor
   exact exposed_eq_active_of_finite_extension A F hF center hcenter hExtension
-
 /-- A crown constraint is either a lower coordinate bound, an upper coordinate bound, or one
     of the defining comparable pairs. -/
 abbrev CrownConstraint (n : ℕ) :=
@@ -313,37 +270,6 @@ noncomputable def crownAffineSlackFamily (n : ℕ) :
     AffineSlackFamily (Fin (2 * n) → ℝ) (Fintype.card (CrownConstraint n)) where
   slack i := crownConstraintSlack n ((Fintype.equivFin (CrownConstraint n)).symm i)
 
-/-- The nonnegative locus of the actual lower bounds, upper bounds, and crown comparisons is the
-    crown order polytope itself. -/
-theorem crown_affine_slack_feasible_eq (n : ℕ) :
-    (crownAffineSlackFamily n).feasible = crownOrderPolytope n := by
-  classical
-  ext x
-  let e := Fintype.equivFin (CrownConstraint n)
-  constructor
-  · intro hx
-    constructor
-    · intro i
-      constructor
-      · have h := hx (e (Sum.inl i))
-        simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
-      · have h := hx (e (Sum.inr (Sum.inl i)))
-        simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
-    · intro i j hij
-      let p : {p : Fin (2 * n) × Fin (2 * n) // crownRelation n p.1 p.2} :=
-        ⟨(i, j), hij⟩
-      have h := hx (e (Sum.inr (Sum.inr p)))
-      simpa [crownAffineSlackFamily, crownConstraintSlack, e, p] using h
-  · rintro ⟨hbounds, horder⟩ i
-    let c := e.symm i
-    have hi : i = e c := by simp [c]
-    rw [hi]
-    rcases c with i | i | p
-    · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).1
-    · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).2
-    · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using
-        (sub_nonneg.mpr (horder p.1.1 p.1.2 p.2))
-
 /-- The actual exposed faces of the crown order polytope, including the empty face and the whole
     polytope. -/
 abbrev CrownExposedFace (n : ℕ) :=
@@ -362,6 +288,34 @@ private noncomputable def crownFaceCode (n : ℕ) (F : CrownExposedFace n) :
 /-- Actual crown exposed faces form a finite family.  Nonempty faces inject into finite masks of
     tight defining inequalities; the empty face occupies the remaining option. -/
 theorem finite_crown_exposed_faces (n : ℕ) : Finite (CrownExposedFace n) := by
+  have crown_affine_slack_feasible_eq (n : ℕ) :
+      (crownAffineSlackFamily n).feasible = crownOrderPolytope n := by
+    classical
+    ext x
+    let e := Fintype.equivFin (CrownConstraint n)
+    constructor
+    · intro hx
+      constructor
+      · intro i
+        constructor
+        · have h := hx (e (Sum.inl i))
+          simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
+        · have h := hx (e (Sum.inr (Sum.inl i)))
+          simpa [crownAffineSlackFamily, crownConstraintSlack, e] using h
+      · intro i j hij
+        let p : {p : Fin (2 * n) × Fin (2 * n) // crownRelation n p.1 p.2} :=
+          ⟨(i, j), hij⟩
+        have h := hx (e (Sum.inr (Sum.inr p)))
+        simpa [crownAffineSlackFamily, crownConstraintSlack, e, p] using h
+    · rintro ⟨hbounds, horder⟩ i
+      let c := e.symm i
+      have hi : i = e c := by simp [c]
+      rw [hi]
+      rcases c with i | i | p
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).1
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using (hbounds i).2
+      · simpa [crownAffineSlackFamily, crownConstraintSlack, e] using
+          (sub_nonneg.mpr (horder p.1.1 p.1.2 p.2))
   classical
   apply Finite.of_injective (crownFaceCode n)
   intro F G hcode
@@ -402,7 +356,6 @@ theorem finite_crown_exposed_faces (n : ℕ) : Finite (CrownExposedFace n) := by
     · have hFempty : F.1 = ∅ := Set.not_nonempty_iff_eq_empty.mp hF
       have hGempty : G.1 = ∅ := Set.not_nonempty_iff_eq_empty.mp hG
       exact hFempty.trans hGempty.symm
-
 /-- The crown augmented by a bottom and a top vertex. -/
 inductive CrownAugmentedVertex (n : ℕ)
   | bottom
@@ -424,30 +377,6 @@ def crownAugmentedLE {n : ℕ} : CrownAugmentedVertex n → CrownAugmentedVertex
   | .vertex i, .vertex j => i = j ∨ crownRelation n i j
   | _, _ => False
 
-/-- Every feasible crown point, extended by zero and one, respects the augmented crown order. -/
-theorem augmentedCoordinate_mono {n : ℕ} {x : Fin (2 * n) → ℝ}
-    (hx : x ∈ crownOrderPolytope n) {u v : CrownAugmentedVertex n}
-    (huv : crownAugmentedLE u v) : augmentedCoordinate x u ≤ augmentedCoordinate x v := by
-  cases u with
-  | bottom =>
-      cases v with
-      | bottom => simp [augmentedCoordinate]
-      | vertex j => exact (hx.1 j).1
-      | top => norm_num [augmentedCoordinate]
-  | top =>
-      cases v with
-      | bottom => simp [crownAugmentedLE] at huv
-      | vertex j => simp [crownAugmentedLE] at huv
-      | top => simp [augmentedCoordinate]
-  | vertex i =>
-      cases v with
-      | bottom => simp [crownAugmentedLE] at huv
-      | top => exact (hx.1 i).2
-      | vertex j =>
-          rcases huv with hij | hij
-          · simpa [hij]
-          · exact hx.2 i j hij
-
 /-- Two augmented vertices are tightly related on a face when they are comparable and their
     extended coordinates agree at every point of the face. -/
 def crownFaceTightRel {n : ℕ} (F : CrownExposedFace n)
@@ -459,14 +388,6 @@ def crownFaceTightGraph {n : ℕ} (F : CrownExposedFace n) :
     SimpleGraph (CrownAugmentedVertex n) :=
   SimpleGraph.fromRel (crownFaceTightRel F)
 
-theorem crownFaceTightGraph_adj_eq {n : ℕ} (F : CrownExposedFace n)
-    {u v : CrownAugmentedVertex n} (huv : (crownFaceTightGraph F).Adj u v)
-    {x : Fin (2 * n) → ℝ} (hx : x ∈ F.1) :
-    augmentedCoordinate x u = augmentedCoordinate x v := by
-  rcases (SimpleGraph.fromRel_adj _ _ _).mp huv with ⟨_, h | h⟩
-  · exact h.2 x hx
-  · exact (h.2 x hx).symm
-
 /-- Every point of an actual exposed face is constant on each connected block of its tight
     comparable-pair graph. -/
 theorem augmentedCoordinate_eq_of_tightComponent {n : ℕ} (F : CrownExposedFace n)
@@ -475,6 +396,13 @@ theorem augmentedCoordinate_eq_of_tightComponent {n : ℕ} (F : CrownExposedFace
       (crownFaceTightGraph F).connectedComponentMk v)
     {x : Fin (2 * n) → ℝ} (hx : x ∈ F.1) :
     augmentedCoordinate x u = augmentedCoordinate x v := by
+  have crownFaceTightGraph_adj_eq {n : ℕ} (F : CrownExposedFace n)
+      {u v : CrownAugmentedVertex n} (huv : (crownFaceTightGraph F).Adj u v)
+      {x : Fin (2 * n) → ℝ} (hx : x ∈ F.1) :
+      augmentedCoordinate x u = augmentedCoordinate x v := by
+    rcases (SimpleGraph.fromRel_adj _ _ _).mp huv with ⟨_, h | h⟩
+    · exact h.2 x hx
+    · exact (h.2 x hx).symm
   have hreach : (crownFaceTightGraph F).Reachable u v :=
     SimpleGraph.ConnectedComponent.exact hcomponent
   have walk_eq {a b : CrownAugmentedVertex n}
@@ -484,5 +412,4 @@ theorem augmentedCoordinate_eq_of_tightComponent {n : ℕ} (F : CrownExposedFace
     | nil => rfl
     | cons h p ih => exact (crownFaceTightGraph_adj_eq F h hx).trans ih
   exact walk_eq hreach.some
-
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytope

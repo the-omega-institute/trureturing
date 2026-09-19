@@ -176,20 +176,179 @@ private theorem trianglePartition_bijective : Function.Bijective trianglePartiti
         h10, h20, h30, h21, h31, h32, h02, h13, h03, Setoid.refl] <;>
       simp_all [triangleVertex]
 
-private theorem trianglePartition_card (s : Finset (Fin 3)) :
-    Nat.card (Quotient (trianglePartition s).toSetoid) = s.card + 1 := by
-  classical
-  have himage : ∀ t : Finset (Fin 3),
-      Finset.univ.image (triangleRank t) = Finset.range (t.card + 1) := by decide
-  change Nat.card (Quotient (Setoid.ker (triangleRank s))) = _
-  rw [Nat.card_congr (Setoid.quotientKerEquivRange (triangleRank s))]
-  rw [Nat.card_eq_fintype_card]
-  rw [Fintype.card_of_finset' (Finset.univ.image (triangleRank s))
-    (by intro k; simp)]
-  rw [himage, Finset.card_range]
-
 private theorem triangle_geometric_count (d : ℕ) :
     crownGeometricFaceCount 1 d = Nat.choose 3 (d + 1) := by
+  have crownPartition_bottom_le {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid (crownPartitionBottomBlock P) C := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    exact ⟨.bottom, v, rfl, rfl, by simp [crownAugmentedLE]⟩
+  have crownPartition_le_top {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (C : Quotient P.toSetoid) :
+      crownPartitionBlockLE P.toSetoid C (crownPartitionTopBlock P) := by
+    refine Quotient.inductionOn C ?_
+    intro v
+    apply Relation.ReflTransGen.single
+    refine ⟨v, .top, rfl, rfl, ?_⟩
+    cases v <;> simp [crownAugmentedLE]
+  have crownPartitionBlockRank_mono {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      {C D : Quotient P.toSetoid} (hCD : crownPartitionBlockLE P.toSetoid C D) :
+      crownPartitionBlockRank P C ≤ crownPartitionBlockRank P D := by
+    letI := P.blockPartialOrder
+    letI : Fintype (Quotient P.toSetoid) := Fintype.ofFinite _
+    letI : Fintype (LinearExtension (Quotient P.toSetoid)) :=
+        Fintype.ofEquiv (Quotient P.toSetoid)
+          { toFun := fun x => x
+            invFun := fun x => x
+            left_inv := fun _ => rfl
+            right_inv := fun _ => rfl }
+    let e := monoEquivOfFin (LinearExtension (Quotient P.toSetoid)) rfl
+    have hlinear : toLinearExtension C ≤ toLinearExtension D := toLinearExtension.monotone hCD
+    have hfin : e.symm (toLinearExtension C) ≤ e.symm (toLinearExtension D) :=
+      e.symm.monotone hlinear
+    change (e.symm (toLinearExtension C)).val ≤ (e.symm (toLinearExtension D)).val
+    exact hfin
+  have crownPartitionBlockRank_injective {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) :
+      Function.Injective (crownPartitionBlockRank P) := by
+    intro C D h
+    letI := P.blockPartialOrder
+    unfold crownPartitionBlockRank at h
+    have hCD : toLinearExtension C = toLinearExtension D :=
+      OrderIso.injective _ (Fin.ext h)
+    exact hCD
+  have crownPartition_rank_denominator_pos {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      (0 : ℝ) < (crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+        crownPartitionBlockRank P (crownPartitionBottomBlock P) := by
+    have hle := crownPartitionBlockRank_mono P
+      (crownPartition_bottom_le P (crownPartitionTopBlock P))
+    have hne : crownPartitionBlockRank P (crownPartitionBottomBlock P) ≠
+        crownPartitionBlockRank P (crownPartitionTopBlock P) :=
+      fun h => hendpoints (crownPartitionBlockRank_injective P h)
+    have hlt := lt_of_le_of_ne hle hne
+    have hltR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) <
+        crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+      exact_mod_cast hlt
+    linarith
+  have crownPartition_block_le_of_augmentedLE {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n) {u v : CrownAugmentedVertex n}
+      (huv : crownAugmentedLE u v) :
+      crownPartitionBlockLE P.toSetoid (Quotient.mk'' u) (Quotient.mk'' v) := by
+    exact
+      Relation.ReflTransGen.single ⟨u, v, rfl, rfl, huv⟩
+  have crownPartitionRankPoint_mem {n : ℕ} (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P) :
+      crownPartitionRankPoint P ∈ crownOrderPolytope n := by
+    have hden := crownPartition_rank_denominator_pos P hendpoints
+    constructor
+    · intro i
+      have hbottom := crownPartitionBlockRank_mono P
+        (crownPartition_bottom_le P (Quotient.mk'' (.vertex i)))
+      have htop := crownPartitionBlockRank_mono P
+        (crownPartition_le_top P (Quotient.mk'' (.vertex i)))
+      have hbottomR : (crownPartitionBlockRank P (crownPartitionBottomBlock P) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) := by
+        exact_mod_cast hbottom
+      have htopR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (crownPartitionTopBlock P) := by
+        exact_mod_cast htop
+      constructor
+      · apply div_nonneg
+        · exact sub_nonneg.mpr hbottomR
+        · exact le_of_lt hden
+      · apply (div_le_one hden).2
+        linarith
+    · intro i j hij
+      have hmono := crownPartitionBlockRank_mono P
+        (crownPartition_block_le_of_augmentedLE P
+          (u := CrownAugmentedVertex.vertex i) (v := CrownAugmentedVertex.vertex j) (Or.inr hij))
+      have hmonoR : (crownPartitionBlockRank P (Quotient.mk'' (.vertex i)) : ℝ) ≤
+          crownPartitionBlockRank P (Quotient.mk'' (.vertex j)) := by
+        exact_mod_cast hmono
+      apply (div_le_div_iff_of_pos_right hden).2
+      linarith
+  have augmentedCoordinate_crownPartitionRankPoint {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        ((crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) := by
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    cases u with
+    | bottom => simp [augmentedCoordinate, crownPartitionBottomBlock]
+    | vertex i => rfl
+    | top =>
+        simp only [augmentedCoordinate, crownPartitionTopBlock]
+        exact (div_self hden).symm
+  have augmentedCoordinate_crownPartitionRankPoint_eq_iff {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P ≠ crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) :
+      augmentedCoordinate (crownPartitionRankPoint P) u =
+        augmentedCoordinate (crownPartitionRankPoint P) v ↔ P.toSetoid.r u v := by
+    rw [augmentedCoordinate_crownPartitionRankPoint P hendpoints u,
+      augmentedCoordinate_crownPartitionRankPoint P hendpoints v]
+    have hden := (crownPartition_rank_denominator_pos P hendpoints).ne'
+    constructor
+    · intro h
+      have hnum : (crownPartitionBlockRank P (Quotient.mk'' u) : ℝ) -
+          crownPartitionBlockRank P (crownPartitionBottomBlock P) =
+          (crownPartitionBlockRank P (Quotient.mk'' v) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P) :=
+        (div_left_inj' hden).mp h
+      have hrank : crownPartitionBlockRank P (Quotient.mk'' u) =
+          crownPartitionBlockRank P (Quotient.mk'' v) := by
+        exact_mod_cast (sub_left_inj.mp hnum)
+      exact Quotient.exact (crownPartitionBlockRank_injective P hrank)
+    · intro huv
+      exact congrArg (fun C =>
+        ((crownPartitionBlockRank P C : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P)) /
+          ((crownPartitionBlockRank P (crownPartitionTopBlock P) : ℝ) -
+            crownPartitionBlockRank P (crownPartitionBottomBlock P))) (Quotient.sound huv)
+  have crownPartition_all_related_of_endpoints_eq {n : ℕ}
+      (P : CrownConnectedCompatiblePartition n)
+      (hendpoints : crownPartitionBottomBlock P = crownPartitionTopBlock P)
+      (u v : CrownAugmentedVertex n) : P.toSetoid.r u v := by
+    apply Quotient.exact
+    apply P.compatible
+    · exact (crownPartition_le_top P (Quotient.mk'' u)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' v)
+    · exact (crownPartition_le_top P (Quotient.mk'' v)).trans <|
+        hendpoints.symm ▸ crownPartition_bottom_le P (Quotient.mk'' u)
+  have crownPartitionFace_nonempty_iff {n : ℕ} (P : CrownConnectedCompatiblePartition n) :
+      (crownPartitionFace P).1.Nonempty ↔
+        crownPartitionBottomBlock P ≠ crownPartitionTopBlock P := by
+    constructor
+    · rintro ⟨x, hx⟩ hendpoints
+      have hall := crownPartition_all_related_of_endpoints_eq P hendpoints
+        CrownAugmentedVertex.bottom CrownAugmentedVertex.top
+      have heq := (mem_crownPartitionFaceSet_iff P x).1 hx |>.2 _ _ hall
+      norm_num [augmentedCoordinate] at heq
+    · intro hendpoints
+      refine ⟨crownPartitionRankPoint P, ?_⟩
+      exact (mem_crownPartitionFaceSet_iff P _).2
+        ⟨crownPartitionRankPoint_mem P hendpoints,
+          fun u v huv => (augmentedCoordinate_crownPartitionRankPoint_eq_iff
+            P hendpoints u v).2 huv⟩
+  have trianglePartition_card (s : Finset (Fin 3)) :
+      Nat.card (Quotient (trianglePartition s).toSetoid) = s.card + 1 := by
+    classical
+    have himage : ∀ t : Finset (Fin 3),
+        Finset.univ.image (triangleRank t) = Finset.range (t.card + 1) := by decide
+    change Nat.card (Quotient (Setoid.ker (triangleRank s))) = _
+    rw [Nat.card_congr (Setoid.quotientKerEquivRange (triangleRank s))]
+    rw [Nat.card_eq_fintype_card]
+    rw [Fintype.card_of_finset' (Finset.univ.image (triangleRank s))
+      (by intro k; simp)]
+    rw [himage, Finset.card_range]
   classical
   let A := {s : Finset (Fin 3) // s.card = d + 1}
   let B := {F : CrownExposedFace 1 // F.val.Nonempty ∧
@@ -241,7 +400,6 @@ private theorem triangle_geometric_count (d : ℕ) :
   change Nat.card B = _
   rw [← Nat.card_congr (Equiv.ofBijective f hbij)]
   simp [A, Nat.card_eq_fintype_card, Fintype.card_finset_len]
-
 /-- The full f-vector is indexed by the empty face first, followed by the
     actual geometric dimensions. In particular the whole polytope is included. -/
 noncomputable def crownGeometricFVector (n : ℕ) : Fin (2 * n + 2) → ℕ := fun k =>

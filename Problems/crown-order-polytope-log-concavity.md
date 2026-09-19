@@ -43,7 +43,7 @@ formula. It does not prove the conjecture. Remark 3.8 states that the
 displayed actual f-polynomials are not real-rooted, so directly claiming
 real-rootedness of that polynomial does not supply the missing proof.
 The Library note records the bounded local and public searches, including
-an unmerged upstream Newton API candidate and the limits of the
+a licensed immutable upstream Newton source and the limits of the
 prior-resolution audit.
 
 ## Route
@@ -63,7 +63,8 @@ Normalize the proven formula as `f_d=2*[d=0]+[d=1]+s_d`, where `s_d`
 is a coefficient of the auxiliary scalar polynomial in the Library note.
 The Chebyshev identity and even/odd factorizations prove that this
 auxiliary polynomial splits over the reals, with repeated roots retained.
-The reusable classical Newton inequality handles its coefficients.
+The licensed elementary-symmetric Newton inequality handles its
+coefficients through Vieta's formula inside the Crown proof.
 The bounds `s_0>=n^2`, `s_0<=s_1<=2n*s_0` handle the comparisons
 at vector indices `1,2,3` for `n>=2`; Newton handles the rest, including
 the last internal index. The separate augmented-chain proof at `n=1`
@@ -88,8 +89,11 @@ Its only hypotheses are the positive-size and internal-index conditions
 above. The exact geometric carrier and full-vector definition occur in
 `CrownOrderPolytope`, `CrownOrderPolytopeFaceCounts`, and
 `CrownOrderPolytopePositive`; `Scalar` and `Chebyshev` prove the
-intermediate polynomial identities. The generic theorem is
-`D5/S3/Analytic/RealRootedCoefficientNewton.split_polynomial_coefficient_newton`.
+intermediate polynomial identities. The licensed prerequisite is
+`D5/S3/Analytic/RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm`.
+It is applied to the negated roots at reversed index `degree-k-2`, with
+out-of-degree coefficients handled by vanishing. Its license and retirement
+condition are in `Library/Combinatorics/tao2026newton.md`.
 The Library note supplies the inspected primary-source SHA-256 values
 and the source-to-module correspondence. The matching Scribe documents
 describe the mathematical results without a final typed settlement claim.
@@ -118,9 +122,10 @@ bind-only declarations throughout the prerequisite chain.
 The proposed `utility.kind` is `none`: these are symbolic geometric
 correspondences, unbounded counting formulas and polynomial inequalities,
 not bounded enumeration, reflection infrastructure, an undischarged
-numeric reduction, or a certified positive finite instance. The triangle
-is a necessary boundary branch inside the universal proof, not a
-standalone finite-instance delivery. `basis`, `consumer`, `instance`,
+numeric reduction, or a certified positive finite instance. The finite
+triangle-rank image calculation occurs inside the actual geometric face
+counting proof; it has no standalone theorem. That geometry supplies the
+necessary boundary case of the universal result. `basis`, `consumer`, `instance`,
 `premises`, `result`, and `claim` are not applicable to this `none`
 classification. Classical Newton and the source's published prerequisite
 results carry no new-mathematics or separate resolution claim.
@@ -130,10 +135,10 @@ all internal indices, with the caller-supplied preregistration above.
 `dominating_theorem_search` is `not-found-in-searched-scope` for an exact
 pre-existing Crown resolution in the bounded searches described by the
 Library note. For the generic Newton prerequisite it is `found` at the
-statement level in the unmerged Mathlib PR 42876; the stronger multiset
-form is a reuse candidate. Its Lean `v4.34.0-rc1` toolchain differs from
+statement level in Mathlib PR 42876; its stronger multiset form is reused
+by the licensed source port. Its Lean `v4.34.0-rc1` toolchain differs from
 the repository's `v4.33.0`, excluding direct dependency admission;
-a licensed transplant and coefficient adaptation remain unverified.
+the port and the in-proof coefficient adaptation preserve the current pins.
 
 ## ASSUMED-UNVERIFIED
 
@@ -142,9 +147,9 @@ require independent review. The fresh arXiv read identifies v3 as current;
 the bounded public searches found no exact Crown resolution, but do not
 establish exhaustive absence or priority. In particular, a citing paper
 was found outside OpenAlex's zero-count citation list. The upstream Newton
-candidate cannot be admitted as a direct dependency at the current pins.
-Its licensed transplant, compilation and exact coefficient reuse remain
-unverified; review must settle reuse before freezing the generic module.
+source cannot be admitted as a direct dependency at the current pins.
+The licensed port and its exact coefficient application require source
+admission review together with the remaining Crown declarations.
 The kernel checks the formal objects, not their correspondence to
 natural-language sources or external priority.
 

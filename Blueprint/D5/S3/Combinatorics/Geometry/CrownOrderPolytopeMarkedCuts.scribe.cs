@@ -21,15 +21,7 @@ internal sealed class CrownOrderPolytopeMarkedCutsDocument : IScribeDocumentDefi
                 Blocks(
                     Paragraph(Text("For n at least two and i at least two, multiplying the number of connected partitions of the 2n-cycle into i blocks with 2m odd blocks by i gives 2n times choose(i,2m) times choose(n+m-1,i-1). The factor i counts markings; all natural support cases are included."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-odd-cycle-blocks-card-even"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.actualOddCycleBlocks_card_even"),
-                H("The number of odd blocks is even"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(
-                    Paragraph(Text("In every connected partition of a nonzero cycle of even size, the number of actual odd-cardinality blocks is even. This is the parity constraint needed to index profiles by 2m."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("In the profile construction, the sum of the actual fiber cardinalities is the even cycle size. The library parity-of-sum equivalence therefore makes the number of odd blocks even and allows profiles to be indexed by 2m.")),
             Describe.Lean(
                 DescribeId.Create("quotient-card-eq-boundary-cuts-card"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Geometry/CrownOrderPolytopeMarkedCuts.quotient_card_eq_boundaryCuts_card"),

@@ -34,6 +34,50 @@ theorem crownOddBlock_geometry {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
     (E = O + 1 ∨ O = E + 1) ∧
       (O < E → ∀ D, crownCycleBlockRel P D C → D = C) ∧
       (E < O → ∀ D, crownCycleBlockRel P C D → D = C) := by
+  have crownCycleBlockRel_iff_boundaryCut {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
+      (P : ConnectedCyclePartition (2 * n)) (C D : Quotient P.toSetoid) (hne : C ≠ D) :
+      crownCycleBlockRel P C D ↔
+        ∃ i j : Fin (2 * n),
+          Quotient.mk'' i = C ∧ Quotient.mk'' j = D ∧ crownRelation n i j ∧
+            ((i ∈ cycleBoundaryCuts P ∧ j = i + 1) ∨
+              (j ∈ cycleBoundaryCuts P ∧ i = j + 1)) := by
+    constructor
+    · rintro ⟨i, j, hi, hj, hij⟩
+      have hnrel : ¬ P.toSetoid.r i j := by
+        intro hrel
+        apply hne
+        rw [← hi, ← hj]
+        exact Quotient.sound hrel
+      refine ⟨i, j, hi, hj, hij, ?_⟩
+      rcases hij.2 with hnext | hprev
+      · left
+        have hsucc : j = i + 1 := by
+          apply Fin.ext
+          simpa [Fin.add_def] using hnext
+        refine ⟨?_, hsucc⟩
+        simpa [cycleBoundaryCuts, hsucc] using hnrel
+      · right
+        have hpred : i = j + 1 := by
+          apply Fin.ext
+          simp only [Fin.add_def, Fin.val_one',
+            Nat.mod_eq_of_lt (show 1 < 2 * n by omega)]
+          by_cases hi0 : i.val = 0
+          · rw [hi0, zero_add, Nat.mod_eq_of_lt (by omega)] at hprev
+            rw [hprev, show 2 * n - 1 + 1 = 2 * n by omega, Nat.mod_self]
+            exact hi0
+          · have hipos : 0 < i.val := Nat.pos_of_ne_zero hi0
+            have hform : i.val + 2 * n - 1 = (i.val - 1) + 2 * n := by omega
+            have himod : ((i.val - 1) + 2 * n) % (2 * n) = i.val - 1 := by
+              rw [Nat.add_mod_right]
+              exact Nat.mod_eq_of_lt (by omega)
+            rw [hform, himod] at hprev
+            rw [hprev, show i.val - 1 + 1 = i.val by omega, Nat.mod_eq_of_lt i.isLt]
+        refine ⟨?_, hpred⟩
+        simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
+        rw [← hpred]
+        exact fun hji => hnrel (P.toSetoid.symm hji)
+    · rintro ⟨i, j, hi, hj, hij, _⟩
+      exact ⟨i, j, hi, hj, hij⟩
   classical
   dsimp only
   let V := crownBlockParityVertices P C
@@ -215,5 +259,4 @@ theorem crownOddBlock_geometry {n : ℕ} [NeZero (2 * n)] (hn : 2 ≤ n)
       · exact (hend 1 0 rfl i hc).1 ⟨hi, hij.1⟩
       · exact (hend 1 0 rfl j hc).2 (by simpa only [← hinext] using And.intro hi hij.1)
     omega
-
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration

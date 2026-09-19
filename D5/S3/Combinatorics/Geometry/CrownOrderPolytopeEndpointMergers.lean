@@ -53,127 +53,11 @@ private noncomputable def twoSidedMergeSetoid {n : ℕ}
     Setoid (CrownAugmentedVertex n) :=
   Setoid.ker (twoSidedMergeCode P lower upper)
 
-private theorem twoSidedMerge_bottom_iff {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid)) (i : Fin (2 * n)) :
-    (twoSidedMergeSetoid P lower upper).r .bottom (.vertex i) ↔
-      (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower := by
-  classical
-  change twoSidedMergeCode P lower upper .bottom =
-    twoSidedMergeCode P lower upper (.vertex i) ↔ _
-  by_cases hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower
-  · simp [twoSidedMergeCode, hi]
-  · by_cases hj : (Quotient.mk'' i : Quotient P.toSetoid) ∈ upper
-    · simp [twoSidedMergeCode, hi, hj]
-    · simp [twoSidedMergeCode, hi, hj]
-
-private theorem twoSidedMerge_top_iff {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid))
-    (hdisjoint : Disjoint lower upper) (i : Fin (2 * n)) :
-    (twoSidedMergeSetoid P lower upper).r .top (.vertex i) ↔
-      (Quotient.mk'' i : Quotient P.toSetoid) ∈ upper := by
-  classical
-  change twoSidedMergeCode P lower upper .top =
-    twoSidedMergeCode P lower upper (.vertex i) ↔ _
-  by_cases hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower
-  · have hnot : (Quotient.mk'' i : Quotient P.toSetoid) ∉ upper := by
-      intro h
-      exact (Finset.disjoint_left.1 hdisjoint) hi h
-    simp [twoSidedMergeCode, hi, hnot]
-  · simp [twoSidedMergeCode, hi]
-
-private theorem twoSidedMerge_lower_originals {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid))
-    (i j : Fin (2 * n))
-    (hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower)
-    (hj : (Quotient.mk'' j : Quotient P.toSetoid) ∈ lower) :
-    (twoSidedMergeSetoid P lower upper).r (.vertex i) (.vertex j) := by
-  classical
-  change twoSidedMergeCode P lower upper (.vertex i) =
-    twoSidedMergeCode P lower upper (.vertex j)
-  simp [twoSidedMergeCode, hi, hj]
-
-private theorem twoSidedMerge_upper_originals {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid))
-    (i j : Fin (2 * n))
-    (hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ upper)
-    (hj : (Quotient.mk'' j : Quotient P.toSetoid) ∈ upper)
-    (hdisjoint : Disjoint lower upper) :
-    (twoSidedMergeSetoid P lower upper).r (.vertex i) (.vertex j) := by
-  classical
-  change twoSidedMergeCode P lower upper (.vertex i) =
-    twoSidedMergeCode P lower upper (.vertex j)
-  have hilower : (Quotient.mk'' i : Quotient P.toSetoid) ∉ lower := by
-    intro h
-    exact (Finset.disjoint_left.1 hdisjoint) h hi
-  have hjlower : (Quotient.mk'' j : Quotient P.toSetoid) ∉ lower := by
-    intro h
-    exact (Finset.disjoint_left.1 hdisjoint) h hj
-  simp [twoSidedMergeCode, hi, hj, hilower, hjlower]
-
-private theorem twoSidedMerge_unselected_originals {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid))
-    (i j : Fin (2 * n))
-    (hiLower : (Quotient.mk'' i : Quotient P.toSetoid) ∉ lower)
-    (hiUpper : (Quotient.mk'' i : Quotient P.toSetoid) ∉ upper)
-    (hjLower : (Quotient.mk'' j : Quotient P.toSetoid) ∉ lower)
-    (hjUpper : (Quotient.mk'' j : Quotient P.toSetoid) ∉ upper) :
-    (twoSidedMergeSetoid P lower upper).r (.vertex i) (.vertex j) ↔
-      P.toSetoid.r i j := by
-  classical
-  change twoSidedMergeCode P lower upper (.vertex i) =
-    twoSidedMergeCode P lower upper (.vertex j) ↔ _
-  have hcode :
-      twoSidedMergeCode P lower upper (.vertex i) =
-          twoSidedMergeCode P lower upper (.vertex j) ↔
-        (Quotient.mk'' i : Quotient P.toSetoid) = Quotient.mk'' j := by
-    simp [twoSidedMergeCode, hiLower, hiUpper, hjLower, hjUpper]
-  constructor
-  · intro h
-    exact @Quotient.exact _ P.toSetoid _ _ (hcode.mp h)
-  · intro h
-    exact hcode.mpr (Quotient.sound h)
-
 /- This is the actual lower/upper split needed by Proposition 3.3: when the
    selected families are disjoint, neither endpoint fiber can accidentally
    contain the other endpoint. -/
-private theorem twoSidedMerge_endpoint_separation {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid)) :
-    ¬ (twoSidedMergeSetoid P lower upper).r .bottom .top := by
-  classical
-  change twoSidedMergeCode P lower upper .bottom ≠
-    twoSidedMergeCode P lower upper .top
-  simp [twoSidedMergeCode]
-
 /- Every selected original lower block is attached to the actual bottom edge,
    and every selected upper block to the actual top edge. -/
-private theorem twoSidedMerge_selected_adjacent {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (lower upper : Finset (Quotient P.toSetoid))
-    (hdisjoint : Disjoint lower upper)
-    (i : Fin (2 * n)) :
-    ((Quotient.mk'' i : Quotient P.toSetoid) ∈ lower →
-      (crownPartitionGraph (twoSidedMergeSetoid P lower upper)).Adj
-        .bottom (.vertex i)) ∧
-    ((Quotient.mk'' i : Quotient P.toSetoid) ∈ upper →
-      (crownPartitionGraph (twoSidedMergeSetoid P lower upper)).Adj
-        (.vertex i) .top) := by
-  classical
-  constructor
-  · intro hi
-    rw [crownPartitionGraph, SimpleGraph.fromRel_adj]
-    exact ⟨by simp, Or.inl ⟨(twoSidedMerge_bottom_iff P lower upper i).mpr hi,
-      by simp [crownAugmentedLE]⟩⟩
-  · intro hi
-    rw [crownPartitionGraph, SimpleGraph.fromRel_adj]
-    exact ⟨by simp, Or.inl ⟨(twoSidedMerge_top_iff P lower upper hdisjoint i).mpr hi |>.symm,
-      by simp [crownAugmentedLE]⟩⟩
-
 /- The two endpoint stars connect all selected blocks, while every unselected
    original block keeps its path in the actual crown cycle. -/
 theorem twoSidedMerge_connected {n : ℕ} (hn : 2 ≤ n)
@@ -182,6 +66,199 @@ theorem twoSidedMerge_connected {n : ℕ} (hn : 2 ≤ n)
     (hdisjoint : Disjoint lower upper) (u v : CrownAugmentedVertex n) :
     (twoSidedMergeSetoid P lower upper).r u v ↔
       (crownPartitionGraph (twoSidedMergeSetoid P lower upper)).Reachable u v := by
+  have parity_succ_mod {n : ℕ} (_hn : 2 ≤ n) (a : Fin (2 * n)) :
+      ((a.val + 1) % (2 * n)) % 2 = (a.val + 1) % 2 := by
+    rw [Nat.mod_mod_of_dvd]
+    exact dvd_mul_right 2 n
+  have pred_mod_succ_mod {N a b : ℕ} (hN : 0 < N) (ha : a < N) (hb : b < N)
+      (hab : a = (b + 1) % N) : b = (a + N - 1) % N := by
+    by_cases hwrap : b + 1 < N
+    · rw [Nat.mod_eq_of_lt hwrap] at hab
+      rw [hab, show b + 1 + N - 1 = b + N by omega, Nat.add_mod, Nat.mod_self,
+        Nat.add_zero, Nat.mod_eq_of_lt hb]
+      exact (Nat.mod_eq_of_lt hb).symm
+    · have hbtop : b + 1 = N := by omega
+      rw [hbtop, Nat.mod_self] at hab
+      subst a
+      rw [zero_add, Nat.mod_eq_of_lt (by omega)]
+      omega
+  have succ_mod_of_pred_mod {N a b : ℕ} (hN : 0 < N) (ha : a < N) (hb : b < N)
+      (hba : b = (a + N - 1) % N) : a = (b + 1) % N := by
+    by_cases ha0 : a = 0
+    · subst a
+      rw [zero_add, Nat.mod_eq_of_lt (by omega)] at hba
+      rw [hba, show N - 1 + 1 = N by omega, Nat.mod_self]
+    · have hapos : 0 < a := Nat.pos_of_ne_zero ha0
+      have hform : a + N - 1 = (a - 1) + N := by omega
+      have hpredlt : a - 1 < N := by omega
+      have hsum : ((a - 1) + N) % N = a - 1 := by
+        simp [Nat.mod_eq_of_lt hpredlt]
+      rw [hform, hsum] at hba
+      rw [hba, show a - 1 + 1 = a by omega, Nat.mod_eq_of_lt ha]
+  have crownRelation_symm_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ n)
+      (i j : Fin (2 * n)) :
+      crownRelation n i j ∨ crownRelation n j i ↔
+        (SimpleGraph.cycleGraph (2 * n)).Adj i j := by
+    letI : NeZero (2 * n) := ⟨by omega⟩
+    constructor
+    · intro h
+      rw [SimpleGraph.cycleGraph_adj']
+      rcases h with hij | hji
+      · rcases hij with ⟨_, hnext | hprev⟩
+        · right
+          have hji : j = i + 1 := by
+            apply Fin.ext
+            simpa [Fin.add_def] using hnext
+          simpa [hji] using (Nat.mod_eq_of_lt (show 1 < 2 * n by omega))
+        · left
+          have hij : i = j + 1 := by
+            apply Fin.ext
+            have hsucc := succ_mod_of_pred_mod (N := 2 * n) (a := i.val) (b := j.val)
+              (by omega) i.isLt j.isLt hprev
+            simpa [Fin.add_def] using hsucc
+          simpa [hij] using (Nat.mod_eq_of_lt (show 1 < 2 * n by omega))
+      · rcases hji with ⟨_, hnext | hprev⟩
+        · left
+          have hij : i = j + 1 := by
+            apply Fin.ext
+            simpa [Fin.add_def] using hnext
+          simpa [hij] using (Nat.mod_eq_of_lt (show 1 < 2 * n by omega))
+        · right
+          have hji : j = i + 1 := by
+            apply Fin.ext
+            have hsucc := succ_mod_of_pred_mod (N := 2 * n) (a := j.val) (b := i.val)
+              (by omega) j.isLt i.isLt hprev
+            simpa [Fin.add_def] using hsucc
+          simpa [hji] using (Nat.mod_eq_of_lt (show 1 < 2 * n by omega))
+    · intro hij
+      rw [SimpleGraph.cycleGraph_adj'] at hij
+      rcases hij with hij | hji
+      · have hsub : i - j = (1 : Fin (2 * n)) := by
+          apply Fin.ext
+          change (i - j).val = 1 % (2 * n)
+          rw [Nat.mod_eq_of_lt (by omega)]
+          exact hij
+        have hij' : i = j + 1 := (sub_eq_iff_eq_add').mp hsub
+        by_cases hj : j.val % 2 = 0
+        · right
+          refine ⟨hj, Or.inl ?_⟩
+          have hval := congrArg Fin.val hij'
+          simpa [Fin.add_def] using hval
+        · left
+          have hjodd : j.val % 2 = 1 := by omega
+          have hival := congrArg Fin.val hij'
+          have hival' : i.val = (j.val + 1) % (2 * n) := by
+            simpa [Fin.add_def] using hival
+          have hi : i.val % 2 = 0 := by
+            rw [hival']
+            rw [parity_succ_mod hn]
+            omega
+          refine ⟨hi, Or.inr ?_⟩
+          exact pred_mod_succ_mod (N := 2 * n) (a := i.val) (b := j.val)
+            (by omega) i.isLt j.isLt hival'
+      · have hsub : j - i = (1 : Fin (2 * n)) := by
+          apply Fin.ext
+          change (j - i).val = 1 % (2 * n)
+          rw [Nat.mod_eq_of_lt (by omega)]
+          exact hji
+        have hji' : j = i + 1 := (sub_eq_iff_eq_add').mp hsub
+        by_cases hi : i.val % 2 = 0
+        · left
+          refine ⟨hi, Or.inl ?_⟩
+          have hval := congrArg Fin.val hji'
+          simpa [Fin.add_def] using hval
+        · right
+          have hiodd : i.val % 2 = 1 := by omega
+          have hjval := congrArg Fin.val hji'
+          have hjval' : j.val = (i.val + 1) % (2 * n) := by
+            simpa [Fin.add_def] using hjval
+          have hj : j.val % 2 = 0 := by
+            rw [hjval']
+            rw [parity_succ_mod hn]
+            omega
+          refine ⟨hj, Or.inr ?_⟩
+          exact pred_mod_succ_mod (N := 2 * n) (a := j.val) (b := i.val)
+            (by omega) j.isLt i.isLt hjval'
+  have twoSidedMerge_bottom_iff {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (lower upper : Finset (Quotient P.toSetoid)) (i : Fin (2 * n)) :
+      (twoSidedMergeSetoid P lower upper).r .bottom (.vertex i) ↔
+        (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower := by
+    classical
+    change twoSidedMergeCode P lower upper .bottom =
+      twoSidedMergeCode P lower upper (.vertex i) ↔ _
+    by_cases hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower
+    · simp [twoSidedMergeCode, hi]
+    · by_cases hj : (Quotient.mk'' i : Quotient P.toSetoid) ∈ upper
+      · simp [twoSidedMergeCode, hi, hj]
+      · simp [twoSidedMergeCode, hi, hj]
+  have twoSidedMerge_top_iff {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (lower upper : Finset (Quotient P.toSetoid))
+      (hdisjoint : Disjoint lower upper) (i : Fin (2 * n)) :
+      (twoSidedMergeSetoid P lower upper).r .top (.vertex i) ↔
+        (Quotient.mk'' i : Quotient P.toSetoid) ∈ upper := by
+    classical
+    change twoSidedMergeCode P lower upper .top =
+      twoSidedMergeCode P lower upper (.vertex i) ↔ _
+    by_cases hi : (Quotient.mk'' i : Quotient P.toSetoid) ∈ lower
+    · have hnot : (Quotient.mk'' i : Quotient P.toSetoid) ∉ upper := by
+        intro h
+        exact (Finset.disjoint_left.1 hdisjoint) hi h
+      simp [twoSidedMergeCode, hi, hnot]
+    · simp [twoSidedMergeCode, hi]
+  have twoSidedMerge_unselected_originals {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (lower upper : Finset (Quotient P.toSetoid))
+      (i j : Fin (2 * n))
+      (hiLower : (Quotient.mk'' i : Quotient P.toSetoid) ∉ lower)
+      (hiUpper : (Quotient.mk'' i : Quotient P.toSetoid) ∉ upper)
+      (hjLower : (Quotient.mk'' j : Quotient P.toSetoid) ∉ lower)
+      (hjUpper : (Quotient.mk'' j : Quotient P.toSetoid) ∉ upper) :
+      (twoSidedMergeSetoid P lower upper).r (.vertex i) (.vertex j) ↔
+        P.toSetoid.r i j := by
+    classical
+    change twoSidedMergeCode P lower upper (.vertex i) =
+      twoSidedMergeCode P lower upper (.vertex j) ↔ _
+    have hcode :
+        twoSidedMergeCode P lower upper (.vertex i) =
+            twoSidedMergeCode P lower upper (.vertex j) ↔
+          (Quotient.mk'' i : Quotient P.toSetoid) = Quotient.mk'' j := by
+      simp [twoSidedMergeCode, hiLower, hiUpper, hjLower, hjUpper]
+    constructor
+    · intro h
+      exact @Quotient.exact _ P.toSetoid _ _ (hcode.mp h)
+    · intro h
+      exact hcode.mpr (Quotient.sound h)
+  have twoSidedMerge_endpoint_separation {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (lower upper : Finset (Quotient P.toSetoid)) :
+      ¬ (twoSidedMergeSetoid P lower upper).r .bottom .top := by
+    classical
+    change twoSidedMergeCode P lower upper .bottom ≠
+      twoSidedMergeCode P lower upper .top
+    simp [twoSidedMergeCode]
+  have twoSidedMerge_selected_adjacent {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (lower upper : Finset (Quotient P.toSetoid))
+      (hdisjoint : Disjoint lower upper)
+      (i : Fin (2 * n)) :
+      ((Quotient.mk'' i : Quotient P.toSetoid) ∈ lower →
+        (crownPartitionGraph (twoSidedMergeSetoid P lower upper)).Adj
+          .bottom (.vertex i)) ∧
+      ((Quotient.mk'' i : Quotient P.toSetoid) ∈ upper →
+        (crownPartitionGraph (twoSidedMergeSetoid P lower upper)).Adj
+          (.vertex i) .top) := by
+    classical
+    constructor
+    · intro hi
+      rw [crownPartitionGraph, SimpleGraph.fromRel_adj]
+      exact ⟨by simp, Or.inl ⟨(twoSidedMerge_bottom_iff P lower upper i).mpr hi,
+        by simp [crownAugmentedLE]⟩⟩
+    · intro hi
+      rw [crownPartitionGraph, SimpleGraph.fromRel_adj]
+      exact ⟨by simp, Or.inl ⟨(twoSidedMerge_top_iff P lower upper hdisjoint i).mpr hi |>.symm,
+        by simp [crownAugmentedLE]⟩⟩
   classical
   let s := twoSidedMergeSetoid P lower upper
   have hback {a b : CrownAugmentedVertex n}
@@ -284,7 +361,6 @@ theorem twoSidedMerge_connected {n : ℕ} (hn : 2 ≤ n)
                         Or.inr ⟨s.symm hsab, Or.inr hbac⟩⟩ }
               obtain ⟨w⟩ := P.connected hij
               exact ⟨w.map f⟩
-
 private def twoSidedMergeCodeLE {n : ℕ} (P : ConnectedCyclePartition (2 * n)) :
     Sum Unit (Sum (Quotient P.toSetoid) Unit) →
       Sum Unit (Sum (Quotient P.toSetoid) Unit) → Prop
@@ -293,75 +369,6 @@ private def twoSidedMergeCodeLE {n : ℕ} (P : ConnectedCyclePartition (2 * n)) 
   | .inr (.inl _), .inr (.inr _) => True
   | .inr (.inr _), .inr (.inr _) => True
   | _, _ => False
-
-private theorem twoSidedMergeCodeLE_refl {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    (a : Sum Unit (Sum (Quotient P.toSetoid) Unit)) :
-    twoSidedMergeCodeLE P a a := by
-  cases a with
-  | inl => simp [twoSidedMergeCodeLE]
-  | inr a =>
-      cases a with
-      | inl => exact Relation.ReflTransGen.refl
-      | inr => simp [twoSidedMergeCodeLE]
-
-private theorem twoSidedMergeCodeLE_trans {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n))
-    {a b c : Sum Unit (Sum (Quotient P.toSetoid) Unit)} :
-    twoSidedMergeCodeLE P a b → twoSidedMergeCodeLE P b c →
-      twoSidedMergeCodeLE P a c := by
-  cases a with
-  | inl => simp [twoSidedMergeCodeLE]
-  | inr a =>
-      cases a with
-      | inr =>
-          cases b with
-          | inl => simp [twoSidedMergeCodeLE]
-          | inr b => cases b <;> simp [twoSidedMergeCodeLE]
-      | inl A =>
-          cases b with
-          | inl => simp [twoSidedMergeCodeLE]
-          | inr b =>
-              cases b with
-              | inr =>
-                  cases c with
-                  | inl => simp [twoSidedMergeCodeLE]
-                  | inr c => cases c <;> simp [twoSidedMergeCodeLE]
-              | inl B =>
-                  cases c with
-                  | inl => simp [twoSidedMergeCodeLE]
-                  | inr c =>
-                      cases c with
-                      | inr => simp [twoSidedMergeCodeLE]
-                      | inl C =>
-                          intro hAB hBC
-                          exact hAB.trans hBC
-
-private theorem twoSidedMergeCodeLE_antisymm {n : ℕ}
-    (P : ConnectedCyclePartition (2 * n)) (hcompatible : crownCycleCompatible P)
-    {a b : Sum Unit (Sum (Quotient P.toSetoid) Unit)} :
-    twoSidedMergeCodeLE P a b → twoSidedMergeCodeLE P b a → a = b := by
-  cases a with
-  | inl =>
-      cases b with
-      | inl => simp
-      | inr b => cases b <;> simp [twoSidedMergeCodeLE]
-  | inr a =>
-      cases a with
-      | inr =>
-          cases b with
-          | inl => simp [twoSidedMergeCodeLE]
-          | inr b => cases b <;> simp [twoSidedMergeCodeLE]
-      | inl A =>
-          cases b with
-          | inl => simp [twoSidedMergeCodeLE]
-          | inr b =>
-              cases b with
-              | inr => simp [twoSidedMergeCodeLE]
-              | inl B =>
-                  intro hAB hBA
-                  exact congrArg (fun C => Sum.inr (Sum.inl C))
-                    (hcompatible hAB hBA)
 
 /- Source Proposition 3.3 uses exactly these orientation facts: no original
    quotient block enters a selected lower-heavy block, and no selected
@@ -376,6 +383,72 @@ theorem twoSidedMerge_compatible {n : ℕ} (hn : 2 ≤ n)
       (crownSelectedUpperBlocks P selected)
     ∀ {C D : Quotient s},
       crownPartitionBlockLE s C D → crownPartitionBlockLE s D C → C = D := by
+  have twoSidedMergeCodeLE_refl {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      (a : Sum Unit (Sum (Quotient P.toSetoid) Unit)) :
+      twoSidedMergeCodeLE P a a := by
+    cases a with
+    | inl => simp [twoSidedMergeCodeLE]
+    | inr a =>
+        cases a with
+        | inl => exact Relation.ReflTransGen.refl
+        | inr => simp [twoSidedMergeCodeLE]
+  have twoSidedMergeCodeLE_trans {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n))
+      {a b c : Sum Unit (Sum (Quotient P.toSetoid) Unit)} :
+      twoSidedMergeCodeLE P a b → twoSidedMergeCodeLE P b c →
+        twoSidedMergeCodeLE P a c := by
+    cases a with
+    | inl => simp [twoSidedMergeCodeLE]
+    | inr a =>
+        cases a with
+        | inr =>
+            cases b with
+            | inl => simp [twoSidedMergeCodeLE]
+            | inr b => cases b <;> simp [twoSidedMergeCodeLE]
+        | inl A =>
+            cases b with
+            | inl => simp [twoSidedMergeCodeLE]
+            | inr b =>
+                cases b with
+                | inr =>
+                    cases c with
+                    | inl => simp [twoSidedMergeCodeLE]
+                    | inr c => cases c <;> simp [twoSidedMergeCodeLE]
+                | inl B =>
+                    cases c with
+                    | inl => simp [twoSidedMergeCodeLE]
+                    | inr c =>
+                        cases c with
+                        | inr => simp [twoSidedMergeCodeLE]
+                        | inl C =>
+                            intro hAB hBC
+                            exact hAB.trans hBC
+  have twoSidedMergeCodeLE_antisymm {n : ℕ}
+      (P : ConnectedCyclePartition (2 * n)) (hcompatible : crownCycleCompatible P)
+      {a b : Sum Unit (Sum (Quotient P.toSetoid) Unit)} :
+      twoSidedMergeCodeLE P a b → twoSidedMergeCodeLE P b a → a = b := by
+    cases a with
+    | inl =>
+        cases b with
+        | inl => simp
+        | inr b => cases b <;> simp [twoSidedMergeCodeLE]
+    | inr a =>
+        cases a with
+        | inr =>
+            cases b with
+            | inl => simp [twoSidedMergeCodeLE]
+            | inr b => cases b <;> simp [twoSidedMergeCodeLE]
+        | inl A =>
+            cases b with
+            | inl => simp [twoSidedMergeCodeLE]
+            | inr b =>
+                cases b with
+                | inr => simp [twoSidedMergeCodeLE]
+                | inl B =>
+                    intro hAB hBA
+                    exact congrArg (fun C => Sum.inr (Sum.inl C))
+                      (hcompatible hAB hBA)
   classical
   dsimp only
   letI : NeZero (2 * n) := ⟨by omega⟩
@@ -471,7 +544,6 @@ theorem twoSidedMerge_compatible {n : ℕ} (hn : 2 ≤ n)
   intro C D hCD hDC
   apply hqcode_injective
   exact twoSidedMergeCodeLE_antisymm P hcompatible (hpath hCD) (hpath hDC)
-
 /-- Source Proposition 3.3's forward map: split selected actual odd blocks by
     their actual parity counts and merge them with the corresponding endpoints. -/
 noncomputable def twoSidedMergeCCP {n : ℕ} (hn : 2 ≤ n)

@@ -4,21 +4,21 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class RealRootedCoefficientNewtonDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef CrownAudit =
-        LibraryNoteRef.Create("D5/L/Combinatorics/lundstrom2025crown");
+    private static readonly LibraryNoteRef NewtonSource =
+        LibraryNoteRef.Create("D5/L/Combinatorics/tao2026newton");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Real splitting gives strong coefficient Newton inequalities.",
-        H("Strong Newton inequalities for real split polynomials"),
+        "Newton inequalities for elementary symmetric functions of real multisets.",
+        H("Newton inequalities from the upstream symmetric-function proof"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("split-polynomial-coefficient-newton"),
-                DeclarationHandle.Create("D5/S3/Analytic/RealRootedCoefficientNewton.split_polynomial_coefficient_newton"),
-                H("Strong Newton inequality at every coefficient"),
+                DescribeId.Create("elementary-symmetric-newton"),
+                DeclarationHandle.Create("D5/S3/Analytic/RealRootedCoefficientNewton.esymm_mul_esymm_le_sq_esymm"),
+                H("The reduced Newton inequality"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(CrownAudit),
+                AssessedProvenance.FromLiterature(NewtonSource),
                 Blocks(
-                    Paragraph(Text("For every real polynomial p that splits over the reals and every natural k, (k+1) times the square of coefficient k+1 is at least (k+2) times the product of coefficients k and k+2. No nonnegativity, simplicity of roots, nonzero polynomial or degree bound is assumed. This is the strong unnormalized coefficient form of the classical Newton inequalities; it is not a claim of a new classical inequality.")),
-                    Paragraph(Text("Rolle's root-count theorem with multiplicities proves that derivatives of split real polynomials split. Induction on products of real linear and constant factors proves Laguerre positivity at every real point. Evaluating this at zero and inducting on derivatives proves the coefficient inequality with the factorial factors. Applied to the auxiliary scalar polynomial, this gives the Newton inequalities used in the crown log-concavity theorem. The coefficient inequality omits the extra finite-degree factor of the degree-sharp normalized Newton inequalities."))),
+                    Paragraph(Text("For a multiset s of N real numbers and every natural k, the product (k+2)(N-k)e_k e_(k+2) is at most (k+1)(N-k-1)e_(k+1)^2, where e_j is its j-th elementary symmetric function. No sign or distinctness assumption is imposed on the entries, and indices beyond N are included.")),
+                    Paragraph(Text("The upstream proof represents elementary symmetric functions by a product of linear factors. The derivative has real roots with multiplicities; normalizing its leading coefficient reduces the number of entries while preserving normalized symmetric functions. Strong induction, the second-degree sum-of-squares inequality, and inversion at the last index prove Newton's inequality. In the Crown theorem, Vieta's formula for the negated root multiset converts this result to the needed coefficient inequalities. The license note identifies the immutable source and preserves its complete Apache license."))),
                 DescribeRole.Theorem))));
 }
