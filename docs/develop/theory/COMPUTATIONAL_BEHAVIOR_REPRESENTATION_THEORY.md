@@ -1405,3 +1405,239 @@ $V_A$ 自伴，$\operatorname{Tr}_B[W(I\otimes\tau_B)]=0$。记 $\Phi_t(\rho)=\o
 **约定 27.3（产地与核验身份）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷。数学、文献核对、文字实施及检错由本会话 ChatGPT 单席串行完成，没有独立模型或同行审阅。有限检查使用精确有理数/符号计算、双精度矩阵计算及 80 位标量计算，分别注明用途，不能替代一般证明。未新增 Lean、Scribe、工具、冻结记录或消化结算状态，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。本文新增十条带证明结果，原条目全部保留；完整前缀字节比较用于检测误改，不代替消化账目核验。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 增补五·固定热参考的精确熵收缩及量子维数边界
+
+**本批导航。** 本批接续原卷 `c4b06639e9da9573f53bd841eed5e5312f9516ad`，读取的 dev 为 `806e7401e78a7b65587aac35370714b272ba2b46`，读取的 PR #8891 为 `bbea3408282f1bfb7e713f4f61f7e3b5be01f58d`。后者已将 #8899 合编进《统一预测几何》主卷，包含观测 Gramian、后验热恢复及磁场信息设计。本批不重复这些结果，在本卷第 25 节的耗散极限上继续研究：退化噪声如何经保守旋转耗散全部信息；经典与量子模型何时具有相同的精确收缩系数；有限延迟数据能够认证什么。第 1–27 节全部保留。本批不使用原卷中未完成远端交付的其他草稿编号。
+
+**定义 28.1（固定参考的收缩系数）。** 对保持概率参考 $\gamma$ 的 Markov 核 $\mathcal K$，定义
+\[
+ \eta_\gamma(\mathcal K)=\sup_{0<D(\nu\Vert\gamma)<\infty}
+      \frac{D(\mathcal K\nu\Vert\gamma)}{D(\nu\Vert\gamma)}.
+\]
+对保持满秩密度矩阵 $\tau$ 的量子信道 $\Phi$，同样定义 $\eta_\tau(\Phi)$，上确界取全部 $\rho\ne\tau$。所有对数为自然对数，迹范数不含二分之一。这里固定第二个相对熵变量，不讨论对任意两个输入同时取上确界的不同系数。经典参考 $\gamma_d$ 表示 $\mathcal N(0,I_d)$；量子参考 $I_2/2$ 表示最大混合态。后者一般不是非零 Hamilton 算子在有限正温度下的 Gibbs 态。
+
+**定理 28.2（Gaussian 保持核的精确相对熵系数）。** 对 $F\in\mathbb R^{d\times d}$、$\|F\|_2\le1$，令
+\[
+ \mathcal K_F(x,\cdot)=\mathcal N(Fx,I_d-FF^{\mathsf T}),
+\]
+允许退化噪声。则
+\[
+ \boxed{\eta_{\gamma_d}(\mathcal K_F)=\|F\|_2^2.}
+\]
+上界适用于所有有限相对熵输入，包括非 Gaussian 输入；当 $F\ne0$ 时，沿最大右奇异向量的任意非零平移 Gaussian 输入达到该界。
+
+**证明。** $X\sim\gamma_d$ 时输出仍为 $\gamma_d$。先考虑标量收缩核 $F=e^{-u}I_d$。对光滑、正且上下有界的参考密度 $f$，其 Ornstein–Uhlenbeck 演化 $Q_uf$ 满足
+\[
+ \frac{d}{du}\operatorname{Ent}_{\gamma_d}(Q_uf)
+ =-\int\frac{|\nabla Q_uf|^2}{Q_uf}\,d\gamma_d,
+ \qquad \nabla Q_uf=e^{-u}Q_u\nabla f.
+\]
+由加权 Cauchy–Schwarz 和参考不变性，右侧 Fisher 信息至多为 $e^{-2u}\int|\nabla f|^2/f\,d\gamma_d$。$Q_uf\to1$，由上下有界和控制收敛，其熵趋零；对上式从零到无穷积分得到 Gaussian 对数 Sobolev 不等式
+\[
+ \operatorname{Ent}_{\gamma_d}(f)\le\tfrac12\int|\nabla f|^2/f\,d\gamma_d.
+\]
+再将它用于每个 $Q_uf$，微分不等式给出 $\operatorname{Ent}(Q_uf)\le e^{-2u}\operatorname{Ent}(f)$。一般有限熵密度先截断、加入正底并归一化，再用 $Q_\varepsilon$ 平滑。截断密度的熵收敛、$L^1$ 连续性及输出相对熵的下半连续性，将结论延至全部有限熵输入。这是 Gaussian 对数 Sobolev 的标准半群证明，本文写出所需步骤。[^tcs5-gaussian]
+
+令 $s=\|F\|$。$s=0$ 时输出恒为参考，$s=1$ 时上界由数据处理给出。$0<s<1$ 时，$G=F/s$ 也是收缩，先作用 $\mathcal K_{sI}$ 再作用 $\mathcal K_G$，复合均值为 $Fx$、噪声协方差为 $I-FF^{\mathsf T}$。因此
+\[
+ D(\mathcal K_F\nu\Vert\gamma_d)
+ \le D(\mathcal K_{sI}\nu\Vert\gamma_d)
+ \le s^2D(\nu\Vert\gamma_d).
+\]
+最后取 $\nu=\mathcal N(a,I_d)$，输出为 $\mathcal N(Fa,I_d)$；两个相对熵分别为 $|a|^2/2$、$|Fa|^2/2$。最大右奇异向量给出匹配下界，亦覆盖 $s=1$。证毕。
+
+**定理 28.3（单量子比特的相同精确系数）。** 设 $\Phi$ 为保单位的单量子比特完全正、迹保持信道，其 Bloch 表示为
+\[
+ \rho_r=\tfrac12(I+r\cdot\sigma),\quad |r|\le1,
+ \qquad \Phi(\rho_r)=\rho_{Tr},\quad T\in\mathbb R^{3\times3}.
+\]
+则
+\[
+ \boxed{\eta_{I_2/2}(\Phi)=\|T\|_2^2.}
+\]
+当 $0<\|T\|<1$ 时，沿最大右奇异向量趋近最大混合态的输入实现上确界极限；不需要给输入附加纯态假设。
+
+**证明。** Bloch 球保持给 $\|T\|\le1$。密度矩阵的两个特征值为 $(1\pm|r|)/2$，所以
+\[
+ D(\rho_r\Vert I/2)=\phi(|r|),\qquad
+ \phi(v)=\tfrac12[(1+v)\log(1+v)+(1-v)\log(1-v)].
+\]
+由 $\phi'(v)=\operatorname{artanh}v$ 积分得
+\[
+ \phi(v)=\sum_{k=1}^\infty\frac{v^{2k}}{2k(2k-1)},\quad0\le v\le1,
+\]
+端点由单调收敛解释。所有系数非负，故 $\phi(sv)\le s^2\phi(v)$，其中 $s=\|T\|$。$\phi$ 单调，得到全部输入的上界。取单位最大奇异向量 $a$，令 $r=\varepsilon a$；$\phi(v)=v^2/2+O(v^4)$，熵比趋于 $s^2$。这给出所需下界。本条是已知单比特收缩结构的固定参考版本；幂级数证明说明它依赖二能级的具体熵函数。证毕。[^tcs5-qubit]
+
+**命题 28.4（三能级不能直接使用平方范数公式）。** 存在保单位的三能级信道，其无迹矩阵上的 Hilbert–Schmidt 收缩范数为 $1/2$，但相对于 $I_3/3$ 的相对熵系数严格大于 $1/4$。
+
+**证明。** 取 $\Phi(\rho)=(\rho+I_3/3)/2$。它是恒等信道与完全退极化信道的等权混合，无迹部分恰乘以 $1/2$。令
+\[
+ \rho=\operatorname{diag}(2/3,1/6,1/6),\qquad
+ \Phi(\rho)=\operatorname{diag}(1/2,1/4,1/4).
+\]
+直接求和给 $D(\rho\Vert I/3)=\log2/3$、$D(\Phi(\rho)\Vert I/3)=\log(9/8)/2$。熵比为
+\[
+ \frac{3\log(9/8)}{2\log2}>\frac14,
+\]
+因为 $9^6=531441>524288=2\,8^6$。这是交换对角态内的反例，已足以阻止从定理 28.3 外推到任意量子维数，也阻止把 Gaussian 结论套到任意经典离散概率空间。高维退极化的相对熵衰减另有专门理论。证毕。[^tcs5-depolarizing]
+
+## 29. 保守旋转使退化耗散覆盖全部状态的充要条件
+
+**定义 29.1（原卷耗散极限的固定模型）。** 沿用第 25.3 条所得线性扩散，固定 $D^{\mathsf T}=-D\in\mathbb R^{d\times d}$、$B\in\mathbb R^{d\times k}$，令
+\[
+ M=BB^{\mathsf T},\quad A=D-M/2,\quad F_t=e^{tA},
+ \qquad dX_t=AX_t\,dt+B\,dW_t.
+\]
+其转移核为 $\mathcal P_t=\mathcal K_{F_t}$，参考为 $\gamma_d$。所有参数已知且不随 $t$ 改变。定义
+\[
+ m=\min\left\{j\ge0:\operatorname{rank}[B,DB,\ldots,D^jB]=d\right\},
+\]
+若不存在则记 $m=\infty$。这里只讨论有明确线性 Gaussian 半群实现的模型；第 23 节的一次初始化有限热环境不自动满足本定义。
+
+**定理 29.2（同一 Gramian 决定可观测深度与最坏熵损失）。** 对所有 $t\ge0$，
+\[
+ \eta_{\gamma_d}(\mathcal P_t)=\|F_t\|^2,
+ \qquad 1-\eta_{\gamma_d}(\mathcal P_t)=\lambda_{\min}G_t,
+\]
+\[
+ G_t=I-F_t^{\mathsf T}F_t
+     =\int_0^te^{sA^{\mathsf T}}BB^{\mathsf T}e^{sA}ds.
+\]
+以下等价：$m<\infty$；某个正时刻的熵系数严格小于一；每个正时刻的熵系数严格小于一。成立时
+\[
+ \boxed{1-\eta_{\gamma_d}(\mathcal P_t)=\Theta(t^{2m+1})\quad(t\downarrow0).}
+\]
+选任意 $t_0>0$、$c_0=\|F_{t_0}\|^2<1$，则全部有限熵初态及全部 $t\ge0$ 有
+\[
+ D(\mathcal P_t\nu\Vert\gamma_d)
+ \le c_0^{\lfloor t/t_0\rfloor}D(\nu\Vert\gamma_d).
+\]
+
+**证明。** $A+A^{\mathsf T}=-M$，对 $F_t^{\mathsf T}F_t$ 求导并积分即得 Gramian。显式线性随机解的噪声协方差是 $I-F_tF_t^{\mathsf T}$，所以定理 28.2 给出前两式。
+
+对 $x$，$x^{\mathsf T}G_tx=\int_0^t|B^{\mathsf T}e^{sA}x|^2ds$。在任意正窗上为零当且仅当所有导数 $B^{\mathsf T}A^jx$ 都为零；矩阵解析性和 Cayley–Hamilton 使前 $d$ 项已足够。每个有限阶的零导数空间还满足
+\[
+ \bigcap_{j=0}^N\ker(B^{\mathsf T}A^j)
+ =\bigcap_{j=0}^N\ker(B^{\mathsf T}D^j).
+\]
+逐阶证明此式：若前面各 $B^{\mathsf T}D^jx=0$，则对应的 $MD^jx=0$，故到下一阶之前 $A^jx=D^jx$；反向使用同一递推。这些空间的正交补由 $[B,DB,\ldots,D^NB]$ 的列张成，因为 $D^{\mathsf T}=-D$。因此严格正定与所列秩条件等价。
+
+有限 $m$ 下，有限导数映射 $x\mapsto(B^{\mathsf T}x,\ldots,B^{\mathsf T}A^mx)$ 有统一正下界。对 $B^{\mathsf T}e^{sA}x$ 展开到 $m$ 阶，令 $s=tu$；Hilbert Gram 矩阵 $(1/(i+j+1))_{0\le i,j\le m}$ 的正定性给多项式平方积分下界 $c t^{2m+1}|x|^2$。指数尾项的 $L^2$ 范数为 $O(t^{m+3/2})|x|$，小时间可吸收一半，得到统一下界。最小性给非零 $x$ 使第零至 $m-1$ 阶导数为零（$m=0$ 时任选单位向量），其积分为 $O(t^{2m+1})$，得到上界。最后半群性和参考保持使每个完整 $t_0$ 区间贡献因子 $c_0$，剩余时间使用数据处理。该幂次就是经典 hypocoercivity index 的时间尺度；本条把它与本卷的预测导数塔及固定参考信息逃逸放在相同矩阵上。证毕。[^tcs5-index]
+
+## 30. 经典振子与受驱动量子比特的同一耗散曲线
+
+**定义 30.1（共同的二维漂移）。** 固定 $\gamma>0$、$\omega\in\mathbb R$，令
+\[
+ A_{\gamma,\omega}=\begin{pmatrix}-\gamma&\omega\\-\omega&0\end{pmatrix}.
+\]
+经典模型为 $dX=A_{\gamma,\omega}Xdt+(\sqrt{2\gamma},0)^{\mathsf T}dW$，平衡参考 $\gamma_2$。量子模型为单比特 Lindblad 方程
+\[
+ \dot\rho=-i[(\omega/2)\sigma_y,\rho]
+           +(\gamma/2)(\sigma_z\rho\sigma_z-\rho),
+\]
+参考为 $I_2/2$，取 $\hbar=1$。它可以看作第 26.3 条去相干极限上增加相干旋转。两种模型各自的状态空间、噪声实现及实验读取仍分别指定。
+
+**定理 30.2（共同的最坏相对熵曲线及三阶起始律）。** 定义
+\[
+ s_\omega(t)=
+ \begin{cases}
+ \sinh(t\sqrt{\gamma^2/4-\omega^2})/\sqrt{\gamma^2/4-\omega^2},&|\omega|<\gamma/2,\\
+ t,&|\omega|=\gamma/2,\\
+ \sin(t\sqrt{\omega^2-\gamma^2/4})/\sqrt{\omega^2-\gamma^2/4},&|\omega|>\gamma/2.
+ \end{cases}
+\]
+上述经典模型与量子模型的固定参考熵系数均精确等于
+\[
+ \boxed{c_{\gamma,\omega}(t)
+ =e^{-\gamma t}\left(\sqrt{1+\gamma^2s_\omega(t)^2/4}
+                     +\gamma|s_\omega(t)|/2\right)^2.}
+\]
+$\omega=0$ 时 $c(t)=1$；$\omega\ne0$ 时每个 $t>0$ 有 $c(t)<1$，并且
+\[
+ c_{\gamma,\omega}(t)=1-\frac{\gamma\omega^2}{6}t^3+O(t^4).
+\]
+经典上界由平移 Gaussian 态达到；量子上界由趋近最大混合态的态族逼近。
+
+**证明。** 写 $A=-\gamma I/2+K$，则 $K^2=(\gamma^2/4-\omega^2)I$。因此 $e^{tA}=e^{-\gamma t/2}(c_*I+s_\omega(t)K)$，其中 $c_*^2-(\gamma^2/4-\omega^2)s_\omega(t)^2=1$。直接计算
+\[
+ \operatorname{tr}(e^{tA^{\mathsf T}}e^{tA})
+ =e^{-\gamma t}(2+\gamma^2s_\omega(t)^2),\qquad
+ \det(e^{tA^{\mathsf T}}e^{tA})=e^{-2\gamma t}.
+\]
+二阶特征方程的较大根即为盒中公式。定理 28.2 给经典系数。
+
+量子 Bloch 坐标满足 $(\dot r_x,\dot r_z)^{\mathsf T}=A(r_x,r_z)^{\mathsf T}$、$\dot r_y=-\gamma r_y$。二维块的最大平方奇异值至少为其行列式的平方根 $e^{-\gamma t}$，故大于等于剩余方向的 $e^{-2\gamma t}$。定理 28.3 给相同系数。$\omega\ne0$ 时定义 29.1 的秩在深度一已满，故由定理 29.2 得严格收缩；$\omega=0$ 存在完整保留的方向。最后在小正时间使用 $s_\omega(t)=t+(\gamma^2/4-\omega^2)t^3/6+O(t^5)$，对公式取对数并展开，线性项相消，三阶项为 $-\gamma\omega^2t^3/6$。本条只识别一个精确的资源指标，不构造两个物理系统之间的状态同构。证毕。
+
+**定理 30.3（固定耗散强度下的定时最优旋转与控制代价）。** 固定 $\gamma>0$ 和目标时间 $T>0$，在全部常数 $\omega$ 中优化时，两种模型均满足
+\[
+ \boxed{\min_{\omega\in\mathbb R}c_{\gamma,\omega}(T)=e^{-\gamma T}.}
+\]
+最小绝对值的达到频率为
+\[
+ |\omega_T|=\sqrt{\gamma^2/4+\pi^2/T^2}.
+\]
+若另外要求 $|\omega|\le\Omega<\infty$，则仅当 $\Omega\ge|\omega_T|$ 才能达到上述下界；对固定 $\Omega$ 的小时间极限，
+\[
+ \inf_{|\omega|\le\Omega}c_{\gamma,\omega}(T)
+ =1-\frac{\gamma\Omega^2}{6}T^3+O(T^4).
+\]
+
+**证明。** 任意二维矩阵的最大平方奇异值至少是两平方奇异值的几何平均，所以 $c(T)\ge e^{-\gamma T}$。定理 30.2 的公式表明等号当且仅当 $s_\omega(T)=0$。前两个分支在正时间非零；第三分支的零点满足 $T\sqrt{\omega^2-\gamma^2/4}=j\pi$、$j\ge1$，得到全部达到频率及最小绝对值。紧区间 $[-\Omega,\Omega]$ 上的 Taylor 余项可一致控制，因此定理 30.2 的三阶式可对 $\omega$ 取下确界，得到最后一式。
+
+固定参数的三阶起始律，与针对每个 $T$ 重新选择的 $e^{-\gamma T}$ 下界并不冲突。达到后一目标需要 $|\omega_T|\sim\pi/T$，量子控制 Hamilton 算子范数为 $|\omega_T|/2$；这里增加的是控制强度，不能据此宣称无成本的任意快混合。优化保守漂移以改善给定平衡的收敛已有相关文献，本条解决当前二维、常系数、定时及幅值预算问题。证毕。[^tcs5-optimal]
+
+## 31. 从有限延迟观测认证全分布耗散及其模型边界
+
+**定理 31.1（已知 OU 类内的单延迟熵证书）。** 在定义 29.1 的已校准完整状态模型中，取固定延迟 $h>0$。平衡配对相关为 $F_h=\mathbb E[X_hX_0^{\mathsf T}]$。若矩阵估计满足 $\|\widehat F_h-F_h\|_2\le\varepsilon$，定义
+\[
+ c_-=(\|\widehat F_h\|_2-\varepsilon)_+^2,
+ \qquad c_+=\min\{1,(\|\widehat F_h\|_2+\varepsilon)^2\}.
+\]
+则 $c_-\le\eta_{\gamma_d}(\mathcal P_h)\le c_+$。若 $c_+<1$，对全部有限熵初态及全部整数 $n\ge0$ 有
+\[
+ \boxed{D(\mathcal P_{nh}\nu\Vert\gamma_d)
+        \le c_+^nD(\nu\Vert\gamma_d).}
+\]
+由 $N$ 次独立热初态制备的配对样本构造 $\widehat F_h=N^{-1}\sum_{j=1}^N X_h^{(j)}(X_0^{(j)})^{\mathsf T}$，在无额外传感噪声且热白化已知时，任意失败概率 $0<\alpha<1$ 可取
+\[
+ \varepsilon_N=\sqrt{d(d+1)/(N\alpha)}.
+\]
+此预算以至少 $1-\alpha$ 概率有效。如果 $b_h=1-\|F_h\|>0$ 且 $\varepsilon_N<b_h/2$，则在同一事件上证书必为严格收缩。$m<\infty$ 时，固定维数和置信度下，$N$ 为充分大常数倍的 $h^{-4m-2}$ 是小延迟的一个保守充分预算，不宣称样本最优性。
+
+**证明。** 范数三角不等式和定理 28.2 给系数区间；半群性使它可逐段复用。热平衡下 $X_0,X_h$ 各自协方差为 $I$，且联合 Gaussian。Wick 四阶矩给每个相关元素的样本方差为 $[1+(F_h)_{ab}^2]/N$，故
+\[
+ \mathbb E\|\widehat F_h-F_h\|_F^2
+ =\frac{d^2+\|F_h\|_F^2}{N}\le\frac{d(d+1)}N.
+\]
+Markov 不等式及算子范数不超过 Frobenius 范数给所列置信预算。在该事件上 $\|\widehat F_h\|+\varepsilon_N\le\|F_h\|+2\varepsilon_N<1$。定理 29.2 给 $b_h=\Theta(h^{2m+1})$，代入预算即可。
+
+本结论将平衡实验的矩阵误差转换为已知模型类中全部非平衡初态的熵保证；外推依赖该类的 Gaussian 转移与半群结构。只读取未闭合的投影、未知热白化、相邻时刻的非独立样本或额外仪器噪声，都需要另建误差模型。量子单比特若已获得 Bloch 矩阵的算子范数误差，也可用定理 28.3 的相同代数区间，但上述 Gaussian 样本统计不能直接充当量子测量保证。证毕。
+
+**命题 31.2（单延迟数据不能自行证明不可逆半群）。** 对任意固定 $h>0$，存在一个有限封闭正定振子的标量热观察和一个严格耗散的标量 OU 过程，使二者任意次数独立制备得到的延迟 $h$ 平衡配对数据法则完全相同，而它们的长期信息行为不同。
+
+**证明。** 取振子频率 $\omega=\pi/(3h)$，单位热协方差，其归一位置相关为 $f(t)=\cos(\omega t)$。另取平稳 OU 过程 $dY=-\lambda Ydt+\sqrt{2\lambda}\,dW$，其中 $\lambda=\log2/h$。两个模型的 $(X_0,X_h)$ 都是零均值、单位边缘方差、相关系数 $1/2$ 的二元 Gaussian，故全部独立配对样本法则相同。
+
+振子从位置平移为 $a\ne0$、隐藏动量仍为独立热分布的初态出发，在 $6h$ 精确返回，位置相对热参考的 KL 为 $a^2/2$。OU 从同一位置边缘出发，在 $6h$ 的 KL 为 $2^{-12}a^2/2$。单延迟的边缘通道均具有系数 $1/4$，但振子的一次初始化过程不满足半群复合，不能把它迭代成 $(1/4)^6$。所以无论单延迟配对数据数量多大，都不能仅凭这些数据把定义 29.1 的模型假设认证出来。额外延迟、干预或先验动力学结构会改变这一辨识问题。证毕。
+
+## 32. 本批来源、贡献边界与证明身份
+
+**出处 32.1（直接文献与来源范围）。** 第 28.2 条是 Gaussian 对数 Sobolev 与强数据处理的具体形式；第 28.3 条属于已知单比特收缩理论；第 29.2 条的奇数短时幂次与 hypocoercivity index 是经典控制/耗散结构。本卷对这些构件给出所需完整证明，不把它们计作新的学术发现。第 28.4 条的有理三能级见证、第 30 节当前经典/量子模型的共同定时曲线与控制预算，以及第 31 节的观测证书和双模型辨识反例，按本批具体推导列为 `repo-derived`。该标记指来源与推导方式；发表级新颖性需另与最接近定理逐项比较。
+
+[^tcs5-gaussian]: Gaussian 对数 Sobolev 的半群方法属于 Gross 理论。Anton Arnold、Jan Erb，*Sharp entropy decay for hypocoercive and non-symmetric Fokker–Planck equations with linear drift*，[arXiv:1409.5425](https://arxiv.org/abs/1409.5425)，研究线性漂移下的熵衰减及 Gaussian 不变族；Anton Arnold、Christian Schmeiser、Beatrice Signorello，*Propagator norm and sharp decay estimates for Fokker–Planck equations with linear drift*，[arXiv:2003.01405](https://arxiv.org/abs/2003.01405)，其主结果是归一 Fokker–Planck 的加权 $L^2$ 传播范数与漂移 ODE 范数一致。后者的 $L^2$ 声明不直接替代本卷的 KL 声明；第 28.2 条另给 Gaussian 核分解及固定参考证明。本批读取两篇作者条目的摘要范围，不据此引用未读取页码。
+
+[^tcs5-qubit]: Fumio Hiai、Mary Beth Ruskai，*Contraction coefficients for noisy quantum channels*，[arXiv:1508.03551](https://arxiv.org/abs/1508.03551)，是量子收缩系数的直接来源；Mario Berta、David Sutter、Michael Walter，*Quantum Brascamp–Lieb Dualities*，Communications in Mathematical Physics 401, 1807–1830 (2023)，[原文 Example 3.11](https://doi.org/10.1007/s00220-023-04678-w)，明确给出单比特退极化的固定最大混合参考系数及趋近参考的达到方式。第 28.3 条用 Bloch 熵级数写出本批实际使用的任意保单位单比特版本。一般高维、有限温非最大混合参考和附加量子记忆均未被该证明覆盖。
+
+[^tcs5-depolarizing]: Alexander Müller-Hermes、Daniel Stilck França、Michael M. Wolf，*Relative entropy convergence for depolarizing channels*，Journal of Mathematical Physics 57, 022202 (2016)，[arXiv:1508.07021](https://arxiv.org/abs/1508.07021)，研究满秩固定点退极化及其 log-Sobolev-1 常数。第 28.4 条只以直接可核算的三能级输入反驳无条件平方范数推广，没有重新求解一般高维收缩系数。
+
+[^tcs5-index]: Franz Achleitner、Anton Arnold、Eric A. Carlen，*The hypocoercivity index for the short time behavior of linear time-invariant ODE systems*，Journal of Differential Equations 371, 83–115 (2023)，[作者条目](https://arxiv.org/abs/2109.10784)，给出有限耗散矩阵的短时传播范数与 $2m+1$ 指数；另见 Achleitner、Arnold、Volker Mehrmann，*Hypocoercivity and controllability in linear semi-dissipative Hamiltonian ordinary differential equations and differential-algebraic equations*，[原文 Theorem 1](https://doi.org/10.1002/zamm.202100171)，明确连接 Kalman 型秩与该指数。第 29.2 条不认领这个指数的新颖性，而将它接入第 25 节的特定极限和第 28 节的固定参考熵系数。
+
+[^tcs5-optimal]: Anton Arnold、Beatrice Signorello，*Optimal non-symmetric Fokker–Planck equation for the convergence to a given equilibrium*，Kinetic and Related Models 15(5), 753–773 (2022)，[原文](https://doi.org/10.3934/krm.2022009)，研究固定 Gaussian 平衡、秩一扩散下的最优非对称加速和乘法常数。第 30.3 条另固定二维摩擦、常数旋转、目标时刻和控制幅值，其等号由本批显式矩阵指数给出；没有把它解释为不计控制资源的加速。
+
+**出处 32.2（与当前前沿的实际交界）。** Jianfeng Lu，*A sharp hypocoercive entropy decay estimate for underdamped Langevin dynamics*，[arXiv:2605.01933v2](https://arxiv.org/html/2605.01933v2)，本批读取 Assumptions 2.1–2.2、Theorem 2.3 及条件熵/最优输运修正项，确认其凸势、空间 log-Sobolev 和增长前件。该文在更广的非线性族中研究显式熵速率；本批保持可精确求系数的线性与单比特载体。Lu 的 ICM 2026 文章 [*Quantitative Hypocoercivity and Lifting of Classical and Quantum Dynamics*](https://doi.org/10.1137/25M1806065) 已给出经典 Langevin 与量子 Lindblad 的统一加速框架，故“经典与量子存在共同耗散数学”本身是已有研究方向。
+
+Pierre Monmarché、Lihan Wang，*On the entropic convergence for piecewise deterministic samplers: speedup and obstruction*，[arXiv:2606.26086v1](https://arxiv.org/html/2606.26086v1)，本批读取 Theorem 2：在其 BPS/ZZP 与速度分布前件下，即使 Gaussian 目标，也不存在文中所定义的统一衰减熵比；其 RHMC 正向结果与此分开。因此本卷从 Gaussian 线性核得到的精确系数，不能从“同一个平衡态”或“同样包含 Hamilton 运动”直接迁移到任意采样器。
+
+**约定 32.3（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷，数学推导、原文核对、实施及有限检错均由本会话 ChatGPT 单席串行完成，无独立同行或异模型评审。八条结果均给出纸面证明。仅原理论文件是本次远端变更目标；检错脚本保留本地。未新增 Lean、Scribe、冻结记录或机器消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。既有时间窗与信息公式的来源分别保留，有限样本核对不代替任意输入分布、所有状态与极限量词。
+
+## 追加锚（本行以下为增补区）
