@@ -816,3 +816,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint private demand survives arbitrary pure-power reassignment](profile-notes/353-joint-private-budget-with-all-pure3-reassignable.md)
 - [Synchronized prime-private cofactor matching on the actual live source](profile-notes/354-synchronized-prime-private-cofactor-matching.md)
 - [Cofactor column heights control synchronized matching mass](profile-notes/355-column-height-matching-bound.md)
+- [Active original parents require shallow private rescue](profile-notes/356-active-parent-private-rescue.md)
