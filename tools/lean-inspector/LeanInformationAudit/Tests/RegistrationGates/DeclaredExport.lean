@@ -34,13 +34,15 @@ run_meta do
     let original ← IO.FS.readFile manifestPath
     let .ok manifest := Json.parse original | throwError "setup: invalid manifest"
     let .ok fields := manifest.getObj? | throwError "setup: manifest is not an object"
+    let .ok version := manifest.getObjValAs? Nat "report_semantic_version"
+      | throwError "setup: missing semantic version"
     IO.FS.writeFile manifestPath ((Json.mkObj (fields.toList.map fun (key, value) =>
-      (key, if key == "report_semantic_version" then toJson (8 : Nat) else value))).compress)
+      (key, if key == "report_semantic_version" then toJson (version + 1) else value))).compress)
     let bumped ← reportJson modules
-    let accepted := bumped.all fun wire => wire.getObjValAs? Nat "compatibility_version" == .ok 8
+    let accepted := bumped.all fun wire => wire.getObjValAs? Nat "compatibility_version" == .ok (version + 1)
     (if accepted then logInfo else logError)
-      m!"[{if accepted then "PASS" else "FAIL"}] manifest_only_bump_emits_eight"
-    for (label, text) in #[("missing", "{}"), ("string", "{\"report_semantic_version\":\"7\"}"),
+      m!"[{if accepted then "PASS" else "FAIL"}] manifest_only_bump_emits_next_version"
+    for (label, text) in #[("missing", "{}"), ("string", "{\"report_semantic_version\":\"8\"}"),
         ("zero", "{\"report_semantic_version\":0}"), ("negative", "{\"report_semantic_version\":-1}"),
         ("boolean", "{\"report_semantic_version\":true}"), ("fraction", "{\"report_semantic_version\":6.5}"),
         ("json", "{"), ("absent", "")] do

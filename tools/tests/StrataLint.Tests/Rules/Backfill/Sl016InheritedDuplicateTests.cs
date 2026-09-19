@@ -104,7 +104,8 @@ public sealed class Sl016InheritedDuplicateTests(ITestOutputHelper output)
 
         Assert.Contains(diagnostics, static diagnostic =>
             diagnostic.AdmissionEffect == AdmissionEffect.Block
-            && diagnostic.Message == "duplicate atom_id: " + RuleFixture.FixtureAtomId);
+            && diagnostic.Message == "ambiguous baseline atom reference: " + RuleFixture.FixtureAtomId
+                + " maps to " + RuleFixture.FixtureAtomId + " and " + new string('c', 64));
         Assert.DoesNotContain(diagnostics, static diagnostic =>
             diagnostic.Message.Contains("inherited from baseline", StringComparison.Ordinal));
     }

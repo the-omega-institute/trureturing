@@ -66,6 +66,20 @@ public sealed class AnchorReferenceRuleTests
             ("D5/B.lean", ["D5.C"]),
             ("D5/C.lean", [Target])));
 
+    [Theory]
+    [InlineData("LeanInformationAudit.Syntax")]
+    [InlineData("LeanInformationAuditAnalysis.Probe")]
+    public void ImportClosureUsesInspectorSourceRootForTooling(string module)
+    {
+        var path = "tools/lean-inspector/" + module.Replace('.', '/') + ".lean";
+        var report = Report(("D5/A.lean", [module]), (path, ["D5.B"]),
+            ("D5/B.lean", [Target]));
+        Assert.Equal(module, LeanImportClosure.ModuleName(RepoPath.CreateKnown(path)));
+        Assert.Contains(RepoPath.CreateKnown("D5/B.lean"),
+            LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown("D5/A.lean")));
+        Assert.True(LeanImportClosure.ImportsExternalModule(report, "D5.A", Target));
+    }
+
     [Fact]
     public void ImportClosureRejectsUnreachableTarget() =>
         Assert.False(IsReachable(("D5/A.lean", ["Mathlib.Data.Nat.Fib.Basic"])));

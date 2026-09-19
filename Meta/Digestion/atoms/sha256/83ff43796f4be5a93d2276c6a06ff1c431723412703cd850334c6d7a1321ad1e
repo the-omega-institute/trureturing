@@ -1,0 +1,111 @@
+**命题 107.2（静态环分离保留统一 $1/n$ 阶）。** 对每个满足定义与假设 107.1 的读数及整数 $n\ge1$，
+$$
+\frac1{24n}\le\overline R^r_n
+\le M^r_n\le\min\left\{\frac12,\frac{592}{n+1}\right\}.
+\tag{107.2a}
+$$
+存在同一套确定性可见规则 $\Gamma_{r,n}$，对所有 $k\ge2$ 都有
+$$
+\mathcal E^r_{k,n}(\Gamma_{r,n})\le\frac{592}{n+1}.
+\tag{107.2b}
+$$
+两个方向下的错误概率各自也满足 (107.2b) 的同一上界。因而逐参数优化后取上确界的风险与不使用 $k$ 的统一规则所能达到的风险，均具有 $1/n$ 阶；数值常数不声称最优。
+
+**证明。** 记 $a=1-1/(3k)$、$\delta=1/k$，以方向 $d=0$ 表示核 $K_k$，方向 $d=1$ 表示 $K_k^{\mathsf T}$。在三个环标签中至多一个等于 $r(0)$，故至少两个环状态具有全状态空间中的单点观察纤维。从固定顺序
+$(1,2),(2,3),(3,1)$ 中选择第一条两个端点均有单点纤维的边 $(u,v)$，置 $B=r(u)$、$C=r(v)$。此选择只依赖 $r$，且
+$$
+K_k(u,v)=a/2,\qquad K_k^{\mathsf T}(u,v)=a/4.
+\tag{107.2c}
+$$
+
+以下时刻均取非负整数。定义可由读数定位的到达时刻和回返时刻
+$$
+\tau_0=\inf\{t\ge0:Y_t=B\},\qquad
+\tau_{m+1}=\inf\{t>\tau_m:Y_t=B\},\qquad
+L_m=\tau_{m+1}-\tau_m.
+\tag{107.2d}
+$$
+因为 $r^{-1}(B)=\{u\}$，这些同时是隐藏链到达状态 $u$ 的停时。对每个固定 $k$，将当前方向的转移核记为 $P$。两核所有条目严格正，故 $q=\min_x P(x,u)>0$；由逐步条件概率，连续 $t$ 步未到达的概率至多为 $(1-q)^t$。这个界也适用于任一到达后等待下一次回返的条件尾概率。因此每个 $\tau_m,L_m$ 都几乎必然有限且可积；取可数个满概率事件的交，并由 $\tau_{m+1}\ge\tau_m+1$，得 $\tau_m\to\infty$ 几乎必然。自环也算回返，此时 $L_m=1$。
+
+先核对两项统一时间界：
+$$
+\mathbb E_{d,k}\tau_0\le4,
+\qquad
+\mathbb E_{d,k}[L_m\mid\mathcal F_{\tau_m}]=4,
+\tag{107.2e}
+$$
+其中 $\mathcal F_t$ 是隐藏链的自然历史。对第一项，循环重标记固定 $0$，保持两核各自形式，可将目标 $u$ 化为 $2$。在正向核下，令 $h_i$ 为从 $i$ 首次到达 $2$ 的平均时间，令 $D=a^2+4a+16$。有限性已证；在 $i\ne2$ 处的首次步方程 $h_i=1+\sum_jK_k(i,j)h_j$ 与 $h_2=0$ 给出
+$$
+h_1=\frac{64}{D},\qquad
+h_3=\frac{16(a+4)}{D},\qquad
+h_0=\frac1\delta+\frac{h_1+h_3}{3},\qquad h_2=0.
+\tag{107.2f}
+$$
+消去 $h_0$ 后两式为 $(8+a)h_1-(4-a)h_3=16$ 与 $(8+a)h_3-(4+2a)h_1=16$，代入即成立；该方程的解唯一，因为去掉目标后的转移矩阵各行和至多为 $1-q<1$，两解之差的最大绝对值只能为零。交换状态 $1,3$ 将两核共轭并固定目标 $2$，故反向核仅交换上述 $h_1,h_3$。由于
+$$
+h_1\le h_3<4,\qquad 4-h_3=\frac{4a^2}{D}>0,
+$$
+从任意环状态到任意环目标的期望至多为 $4$；若初态已经是目标则为零。
+
+两核均为有限不可约链，平稳律均为 $\pi_i=1/4$。直接应用 Levin–Peres（Elizabeth L. Wilmer 参与撰写），[*Markov Chains and Mixing Times*, second edition](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf)，Proposition 1.19、式 (1.28) 的平均回返时间公式，得到从 $u$ 出发的首次正回返期望 $1/\pi_u=4$。在 $\tau_m$ 处使用强 Markov 性，便给出 (107.2e) 的条件期望式。这里采用 Richard Weber，[*Markov Chains*](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf)，§4.4 Theorem 4.4 的强 Markov 定理；首次步方程见同文 §4.2 Theorem 4.2。所用停时有限、到达状态确定，已在上面履行其前提。
+
+在第 $m$ 个回返周期记录标记
+$$
+W_m=\mathbf1_{\{Y_{\tau_m+1}=C\}}.
+$$
+强 Markov 性使各周期从同一状态 $u$ 重新开始，所以对每个固定方向与参数，$(W_m)_{m\ge0}$ 独立同分布。单点纤维与 (107.2c) 给其 Bernoulli 参数
+$$
+\theta_0=a/2\ge5/12,\qquad
+\theta_1=a/4\le1/4.
+\tag{107.2g}
+$$
+不要求 $W_m$ 与同周期长度 $L_m$ 独立。
+
+令 $g_0=0$；在第 $m\ge1$ 次回返点，仅使用此前已经完成的 $m$ 个周期标记，定义
+$$
+g_m=\begin{cases}
+0,&3\sum_{i=0}^{m-1}W_i\ge m,\\
+1,&3\sum_{i=0}^{m-1}W_i<m.
+\end{cases}
+\tag{107.2h}
+$$
+因为 $\tau_i+1\le\tau_{i+1}\le\tau_m$ 对 $i<m$ 成立，$g_m$ 已由时刻 $\tau_m$ 的可见前缀确定，且对 $\mathcal F_{\tau_m}$ 可测。平均标记到阈值 $1/3$ 的距离在两个方向均至少为 $1/12$。直接采用钉版 Mathlib 的 Hoeffding 引理
+[hasSubgaussianMGF_of_mem_Icc 与 HasSubgaussianMGF.measure_sum_range_ge_le_of_iIndepFun](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean)：Bernoulli 变量取值于 $[0,1]$，中心化后的参数为 $1/4$；对 $m$ 个独立标记取阈值 $m/12$，下尾使用取负后的变量。因此
+$$
+\Pr_{d,k}(g_m\ne d)\le e^{-m/72}\quad(m\ge1).
+\tag{107.2i}
+$$
+$m=0$ 时同式由平凡上界 $1$ 成立。这里在确定的周期编号上应用独立样本尾界，没有条件于随机的周期总数。
+
+在首次 $B$ 以前令 $G_t=0$；在整数区间 $\tau_m\le t<\tau_{m+1}$ 上令 $G_t=g_m$。即使已看到本周期标记，也等到下次回返才更新。对任意有限前缀，尚未出现 $B$ 时使用 $0$；否则在最近一次 $B$ 处，用此前各完整周期的标记确定 $g_m$ 并保持至当前时刻。这也在未使用的字母或不符合准备态的前缀上定义了输出，故 $G_0,\ldots,G_n$ 在全部 $A^{n+1}$ 上均有定义；计算 $G_t$ 不需知道未来的 $\tau_{m+1}$。由 (107.2e) 和 $g_m$ 的停时可测性，
+$$
+\mathbb E_{d,k}\!\left[L_m\mathbf1_{\{g_m\ne d\}}\right]
+=4\Pr_{d,k}(g_m\ne d).
+\tag{107.2j}
+$$
+半开整数区间恰含 $L_m$ 个时刻，且这些周期几乎必然覆盖 $\tau_0$ 之后的全部时刻。对非负可测项直接使用 Tonelli 的可数求和形式，即钉版 Mathlib 的 [MeasureTheory.lintegral_tsum](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Lebesgue/Add.lean)，得到累计错误时刻数的统一期望界
+$$
+\begin{aligned}
+\mathbb E_{d,k}\sum_{t=0}^{\infty}\mathbf1_{\{G_t\ne d\}}
+&\le\mathbb E_{d,k}\tau_0+
+\sum_{m=0}^{\infty}\mathbb E_{d,k}\!\left[L_m\mathbf1_{\{g_m\ne d\}}\right]\\
+&\le4+4\sum_{m=0}^{\infty}e^{-m/72}
+=4+\frac4{1-e^{-1/72}}<296.
+\end{aligned}
+\tag{107.2k}
+$$
+最后由 $e^{1/72}>1+1/72$ 得几何和小于 $73$。
+
+现在令 $\Gamma_{r,n}$ 对 $G_0,\ldots,G_n$ 作多数表决，平局选择方向 $0$。全部 $G_t$ 可从现有前缀恢复。若表决错误，则至少 $(n+1)/2$ 个前缀判别错误，包含平局情况。对非负可测的有限错误计数，以正阈值 $(n+1)/2$ 应用 Markov 不等式，采用钉版 Mathlib 的 [MeasureTheory.meas_ge_le_lintegral_div](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/Lebesgue/Markov.lean)，故对每个方向分别有
+$$
+\Pr_{d,k}(\Gamma_{r,n}\ne d)
+\le\frac2{n+1}\mathbb E_{d,k}\sum_{t=0}^{n}\mathbf1_{\{G_t\ne d\}}
+\le\frac{592}{n+1}.
+\tag{107.2l}
+$$
+这证明 (107.2b)。规则只用已知 $r$、观测时刻和整数计数，不用 $k$；其平均风险给 $M^r_n$ 同样的上界。恒报一个方向是另一条不使用 $k$ 的确定性检验，给 $M^r_n$ 的 $1/2$ 上界。对任何共同检验逐参数有 $R^r_{k,n}\le\mathcal E^r_{k,n}(\Gamma)$，先取上确界再对共同检验取下确界，得到 $\overline R^r_n\le M^r_n$；没有交换上下确界。
+
+对下界，任何可见检验与逐坐标读出复合，都是同一准备实验上的完整状态检验。因此第 105 节的完整状态最优风险满足 $R^1_{k,n}\le R^r_{k,n}$。对 $k$ 取上确界并直接应用命题 105.2，得到 $\overline R^r_n\ge1/(24n)$，证明 (107.2a)。这同样约束任何不使用 $k$ 的共同检验，完成风险阶的两种量词结论。证毕。
+
+原始多数规则的短窗口平均风险不保证小于 $1/2$；式 (107.2a) 的最小值来自两条可选共同检验给 $M^r_n$ 的界。该构造既不声称原始粗读数是 Markov 链，也不声称所构造规则对给定 $k$ 已是完整可见实验的最优检验。它保留的是统一风险阶，不是完整状态的全部似然信息。
+
