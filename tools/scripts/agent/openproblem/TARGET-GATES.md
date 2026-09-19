@@ -138,3 +138,68 @@ has to be read against the conjecture you intend to attack, one at a time.
 The same entry shows why the scan cannot be trusted in the other direction either. Its links
 include arXiv:2608.11941, which formalized 492 open OEIS conjectures and resolved 147 of them.
 Anything in that resolved set is settled without any marker appearing in the entry text.
+
+## 5. Is anyone else's search already the one you are about to run?
+
+The four checks above clear a candidate you have already chosen. This one decides whether the
+*pool* you are drawing from can still contain anything, and it is the cheapest of the lot,
+because the answer is usually a published number.
+
+**Selection effects recur at every layer, and each layer is pre-filtered by whoever owns it.**
+
+- **The Erdős database.** Two groups have swept it. Feng, Trinh, Bingham and 21 others,
+  arXiv:2601.22401, evaluated all 700 problems Bloom labels `Open` and got 5 apparently new
+  solutions plus 8 forgotten existing ones. Tsoukalas, Kovsharov, Shirobokov and 18 others,
+  arXiv:2605.22763, resolved 9 of 353 open problems autonomously with Lean proofs at a few
+  hundred dollars each. Hit rates 0.7% and 2.5%. What remains is by construction the residue,
+  and "short, elementary, looks doable" are exactly the features a sweep consumes first, so
+  ranking by them selects the ground already turned over.
+- **OEIS conjecture comments.** A submitter writes "there are no other terms" only after
+  running to the limit of their own compute. Extending their range is therefore precisely the
+  search they already ran. Four attempts in one session came back empty for this reason.
+- **The corollary.** Before starting any search, ask who would already have run it and what
+  their compute budget was. If the answer is "the person who wrote the statement", pick
+  something else.
+
+### What survives the corollary
+
+Two shapes are not protected by the owner's own filtering.
+
+**Verification the owner could not afford**, where this repository has an efficiency edge —
+segmented sieving, large-integer factorisation, mod-p rank in place of exact determinants.
+The edge has to be real and named, not assumed.
+
+**Defects in the statement rather than in the numbers.** Reading the statement is not a search
+the submitter ran. Degenerate cases, quantifier boundaries and unstated conventions all live
+here. Two from this repository's own history: A005282 is quoted through a weak Sidon reading
+under which it starts 1,2,3,5,8, while under the strong convention this repository uses it
+starts 1,2,4,8,13; and A000224's `m>0` guard, added so a script would run, silently made the
+conjecture false at `n=1`.
+
+### Cashable gaps against empty ones
+
+A gap in a statement is worth time only if a concrete instance can fall into it.
+
+Ask what falling into the gap would require. If the answer is another infinitude result, the
+gap is empty. A341654 conjectures `T(n,k) < 0` on even-even cells, and `T = 0` encodes "no such
+j exists", which is not negative — a real gap. But for even `n` and `k` neither `j` nor `j+1`
+is square, such `j` are plentiful, and exhibiting a cell with none would itself need an
+infinitude result. Empty. By contrast the `A000224` guard above was cashable: `n = 1` sat in it.
+
+### Run the conjecture against its own b-file first
+
+One fetch and ten lines. It disposes of the whole class where a statement contradicts its own
+table, and it certifies whether an exception list is exact: a spurious entry means the author
+did not check, a missing one is a counterexample. A262750 bounds `a(n) <= sqrt(n)` with
+exceptions `3, 8, 13, 32`; across all 10000 tabulated terms there are no violations and those
+four are exactly the terms exceeding `sqrt(n)`, so the list is precise.
+
+Exception-list conjectures are cheap enough to sweep in bulk — two families, four entries,
+settled to `2*10^7` in 47 seconds — which makes them good triage and poor prospecting, for the
+reason in the corollary above.
+
+### Every probe carries a ladder
+
+Reproduce instances the source states itself, before searching anything, and exit non-zero when
+they do not come out. A ladder caught the A005282 convention error above within one run. The
+five `erdos156-*` probes, `erdos850.c`, `erdos677.py` and `erdos985.py` all carry one.
