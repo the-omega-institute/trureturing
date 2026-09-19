@@ -809,3 +809,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [External uniform reciprocal excess and bounded original overlap](../../../Library/Arith/filaseta2026reciprocalgap.md)
 - [Original overlap leakage gives a uniform reciprocal gap](profile-notes/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md)
 - [Fresh-prime root transport and two-copy reduction](profile-notes/348-fresh-prime-root-transport-and-two-copy-reduction.md)
+- [Private cylinders in a complete odd cover obstruct root transport](profile-notes/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)

@@ -48,3 +48,14 @@ prime-flat sufficient premise, and selection of fewer root branches.
 Those extensions are ordinary deductions from the displayed construction,
 not the literal statements of the source theorems or new Lean results.
 No source text or diagrams are vendored by this citation note.
+
+[Report 349](../../docs/reports/erdos7-odd-covering/profile-notes/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)
+reconstructs Theorem 4.2, Figures 18–22, with auxiliary closing prime 23.
+The complete power ranges are 1 through 22. A parameterized family
+represents 19,329,428 actual classes, with only modulus 11 repeated
+seven times. Coverage follows from the complete finite tree and its
+leaf-cylinder containments, not from sampled points. The report finds
+private regions of the literal classes 1 mod3 and 1 mod5, then uses
+them to rule out a specified one-child-per-modulus digit-memory
+transport of this source. These obstruction deductions are not stated
+as HSW's results or as unrestricted odd-cover nonexistence.
