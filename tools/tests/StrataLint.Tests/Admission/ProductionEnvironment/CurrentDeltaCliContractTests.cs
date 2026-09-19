@@ -552,6 +552,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             case "unowned-project":
                 const string product = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj";
                 Write(product, "<Project />\n");
+                var productFileMap = TomlSerializer.Deserialize<TomlTable>(File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+                var productRows = ((TomlArray)productFileMap["files"]).Cast<TomlTable>();
+                var productEntry = TomlSerializer.Deserialize<TomlTable>(TomlSerializer.Serialize(productRows.Single(row =>
+                    (string)row["pattern"] == "tools/StrataLint.Engine/StrataLint.Engine.csproj")))!;
+                productEntry["pattern"] = product;
+                var registeredRows = new TomlArray();
+                foreach (var row in productRows.Append(productEntry).OrderBy(row => (string)row["pattern"], StringComparer.Ordinal))
+                    registeredRows.Add(row);
+                productFileMap["files"] = registeredRows;
+                Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(productFileMap));
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
                 break;
