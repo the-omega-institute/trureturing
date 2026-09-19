@@ -826,3 +826,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Common-source antichains refine prime-parent selection capacity](profile-notes/363-common-source-antichain-capacity.md)
 - [Singleton cofactor ideals and forced colors in actual source matchings](profile-notes/364-singleton-cofactor-ideal-and-forced-colors.md)
 - [Coloring literature, fixed-source reconfiguration and complete AP repair choices](profile-notes/365-coloring-literature-and-reconfiguration-interface.md)
+- [Complete shallow-tail coverage and the actual source mean](profile-notes/366-shallow-tail-truncation-on-the-actual-source.md)
