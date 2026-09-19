@@ -823,3 +823,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Sharp mean partial matching and an all-private budget without tail loss](profile-notes/360-mean-partial-matching-without-tail-loss.md)
 - [Separate prime-overlap and composite-parent capacity budgets](profile-notes/361-prime-overlap-reservation-for-composite-parents.md)
 - [Whole private-vector changes and prime-parent rigidity under legal swaps](profile-notes/362-whole-prime-private-vector-under-residue-swaps.md)
+- [Common-source antichains refine prime-parent selection capacity](profile-notes/363-common-source-antichain-capacity.md)
