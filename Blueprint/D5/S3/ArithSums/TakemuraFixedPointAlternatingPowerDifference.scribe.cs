@@ -72,7 +72,10 @@ internal sealed class TakemuraFixedPointAlternatingPowerDifferenceDocument
                     + "tuple image pointwise, and uses the resulting vanishing range together "
                     + "with the first nonzero injection count to identify the least degree.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(SourceNote)),
+                AssessedProvenance.FromRepo(SourceNote),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("takemura-fixed-point-apd-conjecture-1"),
+                    ResolutionKind.Proved)),
             Node(
                 "resultValue",
                 "Conjecture 2: first appearance value",
@@ -88,7 +91,10 @@ internal sealed class TakemuraFixedPointAlternatingPowerDifferenceDocument
                     + "to Fin(n) after the pointwise-fixing sign sum, counts those embeddings, "
                     + "and simplifies the descending factorial to n!.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(SourceNote)))));
+                AssessedProvenance.FromRepo(SourceNote),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("takemura-fixed-point-apd-conjecture-2"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
@@ -96,14 +102,16 @@ internal sealed class TakemuraFixedPointAlternatingPowerDifferenceDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("takemura-apd-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
         StatementSource.FromAuthor(formula),
         provenance,
         Blocks(Paragraph(Text(prose))),
-        role);
+        role,
+        claim);
 
     private static Formula ApdFormula()
     {

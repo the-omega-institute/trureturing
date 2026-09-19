@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\operatorname{firstAppearan
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultDegree` (`✓ std3`). ∎
 
+*Resolves.* `Problems/takemura-fixed-point-apd-conjecture-1` (proved) by `D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultDegree`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"takemura-fixed-point-apd-conjecture-1","declaration_gid":"D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultDegree","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kenichi Takemura (2025). *Alternating Power Difference and Matrix Symmetry: Closed-Form Formulas for the First Appearance Degree m_1*. DOI: [10.48550/arXiv.2512.18169](https://doi.org/10.48550/arXiv.2512.18169). URL: <https://arxiv.org/abs/2512.18169v1>.
@@ -59,6 +63,10 @@ Conjecture 1 (First Appearance Degree of Identity Matrix). For n ≥ 2, the firs
 $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\operatorname{apd}\left(n, fix, n - 1\right) = (\operatorname{factorial}\left(n\right): \mathbb{Z}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultValue` (`✓ std3`). ∎
+
+*Resolves.* `Problems/takemura-fixed-point-apd-conjecture-2` (proved) by `D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultValue`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"takemura-fixed-point-apd-conjecture-2","declaration_gid":"D5/S3/ArithSums/TakemuraFixedPointAlternatingPowerDifference.resultValue","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
