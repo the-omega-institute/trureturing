@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fc47a9da7ee5778cabe8b6dc47a602055c3fe9081c8fe3d64548fd6168f8216f
   normalized_sha256: sha256:fc47a9da7ee5778cabe8b6dc47a602055c3fe9081c8fe3d64548fd6168f8216f
 cas_ref: sha256:fc47a9da7ee5778cabe8b6dc47a602055c3fe9081c8fe3d64548fd6168f8216f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/BoundedRunUnion.bounded_run_union_boundary
+    target_statement_id: sha256:27a1a88db6433ecc4ede7754aaa16c9eee0abbb2a2e860257b2872f3b056ec16
 receipts:
   unresolved_subitems: []
