@@ -143,6 +143,7 @@ globs = ["LeanInformationAudit.+"]
         policy['report_modules']['include'] = [dict(pattern=p, optional=False) for p in paths]
         policy['dependency_sources']['include'] = [dict(pattern='LeanInformationAudit/Registry.lean', optional=False)]
         fixture.write('lean-report-inputs.json', json.dumps(policy))
+        checks = []
         def command(argv):
             argv = [str(a) for a in argv]
             phase_started = time.monotonic()
@@ -150,8 +151,11 @@ globs = ["LeanInformationAudit.+"]
             completed = fixture.guarded_command(argv, timeout=args.command_timeout)
             print(completed.stdout, end='', flush=True)
             print(completed.stderr, end='', file=sys.stderr, flush=True)
-            print('SCOPE_COMMAND_RESULT ' + json.dumps(dict(command=argv,
-                exit=completed.returncode, seconds=round(time.monotonic() - phase_started, 3))), flush=True)
+            checks.append(dict(command=argv, exit=completed.returncode,
+                seconds=round(time.monotonic() - phase_started, 3),
+                built=sum('Built ' in line for line in (completed.stdout + completed.stderr).splitlines()),
+                replayed=sum('Replayed ' in line for line in (completed.stdout + completed.stderr).splitlines())))
+            print('SCOPE_COMMAND_RESULT ' + json.dumps(checks[-1]), flush=True)
             completed.check_returncode()
         # The untouched compiler supplies the independent identity baseline.
         command([fixture.lake, 'build', *names])
@@ -162,24 +166,27 @@ globs = ["LeanInformationAudit.+"]
             triples += [relative[:-5].replace('/', '.'), relative, 'sha256:' + hashlib.sha256(source.read_bytes()).hexdigest()]
         baseline = output / 'baseline.json'
         spool = output / 'baseline-spool'
-        command([sys.executable, '-B', recipe, 'run', fixture.lake, 'env', inspector,
+        command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
             '--statements-only', '--output', baseline, '--material-spool', spool, *triples])
         compact = output / 'baseline-compact.json'
         materials.compact(baseline, spool, compact, fixture.root / 'lean-report-inputs.json')
         baseline.unlink()
         shutil.rmtree(spool)
-        command([sys.executable, '-B', recipe, 'run', fixture.lake, 'build', ':report'])
+        command([sys.executable, '-B', recipe, 'run', 'lake', 'build', ':report'])
         fixture.publish()
         rows = fixture.report()[0]
         old = json.loads(compact.read_text())['modules']
         def identities(modules):
-            return {r['module']: [(d['name'], d['statement_id'], d['axioms'], d['include_in_statement'])
-                    for d in r['declarations']] for r in modules}
+            return {r['module']: (r['source_path'], r['source_sha256'],
+                    [(d['name'], d['statement_id'], d['axioms'], d['include_in_statement'])
+                    for d in r['declarations']]) for r in modules}
         if identities(old) != identities(rows):
             raise ValueError('compiler instrumentation changed declaration identities')
         result = dict(exit=0, modules=len(rows), declarations=sum(len(r['declarations']) for r in rows),
             generated=sum(d['generated_companion'] for r in rows for d in r['declarations']),
-            declaration_identities_unchanged=True, seconds=round(time.monotonic() - started, 3),
+            declaration_identities_unchanged=True, source_and_axiom_identities_unchanged=True,
+            compiler_descriptors=sorted({origin['compiler_input_sha256'] for origin in fixture.origins().values()}),
+            checks=checks, seconds=round(time.monotonic() - started, 3),
             source_sha256={p: hashlib.sha256((sources / p).read_bytes()).hexdigest() for p in paths})
         for path in paths + ['lean-report-inputs.json']:
             dest = output / path

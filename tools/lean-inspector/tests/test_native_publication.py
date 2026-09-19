@@ -746,26 +746,30 @@ initialize registerDerivingHandler ``ProbeMarker fun names => do
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
 
-def builder_origin_controls(destination, *, statement_only=True):
+def builder_origin_controls(destination, *, statement_only=False):
     """Fresh fixed-builder and raw authored controls, without a Git fixture.
 
     Build dependencies in the current repository, compile an isolated module,
-    and use the actual Inspector statement API and compactor. DTR's C# test
-    supplies only the empty registration partition so declaration selection is
-    observed independently of the template audit. This is not a full report-mode
-    coherence or registration-admission test.
+    and use the actual Inspector and compactor. Normal mode runs the fixed
+    Registry driver and source/native/compiler coherence checks. The explicit
+    statement-only option isolates declaration selection without settling DTR.
     """
     destination = Path(destination).resolve()
     destination.mkdir(parents=True, exist_ok=True)
+    (destination / 'result.json').unlink(missing_ok=True)
     runner = NativeTestSupport()
     runner.root = destination
     runner.env = dict(os.environ)
     checks = []
 
     def command(args, env=None):
+        started = time.monotonic()
         result = runner.guarded_command([str(a) for a in args], cwd=ROOT,
             env=env, timeout=1200)
-        checks.append(dict(command=[str(a) for a in args], exit=result.returncode))
+        checks.append(dict(command=[str(a) for a in args], exit=result.returncode,
+            seconds=round(time.monotonic() - started, 3),
+            built=sum('Built ' in line for line in (result.stdout + result.stderr).splitlines())))
+        print('BUILDER_ORIGIN_COMMAND ' + json.dumps(checks[-1]), flush=True)
         if result.returncode:
             raise RuntimeError(result.stdout + result.stderr)
         return result.stdout
@@ -821,20 +825,45 @@ theorem suppliedBridge : LegacyPrimitiveRealization arena (arena.Law testRealiza
 register_information_theorem supplied in arena object_arena objectArena catalog witnessed
   primitives testRealization.toPrimitiveBundle realization suppliedBridge
 
+open RegistrationTemplates
+register_information_template cutRealization
+def verdictArena : PrimitiveLawArena where
+  toArena := Arena.ofFintype Bool
+  signature := cutSignature Bool Bool
+  Law r := ∀ x : Bool, r.readout () x = x
+local instance : DecidableEq verdictArena.State := instDecidableEqBool
+def missingTemplate (f : Bool → Bool) := cutRealization f
+information_theorem declared in verdictArena
+  readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  escape from (Bool) escape continues (open)
+  : ∀ x : Bool, x = x := fun _ => rfl
+information_theorem unresolved in verdictArena
+  readout via (missingTemplate (fun x : Bool => x))
+  primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
+  escape from (Bool) escape continues (open)
+  : ∀ x : Bool, x = x := fun _ => rfl
+
 inductive Box where | mk (n : Nat)
+inductive Ranged where | mk (n : Nat)
+run_elab do
+  unless (Meta.compilerGeneratedCompanionNamesInjective (← getEnv)).contains
+      `D5.S0.Carrier.Target.Ranged.mk.inj do
+    throwError "explicit-source veto needs positive compiler membership"
+  addDeclarationRanges `D5.S0.Carrier.Target.Ranged.mk.inj default
 def count : Nat → Nat | 0 => 0 | n + 1 => count n + 1
 def eqWitness := @count.eq_def
 def congrWitness := @count.congr_simp
 theorem authored.eq_def : True := True.intro
--- Measured residual boundary, kept separate from the suffix regression.
+-- Naked metadata writes are not successful compiler theorem insertions.
 run_elab do
   for name in [`D5.S0.Carrier.Target.markerWritten, `D5.S0.Carrier.Target.congruenceWritten] do
     addDecl <| .thmDecl { name, levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
-  modifyEnv (recordCompanionOrigin · `D5.S0.Carrier.Target.markerWritten `injective)
+  modifyEnv (markAuxRecursor · `D5.S0.Carrier.Target.markerWritten)
   modifyEnv fun env => Meta.congrKindsExt.insert env `D5.S0.Carrier.Target.congruenceWritten #[]
 theorem explicitMarked : True := True.intro
 run_elab do
-  modifyEnv (recordCompanionOrigin · `D5.S0.Carrier.Target.explicitMarked `injective)
+  modifyEnv (markAuxRecursor · `D5.S0.Carrier.Target.explicitMarked)
 run_elab do
   for suffix in SUFFIXES do
     let name := (`D5.S0.Carrier.Target).str ("raw" ++ suffix)
@@ -865,17 +894,81 @@ end D5.S0.Carrier.Target
     command([sys.executable, '-B', recipe, 'run', 'lake', 'build',
         'LeanInformationAudit.SealCommand', 'D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates',
         'leanInspector/reportInspector'])
+    compiler = json.loads(command([sys.executable, '-B', recipe, 'ensure']))
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(source)
     inspector = ROOT / '.lake/build/lean-inspector/producer/bin/reportInspector'
     spool = destination / 'spool'
     raw = destination / 'spool.json'
+    negative_controls = []
     try:
         command([sys.executable, '-B', recipe, 'run', 'lake', 'build', module])
         command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
             *(['--statements-only'] if statement_only else []),
             '--output', raw, '--material-spool', spool, module, path,
             'sha256:' + hashlib.sha256(source.encode()).hexdigest()])
+        if not statement_only:
+            # The strict reader requires a row for every D5 source present in
+            # its snapshot. Discover that exact closure from the normal
+            # producer, then report the imported modules as well as the target.
+            discovered = json.loads(raw.read_text())['modules'][0]['information_templates']['inputs']
+            report_inputs = {entry['path']: entry['sha256'] for entry in discovered
+                if entry['path'].startswith('D5/') and entry['path'].endswith('.lean')}
+            triples = []
+            for relative, digest in sorted(report_inputs.items()):
+                triples.extend([relative[:-5].replace('/', '.'), relative, 'sha256:' + digest])
+            raw, spool = destination / 'complete.json', destination / 'complete-spool'
+            command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
+                '--output', raw, '--material-spool', spool, *triples])
+            # Bypass ensure only for injected damage: its correct recovery
+            # would otherwise repair the descriptor before the verifier saw it.
+            directory = Path(compiler['directory'])
+            environment = dict(runner.env, LEAN_SYSROOT=str(directory), LAKE_OVERRIDE_LEAN='true',
+                LEAN_GITHASH='d8b18978322de05a8f3dba51ef03cf5461676c17-origin-' + compiler['identity'],
+                PATH=str(directory / 'bin') + os.pathsep + runner.env['PATH'])
+            def reject(label, expected, env=environment):
+                output = destination / (label + '.json')
+                result = runner.guarded_command([str(directory / 'bin/lake'), 'env', str(inspector),
+                    '--output', str(output), '--material-spool', str(destination / (label + '-spool')),
+                    module, path, 'sha256:' + hashlib.sha256(source.encode()).hexdigest()],
+                    cwd=ROOT, env=env, timeout=1200)
+                text = result.stdout + result.stderr
+                assert result.returncode != 0 and expected in text, (label, result.returncode, text)
+                negative_controls.append(dict(name=label, exit=result.returncode, diagnostic=expected))
+            reject('environment-mismatch', 'E7.native_compiler_identity',
+                dict(environment, LEAN_GITHASH='d8b18978322de05a8f3dba51ef03cf5461676c17'))
+            descriptor = directory / 'descriptor.json'
+            original = descriptor.read_bytes()
+            try:
+                descriptor.write_bytes(original + b'\n')
+                reject('descriptor-mismatch', 'E7.native_compiler_descriptor')
+            finally:
+                descriptor.write_bytes(original)
+            trace = ROOT / '.lake/build/lib/lean' / Path(path).with_suffix('.trace')
+            original = trace.read_bytes()
+            try:
+                value = json.loads(original)
+                captions = [row for row in value['inputs'] if row[0].startswith('Lean ')]
+                assert len(captions) == 1
+                captions[0][0] = 'Lean mismatched compiler caption'
+                trace.unlink()  # Never mutate a possible Lake artifact hard link.
+                trace.write_text(json.dumps(value))
+                reject('caption-mismatch', 'E7.native_trace_input:Lean ')
+            finally:
+                trace.write_bytes(original)
+            # Every report input is copied at its verified source identity for
+            # the strict consumer; no synthetic registration partition is used.
+            rows = json.loads(raw.read_text())['modules']
+            all_inputs = {entry['path']: entry for row in rows
+                for entry in row['information_templates']['inputs']}
+            for entry in all_inputs.values():
+                relative = Path(entry['path'])
+                assert not relative.is_absolute() and '..' not in relative.parts
+                input_path = ROOT / relative
+                assert publication.digest(input_path) == entry['sha256']
+                copied = destination / relative
+                copied.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(input_path, copied)
     finally:
         # Every command joined its entire process tree before this deletion.
         if target.read_text() != source:
@@ -889,7 +982,8 @@ end D5.S0.Carrier.Target
     manifest = destination / 'lean-report-inputs.json'
     shutil.copyfile(ROOT / 'lean-report-inputs.json', manifest)
     materials.compact(raw, spool, destination / 'public.json', manifest)
-    row = json.loads((destination / 'public.json').read_text())['modules'][0]
+    rows = json.loads((destination / 'public.json').read_text())['modules']
+    row = next(row for row in rows if row['module'] == module)
     declarations = {d['name']: d for d in row['declarations']}
     authored = [module + '.raw' + s for s in suffixes]
     for name in authored:
@@ -902,7 +996,8 @@ end D5.S0.Carrier.Target
     genuine += [module + '.supplied.«' + module + '/' + module + '.objectArena/witnessed».__primitive_realization']
     for name in genuine:
         assert declarations[name]['generated_companion'], name
-    for name in ['target', 'clean', 'supplied', 'suppliedBridge', 'authored.eq_def', 'explicitMarked']:
+    for name in ['target', 'clean', 'supplied', 'suppliedBridge', 'authored.eq_def',
+                 'markerWritten', 'congruenceWritten', 'explicitMarked', 'Ranged.mk.inj']:
         assert not declarations[module + '.' + name]['generated_companion'], name
     residual = {name: declarations[module + '.' + name]['generated_companion']
         for name in ['markerWritten', 'congruenceWritten', 'explicitMarked']}
@@ -912,6 +1007,9 @@ end D5.S0.Carrier.Target
         selected=[n for n, d in declarations.items() if d['kind'] == 'theorem'
             and d['include_in_statement'] and not d['generated_companion'] and not n.startswith('_private.')],
         declarations=len(declarations), mismatch_controls=5, rollback_controls=1, checks=checks,
+        report_modules=len(rows), report_declarations=sum(len(row['declarations']) for row in rows),
+        compiler_descriptor=compiler['identity'], negative_controls=negative_controls,
+        explicit_source_veto='Ranged.mk.inj',
         source_sha256={path: hashlib.sha256(source.encode()).hexdigest()},
         inspector_sha256=hashlib.sha256(inspector.read_bytes()).hexdigest(),
         owned_live_processes=0)

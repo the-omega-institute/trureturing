@@ -506,45 +506,79 @@ public sealed partial class CiTransportTests
         CommonExecutionEvidence.SealEngineering(root, build, steps);
     }
 
-    internal static (int Exit, string Text) ProduceReport(string root)
+    internal static string PrepareReport(string root)
     {
+        var stage = Path.Combine(root, "build/native-report-fixture");
         var repository = TestRepositoryLayout.FindRoot();
-        return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
-            import json, pathlib, shutil, sys
-            repository, root, relative = map(pathlib.Path, sys.argv[1:])
+        var result = SharedBuildContractTests.Process(repository, "python3", ["-B", "-c", """
+            import pathlib, shutil, sys, time
+            repository, stage = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
             from test_native import NativeTests
-            import publication
             NativeTests.setUpClass()
             fixture = NativeTests('test_native_invalidation')
             fixture.setUp()
             try:
-                # Native fixtures supply real Lake facets; this shape uses the
-                # managed module names consumed by the C# report reader.
                 source = fixture.root / 'Fixture.lean'
                 source.rename(fixture.root / 'Trureturing.lean')
                 for name in ('lakefile.toml', 'lean-report-inputs.json', 'utility.json'):
                     path = fixture.root / name
                     path.write_text(path.read_text().replace('Fixture', 'Trureturing'))
                 fixture.write('utility.json', '[]\n')
-                fixture.build()
-                fixture.publish()
-                for name in ('D5', 'Trureturing.lean', 'External.lean', 'ClaimSupport.lean',
-                        'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
-                    source, target = fixture.root / name, root / name
-                    if source.is_dir(): shutil.copytree(source, target, dirs_exist_ok=True)
-                    else: shutil.copyfile(source, target)
-                destination = root / relative
-                destination.parent.mkdir(parents=True, exist_ok=True)
-                for suffix in publication.SUFFIXES:
-                    shutil.copyfile(publication.member(fixture.root / 'public.json', suffix),
-                                    publication.member(destination, suffix))
-                publication.member(destination, '.sha256').write_text(publication.digest(destination)
-                    + '  ' + destination.name + '\n')
-                print('NATIVE_CURRENT_HANDOFF files=' + str(len(publication.SUFFIXES)))
+                started = time.monotonic()
+                built = fixture.build()
+                fixture.record_result('transport-build', dict(exit=built.returncode,
+                    seconds=round(time.monotonic() - started, 3),
+                    built=sum('Built ' in line for line in (built.stdout + built.stderr).splitlines()),
+                    origins=fixture.origins()))
+                # All compiler/build children finish before the candidate
+                # fixture takes ownership of this prepared source and bundle.
+                for command in fixture._commands:
+                    fixture.join_command(command)
+                stage.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(fixture.root), stage)
             finally:
-                fixture.doCleanups()
-            """, repository, root, CommonExecutionEvidence.ReportPath],
+                if not fixture.doCleanups():
+                    raise RuntimeError('native transport preparation cleanup failed')
+            """, repository, stage], hangGuard: TestBudgets.ReportSupervisorHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+        return stage;
+    }
+
+    internal static (int Exit, string Text) ProduceReport(string root, string prepared)
+    {
+        var repository = TestRepositoryLayout.FindRoot();
+        return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import json, pathlib, shutil, sys, time
+            repository, root, prepared, relative = map(pathlib.Path, sys.argv[1:])
+            sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
+            from test_native_support import NativeTestSupport
+            import native, publication
+            started = time.monotonic()
+            # The actual native publisher revalidates materials, compiler
+            # identity and all current source inputs after preparation.
+            native.publish(prepared, prepared / 'public.json')
+            publication.validate_bundle(prepared / 'public.json',
+                publication.coordinates(prepared), prepared)
+            for name in ('D5', 'Trureturing.lean', 'External.lean', 'ClaimSupport.lean',
+                    'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
+                source, target = prepared / name, root / name
+                if source.is_dir(): shutil.copytree(source, target, dirs_exist_ok=True)
+                else: shutil.copyfile(source, target)
+            destination = root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            for suffix in publication.SUFFIXES:
+                shutil.copyfile(publication.member(prepared / 'public.json', suffix),
+                                publication.member(destination, suffix))
+            publication.member(destination, '.sha256').write_text(publication.digest(destination)
+                + '  ' + destination.name + '\n')
+            print('NATIVE_CURRENT_HANDOFF files=' + str(len(publication.SUFFIXES)))
+            observer = NativeTestSupport()
+            observer.root, observer._testMethodName = prepared, 'resource_route'
+            observer.record_result('transport-publication', dict(exit=0, build_count=0,
+                seconds=round(time.monotonic() - started, 3), files=len(publication.SUFFIXES),
+                origins=json.loads(publication.member(destination, '.provenance.json').read_text())['module_origins']))
+            """, repository, root, prepared, CommonExecutionEvidence.ReportPath],
             hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
 

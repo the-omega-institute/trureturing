@@ -4,6 +4,18 @@ from test_native_support import *
 
 class NativeOriginTests:
     def test_compiler_origin_imports_and_invalidation(self):
+        checks = []
+        run_lake = self.run_lake
+        def measured(*args, **kwargs):
+            started = time.monotonic()
+            result = run_lake(*args, **kwargs)
+            checks.append(dict(command=list(args), exit=result.returncode,
+                seconds=round(time.monotonic() - started, 3),
+                built=sum('Built ' in line for line in (result.stdout + result.stderr).splitlines())))
+            self.record_result('measurements', dict(checks=checks))
+            return result
+        self.run_lake = measured
+        self.addCleanup(setattr, self, 'run_lake', run_lake)
         self.write('D5/Origin.lean', '''import Lean
 open Lean Elab Command
 inductive Ranged where
@@ -24,22 +36,54 @@ private theorem privateAuthored : True := True.intro
         self.write('OriginNative.lean', '''import Lean
 import Lean.CompanionOrigin
 open Lean
+unsafe def produced (env : Environment) : IO NameSet := do
+  let mut names : NameSet := {}
+  for (owner, query) in #[
+      (`Lean.Meta.Injective, `Lean.Meta.compilerGeneratedCompanionNamesInjective),
+      (`Lean.Meta.SizeOf, `Lean.Meta.compilerGeneratedCompanionNamesSizeOf),
+      (`Lean.Meta.Eqns, `Lean.Meta.compilerGeneratedCompanionNamesEqns),
+      (`Lean.Elab.PreDefinition.Structural.Eqns, `Lean.Elab.Structural.compilerGeneratedCompanionNamesStructuralEqns),
+      (`Lean.Elab.PreDefinition.WF.Unfold, `Lean.Elab.WF.compilerGeneratedCompanionNamesWFUnfold),
+      (`Lean.Elab.PreDefinition.WF.Eqns, `Lean.Elab.WF.compilerGeneratedCompanionNamesWFEqns),
+      (`Lean.Elab.PreDefinition.PartialFixpoint.Eqns, `Lean.Elab.PartialFixpoint.compilerGeneratedCompanionNamesPartialFixpointEqns),
+      (`Lean.Meta.CongrTheorems, `Lean.Meta.compilerGeneratedCompanionNamesCongrTheorems)] do
+    let some index := env.getModuleIdxFor? query
+      | throw <| IO.userError s!"missing producer query: {query}"
+    unless env.header.moduleNames[index.toNat]! == owner do
+      throw <| IO.userError s!"misowned producer query: {query}"
+    let driver ← IO.ofExcept <| env.evalConstCheck (Environment → Array Name) {}
+      `Lean.CompilerGeneratedCompanionDriver query
+    for name in driver env do names := names.insert name
+  return names
 unsafe def main : IO Unit := do
   initSearchPath (← findSysroot)
   enableInitializersExecution
   let direct ← importModules #[{module := `D5.Origin}] {} (loadExts := true) (leakEnv := true)
   enableInitializersExecution
   let transitive ← importModules #[{module := `D5.Via}] {} (loadExts := true) (leakEnv := true)
+  let directNames ← produced direct
+  let transitiveNames ← produced transitive
   for name in [`Ranged.mk.inj, `Ranged.mk.injEq, `Ranged.mk.sizeOf_spec,
       `simple.eq_def, `wf.eq_def, `loop.eq_def] do
-    let origin := companionOrigin? direct name
-    unless origin.isSome && origin == companionOrigin? transitive name do
+    unless directNames.contains name && transitiveNames.contains name do
       throw <| IO.userError s!"lost imported origin: {name}"
+  let some (.thmInfo theoremValue) := direct.find? `Ranged.mk.inj
+    | throw <| IO.userError "missing imported theorem"
+  let record : CompilerProducedTheorem := { owner := `D5.Origin, theoremValue }
+  unless record.matches direct && record.matches transitive do
+    throw <| IO.userError "exact imported record rejected"
+  for bad in #[{ record with owner := `D5.Via },
+      { record with theoremValue := { theoremValue with name := `Missing } },
+      { record with theoremValue := { theoremValue with levelParams := [`u] } },
+      { record with theoremValue := { theoremValue with type := mkConst ``False } },
+      { record with theoremValue := { theoremValue with value := mkConst ``True.intro } }] do
+    if bad.matches direct || bad.matches transitive then
+      throw <| IO.userError "mismatched imported record accepted"
   enableInitializersExecution
-  let some env ← Elab.runFrontend "inductive GeneratedNative where | mk (n : Nat)"
+  let some env ← Elab.runFrontend "import Lean\\ninductive GeneratedNative where | mk (n : Nat)"
     {} "Native.lean" `Native
     | throw <| IO.userError "native runFrontend failed"
-  unless (companionOrigin? env `GeneratedNative.mk.inj).isSome do
+  unless (← produced env).contains `GeneratedNative.mk.inj do
     throw <| IO.userError "native archive did not retain generator instrumentation"
 ''')
         with (self.root / 'lakefile.toml').open('a') as config:
@@ -63,7 +107,13 @@ unsafe def main : IO Unit := do
             env=dict(self.env, LEAN_SYSROOT=driver['base']))
         self.assertEqual(linked.returncode, 0, linked.stdout + linked.stderr)
         control = self.run_lake('env', str(source_only), success=False)
-        self.assertIn('native archive did not retain generator instrumentation', control.stdout + control.stderr)
+        # The private producer extension has its own native initializer. A
+        # stock archive cannot load it from the patched olean alone; runtimes
+        # which load it dynamically still lack the generator insertion hook.
+        diagnostic = control.stdout + control.stderr
+        self.assertTrue(any(expected in diagnostic for expected in (
+            "cannot evaluate `[init]` declaration '_private.Lean.Meta.Injective.0.Lean.Meta.compilerProducedTheoremsInjective'",
+            'native archive did not retain generator instrumentation')), diagnostic)
         rows = self.report()[0]
         origin_row = next(r for r in rows if r['module'] == 'D5.Origin')
         declarations = {d['name']: d for d in origin_row['declarations']}
@@ -108,8 +158,8 @@ unsafe def main : IO Unit := do
         self.build()
         after = self.origins()
         self.assertNotEqual(before['D5.Origin']['compiler_input_sha256'], after['D5.Origin']['compiler_input_sha256'])
-        self.assertEqual([(r['module'], [(d['name'], d['statement_id']) for d in r['declarations']]) for r in rows],
-            [(r['module'], [(d['name'], d['statement_id']) for d in r['declarations']]) for r in self.report()[0]])
+        self.assertEqual([(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in rows],
+            [(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in self.report()[0]])
         selected = next(p for p in (self.root / 'build/compiler-origin').iterdir()
             if p.name == after['D5.Origin']['compiler_input_sha256'])
         registry = selected / 'lib/lean/Lean/CompanionOrigin.olean'
@@ -139,3 +189,12 @@ unsafe def main : IO Unit := do
                 self.assertFalse(receipt.with_suffix('.json.tmp').exists())
                 self.assertEqual(self.report(), report_before)
                 self.assertEqual(self.origins(), origins_before)
+        self.record_result('verified', dict(exit=0, query_apis=8, imported_companions=6,
+            exact_record_mismatches=5, explicit_source_veto='Ranged.mk.inj',
+            stock_archive_control_exit=control.returncode,
+            stock_archive_control_diagnostic=diagnostic.strip(),
+            compiler_before=before['D5.Origin']['compiler_input_sha256'],
+            compiler_after=after['D5.Origin']['compiler_input_sha256'],
+            recipe_invalidation=True, corruption_recovered=True,
+            receipt_controls=damages, identities_and_axioms_unchanged=True,
+            missing_and_stale_provenance_rejected=True, checks=checks, owned_live_processes=0))

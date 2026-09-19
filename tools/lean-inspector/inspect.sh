@@ -102,6 +102,11 @@ reuse_report() {
   return "$status"
 }
 run_phase compiler python3 "$SCRIPT_DIR/compiler/build.py" ensure
+# Lake prepends its own installation's library directory even when Lean's
+# sysroot is overridden. Use the unchanged Lake binary in the verified local
+# distribution so stock oleans cannot shadow the instrumented producer APIs.
+LAKE="$(python3 -I -c 'import json,pathlib,sys; print(pathlib.Path(json.load(open(sys.argv[1]))["directory"]) / "bin/lake")' "$LOG_DIR/compiler.stdout.log")"
+export LAKE_BIN="$LAKE"
 run_phase reuse reuse_report
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   open_logs

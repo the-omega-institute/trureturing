@@ -207,7 +207,7 @@ def isGeneratedCompanion (env : Environment) (name : Name) (info : ConstantInfo)
       (declRangeExt.find? (level := .server) env name).isSome then return false
   if producerNames.contains name then return true
   if name.isInternal then return false
-  return (companionOrigin? env name).isSome || (Meta.congrKindsExt.find? env name).isSome
+  return false
 
 def kindOf : ConstantInfo → String
   | .axiomInfo _ => "axiom"
@@ -604,16 +604,30 @@ private unsafe def generatedProducerNames (env : Environment) : IO NameSet := do
   for (owner, query) in #[
       (`LeanInformationAudit.Registry.Reifier, `LeanInformationAudit.RegistrationReifier.generatedCompanionNames),
       (`LeanInformationAudit.Syntax, `LeanInformationAudit.registrationCompanionNames),
-      (`LeanInformationAudit.SealCommand, `LeanInformationAudit.sealCompanionNames)] do
+      (`LeanInformationAudit.SealCommand, `LeanInformationAudit.sealCompanionNames),
+      (`Lean.Meta.Injective, `Lean.Meta.compilerGeneratedCompanionNamesInjective),
+      (`Lean.Meta.SizeOf, `Lean.Meta.compilerGeneratedCompanionNamesSizeOf),
+      (`Lean.Meta.Eqns, `Lean.Meta.compilerGeneratedCompanionNamesEqns),
+      (`Lean.Elab.PreDefinition.Structural.Eqns,
+        `Lean.Elab.Structural.compilerGeneratedCompanionNamesStructuralEqns),
+      (`Lean.Elab.PreDefinition.WF.Unfold,
+        `Lean.Elab.WF.compilerGeneratedCompanionNamesWFUnfold),
+      (`Lean.Elab.PreDefinition.WF.Eqns,
+        `Lean.Elab.WF.compilerGeneratedCompanionNamesWFEqns),
+      (`Lean.Elab.PreDefinition.PartialFixpoint.Eqns,
+        `Lean.Elab.PartialFixpoint.compilerGeneratedCompanionNamesPartialFixpointEqns),
+      (`Lean.Meta.CongrTheorems, `Lean.Meta.compilerGeneratedCompanionNamesCongrTheorems)] do
     unless env.header.moduleNames.contains owner do continue
     let some index := env.getModuleIdxFor? query
-      | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer"
+      | throw <| IO.userError s!"IE-C050 reason=incomplete_closure rule=dtr.companion_producer owner={owner} query={query}"
     unless env.header.moduleNames[index.toNat]! == owner do
-      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_owner"
-    let typeName := `LeanInformationAudit.GeneratedCompanionReportDriver
+      throw <| IO.userError s!"IE-C050 reason=incomplete_closure rule=dtr.companion_producer_owner expected={owner} actual={env.header.moduleNames[index.toNat]!}"
+    let (typeName, typeOwner) := if owner.toString.startsWith "Lean." then
+      (`Lean.CompilerGeneratedCompanionDriver, `Lean.CompanionOrigin)
+      else (`LeanInformationAudit.GeneratedCompanionReportDriver, `LeanInformationAudit.RegistryTypes)
     let some typeIndex := env.getModuleIdxFor? typeName
       | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_type"
-    unless env.header.moduleNames[typeIndex.toNat]! == `LeanInformationAudit.RegistryTypes do
+    unless env.header.moduleNames[typeIndex.toNat]! == typeOwner do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck (Environment → Array Name) {} typeName query
     for name in driver env do names := names.insert name

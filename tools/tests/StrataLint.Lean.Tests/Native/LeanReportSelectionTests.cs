@@ -33,6 +33,10 @@ public sealed class LeanReportSelectionTests
         var stubDirectory = Path.Combine(fixture, "fixture-bin");
         ScriptHarnessScratch.EnsureDirectory(stubDirectory);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "python3"), """
+            if [[ "${1:-}" == -I ]]; then
+              printf '%s/bin/lake\n' "$INSPECTOR_TEST_COMPILER"
+              exit 0
+            fi
             [[ "${1:-}" != -B ]] || shift
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
@@ -43,6 +47,7 @@ public sealed class LeanReportSelectionTests
             esac
             printf '%s\n' "$phase" >> "$INSPECTOR_TEST_PHASES"
             [[ "$phase" != "$INSPECTOR_TEST_FAILURE" ]] || exit 23
+            [[ "$phase" != compiler ]] || printf '{"directory":"%s"}\n' "$INSPECTOR_TEST_COMPILER"
             [[ "$phase" != reuse ]] || exit 3
             if [[ "$phase" == capture ]]; then
               while [[ $# -gt 0 ]]; do
@@ -70,6 +75,9 @@ public sealed class LeanReportSelectionTests
             """);
         var lake = Path.Combine(stubDirectory, "lake");
         ScriptHarnessScratch.WriteExecutableStub(lake, "exit 0\n");
+        var compiler = Path.Combine(fixture, "verified compiler");
+        ScriptHarnessScratch.EnsureDirectory(Path.Combine(compiler, "bin"));
+        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(compiler, "bin/lake"), "exit 0\n");
         var producer = Path.Combine(fixture, "fixture-producer.dll");
         ScriptHarnessScratch.WriteScratchText(producer, "fixture producer");
         var shellEnvironment = Path.Combine(fixture, "fixture-shell-env");
@@ -82,6 +90,7 @@ public sealed class LeanReportSelectionTests
             "-u", "STRATALINT_LEAN_PRODUCER_DLL",
             "STRATALINT_INSPECTOR_SUPERVISED=1", "LAKE_BIN=" + lake,
             "INSPECTOR_TEST_PHASES=" + phases, "INSPECTOR_TEST_FAILURE=" + failedPhase,
+            "INSPECTOR_TEST_COMPILER=" + compiler,
             "BASH_ENV=" + shellEnvironment,
             "PATH=" + stubDirectory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
         };

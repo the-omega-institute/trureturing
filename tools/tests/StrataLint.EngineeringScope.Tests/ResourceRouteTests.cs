@@ -219,7 +219,8 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
     public void SelectedReportTransportAcceptsProducedDeclaredMaterial()
     {
         using var fixture = new ResourceFixture(["lean-report"]);
-        var produced = CiTransportTests.ProduceReport(fixture.Root);
+        var prepared = CiTransportTests.PrepareReport(fixture.Root);
+        var produced = CiTransportTests.ProduceReport(fixture.Root, prepared);
         Assert.True(produced.Exit == 0, produced.Text);
         fixture.CommitPlan();
         fixture.Processes(prepareReport: false);

@@ -85,7 +85,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
 清单中的单一正整数 `report_semantic_version` 是开发者维护的报告语义兼容版本，
-当前值为 `6`，与清单格式的 `schema_version` 分开。
+当前值为 `9`，与清单格式的 `schema_version` 分开。
 
 兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
@@ -175,9 +175,10 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `make lean-compiler` builds the project-owned batch frontend under
 `build/compiler-origin/<input digest>/`. `make lean` and `make lean-report`
 select it automatically. The recipe uses the installed `leanprover/lean4:v4.33.0`
-revision `d8b18978322de05a8f3dba51ef03cf5461676c17`, checks the seven upstream
-source hashes, applies `compiler/compiler-origin.patch` without fuzz, and
-compiles its persistent registry and nine exact generator-site hooks. Upstream
+revision `d8b18978322de05a8f3dba51ef03cf5461676c17`, checks the eight upstream
+source hashes, applies the zero-context unified `compiler/compiler-origin.patch`
+without fuzz, and
+compiles private producer registries and eleven exact generator-site hooks. Upstream
 Lean sources and this patch are Apache-2.0. The full upstream license is retained
 in `compiler/LICENSE`; `compiler/LICENSES` retains the pinned distribution’s
 third-party license and notice chain. Both are copied into, and content-bound
@@ -193,23 +194,42 @@ The batch frontend delegates to pinned `Lean.ShellOptions.process` and
 output, JSON diagnostics, plain source, and `--run`. Its driver rejects unsupported
 server, thread-manager and incremental-snapshot options. It is not a language
 server replacement. Lake's native clang links use a local archive with the exact
-seven module objects replaced by their defined initializer symbols and the new
-registry added. The installed shared runtime remains an input.
+eight module objects replaced by their defined initializer symbols and the new
+registry added. The installed shared runtime remains an input. Report and fixture
+commands use the unchanged Lake binary collocated with that distribution:
+Lake prepends its own library directory, so an absolute stock Lake path would
+otherwise shadow the instrumented producer APIs even with `LEAN_SYSROOT` set.
 
 The descriptor binds compiler sources, patch, recipe, installed binary/import/link
 inputs, build tools and platform. Lake's `LEAN_GITHASH` includes its digest;
 report facets also trace it, and module provenance requires the matching
-`compiler_input_sha256`. Missing old provenance rejects report reuse. Compiled
+`compiler_input_sha256`. The recipe embeds the exact compiler caption in its
+compiled shared module; normal native verification requires the environment
+caption and descriptor bytes to match that constant. Missing old provenance rejects report reuse. Compiled
 modules without the registry remain unclassified until canonical rebuilding;
 there is no name, shape, range or trace-based positive fallback. The Inspector
-accepts the positive compiler registry, `congrKindsExt`, or exact fixed-builder
+accepts only the positive compiler registries or exact fixed-builder
 membership. Reifier, registration syntax, and seal staging privately retain their
 successfully inserted theorems; read-only owner-bound queries compare the module,
 universes, type and proof with the current declaration. No suffix grants a DTR
-exemption. Explicit-source,
+exemption. Writing public auxiliary-recursion metadata or `congrKindsExt` alone
+grants no exemption. Explicit-source,
 private/internal and unknown-origin boundaries remain in force. These fields do not
 participate in statement identities. A compiler identity change invalidates the
 requested Lake dependency closure, including requested upstream source builds.
+
+`builder_origin_controls(destination, statement_only=False)` in
+`tests/test_native_publication.py` builds the normal Registry report, compacts its
+materials, and retains its verified source inputs for the strict C# DTR test.
+The publication includes the actual rows for the target's complete D5 input
+closure, as required by the strict reader's snapshot completeness check.
+The test consumes the actual registration inventory and certificates and checks
+all four DTR verdicts, authored suffixes, raw metadata writes, rollback, exact
+producer records, and explicit-source veto. Named environment, descriptor-byte,
+and Lake-caption mismatch controls must fail. The transport fixture completes
+its compiler and report-facet builds in preparation, then uses the real native
+publisher inside the unchanged transport execution guard. Publication still
+validates materials, compiler identity and the prepared fixture's current inputs.
 
 `make lean-origin-scope ORIGIN_SCOPE_SOURCES=<committed-source-copies> ORIGIN_SCOPE_OUTPUT=build/compiler-origin-validation/parsers`
 compiles supplied source copies with stock and instrumented compilers, builds the

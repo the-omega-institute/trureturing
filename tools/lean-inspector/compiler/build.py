@@ -28,6 +28,7 @@ SOURCES = {
     'Lean/Elab/PreDefinition/WF/Unfold.lean': 'a325299893dad6b83de7a4ebb6faf4ae836984edc6ac5cf0d3d9d213d5e471f7',
     'Lean/Elab/PreDefinition/WF/Eqns.lean': '99d3f26b55a0b719ad31a8e49629159a3b3b24cbf59eb7e9a637b00c20ec66e5',
     'Lean/Elab/PreDefinition/PartialFixpoint/Eqns.lean': '26ec3a1d6c9932c7ccd7fa4e7b6c81e17199101b5944422fe279aa5255e0b5c8',
+    'Lean/Meta/CongrTheorems.lean': '2a24eae0954ff67bab815eab23dd595be020c0320086f070bae846947413d2db',
 }
 
 
@@ -172,7 +173,11 @@ def build(root, base, descriptor, identity):
         shutil.copy2(base / 'src/lean' / name, target)
     subprocess.run(['patch', '--batch', '--fuzz=0', '-p1', '-i', str(HERE / 'compiler-origin.patch')],
         cwd=src, check=True, stdout=sys.stderr)
-    shutil.copy2(HERE / 'CompanionOrigin.lean', src / 'src/Lean/CompanionOrigin.lean')
+    origin = (HERE / 'CompanionOrigin.lean').read_text()
+    if origin.count('@COMPILER_ORIGIN_HASH@') != 1:
+        raise ValueError('compiler identity handoff placeholder mismatch')
+    (src / 'src/Lean/CompanionOrigin.lean').write_text(
+        origin.replace('@COMPILER_ORIGIN_HASH@', REVISION + '-origin-' + identity))
     shutil.copy2(HERE / 'Frontend.lean', src / 'src/Frontend.lean')
     mods = ['Lean/CompanionOrigin', *[p[:-5] for p in SOURCES], 'Frontend']
     env = dict(os.environ, LEAN_PATH=str(lib), LEAN_SYSROOT=str(base))

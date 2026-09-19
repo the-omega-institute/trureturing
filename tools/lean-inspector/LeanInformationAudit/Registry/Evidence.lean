@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Entries
+import Lean.CompanionOrigin
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
@@ -488,6 +489,28 @@ private def child (value : Json) (caption : String) : CoreM Json := do
   unless pair.size == 2 do throwError "incomplete_closure:E7.native_trace_pair"
   return pair[1]!
 
+/- The recipe embeds its descriptor identity in the compiled module. The Lake
+   caption and current descriptor bytes must both match that runtime constant;
+   an environment string or a directory name alone is not compiler evidence. -/
+private def runtimeCompilerHash : CoreM String := do
+  let expected := Lean.compilerOriginHash
+  let prefixText := Lean.githash ++ "-origin-"
+  let identity := (expected.drop prefixText.length).toString
+  unless prefixText.isPrefixOf expected && identity.length == 64 &&
+      identity.toList.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f')) do
+    throwError "incomplete_closure:E7.native_compiler_identity"
+  unless (← IO.getEnv "LEAN_GITHASH") == some expected do
+    throwError "incomplete_closure:E7.native_compiler_identity"
+  let some sysroot ← IO.getEnv "LEAN_SYSROOT"
+    | throwError "incomplete_closure:E7.native_compiler_sysroot"
+  let directory := System.FilePath.mk sysroot
+  unless directory.fileName == some identity do
+    throwError "incomplete_closure:E7.native_compiler_sysroot"
+  let hashes ← fileHashes #[(directory / "descriptor.json").toString]
+  unless hashes[0]! == identity do
+    throwError "incomplete_closure:E7.native_compiler_descriptor"
+  pure expected
+
 private structure ExportHash where
   arts : UInt64
   metaArts : UInt64
@@ -702,8 +725,9 @@ private def verifyImported (env : Environment) (name : Name)
       trace.getObjValAs? Bool "synthetic" == .ok false do
     throwError "incomplete_closure:E7.native_trace_version:{name}"
   let inputs ← field trace "inputs"
-  let compiler ← child inputs s!"Lean {Lean.versionStringCore}, commit {Lean.githash}"
-  unless (← ofExcept <| traceHash compiler) == textHash Lean.githash do
+  let compilerHash ← runtimeCompilerHash
+  let compiler ← child inputs s!"Lean {Lean.versionStringCore}, commit {compilerHash}"
+  unless (← ofExcept <| traceHash compiler) == textHash compilerHash do
     throwError "incomplete_closure:E7.native_compiler:{name}"
   let top ← ofExcept <| inputs.getArr?
   let candidates := top.filter fun input =>

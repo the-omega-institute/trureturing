@@ -4,11 +4,32 @@ prelude
 public import Lean.EnvExtension
 public section
 namespace Lean
-private builtin_initialize companionOriginExt : MapDeclarationExtension Name ←
-  mkMapDeclarationExtension
--- Called only immediately after successful declaration insertion at compiler generator sites.
-def recordCompanionOrigin (env : Environment) (declName site : Name) : Environment :=
-  companionOriginExt.insert env declName site
-def companionOrigin? (env : Environment) (declName : Name) : Option Name :=
-  companionOriginExt.find? env declName
+
+/- Filled only by the content-addressed compiler recipe before compilation. -/
+def compilerOriginHash : String := "@COMPILER_ORIGIN_HASH@"
+
+abbrev CompilerGeneratedCompanionDriver := Environment → Array Name
+
+/- The compiler recipe keeps provenance in private producer-owned extensions in
+   each generator module.  This shared value is only the read-only record and
+   exact matcher used by those query functions; it is not a write authority. -/
+structure CompilerProducedTheorem where
+  owner : Name
+  theoremValue : TheoremVal
+  deriving Inhabited
+
+def CompilerProducedTheorem.matches (record : CompilerProducedTheorem) (env : Environment) : Bool :=
+  let expected := record.theoremValue
+  let owner := match env.getModuleIdxFor? expected.name with
+    | some index => env.header.moduleNames[index.toNat]!
+    | none => env.header.mainModule
+  owner == record.owner && match env.find? expected.name with
+    | some (.thmInfo actual) => actual.levelParams == expected.levelParams &&
+        actual.type == expected.type && actual.value == expected.value
+    | _ => false
+
+def compilerProducedNames (records : Array CompilerProducedTheorem) (env : Environment) : Array Name :=
+  records.filterMap fun record =>
+    if record.matches env then some record.theoremValue.name else none
+
 end Lean

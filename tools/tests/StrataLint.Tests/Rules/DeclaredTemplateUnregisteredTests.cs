@@ -244,29 +244,50 @@ public sealed class DeclaredTemplateUnregisteredTests
             Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardOutput)
                 + Encoding.UTF8.GetString(run.StandardError));
         }
-        var files = new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            [Target] = File.ReadAllText(Path.Combine(published, Target)),
-            ["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(published, "lean-report-inputs.json")),
-        };
         var reportPath = Path.Combine(published, "public.json");
+        var files = Files();
+        files.Remove(Registration);
+        using var wire = JsonDocument.Parse(File.ReadAllText(reportPath));
+        foreach (var module in wire.RootElement.GetProperty("modules").EnumerateArray())
+            foreach (var input in module.GetProperty("information_templates").GetProperty("inputs").EnumerateArray())
+            {
+                var path = input.GetProperty("path").GetString()!;
+                files[path] = File.ReadAllText(Path.Combine(published, path));
+            }
         var report = RawLeanReportArtifact.ReadFile(reportPath, Tree(files), validateMaterials: true);
-        var declarations = report.Files.Single().Value.Declarations;
+        var declarations = report.Files.Single(p => p.Key.Value == Target).Value.Declarations;
         using var result = JsonDocument.Parse(File.ReadAllText(Path.Combine(published, "result.json")));
+        Assert.Equal("native-report-compacted", result.RootElement.GetProperty("mode").GetString());
         string[] Names(string key) => result.RootElement.GetProperty(key).EnumerateArray()
             .Select(n => n.GetString()!).ToArray();
         var authored = Names("authored");
         Assert.Equal(11, authored.Length);
         Assert.All(authored, name => Assert.False(declarations.Single(d => d.Name == name).IsGeneratedCompanion));
         Assert.All(Names("genuine"), name => Assert.True(declarations.Single(d => d.Name == name).IsGeneratedCompanion));
-        // The native metadata and every statement material crossed the strict
-        // reader. Only the irrelevant registration partition is synthetic.
-        var findings = Findings(Build(source: files[Target], declarations: declarations.ToArray()));
-        var selected = findings.Select(f => f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
+        // Keep the normal producer's inventory, records, certificates and input
+        // closure intact through the actual rule, including all four verdicts.
+        var before = new Dictionary<string, string>(files) { [Target] = "-- no previous theorem\n" };
+        var findings = Findings(Context(before, files, report, [Target]));
+        Assert.Contains(findings, f => f.Message.StartsWith("DTR-Declared ", StringComparison.Ordinal)
+            && f.Effect == AdmissionEffect.Observe);
+        foreach (var verdict in new[] { "DTR-Undeclared ", "DTR-Evidence ", "DTR-Unregistered " })
+            Assert.Contains(findings, f => f.Message.StartsWith(verdict, StringComparison.Ordinal)
+                && f.Effect == AdmissionEffect.Block);
+        var selected = findings.Where(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal))
+            .Select(f => f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
             .Order(StringComparer.Ordinal).ToArray();
-        Assert.Equal(Names("selected").Order(StringComparer.Ordinal), selected);
+        Assert.Equal(Names("selected").Except(["D5.S0.Carrier.Target.declared"]).Order(StringComparer.Ordinal), selected);
         Assert.All(authored, name => Assert.Contains(name, selected));
-        Assert.All(findings, finding => Assert.Equal(AdmissionEffect.Block, finding.Effect));
+        Assert.Contains("D5.S0.Carrier.Target.Ranged.mk.inj", selected);
+        Assert.All(findings.Where(f => !f.Message.StartsWith("DTR-Declared ", StringComparison.Ordinal)),
+            finding => Assert.Equal(AdmissionEffect.Block, finding.Effect));
+        File.WriteAllText(Path.Combine(published, "dtr-result.json"), JsonSerializer.Serialize(new
+        {
+            mode = "normal-report", synthetic_registration_partition = false,
+            declarations = declarations.Length, selected,
+            findings = findings.Select(f => new { message = f.Message, effect = f.Effect.ToString() }),
+            consumer = "RawLeanReportArtifact(validateMaterials:true) -> DeclaredTemplateBindingRule",
+        }) + "\n");
         files[Target] += "-- source mismatch\n";
         Assert.Throws<FormatException>(() => RawLeanReportArtifact.ReadFile(reportPath, Tree(files)));
     }

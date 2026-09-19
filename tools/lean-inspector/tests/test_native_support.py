@@ -305,7 +305,7 @@ root = "Cache"
             self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
             self.compiler_seed = None
         result = self.guarded_command(['python3', '-B', str(self.root / 'tools/lean-inspector/compiler/build.py'),
-            'run', self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+            'run', 'lake', *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         elif success is False:
@@ -442,13 +442,20 @@ def stage_compiler(output):
         fixture.setUp()
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
-        fixture.run_lake('-d', registration['package_directory'], 'build',
-                         '-o', str(mappings), registration['target'])
-        fixture.run_lake('cache', 'stage', str(mappings), str(output))
+        checks = []
+        for args in [('-d', registration['package_directory'], 'build',
+                      '-o', str(mappings), registration['target']),
+                     ('cache', 'stage', str(mappings), str(output))]:
+            started = time.monotonic()
+            result = fixture.run_lake(*args)
+            checks.append(dict(command=list(args), exit=result.returncode,
+                seconds=round(time.monotonic() - started, 3),
+                built=sum('Built ' in line for line in (result.stdout + result.stderr).splitlines())))
         # Access permissions apply to the directory produced by Lake stage;
         # they do not select or discover build inputs or reusable materials.
         for path in output.iterdir():
             path.chmod(path.stat().st_mode & ~0o222)
+        fixture.record_result('compiler-stage', dict(checks=checks))
     finally:
         if not fixture.doCleanups():
             raise RuntimeError('native compiler stage fixture cleanup failed')
@@ -485,7 +492,7 @@ root.mkdir()
 sources = root / 'sources'
 sources.mkdir()
 (sources / 'Input.lean').write_text('theorem input : True := True.intro\\n')
-rows = [dict(module='Input', declarations=[])]
+rows = [dict(module='Input', source_path='Input.lean', source_sha256='fixture', declarations=[])]
 class Fixture(scope.ScopeFixture):
     @classmethod
     def setUpClass(cls): pass
@@ -508,6 +515,7 @@ class Fixture(scope.ScopeFixture):
         for suffix in scope.publication.SUFFIXES:
             scope.publication.member(self.root / 'public.json', suffix).write_text('fixture')
     def report(self): return rows, b'', b''
+    def origins(self): return {'Input': {'compiler_input_sha256': 'fixture'}}
 scope.ROOT, scope.ScopeFixture = root, Fixture
 scope.materials.compact = lambda source, spool, dest, policy: shutil.copyfile(source, dest)
 output = root / 'output'
