@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "seed": 2026091703,
+  "assertion_count": 2635,
+  "families": 38,
+  "scope": "Finite numerical and exact symbolic error probes. No Lean compilation or proof of universal assertions by testing.",
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sympy": "1.14.0"
+  },
+  "script_sha256": "0d3296c71cd7a88303be6719478566b412f02c552b07930acb15be4a35645955",
+  "selected_checks": {
+    "sharp_b_achieved": {
+      "count": 11,
+      "max_residual": 3.3306690738754696e-16,
+      "tolerance": 2e-09
+    },
+    "adaptive_full_record_state_budget": {
+      "count": 12,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "compressed_commutator_identity": {
+      "count": 40,
+      "max_residual": 2.9357554382812332e-15,
+      "tolerance": 3e-10
+    },
+    "ambient_curvature_decomposition": {
+      "count": 240,
+      "max_residual": 2.2867629927476573e-15,
+      "tolerance": 3e-10
+    },
+    "global_corrected_bound_saturation": {
+      "count": 5,
+      "max_residual": 1.4210854715202004e-14,
+      "tolerance": 3e-10
+    },
+    "exact_symbolic_identities": {
+      "count": 4,
+      "max_residual": 0,
+      "tolerance": 0
+    }
+  },
+  "selected_witnesses": {
+    "coherent_N1024": {
+      "per_step_leakage": 2.353095211914244e-06,
+      "incorrect_sum_probability": 0.0024095694970001857,
+      "final_record_error": 0.9999999999999298,
+      "uncapped_valid_budget": 1.5719991094165389
+    },
+    "ambient_kappa_-0.5": {
+      "normal_energy": 0.0,
+      "ambient_flux": -6.283185307179586,
+      "chern": -1
+    }
+  },
+  "insertion_tests": {
+    "status": "passed",
+    "checks": [
+      "known_remote_blank_line_normalization",
+      "chunk_integrity_rejection",
+      "prefix_0_preservation",
+      "prefix_1_preservation",
+      "prefix_2_preservation",
+      "prefix_3_preservation",
+      "rejected_source-drift",
+      "rejected_wrong-order",
+      "rejected_missing-first",
+      "rejected_duplicate",
+      "rejected_edited",
+      "rejected_wrong-location",
+      "rejected_intervening-text",
+      "rejected_lost-anchor",
+      "real_guard_rejects_fixture",
+      "fixture_patch_applied_ST0-ST26",
+      "fixture_patch_applied_ST19-ST26"
+    ],
+    "count": 17,
+    "scope": "Exact insertion-context fixture only. Complete original was unavailable.",
+    "reviewed_original_blob": "09df8199fd2cd36a90a8df1cd3dfd6cbe3962b32",
+    "fixture_blob": "23420a878ba6bfc8d8077242e47af82a1fd6d29b",
+    "combined_bytes": 74117,
+    "combined_sha256": "a6b0e89073dc2ec00f472fd46e27423dec40ca135cea2b7949d8688293cfc862"
+  }
+}
