@@ -31,6 +31,15 @@ lean-cache-from-github-without-mathlib:
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
 
+.PHONY: lean-compiler lean-origin-scope
+
+lean-origin-scope:
+	@$(MAKE) lean LEAN_TARGETS=leanInspector/reportInspector
+	@python3 -B tools/lean-inspector/tests/compiler_origin_scope.py --sources "$(ORIGIN_SCOPE_SOURCES)" --output "$(ORIGIN_SCOPE_OUTPUT)"
+
+lean-compiler:
+	@python3 tools/lean-inspector/compiler/build.py ensure
+
 lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build $(LEAN_TARGETS)
 

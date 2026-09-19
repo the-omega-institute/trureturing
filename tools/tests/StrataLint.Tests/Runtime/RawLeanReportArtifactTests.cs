@@ -309,15 +309,16 @@ public sealed class RawLeanReportArtifactTests
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(repository.Path, "lean-toolchain"),
-            "leanprover/lean4:v4.31.0\n",
+            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain")),
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(repository.Path, "Trureturing.lean"),
             unicodeSource,
             new UTF8Encoding(false));
+        var compiler = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "compiler", "build.py");
         var build = TestProcessRunner.Run(
-            "lake",
-            ["build"],
+            "python3",
+            [compiler, "run", "lake", "build"],
             repository.Path,
             TestBudgets.LeanProcessHangGuard,
             8 * 1024 * 1024);
@@ -335,9 +336,9 @@ public sealed class RawLeanReportArtifactTests
             SHA256.HashData(Encoding.UTF8.GetBytes(unicodeSource)));
 
         var inspected = TestProcessRunner.Run(
-            "lake",
+            "python3",
             [
-                "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
+                compiler, "run", "lake", "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
                 "--output", spoolReport,
                 "--material-spool", spoolMaterials,
                 "Trureturing", "Trureturing.lean", sourceHash,

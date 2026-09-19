@@ -102,6 +102,21 @@ def coordinates(repository):
     return dict(repository=repository_id, producer=producer, sources=sources, config=config, input=pair[0])
 
 
+@lru_cache(maxsize=16)
+def _compiler_recipe(path, source_digest):
+    # The cache key contains the freshly observed program bytes. Repository
+    # recipe edits cannot be hidden by a path/revision-only module cache.
+    spec = importlib.util.spec_from_file_location('compiler_origin_build', path)
+    compiler = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(compiler)
+    return compiler
+
+
+def compiler_identity(repository):
+    source = Path(repository) / 'tools/lean-inspector/compiler/build.py'
+    return _compiler_recipe(str(source), digest(source)).inputs(Path(repository))[2]
+
+
 def production_origin(repository, executable):
     """Actual generation evidence, never a Lake report dependency or currentness test."""
     inputs = selection.Selection(repository)
@@ -111,7 +126,8 @@ def production_origin(repository, executable):
         sha = (hashlib.sha256(inputs.projection('lean-report').encode('ascii')).hexdigest()
                if path == selection.MANIFEST else digest(inputs.safe_file(path)))
         fingerprint.update(path.encode('utf-8') + b'\0' + sha.encode('ascii') + b'\n')
-    return dict(compatibility_sha256=inputs.compatibility(), producer_sources_sha256=fingerprint.hexdigest(),
+    return dict(compatibility_sha256=inputs.compatibility(), compiler_input_sha256=compiler_identity(str(repository)),
+                producer_sources_sha256=fingerprint.hexdigest(),
                 inspector_executable_sha256=digest(executable))
 
 
@@ -122,7 +138,7 @@ def write_origin(report, name, origin):
 
 def check_origin(origin, row, compatibility):
     materials.require_keys(origin, {'module', 'report_sha256', 'compatibility_sha256',
-        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}, 'module production origin')
+        'producer_sources_sha256', 'inspector_executable_sha256', 'compiler_input_sha256', 'input_sources'}, 'module production origin')
     bindings = origin['input_sources']
     if (not isinstance(bindings, dict) or bindings.get(row['source_path']) != row['source_sha256'][7:]
             or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
@@ -131,7 +147,7 @@ def check_origin(origin, row, compatibility):
         selection.validate_pattern(path, 'dependency source binding')
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
-                   ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
+                   ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256', 'compiler_input_sha256'))
             or origin['report_sha256'] != hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()):
         raise ValueError('invalid or incompatible module production origin')
@@ -328,6 +344,8 @@ def verify_inputs(report, repository):
     compatibility = sources.inputs.compatibility()
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
+        if origins[row['module']]['compiler_input_sha256'] != compiler_identity(str(repository)):
+            raise ValueError('stale compiler origin inputs')
     sources.validate_sources(rows)
     sources.validate_dependency_sources(origins)
 
@@ -378,6 +396,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     for row in rows:
         check_origin(origins[row['module']], row, provenance['producer_sha256'])
     if repository is not None:
+        if any(origin['compiler_input_sha256'] != compiler_identity(str(repository)) for origin in origins.values()):
+            raise ValueError('stale compiler origin inputs')
         sources = _SourceValidation(repository)
         sources.validate_sources(rows)
         sources.validate_dependency_sources(origins)

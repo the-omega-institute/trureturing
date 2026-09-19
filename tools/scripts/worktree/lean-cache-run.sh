@@ -29,4 +29,4 @@ else
 fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
-exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- "$@"
+exec python3 "$ROOT/tools/lean-inspector/compiler/build.py" run "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- "$@"

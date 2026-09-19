@@ -114,6 +114,7 @@ def prepare(root):
         utility = [by_path[path]] if path in by_path else []
         write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
             'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
+    write_if_changed(state(root) / 'compiler-identity', (public.compiler_identity(str(root)) + '\n').encode('ascii'))
     write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
@@ -410,6 +411,8 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     # prepare validated the manifest before any facet could accept an artifact.
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
     origin = public.validate_origin(report, rows, compatibility)
+    if origin['compiler_input_sha256'] != public.compiler_identity(str(root)):
+        raise ValueError('stale compiler origin inputs')
     if origin['input_sources'] != input_sources(root, utility):
         raise ValueError('native dependency source binding mismatch')
     return rows, origin

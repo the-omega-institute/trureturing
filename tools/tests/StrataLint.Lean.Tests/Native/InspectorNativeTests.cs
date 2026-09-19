@@ -7,6 +7,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
 {
     // Publication and packaging use this class's private compiler stage.
     [Theory]
+    [InlineData("test_native.NativeTests.test_compiler_origin_imports_and_invalidation")]
     [InlineData("test_native.NativeTests.test_native_facet_supplies_toolchain_environment")]
     [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
     [InlineData("test_native.NativeTests.test_mapped_image_matches_loaded_bytes")]

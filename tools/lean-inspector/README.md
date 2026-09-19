@@ -169,3 +169,47 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
+
+## Compiler origin
+
+`make lean-compiler` builds the project-owned batch frontend under
+`build/compiler-origin/<input digest>/`. `make lean` and `make lean-report`
+select it automatically. The recipe uses the installed `leanprover/lean4:v4.33.0`
+revision `d8b18978322de05a8f3dba51ef03cf5461676c17`, checks the seven upstream
+source hashes, applies `compiler/compiler-origin.patch` without fuzz, and
+compiles its persistent registry and nine exact generator-site hooks. Upstream
+Lean sources and this patch are Apache-2.0; upstream attribution remains in the
+patched source headers (https://github.com/leanprover/lean4/tree/d8b18978322de05a8f3dba51ef03cf5461676c17).
+No full compiler source or prebuilt compiler is vendored. Installed files are
+never overwritten; local stock hard links are unlinked before replacement.
+
+The batch frontend delegates to pinned `Lean.ShellOptions.process` and
+`Lean.shellMain`, including setup, plugins, normal `runFrontend`, C/olean/ilean
+output, JSON diagnostics, plain source, and `--run`. Its driver rejects unsupported
+server, thread-manager and incremental-snapshot options. It is not a language
+server replacement. Lake's native clang links use a local archive with the exact
+seven module objects replaced by their defined initializer symbols and the new
+registry added. The installed shared runtime remains an input.
+
+The descriptor binds compiler sources, patch, recipe, installed binary/import/link
+inputs, build tools and platform. Lake's `LEAN_GITHASH` includes its digest;
+report facets also trace it, and module provenance requires the matching
+`compiler_input_sha256`. Missing old provenance rejects report reuse. Compiled
+modules without the registry remain unclassified until canonical rebuilding;
+there is no name, shape, range or trace-based positive fallback. The Inspector
+accepts only the positive registry or `congrKindsExt`, with explicit-source,
+private/internal and unknown-origin boundaries retained. These fields do not
+participate in statement identities. A compiler identity change invalidates the
+requested Lake dependency closure, including requested upstream source builds.
+
+`make lean-origin-scope ORIGIN_SCOPE_SOURCES=<committed-source-copies> ORIGIN_SCOPE_OUTPUT=build/compiler-origin-validation/parsers`
+compiles supplied source copies with stock and instrumented compilers, builds the
+real Mathlib dependency closure, compares declaration/statement identities, and
+publishes a fresh native report. Its private fixture uses local package sources;
+only package build outputs are shared. Set `STRATALINT_ORIGIN_SCOPE_REPORT` to that
+output directory when running the canonical
+`DeclaredTemplateUnregisteredTests.actual_compiler_companions_survive_publication_and_strict_loader_to_dtr`
+test to check the five-parser, 730-declaration, 45-companion contract through the
+strict reader and DTR. The scope program's `--measure` mode reads the pinned
+compiler's import parser to count the full default-library source rebuild closure.
+These scoped checks do not replace Linux and whole-project CI.

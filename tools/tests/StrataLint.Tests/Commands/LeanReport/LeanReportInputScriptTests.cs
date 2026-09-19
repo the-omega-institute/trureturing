@@ -485,7 +485,10 @@ public sealed partial class LeanReportInputScriptTests
             Write(DocumentsLockPath, "{}\n");
             Write(TruthLockPath, "{}\n");
             Write("global.json", "{}\n");
+            Write("tools/lean-inspector/compiler/build.py",
+                "def inputs(root): return None, None, 'c' * 64\n");
             LeanReportRegistrationFixture.Install(repository);
+            RegisterProducer("tools/lean-inspector/compiler/build.py");
             // Synthetic module rows carry the same source/origin contract as
             // native bundles; no mathematical declarations are manufactured.
             var modules = new[] { "D5/Probe.lean", "Trureturing.lean" }.Select(path => new

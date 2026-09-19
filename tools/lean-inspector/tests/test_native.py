@@ -5,13 +5,14 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from test_native_support import NativeTestSupport
+from test_native_origin import NativeOriginTests
 from test_native_invalidation import *
 from test_native_publication import *
 from test_native_recovery import *
 from test_native_packaging import *
 from test_native_reuse import *
 
-class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
+class NativeTests(NativeTestSupport, NativeOriginTests, NativeInvalidationTests, NativePublicationTests,
                   NativeRecoveryTests, NativePackagingTests, NativeReuseTests, unittest.TestCase):
     pass
 

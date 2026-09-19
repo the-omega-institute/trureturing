@@ -74,7 +74,8 @@ Raw configuration identity belongs to the aggregate; module exports carry
 Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  return Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
+  let compatibility ← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility")
+  return (Job.nil.mix compatibility).mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compiler-identity"))
 
 /-- A completed native build, not yet accepted by the canonical validator.
 Only private jobs carry this value; it is never a public report facet. -/

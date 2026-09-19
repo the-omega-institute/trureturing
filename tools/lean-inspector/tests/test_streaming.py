@@ -347,6 +347,9 @@ class PublicationTests(unittest.TestCase):
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
             policy = root / 'Policy.lean'
             policy.write_text('def driver := 1\n')
+            supplier = root / 'tools/lean-inspector/compiler/build.py'
+            supplier.parent.mkdir(parents=True, exist_ok=True)
+            supplier.write_text("def inputs(root): return None, None, 'c' * 64\n")
             source = root / 'X.lean'
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
@@ -368,7 +371,7 @@ class PublicationTests(unittest.TestCase):
                 sources='c' * 64, config='d' * 64, input=pair)
             origins = {'X': dict(module='X', report_sha256=publication.digest(report),
                 compatibility_sha256=compatibility, producer_sources_sha256='e' * 64,
-                inspector_executable_sha256='f' * 64, input_sources={'X.lean': publication.digest(source)})}
+                inspector_executable_sha256='f' * 64, compiler_input_sha256='c' * 64, input_sources={'X.lean': publication.digest(source)})}
             publication.write_sidecars(report, coordinates, origins)
             validators = [lambda: native.row_binding(rows, root, 'X', utility),
                           lambda: native.row_binding(rows, root, 'X', utility, template_inputs=inputs),
@@ -424,6 +427,9 @@ class PublicationTests(unittest.TestCase):
     def test_source_membership_and_claim_bindings_use_current_registered_sources(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            supplier = root / 'tools/lean-inspector/compiler/build.py'
+            supplier.parent.mkdir(parents=True, exist_ok=True)
+            supplier.write_text("def inputs(root): return None, None, 'c' * 64\n")
             source = root / 'X.lean'
             source.write_text('def x : Nat := 1\n')
             claim = root / 'Claim.lean'
@@ -475,7 +481,7 @@ class PublicationTests(unittest.TestCase):
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
                 origins = {'X': dict(module='X', report_sha256=publication.digest(report),
-                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64,
+                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64, compiler_input_sha256='c'*64,
                     input_sources={'X.lean': 'a'*64})}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
@@ -559,7 +565,8 @@ class EntryPointTests(unittest.TestCase):
             dotnet.chmod(0o755)
             environment = dict(PATH=str(scripts) + os.pathsep + os.environ['PATH'],
                                STRATALINT_LEAN_PRODUCER_DLL=str(binary))
-            with patch.dict(os.environ, environment), patch.object(publication, 'coordinates', return_value={}):
+            with patch.dict(os.environ, environment), patch.object(publication, 'coordinates', return_value={}), \
+                    patch.object(publication, 'compiler_identity', return_value='c' * 64):
                 native.prepare(root)
             self.assertEqual(json.loads((root / 'utility-command.json').read_text()),
                              [str(binary), 'lean-utility-input'])
@@ -578,7 +585,7 @@ class EntryPointTests(unittest.TestCase):
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
-        cases = [('inputs', 2, [], False), ('utility-input-build', 37, ['build'], False),
+        cases = [('inputs', 2, [], False), ('compiler', 36, [], False), ('utility-input-build', 37, ['build'], False),
                  ('ensure', 38, ['build', 'ensure'], False),
                  ('report', 39, ['build', 'ensure', 'report'], False),
                  ('publish', 40, ['build', 'ensure', 'report', 'publish'], False),
@@ -596,6 +603,8 @@ class EntryPointTests(unittest.TestCase):
                              'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
+                write('tools/lean-inspector/compiler/build.py',
+                    'raise SystemExit(' + ('36' if phase == 'compiler' else '0') + ')\n')
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
                 write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_semantic_version=1,

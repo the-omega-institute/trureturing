@@ -101,6 +101,7 @@ reuse_report() {
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
   return "$status"
 }
+run_phase compiler python3 "$SCRIPT_DIR/compiler/build.py" ensure
 run_phase reuse reuse_report
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   open_logs

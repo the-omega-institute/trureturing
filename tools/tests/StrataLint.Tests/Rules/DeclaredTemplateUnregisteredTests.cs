@@ -97,7 +97,7 @@ public sealed class DeclaredTemplateUnregisteredTests
         var controls = Names("controls");
         var unclassified = Names("unclassified");
         Assert.Equal(8, generated.Length);
-        Assert.Equal(10, controls.Length);
+        Assert.Equal(16, controls.Length);
         Assert.All(generated, n => Assert.True(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
         Assert.All(controls, n => Assert.False(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
         Assert.All(unclassified, n => Assert.False(declarations.Single(d => d.Name == n).IsGeneratedCompanion));
@@ -109,9 +109,48 @@ public sealed class DeclaredTemplateUnregisteredTests
             f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
             .Order(StringComparer.Ordinal));
         Assert.All(findings, f => Assert.Equal(AdmissionEffect.Block, f.Effect));
+        var scope = Environment.GetEnvironmentVariable("STRATALINT_ORIGIN_SCOPE_REPORT");
+        if (!string.IsNullOrEmpty(scope)) VerifyCommittedScope(scope);
         files[Target] += "-- stale report\n";
         Assert.Throws<FormatException>(() => RawLeanReportArtifact.ReadFile(
             Path.Combine(published, "public.json"), Tree(files)));
+    }
+
+    private static void VerifyCommittedScope(string directory)
+    {
+        var sourceFiles = Directory.EnumerateFiles(directory, "*.lean", SearchOption.AllDirectories)
+            .ToDictionary(p => Path.GetRelativePath(directory, p).Replace('\\', '/'), File.ReadAllText);
+        var files = new Dictionary<string, string>(sourceFiles)
+        {
+            ["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(directory, "lean-report-inputs.json")),
+        };
+        var actual = RawLeanReportArtifact.ReadFile(Path.Combine(directory, "public.json"), Tree(files));
+        Assert.Equal(5, actual.Files.Count);
+        Assert.Equal(730, actual.Files.Sum(p => p.Value.Declarations.Length));
+        Assert.Equal(45, actual.Files.Sum(p => p.Value.Declarations.Count(d => d.IsGeneratedCompanion)));
+        var after = PolicyFiles();
+        foreach (var (path, source) in sourceFiles) after[path] = source;
+        var inputs = after.OrderBy(p => p.Key, StringComparer.Ordinal)
+            .Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
+        var reports = actual.Files.ToDictionary(p => p.Key.Value, p => p.Value with
+        {
+            InformationTemplates = JsonSerializer.SerializeToElement(new
+            {
+                schema_version = 1, compatibility_version = ManifestVersion(after), inputs,
+                inventory = Array.Empty<object>(), registered = Array.Empty<object>(), records = Array.Empty<object>(),
+            }),
+        });
+        // Like the raw-control fixture, only the empty registration inventory is
+        // synthetic. Declaration identities/visibility/provenance come from the
+        // actual native producer and the strict report reader above.
+        var report = RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(Tree(after),
+            LeanAxiomReport.Create(reports)).AsSpan(), Tree(after));
+        var findings = Findings(Context(PolicyFiles(), after, report, sourceFiles.Keys.ToArray()));
+        Assert.NotEmpty(findings);
+        Assert.All(findings, f => Assert.StartsWith("DTR-Unregistered ", f.Message));
+        foreach (var row in actual.Files)
+        foreach (var generated in row.Value.Declarations.Where(d => d.IsGeneratedCompanion))
+            Assert.DoesNotContain(findings, f => f.Message.EndsWith("/" + generated.Name, StringComparison.Ordinal));
     }
 
     [Theory]

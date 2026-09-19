@@ -39,6 +39,10 @@ class ReuseTests(unittest.TestCase):
                 'Inspector.lean': 'def inspector := 1\n', 'producer.py': '# producer\n',
                 'lean-toolchain': 'fixture\n', 'lakefile.toml': 'name = "fixture"\n'}.items():
             self.write(path, value)
+        self.write('tools/lean-inspector/compiler/build.py',
+            "def inputs(root): return None, None, 'c' * 64\n")
+        self.policy['producer_scopes']['lean-report']['include'].append(
+            dict(pattern='tools/lean-inspector/compiler/build.py', optional=False))
         self.write_policy()
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                 'tools/scripts/worktree/lean-cache-input.sh']:
@@ -79,7 +83,7 @@ class ReuseTests(unittest.TestCase):
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
             compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
-            inspector_executable_sha256='b' * 64,
+            inspector_executable_sha256='b' * 64, compiler_input_sha256='c' * 64,
             input_sources={row['source_path']: row['source_sha256'][7:]}) for row in rows}
         publication.write_sidecars(self.report, publication.coordinates(self.root), origins)
 

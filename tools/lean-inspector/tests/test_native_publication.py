@@ -35,6 +35,7 @@ class NativePublicationTests:
         self.write('lean-report-inputs.json', json.dumps(policy))
         target = 'D5/S0/Carrier/Target.lean'
         source = """import Lean
+import DeriveHandler
 import Lean.AutoDecl
 open Lean Elab Command
 namespace D5.S0.Carrier.Target
@@ -72,8 +73,56 @@ run_elab do
       (← isAutoDeclOrPrivate_Internal `D5.S0.Carrier.Target.match_custom) &&
       (← isAutoDeclOrPrivate_Internal `D5.S0.Carrier.Target.Authored.mk.inj) do
     throwError "fixture must distinguish broad AutoDecl positives"
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+inductive RawAuthored where
+  | mk (n : Nat)
+elab "emitAuthoredCompanions" : command => do
+  for name in [`D5.S0.Carrier.Target.RawAuthored.mk.inj,
+      `D5.S0.Carrier.Target.RawAuthored.mk.injEq,
+      `D5.S0.Carrier.Target.RawAuthored.mk.sizeOf_spec] do
+    liftCoreM <| addDecl <| Declaration.thmDecl {
+      name := name, levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+emitAuthoredCompanions
+def handParent : Nat := 0
+run_elab do
+  addDecl <| Declaration.thmDecl {
+    name := `D5.S0.Carrier.Target.handParent.eq_def,
+    levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+  let n ← Meta.getUnfoldEqnFor? `D5.S0.Carrier.Target.handParent (nonRec := true)
+  unless n == some `D5.S0.Carrier.Target.handParent.eq_def do
+    throwError "generic getter must return the authored fake"
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+inductive DerivedAuthored where
+  | mk (n : Nat)
+  deriving ProbeMarker
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+inductive TracedAuthored where
+  | mk (n : Nat)
+run_elab do
+  withTraceNode `Meta.injective (fun _ => return m!"generating injectivity") do
+    addDecl <| Declaration.thmDecl {
+      name := `D5.S0.Carrier.Target.TracedAuthored.mk.inj,
+      levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+private theorem privateAuthored : True := True.intro
 end D5.S0.Carrier.Target
 """
+        self.write('DeriveHandler.lean', """import Lean
+open Lean Elab Command
+class ProbeMarker (α : Type) where
+  unused : Unit := ()
+initialize registerDerivingHandler ``ProbeMarker fun names => do
+  for n in names do
+    liftCoreM <| addDecl <| Declaration.thmDecl {
+      name := n ++ `mk.inj, levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+  return true
+""")
+        with (self.root / 'lakefile.toml').open('a') as config:
+            config.write('\n[[lean_lib]]\nname = "DeriveHandler"\n')
+        policy['dependency_sources']['include'].append(dict(pattern='DeriveHandler.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
         self.write(target, source)
         self.build()
         executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
@@ -90,9 +139,10 @@ end D5.S0.Carrier.Target
         for name in generated:
             self.assertTrue(names[name]['generated_companion'], name)
         controls = [n for n, d in names.items() if d['kind'] == 'theorem' and d['include_in_statement']
-            and (n.startswith(('lookalike.', 'Authored.mk.', 'macro_public'))
+            and (n.startswith(('lookalike.', 'Authored.mk.', 'macro_public', 'RawAuthored.mk.',
+                     'handParent.eq_def', 'DerivedAuthored.mk.', 'TracedAuthored.mk.'))
                  or n in ('proof_authored', 'match_custom'))]
-        self.assertEqual(len(controls), 10)
+        self.assertEqual(len(controls), 16)
         internal = [n for n in names if n.startswith('macro_authored.')]
         self.assertEqual(len(internal), 1)
         self.assertFalse(names[internal[0]]['generated_companion'])
@@ -315,7 +365,8 @@ end D5.S0.Carrier.Target
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
             compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
-            inspector_executable_sha256='b' * 64, input_sources=dict(hashes)) for row in rows}
+            inspector_executable_sha256='b' * 64, compiler_input_sha256=publication.compiler_identity(str(self.root)),
+            input_sources=dict(hashes)) for row in rows}
         coordinates = publication.coordinates(self.root)
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = Path(directory) / publication.RAW

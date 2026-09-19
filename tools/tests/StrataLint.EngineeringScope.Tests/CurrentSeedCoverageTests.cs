@@ -267,7 +267,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                     paths = ('D5/A.lean', 'Audit.lean', 'Inspector.lean', 'producer.py',
                         'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', 'bin/lake', 'bin/lean',
                         'tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                        'tools/scripts/worktree/lean-cache-input.sh')
+                        'tools/scripts/worktree/lean-cache-input.sh', 'tools/lean-inspector/compiler/build.py')
                     for relative_source in paths:
                         target = root / relative_source
                         target.parent.mkdir(parents=True, exist_ok=True)

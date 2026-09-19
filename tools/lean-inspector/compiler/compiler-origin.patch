@@ -1,0 +1,142 @@
+--- a/src/Lean/Meta/Injective.lean
++++ b/src/Lean/Meta/Injective.lean
+@@ -5,6 +5,7 @@
+ -/
+ module
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Meta.Basic
+ import Lean.Meta.Tactic.Refl
+ import Lean.Meta.Tactic.Assumption
+@@ -118,6 +119,7 @@
+     type        := (← instantiateMVars type)
+     value       := (← instantiateMVars value)
+   }
++  modifyEnv (recordCompanionOrigin · name `injective)
+ 
+ def mkInjectiveEqTheoremNameFor (ctorName : Name) : Name :=
+   ctorName ++ `injEq
+@@ -175,6 +177,7 @@
+     type        := (← instantiateMVars type)
+     value       := (← instantiateMVars value)
+   }
++  modifyEnv (recordCompanionOrigin · name `injectiveEq)
+   addSimpTheorem (ext := simpExtension) name (post := true) (inv := false) AttributeKind.global (prio := eval_prio default)
+ 
+ register_builtin_option genInjectivity : Bool := {
+--- a/src/Lean/Meta/SizeOf.lean
++++ b/src/Lean/Meta/SizeOf.lean
+@@ -5,6 +5,7 @@
+ -/
+ module
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.AddDecl
+ public import Lean.Meta.AppBuilder
+ public import Lean.DefEqAttrib
+@@ -469,6 +470,7 @@
+         type        := thmType
+         value       := thmValue
+       }
++      modifyEnv (recordCompanionOrigin · thmName `sizeOfSpec)
+       simpAttr.add thmName default .global
+       grindAttr.add thmName grindAttrStx .global
+ 
+--- a/src/Lean/Meta/Eqns.lean
++++ b/src/Lean/Meta/Eqns.lean
+@@ -6,6 +6,7 @@
+ module
+ 
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Meta.Match.MatcherInfo
+ public import Lean.DefEqAttrib
+ public import Lean.Meta.RecExt
+@@ -197,6 +198,7 @@
+       name, type, value
+       levelParams := info.levelParams
+     })
++    modifyEnv (recordCompanionOrigin · name `simpleEquation)
+     inferDefEqAttr name -- should always succeed
+ 
+ /--
+--- a/src/Lean/Elab/PreDefinition/Structural/Eqns.lean
++++ b/src/Lean/Elab/PreDefinition/Structural/Eqns.lean
+@@ -6,6 +6,7 @@
+ module
+ 
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Elab.PreDefinition.FixedParams
+ import Lean.Elab.PreDefinition.EqnsUtils
+ import Lean.Meta.Tactic.CasesOnStuckLHS
+@@ -178,6 +179,7 @@
+         name, type, value
+         levelParams := info.levelParams
+       }
++      modifyEnv (recordCompanionOrigin · name `structuralUnfold)
+       inferDefEqAttr name
+ 
+ def getUnfoldFor? (declName : Name) : MetaM (Option Name) := do
+--- a/src/Lean/Elab/PreDefinition/WF/Unfold.lean
++++ b/src/Lean/Elab/PreDefinition/WF/Unfold.lean
+@@ -6,6 +6,7 @@
+ module
+ 
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Elab.PreDefinition.Basic
+ public import Lean.Meta.Tactic.Simp.Types
+ import Lean.Elab.PreDefinition.EqnsUtils
+@@ -234,6 +235,7 @@
+         name, type, value
+         levelParams := preDef.levelParams
+       }
++      modifyEnv (recordCompanionOrigin · name `wellFoundedUnfold)
+       inferDefEqAttr name
+       trace[Elab.definition.wf] "mkUnfoldEq defined {.ofConstName name}"
+ 
+@@ -267,6 +269,7 @@
+         name, type, value
+         levelParams := preDef.levelParams
+       }
++      modifyEnv (recordCompanionOrigin · name `wellFoundedBinaryUnfold)
+       inferDefEqAttr name
+       trace[Elab.definition.wf] "mkBinaryUnfoldEq defined {.ofConstName name}"
+ 
+--- a/src/Lean/Elab/PreDefinition/WF/Eqns.lean
++++ b/src/Lean/Elab/PreDefinition/WF/Eqns.lean
+@@ -6,6 +6,7 @@
+ module
+ 
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Elab.PreDefinition.FixedParams
+ public import Lean.Meta.ArgsPacker.Basic
+ 
+@@ -67,6 +68,7 @@
+           value := .const unfoldName' (info.levelParams.map mkLevelParam),
+           levelParams := info.levelParams
+         }
++        modifyEnv (recordCompanionOrigin · name `wellFoundedPrivateCopy)
+       return name
+   return none
+ 
+--- a/src/Lean/Elab/PreDefinition/PartialFixpoint/Eqns.lean
++++ b/src/Lean/Elab/PreDefinition/PartialFixpoint/Eqns.lean
+@@ -6,6 +6,7 @@
+ module
+ 
+ prelude
++import Lean.CompanionOrigin
+ public import Lean.Elab.PreDefinition.FixedParams
+ import Init.Internal.Order.Basic
+ import Lean.Meta.Tactic.Delta
+@@ -111,6 +112,7 @@
+         type := type
+         value := value
+       })
++      modifyEnv (recordCompanionOrigin · name `partialFixpointUnfold)
+ 
+ def getUnfoldFor? (declName : Name) : MetaM (Option Name) := do
+   let name := mkEqLikeNameFor (← getEnv) declName unfoldThmSuffix

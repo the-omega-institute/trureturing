@@ -40,6 +40,7 @@ public sealed partial class LeanReportInputScriptTests
                     JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
                 compatibility_sha256 = compatibility,
                 producer_sources_sha256 = new string('1', 64),
+                compiler_input_sha256 = new string('c', 64),
                 inspector_executable_sha256 = new string('2', 64),
                 input_sources = new Dictionary<string, string>
                 {

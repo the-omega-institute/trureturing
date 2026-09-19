@@ -33,7 +33,7 @@ public sealed class StandaloneLeanInspectorTests
     {
         using var repository = new TemporaryDirectory();
         File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"), Lakefile + "\n");
-        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain")));
         File.WriteAllText(Path.Combine(repository.Path, "Trureturing.lean"), "def diskOnly : Nat := 1\n");
         var build = TestProcessRunner.Run(
             "lake",
@@ -45,7 +45,7 @@ public sealed class StandaloneLeanInspectorTests
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("lakefile.toml", Lakefile + "\n"),
-            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"))),
             RawRepositoryEntry.FromText("Trureturing.lean", "axiom snapshotOnly : False\n"),
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
@@ -64,7 +64,7 @@ public sealed class StandaloneLeanInspectorTests
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("lakefile.toml", LakefileWithD5 + "\n"),
-            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"))),
             RawRepositoryEntry.FromText(
                 "D5/S0/Carrier/Dependency.lean",
                 "def dependency : Nat := 7\n"),
@@ -87,7 +87,7 @@ public sealed class StandaloneLeanInspectorTests
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("lakefile.toml", Lakefile + "\n"),
-            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"))),
             RawRepositoryEntry.FromText(
                 "Trureturing.lean",
                 """
@@ -407,7 +407,7 @@ public sealed class StandaloneLeanInspectorTests
         var source = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "Inspector.lean"));
         File.WriteAllText(Path.Combine(directory, "EncodingProbe.lean"),
             source + "\nopen Lean LeanInformationAudit.InspectorProducer\n" + probe + "\n");
-        var result = TestProcessRunner.Run("lean", ["EncodingProbe.lean"], directory,
+        var result = TestProcessRunner.Run("python3", [CompilerRecipe, "run", "lean", "EncodingProbe.lean"], directory,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -435,7 +435,7 @@ public sealed class StandaloneLeanInspectorTests
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("lakefile.toml", Lakefile + "\n"),
-            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"))),
             RawRepositoryEntry.FromText("Trureturing.lean", source),
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
@@ -454,6 +454,9 @@ public sealed class StandaloneLeanInspectorTests
             report.Error) { InformationRegistrationErrors = report.InformationRegistrationErrors };
     }
 
+    private static string CompilerRecipe => Path.Combine(TestRepositoryLayout.FindRoot(),
+        "tools", "lean-inspector", "compiler", "build.py");
+
     private sealed class TestLeanReportProducer(string repositoryRoot)
     {
         internal LeanAxiomReport Inspect(RepositorySnapshot snapshot)
@@ -469,8 +472,8 @@ public sealed class StandaloneLeanInspectorTests
             }
 
             var build = TestProcessRunner.Run(
-                "lake",
-                ["build"],
+                "python3",
+                [CompilerRecipe, "run", "lake", "build"],
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,
                 8 * 1024 * 1024);
@@ -483,7 +486,7 @@ public sealed class StandaloneLeanInspectorTests
             var spoolMaterials = output + ".spool-materials";
             var arguments = new List<string>
             {
-                "env",
+                CompilerRecipe, "run", "lake", "env",
                 "lean",
                 "--root=" + Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector"),
                 "--run",
@@ -509,7 +512,7 @@ public sealed class StandaloneLeanInspectorTests
             }
 
             var inspection = TestProcessRunner.Run(
-                "lake",
+                "python3",
                 arguments,
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,

@@ -64,7 +64,7 @@ def capture(repository, lake):
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, files=files,
+    return dict(eligible=True, files=files, compiler_input_sha256=publication.compiler_identity(str(repository)),
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
 
