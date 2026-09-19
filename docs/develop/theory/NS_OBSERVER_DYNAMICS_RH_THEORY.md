@@ -1581,3 +1581,381 @@ M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
 [17-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩的 Wasserstein 恢复背景；本节的支撑端点泛函及有限时间观察条件单独定义。
 
 [17-C] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 无分离条件的稀疏矩恢复背景。
+
+## 22. 二进制极限逼近、机械读出敏感性与保序权重
+
+### 22.1 定义与已有完成结果的边界
+
+对 $0\leq\alpha<1$、$x\in[0,1)$，使用已有实际机械词
+\[
+s_k(\alpha,x)=\lfloor x+(k+1)\alpha\rfloor-\lfloor x+k\alpha\rfloor\in\{0,1\},\qquad
+O_n(\alpha,x)=(s_0,\ldots,s_{n-1}).
+\]
+它等于窗口 $[1-\alpha,1)$ 对真实旋转 $\{x+k\alpha\}$ 的读出。定义
+\[
+E_n(\alpha,\beta)=\{x\in[0,1):O_n(\alpha,x)\neq O_n(\beta,x)\}.
+\tag{22.1}
+\]
+测度 $\lambda$ 为长度测度，亦为该单位相位区间上的均匀概率。
+
+当前 `BisectionCompletion` 证明有理二分区间的精确宽度 $(u-l)2^{-p}$、端点 Cauchy 性及共同完成极限；其中对任意集合的上界判断使用经典选择，不能直接视为可执行的比较 oracle。`ReadoutTopology` 在其指定的有理探针拓扑与容量空间中刻画了有限总容量与连续实值延拓的等价。以下处理参数完成之后的真实离散读出，没有将这些连续延拓结论自动应用到不连续的阈值函数。
+
+### 22.2 定理：构造局部参数区间及全部错误区域
+
+固定无理 $\alpha\in(0,1)$ 和整数 $n\geq0$。对 $1\leq k\leq n$ 令 $c_k=1-\{k\alpha\}$，并令
+\[
+g_n=\min\bigl(\{1-\alpha\}\cup\{c_k:1\leq k\leq n\}
+\cup\{|c_i-c_j|:1\leq i<j\leq n\}\bigr),\qquad
+r_n=\frac{g_n}{2(n+1)}.
+\]
+有限集合中全部元素严格为正，故 $r_n>0$。对全部 $0\leq\delta\leq r_n$，有 $\alpha+\delta<1$，且
+\[
+\boxed{E_n(\alpha,\alpha+\delta)
+=\bigsqcup_{k=1}^n[c_k-k\delta,c_k),\qquad
+\lambda(E_n)=\frac{n(n+1)}2\delta.}
+\tag{22.2}
+\]
+对第 $k$ 个区域内的每个相位，实际有符号读出差为
+\[
+\boxed{s_j(\alpha+\delta,x)-s_j(\alpha,x)
+=\mathbf1_{\{j=k-1\}}-\mathbf1_{\{j=k\}},\quad 0\leq j<n.}
+\tag{22.3}
+\]
+当 $k=n$ 时只有最后一位增加一；当 $k<n$ 时实际出现相邻 $01\to10$，其余位不变。$n=0$ 时错误集为空。
+
+**证明。** 无理性使每个 $k\alpha$ 非整数；若两个 $c_k$ 相等，则某个非零整数倍的 $\alpha$ 是整数，矛盾。参数区间满足 $0\leq k\delta<g_n$，所以切点不越过零，实际 $k\alpha$ 的整数部分保持不变，且各扫过区间两两不交。直接展开取整进位得到
+\[
+D_k(x):=\lfloor x+k(\alpha+\delta)\rfloor-\lfloor x+k\alpha\rfloor
+=\mathbf1_{[c_k-k\delta,c_k)}(x),\quad D_0=0.
+\]
+相邻累计整数相减给 $s_j(\alpha+\delta,x)-s_j(\alpha,x)=D_{j+1}-D_j$。区间不交保证至多一个 $D_k$ 非零，故得到式 (22.3)。在区间并集之外所有 $D_k$ 为零；在每个区间内第 $k-1$ 位实际改变，故错误集恰为该并集。有限测度可加性及 $\sum_{k=1}^n k=n(n+1)/2$ 给出测度公式。
+
+`MechanicalSlopeSensitivity.local_slope_disagreement_law` 的候选 Lean 证明构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。半径仅为明确的充分半径，没有被宣称最大。
+
+**推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
+\[
+\lambda(H_n=1)=n\delta,\qquad
+\lambda(H_n=2)=\frac{n(n-1)}2\delta,\qquad
+\lambda(H_n=0)=1-\frac{n(n+1)}2\delta,
+\]
+\[
+\int_0^1 H_n(x)\,dx=n^2\delta.
+\tag{22.4}
+\]
+**证明。** 最后一个扫过区间长度为 $n\delta$，此前每个区域改变两位，且没有其他错误区域。各区域的长度直接给出全部公式。
+
+### 22.3 定理：保序数值读出的完整权重分类
+
+对任意实权重 $w_0,\ldots,w_m$，定义非空有限读出
+\[
+V_w(\alpha,x)=\sum_{j=0}^m w_j s_j(\alpha,x).
+\]
+对每个固定无理 $\alpha\in(0,1)$，以下两项等价：
+\[
+\exists r>0,\quad \alpha+r<1,\quad
+\forall\delta\in[0,r],\ \forall x\in[0,1),\quad
+V_w(\alpha+\delta,x)\geq V_w(\alpha,x);
+\]
+\[
+\boxed{w_0\geq w_1\geq\cdots\geq w_m\geq0.}
+\tag{22.5}
+\]
+
+**必要性证明。** 将任何声称有效的正半径与第 22.2 节的正半径取较小值的一半，得到严格正扰动。每个扫过区间都非空，可选择其中点。对第 $k$ 个区域，实际数值变化为 $w_{k-1}-w_k$，$1\leq k\leq m$；最后一个区域的变化为 $w_m$。因此保序性强制全部列出的不等式。若任一条件失败，同一构造给出任意小参数扰动下的真实反例相位，没有假设任意二元模式均能由旋转实现。
+
+**充分性证明。** 对任意 $\alpha\leq\beta$ 和同一实相位 $x$，令
+\[
+D_k=\lfloor x+k\beta\rfloor-\lfloor x+k\alpha\rfloor\geq0,\qquad D_0=0.
+\]
+从实际机械词展开，有限求和分部恒等式给
+\[
+V_w(\beta,x)-V_w(\alpha,x)
+=w_mD_{m+1}+\sum_{k=1}^m(w_{k-1}-w_k)D_k\geq0.
+\tag{22.6}
+\]
+该恒等式可按观察长度归纳：增加最后一项后，中间边界项恰好抵消。它还证明满足式 (22.5) 的权重在整个斜率顺序上保序。取任意 $r\in(0,1-\alpha)$ 得到所需局部命题。
+
+候选 Lean `MechanicalReadoutOrder.local_order_iff_decreasing_weights` 承载这一等价，必要性直接消费已构造的实际错误区域，充分性在证明内推出真实累计取整的求和分部恒等式。求和分部方法本身属于已有数学。
+
+### 22.4 定理：二进制数值完成是一个全局 L1 等距读出
+
+定义
+\[
+B_n(\alpha,x)=\sum_{j=0}^{n-1}2^{-j-1}s_j(\alpha,x),\qquad
+B_\infty(\alpha,x)=\sum_{j=0}^{\infty}2^{-j-1}s_j(\alpha,x).
+\]
+该级数一致收敛，且 $0\leq B_\infty-B_n\leq2^{-n}$。对任意 $0\leq\alpha,\beta<1$，不要求无理，也不要求局部扰动，
+\[
+\boxed{\int_0^1|B_n(\beta,x)-B_n(\alpha,x)|\,dx
+=(1-2^{-n})|\beta-\alpha|,}
+\]
+\[
+\boxed{\int_0^1|B_\infty(\beta,x)-B_\infty(\alpha,x)|\,dx
+=|\beta-\alpha|.}
+\tag{22.7}
+\]
+因此 $\alpha\mapsto B_\infty(\alpha,\cdot)$ 给出到 $L^1([0,1])$ 的保序等距嵌入。这里的对象是关于同一均匀相位的函数，不是一个标量就无损恢复任意无限词的声明。
+
+**证明。** 二进制权重非负且递减，式 (22.6) 给出 $\alpha\leq\beta$ 时每个相位上的 $B_n(\alpha,x)\leq B_n(\beta,x)$，一致极限也保持这一顺序。对每个固定 $k$，旋转窗口读出的积分为 $\alpha$：把 $x\mapsto\{x+k\alpha\}$ 在其唯一回绕点切成两段平移，窗口原像的总长度就是 $\alpha$。所以
+\[
+\int_0^1 B_n(\alpha,x)\,dx=\alpha(1-2^{-n}).
+\]
+有序情况下绝对差就是差，积分给有限公式；交换两参数覆盖另一顺序。最后由一致尾界交换极限与积分，得到无限公式。所有函数都是有限取整组合的可测函数或其一致极限。
+
+**推论。** 在第 22.2 节的局部区间中，同一对模型同时满足
+\[
+\lambda(O_n(\alpha,\cdot)\neq O_n(\alpha+\delta,\cdot))
+=\frac{n(n+1)}2\delta,
+\qquad
+\|B_n(\alpha+\delta,\cdot)-B_n(\alpha,\cdot)\|_1
+=(1-2^{-n})\delta.
+\tag{22.8}
+\]
+完整记录相等与数值编码接近是两个不同的目标。这条等式不声称 $L^\infty$ 参数稳定性。
+
+### 22.5 命题：定向二进制逼近与边界不稳定
+
+对无理 $\alpha\in(0,1)$，设
+\[
+\alpha_p^-=2^{-p}\lfloor2^p\alpha\rfloor,\qquad
+\alpha_p^+=2^{-p}\lceil2^p\alpha\rceil.
+\]
+两种有理逼近到 $\alpha$ 的误差都严格小于 $2^{-p}$，并分别从下方、上方逼近。对固定有限 $n$，若 $x+k\alpha$ 对 $1\leq k\leq n$ 全都不是整数，则任意收敛参数序列最终都给出正确的长度 $n$ 词。
+
+**证明。** 有限多个非整数各自到相邻整数有正距离。取这些距离除以相应 $k$ 后的正最小值，参数误差小于它时全部累计取整保持不变，从而全部 bit 保持不变。
+
+这个结论不能同时覆盖全部相位。固定 $x=1-\alpha$，则
+\[
+s_0(\alpha,x)=1,\qquad s_0(\alpha_p^-,x)=0\quad\text{对每个 }p.
+\tag{22.9}
+\]
+**证明。** $x+\alpha=1$，但 $x+\alpha_p^-\in(0,1)$；直接取整即可。即使参数的每一位精度持续增加，指定边界上的 bit 仍不等于极限处的读出。相反，从上方逼近时，有限多个取整函数的右连续性使每个固定相位、固定长度的读出最终正确；这个起始精度依赖相位，不能取为一个统一的有限值。
+
+已有 `MechanicalPeriodicity` 还证明有理斜率的机械词从起点周期，而 $(0,1)$ 中无理斜率的机械词不最终周期。因此有限精度参数的无限时间周期性，不能被转述为极限动力系统的周期性。普通二进制与带符号数字表示之间的可计算性差异见 [22-A,22-B]。
+
+### 22.6 推论：黄金斜率下的显式参数位数预算
+
+令 $\alpha=\phi-1=\phi^{-1}$，$n\geq1$。已有 `GoldenHurwitzBound.golden_hurwitz_bound` 对有理数 $a/k$ 的约分分母给出
+\[
+\|k\phi\|>\frac1{\sqrt5\,k+1}>\frac1{4k},
+\]
+其中 $\|\cdot\|$ 为到最近整数的距离。于是第 22.2 节所有切点到零的距离及不同切点的距离均大于 $1/(4n)$，且 $1-\alpha>1/4$，故 $g_n>1/(4n)$。因此
+\[
+0\leq\delta\leq\frac1{8n(n+1)}
+\quad\Longrightarrow\quad
+\lambda(E_n(\alpha,\alpha+\delta))=\frac{n(n+1)}2\delta.
+\tag{22.10}
+\]
+
+**证明。** 对 $a/k$ 应用上述有理逼近界，其约分分母至多为 $k$，再乘 $k$ 得最近整数界。两个切点之差的圆距离是 $(i-j)\alpha$ 到整数的距离，线性距离至少为圆距离。代入实际半径公式即可。该推导复用了新 dev 混合性论证中同一个算术间隔来源，没有把混合时间定理当成斜率稳定性定理。
+
+对 $0<\eta\leq1/16$，只要
+\[
+\boxed{2^{-p}\leq\frac{2\eta}{n(n+1)},}
+\tag{22.11}
+\]
+上方二进制逼近 $\alpha_p^+$ 引起错误记录的相位比例就严格小于 $\eta$。等价的充分整数预算为
+\[
+p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
+\]
+**证明。** 式 (22.11) 蕴含 $2^{-p}\leq1/[8n(n+1)]$，故实际误差 $\delta_p<2^{-p}$ 位于已证局部区间。将它代入式 (22.10) 即得结论。该预算控制均匀相位下的错误比例，不保证每个相位的所有 bit 精确，也不是对某个特定二进制尾误差的必要位数声明。
+
+### 22.7 定理：联合相位校准的局部精确代价
+
+固定无理 $\alpha\in(0,1)$ 和 $n\geq1$。令 $g>0$ 不大于 $\alpha,1-\alpha$、全部 $c_k,1-c_k$ 和不同切点的两两距离。对足够小的 $\delta,u$，满足
+\[
+\max_{0\leq k\leq n}|u+k\delta|\leq g/4,\qquad 0<\alpha+\delta<1,
+\]
+则
+\[
+\boxed{\lambda\{x:O_n(\alpha+\delta,x+u)\neq O_n(\alpha,x)\}
+=\sum_{k=0}^n|u+k\delta|.}
+\tag{22.12}
+\]
+机械词对相位的一周期平移不变，故这里 $x+u$ 不需要限制在 $[0,1)$。
+
+**证明。** 对 $k\geq1$，累计取整差仅在切点 $c_k$ 扫过的长度 $|u+k\delta|$ 区间上非零，符号是 $u+k\delta$ 的符号。对 $k=0$，当 $u>0$ 时该区域是 $[1-u,1)$，当 $u<0$ 时是 $[0,-u)$，符号分别为正、负。各区域两两不交，且其端点处理与取整约定一致。每个区域恰好改变一个累计整数，因 $n\geq1$ 必然改变至少一位实际读出。区域之外全部累计整数不变。有限可加性给出式 (22.12)。
+
+当 $n|\delta|\leq g/4$ 时，在上述局部校准类内，最小错误比例为
+\[
+\boxed{|\delta|\left\lfloor\frac{(n+1)^2}{4}\right\rfloor.}
+\tag{22.13}
+\]
+**证明。** $\sum_{k=0}^n|u+k\delta|$ 在 $u=-\delta t$、$t$ 为 $0,1,\ldots,n$ 的任一中位数时最小。可取 $t=n/2$，它满足局部条件。将两端关于中位数配对求和，得到 $\lfloor(n+1)^2/4\rfloor|\delta|$。这将零相位校准的主系数约减半，但保留 $n^2|\delta|$ 阶；没有对局部参数区间以外的全部相位平移声称全局最优。
+
+### 22.8 证明覆盖与保留边界
+
+本节的核心证明链由三个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。源码存在不代表已经执行 elaboration 或内核检查。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，以及第 22.11--22.12 节的精确原子表示与极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
+
+[22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
+
+[22-B] Franziskus Wiesnet and Nils Köpp. *Limits of real numbers in the binary signed digit representation*. Logical Methods in Computer Science 18(3:24), 2022. DOI: 10.46298/lmcs-18(3:24)2022. https://arxiv.org/abs/2103.15702v5 . 带收敛模量的带符号数字流极限与可验证程序提取；其 Minlog 结果不被算作本库新的 Lean 声明。
+
+[22-C] The Omega Institute, trureturing, inspected dev `6b430a6586586f56ae4f8f66c0e513f39db9fdeb`. `BisectionCompletion.lean`、`ReadoutTopology.lean`、`MechanicalBalance.lean`、`MechanicalPeriodicity.lean`、`GoldenHurwitzBound.lean` 为本节读取的实际源。新合入 PR #8335 在 `RECURSIVE_RELATIONAL_OBSERVATION.md` 第 36 节研究固定精确动力下的有限读出混合性；这里不将其有限混合性转述为全空间谱隙或数值替代后的同一性质。
+
+### 22.9 定理：一般几何完成与参数、截断的联合误差
+
+设 $0\leq r<1$、$0\leq\alpha,\beta<1$，并定义
+\[
+q_j=(1-r)r^j,\qquad P_{r,n}(\alpha,x)=\sum_{j=0}^{n-1}q_js_j(\alpha,x),\qquad
+G_r(\alpha,x)=\sum_{j=0}^{\infty}q_js_j(\alpha,x).
+\]
+对每个实相位 $x$，级数收敛，且
+\[
+\boxed{0\leq G_r(\alpha,x)-P_{r,n}(\alpha,x)\leq r^n.}
+\tag{22.14}
+\]
+两个完成读出在 $[0,1)$ 上可积，并满足
+\[
+\int_0^1|P_{r,n}(\beta,x)-P_{r,n}(\alpha,x)|\,dx
+=(1-r^n)|\beta-\alpha|,
+\]
+\[
+\boxed{\int_0^1|G_r(\beta,x)-G_r(\alpha,x)|\,dx=|\beta-\alpha|.}
+\tag{22.15}
+\]
+若 $\beta\leq\alpha$，则参数替代与输出截断的联合误差恰为
+\[
+\boxed{\int_0^1|G_r(\alpha,x)-P_{r,n}(\beta,x)|\,dx
+=\alpha-\beta(1-r^n)=(\alpha-\beta)+\beta r^n.}
+\tag{22.16}
+\]
+
+**证明。** 由实际字母属于 $\{0,1\}$，每项位于 $[0,q_j]$；而 $\sum q_j=1$、$\sum_{j<n}q_j=1-r^n$。正项级数比较同时给出收敛及式 (22.14)，包括 $r=0$ 和 $n=0$ 的约定 $r^0=1$。
+
+对任意实数 $t$，在 $x\in[0,1)$ 上直接展开进位：
+\[
+\lfloor x+t\rfloor=\lfloor t\rfloor+
+\mathbf1_{[1-\{t\},1)}(x).
+\]
+两边可积，右端积分是 $\lfloor t\rfloor+\{t\}=t$。相邻累计取整相减，便得到每个实际字母的积分为 $\alpha$，从而 $\int P_{r,n}(\alpha,x)dx=\alpha(1-r^n)$。几何权重递减且非负，式 (22.6) 证明有序参数对应逐相位有序读出；通过正项极限后，$G_r$ 也保序。有限读出在 $[0,1]$ 中，支配收敛给出完成读出的可积性及 $\int G_r(\alpha,x)dx=\alpha$。对有序参数，绝对差就是差，故积分得到式 (22.15)，交换参数覆盖另一顺序。最后由
+\[
+P_{r,n}(\beta,x)\leq G_r(\beta,x)\leq G_r(\alpha,x)
+\]
+消去式 (22.16) 的绝对值，使用已证明的两个均值即得结论。
+
+此证明由 `geometric_readout_isometric_completion` 承载，实际积分来自进位区间。二进制 $r=1/2$ 是其特例。若 $\beta$ 是 $p$ 位下方二进制逼近，则式 (22.16) 严格小于 $2^{-p}+2^{-n}$；这个预算控制相位平均误差，没有宣称全部相位上的同一界。
+
+### 22.10 定理：固定相位连续性的完整判据
+
+固定 $0<r<1$、$0<\alpha<1$ 和任意实相位 $x$。则
+\[
+\boxed{\beta\longmapsto G_r(\beta,x)\text{ 在 }\alpha\text{ 连续}
+\iff \forall k\geq1,\quad x+k\alpha\notin\mathbb Z.}
+\tag{22.17}
+\]
+若 $x+k\alpha=z\in\mathbb Z$，其中 $k\geq1$，则对每个 $0\leq\beta<\alpha$ 都有
+\[
+\boxed{G_r(\alpha,x)-G_r(\beta,x)\geq(1-r)^2r^{k-1}>0.}
+\tag{22.18}
+\]
+这里连续性使用完整的实数邻域；由于 $\alpha$ 是内部点，可把邻域限制在 $(0,1)$。$r=0$ 被明确排除，因为它只保留第一位，后续累计整数命中未必影响数值。
+
+**无整数命中时的证明。** 对给定 $N$，每个 $x+k\alpha$，$1\leq k\leq N$，到相邻整数的距离均为正。令
+\[
+d_N=\frac12\min\left(\{\alpha,1-\alpha\}\cup
+\left\{\frac{\min(\{x+k\alpha\},1-\{x+k\alpha\})}{k}:1\leq k\leq N\right\}\right)>0.
+\]
+$N=0$ 时内侧集合为空。若 $|\beta-\alpha|<d_N$，则 $\beta\in(0,1)$，前 $N$ 个累计取整完全相同，故 $P_{r,N}(\beta,x)=P_{r,N}(\alpha,x)$。两个尾部都位于 $[0,r^N]$，因此
+\[
+|G_r(\beta,x)-G_r(\alpha,x)|\leq r^N.
+\]
+给定正误差，取足够大的 $N$ 使 $r^N$ 小于它，便得到连续性。
+
+**整数命中时的证明。** 令
+\[
+D_j=\lfloor x+j\alpha\rfloor-\lfloor x+j\beta\rfloor\geq0,\qquad D_0=0.
+\]
+对任意 $N$，实际读出满足有限恒等式
+\[
+P_{r,N}(\alpha,x)-P_{r,N}(\beta,x)
+=q_ND_N+\sum_{j=0}^{N-1}(q_j-q_{j+1})D_{j+1}.
+\tag{22.19}
+\]
+它由展开相邻取整差后逐项抵消得到，也可按 $N$ 归纳。若在时间 $k$ 命中整数，则每个较小参数都有 $D_k\geq1$。因为
+\[
+q_j-q_{j+1}=(1-r)^2r^j>0,
+\]
+对 $N\geq k$，式 (22.19) 的右端至少为 $(1-r)^2r^{k-1}$。让 $N$ 增大，并使用式 (22.14)，该下界保留到完成读出，得到式 (22.18)。任意邻域中都能选择 $\beta<\alpha$，所以连续性不成立。这一论证处理了实际相邻 bit 的正负变化，未假设数值跳变不会抵消。
+
+`geometric_readout_continuity_and_jump` 同时承载式 (22.17) 的显式 $\varepsilon$-$\delta$ 形式与式 (22.18)。证明中的正前缀半径和无限下界均由真实取整计算导出。
+
+### 22.11 定理：原子分布表示及跳变的精确总量
+
+固定 $0<r<1$ 和 $0\leq x<1$，令
+\[
+a_k=(1-r)^2r^{k-1},\qquad
+\nu_{r,x}=\sum_{k=1}^{\infty}a_k\sum_{j=1}^{k}\delta_{(j-x)/k}.
+\tag{22.20}
+\]
+则 $\nu_{r,x}$ 是支撑于 $(0,1]$ 的概率测度，且对 $0\leq\alpha\leq1$，
+\[
+\boxed{G_r(\alpha,x)=\nu_{r,x}((0,\alpha])
+=\sum_{k=1}^{\infty}a_k\lfloor x+k\alpha\rfloor.}
+\tag{22.21}
+\]
+因此，内部斜率处的左跳变恰为
+\[
+\boxed{G_r(\alpha,x)-G_r(\alpha-,x)
+=\sum_{\substack{k\geq1\\x+k\alpha\in\mathbb Z}}(1-r)^2r^{k-1}.}
+\tag{22.22}
+\]
+
+**证明。** 对 $N\geq1$，有限 Abel 展开保留终端项为
+\[
+P_{r,N}(\alpha,x)
+=(1-r)r^{N-1}\lfloor x+N\alpha\rfloor
++\sum_{k=1}^{N-1}a_k\lfloor x+k\alpha\rfloor.
+\]
+这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。上述级数与测度推导是普通证明，不冒充新的 Lean 测度声明。
+
+当 $x=0$、$\alpha=p/q\in(0,1)$ 且分数既约时，命中时间恰好是 $q,2q,\ldots$，所以
+\[
+\boxed{G_r(p/q,0)-G_r((p/q)-,0)
+=\frac{(1-r)^2r^{q-1}}{1-r^q}.}
+\tag{22.23}
+\]
+当固定相位 $x$ 无理时，有理斜率不会命中整数；如果某个无理斜率命中一次，则不能再命中第二次，否则相减会强制斜率有理。因此这一情形的跳变若存在，就恰为单个 $a_k$。这说明连续性不能只按斜率的有理性分类，固定相位也参与判定。
+
+**推论：平均原子测度成为长度测度。** 对 $[0,1]$ 中任意 Borel 集 $A$，
+\[
+\boxed{\int_0^1\nu_{r,x}(A)\,dx=\lambda(A).}
+\tag{22.24}
+\]
+**证明。** 对固定 $k,j$，变量变换 $t=(j-x)/k$ 把均匀相位推送为区间 $((j-1)/k,j/k]$ 上密度 $k$ 的测度。对 $j=1,\ldots,k$ 求和得到 $k\lambda(A)$；再用非负级数与积分交换以及 $\sum ka_k=1$ 即得结论。各个相位的读出都是原子分布函数，而相位平均产生长度测度。这给出了点态跳变与式 (22.15) 的精确 $L^1$ 距离相容的具体机制，没有把两种拓扑等同。
+
+### 22.12 推论：改变位权的平均化与极限次序
+
+对 $0<r<1$、$0\leq\alpha<1$、$0\leq x<1$，式 (22.21) 给出
+\[
+G_r(\alpha,x)-\alpha
+=\sum_{k=1}^{\infty}a_k\bigl(x-\{x+k\alpha\}\bigr).
+\]
+由于 $\sum a_k=1-r$，得到
+\[
+\boxed{(1-r)(x-1)\leq G_r(\alpha,x)-\alpha\leq(1-r)x,
+\qquad |G_r(\alpha,x)-\alpha|\leq1-r.}
+\tag{22.25}
+\]
+因此 $r\uparrow1$ 时，完成读出对斜率、相位一致趋于 $\alpha$。这里改变的是位权本身，固定二进制比率 $r=1/2$ 的读出不包含这个极限。
+
+另一方面，固定有限 $n$ 时，每个权重 $(1-r)r^j$ 随 $r\uparrow1$ 趋于零，因此 $P_{r,n}(\alpha,x)\to0$。故
+\[
+\lim_{r\uparrow1}\lim_{n\to\infty}P_{r,n}(\alpha,x)=\alpha,
+\qquad
+\lim_{n\to\infty}\lim_{r\uparrow1}P_{r,n}(\alpha,x)=0.
+\tag{22.26}
+\]
+这两个极限在 $\alpha>0$ 时不同。若同时改变参数、位权和记录长度，对任意 $0\leq\beta<1$，三角不等式、式 (22.14) 与式 (22.25) 给出逐相位预算
+\[
+\boxed{|P_{r,n}(\beta,x)-\alpha|
+\leq r^n+(1-r)+|\beta-\alpha|.}
+\tag{22.27}
+\]
+所以 $\beta\to\alpha$、$r\uparrow1$、$r^n\to0$ 是一种明确的联合收敛方案。式 (22.25)--(22.27) 是基于已显示级数恒等式的普通推论；它们不宣称固定几何位权在参数上的一致连续性。
+
+### 22.13 文献关系
+
+[22-D] Michel Laurent and Arnaldo Nogueira. *Rotation number of contracted rotations*. Journal of Modern Dynamics 12, 175--191, 2018. DOI: 10.3934/jmd.2018007. https://www.aimsciences.org/article/doi/10.3934/jmd.2018007 . 使用 Hecke--Mahler 级数研究收缩旋转的参数与旋转数关系。相关的取整级数与阶梯现象属于已有研究；本节对指定实际机械读出、任意固定相位和所给误差泛函逐项证明，没有把不同参数映射直接识别。
+
+[22-E] DoYong Kwon. *A devil's staircase from rotations and irrationality measures for Liouville numbers*. arXiv:0709.1642, 2007. https://arxiv.org/abs/0709.1642 . 研究由机械词构造的另一阶梯函数及其连续性和单侧极限。其目标映射与本节的几何加权相位函数不同；本节不把无理连续、有理跳变的一般现象宣称为首次发现。
