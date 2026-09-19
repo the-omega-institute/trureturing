@@ -1,6 +1,6 @@
 # 算术全息量子网络与 Ryu–Takayanagi 研究
 
-本卷以同一个目标组织全部结果：从已有算术窗口和量子编码出发，证明独立定义的边界纠缠熵与几何割之间的关系，并确定这些有限模型能否组成相容的跨尺度量子系统。推理链为：局部完美张量 → 实际纠缠谱 → 单环 RT 与算术亏损 → 熵未记录的多副本结构 → 粗化障碍及可实现的联合操作。公开矩阵和随机网络问题用来检验这些接口的迁移能力。
+本卷以同一个目标组织全部结果：从已有算术窗口和量子编码出发，证明独立定义的边界纠缠熵与几何割之间的关系，并确定这些有限模型能否组成相容的跨尺度量子系统。推理链为：局部完美张量 → 实际纠缠谱 → 单环 RT 与算术亏损 → 熵未记录的多副本结构 → 粗化障碍及可实现的联合操作 → 整个单环的精度通道与局部验证。公开矩阵和随机网络问题用来检验这些接口的迁移能力。
 
 **证明状态。** 本卷新增结论为有限维纸面数学证明及明确标出的计算证书，尚无配套 Lean 内核证明或独立评审。既有形式化、已发表结果、本卷推导和未证接口分别说明。未认领原始引力 RT、物理 AdS/CFT 对偶、完整具名开放问题结算或首次优先权。具体构造的新颖性仍需进一步核对。
 
@@ -179,7 +179,7 @@ $$
 S_n(C)=[Ln-\min(n,\nu)]\log p.
 $$
 
-$c_k\ne0$ 时，$n\ge\nu$ 后绝对亏损稳定为 $\nu\log p$，且 $S_n(C)/(n\log p)\to L$；$c_k=0$ 时 $S_n(C)=(L-1)n\log p$。这是谱计数的精度渐近，不自动建立不同 Hilbert 空间的态收敛或通道相容。
+$c_k\ne0$ 时，$n\ge\nu$ 后绝对亏损稳定为 $\nu\log p$，且 $S_n(C)/(n\log p)\to L$；$c_k=0$ 时 $S_n(C)=(L-1)n\log p$。这是谱计数的精度渐近；与态和通道的精度相容关系在第 12 节另行构造。
 
 ## 5. 所有奇数维数的全区域 RT 构造
 
@@ -240,7 +240,7 @@ $$
 
 $$
 \frac{xy+\alpha x^2}{D}
-=\frac{ac+\alpha a^2}{D}+rac{(c+2\alpha a)b+ae}{p}\pmod{\mathbb Z}.
+=\frac{ac+\alpha a^2}{D}+\frac{(c+2\alpha a)b+ae}{p}\pmod{\mathbb Z}.
 $$
 
 定义正交 Fourier 标架
@@ -305,7 +305,7 @@ $$
 
 两侧数字分解把 $\Phi_D$ 化为 $\Phi_d\otimes\Phi_{D/d}$，偏迹后施加低维共轭即得。任意 $\sigma$ 可由输入 $W^*(\sigma\otimes|0\rangle\langle0|)W$ 送到，故满射。证毕。
 
-$\mathcal C^Z$ 保留计算基余数，$\mathcal C^F$ 保留 Fourier 读出中的数字。例如 $\mathcal C^F_{9,3}(|3\rangle\langle3|)=|1\rangle\langle1|$，不满足普通余数条件。这些结论针对单条连接；顶点和全网络的相容性还需要额外条件。
+$\mathcal C^Z$ 保留计算基余数，$\mathcal C^F$ 保留 Fourier 读出中的数字。例如 $\mathcal C^F_{9,3}(|3\rangle\langle3|)=|1\rangle\langle1|$，不满足普通余数条件。独立腿上的相容性受第 9 节约束；第 12 节构造允许块内及缝合邻块操作的全网络通道。
 
 ## 8. 二分谱之外的四副本算术不变量
 
@@ -537,22 +537,176 @@ $$
 
 **推论 11.3。** $z\ne1$ 时 $U_3(z)$ 不与任何二幺正矩阵局部等价，因而不与任何 $\mathcal H(\boldsymbol\alpha),U_1,U_2$ 局部等价。$z=1$ 时与 $U_1,U_2$ 的分离见证书 11.1，与完整 $\mathcal H$ 的关系仍未解决。[BZ24] 表 1 已提示非零相位通常破坏二幺正性；本卷给出全相位恒等式和周期回返边界，不把已知提示或固定代表记为新的开放问题结算。
 
-## 12. 回接 RT 的统一边界与未证义务
+## 12. 整个单环的块局部精度通道
+
+本节允许每个顶点的两条外部腿组成一个边界块，并允许缝合处两个相邻块之间的联合门。环上块为 $i=0,\ldots,L-1$，块 $0$ 与块 $L-1$ 相邻。这比每条腿独立 CPTP 严格更宽；定理 9.2 仍然有效。
+
+**定义 12.1（显式历史编码）。** 固定 $L\ge3$ 和整数 $\alpha$。解码后每个边界块有寄存器 $(u_i,v_i)$。令
+
+$$
+M_d|u,v\rangle=|u+v,u+2v\rangle,\qquad
+M_d^{-1}|a,b\rangle=|2a-b,b-a\rangle,
+$$
+
+$$
+P_d|u_0,v_0,\ldots,u_{L-1},v_{L-1}\rangle
+=\omega_d^{u_0v_{L-1}+\alpha u_0^2}|u_0,v_0,\ldots,u_{L-1},v_{L-1}\rangle,
+\qquad G_d=M_d^{\otimes L}P_d.
+$$
+
+$M_d$ 的行列式为一，故是全边界空间上的置换幺正；$P_d$ 只作用于缝合两块。取 $L+1$ 个逻辑历史寄存器并定义等距
+
+$$
+K_d|x_0,\ldots,x_L\rangle=\bigotimes_{i=0}^{L-1}|x_i,x_{i+1}\rangle,
+\quad J_d=G_dK_d,\quad\mathcal E_d(\rho)=J_d\rho J_d^*.
+$$
+
+$K_d$ 是固定计算基的相干重复编码；不把任意未知量子态复制为两个独立副本。对 $|+_d\rangle=d^{-1/2}\sum_x|x\rangle$，
+
+$$
+J_d|+_d\rangle^{\otimes(L+1)}=|\Psi^\alpha_{d,L}\rangle,
+$$
+
+恰为定义 4.2 的原网络态。编码定义在整个 $d^{L+1}$ 维历史空间，未把单个参考态当成整个输入空间。
+
+**定理 12.2（全输入交换图和严格通道塔）。** 用第 7 节数字通道 $Q_{D,d}$ 定义
+
+$$
+\mathcal R_{D,d}=\operatorname{Ad}_{G_d}\circ Q_{D,d}^{\otimes2L}\circ\operatorname{Ad}_{G_D^*},
+\qquad\mathcal Q_{D,d}=Q_{D,d}^{\otimes(L+1)}.
+$$
+
+它们 CPTP。$\mathcal R_{D,d}$ 在全部边界输入上满射、非恒定，并且
+
+$$
+\boxed{\mathcal R_{D,d}\circ\mathcal E_D=\mathcal E_d\circ\mathcal Q_{D,d}.}
+$$
+
+对 $f\mid d\mid D$，还在全部边界矩阵上满足
+
+$$
+\boxed{\mathcal R_{d,f}\circ\mathcal R_{D,d}=\mathcal R_{D,f}.}
+$$
+
+**证明。** 令 $e=D/d$，$W_{D;d,e}|a+db\rangle=|a\rangle|b\rangle$，按低、高层统一重组。直接在每个逻辑基向量上可见
+
+$$
+W_{D;d,e}^{\otimes2L}K_D=(K_d\otimes K_e)W_{D;d,e}^{\otimes(L+1)}.
+$$
+
+两次出现的同一个历史标签使用同一数字分解，因此共享腿一致。于是全边界幺正层分解
+
+$$
+\mathcal V_{D;d,e}=(G_d\otimes G_e)W_{D;d,e}^{\otimes2L}G_D^*
+$$
+
+满足等距的算子恒等式
+
+$$
+\mathcal V_{D;d,e}J_D=(J_d\otimes J_e)W_{D;d,e}^{\otimes(L+1)}.
+$$
+
+该恒等式按线性性覆盖任意逻辑叠加，及与任意外部参考纠缠的输入。对高层偏迹，$G_e$ 不改变偏迹结果，且 $J_e$ 等距，得到所述通道交换图。第 7 节 $Q$ 的全输入复合律与中间 $G_d^*G_d=I$ 给出严格通道塔。$Q^{\otimes2L}$ 满射到全部低层密度矩阵，幺正共轭保持满射性，故通道非恒定。证毕。
+
+**局部性。** 实施顺序是所有块各自解码 $M_D^*$、缝合两块实施 $P_D^*$、块内数字偏迹、同一缝合处实施 $P_d$、所有块各自编码 $M_d$。至多五个宏观操作层，深度不随 $L$ 增长，跨块支持仅为缝合处相邻两块。该计数允许任意所述有限维块门，不声称基本量子门数或精度成本不随 $d,D$ 增长。Heisenberg 读出支持只可能在触及缝合块时增加另一缝合块；精度复合不会扩大这一区域。
+
+**推论 12.3（原 RT 参考态的精确层分解）。** 对 $D=de$，
+
+$$
+\mathcal V_{D;d,e}|\Psi^\alpha_{D,L}\rangle
+=|\Psi^\alpha_{d,L}\rangle\otimes|\Psi^\alpha_{e,L}\rangle,
+\qquad
+\mathcal R_{D,d}(|\Psi^\alpha_{D,L}\rangle\langle\Psi^\alpha_{D,L}|)
+=|\Psi^\alpha_{d,L}\rangle\langle\Psi^\alpha_{d,L}|.
+$$
+
+**证明。** 每个 $|+_D\rangle$ 的数字分解恰为 $|+_d\rangle\otimes|+_e\rangle$，代入定理 12.2 的等距恒等式。证毕。对固定 $p,L$ 选择定理 5.2 的同一个整数 $\alpha$，这就给出每一精度都满足全区域 RT 的严格相容参考态塔。
+
+**命题 12.4（进位表示及仅一处残余相位）。** 在原边界输出上先逐腿拆数字，再在每个顶点的两条输出腿实施定理 9.3 的进位修正。对路径 $x=a+db$，输出变成低层 $B_da$ 和高层 $B_eb$，其中 $(B_dx)_i=(x_i+x_{i+1},x_i+2x_{i+1})$。只需再施加相位
+
+$$
+\exp\left(2\pi i\left[\frac{q(a)}d+\frac{q(b)}e-\frac{q(a+db)}{de}\right]\right),
+\qquad q(x)=x_0x_L+\alpha x_0^2,
+$$
+
+即得到 $\mathcal V_{D;d,e}$ 在编码子空间上的作用。相位仅依赖两个端点的低、高数字；它们从第一个和最后一个顶点块分别由 $M_d^{-1},M_e^{-1}$ 恢复。
+
+**证明。** 逐顶点进位修正由定理 9.3 的同一坐标恒等式给出，不要求输入向量在各路径上等幅。原相位为 $e^{2\pi iq(a+db)/(de)}$，乘所列相位后恰为两层相位的乘积。相位函数在所有边界基上可通过各块逆置换定义，故是合法的全空间对角幺正，不只是在态支撑上写一个形式规则。证毕。
+
+至此，单环的共享历史和缝合相位可同时修正；没有把单边相容直接当作网络相容。一般多环、附树边界上的同样有限范围通道尚未由本节证明。
+
+## 13. 显式局部 Hamiltonian 与可检验的 RT 误差界
+
+在解码寄存器上定义互不重叠的 $L$ 条量子连接：$i=0,\ldots,L-2$ 的 $(v_i,u_{i+1})$ 取 $\Phi_d$，缝合 $(u_0,v_{L-1})$ 取 $\Omega_{d,\alpha}$。于是
+
+$$
+|\chi_d\rangle=|\Omega_{d,\alpha}\rangle_{u_0,v_{L-1}}
+\otimes\bigotimes_{i=0}^{L-2}|\Phi_d\rangle_{v_i,u_{i+1}},
+\qquad |\Psi^\alpha_{d,L}\rangle=M_d^{\otimes L}|\chi_d\rangle.
+$$
+
+**定理 13.1（局部父 Hamiltonian 的全谱）。** 取每项能量系数为一，定义
+
+$$
+H_d^0=(I-|\Omega_{d,\alpha}\rangle\langle\Omega_{d,\alpha}|)_{u_0,v_{L-1}}
++\sum_{i=0}^{L-2}(I-|\Phi_d\rangle\langle\Phi_d|)_{v_i,u_{i+1}},
+$$
+
+$$
+H_d=M_d^{\otimes L}H_d^0(M_d^{\otimes L})^*.
+$$
+
+$H_d$ 为 $L$ 个两相邻顶点块上的相互对易投影之和，唯一基态是 $\Psi^\alpha_{d,L}$，基态能量零、谱隙一，全部能量及重数为
+
+$$
+E_k=k,\qquad\operatorname{mult}(E_k)=\binom Lk(d^2-1)^k,\quad k=0,\ldots,L.
+$$
+
+**证明。** $H_d^0$ 的各项作用于互不重叠的寄存器对，每项有一维零空间和 $d^2-1$ 维一空间。张量积求和给出全谱；所有连接的零空间交为 $\chi_d$ 的一维空间。块内幺正保持谱、对易性与两相邻块支持，得到结论。证毕。
+
+这是明确的 Bell 连接父 Hamiltonian 实例，使用成熟的张量网络和波函数重整化机制 [StateRG05, ER07]；没有把这一一般机制认作新发明。若 $\alpha$ 满足第 5 节判据，其唯一基态同时满足所有边界区域的 RT 等式。
+
+**推论 13.2（局部能量认证全部区域）。** 设实际归一化态为 $\sigma$，且
+
+$$
+0\le\operatorname{Tr}(H_d\sigma)\le\varepsilon\le1/4.
+$$
+
+令 $\psi=|\Psi^\alpha_{d,L}\rangle\langle\Psi^\alpha_{d,L}|$。则
+
+$$
+\operatorname{Tr}(\psi\sigma)\ge1-\varepsilon,\qquad
+\tfrac12\|\sigma-\psi\|_1\le\sqrt\varepsilon.
+$$
+
+若 $\alpha$ 满足全区域 RT 判据，对任意非空的边界腿集合 $A$，$D_A=d^{|A|}$，有
+
+$$
+\boxed{|S(\sigma_A)-m(A)\log d|
+\le\sqrt\varepsilon\log(D_A-1)+h_2(\sqrt\varepsilon).}
+$$
+
+**证明。** 谱隙给出 $H_d\ge I-\psi$，得到重叠界；对纯目标的保真度与迹距离不等式给出全态迹距离界，偏迹不增迹距离。应用 [Aud07] 的熵连续性界；其右侧在 $[0,1-1/D_A]$ 单调，而 $\sqrt\varepsilon\le1/2$ 在该区间内。证毕。
+
+这里需要估计 $L$ 个明确的局部能量项，而无需完整边界态层析。项的数目不是采样次数；有限统计误差须先计入真实能量上界 $\varepsilon$，每个块的维数及门实现成本也未忽略。父 Hamiltonian 能量认证是已有方法，相关可实施框架见 [Cert26]；本卷给出当前 RT 态的具体 Hamiltonian、精确谱隙和误差公式，未进行硬件实验。
+
+## 14. 回接 RT 的统一边界与未证义务
 
 [RT] 连接边界纠缠熵与对偶引力最小面积；[LM] 在引力复制构造下推导相应关系。[HaPPY]、[Harlow] 已建立完美张量、量子纠错和互补恢复中的 RT 型结果。[HMPS] 已处理 Bruhat–Tits 树及 Schottky 商的对偶网络，包括连接与不连接区域；本卷固定四腿循环模环构造与其具体网络不同。秩饱和、平坦谱和面积的识别也分别参照 [QMF]、[FixedArea]。
 
-[TPTN26] 第 7 节的谱问题在本卷获得有限单环精确解，但排除最小割简并后的典型谱极限、其他范数下的收敛和完整体态区域恢复仍未解决。[BZ24] 的全部 19 参数比较和 Hadamard 不等价仍未闭合。[RRKL23] 的三维唯一性作为已发表定理直接复用；[Tan26] 是顶点实际量子操作的相关背景。
+[TPTN26] 第 7 节的谱问题在本卷获得有限单环精确解，但排除最小割简并后的典型谱极限、其他范数下的收敛和完整体态区域恢复仍未解决。该文 v2（2026-06-03）的式 (5.23) 前仍保留无领先简并条件；第 7 节仍提出严格谱问题。[BZ24] 的全部 19 参数比较和 Hadamard 不等价仍未闭合。[RRKL23] 的三维唯一性作为已发表定理直接复用；[Tan26] 是顶点实际量子操作的相关背景。
 
-本卷尚未建立任意逻辑体态编码 $\mathcal E_n$ 与局部粗化，使
+第 12 节已对显式历史空间和全部输入闭合
 
 $$
-R^{\mathrm{bdry}}_{n+1,n}\circ\mathcal E_{n+1}
-=\mathcal E_n\circ R^{\mathrm{bulk}}_{n+1,n}.
+\mathcal R_{D,d}\mathcal E_D=\mathcal E_d\mathcal Q_{D,d}.
 $$
 
-第 7 节闭合单边问题，第 9 节说明独立腿操作的限制并给出联合顶点修正。共享腿约定和环上修正的全局相容须另外证明。局部窗口精度不自动等于图的径向截断尺度；完整 Bruhat–Tits 边界为 $\mathbb P^1(\mathbb Q_p)$，$\mathbb Z_p$ 是自然紧开部分，有限边界腿未直接识别为完整 CFT。
+这不等于对任意历史输入都证明同一个纯面积公式。一个明确反例是任意计算基历史 $|x\rangle$：$J_d|x\rangle$ 只是一个边界计算基乘积态乘全局相位，因此所有区域熵都为零，即使 $m(A)>0$。全区域 RT 饱和目前针对指定参考态及第 13 节控制的近邻态。该历史编码尚未被识别为具有独立引力意义的体码，也未证明任意体态的互补区域恢复或量子修正 RT。
 
-原始引力 RT 仍需独立给定边界理论与态、共同调节下的熵控制、满足同调约束的图割到几何面积的极限、$1/(4G_N)$ 系数及引力动力学。固定纯态的全区域熵恒等式不自动给出完整体内量子纠错码。
+第 12 节降低的是寄存器精度，边界块数不变。它与 [ER07] 的先处理纠缠再截断具有方法联系，但没有构造空间尺度的 MERA 或连续极限。第 13 节还显示，在所选双腿块划分下参考态是局部幺正作用于相邻 Bell 连接的短程模型，有显式非零谱隙；相容精度塔本身不提供临界边界场论。局部窗口精度不自动等于图的径向截断尺度；完整 Bruhat–Tits 边界为 $\mathbb P^1(\mathbb Q_p)$，$\mathbb Z_p$ 是自然紧开部分。
+
+原始引力 RT 仍需独立给定边界理论与态、共同调节下的熵控制、满足同调约束的图割到几何面积的极限、$1/(4G_N)$ 系数及引力动力学。后续应在同一目标下扩展几何和体态结构，而不把任意通道交换图或事后构造的父 Hamiltonian 当作物理对偶的证明。
 
 ## 参考文献
 
@@ -576,13 +730,21 @@ $$
 
 [RRKL23] S. A. Rather, N. Ramadas, V. Kodiyalam, A. Lakshminarayan. Absolutely maximally entangled state equivalence and the construction of infinite quantum solutions to the problem of 36 officers of Euler. Phys. Rev. A 108 (2023), 032412. DOI: 10.1103/PhysRevA.108.032412. arXiv:2212.06737v2. 使用 Theorem 1。
 
-[TPTN26] G. Arora, M. Headrick, A. Lawrence, M. Sasieta, B. Swingle, C. Wolfe. Twirled Perfect Tensor Networks: Computationally covariant holographic tensor networks. arXiv:2605.23670v1 (2026). 使用第 5.1、5.2、7 节，保持预印本身份。
+[TPTN26] G. Arora, M. Headrick, A. Lawrence, M. Sasieta, B. Swingle, C. Wolfe. Twirled Perfect Tensor Networks: Computationally covariant holographic tensor networks. arXiv:2605.23670v2 (2026-06-03). 使用第 5.1、5.2、7 节，保持预印本身份。
 
 [BZ24] W. Bruzda, K. Życzkowski. Two-unitary complex Hadamard matrices of order 36. Special Matrices 12 (2024), 20240010. DOI: 10.1515/spma-2024-0010. 使用第 4 节 Conjecture 1 和式 (10)–(15)。
 
 [Tan26] I. Tan. Transversal gates of the ((3,3,2)) qutrit code and local symmetries of the absolutely maximally entangled state of four qutrits. arXiv:2601.19677 (2026).
 
 [Rather24] S. A. Rather. Construction of perfect tensors using biunimodular vectors. Quantum 8 (2024), 1528. DOI: 10.22331/q-2024-11-20-1528. arXiv:2309.01504v2. 第 5.2 节已有固定三个代表的局部不等价性。
+
+[StateRG05] F. Verstraete, J. I. Cirac, J. I. Latorre, E. Rico, M. M. Wolf. Renormalization-Group Transformations on Quantum States. Phys. Rev. Lett. 94 (2005), 140601. arXiv:quant-ph/0410227.
+
+[ER07] G. Vidal. Entanglement renormalization. Phys. Rev. Lett. 99 (2007), 220405. arXiv:cond-mat/0512165v2.
+
+[Aud07] K. M. R. Audenaert. A sharp continuity estimate for the von Neumann entropy. J. Phys. A 40 (2007), 8127–8136. arXiv:quant-ph/0610146. 标准界亦见 arXiv:2408.15306v4 式 (1)。
+
+[Cert26] G.-P. Nadon et al. Quantum State Certification via Effective Parent Hamiltonians from Local Measurement Data. arXiv:2603.04499 (2026). 仅作为局部能量认证方法的相关来源。
 
 ## 附录 A. 36 阶矩阵的精确整数重放
 
