@@ -741,47 +741,46 @@ def alternateSourceCorrectionRealization :
   sourceCorrectionRealization (fun _ => true)
 
 
-private theorem alternateSourceCorrection_not_law :
-    ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
-  intro h
-  have hpf : (30 : ℕ).primeFactors = {2, 3, 5} := by
-    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
-    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
-    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
-    ext q
-    simp [Nat.prime_two.primeFactors, (by decide : Nat.Prime 3).primeFactors,
-      (by decide : Nat.Prime 5).primeFactors]
-    constructor
-    · intro hq
-      rcases hq with rfl | rfl | rfl <;> simp
-    · intro hq
-      rcases hq with rfl | rfl | rfl <;> simp
-  have hsq : Squarefree (30 : ℕ) := by
-    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
-    rw [Nat.squarefree_mul_iff, Nat.squarefree_mul_iff]
-    exact ⟨by decide, Nat.prime_two.squarefree, by decide,
-      (by decide : Nat.Prime 3).squarefree, (by decide : Nat.Prime 5).squarefree⟩
-  have hcard : 3 ≤ (30 : ℕ).primeFactors.card := by
-    rw [hpf]
-    norm_num
-  have hshort : 30 / GreatestPrimeFactor 30 < 2 * GreatestPrimeFactor 30 := by
-    rw [GreatestPrimeFactor, hpf]
-    norm_num
-  have h30 := h 30 (by norm_num) hsq hcard hshort
-  dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
-    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
-    GreatestPrimeFactor, hpf] at h30
-  have hfloor := h30.2
-  norm_num [sourceCorrectionArena, alternateSourceCorrectionRealization,
-    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
-    GreatestPrimeFactor, hpf] at hfloor
-
-
 private theorem sourceCorrection_sensitivity_core :
     sourceCorrectionArena.Law actualSourceCorrectionRealization ∧
-      FiniteSlotSensitivity sourceCorrectionArena := by
+      FiniteSlotSensitivity sourceCorrectionArena ∧
+      FiniteLawVariation sourceCorrectionArena := by
   suffices actualLaw : sourceCorrectionArena.Law actualSourceCorrectionRealization by
-    refine ⟨actualLaw, ?_⟩
+    have alternateNotLaw : ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
+      intro h
+      have hpf : (30 : ℕ).primeFactors = {2, 3, 5} := by
+        rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+        rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+        rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+        ext q
+        simp [Nat.prime_two.primeFactors, (by decide : Nat.Prime 3).primeFactors,
+          (by decide : Nat.Prime 5).primeFactors]
+        constructor
+        · intro hq
+          rcases hq with rfl | rfl | rfl <;> simp
+        · intro hq
+          rcases hq with rfl | rfl | rfl <;> simp
+      have hsq : Squarefree (30 : ℕ) := by
+        rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+        rw [Nat.squarefree_mul_iff, Nat.squarefree_mul_iff]
+        exact ⟨by decide, Nat.prime_two.squarefree, by decide,
+          (by decide : Nat.Prime 3).squarefree, (by decide : Nat.Prime 5).squarefree⟩
+      have hcard : 3 ≤ (30 : ℕ).primeFactors.card := by
+        rw [hpf]
+        norm_num
+      have hshort : 30 / GreatestPrimeFactor 30 < 2 * GreatestPrimeFactor 30 := by
+        rw [GreatestPrimeFactor, hpf]
+        norm_num
+      have h30 := h 30 (by norm_num) hsq hcard hshort
+      dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
+        sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
+        GreatestPrimeFactor, hpf] at h30
+      have hfloor := h30.2
+      norm_num [sourceCorrectionArena, alternateSourceCorrectionRealization,
+        sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
+        GreatestPrimeFactor, hpf] at hfloor
+    refine ⟨actualLaw, ?_, ⟨actualSourceCorrectionRealization,
+      alternateSourceCorrectionRealization, actualLaw, alternateNotLaw⟩⟩
     constructor
     · intro i
       cases i
@@ -791,7 +790,7 @@ private theorem sourceCorrection_sensitivity_core :
         exact (hne rfl).elim
       · intro j
         exact Fin.elim0 j
-      · exact ⟨fun _ => alternateSourceCorrection_not_law, fun _ => actualLaw⟩
+      · exact ⟨fun _ => alternateNotLaw, fun _ => actualLaw⟩
     · intro i
       exact Fin.elim0 i
   intro n hn_even hn_squarefree hn_factors hn_short
@@ -940,11 +939,10 @@ private theorem sourceCorrection_sensitivity_core :
   · exact source_floor_identity hdpos hrem hquot
 
 private theorem sourceCorrection_sensitivity : FiniteSlotSensitivity sourceCorrectionArena :=
-  sourceCorrection_sensitivity_core.2
+  sourceCorrection_sensitivity_core.2.1
 
 private theorem sourceCorrection_variation : FiniteLawVariation sourceCorrectionArena :=
-  ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
-    sourceCorrection_sensitivity_core.1, alternateSourceCorrection_not_law⟩
+  sourceCorrection_sensitivity_core.2.2
 
 /- The source conjecture: for an even squarefree modulus with at least three
 prime factors and short complementary factor, the stated length is attained,
