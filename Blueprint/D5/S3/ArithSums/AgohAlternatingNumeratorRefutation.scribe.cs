@@ -36,9 +36,18 @@ internal sealed class AgohAlternatingNumeratorRefutationDocument : IScribeDocume
                 + "the equivalence for each nonzero real-rooted f. The source's "
                 + "Section 3 also assumes f nonconstant and f(1) nonzero; the "
                 + "counterexample satisfies both conditions.", DescribeRole.Definition),
-            Node("actualWord", "The actual coefficient codes", null,
-                "The three indexed codes are [8,0,5] in Fin(9). Their decoded "
-                + "coefficients are [4,-4,1], in increasing degree order.", DescribeRole.Definition),
+            Node("coefficientDigit", "Base-nine coefficient decoding", null,
+                "A number below 729 contains three base-nine digits. The digit at "
+                + "index i is the quotient by 9^i reduced modulo 9.", DescribeRole.Definition),
+            Node("actualCode", "The actual coefficient code", null,
+                "The code 413 has base-nine digits [8,0,5], from least to most "
+                + "significant.", DescribeRole.Definition),
+            Node("actualWord", "The actual coefficient word", null,
+                "Reading the three digits of 413 gives [8,0,5]. Subtracting four "
+                + "from each digit gives coefficients [4,-4,1].", DescribeRole.Definition),
+            Node("actualCoefficientReadout", "The three coefficient readings", null,
+                "The readings at indices zero, one and two are respectively 8, 0 "
+                + "and 5, exactly the three base-nine digits of 413.", DescribeRole.Definition),
             Node("decodeCode", "Signed coefficient decoding", null,
                 "Decode a code c by the real number val(c)-4.", DescribeRole.Definition),
             Node("polynomialOfWord", "Reconstructing the polynomial", null,
@@ -49,12 +58,13 @@ internal sealed class AgohAlternatingNumeratorRefutationDocument : IScribeDocume
                 + "one at X=1, the reduced-numerator property for every natural n, "
                 + "not monomial, and failure of the simple-root alternative.", DescribeRole.Definition),
             Node("coefficientArena", "Reading the counterexample coefficients", null,
-                "States are the complete coefficient words. The law requires that "
-                + "reading the actual word returns that word, together with the "
-                + "complete algebraic certificate for the read word.", DescribeRole.Definition),
+                "A state is one code below 729, representing exactly three base-nine "
+                + "digits. The law requires that reading code 413 returns its three "
+                + "digits, together with the complete algebraic certificate for the "
+                + "decoded coefficient word.", DescribeRole.Definition),
             Node("actualRealization", "Three coefficient readings", null,
-                "At each index the readout returns that coefficient code of the "
-                + "input word. Each of the three readings can change independently.", DescribeRole.Definition),
+                "At each index the readout returns the corresponding digit of code "
+                + "413. Each of the three readings can change independently.", DescribeRole.Definition),
             Node("result", "The full characterization is false",
                 F.Disp(new Formula.Not(F.Id("fullClaim"))),
                 "Take f=(X-2)^2. It is nonzero, real-rooted and nonconstant, with "
@@ -73,13 +83,11 @@ internal sealed class AgohAlternatingNumeratorRefutationDocument : IScribeDocume
                 + "The literal rational sum equals N/D, and the reduced fraction "
                 + "identity yields num(Q)D=N denom(Q). An explicit Bezout identity "
                 + "makes (X-1)^n coprime to D and cancels D, proving the property "
-                + "for the actual reduced numerator. The nonzero coefficients "
-                + "4 and -4 rule out a monomial, and root 2 has multiplicity 2. "
-                + "The theorem's raw type retains the actual word in a let binding "
-                + "and is definitionally the displayed full negation. The reading "
-                + "law carries the complete certificate; it does not stand in for "
-                + "the all-order proof. The released prior mathematical sketch is "
-                + "credited in the source note; no first-discovery claim is made.", DescribeRole.Theorem))));
+                + "for the actual reduced numerator. The nonzero coefficients 4 and "
+                + "-4 rule out a monomial, while root 2 has multiplicity 2. Hence "
+                + "this nonconstant polynomial satisfies the all-order property but "
+                + "neither alternative in the conjectured characterization, so the "
+                + "full equivalence is false.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula? statement,
         string prose, DescribeRole role) => Describe.Lean(

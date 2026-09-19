@@ -63,20 +63,18 @@ route. A finite collection of n tests would not establish the target.
 
 The source-specific Lean module is
 `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.lean`.
-Its only public mathematical theorem is
-`result : (let counterexample := actualWord; Not fullClaim)`, definitionally
-the full closed negation. The actual word has codes [8,0,5], decoded by
-subtracting 4 to coefficients [4,-4,1]. Its law contains the full
-CounterexampleCertificate, not a sampled or truth-valued placeholder.
-The three CUT slots are coefficient readings. Changing any one code changes
-the law. The legacy bridge derives the full refutation from the certificate.
-Continuation is explicitly open, with no residual certificate claimed.
+The number 413 encodes the three base-nine digits [8,0,5], from least to most
+significant. Subtracting four gives the actual coefficients [4,-4,1], which
+reconstruct 4-4X+X^2=(X-2)^2. This polynomial is nonzero, splitting and
+nonconstant, has value one at X=1, satisfies the actual reduced-numerator
+divisibility for every natural order, is not a monomial, and has a repeated
+root at 2. It therefore refutes the full conjectured equivalence.
 
 ## Triage
 
 `theorem`, targeting a published named conjecture under the
 open-problem-resolution basis. Universal symbolic algebra is the mathematical
-content; the coefficient word is its actual witness, not a bounded
+content; the coefficient code is its actual witness, not a bounded
 enumeration offered as a substitute. Independent review and caller-owned
 freeze-last delivery remain required before solved-problem credit.
 

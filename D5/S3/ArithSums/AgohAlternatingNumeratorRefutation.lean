@@ -13,7 +13,6 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.FinCases
-import Mathlib.Data.Fintype.Pi
 import D5.S3.ConceptDynamics.InformationEscape.AgohCoefficientReadoutTemplate
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import LeanInformationAudit.SealCommand
@@ -219,8 +218,49 @@ private theorem reduced_numerator_divisible (f : ℝ[X]) (hf : f.eval 1 = 1) :
 
 abbrev CoefficientWord := Fin 3 → Fin 9
 
-def actualWord : CoefficientWord := fun i =>
-  if i.val = 0 then 8 else if i.val = 1 then 0 else 5
+abbrev CoefficientCode := Fin 729
+
+def coefficientDigit (code : CoefficientCode) (index : Fin 3) : Fin 9 :=
+  ⟨code.val / 9 ^ index.val % 9, Nat.mod_lt _ (by omega)⟩
+
+def actualCode : CoefficientCode := 413
+
+def actualWord : CoefficientWord := coefficientDigit actualCode
+
+private def coefficientIndexZero : Fin 3 :=
+  (⟨Nat.zero, (let h : Nat.lt 0 3 := (by change 0 < 3; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ Nat.zero))))
+
+private def coefficientIndexOne : Fin 3 :=
+  (⟨Nat.succ Nat.zero, (let h : Nat.lt 1 3 := (by change 1 < 3; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ Nat.zero))))
+
+private def coefficientCodeZero : Fin 9 :=
+  (⟨Nat.zero, (let h : Nat.lt 0 9 := (by change 0 < 9; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ
+      (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))
+
+private def coefficientCodeFive : Fin 9 :=
+  (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))),
+      (let h : Nat.lt 5 9 := (by change 5 < 9; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ
+      (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))
+
+private def coefficientCodeEight : Fin 9 :=
+  (⟨Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ
+      (Nat.succ (Nat.succ Nat.zero))))))),
+      (let h : Nat.lt 8 9 := (by change 8 < 9; omega); h)⟩ :
+    Fin (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ
+      (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))
+
+def actualCoefficientReadout (_ : CoefficientCode) (index : Fin 3) : Fin 9 :=
+  Bool.rec
+    (Bool.rec coefficientCodeFive coefficientCodeZero
+      (@decide (index = coefficientIndexOne)
+        (instDecidableEqFin 3 index coefficientIndexOne)))
+    coefficientCodeEight
+    (@decide (index = coefficientIndexZero)
+      (instDecidableEqFin 3 index coefficientIndexZero))
 
 def decodeCode (code : Fin 9) : ℝ := (code.val : ℝ) - 4
 
@@ -239,14 +279,15 @@ structure CounterexampleCertificate (word : CoefficientWord) : Prop where
 private theorem actual_certificate : CounterexampleCertificate actualWord := by
   have poly : polynomialOfWord actualWord = (X - C (2 : ℝ)) ^ 2 := by
     rw [polynomialOfWord, Fin.sum_univ_three]
-    norm_num [actualWord, decodeCode]
+    norm_num [actualWord, actualCode, coefficientDigit, decodeCode]
     simp only [C_ofNat]
     ring
   have coefficients :
       (polynomialOfWord actualWord).coeff 0 = 4 ∧
       (polynomialOfWord actualWord).coeff 1 = -4 := by
     rw [polynomialOfWord, Fin.sum_univ_three]
-    norm_num [actualWord, decodeCode, coeff_add, coeff_C_mul_X_pow]
+    norm_num [actualWord, actualCode, coefficientDigit, decodeCode, coeff_add,
+      coeff_C_mul_X_pow]
   have eval_one : (polynomialOfWord actualWord).eval 1 = 1 := by
     rw [poly]
     norm_num
@@ -275,8 +316,8 @@ private theorem actual_certificate : CounterexampleCertificate actualWord := by
     rw [poly, rootMultiplicity_X_sub_C_pow] at h
     norm_num at h
 
-/-- The complete conjecture is false, retaining the actual coefficient word. -/
-theorem result : (let counterexample := actualWord; Not fullClaim) := by
+/-- The complete conjecture is false, retaining the code of its actual coefficients. -/
+theorem result : (let counterexample := actualCode; Not fullClaim) := by
   change ¬ fullClaim
   intro claim
   have certificate := actual_certificate
@@ -285,18 +326,26 @@ theorem result : (let counterexample := actualWord; Not fullClaim) := by
   exact h.elim certificate.notMonomial certificate.notSimple
 
 def coefficientArena : PrimitiveLawArena where
-  toArena := Arena.ofFintype CoefficientWord
-  signature := coefficientSignature CoefficientWord
+  toArena := Arena.ofFintype CoefficientCode
+  signature := coefficientSignature CoefficientCode
   Law realization :=
-    let readWord : CoefficientWord := fun index => realization.readout index actualWord
+    let readWord : CoefficientWord := fun index => realization.readout index actualCode
     readWord = actualWord ∧ CounterexampleCertificate readWord
 
-local instance : DecidableEq CoefficientWord := inferInstance
 local instance : DecidableEq coefficientArena.State := coefficientArena.toArena.stateDecidableEq
 
 def actualRealization :=
-  coefficientRealization (S := CoefficientWord)
-    (fun (word : CoefficientWord) (index : Fin 3) => word index)
+  coefficientRealization (S := CoefficientCode) fun code index =>
+    actualCoefficientReadout code index
+
+private theorem actual_readout_eq_word :
+    (fun index => actualCoefficientReadout actualCode index) = actualWord := by
+  funext index
+  apply Fin.ext
+  fin_cases index <;>
+    norm_num [actualCoefficientReadout, coefficientIndexZero, coefficientIndexOne,
+      coefficientCodeZero, coefficientCodeFive, coefficientCodeEight, actualWord, actualCode,
+      coefficientDigit]
 
 private def bumpCode (code : Fin 9) : Fin 9 :=
   ⟨(code.val + 1) % 9, Nat.mod_lt _ (by omega)⟩
@@ -306,21 +355,28 @@ private theorem bumpCode_ne (code : Fin 9) : bumpCode code ≠ code := by
 
 private def alteredRealization (changed : Fin 3) :
     PrimitiveRealization coefficientArena.signature :=
-  coefficientRealization fun word index =>
-    if index = changed then bumpCode (word index) else word index
+  coefficientRealization fun code index =>
+    if index = changed then bumpCode (actualCoefficientReadout code index)
+    else actualCoefficientReadout code index
 
 private theorem coefficient_law : coefficientArena.Law actualRealization := by
-  exact ⟨rfl, actual_certificate⟩
+  change (fun index => actualCoefficientReadout actualCode index) = actualWord ∧
+    CounterexampleCertificate (fun index => actualCoefficientReadout actualCode index)
+  refine ⟨actual_readout_eq_word, ?_⟩
+  rw [actual_readout_eq_word]
+  exact actual_certificate
 
 private theorem altered_not_law (changed : Fin 3) :
     ¬ coefficientArena.Law (alteredRealization changed) := by
   rintro ⟨equality, _⟩
   have atChanged := congrFun equality changed
-  apply bumpCode_ne (actualWord changed)
-  simpa [alteredRealization, coefficientRealization, coefficientSignature] using atChanged
+  rw [← congrFun actual_readout_eq_word changed] at atChanged
+  apply bumpCode_ne (actualCoefficientReadout actualCode changed)
+  simpa [actualRealization, alteredRealization, coefficientRealization, coefficientSignature]
+    using atChanged
 
 private theorem coefficient_bridge : LegacyPrimitiveRealization coefficientArena
-    (let counterexample := actualWord; Not fullClaim) actualRealization := by
+    (let counterexample := actualCode; Not fullClaim) actualRealization := by
   constructor
   constructor
   · intro _
@@ -340,9 +396,11 @@ private theorem coefficient_sensitivity : FiniteSlotSensitivity coefficientArena
     refine ⟨actualRealization, alteredRealization i, ?_, ?_, ?_⟩
     · intro j hne
       change Fin 3 at i j
-      funext word
-      change CoefficientWord at word
-      change word j = if j = i then bumpCode (word j) else word j
+      funext code
+      change CoefficientCode at code
+      change actualCoefficientReadout code j =
+        if j = i then bumpCode (actualCoefficientReadout code j)
+        else actualCoefficientReadout code j
       split
       · next h => exact (hne h).elim
       · rfl
@@ -353,10 +411,12 @@ private theorem coefficient_sensitivity : FiniteSlotSensitivity coefficientArena
     exact Fin.elim0 i
 
 register_information_theorem result in coefficientArena
-  readout via (@coefficientRealization CoefficientWord (fun word index => word index))
+  readout via
+    (@coefficientRealization CoefficientCode
+      (fun code index => actualCoefficientReadout code index))
   primitives actualRealization.toPrimitiveBundle realization coefficient_bridge
   variation coefficient_variation sensitivity coefficient_sensitivity
-  escape from (actualWord) escape continues (open)
+  escape from (actualCode) escape continues (open)
 
 end
 end D5.S3.ArithSums.AgohAlternatingNumeratorRefutation
