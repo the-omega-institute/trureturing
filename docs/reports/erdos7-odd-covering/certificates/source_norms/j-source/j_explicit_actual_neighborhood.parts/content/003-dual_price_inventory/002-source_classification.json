@@ -1,0 +1,373 @@
+[
+  {
+    "source": "certificates/source_norms/j-source/j_face_alignment.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 18956,
+    "sha256": "6874e71b0846d973fedd330f5a8a54bfa457b2cdfe896943db407b8d89bec611",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_coherent_positive7_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 24832,
+    "sha256": "f6c958daf1cb450fecc67f57b1dc42877dd5548f2a22504e8a1f66ab8c887a28",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_combined_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 603381,
+    "sha256": "a6b4239551739fddd6555f298a81ad4031219576b325e41de42f8da7d1ca6a78",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 507395,
+    "sha256": "ec95fd198817e07921bfa5820ca480292dc1c28b48ec65a5c5c915b53bc25ef1",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_complete_survival_linear_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 57126,
+    "sha256": "d3dc85acd3f0b677e5020da0da356e475111d24c1a288029ebb384109e203747",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_coupled_seven_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 17357,
+    "sha256": "babf0e35f264666a21d97447cf603216e43644c6919b0b83949e968f259f0851",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_exact_retained_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 749001,
+    "sha256": "2872babe2b1ab75544d38f621203859b7c84988f5fe1b38f109dd7e907ebbff3",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_exact_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 3623986,
+    "sha256": "1738b1fe9276a0b3014bc783fdf210804c3f3c108a19af27497fa94aee494f90",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_exact_seven_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 496763,
+    "sha256": "65275ebc52c7b9c45e59fdd9350c7bc3702367ab68d6885fdc2b5155e2ea52fc",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_exact_seven_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5286967,
+    "sha256": "fe8379ccd801151159e9c4a5123b9d0632e8a78b33bca664b58a2d7c3a5c9076",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_four_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 490345,
+    "sha256": "318da9a494de6c2e606d0e684a93441312e9ad4c3fa91c97178b87745d7afc06",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_four_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 41897720,
+    "sha256": "47d234129ea10544460ed95ea172d0d566166788786a6e5325d2081c1166f05c",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_generalized_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 623174,
+    "sha256": "fe405af2da19e9f9445aab41cdc9130e9e0b2cbdada18fc3efa819bcf38d3826",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_generalized_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 40022740,
+    "sha256": "95df26743561df015c6a50023521261aafdcdabc25b4ffe2101c5cbf6e054623",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_higher_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 496969,
+    "sha256": "856041c459fe1d47b2b1113b4dda8e03d99f38ba0248b1f45afd4a16c2cc2f01",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_higher_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 32475394,
+    "sha256": "18bf323ed3c28a49f3cf430f438a03ae5168007dde754b6cf9e6579ddec5ee49",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 531010,
+    "sha256": "0d541ec224303be93fc997910b81f407b839931af9a62bc5bb3c191712563f7a",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_factorial_cross_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 640199,
+    "sha256": "c4bf89095799c9658d37f978acdff0e57cc2b57a67987eddf71b9e02ba860f4e",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_factorial_cross_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 18395053,
+    "sha256": "ed567355b0475ab7f5712dca3fda30866638452efaab1bfbcadab5f3e7f33fdb",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_pair_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 632610,
+    "sha256": "a7b6639d73e6cc52d59857209233ba35b8a5592f6a2283de9c20d810afd99671",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 21155342,
+    "sha256": "503746ba3ecb18cce6255c74414a8e416e3331edc1fd4b8befff283b3faec9df",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_positive175189_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 498537,
+    "sha256": "efd69ea3cac1e32b3419dc5bb7b21f19efc61f9f634d37d9f39d339ea9673b0c",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_positive175189_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 46271750,
+    "sha256": "6a8c5e880ef7026ec231a6ddd57d5c678b9a1e9244ce0bd0acc1492651e26c11",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_quadratic_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 205267,
+    "sha256": "f01396b853d869c86fb3e615e88bf348d4c21a21c2cda07ac31793d3ba1f9345",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_retained_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 23577,
+    "sha256": "f99a644a80049cd10278e27000b486927a96a0bf9c22c08c9da4f6c9a8081c4d",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_selected_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 319919,
+    "sha256": "434cd2865b3a61e19ecba395787420bc45d5c4b1da6a6831e93675109ef07a97",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_joint_survival_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 279446,
+    "sha256": "f92cd5001e5fdbd3d8ede07e5ad7221790f7d393253aa9c6f455454ff9942bbc",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_pure_low_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 749502,
+    "sha256": "d616e44fa99d3f7ce43c174b293fae202c3e6f2d58fef1684377b7c357562978",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_pure_low_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 11454235,
+    "sha256": "dc38003f46c3d5323fecb935267593078a18873db226dc5f358bd14bc71bc384",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_pure_path_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13996,
+    "sha256": "119ea1549bd3edff0ecad0f74859660dff68ee64cd995c3d49583ceb2a70dd59",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_pure_path_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 30233,
+    "sha256": "d6e279c7a28222d321fffb4fd492c92d3e0efb942b3f35cb7d1ae3f38e81fc4e",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_raw_prime_path_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 34674,
+    "sha256": "105f51d319fb0393d2e34eb3d19529b29ba6003b63d81d9d34ef7f4b55596587",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_raw_square_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 574107,
+    "sha256": "e7ec15111e1f8a3b756f3ece42a7f954835e63ceeb0ae37a9ba24dfcc16fe9d9",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained135125_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 7664657,
+    "sha256": "4a8eb666d29a6d56c8e33100d283e192d52dba526ecae4e5c631ce83e88bdd86",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained375_ap11_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 496968,
+    "sha256": "5bba9f6a09a4a3d23408962a0af12d0d141a2434cd91179c371bc5ab10e9e0e2",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained375_ap11_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 9049837,
+    "sha256": "97e17693e88033c9c6c932b445a0a85dcab8c70dbd05dc46df245a7d0a3c96b8",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained375_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 491296,
+    "sha256": "8244aa0a393d1983d0b2610bb3bd75a7721fedc31a4a41dc1401a69e407a3f26",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained375_heavy_heads.json",
+    "classification": "covering-and-prefix-seed-banks",
+    "logical_bytes": 83687325,
+    "sha256": "066de548c01bc9809e8c528f2f2eb9fdeac44412b8ba9842d2ce2f804c69f766",
+    "bank_count": 2
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained375_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5335508,
+    "sha256": "1aa84f59e967f07b290343f0f6ded7ac4df7041068a15d372f88c6ffb7e501ce",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_retained_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 570171,
+    "sha256": "2e6252cd45a6236067f2ef177b5af657173377523b12fe395f81a407d18d1daf",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_cofactor_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 751922,
+    "sha256": "218a360cdf7d96d5a66a76d75556be1fd5d715db5d60db3261499f0678e6a191",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_cofactor_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 514006,
+    "sha256": "25ec9b985f8efe62f43651bf03f916ab4879874c244a1ff4a2b13281bd4c4e7b",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_depth_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 576764,
+    "sha256": "450b63e5db83cbc517cf6323648ec5a45d9d43597fe80ec480b9891eaef1c569",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_depth_retained_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 13944273,
+    "sha256": "6f8e8a51ba0a93a43e92d93ae78ed3bdc12130e45bf65ada8a42b961113365c3",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_depth_survival_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 588309,
+    "sha256": "bff4c6deb07df70d6c209bb8ce56590b801aacd21219183860cd05efd68fc4d6",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_second_depth_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 958166,
+    "sha256": "9f27cf25cfd8bfa17fdf4222a742c2f6cf3395ba5a6351f7a8a416985198cf32",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_shared_square_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13159,
+    "sha256": "3dc47204d75eb3ed31658205918d7101adcab7138be1c77b075726d7b6155751",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_shifted_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 635558,
+    "sha256": "269ea14c090b913196f1545340ce01c45b81c33491fffe2c5b94ea3dfbdfa1ff",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_shifted_factorial_quadratic_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 14205438,
+    "sha256": "a2005948bba60c68937a16c5d098c250384db3cb4762eb0d68151d6a9d5c2236",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_triple_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 753459,
+    "sha256": "75bff1f96efb1dcfee0b687c67425eb94d3603a7cf3a1a3394c28aaa246f5f40",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_triple_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 53144774,
+    "sha256": "cec974fc637ee57304f1b612c2a58a311ef677eb5a227279bf145279967cf5d1",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_triple_raw_path_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 589332,
+    "sha256": "99032bc2917344db5c67e3561797868225f893f7d9e3102dc37c26423f307d12",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-source/j_face_triple_second_depth_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 4437583,
+    "sha256": "28efda83f17bffed4a75f49448820c118ee300a4515f807aa4fd677bc3ea8743",
+    "bank_count": 1
+  }
+]

@@ -4,14 +4,14 @@
   "source_sha256": {
     "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
     "profile-notes/26-conditional-head-deletion-with-a-priced-arbitrary-cofactor-tail.md": "f6d3b8d618a733f462410d2d6eb2eede63091c9b23abbe64024b0d545a0f9476",
-    "profile-notes/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "7dd8a1e991c05347d6553d4b3e1792e7f1cd0b2f45622f5a48bd83bb5cd2181b",
-    "profile-notes/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "515a8fc039ef0faa626530414b9857e0fd7892e3177a2e3e030781765af2bfb9"
+    "profile-notes/j-source/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "353ddc47754479318a93f4b6d500a5c3442aa6dfb15a9031ce2b1f1cf8f811f9",
+    "profile-notes/whole-cover/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "e9422d37924d4155fd23741cdcb631df9cc85bb0f2bbd59de2dd022b5c523cf2"
   },
   "ordinary_proof": {
-    "sha256": "516f031a2c13a5b7c620c1811d6597733dd32ec9b8f916fb314c3bf52413aca2",
-    "byte_count": 7466
+    "sha256": "4d828a6f690845395f14500fc138d089d2c90e6a3a09796b8951a8ea335b4b11",
+    "byte_count": 7505
   },
-  "producer_sha256": "1b922f34399b6df7a2ae8a3f9178c240ac362e8eabeb14efa53fe1eabc8bca12",
+  "producer_sha256": "57e6759d69b43c7771edcba30d8c953f3f968afc12603514793dca03868ee7a0",
   "modulus": 45045,
   "factorization": [
     [

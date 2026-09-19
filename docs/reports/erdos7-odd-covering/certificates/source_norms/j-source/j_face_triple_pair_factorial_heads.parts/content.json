@@ -1,0 +1,118 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-triple-pair-factorial-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "02701710c903ec813533793f2ea7dc85ea2b69e7fd10546e5f385f390bace320",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/005-model.json",
+    "sha256": "8db7094bbc0ca5a25017927b29ea96d0b9d1205f1692737187845e5996ea216a",
+    "kind": "object"
+  },
+  "original_cost_indices": {
+    "kind": "inline",
+    "value": [
+      48,
+      49
+    ]
+  },
+  "outside_targets": {
+    "kind": "inline",
+    "value": [
+      "square",
+      "factorial5",
+      "factorial2",
+      "factorial3"
+    ]
+  },
+  "original_affine_pruning_pair_tail": {
+    "kind": "inline",
+    "value": "4879/7200"
+  },
+  "complete_positive7_hinge_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "complete_old_hinge_tail": {
+    "kind": "inline",
+    "value": "6151/405000"
+  },
+  "pair_partitions": {
+    "path": "content/011-pair_partitions.json",
+    "sha256": "5bf3d3a4f05005a3e3b88cf20ba8db0a6d941753e61e8c064fed88991765c46d",
+    "kind": "value"
+  },
+  "conditional_positive7": {
+    "path": "content/012-conditional_positive7.json",
+    "sha256": "60e2dc952bd5e4bdd7120d33177c841e4991e9dd80c11e8c8dea12f98da0d8b5",
+    "kind": "object"
+  },
+  "original_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "threshold_layout_record_count": {
+    "kind": "inline",
+    "value": 75000
+  },
+  "cross_endpoint_record_count": {
+    "kind": "inline",
+    "value": 150000
+  },
+  "all_factorial_and_cross_components_sha256": {
+    "kind": "inline",
+    "value": "0abf1fd606c0a523f58074b7ec4597447943726e17c888b61c8cc70069c8f8a4"
+  },
+  "seed_rows": {
+    "path": "content/017-seed_rows.json",
+    "sha256": "f10c4993d487397554410fc33f91ec47103a7bcde422fb51927bfa3c889cc1c1",
+    "kind": "array"
+  },
+  "results": {
+    "path": "content/018-results.json",
+    "sha256": "4060ea7ffdd4a4167643a58c3e29dc64b84e05bd966a1d567d871ed5a7ff7aa6",
+    "kind": "array"
+  },
+  "encoded_rational_duals": {
+    "path": "content/019-encoded_rational_duals.json",
+    "sha256": "89a944dddc482b3eee7bc2f3a9f837d711ee6759c074733860c0ea5307821cbd",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 2628
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 17163468
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 375000000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 57
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Six complete unchanged original functions on both entire actual saturated J faces; all62500000 original independent containing choices per target, the complete late interval and every old and positive-seven tail. The unchanged264 source retains all seven135/125/225 states with the independent225 raw profile. Exactly21 original POO pairs and49 POZ blocks replace only their assigned cap payments; every complementary pair and positive-seven cofactor remains. Complete276/278 affine pruning and conditional PZZ are unchanged. No actual attainment, off-face extension, complete52-cost comparison, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

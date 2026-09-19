@@ -26,7 +26,7 @@ normalized cylinder costs. This proposed extension is not a quoted theorem
 of these papers and has no local Lean proof.
 
 The primary v1 text was also read for the labelled-modulus application in
-[report 348](../../docs/reports/erdos7-odd-covering/profile-notes/348-fresh-prime-root-transport-and-two-copy-reduction.md).
+[report 348](../../docs/reports/erdos7-odd-covering/profile-notes/whole-cover/348-fresh-prime-root-transport-and-two-copy-reduction.md).
 Lemma 3.6 (pages 11–12) bounds moments by sums over congruence tuples;
 Lemma 3.7 bounds their divisor sums. Section 6 (pages 17–19) explicitly
 indexes all primes and accepts any constant kappa satisfying its

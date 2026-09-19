@@ -37,7 +37,7 @@ def main():
  parser.add_argument('--checkpoint',type=Path,help='Optional temporary complete result before canonical publication')
  args=parser.parse_args()
  if args.dependency_directory:sys.path.insert(0,str(args.dependency_directory))
- sp=importlib.util.spec_from_file_location('j_pair_core',args.base/'frontier/j_face_retained135125_heads.py')
+ sp=importlib.util.spec_from_file_location('j_pair_core',args.base/'frontier/j-source/j_face_retained135125_heads.py')
  core=importlib.util.module_from_spec(sp);sp.loader.exec_module(core)
  solver=[None]
  def propose(lp,obj):

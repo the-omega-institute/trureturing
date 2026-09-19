@@ -1,0 +1,101 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-shifted-factorial-quadratic-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "b5a1e0c56cdf170a0e761450acffe7c84e6629a7c903d31400195ca6aca2975c",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/005-model.json",
+    "sha256": "277191aafbd72dc97c20a441a052e3dc53721314edd36f5beb48c8998fba1aad",
+    "kind": "object"
+  },
+  "original_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      47,
+      48
+    ]
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 4
+  },
+  "complete_pair_tail": {
+    "kind": "inline",
+    "value": "4879/7200"
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "factorial_split_all_head_cases": {
+    "path": "content/010-factorial_split_all_head_cases.json",
+    "sha256": "58be9de3fac4b2e58d6f00e3c7f0cc2468086817c1a0095912cc120e4404c446",
+    "kind": "value"
+  },
+  "original_factorial_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "factorial_endpoint_record_count": {
+    "kind": "inline",
+    "value": 25000
+  },
+  "all_factorial_head_cross_components_sha256": {
+    "kind": "inline",
+    "value": "54522832c5323cffa8e832911dcdfef28f4cb80c6ebf16c205f8ff8753b30cb2"
+  },
+  "seed_rows": {
+    "path": "content/014-seed_rows.json",
+    "sha256": "34c800c4b251ea64e7ac8acc81cd151522141d075c24a585b70200a5b42855c2",
+    "kind": "value"
+  },
+  "results": {
+    "path": "content/015-results.json",
+    "sha256": "c8176ade24f6faa875d8dcf77b50c5918318da79f6fa34f32c89a0883ae18218",
+    "kind": "value"
+  },
+  "encoded_rational_duals": {
+    "path": "content/016-encoded_rational_duals.json",
+    "sha256": "6f40bb776628edf8592aae038b95d2ff3901fa01e63f7a0be2d458a567cc3ab5",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 895
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 2958870
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 187500000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 57
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Three unchanged original costs41/47/48 on both entire actual saturated J faces. ExactPhi4 expansions retain the entire polynomial continuation; the same original six-head feeds the positive hinges, actual survivor factorial head and common-late-coordinate cross secant. Each target retains all62500000 original containing choices, every135/125 membership state, every147/245 projection and complete265 omitted pair tails. Only the normalized common-theta objective may be signed; all dual columns are checked. No hinge-only bound is used for full-cost pruning. No simultaneous source attainment, off-face extension, full52-cost/global comparison, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

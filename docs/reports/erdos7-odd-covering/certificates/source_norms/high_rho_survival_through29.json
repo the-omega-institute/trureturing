@@ -3,20 +3,20 @@
   "source_sha256": {
     "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
     "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-    "certificates/source_norms/j_whole_face_high_rho_finite_guard.json": "0ce641b26c46e9aa75495fda243997f17d1da3100e199cfd0d8e3fef94947d6a",
-    "profile-notes/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "481adc84c9f2e14669c157087a48d9632bd8059fd623becf913cb36d9d0141ac",
-    "frontier/j_whole_face_high_rho_finite_guard.py": "661c04e59071cd47eb3c4785e5d74196b2d0ee67952cee2059c773d63b1e075d",
+    "certificates/source_norms/j-source/j_whole_face_high_rho_finite_guard.json": "89e5860ff02e605a47a7329bf6d3f845cc4afa9a6e7786ca099070069becc172",
+    "profile-notes/j-source/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "eb0c2f82a03761f0d8803f444d214827067454e685e3207e97d58fd1ee83ff94",
+    "frontier/j-source/j_whole_face_high_rho_finite_guard.py": "fea02fd8aecf0ff9f1396bd26cd2d4fd42a9f3ceab55dc66e3ac177e5fdb1cbd",
     "profile-notes/31-one-original-zero-five-layout-across-both-actual-measures.md": "c2a6af20b802ec39900ddbb751c4a747588091e0ad86eeee16362834bc691860",
     "profile-notes/20-genuine-current-kernels-and-positive-charge.md": "42c9e9eccbfa7ef016c074b7e141e01ae31be0afa5683e376bde92facec97847",
     "profile-notes/22-comparing-the-two-killed-steps.md": "cff0890b4d009eabd69ed8ab0dd23a19fd9a2893592c2eeaae11afec90644094",
-    "profile-notes/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md": "d20acd86b2ab8da9d172ae200baf9173d8c89e7ce7b5b163a26350b7a3e41b60",
-    "profile-notes/327-actual-two-prime-survival-needs-a-masked-moment.md": "e8b97667e52d0635a59158e3fad16ce1171cb5f67daa687cd017216bb53036ef"
+    "profile-notes/j-source/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md": "3eb19c0a93bca274089c868b3884c84a5a9d25e3aa2e14751e1e6eb938e7373a",
+    "profile-notes/327-actual-two-prime-survival-needs-a-masked-moment.md": "bb9ed39d1613103b64cb6184797e29cb0247a70d49f5d9bdbea6f0cd9b802a5a"
   },
   "ordinary_proof": {
-    "sha256": "1b46db2b87d1ec16585cdfa165438e6344fafe5a9aae9acec523f3f2ef3f46cd",
-    "byte_count": 8326
+    "sha256": "c34514091efcc5dec0121cc99ae82948e13af1eb891202f3076e48c540513595",
+    "byte_count": 8374
   },
-  "producer_sha256": "36548e4b3f082b6a224a64e1f1beabc958e93f747fa460e431d4eb5207572b58",
+  "producer_sha256": "72a202c2cffa40ade6c7f7e8d5a86a66dfc0d3b9083303f4377855e90a153181",
   "scope": "Actual finite effective9 source qJ>=1-1/4000 and rho>=1/20, no45/135 alignment. Same supported AP(4,5)13 law, prescribed physical pure-base17/T8 and19/T8 followed by actual killed parts, full-Haar23 and29 with delta=1/2. Complete original own tests and all prime-power tails. No prime31 or unrestricted continuation.",
   "guard": {
     "delta_upper": "1/4000",

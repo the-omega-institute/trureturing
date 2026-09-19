@@ -1,0 +1,121 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-generalized-factorial-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "50f8aa458532af804580cf7dab6d8550071ce8e0bfdeb4daf718ff0272ab2adb",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/005-model.json",
+    "sha256": "277191aafbd72dc97c20a441a052e3dc53721314edd36f5beb48c8998fba1aad",
+    "kind": "object"
+  },
+  "original_cost_indices": {
+    "kind": "inline",
+    "value": [
+      48,
+      49
+    ]
+  },
+  "factorial_thresholds": {
+    "kind": "inline",
+    "value": [
+      3,
+      2
+    ]
+  },
+  "positive7_cross_cost_indices": {
+    "kind": "inline",
+    "value": [
+      48,
+      49
+    ]
+  },
+  "zero7_cross_cost_indices": {
+    "kind": "inline",
+    "value": [
+      48,
+      49
+    ]
+  },
+  "complete_pair_tail": {
+    "kind": "inline",
+    "value": "4879/7200"
+  },
+  "complete_positive7_hinge_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "cross_partitions": {
+    "path": "content/012-cross_partitions.json",
+    "sha256": "268dc9ca2cc740abd1834150d18a04c21ea9a8528750d003a6b1f4c8218c8b43",
+    "kind": "value"
+  },
+  "original_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "threshold_layout_record_count": {
+    "kind": "inline",
+    "value": 25000
+  },
+  "cross_endpoint_record_count": {
+    "kind": "inline",
+    "value": 50000
+  },
+  "all_factorial_and_cross_components_sha256": {
+    "kind": "inline",
+    "value": "8bebbffaf34bdf9dc63180c5fd3531abe5d2cdee10dd3a5db880688297d323d3"
+  },
+  "seed_rows": {
+    "path": "content/017-seed_rows.json",
+    "sha256": "f41757626bb6a46804c6b40764008e1c5fd0520997d11a2af6507c970a80271c",
+    "kind": "value"
+  },
+  "results": {
+    "path": "content/018-results.json",
+    "sha256": "1fc2525877cc7a7bd2b074f63c0b2a34b6e8b5e63355b6cc33412f9cfa6ff55b",
+    "kind": "value"
+  },
+  "encoded_rational_duals": {
+    "path": "content/019-encoded_rational_duals.json",
+    "sha256": "d2185b654a041d642deab0457d2700293b35e87efecffcd81ecda408b1ba64e7",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 4850
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 16034100
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 125000000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 38
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Two unchanged original costs48/49 on both entire actual saturated J faces. Exact positive Phi3/Phi2 expansions and the all-nonnegative-integer-tail factorial bound use distinct fresh threshold-specific instances. Complete full-cost affine pruning is recomputed at the corresponding threshold. Positive-seven factorial crosses use actual common raw X with all six21/35/63/105/147/245 projections; zero-seven crosses use actual survivor Y and retained V for25/27/75/81/135/125. Every other cross remains in its complete geometric remainder and convex common-theta secant. The original3306-variable6354-inequality18-equality model and entire pair tail4879/7200 are unchanged. Each target covers62500000 original choices and every consumed dual column is checked. No actual attainment, off-face extension, full52-cost comparison, Lean verification or unrestricted Erdos7 result."
+  }
+}

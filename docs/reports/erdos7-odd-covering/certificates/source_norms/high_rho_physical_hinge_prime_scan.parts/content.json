@@ -12,26 +12,26 @@
     "value": {
       "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
       "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-      "certificates/source_norms/j_whole_face_high_rho_finite_guard.json": "0ce641b26c46e9aa75495fda243997f17d1da3100e199cfd0d8e3fef94947d6a",
-      "profile-notes/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "481adc84c9f2e14669c157087a48d9632bd8059fd623becf913cb36d9d0141ac",
-      "frontier/j_whole_face_high_rho_finite_guard.py": "661c04e59071cd47eb3c4785e5d74196b2d0ee67952cee2059c773d63b1e075d",
-      "frontier/high_rho_survival_through29.py": "36548e4b3f082b6a224a64e1f1beabc958e93f747fa460e431d4eb5207572b58",
-      "profile-notes/330-a-finite-high-surplus-source-survives-through29.md": "1b46db2b87d1ec16585cdfa165438e6344fafe5a9aae9acec523f3f2ef3f46cd",
-      "profile-notes/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "7dd8a1e991c05347d6553d4b3e1792e7f1cd0b2f45622f5a48bd83bb5cd2181b",
-      "profile-notes/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "a1d842dfbe05f3a251ce969a84b02be64128672121cadb5ea2c258befeb1ebc4",
+      "certificates/source_norms/j-source/j_whole_face_high_rho_finite_guard.json": "89e5860ff02e605a47a7329bf6d3f845cc4afa9a6e7786ca099070069becc172",
+      "profile-notes/j-source/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "eb0c2f82a03761f0d8803f444d214827067454e685e3207e97d58fd1ee83ff94",
+      "frontier/j-source/j_whole_face_high_rho_finite_guard.py": "fea02fd8aecf0ff9f1396bd26cd2d4fd42a9f3ceab55dc66e3ac177e5fdb1cbd",
+      "frontier/whole-cover/high_rho_survival_through29.py": "72a202c2cffa40ade6c7f7e8d5a86a66dfc0d3b9083303f4377855e90a153181",
+      "profile-notes/whole-cover/330-a-finite-high-surplus-source-survives-through29.md": "c34514091efcc5dec0121cc99ae82948e13af1eb891202f3076e48c540513595",
+      "profile-notes/j-source/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "353ddc47754479318a93f4b6d500a5c3442aa6dfb15a9031ce2b1f1cf8f811f9",
+      "profile-notes/j-source/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "59c23d8567f712785827d9bc75e73541c2a3bcbb17ea2291ad2c20ed4efc4785",
       "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "93c62f55a963b2a1d55cd8ae20e832a3bec20a2aca1a8402b5e7fd8d99c2b06c",
-      "byte_count": 9711
+      "sha256": "b8763ee7d47d02f761ba7a9bfdecfd61dc28935de077cb480bf8cc32b039d3ac",
+      "byte_count": 9756
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "a30c53a53a7910663f25c69e96c6b8306e5418f35b05b2a2db25ca68c506c8ba"
+    "value": "0248d5a71b900efda53c66c0ab14ed7cfea40f7b2970519c7bf149c2fa3bf368"
   },
   "source_delta": {
     "kind": "inline",

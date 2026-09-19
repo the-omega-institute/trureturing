@@ -1,0 +1,126 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-joint-pair-factorial-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "2b56b495594c4f42ed09ee914cfdcca42bf168084777cacb91fbd6478ace53f9",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/005-model.json",
+    "sha256": "277191aafbd72dc97c20a441a052e3dc53721314edd36f5beb48c8998fba1aad",
+    "kind": "object"
+  },
+  "original_cost_indices": {
+    "kind": "inline",
+    "value": [
+      48,
+      49
+    ]
+  },
+  "outside_targets": {
+    "kind": "inline",
+    "value": [
+      "square",
+      "factorial5"
+    ]
+  },
+  "factorial_thresholds": {
+    "kind": "inline",
+    "value": [
+      3,
+      2,
+      1,
+      5
+    ]
+  },
+  "original_affine_pruning_pair_tail": {
+    "kind": "inline",
+    "value": "4879/7200"
+  },
+  "complete_positive7_hinge_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "cross_partitions": {
+    "path": "content/011-cross_partitions.json",
+    "sha256": "268dc9ca2cc740abd1834150d18a04c21ea9a8528750d003a6b1f4c8218c8b43",
+    "kind": "value"
+  },
+  "pair_partitions": {
+    "path": "content/012-pair_partitions.json",
+    "sha256": "5f5eae93df4cb9efbc33aa8f6fd3cee7c99aab013d54ff1d2c3ef510c393a6e7",
+    "kind": "value"
+  },
+  "conditional_positive7": {
+    "path": "content/013-conditional_positive7.json",
+    "sha256": "585acedb9a50e99f46c937779f6a8654a3436d23d5527e582debdd5ee56d2b7a",
+    "kind": "object"
+  },
+  "original_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "threshold_layout_record_count": {
+    "kind": "inline",
+    "value": 50000
+  },
+  "cross_endpoint_record_count": {
+    "kind": "inline",
+    "value": 100000
+  },
+  "all_factorial_and_cross_components_sha256": {
+    "kind": "inline",
+    "value": "4094df8ca437e6b2fa1f848629dfa28578f3b7d1abae9de4b1ac8d797c39edbe"
+  },
+  "seed_rows": {
+    "path": "content/018-seed_rows.json",
+    "sha256": "f19fa5e297590130d934149ee72f1de2cfd0b9a60e87470af20498d2ca4b4eb8",
+    "kind": "array"
+  },
+  "results": {
+    "path": "content/019-results.json",
+    "sha256": "92a35396b4295a0a1ebfb8d51f40109a105e85ad5ebb3a0a4be9c06c6e62bb7f",
+    "kind": "array"
+  },
+  "encoded_rational_duals": {
+    "path": "content/020-encoded_rational_duals.json",
+    "sha256": "6aab29b6b5aae102ed8fd22a59542fb6d24c1578277e7cbe4a253b7e0cbae419",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 1359
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 4492854
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 250000000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 57
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original costs48/49, original square and purePhi5 on both entire saturated actual J faces, with separate thresholds3/2/1/5 and all62500000 original choices per target. The same3306-variable source carries actual X/Y factorial crosses, the fifteen assigned retained old-old pairs on Y/V and all selected old-positive-seven pairs on X/U. Only their exact known cap payments are replaced; every complementary old-old and old-positive-seven tail remains. Conditional positive-seven pairs retain independent complete original tests at every depth, full265 raw prime paths and one convex common-theta secant; all12500 raw completions and5000 fixed projection combinations are reconstructed. Original full-cost two/four/six affine pruning first retains its entire old pair bound; once all projections are fixed, the three complete lines replace the same old PZZ cap by the conditional secant before exact joint dual checks. PurePhi5 uses no synthetic hinge: complete layout pruning retains the old pair tail, then conditional pruning changes only the complete PZZ bound at both endpoints before exact joint dual checks. No actual attainment, off-face extension, complete52-cost comparison, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-exact-retained-factorial-head-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "a74bf2295403af66bcfc695751680667df1902f83c4ad1afff1307a011281d4e",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/005-model.json",
+    "sha256": "277191aafbd72dc97c20a441a052e3dc53721314edd36f5beb48c8998fba1aad",
+    "kind": "object"
+  },
+  "name": {
+    "kind": "inline",
+    "value": "factorial5"
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 5
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "factorial_threshold": 5,
+      "at_one": "0",
+      "hinge_coefficients": {},
+      "factorial_coefficient": "1",
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "0",
+        "6": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 5,
+        "constant": "10",
+        "linear": "-9/2",
+        "leading": "1/2"
+      }
+    }
+  },
+  "correction_table": {
+    "path": "content/009-correction_table.json",
+    "sha256": "aaa8492fac42b1146f09216ffd72c151c5a23cb65e2ff7c100715899d0396824",
+    "kind": "value"
+  },
+  "cross_partitions": {
+    "path": "content/010-cross_partitions.json",
+    "sha256": "268dc9ca2cc740abd1834150d18a04c21ea9a8528750d003a6b1f4c8218c8b43",
+    "kind": "value"
+  },
+  "pair_partitions": {
+    "path": "content/011-pair_partitions.json",
+    "sha256": "5f5eae93df4cb9efbc33aa8f6fd3cee7c99aab013d54ff1d2c3ef510c393a6e7",
+    "kind": "value"
+  },
+  "conditional_positive7": {
+    "path": "content/012-conditional_positive7.json",
+    "sha256": "60e2dc952bd5e4bdd7120d33177c841e4991e9dd80c11e8c8dea12f98da0d8b5",
+    "kind": "object"
+  },
+  "seed_rows": {
+    "path": "content/013-seed_rows.json",
+    "sha256": "f0c20595405315956ab5de0ee07acfcf44f15d5f96460ee3943f73daf4e4093d",
+    "kind": "object"
+  },
+  "scan": {
+    "path": "content/014-scan.json",
+    "sha256": "c30465a8e9e742a2d7a2381ee2e534c6a3bef3367ffcaf7e32c69c1090e313e4",
+    "kind": "object"
+  },
+  "complete_factorial_upper": {
+    "kind": "inline",
+    "value": "782845887531143161/992250000000000000"
+  },
+  "previous_complete_factorial_upper": {
+    "kind": "inline",
+    "value": "4552688500270367/5670000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "1734325002021383/124031250000000000"
+  },
+  "encoded_rational_duals": {
+    "path": "content/018-encoded_rational_duals.json",
+    "sha256": "af0069ba35e4c4e528804ddd05d2698de5216caefc4394e0ee2e121d83cad0a8",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 637
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 2105922
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete pure Phi5 on both entire actual saturated J faces, all62500000 independent original choices and all exponent tails. The six retained zero-seven labels are counted exactly before the remaining-tail inequality. Only their known survivor head gap and selected-positive-seven raw slope gap are removed. The same3306-variable constraints, all complete unselected old/positive-seven crosses and pair tails, common-theta secant and original valid full-function affine pruning remain. No actual-source attainment, off-face extension, complete52-cost comparison, Lean verification or unrestricted Erdos7 conclusion."
+  }
+}

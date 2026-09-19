@@ -21,7 +21,7 @@ def main():
     parser.add_argument('--checkpoint',type=Path)
     args=parser.parse_args()
     if args.dependency_directory:sys.path.insert(0,str(args.dependency_directory))
-    core=load('j_depth_propose_core',args.base/'frontier/j_face_second_depth_retained_heads.py')
+    core=load('j_depth_propose_core',args.base/'frontier/j-source/j_face_second_depth_retained_heads.py')
     previous=load('j_depth_existing_solver',args.base/'frontier/propose_j_face_retained135125_heads.py')
     solver=[None]
     def propose(lp,obj):

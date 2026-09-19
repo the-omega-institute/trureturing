@@ -12,26 +12,26 @@
     "value": {
       "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
       "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-      "certificates/source_norms/high_rho_full_haar_thresholds.json": "5134f106ab15859d177fdfdff534192db68f6005ea2599822a76f759efde0cdd",
-      "certificates/source_norms/high_rho_original_ap_blocks.json": "a1555b472f8c150aec5b1399845cecbb6c8640704d0104a8c9b4135db872cf84",
-      "profile-notes/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "515a8fc039ef0faa626530414b9857e0fd7892e3177a2e3e030781765af2bfb9",
-      "frontier/high_rho_full_haar_thresholds.py": "f1541dd4166383055a498368e592919d908354b127b0ef51732b2987b72bd1a3",
-      "profile-notes/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md": "6962fb804edf1667400e399b575da2ec7ed5fed0ac55a462fdcc3ca22331eb57",
-      "frontier/high_rho_original_ap_blocks.py": "526b540c4673ffdcdb2493844eaa243d1585b9ce3a4546524a51adc7f3ca1764",
+      "certificates/source_norms/high_rho_full_haar_thresholds.json": "a1074a5142e539c33ab85cdac028e494ee713aa3f015e61fb28c98f720fb33f6",
+      "certificates/source_norms/high_rho_original_ap_blocks.json": "a2f90ed5807f0955e157707fcb5b2a496e40cc374b9d439ec4cbe41dfcd27eb0",
+      "profile-notes/whole-cover/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "e9422d37924d4155fd23741cdcb631df9cc85bb0f2bbd59de2dd022b5c523cf2",
+      "frontier/whole-cover/high_rho_full_haar_thresholds.py": "d0a5eca2dd488194a0448a87c1323149f34a4d2df153c970bafd00cb8a9d63a7",
+      "profile-notes/whole-cover/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md": "6e9626609cf88f5a7013c7ba818ead6e2e5aa8440fed3d5c09b357854c35e2f9",
+      "frontier/whole-cover/high_rho_original_ap_blocks.py": "b8a777279bb746cd2422ac46326b4d052f5c2e1947b9b36d8c53418deda45f60",
       "profile-notes/06-a-common-matrix-bound-for-all-actual-rectangles.md": "b26cf8cc5c96cc0c8545f86bb84e871e4072cd921f6e1c2c802f125644d0a7eb",
-      "profile-notes/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "481adc84c9f2e14669c157087a48d9632bd8059fd623becf913cb36d9d0141ac"
+      "profile-notes/j-source/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "eb0c2f82a03761f0d8803f444d214827067454e685e3207e97d58fd1ee83ff94"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "b4d5d5f15a5a1317415254007967788c396f94e50e6773aafb323b7c060435aa",
-      "byte_count": 9057
+      "sha256": "55ea4c220e73b8834943d66a289fb64bd585d74c84c3a62e9dfc0d2974a68e3c",
+      "byte_count": 9090
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "148bace5833ec265f3a178fb5aeaba5aaf4424b5b3a601e97d7c84d7b6fadf42"
+    "value": "6a29db5f8962a652e0801bd61470445b7ee7f300a37ba9f4170e835503ae0d38"
   },
   "guard": {
     "kind": "inline",

@@ -1,0 +1,126 @@
+{
+  "source_certificate_count": {
+    "kind": "inline",
+    "value": 53
+  },
+  "total_logical_bytes": {
+    "kind": "inline",
+    "value": 427610068
+  },
+  "source_classification": {
+    "path": "content/003-dual_price_inventory/002-source_classification.json",
+    "sha256": "f43fc3116f3e225ff671fef7c466c15d4cd36c198fbc8de90c8f09affd0dee90",
+    "kind": "value"
+  },
+  "priced_bank_count": {
+    "kind": "inline",
+    "value": 25
+  },
+  "priced_source_count": {
+    "kind": "inline",
+    "value": 24
+  },
+  "priced_dual_count": {
+    "kind": "inline",
+    "value": 23881
+  },
+  "historical_bank_count": {
+    "kind": "inline",
+    "value": 23
+  },
+  "historical_dual_count": {
+    "kind": "inline",
+    "value": 22850
+  },
+  "historical_maximum_L1": {
+    "kind": "inline",
+    "value": "4331247056452228979446980667963962832663/97105599806948454246525000000000000"
+  },
+  "historical_ceiling_maximum_L1": {
+    "kind": "inline",
+    "value": 44604
+  },
+  "historical_maximizing_source": {
+    "kind": "inline",
+    "value": "certificates/source_norms/j-source/j_face_triple_second_depth_heads.json"
+  },
+  "historical_maximizing_key": {
+    "kind": "inline",
+    "value": "9b950bd7ab4d0e98517dcb290c1cdc18c559b8bb48bccf130e40434be63dc5f3"
+  },
+  "per_original_matrix_historical_maxima": {
+    "kind": "inline",
+    "value": {
+      "3306/6354/18": {
+        "source": "certificates/source_norms/j-source/j_face_retained135125_heads.json",
+        "maximum_L1": "10113724078099165044568241691963620801/522353952700099269750000000000000",
+        "ceiling_maximum_L1": 19362,
+        "maximizing_key": "0a8ee61e0996cc0e7300b2c90367fe2adeb8922e1c7812e6f8d406daa7a649ac"
+      },
+      "6531/11211/19": {
+        "source": "certificates/source_norms/j-source/j_face_triple_second_depth_heads.json",
+        "maximum_L1": "4331247056452228979446980667963962832663/97105599806948454246525000000000000",
+        "ceiling_maximum_L1": 44604,
+        "maximizing_key": "9b950bd7ab4d0e98517dcb290c1cdc18c559b8bb48bccf130e40434be63dc5f3"
+      },
+      "32151/56133/22": {
+        "source": "certificates/source_norms/j-source/j_face_joint_positive175189_survival_heads.json",
+        "maximum_L1": "3279099697888828372981/555660000000000000",
+        "ceiling_maximum_L1": 5902,
+        "maximizing_key": "652b4caf52a6b92bbb9bc0b9975c64a43e8ff1c1b38a9196f0d522f0e9717e8a"
+      },
+      "876/587/16": {
+        "source": "certificates/source_norms/j-source/j_face_joint_selected_heads.json",
+        "maximum_L1": "812500340527193183022993169029550951/289004761330203732876562500000000",
+        "ceiling_maximum_L1": 2812,
+        "maximizing_key": "ce5a39e99fdff479e6bcf58840ac6d2fdc30ca4825b304f48b537d488a7e4448"
+      },
+      "101/66/19": {
+        "source": "certificates/source_norms/j-source/j_face_joint_retained_square.json",
+        "maximum_L1": "30709/135",
+        "ceiling_maximum_L1": 228,
+        "maximizing_key": "exact_retained_head_dual"
+      },
+      "12941/30454/20": {
+        "source": "certificates/source_norms/j-source/j_face_retained375_survival_heads.json",
+        "maximum_L1": "34989766753190394324469/6945750000000000000",
+        "ceiling_maximum_L1": 5038,
+        "maximizing_key": "f49176f6aa54e42985d6491e29210dde87a58fd349e72e3b6825bf6de9ddc4bc"
+      }
+    }
+  },
+  "maximum_L1": {
+    "kind": "inline",
+    "value": "375573528414630698967865160948169578054701/2913167994208453627395750000000000000"
+  },
+  "ceiling_maximum_L1": {
+    "kind": "inline",
+    "value": 128923
+  },
+  "source_banks": {
+    "path": "content/003-dual_price_inventory/015-source_banks.json",
+    "sha256": "b0959e65d98a83936d2dbc1fb1e132ee91fe7294741858ba4b17ccfeaf88b0dd",
+    "kind": "value"
+  },
+  "small101_row_mapping": {
+    "path": "content/003-dual_price_inventory/016-small101_row_mapping.json",
+    "sha256": "1a9db87afabe531ec6aa9e05effa7473088ed885b24c145ff0705f0dc2aaf96a",
+    "kind": "value"
+  },
+  "covering_node_count": {
+    "kind": "inline",
+    "value": 1177
+  },
+  "covering_dual_count": {
+    "kind": "inline",
+    "value": 981
+  },
+  "prefix_seed_dual_count": {
+    "kind": "inline",
+    "value": 50
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Containing price inventory for all pinned original banks; original dual feasibility is consumed from their pinned certificates, not recomputed."
+  }
+}

@@ -1,4 +1,4 @@
-[Index](../marked_head_profile.md) · [Same-law target](303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md) · [Arbitrary-head transfer](../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
+[Index](../marked_head_profile.md) · [Same-law target](j-source/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md) · [Arbitrary-head transfer](../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
 
 # Actual 19-to-23-to-29 survival needs a masked second moment
 

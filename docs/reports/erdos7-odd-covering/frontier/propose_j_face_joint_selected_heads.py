@@ -37,7 +37,7 @@ def main():
     parser.add_argument('--dependency-directory',type=Path)
     args=parser.parse_args()
     if args.dependency_directory:sys.path.insert(0,str(args.dependency_directory))
-    s=importlib.util.spec_from_file_location('j_joint',args.base/'frontier/j_face_joint_selected_heads.py')
+    s=importlib.util.spec_from_file_location('j_joint',args.base/'frontier/j-source/j_face_joint_selected_heads.py')
     m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
     solver=[None]
     def propose(lp,obj):

@@ -1,0 +1,267 @@
+{
+  "schema": "erdos7-aligned-source-guard-truncation-v1",
+  "source_sha256": {
+    "certificates/source_norms/j-source/j_aligned_explicit_parameter_neighborhood.json": "a7560bf45e9fcf5df4a20e5d5e3812297afc789a31002a7f7c9f7dd64a8b7c92",
+    "profile-notes/46-one-forbidden-carrier-mixture-strengthens-survival.md": "3fa999c5aeba8cdeaec058725b9859ad8cd348361c01d9a74b6946e34283a63b",
+    "profile-notes/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md": "f1919e46166ff701af789dafe498e7fe39bc620939937d0494ccf111f75076b4",
+    "profile-notes/71-global-j-k-control-faces-and-exact-escape-gaps.md": "1ba67485969c424f5523b77dd03a0dc0823f82f9d06f4c3dc719e9cfb66024c1",
+    "profile-notes/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md": "f53341ba3738291a8bdc063faebae5baae5b7c601f7a28e09ae5b2cf26b6ab61",
+    "profile-notes/j-source/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "353ddc47754479318a93f4b6d500a5c3442aa6dfb15a9031ce2b1f1cf8f811f9",
+    "profile-notes/305-ineffective-leading-pairs-retain-the-complete-core-bounds.md": "6d3e60c74ed6467d5e304275278e8a3490e39e7d268ef1f4b85e8eee6bf48b77",
+    "profile-notes/j-source/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "59c23d8567f712785827d9bc75e73541c2a3bcbb17ea2291ad2c20ed4efc4785",
+    "profile-notes/j-source/325-an-explicit-aligned-parameter-neighborhood-keeps-the-complete-comparison-below400.md": "3203ad5e54470106dbbebf32ce82a533443b42a7e3638676f7400ee93facb5cf",
+    "frontier/j-source/j_aligned_explicit_parameter_neighborhood.py": "5aa7faf8bbf2e6994afb444cb72f70834f8f9c0f2ce49fac6f0f4f82ff360a49"
+  },
+  "ordinary_proof": {
+    "sha256": "727aa545e8e87e716bede69cbf55a2d76c75780f88105970e374cf0ce7475e9b",
+    "byte_count": 13146
+  },
+  "producer_sha256": "63ede4ac6ec5f6bc7bb5acacde8368d5d523e63122c868168d752d846b156002",
+  "full_variation_convention": "Full signed variation, without factor1/2.",
+  "target_guard": {
+    "epsilon": "1/100000000000000",
+    "qJ_lower": "99999999999999/100000000000000",
+    "rho_floor": "2/675",
+    "rho_upper": "8000000000027/2700000000000000"
+  },
+  "cuts": [
+    {
+      "cut": {
+        "3": 20,
+        "5": 20,
+        "7": 20
+      },
+      "all_omitted_tails": {
+        "pure3": "1/6973568802",
+        "pure5": "1/381469726562500",
+        "pure7": "1/478753597785672006",
+        "old35": "476847618556327/2660205384063720703125000",
+        "complete357": "29593474458942774658437240840593/141509210941035740477089640808105468750000",
+        "late35": "31789273020371/886735128021240234375000",
+        "early35": "190739899747607/1330102692031860351562500",
+        "carrier_weight": "1/79792266297612001"
+      },
+      "complete_measure_errors": {
+        "pure3_variation": "1/6973568802",
+        "raw35_variation": "476847618556327/2660205384063720703125000",
+        "normalized357_full_variation": "29593474754521150665517318965593/117924342450863117064241367340087890625000",
+        "survivor_mass_full_minus_core_lower": "-29593474458942774658437240840593/117924342450863117064241367340087890625000",
+        "survivor_mass_upper_coefficient_of_core_S": "1/398961331488060005",
+        "carrier_l1": "2/79792266297612001"
+      },
+      "stage_errors": {
+        "pure5_z_monotone_drop": "1/381469726562500",
+        "each_d_section_monotone_drop": "3/381469726562500",
+        "alpha1_change_lower": "-1/381469726562500",
+        "alpha1_change_upper": "1/381469726562500",
+        "root1_beta_width_sum_change_lower": "-3/190734863281250",
+        "root1_beta_width_sum_change_upper": "1/381469726562500",
+        "root1_late_raw_change_lower": "-190739899747607/1330102692031860351562500",
+        "root1_late_raw_change_upper": "31789273020371/886735128021240234375000",
+        "qJ_deficit_carrier_factor_monotone_gain": "79792266685032490/30913158827439060959688489"
+      },
+      "qJ_full_minus_core": {
+        "lower": "-381482511438637/36947297000885009765625",
+        "upper": "3043858138551728819791357837766/589621712254315585321206836700439453125"
+      },
+      "carrier_mass_S0_errors": {
+        "T2_monotone_drop": "47683909530557/2216837820053100585937500",
+        "S0_full_minus_core_lower_constant": "-476847618556327/2660205384063720703125000",
+        "S0_lower_coefficient_of_core_s": "-2/398961331488060005",
+        "S0_full_minus_core_upper": "47683909530557/2216837820053100585937500"
+      },
+      "rho_full_minus_core": {
+        "lower": "-96390037791575209981419801350893/353773027352589351192724102020263671875000",
+        "uniform_upper": "38048753049963681918855444055327/212263816411553610715634461212158203125000",
+        "sharper_upper_constant": "476847618556327/2660205384063720703125000",
+        "sharper_upper_coefficient_of_core_S": "1/398961331488060005",
+        "sharper_upper_coefficient_of_core_s": "2/398961331488060005"
+      },
+      "conditional_finite_data_thresholds": {
+        "core_qJ_lower": "605344520312703413965487983/605344514062500000000000000",
+        "core_rho_upper": "1288048206557128456621508423131506768455929/434716296010861794745619376562500000000000000",
+        "literal_low_labels": [
+          3,
+          9,
+          45,
+          135,
+          405
+        ],
+        "full_original_source_values_computed": false,
+        "condition": "Actual retained source in the same effective9 chart; original45 and135 present and aligned; retained original residues unchanged."
+      },
+      "half_buffer": {
+        "core_to_full_sufficient": false,
+        "full_to_core_sufficient": false,
+        "qJ_lower": "199999999999999/200000000000000",
+        "rho_upper": "16000000000027/5400000000000000",
+        "conditional_only_no_source_membership_asserted": true
+      },
+      "finite_missing_budget": {
+        "universal_core_qJ_upper": "665600973071754553334809839861489808530802836941977043612081219564786174786149548032/665600976507847398373665409817456666807778363492698048275997280143201351165771484375",
+        "universal_core_qJ_deficit_lower": "3436092845038855569955966858276975526550721004663916060578415176379621936343/665600976507847398373665409817456666807778363492698048275997280143201351165771484375",
+        "obstructs_325_qJ_guard": true,
+        "obstructs_half_qJ_guard": true
+      }
+    },
+    {
+      "cut": {
+        "3": 17,
+        "5": 10,
+        "7": 8
+      },
+      "all_omitted_tails": {
+        "pure3": "1/258280326",
+        "pure5": "1/39062500",
+        "pure7": "1/34588806",
+        "old35": "436248613/10089075234375000",
+        "complete357": "193233972018527/1846397174609531250000",
+        "late35": "8038177/3363025078125000",
+        "early35": "206067041/5044537617187500",
+        "carrier_weight": "1/5764801"
+      },
+      "complete_measure_errors": {
+        "pure3_variation": "1/258280326",
+        "raw35_variation": "436248613/10089075234375000",
+        "normalized357_full_variation": "1726307257254689/10770650185222265625000",
+        "survivor_mass_full_minus_core_lower": "-193233972018527/1538664312174609375000",
+        "survivor_mass_upper_coefficient_of_core_S": "1/28824005",
+        "carrier_l1": "2/5764801"
+      },
+      "stage_errors": {
+        "pure5_z_monotone_drop": "1/39062500",
+        "each_d_section_monotone_drop": "3/39062500",
+        "alpha1_change_lower": "-1/39062500",
+        "alpha1_change_upper": "1/39062500",
+        "root1_beta_width_sum_change_lower": "-3/19531250",
+        "root1_beta_width_sum_change_upper": "1/39062500",
+        "root1_late_raw_change_lower": "-206067041/5044537617187500",
+        "root1_late_raw_change_upper": "8038177/3363025078125000",
+        "qJ_deficit_carrier_factor_monotone_gain": "20113708/82718593422507"
+      },
+      "qJ_full_minus_core": {
+        "lower": "-512576431/140126044921875",
+        "upper": "583594182378352/807798763891669921875"
+      },
+      "carrier_mass_S0_errors": {
+        "T2_monotone_drop": "6028633/4203781347656250",
+        "S0_full_minus_core_lower_constant": "-436248613/10089075234375000",
+        "S0_lower_coefficient_of_core_s": "-2/28824005",
+        "S0_full_minus_core_upper": "6028633/4203781347656250"
+      },
+      "rho_full_minus_core": {
+        "lower": "-1758965102193619/13847978809571484375000",
+        "uniform_upper": "5877911518596013/58161511000200234375000",
+        "sharper_upper_constant": "436248613/10089075234375000",
+        "sharper_upper_coefficient_of_core_S": "1/28824005",
+        "sharper_upper_coefficient_of_core_s": "2/28824005"
+      },
+      "conditional_finite_data_thresholds": {
+        "core_qJ_lower": "1434895948782639091093/1434890700000000000000",
+        "core_rho_upper": "220575392067352664444162563/74446734080256300000000000000",
+        "literal_low_labels": [
+          3,
+          9,
+          45,
+          135,
+          405
+        ],
+        "full_original_source_values_computed": false,
+        "condition": "Actual retained source in the same effective9 chart; original45 and135 present and aligned; retained original residues unchanged."
+      },
+      "half_buffer": {
+        "core_to_full_sufficient": false,
+        "full_to_core_sufficient": false,
+        "qJ_lower": "199999999999999/200000000000000",
+        "rho_upper": "16000000000027/5400000000000000",
+        "conditional_only_no_source_membership_asserted": true
+      },
+      "finite_missing_budget": {
+        "universal_core_qJ_upper": "1776951355799902227958183871585897140357955584/1776952639558882162600639276206493377685546875",
+        "universal_core_qJ_deficit_lower": "1283758979934642455404620596237327591291/1776952639558882162600639276206493377685546875",
+        "obstructs_325_qJ_guard": true,
+        "obstructs_half_qJ_guard": true
+      }
+    },
+    {
+      "cut": {
+        "3": 34,
+        "5": 24,
+        "7": 19
+      },
+      "all_omitted_tails": {
+        "pure3": "1/33354363399333138",
+        "pure5": "1/238418579101562500",
+        "pure7": "1/68393371112238858",
+        "old35": "348054768975952831/7952299928506168842315673828125000",
+        "complete357": "113820376475285649009115222312817/1450358933883074516987067776156364440917968750000",
+        "late35": "1365725888094277/176717776189025974273681640625000",
+        "early35": "143298552005855183/3976149964253084421157836914062500",
+        "carrier_weight": "1/11398895185373143"
+      },
+      "complete_measure_errors": {
+        "pure3_variation": "1/33354363399333138",
+        "raw35_variation": "348054768975952831/7952299928506168842315673828125000",
+        "normalized357_full_variation": "135026509617968765921957019187817/1208632444902562097489223146796970367431640625000",
+        "survivor_mass_full_minus_core_lower": "-113820376475285649009115222312817/1208632444902562097489223146796970367431640625000",
+        "survivor_mass_upper_coefficient_of_core_S": "1/56994475926865715",
+        "carrier_l1": "2/11398895185373143"
+      },
+      "stage_errors": {
+        "pure5_z_monotone_drop": "1/238418579101562500",
+        "each_d_section_monotone_drop": "3/238418579101562500",
+        "alpha1_change_lower": "-1/238418579101562500",
+        "alpha1_change_upper": "1/238418579101562500",
+        "root1_beta_width_sum_change_lower": "-3/119209289550781250",
+        "root1_beta_width_sum_change_upper": "1/238418579101562500",
+        "root1_late_raw_change_lower": "-143298552005855183/3976149964253084421157836914062500",
+        "root1_late_raw_change_upper": "1365725888094277/176717776189025974273681640625000",
+        "qJ_deficit_carrier_factor_monotone_gain": "13251915374224984/21122382909102482565614327506263"
+      },
+      "qJ_full_minus_core": {
+        "lower": "-299568245333673253/110448610118141233921051025390625",
+        "upper": "1553792338466704468328741568011284/1258992130106835518217940777913510799407958984375"
+      },
+      "carrier_mass_S0_errors": {
+        "T2_monotone_drop": "30728832482121233/6626916607088474035263061523437500",
+        "S0_full_minus_core_lower_constant": "-348054768975952831/7952299928506168842315673828125000",
+        "S0_lower_coefficient_of_core_s": "-2/56994475926865715",
+        "S0_full_minus_core_upper": "30728832482121233/6626916607088474035263061523437500"
+      },
+      "rho_full_minus_core": {
+        "lower": "-14928096540675885266477081325592763/151079055612820262186152893349621295928955078125000",
+        "uniform_upper": "6618206473161539920838237311592833/90647433367692157311691736009772777557373046875000",
+        "sharper_upper_constant": "348054768975952831/7952299928506168842315673828125000",
+        "sharper_upper_coefficient_of_core_S": "1/56994475926865715",
+        "sharper_upper_coefficient_of_core_s": "2/56994475926865715"
+      },
+      "conditional_finite_data_thresholds": {
+        "core_qJ_lower": "1809590028175612788788349790642811527/1809590028175625976562500000000000000",
+        "core_rho_upper": "550062054926386722161386412690251195043466004362391/185645943537033538174344675348014648437500000000000000",
+        "literal_low_labels": [
+          3,
+          9,
+          45,
+          135,
+          405
+        ],
+        "full_original_source_values_computed": false,
+        "condition": "Actual retained source in the same effective9 chart; original45 and135 present and aligned; retained original residues unchanged."
+      },
+      "half_buffer": {
+        "core_to_full_sufficient": true,
+        "full_to_core_sufficient": true,
+        "qJ_lower": "199999999999999/200000000000000",
+        "rho_upper": "16000000000027/5400000000000000",
+        "conditional_only_no_source_membership_asserted": true
+      },
+      "finite_missing_budget": {
+        "universal_core_qJ_upper": "418138365623567717479405421293546900908691572798376626956879330129794121094605089699669976388976850763776/418138365623568233527260994272765208494723797960250102680269186812556103660654116538353264331817626953125",
+        "universal_core_qJ_deficit_lower": "516047855572979218307586032225161873475723389856682761982566049026838683287942840776189349/418138365623568233527260994272765208494723797960250102680269186812556103660654116538353264331817626953125",
+        "obstructs_325_qJ_guard": false,
+        "obstructs_half_qJ_guard": false
+      }
+    }
+  ],
+  "scope": "Complete geometric tail and buffered finite-data guard formulas for the existing325 J comparison. Does not enumerate original CRT residues, compute a source qJ/rho, assert source realization, alter a consumer, reuse old core errors on a new law, prove a global source join or continue arbitrary later primes."
+}

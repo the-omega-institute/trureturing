@@ -1,0 +1,61 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-assigned-joint-error-reserve-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "4c642b1c99ac784e8ce5ce9e79da39d815939d7b42eaf769e5dc77ceb7280447",
+    "kind": "value"
+  },
+  "source_conservation": {
+    "path": "content/002-source_conservation.json",
+    "sha256": "b8bc58cf1e5c74315018041149fe506bfe614cd6c9fc47d8466cd5378969a83b",
+    "kind": "value"
+  },
+  "domain_proof": {
+    "path": "content/003-domain_proof.json",
+    "sha256": "c988b73fb7d1a242c6a20c39707d12ddf0bc01f3a6e11b6fbe69bf674a264119",
+    "kind": "value"
+  },
+  "zero7_linear_delta_coefficient": {
+    "kind": "inline",
+    "value": "300768358403/56953125000"
+  },
+  "zero7_quadratic_delta_coefficient": {
+    "kind": "inline",
+    "value": "1/45"
+  },
+  "full_axis_remainder_constant": {
+    "kind": "inline",
+    "value": "977251/9492187500"
+  },
+  "six_defect_order": {
+    "kind": "inline",
+    "value": [
+      "E5",
+      "E15",
+      "E5d",
+      "E15d",
+      "E3",
+      "omega"
+    ]
+  },
+  "complete_point_checks": {
+    "path": "content/008-complete_point_checks.json",
+    "sha256": "c53e5a7e03845f56caf91b401f4ff4b96153bd9282cb6859b7ee5f8617fcb9b9",
+    "kind": "array"
+  },
+  "unchanged_mixed_family_errors": {
+    "kind": "inline",
+    "value": {
+      "3_times_deep5": "0",
+      "9_times5": "0",
+      "deep35": "0"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary whole-J direction40 replacement on the entire original136 triangle delta+rho<=1/1000. Root0 pure5 and root1 union-deletion H pieces are separated by their actual ternary roots; later assigned late deletion is disjoint from both. No raw overlapping source families are treated as disjoint. All six mixed-seven defects share one actual budget, all original independent test residues and both infinite axes remain. The analytic dual is an upper, not an exact optimizer of the clipped error supremum. The positive reserve replaces old49 once. No enlarged source domain, complete global comparison, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

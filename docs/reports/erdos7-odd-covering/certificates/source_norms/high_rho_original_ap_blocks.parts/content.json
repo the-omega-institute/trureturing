@@ -12,24 +12,24 @@
     "value": {
       "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
       "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
-      "certificates/source_norms/high_rho_full_haar_thresholds.json": "5134f106ab15859d177fdfdff534192db68f6005ea2599822a76f759efde0cdd",
-      "profile-notes/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "515a8fc039ef0faa626530414b9857e0fd7892e3177a2e3e030781765af2bfb9",
-      "frontier/high_rho_full_haar_thresholds.py": "f1541dd4166383055a498368e592919d908354b127b0ef51732b2987b72bd1a3",
+      "certificates/source_norms/high_rho_full_haar_thresholds.json": "a1074a5142e539c33ab85cdac028e494ee713aa3f015e61fb28c98f720fb33f6",
+      "profile-notes/whole-cover/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "e9422d37924d4155fd23741cdcb631df9cc85bb0f2bbd59de2dd022b5c523cf2",
+      "frontier/whole-cover/high_rho_full_haar_thresholds.py": "d0a5eca2dd488194a0448a87c1323149f34a4d2df153c970bafd00cb8a9d63a7",
       "profile-notes/06-a-common-matrix-bound-for-all-actual-rectangles.md": "b26cf8cc5c96cc0c8545f86bb84e871e4072cd921f6e1c2c802f125644d0a7eb",
-      "profile-notes/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "481adc84c9f2e14669c157087a48d9632bd8059fd623becf913cb36d9d0141ac",
-      "profile-notes/330-a-finite-high-surplus-source-survives-through29.md": "1b46db2b87d1ec16585cdfa165438e6344fafe5a9aae9acec523f3f2ef3f46cd"
+      "profile-notes/j-source/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "eb0c2f82a03761f0d8803f444d214827067454e685e3207e97d58fd1ee83ff94",
+      "profile-notes/whole-cover/330-a-finite-high-surplus-source-survives-through29.md": "c34514091efcc5dec0121cc99ae82948e13af1eb891202f3076e48c540513595"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "6962fb804edf1667400e399b575da2ec7ed5fed0ac55a462fdcc3ca22331eb57",
-      "byte_count": 7657
+      "sha256": "6e9626609cf88f5a7013c7ba818ead6e2e5aa8440fed3d5c09b357854c35e2f9",
+      "byte_count": 7693
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "526b540c4673ffdcdb2493844eaa243d1585b9ce3a4546524a51adc7f3ca1764"
+    "value": "b8a777279bb746cd2422ac46326b4d052f5c2e1947b9b36d8c53418deda45f60"
   },
   "guard": {
     "kind": "inline",

@@ -1,7 +1,7 @@
 {
   "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
-  "frontier/pure_axis_shared_deletion_comparison.py": "65ef1044328fbd03a61422112ad5513a9cba0eacdd13ab82aa9b32e21409e3e4",
-  "certificates/source_norms/pure_axis_shared_deletion_comparison.json": "f4e243a7d3f25273acefd33369a5389068a2b0c062f86be9c5eb3a97a3550679",
+  "frontier/transport/pure_axis_shared_deletion_comparison.py": "9fc2cce3196fac8f82b55dd66dcae20624d2aeeea3a91be36296e6d2b7151430",
+  "certificates/source_norms/retained-transport/pure_axis_shared_deletion_comparison.json": "f4e243a7d3f25273acefd33369a5389068a2b0c062f86be9c5eb3a97a3550679",
   "frontier/whole_face_second_factorial_tail.py": "10a81457579172e28113d2a1e1646ac4f25ba1161c9fb8e927dcaf74a5928870",
   "certificates/source_norms/whole_face_second_factorial_tail.json": "1cea4dcb2b7344fb48e4064d6d8df7ac38b9add92f732e9513f05a5b7fb66c2c",
   "frontier/whole_factorial_same_head.py": "65def5c326c9da6dde7de1bfd91c241347aed825e37af8eeda17883dc091c205",

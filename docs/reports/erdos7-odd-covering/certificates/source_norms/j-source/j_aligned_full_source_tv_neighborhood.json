@@ -1,0 +1,31 @@
+{
+  "schema": "erdos7-aligned-full-source-tv-neighborhood-v1",
+  "source_sha256": {
+    "certificates/source_norms/j-source/j_aligned_complete_moment_comparison.json": "8ad750e1a8e9beca61cc176f09190c529ad53c29acd44b018a73caa3be6ef0bd",
+    "certificates/source_norms/j-source/j_compact_source_neighborhood.json": "ff5fa4a3659720ede72184bd509c1dc7569d6aa00f9779cc9f307125c05df074",
+    "profile-notes/18-actual-bb-kernels-with-fixed-old-second-moment-need-not-be-uniformly-continuous.md": "bc100146496771dafd446a0e7db15d9a9abb1bd878d2b805f4d43888e371ef49",
+    "profile-notes/62-endpoint-square-from-cylinder-intersections.md": "6297c95ff9a566d79b213a6b8aba43446679436e64f795ae8c2186601d847e29",
+    "profile-notes/j-source/302-a-positive-actual-source-neighborhood-keeps-j-below403.md": "353ddc47754479318a93f4b6d500a5c3442aa6dfb15a9031ce2b1f1cf8f811f9",
+    "profile-notes/j-source/317-the-complete-actual-aligned-j-comparison-crosses403.md": "84ebb7209144976039e639f23241311ff801475d77973f1f5b3e24f48d107c61",
+    "profile-notes/j-source/318-a-finite-aligned-source-neighborhood-keeps-j-below403.md": "59eb7dfa24dc1245c8e8284942127becf4646cbbdc2b1f29de861ebc431c32c0"
+  },
+  "complete_own_target_count": 59,
+  "crt_second_moment": "35/4",
+  "crt_fourth_moment": "16625/12",
+  "centered_fourth_moment": "16427/12",
+  "difference_density_bound": "6/5",
+  "centered_density_moment": "16427/10",
+  "numerator_mass_coefficient": "1556107055932111300021081/5393494724947082158204800",
+  "numerator_moment_coefficient": "2070782892374236779637510453/148113662831239102344547200",
+  "denominator_mass_coefficient": "29283/29282",
+  "denominator_moment_coefficient": "1357579/38740086",
+  "full_variation_radius": "1/100000000",
+  "moment_payment_upper": "41/10000",
+  "comparison_rational_upper": "401051/1000",
+  "source_prefix_exponent_cut": 18,
+  "full_forbidden_tail": "72476647379650548024786008099/38505907739057344347507385253906250000",
+  "pure7_tail": "1/9770481587462694",
+  "matching_prefix_full_variation_upper": "72476651320695561452520383099/16044128224607226811461410522460937500",
+  "source_parameter_radius": "not-established",
+  "scope": "Actual aligned effective9 chart of318; complete357 survivor-TV radius around any actual aligned endpoint; all59 original own tests and all tails retained. Matching source prefixes give the displayed coupling. No inverse qJ/rho modulus, Gamma19 bound, global join, unrestricted Erdos7 conclusion or Lean claim."
+}

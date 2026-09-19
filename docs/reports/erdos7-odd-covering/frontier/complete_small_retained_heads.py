@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/complete_small_retained_heads.json'
-PINS = {'certificate_io.py': '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232', 'frontier/uniform_pruning_candidate_transport.py': 'eba10a3c113aa0beaaf8419d349f9415b0b6152a700e59a3c353e23c1cdc6e62', 'frontier/retained_small_domain_all_bank_transport.py': '27812c1be73f4f8008ba27317c3588ad20a4fac8c115b129dfc6d37ea5ba1058', 'frontier/joint_selected_source_comparison.py': '68ac25a9801c1ea946bad2780ed2fda457737bd3bdeeb99da91df642a2745055', 'frontier/k_face_common_seven_hinges.py': '8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97', 'frontier/second_depth_seven_comparison.py': '5544b70201a721be7ca0dfa92155c4b186235a19f52a5fd85346f85c02cfc950', 'certificates/source_norms/uniform_pruning_candidate_transport.json': '3236dce7ade3179f07fa44ad4e3b466cd616cc1a6c48e8c2e6332d32f4ac2170', 'certificates/source_norms/retained_small_domain_all_bank_transport.json': 'dcf75994afa6530450c9d634353009dd5f4f5d386c9e40fc8b0af935dc583298', 'certificates/source_norms/retained135125_heavy_comparison.json': 'fc5b3f2b80d46aee32c8a845be8a6702f4eb28f49f176a2c7751fb94f2761cdb', 'certificates/source_norms/retained135125_survival_comparison.json': 'b195a103f9a876209edf9a220d29327d212daafcf670128586c1b7d48ca1846d', 'certificates/source_norms/joint_selected_source_comparison.json': '6257942abe88f154375d443441b87fc45ef3707b3ed9d61fd5aef3ca186713ec'}
+PINS = {'certificate_io.py': '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232', 'frontier/transport/uniform_pruning_candidate_transport.py': '6b1ef4e29c6d828e0fb599b24231e92ef13983a3a22f148aad39eec1e6d1c512', 'frontier/transport/retained_small_domain_all_bank_transport.py': '593507898cf7773907422a6f1795098c7d7cc91db7c9e27e190485f7d4d889fc', 'frontier/transport/joint_selected_source_comparison.py': 'ab18c0c4ac40af60f7c974393d82738ec4d762ccefa7f5efe61cf4b963b3673c', 'frontier/k_face_common_seven_hinges.py': '8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97', 'frontier/transport/second_depth_seven_comparison.py': 'e04a9cfb22cdb4c3f3ffda097b7975facc253c21840873ef527e5a601f028bfe', 'certificates/source_norms/retained-transport/uniform_pruning_candidate_transport.json': 'e737be03b323adaa708b491af0f535384f5e09eb32e9a4b89e9cd3f77e3fbe58', 'certificates/source_norms/retained-transport/retained_small_domain_all_bank_transport.json': 'bc739bb13848dab2a94ab21e97fc91c1c9c63d74a080b9926dfdb1a55cda77c9', 'certificates/source_norms/retained-transport/retained135125_heavy_comparison.json': '98195f65f9d5acc4a27b8275952488b928e5204c56871e9a41cf4f32cf0e4ff6', 'certificates/source_norms/retained-transport/retained135125_survival_comparison.json': '67d7003462bde8fa391245e76f226694cea286ab005d0404a7cfe4046453b797', 'certificates/source_norms/joint_selected_source_comparison.json': '81ca26366a56753ff9a84c002c97ed9f4a0f2317fb6e2a858c25774c3283b07e'}
 PRIMITIVES = ('E5', 'E15', 'E27', 'Ege4', 'E5d', 'E15d', 'omega')
 
 
@@ -90,10 +90,7 @@ def calculate(base):
     require(PINS, 'Final source and logical-certificate pins')
     io = module('small_heads_io', base/'certificate_io.py')
     read = lambda n: json.loads(io.read_artifact_bytes(base/'certificates/source_norms'/(n+'.json')))
-    heavy, survival, raw_source, pruning, joint = [read(n) for n in (
-        'retained135125_heavy_comparison', 'retained135125_survival_comparison',
-        'joint_selected_source_comparison', 'uniform_pruning_candidate_transport',
-        'retained_small_domain_all_bank_transport')]
+    heavy, survival, raw_source, pruning, joint = [read('retained-transport/retained135125_heavy_comparison'), read('retained-transport/retained135125_survival_comparison'), read('joint_selected_source_comparison'), read('retained-transport/uniform_pruning_candidate_transport'), read('retained-transport/retained_small_domain_all_bank_transport')]
     pins = dict(PINS)
     for doc in (heavy, survival, raw_source, pruning, joint):
         for path, pin in doc['source_sha256'].items():
@@ -102,12 +99,11 @@ def calculate(base):
     for path, pin in pins.items():
         require(sha256(io.read_artifact_bytes(base/path)).hexdigest() == pin, 'Pinned input '+path)
     load = lambda n: module('small_heads_'+n, base/'frontier'/(n+'.py'))
-    small, bridge, prune, depth = [load(n) for n in ('retained_small_domain_all_bank_transport',
-        'k_face_common_seven_hinges', 'uniform_pruning_candidate_transport', 'second_depth_seven_comparison')]
+    small, bridge, prune, depth = [load('transport/retained_small_domain_all_bank_transport'), load('k_face_common_seven_hinges'), load('transport/uniform_pruning_candidate_transport'), load('transport/second_depth_seven_comparison')]
     domain = small.parameters(F(1, 10**8), F(1, 10**11), F(1, 60))
     require(encode(domain) == joint['domain'], 'The same complete source box and raw polytope')
     par, caps, budgets = domain['parameters'], domain['raw_caps'], domain['raw_budgets']
-    raw = load('joint_selected_source_comparison').RawSelectedLP(bridge)
+    raw = load('transport/joint_selected_source_comparison').RawSelectedLP(bridge)
     require(raw.specification() == raw_source['raw_lp'], 'The132-row raw-prefix certificate matrix')
     used = heavy['previous_prefix_duals_used']
     bank = raw_source['rational_dual_certificates']

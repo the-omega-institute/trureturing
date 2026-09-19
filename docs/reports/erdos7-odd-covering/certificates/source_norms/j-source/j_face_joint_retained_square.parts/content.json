@@ -1,0 +1,180 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-joint-retained-square-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "0b5ec65750a5e7f489f0b5f3bfadfa2d6bc8bf7e2988e974b388e93e5c04ce91",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "5539/1200"
+  },
+  "previous_complete_square_upper": {
+    "kind": "inline",
+    "value": "371/80"
+  },
+  "complete_square_improvement": {
+    "kind": "inline",
+    "value": "13/600"
+  },
+  "complete_factorial_upper": {
+    "kind": "inline",
+    "value": "6353/7200"
+  },
+  "complete_tail_partition": {
+    "kind": "inline",
+    "value": {
+      "surviving_pure_coefficients": [
+        "11/20",
+        "13/30",
+        "1/3",
+        "1/9"
+      ],
+      "raw_cofactor_coefficients": [
+        "1/4",
+        "1/8",
+        "1/12",
+        "3/4",
+        "1/2",
+        "1/3",
+        "1/9"
+      ],
+      "raw_old_linear_cap": "3/4",
+      "raw_old_square_cap": "57/16",
+      "weighted_old_pure_before_halving": {
+        "pure3": "11/360",
+        "pure5": "13/1200",
+        "root5": "7/120",
+        "cell5": "13/360"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "old_old_distinct": "111/800",
+      "old_positive7": "121/720",
+      "positive7_positive7_distinct": "2/5",
+      "distinct_tail_pairs": "5089/7200",
+      "old_diagonal": "53/600",
+      "positive7_diagonal": "3/20",
+      "complete_ordered_tail_square": "5947/3600",
+      "independent_lcm_prefix_counts": 64
+    }
+  },
+  "joint_source_model": {
+    "path": "content/010-joint_source_model.json",
+    "sha256": "060908fc716dc81909855b4bd39211e992a7e92f430fdbffb2dedd536449ec2b",
+    "kind": "value"
+  },
+  "exact_retained_head_dual": {
+    "path": "content/011-exact_retained_head_dual.json",
+    "sha256": "ef5de7b2716026073807d1ffa4847f7c9d145c0e6e4f067f2987dbd0da91cd25",
+    "kind": "value"
+  },
+  "controller_layout": {
+    "kind": "inline",
+    "value": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  },
+  "controller_original_components": {
+    "kind": "inline",
+    "value": {
+      "head_square_endpoint_uppers": [
+        "937/675",
+        "329/225"
+      ],
+      "twice_old_cross": "154/225",
+      "complete_cross_tail_endpoint_uppers": [
+        "33973/10800",
+        "11431/3600"
+      ],
+      "complete_square_endpoint_uppers": [
+        "9793/2160",
+        "371/80"
+      ]
+    }
+  },
+  "controller_complete_uniform_cross_tail": {
+    "kind": "inline",
+    "value": "11431/3600"
+  },
+  "controller_complete_upper": {
+    "kind": "inline",
+    "value": "5539/1200"
+  },
+  "original_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "joint_dual_head_count": {
+    "kind": "inline",
+    "value": 1
+  },
+  "other_complete_head_count": {
+    "kind": "inline",
+    "value": 12499
+  },
+  "other_head_maximum": {
+    "kind": "inline",
+    "value": "16439/3600"
+  },
+  "other_maximizing_witnesses": {
+    "kind": "inline",
+    "value": [
+      {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "components": {
+          "head_square_endpoint_uppers": [
+            "916/675",
+            "619/450"
+          ],
+          "twice_old_cross": "47/90",
+          "complete_cross_tail_endpoint_uppers": [
+            "34381/10800",
+            "3829/1200"
+          ],
+          "complete_square_endpoint_uppers": [
+            "49037/10800",
+            "16439/3600"
+          ]
+        }
+      }
+    ]
+  },
+  "all_complete_head_components_sha256": {
+    "kind": "inline",
+    "value": "f397e264482dfd07c9b6b30f15e64f919a5c54fe244b4486ad6493b98e453611"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both whole actual saturated J faces. One101-column exact rational dual retains raw/source/deletion masses and the source-free H column over the full late-split interval; all12500 original layouts retain complete241 crosses and tails. The new LP is not reduced to theta endpoints. Factorial6353/7200 is inherited from241. No optimization dependency, stronger deletion product assumption, actual-attainment claim, off-face/global52-cost comparison, Lean or unrestricted Erdos7 result."
+  }
+}

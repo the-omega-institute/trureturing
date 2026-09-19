@@ -1,0 +1,70 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-joint-quadratic-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "fa436c5dadfb5bf4660f1018fefc7bec90b17797b556ecc65764730c9b79cf3f",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "model": {
+    "path": "content/004-model.json",
+    "sha256": "7c323baeb77f87ecdfdf23b7eac3791c38fe8e07bfede9ad33fab9ccb6d7ceb7",
+    "kind": "value"
+  },
+  "original_cost_indices": {
+    "kind": "inline",
+    "value": [
+      47,
+      48
+    ]
+  },
+  "quadratic_results": {
+    "path": "content/006-quadratic_results.json",
+    "sha256": "7b8ce0993b58b4e7a00e5495971526a68effe15bd9cfb0469e717f1a16c085e0",
+    "kind": "value"
+  },
+  "uniform_raw_square9_upper": {
+    "kind": "inline",
+    "value": "145684760666673439/37044000000000000"
+  },
+  "complete_tail_distinct_pairs": {
+    "kind": "inline",
+    "value": "5089/7200"
+  },
+  "factorial_head_components_sha256": {
+    "kind": "inline",
+    "value": "dabaadde0eec840290abbc1eebed84078a75f73574887e41dfef519611e9568d"
+  },
+  "rational_duals": {
+    "path": "content/010-rational_duals.json",
+    "sha256": "4ed413bb1be8abddebbc9f99ad6e396d3546fdb1e4901c12778c3eb661290a4a",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 14
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 12264
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 12500000
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original costs47/48 on both entire saturated actual J faces, each with its own independent test. One common876-variable244 source/survivor/deletion LP carries both its retained hinges and the actual Phi5(B) head. The complete241 factorial crosses use an affine upper secant in the same normalized late coordinate; every omitted distinct pair remains in5089/7200. All6250000 containing choices per target use exact whole-theta old-bound pruning and feasible rational duals, retaining all876 columns. Current246 bounds are used only to measure strict same-domain improvement. No identification of independent cost loads, actual LP attainment, off-face/global52-cost comparison, Lean or unrestricted Erdos7 result is asserted."
+  }
+}

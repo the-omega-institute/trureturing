@@ -42,14 +42,14 @@ t_7 <= 4, t_11 <= 7 and t_p <= p−5 for primes p >= 23. These multiplicity
 bounds alone do not give a fresh prime of a specified size or certify
 the square-free premise of Theorem 3.2.
 
-[Report 348](../../docs/reports/erdos7-odd-covering/profile-notes/348-fresh-prime-root-transport-and-two-copy-reduction.md)
+[Report 348](../../docs/reports/erdos7-odd-covering/profile-notes/whole-cover/348-fresh-prime-root-transport-and-two-copy-reduction.md)
 spells out the literal residue transport, the construction's weaker
 prime-flat sufficient premise, and selection of fewer root branches.
 Those extensions are ordinary deductions from the displayed construction,
 not the literal statements of the source theorems or new Lean results.
 No source text or diagrams are vendored by this citation note.
 
-[Report 349](../../docs/reports/erdos7-odd-covering/profile-notes/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)
+[Report 349](../../docs/reports/erdos7-odd-covering/profile-notes/whole-cover/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)
 reconstructs Theorem 4.2, Figures 18–22, with auxiliary closing prime 23.
 The complete power ranges are 1 through 22. A parameterized family
 represents 19,329,428 actual classes, with only modulus 11 repeated

@@ -1,0 +1,56 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-explicit-actual-neighborhood-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "bd1e970a6d7ce27c1aacce6a8f992d725137d9f00b24c6c576d4009b33638cb2",
+    "kind": "value"
+  },
+  "source_pin_count": {
+    "kind": "inline",
+    "value": 215
+  },
+  "dual_price_inventory": {
+    "path": "content/003-dual_price_inventory.json",
+    "sha256": "15b92131df7ca7b48c635c8d22d89a43c4f98b08e07eacf12025148f511afb5b",
+    "kind": "object"
+  },
+  "restoration": {
+    "kind": "inline",
+    "value": {
+      "restored_column_count": 4634,
+      "induction_row_count": 2645,
+      "maximum_column_bound": "17",
+      "sum_column_bounds": "56866/5",
+      "physical_column_count": 12800,
+      "original_column_count": 12941,
+      "objective_category_count": 81,
+      "objective_coefficient_bound": "2821/4",
+      "uniform_restoration_price": "80209493/10",
+      "restoration_price": "1866086460287338944252337/3851791904442532050",
+      "ceiling_restoration_price": 484473,
+      "scope": "Consumes the pinned 306 zero-induction theorem and recomputes its full column-category weighted aggregate."
+    }
+  },
+  "consumer": {
+    "path": "content/005-consumer.json",
+    "sha256": "0ec02b0cd32253ca6049255369b89b4e248ca5d63e7191dd968c0449ea9c2505",
+    "kind": "value"
+  },
+  "active_own_load_expansions": {
+    "path": "content/006-active_own_load_expansions.json",
+    "sha256": "2f88206711d364524dc6b280b9db4f94921113a537bcafd536e53ffaeeb9fb11",
+    "kind": "value"
+  },
+  "explicit_neighborhood": {
+    "path": "content/007-explicit_neighborhood.json",
+    "sha256": "5d307e3c78d8c80932266b6f061975e8e08ad82cbeae7826da8ddf70fdb93583",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact arithmetic certificate with original codec and original independent own-load labels. The source transport proofs are ordinary mathematical inputs; no Lean verification or unrestricted covering theorem is asserted."
+  }
+}

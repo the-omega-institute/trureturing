@@ -1,4 +1,4 @@
-[Index](../marked_head_profile.md) · [Whole J face](130-the-whole-j-face-forces-source-anti-alignment.md) · [Surplus transport](132-the-whole-j-face-has-a-quantitative-surplus-neighborhood.md) · [Source packing](116-signed-face-duals-transport-one-shared-finite-source.md) · [Whole-face concentration](71-global-j-k-control-faces-and-exact-escape-gaps.md)
+[Index](../marked_head_profile.md) · [Whole J face](j-source/130-the-whole-j-face-forces-source-anti-alignment.md) · [Surplus transport](j-source/132-the-whole-j-face-has-a-quantitative-surplus-neighborhood.md) · [Source packing](116-signed-face-duals-transport-one-shared-finite-source.md) · [Whole-face concentration](71-global-j-k-control-faces-and-exact-escape-gaps.md)
 
 # A whole J source neighborhood has a complete labelwise bound
 

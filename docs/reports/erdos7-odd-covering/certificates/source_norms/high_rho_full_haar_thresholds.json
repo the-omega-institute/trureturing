@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "5134f106ab15859d177fdfdff534192db68f6005ea2599822a76f759efde0cdd",
+  "logical_sha256": "a1074a5142e539c33ab85cdac028e494ee713aa3f015e61fb28c98f720fb33f6",
   "parts_directory": "high_rho_full_haar_thresholds.parts",
   "root": {
     "path": "content.json",
-    "sha256": "e515f57e03f79b5b69b01eb6cb39952cadc84a2663c59b2211bd7d39208c4213",
+    "sha256": "0b39ad409a54bd5b0ee826bea96e99832d43ee6c3bb042c9ed5be4cd10bc7cb0",
     "kind": "object"
   }
 }

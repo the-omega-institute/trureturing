@@ -1,0 +1,123 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-joint-survival-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "d9ba65e23c06b936bf88bbafd5ad5ba729d5566f88032067a8d875904079bc67",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "model": {
+    "path": "content/006-model.json",
+    "sha256": "7c323baeb77f87ecdfdf23b7eac3791c38fe8e07bfede9ad33fab9ccb6d7ceb7",
+    "kind": "value"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "results": {
+    "path": "content/008-results.json",
+    "sha256": "851a9b8f1a302375fb2673e51cc39d203e5db677f103030d646bfccc5a25d8b7",
+    "kind": "value"
+  },
+  "rational_duals": {
+    "path": "content/009-rational_duals.json",
+    "sha256": "17ab0f29edcd08c3c6a0d317c2f49dd76d9f45246727c95e8b7fb08edc56383c",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 15
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 13140
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 25000000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 56
+  },
+  "inherited_AP13_upper": {
+    "kind": "inline",
+    "value": "22263628571451221/113400000000000000"
+  },
+  "complete_count_tail_upper": {
+    "kind": "inline",
+    "value": "277/4392300"
+  },
+  "complete_AP11_sum_upper": {
+    "kind": "inline",
+    "value": "4004565709269940526273/17433038700000000000000"
+  },
+  "previous_AP11_sum_upper": {
+    "kind": "inline",
+    "value": "337963886/1452753225"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "41223974541103988888519/488125083600000000000000"
+  },
+  "previous_denominator_same_AP13": {
+    "kind": "inline",
+    "value": "41019970850183750993611/488125083600000000000000"
+  },
+  "complete_denominator_improvement": {
+    "kind": "inline",
+    "value": "51000922730059473727/122031270900000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "All four complete original AP11 blocks on both entire actual saturated J faces. The unchanged244 joint876-variable source model retains all selected original labels, ten marked residual constraints, one common late split and complete exponent tails. Each block covers6250000 containing choices. The complete survival denominator uses the existing244 AP13, exact mass3/20, mean16/25 and the whole AP count tail. No new52-cost numerator/global comparison, off-face extension, actual LP attainment, Lean verification or unrestricted Erdos7 resolution is asserted."
+  }
+}

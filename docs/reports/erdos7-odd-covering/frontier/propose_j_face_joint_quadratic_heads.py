@@ -23,7 +23,7 @@ def main():
     args = parser.parse_args()
     if args.dependency_directory:
         sys.path.insert(0,str(args.dependency_directory))
-    checker = load('j_quadratic_checker',args.base/'frontier/j_face_joint_quadratic_heads.py')
+    checker = load('j_quadratic_checker',args.base/'frontier/j-source/j_face_joint_quadratic_heads.py')
     proposals = load('j_quadratic_solver',args.base/'frontier/propose_j_face_joint_selected_heads.py')
     solver = [None]
 

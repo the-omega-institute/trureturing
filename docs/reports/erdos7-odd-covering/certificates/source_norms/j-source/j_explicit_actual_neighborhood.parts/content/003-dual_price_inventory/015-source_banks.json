@@ -1,0 +1,427 @@
+[
+  {
+    "dual_count": 637,
+    "nonzero_price_entries": 393268,
+    "maximum_L1": "41765554854286188629/28350000000000000",
+    "ceiling_maximum_L1": 1474,
+    "maximizing_key": "61b3ac7263269b35a33565cdb726200f85da1bfae1009f47669c32884d0bb073",
+    "distinct_price_rationals": 20957,
+    "source": "certificates/source_norms/j-source/j_face_exact_retained_factorial_head.json",
+    "sha256": "1738b1fe9276a0b3014bc783fdf210804c3f3c108a19af27497fa94aee494f90",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 505,
+    "nonzero_price_entries": 538617,
+    "maximum_L1": "54824584040817287629/14175000000000000",
+    "ceiling_maximum_L1": 3868,
+    "maximizing_key": "aeeca8a724f5898fbd3f8879254b5dc800bec61a5f360511eb62bf11b3adb706",
+    "distinct_price_rationals": 29378,
+    "source": "certificates/source_norms/j-source/j_face_exact_seven_retained_factorial_head.json",
+    "sha256": "fe8379ccd801151159e9c4a5123b9d0632e8a78b33bca664b58a2d7c3a5c9076",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      6531,
+      11211,
+      19
+    ],
+    "rows_sha256": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  },
+  {
+    "dual_count": 2208,
+    "nonzero_price_entries": 6380911,
+    "maximum_L1": "1181573098843806904397/540225000000000000",
+    "ceiling_maximum_L1": 2188,
+    "maximizing_key": "4acb40532b7edd2854dd95329db72aaa45a9bcda55a782d985e449efc7b4a19e",
+    "distinct_price_rationals": 74466,
+    "source": "certificates/source_norms/j-source/j_face_four_pure_hinge_heads.json",
+    "sha256": "47d234129ea10544460ed95ea172d0d566166788786a6e5325d2081c1166f05c",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      6531,
+      11211,
+      19
+    ],
+    "rows_sha256": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  },
+  {
+    "dual_count": 4850,
+    "nonzero_price_entries": 4911418,
+    "maximum_L1": "8524891223012567739823/992250000000000000",
+    "ceiling_maximum_L1": 8592,
+    "maximizing_key": "6f9de1788b7c6891ca6e3e1a86e18d7ac83237468ff944a653fb68a5f5bc2aa5",
+    "distinct_price_rationals": 41732,
+    "source": "certificates/source_norms/j-source/j_face_generalized_factorial_heads.json",
+    "sha256": "95df26743561df015c6a50023521261aafdcdabc25b4ffe2101c5cbf6e054623",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 4712,
+    "nonzero_price_entries": 4075001,
+    "maximum_L1": "37555155068721662175641/48620250000000000000",
+    "ceiling_maximum_L1": 773,
+    "maximizing_key": "611ae2e0f215ec013a32b1eb7e6b2eb91e0568c686b49234f83af0214e3b4837",
+    "distinct_price_rationals": 111131,
+    "source": "certificates/source_norms/j-source/j_face_higher_pure_hinge_heads.json",
+    "sha256": "18bf323ed3c28a49f3cf430f438a03ae5168007dde754b6cf9e6579ddec5ee49",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      6531,
+      11211,
+      19
+    ],
+    "rows_sha256": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  },
+  {
+    "dual_count": 1615,
+    "nonzero_price_entries": 2308413,
+    "maximum_L1": "1024841195019825608880341011/131888381625000000000000",
+    "ceiling_maximum_L1": 7771,
+    "maximizing_key": "5541be11609840f708df9a6ca0cd79f5e873b71f3a0ed4836ed157e364b96f27",
+    "distinct_price_rationals": 69688,
+    "source": "certificates/source_norms/j-source/j_face_joint_factorial_cross_heads.json",
+    "sha256": "ed567355b0475ab7f5712dca3fda30866638452efaab1bfbcadab5f3e7f33fdb",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 1359,
+    "nonzero_price_entries": 1856301,
+    "maximum_L1": "2635222511750003950721/165375000000000000",
+    "ceiling_maximum_L1": 15935,
+    "maximizing_key": "406ebf23e31162f78efadd3827f6c89695a7104e31d6ff5efac3e3a70e39d538",
+    "distinct_price_rationals": 210913,
+    "source": "certificates/source_norms/j-source/j_face_joint_pair_factorial_heads.json",
+    "sha256": "503746ba3ecb18cce6255c74414a8e416e3331edc1fd4b8befff283b3faec9df",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 916,
+    "nonzero_price_entries": 13416040,
+    "maximum_L1": "3279099697888828372981/555660000000000000",
+    "ceiling_maximum_L1": 5902,
+    "maximizing_key": "652b4caf52a6b92bbb9bc0b9975c64a43e8ff1c1b38a9196f0d522f0e9717e8a",
+    "distinct_price_rationals": 36760,
+    "source": "certificates/source_norms/j-source/j_face_joint_positive175189_survival_heads.json",
+    "sha256": "6a8c5e880ef7026ec231a6ddd57d5c678b9a1e9244ce0bd0acc1492651e26c11",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      32151,
+      56133,
+      22
+    ],
+    "rows_sha256": "4da5961945a50079d14a49fc0017409abeba79624086971f2c0747d63e8e494d"
+  },
+  {
+    "dual_count": 14,
+    "nonzero_price_entries": 4222,
+    "maximum_L1": "6292353945666732420583/2315250000000000000",
+    "ceiling_maximum_L1": 2718,
+    "maximizing_key": "a8502d2fc701a715377b87e73335a7670ba8e7181930b03b31cfdd3ddf610a55",
+    "distinct_price_rationals": 546,
+    "source": "certificates/source_norms/j-source/j_face_joint_quadratic_heads.json",
+    "sha256": "f01396b853d869c86fb3e615e88bf348d4c21a21c2cda07ac31793d3ba1f9345",
+    "bank_field": "rational_duals",
+    "dimensions": [
+      876,
+      587,
+      16
+    ],
+    "rows_sha256": "67a917e9001e85289eb2e26cfb974a851fce0810e9cc4970885e5b705be0e5ed"
+  },
+  {
+    "dual_count": 1,
+    "nonzero_price_entries": 35,
+    "maximum_L1": "30709/135",
+    "ceiling_maximum_L1": 228,
+    "maximizing_key": "exact_retained_head_dual",
+    "distinct_price_rationals": 15,
+    "source": "certificates/source_norms/j-source/j_face_joint_retained_square.json",
+    "sha256": "f99a644a80049cd10278e27000b486927a96a0bf9c22c08c9da4f6c9a8081c4d",
+    "bank_field": "exact_retained_head_dual",
+    "dimensions": [
+      101,
+      66,
+      19
+    ],
+    "rows_sha256": null
+  },
+  {
+    "dual_count": 20,
+    "nonzero_price_entries": 5543,
+    "maximum_L1": "812500340527193183022993169029550951/289004761330203732876562500000000",
+    "ceiling_maximum_L1": 2812,
+    "maximizing_key": "ce5a39e99fdff479e6bcf58840ac6d2fdc30ca4825b304f48b537d488a7e4448",
+    "distinct_price_rationals": 1514,
+    "source": "certificates/source_norms/j-source/j_face_joint_selected_heads.json",
+    "sha256": "434cd2865b3a61e19ecba395787420bc45d5c4b1da6a6831e93675109ef07a97",
+    "bank_field": "rational_duals",
+    "dimensions": [
+      876,
+      587,
+      16
+    ],
+    "rows_sha256": "67a917e9001e85289eb2e26cfb974a851fce0810e9cc4970885e5b705be0e5ed"
+  },
+  {
+    "dual_count": 15,
+    "nonzero_price_entries": 5406,
+    "maximum_L1": "1923411713487248781481/13451418750000000000",
+    "ceiling_maximum_L1": 143,
+    "maximizing_key": "6c33e70dcb4ec5ecc98c03577ff231a364ce203a2d4df32f5e3b187568fc5fe9",
+    "distinct_price_rationals": 805,
+    "source": "certificates/source_norms/j-source/j_face_joint_survival_heads.json",
+    "sha256": "f92cd5001e5fdbd3d8ede07e5ad7221790f7d393253aa9c6f455454ff9942bbc",
+    "bank_field": "rational_duals",
+    "dimensions": [
+      876,
+      587,
+      16
+    ],
+    "rows_sha256": "67a917e9001e85289eb2e26cfb974a851fce0810e9cc4970885e5b705be0e5ed"
+  },
+  {
+    "dual_count": 1022,
+    "nonzero_price_entries": 1270829,
+    "maximum_L1": "5149748517904392603043/992250000000000000",
+    "ceiling_maximum_L1": 5190,
+    "maximizing_key": "81622bb7d6e6e63588b04f6dcbc0349297ffef6c2d0b2fbd7103371e140571ce",
+    "distinct_price_rationals": 67138,
+    "source": "certificates/source_norms/j-source/j_face_pure_low_factorial_heads.json",
+    "sha256": "dc38003f46c3d5323fecb935267593078a18873db226dc5f358bd14bc71bc384",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 1,
+    "nonzero_price_entries": 35,
+    "maximum_L1": "30709/135",
+    "ceiling_maximum_L1": 228,
+    "maximizing_key": "exact_retained_head_dual",
+    "distinct_price_rationals": 15,
+    "source": "certificates/source_norms/j-source/j_face_pure_path_square.json",
+    "sha256": "d6e279c7a28222d321fffb4fd492c92d3e0efb942b3f35cb7d1ae3f38e81fc4e",
+    "bank_field": "exact_retained_head_dual",
+    "dimensions": [
+      101,
+      66,
+      19
+    ],
+    "rows_sha256": null
+  },
+  {
+    "dual_count": 344,
+    "nonzero_price_entries": 726367,
+    "maximum_L1": "10113724078099165044568241691963620801/522353952700099269750000000000000",
+    "ceiling_maximum_L1": 19362,
+    "maximizing_key": "0a8ee61e0996cc0e7300b2c90367fe2adeb8922e1c7812e6f8d406daa7a649ac",
+    "distinct_price_rationals": 81549,
+    "source": "certificates/source_norms/j-source/j_face_retained135125_heads.json",
+    "sha256": "4a8eb666d29a6d56c8e33100d283e192d52dba526ecae4e5c631ce83e88bdd86",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 132,
+    "nonzero_price_entries": 1122883,
+    "maximum_L1": "422791311713033031955164949/101692725750000000000000",
+    "ceiling_maximum_L1": 4158,
+    "maximizing_key": "4b90c0c27126007ca3918b1644c84ecebcd7f5a4335b4635eb9892164aa82244",
+    "distinct_price_rationals": 61942,
+    "source": "certificates/source_norms/j-source/j_face_retained375_ap11_heads.json",
+    "sha256": "97e17693e88033c9c6c932b445a0a85dcab8c70dbd05dc46df245a7d0a3c96b8",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      12941,
+      30454,
+      20
+    ],
+    "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0"
+  },
+  {
+    "dual_count": 981,
+    "nonzero_price_entries": 6166362,
+    "maximum_L1": "375573528414630698967865160948169578054701/2913167994208453627395750000000000000",
+    "ceiling_maximum_L1": 128923,
+    "maximizing_key": "0e8313c9777c1d010ca235ea917bd284f10566f22a2019d92a733595372fe6a0",
+    "distinct_price_rationals": 295009,
+    "source": "certificates/source_norms/j-source/j_face_retained375_heavy_heads.json",
+    "sha256": "066de548c01bc9809e8c528f2f2eb9fdeac44412b8ba9842d2ce2f804c69f766",
+    "bank_field": "proof_data/encoded_covering_duals",
+    "dimensions": [
+      12941,
+      30454,
+      20
+    ],
+    "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0"
+  },
+  {
+    "dual_count": 50,
+    "nonzero_price_entries": 406599,
+    "maximum_L1": "47304088126262314010962682197159391997481/485527999034742271232625000000000000",
+    "ceiling_maximum_L1": 97429,
+    "maximizing_key": "c5f4c59c920c56190a5515b83f6a5048a8b6b02153d738567a03dd70ef0bd28c",
+    "distinct_price_rationals": 21798,
+    "source": "certificates/source_norms/j-source/j_face_retained375_heavy_heads.json",
+    "sha256": "066de548c01bc9809e8c528f2f2eb9fdeac44412b8ba9842d2ce2f804c69f766",
+    "bank_field": "proof_data/encoded_prefix_seed_duals",
+    "dimensions": [
+      12941,
+      30454,
+      20
+    ],
+    "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0"
+  },
+  {
+    "dual_count": 104,
+    "nonzero_price_entries": 751291,
+    "maximum_L1": "34989766753190394324469/6945750000000000000",
+    "ceiling_maximum_L1": 5038,
+    "maximizing_key": "f49176f6aa54e42985d6491e29210dde87a58fd349e72e3b6825bf6de9ddc4bc",
+    "distinct_price_rationals": 21253,
+    "source": "certificates/source_norms/j-source/j_face_retained375_survival_heads.json",
+    "sha256": "1aa84f59e967f07b290343f0f6ded7ac4df7041068a15d372f88c6ffb7e501ce",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      12941,
+      30454,
+      20
+    ],
+    "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0"
+  },
+  {
+    "dual_count": 50,
+    "nonzero_price_entries": 69434,
+    "maximum_L1": "1870361494171749202297/1984500000000000000",
+    "ceiling_maximum_L1": 943,
+    "maximizing_key": "7b874d14a701c6d0825d98dab1f7e8ca0f8b222553236cf505366affe96c43b7",
+    "distinct_price_rationals": 2040,
+    "source": "certificates/source_norms/j-source/j_face_second_cofactor_survival_heads.json",
+    "sha256": "25ec9b985f8efe62f43651bf03f916ab4879874c244a1ff4a2b13281bd4c4e7b",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 630,
+    "nonzero_price_entries": 1331135,
+    "maximum_L1": "2684244956499869075689638545215707625987/138722285438497791780750000000000000",
+    "ceiling_maximum_L1": 19350,
+    "maximizing_key": "12f3f45bf4d4961607fa823d466f391621fe47785275fdd58c350c9799a07c4b",
+    "distinct_price_rationals": 135446,
+    "source": "certificates/source_norms/j-source/j_face_second_depth_retained_heads.json",
+    "sha256": "6f8e8a51ba0a93a43e92d93ae78ed3bdc12130e45bf65ada8a42b961113365c3",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 58,
+    "nonzero_price_entries": 108995,
+    "maximum_L1": "15501901747037343496945333/16948787625000000000000",
+    "ceiling_maximum_L1": 915,
+    "maximizing_key": "245787498e639abc944868ab80ee258c4f3eba3fa2181e3e4a8b1cfe85710483",
+    "distinct_price_rationals": 9241,
+    "source": "certificates/source_norms/j-source/j_face_second_depth_survival_heads.json",
+    "sha256": "9f27cf25cfd8bfa17fdf4222a742c2f6cf3395ba5a6351f7a8a416985198cf32",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 895,
+    "nonzero_price_entries": 1727357,
+    "maximum_L1": "1201743321377651026798355771/145077219787500000000000",
+    "ceiling_maximum_L1": 8284,
+    "maximizing_key": "07205e7f032d0a823f480572bf9c1269c9645e61d92d91db174e186b622710bc",
+    "distinct_price_rationals": 81039,
+    "source": "certificates/source_norms/j-source/j_face_shifted_factorial_quadratic_heads.json",
+    "sha256": "a2005948bba60c68937a16c5d098c250384db3cb4762eb0d68151d6a9d5c2236",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      3306,
+      6354,
+      18
+    ],
+    "rows_sha256": "835e4518f33d0acb6ef02f8a045d1610785a9bb04ed13de156d1192d618d706e"
+  },
+  {
+    "dual_count": 2628,
+    "nonzero_price_entries": 5530613,
+    "maximum_L1": "24938453673500016312889/661500000000000000",
+    "ceiling_maximum_L1": 37700,
+    "maximizing_key": "985cbc98a600cb745735c26b058352ff870935c9e2dbb9cb58cb5b672bc540e6",
+    "distinct_price_rationals": 378874,
+    "source": "certificates/source_norms/j-source/j_face_triple_pair_factorial_heads.json",
+    "sha256": "cec974fc637ee57304f1b612c2a58a311ef677eb5a227279bf145279967cf5d1",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      6531,
+      11211,
+      19
+    ],
+    "rows_sha256": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  },
+  {
+    "dual_count": 134,
+    "nonzero_price_entries": 437397,
+    "maximum_L1": "4331247056452228979446980667963962832663/97105599806948454246525000000000000",
+    "ceiling_maximum_L1": 44604,
+    "maximizing_key": "9b950bd7ab4d0e98517dcb290c1cdc18c559b8bb48bccf130e40434be63dc5f3",
+    "distinct_price_rationals": 49709,
+    "source": "certificates/source_norms/j-source/j_face_triple_second_depth_heads.json",
+    "sha256": "28efda83f17bffed4a75f49448820c118ee300a4515f807aa4fd677bc3ea8743",
+    "bank_field": "encoded_rational_duals",
+    "dimensions": [
+      6531,
+      11211,
+      19
+    ],
+    "rows_sha256": "9f571ed4977b916e2a0823e5e7262eb333717301ac85a30f6c96671ebc9465ce"
+  }
+]

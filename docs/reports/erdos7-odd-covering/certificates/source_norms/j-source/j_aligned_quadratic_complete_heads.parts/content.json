@@ -1,0 +1,174 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-quadratic-complete-heads-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/j-source/j_aligned_quadratic_complete_heads.py": "7455bcc630a59c1f6e9555e5aad4e3fb75d28e8633059901cbe796d0f68a2a18",
+      "frontier/j-source/j_aligned_quadratic_sharp_source.py": "33f9cd71b0843265a6c5097eab35d0f0e1bfbe55bbaa4606f98a4449dc85db66",
+      "frontier/j-source/j_aligned_retained375_source.py": "dd641fc921b89cb5d0e88ee0617d83ec832e68556cf4afec52276e76e891f547",
+      "frontier/j-source/j_aligned_joint_selected_heads.py": "74829433cedc2fb9b6ed33dd5df652f96205718cfb555ce8ddacaa17427f1868",
+      "frontier/j-source/j_face_shared_square_factorial.py": "a1c0eadad11cc55fb6faea96942465a89ade2bff95394f01ed47e83bc0bfd99d",
+      "frontier/j-source/j_face_coherent_positive7_pairs.py": "f84967f769452ee854be277694a28ce3fd9642cd6f01153e4888008dcb6e7dbd",
+      "frontier/j-source/j_face_raw_prime_path_pairs.py": "36c4aa22fd8f6f4f2bee83830732b4204c7ff6cbb3752afd4c7651ebac136eb6",
+      "certificates/source_norms/j-source/j_aligned_raw_prime_path_moments.json": "4c9fea11c5e60db35dfc964fba642a7f8eaf3a04bccadaaabdc9606ce1ada6ed",
+      "certificates/source_norms/j-source/j_aligned_retained375_heavy553_heads.json": "5da26bf0616401a8fcc3c032e03b28dcab3a36f540d9d53b3217dd6be7d73313",
+      "certificates/source_norms/j-source/j_face_retained375_heavy_heads.json": "066de548c01bc9809e8c528f2f2eb9fdeac44412b8ba9842d2ce2f804c69f766",
+      "certificates/source_norms/j-source/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "c9fe551e579b5d9e669efb961903244521da90ba18ef26c6ebb19c3308f6a775",
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/j-source/j_face_coupled_seven_heads.py": "740d2656fc47a056c4f8ea2ca13e024784b96794ac364b21a91c89024cfc9587",
+      "frontier/k_face_common_seven_hinges.py": "8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97",
+      "frontier/transport/joint_selected_source_comparison.py": "ab18c0c4ac40af60f7c974393d82738ec4d762ccefa7f5efe61cf4b963b3673c",
+      "frontier/transport/retained_deletion_heavy_comparison.py": "3283d6a9fbd0863ab2c8a22042b2b4e2bec8feeff24f3bf94a86e77e0a86ce1c",
+      "frontier/j-source/j_face_joint_selected_heads.py": "4b244d4008d7cfe0025888192b8ed8a412a8f51509133d0b04208bcd6b47ad2c",
+      "profile-notes/j-source/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "d4e466c76a4a2909bbb01aa4cb372519477895213048764618d1625c6d2cac4b",
+      "certificates/source_norms/j-source/j_aligned_own_test_interface.json": "509d6b41755c98f0b4e44e2a545516a602508bad882ddf8433482f372c1e5a5e",
+      "profile-notes/j-source/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "59c23d8567f712785827d9bc75e73541c2a3bcbb17ea2291ad2c20ed4efc4785",
+      "certificates/source_norms/j-source/j_aligned_joint_selected_heads.json": "8d5f3fc0f3d8fbbf0a5115582912ec97239dd4903d69226b6a084ee900db3fc7",
+      "frontier/j-source/j_face_joint_retained_square.py": "201c771c42af3f979eb6271152285ca2c250430a42de3ea7122d0f5c383b58a8",
+      "frontier/complete_off_face_factorial_tail.py": "8447e1cd50d6452a881413067858188344d22631c7b73b74734b3006a244d047"
+    }
+  },
+  "model": {
+    "path": "content/002-model.json",
+    "sha256": "8becdf18c4066fd303a3bb190f85dd317d154bf3fe04834b880922876ebf1f2b",
+    "kind": "value"
+  },
+  "actual_raw_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "actual_survivor_mass": {
+    "kind": "inline",
+    "value": "413/2700"
+  },
+  "raw_moment_interface": {
+    "kind": "inline",
+    "value": {
+      "POO": "111/800",
+      "POZ": "121/720",
+      "PZZ": "3893/10800"
+    }
+  },
+  "retained_old_labels": {
+    "kind": "inline",
+    "value": [
+      25,
+      27,
+      75,
+      81,
+      135,
+      125,
+      225,
+      375
+    ]
+  },
+  "old_old_assigned_payments": {
+    "path": "content/007-old_old_assigned_payments.json",
+    "sha256": "0a7e4610669d1fe7b069f0ce7407fe94ca35645ac8b46e907808ef978937924f",
+    "kind": "value"
+  },
+  "old_positive7_assigned_payments": {
+    "path": "content/008-old_positive7_assigned_payments.json",
+    "sha256": "15dfe91250f1fb93903deb48993dcc8fc76af80496c28efcdde020d874a8ce5c",
+    "kind": "value"
+  },
+  "remaining_pair_tail_before_conditional_PZZ": {
+    "kind": "inline",
+    "value": "8458763/15876000"
+  },
+  "remaining_zero7_cross_weights": {
+    "kind": "inline",
+    "value": [
+      "1/162",
+      "1/500",
+      "1/500",
+      "1/100",
+      "7/1080"
+    ]
+  },
+  "remaining_positive7_cross_weights": {
+    "kind": "inline",
+    "value": [
+      "1/245",
+      "1/245",
+      "1/245",
+      "1/245",
+      "1/5"
+    ]
+  },
+  "conditional_positive7": {
+    "kind": "inline",
+    "value": {
+      "source314_sha256": "4c9fea11c5e60db35dfc964fba642a7f8eaf3a04bccadaaabdc9606ce1ada6ed",
+      "source314_endpoint_sha256": "f83d33dfc6053fa46516dc626211cd2c429ae7b7b2d5c252a8013faed0098bfb",
+      "weights": [
+        [
+          "6/35",
+          "1/70"
+        ],
+        [
+          "6/245",
+          "1/70"
+        ]
+      ],
+      "remaining_depth_weights": [
+        "1/245",
+        "1/210"
+      ],
+      "complete_remaining_depth_upper": "1357/66150",
+      "first_profile_count": 500,
+      "second_profile_count": 500,
+      "conditional_table_sha256": "74ee09cb31a955bc65eb30c0ad027b7df77967d2a9413908b4631e22c703b041"
+    }
+  },
+  "zero_induction": {
+    "kind": "inline",
+    "value": {
+      "induction_rows": 2645,
+      "certified_zero_columns": 4634,
+      "remaining_columns": 8307,
+      "new_explicit_E5_zero_columns": [
+        851,
+        852,
+        854,
+        856,
+        857,
+        859,
+        864,
+        867,
+        869,
+        872,
+        874
+      ]
+    }
+  },
+  "results": {
+    "path": "content/014-results.json",
+    "sha256": "0456b96dd113d770bed76fca7b63763f6850b1966af18405cbf3f2bbc9e69c24",
+    "kind": "array"
+  },
+  "original_choices_per_observation": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 1695
+  },
+  "full_rational_column_checks": {
+    "kind": "inline",
+    "value": 23643207
+  },
+  "encoded_rational_duals": {
+    "path": "content/018-encoded_rational_duals.json",
+    "sha256": "089357839353cda611698b97153717f5313b12417684e4e82d8f0c946fa12beb",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Six independent original whole quadratic observations on the actual aligned equality source. All original own heads and first/second positive-seven profiles, all retained135/125/225/375 states and every exponent/cofactor tail remain. Final source covers preserve each own load;their separate maxima need not share an optimizer. No source realization of LP maxima, neighborhood,403 comparison or unrestricted conclusion is claimed."
+  }
+}
