@@ -45,14 +45,18 @@ internal sealed class WuPyramidalComplementDocument : IScribeDocumentDefinition
                     + "cube-root index, locates the answer "
                     + "strictly between consecutive pyramidal values in all three branches, "
                     + "and counts exactly n-1 complement values below it.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-pyramidal-complement-conjecture-one"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("wu-pyramidal-" + id),
         DeclarationHandle.Create(Prefix + DeclarationName(id)),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static string DeclarationName(string id) => id switch
     {

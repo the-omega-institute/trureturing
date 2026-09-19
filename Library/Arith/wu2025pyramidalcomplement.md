@@ -61,3 +61,15 @@ not verified. The search is not exhaustive and establishes neither worldwide
 novelty nor priority. An earlier complete published resolution would supersede
 the open-problem assessment without affecting the formal theorem's kernel
 validity.
+
+## Repository settlement
+
+The repository proves the full source statement for every `k >= 9` and
+`n >= 1` as
+`D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one`. The theorem's frozen
+`sourceStatementId` is
+`sha256:7b0c4f46be19f41459abfe30393dba3916c440231d0e079d0e55b3cd949dcf89`;
+its containing module is frozen at
+`sha256:627b09b5bbcd81cb4f97b0496c330457ceb734fb6810d90291ff360ba64cb6d7`.
+This formal settlement does not strengthen the bounded novelty or priority
+claim above.

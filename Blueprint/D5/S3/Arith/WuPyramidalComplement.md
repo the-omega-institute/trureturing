@@ -82,6 +82,10 @@ $$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; 9 \le k \Rightarrow \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu-pyramidal-complement-conjecture-one` (proved) by `D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu-pyramidal-complement-conjecture-one","declaration_gid":"D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chai Wah Wu (2025). *Algorithms for Complementary Sequences*. DOI: [10.5281/zenodo.17535229](https://doi.org/10.5281/zenodo.17535229). URL: <https://math.colgate.edu/~integers/z95/z95.pdf>.
@@ -99,5 +103,4 @@ Let h be the floor of the real cube root of 6n/(k-2). For every k at least nine 
 - Truth anchor: `D5/S3/Arith/WuPyramidalComplement.pyramidal`
 - Truth anchor: `D5/S3/Arith/WuPyramidalComplement.upperThreshold`
 - Truth anchor: `D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one`
-- Dependency: [D5/S3/ConceptDynamics/InformationEscape/EscapeRecord](../ConceptDynamics/InformationEscape/EscapeRecord.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](../ConceptDynamics/InformationEscape/RegistrationTemplates.md)

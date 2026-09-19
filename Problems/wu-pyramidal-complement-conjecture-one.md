@@ -41,11 +41,13 @@ but leaves the uniform `k >= 9`, `n >= 1` statement as Conjecture 1. The
 bounded literature and code search recorded in the linked Library note found
 no complete earlier resolution in the searched scope. OpenAlex and Semantic
 Scholar citation graphs were unavailable because both returned HTTP 429, so
-the gap assessment is not exhaustive.
+the gap assessment is not exhaustive. Issue #8719 preregistered this exact
+all-parameter statement and those literature limits before the proof was
+implemented.
 
 ## Route
 
-Use the integral extension
+The preregistered proof route used the integral extension
 `P_k(m)=(k-2) choose(m+1,3)+choose(m+1,2)`, with `P_k(0)=0` only for counting.
 Its consecutive difference is positive. Let
 `H=nthRoot(3,(6n)/(k-2))` and prove that `H` is exactly the printed real-floor
@@ -76,13 +78,20 @@ the formula and proves the exact type
 uses `Nat.nth (complement k) (n-1)`, the literal real-floor cube root, the
 ordered inclusive thresholds, and the three actual branch codes. The proof
 has no `sorry` and its axiom closure is
-`[propext, Classical.choice, Quot.sound]`.
+`[propext, Classical.choice, Quot.sound]`. The exact frozen declaration is
+`D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one`, with
+`sourceStatementId`
+`sha256:7b0c4f46be19f41459abfe30393dba3916c440231d0e079d0e55b3cd949dcf89`;
+the containing module is frozen at
+`sha256:627b09b5bbcd81cb4f97b0496c330457ceb734fb6810d90291ff360ba64cb6d7`.
+The Scribe theorem node records a typed `OpenProblemResolutionClaim` with
+resolution kind `Proved` for this dossier.
 
 ## Triage
 
 `theorem`. The public theorem has `proof_shape: content`; its conclusion is
 produced by a new root-equivalence, interval, and exact-rank argument rather
-than by instantiating a prior result. The intended admission basis is
+than by instantiating a prior result. The admission basis is
 `open-problem-resolution`. The result is unbounded symbolic mathematics, so
 its computational utility classification is `none`.
 
