@@ -827,3 +827,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Singleton cofactor ideals and forced colors in actual source matchings](profile-notes/364-singleton-cofactor-ideal-and-forced-colors.md)
 - [Coloring literature, fixed-source reconfiguration and complete AP repair choices](profile-notes/365-coloring-literature-and-reconfiguration-interface.md)
 - [Complete shallow-tail coverage and the actual source mean](profile-notes/366-shallow-tail-truncation-on-the-actual-source.md)
+- [Actual prime-parent eligibility and the limit of minimizing height](profile-notes/367-prime-parent-eligibility-and-height-ties.md)
+- [Joint source selection can require strictly greater height](profile-notes/368-joint-selection-can-require-extra-height.md)

@@ -1,0 +1,48 @@
+**定理 137.11（共同谱上界内的未来唯一性）。** 设 $\Lambda\ge0$ 且
+$$
+H_r\succeq0,\qquad 0\preceq S_r\preceq\Lambda H_r.
+$$
+取定理137.2的规范实现，故 $0\preceq C\preceq\Lambda I$。给定前缀在全部满足 $0\preceq\widetilde C\preceq\Lambda I$ 的有限维实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C+\ker(\Lambda I-C).}
+\tag{137.21}
+$$
+
+**证明。** 若 $\Lambda=0$，所有允许演化均为零，全部正阶矩为零；规范 $C=0$ 使式(137.21)也成立。以下设 $\Lambda>0$。对引理137.7的块扩张，正性已给 $D\ker C=0$。另有
+$$
+\Lambda I-\widetilde C
+=\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda I-A\end{pmatrix}
+\succeq0.
+$$
+将同一零二次型论证用于此算子，得到 $D\ker(\Lambda I-C)=0$。若式(137.21)成立，则 $D=0$，全部未来等于规范未来。
+
+反过来，若式(137.21)失败，取非零 $D_0:E\to\mathbb R$ 消灭其右侧子空间。令
+$$
+\alpha=D_0C^\dagger D_0^*\ge0,\qquad
+\beta=D_0(\Lambda I-C)^\dagger D_0^*\ge0,
+$$
+将一维算子认作实数，并选
+$$
+\epsilon^2=\frac{\Lambda}{2(1+\alpha+\beta)},\qquad
+D=\epsilon D_0,\qquad A=\Lambda/2.
+$$
+于是
+$$
+DC^\dagger D^*\le\Lambda/2,\qquad
+D(\Lambda I-C)^\dagger D^*\le\Lambda/2.
+$$
+对任意 $x\in E,y\in\mathbb R$，利用 $D$ 消灭两个端点核，有
+$$
+\begin{aligned}
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+&=\|C^{1/2}x+C^{\dagger/2}D^*y\|^2
+ +(A-DC^\dagger D^*)y^2\ge0,\\
+\left\langle(x,y),
+\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda-A\end{pmatrix}(x,y)\right\rangle
+&=\|(\Lambda I-C)^{1/2}x-(\Lambda I-C)^{\dagger/2}D^*y\|^2\\
+&\quad+(\Lambda-A-D(\Lambda I-C)^\dagger D^*)y^2\ge0.
+\end{aligned}
+$$
+故 $0\preceq\widetilde C\preceq\Lambda I$。又 $D|_L=0$，该模型保持全部已知矩；由于 $E=L+e_r(U)$ 及 $D\ne0$，仍有 $De_r\ne0$，式(137.14)给不同的下一矩。$\square$
+

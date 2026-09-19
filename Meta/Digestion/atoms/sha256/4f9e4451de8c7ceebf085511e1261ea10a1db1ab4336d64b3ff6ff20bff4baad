@@ -1,0 +1,12 @@
+**证明。** 此时
+$$
+H_1=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+S_1=\begin{pmatrix}1&1\\1&2\end{pmatrix}.
+$$
+前者半正定且秩一，后者正定，而 $H_0=(1)$。向量 $(-1,1)$ 属于 $\ker H_1$，却不属于 $\ker S_1$。也可直接设 $b=J1$：若存在自伴实现，则
+$$
+\|(C-I)b\|^2=M_2-2M_1+M_0=0,
+$$
+从而 $Cb=b$，迫使 $M_3=\langle b,C^3b\rangle=M_0=1$，与给定数据矛盾。$\square$
+
