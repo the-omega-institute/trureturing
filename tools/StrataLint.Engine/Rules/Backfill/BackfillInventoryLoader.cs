@@ -148,6 +148,7 @@ internal sealed partial class BackfillInventoryDocument
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
+
     private static ImmutableArray<DigestionCoverageEdge> ParseCoverage(
         string atomId,
         IEnumerable<object?> rawCoverage)
