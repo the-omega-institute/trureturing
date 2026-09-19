@@ -762,4 +762,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Ineffective15 clears a complete source and two core branches](profile-notes/300-ineffective15-clears-a-complete-source-and-two-core-branches.md)
 - [Three missing-source pairs clear both complete core comparisons](profile-notes/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md)
 - [A positive actual-source neighborhood keeps J below403](profile-notes/302-a-positive-actual-source-neighborhood-keeps-j-below403.md)
+- [The same-law Gamma19 scalar comparison needs joint observations](profile-notes/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md)
 - [An actual star blocks a universal scalar restart at19](profile-notes/304-an-actual-star-blocks-a-universal-scalar-restart-at19.md)
