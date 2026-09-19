@@ -21,155 +21,37 @@ namespace D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration
 
 open D5.S3.Combinatorics.Geometry.CrownOrderPolytope
 
-private def cycleCutRank {N : ℕ} (c v : Fin N) : ℕ :=
-  if v.val ≤ c.val then v.val + (N - 1 - c.val) else v.val - c.val - 1
-
-private theorem cycleCutRank_lt {N : ℕ} (c v : Fin N) (hv : v ≠ c) :
-    cycleCutRank c v < N - 1 := by
-  unfold cycleCutRank
-  by_cases hvc : v.val ≤ c.val
-  · simp only [if_pos hvc]
-    have hne : v.val ≠ c.val := fun h => hv (Fin.ext h)
-    omega
-  · simp only [if_neg hvc]
-    omega
-
-private theorem cycleCutRank_injective {N : ℕ} (c : Fin N) :
-    Function.Injective (cycleCutRank c) := by
-  intro u v h
-  unfold cycleCutRank at h
-  by_cases huc : u.val ≤ c.val <;> by_cases hvc : v.val ≤ c.val
-  · simp only [if_pos huc, if_pos hvc] at h
-    exact Fin.ext (by omega)
-  · simp only [if_pos huc, if_neg hvc] at h
-    exfalso
-    omega
-  · simp only [if_neg huc, if_pos hvc] at h
-    exfalso
-    omega
-  · simp only [if_neg huc, if_neg hvc] at h
-    exact Fin.ext (by omega)
-
-private theorem cycleGraph_adj_cycleCutRank {N : ℕ} (hN : 4 ≤ N)
-    (c u v : Fin N) (hu : u ≠ c) (hv : v ≠ c)
+private theorem cycleGraph_adj_values {N : ℕ} (u v : Fin N)
     (hadj : (SimpleGraph.cycleGraph N).Adj u v) :
-    cycleCutRank c u + 1 = cycleCutRank c v ∨
-      cycleCutRank c v + 1 = cycleCutRank c u := by
-  have hedges :
-      u.val = v.val + 1 ∨ v.val = u.val + 1 ∨
-        (u.val = 0 ∧ v.val = N - 1) ∨ (v.val = 0 ∧ u.val = N - 1) := by
-    rw [SimpleGraph.cycleGraph_adj'] at hadj
-    rcases hadj with huv | hvu
-    · by_cases hvleu : v ≤ u
-      · left
-        have hdiff : u.val - v.val = 1 := by
-          simpa [Fin.sub_val_of_le hvleu] using huv
-        omega
-      · right
-        right
-        left
-        have hcast : ((u - v).val : ℤ) = 1 := congrArg Int.ofNat huv
-        rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
-        simp [show ¬v ≤ u from hvleu] at hcast
-        constructor <;> omega
-    · by_cases hulev : u ≤ v
-      · right
-        left
-        have hdiff : v.val - u.val = 1 := by
-          simpa [Fin.sub_val_of_le hulev] using hvu
-        omega
-      · right
-        right
-        right
-        have hcast : ((v - u).val : ℤ) = 1 := congrArg Int.ofNat hvu
-        rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
-        simp [show ¬u ≤ v from hulev] at hcast
-        constructor <;> omega
-  have huc : u.val ≠ c.val := fun h => hu (Fin.ext h)
-  have hvc : v.val ≠ c.val := fun h => hv (Fin.ext h)
-  unfold cycleCutRank
-  rcases hedges with h | h | h | h <;>
-    by_cases hule : u.val ≤ c.val <;> by_cases hvle : v.val ≤ c.val <;>
-      simp only [hule, hvle, if_true, if_false] <;> omega
-
-/- Cutting at any vertex outside an endpoint-free actual block turns that block into one
-   nonempty integer interval.  This is the source's cyclic-consecutive-block classification,
-   now for the real CCP relation rather than an abstract connected subset. -/
-private theorem crownPartition_originalBlock_cycleCutInterval {n : ℕ} (hn : 2 ≤ n)
-    (P : CrownConnectedCompatiblePartition n) (i c : Fin (2 * n))
-    (hbottom : ¬ P.toSetoid.r (.vertex i) .bottom)
-    (htop : ¬ P.toSetoid.r (.vertex i) .top)
-    (hc : ¬ P.toSetoid.r (.vertex i) (.vertex c)) :
-    ∃ a b : ℕ, a ≤ b ∧ b < 2 * n - 1 ∧
-      ∀ v : Fin (2 * n),
-        P.toSetoid.r (.vertex i) (.vertex v) ↔
-          a ≤ cycleCutRank c v ∧ cycleCutRank c v ≤ b := by
-  classical
-  let block : Finset (Fin (2 * n)) :=
-    Finset.univ.filter fun v => P.toSetoid.r (.vertex i) (.vertex v)
-  let ranks : Finset ℕ := block.image (cycleCutRank c)
-  have hi_block : i ∈ block := by simp [block]
-  have hranks : ranks.Nonempty :=
-    ⟨cycleCutRank c i, Finset.mem_image.mpr ⟨i, hi_block, rfl⟩⟩
-  let a := ranks.min' hranks
-  let b := ranks.max' hranks
-  have ha_mem : a ∈ ranks := Finset.min'_mem ranks hranks
-  have hb_mem : b ∈ ranks := Finset.max'_mem ranks hranks
-  obtain ⟨amin, hamin_block, hamin_rank⟩ := Finset.mem_image.mp ha_mem
-  obtain ⟨bmax, hbmax_block, hbmax_rank⟩ := Finset.mem_image.mp hb_mem
-  have hamin : P.toSetoid.r (.vertex i) (.vertex amin) := by
-    simpa [block] using hamin_block
-  have hbmax : P.toSetoid.r (.vertex i) (.vertex bmax) := by
-    simpa [block] using hbmax_block
-  have hamin_ne : amin ≠ c := fun h => hc (h ▸ hamin)
-  have hbmax_ne : bmax ≠ c := fun h => hc (h ▸ hbmax)
-  have hab : a ≤ b := Finset.min'_le_max' ranks hranks
-  have hb_lt : b < 2 * n - 1 := by
-    rw [← hbmax_rank]
-    exact cycleCutRank_lt c bmax hbmax_ne
-  refine ⟨a, b, hab, hb_lt, fun v => ?_⟩
-  constructor
-  · intro hv
-    have hv_block : v ∈ block := by simp [block, hv]
-    have hv_rank : cycleCutRank c v ∈ ranks :=
-      Finset.mem_image.mpr ⟨v, hv_block, rfl⟩
-    exact ⟨Finset.min'_le ranks _ hv_rank, Finset.le_max' ranks _ hv_rank⟩
-  · rintro ⟨hav, hvb⟩
-    have hv_rank : cycleCutRank c v ∈ ranks := by
-      by_cases hva : cycleCutRank c v = a
-      · simpa [hva] using ha_mem
-      · have hav_strict : a < cycleCutRank c v := lt_of_le_of_ne hav (Ne.symm hva)
-        let u : {j // P.toSetoid.r (.vertex i) (.vertex j)} := ⟨amin, hamin⟩
-        let w : {j // P.toSetoid.r (.vertex i) (.vertex j)} := ⟨bmax, hbmax⟩
-        obtain ⟨p⟩ := (crownPartition_originalBlock_cycleGraph_connected hn P i hbottom htop)
-          u w
-        let lower : Set {j // P.toSetoid.r (.vertex i) (.vertex j)} :=
-          {x | cycleCutRank c x.1 < cycleCutRank c v}
-        have hu_lower : u ∈ lower := by
-          change cycleCutRank c amin < cycleCutRank c v
-          rw [hamin_rank]
-          exact hav_strict
-        have hw_lower : w ∉ lower := by
-          change ¬cycleCutRank c bmax < cycleCutRank c v
-          rw [hbmax_rank]
-          omega
-        obtain ⟨d, _, hd_lower, hd_upper⟩ :=
-          p.exists_boundary_dart lower hu_lower hw_lower
-        have hdfst_ne : d.fst.1 ≠ c := fun h => hc (h ▸ d.fst.2)
-        have hdsnd_ne : d.snd.1 ≠ c := fun h => hc (h ▸ d.snd.2)
-        have hstep := cycleGraph_adj_cycleCutRank (N := 2 * n) (by omega)
-          c d.fst.1 d.snd.1 hdfst_ne hdsnd_ne d.adj
-        have hfst : cycleCutRank c d.fst.1 < cycleCutRank c v := hd_lower
-        have hsnd : cycleCutRank c v ≤ cycleCutRank c d.snd.1 := Nat.le_of_not_gt hd_upper
-        have hsnd_eq : cycleCutRank c d.snd.1 = cycleCutRank c v := by
-          rcases hstep with hstep | hstep <;> omega
-        have hdsnd_block : d.snd.1 ∈ block := by
-          simp only [block, Finset.mem_filter, Finset.mem_univ, true_and]
-          exact d.snd.2
-        exact Finset.mem_image.mpr ⟨d.snd.1, hdsnd_block, hsnd_eq⟩
-    obtain ⟨witness, hwitness_block, hwitness_rank⟩ := Finset.mem_image.mp hv_rank
-    have hvw : v = witness := cycleCutRank_injective c hwitness_rank.symm
-    simpa [block, hvw] using hwitness_block
+    u.val = v.val + 1 ∨ v.val = u.val + 1 ∨
+      (u.val = 0 ∧ v.val = N - 1) ∨ (v.val = 0 ∧ u.val = N - 1) := by
+  rw [SimpleGraph.cycleGraph_adj'] at hadj
+  rcases hadj with huv | hvu
+  · by_cases hvleu : v ≤ u
+    · left
+      have hdiff : u.val - v.val = 1 := by
+        simpa [Fin.sub_val_of_le hvleu] using huv
+      omega
+    · right
+      right
+      left
+      have hcast : ((u - v).val : ℤ) = 1 := congrArg Int.ofNat huv
+      rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
+      simp [show ¬v ≤ u from hvleu] at hcast
+      constructor <;> omega
+  · by_cases hulev : u ≤ v
+    · right
+      left
+      have hdiff : v.val - u.val = 1 := by
+        simpa [Fin.sub_val_of_le hulev] using hvu
+      omega
+    · right
+      right
+      right
+      have hcast : ((v - u).val : ℤ) = 1 := congrArg Int.ofNat hvu
+      rw [Fin.intCast_val_sub_eq_sub_add_ite] at hcast
+      simp [show ¬u ≤ v from hulev] at hcast
+      constructor <;> omega
 
 /-- The cycle edges internal to the blocks of a vertex partition. -/
 private def cyclePartitionGraph {N : ℕ} (s : Setoid (Fin N)) : SimpleGraph (Fin N) where
@@ -281,6 +163,180 @@ private theorem cycleBoundaryCuts_eq_empty_iff {N : ℕ} [NeZero N] (hN : 3 ≤ 
   · intro hall
     ext u
     simp [cycleBoundaryCuts, hall]
+
+/- An uncut successor edge is an edge of the reconstructed graph, so its endpoints
+   belong to the same connected component. -/
+private theorem cycleBoundaryCuts_ofCuts_subset {N : ℕ} [NeZero N] (hN : 3 ≤ N)
+    (cuts : Finset (Fin N)) :
+    cycleBoundaryCuts (connectedCyclePartitionOfCuts cuts) ⊆ cuts := by
+  intro u hu
+  by_contra hnot
+  have hadj : (SimpleGraph.cycleGraph N).Adj u (u + 1) := by
+    rw [SimpleGraph.cycleGraph_adj']
+    right
+    simp [Nat.mod_eq_of_lt (show 1 < N by omega)]
+  have hsucc : u ≠ (u + 1) + 1 := by
+    intro hv
+    have ht : (1 : Fin N) + 1 = 0 := by
+      apply add_left_cancel (a := u)
+      simpa [add_assoc] using hv.symm
+    have hval := congrArg Fin.val ht
+    norm_num [Fin.add_def, Nat.mod_eq_of_lt (show 2 < N by omega)] at hval
+  have hedge : (cycleGraphWithCuts cuts).Adj u (u + 1) := by
+    refine ⟨hadj, ?_⟩
+    rintro (⟨hcut, _⟩ | ⟨hcut, hback⟩)
+    · exact hnot hcut
+    · exact hsucc hback
+  have hreach : (cycleGraphWithCuts cuts).Reachable u (u + 1) := hedge.reachable
+  simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and] at hu
+  change ¬ (cycleGraphWithCuts cuts).Reachable u (u + 1) at hu
+  exact hu hreach
+
+/- Two deleted successor edges separate the intervening linear arc from its complement.
+   The wraparound edge can cross this arc only when its last vertex is the second cut. -/
+private theorem cycleGraphWithCuts_arc_invariant {N : ℕ} [NeZero N] (hN : 3 ≤ N)
+    (cuts : Finset (Fin N)) (a b : Fin N) (_hab : a < b)
+    (ha : a ∈ cuts) (hb : b ∈ cuts) (u v : Fin N)
+    (hadj : (cycleGraphWithCuts cuts).Adj u v) :
+    (a.val < u.val ∧ u.val ≤ b.val) ↔
+      (a.val < v.val ∧ v.val ≤ b.val) := by
+  have hcrossEdge (x : Fin N) (hx : x ∈ cuts)
+      (hforward : u = x ∧ v = x + 1 ∨ v = x ∧ u = x + 1) : False := by
+    apply hadj.2
+    rcases hforward with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+    · exact Or.inl ⟨hx, rfl⟩
+    · exact Or.inr ⟨hx, rfl⟩
+  by_contra hiff
+  have hcross :
+      ((a.val < u.val ∧ u.val ≤ b.val) ∧
+        ¬ (a.val < v.val ∧ v.val ≤ b.val)) ∨
+      (¬ (a.val < u.val ∧ u.val ≤ b.val) ∧
+        (a.val < v.val ∧ v.val ≤ b.val)) := by tauto
+  have hN' : 2 < N := by omega
+  rcases cycleGraph_adj_values u v hadj.1 with hstep | hstep | hwrap | hwrap
+  · have hboundary : v = a ∨ v = b := by
+      rcases hcross with hcross | hcross
+      · rcases hcross with ⟨hu, hv⟩
+        rcases hu with ⟨hu1, hu2⟩
+        by_cases hv1 : a.val < v.val
+        · right; apply Fin.ext; omega
+        · left; apply Fin.ext; omega
+      · rcases hcross with ⟨hu, hv⟩
+        rcases hv with ⟨hv1, hv2⟩
+        by_cases hu1 : a.val < u.val
+        · right; apply Fin.ext; omega
+        · left; apply Fin.ext; omega
+    have hsucc : u = v + 1 := by
+      apply Fin.ext
+      have hlt : v.val + 1 < N := by omega
+      simpa [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega),
+        Nat.mod_eq_of_lt hlt] using hstep
+    rcases hboundary with hva | hvb
+    · exact hcrossEdge a ha (Or.inr ⟨hva, hva ▸ hsucc⟩)
+    · exact hcrossEdge b hb (Or.inr ⟨hvb, hvb ▸ hsucc⟩)
+  · have hboundary : u = a ∨ u = b := by
+      rcases hcross with hcross | hcross
+      · rcases hcross with ⟨hu, hv⟩
+        rcases hu with ⟨hu1, hu2⟩
+        by_cases hv1 : a.val < v.val
+        · right; apply Fin.ext; omega
+        · left; apply Fin.ext; omega
+      · rcases hcross with ⟨hu, hv⟩
+        rcases hv with ⟨hv1, hv2⟩
+        by_cases hu1 : a.val < u.val
+        · right; apply Fin.ext; omega
+        · left; apply Fin.ext; omega
+    have hsucc : v = u + 1 := by
+      apply Fin.ext
+      have hlt : u.val + 1 < N := by omega
+      simpa [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega),
+        Nat.mod_eq_of_lt hlt] using hstep
+    rcases hboundary with hua | hub
+    · exact hcrossEdge a ha (Or.inl ⟨hua, hua ▸ hsucc⟩)
+    · exact hcrossEdge b hb (Or.inl ⟨hub, hub ▸ hsucc⟩)
+  · have hvb : v = b := by
+      apply Fin.ext
+      rcases hcross with ⟨hu, hv⟩ | ⟨hu, hv⟩ <;> omega
+    have hsucc : u = v + 1 := by
+      apply Fin.ext
+      simp only [Fin.add_def, Fin.val_one']
+      rcases hwrap with ⟨hu, hv⟩
+      simpa [hv, hu, Nat.mod_eq_of_lt (show 1 < N by omega),
+        show N - 1 + 1 = N by omega] using hu
+    exact hcrossEdge b hb (Or.inr ⟨hvb, hvb ▸ hsucc⟩)
+  · have hub : u = b := by
+      apply Fin.ext
+      rcases hcross with ⟨hu, hv⟩ | ⟨hu, hv⟩ <;> omega
+    have hsucc : v = u + 1 := by
+      apply Fin.ext
+      simp only [Fin.add_def, Fin.val_one']
+      rcases hwrap with ⟨hv, hu⟩
+      simpa [hu, hv, Nat.mod_eq_of_lt (show 1 < N by omega),
+        show N - 1 + 1 = N by omega] using hv
+    exact hcrossEdge b hb (Or.inl ⟨hub, hub ▸ hsucc⟩)
+
+/- With two distinct prescribed cuts, the endpoints of either cut lie in different
+   components of the actual edge-deleted cycle. -/
+private theorem cycleGraphWithCuts_cut_not_reachable {N : ℕ} [NeZero N]
+    (hN : 3 ≤ N) (cuts : Finset (Fin N)) (c d : Fin N)
+    (hc : c ∈ cuts) (hd : d ∈ cuts) (hcd : c ≠ d) :
+    ¬ (cycleGraphWithCuts cuts).Reachable c (c + 1) := by
+  intro hreach
+  obtain ⟨p⟩ := hreach
+  have harc (a b : Fin N) (hab : a < b) (ha : a ∈ cuts) (hb : b ∈ cuts)
+      {x y : Fin N} (q : (cycleGraphWithCuts cuts).Walk x y) :
+      (a.val < x.val ∧ x.val ≤ b.val) ↔
+        (a.val < y.val ∧ y.val ≤ b.val) := by
+    induction q with
+    | nil => rfl
+    | @cons u v w huv _ ih =>
+      exact (cycleGraphWithCuts_arc_invariant hN cuts a b hab ha hb u v huv).trans ih
+  by_cases hlt : c < d
+  · have hcon : c.val < (c + 1).val ∧ (c + 1).val ≤ d.val := by
+      have hsmall : c.val + 1 < N := by omega
+      have hval : (c + 1).val = c.val + 1 := by
+        simp [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega),
+          Nat.mod_eq_of_lt hsmall]
+      omega
+    have hself : ¬ (c.val < c.val ∧ c.val ≤ d.val) := by omega
+    exact hself ((harc c d hlt hc hd p).mpr hcon)
+  · have hdc : d < c := lt_of_le_of_ne (le_of_not_gt hlt) (Ne.symm hcd)
+    have hcon : d.val < c.val ∧ c.val ≤ c.val := by omega
+    have hnext : ¬ (d.val < (c + 1).val ∧ (c + 1).val ≤ c.val) := by
+      by_cases hsmall : c.val + 1 < N
+      · have hval : (c + 1).val = c.val + 1 := by
+          simp [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega),
+            Nat.mod_eq_of_lt hsmall]
+        omega
+      · have hlast : c.val + 1 = N := by omega
+        have hval : (c + 1).val = 0 := by
+          simp [Fin.add_def, Nat.mod_eq_of_lt (show 1 < N by omega), hlast]
+        omega
+    exact hnext ((harc d c hdc hd hc p).mp hcon)
+
+/- For two or more prescribed cuts, reconstruction has precisely those boundaries.
+   Empty and singleton cut sets are outside this theorem's hypothesis. -/
+private theorem cycleBoundaryCuts_ofCuts_eq {N : ℕ} [NeZero N] (hN : 3 ≤ N)
+    (cuts : Finset (Fin N)) (hcuts : 2 ≤ cuts.card) :
+    cycleBoundaryCuts (connectedCyclePartitionOfCuts cuts) = cuts := by
+  apply Finset.Subset.antisymm (cycleBoundaryCuts_ofCuts_subset hN cuts)
+  intro c hc
+  obtain ⟨d, hd, hdc⟩ := Finset.exists_mem_ne (by omega : 1 < cuts.card) c
+  simp only [cycleBoundaryCuts, Finset.mem_filter, Finset.mem_univ, true_and]
+  change ¬ (cycleGraphWithCuts cuts).Reachable c (c + 1)
+  exact cycleGraphWithCuts_cut_not_reachable hN cuts c d hc hd (Ne.symm hdc)
+
+/- With no deleted edges, the cycle itself is connected, so there is one block. -/
+private theorem cycleBoundaryCuts_noCuts {N : ℕ} [NeZero N] (hN : 3 ≤ N) :
+    cycleBoundaryCuts (connectedCyclePartitionOfCuts (∅ : Finset (Fin N))) = ∅ := by
+  apply (cycleBoundaryCuts_eq_empty_iff hN _).mpr
+  intro u v
+  change (cycleGraphWithCuts ∅).Reachable u v
+  have hgraph : cycleGraphWithCuts (∅ : Finset (Fin N)) = SimpleGraph.cycleGraph N := by
+    ext x y
+    simp [cycleGraphWithCuts]
+  rw [hgraph]
+  exact SimpleGraph.cycleGraph_preconnected u v
 
 /-- The directed quotient relation induced by the actual crown order on a connected
     cyclic partition. -/
