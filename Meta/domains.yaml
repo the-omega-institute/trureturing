@@ -1,7 +1,7 @@
 domains:
   Analytic:
     stratum: S3
-    definition: Mellin-transform analysis reconstructing completed zeta from theta-kernel tails.
+    definition: Mellin-transform analysis reconstructing the completed zeta function from theta-kernel tails.
   AnalyticClosure:
     stratum: S3
     definition: Certified finite-window approximation and tail-budget closure of analytic readings.

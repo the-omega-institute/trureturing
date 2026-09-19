@@ -5,7 +5,6 @@ description: Use when answering mathematical, conceptual, philosophical, or meta
 
 # Codex Formal Answer Workflow
 
-
 ## Install
 
 This repository copy is the single source of truth for `skills/codex-formal-answer/`; any installed copy is a projection of it.
