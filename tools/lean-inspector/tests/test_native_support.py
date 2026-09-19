@@ -144,6 +144,7 @@ root = "Cache"
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
         self.compiler_seed = self.env.pop('STRATALINT_NATIVE_COMPILER_SEED', None)
+        self.compiler_distribution_seed = self.compiler_seed
         # A fresh synthetic Git repository bounds ensure donor discovery to
         # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
@@ -312,16 +313,34 @@ root = "Cache"
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
     def run_lake(self, *args, success=True):
         self.ensure()
+        if self.compiler_distribution_seed is not None:
+            # The collection owns this read-only stage. Restore the producer's
+            # descriptor-checked compiler distribution privately before Lake
+            # evaluates the staged producer artifacts. Lake then copies only
+            # its registered outputs into this fixture's private cache; current
+            # input traces still decide whether any artifact is usable.
+            restored = self.guarded_command([sys.executable, '-B',
+                str(self.root / 'tools/lean-inspector/compiler/build.py'), 'restore', self.compiler_distribution_seed],
+                cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+            self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+            self.compiler_distribution_seed = None
         if self.compiler_seed is not None:
-            # The collection owns this read-only stage. Lake copies only its
-            # registered producer outputs into this fixture's private cache;
-            # current input traces still decide whether any artifact is usable.
             restored = self.guarded_command([self.lake, 'cache', 'unstage', self.compiler_seed, 'leanInspector'],
                 cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
             self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
             self.compiler_seed = None
+        started = time.monotonic()
         result = self.guarded_command(['python3', '-B', str(self.root / 'tools/lean-inspector/compiler/build.py'),
             'run', 'lake', *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+        checks = getattr(self, '_lake_checks', [])
+        text = result.stdout + result.stderr
+        checks.append(dict(command=list(args), exit=result.returncode,
+            seconds=round(time.monotonic() - started, 3),
+            compiler_patched_modules=text.count('patching file '),
+            built=sum('Built ' in line for line in text.splitlines()),
+            extract_lines=[line for line in text.splitlines() if 'LEAN_INSPECTOR_EXTRACT' in line]))
+        self._lake_checks = checks
+        self.record_result('lake-commands', dict(checks=checks))
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         elif success is False:
@@ -457,6 +476,7 @@ def stage_compiler(output):
     try:
         fixture.setUp()
         fixture.compiler_seed = None
+        fixture.compiler_distribution_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         checks = []
         # Keep compiler-origin construction as its own bounded phase.  The
@@ -484,6 +504,16 @@ def stage_compiler(output):
         # they do not select or discover build inputs or reusable materials.
         for path in output.iterdir():
             path.chmod(path.stat().st_mode & ~0o222)
+        started = time.monotonic()
+        staged = fixture.guarded_command([
+            sys.executable, str(fixture.root / 'tools/lean-inspector/compiler/build.py'),
+            'stage', str(output)], cwd=fixture.root, env=fixture.env,
+            text=True, capture_output=True, timeout=120)
+        checks.append(dict(command=['compiler-origin', 'stage'], exit=staged.returncode,
+            seconds=round(time.monotonic() - started, 3),
+            built=sum('Built ' in line for line in (staged.stdout + staged.stderr).splitlines())))
+        if staged.returncode != 0:
+            raise AssertionError(staged.stdout + staged.stderr)
         fixture.record_result('compiler-stage', dict(checks=checks))
     finally:
         if not fixture.doCleanups():

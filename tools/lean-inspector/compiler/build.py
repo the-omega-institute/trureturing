@@ -6,6 +6,7 @@ source-name inference, host installation, or mutable global configuration.
 """
 from __future__ import annotations
 import fcntl
+import ctypes
 from functools import lru_cache
 import hashlib
 import json
@@ -43,6 +44,106 @@ def sha(path):
 
 def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+
+
+def _clonefile(source, destination):
+    """Clone one APFS file or directory, returning whether the syscall worked."""
+    if sys.platform != 'darwin':
+        return False
+    try:
+        clonefile = ctypes.CDLL(None, use_errno=True).clonefile
+        clonefile.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint32]
+        clonefile.restype = ctypes.c_int
+        return clonefile(os.fsencode(source), os.fsencode(destination), 0) == 0
+    except (AttributeError, OSError):
+        return False
+
+
+def clone_tree(source, destination):
+    """Make a private tree from a validated producer tree.
+
+    APFS clonefile keeps the fixture writable and private without copying the
+    compiler's large immutable stock images. Other filesystems use the normal
+    copy path; neither path creates links into the donor stage.
+    """
+    source, destination = Path(source), Path(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists() or destination.is_symlink():
+        raise ValueError('compiler stage destination already exists')
+    if not _clonefile(source, destination):
+        shutil.copytree(source, destination, copy_function=shutil.copy2)
+
+
+def validate_artifact_tree(directory, descriptor, *, read_only=False):
+    """Validate the normal compiler receipt and exact current descriptor."""
+    if directory.is_symlink():
+        raise ValueError('compiler distribution is a symbolic link')
+    receipt = directory / 'artifacts.json'
+    expected = json.loads(receipt.read_text())
+    required = {'bin/frontend', 'bin/lean', 'bin/leanc', 'driver.json', 'descriptor.json',
+        'lib/lean/libLean.a', 'lib/lean/libLeanOrigin.a', 'lib/lean/Lean/CompanionOrigin.olean',
+        'lib/lean/Lean/CompanionOrigin.o', 'LICENSE', 'LICENSES'}
+    paths = list(directory.rglob('*'))
+    if any(p.is_symlink() for p in paths):
+        raise ValueError('compiler distribution contains a symbolic link')
+    actual = {p.relative_to(directory).as_posix() for p in paths if p.is_file() and p != receipt}
+    if not isinstance(expected, dict) or not required <= set(expected) or actual != set(expected):
+        raise ValueError('compiler artifact receipt has an incomplete file set')
+    if (directory / 'descriptor.json').read_bytes() != canonical(descriptor):
+        raise ValueError('compiler descriptor mismatch')
+    for relative, record in expected.items():
+        path = directory / relative
+        actual = dict(sha256=sha(path), mode=stat.S_IMODE(path.stat().st_mode))
+        checked = dict(record, mode=record['mode'] & ~0o222) if read_only else record
+        if actual != checked:
+            raise ValueError('compiler artifact receipt mismatch: ' + relative)
+    return expected
+
+
+def stage(root, output):
+    """Stage only the compiler owner's verified distribution, without links."""
+    directory, identity = ensure(root)
+    descriptor = inputs(root)[1]
+    expected = validate_artifact_tree(directory, descriptor)
+    destination = Path(output).resolve() / 'compiler-origin' / identity
+    clone_tree(directory, destination)
+    validate_artifact_tree(destination, descriptor)
+    for relative in [*expected, 'artifacts.json']:
+        path = destination / relative
+        path.chmod(stat.S_IMODE(path.stat().st_mode) & ~0o222)
+    return destination, identity
+
+
+def restore(root, source):
+    """Recheck the current recipe/stock inputs and restore private compiler bytes.
+
+    A mismatched seed is rejected. The caller can then use ordinary ensure;
+    no old descriptor or content-provided metadata grants compiler authority.
+    """
+    _, descriptor, identity = inputs(root)
+    staged = Path(source).resolve() / 'compiler-origin' / identity
+    expected = validate_artifact_tree(staged, descriptor, read_only=True)
+    parent = root / 'build/compiler-origin'
+    parent.mkdir(parents=True, exist_ok=True)
+    with (parent / 'build.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        destination = parent / identity
+        if destination.exists():
+            validate_artifact_tree(destination, descriptor)
+            return destination, identity
+        try:
+            clone_tree(staged, destination)
+            for relative, record in expected.items():
+                (destination / relative).chmod(record['mode'])
+            (destination / 'artifacts.json').chmod(0o600)
+            validate_artifact_tree(destination, descriptor)
+            if inputs(root)[2] != identity:
+                raise ValueError('compiler inputs changed during restore')
+        except BaseException:
+            if destination.exists():
+                shutil.rmtree(destination)
+            raise
+    return destination, identity
 
 
 def base_root(root):
@@ -153,21 +254,10 @@ def build(root, base, descriptor, identity):
     directory = root / 'build/compiler-origin' / identity
     receipt = directory / 'artifacts.json'
     try:
-        expected = json.loads(receipt.read_text())
-        required = {'bin/frontend', 'bin/lean', 'bin/leanc', 'driver.json', 'descriptor.json',
-            'lib/lean/libLean.a', 'lib/lean/libLeanOrigin.a', 'lib/lean/Lean/CompanionOrigin.olean',
-            'lib/lean/Lean/CompanionOrigin.o', 'LICENSE', 'LICENSES'}
-        actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*')
-                  if p.is_file() and p != receipt}
-        if isinstance(expected, dict) and required <= set(expected) and actual == set(expected) and all(
-                            (directory / p).is_file() and not (directory / p).is_symlink()
-                            and dict(sha256=sha(directory / p), mode=stat.S_IMODE((directory / p).stat().st_mode)) == h
-                            for p, h in expected.items()):
-            return directory
-    except (OSError, ValueError):
-        # This is an optional cache receipt, read under ensure's build lock.
-        # Missing, unreadable or truncated metadata requests the same private
-        # rebuild as damaged outputs; required compiler inputs still fail.
+        validate_artifact_tree(directory, descriptor)
+        return directory
+    except (OSError, ValueError, KeyError, TypeError):
+        # Optional damaged outputs/receipts request a normal private rebuild.
         pass
     if directory.exists():
         shutil.rmtree(directory)
@@ -210,7 +300,8 @@ def build(root, base, descriptor, identity):
     subprocess.run([str(base / 'bin/leanc'), export, '-o', str(directory / 'bin/frontend'), *objects],
         env=env, check=True, stdout=sys.stderr)
     (directory / 'driver.json').write_bytes(canonical(dict(base=str(base), lean=str(base / 'bin/lean'),
-        leanc=str(base / 'bin/leanc'), objects=objects[:-1],
+        leanc=str(base / 'bin/leanc'),
+        objects=[Path(p).relative_to(directory).as_posix() for p in objects[:-1]],
         origin=REVISION + '-origin-' + identity)))
     for name in ('lean', 'leanc'):
         path = directory / 'bin' / name
@@ -248,16 +339,23 @@ def environment(directory, identity):
 
 def main():
     root = HERE.parents[2]
-    directory, identity = ensure(root)
     if sys.argv[1:] == ['ensure']:
+        directory, identity = ensure(root)
+        print(json.dumps(dict(directory=str(directory), identity=identity)))
+    elif sys.argv[1:2] == ['stage'] and len(sys.argv) == 3:
+        directory, identity = stage(root, sys.argv[2])
+        print(json.dumps(dict(directory=str(directory), identity=identity)))
+    elif sys.argv[1:2] == ['restore'] and len(sys.argv) == 3:
+        directory, identity = restore(root, sys.argv[2])
         print(json.dumps(dict(directory=str(directory), identity=identity)))
     elif sys.argv[1:2] == ['run'] and len(sys.argv) > 2:
+        directory, identity = ensure(root)
         command = sys.argv[2:]
         # The installed Lake runtime is untouched; it uses the explicit local
         # compiler via its supported override contract.
         os.execvpe(command[0], command, environment(directory, identity))
     else:
-        raise SystemExit('expected ensure | run COMMAND [ARG ...]')
+        raise SystemExit('expected ensure | stage DIRECTORY | restore DIRECTORY | run COMMAND [ARG ...]')
 
 
 if __name__ == '__main__':

@@ -567,25 +567,40 @@ initialize registerDerivingHandler ``ProbeMarker fun names => do
             stage = self.root / 'compiler-stage'
             stage_compiler(stage)
             self.compiler_seed = str(stage)
+            self.compiler_distribution_seed = str(stage)
         stage = Path(self.compiler_seed)
-        before = {path.name: (publication.digest(path), path.stat().st_mode)
-                  for path in stage.iterdir()}
+        before = {path.relative_to(stage).as_posix(): (publication.digest(path), path.stat().st_mode)
+                  for path in stage.rglob('*') if path.is_file()}
+        # A seed built from another recipe cannot bypass current input checks.
+        recipe = self.root / 'tools/lean-inspector/compiler/CompanionOrigin.lean'
+        original = recipe.read_bytes()
+        recipe.write_bytes(original + b'\n-- mismatched seed input\n')
+        rejected = self.guarded_command([sys.executable, '-B',
+            str(self.root / 'tools/lean-inspector/compiler/build.py'), 'restore', str(stage)])
+        self.assertNotEqual(rejected.returncode, 0)
+        self.assertFalse((self.root / 'build/compiler-origin').exists())
+        recipe.write_bytes(original)
         self.run_lake('env', 'true')
-        # Unstage admits only compiler artifacts; each fixture still creates
-        # its own producer build, reports, utility inputs, and ensure stamp.
+        # Producer outputs, compiler outputs, reports and stamps remain private.
         self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
         for name in before:
             if name == 'outputs.jsonl':
                 continue
             donor = stage / name
-            private = self.root / '.lake/artifact-cache/artifacts' / name
-            self.assertEqual(publication.digest(private), before[name][0])
-            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
-            self.assertEqual(donor.stat().st_mode & 0o222, 0)
-            private.unlink()
-            private.write_bytes(b'fixture-private damage')
-        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
-                                  for path in stage.iterdir()})
+            private = (self.root / 'build' / name if name.startswith('compiler-origin/') else
+                       self.root / '.lake/artifact-cache/artifacts' / name)
+            self.assertEqual(publication.digest(private), before[name][0], name)
+            self.assertFalse(os.path.samestat(donor.stat(), private.stat()), name)
+            self.assertEqual(donor.stat().st_mode & 0o222, 0, name)
+        # In-place compiler corruption must not write into the shared seed.
+        registry = next((self.root / 'build/compiler-origin').glob('*/lib/lean/Lean/CompanionOrigin.olean'))
+        registry.write_bytes(b'fixture-private damage')
+        self.assertEqual(before, {path.relative_to(stage).as_posix():
+            (publication.digest(path), path.stat().st_mode)
+            for path in stage.rglob('*') if path.is_file()})
+        self.record_result('verified', dict(seed_files=len(before),
+            mismatched_recipe_exit=rejected.returncode, private_compiler_and_lake_material=True,
+            donor_unchanged_after_private_corruption=True))
 
     def test_native_producer_inputs(self):
         self.build()

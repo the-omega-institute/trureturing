@@ -1,8 +1,9 @@
 namespace StrataLint.Lean.Tests;
 
-public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
+[Collection("Inspector native")]
+public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compiler)
 {
-    // Invalidation and recovery use a separate, class-owned compiler stage.
+    // Invalidation and recovery share the collection's verified compiler stage.
     [Theory]
     [InlineData("test_native.NativeTests.test_release_stage_and_verify_preserve_absent_lake")]
     [InlineData("test_native.NativeTests.test_native_no_build_rejects_corruption_without_production")]

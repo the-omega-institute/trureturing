@@ -3,7 +3,11 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
-public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
+[CollectionDefinition("Inspector native", DisableParallelization = true)]
+public sealed class InspectorNativeCollection : ICollectionFixture<InspectorCompilerFixture>;
+
+[Collection("Inspector native")]
+public sealed class InspectorNativeTests(InspectorCompilerFixture compiler)
 {
     [Fact]
     public void FixedTemplatePlansTrackWarmSemanticPolicyAndReuseUnchangedInputs()

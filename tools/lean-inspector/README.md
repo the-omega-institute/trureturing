@@ -277,7 +277,13 @@ candidate is still built and published natively; the strict check validates both
 sets of materials and compares all declaration, statement and axiom identities.
 Native import/link/invalidation and compiler-output/receipt recovery run as
 separate ordinary harness cases, with unchanged per-process guards and the same
-class-owned Lake compiler stage. Optional lifecycle measurements include setup,
+collection-owned compiler stage. Native cases execute sequentially. Lake stages its registered producer artifacts; the
+compiler owner stages the corresponding distribution using its existing exact
+descriptor and artifact receipt. Each fixture rechecks the current recipe and
+stock inputs, restores private compiler files (APFS clones where available),
+and lets normal compiler validation and Lake traces govern later reuse or
+rebuilding. Object paths are relative to that distribution; no source fixture
+path remains in the compiler driver. Optional lifecycle measurements include setup,
 body and completed cleanup; body receipts alone are not a successful test exit.
 The scope program's `--measure` mode reads the pinned
 compiler's import parser to count the full default-library source rebuild closure.

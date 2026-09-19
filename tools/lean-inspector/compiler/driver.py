@@ -46,7 +46,7 @@ def main():
     if Path(sys.argv[0]).name == 'leanc':
         # Object compilation/shared plugins do not embed the compiler. Native
         # executables link the same generator objects before the pinned archive.
-        extra = [] if '-c' in args or '-shared' in args else config['objects']
+        extra = [] if '-c' in args or '-shared' in args else [str(root / path) for path in config['objects']]
         os.execve(config['leanc'], [config['leanc'], *extra, *args],
             dict(os.environ, LEAN_SYSROOT=config['base']))
     if args in (['--print-prefix'], ['--print-libdir']):
