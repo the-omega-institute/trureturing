@@ -789,3 +789,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Actual two-prime survival needs a masked moment](profile-notes/327-actual-two-prime-survival-needs-a-masked-moment.md)
 - [Complete raw costs cover the high-surplus aligned face](profile-notes/328-complete-raw-costs-cover-the-high-surplus-aligned-face.md)
 - [A finite whole-J neighborhood covers high surplus](profile-notes/329-a-finite-whole-j-neighborhood-covers-high-surplus.md)
+- [A finite high-surplus source survives through29](profile-notes/330-a-finite-high-surplus-source-survives-through29.md)
