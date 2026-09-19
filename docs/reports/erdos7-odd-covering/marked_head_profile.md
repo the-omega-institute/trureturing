@@ -825,3 +825,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Whole private-vector changes and prime-parent rigidity under legal swaps](profile-notes/362-whole-prime-private-vector-under-residue-swaps.md)
 - [Common-source antichains refine prime-parent selection capacity](profile-notes/363-common-source-antichain-capacity.md)
 - [Singleton cofactor ideals and forced colors in actual source matchings](profile-notes/364-singleton-cofactor-ideal-and-forced-colors.md)
+- [Coloring literature, fixed-source reconfiguration and complete AP repair choices](profile-notes/365-coloring-literature-and-reconfiguration-interface.md)
