@@ -76,6 +76,8 @@ def main():
     parser.add_argument('--measure', action='store_true')
     parser.add_argument('--sources', type=Path)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--baseline', type=Path,
+        help='previous actual baseline-compact.json; source identities must match')
     parser.add_argument('--command-timeout', type=float, default=900)
     args = parser.parse_args()
     if args.measure:
@@ -157,21 +159,34 @@ globs = ["LeanInformationAudit.+"]
                 replayed=sum('Replayed ' in line for line in (completed.stdout + completed.stderr).splitlines())))
             print('SCOPE_COMMAND_RESULT ' + json.dumps(checks[-1]), flush=True)
             completed.check_returncode()
-        # The untouched compiler supplies the independent identity baseline.
-        command([fixture.lake, 'build', *names])
         recipe = fixture.root / 'tools/lean-inspector/compiler/build.py'
         inspector = ROOT / '.lake/build/lean-inspector/producer/bin/reportInspector'
         triples = []
         for source, relative in zip(source_paths, paths):
             triples += [relative[:-5].replace('/', '.'), relative, 'sha256:' + hashlib.sha256(source.read_bytes()).hexdigest()]
-        baseline = output / 'baseline.json'
-        spool = output / 'baseline-spool'
-        command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
-            '--statements-only', '--output', baseline, '--material-spool', spool, *triples])
         compact = output / 'baseline-compact.json'
-        materials.compact(baseline, spool, compact, fixture.root / 'lean-report-inputs.json')
-        baseline.unlink()
-        shutil.rmtree(spool)
+        if args.baseline is None:
+            # The untouched compiler supplies the independent identity baseline.
+            command([fixture.lake, 'build', *names])
+            baseline = output / 'baseline.json'
+            spool = output / 'baseline-spool'
+            command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
+                '--statements-only', '--output', baseline, '--material-spool', spool, *triples])
+            materials.compact(baseline, spool, compact, fixture.root / 'lean-report-inputs.json')
+            baseline.unlink()
+            shutil.rmtree(spool)
+        else:
+            # Reuse a real baseline's materials, never its classification. The
+            # current native report is still built and compared below, and the
+            # strict consumer validates both sets of statement materials.
+            baseline = args.baseline.resolve()
+            old = json.loads(baseline.read_text())['modules']
+            expected_sources = {p: 'sha256:' + hashlib.sha256((sources / p).read_bytes()).hexdigest()
+                                for p in paths}
+            if {row['source_path']: row['source_sha256'] for row in old} != expected_sources:
+                raise ValueError('baseline source identities do not match supplied sources')
+            for suffix in ('', '.materials.zip'):
+                shutil.copy2(publication.member(baseline, suffix), publication.member(compact, suffix))
         command([sys.executable, '-B', recipe, 'run', 'lake', 'build', ':report'])
         fixture.publish()
         rows = fixture.report()[0]

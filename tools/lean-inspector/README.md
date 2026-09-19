@@ -217,6 +217,10 @@ grants no exemption. Explicit-source,
 private/internal and unknown-origin boundaries remain in force. These fields do not
 participate in statement identities. A compiler identity change invalidates the
 requested Lake dependency closure, including requested upstream source builds.
+The Inspector imports the fixed compiler query owners itself in both normal and
+statement-only modes. Content modules need not import their generator APIs:
+imported provenance still passes the same exact owner, levels, type and proof
+checks. Builder queries remain bound to their loaded producer modules.
 
 `builder_origin_controls(destination, statement_only=False)` in
 `tests/test_native_publication.py` builds the normal Registry report, compacts its
@@ -243,6 +247,14 @@ they lack positive origin. The check target can consume an existing scope output
 without repeating both builds. Tests always produce fresh native controls unless
 `STRATALINT_ORIGIN_CONTROL_REPORT` explicitly supplies a prior actual publication
 for consumer mutation checks; `STRATALINT_NATIVE_RESULT_DIR` retains a fresh one.
+`ORIGIN_SCOPE_BASELINE=<previous baseline-compact.json>` reuses an actual stock
+baseline and its materials after checking the supplied source identities. The
+candidate is still built and published natively; the strict check validates both
+sets of materials and compares all declaration, statement and axiom identities.
+Native import/link/invalidation and compiler-output/receipt recovery run as
+separate ordinary harness cases, with unchanged per-process guards and the same
+class-owned Lake compiler stage. Optional lifecycle measurements include setup,
+body and completed cleanup; body receipts alone are not a successful test exit.
 The scope program's `--measure` mode reads the pinned
 compiler's import parser to count the full default-library source rebuild closure.
 These scoped checks do not replace Linux and whole-project CI.

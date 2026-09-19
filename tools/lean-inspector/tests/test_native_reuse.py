@@ -6,8 +6,19 @@ from test_reuse import EXECUTION
 class NativeReuseTests:
     def inspect(self, *, success=True):
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        started = time.monotonic()
         result = self.guarded_command(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
             '--repository', str(self.root), '--output', str(output)], env=self.env)
+        report_started = 'phase=report status=started' in result.stderr
+        build_output = Path(str(output) + '.logs/report.stdout.log')
+        build_text = build_output.read_text() if report_started and build_output.is_file() else ''
+        checks = getattr(self, '_entry_checks', [])
+        checks.append(dict(exit=result.returncode, seconds=round(time.monotonic() - started, 3),
+            built=sum('Built ' in line for line in build_text.splitlines()),
+            report_started=report_started,
+            work=[line for line in result.stdout.splitlines() if line.startswith('LEAN_INSPECTOR_WORK ')]))
+        self._entry_checks = checks
+        self.record_result('entry', dict(checks=checks))
         if success:
             self.assertEqual(result.returncode, 0, '[FAIL] report_entry_success\n' + result.stdout + result.stderr)
         else:

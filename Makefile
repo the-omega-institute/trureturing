@@ -36,7 +36,7 @@ ORIGIN_SCOPE_COMMAND_TIMEOUT ?= 900
 
 lean-origin-scope:
 	@$(MAKE) lean LEAN_TARGETS=leanInspector/reportInspector
-	@python3 -B tools/lean-inspector/tests/compiler_origin_scope.py --sources "$(ORIGIN_SCOPE_SOURCES)" --output "$(ORIGIN_SCOPE_OUTPUT)" --command-timeout "$(ORIGIN_SCOPE_COMMAND_TIMEOUT)"
+	@python3 -B tools/lean-inspector/tests/compiler_origin_scope.py --sources "$(ORIGIN_SCOPE_SOURCES)" --output "$(ORIGIN_SCOPE_OUTPUT)" --command-timeout "$(ORIGIN_SCOPE_COMMAND_TIMEOUT)" $(if $(ORIGIN_SCOPE_BASELINE),--baseline "$(ORIGIN_SCOPE_BASELINE)",)
 	@$(MAKE) lean-origin-scope-check ORIGIN_SCOPE_OUTPUT="$(ORIGIN_SCOPE_OUTPUT)"
 
 lean-origin-scope-check:

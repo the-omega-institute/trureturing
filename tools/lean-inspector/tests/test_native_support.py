@@ -38,6 +38,8 @@ class NativeTestSupport:
         if not cls.dotnet or not cls.cli.is_file():
             raise RuntimeError('native fixtures require make -C tools dotnet first')
     def setUp(self):
+        self._fixture_started = time.monotonic()
+        self._fixture_setup_seconds = 0
         self.temporary = tempfile.TemporaryDirectory(prefix='inspector-native.',
             dir=os.environ.get('STRATALINT_NATIVE_TMPDIR'))
         self.addCleanup(self.cleanup_fixture)
@@ -139,6 +141,7 @@ root = "Cache"
         # A fresh synthetic Git repository bounds ensure donor discovery to
         # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
+        self._fixture_setup_seconds = time.monotonic() - self._fixture_started
     command_clock = staticmethod(time.monotonic)
 
     @staticmethod
@@ -228,6 +231,7 @@ root = "Cache"
             time.sleep(0.05)
 
     def cleanup_fixture(self):
+        started = time.monotonic()
         try:
             for command in getattr(self, '_commands', []):
                 self.join_command(command)
@@ -236,6 +240,12 @@ root = "Cache"
             self.temporary._finalizer.detach()
             raise
         self.temporary.cleanup()
+        if hasattr(self, '_fixture_started'):
+            self.record_result('lifecycle', dict(
+                setup_seconds=round(self._fixture_setup_seconds, 3),
+                body_seconds=round(started - self._fixture_started - self._fixture_setup_seconds, 3),
+                cleanup_seconds=round(time.monotonic() - started, 3),
+                fixture_removed=not self.root.exists(), owned_live_processes=0))
 
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
         if not 0 < timeout < float('inf') or not text or not capture_output:

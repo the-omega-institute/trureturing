@@ -596,15 +596,10 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
     for region in regions.reverse do region.free
     out.flush
 
-/-- These read-only queries are fixed producer APIs, never content callbacks.
-Absent old metadata yields no exemption; a loaded producer with a missing or
-misowned API is an error. Statement-only probes use the same membership path. -/
-private unsafe def generatedProducerNames (env : Environment) : IO NameSet := do
-  let mut names : NameSet := {}
-  for (owner, query) in #[
-      (`LeanInformationAudit.Registry.Reifier, `LeanInformationAudit.RegistrationReifier.generatedCompanionNames),
-      (`LeanInformationAudit.Syntax, `LeanInformationAudit.registrationCompanionNames),
-      (`LeanInformationAudit.SealCommand, `LeanInformationAudit.sealCompanionNames),
+/-- Compiler extensions can record companions in modules which do not import
+their producer APIs. The report owns this query closure independently of the
+content import graph. -/
+private def compilerCompanionProducers : Array (Name × Name) := #[
       (`Lean.Meta.Injective, `Lean.Meta.compilerGeneratedCompanionNamesInjective),
       (`Lean.Meta.SizeOf, `Lean.Meta.compilerGeneratedCompanionNamesSizeOf),
       (`Lean.Meta.Eqns, `Lean.Meta.compilerGeneratedCompanionNamesEqns),
@@ -616,7 +611,17 @@ private unsafe def generatedProducerNames (env : Environment) : IO NameSet := do
         `Lean.Elab.WF.compilerGeneratedCompanionNamesWFEqns),
       (`Lean.Elab.PreDefinition.PartialFixpoint.Eqns,
         `Lean.Elab.PartialFixpoint.compilerGeneratedCompanionNamesPartialFixpointEqns),
-      (`Lean.Meta.CongrTheorems, `Lean.Meta.compilerGeneratedCompanionNamesCongrTheorems)] do
+      (`Lean.Meta.CongrTheorems, `Lean.Meta.compilerGeneratedCompanionNamesCongrTheorems)]
+
+/-- These read-only queries are fixed producer APIs, never content callbacks.
+Absent old metadata yields no exemption; a loaded producer with a missing or
+misowned API is an error. Statement-only probes use the same membership path. -/
+private unsafe def generatedProducerNames (env : Environment) : IO NameSet := do
+  let mut names : NameSet := {}
+  for (owner, query) in compilerCompanionProducers ++ #[
+      (`LeanInformationAudit.Registry.Reifier, `LeanInformationAudit.RegistrationReifier.generatedCompanionNames),
+      (`LeanInformationAudit.Syntax, `LeanInformationAudit.registrationCompanionNames),
+      (`LeanInformationAudit.SealCommand, `LeanInformationAudit.sealCompanionNames)] do
     unless env.header.moduleNames.contains owner do continue
     let some index := env.getModuleIdxFor? query
       | throw <| IO.userError s!"IE-C050 reason=incomplete_closure rule=dtr.companion_producer owner={owner} query={query}"
@@ -695,6 +700,7 @@ unsafe def main (args : List String) : IO Unit := do
   -- judge driver is loaded independently of the source's old native imports.
   let moduleNames := sortedUnique (inputs.map (·.moduleName) ++
     selectedUtilities.map (·.claimModule) ++
+    compilerCompanionProducers.map (fun producer => producer.1.toString) ++
     (if statementOnly then #[] else #["LeanInformationAudit.Registry"]))
   let imports := moduleNames.map fun moduleName => { module := moduleName.toName }
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"

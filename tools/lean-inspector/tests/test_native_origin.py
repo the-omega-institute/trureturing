@@ -3,7 +3,7 @@ from test_native_support import *
 
 
 class NativeOriginTests:
-    def test_compiler_origin_imports_and_invalidation(self):
+    def measure_origin_commands(self):
         checks = []
         run_lake = self.run_lake
         def measured(*args, **kwargs):
@@ -16,6 +16,17 @@ class NativeOriginTests:
             return result
         self.run_lake = measured
         self.addCleanup(setattr, self, 'run_lake', run_lake)
+        return checks
+
+    def test_compiler_origin_imports_and_invalidation(self):
+        checks = self.measure_origin_commands()
+        # Compiler companion metadata survives even when the content imports
+        # no Lean producer API. Query imports belong to the report environment.
+        self.write('D5/MinimalOrigin.lean', '''inductive Minimal where
+  | mk (n : Nat)
+def visited : Nat → Nat | 0 => 0 | n + 1 => visited n + 1
+def visitedWitness := @visited.eq_def
+''')
         self.write('D5/Origin.lean', '''import Lean
 open Lean Elab Command
 inductive Ranged where
@@ -115,6 +126,15 @@ unsafe def main : IO Unit := do
             "cannot evaluate `[init]` declaration '_private.Lean.Meta.Injective.0.Lean.Meta.compilerProducedTheoremsInjective'",
             'native archive did not retain generator instrumentation')), diagnostic)
         rows = self.report()[0]
+        # Inspect this module alone: importing Origin would otherwise load
+        # Lean and conceal a missing report-owned query closure.
+        self.run_lake('env', str(self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'),
+            '--output', 'minimal.json', '--material-spool', 'minimal-materials',
+            'D5.MinimalOrigin', 'D5/MinimalOrigin.lean',
+            'sha256:' + publication.digest(self.root / 'D5/MinimalOrigin.lean'))
+        minimal = json.loads((self.root / 'minimal.json').read_text())['modules'][0]
+        for name in ['Minimal.mk.inj', 'Minimal.mk.injEq', 'Minimal.mk.sizeOf_spec', 'visited.eq_def']:
+            self.assertTrue(next(d for d in minimal['declarations'] if d['name'] == name)['generated_companion'], name)
         origin_row = next(r for r in rows if r['module'] == 'D5.Origin')
         declarations = {d['name']: d for d in origin_row['declarations']}
         self.assertFalse(declarations['Ranged.mk.inj']['generated_companion'])
@@ -160,17 +180,33 @@ unsafe def main : IO Unit := do
         self.assertNotEqual(before['D5.Origin']['compiler_input_sha256'], after['D5.Origin']['compiler_input_sha256'])
         self.assertEqual([(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in rows],
             [(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in self.report()[0]])
+        self.record_result('verified', dict(exit=0, query_apis=8, imported_companions=6,
+            exact_record_mismatches=5, explicit_source_veto='Ranged.mk.inj',
+            stock_archive_control_exit=control.returncode,
+            stock_archive_control_diagnostic=diagnostic.strip(),
+            compiler_before=before['D5.Origin']['compiler_input_sha256'],
+            compiler_after=after['D5.Origin']['compiler_input_sha256'],
+            recipe_invalidation=True, identities_and_axioms_unchanged=True,
+            minimal_import_companions=4,
+            missing_and_stale_provenance_rejected=True, checks=checks, owned_live_processes=0))
+
+    def test_compiler_origin_output_and_receipt_recovery(self):
+        checks = self.measure_origin_commands()
+        self.build()
+        before = self.origins()
+        report_before = self.report()
         selected = next(p for p in (self.root / 'build/compiler-origin').iterdir()
-            if p.name == after['D5.Origin']['compiler_input_sha256'])
+            if p.name == before['Fixture']['compiler_input_sha256'])
         registry = selected / 'lib/lean/Lean/CompanionOrigin.olean'
         expected = publication.digest(registry)
         registry.write_bytes(b'corrupt compiler output')
         self.build()
         self.assertEqual(publication.digest(registry), expected)
+        self.assertEqual(self.report(), report_before)
+        self.assertEqual(self.origins(), before)
         # Optional compiler receipts have the same recovery contract as outputs.
         # Exercise the canonical entry after a valid build, including its lock.
-        report_before = self.report()
-        origins_before = self.origins()
+        origins_before = before
         receipt = selected / 'artifacts.json'
         receipt_before = receipt.read_bytes()
         # Root can read mode-000 files; only claim the permission-denied
@@ -189,12 +225,6 @@ unsafe def main : IO Unit := do
                 self.assertFalse(receipt.with_suffix('.json.tmp').exists())
                 self.assertEqual(self.report(), report_before)
                 self.assertEqual(self.origins(), origins_before)
-        self.record_result('verified', dict(exit=0, query_apis=8, imported_companions=6,
-            exact_record_mismatches=5, explicit_source_veto='Ranged.mk.inj',
-            stock_archive_control_exit=control.returncode,
-            stock_archive_control_diagnostic=diagnostic.strip(),
-            compiler_before=before['D5.Origin']['compiler_input_sha256'],
-            compiler_after=after['D5.Origin']['compiler_input_sha256'],
-            recipe_invalidation=True, corruption_recovered=True,
+        self.record_result('verified', dict(corruption_recovered=True,
             receipt_controls=damages, identities_and_axioms_unchanged=True,
-            missing_and_stale_provenance_rejected=True, checks=checks, owned_live_processes=0))
+            compiler=before['Fixture']['compiler_input_sha256'], checks=checks))
