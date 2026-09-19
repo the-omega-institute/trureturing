@@ -44784,3 +44784,201 @@ $$
 [^rro118-limit]: 几何幂极限直接见钉版 Mathlib [tendsto_pow_atTop_nhds_zero_of_lt_one](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecificLimits/Basic.lean)。本节的正系数递推只用归纳比较；显式列及其实际核作用承担递推与状态空间之间的对应。
 
 ## 118.99 追加锚
+
+## 119. 有限最大滞后下的唯一最优时间准备
+
+**定义与假设 119.1（固定有限滞后的实际时间字典）。** 固定 $0<\delta\le1/2$，沿用式 (116.1a) 的实际四态核 $K_{\delta,d}$、准备行 $e_1$、目标行 $e_0$，以及式 (118.1a)、(118.2a) 中的 $\lambda,c,H,R,\pi,G_\delta$；简写 $K_d=K_{\delta,d}$，方向为 $d\in\{0,1\}$。取式 (118.2g) 的实际列 $g_d$ 和式 (118.2h) 的共同轨道 $r_t=e_1K_d^tg_d$。[^rro119-model] 对固定整数 $L\ge0$，令
+$$
+\mu_{t,d}=e_1K_d^t,\qquad
+\mathcal A_{d,L}=\left\{a\in\mathbb R^{L+1}:\sum_{t=0}^La_t\mu_{t,d}=e_0\right\},
+\qquad
+\mathcal A_{{\rm com},L}=\mathcal A_{0,L}\cap\mathcal A_{1,L},
+\tag{119.1a}
+$$
+并按 $\Gamma(a)=\sum_{t=0}^L|a_t|$ 计费。共同可行集要求同一个系数向量同时满足两个方向的等式；字典仅含时刻 $0,\ldots,L$ 的实际时间行。
+
+**命题 119.2（可行阈值、唯一四点最优解与严格滞后前沿）。** 在定义 119.1 下，$\mathcal A_{0,L},\mathcal A_{1,L},\mathcal A_{{\rm com},L}$ 各自非空当且仅当 $L\ge3$。实际共同轨道满足
+$$
+r_0=r_1=r_2=1>r_3>r_4>\cdots>0.
+\tag{119.2a}
+$$
+当 $L\ge3$ 时，置
+$$
+j=L\bmod3,\qquad \ell=L-j,\qquad
+A_L=\frac{1+3R}{1-r_L},\qquad
+B_L=\frac{-3-A_L(\lambda^L-c^\ell\lambda^j)}{H(\lambda)},
+\tag{119.2b}
+$$
+$$
+p_L(z)=A_Lz^L-A_Lc^\ell z^j+B_LH(z)
+=\sum_{t=0}^La_t^*z^t.
+\tag{119.2c}
+$$
+则同一个 $a^*$ 是两个单方向问题及共同问题各自唯一的优化器。其支撑恰为 $\{0,1,2,L\}$，前三个系数严格负，第 $L$ 个系数严格正，并且
+$$
+\boxed{
+\min_{a\in\mathcal A_{0,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{1,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{{\rm com},L}}\Gamma(a)
+=\Gamma^*_{\delta,L}:=\frac{G_\delta+r_L}{1-r_L}.}
+\tag{119.2d}
+$$
+对固定 $\delta$，这条前沿随整数 $L\ge3$ 严格下降，并满足
+$$
+\Gamma^*_{\delta,L}-G_\delta
+=\frac{(G_\delta+1)r_L}{1-r_L}>0,
+\qquad
+\Gamma^*_{\delta,L}\longrightarrow G_\delta.
+\tag{119.2e}
+$$
+
+**证明。** 复用式 (118.2f)–(118.2j) 的实际轨道关系。整个参数区间内，$c,\lambda>0$，且
+$$
+b:=\lambda-c=(3-5\delta)/4\ge1/8>0.
+$$
+令
+$$
+\sigma=b+cb+\lambda c^2=1-(1-\lambda)H(1)\in(0,1),
+\qquad D_t=r_t-r_{t+1}.
+$$
+将式 (118.2i) 在相邻时刻相减，得到
+$$
+D_{t+3}=bD_{t+2}+cbD_{t+1}+\lambda c^2D_t,
+\qquad
+D_0=D_1=0,\quad D_2=1-\sigma>0.
+\tag{119.2f}
+$$
+正系数递推先给出全部 $D_t\ge0$；从 $D_2>0$ 出发，项 $bD_{t+2}$ 又使 $D_{t+3}>0$ 逐步成立。因此 $D_t>0$ 对每个 $t\ge2$ 成立。结合式 (118.2j) 的正性，得到式 (119.2a)。
+
+若 $L\le2$ 且某个方向有可行向量，右乘全一列 $\mathbf1$ 得 $\sum_ta_t=1$；再右乘实际列 $g_d$，利用 $e_0g_d=-3R$ 和 $r_0=r_1=r_2=1$ 得
+$$
+-3R=\sum_{t=0}^La_tr_t=\sum_{t=0}^La_t=1,
+$$
+与 $R>0$ 矛盾。这同时排除两个单方向及共同可行集。
+
+以下固定 $L\ge3$。对每个方向构造实际列
+$$
+g_{d,L}=\frac{g_d-r_L\mathbf1}{1-r_L},\qquad
+f_{d,L}=\mathbf1-2g_{d,L}.
+\tag{119.2g}
+$$
+实际时间行质量为一，故
+$$
+y_{t,L}:=\mu_{t,d}f_{d,L}
+=\frac{1+r_L-2r_t}{1-r_L}.
+$$
+由式 (119.2a)，在 $0\le t\le L$ 内，
+$$
+y_{t,L}=-1\ \Longleftrightarrow\ t\in\{0,1,2\},
+\qquad
+y_{t,L}=1\ \Longleftrightarrow\ t=L,
+\qquad
+-1<y_{t,L}<1\quad(3\le t<L).
+\tag{119.2h}
+$$
+当 $L=3$ 时最后的区间为空。这里受界的是列在实际时间行原子上的评估，不是列的各个状态坐标。目标行评估为
+$$
+e_0f_{d,L}
+=1-2\frac{-3R-r_L}{1-r_L}
+=\frac{G_\delta+r_L}{1-r_L}.
+$$
+因此每份 $a\in\mathcal A_{d,L}$ 都满足有限和弱对偶界[^rro119-dual]
+$$
+\frac{G_\delta+r_L}{1-r_L}
+=\sum_{t=0}^La_ty_{t,L}
+\le\sum_{t=0}^L|a_t|.
+\tag{119.2i}
+$$
+若等号成立，每个非负余量 $|a_t|-a_ty_{t,L}$ 都为零。式 (119.2h) 因而迫使
+$$
+a_t=0\quad(3\le t<L),\qquad
+ a_0,a_1,a_2\le0,\qquad a_L\ge0.
+\tag{119.2j}
+$$
+
+现验证式 (119.2c) 的共同构造。因为 $\ell=3m$，其中 $m\ge1$，而 $\lambda>c>0$，
+$$
+\lambda^L-c^\ell\lambda^j
+=\lambda^j(\lambda^\ell-c^\ell)>0.
+$$
+所以 $A_L>0$、$B_L<0$。多项式 $H$ 的系数为 $c^2,c,1$，全为正；项 $-A_Lc^\ell z^j$ 只进一步减小其中一个低次系数，而 $L\ge3$。具体地，令 $(\eta_0,\eta_1,\eta_2)=(c^2,c,1)$，则
+$$
+a_t^*=B_L\eta_t-A_Lc^\ell\mathbf1_{\{t=j\}}<0\quad(0\le t\le2),
+\qquad a_L^*=A_L>0,
+\qquad a_t^*=0\quad(3\le t<L).
+$$
+又有精确分解
+$$
+z^L-c^\ell z^j
+=z^j(z^{3m}-c^{3m})
+=z^j(z-c)H(z)\sum_{q=0}^{m-1}z^{3(m-1-q)}c^{3q},
+$$
+故 $H$ 整除 $p_L$。$B_L$ 的定义给 $p_L(\lambda)=-3$。由式 (118.2h) 及其中 $u_{1+j}=(1-R\lambda^j)/c^j$，
+$$
+r_L=R\lambda^L+c^\ell(1-R\lambda^j).
+\tag{119.2k}
+$$
+利用 $H(1)=RH(\lambda)$，得到另一个节点值
+$$
+\begin{aligned}
+p_L(1)
+&=A_L(1-c^\ell)+B_LH(1)\\
+&=A_L\bigl[1-c^\ell-R(\lambda^L-c^\ell\lambda^j)\bigr]-3R\\
+&=A_L(1-r_L)-3R=1.
+\end{aligned}
+$$
+复用式 (117.2g) 及式 (118.2n) 所用的共同模式，仍以 $w=e_0-\rho$、$h=e_1-\rho$ 表示既有行，其中 $\rho=(0,1/3,1/3,1/3)$。$H\mid p_L$、上述两个节点值及 $hH(K_d)=0$ 给出
+$$
+e_1p_L(K_d)
+=\pi p_L(1)-\tfrac14wp_L(\lambda)+hp_L(K_d)
+=\pi+\tfrac34w=e_0\qquad(d=0,1).
+\tag{119.2l}
+$$
+故 $a^*$ 是共同可行向量，也证明 $L\ge3$ 的可行性。由 $p_L(1)=1$ 及已证符号，
+$$
+\Gamma(a^*)
+=A_L-\sum_{t=0}^2a_t^*
+=2A_L-1
+=\frac{G_\delta+r_L}{1-r_L}.
+$$
+结合式 (119.2i)，得到三个最小值的等式。
+
+为证明唯一性，必须验证接触原子的实际独立性。置 $\xi=\delta^2/9$，取行 $\mu_{0,0},\mu_{1,0},\mu_{2,0}$ 的环坐标 $1,2,3$，式 (116.1a) 给出子矩阵
+$$
+\begin{pmatrix}
+1&0&0\\
+c&2c&c\\
+\xi+5c^2&\xi+5c^2&\xi+6c^2
+\end{pmatrix}.
+\tag{119.2m}
+$$
+其第三行可由实际核平方直接计算：若 $J$ 是三阶全一矩阵、$C_0$ 是正向三循环矩阵，环块为 $c(J+C_0)$，并且 $J^2=3J$、$JC_0=C_0J=J$，故两步环块为 $\xi J+c^2(5J+C_0^2)$。式 (119.2m) 的行列式为
+$$
+2c(\xi+6c^2)-c(\xi+5c^2)
+=c(\delta^2/9+7c^2)>0.
+$$
+方向一使用反向循环，三个实际行的环子矩阵是式 (119.2m) 交换最后两列，行列式为 $-c(\delta^2/9+7c^2)\ne0$。所以两个方向的前三个实际行均线性独立。
+
+若四个实际行在某个方向满足
+$$
+b_0\mu_{0,d}+b_1\mu_{1,d}+b_2\mu_{2,d}+b_L\mu_{L,d}=0,
+$$
+分别右乘 $\mathbf1$ 与原列 $g_d$，得到
+$$
+b_0+b_1+b_2+b_L=0,\qquad
+b_0+b_1+b_2+r_Lb_L=0.
+$$
+因为 $r_L<1$，相减得 $b_L=0$；前三行独立再给 $b_0=b_1=b_2=0$。因此 $\mu_{0,d},\mu_{1,d},\mu_{2,d},\mu_{L,d}$ 在两个方向都线性独立。任何单方向最优向量由式 (119.2j) 只支撑在这四点，与 $a^*$ 作差即得四行零组合，所以必等于 $a^*$。共同最优向量也是任意单方向的最优向量，因而同样唯一。
+
+最后，式 (119.2d) 直接给出式 (119.2e) 的差值。若 $L'>L\ge3$，式 (119.2a) 给 $r_L>r_{L'}$，于是
+$$
+\Gamma^*_{\delta,L}-\Gamma^*_{\delta,L'}
+=\frac{(G_\delta+1)(r_L-r_{L'})}{(1-r_L)(1-r_{L'})}>0.
+$$
+式 (118.2h) 已给固定 $\delta$ 下 $r_L\to0$，代入即得极限 $G_\delta$。证毕。
+
+[^rro119-model]: [已合并 RRO §116–118](https://github.com/the-omega-institute/trureturing/blob/1b46e9aa0cc3dfa4a6979682be1167c5cf85ece9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，式 (116.1a) 给实际四态核，式 (117.2g) 给共同模式；式 (118.2g)–(118.2j) 给实际对偶列、方向共同轨道、正系数递推与正性，式 (118.2a) 给允许有限最大滞后任意增大时的下确界。本节固定 $L$ 后求解同一时间字典中的系数总量最小化。
+
+[^rro119-dual]: 有限和弱对偶沿用第 118 节的来源：钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)；Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1。这里直接逐项验证对偶不等式及其取等条件，再用实际行的独立性证明唯一性。
+
+## 119.99 追加锚
