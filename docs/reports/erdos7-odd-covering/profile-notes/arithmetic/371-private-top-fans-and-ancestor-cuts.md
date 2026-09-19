@@ -1,4 +1,4 @@
-[Index](../../marked_head_profile.md) · [Actual source](../354-synchronized-prime-private-cofactor-matching.md) · [Shallow bound](../366-shallow-tail-truncation-on-the-actual-source.md)
+[Index](../../marked_head_profile.md) · [Actual source](../whole-cover/354-synchronized-prime-private-cofactor-matching.md) · [Shallow bound](../whole-cover/366-shallow-tail-truncation-on-the-actual-source.md)
 
 # Private top fans and original ancestor cuts at every height
 

@@ -1,4 +1,4 @@
-[Index](../marked_head_profile.md) · [Actual sources](366-shallow-tail-truncation-on-the-actual-source.md) · [Joint height cost](368-joint-selection-can-require-extra-height.md)
+[Index](../../marked_head_profile.md) · [Actual sources](366-shallow-tail-truncation-on-the-actual-source.md) · [Joint height cost](368-joint-selection-can-require-extra-height.md)
 
 # Whole maximum matchings can have no common slot assignment
 
@@ -103,7 +103,7 @@ comparison is 3/Q against 2/Q. No source is renormalized separately.
 
 ## 3. What the RRO gluing theorem requires
 
-The existing [running-intersection theorem](../../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+The existing [running-intersection theorem](../../../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
 requires a tree of nonempty local relations, running intersection of
 their variables, and equality of complete separator projection images.
 A variable here must be the whole matching at one source. A relation
@@ -135,7 +135,7 @@ formalization is introduced here.
 
 ## 4. Verification and remaining obligation
 
-The [standalone checker](../frontier/whole_maximum_slot_obstruction.py)
+The [standalone checker](../../frontier/whole_maximum_slot_obstruction.py)
 uses only Python's standard library. It verifies the literal whole
 cover, private witnesses, divisor closure, comparable disjointness,
 complete CRT source coordinates, every full and shallow source graph,

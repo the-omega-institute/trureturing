@@ -1,4 +1,4 @@
-[Index](../marked_head_profile.md) · [Full-tail mean](360-mean-partial-matching-without-tail-loss.md) · [Shallow source bound](366-shallow-tail-truncation-on-the-actual-source.md) · [Maximum-selection obstruction](369-whole-maximum-matchings-can-have-no-common-slots.md)
+[Index](../../marked_head_profile.md) · [Full-tail mean](360-mean-partial-matching-without-tail-loss.md) · [Shallow source bound](366-shallow-tail-truncation-on-the-actual-source.md) · [Maximum-selection obstruction](369-whole-maximum-matchings-can-have-no-common-slots.md)
 
 # Integrated source budgets survive a one-edge rank loss
 
@@ -169,7 +169,7 @@ making its one deletion.
 
 ## 5. Verification and remaining arithmetic requirement
 
-The extended [exact checker](../frontier/whole_maximum_slot_obstruction.py)
+The extended [exact checker](../../frontier/whole_maximum_slot_obstruction.py)
 retains the full cover and all-source verification of 369, then checks
 the constructive partial repair independently. Its added checks cover
 all source ranks, original labels, complete tails, cutoffs, forced edges,
@@ -181,7 +181,7 @@ an unrelated directory with `python3 -I -S -O -B` give identical output.
 
 Finite Hall is already available in pinned Mathlib as
 `Finset.all_card_le_biUnion_card_iff_existsInjective'`. The repository's
-[rational flow/cut certificate module](../../../../D5/S0/Certificates/RationalSTCutCertificate.lean)
+[rational flow/cut certificate module](../../../../../D5/S0/Certificates/RationalSTCutCertificate.lean)
 provides weak duality and certificate soundness; it is not an integer
 flow existence theorem. Neither is wrapped in a new Lean declaration.
 The present argument and finite checker are not Lean verified.
