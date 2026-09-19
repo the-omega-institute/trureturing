@@ -35,6 +35,12 @@ No finite-state, positivity of singleton masses, irreducibility, stationarity,
 aperiodicity, emission law or stopping-time hypothesis is introduced by these
 suppliers. Source-specific uses must establish their own law identification.
 
+## Verified locator
+
+- URL: https://github.com/TauCetiProject/TauCeti/tree/fbb1ce3c887a9697c1be346d135aed8b2932997a
+- Upstream theorem: `TauCeti.Probability.markovChainLaw_map_prefix_apply_singleton` in `TauCeti/Probability/Process/MarkovChain.lean` at revision `fbb1ce3c887a9697c1be346d135aed8b2932997a` (the `markovChainLaw_map_prefix_apply_singleton` declaration in the pinned source).
+- Source law scope: for a probability initial law, a Markov transition kernel, measurable singletons, and a prefix `w : Fin (n + 1) → α`, the finite-prefix singleton mass is the initial singleton mass times the transition-singleton product.
+
 # Retirement
 
 At each Mathlib revision actually adopted by this repository, search for an

@@ -47,7 +47,9 @@ theorem has_law_traj_measure [IsFiniteMeasure P]
         (prodCongr (refl _) (piSingleton n)).trans
           (MeasurableEquiv.IicProdIoc (Nat.le_succ n)) := rfl
   have IicSuccProd_apply (n : ℕ) (h : Π i : Iic (n + 1), X i) :
-      IicSuccProd n h = (fun i : Iic n ↦ h ⟨i.1, mem_Iic.mpr (le_trans (mem_Iic.mp i.2) (Nat.le_succ n))⟩, h ⟨n + 1, by simp⟩) := rfl
+      IicSuccProd n h =
+        (fun i : Iic n ↦ h ⟨i.1, mem_Iic.mpr (le_trans (mem_Iic.mp i.2) (Nat.le_succ n))⟩,
+          h ⟨n + 1, by simp⟩) := rfl
   have coe_prodCongr {α β γ δ : Type u}
       {mα : MeasurableSpace α} {mβ : MeasurableSpace β}
       {mγ : MeasurableSpace γ} {mδ : MeasurableSpace δ}

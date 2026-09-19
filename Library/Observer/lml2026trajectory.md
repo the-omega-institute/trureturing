@@ -38,6 +38,12 @@ No finite-state, positivity of singleton masses, irreducibility, stationarity,
 aperiodicity, emission law or stopping-time hypothesis is introduced by these
 suppliers. Source-specific uses must establish their own law identification.
 
+## Verified locator
+
+- URL: https://github.com/LeanMachineLearning/LML/tree/357e9dd450b76d6ff85955280bb4721a2c520442
+- Upstream theorem: `ProbabilityTheory.Kernel.hasLaw_trajMeasure` in `LeanMachineLearning/ForMathlib/Probability/Kernel/IonescuTulcea/Traj.lean` at revision `357e9dd450b76d6ff85955280bb4721a2c520442` (the `hasLaw_trajMeasure` declaration in the pinned source).
+- Source law scope: under a finite measure, measurable coordinates, the specified initial law, and the own-history conditional distributions, the coordinate trajectory has the `trajMeasure` law.
+
 # Retirement
 
 At each Mathlib revision actually adopted by this repository, search for an
