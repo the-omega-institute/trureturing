@@ -265,7 +265,9 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         var material = record["family_binding"]!["material"]!;
         switch (mutation)
         {
-            case "old-report": payload["compatibility_version"] = 10; break;
+            case "old-report":
+                payload["compatibility_version"] = payload["compatibility_version"]!.GetValue<int>() - 1;
+                break;
             case "dropped-source": material.AsObject().Remove("source_name"); break;
             case "dropped-levels": material.AsObject().Remove("rigid_levels"); break;
             case "captured-coordinate": material["coordinates"] = new JsonArray(0, 1, 13); break;
@@ -290,7 +292,9 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
                 break;
         }
         var report = fixture.Change(("DependentFamily", JsonSerializer.SerializeToElement(payload)));
-        Assert.Throws<FormatException>(() => fixture.Collect("DependentFamily", report));
+        var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamily", report));
+        if (mutation == "old-report")
+            Assert.StartsWith("DTR-EvidenceVersion:", error.Message, StringComparison.Ordinal);
     }
 
     [Theory]
