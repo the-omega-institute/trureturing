@@ -85,7 +85,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
 清单中的单一正整数 `report_semantic_version` 是开发者维护的报告语义兼容版本，
-当前值为 `6`，与清单格式的 `schema_version` 分开。
+当前值以该清单为准，与清单格式的 `schema_version` 分开。
 
 兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，

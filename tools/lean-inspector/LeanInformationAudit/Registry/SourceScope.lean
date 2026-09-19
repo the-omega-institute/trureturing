@@ -76,7 +76,10 @@ def close (context : Array FamilySourceBinder) (e : Expr) : Expr :=
 private partial def dictionaryType (type : Expr) (depth : Nat := 0) : M Bool := do
   debit
   if depth > 256 then throwError "incomplete_closure:E8.family_dictionary_depth"
-  let type ← whnf type
+  -- Dictionary status is semantic, independent of a definition's reducibility
+  -- hint. Only this classifier reduces with full transparency; its result never
+  -- replaces the raw source domains or occurrences, and uses the same budget.
+  let type ← withTransparency .all <| whnf type
   match type with
   | .forallE n domain body bi =>
     fun fuel => withLocalDecl n bi domain fun x =>
