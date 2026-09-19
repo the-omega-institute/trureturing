@@ -707,7 +707,6 @@ structure FamilyRegistrationDriver where
   resolve : ConstantInfo → FamilySourceSelection → Nat → Meta.MetaM (FamilySourceScope × Nat)
   extract : TemplateOccurrenceEvent → Nat → Meta.MetaM (Expr × Nat)
   validate : TemplateOccurrenceEvent → EscapeRecordInput → Nat → Meta.MetaM (EscapeRecordEvidence × Nat)
-  relation : TemplateOccurrenceEvent → Name → Meta.MetaM Json
   deriving Inhabited
 
 structure TemplateBindingCertificate where
@@ -936,6 +935,6 @@ open Lean
 The inspector resolves one exact declaration/owner of this type. Content does
 not register producers, callbacks, policies or acceptance bits. -/
 abbrev InformationTemplateReportDriver :=
-  Array Name → MetaM (Array (Json × Array (Name × Json)))
+  Array Name → MetaM (Array (Json × Array (Name × Json) × Json))
 
 end LeanInformationAudit

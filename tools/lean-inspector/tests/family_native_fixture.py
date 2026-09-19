@@ -18,7 +18,7 @@ PREFIX = "LeanInformationAudit.Tests.RegistrationGates."
 FIXTURES = ["DependentFamilyOriginal", "DependentFamilyWitnesses", "DependentFamily",
             "DependentFamilySidecar", "DependentFamilyControls", "DependentFamilyMissingPin",
             "DependentFamilyDictionaries", "DependentFamilyUnicode", "DependentFamilyUnresolved",
-            "DependentFamilyFixedControl"]
+            "DependentFamilyFixedControl", "DependentFamilyReuse", "DependentFamilyWrongRegistration"]
 
 
 def build(producer, production):
@@ -28,12 +28,13 @@ def build(producer, production):
                    cwd=ROOT, check=True)
 
 
-def produce(destination, producer):
+def produce(destination, producer, names=None):
     destination.mkdir(parents=True, exist_ok=True)
     cache = ["dotnet", str(producer)]
     # Coherence/assertion fixtures participate in the build. These sources alone
     # own the deliberately selected report occurrences and imported definitions.
-    reported = [PREFIX + name for name in FIXTURES[:5] + FIXTURES[7:10]]
+    reported = [PREFIX + name for name in (names if names is not None
+                else FIXTURES[:5] + FIXTURES[7:])]
     spool = destination / "native.spool.json"
     material_spool = destination / "native.material-spool"
     args = ["--output", str(spool), "--material-spool", str(material_spool)]
@@ -59,6 +60,20 @@ if __name__ == "__main__":
     elif operation == "build-fixtures":
         build(producer, production=False)
     elif operation == "produce":
-        print(produce(pathlib.Path(sys.argv[3]).resolve(), producer))
+        destination = pathlib.Path(sys.argv[3]).resolve()
+        print(produce(destination, producer))
+        # Independent native environments, followed by exact field comparison.
+        # Imports remain imports even when they are also requested report roots.
+        import json
+        full = json.loads((destination / "native.json").read_text())
+        for name in ["DependentFamilyControls", "DependentFamilyUnicode",
+                     "DependentFamilySidecar", "DependentFamilyUnresolved"]:
+            path = produce(destination / name, producer, [name])
+            row = json.loads(path.read_text())["modules"][0]
+            expected = next(m for m in full["modules"] if m["module"] == PREFIX + name)
+            if row != expected:
+                raise AssertionError("batch-dependent native module: " + name)
+            print("[PASS] independent_batch_identical " + name)
+
     else:
         raise SystemExit("unknown family fixture operation")

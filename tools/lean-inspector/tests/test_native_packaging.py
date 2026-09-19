@@ -32,7 +32,7 @@ class NativePackagingTests:
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver :=
-  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json)))
+  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json) × Lean.Json))
 ''')
         self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
@@ -67,7 +67,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
     ("mapped_image_root_out_of_range_falls_back", toJson (!test (coordinates.set! 2 view.size) bytes)),
     ("mapped_image_scalar_root_falls_back", toJson (mappedImageMatch (unsafeCast (0 : Nat)) coordinates bytes == 0))]
   let debug := s!"mapped={view.isMemoryMapped} size={view.size} base={view.baseAddr} offset={view.bufferOffset} root={ptrAddrUnsafe view.root}"
-  return names.map fun _ => (Json.mkObj [("checks", checks), ("debug", toJson debug)], #[])
+  return names.map fun _ => (Json.mkObj [("checks", checks), ("debug", toJson debug)], #[], Lean.Json.arr #[])
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
@@ -101,7 +101,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
 abbrev InformationTemplateReportDriver :=
-  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json)))
+  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json) × Lean.Json))
 initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
   Lean.registerSimplePersistentEnvExtension {
     addEntryFn := fun entries entry => entries.push entry
@@ -115,7 +115,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
   return names.map fun name => (Lean.Json.mkObj [
     ("fixture_root", Lean.toJson name.toString),
     ("fixture_modules", Lean.toJson env.header.moduleNames.size),
-    ("fixture_entries", Lean.toJson entries.size)], #[])
+    ("fixture_entries", Lean.toJson entries.size)], #[], Lean.Json.arr #[])
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()

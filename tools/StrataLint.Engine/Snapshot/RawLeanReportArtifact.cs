@@ -75,6 +75,7 @@ internal static class RawLeanReportArtifact
         foreach (var moduleElement in RequiredArray(root, "modules").EnumerateArray())
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
+            if (moduleElement.TryGetProperty("family_assessments", out _)) moduleProperties.Add("family_assessments");
             if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
@@ -107,6 +108,8 @@ internal static class RawLeanReportArtifact
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
                 {
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
+                    FamilyAssessments = moduleElement.TryGetProperty("family_assessments", out var assessments)
+                        ? assessments.Clone() : null,
                     InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
                         ? templates.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
@@ -177,6 +180,7 @@ internal static class RawLeanReportArtifact
                             .Order(StringComparer.Ordinal),
                         information_registration_errors = fileReport.InformationRegistrationErrors,
                         information_templates = fileReport.InformationTemplates,
+                        family_assessments = fileReport.FamilyAssessments,
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),

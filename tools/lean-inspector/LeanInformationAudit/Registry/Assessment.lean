@@ -413,11 +413,7 @@ def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkO
 /-- Independent declaration evidence, read from ConstantInfo rather than any
 occurrence or certificate. The identity domains are intentionally different
 from the report's normalized statement-v1 material address. -/
-def familyDeclarationRelation (name : Name) (event : TemplateOccurrenceEvent) : MetaM Json := do
-  let driver ← familyDriver
-  driver.relation event name
-
-def familyDeclarationIdentity (name : Name) (relation : Json := Json.null) : MetaM (Option Json) := do
+def familyDeclarationIdentity (name : Name) : MetaM (Option Json) := do
   let info ← getConstInfo name
   let .defnInfo _ := info | return none
   unless info.type.isAppOfArity
@@ -434,8 +430,7 @@ def familyDeclarationIdentity (name : Name) (relation : Json := Json.null) : Met
       ("type_identity", toJson input.typeIdentity),
       ("body_identity", toJson input.bodyIdentity),
       ("registration_identity", toJson identity),
-      ("level_arity", toJson info.levelParams.length),
-      ("family_relation", relation)]
+      ("level_arity", toJson info.levelParams.length)]
   return some (← action.run { remaining := 524288 }).1
 
 private def failureSite (reason : String) : String :=

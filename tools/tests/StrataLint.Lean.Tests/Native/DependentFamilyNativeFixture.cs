@@ -44,7 +44,8 @@ public sealed class DependentFamilyNativeFixture : IDisposable
         var reports = modules.ToDictionary(m => m.GetProperty("source_path").GetString()!, m =>
             new LeanFileReport(m.GetProperty("imports").EnumerateArray().Select(i => i.GetString()!).ToImmutableArray(),
                 RawLeanReportArtifact.ReadDeclarations(m.GetProperty("declarations"), materials))
-            { InformationTemplates = m.GetProperty("information_templates").Clone() });
+            { InformationTemplates = m.GetProperty("information_templates").Clone(),
+                FamilyAssessments = m.GetProperty("family_assessments").Clone() });
         Report = LeanAxiomReport.Create(reports);
     }
 
@@ -61,6 +62,29 @@ public sealed class DependentFamilyNativeFixture : IDisposable
             var change = changes.SingleOrDefault(c => Source(c.Name) == pair.Key);
             return change.Name is null ? pair.Value : pair.Value with { InformationTemplates = change.Payload };
         }));
+
+    internal LeanAxiomReport IndependentlyProduced(params string[] names)
+    {
+        var replacements = new Dictionary<string, LeanFileReport>();
+        foreach (var name in names)
+        {
+            var artifact = Path.Combine(temporary.Path, name, "native.json");
+            using var document = JsonDocument.Parse(File.ReadAllBytes(artifact));
+            var module = Assert.Single(document.RootElement.GetProperty("modules").EnumerateArray());
+            var declarations = module.GetProperty("declarations");
+            var materials = RawLeanReportArtifact.OpenStatementMaterialSource(artifact,
+                declarations.EnumerateArray().Select(d => d.GetProperty("type_sha256").GetString()!));
+            replacements.Add(Source(name).Value, new LeanFileReport(module.GetProperty("imports")
+                .EnumerateArray().Select(i => i.GetString()!).ToImmutableArray(),
+                RawLeanReportArtifact.ReadDeclarations(declarations, materials))
+            {
+                InformationTemplates = module.GetProperty("information_templates").Clone(),
+                FamilyAssessments = module.GetProperty("family_assessments").Clone(),
+            });
+        }
+        return LeanAxiomReport.Create(Report.Files.ToDictionary(pair => pair.Key.Value,
+            pair => replacements.GetValueOrDefault(pair.Key.Value, pair.Value)));
+    }
 
     public void Dispose() => temporary.Dispose();
 }

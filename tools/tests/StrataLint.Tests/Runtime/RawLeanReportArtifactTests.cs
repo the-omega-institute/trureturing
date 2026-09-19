@@ -121,11 +121,13 @@ public sealed class RawLeanReportArtifactTests
         var changed = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
         {
             ["Trureturing.lean"] = file with
-            { Declarations = [original with { FamilyRegistration = payload }] },
+            { Declarations = [original with { FamilyRegistration = payload }], FamilyAssessments = payload },
         });
         var reloaded = RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, changed).AsSpan(), snapshot);
         var declaration = Assert.Single(Assert.Single(reloaded.Files).Value.Declarations);
         Assert.Equal("unselected", declaration.FamilyRegistration!.Value.GetProperty("unknown").GetString());
+        Assert.Equal("unselected", Assert.Single(reloaded.Files).Value.FamilyAssessments!
+            .Value.GetProperty("unknown").GetString());
         Assert.Equal(original.PrecomputedStatementId, declaration.PrecomputedStatementId);
         Assert.Equal(original.StatementTypeAddress, declaration.StatementTypeAddress);
     }

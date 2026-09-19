@@ -172,7 +172,7 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
     references = {}
     for row in root['modules']:
         keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
-        keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
+        keys.update(key for key in ('information_registration_errors', 'information_templates', 'family_assessments', 'utility_refutation') if key in row)
         materials.require_keys(row, keys, 'module')
         name, path, sha = row['module'], row['source_path'], row['source_sha256']
         if (not isinstance(name, str) or not name or previous is not None and name <= previous

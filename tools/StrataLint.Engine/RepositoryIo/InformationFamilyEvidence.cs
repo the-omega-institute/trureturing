@@ -7,7 +7,7 @@ namespace StrataLint.Engine;
 internal sealed record InformationFamilyBinding(string Source, string SourcePath, string Identity,
     ImmutableArray<int> Coordinates, ImmutableArray<string> StatePath, ImmutableArray<string> OutputPath,
     string RegistrationIdentity, int LevelArity, JsonElement RegistrationInput,
-    string StatementIdentity, string LawIdentity, string ArenaName);
+    string StatementIdentity, string PlanIdentity, string DescriptorIdentity, string ActualIdentity);
 
 // This reader validates current native evidence, never proves a family claim.
 // Source bytes and exact wire bindings remain mandatory for selected delta rows.
@@ -103,7 +103,8 @@ internal static class InformationFamilyEvidence
             throw new FormatException("DTR-Evidence: family certificate binding mismatch");
         return new(source, path, identity, coordinates, statePath, outputPath,
             Hash(material, "registration_identity"), levels.Length, registrationInputs[0].Clone(),
-            Hash(material, "statement_identity"), Hash(material, "law_identity"), key.ObjectArena);
+            Hash(material, "statement_identity"), Hash(material, "plan_identity"),
+            Hash(material, "descriptor_identity"), Hash(material, "actual_identity"));
     }
 
     // This is an independent join against the native declaration report, not
@@ -115,7 +116,7 @@ internal static class InformationFamilyEvidence
         if (declaration.FamilyRegistration is not { } native)
             throw new FormatException("DTR-Evidence: family registration declaration identity missing");
         InformationTemplateJson.Fields(native, "schema", "owner", "type_identity", "body_identity",
-            "registration_identity", "level_arity", "family_relation");
+            "registration_identity", "level_arity");
         var input = family.RegistrationInput;
         if (Text(native, "schema") != "dtr-family-declaration-v1"
             || Text(native, "owner") != InformationTemplateEvidence.ModuleForSource(owner.Value)
@@ -125,19 +126,53 @@ internal static class InformationFamilyEvidence
             || family.RegistrationIdentity != Hash(native, "registration_identity")
             || family.LevelArity != Nat(native.GetProperty("level_arity"), 64))
             throw new FormatException("DTR-Evidence: family registration declaration identity mismatch");
-        var relation = native.GetProperty("family_relation");
-        if (relation.ValueKind != JsonValueKind.Object)
-            throw new FormatException("DTR-Evidence: family source relation missing");
-        InformationTemplateJson.Fields(relation, "mode", "source_name", "source_statement_identity",
-            "arena_name", "arena_identity", "law_identity", "registration_name", "exact_source_law");
-        if (Text(relation, "mode") != "dependent-family-v1"
-            || InformationTemplateJson.Name(Text(relation, "source_name")) != family.Source
-            || Hash(relation, "source_statement_identity") != family.StatementIdentity
-            || InformationTemplateJson.Name(Text(relation, "arena_name")) != family.ArenaName
-            || Hash(relation, "law_identity") != family.LawIdentity
-            || InformationTemplateJson.Name(Text(relation, "registration_name")) != declaration.Name
-            || relation.GetProperty("exact_source_law").ValueKind != JsonValueKind.True)
-            throw new FormatException("DTR-Evidence: family source relation mismatch");
+    }
+
+    // Only the existing successful native assessment emits this occurrence-owned
+    // evidence. Rehashing certificate fields cannot supply an assessment of a
+    // different scope, descriptor or extraction. This is a join, not an evaluator.
+    internal static void CheckAssessment(InformationTemplateOccurrence selected, LeanFileReport owner)
+    {
+        var family = selected.Family!;
+        if (owner.FamilyAssessments is not { ValueKind: JsonValueKind.Array } assessments
+            || assessments.GetArrayLength() > 4096)
+            throw new FormatException("DTR-Evidence: family assessed occurrence missing");
+        // Route by literal occurrence addresses before interpreting any payload.
+        // An unrelated malformed assessment must not expand the selected delta.
+        var key = InformationTemplateJson.KeyJson(selected.Key);
+        var matches = assessments.EnumerateArray().Where(assessment =>
+            assessment.ValueKind == JsonValueKind.Object
+            && assessment.TryGetProperty("key", out var candidate)
+            && candidate.ValueKind == JsonValueKind.Object
+            && key.EnumerateObject().All(field => candidate.TryGetProperty(field.Name, out var value)
+                && value.ValueKind == JsonValueKind.String && value.GetString() == field.Value.GetString())).ToArray();
+        if (matches.Length != 1)
+            throw new FormatException("DTR-Evidence: family assessed occurrence missing/ambiguous");
+        var native = matches[0];
+        InformationTemplateJson.Fields(native, "schema", "owner", "key", "statement_identity",
+            "registration_name", "scope_identity", "plan_identity", "descriptor_identity",
+            "actual_identity", "evidence_ref", "content_inputs", "module_inputs");
+        if (InformationTemplateJson.ReadKey(native.GetProperty("key")) != selected.Key)
+            throw new FormatException("DTR-Evidence: family assessed occurrence key mismatch");
+        if (Text(native, "schema") != "dtr-family-assessment-v1"
+            || Text(native, "owner") != InformationTemplateEvidence.ModuleForSource(selected.BindingSourcePath!)
+            || Hash(native, "statement_identity") != family.StatementIdentity
+            || Text(native, "registration_name") != selected.RealizationName
+            || Hash(native, "scope_identity") != family.Identity
+            || Hash(native, "plan_identity") != family.PlanIdentity
+            || Hash(native, "descriptor_identity") != family.DescriptorIdentity
+            || Hash(native, "actual_identity") != family.ActualIdentity
+            || Hash(native, "evidence_ref") != selected.EvidenceRef)
+            throw new FormatException("DTR-Evidence: family assessed occurrence mismatch");
+        var inputs = Array(native, "content_inputs", 4096).Select(input =>
+        {
+            InformationTemplateJson.Fields(input, "path", "sha256");
+            return new InformationTemplateContentInput(Text(input, "path"), Hash(input, "sha256"));
+        }).ToImmutableArray();
+        if (!inputs.SequenceEqual(selected.ContentInputs)
+            || owner.InformationTemplates is not { } templates
+            || !JsonElement.DeepEquals(native.GetProperty("module_inputs"), templates.GetProperty("inputs")))
+            throw new FormatException("DTR-Evidence: family assessed source inputs mismatch");
     }
 
     // Recompute the current native certificate framing for this mode. Rehashing

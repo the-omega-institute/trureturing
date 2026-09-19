@@ -187,6 +187,7 @@ structure ModuleReport where
   refutation : Option RefutationReport := none
   informationRegistrationErrors : Array String := #[]
   informationTemplates : Json := Json.null
+  familyAssessments : Json := Json.null
 
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
@@ -350,6 +351,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (utilities : Array UtilityInput)
     (informationTemplates : Json)
     (declarationIdentities : Array (Name × Json))
+    (familyAssessments : Json)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
@@ -416,6 +418,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
       }
   return {
     informationTemplates
+    familyAssessments
     informationRegistrationErrors
     declarations
     imports := sortedUnique (moduleData.imports.map (fun item => item.module.toString))
@@ -471,6 +474,8 @@ def renderModule (report : ModuleReport) : String :=
     ++ ", \"information_registration_errors\": " ++ renderStrings report.informationRegistrationErrors
     ++ (if report.informationTemplates == Json.null then "" else
       ", \"information_templates\": " ++ report.informationTemplates.compress)
+    ++ (if report.familyAssessments == Json.null then "" else
+      ", \"family_assessments\": " ++ report.familyAssessments.compress)
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
     ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
@@ -584,7 +589,7 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
 source modules. Even an empty inventory requires its source/native verifier.
 The two producer identities are fixed judge APIs, never content callbacks. -/
 private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput) :
-    IO (Array (Json × Array (Name × Json))) := do
+    IO (Array (Json × Array (Name × Json) × Json)) := do
   let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
       some (`LeanInformationAudit.informationTemplateReportDriver,
         `LeanInformationAudit.DispositionEvidence)
@@ -603,7 +608,7 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
     unless env.header.moduleNames[typeOwner.toNat]! == `LeanInformationAudit.RegistryTypes do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck
-      (Array Name → MetaM (Array (Json × Array (Name × Json)))) {}
+      (Array Name → MetaM (Array (Json × Array (Name × Json) × Json))) {}
       typeName producerName
     let (bindings, _) ← (driver (inputs.map (·.moduleName.toName))).run' |>.toIO
       { fileName := "<information-template-join>", fileMap := default } { env }
@@ -656,7 +661,7 @@ unsafe def main (args : List String) : IO Unit := do
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    let bindings ← if statementOnly then pure (inputs.map fun _ => (Json.null, #[])) else
+    let bindings ← if statementOnly then pure (inputs.map fun _ => (Json.null, #[], Json.null)) else
       templateBindings env inputs
     unless bindings.size == inputs.size do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
@@ -671,7 +676,7 @@ unsafe def main (args : List String) : IO Unit := do
         materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
     try
       let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-        inspectModule env cache writer materialCounter utilities binding.1 binding.2 input
+        inspectModule env cache writer materialCounter utilities binding.1 binding.2.1 binding.2.2 input
       writer.stdin.putStr "done\n"
       writer.stdin.flush
       unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do

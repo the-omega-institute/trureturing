@@ -99,11 +99,7 @@ private def sourceMaterial (event : TemplateOccurrenceEvent) (scope : FamilySour
     ("signature_identity", toJson (← rawId scope.levels signature)),
     ("state_field_identity", toJson (← rawId scope.levels (← mkAppM ``Signature.State #[signature]))),
     ("output_field_identity", toJson (← rawId scope.levels (← mkAppM ``Signature.Output #[signature]))),
-    -- Bind the law at the extracted realization.  The family material is
-    -- source evidence for the actual registration, so the identity domain
-    -- must match the native declaration relation's fully applied
-    -- `Arena.Law arena realization`, rather than the under-applied predicate
-    -- `Arena.Law arena`.
+    -- The assessed source law includes the actual extracted realization.
     ("law_identity", toJson (← rawId scope.levels (← mkAppM ``Arena.Law #[arena, realization]))),
     ("realization_identity", toJson (← rawId scope.levels realization)),
     ("registration_name", toJson event.realizationName.toString),
@@ -169,34 +165,10 @@ def validate (event : TemplateOccurrenceEvent) (input : EscapeRecordInput)
   let (evidence, remaining) ← action.run limit
   return (evidence, limit - remaining)
 
-/- The native declaration relation is derived from the loaded occurrence and
-   the actual typed registration. It is carried by the same driver as source
-   resolution, extraction, and validation so managed readers never infer it
-   from certificate bytes. -/
-def declarationRelation (event : TemplateOccurrenceEvent) (name : Name) : MetaM Json := do
-  let (realization, _) ← extract event 524288
-  let arena := event.arena
-  let law ← mkAppM ``Arena.Law #[arena, realization]
-  let .ok (arenaIdentity, _) := rawStatementIdentity event.levelParams arena 524288
-    | throwError "incomplete_closure:E8.family_declaration_relation"
-  let .ok (lawIdentity, _) := rawStatementIdentity event.levelParams law 524288
-    | throwError "incomplete_closure:E8.family_declaration_relation"
-  let exactSourceLaw ← isDefEq law event.statement
-  return Json.mkObj [
-    ("mode", toJson event.key.mode.wireName),
-    ("source_name", toJson event.key.theoremName.toString),
-    ("source_statement_identity", toJson event.statementIdentity),
-    ("arena_name", toJson event.key.objectArena.toString),
-    ("arena_identity", toJson arenaIdentity),
-    ("law_identity", toJson lawIdentity),
-    ("registration_name", toJson name.toString),
-    ("exact_source_law", toJson exactSourceLaw)]
-
 /-- The only native entry selected by the fixed registry for family mode. -/
 def driver : FamilyRegistrationDriver := {
   resolve := @FamilySource.resolve
   extract := extract
-  validate := @validate
-  relation := declarationRelation }
+  validate := @validate }
 
 end LeanInformationAudit.FamilyRegistration

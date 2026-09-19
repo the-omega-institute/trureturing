@@ -316,6 +316,8 @@ internal static class InformationTemplateEvidence
                 var declaration = report.Files[declarationOwner].Declarations.Single(
                     declaration => declaration.Name == selected.RealizationName);
                 InformationFamilyEvidence.CheckDeclaration(family, declarationOwner, declaration);
+                InformationFamilyEvidence.CheckAssessment(selected,
+                    report.Files[RepoPath.CreateKnown(selected.BindingSourcePath!)]);
             }
             joined.Add(key, selected);
         }

@@ -434,28 +434,46 @@ def recordJson (record : BindingRecord) : MetaM Json := do
 /-- Records are partitioned by their actual producing module. An original
 undeclared row and a sidecar overlay remain distinguishable until the final join. -/
 private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
-    (registered : Array TemplateOccurrenceKey) : MetaM Json := do
+    (registered : Array TemplateOccurrenceKey) : MetaM (Json × Json) := do
   let env ← getEnv
   let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
   let overlays := snapshot.selected.filter fun row => row.bindingOwner == some moduleName &&
     row.occurrence.key.registrationModule != moduleName
-  let rows ← (originals ++ overlays).mapM fun row => do
+  let assessed ← (originals ++ overlays).mapM fun row => do
     let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
       | throwError "incomplete_closure:dtr.final_record"
-    recordJson (if selected.bindingOwner == some moduleName then selected else row)
+    pure (if selected.bindingOwner == some moduleName then selected else row)
+  let rows ← assessed.mapM recordJson
   let (inputs, version) ← moduleSourceInputs env moduleName
-  return Json.mkObj [
+  let assessments := (assessed.zip rows).filterMap fun (record, row) =>
+    if record.occurrence.key.mode != .dependentFamily then none else
+    match record.result with
+    | .declaredValidated certificate => certificate.escape.family.map fun family => Json.mkObj [
+      ("schema", toJson "dtr-family-assessment-v1"),
+      ("owner", toJson moduleName.toString), ("key", keyJson record.occurrence.key),
+      ("statement_identity", toJson record.occurrence.statementIdentity),
+      ("registration_name", toJson record.occurrence.realizationName.toString),
+      ("scope_identity", toJson family.identity),
+      ("plan_identity", toJson certificate.planIdentity),
+      ("descriptor_identity", toJson certificate.descriptorIdentity),
+      ("actual_identity", toJson certificate.actualIdentity),
+      ("evidence_ref", toJson certificate.evidenceRef),
+      ("content_inputs", (row.getObjVal? "content_inputs").toOption.getD Json.null),
+      ("module_inputs", Json.arr (inputs.map inputJson))]
+    | _ => none
+  return (Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
-    ("inputs", Json.arr (inputs.map inputJson))]
+    ("inputs", Json.arr (inputs.map inputJson))], Json.arr assessments)
 
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed
 once per boundary, rather than once for every module that imports them. Neither
 source hashes nor a caller-supplied validation flag can authorize this API. -/
-def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (Array Json) := do
+private def reportParts (modules : Array (Name × Array TemplateOccurrenceKey)) :
+    MetaM (Array (Json × Json)) := do
   let env ← getEnv
   let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst ++
     (if modules.any (fun row => row.1 == env.header.mainModule) then
@@ -468,40 +486,26 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
   TemplateAudit.NativeCoherence.validate roots
   return rows
 
+/-- Template rows are the projection of the same owner-partitioned assessment. -/
+def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (Array Json) := do
+  return (← reportParts modules).map Prod.fst
+
 /-- Attach semantic declaration identities from the actual native module table.
 This does not consult registration rows, extraction inputs or supplied names. -/
 def reportWithDeclarations (modules : Array (Name × Array TemplateOccurrenceKey)) :
-    MetaM (Array (Json × Array (Name × Json))) := do
+    MetaM (Array (Json × Array (Name × Json) × Json)) := do
   let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst
   TemplateAudit.NativeCoherence.validate roots
-  let rows ← reportJson modules
+  let rows ← reportParts modules
   let env ← getEnv
-  let reports ← (modules.zip rows).mapM fun ((moduleName, _), row) => do
+  let reports ← (modules.zip rows).mapM fun ((moduleName, _), (row, assessments)) => do
     let some index := env.getModuleIdx? moduleName
       | throwError "incomplete_closure:dtr.declaration_owner"
     let mut declarations := #[]
     for name in env.header.moduleData[index]!.constNames do
-      let info ← getConstInfo name
-      let arenaName := if info.type.isAppOfArity
-          `LeanInformationAudit.DependentFamily.Registration 2 then
-        info.type.getAppArgs[0]!.getAppFn.constName?.getD .anonymous
-      else .anonymous
-      let familyEvents := (inventory env).filter fun event =>
-        event.key.mode == .dependentFamily &&
-          event.realizationName == name &&
-          event.key.objectArena == arenaName
-      let relations ← familyEvents.mapM (familyDeclarationRelation name)
-      let relation ← match relations with
-        | #[] => pure Json.null
-        | #[relation] => pure relation
-        | relations =>
-          let first := relations[0]!
-          unless relations.all (·.compress == first.compress) do
-            throwError "unclassified_form:dtr.family_declaration_relation_ambiguous"
-          pure first
-      if let some identity ← familyDeclarationIdentity name relation then
+      if let some identity ← familyDeclarationIdentity name then
         declarations := declarations.push (name, identity)
-    return (row, declarations)
+    return (row, declarations, assessments)
   TemplateAudit.NativeCoherence.validate roots
   return reports
 

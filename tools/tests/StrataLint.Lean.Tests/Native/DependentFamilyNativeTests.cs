@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
@@ -204,7 +205,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
             JsonSerializer.SerializeToElement(certificate));
         var report = fixture.Change(("DependentFamilyUnicode", JsonSerializer.SerializeToElement(payload)));
         var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamilyUnicode", report));
-        Assert.Contains("family source relation mismatch", error.Message, StringComparison.Ordinal);
+        Assert.Contains("family assessed occurrence", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -239,7 +240,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
             JsonSerializer.SerializeToElement(record["certificate"]));
         var report = fixture.Change(("DependentFamilyUnresolved", JsonSerializer.SerializeToElement(payload)));
         var error = Assert.Throws<FormatException>(() => fixture.Collect("DependentFamilyUnresolved", report));
-        Assert.Contains("family source relation mismatch", error.Message, StringComparison.Ordinal);
+        Assert.Contains("family assessed occurrence", error.Message, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -264,7 +265,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         var material = record["family_binding"]!["material"]!;
         switch (mutation)
         {
-            case "old-report": payload["compatibility_version"] = 9; break;
+            case "old-report": payload["compatibility_version"] = 10; break;
             case "dropped-source": material.AsObject().Remove("source_name"); break;
             case "dropped-levels": material.AsObject().Remove("rigid_levels"); break;
             case "captured-coordinate": material["coordinates"] = new JsonArray(0, 1, 13); break;
@@ -292,6 +293,200 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         Assert.Throws<FormatException>(() => fixture.Collect("DependentFamily", report));
     }
 
+    [Theory]
+    [InlineData("scope")]
+    [InlineData("descriptor-plan")]
+    [InlineData("extraction")]
+    [InlineData("inputs")]
+    public void coherently_rehashed_transplants_reject_against_unchanged_native_assessment(string mutation)
+    {
+        var donor = fixture.Payload("DependentFamilyReuse").GetProperty("records")[0];
+        var changes = new[] { "DependentFamily", "DependentFamilySidecar" }.Select(name =>
+        {
+            var payload = JsonNode.Parse(fixture.Payload(name).GetRawText())!;
+            var record = payload["records"]![0]!;
+            var material = record["family_binding"]!["material"]!;
+            var certificate = record["certificate"]!;
+            if (mutation == "scope")
+            {
+                material["coordinates"] = new JsonArray();
+                material["state"]!["path"] = new JsonArray();
+                material["output"]!["path"] = new JsonArray();
+            }
+            else if (mutation == "inputs")
+            {
+                var inputs = record["content_inputs"]!.AsArray();
+                var removable = inputs.First(input => input!["path"]!.GetValue<string>()
+                    .EndsWith("DependentFamilyWitnesses.lean", StringComparison.Ordinal));
+                inputs.Remove(removable);
+            }
+            else
+            {
+                foreach (var field in mutation == "descriptor-plan"
+                    ? new[] { "descriptor_identity", "plan_identity" } : new[] { "actual_identity" })
+                {
+                    var value = donor.GetProperty("certificate").GetProperty(field).GetString();
+                    Assert.NotEqual(certificate[field]!.GetValue<string>(), value);
+                    material[field] = value;
+                    certificate[field] = value;
+                }
+            }
+            var identity = InformationFamilyEvidence.Identity(JsonSerializer.SerializeToElement(material));
+            record["family_binding"]!["identity"] = identity;
+            record["escape_from"]!["scope_identity"] = identity;
+            certificate["evidence_ref"] = InformationFamilyEvidence.BindingIdentity(
+                InformationTemplateJson.ReadKey(JsonSerializer.SerializeToElement(record["key"])),
+                record["statement_identity"]!.GetValue<string>(), identity,
+                JsonSerializer.SerializeToElement(certificate));
+            return (name, JsonSerializer.SerializeToElement(payload));
+        }).ToArray();
+        var report = fixture.Change(changes);
+        foreach (var name in new[] { "DependentFamily", "DependentFamilySidecar" })
+        {
+            Assert.Equal(fixture.Report.Files[DependentFamilyNativeFixture.Source(name)].FamilyAssessments,
+                report.Files[DependentFamilyNativeFixture.Source(name)].FamilyAssessments);
+            var error = Assert.Throws<FormatException>(() => fixture.Collect(name, report));
+            Assert.Contains("family assessed", error.Message, StringComparison.Ordinal);
+            Declared(name, fixture.Collect(name));
+        }
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("duplicate")]
+    [InlineData("key")]
+    [InlineData("mode")]
+    [InlineData("schema")]
+    [InlineData("owner")]
+    [InlineData("statement_identity")]
+    [InlineData("registration_name")]
+    [InlineData("scope_identity")]
+    [InlineData("plan_identity")]
+    [InlineData("descriptor_identity")]
+    [InlineData("actual_identity")]
+    [InlineData("evidence_ref")]
+    [InlineData("content_inputs")]
+    [InlineData("module_inputs")]
+    public void selected_occurrence_requires_exact_native_assessment(string mutation)
+    {
+        var source = DependentFamilyNativeFixture.Source("DependentFamilySidecar");
+        var native = JsonNode.Parse(fixture.Report.Files[source].FamilyAssessments!.Value.GetRawText())!.AsArray();
+        var assessment = native[0]!;
+        switch (mutation)
+        {
+            case "missing": native.Clear(); break;
+            case "duplicate": native.Add(assessment.DeepClone()); break;
+            case "key": assessment["key"]!["root"] = "Other.Owner"; break;
+            case "mode": assessment["key"]!["mode"] = "fixed-state-v1"; break;
+            case "content_inputs":
+            case "module_inputs": assessment[mutation] = new JsonArray(); break;
+            default: assessment[mutation] = new string('0', 64); break;
+        }
+        var report = LeanAxiomReport.Create(fixture.Report.Files.ToDictionary(pair => pair.Key.Value,
+            pair => pair.Key == source ? pair.Value with { FamilyAssessments = JsonSerializer.SerializeToElement(native) }
+                : pair.Value));
+        Assert.Throws<FormatException>(() => fixture.Collect("DependentFamilySidecar", report));
+        Declared("DependentFamily", fixture.Collect("DependentFamily", report));
+        Declared("DependentFamilyFixedControl", fixture.Collect("DependentFamilyFixedControl", report));
+    }
+
+    [Fact]
+    public void unrelated_malformed_assessment_does_not_expand_the_selected_occurrence()
+    {
+        var source = DependentFamilyNativeFixture.Source("DependentFamily");
+        var native = JsonNode.Parse(fixture.Report.Files[source].FamilyAssessments!.Value.GetRawText())!.AsArray();
+        var unrelated = native[0]!.DeepClone();
+        unrelated["key"]!["theorem"] = "Other.source";
+        unrelated["scope_identity"] = null;
+        unrelated["content_inputs"] = "invalid";
+        native.Add(unrelated);
+        native.Add("unselected malformed assessment");
+        var report = LeanAxiomReport.Create(fixture.Report.Files.ToDictionary(pair => pair.Key.Value,
+            pair => pair.Key == source ? pair.Value with { FamilyAssessments = JsonSerializer.SerializeToElement(native) }
+                : pair.Value));
+        Declared("DependentFamily", fixture.Collect("DependentFamily", report));
+    }
+
+    [Fact]
+    public void registration_reuse_and_wrong_registration_publish_occurrence_owned_results()
+    {
+        var reused = fixture.Collect("DependentFamilyReuse");
+        var original = fixture.Collect("DependentFamilyUnicode");
+        Declared("DependentFamilyReuse", reused);
+        Declared("DependentFamilyUnicode", original);
+        Assert.Equal(original.RealizationName, reused.RealizationName);
+        Assert.NotEqual(original.Key, reused.Key);
+        var wrong = fixture.Collect("DependentFamilyWrongRegistration");
+        Assert.Equal(InformationTemplateBindingState.DeclaredUnresolved, wrong.State);
+        Assert.Contains("family.registration.source_law", wrong.Diagnostic!, StringComparison.Ordinal);
+        Assert.Empty(fixture.Report.Files[DependentFamilyNativeFixture.Source("DependentFamilyWrongRegistration")]
+            .FamilyAssessments!.Value.EnumerateArray());
+        foreach (var name in new[] { "DependentFamilyUnicode", "DependentFamilyReuse" })
+        {
+            var assessment = Assert.Single(fixture.Report.Files[DependentFamilyNativeFixture.Source(name)]
+                .FamilyAssessments!.Value.EnumerateArray());
+            Assert.Equal(InformationTemplateJson.ReadKey(assessment.GetProperty("key")), fixture.Collect(name).Key);
+        }
+    }
+
+    [Fact]
+    public void independently_produced_modules_recombine_to_the_same_sidecar_verdict()
+    {
+        // The producer fixture also compares every field (declarations, inputs,
+        // diagnostics and assessments) against each independently loaded root.
+        var report = fixture.IndependentlyProduced("DependentFamilySidecar", "DependentFamilyControls",
+            "DependentFamilyUnicode", "DependentFamilyUnresolved");
+        foreach (var name in new[] { "DependentFamilySidecar", "DependentFamilyUnicode" })
+        {
+            var expected = fixture.Collect(name);
+            var actual = fixture.Collect(name, report);
+            Assert.Equal(expected.Key, actual.Key);
+            Assert.Equal(expected.EvidenceRef, actual.EvidenceRef);
+            Assert.Equal(expected.Family!.Identity, actual.Family!.Identity);
+            Declared(name, actual);
+        }
+        Assert.Equal(fixture.Collect("DependentFamilyUnresolved").Diagnostic,
+            fixture.Collect("DependentFamilyUnresolved", report).Diagnostic);
+    }
+
+    [Theory]
+    [InlineData("DependentFamilyOriginal")]
+    [InlineData("DependentFamilyWitnesses")]
+    [InlineData("DependentFamily")]
+    [InlineData("DependentFamilySidecar")]
+    public void changing_an_actual_occurrence_dependency_invalidates_selected_evidence(string dependency)
+    {
+        var path = DependentFamilyNativeFixture.Source(dependency);
+        var raw = RawRepositorySnapshot.Create(fixture.Snapshot.Files.Select(pair =>
+            RawRepositoryEntry.FromText(pair.Key.Value,
+                Encoding.UTF8.GetString(pair.Value.RawBytes.AsSpan()) + (pair.Key == path ? "\n-- changed input\n" : ""))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot,
+            fixture.Report, [DependentFamilyNativeFixture.Source("DependentFamilySidecar")]));
+        Assert.Contains("changed or noncanonical input", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void every_input_in_the_native_occurrence_owner_closure_invalidates_on_byte_change()
+    {
+        var source = DependentFamilyNativeFixture.Source("DependentFamilySidecar");
+        var inputs = fixture.Payload("DependentFamilySidecar").GetProperty("inputs").EnumerateArray()
+            .Select(input => RepoPath.CreateKnown(input.GetProperty("path").GetString()!)).ToArray();
+        Assert.NotEmpty(inputs);
+        foreach (var input in inputs)
+        {
+            // Whitespace preserves the JSON policy version while changing the
+            // actual source bytes bound by the native assessment.
+            var raw = RawRepositorySnapshot.Create(fixture.Snapshot.Files.Select(pair =>
+                RawRepositoryEntry.FromText(pair.Key.Value,
+                    Encoding.UTF8.GetString(pair.Value.RawBytes.AsSpan()) + (pair.Key == input ? "\n\n" : ""))));
+            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+            var error = Assert.Throws<FormatException>(() =>
+                InformationTemplateEvidence.Collect(snapshot, fixture.Report, [source]));
+            Assert.Contains(input.Value, error.Message, StringComparison.Ordinal);
+        }
+    }
+
     [Fact]
     public void fixed_state_native_evidence_and_unselected_family_rows_keep_delta_scope()
     {
@@ -302,6 +497,8 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         var payload = JsonNode.Parse(fixture.Payload("DependentFamily").GetRawText())!;
         payload["records"]![0]!["state"] = "invalid";
         var report = fixture.Change(("DependentFamily", JsonSerializer.SerializeToElement(payload)));
+        report = LeanAxiomReport.Create(report.Files.ToDictionary(pair => pair.Key.Value,
+            pair => pair.Value with { FamilyAssessments = JsonSerializer.SerializeToElement("unselected malformed") }));
         Declared("DependentFamilyFixedControl", fixture.Collect("DependentFamilyFixedControl", report));
         Assert.Throws<FormatException>(() => fixture.Collect("DependentFamily", report));
     }

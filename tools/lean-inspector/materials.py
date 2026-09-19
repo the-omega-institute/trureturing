@@ -141,10 +141,10 @@ def require_sorted_strings(value: object, context: str) -> list[str]:
 
 
 def validate_family_registration(value: object, context: str) -> None:
-    """Validate the native source/declaration relation before compacting it."""
+    """Validate declaration-local native identities before compacting them."""
     family = require_keys(value, {
         "schema", "owner", "type_identity", "body_identity", "registration_identity",
-        "level_arity", "family_relation",
+        "level_arity",
     }, context)
     if (family["schema"] != "dtr-family-declaration-v1"
             or any(not isinstance(family[field], str) or not family[field]
@@ -155,21 +155,6 @@ def validate_family_registration(value: object, context: str) -> None:
             or type(family["level_arity"]) is not int
             or family["level_arity"] < 0 or family["level_arity"] > 64):
         raise ValueError(f"{context} is malformed")
-    relation = family["family_relation"]
-    if relation is None:
-        return
-    relation = require_keys(relation, {
-        "mode", "source_name", "source_statement_identity", "arena_name",
-        "arena_identity", "law_identity", "registration_name", "exact_source_law",
-    }, context + " relation")
-    if (relation["mode"] != "dependent-family-v1"
-            or any(not isinstance(relation[field], str) or not relation[field]
-                   for field in ("source_name", "arena_name", "registration_name"))
-            or any(not isinstance(relation[field], str) or not HEX.fullmatch(relation[field])
-                   for field in ("source_statement_identity", "arena_identity", "law_identity"))
-            or type(relation["exact_source_law"]) is not bool):
-        raise ValueError(f"{context} relation is malformed")
-
 
 def regular_spool_file(spool: pathlib.Path, relative: str) -> pathlib.Path:
     if not MATERIAL_FILE.fullmatch(relative):
@@ -296,6 +281,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             module_keys = {"declarations", "imports", "module", "source_path", "source_sha256"}
             if "information_registration_errors" in raw_module:
                 module_keys.add("information_registration_errors")
+            if "family_assessments" in raw_module:
+                module_keys.add("family_assessments")
             if "information_templates" in raw_module:
                 module_keys.add("information_templates")
             if "utility_refutation" in raw_module:
@@ -411,6 +398,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 report_module["information_registration_errors"] = registration_errors
             if information_templates is not None:
                 report_module["information_templates"] = information_templates
+            if "family_assessments" in module:
+                report_module["family_assessments"] = module["family_assessments"]
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)
