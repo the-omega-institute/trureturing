@@ -158,6 +158,25 @@ elab "observe_declared_witness" : command => do
 
 observe_declared_witness
 
+def parameterizedStatement (_ : Unit) : Prop := ∀ n : Nat, n = n
+
+run_meta do
+  -- Keep the inline proof syntax: the term elaborator otherwise extracts it
+  -- into an opaque auxiliary declaration before the occurrence walk runs.
+  let name := `LeanInformationAudit.Tests.DeclaredWitnessRegistration.proofOnlyOrigin
+  let proof := mkApp (mkLambda `n .default (mkConst ``Nat) (mkConst ``True.intro)) (mkNatLit 0)
+  let body := mkLet `h (mkConst ``True) proof (mkConst ``True)
+  addDecl <| .defnDecl {
+    name, levelParams := [], type := mkSort .zero,
+    value := body, hints := .abbrev, safety := .safe }
+  unless (body.find? (·.isConstOf ``Nat)).isSome do throwError "control has no embedded Nat"
+  if ← TemplateAudit.statementContainsOrigin (mkConst name) (mkConst ``Nat) then
+    throwError "origin leaked from an embedded proof body"
+  let applied ← mkAppM ``parameterizedStatement #[mkConst ``Unit.unit]
+  if ← TemplateAudit.statementContainsOrigin applied (mkConst ``Nat) then
+    throwError "parameterized definition was unfolded"
+  logInfo "[PASS] witness_one_step_excludes_proof_bodies_and_parameters"
+
 namespace AuthorExample
 -- Requires CounterexampleRecord and the existing closed claim/result in scope.
 private def witnessArena := WitnessArena.ofCarrier (Fin 1) Nat

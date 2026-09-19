@@ -78,6 +78,7 @@ def witnessStatement (arena statement : Expr) (theoremName : Name) : MetaM Name 
   let universal ← withLocalDeclD `d domain fun d => mkForallFVars #[d] (mkApp predicate d)
   unless (← isDefEq (mkConst claimName) universal) &&
       (← isDefEq result.type (mkNot universal)) &&
+      (← isDefEq (← inferType result.value) (mkNot (mkConst claimName))) &&
       (← checked theoremName (mkNot (mkConst claimName))) do fail
   return claimName
 
