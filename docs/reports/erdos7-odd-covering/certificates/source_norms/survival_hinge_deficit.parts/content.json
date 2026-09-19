@@ -1,0 +1,241 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-survival-hinge-deficit-v1"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "257922307098126854721964898721072235577636047/602691118477933411109744202902940015336000"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "1339218237228092139323/9074811537787275423"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "2873884370396495734788444926897322493/30159644293601482087441992044941875"
+  },
+  "combined": {
+    "kind": "inline",
+    "value": "2928270257334924039784732959883529767674833273/5596417528723667388876196169813014428120000"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "46826819251/94485352500"
+  },
+  "q_effective": {
+    "kind": "inline",
+    "value": "193/231"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "31623610525587809/470050192111500"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "178944068667597492407421033833838271159/1145945873146913361035424153742500000"
+  },
+  "cG": {
+    "kind": "inline",
+    "value": "23559508993421/769588792096410"
+  },
+  "A81": {
+    "kind": "inline",
+    "value": "3302895385270708541/2448027743712364814"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "102715/2916"
+  },
+  "source_comparison_barrier": {
+    "kind": "inline",
+    "value": "45"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "494421973767573087101862098312997239030134240516177/3863592019676151829854915339990217154174460000000",
+      "Gamma13": "938850974295792659450596441/22010955384903036538486500",
+      "T13_81": "83886142365430229050558842761464899071/1071827358741837286492169255751011250",
+      "combined": "61292651390470431890971525528488265488254891900629/297199386128934756142685795383862858013420000000",
+      "rho": "32115488249/94485352500"
+    }
+  },
+  "minimum_margins": {
+    "kind": "inline",
+    "value": {
+      "bound": "0",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "0",
+      "rho": "0"
+    }
+  },
+  "combined_target_gain": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": {
+      "bound": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "Gamma13": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "T13_81": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "combined": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ]
+    }
+  },
+  "rho_minimizers": {
+    "kind": "inline",
+    "value": [
+      398,
+      410,
+      422,
+      616,
+      628,
+      640
+    ]
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "1339218237228092139323/9074811537787275423",
+      "rho13": "46826819251/94485352500",
+      "D13": "2200413600000/46826819251"
+    }
+  },
+  "fallbacks": {
+    "path": "content/019-fallbacks.json",
+    "sha256": "41c0089685fd5e7d745a3b42cb86804f23c0d676778c825094230044ff74a2be",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/020-core_errors.json",
+    "sha256": "b92ef543632327a5e1111903d29dd6447109abc5ac3f98be4ebc5a7e8542132c",
+    "kind": "value"
+  },
+  "consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "consumer_target_margin_checks": {
+    "kind": "inline",
+    "value": 6480
+  },
+  "fallback_checks": {
+    "kind": "inline",
+    "value": 8
+  },
+  "complete_core_checks": {
+    "kind": "inline",
+    "value": 2
+  },
+  "consumer_margin_sha256": {
+    "kind": "inline",
+    "value": "486f944e57d51e1afef086fd48b94ce329e9497ee6ee372437e6475337315bf8"
+  },
+  "row_sha256": {
+    "kind": "inline",
+    "value": "efc6923b70c52bec3197e245bda07e2e6960120e2bbbaa9215343c066ea07dd6"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "The h(5/2) deficit and all numerator deficits use one actual raw survivor mass. Signed B is allowed; positivity follows from the separate survival target. Independent original labels and all exponent tails remain complete. Ordinary inequalities and exact rational verification, no Lean or unrestricted Erdos7 endpoint."
+  },
+  "survival_hinge": {
+    "path": "content/028-survival_hinge.json",
+    "sha256": "1f26fa108fd5a66b9aea9ecc16a76ffc81806535d3cb9cee42d249c3af59df6a",
+    "kind": "object"
+  },
+  "predecessor_source_profiles": {
+    "kind": "inline",
+    "value": {
+      "margin_checks": {
+        "source": 129600,
+        "quadratic": 648000,
+        "linear": 531360
+      },
+      "source_margin_sha256": "8751c5ef93b7f0a8ce360544fe8a526614179b1a0a3dc9e0b754d71e79a2db3d",
+      "quadratic_margin_sha256": [
+        "ab6a4b220d3973af99d6c859180969094f29ed74e10c69d215bd9502523920e9",
+        "bc826a27fc3b1a5c6b030ffb625742e7fa6115c091ce4bcd8128c968d4bdda98",
+        "924608c67a73bcc9bf8dc43b9dd471ac5c64dff3842797e3f9fb7ec42d715c20",
+        "66d862dba27a595445d319361c074237b804cf0a2f8da3ef8a1147e3a81394de",
+        "2e336e6641d60e059d490169d33f1c1708d5f140dc5323fa8434c13c76b2adfb"
+      ],
+      "linear_margin_sha256": "986fba4fae5bb7fbb6a33b5867d73be22483662719eac1cc975ba66334a5f679",
+      "linear_tail_weight": "94212612766226/1174116234095805",
+      "quadratic_tail_weight": "1600217/12882870"
+    }
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+      "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+      "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+      "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+      "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70",
+      "frontier/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained_five_tests.json": "3fac691eb1f3081ab54559a0c396a88abd244efc73e4b6ca1875753a50b8dbc4",
+      "frontier/verify_retained_five_tests.py": "920dd25084bb7670149e7c23ad5057b408326a4c937ce69630ca3889b4ca5f23",
+      "frontier/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+      "certificates/source_norms/retained_quadratic_tests.json": "cfcac117e8988e6b3e37dfde961e6f35cb64a05aab700c09297424dadd534e29",
+      "frontier/verify_retained_quadratic_tests.py": "2ba3c805a4cad11c9a004782e8104c01f7a8c0f9bf06058f8f80da55e772d31f",
+      "frontier/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+      "frontier/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+      "frontier/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+      "frontier/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+      "certificates/source_norms/shared_source_deficits.json": "bd47e5157698faaaed4ddfb5fadf93f51dc11c69fe89e15a3a74e14117445588",
+      "frontier/verify_shared_source_deficits.py": "01accc355e7fc50ee313b08c948874d83252fabcdd08f6dfd4ff533f6f440d5e"
+    }
+  },
+  "helper_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+      "frontier/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "b6b80b99c728382e5e3f34fbc07e3ae8a2655d0e3777b03db2307e0422db9843"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-k-signed-gap-dictionary-v1"
+  },
+  "complete_endpoint_table_sha256": {
+    "kind": "inline",
+    "value": "a48d8c8f2f9e6619024b3b4b5bf61a72687299aedbc39bda8b3a6d5ad4b84cab"
+  },
+  "vertex_count": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "carriers": {
+    "path": "content/003-carriers.json",
+    "sha256": "caa72d19ae7d793200011cf566477c88f8666d80d6d052e989ee87d30cf98a3e",
+    "kind": "value"
+  },
+  "rational_values": {
+    "path": "content/004-rational_values.json",
+    "sha256": "8464b4df6125ba5cbf2f2d72131e191f7530e0875d97537193724b91919f2249",
+    "kind": "array"
+  },
+  "lower_gap_value_indices": {
+    "path": "content/005-lower_gap_value_indices.json",
+    "sha256": "5c7b494e7afe8b9cfee9c425dfc270ad20f5323c7bd3c8a26d07bcd5850337f8",
+    "kind": "array"
+  }
+}

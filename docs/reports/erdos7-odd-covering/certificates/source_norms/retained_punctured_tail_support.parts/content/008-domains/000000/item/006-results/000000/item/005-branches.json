@@ -1,0 +1,12 @@
+{
+  "nested": {
+    "path": "content/008-domains/000000/item/006-results/000000/item/005-branches/000-nested.json",
+    "sha256": "203ebce639235687efc1b2a2e1319729a0a8f95dda60e0f6e68b18de9d80106c",
+    "kind": "object"
+  },
+  "disjoint": {
+    "path": "content/008-domains/000000/item/006-results/000000/item/005-branches/001-disjoint.json",
+    "sha256": "72a8501e51f1fe0a61289d54606af784fecc29e9f204bb8b7c0e2d597178af7d",
+    "kind": "object"
+  }
+}

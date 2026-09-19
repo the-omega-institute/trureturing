@@ -1,0 +1,102 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-transported-source-complete-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "9573c9b982acb1352b1357398f8ffb856dca0230aff67fa81143fb3a08437ba3",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/18",
+      "rho": "1/13000",
+      "rbar": "1/2600",
+      "h1min": "107/324",
+      "v0": "171/11050",
+      "v1": "37529/2364700",
+      "gap": "46741/2527200",
+      "tbar": "19/7",
+      "Cbar": "550/129",
+      "kbar": "107/52",
+      "budget_increments": [
+        "55/22032",
+        "1/648",
+        "1/204"
+      ],
+      "c": [
+        "257/360",
+        "661/1620",
+        "73/270",
+        "73/810"
+      ],
+      "H": [
+        "349/3240",
+        "163/1458",
+        "59/810",
+        "2807/116640"
+      ],
+      "positive7": "1573/25200"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/18",
+      "residual_radius": "1/13000",
+      "actual_r_upper": "1/2600",
+      "joint_source_Delta_upper": "1/68",
+      "source_z_upper": "55/72",
+      "availability_upper": "3/208",
+      "five_actual_gap_lowers": [
+        "259/2600",
+        "13829/210600",
+        "4469/210600",
+        "3563/129600",
+        "6679/210600"
+      ],
+      "minimum_actual_gap": "4469/210600",
+      "common_wrong_slot_gap": "46741/2527200",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "7/9",
+        "shallow_C_minus_1_t": "248/81",
+        "shallow_C_minus_k": "13573/324",
+        "pure3_maximizing_cell": "187/108",
+        "root0_below_root1_reference": "521/324"
+      },
+      "fixed_support_slab_r_cutoff": "1/2500",
+      "marker_coefficient_floor": "11/27"
+    }
+  },
+  "complete_H1": {
+    "path": "content/004-complete_H1.json",
+    "sha256": "d876dbac2087010ebe3d07dfaa377287213b254cdcc68d92e6d2d9adc6c1ca4b",
+    "kind": "object"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/005-joint_pure_five_transport.json",
+    "sha256": "5bfc4cfb14f2c2cbe6c92782a7021c91eda14a3a8e1b8df18cb3d3a3f4092dd3",
+    "kind": "value"
+  },
+  "complete_square": {
+    "path": "content/006-complete_square.json",
+    "sha256": "778a28225291f857009a89e7b0a3650f05e41935badbd41b30dd612c26da8cfb",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/007-complete_heads.json",
+    "sha256": "c07b3aa2fcb9faee7d5833489539cc77478672307c5f8348e8c598f883ef80ee",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/008-comparison.json",
+    "sha256": "fc51fac8baeb2f79f5a71c69414d36965d85e19084258a5ed09236e542cf6002",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete local theorem on both actual K orientations, sigma<=1/18, rho<=1/13000, r<=1/2600. All52 original independent costs, five complete denominator objectives, the same actual residual and actual S coefficient, and every infinite tail remain. A cap/budget/coefficient perturbation transports all166 original heads, with12500 same-layout mean/factorial corrections and3120 independent finite-branch checks. The162 fixed-support heavy theorem applies inside its original strict r cutoff. No new global K, unrestricted Erdos7 conclusion, Lean verification, fresh9.75m-head enumeration or actual attainment of the relaxed maxima."
+  }
+}

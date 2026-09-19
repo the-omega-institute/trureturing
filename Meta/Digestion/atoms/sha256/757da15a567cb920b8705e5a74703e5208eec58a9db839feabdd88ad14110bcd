@@ -1,0 +1,8 @@
+**推论 6.1（逐窗最优不保证某窗取得总下确界）。** 设归一化原子集 $A=\bigcup_{L\ge0}A_L$ 有界，其中 $A_L$ 非空、有限且递增，$V=\operatorname{span}A$ 有限维。固定目标 $v\in V$，令 $\gamma_L(v)$ 为只用 $A_L$ 的成本，不可表达时值为 $+\infty$。则可行窗上的最优值均由有限表示取得，且
+
+$$
+\gamma_L(v)\downarrow\gamma_A(v).
+$$
+
+但是不必存在有限 $L$ 使 $\gamma_L(v)=\gamma_A(v)$。
+

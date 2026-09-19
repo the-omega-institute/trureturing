@@ -1,0 +1,47 @@
+**引理 137.7（共同前缀的正算子扩张）。** 任意匹配给定前缀的正实现，在一个保持输入的正交识别下都可写为
+$$
+\widetilde E=E\oplus F,\qquad
+\widetilde J=\binom J0,\qquad
+\widetilde C=
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}\succeq0,
+\qquad D|_L=0.
+\tag{137.13}
+$$
+反过来，任意有限维 $F$ 和满足式(137.13)的块算子，都给出同一前缀的正实现。每个这样的扩张还满足
+$$
+D|_{\ker C}=0,\qquad
+\widetilde M_{2r+2}-\widehat M_{2r+2}=(De_r)^*(De_r).
+\tag{137.14}
+$$
+
+**证明。** 对任意竞争实现，映射
+$$
+[v]\longmapsto\sum_{j=0}^r\widetilde C^j\widetilde Jv_j
+$$
+由共同 $H_r$ 保内积，其像是竞争模型的前 $r+1$ 层 Krylov 空间。将该像识别为 $E$，并取正交补 $F$。共同 $S_r$ 给任意 $v,w$ 的演化配对与式(137.6)相同，因此 $\widetilde C$ 压缩到 $E$ 恰为 $C$。输入对应 $e_0$，所以 $\widetilde J=(J,0)$。
+
+对 $j<r$，竞争模型的实际幂向量满足
+$$
+\widetilde C(e_ju,0)=(e_{j+1}u,0).
+$$
+其 $F$ 分量给 $De_j=0$，即 $D|_L=0$。若 $x\in\ker C$，则
+$$
+\langle(x,0),\widetilde C(x,0)\rangle=0.
+$$
+由 $\widetilde C\succeq0$ 得 $\widetilde C(x,0)=0$，特别有 $Dx=0$。
+
+反向，由 $De_j=0$ 对 $j<r$ 成立，归纳得
+$$
+\widetilde C^j\widetilde J=(e_j,0)\qquad(0\le j\le r).
+$$
+对 $k\le2r$ 将 $k$ 写成两个不超过 $r$ 的整数之和，内积给 $\widetilde M_k=M_k$。最后一阶满足
+$$
+\widetilde M_{2r+1}=(e_r,0)^*\widetilde C(e_r,0)=e_r^*Ce_r=M_{2r+1}.
+$$
+又
+$$
+\widetilde C^{r+1}\widetilde J=(Ce_r,De_r),
+\qquad C^{r+1}J=Ce_r.
+$$
+分别取伴随平方，得到式(137.14)。$\square$
+

@@ -1,0 +1,12 @@
+{
+  "heavy": {
+    "path": "content/007-shared_price_banks/000-heavy.json",
+    "sha256": "5761b167933fe1d33d548a6bfd39a8c5021d3ee0c2245e121532a1df7469333c",
+    "kind": "object"
+  },
+  "survival": {
+    "path": "content/007-shared_price_banks/001-survival.json",
+    "sha256": "d63b090c6534bedd9eed870fe17b2bc4464f475dcfb1c3bec823464766325fd4",
+    "kind": "object"
+  }
+}

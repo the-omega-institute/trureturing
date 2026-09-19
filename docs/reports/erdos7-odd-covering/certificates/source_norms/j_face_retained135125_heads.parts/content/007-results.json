@@ -1,0 +1,253 @@
+[
+  {
+    "index": "AP13",
+    "at_one": "0",
+    "scan": {
+      "coefficients": {
+        "4": "1"
+      },
+      "complete_hinge_upper": "225629041830357889/1157625000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124994,
+        "four_projection_branches": 300,
+        "four_bounded": 296,
+        "joint_dual_branches": 1,
+        "prior244_bounded": 3,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "29483/147000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "225629041830357889/1157625000000000000",
+        "adopted_complete_upper": "225629041830357889/1157625000000000000",
+        "dual_key": "3622e01849b132eb01b80dcfc4d31f8e1efcb5b3e0a4a81610be22d85d0a8a80",
+        "complete_tail_constant": "156907/2835000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "29483/147000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "225629041830357889/1157625000000000000",
+        "adopted_complete_upper": "225629041830357889/1157625000000000000",
+        "dual_key": "3622e01849b132eb01b80dcfc4d31f8e1efcb5b3e0a4a81610be22d85d0a8a80",
+        "complete_tail_constant": "156907/2835000"
+      },
+      "complete_tail_constant": "156907/2835000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "1802617/9261000",
+      "maximum_four_pruned": "28643/147000",
+      "new_distinct_duals": 1,
+      "all_branch_decisions_sha256": "0306a0d4261489edc3d5698e9046e746108662ec4bb6588510e9cdd99006f384"
+    },
+    "complete_head_upper": "225629041830357889/1157625000000000000",
+    "previous_adopted_upper": "22263628571451221/113400000000000000",
+    "complete_mean_only_upper": "49/100",
+    "adopted_upper": "225629041830357889/1157625000000000000",
+    "improvement_over_previous": "39491996076959809/27783000000000000000"
+  },
+  {
+    "index": 0,
+    "at_one": "0",
+    "scan": {
+      "coefficients": {
+        "1": "298469622484874903/2311075142665519230",
+        "2": "12386341040791428463/9244300570662076920",
+        "3": "525174571/736900164",
+        "4": "9522349/858858",
+        "5": "1580/4719",
+        "6": "3160/42471",
+        "7": "395/3861",
+        "8": "282583/7722"
+      },
+      "complete_hinge_upper": "1791636462292567187058853909283901779303/314622143374512991758741000000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 106492,
+        "four_projection_branches": 925400,
+        "four_bounded": 925233,
+        "joint_dual_branches": 167,
+        "prior244_bounded": 0,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "772380280559124323560020499/127120057929096158286360000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "1788287558809349654776849335524161514849/314622143374512991758741000000000000000",
+        "adopted_complete_upper": "1788287558809349654776849335524161514849/314622143374512991758741000000000000000",
+        "dual_key": "55e6039d4e346c686c36f93201853389432fd757e5a1a96b490a8d3339a6efe2",
+        "complete_tail_constant": "10471605515555369937640633/3743941731118141152600000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          2,
+          4,
+          1,
+          2
+        ],
+        "old_complete_upper": "25140232353393871623663977767/4194961911660173223449880000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "1791636462292567187058853909283901779303/314622143374512991758741000000000000000",
+        "adopted_complete_upper": "1791636462292567187058853909283901779303/314622143374512991758741000000000000000",
+        "dual_key": "3e6bffa1fd31e187a9bd5dc46fa1913800986ef575741a77421564be4407392f",
+        "complete_tail_constant": "10471605515555369937640633/3743941731118141152600000"
+      },
+      "complete_tail_constant": "10471605515555369937640633/3743941731118141152600000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "3412517527005585842559622831/599280273094310460492840000",
+      "maximum_four_pruned": "2171367632720210625850142347/381360173787288474859080000",
+      "new_distinct_duals": 167,
+      "all_branch_decisions_sha256": "c37fe997ee3af02d32843f8150656b0c59709af9a2a1d4c24f33a9aa8f096041"
+    },
+    "complete_head_upper": "1791636462292567187058853909283901779303/314622143374512991758741000000000000000",
+    "previous_adopted_upper": "54024841409691065841343467534559081771/8989204096414656907392600000000000000",
+    "complete_mean_only_upper": "19747/800",
+    "adopted_upper": "1791636462292567187058853909283901779303/314622143374512991758741000000000000000",
+    "improvement_over_previous": "1503530106766971475578294764025243677/4767002172341105935738500000000000000"
+  },
+  {
+    "index": 16,
+    "at_one": "0",
+    "scan": {
+      "coefficients": {
+        "1": "272176197106950808531/2669291789778674710650",
+        "2": "4273128063469824929081/4003937684668012065975",
+        "3": "1259781626/2260943685",
+        "4": "4258739/479115",
+        "5": "35392/150579",
+        "6": "70784/1656369",
+        "7": "35392/637065",
+        "8": "6232942/212355"
+      },
+      "complete_hinge_upper": "165366610325299466178084118303859134302751/36338857559756250548134585500000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 106128,
+        "four_projection_branches": 943600,
+        "four_bounded": 943424,
+        "joint_dual_branches": 176,
+        "prior244_bounded": 0,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "802051869914440232698722784579/165176625271619320673339025000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "82524827414981111138751868320033764316401/18169428779878125274067292750000000000000",
+        "adopted_complete_upper": "82524827414981111138751868320033764316401/18169428779878125274067292750000000000000",
+        "dual_key": "516760f5e1fe28c06813d8055ee41fe958108230c01437fc8e87c53888d94253",
+        "complete_tail_constant": "2418840436852552551697362239/1081063174860363257813250000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          2,
+          4,
+          1,
+          2
+        ],
+        "old_complete_upper": "4351279341257067188726927988217/908471438993906263703364637500",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "165366610325299466178084118303859134302751/36338857559756250548134585500000000000000",
+        "adopted_complete_upper": "165366610325299466178084118303859134302751/36338857559756250548134585500000000000000",
+        "dual_key": "00305ef6969badffc63f01574faf18056de2ab96891d7f57154f98f5eb3f2724",
+        "complete_tail_constant": "2418840436852552551697362239/1081063174860363257813250000"
+      },
+      "complete_tail_constant": "2418840436852552551697362239/1081063174860363257813250000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "1181112172306469569370371837907/259563268283973218200961325000",
+      "maximum_four_pruned": "751623418470885492871162798789/165176625271619320673339025000",
+      "new_distinct_duals": 176,
+      "all_branch_decisions_sha256": "aa00829285e15203b921a4a63495ca316a5c855617e5a6fc3eb5167734c73f43"
+    },
+    "complete_head_upper": "165366610325299466178084118303859134302751/36338857559756250548134585500000000000000",
+    "previous_adopted_upper": "1780968695129976704923782643476065927693/370804668977104597429944750000000000000",
+    "complete_mean_only_upper": "19747/1000",
+    "adopted_upper": "165366610325299466178084118303859134302751/36338857559756250548134585500000000000000",
+    "improvement_over_previous": "3056107265812750301482193585598442203721/12112952519918750182711528500000000000000"
+  }
+]
