@@ -16,6 +16,8 @@ In particular it applies to a hypothetical distinct odd cover, including one wit
 \]
 These are quantitative excess statements, not nonexistence of such a cover. The comparison below is with the inspected 2024 author version; the journal-version constants have not been compared.
 
+The same constants hold for a smaller, localized quantity: the sum, over primes \(5\le p<p_N\), of the Haar mass where an original division-minimal \(p\)-bucket class meets an earlier-prime original class. Here \(N=1532030200000000000000\). Thus a hypothetical odd cover forces this cross-prime overlap sum to exceed \(2\cdot10^{-43}\), and the union of these overlap events has Haar mass greater than \(10^{-64}\). Internal repetition within one prime bucket cannot supply this required overlap. Sections 2–3 give the refinement without any irredundancy assumption.
+
 ## 1. One stage on the original Haar law
 
 Fix the current prime \(p\). All classes in the current bucket have distinct \(p\)-smooth moduli divisible by \(p\), and \(O\) is the union of earlier-prime classes. Let
@@ -71,6 +73,13 @@ The original overlap already paid inside \(O\) must be returned in this subtract
 \[
 \boxed{U_{\rm new}\ge(1-M_p)U-(pM_p-1)e.}\tag{4}
 \]
+Retaining the different kinds of overlap gives the stronger form
+\[
+\boxed{U_{\rm new}\ge(1-M_p)U-(pM_p-1)u
+       +(v-u)+r.}\tag{4a}
+\]
+Both correction terms \(v-u\) and \(r\) are nonnegative. In particular,
+\(U_{\rm new}\ge(1-M_p)U-(pM_p-1)v+r\): internal multiplicity within the current bucket has a favorable sign, unlike overlap with the earlier union.
 One can retain further measurable slack. For \(h=\mu(O^c\setminus E)\) and \(\lambda=\mu(E\cap O)\), (1) gives
 \[
 U_{\rm new}\ge(1-M_p)U+M_ph-M_p\lambda+v+r.
@@ -105,6 +114,35 @@ is increasing. Iterating (4) and using \(\sum_{i=3}^{N-1}e_{p_i}\le H_{\rm cov}\
 \Delta\prod_{i=3}^{N-1}(1-M_{p_i})-A_{N-1}H_{\rm cov}.}\tag{5}
 \]
 The complete original smooth buckets are used here, with all actual exponent heights and no modulus cutoff \(K\).
+
+### A smaller budget: overlap between different prime buckets
+
+At a point \(x\), let \(L(x)\) count all original classes containing \(x\), and let \(K(x)\) count the prime buckets whose unions contain \(x\). There is no multiplicity inside \(K\): each largest prime is counted at most once. Direct pointwise accounting gives, for any family, whether or not it covers,
+\[
+\sum_p v_p=\int(K-1)_+\,d\mu,\qquad
+\sum_p r_p=\int(L-K)\,d\mu.
+\]
+Their sum is the earlier excess identity. The same identities hold on an initial segment, with \(L,K\) counting only that segment's classes. Thus repeatedly covering a point with classes from one bucket increases only the second account.
+
+For \(3\le i<N\), write
+\[
+W_i=\prod_{j=i+1}^{N-1}(1-M_{p_j}),\qquad
+b_i=(v_{p_i}-u_{p_i})+r_{p_i}\ge0,\qquad
+T_{<N}=\sum_{i=3}^{N-1}u_{p_i}.
+\]
+Iterating (4a), instead of discarding all overlap distinctions in (4), proves
+\[
+U_{N-1}\ge\Delta\prod_{i=3}^{N-1}(1-M_{p_i})
+ -\sum_{i=3}^{N-1}A_iW_i u_{p_i}
+ +\sum_{i=3}^{N-1}W_i b_i.
+\tag{5a}
+\]
+Since \(0<W_i\le1\) and \(A_i\le A_{N-1}\),
+\[
+\boxed{U_{N-1}\ge\Delta\prod_{i=3}^{N-1}(1-M_{p_i})
+       -A_{N-1}T_{<N}.}\tag{5b}
+\]
+Here \(T_{<N}\le\sum_{i=3}^{N-1}v_{p_i}\le H_{\rm cov}\) for a whole cover. The classes defining each \(u_p\) are the division-minimal original classes of that same bucket; they are not contracted substitutes. Redundant original classes are allowed throughout.
 
 ## 3. The same FK tail law supplies a numerical gap
 
@@ -198,9 +236,36 @@ Consequently (5)–(6) and \(A_{N-1}<93\) prove
 \]
 for every finite distinct odd cover with all moduli greater than one. The page-24 product depends only on the fixed \(N\), so it applies unchanged. The general \(\Delta\ge1/12\) bound above is retained.
 
+### Localized numerical consequence
+
+Substitute (5b) for (5) in exactly the same tail argument (6). The positive reserve now forces
+\[
+A_{N-1}T_{<N}>4.7596769\cdot10^{-50}
+\]
+in the general case, and \(A_{N-1}T_{<N}>T(6F_0-1)\) in the odd case. Consequently
+\[
+\boxed{T_{<N}>5\cdot10^{-52}\quad(\Delta\ge1/12),\qquad
+       T_{<N}>2\cdot10^{-43}\quad\text{(odd cover)}.}
+\tag{9}
+\]
+No new analytic input or numerical optimization is used. The favorable terms in (5a) can only increase the required weighted overlap.
+
+Define the actual original overlap event
+\[
+G_{<N}=\bigcup_{i=3}^{N-1}(B_{\min,p_i}\cap O_{p_i}).
+\]
+There are \(N-3\) terms, so \(T_{<N}\le(N-3)\mu(G_{<N})\). Since
+\((N-3)10^{-64}<2\cdot10^{-43}\), an odd cover satisfies
+\[
+\boxed{\mu(G_{<N})>10^{-64}.}\tag{10}
+\]
+Every point counted here lies in two original classes with different largest prime factors, both below \(p_N\). The moduli themselves still have arbitrary heights; a bound on largest prime factor is not a bound on modulus. The mass in (10) concerns a union of overlaps, not a selected pair or a multiplicity-weighted expectation.
+
+This localization also states the transport obstruction precisely: at a \(p\)-stage, \(B_{\min,p}\cap O_p\) has zero mass under a law supported on the actual earlier survivor \(O_p^c\). A lower bound under original Haar therefore supplies no positive mass under that killed law. A separate relation to surviving completions is still required.
+
 ## 4. Reproducible checks and limits
 
-The [geometry checker](../frontier/original_overlap_leakage.py) constructs original residue classes on their complete finite Haar periods. It checks the expanded-prefix union inequality, the denominator-ideal/Rogers bound, an exact identity retaining all discarded slacks, and the shared stage-excess identity. Its default deterministic fixtures contain 397 nonempty current families, 73,885 checked period points and 150 stage decompositions. These finite checks support implementation and detect counterexamples; the general argument in Sections 1–3 supplies the unbounded quantifiers.
+The [geometry checker](../frontier/original_overlap_leakage.py) constructs original residue classes on their complete finite Haar periods. It checks the expanded-prefix union inequality, the denominator-ideal/Rogers bound, an exact identity retaining all discarded slacks, both versions of the overlap recurrence, and the distinct cross-prime/internal-multiplicity accounts. It also checks the iterated minimal-class budget against direct surviving sets. Its current fixtures contain 397 single-stage families and 73,885 period points, followed by 150 stage decompositions over 222,180 period points and 300 localized recurrence checks. A separate implementation checks 82 families, including 46 with redundant original classes, over 727,083 period points. These finite checks support implementation and detect counterexamples; the general argument in Sections 1–3 supplies the unbounded quantifiers.
 
 The [rational interval checker](../frontier/reciprocal_gap_source_interval.py) independently encloses the source equation (24) using logarithm and exponential series with rigorous remainder bounds and outward rational rounding. It returns a lower endpoint greater than \(4.7596769\cdot10^{-50}\). This recomputes the final numerical substitution conditional on the paper's analytic Lemmas 1–2 and prime bounds; it does not replay the paper's earlier large prime calculations. The page-24 Euler-product upper bound remains a cited analytic input. The final comparison \(93(5\cdot10^{-52})<4.7596769\cdot10^{-50}\) uses exact rational arithmetic. A separate interval computation for \(T(6F_0-1)\) gives a lower endpoint exceeding \(2.30481519943514\cdot10^{-41}\); division by 93 exceeds \(2\cdot10^{-43}\). It keeps all analytic inputs and parameters fixed.
 
@@ -211,4 +276,60 @@ python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/reciprocal_gap_source
 
 The comparison is with the inspected author version's \(\exp(-3.363054\cdot10^{21})\) bound. The journal DOI is 10.1090/tran/9670, but its PDF returned HTTP 403 during this check; no claim about priority or improvement over uninspected versions is made. The cited source is credited for the distortion method, analytic tail bounds and Rogers/Lewis ingredients.
 
-This conclusion supplies a genuine uniform excess lower bound for every hypothetical distinct odd cover, including arbitrary prime-power heights. It supplies no upper bound on that excess and is not a proof of noncoverage. In particular, \(H_{\rm cov}\) cannot be replaced by the effective source parameter \(\rho\) or by excess under a killed or conditioned law. Such transport still needs its own argument.
+This conclusion supplies a uniform cross-prime original-overlap lower bound, hence an excess lower bound, for every hypothetical distinct odd cover, including arbitrary prime-power heights. It supplies no conflicting upper bound and is not a proof of noncoverage. In particular, neither \(T_{<N}\) nor \(H_{\rm cov}\) can be replaced by the effective source parameter \(\rho\) or by excess under a killed or conditioned law. Such transport still needs its own argument.
+
+## 5. Two excess-reduction operations do not preserve the hypotheses
+
+An implication from one hypothetical distinct odd cover to such covers with excess tending to zero would contradict the uniform bound. The following two operations do not establish that implication. The restriction map reuses [341's literal affine pullback](341-conditional-future-avoidance-controls-the-current-prefix.md); the template obstruction reuses [336's primitive-character argument](336-maximal-label-fourier-overlap-and-uncovered-density.md), rather than asserting a new exact-cover theorem.
+
+### Restriction and genuine residual-modulus collisions
+
+Restrict original classes \(r_i\bmod m_i\) to \(a+d\mathbb Z\). A label is active exactly when \(g_i=\gcd(d,m_i)\) divides \(r_i-a\); its residual modulus is \(n_i=m_i/g_i\). On the same original Haar carrier, enlarged to a common period with \(d\) if necessary, put
+\[
+h_a=\sum_{i\text{ active}}1/n_i-1.
+\]
+Disintegration gives \(d^{-1}\sum_{a\bmod d}h_a=H_{\rm cov}\). Under whole coverage each \(h_a\ge0\), but a fibre with \(h_a\le H_{\rm cov}\) need not retain distinct nonunit moduli.
+
+For a fixed fibre, let \(s_n\) count active labels of residual modulus \(n\), and \(k_n\) count their distinct residual residues. The mass removed by deduplicating identical events is
+\[
+D=\sum_n(s_n-k_n)/n.
+\]
+Retaining one residue at each available residual modulus additionally removes label mass
+\[
+C=\sum_{n:k_n>0}(k_n-1)/n.
+\]
+For any such selector, let \(U_{\rm sel}\) be its uncovered fraction and \(E_{\rm sel}\) its positive multiplicity excess. Its signed mass identity is exactly
+\[
+\boxed{U_{\rm sel}-E_{\rm sel}=C-(h_a-D).}
+\]
+If the original fibre covers, deduplication preserves coverage, so \(0\le D\le h_a\) and
+\[
+\max(0,C-h_a+D)\le U_{\rm sel}\le C.
+\]
+The upper bound follows because every newly uncovered point belongs to a deleted event. Thus collision deletion can create holes even when the original conditional excess is zero.
+
+For an explicit original odd family, take
+\[
+0\bmod3,\qquad10\bmod15,\qquad50\bmod75.
+\]
+The classes are disjoint and each has a private point; their total covered density is \(31/75\). On the actual fibre \(0\bmod25\), writing \(x=25k\) gives exactly \(0,1,2\bmod3\). Here \(h_a=D=0\), \(C=2/3\), and every distinct-modulus selector leaves \(2/3\) uncovered. This family is globally a noncover. It refutes charging these collision deletions to existing overlap without a further hypothesis; it does not refute a claim that uses whole original odd coverage.
+
+### Exact finite templates with a common inserted modulus set
+
+Let a finite exact partition of \(\mathbb Z\) into odd-modulus progressions consist of retained classes and holes. Assume the retained moduli are pairwise distinct. Insert in every hole a covering family with the same nonempty set of distinct odd moduli \(\{m_i\}\), all greater than one, and exactly one class for each modulus. Different residues or affine automorphisms in different holes are allowed. A hole \(b\bmod D\) produces classes of moduli \(Dm_i\).
+
+Every nontrivial such template produces repeated output moduli. Indeed, let \(M>1\) be the largest template modulus. Averaging the exact-cover multiplicity against a primitive \(M\)-character kills every smaller modulus, and gives
+\[
+\sum_{\text{template cells of modulus }M}e^{2\pi i a/M}=0.
+\]
+One summand cannot vanish, and two cannot cancel because \(-1\) is not an odd-order root of unity. Therefore at least three template cells have modulus \(M\). At most one is retained, so at least two holes have that modulus. Each inserted \(m_i\) consequently yields two distinct classes of modulus \(Mm_i\), lying in disjoint holes. Changing their residues cannot remove this collision. A one-cell template is either the inadmissible retained modulus 1 or a single unit-modulus hole, which leaves the input excess unchanged.
+
+If the total hole density is \(\delta\), the output really does have excess \(\delta H_{\rm cov}\), with its repeated labels counted. For example, retaining \(1,2\bmod3\) and filling \(0\bmod3\) gives \(H_{\rm cov}/3\) but repeats retained modulus 3. Retaining \(0\bmod3\) and filling both other holes gives \(2H_{\rm cov}/3\) but repeats every inserted modulus \(3m_i\). The excess identity is valid; its output does not satisfy the distinctness hypothesis. Different inserted modulus sets or a globally coordinated deletion require their own proof and are not ruled out here.
+
+The standalone [collision checker](../frontier/overlap_reduction_collisions.py) verifies the affine membership, all three disintegrations (signed excess, positive excess, and holes), and every selector on five fixtures: 522 complete-period points and 94 selectors. Four ternary transformations are checked at all 162 output-period points. The whole-cover fixtures are explicitly either a distinct cover with even moduli or an odd cover with repeated moduli; none is represented as a distinct odd cover. The general finite-template obstruction is the ordinary Fourier deduction above, not a conclusion inferred from those examples.
+
+For the restricted covering problem, a sufficient interface must therefore preserve both residual covering behavior and the original-to-residual modulus collision relation. Recovering only the conditional covering fraction or its excess does not certify an admissible distinct-modulus continuation.
+
+```sh
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/overlap_reduction_collisions.py
+```

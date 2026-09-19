@@ -17,7 +17,9 @@ def require(condition, message):
 def main():
     rng = random.Random(731905)
     counts = dict(families=0, point_checks=0, strict_leakage_instances=0,
-                  slack_checks=0, stage_identity_checks=0)
+                  slack_checks=0, stage_identity_checks=0,
+                  stage_period_points=0, localized_recurrence_checks=0,
+                  prime_collision_checks=0)
     p = 5
     old_mods = (3,9)
     current_mods = (5,15,45,25,75,225)
@@ -46,27 +48,70 @@ def main():
         require(Un == (1-M)*U-p*M*u+v+r+M*delta+M*z+ell,
                 'Exact signed slack identity')
         require(Un >= (1-M)*U-(p*M-1)*(r+v), 'Coarse leakage bound')
+        require(Un >= (1-M)*U-(p*M-1)*u+(v-u)+r,
+                'Only minimal-class cross-prime overlap pays the loss')
+        require(Un >= (1-M)*U-(p*M-1)*v+r,
+                'Internal bucket excess is a favorable correction')
         counts['strict_leakage_instances'] += int(u > 0)
         counts['families'] += 1
         counts['point_checks'] += Q
         counts['slack_checks'] += 3
     for _ in range(150):
-        rows = [(rng.randrange(d),d) for d in (3,5,9,15,25,45,75,225)
+        rows = [(rng.randrange(d),d)
+                for d in (3,5,7,9,15,21,25,35,45,63,75,105,175,225,315)
                 if rng.randrange(2)]
         Q = lcm(1, *(d for a,d in rows))
         O,total = set(),F(0)
-        for pp in (3,5):
+        cross,internal,minimal = F(0),F(0),F(0)
+        prime_unions=[]
+        localized_events=set()
+        lower=F(0)
+        prefix_factor=F(1)
+        for pp in (3,5,7):
             stage = [(a,d) for a,d in rows
-                     if d%pp == 0 and not(pp == 3 and d%5 == 0)]
+                     if d%pp == 0 and all(d%qq != 0 for qq in (3,5,7) if qq > pp)]
             B = {x for x in range(Q) if any(x%d == a for a,d in stage)}
             r = sum((F(1,d) for a,d in stage),F(0))-F(len(B),Q)
             v = F(len(B&O),Q)
             total += r+v
+            cross += v
+            internal += r
+            if pp > 3:
+                mins = [(a,d) for a,d in stage
+                        if all(e == d or d % e != 0 for _,e in stage)]
+                Bmin = {x for x in range(Q) if any(x%d == a for a,d in mins)}
+                u = F(len(Bmin&O),Q)
+                localized_events |= Bmin&O
+                minimal += u
+                coefficient = {5: F(3,4), 7: F(5,8)}[pp]
+                lower = (1-coefficient)*lower-(pp*coefficient-1)*u+(v-u)+r
+                prefix_factor *= 1-coefficient
+                require(F(Q-len(O|B),Q) >= lower,
+                        'Iterated minimal-class budget with rebates')
+                counts['localized_recurrence_checks'] += 1
             O |= B
+            prime_unions.append(B)
+            if pp == 3:
+                initial = lower = F(Q-len(O),Q)
         excess = F(sum(max(0,sum(x%d == a for a,d in rows)-1)
                        for x in range(Q)),Q)
+        prime_overlap = F(sum(max(0,sum(x in B for B in prime_unions)-1)
+                              for x in range(Q)),Q)
+        inside_overlap = F(sum(sum(x%d == a for a,d in rows)
+                               -sum(x in B for B in prime_unions)
+                               for x in range(Q)),Q)
         require(total == excess, 'Each repeat charged exactly once')
+        require(cross == prime_overlap and internal == inside_overlap,
+                'Cross-prime and within-bucket pointwise decomposition')
+        require(minimal <= cross <= excess,
+                'Localized minimal-class budget is no larger than total excess')
+        require(F(Q-len(O),Q) >= initial*prefix_factor-(7*F(5,8)-1)*minimal,
+                'Uniform endpoint coefficient for the minimal-class budget')
+        require(minimal <= 2*F(len(localized_events),Q),
+                'Event union controls a sum with two eligible prime stages')
         counts['stage_identity_checks'] += 1
+        counts['prime_collision_checks'] += 1
+        counts['stage_period_points'] += Q
     require(F(1,3) == 5*F(1,15),
             'Dilation factor p attained: old 0 mod3, current 0 mod15')
     # A literal private odd family forbids arbitrary source transport.
@@ -99,8 +144,10 @@ def main():
             'Published positive reserve divided by endpoint loss bound')
     require(93*F(5,10**52) < published_gap,
             'Published Euler product <94 yields the stronger 5e-52 gap')
+    require((N-3)*F(1,10**64) < F(2,10**43),
+            'Minimal-class overlap sum forces union mass greater than 1e-64')
     print(counts)
-    print('PASS geometry, same-Haar repeat identity, source boundary and rational bridge')
+    print('PASS geometry, cross-prime budgets, localized recurrence, source boundary and rational bridge')
     print('INPUTS NOT RECOMPUTED: published Lemma3 reserve > 4.7596769e-50 and page24 Euler product <94')
 
 
