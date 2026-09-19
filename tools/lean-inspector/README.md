@@ -76,8 +76,8 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
 清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
 `producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
-只有成功完成默认目标、report 和发布的入口才封存 `.reuse.json`；该证据随 current
-种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
+首次生成 `.reuse.json` 须成功完成默认目标、report 和发布；命中后私有校验并重发布报告，
+同时履行选中的编译义务。该证据随 current 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为
 大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
 选择，报告模块必须能在 Lake workspace 中解析。`dependency_sources` 与 `report_modules`
@@ -89,7 +89,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 
 兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
-但当前 inspector 仍须编译成功。改变报告含义或接受语义时必须增加此版本，例如改变
+进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时必须增加此版本，例如改变
 声明选择、statement identity 计算或 utility 证据含义；即使 JSON schema 完全相同
 也须 bump。例如从 `3` 增加到 `4` 会使全部模块报告及汇总失效，即使最终 report 和
 materials 的内容字节相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
