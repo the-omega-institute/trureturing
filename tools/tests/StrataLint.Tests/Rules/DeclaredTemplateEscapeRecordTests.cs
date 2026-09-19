@@ -108,7 +108,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
             DeclaredTemplateBindingRuleTests.Delta(declared: true), "unknown"));
-        Assert.Contains(findings, f => f.Effect == AdmissionEffect.Block
+        Assert.Contains(findings, f => f.Effect == AdmissionEffect.Observe
             && f.Message.Contains("unknown bridge_kind", StringComparison.Ordinal));
         Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Slots(
             DeclaredTemplateBindingRuleTests.Delta(declared: true, changed: false), "unknown")));
