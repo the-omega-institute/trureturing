@@ -59,6 +59,7 @@ class NativeInterfaceTests:
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         (package / 'MissingHandler.lean').write_text(
             'import LeanInformationAuditInterface.Syntax\n'
+            'def output := 1\ndef analysis_output := 2\ndef ascii_output := 3\n'
             'register_information_template Nat\n')
         result = self.guarded_command([self.lake, 'env', 'lean', 'MissingHandler.lean'],
                                       cwd=package, env=env)

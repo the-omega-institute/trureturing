@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.OutputSyntax
 
 namespace LeanInformationAudit
 open Lean Lean.Elab.Command

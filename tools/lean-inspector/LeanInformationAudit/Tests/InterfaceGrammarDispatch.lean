@@ -15,7 +15,11 @@ private def checkDispatch (source kind diagnostic : String) : CommandElabM Unit 
     throwError "grammar kind changed: {stx.getKind}, expected {expected}"
   let some owner := env.getModuleIdxFor? stx.getKind
     | throwError "grammar owner missing: {stx.getKind}"
-  unless env.allImportedModuleNames[owner.toNat]! == `LeanInformationAuditInterface.Syntax do
+  let outputCommand := #["sealInformationTheoryCmd", "stageInformationAnalysisCmd",
+    "exportInformationAnalysisCmd"].contains kind
+  let grammarOwner := if outputCommand then `LeanInformationAuditInterface.OutputSyntax
+    else `LeanInformationAuditInterface.Syntax
+  unless env.allImportedModuleNames[owner.toNat]! == grammarOwner do
     throwError "grammar is not owned by Interface: {stx.getKind}"
   let handlers := commandElabAttribute.getEntries env stx.getKind
   let [handler] := handlers
