@@ -8,6 +8,69 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Fact]
+    public void ReportlessProfileContainsOnlyRegisteredIndependentChecksAndPreservesFullSeed()
+    {
+        using var fixture = Prepare();
+        var original = FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        var full = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"));
+        var before = Directory.GetFiles(full, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal)
+            .Select(path => (path, CommonExecutionEvidence.Hash(path))).ToArray();
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "checks", TextWriter.Null));
+        var selected = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "checks");
+        var registered = CommonExecutionEvidence.Read<CommonCheckManifest>(fixture.Root, CommonExecutionEvidence.CheckManifestPath).Checks;
+        var expected = original.Units.Where(unit => registered.Single(check => check.Id == unit.Id).ReportInputs.Length == 0).ToArray();
+        Assert.True(JsonNode.DeepEquals(System.Text.Json.JsonSerializer.SerializeToNode(expected),
+            System.Text.Json.JsonSerializer.SerializeToNode(selected.Units)));
+        Assert.NotEmpty(selected.Units);
+        Assert.All(selected.Units, unit => Assert.Null(unit.Report));
+        var small = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("checks"));
+        Assert.False(File.Exists(Path.Combine(small, "producer-report.json")));
+        Assert.DoesNotContain(Directory.GetFiles(small, "*", SearchOption.AllDirectories), path => path.Contains("raw-lean-report", StringComparison.Ordinal));
+        Assert.Equal(before, Directory.GetFiles(full, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal)
+            .Select(path => (path, CommonExecutionEvidence.Hash(path))).ToArray());
+        Directory.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "check-material"), true);
+        var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        var checks = CommonExecutionEvidence.BeginChecks(fixture.Root, "current", build, TextWriter.Null, ["filemap"]);
+        checks.Run("filemap", () => throw new InvalidOperationException("reportless seed must reuse registered filemap"));
+        Assert.Equal("reused", Assert.Single(checks.Seal().Units).Status);
+    }
+
+    [Theory]
+    [InlineData("report-unit")]
+    [InlineData("producer")]
+    [InlineData("corrupt-material")]
+    public void ReportlessProfileRejectsMixedOrCorruptMaterials(string defect)
+    {
+        using var fixture = Prepare();
+        FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "checks", TextWriter.Null));
+        var seed = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("checks"));
+        var record = CommonExecutionEvidence.Read<CommonCheckRecord>(seed, "checks.json");
+        if (defect == "report-unit")
+            CommonExecutionEvidence.Write(seed, "checks.json", record with { Units = [record.Units[0] with { Report = CommonExecutionEvidence.ReportPath }, .. record.Units.Skip(1)] });
+        else if (defect == "producer") fixture.Write(CommonExecutionEvidence.CheckSeedPath("checks") + "/producer-report.json", "{}");
+        else File.AppendAllText(Path.Combine(seed, record.Units[0].Materials[0].Path), "corrupt\n");
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "checks"));
+        var id = record.Units[0].Id;
+        var checks = CommonExecutionEvidence.BeginChecks(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root), TextWriter.Null, [id]);
+        Assert.True(checks.IsSelected(id));
+        Assert.Throws<InvalidDataException>(() => checks.Run(id, () => new([new(id, 1, "actual current check rejected")])));
+    }
+
+    [Fact]
+    public void TransportedProducerCanSelectAndPublishWithoutLeanTools()
+    {
+        using var fixture = Prepare();
+        Producer(fixture, "prepare");
+        fixture.CommitPlan();
+        fixture.Processes();
+        FullCurrent(fixture, []);
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        Producer(fixture, "probe-without-tools");
+    }
+
+    [Fact]
     public void CurrentProducerSeedSurvivesReusedChecksAndFollowingMetadataOnlyCurrent()
     {
         using var fixture = Prepare();
@@ -165,10 +228,10 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         using var fixture = Prepare();
         var calls = new List<string>();
         var original = FullCurrent(fixture, calls);
-        Assert.Equal(21, calls.Count);
+        Assert.Equal(22, calls.Count);
         Assert.NotNull(original.Units.Single(unit => unit.Id == "SL-001").Report);
         Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
-        Assert.Equal(21, CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current").Units.Length);
+        Assert.Equal(22, CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current").Units.Length);
 
         if (selectedInputChanges)
         {
@@ -184,7 +247,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
             original.Units.Length, selected.Id, selected.Status, selectedSeed.Units.Length, calls.Count,
             final.Units.Count(unit => unit.Status == "reused"));
         Assert.Empty(calls);
-        Assert.Equal(21, final.Units.Length);
+        Assert.Equal(22, final.Units.Length);
         foreach (var unit in final.Units)
         {
             var expected = unit.Id == "filemap" ? selected : original.Units.Single(row => row.Id == unit.Id);
@@ -222,7 +285,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         RunSelectedWithoutOriginalMaterials(fixture);
         var exported = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
         var final = FullCurrent(fixture, calls);
-        Assert.Equal(20, calls.Count);
+        Assert.Equal(21, calls.Count);
         Assert.Equal("filemap", Assert.Single(exported.Units).Id);
         Assert.Equal("filemap", Assert.Single(final.Units, unit => unit.Status == "reused").Id);
     }
@@ -246,7 +309,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.DoesNotContain(exported.Units, unit => unit.Id == "unregistered-old-unit");
         FullCurrent(fixture, calls);
         Assert.Empty(calls);
-        Assert.Equal(21, exported.Units.Length);
+        Assert.Equal(22, exported.Units.Length);
     }
 
     private const string Input = "fixtures/filemap-input.txt";
@@ -264,6 +327,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
             fixture.setUp()
             try:
                 if operation == 'prepare':
+                    fixture.register_toolchain()
                     paths = ('D5/A.lean', 'Audit.lean', 'Inspector.lean', 'producer.py',
                         'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', 'bin/lake', 'bin/lean',
                         'tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
@@ -284,18 +348,23 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                     if operation == 'renew':
                         assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'old producer must miss'
                     fixture.receipt()
-                elif operation in ('probe', 'probe-miss'):
+                elif operation in ('probe', 'probe-miss', 'probe-without-tools'):
                     sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
                     import lean_actions
-                    selected = lean_actions.report_seed(root, fixture.lake)
+                    lake = fixture.lake
+                    if operation == 'probe-without-tools':
+                        fixture.lake.unlink()
+                        fixture.lake.with_name('lean').unlink()
+                        lake = None
+                    selected = lean_actions.report_seed(root, lake)
                     if operation == 'probe-miss':
                         assert selected is None, 'damaged producer must return to normal production'
                         sys.exit(0)
                     expected = root / 'build/ci/current-check-seed' / relative
                     assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
-                    assert not reuse.probe(root, pathlib.Path(selected), fixture.lake)['needs_lake']
+                    assert not reuse.probe(root, pathlib.Path(selected), lake)['needs_lake']
                     output = root / 'build/reused-report' / publication.RAW
-                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.lake)['needs_lake']
+                    assert not reuse.reuse(root, pathlib.Path(selected), output, lake)['needs_lake']
                     assert output.read_bytes() == expected.read_bytes()
                 else:
                     raise AssertionError(operation)
@@ -311,7 +380,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         var fixture = new ResourceRouteTests.ResourceFixture(["filemap"], Input);
         fixture.Write("Meta/ReportProducers/check.json", "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}");
         fixture.Write("lean-report-inputs.json", "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}");
-        fixture.Write("Meta/ReportConsumers/check.json", "{\"schema\":\"report-consumer-inputs-v1\",\"producer\":\"Meta/ReportProducers/check.json\",\"projects\":[],\"materials\":[\"global.json\"]}");
+        fixture.Write("Meta/ReportConsumers/check.json", "{\"schema\":\"report-consumer-inputs-v2\",\"producer\":\"Meta/ReportProducers/check.json\",\"projects\":[],\"program_inputs\":[\"global.json\"],\"materials\":[\"global.json\"]}");
         var manifestPath = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckManifestPath);
         var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))!;
         manifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["materials"] = new JsonArray(Input);

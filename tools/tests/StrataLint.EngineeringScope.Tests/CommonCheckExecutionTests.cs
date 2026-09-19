@@ -48,8 +48,8 @@ public sealed partial class CommonCheckExecutionTests
     [InlineData("report", 1)]
     [InlineData("report-materials", 1)]
     [InlineData("report-missing", 1)]
-    [InlineData("candidate", 21)]
-    [InlineData("round", 21)]
+    [InlineData("candidate", 22)]
+    [InlineData("round", 22)]
     [InlineData("null-unit", 1)]
     public void CurrentSeedReportAndAcceptanceDamageCannotSupplyStaleMaterial(string damage, int expected)
     {
@@ -172,7 +172,7 @@ public sealed partial class CommonCheckExecutionTests
             CommonExecutionEvidence.SealCurrent(fixture.Tree.Root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
         }
         Run();
-        Assert.Equal(21, calls.Count);
+        Assert.Equal(22, calls.Count);
         Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Tree.Root, "current", TextWriter.Null));
         Run();
         Assert.Empty(calls);
@@ -322,10 +322,11 @@ public sealed partial class CommonCheckExecutionTests
             Tree.Write("global.json", "{\"sdk\":{\"version\":\"10.0.103\"}}");
             Tree.Write("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "// banned-api-proof\n");
             Tree.Write("fixtures/selftest.txt", "selftest");
-            var ids = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
+            var ids = CommonCheckRegistrationFixture.Ids;
             CommonExecutionEvidence.Write(Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-                new CommonCheckManifest("ci-check-input-registration-v2", ids.Select(id => new RegisteredCommonCheck(id,
-                    [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
+                new CommonCheckManifest("ci-check-input-registration-v3", ids.Select(id => new RegisteredCommonCheck(id,
+                    [CurrentExecutionContractTests.CandidateFixture.First], [CurrentExecutionContractTests.CandidateFixture.First],
+                    id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
             Tree.Track();
         }
         internal CommonCheckRecord Run(string? failure = null)

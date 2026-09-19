@@ -100,11 +100,10 @@ private def requireRebuildAllowed : JobM Unit := do
     modify ({· with wantsRebuild := true})
     error "target is out-of-date and needs to be rebuilt"
 
-/-- Rejected optional artifacts are rebuilt exactly once through Lake, with
-cache reads disabled for that reconstruction. Never write through a restored
-hard link or evict a blob. Required build and validation failures propagate. -/
-private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
-    (build? : Option (JobM PUnit) := none) : JobM FilePath := do
+/-- Rebuild privately through Lake with cache reads disabled. The result still
+requires canonical validation before a public facet can accept it. -/
+private def reconstructRejectedArtifact (row : UnvalidatedArtifact)
+    (build? : Option (JobM PUnit) := none) : JobM UnvalidatedArtifact := do
   requireRebuildAllowed
   logWarning s!"inspector artifact rejected; rebuilding privately: {row.file}"
   removeFileIfExists row.file
@@ -113,9 +112,16 @@ private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
   setTrace row.inputTrace
   let recovered ← withCurrPackage? none <|
     buildArtifactUnlessUpToDate row.file (build?.getD row.build) (ext := "zip") (restore := true)
-  unless (← validateArtifact pkg (row.check ++ #[recovered.path.toString])) == 0 do
-    error s!"reconstructed Inspector artifact is invalid: {row.file}"
   row.outputTrace.set (← getTrace)
+  return {row with path := recovered.path}
+
+/-- Standalone public facets validate their private reconstruction immediately.
+Collection jobs share this same acceptance check through the native batch. -/
+private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
+    (build? : Option (JobM PUnit) := none) : JobM FilePath := do
+  let recovered ← reconstructRejectedArtifact row build?
+  unless (← validateArtifact pkg (recovered.check ++ #[recovered.path.toString])) == 0 do
+    error s!"reconstructed Inspector artifact is invalid: {row.file}"
   return recovered.path
 
 private def acceptArtifact (pkg : Package) (row : UnvalidatedArtifact) : JobM FilePath := do
@@ -363,15 +369,24 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
       unless repairs.isEmpty do
         requireRebuildAllowed
         discard <| runBatch pkg repairs
-      let mut repaired := false
+      let mut reconstructed : Array UnvalidatedArtifact := #[]
       let mut trace := BuildTrace.nil "<collection>"
       for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
         if status != 0 then
-          discard <| rebuildRejectedArtifact pkg row (some do
+          let recovered ← reconstructRejectedArtifact row (some do
             IO.FS.rename (row.file.addExtension "repair") row.file
             pure PUnit.unit)
-          repaired := true
+          reconstructed := reconstructed.push recovered
         trace := trace.mix (← row.outputTrace.get).withoutInputs
+      unless reconstructed.isEmpty do
+        -- Validate every actual reconstructed file. Share only this invocation's
+        -- material/source memo; a rejected repair must never reach aggregation.
+        let validated ← runBatch pkg (reconstructed.map fun row =>
+          ("validate", #[pkg.dir.toString] ++ row.check ++ #[row.path.toString]))
+        for (row, status) in reconstructed.zip validated do
+          unless status == 0 do
+            error s!"reconstructed Inspector artifact is invalid: {row.file}"
+      let repaired := !reconstructed.isEmpty
       setTrace (mixTrace trace membership.getTrace)
       if !repaired then
         if let some row := aggregate? then

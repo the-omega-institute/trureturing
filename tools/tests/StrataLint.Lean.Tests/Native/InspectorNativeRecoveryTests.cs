@@ -4,6 +4,8 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
 {
     // Invalidation and recovery use a separate, class-owned compiler stage.
     [Theory]
+    [InlineData("test_native.NativeTests.test_repaired_rows_share_one_validation_batch")]
+    [InlineData("test_native.NativeTests.test_repair_batch_rejects_invalid_reconstructed_material")]
     [InlineData("test_native.NativeTests.test_release_stage_and_verify_preserve_absent_lake")]
     [InlineData("test_native.NativeTests.test_native_no_build_rejects_corruption_without_production")]
     [InlineData("test_native.NativeTests.test_public_module_validates_and_private_job_is_not_a_target")]

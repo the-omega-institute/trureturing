@@ -4,7 +4,26 @@
   "report_execution": {
     "tools": ["lake", "lean"],
     "platform": ["system", "machine"],
-    "environment": ["LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS"]
+    "environment": ["LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS"],
+    "toolchain": {
+      "pin": "leanprover/lean4:v4.33.0",
+      "identities": [
+        {
+          "platform": {"system": "Darwin", "machine": "arm64"},
+          "tools": {
+            "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+            "lean": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+          }
+        },
+        {
+          "platform": {"system": "Linux", "machine": "aarch64"},
+          "tools": {
+            "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+            "lean": "Lean (version 4.33.0, aarch64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+          }
+        }
+      ]
+    }
   },
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
   "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
@@ -57,7 +76,7 @@
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
       ],
-      "exclude": ["**/bin/**", "**/obj/**"]
+      "exclude": ["**/bin/**", "**/obj/**", "tools/StrataLint.Lean/Properties/AssemblyInfo.cs", "tools/StrataLint.Engine/AssemblyInfo.cs", "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs"]
     },
     "scribe-content": {
       "include": [

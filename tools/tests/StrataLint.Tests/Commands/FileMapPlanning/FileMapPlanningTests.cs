@@ -5,14 +5,33 @@ namespace StrataLint.Tests;
 
 public sealed class FileMapPlanningTests
 {
+    [Theory]
+    [InlineData("valid", 0)]
+    [InlineData("same-stage-conflict", 2)]
+    [InlineData("wrong-stage", 2)]
+    [InlineData("wrong-layer", 2)]
+    public void ReportCacheActivationHasExplicitStageAndLayerScope(string variant, int expected)
+    {
+        var source = FileMapPlanningFixture.Canonical["filemap"]!.GetValue<string>()
+            .Replace("project = \"stage-start\"", "project = \"report-miss\"", StringComparison.Ordinal)
+            .Replace("cache_layers = [\"judge\"], cache_activation = {judge = \"stage-start\"}",
+                "cache_layers = [\"project\"], cache_activation = {project = \"stage-start\"}", StringComparison.Ordinal);
+        if (variant == "same-stage-conflict") source = source.Replace("stage = \"engineering\"", "stage = \"current\"", StringComparison.Ordinal);
+        if (variant == "wrong-stage") source = source.Replace("stage = \"current\"", "stage = \"engineering\"", StringComparison.Ordinal);
+        if (variant == "wrong-layer") source = source.Replace("project", "judge", StringComparison.Ordinal);
+        using var fixture = new FileMapPlanningFixture(source);
+        fixture.Supply(fixture.Changes("README.md"));
+        Assert.Equal(expected, FileMapConformCommand.Run(["--producer-write-set", "none"], fixture.Root).ExitCode);
+        var result = fixture.MakePlan();
+        Assert.True(result.ExitCode == expected, FileMapPlanningFixture.Text(result));
+        fixture.AssertNoTools();
+    }
+
     [Fact]
-    public void ReferenceOnlyParentlessCurrentReturnsHonestNoWorkWithoutToolsOrBase()
+    public void CompleteReferenceOnlyPrReturnsHonestNoWorkWithoutTools()
     {
         using var fixture = new FileMapPlanningFixture();
-        var changes = fixture.Changes();
-        changes["change_count"] = 1;
-        changes["changes"]!.AsArray().Add(new JsonObject { ["status"] = "A", ["old"] = null,
-            ["new"] = fixture.Endpoint("README.md") });
+        var changes = fixture.Changes("README.md");
         fixture.Supply(changes);
         var planned = fixture.MakePlan();
         Assert.True(planned.ExitCode == 0, FileMapPlanningFixture.Text(planned));
@@ -149,7 +168,8 @@ public sealed class FileMapPlanningTests
         Assert.Equal("not-required", FileMapPlanningFixture.Read(fixture.Result)["status"]!.GetValue<string>());
         Assert.Equal(0, fixture.Cli("validate-no-work", "--commit", fixture.Commit, "--changes", fixture.Manifest,
             "--plan", fixture.Plan, "--result", fixture.Result, "--stage", "engineering").ExitCode);
-        Assert.Equal(2, fixture.NoWork("delta").ExitCode);
+        Assert.Equal(0, fixture.NoWork("delta").ExitCode);
+        Assert.Equal(2, fixture.NoWork("current").ExitCode);
         Assert.Equal(2, fixture.NoWork("build").ExitCode);
         fixture.AssertNoTools();
     }
@@ -210,7 +230,7 @@ public sealed class FileMapPlanningTests
             case "tree": changes["candidate"]!["tree"] = new string('a', 40); break;
             case "mode": record["new"]!["mode"] = "120000"; break;
             case "path": record["new"]!["path"] = "docs/../README.md"; break;
-            case "status": record["status"] = "M"; break;
+            case "status": record["status"] = "A"; break;
             case "duplicate-path": changes["changes"]!.AsArray().Add(record.DeepClone()); changes["change_count"] = 2; break;
             default: changes["extra"] = true; break;
         }

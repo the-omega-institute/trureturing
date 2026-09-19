@@ -243,6 +243,14 @@ public sealed class AnchorReferenceRuleTests
             [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
             [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
             ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
+            ["Meta/ReportProducers/lean-report.json"] = """
+                {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json","scope":"lean-report","projects":[]}
+                """,
+            ["lean-report-inputs.json"] = """
+                {"config_inputs":{"include":[{"pattern":"lean-toolchain","optional":false}],"exclude":[]},
+                 "inspector_sources":{"include":[],"exclude":[]},
+                 "producer_scopes":{"lean-report":{"include":[],"exclude":[]}}}
+                """,
         };
         if (!added)
         {

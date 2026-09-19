@@ -125,11 +125,23 @@ def transport(args):
     if args.command == "pack":
         command.extend(["--archive", str(args.archive)])
         seed_archive = args.seed_archive
+        checks_archive = args.checks_seed_archive
         if (seed_archive is None and args.stage == "current"
                 and os.environ.get("STRATALINT_CACHE_WRITES") == "true"):
-            seed_archive = args.archive.with_name("ci-current-seed.tar.gz")
+            layers = ["current"]
+            if os.environ.get("CI_PLAN_PATH"):
+                import ci_plan
+                plan = ci_plan.validate_plan(args.repository, oid(args.commit),
+                    args.repository / os.environ["CI_PLAN_PATH"], args.repository / os.environ["CI_CHANGES_PATH"])
+                layers = ci_plan.stage_requirements(args.repository, plan, "current")["cache_layers"]
+            if "current" in layers:
+                seed_archive = args.archive.with_name("ci-current-seed.tar.gz")
+            if "checks" in layers and checks_archive is None:
+                checks_archive = args.archive.with_name("ci-checks-seed.tar.gz")
         if seed_archive is not None:
             command.extend(["--seed-archive", str(seed_archive)])
+        if checks_archive is not None:
+            command.extend(["--checks-seed-archive", str(checks_archive)])
     # The runner is the upstream candidate runtime. Validation precedes the
     # downstream stage; the non-adversarial runtime bootstrap does not rebuild.
     subprocess.run(command, cwd=args.repository, check=True)
@@ -180,7 +192,8 @@ def stage_input(args):
     if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
         raise ValueError("delta requires the validated plan's explicit immutable base")
     requirements = ci_plan.stage_requirements(root, value, stage)
-    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
+    result = {"required": requirements["required"], "no_work": not value["resources"],
+              "cache_layers": " ".join(requirements["cache_layers"]),
               "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
               "artifact_required": requirements["required"],
               "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}
@@ -223,6 +236,7 @@ def main():
     parser.add_argument("--dispatch", action="store_true")
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--seed-archive", type=pathlib.Path)
+    parser.add_argument("--checks-seed-archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
     args = parser.parse_args()

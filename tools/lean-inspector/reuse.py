@@ -42,20 +42,40 @@ def capture(repository, lake):
     # registered file population. Their presence keeps the ordinary Lake path.
     if any(environment[name] for name in ('LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'LEAN_OPTS')):
         return dict(eligible=False, reason='external-semantic-environment')
-    lake = Path(lake)
-    if not lake.is_absolute():
-        raise ValueError('report reuse requires an absolute Lake executable')
-    try:
-        versions = {}
-        for name in execution['tools']:
-            executable = lake if name == 'lake' else lake.with_name('lean')
-            version = subprocess.check_output([str(executable), '--version'],
-                cwd=inputs.root, text=True, stderr=subprocess.PIPE).strip()
-            if not version:
-                raise ValueError('empty ' + name + ' version')
-            versions[name] = version
-    except (OSError, UnicodeError, ValueError, subprocess.SubprocessError) as error:
-        return dict(eligible=False, reason='toolchain-unavailable', detail=str(error))
+    host = {name: getattr(platform, name)() for name in execution['platform']}
+    toolchain = execution.get('toolchain')
+    expected = None
+    if toolchain is not None:
+        if inputs.safe_file('lean-toolchain').read_text(encoding='utf-8').strip() != toolchain['pin']:
+            return dict(eligible=False, reason='registered-toolchain-pin-mismatch')
+        if environment['ELAN_TOOLCHAIN'] not in ('', toolchain['pin']):
+            return dict(eligible=False, reason='toolchain-environment-override')
+        expected = next((row['tools'] for row in toolchain['identities'] if row['platform'] == host), None)
+        if expected is None:
+            return dict(eligible=False, reason='toolchain-platform-not-registered')
+    if lake is None:
+        # Candidate registration is the authority; donor-reported versions are
+        # compared only by read_receipt and cannot supply a missing identity.
+        if expected is None:
+            return dict(eligible=False, reason='toolchain-identity-not-registered')
+        versions = expected
+    else:
+        lake = Path(lake)
+        if not lake.is_absolute():
+            raise ValueError('report reuse requires an absolute Lake executable')
+        try:
+            versions = {}
+            for name in execution['tools']:
+                executable = lake if name == 'lake' else lake.with_name('lean')
+                version = subprocess.check_output([str(executable), '--version'],
+                    cwd=inputs.root, text=True, stderr=subprocess.PIPE).strip()
+                if not version:
+                    raise ValueError('empty ' + name + ' version')
+                versions[name] = version
+        except (OSError, UnicodeError, ValueError, subprocess.SubprocessError) as error:
+            return dict(eligible=False, reason='toolchain-unavailable', detail=str(error))
+        if expected is not None and versions != expected:
+            return dict(eligible=False, reason='registered-tool-identity-mismatch')
     # dependency_sources includes every report module; producer_paths includes
     # inspector/default-audit sources. Addition/deletion changes the exact map.
     paths = sorted(set(inputs.producer_paths('lean-report') + inputs.dependency_sources()
@@ -65,7 +85,7 @@ def capture(repository, lake):
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
     return dict(eligible=True, files=files,
-        execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
+        execution=dict(tools=versions, platform=host,
                        environment=environment))
 
 
@@ -122,6 +142,8 @@ def write_receipt(report, captured):
 
 
 def seal(repository, report, lake, captured):
+    if lake is None:
+        raise ValueError('sealing report execution requires the actual Lake executable')
     current = capture(repository, lake)
     if current != captured:
         publication.member(report, SUFFIX).unlink(missing_ok=True)
@@ -163,7 +185,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal'))
     parser.add_argument('--repository', required=True, type=Path)
-    parser.add_argument('--lake', required=True, type=Path)
+    parser.add_argument('--lake', type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
@@ -174,6 +196,8 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
+    if args.command in ('capture', 'seal') and args.lake is None:
+        parser.error('--lake is required for executed production')
     if args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository, args.lake)))
     elif args.command == 'seal':

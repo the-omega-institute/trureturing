@@ -133,6 +133,7 @@ internal sealed partial class RuleFixture
                 new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", false, ["tools/tests/CompileFailProof/**/*.cs"])),
         };
         foreach (var (path, text) in DeclaredTemplateReviewTests.PolicyFiles()) Files[path] = text;
+        RegisterLeanProducerInputs();
         var registration = System.Text.Json.Nodes.JsonNode.Parse(Files[EngineeringRegistrationFixture.Path])!;
         registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(
             RegisteredBuildInputs.Select(path => System.Text.Json.Nodes.JsonValue.Create(path)).ToArray());

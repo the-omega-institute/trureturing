@@ -15,7 +15,7 @@ internal sealed record TestExecutionRecord(int Version, string Candidate, string
 internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log);
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials, ResourcePlanBinding? Selection = null, string[]? Projects = null);
 internal sealed record RegisteredCheckReport(string Producer, string Consumer, string Artifact, string[] Materials);
-internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
+internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] ProgramInputs, string[] Materials,
     string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs);
 internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
 
@@ -65,7 +65,7 @@ internal static partial class CommonExecutionEvidence
         return Candidate(root, snapshot);
     }
 
-    private static string Candidate(string root, RepositorySnapshot snapshot)
+    internal static string Candidate(string root, RepositorySnapshot snapshot)
     {
         var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
@@ -97,15 +97,15 @@ internal static partial class CommonExecutionEvidence
                 ?? throw new InvalidDataException("empty common check registration");
         }
         catch (JsonException exception) { throw new InvalidDataException($"invalid common check registration: {exception.Message}", exception); }
-        if (manifest.Schema != "ci-check-input-registration-v2" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
+        if (manifest.Schema != "ci-check-input-registration-v3" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
             throw new InvalidDataException("invalid common check registration schema");
-        var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
+        var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-library", "scribe-markdown", "filemap" };
         if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
             throw new InvalidDataException("common check registration mismatch: missing=[" + string.Join(",", expected.Except(manifest.Checks.Select(check => check.Id)))
                 + "] unexpected-or-duplicate=[" + string.Join(",", manifest.Checks.GroupBy(check => check.Id).Where(group => group.Count() != 1 || !expected.Contains(group.Key)).Select(group => group.Key)) + "]");
         registry ??= EngineeringProjectRegistry.Read(snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray());
         var projects = registry.Projects.Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
-        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToHashSet(StringComparer.Ordinal);
         foreach (var check in manifest.Checks)
         {
             if (check.ProgramProjects is null || check.Materials is null || check.MaterialExcludes is null
@@ -113,10 +113,11 @@ internal static partial class CommonExecutionEvidence
                 throw new InvalidDataException($"missing common check registration fields: {check.Id}");
             foreach (var project in check.ProgramProjects)
                 if (!projects.Contains(project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {project}");
+            ValidateProgramInputs(paths, check.ProgramInputs, "check " + check.Id);
             ValidatePatterns(check.Materials, check.MaterialExcludes, check.Id);
             ValidatePatterns(check.PathInventory, [], check.Id);
-            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
-            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id);
+            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
+            _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, check.PathInventory, [], check.Id);
             if (check.ProgramProjects.Distinct(StringComparer.Ordinal).Count() != check.ProgramProjects.Length)
                 throw new InvalidDataException("duplicate common check declaration: " + check.Id);
             var artifacts = new HashSet<string>(StringComparer.Ordinal);
@@ -131,9 +132,9 @@ internal static partial class CommonExecutionEvidence
                     throw new InvalidDataException($"duplicate or conflicting report input: {check.Id}: {report.Artifact}: {report.Producer}");
                 if (!snapshot.Files.ContainsKey(RepoPath.CreateKnown(report.Producer)))
                     throw new InvalidDataException($"check {check.Id} references missing producer: {report.Producer}");
-                _ = ReadConsumer(snapshot, report, projects, check.Id);
+                _ = ReadConsumer(snapshot, report, projects, check.Id, paths);
                 ValidatePatterns(report.Materials, [], check.Id);
-                _ = EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id);
+                _ = EngineeringProjectRegistry.ValidateExpandedInputs(paths, report.Materials, [], check.Id);
             }
         }
         // Verified emissions come from the shared describe unit. Its registered
@@ -202,7 +203,7 @@ internal static partial class CommonExecutionEvidence
     internal static CommonStageRecord ValidateBuild(string root, string? round = null) =>
         ValidateBuild(root, Candidate(root), round);
 
-    internal static CommonStageRecord ValidateBuild(string root, ValidationScope validation, string round) =>
+    internal static CommonStageRecord ValidateBuild(string root, ValidationScope validation, string? round) =>
         ValidateBuild(root, Candidate(root, validation.Snapshot), round, validation);
 
     private static CommonStageRecord ValidateBuild(string root, string candidate, string? round, ValidationScope? validation = null)
@@ -236,13 +237,17 @@ internal static partial class CommonExecutionEvidence
     {
         RequirePassed(steps, EngineeringSteps);
         var candidate = Candidate(root, out var snapshot);
-        ValidateStartedBuild(root, build, candidate);
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
+        var validation = new ValidationScope(snapshot);
+        ValidateStartedBuild(root, build, candidate, validation);
+        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot, validation: validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
-        var checks = ValidateChecks(root, "engineering", build);
+        var ids = SelectedEngineeringCheckIds(root, build);
+        var checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids, validation);
         var record = new CommonStageRecord(2, candidate, build.Round, steps,
-            Materials(root, new[] { BuildPath, TestsPath, ChecksPath("engineering") }.Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path)).Concat(tests.Materials.Select(material => material.Path))
-                .Concat(steps.Select(step => step.Log))));
+            Materials(root, new[] { BuildPath, TestsPath }.Concat(SelectionPaths(build.Selection))
+                .Concat(checks is null ? [] : new[] { ChecksPath("engineering") })
+                .Concat(checks?.Units.SelectMany(unit => unit.Materials).Select(material => material.Path) ?? [])
+                .Concat(tests.Materials.Select(material => material.Path)).Concat(steps.Select(step => step.Log))), build.Selection);
         Write(root, EngineeringPath, record);
         // The consumer already has the shared build (directly, or in current's
         // standalone release bundle). Engineering transports only its own work.
@@ -252,7 +257,10 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, out _, out _);
 
-    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
+    internal static string[] SelectedEngineeringCheckIds(string root, CommonStageRecord build) =>
+        SelectedPlan(root, build)?.CheckUnits.Intersect(EngineeringCheckIds).ToArray() ?? EngineeringCheckIds;
+
+    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord? checks)
     {
         var candidate = Candidate(root, out var snapshot);
         var validation = new ValidationScope(snapshot);
@@ -260,16 +268,21 @@ internal static partial class CommonExecutionEvidence
     }
 
     private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
-        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
+        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord? checks, IEnumerable<string>? baseProjects = null)
     {
         tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
         var record = Read<CommonStageRecord>(root, EngineeringPath);
         ValidateRecord(root, record, build.Candidate, build.Round, validation);
         RequirePassed(record.Steps, EngineeringSteps);
-        checks = ValidateChecks(root, "engineering", build, null, validation);
-        if (!record.Materials.Any(material => material.Path == ChecksPath("engineering")))
+        if (record.Selection != build.Selection || SelectionPaths(record.Selection).Any(path => !record.Materials.Any(material => material.Path == path)))
+            throw new InvalidDataException("engineering has missing or different build selection");
+        var ids = SelectedEngineeringCheckIds(root, build);
+        checks = ids.Length == 0 ? null : ValidateChecks(root, "engineering", build, ids, validation);
+        if (checks is not null && !record.Materials.Any(material => material.Path == ChecksPath("engineering")))
             throw new InvalidDataException("engineering has no bound common check evidence");
+        if (checks is null && record.Materials.Any(material => material.Path == ChecksPath("engineering")))
+            throw new InvalidDataException("unrequested checks cannot be engineering evidence");
         if (!record.Materials.Any(material => material.Path == TestsPath)
             || !record.Materials.Any(material => material.Path == BuildPath))
             throw new InvalidDataException("engineering has no bound test or build evidence");

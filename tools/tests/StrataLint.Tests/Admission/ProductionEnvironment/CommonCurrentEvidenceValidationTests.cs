@@ -10,6 +10,26 @@ namespace StrataLint.Tests;
 [Collection("CI fixture environment")]
 public sealed partial class CommonCurrentEvidenceValidationTests
 {
+    [Fact]
+    public void ActualRegisteredCurrentInputsLimitBackfillChangesToCapacityAndFileMap()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var snapshot = CommonExecutionEvidence.Snapshot(root);
+        const string path = "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
+        Assert.True(snapshot.TryGetFile(path, out var original));
+        var text = original.Text + "\n// registered input isolation\n";
+        var changed = RepositorySnapshot.Create(snapshot.Files.SetItem(original.Path,
+            new RepositoryFile(original.Path, System.Collections.Immutable.ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(text)), text)));
+        var ids = CommonExecutionEvidence.CheckIds("current", CommonExecutionEvidence.ReadCheckManifest(snapshot));
+
+        var before = CommonExecutionEvidence.CheckInputFingerprints(root, snapshot, currentReport: false, selectedIds: ids);
+        var after = CommonExecutionEvidence.CheckInputFingerprints(root, changed, currentReport: false, selectedIds: ids);
+
+        Assert.Equal(22, before.Count);
+        Assert.Equal(before.Keys.Order(StringComparer.Ordinal), after.Keys.Order(StringComparer.Ordinal));
+        Assert.Equal(new[] { "SL-003", "filemap" }, ids.Where(id => before[id] != after[id]).Order(StringComparer.Ordinal));
+    }
+
     [Theory]
     [InlineData("validate")]
     [InlineData("export")]
@@ -118,7 +138,7 @@ public sealed partial class CommonCurrentEvidenceValidationTests
             Write("lean-report-inputs.json", "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}");
             Write(consumer, System.Text.Json.JsonSerializer.Serialize(new
             {
-                schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
+                schema = "report-consumer-inputs-v2", producer, projects = Array.Empty<string>(), program_inputs = new[] { "global.json" }, materials = new[] { "global.json" },
             }));
             var registration = JsonNode.Parse(CommonCheckRegistrationFixture.Manifest(Project))!;
             foreach (var id in new[] { "SL-001", "SL-002" })

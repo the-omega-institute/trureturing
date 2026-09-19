@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import shutil
 import subprocess
 import sys
@@ -89,6 +90,127 @@ class ReuseTests(unittest.TestCase):
         captured = reuse.capture(self.root, self.lake)
         reuse.seal(self.root, self.report, self.lake, captured)
         return reuse
+
+    def register_toolchain(self):
+        self.policy['report_execution']['toolchain'] = dict(pin='fixture', identities=[dict(
+            platform={name: getattr(platform, name)() for name in EXECUTION['platform']},
+            tools={name: 'fixture ' + name + ' 1' for name in EXECUTION['tools']})])
+        self.write_policy()
+
+    def test_registered_toolchain_reuses_without_executing_or_installing_tools(self):
+        self.register_toolchain()
+        api = self.receipt()
+        shutil.rmtree(self.lake.parent)
+        with patch.object(subprocess, 'check_output', wraps=subprocess.check_output) as commands, \
+                patch.object(publication, 'validate_bundle', wraps=publication.validate_bundle) as validation:
+            self.assertFalse(api.probe(self.root, self.report, None)['needs_lake'])
+            self.assertEqual(validation.call_count, 0)
+            self.assertFalse(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+            self.assertEqual(validation.call_count, 1, '[FAIL] tool_free_reuse_keeps_normal_publication')
+            self.assertFalse(any(Path(call.args[0][0]).name in EXECUTION['tools']
+                for call in commands.call_args_list), '[FAIL] lean_tools_must_remain_unused')
+        publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
+
+    def test_registered_friend_assembly_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Lean', 'Properties/AssemblyInfo.cs')
+
+    def test_registered_engine_friend_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Engine', 'AssemblyInfo.cs')
+
+    def test_registered_backfill_loader_edit_reuses_but_report_source_edit_misses(self):
+        self.assert_registered_friend_edit('StrataLint.Engine', 'Rules/Backfill/BackfillInventoryLoader.cs')
+
+    def assert_registered_friend_edit(self, project, friend_path):
+        registration = publication.selection.Selection(ROOT).data['producer_scopes']['lean-report']
+        scope = self.policy['producer_scopes']['lean-report']
+        scope['include'].extend(row for row in registration['include']
+                               if row['pattern'].startswith(f'tools/{project}/'))
+        scope['exclude'] = registration['exclude']
+        friend = f'tools/{project}/{friend_path}'
+        source = f'tools/{project}/ReportProducer.cs'
+        self.write(friend, '[assembly: InternalsVisibleTo("Existing.Tests")]\n')
+        self.write(source, 'class ReportProducer {}\n')
+        self.write(f'tools/{project}/{project}.csproj', '<Project />\n')
+        self.write(f'tools/{project}/packages.lock.json', '{}\n')
+        self.register_toolchain()
+        api = self.receipt()
+        report_bytes = self.report.read_bytes()
+        shutil.rmtree(self.lake.parent)
+
+        self.write(friend, '[assembly: InternalsVisibleTo("Repository.Tests")]\n')
+        with patch.object(publication, 'validate_bundle', wraps=publication.validate_bundle) as validation:
+            self.assertFalse(api.probe(self.root, self.report, None)['needs_lake'])
+            self.assertFalse(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+            self.assertEqual(validation.call_count, 1, 'reuse must validate the complete report')
+        self.assertEqual(report_bytes, self.output.read_bytes())
+
+        self.write(source, 'class ReportProducer { int changed; }\n')
+        self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        self.assertTrue(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
+    def test_tool_free_reuse_requires_candidate_identity_not_donor_claims(self):
+        self.register_toolchain()
+        api = self.receipt()
+        path = publication.member(self.report, '.reuse.json')
+        sealed = path.read_bytes()
+        for name in EXECUTION['tools']:
+            with self.subTest(tool=name):
+                receipt = json.loads(sealed)
+                receipt['inputs']['execution']['tools'][name] = 'donor supplied version'
+                path.write_text(json.dumps(receipt))
+                self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+                self.assertTrue(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+                self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+        path.write_bytes(sealed)
+        with patch.dict(os.environ, LEAN_OPTS='--another-option'):
+            self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        with patch.dict(os.environ, ELAN_TOOLCHAIN='another/toolchain'):
+            self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        with patch.object(platform, 'machine', return_value='unregistered-machine'):
+            self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        self.write('lean-toolchain', 'another/toolchain\n')
+        self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+
+    def test_registered_tool_versions_are_verified_before_sealing(self):
+        self.register_toolchain()
+        api = self.receipt()
+        self.lake.write_text('#!/bin/sh\nprintf "%s\\n" "wrong compiler"\n')
+        captured = api.capture(self.root, self.lake)
+        self.assertFalse(captured['eligible'], '[FAIL] actual_tool_must_match_candidate_registration')
+        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+        api.seal(self.root, self.report, self.lake, captured)
+        self.assertFalse(publication.member(self.report, '.reuse.json').exists())
+
+    def test_missing_tool_identity_and_damaged_material_need_normal_production(self):
+        api = self.receipt()
+        self.assertTrue(api.probe(self.root, self.report, None)['needs_lake'])
+        self.register_toolchain()
+        api = self.receipt()
+        archive = publication.member(self.report, '.materials.zip')
+        with zipfile.ZipFile(archive, 'a') as target:
+            target.writestr('unregistered material', b'not a valid report material')
+        # Even a self-consistent donor hash cannot grant publication success.
+        path = publication.member(self.report, '.reuse.json')
+        receipt = json.loads(path.read_bytes())
+        receipt['bundle']['.materials.zip'] = publication.digest(archive)
+        path.write_text(json.dumps(receipt))
+        self.assertFalse(api.probe(self.root, self.report, None)['needs_lake'])
+        self.assertTrue(api.reuse(self.root, self.report, self.output, None)['needs_lake'])
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
+    def test_toolchain_registration_rejects_missing_duplicate_and_unknown_fields(self):
+        self.register_toolchain()
+        original = copy.deepcopy(self.policy['report_execution']['toolchain'])
+        for bad in [None, {}, dict(original, pin=''), dict(original, identities=[]),
+                    dict(original, identities=original['identities'] * 2),
+                    dict(original, discover=True),
+                    dict(original, identities=[dict(platform=original['identities'][0]['platform'], tools={})])]:
+            with self.subTest(contract=bad):
+                self.policy['report_execution']['toolchain'] = bad
+                self.write_policy()
+                with self.assertRaisesRegex(ValueError, 'report_execution.toolchain'):
+                    publication.selection.Selection(self.root)
 
     def test_execution_registration_is_explicit_and_strict(self):
         try:

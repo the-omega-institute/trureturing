@@ -126,6 +126,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("selected")]
     [InlineData("metadata")]
     [InlineData("metadata-seed-miss")]
+    [InlineData("metadata-current-seed-miss")]
+    [InlineData("metadata-checks-seed-miss")]
     [InlineData("metadata-required-report")]
     [InlineData("metadata-forged-candidate")]
     [InlineData("metadata-missing-registration")]
@@ -133,6 +135,13 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     {
         var selected = scenario != "all";
         var metadata = scenario.StartsWith("metadata", StringComparison.Ordinal);
+        string[] seedProfiles = scenario switch
+        {
+            "metadata-seed-miss" => ["checks", "current"],
+            "metadata-current-seed-miss" => ["current"],
+            "metadata-checks-seed-miss" => ["checks"],
+            _ => [],
+        };
         string[] selectedChecks = metadata && scenario != "metadata-required-report"
             ? ["SL-003", "SL-015", "SL-019"] : ["SL-012"];
         using var ciEnvironment = new CiFixtureEnvironment();
@@ -152,7 +161,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             fixture.Files["lean-report-inputs.json"] = "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}";
             fixture.Files[consumer] = JsonSerializer.Serialize(new
             {
-                schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
+                schema = "report-consumer-inputs-v2", producer, projects = Array.Empty<string>(), program_inputs = new[] { "global.json" }, materials = new[] { "global.json" },
             });
             if (metadata)
                 foreach (var path in new[] { producer, consumer, "lean-report-inputs.json" })
@@ -205,7 +214,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (!metadata) WriteReport();
         var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
         var arguments = Arguments();
-        if (scenario == "metadata-seed-miss")
+        if (seedProfiles.Length != 0)
         {
             var root = temporary.Path;
             var seedBuild = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.BuildPath);
@@ -214,13 +223,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 seedChecks.Run(id, () => new([new(id, 0, CommonCheckRegistrationFixture.Predicate(id))]));
             _ = seedChecks.Seal();
             _ = CommonExecutionEvidence.CompleteCurrent(root, seedBuild, [], ResourceExecutionPlan.Load(root, "build/plan.json", "build/scope.json"));
-            Assert.True(CommonExecutionEvidence.ExportCheckSeed(root, "current", TextWriter.Null));
-            var seed = Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("current"));
-            var record = CommonExecutionEvidence.Read<CommonCheckRecord>(seed, "checks.json");
-            CommonExecutionEvidence.Write(seed, "checks.json", record with
+            foreach (var profile in seedProfiles)
             {
-                Units = record.Units.Select(unit => unit with { InputFingerprint = new string('0', 64) }).ToArray(),
-            });
+                Assert.True(CommonExecutionEvidence.ExportCheckSeed(root, profile, TextWriter.Null));
+                var seed = Path.Combine(root, CommonExecutionEvidence.CheckSeedPath(profile));
+                var record = CommonExecutionEvidence.Read<CommonCheckRecord>(seed, "checks.json");
+                CommonExecutionEvidence.Write(seed, "checks.json", record with
+                {
+                    Units = record.Units.Select(unit => unit with { InputFingerprint = new string('0', 64) }).ToArray(),
+                });
+            }
         }
         if (scenario == "metadata-required-report")
         {
@@ -272,24 +284,34 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 scenario, result.ExitCode, reads, result.Output, result.Error);
             Assert.Equal(0, reads);
             Assert.False(Directory.Exists(Path.Combine(temporary.Path, ".lake")));
-            if (scenario is not ("metadata" or "metadata-seed-miss"))
+            if (scenario != "metadata" && seedProfiles.Length == 0)
             {
                 Assert.Equal(2, result.ExitCode);
                 Assert.Contains(scenario switch
                 {
                     "metadata-forged-candidate" => "candidate identity",
-                    _ => CommonExecutionEvidence.CheckManifestPath,
+                    // Removing a registered input invalidates the complete local
+                    // scope before the current predicate can read its manifest.
+                    _ => "push origin does not match candidate's actual immutable event endpoints",
                 }, result.Error, StringComparison.Ordinal);
                 Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.ChecksPath("current"))));
                 Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.CurrentPath)));
                 return;
             }
             Assert.True(result.ExitCode == 0, result.Output + result.Error);
-            if (scenario == "metadata-seed-miss")
+            foreach (var profile in new[] { "checks", "current" })
+            {
+                var unavailable = $"COMMON_CHECK_SEED_UNAVAILABLE stage=current profile={profile} ";
+                if (seedProfiles.Contains(profile))
+                    Assert.DoesNotContain(unavailable, result.Output, StringComparison.Ordinal);
+                else
+                    Assert.Contains(unavailable, result.Output, StringComparison.Ordinal);
+            }
+            if (seedProfiles.Length != 0)
             {
                 foreach (var id in selectedChecks)
-                    Assert.Contains($"COMMON_CHECK_SEED_MISS id={id} reason=\"invalid common check identity/provenance: {id}\"", result.Output, StringComparison.Ordinal);
-                Assert.DoesNotContain("COMMON_CHECK_SEED_UNAVAILABLE", result.Output, StringComparison.Ordinal);
+                    Assert.Equal(seedProfiles.Length, result.Output.Split('\n').Count(line =>
+                        line == $"COMMON_CHECK_SEED_MISS id={id} reason=\"invalid common check identity/provenance: {id}\""));
                 Assert.DoesNotContain("COMMON_CHECK_REUSED", result.Output, StringComparison.Ordinal);
             }
             Assert.Equal(1, manifestReads);
@@ -343,15 +365,10 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             var commit = Git(root, "rev-parse", "HEAD");
-            var entry = Git(root, "ls-tree", "HEAD", "--", RuleFixture.RingPath).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
             var changes = Path.Combine(root, "build/scope.json");
             var plan = Path.Combine(root, "build/plan.json");
-            File.WriteAllText(changes, JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
-                candidate = new { commit, tree = Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
-                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null,
-                    @new = new { path = RuleFixture.RingPath, mode = entry[0], oid = entry[2] } } } }));
-            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", root,
-                "--commit", commit, "--changes", changes, "--output", plan], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan", "--repository", root,
+                "--commit", commit], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
             if (scenario == "metadata-required-report")
             {
                 Assert.NotEqual(0, planning.ExitCode);
@@ -360,6 +377,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 return [];
             }
             Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
+            File.Copy(Path.Combine(root, "build/ci/changes.json"), changes, true);
+            File.Copy(Path.Combine(root, "build/ci/plan.json"), plan, true);
             return [.. metadata ? Array.Empty<string>() : new[] { "--candidate-lean-report", report },
                 "--common-build-round", build.Round, "--common-plan", plan, "--common-changes", changes];
         }
@@ -443,6 +462,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (template)
         {
             foreach (var pair in DeclaredTemplateReviewTests.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
+            fixture.RegisterLeanProducerInputs();
             fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
                 "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
             var templatePolicy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
@@ -532,6 +552,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             case "unowned-project":
                 const string product = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj";
                 Write(product, "<Project />\n");
+                var productFileMap = TomlSerializer.Deserialize<TomlTable>(File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+                var productRows = ((TomlArray)productFileMap["files"]).Cast<TomlTable>();
+                var productEntry = TomlSerializer.Deserialize<TomlTable>(TomlSerializer.Serialize(productRows.Single(row =>
+                    (string)row["pattern"] == "tools/StrataLint.Engine/StrataLint.Engine.csproj")))!;
+                productEntry["pattern"] = product;
+                var registeredRows = new TomlArray();
+                foreach (var row in productRows.Append(productEntry).OrderBy(row => (string)row["pattern"], StringComparer.Ordinal))
+                    registeredRows.Add(row);
+                productFileMap["files"] = registeredRows;
+                Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(productFileMap));
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
                 break;

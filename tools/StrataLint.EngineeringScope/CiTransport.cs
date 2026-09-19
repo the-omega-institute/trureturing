@@ -29,14 +29,16 @@ internal static class CiTransport
         }
         var pack = arguments[0] == "transport-pack";
         var seedArchive = values.GetValueOrDefault("--seed-archive");
+        var checksArchive = values.GetValueOrDefault("--checks-seed-archive");
         var required = new[] { "--repository", "--stage", "--commit", "--run-id", "--run-attempt" }
-            .Concat(pack ? ["--archive"] : []).Concat(seedArchive is not null ? ["--seed-archive"] : []).Order(StringComparer.Ordinal);
+            .Concat(pack ? ["--archive"] : []).Concat(seedArchive is not null ? ["--seed-archive"] : [])
+            .Concat(checksArchive is not null ? ["--checks-seed-archive"] : []).Order(StringComparer.Ordinal);
         if (!required.SequenceEqual(values.Keys.Order(StringComparer.Ordinal)))
-            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE] [--seed-archive FILE]");
+            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current|engineering-seed|current-seed|checks-seed --commit SHA --run-id ID --run-attempt N [--archive FILE] [--seed-archive FILE] [--checks-seed-archive FILE]");
         var root = Path.GetFullPath(values["--repository"]);
         var stage = values["--stage"];
         var commit = values["--commit"];
-        if (stage is not ("build" or "engineering" or "current" or "engineering-seed" or "current-seed") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
+        if (stage is not ("build" or "engineering" or "current" or "engineering-seed" or "current-seed" or "checks-seed") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
             || !long.TryParse(values["--run-id"], NumberStyles.None, CultureInfo.InvariantCulture, out var run) || run < 1
             || !int.TryParse(values["--run-attempt"], NumberStyles.None, CultureInfo.InvariantCulture, out var attempt) || attempt < 1)
             throw new ArgumentException("invalid transport stage or immutable execution identity");
@@ -44,7 +46,11 @@ internal static class CiTransport
         var seedStage = stage.EndsWith("-seed", StringComparison.Ordinal);
         if (seedArchive is not null && (!pack || stage is not ("engineering" or "current")))
             throw new ArgumentException("a companion seed archive requires ordinary engineering or current pack");
-        if (seedArchive is not null && Path.GetFullPath(seedArchive) == Path.GetFullPath(values["--archive"]))
+        if (checksArchive is not null && (!pack || stage != "current"))
+            throw new ArgumentException("a reportless companion archive requires ordinary current pack");
+        var archives = new[] { values.GetValueOrDefault("--archive"), seedArchive, checksArchive }
+            .Where(path => path is not null).Select(path => Path.GetFullPath(path!)).ToArray();
+        if (archives.Distinct(StringComparer.Ordinal).Count() != archives.Length)
             throw new ArgumentException("ordinary and seed archives must have distinct destinations");
         if ((!seedStage || pack) && (Git(root, "rev-parse", "HEAD") != commit
             || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0))
@@ -56,9 +62,9 @@ internal static class CiTransport
         CommonExecutionEvidence.ValidationScope? validation = null;
         if (seedStage)
         {
-            var owner = stage[..^5];
-            if (pack) _ = CommonExecutionEvidence.ExportCheckSeed(root, owner, output);
-            var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, owner);
+            var profile = stage[..^5];
+            if (pack) _ = CommonExecutionEvidence.ExportCheckSeed(root, profile, output);
+            var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, profile);
             common = new(2, seed.Candidate, seed.Round, [], []);
         }
         else if (stage == "current")
@@ -83,22 +89,23 @@ internal static class CiTransport
             // materials before exposing output callbacks; imports still validate
             // them against their recipient's registered inputs and environment.
             using var messages = new StringWriter();
-            if (seedArchive is not null && checks is not null)
+            foreach (var (profile, companion, outputPrefix) in new[] { (stage, seedArchive, "seed"), ("checks", checksArchive, "checks_seed") })
             {
-                var destination = Path.GetFullPath(seedArchive);
+                if (companion is null) continue;
+                var destination = Path.GetFullPath(companion);
                 try
                 {
-                    if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, stage, common, tests, checks, messages))
+                    if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, profile, common, tests, checks, messages))
                     {
-                        var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
-                        PackArchive(stage + "-seed", new(2, seed.Candidate, seed.Round, [], []), null, null, destination);
-                        outputs["seed_artifact_name"] = ArtifactName(stage + "-seed", run, attempt);
-                        outputs["seed_archive"] = destination;
+                        var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, profile);
+                        PackArchive(profile + "-seed", new(2, seed.Candidate, seed.Round, [], []), null, null, destination);
+                        outputs[outputPrefix + "_artifact_name"] = ArtifactName(profile + "-seed", run, attempt);
+                        outputs[outputPrefix + "_archive"] = destination;
                     }
                 }
                 catch (Exception exception) when (exception is InvalidDataException or FormatException or IOException or UnauthorizedAccessException or ArgumentException)
                 {
-                    messages.WriteLine($"COMMON_CHECK_SEED_NOT_SAVED stage={stage} reason={System.Text.Json.JsonSerializer.Serialize(exception.Message)}");
+                    messages.WriteLine($"COMMON_CHECK_SEED_NOT_SAVED stage={stage} profile={profile} reason={System.Text.Json.JsonSerializer.Serialize(exception.Message)}");
                 }
             }
             if (Environment.GetEnvironmentVariable("GITHUB_OUTPUT") is { Length: > 0 } destinationOutput)

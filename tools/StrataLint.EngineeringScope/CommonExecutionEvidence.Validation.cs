@@ -25,6 +25,7 @@ internal static partial class CommonExecutionEvidence
             (checks ??= ReadCheckManifest(Snapshot, registry)).Select(check => check with
             {
                 ProgramProjects = [.. check.ProgramProjects],
+                ProgramInputs = [.. check.ProgramInputs],
                 Materials = [.. check.Materials],
                 MaterialExcludes = [.. check.MaterialExcludes],
                 PathInventory = [.. check.PathInventory],

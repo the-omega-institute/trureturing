@@ -12,15 +12,34 @@ internal static partial class CommonExecutionEvidence
     private static Dictionary<string, CheckUnitResult> ImportCheckSeed(string root, string stage,
         ValidationScope registration, IReadOnlyDictionary<string, string> inputs, TextWriter output)
     {
+        var accepted = new Dictionary<string, CheckUnitResult>(StringComparer.Ordinal);
+        if (stage == "current")
+        {
+            var independent = registration.CheckManifest().Where(check => check.ReportInputs.Length == 0)
+                .Select(check => check.Id).ToHashSet(StringComparer.Ordinal);
+            accepted = ImportCheckSeedProfile(root, stage, "checks", registration,
+                inputs.Where(pair => independent.Contains(pair.Key)).ToDictionary(), output);
+        }
+        foreach (var pair in ImportCheckSeedProfile(root, stage, stage, registration,
+                     inputs.Where(pair => !accepted.ContainsKey(pair.Key)).ToDictionary(), output))
+            accepted.Add(pair.Key, pair.Value);
+        return accepted;
+    }
+
+    private static Dictionary<string, CheckUnitResult> ImportCheckSeedProfile(string root, string stage, string profile,
+        ValidationScope registration, IReadOnlyDictionary<string, string> inputs, TextWriter output)
+    {
         var snapshot = registration.Snapshot;
         var accepted = new Dictionary<string, CheckUnitResult>(StringComparer.Ordinal);
-        var seedRoot = Path.Combine(root, CheckSeedPath(stage));
+        if (inputs.Count == 0) return accepted;
+        var seedRoot = Path.Combine(root, CheckSeedPath(profile));
         JsonElement document;
         JsonElement[] rows;
         string candidate;
         string round;
         try
         {
+            if (profile == "checks") ValidateCheckSeedBundle(root, profile);
             document = Read<JsonElement>(seedRoot, "checks.json");
             if (!document.EnumerateObject().Select(property => property.Name).Order(StringComparer.Ordinal)
                 .SequenceEqual(new[] { "candidate", "round", "stage", "units", "version" })
@@ -33,7 +52,7 @@ internal static partial class CommonExecutionEvidence
         }
         catch (Exception exception) when (exception is InvalidDataException or FormatException or IOException or UnauthorizedAccessException or JsonException or InvalidOperationException or KeyNotFoundException)
         {
-            output.WriteLine($"COMMON_CHECK_SEED_UNAVAILABLE stage={stage} reason={JsonSerializer.Serialize(exception.Message)}");
+            output.WriteLine($"COMMON_CHECK_SEED_UNAVAILABLE stage={stage} profile={profile} reason={JsonSerializer.Serialize(exception.Message)}");
             return accepted;
         }
         // Notifications can invoke caller code. Finish validation and copying before
@@ -108,14 +127,13 @@ internal static partial class CommonExecutionEvidence
         // Acceptance errors are fatal; only optional copying/saving may fail harmlessly.
         CommonCheckRecord? checks = null;
         TestExecutionRecord? tests = null;
-        var common = stage == "engineering" ? ValidateEngineering(root, out tests, out checks) : stage == "current" ? ValidateCurrent(root, out checks)
+        var common = stage == "engineering" ? ValidateEngineering(root, out tests, out checks) : stage is "current" or "checks" ? ValidateCurrent(root, out checks)
             : throw new InvalidDataException("invalid common seed stage: " + stage);
-        checks ??= ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
         return CopyAcceptedCheckSeed(root, stage, common, tests, checks, output, destination);
     }
 
     internal static bool CopyAcceptedCheckSeed(string root, string stage, CommonStageRecord common, TestExecutionRecord? tests,
-        CommonCheckRecord checks, TextWriter output, string? destination = null)
+        CommonCheckRecord? checks, TextWriter output, string? destination = null)
     {
         // Copying consumes the accepted records, never their source hash scope.
         // Emit notifications only after both copies; output can invoke caller code.
@@ -127,12 +145,17 @@ internal static partial class CommonExecutionEvidence
             var available = false;
             try
             {
-                available = Hash(Path.Combine(seed, "tests.json")) == Hash(Path.Combine(root, TestsPath));
-                if (available) ValidateMaterials(seed, tests.Materials);
+                var saved = Read<TestExecutionRecord>(seed, "tests.json");
+                if (saved.Projects is null || saved.Materials is null || saved.Projects.Any(project => project is null)
+                    || saved.Materials.Any(material => material is null)) throw new InvalidDataException("invalid saved test seed inventory");
+                available = saved.Version == tests.Version && saved.Candidate == tests.Candidate && saved.Round == tests.Round
+                    && saved.Projects.Where(project => tests.Projects.Any(selected => selected.Project == project.Project)).SequenceEqual(tests.Projects);
+                if (available) ValidateMaterials(seed, saved.Materials);
             }
-            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException) { available = false; }
+            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException or JsonException) { available = false; }
             if (available || CopyTestSeed(root, tests, messages))
-                testMaterials = tests.Materials.Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
+                testMaterials = Read<TestExecutionRecord>(seed, "tests.json").Materials
+                    .Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
         }
         return CopyCheckSeed(root, stage, common, output, destination, testMaterials, checks, messages.ToString());
     }
@@ -142,8 +165,15 @@ internal static partial class CommonExecutionEvidence
     {
         // Stage validation accepted these exact units, build, plan and registry.
         // Retention only copies optional data; import validates it when selected.
-        var record = accepted ?? ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
-        var registered = CheckIds(stage, Read<CommonCheckManifest>(root, CheckManifestPath).Checks);
+        // This is an optional cache inventory, not execution evidence. A tests-only
+        // stage has no current check units; its actual TRX seed travels alongside it.
+        // "checks" is a physical profile of current, not a new execution stage.
+        var owner = stage == "checks" ? "current" : stage;
+        var record = accepted ?? new CommonCheckRecord(2, owner, common.Candidate, common.Round, []);
+        var manifest = Read<CommonCheckManifest>(root, CheckManifestPath).Checks;
+        var registered = CheckIds(owner, manifest).Where(id => stage != "checks"
+            || manifest.Single(check => check.Id == id).ReportInputs.Length == 0).ToArray();
+        record = record with { Units = record.Units.Where(unit => registered.Contains(unit.Id)).ToArray() };
         var selected = record.Units.Select(unit => unit.Id).ToHashSet(StringComparer.Ordinal);
         var sources = record.Units.Select(unit => (Unit: unit, Root: root)).ToList();
         // Producer acceptance is independent of reused check execution. Its
@@ -235,10 +265,12 @@ internal static partial class CommonExecutionEvidence
     {
         var seed = Path.Combine(root, CheckSeedPath(stage));
         var record = Read<CommonCheckRecord>(seed, "checks.json");
-        if (record.Version != 2 || record.Stage != stage || !ValidCandidate(record.Candidate) || !ValidRound(record.Round)
+        if (record.Version != 2 || record.Stage != (stage == "checks" ? "current" : stage) || !ValidCandidate(record.Candidate) || !ValidRound(record.Round)
             || record.Units is null || record.Units.Any(unit => unit is null || unit.Materials is null
                 || unit.Materials.Any(material => material is null || material.Path is null)))
             throw new InvalidDataException("invalid common seed bundle identity");
+        if (stage == "checks" && (record.Units.Any(unit => unit.Report is not null) || File.Exists(Path.Combine(seed, ProducerReportSeedPath))))
+            throw new InvalidDataException("reportless check seed contains report evidence");
         var materials = Read<ExecutionMaterial[]>(seed, "materials.json");
         producer = ReadProducerReportSeed(seed, stage);
         var required = record.Units.SelectMany(unit => unit.Materials).Concat(producer?.Materials ?? []);
