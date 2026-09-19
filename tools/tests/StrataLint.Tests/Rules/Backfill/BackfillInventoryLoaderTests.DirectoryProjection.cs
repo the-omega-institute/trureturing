@@ -5,6 +5,58 @@ namespace StrataLint.Tests;
 
 public sealed partial class BackfillInventoryLoaderTests
 {
+    [Fact]
+    public void BaselineRepeatedReferenceMappingRetainsBothBucketRecords()
+    {
+        var first = Atom("delta-v0.1", "absorbed-closed", "parent", "theorem/parent");
+        var second = Atom("delta-v0.1", "residual-open", "parent", "theorem/parent");
+        var snapshot = Snapshot(Source("delta-v0.1", "docs/delta.md", "none"), first, second);
+
+        var entries = BackfillInventoryLoader.LoadBaseline(snapshot).RequireDigestionEntries();
+
+        Assert.Equal(2, entries.Length);
+        Assert.All(entries, entry => Assert.Equal(FixtureAtomId("theorem/parent"), entry.AtomId));
+        Assert.Equal(
+            [DigestionMigrationState.Absorbed, DigestionMigrationState.Residual],
+            entries.Select(entry => entry.ProjectedStatus.Migration).ToArray());
+    }
+
+    [Fact]
+    public void BaselineRepeatedReferenceMappingProjectsChainWithoutDroppingRecords()
+    {
+        var parent = Atom("delta-v0.1", "residual-open", "parent", "theorem/parent");
+        var child = Atom("delta-v0.1", "residual-open", "child", "theorem/child");
+        var childText = child.Text.Replace("  chain_atoms: []\n",
+            "  chain_atoms:\n    - legacy-parent\n", StringComparison.Ordinal);
+        var root = BackfillInventoryLoader.RootPath + "delta-v0.1/";
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (root + "absorbed-closed/legacy-parent.yaml", parent.Text),
+            (root + "residual-open/legacy-parent.yaml", parent.Text),
+            (child.Path, childText)));
+
+        Assert.Equal(3, document.RequireDigestionEntries().Length);
+        var projectedChild = Assert.Single(document.RequireDigestionEntries(),
+            entry => entry.AtomId == FixtureAtomId("theorem/child"));
+        Assert.Equal([FixtureAtomId("theorem/parent")], projectedChild.Receipts.ChainAtoms.ToArray());
+    }
+
+    [Fact]
+    public void BaselineConflictingReferenceMappingFailsClosed()
+    {
+        var first = Atom("delta-v0.1", "absorbed-closed", "first", "theorem/first");
+        var second = Atom("delta-v0.1", "residual-open", "second", "theorem/second");
+        var root = BackfillInventoryLoader.RootPath + "delta-v0.1/";
+        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (root + "absorbed-closed/legacy-atom.yaml", first.Text),
+            (root + "residual-open/legacy-atom.yaml", second.Text))));
+
+        Assert.Contains("ambiguous baseline atom reference: legacy-atom", error.Message, StringComparison.Ordinal);
+        Assert.Contains(FixtureAtomId("theorem/first"), error.Message, StringComparison.Ordinal);
+        Assert.Contains(FixtureAtomId("theorem/second"), error.Message, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
