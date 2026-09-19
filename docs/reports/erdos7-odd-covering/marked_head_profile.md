@@ -821,3 +821,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Bounded local transport into actual parent-private sets](profile-notes/358-local-escape-transport.md)
 - [Synchronized parent capacities and one all-prime surplus budget](profile-notes/359-synchronized-parent-capacity-allocation.md)
 - [Sharp mean partial matching and an all-private budget without tail loss](profile-notes/360-mean-partial-matching-without-tail-loss.md)
+- [Whole private-vector changes and prime-parent rigidity under legal swaps](profile-notes/362-whole-prime-private-vector-under-residue-swaps.md)
