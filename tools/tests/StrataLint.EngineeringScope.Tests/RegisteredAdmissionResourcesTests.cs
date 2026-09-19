@@ -6,18 +6,18 @@ using Xunit.Abstractions;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
+public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
     : IClassFixture<RegisteredAdmissionResourcesTests.RegisteredBase>
 {
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
-    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json", "pr")]
-    [InlineData("Golden/Frozen/accepted/admission-resource-probe.json", "pr")]
-    [InlineData("Blueprint/D5/F/NumberTheory/AdmissionResourceProbe.scribe.cs", "pr")]
-    public void OrdinaryContentSelectsCompleteRepositoryUnitWithoutFixtureSuite(string path, string mode)
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr", true)]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push", true)]
+    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json", "pr", false)]
+    [InlineData("Golden/Frozen/accepted/admission-resource-probe.json", "pr", false)]
+    [InlineData("Blueprint/D5/F/NumberTheory/AdmissionResourceProbe.scribe.cs", "pr", false)]
+    public void OrdinaryContentSelectsCompleteRepositoryUnitWithoutFixtureSuite(string path, string mode, bool anchors)
     {
         var plan = Plan(path, "", mode);
         var resources = Strings(plan["resources"]!);
@@ -25,7 +25,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.DoesNotContain("engineering", resources);
         Assert.DoesNotContain("delta", resources);
         var tests = Strings(plan["execution"]!["projects"]!).Where(project => project.StartsWith("tools/tests/", StringComparison.Ordinal));
-        Assert.Equal(new[] { "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj" }, tests);
+        Assert.Equal(anchors
+            ? new[] { "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj", "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj" }
+            : new[] { "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj" }, tests);
         Assert.DoesNotContain(Strings(plan["execution"]!["checks"]!), CommonExecutionEvidence.EngineeringCheckIds.Contains);
         Assert.Contains("lean-report", Strings(plan["execution"]!["steps"]!));
     }
@@ -97,7 +99,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
-    [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -219,7 +220,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
-    [InlineData("Meta/registry.yaml")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
     {
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);

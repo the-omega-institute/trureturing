@@ -1,7 +1,7 @@
 using static StrataLint.TestSupport.FormalAnswerSkillContract;
 using Markdig.Syntax;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Policy.Tests;
 
 /// <summary>
 /// The conversation contract and the anchor registries of the codex-formal-answer skill.
@@ -68,7 +68,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerDefinesConversationContract()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));

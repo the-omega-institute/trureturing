@@ -16,6 +16,11 @@ public sealed partial class CurrentDeltaCliContractTests
     [InlineData("staged-metadata", 0, "SL-016")]
     [InlineData("template-overlimit", 1, "SL-003")]
     [InlineData("template-warm-overlimit", 1, "SL-003")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "CLAUDE.md", "CLAUDE.md")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "agents/prover.md", "agents/**")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "skills/codex-formal-answer/SKILL.md", "skills/**")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/merge-gate.sh", "tools/scripts/agent/merge-gate.sh")]
+    [InlineData("template-warm-overlimit", 1, "SL-003", "tools/scripts/agent/openproblem/erdos617.py", "tools/scripts/agent/openproblem/erdos617.py")]
     [InlineData("metadata", 0, "SL-016")]
     [InlineData("metadata-invalid", 1, "SL-016")]
     [InlineData("metadata-missing-report", 2, "raw-lean-report.json")]
@@ -31,14 +36,15 @@ public sealed partial class CurrentDeltaCliContractTests
     [InlineData("forged-plan", 2, "missing, failed, or mismatched plan")]
     [InlineData("unbound-build-plan", 2, "selection")]
     [InlineData("unbound-current-plan", 2, "selection")]
-    public void ScopedDeltaConsumesOnlyItsBoundRegisteredEvidence(string scenario, int expectedExit, string diagnostic)
+    public void ScopedDeltaConsumesOnlyItsBoundRegisteredEvidence(string scenario, int expectedExit, string diagnostic,
+        string? governedPath = null, string? capacityPattern = null)
     {
         using var environmentScope = new CiFixtureEnvironment();
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
         var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
         var metadata = (staged ? scenario["staged-".Length..] : scenario).StartsWith("metadata", StringComparison.Ordinal);
-        const string template = "tools/scripts/agent/openproblem/templates/impl-base-brief.md";
+        var template = governedPath ?? "tools/scripts/agent/openproblem/templates/impl-base-brief.md";
         const string project = "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -47,7 +53,8 @@ public sealed partial class CurrentDeltaCliContractTests
         // A missing declaration must reproduce unsafe warm reuse, not be filled in here.
         var capacityInputs = JsonNode.Parse(TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(CommonExecutionEvidence.CheckManifestPath)))!["checks"]!.AsArray()
             .Single(row => row!["id"]!.GetValue<string>() == "SL-003")!["materials"]!.AsArray()
-            .Where(pattern => pattern!.GetValue<string>() == "tools/scripts/agent/openproblem/templates/*.md").Select(pattern => pattern!.DeepClone()).ToArray();
+            .Where(pattern => pattern!.GetValue<string>() == (capacityPattern ?? "tools/scripts/agent/openproblem/templates/*.md"))
+            .Select(pattern => pattern!.DeepClone()).ToArray();
         var checkManifest = JsonNode.Parse(fixture.Files[CommonExecutionEvidence.CheckManifestPath])!;
         checkManifest["checks"]!.AsArray().Single(row => row!["id"]!.GetValue<string>() == "SL-003")!["materials"] = new JsonArray(capacityInputs);
         fixture.Files[CommonExecutionEvidence.CheckManifestPath] = checkManifest.ToJsonString();
@@ -193,7 +200,7 @@ public sealed partial class CurrentDeltaCliContractTests
             + "\"\nrequire = [\"" + resource + "\"]\nkind = \"data\"\nadmission_plane = \"" + plane
             + "\"\nproduced_by = \"none\"\nconsumed_by = [\"test\"]\nverified_by = [\"test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n";
         static string Overlimit() => string.Concat(Enumerable.Repeat("Read the source.\n", 1001));
-        static void AssertCapacityRejected(RuleExecutionOutcome outcome) => Assert.Contains(
+        void AssertCapacityRejected(RuleExecutionOutcome outcome) => Assert.Contains(
             Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability.Diagnostics,
             finding => finding.RuleId.Value == "SL-003" && finding.Path == template
                 && finding.AdmissionEffect == AdmissionEffect.Block && finding.Message == "artifact exceeds 1000 lines");

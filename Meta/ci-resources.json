@@ -2,6 +2,15 @@
   "schema": "ci-resource-execution-v1",
   "resources": [
     {
+      "id": "anchors",
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "build",
       "projects": [],
       "checks": [],
@@ -96,16 +105,26 @@
       "steps": []
     },
     {
+      "id": "delta-registry",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "engineering",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
         "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
+        "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj",
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
         "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.Policy.Tests/StrataLint.Policy.Tests.csproj",
         "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -150,6 +169,15 @@
       "steps": [
         "lean-report"
       ]
+    },
+    {
+      "id": "policy",
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/StrataLint.Policy.Tests/StrataLint.Policy.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
     },
     {
       "id": "repository",

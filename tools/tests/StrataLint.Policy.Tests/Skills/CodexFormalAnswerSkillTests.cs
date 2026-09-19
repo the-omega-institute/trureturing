@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Markdig.Extensions.Tables;
 using Markdig.Syntax;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Policy.Tests;
 
 public sealed partial class CodexFormalAnswerSkillTests
 {
@@ -109,13 +109,13 @@ public sealed partial class CodexFormalAnswerSkillTests
     {
         Assert.True(
             File.Exists(Path.Combine(
-                RepositoryLayout.FindRoot(),
+                TestRepositoryLayout.FindRoot(),
                 "skills",
                 "codex-formal-answer",
                 "SKILL.md")),
             "Required skill file is missing: skills/codex-formal-answer/SKILL.md");
         Assert.True(DefinesSingleStructurallyTotalAuthority(Parse(File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md")))));
@@ -139,7 +139,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerExtractsTheMaximalFormalizableCore()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
@@ -165,7 +165,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerGeneralizationReturnsToTheConcreteProposition()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
@@ -191,7 +191,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerSearchesRepositoryTheoryBeforeDeclaringAmbiguity()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
@@ -270,7 +270,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerRequiresReusableLibraryGrowth()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
