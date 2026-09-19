@@ -450,6 +450,132 @@ def contract_prefix_tree(classes, q, p, depth, *, child_preferences=None,
                        else 'conditional odd-cover prefix-tree class-count descent'))
 
 
+def contract_prime_chain(classes, q, chain, *, prefix_maps,
+                         allow_even=False, max_period=200000):
+    """Contract explicit full-height prefix trees along q < p1 < ... < pt.
+
+    prefix_maps[p_i][a] maps every residue modulo predecessor_i**a
+    injectively into residues modulo p_i**a, for every 0<=a<=H_i.
+    The maps must commute with truncation. Their full product must avoid
+    the actual q-free residual. This API validates a supplied product;
+    it does not search for one or certify global minimum cardinality.
+    Every original q-free event is checked at the same complete source.
+    """
+    chain = tuple(chain)
+    require(prime(q) and q > 2 and chain
+            and all(prime(p) and p > 2 for p in chain), 'require odd primes and a nonempty chain')
+    require(all(a < b for a, b in zip((q,)+chain, chain)), 'prime chain must be strictly increasing')
+    predecessors = (q,) + chain[:-1]
+    classes = list(classes)
+    require(classes and all(d > 1 for _, d in classes), 'original moduli must be nonunit')
+    classes = [(a % d, d) for a, d in classes]
+    require(len({d for _, d in classes}) == len(classes), 'original moduli must be distinct')
+    require(allow_even or all(d % 2 for _, d in classes), 'even input forbidden')
+    Q = period(classes)
+    require(Q <= max_period, 'original complete-period finite-check cap exceeded')
+    require(Q % q == 0 and all(Q % p == 0 for p in chain), 'chain primes must divide the original period')
+    heights = {p: valuation(Q, p) for p in chain}
+    require(set(prefix_maps) == set(chain), 'prefix map keys must equal the original chain primes')
+    theta, inverse = {}, {}
+    for old_p, new_p in zip(chain, predecessors):
+        H = heights[old_p]
+        layers = prefix_maps[old_p]
+        require(len(layers) == H+1, 'prefix maps must include every original height and level zero')
+        theta[old_p], inverse[old_p] = [], []
+        for a, supplied in enumerate(layers):
+            layer = dict(supplied)
+            require(set(layer) == set(range(new_p**a)), 'prefix map domain is incomplete')
+            require(all(isinstance(y, int) and 0 <= y < old_p**a for y in layer.values()),
+                    'prefix image lies outside its old level')
+            require(len(set(layer.values())) == new_p**a, 'prefix map is not injective')
+            if a:
+                require(all(y % old_p**(a-1) == theta[old_p][a-1][z % new_p**(a-1)]
+                            for z, y in layer.items()), 'prefix maps do not commute with truncation')
+            theta[old_p].append(layer)
+            inverse[old_p].append({y: z for z, y in layer.items()})
+
+    def complete_coverage(family, carrier):
+        covered = bytearray(carrier)
+        for a, d in family:
+            require(carrier % d == 0, 'class modulus does not divide its carrier')
+            for z in range(a % d, carrier, d):
+                covered[z] = 1
+        return covered
+
+    require(all(complete_coverage(classes, Q)), 'original input does not cover its complete period')
+    original_indices = [i for i, (_, d) in enumerate(classes) if d % q]
+    qfree = [classes[i] for i in original_indices]
+    B = Q // q**valuation(Q, q)
+    M = B
+    for p in chain:
+        M //= p**heights[p]
+    source_covered = complete_coverage(qfree, B)
+    residual = [y for y in range(B) if not source_covered[y]]
+    output, provenance, original_to_output = [], [], {}
+    for i, (a, d) in enumerate(qfree):
+        exponents = {p: valuation(d, p) for p in chain}
+        if any(a % p**exponents[p] not in inverse[p][exponents[p]] for p in chain):
+            continue
+        r = d
+        for p in chain:
+            r //= p**exponents[p]
+        new_a, new_d = a % r, r
+        for old_p, new_p in zip(chain, predecessors):
+            alpha = exponents[old_p]
+            b = inverse[old_p][alpha][a % old_p**alpha]
+            new_a = crt(new_a, new_d, b, new_p**alpha)
+            new_d *= new_p**alpha
+        original_to_output[i] = len(output)
+        output.append((new_a, new_d))
+        provenance.append(dict(original=original_indices[i], original_class=[a, d],
+                               original_exponents=exponents, output_class=[new_a, new_d]))
+    require(output and len({d for _, d in output}) == len(output), 'empty output or repeated output modulus')
+    require(all(d > 1 for _, d in output), 'output contains a unit modulus')
+    require(allow_even or all(d % 2 for _, d in output), 'output is not odd')
+    require(len(output) <= len(qfree) < len(classes), 'no strict class-count descent')
+    carrier = M
+    for old_p, new_p in zip(chain, predecessors):
+        carrier *= new_p**heights[old_p]
+    require(carrier <= max_period, 'transport complete-period finite-check cap exceeded')
+    out_period = period(output)
+    require(carrier % out_period == 0, 'output period does not divide the common carrier')
+    # Simultaneous CRT source oracle, independent of the output constructor's
+    # pairwise crt calls. Unit M is handled as a vacuous coordinate.
+    old_moduli = [p**heights[p] for p in chain] + [M]
+    weights = [(B//d)*pow(B//d, -1, d) if d > 1 else 0 for d in old_moduli]
+    images, source_fibre_counts = set(), {}
+    for z in range(carrier):
+        keys = tuple(z % new_p**heights[old_p] for old_p, new_p in zip(chain, predecessors))
+        coordinates = [theta[p][heights[p]][b] for p, b in zip(chain, keys)] + [z % M]
+        old = sum(a*w for a, w in zip(coordinates, weights)) % B
+        require(all(old % d == a for a, d in zip(coordinates, old_moduli)), 'source CRT coordinate mismatch')
+        require(source_covered[old], 'selected product meets the actual q-free residual')
+        actual, observed = bits(qfree, old), bits(output, z)
+        transported = tuple(observed[original_to_output[i]] if i in original_to_output else False
+                            for i in range(len(qfree)))
+        require(actual == transported and any(actual), 'complete q-free original-event vector transport failed')
+        images.add(old)
+        source_fibre_counts[keys] = source_fibre_counts.get(keys, 0) + 1
+    selected = {p: set(theta[p][heights[p]].values()) for p in chain}
+    expected = {y for y in range(B) if all(y % p**heights[p] in selected[p] for p in chain)}
+    require(images == expected and len(images) == carrier, 'source map is not bijective onto the whole selected product')
+    require(len(source_fibre_counts) == carrier//M and all(n == M for n in source_fibre_counts.values()),
+            'complete conditional cofactor fibres were not retained')
+    require(all(complete_coverage(output, out_period)), 'output fails complete-period coverage')
+    require(all(d % chain[-1] for _, d in output), 'last original chain prime survived full replacement')
+    return dict(original=classes, original_period=Q, original_count=len(classes), q=q,
+                chain=list(chain), predecessors=list(predecessors), original_heights=heights,
+                original_q_height=valuation(Q, q), cofactor_period=B, unchanged_cofactor_period=M,
+                cofactor_residual=residual, qfree_original_count=len(qfree),
+                prefix_maps=theta, output_count=len(output), output=output, provenance=provenance,
+                output_period=out_period, transport_carrier=carrier,
+                original_event_coordinates_checked=carrier*len(qfree),
+                conditional_source_points_checked=carrier,
+                selected_full_prefix_products=carrier//M,
+                scope=('even control, not a minimum odd cover' if allow_even
+                       else 'conditional odd-cover full-prime-chain class-count descent'))
+
+
 def dyadic_fixture(p, t):
     """An actual cover with distinct EVEN cofactors, s=p-t pure p-roots."""
     require(prime(p) and p % 2 and 1 <= t <= p, 'invalid dyadic fixture parameters')
@@ -591,6 +717,101 @@ def cross_joint_probability_control():
     )
 
 
+def prime_chain_controls(original5040, cross):
+    """Actual whole even covers for complete one-, two-, and three-link chains."""
+    cap = 3000000
+
+    def maps_for(chain, heights):
+        first = {5: [1, 2, 3], 7: [1, 2, 3, 4, 5], 11: list(range(7))}
+        later = {5: [0, 2, 4], 7: [0, 2, 3, 5, 6], 11: list(range(7))}
+        result = {}
+        for old, new in zip(chain, (3,)+tuple(chain[:-1])):
+            layers = [{0: 0}]
+            for a in range(heights[old]):
+                order = first[old] if a == 0 else later[old]
+                layers.append({z+b*new**a: y+d*old**a
+                               for z, y in layers[-1].items() for b, d in enumerate(order)})
+            result[old] = layers
+        return result
+
+    def copy_maps(maps):
+        return {p: [dict(layer) for layer in layers] for p, layers in maps.items()}
+
+    base_maps = maps_for((5, 7), {5: 1, 7: 1})
+    low = contract_prime_chain(cross, 3, [5, 7], prefix_maps=base_maps,
+                               allow_even=True, max_period=cap)
+    low_expected = [(0, 2), (1, 4), (3, 8), (7, 16), (15, 32), (31, 64), (63, 128),
+                    (2, 3), (4, 5), (0, 15), (21, 30), (27, 60), (63, 120),
+                    (175, 240), (31, 480), (127, 960), (1663, 1920)]
+    require(low['output'] == low_expected, 'cross chain disagrees with independent literal output')
+    high_seed = cross + [(111, 125), (43, 49), (1447, 4900)]
+    high_maps = maps_for((5, 7), {5: 3, 7: 2})
+    high = contract_prime_chain(high_seed, 3, [5, 7], prefix_maps=high_maps,
+                                allow_even=True, max_period=cap)
+    require(high['output'] == low_expected+[(21, 27), (20, 25), (439, 900)],
+            'unequal-height chain disagrees with independent literal output')
+    for p, wanted in ((5, {1, 2, 3}), (7, {1, 2})):
+        require({r['original_exponents'][p] for r in high['provenance']} - {0} == wanted,
+                'chain did not retain all tested original exponents')
+    seed = original5040 + [(11, 25), (36, 125), (186, 625), (2, 200), (92, 1000)]
+    preferences = {(): [0, 1, 2, 3, 4], (0,): [0, 1, 3, 2, 4],
+                   (1,): [2, 0, 4, 1, 3], (2,): [0, 3, 1, 2, 4],
+                   (1, 2): [1, 2, 4, 0, 3], (2, 3): [3, 1, 4, 0, 2]}
+    legacy = contract_prefix_tree(seed, 3, 5, 4, child_preferences=preferences,
+                                  allow_even=True, max_period=cap)
+    single = contract_prime_chain(seed, 3, [5], prefix_maps={5: legacy['selected_prefix_maps']},
+                                  allow_even=True, max_period=cap)
+    require(single['output'] == legacy['output'], 'single chain differs from full-depth prefix transport')
+    triple = contract_prime_chain(cross+[(0, 11), (366, 385)], 3, [5, 7, 11],
+                                  prefix_maps=maps_for((5, 7, 11), {5: 1, 7: 1, 11: 1}),
+                                  allow_even=True, max_period=cap)
+    items = [low, high, single, triple]
+    for item, expected in zip(items, [(17, 1920), (20, 86400), (17, 9072), (19, 13440)]):
+        require((item['output_count'], item['output_period']) == expected, 'chain count/period changed')
+    incomplete = copy_maps(base_maps)
+    del incomplete[5][1][2]
+    noninjective = copy_maps(base_maps)
+    noninjective[5][1][2] = noninjective[5][1][1]
+    wrong_height = copy_maps(base_maps)
+    wrong_height[5].append({})
+    noncommuting = copy_maps(high_maps)
+    noncommuting[5][2][0], noncommuting[5][2][1] = noncommuting[5][2][1], noncommuting[5][2][0]
+    hits = {5: [{0: 0}, dict(enumerate([0, 1, 2]))],
+            7: [{0: 0}, dict(enumerate([0, 1, 2, 3, 4]))]}
+    bad_inputs = [
+        (cross, [5, 7], base_maps, False, 'even input forbidden'),
+        (cross, [7, 5], base_maps, True, 'strictly increasing'),
+        (cross, [5, 7], incomplete, True, 'domain is incomplete'),
+        (cross, [5, 7], noninjective, True, 'not injective'),
+        (cross, [5, 7], wrong_height, True, 'every original height'),
+        (cross, [5, 7], hits, True, 'actual q-free residual'),
+        (high_seed, [5, 7], noncommuting, True, 'do not commute with truncation'),
+    ]
+    rejections = []
+    for bad_seed, chain, maps, even, expected in bad_inputs:
+        try:
+            contract_prime_chain(bad_seed, 3, chain, prefix_maps=maps,
+                                 allow_even=even, max_period=cap)
+        except ValueError as exc:
+            require(expected in str(exc), 'wrong prime-chain rejection: '+str(exc))
+            rejections.append(str(exc))
+        else:
+            raise ValueError('invalid prime-chain input unexpectedly admitted')
+    rows = []
+    for item in items:
+        row = {key: item[key] for key in
+               ('chain', 'original_count', 'qfree_original_count', 'output_count', 'original_period',
+                'original_heights', 'cofactor_period', 'output_period', 'transport_carrier',
+                'original_event_coordinates_checked', 'conditional_source_points_checked')}
+        row['retained_exponent_vectors'] = sorted({tuple(r['original_exponents'][p] for p in item['chain'])
+                                                   for r in item['provenance']})
+        rows.append(row)
+    return dict(controls=rows, rejections=rejections, complete_period_cap=cap,
+                event_coordinates_checked=sum(x['original_event_coordinates_checked'] for x in items),
+                source_points_checked=sum(x['conditional_source_points_checked'] for x in items),
+                scope='Actual even whole covers; no minimum odd cover, partial-tail replacement, or whole Haar transport')
+
+
 def main():
     specs = [
         ('q<t, dropped roots', dyadic_fixture(7, 5), 7, 3, None),
@@ -692,10 +913,12 @@ def main():
                             'output_period', 'residual_p_roots', 'selected_old_p_roots',
                             'original_p_height', 'original_q_height', 'transport_carrier')}
                            for item in contractions]
+    cross_control = cross_joint_probability_control()
     print(json.dumps(dict(success=True, fixtures=summary, rejection_count=len(rejections),
                           rejections=rejections,
                           prefix_tree_contractions=prefix_tree_controls(original5040),
-                          cross_joint_probability=cross_joint_probability_control(),
+                          cross_joint_probability=cross_control,
+                          prime_chain_contractions=prime_chain_controls(original5040, cross_control['classes']),
                           projection_contractions=contraction_summary,
                           contraction_rejections=contraction_rejections,
                           contraction_event_coordinates_checked=sum(
