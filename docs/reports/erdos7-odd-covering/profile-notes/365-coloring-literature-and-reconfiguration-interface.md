@@ -14,9 +14,9 @@ have not been established for the AP choices.
 This is an ordinary mathematical literature and interface report.
 The cited statements are source-checked, not independently certified
 proofs of the papers. No new Lean verification, literature novelty,
-or resolution of unrestricted Erdős #7 is claimed. The period-12 and
-period-144 controls below are actual covers with even moduli; they
-are not odd-cover or extremal-cover counterexamples.
+or resolution of unrestricted Erdős #7 is claimed. The period-12,
+period-144 and affine period-921600 controls below are actual covers
+with even moduli; they are not odd-cover or extremal-cover counterexamples.
 
 ## 1. Five coloring and reconfiguration sources
 
@@ -299,6 +299,55 @@ vertices uncovered. This alone cannot discharge an exact AP
 covering liability. The stronger tracking results in its section 3
 also require hypotheses not established here.
 
+### Full rainbow matchings and the required color-class surplus
+
+Delcourt–Postle's Theorem 2.11 in the same inspected v4 gives a
+full-rainbow interface without a separate conflict system. For
+every fixed integer `r>=2` and real `beta>0`, there exist `alpha>0`
+and an integer threshold `D_beta` such that, for every sufficiently
+large integer `D>=D_beta`, an `r`-bounded multihypergraph `G` with
+a not necessarily proper edge-coloring has a full rainbow matching
+provided that
+
+    Delta(G) <= D;
+    |E_c| >= (1+D^(-alpha))D       for every color c;
+    codeg_G(u,v) <= D^(1-beta)    for every pair of distinct vertices;
+    #{e in E_c : v in e} <= D^(1-beta)  for every color c and vertex v.
+
+The conclusion supplies even `D` pairwise edge-disjoint full rainbow
+matchings. Each full rainbow matching chooses exactly one edge of
+every color. A proposed global repair interpretation could use colors
+for obligations and edges for complete resource certificates, but
+would still have to prove all four conditions for those same
+certificates, along with their AP composition and improvement
+properties. The theorem by itself does not certify these properties.
+
+Ronen Wdowinski's *Bounded degree graphs and hypergraphs with no full
+rainbow matchings*, European Journal of Combinatorics **133** (2026),
+104316, [DOI 10.1016/j.ejc.2025.104316](https://doi.org/10.1016/j.ejc.2025.104316),
+provides an exact boundary on weakening the surplus. The inspected
+[arXiv:2401.06029v2](https://arxiv.org/html/2401.06029v2), revised
+18 December 2025, Theorem 7(2), constructs for every `Delta>=2` a
+bipartite graph of maximum degree `Delta`, with a proper edge-coloring
+in which every color class has at least `Delta+1` edges, but no full
+rainbow matching. The proof in section 4.2 produces simple graphs;
+for odd `Delta`, every color class has exactly `Delta+1` edges.
+
+Simplicity gives vertex-pair codegree at most one, and properness
+gives at most one edge of any fixed color at a vertex. Thus both
+codegree conditions of Theorem 2.11 already hold for these examples
+at `D=Delta` and any fixed `0<beta<=1`. Their obstruction cannot be
+attributed to absent codegree control. The additive surplus `+1`
+does not replace the theorem's surplus `D^(1-alpha)`: taking the
+theorem's `alpha` smaller if necessary so that `0<alpha<1`, the
+odd-degree examples fail the required color-class size for every
+`D>=Delta`. The two theorems therefore do not conflict.
+
+The inspected Delcourt–Postle v4 still labels the `Delta+1`
+bipartite assertion Conjecture 2.9; Wdowinski's inspected version
+explicitly refutes that assertion. This is a discrepancy in the
+reported conjecture status, not a counterexample to Theorem 2.11.
+
 ## 7. A faithful completed-choice interface and its remaining gap
 
 Fix finite domains of permitted actual AP choices, including keep
@@ -381,3 +430,119 @@ faithful encoding with those properties. Fixed-source matching
 connectivity, connected tree supports, and conflict-free perfect
 selection address different parts of that task; none supplies the
 missing joint AP repair estimates by itself.
+
+## 8. A shared-capacity flow needs an actual joint selection theorem
+
+Use 363's actual nonsingleton antichain masses
+`w_E=H({x in Z:E(x)=E})` and `K(E)=intersection_(d in E) supp(d)`.
+A separate transportation model may declare one slot `(E,d)` for
+every `d in E`, each of capacity `w_E`, accessible to every prime
+in `K(E)`. For nonnegative demands `s_q`, max-flow/min-cut gives
+the exact fractional feasibility criterion
+
+    sum_(q in S) s_q
+      <= sum_(E:K(E) intersect S nonempty) |E| w_E
+                      for every prime subset S.
+
+This criterion belongs to that declared model: a source-to-prime
+edge has capacity `s_q`, prime-to-accessible-slot edges have
+unbounded capacity, and slot-to-sink edges have capacity `w_E`.
+The shared slot capacities are additional assumptions. Neither
+the exact antichain marginals in 363 nor its separate q-wise
+selection injections supplies those assumptions, or permits moving
+a selection to an arbitrary other atom with the same kernel.
+
+In particular, if `L_(q,d)(x)` indicates an actual selected child
+lift at `x`, 363 proves
+
+    sum_d L_(q,d)(x) <= 1         for each fixed q.
+
+It does not prove `sum_q L_(q,d)(x)<=1`. Its actual residual
+selected mass is at most `epsilon_q`. The distinct inequality
+`2 epsilon_q<=sum_(d:q|d) delta_d` counts active covering incidences;
+it does not provide a selected demand `s_q=2 epsilon_q`.
+An abstract weight-one antichain with such demands therefore
+cannot certify an obstruction for the original Haar selection.
+
+### Actual matching choices can force shared use
+
+The affine refinement already checked in
+[364](364-singleton-cofactor-ideal-and-forced-colors.md) gives a
+whole even-cover control. Start from the period-960 fixture
+
+    (0 mod 2), (0 mod 3), (3 mod 4), (0 mod 5),
+    (1 mod 8), (1 mod 10), (13 mod 16), (17 mod 20),
+    (13 mod 40), (69 mod 160), (149 mod 320),
+    (469 mod 480), (629 mod 960).
+
+Replace its last, entirely private class by the affine copy of
+all thirteen classes: `a mod d` becomes
+`629+960a mod 960d`. Keep the other twelve originals. This gives
+25 distinct labels, full period `Q=921600`, an irredundant cover,
+and disjoint comparable classes. It is not divisor-closed.
+
+At the actual point `x=6389=629+960*6`, the original hit set is
+`E(x)={1920,2880}` and `K(x)={2,3,5}`. Reset only the first digit
+at q, retaining every higher digit and all other coordinates.
+The resulting source `y_q=T_q x` has hit set exactly `{q}`.
+Its complete root/cofactor graph is as follows. Each entry lists
+the root and its available original numerical labels; its cofactor
+is always the actual `d/q^(v_q(d))`.
+
+| q | Actual private source y_q | Complete nonprime-root choices |
+| --- | --- | --- |
+| 2 | 747764 | `1:{1920,2880}` |
+| 3 | 108789 | `1:{480}`, `2:{1920,2880}` |
+| 5 | 522485 | `1:{10}`, `2:{20}`, `3:{40}`, `4:{1920,2880}` |
+
+Each graph has exactly two maximum matchings, of full ranks 1, 2
+and 4 respectively. In every one, exactly one chosen edge lifts
+to `x`, with original label 1920 or 2880. Thus every joint choice
+of the three maximum matchings has three uses of only two slots
+`(x,1920)` and `(x,2880)`. Of the eight joint choices, six have
+maximum slot load two and two have maximum load three. The
+minimum integer congestion is exactly two. Even a randomized
+joint selection has maximum expected load at least `3/2`, attained
+by giving every prime either label with probability one half.
+Every point has original mass `1/Q`; no source law is changed.
+
+This excludes automatic shared unit capacity even after optimizing
+the maximum-matchings jointly for this whole even-cover control.
+It does not refute such a theorem under the additional odd,
+divisor-closed extremal hypotheses, nor does it establish a failure
+of the aggregate cut above. Reducing selected ranks or using a
+different repair interface also changes the obligation.
+
+For a fixed `x in Z`, the exact pointwise question has a standard
+capacitated Hall formulation. Let `I_x` consist of primes `q in K(x)`
+whose `x`-root is matched in every maximum matching of
+`H_(q,T_q x)`, equivalently those for which deleting that root
+decreases matching rank by one. Let `N_q(x)` be the original labels
+at `x` that occur on that root in some maximum matching. The smallest
+integer slot congestion achievable at this point, preserving every
+source's maximum rank, is
+
+    ceil(max_(empty != S subset I_x)
+                 |S| / |union_(q in S) N_q(x)|),
+
+with value zero when `I_x` is empty. Optional roots can be omitted;
+each chosen edge in `N_q(x)` extends to a maximum matching at its
+own source. Applying capacitated Hall to the remaining mandatory
+primes gives the formula. For fractional expected congestion the
+same flow argument omits the ceiling. In the displayed control,
+`I_x={2,3,5}` and every `N_q(x)={1920,2880}`. Pointwise choices at
+different `x` need not agree when they arise from the same source
+matching; simultaneous compatibility is still a separate obligation.
+
+If one additionally retains the q-wise atom bound `w_E` while
+postulating shared total atom capacity `|E|w_E`, the corresponding
+flow criterion is instead
+
+    sum_(q in S) s_q
+      <= sum_E min(|S intersect K(E)|,|E|) w_E.
+
+Here prime-to-atom edges have capacity `w_E` and atom-to-sink edges
+have capacity `|E|w_E`. This is another conditional transport
+model, not an established AP constraint. Either use requires an
+actual simultaneous selection or allocation theorem, followed by
+the complete return and strict-improvement obligations of section 7.
