@@ -761,3 +761,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete saturated J comparison crosses403](profile-notes/299-the-complete-saturated-j-comparison-crosses403.md)
 - [Ineffective15 clears a complete source and two core branches](profile-notes/300-ineffective15-clears-a-complete-source-and-two-core-branches.md)
 - [Three missing-source pairs clear both complete core comparisons](profile-notes/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md)
+- [A positive actual-source neighborhood keeps J below403](profile-notes/302-a-positive-actual-source-neighborhood-keeps-j-below403.md)
