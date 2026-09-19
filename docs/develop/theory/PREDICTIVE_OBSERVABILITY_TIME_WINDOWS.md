@@ -550,3 +550,415 @@ $$
 [KP26] I. A. Krishtal, G. E. Pfander. *The normalized orbit of a bounded normal operator can be a frame*. [arXiv:2606.20848](https://arxiv.org/abs/2606.20848), submitted 2026-06-18. 反驳 [ACKM26, Conjecture 3]。
 
 [KM26] I. A. Krishtal, B. Miller. *Block Diagonal Carleson Frames*. [arXiv:2607.18491v1](https://arxiv.org/abs/2607.18491v1), 2026. §5 进一步区分 Müntz 条件、完备性与稳定帧。本卷没有复用这些已有反例来认领新的外部猜想结算。
+
+## 12. 平衡相关矩阵给出的可观测闭包证书
+
+**增订范围（2026-09-20）。** 第 12–20 节补上第 10 节的部分数据认证义务：在有限维正定二次系统、线性读数与指定平衡分布下，从相关矩阵及其误差预算认证隐藏耦合、预测下限和额外状态维数。新增内容为纸面证明及合成验证，尚无配套 Lean，不新增外部猜想结算。第 6 节留下的不可逆正规算子义务已由同一 PR 的 [正规连续幂时间窗卷](NORMAL_POWER_FRAME_TIME_INVARIANCE.md) 单独处理，本节不改变其验证层级。
+
+固定 $A=JS$、$S=S^T\succ0$，令 $\vartheta=\beta^{-1}>0$。取随机初态
+
+$$
+z_0\sim N(0,\vartheta S^{-1}),\qquad z_t=e^{At}z_0,
+\qquad y_t=Oz_t,
+$$
+
+其中 $O$ 满行秩、行数为 $r$。这是 Gibbs 初态下的封闭线性 Hamilton 演化；$AS^{-1}+S^{-1}A^T=0$ 保证平稳性。它不要求或推出单条轨迹的遍历性。
+
+设
+
+$$
+C(t)=\mathbb E[y_ty_0^T],\qquad
+F(t)=C(0)^{-1/2}C(t)C(0)^{-1/2}.
+$$
+
+沿用第 7 节的 $P,Q,\Omega,D$，直接得到
+
+$$
+C(t)=\vartheta Oe^{At}S^{-1}O^T,\quad
+F(t)=Qe^{t\Omega}Q^T,\quad QQ^T=I_r,\quad\Omega^T=-\Omega.
+$$
+
+因而 $F(0)=I_r$、$F(-t)=F(t)^T$、$\|F(t)\|_2\le1$。归一化消去了温度尺度；温度与热分布的指定仍是模型假设。
+
+### 定理 12.1（相关曲率等于隐藏耦合 Gram 矩阵）
+
+令 $\Pi=Q^TQ$，则
+
+$$
+\boxed{M:=F'(0)^2-F''(0)
+=\big((I-\Pi)\Omega Q^T\big)^T
+ \big((I-\Pi)\Omega Q^T\big)\succeq0.}
+$$
+
+它与第 7 节使用的闭包残差满足 $\epsilon^2=\|M\|_2$。特别地，$M=0$ 当且仅当 $OA=KO$。用未归一化读数也可写成
+
+$$
+M=C(0)^{-1/2}
+\big[C'(0)C(0)^{-1}C'(0)-C''(0)\big]C(0)^{-1/2}.
+$$
+
+**证明。** $F'(0)=D=Q\Omega Q^T$，$F''(0)=Q\Omega^2Q^T$。展开右侧 Gram 矩阵，使用 $\Omega^T=-\Omega$ 得 $D^2-Q\Omega^2Q^T$。其算子范数是隐藏耦合范数的平方；第 7 节已经将该范数等同于 $\epsilon$。Gram 为零等价于 $(I-\Pi)\Omega Q^T=0$，转置即 $Q\Omega=DQ$，转换坐标得到 $OA=KO$。最后一式将归一化矩阵代回。$\square$
+
+这个证书使用相同读数的零、一、二阶相关信息，不需要先辨识完整的 $A,S$。只有下一节的有限延迟偏差界还需要带宽上界。$M\succeq0$ 是模型蕴含的必要条件；估计矩阵出现显著负特征值时，应检查误差预算或模型假设。
+
+## 13. 同一个矩阵同时控制记忆和热涨落
+
+选择 $V$ 使 $\binom QV$ 为正交矩阵。令 $\xi_0=\vartheta^{-1/2}S^{1/2}z_0\sim N(0,I)$，$u=Q\xi$、$v=V\xi$，并记
+
+$$
+B_h=V\Omega Q^T,\qquad E_h=V\Omega V^T.
+$$
+
+则 $u=C(0)^{-1/2}y$，且
+
+$$
+\dot u=Du-B_h^Tv,\qquad \dot v=B_hu+E_hv.
+$$
+
+### 定理 13.1（精确记忆方程与相关动力学）
+
+消去 $v$ 得
+
+$$
+\dot u(t)=Du(t)-\int_0^t\Lambda(t-s)u(s)\,ds+\eta(t),
+$$
+
+$$
+\Lambda(t)=B_h^Te^{tE_h}B_h,\qquad
+\eta(t)=-B_h^Te^{tE_h}v_0.
+$$
+
+初态 $u_0,v_0$ 独立，且
+
+$$
+\mathbb E[\eta(t)\eta(s)^T]=\Lambda(t-s),\quad
+\Lambda(0)=M,\quad\|\Lambda(t)\|_2\le\|M\|_2.
+$$
+
+相关矩阵满足
+
+$$
+F'(t)=DF(t)-\int_0^t\Lambda(t-s)F(s)\,ds.
+$$
+
+**证明。** 第二个状态方程的变参数公式代入第一个即得记忆式。独立标准高斯初态给出噪声协方差；$E_h$ 反对称，所以其指数正交。由 $V^TV=I-\Pi$，有 $B_h^TB_h=M$。最后将记忆方程右乘 $u_0^T$ 并取期望，独立性令噪声交叉项消失。$\square$
+
+这是 Mori 投影和涨落耗散关系在当前载体上的精确实现 [M65, M65C]。有限封闭系统的 $\Lambda$ 可以振荡且不衰减，此处没有认领不可逆热浴极限。
+
+### 推论 13.2（当前状态条件均值的二阶偏差界）
+
+$$
+\boxed{\|F(t)-e^{tD}\|_2\le\tfrac12t^2\|M\|_2,
+\qquad t\ge0.}
+$$
+
+**证明。** 对相关方程再用变参数公式，使用 $\|e^{tD}\|=1$、$\|F(s)\|\le1$ 和上一节的记忆核界，在三角形 $0\le s\le\tau\le t$ 上积分。$\square$
+
+这个 $O(\epsilon^2t^2)$ 结论针对条件均值。它不替换辛预测完成卷中针对任意隐藏初态的 $O(\epsilon t)$ 轨迹界。
+
+## 14. 所有只读当前状态的预测器共有的误差下限
+
+### 定理 14.1（Gaussian 条件预测及其正交分解）
+
+在第 12 节模型下，对任意固定 $t$，
+
+$$
+\mathbb E[u_t\mid u_0]=F(t)u_0,\qquad
+\operatorname{Cov}(u_t\mid u_0)=G(t):=I_r-F(t)F(t)^T.
+$$
+
+对任意可测且平方可积的预测器 $f:\mathbb R^r\to\mathbb R^r$，
+
+$$
+\boxed{\mathbb E\|u_t-f(u_0)\|^2
+=\operatorname{tr}G(t)+\mathbb E\|F(t)u_0-f(u_0)\|^2.}
+$$
+
+因此全部此类预测器的最小均方误差恰为 $\operatorname{tr}G(t)$。有
+
+$$
+G(t)=Qe^{t\Omega}(I-\Pi)e^{-t\Omega}Q^T,
+\qquad G(t)=t^2M+O(t^3),
+$$
+
+$$
+\operatorname{tr}G(t)=t^2\operatorname{tr}M+O(t^4).
+$$
+
+**证明。** 分解 $\xi_0=Q^Tu_0+V^Tv_0$，其中两个高斯部分独立。代入 $u_t=Qe^{t\Omega}\xi_0$ 即得条件均值、协方差及其 Gram 表达。预测误差与当前状态的任意平方可积函数正交，展开平方得恒等式。Taylor 展开得矩阵首项。迹等于 $r-\|F(t)\|_F^2$，由 $F(-t)=F(t)^T$ 知其为偶函数，故迹余项从四阶开始。$\square$
+
+定理涵盖只使用当前读数的任意非线性网络；历史、附加传感器或其他关于同一隐藏初态的信息会改变条件化对象。此处是 Gibbs 先验下的 Bayes 下限，与第 4 节无状态先验的最坏噪声下限分别记账。
+
+## 15. 从相关矩阵识别必须补回的状态维数
+
+### 定理 15.1（相关导数 Gram 塔）
+
+定义块矩阵
+
+$$
+\mathcal H_m=\big[(-1)^i F^{(i+j)}(0)\big]_{i,j=0}^m.
+$$
+
+则
+
+$$
+\mathcal H_m=\mathcal K_m^T\mathcal K_m,\qquad
+\mathcal K_m=[Q^T,\Omega Q^T,\ldots,\Omega^mQ^T].
+$$
+
+其秩等于截至 $m$ 阶的线性预测闭包维数，稳定后的秩等于完整的最小预测维数。特别地，
+
+$$
+\boxed{\operatorname{rank}\mathcal H_1=r+\operatorname{rank}M.}
+$$
+
+**证明。** 第 $(i,j)$ 个 Gram 块为 $(\Omega^iQ^T)^T\Omega^jQ^T=(-1)^iF^{(i+j)}(0)$。生成向量的跨度与连续预测闭包仅相差可逆能量坐标变换。对
+
+$$
+\mathcal H_1=\begin{pmatrix}I_r&D\\-D&-F''(0)\end{pmatrix}
+$$
+
+消去首块后，其 Schur 补为 $-F''(0)+D^2=M$，得到秩公式。有限维的稳定性由 Cayley–Hamilton 保证。$\square$
+
+$\operatorname{rank}M$ 给出第一轮至少要补回的独立方向数，它可能小于最终所需数。精确秩结论不直接适用于有限精度数据；后文以特征值余量给出可认证下界。
+
+## 16. 单个有限延迟的证书和最优误差阶
+
+假设已知 $\|\Omega\|_2\le b$，其中 $b>0$。对 $h>0$，定义无需数值求导的双向延迟矩阵
+
+$$
+W_h=\frac{2I_r-F(h)F(h)^T-F(h)^TF(h)}{2h^2}.
+$$
+
+### 定理 16.1（有限延迟与相关误差的联合预算）
+
+$W_h\succeq0$，且
+
+$$
+\|W_h-M\|_2\le\tfrac23b^4h^2.
+$$
+
+若 $\|\widehat F_h-F(h)\|_2\le\delta$，将 $\widehat F_h$ 代入同一公式得到 $\widehat W_h$，则
+
+$$
+\boxed{\|\widehat W_h-M\|_2\le
+\eta(h,\delta):=\tfrac23b^4h^2+\frac{2\delta+\delta^2}{h^2}.}
+$$
+
+因此 $\widehat W_h$ 中大于 $\eta$ 的特征值个数，是 $\operatorname{rank}M$ 的可靠下界。
+
+**证明。** $F$ 收缩给出半正定性。令 $P_t=F(t)F(t)^T$。$P''_0=-2M$，并由 $\|F^{(k)}(t)\|\le b^k$ 和 Leibniz 公式得 $\|P^{(4)}_t\|\le16b^4$。双向 Taylor 展开的四阶余项给出 $16b^4h^2/24$。相关误差造成每个乘积至多 $2\delta+\delta^2$ 的扰动，代入定义即得界。最后用对称矩阵特征值扰动界；它也可直接由 Rayleigh 商的最大最小表述证明。$\square$
+
+对固定 $\delta>0$，该上界在
+
+$$
+h_*^4=\frac{3(2\delta+\delta^2)}{2b^4}
+$$
+
+处最小，最小值为 $2b^2\sqrt{2(2\delta+\delta^2)/3}$。延迟太小会放大误差，延迟太大则增大截断偏差。带宽条件不可省：单振子在 $\omega h=2\pi$ 时有 $F(h)=1$、$W_h=0$，但 $M=\omega^2>0$。
+
+### 定理 16.2（单延迟数据模型中的匹配 minimax 阶）
+
+限制到标量读数、已知 $F(0)=1$、频率位于 $[1,3]$ 的有限正定 Hamilton 系统，数据只包含一个 $d$，且 $|d-F(h)|\le\delta$。对于充分小的固定 $h_0>0$，允许选择一次延迟 $0<h\le h_0$。从这一数据估计 $M=-F''(0)$ 的最优最坏绝对误差满足
+
+$$
+\boxed{\inf_{0<h\le h_0}\inf_{\widehat M}
+\sup_{F,\ |d-F(h)|\le\delta}|\widehat M(d)-M(F)|
+=\Theta(\sqrt\delta),\qquad\delta\downarrow0.}
+$$
+
+**证明。** 上界由定理 16.1 取 $b=3$、$h\asymp\delta^{1/4}$ 得到。下界使用两组成对实现。
+
+第一组取 $F_a(t)=\cos(2t)$，以及
+
+$$
+F_b(t)=(1-p_h)\cos t+p_h\cos(3t),\qquad
+p_h=\frac{\cos h-\cos(2h)}{\cos h-\cos(3h)}.
+$$
+
+充分小 $h$ 时 $0<p_h<1$，且 $F_a(h)=F_b(h)$；二者均由正定振子及归一化线性读数实现。其曲率差为
+
+$$
+M_b-M_a=1+8p_h-4=\tfrac54h^2+O(h^4).
+$$
+
+故即使零噪声，单延迟数据也留下至少 $c_1h^2$ 的最坏误差。第二组在 $0<\delta\le h^2$ 时取
+
+$$
+F_x(t)=\cos(\sqrt{x}\,t),\quad x_0=4,\quad x_1=4+4\delta/h^2.
+$$
+
+因 $|\partial_x\cos(\sqrt{x}\,h)|\le h^2/2$，两个数据相差至多 $2\delta$，同一个中点数据与二者相容，曲率差为 $4\delta/h^2$。最坏估计误差至少为 $2\delta/h^2$。$\delta>h^2$ 时改取 $x_1=8$，同理得到常数下界 2。结合两个下界，在 $\delta\le h^2$ 时用 $\max(c_1h^2,2\delta/h^2)\ge\sqrt{2c_1\delta}$；另一情形更强。$\square$
+
+这是一个延迟相关值及有界加性误差的信息模型。多延迟、完整轨迹、额外谱先验或其他测量可以改变最优阶；本定理不把 $\sqrt\delta$ 宣称为所有实验设计的共同下限。
+
+## 17. 协方差白化误差与一个有限样本保证
+
+### 定理 17.1（经验白化的正交对齐预算）
+
+设 $C_0=C(0)\succ0$，估计量满足
+
+$$
+\|C_0^{-1/2}(\widehat C_0-C_0)C_0^{-1/2}\|\le\rho<1,
+\quad
+\|C_0^{-1/2}(\widehat C_h-C(h))C_0^{-1/2}\|\le\nu.
+$$
+
+则 $\widehat C_0\succ0$，存在正交 $U$，使经验归一化相关矩阵满足
+
+$$
+\boxed{\left\|U^T\widehat C_0^{-1/2}\widehat C_h
+\widehat C_0^{-1/2}U-F(h)\right\|
+\le\frac{\rho+\nu}{1-\rho}.}
+$$
+
+**证明。** 写 $E_0=C_0^{-1/2}(\widehat C_0-C_0)C_0^{-1/2}$。对 $L=\widehat C_0^{-1/2}C_0^{1/2}$ 作右极分解 $L=UR$，其中 $R=(I+E_0)^{-1/2}$。对齐后的估计为 $R(F(h)+E_h)R$，$\|E_h\|\le\nu$。谱界给出 $\|R\|\le(1-\rho)^{-1/2}$、$\|R-I\|\le(1-\rho)^{-1/2}-1$。用 $\|F(h)\|\le1$ 展开扰动，得到 $\nu/(1-\rho)+\rho/(1-\rho)$。$\square$
+
+第 16 节的特征值与范数证书对正交变换不变，所以不需要从数据额外恢复 $U$。已知绝对协方差误差及 $\lambda_{\min}(C_0)$ 的正下界时，可直接换算 $\rho,\nu$。
+
+### 推论 17.2（独立 Gibbs 配对样本的保守置信预算）
+
+从 $N$ 次独立初态制备得到配对样本 $(y_0^{(j)},y_h^{(j)})$，均值按已知的零均值处理，以未中心化样本二阶矩估计 $C_0,C_h$。取 $0<\alpha<1$，定义
+
+$$
+\kappa=2\sqrt{\frac{r(r+1)}{N\alpha}}.
+$$
+
+若 $\kappa<1$，则以至少 $1-\alpha$ 的概率，定理 17.1 同时适用 $\rho=\nu=\kappa$，并可向第 16 节输入
+
+$$
+\delta_N=\frac{2\kappa}{1-\kappa}.
+$$
+
+**证明。** 真白化后的配对向量具有 Gaussian 协方差
+
+$$
+\Gamma=\begin{pmatrix}I_r&F(h)^T\\F(h)&I_r\end{pmatrix},
+\quad\|\Gamma\|\le2,\quad\operatorname{tr}\Gamma=2r.
+$$
+
+Gaussian 四阶矩展开给出样本协方差 $\widehat\Gamma$ 的恒等式
+
+$$
+\mathbb E\|\widehat\Gamma-\Gamma\|_F^2
+=\frac{(\operatorname{tr}\Gamma)^2+\operatorname{tr}(\Gamma^2)}N
+\le\frac{4r(r+1)}N.
+$$
+
+Markov 不等式与 $\|\cdot\|_2\le\|\cdot\|_F$ 给出失败概率至多 $\alpha$；提取各子块得到两个相对误差预算。$\square$
+
+这是保守的充分样本界，不认领最优样本复杂度。固定 $r,\alpha$ 时，它与第 16 节组合给出 $h\asymp N^{-1/8}$、曲率证书半径 $O(N^{-1/4})$。一条封闭振子轨迹上的相邻时刻不构成这里的独立样本；传感器噪声、未知均值或相关采样需要单独的估计预算。
+
+## 18. 从数据证书传播到预测与辛结构
+
+令 $\widehat D_h=(\widehat F_h-\widehat F_h^T)/(2h)$，并取
+
+$$
+\gamma=\tfrac16b^3h^2+\delta/h,
+\qquad M_+=\max\{0,\lambda_{\max}(\widehat W_h)+\eta(h,\delta)\}.
+$$
+
+### 定理 18.1（可计算的模型误差界）
+
+在与真坐标正交对齐后，
+
+$$
+\|\widehat D_h-D\|\le\gamma,\quad\|M\|\le M_+,
+$$
+
+$$
+\boxed{\|F(t)-e^{t\widehat D_h}\|\le\tfrac12M_+t^2+\gamma t.}
+$$
+
+其预测均方误差满足
+
+$$
+\mathbb E\|u_t-e^{t\widehat D_h}u_0\|^2
+\le\operatorname{tr}G(t)
++r\bigl(\tfrac12M_+t^2+\gamma t\bigr)^2.
+$$
+
+若 $\sigma_{\min}(\widehat D_h)>\gamma$，则 $D$、进而 $J_r$ 非退化。若另有原系统最低频率下界 $\omega_*>0$ 且 $M_+<\omega_*^2$，第 7 节进一步给出 $\sigma_{\min}(D)\ge\sqrt{\omega_*^2-M_+}$。
+
+**证明。** 中心一阶差分的余项由 $\sup_t\|F'''(t)\|\le b^3$ 控制，给出 $b^3h^2/6$；数据误差贡献至多 $\delta/h$。$D,\widehat D_h$ 都反对称，Duhamel 公式给出两个正交流的差至多 $t\gamma$。与推论 13.2 合并，再用定理 14.1 及 Frobenius 范数至多 $\sqrt r$ 倍算子范数，得到预测界。最后由奇异值扰动及定理 7.1 得结构证书。$\square$
+
+这些结论给出相同实现下的联合链：样本协方差误差、经验白化误差、隐藏耦合余量、预测均值误差和辛非退化性。有限误差证书可以证明非零缺陷或给出上界，不能从近零读数证明精确闭合。
+
+## 19. 量子热响应中保持同一几何的相关量
+
+考虑有限个正则量子模式，$\widehat H=\widehat z^TS\widehat z/2$、$S\succ0$，采用 Weyl 对称排序与通常 Schrödinger 表示。Gibbs 态为 $\rho_\beta$，定义线性读数的 Kubo 相关矩阵
+
+$$
+C^K_{ij}(t)=\frac1\beta\int_0^\beta
+\operatorname{Tr}\big[\rho_\beta e^{s\widehat H}
+\widehat y_i(t)e^{-s\widehat H}\widehat y_j\big]ds.
+$$
+
+### 定理 19.1（二次量子 Gibbs 系统的共同相关矩阵）
+
+$$
+\boxed{C^K(t)=\beta^{-1}Oe^{At}S^{-1}O^T.}
+$$
+
+因此其归一化相关矩阵也是 $Qe^{t\Omega}Q^T$。第 12、15、16 节的矩阵恒等式和确定性误差证书使用同一组对象。
+
+**证明。** 对 $\widehat H_f=\widehat H-f^T\widehat z$ 作 Weyl 位移完成平方，得到
+
+$$
+Z(f)=Z(0)\exp\bigl(\tfrac\beta2f^TS^{-1}f\bigr).
+$$
+
+Duhamel 微分公式给出 $\partial_{f_i}\partial_{f_j}\log Z(0)=\beta^2 C^K_{z,ij}(0)$，而右式 Hessian 为 $\beta S^{-1}$。这证明静态恒等式。二次算子的 Heisenberg 方程为 $\widehat z(t)=e^{At}\widehat z$，由双线性得到动态式。正定二次 Gibbs 算子的分区函数及这些线性源导数均有限；矩阵元公式可在共同 Schwartz 域计算后由热迹延拓。$\square$
+
+Kubo 变换及线性响应本身为既有理论 [H14]。普通对称协方差通常不同：对 $H=(p^2+\omega^2q^2)/2$，
+
+$$
+C^K_{qq}(0)=\frac1{\beta\omega^2},\qquad
+\tfrac12\langle\{q,q\}\rangle
+=\frac{\hbar}{2\omega}\coth(\beta\hbar\omega/2).
+$$
+
+Kubo 相关不等于一次普通量子测量的联合概率协方差；第 14 节的经典条件预测下限和第 17 节的独立 Gaussian 样本保证不能直接移植成量子测量结论。应根据实际的响应或相关测量协议另建误差预算。
+
+## 20. 算例、既有文献与剩余边界
+
+在能量归一坐标中取
+
+$$
+\Omega=\operatorname{diag}(J_2,2J_2),\qquad
+Q=\begin{pmatrix}1&0&0&0\\0&3/5&4/5&0\end{pmatrix}.
+$$
+
+则
+
+$$
+D=\tfrac35J_2,\qquad
+M=\operatorname{diag}(16/25,64/25),\qquad
+\operatorname{rank}\mathcal H_1=4.
+$$
+
+因此两维当前读数需要补回两个独立方向。所有只读当前状态的预测器的最小均方误差，在 $t=0.1,0.25,0.5$ 时分别为 $0.0316905865,0.1881986417,0.6264800864$。
+
+取 $b=2$、归一化相关误差预算 $\delta=0.001$，固定种子扰动实验得到：
+
+| $h$ | $\eta$ | $\|\widehat W_h-M\|_2$ | 可认证额外方向数 |
+|---|---:|---:|---:|
+| 0.01 | 20.0110667 | 14.3335506 | 0 |
+| 0.05 | 0.8270667 | 0.5461889 | 2 |
+| 0.10 | 0.3067667 | 0.2103546 | 2 |
+| 0.20 | 0.4766917 | 0.1010210 | 2 |
+| 0.50 | 2.6746707 | 0.6470029 | 0 |
+
+可认证方向数为零表示该实验预算不足以认证，不表示没有隐藏方向。47 项局部检查覆盖有理 Gram 恒等式、记忆协方差、Volterra 方程、预测风险分解、有限延迟扰动、白化误差、单延迟成对反例和单模 Kubo 热迹。数值检验不替代一般证明，也不构成硬件实验或机器学习性能比较。
+
+**文献归属。** 从相关函数恢复记忆核已有成熟方法。Lang–Lu 的 2026 论文给出相关函数误差到记忆核估计误差的控制；其另一篇论文研究记忆核扰动到轨迹误差的传递。这里聚焦同一个正定 Hamilton 系统的可观测缺陷、额外状态秩、单延迟信息下限和证书传播，不把整个 Mori/GLE 路线登记为新方法 [LL26, LL25]。非线性势、真正热浴极限、测量反作用和非平稳数据均需要独立证明；第 12–19 节不直接覆盖这些情形。
+
+[M65] H. Mori. *Transport, Collective Motion, and Brownian Motion*. Progress of Theoretical Physics 33(3), 423–455, 1965. DOI: [10.1143/PTP.33.423](https://doi.org/10.1143/PTP.33.423). 投影、记忆与涨落耗散的既有背景。
+
+[M65C] H. Mori. *A Continued-Fraction Representation of the Time-Correlation Functions*. Progress of Theoretical Physics 34(3), 399–416, 1965. DOI: [10.1143/PTP.34.399](https://doi.org/10.1143/PTP.34.399). 相关矩与记忆层级的既有背景。
+
+[LL26] Q. Lang, J. Lu. *Learning Memory Kernels in Generalized Langevin Equations*. SIAM Journal on Mathematics of Data Science 8(1), 141–166, 2026. DOI: [10.1137/24M1651101](https://doi.org/10.1137/24M1651101).
+
+[LL25] Q. Lang, J. Lu. *Error Analysis of Generalized Langevin Equations with Approximated Memory Kernels*. [arXiv:2512.10256](https://arxiv.org/abs/2512.10256), 2025. 其同步白噪声与衰减假设不同于这里的封闭热初态记忆。
+
+[H14] A. Horikoshi. *External Source Method for Kubo-Transformed Quantum Correlation Functions*. [arXiv:1401.0983](https://arxiv.org/abs/1401.0983), 2014. 使用第 II 节的 Kubo 变换约定和线性源响应公式；本文的多模矩阵恒等式由定理 19.1 明确推导。
