@@ -178,3 +178,257 @@ The same theorem can quantify a private set **conditionally**. Restrict all othe
 BBMST, *On the Erdős covering problem: the density of the uncovered set*, <https://arxiv.org/pdf/1811.03547>, Theorem3.1 and Lemma3.5 (pp.7,10–11), provide an additional measure comparison: a proven positive survivor mass under their specific distorted law gives an explicit Haar-density lower bound. The statement does not reverse to turn arbitrary Haar-positive witness sets into positive killed/source mass. Their Theorem1.1 also requires sufficiently large distinct residual moduli plus a weighted reciprocal budget; residual restriction need not preserve those hypotheses. HN's multiple-residue Theorem4 is the direct match here.
 
 The current official problem page <https://www.erdosproblems.com/7>, accessed 2026-09-19, remains marked open and cites Hough–Nielsen and BBMST for the factor2-or3 and lcm9-or15 restrictions. No assertion above removes any hypothesis from those results or closes the unrestricted problem.
+
+## Conditional union reduction and certified future majorants
+
+HN feasibility depends on the events presented to the criterion. Even when
+all original classes are irredundant, conditioning on one old point and
+one current prefix can make a residual event contained in another.
+Deleting such an event is legitimate for that conditional union. It does
+not delete the corresponding original class from the original family.
+
+More generally, fix the same old survivor x and current prefix J used
+above. Let V_J(x) be the actual future forbidden union and let M_J(x)
+be a union of auxiliary arithmetic-progression events, each with modulus greater than one, interpreted on the same fibre carrier or a common uniform lift, with
+
+    V_J(x) subset M_J(x).                                      (MJ1)
+
+One sufficient certificate for MJ1 assigns every compatible ORIGINAL
+future label to an auxiliary class containing its residual class. For
+residual a mod m and auxiliary b mod n, this is the check
+`n divides m` and `a=b mod n`. Multiple auxiliary residues at one modulus
+are permitted. Keep this map from original labels; an auxiliary event
+is not a new original label or a claim of original-modulus distinctness.
+Exact conditional union reduction is the special case of equality in MJ1.
+
+Apply Hough--Nielsen Theorem4 to M_J, including the empty current-leaf
+test modulus when needed. Write B_J and xi_(p,J) for this certificate's
+cost and current-prime weight. The surviving set of the majorant is a
+subset of the actual future-surviving set. Consequently its intersection
+with current avoidance is a subset of the ACTUAL uncovered set, and
+
+    U_J(x) >= p^-t exp(-B_J)
+                 [1-exp(xi_(p,J)) p^t a_J(x)]_+.                (MJ2)
+
+Only this lower bound is asserted: actual future avoidance and majorant
+avoidance generally have different probabilities. Under whole coverage,
+MJ2 still forces `a_J(x)>=p^-t exp(-xi_(p,J))`. The auxiliary HN law is
+used to prove the pointwise inequality; it does not reweight the physical
+chain or its killed old submeasure.
+
+The majorant version of the pointwise bound can be inserted into P9 on any certified subset of prefixes. The all-prefix requirement remains specific to the separate Gamma correction.
+
+## An irredundant low-rho head with a conditionally redundant future
+
+Keep precisely the204 original classes of339's N=12 benchmark. Its
+complete357 carrier is unchanged. Add the current original class
+
+    1 mod11^12,
+
+and the following21 future original classes, specified by CRT:
+
+    0 mod11^e, e+1 mod13              for e=0,...,10;
+    0 mod11^11, 0 mod13;
+    0 mod11^e, 0 mod13, e mod17       for e=0,...,8.            (MJ3)
+
+All226 full original moduli are distinct, odd and greater than one.
+Every new class ends at11,13,or17 and has no3,5,or7 factor. Therefore
+all original head labels, all full head heights, qJ, S, S0 and rho,
+and the same-chain measure immediately before prime11 are unchanged.
+The source stays at
+
+    delta=0.00003388634450980418...,
+    rho=0.05833338038722376...,
+
+inside339's remaining region. No extension of the excluded rho>=1/10
+region is used.
+
+The combined family is irredundant on its union. A head private witness
+extends with11-coordinate2 and13-coordinate12, avoiding every added
+class. For a new class, use339's actual uncovered head point. A pure
+future class has its prescribed13 residue,11-coordinate0 and17-coordinate16.
+For the mixed class at depth e, use13-coordinate0,17-coordinate e and
+11-coordinate11^e when e>=1, or2 when e=0. These points miss the depth11
+pure class at13-coordinate0 and every other mixed class. The current
+class has a private extension with13-coordinate12. These are CRT
+constructions of genuine private integers, not only noncontainment
+arguments. The full family is still a NONCOVER: the uncovered head point
+with11-coordinate2 and13-coordinate12 avoids every class.
+
+Now take p=11,H=12,t=11 and J=0 mod11^11. For EVERY old survivor x,
+all p-conditions in MJ3 hold. In the actual remaining13/17 coordinates,
+the literal residual presentation is
+
+    A_13={0,...,11},
+    A_221={z:z=0 mod13 and z in{0,...,8} mod17}.                (MJ4)
+
+These are the actual integer's remaining13/17 coordinates, rather than P1's affine parameter z. The coordinatewise CRT relabelling is a uniform bijection; the event cardinalities and containment relations are unchanged. This presentation is independent of the old point. The current class misses J, so
+`a_J(x)=0`. The literal HN presentation has no finite nonnegative
+supersolution. Indeed, putting X=xi_13 and Y=xi_17, its constraints include
+
+    X >= (12/13)(1+X)+(9/221)(1+X)(1+Y),
+    Y >= (9/221)(1+X)(1+Y).                                  (MJ5)
+
+The first implies X>=12. The second then gives Y>=9/8. Dividing the
+first by1+X and using X/(1+X)<1 also gives Y<8/9, a contradiction.
+This is a symbolic infeasibility proof; the numerical checker verifies
+the exact cardinalities and rational coefficients used in it.
+
+Every residual event in A_221 is already contained in the q=0 event
+of A_13. Removing those nine events preserves the conditional union
+EXACTLY. The reduced family has a certificate
+
+    xi_13=12, xi_11=0, B=12,
+
+with an empty test event modulo11. Its conditional current-leaf
+probabilities are at most1/11. The exact residual hole is1/13; HN also
+gives the valid lower bound exp(-12). Thus MJ2 proves, under any incoming
+eta from the unchanged head with eta(R)>0,
+
+    integral U_J d eta >= 11^-11 exp(-12) eta(R) > 0.          (MJ6)
+
+The same twelve13 residues form a GLOBAL future majorant for MJ3,
+with a direct containing class assigned to each original label. Outside
+this chosen J it need not equal the actual future union; MJ1--MJ2 and P9 retain
+the correct inequality direction.
+
+This example shows that full-original irredundancy does not justify
+keeping every event in a conditioned HN presentation. It also shows how
+an exact residual reduction or a certified majorant can repair that
+presentation without changing the source measure. It supplies no
+uniform majorant, no uniform budget, and no solution of the unrestricted
+covering problem.
+
+The [standalone checker](../frontier/hn_majorant_reduction.py) first reruns the
+existing339 source producer and compares its complete result with the
+canonical multipart-aware certificate. It then checks51,076 private
+witness congruences against all226 original classes, all50,850 ordered
+containment pairs, and2,431 actual conditional CRT points for the exact
+union reduction. The [canonical certificate](../certificates/source_norms/hn_majorant_reduction.json) retains the original-label majorant
+map and the exact HN contradiction coefficients. Every check remains
+active under `python3 -I -S -O`; no new Lean declaration is asserted.
+
+Run `python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/hn_majorant_reduction.py --check`; a copied entrypoint accepts `--base /path/to/erdos7-odd-covering`.
+
+## Conditional Haar queries can use only conflicting residues
+
+Scott--Sokal, [arXiv:cond-mat/0309352v2](https://arxiv.org/pdf/cond-mat/0309352v2),
+Theorem1.2 and equation(1.8), printed/PDF page7, give the lopsided local
+lemma and its conditional avoidance bound. Theorem4.1, equation(4.3),
+page50, gives the corresponding Shearer-polynomial bound. These apply
+directly to the original Haar law conditioned on avoidance. The query
+bound in [problem-details16](../problem-details/16-canonical-conflict-resampling-and-the-exact-shearer-query-ratio.md) concerns a resampling terminal law; that law
+is not substituted here.
+
+Fix the genuine old survivor x and current prefix J of P1. Keep each
+compatible future original label as the atomic event `A_i={z=r_i mod m_i}`.
+If using P2, split its multi-residue sets back into atomic events. Join
+distinct vertices precisely when
+
+    i~j iff gcd(m_i,m_j) does not divide r_i-r_j.              (CQ1)
+
+Use P1's complete residual carrier Q/D, including every remaining current p digit. If starting with only the future-event period lcm(m_i), uniformly lift it to the common period with the query modulus d; this preserves the future-event probabilities. For a canonical test `T={z=b mod d}` on that carrier, let
+
+    N(T)={i:gcd(d,m_i) does not divide b-r_i}.
+
+These are exactly conflicting partial assignments of independent
+prime-adic digits. To verify the weak dependency condition, force the
+digits of any canonical E to their prescribed values. This produces
+Haar conditioned on E. Every compatible event that held before forcing
+still holds afterwards. Thus, for any set C of compatible events,
+`Pr(avoid C|E)<=Pr(avoid C)`, and hence
+`Pr(E|avoid C)<=Pr(E)` whenever the conditioning is defined.
+
+If one set of weights `0<=u_i<1` satisfies
+
+    1/m_i <= u_i product_(j~i)(1-u_j), for every i,
+
+the cited conditional local lemma implies
+
+    Pr(F)>=product_i(1-u_i)>0,
+    Pr(T|F)<=(1/d) product_(i in N(T))(1-u_i)^(-1),            (CQ2)
+
+where F avoids all future events. Indeed, with `C=V minus N(T)`, bound
+`Pr(T|F)` by `Pr(T|avoid C)/Pr(avoid N(T)|avoid C)` and apply equation(1.8)
+to the denominator. This uses the same valid weights throughout;
+different certificates must not be spliced into one product.
+
+More generally put
+
+    Z_U=sum_(I independent in U)(-1)^|I| product_(i in I)(1/m_i).
+
+If every induced Z_U is positive, Theorem4.1(4.3) gives the denominator
+bound `Pr(avoid N(T)|avoid C)>=Z_V/Z_C`, so
+
+    Pr(F)>=Z_V>0,
+    Pr(T|F)<=(1/d) Z_(V minus N(T))/Z_V.                      (CQ3)
+
+Decompose the actual current forbidden union inside J into disjoint
+canonical prefixes T. Their relative Haar masses are `Haar_J(T)`;
+full current leaves are always a permissible decomposition. Summing CQ3
+under this same conditional law gives the direct noncoverage estimate
+
+    U_J(x)>=p^-t [Z_V-sum_T Haar_J(T) Z_(V minus N(T))]_+.     (CQ4)
+
+For clarity, if s denotes the sum in CQ4 and h=Pr(F), then the conditional current-union probability is at most s/Z_V. Hence U_J>=p^-t h[1-s/Z_V]_+>=p^-t[Z_V-s]_+; no bound on an unconditional intersection is substituted.
+
+A strictly positive right side at one genuine x,J proves an uncovered
+integer by CRT. An all-prefix condition is unnecessary for this test.
+Any subsequent integration uses the original old measure, without
+reweighting by future-survivor density. Feasibility remains an input;
+the complete-star failure of universal conflict-Shearer feasibility in
+problem-details16 is not removed.
+
+On the146-class diagnostic's fixed fibre all future events are `0 mod35`
+or `0 modq`. Their conflict graph is empty, so `u_i=1/m_i` satisfies CQ2.
+For remaining current digit0 there are no query neighbors, giving cap1/5.
+For each nonzero digit, only `0 mod35` conflicts, giving cap7/34. The
+actual probabilities are3/17 and7/34. Both caps are below the HN cap
+`exp(1/32)/5`; for the larger one use `exp(1/32)>33/32>35/34`.
+The current union is empty at that old point, so these finer leaf caps
+do not improve its already-unit current-union deficit. This is a check
+of residue sensitivity, not a claim of universal progress.
+
+## The literal HN failure admits a conflict-Shearer certificate
+
+Retain the226-class construction coupled to the actual339 head and all
+21 residual events at `J=0 mod11^11`. They are
+
+    A_a={z=a mod13}, a=0,...,11,
+    B_j={z=0 mod13,z=j mod17}, j=0,...,8.
+
+No event is deleted. The A vertices form a clique; the B vertices form
+a clique. Every B conflicts with A_1,...,A_11 and is compatible with A_0.
+Thus the literal graph is K_11 joined to the disjoint union of A_0 and
+K_9. Charges remain1/13 and1/221.
+
+Every induced graph has k nonzero A vertices, an indicator delta for
+A_0, and r B vertices, where `0<=k<=11`, `delta in{0,1}`, `0<=r<=9`.
+Its exact independence polynomial is
+
+    Z_(k,delta,r)=(1-delta/13)(1-r/221)-k/13.                 (CQ5)
+
+The product counts choices from A_0 and the B clique; a nonzero A
+vertex excludes every other vertex. CQ5 decreases in all three parameters
+on these ranges. All240 induced types are therefore positive, with
+
+    min Z_U=Z_V=(12/13)(212/221)-11/13=113/2873>0.           (CQ6)
+
+The remaining current11 digit has no conflicting future neighbor, so
+CQ3 gives cap1/11. The original current class `1 mod11^12` misses J.
+CQ4 consequently gives missed current/future mass at least
+`11^-11*113/2873>0` at every old point surviving the actual339 head.
+Direct counting gives future-hole probability1/13 and missed mass
+`11^-11/13`; every current conditional digit has probability1/11.
+
+This supplies a second mature criterion on the unchanged residual
+presentation where literal HN failed. The exact-union reduction already
+proved noncoverage of this same family. No additional unrestricted
+family is excluded by this diagnostic.
+
+The same [majorant checker](../frontier/hn_majorant_reduction.py) reconstructs all210 literal CRT pairs from the producer's
+21 residual rows, checks the201 conflict edges, and compares CQ5 with
+an independent deletion recurrence for all240 induced types. It also
+checks all2431 residual CRT points and all11 current conditional digit
+probabilities. Original-label provenance, private witnesses and the339
+source remain verified by the same original-family producer.
