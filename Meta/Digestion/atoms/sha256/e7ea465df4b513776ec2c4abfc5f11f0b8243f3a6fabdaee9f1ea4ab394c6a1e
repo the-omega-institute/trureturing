@@ -1,0 +1,20 @@
+**命题 12.5（受限证书的传播及失效见证）。** 在定义12.4的受限族条件下，若 $\kappa,\varepsilon_j$ 是相应受限态上的统一预算，则对每个允许参考 $R$ 及 $\rho_{XR}\in\mathscr A_0$，
+$$
+\frac12\left\|\bigl[(\mathcal S\overline{\mathcal T}_n\cdots\overline{\mathcal T}_1\mathcal E-\mathcal Q\mathcal T_n\cdots\mathcal T_1)\otimes\operatorname{id}_R\bigr](\rho_{XR})\right\|_1
+\le\min\{1,\kappa+\textstyle\sum_j\varepsilon_j\}.
+$$
+该式按定义12.1写成固定类型；逐轮采用式（12.3a）的类型和相应受限输入族时，同一证明给变类型版本。这只是受限态保证，不断言全空间 diamond 缺陷同样小。如果缺少沿理想前缀的不变范围，结论不成立。对成功条件化的实验，未经归一化的通道误差也不直接给同值的条件误差。
+
+**证明。** 对给定联合态使用式（12.4）；第 $j$ 项右侧的理想前缀将它送入 $\mathscr A_{j-1}$，故该项可使用受限缺陷。左侧的其余通道仍收缩迹距离；末端恢复项使用 $\mathscr A_n$ 上的界。求和得结论。
+
+为说明范围必要性，取经典两态 $X=\{0,1\}$，边界为单点，$\mathcal E$ 擦除，$\mathcal R$ 总制备零，$\mathcal T$ 交换两态，边界更新恒等。初态族仅为零态；其恢复缺陷为零，编码交织缺陷处处为零。然而一步后理想态为一、恢复态为零，总变差为一。原因是末端已经离开恢复有效域。
+
+条件化方面，设成功子态为 $A,B\succeq0$，$p=\operatorname{Tr}A>0,q=\operatorname{Tr}B>0$，且 $\|A-B\|_1\le e$。由 $|p-q|\le e$，
+$$
+\left\|\frac A p-\frac B q\right\|_1
+\le\frac{\|A-B\|_1}{p}+\frac{|p-q|}{p}
+\le\frac{2e}{p}.
+\tag{12.5}
+$$
+故成功概率的共同下界 $p,q\ge s>0$ 给条件态迹距离至多 $\min\{1,e/s\}$。下界不能删除：两个经典联合输出分别以概率 $s$ 成功并输出相反比特，以概率 $1-s$ 给同一失败标签；完整输出总变差为 $s\to0$，成功条件分布的总变差却恒为一。失败旗标保留时仍可使用原通道界。$\square$
+
