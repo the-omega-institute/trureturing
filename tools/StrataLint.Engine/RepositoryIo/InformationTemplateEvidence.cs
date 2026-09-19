@@ -247,7 +247,8 @@ internal static class InformationTemplateEvidence
             var evidence = Read(selection.Project(payload, source), source, snapshot);
             var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
                 .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                    || path.Value == "Trureturing.lean")
+                    || path.Value == "Trureturing.lean"
+                    || ModuleForSource(path.Value).StartsWith("LeanInformationAudit.Tests.", StringComparison.Ordinal))
                 .Select(path => path.Value).Concat(PolicyInputs).ToHashSet(StringComparer.Ordinal);
             foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
                 if (!evidence.Inputs.Any(input => input.Path == required))

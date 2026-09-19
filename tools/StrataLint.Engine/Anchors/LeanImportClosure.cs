@@ -23,6 +23,9 @@ internal static class LeanImportClosure
             ModuleName,
             static path => path,
             StringComparer.Ordinal);
+        foreach (var path in report.Files.Keys)
+            if (path.Value.StartsWith("tools/lean-inspector/LeanInformationAudit/Tests/", StringComparison.Ordinal))
+                pathsByModule.Add(InformationTemplateEvidence.ModuleForSource(path.Value), path);
         var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
         var pending = new Stack<RepoPath>();
         pending.Push(startPath);
