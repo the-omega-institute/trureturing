@@ -1,0 +1,197 @@
+{
+  "denominator_costs": {
+    "path": "content/008-complete_heads/000-denominator_costs.json",
+    "sha256": "d5b5748b684f044c414b657ff4381bffdde8d48aa998098e9d9b428bad09acf1",
+    "kind": "array"
+  },
+  "denominator_shared": {
+    "path": "content/008-complete_heads/001-denominator_shared.json",
+    "sha256": "4d6469da7aa6daaf2b4c54ca9b9c7d3596d923402abe89f056b00e4d98aa6365",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/008-complete_heads/002-H2.json",
+    "sha256": "a5561aa81044b526e8aded585b2123eb9b2635928d67c6e12330caceee2fcd8a",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/008-complete_heads/003-mean_costs.json",
+    "sha256": "40434df3183140b4328c9a031974d464899b81caeebe3a7aa716af34178b6500",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/008-complete_heads/004-mean_shared.json",
+    "sha256": "f2985325dd5a31a6fb832fcd014970bc790bbcb6df6a056d39c19a832873cd48",
+    "kind": "value"
+  },
+  "quadratic_costs": {
+    "path": "content/008-complete_heads/005-quadratic_costs.json",
+    "sha256": "a137cf4416c67a14b5b88e66538a715f1a6c039b43706d747a2147b2f63cbd4d",
+    "kind": "array"
+  },
+  "quadratic_shared": {
+    "path": "content/008-complete_heads/006-quadratic_shared.json",
+    "sha256": "5f29d8dba7c3a0ec80fc55e0173b363575145e50b1c3b9238fbe94320236dbf1",
+    "kind": "value"
+  },
+  "old_parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/1000",
+      "rbar": "1/200",
+      "h1min": "161/486",
+      "v0": "51/2600",
+      "v1": "10343/418600",
+      "gap": "817/48600",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "14/225"
+    }
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/26",
+      "rho": "1/1000",
+      "rbar": "1/200",
+      "h1min": "155/468",
+      "v0": "1/50",
+      "v1": "389/15500",
+      "gap": "131/7800",
+      "tbar": "27/11",
+      "Cbar": "790/193",
+      "kbar": "155/76",
+      "budget_increments": [
+        "79/46800",
+        "1/936",
+        "1/300"
+      ],
+      "c": [
+        "369/520",
+        "73/180",
+        "7/26",
+        "7/78"
+      ],
+      "H": [
+        "609/6760",
+        "329/3042",
+        "83/1170",
+        "5719/243360"
+      ],
+      "positive7": "20389/327600"
+    }
+  },
+  "cap_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/63180",
+      "1/63180",
+      "47/1263600",
+      "1/63180",
+      "0",
+      "0",
+      "0",
+      "1/23400",
+      "0",
+      "0",
+      "0",
+      "0",
+      "25189/583947000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "25189/583947000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "25189/583947000",
+      "0"
+    ]
+  },
+  "factorial_head_increment": {
+    "kind": "inline",
+    "value": "36493/147841200"
+  },
+  "factorial_difference_digest": {
+    "kind": "inline",
+    "value": "2187a8e7ee64c8fe1e920b93e2c37a2845e3f1a619200a0aa0d1daa52cd1714f"
+  },
+  "factorial_layouts": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "group_budget_increments": {
+    "kind": "inline",
+    "value": [
+      "83/1263600",
+      "1/25272",
+      "1/7800"
+    ]
+  },
+  "old_scores": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "26/27",
+      "26/27",
+      "26/27",
+      "26/27"
+    ]
+  },
+  "new_scores": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "25/26",
+      "25/26",
+      "25/26",
+      "25/26"
+    ]
+  },
+  "joint_mean_factorial_difference_digests": {
+    "kind": "inline",
+    "value": [
+      "a514d50b8ed681664e065c1f79d1d1925ec0fd632131b66e99ea4ed7090c20b1",
+      "3f6c3865036cb3cd3c5cfd87471af167c026212a4fa6cb4ad6e0e49764b531d6",
+      "3f6c3865036cb3cd3c5cfd87471af167c026212a4fa6cb4ad6e0e49764b531d6"
+    ]
+  },
+  "complete_pair_upper": {
+    "kind": "inline",
+    "value": "561323/778752"
+  },
+  "finite_branch_transport_checks": {
+    "kind": "inline",
+    "value": 3120
+  },
+  "reused_original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "new_original_head_evaluations": {
+    "kind": "inline",
+    "value": 0
+  }
+}

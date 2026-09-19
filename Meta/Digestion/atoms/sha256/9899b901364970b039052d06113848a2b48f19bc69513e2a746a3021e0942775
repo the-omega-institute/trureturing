@@ -1,0 +1,136 @@
+**定理 95.2（局部化与此剩余类塔的逆极限不交换）。** 定义 95.1 的各 $R_n$ 均有限，各约化态射均满射。存在由投影与局部化诱导的规范含幺环同态
+$$
+\Theta:L_p(R)\longrightarrow\varprojlim_{n\ge1}L_p(R_n).
+$$
+在规范环同构
+$$
+R\cong\mathbb Z_p,\qquad
+L_p(R)\cong\mathbb Z_p[1/p]\cong\mathbb Q_p,
+\qquad
+\varprojlim_{n\ge1}L_p(R_n)\cong0
+$$
+下，$\Theta$ 就是唯一的含幺环同态 $\mathbb Q_p\to0$。因此 $\Theta$ 满射，核为整个源环，但不单射，也不是环同构。与此同时，
+$$
+p_n^n=0\quad(n\ge1),\qquad
+p_R^m\ne0\quad(m\ge0).
+$$
+也就是说，各有限层中的 $p_n$ 都幂零，而极限中的 $p_R$ 没有任何零幂。
+
+**证明。** 自然约化保持 $0,1$、加法、乘法与负元，所以相容条件在这些逐坐标运算下封闭，$R$ 是乘积环的含幺子环，各 $\pi_n$ 是含幺环同态。$R_n$ 恰有 $p^n$ 个元素；给定 $[a]_{p^n}$，同一整数的类 $[a]_{p^{n+1}}$ 是其原像，故约化满射。相邻约化的复合给出任意 $1\le m\le n$ 的约化 $\rho_{n,m}$，并有
+$$
+\rho_{n,m}\circ\pi_n=\pi_m,
+\qquad
+\rho_{n,m}(p_n)=p_m.
+$$
+
+先将 $R$ 识别为通常的 $p$-进整数环。沿用 [定理 45.8](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的素幂剩余类模型，记标准约化为
+$$
+r_n:\mathbb Z_p\longrightarrow R_n.
+$$
+这些约化相容，因而给出含幺环同态
+$$
+\iota:\mathbb Z_p\longrightarrow R,\qquad
+\iota(z)=(r_n(z))_{n\ge1}.
+$$
+现有的环同态提升性质见 [`PadicInt.toZModPow`、`PadicInt.lift`、`PadicInt.lift_spec`、`PadicInt.lift_unique`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/RingHoms.lean)。其指标包含 $n=0$；为应用它，补入单元素环 $R_0=\mathbb Z/1\mathbb Z$ 及唯一投影 $\pi_0$。新增坐标唯一，不改变 $R$。相邻相容性已经通过复合给出全部 $m\le n$ 的相容性；涉及 $m=0$ 的等式因目标单元素而成立。因此该提升性质直接给出含幺环同态
+$$
+\psi:R\longrightarrow\mathbb Z_p,
+\qquad r_n\circ\psi=\pi_n\quad(n\ge0).
+$$
+对 $n\ge1$，
+$$
+\pi_n\circ\iota\circ\psi=r_n\circ\psi=\pi_n,
+$$
+逐坐标相等给出 $\iota\psi=\operatorname{id}_R$。另一方面，$\psi\iota$ 与 $\operatorname{id}_{\mathbb Z_p}$ 经每个 $r_n$ 后都等于 $r_n$；由同一提升的唯一性，
+$$
+\psi\iota=\operatorname{id}_{\mathbb Z_p}.
+$$
+故 $\iota$ 是环同构，并且 $\iota(p)=p_R$。
+
+每层都有 $p_n^n=[p^n]_{p^n}=0$。然而固定任意 $m\ge0$，在第 $m+1$ 个坐标，
+$$
+\pi_{m+1}(p_R^m)=[p^m]_{p^{m+1}}\ne0,
+$$
+因为 $0<p^m<p^{m+1}$，所以 $p^{m+1}$ 不整除 $p^m$。这也包括 $m=0$。因此 $p_R^m\ne0$ 对每个 $m\ge0$ 成立，有限层的幂零关系没有统一的幂次。
+
+现在计算有限层的局部化。记 $\ell_n=\lambda_{R_n}$。在 $L_p(R_n)$ 中，$\ell_n(p_n)$ 是单位，且
+$$
+\ell_n(p_n)^n=\ell_n(p_n^n)=0.
+$$
+以此单位的逆元的 $n$ 次幂相乘，得到 $1=0$，故
+$$
+L_p(R_n)\cong0\quad(n\ge1).
+$$
+这正是局部化的乘法集含零时成为零环的判据，见 [Stacks Project，Lemma 10.9.4，00CQ](https://stacks.math.columbia.edu/tag/00CQ) 与既有 [`IsLocalization.subsingleton`、`IsLocalization.subsingleton_iff`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Defs.lean)。这里消去的是局部化后的单位，没有在含零因子的 $R_n$ 内消去 $p_n$。每个局部化环只有一个元素，因而其相容坐标空间也只有一个元素：
+$$
+\varprojlim_{n\ge1}L_p(R_n)\cong0.
+$$
+
+再计算极限环的局部化。包含 $j:\mathbb Z_p\hookrightarrow\mathbb Q_p$ 把非零元素 $p$ 送到域中的单位，所以由局部化延拓性质得到含幺环同态
+$$
+\eta:\mathbb Z_p[1/p]\longrightarrow\mathbb Q_p,
+\qquad
+\eta(a/p^k)=j(a)p^{-k}.
+$$
+局部化中的每个元素都有 $a/p^k$ 的形式；这是倒置 $p$ 的幂这一分母集的分数表示，也由既有 [`IsLocalization.Away.surj`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean) 给出。若 $\eta(a/p^k)=0$，在域 $\mathbb Q_p$ 中乘以非零的 $p^k$，得到 $j(a)=0$。包含 $j$ 单射，所以 $a=0$，原分数为零。故 $\ker\eta=\{0\}$，$\eta$ 单射。
+
+为证满射，采用标准赋值归一化 $v_p(p)=1$，其中对非零 $x\in\mathbb Q_p$ 有 $v_p(x)\in\mathbb Z$，且 $x\in\mathbb Z_p$ 等价于 $v_p(x)\ge0$。这些赋值与范数关系见 [`Padic.valuation_p`、`Padic.valuation_mul`、`Padic.norm_le_one_iff_val_nonneg`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)。若 $x=0$，取分数 $0/1$。若 $x\ne0$，选自然数
+$$
+N\ge\max\{0,-v_p(x)\}.
+$$
+则
+$$
+v_p(xp^N)=v_p(x)+N\ge0,
+$$
+所以 $a=xp^N\in\mathbb Z_p$，并且
+$$
+x=\frac{a}{p^N}=\eta(a/p^N).
+$$
+因此仅用 $p$ 的幂就能清除每个 $p$-进数的分母；这一表示也见 [`PadicInt.isFractionRing`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicIntegers.lean) 的满射性构造。$\eta$ 遂为环同构。由 $\iota$ 保持 $p$，它与逆同构经局部化唯一延拓为互逆同态，故
+$$
+L_p(R)\cong\mathbb Z_p[1/p]\cong\mathbb Q_p\ne0.
+$$
+
+最后构造规范比较态射。记 $\lambda=\lambda_R$。复合 $\ell_n\pi_n$ 把 $p_R$ 送到单位 $\ell_n(p_n)$，故唯一延拓为
+$$
+\widetilde\pi_n:L_p(R)\longrightarrow L_p(R_n),
+\qquad
+\widetilde\pi_n\circ\lambda=\ell_n\circ\pi_n.
+$$
+同理，约化态射诱导含幺环同态
+$$
+\widetilde\rho_{n+1,n}:L_p(R_{n+1})\longrightarrow L_p(R_n),
+\qquad
+\widetilde\rho_{n+1,n}\circ\ell_{n+1}
+=\ell_n\circ\rho_{n+1,n}.
+$$
+这两种延拓采用同一局部化泛性质，亦对应既有 [`IsLocalization.Away.lift_comp`、`IsLocalization.Away.map`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Localization/Away/Basic.lean)。在 $R$ 上计算得
+$$
+\begin{aligned}
+\widetilde\rho_{n+1,n}\circ\widetilde\pi_{n+1}\circ\lambda
+&=\widetilde\rho_{n+1,n}\circ\ell_{n+1}\circ\pi_{n+1}\\
+&=\ell_n\circ\rho_{n+1,n}\circ\pi_{n+1}\\
+&=\ell_n\circ\pi_n
+=\widetilde\pi_n\circ\lambda.
+\end{aligned}
+$$
+延拓的唯一性于是给出
+$$
+\widetilde\rho_{n+1,n}\circ\widetilde\pi_{n+1}
+=\widetilde\pi_n.
+$$
+复合相邻约化得到任意 $m\le n$ 的局部化约化与相容等式。
+
+把 [定理 5.4](https://github.com/the-omega-institute/trureturing/blob/d9f4d156fa1046453fdc253cd55c8b4b6a4be012/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的正向构造用于常值源系统 $L_p(R)$、恒等源过渡、目标系统 $(L_p(R_n),\widetilde\rho_{n+1,n})$ 及阶段映射 $\widetilde\pi_n$。常值源系统的相容坐标列全部为常值列，其逆极限经任一坐标投影与 $L_p(R)$ 环同构。前述相容等式正是该构造的阶段自然性条件，故得到
+$$
+\Theta(z)=(\widetilde\pi_n(z))_{n\ge1}.
+$$
+每个 $\widetilde\pi_n$ 都是含幺环同态，目标采用逐坐标运算，所以 $\Theta$ 保持 $0,1$、加法与乘法，也是含幺环同态。其分数坐标公式为
+$$
+\Theta(a/p_R^k)
+=\left(\frac{\pi_n(a)}{p_n^k}\right)_{n\ge1},
+$$
+右端各分数只在 $L_p(R_n)$ 中解释。若另一个含幺环同态在与 $\lambda$ 复合后具有相同的第 $n$ 个坐标 $\ell_n\pi_n$，则局部化延拓唯一性使其每个坐标都等于 $\widetilde\pi_n$，故它等于 $\Theta$。这确定了比较态射的规范性。
+
+在已建立的环同构下，源为 $\mathbb Q_p$，目标为零环，因而 $\Theta$ 是唯一映射 $\mathbb Q_p\to0$。该映射保持单位，因为目标中的 $1=0$。目标只有一个元素，故它满射；所有源元素都映为零，故核为整个 $\mathbb Q_p$。源中 $0\ne1$，所以它不单射，也不能是同构。反向不存在含幺环同态 $0\to\mathbb Q_p$，因为这样的同态会将零环中相等的 $0,1$ 分别送到域中不同的 $0,1$。若排除零环，有限层所需的局部化便不在所选范畴中，不能保留同一个比较图。证毕。
+

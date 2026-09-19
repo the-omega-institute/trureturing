@@ -1,0 +1,794 @@
+[
+  {
+    "original_index": 66,
+    "modulus": 6328125,
+    "residue": 2781250,
+    "private_integer": 659210545334815673875000,
+    "coordinate_witness": [
+      34,
+      46875,
+      3
+    ],
+    "progression_parameter": 104171542966489390
+  },
+  {
+    "original_index": 67,
+    "modulus": 31640625,
+    "residue": 5312500,
+    "private_integer": 231882940845197998281250,
+    "coordinate_witness": [
+      34,
+      234375,
+      3
+    ],
+    "progression_parameter": 7328646031650702
+  },
+  {
+    "original_index": 68,
+    "modulus": 158203125,
+    "residue": 81250000,
+    "private_integer": 1686957570441367921093750,
+    "coordinate_witness": [
+      34,
+      1171875,
+      3
+    ],
+    "progression_parameter": 10663237976123214
+  },
+  {
+    "original_index": 69,
+    "modulus": 791015625,
+    "residue": 777343750,
+    "private_integer": 1778905414333700933593750,
+    "coordinate_witness": [
+      34,
+      5859375,
+      3
+    ],
+    "progression_parameter": 2248887832441616
+  },
+  {
+    "original_index": 70,
+    "modulus": 3955078125,
+    "residue": 1884765625,
+    "private_integer": 442788307773236845703125,
+    "coordinate_witness": [
+      34,
+      29296875,
+      3
+    ],
+    "progression_parameter": 111954377076492
+  },
+  {
+    "original_index": 71,
+    "modulus": 19775390625,
+    "residue": 11376953125,
+    "private_integer": 945628079059433007812500,
+    "coordinate_witness": [
+      34,
+      146484375,
+      3
+    ],
+    "progression_parameter": 47818427306511
+  },
+  {
+    "original_index": 72,
+    "modulus": 1215,
+    "residue": 88,
+    "private_integer": 244260195983858154296878,
+    "coordinate_witness": [
+      88,
+      3,
+      3
+    ],
+    "progression_parameter": 201037198340623995306
+  },
+  {
+    "original_index": 73,
+    "modulus": 6075,
+    "residue": 3490,
+    "private_integer": 346409888542525878906265,
+    "coordinate_witness": [
+      88,
+      15,
+      3
+    ],
+    "progression_parameter": 57022203875312901877
+  },
+  {
+    "original_index": 74,
+    "modulus": 30375,
+    "residue": 26575,
+    "private_integer": 857158351335864501953200,
+    "coordinate_witness": [
+      88,
+      75,
+      3
+    ],
+    "progression_parameter": 28219204982250683191
+  },
+  {
+    "original_index": 75,
+    "modulus": 151875,
+    "residue": 111625,
+    "private_integer": 1615044339280428466797250,
+    "coordinate_witness": [
+      88,
+      375,
+      3
+    ],
+    "progression_parameter": 10634036801846442579
+  },
+  {
+    "original_index": 76,
+    "modulus": 759375,
+    "residue": 233125,
+    "private_integer": 16905300936860839845625,
+    "coordinate_witness": [
+      88,
+      1875,
+      3
+    ],
+    "progression_parameter": 22262124690516332
+  },
+  {
+    "original_index": 77,
+    "modulus": 3796875,
+    "residue": 3118750,
+    "private_integer": 1005491739329668457040625,
+    "coordinate_witness": [
+      88,
+      9375,
+      3
+    ],
+    "progression_parameter": 264820869617690457
+  },
+  {
+    "original_index": 78,
+    "modulus": 18984375,
+    "residue": 17546875,
+    "private_integer": 560854953227319091843750,
+    "coordinate_witness": [
+      88,
+      46875,
+      3
+    ],
+    "progression_parameter": 29542976960122157
+  },
+  {
+    "original_index": 79,
+    "modulus": 94921875,
+    "residue": 89687500,
+    "private_integer": 133527348737701416250000,
+    "coordinate_witness": [
+      88,
+      234375,
+      3
+    ],
+    "progression_parameter": 1406707871475372
+  },
+  {
+    "original_index": 80,
+    "modulus": 474609375,
+    "residue": 450390625,
+    "private_integer": 1588601978333871339062500,
+    "coordinate_witness": [
+      88,
+      1171875,
+      3
+    ],
+    "progression_parameter": 3347177830892765
+  },
+  {
+    "original_index": 81,
+    "modulus": 2373046875,
+    "residue": 1304687500,
+    "private_integer": 1680549822226204351562500,
+    "coordinate_witness": [
+      88,
+      5859375,
+      3
+    ],
+    "progression_parameter": 708182311917544
+  },
+  {
+    "original_index": 82,
+    "modulus": 11865234375,
+    "residue": 3203125000,
+    "private_integer": 344432715665740263671875,
+    "coordinate_witness": [
+      88,
+      29296875,
+      3
+    ],
+    "progression_parameter": 29028732579565
+  },
+  {
+    "original_index": 83,
+    "modulus": 59326171875,
+    "residue": 24560546875,
+    "private_integer": 847272486951936425781250,
+    "coordinate_witness": [
+      88,
+      146484375,
+      3
+    ],
+    "progression_parameter": 14281597146317
+  },
+  {
+    "original_index": 84,
+    "modulus": 3645,
+    "residue": 1708,
+    "private_integer": 1745049745683497558593753,
+    "coordinate_witness": [
+      250,
+      3,
+      3
+    ],
+    "progression_parameter": 478751644906309343921
+  },
+  {
+    "original_index": 85,
+    "modulus": 18225,
+    "residue": 7540,
+    "private_integer": 51343112220036132812515,
+    "coordinate_witness": [
+      250,
+      15,
+      3
+    ],
+    "progression_parameter": 2817180368726262431
+  },
+  {
+    "original_index": 86,
+    "modulus": 91125,
+    "residue": 36700,
+    "private_integer": 562091575013374755859450,
+    "coordinate_witness": [
+      250,
+      75,
+      3
+    ],
+    "progression_parameter": 6168357476141286758
+  },
+  {
+    "original_index": 87,
+    "modulus": 455625,
+    "residue": 364750,
+    "private_integer": 1319977562957938720703500,
+    "coordinate_witness": [
+      250,
+      375,
+      3
+    ],
+    "progression_parameter": 2897070097027025998
+  },
+  {
+    "original_index": 88,
+    "modulus": 2278125,
+    "residue": 2005000,
+    "private_integer": 1517694850636500244142500,
+    "coordinate_witness": [
+      250,
+      1875,
+      3
+    ],
+    "progression_parameter": 666203500965267596
+  },
+  {
+    "original_index": 89,
+    "modulus": 11390625,
+    "residue": 5650000,
+    "private_integer": 710424963007178710946875,
+    "coordinate_witness": [
+      250,
+      9375,
+      3
+    ],
+    "progression_parameter": 62369269729025291
+  },
+  {
+    "original_index": 90,
+    "modulus": 56953125,
+    "residue": 23875000,
+    "private_integer": 265788176904829345750000,
+    "coordinate_witness": [
+      250,
+      46875,
+      3
+    ],
+    "progression_parameter": 4666788291333080
+  },
+  {
+    "original_index": 91,
+    "modulus": 284765625,
+    "residue": 58046875,
+    "private_integer": 1634316898437340820546875,
+    "coordinate_witness": [
+      250,
+      234375,
+      3
+    ],
+    "progression_parameter": 5739164965705888
+  },
+  {
+    "original_index": 92,
+    "modulus": 1423828125,
+    "residue": 1083203125,
+    "private_integer": 1293535202011381592968750,
+    "coordinate_witness": [
+      250,
+      1171875,
+      3
+    ],
+    "progression_parameter": 908491115815949
+  },
+  {
+    "original_index": 93,
+    "modulus": 7119140625,
+    "residue": 513671875,
+    "private_integer": 1385483045903714605468750,
+    "coordinate_witness": [
+      250,
+      5859375,
+      3
+    ],
+    "progression_parameter": 194613805076187
+  },
+  {
+    "original_index": 94,
+    "modulus": 35595703125,
+    "residue": 19023437500,
+    "private_integer": 49365939343250517578125,
+    "coordinate_witness": [
+      250,
+      29296875,
+      3
+    ],
+    "progression_parameter": 1386851080589
+  },
+  {
+    "original_index": 95,
+    "modulus": 177978515625,
+    "residue": 4785156250,
+    "private_integer": 552205710629446679687500,
+    "coordinate_witness": [
+      250,
+      146484375,
+      3
+    ],
+    "progression_parameter": 3102653759586
+  },
+  {
+    "original_index": 96,
+    "modulus": 10935,
+    "residue": 2923,
+    "private_integer": 859849416716028320312503,
+    "coordinate_witness": [
+      736,
+      3,
+      3
+    ],
+    "progression_parameter": 78632777020212923668
+  },
+  {
+    "original_index": 97,
+    "modulus": 54675,
+    "residue": 37915,
+    "private_integer": 961999109274696044921890,
+    "coordinate_witness": [
+      736,
+      15,
+      3
+    ],
+    "progression_parameter": 17594862538174596157
+  },
+  {
+    "original_index": 98,
+    "modulus": 273375,
+    "residue": 158200,
+    "private_integer": 1472747572068034667968825,
+    "coordinate_witness": [
+      736,
+      75,
+      3
+    ],
+    "progression_parameter": 5387279641766930655
+  },
+  {
+    "original_index": 99,
+    "modulus": 1366875,
+    "residue": 212875,
+    "private_integer": 434777233990469482422250,
+    "coordinate_witness": [
+      736,
+      375,
+      3
+    ],
+    "progression_parameter": 318081195420553805
+  },
+  {
+    "original_index": 100,
+    "modulus": 6834375,
+    "residue": 486250,
+    "private_integer": 632494521669031005861250,
+    "coordinate_witness": [
+      736,
+      1875,
+      3
+    ],
+    "progression_parameter": 92546066270731560
+  },
+  {
+    "original_index": 101,
+    "modulus": 34171875,
+    "residue": 1853125,
+    "private_integer": 1621080960061838623056250,
+    "coordinate_witness": [
+      736,
+      9375,
+      3
+    ],
+    "progression_parameter": 47439040440767111
+  },
+  {
+    "original_index": 102,
+    "modulus": 170859375,
+    "residue": 42859375,
+    "private_integer": 1176444173959489257859375,
+    "coordinate_witness": [
+      736,
+      46875,
+      3
+    ],
+    "progression_parameter": 6885452869996096
+  },
+  {
+    "original_index": 103,
+    "modulus": 854296875,
+    "residue": 247890625,
+    "private_integer": 749116569469871582265625,
+    "coordinate_witness": [
+      736,
+      234375,
+      3
+    ],
+    "progression_parameter": 876880849493768
+  },
+  {
+    "original_index": 104,
+    "modulus": 4271484375,
+    "residue": 2981640625,
+    "private_integer": 408334873043912354687500,
+    "coordinate_witness": [
+      736,
+      1171875,
+      3
+    ],
+    "progression_parameter": 95595544123677
+  },
+  {
+    "original_index": 105,
+    "modulus": 21357421875,
+    "residue": 12378906250,
+    "private_integer": 500282716936245367187500,
+    "coordinate_witness": [
+      736,
+      5859375,
+      3
+    ],
+    "progression_parameter": 23424302795734
+  },
+  {
+    "original_index": 106,
+    "modulus": 106787109375,
+    "residue": 102080078125,
+    "private_integer": 960021936397910429687500,
+    "coordinate_witness": [
+      736,
+      29296875,
+      3
+    ],
+    "progression_parameter": 8990054530145
+  },
+  {
+    "original_index": 107,
+    "modulus": 533935546875,
+    "residue": 123437500000,
+    "private_integer": 1462861707684106591796875,
+    "coordinate_witness": [
+      736,
+      146484375,
+      3
+    ],
+    "progression_parameter": 2739772087185
+  },
+  {
+    "original_index": 108,
+    "modulus": 32805,
+    "residue": 28438,
+    "private_integer": 104755835749755859378,
+    "coordinate_witness": [
+      2194,
+      3,
+      3
+    ],
+    "progression_parameter": 3193288698361708
+  },
+  {
+    "original_index": 109,
+    "modulus": 164025,
+    "residue": 74365,
+    "private_integer": 102254448394417480468765,
+    "coordinate_witness": [
+      2194,
+      15,
+      3
+    ],
+    "progression_parameter": 623407702450342816
+  },
+  {
+    "original_index": 110,
+    "modulus": 820125,
+    "residue": 796075,
+    "private_integer": 613002911187756103515700,
+    "coordinate_witness": [
+      2194,
+      75,
+      3
+    ],
+    "progression_parameter": 747450585200739037
+  },
+  {
+    "original_index": 111,
+    "modulus": 4100625,
+    "residue": 1124125,
+    "private_integer": 1370888899132320068359750,
+    "coordinate_witness": [
+      2194,
+      375,
+      3
+    ],
+    "progression_parameter": 334312183906677657
+  },
+  {
+    "original_index": 112,
+    "modulus": 20503125,
+    "residue": 2764375,
+    "private_integer": 1568606186810881591798750,
+    "coordinate_witness": [
+      2194,
+      1875,
+      3
+    ],
+    "progression_parameter": 76505712510209131
+  },
+  {
+    "original_index": 113,
+    "modulus": 102515625,
+    "residue": 92978125,
+    "private_integer": 761336299181560058603125,
+    "coordinate_witness": [
+      2194,
+      9375,
+      3
+    ],
+    "progression_parameter": 7426539117149800
+  },
+  {
+    "original_index": 114,
+    "modulus": 512578125,
+    "residue": 441531250,
+    "private_integer": 316699513079210693406250,
+    "coordinate_witness": [
+      2194,
+      46875,
+      3
+    ],
+    "progression_parameter": 617856084044184
+  },
+  {
+    "original_index": 115,
+    "modulus": 2562890625,
+    "residue": 1671718750,
+    "private_integer": 1685228234611722168203125,
+    "coordinate_witness": [
+      2194,
+      234375,
+      3
+    ],
+    "progression_parameter": 657549806524311
+  },
+  {
+    "original_index": 116,
+    "modulus": 12814453125,
+    "residue": 133984375,
+    "private_integer": 1344446538185762940625000,
+    "coordinate_witness": [
+      2194,
+      1171875,
+      3
+    ],
+    "progression_parameter": 104916419379837
+  },
+  {
+    "original_index": 117,
+    "modulus": 64072265625,
+    "residue": 5259765625,
+    "private_integer": 1436394382078095953125000,
+    "coordinate_witness": [
+      2194,
+      5859375,
+      3
+    ],
+    "progression_parameter": 22418348532967
+  },
+  {
+    "original_index": 118,
+    "modulus": 320361328125,
+    "residue": 30888671875,
+    "private_integer": 100277275517631865234375,
+    "coordinate_witness": [
+      2194,
+      29296875,
+      3
+    ],
+    "progression_parameter": 313013047188
+  },
+  {
+    "original_index": 119,
+    "modulus": 1601806640625,
+    "residue": 479394531250,
+    "private_integer": 603117046803828027343750,
+    "coordinate_witness": [
+      2194,
+      146484375,
+      3
+    ],
+    "progression_parameter": 376523003156
+  },
+  {
+    "original_index": 120,
+    "modulus": 98415,
+    "residue": 6568,
+    "private_integer": 1012583425239172363281253,
+    "coordinate_witness": [
+      6568,
+      3,
+      3
+    ],
+    "progression_parameter": 10288913531871893139
+  },
+  {
+    "original_index": 121,
+    "modulus": 492075,
+    "residue": 183715,
+    "private_integer": 1114733117797840087890640,
+    "coordinate_witness": [
+      6568,
+      15,
+      3
+    ],
+    "progression_parameter": 2265372387944602119
+  },
+  {
+    "original_index": 122,
+    "modulus": 2460375,
+    "residue": 1069450,
+    "private_integer": 1625481580591178710937575,
+    "coordinate_witness": [
+      6568,
+      75,
+      3
+    ],
+    "progression_parameter": 660664159159143915
+  },
+  {
+    "original_index": 123,
+    "modulus": 12301875,
+    "residue": 7958500,
+    "private_integer": 587511242513613525391000,
+    "coordinate_witness": [
+      6568,
+      375,
+      3
+    ],
+    "progression_parameter": 47757861505958524
+  },
+  {
+    "original_index": 124,
+    "modulus": 61509375,
+    "residue": 30101875,
+    "private_integer": 785228530192175048830000,
+    "coordinate_witness": [
+      6568,
+      1875,
+      3
+    ],
+    "progression_parameter": 12765997544149571
+  },
+  {
+    "original_index": 125,
+    "modulus": 307546875,
+    "residue": 263837500,
+    "private_integer": 1773814968584982666025000,
+    "coordinate_witness": [
+      6568,
+      9375,
+      3
+    ],
+    "progression_parameter": 5767624751787780
+  },
+  {
+    "original_index": 126,
+    "modulus": 1537734375,
+    "residue": 1124968750,
+    "private_integer": 1329178182482633300828125,
+    "coordinate_witness": [
+      6568,
+      46875,
+      3
+    ],
+    "progression_parameter": 864374370562297
+  },
+  {
+    "original_index": 127,
+    "modulus": 7688671875,
+    "residue": 817421875,
+    "private_integer": 901850577993015625234375,
+    "coordinate_witness": [
+      6568,
+      234375,
+      3
+    ],
+    "progression_parameter": 117296015834076
+  },
+  {
+    "original_index": 128,
+    "modulus": 38443359375,
+    "residue": 30034375000,
+    "private_integer": 561068881567056397656250,
+    "coordinate_witness": [
+      6568,
+      1171875,
+      3
+    ],
+    "progression_parameter": 14594689191806
+  },
+  {
+    "original_index": 129,
+    "modulus": 192216796875,
+    "residue": 176119140625,
+    "private_integer": 653016725459389410156250,
+    "coordinate_witness": [
+      6568,
+      5859375,
+      3
+    ],
+    "progression_parameter": 3397292724027
+  },
+  {
+    "original_index": 130,
+    "modulus": 961083984375,
+    "residue": 137675781250,
+    "private_integer": 1112755944921054472656250,
+    "coordinate_witness": [
+      6568,
+      29296875,
+      3
+    ],
+    "progression_parameter": 1157813430472
+  },
+  {
+    "original_index": 131,
+    "modulus": 4805419921875,
+    "residue": 4750878906250,
+    "private_integer": 1615595716207250634765625,
+    "coordinate_witness": [
+      6568,
+      146484375,
+      3
+    ],
+    "progression_parameter": 336202817333
+  }
+]

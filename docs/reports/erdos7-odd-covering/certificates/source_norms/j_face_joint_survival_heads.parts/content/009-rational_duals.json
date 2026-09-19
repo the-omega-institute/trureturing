@@ -1,0 +1,77 @@
+{
+  "0ba11ebdc214e11331ba07e3b902eb53dde60aaa0134ca4fd3ddc4c4124c2ce3": {
+    "path": "content/009-rational_duals/000-0ba11ebdc214e11331ba07e3b902eb53dde60aaa0134ca4fd3ddc4c4124c2ce3.json",
+    "sha256": "52f02e548085675c9c642c0a68a201c688a853626370a40957285942beb87920",
+    "kind": "value"
+  },
+  "13949db7c08c4c62174ae18d44c301215214bb6d765ac1731931a1d78f218bad": {
+    "path": "content/009-rational_duals/001-13949db7c08c4c62174ae18d44c301215214bb6d765ac1731931a1d78f218bad.json",
+    "sha256": "b7eb17560495969cff435c19760ba6232db8721e235094817850a9fff853e56d",
+    "kind": "value"
+  },
+  "2ed3eb3764bc1bc7820e35c4c9797fb55b23bd29e738fba5a241903f31afa4c6": {
+    "path": "content/009-rational_duals/002-2ed3eb3764bc1bc7820e35c4c9797fb55b23bd29e738fba5a241903f31afa4c6.json",
+    "sha256": "133ab53295ec44daa8d25c64346cbc6af3307115c591b837b40f4a44457801dd",
+    "kind": "value"
+  },
+  "2fe6d5d1eb15c70d2fa94a8c40b712c7ca7532675bd4634233318b7b08d0a099": {
+    "path": "content/009-rational_duals/003-2fe6d5d1eb15c70d2fa94a8c40b712c7ca7532675bd4634233318b7b08d0a099.json",
+    "sha256": "a063352ffff597ec2dfb4d99341bdbf12ba884dd6e46c4134ac2a316870531d9",
+    "kind": "value"
+  },
+  "4a699e57a5fbfaea050e43a2e8b506bcafd7d32178e8b08b136b1b9178969431": {
+    "path": "content/009-rational_duals/004-4a699e57a5fbfaea050e43a2e8b506bcafd7d32178e8b08b136b1b9178969431.json",
+    "sha256": "a4f9484c8a48de9907c1bfd4dfb2a2c1ca99b380114f1df88143c8ff9100ea1a",
+    "kind": "value"
+  },
+  "5086c1c8fc4f097895b5349a8718f9ef666bbb4327cb26366251a85adc3c499a": {
+    "path": "content/009-rational_duals/005-5086c1c8fc4f097895b5349a8718f9ef666bbb4327cb26366251a85adc3c499a.json",
+    "sha256": "d605fb6607c03bdcfb8d45c16faba217142a1e7c1d51925a230b7637ca3c5296",
+    "kind": "value"
+  },
+  "50d84f600646da98bf2e4da6f05a4b9f054c2ff253db4c29eab5e0a40b77f845": {
+    "path": "content/009-rational_duals/006-50d84f600646da98bf2e4da6f05a4b9f054c2ff253db4c29eab5e0a40b77f845.json",
+    "sha256": "7383e15ff74bda02eb2a5f45b0ff0e7ae81793944d353caa6ca0a9586517e744",
+    "kind": "value"
+  },
+  "65195296593bb33da221e305f676dcfac95a9e0d968a91209ccd4cf91ea6d407": {
+    "path": "content/009-rational_duals/007-65195296593bb33da221e305f676dcfac95a9e0d968a91209ccd4cf91ea6d407.json",
+    "sha256": "e75cddc1d8d9becd59b79e43b377f92f005e7387cd5593a11351bda2fe7f1f8c",
+    "kind": "value"
+  },
+  "6c33e70dcb4ec5ecc98c03577ff231a364ce203a2d4df32f5e3b187568fc5fe9": {
+    "path": "content/009-rational_duals/008-6c33e70dcb4ec5ecc98c03577ff231a364ce203a2d4df32f5e3b187568fc5fe9.json",
+    "sha256": "8cce175fdafbe1c37f87f33c99764a65a1e1028ef90fbfed355b6e5dc5e625cc",
+    "kind": "value"
+  },
+  "84be0ef112b7bd8ae1324c839ae8012160aea08e375a6a254b854e6ad281af94": {
+    "path": "content/009-rational_duals/009-84be0ef112b7bd8ae1324c839ae8012160aea08e375a6a254b854e6ad281af94.json",
+    "sha256": "dff628abf1b91e9da9f61e2c70ff5e0a67e387b7b002e1c7b18e7d6f40851bec",
+    "kind": "value"
+  },
+  "909424767d6cd2e3fb4439051f58e7ab3e03fab856e598958f1c9161fce9bcd5": {
+    "path": "content/009-rational_duals/010-909424767d6cd2e3fb4439051f58e7ab3e03fab856e598958f1c9161fce9bcd5.json",
+    "sha256": "44085198e6ae05d6da7c0430ecb40451494ab6fcd697aa441ec3cb22fe9950b0",
+    "kind": "value"
+  },
+  "b3dbee98d9b5f2a2f52f6b7f5f3ab1e1fcf6f1e13ec14d2467a4504f1f1d53d7": {
+    "path": "content/009-rational_duals/011-b3dbee98d9b5f2a2f52f6b7f5f3ab1e1fcf6f1e13ec14d2467a4504f1f1d53d7.json",
+    "sha256": "4464513b0473cd8d08ec60407e445d51ebc762ab8e94128a3f31de86bdac885c",
+    "kind": "value"
+  },
+  "bd668463368a84768c715d296c57718a8dbc5088f265870d7ea234a7c84eaa8a": {
+    "path": "content/009-rational_duals/012-bd668463368a84768c715d296c57718a8dbc5088f265870d7ea234a7c84eaa8a.json",
+    "sha256": "90da9631f055d05c6136545b3451a4dea856be4cfe3685839668f256ad920bd7",
+    "kind": "value"
+  },
+  "c436a7eaede5463fb54f575f1c0b909e35d43362995851fdfb5fbbb5c0317096": {
+    "path": "content/009-rational_duals/013-c436a7eaede5463fb54f575f1c0b909e35d43362995851fdfb5fbbb5c0317096.json",
+    "sha256": "54b23c40b12b66790abfd1d75f2001f0185e4af69d04a0d93087b41e5e855a19",
+    "kind": "value"
+  },
+  "ccd947ac5745482a7f7434067089431c58f019b50563ddbc3ae152f211ada1e0": {
+    "path": "content/009-rational_duals/014-ccd947ac5745482a7f7434067089431c58f019b50563ddbc3ae152f211ada1e0.json",
+    "sha256": "c0ae0969e2039f7a597344cfaad483cb777a44aaa0bdc4e6c1d952ddaef9486e",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "variables": 12941,
+  "inequalities": 30479,
+  "equalities": 23,
+  "rows_sha256": "0f356c4d9f79a67d9e6d85919e06b0645973c17b080912d596541b90b13ee79d",
+  "actual375_predecessor": {
+    "variables": 12941,
+    "inequalities": 30454,
+    "equalities": 23,
+    "rows_sha256": "3a0c4f4ec91c231a11be68e43fef7a9a235dfcb136271d3ecd71fafdb86827a5",
+    "changed_inequality_matrix_rows": [
+      17,
+      22
+    ],
+    "changed_inequality_rhs_rows": [
+      14,
+      17,
+      22
+    ],
+    "changed_original_equality_rhs_rows": [
+      4
+    ],
+    "added_fixed_H_equalities": [
+      20,
+      21,
+      22
+    ],
+    "old_model": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0",
+      "preserved_original_rows": 11211,
+      "preserved_original_equalities": 19,
+      "new_raw_intersection_variables": 3200,
+      "new_survivor_intersection_variables": 3200,
+      "independent_profile_coordinates": 10
+    }
+  },
+  "appended_necessary_rows": [
+    {
+      "label": "H-own-25",
+      "row": 30454,
+      "rhs": "0"
+    },
+    {
+      "label": "H-own-75",
+      "row": 30455,
+      "rhs": "0"
+    },
+    {
+      "label": "H-own-125",
+      "row": 30456,
+      "rhs": "0"
+    },
+    {
+      "label": "H-own-225",
+      "row": 30457,
+      "rhs": "0"
+    },
+    {
+      "label": "H-own-375",
+      "row": 30458,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-0-0",
+      "row": 30459,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-0-1",
+      "row": 30460,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-0-2",
+      "row": 30461,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-0-4",
+      "row": 30462,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-1-0",
+      "row": 30463,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-1-1",
+      "row": 30464,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-1-2",
+      "row": 30465,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-1-4",
+      "row": 30466,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-2-0",
+      "row": 30467,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-2-1",
+      "row": 30468,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-2-2",
+      "row": 30469,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-2-4",
+      "row": 30470,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-3-0",
+      "row": 30471,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-3-1",
+      "row": 30472,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-3-2",
+      "row": 30473,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-3-4",
+      "row": 30474,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-4-0",
+      "row": 30475,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-4-1",
+      "row": 30476,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-4-2",
+      "row": 30477,
+      "rhs": "0"
+    },
+    {
+      "label": "E5-supported-Q-4-4",
+      "row": 30478,
+      "rhs": "0"
+    }
+  ],
+  "own_H_descendant_coefficient": "2/27",
+  "strict_forbidden_non_Q_coefficients": {
+    "pure5": [
+      "0",
+      "1/6",
+      "7/18",
+      "25/54"
+    ],
+    "root1_alpha5": [
+      "0",
+      "0",
+      "2/9",
+      "8/27"
+    ],
+    "wrong_root_alpha5": "1/6"
+  }
+}

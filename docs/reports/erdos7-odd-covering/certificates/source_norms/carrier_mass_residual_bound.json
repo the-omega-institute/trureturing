@@ -1,0 +1,646 @@
+{
+  "schema": "erdos7-carrier-mass-residual-bound-v1",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/global_control_faces.py": "649e9c395ed07896ccc93064c8634e402e1a277b2a96c06a3688e8b566f85c93",
+    "certificates/source_norms/global_control_faces.json": "d99736841c20977095c5c397c5949dec20960a4ee1afd72a3f926f2e773b8817",
+    "frontier/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/joint_survival_carriers.json": "9b8b6f5bfabed669cea810b759d2d02f19e47cce1999851dcd031cfa77115a72"
+  },
+  "hypotheses": [
+    "effective actual source",
+    "qK >= 1-sigma",
+    "0 <= sigma < 1/2",
+    "rho = S-S0 >= 0",
+    "0 < E <= S"
+  ],
+  "carriers": [
+    {
+      "carrier": [
+        -1,
+        -1
+      ],
+      "weights": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "carrier": [
+        -1,
+        0
+      ],
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        -1,
+        1
+      ]
+    },
+    {
+      "carrier": [
+        -1,
+        1
+      ],
+      "weights": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        -1,
+        0
+      ]
+    },
+    {
+      "carrier": [
+        -1,
+        2
+      ],
+      "weights": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "mirror": [
+        -1,
+        2
+      ]
+    },
+    {
+      "carrier": [
+        -1,
+        3
+      ],
+      "weights": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "mirror": [
+        -1,
+        3
+      ]
+    },
+    {
+      "carrier": [
+        -1,
+        4
+      ],
+      "weights": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "mirror": [
+        -1,
+        4
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        -1
+      ],
+      "weights": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        0,
+        -1
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        0
+      ],
+      "weights": [
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        0,
+        1
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        1
+      ],
+      "weights": [
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "mirror": [
+        0,
+        0
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        2
+      ],
+      "weights": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "mirror": [
+        0,
+        2
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        3
+      ],
+      "weights": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "mirror": [
+        0,
+        3
+      ]
+    },
+    {
+      "carrier": [
+        0,
+        4
+      ],
+      "weights": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "mirror": [
+        0,
+        4
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        -1
+      ],
+      "weights": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "mirror": [
+        1,
+        -1
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        0
+      ],
+      "weights": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "mirror": [
+        1,
+        1
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        1
+      ],
+      "weights": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "mirror": [
+        1,
+        0
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        2
+      ],
+      "weights": [
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "mirror": [
+        1,
+        2
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        3
+      ],
+      "weights": [
+        0,
+        0,
+        1,
+        2,
+        1
+      ],
+      "mirror": [
+        1,
+        3
+      ]
+    },
+    {
+      "carrier": [
+        1,
+        4
+      ],
+      "weights": [
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "mirror": [
+        1,
+        4
+      ]
+    }
+  ],
+  "affine_face_bases": [
+    {
+      "index": 398,
+      "selected_cell": 0,
+      "beta": [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      "n": [
+        "1/36",
+        "1/12",
+        "1/36",
+        "1/18",
+        "1/18"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        1
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "67/360",
+        "7/40",
+        "67/360",
+        "13/72",
+        "13/72",
+        "61/360",
+        "59/360",
+        "11/72",
+        "59/360",
+        "19/120",
+        "19/120",
+        "59/360",
+        "19/120",
+        "53/360",
+        "19/120",
+        "11/72",
+        "11/72"
+      ]
+    },
+    {
+      "index": 410,
+      "selected_cell": 0,
+      "beta": [
+        "0",
+        "0",
+        "0",
+        "1/4",
+        "0"
+      ],
+      "n": [
+        "1/36",
+        "1/12",
+        "1/18",
+        "1/36",
+        "1/18"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        1
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "67/360",
+        "7/40",
+        "13/72",
+        "67/360",
+        "13/72",
+        "61/360",
+        "59/360",
+        "11/72",
+        "19/120",
+        "59/360",
+        "19/120",
+        "59/360",
+        "19/120",
+        "53/360",
+        "11/72",
+        "19/120",
+        "11/72"
+      ]
+    },
+    {
+      "index": 422,
+      "selected_cell": 0,
+      "beta": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/4"
+      ],
+      "n": [
+        "1/36",
+        "1/12",
+        "1/18",
+        "1/18",
+        "1/36"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        1
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "67/360",
+        "7/40",
+        "13/72",
+        "13/72",
+        "67/360",
+        "61/360",
+        "59/360",
+        "11/72",
+        "19/120",
+        "19/120",
+        "59/360",
+        "59/360",
+        "19/120",
+        "53/360",
+        "11/72",
+        "11/72",
+        "19/120"
+      ]
+    },
+    {
+      "index": 616,
+      "selected_cell": 1,
+      "beta": [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      "n": [
+        "1/12",
+        "1/36",
+        "1/36",
+        "1/18",
+        "1/18"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        0
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "7/40",
+        "67/360",
+        "67/360",
+        "13/72",
+        "13/72",
+        "61/360",
+        "11/72",
+        "59/360",
+        "59/360",
+        "19/120",
+        "19/120",
+        "59/360",
+        "53/360",
+        "19/120",
+        "19/120",
+        "11/72",
+        "11/72"
+      ]
+    },
+    {
+      "index": 628,
+      "selected_cell": 1,
+      "beta": [
+        "0",
+        "0",
+        "0",
+        "1/4",
+        "0"
+      ],
+      "n": [
+        "1/12",
+        "1/36",
+        "1/18",
+        "1/36",
+        "1/18"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        0
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "7/40",
+        "67/360",
+        "13/72",
+        "67/360",
+        "13/72",
+        "61/360",
+        "11/72",
+        "59/360",
+        "19/120",
+        "59/360",
+        "19/120",
+        "59/360",
+        "53/360",
+        "19/120",
+        "11/72",
+        "19/120",
+        "11/72"
+      ]
+    },
+    {
+      "index": 640,
+      "selected_cell": 1,
+      "beta": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/4"
+      ],
+      "n": [
+        "1/12",
+        "1/36",
+        "1/18",
+        "1/18",
+        "1/36"
+      ],
+      "s": "1/4",
+      "R": "7/24",
+      "distinguished_carrier": [
+        1,
+        0
+      ],
+      "distinguished_mass": "2/9",
+      "all18_carrier_lower_masses": [
+        "23/120",
+        "7/40",
+        "67/360",
+        "13/72",
+        "13/72",
+        "67/360",
+        "61/360",
+        "11/72",
+        "59/360",
+        "19/120",
+        "19/120",
+        "59/360",
+        "59/360",
+        "53/360",
+        "19/120",
+        "11/72",
+        "11/72",
+        "19/120"
+      ]
+    }
+  ],
+  "face_basis_carrier_checks": 108,
+  "mass_projection_terms_before_division_by9": {
+    "width": "1",
+    "z_five_cells": "5/4",
+    "alpha_root_multiplicity": "3/2",
+    "beta": "1/2"
+  },
+  "late_projection_coefficient": "1/36",
+  "mass_L1_projection_coefficient": "1/2",
+  "complete_cap_lower_terms": [
+    {
+      "term": "max_d",
+      "intercept": "3/4",
+      "loss": "1/2",
+      "weight": "1/18"
+    },
+    {
+      "term": "sum_w",
+      "intercept": "9/2",
+      "loss": "0",
+      "weight": "1/36"
+    },
+    {
+      "term": "rootmax_w",
+      "intercept": "3",
+      "loss": "1/2",
+      "weight": "1/36"
+    },
+    {
+      "term": "max_w",
+      "intercept": "1",
+      "loss": "1/2",
+      "weight": "1/36"
+    },
+    {
+      "term": "late_tail",
+      "intercept": "1/72",
+      "loss": "0",
+      "weight": "1"
+    }
+  ],
+  "complete_cap_lower_constant": "7/24",
+  "complete_cap_lower_loss": "1/18",
+  "carrier_weight_loss": "2/45",
+  "S0_upper_constant": "53/360",
+  "S0_upper_sigma_coefficient": "5/9",
+  "E_upper_rho_coefficient": "1",
+  "scope": "Ordinary universal inequality on both whole K-face neighborhoods, with arbitrary beta mixtures and all18 carriers. The audit checks exact algebra and affine source bases; the continuum argument is in note106. No maximizing-carrier preservation, actual-family existence, global comparison improvement, unrestricted Erdos7 resolution or Lean verification is claimed."
+}

@@ -48,6 +48,8 @@ public sealed class InformationTemplateEvidenceTests
             records = new[] { new
             {
                 key = InformationTemplateJson.KeyJson(Key),
+                escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
+                escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
                 unit_name = Unit,
                 realization_name = Realization,
                 registration_source_path = PathA,
@@ -101,6 +103,28 @@ public sealed class InformationTemplateEvidenceTests
 
     [Fact]
     public void complete_producer_loader_accepted() => Assert.Single(RawReport().Files);
+
+    [Theory]
+    [InlineData("legacy", true)]
+    [InlineData("forward", true)]
+    [InlineData("witness", true)]
+    [InlineData("unknown", false)]
+    public void strict_bridge_vocabulary(string kind, bool accepted)
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire(declared: true))!.AsObject();
+        wire["records"]![0]!["bridge_kind"] = kind;
+        if (accepted)
+        {
+            var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+            Assert.Equal(kind, Assert.Single(evidence.Records).BridgeKind);
+        }
+        else
+        {
+            var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+                JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
+            Assert.Equal("DTR-Evidence: unknown bridge_kind", error.Message);
+        }
+    }
 
     [Fact]
     public void raw_report_retains_binding_inventory()

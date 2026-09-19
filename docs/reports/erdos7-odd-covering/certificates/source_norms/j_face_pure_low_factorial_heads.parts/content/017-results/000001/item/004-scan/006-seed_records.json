@@ -1,0 +1,23 @@
+{
+  "length": 30,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 28,
+      "part": {
+        "path": "content/017-results/000001/item/004-scan/006-seed_records/000000-000028.json",
+        "sha256": "b587ab8517aff5686bbbcab121c667dcfdb8aa8eb4676193a4a1d3b1053bff29",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 30,
+      "part": {
+        "path": "content/017-results/000001/item/004-scan/006-seed_records/000028-000030.json",
+        "sha256": "96c5c4db4cb458c6d373fe5a7f5b3755f2bef0b6d5c5f57dcd5a9bff76351256",
+        "kind": "value"
+      }
+    }
+  ]
+}

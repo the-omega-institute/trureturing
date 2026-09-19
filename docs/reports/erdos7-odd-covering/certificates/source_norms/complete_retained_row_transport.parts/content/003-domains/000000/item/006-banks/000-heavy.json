@@ -1,0 +1,42 @@
+{
+  "dual_count": {
+    "kind": "inline",
+    "value": 6292
+  },
+  "positive_raw_mass_prices": {
+    "kind": "inline",
+    "value": 6187
+  },
+  "zero_raw_mass_prices": {
+    "kind": "inline",
+    "value": 105
+  },
+  "zero_old_survivor_cap_prices": {
+    "kind": "inline",
+    "value": 25168
+  },
+  "zero_survivor_mass_prices": {
+    "kind": "inline",
+    "value": 6292
+  },
+  "complete_row_error_maximum": {
+    "kind": "inline",
+    "value": "9014603737495586272939/7325640000000000000000"
+  },
+  "maximizing_dual_keys": {
+    "kind": "inline",
+    "value": [
+      "b6b3b32f6be84980328cc024da0a970bcc0f8caefff560d4091c7c8fec094607"
+    ]
+  },
+  "encoded_price_bank": {
+    "path": "content/003-domains/000000/item/006-banks/000-heavy/007-encoded_price_bank.json",
+    "sha256": "706a16d7f5c21a9ef0bc4637362357d66186b4a817b9524e10418e84ae9b75fb",
+    "kind": "object"
+  },
+  "maximizing_raw_primal_dual_witnesses": {
+    "path": "content/003-domains/000000/item/006-banks/000-heavy/008-maximizing_raw_primal_dual_witnesses.json",
+    "sha256": "674472f302895b5cb6910c7518ef6c3afcd65091a47d4fb76a87cb695f3371a7",
+    "kind": "value"
+  }
+}

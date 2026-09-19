@@ -1,0 +1,373 @@
+[
+  {
+    "source": "certificates/source_norms/j_face_alignment.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 18956,
+    "sha256": "6874e71b0846d973fedd330f5a8a54bfa457b2cdfe896943db407b8d89bec611",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_coherent_positive7_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 24456,
+    "sha256": "1840efa1ced6f86beb990cb03ee4cce3be8c3e04d1508268c598c7f0a5076845",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_combined_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 603005,
+    "sha256": "a82ec1a10c6c600088759b9106e17dd8d042e60b7dbeb62c090f77749a4288ff",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 507248,
+    "sha256": "89e5a1101aaa20051cccaab47318ea4ac222d1e158bb8273d15d56bbe3efb8b1",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_complete_survival_linear_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 57062,
+    "sha256": "28c3a2239df85056e7134f43793c24b054bea3390a0c72ce5c5d5c1202c60a9a",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_coupled_seven_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 17320,
+    "sha256": "17fcfbc35fcb05f760973dc433a28862cb30dda0ab7d84f7ea9f6db90c2c8775",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_exact_retained_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 747829,
+    "sha256": "b018271ef6510bcd4bc2fbd97accaa39846b7c24187f94e55ae4cbd7913d1b61",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_exact_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 3623030,
+    "sha256": "ee49d11a11a7703a714eaafbdce8eeadbf7e5b869f0cbd8fcede96522d08647e",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_exact_seven_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495321,
+    "sha256": "b4a150e96e19da33383294725ac41009fab6b82f99833c104d1201a96534800e",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_exact_seven_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5285903,
+    "sha256": "8dc120b4fc1aeade34860dca5f41d9888557cfb0526cda7170fd3628a6423739",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_four_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 489119,
+    "sha256": "873827f28108da0f984bc963efc70ccbff80daf0c63fd2a0399f263774ab24c9",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_four_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 41897477,
+    "sha256": "44eec665672bf77135c481036f3b96d9eaa0eb3afcf7c2d6ec0baef97dc3a148",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_generalized_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 622272,
+    "sha256": "31f6ee08f263b7cfe5d3a50c8cabb0ed0e629ca86ea7d72b34a25db7e453f717",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_generalized_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 40021865,
+    "sha256": "da98088a723917a401769cde842bd30cc7534c74ada57a7c446e3b05ebb66be4",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_higher_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495635,
+    "sha256": "84813bb0561c2fe3107da264e6c5b89155700f4e2779f5687f87e6e99a2018d1",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_higher_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 32475151,
+    "sha256": "8b72bef75039d68c2a2b3d59a910a6c740d9ae9264ad9bc2562f40266cb68352",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 530751,
+    "sha256": "2c82ccbe68f28bc3560ac5b482e7272a108f554bd2cffeaf6d15d2436184f10f",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_factorial_cross_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 639351,
+    "sha256": "c83c5129a411188164ce6d110534b3eee4ac393ff7ccb23f2b1f9a997fa2db84",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_factorial_cross_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 18394232,
+    "sha256": "39b9a9596e18080f6b942c6f6a3fc0b0afb367264b8f23affdf51085eedf921e",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_pair_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 631654,
+    "sha256": "0e27a88e6a293744c17742e364c48acae6f64d0c888c85b0ad9eec401db9b5c0",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 21154413,
+    "sha256": "debba12ad306a8623c2420ead390af4714ae149738b16aa33adca875606893c9",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_positive175189_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 497041,
+    "sha256": "da1c0ac710c40334539f6786f2e127fc90fa639398e4f544f9dae3cca42d9787",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_positive175189_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 46271183,
+    "sha256": "16a8afd86dfcc2707bc2a9056268477155598665a9ea4fa722d35246b611dffc",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_quadratic_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 204972,
+    "sha256": "05055a67412d7fb89e4c6b5b1503870dc47862bc5bceaec2b05b8a3575899a56",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_retained_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 23476,
+    "sha256": "7d32a00575385a0af956ada8f89f4c2cf92fe723855ff5695262ebf29be15504",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_selected_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 319815,
+    "sha256": "87038435aecbfee3d5a3845c29fe9ece863652a79a35312af00f1096b952fed6",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_joint_survival_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 279297,
+    "sha256": "b07fb153cd98464b12fd709d92df4a51f4e986f491de39b9ba0c6ce46f761ea2",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_pure_low_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 748492,
+    "sha256": "9d528978ef1852d85efa83d65a0f9625bd5f240a34c6e4e619ce722cd13b9631",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_pure_low_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 11453252,
+    "sha256": "e99836b81ca44bd2cb47947b51dc06b91da4438a163ffeb2e1d391bf1fc0375e",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_pure_path_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13904,
+    "sha256": "918a8fa5098b875fc763054e7e57e9cbc9eee7e92933dd6e5c791545dc7a6682",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_pure_path_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 30078,
+    "sha256": "194dd27c2f624ffcc73918c595958d936fe970e24a6f195b632e7c57b52b159f",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_raw_prime_path_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 34271,
+    "sha256": "93b616897af512407e827a5b2fffacc1986261bd3dbadb71426603c837a44fd2",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_raw_square_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 573576,
+    "sha256": "150c3082bc56ea79a0d0918ab86b3bb6d5c266137cb5900697c8a544f2105ed7",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained135125_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 7664506,
+    "sha256": "b9a65e86cf068edc78cd66998683e19df409d437c82de36dbb22658c781f3ae8",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained375_ap11_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495580,
+    "sha256": "a695de09ee871b9a5b7c0aefe23bfa235178bf7bcce97aacee8aaa54fa0960a8",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained375_ap11_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 9049459,
+    "sha256": "91a496f8e146b344f495ed2962a960b4b88dac9d14ff284dcb9a0151233316af",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained375_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 490016,
+    "sha256": "12cf9c9c54961114f4bbe1b07d687437553cb9c8d3c2dccbb1b6d2d1cf818172",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained375_heavy_heads.json",
+    "classification": "covering-and-prefix-seed-banks",
+    "logical_bytes": 83687037,
+    "sha256": "3eb30852d99bf04dcfdf4dd525fdc0b742d7faa683b785b3ce0d625433db2be4",
+    "bank_count": 2
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained375_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5334968,
+    "sha256": "f5e328aee9f52b8cfb57149766e9e95d73d3f865722b050bed594abeb826f224",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_retained_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 569694,
+    "sha256": "988ebe739b00cbd88fada0ecde846b5d7af01b8eec3254698d368a50b4a7c38b",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_cofactor_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 750858,
+    "sha256": "d638faf3629a9191ffbdf710aa813a7cb3d7b5337904aa01567a10552c2bc5ba",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_cofactor_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 513790,
+    "sha256": "f87f6d83aec7ce23ad29fb4b48a0e24a8d606068465bfe2ffb11b5ddc94ee019",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_depth_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 576159,
+    "sha256": "026b00dc83740053e8d24e7809c35a252b294343cc947d48edb15a50572162da",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_depth_retained_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 13944075,
+    "sha256": "e9bc7201404e9c70bce6b1614b9ebe9db53e03429bfd6d0f7468679017b86c3d",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_depth_survival_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 587650,
+    "sha256": "63ffb601a3627ddd33190eb0a718542a1e1f851dde6e24f0080f8ed9a18b60db",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_second_depth_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 957896,
+    "sha256": "6275a57036beab1b6018c3c33b774b3e024346957797af1ac0865d1200bd0d9e",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_shared_square_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13085,
+    "sha256": "3624e60d5a7f5851450feac9005e228354ea157c7b08de24ab3c6fc042609d44",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_shifted_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 634764,
+    "sha256": "5d4c086baa6ff17441e7a79e76b3433db42c1173d016385f92ffdaf5cb297222",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_shifted_factorial_quadratic_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 14204680,
+    "sha256": "f5ea510ce818af5fa12db9830953d596a8a63a68b1db048930b457aeac684a0d",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_triple_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 752341,
+    "sha256": "8c2d831ae268d909a8a32373ba2177b9c7ae40bf31c120a8f79d04a8cf0b87db",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_triple_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 53143764,
+    "sha256": "9659a13167404df2aaa28a57b77e852e68d0884a43a47b2c5b3c408297f97eed",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j_face_triple_raw_path_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 588592,
+    "sha256": "9780db28c918bebf7b5afab2d73fcffa125e2feb70bc4a43364763c794d387cf",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j_face_triple_second_depth_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 4437367,
+    "sha256": "93294c91f6824368f91383f63917228a3a3b1a486a710c042655588a80531889",
+    "bank_count": 1
+  }
+]

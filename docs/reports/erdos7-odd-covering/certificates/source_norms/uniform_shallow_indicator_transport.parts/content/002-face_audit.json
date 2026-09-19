@@ -1,0 +1,84 @@
+{
+  "layouts_per_first_beta": {
+    "kind": "inline",
+    "value": 47
+  },
+  "total_layouts": {
+    "kind": "inline",
+    "value": 141
+  },
+  "rows": {
+    "path": "content/002-face_audit/002-rows.json",
+    "sha256": "3f84662658f6b344efad48cf7b1a55e7f4db4fd02a4a1340820d6b2cb8981460",
+    "kind": "array"
+  },
+  "generic_maxima": {
+    "kind": "inline",
+    "value": [
+      {
+        "first_beta": 2,
+        "generic_maxima": {
+          "3": "2/25",
+          "9": "1/18",
+          "5": "14/225",
+          "15": "8/225",
+          "45": "4/225"
+        }
+      },
+      {
+        "first_beta": 3,
+        "generic_maxima": {
+          "3": "2/25",
+          "9": "1/18",
+          "5": "14/225",
+          "15": "8/225",
+          "45": "4/225"
+        }
+      },
+      {
+        "first_beta": 4,
+        "generic_maxima": {
+          "3": "2/25",
+          "9": "1/18",
+          "5": "14/225",
+          "15": "8/225",
+          "45": "4/225"
+        }
+      }
+    ]
+  },
+  "root0_obstruction": {
+    "kind": "inline",
+    "value": "1/450"
+  },
+  "relaxation_witness": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/90",
+      "1/90",
+      "1/180",
+      "0",
+      "0",
+      "1/45",
+      "1/45",
+      "1/60",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "1/90",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1/90",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1/90",
+      "1/60"
+    ]
+  }
+}

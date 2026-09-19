@@ -1,0 +1,9 @@
+**定理 124.19（自由能和基础权重数）。** 有
+$$
+F_w(q)=-\tau\log Z_w+\tau D(q\Vert\pi_w).
+$$
+因此 $\pi_w$ 是唯一极小点。若 $\rho=w/M$，则 $\pi_\rho=\pi_w$，但
+$$
+Z_w=MZ_\rho,\qquad F_w(q)=F_\rho(q)-\tau\log M.
+$$
+

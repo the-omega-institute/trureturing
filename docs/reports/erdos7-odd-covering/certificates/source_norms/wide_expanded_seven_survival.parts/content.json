@@ -1,0 +1,20 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-wide-expanded-seven-survival-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "bd8111bb7799602d56d4f350678927a1fafdfd383d4475eaf3f67235a75de3b2",
+    "kind": "value"
+  },
+  "domains": {
+    "path": "content/002-domains.json",
+    "sha256": "67688328b1fbacda55a25ba4883d57b3bfd09e105c6f94772c2678e0606d7317",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete actual-source comparison on both whole181 and195 rectangles and both K orientations. Each selected inequality is chosen on the face then held fixed; each complete bridge is maximized over every q/defect vertex before the two whole-domain uppers are minimized. Every original head and all independent21/35/63/105 projections remain. All52 original costs, signed actual mass, complete count and exponent tails remain. No global complementary-region conclusion, actual-family attainment, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

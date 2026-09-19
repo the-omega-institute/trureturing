@@ -1,0 +1,718 @@
+{
+  "density_caps": [
+    "0",
+    "4684/32805",
+    "10462/32805",
+    "197/486",
+    "197/486"
+  ],
+  "raw_density_cap": "122/243",
+  "common_error_envelope": "11786/32805",
+  "first_slot_rows": [
+    {
+      "first_beta": 2,
+      "first_slot": 0,
+      "first_indicator_source_upper": "0",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "1125563/82012500"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "84793/4100625"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "84793/4100625"
+      },
+      "upper": "6010813/65610000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 1,
+      "first_indicator_source_upper": "11/400",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "12881/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "2905117/16402500"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 2,
+      "first_indicator_source_upper": "6161/97200",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "57541/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "57541/656100",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "19783643/65610000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 3,
+      "first_indicator_source_upper": "51713/874800",
+      "indicator_coordinate_prices": [
+        "215755/39123",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "2167/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "215755/39123",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1132257991/52816050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "300359243/12223143000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "300359243/12223143000"
+      },
+      "upper": "1915283629/6111571500"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 4,
+      "first_indicator_source_upper": "1549/32400",
+      "indicator_coordinate_prices": [
+        "1/9",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "122/1215",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "2167/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "12688/2513",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "16520966353/824389650000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "2798585743/117769950000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "2798585743/117769950000"
+      },
+      "upper": "32817806743/117769950000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 0,
+      "first_indicator_source_upper": "0",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "1125563/82012500"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "84793/4100625"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "84793/4100625"
+      },
+      "upper": "6010813/65610000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 1,
+      "first_indicator_source_upper": "11/400",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "12881/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "2905117/16402500"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 2,
+      "first_indicator_source_upper": "6161/97200",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "57541/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "57541/656100",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "19783643/65610000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 3,
+      "first_indicator_source_upper": "51713/874800",
+      "indicator_coordinate_prices": [
+        "215755/39123",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "2167/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "215755/39123",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1132257991/52816050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "300359243/12223143000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "300359243/12223143000"
+      },
+      "upper": "1915283629/6111571500"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 4,
+      "first_indicator_source_upper": "1549/32400",
+      "indicator_coordinate_prices": [
+        "1/9",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "122/1215",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "2167/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "12688/2513",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "16520966353/824389650000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "2798585743/117769950000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "2798585743/117769950000"
+      },
+      "upper": "32817806743/117769950000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 0,
+      "first_indicator_source_upper": "0",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "1125563/82012500"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "84793/4100625"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "84793/4100625"
+      },
+      "upper": "6010813/65610000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 1,
+      "first_indicator_source_upper": "11/400",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "12881/328050",
+        "36617/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "1379/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "2905117/16402500"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 2,
+      "first_indicator_source_upper": "6161/97200",
+      "indicator_coordinate_prices": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "57541/656100",
+        "1379/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "57541/656100",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1605281/328050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "983221/65610000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "776759/32805000"
+      },
+      "upper": "19783643/65610000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 3,
+      "first_indicator_source_upper": "51713/874800",
+      "indicator_coordinate_prices": [
+        "215755/39123",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "0",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "2167/19440",
+        "1379/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "215755/39123",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1132257991/52816050000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "300359243/12223143000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "300359243/12223143000"
+      },
+      "upper": "1915283629/6111571500"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 4,
+      "first_indicator_source_upper": "1549/32400",
+      "indicator_coordinate_prices": [
+        "1/9",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "indicator_q_sum_price": "122/1215",
+      "deep_Bellman_candidates": [
+        "0",
+        "8197/328050",
+        "36617/656100",
+        "1379/19440",
+        "2167/19440"
+      ],
+      "deep_Bellman_upper": "2167/19440",
+      "shared_residual_error": {
+        "inside_price": "1",
+        "outside_price": "12688/2513",
+        "source_offset": "1/6480",
+        "envelope": "11786/32805",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "16520966353/824389650000"
+          },
+          {
+            "mass_in_E3_or_omega": "137951/328050000",
+            "upper": "2798585743/117769950000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/1000",
+            "upper": "776759/32805000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "2798585743/117769950000"
+      },
+      "upper": "32817806743/117769950000"
+    }
+  ],
+  "joint_upper": "1915283629/6111571500",
+  "maximizers": [
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      4,
+      3
+    ]
+  ]
+}

@@ -56,7 +56,7 @@ public sealed class DeclaredTemplateBindingRuleTests
 
     [Fact]
     public void changed_undeclared_registration_blocks() =>
-        Finding(DeclaredTemplateBindingRule.Evaluate(Delta()), "DTR-Undeclared", AdmissionEffect.Block);
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta()), "DTR-Undeclared", AdmissionEffect.Observe);
 
     [Fact]
     public void new_validated_registration_observes() =>
@@ -64,15 +64,15 @@ public sealed class DeclaredTemplateBindingRuleTests
 
     [Fact]
     public void changed_unresolved_registration_blocks() =>
-        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(declared: true, invalid: true)), "DTR-Evidence", AdmissionEffect.Block);
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(declared: true, invalid: true)), "DTR-Evidence", AdmissionEffect.Observe);
 
     [Fact]
     public void delta_missing_evidence_blocks() =>
-        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(missing: true)), "DTR-Evidence", AdmissionEffect.Block);
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(missing: true)), "DTR-Evidence", AdmissionEffect.Observe);
 
     [Fact]
     public void first_pin_selects_registration() =>
-        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Block);
+        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Observe);
 
     [Theory]
     [InlineData("stale-input")]
@@ -93,7 +93,7 @@ public sealed class DeclaredTemplateBindingRuleTests
             InformationTemplates = JsonSerializer.SerializeToElement(wire),
         };
         Finding(DeclaredTemplateBindingRule.Evaluate(Context(before, after, LeanAxiomReport.Create(reports), [Registration])),
-            "DTR-Evidence", AdmissionEffect.Block);
+            "DTR-Evidence", AdmissionEffect.Observe);
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public sealed class DeclaredTemplateBindingRuleTests
         before["D5/S0/Carrier/Unchanged.lean"] = "-- no evidence for unchanged registrations\n";
         after["D5/S0/Carrier/Unchanged.lean"] = before["D5/S0/Carrier/Unchanged.lean"];
         Finding(DeclaredTemplateBindingRule.Evaluate(Context(before, after, report, [Registration])),
-            "DTR-Undeclared", AdmissionEffect.Block);
+            "DTR-Undeclared", AdmissionEffect.Observe);
     }
 
     [Theory]
@@ -141,11 +141,12 @@ public sealed class DeclaredTemplateBindingRuleTests
             Delta(declared: true),
             Delta(declared: true, invalid: true),
             Delta(missing: true),
+            DeclaredTemplateUnregisteredTests.Build(),
         };
         var names = contexts.SelectMany(context => DeclaredTemplateBindingRule.Evaluate(context))
             .Select(finding => finding.Message.Split(' ', 2)[0])
             .Distinct().Order(StringComparer.Ordinal).ToArray();
-        Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared" }),
+        Assert.True(names.SequenceEqual(new[] { "DTR-Declared", "DTR-Evidence", "DTR-Undeclared", "DTR-Unregistered" }),
             "[FAIL] deleted_finding_names_cannot_be_emitted: " + string.Join(", ", names));
     }
 }

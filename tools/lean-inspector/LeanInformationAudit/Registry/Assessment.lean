@@ -355,7 +355,9 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   let name := event.realizationName
   let info ← getConstInfo name
   let raw ← if info.type.isAppOfArity
-      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 then
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
+      info.type.isAppOfArity escapeForwardBridge 3 ||
+      info.type.isAppOfArity escapeWitnessBridge 3 then
     pure info.type.getAppArgs[2]!
   else if isRealizationType info.type then
     match info with
@@ -453,7 +455,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) : MetaM TemplateBindingCertificate := do
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+  RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
     | throwError "unclassified_form:dtr.descriptor_head"
@@ -507,6 +510,14 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
+    if escape.bridgeKind == "witness" then
+      let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
+      unless ← RegistrationGates.bounded (do
+          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          if ← isDefEq rawActual computed then return true
+          let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
+          isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do
+        throwError "unclassified_form:dtr.witness_readout_tie"
     let .ok (descriptorIdentity, descriptorWork) ← TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
       | throwError "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork
@@ -514,11 +525,15 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
-    let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
+    let mut retained := (← get).extractionNames.insert event.realizationName
+    -- Fingerprint the inspected roots here. Their transitive data/type closure
+    -- is retained below without serializing pinned upstream implementations.
+    for name in ← inspectionRoots event do retained := retained.insert name
+    let extractionNames := retained.toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
-      descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
+      descriptorIdentity, actualIdentity, argumentInputs, extractionInputs, escape }
     let .ok (evidenceRef, evidenceWork) := bindingIdentity event.statementIdentity certificate (← get).remaining
       | throwError "incomplete_closure:E8.evidence_identity"
     debit evidenceWork
@@ -541,8 +556,11 @@ new binding check is retained metadata, never a module elaboration failure. -/
 private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   modifyEnv fun env => assessmentEvents.modifyState env (·.push event.key)
   match claim with
-  | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
+  | none => return {
+      occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared
+      escape := { bridgeKind := (← bridgeKind event) } }
   | some claim =>
+    let escape ← checkEscapeRecord event claim.escapeInput
     let result ← tryCatchRuntimeEx
       (withCumulativeBudget do
         unless claim.key == event.key && claim.arena.equal event.arena do
@@ -550,7 +568,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        let certificate ← validate event descriptor claim.owner
+        let certificate ← validate event descriptor claim.owner escape
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
         let message ← error.toMessageData.toString
@@ -558,7 +576,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         let provenance ← diagnosticProvenance event claim reason
         return .declaredUnresolved (diagnosticMessage event.key reason provenance))
-    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result }
+    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape }
 
 private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
   Option (Name × Nat × Nat × Bool)
@@ -601,7 +619,7 @@ private def sameCacheClaim (a b : TemplateBindingClaim) : MetaM Bool := do
       pure (a.equal b)
     | _, _ => pure false
   return a.key == b.key && a.owner == b.owner && a.arena.equal b.arena &&
-  a.resolutionDiagnostic == b.resolutionDiagnostic && descriptorsMatch
+  a.resolutionDiagnostic == b.resolutionDiagnostic && a.escapeInput == b.escapeInput && descriptorsMatch
 
 private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrenceEvent)
     (claim : TemplateBindingClaim) : MetaM Bool := do
@@ -631,6 +649,11 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   let env ← getEnv
   let .ok plan := selectedPlan env name | return
   let mut names : NameSet := {}
+  for name in ← inspectionDependencies record.occurrence do names := names.insert name
+  for value in claim.escapeInput.fromObject.toArray ++ claim.escapeInput.continuation.toArray do
+    for name in value.getUsedConstants do names := names.insert name
+  if let some residual := record.escape.continuation then
+    if let some chain := residual.chainName then names := names.insert chain
   for dependency in plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs do
     names := names.insert dependency.name
   for name in #[plan.name, record.occurrence.key.theoremName, record.occurrence.unitName,

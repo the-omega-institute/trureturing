@@ -1,0 +1,222 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-joint-positive175189-survival-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "fc79320169c43d72377925a9456cb710e54c66a0f012725e79c1bc67d4101ad3",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "name": {
+    "kind": "inline",
+    "value": "hinge4"
+  },
+  "threshold": {
+    "kind": "inline",
+    "value": 4
+  },
+  "model": {
+    "kind": "inline",
+    "value": {
+      "variables": 32151,
+      "inequalities": 56133,
+      "equalities": 22,
+      "rows_sha256": "4da5961945a50079d14a49fc0017409abeba79624086971f2c0747d63e8e494d"
+    }
+  },
+  "original288_model": {
+    "kind": "inline",
+    "value": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0",
+      "preserved_original_rows": 11211,
+      "preserved_original_equalities": 19,
+      "new_raw_intersection_variables": 3200,
+      "new_survivor_intersection_variables": 3200,
+      "independent_profile_coordinates": 10
+    }
+  },
+  "retained_old_labels": {
+    "kind": "inline",
+    "value": [
+      25,
+      27,
+      75,
+      81,
+      135,
+      125,
+      225,
+      375
+    ]
+  },
+  "previous_retained_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      21,
+      35,
+      63,
+      105,
+      147,
+      245,
+      441,
+      735
+    ]
+  },
+  "new_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      175,
+      189
+    ]
+  },
+  "fresh_old_cofactors": {
+    "kind": "inline",
+    "value": [
+      25,
+      27
+    ]
+  },
+  "independent_profile_dimensions": {
+    "kind": "inline",
+    "value": [
+      5,
+      5
+    ]
+  },
+  "raw_CRT_caps": {
+    "path": "content/014-raw_CRT_caps.json",
+    "sha256": "fc71040ed811bb6cb1b185f706ddc4e96f522ece3f7ae88931e0882635322f97",
+    "kind": "value"
+  },
+  "joint_raw_cap": {
+    "kind": "inline",
+    "value": "1/675"
+  },
+  "assigned_removed_tail_caps": {
+    "kind": "inline",
+    "value": [
+      "3/875",
+      "1/210"
+    ]
+  },
+  "complete_old_tail": {
+    "kind": "inline",
+    "value": "5071/405000"
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "337/18375"
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "612439/19845000"
+  },
+  "original_controller": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        4
+      ]
+    }
+  },
+  "seed_dual_key": {
+    "kind": "inline",
+    "value": "465cbf75fa06fc94d92e20bbe4b1e4dad2d2b53e9bf04dead5a1d65828acc6c2"
+  },
+  "fixed_pruning_benchmark": {
+    "kind": "inline",
+    "value": "118025942856670081/617400000000000000"
+  },
+  "prefix_ledger": {
+    "path": "content/023-prefix_ledger.json",
+    "sha256": "e64f94213195a5d53f2767a559d03c49cf171b7601d8dcb5c77f62409023f402",
+    "kind": "object"
+  },
+  "prefix_bounded_original_choices": {
+    "kind": "inline",
+    "value": 3124999030
+  },
+  "original375_reuse": {
+    "path": "content/025-original375_reuse.json",
+    "sha256": "dd5f14f86d120e468496b75f177d730eb40751fa565fa3d82c203169cb8fbe13",
+    "kind": "object"
+  },
+  "residual_leaf_count": {
+    "kind": "inline",
+    "value": 916
+  },
+  "residual_leaf_batches": {
+    "path": "content/027-residual_leaf_batches.json",
+    "sha256": "e02cecb62299e56fb293ee554dc10ca64bd33e9c518d4517d54c771fe2734761",
+    "kind": "array"
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "complete_AP13_upper": {
+    "kind": "inline",
+    "value": "118025942856670081/617400000000000000"
+  },
+  "previous_complete_AP13_upper": {
+    "kind": "inline",
+    "value": "767945288466086119/3969000000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "16112397678112297/6945750000000000000"
+  },
+  "encoded_rational_duals": {
+    "path": "content/032-encoded_rational_duals.json",
+    "sha256": "9f085e85a0f0235547163c194a13d154ef49942dd5efd0e547c109af176e9fda",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 916
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 29450316
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original H4/AP13 on both entire actual saturated J faces. The unchanged375 source is refined only on raw atoms by the two independent parent events for175 and189; each original branch LP contains both full independent five-coordinate profiles. Every3.125 billion original independent containing choice lies in an inherited complete prefix,an individually checked original375 branch,or an exactly checked joint-source residual. Every original source row,survivor/raw measure,common late interval,exponent/cofactor tail and original projection remains. Only assigned caps3/875 and1/210 are removed once,leaving old tail5071/405000 and positive-seven tail337/18375. The final upper is max(fixed seed,all own-leaf minima). No actual attainment,complete52-cost comparison,off-face/global extension,Lean verification,or unrestricted Erdos7 conclusion."
+  }
+}

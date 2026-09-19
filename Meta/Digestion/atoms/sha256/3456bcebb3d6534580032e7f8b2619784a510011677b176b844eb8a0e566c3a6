@@ -1,0 +1,11 @@
+在复 Hilbert 空间 $L^2(X,\mu;\mathbb C)$ 中置
+$$
+H_L=\operatorname{span}_{\mathbb C}\{\mathbf1_C:C\in\mathcal P_L,\ \mu(C)>0\},
+\qquad
+H_{\mathrm{obs}}=\overline{\bigcup_{L\ge0}H_L}.
+$$
+内积取 $\langle f,g\rangle=\int_X\overline f g\,d\mu$。条件平均在零测集外写为
+$$
+\Pi_L f=\sum_{C\in\mathcal P_L,\ \mu(C)>0}
+\left(\frac1{\mu(C)}\int_C f\,d\mu\right)\mathbf1_C.
+$$

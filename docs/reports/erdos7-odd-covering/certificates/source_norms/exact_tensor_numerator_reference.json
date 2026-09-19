@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "7e1db5d63e793b80d89aa61b1d3abb7a637530f7f2bc4a6a60617c54984a67fd",
+  "parts_directory": "exact_tensor_numerator_reference.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "c76b82909a2710b9491648941d34a5726bdaa5950dee47c9a8a943d9920d2d6c",
+    "kind": "object"
+  }
+}

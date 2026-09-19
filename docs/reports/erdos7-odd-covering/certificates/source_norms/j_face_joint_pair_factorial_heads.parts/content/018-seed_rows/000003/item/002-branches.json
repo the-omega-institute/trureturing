@@ -1,0 +1,23 @@
+{
+  "length": 60,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 39,
+      "part": {
+        "path": "content/018-seed_rows/000003/item/002-branches/000000-000039.json",
+        "sha256": "ccb0db44a0f61fa3caef5a7a9fe45d1b0922bf672bceb6e4f2867af5375f22e7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 39,
+      "stop": 60,
+      "part": {
+        "path": "content/018-seed_rows/000003/item/002-branches/000039-000060.json",
+        "sha256": "2a62517eb08fc0f491c28369cf9c1ae6d242f45ac7b7a8b37e8c227c03cbdc76",
+        "kind": "value"
+      }
+    }
+  ]
+}

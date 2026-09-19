@@ -1,0 +1,82 @@
+{
+  "0": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/000-0.json",
+    "sha256": "5fcfad56d590b746b3b638738a39ff84a3345348a26796111afdd455a9d40a24",
+    "kind": "value"
+  },
+  "1": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/001-1.json",
+    "sha256": "0302ba7ae45f22f4ecf4a43d28f3928c94311a6ded4c20b665079062ed6e2050",
+    "kind": "value"
+  },
+  "2": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/002-2.json",
+    "sha256": "dad5eba982bf7b29d3c6f8ad3391a0f59007797899c81fcf0ba8bca99ad40911",
+    "kind": "value"
+  },
+  "3": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/003-3.json",
+    "sha256": "6bf065dee7ed1f27499dd92a1ce9f9bba7d0e1eeb028674901f46cb6fd2c7cab",
+    "kind": "value"
+  },
+  "4": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/004-4.json",
+    "sha256": "354b0e2779d983d8d0834faa278f7e41af41ac427321080b5d1025ea8046dbf4",
+    "kind": "value"
+  },
+  "5": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/005-5.json",
+    "sha256": "f1331b3514fdbbb3ab2115bccc3e35798bf55ed6329814e1a8b9396df9a93c6d",
+    "kind": "value"
+  },
+  "6": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/006-6.json",
+    "sha256": "e9c3d1aff04f5ed4ca64407948c17d85b62d2478ab52b69212d0dae1495f9f99",
+    "kind": "value"
+  },
+  "7": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/007-7.json",
+    "sha256": "8de4b565eda6b041ecbb71ebe84ca75027eb334f4e8c1dcfd0bfdebdbf67e92b",
+    "kind": "value"
+  },
+  "8": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/008-8.json",
+    "sha256": "0212aa5520a4e38ce8556f0e46d25cd11540860f9cc020952000eccfb8bebbee",
+    "kind": "value"
+  },
+  "9": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/009-9.json",
+    "sha256": "e2d5313616cb7d62c47542231bd9c0b9080391dfb3fcf82c9bc52e881a7789b8",
+    "kind": "value"
+  },
+  "a": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/010-a.json",
+    "sha256": "bb97b26f422256c14680ef6a9f4e522df4659f1cc90a7b444dc79572c3933e97",
+    "kind": "value"
+  },
+  "b": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/011-b.json",
+    "sha256": "c96f59d8bbf03498a6a762b42b38c335d15b4db5727fa905496e0a3223d66cc5",
+    "kind": "value"
+  },
+  "c": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/012-c.json",
+    "sha256": "088b617f4f335288ff83231a0acf6693723150bc67e5e2bb590f23a77b65b56b",
+    "kind": "value"
+  },
+  "d": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/013-d.json",
+    "sha256": "38b15bffcf48784d5d2d233691664ab1b4898c7964c658f2c797b68cd8e6b167",
+    "kind": "value"
+  },
+  "e": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/014-e.json",
+    "sha256": "fc4f71fd83d886d356b7f4d9d2c50b6afe6fda0cf07b4f68e84a900783c0354a",
+    "kind": "value"
+  },
+  "f": {
+    "path": "content/009-rational_duals/004-dual_buckets/003-3/015-f.json",
+    "sha256": "d9c633a47957ae830eced405c0da54750a35dc8e37c5687b450566ffbf87b16a",
+    "kind": "value"
+  }
+}
