@@ -280,3 +280,88 @@ has consecutive-gap capacities, and does not claim uniformity. The
 source bridge, 350, 374 and 375 contain no theorem giving PC1--PC7 in
 this full-height chain form; this is a statement of searched scope, not
 a literature-priority claim. No Lean declaration is added.
+
+## 7. Joint tree intersections and common marginal laws do not tensorize
+
+The following obstruction retains the new product-tree condition as well
+as the stronger one-prime conditions from 375. Put
+
+    S={(i,i),(i,i+1): 1<=i<=4} subset Z/5 x Z/7.      (PC9)
+
+Every three-row by five-column rectangle meets S: three rows include at
+least two of the four active rows, and any two active rows have at least
+three neighbors. The complement of five columns has only two elements.
+The projections have four and five elements, so they also meet every
+three-element set in the respective coordinate.
+
+Give the two endpoints (1,1),(4,5) mass 1/5 each and the six remaining
+points mass 1/10 each. This is one probability with row masses
+(3/10,1/5,1/5,3/10) and five column masses equal to 1/5. In particular,
+it satisfies the stronger simultaneous one-coordinate caps 1/3 and 1/5.
+Nevertheless no probability on S can give every pair mass at most 1/9:
+the eight pair boxes partition S and their total allowed mass is 8/9.
+This is a finite dual obstruction to multiplying even the weaker PC7
+caps 1/3 and 1/3.
+
+The failure persists at arbitrary depths in the relation domain. For
+H,K>=1 take the inverse image of S modulo 5^H and 7^K, keeping all tail
+digits. It meets every product of a complete ternary 5-tree and complete
+five-ary 7-tree. The displayed root law, extended by uniform independent
+tails conditional on the root pair, has prefix masses at most
+
+    (1/3) 5^(-(a-1)) <= 3^(-a),
+    (1/5) 7^(-(b-1)) <= 5^(-b).
+
+The same eight root boxes still forbid the joint cap 1/9. Additional
+prefix depths therefore do not by themselves remove this obstruction.
+This lifted relation is not asserted to come from a minimum odd cover.
+
+### A whole distinct even cover realizes the eight-point source
+
+This is also an actual-residue obstruction, not only an abstract
+relation. Let D=2^15. Take the following original classes:
+
+* the 15 classes 2^(j-1)-1 mod 2^j, 1<=j<=15;
+* the three pure classes 0 mod 3, 0 mod 5, 0 mod 7;
+* enumerate the 16 pairs in ({1,...,4} x {1,...,6}) minus S in
+  lexicographic order by e=0,...,15; for pair (i,j), use its CRT class
+  x=i mod 5, x=j mod 7, x=-1 mod 2^e;
+* enumerate the 16 triples (i,j,k), (i,j) in S and k in {1,2},
+  lexicographically by e=0,...,15; use their CRT classes with the
+  additional condition x=-1 mod 2^e.
+
+Their odd modulus parts are respectively 1, the pure primes, 35 and
+105, so all 50 numerical moduli are distinct. The dyadic classes cover
+everything outside x=-1 mod D. On that last fibre the pure 5 and 7
+classes remove the zero roots, the 35 classes remove the complement
+of S, and pure 3 plus the 105 classes cover what remains. The full
+period is 105D=3440640. Removing all 3-bearing originals leaves exactly
+
+    R_3={x mod 35D: x=-1 mod D, (x mod 5,x mod 7) in S}. (PC10)
+
+Each non-dyadic class has a private witness on x=-1 mod D: use its
+own distinct grid cell, choosing the other coordinates to avoid the
+pure classes. For a dyadic class indexed j, use the last listed inside
+triple (4,5,2) and the dyadic residue 2^(j-1)-1 mod D. Only the last
+inside class could cover that triple, and it requires all 15 low bits
+to be one. Thus this cover is irredundant.
+
+[The exact checker](../../frontier/joint_prefix_path_obstruction.py)
+checks the entire period, all 50 private witnesses, PC10, all 210
+three-by-five rectangles, and the common law. Its actual 5-free
+residual also has all six nonzero roots modulo 7, so the other
+nontrivial odd-prime chain test is satisfied. The eight joint boxes
+can even be written as queries with distinct numerical moduli
+35*2^e, e=0,...,7, already present among the original moduli: enumerate
+S and give each pair its CRT residue with x=-1 mod 2^e. Each query
+cuts out one point of R_3. These are alternate-residue queries, not
+original forbidden events; every original 3-free event has zero
+mass on R_3.
+
+The example is even, not divisor-closed (for instance modulus 6 is
+absent), and not globally minimum. It refutes only the implication
+from the stated tree intersections, common marginal caps, and even
+irredundant AP provenance to multiplicative joint caps. It neither
+contradicts PC7 nor refutes a stronger result using the full odd
+minimum-cover hypotheses. Such additional arithmetic is still needed
+for the unrestricted joint-load argument.
