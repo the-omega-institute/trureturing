@@ -23,9 +23,6 @@ internal sealed class WuPyramidalComplementDocument : IScribeDocumentDefinition
                 "C(k,x) holds exactly when x is positive and is not P(k,m) for any positive m. "
                     + "This definition is independent of the proposed enumeration formula.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("root-index", "The integer root index", RootIndexFormula(),
-                "R(k,n) is the greatest natural h whose cube is at most the natural quotient "
-                    + "6n divided by k-2.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("upper-threshold", "The upper threshold", UpperFormula(),
                 "U(k,h) is the inclusive upper-branch threshold in Equation (6).",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -44,7 +41,8 @@ internal sealed class WuPyramidalComplementDocument : IScribeDocumentDefinition
                 "Let h be the floor of the real cube root of 6n/(k-2). For every k at least "
                     + "nine and every positive n, the (n-1)-st zero-based member of the positive "
                     + "complement is the value selected by the exact inclusive thresholds. "
-                    + "The proof identifies this real floor with R(k,n), locates the answer "
+                    + "The proof identifies this real floor with the corresponding integer "
+                    + "cube-root index, locates the answer "
                     + "strictly between consecutive pyramidal values in all three branches, "
                     + "and counts exactly n-1 complement values below it.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
@@ -58,7 +56,6 @@ internal sealed class WuPyramidalComplementDocument : IScribeDocumentDefinition
 
     private static string DeclarationName(string id) => id switch
     {
-        "root-index" => "rootIndex",
         "upper-threshold" => "upperThreshold",
         "lower-threshold" => "lowerThreshold",
         "branch-selector" => "branchSelector",
@@ -109,13 +106,6 @@ internal sealed class WuPyramidalComplementDocument : IScribeDocumentDefinition
         var k = V("k"); var x = V("x"); var m = V("m");
         var excluded = All("m", Imp(Lt(D(0), m), Ne(Call("P", k, m), x)));
         return Disp(All("k", All("x", Iff(Call("C", k, x), And(Lt(D(0), x), excluded)))));
-    }
-
-    private static Formula RootIndexFormula()
-    {
-        var k = V("k"); var n = V("n");
-        return Disp(All("k", All("n", EqF(Call("R", k, n),
-            Call("root", D(3), Call("div", Mul(D(6), n), Sub(k, D(2))))))));
     }
 
     private static Formula UpperFormula()

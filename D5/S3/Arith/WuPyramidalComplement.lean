@@ -37,7 +37,7 @@ def complement (k x : Nat) : Prop :=
   0 < x ∧ ∀ m, 0 < m → pyramidal k m ≠ x
 
 /-- The exact integer cube-root index used internally. -/
-def rootIndex (k n : Nat) : Nat := Nat.nthRoot 3 ((6 * n) / (k - 2))
+private def rootIndex (k n : Nat) : Nat := Nat.nthRoot 3 ((6 * n) / (k - 2))
 
 /-- The upper inclusive threshold in Equation (6). -/
 def upperThreshold (k h : Nat) : Nat :=
