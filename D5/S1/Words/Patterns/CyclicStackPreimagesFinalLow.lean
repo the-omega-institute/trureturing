@@ -232,11 +232,6 @@ lemma successful_high_entries {m q : ℕ} {input : List ℕ}
   exact List.Perm.eq_of_sortedLE (hhighs.imp (by omega)).sortedLE
     (List.sortedLT_range' (m + 1) q (by omega)).sortedLE hp
 
-private lemma EndsWithLow.cons {m a : ℕ} {input : List ℕ}
-    (h : EndsWithLow m input) : EndsWithLow m (a :: input) := by
-  obtain ⟨pre, low, rfl, hlow⟩ := h
-  exact ⟨a :: pre, low, by simp, hlow⟩
-
 private lemma assemble_map_some_ends {m : ℕ} {highs lows : List ℕ}
     (hlen : highs.length = lows.length) (hne : lows ≠ [])
     (hlow : ∀ low ∈ lows, low ≤ m) :
@@ -257,7 +252,14 @@ private lemma assemble_map_some_ends {m : ℕ} {highs lows : List ℕ}
               have htail := ih (highs := highs) (by simpa using hlen) (by simp) (by
                 intro value hmem
                 exact hlow value (by simp [hmem]))
-              exact htail.cons.cons
+              obtain ⟨pre, low', heq, hlow'⟩ := htail
+              refine ⟨high :: low :: pre, low', ?_, hlow'⟩
+              simp only [assembleGaps, List.map_cons]
+              have heq' : assembleGaps highs (some next :: List.map some rest) =
+                  pre ++ [low'] := by
+                simpa only [List.map_cons] using heq
+              rw [heq']
+              simp only [List.cons_append]
 
 lemma assemble_insert_none_ends {m omitted : ℕ} {highs lows : List ℕ}
     (hlen : highs.length = lows.length + 1) (homitted : omitted < lows.length)
@@ -275,14 +277,19 @@ lemma assemble_insert_none_ends {m omitted : ℕ} {highs lows : List ℕ}
               simp only [insertNone, assembleGaps]
               have htail := assemble_map_some_ends (m := m) (highs := highs)
                 (lows := low :: lows) (by simpa using hlen) (by simp) hlow
-              exact htail.cons
+              have htail' : EndsWithLow m
+                  (assembleGaps highs (some low :: lows.map some)) := by
+                simpa only [List.map_cons] using htail
+              obtain ⟨pre, low', heq, hlow'⟩ := htail'
+              exact ⟨high :: pre, low', by simp [heq], hlow'⟩
           | succ omitted =>
               simp only [insertNone, assembleGaps]
               have htail := ih (highs := highs) (omitted := omitted) (by simpa using hlen)
                 (by simpa using homitted) (by
                   intro value hmem
                   exact hlow value (by simp [hmem]))
-              exact htail.cons.cons
+              obtain ⟨pre, low', heq, hlow'⟩ := htail
+              exact ⟨high :: low :: pre, low', by simp [heq], hlow'⟩
 
 lemma successful_high_length {m q : ℕ} {input : List ℕ}
     (hperm : input.Perm (List.range' 1 (m + q))) :

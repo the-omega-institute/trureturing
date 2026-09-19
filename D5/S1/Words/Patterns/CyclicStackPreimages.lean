@@ -107,10 +107,6 @@ private lemma successful_odd_eq_candidate {m : ℕ} (hm : 0 < m) {input : List �
     _ = candidate m (m + 1) omitted :=
       (candidate_eq_assemble m (m + 1) omitted).symm
 
-private lemma fibre_nodup (n : ℕ) : (fibre n).Nodup := by
-  unfold fibre
-  exact (List.nodup_permutations _ List.nodup_range').filter _
-
 /-- Zhan--Bie Conjectures 3 and 4: for every `m ≥ 2`, the full fibre over
 the target of size `2m` has one element, while the full fibre over the target
 of size `2m+1` has `m+1` elements. -/
@@ -122,7 +118,10 @@ theorem zhan_bie_conjectures_3_4 (m : ℕ) (hm : 2 ≤ m) :
     have houtput : cyclicStackSort input = target (2 * m) := by
       simpa [fibre] using (List.mem_filter.mp hinput).2
     simp [successful_even_eq_candidate (by omega) houtput]
-  have hevenUpper := (fibre_nodup (2 * m)).length_le_of_subset hevenSubset
+  have hevenUpper := (show (fibre (2 * m)).Nodup from by
+    unfold fibre
+    exact (List.nodup_permutations _ List.nodup_range').filter _).length_le_of_subset
+    hevenSubset
   have hevenLower := evenCandidate_lower_bound m (by omega)
   have hoddSubset : fibre (2 * m + 1) ⊆
       (List.range (m + 1)).map (candidate m (m + 1)) := by
@@ -132,7 +131,10 @@ theorem zhan_bie_conjectures_3_4 (m : ℕ) (hm : 2 ≤ m) :
     obtain ⟨omitted, homitted, rfl⟩ := successful_odd_eq_candidate (by omega) houtput
     apply List.mem_map.mpr
     exact ⟨omitted, by simpa using homitted, rfl⟩
-  have hoddUpper := (fibre_nodup (2 * m + 1)).length_le_of_subset hoddSubset
+  have hoddUpper := (show (fibre (2 * m + 1)).Nodup from by
+    unfold fibre
+    exact (List.nodup_permutations _ List.nodup_range').filter _).length_le_of_subset
+    hoddSubset
   have hoddLower := oddCandidate_lower_bound m (by omega)
   have hevenUpper' : (fibre (2 * m)).length ≤ 1 := by simpa using hevenUpper
   have hoddUpper' : (fibre (2 * m + 1)).length ≤ m + 1 := by

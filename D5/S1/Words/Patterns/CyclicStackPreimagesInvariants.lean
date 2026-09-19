@@ -333,14 +333,13 @@ lemma successful_lows_pairwise {n : ℕ} {input : List ℕ}
         · exact htail
   exact go hgapped [] (by simp)
 
-private lemma range_split (m q : ℕ) :
-    List.range' 1 (m + q) = List.range' 1 m ++ List.range' (m + 1) q := by
-  simpa [Nat.add_comm] using
-    (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
-
 private lemma lowEntries_range (m q : ℕ) :
     lowEntries m (List.range' 1 (m + q)) = List.range' 1 m := by
-  rw [range_split, lowEntries, List.filter_append]
+  have hsplit : List.range' 1 (m + q) =
+      List.range' 1 m ++ List.range' (m + 1) q := by
+    simpa [Nat.add_comm] using
+      (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
+  rw [hsplit, lowEntries, List.filter_append]
   have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
       List.range' 1 m := by
     apply List.filter_eq_self.mpr
@@ -361,7 +360,11 @@ private lemma lowEntries_range (m q : ℕ) :
 lemma highEntries_range (m q : ℕ) :
     let _sourceObject := cyclicStackSourceWord
     highEntries m (List.range' 1 (m + q)) = List.range' (m + 1) q := by
-  rw [range_split, highEntries, List.filter_append]
+  have hsplit : List.range' 1 (m + q) =
+      List.range' 1 m ++ List.range' (m + 1) q := by
+    simpa [Nat.add_comm] using
+      (List.range'_append_1 (s := 1) (m := m) (n := q)).symm
+  rw [hsplit, highEntries, List.filter_append]
   have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
     apply List.filter_eq_nil_iff.mpr
     intro x hx
@@ -565,12 +568,6 @@ private lemma FilledUntilLast.none_cons_false {rest : List (Option ℕ)}
   cases h with
   | last_none => exact hne rfl
 
-private lemma FilledUntilLast.tail_some {low : ℕ} {rest : List (Option ℕ)}
-    (h : FilledUntilLast (some low :: rest)) : FilledUntilLast rest := by
-  cases h with
-  | last_some => exact FilledUntilLast.nil
-  | cons_some _ tail => exact tail
-
 lemma filledUntilLast_map_some (lows : List ℕ) :
     let _sourceObject := cyclicStackSourceWord
     FilledUntilLast (lows.map some) := by
@@ -657,8 +654,16 @@ lemma successful_highs_of_filled_until_last {n : ℕ} {input : List ℕ}
               | empty hnext _ => exact hnext
               | filled hnext _ _ => exact hnext
             have htailSlots : FilledUntilLast (gapSlots (n / 2) (next :: rest)) := by
-              simp only [gapSlots, if_pos hlow] at hslots
-              exact hslots.tail_some
+              have hslots' : FilledUntilLast
+                  (some low :: gapSlots (n / 2) (next :: rest)) := by
+                simpa only [gapSlots, if_pos hlow] using hslots
+              have tailSome : ∀ {slots : List (Option ℕ)},
+                  FilledUntilLast (some low :: slots) → FilledUntilLast slots := by
+                intro slots h
+                cases h with
+                | last_some => exact FilledUntilLast.nil
+                | cons_some _ tail => exact tail
+              exact tailSome hslots'
             have htail := ih htailSlots (pre ++ [high, low]) (by
               simpa [List.append_assoc] using hwhole)
             have hadj := filled_gap_high_increase hhigh hlow hnext hwhole houtput
