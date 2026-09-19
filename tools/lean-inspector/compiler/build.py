@@ -33,8 +33,19 @@ SOURCES = {
 
 
 def sha(path):
+    """Return a streaming SHA-256 on every supported runner Python.
+
+    ``hashlib.file_digest`` was added in Python 3.11, while the native report
+    entry still runs with the system ``python3`` on Linux images (currently
+    Python 3.9).  Keeping the fallback here preserves the exact byte digest
+    contract without requiring a particular interpreter for compiler-origin
+    construction.
+    """
+    digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def canonical(value):
