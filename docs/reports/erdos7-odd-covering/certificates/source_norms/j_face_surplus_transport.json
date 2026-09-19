@@ -1,0 +1,462 @@
+{
+  "schema": "erdos7-j-face-surplus-transport-v1",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "coefficients": {
+    "linear_prices": {
+      "E5": 22,
+      "E15": 14,
+      "E5d": 2,
+      "E15d": 4,
+      "E3": 1,
+      "omega": 4
+    },
+    "family_error_rows": {
+      "test3": [
+        1,
+        2,
+        1,
+        2,
+        0,
+        1
+      ],
+      "test9": [
+        1,
+        2,
+        1,
+        2,
+        0,
+        1
+      ],
+      "test5": [
+        10,
+        5,
+        0,
+        0,
+        1,
+        1
+      ],
+      "test15": [
+        10,
+        5,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "kappa_prices": [
+      "1/24",
+      "1/30",
+      "1/90",
+      "1/90",
+      "1/120",
+      "1/360"
+    ],
+    "complete_constant_categories": [
+      "11/120",
+      "2/45",
+      "11/360",
+      "4/75",
+      "13/600",
+      "1/25",
+      "1/60",
+      "1/36",
+      "1/72",
+      "3/20"
+    ],
+    "other_five_slot_gaps": [
+      "1/10",
+      "1/15",
+      "1/45",
+      "1/50"
+    ],
+    "other_fifteen_carrier_gaps": [
+      "1/15",
+      "1/15",
+      "1/45",
+      "1/75",
+      "1/30"
+    ],
+    "H_weighted_pure5_loss": "5/18",
+    "H_net_improvement_coefficient": "4/15",
+    "old_carrier_vertices": [
+      {
+        "beta_cell": 2,
+        "late_cell": 2,
+        "a": [
+          "7/45",
+          "37/180",
+          "1/40",
+          "7/30",
+          "7/30"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "1/40",
+          "7/30",
+          "7/30",
+          "13/36",
+          "31/60",
+          "17/30",
+          "139/360",
+          "107/180",
+          "107/180",
+          "59/120",
+          "233/360",
+          "251/360",
+          "31/60",
+          "29/40",
+          "29/40"
+        ]
+      },
+      {
+        "beta_cell": 2,
+        "late_cell": 3,
+        "a": [
+          "7/45",
+          "37/180",
+          "17/180",
+          "59/360",
+          "7/30"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "17/180",
+          "59/360",
+          "7/30",
+          "13/36",
+          "31/60",
+          "17/30",
+          "41/90",
+          "21/40",
+          "107/180",
+          "59/120",
+          "233/360",
+          "251/360",
+          "211/360",
+          "59/90",
+          "29/40"
+        ]
+      },
+      {
+        "beta_cell": 2,
+        "late_cell": 4,
+        "a": [
+          "7/45",
+          "37/180",
+          "17/180",
+          "7/30",
+          "59/360"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "17/180",
+          "7/30",
+          "59/360",
+          "13/36",
+          "31/60",
+          "17/30",
+          "41/90",
+          "107/180",
+          "21/40",
+          "59/120",
+          "233/360",
+          "251/360",
+          "211/360",
+          "29/40",
+          "59/90"
+        ]
+      },
+      {
+        "beta_cell": 3,
+        "late_cell": 2,
+        "a": [
+          "7/45",
+          "37/180",
+          "59/360",
+          "17/180",
+          "7/30"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "59/360",
+          "17/180",
+          "7/30",
+          "13/36",
+          "31/60",
+          "17/30",
+          "21/40",
+          "41/90",
+          "107/180",
+          "59/120",
+          "233/360",
+          "251/360",
+          "59/90",
+          "211/360",
+          "29/40"
+        ]
+      },
+      {
+        "beta_cell": 3,
+        "late_cell": 3,
+        "a": [
+          "7/45",
+          "37/180",
+          "7/30",
+          "1/40",
+          "7/30"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "7/30",
+          "1/40",
+          "7/30",
+          "13/36",
+          "31/60",
+          "17/30",
+          "107/180",
+          "139/360",
+          "107/180",
+          "59/120",
+          "233/360",
+          "251/360",
+          "29/40",
+          "31/60",
+          "29/40"
+        ]
+      },
+      {
+        "beta_cell": 3,
+        "late_cell": 4,
+        "a": [
+          "7/45",
+          "37/180",
+          "7/30",
+          "17/180",
+          "59/360"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "7/30",
+          "17/180",
+          "59/360",
+          "13/36",
+          "31/60",
+          "17/30",
+          "107/180",
+          "41/90",
+          "21/40",
+          "59/120",
+          "233/360",
+          "251/360",
+          "29/40",
+          "211/360",
+          "59/90"
+        ]
+      },
+      {
+        "beta_cell": 4,
+        "late_cell": 2,
+        "a": [
+          "7/45",
+          "37/180",
+          "59/360",
+          "7/30",
+          "17/180"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "59/360",
+          "7/30",
+          "17/180",
+          "13/36",
+          "31/60",
+          "17/30",
+          "21/40",
+          "107/180",
+          "41/90",
+          "59/120",
+          "233/360",
+          "251/360",
+          "59/90",
+          "29/40",
+          "211/360"
+        ]
+      },
+      {
+        "beta_cell": 4,
+        "late_cell": 3,
+        "a": [
+          "7/45",
+          "37/180",
+          "7/30",
+          "59/360",
+          "17/180"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "7/30",
+          "59/360",
+          "17/180",
+          "13/36",
+          "31/60",
+          "17/30",
+          "107/180",
+          "21/40",
+          "41/90",
+          "59/120",
+          "233/360",
+          "251/360",
+          "29/40",
+          "59/90",
+          "211/360"
+        ]
+      },
+      {
+        "beta_cell": 4,
+        "late_cell": 4,
+        "a": [
+          "7/45",
+          "37/180",
+          "7/30",
+          "7/30",
+          "1/40"
+        ],
+        "carrier_coefficients": [
+          "0",
+          "7/45",
+          "37/180",
+          "7/30",
+          "7/30",
+          "1/40",
+          "13/36",
+          "31/60",
+          "17/30",
+          "107/180",
+          "107/180",
+          "139/360",
+          "59/120",
+          "233/360",
+          "251/360",
+          "29/40",
+          "29/40",
+          "31/60"
+        ]
+      }
+    ],
+    "reference_envelope_checks": [
+      {
+        "kappa": "0",
+        "pure3_reference": "11/20",
+        "pure5_reference": "13/30"
+      },
+      {
+        "kappa": "1/40",
+        "pure3_reference": "443/800",
+        "pure5_reference": "313/720"
+      },
+      {
+        "kappa": "1/2",
+        "pure3_reference": "5/8",
+        "pure5_reference": "83/180"
+      },
+      {
+        "kappa": "1",
+        "pure3_reference": "7/10",
+        "pure5_reference": "22/45"
+      }
+    ]
+  },
+  "complete_series_and_reserve": {
+    "complete_series_checks": 36,
+    "complete_series_digest": "76e31f675f3c2588e7d12078eb0e4ba5c976cba28f661a36f99dc3d852d4a389",
+    "uniform_budget_checks": 63,
+    "minimum_budget_slack": "0",
+    "box_epsilon_max": "1/1000",
+    "box_kappa_max": "1/40",
+    "box_margin": {
+      "margin_lower": "151237/648000",
+      "old49_fixed_layout_upper": "107987/486000",
+      "old49_replacement_reserve": "21763/1944000",
+      "complete_G3": {
+        "value": "53/10125",
+        "crossing": 5,
+        "constant_terms": 2,
+        "geometric_tail": "1/810"
+      },
+      "complete_G5": {
+        "value": "1/600",
+        "crossing": 3,
+        "constant_terms": 1,
+        "geometric_tail": "1/1500"
+      }
+    },
+    "box_reserve_excess_over_one_hundredth": "2323/1944000"
+  },
+  "actual_finite_collision": {
+    "height": 3,
+    "changed_depth": 3,
+    "old_grid": [
+      27,
+      125
+    ],
+    "seven_period": 343,
+    "original_odd_labels": 63,
+    "changed_label": {
+      "modulus": 5145,
+      "before": 49,
+      "after": 1519,
+      "depth": 3
+    },
+    "label_digest": "08a864834cb2e91339ceebcbda9d4adf8005e26d450c7429a1ca9f746b942569",
+    "source_mass": "913/3375",
+    "pure7_survivor_mass": "286/343",
+    "target_source_points": 225,
+    "target_old_mass": "1/15",
+    "changed_union_pairs": [
+      [
+        3,
+        1
+      ]
+    ],
+    "deleted_before": "323/3250",
+    "deleted_after": "409/4125",
+    "survivor_before": "15017/87750",
+    "survivor_after": "6362/37125",
+    "normalized_union_loss": "1/4290",
+    "virtual_total_before_and_after": "21318/214375",
+    "omega_before": "323/5573750",
+    "omega_after": "2059/7074375",
+    "complete_family_defects_before_and_after": {
+      "E5": "2/33075",
+      "E15": "1/25725",
+      "E5d": "367/1653750",
+      "E15d": "367/2572500",
+      "E3": "1081/385875"
+    },
+    "shallow_good_carrier_weight": "342/343",
+    "empty_carrier_weight": "1/343",
+    "limiting_positive_epsilon_and_omega": "2/8575",
+    "scope": "Actual finite original-label collision. Exact source face, pi_A=1 and zero capacity defects hold only in the complete limiting family."
+  },
+  "scope": "Ordinary exact-J-source-face surplus theorem arithmetic, complete unbounded geometric sums and a genuine finite collision. The finite fixture is not on the exact limiting source face. No source-perturbation theorem, new global K, Lean verification or unrestricted Erdos7 resolution."
+}

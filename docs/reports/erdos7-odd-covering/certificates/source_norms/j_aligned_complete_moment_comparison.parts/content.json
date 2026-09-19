@@ -1,0 +1,107 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-complete-moment-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "cfb7c954cd01ef340adfbc5308ca1f71194f0daff4df31a27e4414eabec5911f",
+    "kind": "value"
+  },
+  "domain": {
+    "kind": "inline",
+    "value": "Actual countable-label endpoint qJ=1, source45/135 aligned, rho=2/675; either root0 orientation."
+  },
+  "actual_survivor_mass": {
+    "kind": "inline",
+    "value": "413/2700"
+  },
+  "basis": {
+    "path": "content/004-basis.json",
+    "sha256": "b61f8392c2f6f61c48482189ca9111a61c967eb4e70665cc0d3bbff256a25213",
+    "kind": "value"
+  },
+  "all_original_indices": {
+    "path": "content/005-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "original_cost_tags": {
+    "path": "content/006-original_cost_tags.json",
+    "sha256": "386608e2ad3679cde1707dc810fd49a3e39cf6e2a68d094375a1bccbffcc089b",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/007-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "results": {
+    "path": "content/012-results.json",
+    "sha256": "3b6a04006b8ee7196af08b5a8c86e0d6851040ffbd95134f4f7dc6eac692488b",
+    "kind": "array"
+  },
+  "comparison_upper": {
+    "path": "content/013-comparison_upper.json",
+    "sha256": "b91674ff30e8df63e691e7f9816ef166cec0575185c3d3024e805c321c34910b",
+    "kind": "value"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "actual_source_observations": 18,
+      "original_costs": 52,
+      "targets": 59,
+      "low_load_inequalities": 472,
+      "whole_tail_minima": 59
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete ordinary J inequality on the actual aligned endpoint. Every original function retains its own load and independent residues, one actual source and survivor, and complete exponent/count tails. No old saturated numerical bound or old finite moment witness is used. No actual optimizer, Gamma19 bound, explicit finite-source neighborhood, global join, later-prime continuation, unrestricted Erdos7 result or Lean verification is asserted."
+  }
+}

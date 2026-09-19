@@ -1,0 +1,359 @@
+{
+  "schema": "erdos7-exact-survival-comparison-boundary-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_mass": "1/4",
+  "survivor_mass": "3/20",
+  "finite_actual_histograms": [
+    {
+      "height": 3,
+      "period35": 3375,
+      "source_mass": "913/3375",
+      "cofactor_mass": "187/375",
+      "survivor_mass": "15017/87750",
+      "kappa": "57/286",
+      "carrier_weight": "342/343",
+      "empty_weight": "1/343",
+      "source_histogram": {
+        "1": "23/225",
+        "2": "68/1125",
+        "3": "32/1125",
+        "4": "163/3375",
+        "6": "64/3375",
+        "8": "26/3375",
+        "12": "2/1125",
+        "16": "1/3375",
+        "9": "8/3375"
+      },
+      "removed_cofactor_histogram": {
+        "1": "223/1125",
+        "2": "412/3375",
+        "3": "98/3375",
+        "4": "269/3375",
+        "6": "148/3375",
+        "8": "52/3375",
+        "12": "13/3375",
+        "16": "2/3375",
+        "9": "4/675"
+      },
+      "costs": [
+        {
+          "threshold": "5/2",
+          "pre_deletion_hinge": "679813/1930500",
+          "deleted_hinge": "29203/321750",
+          "actual_margin": "108619/321750"
+        },
+        {
+          "threshold": "4",
+          "pre_deletion_hinge": "7306/37125",
+          "deleted_hinge": "2318/53625",
+          "actual_margin": "3391/193050"
+        },
+        {
+          "threshold": "5",
+          "pre_deletion_hinge": "145807/965250",
+          "deleted_hinge": "9443/321750",
+          "actual_margin": "1767/35750"
+        }
+      ]
+    },
+    {
+      "height": 4,
+      "period35": 50625,
+      "source_mass": "12989/50625",
+      "cofactor_mass": "937/1875",
+      "survivor_mass": "5290463/33766875",
+      "kappa": "400/2001",
+      "carrier_weight": "2400/2401",
+      "empty_weight": "1/2401",
+      "source_histogram": {
+        "1": "4816/50625",
+        "2": "2756/50625",
+        "3": "1408/50625",
+        "4": "248/5625",
+        "5": "202/50625",
+        "6": "64/3375",
+        "8": "272/50625",
+        "10": "118/50625",
+        "15": "26/50625",
+        "20": "2/16875",
+        "25": "1/50625",
+        "9": "8/3375",
+        "12": "64/50625",
+        "16": "8/50625"
+      },
+      "removed_cofactor_histogram": {
+        "1": "10001/50625",
+        "2": "6116/50625",
+        "3": "293/10125",
+        "4": "791/10125",
+        "5": "112/50625",
+        "6": "148/3375",
+        "8": "644/50625",
+        "10": "236/50625",
+        "15": "11/10125",
+        "20": "13/50625",
+        "25": "2/50625",
+        "9": "4/675",
+        "12": "32/10125",
+        "16": "4/10125"
+      },
+      "costs": [
+        {
+          "threshold": "5/2",
+          "pre_deletion_hinge": "2936761/8104050",
+          "deleted_hinge": "395632/4052025",
+          "actual_margin": "28731149/101300625"
+        },
+        {
+          "threshold": "4",
+          "pre_deletion_hinge": "4243037/20260125",
+          "deleted_hinge": "198704/4052025",
+          "actual_margin": "-376196/101300625"
+        },
+        {
+          "threshold": "5",
+          "pre_deletion_hinge": "78604/489375",
+          "deleted_hinge": "138512/4052025",
+          "actual_margin": "3063161/101300625"
+        }
+      ]
+    },
+    {
+      "height": 5,
+      "period35": 759375,
+      "source_mass": "191467/759375",
+      "cofactor_mass": "4687/9375",
+      "survivor_mass": "323659111/2127161250",
+      "kappa": "2801/14006",
+      "carrier_weight": "16806/16807",
+      "empty_weight": "1/16807",
+      "source_histogram": {
+        "1": "7831/84375",
+        "2": "13304/253125",
+        "3": "20984/759375",
+        "4": "33448/759375",
+        "5": "136/50625",
+        "6": "15379/759375",
+        "8": "272/50625",
+        "10": "1216/759375",
+        "12": "1514/759375",
+        "18": "118/759375",
+        "24": "26/759375",
+        "30": "2/253125",
+        "36": "1/759375",
+        "9": "8/3375",
+        "15": "272/759375",
+        "16": "8/50625",
+        "20": "64/759375",
+        "25": "8/759375"
+      },
+      "removed_cofactor_histogram": {
+        "1": "49949/253125",
+        "2": "91348/759375",
+        "3": "4384/151875",
+        "4": "11864/151875",
+        "5": "1376/759375",
+        "6": "33761/759375",
+        "8": "644/50625",
+        "10": "2932/759375",
+        "12": "3508/759375",
+        "18": "49/151875",
+        "24": "11/151875",
+        "30": "13/759375",
+        "36": "2/759375",
+        "9": "4/675",
+        "15": "136/151875",
+        "16": "4/10125",
+        "20": "32/151875",
+        "25": "4/151875"
+      },
+      "costs": [
+        {
+          "threshold": "5/2",
+          "pre_deletion_hinge": "7775933579/21271612500",
+          "deleted_hinge": "532811822/5317903125",
+          "actual_margin": "2841691297/10635806250"
+        },
+        {
+          "threshold": "4",
+          "pre_deletion_hinge": "378146123/1772634375",
+          "deleted_hinge": "272657743/5317903125",
+          "actual_margin": "-105265697/10635806250"
+        },
+        {
+          "threshold": "5",
+          "pre_deletion_hinge": "1750826473/10635806250",
+          "deleted_hinge": "192532337/5317903125",
+          "actual_margin": "126266878/5317903125"
+        }
+      ]
+    },
+    {
+      "height": 6,
+      "period35": 11390625,
+      "source_mass": "2855651/11390625",
+      "cofactor_mass": "23437/46875",
+      "survivor_mass": "168299574563/1116748265625",
+      "kappa": "19608/98041",
+      "carrier_weight": "117648/117649",
+      "empty_weight": "1/117649",
+      "source_histogram": {
+        "1": "1048468/11390625",
+        "2": "118366/2278125",
+        "3": "314152/11390625",
+        "4": "501584/11390625",
+        "5": "30568/11390625",
+        "6": "25096/1265625",
+        "7": "962/2278125",
+        "8": "272/50625",
+        "10": "1216/759375",
+        "12": "20048/11390625",
+        "14": "2662/11390625",
+        "21": "554/11390625",
+        "28": "118/11390625",
+        "35": "26/11390625",
+        "42": "2/3796875",
+        "49": "1/11390625",
+        "9": "8/3375",
+        "15": "272/759375",
+        "18": "1216/11390625",
+        "16": "8/50625",
+        "20": "64/759375",
+        "24": "272/11390625",
+        "25": "8/759375",
+        "30": "64/11390625",
+        "36": "8/11390625"
+      },
+      "removed_cofactor_histogram": {
+        "1": "449377/2278125",
+        "2": "1368044/11390625",
+        "3": "65687/2278125",
+        "4": "177949/2278125",
+        "5": "4127/2278125",
+        "6": "505189/11390625",
+        "7": "2008/11390625",
+        "8": "644/50625",
+        "10": "2932/759375",
+        "12": "49796/11390625",
+        "14": "5324/11390625",
+        "21": "227/2278125",
+        "28": "49/2278125",
+        "35": "11/2278125",
+        "42": "13/11390625",
+        "49": "2/11390625",
+        "9": "4/675",
+        "15": "136/151875",
+        "18": "608/2278125",
+        "16": "4/10125",
+        "20": "32/151875",
+        "24": "136/2278125",
+        "25": "4/151875",
+        "30": "32/2278125",
+        "36": "4/2278125"
+      },
+      "costs": [
+        {
+          "threshold": "5/2",
+          "pre_deletion_hinge": "818737763747/2233496531250",
+          "deleted_hinge": "37653288152/372249421875",
+          "actual_margin": "97546497851/372249421875"
+        },
+        {
+          "threshold": "4",
+          "pre_deletion_hinge": "239618429659/1116748265625",
+          "deleted_hinge": "19405050664/372249421875",
+          "actual_margin": "-13103703104/1116748265625"
+        },
+        {
+          "threshold": "5",
+          "pre_deletion_hinge": "185257145648/1116748265625",
+          "deleted_hinge": "4590160904/124083140625",
+          "actual_margin": "2705986339/124083140625"
+        }
+      ]
+    }
+  ],
+  "complete_actual_costs": [
+    {
+      "threshold": "5/2",
+      "barrier": "7/2",
+      "pre_deletion_hinge": "53959/147000",
+      "deleted_hinge": "1831/18000",
+      "surviving_hinge": "46807/176400",
+      "actual_margin": "45803/176400"
+    },
+    {
+      "threshold": "4",
+      "barrier": "1",
+      "pre_deletion_hinge": "3321163/15435000",
+      "deleted_hinge": "1777/33750",
+      "surviving_hinge": "1505089/9261000",
+      "actual_margin": "-115939/9261000"
+    },
+    {
+      "threshold": "5",
+      "barrier": "1",
+      "pre_deletion_hinge": "269853023/1620675000",
+      "deleted_hinge": "75899/2025000",
+      "surviving_hinge": "62732557/486202500",
+      "actual_margin": "5098909/243101250"
+    }
+  ],
+  "survival_weights": [
+    "1/22",
+    "1/6",
+    "4/33"
+  ],
+  "q": "23/42",
+  "combined_margin_upper": "1573445311/128357460000",
+  "denominator_upper": "12117093811/128357460000",
+  "fixed_square_margin": "5701/3888",
+  "fixed_numerator": "16632177193488738812476720877032433019439/449729701159543356783713630148000000000",
+  "offset": "185694867601/8599322160",
+  "certifiable_K_lower_bound": "86218021264866661646394378315020528544556307/208581453821091931839882213739521773400000",
+  "gap_above403": "2159695374966613114921846177993253864356307/208581453821091931839882213739521773400000",
+  "exact_AP11_dilation": {
+    "physical_caps": [
+      [
+        11,
+        "5/3"
+      ],
+      [
+        13,
+        "12/7"
+      ]
+    ],
+    "actual_low_load_masses": {
+      "1": "23/630",
+      "2": "949/29400",
+      "3": "87947/4630500",
+      "4": "13966987/486202500"
+    },
+    "compression_gap_at_one": "6653/175692",
+    "compression_gap_at_two": "31/1452",
+    "raw_denominator_gain": "32101757/108472240800",
+    "required_gain_for403": "2159695374966613114921846177993253864356307/842724672356535473640952566289216526850000000",
+    "raw_survivor_first_moment": "41/72",
+    "exact_dilated_bad_cost": "2410296534497/12203127090000",
+    "denominator_upper": "4044603032429/42710944815000",
+    "certifiable_K_lower_bound": "5072478916121259734553727325478823117587871/12307961740440067066961922810098815200000",
+    "scope": "Only restores the full AP11 count dilation before the AP13/T5 bound. The physical caps and profile49 numerator remain fixed; all original blocks may choose the same actual tensor test. This is still a boundary of a sufficient comparison, not an actual K lower bound."
+  },
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "certificates/source_norms/full_linear_carrier_frontier.json": "237ed11241550037c69c855742d3f6e0a3a9c362ae2a861a173d3450e32375c0",
+    "certificates/source_norms/allocated_seven_thresholds.json": "9400e4fae0a400edcc7ee7459103af677e512592823b683f67e7c896f8d345b8",
+    "certificates/source_norms/joint_survival_carriers.json": "9b8b6f5bfabed669cea810b759d2d02f19e47cce1999851dcd031cfa77115a72",
+    "certificates/source_norms/shared_source_deficits.json": "bd47e5157698faaaed4ddfb5fadf93f51dc11c69fe89e15a3a74e14117445588",
+    "frontier/verify_allocated_seven_thresholds.py": "c9490ee0f1b5943d6b9f37d5fb1b29c8db4cffe5fce77b052dffbf70368985d2",
+    "frontier/verify_full_linear_carrier_frontier.py": "1a97de206716b5ae1822ffca4b94e5affb3be78e763002bdf554d3a95ac8f948",
+    "frontier/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d"
+  },
+  "scope": "Lower bound on a certifiable upper target with the fixed49 numerator and unchanged three-hinge survival functional. Uniform lower margins must apply to the whole actual carrier mixture and admit its limiting endpoint, for example by lower semicontinuity of that whole mixture margin. Actual source and mixed7 deletion costs are exact; no separate deletion credits are added. Not a lower bound on actual K, not a Lean result, and not a resolution of unrestricted Erdos7."
+}

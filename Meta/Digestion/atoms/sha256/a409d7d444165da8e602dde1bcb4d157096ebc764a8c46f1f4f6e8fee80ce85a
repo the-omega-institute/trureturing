@@ -1,0 +1,8 @@
+**定义 120.1（完整实验行为）。** 定义
+$$
+\beta_s:X_s\longrightarrow\prod_{e\in\mathcal E_s}Y_e,\qquad
+\beta_s(x)=(e(x))_{e\in\mathcal E_s},\qquad
+Q_s=\beta_s[X_s].
+$$
+只把实际可实现行为组成 $Q_s$。令 $x\simeq_s y$ 表示全部允许实验结果相等，即 $\ker\beta_s$。
+

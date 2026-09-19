@@ -1,0 +1,54 @@
+### 123.4 同一有向差分给出能量、割权与概率流
+
+给顶点严格正概率权重 $\mu_x$ 和无向边导纳 $w_e>0$。令 $M=\operatorname{diag}(\mu_x)$、$W=\operatorname{diag}(w_e)$，并定义
+$$
+L_\mu=M^{-1}D^{\mathsf T}WD.
+$$
+对任意实函数 $f,g$，有
+$$
+\langle f,L_\mu g\rangle_\mu
+=\sum_e w_e(Df)(e)(Dg)(e).
+$$
+所以 $L_\mu$ 在 $L^2(\mu)$ 中自伴、半正定、消去常数；其核是在每个连通分量上常值的函数。对事件指标，
+$$
+\langle\mathbf1_A,L_\mu\mathbf1_A\rangle_\mu
+=\sum_{e\text{ crosses }A,A^c}w_e.
+$$
+取补集不改变该能量，因为有向差分整体变号后平方保持。
+
+给观察 $q$，将同一纤维内的不同顶点全部连接，并置
+$$
+w_{xy}=\frac{\mu_x\mu_y}{p_{q(x)}},\qquad
+p_b=\sum_{q(z)=b}\mu_z.
+$$
+则
+$$
+(L_\mu f)(x)
+=\frac1{\mu_x}\sum_{y:q(y)=q(x)}w_{xy}(f(x)-f(y))
+=f(x)-(Pf)(x).
+$$
+因此 $L_\mu=I-P$，前述有向割能量就是条件残差平方。严格正权保证：标签 $b$ 属于观察边界 $\partial_qA$，当且仅当该纤维里存在一条 $D\mathbf1_A\ne0$ 的边。于是观察边界的集合判据、有向割的支撑和带权方差经这张具体纤维图相连。
+
+最后，令概率质量 $p_x=\mu_x\rho_x$，并选择动力学 $\dot\rho=-L_\mu\rho$。定义按参考方向的概率流
+$$
+J=-WD\rho.
+$$
+则 $\dot p=D^{\mathsf T}J$。对任意事件 $A$，离散 Stokes 给精确收支
+$$
+\boxed{\frac d{dt}\sum_{x\in A}p_x
+=\langle\mathbf1_A,D^{\mathsf T}J\rangle
+=\langle D\mathbf1_A,J\rangle.}
+$$
+事件内部的总质量变化等于跨割净流入；共同内部边不贡献于总收支。这是“内部体量—边界流—过程变化”的有限关系模型。
+
+在 $\rho_x>0$ 时，相对参考的 KL 满足
+$$
+\begin{aligned}
+\frac d{dt}D(p\Vert\mu)
+&=\sum_x\dot p_x\log\rho_x
+=\langle D\log\rho,J\rangle\\
+&=-\sum_e w_e(D\rho)(e)(D\log\rho)(e)\le0.
+\end{aligned}
+$$
+最后的不等式由对数严格递增逐边得到。对称导纳给出的转移率为 $w_{xy}/\mu_x$，满足关于 $\mu$ 的详细平衡；非负性与质量保持由有限 Markov 生成元性质成立。该动力学是明确添加的关系规则，而非由链边界消去律唯一决定。
+

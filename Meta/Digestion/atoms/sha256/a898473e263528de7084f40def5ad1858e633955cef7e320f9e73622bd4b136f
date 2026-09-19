@@ -1,0 +1,10 @@
+**命题 130.3（两项损失）。**
+
+$$
+g=(I-P_M)\Pi f,\qquad
+I_{\mathrm{full}}-I_{\mathrm{obs}}
+=\|(I-\Pi)f\|_p^2+\|P_M\Pi f\|_p^2.
+$$
+
+因此 $I_{\mathrm{obs}}\le I_{\mathrm{full}}$，等号成立当且仅当 $\Pi f=f$。
+

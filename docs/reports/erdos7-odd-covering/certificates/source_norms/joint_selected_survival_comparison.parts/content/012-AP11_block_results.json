@@ -1,0 +1,264 @@
+[
+  {
+    "block": 0,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363",
+      "5": "28/33"
+    },
+    "previous_upper": "17233291753/101692725750",
+    "joint_mean_upper": "5889718452713543020427/34866077400000000000000",
+    "denominator_gain": "131871038205198857011/1708437792600000000000000",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363",
+        "5": "28/33"
+      },
+      "complete_hinge_upper": "5889718452713543020427/34866077400000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124978,
+        "four": 1100,
+        "four_bounded": 1087,
+        "six": 130,
+        "six_bounded": 113,
+        "joint": 18
+      },
+      "unique_dual_certificates": 17,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 126233,
+      "maximum_pruned_uppers": {
+        "two": "14677550677/87165193500",
+        "four": "51454239437/305078177250",
+        "six": "25682647681/152539088625"
+      },
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "26664805891/152539088625",
+        "four_projection_upper": "51876858557/305078177250",
+        "six_projection_upper": "51695736077/305078177250",
+        "joint_raw_upper": "403861323857060335603/3874008600000000000000",
+        "complete_tail_constant": "564239597/8716519350",
+        "mean_credit": "271/4743684",
+        "joint_complete_upper": "5889718452713543020427/34866077400000000000000",
+        "accepted_upper": "5889718452713543020427/34866077400000000000000",
+        "dual_key": "3476e339c60982aaebb90f479f1ae3877c59f2d369ef052c79fa5f0f38671f5a"
+      },
+      "branch_decisions_sha256": "55936c3940ccf5a30d0e2f7f7a723656fa0a0967e94a59f3e1451b26b136c7eb"
+    }
+  },
+  {
+    "block": 1,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363"
+    },
+    "previous_upper": "3407797/71155260",
+    "joint_mean_upper": "104179560625424798251/2179129837500000000000",
+    "denominator_gain": "2274351846607429/188319862500000000000",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363"
+      },
+      "complete_hinge_upper": "104179560625424798251/2179129837500000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124985,
+        "four": 750,
+        "four_bounded": 736,
+        "six": 140,
+        "six_bounded": 93,
+        "joint": 48
+      },
+      "unique_dual_certificates": 48,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 125893,
+      "maximum_pruned_uppers": {
+        "two": "41456542/871651935",
+        "four": "23567083/498086820",
+        "six": "166622683/3486607740"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          1
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "3407797/71155260",
+        "four_projection_upper": "3407797/71155260",
+        "six_projection_upper": "3407797/71155260",
+        "joint_raw_upper": "500251702809012233/14824012500000000000",
+        "complete_tail_constant": "8238851/581101290",
+        "mean_credit": "16531/142310520",
+        "joint_complete_upper": "104179560625424798251/2179129837500000000000",
+        "accepted_upper": "104179560625424798251/2179129837500000000000",
+        "dual_key": "a07306f317a3884cad921633586316616e61a7ef7861f79c43ea448df920f6be"
+      },
+      "branch_decisions_sha256": "8f176da9712f8967ea40fd1b8ade6d05a8850f959a37bd8599501e93bece4a25"
+    }
+  },
+  {
+    "block": 2,
+    "hinge_coefficients": {
+      "1": "1355/263538",
+      "2": "2275/263538"
+    },
+    "previous_upper": "33868/5929605",
+    "joint_mean_upper": "33868/5929605",
+    "denominator_gain": "0",
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "2275/263538"
+      },
+      "complete_hinge_upper": "33868/5929605",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124978,
+        "four": 1100,
+        "four_bounded": 1077,
+        "six": 230,
+        "six_bounded": 161,
+        "joint": 70
+      },
+      "unique_dual_certificates": 70,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 126333,
+      "maximum_pruned_uppers": {
+        "two": "33868/5929605",
+        "four": "234898/41507235",
+        "six": "3313619/581101290"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "33868/5929605",
+        "four_projection_upper": "33868/5929605",
+        "six_projection_upper": "33868/5929605",
+        "joint_raw_upper": "10773721861545259/2515590000000000000",
+        "complete_tail_constant": "9853/6456681",
+        "mean_credit": "4607/47436840",
+        "joint_complete_upper": "3319064000016954829/581101290000000000000",
+        "accepted_upper": "33868/5929605",
+        "dual_key": "bebfa7a1d43213340db496710cbf1ed5cdd5e771f280781d9e75a49e22a45d7a"
+      },
+      "branch_decisions_sha256": "eec38cdbbcccd64c2ef3417205743c346b52151b28c9e1747f19664f410edd4d"
+    }
+  },
+  {
+    "block": 3,
+    "hinge_coefficients": {
+      "1": "85/87846",
+      "2": "25/87846"
+    },
+    "previous_upper": "16081/27671490",
+    "joint_mean_upper": "16081/27671490",
+    "denominator_gain": "0",
+    "scan": {
+      "coefficients": {
+        "1": "85/87846",
+        "2": "25/87846"
+      },
+      "complete_hinge_upper": "16081/27671490",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124976,
+        "four": 1200,
+        "four_bounded": 1175,
+        "six": 250,
+        "six_bounded": 177,
+        "joint": 74
+      },
+      "unique_dual_certificates": 74,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 126453,
+      "maximum_pruned_uppers": {
+        "two": "16081/27671490",
+        "four": "15949/27671490",
+        "six": "898201/1549603440"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "16081/27671490",
+        "four_projection_upper": "16081/27671490",
+        "six_projection_upper": "16081/27671490",
+        "joint_raw_upper": "2236868623066259/4941337500000000000",
+        "complete_tail_constant": "1579/10761135",
+        "mean_credit": "289/15812280",
+        "joint_complete_upper": "5211435186305433/8967612500000000000",
+        "accepted_upper": "16081/27671490",
+        "dual_key": "387f714ec3a6cf6ca8af2bd4ed3ca3d09270a72d311f757401821b0a2ae5d551"
+      },
+      "branch_decisions_sha256": "46a84bb4433ba81791b0304073f024510dc53018d4c5962d2a5d0cdecbdb2d17"
+    }
+  }
+]

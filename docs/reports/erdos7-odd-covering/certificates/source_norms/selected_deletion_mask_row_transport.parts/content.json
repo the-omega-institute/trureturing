@@ -1,0 +1,34 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-selected-deletion-mask-row-transport-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "31937679d0cbc0cc5cbf6782c4e2e971373013949a6b47a7cecc7901adb22a8f",
+    "kind": "value"
+  },
+  "included_constraints": {
+    "kind": "inline",
+    "value": {
+      "E5_totals": 5,
+      "marked_marginals": 8,
+      "fixed_H": 5,
+      "forbidden_slots": 15,
+      "mask_links": 400
+    }
+  },
+  "exact_aggregation_rows": {
+    "kind": "inline",
+    "value": 25
+  },
+  "domains": {
+    "path": "content/004-domains.json",
+    "sha256": "ab6118fbf4c829c5ec8652c50c8e8294f7ead3979d27b154355926528eb8e33d",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Five E5 row groups only, with one actual source and one residual budget. Prices are evaluated on all2060 existing223 rational duals, not a new off-face objective certificate. Other inherited216 constraints, retained135/125 constraints, pruning candidates, objective and complete-tail changes remain separate obligations. No new K comparison, global improvement, Lean verification or unrestricted Erdos7 conclusion."
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "wide_fresh_full_slot_source_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "1/60"
+  },
+  "raw_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "7/600",
+      "7/600",
+      "29/2850",
+      "7/600",
+      "0",
+      "1/45",
+      "1/45",
+      "329/17100",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45"
+    ]
+  },
+  "raw_budgets": {
+    "kind": "inline",
+    "value": [
+      "821/27360",
+      "61/720",
+      "49/342"
+    ]
+  },
+  "dual_count": {
+    "kind": "inline",
+    "value": 2060
+  },
+  "coarse_five_group_error_maximum": {
+    "kind": "inline",
+    "value": "908963861205441564931/337212000000000000000"
+  },
+  "five_group_error_maximum": {
+    "kind": "inline",
+    "value": "35030614129818676829/67830000000000000000"
+  },
+  "maximizing_dual_keys": {
+    "kind": "inline",
+    "value": [
+      "bf70734b04a05b9e2b50aae603a20d3512878ddf833ad3129f1c5c90755c3251"
+    ]
+  },
+  "complete_heavy_controllers": {
+    "path": "content/004-domains/000000/item/010-complete_heavy_controllers.json",
+    "sha256": "6019b73a8c63b3cd8bfdf6735da9560e3ba80ff38321bb1e0954cd3ebb26e4ea",
+    "kind": "array"
+  }
+}

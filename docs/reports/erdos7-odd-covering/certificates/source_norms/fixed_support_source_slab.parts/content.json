@@ -1,0 +1,129 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-fixed-support-source-slab-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/vector_marked_source.py": "d4fb958ac95a62a766debf18b8a7079081d922430e471d594725274acf321fbc",
+      "frontier/broad_weighted_identity_source.py": "e0a89669a6b8b6ff732391b4c27dddd21bf5517f8a37928120e75955349dd98f",
+      "frontier/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/source_barrier_saturation.py": "92076ee71a6be16655bbe5c2ac223db6502da1ab5c3553a7f83bb555dbbb8363",
+      "certificates/source_norms/whole_quadratic_same_head.json": "b77b50ff8961dcfafaefdb004b538a1a2409e69944f894048ae25b1ae0bede3a",
+      "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+      "certificates/source_norms/broad_weighted_identity_source.json": "e81e64cf6861998f1e6a108e3bebebb40d3f2b278f583f55513772fc33777030",
+      "frontier/broad_five_slot_tradeoff.py": "dba48afdad4ee19ec51ba02be78188b7301767fb01a8a9d0de2b7d12758f4fbd",
+      "certificates/source_norms/broad_five_slot_tradeoff.json": "6bb50bb6265b7fa37549441bdf0bb530cb4e9dd30764e4f84b102dfd3a252462",
+      "frontier/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "4dc984fd1f8554a4938b59f1fd74ec8851833c4d3b43f329b7cc306c9ad7c19e",
+      "certificates/layout_gap_frontier_certificate.json": "88bd32774448af939f4cf34a8419fed50ac88afc7048500be71e6c1a6495f0fa",
+      "certificates/pure_root_profile_certificate.json": "b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196",
+      "frontier/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificates/ap_schedule_frontier_certificate.json": "85bc95f89121f2492cedf3d8db228434c49f04650645b789780b359c54ac4b40",
+      "frontier/verify_ap_schedule.py": "73c01b9da8b511312e699545cd633cb17d7533431d1ce368d43e1156ed585e70",
+      "frontier/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained_five_tests.json": "3fac691eb1f3081ab54559a0c396a88abd244efc73e4b6ca1875753a50b8dbc4",
+      "frontier/verify_retained_five_tests.py": "920dd25084bb7670149e7c23ad5057b408326a4c937ce69630ca3889b4ca5f23",
+      "frontier/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+      "certificates/source_norms/retained_quadratic_tests.json": "cfcac117e8988e6b3e37dfde961e6f35cb64a05aab700c09297424dadd534e29",
+      "frontier/verify_retained_quadratic_tests.py": "2ba3c805a4cad11c9a004782e8104c01f7a8c0f9bf06058f8f80da55e772d31f",
+      "frontier/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+      "frontier/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+      "frontier/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+      "frontier/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+      "certificates/source_norms/shared_source_deficits.json": "bd47e5157698faaaed4ddfb5fadf93f51dc11c69fe89e15a3a74e14117445588",
+      "certificates/source_norms/residual_shell_k_comparison.json": "b974deee02e1c08d4e8e285dba9c1cd9e72b271c0c382d706f1eec9dabdbfced"
+    }
+  },
+  "delta_bound": {
+    "kind": "inline",
+    "value": "1/18"
+  },
+  "z_loss_bound": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "slot_loss_strict_cutoff": {
+    "kind": "inline",
+    "value": "1/2500"
+  },
+  "joint_source_generators": {
+    "path": "content/005-joint_source_generators.json",
+    "sha256": "fe03a528d10825bcedcd55a653c98bf826f1edd9545a9c507c0188bb767cc101",
+    "kind": "value"
+  },
+  "source_factor_sizes": {
+    "kind": "inline",
+    "value": [
+      6,
+      36,
+      6
+    ]
+  },
+  "source_points": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "carriers": {
+    "path": "content/008-carriers.json",
+    "sha256": "caa72d19ae7d793200011cf566477c88f8666d80d6d052e989ee87d30cf98a3e",
+    "kind": "value"
+  },
+  "branch_carrier_evaluations": {
+    "kind": "inline",
+    "value": 4665600
+  },
+  "old_carrier_reconstruction_checks": {
+    "kind": "inline",
+    "value": 216
+  },
+  "all_new_margin_values_sha256": {
+    "kind": "inline",
+    "value": "f080070de3554f80fa0b5220b087a0d6fc81b66abfa98d5b091cb089c02cbbc1"
+  },
+  "source_minima": {
+    "path": "content/012-source_minima.json",
+    "sha256": "ff6d60505ef9793ca87e2e25c176244dd945c8a5262d3234f1951435bb086d9c",
+    "kind": "array"
+  },
+  "heavy_bounds": {
+    "path": "content/013-heavy_bounds.json",
+    "sha256": "93e459d9fe5a8f6c3ef2f01bedb098831b6e2fd3d4ff2d9b59b155eee761f5f5",
+    "kind": "array"
+  },
+  "negative_gain_points": {
+    "kind": "inline",
+    "value": {
+      "0": 13465,
+      "16": 13465
+    }
+  },
+  "weighted_heavy_replacement": {
+    "kind": "inline",
+    "value": {
+      "barrier": "9842264924061537171771956384088145223/143243234143364170129428019217812500",
+      "margin_lower": "32734465824180348472/4201663002429395377875",
+      "one_residual_price": "1217142336875/31668671034"
+    }
+  },
+  "unchanged_original_indices": {
+    "path": "content/016-unchanged_original_indices.json",
+    "sha256": "dc8289e03ccbf62842f684685a051fd002954530c639c6826c4e33ae6f17fe73",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary fixed-support continuum theorem on the original actual source slab and first-beta face, using a containing6x36x6 product and all18 carriers. Both heavy absolute margins attain their positive lower bounds at canonical398. The carrier mixture is actual and every original test/tail remains. The complete local160 inner comparison is strengthened; a full comparison on the entire new slab remains open. No positive gain relative to each old margin, actual-family attainment at slab generators, globalK improvement, Lean theorem or unrestricted Erdos7 conclusion."
+  },
+  "complete_inner_comparison": {
+    "path": "content/018-complete_inner_comparison.json",
+    "sha256": "d25bd526894628576088530a0498e2a28302915e6eb9717b8c32ad67e2778355",
+    "kind": "value"
+  }
+}

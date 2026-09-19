@@ -1,0 +1,248 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-slot-gap-global-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "c4a3def43dd59242c927ad9d398721cb33d47882550d2bfab824cd8e1668ee16",
+    "kind": "value"
+  },
+  "concentration_delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "slot_loss_cutoff": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "source_guards": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "r_upper_inclusive": "1/520",
+      "Delta_upper": "1/36",
+      "root1_total_deficit_upper": "1/54",
+      "h1_lower": "161/486",
+      "eta_first_beta_lower": "53/486",
+      "h0_upper": "41/243",
+      "root_mass_difference_lower": "79/486",
+      "first_label_forcing_margin": "31/180",
+      "four_gap_guards": {
+        "pure5": "51/520",
+        "alpha": "8129/126360",
+        "beta": "2513/126360",
+        "remaining": "4567/227448"
+      },
+      "G_lower": "2513/126360",
+      "best_slot_credit_lower": "51/2600"
+    }
+  },
+  "slot_gap_lower": {
+    "kind": "inline",
+    "value": "2513/126360"
+  },
+  "previous_slot_gap_lower": {
+    "kind": "inline",
+    "value": "7499/379080"
+  },
+  "fixed_old_indices": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      11,
+      13,
+      14,
+      15,
+      19,
+      20,
+      21,
+      22,
+      25,
+      27,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37,
+      38,
+      39,
+      40,
+      42,
+      43,
+      45
+    ]
+  },
+  "fixed_deep_indices": {
+    "kind": "inline",
+    "value": [
+      0,
+      1,
+      2,
+      7,
+      8,
+      10,
+      12,
+      16,
+      17,
+      18,
+      23,
+      24,
+      26,
+      28,
+      32,
+      33,
+      36,
+      41,
+      44
+    ]
+  },
+  "cost_rows": {
+    "path": "content/009-cost_rows.json",
+    "sha256": "bc4ccbe099bf6b8c44b1bad9857bea36be6429e9ab0ec15b585283cd17f4b1a6",
+    "kind": "array"
+  },
+  "weighted_credit": {
+    "kind": "inline",
+    "value": "13984949245536176840531588729/707734377807556120799633856000"
+  },
+  "combined_residual_penalty": {
+    "kind": "inline",
+    "value": "451896694199085314479664772229/12163713552121041313459056000"
+  },
+  "combined_escape_penalty": {
+    "kind": "inline",
+    "value": "1626740964132810385459985700332127421489/3154636730230866529407028478057850000000"
+  },
+  "credit_improvement_from_gap": {
+    "kind": "inline",
+    "value": "8958440746880334610976389/92890137087241740854951943600"
+  },
+  "residual_penalty_reduction_from_gap": {
+    "kind": "inline",
+    "value": "2212986454021531388697515/97452658042046676078663954"
+  },
+  "S0_upper_constant": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "S0_upper_sigma_coefficient": {
+    "kind": "inline",
+    "value": "5/9"
+  },
+  "E_upper_rho_coefficient": {
+    "kind": "inline",
+    "value": "1"
+  },
+  "old_mass_coefficient": {
+    "kind": "inline",
+    "value": "14005839092163790978433304199852525334431910915059219/258053321422020518900769276553892599223596620000000"
+  },
+  "conservative_mass_coefficient": {
+    "kind": "inline",
+    "value": "891280654301453988360055325182031459823273341359752932599709/16421574999583123930048953962520438132410694000000000000000"
+  },
+  "residual_after_denominator_charge": {
+    "kind": "inline",
+    "value": "889244379001505680992729254890678925494854415303752932599709/16421574999583123930048953962520438132410694000000000000000"
+  },
+  "unused_residual_budget": {
+    "kind": "inline",
+    "value": "1102414583696138750765868696880238701546762659372325705836250841/64848799673353756399763319197993210184889830606000000000000000"
+  },
+  "first_escape_gap": {
+    "kind": "inline",
+    "value": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000"
+  },
+  "next_escape_gap": {
+    "kind": "inline",
+    "value": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000"
+  },
+  "middle_negative_quadratic": {
+    "kind": "inline",
+    "value": "4375037987821911821125473137867536393368699803273/8183076626669431390542865912601636252532000000000"
+  },
+  "far_negative_quadratic": {
+    "kind": "inline",
+    "value": "4064990306744770031772682329401185508689431803273/8183076626669431390542865912601636252532000000000"
+  },
+  "signed_branch_margins": {
+    "kind": "inline",
+    "value": {
+      "concentrated_small_r_zero_escape": "5324324964468956065224697789/3538671889037780603998169280000",
+      "concentrated_small_r_at_delta": "2016227400096979676876163749247998939711394047869115969/3047558115329777924114305002246160818310831362876000000000",
+      "concentrated_large_r": "866906063152571745513855969942601102539823423752932599709/42696094998916122218127280302553139144267804400000000000000000",
+      "middle_at_delta": "132128101609358147424843724860684819563366963273/709890080440199842560984160784104546543403532000000000",
+      "middle_limit_at_half": "406795745728923678008078141548363419524508536266273/3895144474294649341898404174398378856205232000000000",
+      "far_at_half": "454424706772937695794291405925312485427329178666273/3895144474294649341898404174398378856205232000000000",
+      "far_at_one": "5177599936979521135461245571624380360744648346131/324595372857887445158200347866531571350436000000000"
+    }
+  },
+  "strict_margin_lower": {
+    "kind": "inline",
+    "value": "132128101609358147424843724860684819563366963273/709890080440199842560984160784104546543403532000000000"
+  },
+  "same_target_with_previous_gap": {
+    "kind": "inline",
+    "value": {
+      "valid": true,
+      "signed_branch_margins": {
+        "concentrated_small_r_zero_escape": "104644071656343809680937542369/74312109669793392683961554880000",
+        "concentrated_small_r_at_delta": "1722317092125156212478358801097297744775270513379115969/3047558115329777924114305002246160818310831362876000000000",
+        "concentrated_large_r": "866906063152571745513855969942601102539823423752932599709/42696094998916122218127280302553139144267804400000000000000000",
+        "middle_at_delta": "132128101609358147424843724860684819563366963273/709890080440199842560984160784104546543403532000000000",
+        "middle_limit_at_half": "406795745728923678008078141548363419524508536266273/3895144474294649341898404174398378856205232000000000",
+        "far_at_half": "454424706772937695794291405925312485427329178666273/3895144474294649341898404174398378856205232000000000",
+        "far_at_one": "5177599936979521135461245571624380360744648346131/324595372857887445158200347866531571350436000000000"
+      },
+      "unused_residual_budget": "22997113870435805753314036568813170539283319315313803532217395701/1354599300140612309865808163414348421104425737366000000000000000"
+    }
+  },
+  "old_K0": {
+    "kind": "inline",
+    "value": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000"
+  },
+  "previous_K107": {
+    "kind": "inline",
+    "value": "108482466605093312704498169765165569198939589/212986060315016386011231666281461556328000"
+  },
+  "decrease_from_K0": {
+    "kind": "inline",
+    "value": "31/250"
+  },
+  "new_K": {
+    "kind": "inline",
+    "value": "108481614660852052638954124838500443352714277/212986060315016386011231666281461556328000"
+  },
+  "improvement_over107": {
+    "kind": "inline",
+    "value": "1/250"
+  },
+  "new_mass_coefficient": {
+    "kind": "inline",
+    "value": "13988316042813895680340328152787484817932251449339219/258053321422020518900769276553892599223596620000000"
+  },
+  "positive_denominator_lower_factor": {
+    "kind": "inline",
+    "value": "40593580507/80223412500"
+  },
+  "fallbacks": {
+    "path": "content/036-fallbacks.json",
+    "sha256": "654f741634c97f569fb37231f6abcaad9627b2cb3cd724a4f3e3363ed4cf36e5",
+    "kind": "value"
+  },
+  "complete_cores": {
+    "path": "content/037-complete_cores.json",
+    "sha256": "6dbd3d3a6e6259c621426ff89869ab853238d2242fb3fe1d6ef17cb431ec8ce7",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete global comparison using117 stronger source packing on the entire original103/107 rectangle. All46 fixed alternatives, one actual residual, complete tails, seven branch margins, eight fallbacks and two terminal errors remain. The certificate separately tests whether the same target already follows with the old gap. No saturated-face extrapolation, Lean verification, optimality or unrestricted Erdos7 resolution."
+  }
+}

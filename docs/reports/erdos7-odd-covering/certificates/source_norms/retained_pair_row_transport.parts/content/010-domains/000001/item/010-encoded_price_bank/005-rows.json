@@ -1,0 +1,77 @@
+{
+  "length": 6292,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/000000-000798.json",
+        "sha256": "4baffd3d5603d4303d9c56c13a14eeaad2e57bd578e1ca650dc81da3086b928c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/000798-001596.json",
+        "sha256": "b40b495d206594b0e8f12da3ffea2de38a9079a7d5629fd9147730648ba4aa85",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/001596-002394.json",
+        "sha256": "d2a530fcc23273ec330b6b9dc072e4a2169f16c8f8fc814fc7e5451278458d52",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/002394-003192.json",
+        "sha256": "575b61003a35fcfe07803d85e0133136c30b8bd2d1403c84273f19657a15e240",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/003192-003990.json",
+        "sha256": "14acb17c891424f7799e4cb95a296ee86940290a9d7e3605d15e947456af7ba5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/003990-004788.json",
+        "sha256": "b35be27604a5be13021686cc571e61d8f319a60bded147e5335df65a07ab0b56",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/004788-005586.json",
+        "sha256": "f07a1d89722b8adfaf0dd29a9a8b0c62406c7070bb548851e6998cd4e49b76d8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 6292,
+      "part": {
+        "path": "content/010-domains/000001/item/010-encoded_price_bank/005-rows/005586-006292.json",
+        "sha256": "81d545e95be195758428c08901f18131c4272a5f9d77d16b4180071dc1724b44",
+        "kind": "value"
+      }
+    }
+  ]
+}

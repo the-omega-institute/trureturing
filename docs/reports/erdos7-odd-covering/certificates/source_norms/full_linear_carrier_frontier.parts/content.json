@@ -1,0 +1,262 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-full-linear-carrier-frontier-v1"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "32591696604416043922570546637202187327127/78026443164264664967078568539321769600"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "85384373808161620601/581553711777853386"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "2873884370396495734788444926897322493/30972486365132609061662761799310375"
+  },
+  "combined": {
+    "kind": "inline",
+    "value": "85328025019970695504683045091497055540870007/167366720587347706354383529516845195792000"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "40511716507/80223412500"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "4491249471991516000981466182272744673193844599341/835636218215298084798437579416497775394055000000",
+      "Gamma13": "20770889584359949927705303/4760635031720493933632625",
+      "T13_81": "27222559915600676688618129311742406379/550357257718894822557238305818515125",
+      "combined": "591781272628227430088596045884431986093035135501433/10863270836798875102379688532414471080122715000000",
+      "rho": "3420152243/80223412500"
+    }
+  },
+  "selected_mass_endpoints": {
+    "kind": "inline",
+    "value": {
+      "bound": "D_c",
+      "Gamma13": "D_c",
+      "T13_81": "D_c",
+      "combined": "D_c",
+      "rho": "D_c"
+    }
+  },
+  "minimum_margins": {
+    "kind": "inline",
+    "value": {
+      "bound": "0",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "0",
+      "rho": "0"
+    }
+  },
+  "combined_target_gain": {
+    "kind": "inline",
+    "value": "4985704837879492171019067773471867524773452839/7528491522847050886604046528313986840623160750"
+  },
+  "controllers": {
+    "path": "content/010-controllers.json",
+    "sha256": "1720678523cbb97404181d5911e2feed3c20069cb8992436e0dba72617ef180b",
+    "kind": "value"
+  },
+  "maximizers": {
+    "path": "content/011-maximizers.json",
+    "sha256": "de145e0bcdcd0e81ba3012fabf6dcb5272650bc8e3d33ef3b68b61f211cca3b8",
+    "kind": "value"
+  },
+  "rho_minimizers": {
+    "kind": "inline",
+    "value": [
+      402,
+      404,
+      406,
+      414,
+      416,
+      418,
+      426,
+      428,
+      430,
+      618,
+      620,
+      622,
+      630,
+      632,
+      634,
+      642,
+      644,
+      646
+    ]
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "85384373808161620601/581553711777853386",
+      "rho13": "40511716507/80223412500",
+      "D13": "99018612000000/2147120974871"
+    }
+  },
+  "fallbacks": {
+    "path": "content/014-fallbacks.json",
+    "sha256": "519bb44bc53cff0fd50d9463a21f44ba6b75f2547b32af3a9d379a4b2e90e9d6",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/015-core_errors.json",
+    "sha256": "7fe6639364a68a8fc684fe56583709960ab70e9a2fc2b582f46b7e8faf557c39",
+    "kind": "value"
+  },
+  "consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "consumer_carrier_checks": {
+    "kind": "inline",
+    "value": 23328
+  },
+  "consumer_denominator_checks": {
+    "kind": "inline",
+    "value": 46656
+  },
+  "consumer_target_margin_checks": {
+    "kind": "inline",
+    "value": 116640
+  },
+  "consumer_endpoint_margin_checks": {
+    "kind": "inline",
+    "value": 233280
+  },
+  "fallback_checks": {
+    "kind": "inline",
+    "value": 8
+  },
+  "complete_core_checks": {
+    "kind": "inline",
+    "value": 2
+  },
+  "consumer_margin_sha256": {
+    "kind": "inline",
+    "value": "188b5dcacaf743ac5d3db2890c4d34ac239a432143018dda68fe2318389c7a7f"
+  },
+  "q_effective": {
+    "kind": "inline",
+    "value": "23/42"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "31623610525587809/470050192111500"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "178944068667597492407421033833838271159/1145945873146913361035424153742500000"
+  },
+  "cG": {
+    "kind": "inline",
+    "value": "23559508993421/769588792096410"
+  },
+  "A81": {
+    "kind": "inline",
+    "value": "3302895385270708541/2448027743712364814"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "102715/2916"
+  },
+  "source_comparison_barrier": {
+    "kind": "inline",
+    "value": "45"
+  },
+  "gain_from47": {
+    "kind": "inline",
+    "value": {
+      "bound": "156422494120255679951565354235/444647393730272960866973100624",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "156422494120255679951565354235/444647393730272960866973100624"
+    }
+  },
+  "linear_gain_from47": {
+    "kind": "inline",
+    "value": {
+      "bound": "156422494120255679951565354235/444647393730272960866973100624",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "1057604012233633224560273791610306959974203717862593/7298179910180113905881055536919805355194817016336000"
+    }
+  },
+  "additional_quadratic_gain": {
+    "kind": "inline",
+    "value": {
+      "bound": "0",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "137256590260983333608402289877092751927400796232037/663470900925464900534641412447255032290437910576000"
+    }
+  },
+  "quadratic_alone_stopping": {
+    "kind": "inline",
+    "value": {
+      "index": 402,
+      "carrier": [
+        0,
+        1
+      ],
+      "endpoint": "D_c",
+      "unchanged_targets": {
+        "bound": "3946916608483833183492317042103258625981367/9441199622876024461016506793257934121600",
+        "Gamma13": "85384373808161620601/581553711777853386",
+        "combined": "939255932492828564979463271311817433032375077/1841033926460824769898218824685297153712000"
+      }
+    }
+  },
+  "linear_only": {
+    "path": "content/035-linear_only.json",
+    "sha256": "3e854f531672e3af22b70f417455ce9ebc05c398cee1cc8e7f8f76fee7ed0485",
+    "kind": "value"
+  },
+  "linear_only_endpoint_checks": {
+    "kind": "inline",
+    "value": 233280
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One global41-linear/five-quadratic carrier function;24 true vertex refinements and1272 retained47 lower bounds. Independent square complement, fixed barriers, same actual mass and complete tails. No actual-source cut, no asserted extremal covering family, and unrestricted Erdos7 remains open."
+  },
+  "frontier": {
+    "path": "content/038-frontier.json",
+    "sha256": "09a3241e1fd7c5f9f6c1f3b84453f498553fae957d0252aff6783c9f7ccce993",
+    "kind": "object"
+  },
+  "predecessor_source_profile_sha256": {
+    "kind": "inline",
+    "value": "06820efd31fb6fa50e72a95f52aef3c586f8355e5909dc1bdd1a93179ed7da25"
+  },
+  "predecessor_survival_conditional_sha256": {
+    "kind": "inline",
+    "value": "27bfac501fe2a9ad0c4b9b9a5b6a980dfbafb51f962c5524af9c19ac6e29c1b8"
+  },
+  "predecessor_linear_conditional_sha256": {
+    "kind": "inline",
+    "value": "774516bff04f72c26ec791f56d60190cc2db5420b9dbcbb86f8a81ecefe1a5e6"
+  },
+  "source_sha256": {
+    "path": "content/042-source_sha256.json",
+    "sha256": "447ba4fc29803a65354e5631675dcad52f299f8dc13f4a186debca5f04edba5a",
+    "kind": "value"
+  },
+  "helper_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/source_barrier_saturation.py": "92076ee71a6be16655bbe5c2ac223db6502da1ab5c3553a7f83bb555dbbb8363"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "1a97de206716b5ae1822ffca4b94e5affb3be78e763002bdf554d3a95ac8f948"
+  }
+}

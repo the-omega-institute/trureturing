@@ -1,0 +1,10 @@
+**定义 137.14（标量原子矩与前缀误差）。** 对有限正测度
+$$
+\mu=\sum_{\ell=1}^n w_\ell\delta_{\lambda_\ell},
+\qquad w_\ell>0,\quad\lambda_\ell\ge0,
+$$
+记 $m_k(\mu)=\sum_\ell w_\ell\lambda_\ell^k$。它由 $E=\mathbb R^n$、$C=\operatorname{diag}(\lambda_\ell)$、$J1=(\sqrt{w_\ell})_\ell$ 正实现。两份长度 $N+1$ 的标量矩前缀误差记为
+$$
+d_N(\mu,\nu)=\max_{0\le k\le N}|m_k(\mu)-m_k(\nu)|.
+$$
+

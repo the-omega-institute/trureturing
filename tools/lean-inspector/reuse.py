@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Validate optional evidence that the complete report entry has no new work.
 
-The registered input set, the explicitly registered execution environment and
-the complete five-piece report are sealed only after defaults/report/publication
-succeed. A receipt selects no rules and grants no check success. A miss returns
+The report semantic version, the Lean and configuration inputs, the explicitly
+registered execution environment and the complete five-piece report are sealed
+only after defaults/report/publication succeed. Producer program bytes are not
+part of the seal; the semantic version is their compatibility contract. A receipt selects no rules and grants no check success. A miss returns
 to the normal Lake entry; malformed authored registration remains an error.
 """
 import argparse
@@ -56,15 +57,19 @@ def capture(repository, lake):
             versions[name] = version
     except (OSError, UnicodeError, ValueError, subprocess.SubprocessError) as error:
         return dict(eligible=False, reason='toolchain-unavailable', detail=str(error))
-    # dependency_sources includes every report module; producer_paths includes
-    # inspector/default-audit sources. Addition/deletion changes the exact map.
-    paths = sorted(set(inputs.producer_paths('lean-report') + inputs.dependency_sources()
+    # Report bytes are a function of the Lean sources Lake compiles (every report
+    # module, its registered Lean dependencies and the inspector), the build configuration and the execution
+    # environment. Producer programs (C#, scripts, build properties) are never
+    # hashed here: their compatibility is the explicit report_semantic_version,
+    # bumped by the change that alters report semantics. Addition/deletion of a
+    # Lean source changes the exact map.
+    paths = sorted(set(inputs.dependency_sources() + inputs.expand('inspector_sources')
                        + inputs.expand('config_inputs')))
     files = {}
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, files=files,
+    return dict(eligible=True, semantic_version=inputs.data['report_semantic_version'], files=files,
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
 

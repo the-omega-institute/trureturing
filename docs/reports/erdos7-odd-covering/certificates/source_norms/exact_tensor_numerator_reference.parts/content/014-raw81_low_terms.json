@@ -1,0 +1,56 @@
+[
+  {
+    "count": 1,
+    "probability": "316/429",
+    "square_threshold": "81",
+    "actual_raw_cost": "344886206015982941/236392871006250000",
+    "old_raw_bound": "92329565716407851/56284016906250000",
+    "actual_weighted_cost": "27246010275262652339/25353135415420312500",
+    "old_weighted_bound": "561079668584324633/464343139476562500"
+  },
+  {
+    "count": 2,
+    "probability": "95702/429429",
+    "square_threshold": "81/4",
+    "actual_raw_cost": "10358328583/3889620000",
+    "old_raw_bound": "230720317/69457500",
+    "actual_weighted_cost": "495656381025133/208789453372500",
+    "old_weighted_bound": "22080395777534/7456766191875"
+  },
+  {
+    "count": 3,
+    "probability": "1155422/61408347",
+    "square_threshold": "9",
+    "actual_raw_cost": "114341/35280",
+    "old_raw_bound": "247309/58800",
+    "actual_weighted_cost": "66056053451/120360360120",
+    "old_weighted_bound": "142873129699/200600600200"
+  },
+  {
+    "count": 4,
+    "probability": "161277542/8781393621",
+    "square_threshold": "81/16",
+    "actual_raw_cost": "5024909/1411200",
+    "old_raw_bound": "2384483/504000",
+    "actual_weighted_cost": "405202486146839/387259458686100",
+    "old_weighted_bound": "192281778590393/138306949530750"
+  },
+  {
+    "count": 5,
+    "probability": "171848462/1255739287803",
+    "square_threshold": "81/25",
+    "actual_raw_cost": "67199/18000",
+    "old_raw_bound": "150823/30000",
+    "actual_weighted_cost": "524911127179/41096922146280",
+    "old_weighted_bound": "12959350292113/753443572681800"
+  },
+  {
+    "count": 6,
+    "probability": "72488419226/25652959736547",
+    "square_threshold": "9/4",
+    "actual_raw_cost": "9691/2520",
+    "old_raw_bound": "2509/480",
+    "actual_weighted_cost": "31931148669053/81623053707195",
+    "old_weighted_bound": "6995132455309/13155363967460"
+  }
+]

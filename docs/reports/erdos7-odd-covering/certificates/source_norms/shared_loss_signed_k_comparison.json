@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "163feab0f92b2a82d3e5b087567a4c78345a4ec20d3674b6a3c90a12566e2cc3",
+  "parts_directory": "shared_loss_signed_k_comparison.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "00e1b4847712947c6ecf59839197c11e1fafb5d2e8d124fdc193dcffaab7f209",
+    "kind": "object"
+  }
+}
