@@ -89,7 +89,10 @@ internal sealed class SomerUniformSubsequenceRefutationDocument : IScribeDocumen
                         + "three sampled residues are 0,2,2, so residue one occurs zero times. "
                         + "The retained let-bound actualWord is the same complete certificate "
                         + "used by the information readout."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("somer-krizek-uniform-subsequence-conjecture"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Node(string declaration, string title, string text,
         DescribeRole role) => Describe.Lean(

@@ -5,7 +5,7 @@ doi: 10.5281/zenodo.14679256
 url: https://math.colgate.edu/~integers/z1/z1.pdf
 triage: theorem
 motivation_gids:
-  - D5/S1/Recurrence/Periodic/SecantNumberPurePeriodRefutation
+  - D5/S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation.result
 ---
 
 # Somer-Krizek uniform-subsequence conjecture

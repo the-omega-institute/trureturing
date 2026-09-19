@@ -168,6 +168,10 @@ $$\operatorname{let}(counterexample = actualWord); \neg fullClaim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/somer-krizek-uniform-subsequence-conjecture` (refuted) by `D5/S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"somer-krizek-uniform-subsequence-conjecture","declaration_gid":"D5/S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lawrence Somer; Michal Krizek (2025). *Generalization of a Theorem of Velez on Uniform Distribution in Second-Order Linear Recurrences*. DOI: [10.5281/zenodo.14679256](https://doi.org/10.5281/zenodo.14679256). URL: <https://math.colgate.edu/~integers/z1/z1.pdf>.
