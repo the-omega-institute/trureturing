@@ -86,7 +86,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         const string theory = "docs/develop/theory/admission-resource-probe.md";
         var plan = Plan(metadata, theory, mode);
         Assert.Equal(new[] { "current-metadata", "delta-metadata", "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Equal(new[] { "filemap" }, Strings(plan["paths"]!.AsArray()
+        Assert.Empty(Strings(plan["paths"]!.AsArray()
             .Single(row => row!["path"]!.GetValue<string>() == theory)!["require"]!));
         if (mode == "push")
         {
@@ -110,6 +110,33 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
                 Strings(plan["execution"]!["checks"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void TheoryDocumentsNeedNoBuildChecksOrCaches(string mode)
+    {
+        var plan = Plan("", "docs/develop/theory/admission-resource-probe.md", mode);
+        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers" })
+            Assert.Empty(plan[field]!.AsArray());
+        foreach (var field in new[] { "projects", "checks", "steps" })
+            Assert.Empty(plan["execution"]![field]!.AsArray());
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("Meta/registry.yaml")]
+    public void TheoryDocumentsDoNotRemoveOtherInputsRequirements(string input)
+    {
+        var plan = Plan(input, "docs/develop/theory/admission-resource-probe.md");
+        Assert.Contains("engineering", Strings(plan["resources"]!));
+        Assert.Contains("current", Strings(plan["resources"]!));
+        Assert.Contains("delta", Strings(plan["resources"]!));
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Order(StringComparer.Ordinal),
+            Strings(plan["execution"]!["checks"]!));
     }
 
     [Theory]
