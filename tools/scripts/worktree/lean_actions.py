@@ -182,7 +182,7 @@ def clean_current_candidate(root, commit):
             raise ValueError("current snapshot requires the exact clean candidate commit")
 
 
-def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
+def snapshot_execution(root, layer, keys, destination, *, seed_manifest=None):
     """Export one native execution seed and make its declared members cacheable.
 
     The native runner owns seed selection, validation, provenance, and the
@@ -211,27 +211,39 @@ def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
             detail = (error.stderr or error.stdout or str(error)).strip()
             raise ValueError("native execution transport rejected prepared seed: " + detail) from error
 
-    if seed_archive is not None:
-        # Ordinary pack already accepted this execution. Verify its native seed
-        # receipt before reading the companion archive, without exporting again.
+    if seed_manifest is not None:
+        # Ordinary pack retained an independent snapshot of its native manifest.
+        # Copy its declared material directly from the accepted producer tree.
         clean_current_candidate(root, commit)
         verify(root)
-        prepared_transport_sha = sha(root / "build/ci" / (spec["stage"] + "-transport.json"))
-        archive = seed_archive
-    else:
-        descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
-        os.close(descriptor)
-        archive = pathlib.Path(archive_name)
+        transport_path = "build/ci/" + spec["stage"] + "-transport.json"
+        producer_manifest = root / transport_path
+        prepared_transport_sha = sha(producer_manifest)
+        if seed_manifest.is_symlink() or not seed_manifest.is_file():
+            raise ValueError("prepared seed manifest is not a regular file")
+        if sha(seed_manifest) != prepared_transport_sha:
+            raise ValueError("prepared seed differs from producer transport")
+        transport = json.loads(producer_manifest.read_text())
+        expected = [*transport["materials"], {"path": transport_path,
+            "sha256": prepared_transport_sha, "mode": producer_manifest.stat().st_mode & 0o777}]
+        # Native validation owns the complete material list. copy_hash checks
+        # exactly the bytes and modes copied, including any late source change.
+        inventory = files(root, expected=expected, copy_to=destination)
+        verify(destination)
+        return inventory
+
+    descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
+    os.close(descriptor)
+    archive = pathlib.Path(archive_name)
     try:
-        if seed_archive is None:
-            command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
-                       *identity, "--archive", str(archive)]
-            try:
-                subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
-            except subprocess.CalledProcessError as error:
-                status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
-                detail = (error.stderr or error.stdout or str(error)).strip()
-                raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
+        command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
+                   *identity, "--archive", str(archive)]
+        try:
+            subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as error:
+            status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
+            detail = (error.stderr or error.stdout or str(error)).strip()
+            raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
         with tarfile.open(archive, "r:gz") as source:
             seen = set()
             for member in source.getmembers():
@@ -251,23 +263,14 @@ def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
     except (tarfile.TarError, EOFError) as error:
         raise ValueError("invalid native execution archive: " + str(error)) from error
     finally:
-        if seed_archive is None:
-            archive.unlink(missing_ok=True)
-            archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
-    if seed_archive is not None:
-        verify(destination)
-        if sha(destination / "build/ci" / (spec["stage"] + "-transport.json")) != prepared_transport_sha:
-            raise ValueError("prepared seed differs from producer transport")
+        archive.unlink(missing_ok=True)
+        archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
     inventory = files(destination)
     transport = json.loads((destination / "build/ci" / (spec["stage"] + "-transport.json")).read_text())
     if transport.get("commit") != commit or transport.get("run_id") != int(os.environ["GITHUB_RUN_ID"]):
         raise ValueError("native execution transport identity mismatch")
     if transport.get("run_attempt") != int(os.environ["GITHUB_RUN_ATTEMPT"]):
         raise ValueError("native execution transport attempt mismatch")
-    if seed_archive is not None:
-        declared = {item["path"] for item in transport["materials"]}
-        if {item["path"] for item in inventory} != declared | {"build/ci/" + spec["stage"] + "-transport.json"}:
-            raise ValueError("execution seed differs from declared transport materials")
     return inventory
 
 
@@ -349,7 +352,7 @@ def replace_restored_directory(staged, target, rollback_root):
             previous.unlink()
 
 
-def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, seed_archive=None):
+def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, seed_manifest=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
     observations = ({name: {"status": "not-entered"} for name in
@@ -387,7 +390,7 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, se
     with cache_guard(root, shared=True):
         if layer in EXECUTION_LAYERS:
             inventory = snapshot_execution(root, layer, keys, staged / "data",
-                                           **({"seed_archive": seed_archive} if seed_archive is not None else {}))
+                                           **({"seed_manifest": seed_manifest} if seed_manifest is not None else {}))
         elif layer == "judge":
             sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
             from dotnet_producer import stage_seed, unique_object
@@ -484,12 +487,12 @@ def current_lean_materials(root, plan, commit):
     return None
 
 
-def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_archive=None):
+def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_manifest=None):
     command = [sys.executable, str(pathlib.Path(__file__).resolve()), "snapshot", "--repository", str(root),
                *(["--stage", "current", "--layer", layer] if current else ["--layers", layer]),
                "--snapshot-directory", str(staged)]
-    if seed_archive is not None:
-        command += ["--seed-archive", str(seed_archive)]
+    if seed_manifest is not None:
+        command += ["--seed-manifest", str(seed_manifest)]
     env = dict(os.environ)
     env.pop("GITHUB_OUTPUT", None)
     handlers = {signum: signal.getsignal(signum) for signum in (signal.SIGTERM, signal.SIGINT)}
@@ -524,7 +527,7 @@ def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_archiv
                     signal.signal(signum, handler)
 
 
-def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None, seed_archive=None):
+def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None, seed_manifest=None):
     registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
         ready, committed, save_minutes = False, False, 1
@@ -545,9 +548,9 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
                 if deadline is None:
-                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current, seed_archive=seed_archive)
+                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current, seed_manifest=seed_manifest)
                 else:
-                    bounded_snapshot(root, layer, staged, seconds, current=current is not None, seed_archive=seed_archive)
+                    bounded_snapshot(root, layer, staged, seconds, current=current is not None, seed_manifest=seed_manifest)
                     save_minutes = deadline.save_timeout_minutes()
                     if not save_minutes:
                         raise ValueError("snapshot left no cache save window")
@@ -765,7 +768,7 @@ def main():
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--layer", choices=ALL_LAYERS)
     parser.add_argument("--bounded-cache", action="store_true")
-    parser.add_argument("--seed-archive", help="reuse this execution's native companion seed archive")
+    parser.add_argument("--seed-manifest", help="reuse this execution's native sealed seed manifest")
     parser.add_argument("--snapshot-directory", type=pathlib.Path, help=argparse.SUPPRESS)
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
@@ -773,11 +776,11 @@ def main():
         parser.add_argument("--" + layer + "-outcome", default="",
                             choices=("", "success", "failure", "cancelled", "skipped"))
     args = parser.parse_args()
-    args.seed_archive = pathlib.Path(args.seed_archive).resolve() if args.seed_archive else None
-    if args.seed_archive is not None:
+    args.seed_manifest = pathlib.Path(args.seed_manifest).absolute() if args.seed_manifest else None
+    if args.seed_manifest is not None:
         selected = [args.layer] if args.layer else args.layers
         if args.command != "snapshot" or not selected or len(selected) != 1 or selected[0] not in EXECUTION_LAYERS:
-            parser.error("--seed-archive requires snapshot with one explicit execution layer")
+            parser.error("--seed-manifest requires snapshot with one explicit execution layer")
     if args.command == "prepare-report" and (args.stage != "current" or args.layer or args.layers):
         parser.error("prepare-report requires --stage current and its registered layer scope")
     if args.layer and args.layers:
@@ -850,7 +853,7 @@ def main():
         keys = actions_keys(args.repository)
         if args.snapshot_directory:
             stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry,
-                           current=current, seed_archive=args.seed_archive)
+                           current=current, seed_manifest=args.seed_manifest)
         elif args.command == "keys":
             values = {}
             values.update({key: keys[key] for key in
@@ -871,7 +874,7 @@ def main():
                 from cache_deadline import load_deadline
                 deadline = load_deadline(args.repository, args.stage)
             snapshot(args.repository, keys, args.layers, registry, deadline=deadline,
-                     current=current, seed_archive=args.seed_archive)
+                     current=current, seed_manifest=args.seed_manifest)
         return 0
     except ProjectRegistrationError as error:
         print(str(error), file=sys.stderr)
