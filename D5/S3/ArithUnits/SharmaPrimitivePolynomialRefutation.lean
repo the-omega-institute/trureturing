@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullClaim; result=D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result; claim=D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullClaim
-   digest: The p=41 dense root certificate refutes the full multiplicative
-   primitive-polynomial conjecture. -/
+   digest: The p=41 dense root certificate refutes the full multiplicative primitive-polynomial conjecture. -/
 
 import Mathlib.Algebra.QuadraticAlgebra.Basic
 import Mathlib.Data.ZMod.Basic
@@ -679,5 +678,57 @@ def sourceCounterexampleArena : PrimitiveLawArena where
   signature := cutSignature (Fin 2) (Fin 2)
   Law r :=
     fullCounterexampleLaw (r.readout () SourceLeadingCoefficient)
+
+private theorem sourceCoefficient_variation :
+    FiniteLawVariation sourceCounterexampleArena := by
+  refine ⟨actualSourceCoefficientRealization, alternateSourceCoefficientRealization, ?_, ?_⟩
+  · change fullCounterexampleLaw SourceLeadingCoefficient
+    refine ⟨?_, ?_, result⟩
+    · norm_num [sourcePolynomial, SourceLeadingCoefficient]
+      rw [Polynomial.natDegree_add_eq_left_of_natDegree_lt]
+      · exact Polynomial.natDegree_X_pow 41
+      · rw [Polynomial.natDegree_X, Polynomial.natDegree_X_pow]
+        norm_num
+    · intro L _ _ α hroot
+      exact certificate_evaluation L α hroot
+  · intro h
+    change fullCounterexampleLaw (0 : Fin 2) at h
+    have hd := h.1
+    norm_num [sourcePolynomial] at hd
+
+private theorem sourceCoefficient_sensitivity :
+    FiniteSlotSensitivity sourceCounterexampleArena := by
+  constructor
+  · intro i
+    cases i
+    obtain ⟨r, r', hr, hr'⟩ := sourceCoefficient_variation
+    refine ⟨r, r', ?_, ?_, ?_⟩
+    · intro j hne
+      exact (hne rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => hr', fun _ => hr⟩
+  · intro i
+    exact Fin.elim0 i
+
+register_information_theorem result in sourceCounterexampleArena
+  readout via (sourceCoefficientRealization (fun c : Fin 2 => c))
+  primitives actualSourceCoefficientRealization.toPrimitiveBundle
+  realization inline actualSourceCoefficientRealization := (by
+    constructor
+    change (¬ claimFor SourceLeadingCoefficient) ↔ fullCounterexampleLaw SourceLeadingCoefficient
+    constructor
+    · intro hresult
+      refine ⟨?_, ?_, hresult⟩
+      · norm_num [sourcePolynomial, SourceLeadingCoefficient]
+        rw [Polynomial.natDegree_add_eq_left_of_natDegree_lt]
+        · exact Polynomial.natDegree_X_pow 41
+        · rw [Polynomial.natDegree_X, Polynomial.natDegree_X_pow]
+          norm_num
+      · intro L _ _ α hroot
+        exact certificate_evaluation L α hroot
+    · exact fun h => h.2.2)
+  variation sourceCoefficient_variation sensitivity sourceCoefficient_sensitivity
+  escape from (SourceLeadingCoefficient) escape continues (open)
 
 end D5.S3.ArithUnits.SharmaPrimitivePolynomialRefutation
