@@ -817,3 +817,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Synchronized prime-private cofactor matching on the actual live source](profile-notes/354-synchronized-prime-private-cofactor-matching.md)
 - [Cofactor column heights control synchronized matching mass](profile-notes/355-column-height-matching-bound.md)
 - [Active original parents require shallow private rescue](profile-notes/356-active-parent-private-rescue.md)
+- [Original private swaps, prime-reset transport, and escape mass](profile-notes/357-original-private-swaps-and-prime-reset-transport.md)
