@@ -88,6 +88,12 @@ Its statement quantifies `m : Nat` with `2 <= m` and proves both equalities
 without assuming the classification. The fibre uses all permutations of
 `List.range' 1 n`, not a candidate enumeration.
 
+The final declaration has immutable statement ID
+`sha256:db5ab1d9a85662064ffdfe8a739232e53fc152542d42c244e79aa9280cd9bd87`.
+Its Scribe description carries the typed `Proved` resolution for this
+dossier. That single binding covers both conjectures through the two
+conjuncts of the joint theorem.
+
 The source identity and declaration mapping are in the Library note.
 The primary PDF SHA-256 is
 `874a257ffcfa64e0ede1c8e1f3c502c5d456d463610f021a89ec30a3536b55a3`.
@@ -99,14 +105,14 @@ repository-derived.
 
 `theorem` denotes the target class, and the problem belongs to the recent
 published-conjecture tier. Both conjectures are addressed in their full
-`n >= 4` scope. This dossier makes no typed resolution claim: first Freeze
-and its independent quality and admission obligations remain separate.
+`n >= 4` scope. The local formal resolution is bound by the Scribe node;
+required remote CI and integration of PR #8705 into `dev` remain pending.
 
 ## ASSUMED-UNVERIFIED
 
 The earlier bounded prior-resolution and Lean-library searches are
 caller-supplied; issue #8660 is the supplied preregistration locator.
 These searches do not certify absence of a
-proof in all literature. No worldwide priority is claimed. Independent
-review of source fidelity and helper admission, first Freeze, and required
-delivery checks remain obligations outside this mathematical dossier.
+proof in all literature. No worldwide priority is claimed. Prior-resolution
+and novelty accounting, required remote CI, and merged delivery remain
+caller-owned obligations outside this mathematical dossier.

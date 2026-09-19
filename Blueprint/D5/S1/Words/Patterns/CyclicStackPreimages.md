@@ -12,6 +12,10 @@ $$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(length\left(fibre\left(2
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhan-bie-cyclic-stack-preimages` (proved) by `D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhan-bie-cyclic-stack-preimages","declaration_gid":"D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alex Zhan and Stella Bie (2026). *Cyclic-Pattern-Avoiding Stacks*. DOI: [10.5281/zenodo.18154216](https://doi.org/10.5281/zenodo.18154216). URL: <https://math.colgate.edu/~integers/aa15/aa15.pdf>.

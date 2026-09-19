@@ -53,7 +53,10 @@ internal sealed class CyclicStackPreimagesDocument : IScribeDocumentDefinition
                             + "all produce the target, and the omitted gap is recoverable from "
                             + "the word, so they are distinct. The converse above exhausts "
                             + "the full permutation fibre."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhan-bie-cyclic-stack-preimages"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {

@@ -88,6 +88,19 @@ literature-attested. The barrier argument, inverse classification, and
 proof of the counts are repository-derived; the source is acknowledged
 without attributing that proof to the authors.
 
+## Formal resolution binding
+
+The Scribe description binds the joint theorem
+`D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4`
+to `Problems/zhan-bie-cyclic-stack-preimages.md` with the typed resolution
+`Proved`. Its immutable declaration statement ID is
+`sha256:db5ab1d9a85662064ffdfe8a739232e53fc152542d42c244e79aa9280cd9bd87`.
+The two conjuncts resolve Conjectures 3 and 4 in the full scope above.
+
+This is a local formal binding. Required remote CI and integration of
+PR #8705 into `dev`, together with prior-resolution and novelty accounting,
+remain caller-owned obligations.
+
 ## Bounded prior-art and reuse scope
 
 The earlier repository, pinned Mathlib, and admissible Lean-library searches
