@@ -1,0 +1,22 @@
+**命题 104.2（统一一致性恰由独立段数决定）。** 在定义与假设 104.1 下，$0<\beta<1$，且对每个设计 $\mathcal D$ 和 $k\ge2$，
+$$
+\frac1{2\cdot4^m}\left(1-\frac1k\right)^L
+\le R_{k,\mathcal D}\le\frac12\beta^m.
+\tag{104.2a}
+$$
+因此
+$$
+\frac1{2\cdot4^m}
+\le\overline R(\mathcal D)\le\frac12\beta^m.
+\tag{104.2b}
+$$
+上界可由只读取各段首边、且不依赖 $k$ 的同一个方向计数规则实现。对任意满足上述条件的确定性设计序列
+$\mathcal D_N=(m_N;\ell_{N,1},\ldots,\ell_{N,m_N})$，
+$$
+\overline R(\mathcal D_N)\longrightarrow0
+\quad\Longleftrightarrow\quad
+m_N\longrightarrow\infty.
+\tag{104.2c}
+$$
+不要求 $m_N$ 单调；各段长度可任意增长。
+

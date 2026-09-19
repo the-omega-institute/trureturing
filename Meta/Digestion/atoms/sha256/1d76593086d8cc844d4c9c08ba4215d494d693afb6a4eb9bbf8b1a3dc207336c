@@ -1,0 +1,81 @@
+**推论 89.4（闭理论覆盖下的逐步保守判据）。** 保留 $\mathrm P_\tau,\mathrm P_\sigma$，并假设每个中间闭理论都由某个源闭理论前推得到：
+$$
+\forall U\in\operatorname{Th}(C_B),\
+\exists T\in\operatorname{Th}(C_A),\qquad
+C_B(\tau[T])=U.
+\tag{89.4a}
+$$
+则
+$$
+K_{\sigma\circ\tau}=C_A
+\quad\Longleftrightarrow\quad
+K_\tau=C_A\ \text{且}\ K_\sigma=C_B.
+\tag{89.4b}
+$$
+$\tau$ 对公式满射足以保证 (89.4a)；这里不主张该覆盖条件是 (89.4b) 成立的必要条件。
+
+**证明。** 使用定理 88.2 的有类型伴随
+$$
+L_\tau\dashv R_\tau,\qquad
+L_\sigma\dashv R_\sigma,
+$$
+其中
+$$
+\begin{aligned}
+L_\tau(T)&=C_B(\tau[T]),&
+R_\tau(U)&=\tau^{-1}[U],\\
+L_\sigma(U)&=C_C(\sigma[U]),&
+R_\sigma(V)&=\sigma^{-1}[V].
+\end{aligned}
+$$
+保持条件保证各右伴随的值确实落在相应闭理论中。对任意 $\Delta\subseteq F_B$，扩张性给出
+$$
+C_C(\sigma[\Delta])
+\subseteq C_C(\sigma[C_B(\Delta)]).
+$$
+另一方面，$\mathrm P_\sigma$ 给出 $\sigma[C_B(\Delta)]\subseteq C_C(\sigma[\Delta])$；再用单调性与幂等性，得到反向包含。因此
+$$
+C_C(\sigma[C_B(\Delta)])=C_C(\sigma[\Delta]).
+\tag{89.4c}
+$$
+将其用于 $\Delta=\tau[T]$，并用逆像复合，得到
+$$
+L_{\sigma\circ\tau}=L_\sigma\circ L_\tau,
+\qquad
+R_{\sigma\circ\tau}=R_\tau\circ R_\sigma.
+\tag{89.4d}
+$$
+复合保持已由 (89.2b) 给出，所以这些映射均有指定的闭理论载体。其伴随方向也正是钉版 Mathlib 的 [GaloisConnection.compose](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean)。
+
+先由覆盖证明
+$$
+L_\tau R_\tau=\operatorname{id}_{\operatorname{Th}(C_B)}.
+\tag{89.4e}
+$$
+给定 $U=L_\tau(T)$，伴随的单位 $T\subseteq R_\tau L_\tau(T)$ 及 $L_\tau$ 单调给出 $U\subseteq L_\tau R_\tau(U)$；余单位给出反向包含 $L_\tau R_\tau(U)\subseteq U$。覆盖保证全部 $U$ 均可这样表示，故 (89.4e) 成立。这里单位与余单位分别直接采用 [GaloisConnection.le_u_l 与 GaloisConnection.l_u_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/GaloisConnection/Defs.lean) 的序不等式。
+
+现在假设复合保守。由定理 88.3 的源闭理论往返判据和 (89.4d)，
+$$
+R_\tau R_\sigma L_\sigma L_\tau(T)=T
+\qquad(T\in\operatorname{Th}(C_A)).
+\tag{89.4f}
+$$
+任取 $U\in\operatorname{Th}(C_B)$，由覆盖写成 $U=L_\tau(T)$。$R_\sigma L_\sigma(U)$ 是中间闭理论，故可对它使用 (89.4e)，得到
+$$
+\begin{aligned}
+R_\sigma L_\sigma(U)
+&=L_\tau R_\tau R_\sigma L_\sigma(U)\\
+&=L_\tau R_\tau R_\sigma L_\sigma L_\tau(T)\\
+&=L_\tau(T)=U.
+\end{aligned}
+$$
+其中第三步使用 (89.4f)。于是 $R_\sigma L_\sigma$ 在全部中间闭理论上为恒等。由 $\mathrm P_\sigma$ 及定理 88.3，得到 $K_\sigma=C_B$，这里结论覆盖全部中间前提集。第一步保守 $K_\tau=C_A$ 则直接由 (89.2b) 和复合保守夹出。
+
+反向，若两步均保守，(89.2a) 给出
+$$
+K_{\sigma\circ\tau}(\Gamma)
+=\tau^{-1}[C_B(\tau[\Gamma])]
+=K_\tau(\Gamma)=C_A(\Gamma).
+$$
+最后，若 $\tau$ 对公式满射，对任意中间闭理论 $U$ 取 $T=R_\tau(U)=\tau^{-1}[U]$。由 $\mathrm P_\tau$ 与定理 88.2，$T$ 源闭；由满射有 $\tau[T]=U$，故 $L_\tau(T)=C_B(U)=U$，验证 (89.4a)。证毕。
+
