@@ -52,6 +52,7 @@
     "LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.BindingOwner",
     "LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Checks",
     "LeanInformationAudit.Tests.RegistrationGates.ProvenanceRegressions",
+    "LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedArenaOIProbe",
     "LeanInformationAudit.Tests.Seal.DeclaredSnapshot"
   ],
   "inputs": [
