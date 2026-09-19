@@ -14,7 +14,6 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.FinCases
 import D5.S3.ConceptDynamics.InformationEscape.AgohCoefficientReadoutTemplate
-import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import LeanInformationAudit.SealCommand
 
 set_option autoImplicit false
