@@ -222,6 +222,97 @@ def fresh_root_construct(classes, p, q, *, selected_roots=None, allow_even=False
                 conditional_source_points_checked=sum(len(v) for v in source_images.values()))
 
 
+def contract_small_projection(classes, q, p, *, selected_roots=None,
+                              allow_even=False, max_period=200000):
+    """Cover-preserving class-count descent from <= p-q actual residual roots.
+
+    Original classes have distinct moduli. This computes their q-free residual
+    and transports q complete p-root branches that avoid it. The whole q-free
+    original event vector is retained on each selected branch; q-bearing
+    original labels are explicitly removed, not treated as measure transport.
+    No claim of global minimum cardinality is inferred from a finite run.
+    """
+    classes = list(classes)
+    require(prime(q) and prime(p) and 2 < q < p, 'require odd primes q < p')
+    require(classes and all(d > 1 for _, d in classes), 'original moduli must be nonunit')
+    classes = [(a % d, d) for a, d in classes]
+    require(len({d for _, d in classes}) == len(classes), 'original moduli must be distinct')
+    require(allow_even or all(d % 2 for _, d in classes), 'even input forbidden')
+    Q = period(classes)
+    require(Q % q == 0 and Q % p == 0, 'q and p must divide the original period')
+    require(Q <= max_period, 'original complete-period finite-check cap exceeded')
+    require(all(any(bits(classes, x)) for x in range(Q)),
+            'original input does not cover its complete period')
+    original_indices = [i for i, (_, d) in enumerate(classes) if d % q]
+    qfree = [classes[i] for i in original_indices]
+    B = Q // q**valuation(Q, q)
+    residual = [x for x in range(B) if not any(bits(qfree, x))]
+    roots = sorted({x % p for x in residual})
+    require(len(roots) <= p-q, 'residual projection exceeds the contraction threshold')
+    selected = ([x for x in range(p) if x not in roots][:q]
+                if selected_roots is None else list(selected_roots))
+    require(len(selected) == q and len(set(selected)) == q
+            and all(0 <= x < p and x not in roots for x in selected),
+            'invalid selected covered roots')
+    root_map = {xi: b for b, xi in enumerate(selected)}
+    K = valuation(B, p)
+    R = B // p**K
+    carrier = q * (B//p)
+    require(carrier <= max_period, 'transport complete-period finite-check cap exceeded')
+    output, provenance = [], []
+    original_to_output = {}
+    for i, (a, d) in enumerate(qfree):
+        alpha = valuation(d, p)
+        if alpha == 0:
+            new_a, new_d, role = a, d, 'unchanged q-free p-free original'
+        elif a % p in root_map:
+            xi, r = a % p, d // p**alpha
+            tail = p**(alpha-1)
+            new_a = crt(root_map[xi], q, (a-xi)//p % tail, tail)
+            new_a = crt(new_a, q*tail, a % r, r)
+            new_d, role = q*(d//p), 'transported q-free original'
+        else:
+            continue
+        original_to_output[i] = len(output)
+        provenance.append(dict(original=original_indices[i], role=role))
+        output.append((new_a, new_d))
+    require(output and len({d for _, d in output}) == len(output),
+            'empty output or repeated output modulus')
+    require(all(d > 1 for _, d in output), 'output contains a unit modulus')
+    require(allow_even or all(d % 2 for _, d in output), 'output is not odd')
+    require(len(output) <= len(qfree) < len(classes),
+            'contraction does not strictly reduce original class count')
+    out_period = period(output)
+    require(carrier % out_period == 0, 'output period does not divide transport carrier')
+    images = {xi: set() for xi in selected}
+    for z in range(carrier):
+        xi = selected[z % q]
+        old = crt(xi+p*(z % p**(K-1)), p**K, z % R, R)
+        observed = bits(output, z)
+        actual = bits(qfree, old)
+        transported = tuple(observed[original_to_output[i]] if i in original_to_output else False
+                            for i in range(len(qfree)))
+        require(actual == transported and any(actual),
+                'selected complete branch loses original q-free event vector or coverage')
+        images[xi].add(old)
+    for xi in selected:
+        require(images[xi] == set(range(xi, B, p)),
+                'transport misses a full old conditional source fibre')
+        require(len(images[xi]) == carrier//q, 'conditional source map is not bijective')
+    require(all(any(bits(output, z)) for z in range(out_period)),
+            'output fails complete-period coverage')
+    return dict(original=classes, original_period=Q, original_count=len(classes),
+                q=q, p=p, original_q_height=valuation(Q, q), original_p_height=K,
+                cofactor_period=B, cofactor_residual=residual, residual_p_roots=roots,
+                qfree_original_count=len(qfree), selected_old_p_roots=selected,
+                output_count=len(output), output=output, output_period=out_period,
+                provenance=provenance, transport_carrier=carrier,
+                original_event_coordinates_checked=carrier*len(qfree),
+                conditional_source_points_checked=carrier,
+                scope=('even control, not a minimum odd cover' if allow_even
+                       else 'conditional odd-cover class-count descent'))
+
+
 def dyadic_fixture(p, t):
     """An actual cover with distinct EVEN cofactors, s=p-t pure p-roots."""
     require(prime(p) and p % 2 and 1 <= t <= p, 'invalid dyadic fixture parameters')
@@ -290,12 +381,66 @@ def main():
         expect_rejection([(a, 7) for a in range(7)], 7, 5, 't=p-s must be positive'),
         expect_rejection(base, 7, 9, 'q must be an odd prime', allow_even=True),
     ]
+    original5040 = [
+        (0, 2), (0, 3), (1, 4), (0, 5), (0, 7), (3, 8), (4, 9),
+        (7, 10), (5, 14), (14, 15), (15, 16), (11, 20), (10, 21),
+        (11, 28), (23, 40), (19, 45), (23, 56), (43, 63), (55, 112),
+    ]
+    contraction_specs = [
+        ('5040, original p becomes q', original5040, 3, 5, None),
+        ('5040, omit original p root', original5040, 3, 5, [1, 2, 3]),
+        ('5040, a different large prime', original5040, 3, 7, None),
+        ('5040, s=p-q boundary', original5040, 5, 7, None),
+        ('translated original labels', [(a+37, d) for a, d in original5040], 3, 5, None),
+        ('retained p^3 and mixed p^2', original5040+[(36, 125), (2, 200)], 3, 5, None),
+    ]
+    contractions = []
+    for name, seed, q, p, selected in contraction_specs:
+        item = contract_small_projection(seed, q, p, selected_roots=selected, allow_even=True)
+        item['case'] = name
+        contractions.append(item)
+    require(any(d == 3 for _, d in contractions[0]['output']), 'original p failed to become q')
+    require(all(d != 3 for _, d in contractions[1]['output']), 'omitted pure-p root survived')
+    require(len(contractions[3]['residual_p_roots']) == 7-5, 'threshold endpoint not exercised')
+    require({75, 120}.issubset({d for _, d in contractions[-1]['output']}),
+            'higher pure or mixed p digits were not retained')
+    contraction_rejections = []
+    bad_inputs = [
+        (original5040, 3, 5, {}, 'even input forbidden'),
+        (original5040+[(1, 2)], 3, 5, dict(allow_even=True), 'original moduli must be distinct'),
+        (original5040[:-1], 3, 5, dict(allow_even=True), 'does not cover'),
+        (original5040, 3, 5, dict(allow_even=True, selected_roots=[0, 1, 4]), 'invalid selected'),
+        (original5040, 3, 5, dict(allow_even=True, selected_roots=[0, 0, 1]), 'invalid selected'),
+        (original5040, 3, 11, dict(allow_even=True), 'must divide'),
+        ([(0, 2), (0, 3), (1, 4), (5, 6), (7, 12), (0, 5)],
+         3, 5, dict(allow_even=True), 'exceeds the contraction threshold'),
+        (original5040, 3, 5, dict(allow_even=True, max_period=5000), 'finite-check cap'),
+    ]
+    for seed, q, p, options, expected in bad_inputs:
+        try:
+            contract_small_projection(seed, q, p, **options)
+        except ValueError as exc:
+            require(expected in str(exc), 'wrong contraction rejection: '+str(exc))
+            contraction_rejections.append(str(exc))
+        else:
+            raise ValueError('invalid contraction fixture unexpectedly admitted')
     summary = [{key: result[key] for key in
                 ('case', 'p', 'q', 's', 't', 'k', 'input_p_height', 'input_period',
                  'output_period', 'joint_transport_carrier', 'output_excess')}
                for result in results]
+    contraction_summary = [{key: item[key] for key in
+                           ('case', 'q', 'p', 'original_count', 'output_count', 'original_period',
+                            'output_period', 'residual_p_roots', 'selected_old_p_roots',
+                            'original_p_height', 'original_q_height', 'transport_carrier')}
+                           for item in contractions]
     print(json.dumps(dict(success=True, fixtures=summary, rejection_count=len(rejections),
                           rejections=rejections,
+                          projection_contractions=contraction_summary,
+                          contraction_rejections=contraction_rejections,
+                          contraction_event_coordinates_checked=sum(
+                              item['original_event_coordinates_checked'] for item in contractions),
+                          contraction_source_points_checked=sum(
+                              item['conditional_source_points_checked'] for item in contractions),
                           checked_period_points=sum(r['checked_period_points'] for r in results),
                           conditional_source_points_checked=sum(r['conditional_source_points_checked']
                                                                  for r in results),
