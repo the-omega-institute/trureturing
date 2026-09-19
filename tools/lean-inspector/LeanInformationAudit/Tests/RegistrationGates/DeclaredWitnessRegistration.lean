@@ -16,6 +16,7 @@ def decision : ∀ w : Fin 1, Decidable (predicate (embedding w)) :=
   fun _ => .isFalse (fun h => h.1 rfl)
 def arena := WitnessArena.ofCarrier (Fin 1) Nat
   predicate embedding decision
+def objectArena := arena.toArena
 def reads := counterexampleRealization (fun _ : Fin 1 => false)
 theorem law : arena.Law reads := ⟨(0 : Fin 1), rfl⟩
 theorem bridge : WitnessPrimitiveRealization arena (¬ claim) reads := ⟨arena.law_refutes⟩
@@ -83,6 +84,10 @@ elab "observe_declared_witness" : command => do
   let cases : Array (String × String × Option String) := #[
     ("named", normal ++ evidence ++ tail, none),
     ("literal", start "literalResult" "arena" "bridge" ++ evidence ++ tail, none),
+    ("occurrence", "register_information_theorem result in arena " ++
+      "object_arena objectArena catalog witnessCatalog " ++
+      "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
+      "primitives reads.toPrimitiveBundle realization bridge " ++ evidence ++ tail, none),
     ("wrong_bridge", start "result" "arena" "result" ++ evidence ++ tail,
       some "IE-C006"),
     ("bridge_not_theorem", start "result" "arena" "definitionBridge" ++ evidence ++ tail,
@@ -150,7 +155,9 @@ elab "observe_declared_witness" : command => do
           | _ => false
         let raw := (env.find? row.occurrence.key.theoremName).get!.type
         pure <| wire.getObjValAs? String "bridge_kind" == .ok "witness" &&
-          row.escape.fromObject.any (·.name == ``Nat) && inputsOk && row.occurrence.statement.equal raw
+          row.escape.fromObject.any (·.name == ``Nat) && inputsOk && row.occurrence.statement.equal raw &&
+          (label != "occurrence" || (row.occurrence.arena.equal (mkConst ``arena) &&
+            row.occurrence.key.objectArena == ``objectArena))
     let ok := match expected with
       | none => validated && failure.isEmpty && metadataOk
       | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1

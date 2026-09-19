@@ -141,6 +141,11 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
   let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  -- An occurrence can name a separate finite object arena. Witness checks use
+  -- the original law arena, which retains the quantifier domain and predicate.
+  let bridgeType := (← getConstInfo entry.realizationName).type
+  let arenaName := if bridgeType.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+      entry.arenaName else entry.canonicalObjectArenaName
   let event : TemplateOccurrenceEvent := {
     key := {
       root := entry.registrationModuleName
@@ -151,7 +156,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
 
     unitName := entry.unitName, realizationName := entry.realizationName,
     statement := info.type, levelParams := info.levelParams, statementIdentity,
-    arena := mkConst entry.canonicalObjectArenaName,
+    arena := mkConst arenaName,
     registrationSource := path, registrationSourceIdentity := sourceIdentity }
   let claim ← match pendingDeclaration.getState (← getEnv) with
     | none => pure none
