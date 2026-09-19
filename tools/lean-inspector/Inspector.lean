@@ -157,6 +157,7 @@ structure DeclarationReport where
   materialFile : String
   name : String
   nameKey : String
+  familyRegistration : Option Json := none
 
 structure UtilityInput where
   modulePath : String
@@ -348,6 +349,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
     (utilities : Array UtilityInput)
     (informationTemplates : Json)
+    (declarationIdentities : Array (Name × Json))
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
@@ -394,6 +396,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
       materialFile
       name := name.toString
       nameKey := encodeName name
+      familyRegistration := (declarationIdentities.find? (·.1 == name)).map Prod.snd
     }
   if profiling then
     (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE module={input.moduleName} declarations={names.size} enumeration_ns={enumerationEnd - enumerationStart} scc_ns={← sccNanos.get} statement_encoding_ns={← encodingNanos.get} scc_constants={(← cache.get).counter}"
@@ -457,7 +460,9 @@ def renderDeclaration (declaration : DeclarationReport) : String :=
     ++ ", \"kind\": " ++ jsonString declaration.kind
     ++ ", \"material_file\": " ++ jsonString declaration.materialFile
     ++ ", \"name\": " ++ jsonString declaration.name
-    ++ ", \"name_key\": " ++ jsonString declaration.nameKey ++ "}"
+    ++ ", \"name_key\": " ++ jsonString declaration.nameKey
+    ++ (declaration.familyRegistration.map (fun value =>
+      ", \"family_registration\": " ++ value.compress)).getD "" ++ "}"
 
 def renderModule (report : ModuleReport) : String :=
   "{\"declarations\": ["
@@ -579,7 +584,7 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
 source modules. Even an empty inventory requires its source/native verifier.
 The two producer identities are fixed judge APIs, never content callbacks. -/
 private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput) :
-    IO (Array Json) := do
+    IO (Array (Json × Array (Name × Json))) := do
   let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
       some (`LeanInformationAudit.informationTemplateReportDriver,
         `LeanInformationAudit.DispositionEvidence)
@@ -597,7 +602,8 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     unless env.header.moduleNames[typeOwner.toNat]! == `LeanInformationAudit.RegistryTypes do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
-    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
+    let driver ← IO.ofExcept <| env.evalConstCheck
+      (Array Name → MetaM (Array (Json × Array (Name × Json)))) {}
       typeName producerName
     let (bindings, _) ← (driver (inputs.map (·.moduleName.toName))).run' |>.toIO
       { fileName := "<information-template-join>", fileMap := default } { env }
@@ -650,7 +656,7 @@ unsafe def main (args : List String) : IO Unit := do
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
+    let bindings ← if statementOnly then pure (inputs.map fun _ => (Json.null, #[])) else
       templateBindings env inputs
     unless bindings.size == inputs.size do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
@@ -665,7 +671,7 @@ unsafe def main (args : List String) : IO Unit := do
         materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
     try
       let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-        inspectModule env cache writer materialCounter utilities binding input
+        inspectModule env cache writer materialCounter utilities binding.1 binding.2 input
       writer.stdin.putStr "done\n"
       writer.stdin.flush
       unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do

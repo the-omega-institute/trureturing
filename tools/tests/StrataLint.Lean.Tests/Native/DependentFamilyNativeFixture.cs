@@ -43,18 +43,7 @@ public sealed class DependentFamilyNativeFixture : IDisposable
         var materials = RawLeanReportArtifact.OpenStatementMaterialSource(artifact, addresses);
         var reports = modules.ToDictionary(m => m.GetProperty("source_path").GetString()!, m =>
             new LeanFileReport(m.GetProperty("imports").EnumerateArray().Select(i => i.GetString()!).ToImmutableArray(),
-                m.GetProperty("declarations").EnumerateArray().Select(d =>
-                {
-                    var address = d.GetProperty("type_sha256").GetString()!;
-                    return new LeanDeclaration(d.GetProperty("name").GetString()!, d.GetProperty("kind").GetString()!,
-                        address, d.GetProperty("statement_id").GetString()!,
-                        d.GetProperty("axioms").EnumerateArray().Select(a => a.GetString()!).ToImmutableArray(),
-                        () => materials(address))
-                    {
-                        NameKey = d.GetProperty("name_key").GetString()!,
-                        IncludeInStatement = d.GetProperty("include_in_statement").GetBoolean(),
-                    };
-                }).ToImmutableArray())
+                RawLeanReportArtifact.ReadDeclarations(m.GetProperty("declarations"), materials))
             { InformationTemplates = m.GetProperty("information_templates").Clone() });
         Report = LeanAxiomReport.Create(reports);
     }

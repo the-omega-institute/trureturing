@@ -468,6 +468,25 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
   TemplateAudit.NativeCoherence.validate roots
   return rows
 
+/-- Attach semantic declaration identities from the actual native module table.
+This does not consult registration rows, extraction inputs or supplied names. -/
+def reportWithDeclarations (modules : Array (Name × Array TemplateOccurrenceKey)) :
+    MetaM (Array (Json × Array (Name × Json))) := do
+  let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst
+  TemplateAudit.NativeCoherence.validate roots
+  let rows ← reportJson modules
+  let env ← getEnv
+  let reports ← (modules.zip rows).mapM fun ((moduleName, _), row) => do
+    let some index := env.getModuleIdx? moduleName
+      | throwError "incomplete_closure:dtr.declaration_owner"
+    let mut declarations := #[]
+    for name in env.header.moduleData[index]!.constNames do
+      if let some identity ← familyDeclarationIdentity name then
+        declarations := declarations.push (name, identity)
+    return (row, declarations)
+  TemplateAudit.NativeCoherence.validate roots
+  return reports
+
 end LeanInformationAudit.TemplateBinding
 
 namespace LeanInformationAudit
@@ -496,6 +515,6 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
           TemplateOccurrenceKey }
     return (moduleName, registered ++ (TemplateBinding.familyKeys env).filter
       (·.registrationModule == moduleName))
-  TemplateBinding.reportJson modules
+  TemplateBinding.reportWithDeclarations modules
 
 end LeanInformationAudit

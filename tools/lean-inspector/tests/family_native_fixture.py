@@ -11,6 +11,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/lean-inspector"))
 import materials
+import publication
 
 
 PREFIX = "LeanInformationAudit.Tests.RegistrationGates."
@@ -45,6 +46,8 @@ def produce(destination, producer):
                    cwd=ROOT, check=True)
     artifact = destination / "native.json"
     materials.compact(spool, material_spool, artifact, ROOT / "lean-report-inputs.json")
+    publication.validate_rows(artifact, pathlib.Path(str(artifact) + ".materials.zip"),
+                              manifest=ROOT / "lean-report-inputs.json")
     return artifact
 
 

@@ -309,6 +309,14 @@ internal static class InformationTemplateEvidence
                 || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName
                 || selected.Key.Mode != original.Key.Mode)
                 throw new FormatException("DTR-Evidence: sidecar retargets the occurrence");
+            if (selected.Family is { } family)
+            {
+                var declarationOwner = realizationOwners.Single(path => report.Files[path].Declarations
+                    .Any(declaration => declaration.Name == selected.RealizationName));
+                var declaration = report.Files[declarationOwner].Declarations.Single(
+                    declaration => declaration.Name == selected.RealizationName);
+                InformationFamilyEvidence.CheckDeclaration(family, declarationOwner, declaration);
+            }
             joined.Add(key, selected);
         }
         // Inventory is the exact join of compiler registration keys, command

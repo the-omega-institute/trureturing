@@ -314,7 +314,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     {
                         "axioms", "include_in_statement", "kind", "material_file",
                         "name", "name_key",
-                    },
+                    } | ({"family_registration"} if isinstance(raw_declaration, dict)
+                         and "family_registration" in raw_declaration else set()),
                     "Inspector spool declaration",
                 )
                 name = declaration["name"]
@@ -360,6 +361,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     "statement_id": declaration_id,
                     "type_sha256": type_sha256,
                 })
+                if "family_registration" in declaration:
+                    declarations[-1]["family_registration"] = declaration["family_registration"]
                 declaration_count += 1
 
             report_module = {

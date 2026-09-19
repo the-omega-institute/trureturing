@@ -31,7 +31,8 @@ class NativePackagingTests:
     def test_mapped_image_matches_loaded_bytes(self):
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver :=
+  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json)))
 ''')
         self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
@@ -66,7 +67,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
     ("mapped_image_root_out_of_range_falls_back", toJson (!test (coordinates.set! 2 view.size) bytes)),
     ("mapped_image_scalar_root_falls_back", toJson (mappedImageMatch (unsafeCast (0 : Nat)) coordinates bytes == 0))]
   let debug := s!"mapped={view.isMemoryMapped} size={view.size} base={view.baseAddr} offset={view.bufferOffset} root={ptrAddrUnsafe view.root}"
-  return names.map fun _ => Json.mkObj [("checks", checks), ("debug", toJson debug)]
+  return names.map fun _ => (Json.mkObj [("checks", checks), ("debug", toJson debug)], #[])
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
@@ -99,7 +100,8 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         # These fixture records test lifetime only, not binding admission.
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver :=
+  Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array (Lean.Name × Lean.Json)))
 initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
   Lean.registerSimplePersistentEnvExtension {
     addEntryFn := fun entries entry => entries.push entry
@@ -110,10 +112,10 @@ namespace LeanInformationAudit
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
   let env ← Lean.getEnv
   let entries := fixtureExtension.getState env
-  return names.map fun name => Lean.Json.mkObj [
+  return names.map fun name => (Lean.Json.mkObj [
     ("fixture_root", Lean.toJson name.toString),
     ("fixture_modules", Lean.toJson env.header.moduleNames.size),
-    ("fixture_entries", Lean.toJson entries.size)]
+    ("fixture_entries", Lean.toJson entries.size)], #[])
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()

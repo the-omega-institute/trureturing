@@ -33,6 +33,10 @@ public sealed record LeanDeclaration(
 
     public bool IncludeInStatement { get; init; } = true;
 
+    // Native ConstantInfo evidence is retained without interpreting unselected
+    // registration semantics. The selected family join requires this field.
+    internal JsonElement? FamilyRegistration { get; init; }
+
     public string StatementTypeAddress =>
         TypeRepresentation.Length > 0
             ? CanonicalStatementWriter.StatementTypeAddress(TypeRepresentation)

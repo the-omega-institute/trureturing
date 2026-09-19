@@ -103,7 +103,7 @@ internal static class RawLeanReportArtifact
             var imports = ReadSortedStrings(RequiredArray(moduleElement, "imports"), "imports");
             var declarations = ReadDeclarations(
                 RequiredArray(moduleElement, "declarations"),
-                materialArchive);
+                materialArchive is null ? null : materialArchive.Read);
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
                 {
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
@@ -170,6 +170,7 @@ internal static class RawLeanReportArtifact
                                 name_key = declaration.NameKey,
                                 statement_id = DeclarationStatementId(item.Value.Path, declaration),
                                 type_sha256 = declaration.StatementTypeAddress,
+                                family_registration = declaration.FamilyRegistration,
                             }),
                         imports = fileReport.Imports
                             .Distinct(StringComparer.Ordinal)
@@ -313,21 +314,20 @@ internal static class RawLeanReportArtifact
         return archive.Read;
     }
 
-    private static ImmutableArray<LeanDeclaration> ReadDeclarations(
+    internal static ImmutableArray<LeanDeclaration> ReadDeclarations(
         JsonElement declarations,
-        StatementMaterialArchive? materialArchive)
+        Func<string, string>? materialSource)
     {
         var builder = ImmutableArray.CreateBuilder<LeanDeclaration>();
         string? previousNameKey = null;
         foreach (var declarationElement in declarations.EnumerateArray())
         {
-            RequireProperties(
-                declarationElement,
-                [
-                    "axioms", "include_in_statement", "kind", "name", "name_key",
-                    "statement_id", "type_sha256",
-                ],
-                "raw Lean declaration");
+            var properties = new List<string> {
+                "axioms", "include_in_statement", "kind", "name", "name_key",
+                "statement_id", "type_sha256" };
+            if (declarationElement.TryGetProperty("family_registration", out _))
+                properties.Add("family_registration");
+            RequireProperties(declarationElement, properties, "raw Lean declaration");
             var nameKey = RequiredString(declarationElement, "name_key");
             RequireStrictOrder(previousNameKey, nameKey, "declarations");
             previousNameKey = nameKey;
@@ -346,13 +346,15 @@ internal static class RawLeanReportArtifact
                 statementTypeAddress,
                 statementId,
                 ReadSortedStrings(RequiredArray(declarationElement, "axioms"), "axioms"),
-                materialArchive is null
+                materialSource is null
                     ? () => throw new InvalidDataException(
                         "Lean declaration has no statement material source; read the report from its file path.")
-                    : () => materialArchive.Read(statementTypeAddress))
+                    : () => materialSource(statementTypeAddress))
             {
                 IncludeInStatement = RequiredBoolean(declarationElement, "include_in_statement"),
                 NameKey = nameKey,
+                FamilyRegistration = declarationElement.TryGetProperty("family_registration", out var family)
+                    ? family.Clone() : null,
             });
         }
 

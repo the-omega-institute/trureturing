@@ -5,7 +5,8 @@ using System.Text.Json;
 namespace StrataLint.Engine;
 
 internal sealed record InformationFamilyBinding(string Source, string SourcePath, string Identity,
-    ImmutableArray<int> Coordinates, ImmutableArray<string> StatePath, ImmutableArray<string> OutputPath);
+    ImmutableArray<int> Coordinates, ImmutableArray<string> StatePath, ImmutableArray<string> OutputPath,
+    string RegistrationIdentity, int LevelArity, JsonElement RegistrationInput);
 
 // This reader validates current native evidence, never proves a family claim.
 // Source bytes and exact wire bindings remain mandatory for selected delta rows.
@@ -77,7 +78,9 @@ internal static class InformationFamilyEvidence
         if (Text(record, "unit_name") != registration || Text(record, "realization_name") != registration)
             throw new FormatException("DTR-Evidence: family registration identity mismatch");
         var certificate = record.GetProperty("certificate");
-        if (Array(certificate, "extraction_inputs", 4096).Count(input => Text(input, "name") == registration) != 1)
+        var registrationInputs = Array(certificate, "extraction_inputs", 4096)
+            .Where(input => Text(input, "name") == registration).ToArray();
+        if (registrationInputs.Length != 1)
             throw new FormatException("DTR-Evidence: family registration extraction input missing/ambiguous");
         foreach (var field in new[] { "plan_identity", "descriptor_identity", "actual_identity" })
             if (Hash(material, field) != Hash(certificate, field))
@@ -97,7 +100,29 @@ internal static class InformationFamilyEvidence
         if (Identity(material) != identity) throw new FormatException("DTR-Evidence: stale family evidence identity");
         if (BindingIdentity(key, statement, identity, certificate) != Hash(certificate, "evidence_ref"))
             throw new FormatException("DTR-Evidence: family certificate binding mismatch");
-        return new(source, path, identity, coordinates, statePath, outputPath);
+        return new(source, path, identity, coordinates, statePath, outputPath,
+            Hash(material, "registration_identity"), levels.Length, registrationInputs[0].Clone());
+    }
+
+    // This is an independent join against the native declaration report, not
+    // another digest of editable certificate material. Its schema fixes the
+    // proof-erased type/body and raw constant identity domains explicitly.
+    internal static void CheckDeclaration(InformationFamilyBinding family, RepoPath owner,
+        LeanDeclaration declaration)
+    {
+        if (declaration.FamilyRegistration is not { } native)
+            throw new FormatException("DTR-Evidence: family registration declaration identity missing");
+        InformationTemplateJson.Fields(native, "schema", "owner", "type_identity", "body_identity",
+            "registration_identity", "level_arity");
+        var input = family.RegistrationInput;
+        if (Text(native, "schema") != "dtr-family-declaration-v1"
+            || Text(native, "owner") != InformationTemplateEvidence.ModuleForSource(owner.Value)
+            || Text(input, "name") != declaration.Name || Text(input, "owner") != Text(native, "owner")
+            || Hash(input, "type_identity") != Hash(native, "type_identity")
+            || Hash(input, "body_identity") != Hash(native, "body_identity")
+            || family.RegistrationIdentity != Hash(native, "registration_identity")
+            || family.LevelArity != Nat(native.GetProperty("level_arity"), 64))
+            throw new FormatException("DTR-Evidence: family registration declaration identity mismatch");
     }
 
     // Recompute the current native certificate framing for this mode. Rehashing
@@ -237,7 +262,7 @@ internal static class InformationFamilyEvidence
 
     private static int Nat(JsonElement value, int bound)
     {
-        if (!value.TryGetInt32(out var n) || n < 0 || n > bound
+        if (value.ValueKind != JsonValueKind.Number || !value.TryGetInt32(out var n) || n < 0 || n > bound
             || value.GetRawText() != n.ToString(System.Globalization.CultureInfo.InvariantCulture))
             throw new FormatException("DTR-Evidence: family ordinal/bound");
         return n;

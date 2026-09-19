@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -64,6 +65,90 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
                 Assert.Throws<FormatException>(() => fixture.Collect(name, report)).Message, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("existing-def")]
+    [InlineData("absent-def")]
+    [InlineData("owner")]
+    [InlineData("type")]
+    [InlineData("body")]
+    [InlineData("constant")]
+    public void fully_rehashed_family_evidence_must_match_the_actual_native_declaration(string mutation)
+    {
+        const string registration = "LeanInformationAudit.Tests.DependentFamily.registration";
+        var changes = new[] { "DependentFamily", "DependentFamilySidecar" }.Select(name =>
+        {
+            var payload = JsonNode.Parse(fixture.Payload(name).GetRawText())!;
+            var record = payload["records"]![0]!;
+            var material = record["family_binding"]!["material"]!;
+            var certificate = record["certificate"]!;
+            var input = Assert.Single(certificate["extraction_inputs"]!.AsArray(),
+                value => value!["name"]!.GetValue<string>() == registration)!;
+            switch (mutation)
+            {
+                case "existing-def":
+                case "absent-def":
+                    var target = mutation == "existing-def"
+                        ? "LeanInformationAudit.Tests.DependentFamily.template"
+                        : "LeanInformationAudit.Tests.DependentFamily.noSuchDefinition";
+                    record["unit_name"] = target;
+                    record["realization_name"] = target;
+                    material["registration_name"] = target;
+                    input["name"] = target;
+                    break;
+                case "owner": input["owner"] = "LeanInformationAudit.Tests.RegistrationGates.DependentFamilySidecar"; break;
+                case "type": input["type_identity"] = new string('0', 64); break;
+                case "body": input["body_identity"] = new string('0', 64); break;
+                case "constant": material["registration_identity"] = new string('0', 64); break;
+            }
+            var identity = InformationFamilyEvidence.Identity(JsonSerializer.SerializeToElement(material));
+            record["family_binding"]!["identity"] = identity;
+            record["escape_from"]!["scope_identity"] = identity;
+            certificate["evidence_ref"] = InformationFamilyEvidence.BindingIdentity(
+                InformationTemplateJson.ReadKey(JsonSerializer.SerializeToElement(record["key"])),
+                record["statement_identity"]!.GetValue<string>(), identity,
+                JsonSerializer.SerializeToElement(certificate));
+            return (name, JsonSerializer.SerializeToElement(payload));
+        }).ToArray();
+        var report = fixture.Change(changes);
+        foreach (var name in new[] { "DependentFamily", "DependentFamilySidecar" })
+        {
+            Declared(name, fixture.Collect(name));
+            Assert.Equal(fixture.Report.Files[DependentFamilyNativeFixture.Source(name)].Declarations,
+                report.Files[DependentFamilyNativeFixture.Source(name)].Declarations);
+            var error = Assert.Throws<FormatException>(() => fixture.Collect(name, report));
+            Assert.Contains(mutation == "absent-def" ? "retained unit/realization owner"
+                : "family registration declaration identity", error.Message, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("owner")]
+    [InlineData("type_identity")]
+    [InlineData("body_identity")]
+    [InlineData("registration_identity")]
+    [InlineData("level_arity")]
+    [InlineData("level-kind")]
+    [InlineData("schema")]
+    public void selected_family_requires_current_native_declaration_evidence(string mutation)
+    {
+        var report = LeanAxiomReport.Create(fixture.Report.Files.ToDictionary(pair => pair.Key.Value, pair =>
+            pair.Value with { Declarations = pair.Value.Declarations.Select(declaration =>
+            {
+                if (declaration.Name != "LeanInformationAudit.Tests.DependentFamily.registration") return declaration;
+                var native = JsonNode.Parse(declaration.FamilyRegistration!.Value.GetRawText())!;
+                if (mutation == "level_arity") native[mutation] = 1;
+                else if (mutation == "level-kind") native["level_arity"] = "2";
+                else native[mutation] = mutation == "owner" ? "Wrong.Owner"
+                    : mutation == "schema" ? "statement-v1" : new string('0', 64);
+                return declaration with { FamilyRegistration = mutation == "missing"
+                    ? null : JsonSerializer.SerializeToElement(native) };
+            }).ToImmutableArray() }));
+        foreach (var name in new[] { "DependentFamily", "DependentFamilySidecar" })
+            Assert.Throws<FormatException>(() => fixture.Collect(name, report));
+        Declared("DependentFamilyFixedControl", fixture.Collect("DependentFamilyFixedControl", report));
+    }
+
     [Fact]
     public void unresolved_native_family_preserves_evidence_verdict_and_exact_law_diagnostic()
     {
@@ -104,6 +189,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
     [InlineData("stale-source")]
     [InlineData("rehashed-family")]
     [InlineData("rehashed-registration")]
+    [InlineData("old-report")]
     public void source_bound_native_mutations_fail_closed(string mutation)
     {
         var payload = JsonNode.Parse(fixture.Payload("DependentFamily").GetRawText())!;
@@ -111,6 +197,7 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
         var material = record["family_binding"]!["material"]!;
         switch (mutation)
         {
+            case "old-report": payload["compatibility_version"] = 9; break;
             case "dropped-source": material.AsObject().Remove("source_name"); break;
             case "dropped-levels": material.AsObject().Remove("rigid_levels"); break;
             case "captured-coordinate": material["coordinates"] = new JsonArray(0, 1, 13); break;

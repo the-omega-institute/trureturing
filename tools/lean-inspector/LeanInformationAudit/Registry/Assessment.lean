@@ -410,6 +410,29 @@ def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkO
   ("name", toJson input.name.toString), ("owner", toJson input.owner.toString),
   ("type_identity", toJson input.typeIdentity), ("body_identity", toJson input.bodyIdentity)]
 
+/-- Independent declaration evidence, read from ConstantInfo rather than any
+occurrence or certificate. The identity domains are intentionally different
+from the report's normalized statement-v1 material address. -/
+def familyDeclarationIdentity (name : Name) : MetaM (Option Json) := do
+  let info ← getConstInfo name
+  let .defnInfo _ := info | return none
+  unless info.type.isAppOfArity
+      `LeanInformationAudit.DependentFamily.Registration 2 do return none
+  let action : CompareM Json := do
+    let input ← inputIdentity name
+    let .ok (identity, work) := rawStatementIdentity info.levelParams
+        (mkConst name (info.levelParams.map Level.param)) (← get).remaining
+      | throwError "incomplete_closure:E8.family_declaration_identity"
+    debit work
+    return Json.mkObj [
+      ("schema", toJson "dtr-family-declaration-v1"),
+      ("owner", toJson input.owner.toString),
+      ("type_identity", toJson input.typeIdentity),
+      ("body_identity", toJson input.bodyIdentity),
+      ("registration_identity", toJson identity),
+      ("level_arity", toJson info.levelParams.length)]
+  return some (← action.run { remaining := 524288 }).1
+
 private def failureSite (reason : String) : String :=
   String.intercalate ":" ((reason.splitOn ":").drop 2)
 

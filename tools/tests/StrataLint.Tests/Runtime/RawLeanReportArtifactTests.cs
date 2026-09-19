@@ -109,6 +109,28 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void DeclarationEvidenceRoundTripsWithoutChangingStatementIdentityOrJudgingUnselectedPayloads()
+    {
+        var snapshot = Snapshot();
+        var report = RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(CanonicalReport), snapshot);
+        var file = Assert.Single(report.Files).Value;
+        var original = Assert.Single(file.Declarations);
+        // The artifact loader retains semantic evidence. Only a selected family
+        // join interprets it, including rejecting this deliberately invalid shape.
+        var payload = System.Text.Json.JsonSerializer.SerializeToElement(new { unknown = "unselected" });
+        var changed = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["Trureturing.lean"] = file with
+            { Declarations = [original with { FamilyRegistration = payload }] },
+        });
+        var reloaded = RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, changed).AsSpan(), snapshot);
+        var declaration = Assert.Single(Assert.Single(reloaded.Files).Value.Declarations);
+        Assert.Equal("unselected", declaration.FamilyRegistration!.Value.GetProperty("unknown").GetString());
+        Assert.Equal(original.PrecomputedStatementId, declaration.PrecomputedStatementId);
+        Assert.Equal(original.StatementTypeAddress, declaration.StatementTypeAddress);
+    }
+
+    [Fact]
     public void MaterialBundleIsOneArchiveAndItsAbsenceFailsOnFirstMaterialUse()
     {
         using var temporary = new TemporaryDirectory();

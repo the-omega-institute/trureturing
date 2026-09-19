@@ -934,6 +934,7 @@ open Lean
 /-- Judge-owned semantic API for the lightweight standalone report driver.
 The inspector resolves one exact declaration/owner of this type. Content does
 not register producers, callbacks, policies or acceptance bits. -/
-abbrev InformationTemplateReportDriver := Array Name → MetaM (Array Json)
+abbrev InformationTemplateReportDriver :=
+  Array Name → MetaM (Array (Json × Array (Name × Json)))
 
 end LeanInformationAudit

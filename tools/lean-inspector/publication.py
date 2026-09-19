@@ -197,7 +197,9 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
             raise ValueError('invalid declarations')
         previous_key = None
         for decl in row['declarations']:
-            materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}, 'declaration')
+            materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}
+                                   | ({'family_registration'} if isinstance(decl, dict)
+                                      and 'family_registration' in decl else set()), 'declaration')
             key = decl['name_key']
             if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
                     or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS
