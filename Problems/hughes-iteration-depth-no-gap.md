@@ -27,7 +27,7 @@ Section 11.
 The frozen word-power recurrence records repeated concatenation of finite
 words. Literal insertion is the next operation considered here: it alternates
 source and base factors and then repeats that operation at a fixed degree.
-The open question asks whether the first-occurrence stages of this richer
+The published question asks whether the first-occurrence stages of this richer
 hierarchy still form an initial interval.
 
 ## Gap
@@ -78,9 +78,44 @@ The literal insertion definition is on page 2, minimum depth is on page 7,
 the arbitrary-language conjecture is on page 8, and the related open-question
 discussion is on page 11.
 
+`D5/S1/Words/HughesIterationDepthNoGap.result` proves the conjecture for
+every finite alphabet and arbitrary languages `A,B`: if a natural depth `r`
+is attained, then every natural `q ≤ r` is attained. The literal insertion
+factorization consists of `k` source factors and `k+1` base factors, each
+possibly empty, with concatenations in `A` and in the preceding stage
+respectively; the output is the interleaving `x₁y₁…xₖyₖxₖ₊₁`. Stage zero is
+`B`. The existential positive degree can vary
+between witnesses but is fixed throughout each witness's iteration history.
+Minimum depth means absence at every earlier stage for every positive degree.
+The proof assumes neither finite languages, epsilon membership in `A`, nor
+monotonicity in depth. Empty alphabets, empty languages and epsilon-only
+languages are included; it asserts no attained depth when the spectrum is
+empty.
+
+The result is stated at `closedSourceZero`; its spectrum is extensionally
+equal to the published zero-based spectrum. Its frozen declaration statement
+ID is
+`sha256:f70ed374412ea1dd3c1bf1824ebbab657e78231bcbe1a2c20f1d6618a5d45075`.
+The frozen statement ID of module `D5/S1/Words/HughesIterationDepthNoGap` is
+`sha256:99025dc3bb5fb68fb04400b89fb31c63acd763d73478a6b35389d0b5e6c99bba`.
+
+The companion
+`D5/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration`
+registers the theorem's source depth origin through a finite two-origin arena,
+with an inline realization bridge and a shifted-origin counterfactual for
+variation and sensitivity. The arena's finiteness does not impose finiteness
+on either language. Its frozen module statement ID is
+`sha256:c22e88f8dd3d6d6d8172c48148f489a2776a2d3a94f5ebc85164b3af69ddc926`.
+Only the S1 `result` Describe node carries the typed `Proved` claim for this
+problem; the registration is not a second resolution.
+
+Hughes retains credit for the conjecture, and the released project lead is
+credited for selecting this already-screened target. The bounded prior-art
+findings and access limits below do not establish worldwide priority.
+
 ## Triage
 
-`theorem`. A complete resolution requires a universal proof for finite
+`theorem`. The frozen result supplies the universal proof for finite
 alphabets and arbitrary languages, including empty and epsilon-only cases.
 
 ## ASSUMED-UNVERIFIED

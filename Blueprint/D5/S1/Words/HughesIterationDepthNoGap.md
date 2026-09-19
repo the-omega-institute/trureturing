@@ -100,13 +100,17 @@ $$\forall alpha \in \operatorname{Type},\; \forall origin \in Fin\left(2\right),
 
 *Commentary.*
 
-Changing the origin adds its natural coordinate to every actual minimum depth. At closedSourceZero this is definitionally the published spectrum.
+Changing the origin adds its natural coordinate to every actual minimum depth. At closedSourceZero this is extensionally equal to the published spectrum.
 
 **Theorem 1.9 (No gaps in the arbitrary-language spectrum).**
 
 $$\forall alpha \in \operatorname{Type},\; Finite\left(alpha\right) \Rightarrow \left(\forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall r \in \mathbb{N},\; r \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right) \Rightarrow \left(\forall q \in \mathbb{N},\; q \le r \Rightarrow q \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/HughesIterationDepthNoGap.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/hughes-iteration-depth-no-gap` (proved) by `D5/S1/Words/HughesIterationDepthNoGap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hughes-iteration-depth-no-gap","declaration_gid":"D5/S1/Words/HughesIterationDepthNoGap.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

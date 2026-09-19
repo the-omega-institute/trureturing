@@ -52,7 +52,7 @@ internal sealed class HughesIterationDepthNoGapDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("iterationDepthSpectrumAt", "Spectrum at a selected origin", SpectrumAtFormula(),
                 "Changing the origin adds its natural coordinate to every actual minimum depth. "
-                    + "At closedSourceZero this is definitionally the published spectrum.",
+                    + "At closedSourceZero this is extensionally equal to the published spectrum.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("result", "No gaps in the arbitrary-language spectrum", ResultFormula(),
                 "For every finite alphabet and arbitrary languages A and B, any attained depth r "
@@ -62,13 +62,17 @@ internal sealed class HughesIterationDepthNoGapDocument : IScribeDocumentDefinit
                     + "factor pairs, producing the original word too early. Induction then descends "
                     + "through every smaller depth. The argument includes empty languages, "
                     + "epsilon-only languages, and empty alphabets.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hughes-iteration-depth-no-gap"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(CanonicalId(name)), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static string CanonicalId(string name) => name switch
     {
