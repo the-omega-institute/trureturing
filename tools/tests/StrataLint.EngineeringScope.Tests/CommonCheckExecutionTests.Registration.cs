@@ -26,6 +26,7 @@ public sealed partial class CommonCheckExecutionTests
             Assert.Equal(expected, JsonSerializer.Serialize(repeated));
 
             checks[0].ProgramProjects[0] = "tools/Corrupt.csproj";
+            checks[0].ProgramInputs[0] = "tools/Corrupt.cs";
             Assert.Equal(expected, JsonSerializer.Serialize(validation.CheckManifest()));
             Assert.Equal(expected, JsonSerializer.Serialize(validation.Fresh().CheckManifest()));
             Assert.Equal(1, reads);
@@ -40,7 +41,7 @@ public sealed partial class CommonCheckExecutionTests
         using var second = new Fixture();
         var original = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
         CommonExecutionEvidence.Write(first.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-            new CommonCheckManifest("ci-check-input-registration-v2", original.Select(check => check.Id == "filemap"
+            new CommonCheckManifest("ci-check-input-registration-v3", original.Select(check => check.Id == "filemap"
                 ? check with { Materials = ["fixtures/selftest.txt"] } : check).ToArray()));
 
         var changed = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
@@ -60,7 +61,7 @@ public sealed partial class CommonCheckExecutionTests
         fixture.Run();
         var original = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root).CheckManifest();
         CommonExecutionEvidence.Write(fixture.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-            new CommonCheckManifest("ci-check-input-registration-v2", original.Select(check => check.Id != "SL-001" ? check
+            new CommonCheckManifest("ci-check-input-registration-v3", original.Select(check => check.Id != "SL-001" ? check
                 : defect == "project" ? check with { ProgramProjects = [expected] }
                 : check with { Materials = [expected] }).ToArray()));
 
@@ -394,7 +395,7 @@ public sealed partial class CommonCheckExecutionTests
         });
         internal static string Consumer(string producer, string material) => System.Text.Json.JsonSerializer.Serialize(new
         {
-            schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { material },
+            schema = "report-consumer-inputs-v2", producer, projects = Array.Empty<string>(), program_inputs = new[] { material }, materials = new[] { material },
         });
         internal ReportInputsFixture()
         {

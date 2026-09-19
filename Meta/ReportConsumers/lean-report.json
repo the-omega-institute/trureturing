@@ -1,8 +1,21 @@
 {
-  "schema": "report-consumer-inputs-v1",
+  "schema": "report-consumer-inputs-v2",
   "producer": "Meta/ReportProducers/lean-report.json",
   "projects": [
     "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+  ],
+  "program_inputs": [
+    "tools/StrataLint.Engine/Admission/*.cs",
+    "tools/StrataLint.Engine/Anchors/*.cs",
+    "tools/StrataLint.Engine/Coordinates/*.cs",
+    "tools/StrataLint.Engine/Dag/*.cs",
+    "tools/StrataLint.Engine/FrozenState/*.cs",
+    "tools/StrataLint.Engine/RepositoryIo/*.cs",
+    "tools/StrataLint.Engine/Rules/TheoryGeneration/UtilitySyntax.cs",
+    "tools/StrataLint.Engine/Runtime/*.cs",
+    "tools/StrataLint.Engine/Snapshot/*.cs",
+    "tools/StrataLint.Lean/**/*.cs",
+    "tools/Trureturing.Truth/**/*.cs"
   ],
   "materials": [
     "global.json",

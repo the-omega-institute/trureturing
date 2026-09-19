@@ -15,6 +15,22 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     private const string Verification = "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs";
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
     private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
+    private static readonly string[] InvocationPrograms =
+    [
+        Invocation, Verification,
+        "tools/StrataLint.Cli/Commands/CliApplication.cs",
+        "tools/StrataLint.Cli/Commands/RegistryLoader.cs",
+        "tools/StrataLint.Cli/Program.cs",
+        "tools/StrataLint.Cli/TruthContext.cs",
+        "tools/StrataLint.Cli/Usings.cs",
+    ];
+    private const string ConsumerEngineProject = "tools/StrataLint.Engine/StrataLint.Engine.csproj";
+    private static readonly string[] ConsumerEnginePrograms =
+    [
+        "tools/StrataLint.Engine/Coverage/ScribeDescribeContract.cs",
+        "tools/StrataLint.Engine/Digestion/ScribeEmissionAttestation.cs",
+        "tools/StrataLint.Engine/Rules/TheoryGeneration/UtilitySyntax.cs",
+    ];
 
     [Theory]
     [InlineData(false)]
@@ -185,7 +201,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             var consumer = JsonNode.Parse(File.ReadAllText(Path.Combine(source, Consumer)))!;
             Write(Consumer, consumer.ToJsonString());
             foreach (var input in consumer["materials"]!.AsArray()
-                .Select(item => item!.GetValue<string>()).Append(Invocation).Append(Verification).Distinct())
+                .Select(item => item!.GetValue<string>()).Concat(InvocationPrograms).Concat(ConsumerEnginePrograms).Distinct())
                 Write(input, File.ReadAllText(Path.Combine(source, input)));
             // The sparse fixture authors native producer scope explicitly; current
             // reuse continues to consume the actual registered consumer above.
@@ -205,11 +221,12 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                 },
             }.ToJsonString());
             var projects = manifest["projects"]!.AsArray().Select(item => item!.GetValue<string>())
-                .Append("tools/StrataLint.Cli/StrataLint.Cli.csproj").Append("fixtures/Independent.csproj").ToArray();
+                .Append("tools/StrataLint.Cli/StrataLint.Cli.csproj").Append(ConsumerEngineProject).Append("fixtures/Independent.csproj").ToArray();
             foreach (var path in projects) Write(path, "<Project />");
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(projects.Select(path =>
                 new EngineeringProjectFixture(path, Path.GetFileNameWithoutExtension(path), "test-support", false,
-                    path.Contains("StrataLint.Cli", StringComparison.Ordinal) ? [Invocation, Verification]
+                    path == ConsumerEngineProject ? ConsumerEnginePrograms
+                        : path.Contains("StrataLint.Cli", StringComparison.Ordinal) ? InvocationPrograms
                         : path.Contains("Scribe.Documents", StringComparison.Ordinal)
                             ? ["Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "Blueprint/D5/S0/Synthetic/Other.scribe.cs"] : [])).ToArray()));
             var checks = JsonNode.Parse(CommonCheckRegistrationFixture.Manifest("fixtures/Independent.csproj"))!;
@@ -218,6 +235,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             {
                 var registered = actual.Single(item => item!["id"]!.ToString() == row!["id"]!.ToString())!;
                 row!["program_projects"] = registered["program_projects"]!.DeepClone();
+                row["program_inputs"] = registered["program_inputs"]!.DeepClone();
                 row["report_inputs"] = registered["report_inputs"]!.DeepClone();
                 row["path_inventory"] = registered["path_inventory"]!.DeepClone();
                 if (row["id"]!.ToString() == "scribe-library")

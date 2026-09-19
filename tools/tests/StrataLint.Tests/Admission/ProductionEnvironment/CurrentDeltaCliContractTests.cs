@@ -161,7 +161,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             fixture.Files["lean-report-inputs.json"] = "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}";
             fixture.Files[consumer] = JsonSerializer.Serialize(new
             {
-                schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
+                schema = "report-consumer-inputs-v2", producer, projects = Array.Empty<string>(), program_inputs = new[] { "global.json" }, materials = new[] { "global.json" },
             });
             if (metadata)
                 foreach (var path in new[] { producer, consumer, "lean-report-inputs.json" })

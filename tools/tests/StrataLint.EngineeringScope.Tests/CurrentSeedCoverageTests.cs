@@ -380,7 +380,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         var fixture = new ResourceRouteTests.ResourceFixture(["filemap"], Input);
         fixture.Write("Meta/ReportProducers/check.json", "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}");
         fixture.Write("lean-report-inputs.json", "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}");
-        fixture.Write("Meta/ReportConsumers/check.json", "{\"schema\":\"report-consumer-inputs-v1\",\"producer\":\"Meta/ReportProducers/check.json\",\"projects\":[],\"materials\":[\"global.json\"]}");
+        fixture.Write("Meta/ReportConsumers/check.json", "{\"schema\":\"report-consumer-inputs-v2\",\"producer\":\"Meta/ReportProducers/check.json\",\"projects\":[],\"program_inputs\":[\"global.json\"],\"materials\":[\"global.json\"]}");
         var manifestPath = Path.Combine(fixture.Root, CommonExecutionEvidence.CheckManifestPath);
         var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))!;
         manifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["materials"] = new JsonArray(Input);
