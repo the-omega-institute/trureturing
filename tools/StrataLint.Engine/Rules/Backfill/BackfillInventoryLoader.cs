@@ -148,7 +148,6 @@ internal sealed partial class BackfillInventoryDocument
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
-
     private static ImmutableArray<DigestionCoverageEdge> ParseCoverage(
         string atomId,
         IEnumerable<object?> rawCoverage)
@@ -159,7 +158,7 @@ internal sealed partial class BackfillInventoryDocument
             var edge = Mapping(rawEdge, $"entry {atomId} coverage edge must be a mapping");
             ExactKeys(edge, ["gid", "target_statement_id"], $"entry {atomId} coverage edge");
             var gid = Scalar(edge, "gid", $"entry {atomId} coverage gid");
-            if (coverage.Count > 0 && StringComparer.Ordinal.Compare(coverage[^1].Gid, gid) >= 0)
+            if (coverage.Count > 0 && StringComparer.Ordinal.Compare(coverage[^1].Gid, gid) > 0)
             {
                 throw new FormatException(
                     $"BACKFILL_COVERAGE_ORDER: entry {atomId} coverage_gids must have unique gids in ordinal order");
