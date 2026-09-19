@@ -41678,3 +41678,407 @@ $$
 原始多数规则的短窗口平均风险不保证小于 $1/2$；式 (107.2a) 的最小值来自两条可选共同检验给 $M^r_n$ 的界。该构造既不声称原始粗读数是 Markov 链，也不声称所构造规则对给定 $k$ 已是完整可见实验的最优检验。它保留的是统一风险阶，不是完整状态的全部似然信息。
 
 ## 107.99 追加锚
+
+## 108. 对称标签噪声下的共同块检验与整段净流界
+
+**定义与假设 108.1（共同准备初态的噪声读数实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的四状态核 $K_k$，$k\ge2$，记 $\delta=1/k$、$a=1-\delta/3$。方向 $d=0$ 使用 $\mathsf K_0=K_k$，方向 $d=1$ 使用 $\mathsf K_1=K_k^{\mathsf T}$，两个方向均确定准备于 $X_0=1$，先验各为 $1/2$。静态读数为
+$$
+r(0)=r(1)=A,\qquad r(2)=B,\qquad r(3)=C.
+$$
+固定且已知 $0<\varepsilon<2/3$。实际标签 $Z_t$ 由 $r(X_t)$ 经过三元对称通道产生：正确标签概率为 $1-\varepsilon$，另两标签各为 $\varepsilon/2$。噪声独立于方向及隐藏链演化；给定完整隐藏路径后，各时刻发射独立。观察 $n\ge0$ 次转移对应的 $n+1$ 个标签 $(Z_0,\ldots,Z_n)$，记方向律为 $\mathbb P^\varepsilon_{d,k}$。
+
+随机检验 $\phi:\{A,B,C\}^{n+1}\to[0,1]$ 的值表示报告方向 $1$ 的概率，其等先验风险为
+$$
+R^\varepsilon_{k,n}(\phi)
+=\frac12\mathbb E^\varepsilon_{0,k}\phi
++\frac12\mathbb E^\varepsilon_{1,k}(1-\phi).
+$$
+逐参数最优风险与共同确定检验的最坏参数风险分别记为
+$$
+R^{*,\varepsilon}_{k,n}=\inf_{\phi}R^\varepsilon_{k,n}(\phi),
+\qquad
+\overline R^{*,\varepsilon}_n=\sup_{k\ge2}R^{*,\varepsilon}_{k,n},
+$$
+$$
+M^\varepsilon_n=
+\inf_{\substack{\phi:\{A,B,C\}^{n+1}\to\{0,1\}\\
+\phi\text{ 可使用 }\varepsilon,n\text{，不使用 }k}}
+\ \sup_{k\ge2}R^\varepsilon_{k,n}(\phi).
+\tag{108.1a}
+$$
+前一个下确界允许检验使用给定的 $k$；后一个下确界要求同一确定检验适用于全部 $k$。
+
+置 $\rho=\varepsilon/2$、$\lambda=1-3\varepsilon/2>0$，定义去噪边分数
+$$
+f_b(z)=\frac{\mathbf1_{\{z=b\}}-\rho}{\lambda}
+\quad(b\in\{A,B,C\}),\qquad
+\widehat g_\varepsilon(z,z')
+=f_B(z)f_C(z')-f_C(z)f_B(z'),
+$$
+$$
+\widehat F_{u,L}
+=\sum_{t=u}^{u+L-1}\widehat g_\varepsilon(Z_t,Z_{t+1}),
+\qquad \widehat F_n=\widehat F_{0,n}.
+\tag{108.1b}
+$$
+$L$ 计块内转移数，故 $\widehat F_{u,L}$ 使用 $L+1$ 个标签。
+
+**命题 108.2（共同块规则的统一上界）。** 置
+$$
+\beta=\frac5{288},\qquad
+\kappa_\varepsilon=\frac{\beta^2\lambda^4}{288}>0,\qquad
+L_0=\max\left\{256,\left\lceil\frac{\log12}{\kappa_\varepsilon}\right\rceil\right\},
+$$
+$$
+L_n=\max\left\{L_0,
+\left\lceil\frac{3\log(n+1)}{\kappa_\varepsilon}\right\rceil\right\},
+\qquad T_n=L_n+1,\qquad
+J_n=\left\lfloor\frac{n+1}{T_n}\right\rfloor.
+\tag{108.2a}
+$$
+共同确定规则 $\Gamma_{\varepsilon,n}$ 依次检查 $j=0,\ldots,J_n-1$ 的块。第 $j$ 块读取 $jT_n,\ldots,jT_n+L_n$：若 $\widehat F_{jT_n,L_n}>\beta L_n$，声明方向 $0$；若 $\widehat F_{jT_n,L_n}<-\beta L_n$，声明方向 $1$；其余情形不声明。首次声明即作为结果；全部完整块均无声明时报告 $0$。相邻块不共享标签，跨块转移不计分，阈值相等时继续检查。
+
+对全部 $k\ge2$、$d\in\{0,1\}$ 及 $n\ge0$，原始块规则满足每方向错误界
+$$
+\mathbb P^\varepsilon_{d,k}(\Gamma_{\varepsilon,n}\ne d)
+\le B_{\varepsilon,n}
+:=\frac{32(L_n+1)}{3(n+1)}+\frac3{(n+1)^2}.
+\tag{108.2b}
+$$
+对 $n\ge1$，
+$$
+\frac1{24n}\le\overline R^{*,\varepsilon}_n
+\le M^\varepsilon_n
+\le\min\left\{\frac12,B_{\varepsilon,n}\right\}
+=O_\varepsilon\!\left(\frac{\log(n+1)}{n+1}\right).
+\tag{108.2c}
+$$
+$n=0$ 时 $\overline R^{*,\varepsilon}_0=M^\varepsilon_0=1/2$。式 (108.2b) 是原始块规则的每方向界；式 (108.2c) 中的 $1/2$ 是共同检验另可选择恒定报告所得的平均风险界。
+
+**证明。** 先传递命题 105.2 的共同路径下界。隐藏路径 $(1,0,\ldots,0)$ 在两方向下均有质量
+$$
+w_{k,n}=\frac\delta3(1-\delta)^{n-1}.
+$$
+给定这条路径，两方向产生相同的归一化噪声输出律 $\nu_n$，所以两份可见律均支配 $w_{k,n}\nu_n$。对任意随机检验 $\phi$，将两项错误积分限制到这份共同子测度，得
+$$
+R^\varepsilon_{k,n}(\phi)
+\ge\frac{w_{k,n}}2\int[\phi+(1-\phi)]\,d\nu_n
+=\frac\delta6(1-\delta)^{n-1}.
+\tag{108.2d}
+$$
+这也是既有有限两点重叠公式
+[le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/c04f3432ca0e3639374cdddecc3be083fc5bff37/D5/S3/Estimation/LeCam.lean)、
+[le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/c04f3432ca0e3639374cdddecc3be083fc5bff37/D5/S3/Estimation/LeCamTight.lean)
+对共同噪声分量的应用。取合法整数 $k=2n$，Bernoulli 不等式给 $(1-1/(2n))^{n-1}\ge1/2$，故得到 $1/(24n)$。
+
+下面证明块规则上界。发射矩阵为 $\lambda I+\rho\mathbf1\mathbf1^{\mathsf T}$，从而
+$$
+\mathbb E[f_b(Z_t)\mid X]=\mathbf1_{\{r(X_t)=b\}}.
+$$
+定义隐藏边函数
+$$
+g(i,j)=\mathbf1_{\{i=2,j=3\}}-\mathbf1_{\{i=3,j=2\}}.
+$$
+由相邻两次发射的条件独立性，
+$$
+\mathbb E[\widehat g_\varepsilon(Z_t,Z_{t+1})\mid X]
+=g(X_t,X_{t+1}).
+\tag{108.2e}
+$$
+$\widehat g_\varepsilon$ 的可能值为 $0$、$\pm\rho/\lambda^2$、$\pm(1-\varepsilon)/\lambda^2$，因此
+$$
+|\widehat g_\varepsilon|\le M:=\lambda^{-2}.
+$$
+
+固定 $k,d$，记 $s_0=1,s_1=-1$、$c=a/12\ge c_0:=5/72$。构造有界势 $h_d$ 如下。对环坐标 $(1,2,3)$，令
+$$
+C_0(x_1,x_2,x_3)=(x_2,x_3,x_1),\qquad
+C_1(x_1,x_2,x_3)=(x_3,x_1,x_2),
+$$
+$$
+v_0=(-1/12,5/12,-1/3),\qquad
+v_1=(-1/12,-1/3,5/12),\qquad \chi=a/4.
+$$
+置 $h_d(0)=0$，以及
+$$
+h_d|_{\{1,2,3\}}
+=\frac{a}{1-\chi^3}
+\left(v_d+\chi C_dv_d+\chi^2C_d^2v_d\right).
+\tag{108.2f}
+$$
+两个 $v_d$ 的环坐标和均为零，且 $C_d^3=I$。环内归一化转移矩阵为 $(3/4)U+(1/4)C_d$，其中 $U$ 的各行均为均匀分布。故逐坐标计算得到
+$$
+\sum_{i=1}^3h_d(i)=0,\qquad
+(I-\mathsf K_d)h_d(i)
+=\sum_j\mathsf K_d(i,j)s_dg(i,j)
+-c\mathbf1_{\{i\ne0\}}.
+\tag{108.2g}
+$$
+在状态 $0$，两侧均为零；在环状态，等式归结为
+$(I-\chi C_d)h_d=av_d$。此外，
+$$
+\|h_d\|_\infty
+\le\frac{a(5/12)(1+\chi+\chi^2)}{1-\chi^3}
+=\frac{a(5/12)}{1-a/4}\le\frac59.
+\tag{108.2h}
+$$
+
+对任意隐藏起点，考虑一个 $L$ 条边的块，先将起始时间记为 $0$。置
+$$
+V_L=\sum_{t=0}^{L-1}\mathbf1_{\{X_t\ne0\}},\qquad
+\eta_t=s_dg(X_t,X_{t+1})+h_d(X_{t+1})-h_d(X_t)
+-c\mathbf1_{\{X_t\ne0\}}.
+$$
+式 (108.2g) 表明 $\eta_t$ 对隐藏链历史条件均值为零；由 (108.2h)，
+$$
+|\eta_t|\le1+10/9+1/12<3.
+$$
+记 $H_L=\sum_{t<L}\eta_t$ 以及
+$$
+N_L=\widehat F_{0,L}-\sum_{t<L}g(X_t,X_{t+1}).
+$$
+便有精确分解
+$$
+s_d\widehat F_{0,L}
+=cV_L+H_L+h_d(X_0)-h_d(X_L)+s_dN_L.
+\tag{108.2i}
+$$
+标准 Azuma–Hoeffding 界给出
+$$
+\mathbb P^\varepsilon_{d,k}(H_L\le-u)
+\le\exp\left(-\frac{u^2}{18L}\right),\qquad u\ge0.
+\tag{108.2j}
+$$
+这里使用有界中心化条件分布的 Hoeffding 引理及
+[measure_sum_ge_le_of_hasCondSubgaussianMGF](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L932)
+所述的标准条件 sub-Gaussian 求和界。
+
+给定完整隐藏块，将 $N_L$ 按偶数边、奇数边分为两组。每组使用互不重叠的发射坐标对，组内变量独立且中心化，单项区间长度至多 $2M$。若 $s_dN_L\le-u$，至少一组和不超过 $-u/2$。对两组分别应用有界变量的
+[Hoeffding 界](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L787)
+并取并集，得
+$$
+\mathbb P^\varepsilon_{d,k}(s_dN_L\le-u\mid X)
+\le2\exp\left(-\frac{u^2}{8M^2L}\right).
+\tag{108.2k}
+$$
+两组之间无需独立；该条件界对每份隐藏路径相同，故去掉条件仍成立。
+
+现在固定 $L\ge L_0$。由 $L\ge256$，
+$$
+|h_d(X_0)-h_d(X_L)|\le10/9\le\beta L/4.
+$$
+若 $H_L\ge-\beta L/4$ 且 $s_dN_L\ge-\beta L/4$，由 $cV_L\ge0$ 知不可能作出错向声明。把 $u=\beta L/4$ 代入 (108.2j)、(108.2k)，并用 $M=\lambda^{-2}\ge1$，对任意隐藏起点得到
+$$
+\mathbb P^\varepsilon_{d,k}(\text{单块作出错向声明})
+\le
+e^{-\beta^2L/288}+2e^{-\beta^2L/(128M^2)}
+\le3e^{-\kappa_\varepsilon L}.
+\tag{108.2l}
+$$
+
+若块从任意环状态开始，隐藏环指示量每步离环概率为 $\delta/3$，从 $0$ 回环概率为 $\delta$。直接解两状态递推得
+$$
+\mathbb P(X_t\ne0\mid X_0\ne0)
+=\frac34+\frac14(1-4\delta/3)^t\ge\frac34.
+$$
+因此 $\mathbb EV_L\ge3L/4$；又由
+$\mathbb EV_L\le L/2+(L/2)\mathbb P(V_L\ge L/2)$，得
+$\mathbb P(V_L\ge L/2)\ge1/2$。在该事件以及上述两个偏差界内，
+$$
+s_d\widehat F_{0,L}\ge c_0L/2-3\beta L/4
+=5\beta L/4>\beta L.
+$$
+故从任意环状态开始，单块正确声明概率至少为
+$$
+\frac12-3e^{-\kappa_\varepsilon L}\ge\frac14.
+\tag{108.2m}
+$$
+
+为控制等待时间，令 $T=L+1$，在网格时刻 $jT$ 考察隐藏环指示量 $I_j=\mathbf1_{\{X_{jT}\ne0\}}$。其 Markov 转移由刚才的两状态核直接计算：置 $z=(1-4\delta/3)^T$，则
+$$
+\mathbb P(I_{j+1}=0\mid I_j=1)=\frac{1-z}{4},
+\qquad
+\mathbb P(I_{j+1}=1\mid I_j=0)=\frac{3(1-z)}4.
+\tag{108.2n}
+$$
+因为 $\delta>0$，该网格链不可约；从环到下一次网格回环的平均间隔为
+$$
+1+\frac{(1-z)/4}{3(1-z)/4}=\frac43.
+\tag{108.2o}
+$$
+这里只对隐藏环指示量使用已计算的 Markov 核；噪声标签序列不被假设为 Markov 链。
+
+令 $\sigma_0=0<\sigma_1<\cdots$ 为网格上满足 $I_j=1$ 的时刻，以块编号计数。取块开始前的历史
+$$
+\mathcal G_j
+=\sigma(X_0,\ldots,X_{jT};Z_0,\ldots,Z_{jT-1}).
+$$
+在 $\sigma_m$ 处，当前块的发射尚未读取。先在事件 $\{\sigma_m=j\}$ 上固定截至 $jT$ 的隐藏历史：已经读到的发射只依赖此前隐藏坐标和独立的发射随机性，因而不会改变给定 $X_{jT}$ 后的未来隐藏转移律及尚未读取的发射律。对这些隐藏历史取条件平均，再对 $j$ 求和，便得到相同的停时重启结论。这一步将发射的条件独立性与隐藏链的强 Markov 性结合；后者直接采用
+Richard Weber, [Markov Chains](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf)
+（2011 年 10 月）§4.4 Theorem 4.4（印刷页 15 / PDF 页 19），平均命中时间的一阶步方程见同书 Theorem 4.2。
+
+记 $C_m=\sigma_{m+1}-\sigma_m$，由 (108.2o)，
+$$
+\mathbb E[C_m\mid\mathcal G_{\sigma_m}]=4/3.
+$$
+仅在证明中，把每个 $\sigma_m$ 对应的块作为一次尝试，令 $\nu$ 为首次作出声明的尝试编号，从 $0$ 开始。此前尝试块都在当前块开始前结束，故 $\{\nu\ge m\}$ 可测于 $\mathcal G_{\sigma_m}$。式 (108.2m) 对此条件历史仍给至少 $1/4$ 的声明概率，因此
+$$
+\mathbb P(\nu\ge m)\le(3/4)^m,\qquad
+\mathbb E[C_m\mathbf1_{\{\nu\ge m\}}]
+=\frac43\mathbb P(\nu\ge m).
+\tag{108.2p}
+$$
+当前尝试成功与 $C_m$ 可以相关；上式只把已经确定的过去事件移出条件期望。由非负级数的 Tonelli 交换，
+$$
+\mathbb E\sigma_{\nu+1}
+=\sum_{m\ge0}\mathbb E[C_m\mathbf1_{\{\nu\ge m\}}]
+\le\frac43\sum_{m\ge0}(3/4)^m=\frac{16}3.
+\tag{108.2q}
+$$
+实际规则扫描全部固定块。若 $W$ 是首次声明所需的总块数，成功块也计入，则
+$$
+W\le\sigma_\nu+1\le\sigma_{\nu+1},
+\qquad \mathbb EW\le16/3.
+\tag{108.2r}
+$$
+这些隐藏网格时刻仅用于证明；规则不观察或识别它们。
+
+最后取 $L=L_n$。若 $J_n\ge1$，无声明概率至多 $16/(3J_n)$。每个扫描块无论从什么隐藏状态开始，均满足 (108.2l)，所以对任一方向，错误概率不超过无声明概率加上任一块错向声明的概率：
+$$
+\mathbb P^\varepsilon_{d,k}(\Gamma_{\varepsilon,n}\ne d)
+\le\frac{16}{3J_n}+3J_ne^{-\kappa_\varepsilon L_n}.
+$$
+由 $J_n\ge(n+1)/(2T_n)$、$J_n\le n+1$ 及
+$e^{-\kappa_\varepsilon L_n}\le(n+1)^{-3}$，得到 (108.2b)。若 $J_n=0$，则 $T_n>n+1$，此时 $B_{\varepsilon,n}>1$，同一界仍成立。
+
+逐参数随机检验最优值不超过任一共同确定检验的风险，因此
+$\overline R^{*,\varepsilon}_n\le M^\varepsilon_n$。共同规则 $\Gamma_{\varepsilon,n}$ 给 $B_{\varepsilon,n}$ 上界，恒报 $0$ 的共同规则另给等先验风险 $1/2$。对固定 $\varepsilon$，$L_n=O_\varepsilon(\log(n+1))$，这证明 (108.2c)。$n=0$ 时两方向只有同一个初态发射律，故最优风险为 $1/2$。证毕。
+
+**命题 108.3（整段去噪净流符号规则的较慢最坏参数风险）。** 令 $\Psi_{\varepsilon,n}$ 在 $\widehat F_n>0$ 时报告 $0$，在 $\widehat F_n<0$ 时报告 $1$，零分处采用任意固定平局决定。置
+$$
+v_\varepsilon=2(\varepsilon/2)^2(1-\varepsilon)>0,\qquad
+N_\varepsilon=\max\left\{2,\left\lceil256/v_\varepsilon\right\rceil\right\}.
+$$
+对所有整数 $n\ge N_\varepsilon$ 及两个方向，取合法参数 $k=n$，有
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d)
+\ge\frac{v_\varepsilon^{5/2}}{13824e\sqrt n}.
+\tag{108.3a}
+$$
+特别地，
+$$
+\sup_{k\ge2}R^\varepsilon_{k,n}(\Psi_{\varepsilon,n})
+=\Omega_\varepsilon(n^{-1/2}).
+\tag{108.3b}
+$$
+该结论只约束 $\Psi_{\varepsilon,n}$，不是 $\overline R^{*,\varepsilon}_n$ 或 $M^\varepsilon_n$ 的相同阶下界。
+
+**证明。** 定义实际标签的原始净流与端点函数
+$$
+S_n=\sum_{t=0}^{n-1}
+\left(\mathbf1_{\{Z_t=B,Z_{t+1}=C\}}
+-\mathbf1_{\{Z_t=C,Z_{t+1}=B\}}\right),
+\qquad q(z)=\mathbf1_{\{z=B\}}-\mathbf1_{\{z=C\}}.
+$$
+展开 (108.1b) 并将梯度项求和，得
+$$
+\lambda^2\widehat F_n
+=S_n-\rho[q(Z_0)-q(Z_n)],
+\qquad |\rho[q(Z_0)-q(Z_n)]|\le2\rho=\varepsilon<1.
+\tag{108.3c}
+$$
+
+先计算纯陷阱区间的噪声矩。若 $U_0,\ldots,U_\ell$ 独立，且各自标签概率为 $(1-\varepsilon,\rho,\rho)$，置
+$$
+\zeta_t=\mathbf1_{\{U_t=B,U_{t+1}=C\}}
+-\mathbf1_{\{U_t=C,U_{t+1}=B\}},\qquad
+\widetilde S_\ell=\sum_{t=0}^{\ell-1}\zeta_t.
+$$
+对调全部 $B,C$ 保持标签律并使分数变号，故 $\widetilde S_\ell$ 的分布对称。直接计算得
+$$
+\mathbb E\zeta_t=0,\qquad
+\mathbb E\zeta_t^2=2\rho^2,\qquad
+\mathbb E(\zeta_t\zeta_{t+1})=-2\rho^3.
+$$
+不相邻边独立，因此对 $\ell\ge1$，
+$$
+\mathbb E\widetilde S_\ell^2
+=2\rho^2\ell-4\rho^3(\ell-1)
+=v_\varepsilon\ell+4\rho^3
+\ge v_\varepsilon\ell.
+\tag{108.3d}
+$$
+偶数边组与奇数边组各自由独立、中心化、绝对值至多 $1$ 的变量组成。对任一含 $m$ 项的组，其四阶矩为
+$$
+\sum_i\mathbb E\zeta_i^4
++6\sum_{i<j}\mathbb E\zeta_i^2\,\mathbb E\zeta_j^2
+\le m+3m(m-1)\le3m^2.
+$$
+空组的四阶矩为零。用 $(x+y)^4\le8(x^4+y^4)$ 合并两组，得到
+$$
+\mathbb E\widetilde S_\ell^4\le24\ell^2.
+\tag{108.3e}
+$$
+
+令 $u=v_\varepsilon\ell/2$。Cauchy–Schwarz 不等式及 (108.3d)、(108.3e) 给出
+$$
+\frac{v_\varepsilon\ell}{2}
+\le\mathbb E\!\left[\widetilde S_\ell^2
+\mathbf1_{\{\widetilde S_\ell^2\ge u\}}\right]
+\le\sqrt{\mathbb E\widetilde S_\ell^4\,
+\mathbb P(\widetilde S_\ell^2\ge u)}.
+$$
+这里第一步使用
+$\mathbb E\widetilde S_\ell^2\le u+
+\mathbb E[\widetilde S_\ell^2\mathbf1_{\{\widetilde S_\ell^2\ge u\}}]$。
+故 $\mathbb P(|\widetilde S_\ell|\ge\sqrt{v_\varepsilon\ell/2})
+\ge v_\varepsilon^2/96$。由对称性，
+$$
+\mathbb P\!\left(\widetilde S_\ell\le-\sqrt{v_\varepsilon\ell/2}\right)
+\ge\frac{v_\varepsilon^2}{192},
+\qquad
+\mathbb P\!\left(\widetilde S_\ell\ge\sqrt{v_\varepsilon\ell/2}\right)
+\ge\frac{v_\varepsilon^2}{192}.
+\tag{108.3f}
+$$
+这是对平方变量使用 Cauchy–Schwarz 所得的标准二阶、四阶矩尾概率估计。
+
+现在令 $k=n$。对 $1\le m\le n$，令 $E_m$ 为隐藏链在时刻 $m$ 首次进入 $0$ 并一直留至时间 $n$ 的事件。每个环状态留在环内的概率均为 $a$，进入 $0$ 的概率均为 $1/(3n)$，所以两方向都有
+$$
+\mathbb P^\varepsilon_{d,n}(E_m)
+=a^{m-1}\frac1{3n}(1-1/n)^{n-m}.
+$$
+由 Bernoulli 不等式，
+$a^{m-1}\ge1-(m-1)/(3n)\ge2/3$；且
+$(1-1/n)^{n-m}\ge(1-1/n)^{n-1}\ge e^{-1}$，
+最后一步等价于 $(1+1/(n-1))^{n-1}\le e$。因此
+$$
+\mathbb P^\varepsilon_{d,n}(E_m)\ge\frac2{9en}.
+\tag{108.3g}
+$$
+这些事件随 $m$ 互斥。
+
+置 $x=\sqrt{v_\varepsilon n}$ 及 $m_n^\circ=\lfloor x/8\rfloor$。由 $n\ge N_\varepsilon$，$x\ge16$，故
+$m_n^\circ\ge x/16$。又因 $v_\varepsilon<1$，对 $m\le m_n^\circ$ 有 $m\le n/2$。条件于 $E_m$，标签 $Z_m,\ldots,Z_n$ 独立，均服从上述纯陷阱发射律；对应 $\ell=n-m\ge n/2$ 条边。噪声独立于隐藏事件，所以 (108.3f) 仍适用，且
+$$
+\sqrt{v_\varepsilon(n-m)/2}\ge x/2,
+\qquad m+1\le x/8+1\le3x/16<x/2.
+\tag{108.3h}
+$$
+陷阱前包含 $t=0,\ldots,m-1$ 的 $m$ 条原始边分数，其绝对值至多 $m$。对方向 $0$，若陷阱段净流不超过 $-x/2$，由 (108.3c)、(108.3h) 可知 $\widehat F_n<0$，从而判错；方向 $1$ 使用不小于 $x/2$ 的对称涨落，同样判错。前缀与陷阱段共享发射 $Z_m$，但前缀仅使用逐路径绝对值界，未要求它与陷阱分数独立。端点校正也只使用其小于 $1$ 的确定界。因此，对每个 $m\le m_n^\circ$，
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d\mid E_m)
+\ge v_\varepsilon^2/192.
+$$
+对互斥事件求和并用 (108.3g)，得到
+$$
+\mathbb P^\varepsilon_{d,n}(\Psi_{\varepsilon,n}\ne d)
+\ge\frac{v_\varepsilon^2}{192}
+\frac{2m_n^\circ}{9en}
+\ge\frac{v_\varepsilon^{5/2}}{13824e\sqrt n}.
+$$
+构造产生严格错误符号，故零分平局约定不影响结论。两方向分别成立，平均风险遂满足 (108.3b)。证毕。
+
+以上常数均允许依赖固定的 $\varepsilon$。命题 108.3 排除了整段去噪净流符号规则的统一 $O_\varepsilon(1/n)$ 保证。上述结果尚未判定 $\overline R^{*,\varepsilon}_n=O_\varepsilon(1/n)$ 或 $M^\varepsilon_n=O_\varepsilon(1/n)$ 是否成立，也未判定要求共用一条不使用 $k$ 的规则是否改变可达风险阶；命题 108.2 中的对数因子未被证明必要。
+
+## 108.99 追加锚
