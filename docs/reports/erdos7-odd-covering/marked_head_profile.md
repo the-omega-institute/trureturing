@@ -808,3 +808,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Old-cylinder tree gluing and source corrections](profile-notes/346-old-cylinder-tree-gluing-and-source-corrections.md)
 - [External uniform reciprocal excess and bounded original overlap](../../../Library/Arith/filaseta2026reciprocalgap.md)
 - [Original overlap leakage gives a uniform reciprocal gap](profile-notes/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md)
+- [Fresh-prime root transport and two-copy reduction](profile-notes/348-fresh-prime-root-transport-and-two-copy-reduction.md)
