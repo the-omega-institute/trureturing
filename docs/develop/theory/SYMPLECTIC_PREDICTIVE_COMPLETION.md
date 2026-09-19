@@ -836,7 +836,7 @@ $\Omega_c$ 反对称，能量 $m|\xi|^2/2$ 守恒，Gibbs 协方差 $(\beta m)^{
 特征多项式为 $\lambda^4+(2\omega_0^2+c^2)\lambda^2+\omega_0^4$，正频率
 $$
 \omega_\pm=\sqrt{\omega_0^2+c^2/4}\pm c/2,
-\quad\omega_+\omega_-=\omega_0^2.
+\quad\omega_+\omega_- =\omega_0^2.
 $$
 对称规范的二次量子 Hamiltonian 是频率 $\sqrt{\omega_0^2+c^2/4}$ 的各向同性振子减 $cL_z/2$。圆偏振算子对角化给 Fock–Darwin 谱 $E_{n_+,n_-}=\hbar\omega_+(n_++1/2)+\hbar\omega_-(n_-+1/2)$，因而
 $$
@@ -1418,3 +1418,302 @@ I(Z;Y_T\mid u)
 [PCR26] A. Park, S. Chennakesavalu, G. M. Rotskoff. *Scaling transferable coarse-graining with mean force matching*. Journal of Chemical Physics 164, 244117 (2026), DOI 10.1063/5.0329526; arXiv:2602.14531. 使用其条件均值力与瞬时投影力噪声的区分，不据其非线性坐标形式推导本章结果，也不将该文实验性能认领为本项目读数。
 
 本章补齐第 9.4 节中“非线性观察下哪些误差真正来自隐藏状态”的一部分义务。全局最小非线性预测状态的构造、有限历史所需长度、实际 noisy sensor 的联合置信保证，以及量子非对易条件恢复的对应仍需分别证明。
+
+<a id="sec-memory-consistency"></a>
+## 11. 历史闭合与多步相容性：残差相关、有限记忆和辛记忆坐标
+
+**范围与来源。** 本章继续同一观察下的非线性预测问题。第 10 节将当前变量的表达误差与真实条件隐藏方差分开；本章研究后者如何阻碍单步模型的多步复用，以及历史怎样补回这种信息。条件期望投影与记忆来自 [CHK02, LTPL23]；残差协方差检验采用 [SP20] 的既有统计结构；延迟可辨识与稳定性的区别与 [YR11, EYWR18] 对照。下列带常数的组合、指定磁模型的可逆记忆图及反例均按正文推导，不认领这些基础理论的首创或新的具名开放问题解决。
+
+### 11.1 条件预测算子的组合缺陷与过去、未来的残差相关
+
+沿用第 10 节保持概率的完整流。令 $\mathcal H=L^2(\mu)$，$\mathsf U_t$ 为 Koopman 酉群，生成元为 $\mathscr L$；$\mathsf P f=\mathbb E[f\mid u]$、$\mathsf Q=I-\mathsf P$。这里 $\mathsf Q$ 是函数空间投影，不是第 5 节的观测矩阵。将当前可见函数空间 $\mathcal H_u=\operatorname{Ran}\mathsf P$ 与其在完整空间中的提升等同，定义
+\[
+ \mathsf T_t=\mathsf P\mathsf U_t\mathsf P\big|_{\mathcal H_u}.
+\]
+每个 $\mathsf T_t$ 单独保持正性、常数和可见参考概率，并是 $L^2$ 压缩算子。一般不满足时间齐次 Markov 半群的组合律。
+
+**定理 11.1（有限延迟的精确组合身份）。** 对任意实 $t,s$，
+\[
+ \mathsf T_{t+s}-\mathsf T_t\mathsf T_s
+ =\mathsf P\mathsf U_t\mathsf Q\mathsf U_s\mathsf P.
+\]
+取实 $f=\varphi(u)\in\operatorname{Dom}\mathscr L^2$，令
+\[
+ r_f=\mathsf Q\mathscr Lf,\quad n_f=\|r_f\|_2^2,
+ \quad c_f=\|\mathscr L^2f\|_2,
+ \quad d_f(h)=\langle f,(\mathsf T_{2h}-\mathsf T_h^2)f\rangle.
+\]
+则
+\[
+ \boxed{d_f(h)=\mathbb E\operatorname{Cov}
+       (\varphi(u_{-h}),\varphi(u_h)\mid u_0),}
+\]
+\[
+ \boxed{|d_f(h)+h^2n_f|
+       \le h^3\sqrt{n_f}\,c_f+h^4c_f^2/4,\qquad h\ge0.}
+\]
+另外有精确正算子身份
+\[
+ I-\mathsf T_{-h}\mathsf T_h
+ =(\mathsf Q\mathsf U_h\mathsf P)^*
+   (\mathsf Q\mathsf U_h\mathsf P)\succeq0.
+\]
+
+**证明。** 在 $\mathsf U_t\mathsf U_s$ 中插入 $I=\mathsf P+\mathsf Q$ 得第一式。由酉性，
+\[
+ d_f(h)=\langle\mathsf Q\mathsf U_{-h}f,
+                    \mathsf Q\mathsf U_h f\rangle.
+\]
+两项正是过去、未来读数相对当前观察的条件中心化残差，给出协方差身份。积分 Taylor 公式给
+\[
+ \mathsf Q\mathsf U_{\pm h}f=\pm h r_f+e_\pm,
+ \quad\|e_\pm\|_2\le h^2c_f/2.
+\]
+展开内积并应用 Cauchy–Schwarz 得余项。最后在
+$\mathsf P\mathsf U_{-h}\mathsf U_h\mathsf P=I_{\mathcal H_u}$
+中插入两投影即得正算子身份。证毕。
+
+若 $\varphi$ 光滑且满足所需域条件，第 10 节的条件协方差给
+\[
+ n_f=\int \nabla\varphi(u)^T\mathcal C(u)\nabla\varphi(u)\rho(u)\,du.
+\]
+因此不同观测函数的双线性短时组合缺陷是
+$-\int\nabla\psi^T\mathcal C\nabla\varphi\,\rho$。在第 10.3 节的分部积分条件下，其弱算子为
+\[
+ \mathcal D_{\mathcal C}\varphi
+ =\rho^{-1}\nabla\cdot(\rho\mathcal C\nabla\varphi),
+ \qquad \langle\varphi,\mathcal D_{\mathcal C}\varphi\rangle_\rho=-n_f.
+\]
+这同时连接热条件响应和非 Markov 组合缺陷。上述展开是固定测试函数上的强/弱陈述，不是无界生成元的统一算子范数 Taylor 展开。
+
+### 11.2 一个时间齐次模型无法同时消掉两个延迟的误差
+
+**推论 11.2（两延迟的相容性下界）。** 令 $\mathsf S_t$ 为 $\mathcal H_u$ 上任意压缩半群，记
+$e_j=\|\mathsf T_{jh}-\mathsf S_{jh}\|_{\mathrm{op}}$，$j=1,2$。对非零 $f$ 有
+\[
+ \boxed{\max(e_1,e_2)\ge
+ \frac{[h^2n_f-h^3\sqrt{n_f}c_f-h^4c_f^2/4]_+}
+ {3\|f\|_2^2}.}
+\]
+尤其 $n_f>0$ 时，精确的当前状态转移族不能是时间齐次 Markov 半群。
+
+**证明。** 用 $\mathsf S_{2h}=\mathsf S_h^2$、两族范数至多一，得到
+\[
+ \|\mathsf T_{2h}-\mathsf T_h^2\|
+ \le e_2+2e_1\le3\max(e_1,e_2).
+\]
+用测试函数的二次型下界及定理 11.1 即得。证毕。
+
+这里比较的是同一状态、同一参考下的转移算子，覆盖保持该参考的时间齐次 Markov 模型。它没有否定带附加记忆状态、显式时间/年龄变量、变时间尺度极限的模型，也没有把任意非线性条件均值函数的复合直接等同于转移核的复合。
+
+**例 11.3（精确单步，错误的细步长极限）。** 标准 Gaussian 初态的谐振子满足 $q_t=\cos t\,q_0+\sin t\,p_0$。精确一步条件核是
+\[
+ q_{k+1}=\cos h\,q_k+\sin h\,\eta_k,
+ \quad \eta_k\ \text{独立标准 Gaussian}.
+\]
+重复这个核相当于每步重新按条件热参考抽取隐藏动量；其均值因子是 $(\cos h)^n$，条件方差是 $1-(\cos h)^{2n}$。固定 $t=nh$、令 $n\to\infty$ 时，二者趋于 $1,0$。真实因子却是 $\cos t,\sin^2t$。两种实验都保持静态 Gaussian 边缘，但连续保留同一隐藏状态与每步重置隐藏状态不是同一实验。更小数值步长不会修复被重复重置的记忆。
+
+对光滑确定性微观模型，可见条件增量协方差以 $t^2\mathcal C$ 起始。具有固定非零扩散张量的 Itô 模型则以 $t\,a(u)$ 起始；二者不能在这个短时尺度直接等同。扩散近似可以在另行证明的时间尺度分离极限或较粗时间分辨率成立。
+
+### 11.3 独立检验数据上的残差相关证书
+
+令 $g_\pm(u)=\mathbb E[\varphi(u_{\pm h})\mid u_0=u]$，以独立训练数据得到固定函数 $\widehat g_\pm$，满足可核验或另行假设的 $L^2$ 预算
+$\|\widehat g_\pm-g_\pm\|_2\le\varepsilon_\pm$。
+
+**命题 11.4（回归误差以乘积进入记忆证书）。** 定义总体残差乘积
+\[
+ \widetilde d_h=\mathbb E[
+ (\varphi(u_{-h})-\widehat g_-(u_0))
+ (\varphi(u_h)-\widehat g_+(u_0))].
+\]
+则
+\[
+ \boxed{\widetilde d_h-d_f(h)
+ =\mathbb E[(g_--\widehat g_-)(g_+-\widehat g_+)],
+ \quad |\widetilde d_h-d_f(h)|\le\varepsilon_-\varepsilon_+.}
+\]
+若 $|\varphi|\le B$、两拟合器裁剪到 $[-B,B]$，并使用 $m$ 组与训练独立且彼此独立的平稳三时刻样本，样本平均 $\widehat d_h$ 以至少 $1-\alpha$ 的概率满足
+\[
+ |\widehat d_h-d_f(h)|\le
+ \varepsilon_-\varepsilon_+
+ +4B^2\sqrt{2\log(2/\alpha)/m}=:a_m.
+\]
+因此 $\widehat d_h+a_m<0$ 认证一个非零组合缺陷，且
+\[
+ \left|-\widehat d_h/h^2-n_f\right|
+ \le h\sqrt{n_f}c_f+h^2c_f^2/4+a_m/h^2.
+\]
+
+**证明。** 每个真实条件残差与任何当前可测函数正交，展开乘积后两个一阶回归误差项为零；剩下误差乘积，Cauchy–Schwarz 得界。每个样本乘积在 $[-4B^2,4B^2]$，Hoeffding 给采样预算，再合并定理 11.1。证毕。
+
+这是 [SP20] 的广义残差协方差结构在本动力学目标上的定量应用。回归预算并非由训练损失自动提供；一条轨迹中重叠三元组也不满足这里的独立检验样本条件。负值是充分的记忆证据，未显著偏离零不能证明 Markov 性。不能据这个有前件证书宣称存在无假设、普遍有效的条件独立检验 [SP20, HPLDGS25]。
+
+### 11.4 一次历史读数怎样降低真实预测风险
+
+本节观测 $u$ 可以为向量，$u\in\operatorname{Dom}\mathscr L^2$，令 $c_2=\|\mathscr L^2u\|_2$。风险不含二分之一。当前 $u_0$ 精确已知，新增一个过去读数 $u_{-h}$，$h>0$，记信息集合 $\mathcal A_h=\sigma(u_0,u_{-h})$。
+
+**定理 11.5（一个过去点的有限时间保证）。**
+\[
+ \mathbb E\operatorname{tr}\operatorname{Cov}(\mathscr Lu\mid\mathcal A_h)
+ \le h^2c_2^2/4,
+\]
+\[
+ \boxed{\inf_f\mathbb E\|u_t-f(u_0,u_{-h})\|^2
+       \le \tfrac14t^2(t+h)^2c_2^2.}
+\]
+若过去读数改成 $u_{-h}+e$，$\|e\|_{L^2}\le\delta$，则
+\[
+ \boxed{\sqrt{\mathcal R_{h,\delta}(t)}
+ \le t(hc_2/2+\delta/h)+t^2c_2/2.}
+\]
+该界不要求误差 $e$ 与状态独立。右侧中关于 $h$ 的两项在 $h=\sqrt{2\delta/c_2}$ 时最小，若这个延迟在允许范围内且 $c_2,\delta>0$。
+
+**证明。** 可由信息集合计算的后向差商
+$d_h=(u_0-u_{-h})/h$ 满足
+$\|d_h-\mathscr Lu\|_2\le hc_2/2$。
+条件期望是最优平方逼近，因此给第一式。未来 Taylor 余项至多 $t^2c_2/2$，对其作条件中心化后收缩，再用三角不等式得风险界。带误差差商至多再增加 $\delta/h$，同理可得。极小点由求导得到。证毕。
+
+当 $h$ 与预测跨度 $t$ 同阶时，无噪声上界为 $O(t^4)$；要从这条预算继续保证四阶风险，需要过去测量的均方根误差 $\delta=O(t^2)$。这不是对所有模型的必要噪声条件。最优条件风险随信息增加不增，但具体拟合器或这个保守上界不自动具有相同改进幅度。
+
+**命题 11.6（完整导数历史的分层风险）。** 令
+$J_k=(u,\mathscr Lu,\ldots,\mathscr L^ku)$，$\mathsf P_k=\mathbb E[\cdot\mid J_k]$，并假设 $u\in\operatorname{Dom}\mathscr L^{k+2}$。置
+$n_k=\|(I-\mathsf P_k)\mathscr L^{k+1}u\|_2^2$。则
+\[
+ \left|\sqrt{\inf_f\mathbb E\|u_t-f(J_k)\|^2}
+ -\frac{t^{k+1}}{(k+1)!}\sqrt{n_k}\right|
+ \le\frac{t^{k+2}}{(k+2)!}\|\mathscr L^{k+2}u\|_2.
+\]
+证明：积分 Taylor 展开中前 $k$ 阶全部是 $J_k$ 可测函数，作 $I-\mathsf P_k$ 投影即得。导数历史是理想信息，带噪延迟需单独预算，不能只据此宣称 Takens 式稳定嵌入。
+
+### 11.5 四阶历史收益的可重建 Gaussian 实例
+
+取四维标准 Gaussian 初态，$\Omega=\operatorname{diag}(J_2,2J_2)$，观测 $u=(q_1+q_2)/\sqrt2$，则
+$f(t)=\mathbb E[u_tu_0]=(\cos t+\cos2t)/2$。当前风险为 $1-f(t)^2$。过去读数有独立 Gaussian 噪声方差 $\sigma^2$ 时，精确风险是
+\[
+ \mathcal R_{h,\sigma}(t)=1-
+ \begin{pmatrix}f(t)&f(t+h)\end{pmatrix}
+ \begin{pmatrix}1&f(h)\\f(h)&1+\sigma^2\end{pmatrix}^{-1}
+ \binom{f(t)}{f(t+h)}.
+\]
+这是 Gaussian 条件协方差的直接 Schur 补。当 $h=t\downarrow0$，
+\[
+ \mathcal R_0(t)\sim\tfrac52t^2,\qquad
+ \mathcal R_{t,0}(t)\sim\tfrac94t^4,\qquad
+ \mathcal R_{t,\sigma}(t)\sim\tfrac{13}4t^4\quad(\sigma^2=t^4).
+\]
+将余弦 Taylor 级数代入上述有限矩阵式即得常数。这表明定理 11.5 的四阶收益在允许模型中确实出现，但一个历史点尚未恢复四维完整状态。
+
+### 11.6 非线性磁模型的精确记忆坐标与奇异边界
+
+回到第 10.5 节，记 $p=p_x$、$z=y-a x^2$、$w=p_y$。定义两个动态记忆坐标
+\[
+ r=\dot p+x^3=2\kappa axz+cw,\quad
+ \chi=4\kappa a^2x^2+c^2,
+\]
+\[
+ s=\dot r+\chi p
+   =\kappa(2ap-c)z+2\kappa axw.
+\]
+于是
+\[
+ \binom r s=A(x,p)\binom z w,\quad
+ A=\begin{pmatrix}2\kappa ax&c\\\kappa(2ap-c)&2\kappa ax\end{pmatrix},
+ \quad \Delta=\det A=\kappa(4\kappa a^2x^2-2acp+c^2).
+\]
+
+**定理 11.7（四维记忆图的精确闭合与几何保持）。** 在 $\Delta\ne0$ 的开集上，$(x,p,r,s)$ 与完整状态光滑等价。将 $(z,w)^T=A^{-1}(r,s)^T$ 代入
+\[
+ \dot x=p,\quad \dot p=-x^3+r,\quad \dot r=s-\chi p,
+\]
+\[
+ \dot s=2\kappa a(-x^3+r-\kappa x)z
+       +\kappa(4ap-c)w-4\kappa a^2xp^2
+\]
+得到精确自治记忆模型。其推前 Poisson 矩阵 $J_{\rm mem}=D\Psi J_{\rm old}D\Psi^T$ 满足 Jacobi，且
+\[
+ \boxed{\det J_{\rm mem}=\Delta^2>0.}
+\]
+推前 Gibbs 密度为
+\[
+ \rho_{\rm mem}(x,p,r,s)\propto
+ \frac{\exp[-\beta H(x,p,z(x,p,r,s),w(x,p,r,s))]}{|\Delta(x,p)|}.
+\]
+
+**证明。** 记忆方程由原多项式向量场逐项求导。映射对 $(z,w)$ 的 Jacobian 是 $A$，完整 Jacobian 为块下三角，故行列式为 $\Delta$，显式逆给图上的光滑等价。原 $(x,p,z,w)$ 坐标中的 Poisson 矩阵为
+\[
+ J_{\rm old}=\begin{pmatrix}
+ 0&1&0&0\\-1&0&2ax&c\\0&-2ax&0&1\\0&-c&-1&0
+ \end{pmatrix},\quad \det J_{\rm old}=1.
+\]
+它来自合法磁 Poisson 矩阵的坐标变换。微分同胚推前保持括号与 Jacobi，行列式为 $\Delta^2$。Gibbs 公式保留逆 Jacobian 的绝对值。证毕。
+
+一个记忆量 $r$ 一般不够：在 $\Delta\ne0$ 的点，固定 $x,p,r$ 仍可改变 $s$，从而改变 $\dot r$。这个模型的瞬时隐藏力协方差只有一个非零方向，仍需要两个独立记忆坐标才能在上述图上恢复全部动力学。它具体说明协方差秩与隐藏坐标维数不同。
+
+**命题 11.8（几乎处处可恢复不保证全局噪声稳定）。** 若 $ac\ne0$，$\Delta=0$ 是 Gibbs 概率为零的超曲面，但对任意独立、均值零、协方差 $\sigma^2I_2$ 的记忆测量误差，$\sigma>0$，直接反演 $A^{-1}$ 的无条件均方误差无限大。这里当前 $x,p$ 被精确知道；该结论针对直接反演器，不针对所有正则化或 Bayes 估计器。
+
+**证明。** 固定 $x$，奇异点为
+$p_*=(4\kappa a^2x^2+c^2)/(2ac)$，且
+$\Delta=-2\kappa ac(p-p_*)$。
+Gibbs 中 $p$ 是全实支撑的 Gaussian。$2\times2$ 逆矩阵的 Frobenius 范数满足
+$\|A^{-1}\|_F^2=\|A\|_F^2/\Delta^2\ge c^2/\Delta^2$，故其条件期望在 $p_*$ 邻域发散。直接反演的条件风险为 $\sigma^2\|A^{-1}\|_F^2$，再积分得到结论。证毕。
+
+在守护区 $|\Delta|\ge d_0>0$、$\|A\|_F\le K_A$，记忆误差 $\eta$ 则给出
+$\|\widehat{(z,w)}-(z,w)\|\le K_A\|\eta\|/d_0$。
+显式奇异纤维：$\kappa=1,a=1/2,c=7/10,x=1,p=149/70$ 下，隐藏状态 $(z,w)=(0,0)$ 与 $(-7/10,1)$ 给相同 $r=s=0$，但 $\dot s$ 相差 $347/70$。因此这个图在奇异面不能继续被当作完整状态；额外更高导数、另一观测图或直接传感器需要独立处理。
+
+### 11.7 从有限历史实现记忆图的一个误差预算
+
+假设当前 $x_0,p_0$ 精确，过去 $p_{-h},p_{-2h}$ 各有绝对误差至多 $\varepsilon$，且轨迹段上 $|p'''|\le K_3$。定义
+\[
+ \widehat p'=(3p_0-4\widehat p_{-h}+\widehat p_{-2h})/(2h),
+ \quad\widehat p''=(p_0-2\widehat p_{-h}+\widehat p_{-2h})/h^2,
+\]
+\[
+ \widehat r=\widehat p'+x_0^3,\quad
+ \widehat s=\widehat p''+(3x_0^2+\chi_0)p_0.
+\]
+Taylor 余项及二阶差分的双积分表达给出保守界
+\[
+ |\widehat r-r|\le K_3h^2+5\varepsilon/(2h),\quad
+ |\widehat s-s|\le K_3h+3\varepsilon/h^2.
+\]
+乘以上节 $\|A\|_F/|\Delta|$ 的逆增益，得到隐藏状态恢复误差。这个指定模板可用 $h\asymp\varepsilon^{1/3}$ 平衡第二条预算；不宣称这一阶对任意高阶模板或采样设计最优。该段只处理有限历史恢复，不把导数观测当作无噪声现成输入。
+
+### 11.8 同一个组合障碍的有限量子实例
+
+有限维可见/隐藏系统上，用归一 Hilbert–Schmidt 内积，$\mathsf U_tX=e^{itH}Xe^{-itH}$、$\mathscr LX=i[H,X]$，以及正交条件期望
+$\mathsf P X=e^{-1}\operatorname{Tr}_B(X)\otimes I_B$，其中 $e=\dim\mathcal H_B$。归一迹参考不变，所以定理 11.1 的全部投影恒等式与两延迟误差下界成立。每个约化 $\mathsf T_t$ 都是完全正、保幺算子，但不自动组成半群。
+
+取 $H=Z\otimes Z$、隐藏初态 $I/2$。直接计算得到
+\[
+ \mathsf T_t(X)=\cos(2t)X,\quad
+ (\mathsf T_{2h}-\mathsf T_h^2)X=-\sin^2(2h)X,
+ \quad\|\mathsf Q\mathscr L(X\otimes I)\|_{2,n}^2=4.
+\]
+重复刷新隐藏系统时，$n$ 步的因子为 $\cos(2t/n)^n\to1$；不刷新时是 $\cos2t$。这与经典热动量刷新具有同一压缩算子机制。它是有限量子系统、无限温度参考下的明确定理实例，不把量子测量记录当作经典无扰动历史，也不将一般有限温相关态的条件期望默认为正交偏迹。
+
+### 11.9 实际检错、文献定位与剩余义务
+
+本轮程序通过 90 项符号或有限实例检查。四维双模模型的 80 位精度风险为：
+
+| $t=h$ | 只知当前值 | 再知一个无噪过去值 | 过去噪声方差为 $t^4$ |
+|---:|---:|---:|---:|
+| 0.1 | 0.0247738899185762 | 0.000222629097589697 | 0.000321332038309279 |
+| 0.03 | 0.00224816133612076 | 0.00000182076474901187 | 0.00000262981724051655 |
+| 0.01 | 0.000249977292642337 | 0.0000000224976188537009 | 0.0000000324963188828699 |
+
+非线性记忆图与完整模型在 $[0,0.2]$ 的合成轨迹比较中，最大状态差约 $2.30\times10^{-13}$；该轨迹的最小 $|\Delta|$ 约为 $0.73353$，没有穿越奇异面。固定有界相位模型的 200000 个独立检验三元组，残差统计约为 $-0.0594110$，包括给定回归误差的总半径约 $0.0248945$，认证非零记忆。该非 Gaussian 相位例使用指定不变概率，不承担非线性磁 Gibbs 图的假设。
+
+[CHK02] A. J. Chorin, O. H. Hald, R. Kupferman. *Optimal prediction with memory*. Physica D 166, 239–257 (2002). DOI: 10.1016/S0167-2789(02)00446-3. 条件期望和保留未解变量记忆是已有理论，本章的复合缺陷来自同一标准投影代数。
+
+[SP20] R. D. Shah, J. Peters. *The hardness of conditional independence testing and the generalised covariance measure*. Annals of Statistics 48(3), 1514–1538 (2020). DOI: 10.1214/19-AOS1857; arXiv:1804.07203. 使用残差协方差及回归误差乘积的既有方法，保留其条件独立检验不可能性边界。
+
+[YR11] H. L. Yap, C. J. Rozell. *Stable Takens' Embeddings for Linear Dynamical Systems*. IEEE Transactions on Signal Processing 59(10), 4781–4794 (2011). DOI: 10.1109/TSP.2011.2160629; arXiv:1010.5938. 稳定性比一一对应更强，本章没有把它的线性充分条件原样用于非线性磁模型。
+
+[EYWR18] A. Eftekhari, H. L. Yap, M. B. Wakin, C. J. Rozell. *Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*. Physical Review E 97, 022222 (2018). DOI: 10.1103/PhysRevE.97.022222; arXiv:1609.06347. 使用几何稳定延迟嵌入作为已有背景，没有认领一般 Takens 扩展。
+
+[HPLDGS25] Z. He, R. Pogodin, Y. Li, N. Deka, A. Gretton, D. J. Sutherland. *On the Hardness of Conditional Independence Testing In Practice*. arXiv:2512.14000 (2025). 摘要明确强调条件均值嵌入误差和条件核选择，本章不据此假定回归误差已受控。
+
+[LTPL23] 与 [PCR26] 的出处见第 10.9 节。前者区分回归 Mori–Zwanzig 记忆与直接延迟嵌入，后者的均值力目标以热力学一致性为评价重点；本章不把减少训练标签噪声当成删除真实动态记忆的理由。2026 年预印本 arXiv:2608.14001 的摘要另提出非均匀采样的广义 Vandermonde 秩猜想；本轮未取得其完整原文，未核定精确量词或结算状态，不将任何本章结果登记为该猜想的解答。
+
+所有一般结论仍是纸面证明；数值与符号检查只用于检错。没有独立同行或异模型审定、Lean kernel、Scribe、canonical ingest、CI、硬件实验或神经网络 benchmark。下一层未解义务是：回归与相关轨迹的联合误差预算、跨奇异记忆图的稳定选择、可实现的量子测量历史，以及非线性长期预测中有限记忆截断的统一界。后续继续在本主卷追加。
