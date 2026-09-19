@@ -701,6 +701,14 @@ structure EscapeRecordEvidence where
   family : Option FamilyBindingEvidence := none
   deriving Inhabited, BEq
 
+/-- Fixed native family judge API. Content chooses a mode, never a checker.
+The implementation lives outside the finite/fixed import closure. -/
+structure FamilyRegistrationDriver where
+  resolve : ConstantInfo → FamilySourceSelection → Nat → Meta.MetaM (FamilySourceScope × Nat)
+  extract : TemplateOccurrenceEvent → Nat → Meta.MetaM (Expr × Nat)
+  validate : TemplateOccurrenceEvent → EscapeRecordInput → Nat → Meta.MetaM (EscapeRecordEvidence × Nat)
+  deriving Inhabited
+
 structure TemplateBindingCertificate where
   evidenceRef : String
   key : TemplateOccurrenceKey

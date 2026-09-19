@@ -181,7 +181,9 @@ def publishFamily (theoremName arenaName recordName : Name) (selection : FamilyS
   let env ← getEnv
   let info ← getConstInfo theoremName
   let owner := env.header.mainModule
-  let (scope, _) ← Elab.Command.liftTermElabM <| FamilySource.resolve info selection
+  let (scope, _) ← Elab.Command.liftTermElabM do
+    (← TemplateAudit.familyDriver).resolve info selection
+      (TemplateAudit.informationTemplate.work.get (← getOptions))
   let .ok (statementIdentity, _) := TemplateAudit.rawStatementIdentity info.levelParams info.type
     | throwError "incomplete_closure:family.source.identity"
   let path := sourcePath owner

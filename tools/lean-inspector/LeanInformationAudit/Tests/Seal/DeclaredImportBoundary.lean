@@ -11,6 +11,10 @@ run_cmd do
   let core := #[`LeanInformationAudit.Registry, `LeanInformationAudit.Syntax,
     `LeanInformationAudit.SealCommand].all modules.contains
   (if core then logInfo else logError) m!"[{if core then "PASS" else "FAIL"}] existing_finite_seal_core_accepted"
+  for name in #[`LeanInformationAudit.Registry.Family,
+      `LeanInformationAudit.Registry.SourceScope, `LeanInformationAudit.DependentFamilyRealization] do
+    if modules.contains name then
+      throwError "dependent-family implementation entered finite seal imports: {name}"
   -- The original 89 modules plus nine generic judge modules split for capacity.
   (if modules.size == 98 then logInfo else logError) m!"[{if modules.size == 98 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
   logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=98"

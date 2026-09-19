@@ -1,5 +1,4 @@
 import LeanInformationAudit.Registry.Enrollment
-import LeanInformationAudit.Registry.Family
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
@@ -357,7 +356,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
 private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   debit
   if event.key.mode == .dependentFamily then
-    let (raw, work) ← FamilyRegistration.extract event (← get).remaining
+    let (raw, work) ← (← familyDriver).extract event (← get).remaining
     debit work
     return ← eraseInput raw
   let name := event.realizationName
@@ -583,7 +582,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
         let (escape, familyWork) ← if event.key.mode == .dependentFamily then
-            FamilyRegistration.validate event claim.escapeInput
+            (← familyDriver).validate event claim.escapeInput
               (TemplateAudit.informationTemplate.work.get (← getOptions))
           else pure (escape, 0)
         let certificate ← validate event descriptor claim.owner escape familyWork

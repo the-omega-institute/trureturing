@@ -706,7 +706,7 @@ private def elabFamilyRegistration : CommandElab := fun stx => registrationTrans
     unless recordInfo.levelParams.length == info.levelParams.length do
       throwError "unclassified_form:family.registration.rigid_levels"
     let recordExpr := Lean.mkConst record (info.levelParams.map Level.param)
-    let realization ← mkAppM ``DependentFamily.Registration.realization #[recordExpr]
+    let realization ← mkAppM `LeanInformationAudit.DependentFamily.Registration.realization #[recordExpr]
     -- Infer every descriptor universe from the original source-level interface.
     -- A generic template may have more universe arguments than the source.
     let expected ← inferType realization

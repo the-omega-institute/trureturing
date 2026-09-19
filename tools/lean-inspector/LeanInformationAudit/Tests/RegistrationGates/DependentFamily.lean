@@ -1,5 +1,5 @@
 import LeanInformationAudit.Tests.RegistrationGates.DependentFamilyWitnesses
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Registry.Family
 
 namespace LeanInformationAudit.Tests.DependentFamily
 open Lean Meta Elab Command

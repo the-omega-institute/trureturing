@@ -29,7 +29,7 @@ public sealed class InformationFamilyEvidenceTests
                 new { ordinal = 2, binder_info = "Lean.BinderInfo.default", domain_identity = Hash },
             }, coordinates = new[] { 0, 2 }, state = occurrence, output = occurrence,
             signature_identity = Hash, state_field_identity = Hash, output_field_identity = Hash,
-            law_identity = Hash, realization_identity = Hash, registration_identity = Hash,
+            law_identity = Hash, realization_identity = Hash, registration_name = "D5.S0.Carrier.registration", registration_identity = Hash,
             bridge_identity = Hash, variation_identity = Hash, sensitivity_identity = Hash,
             continuation = "open", plan_identity = Hash, descriptor_identity = Hash, actual_identity = Hash,
             template_arguments = System.Array.Empty<object>(),
@@ -37,10 +37,13 @@ public sealed class InformationFamilyEvidenceTests
         var identity = InformationFamilyEvidence.Identity(JsonSerializer.SerializeToElement(material));
         var record = new JsonObject
         {
+            ["unit_name"] = "D5.S0.Carrier.registration", ["realization_name"] = "D5.S0.Carrier.registration",
             ["family_binding"] = new JsonObject { ["identity"] = identity, ["material"] = material },
             ["escape_from"] = new JsonObject { ["kind"] = "source-occurrence", ["source"] = Source, ["scope_identity"] = identity },
             ["certificate"] = new JsonObject { ["plan_identity"] = Hash, ["descriptor_identity"] = Hash, ["actual_identity"] = Hash,
-                ["argument_inputs"] = new JsonArray(), ["extraction_inputs"] = new JsonArray() },
+                ["argument_inputs"] = new JsonArray(), ["extraction_inputs"] = new JsonArray(new JsonObject {
+                    ["name"] = "D5.S0.Carrier.registration", ["owner"] = "D5.S0.Carrier",
+                    ["type_identity"] = Hash, ["body_identity"] = Hash }) },
         };
         record["certificate"]!["evidence_ref"] = InformationFamilyEvidence.BindingIdentity(Key, Hash,
             identity, JsonSerializer.SerializeToElement(record["certificate"]));

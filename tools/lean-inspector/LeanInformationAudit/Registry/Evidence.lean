@@ -841,6 +841,20 @@ def validate (roots : Array Name) : CoreM Unit := do
 
 end NativeCoherence
 
+/-- Like Inspector's report driver, this is a fixed judge API with exact native
+ownership. No content callback, fallback or alternate certificate producer exists.
+The finite path neither imports nor executes the dependent-family checker. -/
+def familyDriver : MetaM FamilyRegistrationDriver := do
+  let env ← getEnv
+  let owner := `LeanInformationAudit.Registry.Family
+  let name := `LeanInformationAudit.FamilyRegistration.driver
+  unless RegistrationReifier.declaringModuleOf env name == some owner &&
+      RegistrationReifier.declaringModuleOf env ``FamilyRegistrationDriver ==
+        some `LeanInformationAudit.RegistryTypes do
+    throwError "incomplete_closure:family.native_driver_owner"
+  NativeCoherence.validate #[owner]
+  unsafe evalConstCheck FamilyRegistrationDriver ``FamilyRegistrationDriver name
+
 def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) : CoreM (Array SourceInput) := do
   let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
     `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]

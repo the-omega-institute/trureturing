@@ -1,5 +1,4 @@
 import LeanInformationAudit.Tests.RegistrationGates.DependentFamily
-import LeanInformationAudit.DispositionEvidence
 
 open Lean Elab Command LeanInformationAudit
 open LeanInformationAudit.Tests.DependentFamily

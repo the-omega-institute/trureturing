@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace StrataLint.Engine;
@@ -32,7 +31,7 @@ internal static class InformationFamilyEvidence
         InformationTemplateJson.Fields(material, "mode", "source_name", "source_path", "source_sha256",
             "statement_identity", "source_type_identity", "rigid_levels", "telescope", "coordinates",
             "state", "output", "signature_identity", "state_field_identity", "output_field_identity",
-            "law_identity", "realization_identity", "registration_identity", "bridge_identity",
+            "law_identity", "realization_identity", "registration_name", "registration_identity", "bridge_identity",
             "variation_identity", "sensitivity_identity", "continuation", "plan_identity",
             "descriptor_identity", "actual_identity", "template_arguments");
         var source = InformationTemplateJson.Name(Text(material, "source_name"));
@@ -74,7 +73,12 @@ internal static class InformationFamilyEvidence
         foreach (var field in new[] { "signature_identity", "state_field_identity", "output_field_identity",
             "law_identity", "realization_identity", "registration_identity", "bridge_identity",
             "variation_identity", "sensitivity_identity" }) Hash(material, field);
+        var registration = InformationTemplateJson.Name(Text(material, "registration_name"));
+        if (Text(record, "unit_name") != registration || Text(record, "realization_name") != registration)
+            throw new FormatException("DTR-Evidence: family registration identity mismatch");
         var certificate = record.GetProperty("certificate");
+        if (Array(certificate, "extraction_inputs", 4096).Count(input => Text(input, "name") == registration) != 1)
+            throw new FormatException("DTR-Evidence: family registration extraction input missing/ambiguous");
         foreach (var field in new[] { "plan_identity", "descriptor_identity", "actual_identity" })
             if (Hash(material, field) != Hash(certificate, field))
                 throw new FormatException("DTR-Evidence: family extraction certificate mismatch");
@@ -160,36 +164,66 @@ internal static class InformationFamilyEvidence
         }).ToImmutableArray();
     }
 
+    // Match Lean.Json.compress: scalar UTF-8 (including supplementary scalars),
+    // lowercase control escapes, and only quote, backslash, LF and CR short escapes.
     internal static string Identity(JsonElement material)
     {
-        using var stream = new MemoryStream();
-        stream.Write(Encoding.UTF8.GetBytes("DTR-family-evidence-v1:"));
-        using (var writer = new Utf8JsonWriter(stream, new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }))
-            Write(writer, material, 0);
-        if (stream.Length > 524288) throw new FormatException("DTR-Evidence: family material byte budget");
-        return InformationTemplateJson.Sha256(stream.ToArray());
+        var text = new StringBuilder("DTR-family-evidence-v1:");
+        Write(text, material, 0);
+        var bytes = new UTF8Encoding(false, true).GetBytes(text.ToString());
+        if (bytes.Length > 524288) throw new FormatException("DTR-Evidence: family material byte budget");
+        return InformationTemplateJson.Sha256(bytes);
     }
 
-    private static void Write(Utf8JsonWriter writer, JsonElement value, int depth)
+    private static void String(StringBuilder text, string value)
     {
-        if (depth > 32) throw new FormatException("DTR-Evidence: family material depth budget");
+        text.Append('"');
+        foreach (var c in value)
+            switch (c)
+            {
+                case '"': text.Append("\\\""); break;
+                case '\\': text.Append("\\\\"); break;
+                case '\n': text.Append("\\n"); break;
+                case '\r': text.Append("\\r"); break;
+                default:
+                    if (c < 0x20) text.Append("\\u").Append(((int)c).ToString("x4", System.Globalization.CultureInfo.InvariantCulture));
+                    else text.Append(c);
+                    break;
+            }
+        text.Append('"');
+    }
+
+    private static void Write(StringBuilder text, JsonElement value, int depth)
+    {
+        if (depth > 32 || text.Length > 524288)
+            throw new FormatException("DTR-Evidence: family material depth/byte budget");
+        var separator = false;
         switch (value.ValueKind)
         {
             case JsonValueKind.Object:
-                writer.WriteStartObject();
+                text.Append('{');
                 foreach (var property in value.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal))
                 {
-                    writer.WritePropertyName(property.Name);
-                    Write(writer, property.Value, depth + 1);
+                    if (separator) text.Append(',');
+                    separator = true;
+                    String(text, property.Name);
+                    text.Append(':');
+                    Write(text, property.Value, depth + 1);
                 }
-                writer.WriteEndObject();
+                text.Append('}');
                 break;
             case JsonValueKind.Array:
-                writer.WriteStartArray();
-                foreach (var item in value.EnumerateArray()) Write(writer, item, depth + 1);
-                writer.WriteEndArray();
+                text.Append('[');
+                foreach (var item in value.EnumerateArray())
+                {
+                    if (separator) text.Append(',');
+                    separator = true;
+                    Write(text, item, depth + 1);
+                }
+                text.Append(']');
                 break;
-            default: value.WriteTo(writer); break;
+            case JsonValueKind.String: String(text, value.GetString()!); break;
+            default: text.Append(value.GetRawText()); break;
         }
     }
 

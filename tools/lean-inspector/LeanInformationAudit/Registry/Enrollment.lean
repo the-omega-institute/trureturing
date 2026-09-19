@@ -1,5 +1,4 @@
 import LeanInformationAudit.Registry.Evidence
-import LeanInformationAudit.DependentFamilyRealization
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
@@ -492,8 +491,12 @@ private partial def compileNode (e : Expr) (depth : Nat)
     if n == `Fin && (← get).mode == .dependentFamily then
       finiteIndex e typePosition
       return .proj n i (← child b)
-    unless (← admittedInterface n) || #[`Prod, `Subtype].contains n ||
-        ((← get).mode == .dependentFamily && n == `Sigma) do
+    let interface := (← admittedInterface n) || #[`Prod, `Subtype].contains n ||
+      ((← get).mode == .dependentFamily && n == `Sigma)
+    if !interface && (← get).constructorTypes.contains n && !Lean.isClass (← getEnv) n then
+      rule "E3.constructor_projection"
+      return .proj n i (← child b)
+    unless interface do
       throwError "unclassified_form:E3.projection"
     rule "E3.projection"; return .proj n i (← child b)
   | .app .. | .const .. =>
@@ -592,6 +595,17 @@ private partial def compileNode (e : Expr) (depth : Nat)
       for arg in args do plan := .app plan (← child arg)
       rule "E3.symbolic_decide"
       return plan
+    -- A field may itself be a function: only parameters and self must be
+    -- supplied before projecting. E4c descent authority is unchanged.
+    if let some p := (← getEnv).getProjectionFnInfo? name then
+      if !p.fromClass && (← get).constructorTypes.contains p.ctorName.getPrefix &&
+          args.size > p.numParams then
+        dependency info
+        let mut plan := PlanNode.proj p.ctorName.getPrefix p.i (← child args[p.numParams]!)
+        for arg in args.extract (p.numParams + 1) args.size do
+          plan := .app plan (← child arg)
+        rule "E3.constructor_projection"
+        return plan
     match info with
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
@@ -659,9 +673,15 @@ open Lean Meta Elab Command
 -- P1's reflected-provider pattern. An unavailable pin stays unavailable; import
 -- of an arbitrary same-typed instance cannot supply one later.
 def initializeGrammarPins : CommandElabM Unit := do
-  unless (← getEnv).header.mainModule == `LeanInformationAudit.Syntax do
-    throwError "incomplete_closure:E2.pin_producer_owner"
-  for name in constructiveDictionaryNames ++ familyPrimitiveNames do
+  let owner := (← getEnv).header.mainModule
+  let names ← if owner == `LeanInformationAudit.Syntax then
+      pure (constructiveDictionaryNames ++ familyPrimitiveNames.filter
+        (fun name => !name.toString.startsWith "LeanInformationAudit.DependentFamily."))
+    else if owner == `LeanInformationAudit.Registry.Family then
+      pure (familyPrimitiveNames.filter
+        (fun name => name.toString.startsWith "LeanInformationAudit.DependentFamily."))
+    else throwError "incomplete_closure:E2.pin_producer_owner"
+  for name in names do
     if let some info := (← getEnv).find? name then
       let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
       let .ok (typeId, _) ← liftTermElabM <| rawIdentity info.levelParams info.type

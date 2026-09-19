@@ -89,6 +89,8 @@ internal static class DeclaredTemplateBindingRule
         var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
         return occurrence.State switch
         {
+            InformationTemplateBindingState.DeclaredUnresolved when occurrence.Key.Mode == "dependent-family-v1" =>
+                new(path.Value, "DTR-Evidence " + occurrence.Diagnostic, AdmissionEffect.Block),
             _ when !occurrence.HasOrigin || occurrence.EscapeContinues is null => new(path.Value,
                 "DTR-Undeclared " + key, AdmissionEffect.Block),
             InformationTemplateBindingState.Undeclared => new(path.Value,

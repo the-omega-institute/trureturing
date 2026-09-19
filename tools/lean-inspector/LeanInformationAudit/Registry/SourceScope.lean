@@ -1,4 +1,4 @@
-import LeanInformationAudit.Registry.Evidence
+import LeanInformationAudit.Registry.Enrollment
 import LeanInformationAudit.DependentFamilyRealization
 
 namespace LeanInformationAudit.FamilySource
@@ -71,14 +71,25 @@ def close (context : Array FamilySourceBinder) (e : Expr) : Expr :=
     else if b.kind == "let" then .letE b.name b.domain (b.value.getD (.sort .zero)) e b.nondep
     else .forallE b.name b.domain e b.info) e
 
+-- Classification may reduce aliases for typing, but the retained source,
+-- domains and occurrences always come from the raw traversal above.
+private partial def dictionaryType (type : Expr) (depth : Nat := 0) : M Bool := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.family_dictionary_depth"
+  let type ← whnf type
+  match type with
+  | .forallE n domain body bi =>
+    fun fuel => withLocalDecl n bi domain fun x =>
+      (do dictionaryType (← substitute body x) (depth + 1)).run fuel
+  | _ => pure (Lean.isClass (← getEnv) (type.getAppFn.constName?.getD .anonymous))
+
 private partial def classify (slots : Array Nat) (type : Expr) (i : Nat := 0) : M Unit := do
   debit
   if i > 64 then throwError "incomplete_closure:E8.family_source_binders"
   match type with
   | .forallE n domain body bi =>
     if slots.contains i then
-      let dictionary ← forallTelescope domain fun _ result => do
-        pure (Lean.isClass (← getEnv) (result.getAppFn.constName?.getD .anonymous))
+      let dictionary ← dictionaryType domain
       if bi == .instImplicit || dictionary then
         throwError "unclassified_form:family.map.dictionary_coordinate"
       if domain == mkSort .zero || (← isProp domain) then
@@ -121,7 +132,7 @@ private def resolveM (info : ConstantInfo) (selection : FamilySourceSelection) :
     selection, sourceType := info.type, levels := info.levelParams, telescope, state, output, coordinateDomains, stateFiber, outputFiber }
 
 def resolve (info : ConstantInfo) (selection : FamilySourceSelection) (fuel : Nat := 524288) :
-    MetaM (FamilySourceScope × Nat) := do
+    MetaM (FamilySourceScope × Nat) := withCumulativeBudget do
   let limit := min fuel 524288
   let (scope, remaining) ← (resolveM info selection).run limit
   return (scope, limit - remaining)

@@ -1,7 +1,10 @@
 import LeanInformationAudit.Registry.SourceScope
+import LeanInformationAudit.Syntax
 
 namespace LeanInformationAudit.FamilyRegistration
 open Lean Meta TemplateAudit DependentFamily
+
+run_cmd TemplateAudit.initializeGrammarPins
 
 private abbrev M := StateT Nat MetaM
 private def debit (n : Nat := 1) : M Unit := do
@@ -98,6 +101,7 @@ private def sourceMaterial (event : TemplateOccurrenceEvent) (scope : FamilySour
     ("output_field_identity", toJson (← rawId scope.levels (← mkAppM ``Signature.Output #[signature]))),
     ("law_identity", toJson (← rawId scope.levels (← mkAppM ``Arena.Law #[arena]))),
     ("realization_identity", toJson (← rawId scope.levels realization)),
+    ("registration_name", toJson event.realizationName.toString),
     ("registration_identity", toJson (← rawId scope.levels record)),
     ("bridge_identity", toJson (← field ``Registration.bridge)),
     ("variation_identity", toJson (← field ``Registration.variation)),
@@ -159,5 +163,11 @@ def validate (event : TemplateOccurrenceEvent) (input : EscapeRecordInput)
       bridgeKind := "family-forward", family := some family, continuation := some { kind := "open" } }
   let (evidence, remaining) ← action.run limit
   return (evidence, limit - remaining)
+
+/-- The only native entry selected by the fixed registry for family mode. -/
+def driver : FamilyRegistrationDriver := {
+  resolve := @FamilySource.resolve
+  extract := extract
+  validate := @validate }
 
 end LeanInformationAudit.FamilyRegistration
