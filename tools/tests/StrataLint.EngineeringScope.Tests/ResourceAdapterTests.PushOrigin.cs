@@ -172,13 +172,15 @@ public sealed partial class ResourceAdapterTests
     [Theory]
     [InlineData("shallow")]
     [InlineData("missing")]
+    [InlineData("missing-packed")]
     [InlineData("missing-registration")]
     public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        if (defect == "missing-packed") PackParent(fixture, parent);
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
-        else if (defect == "missing") File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        else if (defect is "missing" or "missing-packed") fixture.RemoveObject(parent);
         else parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", parent + "^1");
         var result = PushPlan(fixture, parent);
         if (defect == "shallow")
@@ -187,7 +189,7 @@ public sealed partial class ResourceAdapterTests
             Assert.Equal(parent, PushScope(fixture)["origin"]!["before"]!.ToString());
             Assert.Equal("event-range", PushScope(fixture)["origin"]!["kind"]!.ToString());
         }
-        else if (defect == "missing")
+        else if (defect is "missing" or "missing-packed")
         {
             Assert.Equal(2, result.Exit);
             Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
@@ -204,12 +206,15 @@ public sealed partial class ResourceAdapterTests
         }
     }
 
-    [Fact]
-    public void PushMissingPromisorParentFailsWithoutContactingRemote()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PushMissingPromisorParentFailsWithoutContactingRemote(bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
-        File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        if (packed) PackParent(fixture, parent);
+        fixture.RemoveObject(parent);
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.promisor", "true");
         var environment = EnvironmentFor(fixture);
@@ -227,6 +232,15 @@ public sealed partial class ResourceAdapterTests
         Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
         Assert.False(File.Exists(contacted), "Planning contacted the promisor remote for a missing object.");
         Assert.False(File.Exists(PushPlanPath(fixture)));
+    }
+
+    private static void PackParent(ResourceRouteTests.ResourceFixture fixture, string parent)
+    {
+        SharedBuildContractTests.Git(fixture.Root, "-c", "gc.autoDetach=false", "maintenance", "run", "--task=gc");
+        Assert.False(File.Exists(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..])));
+        Assert.NotEmpty(Directory.GetFiles(Path.Combine(fixture.Root, ".git/objects/pack"), "*.pack"));
+        Assert.Equal("commit", SharedBuildContractTests.Git(fixture.Root, "cat-file", "-t", parent));
+        Console.WriteLine("PACKED_PARENT " + parent + "\n" + SharedBuildContractTests.Git(fixture.Root, "count-objects", "-v"));
     }
 
     [Fact]
