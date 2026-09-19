@@ -8,6 +8,18 @@ namespace LeanInformationAudit
 open Lean
 open Lean.Elab.Command
 
+private initialize producedTheorems :
+    SimplePersistentEnvExtension ProducedTheorem (Array ProducedTheorem) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+/-- Production enrollment is private to this producer's insertion sites.
+A missing or changed declaration never inherits an exemption. -/
+def sealCompanionNames : GeneratedCompanionReportDriver := fun env =>
+  (producedTheorems.getState env).filterMap fun record =>
+    if record.matches env then some record.theoremValue.name else none
+
 private def rateJson (numerator denominator : Nat) : Json :=
   Json.mkObj [("numerator", numerator), ("denominator", denominator)]
 
@@ -340,7 +352,11 @@ private def stageDeclarations (env : Environment) (declarations : Array Declarat
     match stagedEnv.addDeclCore
         (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
         (maxRecDepth.get options).toUSize declaration none true with
-    | .ok nextEnv => stagedEnv := nextEnv
+    | .ok nextEnv =>
+        stagedEnv := match declaration with
+          | .thmDecl theoremValue => producedTheorems.addEntry nextEnv {
+              owner := nextEnv.header.mainModule, theoremValue }
+          | _ => nextEnv
     | .error error =>
         let name := declaration.getNames[0]!
         throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"

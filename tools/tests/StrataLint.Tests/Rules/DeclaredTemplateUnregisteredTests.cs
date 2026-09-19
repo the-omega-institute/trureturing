@@ -64,9 +64,9 @@ public sealed class DeclaredTemplateUnregisteredTests
 
     [Fact]
     public void generated_occurrence_and_seal_companions_are_exempt() => Empty(Build(source: "-- generated companions\n",
-        declarations: [new(Theorem + ".«root/arena/catalog».__lowers_escape", "theorem", "True", []),
+        declarations: [new(Theorem + ".«root/arena/catalog».__lowers_escape", "theorem", "True", []) { IsGeneratedCompanion = true },
             new(Theorem + "__information_unit", "def", "True", []),
-            new(Theorem + "__catalog_irredundant", "theorem", "True", [])]));
+            new(Theorem + "__catalog_irredundant", "theorem", "True", []) { IsGeneratedCompanion = true }]));
 
     [Fact]
     public void generated_equation_and_congruence_companions_are_exempt() => Empty(Build(
@@ -227,6 +227,69 @@ public sealed class DeclaredTemplateUnregisteredTests
         var theorem = Theorem + "." + suffix;
         Block(Build(source: "-- unknown declaration provenance\n",
             declarations: [new(theorem, "theorem", "True", [])]), theorem);
+    }
+
+    [Fact]
+    public void actual_builder_membership_and_all_authored_suffixes_reach_strict_dtr()
+    {
+        using var output = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var published = Environment.GetEnvironmentVariable("STRATALINT_BUILDER_ORIGIN_CONTROL_REPORT");
+        if (string.IsNullOrEmpty(published))
+        {
+            published = output.Path;
+            var run = TestProcessRunner.Run("python3",
+                ["-B", "-c", "from test_native_publication import builder_origin_controls; import sys; builder_origin_controls(sys.argv[1])", published],
+                Path.Combine(root, "tools/lean-inspector/tests"), TimeSpan.FromMinutes(20), 1024 * 1024);
+            Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardOutput)
+                + Encoding.UTF8.GetString(run.StandardError));
+        }
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [Target] = File.ReadAllText(Path.Combine(published, Target)),
+            ["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(published, "lean-report-inputs.json")),
+        };
+        var reportPath = Path.Combine(published, "public.json");
+        var report = RawLeanReportArtifact.ReadFile(reportPath, Tree(files), validateMaterials: true);
+        var declarations = report.Files.Single().Value.Declarations;
+        using var result = JsonDocument.Parse(File.ReadAllText(Path.Combine(published, "result.json")));
+        string[] Names(string key) => result.RootElement.GetProperty(key).EnumerateArray()
+            .Select(n => n.GetString()!).ToArray();
+        var authored = Names("authored");
+        Assert.Equal(11, authored.Length);
+        Assert.All(authored, name => Assert.False(declarations.Single(d => d.Name == name).IsGeneratedCompanion));
+        Assert.All(Names("genuine"), name => Assert.True(declarations.Single(d => d.Name == name).IsGeneratedCompanion));
+        // The native metadata and every statement material crossed the strict
+        // reader. Only the irrelevant registration partition is synthetic.
+        var findings = Findings(Build(source: files[Target], declarations: declarations.ToArray()));
+        var selected = findings.Select(f => f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(Names("selected").Order(StringComparer.Ordinal), selected);
+        Assert.All(authored, name => Assert.Contains(name, selected));
+        Assert.All(findings, finding => Assert.Equal(AdmissionEffect.Block, finding.Effect));
+        files[Target] += "-- source mismatch\n";
+        Assert.Throws<FormatException>(() => RawLeanReportArtifact.ReadFile(reportPath, Tree(files)));
+    }
+
+    [Theory]
+    [InlineData("__information_unit")]
+    [InlineData("__primitive_realization")]
+    [InlineData("__lowers_escape")]
+    [InlineData("__trivial_in_catalog")]
+    [InlineData("__escape_enriched")]
+    [InlineData("__information_catalog")]
+    [InlineData("__catalog_irredundant")]
+    [InlineData("__catalog_redundant")]
+    [InlineData("__system_catalog_irredundant")]
+    [InlineData("__system_catalog_not_irredundant")]
+    [InlineData("__information_registration_diagnostic")]
+    public void raw_authored_builder_suffix_without_positive_evidence_is_selected(string suffix)
+    {
+        var name = Theorem + suffix;
+        Block(Build(source: "-- raw addDecl has no scanned source name\n",
+            declarations: [new(name, "theorem", "True", [])]), name);
+        Block(Build(source: Source.Replace("target0", "target0" + suffix, StringComparison.Ordinal),
+            declarations: [new(name, "theorem", "True", []) { IsGeneratedCompanion = true }]), name);
     }
 
     [Fact]

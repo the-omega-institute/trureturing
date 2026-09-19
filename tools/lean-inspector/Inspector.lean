@@ -197,13 +197,16 @@ def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
   | _ => true
 
-/-- Only positive metadata emitted by an actual compiler generator grants an
-exemption. Explicit source ranges win; old oleans and unknown generators remain
+/-- Only positive metadata emitted by a compiler or fixed theorem producer
+grants an exemption. Explicit source ranges win; old oleans and unknown generators remain
 selected. Congruence generation already has its own persistent compiler registry. -/
-def isGeneratedCompanion (env : Environment) (name : Name) (info : ConstantInfo) : Bool := Id.run do
-  if !info.isTheorem || name.hasMacroScopes || name.isInternal then return false
+def isGeneratedCompanion (env : Environment) (name : Name) (info : ConstantInfo)
+    (producerNames : NameSet := {}) : Bool := Id.run do
+  if !info.isTheorem || name.hasMacroScopes then return false
   if (declRangeExt.find? (level := .exported) env name).isSome ||
       (declRangeExt.find? (level := .server) env name).isSome then return false
+  if producerNames.contains name then return true
+  if name.isInternal then return false
   return (companionOrigin? env name).isSome || (Meta.congrKindsExt.find? env name).isSome
 
 def kindOf : ConstantInfo → String
@@ -362,7 +365,7 @@ def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := d
 def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
     (utilities : Array UtilityInput)
-    (informationTemplates : Json)
+    (informationTemplates : Json) (producerNames : NameSet)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
@@ -404,7 +407,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     if profiling then encodingNanos.modify (· + ((← IO.monoNanosNow) - encodeStart))
     return {
       axioms := sortedUnique (axioms.map Name.toString)
-      generatedCompanion := isGeneratedCompanion environment name info
+      generatedCompanion := isGeneratedCompanion environment name info producerNames
       includeInStatement := includeInStatement name info
       kind := kindOf info
       materialFile
@@ -593,6 +596,29 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
     for region in regions.reverse do region.free
     out.flush
 
+/-- These read-only queries are fixed producer APIs, never content callbacks.
+Absent old metadata yields no exemption; a loaded producer with a missing or
+misowned API is an error. Statement-only probes use the same membership path. -/
+private unsafe def generatedProducerNames (env : Environment) : IO NameSet := do
+  let mut names : NameSet := {}
+  for (owner, query) in #[
+      (`LeanInformationAudit.Registry.Reifier, `LeanInformationAudit.RegistrationReifier.generatedCompanionNames),
+      (`LeanInformationAudit.Syntax, `LeanInformationAudit.registrationCompanionNames),
+      (`LeanInformationAudit.SealCommand, `LeanInformationAudit.sealCompanionNames)] do
+    unless env.header.moduleNames.contains owner do continue
+    let some index := env.getModuleIdxFor? query
+      | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer"
+    unless env.header.moduleNames[index.toNat]! == owner do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_owner"
+    let typeName := `LeanInformationAudit.GeneratedCompanionReportDriver
+    let some typeIndex := env.getModuleIdxFor? typeName
+      | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_type"
+    unless env.header.moduleNames[typeIndex.toNat]! == `LeanInformationAudit.RegistryTypes do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.companion_producer_type"
+    let driver ← IO.ofExcept <| env.evalConstCheck (Environment → Array Name) {} typeName query
+    for name in driver env do names := names.insert name
+  return names
+
 /-- Report mode loads the fixed Registry judge independently of the requested
 source modules. Even an empty inventory requires its source/native verifier.
 The two producer identities are fixed judge APIs, never content callbacks. -/
@@ -666,6 +692,7 @@ unsafe def main (args : List String) : IO Unit := do
   let produce : IO Unit := do
     if profiling then
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
+    let producerNames ← generatedProducerNames env
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
     let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
@@ -683,7 +710,7 @@ unsafe def main (args : List String) : IO Unit := do
         materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
     try
       let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-        inspectModule env cache writer materialCounter utilities binding input
+        inspectModule env cache writer materialCounter utilities binding producerNames input
       writer.stdin.putStr "done\n"
       writer.stdin.flush
       unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do

@@ -744,3 +744,176 @@ initialize registerDerivingHandler ``ProbeMarker fun names => do
             self.assertIn('report_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+
+def builder_origin_controls(destination, *, statement_only=True):
+    """Fresh fixed-builder and raw authored controls, without a Git fixture.
+
+    Build dependencies in the current repository, compile an isolated module,
+    and use the actual Inspector statement API and compactor. DTR's C# test
+    supplies only the empty registration partition so declaration selection is
+    observed independently of the template audit. This is not a full report-mode
+    coherence or registration-admission test.
+    """
+    destination = Path(destination).resolve()
+    destination.mkdir(parents=True, exist_ok=True)
+    runner = NativeTestSupport()
+    runner.root = destination
+    runner.env = dict(os.environ)
+    checks = []
+
+    def command(args, env=None):
+        result = runner.guarded_command([str(a) for a in args], cwd=ROOT,
+            env=env, timeout=1200)
+        checks.append(dict(command=[str(a) for a in args], exit=result.returncode))
+        if result.returncode:
+            raise RuntimeError(result.stdout + result.stderr)
+        return result.stdout
+
+    suffixes = ['__information_unit', '__primitive_realization', '__lowers_escape',
+        '__trivial_in_catalog', '__escape_enriched', '__information_catalog',
+        '__catalog_irredundant', '__catalog_redundant', '__system_catalog_irredundant',
+        '__system_catalog_not_irredundant', '__information_registration_diagnostic']
+    source = '''import LeanInformationAudit.SealCommand
+import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
+open Lean Meta Elab Command LeanInformationAudit
+open D5.S3.ConceptDynamics.InformationEscape
+namespace D5.S0.Carrier.Target
+def arena : PrimitiveLawArena where
+  toArena := Arena.ofFintype Bool
+  signature :=
+    { Index := Fin 1, indexFintype := inferInstance, indexDecidableEq := inferInstance
+      Output := fun _ => Bool, outputDecidableEq := fun _ => inferInstance
+      axis := fun _ => .cut, readoutAxisNotAnchor := by simp
+      AnchorIndex := Fin 0, anchorFintype := inferInstance, anchorDecidableEq := inferInstance }
+  Law := fun _ => True
+local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
+def testRealization : PrimitiveRealization arena.signature where
+  readout := fun _ state => state
+  anchor := Fin.elim0
+information_theorem target in arena primitives testRealization : arena.Law testRealization := by trivial
+expect_information_occurrence target in arena from "D5.S0.Carrier.Target"
+#seal_information_theory
+run_cmd prepareInformationAnalysisStage (← getEnv).header.mainModule
+
+def eqArena := PointwiseRegistrationTemplates.pointwiseEqArena (Arena.ofFintype Bool) Bool
+theorem clean (x : Bool) : x.not.not = x := Bool.not_not _
+register_information_theorem clean via
+  (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+
+theorem rollback (x : Bool) : x.not.not = x := Bool.not_not _
+run_cmd do
+  let before := RegistrationReifier.generatedCompanionNames (← getEnv)
+  let mut rejected := false
+  try
+    registrationTransaction do
+      elabCommand (← `(command| register_information_theorem rollback via
+        (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena))
+      throwError "expected producer rollback"
+  catch error => rejected := (← error.toMessageData.toString) == "expected producer rollback"
+  unless rejected && !(← getEnv).contains `D5.S0.Carrier.Target.rollback.__primitive_realization &&
+      RegistrationReifier.generatedCompanionNames (← getEnv) == before do
+    throwError "producer membership leaked across rollback"
+
+abbrev objectArena : Arena := arena.toArena
+theorem supplied : arena.Law testRealization := by trivial
+theorem suppliedBridge : LegacyPrimitiveRealization arena (arena.Law testRealization) testRealization := ⟨Iff.rfl⟩
+register_information_theorem supplied in arena object_arena objectArena catalog witnessed
+  primitives testRealization.toPrimitiveBundle realization suppliedBridge
+
+inductive Box where | mk (n : Nat)
+def count : Nat → Nat | 0 => 0 | n + 1 => count n + 1
+def eqWitness := @count.eq_def
+def congrWitness := @count.congr_simp
+theorem authored.eq_def : True := True.intro
+-- Measured residual boundary, kept separate from the suffix regression.
+run_elab do
+  for name in [`D5.S0.Carrier.Target.markerWritten, `D5.S0.Carrier.Target.congruenceWritten] do
+    addDecl <| .thmDecl { name, levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+  modifyEnv (recordCompanionOrigin · `D5.S0.Carrier.Target.markerWritten `injective)
+  modifyEnv fun env => Meta.congrKindsExt.insert env `D5.S0.Carrier.Target.congruenceWritten #[]
+theorem explicitMarked : True := True.intro
+run_elab do
+  modifyEnv (recordCompanionOrigin · `D5.S0.Carrier.Target.explicitMarked `injective)
+run_elab do
+  for suffix in SUFFIXES do
+    let name := (`D5.S0.Carrier.Target).str ("raw" ++ suffix)
+    addDecl <| .thmDecl { name, levelParams := [], type := mkConst ``True, value := mkConst ``True.intro }
+run_cmd do
+  let env ← getEnv
+  let .thmInfo theoremValue ← getConstInfo ``clean | throwError "missing control"
+  let record : ProducedTheorem := { owner := env.header.mainModule, theoremValue }
+  unless record.matches env do throwError "matching evidence rejected"
+  for bad in #[{ record with owner := `WrongOwner },
+      { record with theoremValue := { theoremValue with name := `Missing } },
+      { record with theoremValue := { theoremValue with type := mkConst ``False } },
+      { record with theoremValue := { theoremValue with value := mkConst ``True.intro } },
+      { record with theoremValue := { theoremValue with levelParams := [`u] } }] do
+    if bad.matches env then throwError "mismatched producer evidence accepted"
+  unless !(RegistrationReifier.generatedCompanionNames env).contains ``suppliedBridge &&
+      !(registrationCompanionNames env).contains ``suppliedBridge &&
+      !(sealCompanionNames env).contains ``suppliedBridge do
+    throwError "supplied authored bridge inherited an exemption"
+end D5.S0.Carrier.Target
+'''.replace('SUFFIXES', '#[' + ', '.join(json.dumps(s) for s in suffixes) + ']')
+    path = 'D5/S0/Carrier/Target.lean'
+    module = path[:-5].replace('/', '.')
+    target = ROOT / path
+    if target.exists():
+        raise RuntimeError('builder origin fixture source already exists: ' + str(target))
+    recipe = ROOT / 'tools/lean-inspector/compiler/build.py'
+    command([sys.executable, '-B', recipe, 'run', 'lake', 'build',
+        'LeanInformationAudit.SealCommand', 'D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates',
+        'leanInspector/reportInspector'])
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(source)
+    inspector = ROOT / '.lake/build/lean-inspector/producer/bin/reportInspector'
+    spool = destination / 'spool'
+    raw = destination / 'spool.json'
+    try:
+        command([sys.executable, '-B', recipe, 'run', 'lake', 'build', module])
+        command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
+            *(['--statements-only'] if statement_only else []),
+            '--output', raw, '--material-spool', spool, module, path,
+            'sha256:' + hashlib.sha256(source.encode()).hexdigest()])
+    finally:
+        # Every command joined its entire process tree before this deletion.
+        if target.read_text() != source:
+            raise RuntimeError('builder fixture source changed; refusing cleanup')
+        target.unlink()
+        for directory in ['lib/lean', 'ir']:
+            for artifact in (ROOT / '.lake/build' / directory / Path(path).parent).glob('Target.*'):
+                artifact.unlink()
+    (destination / path).parent.mkdir(parents=True, exist_ok=True)
+    (destination / path).write_text(source)
+    manifest = destination / 'lean-report-inputs.json'
+    shutil.copyfile(ROOT / 'lean-report-inputs.json', manifest)
+    materials.compact(raw, spool, destination / 'public.json', manifest)
+    row = json.loads((destination / 'public.json').read_text())['modules'][0]
+    declarations = {d['name']: d for d in row['declarations']}
+    authored = [module + '.raw' + s for s in suffixes]
+    for name in authored:
+        assert declarations[name]['kind'] == 'theorem', name
+        assert declarations[name]['include_in_statement'], name
+        assert not declarations[name]['generated_companion'], name
+    genuine = [module + '.' + n for n in ['target.__lowers_escape', 'target.__escape_enriched',
+        'arena.__catalog_irredundant', '__system_catalog_irredundant', 'clean.__primitive_realization',
+        'Box.mk.inj', 'Box.mk.injEq', 'Box.mk.sizeOf_spec', 'count.eq_def', 'count.congr_simp']]
+    genuine += [module + '.supplied.«' + module + '/' + module + '.objectArena/witnessed».__primitive_realization']
+    for name in genuine:
+        assert declarations[name]['generated_companion'], name
+    for name in ['target', 'clean', 'supplied', 'suppliedBridge', 'authored.eq_def', 'explicitMarked']:
+        assert not declarations[module + '.' + name]['generated_companion'], name
+    residual = {name: declarations[module + '.' + name]['generated_companion']
+        for name in ['markerWritten', 'congruenceWritten', 'explicitMarked']}
+    result = dict(exit=0, mode="native-statements-compacted" if statement_only else "native-report-compacted",
+        authored=authored, genuine=genuine, arch1_observed=residual,
+        generated=[n for n, d in declarations.items() if d['generated_companion']],
+        selected=[n for n, d in declarations.items() if d['kind'] == 'theorem'
+            and d['include_in_statement'] and not d['generated_companion'] and not n.startswith('_private.')],
+        declarations=len(declarations), mismatch_controls=5, rollback_controls=1, checks=checks,
+        source_sha256={path: hashlib.sha256(source.encode()).hexdigest()},
+        inspector_sha256=hashlib.sha256(inspector.read_bytes()).hexdigest(),
+        owned_live_processes=0)
+    (destination / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
+    return result

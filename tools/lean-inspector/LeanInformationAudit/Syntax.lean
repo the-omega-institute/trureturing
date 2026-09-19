@@ -8,6 +8,18 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
+private initialize producedTheorems :
+    SimplePersistentEnvExtension ProducedTheorem (Array ProducedTheorem) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+/-- Production enrollment is private to this producer's insertion sites.
+A missing or changed declaration never inherits an exemption. -/
+def registrationCompanionNames : GeneratedCompanionReportDriver := fun env =>
+  (producedTheorems.getState env).filterMap fun record =>
+    if record.matches env then some record.theoremValue.name else none
+
 run_cmd TemplateAudit.initializeGrammarPins
 
 /-- Command dispatch also considers identifiers, without reserving the spelling. -/
@@ -478,12 +490,13 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
   let realizationLevels := suppliedRealizationInfo.levelParams.map Level.param
-  liftCoreM <| addAndCompile <| .thmDecl {
+  let theoremValue : TheoremVal := {
     name := realizationName
     levelParams := suppliedRealizationInfo.levelParams
     type := suppliedRealizationInfo.type
-    value := mkConst suppliedRealizationName realizationLevels
-  }
+    value := mkConst suppliedRealizationName realizationLevels }
+  liftCoreM <| addAndCompile <| .thmDecl theoremValue
+  modifyEnv fun env => producedTheorems.addEntry env { owner := env.header.mainModule, theoremValue }
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)

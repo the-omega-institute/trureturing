@@ -202,8 +202,12 @@ report facets also trace it, and module provenance requires the matching
 `compiler_input_sha256`. Missing old provenance rejects report reuse. Compiled
 modules without the registry remain unclassified until canonical rebuilding;
 there is no name, shape, range or trace-based positive fallback. The Inspector
-accepts only the positive registry or `congrKindsExt`, with explicit-source,
-private/internal and unknown-origin boundaries retained. These fields do not
+accepts the positive compiler registry, `congrKindsExt`, or exact fixed-builder
+membership. Reifier, registration syntax, and seal staging privately retain their
+successfully inserted theorems; read-only owner-bound queries compare the module,
+universes, type and proof with the current declaration. No suffix grants a DTR
+exemption. Explicit-source,
+private/internal and unknown-origin boundaries remain in force. These fields do not
 participate in statement identities. A compiler identity change invalidates the
 requested Lake dependency closure, including requested upstream source builds.
 

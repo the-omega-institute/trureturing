@@ -10,6 +10,18 @@ import Std.Sync.Mutex
 namespace LeanInformationAudit.RegistrationReifier
 open Lean Meta D5.S3.ConceptDynamics.InformationEscape
 
+private initialize producedTheorems :
+    SimplePersistentEnvExtension ProducedTheorem (Array ProducedTheorem) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+/-- Production enrollment is private to this producer's insertion sites.
+A missing or changed declaration never inherits an exemption. -/
+def generatedCompanionNames : GeneratedCompanionReportDriver := fun env =>
+  (producedTheorems.getState env).filterMap fun record =>
+    if record.matches env then some record.theoremValue.name else none
+
 register_option informationReifier.fuel : Nat := {
   defValue := 65536
   descr := "Lower-only expression traversal budget for the P1 reifier" }
@@ -284,7 +296,9 @@ private def declaration (name : Name) (type value : Expr) (proof := true) : Meta
   let value ← instantiateMVars value
   closed type; closed value
   if proof then
-    addDecl (.thmDecl { name, levelParams := [], type, value })
+    let theoremValue : TheoremVal := { name, levelParams := [], type, value }
+    addDecl (.thmDecl theoremValue)
+    modifyEnv fun env => producedTheorems.addEntry env { owner := env.header.mainModule, theoremValue }
   else
     addAndCompile (.defnDecl { name, levelParams := [], type, value, hints := .abbrev, safety := .safe })
   unless ← RegistrationGates.checked name type do throwError "P1.MissingEvidence: kernel/axioms {name}"

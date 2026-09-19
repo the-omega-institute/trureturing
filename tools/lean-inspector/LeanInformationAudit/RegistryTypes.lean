@@ -852,4 +852,24 @@ The inspector resolves one exact declaration/owner of this type. Content does
 not register producers, callbacks, policies or acceptance bits. -/
 abbrev InformationTemplateReportDriver := Array Name → MetaM (Array Json)
 
+/-- Exact output of a fixed theorem-producing transaction. This data type and
+its matcher grant no write access to the producers' private registries. -/
+structure ProducedTheorem where
+  owner : Name
+  theoremValue : TheoremVal
+  deriving Inhabited
+
+def ProducedTheorem.matches (record : ProducedTheorem) (env : Environment) : Bool :=
+  let expected := record.theoremValue
+  let owner := match env.getModuleIdxFor? expected.name with
+    | some index => env.header.moduleNames[index.toNat]!
+    | none => env.header.mainModule
+  owner == record.owner && match env.find? expected.name with
+    | some (.thmInfo actual) => actual.levelParams == expected.levelParams &&
+        actual.type == expected.type && actual.value == expected.value
+    | _ => false
+
+/-- Read-only fixed-producer API, resolved by exact declaration and module owner. -/
+abbrev GeneratedCompanionReportDriver := Environment → Array Name
+
 end LeanInformationAudit

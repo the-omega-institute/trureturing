@@ -103,22 +103,9 @@ internal static class DeclaredTemplateBindingRule
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
         if (sourceNames.TryGetValue(declaration.Name, out var kind)) return kind is "theorem" or "lemma";
-        // Source names win over provenance so an authored theorem cannot escape
-        // merely because its spelling resembles a compiler companion.  Reports
-        // from the Lean inspector carry its closed compiler-metadata predicate;
-        // unknown provenance remains fail-closed. The registration
-        // builder's own generated companions retain their established closed
-        // suffix vocabulary because they are not Lean compiler declarations.
-        return !declaration.IsGeneratedCompanion
-            && !GeneratedCompanionSuffixes.Any(suffix => declaration.Name.EndsWith(suffix, StringComparison.Ordinal));
+        // Explicit source declarations win. The source-bound native report
+        // carries positive compiler and fixed-builder membership metadata;
+        // unknown provenance remains selected regardless of spelling.
+        return !declaration.IsGeneratedCompanion;
     }
-
-    // Closed naming alphabet of Registry/Entries and the seal proof builders.
-    // An explicitly authored theorem never gets a suffix-based exemption.
-    private static readonly string[] GeneratedCompanionSuffixes =
-    [
-        "__information_unit", "__primitive_realization", "__lowers_escape", "__trivial_in_catalog",
-        "__escape_enriched", "__information_catalog", "__catalog_irredundant", "__catalog_redundant",
-        "__system_catalog_irredundant", "__system_catalog_not_irredundant", "__information_registration_diagnostic",
-    ];
 }
