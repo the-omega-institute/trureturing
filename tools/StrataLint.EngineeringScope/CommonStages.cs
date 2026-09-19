@@ -297,9 +297,37 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    private static void ValidateProducedReport(string root) =>
+    internal static void ValidateProducedReport(string root)
+    {
+        var entries = new List<RawRepositoryEntry>();
+        var folded = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var utf8 = new UTF8Encoding(false, true);
+        GitRepositorySnapshotReader.VisitCurrent(root, entry =>
+        {
+            if (!RepoPath.TryCreate(entry.Path, out var path) || !folded.Add(entry.Path))
+                throw new InvalidDataException($"Repository path is invalid, duplicated or case-colliding: {entry.Path}.");
+            if (!DigestionOpaquePathPolicy.IsOpaque(path))
+            {
+                try { _ = utf8.GetCharCount(entry.Bytes.AsSpan()); }
+                catch (DecoderFallbackException exception)
+                { throw new InvalidDataException($"Repository file must be strict UTF-8: {entry.Path}.", exception); }
+            }
+            // Only this report reader consumes the view: expected modules and
+            // refutation claim sources use .lean bodies. Keep the full path
+            // inventory; VisitCurrent finishes link validation before the view
+            // reaches the report reader.
+            entries.Add(entry.Path.EndsWith(".lean", StringComparison.Ordinal)
+                ? entry : entry with { Bytes = [] });
+        });
+        var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
+            _ => throw new InvalidDataException("report input snapshot unavailable"),
+        };
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath),
-            CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+            snapshot, validateMaterials: true);
+    }
 
     private void ValidateBase(string? baseSha)
     {
