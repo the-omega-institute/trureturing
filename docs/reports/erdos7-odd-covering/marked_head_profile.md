@@ -803,3 +803,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Conditional future avoidance controls the current prefix](profile-notes/341-conditional-future-avoidance-controls-the-current-prefix.md)
 - [Original cut certificates preserve the old measure by conditional weighting](profile-notes/342-original-cut-certificates-preserve-the-old-measure.md)
 - [Original-prefix SAT reductions and transport obstructions](profile-notes/343-original-prefix-sat-reductions-and-transport-obstructions.md)
+- [Original Fourier moments and finite-probe obstructions](profile-notes/344-original-fourier-moments-and-finite-probe-obstructions.md)
