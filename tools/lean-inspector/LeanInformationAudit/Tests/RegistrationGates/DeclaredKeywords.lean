@@ -48,3 +48,4 @@ elab "observe_declared_keywords" : command => do
 observe_declared_keywords
 
 end LeanInformationAudit.Tests.DeclaredKeywords
+
