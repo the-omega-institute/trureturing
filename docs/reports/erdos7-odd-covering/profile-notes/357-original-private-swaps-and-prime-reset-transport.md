@@ -394,9 +394,11 @@ Also `q<P` follows only when starting at the largest prime P. A later
 q-cofactor may contain larger primes. No strict prime descent has been
 proved.
 
-The remaining obligation is to control the accumulated transport and
-good-tail losses, or give a whole-cover transformation or contradictory
-budget that avoids them. The explicit comparison for a nonempty escape
+The [mean partial-matching bound](360-mean-partial-matching-without-tail-loss.md)
+removes the full-matching tail loss from a budget on raw prime-private
+sources. The remaining obligation is to control accumulated transport
+losses, or give a whole-cover transformation or contradictory budget.
+The explicit comparison for a nonempty escape
 costs 2^(kappa_m+1); no height- and label-independent comparison follows.
 All statements retain actual original labels and the full finite carrier;
 local examples cannot settle this global obligation.

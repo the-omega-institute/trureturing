@@ -214,6 +214,12 @@ in CA12. For smaller q, R_q must not be replaced by the chronological
 pre-q survivor. The inequalities above are necessary capacity constraints;
 no contradiction with another required budget is established here.
 
+The [mean partial-matching bound](360-mean-partial-matching-without-tail-loss.md)
+uses a different selection: keep partial matchings on every tail and
+integrate their sizes. It applies the same allocation to the whole raw
+prime-private source, avoiding the full-matching tail-probability loss.
+That extension still does not give a contradictory surplus bound.
+
 The [standard-library checker](../frontier/parent_capacity_allocation.py)
 enumerates complete periods 12, 144 and 960 for the same three even-cover
 fixtures used in 357. It chooses actual synchronized matchings, compares
