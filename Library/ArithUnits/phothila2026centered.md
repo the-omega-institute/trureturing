@@ -1,6 +1,6 @@
 ---
 bibkey: phothila2026centered
-authors: A. Phothila; T. Thoket; Narakorn Rompurk Kanasri
+authors: Chaninat Phothila; Natthakan Thoket; Narakorn Rompurk Kanasri
 year: 2026
 title: "Length of the Longest Arithmetic Progressions in a Certain Reduced Residue System"
 doi: 10.5281/zenodo.18154061

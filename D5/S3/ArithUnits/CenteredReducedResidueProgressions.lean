@@ -16,8 +16,21 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic
 import Mathlib.Tactic.Ring
+import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+import LeanInformationAudit.RegistrationWitnesses
+import LeanInformationAudit.Syntax
+import LeanInformationAudit.SealCommand
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 namespace D5.S3.ArithUnits.CenteredReducedResidueProgressions
+
+open D5.S3.ConceptDynamics.InformationEscape
+open D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+open LeanInformationAudit
+
+set_option backward.isDefEq.respectTransparency.types false
 
 /-- The source's fixed centered representative system. The all-parity formula
 uses the interval of length `n` beginning at `-((n+1)/2)+1`. -/
@@ -35,6 +48,31 @@ def AdmissibleLength (n s : ℕ) : Prop :=
 /-- The greatest prime factor, expressed through the pinned `primeFactors`
 interface rather than a separate partial maximum. -/
 def GreatestPrimeFactor (n : ℕ) : ℕ := n.primeFactors.sup id
+
+/-- The source's finite arithmetic choice: `0` decodes the printed subtraction
+and `1` is the sensitivity variant with addition in the quotient term. -/
+def SourceCorrection : Bool := false
+
+def decodeSourceCorrection (choice : Bool) (p q : ℕ) : ℕ :=
+  if choice = false then p - 1 - q else p - 1 + q
+
+register_information_template cutRealization
+
+def sourceCorrectionArena : PrimitiveLawArena where
+  toArena := Arena.ofFintype Bool
+  signature := cutSignature Bool Bool
+  Law r := ∀ (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
+    (hn_factors : 3 ≤ n.primeFactors.card)
+    (hn_short : n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n),
+    let p := GreatestPrimeFactor n
+    let d := n / p
+    IsGreatest {s : ℕ | AdmissibleLength n s}
+        (decodeSourceCorrection (r.readout () SourceCorrection) p (2 * p / d)) ∧
+      ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
+        (decodeSourceCorrection (r.readout () SourceCorrection) p (2 * p / d) : ℕ)
+
+local instance : DecidableEq sourceCorrectionArena.State :=
+  instDecidableEqBool
 
 private lemma centered_even_iff {n : ℕ} (hn : Even n) (x : ℤ) :
     CenteredReducedResidue n x ↔
@@ -538,6 +576,8 @@ private lemma no_long_progression_of_step
   omega
 
 set_option maxHeartbeats 800000 in
+-- This large local budget is needed by the centered interval and prime-divisor
+-- arithmetic; it does not alter the theorem's hypotheses or conclusion.
 private lemma attained_progression
     {n d e p : ℕ}
     (hn : n = d * p) (hde : d = 2 * e)
@@ -693,8 +733,10 @@ theorem result (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
     (hn_short : n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n) :
     let p := GreatestPrimeFactor n
     let d := n / p
-    IsGreatest {s : ℕ | AdmissibleLength n s} (p - 1 - (2 * p / d)) ∧
-      ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ = (p - 1 - (2 * p / d) : ℕ) := by
+    IsGreatest {s : ℕ | AdmissibleLength n s}
+        (decodeSourceCorrection SourceCorrection p (2 * p / d)) ∧
+      ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
+        (decodeSourceCorrection SourceCorrection p (2 * p / d) : ℕ) := by
   let p := GreatestPrimeFactor n
   let d := n / p
   change IsGreatest {s : ℕ | AdmissibleLength n s} (p - 1 - (2 * p / d)) ∧
@@ -838,5 +880,106 @@ theorem result (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
       · exact no_long_progression_of_missing_prime hnfac hd_even hd_squarefree hd6 hn_short
           hprime_lt hdh hhpos ha
   · exact source_floor_identity hdpos hrem hquot
+
+def actualSourceCorrectionRealization :
+    PrimitiveRealization sourceCorrectionArena.signature :=
+  @cutRealization sourceCorrectionArena.toArena.State Bool instDecidableEqBool
+    (fun x : sourceCorrectionArena.toArena.State => x)
+
+def alternateSourceCorrectionRealization :
+    PrimitiveRealization sourceCorrectionArena.signature :=
+  @cutRealization sourceCorrectionArena.toArena.State Bool instDecidableEqBool
+    (fun _ => true)
+
+private theorem sourceCorrectionBridge :
+    LegacyPrimitiveRealization sourceCorrectionArena
+      (∀ (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
+        (hn_factors : 3 ≤ n.primeFactors.card)
+        (hn_short : n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n),
+        let p := GreatestPrimeFactor n
+        let d := n / p
+        IsGreatest {s : ℕ | AdmissibleLength n s}
+            (decodeSourceCorrection SourceCorrection p (2 * p / d)) ∧
+          ⌊(p : ℚ) - (2 * p : ℚ) / d⌋ =
+            (decodeSourceCorrection SourceCorrection p (2 * p / d) : ℕ))
+      actualSourceCorrectionRealization := by
+  refine ⟨?_⟩
+  constructor
+  · intro h n hn_even hn_squarefree hn_factors hn_short
+    have h' := h n hn_even hn_squarefree hn_factors hn_short
+    simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
+      cutRealization, decodeSourceCorrection, SourceCorrection] using h'
+  · intro h n hn_even hn_squarefree hn_factors hn_short
+    have h' := h n hn_even hn_squarefree hn_factors hn_short
+    simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
+      cutRealization, decodeSourceCorrection, SourceCorrection] using h'
+
+private theorem alternateSourceCorrection_not_law :
+    ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
+  intro h
+  have hpf : (30 : ℕ).primeFactors = {2, 3, 5} := by
+    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    rw [Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    ext q
+    simp [Nat.prime_two.primeFactors, (by decide : Nat.Prime 3).primeFactors,
+      (by decide : Nat.Prime 5).primeFactors]
+    constructor
+    · intro hq
+      rcases hq with rfl | rfl | rfl <;> simp
+    · intro hq
+      rcases hq with rfl | rfl | rfl <;> simp
+  have hsq : Squarefree (30 : ℕ) := by
+    rw [show (30 : ℕ) = 2 * (3 * 5) by norm_num]
+    rw [Nat.squarefree_mul_iff, Nat.squarefree_mul_iff]
+    exact ⟨by decide, Nat.prime_two.squarefree, by decide,
+      (by decide : Nat.Prime 3).squarefree, (by decide : Nat.Prime 5).squarefree⟩
+  have hcard : 3 ≤ (30 : ℕ).primeFactors.card := by
+    rw [hpf]
+    norm_num
+  have hshort : 30 / GreatestPrimeFactor 30 < 2 * GreatestPrimeFactor 30 := by
+    rw [GreatestPrimeFactor, hpf]
+    norm_num
+  have h30 := h 30 (by norm_num) hsq hcard hshort
+  dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
+    cutRealization, decodeSourceCorrection, GreatestPrimeFactor, hpf] at h30
+  have hactual := result 30 (by norm_num) hsq hcard hshort
+  dsimp [decodeSourceCorrection, SourceCorrection, GreatestPrimeFactor, hpf] at hactual
+  simp [SourceCorrection, hpf] at h30 hactual
+  have hattained : AdmissibleLength 30 5 := by simpa using h30.1.1
+  have hle : 5 ≤ 3 := hactual.1.2 hattained
+  omega
+
+private theorem sourceCorrection_variation :
+    FiniteLawVariation sourceCorrectionArena := by
+  refine ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
+    sourceCorrectionBridge.equivalence.mp result, alternateSourceCorrection_not_law⟩
+
+private theorem sourceCorrection_sensitivity :
+    FiniteSlotSensitivity sourceCorrectionArena := by
+  constructor
+  · intro i
+    cases i
+    refine ⟨actualSourceCorrectionRealization, alternateSourceCorrectionRealization,
+      ?_, ?_, ?_⟩
+    · intro j hne
+      exact (hne rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => alternateSourceCorrection_not_law,
+        fun _ => sourceCorrectionBridge.equivalence.mp result⟩
+  · intro i
+    exact Fin.elim0 i
+
+register_information_theorem result in sourceCorrectionArena
+  readout via (@cutRealization sourceCorrectionArena.toArena.State Bool
+    instDecidableEqBool (fun x : sourceCorrectionArena.toArena.State => x))
+  primitives actualSourceCorrectionRealization.toPrimitiveBundle realization sourceCorrectionBridge
+  variation sourceCorrection_variation sensitivity sourceCorrection_sensitivity
+
+#print axioms result
+#print axioms sourceCorrectionBridge
+#print axioms sourceCorrection_variation
+#print axioms sourceCorrection_sensitivity
 
 end D5.S3.ArithUnits.CenteredReducedResidueProgressions
