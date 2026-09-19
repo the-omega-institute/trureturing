@@ -1,0 +1,804 @@
+{
+  "schema": "erdos7-deep-five-mean-transport-v1",
+  "source_sha256": {
+    "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+    "frontier/source_cost_endpoint_attainment.py": "b7daf5ab9c8656d922681e298b030c199c5f9bcc36af7a43e84a5bef156fb68f",
+    "verify_joint_frontier.py": "a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe",
+    "frontier/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "complete_exponent_coefficient": "1/100",
+  "face_head_credits": [
+    {
+      "reference": "1/450",
+      "M5": 2,
+      "M15": 0,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "1/450",
+      "nonnegative_credit": "1/450"
+    },
+    {
+      "reference": "1/360",
+      "M5": 2,
+      "M15": 0,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "1/360",
+      "nonnegative_credit": "1/360"
+    },
+    {
+      "reference": "7/1800",
+      "M5": 1,
+      "M15": 1,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "7/1800",
+      "nonnegative_credit": "7/1800"
+    },
+    {
+      "reference": "7/1800",
+      "M5": 1,
+      "M15": 1,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "7/1800",
+      "nonnegative_credit": "7/1800"
+    },
+    {
+      "reference": "7/1800",
+      "M5": 1,
+      "M15": 1,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "7/1800",
+      "nonnegative_credit": "7/1800"
+    },
+    {
+      "reference": "13/1800",
+      "M5": 1,
+      "M15": 1,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "13/1800",
+      "nonnegative_credit": "13/1800"
+    },
+    {
+      "reference": "7/900",
+      "M5": 1,
+      "M15": 1,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "7/900",
+      "nonnegative_credit": "7/900"
+    },
+    {
+      "reference": "2/225",
+      "M5": 2,
+      "M15": 2,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "2/225",
+      "nonnegative_credit": "2/225"
+    },
+    {
+      "reference": "2/225",
+      "M5": 2,
+      "M15": 2,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "2/225",
+      "nonnegative_credit": "2/225"
+    },
+    {
+      "reference": "2/225",
+      "M5": 2,
+      "M15": 2,
+      "root_ratio": "2",
+      "defect_penalty": "0",
+      "affine_credit": "2/225",
+      "nonnegative_credit": "2/225"
+    }
+  ],
+  "concentrated_ratios": [
+    {
+      "sigma": "0",
+      "root_ratio_upper": "2"
+    },
+    {
+      "sigma": "1/27",
+      "root_ratio_upper": "161/79"
+    },
+    {
+      "sigma": "2/27",
+      "root_ratio_upper": "160/77"
+    },
+    {
+      "sigma": "1/3",
+      "root_ratio_upper": "17/7"
+    }
+  ],
+  "actual_source_projection_cases": [
+    {
+      "mode": "correct",
+      "height": 3,
+      "h0": "5/27",
+      "h1": "1/3",
+      "E5deep": "45193/11576250",
+      "E15deep": "937/367500",
+      "wrong_root_virtual_mass": "0",
+      "xi5_mass": "45193/11576250",
+      "xi15_mass": "937/367500",
+      "head_checks": [
+        {
+          "test_root": 0,
+          "test_cell": 0,
+          "reference": "7/2700",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-40249/7717500",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/91875"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 1,
+          "reference": "2/675",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-28043/5788125",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "512/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 2,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 3,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 4,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 0,
+          "reference": "1/135",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-68941/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "1136/643125"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 1,
+          "reference": "7/900",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-172523/92610000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "16/8575"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 2,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 3,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 4,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        }
+      ]
+    },
+    {
+      "mode": "wrong",
+      "height": 3,
+      "h0": "5/27",
+      "h1": "1/3",
+      "E5deep": "45193/11576250",
+      "E15deep": "1459/514500",
+      "wrong_root_virtual_mass": "64/128625",
+      "xi5_mass": "45193/11576250",
+      "xi15_mass": "1/300",
+      "head_checks": [
+        {
+          "test_root": 0,
+          "test_cell": 0,
+          "reference": "7/2700",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-40249/7717500",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "128/91875"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 1,
+          "reference": "2/675",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-28043/5788125",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "1024/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 2,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/92610000",
+          "affine_credit": "-191713/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "808/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 3,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/92610000",
+          "affine_credit": "-191713/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "808/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 4,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/92610000",
+          "affine_credit": "-191713/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "808/643125"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 0,
+          "reference": "1/135",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/92610000",
+          "affine_credit": "-88813/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "152/128625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 1,
+          "reference": "7/900",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/92610000",
+          "affine_credit": "-232139/92610000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "296/214375"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 2,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/46305000",
+          "affine_credit": "-540839/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "32/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 3,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/46305000",
+          "affine_credit": "-540839/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "32/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 4,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "952439/46305000",
+          "affine_credit": "-540839/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "32/30625"
+        }
+      ]
+    },
+    {
+      "mode": "mixed",
+      "height": 3,
+      "h0": "5/27",
+      "h1": "1/3",
+      "E5deep": "45193/11576250",
+      "E15deep": "937/367500",
+      "wrong_root_virtual_mass": "0",
+      "xi5_mass": "45193/11576250",
+      "xi15_mass": "937/367500",
+      "head_checks": [
+        {
+          "test_root": 0,
+          "test_cell": 0,
+          "reference": "7/2700",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-40249/7717500",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/91875"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 1,
+          "reference": "2/675",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "45193/5788125",
+          "affine_credit": "-28043/5788125",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "512/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 2,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 3,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 4,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-171841/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "656/643125"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 0,
+          "reference": "1/135",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-68941/30870000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "1136/643125"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 1,
+          "reference": "7/900",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/92610000",
+          "affine_credit": "-172523/92610000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "16/8575"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 2,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 3,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 4,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "892823/46305000",
+          "affine_credit": "-481223/46305000",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "64/30625"
+        }
+      ]
+    },
+    {
+      "mode": "absent",
+      "height": 3,
+      "h0": "5/27",
+      "h1": "1/3",
+      "E5deep": "7/1350",
+      "E15deep": "1/300",
+      "wrong_root_virtual_mass": "0",
+      "xi5_mass": "7/1350",
+      "xi15_mass": "1/300",
+      "head_checks": [
+        {
+          "test_root": 0,
+          "test_cell": 0,
+          "reference": "7/2700",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "7/675",
+          "affine_credit": "-7/900",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 1,
+          "reference": "2/675",
+          "M5": 2,
+          "M15": 0,
+          "root_ratio": "9/4",
+          "defect_penalty": "7/675",
+          "affine_credit": "-1/135",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 2,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/10800",
+          "affine_credit": "-31/3600",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 3,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/10800",
+          "affine_credit": "-31/3600",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 0,
+          "test_cell": 4,
+          "reference": "11/2700",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/10800",
+          "affine_credit": "-31/3600",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 0,
+          "reference": "1/135",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/10800",
+          "affine_credit": "-19/3600",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 1,
+          "reference": "7/900",
+          "M5": 1,
+          "M15": 1,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/10800",
+          "affine_credit": "-53/10800",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 2,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/5400",
+          "affine_credit": "-89/5400",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 3,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/5400",
+          "affine_credit": "-89/5400",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        },
+        {
+          "test_root": 1,
+          "test_cell": 4,
+          "reference": "2/225",
+          "M5": 2,
+          "M15": 2,
+          "root_ratio": "9/4",
+          "defect_penalty": "137/5400",
+          "affine_credit": "-89/5400",
+          "nonnegative_credit": 0,
+          "actual_virtual_credit": "0"
+        }
+      ]
+    }
+  ],
+  "positive_finite_case": {
+    "mode": "positive-product-fiber-with-wrong-root",
+    "source_height": 3,
+    "present_b_interval": [
+      2,
+      6
+    ],
+    "present_e_interval": [
+      1,
+      6
+    ],
+    "five_residue_for_each_label": 4,
+    "wrong_root_label": [
+      1,
+      6,
+      6
+    ],
+    "h0": "5/27",
+    "h1": "1/3",
+    "E5deep": "120773/70904531250",
+    "E15deep": "362351/330887812500",
+    "wrong_root_virtual_mass": "2/16544390625",
+    "xi5_mass": "120773/70904531250",
+    "xi15_mass": "120797/110295937500",
+    "head_checks": [
+      {
+        "test_root": 0,
+        "test_cell": 0,
+        "reference": "7/2700",
+        "M5": 2,
+        "M15": 0,
+        "root_ratio": "9/4",
+        "defect_penalty": "120773/35452265625",
+        "affine_credit": "122390011/47269687500",
+        "nonnegative_credit": "122390011/47269687500",
+        "actual_virtual_credit": "30627698/11817421875"
+      },
+      {
+        "test_root": 0,
+        "test_cell": 1,
+        "reference": "2/675",
+        "M5": 2,
+        "M15": 0,
+        "root_ratio": "9/4",
+        "defect_penalty": "120773/35452265625",
+        "affine_credit": "104922977/35452265625",
+        "nonnegative_credit": "104922977/35452265625",
+        "actual_virtual_credit": "245021584/82721953125"
+      },
+      {
+        "test_root": 0,
+        "test_cell": 2,
+        "reference": "11/2700",
+        "M5": 1,
+        "M15": 1,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/794130750000",
+        "affine_credit": "1077346049/264710250000",
+        "nonnegative_credit": "1077346049/264710250000",
+        "actual_virtual_credit": "67380932/16544390625"
+      },
+      {
+        "test_root": 0,
+        "test_cell": 3,
+        "reference": "11/2700",
+        "M5": 1,
+        "M15": 1,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/794130750000",
+        "affine_credit": "1077346049/264710250000",
+        "nonnegative_credit": "1077346049/264710250000",
+        "actual_virtual_credit": "67380932/16544390625"
+      },
+      {
+        "test_root": 0,
+        "test_cell": 4,
+        "reference": "11/2700",
+        "M5": 1,
+        "M15": 1,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/794130750000",
+        "affine_credit": "1077346049/264710250000",
+        "nonnegative_credit": "1077346049/264710250000",
+        "actual_virtual_credit": "67380932/16544390625"
+      },
+      {
+        "test_root": 1,
+        "test_cell": 0,
+        "reference": "1/135",
+        "M5": 1,
+        "M15": 1,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/794130750000",
+        "affine_credit": "1959713549/264710250000",
+        "nonnegative_credit": "1959713549/264710250000",
+        "actual_virtual_credit": "612553906/82721953125"
+      },
+      {
+        "test_root": 1,
+        "test_cell": 1,
+        "reference": "7/900",
+        "M5": 1,
+        "M15": 1,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/794130750000",
+        "affine_credit": "6173263147/794130750000",
+        "nonnegative_credit": "6173263147/794130750000",
+        "actual_virtual_credit": "214393868/27573984375"
+      },
+      {
+        "test_root": 1,
+        "test_cell": 2,
+        "reference": "2/225",
+        "M5": 2,
+        "M15": 2,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/397065375000",
+        "affine_credit": "3526160647/397065375000",
+        "nonnegative_credit": "3526160647/397065375000",
+        "actual_virtual_credit": "1000088/112546875"
+      },
+      {
+        "test_root": 1,
+        "test_cell": 3,
+        "reference": "2/225",
+        "M5": 2,
+        "M15": 2,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/397065375000",
+        "affine_credit": "3526160647/397065375000",
+        "nonnegative_credit": "3526160647/397065375000",
+        "actual_virtual_credit": "1000088/112546875"
+      },
+      {
+        "test_root": 1,
+        "test_cell": 4,
+        "reference": "2/225",
+        "M5": 2,
+        "M15": 2,
+        "root_ratio": "9/4",
+        "defect_penalty": "3309353/397065375000",
+        "affine_credit": "3526160647/397065375000",
+        "nonnegative_credit": "3526160647/397065375000",
+        "actual_virtual_credit": "1000088/112546875"
+      }
+    ],
+    "minimum_positive_credit": "122390011/47269687500"
+  },
+  "scope": "Ordinary off-face transport of109 C5 from two distinct complete deep-five families with one actual residual budget. The clipped credit is not asserted to preserve convexity in a numerical consumer. Does not supply a complete off-face numerator or new global K."
+}

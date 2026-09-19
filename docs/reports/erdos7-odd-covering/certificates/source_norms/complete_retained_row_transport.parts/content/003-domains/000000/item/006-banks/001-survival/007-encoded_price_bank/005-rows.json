@@ -1,0 +1,41 @@
+{
+  "length": 2792,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/000000-000798.json",
+        "sha256": "dbb5af7989761a0a595ff073e7af5b49f818dcb9c9fddb5484b5114437fec21f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/000798-001596.json",
+        "sha256": "5be620f8e3fd9c0920426689d53cfd4863728ec78feac7237786031d72581913",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/001596-002394.json",
+        "sha256": "d089cfc5a4ba06de81298de64253e63cfaa335944816612cc7a03329810d165f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 2792,
+      "part": {
+        "path": "content/003-domains/000000/item/006-banks/001-survival/007-encoded_price_bank/005-rows/002394-002792.json",
+        "sha256": "dc7036ce290efdfc1dd2c161523cfa8fe6880e06ab36286767f08ae83355e3ba",
+        "kind": "value"
+      }
+    }
+  ]
+}

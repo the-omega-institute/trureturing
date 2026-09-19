@@ -252,7 +252,7 @@ misses every one of these new classes.
 
 The published essential-class constraints are stronger than merely counting
 the children in this top fibre. [Lettl--Sun, Theorems 1.3 and
-2.1](../Library/Arith/lettlsun2008cosets.md), imply that an essential modulus
+2.1](../../../../Library/Arith/lettlsun2008cosets.md), imply that an essential modulus
 `d_t` in a cover by `k` classes satisfies
 `k >= 1 + sum_p v_p(d_t)(p-1)`. At a private point `a` of this class,
 retain the original labels `j` whose prime-to-p part divides `a_j-a` but

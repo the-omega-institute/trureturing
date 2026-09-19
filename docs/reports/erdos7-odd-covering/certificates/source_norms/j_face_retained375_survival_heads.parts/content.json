@@ -1,0 +1,249 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-retained375-survival-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "2b7b50f2573ea68c2171a2a21409ed64cb459dc98cd182c018804bbc8f0e0bbe",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "original264_model": {
+    "path": "content/005-original264_model.json",
+    "sha256": "456cdcfd9f1a3a47183f343ab31435b295ace9eca8a53f90d66d20886daf7dd9",
+    "kind": "object"
+  },
+  "model": {
+    "kind": "inline",
+    "value": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0",
+      "preserved_original_rows": 11211,
+      "preserved_original_equalities": 19,
+      "new_raw_intersection_variables": 3200,
+      "new_survivor_intersection_variables": 3200,
+      "independent_profile_coordinates": 10
+    }
+  },
+  "retained_old_labels": {
+    "kind": "inline",
+    "value": [
+      25,
+      27,
+      75,
+      81,
+      135,
+      125,
+      225,
+      375
+    ]
+  },
+  "retained_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      21,
+      35,
+      63,
+      105,
+      147,
+      245,
+      441,
+      735
+    ]
+  },
+  "new_label": {
+    "kind": "inline",
+    "value": 375
+  },
+  "new_label_survivor_cap": {
+    "kind": "inline",
+    "value": "1/375"
+  },
+  "raw_CRT_caps": {
+    "kind": "inline",
+    "value": [
+      {
+        "label": 25,
+        "lcm": 375,
+        "raw_upper": "1/375"
+      },
+      {
+        "label": 27,
+        "lcm": 3375,
+        "raw_upper": "1/3375"
+      },
+      {
+        "label": 75,
+        "lcm": 375,
+        "raw_upper": "1/375"
+      },
+      {
+        "label": 81,
+        "lcm": 10125,
+        "raw_upper": "1/10125"
+      },
+      {
+        "label": 135,
+        "lcm": 3375,
+        "raw_upper": "1/3375"
+      },
+      {
+        "label": 125,
+        "lcm": 375,
+        "raw_upper": "1/375"
+      },
+      {
+        "label": 225,
+        "lcm": 1125,
+        "raw_upper": "1/1125"
+      }
+    ]
+  },
+  "complete_old_tail_before375": {
+    "kind": "inline",
+    "value": "6151/405000"
+  },
+  "complete_old_tail": {
+    "kind": "inline",
+    "value": "5071/405000"
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "13/490"
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "774979/19845000"
+  },
+  "seed": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        4
+      ]
+    }
+  },
+  "seed_dual_key": {
+    "kind": "inline",
+    "value": "63abc426371526e1df87536a431b1000c6ff107b18dc82b553db10bb62747a98"
+  },
+  "fixed_pruning_benchmark": {
+    "kind": "inline",
+    "value": "767945288466086119/3969000000000000000"
+  },
+  "prefix_ledger": {
+    "path": "content/019-prefix_ledger.json",
+    "sha256": "da229aa8e552fca1039012b5c0d5147ae94293c51621bb1c83f1cd04258f4171",
+    "kind": "object"
+  },
+  "residual_leaf_results": {
+    "path": "content/020-residual_leaf_results.json",
+    "sha256": "1de9c112a95035ae3516865dc7cbe924944cc29633001c3e0c54534de8128ff2",
+    "kind": "array"
+  },
+  "residual_leaf_count": {
+    "kind": "inline",
+    "value": 104
+  },
+  "complete_AP13_upper": {
+    "kind": "inline",
+    "value": "767945288466086119/3969000000000000000"
+  },
+  "previous_complete_AP13_upper": {
+    "kind": "inline",
+    "value": "71949293357559869/370440000000000000"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "10289991277193671/13891500000000000000"
+  },
+  "maximizing_certificate_branch": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        4
+      ],
+      "complete375_upper": "767945288466086119/3969000000000000000",
+      "previous_available_upper": "71949293357559869/370440000000000000",
+      "adopted_upper": "767945288466086119/3969000000000000000",
+      "complete_tail_constant": "774979/19845000",
+      "dual_key": "63abc426371526e1df87536a431b1000c6ff107b18dc82b553db10bb62747a98"
+    }
+  },
+  "encoded_rational_duals": {
+    "path": "content/026-encoded_rational_duals.json",
+    "sha256": "b89710b542ed8b3150ea27af8d5a56dabc663785cf0e6bc7cb84f8f2f2fe0054",
+    "kind": "value"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 104
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 1345864
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete original H4/AP13 bound on both entire actual saturated J faces. Every3.125 billion independent original containing choice lies in a complete280 prefix bound or an exactly checked residual375 leaf. The original264 rows and seven old states remain; the independent375 root-slot profile and raw/survivor intersections are added with both occupied and complement density constraints and every original LCM cap. The375 retained event removes exactly its own1/375 tail payment, leaving5071/405000 and the full13/490 positive-seven tail. The common late interval, every exponent/cofactor depth, marked deletions and actual measure are unchanged. The final bound is the maximum of the fixed seed threshold and each residual leaf minimum of a complete new and old bound. Relaxed certificate maxima are not actual source attainment. No off-face extension, global join, complete52-cost comparison, Lean verification or unrestricted Erdos7 conclusion."
+  }
+}

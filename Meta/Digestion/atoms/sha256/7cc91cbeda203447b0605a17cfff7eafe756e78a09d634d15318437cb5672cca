@@ -1,0 +1,4 @@
+**证明。** 由于 $M\subseteq\mathcal V$，$g=(I-P_M)\Pi s\in\mathcal W$，且 $\Pi s-g=P_M\Pi s\in M$。故对 $h\in\mathcal W$，$\langle h,\Pi s\rangle=\langle h,g\rangle$。Cauchy–Schwarz 给其平方不超过 $\|h\|^2\|g\|^2\le\|g\|^2$；$g\ne0$ 时所示单位向量取等，$g=0$ 时零向量亦在闭球内并取等。证毕。
+
+可见性 $h\in\mathcal V$ 是承重条件，只写 $h\perp M$ 会允许使用未观察到的函数。闭单位球包含零，所以 $\mathcal W=\{0\}$ 时公式仍有意义；单位球面在此情形为空，不能无条件代替闭球。三状态例中可见中心化空间是一维，$M$ 已占满它，故 $\mathcal W=\{0\}$。
+

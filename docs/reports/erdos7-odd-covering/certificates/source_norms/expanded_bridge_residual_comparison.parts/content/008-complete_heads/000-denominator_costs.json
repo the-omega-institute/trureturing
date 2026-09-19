@@ -1,0 +1,23 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000000-000002.json",
+        "sha256": "7bdd7b9abc346a31b85150425d53ea320553a6afb3dbf3fcda7a89cdb6e20a7e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 5,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000002-000005.json",
+        "sha256": "94f6ff98deaf819f6f78a34953b1b3d110b7daaaa630f1fa38c03bc345333bcd",
+        "kind": "value"
+      }
+    }
+  ]
+}

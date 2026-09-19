@@ -1,0 +1,56 @@
+### 121.3 同一 Hilbert 空间中的嵌套观察子空间
+
+令
+
+$$
+\mathcal H=L^2(\Omega,\nu)=\mathbb R^\Omega,
+\qquad\langle f,g\rangle_\nu=\sum_\omega\nu(\omega)f(\omega)g(\omega).
+\tag{121.6}
+$$
+
+定义当前可观察函数空间
+
+$$
+V_n=\{f:\exists a:B_n\to\mathbb R,\ f=a\circ q_n\}.
+\tag{121.7}
+$$
+
+它是纤维常值函数的线性子空间，包含常量。由前缀关系，$a\circ q_n=(a\circ\pi_n)\circ q_{n+1}$，所以
+
+$$
+\boxed{V_n\subseteq V_{n+1}}.
+\tag{121.8}
+$$
+
+对纤维 $F_{n,b}=q_n^{-1}(b)$，定义
+
+$$
+(\Pi_nf)(\omega)
+=\frac{\sum_{\eta\in F_{n,q_n(\omega)}}\nu(\eta)f(\eta)}
+{\nu(F_{n,q_n(\omega)})}.
+\tag{121.9}
+$$
+
+分母严格正。该函数属于 $V_n$，对 $V_n$ 内函数不变。对任意 $g\in V_n$，将求和按纤维分组，得到
+
+$$
+\langle f-\Pi_nf,g\rangle_\nu
+=\sum_b g|_{F_{n,b}}
+\left(\sum_{\omega\in F_{n,b}}\nu(\omega)f(\omega)
+-\nu(F_{n,b})(\Pi_nf)|_{F_{n,b}}\right)=0.
+\tag{121.10}
+$$
+
+故 $\Pi_n$ 正是到 $V_n$ 的正交投影，也就是该共同概率模型中的条件期望。它保持常量、正性和期望。
+
+下文始终在这个固定 $L^2(\nu)$ 中比较算子。不能每获得一条实际记录就任意换成另一个内积空间，再不经嵌入直接相减两份投影。条件后验已经由式（121.9）编码为同一空间中的算子；改变模型或参考律则需要另给相容运输。
+
+记线性隐藏核 $N_n=\ker\Pi_n=V_n^\perp$，则
+
+$$
+\boxed{N_{n+1}\subseteq N_n}.
+\tag{121.11}
+$$
+
+这里 $N_n$ 是函数方向的线性核，式（121.4）的 $K_n$ 是完整实现之间的等价关系核；二者相关，但类型不同。
+

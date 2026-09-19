@@ -1,0 +1,7 @@
+**命题 130.11。** 若 $P_K=K(K^*K)^{-1}K^*$，则 $P_K$ 是到 $\operatorname{im}K$ 的正交投影，且
+
+$$
+S=F^*(I-P_K)F,\qquad
+\min_yQ(x,y)=\frac12\|(I-P_K)Fx\|^2.
+$$
+

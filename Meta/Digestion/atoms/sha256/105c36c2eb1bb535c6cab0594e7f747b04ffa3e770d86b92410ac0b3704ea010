@@ -1,0 +1,43 @@
+**证明。**
+
+张成性给每个向量有限表示，因此 $\gamma_A$ 有限。空表示使 $\gamma_A(0)=0$；缩放表示并取下确界给绝对齐次性。把两个任意接近下确界的有限表示拼在一起，得到三角不等式。取 $M>0$ 使 $\|a\|\le M$ 对所有原子成立，则任一有限表示给
+
+$$
+\|v\|\le M\sum_i|b_i|,
+\qquad \gamma_A(v)\ge\|v\|/M.
+$$
+
+所以只有零向量代价为零。再从 $A$ 中取一组基 $a_1,\ldots,a_d$，相应坐标函数记为 $\xi_j$。有限维下每个坐标函数连续，故存在有限 $C$，使
+
+$$
+\gamma_A(v)\le\sum_{j=1}^d|\xi_j(v)|\le C\|v\|.
+$$
+
+三角不等式于是给 $|\gamma_A(v)-\gamma_A(w)|\le C\|v-w\|$，证明连续性。
+
+因为 $A$ 非空且有正反两侧，$0\in K$。有限表示成本至多一，等价于其向量属于 $K$：把系数的符号吸收到原子中，以绝对值作为凸系数，剩余权重放在零上；反向直接读取凸组合。此处将同索引合并只会降低成本，因而不破坏“至多一”的结论。
+
+因此 $K\subseteq\{\gamma_A\le1\}$，连续性给 $\overline K\subseteq\{\gamma_A\le1\}$。反向设 $\gamma_A(v)\le1$。对每个 $\epsilon>0$，存在成本小于 $1+\epsilon$ 的有限表示，所以 $v/(1+\epsilon)\in K$。令 $\epsilon\downarrow0$，得到 $v\in\overline K$。这证明闭单位球公式。注意它没有证明 $\{\gamma_A\le1\}=K$。
+
+对非零 $v$，若最优有限表示存在，除以其成本 $\gamma_A(v)>0$ 得单位向量属于 $K$。反向若该单位向量属于 $K$，存在成本至多一的有限表示；乘回 $\gamma_A(v)$ 给成本至多下确界的可行表示，因此必等于下确界。这证明第二项。
+
+对于新增原子 $a\in\overline A$，由 $\gamma_A$ 连续且在 $A$ 上至多一，得 $\gamma_A(a)\le1$。任一新增字典有限表示给
+
+$$
+\gamma_A(v)\le\sum_i|b_i|\gamma_A(a_i)\le\sum_i|b_i|.
+$$
+
+取下确界得 $\gamma_A\le\gamma_{\overline A}$。旧原子仍可调用给反向不等式，故两范数相同。有限维中 $\overline A$ 闭有界而紧，$\operatorname{conv}(\overline A\cup(-\overline A))$ 紧且闭；这也可由 Carathéodory 定理把每个凸组合限制到至多 $d+1$ 项，再取紧单纯形与原子集的有限乘积连续像证明。应用已证第二项和闭单位球公式，所有非零向量的最优有限表示可达；零向量用空表示。
+
+对偶公式的“至多”来自每份有限表示上的 $\varphi(v)\le\sum_i|b_i|$。反向在 $v\ne0$ 时，在 $\mathbb Rv$ 上定义线性泛函 $t v\mapsto t\gamma_A(v)$，其相对于 $\gamma_A$ 的范数为一。实 Hahn–Banach 定理将它延拓到 $V$，仍由 $\gamma_A$ 支配，故在 $A$ 上绝对值至多一且在 $v$ 上取到 $\gamma_A(v)$。零向量直接取零泛函。这里使用实 Hahn–Banach 的等范数延拓。
+
+固定一个对偶最优 $\varphi$。任何最优有限表示均满足
+
+$$
+\gamma_A(v)=\varphi(v)=\sum_i b_i\varphi(a_i)
+\le\sum_i|b_i|=\gamma_A(v).
+$$
+
+所以每个非零系数必须有 $\varphi(\operatorname{sgn}(b_i)a_i)=1$。归一化后得到所列暴露面凸组合。反向，这样的凸组合提供成本至多 $\gamma_A(v)$ 的表示，从而达到最小值。若全部原子的绝对读数严格小于一，则每份表示中至少一个非零项产生严格不等式，最优值不能由有限表示取得。证毕。
+
+

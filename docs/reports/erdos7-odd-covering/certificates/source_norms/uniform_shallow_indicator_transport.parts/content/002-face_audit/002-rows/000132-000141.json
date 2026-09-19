@@ -1,0 +1,164 @@
+[
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      3,
+      1
+    ],
+    "generic_lp": "0",
+    "face_credit": "0",
+    "generic_upper": "0",
+    "valid_finite_face": "0",
+    "valid_upper": "0",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      3,
+      2
+    ],
+    "generic_lp": "4/225",
+    "face_credit": "0",
+    "generic_upper": "4/225",
+    "valid_finite_face": "4/225",
+    "valid_upper": "4/225",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      3,
+      3
+    ],
+    "generic_lp": "2/225",
+    "face_credit": "0",
+    "generic_upper": "2/225",
+    "valid_finite_face": "2/225",
+    "valid_upper": "2/225",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      3,
+      4
+    ],
+    "generic_lp": "2/225",
+    "face_credit": "0",
+    "generic_upper": "2/225",
+    "valid_finite_face": "2/225",
+    "valid_upper": "2/225",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      4,
+      0
+    ],
+    "generic_lp": "0",
+    "face_credit": "0",
+    "generic_upper": "0",
+    "valid_finite_face": "0",
+    "valid_upper": "0",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      4,
+      1
+    ],
+    "generic_lp": "0",
+    "face_credit": "0",
+    "generic_upper": "0",
+    "valid_finite_face": "0",
+    "valid_upper": "0",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      4,
+      2
+    ],
+    "generic_lp": "0",
+    "face_credit": "0",
+    "generic_upper": "0",
+    "valid_finite_face": "0",
+    "valid_upper": "0",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      4,
+      3
+    ],
+    "generic_lp": "2/225",
+    "face_credit": "0",
+    "generic_upper": "2/225",
+    "valid_finite_face": "2/225",
+    "valid_upper": "2/225",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  {
+    "first_beta": 4,
+    "label": [
+      45,
+      4,
+      4
+    ],
+    "generic_lp": "2/225",
+    "face_credit": "0",
+    "generic_upper": "2/225",
+    "valid_finite_face": "2/225",
+    "valid_upper": "2/225",
+    "group_duals": [
+      "0",
+      "0",
+      "0"
+    ]
+  }
+]

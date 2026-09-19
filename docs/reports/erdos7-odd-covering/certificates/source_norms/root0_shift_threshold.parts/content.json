@@ -1,0 +1,66 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-root0-shift-threshold-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "fac9c42536401aa4af978ff0d8ccf0ab9f6b797969b85d0b54e58f557fb8da20",
+    "kind": "value"
+  },
+  "layout_checks": {
+    "path": "content/002-layout_checks.json",
+    "sha256": "0e43fbe220b935b7f21e9ec575e17e18ec077ae4e53c19209eb6d14787dafd9a",
+    "kind": "array"
+  },
+  "total_original_layout_checks": {
+    "kind": "inline",
+    "value": 4600
+  },
+  "source_checks_reused": {
+    "kind": "inline",
+    "value": {
+      "prefix_increment_checks": 365,
+      "layout_cell_floor_checks": 23000
+    }
+  },
+  "cost_rows": {
+    "path": "content/005-cost_rows.json",
+    "sha256": "f5170ff352272b70a7cafc84b7a122155ce4206e62fe561b1a60bbc6834ecb49",
+    "kind": "array"
+  },
+  "threshold_factor": {
+    "kind": "inline",
+    "value": "89/180"
+  },
+  "pointwise_envelope": {
+    "kind": "inline",
+    "value": "For low/high root0 increments v,w: [s_shift-v/5]+ <= min((w-v)/5,[k_h*chi-(89/180)*v]+). Positive excess requires the low-derivative cell to be nonmaximal in availability."
+  },
+  "unbounded_root0_coefficient": {
+    "kind": "inline",
+    "value": "k_h*(w-v)/(w+(53/36)*v)"
+  },
+  "deep_bridge": {
+    "kind": "inline",
+    "value": "Q_D-P_D>=-kappa_zero*E_D, with no chi remainder."
+  },
+  "shared_budget": {
+    "kind": "inline",
+    "value": "E_D+(E5-r/5)+omega<=rho-r/5"
+  },
+  "uniform_at103_bounded": {
+    "path": "content/011-uniform_at103_bounded.json",
+    "sha256": "3d15114092154b6319eefd3d934683425ee4946005149419677c68b4bae56472",
+    "kind": "object"
+  },
+  "uniform_at103_unbounded": {
+    "path": "content/012-uniform_at103_unbounded.json",
+    "sha256": "a6e75eb43a2387fbece7e7ae07ece80b38cd24843dcdad5ce71930badf228076",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary source-slab theorem with exact upper-envelope peaks. These coefficients need not minimize actual costs and their aggregate residual charge need not fit a global consumer. Independent original labels, all infinite tails, source curvature and one actual residual retained. No new global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}
