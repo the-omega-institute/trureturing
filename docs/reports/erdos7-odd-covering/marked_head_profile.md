@@ -776,3 +776,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Complete aligned hinges and raw moments share one source](profile-notes/314-complete-aligned-hinges-and-raw-moments-share-one-source.md)
 - [Eight retained labels bound the aligned heavy cost and fourth hinge](profile-notes/315-eight-retained-labels-bound-the-aligned-heavy-cost-and-fourth-hinge.md)
 - [Complete quadratic observations on the actual aligned source](profile-notes/316-complete-quadratic-observations-on-the-actual-aligned-source.md)
+- [The complete actual aligned J comparison crosses403](profile-notes/317-the-complete-actual-aligned-j-comparison-crosses403.md)

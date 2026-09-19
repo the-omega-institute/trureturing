@@ -1,0 +1,269 @@
+[
+  {
+    "name": "cost-50",
+    "upper": "291123705756369087169/70875000000000000000",
+    "coefficients": {
+      "mass": "-729/1625",
+      "square": "729/1625",
+      "cost49": "896/1625"
+    },
+    "low_load_gaps": [
+      "0",
+      "952/1625",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "cost-51",
+    "upper": "16765931331516788051/3969000000000000000",
+    "coefficients": {
+      "mass": "-9/13",
+      "square": "9/13",
+      "cost49": "4/13"
+    },
+    "low_load_gaps": [
+      "0",
+      "17/52",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "AP11-0",
+    "upper": "129129933582018259144139/732187625400000000000000",
+    "coefficients": {
+      "AP11-0": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "AP11-1",
+    "upper": "89934561027952738201/1867825575000000000000",
+    "coefficients": {
+      "AP11-1": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "AP11-2",
+    "upper": "84454702518259168679/14942604600000000000000",
+    "coefficients": {
+      "AP11-2": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "AP11-3",
+    "upper": "264657802518259168679/453259006200000000000000",
+    "coefficients": {
+      "mass": "-290/363363",
+      "mean": "290/363363",
+      "AP11-2": "3/91"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "hinge4",
+    "upper": "1931/10000",
+    "coefficients": {
+      "hinge4": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "mean",
+    "upper": "293/450",
+    "coefficients": {
+      "mean": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  },
+  {
+    "name": "square",
+    "upper": "2565377442951193237/567000000000000000",
+    "coefficients": {
+      "square": "1"
+    },
+    "low_load_gaps": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "whole_tail_polynomial": [
+      "0",
+      "0",
+      "0"
+    ],
+    "tail_test_integers": [
+      9
+    ],
+    "tail_test_values": [
+      "0"
+    ],
+    "whole_tail_minimum": "0"
+  }
+]
