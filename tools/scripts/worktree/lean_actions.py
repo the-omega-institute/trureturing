@@ -21,7 +21,7 @@ from cache_material import files, sha
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
-EXECUTION_LAYERS = ("engineering", "current")
+EXECUTION_LAYERS = ("engineering", "current", "checks")
 ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS, "elan")
 
 
@@ -703,7 +703,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")
 
 
-def report_seed(root, lake):
+def report_seed(root, lake=None):
     """Ask the normal producer whether a transported full report can be reused.
 
     The seed manifest declares the report paths; this adapter neither infers
@@ -746,8 +746,11 @@ def report_seed(root, lake):
         return None
     for relative in sorted(reports):
         report = seed / relative
-        result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
-            "--repository", str(root), "--report", str(report), "--lake", str(lake)],
+        command = [sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
+            "--repository", str(root), "--report", str(report)]
+        if lake is not None:
+            command += ["--lake", str(lake)]
+        result = subprocess.run(command,
             cwd=root, check=True, capture_output=True, text=True)
         outcome = json.loads(result.stdout)
         if type(outcome.get("needs_lake")) is not bool:
@@ -755,6 +758,20 @@ def report_seed(root, lake):
         if not outcome["needs_lake"]:
             return str(report)
     return None
+
+
+def report_resources(root, plan, requirements):
+    source = None
+    if "lean-report" in plan["execution"]["steps"]:
+        lake = shutil.which("lake")
+        source = report_seed(root, pathlib.Path(lake) if lake else None)
+    active = {layer for layer, phase in requirements["cache_activation"].items()
+              if phase == "stage-start" or phase == "report-miss" and source is None}
+    return source, {
+        "needs_lake": bool("lake" in requirements["tools"] and source is None),
+        **{layer + "_required": layer in active for layer in ("dependency", "elan", "project")},
+        "build_cache_layers": " ".join(sorted(active & {"dependency", "project"})),
+    }
 
 
 def main():
@@ -830,15 +847,12 @@ def main():
         # Registration/producer errors are required failures, not optional cache
         # failures. A missing or rejected seed simply keeps the normal resources.
         try:
-            if "current" in args.layers:
-                restore(args.repository, actions_keys(args.repository), {"current": args.current_key}, ["current"])
-            source = None
-            if "lean-report" in plan["execution"]["steps"]:
-                lake = shutil.which("lake")
-                if not lake:
-                    raise ValueError("the registered Lean toolchain is unavailable")
-                source = report_seed(args.repository, pathlib.Path(lake))
-            output({"needs_lake": bool("lake" in requirements["tools"] and source is None)})
+            profiles = [layer for layer in ("checks", "current") if layer in args.layers]
+            if profiles:
+                restore(args.repository, actions_keys(args.repository),
+                        {layer: getattr(args, layer + "_key") for layer in profiles}, profiles)
+            source, resolved = report_resources(args.repository, plan, requirements)
+            output(resolved)
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")
             return 0
         except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:

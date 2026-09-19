@@ -12,7 +12,7 @@ internal static partial class FileMapLoader
 {
     private static readonly string[] ResourceStages = ["build", "engineering", "current", "delta"];
     private static readonly string[] ResourceTools = ["bash", "dotnet", "git", "lake", "make", "python3"];
-    private static readonly string[] ResourceCaches = ["dependency", "project", "judge", "elan", "engineering", "current"];
+    private static readonly string[] ResourceCaches = ["dependency", "project", "judge", "elan", "engineering", "current", "checks"];
 
     private static ImmutableArray<FileMapResource> ParseResources(TomlTable root, string location)
     {
@@ -36,7 +36,9 @@ internal static partial class FileMapLoader
             if (table["cache_activation"] is not TomlTable activation) throw Invalid(id, "cache_activation must be a table");
             RequireExactKeys(activation, id + ":cache_activation", caches.ToArray());
             var phases = activation.ToImmutableDictionary(pair => pair.Key, pair => pair.Value is string phase
-                && phase == "stage-start" ? phase : throw Invalid(id, "unknown cache activation"), StringComparer.Ordinal);
+                && (phase == "stage-start" || phase == "report-miss" && stage == "current"
+                    && pair.Key is "dependency" or "elan" or "project")
+                ? phase : throw Invalid(id, "unknown cache activation or invalid stage/layer"), StringComparer.Ordinal);
             if (table["materials"] is not TomlArray rawMaterials) throw Invalid(id, "materials must be an array");
             var materials = rawMaterials.Select(item => item is string path
                 ? ResourcePath(path, id) : throw Invalid(id, "material must be a path")).ToImmutableArray();
@@ -49,8 +51,9 @@ internal static partial class FileMapLoader
         if (!ids.SequenceEqual(ids.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)))
             throw Invalid(location, "resource ids must be unique and ordinally sorted");
         var byId = resources.ToDictionary(static resource => resource.Id, StringComparer.Ordinal);
-        foreach (var layer in resources.SelectMany(resource => resource.CacheActivation).GroupBy(pair => pair.Key, StringComparer.Ordinal))
-            if (layer.Select(pair => pair.Value).Distinct(StringComparer.Ordinal).Count() != 1)
+        foreach (var layer in resources.SelectMany(resource => resource.CacheActivation.Select(pair =>
+            (resource.Stage, Layer: pair.Key, Phase: pair.Value))).GroupBy(pair => (pair.Stage, pair.Layer)))
+            if (layer.Select(pair => pair.Phase).Distinct(StringComparer.Ordinal).Count() != 1)
                 throw Invalid(location, $"conflicting cache activation: {layer.Key}");
         foreach (var resource in resources)
             foreach (var dependency in resource.Prerequisites)

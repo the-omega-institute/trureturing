@@ -1,6 +1,6 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.TestSupport;
 
-internal static class GitIndexRepositoryFiles
+internal static class RepositoryFileInventory
 {
     internal static IReadOnlyList<(string RelativePath, string FullPath)> Enumerate(
         string repositoryRoot) => StrataLint.Engine.GitIndexRepositoryFiles.Enumerate(repositoryRoot);

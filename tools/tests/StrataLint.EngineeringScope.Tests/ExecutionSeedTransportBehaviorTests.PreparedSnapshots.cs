@@ -10,6 +10,34 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class ExecutionSeedTransportBehaviorTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReportlessCompanionSnapshotConsumesTheAcceptedPackAndPreservesFullProfile(bool includeFull)
+    {
+        using var fixture = Prepare("current");
+        var root = fixture.Root;
+        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var environment = Environment(commit, root, "95", "1");
+        var previous = Inventory(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("current")));
+        var archive = Path.Combine(root, "build/checks-companion.tgz");
+        var full = Path.Combine(root, "build/current-companion.tgz");
+        var packed = NativeTransport(root, "transport-pack", "current", commit, environment,
+            ["--archive", Path.Combine(root, "build/current.tgz"), "--checks-seed-archive", archive,
+            .. includeFull ? new[] { "--seed-archive", full } : []]);
+        Assert.True(packed.Exit == 0, packed.Text);
+        Assert.True(File.Exists(archive));
+        Assert.Equal(includeFull, File.Exists(full));
+        if (!includeFull) Assert.Equal(previous, Inventory(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("current"))));
+        var record = CommonExecutionEvidence.Read<CiTransportRecord>(root, CiTransport.ManifestPath("checks-seed"));
+        Assert.DoesNotContain(record.Materials, item => item.Path.Contains("raw-lean-report", StringComparison.Ordinal));
+        Assert.Contains("checks_seed_archive=" + archive, File.ReadAllLines(environment["GITHUB_OUTPUT"]));
+        var snapshot = Python(root, TestRepositoryLayout.FindRoot(),
+            ["snapshot", "--repository", root, "--layers", "checks", "--seed-archive", archive], environment);
+        Assert.True(snapshot.Exit == 0 && snapshot.Text.Contains("\"status\": \"snapshot\"", StringComparison.Ordinal), snapshot.Text);
+        Assert.Equal("true", Key(snapshot.Text, "checks_ready"));
+    }
+
+    [Theory]
     [InlineData("engineering")]
     [InlineData("current")]
     public void OrdinaryPackProducesOptionalSeedWithOneCandidateRead(string stage)

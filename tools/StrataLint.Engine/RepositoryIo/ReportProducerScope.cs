@@ -55,6 +55,9 @@ internal sealed record ReportProducerScope(string Schema, string Registration, s
             if (!manifest.TryGetProperty("inspector_sources", out var inspector))
                 throw new InvalidDataException($"{InputManifest}: missing inspector_sources");
             selections.Add(inspector);
+            if (!manifest.TryGetProperty("config_inputs", out var configuration))
+                throw new InvalidDataException($"{InputManifest}: missing config_inputs");
+            selections.Add(configuration);
             var current = snapshot.Files.Keys.Select(file => file.Value).ToArray();
             var possible = current.Concat(changes.Paths.Select(file => file.Value)).Distinct(StringComparer.Ordinal).ToArray();
             var inputs = new HashSet<string>(StringComparer.Ordinal) { path, InputManifest, EngineeringProjectRegistry.ManifestPath };

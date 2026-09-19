@@ -10,8 +10,19 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("D5/S0/CacheInputProbe.lean", false)]
     [InlineData("Blueprint/CacheInputProbe.scribe.cs", false)]
     [InlineData("Meta/Digestion/backfill/cache-input-probe.json", false)]
+    [InlineData("Meta/domains.yaml", false)]
+    [InlineData("Meta/registry.yaml", false)]
+    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", false)]
+    [InlineData("tools/scripts/agent/openproblem/templates/learner-brief.md", false)]
+    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md", false)]
+    [InlineData("tools/scripts/agent/openproblem/lane.sh", false)]
+    [InlineData("tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs", false)]
     [InlineData("tools/scripts/worktree/lean_actions.py", true)]
     [InlineData("tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("tools/scripts/workflow/ci.py", true)]
+    [InlineData("tools/scripts/report/dotnet_producer.py", true)]
+    [InlineData("tools/scripts/lib/resource-observation-lib.sh", true)]
+    [InlineData("Makefile", true)]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string path, bool invalidates)
     {
@@ -29,6 +40,10 @@ public sealed partial class CurrentExecutionContractTests
         var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
         File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
             new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        const string unrelatedTests = "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj";
+        fixture.Write(unrelatedTests, "<Project />\n");
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(unrelatedTests, "UnrelatedTests", "test-support", false, ["tools/tests/StrataLint.Tests/**/*.cs"])));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"

@@ -18,23 +18,29 @@ internal sealed partial class ProductionCliEnvironment
         try
         {
             string? commonRound = null, commonPlan = null, commonChanges = null;
-            while (!delta && arguments.Count >= 2 && arguments[^2].StartsWith("--common-", StringComparison.Ordinal))
+            while (arguments.Count >= 2 && arguments[^2].StartsWith("--common-", StringComparison.Ordinal))
             {
                 switch (arguments[^2])
                 {
                     case "--common-build-round" when commonRound is null: commonRound = arguments[^1]; break;
                     case "--common-plan" when commonPlan is null: commonPlan = arguments[^1]; break;
                     case "--common-changes" when commonChanges is null: commonChanges = arguments[^1]; break;
-                    default: throw new InvalidDataException("invalid common current option");
+                    default: throw new InvalidDataException("invalid common stage option");
                 }
                 arguments = arguments.Take(arguments.Count - 2).ToArray();
             }
             var resourcePlan = ResourceExecutionPlan.Load(repositoryRoot, commonPlan, commonChanges);
-            if (resourcePlan is not null && commonRound is null) throw new InvalidDataException("selected current requires a common build round");
+            if (resourcePlan is not null && commonRound is null) throw new InvalidDataException("selected stage requires a common build round");
+            if (delta && commonRound is not null && resourcePlan is null)
+                throw new InvalidDataException("selected delta requires a common plan and changes");
             var options = ParseCheckArguments(arguments);
-            var reportRequired = delta || commonRound is null || resourcePlan is null || resourcePlan.CurrentSteps.Contains("lean-report");
+            if (delta && (options.ProtectedBase is null || resourcePlan is not null
+                && (resourcePlan.Document.GetProperty("mode").GetString() != "pr"
+                    || resourcePlan.Document.GetProperty("base").GetString() != options.ProtectedBase || !resourcePlan.StageRequired("delta"))))
+                throw new InvalidDataException("check-delta requires an explicit base matching its required PR resource plan");
+            var reportRequired = commonRound is null || resourcePlan is null || resourcePlan.CurrentSteps.Contains("lean-report");
             if (reportRequired && options.CandidateLeanReport is null || !delta && options.ProtectedBase is not null)
-                throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
+                throw new InvalidOperationException("check-current requires its registered candidate report and accepts no base; check-delta requires its registered candidate report");
             if (!reportRequired && options.CandidateLeanReport is not null)
                 throw new InvalidDataException("unrequested report cannot be current evidence");
             var raw = repository.ReadCurrent();
@@ -69,10 +75,10 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects);
-                acceptedBaseTests = common.Tests.Projects
+                var common = CommonExecutionEvidence.ValidateDeltaCommon(repositoryRoot, validation, baseProjects, resourcePlan, commonRound);
+                acceptedBaseTests = common.Tests
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray();
-                if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
+                if (reportRequired && !string.Equals(Path.GetFullPath(options.CandidateLeanReport!, repositoryRoot), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
                 if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes) is { } plane)
                     return StageAdmissionFailure(plane);
@@ -84,8 +90,10 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.ProtectedSurfaceVerificationRequired change => MetaEvaluationProfile.ForProtectedSurface(change.ChangeSet),
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
-                result = AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean!, prepared.Changes, meta, null,
-                    commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)));
+                var commonResults = new CandidateCommonResults(common.Current.Candidate, common.Current.Round);
+                result = AdmissionPipeline.CheckDelta(lean is null
+                    ? DeltaRuleContext.CreateWithoutLean(current, baseline, policy, prepared.Changes, meta, commonResults)
+                    : DeltaRuleContext.Create(current, baseline, policy, lean, prepared.Changes, meta, null, commonResults));
             }
             else
             {

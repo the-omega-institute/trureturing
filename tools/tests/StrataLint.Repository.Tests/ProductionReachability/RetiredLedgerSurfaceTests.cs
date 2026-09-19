@@ -1,4 +1,4 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Repository.Tests;
 
 public sealed class RetiredLedgerSurfaceTests(
     RetiredLedgerSurfaceTests.ProductionGraphFixture fixture)
@@ -9,7 +9,7 @@ public sealed class RetiredLedgerSurfaceTests(
     public sealed class ProductionGraphFixture
     {
         internal ProductionSourceGraph Graph { get; } =
-            ProductionSourceGraph.Create(RepositoryLayout.FindRoot());
+            ProductionSourceGraph.Create(TestRepositoryLayout.FindRoot());
     }
 
     [Fact]

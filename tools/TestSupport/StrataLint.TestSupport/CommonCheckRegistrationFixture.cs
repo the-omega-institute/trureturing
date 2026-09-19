@@ -4,7 +4,7 @@ namespace StrataLint.TestSupport;
 
 public static class CommonCheckRegistrationFixture
 {
-    public static string[] Ids => ["SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap"];
+    public static string[] Ids => ["SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-library", "scribe-markdown", "filemap"];
     public static string Manifest(string project) => JsonSerializer.Serialize(new
     {
         schema = "ci-check-input-registration-v2",

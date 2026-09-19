@@ -152,7 +152,7 @@ public sealed class RuleCatalog
         ExecuteInOrder(current, null, ExecutionOrder, null, null, includeCurrent: true);
 
     internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta) =>
-        ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, null, null, includeCurrent: false);
+        ExecuteInOrder(null, delta, ExecutionOrder, null, null, includeCurrent: false);
 
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
         RepositoryFile artifact,
@@ -180,7 +180,7 @@ public sealed class RuleCatalog
         ExecuteInOrder(context.CurrentFacts, context, executionOrder, measureRule, measureApplicability, includeCurrent: true);
 
     private RuleExecutionOutcome ExecuteInOrder(
-        CurrentRuleContext current,
+        CurrentRuleContext? current,
         DeltaRuleContext? delta,
         ImmutableArray<RuleId> executionOrder,
         RuleEvaluationMeasure? measureRule,
@@ -255,7 +255,7 @@ public sealed class RuleCatalog
             {
                 var registration = RegistrationFor(ruleId);
                 var descriptor = registration.Descriptor;
-                if (includeCurrent && current.Selection is { } selection
+                if (includeCurrent && current!.Selection is { } selection
                     && !selection.Selected.Contains(descriptor.Id))
                 {
                     skipped.Add(descriptor.Id);
@@ -281,12 +281,12 @@ public sealed class RuleCatalog
                     if (runCurrent && descriptor.Id == RuleId.CreateKnown(15))
                     {
                         phaseDiagnostics = RepositoryPathPolicy.Evaluate(
-                            current.Current,
+                            current!.Current,
                             current.Policy,
                             descriptor);
                     }
 
-                    var findings = runCurrent ? registration.Rule.EvaluateCurrent(current) : [];
+                    var findings = runCurrent ? registration.Rule.EvaluateCurrent(current!) : [];
                     return runDelta ? findings.AddRange(registration.Rule.EvaluateDelta(delta!)) : findings;
                 }
 

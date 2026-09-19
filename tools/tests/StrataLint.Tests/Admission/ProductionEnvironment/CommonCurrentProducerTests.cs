@@ -46,10 +46,9 @@ public sealed class CommonCurrentProducerTests
         fixture.Files["lean-report-inputs.json"] = """
             {"producer_scopes":{"lean-report":{"include":[{"pattern":"global.json","optional":false}],"exclude":[]},
             "scribe-content":{"include":[{"pattern":"Blueprint/**/*.scribe.cs","optional":false}],"exclude":[]}},
-            "inspector_sources":{"include":[],"exclude":[]}}
+            "inspector_sources":{"include":[],"exclude":[]},"config_inputs":{"include":[],"exclude":[]}}
             """;
         fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
-        fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/lean-report.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/scribe-content.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         foreach (var kind in new[] { "lean-report", "scribe-content" })
         {
@@ -110,7 +109,7 @@ public sealed class CommonCurrentProducerTests
             });
             // This fixture targets the capability/predicate boundary; independent filemap
             // and markdown producer behavior is covered by their native command suites.
-            foreach (var id in selected ? Array.Empty<string>() : new[] { "filemap", "scribe-markdown" }) checks.Run(id, () => new([new(id, 0, "fixture boundary")]));
+            foreach (var id in selected ? Array.Empty<string>() : new[] { "filemap", "scribe-library", "scribe-markdown" }) checks.Run(id, () => new([new(id, 0, "fixture boundary")]));
             var result = Assert.IsType<RuleExecutionOutcome.Completed>(checks.ExecuteCurrentPredicates(policy, data.Lean)).Capability;
             Assert.DoesNotContain(result.Diagnostics, d => d.AdmissionEffect != AdmissionEffect.Observe);
             Assert.Equal(cycle == 0 ? selectedRuleIds : [], result.ExecutedRules.Select(rule => rule.Value).Order(StringComparer.Ordinal));

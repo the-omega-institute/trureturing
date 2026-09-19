@@ -19,6 +19,62 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
+    public void LibraryRechecksChangedPathInventoryWhenDescribeWasReused(bool removeTarget)
+    {
+        using var fixture = new InvocationFixture(output);
+        const string target = "Evidence/D5/S1/Phase/LibraryProbe.result.json";
+        fixture.Write(target, "{}\n");
+        fixture.Write("Library/notes/probe2026note.md", "---\nbibkey: probe2026note\nauthors: A. Author\nyear: 2026\ntitle: Library fixture\n"
+            + "doi: 10.1007/BF01389053\nclaim: A reference.\nstrata_touched:\n  - D5/E/S1/Phase/LibraryProbe.result--json\nlicense: citation-only\ntriage: anchor\n---\n");
+        var first = fixture.RunSelected("scribe-describe", "scribe-library");
+        Assert.True(first.Exit == 0, first.Log);
+        var original = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        Assert.All(original.Units, unit => Assert.Equal("executed", unit.Status));
+        Assert.Equal("library: validated by scribe-describe\n",
+            fixture.Read(original.Units.Single(unit => unit.Id == "scribe-library").Operations.Single().Log));
+        fixture.Seed(original);
+        if (removeTarget) File.Delete(Path.Combine(fixture.Root, target));
+        else fixture.Write("Evidence/D5/S1/Phase/Unrelated.result.json", "{}\n");
+
+        var changed = fixture.RunSelected("scribe-describe", "scribe-library");
+
+        Assert.True(changed.Exit == (removeTarget ? 1 : 0), changed.Log);
+        var describeLogs = Directory.GetFiles(Path.Combine(fixture.Root, "build/ci/check-material"), "0.log", SearchOption.AllDirectories)
+            .Where(path => Path.GetFileName(Path.GetDirectoryName(path)) == "scribe-describe");
+        Assert.Single(describeLogs); // The unchanged describe result remains reusable.
+        if (removeTarget) Assert.Contains("dangling-library-gid", changed.Log, StringComparison.Ordinal);
+        else
+        {
+            var current = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+            Assert.Equal("reused", current.Units.Single(unit => unit.Id == "scribe-describe").Status);
+            var library = current.Units.Single(unit => unit.Id == "scribe-library");
+            Assert.Equal("executed", library.Status);
+            Assert.Equal("library: findings=0\n", fixture.Read(library.Operations.Single().Log));
+        }
+    }
+
+    [Fact]
+    public void LibraryOwnerRejectsChangedMetadataAfterWarmEvidence()
+    {
+        using var fixture = new InvocationFixture(output);
+        const string note = "Library/notes/probe2026note.md";
+        fixture.Write(note, "---\nbibkey: probe2026note\nauthors: A. Author\nyear: 2026\ntitle: Library fixture\n"
+            + "doi: 10.1007/BF01389053\nclaim: A reference.\nstrata_touched: []\nlicense: citation-only\ntriage: anchor\n---\n");
+        var original = fixture.RunLibrary();
+        Assert.True(original.Exit == 0, original.Log);
+        fixture.Seed(CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current")));
+        Assert.Equal(0, fixture.RunLibrary().Exit);
+        var warm = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        Assert.Equal("reused", Assert.Single(warm.Units).Status);
+        fixture.Write(note, "invalid library metadata\n");
+        var invalid = fixture.RunLibrary();
+        Assert.Equal(1, invalid.Exit);
+        Assert.Contains("invalid-library-note", invalid.Log, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void SelectedMarkdownReachesParserAndRejectsMalformedFormula(bool malformed)
     {
         using var fixture = new InvocationFixture(output);
@@ -136,6 +192,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             Write(manifest["registration"]!.GetValue<string>(), new JsonObject
             {
                 ["inspector_sources"] = new JsonObject { ["include"] = new JsonArray(), ["exclude"] = new JsonArray() },
+                ["config_inputs"] = new JsonObject { ["include"] = new JsonArray(), ["exclude"] = new JsonArray() },
                 ["producer_scopes"] = new JsonObject
                 {
                     ["lean-report"] = new JsonObject
@@ -163,6 +220,10 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                 row!["program_projects"] = registered["program_projects"]!.DeepClone();
                 row["report_inputs"] = registered["report_inputs"]!.DeepClone();
                 row["path_inventory"] = registered["path_inventory"]!.DeepClone();
+                if (row["id"]!.ToString() == "scribe-library")
+                    row["materials"] = new JsonArray(registered["materials"]!.AsArray()
+                        .Where(item => item!.GetValue<string>() is "Library/*/*.md" or "Problems/*.md")
+                        .Select(item => item!.DeepClone()).ToArray());
             }
             Write("Meta/ci-checks.json", checks.ToJsonString());
             Write("lean-toolchain", "leanprover/lean4:v4.33.0");
@@ -229,16 +290,17 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             return (CommonExecutionEvidence.ValidateChecks(Root, "current", build,
                 ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]), error);
         }
-        internal (int Exit, string Log) RunMarkdown()
+        internal (int Exit, string Log) RunMarkdown() => RunSelected("scribe-markdown");
+        internal (int Exit, string Log) RunLibrary() => RunSelected("scribe-library");
+        internal (int Exit, string Log) RunSelected(params string[] ids)
         {
             Git("add", ".");
             Write("build/ci/fixture.log", "fixture build");
             var build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), ["build/ci/fixture.log"],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture.log")).ToArray());
-            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, "scribe-markdown"],
+            var result = TestProcessRunner.Run("dotnet", [Path.Combine(program, "bin/Release/net10.0/StrataLint.dll"), Root, build.Round, .. ids],
                 Root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
-            var log = Assert.Single(Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
-            var text = File.ReadAllText(log);
+            var text = string.Join("\n", Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories).Select(File.ReadAllText));
             output.WriteLine($"exit={result.ExitCode}\n{text}{Encoding.UTF8.GetString(result.StandardError)}");
             return (result.ExitCode, text);
         }

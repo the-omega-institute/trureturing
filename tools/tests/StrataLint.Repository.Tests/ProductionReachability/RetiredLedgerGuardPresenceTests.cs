@@ -1,4 +1,4 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Repository.Tests;
 
 public sealed class RetiredLedgerGuardPresenceTests
 {

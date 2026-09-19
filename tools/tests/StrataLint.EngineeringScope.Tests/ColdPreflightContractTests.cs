@@ -14,6 +14,7 @@ public sealed class ColdPreflightContractTests
     public void RepeatedValidationReusesObjectsButChecksLiveDeclarations()
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        fixture.PrPlan();
         var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
             import collections, json, pathlib, sys
             sys.path.insert(0, str(pathlib.Path.cwd() / 'tools/scripts/workflow'))

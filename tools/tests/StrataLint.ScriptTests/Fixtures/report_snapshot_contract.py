@@ -64,20 +64,23 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertIsNone(owner.report_seed(self.root, pathlib.Path("/declared/lake")))
         probe.assert_not_called()
 
-    def test_report_preparation_restores_only_current_and_keeps_normal_producer_selected(self):
+    def test_report_preparation_restores_registered_profiles_and_keeps_normal_producer_selected(self):
         owner = self.owner()
         sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
         planner = importlib.import_module("ci_plan")
-        for report_required, reusable in ((True, False), (True, True), (False, False)):
-            with self.subTest(report_required=report_required, reusable=reusable):
+        for report_required, reusable, profiles in ((True, False, ["current"]), (True, True, ["current"]),
+                (False, False, ["checks"]), (True, True, ["checks", "current"])):
+            with self.subTest(report_required=report_required, reusable=reusable, profiles=profiles):
                 plan = {"execution": {"steps": ["lean-report"] if report_required else ["filemap"]}}
-                requirements = dict(cache_layers=["current", "dependency", "project"] if report_required else ["current"],
-                                    tools=["lake"] if report_required else [])
+                requirements = dict(cache_layers=profiles + (["dependency", "project"] if report_required else []),
+                                    tools=["lake"] if report_required else [],
+                                    cache_activation={**{profile: "stage-start" for profile in profiles},
+                                        **({"dependency": "report-miss", "project": "report-miss"} if report_required else {})})
                 selected = str(self.root / "build/ci/current-check-seed/report.json") if reusable else None
                 with mock.patch.dict(os.environ, dict(self.env, CANDIDATE_SHA=REV,
                         CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
                      mock.patch.object(sys, "argv", [str(CACHE), "prepare-report", "--repository", str(self.root),
-                        "--stage", "current", "--current-key", "transported-seed"]), \
+                        "--stage", "current", "--current-key", "transported-seed", "--checks-key", "small-seed"]), \
                      mock.patch.object(planner, "git", return_value=(REV + "\n").encode()), \
                      mock.patch.object(planner, "validate_plan", return_value=plan), \
                      mock.patch.object(planner, "stage_requirements", return_value=requirements), \
@@ -86,7 +89,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                      mock.patch.object(owner.shutil, "which", return_value="/declared/lake"), \
                      contextlib.redirect_stdout(io.StringIO()) as result:
                     self.assertEqual(0, owner.main())
-                self.assertEqual(["current"], restore.call_args.args[3])
+                self.assertEqual(profiles, restore.call_args.args[3])
+                self.assertEqual({profile: "small-seed" if profile == "checks" else "transported-seed" for profile in profiles}, restore.call_args.args[2])
                 self.assertEqual(int(report_required), probe.call_count)
                 self.assertIn("needs_lake=" + str(report_required and not reusable).lower(), result.getvalue())
                 self.assertIn("STRATALINT_LEAN_REPORT_REUSE=" + (selected or ""), result.getvalue())
