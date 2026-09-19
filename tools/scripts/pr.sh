@@ -8,9 +8,24 @@ PR_WATCH_TIMEOUT_SECONDS="${PR_WATCH_TIMEOUT_SECONDS:-4200}"
 PR_WATCH_MAX_FAILURES=3
 BOUNDED_OUTPUT=""
 receipt() { printf '%s\n' "$*" >&2; }
+watch_result() { printf 'PR_WATCH_RESULT pr=%s %s head_sha=%s\n' "$1" "$3" "$2"; }
 positive_integer() { [[ "$1" =~ ^[1-9][0-9]*$ ]]; }
+commit_sha() { [[ "$1" =~ ^[0-9a-f]{40}$ ]]; }
 usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--auto-merge] [--timeout-seconds S] [--interval-seconds S]"; }
-usage_watch() { receipt "usage: pr.sh watch --pr NUMBER [--timeout-seconds S] [--interval-seconds S]"; }
+usage_watch() { receipt "usage: pr.sh watch --pr NUMBER --head-sha SHA [--timeout-seconds S] [--interval-seconds S]"; }
+PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID!) {
+  repository(owner:$owner,name:$repo) {
+    pullRequest(number:$pr) { state headRefOid }
+    object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
+      nodes { __typename
+        ... on CheckRun { databaseId name status conclusion
+          checkSuite { commit { oid } workflowRun { databaseId } } }
+        ... on StatusContext { id context state commit { oid } }
+      }
+      pageInfo { hasNextPage }
+    } } } }
+  }
+}'
 run_bounded_capture() {
   local step="$1" timeout_seconds="$2"; shift 2
   local started deadline output errors pid watcher rc=0 result=success
@@ -55,13 +70,19 @@ gh_create() {
   fi
 }
 parse_snapshot() {
-  jq -Rsec --argjson required "$1" '
+  jq -Rsec --argjson required "$1" --arg head "$2" '
     def member($xs): . as $value | $xs | index($value) != null;
+    def sha: type == "string" and test("^[0-9a-f]{40}$");
+    def database_id: type == "number" and . > 0 and floor == .;
     def check_name: if .__typename == "CheckRun" then .name elif .__typename == "StatusContext" then .context else null end;
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
       (.name | type == "string" and length > 0) and (.status | type == "string") and has("conclusion") and
-      (.conclusion == null or (.conclusion | type == "string")) elif .__typename == "StatusContext" then
-      (.context | type == "string" and length > 0) and (.state | type == "string") else false end);
+      (.conclusion == null or (.conclusion | type == "string")) and (.databaseId | database_id) and
+      (.checkSuite | type == "object" and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
+      (.checkSuite.workflowRun == null or (.checkSuite.workflowRun.databaseId | database_id))
+      elif .__typename == "StatusContext" then
+      (.context | type == "string" and length > 0) and (.state | type == "string") and
+      (.id | type == "string" and length > 0) and (.commit.oid == $head) else false end);
     def enum_ok: if .__typename == "CheckRun" then
       (.status | member(["QUEUED","IN_PROGRESS","COMPLETED","WAITING","REQUESTED","PENDING"])) and
         (if .status == "COMPLETED" then (.conclusion | member(["FAILURE","CANCELLED","TIMED_OUT","SUCCESS","NEUTRAL","SKIPPED"])) else true end)
@@ -70,36 +91,53 @@ parse_snapshot() {
       elif (.conclusion | member(["FAILURE","CANCELLED","TIMED_OUT"])) then "red" else "terminal" end
       elif (.state | member(["FAILURE","ERROR"])) then "red"
       elif (.state | member(["PENDING","EXPECTED"])) then "pending" else "terminal" end;
-    def check_state: if .__typename == "CheckRun" then .conclusion else .state end; fromjson |
-    select(type == "object" and (.state | member(["OPEN","MERGED","CLOSED"])) and (.statusCheckRollup | type == "array" or type == "null")) |
-    (.statusCheckRollup // []) as $items |
+    def check_state: if .__typename == "CheckRun" then .conclusion else .state end;
+    def evidence: {check:check_name, check_id:(.databaseId // .id),
+      run_id:(.checkSuite.workflowRun.databaseId // null),
+      commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state};
+    fromjson |
+    select(type == "object" and (.errors == null or .errors == [])) |
+    .data.repository |
+    select(type == "object" and (.pullRequest | type == "object") and
+      (.pullRequest.state | member(["OPEN","MERGED","CLOSED"])) and (.pullRequest.headRefOid | sha)) |
+    .pullRequest as $pr |
+    select((.object | type == "object") and .object.oid == $head and
+      (.object | has("statusCheckRollup")) and
+      (.object.statusCheckRollup == null or
+        ((.object.statusCheckRollup.contexts.nodes | type == "array") and
+         .object.statusCheckRollup.contexts.pageInfo.hasNextPage == false))) |
+    (.object.statusCheckRollup.contexts.nodes // []) as $items |
     select(all($items[]; shape_ok)) |
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
+    if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
+    else
     [$required[] as $name | [$items[] | select(check_name == $name)] as $found |
       if ($found | length) == 0 then {kind:"missing"}
       elif any($found[]; phase == "red") then ($found | map(select(phase == "red")) | first | {kind:"red",check:check_name,state:check_state})
       elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end] as $checks |
-    {state:.state, red:($checks | map(select(.kind == "red")) | first // null), pending:($checks | map(select(.kind == "pending")) | length),
-     missing:($checks | map(select(.kind == "missing")) | length)}
+    {state:$pr.state, stale:false, red:($checks | map(select(.kind == "red")) | first // null),
+     pending:($checks | map(select(.kind == "pending")) | length), missing:($checks | map(select(.kind == "missing")) | length),
+     evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) | evidence]} end
   '
 }
 pr_watch_main() {
-  local number="" timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
+  local number="" head_sha="" timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --pr) [[ $# -ge 2 ]] || { usage_watch; return 2; }; number="$2"; shift 2 ;;
+      --head-sha) [[ $# -ge 2 ]] || { usage_watch; return 2; }; head_sha="$2"; shift 2 ;;
       --timeout-seconds) [[ $# -ge 2 ]] || { usage_watch; return 2; }; timeout_seconds="$2"; shift 2 ;;
       --interval-seconds) [[ $# -ge 2 ]] || { usage_watch; return 2; }; interval_seconds="$2"; shift 2 ;;
       *) usage_watch; return 2 ;;
     esac
   done
-  positive_integer "$number" && positive_integer "$timeout_seconds" && positive_integer "$interval_seconds" \
+  positive_integer "$number" && commit_sha "$head_sha" && positive_integer "$timeout_seconds" && positive_integer "$interval_seconds" \
     || { usage_watch; return 2; }
   local started deadline now remaining call_timeout failures=0 seen_snapshot=0 required="" parsed="" state="" red_check="" red_state="" pending=0 missing=0
   started="$(date +%s)"; deadline=$((started + timeout_seconds))
   while [[ -z "$required" ]]; do
     now="$(date +%s)"; remaining=$((deadline - now))
-    if (( remaining <= 0 )); then printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=required-set attempts=%s\n' "$number" "$failures"; return 69; fi
+    if (( remaining <= 0 )); then watch_result "$number" "$head_sha" "outcome=query-unavailable step=required-set attempts=$failures"; return 69; fi
     call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
     if gh_local required-set "$call_timeout" api "repos/$PR_REPO/branches/$PR_BASE" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
@@ -118,11 +156,11 @@ pr_watch_main() {
     required=""; failures=$((failures + 1))
     receipt "PR_WATCH_PROGRESS pr=$number step=required-set unavailable_attempts=$failures"
     if (( failures >= PR_WATCH_MAX_FAILURES )); then
-      printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=required-set attempts=%s\n' "$number" "$failures"
+      watch_result "$number" "$head_sha" "outcome=query-unavailable step=required-set attempts=$failures"
       return 69
     fi
     now="$(date +%s)"; remaining=$((deadline - now))
-    (( remaining > 0 )) || { printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=required-set attempts=%s\n' "$number" "$failures"; return 69; }
+    (( remaining > 0 )) || { watch_result "$number" "$head_sha" "outcome=query-unavailable step=required-set attempts=$failures"; return 69; }
     sleep "$((interval_seconds < remaining ? interval_seconds : remaining))"
   done
   missing="$(jq -r 'length' <<<"$required")"
@@ -130,38 +168,43 @@ pr_watch_main() {
     now="$(date +%s)"; remaining=$((deadline - now))
     if (( remaining <= 0 )); then
       if (( failures > 0 || seen_snapshot == 0 )); then
-        printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=snapshot attempts=%s\n' "$number" "$failures"; return 69
+        watch_result "$number" "$head_sha" "outcome=query-unavailable step=snapshot attempts=$failures"; return 69
       fi
-      printf 'PR_WATCH_RESULT pr=%s outcome=timeout pending=%s missing=%s\n' "$number" "$pending" "$missing"; return 124
+      watch_result "$number" "$head_sha" "outcome=timeout pending=$pending missing=$missing"; return 124
     fi
     call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
-    if gh_local snapshot "$call_timeout" pr view "$number" --repo "$PR_REPO" --json state,statusCheckRollup \
+    if gh_local snapshot "$call_timeout" api graphql -f query="$PR_SNAPSHOT_QUERY" \
+        -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
-        && parsed="$BOUNDED_OUTPUT" \
-        && parsed="$(printf '%s' "$BOUNDED_OUTPUT" | parse_snapshot "$required" 2>/dev/null)" \
+        && parsed="$(printf '%s' "$BOUNDED_OUTPUT" | parse_snapshot "$required" "$head_sha" 2>/dev/null)" \
         && [[ -n "$parsed" ]]; then
       failures=0; seen_snapshot=1
-      state="$(jq -r '.state' <<<"$parsed")"; red_check="$(jq -r '.red.check // empty' <<<"$parsed")"
-      red_state="$(jq -r '.red.state // empty' <<<"$parsed")"; pending="$(jq -r '.pending' <<<"$parsed")"; missing="$(jq -r '.missing' <<<"$parsed")"
-      now="$(date +%s)"
-      if (( now >= deadline )); then printf 'PR_WATCH_RESULT pr=%s outcome=timeout pending=%s missing=%s\n' "$number" "$pending" "$missing"; return 124; fi
-      if [[ -n "$red_check" ]]; then printf 'PR_WATCH_RESULT pr=%s outcome=red check=%s state=%s\n' "$number" "$red_check" "$red_state"; return 1; fi
-      if [[ "$state" == CLOSED ]]; then printf 'PR_WATCH_RESULT pr=%s outcome=closed\n' "$number"; return 4; fi
-      if (( pending == 0 && missing == 0 )); then printf 'PR_WATCH_RESULT pr=%s outcome=green\n' "$number"; return 0; fi
-      receipt "PR_WATCH_PROGRESS pr=$number state=$state pending=$pending missing=$missing"
+      if [[ "$(jq -r '.stale' <<<"$parsed")" == true ]]; then
+        receipt "PR_WATCH_PROGRESS pr=$number state=stale expected_head=$head_sha observed_head=$(jq -r '.observed_head' <<<"$parsed")"
+      else
+        state="$(jq -r '.state' <<<"$parsed")"; red_check="$(jq -r '.red.check // empty' <<<"$parsed")"
+        red_state="$(jq -r '.red.state // empty' <<<"$parsed")"; pending="$(jq -r '.pending' <<<"$parsed")"; missing="$(jq -r '.missing' <<<"$parsed")"
+        now="$(date +%s)"
+        receipt "PR_WATCH_EVIDENCE pr=$number head_sha=$head_sha checks=$(jq -c '.evidence' <<<"$parsed")"
+        if (( now >= deadline )); then watch_result "$number" "$head_sha" "outcome=timeout pending=$pending missing=$missing"; return 124; fi
+        if [[ -n "$red_check" ]]; then watch_result "$number" "$head_sha" "outcome=red check=$red_check state=$red_state"; return 1; fi
+        if [[ "$state" == CLOSED ]]; then watch_result "$number" "$head_sha" "outcome=closed"; return 4; fi
+        if (( pending == 0 && missing == 0 )); then watch_result "$number" "$head_sha" "outcome=green"; return 0; fi
+        receipt "PR_WATCH_PROGRESS pr=$number state=$state pending=$pending missing=$missing"
+      fi
     else
       parsed=""; failures=$((failures + 1))
       receipt "PR_WATCH_PROGRESS pr=$number step=snapshot unavailable_attempts=$failures"
-      if (( failures >= PR_WATCH_MAX_FAILURES )); then printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=snapshot attempts=%s\n' "$number" "$failures"; return 69; fi
+      if (( failures >= PR_WATCH_MAX_FAILURES )); then watch_result "$number" "$head_sha" "outcome=query-unavailable step=snapshot attempts=$failures"; return 69; fi
     fi
     now="$(date +%s)"; remaining=$((deadline - now))
-    if (( remaining <= 0 && (failures > 0 || seen_snapshot == 0) )); then printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=snapshot attempts=%s\n' "$number" "$failures"; return 69; fi
-    (( remaining > 0 )) || { printf 'PR_WATCH_RESULT pr=%s outcome=timeout pending=%s missing=%s\n' "$number" "$pending" "$missing"; return 124; }
+    if (( remaining <= 0 && (failures > 0 || seen_snapshot == 0) )); then watch_result "$number" "$head_sha" "outcome=query-unavailable step=snapshot attempts=$failures"; return 69; fi
+    (( remaining > 0 )) || { watch_result "$number" "$head_sha" "outcome=timeout pending=$pending missing=$missing"; return 124; }
     sleep "$((interval_seconds < remaining ? interval_seconds : remaining))"
   done
 }
 pr_open_main() {
-  local head="" message_file="" title="" body_file="" url number rc=0 auto_merge=0
+  local head="" head_sha="" head_owner="" head_ref="" message_file="" title="" body_file="" url number rc=0 auto_merge=0
   local timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -180,6 +223,20 @@ pr_open_main() {
   # crosses a make or shell layer that could expand or drop it.
   title="$(head -n 1 "$message_file")"
   if [[ -z "$title" ]]; then receipt "pr.sh open: message file has an empty title line: $message_file"; return 2; fi
+  # Resolve the explicit remote branch before creation; the caller working tree
+  # and the first potentially stale PR snapshot are not the requested identity.
+  head_owner="${PR_REPO%%/*}"; head_ref="$head"
+  if [[ "$head" == *:* ]]; then head_owner="${head%%:*}"; head_ref="${head#*:}"; fi
+  [[ -n "$head_owner" && -n "$head_ref" ]] || { usage_open; return 2; }
+  if ! gh_local head-resolve "$PR_OPEN_TIMEOUT_SECONDS" api graphql \
+      -f query='query($owner:String!,$repo:String!,$ref:String!){repository(owner:$owner,name:$repo){ref(qualifiedName:$ref){target{... on Commit{oid}}}}}' \
+      -f owner="$head_owner" -f repo="${PR_REPO#*/}" -f ref="refs/heads/$head_ref" \
+      || ! head_sha="$(printf '%s' "$BOUNDED_OUTPUT" | jq -Rser '
+        fromjson | select(type == "object" and (.errors == null or .errors == [])) |
+        .data.repository.ref.target.oid | select(type == "string" and test("^[0-9a-f]{40}$"))
+      ' 2>/dev/null)" || ! commit_sha "$head_sha"; then
+    receipt "pr.sh open: explicit remote head could not be resolved: $head"; return 69
+  fi
   body_file="$(mktemp "${TMPDIR:-/tmp}/pr-body.XXXXXX")"
   tail -n +2 "$message_file" | sed '1{/^$/d;}' > "$body_file"
   local args=(pr create --repo "$PR_REPO" --base "$PR_BASE" --head "$head" --title "$title" --body-file "$body_file")
@@ -189,10 +246,10 @@ pr_open_main() {
   url="$(printf '%s\n' "$BOUNDED_OUTPUT" | tail -n 1)"; number="${url##*/}"
   if ! positive_integer "$number"; then receipt "pr.sh open: create returned no pull request number"; return 1; fi
   if (( auto_merge == 1 )); then
-    gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge || return $?
+    gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge --match-head-commit "$head_sha" || return $?
   fi
   printf '%s\n' "$number"
-  pr_watch_main --pr "$number" --timeout-seconds "$timeout_seconds" --interval-seconds "$interval_seconds" || return $?
+  pr_watch_main --pr "$number" --head-sha "$head_sha" --timeout-seconds "$timeout_seconds" --interval-seconds "$interval_seconds" || return $?
 }
 case "${1:-}" in
   open) shift; pr_open_main "$@" ;;
