@@ -58,6 +58,16 @@ public sealed class RegistrationImportDirectionTests
     }
 
     [Fact]
+    public void EqualSizeSubstitutionAcrossModulesBlocks()
+    {
+        // The old source strictly shrinks while a clean source gains its removed
+        // edge. A global count check and the per-source reduction both allow this.
+        AssertNewEdge(Evaluate(Files((Source, Imports(Judge, Analysis))),
+            Files((Source, Imports(Judge)), (Other, Imports(Analysis))),
+            Reports((Source, [Judge]), (Other, [Analysis]))), Other, Analysis);
+    }
+
+    [Fact]
     public void UntouchedIndebtedModulePasses()
     {
         var files = Files((Source, Imports(Judge)));
@@ -79,6 +89,16 @@ public sealed class RegistrationImportDirectionTests
         Assert.Contains(Evaluate(baseline, head, Reports((Source, [Judge]))), d =>
             d.Path == Source && d.AdmissionEffect == AdmissionEffect.Block
             && d.Message.Contains("must strictly reduce", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ReductionElsewhereDoesNotExcuseTouchedDebt()
+    {
+        Assert.Contains(Evaluate(Files((Source, Imports(Judge, Analysis)), (Other, Imports(Judge))),
+            Files((Source, Imports(Judge)), (Other, Imports(Judge) + "-- edited\n")),
+            Reports((Source, [Judge]), (Other, [Judge]))), d =>
+                d.Path == Other && d.AdmissionEffect == AdmissionEffect.Block
+                && d.Message.Contains("must strictly reduce", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -117,14 +137,15 @@ public sealed class RegistrationImportDirectionTests
             Files((Source, Imports(Judge))), Reports((Source, [Judge])), ["docs/Unrelated.md"]), Source, Judge);
     }
 
-    [Fact]
-    public void RegImportingD5AndJudgePasses()
+    [Theory]
+    [InlineData("Reg.lean")]
+    [InlineData("Reg/D5/S0/Carrier/Source.lean")]
+    public void RegImportingD5AndJudgePasses(string registration)
     {
-        const string registration = "Reg/D5/S0/Carrier/Source.lean";
-        // Reg is outside the mathematical report domain; it is not a D5 stratum.
+        // Include the downstream report entry too: Reg is not a D5 stratum.
         AssertNoBlock(Evaluate(Files((Source, "-- math\n")),
             Files((Source, "-- math\n"), (registration, Imports("D5.S0.Carrier.Source", Judge))),
-            Reports((Source, []))));
+            Reports((Source, []), (registration, ["D5.S0.Carrier.Source", Judge]))));
     }
 
     [Fact]

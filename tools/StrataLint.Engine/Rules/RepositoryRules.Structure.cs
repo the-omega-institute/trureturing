@@ -16,6 +16,8 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, report) in context.Lean.Report.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
+            // Reg is a downstream registration package, not a mathematical stratum.
+            if (path.Value == "Reg.lean" || path.Value.StartsWith("Reg/", StringComparison.Ordinal)) continue;
             foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
