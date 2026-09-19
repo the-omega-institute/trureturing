@@ -770,3 +770,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The complete J quadratic tails have an explicit modulus](profile-notes/308-complete-j-quadratic-tails-have-an-explicit-modulus.md)
 - [An explicit actual J neighborhood keeps the complete comparison below403](profile-notes/309-an-explicit-actual-j-neighborhood-keeps-the-complete-comparison-below403.md)
 - [An active irredundant family separates scalar and actual continuation](profile-notes/310-an-active-irredundant-family-separates-scalar-and-actual-continuation.md)
+- [Imperfect J source alignment forces a sharp sector surplus](profile-notes/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md)
