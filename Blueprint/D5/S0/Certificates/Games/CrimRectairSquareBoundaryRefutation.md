@@ -22,6 +22,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/CrimRectairSquareBoundaryRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/crim-rectair-square-conjecture-two-refutation` (refuted) by `D5/S0/Certificates/Games/CrimRectairSquareBoundaryRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crim-rectair-square-conjecture-two-refutation","declaration_gid":"D5/S0/Certificates/Games/CrimRectairSquareBoundaryRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
