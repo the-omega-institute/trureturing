@@ -794,3 +794,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Common-mask capacity and the Kakeya interface](profile-notes/332-common-mask-capacity-and-the-kakeya-interface.md)
 - [Variable full-Haar thresholds retain more survivor mass through43](profile-notes/333-variable-full-haar-thresholds-retain-more-survivor-mass.md)
 - [Same-chain overlap and future-risk certificates](profile-notes/334-same-chain-overlap-and-future-risk-certificates.md)
+- [Original AP blocks sharpen the fixed full-Haar account](profile-notes/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md)
