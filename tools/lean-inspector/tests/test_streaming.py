@@ -603,8 +603,20 @@ class EntryPointTests(unittest.TestCase):
                              'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
+                # The real compiler stage hands inspect.sh a JSON descriptor;
+                # a successful fixture must exercise that same handoff.  Keep
+                # the lake executable inside the returned stage so this test
+                # cannot accidentally consume the fixture's initial PATH lake.
+                compiler_stage = root / 'compiler-stage'
+                compiler_lake = compiler_stage / 'bin/lake'
+                compiler_lake.parent.mkdir(parents=True)
                 write('tools/lean-inspector/compiler/build.py',
-                    'raise SystemExit(' + ('36' if phase == 'compiler' else '0') + ')\n')
+                    'import json\n'
+                    'from pathlib import Path\n'
+                    f'stage = Path({str(compiler_stage)!r})\n'
+                    'stage.mkdir(parents=True, exist_ok=True)\n'
+                    'if ' + repr(phase == 'compiler') + ': raise SystemExit(36)\n'
+                    'print(json.dumps({"directory": str(stage), "identity": "fixture"}))\n')
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
                 write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_semantic_version=1,
@@ -613,10 +625,13 @@ class EntryPointTests(unittest.TestCase):
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
                 def shell_phase(name, label, exit_code):
                     write(name, '#!/bin/sh\nprintf "%s\\n" ' + label + ' >> "$CALLS"\nexit ' + str(exit_code) + '\n')
+                shell_phase('compiler-stage/bin/lake', 'report', 39 if phase == 'report' else 0)
                 shell_phase('bin/dotnet', 'build', 37 if phase == 'utility-input-build' else 0)
                 write('candidate producer.dll', 'fixture candidate producer')
                 shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
-                shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
+                # The initial PATH lake is only a bootstrap input.  A report
+                # must use the executable named by the compiler descriptor.
+                shell_phase('bin/lake', 'wrong-lake', 41)
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',

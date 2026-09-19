@@ -453,6 +453,19 @@ def stage_compiler(output):
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         checks = []
+        # Keep compiler-origin construction as its own bounded phase.  The
+        # Lake command still consumes the freshly built producer below, but a
+        # busy host cannot make the origin build and native package build share
+        # one 120-second guard.
+        started = time.monotonic()
+        prepared = fixture.guarded_command([
+            sys.executable, str(fixture.root / 'tools/lean-inspector/compiler/build.py'), 'ensure'],
+            cwd=fixture.root, env=fixture.env, text=True, capture_output=True, timeout=120)
+        checks.append(dict(command=['compiler-origin', 'ensure'], exit=prepared.returncode,
+            seconds=round(time.monotonic() - started, 3),
+            built=sum('Built ' in line for line in (prepared.stdout + prepared.stderr).splitlines())))
+        if prepared.returncode != 0:
+            raise AssertionError(prepared.stdout + prepared.stderr)
         for args in [('-d', registration['package_directory'], 'build',
                       '-o', str(mappings), registration['target']),
                      ('cache', 'stage', str(mappings), str(output))]:
