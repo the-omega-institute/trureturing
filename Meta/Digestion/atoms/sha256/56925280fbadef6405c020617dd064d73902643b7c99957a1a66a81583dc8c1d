@@ -1,0 +1,15 @@
+**命题 101.4（有限停止不能统一认证可逆零假设）。** 在定义与假设 101.3 下，
+$$
+\bar Q_0(C)
+\le\liminf_{k\to\infty}\bar P_k(C)
+\le\sup_{k\ge2}\bar P_k(C).
+\tag{101.4a}
+$$
+因此统一错误证书界 $\delta$ 必使 $\bar Q_0(C)\le\delta$。若规则在 $Q_0$ 下以概率一于有限时刻签发证书，则 $\bar P_k(C)\to1$。对零错误，单个固定替代模型已足够：
+$$
+\forall k\ge2,\qquad
+\bar P_k(C)=0\ \Longrightarrow\ \bar Q_0(C)=0.
+\tag{101.4b}
+$$
+这些界均不要求预先假设停时几乎处处有限。
+
