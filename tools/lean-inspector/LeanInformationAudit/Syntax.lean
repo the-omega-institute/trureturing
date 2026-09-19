@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Syntax
 import LeanInformationAudit.Registry
 
 namespace LeanInformationAudit
@@ -9,34 +10,6 @@ open Lean.Elab.Term
 open Lean.Meta
 
 run_cmd TemplateAudit.initializeGrammarPins
-
-/-- Command dispatch also considers identifiers, without reserving the spelling. -/
-def expect_information_occurrenceKeyword : Parser.Parser := Parser.nonReservedSymbol "expect_information_occurrence" true
-def information_theoremKeyword : Parser.Parser := Parser.nonReservedSymbol "information_theorem" true
-def register_information_theoremKeyword : Parser.Parser := Parser.nonReservedSymbol "register_information_theorem" true
-def register_information_templateKeyword : Parser.Parser := Parser.nonReservedSymbol "register_information_template" true
-def declare_information_template_bindingKeyword : Parser.Parser := Parser.nonReservedSymbol "declare_information_template_binding" true
-def informationInlineKeyword : Parser.Parser := Parser.nonReservedSymbol "inline" true
-
-/-- Clause delimiters are tokens only while reading the preceding registration
-term. They never enter an importing module's global identifier vocabulary. -/
-def registrationTerm : Parser.Parser := {
-  Parser.termParser with
-  fn := Parser.adaptUncacheableContextFn (fun context =>
-    { context with tokens := (#["realization", "variation", "sensitivity", "output_evidence", "escape"].foldl
-        (fun tokens word => tokens.insert word word) context.tokens) }) Parser.termParser.fn }
-
-@[combinator_formatter registrationTerm]
-def registrationTermFormatter : PrettyPrinter.Formatter :=
-  PrettyPrinter.Formatter.categoryParser.formatter `term
-@[combinator_parenthesizer registrationTerm]
-def registrationTermParenthesizer : PrettyPrinter.Parenthesizer :=
-  PrettyPrinter.Parenthesizer.categoryParser.parenthesizer `term 0
-
-declare_syntax_cat informationRealization
-syntax (name := namedInformationRealization) ident : informationRealization
-syntax (name := inlineInformationRealization) (priority := high)
-  informationInlineKeyword registrationTerm " := " registrationTerm : informationRealization
 
 /-- Retain construction ownership before the builtin elaborator's structure eta
 compaction loses it. Metadata has no effect on kernel typing or definitional equality.
@@ -141,18 +114,15 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
   }
 
 /-- Declare one independently expected auxiliary-root occurrence. -/
-elab expect_information_occurrenceKeyword theoremId:ident ppLine
-    &"in " arenaId:ident ppLine
-    &"from " registrationModule:str : command =>
-  addExpectedOccurrence theoremId arenaId registrationModule.getString ""
+@[command_elab command___In__From_]
+private def elabExpectedOccurrence : CommandElab := fun stx =>
+  addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩ (TSyntax.getString ⟨stx[7]⟩) ""
 
 /-- Negative-fixture form for pinning an independently supplied statement identity. -/
-elab expect_information_occurrenceKeyword theoremId:ident ppLine
-    &"in " arenaId:ident ppLine
-    &"from " registrationModule:str ppLine
-    &"statement_id " statementIdentity:str : command =>
-  addExpectedOccurrence theoremId arenaId registrationModule.getString
-    statementIdentity.getString
+@[command_elab command___In__From__Statement_id_]
+private def elabExpectedOccurrenceWithIdentity : CommandElab := fun stx =>
+  addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩
+    (TSyntax.getString ⟨stx[7]⟩) (TSyntax.getString ⟨stx[10]⟩)
 
 private def checkRealizationBundle (theoremName arenaName : Name)
     (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do
@@ -314,13 +284,6 @@ def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := 
     modify fun s => { s with messages := previousMessages ++ { messages with
       reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
 
-syntax (name := informationTheoremCmd)
-  information_theoremKeyword ident ppLine
-    &"in " ident ppLine
-    &"primitives " registrationTerm ppLine
-    (&"variation " ident)? (&"sensitivity " ident)?
-    ": " term " := " term : command
-
 @[command_elab informationTheoremCmd]
 private def elabInformationTheorem : CommandElab := fun stx => registrationTransaction do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
@@ -354,15 +317,6 @@ private def elabInformationTheorem : CommandElab := fun stx => registrationTrans
       variationWitness := ← optionalWitnessName stx[6]
       sensitivityWitness := ← optionalWitnessName stx[7]
     }
-
-syntax (name := registerInformationTheoremCmd)
-  register_information_theoremKeyword ident ppLine
-    &"in " ident ppLine
-    &"primitives " registrationTerm &" realization " informationRealization
-    (&" variation " ident)? (&" sensitivity " ident)? : command
-
-syntax (name := registerInformationTheoremViaCmd)
-  register_information_theoremKeyword ident &" via " term &" in " ident (&" output_evidence " term)? : command
 
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
@@ -483,15 +437,6 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
       sensitivityWitness := ← optionalWitnessName stx[9]
     }
 
-syntax (name := informationTheoremOccurrenceCmd)
-  information_theoremKeyword ident ppLine
-    &"in " ident ppLine
-    &"object_arena " ident ppLine
-    &"catalog " ident ppLine
-    &"primitives " registrationTerm ppLine
-    (&"variation " ident)? (&"sensitivity " ident)?
-    ": " term " := " term : command
-
 @[command_elab informationTheoremOccurrenceCmd]
 private def elabInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
   let theoremId : TSyntax `ident := ⟨stx[1]⟩
@@ -538,14 +483,6 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => registr
     variationWitness := ← optionalWitnessName stx[10]
     sensitivityWitness := ← optionalWitnessName stx[11]
   }
-
-syntax (name := registerInformationTheoremOccurrenceCmd)
-  register_information_theoremKeyword ident ppLine
-    &"in " ident ppLine
-    &"object_arena " ident ppLine
-    &"catalog " ident ppLine
-    &"primitives " registrationTerm &" realization " informationRealization
-    (&" variation " ident)? (&" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremOccurrenceCmd]
 private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => registrationTransaction do
@@ -663,12 +600,14 @@ private def elaborateTemplateEnrollment (id : TSyntax `ident)
   | .error message =>
     logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields message}"
 
-elab register_information_templateKeyword id:ident : command =>
-  elaborateTemplateEnrollment id 1 #[]
+@[command_elab command__]
+private def elabTemplateEnrollment : CommandElab := fun stx =>
+  elaborateTemplateEnrollment ⟨stx[1]⟩ 1 #[]
 
-elab register_information_templateKeyword id:ident &" constructors " version:num
-    " [" types:ident,* "]" : command =>
-  elaborateTemplateEnrollment id version.getNat types.getElems
+@[command_elab «command__Constructors_[_,,]»]
+private def elabTemplateConstructorsEnrollment : CommandElab := fun stx =>
+  elaborateTemplateEnrollment ⟨stx[1]⟩ (TSyntax.getNat ⟨stx[3]⟩)
+    (stx[5].getSepArgs.map fun id => ⟨id⟩)
 
 end LeanInformationAudit
 
@@ -696,10 +635,6 @@ def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Exp
     instantiateMVars value
   return (some value, none)
 
-declare_syntax_cat informationEscapeContinuation
-syntax (name := escapeOpenContinuation) &"open" : informationEscapeContinuation
-syntax (name := escapeCertifiedContinuation) term : informationEscapeContinuation
-
 private def elaborateEscapeInput (origin residual : Syntax) : CommandElabM EscapeRecordInput := do
   let elaborate (stx : Syntax) : CommandElabM Expr := liftTermElabM do
     let value ← elabTerm stx none
@@ -726,41 +661,6 @@ private def withReadout (theoremId arenaId : TSyntax `ident)
   let theoremName ← if native then declarationName theoremId else resolveTheorem theoremId
   let escapeInput ← elaborateEscapeInput origin residual
   TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic, escapeInput } <| elabCommand command
-
-syntax (name := registerInformationTheoremReadoutCmd)
-  register_information_theoremKeyword ident &" in " ident
-  &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  &" realization " informationRealization
-  (&" variation " ident)? (&" sensitivity " ident)?
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
-
-syntax (name := registerInformationTheoremViaReadoutCmd)
-  register_information_theoremKeyword ident &" via " term &" in " ident
-  &"readout " &"via " "(" term ")" (&" output_evidence " registrationTerm)?
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
-
-syntax (name := registerInformationTheoremOccurrenceReadoutCmd)
-  register_information_theoremKeyword ident &" in " ident &" object_arena " ident &" catalog " ident
-  &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  &" realization " informationRealization
-  (&" variation " ident)? (&" sensitivity " ident)?
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
-
-syntax (name := informationTheoremReadoutCmd)
-  information_theoremKeyword ident &" in " ident &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  (&" variation " ident)? (&" sensitivity " ident)?
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
-
-syntax (name := informationTheoremOccurrenceReadoutCmd)
-  information_theoremKeyword ident &" in " ident &" object_arena " ident &" catalog " ident
-  &"readout " &"via " "(" term ")" &" primitives " registrationTerm
-  (&" variation " ident)? (&" sensitivity " ident)?
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
 
 /-- Remove just the declared readout syntax node and dispatch the established
 registration elaborator. All optional witnesses and their original syntax survive. -/
@@ -793,12 +693,6 @@ private def elabNativeReadout : CommandElab := fun stx => do
 private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
   withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
     (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
-
-syntax (name := declareInformationTemplateBindingCmd)
-  declare_information_template_bindingKeyword ident &" in " ident
-  (&" object_arena " ident &" catalog " ident)? &"readout " &"via " "(" term ")"
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 @[command_elab declareInformationTemplateBindingCmd]
 private def elabBindingSidecar : CommandElab := fun stx => registrationTransaction do

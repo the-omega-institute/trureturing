@@ -1,4 +1,4 @@
-import Lean
+import LeanInformationAuditInterface.Syntax
 
 namespace LeanInformationAudit
 open Lean Lean.Elab.Command
@@ -39,15 +39,6 @@ inductive ArtifactKind where
 
 structure AnalysisExportPlan where
   artifacts : List (ArtifactKind × String)
-
-syntax (name := sealInformationTheoryCmd) "#seal_information_theory" : command
-
-syntax (name := stageInformationAnalysisCmd)
-  "#stage_information_analysis" ident ident : command
-
-syntax (name := exportInformationAnalysisCmd)
-  "#export_information_analysis" ident ident (" output " str)?
-    (" analysis_output " str)? (" ascii_output " str)? : command
 
 /-- Seal syntax is deliberately discarded before publication. -/
 def terminalSealCommand (publication : CommandElabM Unit) : CommandElab :=

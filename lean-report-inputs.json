@@ -7,9 +7,9 @@
     "environment": ["LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS"]
   },
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
-  "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
-  "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
-  "config_inputs": {"include": [{"pattern": "lean-toolchain", "optional": false}, {"pattern": "lake-manifest.json", "optional": false}, {"pattern": "lakefile.toml", "optional": false}, {"pattern": "lakefile.lean", "optional": true}], "exclude": []},
+  "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}], "exclude": ["**/.lake/**"]},
+  "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/**/*.lean", "optional": false}], "exclude": ["**/.lake/**"]},
+  "config_inputs": {"include": [{"pattern": "lean-toolchain", "optional": false}, {"pattern": "lake-manifest.json", "optional": false}, {"pattern": "lakefile.toml", "optional": false}, {"pattern": "lakefile.lean", "optional": true}, {"pattern": "tools/lean-inspector-interface/lakefile.toml", "optional": false}, {"pattern": "tools/lean-inspector-interface/lake-manifest.json", "optional": false}], "exclude": []},
   "producer_scopes": {
     "lean-report": {
       "include": [
