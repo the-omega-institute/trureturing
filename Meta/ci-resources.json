@@ -149,6 +149,16 @@
       ]
     },
     {
+      "id": "lean-inspector-build",
+      "projects": [],
+      "checks": [],
+      "steps": [],
+      "lean_targets": [
+        "LeanInformationAudit",
+        "leanInspector/reportInspector"
+      ]
+    },
+    {
       "id": "lean-report",
       "projects": [
         "tools/StrataLint.Lean/StrataLint.Lean.csproj"

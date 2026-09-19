@@ -12,6 +12,41 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("tools/lean-inspector/Inspector.lean", "push")]
+    [InlineData("tools/lean-inspector/Inspector.lean", "pr")]
+    [InlineData("tools/lean-inspector/native_image.c", "push")]
+    [InlineData("tools/lean-inspector/native_image.c", "pr")]
+    [InlineData("tools/lean-inspector/lakefile.lean", "push")]
+    [InlineData("tools/lean-inspector/lakefile.lean", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    public void RegisteredInspectorProgramsAndTestsRequireCompilationWithoutAnotherReportStep(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
+        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector" },
+            Strings(plan["execution"]!["lean_targets"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
+            Strings(plan["execution"]!["steps"]!));
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean", "pr")]
+    [InlineData("tools/lean-inspector/Census/config.lean", "push")]
+    [InlineData("tools/lean-inspector/Census/config.lean", "pr")]
+    public void RegisteredContentAndMetadataDoNotRequireInspectorProgramCompilation(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.DoesNotContain("lean-inspector-build", Strings(plan["resources"]!));
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+    }
+
+    [Theory]
     [InlineData("Meta/ci-checks.json", false)]
     [InlineData("Meta/ci-checks.json", true)]
     [InlineData("Meta/ReportProducers/scribe-content.json", false)]
@@ -72,7 +107,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             Assert.Empty(plan[field]!.AsArray());
         foreach (var stage in new[] { "build", "engineering", "current", "delta" })
             Assert.Equal("not-required", plan["stages"]![stage]!["status"]!.GetValue<string>());
-        foreach (var field in new[] { "projects", "checks", "steps" })
+        foreach (var field in new[] { "projects", "checks", "steps", "lean_targets" })
             Assert.Empty(plan["execution"]![field]!.AsArray());
     }
 
@@ -86,7 +121,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         const string theory = "docs/develop/theory/admission-resource-probe.md";
         var plan = Plan(metadata, theory, mode);
         Assert.Equal(new[] { "current-metadata", "delta-metadata", "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Equal(new[] { "filemap" }, Strings(plan["paths"]!.AsArray()
+        Assert.Empty(Strings(plan["paths"]!.AsArray()
             .Single(row => row!["path"]!.GetValue<string>() == theory)!["require"]!));
         if (mode == "push")
         {
@@ -110,6 +145,33 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
                 Strings(plan["execution"]!["checks"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void TheoryDocumentsNeedNoBuildChecksOrCaches(string mode)
+    {
+        var plan = Plan("", "docs/develop/theory/admission-resource-probe.md", mode);
+        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers" })
+            Assert.Empty(plan[field]!.AsArray());
+        foreach (var field in new[] { "projects", "checks", "steps" })
+            Assert.Empty(plan["execution"]![field]!.AsArray());
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("Meta/registry.yaml")]
+    public void TheoryDocumentsDoNotRemoveOtherInputsRequirements(string input)
+    {
+        var plan = Plan(input, "docs/develop/theory/admission-resource-probe.md");
+        Assert.Contains("engineering", Strings(plan["resources"]!));
+        Assert.Contains("current", Strings(plan["resources"]!));
+        Assert.Contains("delta", Strings(plan["resources"]!));
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Order(StringComparer.Ordinal),
+            Strings(plan["execution"]!["checks"]!));
     }
 
     [Theory]

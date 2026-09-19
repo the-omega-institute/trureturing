@@ -108,7 +108,8 @@ const sealCases = [
 const structuralNames = ['pathThreaded', 'allowlistTampered', 'ownedUnsafe', 'exportSetEnv',
   'stagePathThreaded', 'sealStagesAnalysis'];
 const available = [...sealCases.flatMap(row => [row[0], `stage-${row[0]}`]),
-  ...structuralNames, 'unsealedExport', 'unstagedExport', 'unsealedStage', 'positiveControl'];
+  ...structuralNames, 'stageKernelInvalidTail', 'unsealedExport', 'unstagedExport',
+  'unsealedStage', 'positiveControl'];
 assert(selection.every(label => available.includes(label)), 'unknown mutation selection');
 const selected = label => selection.length === 0 || selection.includes(label);
 
@@ -240,6 +241,43 @@ try {
       }
     } finally {
       replace(file, mutated, source);
+    }
+  }
+  if (selected('stageKernelInvalidTail')) {
+    const label = 'stageKernelInvalidTail';
+    const source = originals.get(sealFile);
+    const anchor = '    let analysis ← prepareAnalysisProofs rootId records\n';
+    const mutated = changeOnce(source, anchor, anchor +
+      '    let declarations := analysis.declarations.modify (analysis.declarations.size - 1) fun declaration =>\n' +
+      '      match declaration with\n' +
+      '        | .thmDecl info => .thmDecl { info with value := mkNatLit 0 }\n' +
+      '        | _ => declaration\n' +
+      '    let analysis := { analysis with declarations }\n');
+    replace(sealFile, source, mutated);
+    try {
+      const build = run(`${label}-build`, ['build', 'LeanInformationAudit.SealCommand']);
+      assert.equal(build.status, 0, build.stdout + build.stderr);
+      for (const [scope, file, selectedRoot, expectedRejections] of [
+        ['same-root', fixture, fixtureRoot, 1],
+        ['imported-root', importedFixture, importedRoot, 2],
+      ]) {
+        const output = path.join(logDirectory, `${label}-${scope}-exports`);
+        assert(!fs.existsSync(output), `use a fresh log directory: ${output}`);
+        const test = run(`${label}-${scope}`, leanFile(file), {
+          IE_EXPECT_KERNEL_STAGE_REJECTION: '1', IE_PROJECTION_OUTPUT_DIR: output,
+        });
+        const expectedStage = `IE-C009 ProofConstructionFailed: ${selectedRoot}.__system_catalog_irredundant`;
+        const expectedExport = `UnstagedAnalysisExport root=${selectedRoot} catalog=system`;
+        results.push({ label, scope, build_exit: build.status, fixture_exit: test.status,
+          expected_fixture_exit: 0, expected_stage_prefix: expectedStage,
+          expected_export: expectedExport });
+        assert.equal(test.status, 0, test.stdout + test.stderr);
+        const marker = `[PASS] ProjectionStage.kernel-tail: ${expectedStage}; ${expectedExport}`;
+        assert.equal(test.stdout.split(marker).length - 1, expectedRejections, test.stdout);
+        assert.deepEqual(fs.readdirSync(output), []);
+      }
+    } finally {
+      replace(sealFile, mutated, source);
     }
   }
 } finally {

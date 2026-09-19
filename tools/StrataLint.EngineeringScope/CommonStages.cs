@@ -241,7 +241,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         // envelope. Nested defaults must not silently shorten that allowance.
         if (runReport)
         {
+            string[] targetSelection = resourcePlan is null ? [] :
+                [$"STRATALINT_LEAN_BUILD_TARGETS={JsonSerializer.Serialize(resourcePlan.LeanBuildTargets)}"];
             Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.LeanProducerPath)}",
+                .. targetSelection,
                 $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",

@@ -838,7 +838,8 @@ def main():
                 if not lake:
                     raise ValueError("the registered Lean toolchain is unavailable")
                 source = report_seed(args.repository, pathlib.Path(lake))
-            output({"needs_lake": bool("lake" in requirements["tools"] and source is None)})
+            output({"needs_lake": bool("lake" in requirements["tools"]
+                and (source is None or plan["execution"]["lean_targets"]))})
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")
             return 0
         except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:

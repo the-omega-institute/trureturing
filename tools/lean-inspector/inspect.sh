@@ -4,6 +4,8 @@ export LC_ALL=C
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
+BUILD_TARGETS=()
+PROGRAM_BUILD_PENDING=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository|--output|--log-dir)
@@ -43,6 +45,7 @@ LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
+  if [[ "$PROGRAM_BUILD_PENDING" == 1 ]]; then rm -f -- "${OUTPUT}.reuse.json"; fi
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
@@ -83,6 +86,29 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
 fi
+# A scoped caller passes the selected resource's registered targets. Direct
+# report calls consume all explicitly registered program targets.
+if [[ "${STRATALINT_LEAN_BUILD_TARGETS-}" != '[]' ]]; then
+  python3 -B - "$REPOSITORY" > "$STARTUP_LOG_DIR/build-targets" <<'PY' || exit 2
+import json, os, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(root / 'tools/scripts/workflow'))
+from ci_plan import lean_build_targets, strict_json_bytes
+if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ:
+    targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS'])
+else:
+    registration = strict_json_bytes((root / 'Meta/ci-resources.json').read_bytes())
+    targets = sorted({target for row in registration['resources']
+                      for target in lean_build_targets(row.get('lean_targets', []))})
+for target in lean_build_targets(targets):
+    print(target)
+PY
+  while IFS= read -r target; do BUILD_TARGETS+=("$target"); done < "$STARTUP_LOG_DIR/build-targets"
+fi
+# Provision before reuse publication creates .lake, preserving cold donor seeding.
+if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
+  run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
+fi
 open_logs() {
   mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
   mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"
@@ -104,6 +130,12 @@ reuse_report() {
 run_phase reuse reuse_report
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   open_logs
+  if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
+    PROGRAM_BUILD_PENDING=1
+    run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
+      "$LAKE" build "${BUILD_TARGETS[@]}"
+    PROGRAM_BUILD_PENDING=0
+  fi
   cat "$LOG_DIR/reuse.stdout.log"
   exit 0
 fi
@@ -116,11 +148,14 @@ if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
     --configuration Release --nologo --verbosity quiet
 fi
-run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
+if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
+  run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
+fi
 open_logs
 # The package facet demands all ordinary defaults/audits and owns module work.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report \
+  ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"
