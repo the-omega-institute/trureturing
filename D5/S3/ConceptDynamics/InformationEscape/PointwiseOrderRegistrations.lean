@@ -7,6 +7,7 @@
    digest: Strict and weak substitution bounds retain their source statements in one shared catalog. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S1.Words.Powers.GoldenDesubstitution
 import LeanInformationAudit.SealCommand
@@ -17,6 +18,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations
 
 open PointwiseRegistrationTemplates LeanInformationAudit
+open EscapeRecord D5.S3.ConceptDynamics.CIRPT
 
 register_information_template homogeneousPointwiseOrderRealization
 open D5.S1.Words.Powers D5.S0.Tower.GoldenGapWord
@@ -53,6 +55,16 @@ theorem positive_bridge : LegacyPrimitiveRealization strictArena
 theorem positive_lawSensitive : strictArena.Law positiveRealization ∧
     ¬ strictArena.Law (homogeneousPointwiseOrderRealization (fun _ : Bool => (0 : Fin 3)) (fun _ => 0)) :=
   ⟨positive_bridge.equivalence.mp substLength_pos, fun h => lt_irrefl (0 : Fin 3) (h false)⟩
+
+private def positiveChain : LayerChain strictArena.toArena where
+  length := 0
+  kernel := fun _ => cutKernel (fun b : Bool => (lengthZero, lengthReadout b))
+  refines := fun r => Fin.elim0 r
+
+private theorem positive_empty : EscapeResidualEmpty positiveChain := by
+  change positiveChain.unresolvedCount = 0
+  decide +kernel
+
 register_information_theorem substLength_pos in strictArena
   object_arena objectArena catalog substitutionBounds
   readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
@@ -60,6 +72,7 @@ register_information_theorem substLength_pos in strictArena
     (fun _ => lengthZero) (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b))
   primitives positiveRealization.toPrimitiveBundle realization positive_bridge
   variation positive_lawSensitive sensitivity strict_slotSensitive
+  escape from (Bool) escape continues (positive_empty)
 example : substLength_pos.«D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__information_unit.Statement =
     (∀ b : Bool, 0 < (subst b).length) := rfl
 #print axioms positive_bridge
@@ -85,6 +98,16 @@ theorem upper_bridge : LegacyPrimitiveRealization weakArena
 theorem upper_lawSensitive : weakArena.Law upperRealization ∧
     ¬ weakArena.Law (homogeneousPointwiseOrderRealization (fun _ : Bool => (1 : Fin 3)) (fun _ => 0)) :=
   ⟨upper_bridge.equivalence.mp substLength_le_two, fun h => (by decide : ¬ (1 : Fin 3) ≤ 0) (h false)⟩
+
+private def upperChain : LayerChain weakArena.toArena where
+  length := 0
+  kernel := fun _ => cutKernel (fun b : Bool => (lengthReadout b, lengthTwo))
+  refines := fun r => Fin.elim0 r
+
+private theorem upper_empty : EscapeResidualEmpty upperChain := by
+  change upperChain.unresolvedCount = 0
+  decide +kernel
+
 register_information_theorem substLength_le_two in weakArena
   object_arena objectArena catalog substitutionBounds
   readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization
@@ -92,6 +115,7 @@ register_information_theorem substLength_le_two in weakArena
     (fun b => D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.lengthReadout b) (fun _ => lengthTwo))
   primitives upperRealization.toPrimitiveBundle realization upper_bridge
   variation upper_lawSensitive sensitivity weak_slotSensitive
+  escape from (Bool) escape continues (upper_empty)
 example : substLength_le_two.«D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__information_unit.Statement =
     (∀ b : Bool, (subst b).length ≤ 2) := rfl
 #print axioms upper_bridge
