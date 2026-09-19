@@ -18,7 +18,7 @@ public sealed partial class CommonCheckExecutionTests
         try
         {
             var checks = validation.CheckManifest();
-            Assert.Equal(24, checks.Count);
+            Assert.Equal(25, checks.Count);
             Assert.Equal(CommonCheckRegistrationFixture.Ids, checks.Select(check => check.Id));
             var expected = JsonSerializer.Serialize(checks);
             var repeated = validation.CheckManifest();
@@ -213,7 +213,7 @@ public sealed partial class CommonCheckExecutionTests
         using var fixture = new ReportInputsFixture();
         var original = fixture.Run();
         Assert.Equal(1, fixture.Calls.Count(id => id == "scribe-describe"));
-        Assert.Equal(21, fixture.Calls.Count);
+        Assert.Equal(22, fixture.Calls.Count);
         Assert.Equal(original.Units.Select(unit => unit.Id), fixture.Calls.Order(StringComparer.Ordinal));
         Assert.All(original.Units, unit => Assert.Equal("executed", unit.Status));
         foreach (var id in new[] { "SL-006", "SL-023" })

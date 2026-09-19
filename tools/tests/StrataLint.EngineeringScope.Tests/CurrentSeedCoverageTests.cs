@@ -177,10 +177,10 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         using var fixture = Prepare();
         var calls = new List<string>();
         var original = FullCurrent(fixture, calls);
-        Assert.Equal(21, calls.Count);
+        Assert.Equal(22, calls.Count);
         Assert.NotNull(original.Units.Single(unit => unit.Id == "SL-001").Report);
         Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
-        Assert.Equal(21, CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current").Units.Length);
+        Assert.Equal(22, CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current").Units.Length);
 
         if (selectedInputChanges)
         {
@@ -196,7 +196,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
             original.Units.Length, selected.Id, selected.Status, selectedSeed.Units.Length, calls.Count,
             final.Units.Count(unit => unit.Status == "reused"));
         Assert.Empty(calls);
-        Assert.Equal(21, final.Units.Length);
+        Assert.Equal(22, final.Units.Length);
         foreach (var unit in final.Units)
         {
             var expected = unit.Id == "filemap" ? selected : original.Units.Single(row => row.Id == unit.Id);
@@ -234,7 +234,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         RunSelectedWithoutOriginalMaterials(fixture);
         var exported = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
         var final = FullCurrent(fixture, calls);
-        Assert.Equal(20, calls.Count);
+        Assert.Equal(21, calls.Count);
         Assert.Equal("filemap", Assert.Single(exported.Units).Id);
         Assert.Equal("filemap", Assert.Single(final.Units, unit => unit.Status == "reused").Id);
     }
@@ -258,7 +258,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.DoesNotContain(exported.Units, unit => unit.Id == "unregistered-old-unit");
         FullCurrent(fixture, calls);
         Assert.Empty(calls);
-        Assert.Equal(21, exported.Units.Length);
+        Assert.Equal(22, exported.Units.Length);
     }
 
     private const string Input = "fixtures/filemap-input.txt";

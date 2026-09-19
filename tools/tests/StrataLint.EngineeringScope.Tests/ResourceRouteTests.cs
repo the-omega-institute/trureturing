@@ -153,7 +153,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, record.Steps.Select(step => step.Name));
         Assert.Equal(new[] { "make --no-print-directory lean-report", "dotnet check-current" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
         var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
-        Assert.Equal(21, checks.Units.Length);
+        Assert.Equal(22, checks.Units.Length);
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("selftest-pair" or "capability-proof" or "banned-api-proof")).Order(StringComparer.Ordinal),
             checks.Units.Select(unit => unit.Id));

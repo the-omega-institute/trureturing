@@ -168,12 +168,22 @@
       ],
       "checks": [
         "scribe-describe",
+        "scribe-library",
         "scribe-markdown",
         "scribe-projections"
       ],
       "steps": [
         "scribe"
       ]
+    },
+    {
+      "id": "scribe-library",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "checks": ["scribe-library"],
+      "steps": ["scribe"]
     }
   ]
 }

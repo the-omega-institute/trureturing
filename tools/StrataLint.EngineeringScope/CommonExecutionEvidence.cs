@@ -99,7 +99,7 @@ internal static partial class CommonExecutionEvidence
         catch (JsonException exception) { throw new InvalidDataException($"invalid common check registration: {exception.Message}", exception); }
         if (manifest.Schema != "ci-check-input-registration-v2" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
             throw new InvalidDataException("invalid common check registration schema");
-        var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
+        var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-library", "scribe-markdown", "filemap" };
         if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
             throw new InvalidDataException("common check registration mismatch: missing=[" + string.Join(",", expected.Except(manifest.Checks.Select(check => check.Id)))
                 + "] unexpected-or-duplicate=[" + string.Join(",", manifest.Checks.GroupBy(check => check.Id).Where(group => group.Count() != 1 || !expected.Contains(group.Key)).Select(group => group.Key)) + "]");

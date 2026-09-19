@@ -13,6 +13,7 @@ public static class ScribeCli
     [
         "describe-report",
         .. EmissionCommands.Order(StringComparer.Ordinal),
+        "library-check",
         "markdown-check",
         "projections",
     ];
@@ -82,6 +83,32 @@ public static class ScribeCli
                     or ArgumentException
                     or FormatException
                     or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "library-check")
+        {
+            if (arguments.Count != 3 || arguments[1] != "--report" || string.IsNullOrWhiteSpace(arguments[2]))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+            try
+            {
+                var repositoryRoot = FindRepositoryRoot(workingDirectory);
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(repositoryRoot, arguments[2]);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                var findings = DescribeRepositoryValidator.ValidateLibrary(repositoryRoot,
+                    definitions.Select(definition => definition.Document), report, validateLocators: true);
+                foreach (var finding in findings) error.WriteLine($"{finding.Code} {finding.Path}: {finding.Message}");
+                output.WriteLine($"library: findings={findings.Length}");
+                return findings.IsEmpty ? 0 : 1;
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or ArgumentException or FormatException or InvalidOperationException)
             {
                 error.WriteLine(exception.Message);
                 return 2;
@@ -216,6 +243,7 @@ public static class ScribeCli
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
+        + "| library-check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->]";
 
     /// <summary>

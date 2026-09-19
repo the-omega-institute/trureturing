@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 
 internal sealed record DescribeRedFinding(string Code, string Path, string Message);
 
-internal static class DescribeRepositoryValidator
+internal static partial class DescribeRepositoryValidator
 {
     internal static ImmutableArray<DescribeRedFinding> Validate(
         string repositoryRoot,
@@ -24,15 +24,9 @@ internal static class DescribeRepositoryValidator
             .Select(static document => document.Header.MirrorBlueprint.Path.Value)
             .ToHashSet(StringComparer.Ordinal);
         var inspectedLibrary = libraryInspection ?? LibraryNoteCatalog.Inspect(repositoryRoot);
-        var notes = inspectedLibrary.Notes
-            .GroupBy(static note => note.BibKey.Value, StringComparer.Ordinal)
-            .ToDictionary(
-                static group => group.Key,
-                static group => group.First(),
-                StringComparer.Ordinal);
+        var inspectedProblems = problemInspection ?? ProblemCandidateCatalog.Inspect(repositoryRoot);
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
-        findings.AddRange(inspectedLibrary.Findings.Select(static finding =>
-            new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        findings.AddRange(ValidateLibrary(repositoryRoot, material, leanReport, inspectedLibrary, inspectedProblems));
         var resolvedDeclarationCatalog = declarationCatalog
             ?? (leanReport is null ? null : DeclarationCatalog.Create(leanReport));
         var graph = DocumentGraphAssembler.Assemble(
@@ -63,55 +57,14 @@ internal static class DescribeRepositoryValidator
                     "dangling-evidence-gid");
             }
 
-            foreach (var anchor in document.Header.Anchors.OfType<LiteratureAnchor>())
-            {
-                ValidateLiteratureAnchor(
-                    document.Header.Gid.Value,
-                    anchor,
-                    notes,
-                    findings);
-            }
-
             ValidateBlocks(
                 repositoryRoot,
                 document.Header.Gid.Value,
                 document.Content,
                 generatedPaths,
-                notes,
                 leanReport,
                 findings);
         }
-
-        foreach (var note in inspectedLibrary.Notes)
-        {
-            foreach (var reference in note.StrataTouched)
-            {
-                ValidateGid(
-                    repositoryRoot,
-                    note.RelativePath,
-                    reference,
-                    generatedPaths,
-                    leanReport,
-                    findings,
-                    "dangling-library-gid");
-            }
-
-            if (note.Triage is LibraryTriage.Task task)
-            {
-                ValidateGid(
-                    repositoryRoot,
-                    note.RelativePath,
-                    task.Reference,
-                    generatedPaths,
-                    leanReport,
-                    findings,
-                    "dangling-library-gid");
-            }
-        }
-
-        var inspectedProblems = problemInspection ?? ProblemCandidateCatalog.Inspect(repositoryRoot);
-        findings.AddRange(inspectedProblems.Findings.Select(static finding =>
-            new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
         var resolutionClaims = EnumerateResolutionClaims(material).ToImmutableArray();
         if (!inspectedProblems.Candidates.IsEmpty || !resolutionClaims.IsEmpty)
         {
@@ -131,8 +84,6 @@ internal static class DescribeRepositoryValidator
                     findings,
                     "dangling-problem-gid");
             }
-
-            ValidateProblemSource(candidate, notes, findings);
         }
         ValidateResolutionClaims(
             resolutionClaims,
@@ -449,7 +400,6 @@ internal static class DescribeRepositoryValidator
         string documentGid,
         BlockSequence blocks,
         IReadOnlySet<string> generatedPaths,
-        IReadOnlyDictionary<string, LibraryNote> notes,
         LeanAxiomReport? leanReport,
         ImmutableArray<DescribeRedFinding>.Builder findings)
     {
@@ -479,25 +429,15 @@ internal static class DescribeRepositoryValidator
                         documentGid,
                         section.Content,
                         generatedPaths,
-                        notes,
                         leanReport,
                         findings);
                     break;
                 case DocumentBlock.Describe describe:
-                    if (describe.LiteratureReference is { } literature)
-                    {
-                        ValidateLiterature(documentGid, literature, notes, findings);
-                    }
-                    foreach (var acknowledgement in describe.AcknowledgementReferences)
-                    {
-                        ValidateLiterature(documentGid, acknowledgement, notes, findings);
-                    }
                     ValidateBlocks(
                         repositoryRoot,
                         documentGid,
                         describe.Content,
                         generatedPaths,
-                        notes,
                         leanReport,
                         findings);
                     break;
