@@ -1,0 +1,13 @@
+#### 134.6.4 后承闭合：加入逻辑系统承认的全部后果
+
+另固定句子集合 $\Sigma$ 和算子 $\operatorname{Cn}:\mathcal P(\Sigma)\to\mathcal P(\Sigma)$，满足 Tarski 三公理：
+
+$$
+\Gamma\subseteq\operatorname{Cn}(\Gamma),\qquad
+\Gamma\subseteq\Delta\Longrightarrow\operatorname{Cn}(\Gamma)\subseteq\operatorname{Cn}(\Delta),
+\qquad
+\operatorname{Cn}(\operatorname{Cn}(\Gamma))=\operatorname{Cn}(\Gamma).
+$$
+
+闭理论是满足 $T=\operatorname{Cn}(T)$ 的句子集。
+

@@ -1,0 +1,23 @@
+**证明。** $p_B(b)=0$ 时两个边缘在该切片全部为零。正切片上求和得到
+$$
+\sum_c p^*(a,b,c)=p_{AB}(a,b),\qquad
+\sum_a p^*(a,b,c)=p_{BC}(b,c),
+$$
+故总质量为一。除以 $p_B(b)$ 后，条件联合律为 $p(a\mid b)p(c\mid b)$。
+
+若 $p(a,b,c)>0$，对应三份边缘均正，所以 $p^*(a,b,c)>0$。在这份支撑上展开，
+$$
+\begin{aligned}
+D(p\Vert p^*)
+&=\sum_{a,b,c:p>0}p(a,b,c)
+ \log\frac{p(a,b,c)p_B(b)}{p_{AB}(a,b)p_{BC}(b,c)}\\
+&=H(AB)+H(BC)-H(B)-H(ABC).
+\end{aligned}
+$$
+同一展开也等于 $\sum_{b:p_B(b)>0} p_B(b)D(p_{AC|b}\Vert p_{A|b}p_{C|b})$，即条件互信息。对 $p^*$，条件独立给
+$$
+H(p^*)=H(B)+H(A\mid B)+H(C\mid B)
+      =H(AB)+H(BC)-H(B).
+$$
+KL 非负及其等号条件给全部结论。有限支撑使这些熵和差值均为有限实数，没有无穷减无穷。$\square$
+

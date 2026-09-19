@@ -1,0 +1,20 @@
+### 125.6 响应度量及它在表示转换下的运输
+
+给 $X,U$ 指定内积。长度 $T$ 的响应距离为
+$$
+d_T(z,z')^2=\sum_{t=0}^{T-1}\|OA^t(z-z')\|^2
+=\langle z-z',G_T(z-z')\rangle,
+\quad G_T=\mathcal O_T^*\mathcal O_T.
+$$
+其零方向是 $\ker\mathcal O_T$，因此它在 $X$ 上是伪距离，在 $X/\ker\mathcal O_T$ 上是距离。$T\ge n$ 时它给完整未来商的内积。坐标转换 $z'=Sz$ 且 $O'=OS^{-1},A'=SAS^{-1}$ 时，$\mathcal O'_T=\mathcal O_TS^{-1}$，从而
+$$
+G'_T=S^{-*}G_TS^{-1},\qquad d'_T(Sz,S\widetilde z)=d_T(z,\widetilde z).
+$$
+这是观察关系定义的几何随表示运输；并不宣称 $G_T$ 等于一份未经运输的外加物理度量。
+
+无限时间加折扣 $\beta>0$。若 $\sqrt\beta\|A\|<1$，则
+$$
+G_\beta=\sum_{t=0}^{\infty}\beta^t(A^t)^*O^*OA^t
+$$
+在算子范数下绝对收敛，因为第 $t$ 项范数不超过 $\|O\|^2(\beta\|A\|^2)^t$。其二次型恰为全部折扣未来输出能量，非负项级数为零当且仅当每项为零，故 $\ker G_\beta=\mathcal N$。这里的范数不等式只是可求和性的充分条件；例如 $A^2=0$ 时级数只有前两项，即使 $\sqrt\beta\|A\|\ge1$ 也收敛。也可以用其他已证可求和条件定义有限的无限时间距离，不能将这个充分估计误报为必要条件。
+

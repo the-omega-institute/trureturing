@@ -1,0 +1,14 @@
+### 130.10 Schur、干扰消除与投影的共同结构
+
+设某个有限维 Hilbert 空间中的线性映射为 $F:\mathbb R^a\to\mathcal K$、$K:\mathbb R^d\to\mathcal K$，并假定 $K$ 单射。考虑
+
+$$
+Q(x,y)=\frac12\|Fx+Ky\|^2.
+$$
+
+其块矩阵为
+
+$$
+A=F^*F,\qquad B_0=F^*K,\qquad D=K^*K\succ0.
+$$
+
