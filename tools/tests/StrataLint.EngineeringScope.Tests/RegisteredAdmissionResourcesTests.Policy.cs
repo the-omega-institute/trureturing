@@ -65,7 +65,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Fact]
     public void FullEngineeringRetainsEverySplitRepositoryProject()
     {
-        var plan = Plan("tools/StrataLint.Engine/AdmissionScopeProbe.cs", "");
+        var plan = Plan("Meta/engineering-projects.json", "");
         var projects = Strings(plan["execution"]!["projects"]!);
         foreach (var name in new[] { "Anchors", "Policy", "Repository" })
             Assert.Contains($"tools/tests/StrataLint.{name}.Tests/StrataLint.{name}.Tests.csproj", projects);
