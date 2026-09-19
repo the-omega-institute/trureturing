@@ -1,0 +1,215 @@
+# 已判条目(R52 起)
+
+`SCREENED-OUT.md` 触及 SL-003 的 1000 行硬上限,按第 4.8 条裂桶,R52 起的各轮记在这里。
+判据与写法同前一桶:只留可复用的结论与必要读数,不留过程。
+
+## R52(2026-09-18):`DECIDABLE` 徽章不等于边界已知,与 size-4 Sidon-extension 的出局
+
+**#475(Graham valid orderings)出局:有限残余没有可枚举的边界。** 页面 badge 是
+`DECIDABLE / Resolved up to a finite check`,但已知结果由五段拼成,每段都带无效常数:
+小 t 的 Costa–Della Fiore 2026 `t ≤ e^{c(log p)^{1/3}}`、中 t 的 Pham–Sauermann 2026
+`1 ≪_α t ≤ p^{1-α}`、大 t 的 Bedert–Bucić–Kravitz–Montgomery–Müyesser 2025
+`p^{1-c} ≤ t ≤ (1-o(1))p`、极大 t 的 Müyesser–Pokrovskiy 2025 `t ≥ (1-o(1))p`,
+另有 `t ≤ 12` 与 `p-3 ≤ t ≤ p-1`。无一篇给出显式 p₀,故「剩下的有限检查」没有边界可跑完;
+要兑现该 badge 得先把五个常数各自显式化。**判据:`DECIDABLE` 只断言原则上有限,不断言边界已知——
+入管线前必须找到显式阈值,找不到即出局。** 验小素数或抽样都关不掉它(抽样本来也不是证明)。
+
+**size-4 Sidon-extension 出局:专家社群在攻。** #707($1000)已由 Alexeev–Mixon 反驳并形式化;
+残余的真开放问题是「size-4 的 Sidon 集是否总可扩成完美差集」——size 2 平凡、size 3 由 Sawin 证得总可扩、
+size 5 有 {1,2,4,8,13} 与 Hall 1947 的 {1,3,9,10,13}。Müller 只证到 {0,1,3,11} 是候选反例
+(所有*已知*构造够不着),缺口是排除非 Singer 型差集,挂在 prime power conjecture 上。
+该方向有 PNAS 论文与专题报告,且他们自己在做自动形式化,按档位律出局。
+arXiv:2604.25214(Niu,size-4 反例)已于 2026-05-14 撤稿,撤稿理由正是 Müller 的 MO 答复
+早六个月证得更强,故该预印本及其后续不作为前置。
+
+## R53(2026-09-19):徽章与 claim 页会互相矛盾,以及 #455 是目前唯一未被 claim 的活靶
+
+**判据:题面徽章不是 claim 状态,claim 页才是。** 本轮把一份外部选靶意见逐条对站点原文复核,
+出现系统性的不一致:#196、#1097、#197 的题面当天仍写着 `OPEN / cannot be resolved with a finite
+computation`,而外部意见称它们已被反驳或已被 claim。去读 claim 页才判得出来——**#196 实测有
+1 条 full proof claim,2026-09-14 由 Liam Kruer 与 Jensen Kohlmeyer 提交(GPT-6 Astra),
+同时附证明与形式化两个外链,内容是构造一个无单调四项等差的 ℕ 排列**,故 #196 出局;题面徽章
+当时尚未更新。反过来,外部意见对 #1097、#197 的断言本轮未能由站点证实,记
+`ASSUMED-UNVERIFIED`,用前须自行读 claim 页。
+
+**操作后果:claim 清查不能外包。** 该外部意见明确报告自己读不到 erdosproblems 的 claim 页、
+且 arXiv 检索端点失败,并拒绝把检索失败写成「无人 claim」——这个自觉是对的,但也意味着
+**清查只能由能取到页面的一侧做**:`curl https://www.erdosproblems.com/forum/thread/<n>/proof-claims`
+可读,零 claim 时的字样是 `No proof claims have been submitted yet.`。派席前按此逐题实测。
+
+**#455 是本轮唯一通过清查的活靶。** 题面:设素数 `q_1 < q_2 < ⋯` 满足 `q_{n+1} − q_n ≥ q_n − q_{n−1}`,
+是否必有 `lim q_n / n² = ∞`?claim 页实测 `No proof claims have been submitted yet.`,
+`Currently working on` 为空(两人标 Looks difficult)。已知结果只有 Richter [Ri76] 的
+`liminf q_n/n² > 0.352⋯`。
+**等价化简**(本仓推导,供后续用):令 `d_n = q_{n+1} − q_n`,由 `d` 单调不减得
+`q_n ≥ (n/2)·d_{n/2}`,而 `d_m ≤ Cm` 无穷次出现即给出 `q_m ≤ q_1 + Cm²`;故原命题等价于
+`d_n / n → ∞`。朴素机制只能走到 `d_n ≳ n / log n`:等间隔的一段就是素数等差数列,长度 `L` 的
+一段要求公差被所有 `p ≤ L` 整除即 `d ≥ primorial(L)`,故 `d_n ≤ Cn` 时每段长 `≤ log(Cn) + O(1)`,
+相异值数 `≥ n / log(Cn)`。这比 Richter 弱,**缺口正是「重复间隔段的整体稀疏性」**,不是逐段估计。
+结论:唯一未被 claim 的候选,但属研究级,不按小时级管线派。
+
+## 会话 6c2e9558(2026-09-18):期刊整卷深查五席——JIS 27–29、INTEGERS 24–26、ECA 2024–26 与 arXiv math.CO 2024
+
+本节的席位编号是该会话内部的,与上文同名轮次无关。过关并已预登记的靶不在此列(见 #8627、#8634、#8639、#8643);
+这里只记**判掉的、已结算的、算过未取的**,以及各窗口的真实覆盖面。
+
+### 覆盖面(「打开并标记」不等于「看过」)
+
+| 窗口 | 席 | 读数 |
+| --- | --- | --- |
+| Journal of Integer Sequences 27–29(2024–26) | subagent | 161 篇全开,109 篇有标记,102 篇的猜想上下文读全,11 篇做了定义级实算 |
+| INTEGERS 24(2024) | codex | 122 篇全开,81 篇有标记,81/81 逐篇处置,32 篇做了定义级实算 |
+| INTEGERS 25–26(2025–26) | subagent | 232 篇全开,141 篇有标记,55 篇上下文读全,17 篇(22 条陈述)实算;**51 篇只看了标记行**,未读全 |
+| Enumerative Combinatorics and Applications 2024–26 | codex | 89 篇全开,46 篇有标记 |
+| arXiv math.CO / cs.FL 2024-01 → 2025-01 | subagent | 五组关键词共 461 个题名、139 份 TeX 源;不匹配关键词的论文未看 |
+| arXiv math.NT 2024-01 → 2024-06 | codex | 1682 条只做了机械筛,**零实算——不算覆盖**;2024-07 → 2025-03 无人看过 |
+
+### 判掉:Brietzke, JIS 27 (2024) Art. 24.3.4, Conjecture 15(#8645,已关)
+
+`Σ_j (d(n,4j) − d(n,4j+2)) = 2^n`(Catalan 三角 A039598)。它是 OEIS A039598 条目自身 `%C`(Wolfdieter Lang,2013-09-20)
+所载一般恒等式 `x^{2n+1} = Σ_k d(n,k)·S_{2k+1}(x)` 在 `x = √2`(`N = 4`)处的特化:`S_{2k+1}(√2)/√2` 以 `1,0,−1,0` 为周期;
+其发表基础是 Lang, Fibonacci Quarterly 38(5) (2000) 注 4。来源论文证了模 5 的类比、印出了给出一行证明的式 (24),却把模 4 的留作猜想。
+
+### 已结算、不派席(席位读出;带 † 者由 orchestrator 复核过出处)
+
+- Cohen, JIS 28 (2025) Art. 25.4.7:Conj. 65 同文自驳(`m=209, n=389`);Conj. 66 由 Ibarra arXiv:2607.09793 反驳;
+  另 22 条由 Duc Hieu Le arXiv:2509.26138 结算(证 16、驳 6)。
+- Greene–Higgins, JIS 28 Art. 25.7.8 Conj. 28:Hajós 群分解定理的特例(Szele 1949);Conj. 27 据称由其推出(未复核)。
+- Fried, JIS 28 Art. 25.4.3(`F(n+2)+2nF(n+1)` 非 Fibonacci 数):Le arXiv:2509.26138 定理 23 / 命题 24。
+- Kohen, JIS 29 Art. 26.4.2 Conj. 13:Offutt arXiv:2504.19031 §4.1 已反驳。
+- Benmoussa, JIS 29 Art. 26.3.5 Conj. 2:符号印错;更正形即作者 arXiv:2511.09817v2 定理 4.1。
+- Bosma–Bruin–Fokkink 等, JIS 28 Art. 25.3.8:Conj. 16(Shtrezi arXiv:2606.17447)、Conj. 17(本仓卷宗)。
+- Arias de Reyna, INTEGERS 24 A19 Conj. 2:同文附录自给反例 `p=2, q=1094`。
+- INTEGERS 24 A81 Conj. 2 的逆向子句:同文 Theorem 11 与 arXiv:2504.09617 已处理;A105 §5 的 rainbow 数等式:JMM 2026 摘要 58848 已宣布反驳。
+- INTEGERS 25 A3(Murugan–Fathima)Conj. 1、A87(Flynn-Connolly)Conj. 1:各为同文定理的直接推论。
+- INTEGERS 26:Chu 猜想(A58)、Komatsu 猜想(A63)、Erdős–Pomerance(A7, van Doorn)、Nath–Saikia–Sarma(A4)、
+  OEIS A001006 的 Batalov 评论(A22 命题 3)、A97 的 Question 1 / Conj. 3(Balogh–Garcia–Liu–Yang)、A52 Conj. 5.1(文中称 [9] 已证)。
+- Ballantine–Beck–Merca 的 `pre2` 单射猜想:Li, INTEGERS 26 A16 定理 1。
+- ECA 2024 S2R9 Conj. 5.3(同文附录 B 反驳)、ECA 2026 S3R17 Conj. 10.2(同文标 False)、ECA 2026 S1R5 Question 1.2(同文 Thm 1.6)、
+  ECA 2024 S1R4 Open Problem 6.1(Franks 等已解)。
+- arXiv:2501.07463v2 的两条抛硬币猜想(Conway leading numbers / Li 1980 / Guibas–Odlyzko 1981 的推论);
+  arXiv:2409.19547v4 的 pix/fix 等分布猜想(Dong–Xu arXiv:2606.00646 加有限核对);Archer–Geary 链避免计数(arXiv:2405.03268);
+  Chen–Wen Conj. 1(arXiv:2412.18425)。
+
+### 算过、不取(附理由)
+
+- **只在边界值处失败**:Kohen INTEGERS 26 A22 Conj. 1(仅 `p ∣ a`);Zhao arXiv:2410.17057 Conj. 4.19 在 `n=2`;Bradshaw JIS 28 25.1.8 Conj. 18–19 在 `n=0`。
+- **陈述不确定或读法歧义**:Gibbs–Miceli JIS 27 24.8.2 Conj. 25(`k=0,n` 处除零,「for some E」);Brietzke Conj. 14(依赖未印出的约定);
+  Shunia arXiv:2407.03357 Conj. 1;Heubach–Dufour arXiv:2404.06608v3 Conj. 1(`S_2` 为印刷笔误级);Guday–Sahin INTEGERS 26 A5(`±` 号未定)。
+- **成立于全部测试范围、无短证明路线**:arXiv:2401.16670 random Chomp;arXiv:2411.14488 Amalgamation Nim;metered parking(arXiv:2406.12941 / INTEGERS 25 A73);
+  arXiv:2501.14640 impartial chess;Zhan–Bie INTEGERS 26 A15 Conj. 1–4;Gy INTEGERS 26 A108 Conj. 2.1、3.1;INTEGERS 25 A28、A102 Conj. 4、A23;
+  INTEGERS 26 A92、A17、A55;Letouzey–Li–Steiner JIS 29 26.3.3;Merikoski–Haukkanen JIS 28 25.7.1 Conj. 5(「当」向可证,「仅当」向为一般非零性)。
+- **实为名题或第三档**:Ross JIS 27 24.7.5 Conj. 17(蕴含不存在奇的非平方丰度 2/4/8/12 数);Zelinsky JIS 29 26.4.3 Conj. 1(Lehmer 型);Wagstaff JIS 28 25.7.2。
+- **有明确小见证、但后续文献正文未取到,故未立**:INTEGERS 24 A94 Conj. 1(`‖n‖₂ ≤ (r+1)s + 2^r − 2`;`r=s=2, n=59` 处为 9 > 8;后续文献 Fibonacci Quarterly 64(3),
+  DOI 10.1080/00150517.2025.2545251);INTEGERS 24 A116 §1 所引 Balandraud 猜想(arXiv:1702.06419 §4;`p=13, A={1,2,6,8,9}`)。
+  INTEGERS 24 A60 Conj. 1(IDP 自反单纯形唯一性;`d=4` 处两个支撑向量)在检索范围内未见结算,期刊版已把 arXiv v2 的陈述收窄到非反链偏序。
+
+### 方法学读数
+
+- **对象有 OEIS 条目时,逐条读完 `%C` / `%F`,不要对已下载的条目做关键词检索。** Brietzke 的结算就在 orchestrator 已取回的条目里(19 条 `%C` 之一),
+  用的是 Chebyshev 与正多边形对角线的语言;关键词 `2^n|4j|alternat|conjectur` 碰不到它。固定动作:对条目里每条一般恒等式问一句「它能否特化出待证陈述」。
+  这次是探针的强制去重步骤接住的,代价一次探针。
+- **搜题 brief 必须写明「作者自己印出、未证的猜想就是目标类」。**「具名」指有出处定位(论文 + 编号),不是挂着名家名字。同一窗口(INTEGERS 24),
+  未写明时 codex 席零实算、0 候选并把该类整体排除;写明并要求逐篇处置表后,同一载体做了 32 篇实算、给出 5 条反例线索与 6 条证明梗概。差别在 brief,不在载体。
+- **锚。** 每条实算先用同一份实现复现来源自己已证或已印的东西(另一条定理、一张表、一个演示图),再去算猜想;本会话全部候选与两次席位自纠的假反驳都靠它。
+  pdftotext 会丢掉 vincular / consecutive 模式的下划线,两篇栈排序论文里不同的映射全印成同一个名字——以 TeX 源或渲染页为准。
+- **载体分工(小样本)。** ChatGPT Pro 三次扫窗口共 0 候选(一次约 60 分钟只精读约 20 篇),但做需要浏览器的文献核对有用:能取到出版商与 ProQuest 的索引摘录,
+  并分得清「打开核对」与「索引摘录」、「取不到」与「零结果」。要求其回复为 JSON 时须规定「值内不得出现双引号字符」,否则信封两次因未转义引号整体作废。
+
+## C2(2026-09-19):codex 搜题席读最新三个月——2230 篇、332 份 PDF、1 条开 lane
+
+窗口:arXiv `math.CO`/`cs.DM` 2026-06-01..09-18(降序,最新优先)与 `math.NT` 2025-09..2026-05;清单 1329+160+853 条,去重后摘要筛 2230 篇,PDF 读 332 篇,抽出 1179 条编号 Conjecture/Question/Problem。产出 1 条,记录在 `/tmp` 的 `screened.tsv`(过程材料不入仓)。
+
+- **开 lane**:Dębski–Grytczuk–Naroski–Pawlik–Przybyło–Śleszyńska-Nowak, arXiv:2609.18476v1(2026-09-16),**Conjecture 2 (2)** `A2(i) = A1(i) + 1 for every i ⩾ 3`——论文自己的印刷行 `ϱ3 = (4, 3, 1, 5, 6, …)` 遗漏 2 而首项为 4,`i = 3` 即反例;正文写的观察是 `i ⩾ 4`,猜想印的是 `i ⩾ 3`(#8675)。orchestrator 按 Algorithm 1 亲算 15 行 × 4000 项,与 Table 1/2 逐项一致。
+- **有限核查无反例、不派**:arXiv:2609.03081 Conjecture 3.9(`n = 9` 全部 362880 个排列);arXiv:2601.09510 Conjecture 1.1(中心二项式系数的 2-adic/3-adic 赋值,`257 ≤ n ≤ 10^7`);arXiv:2609.01562 Conjecture 7.4(`496 ≤ n ≤ 10^5`,最近点 `n = 497`);arXiv:2603.29973 Conjectures 2.2(i)/2.3(i)/2.4(i)(`n ≤ 100` 整数精确核查);arXiv:2609.06096 Conjecture 10.1(未判区间 `1001 ≤ d < 2^72`,pdftotext 把上标阈值渲染成 `272`,以 PDF 原文为准)。
+- **源文内已反驳**:arXiv:2609.19372 Pachter–Sturmfels Conjecture 6.3——同文 Example 6.4 以七点图反驳 `k = 2`。
+
+**读数**:与 C1 同形(704 篇/3 条)相比,最新三个月的 math.CO 出货率更低(2230 篇/1 条),但唯一命中的是提交两天内的论文——「新到没人看」这一档的候选来自最新月份,不来自更宽的窗口。
+
+## R54(2026-09-19):全库 claim 状态的完整测量,与「可有限判定 ∩ 无人认领」恰为 14 条且全已死
+
+用新器 `erdos-claim-scan.py` 逐题读 **claim 页**(不是题面),1–1221 全部取到,零条 UNKNOWN。
+判据是三分:**有 claim** / **零 claim 但有人挂在 `Currently working on`** / **零 claim 且无人在做**。
+
+| 类别 | 条数 |
+| --- | --- |
+| 有 proof claim | 184 |
+| 零 claim,但有人在做 | 134 |
+| 零 claim 且无人在做 | 903 |
+
+对这 903 条再取题面徽章:已解者 524(PROVED 311 / DISPROVED 129 / SOLVED 84),
+`OPEN`(题面明写「不能由有限计算解决」)356,`NO-BADGE` 9,
+**可有限判定者恰 14 条**——#19、#107、#167、#364、#375、#398、#458、#551、#556、#583、#628、#672、#779、#1082
+(FALSIFIABLE 9 / DECIDABLE 3 / VERIFIABLE 2)。这 14 条**全部在 R47 已逐条判死**,
+死因同型:要么反例规模无上界,要么已被覆盖到「充分大」而残余没有显式阈值(同 R52 的
+`DECIDABLE` 判据)。
+
+**结论:以「有限反例」为路径的选靶面在本库范围内已空。** 不是筛得太严,是这一带已被扫过——
+184 条有 claim 的里不少是 2026 年 7–9 月由 AI agent 提交的。剩下可走的只有「一般定理」一路,
+落在那 356 条 `OPEN` 里。
+
+**可复用的候选池**:在 903 条里取「题面 `OPEN` + 无悬赏 + 陈述里出现本仓底座对象
+(Sidon / 超立方体 / powerful / 素数间隔 / 覆盖系统 / 距离 / 密度 / 表示函数 / lacunary)」,
+得 **78 条**。这是当前唯一有机器可依的候选池,派席前仍须逐条核题面与文献。
+
+**器的判据**:零 claim 的字样是 `No proof claims have been submitted yet.`;取不到的页记
+`UNKNOWN` 而不是 0——未测过的页不能长得像无人认领的页。题面徽章不是 claim 状态(#196 在
+2026-09-14 已有 full proof claim 而题面仍写 OPEN),所以只认 claim 页。
+
+## R55(2026-09-19):#850 是候选池里唯一「徽章低估了它」的一条,器与对照阶梯已就位
+
+R54 的 903 条无人认领集里再取「陈述短、无渐近记号、无悬赏」,得 88 条。其中绝大多数是名题
+(平面染色数 #508、Erdős–Szekeres 一族等)。唯一形状对路的是 **#850(Erdős–Woods)**:
+
+> 是否存在相异的 `x, y`,使 `x,y` 同素因子集、`x+1,y+1` 同、`x+2,y+2` 同?
+
+**题面徽章写「不能由有限计算解决」,这句只对否定一侧成立**:若答案为否,确实无法有限验证;
+但若答案为是,**一对显式的 `(x,y)` 就结算了它**,且那正是 §3.3 唯一放行的 `refutes` 形状
+(处决「不存在这样的对」这条具名断言)。这是本轮唯一一条徽章低估了可达性的题。
+
+**已知范围**(2026-09-19 读):Odlyzko 验到 `10^7`,McCranie 验到 `1.4×10^9`;文献另记
+「`x < 100000` 时 `k=3` 已足够」。本仓读数:`k=3` 到 `2×10^5` 零对。
+
+**器与对照阶梯**:`erdos850.py`。**关键判据是「同素因子集」不是「整除」**——
+`75 = 3·5²` 与 `1215 = 3⁵·5` 支撑相同而互不整除。本器的第一版按 `y = x·m`(m 的素因子取自 x)
+枚举,逻辑上漏掉正是这一对;对照阶梯当场抓出。改为按 radical 分组后,`k=2` 到 2000 的五对
+`(2,8) (6,48) (14,224) (30,960) (75,1215)` 全部复现。**任何一次跑不出这五对的运行,
+无论跑多远都不构成关于 `k=3` 的证据。**
+
+**下一步与预算**:当前实现是 O(N) 内存的 Python,推不到 `1.4×10^9` 以上。要真正推进已知范围
+需分段的 C 实现;该机器同时承载 base 的 CI runner,不得跑到干扰它的内存规模。未跑到超过
+已知范围之前,不得称部分进展(§3.6 ③)。
+
+## R56(2026-09-19):#850 的 k=3 搜索推到 4.29×10⁹,零对
+
+`erdos850.c` 是 R55 那支 Python 探针的分段 C 版。**读数**(Mac Studio,2026-09-19):
+
+| 跑法 | 结果 |
+| --- | --- |
+| k=2 到 2000(阶梯) | 恰好 `(2,8) (6,48) (14,224) (30,960) (75,1215)` |
+| k=3 到 `2×10⁵` | 零对 |
+| k=3 到 `1×10⁹` | 零对,43 s,峰值 10.9 MB |
+| k=3 到 `4,294,967,293` | **零对,258 s,峰值 10.9 MB** |
+
+公开记录(转述,未核原文)是 Odlyzko `10⁷`、McCranie `1.4×10⁹`;本轮的 `4.29×10⁹` 越过它。
+按 §3.6 ③ 这只算**推进已知范围**,不是结算——#850 的否定一侧本来就不可由有限计算判定。
+
+**为什么内存与范围无关**:`x < y` 且 `rad(x+i) = rad(y+i)` 给出 `rad(y+i) = rad(x+i) ≤ x+i < y+i`,
+故 `y, y+1, y+2` 全部非无平方因子(约 6% 存活)。分段因子筛施加该必要条件并给出存活者的 radical;
+对每个存活的 `y`,枚举支撑恰为 `supp(rad(y))` 的全部正指数向量且小于 `y` 者作为 `x` 候选,再精确
+分解 `x+1, x+2` 验另两条。峰值 10.9 MB,与上界无关,故可与该机的 CI runner 共存。
+
+**阶梯是程序自带的前置**:每次搜索前先自跑 k=2 到 2000,对不上就打印差异并非零退出、不跑搜索。
+上述 `4.29×10⁹` 那一轮的日志里第一行正是 `ladder k=2 limit=2000: ok (5 pairs)`。同一支源码在
+另一台机器(本地 macOS)上重编后阶梯复现一致。
+
+**当前上界来自宽度**:`--limit + steps - 1` 超过 `4294967295` 时 fail-closed 报错,不静默截断。
+要继续往上推需把索引宽度改到 64 位。
+## C3(2026-09-19):codex 搜题席读最新三个月的 NT/GR/RA/AC/FL/GT/CC/DS——1416 篇、5 条候选、3 条开 lane
+
+窗口:arXiv `math.NT`、`math.GR`、`math.RA`、`math.AC`、`cs.FL`、`cs.GT`、`cs.CC`、`math.DS` 各 2026-06-01..09-18(降序);清单 1512 条去重 1416 篇,PDF 文本 1109 份(席位自报数学级筛读未穷尽,`pdf-queued` 1106 篇未逐条裁定)。
+
+- **开 lane**:Mohan–Neetu, arXiv:2607.11194v1(2026-07-13),§6 **Conjectures 6.1/6.2/6.3**(任意 torsion-free 群的 small doubling `3k−3`/`3k−4` ⟹ ⟨S⟩ 交换)——Klein 瓶群 `Z ⋊ Z`(论文 §5 群律取 `q = −1`)中 `{e,(0,1),(1,1)}` 有 `|S²| = 6 = 3·3−3`、`e ∈ S` 而 `⟨S⟩` 非交换;论文自己的 Example 6.2(`k = 3`)拆成三个单点集反驳 6.2(#8686;orchestrator 按群律亲算三例)。Barket–Grimaldi–Hendi–Hirst–Onus–Singh, arXiv:2607.12026v1,**Conjecture 4.4**(幂零群 Cayley 图归一化 Laplacian 首个 `>1` 间隙指标 ∈ {|G|−1} ∪ {|G/Z_j|})——`Z/5`、`S = {1}` 的 `C₅` 谱 `[0,(5−√5)/4,(5−√5)/4,(5+√5)/4,(5+√5)/4]` 在 `k = 3`,允许值只有 4 与 1(#8688;orchestrator SymPy 精确复算 + 四个对照)。
+- **正向证明候选、暂缓**:Hughes, arXiv:2608.27755v1 §10「Iteration-Depth No-Gap Conjecture」(插入迭代深度谱是初始区间)——席位给出固定次数合并 + 空块填充的证明草图,`{ε,a,b}` 子集全对 64 组到深度 4 通过;定义(k-插入、迭代深度)转写量大,排在反驳型 lane 之后。
+- **已结算**:Das–Nath–Sarma, arXiv:2609.05302v1 Conjecture 5.1(`cφ₁₈(30n+19) ≡ cφ₁₈(30n+25) ≡ 0 (mod 16)`)已由 Saikia arXiv:2609.11813v1 Theorems 1.3–1.4 证明(同文 Conjecture 1.2 / 式 (7))。
+- **载体读数**:`chrono-chatgpt-pro-pool` 当日一次 `model_unavailable`(15 次尝试),同 brief 改投 `company-chatgpt-pro` 即答;派 GPT Pro 席前 `nyxid oracle pool show` 看 `online_workers`,失败后换池不换载体。
