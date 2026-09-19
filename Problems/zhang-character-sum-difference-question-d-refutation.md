@@ -12,12 +12,19 @@ motivation_gids:
 
 ## Problem
 
-Question (D) of Wenpeng Zhang, *Some interesting number theory problems*,
-arXiv:2506.17235v1, asks whether the fixed constant `c` in identity (2) can
-only be 0 or 2. Identity (2) compares the Legendre character sums of two
-fundamentally different integer-coefficient polynomials. Following the
-preceding corollary, the formal statement uses one constant for every odd
-prime.
+Wenpeng Zhang, *Some interesting number theory problems*, arXiv:2506.17235v1,
+printed page 3, states problem (B) and question (D) verbatim as:
+
+> (B). Whether there are infinitely many pairs of fundamentally different
+> integer coefficients polynomials f(x) and g(x) (That is, (f(x)/p) ≠ (g(x)/p))
+> such that Σ_{x=1}^{p−1} (f(x)/p) − Σ_{x=1}^{p−1} (g(x)/p) = c, (2) where c is
+> a fixed constant.
+
+> (D). Whether the values of c can only be 0 or 2?
+
+Identity (2) compares the Legendre character sums of two fundamentally
+different integer-coefficient polynomials. Following the preceding corollary,
+the formal statement uses one constant for every odd prime.
 
 ## Motivation
 
