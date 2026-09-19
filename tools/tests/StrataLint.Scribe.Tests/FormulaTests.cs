@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using static StrataLint.Scribe.DefinitionDsl;
 
-
 namespace StrataLint.Scribe.Tests;
 
 public sealed class FormulaTests

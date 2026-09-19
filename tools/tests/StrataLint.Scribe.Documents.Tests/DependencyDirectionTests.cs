@@ -9,7 +9,6 @@ public sealed class DependencyDirectionTests
     public void DocumentsOwnsANamespacedEntryPointAndCanReachScribeCommands()
     {
         Assert.Equal("StrataLint.Scribe.Documents.Program", typeof(Program).FullName);
-
-        Assert.Contains("emit", ScribeCli.ImplementedCommands);
+        Assert.Contains("routing-probe-must-be-absent", ScribeCli.ImplementedCommands);
     }
 }
