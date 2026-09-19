@@ -836,7 +836,7 @@ $\Omega_c$ 反对称，能量 $m|\xi|^2/2$ 守恒，Gibbs 协方差 $(\beta m)^{
 特征多项式为 $\lambda^4+(2\omega_0^2+c^2)\lambda^2+\omega_0^4$，正频率
 $$
 \omega_\pm=\sqrt{\omega_0^2+c^2/4}\pm c/2,
-\quad\omega_+\omega_- =\omega_0^2.
+\quad\omega_+\omega_-=\omega_0^2.
 $$
 对称规范的二次量子 Hamiltonian 是频率 $\sqrt{\omega_0^2+c^2/4}$ 的各向同性振子减 $cL_z/2$。圆偏振算子对角化给 Fock–Darwin 谱 $E_{n_+,n_-}=\hbar\omega_+(n_++1/2)+\hbar\omega_-(n_-+1/2)$，因而
 $$
