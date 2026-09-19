@@ -211,6 +211,8 @@ def ancestor_cuts(result, g, A, private):
     check(all(A[d] % q == root for d in A if d % q == 0 and d not in excluded),
           'a remaining q-bearing original is outside the saturated free root')
     cuts = []
+    lower_ladder = all(q ** (H-1)*u in A for u in U)
+    ladder_chain_complements = []
     for m in palette:
         if m in U:
             continue
@@ -226,6 +228,10 @@ def ancestor_cuts(result, g, A, private):
         if len(outside) <= q-2:
             check(E[m].issubset(result['low_cofactors']), 'small upper-cone complement retains a high cofactor')
             check(result['source_gain_count'] >= (q-1)*len(E[m]), 'ancestor-trace finite gain lost its original period factor')
+        if lower_ladder and q >= 3 and all(n % k == 0 or k % n == 0 for n, k in combinations(outside, 2)):
+            check(bool(result['low_cofactors']) and result['source_gain_count'] >= q-1,
+                  'ancestor with a complete lower ladder has a chain complement but no finite low-cofactor gain')
+            ladder_chain_complements.append(dict(cofactor=m, complement=outside))
         cuts.append(dict(cofactor=m, first_ancestor_private_point=private[q*m][0],
                          ancestor_trace=sorted(E[m]), upper_cone=upper, outside_upper_cone=outside,
                          minimum_active_outside_on_trace=min(counts),
@@ -239,7 +245,18 @@ def ancestor_cuts(result, g, A, private):
         check(all(n in U for n in palette if n % first != 0), 'chain minimum outside U has a nonuniversal predecessor')
         check(bool(result['low_cofactors']), 'a saturated chain palette remains all-high')
     result['ancestor_cuts'] = dict(applicable=True, free_root=root, top_palette_is_chain=chain,
-                                   all_height_chain_low_verified=chain, cuts=cuts)
+                                   all_height_chain_low_verified=chain, cuts=cuts,
+                                   complete_universal_lower_ladder=lower_ladder,
+                                   ladder_chain_complements=ladder_chain_complements)
+    if q == 3 and lower_ladder:
+        top_primes = sorted({p for m in palette for p in factors(m)})
+        low_support = len(top_primes) <= 2
+        if low_support:
+            check(bool(result['low_cofactors']) and result['source_gain_count'] >= 2,
+                  'ternary top support above a complete lower ladder has at most two primes but no low cofactor')
+        result['ancestor_cuts']['ternary_ladder_prime_support'] = dict(
+            actual_top_primes=top_primes, minimum_if_all_high=3,
+            low_support_exclusion_applies=low_support)
     if H == 2 and result['all_high']:
         m = min(set(palette) - set(U))
         y = private[q*m][0]
