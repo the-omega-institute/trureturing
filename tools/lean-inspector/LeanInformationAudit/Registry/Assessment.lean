@@ -386,7 +386,7 @@ private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
   let info ← getConstInfo name
   let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
   let .ok (typeIdentity, typeWork) ← TemplateAudit.rawIdentity info.levelParams info.type (← get).remaining
-    | throwError "incomplete_closure:dtr.input_identity"
+    | throwError "incomplete_closure:dtr.input_identity:{name}:type:remaining={(← get).remaining}"
   debit typeWork
   -- Proof implementations contribute no body identity; nested proof arguments
   -- in data inputs are erased by rawIdentity as well.
@@ -394,7 +394,7 @@ private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
     | none => pure ""
     | some value =>
       let .ok (identity, bodyWork) ← TemplateAudit.rawIdentity info.levelParams value (← get).remaining
-        | throwError "incomplete_closure:dtr.input_identity"
+        | throwError "incomplete_closure:dtr.input_identity:{name}:body:remaining={(← get).remaining}"
       debit bodyWork
       pure identity
   return { name, owner, typeIdentity, bodyIdentity }
@@ -453,6 +453,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
     return provenance
   catch _ => return Json.null
 
+initialize registerTraceClass `InformationTemplate.work
+
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate := do
   closed descriptor
@@ -472,10 +474,11 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
   let (descriptor, eraseWork) ← eraseProofs descriptor initialBudget
   let arguments := descriptor.getAppArgs
   let budget := initialBudget - eraseWork
-  let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget plan.constructorTypes
-      (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
-    | .ok result => pure result
-    | .error reason => throwError reason
+  -- These raw identities were computed and charged during the same compiler
+  -- traversal. The environment stays fixed throughout this assessment.
+  let (argumentInputs, argumentWork) ← checkArgumentEvidence event.key.theoremName
+    arguments budget plan.constructorTypes (plan.slots.map fun slot => slot.type.isConstOf ``Nat)
+  trace[InformationTemplate.work] "{event.key.theoremName}: argument_work={argumentWork} remaining={budget - argumentWork}"
   let compare : CompareM TemplateBindingCertificate := do
     debit plan.serializedBytes
     let actual ← extract event
@@ -514,7 +517,6 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let .ok (actualIdentity, actualWork) ← TemplateAudit.rawIdentity event.levelParams actual (← get).remaining
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
-    let argumentInputs ← argumentNames.mapM inputIdentity
     let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
@@ -524,7 +526,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | throwError "incomplete_closure:E8.evidence_identity"
     debit evidenceWork
     return { certificate with evidenceRef }
-  let (certificate, _) ← compare.run { remaining := budget - argumentWork, constructorTypes := plan.constructorTypes }
+  let (certificate, state) ← compare.run {
+    remaining := budget - argumentWork, constructorTypes := plan.constructorTypes }
+  trace[InformationTemplate.work] "{event.key.theoremName}: work={initialBudget - state.remaining} argument_work={argumentWork} plan_bytes={plan.serializedBytes}"
   NativeCoherence.validate (#[plan.definitionOwner, plan.enrollmentOwner,
     event.key.registrationModule, bindingOwner] ++
     (plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs).map (·.owner))

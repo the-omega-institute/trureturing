@@ -270,7 +270,7 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 7
+  compatibilityVersion : Nat := 8
   compiler : String
   toolchain : String
   policyIdentity : String
@@ -524,7 +524,7 @@ private def digest : M String := do
 
 private def payload : M TemplatePlanData := do
   expect "DTR-checked-plan-v5"
-  for version in #[1, 1, 1, 7] do unless (← natural) == version do fail
+  for version in #[1, 1, 1, 8] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
   let policyIdentity ← digest
@@ -644,7 +644,7 @@ inductive TemplateBindingResult where
 
 structure BindingRecord where
   schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 7
+  compatibilityVersion : Nat := 8
   occurrence : TemplateOccurrenceEvent
   descriptor : Option Expr
   bindingOwner : Option Name
