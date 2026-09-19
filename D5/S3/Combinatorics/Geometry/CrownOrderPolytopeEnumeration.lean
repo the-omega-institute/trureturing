@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeCCP, mathlib/module/Mathlib.Combinatorics.Enumerative.Composition, mathlib/module/Mathlib/Combinatorics/SimpleGraph/CycleGraph]
    utility: none
-   digest: Fixed-length parity compositions are counted, and actual crown-block edges are cycle edges. -/
+   digest: Fixed-length parity compositions are counted, and endpoint-free crown blocks are connected cycle subgraphs. -/
 
 /- Library search (2026-09-19): the pinned Mathlib Composition API supplies positive
    list compositions, blocksFun, and the unrestricted composition equivalence, but no
@@ -629,5 +629,76 @@ theorem crownPartitionGraph_vertex_adj_iff_cycleGraph_adj {n : ℕ} (hn : 2 ≤ 
     rcases (crownRelation_symm_iff_cycleGraph_adj hn i j).2 hadj with hrel | hrel
     · exact Or.inl ⟨hs, Or.inr hrel⟩
     · exact Or.inr ⟨s.symm hs, Or.inr hrel⟩
+
+private theorem crownPartitionGraph_walk_to_cycle {n : ℕ} (hn : 2 ≤ n)
+    (s : Setoid (CrownAugmentedVertex n)) {u v : CrownAugmentedVertex n}
+    (p : (crownPartitionGraph s).Walk u v) :
+    ∀ {i j : Fin (2 * n)}, u = .vertex i → v = .vertex j →
+      (¬ s.r u .bottom) → (¬ s.r u .top) →
+      ∃ q : (SimpleGraph.cycleGraph (2 * n)).Walk i j,
+        ∀ k ∈ q.support, s.r u (.vertex k) := by
+  induction p with
+  | nil =>
+      intro i j hui huv hbottom htop
+      have hij : i = j := by simpa [hui] using huv
+      subst j
+      refine ⟨.nil, ?_⟩
+      intro k hk
+      simp only [SimpleGraph.Walk.support_nil, List.mem_singleton] at hk
+      subst k
+      rw [← hui]
+  | @cons a b c hab p ih =>
+      intro i j hui hv hbottom htop
+      subst a
+      have hsab : s.r (.vertex i) b := by
+        rw [crownPartitionGraph, SimpleGraph.fromRel_adj] at hab
+        rcases hab.2 with h | h
+        · exact h.1
+        · exact s.symm h.1
+      cases b with
+      | bottom => exact (hbottom hsab).elim
+      | top => exact (htop hsab).elim
+      | vertex k =>
+          have hcycle : (SimpleGraph.cycleGraph (2 * n)).Adj i k :=
+            (crownPartitionGraph_vertex_adj_iff_cycleGraph_adj hn s i k).mp hab |>.2
+          have hbottom' : ¬ s.r (.vertex k) .bottom := by
+            intro hk
+            exact hbottom (s.trans hsab hk)
+          have htop' : ¬ s.r (.vertex k) .top := by
+            intro hk
+            exact htop (s.trans hsab hk)
+          obtain ⟨q, hq⟩ := ih rfl hv hbottom' htop'
+          refine ⟨q.cons hcycle, ?_⟩
+          intro x hx
+          simp only [SimpleGraph.Walk.support_cons, List.mem_cons] at hx
+          rcases hx with rfl | hx
+          · exact s.refl _
+          · exact s.trans hsab (hq x hx)
+
+/-- For `n ≥ 2`, the original vertices in an actual CCP block disjoint from the augmented
+bottom and top induce a connected subgraph of the cyclic comparability graph.  The transported
+walk remains inside the same real partition block at every vertex, including across the cyclic
+wraparound edge. -/
+theorem crownPartition_originalBlock_cycleGraph_connected {n : ℕ} (hn : 2 ≤ n)
+    (P : CrownConnectedCompatiblePartition n) (i : Fin (2 * n))
+    (hbottom : ¬ P.toSetoid.r (.vertex i) .bottom)
+    (htop : ¬ P.toSetoid.r (.vertex i) .top) :
+    ((SimpleGraph.cycleGraph (2 * n)).induce
+      {j | P.toSetoid.r (.vertex i) (.vertex j)}).Connected := by
+  refine { preconnected := ?_, nonempty := ⟨⟨i, P.toSetoid.refl _⟩⟩ }
+  intro a b
+  obtain ⟨q, hq⟩ := crownPartitionGraph_walk_to_cycle hn P.toSetoid
+    ((P.connected _ _).mp (P.toSetoid.trans (P.toSetoid.symm a.2) b.2)).some
+    rfl rfl
+    (fun ha => hbottom (P.toSetoid.trans a.2 ha))
+    (fun ha => htop (P.toSetoid.trans a.2 ha))
+  have hsupport : ∀ k ∈ q.support,
+      P.toSetoid.r (.vertex i) (.vertex k) := by
+    intro k hk
+    exact P.toSetoid.trans a.2 (hq k hk)
+  have w := q.induce {j | P.toSetoid.r (.vertex i) (.vertex j)} hsupport
+  change Nonempty (((SimpleGraph.cycleGraph (2 * n)).induce
+    {j | P.toSetoid.r (.vertex i) (.vertex j)}).Walk a b)
+  simpa only [Subtype.coe_eta] using (show Nonempty _ from ⟨w⟩)
 
 end D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration
