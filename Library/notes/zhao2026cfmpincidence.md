@@ -13,7 +13,12 @@ triage: anchor
 
 # CFMP geometry and incidence-dependent length barriers
 
-## Verified locators and primary-source scope
+## Verified locator
+
+- DOI: 10.48550/arXiv.2601.15174
+- URL: https://arxiv.org/html/2601.15174v1
+
+## Primary-source scope
 
 1. Francois Costantino, Roberto Frigerio, Bruno Martelli and Carlo Petronio,
    *Triangulations of 3-manifolds, hyperbolic relative handlebodies, and Dehn filling*,

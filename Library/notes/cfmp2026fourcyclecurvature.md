@@ -1,9 +1,10 @@
 ---
 bibkey: cfmp2026fourcyclecurvature
-authors: Xinrong Zhao; Ke Feng; Huabin Ge; Bobo Hua; Feng Luo; Tian Yang
+authors: trureturing contributors
 year: 2026
 title: Sources for CFMP four-cycle barriers and cover-uniform curvature estimates
 doi: null
+url: https://raw.githubusercontent.com/the-omega-institute/trureturing/8009ec61bf9a08f36a96f37f0f666bc4e0b45da3/docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md
 claim: The cited analytic and co-volume inputs support the restricted four-cycle incidence theorem and its universal real curvature estimate without establishing general minimum-eight realization.
 license: citation-only
 triage: anchor
@@ -15,6 +16,10 @@ strata_touched: []
 This is a source map for Sections 16–20 of the existing
 `docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md`, not a claim that a new
 paper with this title has been published.
+
+## Verified locator
+
+- URL: https://raw.githubusercontent.com/the-omega-institute/trureturing/8009ec61bf9a08f36a96f37f0f666bc4e0b45da3/docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md
 
 ## Primary mathematical inputs
 
