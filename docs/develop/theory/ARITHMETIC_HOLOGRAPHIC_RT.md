@@ -392,7 +392,7 @@ C_{d,e}:|r,k\rangle_3|s,h\rangle_4
 \mapsto|r,k-\kappa_1(r,s)\rangle_3|s,h-\kappa_2(r,s)\rangle_4,
 $$
 
-高位取模 $e$。按低、高层重组后，
+高位减法取模 $e$。按低、高层重组后，
 
 $$
 C_{d,e}W^{\otimes4}|T_{de}\rangle=|T_d\rangle\otimes|T_e\rangle.
@@ -458,7 +458,7 @@ $$
 L\log d-\log2\le\mathbb E S_2(\rho_A)\le\mathbb E S(\rho_A)\le L\log d.
 $$
 
-后式来自 Jensen 和 $S\ge S_2$。领先熵斜率与完整谱平坦性不同。该区域至少有内部顶点全部归左或全部归右两个同容量最小割，不满足 [TPTN26] 第 5.2 节式 (5.23) 前的无领先简并条件。未从二阶平均值推出其他谱距离的概率极限。
+后式来自 Jensen 和 $S\ge S_2$。领先熵斜率与完整谱平坦性不同。该区域至少具有内部顶点全部归左或全部归右两个同容量最小割，不满足 [TPTN26] 第 5.2 节式 (5.23) 前的无领先简并条件。未从二阶平均值推出其他谱距离的概率极限。
 
 **推论 10.3（几乎处处非平坦）。** 奇数 $d$、所有顶点取 $T_d$ 时，内部 Haar 乘积测度下 $\rho_A$ 几乎处处满秩且非平坦。
 
@@ -708,6 +708,188 @@ $$
 
 原始引力 RT 仍需独立给定边界理论与态、共同调节下的熵控制、满足同调约束的图割到几何面积的极限、$1/(4G_N)$ 系数及引力动力学。后续应在同一目标下扩展几何和体态结构，而不把任意通道交换图或事后构造的父 Hamiltonian 当作物理对偶的证明。
 
+## 15. 全历史编码的最大区域恢复代数
+
+本节直接计算第 12 节编码的区域信息，而不从参考态面积律推断整个码的性质。一般的可纠正代数判据来自 [BKK07]，代数熵与 RT 关系采用 [Harlow] 的标准分块熵约定。以下陪集坐标、矩阵单位和维数是对当前算术映射的显式求值。
+
+**定理 15.1（相干单项编码的完整区域正规形）。** 设 $V,X,Y$ 为有限交换群，$A:V\to X$、$B:V\to Y$ 为群同态，$(A,B)$ 单射。允许任意相位函数 $q:V\to U(1)$，不要求二次。取全历史空间 $\mathbb C[V]$ 上的等距编码
+
+$$
+J|v\rangle=q(v)|Av\rangle_X|Bv\rangle_Y.
+$$
+
+记 $K_A=\ker A$、$K_B=\ker B$、$Z=V/(K_A+K_B)$。每个 $z\in Z$ 选代表元 $v_z$，则
+
+$$
+\mathcal U|z,a,b\rangle=\overline{q(v_z+a+b)}|v_z+a+b\rangle,
+\quad a\in K_A,\ b\in K_B
+$$
+
+是从 $\bigoplus_z\mathbb C[K_A]\otimes\mathbb C[K_B]$ 到实际历史空间的幺正。两侧在其实际像空间上分别换基后，编码恰为
+
+$$
+J\mathcal U|z,a,b\rangle=|z,b\rangle_X|z,a\rangle_Y.
+$$
+
+因此从 $X$、$Y$ 可精确恢复的最大含幺逻辑 $*$-代数分别为
+
+$$
+\mathcal M_X=\mathcal U\left[\bigoplus_{z\in Z}
+ I_{K_A}\otimes\mathcal B(\mathbb C[K_B])\right]\mathcal U^*,
+\qquad
+\mathcal M_Y=\mathcal U\left[\bigoplus_{z\in Z}
+ \mathcal B(\mathbb C[K_A])\otimes I_{K_B}\right]\mathcal U^*.
+$$
+
+两者互为交换子代数，交为 $|Z|$ 维中心。这里“恢复”指擦除另一侧后仍能恢复该代数的全部观测统计；不声称恢复全历史态。
+
+**证明。** $K_A\cap K_B=0$，每个历史唯一写成 $v_z+a+b$。$X$ 中的标签是 $A(v_z+b)$；不同 $(z,b)$ 的标签不同，否则两代表元相差 $K_A+K_B$，继而 $b$ 的差同时属于两核，必须为零。$Y$ 的 $(z,a)$ 同理。相位在 $\mathcal U$ 中消除，得到所列正规形，无须任何群扩张分裂假设。
+
+任意块对角 $b$ 算符可在 $X$ 的 $(z,b)$ 标签上直接实施，因此给出可恢复代数。一个显式 CPTP 恢复是读取中心扇区，保留 $b$ 态，并在丢失的 $a$ 因子准备固定态；对像空间外输入可附加固定输出，从而在全输入上定义通道。
+
+最大性由实际错误算符算出：对 $Y$ 的矩阵单位压缩 $J^*(I_X\otimes|z,a\rangle\langle z',a'|)J$，$z\ne z'$ 时为零；$z=z'$ 时恰为经 $\mathcal U$ 共轭的 $|z\rangle\langle z|\otimes|a\rangle\langle a'|\otimes I_{K_B}$。它们张成所列 $\mathcal M_Y$。擦除的可纠正代数必须与全部压缩错误算符交换 [BKK07]，其交换子恰是 $\mathcal M_X$；另一侧对称。证毕。代表元选择只改内部坐标，不改实际可恢复代数。
+
+**推论 15.2（全输入熵与相对熵，面积算符为零）。** 对任意历史密度矩阵 $\rho$，令 $\widehat\rho=\mathcal U^*\rho\mathcal U$，$p_z=\operatorname{Tr}\widehat\rho_{zz}$，$\rho_{b,z}=\operatorname{Tr}_{K_A}\widehat\rho_{zz}/p_z$；零权扇区略去。则
+
+$$
+\operatorname{Tr}_Y(J\rho J^*)\simeq\bigoplus_zp_z\rho_{b,z},
+\qquad
+S(\operatorname{Tr}_YJ\rho J^*)=H(p)+\sum_zp_zS(\rho_{b,z}).
+$$
+
+右侧正是标准分块代数熵 $S_{\mathcal M_X}(\rho)$，不含冗余因子 $\log|K_A|$。对任意两输入，边界相对熵也精确等于此代数上的相对熵：
+
+$$
+D(\rho_X\Vert\sigma_X)=D(p\Vert s)+\sum_zp_zD(\rho_{b,z}\Vert\sigma_{b,z}),
+$$
+
+支持不包含时两侧均按 $+\infty$ 处理。因而若固定算符 $\mathcal L_X$ 要对所有 $\rho$ 满足
+
+$$
+S(\rho_X)=\operatorname{Tr}(\rho\mathcal L_X)+S_{\mathcal M_X}(\rho),
+$$
+
+则唯一可能是 $\mathcal L_X=0$。
+
+**证明。** 对正规形偏迹，$Y$ 标签的正交性消去不同 $z,a$ 的交叉项，得到直和密度矩阵。熵和相对熵由其分块谱直接计算。两种熵已经相等，因此 $\operatorname{Tr}(\rho\mathcal L_X)=0$ 对全部密度矩阵成立，推出算符为零。证毕。结论使用指定的最大可恢复代数和标准代数熵；未排除另行选取受约束码子空间后出现非零面积项。
+
+**推论 15.3（单环交错半边的经典与量子信息分解）。** 对第 12 节原编码，取 $V=R_d^{L+1}$、$A,B$ 为两侧真实边界线性输出。当区域每顶点恰选一腿时，两核均由初始值递推参数化，大小各为 $d$，故
+
+$$
+|Z|=d^{L-1},\qquad
+\mathcal M_A\simeq\bigoplus_{z=1}^{d^{L-1}}M_d(\mathbb C),\qquad
+\dim_{\mathbb C}\mathcal M_A=d^{L+1}.
+$$
+
+这表示 $d^{L-1}$ 个可区分经典扇区及每扇区一个 $d$ 维量子因子，不表示能恢复 $L$ 个独立量子寄存器。对均匀参考历史及第 4 节二次相位，中心分布均匀，扇区内的 Schmidt 秩为 $d/\gcd(d,c_k)$，所以
+
+$$
+S(\rho_A)=(L-1)\log d+
+\log\frac d{\gcd(d,c_k)}.
+$$
+
+**证明。** 核计数给出代数，扇区内双字符求值直接采用定理 3.1 和 4.3。证毕。单位相位时的 $L\log d$ 全部落在恢复代数的状态熵内；现有全历史码的图割值不能直接识别为 Harlow 公式中的非零中心面积算符。这比第 14 节的单个乘积输入反例更精确：它计算了全部输入、全部区域的恢复信息。
+
+## 16. 空间粗化、相位调整与精度方向的交换
+
+固定奇素数 $p$。对每个 $L\ge3$ 选一个整数 $\alpha_L$，使定理 5.2 的判据对全部 $d=p^n$ 成立。三进情形可取 $\alpha_L=L\bmod2$。记第 12 节相应对象为 $G_{d,L},J_{d,L},\mathcal E_{d,L}$。不同环长允许不同的 $\alpha_L$，同一长度各精度沿用同一整数。
+
+**定义 16.1（真实空间分块）。** 取保留标记缝合的连续分割
+
+$$
+0=t_0<t_1<\cdots<t_r=L,\qquad r\ge3.
+$$
+
+第 $j$ 个宏块含细顶点 $t_j,\ldots,t_{j+1}-1$。在解码坐标中仅保留 $(u_{t_j},v_{t_{j+1}-1})$，偏迹该宏块内部的其余寄存器。这个全边界偏迹记为 $\operatorname{Ret}_{\Pi}$。逻辑空间上仅保留 $x_{t_0},\ldots,x_{t_r}$ 的偏迹记为 $\operatorname{ret}_{\Pi}$。定义
+
+$$
+\mathcal S_{\Pi,d}
+=\operatorname{Ad}_{G_{d,r}}\circ\operatorname{Ret}_{\Pi}\circ
+\operatorname{Ad}_{G_{d,L}^*}.
+$$
+
+这一次空间块数确实由 $L$ 降为 $r$，连接维数 $d$ 保持不变。
+
+**定理 16.2（两参数严格相容）。** 空间通道 CPTP、满射且非恒定，并在全部逻辑输入上满足
+
+$$
+\mathcal S_{\Pi,d}\mathcal E_{d,L}
+=\mathcal E_{d,r}\operatorname{ret}_{\Pi}.
+$$
+
+若 $\Sigma$ 是对 $r$ 个宏块的进一步连续分割，则在全部边界输入上
+
+$$
+\mathcal S_{\Sigma,d}\mathcal S_{\Pi,d}
+=\mathcal S_{\Sigma\circ\Pi,d}.
+$$
+
+与第 12 节每个环长上的精度通道还满足
+
+$$
+\boxed{\mathcal S_{\Pi,d}\mathcal R^{(L)}_{D,d}
+=\mathcal R^{(r)}_{D,d}\mathcal S_{\Pi,D}.}
+$$
+
+各等式也适用于与任意外部参考纠缠的输入。原参考态严格送到同一模型的短环参考态：
+
+$$
+\mathcal S_{\Pi,d}(|\Psi^{\alpha_L}_{d,L}\rangle\langle\Psi^{\alpha_L}_{d,L}|)
+=|\Psi^{\alpha_r}_{d,r}\rangle\langle\Psi^{\alpha_r}_{d,r}|.
+$$
+
+**证明。** 在 $K_{d,L}|x\rangle\langle y|K_{d,L}^*$ 中，每个被删历史标签的两份都位于同一宏块内部，偏迹恰好给出对应的 $\delta_{x_i,y_i}$；每个保留标签的两份仍作为相邻宏块端点保留。因此
+
+$$
+\operatorname{Ret}_{\Pi}(K_{d,L}\rho K_{d,L}^*)
+=K_{d,r}\operatorname{ret}_{\Pi}(\rho)K_{d,r}^*.
+$$
+
+共轭给出全输入交换图。嵌套偏迹保留同一组最终端点，中间 $G^*G$ 抵消，得到空间复合律。精度与空间的方形图归结为
+
+$$
+\operatorname{Ret}_{\Pi}\,Q_{D,d}^{\otimes2L}
+=Q_{D,d}^{\otimes2r}\,\operatorname{Ret}_{\Pi},
+$$
+
+因为在被删寄存器上数字通道保迹，在保留寄存器上两操作分属独立因子。满射由偏迹可添加固定辅助态和幺正共轭得出。参考历史是各寄存器 $|+_d\rangle$ 的乘积，丢弃内部历史仍留下相同形式的纯输入。所有证明是在矩阵单位或算子上建立，故包含任意参考系统。证毕。
+
+**局部实现。** 两端的双线性缝合相位 $u_0v_{L-1}$ 在偏迹前后相同且只涉及被保留寄存器，故相消。令 $\delta=\alpha_r-\alpha_L$，实际空间通道可写成
+
+$$
+\mathcal S_{\Pi,d}
+=\operatorname{Ad}_{M_d^{\otimes r}}
+\circ\operatorname{Ad}_{D_{d,\delta}^{(u_0)}}
+\circ\operatorname{Ret}_{\Pi}
+\circ\operatorname{Ad}_{(M_d^{\otimes L})^*}.
+$$
+
+所有解码、丢弃和重新编码都位于各自宏块内；额外二次相位只位于第一个宏块。宏块大小为 $b$ 时门支持可达该宏块的 $2b$ 条细腿，不能称为与分块尺寸无关的细格点操作。空间通道不保持任意细腿区域的原熵；它保持的是所指定编码交换图，并把参考态送到满足各自图割等式的粗态。
+
+**命题 16.3（三进相位调整的必要性）。** 对 $d=3^n$，全区域 RT 条件要求：偶环 $\alpha\equiv0\pmod3$，奇环 $\alpha\not\equiv0\pmod3$。故一个不变的 $\alpha$ 不能同时覆盖奇、偶长度。
+
+**证明。** 偶环中 $c_k\equiv2\alpha+2(-1)^k\pmod3$，$k$ 的两种奇偶均出现；同时非零当且仅当 $\alpha=0$。奇环中两幂之和为零，$c_k\equiv2\alpha$，故要求非零。模 $3$ 非零等价于在每个 $3^n$ 中为单位。证毕。
+
+例如四环的 $\alpha=0$ 参考态原本对全部区域饱和；若分块到三环却不改相位，交错半边的熵只剩 $2\log3$，而三环最小割为 $3$。在保留寄存器 $u_0$ 上加 $\omega_3^{u_0^2}$ 后得到 $\alpha=1$ 三环，熵恢复 $3\log3$。修正由真实粗化后的单位判据决定，并非声称普通偏迹自动保持 RT。
+
+**推论 16.4（空间固定点的精确限制）。** 对参考态，若区域 $A$ 由完整的双腿顶点块构成，则
+
+$$
+S(\rho_A)=|\partial A|\log d,
+$$
+
+其中 $\partial A$ 是环上穿过该分区的边集合。对任意三组互不相交完整块 $A,B,C$，忽略其余块后有
+
+$$
+I(A:C\mid B)=2|E(A,C)|\log d.
+$$
+
+**证明。** 第 13 节将参考态写为块内幺正作用于独立最大纠缠边。每条边独立贡献区域熵：穿过边界贡献 $\log d$，否则为零。将四个区域熵代入条件互信息，只有直接连接 $A,C$ 的边贡献 $2\log d$。证毕。标准量子 Markov 等式的结构背景见 [HJPW04]。
+
+因此任意非空真连续区间的熵恒为 $2\log d$，与区间长度无关；没有直接相邻边的块组满足所述条件互信息为零。与分割匹配的完整宏块区域在空间粗化前后保留这一熵。第 16 节闭合了空间和精度的双参数操作关系，同时证明当前块态仍是短程 Bell 固定点，未生成临界边界理论。
+
+**统一的后续义务。** 第 15 节给出当前全历史编码的完整区域恢复，但其标准面积算符为零。要得到具有非零几何面积项的全输入量子 RT，需选取或构造受约束编码子空间，在独立几何区域间保留固定的辅助纠缠，同时证明该选择与第 16 节的粗化相容。一般 OAQEC 与波函数重整化的原理已有文献基础；这里的算术扇区求值、相位随环长的必要调整及实际交换图尚未完成全面优先权排查，不认领外部猜想结算或原始引力 RT 证明。
+
 ## 参考文献
 
 [RT] S. Ryu, T. Takayanagi. Holographic Derivation of Entanglement Entropy from AdS/CFT. Phys. Rev. Lett. 96 (2006), 181602. arXiv:hep-th/0603001.
@@ -745,6 +927,10 @@ $$
 [Aud07] K. M. R. Audenaert. A sharp continuity estimate for the von Neumann entropy. J. Phys. A 40 (2007), 8127–8136. arXiv:quant-ph/0610146. 标准界亦见 arXiv:2408.15306v4 式 (1)。
 
 [Cert26] G.-P. Nadon et al. Quantum State Certification via Effective Parent Hamiltonians from Local Measurement Data. arXiv:2603.04499 (2026). 仅作为局部能量认证方法的相关来源。
+
+[BKK07] C. Bény, A. Kempf, D. W. Kribs. Quantum Error Correction of Observables. Phys. Rev. A 76 (2007), 042303. arXiv:0705.1574. 使用可纠正代数的压缩错误算符交换子判据；较早简报为 Phys. Rev. Lett. 98 (2007), 100502，arXiv:quant-ph/0608071。
+
+[HJPW04] P. Hayden, R. Jozsa, D. Petz, A. Winter. Structure of states which satisfy strong subadditivity of quantum entropy with equality. Commun. Math. Phys. 246 (2004), 359–374. arXiv:quant-ph/0304007. 仅作为零条件互信息与短量子 Markov 结构的背景，式中当前网络的值由逐边计算得出。
 
 ## 附录 A. 36 阶矩阵的精确整数重放
 
