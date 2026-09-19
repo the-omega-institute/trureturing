@@ -775,3 +775,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Five complete heads retain the actual aligned J source](profile-notes/313-five-complete-heads-retain-the-actual-aligned-j-source.md)
 - [Complete aligned hinges and raw moments share one source](profile-notes/314-complete-aligned-hinges-and-raw-moments-share-one-source.md)
 - [Eight retained labels bound the aligned heavy cost and fourth hinge](profile-notes/315-eight-retained-labels-bound-the-aligned-heavy-cost-and-fourth-hinge.md)
+- [Complete quadratic observations on the actual aligned source](profile-notes/316-complete-quadratic-observations-on-the-actual-aligned-source.md)
