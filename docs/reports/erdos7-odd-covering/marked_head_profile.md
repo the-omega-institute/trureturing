@@ -774,3 +774,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [An aligned J source has a complete own-test and residual-deletion interface](profile-notes/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md)
 - [Five complete heads retain the actual aligned J source](profile-notes/313-five-complete-heads-retain-the-actual-aligned-j-source.md)
 - [Complete aligned hinges and raw moments share one source](profile-notes/314-complete-aligned-hinges-and-raw-moments-share-one-source.md)
+- [Eight retained labels bound the aligned heavy cost and fourth hinge](profile-notes/315-eight-retained-labels-bound-the-aligned-heavy-cost-and-fourth-hinge.md)
