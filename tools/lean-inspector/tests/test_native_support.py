@@ -126,7 +126,7 @@ root = "Cache"
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/lean-inspector/compiler/*.py', 'tools/lean-inspector/compiler/*.lean',
-                'tools/lean-inspector/compiler/*.patch',
+                'tools/lean-inspector/compiler/*.patch', 'tools/lean-inspector/compiler/LICENSE*',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))

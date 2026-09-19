@@ -57,6 +57,35 @@ unsafe def main : IO Unit := do
         self.assertEqual(len(private), 1)
         self.assertFalse(private[0]['generated_companion'])
         before = self.origins()
+        # Legacy and stale compiler evidence must fail at the real publisher,
+        # then re-enter the canonical report facet without guessed provenance.
+        for damage in ('missing', 'stale'):
+            artifacts = [*self.root.glob('.lake/build/lean-inspector/modules/*.zip'),
+                         self.root / '.lake/build/lean-inspector/report.zip']
+            for artifact in artifacts:
+                with zipfile.ZipFile(artifact) as archive:
+                    entries = [(info, archive.read(info)) for info in archive.infolist()]
+                artifact.unlink()  # Do not mutate a linked Lake cache artifact.
+                with zipfile.ZipFile(artifact, 'w') as archive:
+                    for info, data in entries:
+                        if info.filename.endswith('.provenance.json'):
+                            origin = json.loads(data)
+                            records = origin['module_origins'].values() if 'module_origins' in origin else [origin]
+                            for record in records:
+                                if damage == 'missing':
+                                    record.pop('compiler_input_sha256')
+                                else:
+                                    record['compiler_input_sha256'] = '0' * 64
+                            data = json.dumps(origin).encode()
+                        archive.writestr(info, data)
+            rejected = self.root / ('rejected-' + damage + '.json')
+            result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
+                'publish', str(self.root), str(rejected)], env=self.env, capture_output=True, timeout=120)
+            self.assertNotEqual(result.returncode, 0, damage)
+            self.assertFalse(rejected.exists(), damage)
+            self.build()
+            self.assertEqual(before, self.origins(), damage)
+            self.assertEqual(rows, self.report()[0], damage)
         recipe = self.root / 'tools/lean-inspector/compiler/CompanionOrigin.lean'
         recipe.write_text(recipe.read_text() + '\n-- compiler-input invalidation control\n')
         self.build()

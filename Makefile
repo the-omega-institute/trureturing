@@ -31,11 +31,16 @@ lean-cache-from-github-without-mathlib:
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
 
-.PHONY: lean-compiler lean-origin-scope
+.PHONY: lean-compiler lean-origin-scope lean-origin-scope-check
 
 lean-origin-scope:
 	@$(MAKE) lean LEAN_TARGETS=leanInspector/reportInspector
 	@python3 -B tools/lean-inspector/tests/compiler_origin_scope.py --sources "$(ORIGIN_SCOPE_SOURCES)" --output "$(ORIGIN_SCOPE_OUTPUT)"
+	@$(MAKE) lean-origin-scope-check ORIGIN_SCOPE_OUTPUT="$(ORIGIN_SCOPE_OUTPUT)"
+
+lean-origin-scope-check:
+	@test -n "$(ORIGIN_SCOPE_OUTPUT)" && test -f "$(ORIGIN_SCOPE_OUTPUT)/public.json"
+	@STRATALINT_ORIGIN_SCOPE_REPORT="$(abspath $(ORIGIN_SCOPE_OUTPUT))" $(MAKE) -C tools test TEST_PROJECT="$(CURDIR)/tools/tests/StrataLint.Tests/StrataLint.Tests.csproj" TEST_FILTER=FullyQualifiedName~actual_compiler_companions_survive_publication_and_strict_loader_to_dtr
 
 lean-compiler:
 	@python3 tools/lean-inspector/compiler/build.py ensure

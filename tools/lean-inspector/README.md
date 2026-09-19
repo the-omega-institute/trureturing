@@ -178,8 +178,13 @@ select it automatically. The recipe uses the installed `leanprover/lean4:v4.33.0
 revision `d8b18978322de05a8f3dba51ef03cf5461676c17`, checks the seven upstream
 source hashes, applies `compiler/compiler-origin.patch` without fuzz, and
 compiles its persistent registry and nine exact generator-site hooks. Upstream
-Lean sources and this patch are Apache-2.0; upstream attribution remains in the
-patched source headers (https://github.com/leanprover/lean4/tree/d8b18978322de05a8f3dba51ef03cf5461676c17).
+Lean sources and this patch are Apache-2.0. The full upstream license is retained
+in `compiler/LICENSE`; `compiler/LICENSES` retains the pinned distribution’s
+third-party license and notice chain. Both are copied into, and content-bound
+with, the selected local compiler distribution. Upstream attribution remains in
+the patched source headers (https://github.com/leanprover/lean4/tree/d8b18978322de05a8f3dba51ef03cf5461676c17).
+The pinned upstream root contains `LICENSE` and `LICENSES`, with no separate
+`NOTICE`. The patch adds origin metadata hooks; it changes no proof statement.
 No full compiler source or prebuilt compiler is vendored. Installed files are
 never overwritten; local stock hard links are unlinked before replacement.
 
@@ -206,10 +211,14 @@ requested Lake dependency closure, including requested upstream source builds.
 compiles supplied source copies with stock and instrumented compilers, builds the
 real Mathlib dependency closure, compares declaration/statement identities, and
 publishes a fresh native report. Its private fixture uses local package sources;
-only package build outputs are shared. Set `STRATALINT_ORIGIN_SCOPE_REPORT` to that
-output directory when running the canonical
-`DeclaredTemplateUnregisteredTests.actual_compiler_companions_survive_publication_and_strict_loader_to_dtr`
-test to check the five-parser, 730-declaration, 45-companion contract through the
-strict reader and DTR. The scope program's `--measure` mode reads the pinned
+only package build outputs are shared. It then calls `make lean-origin-scope-check`
+to validate all 730 statement materials and identities through the strict reader,
+check the exact 45 companion names, and require DTR to select exactly the five
+authored parser theorems. The stock reports select all 50 public theorems because
+they lack positive origin. The check target can consume an existing scope output
+without repeating both builds. Tests always produce fresh native controls unless
+`STRATALINT_ORIGIN_CONTROL_REPORT` explicitly supplies a prior actual publication
+for consumer mutation checks; `STRATALINT_NATIVE_RESULT_DIR` retains a fresh one.
+The scope program's `--measure` mode reads the pinned
 compiler's import parser to count the full default-library source rebuild closure.
 These scoped checks do not replace Linux and whole-project CI.

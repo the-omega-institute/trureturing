@@ -133,8 +133,20 @@ globs = ["LeanInformationAudit.+"]
         policy['report_modules']['include'] = [dict(pattern=p, optional=False) for p in paths]
         policy['dependency_sources']['include'] = [dict(pattern='LeanInformationAudit/Registry.lean', optional=False)]
         fixture.write('lean-report-inputs.json', json.dumps(policy))
-        command = lambda argv, env=fixture.env: subprocess.run([str(a) for a in argv],
-            cwd=fixture.root, env=env, check=True, timeout=900)
+        def command(argv):
+            # Keep the existing 900s scope guard and the native fixture's
+            # process ownership/join contract, including timeout descendants.
+            args = [str(a) for a in argv]
+            process = subprocess.Popen(args, cwd=fixture.root, env=fixture.env, start_new_session=True)
+            owned = (process, {})
+            fixture._commands.append(owned)
+            try:
+                code = process.wait(timeout=900)
+                if code != 0:
+                    raise subprocess.CalledProcessError(code, args)
+            finally:
+                fixture.join_command(owned)
+                fixture._commands.remove(owned)
         # The untouched compiler supplies the independent identity baseline.
         command([fixture.lake, 'build', *names])
         recipe = fixture.root / 'tools/lean-inspector/compiler/build.py'
@@ -148,6 +160,8 @@ globs = ["LeanInformationAudit.+"]
             '--statements-only', '--output', baseline, '--material-spool', spool, *triples])
         compact = output / 'baseline-compact.json'
         materials.compact(baseline, spool, compact, fixture.root / 'lean-report-inputs.json')
+        baseline.unlink()
+        shutil.rmtree(spool)
         command([sys.executable, '-B', recipe, 'run', fixture.lake, 'build', ':report'])
         fixture.publish()
         rows = fixture.report()[0]

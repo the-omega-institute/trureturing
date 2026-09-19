@@ -60,8 +60,9 @@ def base_inventory(base):
     # One invocation observes the immutable installed pin once. Repository and
     # recipe files are never memoized: edits are observed on every validation.
     return {p.relative_to(base).as_posix(): dict(sha256=sha(p), mode=stat.S_IMODE(p.stat().st_mode))
-            for part in ('bin', 'lib', 'include')
-            for p in sorted((base / part).rglob('*')) if p.is_file()}
+            for part in ('bin', 'lib', 'include', 'LICENSE', 'LICENSES')
+            for p in ([base / part] if (base / part).is_file() else sorted((base / part).rglob('*')))
+            if p.is_file()}
 
 
 def inputs(root):
@@ -145,7 +146,7 @@ def build(root, base, descriptor, identity):
         expected = json.loads(receipt.read_text())
         required = {'bin/frontend', 'bin/lean', 'bin/leanc', 'driver.json', 'descriptor.json',
             'lib/lean/libLean.a', 'lib/lean/Lean/CompanionOrigin.olean',
-            'lib/lean/Lean/CompanionOrigin.o'}
+            'lib/lean/Lean/CompanionOrigin.o', 'LICENSE', 'LICENSES'}
         actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*')
                   if p.is_file() and p != receipt}
         if required <= set(expected) and actual == set(expected) and all(

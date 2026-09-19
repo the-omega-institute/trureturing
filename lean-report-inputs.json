@@ -58,7 +58,8 @@
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false},
         {"pattern": "tools/lean-inspector/compiler/*.py", "optional": false},
         {"pattern": "tools/lean-inspector/compiler/*.lean", "optional": false},
-        {"pattern": "tools/lean-inspector/compiler/*.patch", "optional": false}
+        {"pattern": "tools/lean-inspector/compiler/*.patch", "optional": false},
+        {"pattern": "tools/lean-inspector/compiler/LICENSE*", "optional": false}
       ],
       "exclude": ["**/bin/**", "**/obj/**"]
     },

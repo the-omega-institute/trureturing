@@ -12,6 +12,8 @@ public sealed class DeclaredTemplateUnregisteredTests
     private const string Target = DeclaredTemplateReviewTests.Target;
     internal const string Theorem = "D5.S0.Carrier.Target.target0";
     private const string Source = "namespace D5.S0.Carrier.Target\ntheorem target0 : True := by trivial\nend D5.S0.Carrier.Target\n";
+    private const string TwoTheoremSource = "namespace D5.S0.Carrier.Target\ntheorem target0 : True := by trivial\n"
+        + "theorem target0_second : True := by trivial\nend D5.S0.Carrier.Target\n";
 
     [Fact]
     public void new_public_theorem_without_registration_blocks() => Block(Build());
@@ -77,13 +79,21 @@ public sealed class DeclaredTemplateUnregisteredTests
     {
         using var output = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
-        var run = TestProcessRunner.Run("env",
-            ["STRATALINT_NATIVE_RESULT_DIR=" + output.Path, "python3", "-B", "-m", "unittest",
-                "test_native.NativeTests.test_generated_companions", "-v"],
-            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
-        Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardOutput)
-            + Encoding.UTF8.GetString(run.StandardError));
-        var published = Path.Combine(output.Path, "test_generated_companions/published");
+        // Explicit supplied publications support repeated consumer mutations
+        // against the same actual compiler output. The default always produces
+        // a fresh fixture; existence alone never bypasses native execution.
+        var published = Environment.GetEnvironmentVariable("STRATALINT_ORIGIN_CONTROL_REPORT");
+        if (string.IsNullOrEmpty(published))
+        {
+            var results = Environment.GetEnvironmentVariable("STRATALINT_NATIVE_RESULT_DIR") ?? output.Path;
+            var run = TestProcessRunner.Run("env",
+                ["STRATALINT_NATIVE_RESULT_DIR=" + results, "python3", "-B", "-m", "unittest",
+                    "test_native.NativeTests.test_generated_companions", "-v"],
+                Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardOutput)
+                + Encoding.UTF8.GetString(run.StandardError));
+            published = Path.Combine(results, "test_generated_companions/published");
+        }
         var files = new Dictionary<string, string>(StringComparer.Ordinal);
         files["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(published, "lean-report-inputs.json"));
         foreach (var path in Directory.EnumerateFiles(published, "*.lean", SearchOption.AllDirectories))
@@ -105,9 +115,13 @@ public sealed class DeclaredTemplateUnregisteredTests
         // declaration metadata and material identities come from actual Lean
         // extraction, native compaction/publication and the strict reader.
         var findings = Findings(Build(source: files[Target], declarations: declarations.ToArray()));
-        Assert.Equal(controls.Concat(unclassified).Order(StringComparer.Ordinal), findings.Select(f =>
+        var selected = findings.Select(f =>
             f.Message.Replace("DTR-Unregistered D5.S0.Carrier.Target/", "", StringComparison.Ordinal))
-            .Order(StringComparer.Ordinal));
+            .Order(StringComparer.Ordinal).ToArray();
+        var expected = controls.Concat(unclassified).Order(StringComparer.Ordinal).ToArray();
+        Assert.True(expected.SequenceEqual(selected), "DTR selection mismatch; missing: "
+            + string.Join(", ", expected.Except(selected)) + "; unexpected: "
+            + string.Join(", ", selected.Except(expected)));
         Assert.All(findings, f => Assert.Equal(AdmissionEffect.Block, f.Effect));
         var scope = Environment.GetEnvironmentVariable("STRATALINT_ORIGIN_SCOPE_REPORT");
         if (!string.IsNullOrEmpty(scope)) VerifyCommittedScope(scope);
@@ -124,15 +138,38 @@ public sealed class DeclaredTemplateUnregisteredTests
         {
             ["lean-report-inputs.json"] = File.ReadAllText(Path.Combine(directory, "lean-report-inputs.json")),
         };
-        var actual = RawLeanReportArtifact.ReadFile(Path.Combine(directory, "public.json"), Tree(files));
+        var actual = RawLeanReportArtifact.ReadFile(Path.Combine(directory, "public.json"), Tree(files), validateMaterials: true);
+        var baseline = RawLeanReportArtifact.ReadFile(Path.Combine(directory, "baseline-compact.json"), Tree(files), validateMaterials: true);
+        foreach (var (path, row) in actual.Files)
+            Assert.Equal(baseline.Files[path].Declarations.Select(Identity), row.Declarations.Select(Identity));
+        static object Identity(LeanDeclaration d) => (d.Name, d.Kind, d.NameKey, d.PrecomputedStatementId,
+            d.StatementTypeAddress, string.Join(",", d.Axioms), d.IncludeInStatement);
         Assert.Equal(5, actual.Files.Count);
         Assert.Equal(730, actual.Files.Sum(p => p.Value.Declarations.Length));
-        Assert.Equal(45, actual.Files.Sum(p => p.Value.Declarations.Count(d => d.IsGeneratedCompanion)));
-        var after = PolicyFiles();
+        const string parser = "D5.S0.Computability.Coding.PhysicalSixParser.";
+        string[] withFields = ["Instruction.move", "Instruction.read", "Instruction.write", "Continuation.header",
+            "Continuation.payload", "Configuration.mk", "Control.sourceRewind", "Control.pad", "Control.init",
+            "Control.count", "Control.header", "Control.consume", "Control.payload"];
+        string[] nullary = ["Instruction.halt", "Continuation.finish", "Control.halt", "Control.sink", "Control.start"];
+        var expectedCompanions = withFields.SelectMany(ctor => new[] { ".inj", ".injEq", ".sizeOf_spec" }
+                .Select(suffix => parser + ctor + suffix))
+            .Concat(nullary.Select(ctor => parser + ctor + ".sizeOf_spec"))
+            .Append(parser + "visited.eq_def").Order(StringComparer.Ordinal).ToArray();
+        var companions = actual.Files.SelectMany(p => p.Value.Declarations)
+            .Where(d => d.IsGeneratedCompanion).Select(d => d.Name).Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(45, companions.Length);
+        Assert.Equal(expectedCompanions, companions);
+        var before = Files();
+        before.Remove(Target);
+        before.Remove(Registration);
+        var after = new Dictionary<string, string>(before)
+        {
+            ["lean-report-inputs.json"] = files["lean-report-inputs.json"],
+        };
         foreach (var (path, source) in sourceFiles) after[path] = source;
         var inputs = after.OrderBy(p => p.Key, StringComparer.Ordinal)
             .Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
-        var reports = actual.Files.ToDictionary(p => p.Key.Value, p => p.Value with
+        Dictionary<string, LeanFileReport> Reports(LeanAxiomReport input) => input.Files.ToDictionary(p => p.Key.Value, p => p.Value with
         {
             InformationTemplates = JsonSerializer.SerializeToElement(new
             {
@@ -144,13 +181,31 @@ public sealed class DeclaredTemplateUnregisteredTests
         // synthetic. Declaration identities/visibility/provenance come from the
         // actual native producer and the strict report reader above.
         var report = RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(Tree(after),
-            LeanAxiomReport.Create(reports)).AsSpan(), Tree(after));
-        var findings = Findings(Context(PolicyFiles(), after, report, sourceFiles.Keys.ToArray()));
-        Assert.NotEmpty(findings);
-        Assert.All(findings, f => Assert.StartsWith("DTR-Unregistered ", f.Message));
-        foreach (var row in actual.Files)
-        foreach (var generated in row.Value.Declarations.Where(d => d.IsGeneratedCompanion))
-            Assert.DoesNotContain(findings, f => f.Message.EndsWith("/" + generated.Name, StringComparison.Ordinal));
+            LeanAxiomReport.Create(Reports(actual))).AsSpan(), Tree(after));
+        var findings = Findings(Context(before, after, report, sourceFiles.Keys.ToArray()));
+        var oldReport = RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(Tree(after),
+            LeanAxiomReport.Create(Reports(baseline))).AsSpan(), Tree(after));
+        var oldFindings = Findings(Context(before, after, oldReport, sourceFiles.Keys.ToArray()));
+        Assert.Equal(50, oldFindings.Length);
+        Assert.All(oldFindings, f => Assert.StartsWith("DTR-Unregistered ", f.Message));
+        Assert.All(expectedCompanions, name => Assert.Contains(oldFindings,
+            f => f.Message.EndsWith("/" + name, StringComparison.Ordinal)));
+        string[] authored = ["PhysicalParserExecution.parser_frame_resources", "PhysicalParserField.parse_field",
+            "PhysicalParserPadding.pad_one", "PhysicalParserTally.count_one", "PhysicalSixParser.coupled_source_rewind"];
+        var expectedFindings = authored.Select(name =>
+        {
+            var module = "D5.S0.Computability.Coding." + name[..name.IndexOf('.', StringComparison.Ordinal)];
+            return "DTR-Unregistered " + module + "/D5.S0.Computability.Coding." + name;
+        }).Order(StringComparer.Ordinal);
+        Assert.Equal(expectedFindings, findings.Select(f => f.Message).Order(StringComparer.Ordinal));
+        Assert.All(findings, f => Assert.Equal(AdmissionEffect.Block, f.Effect));
+        File.WriteAllText(Path.Combine(directory, "dtr-result.json"), JsonSerializer.Serialize(new
+        {
+            declarations = 730, companions, selected = findings.Select(f => f.Message).Order(StringComparer.Ordinal),
+            declaration_identities_unchanged = true, axiom_closures_unchanged = true,
+            stock_without_origin_selected = oldFindings.Length,
+            consumer = "RawLeanReportArtifact(validateMaterials:true) -> DeclaredTemplateBindingRule",
+        }) + "\n");
     }
 
     [Theory]
@@ -185,7 +240,7 @@ public sealed class DeclaredTemplateUnregisteredTests
     [Fact]
     public void candidate_new_module_judges_every_public_theorem()
     {
-        var findings = Findings(Build(added: true, declarations:
+        var findings = Findings(Build(added: true, source: TwoTheoremSource, declarations:
             [new(Theorem, "theorem", "True", []), new(Theorem + "_second", "theorem", "True", [])]));
         Assert.True(findings.Count(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Block) == 2, "[FAIL] candidate_new_module_judges_every_public_theorem");
@@ -240,7 +295,7 @@ public sealed class DeclaredTemplateUnregisteredTests
 
     [Fact]
     public void registration_for_other_theorem_does_not_cover_new_theorem() => Block(Build(binding: "inline",
-        declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
+        source: TwoTheoremSource, declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
 
     [Fact]
     public void unrelated_foreign_records_cannot_fail_selected_theorem() => Declared(Build(binding: "foreign", malformed: true));
