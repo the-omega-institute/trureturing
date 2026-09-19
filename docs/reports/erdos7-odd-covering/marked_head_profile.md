@@ -798,3 +798,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Maximal-label Fourier overlap and uncovered density](profile-notes/336-maximal-label-fourier-overlap-and-uncovered-density.md)
 - [Fixed original groups retain the complete count law](profile-notes/337-fixed-original-groups-retain-the-complete-count-law.md)
 - [Simultaneous convex extremizers can have disjoint high-load regions](profile-notes/338-simultaneous-convex-extremizers-can-have-disjoint-high-load-regions.md)
+- [Irredundant source-seven labels bound the actual surplus](profile-notes/339-irredundant-source-seven-labels-bound-the-actual-surplus.md)
