@@ -47,7 +47,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
             DeclaredTemplateBindingRuleTests.Delta(declared: true), "old"));
         Assert.True(findings.Length == 1 && findings[0].Message.StartsWith("DTR-Undeclared ", StringComparison.Ordinal)
-            && findings[0].Effect == AdmissionEffect.Block, "[FAIL] selected_old_form_is_undeclared");
+            && findings[0].Effect == AdmissionEffect.Observe, "[FAIL] selected_old_form_is_undeclared");
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "old"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Block), "[FAIL] new_theorem_requires_four_slots");
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] new_theorem_requires_four_slots");
     }
 
     [Fact]
@@ -87,6 +87,6 @@ public sealed class DeclaredTemplateEscapeRecordTests
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "malformed"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Block), "[FAIL] malformed_escape_evidence_blocks");
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] malformed_escape_evidence_blocks");
     }
 }
