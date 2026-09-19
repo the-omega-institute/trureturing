@@ -22,15 +22,15 @@ def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr
   let type ← whnf (← inferType catalog)
   unless type.isAppOf ``Catalog do fail "object-arena"
   let declaredArena := type.appArg!
-  let canonicalName := if declaredArena.isAppOf ``PrimitiveLawArena.toArena then
-      declaredArena.appArg!.constName?
-    else declaredArena.constName?
+  let declaredOwner := if declaredArena.isAppOf ``PrimitiveLawArena.toArena then
+      declaredArena.appArg! else declaredArena
+  let declaredOwner := if declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toPrimitiveLawArena") ||
+      declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toArena") then
+      declaredOwner.appArg! else declaredOwner
+  let canonicalName := declaredOwner.constName?
   unless canonicalName == some arenaName do fail "object-arena"
   let named ← mkConstWithFreshMVarLevels arenaName
-  let namedType ← whnf (← inferType named)
-  let named ← if namedType.isAppOf ``PrimitiveLawArena then
-      mkAppM ``PrimitiveLawArena.toArena #[named]
-    else pure named
+  let named := (← RegistrationGates.normalizeArena named).finite
   unless (← isDefEq named declaredArena) && (← isDefEq named arena) do fail "object-arena"
   let actualCard : Nat ← reduceEval (← mkAppM ``Arena.card #[named])
   unless actualCard == stateCard do fail "arena-counts"
@@ -104,7 +104,8 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     let declared ← mkConstWithFreshMVarLevels row.realizationName
     let declaredType ← whnf (← inferType declared)
     let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization || declaredType.isAppOf
-        `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
+        `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
+        declaredType.isAppOfArity RegistrationGates.witnessBridgeName 3 then
         pure declaredType.appArg!
       else if declaredType.isAppOf ``PrimitiveRealization then pure declared
       else do fail "realization-type"; pure declared
