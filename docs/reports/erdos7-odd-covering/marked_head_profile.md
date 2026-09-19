@@ -810,3 +810,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original overlap leakage gives a uniform reciprocal gap](profile-notes/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md)
 - [Fresh-prime root transport and two-copy reduction](profile-notes/348-fresh-prime-root-transport-and-two-copy-reduction.md)
 - [Private cylinders in a complete odd cover obstruct root transport](profile-notes/349-real-odd-cover-private-cylinders-and-transport-obstruction.md)
+- [Extremal odd-cover branches and source support](profile-notes/350-extremal-paired-branch-and-source-support.md)
