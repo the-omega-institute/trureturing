@@ -12,6 +12,41 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("tools/lean-inspector/Inspector.lean", "push")]
+    [InlineData("tools/lean-inspector/Inspector.lean", "pr")]
+    [InlineData("tools/lean-inspector/native_image.c", "push")]
+    [InlineData("tools/lean-inspector/native_image.c", "pr")]
+    [InlineData("tools/lean-inspector/lakefile.lean", "push")]
+    [InlineData("tools/lean-inspector/lakefile.lean", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    public void RegisteredInspectorProgramsAndTestsRequireCompilationWithoutAnotherReportStep(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
+        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector" },
+            Strings(plan["execution"]!["lean_targets"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
+            Strings(plan["execution"]!["steps"]!));
+    }
+
+    [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean", "pr")]
+    [InlineData("tools/lean-inspector/Census/config.lean", "push")]
+    [InlineData("tools/lean-inspector/Census/config.lean", "pr")]
+    public void RegisteredContentAndMetadataDoNotRequireInspectorProgramCompilation(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.DoesNotContain("lean-inspector-build", Strings(plan["resources"]!));
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+    }
+
+    [Theory]
     [InlineData("Meta/ci-checks.json", false)]
     [InlineData("Meta/ci-checks.json", true)]
     [InlineData("Meta/ReportProducers/scribe-content.json", false)]
@@ -72,7 +107,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             Assert.Empty(plan[field]!.AsArray());
         foreach (var stage in new[] { "build", "engineering", "current", "delta" })
             Assert.Equal("not-required", plan["stages"]![stage]!["status"]!.GetValue<string>());
-        foreach (var field in new[] { "projects", "checks", "steps" })
+        foreach (var field in new[] { "projects", "checks", "steps", "lean_targets" })
             Assert.Empty(plan["execution"]![field]!.AsArray());
     }
 
