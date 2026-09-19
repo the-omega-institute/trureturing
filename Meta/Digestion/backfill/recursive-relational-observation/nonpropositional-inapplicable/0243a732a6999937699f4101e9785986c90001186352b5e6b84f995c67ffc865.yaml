@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0243a732a6999937699f4101e9785986c90001186352b5e6b84f995c67ffc865
+  normalized_sha256: sha256:0243a732a6999937699f4101e9785986c90001186352b5e6b84f995c67ffc865
+cas_ref: sha256:0243a732a6999937699f4101e9785986c90001186352b5e6b84f995c67ffc865
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Complete RRO112 inverse fragment, read with definition 112.1 and the actual K of 103.1: every finite nonempty sensor, irreducible stochastic T, nonnegative normalized stationary eta, delta in [0,1/2] and both directions, including periodic T and delta=0. All clauses close by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Matrix.mul_kronecker_mul and stochastic/stationary finite-sum normalization give P-Q commutation; det_ne_zero_of_sum_row_lt_diag, Matrix.IsUnit.kronecker and Matrix.mulVec_injective_iff_isUnit give the projected kernel elimination. Matrix.isIrreducible_iff_exists_pow_pos, List.prod_induction_nonempty and map_pow give product irreducibility for positive hidden factors; delta=0 uses the trap and ring restrictions separately. Harmonic constancy follows from the positive-shift minimum-ratio argument using Finset.lt_inf'_iff, Finset.inf'_le, Finset.exists_mem_eq_inf', Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.IsIrreducible.connected, Quiver.Path.exists_mem_notMem_hom_path_path_of_notMem_mem and Finset.sum_eq_zero_iff_of_nonneg, with no external MCMC premise. Matrix.linfty_opNorm_def identifies the exact row-sum/sup norm. continuousAt_matrix_inv, ContinuousAt.finset_sup_apply, NNReal.continuous_coe and IsCompact.exists_isMaxOn give an attained finite maximum on the compact interval for both directions, not only an unspecified upper bound. These are direct instantiations, projections and normalization; no escape witness or usable frozen project GID for this complete fragment. Existing upstream-only settlement under CLAUDE 3.2/spec 11.21, zero new Lean. The remaining Poisson, window, risk and parent obligations stay open."
+    previous_atom_id: 9a5c3eca8d9a71f0bc148ec5ef985eaa016584d8ab990d9210d5229022b060c6
+    next_atom_id: 207e01a870028adfe70c4656a0169583f0318feeed0f454776cc57a1ab9e68c7
