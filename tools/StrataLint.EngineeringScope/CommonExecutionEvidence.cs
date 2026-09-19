@@ -57,7 +57,38 @@ internal static partial class CommonExecutionEvidence
             _ => throw new InvalidDataException("candidate snapshot unavailable"),
         };
 
-    internal static string Candidate(string root) => Candidate(root, out _);
+    internal static string Candidate(string root)
+    {
+        var files = new List<EngineeringSource>();
+        var folded = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var utf8 = new UTF8Encoding(false, true);
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        GitRepositorySnapshotReader.VisitCurrent(root, entry =>
+        {
+            if (!RepoPath.TryCreate(entry.Path, out var path))
+                throw new InvalidDataException($"Repository path is invalid: {entry.Path}.");
+            if (!folded.Add(entry.Path))
+                throw new InvalidDataException($"Repository path is duplicated or case-colliding: {entry.Path}.");
+            if (!DigestionOpaquePathPolicy.IsOpaque(path))
+            {
+                try { _ = utf8.GetCharCount(entry.Bytes.AsSpan()); }
+                catch (DecoderFallbackException exception)
+                { throw new InvalidDataException($"Repository file must be strict UTF-8: {entry.Path}.", exception); }
+            }
+            // Registry admission reads only its manifest; all other source
+            // entries contribute their paths to coverage and input validation.
+            files.Add(new(entry.Path, entry.Path == EngineeringProjectRegistry.ManifestPath
+                ? utf8.GetString(entry.Bytes.AsSpan()) : string.Empty));
+            hash.AppendData(Encoding.UTF8.GetBytes(entry.Path + "\0"));
+            var mode = OperatingSystem.IsWindows() ? 0 : (int)(File.GetUnixFileMode(Path.Combine(root, entry.Path))
+                & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute));
+            hash.AppendData(Encoding.UTF8.GetBytes(mode == 0 ? "regular\0" : "executable\0"));
+            hash.AppendData(SHA256.HashData(entry.Bytes.AsSpan()));
+        });
+        var registry = EngineeringProjectRegistry.Read(files);
+        _ = registry.Sources(files);
+        return Convert.ToHexStringLower(hash.GetHashAndReset());
+    }
 
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
