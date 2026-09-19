@@ -1,0 +1,214 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-whole-face-second-factorial-tail-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "5110e43a050f7cb0bf571464e50679fd67ece158ab80adc09c5745b70d0b3a1c",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "head_exponents": {
+    "kind": "inline",
+    "value": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ]
+  },
+  "head_factorial_bound": {
+    "kind": "inline",
+    "value": "4/225"
+  },
+  "old_tail_operator": {
+    "path": "content/009-old_tail_operator.json",
+    "sha256": "57c5c6bcf2f6662746a590ab2f116b8db76cdb11b1ee57594921c8d0db49da63",
+    "kind": "value"
+  },
+  "complete_pair_partition": {
+    "path": "content/010-complete_pair_partition.json",
+    "sha256": "a32e2b74f103ee5c58399ede659b3f75c0592f3214a18aee735dc71d073417be",
+    "kind": "value"
+  },
+  "second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "619/720"
+  },
+  "quadratic_updates": {
+    "path": "content/012-quadratic_updates.json",
+    "sha256": "b274f02e6cbbfde7cb39e4437bd1f03f812b384db7c850f5e4ff37745361f382",
+    "kind": "value"
+  },
+  "cost_weights": {
+    "path": "content/013-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "direct_cost_upper_bounds": {
+    "path": "content/014-direct_cost_upper_bounds.json",
+    "sha256": "bbfd8a9d358353d2453b72bbe5b7b18a23f348f83062b4ef7f200ee0bb78f32a",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/015-majorants.json",
+    "sha256": "d2d79ebd901476ade21586586c5c5269bb9ff5729d3f30461726a6eff41589b8",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/016-improved_cost_bounds.json",
+    "sha256": "bbfd8a9d358353d2453b72bbe5b7b18a23f348f83062b4ef7f200ee0bb78f32a",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "374/75"
+  },
+  "direct_numerator_improvement": {
+    "kind": "inline",
+    "value": "1142571154044081850503886997/55277902592312400000000000000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "total_numerator_improvement": {
+    "kind": "inline",
+    "value": "1142571154044081850503886997/55277902592312400000000000000"
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "8900862274618738486076077484437084354260312604177/252972956902243138190838916958250000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "138994272332498675172774630998611476091466279743/3952702451597549034231858077472656250000000000"
+  },
+  "uniform_hinge_uppers": {
+    "kind": "inline",
+    "value": {
+      "1": "443/900",
+      "2": "3869/10500",
+      "3": "86623/330750",
+      "6": "89710847/680683500",
+      "7": "547475903/4764784500",
+      "8": "388664263/3705943500",
+      "4": "938213/4630500",
+      "5": "1523903/9724050"
+    }
+  },
+  "denominator_coefficients": {
+    "kind": "inline",
+    "value": {
+      "mass": "308186/307461",
+      "linear": "1451/614922",
+      "hinge2": "2400/102487",
+      "hinge3": "50/2541",
+      "hinge4": "1/6",
+      "hinge5": "4/33"
+    }
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282",
+      "integrated_cost_upper": "45451/158122800"
+    }
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "1358432973299/17084377926000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "45863942113753007251795118139309083557904353324321601/98823426011466392651464381291661827125000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "716222699946927632837956597381642058997115043314859/1544116031429162385179130957682216048828125000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "12568282694484900355542756967/48348531325874028600000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete second-factorial-tail theorem on both full actual saturated K faces, with arbitrary independent original labels and all exponent tails. Repartitions explicit nonnegative LCM-cap subseries, not unknown moments. Uses current104 row minima and retains all52 costs and the full101 denominator. No off-face extension, new global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}

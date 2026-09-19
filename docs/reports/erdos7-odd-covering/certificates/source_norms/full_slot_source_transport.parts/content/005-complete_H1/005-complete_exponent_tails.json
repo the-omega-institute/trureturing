@@ -1,0 +1,50 @@
+[
+  {
+    "crossing": 4,
+    "geometric_sum": "1/18",
+    "error_sum": "85721/23119200",
+    "name": "pure3",
+    "prime": 3,
+    "start": 3,
+    "reference_coefficient": "369/520",
+    "envelope": "609/6760",
+    "error": "31/15200",
+    "upper": "997151/23119200"
+  },
+  {
+    "crossing": 3,
+    "geometric_sum": "1/20",
+    "error_sum": "13639/6084000",
+    "name": "pure5",
+    "prime": 5,
+    "start": 2,
+    "reference_coefficient": "73/180",
+    "envelope": "329/3042",
+    "error": "181/156000",
+    "upper": "137009/6084000"
+  },
+  {
+    "crossing": 3,
+    "geometric_sum": "1/20",
+    "error_sum": "1/585",
+    "name": "root5",
+    "prime": 5,
+    "start": 2,
+    "reference_coefficient": "7/26",
+    "envelope": "83/1170",
+    "error": "1/1000",
+    "upper": "71/4680"
+  },
+  {
+    "crossing": 2,
+    "geometric_sum": "1/20",
+    "error_sum": "5719/4867200",
+    "name": "cell5",
+    "prime": 5,
+    "start": 2,
+    "reference_coefficient": "7/78",
+    "envelope": "5719/243360",
+    "error": "1/1000",
+    "upper": "27559/4867200"
+  }
+]

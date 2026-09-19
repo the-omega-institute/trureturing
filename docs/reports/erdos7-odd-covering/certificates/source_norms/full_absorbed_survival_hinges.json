@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "3b9ac3f0a8ce3b5e11c5f32165c713cd8307f7bf09f0d49426a5f719a18fcef7",
+  "parts_directory": "full_absorbed_survival_hinges.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "b3bc74d333f64dd5e93a82060a1e9f0cb32aada4d0c421a98df0d8c9f13affce",
+    "kind": "object"
+  }
+}

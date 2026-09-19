@@ -1,0 +1,68 @@
+{
+  "length": 50,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 21,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000000-000021.json",
+        "sha256": "17d41802606e023f3b2bed273765500aeb31784935b7efeec3bb5b49bfbc4340",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21,
+      "stop": 28,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000021-000028.json",
+        "sha256": "2d514efea1bc9fd62b5fe1018ac418de403aef02156ca3fdcf9cfefeac89e89b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 33,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000028-000033.json",
+        "sha256": "d29eafb465c718a56f687f8833ac1bfca55dd5370b97f4138a55126d53074cc1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 37,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000033-000037.json",
+        "sha256": "a9e9f60a812a631a008ef759a24fd9827b92082d2f6e93832389e1e66b5f4340",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 37,
+      "stop": 43,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000037-000043.json",
+        "sha256": "c38b97733e642e6ef253297a6a2f3b09fd1b14c01106cc37783a27a1752843db",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 43,
+      "stop": 47,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000043-000047.json",
+        "sha256": "fb6c310ecc5d0d597390fe55e0ab0ea2a35fe011a3b60d460a7a99cbd0c29aa0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 47,
+      "stop": 50,
+      "part": {
+        "path": "content/014-results/000001/item/006-closed_node_batches/000002/item/002-rows/000047-000050.json",
+        "sha256": "8af9b484b3550eae435c1fa21c2d72cdf7f0eb5a45a53dba0fb280b8966afd6d",
+        "kind": "value"
+      }
+    }
+  ]
+}

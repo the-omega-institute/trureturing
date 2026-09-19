@@ -1,0 +1,569 @@
+[
+  {
+    "start": 64,
+    "stop": 128,
+    "rows": [
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          10447,
+          11210,
+          11297
+        ],
+        "dual_id": "5709c45013737b2c1845cf13bb7cb7a9b2b1ebbfb4711dc4637dead5fd80969e",
+        "complete_upper": "15751281119445414267484319072612603681/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          10471,
+          10476,
+          10477,
+          11244,
+          11249,
+          11250,
+          11331,
+          11336,
+          11337
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          10478,
+          11251,
+          11338
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          10480,
+          11253,
+          11340
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11591,
+          11596,
+          11597
+        ],
+        "dual_id": "c3c07aa59dd086bfd14841cdd407004275df75fcd3d997f15cb6d34f67a8c2f9",
+        "complete_upper": "61794475470423863924862047054758266641/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11592,
+          11641,
+          11646,
+          11647
+        ],
+        "dual_id": "8048333d8c06f23eed7c0b6c203199b6c2dba3ad214bfe44ae5745c1f96fe3ce",
+        "complete_upper": "2474427721110813966488590217975948753/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11593
+        ],
+        "dual_id": "c3c07aa59dd086bfd14841cdd407004275df75fcd3d997f15cb6d34f67a8c2f9",
+        "complete_upper": "61794475470423863924862047054758266641/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11594
+        ],
+        "dual_id": "8d996b252cdfe1435cf310b7a16bb0db44e0981d52744770b00693b7b011ee5d",
+        "complete_upper": "61844138638342661199767930505500014717/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11595
+        ],
+        "dual_id": "ace91bd19379f509d2539e139435ece31e4f7ef128a80c0b6a8dd73a2959d294",
+        "complete_upper": "61860693028031967799464176780876862497/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11598
+        ],
+        "dual_id": "c3c07aa59dd086bfd14841cdd407004275df75fcd3d997f15cb6d34f67a8c2f9",
+        "complete_upper": "61794475470423863924862047054758266641/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11599
+        ],
+        "dual_id": "808acd5e7eb19b9e7f0e88310fb5eacdd4dc22812500f4475a27471682475d52",
+        "complete_upper": "62045774312685982298550033381743531693/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11600
+        ],
+        "dual_id": "d4086f9e95d2eb9fd21e28af2ce23cef87b2384342781fcd2f9925521424bba9",
+        "complete_upper": "31146028387773130368384208940925864247/5826335988416907254791500000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11601,
+          11606,
+          11607
+        ],
+        "dual_id": "6008930fb577281758f694cbfd4e77b5c15de421f78a1738a5ed86978b96b99a",
+        "complete_upper": "2475202071308502691944957742481169547/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11602,
+          11651,
+          11656,
+          11657
+        ],
+        "dual_id": "3a09fd606f2adbd7f0e0568ec7e51d4dc330131225cf12fd3972e4eb4c8b1c8d",
+        "complete_upper": "61976578818609435557720971980942998731/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11603
+        ],
+        "dual_id": "6008930fb577281758f694cbfd4e77b5c15de421f78a1738a5ed86978b96b99a",
+        "complete_upper": "2475202071308502691944957742481169547/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11604
+        ],
+        "dual_id": "3f6f810e32869665b0d8eeb96791e692345a3bc3727ceeb14a6dd5f0d82ef6b3",
+        "complete_upper": "4130163137267410834262335712785419379/776844798455587633972200000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11605
+        ],
+        "dual_id": "758a4c137c708716dd649658954dc109b3a1f45e7044e1de90953162c0cb5ccb",
+        "complete_upper": "12395315763576009376353862654969215323/2330534395366762901916600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11608
+        ],
+        "dual_id": "6008930fb577281758f694cbfd4e77b5c15de421f78a1738a5ed86978b96b99a",
+        "complete_upper": "2475202071308502691944957742481169547/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11609
+        ],
+        "dual_id": "f489126947e97806b21bdf9cff312c516e88d501d2977d0d173ef80579426547",
+        "complete_upper": "62131350623932333187501542074651756251/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11610
+        ],
+        "dual_id": "3bc2e786d4f1aeb529ff6a313f9d0736740060c7ec9699597410b00daa67bb4f",
+        "complete_upper": "15594408271622849149600973534749858021/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11611,
+          11616,
+          11617
+        ],
+        "dual_id": "62b1c006c978b800a646de2b27e60925d64a9c52a91a54e660c2713e15cc85c3",
+        "complete_upper": "61846254216561567480321457935990939283/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11612,
+          11661,
+          11666,
+          11667
+        ],
+        "dual_id": "8b6633ab8f6eee592e44bd881a9de7c18b40c879ec449c620fa4244004ecf3b0",
+        "complete_upper": "61882162295847254344485610324442352751/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11613
+        ],
+        "dual_id": "62b1c006c978b800a646de2b27e60925d64a9c52a91a54e660c2713e15cc85c3",
+        "complete_upper": "61846254216561567480321457935990939283/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11614
+        ],
+        "dual_id": "56641004eb575752e3a02339ccc69eaa0dc64c7ee93b7313dd92cea75b4c5ca5",
+        "complete_upper": "12374637055254588655886566831105847213/2330534395366762901916600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11615
+        ],
+        "dual_id": "d4dc673b8f19c5c7c35faed3d2c34ac4fad79d6582079e549a5083968396c23e",
+        "complete_upper": "5625651117812898160014021615733688441/1059333816075801319053000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11618
+        ],
+        "dual_id": "62b1c006c978b800a646de2b27e60925d64a9c52a91a54e660c2713e15cc85c3",
+        "complete_upper": "61846254216561567480321457935990939283/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11619
+        ],
+        "dual_id": "da36b51fbbf6f6c1f141df53e896f7cd4abe2acd4addc4a7c4e31adcecbc247e",
+        "complete_upper": "62112039322537718149129785533767891859/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11620
+        ],
+        "dual_id": "d2690db60ce43d9ff4e42613443a0fe0cfcc31cf72f35342dc5efaa3fcbf82f4",
+        "complete_upper": "15593202012406529980142356400221395511/2913167994208453627395750000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11621,
+          11626,
+          11627
+        ],
+        "dual_id": "3a33c59863ee491d90c48b7956e456b8e9fbd1eebb1d755d3e3c97ee3c4b4fbd",
+        "complete_upper": "2952665858070526689015149506957830919/554889141753991167123000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11622,
+          11671,
+          11676,
+          11677
+        ],
+        "dual_id": "d1a8941171be4e328af912f9bd8b1f3c61d695e9cba64db4a06e38ab253f5cc2",
+        "complete_upper": "1772625459954521909521970390709933301/332933485052394700273800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11623
+        ],
+        "dual_id": "3a33c59863ee491d90c48b7956e456b8e9fbd1eebb1d755d3e3c97ee3c4b4fbd",
+        "complete_upper": "2952665858070526689015149506957830919/554889141753991167123000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11624
+        ],
+        "dual_id": "de8ad51bae68037d58ee3076e6a0341cb40cac7ab749690ce4e97c41eba6ea5c",
+        "complete_upper": "5639355825371897529930643983557014087/1059333816075801319053000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11625
+        ],
+        "dual_id": "b9701d33e125aa0c3303339e0668ec4b776f8f8ed6d4e1a346b0a24027329194",
+        "complete_upper": "62041891098703959810157845784698995659/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11628
+        ],
+        "dual_id": "3a33c59863ee491d90c48b7956e456b8e9fbd1eebb1d755d3e3c97ee3c4b4fbd",
+        "complete_upper": "2952665858070526689015149506957830919/554889141753991167123000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11629
+        ],
+        "dual_id": "4eee20946e7b39d0a4c725db1b59af63203fdf8f541938fa2d89076fb6962a1e",
+        "complete_upper": "62271768126039174903845095377790185331/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11630
+        ],
+        "dual_id": "8b50b16bf097a86230b7f8b5e9461c5aa664a866398a5b925a2fac749313363f",
+        "complete_upper": "7816567106621394209798090218463956661/1456583997104226813697875000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11631,
+          11636,
+          11637
+        ],
+        "dual_id": "fea027541d98b9ce90d073978eed9541ac4f032328906657d44c9805140b48e7",
+        "complete_upper": "1136500784972879730022674435030541381/211866763215160263810600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11632,
+          11681,
+          11686,
+          11687
+        ],
+        "dual_id": "da5d15c3bbc4462aca0b366ec17c3cfada5a6e2067ca15968221e4a8adf4e2cd",
+        "complete_upper": "463284824088126863960173817649653789/86316088717287514885800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11633
+        ],
+        "dual_id": "fea027541d98b9ce90d073978eed9541ac4f032328906657d44c9805140b48e7",
+        "complete_upper": "1136500784972879730022674435030541381/211866763215160263810600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11634
+        ],
+        "dual_id": "4aa479148712b608438f43d864a4b92968fce96c408f8581b618297c88b0204e",
+        "complete_upper": "6948274914689879249599965340335590041/1294741330759312723287000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11635
+        ],
+        "dual_id": "6f48cd028950eced101ece9041a72a2f941b8df359c41347833521b154e25367",
+        "complete_upper": "2501738050082089916986457865106201019/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11638
+        ],
+        "dual_id": "fea027541d98b9ce90d073978eed9541ac4f032328906657d44c9805140b48e7",
+        "complete_upper": "1136500784972879730022674435030541381/211866763215160263810600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11639
+        ],
+        "dual_id": "00cb5c22d0bffab348bdcb8d3afb07a227b57c9a6fab780fd4028444ed561661",
+        "complete_upper": "12551768403046674881870661644596727887/2330534395366762901916600000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11640
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11643
+        ],
+        "dual_id": "8048333d8c06f23eed7c0b6c203199b6c2dba3ad214bfe44ae5745c1f96fe3ce",
+        "complete_upper": "2474427721110813966488590217975948753/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11648
+        ],
+        "dual_id": "8048333d8c06f23eed7c0b6c203199b6c2dba3ad214bfe44ae5745c1f96fe3ce",
+        "complete_upper": "2474427721110813966488590217975948753/466106879073352580383320000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11653
+        ],
+        "dual_id": "3a09fd606f2adbd7f0e0568ec7e51d4dc330131225cf12fd3972e4eb4c8b1c8d",
+        "complete_upper": "61976578818609435557720971980942998731/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11658
+        ],
+        "dual_id": "3a09fd606f2adbd7f0e0568ec7e51d4dc330131225cf12fd3972e4eb4c8b1c8d",
+        "complete_upper": "61976578818609435557720971980942998731/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11663
+        ],
+        "dual_id": "8b6633ab8f6eee592e44bd881a9de7c18b40c879ec449c620fa4244004ecf3b0",
+        "complete_upper": "61882162295847254344485610324442352751/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11668
+        ],
+        "dual_id": "8b6633ab8f6eee592e44bd881a9de7c18b40c879ec449c620fa4244004ecf3b0",
+        "complete_upper": "61882162295847254344485610324442352751/11652671976833814509583000000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11673
+        ],
+        "dual_id": "d1a8941171be4e328af912f9bd8b1f3c61d695e9cba64db4a06e38ab253f5cc2",
+        "complete_upper": "1772625459954521909521970390709933301/332933485052394700273800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11678
+        ],
+        "dual_id": "d1a8941171be4e328af912f9bd8b1f3c61d695e9cba64db4a06e38ab253f5cc2",
+        "complete_upper": "1772625459954521909521970390709933301/332933485052394700273800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11683
+        ],
+        "dual_id": "da5d15c3bbc4462aca0b366ec17c3cfada5a6e2067ca15968221e4a8adf4e2cd",
+        "complete_upper": "463284824088126863960173817649653789/86316088717287514885800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11688
+        ],
+        "dual_id": "da5d15c3bbc4462aca0b366ec17c3cfada5a6e2067ca15968221e4a8adf4e2cd",
+        "complete_upper": "463284824088126863960173817649653789/86316088717287514885800000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11781,
+          11786,
+          11787
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          11790
+        ],
+        "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a",
+        "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13636
+        ],
+        "dual_id": "0bdf983e3e89d0f1b5a172447e6cd969c2110e07ead2e106f865b9b86658a700",
+        "complete_upper": "2232975210318971599056076361393039653/448179691416685173445500000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13646
+        ],
+        "dual_id": "120b78f41b615dd7f124b9062ea8422b56eb00004495fac4d792c9a2a811eb03",
+        "complete_upper": "1431329436562392920297225156471870699/291316799420845362739575000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13655
+        ],
+        "dual_id": "120b78f41b615dd7f124b9062ea8422b56eb00004495fac4d792c9a2a811eb03",
+        "complete_upper": "1431329436562392920297225156471870699/291316799420845362739575000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13671
+        ],
+        "dual_id": "8a6132821c1349c0681ed402904928578af44d9290b1603c5af8256ee0b2088f",
+        "complete_upper": "47964429090748229875539477154973490739/9710559980694845424652500000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13684
+        ],
+        "dual_id": "53b74c5d5f7d4db1f06c1f10d994592602089052bb8e4e4d6e1a6d6c341befe1",
+        "complete_upper": "11109510101435584757436741448451089/2263533795033763502250000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13697
+        ],
+        "dual_id": "53b74c5d5f7d4db1f06c1f10d994592602089052bb8e4e4d6e1a6d6c341befe1",
+        "complete_upper": "11109510101435584757436741448451089/2263533795033763502250000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13725,
+          13799,
+          13857,
+          13882,
+          13907,
+          15107,
+          15132,
+          16345,
+          16370
+        ],
+        "dual_id": "72bda1d3eb509c15e3650eba75d03703544c9fb8e32868135c74308cf33d50ea",
+        "complete_upper": "5672144688263651817180614602097978887/1165267197683381450958300000000000000"
+      },
+      {
+        "kind": "prior70",
+        "original_leaf_indices": [
+          13763
+        ],
+        "dual_id": "9cf7d11f844de3163061d7d365faedd47be6cba8029fe661ff3763505bcf2003",
+        "complete_upper": "56759267856896951349216046892209604119/11652671976833814509583000000000000000"
+      }
+    ]
+  }
+]

@@ -1,0 +1,450 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      3
+    ],
+    "affine_upper": "772813/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      4
+    ],
+    "affine_upper": "776863/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      0
+    ],
+    "affine_upper": "767953/3969000",
+    "strongest_available_old_upper": "767953/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      1
+    ],
+    "affine_upper": "5378911/27783000",
+    "strongest_available_old_upper": "5378911/27783000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      2
+    ],
+    "affine_upper": "771193/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      3
+    ],
+    "affine_upper": "5378101/27783000",
+    "strongest_available_old_upper": "5378101/27783000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      4
+    ],
+    "affine_upper": "771193/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      0
+    ],
+    "affine_upper": "767953/3969000",
+    "strongest_available_old_upper": "767953/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      1
+    ],
+    "affine_upper": "767953/3969000",
+    "strongest_available_old_upper": "767953/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      2
+    ],
+    "affine_upper": "771193/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      3
+    ],
+    "affine_upper": "770383/3969000",
+    "strongest_available_old_upper": "770383/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "affine_upper": "774433/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      0
+    ],
+    "affine_upper": "769843/3969000",
+    "strongest_available_old_upper": "769843/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      1
+    ],
+    "affine_upper": "5392141/27783000",
+    "strongest_available_old_upper": "5392141/27783000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      2
+    ],
+    "affine_upper": "773083/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      3,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      3
+    ],
+    "affine_upper": "5391331/27783000",
+    "strongest_available_old_upper": "5391331/27783000",
+    "maximizing_late_coordinate": "1"
+  }
+]

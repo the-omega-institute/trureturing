@@ -325,6 +325,19 @@ best literature bound. In particular, Schroeder's nine-prime claim would
 exclude this six-prime case as well; its verification boundary remains
 that of the linked source note. No bind-only Lean declaration is added.
 
+Ege Öztürk's *Closed-form nonexistence certificates for odd covering
+systems* ([DOI](https://doi.org/10.13140/RG.2.2.13216.55049)) advertises the
+same threshold and first uncertified integer in the author's
+[18 August 2026 post](https://www.erdosproblems.com/forum/thread/7#post-8507).
+The post describes two CRT survivor-volume bounds and a peeling test.
+The author, title and DOI are confirmed by the
+[DataCite record](https://api.datacite.org/dois/10.13140/RG.2.2.13216.55049).
+The full preprint has not been obtained: its ResearchGate endpoint returned
+HTTP403. Thus the numerical boundary has an earlier bibliographic source,
+but equality of the full proofs, numbered theorem statements and any
+asserted unit-character limitation have not been verified. The local
+FC1--FC3 proof and verifier above supply their own stated evidence.
+
 <a id="reuse-of-the-5040-and-divisor-sum-work"></a>
 ### Reuse of the 5040 and divisor-sum work
 

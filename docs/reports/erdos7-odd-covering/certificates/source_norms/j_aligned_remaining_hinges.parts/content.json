@@ -1,0 +1,94 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-remaining-hinges-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232",
+      "frontier/j_face_coupled_seven_heads.py": "d2794b380770dcd5529bacc0fb134d0e7ea82c26c572339b65e30c8222e24946",
+      "frontier/k_face_common_seven_hinges.py": "8cc4600c9b3f2f65a11820fcb2d0d6663c765c20765bbaf1ae0de6e883cefc97",
+      "frontier/joint_selected_source_comparison.py": "68ac25a9801c1ea946bad2780ed2fda457737bd3bdeeb99da91df642a2745055",
+      "frontier/retained_deletion_heavy_comparison.py": "294fe1254ce3209a072e6bf462d00d4e106e5b1e987d911ff786736370062d75",
+      "frontier/j_face_joint_selected_heads.py": "01033d19b43910a667954005342d2a03fe57dd6f621bf319398cfdb77ec821ec",
+      "certificates/source_norms/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "5d746cc187d5b5cfb3b9eec0a02cfa6e9b55fe3dd8a61b51882c529c9fdb5505",
+      "profile-notes/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "1e10b2ef81352086405414637c19bffe7b54a1d3852010a29b075462ec1ba387",
+      "certificates/source_norms/j_aligned_own_test_interface.json": "4acd11a4171dee81f627747608850be94521d25de4f2c128b686406280e532de",
+      "profile-notes/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "a1d842dfbe05f3a251ce969a84b02be64128672121cadb5ea2c258befeb1ebc4",
+      "frontier/j_aligned_joint_selected_heads.py": "803b2152f054c8d981e04aea67184ff1c89c763781ccb63732657d7a5d04a675",
+      "certificates/source_norms/j_aligned_joint_selected_heads.json": "4ad31d0efb64a96179f832672e2964f5ef6e09350e8f706f6ce4b43343ad65da"
+    }
+  },
+  "domain": {
+    "kind": "inline",
+    "value": "Actual completed aligned312 endpoint qJ=1,rho=2/675,original45 and135 in one root1 cell; uniform limiting statement for actual finite sources approaching this endpoint."
+  },
+  "actual_source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "actual_survivor_mass": {
+    "kind": "inline",
+    "value": "413/2700"
+  },
+  "model_sha256": {
+    "kind": "inline",
+    "value": "449f1cca41508a4f67d41ffa8598a4a6e43cb5ad9c4958cfb6bb7a311795ddb0"
+  },
+  "seeds": {
+    "path": "content/006-seeds.json",
+    "sha256": "2fcf623b6957dc51d55dc49998308e1d79aef768f66bb40ac0237e9e87b2e902",
+    "kind": "value"
+  },
+  "results": {
+    "path": "content/007-results.json",
+    "sha256": "8c7df7544d85d06f91fc6392333146849b235c5f28d4f8501e047d64f1b72d6b",
+    "kind": "value"
+  },
+  "rational_duals": {
+    "path": "content/008-rational_duals.json",
+    "sha256": "d3b4cf003063060bd9d6fd799b341d45d00c0f5d8cd5b8d280c6d55f5f3e1ee6",
+    "kind": "object"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 79
+  },
+  "rational_dual_columns_checked": {
+    "kind": "inline",
+    "value": 69204
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 31250000
+  },
+  "fixed299_observation_costs": {
+    "path": "content/012-fixed299_observation_costs.json",
+    "sha256": "bcf1636f4d0f6757c9e1927315aeb8aff8d616511cd328687bbac348d13d1c5b",
+    "kind": "value"
+  },
+  "sum_signed403_gap_cost": {
+    "kind": "inline",
+    "value": "648429050652320017797469678461732729020908405576018285207965647454867150253675985638808299416927190544078289880420873017697481573394614189093/21887682336829398502189836036343393370617649930294241535141314022314938090826676356420248233759670097677682485695522411249734225000000000000000"
+  },
+  "sum_nonnegative403_gap_cost": {
+    "kind": "inline",
+    "value": "194905866629796500054126833881953679473/5790597659435388202783380000000000000000"
+  },
+  "remaining_original_source_observations": {
+    "kind": "inline",
+    "value": [
+      "cost48",
+      "cost49",
+      "factorial2",
+      "factorial3",
+      "factorial5",
+      "square"
+    ]
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Five complete independent original hinges on the same actual aligned312/313 endpoint. Each target retains its own residues,all selected labels and full exponent/cofactor tails.313 supplies the model embedding and uniform finite-sequence limsup via complete summable tails. No common optimizer,explicit finite radius,positive403 comparison,unrestricted Erdos7 resolution or Lean verification."
+  }
+}

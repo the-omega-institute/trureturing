@@ -1,0 +1,16 @@
+{
+  "candidate_count": {
+    "kind": "inline",
+    "value": 81
+  },
+  "candidates": {
+    "path": "content/008-domains/000000/item/006-results/000003/item/005-branches/001-disjoint/004-support_choice/001-candidates.json",
+    "sha256": "63266498e3c4c32bac27ee687db6afcc21bb97ebe2c889a502fc1f5547f98a84",
+    "kind": "array"
+  },
+  "selected": {
+    "path": "content/008-domains/000000/item/006-results/000003/item/005-branches/001-disjoint/004-support_choice/002-selected.json",
+    "sha256": "a1257b4bbc23c6f97dac214f6f5e4a64c31f93f48c34d5f3754c6c5fd3d800a1",
+    "kind": "value"
+  }
+}
