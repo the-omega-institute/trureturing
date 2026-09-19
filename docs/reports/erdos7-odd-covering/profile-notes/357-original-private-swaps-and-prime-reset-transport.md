@@ -378,13 +378,13 @@ do not specify a transport map or give a contradictory upper bound.
 ## 7. The unclosed global step
 
 PT9 controls a single transport from an *actual parent-private source*.
-It does not construct that source from a prime-private synchronized
-event with comparable mass. PT2 and PT4 are budget comparisons, not
-such a transition kernel. PT14a--PT14b supply a positive explicit mass
-comparison when beta_r>0, including the stated deep-prefix range.
-PT14c--PT14e remove the zero lower bound in the shallow nonempty-escape
-case and combine it with the legal-swap branch. These mass comparisons
-still do not by themselves supply that kernel.
+PT2, PT4 and PT14a--PT14e are source/target mass comparisons, not
+transition kernels. A separate [bounded-displacement construction](358-local-escape-transport.md)
+now maps an actual child source into its actual parent-private set at
+every depth, with explicit congestion. It need not preserve previous
+coordinate exclusions. The [synchronized capacity allocation](359-synchronized-parent-capacity-allocation.md)
+also assigns one global surplus budget across all current primes.
+Neither construction gives a contradictory upper bound on that budget.
 
 Directly resetting another prime p at a point already private to A_q
 preserves A_q membership and introduces A_p membership. Its image is
@@ -394,12 +394,12 @@ Also `q<P` follows only when starting at the largest prime P. A later
 q-cofactor may contain larger primes. No strict prime descent has been
 proved.
 
-The remaining obligation is a valid source-to-parent-private transition,
-or a whole-cover transformation or contradictory budget that avoids
-needing one. The explicit comparison for a nonempty escape costs
-2^(kappa_m+1); no height- and label-independent comparison follows.
-All statements retain actual original labels
-and the full finite carrier; local examples cannot settle this obligation.
+The remaining obligation is to control the accumulated transport and
+good-tail losses, or give a whole-cover transformation or contradictory
+budget that avoids them. The explicit comparison for a nonempty escape
+costs 2^(kappa_m+1); no height- and label-independent comparison follows.
+All statements retain actual original labels and the full finite carrier;
+local examples cannot settle this global obligation.
 
 ## 8. Verification scope
 
