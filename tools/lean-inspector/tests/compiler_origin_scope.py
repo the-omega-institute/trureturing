@@ -106,6 +106,7 @@ def main():
         fixture.write('utility.json', '[]')
         config = '''name = "fixture"
 defaultTargets = ["Scope"]
+moreLeanArgs = ["-Dweak.compilerOrigin=true"]
 [[require]]
 name = "leanInspector"
 path = "tools/lean-inspector"
@@ -114,10 +115,12 @@ name = "mathlib"
 path = ".lake/packages/mathlib"
 [[lean_lib]]
 name = "Scope"
+needs = ["leanInspector/compilerInput"]
 roots = ["D5"]
 globs = ["D5.+"]
 [[lean_lib]]
 name = "LeanInformationAudit"
+needs = ["leanInspector/compilerInput"]
 globs = ["LeanInformationAudit.+"]
 '''
         fixture.write('lakefile.toml', config)

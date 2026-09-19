@@ -193,19 +193,30 @@ The batch frontend delegates to pinned `Lean.ShellOptions.process` and
 `Lean.shellMain`, including setup, plugins, normal `runFrontend`, C/olean/ilean
 output, JSON diagnostics, plain source, and `--run`. Its driver rejects unsupported
 server, thread-manager and incremental-snapshot options. It is not a language
-server replacement. Lake's native clang links use a local archive with the exact
-eight module objects replaced by their defined initializer symbols and the new
-registry added. The installed shared runtime remains an input. Report and fixture
+server replacement. Native provenance consumers explicitly link and trace
+`libLeanOrigin.a`, with the exact eight module objects replaced by their defined
+initializer symbols and the new registry added. `libLean.a` and the installed
+shared runtime remain stock inputs. Report and fixture
 commands use the unchanged Lake binary collocated with that distribution:
 Lake prepends its own library directory, so an absolute stock Lake path would
 otherwise shadow the instrumented producer APIs even with `LEAN_SYSROOT` set.
 
 The descriptor binds compiler sources, patch, recipe, installed binary/import/link
-inputs, build tools and platform. Lake's `LEAN_GITHASH` includes its digest;
-report facets also trace it, and module provenance requires the matching
+inputs, build tools and platform. Lake's global `LEAN_GITHASH` identifies the
+stock compiler. Libraries requiring provenance declare
+`needs = ["leanInspector/compilerInput"]`; the inspector package declares that
+input in its `extraDepTargets`. These ordinary Lake dependencies bind the recipe
+digest to the requesting modules. Their package `moreLeanArgs` selects the
+instrumented frontend with `-Dweak.compilerOrigin=true`. Unmarked Lake module
+builds use the actual stock frontend and builtin imports, so fetched caches do
+not claim generation by the instrumented compiler. The weak option also permits
+stock tooling to compile a configuration; it grants no provenance.
+
+Report facets trace the digest, and module provenance requires the matching
 `compiler_input_sha256`. The recipe embeds the exact compiler caption in its
-compiled shared module; normal native verification requires the environment
-caption and descriptor bytes to match that constant. Missing old provenance rejects report reuse. Compiled
+compiled shared module; normal native verification requires the separate
+`LEAN_COMPILER_ORIGIN` environment value, package compiler-input trace, stock
+compiler caption and descriptor bytes to match. Missing old provenance rejects report reuse. Compiled
 modules without the registry remain unclassified until canonical rebuilding;
 there is no name, shape, range or trace-based positive fallback. The Inspector
 accepts only the positive compiler registries or exact fixed-builder
@@ -216,7 +227,9 @@ exemption. Writing public auxiliary-recursion metadata or `congrKindsExt` alone
 grants no exemption. Explicit-source,
 private/internal and unknown-origin boundaries remain in force. These fields do not
 participate in statement identities. A compiler identity change invalidates the
-requested Lake dependency closure, including requested upstream source builds.
+modules requesting that input and the native archive consumers. Fetched packages
+retain their stock traces and unknown provenance; their ordinary source, import,
+option and toolchain changes still invalidate through Lake.
 The Inspector imports the fixed compiler query owners itself in both normal and
 statement-only modes. Content modules need not import their generator APIs:
 imported provenance still passes the same exact owner, levels, type and proof

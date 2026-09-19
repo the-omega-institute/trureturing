@@ -33,14 +33,7 @@ SOURCES = {
 
 
 def sha(path):
-    """Return a streaming SHA-256 on every supported runner Python.
-
-    ``hashlib.file_digest`` was added in Python 3.11, while the native report
-    entry still runs with the system ``python3`` on Linux images (currently
-    Python 3.9).  Keeping the fallback here preserves the exact byte digest
-    contract without requiring a particular interpreter for compiler-origin
-    construction.
-    """
+    """Hash exact bytes incrementally without requiring hashlib.file_digest."""
     digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b''):
@@ -109,7 +102,7 @@ def patch_native_archive(base, directory, objects):
     is performed here.
     """
     ar = str(base / 'bin/llvm-ar')
-    archive = directory / 'lib/lean/libLean.a'
+    archive = directory / 'lib/lean/libLeanOrigin.a'
     stock = base / 'lib/lean/libLean.a'
     members = subprocess.check_output([ar, 't', str(stock)], text=True).splitlines()
     candidates = {Path(name).stem + '.c.o.export' for name in SOURCES}
@@ -137,7 +130,6 @@ def patch_native_archive(base, directory, objects):
             selected.append((member, occurrences[member]))
     if found != set(SOURCES):
         raise ValueError('incomplete pinned compiler native archive')
-    archive.unlink()  # Never mutate the hard-linked installed library.
     shutil.copy2(stock, archive)
     for member, occurrence in sorted(selected, reverse=True):
         subprocess.run([ar, 'dN', str(occurrence), str(archive), member], check=True)
@@ -157,7 +149,7 @@ def build(root, base, descriptor, identity):
     try:
         expected = json.loads(receipt.read_text())
         required = {'bin/frontend', 'bin/lean', 'bin/leanc', 'driver.json', 'descriptor.json',
-            'lib/lean/libLean.a', 'lib/lean/Lean/CompanionOrigin.olean',
+            'lib/lean/libLean.a', 'lib/lean/libLeanOrigin.a', 'lib/lean/Lean/CompanionOrigin.olean',
             'lib/lean/Lean/CompanionOrigin.o', 'LICENSE', 'LICENSES'}
         actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*')
                   if p.is_file() and p != receipt}
@@ -212,7 +204,8 @@ def build(root, base, descriptor, identity):
     subprocess.run([str(base / 'bin/leanc'), export, '-o', str(directory / 'bin/frontend'), *objects],
         env=env, check=True, stdout=sys.stderr)
     (directory / 'driver.json').write_bytes(canonical(dict(base=str(base), lean=str(base / 'bin/lean'),
-        leanc=str(base / 'bin/leanc'), objects=objects[:-1])))
+        leanc=str(base / 'bin/leanc'), objects=objects[:-1],
+        origin=REVISION + '-origin-' + identity)))
     for name in ('lean', 'leanc'):
         path = directory / 'bin' / name
         path.unlink()
@@ -243,7 +236,7 @@ def ensure(root):
 
 def environment(directory, identity):
     return dict(os.environ, LEAN_SYSROOT=str(directory), LAKE_OVERRIDE_LEAN='true',
-        LEAN_GITHASH=REVISION + '-origin-' + identity,
+        LEAN_GITHASH=REVISION, LEAN_COMPILER_ORIGIN=REVISION + '-origin-' + identity,
         PATH=str(directory / 'bin') + os.pathsep + os.environ['PATH'])
 
 

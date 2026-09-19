@@ -1,4 +1,5 @@
 """Compiler provenance through native links, imports and the actual report facet."""
+import re
 from test_native_support import *
 
 
@@ -9,17 +10,74 @@ class NativeOriginTests:
         def measured(*args, **kwargs):
             started = time.monotonic()
             result = run_lake(*args, **kwargs)
+            built = re.findall(r'Built (\S+) \(', result.stdout + result.stderr)
+            work = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+            counts = {kind: sum(row['count'] for row in work if row['kind'] == kind)
+                for kind in ('extract', 'aggregate')} if args[:2] == ('build', ':report') else None
             checks.append(dict(command=list(args), exit=result.returncode,
                 seconds=round(time.monotonic() - started, 3),
-                built=sum('Built ' in line for line in (result.stdout + result.stderr).splitlines())))
+                built=len(built), compiled_modules=[name for name in built if ':' not in name and '/' not in name],
+                work=counts))
             self.record_result('measurements', dict(checks=checks))
             return result
         self.run_lake = measured
         self.addCleanup(setattr, self, 'run_lake', run_lake)
         return checks
 
+    def test_stock_package_cache_miss_and_source_invalidation(self):
+        checks = self.measure_origin_commands()
+        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n[[lean_lib]]\nname = "Stock"\n')
+        self.write('D5/A.lean', 'import D5.B\nimport Stock\ndef value : Nat := D5.hidden\n')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='fixture-mathlib/Stock.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        traces = []
+        for fields in ('(n : Nat)', '(n m : Nat)'):
+            self.write('fixture-mathlib/Stock.lean', '''import Lean
+run_elab
+  let some sysroot ← IO.getEnv "LEAN_SYSROOT" | throwError "missing stock sysroot"
+  unless (← IO.getEnv "LEAN_COMPILER_ORIGIN").isNone do throwError "stock origin environment leaked"
+  let child ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
+  unless child.exitCode == 0 && child.stdout.trimAscii.toString == sysroot do
+    throwError "stock child compiler escaped its toolchain"
+inductive Stock where | mk ''' + fields + '\n')
+            self.build()
+            path = self.root / 'fixture-mathlib/.lake/build/lib/lean/Stock.trace'
+            trace = json.loads(path.read_text())
+            compiler = [row for row in trace['inputs'] if row[0].startswith('Lean ')]
+            self.assertEqual([row[0] for row in compiler],
+                ['Lean 4.33.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17'])
+            self.assertNotIn('compiler origin:', json.dumps(trace['inputs']))
+            traces.append(trace['depHash'])
+            self.run_lake('env', str(self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'),
+                '--output', 'stock.json', '--material-spool', 'stock-materials',
+                'Stock', 'fixture-mathlib/Stock.lean',
+                'sha256:' + publication.digest(self.root / 'fixture-mathlib/Stock.lean'))
+            rows = json.loads((self.root / 'stock.json').read_text())['modules']
+            for name in ('Stock.mk.inj', 'Stock.mk.injEq', 'Stock.mk.sizeOf_spec'):
+                declaration = next(d for d in rows[0]['declarations'] if d['name'] == name)
+                self.assertFalse(declaration['generated_companion'], name)
+                self.assertTrue(declaration['include_in_statement'], name)
+            shutil.rmtree(self.root / 'stock-materials')
+        self.assertNotEqual(*traces)
+        self.record_result('verified', dict(checks=checks, source_mutation_invalidated=True,
+            stock_cache_misses=2, stock_companions_remain_selected=3, owned_live_processes=0))
+
     def test_compiler_origin_imports_and_invalidation(self):
         checks = self.measure_origin_commands()
+        # A fetched package is really compiled by the stock producer before
+        # the instrumented build. Its cache and unknown-origin classification
+        # must survive both initial admission and a compiler recipe change.
+        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n[[lean_lib]]\nname = "Stock"\n')
+        self.write('fixture-mathlib/Stock.lean', 'inductive Stock where | mk (n : Nat)\n')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='fixture-mathlib/Stock.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        stock_build = self.guarded_command([self.lake, 'build', 'Stock'], env=self.env)
+        self.assertEqual(stock_build.returncode, 0, stock_build.stdout + stock_build.stderr)
+        stock_paths = list((self.root / 'fixture-mathlib/.lake/build/lib/lean').glob('Stock.*'))
+        self.assertTrue(stock_paths)
+        stock_inputs = {path: (publication.digest(path), path.stat().st_mtime_ns) for path in stock_paths}
         # Compiler companion metadata survives even when the content imports
         # no Lean producer API. Query imports belong to the report environment.
         self.write('D5/MinimalOrigin.lean', '''inductive Minimal where
@@ -28,6 +86,7 @@ def visited : Nat → Nat | 0 => 0 | n + 1 => visited n + 1
 def visitedWitness := @visited.eq_def
 ''')
         self.write('D5/Origin.lean', '''import Lean
+import Stock
 open Lean Elab Command
 inductive Ranged where
   | mk (n : Nat)
@@ -74,6 +133,9 @@ unsafe def main : IO Unit := do
   let transitive ← importModules #[{module := `D5.Via}] {} (loadExts := true) (leakEnv := true)
   let directNames ← produced direct
   let transitiveNames ← produced transitive
+  for name in [`Stock.mk.inj, `Stock.mk.injEq, `Stock.mk.sizeOf_spec] do
+    if directNames.contains name || transitiveNames.contains name then
+      throw <| IO.userError s!"stock cache acquired compiler origin: {name}"
   for name in [`Ranged.mk.inj, `Ranged.mk.injEq, `Ranged.mk.sizeOf_spec,
       `simple.eq_def, `wf.eq_def, `loop.eq_def] do
     unless directNames.contains name && transitiveNames.contains name do
@@ -98,8 +160,11 @@ unsafe def main : IO Unit := do
     throw <| IO.userError "native archive did not retain generator instrumentation"
 ''')
         with (self.root / 'lakefile.toml').open('a') as config:
-            config.write('\n[[lean_exe]]\nname = "originNative"\nroot = "OriginNative"\nsupportInterpreter = true\n')
+            config.write('\n[[lean_exe]]\nname = "originNative"\nroot = "OriginNative"\nsupportInterpreter = true\n'
+                'needs = ["leanInspector/compilerInput"]\nmoreLinkObjs = ["leanInspector/compilerArchive"]\n')
         self.build()
+        self.assertEqual(stock_inputs,
+            {path: (publication.digest(path), path.stat().st_mtime_ns) for path in stock_paths})
         self.run_lake('build', 'originNative')
         self.run_lake('env', str(self.root / '.lake/build/bin/originNative'))
         # Source/olean instrumentation alone does not replace the compiler
@@ -144,6 +209,37 @@ unsafe def main : IO Unit := do
         self.assertEqual(len(private), 1)
         self.assertFalse(private[0]['generated_companion'])
         before = self.origins()
+        recipe = self.root / 'tools/lean-inspector/compiler/CompanionOrigin.lean'
+        recipe.write_text(recipe.read_text() + '\n-- compiler-input invalidation control\n')
+        self.build()
+        after = self.origins()
+        self.assertEqual(stock_inputs,
+            {path: (publication.digest(path), path.stat().st_mtime_ns) for path in stock_paths})
+        self.run_lake('build', 'originNative')
+        self.run_lake('env', str(self.root / '.lake/build/bin/originNative'))
+        self.assertNotEqual(before['D5.Origin']['compiler_input_sha256'], after['D5.Origin']['compiler_input_sha256'])
+        self.assertEqual([(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in rows],
+            [(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in self.report()[0]])
+        self.record_result('verified', dict(exit=0, query_apis=8, imported_companions=6,
+            exact_record_mismatches=5, explicit_source_veto='Ranged.mk.inj',
+            stock_archive_control_exit=control.returncode,
+            stock_archive_control_diagnostic=diagnostic.strip(),
+            compiler_before=before['D5.Origin']['compiler_input_sha256'],
+            compiler_after=after['D5.Origin']['compiler_input_sha256'],
+            recipe_invalidation=True, identities_and_axioms_unchanged=True,
+            stock_cache_files=len(stock_paths), stock_cache_unchanged=True,
+            stock_companions_remain_unknown=True,
+            minimal_import_companions=4,
+            checks=checks, owned_live_processes=0))
+
+    def test_compiler_origin_report_binding_recovery(self):
+        checks = self.measure_origin_commands()
+        self.write('D5/BindingOrigin.lean', 'inductive BoundOrigin where | mk (n : Nat)\n')
+        self.build()
+        rows = self.report()[0]
+        declarations = next(r for r in rows if r['module'] == 'D5.BindingOrigin')['declarations']
+        self.assertTrue(next(d for d in declarations if d['name'] == 'BoundOrigin.mk.inj')['generated_companion'])
+        before = self.origins()
         # Legacy and stale compiler evidence must fail at the real publisher,
         # then re-enter the canonical report facet without guessed provenance.
         for damage in ('missing', 'stale'):
@@ -173,22 +269,8 @@ unsafe def main : IO Unit := do
             self.build()
             self.assertEqual(before, self.origins(), damage)
             self.assertEqual(rows, self.report()[0], damage)
-        recipe = self.root / 'tools/lean-inspector/compiler/CompanionOrigin.lean'
-        recipe.write_text(recipe.read_text() + '\n-- compiler-input invalidation control\n')
-        self.build()
-        after = self.origins()
-        self.assertNotEqual(before['D5.Origin']['compiler_input_sha256'], after['D5.Origin']['compiler_input_sha256'])
-        self.assertEqual([(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in rows],
-            [(r['module'], [(d['name'], d['statement_id'], d['axioms']) for d in r['declarations']]) for r in self.report()[0]])
-        self.record_result('verified', dict(exit=0, query_apis=8, imported_companions=6,
-            exact_record_mismatches=5, explicit_source_veto='Ranged.mk.inj',
-            stock_archive_control_exit=control.returncode,
-            stock_archive_control_diagnostic=diagnostic.strip(),
-            compiler_before=before['D5.Origin']['compiler_input_sha256'],
-            compiler_after=after['D5.Origin']['compiler_input_sha256'],
-            recipe_invalidation=True, identities_and_axioms_unchanged=True,
-            minimal_import_companions=4,
-            missing_and_stale_provenance_rejected=True, checks=checks, owned_live_processes=0))
+        self.record_result('verified', dict(missing_and_stale_provenance_rejected=True,
+            generated_companions_and_rows_preserved=True, checks=checks, owned_live_processes=0))
 
     def test_compiler_origin_output_and_receipt_recovery(self):
         checks = self.measure_origin_commands()

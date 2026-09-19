@@ -7,6 +7,25 @@ open Lean (Json)
 
 package leanInspector where
   buildDir := "../../.lake/build/lean-inspector/producer"
+  moreLeanArgs := #["-Dweak.compilerOrigin=true"]
+  extraDepTargets := #[`compilerInput]
+
+/-- The compiler recipe is an input of the packages which request provenance.
+Fetched packages retain their own stock compiler/input traces. This is a Lake
+dependency, not authority to classify a declaration as generated. -/
+target compilerInput (_pkg) : Unit := do
+  Job.async do
+    let some origin ← IO.getEnv "LEAN_COMPILER_ORIGIN"
+      | error "missing compiler origin environment"
+    setTrace <| .ofHash (pureHash origin) s!"compiler origin: {origin}"
+    return ()
+
+/-- Native producer executables explicitly consume and trace the instrumented
+archive. The distribution's libLean.a remains the untouched stock input. -/
+target compilerArchive (_pkg) : FilePath := do
+  let some directory ← IO.getEnv "LEAN_SYSROOT"
+    | error "missing compiler origin sysroot"
+  inputBinFile (FilePath.mk directory / "lib/lean/libLeanOrigin.a")
 
 target nativeImage pkg : FilePath := do
   buildLeanO (pkg.buildDir / "c" / "native_image.o")
@@ -15,7 +34,8 @@ target nativeImage pkg : FilePath := do
 lean_exe reportInspector where
   root := `Inspector
   supportInterpreter := true
-  moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
+  moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)},
+    {key := .mk (.packageTarget .anonymous `compilerArchive)}]
 
 private def inspectorDir (pkg : Package) : FilePath := pkg.dir / "tools" / "lean-inspector"
 

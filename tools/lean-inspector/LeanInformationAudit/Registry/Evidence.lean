@@ -489,8 +489,8 @@ private def child (value : Json) (caption : String) : CoreM Json := do
   unless pair.size == 2 do throwError "incomplete_closure:E7.native_trace_pair"
   return pair[1]!
 
-/- The recipe embeds its descriptor identity in the compiled module. The Lake
-   caption and current descriptor bytes must both match that runtime constant;
+/- The recipe embeds its descriptor identity in the compiled module. The package
+   compiler input and current descriptor bytes must match that runtime constant;
    an environment string or a directory name alone is not compiler evidence. -/
 private def runtimeCompilerHash : CoreM String := do
   let expected := Lean.compilerOriginHash
@@ -499,7 +499,8 @@ private def runtimeCompilerHash : CoreM String := do
   unless prefixText.isPrefixOf expected && identity.length == 64 &&
       identity.toList.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f')) do
     throwError "incomplete_closure:E7.native_compiler_identity"
-  unless (← IO.getEnv "LEAN_GITHASH") == some expected do
+  unless (← IO.getEnv "LEAN_GITHASH") == some Lean.githash &&
+      (← IO.getEnv "LEAN_COMPILER_ORIGIN") == some expected do
     throwError "incomplete_closure:E7.native_compiler_identity"
   let some sysroot ← IO.getEnv "LEAN_SYSROOT"
     | throwError "incomplete_closure:E7.native_compiler_sysroot"
@@ -510,6 +511,21 @@ private def runtimeCompilerHash : CoreM String := do
   unless hashes[0]! == identity do
     throwError "incomplete_closure:E7.native_compiler_descriptor"
   pure expected
+
+/-- Lake nests a library's `needs` and its package's extra dependencies under
+`deps`. Match the exact recipe input once, independently of library names. -/
+private partial def compilerInputs (value : Json) (caption : String) (depth : Nat := 0) : Array Json := Id.run do
+  if depth > 256 then return #[]
+  let mut found := #[]
+  if let .ok rows := value.getArr? then
+    for row in rows do
+      if let .ok pair := row.getArr? then
+        if pair.size == 2 then
+          if pair[0]!.getStr? == .ok caption then
+            found := found.push pair[1]!
+          else
+            found := found ++ compilerInputs pair[1]! caption (depth + 1)
+  return found
 
 private structure ExportHash where
   arts : UInt64
@@ -726,9 +742,14 @@ private def verifyImported (env : Environment) (name : Name)
     throwError "incomplete_closure:E7.native_trace_version:{name}"
   let inputs ← field trace "inputs"
   let compilerHash ← runtimeCompilerHash
-  let compiler ← child inputs s!"Lean {Lean.versionStringCore}, commit {compilerHash}"
-  unless (← ofExcept <| traceHash compiler) == textHash compilerHash do
+  let compiler ← child inputs s!"Lean {Lean.versionStringCore}, commit {Lean.githash}"
+  unless (← ofExcept <| traceHash compiler) == textHash Lean.githash do
     throwError "incomplete_closure:E7.native_compiler:{name}"
+  let origins := compilerInputs (← child inputs "deps") s!"compiler origin: {compilerHash}"
+  unless origins.size == 1 do
+    throwError "incomplete_closure:E7.native_compiler_input:{name}"
+  unless (← ofExcept <| traceHash origins[0]!) == textHash compilerHash do
+    throwError "incomplete_closure:E7.native_compiler_input:{name}"
   let top ← ofExcept <| inputs.getArr?
   let candidates := top.filter fun input =>
     (((input.getArr?).toOption.bind (·[0]?)).bind (·.getStr?.toOption)).any fun caption =>

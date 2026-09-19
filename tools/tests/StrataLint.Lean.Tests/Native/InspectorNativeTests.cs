@@ -8,6 +8,8 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     // Publication and packaging use this class's private compiler stage.
     [Theory]
     [InlineData("test_native.NativeTests.test_compiler_origin_imports_and_invalidation")]
+    [InlineData("test_native.NativeTests.test_stock_package_cache_miss_and_source_invalidation")]
+    [InlineData("test_native.NativeTests.test_compiler_origin_report_binding_recovery")]
     [InlineData("test_native.NativeTests.test_compiler_origin_output_and_receipt_recovery")]
     [InlineData("test_native.NativeTests.test_native_facet_supplies_toolchain_environment")]
     [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
@@ -15,6 +17,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_streaming")]
     [InlineData("test_reuse")]
     [InlineData("test_native.NativeTests.test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
+    [InlineData("test_native.NativeTests.test_report_entry_rejects_damaged_seed_and_rebuilds")]
     [InlineData("test_native_support.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     [InlineData("test_native.NativeTests.test_coordinates_reuse_warm_tree_memo")]

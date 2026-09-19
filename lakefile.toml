@@ -2,6 +2,7 @@ name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
 defaultTargets = ["Trureturing", "LeanInformationAudit"]
+moreLeanArgs = ["-Dweak.compilerOrigin=true"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -20,17 +21,20 @@ path = "tools/lean-inspector"
 
 [[lean_lib]]
 name = "Trureturing"
+needs = ["leanInspector/compilerInput"]
 roots = ["Trureturing", "D5"]
 globs = ["Trureturing", "D5.+"]
 
 [[lean_lib]]
 name = "LeanInformationAudit"
+needs = ["leanInspector/compilerInput"]
 srcDir = "tools/lean-inspector"
 roots = ["LeanInformationAudit"]
 globs = ["LeanInformationAudit.+"]
 
 [[lean_lib]]
 name = "LeanInformationAuditAnalysis"
+needs = ["leanInspector/compilerInput"]
 srcDir = "tools/lean-inspector"
 roots = ["LeanInformationAuditAnalysis"]
 globs = ["LeanInformationAuditAnalysis.+"]

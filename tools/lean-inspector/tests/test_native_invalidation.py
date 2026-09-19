@@ -347,7 +347,8 @@ class NativeInvalidationTests:
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)
         self.write('D5/A.lean', 'import Support\nnoncomputable def value : Nat := support\n')
-        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n[[lean_lib]]\nname = "Support"\n')
+        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() +
+            '\n[[lean_lib]]\nname = "Support"\nneeds = ["leanInspector/compilerInput"]\n')
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         rejected = self.build(success=False)  # Native dependencies never invent registration.
         self.assertIn('unregistered native dependency sources: Support.lean', rejected.stdout + rejected.stderr)

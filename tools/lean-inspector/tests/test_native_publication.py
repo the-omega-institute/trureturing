@@ -120,7 +120,7 @@ initialize registerDerivingHandler ``ProbeMarker fun names => do
   return true
 """)
         with (self.root / 'lakefile.toml').open('a') as config:
-            config.write('\n[[lean_lib]]\nname = "DeriveHandler"\n')
+            config.write('\n[[lean_lib]]\nname = "DeriveHandler"\nneeds = ["leanInspector/compilerInput"]\n')
         policy['dependency_sources']['include'].append(dict(pattern='DeriveHandler.lean', optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.write(target, source)
@@ -924,7 +924,8 @@ end D5.S0.Carrier.Target
             # would otherwise repair the descriptor before the verifier saw it.
             directory = Path(compiler['directory'])
             environment = dict(runner.env, LEAN_SYSROOT=str(directory), LAKE_OVERRIDE_LEAN='true',
-                LEAN_GITHASH='d8b18978322de05a8f3dba51ef03cf5461676c17-origin-' + compiler['identity'],
+                LEAN_GITHASH='d8b18978322de05a8f3dba51ef03cf5461676c17',
+                LEAN_COMPILER_ORIGIN='d8b18978322de05a8f3dba51ef03cf5461676c17-origin-' + compiler['identity'],
                 PATH=str(directory / 'bin') + os.pathsep + runner.env['PATH'])
             def reject(label, expected, env=environment):
                 output = destination / (label + '.json')
@@ -936,7 +937,9 @@ end D5.S0.Carrier.Target
                 assert result.returncode != 0 and expected in text, (label, result.returncode, text)
                 negative_controls.append(dict(name=label, exit=result.returncode, diagnostic=expected))
             reject('environment-mismatch', 'E7.native_compiler_identity',
-                dict(environment, LEAN_GITHASH='d8b18978322de05a8f3dba51ef03cf5461676c17'))
+                dict(environment, LEAN_COMPILER_ORIGIN='d8b18978322de05a8f3dba51ef03cf5461676c17'))
+            reject('stock-environment-mismatch', 'E7.native_compiler_identity',
+                dict(environment, LEAN_GITHASH=environment['LEAN_COMPILER_ORIGIN']))
             descriptor = directory / 'descriptor.json'
             original = descriptor.read_bytes()
             try:
@@ -956,6 +959,34 @@ end D5.S0.Carrier.Target
                 reject('caption-mismatch', 'E7.native_trace_input:Lean ')
             finally:
                 trace.write_bytes(original)
+            # The package compiler input replaces the former global recipe
+            # hash. Its absence, stale caption and stale hash all fail closed.
+            def compiler_inputs(rows):
+                for caption, value in rows:
+                    if caption.startswith('compiler origin: '):
+                        yield [caption, value]
+                    elif isinstance(value, list):
+                        yield from compiler_inputs(value)
+            for damage in ('caption', 'hash', 'missing'):
+                value = json.loads(original)
+                def damage_input(rows):
+                    for pair in rows:
+                        if pair[0].startswith('compiler origin: '):
+                            if damage == 'caption': pair[0] += '-stale'
+                            elif damage == 'hash': pair[1] = '0000000000000000'
+                            else: rows.remove(pair)
+                            return True
+                        if isinstance(pair[1], list) and damage_input(pair[1]):
+                            return True
+                    return False
+                assert len(list(compiler_inputs(value['inputs']))) == 1
+                assert damage_input(value['inputs'])
+                try:
+                    trace.unlink()
+                    trace.write_text(json.dumps(value))
+                    reject('compiler-input-' + damage, 'E7.native_compiler_input')
+                finally:
+                    trace.write_bytes(original)
             # Every report input is copied at its verified source identity for
             # the strict consumer; no synthetic registration partition is used.
             rows = json.loads(raw.read_text())['modules']

@@ -46,6 +46,7 @@ class NativeTestSupport:
         self.root = Path(self.temporary.name)
         self.write('lakefile.toml', '''name = "fixture"
 defaultTargets = ["Fixture", "Audit"]
+moreLeanArgs = ["-Dweak.compilerOrigin=true"]
 [[require]]
 name = "leanInspector"
 path = "tools/lean-inspector"
@@ -54,10 +55,12 @@ name = "mathlib"
 path = "fixture-mathlib"
 [[lean_lib]]
 name = "Fixture"
+needs = ["leanInspector/compilerInput"]
 roots = ["Fixture", "D5"]
 globs = ["Fixture", "D5.+"]
 [[lean_lib]]
 name = "Audit"
+needs = ["leanInspector/compilerInput"]
 globs = ["Audit"]
 defaultFacets = ["static"]
 [[lean_exe]]
@@ -86,8 +89,10 @@ root = "Cache"
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 1\n')
         with (self.root / 'lakefile.toml').open('a') as target:
-            target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
-            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
+            target.write('[[lean_lib]]\nname = "External"\nneeds = ["leanInspector/compilerInput"]\n'
+                '[[lean_lib]]\nname = "ClaimSupport"\nneeds = ["leanInspector/compilerInput"]\n')
+            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nneeds = ["leanInspector/compilerInput"]\n'
+                'globs = ["LeanInformationAudit.+"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
         shutil.copytree(HERE / 'compiler', self.root / 'tools/lean-inspector/compiler', ignore=shutil.ignore_patterns('__pycache__'))
