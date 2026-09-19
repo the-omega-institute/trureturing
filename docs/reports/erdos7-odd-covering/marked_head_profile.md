@@ -831,3 +831,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Joint source selection can require strictly greater height](profile-notes/368-joint-selection-can-require-extra-height.md)
 - [Whole maximum matchings can have no common slot assignment](profile-notes/369-whole-maximum-matchings-can-have-no-common-slots.md)
 - [Integrated source budgets survive a one-edge rank loss](profile-notes/370-integrated-source-budgets-with-one-rank-loss.md)
+- [Private top fans and original ancestor cuts at every height](profile-notes/arithmetic/371-private-top-fans-and-ancestor-cuts.md)
