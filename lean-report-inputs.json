@@ -76,7 +76,7 @@
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
       ],
-      "exclude": ["**/bin/**", "**/obj/**"]
+      "exclude": ["**/bin/**", "**/obj/**", "tools/StrataLint.Lean/Properties/AssemblyInfo.cs", "tools/StrataLint.Engine/AssemblyInfo.cs"]
     },
     "scribe-content": {
       "include": [
