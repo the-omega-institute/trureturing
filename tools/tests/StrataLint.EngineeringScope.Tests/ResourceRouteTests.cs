@@ -109,6 +109,32 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
     }
 
     [Theory]
+    [InlineData(false, "missing")]
+    [InlineData(false, "invalid")]
+    [InlineData(false, "materials")]
+    [InlineData(true, "missing")]
+    [InlineData(true, "invalid")]
+    [InlineData(true, "materials")]
+    public void FinalizationRejectsBadReportWithoutACandidateChecker(bool filemap, string damage)
+    {
+        using var fixture = new ResourceFixture(filemap ? ["lean-report", "filemap"] : ["lean-report"]);
+        fixture.Processes();
+        var report = Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath);
+        if (damage == "missing") File.Delete(report);
+        if (damage == "invalid") File.WriteAllText(report, "not JSON");
+        if (damage == "materials") File.WriteAllText(report + ".materials.zip", "not a ZIP archive");
+
+        using var output = new StringWriter();
+        Assert.Equal(2, fixture.Run("current", output));
+        var launched = File.ReadAllLines(Path.Combine(fixture.Root, "build/launched"));
+        Assert.Equal(filemap ? new[] { "make --no-print-directory lean-report", "dotnet filemap-conform" }
+            : ["make --no-print-directory lean-report"], launched);
+        Assert.Contains("CURRENT_FINALIZE phase=seal status=started", output.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("CURRENT_FINALIZE phase=seal status=completed", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void InspectorCompileObligationReachesTheReportEntryFromRegistration(bool compile)

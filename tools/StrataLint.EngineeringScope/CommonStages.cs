@@ -249,7 +249,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+            // The candidate checker validates its report input. Finalization also
+            // validates it before sealing, including stages with no check units.
+            // Do not materialize a discarded snapshot/report in this parent.
         }
         else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
