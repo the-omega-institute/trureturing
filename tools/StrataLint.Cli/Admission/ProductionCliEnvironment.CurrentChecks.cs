@@ -35,12 +35,6 @@ internal sealed partial class ProductionCliEnvironment
         if (checks.Ids.Contains("scribe-projections")) checks.Run("scribe-projections", () => Scribe("scribe-projections",
             ["projections", "--check", "--report", CommonExecutionEvidence.ReportPath]));
         if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
-        if (checks.Ids.Contains("scribe-library")) checks.Run("scribe-library", () =>
-            // Only this invocation's executed describe covers Library inputs that
-            // invalidated independently of a cached describe result.
-            checks.Completed.Any(unit => unit.Id == "scribe-describe" && unit.Status == "executed")
-                ? new([new("scribe-library", 0, "library: validated by scribe-describe\n")])
-                : Scribe("scribe-library", ["library-check", "--report", CommonExecutionEvidence.ReportPath]));
         if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
         {
             var declaration = validation.CheckManifest().Single(check => check.Id == "scribe-markdown");

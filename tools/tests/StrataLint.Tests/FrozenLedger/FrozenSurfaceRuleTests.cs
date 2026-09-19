@@ -23,15 +23,20 @@ public sealed partial class FrozenSurfaceRuleTests
     public static TheoryData<string> LeanReportProducerInputCategories => new()
     {
         "lean-report-inputs.json",
+        "tools/StrataLint.Cli/Program.cs",
         "tools/StrataLint.Engine/Rules/RepositoryRules.FrozenState.cs",
+        "tools/StrataLint.Scribe/ScribeEmitter.cs",
         "tools/Trureturing.Truth/Truth.cs",
         "tools/Trureturing.Truth/Trureturing.Truth.csproj",
         "tools/lean-inspector/Inspector.lean",
         "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/workflow/ci-engineering.sh",
         "tools/scripts/worktree/lean-cache-ensure.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/lean-report-pair.sh",
+        ".github/workflows/ci-push.yml",
         "Directory.Build.props",
+        "tools/Directory.Build.targets",
         "Directory.Packages.props",
         "global.json",
         "lean-toolchain",
@@ -43,13 +48,17 @@ public sealed partial class FrozenSurfaceRuleTests
     public static TheoryData<string> IndependentlyWakingLeanReportProducerInputs => new()
     {
         "lean-report-inputs.json",
+        "tools/StrataLint.Cli/Program.cs",
+        "tools/StrataLint.Scribe/ScribeEmitter.cs",
         "tools/Trureturing.Truth/Truth.cs",
         "tools/Trureturing.Truth/Trureturing.Truth.csproj",
         "tools/lean-inspector/Inspector.lean",
         "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/workflow/ci-engineering.sh",
         "tools/scripts/worktree/lean-cache-ensure.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/lean-report-pair.sh",
+        ".github/workflows/ci-push.yml",
         "lean-toolchain",
         "lakefile.toml",
         "lakefile.lean",
@@ -60,7 +69,8 @@ public sealed partial class FrozenSurfaceRuleTests
     {
         "lean-report-inputs.json",
         "lean-toolchain",
-        "tools/lean-inspector/Inspector.lean",
+        ".github/workflows/ci-push.yml",
+        "tools/StrataLint.Cli/Program.cs",
     };
 
     [Theory]
@@ -431,8 +441,7 @@ public sealed partial class FrozenSurfaceRuleTests
     [MemberData(nameof(LeanReportProducerInputCategories))]
     public void LeanReportProducerInputPredicateCoversEachCanonicalCategory(string path)
     {
-        var context = new RuleFixture().Build(RawChangeSet.Create([path]));
-        Assert.True(RepositoryRules.IsLeanReportProducerInput(path, context.RegisteredLeanReportInputs));
+        Assert.True(RepositoryRules.IsLeanReportProducerInput(path, RuleFixture.RegisteredBuildInputs));
     }
 
     [Theory]
@@ -442,15 +451,9 @@ public sealed partial class FrozenSurfaceRuleTests
     [InlineData("Meta/Digestion/atoms/sha256/abc")]
     [InlineData("docs/develop/theory/X.md")]
     [InlineData("tools/tests/StrataLint.Tests/X.cs")]
-    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md")]
-    [InlineData("tools/scripts/workflow/ci-engineering.sh")]
-    [InlineData("tools/StrataLint.Cli/Program.cs")]
-    [InlineData("tools/StrataLint.Scribe/ScribeEmitter.cs")]
-    [InlineData(".github/workflows/ci-push.yml")]
     public void LeanReportProducerInputPredicateExcludesContentProjectionAndTestPaths(string path)
     {
-        var context = new RuleFixture().Build(RawChangeSet.Create([path]));
-        Assert.False(RepositoryRules.IsLeanReportProducerInput(path, context.RegisteredLeanReportInputs));
+        Assert.False(RepositoryRules.IsLeanReportProducerInput(path, RuleFixture.RegisteredBuildInputs));
     }
 
     [Theory]
@@ -657,16 +660,8 @@ public sealed partial class FrozenSurfaceRuleTests
         RuleFixture fixture,
         string changedPath)
     {
-        if (changedPath == "lean-report-inputs.json")
-        {
-            fixture.Baseline[changedPath] = fixture.Files[changedPath];
-            fixture.Files[changedPath] += "\n";
-        }
-        else
-        {
-            fixture.Baseline[changedPath] = "baseline\n";
-            fixture.Files[changedPath] = "candidate\n";
-        }
+        fixture.Baseline[changedPath] = "baseline\n";
+        fixture.Files[changedPath] = "candidate\n";
         return Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build(
                 RawChangeSet.CreateWithKinds([(changedPath, RawChangeKind.Modified)])))).Capability;

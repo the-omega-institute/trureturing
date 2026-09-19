@@ -63,7 +63,7 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("cache_snapshot_contract", "test_judge_restore_rejects_late_changes_without_replacing_target")]
     [InlineData("report_snapshot_contract", "test_report_route_uses_only_declared_complete_receipts_and_never_publishes")]
     [InlineData("report_snapshot_contract", "test_report_route_missing_seed_does_not_invoke_a_producer_or_claim_success")]
-    [InlineData("report_snapshot_contract", "test_report_preparation_restores_registered_profiles_and_keeps_normal_producer_selected")]
+    [InlineData("report_snapshot_contract", "test_report_preparation_restores_only_current_and_keeps_normal_producer_selected")]
     [InlineData("report_snapshot_contract", "test_native_report_is_normal_project_material")]
     [InlineData("report_snapshot_contract", "test_current_handoff_accepts_native_five_members_without_directory_scans")]
     [InlineData("report_snapshot_contract", "test_current_handoff_rejects_each_missing_or_damaged_member")]

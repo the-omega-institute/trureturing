@@ -52,7 +52,7 @@ internal sealed class JudgeSeedFixture : IDisposable
         Dotnet(["restore", "tools/StrataLint.sln", "--use-lock-file"]);
         Write("Meta/engineering-projects.json", JsonSerializer.Serialize(new
         {
-            version = 1, test_parallelism = 1, rule_build_inputs = Array.Empty<string>(), projects = new[]
+            version = 1, rule_build_inputs = Array.Empty<string>(), projects = new[]
             {
                 ProjectRow("tools/Library/Library.csproj", "Library", "test-support", ["tools/Library/**/*.cs"], []),
                 ProjectRow("tools/Consumer/Consumer.csproj", "Consumer", "test-support", ["tools/Consumer/**/*.cs"], ["tools/Library/Library.csproj"]),

@@ -24,8 +24,7 @@ internal static class CommonBuildOutputs
         string? packageRoot = null;
         var snapshot = CommonExecutionEvidence.Snapshot(root);
         var registrations = EngineeringProjectRegistry.Read(snapshot);
-        var roots = selectedRoots?.ToHashSet(StringComparer.Ordinal);
-        var selected = roots is null ? null : RegisteredClosure(registrations, roots);
+        var selected = selectedRoots is null ? null : RegisteredClosure(registrations, selectedRoots);
         foreach (var registration in registrations.Projects.Where(project => project.Role != "compile-fail-proof"
                      && (selected is null || selected.Contains(project.Path))))
         {
@@ -79,13 +78,13 @@ internal static class CommonBuildOutputs
             File.Copy(material.Source, target, overwrite: true);
         }
         var testProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot))
-            .Where(project => roots is null || roots.Contains(project)).ToArray();
+            .Where(project => selected is null || selected.Contains(project)).ToArray();
         var tests = testProjects.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
             ? assembly : throw new InvalidDataException("selected test project was not built: " + project))).ToArray();
         var runtime = selected is null ? new[] {
             CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath,
             CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath }
-            : roots!.Select(project => projects[project]).ToArray();
+            : selectedRoots!.Select(project => projects[project]).ToArray();
         foreach (var assembly in tests.Select(test => test.Assembly).Concat(runtime))
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);

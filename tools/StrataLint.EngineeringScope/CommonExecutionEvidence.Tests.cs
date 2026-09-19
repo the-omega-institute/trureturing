@@ -8,17 +8,12 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
-    internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot,
-        CommonStageRecord? build = null)
+    internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot)
     {
         var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         var sources = registry.Sources(files);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
-        // Selection comes only from a validated FILEMAP plan, never from the
-        // runtime inventory or whichever test binaries happen to be present.
-        var selected = build is not null && SelectedPlan(root, build) is { } plan
-            ? plan.Projects.ToHashSet(StringComparer.Ordinal) : null;
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
         var materials = new Dictionary<string, object>(StringComparer.Ordinal);
@@ -28,7 +23,7 @@ internal static partial class CommonExecutionEvidence
         var executionInputs = projects.Values.Where(project => project.IsTest).ToDictionary(project => project.Path, project =>
             EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path), StringComparer.Ordinal);
         var result = new Dictionary<string, RegisteredTestInput>(StringComparer.Ordinal);
-        foreach (var project in projects.Values.Where(project => project.Ci && (selected is null || selected.Contains(project.Path))))
+        foreach (var project in projects.Values.Where(project => project.Ci))
         {
             var environment = project.ExecutionEnvironment!.Order(StringComparer.Ordinal).Select(name => new
             {
@@ -166,9 +161,8 @@ internal static partial class CommonExecutionEvidence
         if (record.Version != 2 || record.Candidate != candidate || !ValidRound(record.Round)
             || record.Projects is null || record.Materials is null)
             throw new InvalidDataException("engineering evidence candidate identity mismatch or invalid version/round");
-        var build = Read<CommonStageRecord>(root, BuildPath);
-        var inputs = TestInputs(root, snapshot, build);
-        _ = ValidateTestBuild(root, build, inputs);
+        var inputs = TestInputs(root, snapshot);
+        _ = ValidateTestBuild(root, Read<CommonStageRecord>(root, BuildPath), inputs);
         if (!inputs.Keys.Order(StringComparer.Ordinal).SequenceEqual(record.Projects.Select(result => result.Project)))
             throw new InvalidDataException("engineering evidence does not cover every current test project exactly once");
         var bound = new List<string>();
@@ -294,54 +288,12 @@ internal static partial class CommonExecutionEvidence
         var staging = destination + ".tmp-" + Guid.NewGuid().ToString("N");
         try
         {
-            var sources = tests.Projects.Select(project => (Project: project, Root: root,
-                Materials: tests.Materials.Where(material => material.Path.StartsWith(project.Results + "/", StringComparison.Ordinal)).ToArray())).ToList();
-            try
-            {
-                var previous = Read<TestExecutionRecord>(destination, "tests.json");
-                if (previous.Version != 2 || !ValidCandidate(previous.Candidate) || !ValidRound(previous.Round)
-                    || previous.Projects is null || previous.Materials is null)
-                    throw new InvalidDataException("invalid retained test seed identity");
-                var retainedProjects = previous.Projects.Where(project => project is { Project: not null }).ToArray();
-                var retainedMaterials = previous.Materials.Where(material => material is { Path: not null, Sha256: not null }).ToArray();
-                if (retainedProjects.Length != previous.Projects.Length || retainedMaterials.Length != previous.Materials.Length)
-                    output.WriteLine("ENGINEERING_TEST_SEED_RETENTION_MISS reason=\"invalid retained project or material row\"");
-                // Invalid optional rows cannot prevent exporting this round's accepted
-                // results. Missing materials still reject their owning project below.
-                previous = previous with { Projects = retainedProjects, Materials = retainedMaterials };
-                var registered = EngineeringProjectRegistry.Read(Snapshot(root)).Projects.Where(project => project.Ci)
-                    .ToDictionary(project => project.Path, StringComparer.Ordinal);
-                foreach (var group in previous.Projects.GroupBy(project => project.Project, StringComparer.Ordinal)
-                             .Where(group => !tests.Projects.Any(project => project.Project == group.Key) && registered.ContainsKey(group.Key)))
-                {
-                    try
-                    {
-                        var project = group.Single();
-                        // Retention checks original provenance and material integrity.
-                        // Only later import can accept it for a new input fingerprint.
-                        var input = new RegisteredTestInput(project.Project, registered[project.Project].Assembly, project.InputFingerprint);
-                        var materials = ValidateProject(destination, previous, project, input);
-                        sources.Add((project with { Status = "reused" }, destination, materials));
-                    }
-                    catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException or InvalidOperationException or ArgumentException)
-                    { output.WriteLine($"ENGINEERING_TEST_SEED_RETENTION_MISS project={JsonSerializer.Serialize(group.Key)} reason={JsonSerializer.Serialize(exception.Message)}"); }
-                }
-            }
-            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException or JsonException)
-            { output.WriteLine($"ENGINEERING_TEST_SEED_RETENTION_UNAVAILABLE reason={JsonSerializer.Serialize(exception.Message)}"); }
-            var grouped = sources.SelectMany(source => source.Materials.Select(material => (Material: material, source.Root)))
-                .GroupBy(source => source.Material.Path, StringComparer.Ordinal).ToArray();
-            tests = tests with { Projects = sources.Select(source => source.Project).OrderBy(project => project.Project, StringComparer.Ordinal).ToArray(),
-                Materials = grouped.Select(group => group.First().Material).OrderBy(material => material.Path, StringComparer.Ordinal).ToArray() };
             Directory.CreateDirectory(staging);
-            foreach (var group in grouped)
+            foreach (var material in tests.Materials)
             {
-                var source = group.First();
-                var material = source.Material;
-                if (group.Any(item => item.Material != material)) throw new InvalidDataException("conflicting retained test material: " + material.Path);
                 var target = Path.Combine(staging, material.Path);
                 Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-                File.Copy(Path.Combine(source.Root, material.Path), target);
+                File.Copy(Path.Combine(root, material.Path), target);
             }
             Write(staging, "tests.json", tests);
             ValidateMaterials(staging, tests.Materials);

@@ -76,10 +76,6 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
 清单，声明 `report_modules`、`inspector_sources`、`config_inputs`、
 `producer_scopes`，并可声明 `dependency_sources` 和完整调用的 `report_execution` 环境。
-`report_execution.toolchain` 可显式登记 `pin` 和各 `platform` 对应的完整工具版本字符串。
-生产封存前实测 Lake/Lean 版本并核对该登记；工具未安装时，复用入口使用候选登记核对旧证据，
-仍完整验证报告材料，不取 donor 自报版本作为权威。缺登记、平台/pin/环境不匹配或材料损坏时
-进入正常生产；仅在该入口需要生产且 Lake 不可用时激活工具链，安装或实际构建失败照常失败。
 只有成功完成默认目标、report 和发布的入口才封存 `.reuse.json`；该证据随 current
 种子传输，不改变报告 schema、模块来源或远端 mathlib 分区。
 [读取器](../scripts/report/lean-report-selection.py) 只展开显式登记的路径集合；路径为
@@ -103,7 +99,6 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | 输入变化 | 失效范围 |
 | --- | --- |
 | `report_semantic_version` 增加 | 所有模块报告及汇总。 |
-| `lean-report-inputs.json` 字节变化，语义版本不变 | 真实 `information_templates` 仍绑定该文件的原始哈希，旧证据失效并重新提取；`--statements-only` 夹具不覆盖此绑定。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；源码哈希也独立参与，包含只改注释的编辑。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |
@@ -115,8 +110,6 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-
-批量修复被拒绝的模块工件时，先私有重建，再用一次验证调用检查所有修复后的实际文件；任一材料无效即失败。独立模块入口仍立即验证自己的修复结果。验证不因批处理跳过源码、哈希或材料完整性检查。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，

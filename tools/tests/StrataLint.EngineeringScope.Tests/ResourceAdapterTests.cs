@@ -8,33 +8,6 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class ResourceAdapterTests
 {
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void OptionalReportResourcesHonorTheRegisteredActivationPhase(bool reusable)
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var result = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
-            import pathlib, sys
-            from unittest.mock import patch
-            root = pathlib.Path(sys.argv[1])
-            sys.path.insert(0, str(root / 'tools/scripts/worktree'))
-            import lean_actions
-            hit = sys.argv[2] == 'true'
-            source = 'accepted/report.json' if hit else None
-            requirements = dict(tools=['lake'], cache_layers=['current', 'elan', 'project'],
-                cache_activation={'current':'stage-start', 'elan':'report-miss', 'project':'stage-start'})
-            with patch.object(lean_actions, 'report_seed', return_value=source):
-                selected, values = lean_actions.report_resources(root, {'execution':{'steps':['lean-report']}}, requirements)
-            assert selected == source
-            assert values['needs_lake'] == (not hit)
-            assert values['elan_required'] == (not hit), values
-            assert values['project_required'], 'stage-start is independent of report reuse'
-            assert not values['dependency_required'], 'undeclared resources cannot activate'
-            """, root, reusable ? "true" : "false"], hangGuard: TestBudgets.ScriptProcessHangGuard);
-        Assert.True(result.Exit == 0, result.Text);
-    }
-
-    [Theory]
     [InlineData("build")]
     [InlineData("engineering")]
     [InlineData("current")]
@@ -142,26 +115,12 @@ public sealed partial class ResourceAdapterTests
         var result = Route(fixture, "current", environment);
         Assert.True(result.Exit == 0, result.Text);
         var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
-        Assert.Contains("no_work=" + (resource == "none" ? "true" : "false"), outputs);
         Assert.Contains("required=" + (resource == "none" ? "false" : "true"), outputs);
         Assert.Contains("dotnet=" + (resource == "none" ? "false" : "true"), outputs);
         Assert.Contains("lake=false", outputs);
         Assert.Contains("cache_layers=" + (resource == "none" ? "" : "current"), outputs);
         Assert.Contains("report_required=false", outputs);
         Assert.Equal(File.ReadAllBytes(fixture.Plan), File.ReadAllBytes(Path.Combine(fixture.Root, "build/ci/plan.json")));
-    }
-
-    [Fact]
-    public void UnselectedStageCannotDeclareTheWholePlanHasNoWork()
-    {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
-        var environment = EnvironmentFor(fixture);
-        MaterializePlan(fixture, environment);
-        var result = Route(fixture, "engineering", environment);
-        Assert.True(result.Exit == 0, result.Text);
-        var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
-        Assert.Contains("required=false", outputs);
-        Assert.Contains("no_work=false", outputs);
     }
 
     [Theory]

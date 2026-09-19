@@ -12,7 +12,7 @@ public sealed class ScribeCliCommandSetTests
     {
         var pinned = new[]
         {
-            "describe-report", "emit", "emit-values", "filemap", "library-check", "markdown-check", "projections",
+            "describe-report", "emit", "emit-values", "filemap", "markdown-check", "projections",
         };
 
         Assert.Equal(

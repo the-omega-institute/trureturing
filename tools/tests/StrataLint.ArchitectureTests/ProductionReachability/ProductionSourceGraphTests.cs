@@ -1,4 +1,4 @@
-namespace StrataLint.Repository.Tests;
+namespace StrataLint.ArchitectureTests;
 
 public sealed class ProductionSourceGraphTests
 {

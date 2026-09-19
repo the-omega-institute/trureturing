@@ -1,13 +1,14 @@
 {
   "version": 1,
-  "test_parallelism": 2,
   "projects": [
     {
       "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "assembly": "StrataLint",
       "role": "production",
       "ci": false,
-      "include": ["tools/StrataLint.Cli/**/*.cs"],
+      "include": [
+        "tools/StrataLint.Cli/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -39,15 +40,21 @@
       "assembly": "StrataLint.Engine",
       "role": "production",
       "ci": false,
-      "include": ["tools/StrataLint.Engine/**/*.cs"],
+      "include": [
+        "tools/StrataLint.Engine/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/Trureturing.Truth/Trureturing.Truth.csproj"],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Engine.Tests",
       "test_partition": null,
       "root_namespace": "StrataLint.Engine",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/StrataLint.Engine/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Engine/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -63,7 +70,9 @@
       "assembly": "StrataLint.EngineeringScope",
       "role": "production",
       "ci": false,
-      "include": ["tools/StrataLint.EngineeringScope/**/*.cs"],
+      "include": [
+        "tools/StrataLint.EngineeringScope/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -74,7 +83,9 @@
       "test_partition": null,
       "root_namespace": "StrataLint.EngineeringScope",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/StrataLint.EngineeringScope/Properties/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.EngineeringScope/Properties/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -90,15 +101,21 @@
       "assembly": "StrataLint.Lean",
       "role": "production",
       "ci": false,
-      "include": ["tools/StrataLint.Lean/**/*.cs"],
+      "include": [
+        "tools/StrataLint.Lean/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/StrataLint.Engine/StrataLint.Engine.csproj"],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Lean.Tests",
       "test_partition": null,
       "root_namespace": "StrataLint.EngineeringScope",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/StrataLint.Lean/Properties/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Lean/Properties/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -119,12 +136,16 @@
         "Blueprint/**/*.scribe.cs"
       ],
       "exclude": [],
-      "references": ["tools/StrataLint.Scribe/StrataLint.Scribe.csproj"],
+      "references": [
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Scribe.Documents.Tests",
       "test_partition": null,
       "root_namespace": "StrataLint.Scribe.Documents",
-      "namespace_exclude": ["Blueprint/**/*.scribe.cs"],
+      "namespace_exclude": [
+        "Blueprint/**/*.scribe.cs"
+      ],
       "global_namespace_exceptions": [],
       "build_inputs": [
         "global.json",
@@ -141,7 +162,9 @@
       "assembly": "StrataLint.Scribe",
       "role": "production",
       "ci": false,
-      "include": ["tools/StrataLint.Scribe/**/*.cs"],
+      "include": [
+        "tools/StrataLint.Scribe/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -152,7 +175,9 @@
       "test_partition": null,
       "root_namespace": "StrataLint.Scribe",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/StrataLint.Scribe/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Scribe/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -168,15 +193,21 @@
       "assembly": "StrataLint.TestSupport",
       "role": "test-support",
       "ci": false,
-      "include": ["tools/TestSupport/StrataLint.TestSupport/**/*.cs"],
+      "include": [
+        "tools/TestSupport/StrataLint.TestSupport/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/StrataLint.Engine/StrataLint.Engine.csproj"],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": null,
       "test_partition": null,
       "root_namespace": "StrataLint.TestSupport",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/TestSupport/StrataLint.TestSupport/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.TestSupport/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -192,7 +223,9 @@
       "assembly": "Trureturing.Truth",
       "role": "production",
       "ci": false,
-      "include": ["tools/Trureturing.Truth/**/*.cs"],
+      "include": [
+        "tools/Trureturing.Truth/**/*.cs"
+      ],
       "exclude": [],
       "references": [],
       "owner": null,
@@ -216,7 +249,9 @@
       "assembly": "JudgeSeedTask",
       "role": "production",
       "ci": false,
-      "include": ["tools/scripts/report/JudgeSeedTask.cs"],
+      "include": [
+        "tools/scripts/report/JudgeSeedTask.cs"
+      ],
       "exclude": [],
       "references": [],
       "owner": null,
@@ -240,7 +275,9 @@
       "assembly": "StrataLint.BannedApiCompileFailProof",
       "role": "compile-fail-proof",
       "ci": false,
-      "include": ["tools/tests/BannedApiCompileFailProof/**/*.cs"],
+      "include": [
+        "tools/tests/BannedApiCompileFailProof/**/*.cs"
+      ],
       "exclude": [],
       "references": [],
       "owner": null,
@@ -266,9 +303,13 @@
       "assembly": "StrataLint.CompileFailProof",
       "role": "compile-fail-proof",
       "ci": false,
-      "include": ["tools/tests/CompileFailProof/**/*.cs"],
+      "include": [
+        "tools/tests/CompileFailProof/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/StrataLint.Engine/StrataLint.Engine.csproj"],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": null,
       "test_partition": null,
@@ -292,7 +333,9 @@
       "assembly": "JudgeSeedTask.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/JudgeSeedTask.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/JudgeSeedTask.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/scripts/report/JudgeSeedTask.csproj",
@@ -320,43 +363,18 @@
         "tools/scripts/report/packages.lock.json"
       ],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
-    },
-    {
-      "path": "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj",
-      "assembly": "StrataLint.Anchors.Tests",
-      "role": "cross-cutting-test",
-      "ci": true,
-      "include": ["tools/tests/StrataLint.Anchors.Tests/**/*.cs"],
-      "exclude": [],
-      "references": ["tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"],
-      "owner": null,
-      "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Anchors.Tests",
-      "root_namespace": "StrataLint.Anchors.Tests",
-      "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Anchors.Tests/Usings.cs"],
-      "build_inputs": [
-        "global.json",
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        "tools/tests/StrataLint.Anchors.Tests/packages.lock.json",
-        "tools/tests/Directory.Build.props",
-        "tools/Architecture/BannedSymbols.Determinism.txt"
-      ],
-      "execution_inputs": [
-        "D5/**",
-        "skills/codex-formal-answer/SKILL.md"
-      ],
-      "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
       "assembly": "StrataLint.ArchitectureTests",
       "role": "cross-cutting-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.ArchitectureTests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.ArchitectureTests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -371,7 +389,9 @@
       "test_partition": "tools/tests/StrataLint.ArchitectureTests",
       "root_namespace": "StrataLint.ArchitectureTests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.ArchitectureTests/Usings.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ArchitectureTests/Usings.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -395,9 +415,12 @@
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-checks.json",
         "Meta/ci-resources.json",
+        "Meta/domains.yaml",
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "agents/**",
         "docs/develop/spec/**",
         "*.props",
         "*.json",
@@ -407,29 +430,33 @@
         ".gitignore"
       ],
       "execution_excludes": [
-        "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md",
-        "tools/scripts/agent/openproblem/TARGET-GATES.md",
-        "tools/scripts/agent/openproblem/erdos617.py",
-        "tools/scripts/agent/openproblem/standing-check.py"
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
       ],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
       "assembly": "StrataLint.Cache.Tests",
       "role": "cross-cutting-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Cache.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Cache.Tests/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
       "owner": null,
       "owned_test_assembly": null,
       "test_partition": "tools/tests/StrataLint.Cache.Tests",
       "root_namespace": "StrataLint.Cache.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Cache.Tests/AssemblyInfo.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Cache.Tests/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -439,23 +466,44 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/lean-inspector/**",
-        "tools/scripts/lib/**",
-        "tools/scripts/report/**",
-        "tools/scripts/workflow/**",
-        "tools/scripts/worktree/**",
-        "tools/tests/StrataLint.ScriptTests/Fixtures/**",
-        "Makefile"
+        "tools/**",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
       ],
-      "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
       "assembly": "StrataLint.Engine.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Engine.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Engine.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -469,7 +517,9 @@
       "test_partition": "tools/tests/StrataLint.Engine.Tests",
       "root_namespace": "StrataLint.Engine.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Engine.Tests/Usings.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Engine.Tests/Usings.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -478,16 +528,22 @@
         "tools/tests/Directory.Build.props",
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
-      "execution_inputs": ["tools/tests/StrataLint.Engine.Tests/Fixtures/**"],
+      "execution_inputs": [
+        "tools/tests/StrataLint.Engine.Tests/Fixtures/**"
+      ],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
       "assembly": "StrataLint.EngineeringScope.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.EngineeringScope.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -511,13 +567,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/scripts/ci-build-outputs.targets",
-        "tools/scripts/ci-stage.sh",
-        "tools/scripts/preflight.sh",
-        "tools/scripts/lib/**",
-        "tools/scripts/report/**",
-        "tools/scripts/workflow/**",
-        "tools/scripts/worktree/**",
+        "tools/scripts/**",
         "tools/Architecture/**",
         "tools/**/*.csproj",
         "tools/**/*.json",
@@ -533,15 +583,22 @@
         "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/**",
         "lean-report-inputs.json"
       ],
-      "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
       "assembly": "StrataLint.Lean.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Lean.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Lean.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -555,7 +612,9 @@
       "test_partition": "tools/tests/StrataLint.Lean.Tests",
       "root_namespace": "StrataLint.Lean.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Lean.Tests/Usings.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Lean.Tests/Usings.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -589,93 +648,22 @@
         "lean-report-inputs.json"
       ],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
-    },
-    {
-      "path": "tools/tests/StrataLint.Policy.Tests/StrataLint.Policy.Tests.csproj",
-      "assembly": "StrataLint.Policy.Tests",
-      "role": "cross-cutting-test",
-      "ci": true,
-      "include": ["tools/tests/StrataLint.Policy.Tests/**/*.cs"],
-      "exclude": [],
-      "references": [
-        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
-      ],
-      "owner": null,
-      "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Policy.Tests",
-      "root_namespace": "StrataLint.Policy.Tests",
-      "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Policy.Tests/Usings.cs"],
-      "build_inputs": [
-        "global.json",
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        "tools/tests/StrataLint.Policy.Tests/packages.lock.json",
-        "tools/tests/Directory.Build.props",
-        "tools/Architecture/BannedSymbols.Determinism.txt"
-      ],
-      "execution_inputs": [
-        "**/*.cs",
-        "CLAUDE.md",
-        "Meta/FILEMAP.*.toml",
-        "Meta/FILEMAP.toml",
-        "Meta/ReportConsumers/*.json",
-        "Meta/ReportProducers/*.json",
-        "Meta/domains.yaml",
-        "Meta/judge-seed.json",
-        "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "lean-report-inputs.json",
-        "skills/**",
-        "tools/**/*.csproj",
-        "tools/scripts/agent/batch_pr.sh"
-      ],
-      "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
-    },
-    {
-      "path": "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj",
-      "assembly": "StrataLint.Repository.Tests",
-      "role": "cross-cutting-test",
-      "ci": true,
-      "include": ["tools/tests/StrataLint.Repository.Tests/**/*.cs"],
-      "exclude": [],
-      "references": [
-        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
-      ],
-      "owner": null,
-      "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Repository.Tests",
-      "root_namespace": "StrataLint.Repository.Tests",
-      "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Repository.Tests/Usings.cs"],
-      "build_inputs": [
-        "global.json",
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        "tools/tests/StrataLint.Repository.Tests/packages.lock.json",
-        "tools/tests/Directory.Build.props",
-        "tools/Architecture/BannedSymbols.Determinism.txt"
-      ],
-      "execution_inputs": [
-        "**/*.cs",
-        "D5/**",
-        "tools/**/*.csproj"
-      ],
-      "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
       "assembly": "StrataLint.Scribe.Documents.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Scribe.Documents.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"],
+      "references": [
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
       "owner": {
         "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
         "assembly": "StrataLint.Scribe.Documents"
@@ -695,14 +683,18 @@
       ],
       "execution_inputs": [],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
       "assembly": "StrataLint.Scribe.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Scribe.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Scribe.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -716,7 +708,9 @@
       "test_partition": "tools/tests/StrataLint.Scribe.Tests",
       "root_namespace": "StrataLint.Scribe.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.Scribe.Tests/Usings.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Scribe.Tests/Usings.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -731,18 +725,24 @@
         "D5/**",
         "Blueprint/**",
         "Library/**",
+        "Meta/domains.yaml",
+        "Meta/registry.yaml",
         "tools/scripts/katex/**",
         "tools/scripts/renderer/**"
       ],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
       "assembly": "StrataLint.ScriptTests",
       "role": "cross-cutting-test",
       "ci": false,
-      "include": ["tools/tests/StrataLint.ScriptTests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.ScriptTests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -755,7 +755,9 @@
       "test_partition": "tools/tests/StrataLint.ScriptTests",
       "root_namespace": "StrataLint.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": ["tools/tests/StrataLint.ScriptTests/Usings.cs"],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ScriptTests/Usings.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -781,14 +783,18 @@
         "tools/scripts/agent/openproblem/README.md",
         "tools/scripts/agent/openproblem/SCREENED-OUT.md"
       ],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
       "assembly": "StrataLint.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/StrataLint.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/StrataLint.Tests/**/*.cs"
+      ],
       "exclude": [],
       "references": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
@@ -826,12 +832,15 @@
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-checks.json",
         "Meta/ci-resources.json",
+        "Meta/domains.yaml",
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
+        "Meta/registry.yaml",
         "D5/**",
         "Blueprint/**",
         "Library/**",
+        "agents/**",
         "*.props",
         "*.json",
         "*.toml",
@@ -841,23 +850,25 @@
         "docs/develop/spec/**"
       ],
       "execution_excludes": [
-        "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md",
-        "tools/scripts/agent/openproblem/TARGET-GATES.md",
-        "tools/scripts/agent/openproblem/erdos617.py",
-        "tools/scripts/agent/openproblem/standing-check.py"
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
       ],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
       "assembly": "Trureturing.Truth.Tests",
       "role": "owned-test",
       "ci": true,
-      "include": ["tools/tests/Trureturing.Truth.Tests/**/*.cs"],
+      "include": [
+        "tools/tests/Trureturing.Truth.Tests/**/*.cs"
+      ],
       "exclude": [],
-      "references": ["tools/Trureturing.Truth/Trureturing.Truth.csproj"],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
       "owner": {
         "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
         "assembly": "Trureturing.Truth"
@@ -877,7 +888,9 @@
       ],
       "execution_inputs": [],
       "execution_excludes": [],
-      "execution_environment": ["STRATALINT_TEST_ENVIRONMENT"]
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     }
   ],
   "historical_projects": [],

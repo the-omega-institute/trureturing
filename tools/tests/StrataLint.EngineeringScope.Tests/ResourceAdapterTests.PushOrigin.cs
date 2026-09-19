@@ -19,7 +19,6 @@ public sealed partial class ResourceAdapterTests
         SetPushEvent(fixture, environment, before);
         var result = PlannerWithEnvironment(fixture, environment, "push-plan");
         Assert.True(result.Exit == 0, result.Text);
-        Assert.Contains("no_work=false", File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output")));
         var paths = PushScope(fixture)["changes"]!.AsArray().SelectMany(row =>
             new[] { row!["old"], row["new"] }.Where(value => value is not null).Select(value => value!["path"]!.ToString())).Distinct().Order(StringComparer.Ordinal).ToArray();
         Assert.Equal(new[] { "docs/push-range.md", "fixtures/selected.txt" }, paths);
@@ -171,20 +170,17 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Theory]
-    [InlineData("shallow", false)]
-    [InlineData("missing", false)]
-    [InlineData("missing", true)]
-    [InlineData("missing-parent", false)]
-    [InlineData("missing-parent", true)]
-    [InlineData("missing-registration", false)]
-    public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect, bool packed)
+    [InlineData("shallow")]
+    [InlineData("missing")]
+    [InlineData("missing-packed")]
+    [InlineData("missing-registration")]
+    public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
-        if (packed) PackParent(fixture, parent);
+        if (defect == "missing-packed") PackParent(fixture, parent);
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
-        else if (defect == "missing-parent") fixture.RemoveObject(parent);
-        else if (defect == "missing") parent = MissingEndpoint(fixture);
+        else if (defect is "missing" or "missing-packed") fixture.RemoveObject(parent);
         else parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", parent + "^1");
         var result = PushPlan(fixture, parent);
         if (defect == "shallow")
@@ -193,7 +189,7 @@ public sealed partial class ResourceAdapterTests
             Assert.Equal(parent, PushScope(fixture)["origin"]!["before"]!.ToString());
             Assert.Equal("event-range", PushScope(fixture)["origin"]!["kind"]!.ToString());
         }
-        else if (defect is "missing" or "missing-parent")
+        else if (defect is "missing" or "missing-packed")
         {
             Assert.Equal(2, result.Exit);
             Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
@@ -211,21 +207,18 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    [InlineData(true, true)]
-    public void PushMissingPromisorEndpointFailsWithoutContactingRemote(bool packed, bool actualParent)
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PushMissingPromisorParentFailsWithoutContactingRemote(bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
-        if (packed) PackParent(fixture, before);
-        if (actualParent) fixture.RemoveObject(before);
-        else before = MissingEndpoint(fixture);
+        var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        if (packed) PackParent(fixture, parent);
+        fixture.RemoveObject(parent);
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.promisor", "true");
         var environment = EnvironmentFor(fixture);
-        SetPushEvent(fixture, environment, before);
+        SetPushEvent(fixture, environment, parent);
         var helper = Path.Combine(environment["PATH"], "git-remote-push-probe");
         File.WriteAllText(helper, "#!/bin/bash\nprintf 'contacted\\n' > \"$PUSH_REMOTE_PROBE\"\nexit 1\n");
         SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", helper]);
@@ -239,21 +232,6 @@ public sealed partial class ResourceAdapterTests
         Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
         Assert.False(File.Exists(contacted), "Planning contacted the promisor remote for a missing object.");
         Assert.False(File.Exists(PushPlanPath(fixture)));
-        _ = SharedBuildContractTests.Process(fixture.Root, "git", ["cat-file", "-e", before], environment,
-            TestBudgets.WorkflowProcessHangGuard);
-        Assert.True(File.Exists(contacted), "The control must reach the promisor helper when lazy fetch is enabled.");
-    }
-
-    private static string MissingEndpoint(ResourceRouteTests.ResourceFixture fixture)
-    {
-        // event.before need not be an ancestor. Hash a valid commit without
-        // writing it so the missing endpoint is independent of Git storage.
-        fixture.Write("build/missing-endpoint.commit",
-            SharedBuildContractTests.Git(fixture.Root, "cat-file", "commit", "HEAD^1")
-                + "\nmissing push endpoint fixture\n");
-        var before = SharedBuildContractTests.Git(fixture.Root, "hash-object", "-t", "commit", "--", "build/missing-endpoint.commit");
-        Assert.NotEqual(0, SharedBuildContractTests.Process(fixture.Root, "git", ["cat-file", "-e", before]).Exit);
-        return before;
     }
 
     private static void PackParent(ResourceRouteTests.ResourceFixture fixture, string parent)
@@ -419,7 +397,7 @@ public sealed partial class ResourceAdapterTests
             string.Concat(patterns.Select(pattern => row.Replace("pattern = \"**\"", "pattern = \"" + pattern + "\"", StringComparison.Ordinal))));
         fixture.CommitPlan();
         fixture.Write("missing/registered-later.md", "no inferred ownership\n");
-        fixture.CommitChanges();
+        fixture.CommitPlan();
         var result = PushPlan(fixture);
         Assert.Equal(2, result.Exit);
         Assert.Contains("missing/registered-later.md: FILEMAP match count " + (conflict ? "2" : "0"), result.Text, StringComparison.Ordinal);

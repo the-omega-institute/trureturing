@@ -6,69 +6,10 @@ using Xunit.Abstractions;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
+public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
     : IClassFixture<RegisteredAdmissionResourcesTests.RegisteredBase>
 {
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
-
-    [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr", true)]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push", true)]
-    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json", "pr", false)]
-    [InlineData("Golden/Frozen/accepted/admission-resource-probe.json", "pr", false)]
-    [InlineData("Blueprint/D5/F/NumberTheory/AdmissionResourceProbe.scribe.cs", "pr", false)]
-    public void OrdinaryContentSelectsCompleteRepositoryUnitWithoutFixtureSuite(string path, string mode, bool anchors)
-    {
-        var plan = Plan(path, "", mode);
-        var resources = Strings(plan["resources"]!);
-        Assert.Contains("repository", resources);
-        Assert.DoesNotContain("engineering", resources);
-        Assert.DoesNotContain("delta", resources);
-        var tests = Strings(plan["execution"]!["projects"]!).Where(project => project.StartsWith("tools/tests/", StringComparison.Ordinal));
-        Assert.Equal(anchors
-            ? new[] { "tools/tests/StrataLint.Anchors.Tests/StrataLint.Anchors.Tests.csproj", "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj" }
-            : new[] { "tools/tests/StrataLint.Repository.Tests/StrataLint.Repository.Tests.csproj" }, tests);
-        Assert.DoesNotContain(Strings(plan["execution"]!["checks"]!), CommonExecutionEvidence.EngineeringCheckIds.Contains);
-        Assert.Contains("lean-report", Strings(plan["execution"]!["steps"]!));
-    }
-
-    [Fact]
-    public void ContentWithJudgeChangeRestoresCompleteEngineering()
-    {
-        var plan = Plan("D5/F/NumberTheory/AdmissionResourceProbe.lean", "Meta/engineering-projects.json");
-        Assert.Contains("engineering", Strings(plan["resources"]!));
-        Assert.Contains("delta", Strings(plan["resources"]!));
-        Assert.Contains("tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", Strings(plan["execution"]!["projects"]!));
-        foreach (var id in CommonExecutionEvidence.EngineeringCheckIds) Assert.Contains(id, Strings(plan["execution"]!["checks"]!));
-    }
-
-    [Theory]
-    [InlineData("pr")]
-    [InlineData("push")]
-    public void LibraryNotesKeepReferenceEvidenceWithoutEngineeringOrUnrelatedScribeChecks(string mode)
-    {
-        var plan = Plan("Library/notes/probe2026note.md", "", mode);
-        Assert.Equal(new[] { "build", "filemap", "lean", "lean-report", "scribe-library" }, Strings(plan["resources"]!));
-        Assert.Equal(new[] { "filemap", "scribe-library" }, Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "checks", "current", "dependency", "elan", "judge", "project" }, Strings(plan["cache_layers"]!));
-        Assert.Equal(new[] { "lean-report", "scribe", "filemap" }, Strings(plan["execution"]!["steps"]!));
-        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
-        Assert.DoesNotContain(Strings(plan["execution"]!["projects"]!), path => path.StartsWith("tools/tests/", StringComparison.Ordinal));
-    }
-
-    [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
-    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
-    public void LibraryNotesDoNotHideOtherRegisteredObligations(string changed)
-    {
-        var original = Plan(changed, "");
-        var mixed = Plan(changed, "Library/notes/probe2026note.md");
-        foreach (var field in new[] { "resources", "tools", "cache_layers" })
-            Assert.Empty(Strings(original[field]!).Except(Strings(mixed[field]!)));
-        foreach (var field in new[] { "checks", "steps", "projects" })
-            Assert.Empty(Strings(original["execution"]![field]!).Except(Strings(mixed["execution"]![field]!)));
-        Assert.Contains("scribe-library", Strings(mixed["execution"]!["checks"]!));
-    }
 
     [Theory]
     [InlineData("Meta/ci-checks.json", false)]
@@ -83,6 +24,10 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", true)]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs", false)]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs", true)]
+    [InlineData("tools/tests/JudgeSeedTask.Tests/JudgeSeedInputsTests.cs", false)]
+    [InlineData("tools/tests/JudgeSeedTask.Tests/JudgeSeedInputsTests.cs", true)]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs", false)]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs", true)]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj", false)]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj", true)]
     [InlineData("tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", false)]
@@ -93,7 +38,11 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py", true)]
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", false)]
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", true)]
+    [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
+    [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
+    [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
+    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -106,35 +55,6 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.Equal(mixed ? 2 : 1, plan["paths"]!.AsArray().Count);
         if (mixed)
             Assert.Empty(plan["paths"]!.AsArray().Single(row => row!["path"]!.GetValue<string>() == RegisteredNoResourceContent)!["require"]!.AsArray());
-    }
-
-    [Theory]
-    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md", "pr")]
-    [InlineData("tools/scripts/agent/openproblem/templates/impl-base-brief.md", "push")]
-    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", "pr")]
-    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", "push")]
-    public void AgentTemplatesRequestOnlyCapacityDataDeltaAndPathValidation(string path, string mode)
-    {
-        var plan = Plan(path, "", mode);
-        Assert.Equal(mode == "pr" ? new[] { "build", "current-data", "delta-data", "filemap" }
-            : new[] { "build", "current-data", "filemap" }, Strings(plan["resources"]!));
-        Assert.Equal(mode == "pr" ? new[] { "build", "current", "delta" } : new[] { "build", "current" }, Strings(plan["selected_stages"]!));
-        Assert.Equal(new[] { "SL-003", "filemap" }, Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
-        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
-        Assert.DoesNotContain("lake", Strings(plan["tools"]!));
-    }
-
-    [Theory]
-    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs", "delta-judge")]
-    [InlineData("Meta/engineering-projects.json", "delta")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "delta-content")]
-    public void AgentTemplateDoesNotExemptAdditionalEngineeringOrSemanticInput(string input, string deltaResource)
-    {
-        var plan = Plan("tools/scripts/agent/openproblem/templates/impl-base-brief.md", input);
-        Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
-        Assert.Contains(deltaResource, Strings(plan["resources"]!));
-        Assert.Contains("lean-report", Strings(plan["execution"]!["steps"]!));
     }
 
     [Theory]
@@ -157,24 +77,6 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("pr")]
-    [InlineData("push")]
-    public void TheoryTextNeedsNoHeavyResourcesAndCannotHideOtherRequirements(string mode)
-    {
-        const string theory = "docs/develop/theory/admission-resource-probe.md";
-        var textOnly = Plan("", theory, mode);
-        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers" })
-            Assert.Empty(textOnly[field]!.AsArray());
-        foreach (var field in new[] { "projects", "checks", "steps" })
-            Assert.Empty(textOnly["execution"]![field]!.AsArray());
-
-        var judgeOnly = Plan("Meta/ci-checks.json", "", mode);
-        var mixed = Plan("Meta/ci-checks.json", theory, mode);
-        foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers", "execution" })
-            Assert.True(JsonNode.DeepEquals(judgeOnly[field], mixed[field]), field);
-    }
-
-    [Theory]
     [InlineData("Meta/Digestion/atoms/sha256/admission-resource-probe", "push")]
     [InlineData("Meta/Digestion/atoms/sha256/admission-resource-probe", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
@@ -184,14 +86,14 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         const string theory = "docs/develop/theory/admission-resource-probe.md";
         var plan = Plan(metadata, theory, mode);
         Assert.Equal(new[] { "current-metadata", "delta-metadata", "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Empty(Strings(plan["paths"]!.AsArray()
+        Assert.Equal(new[] { "filemap" }, Strings(plan["paths"]!.AsArray()
             .Single(row => row!["path"]!.GetValue<string>() == theory)!["require"]!));
         if (mode == "push")
         {
             Assert.Equal(new[] { "build", "current-metadata", "filemap" }, Strings(plan["resources"]!));
             Assert.Equal(new[] { "build", "current" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "bash", "dotnet", "git", "python3" }, Strings(plan["tools"]!));
-            Assert.Equal(new[] { "checks", "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal(new[] { "current", "judge" }, Strings(plan["cache_layers"]!));
             Assert.Equal(new[] { "tools/StrataLint.Cli/StrataLint.Cli.csproj" }, Strings(plan["execution"]!["projects"]!));
             Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" }, Strings(plan["execution"]!["checks"]!));
             Assert.Equal(new[] { "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
@@ -200,31 +102,28 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         }
         else
         {
-            Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "filemap", "lean", "lean-report" },
+            Assert.Equal(new[] { "build", "current-metadata", "delta-metadata", "engineering", "filemap", "lean", "lean-report" },
                 Strings(plan["resources"]!));
-            Assert.Equal(new[] { "checks", "current", "dependency", "elan", "judge", "project" }, Strings(plan["cache_layers"]!));
-            Assert.Equal(new[] { "build", "current", "delta" }, Strings(plan["selected_stages"]!));
+            Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "lean-report", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" },
+            Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "banned-api-proof", "capability-proof", "filemap", "selftest-pair" },
                 Strings(plan["execution"]!["checks"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
-            Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
         }
     }
 
     [Theory]
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
-    [InlineData("tools/StrataLint.Engine/AdmissionResourceProbe.cs")]
+    [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
+    [InlineData("Meta/registry.yaml")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
     {
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);
         Assert.Contains("current", Strings(plan["resources"]!));
-        var content = input.StartsWith("D5/", StringComparison.Ordinal) || input.StartsWith("Golden/", StringComparison.Ordinal);
-        Assert.Contains(content ? "delta-content" : "delta-judge", Strings(plan["resources"]!));
+        Assert.Contains("delta", Strings(plan["resources"]!));
         Assert.Contains("scribe", Strings(plan["resources"]!));
-        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => !content || !CommonExecutionEvidence.EngineeringCheckIds.Contains(id)).Order(StringComparer.Ordinal),
-            Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Order(StringComparer.Ordinal), Strings(plan["execution"]!["checks"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
     }
 
@@ -243,23 +142,12 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         return plan;
     }
 
-    [Theory]
-    [InlineData("docs/reports/ci-fixture-plane-probe.unregistered")]
-    [InlineData("docs/develop/theory/ci-fixture-plane-probe.unregistered")]
-    [InlineData("docs/develop/theory/ci-fixture-plane-probe.jsonl")]
-    public void UnregisteredContentCannotClaimNoResources(string path)
+    [Fact]
+    public void UnregisteredReportContentCannotClaimNoResources()
     {
-        var result = PlanResult("", path);
+        var result = PlanResult("", "docs/reports/ci-fixture-plane-probe.unregistered");
         Assert.NotEqual(0, result.Exit);
         Assert.Contains("FILEMAP match count 0", result.Text, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TheoryRegistryRetainsItsExplicitResourceRequirement()
-    {
-        var plan = Plan("", "docs/develop/theory/PERIODIC_TREE_registry.jsonl");
-        Assert.Equal(new[] { "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
     }
 
     private (int Exit, string Text) PlanResult(string judge, string content, string mode = "pr")

@@ -180,8 +180,7 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base,
-                                  "no_work": str(not expected_plan["resources"]).lower()}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
@@ -462,7 +461,7 @@ runtime_disposition = "committed-source"
                 return subprocess.CompletedProcess(command, 0)
             return run(command, **options)
         args = owner.argparse.Namespace(repository=self.root, stage="engineering", commit=REV,
-            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None, checks_seed_archive=None)
+            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None)
         with mock.patch.dict(os.environ, dict(self.env, NUGET_PACKAGES=str(self.root / "absent-packages"))), \
              mock.patch.object(owner.subprocess, "run", side_effect=invoke), \
              mock.patch.object(owner, "extract") as extract:
@@ -493,24 +492,10 @@ runtime_disposition = "committed-source"
                     self.assertEqual(expected is not None, "--seed-archive" in command)
                     if expected is not None:
                         self.assertEqual(str(expected), command[command.index("--seed-archive") + 1])
-            planner = importlib.import_module("ci_plan")
-            args.stage, args.seed_archive = "current", None
-            for profiles in (["checks"], ["current"], ["checks", "current"]):
-                with self.subTest(profiles=profiles), \
-                     mock.patch.dict(os.environ, dict(STRATALINT_CACHE_WRITES="true",
-                        CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
-                     mock.patch.object(planner, "validate_plan", return_value={}), \
-                     mock.patch.object(planner, "stage_requirements", return_value={"cache_layers": profiles}):
-                    owner.transport(args)
-                    command = calls[-1][0]
-                    self.assertEqual("current" in profiles, "--seed-archive" in command)
-                    self.assertEqual("checks" in profiles, "--checks-seed-archive" in command)
-                    if "checks" in profiles:
-                        self.assertEqual(str(self.root / "ci-checks-seed.tar.gz"), command[command.index("--checks-seed-archive") + 1])
             with mock.patch.object(owner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "dotnet")):
                 with self.assertRaises(subprocess.CalledProcessError):
                     owner.transport(args)
-        self.assertEqual(10, len(calls))
+        self.assertEqual(7, len(calls))
 
 
 if __name__ == "__main__":

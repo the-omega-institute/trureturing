@@ -44,7 +44,6 @@ internal sealed record EngineeringProjectRegistration(
 
 internal sealed record EngineeringProjectManifest(
     int Version,
-    int TestParallelism,
     EngineeringProjectRegistration[] Projects,
     EngineeringProjectRegistration[] HistoricalProjects,
     string[] RuleBuildInputs);
@@ -62,14 +61,9 @@ internal sealed class EngineeringProjectRegistry
         RespectRequiredConstructorParameters = true,
     };
 
-    private EngineeringProjectRegistry(IReadOnlyList<EngineeringProjectRegistration> projects, int testParallelism)
-    {
-        Projects = projects;
-        TestParallelism = testParallelism;
-    }
+    private EngineeringProjectRegistry(IReadOnlyList<EngineeringProjectRegistration> projects) => Projects = projects;
 
     internal IReadOnlyList<EngineeringProjectRegistration> Projects { get; }
-    internal int TestParallelism { get; }
 
     internal static EngineeringProjectRegistry Read(RepositorySnapshot snapshot) => Read(
         snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray());
@@ -79,8 +73,7 @@ internal sealed class EngineeringProjectRegistry
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
         var registration = Parse(manifest.Content);
-        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true),
-            registration.TestParallelism);
+        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true));
         _ = registry.ProjectInputs(registry.Projects.Select(project => project.Path), files.Select(file => file.Path), []);
         return registry;
     }
@@ -146,8 +139,6 @@ internal sealed class EngineeringProjectRegistry
             var manifest = JsonSerializer.Deserialize<EngineeringProjectManifest>(text, Options);
             if (manifest is null || manifest.Version != 1 || manifest.Projects is null || manifest.HistoricalProjects is null)
                 throw new InvalidDataException("invalid engineering project registration version or projects");
-            if (manifest.TestParallelism < 1)
-                throw new InvalidDataException("invalid engineering test_parallelism: expected a positive integer");
             ValidateInputPaths(manifest.RuleBuildInputs, "rule_build_inputs");
             ValidateDeclarations(manifest.Projects.Concat(manifest.HistoricalProjects));
             foreach (var project in manifest.Projects.Concat(manifest.HistoricalProjects))
@@ -255,19 +246,12 @@ internal sealed class EngineeringProjectRegistry
     internal static string[] ExpandInputs(IEnumerable<string> paths, string[] includes, string[] excludes, string project)
     {
         var available = paths.ToHashSet(StringComparer.Ordinal);
-        var (include, exclude) = ValidateExpandedInputs(available, includes, excludes, project);
-        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
-            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
-    }
-
-    internal static (FileMapGlob[] Include, FileMapGlob[] Exclude) ValidateExpandedInputs(
-        IReadOnlySet<string> available, string[] includes, string[] excludes, string project)
-    {
         var include = includes.Select(FileMapGlob.Create).ToArray();
         var exclude = excludes.Select(FileMapGlob.Create).ToArray();
         foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
             if (!available.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
-        return (include, exclude);
+        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
+            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
     }
 
     private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)

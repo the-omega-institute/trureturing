@@ -153,7 +153,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, record.Steps.Select(step => step.Name));
         Assert.Equal(new[] { "make --no-print-directory lean-report", "dotnet check-current" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
         var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
-        Assert.Equal(22, checks.Units.Length);
+        Assert.Equal(21, checks.Units.Length);
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("selftest-pair" or "capability-proof" or "banned-api-proof")).Order(StringComparer.Ordinal),
             checks.Units.Select(unit => unit.Id));
@@ -276,9 +276,8 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         using var output = new StringWriter();
         Assert.True(fixture.Run("build", output) == 0, output.ToString());
         Assert.Equal(new[] { ResourceFixture.Foo }, CommonExecutionEvidence.ValidateBuild(fixture.Root).Projects);
-        var processes = string.Join('\n', output.ToString().Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal)));
-        Assert.DoesNotContain("tools/ScriptTests/ScriptTests.csproj", processes, StringComparison.Ordinal);
-        Assert.DoesNotContain("tools/Proof/Proof.csproj", processes, StringComparison.Ordinal);
+        Assert.DoesNotContain("tools/ScriptTests/ScriptTests.csproj", output.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("tools/Proof/Proof.csproj", output.ToString(), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -322,7 +321,6 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         internal string Plan => Path.Combine(Root, "build/plan.json");
         internal string Changes => Path.Combine(Root, "build/changes.json");
         internal string Commit { get; private set; } = "";
-        private readonly string planningBase;
         private readonly string changed;
         private readonly string[] required;
         internal ResourceFixture(string[] required, string changed = "fixtures/selected.txt")
@@ -353,10 +351,8 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 """ + "\n");
             Git("add", "Meta/FILEMAP.toml");
             Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "register seed projects");
-            planningBase = Git("rev-parse", "HEAD");
             var source = TestRepositoryLayout.FindRoot();
-            foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py", "tools/scripts/ci-build-outputs.targets",
-                "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh" })
+            foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py", "tools/scripts/ci-build-outputs.targets" })
                 Write(path, File.ReadAllText(Path.Combine(source, path)));
             Write(changed, "registered input\n");
             Write(".gitignore", "build/\n.lake/\n**/bin/\n**/obj/\n__pycache__/\n");
@@ -368,8 +364,8 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 schemaVersion = 1, packageRootSource = "build-output:NuGetPackageRoot",
                 packages = new[] { new { packagePath = "xunit/2.9.3", include = new[] { "xunit.nuspec" }, exclude = Array.Empty<string>() } } }));
             Register();
-            environment = new CiFixtureEnvironment();
             CommitPlan();
+            environment = new CiFixtureEnvironment();
         }
         private void Register()
         {
@@ -400,21 +396,18 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 new EngineeringProjectFixture(Bar, "Bar", "test-support", false, ["tools/Bar/Program.cs"])));
             Write(CommonExecutionEvidence.CheckManifestPath, CommonCheckRegistrationFixture.Manifest(Foo));
         }
-        internal void CommitChanges()
+        internal void CommitPlan()
         {
             Git("add", ".");
             Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "--allow-empty", "-qm", "resource fixture");
             Commit = Git("rev-parse", "HEAD");
-        }
-        internal void CommitPlan()
-        {
-            CommitChanges();
-            var result = SharedBuildContractTests.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan",
-                "--repository", Root, "--commit", Commit, "--before", planningBase, "--after", Commit],
+            var entry = Git("ls-tree", "HEAD", "--", changed).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+            Write("build/changes.json", JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
+                candidate = new { commit = Commit, tree = Git("rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
+                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null, @new = new { path = changed, mode = entry[0], oid = entry[2] } } } }));
+            var result = SharedBuildContractTests.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", Root, "--commit", Commit, "--changes", Changes, "--output", Plan],
                 hangGuard: TestBudgets.ScriptProcessHangGuard);
             Assert.True(result.Exit == 0, result.Text);
-            File.Move(Path.Combine(Root, "build/ci/changes.json"), Changes, true);
-            File.Move(Path.Combine(Root, "build/ci/plan.json"), Plan, true);
         }
         internal void RemoveObject(string oid)
         {
@@ -519,7 +512,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         }
         internal void Report() => CiTransportTests.Report(fixture.Root);
         internal void Write(string path, string text) => fixture.Write(path, text);
-        internal void Executable(string path, string text)
+        private void Executable(string path, string text)
         {
             Write(path, "#!/bin/bash\nset -euo pipefail\n" + text);
             if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(Path.Combine(Root, path), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
