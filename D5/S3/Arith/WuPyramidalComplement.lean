@@ -16,7 +16,6 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
-import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import LeanInformationAudit.Syntax
 
