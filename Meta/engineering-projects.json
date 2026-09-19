@@ -647,7 +647,9 @@
         "lean-toolchain",
         "lean-report-inputs.json"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/worktree/lean_actions.py"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
