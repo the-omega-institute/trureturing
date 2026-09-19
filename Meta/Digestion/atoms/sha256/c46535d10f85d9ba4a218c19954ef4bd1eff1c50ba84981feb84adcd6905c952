@@ -1,0 +1,28 @@
+**证明。** 对 $x\in V$，有 $x=\sum_{i=1}^4x_i(e_i-e_5)$，表示唯一；若 $x\in A_4$，系数全为整数。反之整系数组合属于 $A_4$。内积 $\langle b_i,b_j\rangle=\delta_{ij}+1$ 给出 $C$。在 $\mathbf1^\perp\subset\mathbb R^4$ 上 $C$ 为恒等算子，在 $\mathbb R\mathbf1$ 上为乘以 $5$，故正定且行列式为 $5$。证毕。
+
+令 $W=\Lambda^2V$，依次取基
+
+$$
+(w_1,\ldots,w_6)
+=(b_1\wedge b_2,b_1\wedge b_3,b_1\wedge b_4,
+  b_2\wedge b_3,b_2\wedge b_4,b_3\wedge b_4).
+$$
+
+自然外幂内积由
+
+$$
+\langle u_1\wedge u_2,v_1\wedge v_2\rangle
+=\det\begin{pmatrix}
+\langle u_1,v_1\rangle&\langle u_1,v_2\rangle\\
+\langle u_2,v_1\rangle&\langle u_2,v_2\rangle
+\end{pmatrix}
+$$
+
+及双线性延拓定义。取正交规范基可见其正定。定义自然整外幂格
+
+$$
+\Lambda^2_{\mathbb Z}A_4
+=\operatorname{span}_{\mathbb Z}\{u\wedge v:u,v\in A_4\}
+\subset W.
+$$
+

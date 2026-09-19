@@ -1,0 +1,18 @@
+**定理 122.10（一般正交投影压缩）。** 设 $H$ 是有限维实或复 Hilbert 空间，$P,Q$ 是正交投影。令 $U=\operatorname{ran}P$、$V=\ker P=U^\perp$，并定义
+$$
+E=PQP|_U:U\to U,\qquad C=(I-P)QP|_U:U\to V.
+$$
+则 $E$ 是效应，即 $E=E^*$、$0\le E\le I_U$，且
+$$
+E-E^2=C^*C.
+$$
+此外，
+$$
+E^2=E\iff C=0\iff PQ=QP,
+$$
+$$
+\|[P,Q]\|_{\mathrm{HS}}^2
+=2\|C\|_{\mathrm{HS}}^2
+=2\operatorname{Tr}_U(E-E^2).
+$$
+

@@ -52286,3 +52286,660 @@ $$
 以上是逻辑与概率模型中的恒等式。实际写入、稳定维持、读取和擦除的物理费用，需要记录装置、准备条件、环境耦合及反向实验；它们没有由一个比特双射自动决定。可逆计算的经典参考为 C. H. Bennett, “Logical Reversibility of Computation”, IBM Journal of Research and Development 17 (1973), 525–532, DOI 10.1147/rd.176.0525。
 
 ## 136.99 追加锚
+
+## 137. 有限边界矩的正实现与未来唯一性
+
+### 137.1 有限矩、共同零关系与 Gram 商
+
+**定义 137.1（有限边界矩与正实现）。** 固定有限维实内积空间 $U$、整数 $r\ge0$ 以及自伴算子
+$$
+M_0,M_1,\ldots,M_{2r+1}:U\to U.
+$$
+不要求这些算子彼此交换。在正交直和 $P_r=U^{r+1}$ 上定义
+$$
+H_r=(M_{i+j})_{0\le i,j\le r},
+\qquad
+S_r=(M_{i+j+1})_{0\le i,j\le r}.
+\tag{137.1}
+$$
+这一前缀的正实现是有限维实内积空间 $E$、线性输入 $J:U\to E$ 和自伴算子 $C\succeq0$，满足
+$$
+M_k=J^*C^kJ\qquad(0\le k\le2r+1).
+\tag{137.2}
+$$
+全部矩均要求精确相等。第126节的输出耦合 $B$ 对应这里的 $J^*$；该节严格正定的演化是此实现类的子类。零维空间允许作为实现空间。
+
+**定理 137.2（有限奇数阶矩的精确正实现）。** 定义137.1的前缀存在正实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad S_r\succeq0,\qquad
+\ker H_r\subseteq\ker S_r.}
+\tag{137.3}
+$$
+条件成立时，可以取
+$$
+E=P_r/\ker H_r,\qquad \dim E=\operatorname{rank}H_r,
+\tag{137.4}
+$$
+且此维数在全部正实现中最小。
+
+此精确等号问题的矩阵 Stieltjes 判据见 V. Bolotnikov, “Degenerate Stieltjes Moment Problem and Associated J-Inner Polynomials”, *Zeitschrift für Analysis und ihre Anwendungen* 14(3) (1995), 441–468，[DOI 10.4171/ZAA/633](https://doi.org/10.4171/ZAA/633)，Definition 2.1及Lemma 2.5，445–448页。其复 Hermitian 矩阵表述限制到实对称数据给上述条件；以下直接构造有限实实现。
+
+**证明。** 若有正实现，定义
+$$
+T:P_r\to E,\qquad
+T(v_0,\ldots,v_r)=\sum_{j=0}^rC^jJv_j.
+$$
+自伴性与矩匹配给
+$$
+H_r=T^*T,\qquad S_r=T^*CT.
+$$
+故两个块算子均半正定。又 $\ker(T^*T)=\ker T$，所以 $\ker H_r\subseteq\ker S_r$，并且
+$$
+\operatorname{rank}H_r=\dim\operatorname{ran}T\le\dim E.
+\tag{137.5}
+$$
+
+反过来，假设式(137.3)。在式(137.4)的商上定义
+$$
+\langle[v],[w]\rangle_E=\langle v,H_rw\rangle_{P_r}.
+$$
+半正定算子的零二次型向量恰为其核，因此这是正定内积。核包含及 $S_r$ 的自伴性使
+$$
+([v],[w])\longmapsto\langle v,S_rw\rangle_{P_r}
+$$
+对两个代表元均无关。有限维 Riesz 表示于是唯一给出线性算子 $C:E\to E$，满足
+$$
+\langle[v],C[w]\rangle_E=\langle v,S_rw\rangle_{P_r}.
+\tag{137.6}
+$$
+右端对称且在对角线上非负，所以 $C=C^*\succeq0$。
+
+记 $e_j:U\to E$ 为在第 $j$ 个系数位插入向量后取商的映射，令 $J=e_0$。对 $j<r$、$0\le i\le r$ 及 $u,v\in U$，
+$$
+\langle e_i u,Ce_jv\rangle_E
+=\langle u,M_{i+j+1}v\rangle_U
+=\langle e_i u,e_{j+1}v\rangle_E.
+$$
+所有 $e_i(U)$ 张成 $E$，故
+$$
+Ce_j=e_{j+1}\quad(j<r),\qquad C^jJ=e_j\quad(0\le j\le r).
+\tag{137.7}
+$$
+对 $0\le k\le2r$，选择 $i,j\le r$ 使 $i+j=k$，再用自伴性得
+$$
+\langle u,J^*C^kJv\rangle_U
+=\langle C^iJu,C^jJv\rangle_E
+=\langle u,M_kv\rangle_U.
+$$
+最后一阶由式(137.6)的右下块给出：
+$$
+J^*C^{2r+1}J=e_r^*Ce_r=M_{2r+1}.
+$$
+故全部指定矩匹配。商的维数等于 $\operatorname{rank}H_r$，达到式(137.5)的下界。若 $H_r=0$，核包含迫使 $S_r=0$；全部指定矩为零，上述构造给 $E=0$，论证仍成立。$\square$
+
+**命题 137.3（两个正块与普通平坦不足以保证实现）。** 标量前缀
+$$
+(M_0,M_1,M_2,M_3)=(1,1,1,2)
+$$
+满足 $H_1\succeq0$、$S_1\succeq0$ 及 $\operatorname{rank}H_1=\operatorname{rank}H_0$，但不存在正实现，甚至不存在自伴实现。
+
+**证明。** 此时
+$$
+H_1=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+S_1=\begin{pmatrix}1&1\\1&2\end{pmatrix}.
+$$
+前者半正定且秩一，后者正定，而 $H_0=(1)$。向量 $(-1,1)$ 属于 $\ker H_1$，却不属于 $\ker S_1$。也可直接设 $b=J1$：若存在自伴实现，则
+$$
+\|(C-I)b\|^2=M_2-2M_1+M_0=0,
+$$
+从而 $Cb=b$，迫使 $M_3=\langle b,C^3b\rangle=M_0=1$，与给定数据矛盾。$\square$
+
+### 137.2 最小维数、严格正性与有限谱界
+
+**定理 137.4（有限前缀的最小维数实现唯一）。** 假设式(137.3)，取定理137.2的规范实现 $(E,C,J)$。任一维数为 $\operatorname{rank}H_r$ 的正实现 $(E',C',J')$，都有唯一正交同构 $Q:E\to E'$ 满足
+$$
+QC=C'Q,\qquad QJ=J'.
+\tag{137.8}
+$$
+因而最小维数实现所生成的全部矩
+$$
+\widehat M_k=J^*C^kJ\qquad(k\ge0)
+\tag{137.9}
+$$
+只依赖给定前缀。
+
+**证明。** 令 $T'v=\sum_{j=0}^r(C')^jJ'v_j$。由 $H_r=(T')^*T'$，$\ker T'=\ker H_r$，所以
+$$
+Q[v]=T'v
+$$
+良定义且保内积。其像的维数为 $\operatorname{rank}H_r=\dim E'$，故它满射。对任意 $v,w\in P_r$，
+$$
+\langle Q[v],C'Q[w]\rangle_{E'}
+=\langle v,S_rw\rangle_{P_r}
+=\langle Q[v],QC[w]\rangle_{E'}.
+$$
+$Q$ 满射给 $C'Q=QC$；零次插入给 $QJ=J'$。任何满足式(137.8)的映射都必须将 $C^jJu$ 送到 $(C')^jJ'u$，而这些向量在 $0\le j\le r$ 时已张成 $E$，故 $Q$ 唯一。对式(137.8)取幂并使用正交性，得到全部矩相同。$\square$
+
+**定理 137.5（严格正性与谱区间的有限矩判据）。** 在式(137.3)下，存在严格正定实现，当且仅当
+$$
+\ker S_r=\ker H_r.
+\tag{137.10}
+$$
+此条件也等价于规范实现的 $C$ 严格正定。给定 $0\le a\le b<\infty$，存在满足
+$$
+aI\preceq C\preceq bI
+$$
+的实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad aH_r\preceq S_r\preceq bH_r.}
+\tag{137.11}
+$$
+其中 $a=b$ 允许；若 $a=b=0$，可取 $C=0$。
+
+**证明。** 在规范商上，
+$$
+\langle[v],C[v]\rangle_E=\langle v,S_rv\rangle_{P_r}.
+$$
+$S_r\succeq0$ 时右端为零恰当 $v\in\ker S_r$；而 $[v]=0$ 恰当 $v\in\ker H_r$。这证明式(137.10)与规范 $C$ 严格正定的等价。若另有严格正实现，写 $H_r=T^*T$、$S_r=T^*CT$，则后者的零二次型恰当 $Tv=0$，同样得到两核相等。
+
+对有界谱实现，由 $aI\preceq C\preceq bI$ 两侧复合 $T^*$ 与 $T$，得到式(137.11)。反过来，令 $v\in\ker H_r$。半正定算子 $S_r-aH_r$ 满足
+$$
+0\le\langle v,(S_r-aH_r)v\rangle
+\le(b-a)\langle v,H_rv\rangle=0.
+$$
+故 $(S_r-aH_r)v=0$，进而 $S_rv=0$。于是核相容成立，定理137.2适用。式(137.6)再把矩不等式变为
+$$
+a\|[v]\|^2\le\langle[v],C[v]\rangle_E\le b\|[v]\|^2,
+$$
+即所需谱界。若 $a=b$，上述不等式迫使 $C=aI$。$\square$
+
+### 137.3 任意维数竞争实现与未定的未来
+
+**定义 137.6（前缀的未来唯一性与低阶生成空间）。** 在式(137.3)下固定规范实现，令
+$$
+L=\operatorname{span}\{e_j(U):0\le j<r\}\subseteq E.
+\tag{137.12}
+$$
+$r=0$ 时取 $L=0$。当 $r\ge1$ 时，$S_{r-1}$ 表示 $S_r$ 的左上 $r\times r$ 块；$r=0$ 时约定 $\operatorname{rank}S_{-1}=0$。称给定前缀在某实现类内决定全部未来，是指该类中任意两个匹配前缀的实现，其 $J^*C^kJ$ 对全部 $k\ge0$ 都相等。此定义允许不同实现空间具有不同维数。
+
+**引理 137.7（共同前缀的正算子扩张）。** 任意匹配给定前缀的正实现，在一个保持输入的正交识别下都可写为
+$$
+\widetilde E=E\oplus F,\qquad
+\widetilde J=\binom J0,\qquad
+\widetilde C=
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}\succeq0,
+\qquad D|_L=0.
+\tag{137.13}
+$$
+反过来，任意有限维 $F$ 和满足式(137.13)的块算子，都给出同一前缀的正实现。每个这样的扩张还满足
+$$
+D|_{\ker C}=0,\qquad
+\widetilde M_{2r+2}-\widehat M_{2r+2}=(De_r)^*(De_r).
+\tag{137.14}
+$$
+
+**证明。** 对任意竞争实现，映射
+$$
+[v]\longmapsto\sum_{j=0}^r\widetilde C^j\widetilde Jv_j
+$$
+由共同 $H_r$ 保内积，其像是竞争模型的前 $r+1$ 层 Krylov 空间。将该像识别为 $E$，并取正交补 $F$。共同 $S_r$ 给任意 $v,w$ 的演化配对与式(137.6)相同，因此 $\widetilde C$ 压缩到 $E$ 恰为 $C$。输入对应 $e_0$，所以 $\widetilde J=(J,0)$。
+
+对 $j<r$，竞争模型的实际幂向量满足
+$$
+\widetilde C(e_ju,0)=(e_{j+1}u,0).
+$$
+其 $F$ 分量给 $De_j=0$，即 $D|_L=0$。若 $x\in\ker C$，则
+$$
+\langle(x,0),\widetilde C(x,0)\rangle=0.
+$$
+由 $\widetilde C\succeq0$ 得 $\widetilde C(x,0)=0$，特别有 $Dx=0$。
+
+反向，由 $De_j=0$ 对 $j<r$ 成立，归纳得
+$$
+\widetilde C^j\widetilde J=(e_j,0)\qquad(0\le j\le r).
+$$
+对 $k\le2r$ 将 $k$ 写成两个不超过 $r$ 的整数之和，内积给 $\widetilde M_k=M_k$。最后一阶满足
+$$
+\widetilde M_{2r+1}=(e_r,0)^*\widetilde C(e_r,0)=e_r^*Ce_r=M_{2r+1}.
+$$
+又
+$$
+\widetilde C^{r+1}\widetilde J=(Ce_r,De_r),
+\qquad C^{r+1}J=Ce_r.
+$$
+分别取伴随平方，得到式(137.14)。$\square$
+
+**定理 137.8（全部有限正实现的未来唯一判据）。** 给定前缀在所有有限维正实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C.}
+\tag{137.15}
+$$
+它又等价于
+$$
+\boxed{\operatorname{rank}S_r=\operatorname{rank}S_{r-1}.}
+\tag{137.16}
+$$
+
+**证明。** 若式(137.15)成立，引理137.7使每个竞争模型的 $D$ 同时消灭 $L$ 与 $\ker C$，故 $D=0$。于是 $E$ 在 $\widetilde C$ 下不变，输入位于 $E$，全部未来矩均等于式(137.9)。
+
+若式(137.15)失败，取非零线性映射 $D:E\to\mathbb R$ 消灭 $L+\ker C$。在 $C$ 的正特征子空间上按特征值取倒数、在其核上取零，定义 $C^\dagger$；同样定义 $C^{1/2}$ 与 $C^{\dagger/2}$。置
+$$
+A=DC^\dagger D^*,\qquad
+\widetilde C=\begin{pmatrix}C&D^*\\D&A\end{pmatrix}.
+$$
+由于 $D$ 消灭 $\ker C$，$DC^{\dagger/2}C^{1/2}=D$，因此
+$$
+\widetilde C=
+\binom{C^{1/2}}{DC^{\dagger/2}}
+\begin{pmatrix}C^{1/2}&C^{\dagger/2}D^*\end{pmatrix}
+\succeq0.
+\tag{137.17}
+$$
+引理137.7表明此扩张保持给定前缀。又 $E=L+e_r(U)$，而 $D\ne0$ 且 $D|_L=0$，故 $De_r\ne0$。式(137.14)于是给出一个不同的第 $2r+2$ 阶矩，全部未来不唯一。式(137.17)也是带核相容条件的广义 Schur 补在本情形中的平方分解；一般块正性判据见前引 Bolotnikov Lemma 2.4，446页。
+
+最后，$S_r$ 是向量族 $C^{1/2}e_j(U)$、$0\le j\le r$ 的 Gram 算子，而 $S_{r-1}$ 对应 $j<r$。所以
+$$
+\operatorname{rank}S_r=\dim C^{1/2}E,\qquad
+\operatorname{rank}S_{r-1}=\dim C^{1/2}L.
+$$
+两个像空间相等当且仅当每个 $x\in E$ 都能写成 $x=l+z$，其中 $l\in L$、$z\in\ker C^{1/2}=\ker C$。这证明式(137.15)与式(137.16)等价，也包含 $r=0$ 的情形。$\square$
+
+**推论 137.9（首个未定矩的全部正方向）。** 令
+$$
+W=(L+\ker C)^\perp,\qquad Q=P_We_r:U\to W.
+$$
+则 $Q$ 满射，
+$$
+\dim W=\operatorname{rank}S_r-\operatorname{rank}S_{r-1},
+\tag{137.18}
+$$
+且所有有限维正竞争实现的首个未定矩差组成的集合恰为
+$$
+\boxed{
+\{\widetilde M_{2r+2}-\widehat M_{2r+2}\}
+=\{Q^*ZQ: Z:W\to W,\ Z=Z^*\succeq0\}.
+}
+\tag{137.19}
+$$
+因此规范第 $2r+2$ 阶矩是全部竞争实现该阶矩的 Loewner 下界。
+
+**证明。** $E=L+e_r(U)$ 且 $P_WL=0$，所以 $Q(U)=W$。维数等式由
+$$
+\dim W
+=\dim E-\dim(L+\ker C)
+=\dim C^{1/2}E-\dim C^{1/2}L
+$$
+和定理137.8证明中的秩公式得到。
+
+对任意竞争实现，引理137.7给 $D=DP_W$。于是令 $Z=(D|_W)^*(D|_W)\succeq0$，式(137.14)便成为 $Q^*ZQ$。反过来，对任意 $Z\succeq0$，取 $F=W$、$D=Z^{1/2}P_W$、$A=DC^\dagger D^*$。式(137.17)仍给正扩张；它满足 $D|_L=0$，并产生所要求的 $Q^*ZQ$。$\square$
+
+**命题 137.10（普通平坦与移位平坦的区别）。** 当 $r\ge1$ 时，
+$$
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1}
+\tag{137.20}
+$$
+蕴含全部未来唯一；若规范 $C\succ0$，则式(137.20)也是必要条件。若只在严格正定实现类中比较，规范 $C\succ0$ 时仍有同一充要条件。允许零特征值时，式(137.20)不再必要。
+
+**证明。** $H_{r-1}$ 是 $e_0,\ldots,e_{r-1}$ 的 Gram 算子，故其秩为 $\dim L$；$H_r$ 的秩为 $\dim E$。式(137.20)因此恰为 $L=E$，由定理137.8推出未来唯一。
+
+若 $C\succ0$，则 $\ker C=0$，定理137.8使未来唯一等价于 $L=E$。若将竞争类也限制为严格正定，$L\ne E$ 时选非零 $D:E\to\mathbb R$ 消灭 $L$，并取
+$$
+A=DC^{-1}D^*+\eta,\qquad\eta>0.
+$$
+对任意 $(x,y)\ne0$，
+$$
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+=\|C^{1/2}x+C^{-1/2}D^*y\|^2+\eta y^2>0.
+$$
+该严格正扩张仍由式(137.14)改变下一偶矩。
+
+为证明允许零谱时普通平坦不必要，取
+$$
+C=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad J=\binom10.
+$$
+$C^2=2C$，所以前四矩为 $(1,1,2,4)$。此时
+$$
+H_1=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+S_1=\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad S_0=(1).
+$$
+$H_1$ 秩二、$H_0$ 秩一；$S_1$ 与 $S_0$ 却同为秩一。定理137.8给所有未来唯一，而式(137.20)不成立。$\square$
+
+### 137.4 谱上界对未来唯一性的约束
+
+**定理 137.11（共同谱上界内的未来唯一性）。** 设 $\Lambda\ge0$ 且
+$$
+H_r\succeq0,\qquad 0\preceq S_r\preceq\Lambda H_r.
+$$
+取定理137.2的规范实现，故 $0\preceq C\preceq\Lambda I$。给定前缀在全部满足 $0\preceq\widetilde C\preceq\Lambda I$ 的有限维实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C+\ker(\Lambda I-C).}
+\tag{137.21}
+$$
+
+**证明。** 若 $\Lambda=0$，所有允许演化均为零，全部正阶矩为零；规范 $C=0$ 使式(137.21)也成立。以下设 $\Lambda>0$。对引理137.7的块扩张，正性已给 $D\ker C=0$。另有
+$$
+\Lambda I-\widetilde C
+=\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda I-A\end{pmatrix}
+\succeq0.
+$$
+将同一零二次型论证用于此算子，得到 $D\ker(\Lambda I-C)=0$。若式(137.21)成立，则 $D=0$，全部未来等于规范未来。
+
+反过来，若式(137.21)失败，取非零 $D_0:E\to\mathbb R$ 消灭其右侧子空间。令
+$$
+\alpha=D_0C^\dagger D_0^*\ge0,\qquad
+\beta=D_0(\Lambda I-C)^\dagger D_0^*\ge0,
+$$
+将一维算子认作实数，并选
+$$
+\epsilon^2=\frac{\Lambda}{2(1+\alpha+\beta)},\qquad
+D=\epsilon D_0,\qquad A=\Lambda/2.
+$$
+于是
+$$
+DC^\dagger D^*\le\Lambda/2,\qquad
+D(\Lambda I-C)^\dagger D^*\le\Lambda/2.
+$$
+对任意 $x\in E,y\in\mathbb R$，利用 $D$ 消灭两个端点核，有
+$$
+\begin{aligned}
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+&=\|C^{1/2}x+C^{\dagger/2}D^*y\|^2
+ +(A-DC^\dagger D^*)y^2\ge0,\\
+\left\langle(x,y),
+\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda-A\end{pmatrix}(x,y)\right\rangle
+&=\|(\Lambda I-C)^{1/2}x-(\Lambda I-C)^{\dagger/2}D^*y\|^2\\
+&\quad+(\Lambda-A-D(\Lambda I-C)^\dagger D^*)y^2\ge0.
+\end{aligned}
+$$
+故 $0\preceq\widetilde C\preceq\Lambda I$。又 $D|_L=0$，该模型保持全部已知矩；由于 $E=L+e_r(U)$ 及 $D\ne0$，仍有 $De_r\ne0$，式(137.14)给不同的下一矩。$\square$
+
+**命题 137.12（最小实现唯一、未来不唯一与谱上界）。** 前缀
+$$
+(M_0,M_1,M_2,M_3)=(1,2,5,14)
+$$
+具有唯一到正交同构的二维最小正实现，但在严格正定、谱上界为四的有限实现类中不决定全部未来。在谱上界为三的非负实现类中，它决定全部未来。
+
+**证明。** 取
+$$
+C=\begin{pmatrix}2&1\\1&2\end{pmatrix},\quad
+J=\binom10,\qquad
+C_t=\begin{pmatrix}2&1&0\\1&2&t\\0&t&2\end{pmatrix},\quad
+J_t=\begin{pmatrix}1\\0\\0\end{pmatrix},
+\quad t\in\{0,1\}.
+$$
+$C$ 的谱为 $\{1,3\}$。$C_t$ 的特征多项式为
+$$
+\det(\lambda I-C_t)
+=(\lambda-2)\bigl((\lambda-2)^2-(1+t^2)\bigr),
+$$
+故两份 $C_t$ 都满足 $0\prec C_t\prec4I$。并且
+$$
+C_tJ_t=(2,1,0)^T,\qquad C_t^2J_t=(5,4,t)^T.
+$$
+由内积立即得到共同的前四矩与
+$$
+J_t^*C_t^4J_t=41+t^2.
+$$
+$H_1=\left(\begin{smallmatrix}1&2\\2&5\end{smallmatrix}\right)$ 的行列式为一，最小维数为二；定理137.4给该维数类的唯一性。$t=1$ 的三维实现则给不同的第四阶矩。
+
+在二维规范实现中，$L=\mathbb R(1,0)^T$，而
+$$
+\ker(3I-C)=\mathbb R(1,1)^T.
+$$
+二者张成 $E$。定理137.11在 $\Lambda=3$ 时给全部未来唯一。$\square$
+
+### 137.5 偶数平坦数据的较短接口
+
+**定理 137.13（偶数前缀的正平坦实现）。** 设 $r\ge1$，只给自伴数据 $M_0,\ldots,M_{2r}$。若
+$$
+H_r\succeq0,\qquad
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1},\qquad
+S_{r-1}\succeq0,
+\tag{137.22}
+$$
+其中 $S_{r-1}=(M_{i+j+1})_{0\le i,j<r}$，则存在维数为 $\operatorname{rank}H_r$ 的正实现匹配全部已知矩；在全部有限维自伴实现之间，这一偶数前缀已经决定全部未来。
+
+写
+$$
+G=H_{r-1},\qquad
+h=(M_r,\ldots,M_{2r-1})^{\mathsf T}.
+$$
+方程 $GR=h$ 有解，对任意这样的 $R:U\to U^r$，唯一允许的下一矩为
+$$
+M_{2r+1}=R^*S_{r-1}R.
+\tag{137.23}
+$$
+正平坦扩张的标量机制可参见 M. Laurent、B. Mourrain, “A generalized flat extension theorem for moment matrices”, *Archiv der Mathematik* 93 (2009)，[DOI 10.1007/s00013-009-0007-6](https://doi.org/10.1007/s00013-009-0007-6)，以及其 [arXiv:0812.2563v1](https://arxiv.org/abs/0812.2563v1) 的Theorem 1.2与Corollary 1.3；以下证明直接处理矩阵系数与截断移位。
+
+**证明。** 在 $E=P_r/\ker H_r$ 上取 Gram 内积，并仍以 $e_j$ 表示各次插入。由平坦性，次数小于 $r$ 的系数串之类已张成 $E$。用形式多项式表示系数串，对 $\deg p<r$ 定义
+$$
+C[p]=[xp].
+$$
+若 $[p]=0$，则对任意 $\deg q<r$，Hankel 配对给
+$$
+\langle[xp],[q]\rangle_E=\langle[p],[xq]\rangle_E=0.
+$$
+这批 $[q]$ 张成 $E$，故 $[xp]=0$，定义良好。同一等式给自伴性。若 $p$ 的系数向量为 $v\in U^r$，则
+$$
+\langle[p],C[p]\rangle_E=\langle v,S_{r-1}v\rangle\ge0,
+$$
+故 $C\succeq0$。取 $J=e_0$，逐次插入给 $C^jJ=e_j$ 对 $j\le r$ 成立；将 $k\le2r$ 分成两个至多为 $r$ 的指标，Gram 配对便给全部矩匹配。
+
+对任一匹配偶数前缀的自伴实现，其次数小于 $r$ 及次数至多 $r$ 的 Krylov 空间维数分别为 $\operatorname{rank}H_{r-1}$ 和 $\operatorname{rank}H_r$。前者包含于后者，而维数相等，故二者相同。该共同空间包含输入，且在演化下不变。将其按共同 Gram 配对与 $E$ 等距识别后，演化在生成元 $e_j$、$j<r$ 上都满足 $e_j\mapsto e_{j+1}$，所以正好是上述 $C$；全部未来因而相同。
+
+为证明式(137.23)，观察
+$$
+H_r=\begin{pmatrix}G&h\\h^*&M_{2r}\end{pmatrix}\succeq0.
+$$
+若 $v\in\ker G$，则 $(v,0)$ 在此正算子下二次型为零，故 $h^*v=0$。于是 $\operatorname{ran}h\subseteq(\ker G)^\perp=\operatorname{ran}G$，方程 $GR=h$ 可解。对该块矩阵作可逆合同变换得到
+$$
+\begin{pmatrix}I&0\\-R^*&I\end{pmatrix}
+H_r
+\begin{pmatrix}I&-R\\0&I\end{pmatrix}
+=\begin{pmatrix}G&0\\0&M_{2r}-R^*GR\end{pmatrix}.
+$$
+平坦秩迫使右下块为零。因此商中的插入满足 $e_r=e_{<r}R$，其中 $e_{<r}(v_0,\ldots,v_{r-1})=\sum_{j<r}e_jv_j$。于是
+$$
+J^*C^{2r+1}J=e_r^*Ce_r
+=R^*e_{<r}^*Ce_{<r}R
+=R^*S_{r-1}R.
+$$
+左端已由规范实现唯一确定，故右端与解 $R$ 的选择无关。$\square$
+
+### 137.6 精确矩判据的带噪边界
+
+**定义 137.14（标量原子矩与前缀误差）。** 对有限正测度
+$$
+\mu=\sum_{\ell=1}^n w_\ell\delta_{\lambda_\ell},
+\qquad w_\ell>0,\quad\lambda_\ell\ge0,
+$$
+记 $m_k(\mu)=\sum_\ell w_\ell\lambda_\ell^k$。它由 $E=\mathbb R^n$、$C=\operatorname{diag}(\lambda_\ell)$、$J1=(\sqrt{w_\ell})_\ell$ 正实现。两份长度 $N+1$ 的标量矩前缀误差记为
+$$
+d_N(\mu,\nu)=\max_{0\le k\le N}|m_k(\mu)-m_k(\nu)|.
+$$
+
+**命题 137.15（精确相容与最小维数不是连续阈值）。** 不可正实现的 $0,\ldots,3$ 阶前缀可以任意接近可正实现的同阶前缀，同时保持两个块半正定与普通平坦。即使谱始终在 $[1,2]$ 内，正实现的 $0,\ldots,3$ 阶前缀所允许的最小维数也不由前缀误差连续确定。
+
+**证明。** 对任意 $\epsilon>0$，前缀 $(1,1,1,1+\epsilon)$ 的 $H_1$ 仍为命题137.3的秩一矩阵，而
+$$
+S_1=\begin{pmatrix}1&1\\1&1+\epsilon\end{pmatrix}\succ0.
+$$
+其核不相容，所以不可实现；当 $\epsilon\downarrow0$ 时却趋向单点正测度 $\delta_1$ 的前缀。
+
+再令
+$$
+\mu_\delta=(1-\delta)\delta_1+\delta\delta_2,\qquad 0<\delta<1.
+$$
+它的矩为 $m_k=1+\delta(2^k-1)$，任意固定长度的前缀都趋向 $\delta_1$ 的前缀。但
+$$
+\det H_1
+=\det\begin{pmatrix}1&1+\delta\\1+\delta&1+3\delta\end{pmatrix}
+=\delta(1-\delta)>0.
+$$
+因此 $\mu_\delta$ 的 $0,\ldots,3$ 阶前缀之最小实现维数为二，而极限前缀的最小实现维数为一；所有谱始终包含于 $[1,2]$。$\square$
+
+**命题 137.16（无共同谱上界时下一矩无局部控制）。** 对每个固定 $r\ge0$，存在真实正实现的序列，其 $0,\ldots,2r+1$ 阶矩共同趋向一，而第 $2r+2$ 阶矩趋于无穷。当 $r\ge2$ 时，这些序列中的每个 $H_r$ 还满足普通平坦。
+
+**证明。** 对 $R>1$ 取
+$$
+w_R=R^{-(2r+3/2)},\qquad
+\mu_R=(1-w_R)\delta_1+w_R\delta_R.
+$$
+权重严格正。对 $k\le2r+1$，
+$$
+|m_k(\mu_R)-1|=w_R(R^k-1)\le R^{-1/2}\longrightarrow0.
+$$
+另一方面，
+$$
+m_{2r+2}(\mu_R)=1-w_R+R^{1/2}\longrightarrow+\infty.
+$$
+两个不同节点的 Vandermonde 向量线性无关，故当 $r\ge2$ 时 $H_r$ 与 $H_{r-1}$ 的秩都为二。$\square$
+
+**命题 137.17（有界谱与固定秩不足以稳定内部演化）。** 即使限定一维最小正实现且谱在 $[1,2]$ 内，也不存在仅由任意固定长度矩前缀的绝对误差趋零，便迫使两个内部演化算子在正交识别下距离趋零的统一结论。
+
+**证明。** 对 $\delta>0$，两份一维实现取相同输入 $J1=\sqrt\delta$，演化分别为 $C_1=1$、$C_2=2$。两者均最小且满足共同谱界。其矩差为
+$$
+|M_k^{(2)}-M_k^{(1)}|=\delta(2^k-1).
+$$
+对每个固定 $N$，该差在 $0\le k\le N$ 上的最大值趋零；但任一一维正交识别只能乘以 $1$ 或 $-1$，两演化在这种识别下的算子范数差恒为一。与此同时，任一固定 $H_r$ 的唯一非零特征值为
+$$
+\delta\sum_{j=0}^r C_i^{2j},
+$$
+随 $\delta\downarrow0$ 趋零。故共同谱界与固定秩没有提供有效 Gram 方向的统一非退化裕量。$\square$
+
+**命题 137.18（逐个正定不提供统一无限时间控制）。** 对每个固定时间窗，严格正的一维响应可以趋近常值响应，而在全部非负时间上的一致误差不趋零。即使比较双方都严格正定，固定窗口内趋近也不推出无限时间一致趋近或积分趋近。
+
+**证明。** 令输入为 $J=1$，演化为 $C_\epsilon=\epsilon>0$。响应
+$$
+K_\epsilon(t)=e^{-\epsilon t}
+$$
+对任意固定 $0\le T<\infty$ 满足
+$$
+\sup_{0\le t\le T}|K_\epsilon(t)-1|
+\le\epsilon T\longrightarrow0,
+$$
+但
+$$
+\sup_{t\ge0}|K_\epsilon(t)-1|=1,
+\qquad
+\int_0^\infty K_\epsilon(t)\,dt=\epsilon^{-1}.
+$$
+若比较两个严格正演化 $\epsilon$ 与 $2\epsilon$，有限窗口内的响应差仍趋零；令 $u=e^{-\epsilon t}$，则
+$$
+\sup_{t\ge0}|e^{-\epsilon t}-e^{-2\epsilon t}|
+=\sup_{0<u\le1}(u-u^2)=\frac14.
+$$
+两积分之差为 $1/(2\epsilon)$，趋于无穷。这里每个算子都严格正定，但整个实现族没有共同正谱下界。$\square$
+
+## 137.99 追加锚
+
+## 138. 有限辅助关系、延迟坐标与适用语言
+
+### 138.1 辅助表示的五项合同
+
+**定义 138.1（任务相对的有限辅助表示）。** 固定第120节的合法实现、基础读数与允许上下文，包含任务需要的失败标签、共同来源和费用。有限辅助表示是有限个已声明函数组成的映射
+$$
+\Psi:X\to Z,\qquad \Psi(x)=(\psi_1(x),\ldots,\psi_r(x)),\qquad Z=\Psi[X].
+$$
+对每个任务 $f$ 给出恢复映射 $\bar f$ 及等式 $f=\bar f\Psi$；对每个允许操作给出实际像上的更新及等式 $\Psi T_a=\bar T_a\Psi$；对多元拼接另要求相应的合法性与逐孔替换条件。三者构成语义合同。若需要定量结论，再指定误差的范数、传播常数及获取和验证这份表示的资源合同。
+
+第120.2、120.3节的最小性相对于全部已声明实验的共同核；[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 第3–5节处理其实际语言、几何运输和合法拼接。这里的有限坐标数不定义最短编码、最低实验费或最小误差。若 $\ker\Psi$ 恰等于完整实验核，称它是该任务语言的一份精确有限呈示；它是否可通过有限已取得记录恢复，仍须另给记录到 $\Psi$ 的因子化。
+
+有限非空状态、有限非空动作与有限实际读数像的情形，可引用既有 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 的 `controlled_signature_algorithm_correctness`：递归签名在有限深度稳定为完整受控行为核。读数以实际像为值域时满射，满足该声明的读数前提。把这个存在性变为有效的分区细化算法，还要求动作可枚举、读数比较可判定及更新可计算；无限状态系统没有从该有限声明取得终止保证。
+
+### 138.2 一个平方辅助量的完整实际像
+
+**命题 138.2（平方坐标与两步记录的最小行为表示）。** 取实参数 $\alpha,\beta,\gamma$，其中 $\gamma\ne0$，在 $X=\mathbb R^2$ 上设
+$$
+T(x,y)=(\alpha x,\beta y+\gamma x^2),\qquad q_0(x,y)=y.
+\tag{138.1}
+$$
+只允许 $T$ 的有限次迭代，并以每次的 $y$ 为读数。令
+$$
+\Psi(x,y)=(y,x^2),\qquad Z=\mathbb R\times[0,\infty),\qquad
+M=\begin{pmatrix}\beta&\gamma\\0&\alpha^2\end{pmatrix}.
+$$
+则 $\Psi[X]=Z$、$MZ\subseteq Z$、$\Psi T=M\Psi$，且
+$$
+\ker\Psi=\bigcap_{n\ge0}\ker(q_0T^n)
+=\ker\bigl(q_0,q_0T\bigr).
+\tag{138.2}
+$$
+所以 $\Psi$ 是该语言的最小动态稳定呈示。两步读数的实际像为
+$$
+D=\{(u,v)\in\mathbb R^2:(v-\beta u)/\gamma\ge0\},
+$$
+并有互逆映射
+$$
+(y,s)\longmapsto(y,\beta y+\gamma s),\qquad
+(u,v)\longmapsto\left(u,\frac{v-\beta u}{\gamma}\right).
+\tag{138.3}
+$$
+
+**证明。** 每个非负 $s$ 都是某个实数的平方，故实际像正是 $Z$。直接代入得到 $\Psi(T(x,y))=M\Psi(x,y)$，而 $\alpha^2s\ge0$ 保证更新保持实际像。若两个实现具有相同 $\Psi$，对 $M$ 的迭代给全部未来 $y$ 相同。反向只需前两次 $y$：第一次确定 $y$，第二次之差为 $\gamma(x^2-x'^2)$，由 $\gamma\ne0$ 得平方相同。于是两种核等式成立。
+
+任一保留当前读数并对 $T$ 闭合的表示，也保留当前和下一步读数，由式（138.3）便恢复 $\Psi$；因此它至少保留这些区别，得到所称最小性。最后两式复合为恒等映射，第二坐标非负恰对应 $D$，证明实际像与互逆关系。证毕。
+
+**命题 138.3（二阶记忆、合法初值与逆放大）。** 命题138.2的全部可见轨道满足
+$$
+y_{t+2}=(\beta+\alpha^2)y_{t+1}-\beta\alpha^2y_t.
+\tag{138.4}
+$$
+反之，满足该递推的实序列来自某个合法初态 $(x_0,y_0)$，当且仅当
+$$
+s_0=(y_1-\beta y_0)/\gamma\ge0.
+\tag{138.5}
+$$
+若两个初始读数各自的绝对误差不超过 $\epsilon\ge0$，则式（138.3）的直接线性解码满足
+$$
+|\widehat s_0-s_0|\le\frac{1+|\beta|}{|\gamma|}\epsilon.
+\tag{138.6}
+$$
+该界作为这份解码器在独立盒约束下的最坏误差可取到；它不声称解码结果必在合法半轴内，也不声称是所有合法恢复器的最优界。
+
+**证明。** 令 $s_t=x_t^2$，则 $s_{t+1}=\alpha^2s_t$、$y_{t+1}=\beta y_t+\gamma s_t$。代入下一步并消去 $s_t$，得到式（138.4）。反向定义 $s_t=(y_{t+1}-\beta y_t)/\gamma$，用二阶式得到 $s_{t+1}=\alpha^2s_t$。若 $s_0\ge0$，选实平方根 $x_0$ 并令 $x_t=\alpha^t x_0$，就有 $x_t^2=s_t$；配上既有 $y_t$ 得原系统轨道。若存在原初态，$s_0=x_0^2$ 必非负，得到充要性。没有要求 $\alpha,\beta$ 非零或互异。
+
+解码误差为 $(e_1-\beta e_0)/\gamma$。三角不等式给式（138.6）；选择 $e_1$ 和 $-\beta e_0$ 同号且分别取允许绝对值端点，可达到上界，$\beta=0$ 时只需 $|e_1|=\epsilon$。当 $\gamma\to0$ 而不为零时，代数逆仍存在，但这个逆的盒误差放大无共同有限上界。证毕。
+
+### 138.3 扩大干预或拼接语言会细化任务商
+
+**命题 138.4（保留平方不保持平移与相对符号）。** 对命题138.2的系统，增加允许干预 $U(x,y)=(x+1,y)$ 后，原表示 $\Psi$ 不再闭合。若两个组件之间新增目标 $x_1x_2$，仅保留各组件的 $(y_i,x_i^2)$ 也不足以恢复该目标。
+
+**证明。** $(1,y)$ 与 $(-1,y)$ 的辅助表示相同，干预后平方分别为四与零，因此不存在 $\bar U$ 使 $\Psi U=\bar U\Psi$。由于 $\gamma\ne0$，随后一次 $T$ 的 $y$ 响应也不同，所以这项细化实际进入扩大后的实验行为。对拼接取 $y_1=y_2=0$，比较 $(x_1,x_2)=(1,1)$ 与 $(-1,1)$；两个局部平方均为一，交叉目标却分别为一与负一。故目标不通过两个平方摘要因子化。两种失败都来自新增语言提出了原任务没有提出的区别，符合命题120.3的核细化方向。证毕。
+
+**命题 138.5（有限坐标不保证有限线性观测闭合）。** 存在一维非线性系统与一个当前读数，不能被包含该读数的任何有限维实线性观测函数空间精确封闭。
+
+**证明。** 在 $X=\mathbb R$ 上取 $T(x)=x^2$、当前读数 $f(x)=x$。若函数空间 $W$ 包含 $f$，且对拉回 $g\mapsto g\circ T$ 不变，则包含每个 $x\mapsto x^{2^n}$。这些函数线性独立：任一有限线性关系是一个在所有实数上恒零、次数互异的多项式，其每个系数必须为零。因此 $W$ 不可能有限维。
+
+这不排除单坐标上的非线性闭合 $x\mapsto x^2$，也不排除受限状态集、近似闭合或不同任务。有限 Koopman 不变子空间的成熟背景见 Brunton、Brunton、Proctor、Kutz，[*Koopman Invariant Subspaces and Finite Linear Representations of Nonlinear Dynamical Systems for Control*](https://arxiv.org/abs/1510.03007)。本命题只使用上述函数线性独立性。证毕。
+
+### 138.4 辅助关系的取得与证书稳定性
+
+**定义 138.6（辅助表示的三种比较）。** 对同一任务与允许语言，表示之间的语义比较采用第120节的因子化与行为核；实际取得的记录之间采用第121节的保留式扩展；资源比较采用第136节的有证书路径与已声明费用。若 $g$ 是实现上的新读数，$q'=(q,g)$ 满足 $\ker q'=\ker q\cap\ker g$；若 $g=h\circ q$，则这个交集等于 $\ker q$。前者允许新增区别，后者可以重组已有区别而不改变候选纤维。
+
+命题138.2中，只知 $y_0$ 时取得 $x_0^2$ 需要新的访问或下一次真实读数；已知 $(x_0,y_0)$ 时计算平方只是重表达。后处理是否便宜、终端解码是否可调用，由 [恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) 第8节的共同来源、合法中心和硬预算合同承担。第136节的已证宏展开说明工具可以保持语义后承而改变费用，不用无资源限制的信息熵替代这个费用问题。
+
+**命题 138.7（单步辅助缺陷的累计界与适用域）。** 在一份已声明、沿所考察轨道始终合法的辅助表示中，令真实与近似辅助量位于同一个实赋范线性空间，每个 $M_a$ 是该空间上的有界线性算子。设真实辅助量为 $s_n=\Psi(x_n)$，近似递推为 $\widehat s_{n+1}=M_{a_n}\widehat s_n$，且沿同一操作序列逐步有
+$$
+\|s_{n+1}-M_{a_n}s_n\|\le\varepsilon,\qquad
+\|M_{a_n}\|\le L,
+\quad \varepsilon,L\ge0.
+$$
+则 $e_n=\|s_n-\widehat s_n\|$ 满足
+$$
+e_n\le L^n e_0+\varepsilon\sum_{j=0}^{n-1}L^j.
+\tag{138.7}
+$$
+这里空和为零、$L^0=1$，因此包含 $L=0$。该界本身不证明后继始终合法，也不保证基于扰动读数选择的另一条自适应操作序列仍相同。
+
+**证明。** 三角不等式给 $e_{n+1}\le Le_n+\varepsilon$，非负 $L$ 保持归纳中的不等式方向，得到式（138.7）。这是上下文几何卷第6节一元缺陷递推的恒定增益特化；多元拼接还须使用该卷的合法混合输入与逐孔增益。若两侧采用不同的动作，当前假设没有约束不同动作之间的差，故本递推不适用。证毕。
+
+**定义 138.8（同一辅助结构的恢复、复合与代价证书）。** 对定义138.1的有限呈示，按需要分别附上：目标恢复等式、操作交织等式、允许上下文的合法拼接条件、误差界以及获取和验证费用。有限矩场景中，第137节先认证存在一个合法内部实现，再区分最小实现与所有未来的唯一性；有限时间字典中，恢复几何卷第9节以对偶接触裕度及接触基的逆控制近最优系数；实际执行场景中，该卷第8节以同一策略的终端纤维和硬预算定义可达到的风险。
+
+这些合同可以共用一份关系呈示，但其前提分别保留。特别地，精确可恢复、后继可复合、噪声可控、最优值取得及预算内可执行，不被定义成同一个性质。第9节逐窗最优值收敛而系数不收敛的例子，给出了不能仅凭代价收敛认定具体辅助实现稳定的明确边界。
+
+## 138.99 追加锚

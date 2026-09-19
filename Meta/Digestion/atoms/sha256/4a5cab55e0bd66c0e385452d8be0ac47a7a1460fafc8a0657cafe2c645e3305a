@@ -1,0 +1,6 @@
+### 129.12 支持、来源归属与本桥梁的范围
+
+若有限参考 $\nu$ 允许零值，可先限制到 $S=\{x:\nu(x)>0\}$，并将读数空间限制为 $r(S)$。在该支持上所有参考纤维质量严格正，$V=\mathbb R^S$ 的内积非退化；所有函数只按该支持上的值解释，密度和重建均在此定义。若候选概率允许向 $S$ 外移动质量，就不属于本节的固定参考密度路径，不能随意为 $d/\nu$ 填值。这里没有零概率纤维上的任意后验选择。
+
+Clifford—外代数线性识别采用 Mathlib `CliffordAlgebra.equivExterior` 的 Chevalley 构造；参考 Bourbaki, Algèbre, Chapitre IX §9，以及 D. Grinberg, “The Clifford algebra and the Chevalley map — a computational approach” (2016)。概率重建沿用本卷 §82.1，正规化密度的局部 Hessian 接口见 §92.3；显式线性路径余项由本节直接计算。
+
