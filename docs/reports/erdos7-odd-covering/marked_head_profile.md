@@ -836,3 +836,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original binary first ancestors force a joint cutoff-one cylinder](profile-notes/arithmetic/373-binary-first-ancestors-and-cutoff-one.md)
 - [Extremal prime-coordinate projections and a complete-cover descent](profile-notes/arithmetic/374-extremal-prime-projections-and-cardinality-descent.md)
 - [Deep prime-prefix projections and complete tree contraction](profile-notes/arithmetic/375-deep-prime-prefix-projections-and-tree-contraction.md)
+- [Complete prime-chain transport and one common prefix law](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
