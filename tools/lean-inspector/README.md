@@ -61,16 +61,16 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 报告是否可复用仍由 Lake trace 和 inspector 校验决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
-每次 `make lean-report` 都要求当前项目默认目标和 inspector 编译的有效成功证据。
-正常入口先校验可选 `.reuse.json`：报告语义版本号、登记的 Lean 源与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
-一致，并且报告五件套通过完整私有校验时，复用该调用而无需下载 Lean 重缓存。缺失、损坏
-或不匹配时进入原生 Lake 增量；生产程序（C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。[当前默认目标](../../lakefile.toml)为 `Trureturing` 和
+程序编译义务由 FILEMAP 及其登记的 [ci-resources.json](../../Meta/ci-resources.json) 中 `lean_targets` 显式选择。
+正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
+一致，并且报告五件套通过完整私有校验时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。无 scope 的直接调用消费登记的全部程序目标。[当前默认目标](../../lakefile.toml)为 `Trureturing` 和
 `LeanInformationAudit`。默认目标及 audit 的构建义务独立于模块报告失效；只影响这些
 构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
 `LEAN_INSPECTOR_WORK extracted_modules=… aggregates=…` 分别表示本次实际提取模块数
-与汇总次数。输入未变且原生工件有效时，两者均为零；完整调用复用时仍校验构建成功证据
-与报告材料，current/delta 检查继续执行。
+与汇总次数。输入未变且原生工件有效时，两者均为零；报告复用时仍履行选中的编译义务
+并校验报告材料，current/delta 检查继续执行。编译失败返回非零并清除该输出的 `.reuse.json`。
 这两个计数不表示 Lean 重编数量；进程 RSS 观测也不表示最低 RAM 要求。
 
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入
