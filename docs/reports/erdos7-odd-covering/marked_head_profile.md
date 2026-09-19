@@ -782,3 +782,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Near-aligned first-five virtual measures recover the H restrictions](profile-notes/320-near-aligned-first-five-virtual-measures-recover-the-h-restrictions.md)
 - [Full coarse deep-five transport from the same capacity defect](profile-notes/321-full-coarse-deep-five-transport-from-the-same-capacity-defect.md)
 - [An explicit total-variation neighborhood of the aligned endpoint set](profile-notes/322-an-explicit-total-variation-neighborhood-of-the-aligned-endpoint-set.md)
+- [Actual aligned source and row transport](profile-notes/323-actual-aligned-source-and-row-transport.md)
+- [Complete aligned source prefixes and tails have an explicit modulus](profile-notes/324-complete-aligned-source-prefixes-and-tails-have-an-explicit-modulus.md)
