@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -175,7 +174,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             stage = "engineering";
         }
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
-        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
+        CommonExecutionEvidence.ReleaseTemporarySnapshots();
         try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
         finally
         {
@@ -186,6 +185,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 testsReused = tests.Projects.Count(project => project.Status == "reused");
             }
         }
+        // Test execution owns its own validated inputs. Keep this independent
+        // check snapshot out of the parent while the test processes are running.
+        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
         attemptedEngineeringCheck = "selftest-pair";
         checks.Run(attemptedEngineeringCheck, () => new CheckWork([
             Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
@@ -252,8 +254,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             // This process now waits while the child validates its own fresh
             // snapshot. Reclaim the completed report validation's temporary
             // snapshot before those independent heaps coexist in one cgroup.
-            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true, compacting: true);
+            CommonExecutionEvidence.ReleaseTemporarySnapshots();
         }
         else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
