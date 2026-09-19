@@ -64,6 +64,36 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
+/-- Explicit compilation inputs of modules which retain checked template plans.
+This is configuration, not a source scanner or a second freshness decision. -/
+package_facet templatePlanInputs (pkg : Package) : (Lean.NameSet × Array String) := do
+  Job.async do
+    let directory := if pkg.baseName == `leanInspector then pkg.dir else inspectorDir pkg
+    let config ← readJson (directory / "template-plan-inputs.json")
+    let owners ← strings config "owners"
+    let paths ← strings config "inputs"
+    for path in paths do
+      if path.isEmpty || (FilePath.mk path).isAbsolute ||
+          (path.splitOn "/").any (fun part => part == ".." || part == "." || part.isEmpty) then
+        error s!"invalid registered template plan input: {path}"
+    return (owners.foldl (fun names owner => names.insert owner.toName) {}, paths)
+
+/-- Extend Lake's ordinary compilation trace before its reuse decision.
+Scheduling, cache lookup, restoration and rebuilding remains Lake's standard module machinery.
+Only explicitly registered owners read these additional raw-byte inputs. -/
+@[«module_facet»] def templatePlanInputFacet : ModuleFacetDecl :=
+  .mk Module.presetupFacet <| mkFacetJobConfig (buildable := false) fun (mod : Module) => do
+  let source : Job ModulePreSetup ← Module.presetupFacetConfig.run mod
+  let root := (← getWorkspace).root
+  if mod.pkg.keyName != root.keyName then return source
+  let (owners, paths) ← (← fetch <| root.facet `templatePlanInputs).await
+  unless owners.contains mod.name do return source
+  let mut dependencies := Job.nil
+  for path in paths do
+    dependencies := dependencies.mix (← inputBinFile (root.dir / path))
+  (source.add dependencies).mapM fun input => do
+    return {input with trace := input.trace.mix dependencies.getTrace}
+
 package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
   (← fetch <| pkg.facet `reportInputs).mapM fun path => do
     let names ← strings (← readJson path) "modules"

@@ -19,6 +19,28 @@ public sealed class DependentFamilyNativeTests(DependentFamilyNativeFixture fixt
     }
 
     [Fact]
+    public void warm_semantic_transition_rebuilds_plan_owners_and_unchanged_rerun_reuses_them()
+    {
+        var (snapshot, report) = fixture.WarmTransition();
+        foreach (var name in new[] { "DependentFamily", "DependentFamilySidecar", "DependentFamilyReuse",
+            "DependentFamilyUnicode", "DependentFamilyFixedControl" })
+        {
+            var occurrence = Assert.Single(InformationTemplateEvidence.Collect(snapshot, report,
+                [DependentFamilyNativeFixture.Source(name)]).Occurrences.Values);
+            Declared(name, occurrence);
+        }
+        var original = DependentFamilyNativeFixture.Source("DependentFamilyOriginal");
+        static object Identity(LeanDeclaration declaration) => new
+        {
+            declaration.Name, declaration.Kind, declaration.NameKey, declaration.IncludeInStatement,
+            declaration.StatementTypeAddress, declaration.PrecomputedStatementId,
+            Axioms = string.Join(",", declaration.Axioms),
+        };
+        Assert.Equal(fixture.Report.Files[original].Declarations.Select(Identity),
+            report.Files[original].Declarations.Select(Identity));
+    }
+
+    [Fact]
     public void unchanged_original_and_imported_sidecar_preserve_exact_source_and_four_slots()
     {
         var original = Path.Combine(fixture.Root, DependentFamilyNativeFixture.Prefix + "DependentFamilyOriginal.lean");

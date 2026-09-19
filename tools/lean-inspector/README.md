@@ -40,6 +40,12 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 
 这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
 入口完成当前默认目标、原生报告及完整校验，再打包根 buildDir；不另跑一轮 `lake build`。
+
+编译时保存 template plan 的模块在 `template-plan-inputs.json` 中显式登记；
+新增直接 enrollment 的模块须同时登记。Lake 的普通 `presetup` facet 为这些模块追加
+登记的原始文件依赖，再由原生编译 trace 决定复用、还原或重编。
+manifest 改变会重编 plan owner，并通过普通 import 关系传播；未登记模块保留
+原有编译依赖。此接线不刷新旧 plan 的哈希，不放宽 E7 校验，也不更改报告版本。
 输入、编译或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
 归档携带原生 Inspector 可执行文件、模块与汇总工件，以及规范报告、materials、origin 和
 attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft

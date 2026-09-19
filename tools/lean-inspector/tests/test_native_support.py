@@ -82,6 +82,9 @@ root = "Cache"
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 1\n')
+        # Statement-only packages have no compiled template-plan owners.
+        self.write('tools/lean-inspector/template-plan-inputs.json',
+                   json.dumps(dict(owners=[], inputs=[])))
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
