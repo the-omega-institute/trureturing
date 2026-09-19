@@ -29,10 +29,7 @@ internal sealed class CenteredReducedResidueProgressionsDocument : IScribeDocume
             Node("centered-progression-maximum", "result",
                 "The exact maximum progression length", ResultFormula(),
                 "Let p be the greatest prime factor of n, d=n/p, and k=p-1-floor(2p/d), where the inner floor is natural Euclidean division. For every even squarefree n with at least three distinct prime factors and d<2p, k is an admitted length and bounds every admitted length. The rational floor of p-2p/d is exactly the same natural number k.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("centered-reduced-residue-progressions"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
@@ -80,7 +77,8 @@ internal sealed class CenteredReducedResidueProgressionsDocument : IScribeDocume
         Formula admissibleSet = Seq(OpenBrace, s, Sp, InMacro, Sp, Naturals(), Sp, Mid, Sp,
             Call("AdmissibleLength", n, s), CloseBrace);
         Formula maximum = Call("IsGreatest", admissibleSet, k);
-        Formula rationalFloor = Equal(new Formula.Floor(Sub(p, new Formula.Fraction(Mul(D(2), p), d))), k);
+        Formula rationalFloor = Equal(
+            Seq(Lfloor, Sp, Sub(p, new Formula.Fraction(Mul(D(2), p), d)), Rfloor), k);
         return Universal([Bound("n", Naturals())], Seq(
             Let(p, Call("GreatestPrimeFactor", n)),
             Let(d, Call("NatDiv", n, p)),

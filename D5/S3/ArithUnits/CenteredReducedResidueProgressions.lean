@@ -56,7 +56,11 @@ def SourceCorrection : Bool := false
 def decodeSourceCorrection (choice : Bool) (p q : ℕ) : ℕ :=
   if choice = false then p - 1 - q else p - 1 + q
 
-register_information_template cutRealization
+private def sourceCorrectionRealization (f : Bool → Bool) :
+    PrimitiveRealization (cutSignature Bool Bool) :=
+  cutRealization f
+
+register_information_template sourceCorrectionRealization
 
 def sourceCorrectionArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -882,14 +886,12 @@ theorem result (n : ℕ) (hn_even : Even n) (hn_squarefree : Squarefree n)
   · exact source_floor_identity hdpos hrem hquot
 
 def actualSourceCorrectionRealization :
-    PrimitiveRealization sourceCorrectionArena.signature :=
-  @cutRealization sourceCorrectionArena.toArena.State Bool instDecidableEqBool
-    (fun x : sourceCorrectionArena.toArena.State => x)
+    PrimitiveRealization (cutSignature Bool Bool) :=
+  sourceCorrectionRealization (fun x : Bool => x)
 
 def alternateSourceCorrectionRealization :
-    PrimitiveRealization sourceCorrectionArena.signature :=
-  @cutRealization sourceCorrectionArena.toArena.State Bool instDecidableEqBool
-    (fun _ => true)
+    PrimitiveRealization (cutSignature Bool Bool) :=
+  sourceCorrectionRealization (fun _ => true)
 
 private theorem sourceCorrectionBridge :
     LegacyPrimitiveRealization sourceCorrectionArena
@@ -908,11 +910,11 @@ private theorem sourceCorrectionBridge :
   · intro h n hn_even hn_squarefree hn_factors hn_short
     have h' := h n hn_even hn_squarefree hn_factors hn_short
     simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
-      cutRealization, decodeSourceCorrection, SourceCorrection] using h'
+      sourceCorrectionRealization, cutRealization, decodeSourceCorrection, SourceCorrection] using h'
   · intro h n hn_even hn_squarefree hn_factors hn_short
     have h' := h n hn_even hn_squarefree hn_factors hn_short
     simpa [sourceCorrectionArena, actualSourceCorrectionRealization,
-      cutRealization, decodeSourceCorrection, SourceCorrection] using h'
+      sourceCorrectionRealization, cutRealization, decodeSourceCorrection, SourceCorrection] using h'
 
 private theorem alternateSourceCorrection_not_law :
     ¬ sourceCorrectionArena.Law alternateSourceCorrectionRealization := by
@@ -942,7 +944,8 @@ private theorem alternateSourceCorrection_not_law :
     norm_num
   have h30 := h 30 (by norm_num) hsq hcard hshort
   dsimp [sourceCorrectionArena, alternateSourceCorrectionRealization,
-    cutRealization, decodeSourceCorrection, GreatestPrimeFactor, hpf] at h30
+    sourceCorrectionRealization, cutRealization, decodeSourceCorrection,
+    GreatestPrimeFactor, hpf] at h30
   have hactual := result 30 (by norm_num) hsq hcard hshort
   dsimp [decodeSourceCorrection, SourceCorrection, GreatestPrimeFactor, hpf] at hactual
   simp [SourceCorrection, hpf] at h30 hactual
@@ -972,14 +975,9 @@ private theorem sourceCorrection_sensitivity :
     exact Fin.elim0 i
 
 register_information_theorem result in sourceCorrectionArena
-  readout via (@cutRealization sourceCorrectionArena.toArena.State Bool
-    instDecidableEqBool (fun x : sourceCorrectionArena.toArena.State => x))
+  readout via (sourceCorrectionRealization (fun x : Bool => x))
   primitives actualSourceCorrectionRealization.toPrimitiveBundle realization sourceCorrectionBridge
   variation sourceCorrection_variation sensitivity sourceCorrection_sensitivity
-
-#print axioms result
-#print axioms sourceCorrectionBridge
-#print axioms sourceCorrection_variation
-#print axioms sourceCorrection_sensitivity
+  escape from (SourceCorrection) escape continues (open)
 
 end D5.S3.ArithUnits.CenteredReducedResidueProgressions

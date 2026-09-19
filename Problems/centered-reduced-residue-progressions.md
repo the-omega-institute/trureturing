@@ -5,7 +5,7 @@ doi: 10.5281/zenodo.18154061
 url: https://math.colgate.edu/~integers/aa6/aa6.pdf
 triage: theorem
 motivation_gids:
-  - D5/S3/ArithUnits/CenteredReducedResidueProgressions.result
+  - D5/S3/ArithUnits/FiniteWindowResidues.finite_window_residues_realizable
 ---
 
 # Centered reduced residue progression maximum
