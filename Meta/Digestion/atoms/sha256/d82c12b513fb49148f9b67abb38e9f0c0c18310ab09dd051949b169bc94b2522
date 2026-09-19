@@ -1,0 +1,21 @@
+**定理 5.2（代价球、完成化与暴露面）。**
+
+1. $\gamma_A$ 是有限、连续的范数，且其闭单位球是 $\overline K$。
+2. 对 $v\ne0$，旧字典存在取得 $\gamma_A(v)$ 的有限表示，当且仅当 $v/\gamma_A(v)\in K$。
+3. 把所有归一化极限原子 $\overline A$ 加入且各按单位价格调用，则对全部 $v$，$\gamma_{\overline A}(v)=\gamma_A(v)$；新字典中每个 $v$ 的极小值均有有限表示取得。
+4. 范数具有对偶公式
+
+$$
+\gamma_A(v)=\max\{\varphi(v):\varphi\in V^*,\quad
+|\varphi(a)|\le1\text{ 对全部 }a\in A\}.
+$$
+
+若 $v\ne0$，取一个达到右侧最大值的 $\varphi$，则旧字典极小值可达等价于
+
+$$
+\frac{v}{\gamma_A(v)}\in
+\operatorname{conv}\{a\in A\cup(-A):\varphi(a)=1\}.
+$$
+
+特别地，若对每个 $a\in A$ 都有 $|\varphi(a)|<1$，则任何旧字典有限精确表示的成本均严格大于 $\gamma_A(v)$。
+
