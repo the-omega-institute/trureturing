@@ -780,3 +780,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [A finite aligned source neighborhood keeps J below403](profile-notes/318-a-finite-aligned-source-neighborhood-keeps-j-below403.md)
 - [Near-aligned deep-five leakage and persistent hole caps](profile-notes/319-near-aligned-deep-five-leakage-and-persistent-hole-caps.md)
 - [Near-aligned first-five virtual measures recover the H restrictions](profile-notes/320-near-aligned-first-five-virtual-measures-recover-the-h-restrictions.md)
+- [Full coarse deep-five transport from the same capacity defect](profile-notes/321-full-coarse-deep-five-transport-from-the-same-capacity-defect.md)
