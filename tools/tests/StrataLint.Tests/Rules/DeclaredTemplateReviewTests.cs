@@ -107,7 +107,7 @@ public sealed class DeclaredTemplateReviewTests
                 (path == Registration ? ".unit" : ".realization"), "def", "True", [])).ToImmutableArray();
             string[] imports = path == Registration
                 ? indirectJudgePath
-                    ? ["tools.lean-inspector.LeanInformationAudit.Syntax"]
+                    ? ["LeanInformationAudit.Syntax"]
                     : [TargetModule, "LeanInformationAudit.Syntax"]
                 : [];
             reports[path] = new(imports.ToImmutableArray(), declarations)
@@ -272,6 +272,74 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
+    public void actual_inline_proof_helper_input_omission_rejected()
+    {
+        const string prefix = "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/";
+        const string registration = prefix + "InlineRealization.lean";
+        const string source = prefix + "InlineRealizationSource.lean";
+        const string helper = prefix + "InlineProofHelper.lean";
+        var root = TestRepositoryLayout.FindRoot();
+        // Engineering restores only a seed, not this fixture's compiled imports.
+        // Lake owns the prerequisite closure; the canonical runner owns cache
+        // provisioning and locking. Do not build the whole inspector test library.
+        var build = TestProcessRunner.Run("make",
+            ["lean", "LEAN_TARGETS=LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource "
+                + "LeanInformationAudit.Tests.RegistrationGates.Positive LeanInformationAudit.Tests.SourceIsolation"],
+            root, TestBudgets.ReportSupervisorHangGuard, 2 * 1024 * 1024);
+        Assert.True(build.ExitCode == 0, Encoding.UTF8.GetString(build.StandardOutput)
+            + Encoding.UTF8.GetString(build.StandardError));
+        var process = TestProcessRunner.Run("/bin/bash",
+            [Path.Combine(root, "tools/scripts/worktree/lean-cache-run.sh"),
+                "lake", "env", "lean", "--root=tools/lean-inspector", Path.Combine(root, registration)],
+            root, TestBudgets.LeanProcessHangGuard, 2 * 1024 * 1024);
+        var output = Encoding.UTF8.GetString(process.StandardOutput)
+            + Encoding.UTF8.GetString(process.StandardError);
+        Assert.True(process.ExitCode == 0, output);
+        const string marker = "INLINE_PROVENANCE_REPORT=";
+        var start = output.IndexOf(marker, StringComparison.Ordinal);
+        Assert.True(start >= 0, output);
+        start += marker.Length;
+        var end = output.IndexOf('\n', start);
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(output[start..(end < 0 ? output.Length : end)])!;
+        var inputs = wire["inputs"]!.AsArray();
+        Assert.Contains(inputs, input => input!["path"]!.GetValue<string>() == helper);
+
+        var entries = inputs.Select(input =>
+        {
+            var path = input!["path"]!.GetValue<string>();
+            return new RawRepositoryEntry(path,
+                ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
+        });
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(entries))).Snapshot;
+        var declarations = wire["records"]!.AsArray().SelectMany(record => new[]
+        {
+            new LeanDeclaration(record!["unit_name"]!.GetValue<string>(), "def", "True", []),
+            new LeanDeclaration(record["realization_name"]!.GetValue<string>(), "theorem", "True", []),
+        }).DistinctBy(declaration => declaration.Name).ToImmutableArray();
+        LeanAxiomReport WithWire(System.Text.Json.Nodes.JsonNode evidence) =>
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+            {
+                [registration] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource"], declarations)
+                { InformationTemplates = JsonSerializer.SerializeToElement(evidence) },
+                [source] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper"], []),
+                [helper] = new([], []),
+            });
+        var selected = new[] { RepoPath.CreateKnown(registration) };
+        Assert.Null(Record.Exception(() => InformationTemplateEvidence.Collect(
+            snapshot, WithWire(wire), selected)));
+
+        var omitted = wire.DeepClone();
+        var omittedInputs = omitted["inputs"]!.AsArray();
+        omittedInputs.RemoveAt(omittedInputs.ToList().FindIndex(input =>
+            input!["path"]!.GetValue<string>() == helper));
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
+            snapshot, WithWire(omitted), selected));
+        Assert.Contains("omitted required producer/source input " + helper, error.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void indirect_judge_import_closure_keeps_content_and_drops_judge_inputs()
     {
         var files = Files();
@@ -286,7 +354,7 @@ public sealed class DeclaredTemplateReviewTests
         reportFiles[syntax] = new([TargetModule], []);
         var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
-        Assert.Equal("tools.lean-inspector.LeanInformationAudit.Syntax",
+        Assert.Equal("LeanInformationAudit.Syntax",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
         var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
         Assert.Contains(RepoPath.CreateKnown(Target), closure);

@@ -17,11 +17,13 @@ namespace D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 
 open RegistrationTemplates LeanInformationAudit
 
+universe u
+
 /-- A finite carrier checks a predicate at selected points of its quantifier domain.
 The signature and law are derived below, so an author cannot override either.
 The decision family may use `Decidable.isFalse h` for a kernel-checked local failure. -/
 structure WitnessArena extends Arena.{0} where
-  Domain : Type
+  Domain : Type u
   predicate : Domain → Prop
   embed : State → Domain
   decision : ∀ w, Decidable (predicate (embed w))
@@ -40,7 +42,7 @@ def WitnessArena.toPrimitiveLawArena (a : WitnessArena) : PrimitiveLawArena.{0,0
   Law := a.Law
 
 /-- Build a witness arena from a finite carrier and its per-point predicate decisions. -/
-def WitnessArena.ofCarrier (W D : Type) [Fintype W] [DecidableEq W]
+def WitnessArena.ofCarrier (W : Type) (D : Type u) [Fintype W] [DecidableEq W]
     (predicate : D → Prop) (embed : W → D)
     (decision : ∀ w, Decidable (predicate (embed w))) : WitnessArena where
   toArena := Arena.ofFintype W
