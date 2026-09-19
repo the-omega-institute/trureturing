@@ -312,6 +312,7 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
   let env ← getEnv
   let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
     record.occurrence.realizationName, record.occurrence.key.objectArena]
+  pending := (← TemplateAudit.inspectionRoots record.occurrence).toList ++ pending
   if let some origin := record.escape.fromObject then pending := origin.name :: pending
   if let some residual := record.escape.continuation then
     pending := residual.declarationName.toList ++ residual.chainName.toList ++ pending

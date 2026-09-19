@@ -39,7 +39,8 @@ private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx 
   let value ← elaborator stx expected
   let type ← whnfR (← inferType value)
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
-      type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
+      type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena ||
+      type.isAppOf RegistrationGates.witnessArenaName then
     return mkAnnotation arenaConstructionMarker value
   return value
 
@@ -330,7 +331,8 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     let legacyArgs := realizationType.getAppArgs
     unless (realizationType.getAppFn.constName? ==
         (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
-        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge) &&
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge ||
+        realizationType.getAppFn.constName? == some RegistrationGates.witnessBridgeName) &&
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
@@ -339,13 +341,26 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
+    let variationName ← optionalWitnessName stx[8]
+    let sensitivityName ← optionalWitnessName stx[9]
+    if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+      liftTermElabM do
+        let arena ← mkConstWithFreshMVarLevels arenaName
+        discard <| RegistrationGates.witnessStatement arena legacyArgs[1]! theoremName
+        if let some diagnostic ← RegistrationGates.witnessEvidence arena legacyArgs[2]!
+            variationName sensitivityName then throwError diagnostic
     let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
     if realizationType.isAppOf TemplateAudit.escapeForwardBridge &&
         (stx[8].getNumArgs == 0 || stx[9].getNumArgs == 0) then
       throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
-    let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+    let witnessUnitId := absoluteIdentFrom theoremId (RegistrationGates.witnessBridgeName.str "toTheoremUnit")
+    let variationId := absoluteIdentFrom theoremId variationName
+    let unitValue <- if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+        `(term| $witnessUnitId:ident
+          $realizationId:ident (And.left $variationId:ident))
+      else if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
         `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
       else `(term|
         D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
@@ -468,7 +483,8 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let legacyArgs := realizationType.getAppArgs
   unless (realizationType.getAppFn.constName? ==
       (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
-        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge) &&
+        realizationType.getAppFn.constName? == some TemplateAudit.escapeForwardBridge ||
+        realizationType.getAppFn.constName? == some RegistrationGates.witnessBridgeName) &&
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
@@ -477,6 +493,14 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
+  let variationName ← optionalWitnessName stx[12]
+  let sensitivityName ← optionalWitnessName stx[13]
+  if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+    liftTermElabM do
+      let arena ← mkConstWithFreshMVarLevels lawArenaName
+      discard <| RegistrationGates.witnessStatement arena legacyArgs[1]! theoremName
+      if let some diagnostic ← RegistrationGates.witnessEvidence arena legacyArgs[2]!
+          variationName sensitivityName then throwError diagnostic
   let realizationLevels := suppliedRealizationInfo.levelParams.map Level.param
   liftCoreM <| addAndCompile <| .thmDecl {
     name := realizationName
@@ -491,7 +515,12 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       (stx[12].getNumArgs == 0 || stx[13].getNumArgs == 0) then
     throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
   let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
-  let unitValue <- if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
+  let witnessUnitId := absoluteIdentFrom theoremId (RegistrationGates.witnessBridgeName.str "toTheoremUnit")
+  let variationId := absoluteIdentFrom theoremId variationName
+  let unitValue <- if realizationType.isAppOf RegistrationGates.witnessBridgeName then
+      `(term| $witnessUnitId:ident
+        $qualifiedRealizationId:ident (And.left $variationId:ident))
+    else if realizationType.isAppOf TemplateAudit.escapeForwardBridge then
       `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
     else `(term|
       D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
