@@ -766,3 +766,6 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [An actual star blocks a universal scalar restart at19](profile-notes/304-an-actual-star-blocks-a-universal-scalar-restart-at19.md)
 - [Ineffective leading pairs retain the complete core bounds](profile-notes/305-ineffective-leading-pairs-retain-the-complete-core-bounds.md)
 - [Common actual J rows restore the vanished columns](profile-notes/306-common-actual-j-rows-restore-the-vanished-columns.md)
+- [The original J prefixes and complete tails have an explicit modulus](profile-notes/307-original-j-prefixes-and-complete-tails-have-an-explicit-modulus.md)
+- [The complete J quadratic tails have an explicit modulus](profile-notes/308-complete-j-quadratic-tails-have-an-explicit-modulus.md)
+- [An explicit actual J neighborhood keeps the complete comparison below403](profile-notes/309-an-explicit-actual-j-neighborhood-keeps-the-complete-comparison-below403.md)
