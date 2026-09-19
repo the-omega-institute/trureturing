@@ -188,6 +188,9 @@ The pinned upstream root contains `LICENSE` and `LICENSES`, with no separate
 `NOTICE`. The patch adds origin metadata hooks; it changes no proof statement.
 No full compiler source or prebuilt compiler is vendored. Installed files are
 never overwritten; local stock hard links are unlinked before replacement.
+On macOS, executables and dylibs have private inodes so dyld cannot resolve
+loader-relative paths through another compiler stage during its cleanup.
+Their exact bytes and modes remain covered by the compiler artifact receipt.
 
 The batch frontend delegates to pinned `Lean.ShellOptions.process` and
 `Lean.shellMain`, including setup, plugins, normal `runFrontend`, C/olean/ilean
@@ -211,6 +214,14 @@ instrumented frontend with `-Dweak.compilerOrigin=true`. Unmarked Lake module
 builds use the actual stock frontend and builtin imports, so fetched caches do
 not claim generation by the instrumented compiler. The weak option also permits
 stock tooling to compile a configuration; it grants no provenance.
+
+Modules retaining checked template plans are explicitly listed in
+`template-plan-inputs.json`. Their ordinary Lake `Module.presetup` facet traces
+raw `lean-report-inputs.json`, `lean-toolchain` and `lake-manifest.json` bytes
+before deciding whether to reuse compiled outputs. It delegates all other setup
+and rebuilding to Lake and composes with `compilerInput`; fetched packages and
+unregistered modules keep their ordinary traces. The registry is configuration,
+not provenance authority. Native readers still reject stale plans.
 
 Report facets trace the digest, and module provenance requires the matching
 `compiler_input_sha256`. The recipe embeds the exact compiler caption in its

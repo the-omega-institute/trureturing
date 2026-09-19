@@ -56,6 +56,7 @@
         {"pattern": "tools/lean-inspector/reuse.py", "optional": false},
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/template-plan-inputs.json", "optional": false},
         {"pattern": "tools/lean-inspector/compiler/*.py", "optional": false},
         {"pattern": "tools/lean-inspector/compiler/*.lean", "optional": false},
         {"pattern": "tools/lean-inspector/compiler/*.patch", "optional": false},

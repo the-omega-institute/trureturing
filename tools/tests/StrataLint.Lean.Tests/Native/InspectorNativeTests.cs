@@ -5,6 +5,24 @@ namespace StrataLint.Lean.Tests;
 
 public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
+    [Fact]
+    public void FixedTemplatePlansTrackWarmSemanticPolicyAndReuseUnchangedInputs()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var output = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        foreach (var operation in new[] { "prepare", "snapshot", "prior-build", "prior-report", "stale-report",
+            "current-build", "current-report", "reuse-build", "reuse-report" })
+        {
+            var result = TestProcessRunner.Run("python3",
+                ["-B", "fixed_plan_fixture.py", operation, output.Path],
+                Path.Combine(root, "tools/lean-inspector/tests"),
+                TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
+                + Encoding.UTF8.GetString(result.StandardError));
+        }
+    }
+
     // Publication and packaging use this class's private compiler stage.
     [Theory]
     [InlineData("test_native.NativeTests.test_compiler_origin_imports_and_invalidation")]

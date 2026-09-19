@@ -93,7 +93,7 @@ root = "Cache"
                 '[[lean_lib]]\nname = "ClaimSupport"\nneeds = ["leanInspector/compilerInput"]\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nneeds = ["leanInspector/compilerInput"]\n'
                 'globs = ["LeanInformationAudit.+"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'template-plan-inputs.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
         shutil.copytree(HERE / 'compiler', self.root / 'tools/lean-inspector/compiler', ignore=shutil.ignore_patterns('__pycache__'))
         # These native-facet fixtures test statement extraction and publication,
@@ -132,6 +132,7 @@ root = "Cache"
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
+                'tools/lean-inspector/template-plan-inputs.json',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/lean-inspector/compiler/*.py', 'tools/lean-inspector/compiler/*.lean',
                 'tools/lean-inspector/compiler/*.patch', 'tools/lean-inspector/compiler/LICENSE*',
@@ -507,6 +508,35 @@ class GuardedCommandTests(unittest.TestCase):
                 result = self.fixture.guarded_command([sys.executable, '-c',
                     f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+
+    def test_native_compiler_images_keep_private_loader_paths(self):
+        if sys.platform != 'darwin':
+            return
+        from compiler import build as compiler
+        from concurrent.futures import ThreadPoolExecutor
+        base = Path(subprocess.check_output(['elan', 'which', 'lean'], cwd=ROOT,
+            text=True).strip()).resolve().parents[1]
+        source = self.fixture.root / 'source'
+        images = ['bin/llvm-ar', 'lib/libLLVM.dylib']
+        for name in images:
+            path = source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(base / name, path)
+        expected = {name: publication.digest(source / name) for name in images}
+        def invoke(index):
+            stage = self.fixture.root / str(index)
+            try:
+                for name in images:
+                    compiler.copy_material(source / name, stage / name)
+                    self.assertFalse(os.path.samefile(source / name, stage / name))
+                    self.assertEqual(publication.digest(stage / name), expected[name])
+                result = subprocess.run([str(stage / 'bin/llvm-ar'), '--version'],
+                    capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+            finally:
+                shutil.rmtree(stage)
+        with ThreadPoolExecutor(max_workers=4) as workers:
+            list(workers.map(invoke, range(16)))
 
     def test_scope_cleanup_failure_prevents_success_receipt(self):
         # Run the real CLI lifecycle in another process. Substitute only the

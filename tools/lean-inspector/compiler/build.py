@@ -85,6 +85,12 @@ def inputs(root):
 
 def copy_material(src, dst):
     dst.parent.mkdir(parents=True, exist_ok=True)
+    # dyld resolves loader-relative paths through executable/image identity.
+    # A shared inode can resolve through another compiler stage while that
+    # stage is being removed. Keep Mach-O images private to their distribution.
+    if sys.platform == 'darwin' and (src.parent.name == 'bin' or src.suffix == '.dylib'):
+        shutil.copy2(src, dst)
+        return
     # Hard links are never changed in place. Every patched/replaced artifact is
     # unlinked first; immutable stock artifacts remain read-only inputs.
     try:
@@ -101,7 +107,7 @@ def patch_native_archive(base, directory, objects):
     Defined initializer symbols identify objects; no declaration classification
     is performed here.
     """
-    ar = str(base / 'bin/llvm-ar')
+    ar = str(directory / 'bin/llvm-ar')
     archive = directory / 'lib/lean/libLeanOrigin.a'
     stock = base / 'lib/lean/libLean.a'
     members = subprocess.check_output([ar, 't', str(stock)], text=True).splitlines()

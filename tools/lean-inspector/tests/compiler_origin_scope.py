@@ -170,7 +170,15 @@ globs = ["LeanInformationAudit.+"]
         compact = output / 'baseline-compact.json'
         if args.baseline is None:
             # The untouched compiler supplies the independent identity baseline.
-            command([fixture.lake, 'build', *names])
+            # Its libraries must not request the instrumented compiler input.
+            # Restore that dependency before the normal report phase; changing
+            # the actual frontend is then a normal Lake compilation input.
+            fixture.write('lakefile.toml', config.replace(
+                'needs = ["leanInspector/compilerInput"]\n', ''))
+            try:
+                command([fixture.lake, 'build', *names])
+            finally:
+                fixture.write('lakefile.toml', config)
             baseline = output / 'baseline.json'
             spool = output / 'baseline-spool'
             command([sys.executable, '-B', recipe, 'run', 'lake', 'env', inspector,
