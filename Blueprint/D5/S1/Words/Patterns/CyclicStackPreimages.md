@@ -12,7 +12,7 @@ $$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(length\left(fibre\left(2
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4` (`✓ std3`). ∎
 
-*Citation.* Alex Zhan and Stella Bie (2026). *Cyclic-Pattern-Avoiding Stacks*. URL: <https://math.colgate.edu/~integers/aa15/aa15.pdf>.
+*Citation.* Alex Zhan and Stella Bie (2026). *Cyclic-Pattern-Avoiding Stacks*. DOI: [10.5281/zenodo.18154216](https://doi.org/10.5281/zenodo.18154216). URL: <https://math.colgate.edu/~integers/aa15/aa15.pdf>.
 
 *Commentary.*
 
@@ -21,3 +21,4 @@ For m at least two, fibre(n) is the complete list of permutations of 1 through n
 ## References
 
 - Truth anchor: `D5/S1/Words/Patterns/CyclicStackPreimages.zhan_bie_conjectures_3_4`
+- Dependency: [D5/S1/Words/Patterns/CyclicStackPreimagesFinalLow](CyclicStackPreimagesFinalLow.md)

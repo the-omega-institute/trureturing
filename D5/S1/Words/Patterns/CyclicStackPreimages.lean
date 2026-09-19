@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimages
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S1/Words/Patterns/CyclicStackPreimagesFinalLow]
+   anchors: []
    utility: none
    digest: Exact even and odd fibre cardinalities for the consecutive cyclic stack map. -/
 
@@ -115,6 +115,7 @@ private lemma fibre_nodup (n : ℕ) : (fibre n).Nodup := by
 the target of size `2m` has one element, while the full fibre over the target
 of size `2m+1` has `m+1` elements. -/
 theorem zhan_bie_conjectures_3_4 (m : ℕ) (hm : 2 ≤ m) :
+    let _sourceObject := cyclicStackSourceWord
     (fibre (2 * m)).length = 1 ∧ (fibre (2 * m + 1)).length = m + 1 := by
   have hevenSubset : fibre (2 * m) ⊆ [candidate m m m] := by
     intro input hinput

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimagesCandidates
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S1/Words/Patterns/CyclicStackPreimagesCore]
+   anchors: []
    utility: none
    digest: Candidate fibres and lower bounds for the consecutive cyclic stack map. -/
 
@@ -283,6 +283,7 @@ private lemma oddCandidate_maps_to_target (m omitted : ℕ) (hm : 0 < m)
   rw [show 2 * m + 1 - m = m + 1 by omega]
 
 lemma target_perm_range (n : ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     (target n).Perm (List.range' 1 n) := by
   let m := n / 2
   have hm : m ≤ n := Nat.div_le_self n 2
@@ -333,6 +334,7 @@ private lemma oddCandidate_nodup (m : ℕ) :
   simpa only [decode_odd_candidate m a ha, decode_odd_candidate m b hb] using hdecoded
 
 lemma oddCandidate_lower_bound (m : ℕ) (hm : 0 < m) :
+    let _sourceObject := cyclicStackSourceWord
     m + 1 ≤ (fibre (2 * m + 1)).length := by
   have hsubset : (List.range (m + 1)).map (candidate m (m + 1)) ⊆
       fibre (2 * m + 1) := by
@@ -343,6 +345,7 @@ lemma oddCandidate_lower_bound (m : ℕ) (hm : 0 < m) :
   simpa using (oddCandidate_nodup m).length_le_of_subset hsubset
 
 lemma evenCandidate_lower_bound (m : ℕ) (hm : 0 < m) :
+    let _sourceObject := cyclicStackSourceWord
     1 ≤ (fibre (2 * m)).length := by
   exact List.length_pos_of_mem (evenCandidate_mem_fibre m hm)
 

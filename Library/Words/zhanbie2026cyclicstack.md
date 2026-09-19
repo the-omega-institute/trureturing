@@ -3,9 +3,9 @@ bibkey: zhanbie2026cyclicstack
 authors: Alex Zhan and Stella Bie
 year: 2026
 title: Cyclic-Pattern-Avoiding Stacks
-doi: null
+doi: 10.5281/zenodo.18154216
 url: https://math.colgate.edu/~integers/aa15/aa15.pdf
-claim: Conjectures 3 and 4 give the exact full fibre over the layered target for the consecutive cyclic [123]-avoiding stack: cardinality one in even size and ceiling(n/2) in odd size, for every n at least four.
+claim: "Conjectures 3 and 4 give the exact full fibre over the layered target for the consecutive cyclic [123]-avoiding stack: cardinality one in even size and ceiling(n/2) in odd size, for every n at least four."
 strata_touched:
   - D5/S1/Words/Patterns/CyclicStackPreimagesCore
   - D5/S1/Words/Patterns/CyclicStackPreimagesCandidates
@@ -43,6 +43,7 @@ cardinalities at sizes `2m` and `2m+1` are `1` and `m+1`.
 
 ## Verified locator
 
+- DOI: https://doi.org/10.5281/zenodo.18154216.
 - Journal: *INTEGERS* 26 (2026), article A15.
 - Volume index: https://math.colgate.edu/~integers/vol26.html, entry A15.
 - Article PDF: https://math.colgate.edu/~integers/aa15/aa15.pdf.

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimagesInvariants
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S1/Words/Patterns/CyclicStackPreimagesCandidates]
+   anchors: []
    utility: none
    digest: Global gap decomposition and high-stack invariants for cyclic-stack preimages. -/
 
@@ -72,7 +72,9 @@ private lemma assembleGaps_cons (high : ℕ) (highs : List ℕ)
           cases slot <;> simp [assembleGaps, assembleTail, ih]
 
 lemma Gapped.head_high {m high : ℕ} {rest : List ℕ}
-    (hgapped : Gapped m (high :: rest)) : m < high := by
+    (hgapped : Gapped m (high :: rest)) :
+    let _sourceObject := cyclicStackSourceWord
+    m < high := by
   cases hgapped with
   | last hhigh => exact hhigh
   | empty hhigh _ => exact hhigh
@@ -80,6 +82,7 @@ lemma Gapped.head_high {m high : ℕ} {rest : List ℕ}
 
 lemma gapped_filters_slots {m : ℕ} {input : List ℕ}
     (hgapped : Gapped m input) :
+    let _sourceObject := cyclicStackSourceWord
     assembleGaps (highEntries m input) (gapSlots m input) = input ∧
       (gapSlots m input).length = (highEntries m input).length ∧
       (gapSlots m input).filterMap id = lowEntries m input := by
@@ -108,6 +111,7 @@ lemma gapped_filters_slots {m : ℕ} {input : List ℕ}
 
 lemma success_perm_range {n : ℕ} {input : List ℕ}
     (houtput : cyclicStackSort input = target n) :
+    let _sourceObject := cyclicStackSourceWord
     input.Perm (List.range' 1 n) := by
   have hp : (cyclicStackSort input).Perm input := by
     simpa only [cyclicStackSort, List.append_nil] using process_perm input []
@@ -185,7 +189,9 @@ private lemma no_high_low_low_factor {n high low₁ low₂ : ℕ}
   exact no_two_lows_after_high hlow₁ hlow₂ hne hhigh hsuffix
 
 lemma successful_gapped {n : ℕ} (hn : 2 ≤ n) {input : List ℕ}
-    (houtput : cyclicStackSort input = target n) : Gapped (n / 2) input := by
+    (houtput : cyclicStackSort input = target n) :
+    let _sourceObject := cyclicStackSourceWord
+    Gapped (n / 2) input := by
   obtain ⟨high, rest, rfl, hhigh⟩ := successful_head_high hn houtput
   have hnodup : (high :: rest).Nodup :=
     (success_perm_range houtput).nodup_iff.mpr List.nodup_range'
@@ -293,6 +299,7 @@ private lemma filled_gap_low_precedes {n high low later : ℕ}
 lemma successful_lows_pairwise {n : ℕ} {input : List ℕ}
     (hgapped : Gapped (n / 2) input)
     (houtput : cyclicStackSort input = target n) :
+    let _sourceObject := cyclicStackSourceWord
     (lowEntries (n / 2) input).Pairwise (fun x y => x < y) := by
   have go : ∀ {suffix : List ℕ}, Gapped (n / 2) suffix →
       ∀ pre, input = pre ++ suffix →
@@ -349,6 +356,7 @@ private lemma lowEntries_range (m q : ℕ) :
   rw [hleft, hright, List.append_nil]
 
 lemma highEntries_range (m q : ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     highEntries m (List.range' 1 (m + q)) = List.range' (m + 1) q := by
   rw [range_split, highEntries, List.filter_append]
   have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
@@ -371,6 +379,7 @@ lemma highEntries_range (m q : ℕ) :
 lemma successful_low_entries {m q : ℕ} {input : List ℕ}
     (hperm : input.Perm (List.range' 1 (m + q)))
     (hlows : (lowEntries m input).Pairwise (fun x y => x < y)) :
+    let _sourceObject := cyclicStackSourceWord
     lowEntries m input = List.range' 1 m := by
   have hp := hperm.filter (fun x => decide (x ≤ m))
   change (lowEntries m input).Perm
@@ -386,6 +395,7 @@ def insertNone : ℕ → List ℕ → List (Option ℕ)
 
 lemma options_all_some {slots : List (Option ℕ)}
     (hlen : slots.length = (slots.filterMap id).length) :
+    let _sourceObject := cyclicStackSourceWord
     slots = (slots.filterMap id).map some := by
   induction slots with
   | nil => rfl
@@ -404,6 +414,7 @@ lemma options_all_some {slots : List (Option ℕ)}
 lemma options_one_none {slots : List (Option ℕ)} {lows : List ℕ}
     (hfilter : slots.filterMap id = lows)
     (hlen : slots.length = lows.length + 1) :
+    let _sourceObject := cyclicStackSourceWord
     ∃ omitted < lows.length + 1, slots = insertNone omitted lows := by
   induction slots generalizing lows with
   | nil => simp at hlen
@@ -471,6 +482,7 @@ private lemma candidateSlots_after (omitted i count : ℕ) (h : omitted < i) :
       exact ih (i := i + 1) (by omega)
 
 lemma candidateSlots_even (m : ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     candidateSlots m 0 m = (List.range' 1 m).map some := by
   exact candidateSlots_before m 0 m (by omega)
 
@@ -489,6 +501,7 @@ private lemma insertNone_range (start omitted count : ℕ) (h : omitted ≤ coun
           simp [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
 lemma candidateSlots_odd (m omitted : ℕ) (homitted : omitted < m + 1) :
+    let _sourceObject := cyclicStackSourceWord
     candidateSlots omitted 0 (m + 1) = insertNone omitted (List.range' 1 m) := by
   have hsplit := candidateSlots_append omitted 0 omitted (m + 1 - omitted)
   rw [Nat.add_sub_of_le (by omega : omitted ≤ m + 1)] at hsplit
@@ -502,6 +515,7 @@ lemma candidateSlots_odd (m omitted : ℕ) (homitted : omitted < m + 1) :
   simp [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
 lemma candidate_eq_assemble (m highCount omitted : ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     candidate m highCount omitted =
       assembleGaps (List.range' (m + 1) highCount)
         (candidateSlots omitted 0 highCount) := by
@@ -555,6 +569,7 @@ private lemma FilledUntilLast.tail_some {low : ℕ} {rest : List (Option ℕ)}
   | cons_some _ tail => exact tail
 
 lemma filledUntilLast_map_some (lows : List ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     FilledUntilLast (lows.map some) := by
   induction lows with
   | nil => exact FilledUntilLast.nil
@@ -564,6 +579,7 @@ lemma filledUntilLast_map_some (lows : List ℕ) :
       | cons next rest => exact FilledUntilLast.cons_some low ih
 
 lemma filledUntilLast_insertNone_last (lows : List ℕ) :
+    let _sourceObject := cyclicStackSourceWord
     FilledUntilLast (insertNone lows.length lows) := by
   induction lows with
   | nil => exact FilledUntilLast.last_none
@@ -606,6 +622,7 @@ lemma successful_highs_of_filled_until_last {n : ℕ} {input : List ℕ}
     (hgapped : Gapped (n / 2) input)
     (hfilled : FilledUntilLast (gapSlots (n / 2) input))
     (houtput : cyclicStackSort input = target n) :
+    let _sourceObject := cyclicStackSourceWord
     (highEntries (n / 2) input).Pairwise (fun x y => x < y) := by
   have go : ∀ {suffix : List ℕ}, Gapped (n / 2) suffix →
       FilledUntilLast (gapSlots (n / 2) suffix) →
