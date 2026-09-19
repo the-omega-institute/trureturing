@@ -68,8 +68,10 @@ public sealed partial class LeanCacheProvisionerTests
         foreach (var arguments in new[]
         {
             new[] { "init", "--quiet" }, new[] { "add", "tracked.txt" },
+            // The donor is copied immediately; maintenance must not keep modifying .git.
             new[] { "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
-                "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "fixture" },
+                "-c", "commit.gpgsign=false", "-c", "maintenance.auto=false",
+                "commit", "--quiet", "-m", "fixture" },
         })
             Assert.Equal(0, TestProcessRunner.Run("git", arguments, donor,
                 TestBudgets.ScriptProcessHangGuard, 64 * 1024).ExitCode);
