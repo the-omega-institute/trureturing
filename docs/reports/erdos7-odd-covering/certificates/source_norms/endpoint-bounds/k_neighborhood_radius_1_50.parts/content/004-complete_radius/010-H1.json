@@ -1,0 +1,104 @@
+{
+  "upper": "759529994159/1123875000000",
+  "face_upper": "443/900",
+  "excess": "206333744159/1123875000000",
+  "bounded_labels": [
+    {
+      "modulus": 3,
+      "face": "7/90",
+      "delta_coefficient": 2,
+      "rho_coefficient": 8,
+      "transported_upper": "13259/112500",
+      "raw_haar_cap": "1/3",
+      "upper": "13259/112500"
+    },
+    {
+      "modulus": 9,
+      "face": "1/18",
+      "delta_coefficient": 2,
+      "rho_coefficient": 8,
+      "transported_upper": "10759/112500",
+      "raw_haar_cap": "1/9",
+      "upper": "10759/112500"
+    },
+    {
+      "modulus": 5,
+      "face": "14/225",
+      "delta_coefficient": 3,
+      "rho_coefficient": 23,
+      "transported_upper": "110207/900000",
+      "raw_haar_cap": "1/5",
+      "upper": "110207/900000"
+    },
+    {
+      "modulus": 15,
+      "face": "8/225",
+      "delta_coefficient": 2,
+      "rho_coefficient": 21,
+      "transported_upper": "68189/900000",
+      "raw_haar_cap": "1/15",
+      "upper": "1/15"
+    },
+    {
+      "modulus": 45,
+      "face": "4/225",
+      "delta_coefficient": 2,
+      "rho_coefficient": 21,
+      "transported_upper": "52189/900000",
+      "raw_haar_cap": "1/45",
+      "upper": "1/45"
+    }
+  ],
+  "complete_exponent_tails": [
+    {
+      "crossing": 8,
+      "geometric_sum": "1/18",
+      "error_sum": "421597/3596400000",
+      "name": "pure3",
+      "prime": 3,
+      "start": 3,
+      "reference_coefficient": "141/200",
+      "envelope": "1773/25000",
+      "error": "299/14800000",
+      "upper": "141280597/3596400000"
+    },
+    {
+      "crossing": 5,
+      "geometric_sum": "1/20",
+      "error_sum": "22619/70312500",
+      "name": "pure5",
+      "prime": 5,
+      "start": 2,
+      "reference_coefficient": "1813/4500",
+      "envelope": "5863/56250",
+      "error": "7/75000",
+      "upper": "5756101/281250000"
+    },
+    {
+      "crossing": 6,
+      "geometric_sum": "1/20",
+      "error_sum": "32/703125",
+      "name": "root5",
+      "prime": 5,
+      "start": 2,
+      "reference_coefficient": "67/250",
+      "envelope": "31/450",
+      "error": "1/100000",
+      "upper": "75631/5625000"
+    },
+    {
+      "crossing": 5,
+      "geometric_sum": "1/20",
+      "error_sum": "88099/2250000000",
+      "name": "cell5",
+      "prime": 5,
+      "start": 2,
+      "reference_coefficient": "67/750",
+      "envelope": "20599/900000",
+      "error": "1/100000",
+      "upper": "10138099/2250000000"
+    }
+  ],
+  "deep_mixed_upper": "1/72",
+  "complete_positive7_upper": "2869/18000"
+}

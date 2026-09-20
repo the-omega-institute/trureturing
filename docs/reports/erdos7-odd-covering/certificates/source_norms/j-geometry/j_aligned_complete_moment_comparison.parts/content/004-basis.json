@@ -1,0 +1,110 @@
+[
+  {
+    "name": "AP11-0",
+    "upper": "129129933582018259144139/732187625400000000000000",
+    "source": "313",
+    "mass_is_exact": false
+  },
+  {
+    "name": "AP11-1",
+    "upper": "89934561027952738201/1867825575000000000000",
+    "source": "313",
+    "mass_is_exact": false
+  },
+  {
+    "name": "AP11-2",
+    "upper": "84454702518259168679/14942604600000000000000",
+    "source": "313",
+    "mass_is_exact": false
+  },
+  {
+    "name": "cost0",
+    "upper": "553/100",
+    "source": "315",
+    "mass_is_exact": false
+  },
+  {
+    "name": "cost48",
+    "upper": "14239908700596137297/3969000000000000000",
+    "source": "316",
+    "mass_is_exact": false
+  },
+  {
+    "name": "cost49",
+    "upper": "15450579600948267683/3969000000000000000",
+    "source": "316",
+    "mass_is_exact": false
+  },
+  {
+    "name": "factorial2",
+    "upper": "673097/453600",
+    "source": "316",
+    "mass_is_exact": false
+  },
+  {
+    "name": "factorial3",
+    "upper": "1222663/1058400",
+    "source": "316",
+    "mass_is_exact": false
+  },
+  {
+    "name": "factorial5",
+    "upper": "836347/1058400",
+    "source": "316",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge2",
+    "upper": "2537512500002069/7087500000000000",
+    "source": "314",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge3",
+    "upper": "14833071428623529/56700000000000000",
+    "source": "314",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge4",
+    "upper": "1931/10000",
+    "source": "315",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge5",
+    "upper": "718768974738331/4725000000000000",
+    "source": "314",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge6",
+    "upper": "3319728883813633/28350000000000000",
+    "source": "314",
+    "mass_is_exact": false
+  },
+  {
+    "name": "hinge8",
+    "upper": "71860326663466951447/833837287500000000000",
+    "source": "314",
+    "mass_is_exact": false
+  },
+  {
+    "name": "mass",
+    "upper": "413/2700",
+    "source": "312",
+    "mass_is_exact": true
+  },
+  {
+    "name": "mean",
+    "upper": "293/450",
+    "source": "312",
+    "mass_is_exact": false
+  },
+  {
+    "name": "square",
+    "upper": "2565377442951193237/567000000000000000",
+    "source": "316",
+    "mass_is_exact": false
+  }
+]

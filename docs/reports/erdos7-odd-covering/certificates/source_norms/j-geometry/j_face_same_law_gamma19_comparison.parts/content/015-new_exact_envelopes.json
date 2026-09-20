@@ -1,0 +1,32 @@
+{
+  "length": 28,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 10,
+      "part": {
+        "path": "content/015-new_exact_envelopes/000000-000010.json",
+        "sha256": "6ce77b2c4b73d2b31b0fed664eee2ed54c5e3d4228e5ddc23f50a2106d8e4152",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 20,
+      "part": {
+        "path": "content/015-new_exact_envelopes/000010-000020.json",
+        "sha256": "8afcf30a2365625cb0314a2b59fcf2cdaf1ecdb20c2d71ce5a7963106d403060",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 28,
+      "part": {
+        "path": "content/015-new_exact_envelopes/000020-000028.json",
+        "sha256": "6eb9cfdb8e89807b1f04c0d08ab1fe06a078642baefdaf040aebabcb76026200",
+        "kind": "value"
+      }
+    }
+  ]
+}

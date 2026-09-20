@@ -165,11 +165,10 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourceModules := #[mod]
   sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
   -- Inspector loads this fixed judge even for an empty registration inventory.
-  -- Demand and trace its native closure independently of the reported module.
+  -- Demand its build without making this program a report data dependency.
   let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-  exports := exports.push (← driver.exportInfo.fetch)
-  sourceModules := sourceModules.push driver ++ (← (← driver.transImports.fetch).await)
+  let driverBuild ← driver.exportInfo.fetch
   for name in claims do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
@@ -191,7 +190,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
   let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add inspector).mapM fun _ => do
+  (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.

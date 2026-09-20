@@ -1,0 +1,50 @@
+{
+  "length": 3344,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/004-rational_values/000000-000798.json",
+        "sha256": "84a9f805a9ff17338d2e67f8066b78a4812e5fa69573da0a0891bd51c6b19eaa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/004-rational_values/000798-001596.json",
+        "sha256": "545913a8d239f700cf63b2f5e2c197f251d1cfcf25de94b4dabcb9c50de1fb99",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/004-rational_values/001596-002394.json",
+        "sha256": "0ba4b1bc45d4e91982dcc06bb33c0af4d6fb59543657efcc9dceac598b46d03c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/004-rational_values/002394-003192.json",
+        "sha256": "40043e4998afeebf789e8f9f374cdea974774c56498e880705f53d69ea007b47",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3344,
+      "part": {
+        "path": "content/004-rational_values/003192-003344.json",
+        "sha256": "6d4188c40bf2090cd03f998256089607938321869168366f1be9f3622c18865e",
+        "kind": "value"
+      }
+    }
+  ]
+}

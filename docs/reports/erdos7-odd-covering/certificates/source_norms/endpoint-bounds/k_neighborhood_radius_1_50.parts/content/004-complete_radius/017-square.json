@@ -1,0 +1,171 @@
+{
+  "mass_upper": "47503/300000",
+  "bounded_cylinders": [
+    {
+      "modulus": 3,
+      "face": "7/90",
+      "delta_coefficient": 2,
+      "rho_coefficient": 8,
+      "transported_upper": "13259/112500",
+      "raw_haar_cap": "1/3",
+      "upper": "13259/112500",
+      "LCM_weight": 3,
+      "weighted_upper": "13259/37500"
+    },
+    {
+      "modulus": 9,
+      "face": "1/18",
+      "delta_coefficient": 2,
+      "rho_coefficient": 8,
+      "transported_upper": "10759/112500",
+      "raw_haar_cap": "1/9",
+      "upper": "10759/112500",
+      "LCM_weight": 5,
+      "weighted_upper": "10759/22500"
+    },
+    {
+      "modulus": 5,
+      "face": "14/225",
+      "delta_coefficient": 3,
+      "rho_coefficient": 23,
+      "transported_upper": "110207/900000",
+      "raw_haar_cap": "1/5",
+      "upper": "110207/900000",
+      "LCM_weight": 3,
+      "weighted_upper": "110207/300000"
+    },
+    {
+      "modulus": 15,
+      "face": "8/225",
+      "delta_coefficient": 2,
+      "rho_coefficient": 21,
+      "transported_upper": "68189/900000",
+      "raw_haar_cap": "1/15",
+      "upper": "1/15",
+      "LCM_weight": 9,
+      "weighted_upper": "3/5"
+    },
+    {
+      "modulus": 45,
+      "face": "4/225",
+      "delta_coefficient": 2,
+      "rho_coefficient": 21,
+      "transported_upper": "52189/900000",
+      "raw_haar_cap": "1/45",
+      "upper": "1/45",
+      "LCM_weight": 15,
+      "weighted_upper": "1/3"
+    }
+  ],
+  "complete_weighted_tails": [
+    {
+      "family": "pure3",
+      "prime": 3,
+      "start": 3,
+      "raw": "9699/12500",
+      "branches": [
+        [
+          "141/200",
+          "299/14800000",
+          "1773/25000"
+        ]
+      ],
+      "LCM_multiplier": 1,
+      "crossing": 8,
+      "reference_weighted_sum": "47/150",
+      "error_weighted_sum": "560639/399600000",
+      "upper": "125768639/399600000"
+    },
+    {
+      "family": "pure5",
+      "prime": 5,
+      "start": 2,
+      "raw": "6339/12500",
+      "branches": [
+        [
+          "1813/4500",
+          "7/75000",
+          "5863/56250"
+        ]
+      ],
+      "LCM_multiplier": 1,
+      "crossing": 5,
+      "reference_weighted_sum": "19943/180000",
+      "error_weighted_sum": "686099/281250000",
+      "upper": "63694073/562500000"
+    },
+    {
+      "family": "root5",
+      "prime": 5,
+      "start": 2,
+      "raw": "379/1125",
+      "branches": [
+        [
+          "67/250",
+          "1/100000",
+          "31/450"
+        ]
+      ],
+      "LCM_multiplier": 3,
+      "crossing": 6,
+      "reference_weighted_sum": "2211/10000",
+      "error_weighted_sum": "1479/1250000",
+      "upper": "138927/625000"
+    },
+    {
+      "family": "cell5",
+      "prime": 5,
+      "start": 2,
+      "raw": "100999/900000",
+      "branches": [
+        [
+          "67/750",
+          "1/100000",
+          "20599/900000"
+        ]
+      ],
+      "LCM_multiplier": 5,
+      "crossing": 5,
+      "reference_weighted_sum": "737/6000",
+      "error_weighted_sum": "1418777/900000000",
+      "upper": "111968777/900000000"
+    }
+  ],
+  "complete_mixed_pair_sum": "7/18",
+  "zero7_pair_upper": "1725441095209/499500000000",
+  "raw_cap_order": [
+    "s",
+    "N3",
+    "N9",
+    "D",
+    "h",
+    "h1",
+    "eta_max",
+    "deep_mixed"
+  ],
+  "raw_cap_upper": [
+    "13/50",
+    "67/450",
+    "7/75",
+    "151/200",
+    "451/900",
+    "1/3",
+    "1/9",
+    "1"
+  ],
+  "raw_LCM_weights": [
+    "1",
+    "3",
+    "5",
+    "4/9",
+    "7/8",
+    "21/8",
+    "35/8",
+    "7/18"
+  ],
+  "raw35_pair_upper": "26621/7200",
+  "positive7_factor": "2/3",
+  "full_square_upper": "2956662345209/499500000000",
+  "face_square_upper": "374/75",
+  "square_excess": "465822345209/499500000000"
+}

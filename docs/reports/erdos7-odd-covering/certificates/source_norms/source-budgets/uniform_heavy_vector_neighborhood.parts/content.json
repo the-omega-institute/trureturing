@@ -1,0 +1,70 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-heavy-vector-neighborhood-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/comparison-bounds/uniform_k_neighborhood_cost.py": "365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+      "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+      "frontier/source-budgets/shared_budget_affine_tail.py": "bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/moments-survival/uniform_quadratic_cost_portfolio.py": "5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1",
+      "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+      "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/endpoint-bounds/vector_marked_source.py": "c8fb3eb6fd743d14942fe44a3999749585bbf29e52b825ef68e7955cc0640c79",
+      "certificates/source_norms/endpoint-bounds/vector_marked_face.json": "adf0746b9a11e99ab23e096c9777a54c4a586de2a9f4085ef5a83ce3f4bb14a3",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6"
+    }
+  },
+  "indices": {
+    "kind": "inline",
+    "value": [
+      0,
+      16
+    ]
+  },
+  "radii": {
+    "path": "content/003-radii.json",
+    "sha256": "a8555aa36e9573b98a760a0032b7b28e988cb7d878ba63bf4a40832aa180d969",
+    "kind": "array"
+  },
+  "actual_source_checks": {
+    "kind": "inline",
+    "value": [
+      {
+        "height": 12,
+        "index": 0,
+        "branches": 100,
+        "minimum_transport_slack": "181018952127307075650210637808472180302513883060711110649450641/34497052100503574989054517667825758167094503157812500000000000000"
+      },
+      {
+        "height": 12,
+        "index": 16,
+        "branches": 100,
+        "minimum_transport_slack": "32457315669381254649192341532738434877408598423351221321679631221/7747462950904761216291827092899201521693307167525390625000000000000"
+      },
+      {
+        "height": 15,
+        "index": 0,
+        "branches": 100,
+        "minimum_transport_slack": "112382348737120311738159321492822955137079683960018628678895227063/21528113174040674391754305129496923610880201734804687500000000000000"
+      },
+      {
+        "height": 15,
+        "index": 16,
+        "branches": 100,
+        "minimum_transport_slack": "20150471346701165455854476988240785716078046115596624495086703702003/4834855417003301457148154360332850760943511972941552734375000000000000"
+      }
+    ]
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary source-uniform continuum transport of the two adopted95 heavy linear controllers on134 actual K neighborhood. All100 original branches per cost, both orientations, the whole first-beta triangle, the actual carrier and one complete residual are retained. Complete raw operator Lipschitz prices include every infinite tail. No new global K, Lean verification or unrestricted Erdos7 resolution."
+  }
+}
