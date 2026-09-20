@@ -1,0 +1,14 @@
+**定义 27.1（共同开参数域与实际端口）。** 沿用定义25.1的 $2\pi$ 环面、归一化体积、Fourier 符号、实均值零无散度空间，以及（25.102）的无外力准备
+$$
+u_0=\alpha a_0+\beta b_0
+ =(\beta\cos(X_2-X_1),\alpha\cos X_1+\beta\cos(X_2-X_1)).
+\tag{27.101}
+$$
+本节固定已校准的有符号 $\alpha\ne0$。给定任意 $\beta_0\in\mathbb R,\nu_0>0$，取 $B>|\beta_0|$、$0<\underline\nu<\nu_0<\overline\nu<\infty$，令
+$$
+\mathcal V=(-B,B)\times(\underline\nu,\overline\nu),\qquad
+\|v\|_{H^s}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^s|\widehat v(k)|^2.
+\tag{27.102}
+$$
+闭包给紧的正黏性界；随后使用的紧参数集均取在此开域内部。$E_\nu(t)=e^{\nu t\Delta}$、$\mathbb P$ 和 $\mathcal B_\nu$ 就是（25.105）、（25.107）的算子，改用 $H^{12}$ 范数，不作频率截断。实际端口仍是引理25.5的 $x=\ell_x(u),y=\ell_y(u)$，并置 $r=1-2x/\alpha,z=-4y/\alpha$；端口方向、相位与幅度校准固定。
+

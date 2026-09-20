@@ -65,7 +65,7 @@ node, the emitted `.md`, and the `Library/` note if the lane cites literature. K
 - **Phase B (after the freeze).** Now add the `OpenProblemResolutionClaim` node to the Scribe and write the
   `Problems/` dossier whose motivation GID names the now-frozen declaration. `make emit` twice again, second run
   0 changed. Then ONE builder commit carrying the door's delta — the Freeze event, the state pin, the new
-  dossier and the re-emitted mirror — followed by `make preflight`, push and `make pr-open`.
+  dossier and the re-emitted mirror — followed by `make preflight MODE=push BASE="$(git rev-parse origin/dev^{{commit}})"`, push and `make pr-open`.
 
 Two commits, in that order. If you find yourself wanting to emit the claim before the deposit, re-read this: the
 validator is asking for a frozen host, and only the door can give it one.
@@ -75,7 +75,7 @@ validator is asking for a frozen host, and only the door can give it one.
 
 
 
-**Render check after ANY Stage-B mirror change (zaremba v3 lesson, 2026-09-05):** if you add or edit Describe nodes here, then after `make emit` run `grep -n -E '&&|\\|\\||==|!=|\\bdecide\\b.*&&' Blueprint/<module>.md` (must be empty — Lean Boolean `&&`/`||`/`==` must be rendered as `∧`/`∨`/`=` inside `Parenthesized`), re-read every new formula, and run `make preflight`: a line `markdown red <your module>.md:…` (KaTeX parse error) or any check naming your module is a STOP-and-fix condition BEFORE `make deposit`; unrelated locale/observe noise is not. '''
+**Render check after ANY Stage-B mirror change (zaremba v3 lesson, 2026-09-05):** if you add or edit Describe nodes here, then after `make emit` run `grep -n -E '&&|\\|\\||==|!=|\\bdecide\\b.*&&' Blueprint/<module>.md` (must be empty — Lean Boolean `&&`/`||`/`==` must be rendered as `∧`/`∨`/`=` inside `Parenthesized`), re-read every new formula, and run `make preflight MODE=push BASE="$(git rev-parse origin/dev^{{commit}})"`: a line `markdown red <your module>.md:…` (KaTeX parse error) or any check naming your module is a STOP-and-fix condition BEFORE `make deposit`; unrelated locale/observe noise is not. '''
 gm=re.search(r'## GoalArtifact.*?(?=\n## |\Z)',pre,re.S); goal=gm.group(0)+'\n\n' if gm else ''
 base=(here/'templates'/'impl-base-brief.md').read_text()
 extra=''.join(re.findall(r'\n6[′″]\. \*\*.*?(?=\n[0-9]+[′″]?\. |\n## )',base,re.S))

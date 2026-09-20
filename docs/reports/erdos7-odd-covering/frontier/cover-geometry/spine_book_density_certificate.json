@@ -87,7 +87,7 @@
   "full_haar_density_bound": {
     "prefactor": "67/4000",
     "per_page_factor": "3/16",
-    "formula": "prefactor * per_page_factor^N",
+    "expression": "prefactor * per_page_factor^N",
     "N": "number of nonempty private pages"
   },
   "zero_fibre_counterexample": {

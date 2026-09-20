@@ -141,7 +141,7 @@ def main():
         spine_joint_density_cap=str(spine_density_cap),
         full_haar_density_bound=dict(prefactor=str(prefactor),
                                     per_page_factor=str(page_factor),
-                                    formula='prefactor * per_page_factor^N',
+                                    expression='prefactor * per_page_factor^N',
                                     N='number of nonempty private pages'),
         zero_fibre_counterexample=zero_fibre(),
         verification='Exact rational fee and moment calculations with a finite arithmetic counterexample. Conditional comparison, kernel construction and arbitrary-height reduction are ordinary proof obligations; no new Lean verification.')

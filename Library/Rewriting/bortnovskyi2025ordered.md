@@ -27,21 +27,130 @@ computationally infeasible beyond `n = 25`.
 This note is the literature anchor for the problem candidate
 `Problems/ordered-zeckendorf-long-game-strategy.md`.
 
-## Search log
+## Source scope
 
-- 2026-08-18: Queried the arXiv Atom API for `id_list=2508.20222`. HTTP 200 with
-  `totalResults=1`; the entry resolved to `http://arxiv.org/abs/2508.20222v2`,
-  title *The Ordered Zeckendorf Game*, six authors as recorded above, published
-  2025-08-27, primary category `math.NT`. The API reported no `arxiv:doi` and no
-  `arxiv:journal_ref`, so the arXiv-assigned DOI is used. The resolved entry is
-  version 2; the DOI above is version-independent, and the problem candidate
-  records the version it quotes.
-- 2026-08-18: Issued `HEAD https://doi.org/10.48550/arXiv.2508.20222`, which
-  returned HTTP 302 redirecting to `https://arxiv.org/abs/2508.20222`.
+The source is arXiv:2508.20222v2, originally posted 2025-08-27 in `math.NT`.
+The DOI above identifies the version-independent arXiv record. A journal
+publication was not established in the recorded source checks.
 
-No literature search for a later resolution of Conjecture 1.7 was performed; the
-open status recorded in the problem candidate is the status stated in this
-arXiv version.
+The research intake registered in #9018 reports bounded checks of the current
+arXiv history, exact-title and ordered-longest searches, and OpenAlex W4414447583;
+no later exact resolution was verified in that scope. This is not a worldwide
+priority claim. The full v2 conjecture is proved by `Completion.result` below.
+
+## Direct weighted comparison
+
+With positive paper indices, write c_i for multiplicity. The full reward of a
+carry followed by sorting is c_1-1 for combining ones, c_2-1 for splitting twos,
+c_(i-1)+c_i-1 for splitting i>2, and c_(a+1) for merging a,a+1. The carry itself
+is included. In raw indices the single ordered representation is `List Nat`
+with named decode `List.map Nat.succ`; n raw zeros represent n source ones.
+The new `D5/S1/Digit/Carry/OrderedGame.path_potential` proves the natural-number
+inequality `length + inv(decode end) ≤ inv(decode start) + sum carryReward`
+for every finite legal ordered path, using the existing local inversion bounds.
+Its position-aware LGS relation retains all switch choices and restarts priority
+after every move. `Conjecture17` is the full source target, including
+existence of a complete LGS run for every positive n. It is proved by
+`OrderedGame/Completion.result` with the definitions unchanged.
+`path_raw_erasure` now maps every ordered path to a labelled raw path with
+identical accumulated reward, removing switches and retaining the existing
+`CarryStep` relation for each labelled carry and its spectator context.
+
+`D5/S1/Digit/Carry/SplitStabilization` proves complete split-phase existence,
+exact site balance, a first-overfire least-action bound, and uniqueness of both
+firing counts and endpoint. Its notion of stability means binary multiplicities;
+it permits consecutive occupied indices and therefore is not game terminality.
+The weighted extension proves legal preferred-split promotion through lower
+prefixes, promotion in every complete phase using first-overfire, and
+`greedy_split_optimality`: every complete greedy split phase maximizes full
+reward among complete split phases from the same arbitrary raw start. Ones
+take priority; otherwise the highest duplicate is recomputed after each split.
+This comparison excludes merges and does not by itself establish full-game optimality.
+
+`OrderedGame.greedy_attainment` now constructs a complete raw greedy path to
+binary nonadjacent digits whose full reward is the concrete recursive `G`.
+`complete_greedy_reward` establishes the converse quantifier: every complete
+`RawGreedyPath c e w` with canonical endpoint has `w = G c`. Its proof identifies
+the unique legal preferred successor and follows the recursive reward along
+the path. This equality supplies no upper bound for arbitrary legal competitors.
+`greedyDecision` selects zero first, otherwise the highest duplicate, otherwise
+the least consecutive pair; every decision retains a labelled legal carry and
+its actual priority. The recursion uses the strict carry measure, not a maximum.
+`shared_input_merge_repair` proves all five shared-input detours, with arbitrary
+spectators, exact common endpoint, and exact natural-number reward gain.
+`ones_terminal_promotion` promotes combining ones against every terminal raw
+path, including arbitrary interleaved merges, preserving endpoint and weakly
+increasing full reward. Its replacement tail is only required to be legal.
+
+`OrderedGame/Optimality.raw_terminal_bound` now proves that every legal raw
+path `RawPath c e w` with `CanonicalRaw e` has `w ≤ G c`, for arbitrary raw
+starts and arbitrary interleaving of merges and splits. Combined with
+`complete_greedy_reward`, this establishes weighted raw optimality for every
+complete raw greedy path. The proof uses strict-successor induction on the
+existing carry measure, with an inner descent on binary competing merge indices.
+For split competitors, `split_greedy_terminal_promotion` cuts the actual greedy
+continuation before its first merge, promotes only that complete split phase,
+and retains the unchanged suffix. It never applies split-only promotion across
+a merge. No Bellman inequality is assumed.
+For singleton inputs, the high block C_a;S_(a+2);...;S_r advances one duplicate
+through a binary tail, fills the preceding holes and has reward one per move.
+A lower preferred split can be extracted across this block. Prefix recognition
+and legal replay require different hypotheses: at j=a-1 the lower split changes
+c_a, although the replay's high input and reward coordinates remain valid.
+
+At a binary state let a be the least enabled merge and b>a a competing merge.
+If c_(b-1)=1, C_b can be replaced by C_(b-1);S_(b+1), gaining one and reducing
+the competing index. Otherwise b≥a+3 and its high cascade commutes with C_a.
+At b=a+3 the lower merge changes c_(b-1), so legal replay must allow that boundary
+change. `high_cascade` constructs the finite cascade using coordinate induction
+up to a finite-support gap, with arbitrary lower-boundary legal replay.
+The dependent `Optimality` module supplies `singleton_merge_cascade`,
+`lower_split_merge_exchange` and `binary_separated_merge_exchange`. Local
+calculations in `raw_terminal_bound` supply the higher-split exchange and
+predecessor detour, with the required legal common endpoints and exact rewards.
+Replacement tails need not be greedy. Induction applies
+after a strict first successor, never at the state whose optimality is being
+proved. These exchanges and the raw terminal bound are now Lean-checked.
+
+`OrderedGame/Attainment` proves exact ordered accounting: each actual LGS move
+satisfies `1 + inv(decode t) = inv(decode s) + reward s a`, and every LGS path
+satisfies the corresponding telescoping equality. It also proves that every
+switch phase can finish and that all maximal legal zero-reward paths have the
+same sorted endpoint and the inversion count as their exact length. These
+results retain every allowed switch choice. `terminal_raw_canonical` also proves
+that every actual ordered terminal state has binary nonconsecutive raw digits,
+by excluding each adjacent operation and deriving spacing of the entire list.
+`OrderedGame/Completion.lgs_path_raw_erasure` supplies the exact positional
+bridge: a selected carry starts sorted; duplicate counts yield adjacent
+duplicates; strict value order forces strict position order. Rightmost splits
+therefore select the highest duplicate, and leftmost merges select the least
+enabled consecutive pair. All switches erase with zero reward and unchanged
+counts, so every permitted LGS path becomes a raw greedy path with its weight
+preserved.
+
+`complete_lgs_exists` constructs a finite complete LGS path from every list.
+A minimum rank among actual legal moves realizes the relational priority.
+Carries decrease the existing token-count/index-weight pair, and switches
+preserve that pair while decreasing inversions. Their lexicographic combination
+gives well-founded completion, including the singleton start.
+
+`Completion.result : Conjecture17` combines these bridges with raw terminal
+domination and exact ordered attainment. It quantifies every positive n,
+every permitted complete LGS run and every arbitrary legal terminal competitor.
+Terminal inversion zero follows from absence of actual switches. Its axiom
+closure is `propext`, `Classical.choice`, `Quot.sound`. Independent pre-Freeze
+source-fidelity and declaration-admission review passed.
+
+Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
+and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly
+allow arbitrary starting states. They do not account for paid ordered switches.
+Bond–Levine, *Abelian Networks I*, arXiv:1309.3445, supplies the classical
+least-action comparison, not these state-dependent reward inequalities.
+The direct weighted proof is a research deduction attributed to the #9018
+intake, not a theorem claimed from either paper. Existing repository carry,
+termination, inversion and chain suppliers from PRs #7495, #7575, #7643 and
+#7651 retain their attribution. The kernel result does not claim worldwide
+priority.
 
 ## Verified locator
 

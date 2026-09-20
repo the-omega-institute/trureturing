@@ -5407,3 +5407,497 @@ $$
 准备场的实际三角表达沿用 [ReversalWaveSynthesis](../../../D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.lean) 的 `synthesis_eq_realVelocity`；全 PDE 与端口泛函的来源是本卷第25节，黏性和五次时间正则性由定理27.2—27.3承担。图逆及其混合 Taylor 余项由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第28节承担，此处仅输出实际联合 $C^5$ 端口与初始时间射流。$\square$
 
 ## 27.99 追加锚
+
+## 28. 平移准备的全流对称性、相干复端口与准备场任务
+
+**定义 28.1（固定空间标架与实际初始参考）。** 沿用定义25.1、27.1的归一化 $2\pi$ 环面、Fourier 符号、分量方向和无外力方程。以 $a_{\rm cal}>0$ 表示独立已知的物理幅度 $|\alpha|$，它不是（25.102）的向量场 $a_0$。取 $\alpha\in\{a_{\rm cal},-a_{\rm cal}\}$、$\beta\in\mathbb R$、$\nu>0$，空间平移 $q\in\mathbb T^2$ 在整条轨迹上固定。置
+$$
+a=(1,0),\qquad b=(-1,1),\qquad c=(0,1)=a+b,
+\qquad \chi_k(q)=e^{ik\cdot q}.
+\tag{28.101}
+$$
+非平移实际解记为 $u_{\alpha,\beta,\nu}$；其准备及平移准备为
+$$
+u_{\alpha,\beta,\nu}(0,X)
+ =(\beta\cos(X_2-X_1),\alpha\cos X_1+\beta\cos(X_2-X_1)),
+\qquad u_0^q(X)=u_{\alpha,\beta,\nu}(0,X+q).
+\tag{28.102}
+$$
+相应实际解记为 $u^q$。两端口是完整相干正交分量构成的复数 Fourier 积分
+$$
+A^q(t)=\widehat{u_2^q}(a,t),\qquad
+C^q(t)=\widehat{u_1^q}(c,t),\qquad
+A_0=A^q(0)=\frac\alpha2\chi_a(q),\quad |A_0|=a_{\rm cal}/2>0.
+\tag{28.103}
+$$
+两端口与初始参考的复校准及共同 Fourier 标架固定；它们是全空间 Fourier 积分，不暗含局部点探测器。使用 $A_0$ 的恢复命题要求这个初始复值已实际取得并保留，知道它的模不等于取得它的相位。允许时钟、同源取得和全部旧记录由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义33.1另行规定。
+
+**定理 28.2（实际全流的半转对称性与平移字符）。** 在定理27.2的共同局部时间上，未平移实际解满足
+$$
+u(t,X)=-u(t,s_0-X),\qquad s_0=(\pi,0),
+$$
+$$
+\widehat u(k,t)=-e^{-ik\cdot s_0}\widehat u(-k,t)
+ =-(-1)^{k_1}\overline{\widehat u(k,t)}.
+\tag{28.104}
+$$
+因而 $A(t)=x(t)\in\mathbb R$、$C(t)=iy(t)$，其中 $x,y$ 恰为引理25.5的实际实端口。平移解满足
+$$
+u^q(t,X)=u(t,X+q),\qquad
+\widehat{u^q}(k,t)=\chi_k(q)\widehat u(k,t).
+\tag{28.105}
+$$
+使用已获 $A_0$ 定义的归一化量满足精确恒等式
+$$
+R(t)=1-\frac{A^q(t)}{A_0}=1-\frac{2x(t)}\alpha=r(t),\qquad
+Z(t)=\frac{2iC^q(t)}{A_0}=\chi_b(q)z(t),\quad z=-\frac{4y}\alpha.
+\tag{28.106}
+$$
+这些是整个实际共同局部流的等式，包括全部新生成模态，不以有限射流代替轨迹相等。
+
+证明。令 $Y=s_0-X$，$v(t,X)=-u(t,Y)$、$\Pi_v(t,X)=\Pi_u(t,Y)$。对每个分量直接微分得
+$$
+v_t=-u_t(t,Y),\quad \partial_{X_j}v_i=\partial_{Y_j}u_i(t,Y),
+\quad (v\cdot\nabla_X)v=-(u\cdot\nabla_Y)u(t,Y),
+$$
+$$
+\Delta_Xv=-\Delta_Yu(t,Y),\qquad
+\nabla_X\Pi_v=-\nabla_Y\Pi_u(t,Y),\qquad
+\operatorname{div}_Xv=\operatorname{div}_Yu(t,Y)=0.
+\tag{28.107}
+$$
+所以方程各项同乘负号，黏性不变；压力的归一化均值也不变。$\cos(\pi-X_1)=-\cos X_1$，且
+$\cos((-X_2)-(\pi-X_1))=-\cos(X_2-X_1)$，故 $v(0)=u(0)$。此变换保持 $C_tH^2_\sigma$，定理25.3的实际唯一性给 $v=u$；定理25.4的压力与光滑解识别保证这是原方程的对称性。在 Fourier 积分中换元 $Y=s_0-X$ 得（28.104）的第一式，实场的共轭条件给第二式。$a_1=1$ 使 $a$ 系数为实数，$c_1=0$ 使 $c$ 系数为纯虚数，结合（25.115）正好识别为 $x,iy$。同一推导对每个 $k$ 成立，无有限不变 Fourier 支持的前提。
+
+固定平移与空间导数、时间导数、乘积及积分交换，$u(t,X+q),\Pi(t,X+q)$ 满足同一黏性的方程与平移准备。换元 $Y=X+q$ 给（28.105）的字符因子；特别对每个已有 Sobolev 指数 $s$，
+$$
+\|v(\cdot+q)\|_{H^s}^2
+ =\sum_k(1+|k|^2)^s|\chi_k(q)\widehat v(k)|^2
+ =\|v\|_{H^s}^2.
+\tag{28.108}
+$$
+因此定理27.2—27.3的共同时间和范数界保留，实际唯一性识别这条平移解；无需另取随 $q$ 缩短的区间。平移场本身亦满足
+$u^q(t,X)=-u^q(t,s_0-2q-X)$。由 $x(0)=\alpha/2$ 得（28.103），相除时
+$\chi_c(q)/\chi_a(q)=\chi_{c-a}(q)=\chi_b(q)$，而 $2i(iy)/(\alpha/2)=-4y/\alpha$，证明（28.106）。端口的任意独立相位改变不自动是同一空间平移。
+
+Fourier 字符换元与等距性是标准 Fourier 分析；周期 Fourier 正交与 Parseval 的成熟来源见 Stein–Shakarchi, *Fourier Analysis: An Introduction*（Princeton University Press, 2003），第2—3章。原方程局部光滑解的存在、唯一性来源及环面尺度换算已在定理25.4引 Tao 的 *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*，Corollary 40、Proposition 39；本证明使用的是本卷定理25.3所证实际解唯一性。$\square$
+
+**定理 28.3（符号运输与正代表的复射线图）。** 在同一共同时间和黏性下，有全流身份
+$$
+\begin{aligned}
+r_{-\alpha,\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{-\alpha,\beta,\nu}&=z_{\alpha,\beta,\nu},\\
+r_{\alpha,-\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{\alpha,-\beta,\nu}&=-z_{\alpha,\beta,\nu}.
+\end{aligned}
+\tag{28.109}
+$$
+对 $\beta\ne0$，置
+$$
+\mathcal B=\beta\chi_b(q),\qquad
+m_+=\frac{|\mathcal B|}{\nu}>0,\quad
+k=\frac{a_{\rm cal}^2}{\nu^2},\quad p=(m_+,k),\qquad
+\omega=\frac{\mathcal B}{|\mathcal B|}\in\mathbb S^1.
+\tag{28.110}
+$$
+令 $g_p$ 为上下文卷定理28.2对正代表 $\alpha=a_{\rm cal},\beta=|\mathcal B|$ 给出的真实图。在它的共同初始图区间上，平移复端口图为
+$$
+Z=\mathcal G(R),\qquad \mathcal G(r)=\omega g_p(r).
+\tag{28.111}
+$$
+它继承该卷定理28.2—引理28.4的实变量图正则性及参数余项；在任意固定正紧参数邻域，令 $m_{\min}=\min m_+>0$，可缩小共同 $r_*>0$ 使
+$$
+\partial_rg_p(r)\ge m_{\min}/2,\qquad
+g_p(r)\ge m_{\min}r/2\quad(0\le r\le r_*).
+\tag{28.112}
+$$
+
+证明。平移 $(\pi,\pi)$ 将初态的 $\alpha$ 翻号而保持 $\beta$，且 $a,c$ 字符均为 $-1$。由定理28.2的平移协变与实际唯一性，整条未平移准备解的 $x,y$ 都翻号；归一化的分母 $\alpha$ 同时翻号，所以 $r,z$ 都不变。平移 $(0,\pi)$ 将初态的 $\beta$ 翻号而保持 $\alpha$，$a$ 字符为一、$c$ 字符为负一，故 $x$ 不变、$y$ 翻号，给第二行。两种转换的 $H^{12}$ 半径和时间只依赖幅度平方，因而可用同一共同区间。这还显式补全了上下文卷命题28.6的符号运输在本接口中的用途。
+
+任一符号的准备因此有 $r=r_+$、$z=\operatorname{sign}(\beta)z_+$。定理28.2给 $Z=\chi_b(q)z$，而 $\operatorname{sign}(\beta)\chi_b(q)=\omega$，所以在正代表的初始逆时间上得到（28.111）。共同图域及联合 $C^5$ 是正代表已有的结果；这里不主张平移参数 $q$ 到 $H^{12}$ 值轨迹的联合光滑性。最后 $\partial_rg_p(0)=m_+$，紧性和联合连续性给同一正下界；从 $g_p(0)=0$ 沿实坐标积分给（28.112）。$\square$
+
+**定理 28.4（准备场、四重标签与保留参考的区别）。** 定义28.1的实际准备场恰为
+$$
+u_0^q(X)=\left(
+\operatorname{Re}(\mathcal B e^{ib\cdot X}),\quad
+\operatorname{Re}(2A_0e^{ia\cdot X})+
+\operatorname{Re}(\mathcal B e^{ib\cdot X})\right).
+\tag{28.113}
+$$
+故 $(A_0,\mathcal B,\nu)$ 确定初始场及其共同局部时间上的唯一实际解，任意光滑续解在共同定义域上亦一致。固定 $|\alpha|=a_{\rm cal}$ 且 $\beta\ne0$ 时，同一准备场的标签恰有四个（模环面周期），由
+$$
+T_a(\alpha,\beta,q)=(-\alpha,\beta,q+(\pi,\pi)),\qquad
+T_b(\alpha,\beta,q)=(\alpha,-\beta,q+(0,\pi))
+\tag{28.114}
+$$
+生成。若固定有符号 $\alpha$，则恰剩 $T_b$ 所给两个标签。这是准备场任务的精确冗余，不是任意含准备来源记录的完整观察者的碰撞。
+
+证明。将（28.102）的两个余弦写成实部便得（28.113）。反过来，其 $a$ 模第二分量为 $A_0$，$b$ 模第一分量为 $\mathcal B/2$；不同支持不会混淆，故场相同当且仅当 $A_0,\mathcal B$ 相同。指定黏性后，实际唯一性给所述解；延拓唯一性可在每个共同紧时间段分段重启定理25.3的差估计，不推出新的全局存在性。
+
+$T_a,T_b$ 各保持 $A_0,\mathcal B$，两者交换且平方为环面周期。反之，设另一标签 $(\alpha',\beta',q')$ 有同样两系数。由模相等得 $\alpha'=s_a\alpha,\beta'=s_b\beta$，$s_a,s_b\in\{1,-1\}$，并有
+$$
+\chi_a(q'-q)=s_a,\qquad \chi_b(q'-q)=s_b.
+\tag{28.115}
+$$
+字符映射 $q\mapsto(\chi_a(q),\chi_b(q))$ 在环面上双射：若 $q=(q_1,q_2)$，两字符分别为 $e^{iq_1},e^{i(q_2-q_1)}$，其逆由两角给 $q_1$ 及 $q_2=q_1+(q_2-q_1)$（均模 $2\pi$）。等价地，$a,b$ 构成行列式为一的整数格基。因此两符号唯一决定平移差，正是（28.114）的四种组合。$\alpha\ne0,\beta\ne0$ 使四个标签互异；固定有符号 $\alpha$ 排除两种 $s_a=-1$ 的组合。若准备动作、符号或平移来源已经保留，这些记录可以区分标签，不能由场相同删除它们。
+
+另就只保留归一化历史的缩减接口而言，任意 $s\in\mathbb R$ 的 $q\mapsto q+(s,s)$ 保持 $\chi_b(q)$，同时将 $A^q,C^q,A_0$ 都乘 $e^{is}$，所以 $R,Z$ 的全部读数相同，而 $A_0$ 改变。取 $s\notin2\pi\mathbb Z$ 即改变非零的准备 $a$ 模。由此可见归一化历史本身丢失共同 $a$ 相位；在实际已保留校准 $A_0$ 的完整档案中，这不是同一观察记录。恢复 $\mathcal B,\nu$ 之后仍须连同这个已获参考使用（28.113）。$\alpha$ 符号未给定时，$A_0$ 的相位是实际 $a$ 模的相位，不单独等于 $\chi_a(q)$。$\square$
+
+**定理 28.5（两个准备场的精确距离）。** 对定义28.1中任意两准备，系数分别为 $(A_{0,1},\mathcal B_1)$ 与 $(A_{0,2},\mathcal B_2)$，归一化环面上的实际两分量场满足
+$$
+\|u_{0,1}-u_{0,2}\|_{L^2}^2
+ =2|A_{0,1}-A_{0,2}|^2+|\mathcal B_1-\mathcal B_2|^2.
+\tag{28.116}
+$$
+
+证明。记 $f_a=\operatorname{Re}(2\Delta A_0e^{ia\cdot X})$、$f_b=\operatorname{Re}(\Delta\mathcal B e^{ib\cdot X})$。对任意非零整数频率 $k$ 及复数 $D$，展开实部并积分 $e^{2ik\cdot X}$ 得
+$\|\operatorname{Re}(De^{ik\cdot X})\|_2^2=|D|^2/2$。$a\ne\pm b$ 又使 $\langle f_a,f_b\rangle=0$。场差为 $(f_b,f_a+f_b)$，所以
+$$
+\|(f_b,f_a+f_b)\|_2^2
+ =\|f_a\|_2^2+2\|f_b\|_2^2
+ =2|\Delta A_0|^2+|\Delta\mathcal B|^2.
+$$
+这是标准 Fourier 正交性在该两分量准备中的直接应用，两个分量内重复的 $b$ 模均已计入。此恒等式只比较初始准备场；后续含不同黏性的轨迹扰动界需要另行估计。$\square$
+
+## 28.99 追加锚
+
+## 29. 隐藏初始层到静态有效未来轨迹的定量桥梁
+
+### 29.1 共同准备、静态生成元与残差的对象
+
+**定义 29.1（有限自伴自治模型与实际准备）。** 固定有限维实 Hilbert 空间 $U,H$，直和范数为 $\|(x,h)\|^2=\|x\|^2+\|h\|^2$，所有算子范数均取自这些固定内积。设
+$$
+A=A^*:U\to U,\qquad C=C^*:H\to H,\qquad B:H\to U,
+\qquad C\succeq c_0I_H,\quad c_0>0.
+$$
+给定同一次实际联合准备 $(x_0,h_0)\in U\oplus H$，令
+$$
+\dot x=-Ax-Bh,\qquad \dot h=-B^*x-Ch,
+\qquad (x,h)(0)=(x_0,h_0),
+\qquad L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}.
+\tag{29.1}
+$$
+有限维常系数线性初值问题给唯一全局解 $z(t)=(x(t),h(t))=e^{-tL}z_0$。定义
+$$
+S=A-BC^{-1}B^*,\qquad r_0=h_0+C^{-1}B^*x_0,
+\qquad b=\|B\|,\qquad X(t)=e^{-tS}x_0.
+\tag{29.2}
+$$
+$r_0$ 是本次隐藏初态相对于静态纤维极小态的失配；静态算子或完整记忆核本身不提供其数值。$X$ 使用同一个可见初态，不对实际隐藏准备作重置。除非另加假设，此处不要求 $S\succeq0$。
+
+[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)§126.6–126.8已经给出精确隐藏消元、$K(t)=Be^{-tC}B^*$、$\int_0^\infty K(t)dt=BC^{-1}B^*$及同静态算子而不同记忆的整个解析族。本卷命题11.6–11.8分别处理同一外给输入、历史尾和静态积分，本卷接口13.10、定理14.6及[上下文卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定理12.10已有实际反馈与初始化合同。后者要求普通可测 $L^1$ 函数核及小增益条件，静态瞬时作用若写成 Dirac 核，不满足该函数核前提。本节的对象是式（29.1）的实际轨迹与静态生成元轨迹之间的差。
+
+以下估计是从这些仓内关系作出的普通数学综合（repo-derived）；所用矩阵指数、变常数公式及线性稳定性是成熟方法，参见 Gerald Teschl，[*Ordinary Differential Equations and Dynamical Systems*](https://www.mat.univie.ac.at/~gerald/ftp/book-ode/)，AMS，2012，第3章。有限自伴谱分解与 Schur 配方按主卷§126.7及命题130.8使用。结论始终限于已声明的有限维、常系数、自伴、伴随耦合、无外力模型。
+
+### 29.2 保留初始抵消的完整残差
+
+**命题 29.2（初始层与运动滞后的精确恒等式）。** 在定义29.1下，对每个 $t\ge0$，
+$$
+h(t)=-C^{-1}B^*x(t)+e^{-tC}r_0
+ +\int_0^t e^{-(t-s)C}C^{-1}B^*\dot x(s)\,ds,
+\tag{29.3}
+$$
+并且
+$$
+\dot x(t)=-Sx(t)+\rho(t),\qquad
+\rho(t)=-Be^{-tC}r_0
+ -\int_0^t Be^{-(t-s)C}C^{-1}B^*\dot x(s)\,ds.
+\tag{29.4}
+$$
+这些恒等式不需要可见正谱隙，也不需要预先给定速度上界。
+
+证明。固定 $t$，$x$ 光滑，乘积法则给
+$$
+\frac d{ds}\left(e^{-(t-s)C}C^{-1}B^*x(s)\right)
+=e^{-(t-s)C}B^*x(s)
+ +e^{-(t-s)C}C^{-1}B^*\dot x(s).
+$$
+这里只用 $C$ 与自身指数和逆交换，没有将 $B^*$ 移过 $C$。积分后得
+$$
+\int_0^t e^{-(t-s)C}B^*x(s)\,ds
+=C^{-1}B^*x(t)-e^{-tC}C^{-1}B^*x_0
+ -\int_0^t e^{-(t-s)C}C^{-1}B^*\dot x(s)\,ds.
+$$
+将此代入主卷§126.6的精确隐藏解
+$h(t)=e^{-tC}h_0-\int_0^t e^{-(t-s)C}B^*x(s)ds$，得到式（29.3）。再代入 $\dot x=-Ax-Bh$，静态项合并为 $-Sx$，其余项恰为式（29.4）。初态项保留了 $h_0$ 与 $C^{-1}B^*x_0$ 的实际抵消，不能单独删去。$\square$
+
+**命题 29.3（实际速度证书给出的残差界）。** 固定 $T\in(0,\infty]$，记 $I_T=[0,T]$（$T=\infty$ 时指 $[0,\infty)$）。若有限常数 $V\ge0$ 满足 $\|\dot x(s)\|\le V$ 对所有 $s\in I_T$ 成立，则对每个 $t\in I_T$，
+$$
+\|\rho(t)\|
+\le be^{-c_0t}\|r_0\|
+ +\frac{b^2V}{c_0^2}(1-e^{-c_0t}).
+\tag{29.5}
+$$
+
+证明。谱定理给 $\|e^{-uC}\|\le e^{-c_0u}$、$\|C^{-1}\|\le c_0^{-1}$，且 $\|B^*\|=b$。式（29.4）的积分范数至多
+$$
+\frac{b^2V}{c_0}\int_0^t e^{-c_0(t-s)}ds
+=\frac{b^2V}{c_0^2}(1-e^{-c_0t}),
+$$
+而初始项至多 $be^{-c_0t}\|r_0\|$，相加即得。$\square$
+
+若还给实际幅度界 $\|x(t)\|\le U_0$，有一个不保留初始抵消的派生比较式
+$$
+\|\rho(t)\|\le\frac{b^2V}{c_0^2}
+ +e^{-c_0t}\left(\frac{b^2U_0}{c_0}+b\|h_0\|\right).
+$$
+具体地，在主卷精确记忆方程中加减 $\int_0^\infty K(u)du\,x(t)$，残差成为
+$$
+-Be^{-tC}h_0+\int_0^tK(u)(x(t-u)-x(t))du
+ -\int_t^\infty K(u)x(t)du.
+$$
+利用 $\|x(t-u)-x(t)\|\le Vu$、$\|K(u)\|\le b^2e^{-c_0u}$，中项至多 $b^2V\int_0^\infty ue^{-c_0u}du=b^2V/c_0^2$，末项至多 $b^2U_0e^{-c_0t}/c_0$，得到该比较式。它额外使用 $U_0$ 并丢失准备抵消，因此不替代式（29.5）。有限区间上速度最大值的存在不等于已取得数值 $V$；用于预测还须有模型、先验或估计证书。有限窗的 $V$ 也不自动成为全时间共同界。
+
+### 29.3 正隙轨迹界、半正定视界界与内部速度证书
+
+**定理 29.4（静态有效轨迹的速度型证书）。** 采用命题29.3的同一 $I_T,V$。若 $S\succeq a_0I_U$、$a_0>0$，则对每个 $t\in I_T$，
+$$
+\|x(t)-X(t)\|
+\le\frac{b^2V}{a_0c_0^2}(1-e^{-a_0t})
+ +b\|r_0\|J_{a_0,c_0}(t),
+\tag{29.6}
+$$
+其中对 $a,c>0$，
+$$
+J_{a,c}(t)=\int_0^t e^{-a(t-u)}e^{-cu}du
+=\begin{cases}
+(e^{-at}-e^{-ct})/(c-a),&c\ne a,\\
+te^{-at},&c=a.
+\end{cases}
+\tag{29.7}
+$$
+当速度证书对全部 $t\ge0$ 成立时，
+$$
+\sup_{t\ge0}\|x(t)-X(t)\|
+\le\frac{b^2V}{a_0c_0^2}
+ +\frac{b\|r_0\|}{\max\{a_0,c_0\}}.
+\tag{29.8}
+$$
+若只假设 $S\succeq0$，则在同一速度证书有效的每个有限视界内仅由此方法得到
+$$
+\|x(t)-X(t)\|
+\le\frac{b^2Vt}{c_0^2}
+ +\frac{b\|r_0\|}{c_0}(1-e^{-c_0t}),\qquad t\in I_T.
+\tag{29.9}
+$$
+$T=\infty$ 时式（29.9）仍逐个有限 $t$ 有效。当 $b^2V>0$ 时，该式右端的全时间上确界为无穷，因而该估计本身不提供有限的全时间误差界；当 $b^2V=0$ 时，该式仍给出至多 $b\|r_0\|/c_0$ 的全时间误差界。
+
+证明。令 $e=x-X$，式（29.4）给 $\dot e=-Se+\rho$、$e(0)=0$，因而
+$$
+e(t)=\int_0^t e^{-(t-u)S}\rho(u)du.
+$$
+在正隙假设下，$\|e^{-vS}\|\le e^{-a_0v}$。把式（29.5）的第二项放宽为 $b^2V/c_0^2$，对两项分别积分即得式（29.6）。直接积分指数给式（29.7），$a=c$ 时被积函数恒为 $e^{-at}$，故积分为 $te^{-at}$。分别丢去两个不超过一的指数因子，得到
+$$
+0\le J_{a,c}(t)\le\int_0^t e^{-a(t-u)}du\le1/a,
+\qquad J_{a,c}(t)\le\int_0^t e^{-cu}du\le1/c.
+$$
+故 $J_{a,c}\le1/\max\{a,c\}$，在全时间速度前提下取上确界得到式（29.8）。半正定情形只用 $\|e^{-vS}\|\le1$，同一积分分别给 $b^2Vt/c_0^2$ 和 $b\|r_0\|(1-e^{-c_0t})/c_0$，得到式（29.9）。这是实际不同轨迹间的比较，没有将两侧反馈输入当作同一外给函数。式（29.9）中上界的线性累计不证明实际轨迹差发散。$\square$
+
+**命题 29.5（完整块模型供应全时间速度）。** 在定义29.1中，只要 $S\succeq0$，便有 $L\succeq0$，并可取
+$$
+N_0=\|z_0\|=\sqrt{\|x_0\|^2+\|h_0\|^2},\qquad
+\|z(t)\|\le N_0,\qquad
+\|\dot x(t)\|\le V_{\rm int}:=\|Lz_0\|
+\quad(t\ge0).
+\tag{29.10}
+$$
+
+证明。主卷的 Schur 配方在这里写成
+$$
+\langle(x,h),L(x,h)\rangle
+=\langle x,Sx\rangle
+ +\|C^{1/2}(h+C^{-1}B^*x)\|^2\ge0.
+$$
+自伴谱分解于是给 $\|e^{-tL}\|\le1$。$L$ 与自身指数交换，故
+$\dot z(t)=-e^{-tL}Lz_0$；投影到 $U$ 的范数不超过直和范数，得到式（29.10）。$\square$
+
+这份证书消除了另找实际速度上界的需要，但仍使用同一模型和实际 $z_0$ 的数值；它可能随快尺度增长。将 $V_{\rm int}$ 代入式（29.8）后，必须检验整个右侧，不能仅从 $c_0$ 增大推断趋零。
+
+### 29.4 不要求交换的能量坐标强化
+
+**定理 29.6（矩阵能量坐标的全时间证书）。** 在定义29.1下，再假设 $S\succeq a_0I_U$、$a_0>0$。用 $C$ 的谱平方根定义
+$$
+G=BC^{-1/2}:H\to U,\qquad G^*=C^{-1/2}B^*:U\to H,
+\qquad w=C^{1/2}h+G^*x\in H,
+$$
+$$
+\Gamma=C+G^*G:H\to H,\qquad
+w_0=C^{1/2}r_0,\qquad N_0=\|(x_0,h_0)\|.
+\tag{29.11}
+$$
+取任何已认证的 $\gamma_0>0$ 使 $\Gamma\succeq\gamma_0I_H$；总可用 $\gamma_0=c_0$。则精确方程为
+$$
+\dot x=-Sx-Gw,\qquad
+\dot w=-\Gamma w-G^*Sx,
+\tag{29.12}
+$$
+且对所有 $t\ge0$，
+$$
+\|w(t)\|\le e^{-\gamma_0t}\|w_0\|
+ +\frac{\|G^*S\|N_0}{\gamma_0}(1-e^{-\gamma_0t}).
+\tag{29.13}
+$$
+不用额外速度前提便有
+$$
+\boxed{
+\sup_{t\ge0}\|x(t)-X(t)\|
+\le\frac{\|G\|\|w_0\|}{\gamma_0}
+ +\frac{\|G\|\|G^*S\|N_0}{a_0\gamma_0}.}
+\tag{29.14}
+$$
+不假定 $C$ 与 $G^*G$ 交换，也不假定 $S$ 与 $BB^*$ 交换。
+
+证明。由定义，$B=GC^{1/2}$、$BC^{-1}B^*=GG^*$、$A=S+GG^*$，从而
+$$
+-Ax-Bh=-(S+GG^*)x-G(w-G^*x)=-Sx-Gw.
+$$
+再对 $w$ 求导，保持算子顺序：
+$$
+\begin{aligned}
+\dot w
+&=C^{1/2}(-B^*x-Ch)+G^*(-Sx-Gw)\\
+&=-C^{1/2}B^*x-C(w-G^*x)-G^*Sx-G^*Gw\\
+&=-(C+G^*G)w-G^*Sx.
+\end{aligned}
+$$
+最后一行恰使用 $CG^*=C^{1/2}B^*$；没有把 $C$ 移过 $G^*G$。命题29.5给 $\|x(t)\|\le N_0$。对第二式作变常数，
+$$
+w(t)=e^{-t\Gamma}w_0
+ -\int_0^t e^{-(t-u)\Gamma}G^*Sx(u)du.
+$$
+因为 $\langle h,\Gamma h\rangle=\langle h,Ch\rangle+\|Gh\|^2\ge c_0\|h\|^2$，$\gamma_0=c_0$ 确实总可使用。$\Gamma$ 自伴且有所选下界 $\gamma_0$，所以积分范数至多
+$\|G^*S\|N_0(1-e^{-\gamma_0t})/\gamma_0$，得到式（29.13）。再令 $e=x-X$，则
+$$
+e(t)=-\int_0^t e^{-(t-u)S}Gw(u)du.
+$$
+代入式（29.13），得到同一证明的时间相关形式
+$$
+\|e(t)\|\le\|G\|\|w_0\|J_{a_0,\gamma_0}(t)
+ +\frac{\|G\|\|G^*S\|N_0}{\gamma_0}
+ \int_0^t e^{-a_0(t-u)}(1-e^{-\gamma_0u})du.
+$$
+首积分至多 $1/\gamma_0$，末积分至多 $1/a_0$，故式（29.14）成立。整个推导只对单个自伴算子各自使用谱界，并未联合对角化不同算子。$\square$
+
+式（29.14）提供另一份充分证书；不声称它在所有矩阵和准备上都小于速度型证书。两份证书适用时可以选择较小的完整上界。
+
+### 29.5 标量常数与一致快尺度速率
+
+**推论 29.7（标量准备的显式全时间常数）。** 任取 $a,d\in\mathbb R$、$a>d^2$、$c>0$及任意实际初始对 $(x_0,h_0)\in\mathbb R^2$，考虑
+$$
+\dot x=-ax-\sqrt c\,d\,h,\qquad
+\dot h=-\sqrt c\,d\,x-ch.
+$$
+置 $s=a-d^2>0$、$R_0=\sqrt c\,h_0+dx_0$、$N_0=\sqrt{x_0^2+h_0^2}$。则
+$$
+\sup_{t\ge0}|x(t)-e^{-st}x_0|
+\le\frac{|d|\,|R_0|+d^2N_0}{c+d^2}.
+\tag{29.15}
+$$
+固定 $a,d,x_0$，若对每个 $c>0$ 的实际准备确实满足 $h_0(c)=-dx_0/\sqrt c$，则
+$$
+\sup_{t\ge0}|x(t)-e^{-st}x_0|
+\le\frac{d^2|x_0|}{\sqrt{c(c+d^2)}}\longrightarrow0.
+\tag{29.16}
+$$
+$d=0$ 时误差恒为零。
+
+证明。直接特化定理29.6：$S=s$、$G=d$、$G^*S=ds$、$\Gamma=c+d^2$、$w_0=R_0$，可取 $a_0=s$、$\gamma_0=c+d^2$。式（29.14）的两项恰给式（29.15）。匹配准备时 $R_0=0$、$N_0=|x_0|\sqrt{1+d^2/c}$，将其代入得到式（29.16）。$d=0$ 时第一方程本身为 $\dot x=-ax$，故与静态轨迹相同。$\square$
+
+能量证书的附加作用可在同一特化中直接比较。取 $x_0=0,h_0=1,d\ne0$，则 $V_{\rm int}=\sqrt{c^2+cd^2}$。对 $c\ge s$，速度型式（29.8）的右侧为
+$$
+\frac{d^2}{s}\sqrt{1+d^2/c}+\frac{|d|}{\sqrt c}
+\longrightarrow\frac{d^2}{s}>0,
+$$
+而式（29.15）的右侧 $(|d|\sqrt c+d^2)/(c+d^2)$ 趋零。前者不趋零只表示该上界未认证收敛，不是否定后者已证明的收敛；两者均未声称最优。匹配准备的用途还以实际可制备和合法性为前提，不能把历史已确定的 $h_0$ 免费改为所需值。
+
+**推论 29.8（共同尺度族的两种一致速率）。** 固定有限维空间、固定 $D:H\to U$、固定 $A=A^*$，并设
+$$
+C_c=cI_H,\qquad B_c=\sqrt c\,D,\qquad
+S=A-DD^*\succeq a_0I_U,\quad a_0>0.
+$$
+这是主卷§126.8既有族在严格可见正隙下的特化。对所有 $c\ge c_*>0$，若实际初始对满足共同界
+$\|x_0(c)\|\le X_*$、$\|h_0(c)\|\le H_*$，其中 $0\le X_*,H_*<\infty$，则对该类全部准备一致有
+$$
+\sup_{t\ge0}\|x_c(t)-e^{-tS}x_0(c)\|
+\le\frac{\|D\|H_*}{\sqrt c}
+ +\frac{\|D\|^2X_*}{c}
+ +\frac{\|D\|\|D^*S\|\sqrt{X_*^2+H_*^2}}{a_0c}
+=O(c^{-1/2}).
+\tag{29.17}
+$$
+另一种准备合同只要求实际实施的匹配准备
+$h_0(c)=-D^*x_0(c)/\sqrt c$、$\|x_0(c)\|\le X_*$，则一致有
+$$
+\sup_{t\ge0}\|x_c(t)-e^{-tS}x_0(c)\|
+\le\frac{\|D\|\|D^*S\|X_*\sqrt{1+\|D\|^2/c}}{a_0c}
+=O(c^{-1}).
+\tag{29.18}
+$$
+两式的隐含常数只依赖这些固定数据及 $c_*$，不依赖该类中所选初始对。
+
+证明。此时 $G=D$、$\Gamma=cI_H+D^*D\succeq cI_H$，取 $\gamma_0=c$。一般准备下
+$$
+\|w_0\|=\|\sqrt c\,h_0+D^*x_0\|
+\le\sqrt c\,H_*+\|D\|X_*,\qquad
+N_0\le\sqrt{X_*^2+H_*^2}.
+$$
+代入式（29.14）逐项得到式（29.17）。匹配准备给 $w_0=0$ 及
+$N_0\le X_*\sqrt{1+\|D\|^2/c}$，同式便给式（29.18）。$c\ge c_*$ 控制平方根，故所写阶数在全部给定准备上一致。$D=0$ 时所有误差项为零。$\square$
+
+一般尺度族须保持量词完整：对同一尺度 $c$ 的非空共同可行集 $\mathcal F_c$，在同一个适用视界 $I_c$ 上，若为每个 $\theta\in\mathcal F_c$ 选择了满足全部前提的完整证书 $E_{c,\theta}$，则
+$$
+\sup_{\theta\in\mathcal F_c}\sup_{t\in I_c}
+\|x_{c,\theta}(t)-X_{c,\theta}(t)\|
+\le\sup_{\theta\in\mathcal F_c}\sup_{t\in I_c}E_{c,\theta}(t).
+$$
+右侧趋零才由这份证书推出一致收敛；对每个固定 $\theta$ 趋零不自动给该上确界趋零。只需有一份适用的完整证书一致趋零，不要求其余较松上界也趋零。$b,V,a_0,r_0$、$G,w_0,\gamma_0,N_0$ 都可能随尺度变化，不能独立选各项最优值来代替一个共同实现，也不能只查 $c_0\to\infty$。式（29.17）–（29.18）使用固定空间和算子；无控制增长的 $h_0(c)$、变化图族或变化内积不在这两项速率的假设内。完整已获档案允许哪些准备与参数，由上下文卷第34节的共同世界集限制。
+
+### 29.6 守恒图的限制正隙与半正定边界
+
+**命题 29.9（共同守恒分量之外的合法正隙应用）。** 采用主卷§127.1、§127.4的有限连通对称加权图，顶点集为 $V$：$L$ 是 Euclidean 内积下的图 Laplace 算子，$\ker L=\mathbb R\mathbf1$；$P=P^*=P^2$ 是其纤维平均投影，$P\mathbf1=\mathbf1$。令 $U=\operatorname{im}P$、$H=\ker P$，按式（29.1）分块，置
+$$
+W=U\cap\mathbf1^\perp.
+$$
+则 $A,S$ 保持 $W$，$B(H)\subseteq W$。当 $W\ne\{0\}$ 时，存在该固定图与投影的 $a_W>0$ 使 $S|_W\succeq a_WI_W$。对任意实际初态 $z_0=x_0+h_0$，定义
+$$
+\bar x=\frac{\langle z_0,\mathbf1\rangle}{\|\mathbf1\|^2}\mathbf1,
+\qquad x_\circ(t)=x(t)-\bar x,
+\qquad X_\circ(t)=X(t)-\bar x.
+$$
+实际与静态轨迹具有同一恒定分量 $\bar x$，$x_\circ,X_\circ,\rho$ 始终在 $W$。本节的正隙估计可用于 $W\oplus H$ 上的中心化系统，初态为 $(x_0-\bar x,h_0)$；不能在整个 $U$ 上给 $S$ 宣称正隙。
+
+证明。主卷的图能量平方和及连通性给 $L\succeq0$、$\ker L=\mathbb R\mathbf1$。由 $P\mathbf1=\mathbf1$，$H\subseteq\mathbf1^\perp$，所以非零 $h\in H$ 满足
+$\langle h,Ch\rangle=\langle h,Lh\rangle>0$；有限维性给 $C\succeq c_0I_H$，零维 $H$ 按唯一算子解释。$L\mathbf1=0$ 的两个分量分别为 $A\mathbf1=0$、$B^*\mathbf1=0$。于是
+$$
+\langle Au,\mathbf1\rangle=\langle u,A\mathbf1\rangle=0,
+\qquad \langle Bh,\mathbf1\rangle=\langle h,B^*\mathbf1\rangle=0.
+$$
+故 $A$ 保持 $W$、$B(H)\subseteq W$；$S=A-BC^{-1}B^*$ 同样保持 $W$，且 $S\mathbf1=0$。
+
+任取非零 $u\in W$，向量
+$y=(u,-C^{-1}B^*u)\in W\oplus H\subseteq\mathbf1^\perp$ 非零。由配方及连通性，
+$$
+\langle u,Su\rangle=\langle y,Ly\rangle>0.
+$$
+在 $W$ 的紧单位球面上取这一连续正函数的最小值，得到 $a_W>0$。这同时明确了隐藏极小向量为何没有落入守恒核。
+
+实际轨迹满足 $\frac d{dt}\langle x,\mathbf1\rangle=0$，静态轨迹也因 $S\mathbf1=0$ 保持此量，二者初值相同；$h_0\perp\mathbf1$ 使它等于 $\langle z_0,\mathbf1\rangle$。减去 $\bar x$ 不改变隐藏方程的 $B^*x$，也不改变 $r_0$，所以 $(x_\circ,h)$ 恰满足限制块系统。残差式（29.4）每项都位于 $B(H)\subseteq W$，或直接由 $\rho=\dot x_\circ+Sx_\circ$ 看出不变性。因此定理29.4、29.6在 $W$ 上的所有前提得到满足，$N_0,V_{\rm int}$ 可用中心化初态计算。
+
+在 $\mathbf1^\perp=W\oplus H$ 上 $L$ 也正定，故谱分解使实际中心化全态趋零；$S|_W$ 正定使 $X_\circ\to0$，二者保留同一极限 $\bar x$。概率初态时 $\bar x=\mathbf1/|V|$，即主卷的 $\pi$。$W=\{0\}$ 时 $B=0$、$x=X=\bar x$，可见误差恒零，无需在零维空间提取数值正隙。$\square$
+
+该证明只供应每个固定图的限制正隙，不供应任意变化图族的共同 $a_W$。范数误差证书本身也不证明静态演化保持概率正锥或归一化；若将其输出用作概率状态，还须另证相应合法性或给出有误差保证的合法修正。
+
+**命题 29.10（一般半正定块可改变可见极限）。** 在 $U=H=\mathbb R$ 中取 $A=B=C=1$、$(x_0,h_0)=(0,1)$。此时 $L\succeq0$、$C>0$、$S=0$，但
+$$
+X(t)=0,\qquad x(t)=-\frac{1-e^{-2t}}2,\qquad
+\lim_{t\to\infty}x(t)=-\frac12.
+\tag{29.19}
+$$
+
+证明。方程给 $(x+h)'=-2(x+h)$、$(x-h)'=0$，初值分别为 $1,-1$。故 $x+h=e^{-2t}$、$x-h=-1$，解出所示 $x$；$S=0,x_0=0$ 给 $X=0$。$L$ 的特征值为 $0,2$，满足半正定前提。这里 $\ker L$ 由 $(1,-1)$ 张成，没有命题29.9中守恒向量完全位于可见空间的条件，故与图的中心化结论相容。$\square$
+
+### 29.7 静态与动态关系的解释范围
+
+**约定 29.11（精确消元与有证书静态近似）。** 主卷§126.8的整个同静态响应、不同记忆族已经证明静态 $S$ 不决定一般未来关系。精确消元保留完整记忆和同次初始源；将其改为 $\dot X=-SX$ 才是本节有误差证书的近似。主卷命题127.2的零频结论针对有效算子，不能单凭低频算子余项就给其逆的稳定性、输入频带、无权状态积分或全时间轨迹作保证。这里分别由速度／准备预算和能量坐标预算承担时间域结论。空间分块、隐藏记忆、静态边界与未来预测由同一关系连接，但没有由这些有限模型推出一般物理重整化、时间涌现、普遍分形或红移定律；尺度参数不因此成为事件时间。
+
+## 29.99 追加锚
