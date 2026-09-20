@@ -1,0 +1,22 @@
+**定理 14.10（合法次序决定显露时刻而不改变最终空间）。** 给 $E$ 的一个合法全枚举 $\ell=(e_1,\ldots,e_n)$，令 $I_k=\{e_1,\ldots,e_k\}$。对非空 $S\subseteq E$ 定义
+$$
+\rho_\ell(S)=\max\{k:e_k\in S\}.
+\tag{14.20}
+$$
+它既是首次包含 $S$ 的割下标，也是首次包含 $\downarrow S$ 的割下标。任意联合律下有
+$$
+\Delta_k=P_{I_k}-P_{I_{k-1}}
+=\sum_{\rho_\ell(S)=k}D_S
+=\sum_{\substack{J\subseteq I_k,\ J\nsubseteq I_{k-1}\\J\in\mathcal J(E)}}K_J.
+\tag{14.21}
+$$
+在假设14.4下，非零 $D_S$ 的空间在 $\rho_\ell(S)$ 之前与当前观察空间正交，在该时刻起被完全包含；且
+$$
+\sum_{k=1}^n\|\Delta_k f\|_2^2
+=\|P_Ef-P_Cf\|_2^2
+=\mathscr R_\varnothing(f)-\mathscr R_E(f)
+=\sum_{\varnothing\ne S\subseteq E}\|D_Sf\|_2^2.
+\tag{14.22}
+$$
+左边按取得时刻分配的各项可以随合法枚举变化，最终空间 $\operatorname{ran}P_E$ 和总风险下降不变。式（14.22）前三项的相等无需条件独立。
+
