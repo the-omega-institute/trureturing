@@ -335,6 +335,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             var plan = Plan($"tools/{project}/{file}", "");
             Assert.Contains("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
                 Strings(plan["execution"]!["tests"]!));
+            Assert.Contains("current", Strings(plan["resources"]!));
+            Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)),
+                Strings(plan["execution"]!["checks"]!).Where(id => id.StartsWith("SL-", StringComparison.Ordinal)));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }
