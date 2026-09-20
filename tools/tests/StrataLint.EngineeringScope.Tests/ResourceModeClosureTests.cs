@@ -103,6 +103,35 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.False(File.Exists(Path.Combine(fixture.Root, "build/ci/plan.json")));
     }
 
+    [Theory]
+    [InlineData("engineering-check")]
+    [InlineData("current-check")]
+    [InlineData("current-step")]
+    [InlineData("test-project")]
+    public void SelectedExecutionCannotBeRegisteredUnderAnotherStage(string defect)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        Register(fixture, ["engineering", "filemap"]);
+        var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
+        var selected = mapping["resources"]!.AsArray().Single(row => row!["id"]!.ToString()
+            == (defect is "engineering-check" or "test-project" ? "filemap" : "engineering"))!;
+        if (defect == "engineering-check") selected["checks"] = new JsonArray("selftest-pair");
+        if (defect == "current-check") selected["checks"] = new JsonArray("filemap");
+        if (defect == "current-step") selected["steps"] = new JsonArray("filemap");
+        if (defect == "test-project")
+        {
+            var registry = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
+            registry["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == ResourceRouteTests.ResourceFixture.Foo)!["ci"] = true;
+            fixture.Write(EngineeringRegistrationFixture.Path, registry.ToJsonString());
+        }
+        fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
+
+        var result = Plan(fixture, "pr");
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("resource execution stage mismatch", result.Text, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/ci/plan.json")));
+    }
+
     private static void Register(ResourceRouteTests.ResourceFixture fixture, string[] required, bool followup = false,
         string? invalidDependency = null)
     {

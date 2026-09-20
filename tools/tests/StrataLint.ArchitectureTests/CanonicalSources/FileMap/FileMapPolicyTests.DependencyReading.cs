@@ -5,6 +5,43 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void DeltaDependencyInspectionReadsOnlySelectedBodiesAndUsesCompleteGeneratedIndex()
+    {
+        var manifest = Parse(
+            Entry("Data/**/*.toml", "data", "none", "loader", "SnapshotDecoder"),
+            Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "JsonEmitter"),
+            Entry("Generated/**/*.lean", "generated", "LeanEmitter", "lake", "LeanEmitter"),
+            Entry("Main.lean", "truth", "none", "lake", "lean-build"));
+        string[] paths = ["Data/changed.toml", "Data/untouched.toml", "Generated/output.json", "Main.lean"];
+        var reads = new List<string>();
+        var findings = FileMapPolicy.InspectDependencies(manifest, paths, path =>
+        {
+            reads.Add(path);
+            return path == "Main.lean" ? "import Generated.Proof\n" : "projection = \"Generated/output.json\"\n";
+        }, new HashSet<string>(["Data/changed.toml", "Main.lean"], StringComparer.Ordinal));
+
+        Assert.Equal(new[] { "Data/changed.toml", "Main.lean" }, reads);
+        Assert.Equal(new[] {
+            new FileMapFinding("FILEMAP-DATA-GENERATED-DEPENDENCY", "Data/changed.toml", "machine-readable data references generated artifact Generated/output.json"),
+            new FileMapFinding("FILEMAP-LEAN-GENERATED-IMPORT", "Main.lean", "Lean imports generated artifact Generated/Proof.lean"),
+        }, findings);
+    }
+
+    [Fact]
+    public void DeletedDependencyPathDoesNotReadUnchangedBodies()
+    {
+        var manifest = Parse(Entry("Data/**/*.toml", "data", "none", "loader", "SnapshotDecoder"));
+        var reads = new List<string>();
+        var findings = FileMapPolicy.InspectDependencies(manifest, ["Data/untouched.toml"], path =>
+        {
+            reads.Add(path);
+            return "unchanged";
+        }, new HashSet<string>(["Data/deleted.toml"], StringComparer.Ordinal));
+        Assert.Empty(reads);
+        Assert.Empty(findings);
+    }
+
+    [Fact]
     public void DependencyInspectionDoesNotRetainPreviouslyReadBodies()
     {
         var manifest = Parse(

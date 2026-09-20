@@ -24,7 +24,7 @@ internal static partial class CommonExecutionEvidence
             ValidateStartedBuild(root, started, candidate, validation);
             build = started;
         }
-        var inputs = TestInputs(root, validation.Snapshot);
+        var inputs = TestInputs(root, validation.Snapshot, CurrentPlan(root, build)?.TestProjects);
         return new(candidate, build, inputs, ValidateTestBuild(root, build, inputs));
     }
 
@@ -50,13 +50,13 @@ internal static partial class CommonExecutionEvidence
         return 0;
     }
 
-    internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot)
+    internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot,
+        string[]? selectedProjects = null)
     {
-        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
-        var registry = EngineeringProjectRegistry.Read(files);
-        var sources = registry.Sources(files);
+        var registry = EngineeringProjectRegistry.Read(snapshot);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var sources = registry.SourcePaths(paths);
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
         var materials = new Dictionary<string, object>(StringComparer.Ordinal);
         // Validate ALL current declarations before selection, including disabled tests.
@@ -64,8 +64,12 @@ internal static partial class CommonExecutionEvidence
             EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path), StringComparer.Ordinal);
         var executionInputs = projects.Values.Where(project => project.IsTest).ToDictionary(project => project.Path, project =>
             EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path), StringComparer.Ordinal);
+        var selected = selectedProjects?.ToHashSet(StringComparer.Ordinal);
+        if (selected is not null && (selected.Count != selectedProjects!.Length
+            || selected.Any(path => !projects.TryGetValue(path, out var project) || !project.Ci)))
+            throw new InvalidDataException("unregistered selected CI test project");
         var result = new Dictionary<string, RegisteredTestInput>(StringComparer.Ordinal);
-        foreach (var project in projects.Values.Where(project => project.Ci))
+        foreach (var project in projects.Values.Where(project => project.Ci && (selected is null || selected.Contains(project.Path))))
         {
             var environment = project.ExecutionEnvironment!.Order(StringComparer.Ordinal).Select(name => new
             {
@@ -98,7 +102,7 @@ internal static partial class CommonExecutionEvidence
                 include = project.Include.Order(StringComparer.Ordinal), exclude = project.Exclude.Order(StringComparer.Ordinal),
                 build_inputs = project.BuildInputs!.Order(StringComparer.Ordinal),
                 references = project.References.Order(StringComparer.Ordinal).Select(reference => new { path = reference, input = Compile(reference) }),
-                materials = sources[path].Select(source => source.Path).Concat(buildInputs[path]).Append(path)
+                materials = sources[path].Concat(buildInputs[path]).Append(path)
                     .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(Material),
             });
             compile.Add(path, value);
@@ -108,7 +112,7 @@ internal static partial class CommonExecutionEvidence
         void AddCompilePaths(string path, HashSet<string> relevant)
         {
             relevant.Add(path);
-            relevant.UnionWith(sources[path].Select(source => source.Path));
+            relevant.UnionWith(sources[path]);
             relevant.UnionWith(buildInputs[path]);
             foreach (var reference in projects[path].References) AddCompilePaths(reference, relevant);
         }
@@ -203,19 +207,28 @@ internal static partial class CommonExecutionEvidence
         if (record.Version != 2 || record.Candidate != candidate || !ValidRound(record.Round)
             || record.Projects is null || record.Materials is null)
             throw new InvalidDataException("engineering evidence candidate identity mismatch or invalid version/round");
-        var inputs = TestInputs(root, snapshot);
-        _ = ValidateTestBuild(root, Read<CommonStageRecord>(root, BuildPath), inputs);
+        var build = Read<CommonStageRecord>(root, BuildPath);
+        var inputs = TestInputs(root, snapshot, CurrentPlan(root, build)?.TestProjects);
+        _ = ValidateTestBuild(root, build, inputs);
         if (!inputs.Keys.Order(StringComparer.Ordinal).SequenceEqual(record.Projects.Select(result => result.Project)))
-            throw new InvalidDataException("engineering evidence does not cover every current test project exactly once");
+            throw new InvalidDataException("engineering evidence does not cover every selected test project exactly once");
         var bound = new List<string>();
         foreach (var project in record.Projects)
             bound.AddRange(ValidateProject(root, record, project, inputs[project.Project], validation).Select(material => material.Path));
         if (!bound.Order(StringComparer.Ordinal).SequenceEqual(record.Materials.Select(material => material.Path).Order(StringComparer.Ordinal)))
             throw new InvalidDataException("engineering evidence contains unowned or duplicate TRX material");
-        foreach (var project in requiredProjects ?? [])
-            if (!inputs.ContainsKey(project))
-                throw new InvalidDataException($"base test project has no current accepted-success coverage: {project}");
+        ValidateBaseTestProjects(snapshot, requiredProjects);
         return record;
+    }
+
+    private static void ValidateBaseTestProjects(RepositorySnapshot snapshot, IEnumerable<string>? baseProjects)
+    {
+        if (baseProjects is null) return;
+        var current = EngineeringProjectRegistry.Read(snapshot).Projects.Where(project => project.Ci)
+            .Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
+        foreach (var project in baseProjects)
+            if (!current.Contains(project))
+                throw new InvalidDataException($"base test project is missing from current CI registration: {project}");
     }
 
     private static bool ValidRound(string? round) => !string.IsNullOrWhiteSpace(round)
@@ -227,6 +240,18 @@ internal static partial class CommonExecutionEvidence
     {
         if (project.Project != input.Project || project.InputFingerprint != input.Fingerprint)
             throw new InvalidDataException($"test input identity mismatch: {project.Project}");
+        var (materials, evidence) = ValidateProjectMaterial(root, record, project, validation);
+        if (evidence.CountAssembly(input.Assembly) == 0 || evidence.ExecutedTests.Any(test =>
+                !StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, input.Assembly)))
+            throw new InvalidDataException($"TRX assembly identity mismatch: {project.Project}: {input.Assembly}");
+        return materials;
+    }
+
+    private static (ExecutionMaterial[] Materials, TestResultEvidence Evidence) ValidateProjectMaterial(
+        string root, TestExecutionRecord record, TestProjectExecution project, ValidationScope? validation = null)
+    {
+        if (!RepoPath.TryCreate(project.Project, out _) || !ValidCandidate(project.InputFingerprint))
+            throw new InvalidDataException("invalid test project seed identity");
         if (project.Status is not ("executed" or "reused") || !ValidCandidate(project.ExecutionCandidate) || !ValidRound(project.ExecutionRound)
             || project.Status == "executed" && (project.ExecutionCandidate != record.Candidate || project.ExecutionRound != record.Round))
             throw new InvalidDataException($"invalid original execution provenance: {project.Project}");
@@ -245,10 +270,7 @@ internal static partial class CommonExecutionEvidence
         ValidateMaterials(root, materials, validation);
         var evidence = TestResultEvidence.Load(directory);
         if (evidence.Executed != project.Executed) throw new InvalidDataException($"TRX count mismatch: {project.Project}");
-        if (evidence.CountAssembly(input.Assembly) == 0 || evidence.ExecutedTests.Any(test =>
-                !StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, input.Assembly)))
-            throw new InvalidDataException($"TRX assembly identity mismatch: {project.Project}: {input.Assembly}");
-        return materials;
+        return (materials, evidence);
     }
 
     // Optional seeds contain tests.json plus the original material paths relative to this
@@ -262,27 +284,7 @@ internal static partial class CommonExecutionEvidence
         JsonElement[] seedProjects;
         try
         {
-            var document = Read<JsonElement>(seedRoot, "tests.json");
-            if (!document.EnumerateObject().Select(property => property.Name).Order(StringComparer.Ordinal)
-                .SequenceEqual(new[] { "candidate", "materials", "projects", "round", "version" }))
-                throw new InvalidDataException("invalid test seed envelope fields");
-            seedProjects = document.GetProperty("projects").EnumerateArray().ToArray();
-            // Decode optional rows independently. Bad material loses its own TRX binding;
-            // the same project validator then rejects only the affected project.
-            var materials = new List<ExecutionMaterial>();
-            foreach (var row in document.GetProperty("materials").EnumerateArray())
-            {
-                try
-                {
-                    if (row.Deserialize<ExecutionMaterial>(JsonOptions) is { Path: not null, Sha256: not null } material)
-                        materials.Add(material);
-                }
-                catch (JsonException) { }
-            }
-            seed = new(document.GetProperty("version").GetInt32(), document.GetProperty("candidate").GetString()!,
-                document.GetProperty("round").GetString()!, [], materials.ToArray());
-            if (seed.Version != 2 || !ValidCandidate(seed.Candidate) || !ValidRound(seed.Round) || seed.Projects is null || seed.Materials is null)
-                throw new InvalidDataException("unsupported test seed schema/identity");
+            (seed, seedProjects) = ReadTestSeed(seedRoot);
         }
         catch (Exception exception)
         {
@@ -316,12 +318,74 @@ internal static partial class CommonExecutionEvidence
         return accepted;
     }
 
+    private static (TestExecutionRecord Record, JsonElement[] Projects) ReadTestSeed(string seedRoot)
+    {
+        var document = Read<JsonElement>(seedRoot, "tests.json");
+        if (!document.EnumerateObject().Select(property => property.Name).Order(StringComparer.Ordinal)
+            .SequenceEqual(new[] { "candidate", "materials", "projects", "round", "version" }))
+            throw new InvalidDataException("invalid test seed envelope fields");
+        var seedProjects = document.GetProperty("projects").EnumerateArray().ToArray();
+        // Decode optional rows independently. Bad material loses its own TRX binding;
+        // the same project validator then rejects only the affected project.
+        var materials = new List<ExecutionMaterial>();
+        foreach (var row in document.GetProperty("materials").EnumerateArray())
+        {
+            try
+            {
+                if (row.Deserialize<ExecutionMaterial>(JsonOptions) is { Path: not null, Sha256: not null } material)
+                    materials.Add(material);
+            }
+            catch (JsonException) { }
+        }
+        var seed = new TestExecutionRecord(document.GetProperty("version").GetInt32(), document.GetProperty("candidate").GetString()!,
+            document.GetProperty("round").GetString()!, [], materials.ToArray());
+        if (seed.Version != 2 || !ValidCandidate(seed.Candidate) || !ValidRound(seed.Round) || seed.Projects is null || seed.Materials is null)
+            throw new InvalidDataException("unsupported test seed schema/identity");
+        return (seed, seedProjects);
+    }
+
     // This must only be called after engineering acceptance. Transport/save is optional;
     // acceptance errors are not swallowed as cache misses or save failures.
     internal static bool ExportTestSeed(string root, TextWriter output, string? destination = null)
     {
         _ = ValidateEngineering(root, out var tests, out _);
-        return CopyTestSeed(root, tests, output, destination);
+        return tests is not null && CopyTestSeed(root, tests, output, destination);
+    }
+
+    private static TestExecutionRecord RetainUnselectedTestSeeds(string source, string target, TestExecutionRecord tests)
+    {
+        TestExecutionRecord prior;
+        JsonElement[] rows;
+        try { (prior, rows) = ReadTestSeed(source); }
+        catch (Exception) { return tests; } // No optional seed is a normal starting point.
+        var projects = tests.Projects.ToDictionary(project => project.Project, StringComparer.Ordinal);
+        var materials = tests.Materials.ToDictionary(material => material.Path, StringComparer.Ordinal);
+        foreach (var row in rows)
+        {
+            try
+            {
+                var project = row.Deserialize<TestProjectExecution>(JsonOptions)
+                    ?? throw new InvalidDataException("missing optional project");
+                if (projects.ContainsKey(project.Project)) continue;
+                if (rows.Count(item => item.ValueKind == JsonValueKind.Object && item.TryGetProperty("project", out var path)
+                    && path.ValueKind == JsonValueKind.String && path.GetString() == project.Project) != 1)
+                    throw new InvalidDataException("duplicate optional project");
+                var (bound, _) = ValidateProjectMaterial(source, prior, project);
+                if (bound.Any(material => materials.ContainsKey(material.Path)))
+                    throw new InvalidDataException("overlapping optional TRX material");
+                foreach (var material in bound)
+                {
+                    var destination = Path.Combine(target, material.Path);
+                    Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                    File.Copy(Path.Combine(source, material.Path), destination);
+                }
+                projects.Add(project.Project, project with { Status = "reused" });
+                foreach (var material in bound) materials.Add(material.Path, material);
+            }
+            catch (Exception) { } // One damaged optional row cannot discard another.
+        }
+        return tests with { Projects = projects.Values.OrderBy(project => project.Project, StringComparer.Ordinal).ToArray(),
+            Materials = materials.Values.OrderBy(material => material.Path, StringComparer.Ordinal).ToArray() };
     }
 
     private static bool CopyTestSeed(string root, TestExecutionRecord tests, TextWriter output, string? destination = null)
@@ -337,8 +401,12 @@ internal static partial class CommonExecutionEvidence
                 Directory.CreateDirectory(Path.GetDirectoryName(target)!);
                 File.Copy(Path.Combine(root, material.Path), target);
             }
-            Write(staging, "tests.json", tests);
-            ValidateMaterials(staging, tests.Materials);
+            // Preserve optional rows that were not requested this round. They are
+            // transport material, not accepted current execution: their registered
+            // input and assembly identity are checked only when later selected.
+            var retained = RetainUnselectedTestSeeds(Path.Combine(root, TestSeedPath), staging, tests);
+            Write(staging, "tests.json", retained);
+            ValidateMaterials(staging, retained.Materials);
             if (Directory.Exists(destination)) Directory.Delete(destination, recursive: true);
             Directory.Move(staging, destination);
             output.WriteLine("ENGINEERING_TEST_SEED_SAVED");

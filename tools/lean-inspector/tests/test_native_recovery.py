@@ -318,7 +318,7 @@ class NativeRecoveryTests:
             self.assertEqual(path.read_bytes(), expected)
 
         self.write('Audit.lean', 'def audit : False := True.intro\n')
-        self.build(success=False)
+        self.build(success=False, targets=['Audit'])
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
         self.build(success=False)
