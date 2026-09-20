@@ -1,4 +1,4 @@
-[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](17-odd-cactus-noncoverage-and-cycle-breaking-vertices.md) · [Next](08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
+[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](18-four-vertex-blocks-and-cycle-breaking-vertices.md) · [Next](08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
 
 <a id="ordered-local-kernels-unbounded-feedback-sets-and-treewidth"></a>
 #### Ordered local kernels: unbounded feedback sets and treewidth
@@ -405,7 +405,7 @@ bound on `Pr(alpha+beta>=1)` is `min(1,F(w,L))`, where
  \sqrt{F(w,L)}\ge\sqrt L+\frac{\sqrt w}{2}.           \tag{DG7}
 \]
 
-Minimizing `Aw+BL` subject to (FV3) gives this expression. It is sharp:
+Minimizing `Aw+BL` subject to [(FV3)](18-four-vertex-blocks-and-cycle-breaking-vertices.md#a-bounded-number-of-cycle-breaking-vertices-in-each-component) gives this expression. It is sharp:
 if `0<t=F(w,L)<=1`, an event of mass `t` carrying
 `alpha=sqrt(w/t), beta=1-alpha`, with both zero outside, attains all three
 values; the zero case is immediate. If `F>=1`, constant `alpha=sqrt(w), beta=1-sqrt(w)`

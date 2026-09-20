@@ -1,4 +1,4 @@
-[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](05-unrestricted-axis-deletions-a-complete-head-bound.md) · [Next](17-odd-cactus-noncoverage-and-cycle-breaking-vertices.md)
+[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](05-unrestricted-axis-deletions-a-complete-head-bound.md) · [Next](17-odd-cactus-noncoverage.md)
 
 <a id="block-saturation-and-the-actual-crossing-budget"></a>
 ### Block saturation and the actual crossing budget
@@ -235,7 +235,7 @@ the nonnegative triangle term. This limits this scalar certificate with
 the constants (BS10); it does not refute noncoverage at cutoff 31 or exclude
 estimates retaining the actual graph and residues. All constants in
 (BS10)--(BS13) and these strict comparisons are checked by the same fixed
-block [certificate](../certificates/star_block_obstruction_certificate.json). The general arguments are ordinary proofs,
+block certificate linked below. The general arguments are ordinary proofs,
 not new Lean declarations.
 
 <a id="every-positive-height-star-head-admits-the-required-broad-law"></a>
@@ -800,5 +800,5 @@ retain literal original labels and residues, the full-coordinate tree
 domains, extension counts, core compatibility and original-Haar counts.
 Their finite examples check the implementation and constants; the
 unbounded graph and height claim follows from PB1--UC7. The existing
-[feedback-vertex estimates](17-odd-cactus-noncoverage-and-cycle-breaking-vertices.md#a-bounded-number-of-cycle-breaking-vertices-in-each-component) retain their stated head and tail-cutoff
+[feedback-vertex estimates](18-four-vertex-blocks-and-cycle-breaking-vertices.md#a-bounded-number-of-cycle-breaking-vertices-in-each-component) retain their stated head and tail-cutoff
 hypotheses and are not being quoted as this all-odd specialization.
