@@ -64,6 +64,17 @@ Probe evidence (data, not authority — re-verify): `<<OP_SCRATCH>>/results/p12-
 
 **Public surface is deliberate.** Every non-`private` declaration (defs, instances, helpers) becomes part of the frozen module AND must be mirrored by a Describe node; before Stage A ends, make every helper that no public statement mentions `private`, give any public instance an explicit name, and mirror the remaining public defs with their defining expression (big kernel-decided tables: a node stating the type and describing the list). A public helper without a Describe node was a mirror-check reject (zarembav3, 2026-09-05).
 
+**Private lemmas are frozen and judged one by one (§3.2).** The Freeze event pins every declaration of the module, private
+ones included, and review seats apply the bind-only prohibition to each pinned theorem: a `private lemma`/`private theorem`
+whose whole proof is definition unfolding plus normalisation (`rfl`, `simp`, `simp only [...]`, `simpa using ...`, `omega`, `ring`,
+`linarith`, `ac_rfl`, `decide`, `norm_num`, `Nat.mul_mod`-style rewriting, `Fin.ext`/`congrArg` projections — in any sequence) is
+bind-only and is a reject even when private and even when the module has content elsewhere (#9162 rounds 1 and 2: three then four
+such lemmas, two carriers, two redeposits). Before Stage A ends: for every private theorem/lemma, either (a) its proof contains a
+case split with genuinely different branches, an induction, the construction and verification of a bijection/equivalence, or a
+cardinality/counting argument — keep it; or (b) it does not — inline it at every use site (a `have` inside a proof is not a
+declaration and is not pinned) and delete it. Report the per-lemma classification in the PR body's Declarations section. The
+open-problem-resolution basis exempts only the settling `result`, never a helper.
+
 **The source statement is quoted, not paraphrased (open-problem lanes).** The Describe node of the public `claim` (and of any definition the source states in words, such as an Observation that defines the object) carries the source sentence VERBATIM — typography as printed (`n ≥ 1`, `⌊n/4⌋`, `|Pd | − |diam(Jn (x))| ≤ 1`), with the page number — followed by the encoding (letters, indices, carriers) and any counting convention the paper fixes by example. The `Problems/` dossier and the `Library/` note quote the same sentences. Paraphrase in any of the three was a reject from three review seats on two lanes (op-jaco29 round 1, op-abelian4 round 1, 2026-09-18); a paraphrase after the freeze costs a prose commit, a full re-take of every delivered-head reading and one more review round.
 
 **Set `DOTNET_ROOT` before any door that runs the engineering tests** (`make preflight`): the pinned-SDK check refuses to start without it (`JUDGE_SEED_REGISTRATION: supply DOTNET_ROOT for the pinned SDK`). Derive it from the pinned `dotnet` on `PATH` (`export DOTNET_ROOT="$(dirname "$(dirname "$(readlink -f "$(command -v dotnet)")")")"` or the host's documented SDK root) — a preflight that never reached the engineering stage is not a preflight reading (op-abelian4 Stage B, 2026-09-18).
