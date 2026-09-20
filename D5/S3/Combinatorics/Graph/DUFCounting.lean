@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/DUFCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/DUFWedges]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
    digest: Exact fiber counts and two incidence counts bound codegree-four triple families. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/DUFComponentCounts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/DUFComponents]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
    digest: Exactly two reciprocal fibers belong to each saturated link component. -/
 

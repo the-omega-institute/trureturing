@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/DUFWedges
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/DUFStructure]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Sigma, mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Sigma]
    utility: none
    digest: Unordered wedges in exact four-neighborhood fibers correspond to four-edge common links. -/
 
