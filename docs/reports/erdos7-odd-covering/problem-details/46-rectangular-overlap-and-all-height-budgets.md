@@ -749,3 +749,5 @@ Neither T nor S is identified with first-hit loss. This inequality does
 not itself convert a pair defect into uncovered mass, a future-loss
 saving, or a telescoping budget along the whole prime sequence. Those
 remain separate mathematical obligations, including all tail primes.
+
+[Continue with section 14: finite original-label cores](47-finite-label-core-and-omitted-mass.md).
