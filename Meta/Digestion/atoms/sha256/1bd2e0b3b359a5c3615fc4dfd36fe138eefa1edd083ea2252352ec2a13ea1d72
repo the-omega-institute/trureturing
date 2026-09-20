@@ -1,0 +1,6 @@
+**证明。** $\mathcal F_I\subseteq\mathcal F_J$ 给嵌套可测子空间，故 $P_JP_I=P_I$；取伴随得 $P_IP_J=P_I$。于是 $(P_J-P_I)^2=P_J-P_I$，且它自伴。对 $k<\ell$ 展开 $\Delta_k\Delta_\ell$，四项按较小下标投影分别抵消为零；同样有 $P_C\Delta_k=0$。式（14.5）第一式从式（14.4）相减，第二式望远镜求和。最后
+$$
+f-P_If=(f-P_Jf)+(P_J-P_I)f
+$$
+的两项正交，因为第一项正交于全部 $\mathcal F_J$ 可测函数，第二项属于该空间。取范数平方即得式（14.6）。这正是[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第121节“保留式观察的正交增量与记录时间”中§121.4—121.6的观察塔公式，所增加的等式是它与式（14.3）的连接。$\square$
+
