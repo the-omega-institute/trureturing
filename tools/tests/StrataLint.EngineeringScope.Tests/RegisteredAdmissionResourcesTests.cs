@@ -289,6 +289,33 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         }
     }
 
+    [Theory]
+    [InlineData("StrataLint.Scribe", "push")]
+    [InlineData("StrataLint.Scribe", "pr")]
+    [InlineData("StrataLint.Scribe.Documents", "push")]
+    [InlineData("StrataLint.Scribe.Documents", "pr")]
+    public void ScribeSourceSelectsItsRegisteredCurrentConsumers(string project, string mode)
+    {
+        var plan = Plan($"tools/{project}/ResourceRoutingProbe.cs", "", mode);
+        Assert.Equal(mode == "pr" ? new[] { "SL-006", "SL-023", "SL-025" } : [],
+            Strings(plan["execution"]!["checks"]!).Where(id => id.StartsWith("SL-", StringComparison.Ordinal)));
+        Assert.DoesNotContain("current", Strings(plan["resources"]!));
+        Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current-scribe"));
+        Assert.Contains("filemap", Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "scribe-describe", "scribe-markdown", "scribe-projections" },
+            Strings(plan["execution"]!["checks"]!).Where(id => id.StartsWith("scribe-", StringComparison.Ordinal)));
+        Assert.Equal(mode == "pr" ? "required" : "not-applicable", plan["stages"]!["delta"]!["status"]!.ToString());
+    }
+
+    [Fact]
+    public void ScribeAndEngineChangesRetainTheFullCurrentRequirement()
+    {
+        var plan = Plan("tools/StrataLint.Scribe/ResourceRoutingProbe.cs", "tools/StrataLint.Engine/ResourceRoutingProbe.cs");
+        Assert.Contains("current", Strings(plan["resources"]!));
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)),
+            Strings(plan["execution"]!["checks"]!).Where(id => id.StartsWith("SL-", StringComparison.Ordinal)));
+    }
+
     [Fact]
     public void UnregisteredProductionProjectCannotInheritBlanketEngineering()
     {
@@ -308,6 +335,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             var plan = Plan($"tools/{project}/{file}", "");
             Assert.Contains("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
                 Strings(plan["execution"]!["tests"]!));
+            Assert.Contains("current", Strings(plan["resources"]!));
+            Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)),
+                Strings(plan["execution"]!["checks"]!).Where(id => id.StartsWith("SL-", StringComparison.Ordinal)));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }
