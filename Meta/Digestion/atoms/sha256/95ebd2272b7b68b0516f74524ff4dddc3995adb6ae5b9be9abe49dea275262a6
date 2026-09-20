@@ -1,0 +1,19 @@
+**定理 7.1（深度消耗与统一尾界）。** 定义2.3的有限深度距离满足
+$$
+D_s^{[N]}\uparrow D_s,\qquad
+D_t^{[N]}(hx,hy)\le L_hD_s^{[N+1]}(x,y).
+\tag{7.1}
+$$
+在全参数多元模型中，同样有
+$$
+D_t^{[N]}(g\boldsymbol x,g\boldsymbol y)
+\le\sum_iL_{g,i}D_{s_i}^{[N+1]}(x_i,y_i).
+\tag{7.2}
+$$
+若全部读数空间直径统一不超过 $M<\infty$，且所有生成箭头 $L_h\ge\lambda>1$，则
+$$
+D_s^{[N]}(x,y)\le D_s(x,y)
+\le\max\{D_s^{[N]}(x,y),M\lambda^{-(N+1)}\}.
+\tag{7.3}
+$$
+

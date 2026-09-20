@@ -1,0 +1,18 @@
+**推论 6.4（时间接续的增益乘积）。** 一元动作链每步增益为 $L_k>0$、有限缺陷预算为 $\delta_k\ge0$，初始预算为 $E_0<\infty$。设实际误差由非负实数预算满足 $E_{k+1}\le L_kE_k+\delta_k$。则
+$$
+E_n\le
+\left(\prod_{k=0}^{n-1}L_k\right)E_0+
+\sum_{j=0}^{n-1}\left(\prod_{k=j+1}^{n-1}L_k\right)\delta_j.
+\tag{6.3}
+$$
+若 $L_k\le L$、$\delta_k\le\delta$，则
+$$
+E_n\le
+\begin{cases}
+L^nE_0+\delta(1-L^n)/(1-L),&0<L<1,\\
+E_0+n\delta,&L=1,\\
+L^nE_0+\delta(L^n-1)/(L-1),&L>1.
+\end{cases}
+\tag{6.4}
+$$
+

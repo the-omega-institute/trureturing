@@ -1,0 +1,20 @@
+**定理 11.10（历史树归一化与历史 POVM）。** 定义11.9给出非负联合概率，满足
+$$
+\sum_{y\in Y_t}p(hy)=p(h),\qquad
+\sum_{h\in Y_1\times\cdots\times Y_t}p(h)=1.
+\tag{11.17}
+$$
+对任意前缀 $h$，全部有限后续结果求和仍为 $p(h)$。每层的 $\sum_{|h|=t}\Phi_h$ 是 CPTP，并且
+$$
+\sigma_h=(\operatorname{id}_R\otimes\Phi_h)(\rho_{RQ_0}),\qquad
+E_h=\Phi_h^*(I_{Q_t})\ge0,\qquad
+\sum_{|h|=t}E_h=I_{Q_0},\qquad
+p(h)=\operatorname{Tr}(E_h\rho_{Q_0}),
+\tag{11.18}
+$$
+其中 $\Phi_h^*$ 为 Hilbert–Schmidt 伴随。仅当 $p(h)>0$ 时定义条件态 $\sigma_h/p(h)$ 与下一结果概率 $p(hy)/p(h)$。正概率完整历史满足
+$$
+p(y_1,\ldots,y_t)=\prod_{j=1}^t p(y_j\mid y_1,\ldots,y_{j-1}).
+\tag{11.19}
+$$
+

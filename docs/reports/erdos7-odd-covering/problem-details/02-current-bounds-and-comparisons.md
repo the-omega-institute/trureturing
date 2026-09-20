@@ -356,6 +356,8 @@ Existing frozen declarations provide the following reusable ingredients:
 |---|---|
 | [FiniteDivisorEulerProduct.divisor_sum_eq_euler_product](../../../../D5/S3/Arith/DivisorGibbs/FiniteDivisorEulerProduct.lean) | Factor a finite divisor sum into local prime-power geometric sums. |
 | [GoldenResourceOptimalInteger.golden_resource_sigma_identity](../../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean) | Identify the project's divisor objective with `log(σ(N)/N)−λ log N`. |
+| [GoldenResourceObjectiveFactorization.golden_resource_objective_factorization](../../../../D5/S3/Arith/GoldenResourceObjectiveFactorization.lean) | Separate the fixed dyadic contribution from every positive odd integer. |
+| [GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval](../../../../D5/S3/Arith/GoldenResource5040PriceInterval.lean) | Supply an open price interval on which 5040 is the unique full-domain optimum. |
 | [RobinExponentSwap.reciprocal_geom_sum_swap_strict](../../../../D5/S3/Arith/RobinExponentSwap.lean) | Compare reciprocal-divisor products when prime exponents are reassigned. |
 | [RobinRationalBasis.log_expansion_remainder_bound](../../../../D5/S3/Arith/GoldenResource/RobinRationalBasis.lean) | Bound the remainder of the same positive `atanh` logarithm expansion used by the finite continuation verifier. |
 | [GoldenDivisorLanguage.golden_fiber_5040](../../../../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean) | The six integers with golden observation 5040 have exactly the two odd parts 315 and 945. |
@@ -366,6 +368,48 @@ wrapper is introduced. The new mathematical arguments in this dossier are
 not thereby Lean-verified. For the logarithm calculation, the public remainder
 bound treats `1≤y<2` after binary range reduction; the endpoint `log 2`
 uses pinned Mathlib's `Real.sum_range_le_log_div` at parameter `1/3`.
+
+The fixed dyadic contribution can be cancelled to obtain an optimum on
+**all positive odd integers**. Write
+\(J_\lambda(n)=\log(\sigma(n)/n)-\lambda\log n\).
+For positive odd \(n\), coprimality of \(16\) and \(n\), together with
+the factorization above, gives
+
+\[
+ J_\lambda(16n)=J_\lambda(16)+J_\lambda(n).
+\]
+
+Apply the existing
+[golden_resource_unique_optimum](../../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean)
+at \(16n\) with price \(1/25\), use \(5040=16\cdot315\), and subtract
+the common term \(J_{1/25}(16)\). This gives
+
+\[
+ J_{1/25}(n)\le J_{1/25}(315),\qquad
+ J_{1/25}(n)=J_{1/25}(315)\ \Longleftrightarrow\ n=315.
+\]
+
+Indeed, equality in the original theorem is equivalent to
+\(16n=5040\). The same cancellation using the price-interval theorem
+gives the identical odd-domain uniqueness statement for every
+
+\[
+ \frac{\log(12/11)}{\log11}<\lambda
+ <\frac{\log(31/30)}{\log2}.
+\]
+
+These odd-domain conclusions are ordinary deductions from the cited Lean
+declarations, not new Lean theorems. At price \(1/25\), exponentiating
+the objective bound gives precisely
+
+\[
+ \frac{\sigma(n)}n\le
+ \frac{208}{105}\left(\frac n{315}\right)^{1/25}
+ \qquad(n>0\text{ odd}).
+\]
+
+The right side still grows with the period; it is not the constant
+\(208/105\).
 
 The odd part 315 lies just below a simple covering obstruction. For any
 family of distinct nonunit divisors of `N`, the union bound on a full period
@@ -382,7 +426,10 @@ shows that covering would require `σ(N)/N≥2`. At the two adjacent heights,
 Thus moduli dividing `315=3²·5·7` leave at least `2/105=6/315` uncovered,
 for every residue assignment. Raising only the 3-exponent to obtain
 `945=3³·5·7` already makes this reciprocal-sum bound insufficient. It does
-not prove coverage at 945. The finite-height CRT criterion (FC1)--(FC2)
+not prove coverage at 945. Although \(J_{1/25}(945)<J_{1/25}(315)\), its
+unpenalized divisor ratio is larger, as the displayed values show.
+Thus a smaller objective value need not give a smaller raw reciprocal
+covering budget. The finite-height CRT criterion (FC1)--(FC2)
 gives the stronger bounds:
 
 | Period \(N\) | Mixed budget \(M_N\) | Guaranteed uncovered residues |
@@ -522,8 +569,13 @@ second-moment weights; replacing them by the divisor-sum weights would
 change the quantity being bounded. The same argument works for any new
 prime. It does not require a new Lean declaration.
 
-The existing unique optimum at 5040 concerns the objective
-`log(σ(N)/N)−(1/25)log N`, not an optimization over survivor probabilities.
+The odd-domain optimum above controls the priced divisor objective.
+A comparison with actual covering costs still needs a separate proof:
+for example, [the literal root costs in report 379](../profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
+retain assigned residues and, when `5` divides `m`, weights
+`3^(1−e)g(m)` for originals `3^e m`, rather than their reciprocal
+weights `1/(3^e m)`. The optimum alone supplies no upper bound for
+those costs below their required budget.
 Similarly, [robin_seven_smooth](../../../../D5/S3/Arith/Robin/SevenSmooth.lean) bounds
 `σ(N)/N` for `N=2^a3^b5^c7^d>5040` by Robin's logarithmic right-hand side.
 Neither statement controls arbitrary forbidden residues or their conditioned
