@@ -66,7 +66,11 @@ internal sealed class DavisWidthDescentDifferenceCoprimeDocument
                     + "the cyclic descent enumerator into n copies of the ordinary descent "
                     + "enumerator on n-1 letters, with one additional descent.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "davis-width-k-descent-difference-coprime-formula"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id,

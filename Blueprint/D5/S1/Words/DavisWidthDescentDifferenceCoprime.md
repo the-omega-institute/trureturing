@@ -60,6 +60,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/DavisWidthDescentDifferenceCoprime.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/davis-width-k-descent-difference-coprime-formula` (proved) by `D5/S1/Words/DavisWidthDescentDifferenceCoprime.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"davis-width-k-descent-difference-coprime-formula","declaration_gid":"D5/S1/Words/DavisWidthDescentDifferenceCoprime.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robert Davis (2017). *Width-k Generalizations of Classical Permutation Statistics*. DOI: [10.48550/arXiv.1701.04788](https://doi.org/10.48550/arXiv.1701.04788). URL: <https://cs.uwaterloo.ca/journals/JIS/VOL20/Davis/davis6.pdf>.
