@@ -60,8 +60,7 @@ internal sealed class CompletionDocument : IScribeDocumentDefinition
                     ProblemSlugRef.Create("ordered-zeckendorf-long-game-strategy"),
                     ResolutionKind.Proved)),
             Paragraph(Text("Independent pre-Freeze source-fidelity and declaration-admission "
-                + "review passed. Final new-head CI, ordinary merge and independent completion "
-                + "audit remain pending. Attribution remains with Bortnovskyi et al., Cusenza "
+                + "review passed. Attribution remains with Bortnovskyi et al., Cusenza "
                 + "et al., and the suppliers contributed in PRs 7495, 7575, 7643 and 7651. "
                 + "This formal result makes no worldwide-priority claim.")))));
 }

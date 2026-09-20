@@ -139,8 +139,7 @@ domination and exact ordered attainment. It quantifies every positive n,
 every permitted complete LGS run and every arbitrary legal terminal competitor.
 Terminal inversion zero follows from absence of actual switches. Its axiom
 closure is `propext`, `Classical.choice`, `Quot.sound`. Independent pre-Freeze
-source-fidelity and declaration-admission review passed. Final new-head CI,
-ordinary merge and independent completion audit remain pending.
+source-fidelity and declaration-admission review passed.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
 and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly

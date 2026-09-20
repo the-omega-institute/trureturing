@@ -66,8 +66,7 @@ internal sealed class AttainmentDocument : IScribeDocumentDefinition
                 + "in OrderedGame/Completion.result. Raw weighted domination is supplied by "
                 + "OrderedGame/Optimality, and Completion supplies priority correspondence "
                 + "and finite ordered completion. Independent pre-Freeze source-fidelity and "
-                + "declaration-admission review passed. Final new-head CI, ordinary merge and "
-                + "independent completion audit remain pending; no worldwide priority is claimed.")))));
+                + "declaration-admission review passed. No worldwide priority is claimed.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);

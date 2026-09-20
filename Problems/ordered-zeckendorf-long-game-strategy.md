@@ -80,7 +80,6 @@ at least as long as every legal terminal competing path. The three new results
 `lgs_path_raw_erasure`, `complete_lgs_exists` and `result` have exactly the
 standard axiom closure `propext`, `Classical.choice`, `Quot.sound`.
 Independent pre-Freeze source-fidelity and declaration-admission review passed.
-Final new-head CI, ordinary merge and independent completion audit remain pending.
 The proof does not use the paper's at-most-one-repetition lemma.
 
 - `OrderedGame.greedy_attainment` constructs the concrete full raw greedy
@@ -413,8 +412,7 @@ recurrence arithmetic in `D5/S1/Digit/Carry/RunChainLowerBound`.
 `theorem`. The full `Conjecture17` now has a kernel-checked proof, including
 ordered/raw priority correspondence, complete ordered LGS existence and the
 universal comparison with all permitted switch choices retained. Independent
-pre-Freeze source-fidelity and declaration-admission review passed; final new-head
-CI, ordinary merge and independent completion audit remain pending. Related suppliers were contributed
+pre-Freeze source-fidelity and declaration-admission review passed. Related suppliers were contributed
 in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
 
 ## ASSUMED-UNVERIFIED
