@@ -4,7 +4,7 @@
 
 [Examples](#three-places-to-look) · [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
-[Contribute](#take-part) · [Apache-2.0](LICENSE)
+[Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing pursues truth by turning questions into knowledge others can check
 and build on. The name reflects the project's intent: **true · return · Turing**
@@ -179,6 +179,12 @@ to bring a concrete question or reproducible problem.
 
 ## License and foundations
 
-Released under [Apache-2.0](LICENSE). Built on
+The root [LICENSE](LICENSE) contains Apache-2.0. The repository's
+[licensing specification](docs/develop/spec/golden-ledger-repo-spec.md#第八部治理)
+assigns Apache-2.0 to repository-produced Lean code, CC-BY-4.0 to text, and CC0
+to data. Third-party dependencies retain their upstream licenses and applicable
+notices.
+
+Built on
 [Lean](https://lean-lang.org/) and [Mathlib](https://github.com/leanprover-community/mathlib4).
 Classical results and upstream proofs remain credited to their sources.
