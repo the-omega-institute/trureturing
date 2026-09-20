@@ -49,6 +49,17 @@ this program only reproduces them -- which is exactly why they are run, as a
 control on the enumeration.  Layer 4 leaves that range by eighteen orders of
 magnitude, and layer 5 further still, so those two are the open part.
 
+ONE PORT DOES NOT ENUMERATE.  Appending 3109 to the q_1 = 149 branch sends the
+port to (R, c) = (52495396602, 1) -- that is R = 113322*149*3109 = K_7, the
+known seven-prime primary pseudoperfect number, with the modulus collapsed to
+1.  The bound of fact (2) then only says the next prime lies in (K_7, 3*K_7],
+a window 1.05e11 wide holding about 4e9 primes, each of which would need its
+own factorization of a 145-bit R*R + c.  That node is the inheritance channel
+from B_2 = 149*3109: it asks whether K_7 admits three further primes, the
+layer-5 form of the four-prime inheritance problem Appendix A.4(a) lists as
+a remaining target.  A scan of every port in the layer finds exactly one such
+node, so the walk reports it by name and does not descend into it.
+
 CONTROLS.  Every run asserts the layer's own known filling before enumerating,
 so an empty answer cannot come from a broken walk:
     k=2  from the empty prefix           -> 149, 3109
@@ -59,6 +70,8 @@ Usage:
     wang-port-low-layers.py                    layers 2,3,4 with controls
     wang-port-low-layers.py K                  layer K, whole layer
     wang-port-low-layers.py K SHARD STRIDE     layer K, q_1 congruent shard
+    wang-port-low-layers.py K Q1 SUB STRIDE    one q_1, sharded by the second prime
+    wang-port-low-layers.py K Q1 Q2 SUB STRIDE one q_1 q_2, sharded by the third
 """
 
 import sys
@@ -67,6 +80,7 @@ from sympy import isprime, primerange, divisors
 PORT_R, PORT_C = 113322, 797
 N9 = 5998279018951962402
 PREFIX = (2, 3, 11, 17, 101)
+DEGENERATE_WINDOW = 10 ** 8
 CONTROLS = {
     2: ((), (149, 3109)),
     4: ((157, 1979), (10093, 16879)),
@@ -118,9 +132,19 @@ def is_ppn(B):
     return n, Fraction(1, n) + sum(Fraction(1, p) for p in primes) == 1
 
 
-def branch(k, q1):
-    """Settle one q_1 branch of layer k.  Returns (stats, fillings)."""
-    stats = {"prefixes": 0, "empty": 0, "factored": 0}
+def branch(k, q1, shard=None, depth=2, only=None):
+    """Settle one q_1 branch of layer k.  Returns (stats, fillings).
+
+     is an optional (residue, modulus) pair restricting the prime at
+    position  (2 for the second prime, 3 for the third), so one branch
+    can be split across processes; the union over residues is exactly what the
+    unsharded run covers.   fixes the second prime, which is what lets a
+    single dominant subtree be split by its third prime.
+    """
+    start = k - 1
+    shard_at = start - (depth - 2)
+    index = [0]
+    stats = {"prefixes": 0, "empty": 0, "factored": 0, "skipped": 0}
     found = []
 
     def walk(R, c, qlast, remaining, path):
@@ -142,9 +166,28 @@ def branch(k, q1):
         lo = R // c + 1
         hi = (remaining * R + 1) // c
         for q in primerange(max(lo, qlast + 1), hi + 1):
-            walk(R * q, c * q - R, q, remaining - 1, path + (q,))
+            if only is not None and remaining == start and q != only:
+                continue
+            if shard is not None and remaining == shard_at:
+                index[0] += 1
+                if (index[0] - 1) % shard[1] != shard[0]:
+                    continue
+            child_R, child_c = R * q, c * q - R
+            child_rest = remaining - 1
+            # A port whose modulus collapses is an inheritance channel from a
+            # smaller filling.  Its next window is too wide to walk, so name it
+            # rather than descend.  Only ports that still enumerate a prime are
+            # affected; at two remaining primes the divisor identity decides.
+            if child_rest > 2:
+                span = child_rest * child_R // child_c - child_R // child_c
+                if span > DEGENERATE_WINDOW:
+                    stats["skipped"] += 1
+                    print(f"### DEGENERATE | path {' '.join(map(str, path + (q,)))}"
+                          f" | R={child_R} c={child_c} next-window={span}", flush=True)
+                    continue
+            walk(child_R, child_c, q, child_rest, path + (q,))
 
-    walk(PORT_R * q1, PORT_C * q1 - PORT_R, q1, k - 1, (q1,))
+    walk(PORT_R * q1, PORT_C * q1 - PORT_R, q1, start, (q1,))
     return stats, found
 
 
@@ -158,7 +201,7 @@ def layer(k, shard=0, stride=1):
         control(k)
     if k == 2:
         fills = [tuple(p) for p in completions(PORT_R, PORT_C, PREFIX[-1])]
-        report(k, "all", {"prefixes": 1, "empty": 0, "factored": 1}, fills)
+        report(k, "all", {"prefixes": 1, "empty": 0, "factored": 1, "skipped": 0}, fills)
         return
     for i, q1 in enumerate(first_primes(k)):
         if i % stride != shard:
@@ -174,7 +217,8 @@ def report(k, q1, stats, fills):
         print(f"    113322*B = {n}   ({k + 5} prime factors)   ppn identity: {ok}",
               flush=True)
     print(f"k={k} q1={q1} prefixes={stats['prefixes']} no-completion={stats['empty']} "
-          f"factored={stats['factored']} fillings={len(fills)}", flush=True)
+          f"factored={stats['factored']} fillings={len(fills)} "
+          f"not-enumerated={stats.get('skipped', 0)}", flush=True)
 
 
 def main():
@@ -184,6 +228,18 @@ def main():
             layer(k)
         return 0
     k = int(args[0])
+    if len(args) == 5:
+        q1, q2, sub, stride = (int(a) for a in args[1:])
+        control(k)
+        stats, fills = branch(k, q1, (sub, stride), depth=3, only=q2)
+        report(k, f"{q1} q2={q2} sub={sub}/{stride}", stats, fills)
+        return 0
+    if len(args) == 4:
+        q1, sub, stride = (int(a) for a in args[1:])
+        control(k)
+        stats, fills = branch(k, q1, (sub, stride))
+        report(k, f"{q1} sub={sub}/{stride}", stats, fills)
+        return 0
     shard, stride = (int(args[1]), int(args[2])) if len(args) >= 3 else (0, 1)
     layer(k, shard, stride)
     return 0
