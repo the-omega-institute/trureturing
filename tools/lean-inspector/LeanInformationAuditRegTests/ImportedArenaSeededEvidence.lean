@@ -1,9 +1,9 @@
-import LeanInformationAudit.Tests.Occurrence.DesignatedRootSeal
+import LeanInformationAuditRegTests.DesignatedRootSeal
 
 open Lean Elab Command LeanInformationAudit
 
--- SharedInformationRoot seals without registering or declaring a contract.
--- Its native contributors must already carry every retained seed's input evidence.
+-- The downstream production closure must retain every existing seed's
+-- expected/source/baseline evidence through ordinary compiler imports.
 run_cmd do
   for contract in currentRootCatalogContracts do
     for rows in #[contract.expected, contract.source, contract.baseline] do
