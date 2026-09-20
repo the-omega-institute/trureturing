@@ -93,7 +93,7 @@ internal sealed partial class ProductionCliEnvironment
                 {
                     if (reportRequired && Path.GetFullPath(options.CandidateLeanReport!, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
                         throw new InvalidDataException("common current requires canonical report material");
-                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds);
+                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds, resourcePlan);
                 }
                 var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report!);
                 result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean!, verified));

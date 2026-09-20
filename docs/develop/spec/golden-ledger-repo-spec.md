@@ -382,6 +382,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求完整 engineering 证据和正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带其它 current 谓词或 Scribe。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 标签豁免其它路径。
 
+filemap 的检查范围由本轮 build 绑定的完整变更路径与 `Meta/ci-checks.json` 中 `filemap.delta_scope` 决定。普通路径只检查候选中现存的变更文件正文;删除端保留作登记人口与产物存在性检查。关联范围仅按 `related` 的显式输入/目标 glob 展开,包括未变消费者和尚未出现的登记产物;不从正文发现影响范围。`whole_tree_inputs` 明列需要整体复验的政策/判官输入,`actor_inputs` 明列需要核对声明名称的输入,`inventory_inputs` 明列需要核对完整 producer 产物目录的输入;产物目录复验不扩大正文读取范围。路径索引可完整读取,不由此扩大正文检查;无范围的显式完整入口仍检查全树。current 与 build 的计划必须相同,包括有无计划;执行前、封存与下游接受均校验。局部检查证据同时绑定完整路径范围、登记与实际选中的候选正文材料,不得复用成另一范围或全量的成功。scope 缺失/损坏须失败,不得静默退回全量或免跑;CI 与 preflight 使用同一选择与检查入口,current 判官不读取 base。
+
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。
 
 工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。

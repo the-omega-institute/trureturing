@@ -20,7 +20,10 @@ public sealed class ReleaseConsumerContractTests
             // A real native consumer runs with a different registered process count.
             // This injects an environment difference; it is not a cross-OS Actions run.
             Environment.SetEnvironmentVariable("DOTNET_PROCESSOR_COUNT", "1");
-            Produce(fixture);
+            fixture.Processes(bindPlan: false);
+            fixture.CompleteCheckBoundary();
+            using var output = new StringWriter();
+            Assert.True(fixture.Run("current", output, planned: false) == 0, output.ToString());
             original = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
             Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
             Pack(fixture, 17);
