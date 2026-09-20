@@ -10,5 +10,6 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal("StrataLint.Scribe.Documents.Program", typeof(Program).FullName);
         Assert.Contains("emit", ScribeCli.ImplementedCommands);
+        Assert.Contains("ci-resource-probe-intentionally-missing-command", ScribeCli.ImplementedCommands);
     }
 }
