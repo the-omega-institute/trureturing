@@ -8,6 +8,37 @@ namespace StrataLint.Tests;
 public sealed class RegManifestAgreementTests
 {
     [Theory]
+    [InlineData("notes/unrelated.txt")]
+    [InlineData("Reg/lake-manifest.json")]
+    [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.RegManifest.cs")]
+    [BaseFactScopeProbe(15, typeof(RepositoryRules), nameof(RepositoryRules.DeclarationManifestAgreement))]
+    public void Sl015DeclarationManifestAgreementChecksCurrentPinsAcrossDeltaScopes(string changedPath)
+    {
+        var valid = Files();
+        var manifest = JsonNode.Parse(valid[RegManifestAgreement.ManifestPath])!;
+        manifest["packages"]![3]!["rev"] = new string('b', 40);
+        var invalid = manifest.ToJsonString();
+        var fixture = new RuleFixture();
+        foreach (var (path, text) in valid)
+        {
+            fixture.Files[path] = text;
+            fixture.Baseline[path] = text;
+        }
+        fixture.Files[RegManifestAgreement.ManifestPath] = invalid;
+        if (changedPath != RegManifestAgreement.ManifestPath)
+            fixture.Baseline[RegManifestAgreement.ManifestPath] = invalid;
+        var changes = RawChangeSet.Create([changedPath]);
+        var findings = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(15), fixture.Build(changes)).Diagnostics;
+        Assert.Contains(findings, finding => finding.Message.Contains("REG-MANIFEST-GIT-AGREEMENT", StringComparison.Ordinal));
+
+        // A repaired current manifest is accepted even when the baseline disagrees.
+        fixture.Baseline[RegManifestAgreement.ManifestPath] = invalid;
+        fixture.Files[RegManifestAgreement.ManifestPath] = valid[RegManifestAgreement.ManifestPath];
+        var repaired = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(15), fixture.Build(changes)).Diagnostics;
+        Assert.DoesNotContain(repaired, finding => finding.Message.Contains("REG-MANIFEST-", StringComparison.Ordinal));
+    }
+
+    [Theory]
     [InlineData("rev", "REG-MANIFEST-GIT-AGREEMENT")]
     [InlineData("missing", "REG-MANIFEST-GIT-AGREEMENT")]
     [InlineData("extra", "REG-MANIFEST-GIT-AGREEMENT")]
