@@ -96,6 +96,7 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
 逐模块工件 trace 只取模块及 utility claim 的编译闭包与语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
 | --- | --- |

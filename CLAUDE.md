@@ -209,13 +209,13 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 3.9 登记即声明模板与 delta 判官
 
-**每条信息登记显式声明它用的模板;判官不搜索、只判 delta;没有模板就加模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与源码绑定证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),文法不认的写法先改内容。
+**每条信息登记显式声明它用的模板;判官不搜索、只判 delta;没有模板就加模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与编译产物证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),文法不认的写法先改内容。
 **delta 律**:判官只评估候选相对受保护基线**新增、字节变化或首次取得 state pin** 的 D5 模块里的登记(与 SL-031 同一选择源);已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared`;声明了但未解析/证据缺失、畸形、不一致或无有效证书 ⇒ `DTR-Evidence`;声明且验证通过 ⇒ `DTR-Declared`;新增公开定理无登记 ⇒ `DTR-Unregistered`(下款)。判词名单封闭为这四个,无别的名字;**四个判词全部为 Observe(告警)**,判官只收集登记状态、不阻断准入。判官的改动权限收归 #5214 登记即程序线,其他 lane 不改判官、只提供告警读数(τ=0 owner 2026-09-20 裁决,原话「把判官从block 改成warning … 把改的权限全部收到你这边来吧, 否则太乱了. 你只要收集他们的warning就可以了」)。登记由 #5214 线代做:其他 lane 的新定理出现 `DTR-Unregistered`/`DTR-Undeclared` 告警不构成该 lane 的义务,由本线以 sidecar 登记、缺模板即加模板;模板覆盖与流程稳定后再议登记是否回到规范或门(τ=0 owner 2026-09-20 裁决,原话「就先你来登记, 不用管其他人有没有登记的, 等着模版加差不多了流程稳定了再说」)。
 **没有模板就加模板**(τ=0 owner 2026-09-18 裁决,原话「默认就是没有模版就加模版, 以后也这样」):某条登记在现有模板下找不到合法归属时,唯一处置是**新写一个模板**(内容 PR)并声明它;不得留作未声明,不得硬套错误模板;所有者模块已冻结时,用 `declare_information_template_binding <定理> in <模块>` 的 sidecar 模块声明,不改冻结模块。存量未声明的登记按族由内容 PR 迁移;不设债务账本、不设兼容开关、不设宽限期。
 **新定理即四槽逃逸登记**(τ=0 owner 2026-09-18 裁决,原话「你就只判delta就可以, 很简单新定理需要给出几个东西, 原来逃逸在哪里, 把逃逸怎么处理的, 出来什么新信息, 新信息在哪里继续逃逸.」及「应该至少一种吧, 就是这个本质上就是你写了能过机器验证肯定是对的, 至于有没有其他种类, 那你写两种就有两种逃逸方式?」):选中模块里,相对受保护基线新增的每条公开 `theorem`/`lemma` 须有**至少一条** `declared_validated` 四槽登记;同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。四槽各有机器消费者:
 
 - **原来逃逸在哪里**:`escape from (<term>)` 指明常量或 binder 类型;检查其在 elaborate 后的定理陈述中出现,并与闭合舞台 State 所代表的对象作身份核对,不搜索。
-- **把逃逸怎么处理**:`readout via (<已 enroll 模板应用>)` 由现役 DTR 的 E1–E8、精确提取与源码绑定证据核对;没有模板就加内容模板,不为语料放宽判官。
+- **把逃逸怎么处理**:`readout via (<已 enroll 模板应用>)` 由现役 DTR 的 E1–E8、精确提取与编译产物证据核对;没有模板就加内容模板,不为语料放宽判官。
 - **出来什么新信息**:`realization <桥>` 核对原陈述、闭合 Law 和实现参数;既有 `LegacyPrimitiveRealization` 等价桥继续有效,`EscapePrimitiveRealization` 只要求陈述 ⇒ Law,但强制有效 variation·sensitivity,否则报 `dtr.forward_bridge_requires_sensitivity`。native 形式保留精确 Law 检查。`CounterexampleRecord.WitnessPrimitiveRealization` 是反例桥(`bridge_kind=witness`):陈述须为闭合零参数 `Prop` 定义 `c` 的否定,`c` 定义等价于 `∀ d : Domain, predicate d`,此时 `escape from` 对 `Domain` 而非 State 核对;桥的实现须与舞台自算读出定义相等,variation 须在同一实现上为正、对常真读出为负,sensitivity 必填;判官只看具名断言与桥参数,不打开反驳证明体。
 - **新信息在哪里继续逃逸**:`escape continues (<term>)` 是闭合舞台上具名 `LayerChain` 的 `EscapeResidualWitness` 值、`EscapeResidualEmpty` 证明,或字面 `open`。前两者核对证书声明、类型及链所属舞台,内核检查 membership/empty 证明;判官不求值证书。`open` 仅声明 Gödel 顶层,不伪造证书。
 
@@ -791,7 +791,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 
 ### 10.4 cache key 与权威增量补编
 
-报告工件的复用由 Lake trace 与 `report_cache_release_semantic_version` 决定，配置身份归聚合报告；enrollment plan 是其 owner 模块的编译产物，不含 manifest 派生值，失效只由 Lake 的 import trace 决定；复用验证器只查结构与工件自身完整性，禁止重算当前仓库文件摘要与缓存内保存值比较来决定报告复用，inspector 不兼容改动手动 bump 该字段。
+报告工件的复用由 Lake trace 与 `report_cache_release_semantic_version` 决定，配置身份归聚合报告；enrollment plan 是其 owner 模块的编译产物，不保存源文件字节摘要或 manifest 派生值；plan identity 与 assessment 只消费编译信息，失效由 Lake 的 import trace 决定；复用验证器只查结构与工件自身完整性，禁止重算当前仓库文件摘要与缓存内保存值比较来决定报告复用，inspector 不兼容改动手动 bump 该字段。
 
 - **cache key 恰好覆盖能改变被复用值的输入,不多不少;目标不是完全命中,是不假失效**——承上条:「一事不再理」要求按内容地址记忆化,而**地址取错范围,两个方向都出病**。key **少了**能改变值的输入 ⟹ **假命中**(复用了不该复用的东西;#1201 判据管这一侧:「缓存 key 必须覆盖所有能改变被复用值或其接受语义的输入,或复用后存在独立等价重证」);key **多了**不改变值的输入 ⟹ **假失效**(命中率被一个零信息的字节归零),**本条管这一侧,二者是同一条判据的两端**。
   **判据(逐条可查)**:①对 key 的**每一项输入**问一句「**改变它而产物不变,可能吗**」——可能,它就不该整份进 key,只有它**影响产物的那部分字段**才进;②**不追求完全命中**——下游若本身是增量构建系统(lake / Bazel / dotnet),cache 的职责只是**把它送到一个近似的起点**,剩下的差量由该系统自己算;为「命中即完全正确」而把整个配置文件哈希进 key,买到的是 100% 失效,卖掉的是构建系统本就具备的增量能力;③**宽 key + 差量补编** 优于 **窄 key + 全量重来**,前提是差量由**权威的增量机制**判定(不是我们自己写的启发式);④凡 key 的某项输入是**一个文件的全文**,先问它是不是「配置文件里只有几个字段影响产物」的情形。**cache 不是真源(第 4.4 条)**,故 key 宁可宽而由下游增量兜底——取宽只损失时间,取窄损失的是正确性,二者不对称。

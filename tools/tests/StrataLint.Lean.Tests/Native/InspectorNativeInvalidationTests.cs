@@ -4,6 +4,7 @@ public sealed class InspectorNativeInvalidationTests(InspectorCompilerFixture co
 {
     // Invalidation and dependency binding use a class-owned compiler stage.
     [Theory]
+    [InlineData("test_native.NativeTests.test_declared_helper_comment_preserves_report_and_plan_identity")]
     [InlineData("test_native.NativeTests.test_native_no_build_rejects_corruption_without_production")]
     [InlineData("test_native.NativeTests.test_public_module_validates_and_private_job_is_not_a_target")]
     [InlineData("test_native.NativeTests.test_native_invalidation")]

@@ -71,9 +71,11 @@ elab "observe_declared_template_plan_identity" : command => do
   let .ok () ← enroll ``symbolicPointwise | throwError "identity fixture enrollment failed"
   let .ok plan := selectedPlan (← getEnv) ``symbolicPointwise
     | throwError "identity fixture plan missing"
-  unless !plan.sourceInputs.isEmpty && plan.sourceInputs.all (fun input => input.path.endsWith ".lean") do
-    throwError "[FAIL] enrollment_inputs_exclude_global_configuration"
   let .ok bytes := planEncoding plan | throwError "identity fixture encoding failed"
+  let source ← liftCoreM <| readSourceInput (sourcePath plan.enrollmentOwner)
+  if (String.fromUTF8! bytes).contains source.sha256 then
+    throwError "[FAIL] enrollment_encoding_omits_source_hashes"
+  logInfo "[PASS] enrollment_encoding_omits_source_hashes"
   (if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then logInfo else logError) m!"[{if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then "PASS" else "FAIL"}] complete_plan_encoding_binds_all_nodes bytes={bytes.size} work={plan.chargedWork}"
   let variants := #[
     ("summary_changed_body_rejected", { plan with bodyIdentity := String.ofList (List.replicate 64 'a') }),

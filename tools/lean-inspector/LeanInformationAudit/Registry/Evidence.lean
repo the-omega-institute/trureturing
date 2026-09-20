@@ -395,12 +395,12 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
 
 /-- The canonical wire includes every retained plan node and proof proposition/erased expansion,
-all slots, identities, the private frame version tuple and source references. The hash and byte count are
+all slots, identities, the private frame version tuple. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v5"
+    emit "DTR-checked-plan-v6"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain
@@ -416,8 +416,6 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
       wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
     emit (toString plan.constructorTypes.size)
     for ast in plan.constructorTypes do wireName ast
-    emit (toString plan.sourceInputs.size)
-    for input in plan.sourceInputs do emit input.path; emit input.sha256
     emit (toString plan.rules.size)
     for rule in plan.rules do emit rule
     -- The fixed-width work field is outside the token table so its changing
@@ -923,25 +921,5 @@ def validate (roots : Array Name) : CoreM Unit := do
       total_ns={finished - started}"
 
 end NativeCoherence
-
-def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) :
-    CoreM (Array SourceInput) := do
-  let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
-    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
-    |>.filter (fun name => (env.getModuleIdx? name).isSome)
-  NativeCoherence.validate (#[env.header.mainModule] ++ policyOwners ++ dependencies.map (·.owner))
-  let mut paths := #[sourcePath env.header.mainModule]
-  for dep in dependencies do
-    if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit.Tests." then
-      let path := sourcePath dep.owner
-      unless paths.contains path do paths := paths.push path
-  readSourceInputs (paths.qsort (· < ·))
-
-/-- Compare retained bytes; never refresh a stale plan by wrapping old olean
-contents with hashes from the current source tree. -/
-def validateSourceInputs (inputs : Array SourceInput) : CoreM Unit := do
-  for input in inputs do
-    unless (← readSourceInput input.path) == input do
-      throwError "incomplete_closure:E7.stale_source:{input.path}"
 
 end LeanInformationAudit.TemplateAudit
