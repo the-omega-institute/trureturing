@@ -1,4 +1,4 @@
-import LeanInformationAudit.SnapshotTypes
+import LeanInformationAuditInterface.RootContract
 
 namespace LeanInformationAudit
 
