@@ -51,3 +51,24 @@ run_cmd do
       throwError "[FAIL] dead argument/class-let imported evidence: {name}"
   logInfo "[PASS] QUALITY-DEFAULT-EVIDENCE rejected IE-C003; \
     dead arguments retain ProvenanceProbe.arena"
+
+
+run_cmd do
+  for name in #[`QualityGrouped.shifted, `QualityGrouped.shiftedCopy] do
+    let diagnostic ← liftTermElabM do
+      try return s!"accepted owner={← resolveCanonicalArenaNameFromEvidence name}"
+      catch ex => ex.toMessageData.toString
+    unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+      throwError "[FAIL] grouped native evidence: {diagnostic}"
+  for name in #[`QualityGroupedRegistration.aliasFact, `QualityGroupedRegistration.copyFact] do
+    unless (InformationRegistry.find? (← getEnv) name).isNone do
+      throwError "[FAIL] grouped rejected registration survived native import: {name}"
+  for (name, expected) in #[
+      (`QualityGrouped.deadInserted, `ProvenanceProbe.arena),
+      (`QualityGrouped.liveOuter, `QualityGrouped.liveOuter),
+      (`QualityGrouped.explicitInner, `ProvenanceProbe.arena),
+      (`QualityGrouped.namedInner, `ProvenanceProbe.arena),
+      (`QualityGrouped.groupedExplicit, `ProvenanceProbe.arena)] do
+    unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) == expected do
+      throwError "[FAIL] grouped native positive: {name}"
+  logInfo "[PASS] Q3 dual evidence-only rejection/no insertion; grouped positives preserved"
