@@ -62,9 +62,11 @@ internal sealed class AttainmentDocument : IScribeDocumentDefinition
                     + "carry has positive reward, so zero-reward paths are precisely switch "
                     + "phases. Strong induction on inversions constructs completion; the proof "
                     + "retains all allowed switch orders."))), DescribeRole.Theorem),
-            Paragraph(Text("These are attainment components, not a proof of Conjecture 1.7. "
-                + "Global weighted domination and complete LGS existence remain separate "
-                + "obligations. No resolution credit or worldwide priority is claimed.")))));
+            Paragraph(Text("These attainment components feed the full Conjecture 1.7 proof "
+                + "in OrderedGame/Completion.result. Raw weighted domination is supplied by "
+                + "OrderedGame/Optimality, and Completion supplies priority correspondence "
+                + "and finite ordered completion. Independent review and first-freeze "
+                + "admission remain pending; no worldwide priority is claimed.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);

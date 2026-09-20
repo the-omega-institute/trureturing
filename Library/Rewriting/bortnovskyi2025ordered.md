@@ -49,8 +49,9 @@ The new `D5/S1/Digit/Carry/OrderedGame.path_potential` proves the natural-number
 inequality `length + inv(decode end) ≤ inv(decode start) + sum carryReward`
 for every finite legal ordered path, using the existing local inversion bounds.
 Its position-aware LGS relation retains all switch choices and restarts priority
-after every move. `Conjecture17` is the full, still unproved target, including
-existence of a complete LGS run for every positive n.
+after every move. `Conjecture17` is the full source target, including
+existence of a complete LGS run for every positive n. It is proved by
+`OrderedGame/Completion.result` with the definitions unchanged.
 `path_raw_erasure` now maps every ordered path to a labelled raw path with
 identical accumulated reward, removing switches and retaining the existing
 `CarryStep` relation for each labelled carry and its spectator context.
@@ -119,9 +120,26 @@ same sorted endpoint and the inversion count as their exact length. These
 results retain every allowed switch choice. `terminal_raw_canonical` also proves
 that every actual ordered terminal state has binary nonconsecutive raw digits,
 by excluding each adjacent operation and deriving spacing of the entire list.
-Complete ordered LGS existence, ordered/raw priority correspondence and the
-final ordered comparison remain unproved. Raw weighted domination is complete;
-this does not yet settle the source conjecture.
+`OrderedGame/Completion.lgs_path_raw_erasure` supplies the exact positional
+bridge: a selected carry starts sorted; duplicate counts yield adjacent
+duplicates; strict value order forces strict position order. Rightmost splits
+therefore select the highest duplicate, and leftmost merges select the least
+enabled consecutive pair. All switches erase with zero reward and unchanged
+counts, so every permitted LGS path becomes a raw greedy path with its weight
+preserved.
+
+`complete_lgs_exists` constructs a finite complete LGS path from every list.
+A minimum rank among actual legal moves realizes the relational priority.
+Carries decrease the existing token-count/index-weight pair, and switches
+preserve that pair while decreasing inversions. Their lexicographic combination
+gives well-founded completion, including the singleton start.
+
+`Completion.result : Conjecture17` combines these bridges with raw terminal
+domination and exact ordered attainment. It quantifies every positive n,
+every permitted complete LGS run and every arbitrary legal terminal competitor.
+Terminal inversion zero follows from absence of actual switches. Its axiom
+closure is `propext`, `Classical.choice`, `Quot.sound`. Source-fidelity review,
+first-freeze admission and final CI integration remain pending.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
 and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly
@@ -131,7 +149,8 @@ least-action comparison, not these state-dependent reward inequalities.
 The direct weighted candidate is a research deduction attributed to the #9018
 intake, not a theorem claimed from either paper. Existing repository carry,
 termination, inversion and chain suppliers from PRs #7495, #7575, #7643 and
-#7651 retain their attribution. No complete conjecture resolution is claimed.
+#7651 retain their attribution. Independent completion review is still required;
+the kernel result does not claim worldwide priority.
 
 ## Verified locator
 

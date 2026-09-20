@@ -834,8 +834,8 @@ inductive LGSPath : List ℕ → List ℕ → ℕ → ℕ → Prop where
 /-- No legal ordered operation is enabled. -/
 def Terminal (s : List ℕ) : Prop := ∀ p a t, ¬Move p a s t
 
-/-- The full source target, including nonvacuous completion. This definition
-records an unproved proposition, not a resolution of the conjecture. -/
+/-- The full source target, including nonvacuous completion. Its proof is in
+OrderedGame.Completion; the proposition retains every permitted switch choice. -/
 def Conjecture17 : Prop :=
   (∀ n, 0 < n → ∃ t length weight,
     LGSPath (List.replicate n 0) t length weight ∧ Terminal t) ∧

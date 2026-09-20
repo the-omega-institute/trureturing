@@ -152,9 +152,9 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
                 + "priority restarts after every move: switches, leftmost ones, rightmost "
                 + "split, then leftmost consecutive merge. Conjecture17 records nonvacuous "
                 + "complete LGS existence for every positive n and the comparison of every "
-                + "complete LGS run with every legal terminal competitor. That proposition "
-                + "is defined but not proved. The path bound alone does not establish "
-                + "attainment or weighted greedy optimality.")))));
+                + "complete LGS run with every legal terminal competitor. Its proof is "
+                + "OrderedGame/Completion.result, which combines these path bounds with "
+                + "ordered attainment, raw greedy optimality and finite completion.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);

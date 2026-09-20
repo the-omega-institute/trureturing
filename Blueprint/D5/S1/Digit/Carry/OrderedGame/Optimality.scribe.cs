@@ -62,10 +62,11 @@ internal sealed class OptimalityDocument : IScribeDocumentDefinition
                     + "the whole list spaced, hence its raw multiplicities are binary and "
                     + "nonconsecutive. The proof includes the exceptional zero and one splits."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The full source Conjecture 1.7 remains unproved. The remaining "
-                + "interfaces are ordered LGS priority correspondence and erasure to raw greedy "
-                + "paths, existence of a complete ordered LGS path for every positive n, and "
-                + "the final comparison using exact ordered potential attainment. No helper "
+            Paragraph(Text("OrderedGame/Completion.result combines this raw bound with "
+                + "ordered priority correspondence, finite LGS completion and exact potential "
+                + "attainment to prove the full source Conjecture17. The universal comparison "
+                + "retains all permitted switches and all legal terminal competitors. "
+                + "Independent review and first-freeze admission remain pending. No helper "
                 + "counts as a completed external problem. Attribution remains with Bortnovskyi "
                 + "et al., Cusenza et al., and the existing suppliers in PRs 7495, 7575, 7643 "
                 + "and 7651; no worldwide priority claim is made.")))));

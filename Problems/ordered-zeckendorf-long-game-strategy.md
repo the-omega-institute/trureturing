@@ -72,7 +72,16 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   value-preserving paths from `[F_1,...,F_1]` to the sorted normal form, LGS
   should maximize length.
 
-## Gap
+## Formal result and suppliers
+
+`D5/S1/Digit/Carry/OrderedGame/Completion.result : Conjecture17` proves the exact
+source target with its definitions unchanged. For every positive n, including
+n=1, a complete ordered LGS path exists; every permitted complete LGS path is
+at least as long as every legal terminal competing path. The three new results
+`lgs_path_raw_erasure`, `complete_lgs_exists` and `result` have exactly the
+standard axiom closure `propext`, `Classical.choice`, `Quot.sound`.
+Independent source-fidelity review, first-freeze admission and required final
+CI/merge remain outstanding. No completion credit is claimed before that audit.
 
 - `OrderedGame.greedy_attainment` constructs the concrete full raw greedy
   continuation, recursively using the strict carry measure, and attains its
@@ -89,13 +98,16 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   cases in `OrderedGame/Optimality.raw_terminal_bound`, proving the full bound
   `weight ≤ G` for every legal path to a canonical raw endpoint.
 - `terminal_raw_canonical` proves that actual ordered terminality implies that
-  endpoint condition. The remaining bridges are ordered LGS priority erasure
-  to `RawGreedyPath` and complete ordered LGS existence for every positive n.
+  endpoint condition. `Completion.lgs_path_raw_erasure` proves the ordered/raw
+  priority bridge without restricting switches. `complete_lgs_exists` minimizes
+  a rank among actual legal moves and recurses on the carry measure paired with
+  inversions to obtain a terminal continuation from every list.
 - `OrderedGame` defines ordered legality and the switch move, and
   `path_raw_erasure` proves erasure into a labelled raw path with identical
   accumulated reward. `OrderedGame/Attainment.lgs_move_potential` and
   `lgs_path_potential` prove exact attainment of the inversion potential by
-  actual ordered LGS moves and paths. Length optimality remains unproved.
+  actual ordered LGS moves and paths. `Completion.result` combines these with
+  the raw weighted comparison to prove actual ordered length optimality.
 - Newman confluence and normal-form uniqueness say nothing about longest paths.
 - LGS contains a tie phrase "switch moves (in any order)".
   `ASSUMED-UNVERIFIED`: an uncommitted exhaustive search over `n <= 16` found
@@ -103,8 +115,8 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   If correct, that supports omitting a switch tie-breaker within that range; the
   unrestricted switch-phase independence is now proved by
   `OrderedGame/Attainment.switch_normalization`: all maximal legal zero-reward
-  paths share their sorted endpoint and exact inversion length. Complete LGS
-  existence and the ordered/raw priority bridge remain open.
+  paths share their sorted endpoint and exact inversion length. The full
+  all-switch comparison is now proved by `Completion.result`.
 - The inversion count now exists here. `D5/S1/Digit/Carry/ListInversions` is
   frozen and supplies `inv : List Nat -> Nat`, its append law, a three-block
   window decomposition, and four local replacement bounds, one per non-switch
@@ -155,9 +167,10 @@ domination: every legal raw path to a canonical endpoint has reward at most the
 concrete `G`, for arbitrary raw starts. Its proof handles interleaved merges via
 the actual split-prefix cut, finite high cascades, and exact legal exchanges.
 `terminal_raw_canonical` connects actual ordered terminal states to that endpoint
-condition. Ordered/raw priority correspondence, complete ordered LGS existence
-and complete Conjecture 1.7 remain unproved. Exact ordered potential attainment
-and arbitrary switch-phase completion are supplied by `OrderedGame/Attainment`.
+condition. `Completion` proves ordered/raw priority correspondence, finite
+ordered LGS completion and the full `Conjecture17`. Exact ordered potential
+attainment and arbitrary switch-phase completion are supplied by
+`OrderedGame/Attainment`.
 
 1. Use one raw ordered `List Nat`, decoded by `Nat.succ`; multiplicities use
    `Multiset.toFinsupp`. `Carry/OrderedGame` defines all five positional moves,
@@ -166,7 +179,7 @@ and arbitrary switch-phase completion are supplied by `OrderedGame/Attainment`.
    `length + inv(decode end) ≤ inv(decode start) + reward`. It reuses the four
    frozen inversion bounds. `path_raw_erasure` preserves the exact reward in
    the labelled raw carrier. `Attainment` proves equality for actual LGS paths;
-   comparison still needs the priority bridge. The raw weighted upper bound
+   `Completion.lgs_path_raw_erasure` supplies the priority bridge. The raw weighted upper bound
    and the ordered-terminal-to-canonical bridge are now proved in `Optimality`.
 3. `Carry/SplitStabilization` proves exact site balance, the first-overfire
    least-action bound, unique complete split counts and endpoint, and existence
@@ -187,9 +200,11 @@ and arbitrary switch-phase completion are supplied by `OrderedGame/Attainment`.
    those lower-boundary changes. The higher-split,
    lower-split, predecessor and separated-merge exchanges are all Lean-checked.
    Replacement tails need only be legal and terminal.
-6. Use exact potential attainment and switch-phase independence to prove
-   complete LGS existence, including n=1. Compare every complete LGS run with every terminal
-   competitor. No global maximum or unproved Bellman premise is required.
+6. `Completion.complete_lgs_exists` constructs finite completion using the
+   combined carry/inversion measure, including n=1. Exact potential attainment
+   and raw greedy comparison then yield `Completion.result` for every complete
+   LGS run and every terminal competitor. No global maximum or unproved Bellman
+   premise is required.
 
 The following older maximum-value proof **sketch** is historical mathematical context; its claims remain
 `ASSUMED-UNVERIFIED`. **Nothing here is Lean-verified**, the four move-specific
@@ -395,24 +410,21 @@ recurrence arithmetic in `D5/S1/Digit/Carry/RunChainLowerBound`.
 
 ## Triage
 
-`theorem`. Weighted raw domination, legal cascade extraction, ordered terminal
-canonicality and exact sorted attainment are now supplied. The remaining route
-requires ordered/raw priority correspondence, complete ordered LGS existence
-and the final universally quantified comparison. Related suppliers were contributed
+`theorem`. The full `Conjecture17` now has a kernel-checked proof, including
+ordered/raw priority correspondence, complete ordered LGS existence and the
+universal comparison with all permitted switch choices retained. Independent
+completion review and integration remain pending. Related suppliers were contributed
 in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
 
 ## ASSUMED-UNVERIFIED
 
-- All permitted switch orders in complete LGS have equal length remains unproved.
-- The paper's game moves correspond cleanly enough to frozen carry identities to
-  reuse value proofs.
-- The at-most-one-repetition lemma suffices to close every local optimality
-  branch.
+- Independent review of source fidelity and declaration admission is pending.
+  The proof does not use the paper's at-most-one-repetition lemma.
 - Whether Conjecture 1.7 was resolved after arXiv v2 is unverified; novelty of
   the exchange-lemma route is unassessed.
 - The stronger raw terminal upper bound is kernel-checked in
-  `OrderedGame/Optimality.raw_terminal_bound`; the complete source conjecture
-  still requires the ordered priority and existence bridges.
+  `OrderedGame/Optimality.raw_terminal_bound`, and the ordered priority and
+  existence bridges are kernel-checked in `OrderedGame/Completion`.
 - `U(run a L) = floor(L^2 / 4)` is an enumeration reading on `a` in 1 to 6 and
   `L` in 1 to 13, and the union-of-runs readings hold only on the domains stated
   with them. Independence from `a`, the gap-one closed form and the cascade
@@ -422,11 +434,11 @@ in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
   `floor(L^2/4)` and the count of odd-distance run pairs, and the exclusion it
   yields are written-out algebra with no frozen GID behind them.
 - Cusenza et al.'s Lemmas 2.2 and 2.3 explicitly allow arbitrary starting game
-  states. The remaining transfer gap is ordered, state-dependent reward, not
-  arbitrary-start scope. No Lean formalization of that weighted transfer is
-  supplied by the unordered theorem or the historical enumerations.
-- The smallest-merge case carries an external dependency this entry does not
-  discharge. The unordered Zeckendorf game's longest length is treated in
+  states. Their unordered theorem alone does not establish ordered,
+  state-dependent reward comparison. The direct weighted proof above establishes
+  that comparison without assuming a transfer from their theorem.
+- The alternative route through the unordered smallest-merge theorem is not
+  used by `Completion.result`. The unordered game's longest length is treated in
   arXiv:2009.09510, whose Theorem 1.2 reads "The longest game on any `n` is
   achieved by applying split moves or combine 1's (in any order) whenever
   possible, and, if there is no split or combine 1 move available, combine
