@@ -1879,3 +1879,705 @@ Pinsker 给首个迹距离界。由 Araki–Lieb 与 $S(A_1\cdots A_n)\le n\log2
 **约定 37.2（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 在原卷追加，数学推导、文献核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，无独立同行或异模型审定。正文保留全部记忆量词和模型前件，九条结果均配套纸面证明。计算中的矩阵样本只用于检错，不代替任意辅助维数、全部联合态和连续时间的证明。未新增 Lean、Scribe、冻结记录或消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 增补七·以 Hirche–Reeb 信息合并上界为目标
+
+**本批导航。** 本批接续本卷 `618199bab3d7916f2905a0a592a9dd6ffac0974d` 的第 37 节，核对的 dev 为 `244bc8e6c766f6498d56ca4681e6e5c739eaa798`。前面第 34 节已使用矩阵对数的预解式微分；本批把这个工具用于一个外部具名猜想的非对易子域，而不再增加没有指定目标的耗散类比。第 39 节证明所需的 BKM 二次型张量不等式，第 40 节给出具有明确边界的参数区域。第 41 节记录该区域与原猜想全部量词之间的差别。本批不改判第 1–37 节，也不据此宣告一般猜想已经解决。
+
+**问题 38.1（外部原题及本批限定）。** Hirche–Reeb 的 *Bounds on Information Combining With Quantum Side Information*，IEEE Transactions on Information Theory 64(7), 4739–4757 (2018)，Conjecture VII.2、式 (73)，提出如下上界。本批固定它在独立均匀二元输入下的版本：
+\[
+ \rho_{X_iB_i}=\tfrac12\sum_{x=0}^1|x\rangle\langle x|\otimes\rho_x^{(i)},\qquad
+ \rho_{X_1B_1X_2B_2}=\rho_{X_1B_1}\otimes\rho_{X_2B_2}.
+\]
+这里 $B_i$ 为任意有限维量子系统，$Z=X_1\oplus X_2$。用以二为底的 von Neumann 条件熵记 $H_i=H(X_i|B_i)$，猜想为
+\[
+ \boxed{H(Z|B_1B_2)\le H_1+H_2-H_1H_2.}\tag{HR-upper}
+\]
+这与同文 Conjecture VII.1 的下界是两个不同命题。本批只研究 (HR-upper)。2023 年 Hirche–Guan–Tomamichel 的 Conjecture V.6 将其推广至 Rényi 条件熵；该文证明的特定二阶 Rényi 恒等式并未证明本题的 von Neumann 版本。2025 年 Hirche 的论文结论仍将量子信息合并列为开放方向。本批实际核对了上述原文及后续检索；这不是穷尽全部文献的优先权判定。[^tcs7-hr][^tcs7-hgt][^tcs7-hirche]
+
+**定义 38.2（平均态、差分与相对对比度）。** 令
+\[
+ \sigma_i=(\rho_0^{(i)}+\rho_1^{(i)})/2,\qquad
+ \Delta_i=(\rho_0^{(i)}-\rho_1^{(i)})/2.
+\]
+限制在 $\operatorname{supp}\sigma_i$ 上，使 $\sigma_i\succ0$，$\Delta_i=\Delta_i^\dagger$、$\operatorname{Tr}\Delta_i=0$。每个物理输入对满足 $-\sigma_i\preceq \Delta_i\preceq\sigma_i$，故
+\[
+ r_i=\|\sigma_i^{-1/2}\Delta_i\sigma_i^{-1/2}\|\le1.
+\]
+$r_i$ 不是小的 Holevo 信息本身。令自然对数熵为 $S$，并定义
+\[
+ J(\sigma,X)=S(\sigma)-\tfrac12 S(\sigma+X)-\tfrac12 S(\sigma-X),\qquad
+ L=\log2,
+\]
+\[
+ \chi_i=J(\sigma_i,\Delta_i),\quad I_i=\chi_i/L=1-H_i.
+\]
+奇偶位的两个条件输出恰为 $\sigma_1\otimes\sigma_2\pm \Delta_1\otimes \Delta_2$。因此
+\[
+ I^-=\frac{J(\sigma_1\otimes\sigma_2,\Delta_1\otimes \Delta_2)}L
+       =1-H(Z|B_1B_2),
+\]
+而 (HR-upper) 等价于 $I^-\ge I_1I_2$。本批在 $r_i<1$ 时给出充分条件，不假设 $[\sigma_i,\Delta_i]=0$，也不假设两个量子输出可以被共同对角化。
+
+## 39. BKM 二次型的张量比较
+
+**引理 39.1（逆对数平均的四点不等式）。** 对 $a,b>0$ 令
+\[
+ \ell(a,b)=\begin{cases}(\log a-\log b)/(a-b),&a\ne b,\\1/a,&a=b.\end{cases}
+\]
+则对全部 $a,b,c,d>0$，
+\[
+ \frac{\ell(ac,bd)+\ell(ad,bc)}2\ge \ell(a,b)\ell(c,d).
+\]
+等号当且仅当 $a=b$ 或 $c=d$。
+
+**证明。** 先设 $h(x)=x/\sinh x$，$h(0)=1$。由双曲正弦的 Euler 乘积，
+\[
+ h(x)=\prod_{n=1}^{\infty}\left(1+\frac{x^2}{\pi^2n^2}\right)^{-1}.
+\]
+取独立、均值为一的指数随机变量 $E_n$，令 $T=\sum_{n\ge1}E_n/(\pi^2n^2)$。其期望有限，所以 $0<T<\infty$ 几乎处处。有限乘积的 Laplace 变换与控制收敛给出 $h(x)=\mathbb E e^{-Tx^2}$。因此
+\[
+ \frac{h(x+y)+h(x-y)}2
+ =\mathbb E\big[e^{-T(x^2+y^2)}\cosh(2Txy)\big]
+ \ge\mathbb E\big[e^{-Tx^2}e^{-Ty^2}\big]
+ \ge h(x)h(y).
+\]
+最后一步来自同向单调函数的协方差非负：若 $T'$ 为独立副本，则 $2\operatorname{Cov}(f(T),g(T))=\mathbb E[(f(T)-f(T'))(g(T)-g(T'))]\ge0$，这里两个函数都非增。若 $xy\ne0$，第一步因 $T>0$ 而严格；若 $xy=0$，两步均取等。
+
+置 $a=s e^x,b=s e^{-x},c=t e^y,d=t e^{-y}$，$s,t>0$。则 $\ell(a,b)=h(x)/s$、$\ell(c,d)=h(y)/t$，两个左项分别为 $h(x+y)/(st)$ 与 $h(x-y)/(st)$。代回便得四点不等式和等号条件。此处使用的无限乘积是经典恒等式，概率表示只用于给出所需标量比较的证明。证毕。[^tcs7-dlmf]
+
+**定理 39.2（Hermitian 方向上的 BKM 张量下界）。** 对任意有限维 $\sigma\succ0$ 和 Hermitian $X$，定义
+\[
+ Q_\sigma(X)=\operatorname{Tr}\big[X\,D\log(\sigma)[X]\big]
+ =\int_0^\infty\operatorname{Tr}\big[X(\sigma+uI)^{-1}X(\sigma+uI)^{-1}\big]du.
+\]
+对任意两组这样的数据，
+\[
+ \boxed{Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)
+        \ge Q_{\sigma_1}(\Delta_1)Q_{\sigma_2}(\Delta_2).}
+\]
+若 $\Delta_1,\Delta_2$ 均非零，等号当且仅当 $[\sigma_1,\Delta_1]=0$ 或 $[\sigma_2,\Delta_2]=0$。特别地，两边均非对易时该二次型比较严格。
+
+**证明。** 分别在 $\sigma_1,\sigma_2$ 的正交本征基中，记正本征值为 $a_i,b_k$，Hermitian 矩阵元为 $x_{ij},y_{kl}$。积分正函数得到
+\[
+ Q_{\sigma_1}(\Delta_1)=\sum_{i,j}|x_{ij}|^2 \ell(a_i,a_j),
+\]
+乘积系统中对应的求和项为 $|x_{ij}|^2|y_{kl}|^2\ell(a_i b_k,a_j b_l)$。因为 $|y_{kl}|^2=|y_{lk}|^2$，交换 $k,l$ 并平均，得到
+\[
+ Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)
+ =\sum_{i,j,k,l}|x_{ij}|^2|y_{kl}|^2
+ \frac{\ell(a_i b_k,a_j b_l)+\ell(a_i b_l,a_j b_k)}2.
+\]
+逐项应用引理 39.1，即得乘积下界。
+
+若一个方向与平均态对易，则所有非零矩阵元都在相同本征值之间，对应每项取等。反之，两个交换子都非零，就各自存在一个跨不同本征值的非零矩阵元；选取这两个索引对，引理 39.1 严格，其权重为正，其余项均非负，故总式严格。任意退化本征空间不影响这个判据。本证明依赖 Hermitian 条件所给的反向索引权重相等，未把它无条件推广到任意非自伴方向。证毕。
+
+## 40. 非对易输入区域内的 Hirche–Reeb 上界
+
+**引理 40.1（有限幅度 Holevo 信息的二次型夹逼）。** 设 $\sigma\succ0$ 为密度矩阵，$X=X^\dagger$、$\operatorname{Tr}X=0$，$r=\|\sigma^{-1/2}X\sigma^{-1/2}\|<1$。置
+\[
+ \psi(r)=\begin{cases}-\log(1-r^2)/r^2,&0<r<1,\\1,&r=0.\end{cases}
+\]
+则
+\[
+ \boxed{\frac12Q_\sigma(X)\le J(\sigma,X)
+                 \le\frac{\psi(r)}2Q_\sigma(X).}
+\]
+更精确地，令 $K_u=(\sigma+uI)^{-1/2}X(\sigma+uI)^{-1/2}$，有
+\[
+ J(\sigma,X)=-\frac12\int_0^\infty\operatorname{Tr}\log(I-K_u^2)\,du.
+\]
+
+**证明。** 对 $f(v)=D(\sigma+vX\Vert\sigma)$ 使用矩阵对数的预解式微分：
+\[
+ f''(v)=\int_0^\infty\operatorname{Tr}\big[K_u^2(I+vK_u)^{-2}\big]du.
+\]
+这一公式由 $(\sigma+vX+uI)^{-1}=(\sigma+uI)^{-1/2}(I+vK_u)^{-1}(\sigma+uI)^{-1/2}$ 和迹的循环性推出，不需要 $\sigma X=X\sigma$。又 $f(0)=f'(0)=0$，且 $J=(f(1)+f(-1))/2$。将对 $v$ 的二次积分写成对 $K_u$ 各实本征值 $k$ 的标量积分，每个本征值的偶部分恰为 $-\log(1-k^2)/2$，得到积分身份。
+
+由 $-r\sigma\preceq X\preceq r\sigma$ 可知 $\|K_u\|\le r$。$Q_\sigma(X)=\int\operatorname{Tr}K_u^2du$ 有限，因 $u$ 大时被积项为 $O(u^{-2})$，近零时 $\sigma\succ0$；同一个上界控制上述积分换序。对 $0\le z\le r^2$ 使用
+\[
+ z\le-\log(1-z)\le\psi(r)z
+\]
+并逐谱点积分，得到夹逼。右侧系数的单调性由 $-\log(1-z)/z=\sum_{j\ge0}z^j/(j+1)$ 给出。$X=0$ 的情形两边都是零。证毕。
+
+**定理 40.2（任意有限维量子输出上的已证明参数区域）。** 在定义 38.2 中，假设 $r_1,r_2<1$。则
+\[
+ \boxed{I^-\ge\frac{2\log2}{\psi(r_1)\psi(r_2)}I_1I_2.}\tag{40.2a}
+\]
+因此当
+\[
+ \boxed{\psi(r_1)\psi(r_2)\le2\log2}\tag{40.2b}
+\]
+时，(HR-upper) 成立。这一结论允许任意有限输出维数、任意不同平均态以及非对易条件输出。
+
+特别地，若 $r_1,r_2\le1/2$，则
+\[
+ I^-\ge k_0 I_1I_2,\qquad
+ k_0=\frac{\log2}{8\log^2(4/3)}\simeq1.0469112739>1.
+\]
+因此对 $I_1I_2>0$ 的这些输入，猜想上界还有至少 $(k_0-1)I_1I_2$ 的严格熵余量。相同对比度 $r_1=r_2=r$ 时，本方法覆盖到唯一满足 $\psi(r_*)=\sqrt{2\log2}$ 的 $r_*\in(0,1)$，数值 $r_*\simeq0.5342304691$；该近似数只用于展示，精确定义为前述方程。
+
+**证明。** 乘积态的归一方向满足
+\[
+ (\sigma_1\otimes\sigma_2)^{-1/2}(\Delta_1\otimes \Delta_2)
+ (\sigma_1\otimes\sigma_2)^{-1/2}
+ = (\sigma_1^{-1/2}\Delta_1\sigma_1^{-1/2})\otimes
+   (\sigma_2^{-1/2}\Delta_2\sigma_2^{-1/2}),
+\]
+其范数为 $r_1r_2<1$。先对乘积使用引理 40.1 的下界，再用定理 39.2，最后对两个单独输入使用引理 40.1 的上界，得到
+\[
+ \begin{aligned}
+ J(\sigma_1\otimes\sigma_2,\Delta_1\otimes \Delta_2)
+ &\ge\tfrac12 Q_{\sigma_1\otimes\sigma_2}(\Delta_1\otimes \Delta_2)\\
+ &\ge\tfrac12Q_{\sigma_1}(\Delta_1)Q_{\sigma_2}(\Delta_2)\\
+ &\ge\frac{2\chi_1\chi_2}{\psi(r_1)\psi(r_2)}.
+ \end{aligned}
+\]
+除以 $\log2$ 并代入 $I_i=\chi_i/\log2$，得到 (40.2a)。在 (40.2b) 下系数至少为一，再用定义 38.2 的等价改写即得猜想。
+
+$\psi$ 非减且 $\psi(1/2)=4\log(4/3)$，给出 $k_0$。为避免依靠小数判定其严格性，可由 $\operatorname{artanh}$ 正级数得到 $\log2>2/3$，而
+\[
+ \log(4/3)=2\operatorname{artanh}(1/7)
+ <\frac27+\frac1{504}=\frac{145}{504},
+ \qquad 8(145/504)^2=21025/31752<2/3.
+\]
+所以 $\log2>8\log^2(4/3)$。最后 $\psi$ 从一严格增加至无穷，$\sqrt{2\log2}>1$，保证 $r_*$ 唯一。这个定理证明的是原猜想的所列子域；(40.2b) 未满足只表示本证明给出的系数不足，不表示原猜想失效。证毕。
+
+**推论 40.3（可核验的混合输入与奇偶迭代）。** 对任意两个二元量子输出对，先以独立概率 $p_i\in[1/4,1/2]$ 混合各对的标签，即
+\[
+ \widetilde\rho_0^{(i)}=(1-p_i)\rho_0^{(i)}+p_i\rho_1^{(i)},\qquad
+ \widetilde\rho_1^{(i)}=p_i\rho_0^{(i)}+(1-p_i)\rho_1^{(i)}.
+\]
+这些混合后的通道满足定理 40.2 的 $k_0$ 上界余量。同时，对任意原始输入，奇偶合并输出的相对对比度精确为 $r^-=r_1r_2$。若一个固定通道有 $r<1$，对 $2^m$ 个独立副本反复只取奇偶合并，其对比度为 $r^{2^m}$；故从某个有限层开始，相邻两份同型输入进入定理 40.2 的覆盖区域。
+
+**证明。** 标签混合保持平均态，并将 $\Delta_i$ 变为 $(1-2p_i)\Delta_i$。原物理输入满足 $r_i\le1$，所以新对比度至多 $1/2$，可直接应用定理 40.2。乘积范数身份已在上一证明中给出，归纳得到 $r^{2^m}$。$0\le r<1$ 时该数趋零，给出有限进入层数。$r=1$ 不被该论证处理；纯输出或带可完全区分子空间的通道可能具有这一端点。此推论描述一类可实现输入和特定奇偶支路，不证明增加噪声能够改善编码速率，也没有处理极化树中的全部加号支路或最优有限块长。证毕。
+
+## 41. 非对易实例、边界与逐项文献比较
+
+**算例 41.1（有理矩阵的非对易内部实例）。** 取
+\[
+ \sigma_1=\operatorname{diag}(4/5,1/5),\quad \Delta_1=\begin{pmatrix}0&1/5\\1/5&0\end{pmatrix},\qquad
+ \sigma_2=\operatorname{diag}(9/10,1/10),\quad \Delta_2=\begin{pmatrix}0&3/20\\3/20&0\end{pmatrix}.
+\]
+两对 $\sigma_i\pm \Delta_i$ 都为正定密度矩阵，两个交换子非零，且 $r_1=r_2=1/2$。按自然对数可直接求出
+\[
+ Q_{\sigma_1}(\Delta_1)=\tfrac2{15}\log4,\qquad
+ Q_{\sigma_2}(\Delta_2)=\tfrac9{160}\log9.
+\]
+换算为比特，$I_1\simeq0.1391449606$、$I_2\simeq0.0927094011$、$I^-\simeq0.01733665547$，而 $I_1I_2\simeq0.01290004597$。前两个条件态的正本征值分别是 $(5\pm\sqrt{13})/10$ 与 $(10\pm\sqrt{73})/20$；奇偶条件态的本征值是 $(37\pm\sqrt{1234})/100$、$(13\pm\sqrt{34})/100$，所以全部数值可从明确的代数数及对数重建。一般定理的非对易范围由证明承担，此实例只检查系数、单位和符号。
+
+**边界 41.2（尚未覆盖的原题区域）。** 本批尚未证明 (HR-upper) 在 $\psi(r_1)\psi(r_2)>2\log2$ 的一般输入上成立，也未处理所有 $r_i=1$ 的边界。原文的二元擦除通道使猜想取等，且只要具有非零可完全区分的输出概率，其对比度就是一。这些已知取等实例不在本批统一内部条件中。把擦除概率取近一可以使 $I_i$ 任意小而保持 $r_i=1$；所以不能把定理 40.2 的前件改写成“只要两个通道的 Holevo 信息足够小”。独立输入、均匀比特、von Neumann 熵和共同支持上的算子序前件也都保留。
+
+当前证明的两个放松分别是 $J\ge Q/2$ 和 $J\le\psi(r)Q/2$，二者在强对比边界无法给出所需常数。因此继续目标是控制这个有限幅度缺口，或者构造真正违反 (HR-upper) 的状态。未证明的高阶预解式矩张量不等式不作为本稿推导前件。本批没有解答另一项下界猜想 VII.1，也没有据此宣告量子极化码的全局多项式块长保证。
+
+**出处 41.3（文献覆盖与本批承重增量）。** 原题、经典可对易取等通道以及量子信息合并与极化的联系归于 [HR18]；二阶 Rényi 的已解决特例归于 [HGT23]。第 34 节的 BKM 方法和矩阵对数微分已有文献基础。第 39 节给出 Hermitian 方向的逆对数平均比较及其张量推导，第 40 节将其与有限幅度余项共同用于 (HR-upper) 的显式非对易参数区域，按本稿证明列为 `repo-derived`。本轮检索了原文、2023 和 2025 的后续作者论文，以及 BKM tensor product、quantum Jensen–Shannon、weak-signal information combining 等组合，没有找到与 (40.2a)–(40.2b) 完全相同的已发表陈述。这一检索结果不排除未检出的支配定理；本稿的正确性与独立新颖性需要分别复核。
+
+[^tcs7-hr]: Christoph Hirche、David Reeb，*Bounds on Information Combining With Quantum Side Information*，IEEE Transactions on Information Theory 64(7), 4739–4757 (2018)，DOI [10.1109/TIT.2018.2842180](https://doi.org/10.1109/TIT.2018.2842180)，[作者预印本](https://arxiv.org/pdf/1706.09752)。本轮读取 §§III–IV、VII 及相关应用范围，并查看 PDF 第 15 页图像核对 Conjecture VII.2、式 (73)，后续页核对擦除取等与数值证据。本批把自然对数陈述换算成比特，目标限定为独立均匀输入；没有将另一项 Mrs. Gerber 下界自动并入本批结算。
+
+[^tcs7-hgt]: Christoph Hirche、Xinyue Guan、Marco Tomamichel，*Chain Rules for Rényi Information Combining*，[arXiv:2305.02589v1](https://arxiv.org/pdf/2305.02589)。本轮读取引言、§V 的二阶 Rényi 特例和 Conjecture V.6。其 $\alpha=2$ 结果不能通过“取 $\alpha\to1$”直接得到一个没有在邻域证明的全称不等式。本批使用的是 von Neumann 熵自身的精确积分表达。
+
+[^tcs7-hirche]: Christoph Hirche，*Rényi partial orders for BISO channels*，[arXiv:2508.19951v1](https://arxiv.org/html/2508.19951v1)，2025。§4 仍将 [HR18] 的量子信息合并列为开放方向；其主要定理研究经典 BISO 信道的 Rényi 偏序，本批没有把那些经典极值次序直接外推为量子输入的结论。
+
+[^tcs7-dlmf]: NIST Digital Library of Mathematical Functions，§4.36，式 [4.36.1](https://dlmf.nist.gov/4.36.E1)，双曲正弦的无限乘积。本批用它构造 $h(x)=\mathbb E e^{-Tx^2}$ 并独立证明引理 39.1，没有依赖未证明的 Gaussian 乘积猜想。
+
+**约定 41.4（产地与验证身份）。** 本批按仓库 `theory-volume-template/APPEND.md` 追加原卷。推导、来源核对和有限检错由本会话 ChatGPT 单席完成，无独立同行或异模型审定。五条带证明的引理、定理或推论是纸面结果；本批未新增 Lean、Scribe、冻结或消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。数值检查只用于检错，不承担任意维数的量词。本运行环境的已发现 GitHub 动作只有读取与搜索，故本批生成精确尾部追加稿及可应用补丁，尚未写入远端 PR；文件或本地补丁存在不构成远端提交记录。
+
+## 追加锚（本行以下为增补区）
+
+## 42. 增补八·无指定标签的实验、表示等价与不变量
+
+**本批导航。** 本批接续第 38–41 节的本地研究稿；这些章节在前轮写成本地稿，以远端 `618199bab3d7916f2905a0a592a9dd6ffac0974d` 为精确前缀，本批继续在其后增补。本批读取的 dev 为 `bd92e9c46ba8f70031ae0a21891899e6fefb7f49`。目标仍为问题 38.1 的 Hirche–Reeb 上界：第 42 节区分标签改变、统计等价和真正粗粒化；第 43 节把已证内部区域扩展到带非对易成分的边界及受控的未认证分区；第 44 节量化近似恢复时的余量损失。所有熵以比特计，矩阵对数明确写自然对数时除外。不同表示中的物理能量和实现成本不被统计等价自动保留。
+
+**定义 42.1（无指定原点的二元实验）。** 令 $S$ 是一个恰含两个元素的集合，$\iota:S\to S$ 为唯一无不动点置换。实验 $\mathsf W$ 给每个 $s\in S$ 指定一个有限维密度矩阵 $\rho_s$，先验均匀。这里没有指定哪个元素叫作零。两实验合并的输出标签集定义为
+\[
+ (S_1\times S_2)/\{(s,t)\sim(\iota_1s,\iota_2t)\},
+\]
+每个轨道对应其中两个产品态的等权混合。任选两套标签后，这恰为第 38 节的奇偶合并，记为 $\mathsf W_1\boxast\mathsf W_2$。相对任意标签取 $\sigma=(\rho_++\rho_-)/2$、$\Delta=(\rho_+-\rho_-)/2$；交换标签只改变 $\Delta$ 的符号。
+
+若存在两条固定 CPTP 映射 $\Lambda,\mathcal R$，对两个条件态同时满足 $\Lambda(\rho_s)=\widetilde\rho_{\pi(s)}$ 和 $\mathcal R(\widetilde\rho_{\pi(s)})=\rho_s$，其中 $\pi$ 是标签双射，则称两实验统计等价。恢复只要求在指定实验态族上成立，不要求在整个矩阵空间上可逆。有限维经典实验可用对角态表示；一般操作概率理论则从状态、效应、变换与复合规则开始，不能未加假设就使用本卷的 von Neumann 熵或 Hilbert 张量积。[^tcs8-operational][^tcs8-buscemi]
+
+**定理 42.2（对比度是操作不变量，非矩阵命名的产物）。** 在 $\operatorname{supp}\sigma$ 上定义 $r=\|\sigma^{-1/2}\Delta\sigma^{-1/2}\|$。则
+\[
+ r=\inf\{a\ge0:-a\sigma\preceq\Delta\preceq a\sigma\}
+  =\sup_{0\preceq E\preceq I,\ \operatorname{Tr}\sigma E>0}
+       \frac{|\operatorname{Tr}\Delta E|}{\operatorname{Tr}\sigma E}.
+\]
+对任意 CPTP 映射，$r(\Lambda\mathsf W)\le r(\mathsf W)$ 且 $I(\Lambda\mathsf W)\le I(\mathsf W)$。统计等价保持 $r$、$I$ 和第 39.2 节的 $Q_\sigma(\Delta)$。奇偶合并在统计等价类上良定义，故
+\[
+ \mathfrak G(\mathsf W_1,\mathsf W_2)
+ :=I(\mathsf W_1\boxast\mathsf W_2)-I(\mathsf W_1)I(\mathsf W_2)
+\]
+也是统计等价不变量。
+
+**证明。** 正定支持上的合同变换把第一项算子序条件转成 $-aI\preceq\sigma^{-1/2}\Delta\sigma^{-1/2}\preceq aI$，得到首个等号。该序条件逐效应给比值上界。反向，对达到最大绝对本征值的广义 Rayleigh 向量取秩一效应，按范数缩放使它不超过 $I$，便达到比值。支持外 $\Delta$ 为零，由 $\sigma\pm\Delta\succeq0$ 可知，所以忽略支持外方向无损。
+
+正映射保持两个算子序不等式，故 $r$ 不增。$I=\{D(\rho_+\Vert\sigma)+D(\rho_-\Vert\sigma)\}/(2\log2)$，数据处理给信息不增。统计等价时，正反两条映射给相反不等式，故二者相等。由线性，$\mathcal R\Lambda$ 还固定全部 $\sigma+t\Delta$，$|t|<1$；对 $D(\sigma+t\Delta\Vert\sigma)$ 两次使用数据处理得到恒等，再在 $t=0$ 求二阶导数，得 BKM 二次型不变。
+
+产品映射 $\Lambda_1\otimes\Lambda_2$ 与产品恢复分别作用于合并态，保持轨道内的等权混合。任选标签的翻转只可能交换两个输出标签，不能改变信息，所以合并与 $\mathfrak G$ 在等价类上良定义。该证明给出一个限制：通过统计无损的换基、冗余编码或更换载体，不能将 $r=1$ 变成第 40 节的 $r<1$。要覆盖那个边界，需要额外数学推导。证毕。
+
+**命题 42.3（统计冗余与物理差别的精确边界）。** 给实验的每个输出附加同一个固定态 $\tau$，$\rho_s\mapsto\rho_s\otimes\tau$，保持全部定理 42.2 的量，却使每个输出的原始 von Neumann 熵增加 $S(\tau)$。另一方面，把完整的经典二态概率空间与完整单量子比特状态空间用互逆的仿射映射等同，是不可能的。
+
+**证明。** 附加态与偏迹构成在全部输入态上互逆的一对编码/恢复，第一项由定理 42.2 得到。产品谱直接给 $S(\rho_s\otimes\tau)=S(\rho_s)+S(\tau)$。因此实验信息不变量不能用单个输出的原始熵代替。这个统计恢复没有声称附加或移除热态的物理功为零。
+
+经典二态概率空间的仿射维数为一。量子比特中 $I/2$ 与 $(I+\sigma_x)/2,(I+\sigma_y)/2,(I+\sigma_z)/2$ 的三个差向量线性无关，故仿射维数为三。互逆仿射映射保持仿射维数，得到矛盾。共同抽象保留可分辨方向及允许的复合规则，不因删除名称而删除这些结构。证毕。
+
+## 43. 可读取分区把内部上界延伸到强对比边界
+
+**定义 43.1（平衡的正交可读取分区）。** 给定与 $\rho_+,\rho_-$ 都对易的正交投影族 $P_a$，$\sum_aP_a=I$，并要求
+\[
+ \operatorname{Tr}P_a\rho_+=\operatorname{Tr}P_a\rho_-=p_a>0.
+\]
+归一化块态 $\rho_{s,a}=P_a\rho_sP_a/p_a$ 定义实验 $\mathsf W_a$，且 $\rho_s=\bigoplus_a p_a\rho_{s,a}$。分区结果是输出中可以无扰动读取的经典信息，其概率独立于输入标签。它不等同于任意不可见的凸混合分解。所有定义与结论在共同酉换基后保持，由投影一起变换实现。
+
+**定理 43.2（奇偶余量的分区恒等式与端点）。** 若两实验分别具有定义 43.1 的分区，则
+\[
+ I(\mathsf W_i)=\sum_a p_{i,a}I(\mathsf W_{i,a}),
+\]
+\[
+ \boxed{\mathfrak G(\mathsf W_1,\mathsf W_2)
+ =\sum_{a,b}p_{1,a}p_{2,b}
+             \mathfrak G(\mathsf W_{1,a},\mathsf W_{2,b}).}
+\]
+如果一个实验的两个输出相同，则它与任何另一实验的余量为零。如果一个实验的两个输出具有正交支持，则 $I=1$，它与任意另一实验合并后的信息恰为另一实验的信息，余量也为零。
+
+**证明。** 块对角态的熵为 $h(p)+\sum_ap_aS(\rho_{s,a})$。同一分区概率出现在两个条件输出及平均态中，计算 Holevo 差时 $h(p)$ 抵消，得首式。独立合并的块概率为 $p_{1,a}p_{2,b}$，块内输出正是两个实验的奇偶合并；再次使用首式，减去两条单实验信息乘积即得盒中恒等式。
+
+相同输出时 $\Delta=0$，合并差分也为零，所以两项均为零。正交输出时，第一输出可精确读取其输入。更直接地，合并的两个条件态按第一实验的两个正交支持分块，权重各为一半；块内第二态的两个标签只是在一个块中交换。其 Holevo 信息按前面的熵计算恰为第二实验的信息。端点结论允许任意量子维数，不要求另一实验可对角化。证毕。
+
+**定理 43.3（可认证核心、任意余块与边界扩展）。** 将每个实验的定义 43.1 分区分成四类：C 类满足 $r_{i,a}\le1/2$；P 类为正交输出；Z 类为相同输出；U 类为任意其余输出，不对该类假设 HR 上界。令
+\[
+ g_i=\sum_{a\in C}p_{i,a}I(\mathsf W_{i,a}),\qquad
+ b_i=\sum_{a\in U}p_{i,a}I(\mathsf W_{i,a}),\qquad
+ k_0=\frac{\log2}{8\log^2(4/3)}>1.
+\]
+则
+\[
+ \boxed{\mathfrak G(\mathsf W_1,\mathsf W_2)
+ \ge(k_0-1)g_1g_2-g_1b_2-b_1g_2-b_1b_2.}
+\]
+特别地，U 类为空时，两实验满足 HR 上界；允许任意非零 P 类权重，因此全局 $r_i$ 可以等于一。更一般地，只要 $b_i\le u g_i$ 且 $0\le u\le\sqrt{k_0}-1$，HR 上界仍成立。约 $0.0231868$ 的阈值衡量的是未认证块贡献的输入信息相对于认证核心信息的比例，不是分区概率本身。
+
+**证明。** 对两个 C 类块，定理 40.2 给 $\mathfrak G_{ab}\ge(k_0-1)I_{1,a}I_{2,b}$。只要一边属于 P 或 Z 类，定理 43.2 给精确零余量。其余包含 U 类的块对，只用 Holevo 信息非负，得到 $\mathfrak G_{ab}\ge-I_{1,a}I_{2,b}$。将这些界代入定理 43.2 的精确平均，分别求和便得到盒中界。若 $b_i\le u g_i$，右侧至少为 $[k_0-1-2u-u^2]g_1g_2$，给出阈值。若某个 $g_i=0$，所述条件也强制 $b_i=0$，仍包含在同一证明中。
+
+P 类的非零块在相对归一差分中具有绝对值为一的本征值，块直和的范数因此等于一。因此这条结果确实覆盖第 40.2 条全局对比度条件之外的非对易边界族。它不证明任意 $r_i=1$ 的不可约态对满足猜想；仅有未读取的随机混合标签也不满足定义 43.1。证毕。
+
+**命题 43.4（全局对比度一的明确非对易实例）。** 取第 41.1 条的两个二阶核心实验 $\rho^{\mathrm c}_{i,s}=\sigma_i+s\Delta_i$，令 $s\in\{+,-\}$。在维数五的直和空间构造
+\[
+ \widehat\rho_{i,s}
+ =\tfrac12\rho^{\mathrm c}_{i,s}
+   \ \oplus\ \tfrac14|s\rangle\langle s|
+   \ \oplus\ \tfrac14[1].
+\]
+则两对输出均非对易，全局 $r_1=r_2=1$，并有
+\[
+ I(\widehat{\mathsf W}_i)=\tfrac14+\tfrac12 I(\mathsf W_i^{\mathrm c}),\qquad
+ \mathfrak G(\widehat{\mathsf W}_1,\widehat{\mathsf W}_2)
+ =\tfrac14\mathfrak G(\mathsf W_1^{\mathrm c},\mathsf W_2^{\mathrm c})
+ \ge\frac{k_0-1}{4}I(\mathsf W_1^{\mathrm c})I(\mathsf W_2^{\mathrm c})>0.
+\]
+
+**证明。** 三个正交块的概率为 $1/2,1/4,1/4$，分别为 C、P、Z 类。定理 43.2 给两个精确恒等式，定理 40.2 给严格下界。P 类使全局对比度为一；核心块中 $[\sigma_i,\Delta_i]\ne0$，故整个输出对的交换子非零。本实例的精确余量约为 $0.0011091524$，只用统一 $k_0$ 的保守下界约为 $0.0001512894$。可同时对全部矩阵施任意共同酉变换，分区不必呈现为给定坐标中的显式对角块。证毕。
+
+## 44. 近似无损表示与开放问题余量的稳定性
+
+**引理 44.1（二元经典标签的条件熵连续模数）。** 令 $\rho_{XB},\tau_{XB}$ 是在同一二元经典标签基上块对角的量子态，$\tfrac12\|\rho-\tau\|_1\le\epsilon\le1$。定义
+\[
+ w(\epsilon)=\min\left\{1,\epsilon+(1+\epsilon)
+                         h_2\!\left(\frac{\epsilon}{1+\epsilon}\right)\right\}.
+\]
+则 $|H(X|B)_\rho-H(X|B)_\tau|\le w(\epsilon)$，常数与 $\dim B$ 无关。
+
+**证明。** 先令实际迹距离为 $e>0$，取块对角 Jordan 分解 $\rho-\tau=e(\omega_+-\omega_-)$，其中 $\omega_\pm$ 为态。共同混合态满足
+\[
+ \zeta=(\rho+e\omega_-)/(1+e)=(\tau+e\omega_+)/(1+e).
+\]
+对任何两个态的混合，条件熵在对应条件熵凸组合与该组合加二元混合熵之间；下界是条件熵凹性，上界可通过保留再遗忘混合标签的条件互信息不超过该标签熵得到。用两种方式展开 $\zeta$，并注意二元经典 $X$ 的条件熵在 $[0,1]$ 中，得到差至多 $e+(1+e)h_2(e/(1+e))$。实际 $e\le\epsilon$，该表达式非减，再与平凡范围一比较得到所列模数。$e=0$ 直接成立。该证明是 Winter 连续性方法的 cq 特例；不声称这是该受限类的最优模数。证毕。[^tcs8-continuity]
+
+**定理 44.2（恢复损失给出猜想余量的可靠误差账）。** 对每个二元实验 $\mathsf W_i$，取任意 CPTP 粗粒化 $\Lambda_i$，记 $\mathsf V_i=\Lambda_i\mathsf W_i$、$\delta_i=I(\mathsf W_i)-I(\mathsf V_i)\ge0$，并令
+\[
+ \delta_-=I(\mathsf W_1\boxast\mathsf W_2)
+                  -I(\mathsf V_1\boxast\mathsf V_2)\ge0.
+\]
+则有精确式
+\[
+ \mathfrak G(\mathsf W_1,\mathsf W_2)
+ =\mathfrak G(\mathsf V_1,\mathsf V_2)+\delta_-
+       -I(\mathsf V_1)\delta_2-I(\mathsf V_2)\delta_1-\delta_1\delta_2.
+\]
+若另有固定恢复映射 $\mathcal R_i$ 满足
+\[
+ \frac14\sum_{s=\pm}
+ \|\rho_{i,s}-\mathcal R_i\Lambda_i(\rho_{i,s})\|_1\le\epsilon_i\le1,
+\]
+则 $\delta_i\le w_i:=w(\epsilon_i)$。因此只要对粗实验已有下界 $\mathfrak G(\mathsf V_1,\mathsf V_2)\ge L$，就有
+\[
+ \boxed{\mathfrak G(\mathsf W_1,\mathsf W_2)
+ \ge L-I(\mathsf V_1)w_2-I(\mathsf V_2)w_1-w_1w_2.}
+\]
+对定义 43.1 的候选投影，粗粒化可取 pinching $\Lambda(\rho)=\sum_aP_a\rho P_a$，恢复取同一矩阵空间的包含映射。因此正的分区余量能够认证小但非零的跨分区相干扰动；不要求原态已经精确块对角。
+
+**证明。** 产品 CPTP 映射与轨道混合交换，数据处理给 $\delta_-\ge0$。将 $I(\mathsf W_i)=I(\mathsf V_i)+\delta_i$ 展开乘积即得恒等式。恢复后的二元 cq 态与原 cq 态的迹距离正是所给平均误差；引理 44.1 给其 Holevo 信息差至多 $w_i$，因为经典边缘都均匀。又恢复不增加信息，$I(\mathcal R_i\mathsf V_i)\le I(\mathsf V_i)\le I(\mathsf W_i)$，所以 $\delta_i\le w_i$。在精确式中丢弃非负 $\delta_-$ 并代入上界，得到证书。
+
+最后对 pinching 的输出重新检验平衡块概率及第 43 节条件，即可使用其 $L$。仅改变坐标时 $\delta_i=\delta_-=0$；真正粗粒化时三个信息损失一般不同，所以 HR 余量本身不被宣称为所有粗粒化下单调。证毕。
+
+**命题 44.3（读取分区与隐藏命名的差别不可省略）。** 任意凸混合若没有保留正交可读标签，不能使用定理 43.2 的信息平均式，即使每个分量实验都完全可辨识。
+
+**证明。** 取独立公平标签 $A$，在分量 $a\in\{0,1\}$ 上把输入 $x$ 映成正交态 $|x\oplus a\rangle\langle x\oplus a|$。若输出保留 $a$，两个正交块的概率都为一半，每块信息为一，整体信息为一。若输出只保留后一比特并丢弃 $a$，两个输入都得到 $I_2/2$，信息为零。给没有输出的变量起一个名字，没有提供定义 43.1 的可读效应，也不能恢复被删除的相关信息。本反例限制的是分解方法，不给出 HR 猜想的反例。证毕。
+
+## 45. 本批的开放问题范围、文献与核验身份
+
+**出处 45.1（实际进展与未闭合量词）。** 定理 42.2 的统计比较与数据处理、定理 43.2 的正交块熵计算及引理 44.1 的连续性方法是已有构件。相对于第 40 节，本批新增的外部问题覆盖范围由定理 43.3 和 44.2 精确给出：允许非对易核心、全局相对对比度一、受控的任意未认证分区，以及足够小的跨分区相干。这些是原 HR-upper 的受限族结论，不证明任意不可约输出对或全部强相干边界。全局 $r=1$ 的一般困难不能通过更换名称或统计无损压缩消除，定理 42.2 已说明这一点。
+
+原 HR 论文 §III 已给经典条件化的方法，§VII.A 给二元擦除取等。本批并未重新认领这两个事实；这里利用的是第 40 节的非对易严格余量，并把它变成分区及恢复预算。当前原文与后续作者论文检索没有给出一般 HR 上界已解决的证据，检索未命中不等于完整优先权判定。第 43.3 条的核心/余块阈值及第 44.2 条的证书按本卷推导记为 `repo-derived`。上述定义没有建立超出经典或量子理论的全新物理理论，也没有从哲学类比推导实验事实。
+
+[^tcs8-operational]: G. Chiribella、G. M. D'Ariano、P. Perinotti，*Probabilistic theories with purification*，Physical Review A 81, 062348 (2010)，[arXiv:0908.1583v5](https://arxiv.org/abs/0908.1583v5)。操作概率框架用制备、变换、测量及复合来组织理论，可不以 Hilbert 坐标为起点；其纯化和可逆实现结论需要其公理。本批读取作者摘要与框架范围，没有把该文一般定理作为 HR-upper 的证明。
+
+[^tcs8-buscemi]: Francesco Buscemi，*Comparison of quantum statistical models: equivalent conditions for sufficiency*，Communications in Mathematical Physics 310, 625–647 (2012)，[arXiv:1004.3794](https://arxiv.org/abs/1004.3794)，DOI [10.1007/s00220-012-1421-3](https://doi.org/10.1007/s00220-012-1421-3)。量子统计模型的 CPTP 比较与充分性为已有结构。本文直接证明所用的双向恢复不变量，没有把所有任务中的等价条件或任意统计态射都当作 CPTP 可逆映射。
+
+[^tcs8-continuity]: Andreas Winter，*Tight Uniform Continuity Bounds for Quantum Entropies: Conditional Entropy, Relative Entropy Distance and Energy Constraints*，Communications in Mathematical Physics 347, 291–313 (2016)，[arXiv:1507.07775](https://arxiv.org/abs/1507.07775)。引理 44.1 直接写出该类 Jordan 分解/共同混合证明并使用经典标签的条件熵范围。另核对 Mario Berta 等，*Sharp continuity of quantum conditional entropy*，[arXiv:2607.24687v1](https://arxiv.org/html/2607.24687v1)，Theorem 1.1 给出一般量子条件熵的精确维数模数。本批使用已完整证明的 cq 模数，不将它标成最优，也不误用经典条件系统与经典被条件变量的相反角色。
+
+**约定 45.2（本批来源与检错）。** 按既有 `theory-volume-template/APPEND.md` 继续原卷。数学推导、原文核对、文字实施及有限数值检错由本会话 ChatGPT 单席串行完成，无独立同行或异模型审定。第 42–44 节八条结果均紧跟证明；统计不变量与部分区域证明的价值分别说明，不用条目数量衡量原创性。核对了 HR 原文第 VII 节及式 (73) 页面、后续 BISO 作者论文，以及统计比较和条件熵连续性来源。未运行 Lean kernel、canonical `make ingest`、Scribe 或仓库 CI；本批不新增机器冻结或开放问题结算状态。
+
+## 追加锚（本行以下为增补区）
+
+## 46. 增补九·拓扑等价、时间共轭与全局 Hamilton 障碍
+
+**本批导航。** 本批继续第 45 节的本地完整候选，已读取原卷远端 PR #8330 的 `618199bab3d7916f2905a0a592a9dd6ffac0974d`、`dev@995dec04185b482a7dc2d257b829437c0d8ac9b0` 及 PR #8891 的 `a287cd0501f852193a5c027337a9e0be576500df`。远端原卷仍至第 37 节，第 38–45 节为先前待提交追加，不以本地章节存在推断已经入远端。本批将前一轮几何讨论中的历史坐标和辛缺陷写成完整推导，并补出全局拓扑导致的模型误差、固定时间窗的最优采样和噪声代价。本文不改变 HR 上界已证明的参数域，也不重复 #8891 的测量函数族稳定秩结果。旧字节及旧证明身份保持不变。
+
+**定义 46.1（空间、结构与演化的不同等价）。** 同胚是连续双射且逆连续的映射。两流 $\Phi_t$ 与 $\Psi_t$ 的保时间拓扑共轭是同胚 $h$，满足 $h\Phi_t=\Psi_t h$ 对全部共同定义的 $t$ 成立；允许另行改变时间参数的轨道等价不使用同一条件。度量的等距、辛形式的辛微分同胚、参考概率的测度保持，分别增加独立的结构条件。本批光滑相空间的辛约定是 $\iota_{X_H}\Omega=dH$，在 $\Omega=dq\wedge dp$ 下有 $X_H=(\partial_pH,-\partial_qH)$。几何流 $g_t$ 本身改变度量，通常仍定义在同一底流形上；它与固定结构上点的流 $\Phi_t$ 分别指定。
+
+**命题 46.2（同一拓扑与同一轨道仍不确定时间动力学）。** 完备 $C^1$ 向量场在流形 $M$ 上的每个时间映射都是 $C^1$ 微分同胚。保时间拓扑共轭保持每个点的周期集合 $\{t:\Phi_t(x)=x\}$，因而保持非平衡周期轨道的最小正周期。相同状态空间和相同轨道集合仍不足以保证这种共轭。即使保时间拓扑共轭成立，固定坐标距离下的指数收敛速率也不必相同。
+
+**证明。** 流的唯一性给 $\Phi_{t+s}=\Phi_t\Phi_s$、$\Phi_0=I$，故 $\Phi_{-t}$ 是逆；标准局部流的初值可微性给两边 $C^1$。若 $h\Phi_t=\Psi_t h$，则 $\Phi_t(x)=x$ 当且仅当 $\Psi_t(hx)=hx$，得到周期集合相同。在圆周 $\mathbb R/(2\pi\mathbb Z)$ 上，速度一与速度二的恒速流有同一整个圆周轨道，却分别有最小周期 $2\pi$ 与 $\pi$，因此没有保时间共轭。
+
+最后，在 $\mathbb R$ 上取 $\Phi_t(x)=e^{-t}x$、$\Psi_t(x)=e^{-at}x$，$a>0$。映射 $h_a(x)=\operatorname{sgn}(x)|x|^a$ 是同胚，且直接满足 $h_a\Phi_t=\Psi_t h_a$。欧氏坐标中的速率分别为一与 $a$。当 $a\ne1$ 时，这个坐标变换在原点附近不是双 Lipschitz 的。故保时间并不补足距离和条件数信息。完备光滑流保持相空间拓扑的结论，也不禁止度量、概率密度、某个投影的像或含奇异操作的几何模型发生其他变化。证毕。[^tcs9-topology]
+
+**定理 46.3（平坦环面的全局 Hamilton 分解与精确误设误差）。** 在 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上取 $\Omega=d\theta\wedge d\phi$、平坦范数及归一面积概率 $\mu$。任意光滑保持 $\Omega$ 的向量场 $X=(u,v)$ 都能唯一写为
+\[
+ X=(a,b)+X_{H_0},\qquad a=\int u\,d\mu,\quad b=\int v\,d\mu,
+ \quad \int H_0\,d\mu=0,
+\]
+其中 $H_0$ 是全局单值光滑周期函数。$X$ 有全局单值 Hamilton 函数，当且仅当 $a=b=0$。并且在全部光滑周期 $H$ 上，
+\[
+ \boxed{\inf_H\|X-X_H\|_{L^2(\mu)}^2=a^2+b^2,
+ \qquad \inf_H\|X-X_H\|_\infty=\sqrt{a^2+b^2}.}
+\]
+特别地，非零恒定流 $a\partial_\theta+b\partial_\phi$ 保持辛形式，局部可用 $a\phi-b\theta$ 生成，却不能由环面上的全局单值能量生成。
+
+**证明。** 保持面积等价于 $\partial_\theta u+\partial_\phi v=0$。对零均值部分取 Fourier 系数 $\widehat u_k,\widehat v_k$，$k=(k_1,k_2)\ne0$，有 $k_1\widehat u_k+k_2\widehat v_k=0$。定义
+\[
+ \widehat H_{0,k}=-i\frac{k_2\widehat u_k-k_1\widehat v_k}{|k|^2},
+ \qquad \widehat H_{0,0}=0.
+\]
+光滑性保证系数快速衰减，故该级数定义光滑函数；实向量场的共轭对称保证 $H_0$ 实值。逐项计算 $i k_2\widehat H_{0,k}=\widehat u_k$、$-i k_1\widehat H_{0,k}=\widehat v_k$，得到分解。零均值固定加常数自由度，因此唯一。任意周期 Hamilton 场的平均值为零，所以全局 Hamilton 的必要条件是 $a=b=0$，充分性来自构造。
+
+也可直接看到拓扑障碍：$\iota_X\Omega=u\,d\phi-v\,d\theta$ 是闭一形式。对上述分解，其沿两个基本闭路的积分分别为 $-2\pi b$、$2\pi a$；单值函数的全微分沿闭路积分为零。常量项因此不能通过在同一环面上改写一个周期标量能量消除。
+
+对任意 $H$，$X_{H_0-H}$ 平均为零，故正交分解给
+\[
+ \|X-X_H\|_{L^2(\mu)}^2=a^2+b^2+\|X_{H_0-H}\|_{L^2(\mu)}^2.
+\]
+取 $H=H_0$ 达到第一式。又 $\|X-X_H\|_\infty\ge\|\int(X-X_H)d\mu\|=\sqrt{a^2+b^2}$，同一选择达到界。该误差下界要求固定相空间、固定辛形式和全局单值周期 Hamilton 参数化；增加状态维数、使用局部图或加入非 Hamilton 通量，会改变模型类。分解属于环面 Hodge/闭形式理论的具体 Fourier 实现，不作为新的拓扑定理。证毕。[^tcs9-symplectic]
+
+## 47. 有限历史的拓扑恢复与辛结构搬运
+
+**命题 47.1（一个连续标量无法完整编码圆周状态）。** 任意连续函数 $c:S^1\to\mathbb R$ 都把某对对径点映成相同数值。因此，若状态为欧氏单位圆周，任意只读取 $c$ 的确定性重建器的全状态最坏欧氏误差至少为一。对这对对径点，若给读数加上与状态无关的同分布噪声，任意等先验判别器的最小错误率为 $1/2$。
+
+**证明。** 置 $g(\theta)=c(e^{i\theta})-c(-e^{i\theta})$，则 $g(\theta+\pi)=-g(\theta)$。介值定理给 $g$ 的零点，两对径点的距离为二。它们共享同一重建输出 $z$，三角不等式给两误差之和至少为二，所以至少一个误差不小于一。加同分布噪声后两个观测法则完全相同，任何判别规则在等先验下的成功概率恰为 $1/2$。此障碍只针对一个连续实标量的全状态编码，不否定标量对较弱任务的充分性、带不连续编码的集合单射或添加历史后的恢复。它是圆周 Borsuk–Ulam 现象的初等特例。证毕。
+
+**定理 47.2（双位置历史的精确共轭、辛形式及条件数）。** 给定已知频率 $\omega>0$，完整谐振相空间为 $\mathbb R^2$，
+\[
+ \dot q=\omega p,\qquad \dot p=-\omega q,\qquad
+ H(q,p)=\omega(q^2+p^2)/2,\quad\Omega=dq\wedge dp.
+\]
+对延迟 $h>0$，令 $\alpha=\omega h$，用 $y_0=q(t),y_1=q(t-h)$ 定义线性映射
+\[
+ y=S_\alpha(q,p)^T,\qquad S_\alpha=\begin{pmatrix}1&0\\\cos\alpha&-\sin\alpha\end{pmatrix}.
+\]
+它可逆当且仅当 $\sin\alpha\ne0$；成立时
+\[
+ q=y_0,\quad p=(\cos\alpha\,y_0-y_1)/\sin\alpha,
+\]
+\[
+ \dot y=\frac\omega{\sin\alpha}
+ \begin{pmatrix}\cos\alpha&-1\\1&-\cos\alpha\end{pmatrix}y.
+\]
+在新坐标中原辛形式和能量分别为
+\[
+ \boxed{\Omega_y=-\frac1{\sin\alpha}\,dy_0\wedge dy_1,
+ \quad H_y=\frac\omega{2\sin^2\alpha}
+ (y_0^2-2\cos\alpha\,y_0y_1+y_1^2).}
+\]
+因此该变换是保时间的光滑共轭，并且只有在同时搬运上述形式时才是与原模型相容的辛坐标表达。$S_\alpha^TS_\alpha$ 的特征值为 $1\pm|\cos\alpha|$，给出精确的全局上下距离增益；若两个读数各有绝对误差至多 $\varepsilon$，则
+\[
+ |\delta p|\le\frac{1+|\cos\alpha|}{|\sin\alpha|}\varepsilon.
+\]
+
+**证明。** 完整振子解给 $q(t-h)=q(t)\cos\alpha-p(t)\sin\alpha$。行列式为 $-\sin\alpha$，故反演条件及反演式成立。对两个历史坐标求导、用反演消去 $q,p$，得到所列自治方程。将 $dq=dy_0$、$dp=(\cos\alpha\,dy_0-dy_1)/\sin\alpha$ 代入二形式并将反演代入 $H$，得到搬运公式，链式法则保证 Hamilton 方程相容。Gram 矩阵的迹为二、行列式为 $\sin^2\alpha$，求二阶特征根得到距离增益；动量噪声预算直接由反演式的三角不等式得到。
+
+固定一个能量圆周后，映射可恢复该一维不变集合，但一维流形不能承载非退化二形式；本条的辛共轭陈述使用完整二维相空间。$h\downarrow0$ 时下增益趋零，动量误差放大系数约为 $2/(\omega h)$，所以拓扑可恢复没有提供一致的噪声稳定性。证毕。[^tcs9-embedology]
+
+## 48. 固定时窗和观测增益预算的最优恢复
+
+**定义 48.1（可设计的已知频率积分读出）。** 沿用定义 47.2 的完整二维初态 $x=(q,p)^T$。在过去窗口 $[0,T]$ 中选择任意有限个延迟 $t_j$ 和权重 $w_j\ge0$，$\sum_jw_j=1$。第 $j$ 个观测的均值为
+\[
+ (O x)_j=\sqrt{w_j}(\cos\omega t_j,-\sin\omega t_j)x.
+\]
+所有读数加上独立 $N(0,\sigma^2)$ 噪声，$\sigma>0$。权重是作用于信号的实际增益预算，不能一面缩放观测，一面把噪声方差也免费缩小。模型非自适应、频率已知；任意增加读数数量仍需共享总平方增益一。定义 $G=O^TO$、$L_*^2(T)=\sup\lambda_{\min}(G)$，上确界遍历这些有限设计。
+
+**定理 48.2（全部有限采样设计上的精确定时最优值）。** 对所有 $T\ge0$，
+\[
+ \boxed{L_*^2(T)=\frac{1-\cos(\min\{\omega T,\pi/2\})}{2}.}
+\]
+当 $0<\omega T\le\pi/2$ 时，在窗口两端各使用一半增益达到最优；当 $\omega T\ge\pi/2$ 时，延迟 $0$ 和 $\pi/(2\omega)$ 各半增益达到 $L_*^2=1/2$。没有更多读数的有限设计能够超过这些值。
+
+**证明。** 置 $z=\sum_jw_je^{2i\omega t_j}$，三角恒等式给
+\[
+ G=\tfrac12\begin{pmatrix}1+\operatorname{Re}z&-\operatorname{Im}z\\-\operatorname{Im}z&1-\operatorname{Re}z\end{pmatrix},
+ \qquad \lambda_{\min}(G)=(1-|z|)/2.
+\]
+记 $\Delta=\omega T$。若 $0\le\Delta\le\pi/2$，每个 $2\omega t_j-\Delta$ 属于 $[-\Delta,\Delta]$，所以
+\[
+ \operatorname{Re}(e^{-i\Delta}z)
+ =\sum_jw_j\cos(2\omega t_j-\Delta)\ge\cos\Delta\ge0.
+\]
+从而 $|z|\ge\cos\Delta$。两个端点等权给 $z=e^{i\Delta}\cos\Delta$，达到该下界。若 $\Delta\ge\pi/2$，$\operatorname{tr}G=1$ 给 $\lambda_{\min}\le1/2$，所述四分之一周期双延迟使 $z=0$，达到上界。$T=0$ 时全部方向相同，最小特征值为零，也符合公式。这个证明是第一谐波回归的 E-optimal 设计在本预算下的直接凸几何解，不被表述为一般非线性稳定嵌入开放问题的解决。证毕。[^tcs9-design]
+
+**推论 48.3（最坏对径判别的精确风险与时间资源律）。** 在定义 48.1 中固定设计，比较等先验初态 $x=v$ 与 $x=-v$，$|v|=1$，判别器知道该候选对。独立重复完整实验 $N\ge1$ 次，允许任意可测判别器，则其最小错误率为
+\[
+ p^*(v)=\Phi\!\left(-\frac{\sqrt N\|Ov\|}{\sigma}\right),
+\]
+其中 $\Phi$ 是标准正态分布函数。先让判别器对每个候选对最优，再取最坏单位方向并优化采样设计，有
+\[
+ \boxed{\inf_O\sup_{|v|=1}p^*(v)
+ =\Phi\!\left(-\frac{\sqrt N L_*(T)}{\sigma}\right).}
+\]
+给定目标错误率 $0<p_0<1/2$，$T>0$，所需独立重复次数的精确最小整数为
+\[
+ N_{\min}=\left\lceil\frac{\sigma^2[\Phi^{-1}(1-p_0)]^2}{L_*^2(T)}\right\rceil.
+\]
+固定其余参数、$T\downarrow0$ 时，
+\[
+ N_{\min}\sim\frac{4\sigma^2[\Phi^{-1}(1-p_0)]^2}{\omega^2T^2}.
+\]
+
+**证明。** 两个 Gaussian 观测法则均值为 $\pm Ov$、协方差相同为 $\sigma^2I$。最优似然比沿 $Ov$ 方向阈值在零；$N$ 个独立重复求和后，信噪比乘 $\sqrt N$，一维正态尾概率给首式。由于 $\Phi$ 单调，最坏方向使 $\|Ov\|$ 最小，其平方为 $\lambda_{\min}G$。再使用定理 48.2 得设计后的精确风险。反解尾概率得到次数阈值，$L_*^2(T)=\omega^2T^2/4+O(T^4)$ 给渐近式。$T=0$ 时任何 $N$ 的最坏错误率都是 $1/2$。本条仅求解所述已知两候选判别任务，不把它冒认为完整连续状态估计或任意带反馈实验的 minimax 风险。证毕。
+
+## 49. 轨迹误差、拓扑保持与辛结构误差的分离
+
+**定理 49.1（向量场残差的几何误差预算）。** 设 $(M,\Omega)$ 为光滑辛流形，$X=X_H$ 为光滑 Hamilton 场，$\widetilde X=X+r$ 为另一光滑场，在指定区域及 $0\le t\le T$ 有流 $\widetilde\Phi_t$。固定一个 Riemann 度量以度量向量及二形式范数，假定所有被考察轨迹和拉回点均在该区域，且
+\[
+ \|d(\iota_r\Omega)\|\le\eta,\qquad
+ \|D\widetilde\Phi_t\|\le e^{Lt},\quad L\ge0.
+\]
+则
+\[
+ \mathcal L_{\widetilde X}\Omega=d(\iota_r\Omega),
+\]
+\[
+ \boxed{\|\widetilde\Phi_t^*\Omega-\Omega\|
+ \le\eta\int_0^t e^{2Ls}ds
+ =\begin{cases}\eta(e^{2Lt}-1)/(2L),&L>0,\\\eta t,&L=0.\end{cases}}
+\]
+
+**证明。** Cartan 公式为 $\mathcal L_Y\Omega=d(\iota_Y\Omega)+\iota_Yd\Omega$。$d\Omega=0$ 及 $\iota_X\Omega=dH$ 使真实场的项为零，得到残差公式。拉回随时间的导数为 $\widetilde\Phi_t^*\mathcal L_{\widetilde X}\Omega$。二形式作用于两个切向量，拉回范数至多乘 $\|D\widetilde\Phi_t\|^2$，积分得到结论。该预算控制的是辛形式偏离；单独的 $\|r\|$ 上界没有给出 $d(\iota_r\Omega)$ 的界，不能删去导数前件。证毕。[^tcs9-symplectic]
+
+**命题 49.2（均匀轨迹接近与拓扑保持不能认证辛保真）。** 在 $\mathbb R^2$、$\Omega=dq\wedge dp$ 上，真实向量场为零。对每个 $0<\varepsilon\le1$，令
+\[
+ \widetilde X_\varepsilon(q,p)
+ =(\varepsilon\sin(q/\varepsilon^2),0).
+\]
+它有全时间光滑可逆流，满足对全部初态及 $t\ge0$，
+\[
+ \|\widetilde\Phi_t(x)-x\|\le\varepsilon t.
+\]
+但在固定点原点处，
+\[
+ \boxed{(\widetilde\Phi_t^*\Omega)_0=e^{t/\varepsilon}\Omega_0.}
+\]
+所以任意固定正时间下，轨迹误差趋零，而原点的辛形式误差趋于无穷；每个时间映射仍保持相空间拓扑。
+
+**证明。** 向量场光滑、全局有界，并且对固定 $\varepsilon$ 是全局 Lipschitz，故正反时间的解均全局存在且流可逆。速度范数至多 $\varepsilon$，积分给均匀轨迹界。原点是固定点，线性化矩阵为 $\operatorname{diag}(1/\varepsilon,0)$；其变分流是 $\operatorname{diag}(e^{t/\varepsilon},1)$，拉回二形式恰乘行列式，得到公式。相应瞬时缺陷也可直接算为 $d(\iota_{\widetilde X_\varepsilon}\Omega)=\varepsilon^{-1}\cos(q/\varepsilon^2)dq\wedge dp$。本例说明某类损失函数缺少微分控制，不是对所有带正则化的学习算法作不可能性判断。证毕。
+
+## 50. 本批来源、外部问题的关系与交付边界
+
+**出处 50.1（已有数学与本批用途）。** 同胚、保时间共轭、周期不变量、环面闭一形式障碍、Fourier/Hodge 分解、Cartan 拉回公式均属于已有数学。第 46.3 条把固定环面上的全局能量误设写成可计算的精确误差；第 47 节将前轮历史坐标推导补齐其辛形式与条件数；第 48 节计算一个固定频率、固定增益、有限时窗设计的精确最优值及判别资源；第 49 节给出轨迹误差与几何误差的严格分离。这八条结果的具体组合按正文推导记录，不把它们的经典构件认领为新发现。
+
+[^tcs9-topology]: Steven M. LaValle，*Planning Algorithms*，§4.1.1 中 [Homeomorphism: Making a donut into a coffee cup](https://msl.cs.uiuc.edu/planning/node130.html)。同胚忽略度量量，只保留连续结构。甜甜圈和单柄杯子的类比要求比较一致的理想化实体或边界曲面模型，不能混淆材料、内部空腔与只取外壁的不同集合；“洞数相同”不是任意拓扑空间的完整分类。几何本身随时间变化的独立例子是 Ricci 流，可参见 G. Perelman，*The entropy formula for the Ricci flow and its geometric applications*，[arXiv:math/0211159](https://arxiv.org/abs/math/0211159)。本批仅用它说明问题类型，不证明 Ricci 流或 Poincaré 定理。
+
+[^tcs9-symplectic]: Ana Cannas da Silva，*Symplectic Geometry*，Handbook of Differential Geometry, vol. 2，作者稿 [arXiv:math/0505366v1](https://arxiv.org/pdf/math/0505366)。本批核对 §1.4 的拉回求导与 Cartan 公式、§5.1 的闭/恰当一形式及环面上的非 Hamilton 平移实例，使用 PDF 解析文字；页面截图接口本次未返回成功，不引用图表。$H^1_{\mathrm{dR}}$ 的障碍是该文已有内容，第 46.3 条另写当前平坦范数下的 Fourier 分解和误差等号。
+
+[^tcs9-embedology]: A. Eftekhari、H. L. Yap、M. B. Wakin、C. J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，[arXiv:1609.06347](https://arxiv.org/abs/1609.06347)。本次读取作者摘要，并复用先前已核对的主卷 §12 的原文问题范围：拓扑嵌入不自动给距离稳定性。第 47.2 条只是一个完全可算的谐振子，不声称任意流或任意标量传感器都由两个延迟恢复。
+
+[^tcs9-design]: E-optimal 设计最大化信息矩阵最小特征值，是既有实验设计准则。本批的直接背景包括 H. Dette、Y. Grigoriev，*E-optimal designs for second-order response surface models*，[arXiv:1403.3805](https://arxiv.org/abs/1403.3805)，其模型与本批第一谐波模型不同，本次仅读取其摘要和准则范围。第 48.2 条通过圆弧凸包独立求解指定二参数实验，未借用该文另一模型的最优常数。
+
+**出处 50.2（与现有理论卷和当前研究的实际连接）。** PR #8891 的 `a287cd0501f852193a5c027337a9e0be576500df` 中，§2 给正定二次预测商的自动辛配对，§11 给非线性记忆图的 Poisson 与 Gibbs 搬运及奇异反演风险，§12 研究 EYWR18 的固定圆周测量族设计子问题。本批第 48 节固定传感函数而设计采样时间，属于不同的精确子问题；它不扩大先前 EYWR18 原题或 HR-upper 的结算范围。第 46 节的拓扑约束又说明，推广到一般流形时，局部能量公式、周期识别和全局同调前件必须单独检查。
+
+Rei Henigman、Yael Karshon 的 *Symplectic torus actions with non-contractible orbits*，[arXiv:2607.21159v1](https://arxiv.org/html/2607.21159v1)，2026-07-23，Theorem 1.1 在闭连通 $2n$ 维辛流形及所规定环面作用维数条件下，把 Hamilton 性与轨道映射的零同伦联系起来。本批已读取引言的精确维数前件及其反例讨论；该定理属于作者，本批没有证明它或其 §8 的开放问题。它说明局部辛性质与全局拓扑之间存在正在研究的严格问题，但本卷仍保持既有有限观察与信息合并目标，不凭一个环面例子另建研究主线。
+
+**约定 50.3（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷，推导、来源核对及有限符号/数值检错由本会话 ChatGPT 单席完成，无独立同行或异模型审定。本批八条结果是纸面证明，不新增 Lean、Scribe、冻结或消化账目，未执行 Lean kernel、canonical `make ingest` 或仓库 CI。当前远端写入动作调用返回资源不存在，重新发现的 GitHub 动作仅支持读取；当前环境无已认证的写入 CLI。故本批连同此前待提交的第 38–45 节保存为原路径的完整候选与精确追加补丁，不把本地保存或评论视为远端文件提交。实际后续入远端时须另核对分支头、前缀与 blob，并保留本条对本轮发生情况的记录。
+
+## 追加锚（本行以下为增补区）
+
+## 51. 增补十·观察拓扑、有限证据与共同核的适用域
+
+**本批导航。** 本批接续第 46–50 节的本地追加稿，所读取的远端本卷为 `618199bab3d7916f2905a0a592a9dd6ffac0974d`，dev 为 `2005cf1f8e500d45722418f2e99f308d4452ba79`，PR #8891 为 `43af212d7552052567390d48419c48dc05758ad7`。仓库《证明拓扑、对合逻辑与观察逃逸统一理论》第六至九部及 `PartitionTopologyKernel.lean` 已证明离散读数的不可分辨关系等于共同核，且目标恢复对应相应观察拓扑下的连续性。本批直接复用这些结果。第 51 节说明有限证据的拓扑与离散分割拓扑的区别；第 52–54 节以公开的稳定延迟嵌入测量设计问题为目标，研究相同可分辨拓扑下的传感器维数、稳定秩与噪声预算。旧章节不改判、不改字节；本批的实际远端交付另由提交记录确认。
+
+**定义 51.1（允许的正观察）。** 给定集合 $X$ 及读数族 $q_i:X\to Y_i$，每个 $Y_i$ 带指定拓扑。定义 $\tau_{\rm obs}$ 为所有 $q_i^{-1}(U)$（$U$ 在 $Y_i$ 中开）生成的初始拓扑。取 Sierpiński 空间 $\mathbb S=\{\bot,\top\}$，其开集为 $\varnothing,\{\top\},\mathbb S$。开集 $U\subseteq X$ 的正检验是 $\chi_U:X\to\mathbb S$。这是一种不指定概率和数值误差的观察语义。把它进一步解释为可执行半判定，需要另给表示、有效索引及算法；任意抽象开集不被自动标成可计算。[^tcs10-pauly]
+
+**命题 51.2（区分关系相同仍可有不同的有限证据拓扑）。** 对定义 51.1，$U\in\tau_{\rm obs}$ 当且仅当 $\chi_U$ 连续。若各 $Y_i$ 为 $T_0$ 空间，则
+\[
+ x,y\text{ 在 }\tau_{\rm obs}\text{ 中不可分辨}
+ \iff \forall i,\ q_i(x)=q_i(y).
+\]
+但是这个不可分辨关系一般不足以决定 $\tau_{\rm obs}$。具体地，在 $X=\{0,1\}^{\mathbb N}$ 上，全部坐标 $q_n(x)=x_n$ 取离散二元值域，所生成的乘积拓扑与把整个序列作为一个离散读数所得的拓扑，有相同的对角核，却是不同拓扑。
+
+**证明。** $\mathbb S$ 唯一非平凡开集的原像为 $U$，给出连续性等价。若所有读数相同，任何生成开集都同时包含或排除两点，有限交和任意并保持此性质。若某个读数不同，$T_0$ 性给出一个恰含其中一个读数的开集，其原像分开两点。
+
+在序列例中，两个不同序列总在某个坐标不同，故乘积拓扑的不可分辨关系为对角线。离散序列读数的核也为对角线。但全零序列的单点集不是乘积开集：任何包含它的基本柱集只限制有限坐标，可以在另一个坐标置一。这个单点集却在离散拓扑中开。由此可见，原有离散分割定理的前件不可省略；一般观察拓扑还编码哪些正检验可以由有限局部证据支持。它的任意并和有限交分别对应正检验的析取和有限合取，补集及无限交不自动开放。证毕。
+
+**注记 51.3（已有真源的复用边界）。** `partition_inseparable_iff_kernel` 与 `partitionTopology_eq_of_kernel_iff` 的值域明确取离散拓扑，所以前述例子不反驳它们。初始拓扑、Sierpiński 正检验和 $T_0$ 商属于经典及表示空间理论，本节不将其重新命名为新基础。以下真正的定量问题是：即使同一个紧致状态空间上的读数均为嵌入、诱导完全相同的拓扑，它们的有限资源恢复能力能相差多大。[^tcs10-repo]
+
+## 52. 外部测量设计问题中的谐波核与维数障碍
+
+**问题 52.1（固定设计类和外部原题）。** Eftekhari–Yap–Wakin–Rozell 的 *Stabilizing Embedology*，Physical Review E 97, 022222 (2018)，结论部分明确询问能否通过测量函数设计提高稳定秩。本批使用其有限基函数族 $H$ 和二延迟差矩阵的稳定秩定义，固定圆周状态 $x(\varphi)=(\cos\varphi,\sin\varphi)$、一步旋转 $\theta=\pi/6$。只考虑有限的成对谐波族
+\[
+ H(\varphi)=(a_kc_k(\varphi))_{k\in K},\quad
+ c_k(\varphi)=(\cos k\varphi,\sin k\varphi),\quad
+ K\subset\mathbb N_{>0},\quad a_k>0,
+\]
+其中 $K$ 非空、频率互异，输出维数为 $2|K|$。定义
+\[
+ X_H(\varphi)=\begin{pmatrix}H(\varphi)^T\\H(\varphi-\theta)^T\end{pmatrix},\qquad
+ R_H=\inf_{\varphi\not\equiv\psi}
+ \frac{\|X_H(\varphi)-X_H(\psi)\|_F^2}
+      {\|X_H(\varphi)-X_H(\psi)\|_{\rm op}^2}.
+\]
+只有单射的 $H$ 被纳入以下设计比较。设计整个 $H$ 不等于在固定 $H$ 内改变随机标量系数 $\alpha$；观察全部基函数也不等于只观察 $h_\alpha=\alpha^TH$。本批不宣称两个延迟满足原论文随机标量嵌入定理的数值充分门槛。[^tcs10-eftekhari]
+
+**命题 52.2（谐波观察核及延迟不能修复的混叠）。** 令 $g=\gcd K$，则
+\[
+ H(\varphi)=H(\psi)
+ \iff \varphi-\psi\in(2\pi/g)\mathbb Z\pmod{2\pi}.
+\]
+添加任意有限或无限多个同一已知旋转的延迟读数，仍具有完全相同的核。因此 $H$ 是圆周的光滑嵌入当且仅当 $g=1$；成立时，它诱导原圆周拓扑。对 $d=\varphi-\psi$，两个差行的 Gram 矩阵为
+\[
+ \begin{pmatrix}A(d)&B(d)\\B(d)&A(d)\end{pmatrix},\quad
+ A(d)=4\sum_{k\in K}a_k^2\sin^2(kd/2),\quad
+ B(d)=4\sum_{k\in K}a_k^2\cos(k\theta)\sin^2(kd/2),
+\]
+当 $g=1$ 时，$R_H=2/(1+\sup_{d\not\equiv0}|B(d)|/A(d))$。
+
+**证明。** 单个平面谐波相等恰好要求 $kd\in2\pi\mathbb Z$。Bezout 身份把全部这些条件等价为 $gd\in2\pi\mathbb Z$，反向因 $g$ 整除各 $k$ 立即成立。对任意共同延迟 $t$，$c_k(\varphi-t)$ 是 $c_k(\varphi)$ 乘一个可逆平面旋转，因此不改变任何一对状态是否相等。导数平方范数恒为 $\sum_k k^2a_k^2>0$，故是浸入；$g=1$ 时紧致单射到 Hausdorff 空间是到其像的同胚，结合浸入得到光滑嵌入。$g>1$ 时核非平凡。最后逐个谐波用旋转的内积公式得到 $A,B$，两行 Gram 特征值为 $A\pm|B|$，即得稳定秩式。这里把已知读数核用于实际传感器，而不把添加更多同类时间点自动当成新的分离关系。证毕。
+
+**定理 52.3（两对谐波的严格上限与三对谐波的必要性）。** 在问题 52.1 的设计类中，若 $|K|\le2$ 且 $H$ 单射，则
+\[
+ \boxed{R_H\le\frac43.}
+\]
+这个上限由 $K=\{2,3\}$、任意两个正振幅达到，可同时归一化为 $\|H'(\varphi)\|=1$。任意有限的单射成对谐波族均不能精确达到 $R_H=2$。
+
+**证明。** 单个谐波单射要求 $K=\{1\}$，此时 $B/A=\cos\theta=\sqrt3/2$，所列界成立。两个频率 $m,n>1$ 互素时，取 $d=2\pi/m$，第 $m$ 个差分为零而第 $n$ 个不为零，因此该弦的 $B/A=\cos(n\theta)$；交换两个频率同理。另一方面 $B/A$ 始终是两个余弦的非负加权平均，所以
+\[
+ R_H=\frac2{1+\max\{|\cos(m\theta)|,|\cos(n\theta)|\}}.
+\]
+在 $\theta=\pi/6$ 时，余弦绝对值小于 $1/2$ 只可能为零；相应频率是三的奇数倍。两个频率若都如此，就不互素。故最大绝对值至少为 $1/2$。若其中一个频率为一，取 $d=2\pi/n$ 消去另一个，得到 $R_H\le2/(1+\sqrt3/2)<4/3$。$\{2,3\}$ 的余弦分别为 $1/2,0$，所以达到 $4/3$，整体尺度不改变稳定秩。
+
+最后，若任意有限谐波族达到 $R_H=2$，则 $B(d)$ 对全部 $d$ 为零。由三角多项式的 Fourier 系数唯一性，每个非零振幅都须满足 $\cos(k\theta)=0$，故所有频率均为三的倍数，违反单射性。这个必要性限定于本批成对谐波族，不是任意光滑传感器或任意延迟数的最小维数定理。证毕。
+
+## 53. 六维同拓扑测量族逼近稳定秩上限
+
+**定义 53.1（固定三对谐波构造）。** 对 $0<\varepsilon\le1/2$，置 $Z_\varepsilon=9+20\varepsilon$，定义
+\[
+ H_\varepsilon(\varphi)
+ =\frac{(\sqrt\varepsilon\,c_2(\varphi),\ c_3(\varphi),\
+               \sqrt\varepsilon\,c_4(\varphi))}{\sqrt{Z_\varepsilon}}
+ \in\mathbb R^6.
+\]
+下弦增益 $l_\varepsilon$ 和上弦增益 $U_\varepsilon$ 指对全部不同圆周状态的比值
+$\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
+  \|x(\varphi)-x(\psi)\|$ 的下确界和上确界。
+
+**定理 53.2（精确几何预算、稳定秩渐近及配对维数门槛）。** 每个 $H_\varepsilon$ 都是光滑嵌入，诱导同一个圆周拓扑，并满足
+\[
+ \|H_\varepsilon'(\varphi)\|=U_\varepsilon=1,\qquad
+ \boxed{l_\varepsilon^2=\frac{2\varepsilon}{9+20\varepsilon}.}
+\]
+令 $\eta_\varepsilon=2/R_{H_\varepsilon}-1$，则有精确的一变量极值式
+\[
+ \eta_\varepsilon=
+ \max_{-1\le q\le3}
+ \frac{(\varepsilon/2)|q(q+1)(2-q)|}
+      {q^2[1+\varepsilon(q-1)]+2\varepsilon},
+\]
+且
+\[
+ \eta_\varepsilon\sim\frac{\sqrt\varepsilon}{2\sqrt2},\qquad
+ \boxed{2-R_{H_\varepsilon}\sim\sqrt{\varepsilon/2},\qquad
+        \frac{2-R_{H_\varepsilon}}{l_\varepsilon}\longrightarrow\frac32.}
+\]
+因此，在问题 52.1 的单射成对谐波设计类内，逼近二延迟稳定秩上限二所需的最少谐波对数恰为三，即六个实基函数。这个上确界不由任何有限单射谐波族达到。
+
+**证明。** $\gcd(2,3,4)=1$，命题 52.2 给嵌入。导数平方范数为 $(4\varepsilon+9+16\varepsilon)/Z_\varepsilon=1$。置 $x=\cos^2(d/2)$，直接使用正弦倍角公式可得平方弦增益
+\[
+ \frac{(4x-1)^2[1+\varepsilon(4x-2)]+2\varepsilon}{Z_\varepsilon}.
+\]
+因 $0\le x\le1$、$\varepsilon\le1/2$，方括号非负；$x=1/4$ 使第一项为零，故下界精确为所列值。每个谐波满足 $|\sin(ku)|\le k|\sin u|$，所以平方上弦增益至多为导数预算一；$d\to0$ 时达到此上确界。
+
+代入命题 52.2 的 $A,B$，再令 $q=4x-1$，约去共同因子，得到精确极值式。这里 $q=3$ 用短弦极限延拓，故最大值可以在闭区间计算。令 $q=\sqrt\varepsilon z$，则极值式除以 $\sqrt\varepsilon$ 后的函数为
+\[
+ \frac{|z(1+\sqrt\varepsilon z)(2-\sqrt\varepsilon z)|/2}
+ {z^2[1+\varepsilon(\sqrt\varepsilon z-1)]+2}.
+\]
+它在任意有界 $z$ 区间上一致趋于 $|z|/(z^2+2)$。对 $\varepsilon\le1/4$，原 $q\in[-1,3]$ 上有 $|(q+1)(2-q)|\le4$，分母至少为 $q^2/2+2\varepsilon$，因此缩放后的函数在 $|z|\ge R$ 至多为 $4/R$。先限制到有界区间，再令 $R\to\infty$，证明极值收敛到
+\[
+ \max_{z\in\mathbb R}\frac{|z|}{z^2+2}=\frac1{2\sqrt2},
+\]
+在 $z=\pm\sqrt2$ 达到。由 $R_H=2/(1+\eta)$ 和 $l_\varepsilon\sim\sqrt{2\varepsilon}/3$ 得两条后果。两对谐波的障碍由定理 52.3，当前三对构造给充分性，故配对数恰为三。上确界不达到也由同条定理。
+
+本构造的拓扑、核和微分增益在全部正 $\varepsilon$ 上相同，但下弦增益趋零。它相对 #8891 §12 的五对谐波构造减少了基函数数量；代价是稳定秩缺口在此与 $l_\varepsilon$ 同阶，而那一构造的缺口与 $l^2$ 同阶。两个设计分别优化了不同资源，不能据维数更小认领全面支配。证毕。[^tcs10-design]
+
+## 54. 相同观察拓扑下无法靠增加延迟绕过的噪声预算
+
+**定理 54.1（固定总观测增益的精确两假设风险）。** 对定义 53.1 的同一模型，任取有限个已知延迟 $t_j\in\mathbb R$ 和权重 $w_j\in\mathbb R$，测量
+\[
+ Y_j=w_jH_\varepsilon(\varphi-t_j)+\xi_j,
+ \qquad \xi_j\ \text{独立 }\mathcal N(0,\sigma^2I_6),\quad\sigma>0.
+\]
+未知初相位在 $\varphi_0=0$ 和 $\varphi_1=2\pi/3$ 两者间等先验选择。令 $E=\sum_jw_j^2$。全部可测判别器的最小错误率精确为
+\[
+ \boxed{p^*(E,\varepsilon,\sigma)
+ =\Phi\!\left(-\frac1{2\sigma}
+                   \sqrt{\frac{6E\varepsilon}{Z_\varepsilon}}\right)
+ =\Phi\!\left(-\frac{\sqrt{3E}\,l_\varepsilon}{2\sigma}\right),}
+\]
+其中 $\Phi$ 是标准正态分布函数。给定 $E$ 时，增加延迟数、改变延迟位置或重新分配权重，均不改变这一个两假设任务的最优风险。若目标错误率为 $0<\alpha<1/2$，则必要且充分的预算为
+\[
+ \boxed{E\ge \frac{4\sigma^2}{3l_\varepsilon^2}
+                 [\Phi^{-1}(1-\alpha)]^2.}
+\]
+因此固定 $\sigma,\alpha$，在本构造 $R_{H_\varepsilon}\uparrow2$ 时，所需预算满足
+\[
+ E_{\min}\sim
+ \frac{3\sigma^2[\Phi^{-1}(1-\alpha)]^2}
+      {(2-R_{H_\varepsilon})^2}.
+\]
+
+**证明。** 两个相位的第三谐波完全相同，第二和第四谐波差长平方各为三；在两者同时减去任何延迟时，平面旋转保持这些长度。因此每个 $H_\varepsilon$ 读数的均值差长平方为 $6\varepsilon/Z_\varepsilon=3l_\varepsilon^2$。堆叠全部观测后，两个 Gaussian 假设的共同协方差为 $\sigma^2I$，均值差平方恰为 $3E l_\varepsilon^2$。最优似然比检验是均值差方向上的中点阈值，直接积分一维正态尾部得到错误率。单调反演得到预算的充要条件，再用定理 53.2 的缺口与下弦增益关系得到渐近式。
+
+此处 $E$ 是总平方测量增益，不被解释为真实热量。精确值允许读取全部六维基函数，且噪声模型预先固定；未把后处理当作额外传感器，未使用量子无扰动历史。若约束 $\sum_jw_j^2\le E_0$，用满预算时最优值为上式的 $E_0$ 版本。这个实例表明，相同的观察拓扑和单射核不决定有限噪声的恢复代价。证毕。
+
+## 55. 本批来源、与已有理论的接口及验证身份
+
+**出处 55.1（复用与承重增量）。** 观察拓扑的共同核结论直接复用仓库理论和 Lean；Sierpiński 正检验、初始拓扑和乘积拓扑属于经典理论及 Pauly 的表示空间框架。命题 52.2 的 gcd 与 Fourier 计算是既有方法在本读数族中的展开。外部目标固定为 [EYWR18] 的测量设计问题。当前新增的限定答案是：在指定成对谐波类中两对的严格上限、三对的匹配充分性、六维构造的精确下弦增益和稳定秩缺口，以及同一构造在任意有限延迟设计和固定总增益下的精确统计预算。该结果不解决任意光滑测量族的最小维数，不宣称原文的随机标量嵌入保证已经在两个延迟成立，也不把全部原问题结算为已解决。
+
+[^tcs10-repo]: 固定 dev 来源为 `2005cf1f8e500d45722418f2e99f308d4452ba79` 的 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md` 第六至九部，以及 `D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.lean` 中 `partition_inseparable_iff_kernel`、`partitionTopology_eq_of_kernel_iff`。实际读取了声明和证明，其离散值域前件明确。本轮不新建绑定包装，不把新增的连续观察与噪声结论冒认为已有 Lean 声明。
+
+[^tcs10-pauly]: Arno Pauly，*On the topological aspects of the theory of represented spaces*，Computability 5(2), 159–180 (2016)，DOI [10.3233/COM-150049](https://doi.org/10.3233/COM-150049)，作者稿 [arXiv:1204.3763](https://arxiv.org/abs/1204.3763)。核对 §4 的 Sierpiński 值正检验、开集表示与 Proposition 5 的可计算运算，及作者机构的期刊书目信息。期刊正式年份为 2016，在线先行发表于 2015。抽象拓扑连续性与在已指定表示下的可计算性分别使用。本批的概率风险和传感器稳定秩定理不归给该来源。
+
+[^tcs10-eftekhari]: Armin Eftekhari、Han Lun Yap、Michael B. Wakin、Christopher J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，DOI [10.1103/PhysRevE.97.022222](https://doi.org/10.1103/PhysRevE.97.022222)，作者稿 [arXiv:1609.06347v2](https://arxiv.org/abs/1609.06347v2)。核对 §III 的测量族、A1–A3、式 (14)–(16) 及结论部分第二个测量设计问题。原文已区分拓扑嵌入与几何稳定，也分别使用双 Lipschitz 和稳定秩条件。本文没有把这一区分本身计为新发现。所设计的是原定义里的整个基函数族，固定族内的标量系数不改变该族稳定秩。
+
+[^tcs10-design]: 固定 PR #8891 主卷 `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`，head `43af212d7552052567390d48419c48dc05758ad7` 的 §12。其四维两谐波提升、所有有限输出维数的下弦裕量障碍、十维五谐波抵消构造及噪声见证均保留原证明身份。本批减少特定趋极值构造的谐波数量，同时明确不同的裕量损失阶；没有修改该主卷或声称解决它在固定裕量下最优常数的剩余问题。
+
+**约定 55.2（文献登记与本批核验）。** 本批按既有 `theory-volume-template/APPEND.md` 追加，理论原文件是唯一新增数学正文。新引用以 `Library` 的规范书目条目登记，并在已有观察拓扑 Scribe 中增补文献与适用域说明，既有 Lean 声明、证明和公式保持。数学推导、来源核对和有限检错由本会话 ChatGPT 单席完成，没有独立同行或异模型审定。本文五条带证明结果是纸面推导，有限计算只用于检错。未新增 Lean、冻结记录或机器消化账目，未运行 Lean kernel、Scribe 编译、canonical `make ingest` 或仓库 CI。此前章节中“未写远端”的记述保留其各自写作时的事实，不能用本批后续提交追溯改写。
+
+## 追加锚（本行以下为增补区）
