@@ -315,7 +315,7 @@ def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
     validateFrozenBaselineInSnapshot rootId (fixedSnapshotOccurrences rootId)
   let expectedEntries ← liftTermElabM <|
     (expectedOccurrencesForRoot env rootId).mapM fun entry => do
-      let objectArenaName ← resolveCanonicalArenaName entry.objectArenaName
+      let objectArenaName ← resolveCanonicalArenaNameFromEvidence entry.objectArenaName
       pure { entry with objectArenaName }
   let actualEntries := InformationRegistry.entries env
   let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)

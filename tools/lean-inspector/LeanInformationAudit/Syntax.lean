@@ -100,6 +100,8 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
   let theoremName <- resolveTheorem theoremId
   let objectArenaName <- resolveArena arenaId
+  -- Source evidence is acquired by the declaration command, before IO-free sealing.
+  discard <| liftTermElabM <| resolveCanonicalArenaName objectArenaName
   let env <- getEnv
   let statementIdentity := if statementIdentityOverride.isEmpty then
     theoremStatementIdentity env theoremName

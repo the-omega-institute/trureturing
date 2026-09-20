@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Reifier
+import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
 
@@ -44,7 +45,7 @@ def arenaAliasWorkBudget : Nat := 4096
 
 /-- Elaboration provenance for a structure literal, retained across olean imports.
 Lean's structure elaborator eta-contracts field-copy literals before storing them. -/
-def arenaConstructionMarker : Name := `LeanInformationAudit.arenaConstruction
+def arenaConstructionMarker : Name := ArenaProvenance.construction
 
 private inductive AliasClosure where
   | mk (term : Expr) (bindings : List AliasClosure)
@@ -55,7 +56,8 @@ Unlike unrestricted `whnfR`, this stops at constructors, projections and recurso
 and never performs structure eta. A bare named target becomes the next owner;
 an application that constructs a value retains the last named owner.
 The single budget covers both outer aliases and all work inside applications. -/
-def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
+private def resolveCanonicalArenaUsing (declarationValue : DefinitionVal → MetaM Expr)
+    (spelling : Name) : MetaM Name := do
   let env ← getEnv
   unless env.contains spelling do return spelling
   let mut owner := spelling
@@ -68,6 +70,8 @@ def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
     match term with
     | .mdata data body =>
       if data.contains arenaConstructionMarker then return owner
+      if data.contains ArenaProvenance.unsupported then
+        throwError "IE-C003 ArenaSourceUnsupported arena={spelling} owner={owner}"
       current := .mk body bindings
     | .app fn arg =>
       arguments := .mk arg bindings :: arguments
@@ -88,10 +92,18 @@ def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
     | .const name _ =>
       if arguments.isEmpty then owner := name
       match env.find? name with
-      | some (.defnInfo info) => current := .mk info.value []
+      | some (.defnInfo info) => current := .mk (← declarationValue info) []
       | _ => return owner
     | _ => return owner
   throwError "IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
+
+/-- Acquire source construction evidence while compiling a registration. -/
+def resolveCanonicalArenaName : Name → MetaM Name :=
+  resolveCanonicalArenaUsing ArenaProvenance.declarationValue
+
+/-- Validate imported registrations using only their compiled provenance. -/
+def resolveCanonicalArenaNameFromEvidence : Name → MetaM Name :=
+  resolveCanonicalArenaUsing ArenaProvenance.compiledValue
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
@@ -321,8 +333,10 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
   | .ok () => pure ()
   try
     if entry.derivedCertificate.isSome then
+      let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
+        else entry.objectArenaName
       unless entry.statementIdentity == theoremStatementIdentity env entry.theoremName &&
-          entry.resolvedArenaName == (← prepareRegistrationEntry env entry).resolvedArenaName do
+          entry.resolvedArenaName == (← resolveCanonicalArenaNameFromEvidence spelling) do
         return .error "P1.CertificateBindingMismatch: current statement identity or arena ownership"
     RegistrationReifier.validateDerivedCertificate entry
   catch e => return .error (← e.toMessageData.toString)

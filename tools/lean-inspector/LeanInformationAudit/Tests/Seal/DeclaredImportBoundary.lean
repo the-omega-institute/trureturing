@@ -9,8 +9,9 @@ run_cmd do
   let modules := env.header.moduleNames.filter fun name =>
     name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
   let core := #[`LeanInformationAudit.Registry, `LeanInformationAudit.Syntax,
-    `LeanInformationAudit.SealCommand, `LeanInformationAudit.Registry.Repository].all modules.contains
+    `LeanInformationAudit.SealCommand, `LeanInformationAudit.Registry.Repository,
+    `LeanInformationAudit.Registry.ArenaProvenance].all modules.contains
   (if core then logInfo else logError) m!"[{if core then "PASS" else "FAIL"}] existing_finite_seal_core_accepted"
-  -- Rooted source IO adds Registry.Repository to the existing 98-module closure.
-  (if modules.size == 99 then logInfo else logError) m!"[{if modules.size == 99 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
-  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=99"
+  -- Repository IO and imported construction provenance add exactly two helpers.
+  (if modules.size == 100 then logInfo else logError) m!"[{if modules.size == 100 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
+  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=100"
