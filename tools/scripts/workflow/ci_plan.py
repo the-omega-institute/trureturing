@@ -894,17 +894,23 @@ def validate_stage(root, stage, base):
 def plan_pr(root, commit, base, head):
     started = time.monotonic()
     changes, plan = root / "build/ci/changes.json", root / "build/ci/plan.json"
+    no_work_path = root / "build/ci/no-work.json"
+    no_work_path.unlink(missing_ok=True)
     scope = pr_paths(root, commit, base, head)
     write(changes, scope)
     value = make_plan(root, commit, changes)
     write(plan, value)
     validate_plan(root, commit, plan, changes)
+    work_required = bool(value["resources"])
+    if not work_required:
+        write(no_work_path, no_work(value))
     print("CI_PLAN_RESULT " + json.dumps({"mode": "pr", "change_count": scope["change_count"],
           "path_count": len(value["paths"]), "plan_bytes": plan.stat().st_size,
-          "changes_bytes": changes.stat().st_size, "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
+          "changes_bytes": changes.stat().st_size, "work_required": work_required,
+          "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
     # Complete manifests travel as files. Job outputs remain bounded regardless
     # of the number or length of changed paths.
-    return {"candidate_sha": commit, "base_sha": base}
+    return {"candidate_sha": commit, "base_sha": base, "work_required": work_required}
 
 
 def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):

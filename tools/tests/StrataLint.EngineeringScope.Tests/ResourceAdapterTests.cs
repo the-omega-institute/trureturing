@@ -8,6 +8,23 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class ResourceAdapterTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdleStageDoesNotHideWorkInAnotherRegisteredStage(bool otherWork)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(otherWork ? ["filemap"] : []);
+        var environment = EnvironmentFor(fixture);
+        MaterializePlan(fixture, environment);
+
+        var result = Route(fixture, "engineering", environment);
+
+        Assert.True(result.Exit == 0, result.Text);
+        var lines = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
+        Assert.Contains("required=false", lines);
+        Assert.Contains("work_required=" + (otherWork ? "true" : "false"), lines);
+    }
+
+    [Theory]
     [InlineData("build")]
     [InlineData("engineering")]
     [InlineData("current")]

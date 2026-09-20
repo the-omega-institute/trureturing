@@ -19,6 +19,7 @@ jobs:
     outputs:
       candidate_sha: ${{ steps.resolve.outputs.candidate_sha }}
       base_sha: ${{ steps.resolve.outputs.base_sha }}
+      work_required: ${{ steps.resolve.outputs.work_required }}
       plan_artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +38,7 @@ jobs:
           path: |
             build/ci/plan.json
             build/ci/changes.json
+            build/ci/no-work.json
           if-no-files-found: error
           retention-days: 7
 
@@ -48,11 +50,12 @@ jobs:
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
       plan_artifact_id: ${{ needs.resolve.outputs.plan_artifact_id }}
+      no_work: ${{ needs.resolve.result == 'success' && needs.resolve.outputs.work_required == 'false' }}
 
   delta:
     name: delta
     needs: [resolve, push]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && !(needs.resolve.result == 'success' && needs.resolve.outputs.work_required == 'false') }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
     env:

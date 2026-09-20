@@ -6,6 +6,49 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class ResourceAdapterTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PullRequestResolverPublishesWholePlanWorkDecision(bool required)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
+        fixture.PrPlan();
+        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+
+        var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
+
+        Assert.True(resolved.Exit == 0, resolved.Text);
+        Assert.Contains("work_required=" + (required ? "true" : "false"),
+            File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output")));
+        var receipt = Path.Combine(fixture.Root, "build/ci/no-work.json");
+        Assert.Equal(!required, File.Exists(receipt));
+        if (required) return;
+        var result = JsonNode.Parse(File.ReadAllText(receipt))!;
+        Assert.Equal("not-required", result["status"]!.ToString());
+        Assert.Equal(fixture.Commit, result["candidate"]!["commit"]!.ToString());
+        Assert.Single(result["paths"]!.AsArray());
+        Assert.Empty(result["resources"]!.AsArray());
+        Assert.Empty(result["executed"]!.AsArray());
+        Assert.Empty(result["artifacts"]!.AsArray());
+    }
+
+    [Fact]
+    public void FailedPlanCannotPublishNoWorkDecision()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        fixture.PrPlan();
+        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        File.AppendAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"), "# uncommitted declaration\n");
+
+        var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
+
+        Assert.Equal(2, resolved.Exit);
+        Assert.Contains("resource plan declaration differs from candidate", resolved.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("work_required=false",
+            File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output")));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/ci/no-work.json")));
+    }
+
     [Fact]
     public void LargePullRequestTransportsCompleteScopeWithoutProcessSizedOutputs()
     {
