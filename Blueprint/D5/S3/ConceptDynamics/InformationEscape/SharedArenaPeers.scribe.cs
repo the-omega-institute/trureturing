@@ -12,10 +12,6 @@ internal sealed class SharedArenaPeersDocument : IScribeDocumentDefinition
         H("Shared Canonical Arena Peers"),
         Blocks(
             Paragraph(Text("The intervention catalog contains four new peers and its gold shadow; the observation-intervention catalog contains one new peer and its gold shadow. Each occurrence uses exactly the two finite readouts of its declared law. No anchors, carrier copies, or theorem-truth readouts enter the bundles.")),
-            Node("intervention-catalog", "interventionCatalog", "Five intervention occurrences",
-                "The catalog uses the complete finite intervention registry vector.", DescribeRole.Definition),
-            Node("observation-catalog", "observationCatalog", "Two observation-intervention occurrences",
-                "The catalog uses the complete finite observation-intervention registry vector.", DescribeRole.Definition),
             Node("finite-intervention-arena", "finiteInterventionArena", "Finite intervention object arena",
                 "The intervention registrations enumerate the finite SCM object arena used by their declared readouts.", DescribeRole.Definition),
             Node("finite-intervention-law-arena", "finiteInterventionLawArena", "Finite intervention law arena",
@@ -46,10 +42,6 @@ internal sealed class SharedArenaPeersDocument : IScribeDocumentDefinition
                 "The actual realization satisfies the law and a constant realization of the same signature fails it."),
             Node("observation-sensitive", "observation_law_sensitive", "Observation law sensitivity",
                 "The actual realization satisfies the law and a constant realization of the same signature fails it."),
-            Node("all-trivial", "all_peers_trivial", "All occurrences are trivial in their shared catalogs",
-                "Every occurrence has zero unique capture because a real peer has the same agreement kernel."),
-            Node("no-lowering", "no_peer_lowers_escape", "No occurrence lowers shared escape",
-                "Nondegeneracy turns empty unique capture into failure of LowersEscape for all seven occurrences."),
             Paragraph(Text("The maximal seal succeeds on both complete catalogs with a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.")))));
 
     private static DocumentBlock.Describe Node(
