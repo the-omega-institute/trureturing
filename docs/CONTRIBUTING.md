@@ -1,5 +1,199 @@
 # Contributing
 
+You can help by making one result easier to understand, reproducing an example,
+finding a counterexample, or improving a tool. English and Chinese contributions
+are welcome. You do not need to write a new proof to make a useful contribution.
+
+[Project entrance](../README.md) · [中文入口](#中文入口) ·
+[Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
+[Specification](develop/spec/golden-ledger-repo-spec.md)
+
+## Choose a starting point
+
+- **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
+  from explanation to Lean statement. Clarify terminology, fix a link or improve
+  a translation while preserving the result's assumptions and scope.
+- **Reproduce.** Run the [WDigits example](../README.md#first-run). For an
+  experiment, follow its own instructions and report the input, environment and
+  output. A computed sample and a theorem answer different questions.
+- **Fix.** Bring a minimal reproduction of a build failure, misleading
+  explanation or tool defect. A small, focused fix is a useful first PR.
+- **Explore.** Start from a [problem dossier](../Problems/) or
+  [open frontier task](../D5/X_Frontier/), state the exact missing fact, and
+  search for existing results before writing a proof.
+
+To report a problem, [open an issue](https://github.com/the-omega-institute/trureturing/issues)
+with the source path or declaration, the commit from `git rev-parse HEAD`, your
+OS and relevant tool versions, the smallest input and command that reproduce
+it, the expected outcome and the actual output or exit code. For a mathematical
+mismatch, quote the statement and identify the missing hypothesis or give the
+counterexample. Include necessary diagnostics; omit credentials and session
+transcripts. A precise explanation question is welcome too.
+
+## Prerequisites
+
+Reading the source and book needs no local toolchain. For local work, use Git,
+Make and Bash, with these tools on `PATH`:
+
+- [elan](https://github.com/leanprover/elan#installation), which selects
+  **Lean 4.33.0** from [lean-toolchain](../lean-toolchain). Mathlib is pinned to
+  **v4.33.0** in [lakefile.toml](../lakefile.toml), with resolved dependencies in
+  [lake-manifest.json](../lake-manifest.json).
+- [.NET SDK **10.0.103**](https://dotnet.microsoft.com/en-us/download/dotnet/10.0),
+  selected by [global.json](../global.json) with roll-forward disabled. The
+  repository's Lean wrapper also uses .NET.
+- **Python 3.11 or later** as `python3` for the CI/preflight scripts, which use
+  the standard-library `tomllib` module.
+
+The shell examples below use macOS/Linux conventions. Install the SDK version
+in the pin, not just a runtime. Check `dotnet --version`, `lean --version` and
+`python3 --version` from the checkout. Dependency downloads need network access;
+individual experiments may have additional prerequisites.
+
+## Your first change
+
+Fork [the repository](https://github.com/the-omega-institute/trureturing/fork)
+on GitHub. In the following example, replace `YOUR-USERNAME` with your account.
+Keep the initial checkout for tracking `dev`; make edits in an isolated
+worktree created by the repository command:
+
+```sh
+git clone https://github.com/YOUR-USERNAME/trureturing.git
+cd trureturing
+git remote add upstream https://github.com/the-omega-institute/trureturing.git
+git fetch upstream dev
+make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-first-docs
+cd ../trureturing-first-docs
+```
+
+This creates `lane/governance/first-docs` and restores locked .NET dependencies.
+Use a fresh task name for each change. The command's other current kinds are
+`math` and `theory`; its branch kind does not replace file-level admission rules.
+For a maintainer checkout, `BASE=origin/dev` selects the project remote instead.
+
+The worktree starts without a Lean cache. Its first `make lean` prepares a
+private cache, using a compatible local donor when available or downloading
+dependencies. Use `make lean` before any `lake env lean` debugging command in a
+new worktree. `make lean-cache-ensure` is an optional explicit prewarm command.
+
+For a documentation edit, change the owning source, check links and preview
+the Markdown. If you publish a command or example, run it. A typo fix needs no
+new Lean theorem or test. Then follow the applicable checks and PR steps below.
+
+## Edit the owning source
+
+| What you are changing | Where it belongs |
+| --- | --- |
+| Public entrance or contribution instructions | `README.md` or this guide |
+| Formal definitions and proofs | `D5/**/*.lean`, subject to frozen-state rules |
+| Blueprint or paper narrative | The corresponding `*.scribe.cs` source; regenerate with `make emit` |
+| Experimental evidence | `Evidence/` or the experiment's registered location |
+| Harness code and tests | `tools/` and `tools/tests/` |
+| Research input | `docs/develop/theory/`, under the append-only theory rules |
+
+Read [AGENTS.md](../AGENTS.md) and [agents/CONTEXT.md](../agents/CONTEXT.md) before
+editing. The [specification](develop/spec/golden-ledger-repo-spec.md) defines
+the routing and delivery contracts. Generated Markdown, reports, frozen pins
+and digestion state have designated writers; do not repair them by hand.
+New files must fit the existing [FILEMAP](../Meta/FILEMAP.toml) and routing rules.
+
+Keep each PR focused and keep **content changes separate from changes to the
+rules that judge them**. The current FILEMAP classifies `README.md` as content
+and `docs/CONTRIBUTING.md` as judge-plane, so changes to these two files belong
+in separate PRs. This classification is about admission, not the file extension.
+
+For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
+search this repository, pinned Mathlib and admissible upstream libraries before
+proving anything locally. Reuse an existing result directly when it fits.
+Do not add a theorem whose only contribution is renaming, specializing or
+repackaging an existing one. The rules describe the existing settlement path
+for such source claims, the requirements for new content and the narrowly
+defined external open-problem exception.
+
+Frozen results stay fixed. Changes involving assumptions, new axioms,
+`Hearts.lean` or protected policy must follow their existing authorization
+rules. An unresolved claim stays explicit; a successful experiment does not
+close it. These requirements apply to human and AI contributions alike.
+
+## Check your change
+
+Use `make help` and `make -C tools help` for the current command list. Choose
+focused checks while editing:
+
+```sh
+git diff --check
+make lean LEAN_TARGETS=D5.S0.Conventions.WDigits
+```
+
+The second command is a **targeted Lean build**; replace the module with the
+one you changed when doing mathematical work. It is not a full repository
+check. For harness changes, `make -C tools check-fast` runs the selected fast
+structure checks, and `make -C tools test` runs the full .NET harness test suite.
+
+Commit each logical change and push it to your fork; run local verification
+alongside remote CI. The shared preflight entry selects the applicable
+engineering and current-tree checks:
+
+```sh
+make preflight
+```
+
+Before merge, check the combination with the project's `dev` branch. Start
+from a clean, committed worktree and pass an immutable base SHA:
+
+```sh
+git fetch upstream dev
+base_sha="$(git rev-parse upstream/dev)"
+make preflight MODE=pr BASE="$base_sha"
+```
+
+PR-mode preflight checks an isolated merge-tree candidate and its delta. It
+does not merge your branch. If you have only the project remote, use
+`origin/dev` in the two Git commands. A targeted build, local preflight and
+remote CI are distinct results: report the command and actual exit code, and
+say explicitly which checks you did not run.
+
+## Open a pull request
+
+Push the branch to your fork with `git push -u origin lane/governance/first-docs`
+(substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
+`main` is the release branch.
+
+Describe the concrete problem, resulting behavior or explanation, source
+evidence and verification. At the top, include the provenance required by
+[AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露): skills used (or none),
+who produced and reviewed the work, and the actual review method and scope.
+Disclose AI assistance when used. Keep the PR to useful results and necessary
+diagnostics; do not paste process transcripts.
+
+Arrange independent review. The repository's documented merge checks are
+`push / engineering`, `push / current` and `delta`; inspect the actual check
+results on your PR and address failures. GitHub branch-protection configuration
+is an external setting, not a guarantee supplied by this guide. An open PR or
+green local check is not a merged contribution: completion is **MERGED** into
+`dev`. Clean up an isolated worktree only after confirming the merge and a
+clean working tree.
+
+## 中文入口
+
+欢迎从一次小而具体的贡献开始：读懂并改进一个结果的说明、复现 README 的
+[首个例子](../README.md#first-run)、修复链接或翻译、报告陈述与实现之间的差异。
+不必先写新定理，也可以帮助项目变得更清楚、更可信。
+
+本地工作需要 Git、Make、Bash、elan、钉版 .NET SDK 10.0.103，以及 Python 3.11+。
+按上方 [Your first change](#your-first-change) 的命令 fork、克隆并创建独立
+worktree；从 `upstream/dev` 开始，PR 也提交到 `dev`。普通文档修正检查链接与
+预览，文中命令要亲跑；[验证部分](#check-your-change) 区分定向构建、本地
+preflight 和远端 CI，请如实报告实际运行的范围与退出码。
+
+修改前阅读[仓库规则](../AGENTS.md)与[工作地图](../agents/CONTEXT.md)。
+生成文档改其 `*.scribe.cs` 源文件，冻结证明与机器维护的账目不得手改。
+数学贡献先查已有库，复用已有结论；输入散文、实验读数和形式证明各有边界。
+报告问题时给出 commit、源码位置、环境、最小输入、命令、预期与实际结果。
+
+项目采用 [Apache-2.0](../LICENSE)。下面保留理论原文的两段边界声明；
+它们是引用，不是新增的数学结论。
+
 ## 防命理总墙
 
 > 本理论:不证明黎曼假设;不主张宇宙以 φ 运行;不为黄金比例神秘主义背书;φ 在物理中处处"被选出"(不动点/临界点)而非"被写入"(公理);GCS 为黄金格原生坐标,非唯一非独尊。**凡"本质就是"四字,须过 27.94 之分家检验;凡统一感,须交 27.82 之收据。**
