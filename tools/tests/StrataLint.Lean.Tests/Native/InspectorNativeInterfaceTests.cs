@@ -10,5 +10,8 @@ public sealed class InspectorNativeInterfaceTests(InspectorCompilerFixture compi
     [InlineData("test_native.NativeTests.test_interface_registered_build_inputs")]
     [InlineData("test_native.NativeTests.test_interface_records_have_single_owner")]
     [InlineData("test_native.NativeTests.test_interface_store_cross_module_persistence")]
+    [InlineData("test_native.NativeTests.test_reg_empty_and_nonempty_build_routing")]
+    [InlineData("test_native.NativeTests.test_reg_report_rows_relocation_and_defaults")]
+    [InlineData("test_native.NativeTests.test_reg_manifest_rejected_before_materialization")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 }

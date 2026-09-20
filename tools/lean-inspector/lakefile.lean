@@ -17,12 +17,21 @@ lean_exe reportInspector where
   supportInterpreter := true
   moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
 
-private def inspectorDir (pkg : Package) : FilePath := pkg.dir / "tools" / "lean-inspector"
+-- Resolve Lake's current package at runtime; copied config oleans contain no host root.
+private partial def repositoryDir (pkg : Package) : IO FilePath := do
+  let rec ascend (dir : FilePath) : IO FilePath := do
+    if (← (dir / "lakefile.toml").pathExists) &&
+        (← (dir / "lean-toolchain").pathExists) then return dir
+    if let some parent := dir.parent then
+      if parent != dir then return ← ascend parent
+    throw <| IO.userError "Inspector repository root not found"
+  ascend (← IO.FS.realPath pkg.dir)
 
-private def nativeCommand (pkg : Package) (args : Array String) : IO.Process.SpawnArgs :=
-  { cmd := "python3", args := #[((inspectorDir pkg) / "native.py").toString] ++ args,
-    cwd := some pkg.dir }
-
+private def nativeCommand (pkg : Package) (args : Array String) : IO IO.Process.SpawnArgs := do
+  let root ← repositoryDir pkg
+  return {
+    cmd := "python3", args := #[(root / "tools/lean-inspector/native.py").toString] ++ args
+    cwd := some root }
 -- Direct phase observations survive a cache-writer process that buffers Lake's
 -- output. They never participate in traces, reuse or admission decisions.
 private def observePhase (phase boundary : String) : IO Unit := do
@@ -41,14 +50,14 @@ package_facet reportBatch (_pkg : Package) : ReportState := do
   Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← Std.Mutex.new ()⟩
 
 private def validateArtifact (pkg : Package) (args : Array String) : JobM UInt32 := do
-  return (← IO.Process.output (nativeCommand pkg (#["validate"] ++ args))).exitCode
+  return (← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))).exitCode
 
 /-- Utility input is generated once per invocation by its existing .NET owner.
 This job deliberately has no content trace: each module traces its own record. -/
 package_facet reportInputs (pkg : Package) : FilePath := do
   Job.async do
-    proc (nativeCommand pkg #["prepare", pkg.dir.toString])
-    return pkg.buildDir / "lean-inspector" / "inputs.json"
+    proc (← nativeCommand pkg #["prepare", (← repositoryDir pkg).toString])
+    return (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs.json"
 
 private def readJson (path : FilePath) : IO Json := do
   IO.ofExcept (Json.parse (← IO.FS.readFile path))
@@ -74,7 +83,7 @@ Raw configuration identity belongs to the aggregate; module exports carry
 Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  return Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
+  return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "compatibility"))
 
 /-- A completed native build, not yet accepted by the canonical validator.
 Only private jobs carry this value; it is never a public report facet. -/
@@ -152,9 +161,9 @@ module_data inspectorPreparedReport : PreparedArtifact
 module_data inspectorUnvalidatedReport : UnvalidatedArtifact
 
 private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := withCurrPackage mod.pkg do
-  let pkg := mod.pkg
+  let pkg := (← getWorkspace).root
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  let utility := pkg.buildDir / "lean-inspector" / "inputs" / s!"{mod.name}.json"
+  let utility := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
   let record ← readJson utility
   let claims ← strings record "claims"
   let reported ← (← fetch <| pkg.facet `reportSourceModules).await
@@ -179,7 +188,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourcePaths : Array String := #[]
   for dependency in sourceModules do
     if dependency.name != mod.name && reported.contains dependency.name then continue
-    let path := (relPathFrom pkg.dir dependency.leanFile).toString
+    let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
     unless path.startsWith ".lake/" || path.startsWith "../" do
       sourcePaths := sourcePaths.push path
   writeBinFileIfChanged (utility.addExtension "sources.json")
@@ -189,7 +198,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let inspector ← reportInspector.fetch
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
-  let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"
+  let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
@@ -199,14 +208,14 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       let info ← exportJob.await
       addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let executable ← inspector.await
-    let args := #[pkg.dir.toString, mod.name.toString, mod.leanFile.toString,
+    let args := #[(← repositoryDir pkg).toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]
     let build := do
-      proc { (nativeCommand pkg (#["module"] ++ args)) with env }
+      proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
       pure PUnit.unit
     let inputTrace ← getTrace
     let artifact? ← probeArtifact file build
-      #["module", pkg.dir.toString, mod.name.toString, utility.toString]
+      #["module", (← repositoryDir pkg).toString, mod.name.toString, utility.toString]
     return ⟨file, args, env, inputTrace, artifact?.map fun row => {row with productionArgs? := some args}⟩
 
 private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := do
@@ -217,7 +226,7 @@ private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) 
   return cast (by simp [key]) job
 
 private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArtifact) := withCurrPackage mod.pkg do
-  let pkg := mod.pkg
+  let pkg := (← getWorkspace).root
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
   reportState.started.modify (·.insert mod.name)
   let prepared ← preparedModuleReport mod
@@ -230,7 +239,7 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArti
       setTrace (← row.outputTrace.get)
       return row
     let direct := do
-      proc { (nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
+      proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
       pure PUnit.unit
     let pending := request.file.addExtension "pending"
     let build := if batch?.isSome then do
@@ -239,7 +248,7 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArti
       else direct
     try
       let row ← uncheckedArtifact request.file build
-        #["module", pkg.dir.toString, mod.name.toString, request.args[3]!]
+        #["module", (← repositoryDir pkg).toString, mod.name.toString, request.args[3]!]
       -- A rejected optional output reconstructs through the same native owner,
       -- outside the initial shared production job, with cache reads disabled.
       return {row with build := direct, productionArgs? := some request.args}
@@ -254,17 +263,18 @@ private def nativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArtifact)
   return cast (by simp [key]) job
 
 module_facet report (mod : Module) : FilePath := withCurrPackage mod.pkg do
-  let reportState ← (← fetch <| mod.pkg.facet `reportBatch).await
+  let pkg := (← getWorkspace).root
+  let reportState ← (← fetch <| pkg.facet `reportBatch).await
   (← nativeModuleReport mod).mapM fun row =>
-    reportState.validation.atomically do acceptArtifact mod.pkg row
+    reportState.validation.atomically do acceptArtifact pkg row
 
 private def runBatch (pkg : Package) (requests : Array (String × Array String)) : JobM (Array Nat) := do
-  let requestFile := pkg.buildDir / "lean-inspector" / "batch.json"
-  let resultFile := pkg.buildDir / "lean-inspector" / "batch-results.json"
+  let requestFile := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "batch.json"
+  let resultFile := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "batch-results.json"
   IO.FS.writeFile requestFile (Lean.toJson requests).compress
   let env := (← getWorkspace).augmentedEnvVars
   try
-    let result ← IO.Process.output { (nativeCommand pkg #["batch", requestFile.toString, resultFile.toString]) with env }
+    let result ← IO.Process.output { (← nativeCommand pkg #["batch", requestFile.toString, resultFile.toString]) with env }
     unless result.stdout.isEmpty do logInfo result.stdout
     unless result.stderr.isEmpty do logInfo result.stderr
     unless result.exitCode == 0 do error s!"Inspector batch exited with code {result.exitCode}"
@@ -276,7 +286,8 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
     removeFileIfExists requestFile
     removeFileIfExists resultFile
 
-package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
+package_facet report (owner : Package) : FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
   observePhase "lake-inputs" "start"
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
   let inputs ← (← fetch <| pkg.facet `reportInputs).await
@@ -285,14 +296,14 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   observePhase "lake-inputs" "finish"
   -- Demand ordinary defaults independently of row traces. Audit/default-only
   -- changes still fail the invocation without invalidating unrelated rows.
-  let defaults ← match ← (parseTargetSpec (← getWorkspace) s!"@{pkg.baseName}").toBaseIO with
-    | .ok specs => pure specs
+  let mut defaults := #[]
+  for name in (if pkg.baseName == `reg then #[`trureturing, `reg] else #[pkg.baseName]) do
+    match ← (parseTargetSpec (← getWorkspace) s!"@{name}").toBaseIO with
+    | .ok specs => defaults := defaults ++ specs
     | .error err => error err.toString
   observePhase "lake-defaults" "start"
   discard <| (← buildSpecs defaults).await
   observePhase "lake-defaults" "finish"
-  -- Shared native dependency jobs compose continuations; no per-miss promise
-  -- wait, readiness polling, or independent dependency/freshness planner.
   let alreadyStarted ← reportState.started.get
   let mut members : Lean.NameSet := {}
   let mut prepared := #[]
@@ -322,13 +333,14 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let membership ← inputBinFile inputs
   ((Job.collectArray rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts =>
     reportState.validation.atomically do
+    let root ← repositoryDir pkg
     let paths := artifacts.map (·.path.toString)
-    let file := pkg.buildDir / "lean-inspector" / "report.zip"
+    let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "report.zip"
     let pending := file.addExtension "pending"
     let direct := do
-      proc (nativeCommand pkg (#["aggregate", pkg.dir.toString, file.toString] ++ paths))
+      proc (← nativeCommand pkg (#["aggregate", (← repositoryDir pkg).toString, file.toString] ++ paths))
       pure PUnit.unit
-    let check := #["report", pkg.dir.toString]
+    let check := #["report", (← repositoryDir pkg).toString]
     let mut initialTrace := BuildTrace.nil "<collection>"
     for row in artifacts do
       initialTrace := initialTrace.mix (← row.outputTrace.get).withoutInputs
@@ -336,15 +348,12 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
     let inputTrace ← getTrace
     let aggregate? ← probeArtifact file direct check
     setTrace inputTrace
-    -- A single validator invocation checks every actual row and the reused
-    -- aggregate, or constructs the missing aggregate from those rows. Its
-    -- material identity memo lives only for this invocation; all bytes are
-    -- read, CRC-checked and hashed at every validation boundary.
+    -- Validate every row and aggregate, including material integrity, once per batch.
     let requests := artifacts.map fun row =>
-      ("validate", #[pkg.dir.toString] ++ row.check ++ #[row.path.toString])
+      ("validate", #[root.toString] ++ row.check ++ #[row.path.toString])
     let aggregateRequest := match aggregate? with
-      | some row => ("validate", #[pkg.dir.toString] ++ check ++ #[row.path.toString])
-      | none => ("aggregate", #[pkg.dir.toString, pending.toString] ++ paths)
+      | some row => ("validate", #[root.toString] ++ check ++ #[row.path.toString])
+      | none => ("aggregate", #[root.toString, pending.toString] ++ paths)
     let repairFiles ← IO.mkRef (#[] : Array FilePath)
     try
       let statuses ← runBatch pkg (requests.push aggregateRequest)
