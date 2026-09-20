@@ -3,7 +3,7 @@
 # A ternary shadow can cover despite distinct downward-closed labels
 
 There is an eleven-box cover of the full ternary cube on five coordinates
-with one box per nonzero exponent vector, nonempty downward closure,
+with eleven distinct nonzero exponent vectors, nonempty downward closure,
 disjoint boxes at comparable distinct vectors, and a private point for
 every box. Every coordinate interleaving still misses part of the cube
 when restricted to its prefix-compatible boxes.
