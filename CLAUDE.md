@@ -580,11 +580,11 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 8.1 分层 make 入口与器谱
 
 **一器一门,门随层设**:构建/发射/校验/开工走所属层唯一 make 入口。根 `Makefile` 管内容(`make test` 数学门,`make help` 活器谱);`tools/Makefile` 管工具(`make -C tools test` 及 build/selftest 目标,器谱 `make -C tools help`)。层内只委托 canonical 实现,跨层零配方复制,哪层坏修哪层。
-**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`preflight`(预证三 required check)、`gate`、`test`、`worktree KIND=x NAME=y`、`worktree-clean`、`pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr-open 以消息首行为标题,建 PR、隔离 App token、按显式选项 arm 并同步等 required CI,缺省不 arm auto-merge;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
+**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`preflight MODE=fast|push|pr|full`(按任务显式选模式,范围见第 8.2 条)、`gate`、`test`、`worktree KIND=x NAME=y`、`worktree-clean`、`pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr-open 以消息首行为标题,建 PR、隔离 App token、按显式选项 arm 并同步等 required CI,缺省不 arm auto-merge;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
 
 ### 8.2 本地早反馈与远端 CI 并行
 
-**本地与 CI 同一器,本地预证非强制**:`make gate` 同门脚本,`make preflight` 一命令预证三 required checks(engineering 全步骤含反证编译+admission,CI=true 复现 deterministic `/_/` 映射等环境)。提交前按判断跑必要测试,CI 红再跑全量 preflight 定位;本机噪声会使本地红不具权威。
+**本地与 CI 共用检查器,本地预证非强制**:`make gate` 同门脚本;`make preflight` 无默认模式,缺参提示 fast/push/pr/full 并在任何规划/构建前失败。AI 按工作选择:器代码迭代用 `make preflight MODE=fast`(既有 .NET 快速结构测试,不证明 Lean 或 admission)+定向测试;Lean 迭代用定向 `make lean`;完整增量校验用 `make preflight MODE=push BASE=<40-hex-commit-sha>`(显式已有非零 commit 基线到当前工作树,含多提交、暂存/未暂存/未跟踪/删除;无资源文档变更可不启动 .NET);集成校验用 `make preflight MODE=pr BASE=<40-hex-commit-sha>`(干净已提交源树的隔离合并候选及 delta);只有主动全树诊断才用 `make preflight MODE=full`(完整当前输入,保留正常缓存与增量 producer)。fast/full 不接 BASE 或 push 范围;push 只接受匹配显式 BASE/HEAD 的完整 CI_PUSH_BEFORE/AFTER 副本,无隐式父提交/remote 回退。共享模式拒继承原生 push 事件、reusable workflow candidate 输入和陈旧 CANDIDATE_SHA。push/full 运行登记所需 engineering/current,pr 加 delta;相同候选、范围与语义环境的共享检查与 CI 等价,fast 不在等价域。提交前按判断跑必要测试,CI 红后按失败范围选模式定位;本机噪声会使本地红不具权威。
 **不变三项**:①CI 三门唯一权威,完成引用其机器判词,本地绿不替代;②本地绿而 CI 红仍是器 bug,最高优先修;③改 CI 自身依第 8.12 条真跑。本款只区分是否本地预跑,不削 CI 检测。
 **本地验证与远端 CI 必须并行**:提交即推,推后跑本地,不得等本地绿才 push;本地先红就修后再推,本地只是早反馈而非推送闸。〔守护:**软**·并行靠评审;完成仍须 CI 三门判词〕
 
