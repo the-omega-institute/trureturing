@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -31,8 +31,8 @@ HERE = Path(__file__).resolve().parent
 CERTIFICATE = 'certificates/finite_core_approximation_certificate.json'
 PRIMES = (3, 5, 7, 11, 13)
 PINS = {
-    'verify_pg1_lifted_global_cap.py': '1b5d306f4e4418dab1d2ecca17610298f1fce0a9934b87aa861d0c8b6efc1acf',
-    'certificates/uniform_gamma_cofactor_certificate.json': 'bc8dd94c2471cb6ae97479c241553183b2585774a2ba09291eb267a612d05c6c',
+    'verify_pg1_lifted_global_cap.py': '2c437c90cbc390e0dff5b759ac5341078e2ba3a7fe4b3316ed83e54a0c4bdefb',
+    'certificates/uniform_gamma_cofactor_certificate.json': '1739213682c47464c2d0a4e72f90ef98fb0813dcddae96bea250b355fbaea366',
     'certificates/star_block_obstruction_certificate.json': 'a378fed7d44cb1dd77fa81b9d9888cc248014011bf8a25aafeeceab8166a1907',
 }
 

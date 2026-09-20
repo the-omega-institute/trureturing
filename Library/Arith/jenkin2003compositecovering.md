@@ -40,10 +40,10 @@ resulting moduli or provide a covering choice among duplicate classes.
 Theorem 3, page 3, cites Simpson's bound
 n >= 1+sum_p H_p(p−1) for an irredundant whole cover with full period
 product_p p^H_p. That bound is already retained in
-[report 343](../../docs/reports/erdos7-odd-covering/profile-notes/343-original-prefix-sat-reductions-and-transport-obstructions.md).
+[report 343](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md).
 No source text or scan is vendored by this citation note.
 
-[Report 350](../../docs/reports/erdos7-odd-covering/profile-notes/350-extremal-paired-branch-and-source-support.md)
+[Report 350](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/350-extremal-paired-branch-and-source-support.md)
 applies these reductions to a hypothetical distinct odd cover chosen
 first by minimum cardinality, then by minimum modulus sum. It identifies
 the literal parent-child residual collisions and their private-point
