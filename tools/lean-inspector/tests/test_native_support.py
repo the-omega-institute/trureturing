@@ -128,6 +128,7 @@ root = "Cache"
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,
+            STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
@@ -306,9 +307,9 @@ root = "Cache"
         elif success is False:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
-    def build(self, success=True):
+    def build(self, success=True, *, targets=()):
         self.write('activity.jsonl', '')
-        return self.run_lake('build', ':report', success=success)
+        return self.run_lake('build', ':report', *targets, success=success)
     def stamps(self):
         return {p.stem: (p.stat().st_mtime_ns, publication.digest(p)) for p in (self.root / '.lake/build/lean-inspector/modules').glob('*.zip')}
     def report(self):

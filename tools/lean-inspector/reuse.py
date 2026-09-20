@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate optional evidence that the complete report entry has no new work.
 
-The report semantic version, the Lean and configuration inputs, the explicitly
+The report semantic version, the report-module and configuration inputs, the explicitly
 registered execution environment and the complete five-piece report are sealed
 only after defaults/report/publication succeed. Producer program bytes are not
 part of the seal; the semantic version is their compatibility contract. A receipt selects no rules and grants no check success. A miss returns
@@ -57,14 +57,11 @@ def capture(repository, lake):
             versions[name] = version
     except (OSError, UnicodeError, ValueError, subprocess.SubprocessError) as error:
         return dict(eligible=False, reason='toolchain-unavailable', detail=str(error))
-    # Report bytes are a function of the Lean sources Lake compiles (every report
-    # module, its registered Lean dependencies and the inspector), the build configuration and the execution
-    # environment. Producer programs (C#, scripts, build properties) are never
-    # hashed here: their compatibility is the explicit report_cache_release_semantic_version,
-    # bumped by the change that alters report semantics. Addition/deletion of a
-    # Lean source changes the exact map.
-    paths = sorted(set(inputs.dependency_sources() + inputs.expand('inspector_sources')
-                       + inputs.expand('config_inputs')))
+    # This receipt binds report data. FILEMAP's registered program targets are
+    # a separate Lake build obligation enforced by inspect.sh on both hit/miss.
+    # Inspector/audit implementation bytes do not invalidate report data; an
+    # incompatible program change must bump the explicit semantic version.
+    paths = sorted(set(inputs.expand('report_modules') + inputs.expand('config_inputs')))
     files = {}
     for path in paths:
         source = inputs.safe_file(path)

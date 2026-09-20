@@ -9,11 +9,13 @@ namespace StrataLint.Cli;
 internal sealed partial class ProductionCliEnvironment
 {
     private ExplicitCommandResult ExecuteCommonCurrent(string round, CommonExecutionEvidence.ValidationScope validation,
-        ValidatedPolicy policy, AcceptedLeanClosure? lean, LeanAxiomReport? report, string[]? selectedIds = null)
+        ValidatedPolicy policy, AcceptedLeanClosure? lean, LeanAxiomReport? report, string[]? selectedIds = null,
+        ResourceExecutionPlan? resourcePlan = null)
     {
         using var trace = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         var snapshot = validation.Snapshot;
         var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, validation, round);
+        CommonExecutionEvidence.ValidateExecutionPlan(repositoryRoot, build, resourcePlan, "current");
         var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds, validation);
         var assembly = typeof(DocumentAssembly).Assembly;
         CheckWork Scribe(string id, string[] arguments, bool capability = false)
@@ -37,15 +39,16 @@ internal sealed partial class ProductionCliEnvironment
         if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
         if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
         {
-            var declaration = validation.CheckManifest().Single(check => check.Id == "scribe-markdown");
-            var paths = EngineeringProjectRegistry.ExpandInputs(snapshot.Files.Keys.Select(path => path.Value), declaration.PathInventory, [], declaration.Id);
-            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", paths) + "\0");
+            var scope = checks.MarkdownScope ?? throw new InvalidDataException("missing scribe-markdown inspection scope");
+            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", scope.Paths) + "\0");
             return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
                 "--paths-from", Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths)]);
         });
         if (checks.Ids.Contains("filemap")) checks.Run("filemap", () =>
         {
-            var result = FileMapConform([]);
+            CommonExecutionEvidence.Write(repositoryRoot, CommonExecutionEvidence.FileMapScopePath,
+                checks.FileMapScope ?? throw new InvalidDataException("missing filemap inspection scope"));
+            var result = FileMapConform(["--scope", CommonExecutionEvidence.FileMapScopePath]);
             return new([new("filemap", result.ExitCode, result.Output + result.Error)]);
         });
         if (!checks.Ids.Any(id => id.StartsWith("SL-", StringComparison.Ordinal)))

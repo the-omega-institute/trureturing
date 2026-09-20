@@ -145,8 +145,7 @@ class ReuseTests(unittest.TestCase):
 
     def test_input_changes_additions_deletions_and_environment_invalidate_receipt(self):
         api = self.receipt()
-        for path in ['D5/A.lean', 'Audit.lean', 'Inspector.lean',
-                     'lean-toolchain', 'lakefile.toml']:
+        for path in ['D5/A.lean', 'lean-toolchain', 'lakefile.toml']:
             with self.subTest(changed=path):
                 source = self.root / path
                 original, stamp = source.read_bytes(), source.stat()
@@ -172,20 +171,20 @@ class ReuseTests(unittest.TestCase):
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
         captured = api.capture(self.root, self.lake)
-        source = self.root / 'Audit.lean'
+        source = self.root / 'D5/A.lean'
         source.chmod(0o755)
         self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'],
-                        '[FAIL] lean_source_mode_change_invalidates_reuse')
+                        '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
             api.seal(self.root, self.report, self.lake, captured)
 
     def test_producer_program_bytes_never_gate_reuse(self):
         api = self.receipt()
         captured = api.capture(self.root, self.lake)
-        producer_only = ['producer.py', 'tools/scripts/report/lean-report-selection.py']
-        self.assertTrue(all(path.endswith('.lean') or path in ('lean-toolchain', 'lakefile.toml')
-                            for path in captured['files']),
-                        '[FAIL] receipt_population_is_lean_and_configuration_only: ' + repr(sorted(captured['files'])))
+        producer_only = ['producer.py', 'tools/scripts/report/lean-report-selection.py',
+                         'Inspector.lean', 'Audit.lean']
+        self.assertEqual(set(captured['files']), {'D5/A.lean', 'lean-toolchain', 'lakefile.toml'},
+                         '[FAIL] receipt_population_is_report_modules_and_configuration_only')
         self.assertFalse(set(producer_only + ['lean-report-inputs.json']) & set(captured['files']),
                          '[FAIL] producer_program_not_hashed')
         for path in producer_only:
@@ -302,14 +301,15 @@ class ReuseTests(unittest.TestCase):
     def test_seal_and_reuse_reject_input_changes_during_work(self):
         api = self.receipt()
         captured = api.capture(self.root, self.lake)
-        self.write('Audit.lean', 'def audit := 2\n')
+        self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
             api.seal(self.root, self.report, self.lake, captured)
+        self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
         def mutate_after_publish(*args, **kwargs):
             publish(*args, **kwargs)
-            self.write('Audit.lean', 'def audit := 3\n')
+            self.write('D5/A.lean', 'def a := 3\n')
         with patch.object(publication, 'publish', side_effect=mutate_after_publish):
             self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())
@@ -328,6 +328,90 @@ class ReuseTests(unittest.TestCase):
             api.probe(self.root, self.report, self.lake)
         with self.assertRaisesRegex(ValueError, 'report_execution'):
             api.reuse(self.root, self.report, self.output, self.lake)
+
+    def entry_with_program_build(self, targets, *, seed=True, build_exit=0):
+        # Exercise the actual shell entry and report receipt, replacing only the
+        # external cache/build processes. No Lean compilation is needed here.
+        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+                         'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                         'tools/scripts/lib/resource-observation-lib.sh',
+                         'tools/scripts/workflow/ci_plan.py'):
+            target = self.root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+        ensure = self.root / 'tools/scripts/worktree/lean-cache-ensure.sh'
+        ensure.write_text('#!/bin/bash\nset -euo pipefail\n'
+                          'test ! -e .lake\nprintf "ensure\\n" >> build-calls\nmkdir .lake\n')
+        runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
+        runner.write_text('#!/bin/bash\nset -euo pipefail\n'
+                          'printf "%s\\n" "$*" >> build-calls\n'
+                          'exit ' + str(build_exit) + '\n')
+        runner.chmod(0o755)
+        self.receipt()
+        if not seed:
+            publication.member(self.report, '.reuse.json').unlink()
+        elif seed == 'corrupt':
+            publication.member(self.report, '.reuse.json').write_text('damaged receipt')
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        producer = self.root / 'producer.dll'
+        producer.write_text('fixture executable')
+        environment = dict(os.environ, LAKE_BIN=str(self.lake),
+            STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
+            STRATALINT_LEAN_REPORT_REUSE=str(self.report),
+            STRATALINT_LEAN_BUILD_TARGETS=json.dumps(targets))
+        if targets is None:
+            environment.pop('STRATALINT_LEAN_BUILD_TARGETS')
+            self.write('Meta/ci-resources.json', json.dumps(dict(
+                schema='ci-resource-execution-v1', resources=[dict(
+                    id='fixture-program-build', projects=[], checks=[], steps=[],
+                    lean_targets=['FixtureAudit'])])))
+        result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+            '--repository', str(self.root), '--output', str(self.output),
+            '--log-dir', str(self.root / 'logs')], env=environment, text=True, capture_output=True)
+        calls = self.root / 'build-calls'
+        return result, calls.read_text().splitlines() if calls.exists() else []
+
+    def test_exact_report_reuse_still_builds_registered_program_targets(self):
+        targets = ['LeanInformationAudit', 'leanInspector/reportInspector']
+        result, calls = self.entry_with_program_build(targets)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['ensure', str(self.lake) + ' build ' + ' '.join(targets)])
+        self.assertEqual(self.output.read_bytes(), self.report.read_bytes())
+        self.assertTrue(publication.member(self.output, '.reuse.json').is_file())
+
+    def test_reused_report_cannot_mask_program_build_failure(self):
+        result, calls = self.entry_with_program_build(['LeanInformationAudit'], build_exit=42)
+        self.assertEqual(result.returncode, 42, result.stdout + result.stderr)
+        self.assertEqual(len(calls), 2)
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
+    def test_report_miss_combines_program_and_report_in_one_lake_build(self):
+        targets = ['LeanInformationAudit', 'leanInspector/reportInspector']
+        result, calls = self.entry_with_program_build(targets, seed=False, build_exit=42)
+        self.assertEqual(result.returncode, 42, result.stdout + result.stderr)
+        self.assertEqual(calls, ['ensure', str(self.lake) + ' build :report ' + ' '.join(targets)])
+
+    def test_report_reuse_without_program_obligation_needs_no_build_cache(self):
+        result, calls = self.entry_with_program_build([])
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, [])
+
+    def test_corrupt_report_seed_keeps_program_build_in_normal_report_invocation(self):
+        result, calls = self.entry_with_program_build(['LeanInformationAudit'], seed='corrupt', build_exit=42)
+        self.assertEqual(result.returncode, 42, result.stdout + result.stderr)
+        self.assertEqual(calls, ['ensure', str(self.lake) + ' build :report LeanInformationAudit'])
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
+    def test_invalid_program_target_fails_before_provisioning(self):
+        result, calls = self.entry_with_program_build(['--invalid-build-option'])
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertEqual(calls, [])
+        self.assertIn('lean_targets requires', result.stderr)
+
+    def test_direct_report_entry_uses_registered_program_targets(self):
+        result, calls = self.entry_with_program_build(None)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['ensure', str(self.lake) + ' build FixtureAudit'])
 
 
 if __name__ == '__main__':

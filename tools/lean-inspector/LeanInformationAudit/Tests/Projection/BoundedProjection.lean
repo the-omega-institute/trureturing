@@ -37,7 +37,8 @@ run_cmd do
       (← mkConstWithFreshMVarLevels ``arena) #[``aFirst, ``bSecond, ``cThird]
       `Bounded `cube ``arena `BoundedProjection).run #[]
   let ((projection, _, layers), declarations) ← liftTermElabM prepare
-  let ((repeated, _, repeatedLayers), _) ← liftTermElabM prepare
+  let ((repeated, _, repeatedLayers), repeatedDeclarations) ← liftTermElabM prepare
+  let _ ← liftCoreM <| stageDeclarations (← getEnv) repeatedDeclarations
   unless !projection.completeLatticeMaterialized do throwError "bounded projection flag"
   unless projection.nodes.size == 6 do throwError "bounded cube must omit two singleton interiors"
   let keys := projection.nodes.map (·.key)
@@ -72,8 +73,8 @@ run_cmd do
   let .ok repeatedAscii := renderAsciiHierarchy `Bounded `cube ``arena repeated
     | throwError "bounded cube repeated ASCII projection"
   unless ascii == repeatedAscii do throwError "bounded cube ASCII determinism"
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   for declaration in declarations do
-    liftCoreM <| addDecl declaration
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
   modifyEnv (projectionFixtureStore.addEntry · projection)
