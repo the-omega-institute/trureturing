@@ -30,13 +30,13 @@ internal sealed class SharmaPrimitivePolynomialRefutationDocument : IScribeDocum
             Node("SourceLeadingCoefficient", "The source leading coefficient",
                 Equal(F.Id("SourceLeadingCoefficient"), F.D(1)),
                 "The actual source coefficient is 1 in Fin 2. This constant occurs in the "
-                    + "original public theorem statement and is also the arena input state.",
+                    + "original public theorem statement and fixes the monic source polynomial.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("sourcePolynomial", "The coefficient-parameterized source polynomial",
                 SourcePolynomialFormula(),
-                "For a coefficient cut c, sourcePolynomial is C(val(c)) X^p + X + C(lam). "
+                "For a coefficient c, sourcePolynomial is C(val(c)) X^p + X + C(lam). "
                     + "The actual source coefficient is the Fin 2 value 1; the coefficient parameter "
-                    + "is retained in the full family so that the law measures the stated input.",
+                    + "is retained in the full polynomial family.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("claimFor", "The complete universal source claim at one coefficient",
                 Iff(Call("claimFor", F.Id("c")), ClaimForFormula(F.Id("c"))),
@@ -56,7 +56,7 @@ internal sealed class SharmaPrimitivePolynomialRefutationDocument : IScribeDocum
                     + "The Lean theorem result proves this proposition unconditionally.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("QuadraticField41", "The executable quadratic field at p equals 41", null,
-                "The counterexample arena is QuadraticAlgebra (ZMod 41) 3 0, with the nonsquare "
+                "The counterexample field is QuadraticAlgebra (ZMod 41) 3 0, with the nonsquare "
                     + "witness and finite cardinality supplied in Lean. Its cardinality is 41 squared.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("lambda41", "The primitive lambda certificate", null,
@@ -81,32 +81,10 @@ internal sealed class SharmaPrimitivePolynomialRefutationDocument : IScribeDocum
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("denseCertificateIdentityFor", "The universal root certificate",
                 DenseCertificateFormula(),
-                "For every field extension L and every root alpha of the coefficient-dependent source "
-                    + "polynomial, evaluating the certificate polynomial gives z with z^83 = alpha. "
-                    + "This is the certificate-dependent obstruction used in the full refutation.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
-            Node("fullCounterexampleLaw", "The complete coefficient-sensitive law",
-                FullLawFormula(),
-                "The law contains all three substantive components: actual degree 41, the universal "
-                    + "root certificate, and negation of the full claim at the observed coefficient. "
-                    + "Changing the coefficient to zero gives degree one, so the altered law fails and "
-                    + "the readout is genuinely varied and slot-sensitive.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
-            Node("sourceCounterexampleArena", "The finite source counterexample arena", null,
-                "The arena's law reads the actual coefficient SourceLeadingCoefficient from the "
-                    + "registered state and then applies fullCounterexampleLaw. The inline registration "
-                    + "constructs a LegacyPrimitiveRealization equivalence: the forward direction "
-                    + "proves the source degree and certificate and retains the incoming claim negation; "
-                    + "the reverse direction projects that negation.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
-            Node("actualSourceCoefficientRealization", "The actual source coefficient realization", null,
-                "The actual realization returns each coefficient cut unchanged. It therefore reads the "
-                    + "source coefficient 1 through the enrolled direct record and feeds that value into "
-                    + "the degree, certificate, and claim-negation law.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
-            Node("alternateSourceCoefficientRealization", "The altered coefficient realization", null,
-                "The altered realization returns coefficient zero. Its degree-one polynomial proves the "
-                    + "required sensitivity witness for the same declared law.",
+                "This predicate states that, for every field extension L and every root alpha of the "
+                    + "coefficient-dependent source polynomial, evaluating the certificate polynomial "
+                    + "gives z with z^83 = alpha. The private certificate_evaluation theorem proves "
+                    + "this property at SourceLeadingCoefficient, and result uses that theorem.",
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("result", "The full source conjecture is false", ResultFormula(),
                 "At p=41 take K = QuadraticAlgebra (ZMod 41) 3 0 and lambda = 5 + u. The "
@@ -180,12 +158,6 @@ internal sealed class SharmaPrimitivePolynomialRefutationDocument : IScribeDocum
                 Equal(new Formula.Power(Call("aeval", alpha,
                         F.Id("certificatePolynomial")), F.D(8, 3)), alpha)))));
     }
-
-    private static Formula FullLawFormula() =>
-        And(Equal(Call("natDegree", Call("sourcePolynomial", F.D(4, 1), F.Id("c"),
-                F.Id("lambda41"))), F.D(4, 1)),
-            And(Call("denseCertificateIdentityFor", F.Id("c")),
-                new Formula.Not(Call("claimFor", F.Id("c")))));
 
     private static Formula ResultFormula() => new Formula.Not(F.Id("fullClaim"));
 

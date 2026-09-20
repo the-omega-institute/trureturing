@@ -57,7 +57,7 @@ The certificate uses
  \lambda = 5+u,
 \]
 where \(u^2=3\). The kernel checks that \(|K|=41^2=1681\), that λ has
-order \(1680=|K|-1\), and that the actual source polynomial has degree 41.
+order \(1680=|K|-1\). The actual source polynomial is \(X^{41}+X+\lambda\).
 The 41 coefficients in `certificateCoefficients` are multiplied by eight
 exact product identities. Horner semantics then give, for every field
 extension \(L/K\) and every root α of \(X^{41}+X+\lambda\),
@@ -73,18 +73,13 @@ is impossible. The argument uses the source's full universal root certificate
 and multiplicative-order conclusion; it does not replace them by a finite
 enumeration or by a coefficient-content statement.
 
-## Registration and bounded literature scope
+## Registration boundary and bounded literature scope
 
-The four-slot registration is source-owned by `sourceCounterexampleArena`.
-Its readout is the enrolled direct `sourceCoefficientRealization`, its law
-contains the actual degree-41 condition, the coefficient-dependent universal
-root certificate, and the full claim negation. The merged `realization inline`
-syntax produces a registration-owned `LegacyPrimitiveRealization`: its forward
-direction proves the degree and root certificate from the source and retains
-the incoming full-claim negation; its reverse direction projects that negation.
-There is no separately authored bridge theorem. The altered coefficient zero
-has degree one, providing the variation and slot-sensitivity witnesses. The
-continuation is explicitly `open`; no frozen identifier or
+The D5 module contains the mathematical source and refutation, with no inline
+information registration or judge imports. Registration belongs to the
+separate `Reg` package under #5214; this artifact supplies no replacement
+registration. The complete source claim, primitive-lambda witness and universal
+root certificate remain in D5. No frozen identifier or
 `OpenProblemResolutionClaim` is asserted in this pre-Freeze artifact.
 
 The candidate was numerically discovered before

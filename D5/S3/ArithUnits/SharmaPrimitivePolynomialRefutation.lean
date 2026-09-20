@@ -12,19 +12,11 @@ import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.FieldTheory.Minpoly.Basic
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.Tactic
-import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
-import LeanInformationAudit.Syntax
-import LeanInformationAudit.SealCommand
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.ArithUnits.SharmaPrimitivePolynomialRefutation
-
-open D5.S3.ConceptDynamics.InformationEscape
-open D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-open LeanInformationAudit
 
 universe u
 
@@ -325,10 +317,6 @@ def denseCertificateIdentityFor (c : Fin 2) : Prop :=
   ∀ (L : Type) (_ : Field L) (_ : Algebra QuadraticField41 L) (α : L),
     Polynomial.aeval α (sourcePolynomial (p := 41) c lambda41) = 0 →
       (Polynomial.aeval α certificatePolynomial) ^ 83 = α
-
-def fullCounterexampleLaw (c : Fin 2) : Prop :=
-  (sourcePolynomial (p := 41) c lambda41).natDegree = 41 ∧
-    denseCertificateIdentityFor c ∧ ¬ claimFor c
 
 private theorem certificate_evaluation (L : Type) [Field L]
     [Algebra QuadraticField41 L] (α : L)
@@ -658,77 +646,5 @@ theorem result : ¬ claimFor SourceLeadingCoefficient := by
     · exact certificateN_division_strict.1
     · simpa [certificateN] using hdvd
   exact (Nat.not_lt_of_ge hle) certificateN_division_strict.2
-
-private def sourceCoefficientRealization (f : Fin 2 → Fin 2) :
-    PrimitiveRealization (cutSignature (Fin 2) (Fin 2)) :=
-  ⟨fun _ => f, Fin.elim0⟩
-
-register_information_template sourceCoefficientRealization
-
-def actualSourceCoefficientRealization :
-    PrimitiveRealization (cutSignature (Fin 2) (Fin 2)) :=
-  sourceCoefficientRealization (fun c => c)
-
-def alternateSourceCoefficientRealization :
-    PrimitiveRealization (cutSignature (Fin 2) (Fin 2)) :=
-  sourceCoefficientRealization (fun _ => 0)
-
-def sourceCounterexampleArena : PrimitiveLawArena where
-  toArena := Arena.ofFintype (Fin 2)
-  signature := cutSignature (Fin 2) (Fin 2)
-  Law r :=
-    fullCounterexampleLaw (r.readout () SourceLeadingCoefficient)
-
-private theorem sourceCoefficient_variation :
-    FiniteLawVariation sourceCounterexampleArena := by
-  refine ⟨actualSourceCoefficientRealization, alternateSourceCoefficientRealization, ?_, ?_⟩
-  · change fullCounterexampleLaw SourceLeadingCoefficient
-    refine ⟨?_, ?_, result⟩
-    · norm_num [sourcePolynomial, SourceLeadingCoefficient]
-      rw [Polynomial.natDegree_add_eq_left_of_natDegree_lt]
-      · exact Polynomial.natDegree_X_pow 41
-      · rw [Polynomial.natDegree_X, Polynomial.natDegree_X_pow]
-        norm_num
-    · intro L _ _ α hroot
-      exact certificate_evaluation L α hroot
-  · intro h
-    change fullCounterexampleLaw (0 : Fin 2) at h
-    have hd := h.1
-    norm_num [sourcePolynomial] at hd
-
-private theorem sourceCoefficient_sensitivity :
-    FiniteSlotSensitivity sourceCounterexampleArena := by
-  constructor
-  · intro i
-    cases i
-    obtain ⟨r, r', hr, hr'⟩ := sourceCoefficient_variation
-    refine ⟨r, r', ?_, ?_, ?_⟩
-    · intro j hne
-      exact (hne rfl).elim
-    · intro j
-      exact Fin.elim0 j
-    · exact ⟨fun _ => hr', fun _ => hr⟩
-  · intro i
-    exact Fin.elim0 i
-
-register_information_theorem result in sourceCounterexampleArena
-  readout via (sourceCoefficientRealization (fun c : Fin 2 => c))
-  primitives actualSourceCoefficientRealization.toPrimitiveBundle
-  realization inline actualSourceCoefficientRealization := (by
-    constructor
-    change (¬ claimFor SourceLeadingCoefficient) ↔ fullCounterexampleLaw SourceLeadingCoefficient
-    constructor
-    · intro hresult
-      refine ⟨?_, ?_, hresult⟩
-      · norm_num [sourcePolynomial, SourceLeadingCoefficient]
-        rw [Polynomial.natDegree_add_eq_left_of_natDegree_lt]
-        · exact Polynomial.natDegree_X_pow 41
-        · rw [Polynomial.natDegree_X, Polynomial.natDegree_X_pow]
-          norm_num
-      · intro L _ _ α hroot
-        exact certificate_evaluation L α hroot
-    · exact fun h => h.2.2)
-  variation sourceCoefficient_variation sensitivity sourceCoefficient_sensitivity
-  escape from (SourceLeadingCoefficient) escape continues (open)
 
 end D5.S3.ArithUnits.SharmaPrimitivePolynomialRefutation

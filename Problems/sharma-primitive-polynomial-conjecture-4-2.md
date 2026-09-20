@@ -67,7 +67,8 @@ The refutation instantiates \(p=41\) with
 \(\lambda=5+u\), where \(u^2=3\). Eight kernel-checked coefficient-list
 product identities evaluate the certificate polynomial at any root α of
 \(X^{41}+X+\lambda\) and prove \(z^{83}=\alpha\). The same source proves
-\(|K|=1681\), `orderOf λ = 1680`, and the actual degree-41 condition.
+\(|K|=1681\) and `orderOf λ = 1680` for the source polynomial
+\(X^{41}+X+\lambda\).
 
 Assuming the conjecture for this λ would produce a degree-41 extension \(L\),
 so \(|L|=1681^{41}\) and a primitive α of order \(|L|-1\). Finite-field
@@ -80,13 +81,12 @@ negation.
 
 The source theorem is
 `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result`.
-The source-owned information law is
-`D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullCounterexampleLaw`;
-it includes the actual degree, the coefficient-dependent universal root
-certificate, and the negation of the coefficient-indexed claim. The actual
-readout uses `actualSourceCoefficientRealization`, while the zero-coefficient
-realization has degree one. The registration therefore records substantive
-variation and sensitivity, with the continuation marked `open` before Freeze.
+Its private `certificate_evaluation` theorem supplies the universal root
+certificate at `SourceLeadingCoefficient`. The proof of `result` combines
+that certificate with the primitive-lambda witness and the hypothetical
+degree-41 extension to negate the full source claim. Information registration
+belongs to the separate `Reg` package under #5214; this D5 module has no inline
+registration or judge imports.
 
 The utility header requests the typed closed-negation relation from
 `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullClaim` to

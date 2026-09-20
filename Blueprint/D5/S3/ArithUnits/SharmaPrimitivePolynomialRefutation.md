@@ -40,7 +40,7 @@ $$SourceLeadingCoefficient = 1$$
 
 *Commentary.*
 
-The actual source coefficient is 1 in Fin 2. This constant occurs in the original public theorem statement and is also the arena input state.
+The actual source coefficient is 1 in Fin 2. This constant occurs in the original public theorem statement and fixes the monic source polynomial.
 
 **Definition 1.4 (The coefficient-parameterized source polynomial).**
 
@@ -54,7 +54,7 @@ $$\operatorname{sourcePolynomial}\left(p, c, lambda\right) = \operatorname{C}\le
 
 *Commentary.*
 
-For a coefficient cut c, sourcePolynomial is C(val(c)) X^p + X + C(lam). The actual source coefficient is the Fin 2 value 1; the coefficient parameter is retained in the full family so that the law measures the stated input.
+For a coefficient c, sourcePolynomial is C(val(c)) X^p + X + C(lam). The actual source coefficient is the Fin 2 value 1; the coefficient parameter is retained in the full polynomial family.
 
 **Definition 1.5 (The complete universal source claim at one coefficient).**
 
@@ -108,7 +108,7 @@ Lean statement: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.QuadraticF
 
 *Commentary.*
 
-The counterexample arena is QuadraticAlgebra (ZMod 41) 3 0, with the nonsquare witness and finite cardinality supplied in Lean. Its cardinality is 41 squared.
+The counterexample field is QuadraticAlgebra (ZMod 41) 3 0, with the nonsquare witness and finite cardinality supplied in Lean. Its cardinality is 41 squared.
 
 **Definition 1.9 (The primitive lambda certificate).**
 
@@ -178,65 +178,9 @@ $$\forall L \in Type,\; ((\operatorname{Field}\left(L\right)) \land (\operatorna
 
 *Commentary.*
 
-For every field extension L and every root alpha of the coefficient-dependent source polynomial, evaluating the certificate polynomial gives z with z^83 = alpha. This is the certificate-dependent obstruction used in the full refutation.
+This predicate states that, for every field extension L and every root alpha of the coefficient-dependent source polynomial, evaluating the certificate polynomial gives z with z^83 = alpha. The private certificate_evaluation theorem proves this property at SourceLeadingCoefficient, and result uses that theorem.
 
-**Definition 1.14 (The complete coefficient-sensitive law).**
-
-$$(\operatorname{natDegree}\left(\operatorname{sourcePolynomial}\left(41, c, lambda41\right)\right) = 41) \land ((\operatorname{denseCertificateIdentityFor}\left(c\right)) \land (\neg \operatorname{claimFor}\left(c\right)))$$
-
-*Formalization.* `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullCounterexampleLaw` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Avnish K. Sharma (2026). *Primitive Polynomials of the Form g(x)+λ over Finite Fields: Non-Existence Results and Conjectures*. URL: <https://arxiv.org/abs/2608.07262v2>.
-
-*Commentary.*
-
-The law contains all three substantive components: actual degree 41, the universal root certificate, and negation of the full claim at the observed coefficient. Changing the coefficient to zero gives degree one, so the altered law fails and the readout is genuinely varied and slot-sensitive.
-
-**Definition 1.15 (The finite source counterexample arena).**
-
-Lean statement: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.sourceCounterexampleArena`
-
-*Formalization.* `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.sourceCounterexampleArena` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Avnish K. Sharma (2026). *Primitive Polynomials of the Form g(x)+λ over Finite Fields: Non-Existence Results and Conjectures*. URL: <https://arxiv.org/abs/2608.07262v2>.
-
-*Commentary.*
-
-The arena's law reads the actual coefficient SourceLeadingCoefficient from the registered state and then applies fullCounterexampleLaw. The inline registration constructs a LegacyPrimitiveRealization equivalence: the forward direction proves the source degree and certificate and retains the incoming claim negation; the reverse direction projects that negation.
-
-**Definition 1.16 (The actual source coefficient realization).**
-
-Lean statement: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.actualSourceCoefficientRealization`
-
-*Formalization.* `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.actualSourceCoefficientRealization` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Avnish K. Sharma (2026). *Primitive Polynomials of the Form g(x)+λ over Finite Fields: Non-Existence Results and Conjectures*. URL: <https://arxiv.org/abs/2608.07262v2>.
-
-*Commentary.*
-
-The actual realization returns each coefficient cut unchanged. It therefore reads the source coefficient 1 through the enrolled direct record and feeds that value into the degree, certificate, and claim-negation law.
-
-**Definition 1.17 (The altered coefficient realization).**
-
-Lean statement: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.alternateSourceCoefficientRealization`
-
-*Formalization.* `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.alternateSourceCoefficientRealization` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Avnish K. Sharma (2026). *Primitive Polynomials of the Form g(x)+λ over Finite Fields: Non-Existence Results and Conjectures*. URL: <https://arxiv.org/abs/2608.07262v2>.
-
-*Commentary.*
-
-The altered realization returns coefficient zero. Its degree-one polynomial proves the required sensitivity witness for the same declared law.
-
-**Theorem 1.18 (The full source conjecture is false).**
+**Theorem 1.14 (The full source conjecture is false).**
 
 $$\neg fullClaim$$
 
@@ -256,17 +200,13 @@ At p=41 take K = QuadraticAlgebra (ZMod 41) 3 0 and lambda = 5 + u. The certific
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.QuadraticField41`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.SourceLeadingCoefficient`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.SourcePrimitivePolynomial`
-- Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.actualSourceCoefficientRealization`
-- Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.alternateSourceCoefficientRealization`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.certificateCoefficients`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.certificateN`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.certificatePolynomial`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.claimFor`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.denseCertificateIdentityFor`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullClaim`
-- Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullCounterexampleLaw`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.lambda41`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.publicResult`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result`
-- Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.sourceCounterexampleArena`
 - Truth anchor: `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.sourcePolynomial`
