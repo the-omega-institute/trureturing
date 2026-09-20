@@ -1,0 +1,16 @@
+**定义 19.7（截断逐边长度的路径距离）。**
+
+令
+
+$$
+r_m(e)=\frac{\min(m_x,m_y)}{w_{xy}},\qquad
+\ell_m(e)=\sqrt{\min\{1,r_m(e)\}}
+\quad(e=\{x,y\}),
+$$
+$$
+\boxed{\ d_m^{\rm ADS}(i,j)=\inf_{\gamma:i\leadsto j}\sum_{e\in\gamma}\ell_m(e).\ }
+\tag{19.114}
+$$
+
+这正是论文取 `θ=m, ω=w` 的式 (1.2)。`1` 与**整个比值**取最小值，不是把容量先与 1 取最小值再除以导纳。有限连通图与正边长使它成为有限距离，且 `d_m^{ADS}≤d_graph`。
+

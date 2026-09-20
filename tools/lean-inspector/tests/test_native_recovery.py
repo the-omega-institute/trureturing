@@ -36,7 +36,7 @@ class NativeRecoveryTests:
             directory = Path(directory)
             temporary = directory / 'tmp'
             temporary.mkdir()
-            for damage in ['none', 'missing', 'stale', 'stale-dependency']:
+            for damage in ['none', 'missing', 'stale', 'changed-dependency']:
                 with self.subTest(damage=damage):
                     root = directory / damage
                     shutil.copytree(self.root, root, ignore=shutil.ignore_patterns('.lake', '.git'))
@@ -46,7 +46,7 @@ class NativeRecoveryTests:
                     if damage == 'stale':
                         source = root / 'D5/Alone.lean'
                         source.write_text(source.read_text() + '-- changed input\n')
-                    elif damage == 'stale-dependency':
+                    elif damage == 'changed-dependency':
                         (root / 'ClaimSupport.lean').write_text('def claimSupport : Prop := True\n')
                     environment = dict(self.env, TMPDIR=str(temporary),
                         STRATALINT_LEAN_INPUT_MEMO_ROOT=str(directory / 'verify-memo'))
@@ -55,22 +55,22 @@ class NativeRecoveryTests:
                         'stage', '--bundle', str(bundle), '--staging-directory', str(staged.parent),
                         '--repository', str(root)], cwd=directory, env=environment,
                         text=True, capture_output=True, timeout=120)
-                    self.assertEqual(stage.returncode, 0 if damage == 'none' else 1, stage.stdout + stage.stderr)
+                    accepted = damage in ['none', 'changed-dependency']
+                    self.assertEqual(stage.returncode, 0 if accepted else 1, stage.stdout + stage.stderr)
                     self.assertFalse((root / '.lake').exists(), 'stage must preserve whole-tree donor eligibility')
                     self.assertEqual(list(temporary.iterdir()), [], 'stage must clean its input memo')
                     verify = subprocess.run(['bash', str(root / 'tools/scripts/report/lean-report-input.sh'),
-                        'verify', '--repository', str(root), '--report', str(staged if damage == 'none' else bundle)],
+                        'verify', '--repository', str(root), '--report', str(staged if accepted else bundle)],
                         cwd=directory, env=environment, text=True, capture_output=True, timeout=120)
                     self.assertEqual(verify.returncode,
-                        {'none': 0, 'missing': 2, 'stale': 2, 'stale-dependency': 1}[damage], verify.stdout + verify.stderr)
-                    if damage == 'none':
+                        {'none': 0, 'missing': 2, 'stale': 2, 'changed-dependency': 0}[damage], verify.stdout + verify.stderr)
+                    if accepted:
                         self.assertEqual(staged.read_bytes(), incoming.read_bytes())
                         self.assertEqual(publication.member(staged, '.materials.zip').read_bytes(),
                             publication.member(incoming, '.materials.zip').read_bytes())
                     else:
                         self.assertFalse(staged.exists())
-                        diagnostic = {'missing': 'missing bundle member', 'stale': 'stale input/provenance',
-                                      'stale-dependency': 'stale dependency'}[damage]
+                        diagnostic = {'missing': 'missing bundle member', 'stale': 'stale input/provenance'}[damage]
                         self.assertIn(diagnostic, stage.stderr)
                     self.assertFalse((root / '.lake').exists(), 'verify must preserve whole-tree donor eligibility')
                     self.assertEqual(list(temporary.iterdir()), [])

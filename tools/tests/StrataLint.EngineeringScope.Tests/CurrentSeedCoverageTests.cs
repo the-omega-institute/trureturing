@@ -23,7 +23,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         // Producer programs are versioned, never hashed: only a semantic version
         // bump (or a Lean/configuration input change) retires the previous receipt.
         var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, registration)))!;
-        manifest["report_semantic_version"] = manifest["report_semantic_version"]!.GetValue<int>() + 1;
+        manifest["report_cache_release_semantic_version"] = manifest["report_cache_release_semantic_version"]!.GetValue<int>() + 1;
         fixture.Write(registration, manifest.ToJsonString());
         fixture.CommitPlan();
         fixture.Processes();
