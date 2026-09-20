@@ -69,6 +69,12 @@ how any disagreement was adjudicated. A body that says only 「three codex-cli s
 standing is a §5.2 omission. Carrier fallback under §5.11 (an unavailable pool) is compliance when disclosed, not
 a finding.
 
+The standing table lists EVERY completed round at every head (`tools/scripts/agent/openproblem/standing-check.py`
+rule 1; a table holding only the latest round was the #8422 round-3 blocking finding). Those rows are the §5.2 tally and
+carry-forward disclosure, not process history: the §2.10 deletion test does not apply to them, and asking the lane to
+delete closed-round rows is not a finding (#9066 round 3, #9099 round 2 each spent a round on it). What §2.10 removes
+from the standing section is narration — what a seat said, what was fixed and when — not the rows and tallies.
+
 ## Verdict set and blocking rule
 `approve` / `comment` / `reject`. A `reject` must cite the exact file:line, the GoalArtifact term violated, the evidence in the work, the failure class (mistake / omission / uncertainty within the trust boundary). Advisory items go under `comment` findings and do not block.
 

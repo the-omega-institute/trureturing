@@ -34,10 +34,13 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Every prime-interaction graph with blocks of at most seven vertices is noncovering, with arbitrary total prime count, original heights, and residues](../docs/reports/erdos7-odd-covering/problem-details/31-seven-vertex-block-noncoverage-with-actual-prime-measures.md)
+- [Every prime-interaction graph with blocks of at most six vertices is noncovering: transported six-prime prefix measures pay all actual attachments, with arbitrary total prime count and heights](../docs/reports/erdos7-odd-covering/problem-details/30-six-prime-prefix-measures-close-all-six-vertex-blocks.md)
 - [Actual conditioned heads admit explicitly bounded sparse prime tails of arbitrary finite size, retaining every mixed support](../docs/reports/erdos7-odd-covering/problem-details/27-sparse-tail-extensions-of-conditioned-heads.md)
 - [Literal modulus 5 or 15 absence, or agreement of their residues modulo 5, pays every remaining six-vertex block under the actual pure-class invariant](../docs/reports/erdos7-odd-covering/problem-details/26-literal-pure-classes-and-six-vertex-residue-branches.md)
 - [Six-vertex block fees reduce the remaining root-3 cases to fifty explicit prime cores, with arbitrary original heights and residues retained](../docs/reports/erdos7-odd-covering/problem-details/25-six-vertex-block-fees-and-a-finite-prime-core-frontier.md)
 - [The unique root reserve and shared descendant budget reduce the fifty six-vertex prime cores to twelve, retaining arbitrary original heights and residues](../docs/reports/erdos7-odd-covering/problem-details/28-unique-root-reserve-and-shared-descendant-budget.md)
+- [Outside-root fee savings and actual prime ownership reduce the twelve six-vertex core types to six, preserving original heights and residues](../docs/reports/erdos7-odd-covering/problem-details/29-outside-root-savings-and-prime-ownership.md)
 - [Literal prime-power residue conflicts bound queries under the actual conditional survivor law, with dependent digits retained](../docs/reports/erdos7-odd-covering/problem-details/24-laminar-prefix-conflicts-under-actual-conditioning.md)
 - [Actual conditional kernels close every five-vertex block and an unbounded large-prime block regime under arbitrary recursive attachments](../docs/reports/erdos7-odd-covering/problem-details/23-conditional-kernels-and-recursive-block-noncoverage.md)
 - [Two shared parent layers give fees for exceptional 3,5,11,13,17 and 3,7,11,13,17 blocks with established block descendants](../docs/reports/erdos7-odd-covering/problem-details/22-two-layer-profiles-for-two-further-five-prime-blocks.md)
