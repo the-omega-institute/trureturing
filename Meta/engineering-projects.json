@@ -639,6 +639,7 @@
         "tools/lean-inspector/publication.py",
         "tools/lean-inspector/reuse.py",
         "tools/lean-inspector/tests/*.py",
+        "tools/lean-inspector-interface/**",
         "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
         "tools/tests/StrataLint.Lean.Tests/Native/*.py",
         "global.json",
