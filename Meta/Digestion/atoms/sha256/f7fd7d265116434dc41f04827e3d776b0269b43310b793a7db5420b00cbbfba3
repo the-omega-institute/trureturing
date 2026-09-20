@@ -1,0 +1,66 @@
+#### 134.5.2 自然变换提供一个真正的高层比较模型
+
+以范畴为对象、函子为一胞、自然变换为二胞，是一个具体例子。给同源同目标函子 $F,G:\mathcal A\to\mathcal B$，自然变换 $\eta:F\Rightarrow G$ 的分量是
+
+$$
+\eta_x:F(x)\to G(x),
+$$
+
+并要求每个 $f:x\to y$ 满足 $G(f)\eta_x=\eta_yF(f)$。这里的分量不是任意标签，而是目标范畴中的真实箭头。
+
+若 $\theta:G\Rightarrow J$，垂直复合定义为 $(\theta\cdot\eta)_x=\theta_x\eta_x$。其自然性由
+
+$$
+J(f)\theta_x\eta_x
+=\theta_yG(f)\eta_x
+=\theta_y\eta_yF(f)
+$$
+
+给出。恒等自然变换逐点取恒等；单位律和结合律逐点继承。
+
+函子还允许两种 whiskering：对 $K:\mathcal B\to\mathcal E$，令 $(K\eta)_x=K(\eta_x)$；对 $H:\mathcal Z\to\mathcal A$，令 $(\eta H)_z=\eta_{H(z)}$。各自的自然性分别来自函子保持复合及原自然性。
+
+给 $\eta:F\Rightarrow G:\mathcal A\to\mathcal B$、$\theta:H\Rightarrow K:\mathcal B\to\mathcal E$，水平复合为
+
+$$
+(\theta*\eta)_x
+=\theta_{Gx}\,H(\eta_x)
+=K(\eta_x)\,\theta_{Fx}.
+$$
+
+两个公式相等，正是 $\theta$ 对箭头 $\eta_x$ 的自然性。对 $f:x\to y$，
+
+$$
+\begin{aligned}
+KG(f)\,\theta_{Gx}H(\eta_x)
+&=\theta_{Gy}HG(f)H(\eta_x)\\
+&=\theta_{Gy}H(G(f)\eta_x)\\
+&=\theta_{Gy}H(\eta_yF(f)),
+\end{aligned}
+$$
+
+所以它是一条从 $HF$ 到 $KG$ 的自然变换。
+
+垂直与水平复合还满足 interchange。若 $\eta':G\Rightarrow J$、$\theta':K\Rightarrow L$，则逐点有
+
+$$
+\begin{aligned}
+((\theta'*\eta')\cdot(\theta*\eta))_x
+&=\theta'_{Jx}K(\eta'_x)\theta_{Gx}H(\eta_x)\\
+&=\theta'_{Jx}\theta_{Jx}H(\eta'_x)H(\eta_x)\\
+&=((\theta'\cdot\theta)*(\eta'\cdot\eta))_x.
+\end{aligned}
+$$
+
+中间一步又使用 $\theta$ 的自然性。水平结合律也可逐点检查。再给 $\zeta:L\Rightarrow M:\mathcal E\to\mathcal Z$，两种水平组合的分量均为
+
+$$
+(\zeta*(\theta*\eta))_x
+=((\zeta*\theta)*\eta)_x
+=\zeta_{KGx}\,L(\theta_{Gx})\,LH(\eta_x).
+$$
+
+与恒等函子的恒等自然变换作水平复合，分量直接退化为原分量；故水平单位律也严格成立。连同已验证的垂直单位、结合律与 interchange，这给出范畴、函子、自然变换形成的标准二范畴。
+
+若把集合仅视为离散范畴，两个函数所成函子之间有自然变换，当且仅当它们在每个点取相同值，且该变换唯一。因此，非平凡的“函数之间的关系”不能只靠改称自然变换得到；必须为目标提供非离散箭头或另选其他高层结构。
+

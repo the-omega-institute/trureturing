@@ -1,0 +1,123 @@
+**定理 91.2（相容层双射、实际像与纤维提升）。** 沿用定义 91.1。给定各层双射 $g_L:Q_L\to Q_L$，满足
+$$
+r_Lg_{L+1}=g_Lr_L\qquad(L\ge0).
+\tag{91.3}
+$$
+则以下结论成立。
+
+（一）存在唯一满足 $\pi_LG=g_L\pi_L$ 的映射 $G:K\to K$。它是双射且
+$$
+(Gz)_L=g_L(z_L),\qquad
+d(Gz,Gz')=d(z,z').
+\tag{91.4}
+$$
+反之，若只给出满足这些坐标等式的 $G:K\to K$，则（91.3）必在 $\pi_{L+1}[K]$ 上成立；若每个坐标投影满射，便在整个 $Q_{L+1}$ 上成立。这里投影满射是取得全层逆向结论的充分条件，不声称它对每个特殊观察塔均必要。
+
+（二）对任意 $F:X\to X$，有
+$$
+\iota F=G\iota
+\quad\Longleftrightarrow\quad
+\forall L,\ q_LF=g_Lq_L.
+\tag{91.5}
+$$
+满足该式的每个 $F$ 都保持 $d_X$。存在这样的全函数 $F$，当且仅当
+$$
+G(A)\subseteq A.
+\tag{91.6}
+$$
+在给定截面 $s:A\to X$、$es=\operatorname{id}_A$ 的版本中，充分方向的构造不需再次选择；仅从 $e$ 满射取得截面时使用选择公理。
+
+（三）若 $\iota$ 单射，则提升存在时唯一且单射，并且
+$$
+F\text{ 满射（亦即双射）}\quad\Longleftrightarrow\quad G(A)=A.
+\tag{91.7}
+$$
+无须 $\iota$ 单射，$G(A)=A$ 总给出观察商 $X/{\sim}$ 的典范等距自同构。
+
+（四）不要求 $\iota$ 单射时，存在满足（91.5）的原状态双射，当且仅当
+$$
+G(A)=A
+\quad\text{且存在一族双射}\quad
+(h_a:X_a\overset\sim\longrightarrow X_{G_Aa})_{a\in A},
+\tag{91.8}
+$$
+其中 $G_A:A\overset\sim\to A$ 是 $G$ 在实际像上的限制。一族双射作为整体数据给定后，其组装不再使用选择；由逐点等势选择出整族双射时使用选择公理。
+
+特别，若 $A=K$ 且 $\iota$ 单射，则每个这样的 $G$ 都经 $X\simeq K$ 共轭为原状态的等距自同构；对一份指定 $G$，$A=K$ 并非必要，原状态双射提升的条件仍是（91.8）。
+
+**证明。** 对 $i\le j$，把相邻限制复合为
+$$
+r_{i,i}=\operatorname{id},\qquad
+r_{i,j+1}=r_{i,j}r_j.
+$$
+由复合结合律及对 $k-j$ 的归纳，$r_{i,j}r_{j,k}=r_{i,k}$。相邻线程相容反复代入给出所有 $i\le j$ 的 $r_{i,j}(z_j)=z_i$，反向取 $j=i+1$ 即得相邻式。因此这些复合限制与线程分别满足既有逆系统及相容族接口。全指标自然性的归纳从 $r_{i,i}g_i=g_i$ 开始，归纳步为
+$$
+r_{i,j+1}g_{j+1}
+=r_{i,j}r_jg_{j+1}
+=r_{i,j}g_jr_j
+=g_ir_{i,j}r_j
+=g_ir_{i,j+1}.
+$$
+因此可直接应用定理 5.4 的逆极限下降，或既有 `inverse_limit_descent_and_independent_converse` 的正向部分，取得唯一的坐标相容映射 $G$。[^rro91-descent] 将（91.3）左复合 $g_L^{-1}$、右复合 $g_{L+1}^{-1}$，得
+$$
+r_Lg_{L+1}^{-1}=g_L^{-1}r_L.
+$$
+逆映射族同样下降，所得映射与 $G$ 的两个复合逐坐标都是恒等，故 $G$ 双射。又因
+$$
+g_L(z_L)=g_L(z'_L)\quad\Longleftrightarrow\quad z_L=z'_L,
+$$
+坐标相等模式与首次分歧层均被保持，得到（91.4）。
+
+若已给坐标相容的 $G$，对任意 $z\in K$ 有
+$$
+r_Lg_{L+1}(z_{L+1})
+=r_L(Gz)_{L+1}
+=(Gz)_L
+=g_Lr_L(z_{L+1}).
+$$
+这只检验到了 $\pi_{L+1}[K]$。投影满射时可代表每个 $Q_{L+1}$ 元素，得到全层等式；其条件边界沿用第 6.3 条。
+
+（91.5）是逐坐标相等。对任意提升，代入（91.4）得
+$$
+d_X(Fx,Fx')
+=d(G\iota(x),G\iota(x'))
+=d_X(x,x').
+\tag{91.9}
+$$
+实际像前向不变是既有 `realization_range_invariant` 对 $R=\iota$、$\nu=G$ 的应用：$a=\iota(x)$ 时，$Ga=\iota(Fx)\in A$。[^rro91-lift] 反之，若 $G(A)\subseteq A$，令 $G_A:A\to A$ 为相应限制。满射 $e:X\to A$ 有截面 $s:A\to X$；定义
+$$
+F=sG_Ae.
+\tag{91.10}
+$$
+由 $es=\operatorname{id}_A$ 得 $eF=G_Ae$，即（91.5）。这是已有 `sectionLift_isComplementLift` 的截面提升，其中底映射只需取 $G_A$，不需要对合假设。空集合情形使用空截面与空映射，同样成立。
+
+若 $\iota$ 单射，两份提升满足 $\iota F_1=\iota F_2$，故 $F_1=F_2$。若 $Fx=Fx'$，则 $G\iota(x)=G\iota(x')$，由 $G$ 与 $\iota$ 单射得 $x=x'$。满射 $F$ 给出
+$$
+G(A)=\iota(F[X])=A.
+$$
+反之，$G(A)=A$ 时，对任意 $y\in X$ 可取 $x$ 使
+$\iota(y)=G\iota(x)=\iota(Fx)$，再由 $\iota$ 单射得 $y=Fx$。这证明（91.7）。在此分离情形，$X\simeq A$ 正是既有 `Equiv.ofInjective` 的实际像等价；一般情形，则通过 `Setoid.quotientKerEquivRange` 将 $G_A$ 共轭到观察商。具体地，$[x]$ 映到非空集合 $\{y\in X:\iota(y)=G\iota(x)\}$ 所确定的唯一观察类；更换 $x$ 的代表不改变这个类。用 $G_A^{-1}$ 同样定义其逆，（91.4）给出等距性。输出是整个等价类，无须选择其成员，故这个商自同构不需选择原状态代表。[^rro91-range]
+
+若双射 $F$ 存在，同一像计算给出 $G(A)=A$。其限制 $F|_{X_a}$ 映入 $X_{G_Aa}$，并且单射。对 $y\in X_{G_Aa}$，由 $F$ 满射取 $x$ 使 $Fx=y$，则
+$$
+G\iota(x)=\iota(y)=Ga.
+$$
+由 $G$ 单射得 $e(x)=a$，所以限制也满射。这些限制共同给出（91.8）中的整族 $h_a$。
+
+反之，把 `canonicalDependentFiberEquiv` 应用于 $e$，并用 `Equiv.psigmaEquivSubtype` 将每个 $\operatorname{ConceptFiber}(e,a)$ 的 `PSigma` 依赖对转换成集合纤维 $X_a$，再以 `Equiv.sigmaCongrRight` 组装，得到典范依赖纤维分解
+$$
+E:X\simeq\sum_{a\in A}X_a,\qquad
+E(x)=(e(x),x),\qquad E^{-1}(a,x)=x.
+$$
+在该依赖和上以底空间等价 $G_A$ 和纤维等价 $h_a$ 应用 `Equiv.sigmaCongr`，其显式作用与逆作用为
+$$
+(a,x)\longmapsto(G_Aa,h_a(x)),
+\qquad
+(b,y)\longmapsto
+\bigl(G_A^{-1}b,h_{G_A^{-1}b}^{-1}(y)\bigr).
+\tag{91.11}
+$$
+式中纤维指标沿 $G_AG_A^{-1}b=b$ 作自然识别。两式互逆，输运回 $X$ 给出双射 $F$；其输出所在纤维是 $G_Aa$，故满足（91.5）。截面只选择每个目标纤维中的一个点，不能代替（91.8）所需的整纤维双射。[^rro91-fibers]
+
+最后，把 $(Q_L,q_L,r_L)$ 代入既有 `RefinementSystem`，其 `InverseThread` 按相同坐标及相容式识别为 $K$，`stateThread` 对应 $\iota$。若 $A=K$ 且 $\iota$ 单射，则线程完备及状态分离成立；`stateEquivInverseLimit` 给出 $\Phi:X\simeq K$，共轭 $F=\Phi^{-1}G\Phi$ 为原状态双射，并由（91.9）保持 $d_X$。[^rro91-completion] 全线程可实现并且观察分离，是让所有这种对称均提升为原状态等距自同构的充分条件。对一份指定 $G$，原状态双射提升只要求（91.8）；例如 $G=\operatorname{id}_K$ 保持任何实际像 $A\subsetneq K$，纤维恒等族给出 $F=\operatorname{id}_X$，所以此时不必有 $A=K$。证毕。
+

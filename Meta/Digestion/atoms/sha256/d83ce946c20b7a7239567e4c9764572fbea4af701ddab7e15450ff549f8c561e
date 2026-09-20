@@ -1,0 +1,24 @@
+**命题 134.7（最小闭理论）。** $\operatorname{Cn}(\Gamma)$ 是包含 $\Gamma$ 的最小闭理论，且任意闭理论族的交仍是闭理论。
+
+**证明。** 前一结论的包含性来自广延性，闭合性来自幂等性。若 $\Gamma\subseteq T$ 且 $T$ 闭合，单调性给 $\operatorname{Cn}(\Gamma)\subseteq\operatorname{Cn}(T)=T$。对一族闭理论 $(T_i)$，单调性给 $\operatorname{Cn}(\bigcap_iT_i)\subseteq T_i$ 对每个 $i$ 成立，故包含于交；广延性给反向。空交为 $\Sigma$，亦满足闭合。证毕。
+
+语义后承可由另一个反向 Galois 对应构造。固定在所选更大宇宙内的模型集合 $\mathcal M$ 和满足关系，令
+
+$$
+\operatorname{Mod}(\Gamma)=\{M\in\mathcal M:\forall\varphi\in\Gamma,\ M\models\varphi\},
+$$
+
+$$
+\operatorname{Th}(\mathcal A)=\{\varphi\in\Sigma:\forall M\in\mathcal A,\ M\models\varphi\}.
+$$
+
+定义 $\operatorname{Cn}_{\rm sem}(\Gamma)=\operatorname{Th}(\operatorname{Mod}(\Gamma))$。有 $\Gamma\subseteq\operatorname{Th}(\mathcal A)$ 当且仅当 $\mathcal A\subseteq\operatorname{Mod}(\Gamma)$。与命题 134.6 的证明相同，
+
+$$
+\operatorname{Mod}(\operatorname{Cn}_{\rm sem}(\Gamma))=\operatorname{Mod}(\Gamma),
+$$
+
+从而给出三条闭合律。若没有模型，则 $\operatorname{Th}(\varnothing)=\Sigma$，依然是合法闭合值；闭合不保证一致性。若另给语法证明系统，要把它的可证后承与这里的语义后承认作同一算子，还需要该系统自己的可靠性与完备性定理。
+
+这些公理也没有给出有限证明搜索的停止界、句子成员关系的判定算法或资源消耗上界。逻辑闭合的定义域是句子族，命名闭合的定义域是读数族，动态闭合还依赖允许操作；三个幂等式不是同一个对象上的同一命题。
+

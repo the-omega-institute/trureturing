@@ -1,0 +1,11 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "deficit2"
+  },
+  "costs": {
+    "path": "content/010-direction_probes/000004/item/001-costs.json",
+    "sha256": "606384de59c137fba902298ff8713b9dce108a65ae60e23fc5ed7f17d19845dd",
+    "kind": "array"
+  }
+}

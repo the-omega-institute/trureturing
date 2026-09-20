@@ -1,0 +1,12 @@
+**定义与假设 106.1（静态确定传感器）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/3ecfc2e378cfc13bd95154bf4bd79a5898c1d553/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态核 $K_k$，$k\ge2$，记 $a_k=1-1/(3k)$。两假设均准备初态 $X_0=1$，随后分别使用 $K_k$ 与 $K_k^{\mathsf T}$，方向先验各为 $1/2$。固定有限离散字母表 $A$ 及与时间、参数 $k$ 无关的确定映射
+$$
+r:S=\{0,1,2,3\}\longrightarrow A,\qquad Y_t=r(X_t).
+$$
+观察 $n$ 次转移对应的前缀 $(Y_0,\ldots,Y_n)$，其两份律记为 $P^r_{k,n},Q^r_{k,n}$；无限记录取 $A^{\mathbb N_0}$ 的乘积 $\sigma$-代数，相应律记为 $P^r_{k,\infty},Q^r_{k,\infty}$。令 $R^r_{k,n}$、$R^r_{k,\infty}$ 为允许所有可测随机化检验的最优等先验平均错误率。若 $\varphi$ 表示报告转置核的概率，则其错误率为
+$$
+\frac12\left(\int\varphi\,dP+\int(1-\varphi)\,dQ\right),
+\qquad 0\le\varphi\le1.
+\tag{106.1a}
+$$
+有效字母数为 $|r(S)|$，不计未使用的符号。本节比较共同起点下的两个核，沿用第 105 节与整路径反序的区别；传感器没有额外内部状态。
+

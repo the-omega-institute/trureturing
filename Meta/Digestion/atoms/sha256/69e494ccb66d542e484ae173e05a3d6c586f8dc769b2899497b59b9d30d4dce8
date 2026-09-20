@@ -1,0 +1,12 @@
+**推论 3.3（零半径与精确因子化）。** 式（3.4）的值为零，当且仅当每条非空候选纤维 $C_y$ 只含一个点；这又等价于存在 $R:Y\to S$，使 $R(y)=F(x)$ 对所有 $(x,y)\in\mathcal E$ 成立。若 $\mathcal E$ 是确定观察 $q:X\to Y$ 的图，此条件恰为 $F$ 在 $q$ 的纤维上恒定，亦即 $F=R\circ q$。
+
+证明。若值为零，则每个 $r_y=0$。对任意 $z,z'\in C_y$ 和任意 $\eta>0$，选择半径小于 $\eta$ 的中心 $s$，有
+
+$$
+d(z,z')\le d(z,s)+d(s,z')<2\eta.
+$$
+
+令 $\eta$ 任意小得到 $d(z,z')=0$，由度量分离性得 $z=z'$。反之，非空单点纤维以其唯一点为中心，半径为零；空纤维使用任意固定元素。这样得到零风险的 $R$。对确定观察关系，将允许对写为 $(x,q(x))$，便得到所述因子化。证毕。
+
+确定观察在实际像上的唯一因子化，可直接引用 [`realized_image_unique_factorization_iff_reverse_kernel`](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean)。推论 3.3 使用零半径把这一精确核条件接到一般噪声关系；它不为正半径补入不存在的最优中心。
+

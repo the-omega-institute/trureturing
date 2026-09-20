@@ -6,6 +6,103 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class ResourceAdapterTests
 {
+    [Theory]
+    [InlineData("cache", true)]
+    [InlineData("phase", true)]
+    [InlineData("tool", true)]
+    [InlineData("cache", false)]
+    [InlineData("phase", false)]
+    [InlineData("tool", false)]
+    public void HistoricalCapabilitiesNeverEnableCandidateExecution(string capability, bool historicalOnly)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        var original = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
+        var replacement = capability switch
+        {
+            "cache" => "tools = [], cache_layers = [\"future-cache\"], cache_activation = {\"future-cache\" = \"stage-start\"}",
+            "phase" => "tools = [], cache_layers = [\"current\"], cache_activation = {current = \"future-phase\"}",
+            _ => "tools = [\"future-tool\"], cache_layers = [], cache_activation = {}"
+        };
+        var historical = string.Join('\n', original.Split('\n').Select(line =>
+            line.Contains("id = \"filemap\"", StringComparison.Ordinal)
+                ? line.Replace("tools = [], cache_layers = [], cache_activation = {}", replacement, StringComparison.Ordinal)
+                : line));
+        fixture.Write("Meta/FILEMAP.toml", historical);
+        fixture.Write("retired/old.txt", "registered historical input\n");
+        SharedBuildContractTests.Git(fixture.Root, "add", ".");
+        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+            "commit", "-qm", "historical capability");
+        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        fixture.Write("Meta/FILEMAP.toml", original);
+        File.Delete(Path.Combine(fixture.Root, "retired/old.txt"));
+        fixture.CommitPlan();
+        if (!historicalOnly)
+        {
+            fixture.Write("Meta/FILEMAP.toml", historical);
+            // The local candidate path validates the dirty FILEMAP before executing work.
+            var environment = EnvironmentFor(fixture);
+            var rejected = PlannerWithEnvironment(fixture, environment, "push-plan");
+            Assert.Equal(2, rejected.Exit);
+            Assert.Contains(capability == "phase" ? "unknown cache activation" : "unknown resource/tool/cache",
+                rejected.Text, StringComparison.Ordinal);
+            return;
+        }
+        var result = PushPlan(fixture, before);
+        Assert.True(result.Exit == 0, result.Text);
+        var plan = PushSelection(fixture);
+        Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.DoesNotContain("future-", plan["tools"]!.ToJsonString(), StringComparison.Ordinal);
+        Assert.Empty(plan["cache_layers"]!.AsArray());
+        var retired = plan["paths"]!.AsArray().Single(row => row!["path"]!.ToString() == "retired/old.txt")!;
+        Assert.Equal(new[] { "filemap" }, Strings(retired["require"]!));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void HistoricalResourceRequiresExplicitCandidateImplementation(bool registered)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        const string alias = "zz-retired-check";
+        const string declaration = "{ id = \"zz-retired-check\", stage = \"current\", owner = \"Meta/FILEMAP.toml\", prerequisites = [\"filemap\"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },\n";
+        var original = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
+        var withAlias = original.Replace("]\n[residence_policy]", declaration + "]\n[residence_policy]", StringComparison.Ordinal);
+        Assert.NotEqual(original, withAlias);
+        fixture.Write("Meta/FILEMAP.toml", withAlias.Replace("require = [\"filemap\"]", "require = [\"zz-retired-check\"]", StringComparison.Ordinal));
+        fixture.Write("retired/old.txt", "registered historical input\n");
+        SharedBuildContractTests.Git(fixture.Root, "add", ".");
+        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+            "commit", "-qm", "historical resource name");
+        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        fixture.Write("Meta/FILEMAP.toml", registered ? withAlias : original);
+        if (registered)
+        {
+            var execution = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
+            execution["resources"]!.AsArray().Add(new JsonObject
+            {
+                ["id"] = alias, ["projects"] = new JsonArray(), ["checks"] = new JsonArray(), ["steps"] = new JsonArray()
+            });
+            fixture.Write("Meta/ci-resources.json", execution.ToJsonString());
+        }
+        File.Delete(Path.Combine(fixture.Root, "retired/old.txt"));
+        fixture.CommitPlan();
+        var result = PushPlan(fixture, before);
+        if (!registered)
+        {
+            Assert.NotEqual(0, result.Exit);
+            Assert.Contains(alias, result.Text, StringComparison.Ordinal);
+            Assert.False(File.Exists(PushPlanPath(fixture)));
+            return;
+        }
+        Assert.True(result.Exit == 0, result.Text);
+        var plan = PushSelection(fixture);
+        Assert.Equal(new[] { "build", "filemap", alias }, Strings(plan["resources"]!));
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.Equal(new[] { alias }, Strings(plan["paths"]!.AsArray()
+            .Single(row => row!["path"]!.ToString() == "retired/old.txt")!["require"]!));
+    }
+
     [Fact]
     public void PushRangeUsesEventEndpointsAcrossMultipleCommits()
     {
@@ -172,13 +269,15 @@ public sealed partial class ResourceAdapterTests
     [Theory]
     [InlineData("shallow")]
     [InlineData("missing")]
+    [InlineData("missing-packed")]
     [InlineData("missing-registration")]
     public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        if (defect == "missing-packed") PackParent(fixture, parent);
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
-        else if (defect == "missing") File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        else if (defect is "missing" or "missing-packed") fixture.RemoveObject(parent);
         else parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", parent + "^1");
         var result = PushPlan(fixture, parent);
         if (defect == "shallow")
@@ -187,7 +286,7 @@ public sealed partial class ResourceAdapterTests
             Assert.Equal(parent, PushScope(fixture)["origin"]!["before"]!.ToString());
             Assert.Equal("event-range", PushScope(fixture)["origin"]!["kind"]!.ToString());
         }
-        else if (defect == "missing")
+        else if (defect is "missing" or "missing-packed")
         {
             Assert.Equal(2, result.Exit);
             Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
@@ -204,12 +303,15 @@ public sealed partial class ResourceAdapterTests
         }
     }
 
-    [Fact]
-    public void PushMissingPromisorParentFailsWithoutContactingRemote()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PushMissingPromisorParentFailsWithoutContactingRemote(bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
-        File.Delete(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..]));
+        if (packed) PackParent(fixture, parent);
+        fixture.RemoveObject(parent);
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
         SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.promisor", "true");
         var environment = EnvironmentFor(fixture);
@@ -227,6 +329,15 @@ public sealed partial class ResourceAdapterTests
         Assert.Contains("PUSH_BEFORE_UNAVAILABLE", result.Text, StringComparison.Ordinal);
         Assert.False(File.Exists(contacted), "Planning contacted the promisor remote for a missing object.");
         Assert.False(File.Exists(PushPlanPath(fixture)));
+    }
+
+    private static void PackParent(ResourceRouteTests.ResourceFixture fixture, string parent)
+    {
+        SharedBuildContractTests.Git(fixture.Root, "-c", "gc.autoDetach=false", "maintenance", "run", "--task=gc");
+        Assert.False(File.Exists(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..])));
+        Assert.NotEmpty(Directory.GetFiles(Path.Combine(fixture.Root, ".git/objects/pack"), "*.pack"));
+        Assert.Equal("commit", SharedBuildContractTests.Git(fixture.Root, "cat-file", "-t", parent));
+        Console.WriteLine("PACKED_PARENT " + parent + "\n" + SharedBuildContractTests.Git(fixture.Root, "count-objects", "-v"));
     }
 
     [Fact]

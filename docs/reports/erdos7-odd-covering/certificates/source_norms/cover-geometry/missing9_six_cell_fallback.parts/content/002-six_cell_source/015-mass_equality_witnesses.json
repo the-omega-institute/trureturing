@@ -1,0 +1,50 @@
+{
+  "length": 54,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 11,
+      "part": {
+        "path": "content/002-six_cell_source/015-mass_equality_witnesses/000000-000011.json",
+        "sha256": "875d5d2fab5baa1f239d1b5d3558f9ca6c7f152bb9f1efe097070bce02eca45e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 22,
+      "part": {
+        "path": "content/002-six_cell_source/015-mass_equality_witnesses/000011-000022.json",
+        "sha256": "076a81b3d0feb944e78288f422bf0c26541886192a29a4c377449794f61801d3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 33,
+      "part": {
+        "path": "content/002-six_cell_source/015-mass_equality_witnesses/000022-000033.json",
+        "sha256": "44c0506c18d539877b7d229dad54d0e660a029e8b5ce26a501164d84ddf74592",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 44,
+      "part": {
+        "path": "content/002-six_cell_source/015-mass_equality_witnesses/000033-000044.json",
+        "sha256": "b3574138747828fa440a9cc536bb69d3517a711c1123742328e66be045c7f775",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 44,
+      "stop": 54,
+      "part": {
+        "path": "content/002-six_cell_source/015-mass_equality_witnesses/000044-000054.json",
+        "sha256": "aa6f9e507b5c5c0d4395302abcf523938710c6a807893cf007ac98e7d275fabf",
+        "kind": "value"
+      }
+    }
+  ]
+}

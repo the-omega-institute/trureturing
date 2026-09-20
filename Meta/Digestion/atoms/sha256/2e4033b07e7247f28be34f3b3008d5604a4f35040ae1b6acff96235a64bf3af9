@@ -1,0 +1,23 @@
+**定义 3.1（噪声关系与合法中心）。** 设 $X$ 为完整实现集合，$Y$ 为数据集合，$S$ 为非空度量空间，目标为 $F:X\to S$。用关系 $\mathcal E\subseteq X\times Y$ 指定哪些实现能够产生哪些数据。对每个 $y\in Y$，定义其候选目标纤维
+
+$$
+C_y=\{F(x):(x,y)\in\mathcal E\}.
+\tag{3.1}
+$$
+
+中心必须属于合法输出空间 $S$。令
+
+$$
+\rho_y(s)=\sup_{z\in C_y}d(s,z),
+\qquad
+r_y=\inf_{s\in S}\rho_y(s).
+\tag{3.2}
+$$
+
+这些量取值于 $[0,+\infty]$；空候选纤维的上确界取零。对恢复器 $R:Y\to S$，记
+
+$$
+\mathcal R(R)=\sup_{(x,y)\in\mathcal E}d(R(y),F(x)).
+\tag{3.3}
+$$
+

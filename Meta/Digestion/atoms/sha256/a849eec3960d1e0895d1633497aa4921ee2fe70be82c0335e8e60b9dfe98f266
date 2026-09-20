@@ -1,0 +1,16 @@
+**定义与假设 93.1（有限路径和正反实验）。** 设 $S$ 为有限非空集合，固定一个全序，仅用于将无序状态对记为 $i<j$。对 $n\in\mathbb N_0$，路径
+$$
+w=(x_0,\ldots,x_n)\in S^{n+1}
+$$
+含 $n$ 次转移、$n+1$ 个状态，反演为 $\Theta_nw=(x_n,\ldots,x_0)$。给定概率 $P_n$，以下均在其非空正支撑 $\Omega_n$ 上比较，且要求 $\Theta_n[\Omega_n]=\Omega_n$。记
+$$
+P_n^R=(\Theta_n)_*P_n,\qquad P_n^R(w)=P_n(\Theta_nw),\qquad
+\sigma_n(w)=\log\frac{P_n(w)}{P_n^R(w)}.
+$$
+两份概率在 $\Omega_n$ 上严格为正，所有对数取自然底数；$D$ 表示相应的有限 KL 散度。定义转移数与净转移数
+$$
+N_{ij}(w)=\#\{0\le t<n:(x_t,x_{t+1})=(i,j)\},\qquad
+J_{ij}(w)=N_{ij}(w)-N_{ji}(w),
+$$
+并以 $J(w)=(J_{ij}(w))_{i<j}$ 为计数读出。每个读出的陪域均取其在 $\Omega_n$ 上的实际像。
+

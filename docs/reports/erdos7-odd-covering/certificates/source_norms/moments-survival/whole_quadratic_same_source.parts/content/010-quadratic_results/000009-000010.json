@@ -1,0 +1,154 @@
+[
+  {
+    "index": 51,
+    "tag": [
+      "s",
+      "9/4"
+    ],
+    "scaling": {
+      "factor": "1/4",
+      "primitive_hinges": {
+        "1": 7,
+        "2": 13,
+        "3": 8,
+        "4": 8
+      },
+      "primitive_factorial": 8
+    },
+    "joint_source_uniform_cost_upper": "5341922/1157625",
+    "previous_uniform_cost_upper": "5341922/1157625",
+    "accepted_cost_upper": "5341922/1157625",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 10561398750,
+      "source_dual": [
+        {
+          "gamma": 66942281,
+          "alpha": [
+            0,
+            0,
+            240003960,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 1629438650
+        },
+        {
+          "gamma": 116119563,
+          "alpha": [
+            22235661,
+            22235661,
+            488125701,
+            22235661,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 7699891752
+        },
+        {
+          "gamma": 7447902,
+          "alpha": [
+            0,
+            0,
+            53729578,
+            0,
+            0,
+            0,
+            0,
+            53729578,
+            0,
+            0,
+            0,
+            0,
+            53729578,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 1232068348
+        }
+      ],
+      "scaled_selected_increments": [
+        18970195356,
+        22136835840,
+        3794886144
+      ],
+      "scaled_mean_deletion": 10549585830,
+      "scaled_factorial_remainder": 43680720720
+    }
+  }
+]

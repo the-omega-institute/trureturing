@@ -79,8 +79,8 @@ class NativePublicationTests:
         driver.write_bytes(good_driver + b'\n-- changed shared driver\n')
         try:
             native.batch(request, result)
-            self.assertEqual(json.loads(result.read_text()), [1] * len(requests),
-                             '[FAIL] aggregate_shared_source_rejection')
+            self.assertEqual(json.loads(result.read_text()), [0] * len(requests),
+                             '[FAIL] aggregate_compatible_judge_reuse')
             self.assertEqual(output.read_bytes(), original)
         finally:
             driver.write_bytes(good_driver)

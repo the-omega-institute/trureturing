@@ -1,0 +1,56 @@
+### 126.2 响应矩定义边界词的内积关系
+
+令 $\mathcal W=\bigoplus_{j\ge0}U$ 为有限支撑的边界系数串空间。元素写成 $v=(v_0,v_1,\ldots)$，只有有限项非零；也可视为系数在 $U$ 中的多项式。这里的“词”标记各阶响应方向，并不把单个矩等同于某次有限采样结果。
+
+只用边界响应矩定义双线性配对
+
+$$
+\gamma_K(v,w)=\sum_{i,j\ge0}\langle v_i,M_{i+j}w_j\rangle_U.
+$$
+
+两边都是有限和。对实际隐藏关系，定义
+
+$$
+T:\mathcal W\to H,\qquad Tv=\sum_{i\ge0}C^iB^*v_i.
+$$
+
+利用 $C=C^*$，逐项计算：
+
+$$
+\begin{aligned}
+\gamma_K(v,w)
+&=\sum_{i,j}\langle v_i,BC^{i+j}B^*w_j\rangle_U\\
+&=\sum_{i,j}\langle C^iB^*v_i,C^jB^*w_j\rangle_H\\
+&=\boxed{\langle Tv,Tw\rangle_H.}
+\end{aligned}
+$$
+
+因此 $\gamma_K$ 对称、半正定，且它的零范数集合恰为线性子空间
+
+$$
+\mathcal Z_K=\{v:\gamma_K(v,v)=0\}=\ker T.
+$$
+
+若 $v\in\mathcal Z_K$，则对所有 $w$ 有 $\gamma_K(v,w)=0$，所以配对下降到商空间
+
+$$
+\mathcal H_K=\mathcal W/\mathcal Z_K,\qquad
+\langle[v],[w]\rangle_K=\gamma_K(v,w).
+$$
+
+该商内积正定。映射
+
+$$
+\Phi_K:\mathcal H_K\to\mathcal R,\qquad \Phi_K[v]=Tv
+$$
+
+良定义、单射、保内积；由 $\mathcal R$ 的生成定义又满射。因此
+
+$$
+\boxed{\Phi_K:\mathcal H_K\simeq_{\rm orth}\mathcal R.}
+$$
+
+这恢复的是实际隐藏方向的全部两两内积，而不只是维数。特别地，$\mathcal H_K$ 自动有限维且完备；其距离为 $\|[v]-[w]\|_K=\|T(v-w)\|_H$。在 $H/\mathcal N$ 上取标准商内积，即用唯一的 $\mathcal R$ 正交代表计算内积，则也有规范等距对应 $\mathcal H_K\cong H/\mathcal N$。
+
+这一步是标准 Gram 商构造：先在边界描述上记录配对，再商掉所有零配对方向。实际实现证明了该配对的正性与有限秩，不是在任意给定的矩序列上额外假定矩问题已有解。
+

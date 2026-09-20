@@ -1,0 +1,82 @@
+{
+  "roots": {
+    "kind": "inline",
+    "value": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ]
+  },
+  "group_vertex_counts": {
+    "kind": "inline",
+    "value": [
+      7,
+      3,
+      7,
+      7,
+      2
+    ]
+  },
+  "vertices": {
+    "kind": "inline",
+    "value": 2058
+  },
+  "layouts": {
+    "path": "content/002-six_cell_source/003-layouts.json",
+    "sha256": "b1b793cf72de0e24f21f1edd3863b9157dd35f7dd923ff3be68aa995166ebb9b",
+    "kind": "value"
+  },
+  "source_square": {
+    "kind": "inline",
+    "value": "13591/468"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "19/108"
+  },
+  "source_density": {
+    "kind": "inline",
+    "value": "108/19"
+  },
+  "minimum_two_prime_mass": {
+    "kind": "inline",
+    "value": "1/3"
+  },
+  "square_margin_count": {
+    "kind": "inline",
+    "value": 24696
+  },
+  "square_minimum_margin": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "square_margin_sha256": {
+    "kind": "inline",
+    "value": "b9ba36a42ba4a3948ceb68c4f69147fc95dcd829b7a945656332a08c1668eddd"
+  },
+  "square_equality_witnesses": {
+    "path": "content/002-six_cell_source/011-square_equality_witnesses.json",
+    "sha256": "28700c2ef3b5cbe13081d2059bf32f7f07a7b17cb313269b251b3841c6161624",
+    "kind": "array"
+  },
+  "mass_margin_count": {
+    "kind": "inline",
+    "value": 2058
+  },
+  "mass_minimum_margin": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass_margin_sha256": {
+    "kind": "inline",
+    "value": "a2e1aa21bb72773d18cd9e044d7315d8dccf618a5397f799fad9fba5767a3862"
+  },
+  "mass_equality_witnesses": {
+    "path": "content/002-six_cell_source/015-mass_equality_witnesses.json",
+    "sha256": "25d9c6a425c4bf16c0319ba7b0862938fae70daf804b3da172eec8f5bf6603d6",
+    "kind": "array"
+  }
+}

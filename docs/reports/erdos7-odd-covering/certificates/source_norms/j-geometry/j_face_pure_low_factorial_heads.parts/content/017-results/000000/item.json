@@ -1,0 +1,62 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "factorial2"
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 2
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "factorial_threshold": 2,
+      "at_one": "0",
+      "factorial_coefficient": "1",
+      "hinge_coefficients": {},
+      "zero_branch_last_integer": 2,
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 2,
+        "constant": "1",
+        "linear": "-3/2",
+        "leading": "1/2"
+      }
+    }
+  },
+  "all_head_tail_split": {
+    "path": "content/017-results/000000/item/003-all_head_tail_split.json",
+    "sha256": "e2eb3976726bc1018239e98b3e82ba971e5ea7af67885700d8f115a857fb703b",
+    "kind": "value"
+  },
+  "scan": {
+    "path": "content/017-results/000000/item/004-scan.json",
+    "sha256": "65880f84b317e9cd6c43a2484124acd58373d70433444d9dc25e4d8a7a59ae83",
+    "kind": "object"
+  },
+  "complete_factorial_upper": {
+    "kind": "inline",
+    "value": "646091150027086103/441000000000000000"
+  },
+  "old_moment_separation": {
+    "path": "content/017-results/000000/item/006-old_moment_separation.json",
+    "sha256": "83c6439e1a9a5eb2243d74e422b081e16efd3157cb5e759a22104754b0496d88",
+    "kind": "value"
+  },
+  "maximizing_cross_components": {
+    "path": "content/017-results/000000/item/007-maximizing_cross_components.json",
+    "sha256": "36771982e13addf4459f1eb761b142ac2e89b6c1084a54ed94e24b753f827e03",
+    "kind": "value"
+  },
+  "maximizing_conditional_PZZ_endpoints": {
+    "kind": "inline",
+    "value": [
+      "195197/529200",
+      "89/240"
+    ]
+  }
+}
