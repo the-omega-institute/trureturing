@@ -1,0 +1,53 @@
+**定义 33.1（复端口实验与完整共同实现）。** 先固定一次实验 $\mathcal X_{\rm phase}$：独立已知的物理幅度 $a_{\rm cal}>0$；[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定义28.1的 Fourier 标架、分量方向及相干复校准；固定平移的无外力准备族；黏性／径向先验；来源及分支规则；两个本地标签域 $I_A,I_C$；允许动作、钟对、延迟及费用；全部旧记录的解释规则；一份联合原始误差模型。这另立复数平移准备合同，定义29.1的有符号实端口单钟世界不是它的世界集合。
+
+一份完整世界 $w\in\Omega_{\mathcal X_{\rm phase}}$ 含一个被研究的实际来源、$\alpha\in\{a_{\rm cal},-a_{\rm cal}\}$、$\beta\in\mathbb R$、$\nu>0$、固定 $q\in\mathbb T^2$、相应实际平移 PDE 轨迹 $u^q$、允许取得映射，以及解释全部档案所需的辅助量和联合误差。已有其它来源的记录和来源间关系亦由这一份世界的辅助量共同解释。初始标签域含零，$\theta_A:I_A\to[0,T_{12}]$、$\theta_C:I_C\to[0,T_{12}]$ 连续严格递增，$\theta_A(0)=\theta_C(0)=0$；更强已获钟限制仍属于允许钟对集合 $\mathcal C_{\mathcal X}$。钟的实际内部值是潜变量，除非已被取得。此处两钟可各自未知，不声明它们统计独立。
+
+完整已获档案为
+$$
+H_{\rm phase}=(C,\mathcal A,D_0,D_A,D_C,J),\qquad
+D_0=(\text{初始事件证书},A_0^{\rm obs}),
+$$
+$$
+D_A=(s,A^{\rm obs}(s))_{s\in L_A},\qquad
+D_C=(v,C^{\rm obs}(v))_{v\in L_C},\qquad L_A\subseteq I_A,\ L_C\subseteq I_C.
+\tag{33.101}
+$$
+$C$ 保留每一项先前内部／外部记录、来源关系和参考；$\mathcal A$ 保留带来源索引的全部实际动作、校准、费用、延迟及取得历史；$J$ 保留全部已获跨端口配对、实际顺序、时间、来源及联合取得关系，包括第32节形式的已获顺序约束。$D_A,D_C$ 保留完整复值及本地标签，$L_A,L_C$ 在选候选世界之前固定。初始参考有误差仍是已获记录，不能被 $|A_0|=a_{\rm cal}/2$ 替换。
+
+明确令 $\operatorname{Hist}_{\rm phase}(w,\mathcal A,D_0)$ 断言：每次所记动作由其声明来源在对应潜在内部时刻合法实施，满足所记费用、延迟和校准；读出的真实量就是该世界同一实际轨迹的指定 Fourier 积分；初始参考事件确为该准备的 $t=0$；取得无扰动，或有已认证的等价共同轨迹；每份分支证书在实际轨迹上成立。该谓词既不以模型预测伪造取得，也不把到达顺序当作未经认证的内部取得顺序。用 $\mathcal R_i,\mathcal J_\ell$ 分别解释所有旧记录与联合关系。对非退化任务置
+$$
+\mathcal B(w)=\beta(w)\chi_b(q(w)),\quad
+p(w)=(m_+(w),k(w))=\left(\frac{|\beta(w)|}{\nu(w)},
+ \frac{a_{\rm cal}^2}{\nu(w)^2}\right),\quad
+\omega(w)=\frac{\mathcal B(w)}{|\mathcal B(w)|}.
+\tag{33.102}
+$$
+给定实验先验 $P_{\mathcal X}\subset(0,\infty)^2$，完整可行交集为
+$$
+\begin{aligned}
+\mathfrak F_H^{\rm phase}=\{w\in\Omega_{\mathcal X_{\rm phase}}:\;&
+ \beta(w)\ne0,\quad p(w)\in P_{\mathcal X},\quad
+ (\theta_A,\theta_C)\in\mathcal C_{\mathcal X},\\
+&\operatorname{Hist}_{\rm phase}(w,\mathcal A,D_0),\quad
+ \mathcal R_i(w,c_i)\ (\text{全部 }c_i\in C),\\
+&\mathcal J_\ell(w,j_\ell)\ (\text{全部 }j_\ell\in J),\quad w\in\mathcal E_H,\\
+&A_0^{\rm obs}=A_0(w)+\varepsilon_0(w),\\
+&A^{\rm obs}(s)=A_w^{q(w)}(\theta_A(s))+\varepsilon_A(w,s)
+ \quad(s\in L_A),\\
+&C^{\rm obs}(v)=C_w^{q(w)}(\theta_C(v))+\varepsilon_C(w,v)
+ \quad(v\in L_C)\},\qquad
+\mathcal K_H^{\rm phase}=p(\mathfrak F_H^{\rm phase}).
+\end{aligned}
+\tag{33.103}
+$$
+$\mathcal E_H$ 是同一联合事件，含原始误差全部相关限制；其必要坐标界不替代它。任一重复出现的参考或读数指同一个误差变量。各条关系不得另选互不相容的世界。有限恢复另外要求 $J$ 确实含两个已获标签对 $(s_j,v_j)$ 的同源配对证书
+$$
+t_j(w):=\theta_A(s_j)=\theta_C(v_j),\qquad
+0<t_1(w)<t_2(w)\le T_g,\qquad
+r_j(w):=R_w(t_j(w))\in(0,r_*]\quad(j=1,2).
+\tag{33.104}
+$$
+这是推论30.8的实际事件条件，不要求两事件之间 $\theta_A=\theta_C$。两个无关联流或同数值标签不提供该证书。理想射流定理则另要求取得零点附近任意小正水平的对齐初始图 germ；两个有限配对不自动提供这种理想数据。
+
+所有归一化、实部和模都是 $H_{\rm phase}$ 的计算摘要，不能删除 $A_0^{\rm obs}$、原复数、虚部、来源、动作或联合时间顺序。沿用定义25.5及定义30.1的共同实现语义，数值摘要拟合不是完整世界见证。非空恢复须有 $w_*\in\mathfrak F_H^{\rm phase}$；空集上的成对不等式不产生参数、场或合法动作。
+
