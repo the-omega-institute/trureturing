@@ -1,7 +1,7 @@
 {
   "schema": "anchored-four-record-potential-v1",
   "scope": "Anchored order 3,5,7 followed by any order with at most four actual earlier graph neighbours; distinct odd nonunit original numerical moduli, arbitrary original heights and residues.",
-  "helper_sha256": "6282f94780ba7d16307bfe8420b316addc227ddb8ac90267361504d8c9890f69",
+  "helper_sha256": "e8455f314b463dfc3d513289b2043b3143793bd2dca2ef4e480c37e034e646c6",
   "threshold_schedule": {
     "7": "1/5",
     "11": "1/3",
