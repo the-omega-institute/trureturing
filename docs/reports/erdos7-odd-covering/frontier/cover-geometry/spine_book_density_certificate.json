@@ -1,0 +1,30 @@
+{
+  "schema": "spine-book-full-density-v1",
+  "scope": "A book with N nonempty private pages of size at most two sharing the spine {3,5}; full Haar density, uniform in primes, finite heights and residues.",
+  "chapter36_certificate_sha256": "1179712ddd5f6e90c1c23a23902bb111af54ea7a5061350c0df2471455dbefeb",
+  "source": {
+    "source_doi": "10.5281/zenodo.22759614",
+    "source_archive_url": "https://michaelschroeder.ai/research/NinePrimeSupport/nine-prime-support-1.0.1.zip",
+    "source_archive_sha256": "9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c",
+    "source_verifier_sha256": "e3296d181686c0f1925e755583fdc4df2ffeb2bacbc36a77a2396bbe3b4a9135",
+    "source_geometry_cpp_sha256": "8d7ecf1981a413daf2d3835ebe2c046b20f03010f7ce24f247bd357136e24f04"
+  },
+  "delta": "968925187/2025000000000",
+  "S": "21/200",
+  "eta": "968925187/426218925187",
+  "maximum_extra_outside_page_charge": "968925187/4050000000000",
+  "finite_minimum_shallow_residual": "94/6165",
+  "minimum_residual_row_prime": 137,
+  "analytic_tail_shallow_residual_lower_bound": "1/2",
+  "outside_page_pure_domain_product_lower_bound": "55/64",
+  "uniform_outside_page_haar_fibre_lower_bound": "45539483789/1528808537470752",
+  "four_prime_source_joint_density_cap": "5/2",
+  "uniform_core_joint_density_cap": "15/2",
+  "full_haar_density_bound": {
+    "prefactor": "968925187/30375000000000",
+    "per_page_factor": "45539483789/1528808537470752",
+    "formula": "prefactor * per_page_factor^N",
+    "N": "number of nonempty private pages in the chosen original partition"
+  },
+  "verification": "Exact rational consequences of the pinned Chapter 36 certificate; ordinary proof premises, no new Lean or geometry verification."
+}
