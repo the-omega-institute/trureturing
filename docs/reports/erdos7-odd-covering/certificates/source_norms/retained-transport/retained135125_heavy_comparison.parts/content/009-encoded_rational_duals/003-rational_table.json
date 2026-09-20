@@ -1,0 +1,68 @@
+{
+  "length": 5578,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "b02b8ea01665fc073a6cf7083621db9b13cd987e9f347d90d471c3023e97bccf",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/000798-001596.json",
+        "sha256": "c2c26b69257a5bac3b4036ebe73fa8a010bdcfc003c5ddaee5f7fd07c0122535",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/001596-002394.json",
+        "sha256": "1d56824b6db95197b3aa4f647fef0b745be92e28ce4e47fa582bad2c4723b859",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/002394-003192.json",
+        "sha256": "c6d1a4053dd6adcc6932f7a3e0a82ff9bff89956d4d9877c8fef5ecf9577c148",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/003192-003990.json",
+        "sha256": "d16b61f0d312c2741c09c64df13e9060d5a4451422fd00827a425aa8322835a0",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/003990-004788.json",
+        "sha256": "0ab10b639b8a2183655116a7512fe39f242ed28c7cf6b211af82ca8567b8d77e",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5578,
+      "part": {
+        "path": "content/009-encoded_rational_duals/003-rational_table/004788-005578.json",
+        "sha256": "bfcc567493a3b3a8adf18be7377c82cf85211f9231284cebc82b5d2342e68e81",
+        "kind": "value-zlib-base85"
+      }
+    }
+  ]
+}
