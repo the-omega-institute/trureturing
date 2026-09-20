@@ -61,7 +61,11 @@ internal sealed class BarketCayleyEigengapRefutationDocument : IScribeDocumentDe
                         + "so the first gap above one has index three. The final index is four, "
                         + "while the only central quotient allowed by nilpotency class one has "
                         + "cardinality one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "barket-central-quotient-eigengap-conjecture-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(
         string id, string title, string name, Formula formula, string prose) =>

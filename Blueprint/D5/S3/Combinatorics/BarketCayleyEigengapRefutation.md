@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BarketCayleyEigengapRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barket-central-quotient-eigengap-conjecture-refutation` (refuted) by `D5/S3/Combinatorics/BarketCayleyEigengapRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barket-central-quotient-eigengap-conjecture-refutation","declaration_gid":"D5/S3/Combinatorics/BarketCayleyEigengapRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
