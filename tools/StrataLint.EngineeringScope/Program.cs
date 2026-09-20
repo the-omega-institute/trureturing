@@ -6,6 +6,9 @@ namespace StrataLint.EngineeringScope;
 
 internal static class Program
 {
+    // Temporary policy-override, not capacity-derived; owner and review trigger: spec A22, #8989.
+    private const int DefaultConcurrentTestProjects = 2;
+
     public static int Main(string[] arguments) => Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> evidenceLoader, TextWriter output, TextWriter error)
@@ -114,7 +117,7 @@ internal static class Program
         => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build), maxConcurrentProjects);
 
     private static int RunPreparedTests(string root, Func<string, string, int> run, TextWriter output,
-        CommonExecutionEvidence.PreparedTests prepared, int maxConcurrentProjects = 2)
+        CommonExecutionEvidence.PreparedTests prepared, int maxConcurrentProjects = DefaultConcurrentTestProjects)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(maxConcurrentProjects, 1);
         output = TextWriter.Synchronized(output);
