@@ -4,6 +4,39 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class CapacityPolicyTests
 {
+    [Theory]
+    [InlineData("measurements.json")]
+    [InlineData("Results/sample.JSON")]
+    [InlineData("Results/sample.jsonl")]
+    [InlineData("Results/sample.ndjson")]
+    [InlineData("Results/sample.json5")]
+    [InlineData("Results/sample.jsonc")]
+    [InlineData("Results/sample.yaml")]
+    [InlineData("Results/sample.yml")]
+    [InlineData("Results/sample.toml")]
+    [InlineData("Results/sample.csv")]
+    [InlineData("Results/sample.tsv")]
+    [InlineData("Results/sample.xml")]
+    [InlineData("Results/sample.jsonl.xz.b64")]
+    [InlineData("Results/sample.trx")]
+    public void CapacityAuditExemptsDataFileLength(string path)
+    {
+        var text = string.Concat(Enumerable.Repeat("data\n", 1001));
+        Assert.Empty(RepositoryCapacityAudit.InspectFiles(new[] { (path, text) }));
+    }
+
+    [Fact]
+    public void CapacityAuditStillCountsOversizeDataFilesForDirectoryTolerance()
+    {
+        var text = string.Concat(Enumerable.Repeat("data\n", 1001));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
+            .Select(index => ($"Results/sample{index}.json", text));
+
+        var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));
+        Assert.Equal("Results", finding.Path);
+        Assert.Contains("directory contains", finding.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void CapacityExcludesOnlyCanonicalProblemPoolPaths()
     {
