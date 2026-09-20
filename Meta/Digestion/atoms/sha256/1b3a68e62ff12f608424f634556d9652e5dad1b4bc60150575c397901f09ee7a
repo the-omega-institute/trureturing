@@ -1,0 +1,20 @@
+**应用 36.2（指定前缀距离下的完成识别）。** 令 $X_{k,\rm fs}\subset X_k$ 为最终全零的合法串，$J(x)=(q_nx)_{n\ge0}$。对 $x\ne y$ 置
+$$
+p(x,y)=2^{-\min\{j\ge0:x_j\ne y_j\}},\qquad p(x,x)=0.
+\tag{36.3}
+$$
+在主卷§132.3.3的既有识别 $X_k\cong\varprojlim\mathcal W_n^{(k)}$ 下，前缀读数联合分离且每个相容线程具有同一个实现：线程的第 $j$ 位取自长度 $j+1$ 的前缀，相容性保证更长层不改它；若所得串含 $1^k$，某个有限前缀就不合法。反过来每个合法串给这一线程。因此可直接使用 [InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean)；[LocalGlobalAtlasExactness.local_global_atlas_exactness](../../../D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.lean)把同一条件写成核为对角、线程像为全部。这两条是 Type 层的分离／共同实现判据，本身没有拓扑完成的结论。
+
+拓扑部分需保留距离刻度。[主卷定义91.1、式（91.2）](RECURSIVE_RELATIONAL_OBSERVATION.md)按首个不同的“层”定义线程距离，而 $q_0$ 恒为空，故首个不同位为 $j$ 时首个不同层为 $j+1$。精确地，
+$$
+d_{91}(Jx,Jy)=\tfrac12p(x,y),\qquad
+\widetilde d:=2d_{91}\quad\Longrightarrow\quad
+\widetilde d(Jx,Jy)=p(x,y).
+\tag{36.4}
+$$
+相等串两边均零。若未重标号或乘二，只能说同拓扑及比例相似，不能称按式（36.3）等距。主卷定义91.1已经给出观察商的完成为 $\overline{J[X]}$；等于整个逆极限还需要此像稠密。这里每个合法有限词补零仍合法，故所有有限实际像都等于 $\mathcal W_n^{(k)}$。Q124.13的有限实际像稠密判据可直接使用：线程的基本邻域只约束有限多层，选择最大受限层的实际代表便同时满足较小层。于是 $J[X_{k,\rm fs}]$ 稠密，按重标距离 $\widetilde d$ 的完成正好为 $(X_k,p)$。
+
+同一个结论也可用截断 $\tau_Nx$ 验证所需稠密性：保留前 $N$ 位后补零不制造禁词，且 $p(\tau_Nx,x)\le2^{-N}$。全部合法串在二元乘积中闭，因此在此首差距离下紧且完备；这使用 Q124.2的既有前缀构造，把禁词从 $11$ 换成 $1^k$。有限支持域自身缺共同实现：Q123.3的交替串 $1010\ldots$ 对所有 $k\ge2$ 均合法，每个有限前缀可补零实现，却无同一个最终全零的串实现全部层。此例说明“每层有实际代表且相互相容”与“有原类型中的共同代表”仍不同；各层分别有代表而不相容，连线程也不是。
+
+离散前缀和完成对象可据此称为同一关系的有限限制与相容整体，或一个声明清楚的体／边界接口。对有限观察 $q_N$，其纤维通常仍有许多整体，不能从一个有限边界凭空恢复全部层；对全层族，唯一性和存在性刚好是上述两项条件。这一识别不赋予任何概率。根 Perron 柱律是额外的相容权重；恢复卷的 Gram 数据和等距又是相干结构的额外选择。完成字符串本身既不产生 Born 规则，也不选定实际发生的历史。
+
