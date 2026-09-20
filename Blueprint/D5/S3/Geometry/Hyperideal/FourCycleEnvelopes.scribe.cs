@@ -9,6 +9,8 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
 {
     private const string Declaration =
         "D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.cosine_mixed_comparison";
+    private static readonly LibraryNoteRef Zhao =
+        LibraryNoteRef.Create("D5/L/zhao2026cfmpincidence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Mixed-coordinate monotonicity for the exact six-variable hyper-ideal cosine.",
@@ -21,14 +23,14 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
             Paragraph(Text("Define rad(x,y,z)=2xyz+x^2+y^2+z^2-1 and "
                 + "P(x,y,z,o,v,w)=yz+vw+xyv+xzw-(x^2-1)o. The function cosine "
                 + "is P divided first by sqrt(rad(x,y,w)) and then by sqrt(rad(x,z,v)). "
-                + "This is the actual formula in Zhao, arXiv:2601.15174v2, Lemma 2.2. "
+                + "This is the exact six-variable formula used by the cited source. "
                 + "Both radicands are proved positive on the box.")),
             Describe.Lean(
                 DescribeId.Create("hyperideal-mixed-coordinate-comparison"),
                 DeclarationHandle.Create(Declaration),
                 H("Increasing neighbours and decreasing the opposite coordinate"),
                 StatementSource.FromAuthor(F.Disp(Statement())),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Zhao),
                 Blocks(
                     Paragraph(Text("All eleven variables lie in [1,2]. Increasing the four "
                         + "neighbouring coordinates and decreasing the opposite coordinate cannot "

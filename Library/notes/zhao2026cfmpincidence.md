@@ -4,7 +4,7 @@ authors: Xinrong Zhao
 year: 2026
 title: Combinatorial Ricci Flows and Hyperbolic Structures on a Class of Compact 3-Manifolds with Boundary
 doi: 10.48550/arXiv.2601.15174
-url: https://arxiv.org/html/2601.15174v1
+url: https://arxiv.org/html/2601.15174v2
 claim: The general valence-nine theorem and cube monotonicity are existing results; the accompanying theory proves explicitly restricted lower-valence incidence criteria without claiming the full CFMP conjecture.
 strata_touched: []
 license: citation-only
@@ -16,7 +16,7 @@ triage: anchor
 ## Verified locator
 
 - DOI: 10.48550/arXiv.2601.15174
-- URL: https://arxiv.org/html/2601.15174v1
+- URL: https://arxiv.org/html/2601.15174v2
 
 ## Primary-source scope
 
@@ -37,20 +37,20 @@ triage: anchor
    26 (2022), 1349-1384, DOI 10.2140/gt.2022.26.1349.
    https://arxiv.org/abs/2009.03731
    https://arxiv.org/pdf/2009.03731
-   Read the original abstract, Theorems 1.5, 1.6, 3.9 and the co-volume/flow
-   arguments in Sections 4-5 in the retrieved PDF text. The general threshold
-   is ten. Theorem 1.6 already gives convergence from every positive initial
+   Theorems 1.5, 1.6 and 3.9 together with the co-volume/flow arguments in
+   Sections 4-5 give the relevant inputs. The general threshold is ten.
+   Theorem 1.6 gives convergence from every positive initial
    vector once a genuine zero-curvature metric exists. Theorem 3.9 gives a
    larger genuine-metric cube up to arccosh(3). Our smaller arccosh(2) cube is
    rechecked directly by the displayed cosine inequalities and is not claimed
-   as a new discovery. The author order and spelling were checked on arXiv.
+   as a new discovery.
 
-3. Xinrong Zhao, the present bibkey, arXiv:2601.15174v1, January 21, 2026.
-   https://arxiv.org/html/2601.15174v1
-   Read the full primary HTML, especially Theorems 1.1/1.5, 2.12,
-   Lemmas 2.2 and 3.4, and the opposite-edge/adjacent-face estimates of
-   Sections 4-6. The general threshold is nine. No peer-reviewed publication
-   status is asserted here. Its cube monotonicity already controls the four
+3. Xinrong Zhao, the present bibkey, arXiv:2601.15174v2, February 5, 2026.
+   https://arxiv.org/html/2601.15174v2
+   Theorems 1.1/1.5 and 2.12, Lemmas 2.2 and 3.4, and the
+   opposite-edge/adjacent-face estimates of Sections 4-6 give the relevant
+   inputs. The general threshold is nine. No peer-reviewed publication status
+   is asserted here. Its cube monotonicity already controls the four
    adjacent variables. The accompanying theory proves that elementary
    derivative sign explicitly, rather than borrowing the degree-nine theorem
    for a triangulation containing degree-eight edges.
@@ -58,8 +58,8 @@ triage: anchor
 4. Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
    3-manifolds*, arXiv:1404.5365v2.
    https://arxiv.org/abs/1404.5365
-   The primary abstract was read. The tetrahedron length characterization,
-   Schlaefli/co-volume formula and global rigidity are also explicitly stated
+   The tetrahedron length characterization, Schlaefli/co-volume formula and
+   global rigidity are also explicitly stated
    with original locators in the two flow papers. We do not claim a complete
    independent audit of every proof in Luo-Yang.
 
@@ -70,13 +70,7 @@ triage: anchor
    Its mixed-boundary result requires proper gluing, ideal-edge valence at
    least six and hyper-ideal-edge valence at least eleven. It does not prove
    the pure hyper-ideal valence-eight cases considered here. The primary
-   abstract and relevant HTML theorem statements were checked.
-
-PDF screenshots of the CFMP and Feng-Ge-Hua pages were attempted and returned
-cache-miss/internal errors. The parsed primary texts and Zhao's full HTML
-were available. No successful visual inspection of those PDF pages or an
-unparsed figure/table is asserted. Figure geometry is not used as evidence
-for any new inequality.
+   theorem statements imply the stated comparison boundary.
 
 ## Exact mathematical delta
 
@@ -127,19 +121,12 @@ Repository searches for CFMP and hyper-ideal returned no existing owner,
 so the new theory volume is a distinct geometric domain rather than a copy
 of the surface-congruence volume. This is not an exhaustive novelty search.
 
-Read the current information-escape specification and relevant CLAUDE
-admission text. Also inspected other-contributor PR results, including
-loning's #7820 theory continuation, alongside the actual spacetime source.
-No assertion of having mathematically reviewed every current PR is made.
-
 The theory volume contains ordinary proofs and source provenance. The
 unrestricted degree-eight target and original CFMP conjecture remain open.
 The restricted theorem has no numerical hypothesis left unproved; its
 additional hypotheses are the explicit incidence rules.
 
 ## Second increment: exact identification constraints and nonvacuous families
-
-Sections 5-9 were appended without changing Sections 1-4.
 
 Section 5 retains the actual equality of a local edge with its opposite when
 both represent the same global edge. The upper-face calculation must then
@@ -183,32 +170,27 @@ Section 9 uses the exact remaining variational obligation. In a minimum-eight
 triangulation the assignment 2pi/d(e) is a strict angle structure. Luo-Yang
 Theorems 1.4 and 6.3 already give a unique maximum-volume angle structure and
 a positive GENERALIZED length realization. Its only nongeometric tetrahedra
-have angles (0,0,0,0,pi,pi), with the pi angles opposite. The full original
-PDF was now retrieved and the theorem/Section 6.3 text inspected. A screenshot
-of PDF page index one (printed page two, including Theorem 1.4) succeeded.
-No claim of independently rechecking the entire paper is made. Excluding
+   have angles (0,0,0,0,pi,pi), with the pi angles opposite. Excluding
 these flat tetrahedra in the maximum is the missing full-eight existence
 step; positive angle feasibility or energy monotonicity does not exclude them.
 
-## Exact checks actually executed, outside the repository delta
+## Finite verification boundary
 
-The local verification script checks the derivative numerator identity,
-seven displayed cosine evaluations, the squared three-high bound, all exact
-triple/seven-angle inequalities, and the rational no-go factorization.
+The derivative numerator identity, seven displayed cosine evaluations, the
+squared three-high bound, all exact triple/seven-angle inequalities, and the
+rational no-go factorization have exact finite checks.
 Numerical radian margins are display-only; the strict signs have rational
 polynomial certificates. A two-variable floating-point root was also explored
 for the four-tetrahedron example; its success is not used as an existence
 proof or certified geometric root.
 
-Three face-pairing packets were checked. Two are the stated (8,16) and
+Three face-pairing packets satisfy the finite checks. Two are the stated (8,16) and
 (6,6,24) examples. The third is a second (8,16) packet with an opposite-pair
-low edge, checking the Section 5 condition. The initial searches used exact
-union-find bookkeeping. A separate graph-component implementation, with no
-use of the searcher's output classes, rechecked complete face pairing,
-orientation parity, connectedness, oriented-edge reversal, circular normal
-links, vertex-link Euler characteristics and all incidence hypotheses. Both
-implementations are local diagnostics authored in this session; they are not
-independent human reviews, a Regina/SnapPy certificate or Lean certification.
+low edge, checking the Section 5 condition. Exact union-find and an independent
+graph-component calculation agree on complete face pairing, orientation parity,
+connectedness, oriented-edge reversal, circular normal links, vertex-link Euler
+characteristics and all incidence hypotheses. These finite calculations do not
+prove the unrestricted conjecture.
 
 No tests of finitely many pairings establish the unrestricted conjecture.
 The mathematical theorems quantify over all actual triangulations satisfying

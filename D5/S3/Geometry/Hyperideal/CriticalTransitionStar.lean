@@ -41,26 +41,6 @@ def gamma : ℝ := Real.arccos (43/99)
 def margin : ℝ := min (2*Real.pi - 6*Real.arccos (4/7))
   (4*gamma + 2*beta - 2*Real.pi)
 
-private theorem quotient_le (A B P q : ℝ) (hA : 0 < A) (hB : 0 < B)
-    (hq : 0 ≤ q) (hs : P ^ 2 ≤ q ^ 2 * (A * B)) :
-    P / Real.sqrt A / Real.sqrt B ≤ q := by
-  let r := Real.sqrt A * Real.sqrt B
-  have hr : 0 < r := mul_pos (Real.sqrt_pos.2 hA) (Real.sqrt_pos.2 hB)
-  have hrsq : r^2 = A*B := by
-    dsimp [r]
-    rw [mul_pow, Real.sq_sqrt hA.le, Real.sq_sqrt hB.le]
-  rw [div_div]
-  change P/r ≤ q
-  apply (div_le_iff₀ hr).2
-  by_cases hP : P ≤ 0
-  · exact hP.trans (mul_nonneg hq hr.le)
-  · by_contra h
-    have hlt : q*r < P := lt_of_not_ge h
-    have hsum : 0 < P+q*r := by nlinarith [mul_nonneg hq hr.le]
-    have hprod := mul_pos (sub_pos.mpr hlt) hsum
-    have heq : (q*r)^2 = q^2*(A*B) := by rw [mul_pow, hrsq]
-    nlinarith
-
 /-- Uniform signed angle-sum margins on both faces of the shared critical
 coordinate. The same real neighbour vector is used on each face. -/
 theorem critical_transition_star
@@ -78,6 +58,21 @@ theorem critical_transition_star
     2*Real.pi + margin ≤
       ∑ i : I, Real.arccos (cosine 2 (y i) (z i) (o i) (v i) (w i)) := by
   classical
+  have quotient_le : ∀ (A B P q : ℝ), 0 < A → 0 < B → 0 ≤ q →
+      P ^ 2 ≤ q ^ 2 * (A * B) → P / Real.sqrt A / Real.sqrt B ≤ q := by
+    intro A B P q hA hB hq hs
+    let r := Real.sqrt A * Real.sqrt B
+    have hr : 0 < r := mul_pos (Real.sqrt_pos.2 hA) (Real.sqrt_pos.2 hB)
+    have hrsq : r^2 = A*B := by
+      dsimp [r]
+      rw [mul_pow, Real.sq_sqrt hA.le, Real.sq_sqrt hB.le]
+    rw [div_div]
+    change P/r ≤ q
+    apply (div_le_iff₀ hr).2
+    apply le_of_sq_le_sq
+    · rw [mul_pow, hrsq]
+      exact hs
+    · exact mul_nonneg hq hr.le
   have hc1 : (1:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hc2 : (2:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hch : (5/4:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num

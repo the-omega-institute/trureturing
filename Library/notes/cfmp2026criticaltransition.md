@@ -5,7 +5,7 @@ year: 2026
 title: Sources for critical six-valent transition stars and cover-stable realization
 doi: null
 url: https://raw.githubusercontent.com/the-omega-institute/trureturing/8009ec61bf9a08f36a96f37f0f666bc4e0b45da3/docs/develop/theory/CFMP_GEOMETRIC_REALIZATION.md
-claim: The cited geometric inputs support the explicitly restricted critical-star construction; the formal result proves its continuous six-occurrence angle estimate without claiming unrestricted CFMP.
+claim: The cited geometric inputs support the explicitly restricted critical-star construction and its continuous six-occurrence angle estimate without establishing unrestricted CFMP.
 license: citation-only
 triage: anchor
 strata_touched: []
@@ -36,8 +36,7 @@ https://arxiv.org/html/2601.15174v2
 https://arxiv.org/abs/2601.15174
 Lemma 2.2, Proposition 2.4 and Lemma 3.4 supply the actual six-variable
 cosine, genuine length domain and neighbour/opposite monotonicity. Theorem
-1.1 is the general minimum-nine result. The source was read as HTML;
-no new PDF visual-inspection claim is made in this increment.
+1.1 is the general minimum-nine result.
 
 Ke Feng, Huabin Ge and Bobo Hua, *Combinatorial Ricci flows and the
 hyperbolization of a class of compact 3-manifolds*, Geometry & Topology 26
@@ -71,7 +70,8 @@ are two M tetrahedra, five P4 tetrahedra and one C tetrahedron. The six-degree
 star has four favourable occurrences and two P4 endpoints adjoining
 seventeen-degree low edges. Complete edge classes and normal circles are
 written in the theory; independent finite checks also trace oriented-edge
-classes and all vertex-link fans. These checks are not kernel certification.
+classes and all vertex-link fans. These finite checks do not prove the
+unrestricted conjecture.
 
 The intrinsic opposite condition uses its degree class. It therefore
 persists through unbranched covers even if global edge identities split.
@@ -80,29 +80,17 @@ characteristic -5n. The fixed maximum degree 25 allows a common lower floor
 and hence use of the previously credited local Hessian compactness input.
 No explicit numerical Hessian eigenvalue bound is claimed.
 
-## Formal source correspondence
+## Analytic scope
 
-`D5/S3/Geometry/Hyperideal/CriticalTransitionStar.lean` has one public
-candidate theorem `critical_transition_star`, paired with its authored
-Scribe. Its arbitrary finite occurrence carrier has cardinality six; all
-five non-target real coordinates vary on continuous faces. A finite good
-subset has at least four members. The conditions are actual coordinate
-caps and opposite floors, not cosine bounds or the desired total angles.
-The proof consumes the derivative-based owner FourCycleEnvelopes, proves
-the new endpoint and double-angle estimates, and aggregates actual arccos
-values with an explicit positive two-sided margin.
+The arbitrary finite occurrence carrier has cardinality six; all five
+non-target real coordinates vary on continuous faces, and a finite favourable
+subset has at least four members. The conditions are actual coordinate caps
+and opposite floors, not cosine bounds or desired total angles. The derivative
+comparison, endpoint estimates, double-angle gap, and occurrence aggregation
+give one explicit positive two-sided margin.
 
-Pinned mathlib: db584cd6d46c92f209a44c0f1c829460d327499d.
-The exact inverse-trigonometric APIs were read in
-`Mathlib/Analysis/SpecialFunctions/Trigonometric/Inverse.lean`, notably
-arccos_cos, arccos_neg, arccos_le_arccos, arccos_lt_arccos and cos_arccos.
-The square-root and finite-sum patterns follow the existing candidate
-modules. Repository searches did not locate this exact critical transition
-owner in the searched scope. That is a bounded dependency search, not an
-exhaustive novelty certificate.
-
-The formal theorem covers the continuous six-occurrence angle estimate only.
-The manifold construction, co-volume existence step and cover family remain
-ordinary proofs. The full CFMP conjecture and unrestricted minimum-eight case
-remain outside the proved restricted hypotheses. The original
-independent-opposite-one obstruction is retained without alteration.
+This continuous six-occurrence estimate does not construct the manifold,
+establish the co-volume minimum, or prove the cover family. The full CFMP
+conjecture and unrestricted minimum-eight case remain outside the restricted
+hypotheses. The independent-opposite-one obstruction is retained without
+alteration.

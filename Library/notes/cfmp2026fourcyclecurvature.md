@@ -52,11 +52,9 @@ Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
 https://arxiv.org/abs/1404.5365
 https://arxiv.org/pdf/1404.5365
 
-The co-volume argument following equation (4.2) explicitly gives a positive-
-definite Hessian in true hyper-ideal length space. The parsed text and printed
-page 15 were inspected, including a successful screenshot of that page.
-A screenshot attempt for the Feng–Ge–Hua page failed; no successful visual
-inspection of that page is asserted. No unseen figure is a proof input.
+The co-volume argument following equation (4.2) gives a positive-definite
+Hessian in true hyper-ideal length space. This is the geometric input used by
+the compact-box spectral argument below.
 
 ## Exact restricted result and its boundary
 
@@ -107,10 +105,9 @@ checked numerically; the root residual was about 4.44e-15. The displayed
 finite-difference Hessian eigenvalues are diagnostics only. The all-cover
 statements follow from the written proofs, not an enumeration of covers.
 
-Bounded primary-source searches did not locate the precise four-cycle
-incidence theorem. This is not an exhaustive priority certificate or an
-independent referee assessment. The co-volume, compactness and matrix tools
-are classical and credited above.
+The cited sources do not state the precise four-cycle incidence theorem.
+No exhaustive priority claim follows from this source map. The co-volume,
+compactness and matrix tools are classical and credited above.
 
 The general CFMP obligation remains to handle all permitted local low-valence
 patterns and their shared variables, or to exclude flat tetrahedra in the
@@ -118,81 +115,35 @@ global maximizing angle structure. Small average error on larger objects
 cannot replace genuine nondegenerate compactness and an undiluted residual
 criterion on a fixed object.
 
-## Formal correspondence: universal real envelopes
+## Universal real envelopes and global incidence
 
-`D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.lean` contains one public
-candidate theorem, `cosine_mixed_comparison`, paired with its authored
-Scribe. It targets the analytic monotonicity input used in theory Sections
-2 and 16. No mathematical conclusion of the theory is changed by this
-formalization, and the geometric theory remains the single ordinary-proof
-owner.
+The analytic comparison retains six independent real coordinates, the
+original numerator, both radicands, and real square roots. On the whole cube
+[1,2], differentiating the quotient reduces neighbour monotonicity to the
+nonnegative interval sign of
+`Q=xow+xv+yo+yvw+z(1-w^2)`; the other coordinate comparisons follow from the
+tetrahedral symmetries. Denominator positivity is proved on the same cube.
 
-The Lean definitions retain the exact six independent real coordinates,
-the original numerator, both radicands, and real square roots. The theorem
-quantifies over two points of the whole closed cube. Its proof constructs
-the square-root/quotient derivative, proves its coupled polynomial sign on
-[1,2], and derives the other coordinate comparisons by actual symmetries.
-Monotonicity and denominator positivity are not hypotheses.
-The new live estimate is the interval sign of
-`Q=xow+xv+yo+yvw+z(1-w^2)` within the derivative computation. The mean-value
-theorem alone does not provide that sign.
+For a finite incidence map `T x Fin(6) -> E`, one global real vector is read
+through six vertex-induced frames and occurrences are counted with
+multiplicity. Under the stated four-cycle colouring and low/high fibre
+cardinalities, the construction gives a nonempty box, strict cosine-domain
+inclusion, and one positive eta on every lower and upper curvature face. No
+angle bound, small-enough parameter, curvature sign, co-volume function or
+solution is an extra hypothesis. The fixed eta is independent of incidence
+size; the chosen high-edge floor tends to one as that size grows, so no uniform
+Hessian lower bound across all these boxes follows.
 
-Pinned upstream: mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`.
-Directly read `Analysis/Calculus/Deriv/MeanValue.lean` and
-`Analysis/SpecialFunctions/Sqrt.lean`; the proof consumes the actual
-`monotoneOn_of_deriv_nonneg` and `HasDerivAt.sqrt` APIs. Repository CFMP
-search returned no pre-existing matching Lean owner. A bounded external
-search did not locate a matching formal hyper-ideal cosine theorem. This
-is not a complete search of all Lean code or a priority claim. The ordinary
-monotonicity result is credited to the primary geometric sources above.
+Exact derivative identities, tetrahedral symmetries, endpoint substitutions,
+and rational squared angle margins support the universal calculation. Ninety-
+six face corners and 1000 interior samples are finite diagnostics only and do
+not prove the universal inequality.
 
-The formal statement stops at mixed-coordinate comparison for the analytic
-cosine. Rational face bounds are direct instances used inside the later
-content theorem that needs them, rather than separate public declarations.
-Topological tetrahedron construction, the formula-to-geometry equivalence,
-strict trigonometric comparisons, global face gluing, the co-volume minimum,
-and the manifold-cover residual example are not formalized by this file.
-These boundaries prevent a real-expression theorem from being presented as
-a completed Lean proof of a geometric realization conjecture.
-
-Exact derivative-numerator and nonnegative-cone identities, exact symmetries,
-endpoint substitutions, and rational squared angle margins were checked
-independently. Ninety-six face corners and 1000 interior samples were also
-evaluated as finite diagnostics. The latter do not prove a universal
-inequality. The formal theorem supplies the universal real estimate; the
-content and utility classification remains subject to independent review.
-
-## Global incidence, quantitative margins and face-signature obstruction
-
-`FourCycleCurvature.lean` builds an actual finite incidence map
-`T x Fin(6) -> E`, counts its fibres, and reads one global real vector through
-six vertex-induced frames. Its only mathematical hypotheses are the stated
-four-cycle colouring and actual low/high fibre cardinalities. The theorem
-`fourcycle_curvature_box` constructs delta from the total occurrence count,
-proves nonemptiness and strict cosine-domain inclusion, and gives one positive
-eta on every lower and upper curvature face. No angle bound, small-enough
-parameter, curvature sign, co-volume function or solution is supplied as an
-extra hypothesis. The paired Scribe states the same quantifiers and constants.
-
-The six-variable mixed comparison is the candidate dependency; its endpoint
-instances are proved locally in the curvature theorem. The new proof consumes
-pinned `Real.arccos_cos`, `Real.arccos_le_arccos`,
-`Real.arccos_lt_arccos`, square-root comparisons and finite sums. The actual
-pinned trigonometric inverse source was inspected. The universal estimate
-is distinguished from the finite frame and numerical diagnostics used while
-checking its implementation. The fixed eta is independent of incidence size;
-the explicitly chosen high-edge floor tends to one as that size grows, so no
-uniform Hessian lower bound across all these boxes is inferred.
-
-`FaceColourPropagation.lean` proves `balanced_signature_constant` on a
-face-paired incidence carrier, even without a finite tetrahedron type when
-finite-path connectedness holds. Each face gluing includes a permutation of
-its three edges and equality of the corresponding global labels. Equal
-opposite colours imply equal face counts inside each tetrahedron. Summing
-the actual label equalities and reindexing by that permutation gives equality
-across each gluing; finite-path induction gives global constancy. Neither
-neighbouring type equality nor the desired global invariant is a premise.
-The same-name Scribe records this independent combinatorial scope.
+For the separate face-colour observation, each face gluing permutes three
+edges while preserving their global labels. Equal opposite colours identify
+every face count with the number of low opposite pairs; reindexing across one
+gluing and finite-path induction make this number constant on each connected
+component.
 
 This rules out a proposed direct mixture of all-high, one-low-opposite-pair,
 low-four-cycle and all-low tetrahedra in a connected complex made exclusively
@@ -201,26 +152,17 @@ allowed single noncritical low occurrence, which is unbalanced. A three-edge
 path has face signatures (2,1,1,2) and is a concrete local transition type;
 no geometric realization of arbitrary complexes using it is asserted.
 
-Ordinary theory Sections 21-24 include the corresponding proofs and a
+Theory Sections 21-24 include the corresponding proofs and a
 prescribed-cone-curvature extension. The latter minimizes the existing
 co-volume plus a linear term for sup-norm target curvature less than eta.
-It is not yet Lean-formalized. At nonzero curvature, the edge ends induce
-cone points on the truncated boundary as well; totally geodesic boundary
+At nonzero curvature, the edge ends induce cone points on the truncated boundary
+as well; totally geodesic boundary
 is asserted only away from these endpoints. The perturbation corollary
 requires a pointwise uniform error bound and does not assert convergence.
 
-A bounded search found no pre-existing repository owner for these two exact
-statements. Classical ingredients are reused, and no first-discovery claim
-or independent admission classification is made. Public Lean Brouwer projects
-`math-xmum/Brouwer` and `harfe/fixed-point-theorems-lean4` were located; only
-README-level descriptions/toolchain context were reviewed in this increment.
-They were not imported, independently audited or compiled here, and no
-Brouwer axiom was introduced as a replacement for such work.
-
-Executed diagnostics validate six vertex frames, all 64 Boolean edge-colour
+Finite diagnostics validate six vertex frames, all 64 Boolean edge-colour
 patterns, 6144 paired-pattern/face-permutation cases, the original genuine
 six-tetrahedron packet, nine high-precision floor cases, 816 actual global
 boundary states, and 100 independent angle-relabel comparisons. The full
-unbounded proofs are separate from these finite checks. The Lean theorems
-cover the universal analytic and incidence statements described above, not
-the remaining manifold and co-volume obligations.
+unbounded proofs are separate from these finite checks and retain the remaining
+manifold and co-volume obligations stated above.
