@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Two-prime separator kernels: exact gluing, a common-law sufficient criterion, and original-AP probes that recover the joint extension counts](../docs/reports/erdos7-odd-covering/problem-details/17-two-prime-separator-interfaces-and-exact-count-probes.md)
 - [Four-vertex blocks and arbitrary cycle blocks: noncoverage from a common descendant budget, retaining all four-prime labels and heights](../docs/reports/erdos7-odd-covering/problem-details/06-block-saturation-and-the-actual-crossing-budget.md#four-vertex-blocks-with-a-common-descendant-budget)
 - [Every original prime graph with at most one cycle per component is noncovering, at arbitrary heights and residues](../docs/reports/erdos7-odd-covering/problem-details/06-block-saturation-and-the-actual-crossing-budget.md#arbitrary-odd-pseudoforests-are-noncovering)
 - [Every original cactus prime graph is noncovering: arbitrarily many cycles joined at articulation primes, with all heights and residues retained](../docs/reports/erdos7-odd-covering/problem-details/06-block-saturation-and-the-actual-crossing-budget.md#arbitrary-odd-cactus-graphs-are-noncovering)
