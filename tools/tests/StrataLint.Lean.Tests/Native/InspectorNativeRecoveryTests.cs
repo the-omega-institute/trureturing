@@ -25,4 +25,8 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     [InlineData("test_native.NativeTests.test_native_recovers_only_row_with_encrypted_material")]
     [InlineData("test_native.NativeTests.test_native_recovers_encrypted_report")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    [Fact]
+    public void ModuleBindingScope() =>
+        InspectorNativeTestRunner.Run(compiler, "test_native.NativeTests.test_native_module_binding_scope");
 }

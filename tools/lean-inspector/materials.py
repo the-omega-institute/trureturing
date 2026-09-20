@@ -240,6 +240,11 @@ def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
         raise ValueError("Inspector declared-template evidence is malformed")
     if evidence["compatibility_version"] != version:
         raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version differs from report_semantic_version")
+    for source in evidence["inputs"]:
+        require_keys(source, {"path", "sha256"}, "declared-template input")
+        path = source["path"]
+        if not isinstance(path, str) or not path.endswith(".lean"):
+            raise ValueError("malformed declared-template input: expected a module source")
 
 
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path,

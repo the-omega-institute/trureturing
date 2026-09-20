@@ -17,7 +17,8 @@ run_meta do
       expected.all (fun name => snapshot.selected.any (·.occurrence.key.theoremName == name)) do
     throwError "setup: export inventory differs from the five independent occurrences"
   let modules := #[`LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings,
-      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural].map fun moduleName =>
+      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural,
+      (← getEnv).header.mainModule].map fun moduleName =>
     (moduleName, snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
       |>.map (·.occurrence.key))
   let wires ← reportJson modules
@@ -26,6 +27,12 @@ run_meta do
     let .ok rows := wire.getObjValAs? (Array Json) "records"
       | throwError "setup: missing record wire"
     unless rows.size == registered.size do throwError "setup: export partition lost a row"
+    let .ok inputs := wire.getObjValAs? (Array Json) "inputs"
+      | throwError "setup: missing inputs"
+    unless inputs.all (fun input => match input.getObjValAs? String "path" with
+        | .ok path => path.endsWith ".lean"
+        | .error _ => false) do
+      throwError "[FAIL] module_inputs_exclude_global_configuration"
   logInfo "[PASS] complete_producer_loader_wire"
   IO.FS.createDirAll ".lake/build"
   IO.FS.writeFile ".lake/build/declared-template-evidence.json" ((Json.arr wires).compress ++ "\n")

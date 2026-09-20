@@ -70,12 +70,18 @@ elab "observe_declared_template_plan_identity" : command => do
   let .ok () ← enroll ``symbolicPointwise | throwError "identity fixture enrollment failed"
   let .ok plan := selectedPlan (← getEnv) ``symbolicPointwise
     | throwError "identity fixture plan missing"
+  unless plan.sourceInputs.all (fun input => input.path.endsWith ".lean") do
+    throwError "[FAIL] enrollment_inputs_exclude_global_configuration"
+  let .ok manifest := Json.parse (← IO.FS.readFile "lean-report-inputs.json")
+    | throwError "setup: invalid manifest"
+  unless manifest.getObjValAs? Nat "report_semantic_version" == .ok plan.reportSemanticVersion do
+    throwError "[FAIL] enrollment_records_semantic_version"
   let .ok bytes := planEncoding plan | throwError "identity fixture encoding failed"
   (if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then logInfo else logError) m!"[{if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then "PASS" else "FAIL"}] complete_plan_encoding_binds_all_nodes bytes={bytes.size} work={plan.chargedWork}"
   let variants := #[
     ("summary_changed_body_rejected", { plan with bodyIdentity := String.ofList (List.replicate 64 'a') }),
     ("summary_wrong_owner_rejected", { plan with enrollmentOwner := `WrongOwner }),
-    ("summary_stale_policy_rejected", { plan with policyIdentity := String.ofList (List.replicate 64 'b') })]
+    ("summary_changed_semantic_version_rejected", { plan with reportSemanticVersion := plan.reportSemanticVersion + 1 })]
   for (label, variant) in variants do
     let .ok payload := planEncoding variant | throwError "setup: mutation payload encoding failed"
     let frame : TemplatePlanFrame := { key := plan.name.toString.toUTF8, payload, identity := plan.planIdentity }

@@ -50,7 +50,8 @@ internal static class InformationTemplateEvidence
             InformationTemplateJson.Fields(item, "path", "sha256");
             var path = InformationTemplateJson.String(item, "path");
             var sha256 = InformationTemplateJson.Hash(InformationTemplateJson.String(item, "sha256"), 64);
-            if (!RepoPath.TryCreate(path, out _) || path.Contains('\\')
+            if (!path.EndsWith(".lean", StringComparison.Ordinal)
+                || !RepoPath.TryCreate(path, out _) || path.Contains('\\')
                 || path.Split('/').Any(part => part is "" or "." or "..")
                 || previous is not null && string.CompareOrdinal(previous, path) >= 0
                 || !index.Matches(path, sha256))
@@ -219,11 +220,6 @@ internal static class InformationTemplateEvidence
     internal static string ModuleForSource(string path) =>
         LeanImportClosure.ModuleName(RepoPath.CreateKnown(path));
 
-    // Binding compatibility is the manual report_semantic_version tag, not
-    // an Inspector source fingerprint. These are configuration/toolchain inputs.
-    private static readonly string[] PolicyInputs = [
-        "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"];
-
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
         IEnumerable<RepoPath> sources, ImmutableHashSet<string>? theorems = null)
     {
@@ -246,7 +242,7 @@ internal static class InformationTemplateEvidence
                 .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     || path.Value == "Trureturing.lean"
                     || ModuleForSource(path.Value).StartsWith("LeanInformationAudit.Tests.", StringComparison.Ordinal))
-                .Select(path => path.Value).Concat(PolicyInputs).ToHashSet(StringComparer.Ordinal);
+                .Select(path => path.Value).ToHashSet(StringComparer.Ordinal);
             foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
                 if (!evidence.Inputs.Any(input => input.Path == required))
                     throw new FormatException("DTR-Evidence: omitted required producer/source input " + required);

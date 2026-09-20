@@ -28,6 +28,93 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_native_module_binding_scope(self):
+        # This synthetic driver supplies source-bound empty registration rows;
+        # DeclaredExport separately checks the production Lean emitter.
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.compiler_seed = None
+        # The four-module synthetic package deliberately starts without oleans.
+        self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+open Lean
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  let env ← getEnv
+  names.mapM fun root => do
+    let mut pending := [root]
+    let mut seen : NameSet := {}
+    let mut paths : Array String := #[]
+    while let name :: rest := pending do
+      pending := rest
+      if seen.contains name then continue
+      seen := seen.insert name
+      unless name == `Fixture || name.toString.startsWith "D5." do continue
+      paths := paths.push (name.toString.replace "." "/" ++ ".lean")
+      if let some index := env.getModuleIdx? name then
+        pending := env.header.moduleData[index.toNat]!.imports.toList.map (·.module) ++ pending
+    let result ← IO.Process.output { cmd := "python3", args := #["-c",
+      "import hashlib,json,pathlib,sys; print(json.dumps(dict(schema_version=1," ++
+      "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_semantic_version']," ++
+      "inventory=[],registered=[],records=[],inputs=[dict(path=p,sha256=hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sorted(sys.argv[1:])])))"] ++ paths }
+    IO.ofExcept (Json.parse result.stdout)
+''')
+
+        def build():
+            self.write('activity.jsonl', '')
+            result = self.guarded_command(['make', 'lean',
+                'LEAN_TARGETS=LeanInformationAudit.Registry :report'], cwd=self.root,
+                env=self.env, capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
+            return result.stdout + result.stderr
+
+        build()
+        rows = self.report()[0]
+        self.assertEqual(len(rows), 4)
+        self.assertTrue(all(row['information_templates']['inputs'] for row in rows))
+        before = self.stamps()
+
+        def changed(expected):
+            nonlocal before
+            output = build()
+            after = self.stamps()
+            self.assertEqual({name for name in after if after[name] != before[name]}, set(expected))
+            activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+            self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), len(expected))
+            self.assertEqual(output.count('inspector artifact rejected'), 0)
+            before = after
+            return output
+
+        manifest = json.loads((self.root / 'lake-manifest.json').read_text())
+        self.write('unrelated/lakefile.toml', 'name = "unrelated"\n')
+        self.write('unrelated/lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
+        manifest['packages'].append(dict(type='path', scope='', name='unrelated',
+            manifestFile='lake-manifest.json', inherited=False, dir='unrelated', configFile='lakefile.toml'))
+        self.write('lake-manifest.json', json.dumps(manifest))
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='unrelated/**/*.lean', optional=True))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        changed(set())
+        policy['report_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        changed(set(before))
+        self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
+        changed({'D5.B', 'D5.A', 'Fixture'})
+
+        # Old policy bindings are malformed even if the bytes still match.
+        row = next(row for row in self.report()[0] if row['module'] == 'D5.Alone')
+        for path in ['lake-manifest.json', 'lean-toolchain', 'lean-report-inputs.json']:
+            with self.subTest(retired_input=path):
+                evidence = dict(row['information_templates'])
+                evidence['inputs'] = sorted(evidence['inputs'] + [
+                    dict(path=path, sha256=publication.digest(self.root / path))], key=lambda item: item['path'])
+                with self.assertRaisesRegex(ValueError, 'malformed declared-template input',
+                        msg='[FAIL] retired_policy_binding_is_malformed'):
+                    publication.validate_template_sources([dict(row, information_templates=evidence)], self.root)
+
     def test_native_config_options_rebuild_and_fail_closed(self):
         # Origin evidence includes the actual executable hash. Inspector embeds
         # its source-adjacent fallback writer path, so both builds must compile

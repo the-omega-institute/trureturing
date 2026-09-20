@@ -12,7 +12,7 @@ internal sealed partial class RuleFixture
     {
         var inputs = snapshot.Files.Values.Where(file => file.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
                 && file.Path.Value.EndsWith(".lean", StringComparison.Ordinal)
-                || file.Path.Value is "Trureturing.lean" or "lean-toolchain" or "lake-manifest.json" or "lean-report-inputs.json")
+                || file.Path.Value == "Trureturing.lean")
             .OrderBy(file => file.Path.Value, StringComparer.Ordinal)
             .Select(file => new InformationTemplateContentInput(file.Path.Value,
                 InformationTemplateJson.Sha256(file.RawBytes.AsSpan()))).ToImmutableArray();
