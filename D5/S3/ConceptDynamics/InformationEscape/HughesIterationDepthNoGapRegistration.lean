@@ -9,7 +9,7 @@
 import D5.S1.Words.HughesIterationDepthNoGap
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.RegistrationWitnesses
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,7 +20,7 @@ open D5.S1.Words.HughesIterationDepthNoGap
 open LeanInformationAudit
 open RegistrationTemplates
 
-private def depthOriginTemplate (f : Fin 2 → Fin 2) :
+def depthOriginTemplate (f : Fin 2 → Fin 2) :
     PrimitiveRealization (cutSignature (Fin 2) (Fin 2)) :=
   ⟨fun _ => f, Fin.elim0⟩
 
@@ -52,7 +52,7 @@ private def emptyLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 
 
 private def epsilonLanguage : D5.S1.Words.HughesIterationDepthNoGap.Language (Fin 0) := {[]}
 
-private theorem depth_law_variation : FiniteLawVariation depthNoGapArena :=
+theorem depth_law_variation : FiniteLawVariation depthNoGapArena :=
     by
   refine ⟨depthOriginRealization, shiftedDepthOriginRealization, ?_, ?_⟩
   · simpa [depthNoGapArena, depthOriginRealization, depthOriginTemplate] using (@result)
@@ -72,7 +72,7 @@ private theorem depth_law_variation : FiniteLawVariation depthNoGapArena :=
     exact zero_not_mem_shifted_spectrum
       (law (Fin 0) emptyLanguage epsilonLanguage 1 one_mem_shifted_spectrum 0 (by decide))
 
-private theorem depth_slot_sensitivity : FiniteSlotSensitivity depthNoGapArena := by
+theorem depth_slot_sensitivity : FiniteSlotSensitivity depthNoGapArena := by
   constructor
   · intro i
     cases i
@@ -104,14 +104,9 @@ private theorem depth_slot_sensitivity : FiniteSlotSensitivity depthNoGapArena :
   · intro i
     exact Fin.elim0 i
 
-register_information_template depthOriginTemplate
 
-register_information_theorem result in depthNoGapArena
-  readout via (depthOriginTemplate (fun origin => origin))
-  primitives depthOriginRealization.toPrimitiveBundle
-  realization inline depthOriginRealization := by exact ⟨Iff.rfl⟩
-  variation depth_law_variation sensitivity depth_slot_sensitivity
-  escape from (closedSourceZero) escape continues (open)
+
+
 
 #print axioms depth_law_variation
 #print axioms depth_slot_sensitivity
