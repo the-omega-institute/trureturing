@@ -5901,3 +5901,438 @@ $$
 **约定 29.11（精确消元与有证书静态近似）。** 主卷§126.8的整个同静态响应、不同记忆族已经证明静态 $S$ 不决定一般未来关系。精确消元保留完整记忆和同次初始源；将其改为 $\dot X=-SX$ 才是本节有误差证书的近似。主卷命题127.2的零频结论针对有效算子，不能单凭低频算子余项就给其逆的稳定性、输入频带、无权状态积分或全时间轨迹作保证。这里分别由速度／准备预算和能量坐标预算承担时间域结论。空间分块、隐藏记忆、静态边界与未来预测由同一关系连接，但没有由这些有限模型推出一般物理重整化、时间涌现、普遍分形或红移定律；尺度参数不因此成为事件时间。
 
 ## 29.99 追加锚
+
+## 30. 静态边界的概率域、合法准备与有符号逆的代价
+
+### 30.1 均值、正交坐标和概率质量的不同类型
+
+**定义 30.1（图消元的容量坐标）。** 取[主卷§127.1、§127.4](RECURSIVE_RELATIONAL_OBSERVATION.md)的有限非空顶点集 $V$、对称权重 $w_{ij}=w_{ji}\ge0$、$w_{ii}=0$，正权边组成连通无向图。令 $L$ 为该图的 Laplace 算子，$q:V\twoheadrightarrow\mathcal A$ 为非空胞腔分区，$m=|\mathcal A|$。在未归一化的 Euclidean 内积中定义
+$$
+R_{ia}=\mathbf1_{q(i)=a},\qquad n_a=|q^{-1}(a)|>0,\qquad
+D=R^{\mathsf T}R=\operatorname{diag}(n_a),\qquad N_v=|V|=\sum_a n_a,
+$$
+$$
+P=RD^{-1}R^{\mathsf T},\qquad U=\operatorname{ran}P,\quad H=\ker P,
+\qquad
+L\big|_{U\oplus H}=\begin{pmatrix}A&B\\B^*&C\end{pmatrix},
+\quad B:H\to U,\quad B^*:U\to H,
+\quad S=A-BC^{-1}B^*:U\to U.
+\tag{30.1}
+$$
+主卷的能量配方及本卷命题29.9给出 $C>0$、$S\succeq0$ 和 $B^*\mathbf1_V=0$；$H=\{0\}$ 时 $C^{-1}$ 按唯一的零维映射解释。对可见向量 $x=Ru\in U$，分别称 $u\in\mathbb R^{\mathcal A}$ 为胞腔均值，$z=D^{1/2}u$ 为正交归一胞腔基 $RD^{-1/2}$ 中的坐标，$b=Du=R^{\mathsf T}x$ 为胞腔质量。实际微观概率 $p$ 给 $x=Pp$ 和 $b=R^{\mathsf T}p$，但 $u,z$ 一般不以坐标和为一归一化。记
+$$
+K=R^{\mathsf T}SR,\qquad \bar\pi=\frac{D\mathbf1_{\mathcal A}}{N_v},\qquad
+\Delta_m=\{b\in\mathbb R^{\mathcal A}:b_a\ge0, \mathbf1^{\mathsf T}b=1\}.
+$$
+以下是主卷的有限图消元、本卷第29节轨迹界与既有正锥、原子几何的普通数学综合（repo-derived），没有扩大它们各自的适用域。有限 Markov 生成元与矩阵指数使用成熟的有限状态理论，参见 J. R. Norris，[*Markov Chains*](https://doi.org/10.1017/CBO9780511810633)，1997，第2章。
+
+**命题 30.2（静态质量生成元的精确符号判据）。** 定义30.1给 $K=K^{\mathsf T}\succeq0$、$K\mathbf1=0$。静态方程 $x'=-Sx$ 的三种坐标分别满足
+$$
+u'=-D^{-1}Ku,\qquad
+z'=-D^{-1/2}KD^{-1/2}z,\qquad
+b'=G_b b,\quad G_b=-KD^{-1}.
+\tag{30.2}
+$$
+$\mathbf1^{\mathsf T}G_b=0$ 且 $G_b\bar\pi=0$。对全部 $t\ge0$，$e^{tG_b}$ 为非负列随机矩阵，当且仅当
+$$
+K_{ab}\le0\qquad(a\ne b).
+\tag{30.3}
+$$
+
+证明。$S$ 自伴半正定，且 $S\mathbf1_V=A\mathbf1_V-BC^{-1}B^*\mathbf1_V=0$，故共轭二次型给 $K$ 的三项性质。$SRu\in U$，而 $R^{\mathsf T}SR=K$，所以 $SR=RD^{-1}K$。在 $Ru'=-SRu$ 中用 $R$ 的单射性得到均值方程，再分别左乘 $D^{1/2}$ 和 $D$ 得到另外两式。$K$ 对称且零行和给列守恒；将 $\bar\pi$ 代入得到平衡。
+
+必要性在 $a\ne b$ 处由
+$(e^{tG_b})_{ab}=t(G_b)_{ab}+O(t^2)$ 得 $(G_b)_{ab}\ge0$，再用 $n_b>0$。充分性中，假设式（30.3），则 $G_b$ 的非对角元非负，零列和使 $(G_b)_{bb}=-\sum_{a\ne b}(G_b)_{ab}\le0$。置 $r=\max_b(-(G_b)_{bb})$。若 $r=0$，所有列的非负非对角和为零，故 $G_b=0$，指数为恒等。若 $r>0$，矩阵 $Q=I+G_b/r$ 非负且列和一，从而
+$$
+e^{tG_b}=e^{-rt}\sum_{j=0}^{\infty}\frac{(rt)^j}{j!}Q^j
+\tag{30.4}
+$$
+是列随机矩阵的 Poisson 凸组合。级数在有限维中绝对收敛，包括 $t=0$。$\square$
+
+这项判据中的符号义务独立于能量半正定与总质量守恒。这里消去的是胞腔内零和差异，并非保留若干原顶点、删除其余顶点的主子块消元，不能直接套用后一类电阻网络消元的边权符号结论。若用直接压缩 $A$，其刚度 $K_A=R^{\mathsf T}LR$ 满足
+$$
+(K_A)_{ab}=-\sum_{i\in q^{-1}(a),\ j\in q^{-1}(b)}w_{ij}\quad(a\ne b),\qquad
+(G_A)_{ab}=\frac{\sum_{i\in q^{-1}(a),\ j\in q^{-1}(b)}w_{ij}}{n_b}.
+\tag{30.5}
+$$
+这是对 $L_{ij}=-w_{ij}$ 的胞腔求和，因此 $G_A=-K_AD^{-1}$ 始终合法。其合法性不提供全部初态的精确下降；精确性仍由主卷定理127.1的 $B=0$ 判定。把 $S$ 换成 $A$ 也改变了被比较的轨迹，不能沿用第29节针对 $e^{-tS}x_0$ 的误差界；这里没有任何任务上的普遍精度排序。
+
+### 30.2 连通胞腔的四点反例与同一实际热轨迹
+
+**命题 30.3（最小的静态负率图及其真实准备）。** 取单位权路径 $3-1-2-4$，胞腔依次为 $A=\{1,2\},B=\{3\},C=\{4\}$；这里胞腔名 $C$ 与隐藏算子 $C$ 由类型区分。按微观顺序 $(1,2,3,4)$，有
+$$
+L=\begin{pmatrix}2&-1&-1&0\\-1&2&0&-1\\-1&0&1&0\\0&-1&0&1\end{pmatrix},\quad
+R=\begin{pmatrix}1&0&0\\1&0&0\\0&1&0\\0&0&1\end{pmatrix},\quad
+D=\operatorname{diag}(2,1,1),\quad h=(1,-1,0,0)^{\mathsf T}.
+\tag{30.6}
+$$
+$H=\mathbb Rh$，$h^{\mathsf T}Lh=6$，$v:=R^{\mathsf T}Lh=(0,-1,1)^{\mathsf T}$；在单位基 $h/\sqrt2$ 中隐藏算子为 $C=3$。相应静态刚度与质量生成元为
+$$
+K=R^{\mathsf T}LR-\frac{vv^{\mathsf T}}6
+=\begin{pmatrix}2&-1&-1\\-1&5/6&1/6\\-1&1/6&5/6\end{pmatrix},\qquad
+G_b=\begin{pmatrix}-1&1&1\\1/2&-5/6&-1/6\\1/2&-1/6&-5/6\end{pmatrix}.
+\tag{30.7}
+$$
+令 $t_*=(3/2)\log(4/3)$，则
+$$
+T:=e^{t_*G_b}=\frac1{256}
+\begin{pmatrix}182&74&74\\37&187&-5\\37&-5&187\end{pmatrix}.
+\tag{30.8}
+$$
+因此 $Te_C=(74,-5,187)^{\mathsf T}/256$ 不属于 $\Delta_3$。严格正微观概率及其静态终值也满足
+$$
+p_0=\frac1{64}(1,1,1,61)^{\mathsf T},\qquad
+b_0=R^{\mathsf T}p_0=\left(\frac1{32},\frac1{64},\frac{61}{64}\right)^{\mathsf T},\qquad
+Tb_0=\left(\frac{619}{2048},-\frac{11}{4096},\frac{2869}{4096}\right)^{\mathsf T}.
+\tag{30.9}
+$$
+相反，两个同次实际微观初态 $e_4,p_0$ 各自产生合法热概率；$p_0$ 的轨迹从初时起严格正。
+
+证明。相乘得到 $Lh=(3,-3,-1,1)^{\mathsf T}$，故所列二次型与 $v$ 正确。$h$ 的范数平方是 $2$，所以隐藏算子读数是 $6/2=3$。对均值 $u$，主卷的极小化在该一维隐藏方向写为
+$$
+(Ru+\alpha h)^{\mathsf T}L(Ru+\alpha h)
+=u^{\mathsf T}R^{\mathsf T}LRu+2\alpha v^{\mathsf T}u+6\alpha^2.
+$$
+极小系数 $\alpha=-v^{\mathsf T}u/6=(u_B-u_C)/6$ 给出式（30.7），不是把未归一化的 $6$ 代作算子 $C$。
+
+质量平衡为 $\bar\pi=(1/2,1/4,1/4)^{\mathsf T}$。直接作用于两个独立零和向量得到
+$$
+G_b(-2,1,1)^{\mathsf T}=-2(-2,1,1)^{\mathsf T},\qquad
+G_b(0,1,-1)^{\mathsf T}=-\tfrac23(0,1,-1)^{\mathsf T}.
+$$
+这三向量构成基。写 $a=e^{-2t}$、$c=e^{-2t/3}$，相应三个列初态的基分解给完整指数
+$$
+e^{tG_b}=\begin{pmatrix}
+(1+a)/2&(1-a)/2&(1-a)/2\\
+(1-a)/4&(1+a)/4+c/2&(1+a)/4-c/2\\
+(1-a)/4&(1+a)/4-c/2&(1+a)/4+c/2
+\end{pmatrix}.
+\tag{30.10}
+$$
+对 $e_C$ 的第二坐标是 $(1+a)/4-c/2$。令 $c=3/4$ 即得 $t_*$，此时 $a=c^3=27/64$，代入给式（30.8）及负坐标 $-5/256$。$p_0=(15/16)e_4+(1/16)(\mathbf1_V/4)$，静态平衡保持与线性性给式（30.9）。
+
+还可以明确比较同一次实际路径。按路径顺序 $(3,1,2,4)$ 记位置为 $j=1,2,3,4$。其正交归一热模态为
+$$
+\phi_0(j)=\tfrac12,\qquad
+\phi_k(j)=\frac1{\sqrt2}\cos\frac{k\pi(j-1/2)}4\quad(k=1,2,3),\qquad
+\lambda_k=2-2\cos\frac{k\pi}4.
+\tag{30.11}
+$$
+在内部点用 $2\cos\theta-\cos(\theta-\alpha)-\cos(\theta+\alpha)=2(1-\cos\alpha)\cos\theta$，端点用 $\cos(\alpha/2)-\cos(3\alpha/2)=2(1-\cos\alpha)\cos(\alpha/2)$，以及末端 $\alpha=k\pi/4$ 的反射，得到特征方程。有限余弦求和给 $\sum_j\phi_k(j)\phi_l(j)=\delta_{kl}$：用积化和差，非零频率的四项半格余弦和为零，$k=l>0$ 时未归一化平方和为 $2$。故从位置4出发的实际核为 $p_j(t)=\sum_{k=0}^3e^{-\lambda_kt}\phi_k(j)\phi_k(4)$。
+
+对两端 $j=1,4$，$k=2$ 的乘积为 $1/4$，两个奇模态的端点乘积分别为 $\mp(2+\sqrt2)/8$、$\mp(2-\sqrt2)/8$；负号取 $j=1$。于是设
+$$
+d(t)=\frac{2+\sqrt2}{8}e^{-(2-\sqrt2)t}
++\frac{2-\sqrt2}{8}e^{-(2+\sqrt2)t},\qquad a=e^{-2t},
+$$
+实际胞腔质量恰为
+$$
+b^{\rm heat}(t)=R^{\mathsf T}e^{-tL}e_4
+=\left(\frac{1-a}{2},\frac{1+a}{4}-d(t),\frac{1+a}{4}+d(t)\right)^{\mathsf T}.
+\tag{30.12}
+$$
+中间胞腔是剩余总质量，因而第一坐标如式。取 $r>2$，$Q_V=I-L/r$ 非负列随机，沿路径从4到3的三步项 $(Q_V^3)_{3,4}>0$。主卷式（127.4）的统一化展开独立保证 $e^{-tL}\ge0$，并在每个 $t>0$ 保证这个端点转移严格正。这说明式（30.12）的第二坐标虽由相减表示，却始终非负且在正时刻严格正。严格初态的每个微观坐标则为 $1/64+(15/16)(e^{-tL}e_4)_i$。
+
+在 $t_*$，点初态的第二坐标误差为 $b_B^{\rm heat}(t_*)+5/256>5/256$；严格混合的实际第二坐标为 $1/64+(15/16)b_B^{\rm heat}(t_*)>0$，与式（30.9）的误差大于 $11/4096$。下文命题30.7还给这两个同次实际比较的 $\ell_1$ 障碍分别至少 $5/128$、$11/2048$，不以一个抽象概率替换真实热轨迹。
+
+最后，极小微观准备 $Jb=E_SR D^{-1}b$ 在本例具体为
+$$
+J=\begin{pmatrix}1/2&1/6&-1/6\\1/2&-1/6&1/6\\0&1&0\\0&0&1\end{pmatrix},\qquad
+Jb\ge0\ \Longleftrightarrow\ |b_B-b_C|\le3b_A\quad(b\in\Delta_3).
+\tag{30.13}
+$$
+前两行由 $u_A\pm(u_B-u_C)/6$ 得到，后两行是单点胞腔，故所列不等式既必要又充分。特别地
+$$
+Je_C=(-1/6,1/6,0,1)^{\mathsf T},\qquad
+Jb_0=(-9,11,1,61)^{\mathsf T}/64.
+$$
+两份实际正准备不使所要求的静态极小提升自动合法；域条件给出的受限合法准备仍可非空。
+
+四个顶点是这种生成元负率障碍的最小规模：一个胞腔时 $K=0$；两个胞腔时，对称零行和强制 $K=\kappa\bigl(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\bigr)$，半正定给 $\kappa\ge0$，故满足式（30.3）；不超过三个顶点而有三个胞腔只能全为单点，此时 $H=0$、$K=L$。本例有三个胞腔且隐藏空间非零，达到下界。胞腔 $\{1,2\}$ 自身也连通。主卷§127.6的 $1-2-3-4$、$12\mid34$ 是粗熵反例，分区及任务均不同。$\square$
+
+### 30.3 正保常量截面与全域匹配准备
+
+**定理 30.4（严格正条件平均的正截面唯一性）。** 令 $q:X\twoheadrightarrow\mathcal A$ 为有限非空集合之间的满射。对每条纤维给权重 $\omega_{i\mid a}>0$、$\sum_{q(i)=a}\omega_{i\mid a}=1$，令
+$$
+(\mathsf Pf)_a=\sum_{q(i)=a}\omega_{i\mid a}f_i,\qquad
+(iu)_j=u_{q(j)}.
+$$
+若实线性 $E:\mathbb R^{\mathcal A}\to\mathbb R^X$ 满足 $\mathsf PE=I$、$E\mathbf1_{\mathcal A}=\mathbf1_X$，则以下三项等价：$E$ 在全部非负函数上保非负；$E$ 在全部严格正函数上保非负；$E=i$。
+
+证明。若 $E$ 保正，对胞腔指标 $e_a$，在每个 $b\ne a$ 胞腔有 $(\mathsf PEe_a)_b=0$。严格正的权重与逐点非负性迫使 $Ee_a$ 在该胞腔处处为零。再由 $\sum_aEe_a=E\mathbf1=\mathbf1$，在胞腔 $a$ 上只有 $Ee_a$ 能非零，故它每点都为一。于是 $Ee_a=ie_a$ 对一组基成立，给 $E=i$。自然嵌入保正，并立即给全非负域到严格正域的蕴含。反之，若只知严格正输入保非负，对 $f\ge0$ 使用 $f+\varepsilon\mathbf1>0$，令 $\varepsilon\downarrow0$；有限维线性连续性给 $Ef\ge0$。
+
+若 $E\ne i$，上面的等价保证 $E$ 非正，故某个矩阵元 $(Ee_a)_j<0$，否则所有非负线性组合都非负。选 $0<\varepsilon<-(Ee_a)_j$，则 $e_a+\varepsilon\mathbf1$ 严格正，而提升的第 $j$ 坐标仍负。乘正因子归一化不改变此符号；特别地在此分区上取 $n_a=|q^{-1}(a)|$、$D=\operatorname{diag}(n_a)$，并以其指示矩阵 $R$ 归一化为均值 $u=(e_a+\varepsilon\mathbf1)/\sum_b n_b(e_a+\varepsilon\mathbf1)_b$，得到严格正质量 $Du\in\Delta_m$ 与合法自然微观准备 $Ru$，但 $Eu$ 非法。$\square$
+
+**推论 30.5（极小提升的全概率域与受限实际域）。** 在定义30.1中，以包含 $U\subseteq\mathbb R^V$ 的类型写
+$$
+E_S:U\to\mathbb R^V,\qquad E_Sx=x-C^{-1}B^*x,\qquad
+J=E_SR D^{-1}:\mathbb R^{\mathcal A}\to\mathbb R^V.
+\tag{30.14}
+$$
+则 $PE_S=\operatorname{id}_U$、$E_S\mathbf1_V=\mathbf1_V$、$R^{\mathsf T}J=I$、$J\bar\pi=\mathbf1_V/N_v$，并且
+$$
+J\Delta_m\subseteq\Delta_{N_v}
+\ \Longleftrightarrow\ E_S\text{ 在全部非负可见函数上保正}
+\ \Longleftrightarrow\ E_S\text{ 是自然包含}
+\ \Longleftrightarrow\ B^*=0\ \Longleftrightarrow\ B=0.
+\tag{30.15}
+$$
+只要求全部严格正粗概率的提升非负也给相同结论。
+
+证明。$C^{-1}B^*x\in H$，故 $P$ 消去修正；$B^*\mathbf1_V=0$ 给保常量。又 $R^{\mathsf T}$ 消去 $H$，所以 $R^{\mathsf T}J=R^{\mathsf T}RD^{-1}=I$，特别地 $J$ 保总质量。$RD^{-1}\bar\pi=\mathbf1_V/N_v$ 给参考保持。应用定理30.4于算术平均、$E_SR$ 与胞腔值，得正性恰为自然包含。自然包含恰说 $C^{-1}B^*=0$，可逆性给 $B^*=0$；伴随给 $B=0$。任意非零非负可见函数均可按总质量正归一化，故概率域与非负函数域等价；严格正版本同理。$\square$
+
+此处的零耦合直接接到主卷定理127.1的零记忆、强可并与全部初态的精确随机下降；[StrongLumpabilityDescent](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean)提供的是推前律在纤维上常值的既有接口。[SchurMinimum](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)中的 `schur_quadratic_is_least` 只承担静态能量极小化，不承担概率正性。主卷定理74.2提供一份指定参考的 Bayes 提升及其参考保持性质，不提供任意截面的唯一性。
+
+保常量／参考保持前提不可删除。例如一胞腔含两点时，$\mathsf P=(1/2,1/2)$，$Eu=(2u,0)$ 是正右截面，却不保常量；相应质量右逆 $b\mapsto(b,0)$ 为随机提升而非均匀提升。反过来，$B\ne0$ 并不排除在某个已声明实际准备族 $\mathcal B\subseteq\Delta_m$ 上逐项满足 $Jb\ge0$，式（30.13）已给完整受限域。它只判向量是否可为概率，执行这份准备所需控制、费用及与旧记录的相容性仍须另给。历史初态 $h_0$ 不因写下 $-C^{-1}B^*x_0$ 就被重置；即使 $r_0=0$，第29节的运动滞后项仍须保留。
+
+### 30.4 合法静态率仍不保证合法极小准备
+
+**命题 30.6（三点路径分离两种合法性）。** 取单位权路径 $1-2-3$、胞腔 $\{1,2\}\mid\{3\}$。此时
+$$
+L=\begin{pmatrix}1&-1&0\\-1&2&-1\\0&-1&1\end{pmatrix},\quad
+R=\begin{pmatrix}1&0\\1&0\\0&1\end{pmatrix},\quad
+h=(1,-1,0)^{\mathsf T},\quad D=\operatorname{diag}(2,1),
+$$
+$$
+h^{\mathsf T}Lh=5,\quad R^{\mathsf T}Lh=(-1,1)^{\mathsf T},\quad
+R^{\mathsf T}LR=\begin{pmatrix}1&-1\\-1&1\end{pmatrix},\quad
+K=\frac45\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+\tag{30.16}
+$$
+故 $G_b=\bigl(\begin{smallmatrix}-2/5&4/5\\2/5&-4/5\end{smallmatrix}\bigr)$ 合法，但
+$$
+J=\begin{pmatrix}3/5&-1/5\\2/5&1/5\\0&1\end{pmatrix},\qquad
+J\binom{1/5}{4/5}=\frac1{25}(-1,6,20)^{\mathsf T}
+\tag{30.17}
+$$
+不是概率，尽管其自然微观准备 $(1/10,1/10,4/5)^{\mathsf T}$ 严格正。
+
+证明。直接相乘得 $Lh=(2,-3,1)^{\mathsf T}$，给二次型 $5$ 与所列耦合。极小隐藏系数为 $\alpha=(u_A-u_B)/5$，从 $Ru+\alpha h$ 并代入 $u=(b_A/2,b_B)$ 得 $J$。刚度由 $R^{\mathsf T}LR-vv^{\mathsf T}/5$ 得到，非对角元非正，所以命题30.2适用。将严格正粗质量代入 $J$ 即得式（30.17）；其总和一而第一坐标负。这是极小准备障碍，未违反命题30.3关于生成元负率至少需要四点的最小性。$\square$
+
+### 30.5 同一真值上的尖锐概率修复
+
+**命题 30.7（统一质量移除引理）。** 对 $b\in\mathbb R^m$、$\sum_i b_i=1$，定义负质量
+$$
+N(b)=\sum_i(-b_i)_+,\qquad b_i^+=\max(b_i,0),\qquad \sum_i b_i^+=1+N(b).
+$$
+每个 $p\in\Delta_m$ 都满足 $\|b-p\|_1\ge2N(b)$。若 $z\in\Delta_m$ 满足
+$$
+z_i=0\quad(b_i\le0),\qquad 0\le z_i\le b_i\quad(b_i>0),
+\tag{30.18}
+$$
+则同时有
+$$
+\|z-b\|_1=2N(b)=\min_{p\in\Delta_m}\|b-p\|_1,\qquad
+\forall p\in\Delta_m,\quad \|z-p\|_1\le\|b-p\|_1.
+\tag{30.19}
+$$
+特别地，$\mathcal R_+(b):=b^+/(1+N(b))$ 满足全部结论。
+
+证明。$p-b$ 的坐标和零，故其正部分与负部分质量相等。在 $b_i<0$ 处，$(p_i-b_i)_+=p_i-b_i\ge-b_i$，所以 $\|p-b\|_1=2\sum_i(p_i-b_i)_+\ge2N(b)$。满足式（30.18）的 $z$ 将全部负坐标归零，又从原来质量 $1+N(b)$ 的正坐标中恰移除 $N(b)$，故两部分到 $b$ 的距离各为 $N(b)$，得到最短距离。
+
+现在固定任意同一个真值 $p\in\Delta_m$。对 $b_i<0$，把 $b_i$ 改为零使 $|b_i-p_i|$ 恰减少 $-b_i$，总减少 $N(b)$；对 $b_i=0$ 没有改变。对每个正坐标，三角不等式给
+$$
+|z_i-p_i|-|b_i-p_i|\le|z_i-b_i|=b_i-z_i.
+$$
+右侧总和为 $N(b)$，故整个误差不增加。这一论证对全部 $p$ 使用同一个 $z$，并不按真值选择不同修复。$\mathcal R_+$ 显然非负归一化，且只按共同正因子缩小正坐标，所以满足式（30.18）。$\square$
+
+因此一份真实概率的原始证书 $\|b-p\|_1\le E$ 必须有 $E\ge2N(b)$，并直接给 $\|z-p\|_1\le E$，无需把界放宽为 $2E$。由于 $z,p$ 都是真正概率，
+$$
+\operatorname{TV}(z,p)=\tfrac12\|z-p\|_1\le\min\{1,E/2\},\qquad
+|f^{\mathsf T}z-f^{\mathsf T}p|\le\min\{1,E/2\}\quad(0\le f_i\le1).
+\tag{30.20}
+$$
+最后一式来自零和差 $z-p$：任一 $[0,1]$ 效果在正差坐标上至多取一、在负差坐标上至少取零，其绝对读数至多正差总质量。这是相对同一真值的修复定理，没有将一般两份有符号输入间的 $\ell_1$ 非扩张作为前提。
+
+**命题 30.8（容量加权投影属于同一修复族）。** 给定任意 $n_i>0$ 和 $D=\operatorname{diag}(n_i)$，取
+$$
+\|v\|_{D^{-1}}=(v^{\mathsf T}D^{-1}v)^{1/2},\qquad
+\Pi_D b=\underset{z\in\Delta_m}{\operatorname{argmin}}\ \|z-b\|_{D^{-1}}^2.
+\tag{30.21}
+$$
+该投影存在唯一，并在此加权 Hilbert 范数下非扩张，固定全部 $\Delta_m$。当 $\sum_i b_i=1$ 时，唯一的非负阈值 $\tau$ 由
+$$
+\sum_i\max(b_i-\tau n_i,0)=1,\qquad
+(\Pi_D b)_i=\max(b_i-\tau n_i,0)
+\tag{30.22}
+$$
+确定；$\tau>0$ 当且仅当 $N(b)>0$，否则 $\tau=0$。故 $\Pi_D b$ 也满足式（30.18）–（30.20）。
+
+证明。$\Delta_m$ 是非空闭凸集，式（30.21）使用本卷定理10.4所用的闭凸 Hilbert 投影定理，内积改为 $u^{\mathsf T}D^{-1}v$；其存在唯一、变分不等式、非扩张与固定合法点的结论均适用。这里仅求该特定集合的显式解，不另造一般投影定理。
+
+令 $g(\tau)=\sum_i(b_i-\tau n_i)_+$。它连续，$g(0)=1+N(b)\ge1$，而在 $M=\max_i(b_i/n_i)>0$ 处 $g(M)=0$。中值定理给 $[0,M)$ 中的根 $g(\tau)=1$。只要较大阈值处 $g$ 仍正，就至少有一个活坐标以严格正斜率大小 $n_i$ 下降，其余坐标不增，故该根唯一。$g(0)=1$ 恰为 $N(b)=0$，给阈值的符号判据。
+
+写 $z_i=(b_i-\tau n_i)_+$。在 $z_i>0$ 处 $(z_i-b_i)/n_i=-\tau$；在 $z_i=0$ 处 $(z_i-b_i)/n_i\ge-\tau$。对任意 $p\in\Delta_m$，有
+$$
+\langle z-b,p-z\rangle_{D^{-1}}
+\ge-\tau\sum_i(p_i-z_i)=0,
+$$
+因为非活坐标处 $p_i-z_i=p_i\ge0$，活坐标处系数恰为 $-\tau$。这就是投影的变分刻画，故所构造 $z$ 为 $\Pi_D b$。$\tau\ge0$ 使它只移除正质量，命题30.7给全部真值界。$\square$
+
+两种修复在任一固定概率真值上的 $\ell_1$ 结论相同，但不能把 $\Pi_D$ 的加权 Hilbert 非扩张直接赋给 $\mathcal R_+$。例如 $D=I_3$，令
+$$
+b=(-1/100,1,1/100),\qquad c=(-1/200,201/200,0).
+$$
+它们都质量一；$\mathcal R_+(b)=(0,100/101,1/101)$、$\mathcal R_+(c)=(0,1,0)$，所以修复后距离平方为 $2/10201$，修复前为 $6/40000$，而 $40000>30603$ 给前者严格更大。这个两输入比较不影响式（30.19），因为其中真值必须属于 $\Delta_m$。
+
+### 30.6 从隐藏记忆证书运输到实际概率误差
+
+**命题 30.9（同一容量下的质量度量运输）。** 对定义30.1的同一 $R,D,N_v$，任取 $x,X\in U$，置 $b=R^{\mathsf T}x$、$\widehat b=R^{\mathsf T}X$，则
+$$
+\|b-\widehat b\|_{D^{-1}}=\|x-X\|_2,\qquad
+\|b-\widehat b\|_1\le\sqrt{N_v}\,\|x-X\|_2.
+\tag{30.23}
+$$
+若 $b\in\Delta_m$、$\sum_i\widehat b_i=1$，且同次实际与静态轨迹已有第29节的适用证书 $\|x(t)-X(t)\|_2\le E(t)$，则
+$$
+\|b(t)-\Pi_D\widehat b(t)\|_{D^{-1}}\le E(t),\qquad
+\operatorname{TV}\bigl(b(t),\mathcal Q\widehat b(t)\bigr)
+\le\min\{1,\sqrt{N_v}E(t)/2\},\quad
+\mathcal Q\in\{\mathcal R_+,\Pi_D\}.
+\tag{30.24}
+$$
+相同的 TV 界控制所有 $[0,1]$ 效果；这里 $N_v$ 是微观顶点数而非胞腔数。
+
+证明。写 $x-X=R\delta u$，则 $b-\widehat b=D\delta u$，故
+$$
+(b-\widehat b)^{\mathsf T}D^{-1}(b-\widehat b)
+=\delta u^{\mathsf T}D\delta u=\|R\delta u\|_2^2.
+$$
+再对 $\sum_i\sqrt{n_i}|(b-\widehat b)_i|/\sqrt{n_i}$ 使用 Cauchy–Schwarz，得到式（30.23）。投影固定 $b$，加权非扩张给式（30.24）的首式；原始 $\ell_1$ 误差至多 $\sqrt{N_v}E(t)$，命题30.7–30.8给两种修复的 TV 与效果界。$\square$
+
+具体地，对同一个微观初态 $p_0\in\Delta_{N_v}$，取 $x(t)=Pe^{-tL}p_0$、$h_0=(I-P)p_0$、$X(t)=e^{-tS}Pp_0$。实际 $b(t)=R^{\mathsf T}e^{-tL}p_0$ 合法，静态 $\widehat b(t)=e^{tG_b}R^{\mathsf T}p_0$ 总质量一。第29节的 $r_0,V$ 或能量坐标参数均用这一模型与准备；命题29.9允许在共同守恒分量之外使用正隙。若只取得半正定视界界，式（30.24）沿用该视界，不能据此宣称统一无界时间精度。
+
+在一个非空完整可行族上，式（30.24）可对同一世界的整条路径取上确界，再对同一世界集取上确界。若不同世界的 $S_\theta,p_{0,\theta}$ 未确定，模型间的 $\widehat b_\theta$ 散布仍须保留；这部分由[上下文卷§34.2及§35.2](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)给共同档案预测合同。一份公共加权投影要求各世界使用同一分区和容量，或先给有界的合法坐标运输。计算输出的质量一、投影的数值残差、最终概率域成员资格及实际制备权限分别是应用前提，向量投影的存在不提供这些访问条件。
+
+### 30.7 两种修复均不恢复静态半群律
+
+**命题 30.10（同一个有理热矩阵的两个精确非半群见证）。** 使用命题30.3的同一 $G_b,D,t_*,T$。在 $\Delta_3$ 上定义
+$$
+F_t=\mathcal R_+\circ e^{tG_b},\qquad
+H_t=\Pi_D\circ e^{tG_b}.
+$$
+对每个 $t\ge0$，它们都输出概率；$F_{t_*},H_{t_*}$ 均非仿射，并且
+$$
+F_{t_*}(F_{t_*}e_C)\ne F_{2t_*}e_C,\qquad
+H_{t_*}(H_{t_*}e_C)\ne H_{2t_*}e_C.
+\tag{30.25}
+$$
+
+证明。式（30.8）给 $Te_C=(74,-5,187)/256$，正质量为 $261/256$，故
+$$
+F_{t_*}e_C=(74,0,187)/261.
+$$
+再次乘同一 $T$ 得到严格正向量
+$$
+T(F_{t_*}e_C)
+=\left(\frac{1517}{3712},\frac{601}{22272},\frac{12569}{22272}\right).
+\tag{30.26}
+$$
+例如未约分的三个分子是 $182\cdot74+74\cdot187=27306$、$37\cdot74-5\cdot187=1803$、$37\cdot74+187^2=37707$，共同分母 $256\cdot261=66816$。无需再修复。而直接经过两倍时间的向量为
+$$
+T^2e_C=\left(\frac{3367}{8192},\frac{217}{16384},\frac{9433}{16384}\right),
+\tag{30.27}
+$$
+也严格正，故 $F_{2t_*}e_C=T^2e_C$。其第二坐标 $217/16384$ 不等于式（30.26）的 $601/22272$，得到第一个失败。
+
+加权修复中，$D=\operatorname{diag}(2,1,1)$，阈值 $\tau=5/768$ 给
+$$
+H_{t_*}e_C=(53,0,139)/192.
+\tag{30.28}
+$$
+确切地，从正坐标 $74/256,187/256$ 分别减去 $2\tau,\tau$，合计移除 $5/256$；负的第二坐标归零，且余下两个坐标严格正，满足命题30.8的质量方程。再次乘 $T$ 得
+$$
+T(H_{t_*}e_C)
+=\left(\frac{1661}{4096},\frac{211}{8192},\frac{4659}{8192}\right).
+\tag{30.29}
+$$
+未约分分子为 $182\cdot53+74\cdot139=19932$、$37\cdot53-5\cdot139=1266$、$37\cdot53+187\cdot139=27954$，分母为 $49152$。此向量与式（30.27）均已严格正，所以它们分别就是 $H_{t_*}(H_{t_*}e_C)$ 与 $H_{2t_*}e_C$；第二坐标 $211/8192\ne217/16384$。
+
+最后交换胞腔 $B,C$ 保持 $T,D$ 及两种修复。$F_{t_*}e_B,F_{t_*}e_C$ 的第一坐标均为 $74/261$，而
+$$
+T\bigl((e_B+e_C)/2\bigr)=(74,91,91)/256\in\Delta_3
+$$
+被两种修复固定，其第一坐标为 $74/256$。因此 $F_{t_*}$ 非仿射。$H_{t_*}e_B,H_{t_*}e_C$ 的第一坐标则均为 $53/192\ne74/256$，所以 $H_{t_*}$ 也非仿射。$\square$
+
+这里反驳的是这两套修复映射的半群恒等式，以及将它们作为同一状态无关随机转移核的解释。结论没有排除带记忆的联合过程具有这些单时边缘。反过来，给每个时刻指定一个概率，甚至构造独立乘积耦合，也没有恢复任务原有的联合路径、干预响应或保留档案；统一的同世界路径误差可以在没有半群律时成立。
+
+### 30.8 全部 qubit 通道字典中的退相干逆代价
+
+**定义 30.11（有符号线性恢复的任务和原子）。** 令 $\operatorname{Herm}_2$ 为二阶 Hermitian 矩阵的实向量空间，$\mathcal D_2=\{\rho\succeq0:\operatorname{Tr}\rho=1\}$。固定已知 $0<\lambda\le1$，取[量子实在卷定理222.1–222.2](QUANTUM-REALITY.md)的相位阻尼
+$$
+\mathcal D_\lambda\begin{pmatrix}a&c\\\bar c&d\end{pmatrix}
+=\begin{pmatrix}a&\lambda c\\\lambda\bar c&d\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\rho_+=\tfrac12(I+X).
+\tag{30.30}
+$$
+原子字典 $\mathfrak A$ 是全部 qubit CPTP 映射在 $\operatorname{Herm}_2$ 上的限制，每个原子单位价格一，承载表示的实空间取 $\mathcal V=\operatorname{span}_{\mathbb R}\mathfrak A$。只允许有限个实系数，并要求同一个线性组合在全部 Hermitian 输入上等于 $\mathcal D_\lambda^{-1}$：
+$$
+\Gamma_{\mathfrak A}(\mathcal D_\lambda^{-1})
+=\inf\left\{\sum_{j=1}^k|a_j|: k<\infty, a_j\in\mathbb R,
+\Phi_j\in\mathfrak A,\quad \sum_j a_j\Phi_j=\mathcal D_\lambda^{-1}\right\}.
+\tag{30.31}
+$$
+这是本卷定义5.1、定理5.2的单位价格原子问题。有限维通道与 Choi 表示采用 John Watrous，[*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/)，2018，第2章；有符号通道分解的实验用途见 Kristan Temme、Sergey Bravyi、Jay M. Gambetta，[*Error Mitigation for Short-Depth Quantum Circuits*](https://arxiv.org/abs/1612.02058)，2017。下列计算是该既有原子几何的具体应用，不将负系数视为调用概率。
+
+**定理 30.12（显式对偶给出的全部通道最优值）。** 在定义30.11下，字典非空有界，且
+$$
+\boxed{\Gamma_{\mathfrak A}(\mathcal D_\lambda^{-1})=\lambda^{-1}.}
+\tag{30.32}
+$$
+极小值由
+$$
+\mathcal D_\lambda^{-1}=a_+\operatorname{id}+a_-\operatorname{Ad}_Z,\qquad
+\operatorname{Ad}_Z(M)=ZMZ,\qquad
+ a_\pm=\frac{1\pm\lambda^{-1}}2
+\tag{30.33}
+$$
+取得。任一可行表示满足 $\sum_j a_j=1$；任一最优表示的负系数总质量为 $(\lambda^{-1}-1)/2$。此结论不要求或宣称最优分解唯一。
+
+证明。恒等与酉共轭都是 CPTP，故字典非空，其实张成按定义为 $\mathcal V$。用未归一化向量 $|\Omega\rangle=|00\rangle+|11\rangle$ 定义 Choi 矩阵
+$J(\Phi)=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)$。通道的 $J(\Phi)\succeq0$ 且 $\operatorname{Tr}J(\Phi)=2$，所以 $\|J(\Phi)\|_1=2$；Choi 线性对应是有限维同构，因此字典在任意固定算子坐标范数中有界。定理5.2的有限维、有界、张成条件全部满足。
+
+量子实在卷式（222.2）的矩阵恒等式在此取参数 $\lambda^{-1}$；比较对角与非对角元仍给式（30.33），但不延伸其凸性或 CPTP 断言。两个系数的绝对值和为 $\lambda^{-1}$，给上界及目标属于 $\mathcal V$。
+
+显式对偶泛函取
+$$
+\ell(\Phi)=\operatorname{Tr}\bigl[X\Phi(\rho_+)\bigr]\quad(\Phi\in\mathcal V).
+\tag{30.34}
+$$
+它是实线性泛函。对每个 CPTP 原子，$\sigma=\Phi(\rho_+)\in\mathcal D_2$；由于 $-I\preceq X\preceq I$，有 $-1\le\operatorname{Tr}(X\sigma)\le1$，故 $|\ell(\Phi)|\le1$ 对全部字典成立。同时
+$$
+\mathcal D_\lambda^{-1}(\rho_+)=\tfrac12(I+\lambda^{-1}X),\qquad
+\ell(\mathcal D_\lambda^{-1})=\lambda^{-1}.
+$$
+定理5.2的对偶公式于是给下界 $\lambda^{-1}$。也可对任一表示直接写
+$\lambda^{-1}=\sum_ja_j\ell(\Phi_j)\le\sum_j|a_j|$，与式（30.33）相合。最后，逆映射保持迹，对任意迹一输入取表示两侧的迹得到 $\sum_ja_j=1$。记正、负系数质量为 $P_a,N_a$，则 $P_a-N_a=1$、$P_a+N_a=\sum_j|a_j|$；在最优表示中解得所列 $N_a$。$\square$
+
+逆作用于 $\rho_+$ 的两个特征值为 $(1\pm\lambda^{-1})/2$。故 $0<\lambda<1$ 时它不是全态正映射，更不是全态 CPTP 恢复；$\lambda=1$ 为恒等，$\lambda=0$ 消去非对角元而不具线性逆。令 $Y=\bigl(\begin{smallmatrix}0&-\mathrm i\\\mathrm i&0\end{smallmatrix}\bigr)$，用 Pauli 向量写 $\rho=(I+r_xX+r_yY+r_zZ)/2$。三个坐标为实数，$(r_xX+r_yY+r_zZ)^2=(r_x^2+r_y^2+r_z^2)I$，所以 $\rho$ 的特征值为 $(1\pm\sqrt{r_x^2+r_y^2+r_z^2})/2$；故 $\rho\in\mathcal D_2$ 恰为 $r_x^2+r_y^2+r_z^2\le1$。相位阻尼将前两坐标乘 $\lambda$，因而实际输出域是
+$$
+\mathcal E_\lambda=\mathcal D_\lambda[\mathcal D_2]
+=\left\{\rho:\frac{r_x^2+r_y^2}{\lambda^2}+r_z^2\le1\right\}.
+\tag{30.35}
+$$
+逆在这个域上恢复合法态，因为它只把前两个坐标除以 $\lambda$。域内代数合法性不提供在全部未知输入上可执行的逆通道。
+
+若仍要求一份固定线性组合在整个 $\mathcal E_\lambda$ 上等于逆映射，最优值也不能下降。证明是两线性映射之差在该椭球上为零：$I/2$ 是其相对内点，对任意无迹 Hermitian $H$，存在 $\varepsilon>0$ 使 $I/2\pm\varepsilon H$ 都在椭球内；相减得差映射消去 $H$，再用 $I/2$ 得消去整个 $\operatorname{Herm}_2$。所以回到定理30.12的全线性任务。$\lambda<1$ 时对偶测试所用 $\rho_+$ 不在实际输出椭球中；它在这个线性延拓论证之后作为分离测试合法使用，不是声称已经从噪声通道取得该输入。
+
+若任务只有一份已知准备态 $\rho_0$ 的恢复，允许制备 $\rho_0$ 的常值通道 $M\mapsto\operatorname{Tr}(M)\rho_0$ 已以成本一满足该单态任务；仅恢复对角输入时恒等也成本一。两者至少一的下界均由在一份迹一输入上取迹得到 $\sum a_j=1$。这些任务的量词不同于整个椭球上的一份共同线性逆。未知 $\lambda$、不同原子价格、受限可调用字典、非线性或自适应恢复都须重新指定问题，式（30.32）不替代那些合同。
+
+**命题 30.13（可执行原子的指定抽样上界）。** 给一份式（30.31）的实际可调用表示，令 $\Gamma=\sum_j|a_j|$，省去零系数，以概率 $q_j=|a_j|/\Gamma$ 调用第 $j$ 个原子。在已合法取得的该次实验中，读数 $Y$ 满足 $|Y|\le1$，且条件均值 $\mathbb E[Y\mid j]$ 为声明的同一输入和效果下的原子预测。则带符号估计量
+$$
+Z_{\rm est}=\Gamma\operatorname{sgn}(a_j)Y
+$$
+满足
+$$
+\mathbb E Z_{\rm est}=\sum_j a_j\mathbb E[Y\mid j],\qquad
+\mathbb E Z_{\rm est}^2\le\Gamma^2.
+\tag{30.36}
+$$
+
+证明。对实际抽样指标取全期望，$q_j\Gamma\operatorname{sgn}(a_j)=a_j$ 给均值等式，且 $Z_{\rm est}^2=\Gamma^2Y^2\le\Gamma^2$ 给二阶矩界。若另有独立重复的共同输入／准备合同，$n$ 次均值的方差至多 $\Gamma^2/n$；这一步使用独立性，单次界本身不提供它。$\square$
+
+对式（30.33）取 $\Gamma=\lambda^{-1}$。只有另外规定 $\lambda=e^{-\gamma t}$、$\gamma\ge0,t\ge0$，才可写 $\Gamma(t)=e^{\gamma t}$；严格负特征值要求 $\gamma t>0$。式（30.36）是这一指定协议的二阶矩上界，原子范数下界不因此成为一切实验的方差或采样数下界。有符号估计值也不是制备出的有符号物理态。形式记号 $\mathcal D_{-t}$ 在这里仅指该线性逆，不赋予从未来向过去传讯或反向因果推断。
+
+## 30.99 追加锚
