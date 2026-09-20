@@ -60,3 +60,4 @@ The selected slot uses bumpCode while the other five slots preserve the actual w
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SomerUniformSubsequenceCertificateRegistration.certificateRealization`
 - Dependency: [D5/S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation](../../../S1/Recurrence/Periodic/SomerUniformSubsequenceRefutation.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/CertificateWordRegistrationTemplates](CertificateWordRegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)
