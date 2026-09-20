@@ -273,3 +273,79 @@ The actual fixture helper is
 [actual_327_three_prime_risk.py](../../frontier/cover-geometry/actual_327_three_prime_risk.py).
 The source charges and exact47 deficit are in333's
 [certificate](../../certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json).
+
+## Exact original-prefix evaluator
+
+The [original-prefix evaluator](../../frontier/cover-geometry/original_prefix_transition.py)
+implements this section's fixed-kernel original-label state without
+enumerating entire prime-power coordinates. Its
+[exact output](../../frontier/cover-geometry/original_prefix_transition.json)
+reproduces both327/334 original families, their full physical event laws,
+first-hit fees, masked moments and surviving masses. It also retains the
+joint match state of all future-ending original labels, so later stages
+can continue in the same run. Normalized physical mass and unnormalized
+killed mass remain separate restrictions of the same chain.
+
+For a prime p, collect its N distinct literal original prefix cylinders,
+including those in future-ending labels, and the whole-coordinate root.
+Attach each queried prefix v to its deepest proper queried ancestor.
+If Ch(v) denotes its immediate queried children, use the cells
+
+    E_v=J_v minus union_(w in Ch(v)) J_w,
+    Haar(E_v)=p^(-depth(v))-sum_(w in Ch(v))p^(-depth(w)).
+
+Prime-power prefixes are nested or disjoint. Each point belongs to the
+cell of its deepest queried prefix, and every original prefix indicator
+is constant on that cell. Thus these cells partition the full coordinate;
+discarding zero-mass cells leaves at most N+1. Their weights pay every
+unobserved digit at the full original height. This differs from the
+existing depth-by-depth trie in
+[the finite-source evaluator](../../frontier/source-budgets/irredundant_whole_j_finite_source.py)
+by skipping unqueried intermediate depths; integer bit costs still depend
+on the heights. The original numerical moduli and their labels remain
+distinct even when some literal prefix tests coincide.
+
+The Python entry points are `original(coords)` and
+`run(labels, incoming, primes, thresholds)`. Each coordinate entry is
+`prime: (positive_exponent, residue)`; incoming rows pair a dictionary of
+complete old-coordinate representatives with an exact rational mass.
+The constructor checks actual odd primes and builds the original CRT
+class. The evaluator rechecks each label's modulus, canonical residue,
+full prime-power factorization and CRT agreement. It requires strictly
+increasing, nonrepeated stages and one common incoming old-coordinate
+domain, entirely before the first stage. Every original coordinate at
+most the final stage must be old or scheduled, including tests of labels
+ending before or after the scheduled window. An old coordinate cannot
+be exposed again. These conditions justify using the largest prime as
+each original label's owner.
+
+Every scheduled threshold is a fixed exact rational with0<delta<1,
+using the already established full-Haar clipped formula in333 and340(CP4).
+The tool does not take an arbitrary history-dependent policy. A future
+adaptive-policy consumer must retain its additional observations. Source
+masses are nonnegative exact rationals, never silently renormalized;
+positive-mass old rows must avoid all completed original labels. A zero
+source needs an explicit-domain zero-weight row; an empty source list
+with no declared old domain is rejected.
+
+The retained checks compare compressed and full-period calculations,
+include nested and disjoint prefixes, deeper future tests, zero/full bad
+fibres, and nonunit incoming mass, and reject incomplete or inconsistent
+input contracts. The threshold checks include4/7,12/23,5/9 and999/1000,
+so the admitted range includes333's43/47 steps. They do not construct
+333's actual incoming source. The arbitrary-height checks exercise
+omitted-digit accounting; they are not additional noncoverage results.
+
+Run the standard-library producer from the repository root:
+
+```sh
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original_prefix_transition.py
+```
+
+It emits the deterministic compact JSON to standard output; `--output PATH`
+writes the same bytes to a chosen file. The evaluator requires no repository
+imports and can also run from any directory using its absolute path.
+The total reachable state set can still grow exponentially with the original
+label count. This computes a specified family's prescribed chain; it does
+not supply a uniform gain over all original families, optimize unobserved
+Gamma test layouts, or settle the unrestricted problem.
