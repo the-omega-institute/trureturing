@@ -46,7 +46,11 @@ internal sealed class DawseyPartitionPolynomialDerivativeQuestionRefutationDocum
                     + "derivatives evaluate to 2 at 1. This refutes the printed universal "
                     + "assertion and makes no claim about the same-length reading.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "dawsey-russell-urban-partition-polynomial-derivative-question-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -55,10 +59,11 @@ internal sealed class DawseyPartitionPolynomialDerivativeQuestionRefutationDocum
         string prose,
         string declaration,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula PartitionPolynomialFormula()
     {

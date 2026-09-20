@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/DawseyPartitionPolynomialDerivativeQuestionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dawsey-russell-urban-partition-polynomial-derivative-question-refutation` (refuted) by `D5/S0/Certificates/DawseyPartitionPolynomialDerivativeQuestionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dawsey-russell-urban-partition-polynomial-derivative-question-refutation","declaration_gid":"D5/S0/Certificates/DawseyPartitionPolynomialDerivativeQuestionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Madeline Locus Dawsey; Tyler Russell; Dannie Urban (2022). *Derivatives and Integrals of Polynomials Associated with Integer Partitions*. DOI: [10.48550/arXiv.2108.00943](https://doi.org/10.48550/arXiv.2108.00943). URL: <https://cs.uwaterloo.ca/journals/JIS/VOL25/Dawsey/dawsey3.pdf>.
