@@ -20,12 +20,31 @@ complete scope and declared resource selection against the fixed candidate befor
 routing work. Missing, corrupt, or mismatched manifests fail even for no-resource
 changes; path lists never travel through process arguments or environment values.
 
-Push checks the final commit H. Its lightweight planner uses the push event's
+Native CI push checks the final commit H. Its lightweight planner uses the push event's
 complete before-to-after path range; initial pushes cover the registered current
 tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,
 and cache layers. The semantic `current` checks have no baseline or changes input;
 only PR `delta` checks compare B to M. Local PR preflight constructs an isolated
 merge-tree candidate from a clean checkout and an explicit base SHA.
+
+Local `make preflight` requires an explicit mode and prints choices with exit 2
+before planning or building when it is absent or invalid. `MODE=fast` delegates
+`make -C tools check-fast`, the quick .NET structure tests, with no Lean or
+admission claim. `MODE=push BASE=<40-hex-commit-sha>` uses the existing push planner
+with explicit BASE/HEAD endpoints to cover the complete baseline-to-worktree
+delta, including multi-commit, staged, unstaged, untracked and deleted inputs.
+BASE must be an existing nonzero commit; it need not be an ancestor.
+`MODE=full` uses that planner's complete current-input scope, including removed
+dirty endpoints for ownership checks. It retains caches
+and incremental production. fast/full reject BASE and push endpoints. Only push
+accepts matching complete CI_PUSH_BEFORE/AFTER copies. Shared local modes reject
+inherited native push events, reusable workflow candidate inputs and stale
+CANDIDATE_SHA, then bind child validation to the actual candidate. `MODE=pr`
+retains the clean private merge candidate and its explicit immutable BASE.
+Choose fast for harness iteration, targeted `make lean` for mathematical
+iteration, push for delta validation, pr for integration, and full for deliberate
+whole-tree diagnostics. CI equivalence covers matching shared check scopes;
+fast has its own limited test scope.
 
 The common build stage restores locked packages, builds the selected candidate
 projects, and seals their identity and outputs. Engineering accepts verified test
