@@ -6,7 +6,7 @@ Mixed-coordinate monotonicity for the exact six-variable hyper-ideal cosine.
 
 All variables below are real numbers. Icc(a,b) denotes the closed interval [a,b]. In the local edge order (12,13,14,34,24,23), the inputs (x,y,z,o,v,w) keep all six coordinates independent. Coordinates x and o are opposite.
 
-Define rad(x,y,z)=2xyz+x^2+y^2+z^2-1 and P(x,y,z,o,v,w)=yz+vw+xyv+xzw-(x^2-1)o. The function cosine is P divided first by sqrt(rad(x,y,w)) and then by sqrt(rad(x,z,v)). This is the actual formula in Zhao, arXiv:2601.15174v2, Lemma 2.2. Both radicands are proved positive on the box.
+Define rad(x,y,z)=2xyz+x^2+y^2+z^2-1 and P(x,y,z,o,v,w)=yz+vw+xyv+xzw-(x^2-1)o. The function cosine is P divided first by sqrt(rad(x,y,w)) and then by sqrt(rad(x,z,v)). This is the exact six-variable formula used by the cited source. Both radicands are proved positive on the box.
 
 **Theorem 1.1 (Increasing neighbours and decreasing the opposite coordinate).**
 
@@ -14,7 +14,7 @@ $$\forall x \in \mathrm{Real}, y \in \mathrm{Real}, z \in \mathrm{Real}, o \in \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.cosine_mixed_comparison` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Xinrong Zhao (2026). *Combinatorial Ricci Flows and Hyperbolic Structures on a Class of Compact 3-Manifolds with Boundary*. DOI: [10.48550/arXiv.2601.15174](https://doi.org/10.48550/arXiv.2601.15174). URL: <https://arxiv.org/html/2601.15174v2>.
 
 *Commentary.*
 
