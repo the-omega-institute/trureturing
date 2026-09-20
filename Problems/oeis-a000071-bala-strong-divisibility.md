@@ -45,13 +45,13 @@ Q inverse, where Q=[[1,1],[1,0]]. This is implemented inside `result`.
 It is false for arbitrary composite moduli: modulo 6, t=7 gives
 F_7=13=1, but Q^7=[[3,1],[1,2]] is neither of the two return matrices.
 
-Issue #9152 preregisters this representation. Issue #7980 remains closed
-with its missing Lucas-gcd prerequisite and no resolution credit. A fresh
-all-state A000071 issue search in this flight returned #9152, #7980 and
-the two standing research programme issues, with no additional exact-target
-owner; the corresponding all-state PR search returned no results.
-The bounded source and literature findings and their attribution
-limits are in the Library note.
+[Issue #9152](https://github.com/the-omega-institute/trureturing/issues/9152)
+preregisters the prime-power matrix-return representation.
+[Issue #7980](https://github.com/the-omega-institute/trureturing/issues/7980)
+remains closed with its missing Lucas-gcd prerequisite and no resolution
+credit. The present proof supplies a different bridge through periodic
+points. The bounded source, literature and ownership checks are recorded
+in #9152; the Library note states their scope and attribution limits.
 
 ## Route
 
@@ -82,7 +82,8 @@ matrix-return equivalence as the substantive local assertion; independent
 admission review remains required. `admission_basis` is
 `open-problem-resolution`, tied to the exact preregistered external
 conjecture. `utility: none`: this is an unbounded symbolic theorem.
-There is exactly one new public theorem and no standalone helper declarations.
+There is exactly one authored public theorem; all auxiliary assertions are
+local. The compiler also generates two simp declarations.
 
 The direct frozen suppliers are
 `D5/S1/Recurrence/LucasEvenDescent` (statement ID
@@ -108,10 +109,11 @@ recurrence, power shape and determinant, then the pinned Mathlib
 iteration, periodicity and divisibility suppliers. It has no extra
 formal premise, sorry, private axiom, or finite enumeration.
 
-The native worker verified the source statement and supplier contracts.
+The implementation is published for review in
+[PR #9165](https://github.com/the-omega-institute/trureturing/pull/9165).
 Independent review, canonical Freeze, final required CI, ordinary merge
-and completion audit remain caller-owned obligations; compilation does
-not claim those outcomes or resolution credit.
+and completion audit remain pending. Compilation alone does not establish
+delivery completion or resolution credit.
 
 ## Triage
 
@@ -121,10 +123,8 @@ The age of the source does not imply either difficulty or novelty.
 
 ## ASSUMED-UNVERIFIED
 
-The earlier paper and external Lean search readings are supplied by the
-caller and were not independently repeated in this implementation.
-Openness outside the inspected sources and worldwide priority remain
-unverified. No model-diversity or independent-priority claim is made.
-The earlier scalar-polynomial alternative is uncompiled and unused;
-no lower formalization cost has been established for it. This flight
-does not supply the independent review or any final lifecycle credit.
+The bounded source investigation on 2026-09-21 inspected the cited
+passages and external Lean candidates recorded in #9152. Those readings
+were not independently repeated during report and documentation
+preparation. Openness outside the inspected sources and worldwide priority
+remain unverified. No model-diversity or independent-priority claim is made.
