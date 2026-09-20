@@ -59,6 +59,17 @@ PATTERNS = [
     (r"\b(is|are) (currently )?(in progress|running|pending|under way|underway)\b", "promises a reading instead of stating one"),
     (r"\bwhen (it|they) (complete|completes|finish|finishes)\b", "defers a reading to the future"),
     (r"\b(will be|to be) (recorded|added|dispatched|filled|updated|measured)\b", "defers a reading to the future"),
+    # Two measured misses on PR #8698, each caught by a review seat after this checker returned 0.
+    # Both describe an edit made to THIS deliverable, which is what 2.10 excludes; the anchoring and
+    # search vocabulary that legitimately uses past tense ('was found in the searched scope', 'no
+    # citation index was retrieved', a mutation that 'is deleted and replaced') stays unmatched
+    # because these patterns require a round-outcome verb or the word repair/correction itself.
+    (r"\brounds?[- ]?\d+(\s*,\s*\d+)*(\s+(and|&)\s+\d+)?\s+(all\s+)?(rejected|approved|objected|flagged)\b",
+     "narrates what earlier rounds decided"),                       # 'Rounds 5, 6 and 7 all rejected on one class'
+    (r"\b(removed|deleted|dropped|rewritten|corrected|replaced|cut)\s+rather than\b",
+     "narrates how a repair was carried out"),                      # 'removed rather than corrected'
+    (r"\b(correction|repair|fix)s?\b(?=.{0,45}\b(preserve\w*|kept|keeps|retain\w*|leave\w*|do not|does not)\b)",
+     "narrates the effect of an edit made to this delivery"),       # 'display corrections preserve the Lean source'
 ]
 # A body legitimately anchors readings to commits and names disclosed boundaries; those are current
 # properties of the evidence, so anchoring vocabulary is not matched above.
