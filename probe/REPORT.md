@@ -40,3 +40,20 @@ Independent program: `python3 probe/verify.py enumerate`, exit 0. All 24000000 r
 | 16 | 1, 3, 5, 15, 17, 51, 85, 255 | 0 | 0 |
 
 Anchor B = 10: {1, 3, 9, 11, 33, 99}, reproducing the paper’s Theorem 3 within the registered finite window. No universal conclusion is inferred from the enumeration.
+
+## Step 2: source fidelity and reversal
+
+Read the downloaded source with `pdftotext -layout`; the PDF and extracted text remain exclusively in the runner scratch directory, outside this worktree. Printed p. 8 §4.1 defines m*_B by reversing the coefficients of the usual finite base-B expansion, including zeros. Printed p. 8 Proposition 5 gives the divisor-to-property implication. Printed p. 9 Problem 1 asks whether these are the only positive integers. The preregistered quantifiers and biconditional are faithful; no correction is needed.
+
+For m > 0 and B ≥ 2, write the canonical digits as [a₀,…,aₖ] with aₖ ≠ 0. Nat.digits is least-significant-first; Nat.ofDigits evaluates the coefficient at index i with weight B^i. Thus the reversed list evaluates to aₖ + aₖ₋₁ B + … + a₀ B^k, exactly the source formula. If a₀ = 0, it is simply a trailing zero in the reversed coefficient list, so the value has fewer canonical digits without changing this equality. No injectivity or reversal-involution claim for numbers ending in zero is required.
+
+Independent cross-check: `python3 probe/verify.py faithfulness`, exit 0; model of Nat.digits/ofDigits versus reversed positional string evaluated with Python int. Bases 2, 10, 16 use independent built-in string formatting; base 3 uses most-significant-place extraction. Each row tests m = 1 through 100000.
+
+| Base | Values | Trailing-zero inputs | Mismatches |
+|---|---|---|---|
+| 2 | 100000 | 50000 | 0 |
+| 3 | 100000 | 33333 | 0 |
+| 10 | 100000 | 10000 | 0 |
+| 16 | 100000 | 6250 | 0 |
+
+Prediction 4 held. This Python test checks the stated mathematical model; pinned Lean definitions and the digits reconstruction theorem are inspected in Step 4.
