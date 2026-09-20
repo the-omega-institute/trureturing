@@ -12,7 +12,7 @@ public static class ScribeCli
     public static ImmutableArray<string> ImplementedCommands { get; } =
     [
         "describe-report",
-        .. EmissionCommands.Order(StringComparer.Ordinal),
+        .. EmissionCommands.Where(static command => command != "emit").Order(StringComparer.Ordinal),
         "markdown-check",
         "projections",
     ];
