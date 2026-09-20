@@ -22,6 +22,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/MbirikaAssociatedPellGcdEntryPointRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mbirika-schrader-spilker-associated-pell-gcd-entry-point-refutation` (refuted) by `D5/S1/Recurrence/Invariants/MbirikaAssociatedPellGcdEntryPointRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mbirika-schrader-spilker-associated-pell-gcd-entry-point-refutation","declaration_gid":"D5/S1/Recurrence/Invariants/MbirikaAssociatedPellGcdEntryPointRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* aBa Mbirika; Janee Schrader; Jürgen Spilker (2023). *Pell and Associated Pell Braid Sequences as GCDs of Sums of k Consecutive Pell, Balancing, and Related Numbers*. DOI: [10.48550/arXiv.2301.05758](https://doi.org/10.48550/arXiv.2301.05758). URL: <https://cs.uwaterloo.ca/journals/JIS/VOL26/Mbirika/mbir5.pdf>.

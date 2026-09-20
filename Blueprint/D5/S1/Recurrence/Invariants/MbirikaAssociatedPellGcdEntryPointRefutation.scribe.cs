@@ -32,14 +32,19 @@ internal sealed class MbirikaAssociatedPellGcdEntryPointRefutationDocument
                     + "false. The prime p = 3 divides 12, its least positive entry point "
                     + "is r = 2 because Q(1) = 1 and Q(2) = 3, and 2 divides 12. Thus "
                     + "the right side is true and the biconditional is false.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "mbirika-schrader-spilker-associated-pell-gcd-entry-point-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("mbirika-associated-pell-" + name),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimFormula()
     {

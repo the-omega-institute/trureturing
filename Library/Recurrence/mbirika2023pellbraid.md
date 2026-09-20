@@ -23,7 +23,7 @@ printed page 4, states verbatim:
 The module reuses `D5/S1/Recurrence/PellCompanionGcd.Q`, whose initial values
 and recurrence are exactly this associated Pell sequence.
 
-Section 6.1, on printed page 22, introduces the entry point verbatim:
+Section 6.2, on printed page 22, introduces the entry point verbatim:
 
 > When (S_n)_{n≥0} is the Pell or associated Pell sequence, we have partial results towards closed forms for gcd(S_k, k) that involve the entry point (or rank of apparition), e_S(p), which is the smallest index r > 0 such that p divides S_r where p is a prime.
 
@@ -45,4 +45,4 @@ refutation of Conjecture 32; none was found in that scope.
 
 - DOI: 10.48550/arXiv.2301.05758
 - URL: https://cs.uwaterloo.ca/journals/JIS/VOL26/Mbirika/mbir5.pdf
-- Scope: Definition 3 on printed p. 4 and Conjecture 32 in section 6.1 on printed p. 22.
+- Scope: Definition 3 on printed p. 4 and Conjecture 32 in section 6.2 on printed p. 22.
