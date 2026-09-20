@@ -57,3 +57,28 @@ Independent cross-check: `python3 probe/verify.py faithfulness`, exit 0; model o
 | 16 | 100000 | 6250 | 0 |
 
 Prediction 4 held. This Python test checks the stated mathematical model; pinned Lean definitions and the digits reconstruction theorem are inspected in Step 4.
+
+## Step 3: independent proof-route check
+
+There is no mathematical gap detected in the route. The strict inequality m < 2B^s is essential for the leading digit, including B = 2. Taking B^s > n and m = n·ceil(B^s/n) indeed gives B^s ≤ m < B^s+n < 2B^s. If d = gcd(n,B), the property implies d divides m*_B; also d divides B and m*_B is 1 modulo B. Hence d divides 1 and d = 1. This argument does not need choosing a prime factor.
+
+For n = 1, the conclusion and property hold directly. For n > 1, coprimality makes B a unit modulo n with positive finite order T. Order 1 already gives B² = 1. Order 2 also already gives B² = 1 and never enters the nondivisor construction. In the remaining case T ≥ 2, choose the positive representative c of −(1+B) modulo n, choosing n when that residue is zero. The c+2 occupied indices are distinct: 0 and 1 lie below T, and positive multiples iT are distinct. Thus no carries occur, even in base 2, and the highest index is k = cT. Reversal sends these indices to k, k−1, and (c−i)T for 1 ≤ i ≤ c. Modulo n, the forward value is 1+B+c = 0, and the reverse value is 1+B^(-1)+c. Multiplying the latter by B gives 1−B². This avoids needing a field or cancelling a nonunit. If n does not divide B²−1, the reverse cannot be zero modulo n.
+
+The already-published forward implication can also be organized as the list identity R(L) = B^(length(L)−1)·V(L) modulo n when B² = 1; the empty-list case is separate. This is consistent with the paper's even/odd argument and handles trailing-zero input digits.
+
+Exact-integer construction check: `python3 probe/verify.py construction`, exit 0. It evaluates the actual integer m and its arithmetic reversal and independently checks the reversed-exponent formula. Registered prediction 3 held.
+
+| B | Required construction pairs |
+|---|---|
+| 2 | 28 |
+| 3 | 36 |
+| 4 | 26 |
+| 5 | 40 |
+| 6 | 16 |
+| 7 | 41 |
+| 8 | 25 |
+| 9 | 31 |
+| 10 | 19 |
+| 11 | 40 |
+
+Total 302 pairs, failures 0, largest exponent cT = 3248. Edge stresses over bases 2 through 16 and n ≤ 400: n = 1 in 15 bases; order 1 in 30 pairs; order 2 in 73 pairs; base-2 coprime nondivisor cases 198. The leading-one construction was checked in all 6000 pairs, with 2459 noncoprime pairs each giving a genuine reversal counterexample. These remain finite experimental results, not a replacement for the Lean witness.
