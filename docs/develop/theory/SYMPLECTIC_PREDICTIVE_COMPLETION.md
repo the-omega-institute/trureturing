@@ -1936,3 +1936,227 @@ $|(1+y)(2y-1)|\le2$ 对 $-1\le y\le1$ 成立，且 $d_\varepsilon\ge\sin^2(3d/2)
 本章新增的候选内容是：共同最优弦增益下的严格稳定秩提升；固定圆周与两延迟上的所有测量族分离障碍；固定十维设计中的未达到上确界和阶匹配构造；以及同一构造的精确噪声判别退化。其问题来源属于公开发表论文明确列出的测量设计研究问题，但本章只回答给定量词的圆周实例与构造性存在部分。固定稳定裕量后最优稳定秩的精确常数、更一般流和延迟数的最优设计、单标量传感器的可实现条件及非线性长时恢复仍未解决。
 
 这些是带完整纸面证明和有限检错的结果，尚未通过独立模型或同行审阅、Lean kernel、Scribe、canonical ingest 或 CI。文献检索没有确立全球优先权，原论文问题也不因此自动登记为一般性解决。与前章的关系是把“几乎处处可恢复仍可不稳定”的内部实例推进到一个外部可复核的设计问题，并给出统一约束和具体极值构造。后续增补继续留在本主卷。
+
+<a id="sec-compatible-statistical-reduction"></a>
+## 13. 可持续更新的统计压缩：相容谱、近共振代价与量子充分子系统
+
+### 13.1 问题和既有研究的边界
+
+本章把目标固定为：在已知有限维保能动力学和已校准统计实验中，选取指定维数的表示，使其具有自治更新，同时控制丢弃表示造成的统计误差，并保留适用的 Poisson／量子结构。准确的无损性、平均 Bayes 风险、逐状态全局可区分性分别记账。本章不给任意系统的无损低维表示，也不把一次状态推断自动当作持续在线滤波。
+
+[SCWTM17] 已研究目标导向 Gaussian 逆问题的最优后验低秩近似；其 §2.3 的损失由后验精度加权，不能与下文固定能量损失混用。[BGH22] 已在周期解及能量坐标等条件下给出 POD 与最优辛基的联系；因此谱选择与能量坐标本身不作首创声明。[FTXZZ26] 的辛自编码器预印本研究结构保持的嵌入逼近；它不自动保证给定微观动力学对编码精确下降，也不直接认证全局统计充分性。
+
+本章先写出一个可精确求解的自治约束优化问题，再用同一实现推导近自治时能够获得的额外统计收益上界、其局部达到构造和共振不连续性。谱定理、Ky Fan 变分及 Gaussian 条件计算作为既有数学工具使用。量子部分用 [KI02, LW26] 的统计充分性作锚，给出真实 CPTP 编码、解码与更新的有限实例。没有登记新的具名开放问题结算或全球优先权。
+
+### 13.2 同一实现上的动力学、信息与损失
+
+设 $d=2n$、$\Omega\in\mathbb R^{d\times d}$ 可逆且反对称，$\dot x=\Omega x$。取 $x_0\sim N(0,I_d)$，实验为
+\[
+Y=Lx_0+\eta,\qquad \eta\sim N(0,R),\quad R\succ0,
+\]
+噪声与初态独立，$L,R,\Omega$ 已知。这个初态是能量 $|x|^2/2$ 的单位温度 Gibbs 参考，Poisson 矩阵为 $\Omega$；正定二次系统可先用第 2 节的能量坐标变换到此形式。这里可以把多时刻积分读数组合进同一个 $L$，但未把连续白噪声当作普通平方可积随机函数。
+
+记
+\[
+F=L^TR^{-1}L,\quad \Sigma=(I+F)^{-1},\quad
+m(Y)=\Sigma L^TR^{-1}Y,\quad B=I-\Sigma=\operatorname{Cov}(m(Y)).
+\]
+$B$ 对称且 $0\preceq B\prec I$，是数据实际支持的后验均值协方差。它区别于平衡状态协方差 $I$，后者在所有正交方向上相同。
+
+选择 $Q\in\mathbb R^{2k\times d}$、$QQ^T=I$，令 $P=Q^TQ$。编码为 $u=Qx$，正交重建为 $Q^Tu$。对每个固定 $P$，在所有取值于 $\operatorname{Ran}P$ 的可测估计器中，$\widehat x_P=Pm(Y)$ 最优，且
+\[
+\mathcal R(P):=\inf_{\widehat x(Y)\in\operatorname{Ran}P}
+\tfrac12\mathbb E\|x_0-\widehat x(Y)\|^2
+=n-\tfrac12\operatorname{tr}(PB),
+\]
+\[
+\mathcal R_{\rm full}=\tfrac12\operatorname{tr}\Sigma,\quad
+\mathcal E(P):=\mathcal R(P)-\mathcal R_{\rm full}
+=\tfrac12\operatorname{tr}((I-P)B).
+\]
+这些身份由条件期望正交分解与 $\operatorname{Cov}m=B$ 直接得到。损失明确为全状态的热归一二次能量风险；仅关心某个输出时须另给输出权重，不把本章的最优性自动外推。
+
+编码具有对全部初态成立的自治线性更新，当且仅当
+\[
+Q\Omega=DQ,\qquad D=Q\Omega Q^T,
+\]
+等价于 $[P,\Omega]=0$。反对称性保证不变子空间及其正交补同时不变。此时 $D$ 可逆且反对称，$\dot u=Du$ 是 Poisson 矩阵 $D$、能量 $|u|^2/2$ 的 Hamilton 系统；第 2 节的辛、能量和热分解适用。给定初始统计数据以后，$Qm(Y)$ 可按同一个 $e^{tD}$ 更新；本结论未添加后续观测时的滤波器。
+
+严格的实验无损性更强。Gaussian 似然族 $\{N(Lx,R):x\in\mathbb R^d\}$ 能仅由 $Qx$ 精确给出，当且仅当 $L(I-P)=0$。因为同一编码纤维上 Gaussian 均值必须相同，反向可用均值 $LQ^Tu$。其 KL 距离为 $(x-x')^TF(x-x')/2$，因而也被精确保留。再加自治条件，就必须包含 $\operatorname{span}_{j\ge0}\Omega^j\operatorname{Ran}L^T$；这是第 2 节预测完成的直接应用，不另计新增定理。该跨度为全空间时，没有严格更小的无损线性自治编码。
+
+### 13.3 自治约束下的精确最优压缩
+
+定义 $B$ 的动力学平均
+\[
+\overline B=\lim_{T\to\infty}\frac1T\int_0^T e^{-t\Omega}Be^{t\Omega}dt.
+\]
+这个极限只是有限维矩阵的解析定义，无需以无限观测时间实际估计。若 $i\Omega=\sum_\lambda\lambda E_\lambda$ 是复 Hermitian 谱分解，则
+\[
+\overline B=\sum_\lambda E_\lambda B E_\lambda.
+\]
+它为实对称矩阵，满足 $0\preceq\overline B\prec I$、$[\overline B,\Omega]=0$。在每个正频率块对相应复 Hermitian 矩阵对角化，并把每个复方向与其共轭配对，可列出 $n$ 个实二维模态收益
+\[
+\nu_1\ge\cdots\ge\nu_n\ge0,
+\qquad\operatorname{spec}(\overline B)=(\nu_1,\nu_1,\ldots,\nu_n,\nu_n).
+\]
+
+**定理 13.1（与更新相容的最优后验均值表示）。** 在所有秩为 $2k$ 且与 $\Omega$ 对易的正交投影上，
+\[
+\boxed{\min\mathcal R(P)=n-\sum_{j=1}^k\nu_j=:R_{\rm cl}(k).}
+\]
+选择收益最大的 $k$ 个共轭模态对得到极小点，包含重复频率的情形。该表示既精确自治，又具有非退化 Poisson 配对。相对于不加自治约束的同维正交表示，最优风险差为
+\[
+\boxed{R_{\rm cl}(k)-R_{\rm free}(2k)
+=\tfrac12\sum_{j=1}^{2k}\lambda_j(B)-\sum_{j=1}^k\nu_j\ge0.}
+\]
+
+**证明。** 有限谱展开中，不同特征值之间的旋转因子时间平均为零，得到谱块公式。复共轭交换正负频率；实对称性因此给实矩阵。$\overline B$ 的每个实特征空间对 $\Omega$ 不变，$\Omega$ 在其中无核，故维数为偶数。更具体地，在固定正频率复特征空间对 $E_\lambda BE_\lambda$ 对角化，一条复正交特征方向与共轭方向产生一个实正交二维不变平面，这同时给出成对谱和可计算极小点。
+
+若 $P\Omega=\Omega P$，迹循环及平均给 $\operatorname{tr}(PB)=\operatorname{tr}(P\overline B)$。Ky Fan 变分界为 $2\sum_{j\le k}\nu_j$，上述成对构造在可行集合内达到它。代入风险身份；不受约束的投影对 $B$ 直接作同一谱变分，得到差值。证毕。
+
+算法是一次生成元频率分块、各块的后验收益对角化及模态排序。截止收益重复时，任意截断实特征向量可能破坏不变性；实现必须在频率块内取复方向并共轭配对。已知 $\Omega$ 时，若 $\|\widehat B-B\|\le a$，经验极小点 $\widehat P$ 满足
+\[
+\mathcal R(\widehat P)-R_{\rm cl}(k)\le 2k a.
+\]
+这是两个秩 $2k$ 迹误差各至多 $2ka$、风险系数为二分之一的直接后果。未知或近共振生成元的谱分组误差不包含于该预算。
+
+### 13.4 信息保留的证书及其量词
+
+补充 $V$ 使 $\binom QV$ 正交，令 $u=Qx,v=Vx$。沿用第 8 节的恢复：保留后验的 $u$ 边缘，把 $v$ 恢复成独立平衡参考 $N(0,I)$。平均后验 KL 缺陷为
+\[
+\Delta(P)=I(v;Y\mid u)=\tfrac12\log\det(I+VF V^T).
+\]
+这个身份对任何正交 $P$ 成立，不要求自治。若 $b=\|B\|<1$，则
+\[
+\boxed{\mathcal E(P)\le\Delta(P)\le\frac{\mathcal E(P)}{1-b}.}
+\]
+
+**证明。** $F=B(I-B)^{-1}\preceq B/(1-b)$，再用标量 $\log(1+t)\le t$ 给上界。对下界，$V\Sigma V^T$ 是隐藏后验边缘协方差，而 $(I+VF V^T)^{-1}$ 是同时条件于 $u,Y$ 的协方差；条件 Gaussian Schur 补给前者不小于后者。因而
+\[
+2\mathcal E(P)=\operatorname{tr}(I-V\Sigma V^T)
+\le\operatorname{tr}[I-(I+VF V^T)^{-1}]
+\le\log\det(I+VF V^T).
+\]
+最后一步逐特征值使用 $t/(1+t)\le\log(1+t)$。证毕。
+
+所以小的后验均值表示损失，在信噪比有固定上界即 $b$ 远离 1 时，也控制该条件热信息损失。它是先验平均、给定实验与给定恢复规则的证书，不能改称所有状态对的统一距离保证。最小化 $\mathcal R$ 不被声称等价于最小化 $\Delta$。例如 Pinsker 与 Jensen 只给平均后验总变差至多 $\sqrt{\Delta/2}$，没有给罕见状态对同样的误差界。
+
+一个同一实验内的目标冲突可精确计算。取两异频模态和 $B=\operatorname{diag}(.8,.01,.45,.45)$，保留一个完整模态。保留第一模态的能量风险为 $1.595$、条件信息缺陷为 $\log(20/11)$；保留第二模态的风险为 $1.55$、信息缺陷为 $\frac12\log(500/99)$。前者信息缺陷更小，后者平均能量风险更小。两种表示都精确自治且保留模态辛配对，因此不能把定理 13.1 的能量最优表示同时标为信息最优表示。
+
+### 13.5 近自治的信息收益上界及几何提升偏差
+
+令 $K$ 为实对称矩阵，满足
+\[
+[\Omega,K]=B-\overline B.
+\]
+可由谱间 Sylvester 方程显式构造：在 $i\Omega$ 的特征基中，非等频元素取 $iB_{ab}/(\lambda_a-\lambda_b)$，等频元素取零。设 $g$ 为不同特征值的最小间隔，则
+\[
+\|K\|_F\le\|B-\overline B\|_F/g.
+\]
+
+**定理 13.2（统计收益与更新不相容性的权衡）。** 任意秩 $2k$ 正交投影均满足
+\[
+\boxed{\mathcal R(P)\ge R_{\rm cl}(k)
+-\tfrac12\|[P,\Omega]\|_F\|K\|_F.}
+\]
+因而任何超过精确自治最优值的收益，都需要非零的更新组合缺陷；带宽或单次重建损失本身不决定这个缺陷。
+
+**证明。** 迹循环给
+\[
+\operatorname{tr}(PB)=\operatorname{tr}(P\overline B)+\operatorname{tr}([P,\Omega]K).
+\]
+第一项对任意秩 $2k$ 投影都不超过 $2\sum_{j\le k}\nu_j$，第二项用 Frobenius Cauchy–Schwarz，代入风险即得。谱间解的范数界由正交特征基中的逐元素平方和得到。证毕。
+
+令 $\delta=\|(I-P)\Omega P\|$，则第 2 节的预测界为
+\[
+\|Qe^{t\Omega}x-e^{tD}Qx\|\le t\delta\|x\|,
+\quad D=Q\Omega Q^T,
+\quad\|[P,\Omega]\|_F=\sqrt2\|(I-P)\Omega P\|_F.
+\]
+若 $\delta<\sigma_{\min}(\Omega)$，已有非退化性结论适用；还可明确比较两种提升。$D$ 可逆时，
+\[
+L_s=\Omega Q^TD^{-1},\quad QL_s=I,\quad
+L_s^T(-\Omega^{-1})L_s=-D^{-1},
+\]
+\[
+\boxed{L_s-Q^T=(I-P)\Omega Q^TD^{-1},\quad
+\|L_s-Q^T\|\le\delta/\sigma_{\min}(D).}
+\]
+这些式子直接相乘可证。$L_s$ 是辛提升，$Q^T$ 是最小能量提升；精确自治时两者相同，近自治时由同一个残差控制差异。不能把任意正交解码器自动称为辛解码器。
+
+### 13.6 近共振两模态：权衡界的一阶达到与精确约束的不连续性
+
+取
+\[
+\Omega=\operatorname{diag}(\omega_1J_2,\omega_2J_2),\quad
+B=\begin{pmatrix}b_1I_2&\rho I_2\\\rho I_2&b_2I_2\end{pmatrix},
+\quad 0\prec B\prec I,\quad b_1>b_2,\quad\rho>0,
+\]
+\[
+Q_\theta=(\cos\theta I_2,\sin\theta I_2),\quad P_\theta=Q_\theta^TQ_\theta.
+\]
+这是可实现的统计实验：令 $R=I$、$L=[B(I-B)^{-1}]^{1/2}$ 即可得到指定 $B$。$\omega_j>0$ 时，所有 $D_\theta=(\omega_1\cos^2\theta+\omega_2\sin^2\theta)J_2$ 都非退化，可以构造上一节的辛提升，但精确自治在异频时只允许模态端点。
+
+直接计算得
+\[
+\delta_\theta=|\omega_2-\omega_1||\sin\theta\cos\theta|,
+\]
+\[
+\mathcal R(P_\theta)=2-b_1\cos^2\theta-b_2\sin^2\theta-2\rho\sin\theta\cos\theta.
+\]
+异频时精确最优风险是 $2-b_1$，混合收益为
+\[
+2\rho\sin\theta\cos\theta-(b_1-b_2)\sin^2\theta.
+\]
+此例 $\|K\|_F=2\rho/|\omega_2-\omega_1|$、$\|[P_\theta,\Omega]\|_F=2|\omega_2-\omega_1||\sin\theta\cos\theta|$。当 $\theta\downarrow0$，定理 13.2 上界与真实收益之比趋于 1；两者差恰为 $(b_1-b_2)\sin^2\theta$。因此线性的残差代价在允许模型中有一阶达到实例。
+
+取 $b_1=.7,b_2=.3,\rho=.2$，不受自治约束的最优混合角为 $\pi/8$、风险为 $1.217157287525381$，异频精确最优为 $1.3$。频差从 2 降至 .05、.001 时，混合的闭包残差分别是 .7071067812、.01767766953、.000353553391，风险不变。频差严格为零时，这一混合本身精确自治，最优风险降到 $1.217157287525381$。
+
+因此，精确自治约束下的最优值可以在共振处不连续；有限时间、允许残差的设计可以连续接近共振收益。算法不应把浮点数近等频默认为数学上的严格等频。该例在已知生成元和所列 Gaussian 实验中成立，不表示通过任意噪声数据可无限准确分辨频率。
+
+### 13.7 量子充分表示：一个真实通道实例与不能外推的范围
+
+[KI02] 已把部分已知量子态的冗余部分与需保留部分分解；[LW26] §1.1 说明 CPTP 充分子空间的最小对象具有代数结构，并另外研究仅正映射的推广。本章采用可物理实现的完全正、保迹编码和解码，不把仅正映射当作量子通道。
+
+取两个量子比特，$U$ 为第二比特控制、第一比特翻转的 CNOT，令
+\[
+X_L=X\otimes I,\quad Y_L=Y\otimes Z,\quad Z_L=Z\otimes Z.
+\]
+它们为 $U(X\otimes I)U^\dagger$ 等三个 Pauli 像。状态族限定为
+\[
+\rho_{a,b,c}=\tfrac14(I+aX_L+bY_L+cZ_L)
+=U(\tau_{a,b,c}\otimes I/2)U^\dagger,\quad a^2+b^2+c^2\le1.
+\]
+Hamilton 算子为 $H=gZ_L$。编码、解码为
+\[
+\mathcal E(\rho)=\operatorname{Tr}_B(U^\dagger\rho U),\quad
+\mathcal D(\tau)=U(\tau\otimes I/2)U^\dagger.
+\]
+两者均 CPTP。在所列整个态族上，$\mathcal D\mathcal E\rho=\rho$，并且
+\[
+\mathcal E(e^{-itH}\rho e^{itH})
+=e^{-igtZ}\mathcal E(\rho)e^{igtZ}.
+\]
+故两个物理比特的指定实验族可用一个逻辑比特精确表示，既支持未来更新，又保留全部两态迹距离与相对熵。证明由酉共轭、偏迹及张量固定因子的谱直接得到，也可用编码解码的双向数据处理。它是既有量子充分性机制的明确实现，不作为新的普遍量子压缩定理。
+
+直接丢掉原第二个物理比特一般做不到同一件事：$\rho_{0,1/2,0}$ 与 $\rho_{0,-1/2,0}$ 的第一比特边缘相同，但逻辑编码后迹距离为 1。实现新逻辑编码需要相应酉操作，不能从已经丢弃的物理边缘后处理恢复。若允许任意四维密度态，以上解码不再恢复全部态；若加入不保持该逻辑子代数的 Hamilton 相互作用，闭合也须重新检验。一般非线性经典空间与量子充分代数之间的对应尚未建立。
+
+### 13.8 文献入库、验证与尚未解决的目标
+
+本章新增原始引用分别登记于 `Library/PredictiveReduction/`，并由已有 `HamiltonianEffectCompletionGenerator.scribe.cs` 的文献说明关联。Scribe 说明只关联已存在的交换子闭包声明与相关文献，不创建虚构 Lean 真源，不将本章纸面优化定理升级成 kernel 结论。主卷继续是研究结果的唯一正文。
+
+本轮程序通过 72 个分组有限检查，包括重复频率的成对谱构造、自治投影、Sylvester 身份、随机投影的权衡界、条件 KL 上下界、后验扰动遗憾界和量子通道恢复。两态例中编码前后相对熵分别为 .3094844837282447 与 .30948448372824505，迹距离为 .75。这些数值用于检错；一般结果由上述证明承担。没有运行 Lean kernel、Scribe 编译或发射、仓库 CI，也没有硬件实验或神经网络 benchmark。
+
+[SCWTM17] A. Spantini, T. Cui, K. Willcox, L. Tenorio, Y. Marzouk. *Goal-Oriented Optimal Approximations of Bayesian Linear Inverse Problems*. SIAM Journal on Scientific Computing 39(5), S167–S196 (2017), DOI 10.1137/16M1082123; arXiv:1607.01881。核对解析全文 §2.3、式 (2.22)–(2.26) 的目标与后验精度损失。本章另加自治约束，并使用热归一能量损失。
+
+[BGH22] P. Buchfink, S. Glas, B. Haasdonk. *Optimal Bases for Symplectic Model Order Reduction of Canonizable Linear Hamiltonian Systems*. IFAC-PapersOnLine 55(20), 463–468 (2022), DOI 10.1016/j.ifacol.2022.09.138。作者机构页摘要与书目信息已核对，公开全文下载失败，未核定其内部定理编号。该文已有周期线性系统中能量坐标/POD 的最优辛基结果，不能因未取得全文就声称本章谱构造此前不存在。
+
+[FTXZZ26] L. Feng, Y. Tang, Y. Xie, R. Zhang, A. Zhu. *Learning symplectic model reduction based on a approximation theorem of symplectic embeddings*. arXiv:2606.04623 (2026)。核对解析文本 Theorems 2.2、3.1 的紧可缩域和结构保持编码/解码目标，作为当前预印本文献，未独立审定其全部证明。
+
+[KI02] M. Koashi, N. Imoto. *Operations that do not disturb partially known quantum states*. Physical Review A 66, 022318 (2002), DOI 10.1103/PhysRevA.66.022318；预印本 quant-ph/0101144 的标题为 *What is Possible Without Disturbing Partially Known Quantum States?*。使用指定态族的可保留部分和冗余部分，不套用到任意未知态。
+
+[LW26] L. van Luijk, H. Wilming. *Sufficiency and Petz recovery for positive maps*. arXiv:2604.08380v1 (2026), §1.1–1.2。全文 HTML 已核对；CPTP 最小充分代数与正映射/Jordan 结构的区别保留。
+
+PDF 文献的解析正文已按上述范围读取，页面截图工具返回错误，未进行图表或页面视觉核验。新候选结论没有获得独立同行或异模型证明审查，也未确立全球优先权。
+
+本章已经解出的是指定 Gaussian 实验下的精确自治子空间最优能量恢复，以及其近自治收益界；量子部分只给限定态族的精确实例。尚未解决的核心扩展是：同一约束下直接最小化条件 KL 或最坏任务风险的全局解；未知近共振生成元与传感器的联合有限数据保证；非线性流形的全局、稳定、低维充分表示；以及一般有限温量子态族的统计充分代数与动力学生成代数的联合最小化。后续在本主卷增补，不另开重复理论。
