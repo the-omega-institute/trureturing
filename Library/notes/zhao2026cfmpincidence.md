@@ -110,16 +110,12 @@ conservative bounds, not falsely asserted actual global states.
 This methodological connection supplies no automatic curvature estimate,
 physical spacetime identification or proof of geometric realization.
 
-## Search and delivery boundary
+## Literature and scope boundary
 
-September 16, 2026: searched primary arXiv sources and the combinations
-hyper-ideal, valence eight, CFMP and geometric realization. Bounded searches
-found the general ten and nine results, but no proof or counterexample for
-all-eight or all-six triangulations. Some search results were secondary
-machine-generated summaries; those were not used as mathematical sources.
-Repository searches for CFMP and hyper-ideal returned no existing owner,
-so the new theory volume is a distinct geometric domain rather than a copy
-of the surface-congruence volume. This is not an exhaustive novelty search.
+The cited primary sources establish the general valence-ten and valence-nine
+results, but do not supply a proof or counterexample for all-eight or all-six
+triangulations. No secondary summary is used as a mathematical source. The
+source set is not an exhaustive priority review.
 
 The theory volume contains ordinary proofs and source provenance. The
 unrestricted degree-eight target and original CFMP conjecture remain open.
@@ -180,9 +176,9 @@ The derivative numerator identity, seven displayed cosine evaluations, the
 squared three-high bound, all exact triple/seven-angle inequalities, and the
 rational no-go factorization have exact finite checks.
 Numerical radian margins are display-only; the strict signs have rational
-polynomial certificates. A two-variable floating-point root was also explored
-for the four-tetrahedron example; its success is not used as an existence
-proof or certified geometric root.
+polynomial certificates. A two-variable floating-point root for the
+four-tetrahedron example is a diagnostic only; it is not an existence proof
+or a certified geometric root.
 
 Three face-pairing packets satisfy the finite checks. Two are the stated (8,16) and
 (6,6,24) examples. The third is a second (8,16) packet with an opposite-pair
@@ -218,8 +214,7 @@ of that estimate, not a nonrealizability claim at degree eighteen and not
 an exclusion of more detailed incidence, positive lower, or nonrectangular
 barriers.
 
-The final diagnostic run also verifies the two new cosine values, the exact
-Taylor margin, the derivative identity for the two-cap extremum, and the
-positive-integral formula for 22/7-pi. The graph checker rechecks the new
-nineteen-neighbor criterion on the same actual packets. No new mathematical
-independence or kernel certification is inferred from using a second program.
+Exact finite checks cover the two new cosine values, the Taylor margin, the
+derivative identity for the two-cap extremum, the positive-integral formula
+for 22/7-pi, and the nineteen-neighbor criterion on the stated packets. These
+checks supply no mathematical independence or kernel certification.
