@@ -74,6 +74,27 @@ public sealed class RegManifestAgreementTests
         Assert.Empty(Current(files));
     }
 
+    [Theory]
+    [InlineData("inputRev")]
+    [InlineData("manifestFile")]
+    [InlineData("subDir")]
+    public void MatchingNullableLakeGitFieldsPass(string field)
+    {
+        using var repository = new TemporaryDirectory();
+        var files = Files();
+        foreach (var name in new[] { "lake-manifest.json", "Reg/lake-manifest.json" })
+        {
+            var manifest = JsonNode.Parse(files[name])!;
+            var git = manifest["packages"]!.AsArray().Single(item => item!["type"]!.GetValue<string>() == "git")!;
+            git[field] = null;
+            files[name] = manifest.ToJsonString();
+        }
+        Write(repository.Path, files);
+        Assert.NotNull(LeanPinSet.TryReadWorktree(repository.Path, out var reason));
+        Assert.Null(reason);
+        Assert.Empty(Current(files));
+    }
+
     private static Dictionary<string, string> Files()
     {
         var git = JsonNode.Parse("""

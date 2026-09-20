@@ -64,8 +64,8 @@ internal static class RegManifestAgreement
         .Select(item => JsonSerializer.Serialize(new[]
         {
             String(item, "name"), String(item, "url"), String(item, "rev"),
-            String(item, "inputRev"), NullableString(item, "subDir"),
-            String(item, "configFile"), String(item, "manifestFile"),
+            NullableString(item, "inputRev"), NullableString(item, "subDir"),
+            String(item, "configFile"), NullableString(item, "manifestFile"),
         }))
         .GroupBy(key => key, StringComparer.Ordinal)
         .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
