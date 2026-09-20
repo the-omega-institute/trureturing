@@ -432,7 +432,7 @@ FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，�
 
 Actions 仅恢复所选候选资源声明的层；需要原生报告时，由 `lean` 前置声明 dependency/project/elan，`.lake/build/lean-inspector` 随 project 一起运输，不再存在独立 report 层、prepare/resume 协议或晚启动缓存阶段。stage-start 先恢复 current 证据；A14.9 的 producer 输入与完整成功证据校验明确判定无需 Lake 时不下载 dependency/project，其余情况按原登记恢复。filemap 等无 Lean 资源的路径仍不物化 Lean 缓存。
 
-需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 的正常 producer 入口按 A14.9 校验完整调用成功证据，或进入原生 Lake facets；当前默认 Lean/audit 目标和 Inspector 编译须有全部登记输入及执行环境一致的成功证据，否则重新执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化更新聚合配置身份，逐模块重检由源码闭包与语义版本号决定。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。
+需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 的正常 producer 入口按 A14.9 校验完整调用成功证据，或进入原生 Lake facets；当前默认 Lean/audit 目标和 Inspector 编译须有全部登记输入及执行环境一致的成功证据，否则重新执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化不冒称零报告重检。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。
 
 下载前的 report probe 只核对登记输入、环境、receipt 与材料哈希,决定是否需要 Lake 缓存;它不接受报告或签发检查成功。正常 reuse 对私有快照执行完整 publication 校验,失败即进入实际生产;probe 后材料变化、哈希自洽的坏报告与构建失败均不得假绿。完整语义校验不在 probe 重复执行。
 
