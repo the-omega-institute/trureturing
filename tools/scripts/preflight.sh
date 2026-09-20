@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-MODE="${MODE:-push}"
+MODE="${MODE:-}"
 BASE_SHA="${BASE:-}"
 ROOT=""
 CANDIDATE=""
@@ -40,17 +40,72 @@ finish() {
 }
 trap finish EXIT
 trap 'reason=interrupted; exit 2' HUP INT TERM
-fail_input() { reason="$1"; exit 2; }
-case "$MODE" in push|pr) ;; *) MODE=invalid; fail_input invalid-mode ;; esac
+usage() {
+  cat >&2 <<'USAGE'
+Choose an explicit local preflight mode (there is no default):
+  make preflight MODE=fast
+    Quick .NET structure tests (make -C tools check-fast); no Lean/admission proof.
+  make preflight MODE=push BASE=<40-hex-commit-sha>
+    Registered checks for the complete BASE-to-worktree delta, including dirty/untracked files.
+  make preflight MODE=pr BASE=<40-hex-commit-sha>
+    Clean committed source; isolated merge candidate, shared checks and cross-tree delta.
+  make preflight MODE=full
+    Registered checks for the whole current input; normal caches/incremental builds remain valid.
+Use fast for harness iteration, targeted make lean for Lean iteration, push for delta validation,
+pr for integration, and full for deliberate whole-tree diagnostics. fast/full reject BASE;
+only push accepts a matching complete CI_PUSH_BEFORE/CI_PUSH_AFTER pair. No positional arguments.
+USAGE
+}
+fail_input() { reason="$1"; usage; exit 2; }
+[[ $# == 0 ]] || fail_input unexpected-arguments
+case "$MODE" in fast|push|pr|full) ;; *) fail_input invalid-mode ;; esac
+case "$MODE" in
+  push|pr)
+    [[ "$BASE_SHA" =~ ^[0-9a-fA-F]{40}$ && "$BASE_SHA" != 0000000000000000000000000000000000000000 ]] || fail_input invalid-base-sha
+    ;;
+  fast|full) [[ -z "$BASE_SHA" ]] || fail_input unexpected-base ;;
+esac
+if [[ "$MODE" != push && ( -n "${CI_PUSH_BEFORE:-}" || -n "${CI_PUSH_AFTER:-}" ) ]]; then
+  fail_input unexpected-push-range
+fi
+# Native push changes both planning and every child's plan validation. This
+# local door must never acquire an immutable CI event's different scope.
+[[ "${GITHUB_EVENT_NAME:-}" != push ]] || fail_input inherited-push-event
 ROOT="$(git rev-parse --show-toplevel)" || fail_input invalid-repository
 cd "$ROOT"
 CANDIDATE="$ROOT"
-if [[ "$MODE" == pr ]]; then
-  [[ "$BASE_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || fail_input invalid-base-sha
+if [[ "$MODE" == fast ]]; then
+  stage=fast
+  make -C tools check-fast
+  stage=complete
+  exit 0
+fi
+# Reuse the shared parser for the only reusable-workflow identity input.
+# Keep the accepted local environment intact throughout child validation.
+python3 -B - "$ROOT" <<'PY' || fail_input inherited-workflow-inputs
+import pathlib, sys
+sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / "tools/scripts/workflow"))
+import ci_plan
+try:
+    if ci_plan.workflow_candidate() is not None:
+        raise ValueError("local preflight does not accept reusable workflow candidate inputs")
+except ValueError as error:
+    print(str(error), file=sys.stderr)
+    sys.exit(2)
+PY
+if [[ "$MODE" == push || "$MODE" == pr ]]; then
   [[ "$(git cat-file -t "$BASE_SHA" 2>/dev/null)" == commit ]] || fail_input unavailable-base-commit
+  BASE_SHA="$(git rev-parse --verify "$BASE_SHA^{commit}")" || fail_input unavailable-base-commit
+fi
+HEAD_SHA="$(git rev-parse --verify 'HEAD^{commit}')" || fail_input uncommitted-head
+[[ -z "${CANDIDATE_SHA:-}" || "$CANDIDATE_SHA" == "$HEAD_SHA" ]] || fail_input candidate-head-mismatch
+export CANDIDATE_SHA="$HEAD_SHA"
+if [[ "$MODE" == push && ( -n "${CI_PUSH_BEFORE:-}" || -n "${CI_PUSH_AFTER:-}" ) ]]; then
+  [[ "${CI_PUSH_BEFORE:-}" == "$BASE_SHA" && "${CI_PUSH_AFTER:-}" == "$HEAD_SHA" ]] || fail_input conflicting-push-range
+fi
+if [[ "$MODE" == pr ]]; then
   status_output="$(git status --porcelain --untracked-files=all)" || fail_input status-observation-failed
   [[ -z "$status_output" ]] || fail_input dirty-tree
-  HEAD_SHA="$(git rev-parse --verify 'HEAD^{commit}')" || fail_input uncommitted-head
   stage=merge-tree
   merge_rc=0
   merge_output="$(git merge-tree --write-tree "$BASE_SHA" "$HEAD_SHA" 2>&1)" || merge_rc=$?
@@ -79,7 +134,9 @@ if [[ "$MODE" == pr ]]; then
   printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
 else
   stage=plan
-  python3 -B tools/scripts/workflow/ci.py push-plan --repository "$ROOT" ${CANDIDATE_SHA:+--commit "$CANDIDATE_SHA"}
+  range_options=()
+  if [[ "$MODE" == push ]]; then range_options=(--before "$BASE_SHA" --after "$HEAD_SHA"); fi
+  python3 -B tools/scripts/workflow/ci.py push-plan --repository "$ROOT" --commit "$HEAD_SHA" ${range_options[@]+"${range_options[@]}"}
   export CI_PLAN_PATH="$ROOT/build/ci/plan.json"
   export CI_CHANGES_PATH="$ROOT/build/ci/changes.json"
 fi

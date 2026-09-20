@@ -201,19 +201,35 @@ make lean LEAN_TARGETS=D5.S0.Conventions.WDigits
 
 The second command is a **targeted Lean build**; replace the module with the
 one you changed when doing mathematical work. It is not a full repository
-check. For harness changes, `make -C tools check-fast` runs the selected fast
-structure checks, and `make -C tools test` runs the full .NET harness test suite.
+check. For harness changes, `make preflight MODE=fast` runs the selected quick .NET
+structure checks (no Lean or admission proof), and `make -C tools test` runs the full .NET harness test suite.
 
 Commit each logical change and push it to your fork immediately; run any local
 checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
-local `make preflight` and PR-mode preflight are **optional** early feedback and
+local preflight modes are **optional** early feedback and
 diagnostics. Current remote CI checks remain **required and authoritative**.
-The shared preflight entry selects the applicable engineering and current-tree
-checks:
+Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
+before any work. For delta validation, resolve the intended baseline commit and
+select the complete baseline-to-worktree scope:
 
 ```sh
-make preflight
+base_sha="$(git rev-parse upstream/dev^{commit})"
+make preflight MODE=push BASE="$base_sha"
 ```
+
+Push requires an existing nonzero 40-hex commit, with no implicit parent or remote
+fallback and no ancestry requirement. Its scope includes all committed changes
+since BASE plus staged, unstaged, untracked and deleted inputs. FILEMAP selects
+the applicable engineering/current checks; a no-resource documentation delta can
+avoid .NET work. Only a complete CI_PUSH_BEFORE/CI_PUSH_AFTER pair matching BASE
+and HEAD is accepted. Local shared modes reject inherited native push events,
+reusable workflow candidate inputs and stale CANDIDATE_SHA.
+
+For deliberate whole-current-tree diagnostics use `make preflight MODE=full`.
+It selects all current inputs plus removed dirty endpoints for ownership checks,
+while preserving valid caches and incremental builds. fast/full accept neither BASE nor push endpoints. During iteration choose
+fast for harness structure, targeted `make lean` for Lean, and push when delta
+validation is useful; full is a deliberate diagnostic choice.
 
 Optionally, check the combination with the project's `dev` branch before
 merge. To run this diagnostic, start from a clean, committed worktree and pass

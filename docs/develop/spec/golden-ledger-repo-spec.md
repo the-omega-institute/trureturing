@@ -360,9 +360,11 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 **A22 preflight 与 CI 共用 current/delta 契约(v7.31 修订,2026-09-13)**
 
-**状态与等价域。** 本条是用户已授权 CI/preflight 重构的现行契约,原位替代旧 engineering/lean-inspect/admission 三段方案及精确地址命中短路方案。候选交付资格按 CLAUDE.md §8.12 的真实事件、覆盖、性能与稳定条数判定,required set 只随已验证的部署版本切换;旧 workflow 或本地测试的成功不能替代候选的真实事件验证。本地 preflight 是早反馈,不强制作提交前闸;CI 是合并判词的权威。同一候选输入、base(仅 PR)、工具链、语义环境及有效登记证据下,CI 与 preflight 必须具有相同检查义务与判词。缓存可减少实际重算量,不能消除检查义务;共享生产只做一次,delta 消费本轮接受的结果。
+**状态与等价域。** 本条是用户已授权 CI/preflight 重构的现行契约,原位替代旧 engineering/lean-inspect/admission 三段方案及精确地址命中短路方案。候选交付资格按 CLAUDE.md §8.12 的真实事件、覆盖、性能与稳定条数判定,required set 只随已验证的部署版本切换;旧 workflow 或本地测试的成功不能替代候选的真实事件验证。本地 preflight 是早反馈,不强制作提交前闸;CI 是合并判词的权威。同一候选输入、完整资源范围、base(跨树检查仅 PR)、工具链、语义环境及有效登记证据下,CI 与 preflight 的共享检查模式(push/pr/full)必须具有相同检查义务与判词;fast 仅为快速 .NET 结构测试,不在该等价域。缓存可减少实际重算量,不能消除检查义务;共享生产只做一次,delta 消费本轮接受的结果。
 
-**模式与候选。** `make preflight` 默认 `MODE=push`,对当前有效工作树运行登记所需的 engineering/current,不执行 delta。语义 `current` 只接收候选树与经校验的资源计划,不包含 base、baseline 或 changes。push 不要求 BASE、父提交或 remote;无父提交的初始树以完整显式登记输入规划。本地 push 可验 dirty 工作树,计划与证据须绑定实际有效输入,不得冒记成已提交 HEAD;本地增量规划使用完整显式范围或已验证的登记输入证据,不得猜测 push 事件范围。
+**模式与候选。** 本地 `make preflight` 必须显式选择 `MODE=fast|push|pr|full`;缺失、空值、无效模式或位置参数须提示四种选择并以 exit 2 在 Git、规划与构建前失败。`make preflight MODE=fast` 只委托既有 `make -C tools check-fast`,传播失败;这是快速 .NET 结构测试,不证明 Lean/current admission。`make preflight MODE=push BASE=<40-hex-commit-sha>` 要求显式已有非零 commit BASE,规范化为完整 SHA,以 BASE 与实际 HEAD 调用共享 push planner,覆盖完整基线到工作树差异(多提交、暂存、未暂存、未跟踪、删除),不设 ancestry 门、不猜父提交或 remote。`make preflight MODE=full` 以同一 planner 的无范围入口覆盖完整当前输入及用于归属检查的 dirty 删除端点,不接 BASE 或 CI_PUSH 端点;full 是覆盖范围,不清缓存或强迫重编。fast 同样拒绝 BASE/push 范围。AI 按工作选择:器代码迭代 fast+定向测试,数学迭代定向 `make lean`,增量验证 push,集成验证 pr,全树诊断才 full。
+
+本地 push/full 对实际有效工作树运行登记所需 engineering/current,不执行跨树 delta。语义 `current` 只接收候选树与经校验的资源计划,不包含 base、baseline 或 changes。计划与证据绑定实际有效输入,dirty 输入不得冒记成已提交 HEAD。push 的 CI_PUSH_BEFORE/AFTER 只能是同时提供且与显式 BASE/HEAD 一致的副本,不得替代 BASE;部分或冲突范围拒绝。共享本地模式在规划前拒绝继承的原生 push 事件身份与 reusable workflow candidate 输入;CANDIDATE_SHA 若提供必须等于实际源 HEAD,随后绑定实际候选(包括 PR 合成候选),并在子验证中维持同一语义。原生 CI 事件范围与本地显式范围分开,不改变下款 CI 初始 push 的零端点语义。
 
 原生 push 的轻量规划固定使用 `P=event.before`、`H=event.after`,核对 `H=已检出的 HEAD`,比较完整 `P→H` 端点树差异;范围包括多提交、删除与重命名两端,`HEAD^1` 或 GitHub 路径过滤不能替代该范围。计划绑定 `P`、`H`、候选树、完整 changed-endpoint 清单与 FILEMAP 路由,在执行前由候选入口重新校验;下游不得自行补路径、重算另一范围或解析移动分支。`P` 仅作规划数据,不进入 current context,不执行其代码,不运行 push delta;`P` 无须是 `H` 的祖先。检查前可取得明确钉住的缺失对象,取得失败或普通范围无效、不完整即失败,不得退回空范围、全套检查或默认分支。全零 `P` 表示新分支初始输入,必须覆盖当前树完整登记输入;原生 push 缺失端点不得改判初始输入。删除事件没有候选树,不能报告 current 校验成功。
 
@@ -370,7 +372,7 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 私有 PR 候选只在 current 子进程以 `STRATALINT_LEAN_CACHE_DONOR_REPOSITORY` 显式提供源仓路径,Lean wrapper 转为 `--donor-repository DIR`;判官 CLI 不自行读取该环境变量。该路径仅为新建 `.lake` 的可选只读 donor 清单来源,复用既有 mathlib/platform/stamp、共享锁与独立复制,不执行源仓代码、不进入候选身份或缓存分区。来源不可用或 donor 不合格回到原供给路径,已有 `.lake` 不因该选项被覆盖,Lean producer 与失败判词照常执行;工程阶段不继承此来源。
 
-**共享入口与谓词。** CI 和 preflight 共用下列阶段实现。文件分类、项目/测试归属、编译与 producer 输入、资源、影响范围、缓存及材料选择唯一取自 `Meta/FILEMAP.toml` 或由其登记的显式 manifest,按 CLAUDE.md §8.16 消费;不从 MSBuild 求值、SDK/目录/名称扫描、反射、调用图、IO 效应或宿主环境动态推导。显式 glob 的确定性展开、声明材料的哈希/完整性验证与编译器/Lake 正常增量执行只消费登记,不生成新的选择权威。漏登、矛盾或范围不完整须具名失败,不得动态补猜或回退全套检查。
+**共享入口与谓词。** CI 和 preflight 的共享检查模式(push/pr/full)共用下列阶段实现;fast 只委托既有 check-fast。文件分类、项目/测试归属、编译与 producer 输入、资源、影响范围、缓存及材料选择唯一取自 `Meta/FILEMAP.toml` 或由其登记的显式 manifest,按 CLAUDE.md §8.16 消费;不从 MSBuild 求值、SDK/目录/名称扫描、反射、调用图、IO 效应或宿主环境动态推导。显式 glob 的确定性展开、声明材料的哈希/完整性验证与编译器/Lake 正常增量执行只消费登记,不生成新的选择权威。漏登、矛盾或范围不完整须具名失败,不得动态补猜或回退全套检查。
 
 | 阶段入口 | 登记义务与执行边界 |
 |---|---|
@@ -450,7 +452,7 @@ project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,�
 | 多提交/非祖先 push、删除/重命名、缺失对象或事件端点 | 固定 P→H 完整端点规划并绑定候选;初始全零 P 单独覆盖当前树,坏普通范围失败,删除事件不冒领 current 成功。 |
 | no-resource、必需资源、漏登或冲突 | 无工作不启动多余 SDK/缓存;必需资源真实结算,漏登/冲突具名失败,不退回全量或动态推断。 |
 | PR 合法分叉/快进;脏树、非法 base、冲突 | 合法候选按 clean merge-tree 判,无祖先门;坏输入阻断并清理临时候选。 |
-| 相同候选输入/base/工具链的 CI 与 preflight | 检查义务及判词一致,共享工作不重复;PR job 的 M 一致,delta 的 B=M^1。 |
+| 相同候选输入/完整范围/base/工具链的 CI 与 preflight 共享检查模式(push/pr/full,不含 fast) | 检查义务及判词一致,共享工作不重复;PR job 的 M 一致,delta 的 B=M^1。 |
 | 混分区、非法首次冻结、棘轮违规、base 测试项目无候选接受的成功覆盖 | delta 阻断,合法例放行,delta-only 存量作用域不变。 |
 | 登记输入/material/mode/环境变更;无关变更 | 前者只使受影响登记项目/检查失效,后者可复用有效原证据;每轮重新验证候选及来源,无裸历史成功。 |
 | 缺报告、交接身份错误、损坏 TRX/DLL | 消费入口拒绝无效必需证据;producer 可从无效种子正常重建,无假绿。 |
