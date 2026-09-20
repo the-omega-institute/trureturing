@@ -206,6 +206,73 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
+    [InlineData("StrataLint.Cli", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.EngineeringScope", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Lean", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Lean.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Scribe", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Scribe.Documents", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Engine", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Lean.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
+    [InlineData("Trureturing.Truth", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Lean.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.Tests,Trureturing.Truth.Tests")]
+    public void ProductionProjectsSelectTheirExplicitTestConsumers(string project, string assemblies)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+        {
+            var plan = Plan($"tools/{project}/ResourceRoutingProbe.cs", "", mode);
+            Assert.Equal(assemblies.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+                Strings(plan["execution"]!["tests"]!));
+            Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+            Assert.Contains("engineering-guards", Strings(plan["resources"]!));
+            foreach (var guard in new[] { "selftest-pair", "capability-proof", "banned-api-proof" })
+                Assert.Contains(guard, Strings(plan["execution"]!["checks"]!));
+            Assert.Contains("filemap", Strings(plan["execution"]!["checks"]!));
+            Assert.Contains("scribe", Strings(plan["resources"]!));
+            Assert.Equal(mode == "pr" ? "required" : "not-applicable", plan["stages"]!["delta"]!["status"]!.ToString());
+        }
+    }
+
+    [Fact]
+    public void UnregisteredProductionProjectCannotInheritBlanketEngineering()
+    {
+        var result = PlanResult("tools/StrataLint.Unregistered/Program.cs", "");
+        Assert.NotEqual(0, result.Exit);
+        Assert.Contains("FILEMAP match count 0", result.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("StrataLint.Cli")]
+    [InlineData("StrataLint.Scribe")]
+    [InlineData("StrataLint.Scribe.Documents")]
+    public void ProductionProjectConfigurationAlsoSelectsEngineeringScopeConsumers(string project)
+    {
+        foreach (var file in new[] { project + ".csproj", "packages.lock.json" })
+        {
+            var plan = Plan($"tools/{project}/{file}", "");
+            Assert.Contains("tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+                Strings(plan["execution"]!["tests"]!));
+            Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        }
+    }
+
+    [Fact]
+    public void ProductionAndTestChangesKeepBothRegisteredConsumerSets()
+    {
+        var plan = Plan("tools/StrataLint.Cli/Program.cs", "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs");
+        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.Engine.Tests", "StrataLint.Tests" }
+            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+    }
+
+    [Fact]
+    public void SharedTestSupportSelectsItsDeclaredConsumerProjects()
+    {
+        var plan = Plan("tools/TestSupport/StrataLint.TestSupport/TestBudgets.cs", "");
+        Assert.Equal(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests",
+            "StrataLint.Engine.Tests", "StrataLint.EngineeringScope.Tests", "StrataLint.Lean.Tests", "StrataLint.Scribe.Tests", "StrataLint.Tests" }
+            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+    }
+
+    [Theory]
     [InlineData("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs")]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs")]
     public void CompileFailureFixturesRequestGuardsAndTheirArchitectureCoverage(string path)
