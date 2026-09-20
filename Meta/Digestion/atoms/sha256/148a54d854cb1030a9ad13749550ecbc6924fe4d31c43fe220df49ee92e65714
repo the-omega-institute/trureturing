@@ -1,0 +1,64 @@
+**定理 21.2（源参数与内部时间的开楔形坐标）。** 在假设21.1下，一个正时刻的已校准同刻读数对唯一恢复 $r>0$ 与该次内部时间 $t>0$，并给下述开楔形的光滑坐标。证明。应用[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定理19.2、19.3的核单调性与逆稳定结果。
+
+消去 $t=-\log u$，得到
+
+$$
+\boxed{
+v=G_r(u):=\frac1{r+2}+\frac u2
++\frac{r}{2(r+2)}u^{1+2/r},
+\qquad 0<u<1.}
+\tag{21.104}
+$$
+
+因此同一未知非线性钟的具体形式从这一个同刻关系中消去。直接求 $u$ 导数，以及把既有 $\partial_r k_r(t)$ 公式代入 $t=-\log u$，给
+
+$$
+\boxed{\partial_uG_r(u)=\frac{1+u^{2/r}}2\in(1/2,1),}
+\tag{21.105}
+$$
+
+$$
+\boxed{
+\partial_rG_r(u)
+=-\frac{H((1+2/r)(-\log u))}{(r+2)^2}<0,
+\qquad H(w)=1-(1+w)e^{-w}.}
+\tag{21.106}
+$$
+
+这里 $H$ 就是恢复几何卷第19节中的 $h$，换字母仅为避免混同采样间隔。对 $w>0$，$H(w)>0$，且 $H'(w)=we^{-w}>0$。
+
+恢复几何卷定理19.2的端点极限直接成为
+
+$$
+\lim_{r\to\infty}G_r(u)=u,\qquad
+\lim_{r\downarrow0}G_r(u)=\frac{1+u}{2}.
+\tag{21.107}
+$$
+
+连续严格反单调性表明，固定 $u\in(0,1)$ 时，$r\mapsto G_r(u)$ 恰把 $(0,\infty)$ 一一映到 $(u,(1+u)/2)$。所以
+
+$$
+\boxed{
+(r,t)\in(0,\infty)^2
+\longmapsto (e^{-t},k_r(t))
+}
+$$
+
+恰为
+
+$$
+\boxed{\mathcal W=\{(u,v):0<u<1,\ u<v<(1+u)/2\}}
+\tag{21.108}
+$$
+
+的一一参数化。逆像由 $t=-\log u$ 和唯一方程 $G_r(u)=v$ 确定。前向映射光滑，Jacobian 为
+
+$$
+\det\frac{\partial(u,v)}{\partial(r,t)}
+=u\,\partial_rG_r(u)<0.
+$$
+
+直接应用通常的局部反函数定理，并利用已得的全局单射与满射，逆映射在整个 $\mathcal W$ 上光滑。这里的 $\mathcal W$ 是精确的开区域；边界 $v=u$、$v=(1+u)/2$ 分别对应 $r\to\infty$、$r\downarrow0$，不能解释为有限正质量参数。
+
+$t=0$ 时两值同为 $1$，只承担校准而不识别 $r$。$u=0$ 对应无限经过时间极限，不属于一次有限正时刻的读数合同。
+
