@@ -28,8 +28,13 @@ def paths(*patterns):
 def declaration():
     return dict(schema_version=1, report_semantic_version=1,
         report_modules=dict(include=[spec('Trureturing.lean'), spec('D5/**/*.lean', True)], exclude=[]),
-        inspector_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True)], exclude=[]),
-        config_inputs=paths('lean-toolchain', 'lake-manifest.json', 'lakefile.toml'),
+        inspector_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True),
+            spec('tools/lean-inspector-interface/**/*.lean', True)], exclude=[]),
+        dependency_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True),
+            spec('tools/lean-inspector-interface/**/*.lean', True)], exclude=[]),
+        config_inputs=paths('lean-toolchain', 'lake-manifest.json', 'lakefile.toml',
+            'tools/lean-inspector-interface/lakefile.toml',
+            'tools/lean-inspector-interface/lake-manifest.json'),
         producer_scopes={
             'lean-report': paths(MANIFEST, LOADER, INPUT, 'tools/lean-inspector/inspect.sh',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/materials.py', 'Engine/**/*.cs'),
@@ -49,6 +54,9 @@ class Contract(unittest.TestCase):
                 'lean-toolchain': 'leanprover/lean4:v4.33.0\n',
                 'lake-manifest.json': '{}\n', 'lakefile.toml': 'name = "fixture"\n',
                 'tools/lean-inspector/Inspector.lean': '-- inspector\n',
+                'tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean': '-- grammar\n',
+                'tools/lean-inspector-interface/lakefile.toml': 'name = "interface"\n',
+                'tools/lean-inspector-interface/lake-manifest.json': '{"packages": []}\n',
                 'Blueprint/Probe.scribe.cs': '// document\n'}.items():
             self.write(path, text)
         for relative in (LOADER, INPUT, 'tools/scripts/worktree/lean-cache-input.sh',
@@ -150,6 +158,16 @@ class Contract(unittest.TestCase):
         self.write('Engine/Main.cs', '// producer changed')
         producer = self.address()
         self.assertEqual(policy, producer)
+        self.write('tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean', '-- compatible grammar\n')
+        self.assertEqual(producer, self.address())
+        interface_source = 'tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean'
+        self.assertIn(interface_source, self.selection().expand('inspector_sources'))
+        self.assertIn(interface_source, self.selection().dependency_sources())
+        self.write('tools/lean-inspector-interface/lakefile.toml', 'name = "changedInterface"\n')
+        interface_config = self.address()
+        self.assertNotEqual(producer[3], interface_config[3])
+        self.assertEqual(producer[1:3], interface_config[1:3])
+        producer = interface_config
         self.policy['report_semantic_version'] = 2
         bumped = self.address()
         self.assertNotEqual(producer[1], bumped[1])
