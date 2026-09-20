@@ -82,3 +82,38 @@ Exact-integer construction check: `python3 probe/verify.py construction`, exit 0
 | 11 | 40 |
 
 Total 302 pairs, failures 0, largest exponent cT = 3248. Edge stresses over bases 2 through 16 and n ≤ 400: n = 1 in 15 bases; order 1 in 30 pairs; order 2 in 73 pairs; base-2 coprime nondivisor cases 198. The leading-one construction was checked in all 6000 pairs, with 2459 noncoprime pairs each giving a genuine reversal counterexample. These remain finite experimental results, not a replacement for the Lean witness.
+
+## Step 4: upstream and repository reuse
+
+### Counted mathlib searches
+
+- characterisation: `rg -n -i -g '*.lean' 'HasReverseMultipleProperty|reverseBase|reverseB\b|reverse.{0,50}(any|all).{0,30}multiple|multiple.{0,50}revers|\bAyad\b|\bBouchenna\b' .lake/packages/mathlib/Mathlib`; 1 matching lines, exit 0. Positive control: `rg -n -i -g '*.lean' ofDigits .lake/packages/mathlib/Mathlib`; 328 matching lines, exit 0.
+- reversal: `rg -n -i -g '*.lean' 'ofDigits_reverse_cons|ofDigits_reverse_zero_cons|digits_ofDigits|digits_append|eleven_dvd_iff' .lake/packages/mathlib/Mathlib`; 26 matching lines, exit 0. Positive control: `rg -n -i -g '*.lean' digits .lake/packages/mathlib/Mathlib`; 681 matching lines, exit 0.
+- order: `rg -n -i -g '*.lean' 'orderOf_pos|pow_orderOf_eq_one|orderOf_eq_one_iff|isUnit_iff_coprime|pow_totient' .lake/packages/mathlib/Mathlib`; 162 matching lines, exit 0. Positive control: `rg -n -i -g '*.lean' ZMod .lake/packages/mathlib/Mathlib`; 2813 matching lines, exit 0.
+
+### Counted repo searches
+
+- characterisation: `rg -n -i -g '*' 'HasReverseMultipleProperty|reverseBase|reverseB\b|reverse.{0,50}(any|all).{0,30}multiple|multiple.{0,50}revers|\bAyad\b|\bBouchenna\b' D5 Problems Library Blueprint`; 2 matching lines, exit 0. Positive control: `rg -n -i -g '*' ofDigits D5 Problems Library Blueprint`; 152 matching lines, exit 0.
+- reversal: `rg -n -i -g '*' 'ofDigits_reverse_cons|ofDigits_reverse_zero_cons|digits_ofDigits|digits_append|eleven_dvd_iff' D5 Problems Library Blueprint`; 18 matching lines, exit 0. Positive control: `rg -n -i -g '*' digits D5 Problems Library Blueprint`; 3689 matching lines, exit 0.
+- order: `rg -n -i -g '*' 'orderOf_pos|pow_orderOf_eq_one|orderOf_eq_one_iff|isUnit_iff_coprime|pow_totient' D5 Problems Library Blueprint`; 34 matching lines, exit 0. Positive control: `rg -n -i -g '*' ZMod D5 Problems Library Blueprint`; 6420 matching lines, exit 0.
+
+Pinned Mathlib commit: db584cd6d46c92f209a44c0f1c829460d327499d. Source inspection confirms `digits` is little-endian and `ofDigits` is its positional evaluation. No whole-statement reuse hit: the one Mathlib characterisation-query hit is affine vector-span prose; the two repository hits are divisibility-support inclusion prose, unrelated to digit reversal. Neighboring repository reversal results concern binary complement recurrences, decimal palindrome squares, or decimal subsequences; none implies the present universal property. No cover route was found.
+
+Reusable upstream declarations, inspected at their definitions:
+
+- `Mathlib/Data/Nat/Digits/Defs.lean`: `Nat.ofDigits_append`, `Nat.ofDigits_reverse_cons`, `Nat.ofDigits_reverse_zero_cons`, `Nat.coe_ofDigits`, `Nat.digits_ofDigits`, `Nat.ofDigits_digits`.
+- `Mathlib/Data/Nat/Digits/Lemmas.lean`: `Nat.digits_append_digits` (the actual name, not `Nat.digits_append`), `Nat.digits_append_zeroes_append_digits`, `Nat.digits_length_le_iff`, `Nat.ofDigits_mod_eq_head!`.
+- `Mathlib/Data/Nat/Digits/Div.lean`: `Nat.eleven_dvd_iff`, only the decimal alternating-sum test, not this classification.
+- `Mathlib/Data/ZMod/Basic.lean`: `ZMod.isUnit_iff_coprime`, natural cast and divisibility bridges.
+- `Mathlib/GroupTheory/OrderOfElement.lean`: `orderOf_pos` for a finite group, `pow_orderOf_eq_one`, `orderOf_eq_one_iff`. Apply to the unit in `(ZMod n)ˣ`, not indiscriminately to a nonunit in the multiplicative monoid.
+- `Mathlib/FieldTheory/Finite/Basic.lean`: `Nat.ModEq.pow_totient` is an available alternative positive period; no minimality of the period is needed in the sparse argument.
+
+External Lean search capability was tested via the GitHub code-search API: exact identifier `HasReverseMultipleProperty` with `language:Lean` returned total_count = 0; positive control `Nat.digits` in `leanprover-community/mathlib4` returned total_count = 11. This narrow search does not certify absence of every differently named external theorem, nor repeat the issue's literature-open audit.
+
+## Cache preparation for Step 5
+
+The worktree initially had no `.lake`. Ran `make lean-cache-ensure` with the exact PATH required in the brief before any Lake invocation; exit 0. Preparation precedes Step 4 source searches because the pinned Mathlib sources were absent initially. Receipt:
+
+```text
+LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-ayad-reverse","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+```

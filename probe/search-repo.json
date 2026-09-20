@@ -1,0 +1,116 @@
+[
+  {
+    "name": "characterisation",
+    "query": {
+      "command": "rg -n -i -g '*' 'HasReverseMultipleProperty|reverseBase|reverseB\\b|reverse.{0,50}(any|all).{0,30}multiple|multiple.{0,50}revers|\\bAyad\\b|\\bBouchenna\\b' D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 2,
+      "hits": [
+        "Blueprint/D5/S3/Zeros/NicaCovariance/QuasiLatticeOrder.md:53:If v divides u, every multiple of u is a multiple of v, giving the reverse inclusion of divisible support subspaces. Conversely, the unit vector at u lies in divisibleSubspace u; applying an assumed inclusion forces u to pass the v-divisibility filter.",
+        "Blueprint/D5/S3/Zeros/NicaCovariance/QuasiLatticeOrder.scribe.cs:105:                    \"If v divides u, every multiple of u is a multiple of v, giving the reverse \""
+      ]
+    },
+    "positive_control": {
+      "command": "rg -n -i -g '*' ofDigits D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 152,
+      "hits": [
+        "Problems/oeis-a090079-yanev-run-compression-closed-form.md:30:`a n = Nat.ofDigits 2 (((Nat.digits 2 n).splitBy (\u00b7 == \u00b7)).map List.head!)`.",
+        "Problems/oeis-a090079-yanev-run-compression-closed-form.md:69:   `3 * Nat.ofDigits 2 l + 2 = 2 ^ (l.length + 1) + l.head!`.",
+        "Problems/oeis-a059894-stephan-complement-reverse-recurrence.md:33:natural subtraction `1 - d`, append `[1]`, and evaluate with `Nat.ofDigits 2`."
+      ]
+    }
+  },
+  {
+    "name": "reversal",
+    "query": {
+      "command": "rg -n -i -g '*' 'ofDigits_reverse_cons|ofDigits_reverse_zero_cons|digits_ofDigits|digits_append|eleven_dvd_iff' D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 18,
+      "hits": [
+        "Problems/oeis-a059894-stephan-complement-reverse-recurrence.md:80:   inputs. List reversal, mapping, and `Nat.ofDigits_append` reduce the",
+        "Problems/oeis-a059894-stephan-complement-reverse-recurrence.md:82:3. Apply `Nat.digits_ofDigits` to reconstruct each complemented digit list.",
+        "D5/S1/Digit/StephanComplementReverseRecurrence.lean:39:      List.map_cons, List.map_nil, Nat.sub_zero, Nat.ofDigits_append,",
+        "D5/S1/Digit/StephanComplementReverseRecurrence.lean:52:      Nat.ofDigits_append, Nat.ofDigits_singleton, List.length_append,",
+        "D5/S1/Digit/StephanComplementReverseRecurrence.lean:60:      apply Nat.digits_ofDigits 2 (by decide)",
+        "D5/S1/Digit/Admissibility/PalindromeSquareReversalInfinitude.lean:55:          have hadd := Nat.digits_append_zeroes_append_digits",
+        "D5/S1/Digit/Admissibility/DistinctPartitionConcatenationComposite.lean:60:              List.append_nil, Nat.ofDigits_digits_append_digits]",
+        "D5/S1/Digit/Admissibility/DistinctPartitionConcatenationComposite.lean:75:          Nat.ofDigits_digits_append_digits]",
+        "D5/S1/Words/BitDeletionGrundy.lean:654:      rw [Nat.digits_ofDigits 2 (by decide)]",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativeTailWords.lean:94:theorem wordDigits_append (left right : List Nat) :",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativeTailWords.lean:238:      rw [weight, List.reverse_cons, wordDigits_append, basePhiValue_add, b_add,",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentClassification.lean:253:  simp [prefixTrace, wordDigits_append, wordDigits, basePhiValue]",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentCore.lean:370:private theorem trace_wordDigits_append (left right : List Nat) :",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentCore.lean:376:  rw [wordDigits_append, basePhiValue_add, shiftDigits_eval]",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentCore.lean:573:  rw [trace_wordDigits_append, heven.neg_one_pow,",
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentCore.lean:588:  rw [trace_wordDigits_append, hodd.neg_one_pow,",
+        "D5/S3/Arith/SumInConcatenation.lean:43:  simp only [Nat.ofDigits_digits, Nat.ofDigits_append, Nat.ofDigits_cons,",
+        "D5/S3/Arith/SumInConcatenation.lean:92:  (Nat.digits_append_digits (by norm_num : 0 < 10)).symm"
+      ]
+    },
+    "positive_control": {
+      "command": "rg -n -i -g '*' digits D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 3689,
+      "hits": [
+        "Library/Digit/erdos1989mahler.md:10:  - D5/S1/Digit/ErdosMahlerBinaryDigitSquareRefutation",
+        "Library/Digit/frohlich2017a254074.md:44:The route assumes a multiple of 5 whose digits are all at least 5, forcing",
+        "Problems/zeckendorf-polynomial-maximum-order-complexity.md:7:  - D5/S0/Conventions/WDigits"
+      ]
+    }
+  },
+  {
+    "name": "order",
+    "query": {
+      "command": "rg -n -i -g '*' 'orderOf_pos|pow_orderOf_eq_one|orderOf_eq_one_iff|isUnit_iff_coprime|pow_totient' D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 34,
+      "hits": [
+        "Problems/oeis-a003558-marcus-tent-map-suborder.md:98:3. `Nat.ModEq.pow_totient` supplies a positive return. The",
+        "Problems/oeis-a003558-marcus-tent-map-suborder.md:135:  supplies `Nat.ModEq.pow_totient` and the other required APIs transitively.",
+        "D5/S3/PrimeForms/Splitting/ThreeRingProfileFactorization.lean:57:    (ZMod.isUnit_iff_coprime p 60).mp hpUnit",
+        "D5/S3/Weil/PrimeAddress/PrimeAddress.lean:77:  rw [ZMod.isUnit_iff_coprime]",
+        "D5/S3/Weil/Mertens/CoprimeSquarefreeDensity.lean:291:      \u00b7 rw [if_pos hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime n q).mpr hc)]",
+        "D5/S3/Weil/Mertens/CoprimeSquarefreeDensity.lean:293:      \u00b7 rw [if_neg hc, MulChar.map_nonunit _ (by simpa only [ZMod.isUnit_iff_coprime] using hc)]",
+        "D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.lean:21:     `RingHom.map_det`, `pow_orderOf_eq_one`, `orderOf_pos`, and",
+        "D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.lean:91:        pow_orderOf_eq_one, Units.val_one]",
+        "D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.lean:92:    refine \u27e8orderOf observedUnit, orderOf_pos observedUnit, ?_\u27e9",
+        "D5/S3/Arith/GoldenResource/GoldenCell902160Uniqueness.lean:25:    orderOf_pos_iff.mp (by rw [three_order_179]; decide)",
+        "D5/S3/Arith/CyclotomicFiveResidueSum.lean:123:  simp only [ZMod.isUnit_iff_coprime]",
+        "D5/S3/ArithUnits/PrimeModInverse.lean:15:   * Pinned-mathlib searches for `isUnit_iff_coprime`, `coprime_iff_not_dvd`,",
+        "D5/S3/ArithUnits/PrimeModInverse.lean:18:     `ZMod.isUnit_iff_coprime` and `Nat.Prime.coprime_iff_not_dvd`.",
+        "D5/S3/ArithUnits/PrimeModInverse.lean:31:  rw [ZMod.isUnit_iff_coprime]",
+        "D5/S1/Recurrence/LucasEvenPeriods.lean:135:  exact (ZMod.isUnit_iff_coprime 2 s).mpr (Nat.coprime_two_left.mpr hs)",
+        "D5/S1/Recurrence/LucasEvenPeriods.lean:149:    exact congrArg Units.val (pow_orderOf_eq_one x)",
+        "D5/S1/Recurrence/MarcusTentMapSuborder.lean:71:    (ZMod.isUnit_iff_coprime 2 (2 * n + 1)).mpr hcop",
+        "D5/S1/Recurrence/MarcusTentMapSuborder.lean:135:    (periodic_iff _).mpr (Or.inl (Nat.ModEq.pow_totient hcop))",
+        "D5/S3/Arith/Congruence/FiroozbakhtLeastSelfDivisorPowerMinusOne.lean:47:    orderOf_eq_one_iff.mp (Nat.dvd_one.mp horder_gcd)",
+        "D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor.lean:118:        have hxone : x = 1 := orderOf_eq_one_iff.mp hrone",
+        "D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor.lean:132:        simpa only [hr_eq_two'] using pow_orderOf_eq_one x",
+        "D5/S3/PrimeGaps/ShortTranslateClosure.lean:359:  have hQ' : (Q : ZMod p) \u2260 0 := ((ZMod.isUnit_iff_coprime Q p).mpr hQ).ne_zero",
+        "D5/S3/Arith/Congruence/PowerResidueRecursionFour.lean:85:  have h21 : (2 : ZMod p) = 1 := orderOf_eq_one_iff.mp (Nat.dvd_one.mp hd)",
+        "D5/S3/Arith/Congruence/PowerResidueRecursionFour.lean:101:  have h := (Nat.ModEq.pow_totient hc).pow 2",
+        "D5/S3/Analytic/Asymptotics/PrimeDeletedLambertMellin.lean:50:      rw [ZMod.isUnit_iff_coprime, Nat.coprime_comm,",
+        "D5/S3/Analytic/Asymptotics/PrimeDeletedLambertMellin.lean:56:      rw [ZMod.isUnit_iff_coprime, Nat.coprime_comm,",
+        "D5/S1/Recurrence/LucasEvenDescent.lean:201:    simp [lucasU, pow_orderOf_eq_one]",
+        "D5/S1/Recurrence/LucasEvenDescent.lean:202:  have hp := orderOf_pos (companion p q)",
+        "D5/S1/Recurrence/LucasCompanion.lean:146:  orderOf_pos _",
+        "D5/S1/Recurrence/LucasCompanion.lean:158:  simp [lucasV, matrixPeriod, zpow_add, pow_orderOf_eq_one]",
+        "D5/S1/Recurrence/Periodic/StirlingTransformTotientPeriod.lean:89:    have hu := (Nat.ModEq.pow_totient hc).pow t",
+        "D5/S3/ArithSums/A357512PrimeDivisibility.lean:48:  apply (ZMod.isUnit_iff_coprime k (p ^ 4)).mpr",
+        "Blueprint/D5/S3/ArithUnits/PrimeModInverse.scribe.cs:40:                                        + \"ZMod.isUnit_iff_coprime turns the goal into coprimality of a and p, \"",
+        "Blueprint/D5/S3/ArithUnits/PrimeModInverse.md:21:Pinned Mathlib supplies both bridge results needed here. ZMod.isUnit_iff_coprime turns the goal into coprimality of a and p, and Nat.Prime.coprime_iff_not_dvd converts the stated premise to coprimality in the opposite order. Symmetry closes the adapter. The nearby isUnit_prime_of_not_dvd reverses the mathematical roles by making the prime the residue modulo an arbitrary modulus, so it is not the target theorem. No inverse or coprimality argument is re-proved."
+      ]
+    },
+    "positive_control": {
+      "command": "rg -n -i -g '*' ZMod D5 Problems Library Blueprint",
+      "exit": 0,
+      "count": 6420,
+      "hits": [
+        "Blueprint/D5/S0/Observation/FiniteWindowCRTIndistinguishability.md:19:The construction chooses natural representatives for the target residues, applies the finite Chinese remainder theorem, and then identifies the resulting congruences with equality in each ZMod component. The witness depends on both the finite window and the target; no single shift is asserted to realize all windows at once.",
+        "Blueprint/D5/S0/Observation/FiniteWindowCRTIndistinguishability.md:23:$$\\operatorname{card}\\left(\\operatorname{ZMod}\\left(4\\right) \\times \\operatorname{ZMod}\\left(9\\right) \\times \\operatorname{ZMod}\\left(25\\right)\\right) = 900 \\land 511 \\equiv 3 (\\operatorname{mod} 4) \\land 511 \\equiv 7 (\\operatorname{mod} 9) \\land 511 \\equiv 11 (\\operatorname{mod} 25).$$",
+        "Blueprint/D5/S0/Observation/FiniteWindowCRTIndistinguishability.scribe.cs:30:                            + \"the resulting congruences with equality in each ZMod component. \""
+      ]
+    }
+  }
+]
