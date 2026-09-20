@@ -1,0 +1,52 @@
+**定理 24.1（共同半径、变分与标量响应常数）。** 设 $E$ 为有限维实赋范空间，$L:E\to E$ 连续线性，$B:E\times E\to E$ 连续双线性，$V(v)=Lv-B(v,v)$。准备为 $v_{\alpha,\beta}(0)=\alpha a_0+\beta b_0$，参数位于紧集，初始范数至多 $R_0<R$。记
+$$
+l=\|L\|,\quad b=\|B\|,\quad
+F_0=lR+bR^2,\quad D_0=l+2bR.
+\tag{24.101}
+$$
+若 $F_0>0$，取 $0<\tau\le(R-R_0)/(2F_0)$。全部初态在 $[0,\tau]$ 上有唯一光滑解，范数至多 $(R+R_0)/2$。任意连续实线性读出 $\ell$ 的实际响应 $y=\ell(v)$ 满足
+$$
+|y''|\le M_\ell:=\|\ell\|D_0F_0,
+\qquad
+|y_\beta''-y_{\beta'}''|
+\le C_\ell|\beta-\beta'|,
+\tag{24.102}
+$$
+其中比较使用同一 $\alpha$，且
+$$
+C_\ell=\|\ell\|(2bF_0+D_0^2)e^{D_0\tau}\|b_0\|.
+\tag{24.103}
+$$
+在参数开邻域的解存在处，$w_\beta=\partial_\beta v_{\alpha,\beta}$ 满足真实变分方程
+$$
+\partial_t w_\beta=DV(v_{\alpha,\beta})w_\beta,\quad w_\beta(0)=b_0,
+\quad \|w_\beta(t)\|\le e^{D_0t}\|b_0\|,
+\quad |\partial_\beta y''|\le C_\ell.
+\tag{24.104}
+$$
+若 $F_0=0$，球内向量场为零，解为常值，以上响应界均为零，时间可任取。
+
+证明。$DV(v)h=Lh-B(h,v)-B(v,h)$，在半径 $R$ 球中有 $\|V(v)\|\le F_0$、$\|DV(v)\|\le D_0$。局部存在唯一性来自局部 Lipschitz 性。在第一次离开该球前，位移至多 $F_0t\le(R-R_0)/2$，故实际轨迹留在严格较小的紧球；若最大寿命不超过 $\tau$，有限维延拓定理将其继续，矛盾。这也在紧初态族周围留下正的半径裕量，稍扩初态范围仍有共同解。
+
+链式法则给 $y''=g_\ell(v)$，其中 $g_\ell(v)=\ell(DV(v)V(v))$。在球内，
+$$
+\|DV(v)-DV(w)\|\le2b\|v-w\|,
+$$
+$$
+|g_\ell(v)-g_\ell(w)|
+\le\|\ell\|(2bF_0+D_0^2)\|v-w\|.
+\tag{24.105}
+$$
+后一式由将差展开为 $(DV(v)-DV(w))V(v)+DV(w)(V(v)-V(w))$ 得到。Gronwall 给 $\|v_{\alpha,\beta}(t)-v_{\alpha,\beta'}(t)\|\le e^{D_0t}\|b_0\||\beta-\beta'|$，遂得（24.102）。
+
+变分方程可由实际差商核验。令 $q_h=(v_{\alpha,\beta+h}-v_{\alpha,\beta})/h$，两个积分方程相减、使用二次展开得
+$$
+q_h(t)=b_0+\int_0^t DV(v_{\alpha,\beta}(s))q_h(s)\,ds
+ -h\int_0^t B(q_h(s),q_h(s))\,ds,
+$$
+前述差估计使 $q_h$ 一致有界；减去线性变分方程并用 Gronwall，余项范数至多常数乘 $|h|$，因此 $q_h$ 一致收敛到变分解。线性积分方程及同样的差估计给该解随参数连续。最后
+$$
+Dg_\ell(v)h=\ell\bigl(D^2V(v)[h,V(v)]+DV(v)DV(v)h\bigr)
+$$
+的范数至多 $\|\ell\|(2bF_0+D_0^2)\|h\|$，和变分界合成得（24.104）。多项式向量场的高阶局部正则性或逐次微分给所需光滑性。$\square$
+
