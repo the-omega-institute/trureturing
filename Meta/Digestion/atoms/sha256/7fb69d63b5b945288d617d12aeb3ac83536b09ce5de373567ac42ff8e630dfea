@@ -1,0 +1,15 @@
+**定理 14.7（合法割上的反演与增量）。** 在任意联合律下，
+$$
+P_I=\sum_{\substack{J\in\mathcal J(E)\\J\subseteq I}}K_J,
+\qquad
+K_J=\sum_{R\subseteq\operatorname{Max}(J)}(-1)^{|R|}P_{J\setminus R}.
+\tag{14.13}
+$$
+后式的每个 $J\setminus R$ 都是合法割。对合法 $I\subseteq I'$，
+$$
+P_{I'}-P_I
+=\sum_{\substack{J\in\mathcal J(E)\\J\subseteq I',\ J\nsubseteq I}}K_J.
+\tag{14.14}
+$$
+在假设14.4下，各 $K_J$ 是两两正交的自伴投影，$P_E=\sum_JK_J$；它们与 $Q$ 正交。
+
