@@ -3915,3 +3915,517 @@ $$
 这些读数高度相关，不能把 $p^k$ 份单次熵直接相加。增长来自同一初态的低位被显露，动作没有增加随机创新；$T$ 保持 $\mu$ 且可逆等距，不由记录熵增长推出热力学熵增或物理反演破缺。若另有旧记录，应在保留的同一联合律下条件化；非 Haar 初态的球概率不同，Dirac 初态更使全部记录熵为零。有限加一与携带恢复的算术对任意整数基 $b\ge2$ 同样成立，故层级周期本身不能识别素数；标准 $\mathbb Z_p$ 赋值和距离才使用素数假设。传感器误码或动作漏记不在定义24.1内，需另立共同误差纤维，不能继续声称这里的锐阈值。$\square$
 
 ## 24.99 追加锚
+
+## 25. 非线性双端口、共同钟与档案相容图
+
+**定义 25.1（实际混合响应合同）。** 固定已知 $\nu>0$、紧区间 $I=[b_-,b_+]$（允许单点）和 $T_0>0$，记 $B=\max\{|b_-|,|b_+|\}$。同一来源、模型、校准和内部时间下有实际实值响应 $r(\beta,t),z(\beta,t)$，定义在 $I$ 的开邻域乘 $[0,T_0]$ 上，满足
+$$
+r(\beta,0)=z(\beta,0)=0,\quad r_t(\beta,0)=\nu,
+\quad z_t(\beta,0)=\beta.
+\tag{25.101}
+$$
+假设时间二阶导数及其一次 $\beta$ 导数连续，所需低阶导数亦连续，时间端点取单侧导数；在 $I\times[0,T_0]$ 有非负有限常数
+$$
+|r_{tt}|\le A_r,\quad |r_{\beta tt}|\le A_1,
+\qquad |z_{tt}|\le C_z,\quad |z_{\beta tt}|\le C_1.
+\tag{25.102}
+$$
+这些是实际响应的估计前提，不是参数单射性前提。置
+$$
+\kappa=C_1/2+A_1(B+C_zT_0)/\nu,
+\quad 0<T\le T_0,\quad A_rT\le\nu/2,\quad\kappa T\le1/2,
+$$
+$$
+s_*=\nu T/2,\qquad L_g=2(B+C_zT)/\nu.
+\tag{25.103}
+$$
+零系数不限制 $T$，所以这样的正 $T$ 存在。这里 $A_r$ 是进度响应常数，与准备幅度上界 $A_\alpha$ 无关。
+
+**定理 25.2（阈值图、精确像与共同短时单射）。** 在定义25.1下，每个 $\beta\in I$、$s\in[0,s_*]$ 有唯一 $t_\beta(s)\in[0,T]$ 使 $r(\beta,t_\beta(s))=s$。设 $G_s(\beta)=z(\beta,t_\beta(s))$，则正阈值处
+$$
+\frac{2s}{3\nu}\le t_\beta(s)\le\frac{2s}\nu,
+\qquad \partial_s t_\beta=\frac1{r_t},\quad
+\partial_\beta t_\beta=-\frac{r_\beta}{r_t},
+\tag{25.104}
+$$
+$$
+\partial_\beta G_s=z_\beta-z_t\frac{r_\beta}{r_t},
+\quad \frac{s}{3\nu}\le\partial_\beta G_s\le\frac{3s}{\nu},
+\quad
+\left|\partial_\beta G_s-\frac{s}{\nu}\right|
+\le\frac4{\nu^2}\left(\kappa+\frac{A_r}{2\nu}\right)s^2.
+\tag{25.105}
+$$
+实际映射 $\Psi(\beta,t)=(r(\beta,t),z(\beta,t))$ 在
+$$
+W=\{(\beta,t):\beta\in I,\ 0<t\le T,\ 0<r(\beta,t)\le s_*\}
+\tag{25.106}
+$$
+上单射，其精确像为
+$$
+Y=\{(s,w):0<s\le s_*,\quad G_s(b_-)\le w\le G_s(b_+)\}.
+\tag{25.107}
+$$
+域含 $I\times(0,T/3]$。按坐标次序 $(t,\beta)$，Jacobian 行列式满足
+$$
+\Delta=r_tz_\beta-r_\beta z_t\ge\nu t/4>0.
+\tag{25.108}
+$$
+
+证明。Taylor 积分式及其参数微分给
+$$
+\begin{aligned}
+|r-\nu t|&\le A_rt^2/2,& |r_t-\nu|&\le A_rt,& |r_\beta|&\le A_1t^2/2,\\
+|z-\beta t|&\le C_zt^2/2,& |z_t-\beta|&\le C_zt,& |z_\beta-t|&\le C_1t^2/2.
+\end{aligned}
+\tag{25.109}
+$$
+例如 $r-\nu t=\int_0^t(t-v)r_{tt}(\beta,v)dv$；混合导数连续使在此积分下对 $\beta$ 求导合法，其余五式同理。因此 $\nu/2\le r_t\le3\nu/2$，积分得 $(\nu/2)t\le r\le(3\nu/2)t$。更精细地 $r(\beta,T)\ge3\nu T/4>s_*$，故介值性及严格时间单调性给唯一阈值时刻，且正阈值严格在 $T$ 之前。隐函数定理在这些内部时间点适用；参数开邻域保证区间端点的导数也是限制所得。$s=0$ 时 $t_\beta(0)=0$，公式按单侧连续意义延伸。
+
+链式法则必须保留参数依赖的阈值时间，给（25.105）的首式。记 $t=t_\beta(s)$，有
+$$
+|\partial_\beta G_s-t|
+\le\left(C_1/2+A_1(B+C_zT)/\nu\right)t^2
+\le\kappa t^2\le t/2.
+$$
+结合（25.104）的时间界即得两侧导数界；再用 $|t-s/\nu|\le A_rt^2/(2\nu)$ 得二阶渐近界。因此每条正阈值图对参数严格递增。两份相等读数先落在同一正阈值，再由严格递增得同一参数，最后由 $r$ 的时间单调性得同一时间。连续严格单调函数的像是端点间闭区间，给（25.107）；单点参数时该像退化成一条曲线。$t\le T/3$ 保证 $r\le s_*$。最后 $\Delta=r_t\partial_\beta G_s\ge(\nu/2)(t/2)$。此证明没有把 $r$ 假定成与参数无关，也没有将 $t=s/\nu$ 或 $\beta=\nu w/s$ 当作精确反演式。$\square$
+
+**定理 25.3（两份实际读数的参数与时间误差）。** 对 $(s,w)=\Psi(\beta,t)$、$(s',w')=\Psi(\beta',t')\in Y$，置 $m=\min\{s,s'\}>0$。则
+$$
+|\beta-\beta'|\le\frac{3\nu}{m}\bigl(|w-w'|+L_g|s-s'|\bigr),
+\tag{25.110}
+$$
+$$
+|t-t'|\le\frac2\nu|s-s'|+
+ \frac{4A_1m^2}{\nu^3}|\beta-\beta'|,
+\tag{25.111}
+$$
+因而
+$$
+|t-t'|\le\left(\frac2\nu+\frac{12A_1L_gm}{\nu^2}\right)|s-s'|
+ +\frac{12A_1m}{\nu^2}|w-w'|.
+\tag{25.112}
+$$
+若同一测得坐标的真实点和拟合点均在 $s\ge s_0>0$ 的图中，且各有坐标残差至多 $\epsilon_r,\epsilon_z$，则参数差至多 $6\nu(\epsilon_z+L_g\epsilon_r)/s_0$。
+
+证明。由（25.104）和（25.109），$|\partial_sG_s|=|z_t/r_t|\le L_g$。不妨 $s=m\le s'$，则在同一阈值 $m$ 比较两个参数，得到
+$$
+\frac{m}{3\nu}|\beta-\beta'|
+\le|G_m(\beta)-G_m(\beta')|
+\le |w-w'|+L_g(s'-m).
+$$
+这给（25.110）。阈值时间的导数满足 $|\partial_st|\le2/\nu$，在 $m$ 处 $|\partial_\beta t_\beta(m)|\le A_1t_\beta(m)^2/\nu\le4A_1m^2/\nu^3$；同样先同阈值比参数再移动阈值给（25.111），代入得（25.112）。噪声结论用两个候选之间的坐标差各至多两倍残差界。测得坐标本身无需在 $Y$ 中。
+
+正阈值下截断图的逆统一 Lipschitz；靠近零时参数界的 $1/m$ 因子不能仅凭时间界删掉。例如合法响应 $r=\nu t,z=\beta t$ 在固定 $t$ 给 $|\delta z|=t|\delta\beta|$，已排除延伸到零的统一参数 Lipschitz 常数。$\square$
+
+**约定 25.4（同轨迹同时取得与未知钟）。** 双端口实际取得须同时、不扰动，或有已认证的等价共同轨迹，使两数确实等于同一 $\Psi(\beta,t)$。仅有“两个仪器同时开机”不足以证明测量干预没有改变方程。固定同一个严格递增连续钟 $t=h(\theta)$、$h(0)=0$。如果实际 $(\beta,h(\theta))\in W$，同时读数经上述逆确定参数和该样点的内部时间，无需钟导数。有限多个样点只确定相应 $h(\theta_i)$，不确定未采样插值。校准、黏性、模型和已知准备幅度必须在所有候选间固定。
+
+阈值 $s$ 是已读第一坐标，不额外算一次导数测量。若实际采用首次阈值触发，则另须有事件检测权限、第一分支保证，以及 $h(\theta_{\rm end})\ge t_\beta(s)$ 的可达性；$h(\theta_{\rm end})\ge2s/\nu$ 或 $\ge T$ 是充分条件。连续性给到达，初始分支严格单调性给唯一首次交叉。仅严格增的钟 $h(\theta)=c(1-e^{-\theta})$ 在 $0<c<t_\beta(s)$ 时永远不到阈值。任意迟时样点的 $r$ 数值小也不证明它在初始分支；预定外部时刻需独立的内部时间上界或分支证书。
+
+**定义 25.5（完整观察者与共同实现交集）。** 完整观察者明确写为
+$$
+H=(C,\mathcal A,d_{\rm raw}).
+\tag{25.113}
+$$
+$C$ 包含所有已取得的内部／外部旧记录及其关系；$\mathcal A$ 是带来源索引的合法取得历史，保留每次动作、端口、外部标签、校准及共同轨迹证书；$d_{\rm raw}$ 是当前实际原始对，不能由预测值代写。
+
+固定模型和校准后，令 $\Omega$ 为完整实现集合。每个 $\omega\in\Omega$ 同时包含一个来源身份、参数 $\beta(\omega)$、同一准备生成的整条实际轨迹、一个共同钟 $h_\omega$，以及解释全部旧记录所需的辅助变量、误差和关系。每条旧记录 $c_i\in C$ 有其声明的约束 $\mathcal R_i(\omega,c_i)$；关系可包括跨端口、跨时刻和跨来源的已获信息，不能逐条另选实现。令 $\operatorname{Hist}(\omega,\mathcal A)$ 断言该一份实现确实支持所记合法取得及同时无扰动／等价轨迹条件。当前外部时刻 $\theta_*$ 的内部时刻为 $t(\omega)=h_\omega(\theta_*)$。将原始对按固定校准换为 $(r_{\rm obs},z_{\rm obs})$，其共同误差事件记为 $\mathcal E_H$。定义
+$$
+\begin{aligned}
+\mathfrak F_H=\{\omega\in\Omega:\;&\operatorname{Hist}(\omega,\mathcal A),\quad
+ \mathcal R_i(\omega,c_i)\ \text{对全部旧记录成立},\\
+ & (\beta(\omega),t(\omega))\in W,\quad \omega\in\mathcal E_H,\\
+ &|r(\beta(\omega),t(\omega))-r_{\rm obs}|\le\epsilon_r,\\
+ &|z(\beta(\omega),t(\omega))-z_{\rm obs}|\le\epsilon_z\},
+\end{aligned}
+\tag{25.114}
+$$
+并令 $K_H=\{(\beta(\omega),t(\omega)):\omega\in\mathfrak F_H\}$。如果原始实际误差为 $|x_{\rm obs}-x|\le\epsilon_x$、$|y_{\rm obs}-y|\le\epsilon_y$，且 $r=1-2x/\alpha,z=-4y/\alpha$，则在同一个联合误差事件上使用
+$$
+\epsilon_r=2\epsilon_x/|\alpha|,\qquad
+\epsilon_z=4\epsilon_y/|\alpha|.
+\tag{25.115}
+$$
+此处 $\alpha$ 已知固定，不将含噪幅度代入当作新的联合识别证明。$\mathcal E_H$ 可以施加更强的相关误差约束，无独立噪声前提。
+
+**命题 25.6（外包界可限制，档案见证不可省略）。** 令
+$$
+K_{\rm pair}=\{(\beta,t)\in W:
+ |r(\beta,t)-r_{\rm obs}|\le\epsilon_r,
+ |z(\beta,t)-z_{\rm obs}|\le\epsilon_z\}.
+\tag{25.116}
+$$
+则 $K_H\subseteq K_{\rm pair}$。定理25.3对任意两个外包候选的直径上界也对 $K_H$ 成立；第27节的共同剩余时域界亦如此。但是声称拟合点与完整档案相容，必须给 $\widehat\omega\in\mathfrak F_H$，不能只给 $(\widehat\beta,\widehat t)\in K_{\rm pair}$。
+
+证明。集合包含由（25.114）投影直接得到；全称成对不等式可限制到子集。反方向失败：某条旧约束可能要求 $\beta=b_-$，而当前精确对只由另一个参数生成，外包非空而交集空。全部旧记录分别可拟合也不推出一个共同 $\omega$ 存在。若实际来源、档案、第一分支和联合误差假设均成立，真实 $\omega$ 就给非空见证；否则不能以空集上的真空全称断言授权动作。完整 $H$ 的保留还意味着从两数恢复场并不等于从两数重建整份档案。$\square$
+
+## 26. 全 PDE 的参数差商与联合识别实例
+
+**定理 26.1（开邻域上的实际参数导数）。** 固定已知 $\nu>0$、$0<a\le|\alpha|\le A_\alpha$ 及 $B_0\ge0$，使用[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定义25.1的全部空间、归一化、准备和常数 $R,\tau$。令 $X=C([0,\tau];H^2_\sigma)$、$\lambda=1/(4R)$、$\delta_\beta=R/24$。同一实际温和解可定义在参数开区间
+$$
+J_\beta=(-B_0-\delta_\beta,B_0+\delta_\beta),
+\tag{26.101}
+$$
+且 $\beta\mapsto u_\beta\in X$ 为 $C^1$，满足
+$$
+\|\partial_\beta u_\beta\|_X\le6.
+\tag{26.102}
+$$
+
+证明。只使用恢复卷定理25.3的同一双线性算子 $\mathcal B$，不重新构造 PDE。将 $\beta$ 投影到 $[-B_0,B_0]$，初态范数增加至多 $3\delta_\beta=R/8$，故开区间初态范数小于或等于 $5R/8$。同一 $R$ 球上的映射像范数至多 $5R/8+R/4=7R/8$，收缩系数仍为 $1/2$。因此同一时间与同一球适用，且相减仍给 $\|u_\beta-u_\gamma\|_X\le6|\beta-\gamma|$。
+
+定义有界线性算子 $\mathcal A_\beta v=\mathcal B(v,u_\beta)+\mathcal B(u_\beta,v)$，其范数至多 $2\lambda R=1/2$。Neumann 级数给 $(I+\mathcal A_\beta)^{-1}$，范数至多二。令
+$$
+v_\beta=(I+\mathcal A_\beta)^{-1}E(\cdot)b_0,
+\quad
+v_\beta=E(\cdot)b_0-\mathcal B(v_\beta,u_\beta)-\mathcal B(u_\beta,v_\beta).
+\tag{26.103}
+$$
+$\|b_0\|_{H^2}=3$ 给 $\|v_\beta\|_X\le6$。对 $h\ne0$ 且 $\beta+h\in J_\beta$，实际差商 $q_h=(u_{\beta+h}-u_\beta)/h$ 满足 $\|q_h\|_X\le6$。将两个二次温和方程精确相减得
+$$
+(I+\mathcal A_\beta)q_h=E(\cdot)b_0-h\mathcal B(q_h,q_h),
+\quad
+\|q_h-v_\beta\|_X\le72\lambda|h|.
+\tag{26.104}
+$$
+这证明真实参数导数存在于整个时间 Banach 空间，而不是假定逐点可微。再将（26.103）在两参数处相减，得到
+$$
+\|v_\beta-v_\gamma\|_X
+\le2\|\mathcal A_\beta-\mathcal A_\gamma\|\,\|v_\gamma\|_X
+\le24\lambda\|u_\beta-u_\gamma\|_X
+\le144\lambda|\beta-\gamma|.
+\tag{26.105}
+$$
+故导数连续；原闭区间端点的导数来自这个真正的开邻域。$\square$
+
+**定理 26.2（$DF$、$DG$ 与连续混合端口界）。** 继续使用恢复卷的 $F:H^2_\sigma\to L^2_\sigma$、$Q_\phi$、$G_\phi$、$M_F,D_F,J,M$。对其任一配对端口 $(\ell,\phi)$，
+$$
+DF(u)h=\nu\Delta h-\mathbb P((h\cdot\nabla)u+(u\cdot\nabla)h),
+$$
+$$
+DG_\phi(u)h=-\nu\ell(DF(u)h)
+ -D^2Q_\phi(h,F(u))-DQ_\phi(u)DF(u)h.
+\tag{26.106}
+$$
+这些是连续 Fréchet 导数；在半径 $R$ 球中
+$$
+\|DF(u)h\|_2\le D_F\|h\|_{H^2},\qquad
+|DG_\phi(u)h|\le J\|h\|_{H^2}.
+\tag{26.107}
+$$
+实际两个端口满足
+$$
+|x_{tt}|,|y_{tt}|\le M,\qquad
+|\partial_\beta x_{tt}|,|\partial_\beta y_{tt}|\le6J,
+\tag{26.108}
+$$
+这些混合导数在参数与时间上连续，包含时间零点的单侧值。
+
+证明。恢复卷的 $\|u\|_\infty\le4\|u\|_{H^2}$ 使对流为连续双线性映射 $H^2\times H^2\to L^2$。二次展开余项至多 $4\|h\|_{H^2}^2$，故 $DF$ 的公式与连续性确实成立，范数界为 $\nu+8R$。恢复卷引理25.5已在完整 $L^2$ 空间证明 $Q_\phi,DQ_\phi,D^2Q_\phi$ 及其界；此处对 $G_\phi=-\nu\ell F-DQ_\phi(\cdot)F$ 用乘积法则，给（26.106）。三项界之和为
+$$
+\nu D_F+M_F+RD_F=\nu^2+10\nu R+12R^2=J.
+$$
+$G_\phi$ 是 $H^2$ 上连续线性、双线性、三线性映射之和。将这些映射逐时作用于 $C_tH^2$，仍为连续多线性映射，因而诱导映射 $C_tH^2\to C_t\mathbb R$ 为 $C^1$，导数逐时为 $DG_\phi$。定理26.1于是给
+$$
+\partial_\beta a_{tt}(\beta,t)=DG_\phi(u_\beta(t))v_\beta(t),
+$$
+范数至多 $6J$，且联合连续。绝对二阶界是恢复卷定理25.6的 $M$。最后由
+$$
+a(\beta,t)=a(\beta,0)+t a_t(\beta,0)
+ +\int_0^t(t-s)G_\phi(u_\beta(s))\,ds
+\tag{26.109}
+$$
+在连续时间函数空间对参数求导，其结果可再对时间微分两次，正好得到上式。因此没有把未证的混合导数交换作为前提，也没有要求 $u_{tt}\in L^2$ 或 $u_t\in H^2$。$\square$
+
+**推论 26.3（已校准 PDE 的双端口绝对钟图）。** 对恢复卷（25.115）的实际端口置
+$$
+r=1-2x/\alpha,\qquad z=-4y/\alpha,\qquad
+A_r=2M/a,\quad C_z=4M/a,\quad A_1=12J/a,\quad C_1=24J/a.
+\tag{26.110}
+$$
+取 $I=[-B_0,B_0]$、$T_0=\tau$，并取
+$$
+\kappa=C_1/2+A_1(B_0+C_z\tau)/\nu,
+\quad T=\min\{\tau,\nu/(2A_r),1/(2\kappa)\},\quad s_*=\nu T/2.
+\tag{26.111}
+$$
+则定义25.1的全部条件实际成立，定理25.2、25.3的图、精确像、单射性及全部误差界适用于这个全 PDE。这里 $A_r,\kappa$ 严格正，故公式无零分母。
+
+证明。恢复卷的初始系数识别给 $x(0)=\alpha/2$、$y(0)=0$、$y_t(0)=-\alpha\beta/4$。没有两个非零初始频率相加为 $(1,0)$，所以该处非线性导数为零，$x_t(0)=-\nu\alpha/2$。由真实 $u_t=F(u)$ 得 $r_t(0)=\nu,z_t(0)=\beta$，并非有限槽的代数代替了演化。定理26.2乘固定比例并用 $|\alpha|\ge a$ 给（26.110），定理26.1供应开邻域。时间选择满足（25.103），直接使用已证一般图定理即可。
+
+在同轨迹同时读出及第一分支条件下，一对正时原始数据确定 $\beta$ 和该样点内部时间；多个样点仍只给采样处的钟值。带噪应用须用定义25.5的一份实现与联合事件，尤其原始误差转换严格为（25.115）。本结论固定 $\alpha,\nu$、模型及校准；恢复卷的含噪 $\alpha$ 标量估计不将这些固定量变成未知量。
+
+若 $B_0>0$，不同初态在时间零的规范读数全为 $(0,0)$，所以不能将它加入原始图并保留单射性。若 $B_0=0$，初态已知且参数域单点，$r_t\ge\nu/2$ 使加入时间零仍单射；正阈值的参数除法界仍只在其原声明域内使用。$\square$
+
+**命题 26.4（未知黏性的精确钟碰撞与条件性纤维）。** 在 $\beta=0$ 的实际 PDE 中，
+$$
+u(X,t)=\alpha e^{-\nu t}(0,\cos X_1),\quad p=0,
+\quad r=1-e^{-\nu t},\quad z=0.
+\tag{26.112}
+$$
+两种正黏性及满足 $\nu_1h_1=\nu_2h_2$ 的钟给相同的整个双端口历史，故未知黏性下不能在包含此准备的族上由这些历史恢复绝对内部时间。该例不证明隐藏参数不同，因为两例都取 $\beta=0$。
+
+证明。该剪切的对流为零、Laplacian 为负自身，所以方程逐项成立；读出与钟等式直接代入即得。一般混合合同本身也不能识别三个量：精确响应 $r=\nu t,z=\beta t$ 在 $(\nu,\beta,t)\mapsto(c\nu,c\beta,t/c)$ 下不变。后者只是合同反例，不是固定 $\alpha$ 的非线性 PDE 缩放定律。
+
+另有如下严格条件命题：若额外证明实际响应在正黏性开邻域对 $(\nu,\beta,t)$ 为 $C^1$，且在所考察内点有统一渐近
+$$
+r_\nu=t+O(t^2),\quad z_\nu=O(t^2),\quad
+r_t=\nu+O(t),\quad z_t=\beta+O(t),\quad
+r_\beta=O(t^2),\quad z_\beta=t+O(t^2),
+\tag{26.113}
+$$
+则固定一对足够短正时读数时，隐函数定理给随 $\nu$ 改变的精确局部纤维 $(\beta(\nu),t(\nu))$，且
+$$
+\frac{dt}{d\nu}=\frac{r_\beta z_\nu-z_\beta r_\nu}{\Delta}
+=-\frac t\nu+O(t^2),\quad
+\frac{d\beta}{d\nu}=\frac{z_t r_\nu-r_tz_\nu}{\Delta}
+=\frac\beta\nu+O(t).
+\tag{26.114}
+$$
+证明这个条件命题只需定理25.2的非零 Jacobian：对固定读数求导解二乘二线性方程，代入（26.113）及 $\Delta=\nu t+O(t^2)$ 即得。在非零内点 $\beta$ 处，充分小时间使两导数非零。定理26.1仅证明固定黏性下的 $\beta$ 可微性，没有证明（26.113）的黏性前提，所以这里保持条件命题；不将它升级为本节已履行的 PDE 黏性识别或不识别结论。更多端口或整条非退化响应曲线需要另行研究。$\square$
+
+## 27. 比值边界、完整场因子与部分续接
+
+**定理 27.1（隐藏初始方向的正则比值坐标）。** 固定推论26.3的全部准备、黏性、常数和第一分支。置
+$$
+\vartheta(\beta,t)=\nu z(\beta,t)/r(\beta,t)\quad(t>0),
+\qquad \vartheta(\beta,0)=\beta,
+$$
+$$
+Z_*=B_0+C_zT/2,\quad E_\vartheta=C_z+A_rB_0/\nu,
+\quad L_\vartheta=C_z+2A_rZ_*/\nu,
+\quad D_\vartheta=C_1+A_r/\nu+2A_1Z_*/\nu.
+\tag{27.101}
+$$
+则 $\vartheta$ 是 $[-B_0,B_0]\times[0,T]$ 上的 $C^1$ 函数（时间端点单侧），并有
+$$
+|\vartheta-\beta|\le E_\vartheta t,\quad
+|\vartheta_t|\le L_\vartheta,\quad
+|\vartheta_\beta-1|\le D_\vartheta t,
+\quad 1/3\le\vartheta_\beta\le3.
+\tag{27.102}
+$$
+初始边界导数为
+$$
+\vartheta_\beta(\beta,0)=1,\qquad
+\vartheta_t(\beta,0)=\tfrac12 z_{tt}(\beta,0)
+ -\frac{\beta}{2\nu}r_{tt}(\beta,0).
+\tag{27.103}
+$$
+
+证明。先分离已知的一阶时间零点，定义
+$$
+U(\beta,t)=\int_0^1r_t(\beta,qt)\,dq,
+\quad V(\beta,t)=\int_0^1z_t(\beta,qt)\,dq.
+\tag{27.104}
+$$
+于是 $r=tU,z=tV$，$U(\beta,0)=\nu,V(\beta,0)=\beta$。第26节的连续混合正则性保证 $U,V$ 均 $C^1$，且由（25.109）积分得到
+$$
+\begin{gathered}
+U\ge\nu/2,\quad |U-\nu|\le A_rt/2,\quad
+|V-\beta|\le C_zt/2,\quad |V|\le Z_*,\\
+|U_t|\le A_r/2,\quad |V_t|\le C_z/2,\quad
+|U_\beta|\le A_1t/2,\quad |V_\beta-1|\le C_1t/2.
+\end{gathered}
+\tag{27.105}
+$$
+因此 $\nu V/U$ 就是在零点也有定义的 $C^1$ 延伸。由 $\nu V-\beta U=\nu(V-\beta)+\beta(\nu-U)$ 得第一误差界；对商求时间导数，用（27.105）给 $C_z+2A_rZ_*/\nu$。参数导数减一，分别界定 $\nu(V_\beta-1)/U$、$\nu/U-1$ 及 $\nu VU_\beta/U^2$，得到 $D_\vartheta t$。代入零点的积分导数给（27.103）。
+
+正的参数导数不需再缩短 $T$。对 $t>0$，
+$$
+\vartheta_\beta=\frac\nu r\left(z_\beta-\frac zr r_\beta\right),\qquad
+\left|z_\beta-\frac zr r_\beta-t\right|
+\le\left(C_1/2+A_1Z_*/\nu\right)t^2
+\le\kappa t^2\le t/2.
+$$
+再用 $(\nu/2)t\le r\le(3\nu/2)t$ 得 $1/3\le\vartheta_\beta\le3$，零点由（27.103）直接成立。$\square$
+
+**定理 27.2（闭合提升图及两种完成）。** 令
+$$
+\overline W=\{(\beta,t):|\beta|\le B_0,\ 0\le t\le T,
+\ r(\beta,t)\le s_*\},\quad
+\widetilde\Psi(\beta,t)=(r(\beta,t),\vartheta(\beta,t)).
+\tag{27.106}
+$$
+该图在闭域上单射，且为双 Lipschitz 坐标。置 $\Theta_s(\beta)=\vartheta(\beta,t_\beta(s))$，包括 $\Theta_0(\beta)=\beta$，$L_s=2L_\vartheta/\nu$。其精确像是闭带
+$$
+\widetilde Y=\{(s,v):0\le s\le s_*,\quad
+\Theta_s(-B_0)\le v\le\Theta_s(B_0)\},
+\tag{27.107}
+$$
+且任意两份提升图读数 $(s,v),(s',v')$、$m=\min\{s,s'\}\ge0$ 满足
+$$
+|\beta-\beta'|\le3(|v-v'|+L_s|s-s'|),
+\qquad
+|t-t'|\le\frac2\nu|s-s'|+
+ \frac{4A_1m^2}{\nu^3}|\beta-\beta'|.
+\tag{27.108}
+$$
+当 $B_0>0$ 时，原始正时间图 $Y$ 的 Euclidean 完成只在初始边界加一个点 $(0,0)$，提升图正时间部分的 Euclidean 完成却加整段 $\{0\}\times[-B_0,B_0]$。两种误差几何在该边界附近不统一等价。
+
+证明。正 $s$ 处，$\Theta_s=(\nu/s)G_s$，所以（25.105）给 $1/3\le\partial_\beta\Theta_s\le3$；零点的导数为一。$|\partial_s\Theta_s|=|\vartheta_t/r_t|\le L_s$。正时间的单射性复用定理25.2；$s=0$ 强制 $t=0$，第二坐标恰是参数。连续单调阈值图给闭带像。两参数先在较小阈值 $m$ 比较，再沿阈值移动，得（27.108）；$m=0$ 时阈值时间恒为零，所以其参数变化项就是零，毋须除零或极限论证。前向估计为
+$$
+|s-s'|\le\tfrac12A_1T^2|\beta-\beta'|+\tfrac32\nu|t-t'|,
+\quad
+|v-v'|\le3|\beta-\beta'|+L_\vartheta|t-t'|.
+\tag{27.109}
+$$
+这是沿环境参数／时间矩形的两段比较，故不要求连接线留在 $\overline W$。逆估计中的 $m\le s_*$ 给统一常数，证明双 Lipschitz 性。
+
+正时 Jacobian 为
+$$
+r_t\vartheta_\beta-r_\beta\vartheta_t
+=\frac\nu r\Delta\ge\nu/6,
+\tag{27.110}
+$$
+零时为 $\nu$。若需普通开集上的局部逆，可以在负时间附近定义 $U=\nu+t r_{tt}(\beta,0)/2$、$V=\beta+t z_{tt}(\beta,0)/2$。第26节混合导数使这些初始系数对参数 $C^1$，两侧的一阶值吻合，给 $C^1$ 延伸及非零 Jacobian。正阈值端点严格小于 $T$，参数端点有开邻域，故局部逆在所有相关边界均以限制意义成立。此代数延伸不声称负时间 PDE 演化存在。
+
+原始图精确分解为
+$$
+(\beta,t)\longmapsto(s,\vartheta)
+\longmapsto(s,s\vartheta/\nu)=(r,z).
+\tag{27.111}
+$$
+闭参数／阈值域紧，两个完整像均为紧集，其正阈值部分稠密，故各自闭像就是各自 Euclidean 完成。第二映射在 $s=0$ 将整段压为一点。选不同的 $\beta,\beta'$，$s_n=s_*/(n+1)\downarrow0$，两原始序列 $(s_n,G_{s_n}(\beta))$、$(s_n,G_{s_n}(\beta'))$ 均趋 $(0,0)$，但提升序列分别趋 $(0,\beta)$、$(0,\beta')$。所以原始到提升的正时间变换不统一连续。普通原始度量的完成不能凭空恢复这些标签。
+
+已有 [GoldenThreadBlowup](../../../D5/S3/CompletionDynamics/GoldenMobius/GoldenThreadBlowup.lean) 的 `golden_thread_completion_value_eq`、`golden_thread_tangent_injective` 与 `golden_geometric_thread_origin_recovery` 分别给相同完成值、可区别的来源切向与有限深度交比重标后的来源恢复。本节使用同样的“端点值与归一化方向不同”区分，其实际 PDE 估计与取得条件由第25—26节供应，不声称除以消失坐标能增加观测信息。该来源中的几何 blowup 是坐标分辨，和恢复卷第26节的流体奇异性不同。$\square$
+
+**命题 27.3（比值噪声与原始读数的必要误差量级）。** 在正时间实际对 $(s,w)=(r,z)$ 上，若 $|\delta s|\le\epsilon_r<s$、$|\delta w|\le\epsilon_z$，计算比值 $\widetilde\vartheta=\nu(w+\delta w)/(s+\delta s)$ 满足
+$$
+\widetilde\vartheta-\vartheta
+=\frac{\nu\delta w-\vartheta\delta s}{s+\delta s},\qquad
+|\widetilde\vartheta-\vartheta|
+\le\frac{\nu\epsilon_z+|\vartheta|\epsilon_r}{s-\epsilon_r}.
+\tag{27.112}
+$$
+又 $|\vartheta|\le2Z_*$；$\epsilon_r\le s/2$ 时上界至多 $2(\nu\epsilon_z+2Z_*\epsilon_r)/s$。当 $B_0>0$，仅由一对读数、内部时间未知且没有进一步区分这对候选的档案时，即使第一坐标精确已知，任意确定性参数估计器的最坏误差至少为
+$$
+\min\{B_0,\nu\epsilon_z/(3s)\}.
+\tag{27.113}
+$$
+
+证明。通分给（27.112），分母和三角界给所列估计，$\vartheta=\nu V/U$ 给 $2Z_*$。取 $d=\min\{B_0,\nu\epsilon_z/(3s)\}$。参数 $d,-d$ 在各自阈值时间的第二读数相差至多 $6sd/\nu\le2\epsilon_z$，由（25.105）的上界积分可得；第一读数均为 $s$。共同中点同时是两种合法含噪输出，参数相距 $2d$，故至少一个估计误差不小于 $d$。$d=0$ 时下界自然为零。
+
+此两点论证针对仅此原始对的外包合同；若加入旧档案 $C$ 或精确时间旁路，须另证明两候选都在同一个 $K_H$ 中，不能自动把下界限制到任意较小交集。$B_0=0$ 时参数已知，不存在该参数歧义。单个初始原始对 $(0,0)$ 不能计算 $\vartheta(\beta,0)=\beta$；该边界标签需独立提供。提升图的统一稳定性针对提升坐标自身的误差，原始测量转换的 $1/s$ 代价仍在。$\square$
+
+**命题 27.4（准备场上的既有精确因子化及其定量界）。** 置
+$$
+\mathcal S=\{u_\beta(t):(\beta,t)\in W\},\quad
+\mathcal I=\Psi^{-1}:Y\to W,\quad
+\mathcal D(a)=u_\beta(t)\ \text{其中 }\mathcal I(a)=(\beta,t),
+$$
+$$
+\mathcal O(U)=(1-2\ell_x(U)/\alpha,-4\ell_y(U)/\alpha).
+\tag{27.114}
+$$
+则 $\mathcal O|_{\mathcal S}$ 与 $\mathcal D$ 互逆。因此任意精确任务 $\mathcal T:\mathcal S\to Z_{\mathcal T}$ 都在实际读数像上有唯一因子 $\mathcal T\circ\mathcal D$；这直接使用既有 [InjectiveInterfaceTargetFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.lean) 的 `injective_interface_factors_every_target` 及 [RealizedImageKernelFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean) 的 `realized_image_unique_factorization_iff_reverse_kernel`，不是另立一般解码原理。
+
+具体定量内容为
+$$
+\|u_\beta(t)-u_{\beta'}(t')\|_2
+\le6|\beta-\beta'|+M_F|t-t'|.
+\tag{27.115}
+$$
+对两份原始图坐标，令 $m=\min\{r,r'\}>0$、$P_m=6+4M_FA_1m^2/\nu^3$，则
+$$
+\|\mathcal D(r,z)-\mathcal D(r',z')\|_2
+\le\frac{3\nu P_m}{m}(|z-z'|+L_g|r-r'|)
+ +\frac{2M_F}{\nu}|r-r'|.
+\tag{27.116}
+$$
+在提升闭图上，边界标签已给时定义 $\widetilde{\mathcal D}(\widetilde\Psi(\beta,t))=u_\beta(t)$；此时允许 $m=0$，且
+$$
+\|\widetilde{\mathcal D}(r,v)-\widetilde{\mathcal D}(r',v')\|_2
+\le3P_m(|v-v'|+L_s|r-r'|)+\frac{2M_F}{\nu}|r-r'|.
+\tag{27.117}
+$$
+
+证明。直接有 $\mathcal O(\mathcal D(a))=a$。若 $U=u_\beta(t)\in\mathcal S$，则 $\mathcal O(U)=\Psi(\beta,t)$，图单射给 $\mathcal D(\mathcal O(U))=U$。所以观察在此准备场集合上单射，满足所引现成精确因子化前提。恢复卷（25.106）在共同时间比较参数，恢复卷（25.111）的 $L^2$ 速度界在时间段积分，得（27.115）；没有声称 $H^2$ 时间速度有同一界。代入本卷（25.110）—（25.111）得（27.116），代入（27.108）得（27.117）。提升边界的初态由已给 $\beta$ 决定，定义良好。
+
+任意精确任务可因子化，不意味着它定量稳定。若另外证明 $d_{\mathcal T}(\mathcal T(U),\mathcal T(V))\le L_{\mathcal T}\|U-V\|_2$，才可将这些界乘 $L_{\mathcal T}$；更一般须有自己的 $L^2$ 连续模数。点值、梯度或不连续任务不能自动使用此结论。解码对象是准备场及指定任务，不是整个 $C$ 或取得历史。两数充分也没有证明它们在所有可能传感器或费用合同中全局最优。$\square$
+
+**定理 27.5（续接的定义域等式与自主 PDE 交织）。** 写 $t_*(\beta)=t_\beta(s_*)$，则 $W=\{(\beta,t):|\beta|\le B_0,0<t\le t_*(\beta)\}$。对已知非负内部增量 $\sigma$，定义域子类型上的操作为
+$$
+\operatorname{Dom}_\sigma=\{a\in Y:\mathcal I(a)=(\beta,t),\quad
+ 0\le\sigma\le t_*(\beta)-t\},\qquad
+\mathcal U_\sigma(a)=\Psi(\beta,t+\sigma).
+\tag{27.118}
+$$
+对任意 $\sigma,\eta\ge0$，
+$$
+\operatorname{Dom}_{\sigma+\eta}
+=\{a\in\operatorname{Dom}_\sigma:\mathcal U_\sigma(a)\in\operatorname{Dom}_\eta\},
+\qquad \mathcal U_{\sigma+\eta}=\mathcal U_\eta\circ\mathcal U_\sigma,
+\quad\mathcal U_0=\operatorname{id}.
+\tag{27.119}
+$$
+若 $S_\sigma$ 是实际自主 PDE 从该准备场重启的、限制在上述允许域内的续接，则
+$$
+\mathcal D(\mathcal U_\sigma(a))=S_\sigma(\mathcal D(a))=u_\beta(t+\sigma).
+\tag{27.120}
+$$
+同样的定义与等式适用于边界标签已供给的提升图。
+
+证明。$r$ 在初始分支严格递增，给域的精确形式。两次合法条件分别为 $\sigma\le t_*(\beta)-t$ 和 $\eta\le t_*(\beta)-t-\sigma$，非负增量下它们等价于 $\sigma+\eta\le t_*(\beta)-t$，同时中间时刻必在域内。图逆在第一步后给 $(\beta,t+\sigma)$，代入第二步即得值的复合等式。零步不改变参数或时间，且总在图内合法。移位路径 $q\mapsto u_\beta(t+q)$ 从 $u_\beta(t)$ 解同一自主方程；恢复卷的温和解唯一性将它识别为重启解，证明（27.120）。
+
+对两个都允许同一 $\sigma$ 的图点，推进后参数差及时间差不变，仍在共同 PDE 区间内，故（27.115）仍给相同右界；代入原始输入或提升输入的参数／时间界，（27.116）或（27.117）的原右侧也界定其推进后的场差。这里没有声称实际误差在演化中单调下降。
+
+这些部分操作属于本卷约定1.2和命题1.4的域保持语义；[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的 `PartialSignature`、`sourceOperationEquiv` 及 `contextual_equivalence_is_greatest` 已供应域子类型与严格失败传播的形式接口。可将 $\mathcal U_\sigma$ 总化为成功／失败标签，任何失败后的续接仍传播该失败，不返回一个默认场。域外输入与域内却超越剩余时域的非法增量应分别标记；两类都不同于下面的噪声证书未通过。$\square$
+
+**约定 27.6（实际观察者操作保留档案）。** （27.118）是精确图坐标上的数学更新。对完整观察者 $H=(C,\mathcal A,d_{\rm raw})$ 执行操作时，旧 $C$ 逐条保留，当前原始对连同来源、原标签及误差合同保留为旧记录；实际执行的内部推进及新取得动作追加到 $\mathcal A$。若协议确实在推进后取得新的同轨迹双端口对，才把该原始对放入新的 $d_{\rm raw}$，并将其残差与全部旧约束一起加入同一个延伸实现集合。新的相容集合是旧共同实现先经实际操作运输，再与实际新记录约束取交。
+
+若只计算 $\mathcal U_\sigma(a)$、$\mathcal D(a)$ 或预测的新读数，它们只能作为标明的派生值；没有执行推进就不记已推进，没有重新取得就保留最近原始对的原时间标签，不将预测冒充当前测量。两次推进之间取得一次额外记录，会让完整取得历史不同于直接推进一次；（27.119）保证参数、场及合法域的复合等式，不抹去这项历史区别。历史按实际动作序列串接，结合律保留记录次序；只有声明同一个展开协议时，才可将两种动作写法视为同一历史。
+
+严格失败语义至少区分：输入精确值不在图中；共同实现集 $\mathfrak F_H$ 为空；已有精确图点但 $\sigma$ 超过（27.118）的上界；共同实现非空但噪声裕量证书没有通过。前三者均不能通过默认补一个状态继续；第四者表示尚未认证，不能推断实际增量非法。若采用总化编码，这些标签都在其后的严格接续中原样传播。由于 $\mathfrak F_H=\varnothing$ 没有实际见证，即使零步也不能以它认证一个被假定存在的来源；对任意非空相容图集合，零步始终是合法恒等操作。
+
+**定理 27.7（完整相容集合的剩余时域证书）。** 定义
+$$
+\ell_{\rm rem}(\beta,t)=t_\beta(s_*)-t,\qquad
+K_*=4A_1s_*^2/\nu^3.
+\tag{27.121}
+$$
+取定义25.5的一份实际档案相容拟合见证 $\widehat\omega\in\mathfrak F_H$，其投影为 $(\widehat\beta,\widehat t)$。若
+$$
+\underline r=r_{\rm obs}-\epsilon_r>0,
+\quad B_{\rm err}=\frac{6\nu}{\underline r}(\epsilon_z+L_g\epsilon_r),
+\quad T_{\rm err}=\frac{4\epsilon_r}{\nu}+K_*B_{\rm err},
+$$
+$$
+E_{\rm adm}=\frac{4\epsilon_r}{\nu}+2K_*B_{\rm err},\qquad
+\widehat\ell=\ell_{\rm rem}(\widehat\beta,\widehat t),
+\tag{27.122}
+$$
+则任意两个 $K_H$ 中的候选参数差、时间差分别至多 $B_{\rm err},T_{\rm err}$，剩余时域差至多 $E_{\rm adm}$。因此每个相容候选都允许同一个已知内部增量
+$$
+0\le\sigma\le\max\{0,\widehat\ell-E_{\rm adm}\}.
+\tag{27.123}
+$$
+推进后实际相容场与拟合续接场满足
+$$
+\|u_\beta(t+\sigma)-u_{\widehat\beta}(\widehat t+\sigma)\|_2
+\le6B_{\rm err}+M_FT_{\rm err}.
+\tag{27.124}
+$$
+该区间仅为充分证书；不能认证某正增量，不证明该增量非法。
+
+证明。阈值时间导数给 $|\partial_\beta t_\beta(s_*)|\le K_*$，故
+$$
+|\ell_{\rm rem}(\beta,t)-\ell_{\rm rem}(\beta',t')|
+\le K_*|\beta-\beta'|+|t-t'|.
+\tag{27.125}
+$$
+先对较大的 $K_{\rm pair}$ 证明界：任意两个候选坐标差至多 $2\epsilon_r,2\epsilon_z$，其较小真实第一坐标满足 $\underline r\le m\le s_*$。定理25.3依次给 $B_{\rm err}$、$4\epsilon_r/\nu+K_*B_{\rm err}$，代入（27.125）给 $E_{\rm adm}$。这些全称界通过 $K_H\subseteq K_{\rm pair}$ 限制到真正档案交集；拟合点具有交集见证，故任意实际相容剩余时域至少 $\widehat\ell-E_{\rm adm}$。正裕量情形可用（27.118）；若该数为负，只保留零步，零步由图域定义独立合法。因此（27.123）在所有情况成立，且从未对负裕量作不合法的正步授权。（27.124）是（27.115）的直接应用。
+
+若实际来源确在初始图上、旧档案相容、同时取得条件成立且共同误差事件为真，则真实实现在 $\mathfrak F_H$，证书便约束真实动作。若交集空，或拟合只属于 $K_{\rm pair}$ 而无共同档案见证，不能称此证书已对完整观察者实例化。测得原始对不在精确图像中，并不自动使交集空；噪声情形须用残差判断。一个数值实现可以将 $\widehat\ell$ 换成其认证下界，但计算该下界与提供拟合见证仍有独立成本。
+
+每个候选推进后的剩余时域都严格减去同一个 $\sigma$，与拟合的剩余时域差不变。因此对未新增测量的传播候选集，所有累计增量不超过原正裕量的序列继续被同一个 $E_{\rm adm}$ 支持；（27.119）给域与值的复合。实际新增记录只在同一延伸实现上进一步取交，不能重新挑一个不兼容的来源来维持拟合。
+
+$B_0=0$ 时参数已知，可令 $B_{\rm err}=0$、$T_{\rm err}=E_{\rm adm}=4\epsilon_r/\nu$；$r_t\ge\nu/2$ 直接界定任意两候选的时间差，此单点版本可包含已知初始时刻且无需 $\underline r>0$。非空共同见证仍必需。对于非单点参数，正下界失败只表明（27.122）不能使用，不等于实际离开图域或正增量非法。$\square$
+
+**注记 27.8（内部续接、来源标签与关系范围）。** 所有续接都要求已知内部时长 $\sigma$；未知共同钟下等待一个指定外部时长并不提供它，须另有时钟运输或实际取得证书。修改初态、外力、黏性、校准或测量干预是另一种操作，不能沿用当前的闭合域。越过 $t_*(\beta)$ 未获本接口许可，即使 PDE 本身仍可继续也一样。
+
+在这里声明的自主非负推进下，恢复出的来源标签 $\beta$ 不变、内部时间平移；相同 $\beta$ 的两图点依时间顺序由一个允许前进量连接，不同 $\beta$ 则不能由这些操作连接。这是相对于规定操作的轨道标签，完整场仍随时间变化；它不表示所有空间场静止，也不把时间从空间推出。比值边界只是改变表示与误差几何，既不供应初始原始对所缺的标签，也不分配概率。
+
+全场解码及响应逆的存在不使其求值免费：所需实际 PDE 求解、逆响应认证、端口取得、阈值监测、钟可达性和档案共同见证各有原来的资源条件。本文的数学陈述是普通证明，适用范围为固定准备族的共同短时图；有限维、全 PDE、精确识别、稳定性、合法操作和完整已获档案分别由各自明确条件承担。
+
+## 27.99 追加锚
