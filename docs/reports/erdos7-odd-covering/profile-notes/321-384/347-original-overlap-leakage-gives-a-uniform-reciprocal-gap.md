@@ -16,7 +16,13 @@ In particular it applies to a hypothetical distinct odd cover, including one wit
 \]
 These are quantitative excess statements, not nonexistence of such a cover. The comparison below is with the inspected 2024 author version; the journal-version constants have not been compared.
 
-The same constants hold for a smaller, localized quantity: the sum, over primes \(5\le p<p_N\), of the Haar mass where an original division-minimal \(p\)-bucket class meets an earlier-prime original class. Here \(N=1532030200000000000000\). Thus a hypothetical odd cover forces this cross-prime overlap sum to exceed \(2\cdot10^{-43}\), and the union of these overlap events has Haar mass greater than \(10^{-64}\). Internal repetition within one prime bucket cannot supply this required overlap. Sections 2–3 give the refinement without any irredundancy assumption.
+Section 6 strengthens the all-odd consequence to excess and minimal-bucket
+overlap greater than \(10^{-11}\), and to original overlap-union mass
+greater than \(10^{-20}\). It removes the even-prime factors from both
+the prefix estimate and the fourth-moment tail proof. The general
+\(\Delta\ge1/12\) statement above retains its original scope.
+
+The constants in Sections 2–3 also hold for a smaller, localized quantity: the sum, over primes \(5\le p<p_N\), of the Haar mass where an original division-minimal \(p\)-bucket class meets an earlier-prime original class. Here \(N=1532030200000000000000\). Thus a hypothetical odd cover forces this cross-prime overlap sum to exceed \(2\cdot10^{-43}\), and the union of these overlap events has Haar mass greater than \(10^{-64}\). Internal repetition within one prime bucket cannot supply this required overlap. Sections 2–3 give the refinement without any irredundancy assumption.
 
 ## 1. One stage on the original Haar law
 
@@ -333,3 +339,164 @@ For the restricted covering problem, a sufficient interface must therefore prese
 ```sh
 python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/overlap_reduction_collisions.py
 ```
+
+## 6. Odd-only ideals and fourth moments strengthen the uniform gap
+
+For every hypothetical finite covering family of pairwise distinct odd
+moduli greater than one, the same original Haar law satisfies
+\[
+\boxed{H_{\rm cov}\ge T^{\rm odd}_{<10^9}>10^{-11},
+\qquad \mu(G^{\rm odd}_{<10^9})>10^{-20}.}
+\tag{11}
+\]
+Here, with the prime indexing of Section 2,
+\[
+T^{\rm odd}_{<N}=\sum_{i=3}^{N-1}
+ \mu(B_{\min,p_i}\cap O_{p_i}),\qquad
+G^{\rm odd}_{<N}=\bigcup_{i=3}^{N-1}(B_{\min,p_i}\cap O_{p_i}).
+\]
+The classes defining these events are the same division-minimal original
+classes used above. Every prime in these overlap events is less than
+\(25\cdot10^9\). This bounds largest prime factors, not original moduli:
+all original exponent heights and redundant classes remain allowed.
+
+### Odd upward ideals on the original Haar carrier
+
+Because all original moduli are odd, the upward ideal in Section 1 needs
+only odd \(p\)-smooth multiples. The factor for the prime 2 disappears:
+\[
+m_p=\frac1{p-1}\prod_{3\le q<p}\frac q{q-1}=\frac{M_p}{2}.
+\]
+Inclusion–exclusion on the same division-minimal moduli gives the exact
+odd ideal sum \(m_p\mu(E_{\rm centered})\). Indeed an intersection of
+upward ideals has least modulus equal to the least common multiple of its
+generators; its reciprocal sum is that modulus's reciprocal times
+\(\prod_{3\le q\le p}q/(q-1)\). The centered expanded class has
+\(p\) times the generator's reciprocal mass, giving the coefficient
+\(m_p\). The finite original sum counts each modulus at most once and
+is bounded by this convergent ideal sum. Rogers' comparison, still on
+the original Haar carrier, therefore gives
+\[
+S\le m_p\mu(E).
+\]
+The expanded-prefix inequality \(\mu(E\cap O)\le pu\) is unchanged.
+Consequently the overlap recurrence becomes
+\[
+U_{\rm new}\ge(1-m_p)U-(pm_p-1)u+(v-u)+r.
+\tag{12}
+\]
+For \(p\ge5\), both \(m_p\in(0,1)\) and
+\[
+A_p^{\rm odd}:=pm_p-1
+  =\prod_{3\le q\le p}\frac q{q-1}-1>0
+\]
+hold; the latter is increasing in \(p\). Iteration, with the same
+nonnegative rebates as in (5a), gives
+\[
+U_{N-1}\ge\Delta\prod_{i=3}^{N-1}(1-M_{p_i}/2)
+              -A_{p_{N-1}}^{\rm odd}T^{\rm odd}_{<N}.
+\tag{13}
+\]
+The odd pure 3-power family has \(\Delta>1/2\). For \(0\le x<1\),
+\((1-x/2)^2\ge1-x\), so FK Lemma 2 implies, for every \(N\ge10^9\),
+\[
+\Delta\prod_{i=3}^{N-1}(1-M_{p_i}/2)
+>
+\frac{\sqrt{3.84636486599}}{2p_N^{0.89131905}}
+\exp\!\left(-\frac{0.44565955}{\log p_N}\right).
+\tag{14}
+\]
+The initial density \(1/2\) is outside the square root. No original
+Haar quantity is replaced by a survivor-conditioned law in (12)–(14).
+
+### The odd fourth-moment tail omits a factor of 150
+
+Use FK's original schedule \(\delta_i=0\) before \(N\) and
+\(\delta_i=95007347/1520117553\) afterwards. In its fourth-moment
+estimate (6), all four old cofactors divide the odd original period.
+Thus in (7) the sum may be extended over odd smooth integers only. In
+the Euler product (8), the factor for \(q=2\) is omitted. Since
+\(p_1=2\) and \(\delta_1=0\), that omitted factor is exactly
+\[
+1+\frac{15\cdot2^3+5\cdot2^2+5\cdot2-1}{(2-1)^4}=150.
+\]
+Every remaining factor, including every positive threshold, is unchanged.
+Accordingly the right-hand side of (9) is divided by 150 for each
+\(i\ge N\). In the proof of Lemma 1, equations (18)–(21) bound this
+Euler product multiplicatively, and the subsequent tail summation is
+positive and linear in its constant. The same proof therefore yields
+\[
+\sum_{i\ge N}P_i(B_i)
+ \le\frac{0.657743}{150}\frac{\log^{16}p_N}{p_N^3},
+\qquad N\ge10^9.
+\tag{15}
+\]
+This division uses the restricted cofactor sum and the proof of Lemma 1;
+dividing that lemma's conclusion alone would not justify it. The
+published prime estimates and large finite-product inputs remain cited
+inputs. Empty buckets and zero-height even coordinates cause no change.
+
+### One fixed index gives an exact numerical certificate
+
+Fix \(N=10^9\). Since it is below
+\(N_0=1532030200000000000000\), the same page-24 product bound used in
+Section 3 gives
+\[
+A_{p_{N-1}}^{\rm odd}<94/2-1=46.
+\]
+Use the source prime bounds (23), rather than requiring the exact value
+of the billionth prime:
+\[
+\tau_-=N(\log N+\log\log N-3/2)<p_N
+ <\tau_+=N(\log N+\log\log N-1/2).
+\]
+The right-hand side of (14), as a function of \(p_N\), decreases when
+\(1.7826381-0.8913191/(\log p_N)^2>0\). The function
+\(\log^{16}p_N/p_N^3\) decreases when \(\log p_N>16/3\).
+Both conditions hold throughout these prime bounds. Define
+\[
+R=\frac{\sqrt{3.84636486599}}{2\tau_+^{0.89131905}}
+ \exp\!\left(-\frac{0.44565955}{\log\tau_+}\right),\qquad
+F=\frac{0.657743}{150}\frac{\log^{16}\tau_-}{\tau_-^3}.
+\]
+The extended rational interval checker certifies
+\[
+\begin{aligned}
+R-F&>5.49724440508628\cdot10^{-10},\\
+(R-F)/46&>1.19505313154049\cdot10^{-11}>10^{-11},\\
+(R-F)/[46(N-3)]&>1.19505313512565\cdot10^{-20}>10^{-20},\\
+\tau_+&<25\cdot10^9.
+\end{aligned}
+\tag{16}
+\]
+The displayed decimals are rounded down from verified rational lower
+endpoints. The checker uses only integer and rational interval operations
+with explicit logarithm and exponential remainders; it also checks both
+monotonicity conditions.
+
+Before \(N\), the actual distorted law is exactly original Haar.
+Under whole coverage the tail must cover all of its remaining mass,
+so (6), (13)–(15) give
+\[
+46T^{\rm odd}_{<N}>R-F.
+\]
+The pointwise overlap accounting of Section 2 gives
+\(H_{\rm cov}\ge T^{\rm odd}_{<N}\), and the union bound on the
+\(N-3\) overlap events gives
+\(T^{\rm odd}_{<N}\le(N-3)\mu(G^{\rm odd}_{<N})\).
+These prove (11) and the stated prime range.
+
+The geometry checker now additionally checks the odd ideal and its
+signed slack identity on 397 original families, and the odd iterated
+recurrence on 300 prefix steps. These finite checks do not supply the
+unbounded quantifiers; those follow from the ideal, prefix and tail
+arguments above. The interval checker does not recompute FK's large
+prime products or certify the source lemmas. Neither checker is a Lean
+proof. This is an odd-family specialization and extension of the cited
+method, with no claim about priority over uninspected literature.
+
+The stronger lower bound still has no conflicting upper bound on the
+same overlap quantity. It therefore excludes low-overlap hypothetical
+covers but does not resolve Erdős #7. The overlap events remain outside
+the actual earlier survivor at their own prime stage; the source
+transport limitation after (10) still applies.
