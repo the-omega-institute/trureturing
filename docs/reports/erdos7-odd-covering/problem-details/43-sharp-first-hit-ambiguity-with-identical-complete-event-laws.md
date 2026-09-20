@@ -995,3 +995,169 @@ as `Nat.exists_prime_lt_and_le_two_mul` in
 The sharp interval in Sections 1--5, reachable pair in Section 7 and
 source-restricted budget in Section 8 are repository-derived;
 no literature-priority assertion is made.
+
+## 9. A fixed policy can preserve the current marginal without preserving either full pair
+
+The fixed-leaf obstruction in Section 8 uses a complete Latin grid and
+full pair-product marginals. Current-marginal stationarity alone does
+not have that rigidity. The following source has 31 distinct original
+odd moduli and preserves the current marginal for every fixed
+\(0<\delta_7<1\).
+
+### An original-congruence stationary source
+
+Use the carrier \(3^{12}\times5^6\times7\), with pure classes
+\(0\pmod3,0\pmod5,0\pmod7\). The incoming old law is the product
+of the two uniform pure-survivor laws; the current base is uniform on
+\(\{1,\ldots,6\}\). Partition the following 28 distinct
+\(3,5\)-monomials into six groups:
+
+| Current color | Monomials |
+| --- | --- |
+| 1 | \(1,5,375,405,625,2025,3125\) |
+| 2 | \(3,15,225,243,6075\) |
+| 3 | \(9,25,27,125,1125,1875,3375\) |
+| 4 | \(45,81,135,675,5625\) |
+| 5 | \(729,2187,3645\) |
+| 6 | \(6561\) |
+
+Each group sums to \(6561\). Enumerate the entries in table order by
+\(h=0,\ldots,27\). For an entry \(3^i5^j\) in color \(c\), set
+\[
+ a_h=12-i,\qquad b_h=6-j,\qquad
+ \rho_h=1+h+\lfloor h/2\rfloor.
+\]
+The associated original mixed class is the unique CRT class satisfying
+\[
+ x\equiv\rho_h\pmod{3^{a_h}},\qquad
+ x\equiv1\pmod{5^{b_h}},\qquad x\equiv c\pmod7.
+ \tag{FA40}
+\]
+All \(a_h\ge4\), all \(b_h\ge1\), and the 28 values
+\(\rho_h\in\{1,2,4,5,\ldots,40,41\}\) are distinct nonzero
+residues modulo \(81\). Consequently the old trigger rectangles are
+pairwise disjoint. Unique monomials give unique pairs \((a_h,b_h)\),
+hence all 28 mixed numerical moduli are distinct. Together with the
+three pure classes these are 31 distinct odd moduli greater than one.
+
+The old mass of a rectangle is
+\[
+ \frac{3^{1-a_h}}2\frac{5^{1-b_h}}4
+ =\frac{15\,3^i5^j}{8\,3^{12}5^6}.
+\]
+Thus each color has trigger mass \(m=1/675000\), and the union of
+all triggers has mass \(6m=1/112500\). Every active old row forbids
+exactly one current color. Put
+\[
+ u=\frac{\min(1/6,\delta_7)}{1-\min(1/6,\delta_7)}.
+\]
+On a row forbidding \(c\), the actual current density is
+\(1+u(1-6\mathbf1_{\{c\}})\); on inactive rows it is one.
+Integrating any current color \(c\) therefore gives density
+\[
+ 1+u(6m)-6um=1.
+ \quad\text{Hence}\quad \mu_7=\nu_7
+ \quad\text{for every }0<\delta_7<1.
+ \tag{FA41}
+\]
+The actual source differs from the product law on its active rows.
+On the head-avoiding set, its surplus above the unnormalized product
+reference is
+\[
+ h=\frac56u\frac1{112500}>0.
+ \tag{FA42}
+\]
+This is a stationarity counterexample, not an odd covering: the integer
+\(2\) avoids all 31 classes.
+
+### Disjoint original rectangles cannot preserve a full old-current pair
+
+Let \(r<s<p\) be odd primes, \(n=p-1\), and take uniform old
+pure-survivor bases at arbitrary finite heights \(E,F\). Consider a
+nonempty family of original classes with moduli
+\(r^{a_i}s^{b_i}p\), where \(1\le a_i\le E\),
+\(1\le b_i\le F\), the pairs \((a_i,b_i)\) are distinct, and
+the old rectangles \(C_i\times D_i\) are nonempty and pairwise
+disjoint. Assign any current color \(c_i\in\{1,\ldots,n\}\) to
+each class, and use one fixed \(0<\delta_p<1\). Then
+\[
+ \mu_{r,p}\ne\nu_r\otimes\nu_p,
+ \qquad
+ \mu_{s,p}\ne\nu_s\otimes\nu_p.
+ \tag{FA43}
+\]
+This does not require a Latin grid or a density cap.
+
+To prove the first inequality, set
+\(u=\min(1/n,\delta_p)/(1-\min(1/n,\delta_p))>0\) and
+\(v_i=\mathbf1-n e_{c_i}\in\mathbb R^n\). Disjointness gives
+the current density \(\mathbf1+u v_i\) on rectangle \(i\).
+The alleged full pair-product law would therefore imply, at every
+complete old \(r\)-word \(x\),
+\[
+ F(x):=\sum_{i:x\in C_i}\frac{s^{1-b_i}}{s-1}v_i=0.
+ \tag{FA44}
+\]
+Choose the largest occurring \(r\)-depth \(A\), and among labels
+at that depth choose the unique largest \(s\)-depth \(B\).
+Choose \(x\) in that label's \(r\)-cylinder and \(x'\) in a
+different child of the same depth-\((A-1)\) parent. Such an old
+survivor child exists: there are \(r\) children when \(A>1\),
+and \(r-1\ge2\) at the first pure-survivor level.
+
+All labels of depth less than \(A\) agree at \(x,x'\). Multiply
+\(F(x)-F(x')=0\) by \((s-1)s^{B-1}\). Each remaining term of
+\(s\)-depth \(b<B\) has integer coefficient divisible by \(s\).
+The chosen label is the only term of depth \(B\), and has coefficient
+one. In any current coordinate other than its color its vector entry
+is one. That coordinate of the alleged equality reduces modulo \(s\)
+to \(1=0\), a contradiction. Exchanging \(r,s\) proves the
+second inequality. All complete digits are retained throughout.
+
+The same first inequality holds under a weaker assumption than
+disjointness: no old word triggers two labels of the same color, and
+for each fixed \(x\), the positive values of
+\(k(x,y)=\#B(x,y)\) are constant as \(y\) varies. The constant
+may depend on \(x\). Indeed the density perturbation on that row is
+\[
+ \frac{u_k}{k}\sum_{i:(x,y)\in C_i\times D_i}v_i,
+ \qquad
+ u_k=\frac{\min(k/n,\delta_p)}{1-\min(k/n,\delta_p)}.
+ \tag{FA45}
+\]
+The positive scalar \(u_k/k\) is constant on its active part.
+Pair-product would again force (FA44), including rows with no active
+point, and the same contradiction applies. The analogous columnwise
+condition gives the second inequality. Arbitrary multicolor unions
+with varying \(k\), or overlapping triggers of the same color,
+are not covered by this argument; simultaneous full pair products
+in that unrestricted source class remain unresolved here.
+
+### Exact finite witness
+
+The standard-library producer
+[`fixed_stationary_boundary.py`](../frontier/cover-geometry/fixed_stationary_boundary.py)
+and its [exact output](../frontier/cover-geometry/fixed_stationary_boundary.json)
+give every literal modulus and residue in (FA40). The producer uses
+the adjacent `balanced_prefix_budget.py` only for CRT, prefix
+partitions and clipping, and rebuilds this source's probability law.
+It partitions the complete old coordinates into \(352\times24\)
+constant-test cylinders, representing \(4428675000\) old survivor
+words. For the default thresholds it verifies:
+
+| \(\delta_7\) | Head surplus \(h\) | \(\operatorname{TV}(\mu_{3,7},\nu_3\otimes\nu_7)\) | \(\operatorname{TV}(\mu_{5,7},\nu_5\otimes\nu_7)\) |
+| --- | --- | --- | --- |
+| \(1/96\) | \(1/12825000\) | \(1/12825000\) | \(341/6643012500\) |
+| \(1/6\) | \(1/675000\) | \(1/675000\) | \(6479/6643012500\) |
+| \(1/5\) | \(1/675000\) | \(1/675000\) | \(6479/6643012500\) |
+
+```sh
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fixed_stationary_boundary.py --output /tmp/fixed-stationary-boundary.json
+```
+
+Repeating `--delta` selects other exact rational thresholds. The
+all-threshold assertion is proved by (FA41), not by the three sampled
+policies. Section 9 is a repository-derived ordinary mathematical
+argument with an exact computational witness, not a Lean-certified
+result or a resolution of unrestricted Erdős #7; no literature-priority
+assertion is made.
