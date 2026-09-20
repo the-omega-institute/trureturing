@@ -187,7 +187,7 @@ public sealed partial class CurrentExecutionContractTests
             calls.Add(project);
             if (Interlocked.Increment(ref starts) == 2) entered.SetResult();
             // This deadline only releases a broken scheduler; elapsed time is not the assertion.
-            if (!release.Wait(TimeSpan.FromSeconds(30))) throw new TimeoutException("concurrent runner hang guard");
+            if (!release.Wait(TestBudgets.PlaybookProcessHangGuard)) throw new TimeoutException("concurrent runner hang guard");
             if (project == CandidateFixture.First && outcome == "exception") throw new IOException("fixture execution error");
             var failed = project == CandidateFixture.First && outcome == "failed";
             fixture.WriteTrx(results, failed ? "Failed" : "Passed");
@@ -196,13 +196,13 @@ public sealed partial class CurrentExecutionContractTests
         var exit = -1;
         try
         {
-            await entered.Task.WaitAsync(TimeSpan.FromSeconds(20));
+            await entered.Task.WaitAsync(TestBudgets.PlaybookProcessHangGuard);
             Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath)));
         }
         finally
         {
             release.Set();
-            exit = await work.WaitAsync(TimeSpan.FromSeconds(30));
+            exit = await work.WaitAsync(TestBudgets.PlaybookProcessHangGuard);
         }
         Assert.Equal(outcome == "passed" ? 0 : 1, exit);
         Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, calls.Order(StringComparer.Ordinal));
