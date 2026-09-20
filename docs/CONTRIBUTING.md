@@ -40,17 +40,18 @@ Reading the source and book needs no local toolchain. For local work, use Git,
 Make and Bash, with these tools on `PATH`:
 
 - [elan](https://github.com/leanprover/elan#installation), which selects
-  **Lean 4.33.0** from [lean-toolchain](../lean-toolchain). Mathlib is pinned to
-  **v4.33.0** in [lakefile.toml](../lakefile.toml), with resolved dependencies in
+  Lean from [lean-toolchain](../lean-toolchain). Mathlib is declared in
+  [lakefile.toml](../lakefile.toml), with resolved dependencies in
   [lake-manifest.json](../lake-manifest.json).
-- [.NET SDK **10.0.103**](https://dotnet.microsoft.com/en-us/download/dotnet/10.0),
+- [.NET SDK](https://dotnet.microsoft.com/en-us/download),
   selected by [global.json](../global.json) with roll-forward disabled. The
   repository's Lean wrapper also uses .NET.
-- **Python 3.11 or later** as `python3` for the CI/preflight scripts, which use
+- **Python** available as `python3` for the CI/preflight scripts, which require
   the standard-library `tomllib` module.
 
-The shell examples below use macOS/Linux conventions. Install the SDK version
-in the pin, not just a runtime. Check `dotnet --version`, `lean --version` and
+The shell examples below use macOS/Linux conventions. The installed SDK must
+match [global.json](../global.json); a runtime alone is insufficient.
+Check `dotnet --version`, `lean --version` and
 `python3 --version` from the checkout. Dependency downloads need network access;
 individual experiments may have additional prerequisites.
 
