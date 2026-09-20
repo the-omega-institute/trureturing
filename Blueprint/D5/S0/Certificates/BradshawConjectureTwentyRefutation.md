@@ -28,7 +28,7 @@ $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall n \in \mathbb{
 
 *Commentary.*
 
-Bradshaw, printed page 16: "It should also be noted that similar problems can be formulated for the generalized Collatz functions $C_{a,b}(n) := \begin{cases}\operatorname{NatDiv}\left(a \cdot n + b, 2\right),&\text{if }n\text{ odd};\\\operatorname{NatDiv}\left(n, 2\right),&\text{if }n\text{ even},\end{cases}$ with $a \equiv b (\mathrm{mod} 2)$."
+Bradshaw, printed page 16: "It should also be noted that similar problems can be formulated for the generalized Collatz functions $C_{a,b}(n) := \begin{cases}\frac{an+b}{2},&\text{if }n\text{ odd};\\\frac{n}{2},&\text{if }n\text{ even},\end{cases}$ with $a \equiv b (\mathrm{mod} 2)$."
 
 The encoding C(a,b,n) uses exactly these two branches. NatDiv(x,y) is natural-number integer division, and NatMod(x,y) is the natural remainder. The expression ite(P,x,y) chooses x when P holds and y otherwise. For natural n, NatMod(n,2) = 1 means n is odd, and the other branch means n is even. The map is defined for all natural a,b,n; the claim imposes equal parity on a and b, so the fractions in the source quotation have exact integral values on their respective branches. The formal definition displayed above uses NatDiv for both quotients.
 

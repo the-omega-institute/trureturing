@@ -129,14 +129,14 @@ internal sealed class BradshawConjectureTwentyRefutationDocument : IScribeDocume
         Seq(F.Id("a"), Sp, Equiv, Sp, F.Id("b"), Sp,
             Parenthesized(Seq(Mathrm, Grp(F.Id("mod")), Sp, D(2))));
 
-    // Fractions here reproduce the source quotation; the Lean mirror uses NatDiv below.
+    // Preserve the printed fractions in the quotation; CollatzFormula uses NatDiv for the Lean mirror.
     private static Formula SourceCollatzFormula() =>
         Seq(SourceC(F.Id("n")), Sp, Colon, Eq, Sp,
             Begin, Grp(F.Id("cases")),
-            Call("NatDiv", Add(Multiply(F.Id("a"), F.Id("n")), F.Id("b")), D(2)),
+            new Formula.Fraction(Seq(F.Id("a"), F.Id("n"), Plus, F.Id("b")), D(2)),
             Comma, Amp, F.Text, Grp(Seq(F.Id("if"), Sp)), F.Id("n"),
             F.Text, Grp(Seq(Sp, F.Id("odd"))), Semi, RowBreak,
-            Call("NatDiv", F.Id("n"), D(2)),
+            new Formula.Fraction(F.Id("n"), D(2)),
             Comma, Amp, F.Text, Grp(Seq(F.Id("if"), Sp)), F.Id("n"),
             F.Text, Grp(Seq(Sp, F.Id("even"))), Comma,
             End, Grp(F.Id("cases")));
