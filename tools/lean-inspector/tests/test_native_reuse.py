@@ -60,6 +60,16 @@ class NativeReuseTests:
         self.assertIn('phase=report status=completed', first.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file(), '[FAIL] defaults_report_success_sealed')
         expected = output.read_bytes()
+        # An explicitly report-only resource must stay report-only on a miss too.
+        # An invalid, unselected program proves the facet cannot demand defaults.
+        self.write('Audit.lean', 'def audit : False := True.intro\n')
+        publication.member(output, '.reuse.json').unlink()
+        clear_calls()
+        report_only = self.inspect(phase='report-only-miss-with-unselected-invalid-program')
+        self.assertEqual(builds(), [['build', ':report']])
+        self.assertIn('phase=report status=completed', report_only.stderr)
+        self.assertEqual(expected, output.read_bytes())
+        self.write('Audit.lean', 'def audit : Nat := 1\n')
         seed = self.root / 'lightweight-seed' / output.name
         seed.parent.mkdir()
         for suffix in (*publication.SUFFIXES, '.reuse.json'):

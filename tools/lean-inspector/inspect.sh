@@ -152,7 +152,7 @@ if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs
-# The package facet demands all ordinary defaults/audits and owns module work.
+# The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
