@@ -24,8 +24,13 @@ where \(X\) is the original pure-power survivor density,
 and \(P_*\) is the largest actual support prime.
 A divisor-support capacity bound also removes the largest-prime factor:
 \(M_{\mathrm{comp}}>X/140\) at every finite height and for arbitrary
-additional support primes. These are ordinary mathematical deductions
-from the cited reports and the finite Euler product.
+additional support primes. Section 8 shows that this uniform floor is
+already implied by report 361's exact no-prime-region coverage condition
+and the same divisor-capacity bound. It therefore adds no exclusion of an
+original modulus palette that passes that existing condition. The joint
+budget form retains the excess inside the no-prime region.
+These are ordinary mathematical deductions from the cited reports and
+the finite Euler product.
 They do not establish unrestricted noncoverage, new Lean content,
 or literature novelty.
 
@@ -478,14 +483,103 @@ their overlapping charges. This is a direct use of divisor-factorized
 capacity after an original-Haar reduction; it does not order 379's
 forest-law prices by the golden resource objective.
 
-## 8. The remaining comparison
+## 8. The exact no-prime budget already implies the uniform floor
+
+Keep the same finite original support, heights and distinct modulus set.
+With \(\varphi\) denoting Euler's totient, put
+
+\[
+ \begin{aligned}
+ P_0&=\prod_{p\in\Lambda}(1-1/p),&
+ W&=\sum_{d\in D_{\mathrm{comp}}}\frac1d,\\
+ A&=P_0\sum_{d\in D_{\mathrm{comp}}}\frac1{\varphi(d)},&
+ v&=A-P_0.
+ \end{aligned}
+ \tag{HB30}
+\]
+
+The exact identity in
+[361, PR6](../321-384/361-prime-overlap-reservation-for-composite-parents.md)
+is \(M_{\mathrm{comp}}=W-A\). Here \(A\) is the total composite load
+in the region avoiding every original prime class, whose Haar mass is
+\(P_0\). Whole coverage therefore requires \(A\ge P_0\), equivalently
+\(\sum_{d\in D_{\mathrm{comp}}}1/\varphi(d)\ge1\), and \(v\ge0\).
+This condition is already part of PR6. Also \(X\le P_0\), since
+\(y_p\ge1/p\) at every original height.
+
+Writing \(h=\sum_{d\in D}1/d-1\) and
+\(J=\sum_{p\in\Lambda}1/p-1+P_0\), the presence of every support
+prime in \(D\) gives
+
+\[
+ h-J=W-P_0=M_{\mathrm{comp}}+v.
+ \tag{HB31}
+\]
+
+Apply the threshold split from section 7 to all original composite
+labels. At most \(C(t)\) of their reciprocal mass has \(c_d\le t\).
+For every \(0<t<1\), this yields
+
+\[
+ \begin{aligned}
+ M_{\mathrm{comp}}&\ge t\bigl(W-C(t)\bigr),\\
+ (1-t)M_{\mathrm{comp}}&\ge t\bigl(A-C(t)\bigr).
+ \end{aligned}
+ \tag{HB32}
+\]
+
+This finite label inequality does not require whole coverage or the
+mixed-head survivor estimate. It also permits an empty composite subset;
+whole coverage supplies the separate requirement \(A\ge P_0>0\).
+
+Use the already established strict capacity bound in HB29 and set
+\(\alpha=2095093/10000000\). At \(t=1/25\), HB32 gives the joint form
+
+\[
+ \begin{aligned}
+ 24M_{\mathrm{comp}}+\alpha X&>A=P_0+v,\\
+ 24(h-J)+\alpha X&>P_0+25v,\\
+ W&>\frac{25(P_0+v)-\alpha X}{24}.
+ \end{aligned}
+ \tag{HB33}
+\]
+
+The strictness comes from \(C(1/25)<\alpha X\); no new approximation
+of the original heights or law is used. Under the existing coverage
+condition \(A\ge P_0\ge X\), it follows that
+
+\[
+ M_{\mathrm{comp}}>\frac{1-\alpha}{24}X>\frac{X}{140}.
+ \tag{HB34}
+\]
+
+For the last comparison, \(\alpha<1/4\) gives
+\((1-\alpha)/24>1/32>1/140\).
+Consequently HB29's uniform floor cannot exclude any exact original
+palette that already satisfies the no-prime-region union condition.
+HB32 and HB33 express a universal relation between divisor-label
+capacities, even without coverage, with \(v=A-P_0\) defined algebraically.
+They are useful budget summaries, not an independent new palette test.
+
+The same limitation applies to a period-only comparison with the
+[odd 315 resource envelope](../../problem-details/02-current-bounds-and-comparisons.md#reuse-of-the-5040-and-divisor-sum-work).
+If the full nonunit divisor palette of \(Q\) passes the no-prime
+condition, that numerical palette also satisfies HB32--HB34 and the
+divisor-sum envelope. Those scalar constraints alone cannot exclude
+such a period. This is an obstruction to that comparison, not a claim
+that the full palette has a covering residue assignment or satisfies
+all extremal and private-point constraints.
+
+## 9. The remaining comparison
 
 [361, PR4--PR6](../321-384/361-prime-overlap-reservation-for-composite-parents.md)
 already supplies \(M_{\mathrm{comp}}\le h-J\) on the same original
-Haar space. No incompatibility between that upper bound and HB15,
-HB22 or HB29 has been proved. The remaining task is an incompatible upper bound
-on this same original budget, with the original labels, heights, and
-joint coverage constraints retained.
+Haar space. By HB31 this upper bound is exactly \(v\ge0\), so it cannot
+contradict the uniform floor it already implies together with the
+divisor-capacity inequality. No incompatibility with the saturated-branch
+bounds has been proved either. A stronger exclusion requires an additional
+restriction on this same original budget or its jointly realizable
+sources, retaining the original labels, heights and coverage constraints.
 
 The missing-fibre quotient is a whole-cover reduction with at most two
 copies of each output modulus. Its heights are unrestricted and several
