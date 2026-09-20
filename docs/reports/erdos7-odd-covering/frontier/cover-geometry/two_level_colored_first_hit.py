@@ -5,6 +5,7 @@ No optimization package is used: a feasible source and a pointwise dual
 prove the optimum. All classes retain their original numerical moduli.
 """
 from argparse import ArgumentParser
+from collections import Counter
 from fractions import Fraction as F
 from hashlib import sha256
 from itertools import combinations
@@ -145,6 +146,8 @@ def main():
 
     inv = pow(old_period, -1, current_period)
     costs, additive_costs, triple, current_moments = {}, {}, {}, {}
+    full_AP_patterns = {name: {mask: F(0) for mask in range(1 << len(labels))}
+                        for name in laws}
     row_cost = {}
     for x in states:
         i1, i4, b, c = indicators(x)
@@ -179,10 +182,14 @@ def main():
         scalar_beta = max(F(0), scalar_alpha-delta)/(1-delta)
         require(scalar_beta-beta == F(a*c, q*(q-1)),
                 "Pointwise charge saved by actual cross-depth containment")
+        pattern_counts = Counter(sum(value << i for i, value in enumerate(row))
+                                 for row in event_vectors)
         for name, law in laws.items():
             costs[name] = costs.get(name, F(0)) + law[x]*beta
             additive_costs[name] = additive_costs.get(name, F(0)) + law[x]*scalar_beta
             triple[name] = triple.get(name, F(0)) + law[x]*a*b*c
+            for mask, count in pattern_counts.items():
+                full_AP_patterns[name][mask] += law[x]*F(count, current_period)
             moments = current_moments.setdefault(name, [F(0)]*28)
             k = 0
             for i in range(len(labels)):
@@ -193,6 +200,14 @@ def main():
                     k += 1
     require(current_moments["plus"] == current_moments["minus"] == current_moments["product"],
             "All full original AP unary/pair moments under source x current Haar identical")
+    require(full_AP_patterns["plus"] == full_AP_patterns["minus"] == full_AP_patterns["product"],
+            "The entire 128-pattern original-AP joint law is identical")
+    nonzero_patterns = {mask: mass for mask, mass in full_AP_patterns["plus"].items()
+                        if mass}
+    require(set(nonzero_patterns) == {0,8,16,32,64,72,80},
+            "Exactly seven patterns: empty, four singletons and two doubletons")
+    require(all(bin(mask).count('1') <= 2 for mask in nonzero_patterns),
+            "Every original AP intersection of order at least three is empty")
 
     # The primal LP has all actual coordinates, not abstract event patterns.
     # Four equality prices 1/10 use the fixed (old3,old5) row mass 1/24.
@@ -245,6 +260,8 @@ def main():
         "full_pair_marginal_cells_checked": pair_checks,
         "identical_old_unary_and_pair_moments": len(moment_rows["plus"]),
         "identical_full_AP_unary_and_pair_moments": len(current_moments["plus"]),
+        "identical_full_AP_joint_pattern_count": len(full_AP_patterns["plus"]),
+        "full_AP_joint_nonzero_pattern_probabilities": nonzero_patterns,
         "triple_ABC": triple, "first_hit_costs": costs,
         "literal_additive_row_costs": additive_costs,
         "first_hit_nonidentifiability_gap": costs["minus"]-costs["plus"],

@@ -31,8 +31,18 @@
     "product": "133/7920"
   },
   "first_hit_nonidentifiability_gap": "1/138600",
+  "full_AP_joint_nonzero_pattern_probabilities": {
+    "0": "3991/4356",
+    "16": "65/4356",
+    "32": "1/44",
+    "64": "1/2178",
+    "72": "1/1452",
+    "8": "65/1452",
+    "80": "1/4356"
+  },
   "full_pair_marginal_cells_checked": 252,
   "full_period": 38115,
+  "identical_full_AP_joint_pattern_count": 128,
   "identical_full_AP_unary_and_pair_moments": 28,
   "identical_old_unary_and_pair_moments": 28,
   "literal_additive_row_costs": {
@@ -83,7 +93,7 @@
   },
   "model_sha256": "0b1c4f4fe56e66b0ba05817a22e558f1509e1812e8ce280c1a61e75cdb02f348",
   "old_survivor_atoms": 144,
-  "producer_sha256": "cfa427ba4d261f8cf437b3774bc7431a2b7797c24dc97b527e197da78e5a4362",
+  "producer_sha256": "908f81c967df5cfcc4a20e657982c6344007c42619db4bdd8af56529fd06b4ce",
   "scope": "Ordinary finite exact certificate; no Lean, no unrestricted head bound, no claim that incoming kernels equal an earlier prescribed BBMST policy. The plus, minus and product laws are realized by normalized full-history kernels satisfying the stated caps; the uncapped comparator explicitly violates the seven cap.",
   "sharp_capped_LP_optimum": "97/5775",
   "sharp_uncapped_pair_LP_optimum": "3/176",

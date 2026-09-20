@@ -6,9 +6,12 @@
 One containment-reduced family of seven distinct odd original moduli admits
 two positive incoming survivor laws with the same complete two-coordinate
 marginals, all original-label unary and pair moments, the same fixed colors
-and every resulting pair/chain zero. Both laws obey the stated full-history
+and every resulting pair/chain zero. In fact the entire joint distribution
+of all seven original AP indicators agrees under the incoming law times
+uniform current-coordinate Haar. Both laws obey the stated full-history
 conditional prefix caps. Nevertheless, their actual clipped-kernel first-hit
-costs differ by exactly `1/138600`.
+costs differ by exactly `1/138600`. The missing relation is the association
+with old histories, which determines the conditional fibre load.
 
 For this same family, a linear program on its 144 actual old CRT atoms has
 the exact optimum `97/5775`. A six-price rational dual and one of the two
@@ -121,6 +124,17 @@ intersection is a fixed numerical Haar factor multiplying an old unary/pair
 moment. This assertion concerns the incoming Haar extension, before the
 nonlinear clipped kernel is applied.
 
+The entire original-AP event vector has the same joint law as well. The
+three old pure indicators are zero on X. The 55 class is disjoint from
+33,99 and 847 because its current root is 1 rather than 0, while 33 and
+99 are mutually disjoint. Thus only seven event patterns can occur: the
+empty pattern, the four current singletons, and the two pairs `{33,847}`
+and `{99,847}`. All intersections of three or more original APs are empty.
+The pair probabilities determine the two doubletons; subtracting those
+from the relevant singleton marginals determines the singleton-only
+patterns, and normalization determines the empty pattern. The complete
+128-pattern law is therefore identical under both incoming Haar extensions.
+
 On the other hand,
 
     E[A B] = 1/6,  E[B C] = 1/24,
@@ -135,11 +149,14 @@ Indeed `E_nu3[A h3]=1/3`, `E_nu5[B h5]=1/4`, and
     E_mu_plus[b]  = 2327/138600,
     E_mu_minus[b] = 97/5775 = 2328/138600.              (TF6)
 
-Thus those complete pair observations and structural zeros do not determine
-the actual first-hit charge. An upper bound based on them can remain sound
-by optimizing over the missing triple, but it cannot silently substitute
-its value from a different joint law. The counterexample does not say that
-all pair-based upper bounds are useless or that no uniform bound exists.
+Thus even the complete unconditional original-AP event law does not determine
+the actual first-hit charge. Increasing the order of moments of those same
+full AP indicators cannot distinguish these examples: their entire laws
+already agree. The triple in (TF5) instead concerns earlier-prefix conditions
+under the old source, retaining their relationship to the fixed current
+colors. An upper bound based on the old pair observations can remain sound
+by optimizing over that missing triple, but cannot silently substitute its
+value from a different law. No impossibility of useful upper bounds is claimed.
 
 ## 3. A realizable finite LP and its exact dual
 
@@ -224,11 +241,12 @@ intersections; [profile 363](../profile-notes/321-384/363-common-source-antichai
 that marginal feasibility need not imply an AP realization. The present
 finite construction uses those boundaries: it provides a specific sharp
 two-depth cap-aware objective and an actual same-family nonidentifiability
-witness for pair observations. No new general antichain theorem, generic
-projection identity, literature priority or Lean declaration is claimed.
+witness even for the complete unconditional original-AP event law. No new
+general antichain theorem, generic projection identity, literature priority
+or Lean declaration is claimed.
 
 The missing unrestricted input remains a quantitative bound for the
-relevant higher intersections under the one specified incoming/killed law,
+relevant joint earlier-prefix masks under the one specified incoming/killed law,
 uniform over original prime powers, all cofactor supports and the required
 future continuation. This example demonstrates one triple that must be
 represented or validly bounded; it does not establish how many observations
@@ -247,6 +265,7 @@ python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_le
 The producer checks the literal original residues on all 144 old fibres
 and 17,424 old/current points, all five comparable original pairs,
 the complete pair marginals, 28 old and 28 full-AP unary/pair moments,
+the complete 128-pattern original-AP joint laws,
 the full-history caps, normalized current kernels, exact hinge identities,
 all 144 dual columns and primal attainment. Its JSON embeds the mathematical
 input hash and producer source hash. It uses explicit exceptions, exact
