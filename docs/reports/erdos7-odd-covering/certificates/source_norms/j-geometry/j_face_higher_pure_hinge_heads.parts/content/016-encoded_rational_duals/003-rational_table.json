@@ -1,0 +1,23 @@
+{
+  "length": 902,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/016-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "617b89368c98a77c07d154cbc07f551a9d8f28a3e266ff4ac5af866535d76244",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 902,
+      "part": {
+        "path": "content/016-encoded_rational_duals/003-rational_table/000798-000902.json",
+        "sha256": "04eeeba83edd33eb2334e879e17bba5f6059f3880a977ea31d272ff05e8a6310",
+        "kind": "value-zlib-base85"
+      }
+    }
+  ]
+}
