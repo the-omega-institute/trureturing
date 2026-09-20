@@ -1,0 +1,60 @@
+**定理 12.4（最小状态空间的正交对齐）。** 在定义12.1下，若进一步有 $d_P<1$，则 $\operatorname{rank}H=\operatorname{rank}H'$，且存在整个 $\mathcal P$ 上的正交映射 $O$，满足
+$$
+OP=P'O,\qquad \|O-I\|_F\le2d_P.
+\tag{12.15}
+$$
+因而 $O|_{P\mathcal P}:P\mathcal P\to P'\mathcal P$ 是有效内积空间的等距同构，并有
+$$
+\|J-O^*J'\|_F\le d_J+2\sqrt R\,d_P,
+\qquad
+\|T-O^*T'O\|_F\le d_T+4v\,d_P.
+\tag{12.16}
+$$
+记有效生成元为
+$$
+C=-h^{-1}\log(T|_{P\mathcal P}),\qquad
+C'=-h^{-1}\log(T'|_{P'\mathcal P}),
+$$
+则在 $P\mathcal P$ 上有
+$$
+\boxed{\|C-O^*C'O\|_F
+\le\frac{d_T+4v\,d_P}{hu}.}
+\tag{12.17}
+$$
+正交对齐保持内积；式(12.16)控制其输入及演化交织缺陷，不断言两份不同数据的模型精确交织。
+
+所用极分解为标准有限矩阵极分解：N. J. Higham, “Computing the Polar Decomposition—with Applications”, *SIAM Journal on Scientific and Statistical Computing* 7(4) (1986), 1160–1174，[DOI 10.1137/0907079](https://doi.org/10.1137/0907079)，Theorem 1.1；该文§2.4研究其扰动。下证直接给出这里由两投影构成的极分解及所需误差，不以一般扰动结论替代具体常数。
+
+**证明。** 令 $D=P-P'$、
+$$
+W=P'P+(I-P')(I-P).
+$$
+投影恒等式给
+$$
+WP=P'W,\qquad
+W-I=(P'-P)(2P-I),\qquad
+W^*W=I-D^2.
+\tag{12.18}
+$$
+其中 $D^2$ 与 $P$ 交换。由 $\|D\|_{\rm op}\le d_P<1$，$W^*W$ 正定。取
+$$
+O=W(W^*W)^{-1/2}.
+$$
+它是正交映射；$(W^*W)^{-1/2}$ 与 $P$ 交换，所以 $OP=P'O$。这同时证明有效空间同维。
+
+$2P-I$ 正交，故 $\|W-I\|_F=\|D\|_F$。记 $|W|=(I-D^2)^{1/2}$，则 $W=O|W|$。对每个 $|\lambda|<1$，
+$$
+0\le1-\sqrt{1-\lambda^2}\le|\lambda|.
+$$
+在 $D$ 的特征基中逐项求和，得到
+$$
+\|O-W\|_F=\|I-|W|\|_F\le\|D\|_F.
+$$
+于是 $\|O-I\|_F\le2\|D\|_F\le2d_P$。
+
+输入差分解为 $J-J'+(I-O^*)J'$。演化差分解为
+$$
+T-T'+(I-O^*)T'O+T'(I-O).
+$$
+由 $\|J'\|_{\rm op}\le\sqrt R$、$\|T'\|_{\rm op}\le v$ 得式(12.16)。$O$ 把有效空间等距对齐后，$T$ 与 $O^*T'O$ 在同一个有效空间上均具有 $[u,v]$ 内的谱；矩阵对数与正交运输交换。再次使用式(12.7)及对数的 $1/u$ 常数，得到式(12.17)。$\square$
+

@@ -1,0 +1,30 @@
+**定理 13.4（完整核已知时的精确未来最坏情形半径）。** 固定定义13.1中的实际模型，且 $\mathcal H(z,E_*)\ne\varnothing$。对 $t\ge0$ 记
+$$
+A_t=J^*e^{-tC},\qquad
+B_t=A_tV=[K(t),K(t+h),\ldots,K(t+rh)],
+$$
+$$
+c_t=B_tH^\dagger z,\qquad
+Q_t=K(2t)-B_tH^\dagger B_t^*.
+\tag{13.10}
+$$
+则 $Q_t\succeq0$，且
+$$
+\boxed{
+\inf_{y\in U}\ \sup_{h_0\in\mathcal H(z,E_*)}
+\|J^*e^{-tC}h_0-y\|
+=q\sqrt{\|Q_t\|}.
+}
+\tag{13.11}
+$$
+中心 $y=c_t$ 达到该值。对时间范围 $I=[0,T_0]$ 或 $I=[0,\infty)$，以有界连续路径空间 $C_b(I;U)$ 的一致范数计费，同一初态纤维上的整条路径风险为
+$$
+\boxed{
+\inf_{y\in C_b(I;U)}\ \sup_{h_0\in\mathcal H(z,E_*)}
+\sup_{t\in I}\|J^*e^{-tC}h_0-y(t)\|
+=\sup_{t\in I}q\sqrt{\|Q_t\|}.
+}
+\tag{13.12}
+$$
+中心路径 $c=(c_t)_{t\in I}$ 由同一个 $h_{\mathrm{vis}}$ 产生并达到该值。
+
