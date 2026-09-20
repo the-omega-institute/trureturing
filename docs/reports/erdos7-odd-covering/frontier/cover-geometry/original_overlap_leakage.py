@@ -169,8 +169,20 @@ def main():
             'Published Euler product <94 yields the stronger 5e-52 gap')
     require((N-3)*F(1,10**64) < F(2,10**43),
             'Minimal-class overlap sum forces union mass greater than 1e-64')
+    # Section 7: a smooth reciprocal tail cannot carry the new overlap union.
+    P, tilt, degree, cutoff_power = 25*10**9, F(13,5), 5, 69
+    require(1 < tilt < 3 < P < N+1,
+            'Tilt converges at every odd prime; P is below the cited p_N')
+    require(sum((F(2,3)**j for j in range(degree)), F(0)) == F(211,81),
+            'Exact five-term lower bound for the Bernoulli comparison')
+    require(tilt < F(211,81), 'Tilt is bounded by the five-term sum')
+    smooth_tail_upper = 47**degree / tilt**cutoff_power
+    require(smooth_tail_upper < F(1,10**20),
+            'Original smooth reciprocal tail is smaller than the forced overlap union')
+    require(P**cutoff_power < 10**718,
+            'Both members of the required intersecting pair are below 10^718')
     print(counts)
-    print('PASS geometry, cross-prime budgets, localized recurrence, source boundary and rational bridge')
+    print('PASS geometry, cross-prime budgets, localized recurrence, source boundary, rational bridge and bounded-pair tail')
     print('INPUTS NOT RECOMPUTED: published Lemma3 reserve > 4.7596769e-50 and page24 Euler product <94')
 
 

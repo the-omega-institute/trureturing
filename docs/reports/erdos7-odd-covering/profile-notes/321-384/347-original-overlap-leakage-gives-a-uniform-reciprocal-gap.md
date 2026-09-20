@@ -500,3 +500,94 @@ same overlap quantity. It therefore excludes low-overlap hypothetical
 covers but does not resolve Erdős #7. The overlap events remain outside
 the actual earlier survivor at their own prime stage; the source
 transport limitation after (10) still applies.
+
+## 7. A bounded pair of original moduli must already intersect
+
+Every hypothetical finite odd distinct cover has two intersecting
+original classes whose two numerical moduli are both less than
+\(10^{718}\). In fact, put \(P=25\cdot10^9\) and \(K=P^{69}\).
+There are two intersecting original classes with distinct moduli
+\(m_1,m_2\le K<10^{718}\), and their largest prime factors are
+different and both less than \(P\). No bound is asserted on the other
+original moduli.
+
+This is the bounded-pair target of the cited FK argument, now using the
+odd overlap-union bound (11) and an elementary smooth reciprocal tail.
+The comparison is with its inspected author-version cutoff
+\(\exp(1.681527\cdot10^{21})\), not with uninspected later literature.
+
+Let \(\mathcal S_P\) be all positive odd integers whose prime factors
+are at most \(P\), and take
+\[
+r=\frac{13}{5},\qquad
+\sigma=\frac{\log r}{\log P}\in(0,1).
+\]
+For every odd prime \(q\le P\), \(q^\sigma\le r<3\le q\).
+With \(x=1/q\le1/3\), the exact five-term calculation gives
+\[
+1-(1-x)^5
+ =x\sum_{j=0}^4(1-x)^j
+ \ge x\sum_{j=0}^4(2/3)^j
+ =\frac{211}{81}x>rx.
+\]
+All factors below are positive, so
+\[
+\prod_{\substack{q\le P\\q\text{ odd prime}}}
+ (1-q^{-1+\sigma})^{-1}
+\le\prod_{\substack{q\le P\\q\text{ odd prime}}}(1-r/q)^{-1}
+<\left(\prod_{\substack{q\le P\\q\text{ odd prime}}}
+          (1-1/q)^{-1}\right)^5<47^5.
+\tag{17}
+\]
+For the last step use the same cited Euler product below 94 at
+\(N_0=1532030200000000000000\), and remove its factor 2. Its range
+includes all primes through \(P\): the elementary bound
+\(p_{N_0}\ge N_0+1>P\) suffices. This range check is separate from
+the earlier upper bound on \(p_{10^9}\).
+
+There are finitely many primes through \(P\). Expanding their convergent
+geometric series in (17) includes every possible original exponent height.
+For \(m>K\), \(m^{-1}\le K^{-\sigma}m^{-1+\sigma}\), whence
+\[
+\sum_{\substack{m\in\mathcal S_P\\m>K}}\frac1m
+\le K^{-\sigma}\sum_{m\in\mathcal S_P}m^{-1+\sigma}
+<47^5r^{-69}<10^{-20}.
+\tag{18}
+\]
+The usual positive-power weighting of the reciprocal tail, often called
+Rankin's bound, is proved here by the displayed termwise inequality.
+Both numerical comparisons are exact integer inequalities:
+\[
+47^5\,5^{69}\,10^{20}<13^{69},\qquad
+(25\cdot10^9)^{69}<10^{718}.
+\tag{19}
+\]
+They and the five-term comparison are checked by the existing geometry
+checker; no numerical logarithms or enumeration of primes through \(P\)
+are required for (17)–(19).
+
+Let \(V\) be the union of original classes with \(P\)-smooth moduli
+greater than \(K\). The same original Haar law and original numerical
+distinctness give
+\[
+\mu(V)
+\le\sum_{\substack{\text{original }i\\m_i>K,
+                     \ m_i\in\mathcal S_P}}\frac1{m_i}
+\le\sum_{\substack{m\in\mathcal S_P\\m>K}}\frac1m
+<10^{-20},
+\]
+whereas (11) gives \(\mu(G^{\rm odd}_{<10^9})>10^{-20}\).
+Choose an actual period point in \(G^{\rm odd}_{<10^9}\setminus V\).
+It lies in a division-minimal original class of one early prime bucket
+and in an original class of an earlier bucket. These are distinct,
+intersect at the chosen point, and have different largest prime factors
+less than \(P\). Neither modulus exceeds \(K\), since otherwise that
+point would lie in \(V\). Thus the same pair satisfies all the claimed
+bounds. No original label is discarded and no derived moduli are merged.
+
+The result does not make a bounded search over all covering families
+sufficient: only one intersecting pair is bounded, and all other labels
+may still have arbitrary moduli. Its intersection need not carry the
+whole aggregate overlap lower bound. It gives another necessary
+condition for a hypothetical cover, not a contradiction to every such
+cover or a resolution of Erdős #7.
