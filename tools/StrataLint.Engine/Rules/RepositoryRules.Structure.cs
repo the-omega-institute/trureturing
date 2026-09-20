@@ -16,6 +16,8 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, report) in context.Lean.Report.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
+            // Reg is a downstream registration package, not a mathematical stratum.
+            if (path.Value == "Reg.lean" || path.Value.StartsWith("Reg/", StringComparison.Ordinal)) continue;
             foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
@@ -32,6 +34,66 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
+
+    private static ImmutableArray<RuleFinding> RegistrationImportDirection(DeltaRuleContext context)
+    {
+        // The candidate report is accepted Lean evidence. Base source comes only from
+        // the protected snapshot gateway and is parsed as data, never elaborated.
+        var baseline = FormalFiles(context.Baseline)
+            .SelectMany(item => LeanSourceCatalog.ParseFileImports(item.File)
+                .Where(IsRegistrationImport)
+                .Select(module => (Path: item.Path, Module: module)))
+            .ToHashSet();
+        var candidate = context.Lean.Report.Files
+            .Where(item => item.Key.Value.StartsWith("D5/", StringComparison.Ordinal)
+                && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+            .SelectMany(item => item.Value.Imports.Where(IsRegistrationImport)
+                .Select(module => (Path: item.Key, Module: module)))
+            .ToHashSet();
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+
+        if (baseline.Count == 0)
+        {
+            // No delta path filter: zero base debt activates the full-tree ban.
+            foreach (var edge in candidate.OrderBy(edge => edge.Path.Value, StringComparer.Ordinal)
+                .ThenBy(edge => edge.Module, StringComparer.Ordinal))
+                findings.Add(new RuleFinding(edge.Path.Value, $"D5 may not add forbidden import {edge.Module}"));
+        }
+        else
+        {
+            // Edge identity includes the source path. Counts cannot prevent substitution
+            // within one source or moving a debt edge to another source.
+            foreach (var edge in candidate.Except(baseline)
+                .OrderBy(edge => edge.Path.Value, StringComparer.Ordinal)
+                .ThenBy(edge => edge.Module, StringComparer.Ordinal))
+                findings.Add(new RuleFinding(edge.Path.Value, $"D5 may not add forbidden import {edge.Module}"));
+
+            foreach (var debt in baseline.GroupBy(edge => edge.Path)
+                .OrderBy(group => group.Key.Value, StringComparer.Ordinal))
+            {
+                var remaining = candidate.Count(edge => edge.Path == debt.Key);
+                // Together with subset above: each indebted source is byte-identical or
+                // strictly loses edges. Deletion has zero remaining edges and is allowed.
+                if (context.Current.Files.TryGetValue(debt.Key, out var current)
+                    && !current.RawBytes.AsSpan().SequenceEqual(context.Baseline.Files[debt.Key].RawBytes.AsSpan())
+                    && remaining >= debt.Count())
+                    findings.Add(new RuleFinding(debt.Key.Value,
+                        "changed D5 module must strictly reduce its forbidden imports"));
+
+                findings.Add(new RuleFinding(debt.Key.Value,
+                    $"registration import debt: base={debt.Count()}, candidate={remaining}", AdmissionEffect.Observe));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static bool IsRegistrationImport(string module) =>
+        module is "LeanInformationAudit" or "LeanInformationAuditAnalysis" or "LeanInformationAuditInterface" or "Reg"
+        || module.StartsWith("LeanInformationAudit.", StringComparison.Ordinal)
+        || module.StartsWith("LeanInformationAuditAnalysis.", StringComparison.Ordinal)
+        || module.StartsWith("LeanInformationAuditInterface.", StringComparison.Ordinal)
+        || module.StartsWith("Reg.", StringComparison.Ordinal);
 
     private static ImmutableArray<RuleFinding> Sorry(CurrentRuleContext context)
     {

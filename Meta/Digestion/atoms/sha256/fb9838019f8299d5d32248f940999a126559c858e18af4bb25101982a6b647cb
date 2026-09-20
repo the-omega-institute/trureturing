@@ -1,0 +1,14 @@
+#### 122.3.1 同一纤维上的条件期望
+
+现在设 $X$ 有限非空，$\mu_x>0$、$\sum_x\mu_x=1$，且 $q:X\twoheadrightarrow B$。令
+$$
+p_b=\sum_{x\in X_b}\mu_x>0,\qquad
+H=L^2(X,\mu;\mathbb R),\qquad
+\langle f,g\rangle_\mu=\sum_x\mu_x f_xg_x,
+$$
+$$
+(Pf)_x=\bar f_{q(x)},\qquad
+\bar f_b=\frac1{p_b}\sum_{x\in X_b}\mu_xf_x.
+$$
+复值算子部分可以使用同一公式及 $\langle f,g\rangle=\sum\mu_x\overline f_xg_x$；以下方差、事件和熵取实值。
+

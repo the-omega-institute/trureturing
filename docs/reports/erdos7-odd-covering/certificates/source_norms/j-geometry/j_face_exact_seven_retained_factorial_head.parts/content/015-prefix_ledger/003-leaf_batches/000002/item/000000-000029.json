@@ -1,0 +1,785 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      2,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "831181/1058400",
+      "281503/352800"
+    ],
+    "objective_key": "e24525fe03a225e4c3cfe5dc01eb3be74bb1949816f711881e4d6dd505524db9",
+    "constant": "14533021/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      2,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "826639/1058400",
+      "279989/352800"
+    ],
+    "objective_key": "b359a32a31409bd786c78682953620337b914834e1b631955458053dc706a5a1",
+    "constant": "14419471/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      2,
+      0,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "834343/1058400",
+      "282557/352800"
+    ],
+    "objective_key": "f5e6e2fd072302144df366374913deac574193cb1088fe2feabbff65f8af13fb",
+    "constant": "14612071/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      2,
+      1,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "825311/1058400",
+      "279773/352800"
+    ],
+    "objective_key": "e44d3e22795819661f33c8190e3e1db0e8205bc192398d3c293df49ecc8faa6d",
+    "constant": "14386271/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      2,
+      1,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "7849/10080",
+      "6207/7840"
+    ],
+    "objective_key": "e205004f180fa849fc681601b99d4a16108245688b333ef7e67d9c3c39fd955d",
+    "constant": "4785707/8820000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      3,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "164363/211680",
+      "278381/352800"
+    ],
+    "objective_key": "e1b214cd9e561dfcbbc35b7d107ff477f8c5c3a735ad85e673dcded3cc612974",
+    "constant": "14298871/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      3,
+      0,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "824977/1058400",
+      "18629/23520"
+    ],
+    "objective_key": "28f5926cdf7e47978def8442bf1014222355e35705a8a3eeae492b7d377293e0",
+    "constant": "14377921/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      3,
+      1,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "11051/14112",
+      "535/672"
+    ],
+    "objective_key": "7086e2f734414d280b920f21dcba4fd82b6af2c044aa5fe1c4520b475de448ad",
+    "constant": "4824707/8820000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      0,
+      1
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "825637/1058400",
+      "55931/70560"
+    ],
+    "objective_key": "701fbf53d14ab5a8207386b30703a0051930ad7d3b8e6dff8c15286bd41ec84e",
+    "constant": "14394421/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "33175/42336",
+      "280901/352800"
+    ],
+    "objective_key": "572cd2c98d698e4327c070343a9cb0a8304918540ebc9e02ce196d5e42b1cf75",
+    "constant": "14487871/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "824833/1058400",
+      "31043/39200"
+    ],
+    "objective_key": "b7a9550080375af0d956d551c6d9891a5dcce51fc28cce6a58cdc11bf076cecd",
+    "constant": "14374321/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      0,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "832537/1058400",
+      "18797/23520"
+    ],
+    "objective_key": "32884fabfd91b563995be4d82e47a35059313f5221f8d7cb323f75ef6076b75e",
+    "constant": "14566921/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      1,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "164701/211680",
+      "31019/39200"
+    ],
+    "objective_key": "30b432a64c4aba18e7cb72d007bb39425f75feda52fde36de9d688457f4616e6",
+    "constant": "14341121/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      2,
+      1,
+      1,
+      4,
+      1,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "4351/5600",
+      "278713/352800"
+    ],
+    "objective_key": "ac556e82a5a0255842325e0d3f82b056a6a197f10872a613af5a8c58d400cc5e",
+    "constant": "530073/980000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "828283/1058400",
+      "280537/352800"
+    ],
+    "objective_key": "bdb1e9bda916c97fb9d1df53af16522715d6cf9827ff58baf811155fba51a979",
+    "constant": "14460571/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "832021/1058400",
+      "281783/352800"
+    ],
+    "objective_key": "d81fe7facfdb3816409ded9c3fc4e3721562e5c6db40ab7812c014ca203c4da5",
+    "constant": "14554021/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "827479/1058400",
+      "31141/39200"
+    ],
+    "objective_key": "f72695054abcca99944449b98b6d712b232250ef6c04460101f4e2cb0afaa3b1",
+    "constant": "14440471/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "strongest_available_upper": "92671/117600",
+    "affine_endpoints": [
+      "39059/50400",
+      "92671/117600"
+    ],
+    "objective_key": "d7033a25539272156c3de35cd9570a3d8efd9f207a2673e7629bf00e5a51f2eb",
+    "constant": "4753157/8820000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      1,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "826151/1058400",
+      "31117/39200"
+    ],
+    "objective_key": "a6708e71f12b482f42b038d14b7292c7433c50227c8580961966a6fb3eac292c",
+    "constant": "14407271/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      1,
+      1,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "873/1120",
+      "55919/70560"
+    ],
+    "objective_key": "d146a17ae42f0fb08cbd86d0304488108376c58efedc2fa948d34fda868a5924",
+    "constant": "532523/980000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      0,
+      1
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "828283/1058400",
+      "280537/352800"
+    ],
+    "objective_key": "4ad9796addcbe87d79b8956e1cc27f30449d82bdb3d7a14decb25fb7f945c18b",
+    "constant": "14460571/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "832021/1058400",
+      "281783/352800"
+    ],
+    "objective_key": "055c2d0b5168f728524fa182a3bb413a0dc0607ae58f2515e03660aa56e4ee3f",
+    "constant": "14554021/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "827479/1058400",
+      "31141/39200"
+    ],
+    "objective_key": "547ad6c73af90a4b14b2de73376f109f41ce7497e6e4e2c0694b0da98e7a5ed6",
+    "constant": "14440471/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      1,
+      1
+    ],
+    "strongest_available_upper": "92671/117600",
+    "affine_endpoints": [
+      "39059/50400",
+      "92671/117600"
+    ],
+    "objective_key": "f972f9adebd3ee5bef1388152866346ba22c8eb6181597084b87ad3bc0afa36c",
+    "constant": "4753157/8820000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      1,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "826151/1058400",
+      "31117/39200"
+    ],
+    "objective_key": "798b6248258563d02470d79e5f2c983eb91266d7363579a3f085ad3ddef22d12",
+    "constant": "14407271/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      2,
+      1,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "873/1120",
+      "55919/70560"
+    ],
+    "objective_key": "0a8789ddf67025b9e38df395e0d9a7835db535a139848393d76e05c7c3b602fe",
+    "constant": "532523/980000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      3,
+      0,
+      0
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "825073/1058400",
+      "279467/352800"
+    ],
+    "objective_key": "796a28bc32885b57f892d8311a4f2f28f0ea35904d47b5a7609a86b6c7e85d77",
+    "constant": "14380321/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      3,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "33373/42336",
+      "282551/352800"
+    ],
+    "objective_key": "684ce5f78c007f057f6d0b92fd99f06d27273cf1ff9c3a1dfccb16f3fd28665f",
+    "constant": "14611621/26460000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      0,
+      3,
+      1,
+      0,
+      3,
+      1,
+      0
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "274903/352800",
+      "39929/50400"
+    ],
+    "objective_key": "bc230b95389f5e25aecd8542e579add3a7e74768f273e73b20bfb750223a8a6f",
+    "constant": "4790407/8820000"
+  }
+]

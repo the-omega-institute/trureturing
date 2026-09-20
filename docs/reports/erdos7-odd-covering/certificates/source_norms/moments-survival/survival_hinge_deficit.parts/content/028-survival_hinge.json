@@ -1,0 +1,31 @@
+{
+  "threshold": {
+    "kind": "inline",
+    "value": "5/2"
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "7/2"
+  },
+  "survival_coefficient": {
+    "kind": "inline",
+    "value": "193/231"
+  },
+  "margin_checks": {
+    "kind": "inline",
+    "value": 129600
+  },
+  "margin_sha256": {
+    "kind": "inline",
+    "value": "1a94a5a77b60cbee89b417dc78adc546e38b0f97ed3a5dcf60175fbcfcb0632a"
+  },
+  "rows": {
+    "path": "content/028-survival_hinge/005-rows.json",
+    "sha256": "7168e3c7419f939c1c734b9f3d995d506d9972da44f26330ec8d53f0474f7b78",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Raw signed survival-hinge margins with independent original labels and complete exponent tails. No pointwise substitution of D for the actual mass S; final signed target checks are required."
+  }
+}

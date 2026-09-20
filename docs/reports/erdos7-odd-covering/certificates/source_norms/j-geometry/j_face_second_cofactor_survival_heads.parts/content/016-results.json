@@ -1,0 +1,107 @@
+[
+  {
+    "name": "AP13",
+    "index": "AP13",
+    "coefficients": {
+      "4": "1"
+    },
+    "at_one": "0",
+    "complete_head_upper": "71949293357559869/370440000000000000",
+    "adopted_upper": "71949293357559869/370440000000000000",
+    "previous_adopted_upper": "5415097003260174967/27783000000000000000",
+    "improvement_over_previous": "337500025771157/496125000000000000",
+    "scan": {
+      "counts": {
+        "layouts": 12500,
+        "two_seen": 125000,
+        "two_old_bounded": 124990,
+        "two_enhanced_bounded": 4,
+        "four_seen": 300,
+        "four_old_bounded": 294,
+        "four_enhanced_bounded": 2,
+        "six_seen": 40,
+        "six_old_bounded": 8,
+        "six_enhanced_bounded": 8,
+        "six_known_dual_bounded": 23,
+        "seven_seen": 5,
+        "seven_bounded": 0,
+        "eight_seen": 50,
+        "eight_bounded": 0,
+        "seed_bounded": 50,
+        "lp_remaining": 0
+      },
+      "covered_containing_choices": 3125000000,
+      "original_choice_count": 62500000,
+      "new_independent_choices_per_original": 50,
+      "maximum_pruned_bounds": {
+        "two_old_bounded": "85649/441000",
+        "two_enhanced_bounded": "1074377/5556600",
+        "four_old_bounded": "28433/147000",
+        "four_enhanced_bounded": "768223/3969000",
+        "six_old_bounded": "28547/147000",
+        "six_enhanced_bounded": "5381881/27783000",
+        "six_known_dual_bounded": "359494466801295163/1852200000000000000",
+        "seed_bounded": "71949293357559869/370440000000000000"
+      },
+      "all_branch_decisions_sha256": "5d9893836c7f3a5089228bfe0f627eabf3b02f4014b49beed4c65e6f2e829a08",
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "projection441_735": [
+          4,
+          1,
+          4
+        ],
+        "dual_upper": "71949293357559869/370440000000000000",
+        "complete_tail_constant": "916099/19845000",
+        "adopted_upper": "71949293357559869/370440000000000000",
+        "dual_key": "459c69c14f1f1b312c5eeefd94600d63a1b6729f6641b1c94955cc4fc417107b"
+      },
+      "existing256_duals_rechecked": [
+        "0272063756021797a2e595cb16d6a9c317d59b7dee4261c49acffae276f2a2ab",
+        "1101fae66f3d07b87f5c9f18f100aa8a77ae61ea4f05882f189e10188315f36a",
+        "4077bf0de90465294d4f4b8181801752c146143b9efa02741f0dde3c7712897a",
+        "48a1a3a2a05d213135cd86ce936275c29caefa4fe0c8cb219df2e9aa1d186bc5",
+        "49e23497eb1899f1a0172406aaa334a0f02f0ed02ecd0309355f0afe4f6fe90a",
+        "4df54cc3f01866ce71260cd68e1a081b63f761fdd36b78c3f9ef29233949b932",
+        "5199a23345f2e73cbfc1673b6dbf1a61fb775ec9377db53f6c4dbfc27d862cc3",
+        "522ea1112a1d15f89c99b4305d318284da8fa07c159ee11a3462044074ec033e",
+        "54f869669c91e613beecc18b7f45d39a77305198947d34f4b0c7afa0ae0fe4fc",
+        "5767e2a33d3aa02fe795ba79727311f6428d122c35680c4809e9008e1537b94b",
+        "849ae0ee92ee1ec9a8b6b4a1b6f5fefac04b8b8a5c4ae29b9fa00210f7f4c5ae",
+        "8bfffeb3876ec63df6e82a62fa706023fcde2939e4b0b81f34bbb6e980da5ed4",
+        "9c4c6d201db728f432581224e7d73ce9f61f62c2adf5224d2a77509abc582e0b",
+        "9ca7361ab1da8ef75b05e9d2fddbaf038e78960f70f5d7207806f350ed944693",
+        "b4123beb31cfa1d6d40ad9859b4b28a63aa9edfea238c603d753dd59e47a4954",
+        "bcbe6f41e09ce4136ba5506633f1a7f2c4310a954462c474b9370a00e9ddf220",
+        "c124b33ad5b94fabca2782a2d8b29a40e41ee25e75638ea07d9f41a700eefce3",
+        "c93966a667eb0e26994e70e1d25eb92d90751dde9a02cc3c400bb0b10786ef98",
+        "cd626a358fea23f403e12620c1ac6c99196231dcad97f9cc85a78755d028e5c9",
+        "dc33b400ec9dfc4d25546eeb91a1360c20aed1248a7489c36b4d67a56d496175",
+        "e244b3d82e4cde70d2af54e694e491aef7c7e4f51a5d44a892e58d0ed12d4aa8",
+        "eee604954a8c059e4f61ff7f9afe01b2a648076f4aa2b1ca77e9f6c1a4cfe067",
+        "f65c8a229cedf7827f8f0a5a2c2d65d0ff77237360f0dab9bd48c41afd218e91",
+        "fbce625b31ca00fa02dbc6a7ce3110aec97999a50b5cf784142d65f3483a31b2"
+      ],
+      "existing256_column_checks": 79344,
+      "seed_column_checks": 165300,
+      "independent_fractional_affine_checks": 600
+    }
+  }
+]

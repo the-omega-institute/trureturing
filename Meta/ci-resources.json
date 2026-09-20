@@ -2,6 +2,18 @@
   "schema": "ci-resource-execution-v1",
   "resources": [
     {
+      "id": "anchors",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "architecture",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "build",
       "projects": [],
       "checks": [],
@@ -38,6 +50,12 @@
       ]
     },
     {
+      "id": "current-data",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "current-metadata",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -56,6 +74,18 @@
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
       ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-data",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-judge",
+      "projects": [],
       "checks": [],
       "steps": []
     },
@@ -91,6 +121,12 @@
       "steps": []
     },
     {
+      "id": "engineering-guards",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "filemap",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -123,6 +159,18 @@
       ]
     },
     {
+      "id": "policy",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "repository",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "scribe",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
@@ -136,6 +184,24 @@
       "steps": [
         "scribe"
       ]
+    },
+    {
+      "id": "test-cli",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-engineering-scope",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-scribe",
+      "projects": [],
+      "checks": [],
+      "steps": []
     }
   ]
 }

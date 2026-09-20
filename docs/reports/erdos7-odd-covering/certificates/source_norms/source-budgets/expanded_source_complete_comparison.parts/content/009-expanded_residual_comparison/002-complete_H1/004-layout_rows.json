@@ -1,0 +1,185 @@
+{
+  "length": 141,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 8,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000000-000008.json",
+        "sha256": "8c6b5bca8bf27616f6059d931f165d35ddc9b49138b17a36592161f1bd5c9d7a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 15,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000008-000015.json",
+        "sha256": "5515ab205b45dd8a9fc331991695177b715edf302d58b7e54bd77d7869cdfd9e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15,
+      "stop": 22,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000015-000022.json",
+        "sha256": "e4ca7bcd01cf0d706d98ac43fa887207959a37bb341dce68bc7b739bcd3dbfe4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 29,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000022-000029.json",
+        "sha256": "e20ca395f6383d839a28fda0d796c8b8cafff0409477b448659d54045d78a2a3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 29,
+      "stop": 36,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000029-000036.json",
+        "sha256": "5bca706502648fe44e60dacfd8eb4cf7165d48ad64e81dfac9bda959633c3913",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 43,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000036-000043.json",
+        "sha256": "46ce66f38727e48c76e926f843f52c6a090c2d75a14a67c3deddf2727ed4d42d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 43,
+      "stop": 51,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000043-000051.json",
+        "sha256": "c8e364948e480691f6fc1bffd65946765327c060b6ec28a6c948f79031ea253d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 51,
+      "stop": 58,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000051-000058.json",
+        "sha256": "491ec4eefe5440267bc9e0cefe8330bd53c83b295903eaaa6034e0ec61529d51",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 58,
+      "stop": 65,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000058-000065.json",
+        "sha256": "3a072c1ff9b64251207d3c08619ad02825f84b716b2d5ab8984591f2ad4feadc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 65,
+      "stop": 72,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000065-000072.json",
+        "sha256": "377fa75d07b8de3d5213573499ae1e1ce6ac543b3ac510690b994c3c0ca9d368",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 79,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000072-000079.json",
+        "sha256": "ec27cae9beff4a84d33c866aeb1c2777d4bc7eee02b07d64d33a98da98e33eb5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 79,
+      "stop": 86,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000079-000086.json",
+        "sha256": "5fd4cffd09d83bdd479515ec11e0cd0efa787d3a36268041b23d61263c4f81da",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 86,
+      "stop": 93,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000086-000093.json",
+        "sha256": "4148135ec3548d255852ee19d3579f8c17c6cd981e27052e3937599af517eac3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 93,
+      "stop": 101,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000093-000101.json",
+        "sha256": "756d86c74b5f22968bce44a19c8812826414342608b3824b33203bdab419bfe7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 101,
+      "stop": 108,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000101-000108.json",
+        "sha256": "ce7748d242413f77e9e617dcc90b61a8c433f507ef6235c425410c2e5b8e5c66",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 108,
+      "stop": 115,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000108-000115.json",
+        "sha256": "e58fd4109be188bb65b95a526af0651237c45ee97541fca2d4fd48384628c041",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 115,
+      "stop": 122,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000115-000122.json",
+        "sha256": "d6c8db5a495d055347b76456ed28116bba518262ead5211d25fb77afe405c389",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 122,
+      "stop": 129,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000122-000129.json",
+        "sha256": "8cef67865715c4cafb6f1b68b462f2de20a5d7f8a0cf740022ba857c90aa26e8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 129,
+      "stop": 136,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000129-000136.json",
+        "sha256": "77119a63cdaa1e322535ed7988a77652932d3fd8461ef7ec88255aa08f195ce3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 136,
+      "stop": 141,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/002-complete_H1/004-layout_rows/000136-000141.json",
+        "sha256": "8cc612f2c9e1f1e64aaea1f84764a563ea7b115c8ff26d85a331f1d9b4b4dda4",
+        "kind": "value"
+      }
+    }
+  ]
+}

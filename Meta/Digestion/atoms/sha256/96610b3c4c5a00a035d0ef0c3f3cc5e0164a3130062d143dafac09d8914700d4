@@ -1,0 +1,6 @@
+**定义 124.1（相容对）。** 对集合映射 $r_A:A\to B$ 与 $r_C:C\to B$，定义
+$$
+A\times_B C=\{(a,c)\in A\times C:r_A(a)=r_C(c)\}.
+$$
+这里保留两份实现及其相等的边界值。若真实全局实现为 $\Gamma$，并给限制 $\rho_A,\rho_C$，还须检验 $(\rho_A,\rho_C):\Gamma\to A\times_B C$ 的像；任意候选相容对不自动属于该像。
+

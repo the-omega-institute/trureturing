@@ -1,0 +1,12 @@
+#### 122.2.1 存在读数、全称读数与歧义
+
+设 $q:X\twoheadrightarrow B$，记非空纤维 $X_b=q^{-1}(b)$。本节不要求有限性。对事件 $A\subseteq X$ 定义
+$$
+U_q(A)=\{b:X_b\cap A\ne\varnothing\}=q[A],\qquad
+L_q(A)=\{b:X_b\subseteq A\},
+$$
+$$
+\partial_q A=U_q(A)\setminus L_q(A).
+$$
+上读数记录“这个名字有支持 $A$ 的实现”；下读数记录“这个名字的全部实现都支持 $A$”。二者是不同的量词。
+

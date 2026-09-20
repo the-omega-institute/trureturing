@@ -1,0 +1,14 @@
+**证明。** 取 $\rho=|+\rangle\langle+|$、$\sigma=|-\rangle\langle-|$，它们对角元相同且非对角元不同。[CanonicalRecordAccessRecovery](../../../D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.lean) 的 reduced_irreversibility_is_canonical_record_access_defect 直接给 copied-address 模型的全局区别、约化同一、无共同约化恢复函数及实际记录的逆耦合恢复。此例中
+$$
+U(|\pm\rangle_S|0\rangle_M)=|\Phi_\pm\rangle,
+\qquad U^\dagger|\Phi_\pm\rangle=|\pm\rangle_S|0\rangle_M.
+\tag{11.23}
+$$
+局部偏迹各为 $I_2/2$，故限定局部协议从同一局部态出发，定理11.10给相同历史权重。允许 $U^\dagger=U$ 时，后续 $\{|+\rangle\langle+|,|-\rangle\langle-|\}$ 测量分别给确定结果。计算基测量 $M$ 后的经典记录与条件 $S$ 态对两个符号均为
+$$
+\frac12|0\rangle\langle0|_H\otimes|0\rangle\langle0|_S
++\frac12|1\rangle\langle1|_H\otimes|1\rangle\langle1|_S.
+\tag{11.24}
+$$
+该相同输出的任何共同后处理仍相同，故保存标签本身不恢复相位。$\square$
+

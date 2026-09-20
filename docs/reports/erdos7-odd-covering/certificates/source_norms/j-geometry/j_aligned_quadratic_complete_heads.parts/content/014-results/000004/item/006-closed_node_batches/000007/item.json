@@ -1,0 +1,15 @@
+{
+  "start": {
+    "kind": "inline",
+    "value": 350
+  },
+  "stop": {
+    "kind": "inline",
+    "value": 382
+  },
+  "rows": {
+    "path": "content/014-results/000004/item/006-closed_node_batches/000007/item/002-rows.json",
+    "sha256": "ad4664090bf08f032f6098918008355327ec6e4a219b0449d20a643921e779b5",
+    "kind": "array"
+  }
+}

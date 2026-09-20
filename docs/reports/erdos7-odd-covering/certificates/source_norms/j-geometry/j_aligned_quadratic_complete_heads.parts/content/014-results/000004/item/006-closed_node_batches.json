@@ -1,0 +1,77 @@
+{
+  "length": 8,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000000/single.json",
+        "sha256": "5af4def20056d5e3cb8603369384297c8d537752e646ecf42292560c3a2b2f10",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000001/single.json",
+        "sha256": "c3d8746431dc6a8d867f7a9eef48f7cbfab5ea520ceee14072b8c2501180f577",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000002/single.json",
+        "sha256": "784f0370f3aad69d2712c66cefb9561b279baf66d78499dd5a579d07900bab96",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000003/single.json",
+        "sha256": "998e8b447b368963e9ba01adbfbca178ea10458fbc56e869dc9aa57116e6e8d2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000004/single.json",
+        "sha256": "f035aa6af779114ad7605a7c500064fd13facc7c8dab6139e8a36b12383c88a5",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000005/single.json",
+        "sha256": "6ed5db696a9a9d0182cf239755abc5550fa1227a9a1a79254b4f3f454cd598fc",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000006/single.json",
+        "sha256": "49b6cdc6b5c0d3cd6b39ac26e9e14617437bdeb3332bb5c1a0d356d725accfce",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/014-results/000004/item/006-closed_node_batches/000007/single.json",
+        "sha256": "f95de5a8843cdc3c42fcbccc532070813e0d94a203ab6456b5f04b568168ef54",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

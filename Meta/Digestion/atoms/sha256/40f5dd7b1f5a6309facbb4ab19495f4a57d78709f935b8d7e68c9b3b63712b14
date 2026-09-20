@@ -1,0 +1,23 @@
+**定理 12.2（允许像空间转动的白化稳定界）。** 在定义12.1下，式(12.3)是主卷定理137.2规范商实现的一份等距坐标表达，并满足
+$$
+uP\preceq T\preceq vP,\quad T=PTP,\quad PJ=J,
+\qquad M_k=J^*T^kJ\quad(0\le k\le2r+1),
+\tag{12.4}
+$$
+另一份数据同理。置
+$$
+d_P=\frac{\delta_H}{\gamma},\qquad
+d_J=\frac{\delta_H}{\sqrt\gamma},\qquad
+d_T=\frac{\delta_S}{\gamma}
+       +\frac{2v\sqrt R}{\gamma^{3/2}}\delta_H.
+\tag{12.5}
+$$
+则
+$$
+\|P-P'\|_F\le d_P,\qquad
+\|J-J'\|_F\le d_J,\qquad
+\|T-T'\|_F\le d_T.
+\tag{12.6}
+$$
+这些上界也分别控制对应算子范数，但没有将数据侧的 Frobenius 误差无条件替换为算子范数误差。
+

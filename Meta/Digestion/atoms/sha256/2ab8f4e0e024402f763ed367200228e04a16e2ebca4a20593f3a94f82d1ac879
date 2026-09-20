@@ -1,0 +1,8 @@
+**命题 129.1。** 若 $P$ 是真投影，即 $P\ne I$，则不存在保持单位的实代数同态
+
+$$
+\Phi:\operatorname{Cl}(V,Q)\to\operatorname{Cl}(V,Q)
+$$
+
+使 $\Phi(\iota_Q(v))=\iota_Q(Pv)$ 对所有 $v$ 成立。将陪域改为 $\operatorname{Cl}(U,Q|_U)$，结论相同。
+

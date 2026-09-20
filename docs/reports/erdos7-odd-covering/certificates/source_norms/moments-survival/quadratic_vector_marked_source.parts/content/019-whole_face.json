@@ -1,0 +1,584 @@
+{
+  "vertices": [
+    [
+      "1/4",
+      "0",
+      "0"
+    ],
+    [
+      "1/5",
+      "1/20",
+      "0"
+    ],
+    [
+      "1/5",
+      "0",
+      "1/20"
+    ]
+  ],
+  "source_group_masses": [
+    "1/36",
+    "1/12",
+    "5/36"
+  ],
+  "non_H_group_budgets": [
+    "1/60",
+    "11/180",
+    "13/180"
+  ],
+  "constant_geometry": {
+    "Delta": "0",
+    "r": "0",
+    "first_beta": 2,
+    "score": [
+      "0",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "a": [
+      "1",
+      "4/5",
+      "4/5",
+      "4/5",
+      "4/5"
+    ],
+    "caps": [
+      "0",
+      "1/90",
+      "1/90",
+      "1/120",
+      "1/90",
+      "0",
+      "1/45",
+      "1/45",
+      "1/60",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "1/90",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1/90",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "1/90",
+      "1/45"
+    ],
+    "G": "1/45",
+    "gap_entries": [
+      "1/10",
+      "1/15",
+      "1/45",
+      "1/30",
+      "1/30"
+    ],
+    "necessary_condition_failures": []
+  },
+  "relabellings": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      4,
+      3
+    ],
+    [
+      0,
+      1,
+      3,
+      2,
+      4
+    ],
+    [
+      0,
+      1,
+      3,
+      4,
+      2
+    ],
+    [
+      0,
+      1,
+      4,
+      2,
+      3
+    ],
+    [
+      0,
+      1,
+      4,
+      3,
+      2
+    ],
+    [
+      1,
+      0,
+      2,
+      3,
+      4
+    ],
+    [
+      1,
+      0,
+      2,
+      4,
+      3
+    ],
+    [
+      1,
+      0,
+      3,
+      2,
+      4
+    ],
+    [
+      1,
+      0,
+      3,
+      4,
+      2
+    ],
+    [
+      1,
+      0,
+      4,
+      2,
+      3
+    ],
+    [
+      1,
+      0,
+      4,
+      3,
+      2
+    ]
+  ],
+  "costs": [
+    {
+      "index": 0,
+      "tuple": [
+        0,
+        0
+      ],
+      "barrier": "1843590625606784/50362520583375",
+      "uniform_absolute_margin_lower": "3817044356346659/63456775935052500",
+      "uniform_residual_coefficient": "2236364765/184225041",
+      "vertex_new_minima": [
+        "3817044356346659/63456775935052500",
+        "3817044356346659/63456775935052500",
+        "3817044356346659/63456775935052500"
+      ],
+      "vertex_old_minima": [
+        "3104645553918731/63456775935052500",
+        "3104645553918731/63456775935052500",
+        "3104645553918731/63456775935052500"
+      ],
+      "vertex_branch_and_dual_sha256": [
+        "66a8802b84f33dfa05185577c867a9fa1a289bc088fe8c8c790aee16e5812756",
+        "2b5b6b2569fe4af90fa326b3d567c7cf7887c11c285724ca78d1b2d226e8e51c",
+        "fa4f700ba1809afff2cd42e8e4177cbc67e87b4a8e3508df6f160b999ec26e4d"
+      ],
+      "fixed_capacity_duals_sha256": "025933eff4e69a8052028c76eff54020cf975ac752f8fa0c144ab088f5733b5e",
+      "complete_quadratic_common_decomposition": [
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "60824128/429858429",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "9056303/6306300"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2010887/6306300"
+            }
+          ],
+          "complete_tail_weight": "52/2205",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "144721261379/77374517220"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "60824128/429858429",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "9056303/6306300"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2010887/6306300"
+            }
+          ],
+          "complete_tail_weight": "52/2205",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "144721261379/77374517220"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "60824128/429858429",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "9056303/6306300"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2010887/6306300"
+            }
+          ],
+          "complete_tail_weight": "52/2205",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "144721261379/77374517220"
+        }
+      ],
+      "zero_residual_cost_upper": "4174926132021133/783416986852500"
+    },
+    {
+      "index": 1,
+      "tuple": [
+        0,
+        1
+      ],
+      "barrier": "51437677469/4932968040",
+      "uniform_absolute_margin_lower": "78457029319/1775868494400",
+      "uniform_residual_coefficient": "1905881/290004",
+      "vertex_new_minima": [
+        "78457029319/1775868494400",
+        "78457029319/1775868494400",
+        "78457029319/1775868494400"
+      ],
+      "vertex_old_minima": [
+        "65697896359/1775868494400",
+        "65697896359/1775868494400",
+        "65697896359/1775868494400"
+      ],
+      "vertex_branch_and_dual_sha256": [
+        "6b90ff1840eb8e9e5adced4a81a81ed80c02ae2b8b4fc28de5ae3dab75650548",
+        "d19194a735920eba53bd4466abf5329cc72b1fc86c0e9ece996e5ed53bbc4e8e",
+        "69c71e4a06aed0604c833d01ade58f94c6c1773e7384ae8a334ac09f07f5743b"
+      ],
+      "fixed_capacity_duals_sha256": "b649ff41a513a641d67241c5f9bd65f836075145ba5692c4d350e69aa7989104",
+      "complete_quadratic_common_decomposition": [
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1167559/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "755/2016"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "14345/183456"
+            }
+          ],
+          "complete_tail_weight": "5/882",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "362918021/730810080"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1167559/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "755/2016"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "14345/183456"
+            }
+          ],
+          "complete_tail_weight": "5/882",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "362918021/730810080"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1167559/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "755/2016"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "14345/183456"
+            }
+          ],
+          "complete_tail_weight": "5/882",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "362918021/730810080"
+        }
+      ],
+      "zero_residual_cost_upper": "441289979423/295978082400"
+    },
+    {
+      "index": 2,
+      "tuple": [
+        0,
+        2
+      ],
+      "barrier": "868964699/704709720",
+      "uniform_absolute_margin_lower": "7859954981/1268477496000",
+      "uniform_residual_coefficient": "224825/290004",
+      "vertex_new_minima": [
+        "7859954981/1268477496000",
+        "7859954981/1268477496000",
+        "7859954981/1268477496000"
+      ],
+      "vertex_old_minima": [
+        "5296790981/1268477496000",
+        "5296790981/1268477496000",
+        "5296790981/1268477496000"
+      ],
+      "vertex_branch_and_dual_sha256": [
+        "79001bf71856807c883e4692242c16b1c74d12035fdc7033ca4ff02ccd78a741",
+        "9be7cb4e3515d9dfeb0136c4566d6fa3dc65f6fca895e34013f356814292656f",
+        "0c995b3f3f2aed9fefce36be442f2ff400be11af7364a227fad50a107733ef53"
+      ],
+      "fixed_capacity_duals_sha256": "208ea98ac34d596fc0f5bddd156338eaf9b863e5eb1fc3d8b401d6d5e702eae1",
+      "complete_quadratic_common_decomposition": [
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "242791/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "5587/131040"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "106153/11924640"
+            }
+          ],
+          "complete_tail_weight": "37/57330",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "6144563/104401440"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "242791/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "5587/131040"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "106153/11924640"
+            }
+          ],
+          "complete_tail_weight": "37/57330",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "6144563/104401440"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "242791/11841830",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "5587/131040"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "106153/11924640"
+            }
+          ],
+          "complete_tail_weight": "37/57330",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "6144563/104401440"
+        }
+      ],
+      "zero_residual_cost_upper": "37069281709/211412916000"
+    },
+    {
+      "index": 3,
+      "tuple": [
+        1,
+        0
+      ],
+      "barrier": "197160180946/16688172501",
+      "uniform_absolute_margin_lower": "933450129769/18774194063625",
+      "uniform_residual_coefficient": "8117639/1090089",
+      "vertex_new_minima": [
+        "933450129769/18774194063625",
+        "933450129769/18774194063625",
+        "933450129769/18774194063625"
+      ],
+      "vertex_old_minima": [
+        "788229721219/18774194063625",
+        "788229721219/18774194063625",
+        "788229721219/18774194063625"
+      ],
+      "vertex_branch_and_dual_sha256": [
+        "0b7a65e7947e6b1db7858d6a4c05e87541592f64e31aba28516ca9a9c92efd7e",
+        "33c52deb1781a243cb9c304a9bd9a7d27dc37048783295ea86eca328b6e8ba6e",
+        "3bc24f6c3b6d1b9f9add249f99c4bd9e0c9a3b24c051a17d8621e316e6354ee7"
+      ],
+      "fixed_capacity_duals_sha256": "fbdebab2d6f7487972220f8e0aba1a68326cf979881a9f85d80a2eef1ba3137b",
+      "complete_quadratic_common_decomposition": [
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1381784/12717705",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "1963/4620"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2869/32340"
+            }
+          ],
+          "complete_tail_weight": "52/8085",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "85861129/152612460"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1381784/12717705",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "1963/4620"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2869/32340"
+            }
+          ],
+          "complete_tail_weight": "52/8085",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "85861129/152612460"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "1381784/12717705",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "1963/4620"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "2869/32340"
+            }
+          ],
+          "complete_tail_weight": "52/8085",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "85861129/152612460"
+        }
+      ],
+      "zero_residual_cost_upper": "522159750443/309040231500"
+    },
+    {
+      "index": 4,
+      "tuple": [
+        2,
+        0
+      ],
+      "barrier": "3930317668/2384024643",
+      "uniform_absolute_margin_lower": "88769931643/10728110893500",
+      "uniform_residual_coefficient": "1129889/1090089",
+      "vertex_new_minima": [
+        "88769931643/10728110893500",
+        "88769931643/10728110893500",
+        "88769931643/10728110893500"
+      ],
+      "vertex_old_minima": [
+        "59915091043/10728110893500",
+        "59915091043/10728110893500",
+        "59915091043/10728110893500"
+      ],
+      "vertex_branch_and_dual_sha256": [
+        "1ad03d8f0b864bdb5bbd8de9e88d3ec8d9ab2ddd924555be8bcd3df7fe92e8e2",
+        "24e1dccc4beea2a48e8c90f367a8081bcd406a93373197f746a60fc6ac232b06",
+        "5c665f32c6e1744588a79f236aeb31c637a3a85ca6aebffd74d49daa167ff275"
+      ],
+      "fixed_capacity_duals_sha256": "75b413c9c098d7ad6df39a843699d5c3e44c3d92d4cc17a29277525d48459be1",
+      "complete_quadratic_common_decomposition": [
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "2432288/89023935",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "60853/1067220"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "88939/7470540"
+            }
+          ],
+          "complete_tail_weight": "1612/1867635",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "5146541/65405340"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "2432288/89023935",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "60853/1067220"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "88939/7470540"
+            }
+          ],
+          "complete_tail_weight": "1612/1867635",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "5146541/65405340"
+        },
+        {
+          "cutoff": 4,
+          "affine_source_coefficient": "2432288/89023935",
+          "finite_blocks": [
+            {
+              "seven_block": 1,
+              "raw_value": "60853/1067220"
+            },
+            {
+              "seven_block": 2,
+              "raw_value": "88939/7470540"
+            }
+          ],
+          "complete_tail_weight": "1612/1867635",
+          "square_monomial_raw": "163/48",
+          "reconstructed_common": "5146541/65405340"
+        }
+      ],
+      "zero_residual_cost_upper": "31050191647/132445813500"
+    }
+  ],
+  "old00_nonconstant_witness": {
+    "beta": [
+      "1/5",
+      "1/40",
+      "1/40"
+    ],
+    "old_margin": "3240074401281659/63456775935052500",
+    "new_margin": "3817044356346659/63456775935052500",
+    "relative_gain": "15075314/1658025369"
+  },
+  "comparison": "On all six K-face triangles with r=0: actual_margin_i >= uniform_absolute_margin_lower_i - P_i*rho. At rho=0: cost_i <= C_i*(53/360)-uniform_absolute_margin_lower_i.",
+  "scope": "Whole-face absolute bounds with r=0 from concavity of the exact improved branches with fixed source duals and unchanged curvature. Cost bounds additionally require rho=0. No constant00 relative gain, neighborhood extension or global K claimed."
+}

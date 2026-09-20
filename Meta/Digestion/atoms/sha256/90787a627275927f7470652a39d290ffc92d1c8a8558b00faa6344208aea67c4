@@ -1,0 +1,16 @@
+**命题 130.8。**
+
+$$
+Q(x,y)=\frac12x^TSx+
+\frac12(y+D^{-1}B_0^Tx)^TD(y+D^{-1}B_0^Tx),
+$$
+
+所以对每个固定 $x$，
+
+$$
+\min_yQ(x,y)=\frac12x^TSx,\qquad
+\operatorname{argmin}_yQ(x,y)=\{-D^{-1}B_0^Tx\}.
+$$
+
+此外 $H\succ0$ 当且仅当 $S\succ0$；$\det H=\det D\,\det S$。
+

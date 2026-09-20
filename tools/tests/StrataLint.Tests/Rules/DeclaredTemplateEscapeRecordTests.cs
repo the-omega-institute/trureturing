@@ -23,7 +23,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
             {
                 record!["escape_from"] = mode == "old" ? null : JsonSerializer.SerializeToNode(FromSlot);
                 record["escape_continues"] = mode == "old" ? null : JsonSerializer.SerializeToNode(OpenSlot);
-                record["bridge_kind"] = "legacy";
+                record["bridge_kind"] = mode is "witness" or "forward" or "unknown" ? mode : "legacy";
                 if (mode == "malformed") record["escape_continues"]!["kind"] = "guessed";
             }
             if (mode == "two" && wire["records"]!.AsArray().Count > 0)
@@ -47,7 +47,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
             DeclaredTemplateBindingRuleTests.Delta(declared: true), "old"));
         Assert.True(findings.Length == 1 && findings[0].Message.StartsWith("DTR-Undeclared ", StringComparison.Ordinal)
-            && findings[0].Effect == AdmissionEffect.Block, "[FAIL] selected_old_form_is_undeclared");
+            && findings[0].Effect == AdmissionEffect.Observe, "[FAIL] selected_old_form_is_undeclared");
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "old"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Block), "[FAIL] new_theorem_requires_four_slots");
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] new_theorem_requires_four_slots");
     }
 
     [Fact]
@@ -87,6 +87,30 @@ public sealed class DeclaredTemplateEscapeRecordTests
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "malformed"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Block), "[FAIL] malformed_escape_evidence_blocks");
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] malformed_escape_evidence_blocks");
+    }
+
+    [Theory]
+    [InlineData("legacy")]
+    [InlineData("forward")]
+    [InlineData("witness")]
+    public void bridge_vocabulary_preserves_declared_verdict(string kind)
+    {
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateUnregisteredTests.Build(binding: "inline"), kind));
+        var finding = Assert.Single(findings);
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
+        Assert.Contains("bridge_kind=" + kind, finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void unknown_bridge_kind_blocks_selected_only()
+    {
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateBindingRuleTests.Delta(declared: true), "unknown"));
+        Assert.Contains(findings, f => f.Effect == AdmissionEffect.Observe
+            && f.Message.Contains("unknown bridge_kind", StringComparison.Ordinal));
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Slots(
+            DeclaredTemplateBindingRuleTests.Delta(declared: true, changed: false), "unknown")));
     }
 }

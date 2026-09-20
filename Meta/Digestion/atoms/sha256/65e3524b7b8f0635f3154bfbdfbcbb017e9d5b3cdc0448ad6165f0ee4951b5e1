@@ -1,0 +1,26 @@
+#### 124.10.3 共享来源不能被复制或提前遗忘
+
+若两块还共享 $s$，正确响应在保留共同来源后具有形状
+
+$$
+Z(x,z)=\sum_{s,y}\mu(s)
+\left(\sum_u w_1(x,u,s,y)\right)
+\left(\sum_v w_2(s,y,v,z)\right).
+$$
+
+共享先验 $\mu(s)$ 计一次。分别先对 $s$ 求和，再相乘，会把同一个来源替换成两个可独立选择的来源。
+
+例如公平比特 $S$ 同时产生 $X=S$ 与 $Z=S$。各局部输出都均匀，真实联合却是 $P(X=Z)=1$。把两个局部均匀边缘相乘会得到 $P(X=Z)=1/2$，改变了模型。差别来自共享关系被删除，而非求和恒等式失效。
+
+若输入是相容的两个概率边缘 $p_{XY},p_{YZ}$，共同边缘为 $p_Y$，在 $p_Y(y)>0$ 时定义
+
+$$
+p(x,y,z)=\frac{p_{XY}(x,y)p_{YZ}(y,z)}{p_Y(y)};
+$$
+
+在 $p_Y(y)=0$ 的纤维令其为零。非负性成立；对 $z$ 求和给 $p_{XY}$，对 $x$ 求和给 $p_{YZ}$，再求总和为一。这证明两个相容边缘存在一个条件独立的共同扩张。若原始系统已有真实联合分布，只有在其满足 $X\perp Z\mid Y$ 时，才由该公式重现该真实联合。相容边缘本身并不唯一指定联合。
+
+三块以上的循环相容性还可能不存在任何共同扩张。取三个二值变量：$p_{XY}$ 在 $00,11$ 各给 $1/2$；$p_{YZ}$ 同样；$p_{XZ}$ 在 $01,10$ 各给 $1/2$。所有重叠的单变量边缘都均匀，但前两项要求 $X=Y=Z$ 几乎处处，第三项要求 $X\ne Z$ 几乎处处，矛盾。集合约束 $x=y$、$y=z$、$x\ne z$ 也给出同一共同见证障碍：任意两项可以实现，三项的交为空。
+
+对应数学接口包括纤维积、层的匹配族、连接树、Moore–Penrose 逆、条件互信息与 Markov 核。仓内 `SheafPairwiseEqualizer`、`RunningIntersectionRecords`、`HistoryPayloadFactorization`、`LocalLawGluingObstruction`、`FiniteMoorePenroseInverse`、`FiniteSynthesisGramDistance` 及 `GibbsVariationalIdentity` 给出已有组件。
+

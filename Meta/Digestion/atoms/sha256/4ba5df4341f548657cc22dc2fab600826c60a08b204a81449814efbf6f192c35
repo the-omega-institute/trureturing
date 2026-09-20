@@ -1,0 +1,6 @@
+**推论 9.19（距离尺度与词语言的范围）。** 在定理9.18的同一$X_k$上，把距离改成$d_\theta(x,y)=\theta^{\min\{j:x_j\ne y_j\}}$、$0<\theta<1$，并令相等点距离为零，则Hausdorff维数为$\log\lambda_k/(-\log\theta)$。式（9.19）不指定其他物理空间或Hilbert空间的维数，也不适用于任意一条固定合法词的因子语言。
+
+**证明。** 长度$n$柱直径改为至多$\theta^n$，式（9.20）的质量界仍为$\lambda_k^{-n}$。令$s_\theta=\log\lambda_k/(-\log\theta)$，则$\lambda_k^{-n}=(\theta^n)^{s_\theta}$；定理9.18的柱覆盖、任意集合质量界及正有限临界测度证明逐项成立，给出所述维数。它依赖所指定的载体与距离，故不给未指定空间的维数结论。
+
+固定词语言的区别可由[`SubshiftHausdorffDimension`](../../../D5/S1/Words/Complexity/SubshiftHausdorffDimension.lean)中的`dimH_goldenSubshift_eq_zero`见证：该结论研究一条固定黄金词的因子语言，其复杂度线性、Hausdorff维数为零；它的载体不是所有禁止$11$的序列，所以与$D_2>0$的结论适用域不同。证毕。
+

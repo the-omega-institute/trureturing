@@ -1,0 +1,10 @@
+### 131.3 二重向量与二形式的 Hodge 矩阵
+
+令 $\theta^1,\ldots,\theta^4$ 是 $b_i$ 的代数对偶基。二形式按同一对指标顺序取基 $\theta^i\wedge\theta^j$。它们的自然 Gram 矩阵为 $G^{-1}$，而与 $+\Omega$ 对应的单位体积形式为
+
+$$
+\operatorname{vol}_+=\sqrt5\,\theta^1\wedge\theta^2\wedge\theta^3\wedge\theta^4.
+$$
+
+这是因为顶次对偶基的平方范数为 $(\det C)^{-1}=1/5$，且该形式在单位顶次向量 $\Omega/\sqrt5$ 上取值一。
+
