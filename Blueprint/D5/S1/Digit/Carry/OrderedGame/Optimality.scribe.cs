@@ -66,7 +66,9 @@ internal sealed class OptimalityDocument : IScribeDocumentDefinition
                 + "ordered priority correspondence, finite LGS completion and exact potential "
                 + "attainment to prove the full source Conjecture17. The universal comparison "
                 + "retains all permitted switches and all legal terminal competitors. "
-                + "Independent review and first-freeze admission remain pending. No helper "
+                + "Independent pre-Freeze source-fidelity and declaration-admission review "
+                + "passed. Final new-head CI, ordinary merge and independent completion audit "
+                + "remain pending. No helper "
                 + "counts as a completed external problem. Attribution remains with Bortnovskyi "
                 + "et al., Cusenza et al., and the existing suppliers in PRs 7495, 7575, 7643 "
                 + "and 7651; no worldwide priority claim is made.")))));

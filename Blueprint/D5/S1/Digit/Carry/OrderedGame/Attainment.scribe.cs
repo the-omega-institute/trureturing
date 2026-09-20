@@ -65,8 +65,9 @@ internal sealed class AttainmentDocument : IScribeDocumentDefinition
             Paragraph(Text("These attainment components feed the full Conjecture 1.7 proof "
                 + "in OrderedGame/Completion.result. Raw weighted domination is supplied by "
                 + "OrderedGame/Optimality, and Completion supplies priority correspondence "
-                + "and finite ordered completion. Independent review and first-freeze "
-                + "admission remain pending; no worldwide priority is claimed.")))));
+                + "and finite ordered completion. Independent pre-Freeze source-fidelity and "
+                + "declaration-admission review passed. Final new-head CI, ordinary merge and "
+                + "independent completion audit remain pending; no worldwide priority is claimed.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);

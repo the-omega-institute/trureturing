@@ -37,7 +37,7 @@ Status statement, quoted from the same version:
 > empirical simulations. However, a rigorous proof establishing its optimality
 > remains an open problem.”
 
-Proposed formalization, after importing the five moves exactly:
+Formal statement, with the five moves represented exactly:
 
 ```text
 ∀ n > 0, ∃ g, CompleteLGSRun n g
@@ -45,9 +45,8 @@ Proposed formalization, after importing the five moves exactly:
   ∀ h, LegalTerminalRun n h -> h.length ≤ g.length
 ```
 
-Every permitted switch ordering is retained. Switch-order independence is a
-proof obligation, not permission to replace the target by a deterministic or
-existential variant. Priorities restart after every move, including a switch.
+Every permitted switch ordering is retained in the proved universal comparison.
+Priorities restart after every move, including a switch.
 
 The paper says the conjecture is backed by exhaustive simulations rather than a
 proof. In its broader exact game-tree analysis it also states:
@@ -70,7 +69,7 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   but confluence intentionally forgets path lengths.
 - The new content is an extremal refinement of rewriting: among ordered
   value-preserving paths from `[F_1,...,F_1]` to the sorted normal form, LGS
-  should maximize length.
+  maximizes length.
 
 ## Gap
 
@@ -80,8 +79,9 @@ n=1, a complete ordered LGS path exists; every permitted complete LGS path is
 at least as long as every legal terminal competing path. The three new results
 `lgs_path_raw_erasure`, `complete_lgs_exists` and `result` have exactly the
 standard axiom closure `propext`, `Classical.choice`, `Quot.sound`.
-Independent source-fidelity review, first-freeze admission and required final
-CI/merge remain outstanding. No completion credit is claimed before that audit.
+Independent pre-Freeze source-fidelity and declaration-admission review passed.
+Final new-head CI, ordinary merge and independent completion audit remain pending.
+The proof does not use the paper's at-most-one-repetition lemma.
 
 - `OrderedGame.greedy_attainment` constructs the concrete full raw greedy
   continuation, recursively using the strict carry measure, and attains its
@@ -413,15 +413,16 @@ recurrence arithmetic in `D5/S1/Digit/Carry/RunChainLowerBound`.
 `theorem`. The full `Conjecture17` now has a kernel-checked proof, including
 ordered/raw priority correspondence, complete ordered LGS existence and the
 universal comparison with all permitted switch choices retained. Independent
-completion review and integration remain pending. Related suppliers were contributed
+pre-Freeze source-fidelity and declaration-admission review passed; final new-head
+CI, ordinary merge and independent completion audit remain pending. Related suppliers were contributed
 in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
 
 ## ASSUMED-UNVERIFIED
 
-- Independent review of source fidelity and declaration admission is pending.
-  The proof does not use the paper's at-most-one-repetition lemma.
-- Whether Conjecture 1.7 was resolved after arXiv v2 is unverified; novelty of
-  the exchange-lemma route is unassessed.
+- Bounded checks of the arXiv history, exact-title and ordered-longest searches,
+  and OpenAlex W4414447583 verified no later exact resolution in that scope.
+  These checks do not establish worldwide priority or novelty of the
+  exchange-lemma route.
 - The stronger raw terminal upper bound is kernel-checked in
   `OrderedGame/Optimality.raw_terminal_bound`, and the ordered priority and
   existence bridges are kernel-checked in `OrderedGame/Completion`.

@@ -36,13 +36,17 @@ Lean statement: `D5/S1/Digit/Carry/OrderedGame/Completion.result`
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Carry/OrderedGame/Completion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ordered-zeckendorf-long-game-strategy` (proved) by `D5/S1/Digit/Carry/OrderedGame/Completion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ordered-zeckendorf-long-game-strategy","declaration_gid":"D5/S1/Digit/Carry/OrderedGame/Completion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
 
 The conclusion is exactly Conjecture17. For every positive n there exists a complete LGS path from n ones. For every such complete LGS path, with every permitted switch choice retained, every arbitrary legal terminal competing path has at most its actual move count. The competitor's weight is at most G by raw_terminal_bound; the strategy's weight equals G by priority-preserving erasure and complete_greedy_reward. The exact strategy potential and the competitor potential bound turn these weight statements into the length comparison. Terminal inversion zero follows from the actual absence of switches, not from raw counts. No Bellman premise, deterministic-switch restriction or finite cutoff is added.
 
-Source-fidelity and first-freeze admission remain subject to independent review. Attribution remains with Bortnovskyi et al., Cusenza et al., and the suppliers contributed in PRs 7495, 7575, 7643 and 7651. The structured problem-resolution claim requires the future frozen declaration and is deferred until that admission. This formal result makes no worldwide-priority claim.
+Independent pre-Freeze source-fidelity and declaration-admission review passed. Final new-head CI, ordinary merge and independent completion audit remain pending. Attribution remains with Bortnovskyi et al., Cusenza et al., and the suppliers contributed in PRs 7495, 7575, 7643 and 7651. This formal result makes no worldwide-priority claim.
 
 ## References
 

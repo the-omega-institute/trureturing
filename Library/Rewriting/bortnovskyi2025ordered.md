@@ -36,7 +36,7 @@ publication was not established in the recorded source checks.
 The research intake registered in #9018 reports bounded checks of the current
 arXiv history, exact-title and ordered-longest searches, and OpenAlex W4414447583;
 no later exact resolution was verified in that scope. This is not a worldwide
-priority claim. The v2 conjecture remains the full implementation target.
+priority claim. The full v2 conjecture is proved by `Completion.result` below.
 
 ## Direct weighted comparison
 
@@ -65,7 +65,7 @@ prefixes, promotion in every complete phase using first-overfire, and
 `greedy_split_optimality`: every complete greedy split phase maximizes full
 reward among complete split phases from the same arbitrary raw start. Ones
 take priority; otherwise the highest duplicate is recomputed after each split.
-This comparison excludes merges and does not yet establish full-game optimality.
+This comparison excludes merges and does not by itself establish full-game optimality.
 
 `OrderedGame.greedy_attainment` now constructs a complete raw greedy path to
 binary nonadjacent digits whose full reward is the concrete recursive `G`.
@@ -138,19 +138,20 @@ gives well-founded completion, including the singleton start.
 domination and exact ordered attainment. It quantifies every positive n,
 every permitted complete LGS run and every arbitrary legal terminal competitor.
 Terminal inversion zero follows from absence of actual switches. Its axiom
-closure is `propext`, `Classical.choice`, `Quot.sound`. Source-fidelity review,
-first-freeze admission and final CI integration remain pending.
+closure is `propext`, `Classical.choice`, `Quot.sound`. Independent pre-Freeze
+source-fidelity and declaration-admission review passed. Final new-head CI,
+ordinary merge and independent completion audit remain pending.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
 and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly
 allow arbitrary starting states. They do not account for paid ordered switches.
 Bond–Levine, *Abelian Networks I*, arXiv:1309.3445, supplies the classical
 least-action comparison, not these state-dependent reward inequalities.
-The direct weighted candidate is a research deduction attributed to the #9018
+The direct weighted proof is a research deduction attributed to the #9018
 intake, not a theorem claimed from either paper. Existing repository carry,
 termination, inversion and chain suppliers from PRs #7495, #7575, #7643 and
-#7651 retain their attribution. Independent completion review is still required;
-the kernel result does not claim worldwide priority.
+#7651 retain their attribution. The kernel result does not claim worldwide
+priority.
 
 ## Verified locator
 
