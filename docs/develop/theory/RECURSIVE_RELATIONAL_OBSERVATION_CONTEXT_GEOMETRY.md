@@ -5171,7 +5171,7 @@ $$
 \operatorname{sign}(\partial_rg_{m,k})=\sigma=\operatorname{sign}(m).
 \tag{31.108}
 $$
-取 $3\eta\le\bar r$、$d_0\eta^2\le1$。对任意 $k_a,k_b\in I_k$ 且 $|k_a-k_b|\le d_0$，$g_{m,k_b}([0,2\eta])$ 在 $g_{m,k_a}([0,3\eta])$ 的逆值域中；具体地，写 $w_k=\sigma g_{m,k}$，有
+取 $0<\eta\le\bar r/3$、$d_0\eta^2\le1$。对任意 $k_a,k_b\in I_k$ 且 $|k_a-k_b|\le d_0$，$g_{m,k_b}([0,2\eta])$ 在 $g_{m,k_a}([0,3\eta])$ 的逆值域中；具体地，写 $w_k=\sigma g_{m,k}$，有
 $$
 w_{k_a}(3\eta)-w_{k_b}(2\eta)\ge\frac{3|m|\eta}{10}>0.
 \tag{31.109}
