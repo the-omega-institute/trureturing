@@ -1,0 +1,49 @@
+**定理 25.2（阈值图、精确像与共同短时单射）。** 在定义25.1下，每个 $\beta\in I$、$s\in[0,s_*]$ 有唯一 $t_\beta(s)\in[0,T]$ 使 $r(\beta,t_\beta(s))=s$。设 $G_s(\beta)=z(\beta,t_\beta(s))$，则正阈值处
+$$
+\frac{2s}{3\nu}\le t_\beta(s)\le\frac{2s}\nu,
+\qquad \partial_s t_\beta=\frac1{r_t},\quad
+\partial_\beta t_\beta=-\frac{r_\beta}{r_t},
+\tag{25.104}
+$$
+$$
+\partial_\beta G_s=z_\beta-z_t\frac{r_\beta}{r_t},
+\quad \frac{s}{3\nu}\le\partial_\beta G_s\le\frac{3s}{\nu},
+\quad
+\left|\partial_\beta G_s-\frac{s}{\nu}\right|
+\le\frac4{\nu^2}\left(\kappa+\frac{A_r}{2\nu}\right)s^2.
+\tag{25.105}
+$$
+实际映射 $\Psi(\beta,t)=(r(\beta,t),z(\beta,t))$ 在
+$$
+W=\{(\beta,t):\beta\in I,\ 0<t\le T,\ 0<r(\beta,t)\le s_*\}
+\tag{25.106}
+$$
+上单射，其精确像为
+$$
+Y=\{(s,w):0<s\le s_*,\quad G_s(b_-)\le w\le G_s(b_+)\}.
+\tag{25.107}
+$$
+域含 $I\times(0,T/3]$。按坐标次序 $(t,\beta)$，Jacobian 行列式满足
+$$
+\Delta=r_tz_\beta-r_\beta z_t\ge\nu t/4>0.
+\tag{25.108}
+$$
+
+证明。Taylor 积分式及其参数微分给
+$$
+\begin{aligned}
+|r-\nu t|&\le A_rt^2/2,& |r_t-\nu|&\le A_rt,& |r_\beta|&\le A_1t^2/2,\\
+|z-\beta t|&\le C_zt^2/2,& |z_t-\beta|&\le C_zt,& |z_\beta-t|&\le C_1t^2/2.
+\end{aligned}
+\tag{25.109}
+$$
+例如 $r-\nu t=\int_0^t(t-v)r_{tt}(\beta,v)dv$；混合导数连续使在此积分下对 $\beta$ 求导合法，其余五式同理。因此 $\nu/2\le r_t\le3\nu/2$，积分得 $(\nu/2)t\le r\le(3\nu/2)t$。更精细地 $r(\beta,T)\ge3\nu T/4>s_*$，故介值性及严格时间单调性给唯一阈值时刻，且正阈值严格在 $T$ 之前。隐函数定理在这些内部时间点适用；参数开邻域保证区间端点的导数也是限制所得。$s=0$ 时 $t_\beta(0)=0$，公式按单侧连续意义延伸。
+
+链式法则必须保留参数依赖的阈值时间，给（25.105）的首式。记 $t=t_\beta(s)$，有
+$$
+|\partial_\beta G_s-t|
+\le\left(C_1/2+A_1(B+C_zT)/\nu\right)t^2
+\le\kappa t^2\le t/2.
+$$
+结合（25.104）的时间界即得两侧导数界；再用 $|t-s/\nu|\le A_rt^2/(2\nu)$ 得二阶渐近界。因此每条正阈值图对参数严格递增。两份相等读数先落在同一正阈值，再由严格递增得同一参数，最后由 $r$ 的时间单调性得同一时间。连续严格单调函数的像是端点间闭区间，给（25.107）；单点参数时该像退化成一条曲线。$t\le T/3$ 保证 $r\le s_*$。最后 $\Delta=r_t\partial_\beta G_s\ge(\nu/2)(t/2)$。此证明没有把 $r$ 假定成与参数无关，也没有将 $t=s/\nu$ 或 $\beta=\nu w/s$ 当作精确反演式。$\square$
+

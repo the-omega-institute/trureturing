@@ -61,7 +61,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void BranchesOutsideLifecycleNamespacesRemainUntouched()
+    public void WorktreesOutsideLifecycleNamespacesAreReclaimedWithoutDeletingTheirBranches()
     {
         using var fixture = new CleanLanesFixture();
         const string registeredBranch = "feature/registered";
@@ -72,13 +72,13 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force");
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(registeredPath));
+        Assert.False(Directory.Exists(registeredPath));
         Assert.True(fixture.BranchExists(registeredBranch));
         Assert.True(fixture.BranchExists(orphanBranch));
         Assert.DoesNotContain(
             ReadItems(result.Output),
             item => item.TryGetProperty("branch", out var branch)
-                && (branch.GetString() == registeredBranch || branch.GetString() == orphanBranch));
+                && branch.GetString() == orphanBranch);
     }
 
     [Fact]

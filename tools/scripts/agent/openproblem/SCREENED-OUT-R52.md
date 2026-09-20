@@ -644,3 +644,85 @@ R52 写 Cohen 25.4.7「另 22 条由 Duc Hieu Le arXiv:2509.26138 结算(证 16�
 **读数(orchestrator 亲验页面,时间取 HTML `<time dateTime>`)**:Kok 2.12(`/p/369427`,反例 `v_88`,2026-08-20T11:26Z)与 Kok 2.9(`/p/369426`,反例 `J_33`,2026-08-20T11:35Z)均由用户 shivampatel 张贴,见证与本仓 `kok-jaco-exponential-domination-refutation`(#7316,预登记 09-12)、`kok-jaco-dom-path-diameter-refutation`(#8569,预登记 09-18)相同,早于本仓。Takemura arXiv:2512.18169 在 MathDB 有十条条目 `/p/372172`–`/p/372181`(标准循环矩阵、行移位平方格、Hilbert、乘法表格、Vandermonde),**每条各有一条 `Proof` 解答(2026-08-20/21,一条 09-03)**;C7 排队的 Conjectures 10–11、12、15 因此出局。已合入的 Conjectures 1–2(#8837 → #8930,预登记 09-19)也在其中:`/p/372172`/`/p/372173` 的解答(2026-08-20T09:55Z)在证循环矩阵情形时同页显式证出 `m₁(fix) = n − 1` 与 `APD_{n−1}(fix) = n!`。Mehiri–Nadji 2509.12756(power contamination)与 Cohen JIS 25.4.7 无条目。
 
 **判据**:该用户自 2026-08 起系统性地处理 arXiv 小猜想,与本线第一档选题函数重叠——**凡 2025 年后 arXiv 论文的编号猜想,先假定 MathDB 上有人做过**;MathDB 的条目由 arXiv 论文生成,期刊专载(JIS、INTEGERS)、OEIS `%C` 猜想行与旧文献覆盖弱,搜题席应向这些来源倾斜。KPI 按「首次公开」口径计,Kok 2.9/2.12 与 Takemura 1–2 四条从计数扣除、冻结不撤。全量审计(codex 席 `s96d-mathdb-audit`,dev `16bb7e8ac3`,312 条 OPR 声明):4 条 `entry-solved-before-ours`(即上述四条)、226 条 `no-entry`、82 条因 MathDB HTTP 429 `unreachable`(orchestrator 节流重放中)、1 条 `unsure`(`fiebig-mbirika-spilker-vertical-slice`,多条目同源待人读)。
+
+## R69(2026-09-20):Erdős #272 的 N=13 —— 形状对、作者在做、我的手段差得远,不取
+
+**候选来源**:arXiv API(https,http 返 301)按「机器已造好却明写留下更便宜实例」的信号搜近期论文,命中
+**arXiv:2607.23004**(v1 2026-07-25,v2 2026-09-20),即 Erdős **#272**:最大的 `t`,使
+`A₁,…,A_t ⊆ {1,…,N}` 两两交集为非空等差数列。该文摘要逐字:
+
+> "We determine `t(N)` exactly for all `3 ≤ N ≤ 12` by exhaustive computation: in this entire range
+> Szabo's lower bound is exact, and we conjecture that `t(N)=\binom{N}{2}+1+\lfloor(N-1)/4\rfloor`
+> for every `N`."
+
+故**下一未知情形 `N = 13` 是有限计算**,预测 `t(13) = 78+1+3 = 82`,形状属第二档。该文另证:
+对每个 `N`,starred(有公共元素)族中 Szabó 界即精确最大值,整个猜想归约到 Szabó kernel 猜想。
+
+**本仓已有可跑的机器,正对照过到 N=9**:族图(顶点=非空子集,边=交集为非空 AP)+ Tomita 精确
+max-clique,复现 `t(N)`(N=3..9)= 4, 7, 12, 17, 23, 30, 39,与该文逐项相同。
+*(第一版着色剪枝写错,N=6 给出 11 —— 低于已知下界的不可能值;重写后全对。任何新求解器须先过此对照。)*
+
+**不取的三条读数**:
+
+1. **状态**(live 实测):徽章 `OPEN`、`Proof claims 0`,但
+   **`Currently working on: arkyang`** 且 `Open to collaboration: arkyang` —— 与该文 v2 更新于同日。
+   作者本人在活跃推进其自己的下一情形。
+2. **我的手段差得远**:`N=9` 有 511 个子集,精确 max-clique 耗 **122.9 s**;`N=13` 有 **8191** 个。
+   `N=10` 在 260 s 预算内未跑完。
+3. **种下界没用**:真实任务是「已知 82,证不存在 83-clique」而非从零搜,故测了种下界的加速 ——
+   `N=9` 从 `lb=0` 122.9 s、从 `lb=38` **119.8 s**,**只省 2.5%**。剪枝早由着色界做掉了,
+   这条捷径不存在。要 `N=13` 只能重新实现该文的结构归约或上重型求解器,而那是在与作者赛跑。
+
+**若日后重开**:先查 `arkyang` 是否已发 `N=13`;`FormalConjectures/ErdosProblems/272.lean` 有 Lean 陈述;
+注意即使 `t(13)=82` 也是**正向有限实例**,按第 3.3 条不可单独取得 Lean 准入,只有 `t(13) ≠ 82`
+(反驳该文猜想)才是。
+
+**同轮的负结果**:`erdos-badge-scan.py` 扫出 41 个第二档形状题,经逐条核对与本文件 R47/R52 的判死记录
+对齐后无新增可取者;本地 scratchpad 的论文按同一信号词过一遍,只有 2609.07728 命中且留的是无界 ∀。
+
+## R70(2026-09-20):可有限判定的 40 条已被占满;并勘正 R69 同轮的一处错判
+
+**勘正先说**。同轮早些时候我用松正则核对「徽章为 DECIDABLE/VERIFIABLE/FALSIFIABLE 的 41 条是否都被筛过」,
+得出「全部碰过」。**那个结论是错的**,正则把不相干的数字当成了题号。改用权威结构化数据源
+`teorth/erdosproblems` 的 `data/problems.yaml`(字段 `informal_status.{state,last_update}`)
+取出该状态集,再对筛选文件按 `#N` 精确匹配,得:
+
+    decidable / verifiable / falsifiable 共 40 条
+      R52 已逐条判死          14
+      本文件他处提到过         11
+      **从未筛过**            15
+
+**这 15 条逐条核过 live 页面,结论是它们全部已被占**:
+
+| 题号 | Proof claims | Currently working on |
+|---|---|---|
+| #7 | 0 | duckmerc |
+| #23 | 0 | Sam_Petkov |
+| #64 | 2 | Sam_Petkov |
+| #114 | 1 | KMendoza |
+| #128 | 1 | Sam_Petkov |
+| #242 | 1 | jgold |
+| #488 | 2 | will0708 |
+| #506 | 1 | None |
+| #723 | 0 | Jacky_Wang |
+| #742 | 1 | None |
+| #835 | 0 | RajveerKap |
+| #848 | 1 | None |
+| #982 | 1 | Sam_Petkov |
+| #1020 | 1 | None |
+| #1041 | 1 | ogroth |
+
+无一条既无 claim 又无人在做。**#1020 是唯一无人在做的**,但仍带 1 条 claim。
+
+**三条 `decidable`(「Resolved up to a finite check」)另有独立死因**,复核了本仓既有判例
+「徽章不蕴含可计算性」:
+- **#506**(平面 `n` 点决定的最少圆数):Elliott/Purdy–Smith 的界对 `n > 393` 成立,
+  缺口是 `n ≤ 393` —— 阈值虽显式,但域是**平面点配置的连续空间**,不是可枚举的有限对象。
+- **#742**(直径 2 的临界图边数 `≤ n²/4`):Füredi 1992 证「充分大 `n`」,**无显式阈值**。
+- **#848**(`ab+1` 恒非无平方因子的 `A ⊆ [N]`):Sawhney 证「充分大 `N`」,**无显式阈值**。
+
+**#723** 顺带记:是 **12 阶射影平面**的存在性(10 阶由 Lam 等人的计算机搜索排除),第三档,不取。
+
+**判据沉淀**:选靶时「徽章可有限判定」既不蕴含可计算(阈值可能不显式、域可能连续),
+也不蕴含无人认领。两项都必须逐题查 live 页面,**且要用 `problems.yaml` 而非抓 HTML**——
+前者是权威结构化源,带 `informal_status.last_update`,能直接看出哪里刚落地新结果。

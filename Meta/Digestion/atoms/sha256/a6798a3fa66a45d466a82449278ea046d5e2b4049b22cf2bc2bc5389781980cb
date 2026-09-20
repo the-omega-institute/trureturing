@@ -1,0 +1,22 @@
+**命题 24.4（真实截断方程与准备识别）。** 上述 $L_Q,B_Q$ 在 $E_Q$ 内封闭，且是实线性、实双线性映射。它们给出实际 Fourier Galerkin 方程
+$$
+\partial_tu=\nu\Delta u-\Pi_Q\mathbb P((u\cdot\nabla)u).
+\tag{24.108}
+$$
+取 $e=(1,0)$、$q=(-1,1)$、$h=(0,1)$，在 $\pm e$ 上置 $(a_0)_k=(0,1/2,0)$，在 $\pm q$ 上置 $(b_0)_k=(1/2,1/2,0)$，其余为零。则准备 $v(0)=\alpha a_0+\beta b_0$ 合成为
+$$
+u_0(X)=\alpha(0,\cos X_1,0)
+ +\beta(\cos(X_2-X_1),\cos(X_2-X_1),0).
+\tag{24.109}
+$$
+对 $x(t)=\operatorname{Re}(v_e(t))_2$、$y(t)=\operatorname{Im}(v_h(t))_1$，有
+$$
+x(0)=\alpha/2,\quad x'(0)=-\nu\alpha/2,
+\qquad y(0)=0,\quad y'(0)=-\alpha\beta/4.
+\tag{24.110}
+$$
+
+证明。$P_k$ 为范数一的实正交投影，给横向性。将卷积索引换成 $(-p,-q)$，来自 $q$ 的负号和 $i$ 的共轭负号相合，得到 $B_Q(v,w)_{-k}=\overline{B_Q(v,w)_k}$；零输出因 $q=-p$ 而 $q\cdot v_p=0$，确实为零。设 $A_k=i\sum_{p+q=k}(\widetilde q\cdot v_p)v_q$，压力系数 $\widehat p_k=i\widetilde k\cdot A_k/|k|^2$ 满足 $-A_k-i\widetilde k\widehat p_k=-P_kA_k$，且有共轭对称性。这证明含压力的保留模方程恰为（24.108）。未保留输出被 $\Pi_Q$ 丢弃，故它是指定的截断演化。
+
+准备合成直接复用 [ReversalWaveSynthesis](../../../D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.lean) 的 `synthesis_eq_realVelocity`，其 `realVelocity_contDiff`、`realVelocity_periodic`、`realVelocity_divergence` 供应初始实场的光滑、周期、无散度性质；这些是初态性质，不是实际 PDE 演化。$Q\ge2$ 保留全部输入及 $\pm h$。没有非零初始频率对相加为 $e$，所以该处初始非线性为零。相加为 $h$ 的有序对仅 $(e,q),(q,e)$，乘 $i$ 前的和为 $(\alpha\beta/4,\alpha\beta/2,0)$；$P_h$ 去掉第二分量，负非线性给 $-i\alpha\beta/4$。这正是约定23.1引用的既有系数恒等式在实际 ODE 初始导数中的应用。$\square$
+

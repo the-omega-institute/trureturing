@@ -23,10 +23,6 @@ public sealed partial class CleanLanesCommandTests
         private Action disposeRepository;
         private Action disposeWorktrees;
         private Action disposeTemp;
-        private readonly Dictionary<string, PullRequestProbeOutcome> pullRequests =
-            new(StringComparer.Ordinal);
-        private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
-            new(StringComparer.Ordinal);
         private DateTimeOffset now;
 
         internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
@@ -194,32 +190,6 @@ public sealed partial class CleanLanesCommandTests
         internal void LockLane(string path) =>
             Git(repository.Path, "worktree", "lock", "--reason", "fixture session", path);
 
-        internal void RegisterMergedPr(string branch, string headOid, string mergeCommitOid) =>
-            pullRequests[branch] = new PullRequestProbeOutcome(
-                true,
-                [new PullRequestInfo(branch, headOid, "MERGED", mergeCommitOid)]);
-
-        internal void RegisterPullRequests(
-            string lookupBranch,
-            params PullRequestInfo[] returnedPullRequests) =>
-            pullRequests[lookupBranch] = new PullRequestProbeOutcome(
-                true,
-                returnedPullRequests);
-
-        internal void RegisterClosedPr(string branch, string headOid) =>
-            pullRequests[branch] = new PullRequestProbeOutcome(
-                true,
-                [new PullRequestInfo(branch, headOid, "CLOSED", null)]);
-
-        internal void FailPrProbe(string branch) =>
-            pullRequests[branch] = new PullRequestProbeOutcome(false, []);
-
-        internal void MarkLaneInUse(string path) =>
-            laneProcesses[path] = new LaneProcessProbeOutcome(true, true);
-
-        internal void FailProcessProbe(string path) =>
-            laneProcesses[path] = new LaneProcessProbeOutcome(false, false);
-
         internal void SwitchToManagedBranch(string branch) =>
             Git(repository.Path, "switch", "-c", branch);
 
@@ -239,7 +209,14 @@ public sealed partial class CleanLanesCommandTests
         {
             var path = Path.Combine(temp.Path, name);
             Git(repository.Path, "worktree", "add", "--detach", path, "dev");
-            return path;
+            return Git(path, "rev-parse", "--show-toplevel").Trim();
+        }
+
+        internal string AddNestedWorktree(string parent)
+        {
+            var path = Path.Combine(parent, "nested");
+            Git(repository.Path, "worktree", "add", "--detach", path, "dev");
+            return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
 
         internal string AddForeignTempDirectory(string name)
@@ -287,7 +264,6 @@ public sealed partial class CleanLanesCommandTests
             var path = WorktreePath(branch);
             AddWorktree(branch, path);
             var canonicalPath = Git(path, "rev-parse", "--show-toplevel").Trim();
-            RegisterMergedPr(branch, Head(canonicalPath), Head(canonicalPath));
             if (dirty)
             {
                 File.WriteAllText(
@@ -310,8 +286,7 @@ public sealed partial class CleanLanesCommandTests
             Git(path, "add", artifact);
             Git(path, "commit", "-m", $"land {branch}");
             Git(repository.Path, "merge", "--ff-only", branch);
-            var head = Head(path);
-            RegisterMergedPr(branch, head, head);
+            AdvanceBase(300);
             if (dirty)
             {
                 File.WriteAllText(
@@ -332,59 +307,53 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
             Git(path, "add", "unmerged.txt");
             Git(path, "commit", "-m", "unmerged branch commit");
+            AdvanceBase(300);
             return path;
         }
 
         internal CommandResult Run(params string[] arguments) =>
-            RunCore(
-                CreateRunner(),
-                now,
-                ProbePullRequests,
-                ProbeLaneProcesses,
-                arguments);
+            RunCore(CreateRunner(), now, arguments);
 
         internal CommandResult RunAt(DateTimeOffset injectedNow, params string[] arguments) =>
-            RunCore(
-                CreateRunner(),
-                injectedNow,
-                ProbePullRequests,
-                ProbeLaneProcesses,
-                arguments);
+            RunCore(CreateRunner(), injectedNow, arguments);
 
         internal CommandResult RunWithBase(string baseRevision, params string[] arguments) =>
-            RunCore(
-                CreateRunner(),
-                now,
-                ProbePullRequests,
-                ProbeLaneProcesses,
-                arguments,
-                baseRevision);
+            RunCore(CreateRunner(), now, arguments, baseRevision);
 
-        internal CommandResult RunWithProbes(
-            PullRequestProbe pullRequestProbe,
-            LaneProcessProbe laneProcessProbe,
-            params string[] arguments) =>
-            RunCore(
-                CreateRunner(),
-                now,
-                pullRequestProbe,
-                laneProcessProbe,
-                arguments);
+        internal CommandResult RunWith(IWorktreeProcessRunner runner, params string[] arguments) =>
+            RunCore(CreateRunner(runner), now, arguments);
 
-        internal CommandResult RunWithLaneProcessProbe(
-            LaneProcessProbe laneProcessProbe,
-            params string[] arguments) =>
-            RunCore(
-                CreateRunner(),
-                now,
-                ProbePullRequests,
-                laneProcessProbe,
-                arguments);
+        internal void AdvanceBase(int count)
+        {
+            var stream = new StringBuilder();
+            for (var index = 0; index < count; index++)
+            {
+                stream.Append("commit refs/heads/dev\ncommitter Test <test@example.invalid> 1700000000 +0000\ndata 1\nx\n");
+                if (index == 0) stream.Append($"from {Head(repository.Path)}\n");
+                stream.Append('\n');
+            }
 
-        internal CommandResult RunWith(
-            IWorktreeProcessRunner runner,
-            params string[] arguments) =>
-            RunCore(CreateRunner(runner), now, ProbePullRequests, ProbeLaneProcesses, arguments);
+            var result = TestProcessRunner.Run("git", ["fast-import", "--quiet", "--force"],
+                repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096,
+                Encoding.UTF8.GetBytes(stream.ToString()));
+            Assert.Equal(0, result.ExitCode);
+        }
+
+        internal DateTimeOffset LastUpdate(string path) => DateTimeOffset.FromUnixTimeSeconds(
+            File.ReadLines(CreationLogPath(path)).Select(line => long.Parse(
+                line.Split('\t')[0].Split(' ', StringSplitOptions.RemoveEmptyEntries)[^2],
+                System.Globalization.CultureInfo.InvariantCulture)).Max());
+
+        internal void RewriteLastUpdate(string path, DateTimeOffset time)
+        {
+            var log = CreationLogPath(path);
+            var lines = File.ReadAllLines(log);
+            var tab = lines[^1].IndexOf('\t');
+            var fields = (tab < 0 ? lines[^1] : lines[^1][..tab]).Split(' ');
+            fields[^2] = time.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
+            lines[^1] = string.Join(' ', fields) + (tab < 0 ? "" : lines[^1][tab..]);
+            File.WriteAllLines(log, lines);
+        }
 
         internal ScriptedWorktreeProcessRunner CreateRunner(ProcessScript? script = null) =>
             CreateRunner(new ProductionWorktreeProcessRunner(), script);
@@ -392,7 +361,7 @@ public sealed partial class CleanLanesCommandTests
         internal CommandResult RunWithRaw(
             IWorktreeProcessRunner runner,
             params string[] arguments) =>
-            RunCore(runner, now, ProbePullRequests, ProbeLaneProcesses, arguments);
+            RunCore(runner, now, arguments);
 
         internal CommandResult RunWithProductionProbes(
             IWorktreeProcessRunner runner,
@@ -418,8 +387,6 @@ public sealed partial class CleanLanesCommandTests
         private CommandResult RunCore(
             IWorktreeProcessRunner runner,
             DateTimeOffset injectedNow,
-            PullRequestProbe pullRequestProbe,
-            LaneProcessProbe laneProcessProbe,
             IReadOnlyList<string> arguments,
             string baseRevision = "dev")
         {
@@ -430,9 +397,7 @@ public sealed partial class CleanLanesCommandTests
                 allArguments,
                 runner,
                 [temp.Path],
-                injectedNow,
-                pullRequestProbe,
-                laneProcessProbe);
+                injectedNow);
         }
     }
 }
