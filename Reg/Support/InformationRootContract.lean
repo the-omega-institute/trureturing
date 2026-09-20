@@ -1,4 +1,6 @@
-import LeanInformationAudit.RootContract
+import LeanInformationAuditInterface.RootContract
+import LeanInformationAudit.FixedSnapshot
+import LeanInformationAudit.FrozenBaseline
 
 namespace Reg.Support.InformationRootContract
 open Lean LeanInformationAudit
