@@ -153,3 +153,16 @@ This is a semantic proof-shape prediction, not a machine classification. No proj
 Intended `escape_witness`: `∀ B n, 2 ≤ B → 0 < n → ¬ n ∣ B²−1 → ∃ m > 0, n ∣ m ∧ ¬ n ∣ reverseBase B m`, exactly `AyadProbe.witness`. It is used by the necessary direction of `result`. The intended content basis is `admission_basis: escape-witness`; issue #8990 also supplies the external-open-problem preregistration for the alternate `open-problem-resolution` basis if independent semantic review reclassifies the mathematics. No such fallback is needed by this probe's prediction.
 
 The production public surface remains the two definitions plus one `result`; the probe helpers are not an authorization to add bind-only companion declarations. The full theorem, rather than the Python enumeration, is the mathematical deliverable candidate.
+
+## Step 7: utility and settlement
+
+Directly inspected both requested Lean headers:
+
+- `D5/S1/Digit/KurkovRunAlternatingCount.lean`: `utility: none`.
+- `D5/S1/Digit/Admissibility/WuLouPermutationInvariantNivenDigitSum.lean`: `utility: none`.
+
+The appropriate candidate header is `utility: none`. The proposed result quantifies over every base B ≥ 2, every positive n, and all positive multiples m. Its new content is an unbounded symbolic construction and induction. It is neither bounded-enumeration nor a certified-instance, checker, or numeric-reduction. Each theorem helper in the probe is likewise symbolic; the Python experiments are evidence checking the route and do not occur in the Lean proof or determine the delivered theorem's utility class.
+
+Verdict: propose. Registered predictions 1–4 held; no broken predictions and no source-fidelity mismatch. Exact witness and complete theorem compile without proof holes and have the standard three-axiom closure. Remaining pipeline work under the supplied GoalArtifact is production placement and public-surface cleanup, Scribe/Problems metadata and open-problem claim, independent review, admission/required checks, and a merged PR recorded in the preregistration. This isolated seat does not perform those stages and does not claim a KPI increment.
+
+ASSUMED-UNVERIFIED: issue #8990's claim that no later literature settles the external problem was read but not independently re-audited here; narrow external Lean search does not establish a global absence result. The orchestrator must independently verify this seat's source and measurements under the supplied trust boundary. No theorem-formalization blocker remains in the probe. No sshx, subordinate agent, review dispatch, PR, deposit, emit, lean-report, or preflight was run.
