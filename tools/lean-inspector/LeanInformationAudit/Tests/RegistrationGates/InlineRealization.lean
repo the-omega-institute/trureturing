@@ -161,7 +161,8 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
     throwError "report retains untraced source hashes"
   logInfo m!"INLINE_PROVENANCE_REPORT={wire.compress}"
   unless wire.compress == LeanInformationAudit.Tests.InlineProvenanceWire.canonical do
-    throwError "[FAIL] INLINE_PROVENANCE_WIRE_MISMATCH: set InlineProvenanceWire.canonical to the JSON after INLINE_PROVENANCE_REPORT= in this module's build log"
+    throwError ("[FAIL] INLINE_PROVENANCE_WIRE_MISMATCH: set InlineProvenanceWire.canonical to " ++
+      "the JSON after INLINE_PROVENANCE_REPORT= in this module's build log" : String)
   let path : System.FilePath := helperPath
   let original ← IO.FS.readBinFile path
   try
