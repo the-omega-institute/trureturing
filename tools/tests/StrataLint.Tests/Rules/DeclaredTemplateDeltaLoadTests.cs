@@ -99,7 +99,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
     }
 
     [Fact]
-    public void selected_stale_evidence_blocks()
+    public void selected_inconsistent_content_input_blocks()
     {
         using var fixture = new WireFixture();
         fixture.Evidence(A)["inputs"]![0]!["sha256"] = new string('0', 64);

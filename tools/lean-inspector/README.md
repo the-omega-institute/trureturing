@@ -46,7 +46,7 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
 manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。原生 trace 与完整
-当前输入和 materials 校验决定还原后的报告复用。
+`report_cache_release_semantic_version` 决定还原后的报告复用；验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
@@ -58,7 +58,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 `lake-manifest.json` 中 mathlib 的 resolved revision 与 OS/架构，不证明项目工件已齐全或报告仍有效。
 缺失或损坏的 stamp 不等于 pin 已变；ensure 按现有规则补齐或原地重产。
 缺 stamp、项目 olean 为冷且 `.lake/build` 不存在时，也可走 donor 的 missing-build 播种路径。
-报告是否可复用仍由 Lake trace 和 inspector 校验决定。正常入口在 ensure 前不创建
+报告是否可复用由 Lake trace 和 `report_cache_release_semantic_version` 决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
 每次 `make lean-report` 都要求当前项目默认目标和 inspector 编译的有效成功证据。
@@ -102,12 +102,12 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；源码哈希也独立参与，包含只改注释的编辑。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
-| 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |
+| 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
 | 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
 
-版本 4 的 `information_templates` 分区携带 occurrence inventory、BindingRecord 和
-当前源码输入。原生复用和发布检查这些输入的字节绑定；陈旧或缺失输入使工件失效。
+`information_templates` 分区携带 occurrence inventory、BindingRecord 和捕获的源码输入，
+其 `compatibility_version` 等于 manifest 的缓存发布版本；复用验证检查结构，不重算当前源码摘要。
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
@@ -126,10 +126,10 @@ SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报�
 多个真实来源；`mode=cached` 或 `produced` 描述本次发布工作，不把旧报告改称当前
 可执行文件新生成。
 
-导出的 bundle 保留 `module_origins.input_sources`。原生模块接受时核对本次 Lake
-捕获的依赖集合及当前哈希；发布和导出报告的
-[当前输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员、
-源码、claim 源码和捕获依赖的当前文件字节，拒绝未登记或陈旧的绑定。
+导出的 bundle 保留 `module_origins.input_sources`；其路径、摘要格式及自身行的一致性仍受检查。
+发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
+不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
+inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
 兼容 producer 改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
@@ -137,8 +137,8 @@ SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报�
 缺失的可选原生工件由 Lake 恢复或补建。存在但损坏或不兼容的工件先被拒绝，再在私有构建树
 重建一次，该次恢复禁用缓存读取；重建仍无效则失败。默认输出或任一相邻 sidecar
 丢失、损坏时重新运行 `make lean-report`，它从已验证的 inspector 工件重新发布，
-必要时先补建。接受前仍检查规范 JSON、materials 身份、provenance、当前源码、utility
-绑定及输入坐标，不能把缓存命中当成检查通过。
+必要时先补建。接受前仍检查规范 JSON、materials 身份、provenance、源码路径、utility
+记录结构及输入坐标，不能把缓存命中当成检查通过。
 
 原生 Lake `--no-build` 保留上述接受条件：
 

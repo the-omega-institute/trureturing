@@ -39,9 +39,9 @@ not publish cache snapshots.
 
 Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
 `lean-report-inputs.json`. Native Lake facets own report reuse and always require
-the default Lean/audit targets and current inspector build. Registered configuration
-bytes, module and utility-claim inputs, captured source hashes, and complete
-publication materials determine acceptance. Reused rows retain their actual producer
+the default Lean/audit targets and current inspector build. Lake traces and the explicit
+cache release version decide reuse; validators check structure and artifact integrity
+without comparing stored source digests with current repository bytes. Reused rows retain their actual producer
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
 remains the resolved mathlib revision, with OS/architecture binary isolation.

@@ -28,6 +28,65 @@ import native
 from test_native_support import *
 
 class NativePublicationTests:
+    def test_native_module_validation_uses_lake_trace(self):
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/Fixture.zip'
+        trace = Path(str(artifact) + '.trace')
+        trace_bytes = trace.read_bytes()
+        utility = state / 'inputs/Fixture.json'
+        template_inputs = publication.selection.Selection(self.root)
+        paths = [self.root / p for p in ['Fixture.lean', 'External.lean', 'ClaimSupport.lean']]
+        originals = [p.read_bytes() for p in paths]
+        digest = publication.digest
+        def artifact_digest(path):
+            self.assertNotEqual(Path(path).suffix, '.lean',
+                '[FAIL] native_validation_does_not_hash_repository_sources')
+            return digest(path)
+        for damage in ['changed', 'deleted']:
+            with self.subTest(damage=damage):
+                try:
+                    for path, original in zip(paths, originals):
+                        if damage == 'changed':
+                            path.write_bytes(original + b'\n-- modified after extraction\n')
+                        else:
+                            path.unlink()
+                    # Deliberately force the retained trace precondition. Normal
+                    # Lake would invalidate these sources before this validator.
+                    trace.write_bytes(trace_bytes)
+                    with patch.object(publication, 'digest', side_effect=artifact_digest):
+                        native.validate('module', self.root, 'Fixture', utility, artifact, template_inputs=template_inputs)
+                    self.assertEqual(trace.read_bytes(), trace_bytes)
+                finally:
+                    for path, original in zip(paths, originals):
+                        path.write_bytes(original)
+
+    def test_native_module_integrity_rejections(self):
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/D5.Alone.zip'
+        utility = state / 'inputs/D5.Alone.json'
+        with zipfile.ZipFile(artifact) as archive:
+            original = {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        candidate = self.root / 'corrupt-module.zip'
+        for damage in ['report_sha256', 'missing_member', 'noncanonical_json']:
+            with self.subTest(damage=damage):
+                entries = dict(original)
+                if damage == 'report_sha256':
+                    key = publication.RAW + '.provenance.json'
+                    origin = json.loads(entries[key])
+                    origin['report_sha256'] = '0' * 64
+                    entries[key] = materials.canonical_json(origin)
+                elif damage == 'missing_member':
+                    del entries[publication.RAW + '.materials.zip']
+                else:
+                    entries[publication.RAW] = json.dumps(json.loads(entries[publication.RAW]), indent=2).encode()
+                with zipfile.ZipFile(candidate, 'w') as archive:
+                    for name, data in entries.items():
+                        archive.writestr(name, data)
+                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage):
+                    native.validate('module', self.root, 'D5.Alone', utility, candidate)
+
     def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
         self.build()
         state = native.state(self.root)
@@ -66,7 +125,8 @@ class NativePublicationTests:
                 try:
                     native.batch(request, result)
                     expected = [0] * len(requests)
-                    expected[alone_index] = expected[-1] = 1
+                    if damage == 'artifact':
+                        expected[alone_index] = expected[-1] = 1
                     self.assertEqual(json.loads(result.read_text()), expected,
                                      '[FAIL] aggregate_exact_row_rejection')
                     self.assertEqual(output.read_bytes(), original)
@@ -153,7 +213,7 @@ class NativePublicationTests:
             self.assertEqual(before, (memo.read_bytes(), memo.stat().st_ino, memo.stat().st_mtime_ns))
 
     def test_input_verification_is_read_only(self):
-        self.check_source_validation_invocation_lifetime()
+        self.check_source_validation_does_not_rehash()
         self.build()
         self.publish()
         helper_root = self.root / 'tools'
@@ -190,15 +250,13 @@ class NativePublicationTests:
                 result = subprocess.run(['bash', str(helper_root / 'scripts/report/lean-report-input.sh'),
                     'verify', '--repository', str(self.root), '--report', str(report)],
                     cwd=working_directory, env=environment, text=True, capture_output=True, timeout=120)
-                if damage == 'none':
+                if damage in ['none', 'stale-dependency']:
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 else:
                     self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
-                    if damage == 'stale-dependency':
-                        self.assertIn('stale dependency', result.stderr)
                 self.assertEqual(before, snapshot(), result.stdout + result.stderr)
 
-    def check_source_validation_invocation_lifetime(self):
+    def check_source_validation_does_not_rehash(self):
         # A pure source fixture also runs directly without compiling Lean.
         inputs = publication.selection.Selection(self.root)
         hashes = {path: publication.digest(inputs.safe_file(path))
@@ -228,18 +286,15 @@ class NativePublicationTests:
                     self.assertEqual(selected.call_count, 1)
                     source_reads = [str(Path(call.args[0]).relative_to(self.root.resolve()))
                                     for call in digests.call_args_list if Path(call.args[0]).suffix == '.lean']
-                    self.assertCountEqual(source_reads, hashes)
-                for path, message in [('D5/B.lean', 'report source binding'),
-                                      ('External.lean', 'report claim source binding'),
-                                      ('ClaimSupport.lean', 'stale dependency source binding')]:
+                    self.assertEqual(source_reads, [], '[FAIL] publication_does_not_hash_repository_sources')
+                for path in ['D5/B.lean', 'External.lean', 'ClaimSupport.lean']:
                     with self.subTest(path=path):
                         source = self.root / path
                         original, stamp = source.read_bytes(), source.stat()
                         try:
                             source.write_bytes(original.replace(b'def ', b'DEF ', 1))
                             os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
-                            with self.assertRaisesRegex(ValueError, message):
-                                verify()
+                            verify()
                         finally:
                             source.write_bytes(original)
                 added = self.root / 'D5/New.lean'
@@ -249,12 +304,11 @@ class NativePublicationTests:
                         verify()
                 finally:
                     added.unlink()
-                # A path read for an earlier binding still has to match every
-                # later expected SHA, and still needs dependency registration.
+                # Non-owner source hashes remain captured provenance. Paths
+                # still need registration, without comparing live file bytes.
                 origins['Fixture']['input_sources']['D5/B.lean'] = '0' * 64
                 publication.write_sidecars(report, coordinates, origins)
-                with self.assertRaisesRegex(ValueError, 'stale dependency source binding'):
-                    verify()
+                verify()
                 origins['Fixture']['input_sources']['D5/B.lean'] = hashes['D5/B.lean']
                 publication.write_sidecars(report, coordinates, origins)
                 manifest = self.root / 'lean-report-inputs.json'
@@ -300,7 +354,7 @@ class NativePublicationTests:
         artifact = self.root / '.lake/build/lean-inspector/report.zip'
         with zipfile.ZipFile(artifact) as archive:
             original = [(info, archive.read(info)) for info in archive.infolist()]
-        for damage in ['sha256', 'mode', 'provenance', 'identity', 'source']:
+        for damage in ['sha256', 'mode', 'provenance', 'identity']:
             with self.subTest(damage=damage):
                 entries = []
                 for info, data in original:
@@ -318,45 +372,15 @@ class NativePublicationTests:
                                 changed.writestr(entry, b'corrupt material' if index == 0 else materials_zip.read(entry))
                         data = output.getvalue()
                     entries.append((info, data))
-                if damage == 'source':
-                    # Keep every sidecar and origin consistent with the forged
-                    # report, so only the current source check can reject it.
-                    payloads = {info.filename: data for info, data in entries}
-                    value = json.loads(payloads[publication.RAW])
-                    row = value['modules'][0]
-                    row['source_sha256'] = 'sha256:' + '0' * 64
-                    raw = materials.canonical_json(value)
-                    sha = hashlib.sha256(raw).hexdigest()
-                    provenance = json.loads(payloads[publication.RAW + '.provenance.json'])
-                    provenance['report_sha256'] = sha
-                    provenance['module_origins'][row['module']]['report_sha256'] = hashlib.sha256(
-                        materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()
-                    provenance['module_origins'][row['module']]['input_sources'][row['source_path']] = '0' * 64
-                    payloads[publication.RAW] = raw
-                    payloads[publication.RAW + '.provenance.json'] = json.dumps(provenance).encode()
-                    payloads[publication.RAW + '.sha256'] = f'{sha}  {publication.RAW}\n'.encode()
-                    attestation = payloads[publication.RAW + '.input.attestation'].decode().splitlines()
-                    attestation[-1] = 'report_sha256=' + sha
-                    payloads[publication.RAW + '.input.attestation'] = ('\n'.join(attestation) + '\n').encode()
-                    entries = [(info, payloads[info.filename]) for info, _ in entries]
                 artifact.unlink()
                 with zipfile.ZipFile(artifact, 'w') as archive:
                     for info, data in entries: archive.writestr(info, data)
-                if damage == 'source':
-                    with tempfile.TemporaryDirectory(dir=self.root) as directory:
-                        report = publication.unpack(artifact, directory)
-                        expected = publication.coordinates(self.root)
-                        publication.validate_bundle(report, expected, manifest=self.root / 'lean-report-inputs.json')
-                        with self.assertRaisesRegex(ValueError, '^report source binding mismatch$'):
-                            publication.validate_bundle(report, expected, self.root)
                 for activity in ['', '{"kind":"extract","count":1}\n']:
                     self.write('activity.jsonl', activity)
                     result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
                         'publish', str(self.root), str(destination)], env=self.env,
                         text=True, capture_output=True, timeout=120)
                     self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
-                    if damage == 'source':
-                        self.assertIn('lean-inspector-native: report source binding mismatch\n', result.stderr)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
     def test_publication_snapshot_integrity_and_replace_failure(self):

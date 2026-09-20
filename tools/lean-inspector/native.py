@@ -154,8 +154,8 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
     public.validate_template_sources(rows, root, inputs=template_inputs)
     record = public.read_json(Path(utility_path).read_bytes())
     path = record['source_path']
-    if row['source_path'] != path or row['source_sha256'] != 'sha256:' + public.digest(Path(root) / path):
-        raise ValueError('native module source mismatch')
+    if row['source_path'] != path:
+        raise ValueError('native module source path mismatch')
     obligations = record['utilities']
     if not obligations:
         if 'utility_refutation' in row:
@@ -410,8 +410,6 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     # prepare validated the manifest before any facet could accept an artifact.
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
     origin = public.validate_origin(report, rows, compatibility)
-    if origin['input_sources'] != input_sources(root, utility):
-        raise ValueError('native dependency source binding mismatch')
     return rows, origin
 
 

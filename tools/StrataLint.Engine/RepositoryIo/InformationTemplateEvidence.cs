@@ -1,12 +1,10 @@
 using System.Collections.Immutable;
-using System.Collections.Concurrent;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-// Current-compiler evidence is source-bound independently for each module. Null
-// is an old/missing producer, never an empty inventory.
+// Lake traces and the report cache version govern reuse. Null is an old/missing
+// producer, never an empty inventory; this reader checks evidence structure.
 internal sealed record InformationTemplateModuleEvidence(
     JsonElement Wire,
     ImmutableHashSet<InformationOccurrenceKey> Inventory,
@@ -16,34 +14,11 @@ internal sealed record InformationTemplateModuleEvidence(
 
 internal static class InformationTemplateEvidence
 {
-    // RepositorySnapshot and its files are immutable. Share only their parsed
-    // link policy and byte digests; every wire record is still checked below.
-    // A replacement snapshot gets an independent index, even for equal paths.
-    private static readonly ConditionalWeakTable<RepositorySnapshot, InputIndex> InputIndices = new();
-
-    private sealed class InputIndex(RepositorySnapshot snapshot)
-    {
-        private readonly ImmutableArray<FileMapSymlink> links =
-            snapshot.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var manifest)
-                ? FileMapSymlinkPolicy.Parse(manifest.RawBytes.AsSpan(), AdmissionPlanePolicy.FileMapPath,
-                    path => snapshot.TryGetFile(path, out var included)
-                        ? included.RawBytes.ToArray()
-                        : throw new KeyNotFoundException(path))
-                : [];
-        private readonly ConcurrentDictionary<string, string> hashes = new(StringComparer.Ordinal);
-
-        internal bool Matches(string path, string digest) =>
-            !links.Any(link => path == link.Path || path.StartsWith(link.Path + "/", StringComparison.Ordinal))
-            && snapshot.TryGetFile(path, out var file)
-            && hashes.GetOrAdd(path, _ => InformationTemplateJson.Sha256(file.RawBytes.AsSpan())) == digest;
-    }
-
-    private static ImmutableArray<InformationTemplateContentInput> ReadInputs(JsonElement value, RepositorySnapshot inputs)
+    private static ImmutableArray<InformationTemplateContentInput> ReadInputs(JsonElement value)
     {
         if (value.ValueKind != JsonValueKind.Array || value.GetArrayLength() == 0)
             throw new FormatException("DTR-Evidence: nonempty content inputs required");
         var result = ImmutableArray.CreateBuilder<InformationTemplateContentInput>();
-        var index = InputIndices.GetValue(inputs, static snapshot => new InputIndex(snapshot));
         string? previous = null;
         foreach (var item in value.EnumerateArray())
         {
@@ -53,9 +28,8 @@ internal static class InformationTemplateEvidence
             if (!path.EndsWith(".lean", StringComparison.Ordinal)
                 || !RepoPath.TryCreate(path, out _) || path.Contains('\\')
                 || path.Split('/').Any(part => part is "" or "." or "..")
-                || previous is not null && string.CompareOrdinal(previous, path) >= 0
-                || !index.Matches(path, sha256))
-                throw new FormatException($"DTR-Evidence: unavailable, changed or noncanonical input {path}");
+                || previous is not null && string.CompareOrdinal(previous, path) >= 0)
+                throw new FormatException($"DTR-Evidence: noncanonical input {path}");
             previous = path;
             result.Add(new(path, sha256));
         }
@@ -101,7 +75,7 @@ internal static class InformationTemplateEvidence
         InformationTemplateJson.Version(value);
         if (value.GetProperty("compatibility_version").GetRawText() != ManifestVersion(snapshot))
             throw new FormatException("DTR-EvidenceVersion: compatibility_version differs from report_cache_release_semantic_version");
-        var inputs = ReadInputs(value.GetProperty("inputs"), snapshot);
+        var inputs = ReadInputs(value.GetProperty("inputs"));
         if (!inputs.Any(input => input.Path == sourcePath))
             throw new FormatException("DTR-Evidence: producer source is not bound");
         var inventory = ReadKeys(value.GetProperty("inventory"));
@@ -125,7 +99,7 @@ internal static class InformationTemplateEvidence
             if (key.RegistrationModule != ModuleForSource(registration))
                 throw new FormatException("DTR-Evidence: registration module/source owner differs");
             var statement = InformationTemplateJson.Hash(InformationTemplateJson.String(record, "statement_identity"), 64);
-            var contentInputs = ReadInputs(record.GetProperty("content_inputs"), snapshot);
+            var contentInputs = ReadInputs(record.GetProperty("content_inputs"));
             if (!contentInputs.Any(input => input.Path == registration)
                 || contentInputs.Any(input => !inputs.Contains(input)))
                 throw new FormatException("DTR-Evidence: registration/content source not in current input closure");

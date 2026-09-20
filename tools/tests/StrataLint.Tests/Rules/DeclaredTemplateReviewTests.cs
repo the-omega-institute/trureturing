@@ -269,6 +269,25 @@ public sealed class DeclaredTemplateReviewTests
         Assert.Contains(diagnostics, d => d.Message.Contains("DTR-Declared", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void selected_module_accepts_input_digests_that_differ_from_snapshot()
+    {
+        var before = Files();
+        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
+        var modules = Report(after, declared: true).Files.ToDictionary(pair => pair.Key.Value, pair =>
+        {
+            var wire = System.Text.Json.Nodes.JsonNode.Parse(pair.Value.InformationTemplates!.Value.GetRawText())!;
+            foreach (var input in wire["inputs"]!.AsArray()) input!["sha256"] = new string('a', 64);
+            foreach (var record in wire["records"]!.AsArray())
+                foreach (var input in record!["content_inputs"]!.AsArray()) input!["sha256"] = new string('a', 64);
+            return pair.Value with { InformationTemplates = JsonSerializer.SerializeToElement(wire) };
+        });
+        var diagnostics = Dispatch(Context(before, after, LeanAxiomReport.Create(modules), [Registration]));
+        Assert.True(diagnostics.Any(d => d.Message.Contains("DTR-Declared", StringComparison.Ordinal))
+            && diagnostics.All(d => !d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)),
+            "[FAIL] selected_module_accepts_input_digests_that_differ_from_snapshot");
+    }
+
     [Theory]
     [InlineData(Registration)]
     [InlineData(Target)]

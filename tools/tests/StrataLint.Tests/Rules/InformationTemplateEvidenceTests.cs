@@ -342,9 +342,12 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Fact]
-    public void persisted_changed_input_rejected() =>
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(Wire(), PathA,
-            Snapshot((PathA, TextA + "-- changed\n"))));
+    public void persisted_changed_input_digest_is_not_revalidated()
+    {
+        var evidence = InformationTemplateEvidence.Read(Wire(), PathA,
+            Snapshot((PathA, TextA + "-- changed\n")));
+        Assert.Contains(evidence.Inputs, input => input.Path == PathA && input.Sha256 == Hash(TextA));
+    }
 
     [Fact]
     public void persisted_replay_rejected()

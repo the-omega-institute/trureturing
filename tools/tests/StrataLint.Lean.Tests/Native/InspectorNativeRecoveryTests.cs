@@ -26,6 +26,11 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     [InlineData("test_native.NativeTests.test_native_recovers_encrypted_report")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
+    [Theory]
+    [InlineData("test_native.NativeTests.test_native_module_validation_uses_lake_trace")]
+    [InlineData("test_native.NativeTests.test_native_module_integrity_rejections")]
+    public void ModuleCacheValidation(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
     [Fact]
     public void OldManifestKeyRejected() =>
         InspectorNativeTestRunner.Run(compiler, "test_native.NativeTests.test_native_old_manifest_key_rejected");

@@ -293,7 +293,7 @@ class PublicationTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'declared-template evidence'):
                         publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
 
-    def test_binding_source_revalidation_rejects_stale_and_missing_inputs(self):
+    def test_binding_structure_accepts_retained_hashes_without_source_reads(self):
         import zipfile
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -337,12 +337,11 @@ class PublicationTests(unittest.TestCase):
                 validate()
             policy.write_text('def driver := 2\n')
             for index, validate in enumerate(validators):
-                with self.subTest(validator=index, damage='changed'), self.assertRaisesRegex(
-                        ValueError, 'stale declared-template input', msg='[FAIL] native_binding_input_freshness'):
+                with self.subTest(validator=index, damage='changed'):
                     validate()
             policy.unlink()
             for index, validate in enumerate(validators):
-                with self.subTest(validator=index, damage='missing'), self.assertRaises((ValueError, OSError)):
+                with self.subTest(validator=index, damage='missing'):
                     validate()
 
     def test_shared_validation_rechecks_bytes_and_complete_declaration_identity(self):
@@ -378,7 +377,7 @@ class PublicationTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'material address mismatch'):
                     publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
 
-    def test_source_membership_and_claim_bindings_use_current_registered_sources(self):
+    def test_source_membership_and_paths_remain_required_without_byte_revalidation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / 'X.lean'
@@ -400,12 +399,10 @@ class PublicationTests(unittest.TestCase):
                 publication.validate_sources([row], root)
             row['source_path'] = 'X.lean'
             claim.write_text('def claim : Prop := True\n')
-            with self.assertRaisesRegex(ValueError, 'claim source'):
-                publication.validate_sources([row], root)
+            publication.validate_sources([row], root)
             row.pop('utility_refutation')
             source.write_text('def x : Nat := 2\n')
-            with self.assertRaisesRegex(ValueError, 'source binding'):
-                publication.validate_sources([row], root)
+            publication.validate_sources([row], root)
 
     def test_rejected_complete_bundle_never_replaces_published_bytes(self):
         import subprocess
