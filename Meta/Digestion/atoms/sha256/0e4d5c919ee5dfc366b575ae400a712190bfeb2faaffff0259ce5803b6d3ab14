@@ -1,0 +1,18 @@
+**定理 15.4（实际预测商、线性维数与可恢复目标）。** 在上述同一仪器下，对任意 $p,q\in\Delta_X$，
+$$
+pB=qB
+\iff \forall w, pK_w\mathbf1=qK_w\mathbf1.
+\tag{15.9}
+$$
+在相同固定初始可访问记录、相同控制器状态及式（15.3）的策略契约下，这还等价于全部允许有限自适应实验的完整动作—输出记录律相等。因而 $\mathcal P$ 表示实际实现的预测等价类；任何能决定全部这些词概率的集合统计量 $T$，在其实际像上唯一决定 $s$。
+
+若竞争表示是未归一化输入上的齐次线性映射 $L:\mathbb R^X\to W$，其中 $W$ 有限维，并且相同 $L(u)$ 对全部 $u\ge0$ 决定相同的每个 $uK_w\mathbf1$，则 $\dim\operatorname{ran}L\ge r$；$u\mapsto uB$ 达到 $r$。归一化域 $\mathcal P$ 的仿射维数恰为 $r-1$。
+
+对任意列函数 $h\in\mathbb R^X$，存在解码器 $g:\mathcal P\to\mathbb R$ 使
+$$
+g(pB)=ph\quad\text{对全部 }p\in\Delta_X
+\quad\Longleftrightarrow\quad h\in V.
+\tag{15.10}
+$$
+特别地，从 $s$ 恢复全部初态分布 $p$ 的充要条件为 $V=\mathbb R^X$。这些是全先验结论；某个受限可达先验族可以有额外关系。
+
