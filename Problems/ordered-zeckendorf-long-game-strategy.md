@@ -84,10 +84,13 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 - `shared_input_merge_repair` proves all five shared-input detours with
   unrestricted spectators, exact endpoints, and exact full reward gains.
   `ones_terminal_promotion` proves ones-first promotion against arbitrary
-  terminal raw paths, including interleaved merges. Highest nonzero duplicate
-  promotion, binary least-merge domination, and the full bound `weight ≤ G`
-  remain open. The singleton-input binary-cascade boundary conditions below
-  still require proof.
+  terminal raw paths, including interleaved merges. The actual split-prefix cut
+  and finite high cascade now discharge the singleton and binary exchange
+  cases in `OrderedGame/Optimality.raw_terminal_bound`, proving the full bound
+  `weight ≤ G` for every legal path to a canonical raw endpoint.
+- `terminal_raw_canonical` proves that actual ordered terminality implies that
+  endpoint condition. The remaining bridges are ordered LGS priority erasure
+  to `RawGreedyPath` and complete ordered LGS existence for every positive n.
 - `OrderedGame` defines ordered legality and the switch move, and
   `path_raw_erasure` proves erasure into a labelled raw path with identical
   accumulated reward. `OrderedGame/Attainment.lgs_move_potential` and
@@ -146,10 +149,15 @@ The weighted split-only subproblem is now proved in
 decrease full reward; first-overfire supplies the selected split's occurrence.
 The comparison covers all complete split phases from arbitrary raw digits,
 with ones priority and highest-duplicate priority restarted after every step.
-It does not cover paths containing merges. Full weighted raw-game domination,
-ordered/raw priority correspondence, complete ordered LGS existence and complete
-Conjecture 1.7 remain unproved. Exact ordered potential attainment and arbitrary
-switch-phase completion are supplied by `OrderedGame/Attainment`.
+The split-only theorem does not cover paths containing merges.
+`OrderedGame/Optimality.raw_terminal_bound` now supplies full weighted raw-game
+domination: every legal raw path to a canonical endpoint has reward at most the
+concrete `G`, for arbitrary raw starts. Its proof handles interleaved merges via
+the actual split-prefix cut, finite high cascades, and exact legal exchanges.
+`terminal_raw_canonical` connects actual ordered terminal states to that endpoint
+condition. Ordered/raw priority correspondence, complete ordered LGS existence
+and complete Conjecture 1.7 remain unproved. Exact ordered potential attainment
+and arbitrary switch-phase completion are supplied by `OrderedGame/Attainment`.
 
 1. Use one raw ordered `List Nat`, decoded by `Nat.succ`; multiplicities use
    `Multiset.toFinsupp`. `Carry/OrderedGame` defines all five positional moves,
@@ -158,7 +166,8 @@ switch-phase completion are supplied by `OrderedGame/Attainment`.
    `length + inv(decode end) ≤ inv(decode start) + reward`. It reuses the four
    frozen inversion bounds. `path_raw_erasure` preserves the exact reward in
    the labelled raw carrier. `Attainment` proves equality for actual LGS paths;
-   comparison still needs the raw weighted upper bound and priority bridge.
+   comparison still needs the priority bridge. The raw weighted upper bound
+   and the ordered-terminal-to-canonical bridge are now proved in `Optimality`.
 3. `Carry/SplitStabilization` proves exact site balance, the first-overfire
    least-action bound, unique complete split counts and endpoint, and existence
    of complete split phases. Weighted preferred-split promotion and maximal
@@ -167,13 +176,17 @@ switch-phase completion are supplied by `OrderedGame/Attainment`.
    greedy continuation by the strict carry measure. `ones_terminal_promotion`
    handles arbitrary terminal competitors for the ones-first branch, and
    `shared_input_merge_repair` proves the five duplicated-input merge repairs.
-   Complete highest-nonzero-split promotion and extract the preferred move
-   using the singleton-input and binary-tail cascades. Apply the induction
-   hypothesis only after a strict first successor.
-5. Prove legal cascade replay separately from recognition of a greedy prefix:
+   `split_greedy_terminal_promotion` cuts a genuine complete split prefix before
+   the first merge. `raw_terminal_bound` then completes the strict-successor
+   induction using all split competitors before handling shared-input merges,
+   and strong index descent in the binary branch.
+5. Legal cascade replay is proved separately from recognition of a greedy prefix:
    a split at j=a-1 changes the lower boundary, as does a merge at b=a+3.
-   The replay needs unchanged high inputs and reward coordinates, not the old
-   binary-tail hypothesis. Replacement tails need only be legal and terminal.
+   `high_cascade` and `Optimality.singleton_merge_cascade` preserve the high
+   inputs and reward coordinates under
+   those lower-boundary changes. The higher-split,
+   lower-split, predecessor and separated-merge exchanges are all Lean-checked.
+   Replacement tails need only be legal and terminal.
 6. Use exact potential attainment and switch-phase independence to prove
    complete LGS existence, including n=1. Compare every complete LGS run with every terminal
    competitor. No global maximum or unproved Bellman premise is required.
@@ -382,9 +395,10 @@ recurrence arithmetic in `D5/S1/Digit/Carry/RunChainLowerBound`.
 
 ## Triage
 
-`theorem`. The current direct route requires weighted split promotion, legal
-cascade extraction and sorted attainment. None of those obligations is supplied
-by confluence or the partial results above. Related suppliers were contributed
+`theorem`. Weighted raw domination, legal cascade extraction, ordered terminal
+canonicality and exact sorted attainment are now supplied. The remaining route
+requires ordered/raw priority correspondence, complete ordered LGS existence
+and the final universally quantified comparison. Related suppliers were contributed
 in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
 
 ## ASSUMED-UNVERIFIED
@@ -396,8 +410,9 @@ in merged PRs #7495, #7575, #7643 and #7651; this work does not replace them.
   branch.
 - Whether Conjecture 1.7 was resolved after arXiv v2 is unverified; novelty of
   the exchange-lemma route is unassessed.
-- The four guarded Bellman equalities have no proof recorded here. Nothing
-  about them is kernel-verified.
+- The stronger raw terminal upper bound is kernel-checked in
+  `OrderedGame/Optimality.raw_terminal_bound`; the complete source conjecture
+  still requires the ordered priority and existence bridges.
 - `U(run a L) = floor(L^2 / 4)` is an enumeration reading on `a` in 1 to 6 and
   `L` in 1 to 13, and the union-of-runs readings hold only on the domains stated
   with them. Independence from `a`, the gap-one closed form and the cascade

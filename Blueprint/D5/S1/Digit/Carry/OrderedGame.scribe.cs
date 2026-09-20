@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Carry;
 internal sealed class OrderedGameDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Concrete raw greedy continuation, shared-input repairs, and ordered reward erasure.",
+        "Concrete greedy continuation, weighted split promotion and finite cascade exchanges.",
         H("Ordered Zeckendorf Paths and the Inversion Potential"),
         Blocks(
             Paragraph(Text("A state is one list of natural-number raw W indices. Decode maps "
@@ -82,8 +82,36 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
                     + "retaining its endpoint and at least its full reward. The competing path "
                     + "may interleave merges and splits arbitrarily. The proof promotes ones "
                     + "through split steps, repairs a merge consuming a one, and commutes past "
-                    + "higher merges. This closes the ones-first promotion branch; highest "
-                    + "nonzero splits and least binary merges still require their own proofs."))),
+                    + "higher merges. This closes the ones-first promotion branch. The dependent "
+                    + "Optimality module supplies the nonzero-split and least-binary-merge "
+                    + "comparisons inside its complete raw terminal bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-game-split-greedy-terminal-promotion"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.split_greedy_terminal_promotion"),
+                H("Promote the preferred split through the actual initial split phase"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A competing split followed by a complete raw greedy path "
+                    + "admits a legal replacement beginning with the currently highest split, "
+                    + "with the same terminal endpoint and at least its reward. The proof cuts "
+                    + "the actual greedy continuation immediately before its first merge, or "
+                    + "at its canonical endpoint. The cut state is binary. Only that complete "
+                    + "WeightedSplitPath is passed to split_phase_promotion; the entire remaining "
+                    + "raw suffix is preserved. No split-only comparison is applied across merges."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-game-high-cascade"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.high_cascade"),
+                H("Finite high cascade and boundary-independent legal replay"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive raw k, assume holes at k and k+1, at most "
+                    + "two tokens at k+2, binary digits above k+2 and at most one zero. A finite "
+                    + "greedy split cascade makes the tail at and above k binary and preserves "
+                    + "all lower coordinates. Finite support supplies the first zero; induction "
+                    + "on its distance proves the coordinate invariant. Every split has unit "
+                    + "reward. The same word replays from any state agreeing strictly above k, "
+                    + "with the same reward and exact additive endpoint balance. Lower coordinates "
+                    + "in the replay are unrestricted; its moves are not asserted to be greedy."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ordered-game-path-raw-erasure"),
                 DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.path_raw_erasure"),

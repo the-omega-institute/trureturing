@@ -81,12 +81,16 @@ spectators, exact common endpoint, and exact natural-number reward gain.
 path, including arbitrary interleaved merges, preserving endpoint and weakly
 increasing full reward. Its replacement tail is only required to be legal.
 
-The remaining proof candidate uses strict-successor induction on the existing
-carry measure to compare arbitrary terminal paths with that concrete `G`.
-Preferred promotion and greedy comparison for complete split-only phases are
-now proved. Beyond the ones-first branch and the shared-input repairs, the
-remaining comparison must handle nonzero preferred splits with interleaved
-merges and the least-merge branches in binary states.
+`OrderedGame/Optimality.raw_terminal_bound` now proves that every legal raw
+path `RawPath c e w` with `CanonicalRaw e` has `w ≤ G c`, for arbitrary raw
+starts and arbitrary interleaving of merges and splits. Combined with
+`complete_greedy_reward`, this establishes weighted raw optimality for every
+complete raw greedy path. The proof uses strict-successor induction on the
+existing carry measure, with an inner descent on binary competing merge indices.
+For split competitors, `split_greedy_terminal_promotion` cuts the actual greedy
+continuation before its first merge, promotes only that complete split phase,
+and retains the unchanged suffix. It never applies split-only promotion across
+a merge. No Bellman inequality is assumed.
 For singleton inputs, the high block C_a;S_(a+2);...;S_r advances one duplicate
 through a binary tail, fills the preceding holes and has reward one per move.
 A lower preferred split can be extracted across this block. Prefix recognition
@@ -97,17 +101,27 @@ At a binary state let a be the least enabled merge and b>a a competing merge.
 If c_(b-1)=1, C_b can be replaced by C_(b-1);S_(b+1), gaining one and reducing
 the competing index. Otherwise b≥a+3 and its high cascade commutes with C_a.
 At b=a+3 the lower merge changes c_(b-1), so legal replay must allow that boundary
-change. Each replacement must have a legal common endpoint; its tail need not
-be greedy. Induction applies after a strict first successor, never at the state
-whose optimality is being proved. These merge exchanges remain unproved in Lean.
+change. `high_cascade` constructs the finite cascade using coordinate induction
+up to a finite-support gap, with arbitrary lower-boundary legal replay.
+The dependent `Optimality` module supplies `singleton_merge_cascade`,
+`lower_split_merge_exchange` and `binary_separated_merge_exchange`. Local
+calculations in `raw_terminal_bound` supply the higher-split exchange and
+predecessor detour, with the required legal common endpoints and exact rewards.
+Replacement tails need not be greedy. Induction applies
+after a strict first successor, never at the state whose optimality is being
+proved. These exchanges and the raw terminal bound are now Lean-checked.
 
 `OrderedGame/Attainment` proves exact ordered accounting: each actual LGS move
 satisfies `1 + inv(decode t) = inv(decode s) + reward s a`, and every LGS path
 satisfies the corresponding telescoping equality. It also proves that every
 switch phase can finish and that all maximal legal zero-reward paths have the
 same sorted endpoint and the inversion count as their exact length. These
-results retain every allowed switch choice. Complete ordered LGS existence,
-ordered/raw priority correspondence and global domination remain unproved.
+results retain every allowed switch choice. `terminal_raw_canonical` also proves
+that every actual ordered terminal state has binary nonconsecutive raw digits,
+by excluding each adjacent operation and deriving spacing of the entire list.
+Complete ordered LGS existence, ordered/raw priority correspondence and the
+final ordered comparison remain unproved. Raw weighted domination is complete;
+this does not yet settle the source conjecture.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
 and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly

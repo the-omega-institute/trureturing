@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: Concrete raw greedy attainment, weighted merge repairs, ones promotion, and ordered reward erasure. -/
+   digest: Greedy attainment, split-prefix promotion, finite cascades, and ordered reward erasure. -/
 
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry.ListInversions
@@ -507,6 +507,191 @@ theorem ones_terminal_promotion {c c' e : RawDigits} {w : ℕ}
           simp [rawReward, splitReward, rawInput, rawOutput, splitOutput, Finsupp.single_apply]
           omega
         exact ⟨_, .cons across rest, by omega⟩
+
+/-- A competing split followed by an actual complete greedy continuation can
+be replaced by the currently highest split. Only the initial split phase is
+promoted; the suffix beginning with the first merge is retained verbatim. -/
+theorem split_greedy_terminal_promotion {c c' d e : RawDigits} {i j w : ℕ}
+    (competing : SplitStep i c d) (tail : RawGreedyPath d e w)
+    (complete : CanonicalRaw e) (first : SplitStep j c c')
+    (highest : j = 0 ∨ ∀ k, j < k → c k ≤ 1) :
+    ∃ v, RawPath c' e v ∧ splitReward c i + w ≤ splitReward c j + v := by
+  have erase {x y : RawDigits} {v : ℕ} (p : RawGreedyPath x y v) :
+      RawPath x y v := by
+    induction p with
+    | nil x => exact .nil x
+    | cons move _ _ ih => exact .cons move ih
+  have cut {x y : RawDigits} {v : ℕ} (p : RawGreedyPath x y v)
+      (terminal : CanonicalRaw y) :
+      ∃ u xs s t, WeightedSplitPath x u xs s ∧ (∀ k, u k ≤ 1) ∧
+        RawPath u y t ∧ v = s + t := by
+    induction p with
+    | nil x => exact ⟨x, [], 0, 0, .nil x, terminal.1, .nil x, rfl⟩
+    | @cons a x z y v move preferred rest ih =>
+      have extend (k : ℕ) (ha : a = splitAction k) :
+          ∃ u xs s t, WeightedSplitPath x u xs s ∧ (∀ k, u k ≤ 1) ∧
+            RawPath u y t ∧ rawReward x a + v = s + t := by
+        obtain ⟨u, xs, s, t, pre, binary, suffix, weight⟩ := ih terminal
+        have step : SplitStep k x z := by
+          obtain ⟨_, r, hx, hz, _⟩ := move
+          subst a
+          refine ⟨r, ?_, ?_⟩ <;> rcases k with _ | _ | k <;> assumption
+        have reward_eq : rawReward x a = splitReward x k := by
+          subst a; rcases k with _ | _ | k <;> rfl
+        exact ⟨u, k :: xs, splitReward x k + s, t, .cons step pre,
+          binary, suffix, by rw [reward_eq, weight, Nat.add_assoc]⟩
+      cases a with
+      | switch => exact preferred.elim
+      | ones => exact extend 0 rfl
+      | twos => exact extend 1 rfl
+      | split k => exact extend (k + 2) rfl
+      | merge a =>
+        exact ⟨x, [], 0, rawReward x (.merge a) + v, .nil x,
+          preferred.1, .cons move (erase rest), (Nat.zero_add _).symm⟩
+  obtain ⟨u, xs, s, t, pre, binary, suffix, weight⟩ := cut tail complete
+  obtain ⟨ys, v, replay, gain⟩ :=
+    split_phase_promotion (.cons competing pre) first highest binary
+  have append {x y z : RawDigits} {xs : List ℕ} {v t : ℕ}
+      (p : WeightedSplitPath x y xs v) (q : RawPath y z t) :
+      RawPath x z (v + t) := by
+    induction p with
+    | nil => simpa using q
+    | @cons x y e xs v k step rest ih =>
+      have move : RawMove (splitAction k) x y := by
+        obtain ⟨r, rfl, rfl⟩ := step
+        refine ⟨?_, r, ?_, ?_, ?_⟩
+        · rcases k with _ | _ | k
+          · exact CarryStep.double_zero r
+          · simpa [splitOutput, add_assoc] using CarryStep.double_one r
+          · simpa [splitOutput, add_assoc] using CarryStep.double_succ r k
+        · rcases k with _ | _ | k <;> rfl
+        · rcases k with _ | _ | k <;> rfl
+        · rcases k with _ | _ | k <;> simp [splitAction]
+      have reward_eq : rawReward x (splitAction k) = splitReward x k := by
+        rcases k with _ | _ | k <;> rfl
+      simpa [reward_eq, Nat.add_assoc] using RawPath.cons move (ih q)
+  exact ⟨v + t, append replay suffix, by omega⟩
+
+/-- A double above two holes propagates to the first finite-support gap.
+Every split has reward one and is preferred in the original state. The same
+word replays with the same reward under arbitrary changes at or below the
+lower hole; the replay is only legal, and its endpoint satisfies exact balance. -/
+theorem high_cascade {c : RawDigits} {k : ℕ} (positive : 0 < k)
+    (zero : c 0 ≤ 1) (hole : c k = 0) (next_hole : c (k + 1) = 0)
+    (front : c (k + 2) ≤ 2) (high : ∀ i, k + 2 < i → c i ≤ 1) :
+    ∃ e n, RawGreedyPath c e n ∧ (∀ i, k ≤ i → e i ≤ 1) ∧
+      (∀ i, i < k → e i = c i) ∧
+      ∀ d : RawDigits, (∀ i, k < i → d i = c i) →
+        ∃ f, RawPath d f n ∧ f + c = e + d := by
+  classical
+  have stop {x : RawDigits} {a : ℕ} (h₀ : x a = 0) (h₁ : x (a + 1) = 0)
+      (h₂ : x (a + 2) ≤ 1) (hi : ∀ i, a + 2 < i → x i ≤ 1) :
+      ∃ e n, RawGreedyPath x e n ∧ (∀ i, a ≤ i → e i ≤ 1) ∧
+        (∀ i, i < a → e i = x i) ∧
+        ∀ d : RawDigits, (∀ i, a < i → d i = x i) →
+          ∃ f, RawPath d f n ∧ f + x = e + d := by
+    refine ⟨x, 0, .nil x, ?_, fun _ _ => rfl, ?_⟩
+    · intro i hai
+      by_cases h : i = a
+      · simpa [h, h₀]
+      by_cases h' : i = a + 1
+      · simpa [h', h₁]
+      by_cases h'' : i = a + 2
+      · simpa [h''] using h₂
+      exact hi i (by omega)
+    · intro d _; exact ⟨d, .nil d, add_comm _ _⟩
+  have bounded (m : ℕ) : ∀ (x : RawDigits) (a : ℕ), 0 < a → x 0 ≤ 1 →
+      x a = 0 → x (a + 1) = 0 → x (a + 2) ≤ 2 →
+      (∀ i, a + 2 < i → x i ≤ 1) →
+      x (a + 2 + m) ≤ (if m = 0 then 1 else 0) →
+      ∃ e n, RawGreedyPath x e n ∧ (∀ i, a ≤ i → e i ≤ 1) ∧
+        (∀ i, i < a → e i = x i) ∧
+        ∀ d : RawDigits, (∀ i, a < i → d i = x i) →
+          ∃ f, RawPath d f n ∧ f + x = e + d := by
+    induction m with
+    | zero =>
+      intro x a _ _ h₀ h₁ _ hi gap
+      exact stop h₀ h₁ (by simpa using gap) hi
+    | succ m ih =>
+      intro x a ha hz h₀ h₁ h₂ hi gap
+      by_cases done : x (a + 2) ≤ 1
+      · exact stop h₀ h₁ done hi
+      have two : x (a + 2) = 2 := by omega
+      let r := x - Finsupp.single (a + 2) 2
+      have hr : r + Finsupp.single (a + 2) 2 = x :=
+        tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (by omega))
+      let y := r + Finsupp.single a 1 + Finsupp.single (a + 3) 1
+      have move : RawMove (.split a) x y := by
+        rw [← hr]
+        exact ⟨CarryStep.double_succ r a, r, rfl, (add_assoc _ _ _), by simp⟩
+      have coord (i : ℕ) : y i =
+          if i = a then 1 else if i = a + 2 then 0 else
+            if i = a + 3 then x i + 1 else x i := by
+        dsimp [y, r]
+        simp only [Finsupp.add_apply, Finsupp.tsub_apply, Finsupp.single_apply]
+        split_ifs <;> subst_vars <;> omega
+      have reward_one : rawReward x (.split a) = 1 := by
+        simp [rawReward, splitReward, h₁, two]
+      have yz : y 0 ≤ 1 := by rw [coord]; split_ifs <;> omega
+      have yh₀ : y (a + 1) = 0 := by rw [coord]; split_ifs <;> omega
+      have yh₁ : y (a + 1 + 1) = 0 := by rw [coord]; split_ifs <;> omega
+      have yh₂ : y (a + 1 + 2) ≤ 2 := by
+        change y (a + 3) ≤ 2
+        have := hi (a + 3) (by omega)
+        rw [coord]; split_ifs <;> omega
+      have yhi : ∀ i, a + 1 + 2 < i → y i ≤ 1 := by
+        intro i h; have := hi i (by omega)
+        rw [coord]; split_ifs <;> omega
+      have ygap : y (a + 1 + 2 + m) ≤ (if m = 0 then 1 else 0) := by
+        simp only [Nat.add_one_ne_zero, if_false] at gap
+        rw [show a + 2 + (m + 1) = a + 1 + 2 + m by omega] at gap
+        rw [coord]; split_ifs <;> omega
+      obtain ⟨e, n, path, binary, low, replay⟩ :=
+        ih y (a + 1) (by omega) yz yh₀ yh₁ yh₂ yhi ygap
+      refine ⟨e, 1 + n, ?_, ?_, ?_, ?_⟩
+      · simpa [reward_one] using RawGreedyPath.cons move ⟨hz, hi⟩ path
+      · intro i h
+        by_cases h' : a + 1 ≤ i
+        · exact binary i h'
+        have eq : i = a := by omega
+        rw [low i (by omega), coord]; simp [eq]
+      · intro i h
+        rw [low i (by omega), coord]; split_ifs <;> omega
+      · intro d agree
+        have dtwo : d (a + 2) = 2 := (agree _ (by omega)).trans two
+        let s := d - Finsupp.single (a + 2) 2
+        have hs : s + Finsupp.single (a + 2) 2 = d :=
+          tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (by omega))
+        let z := s + Finsupp.single a 1 + Finsupp.single (a + 3) 1
+        have across : RawMove (.split a) d z := by
+          rw [← hs]
+          exact ⟨CarryStep.double_succ s a, s, rfl, (add_assoc _ _ _), by simp⟩
+        have zagree : ∀ i, a + 1 < i → z i = y i := by
+          intro i h
+          dsimp [z, s, y, r]
+          rw [agree i (by omega)]
+        obtain ⟨f, rest, balance⟩ := replay z zagree
+        refine ⟨f, ?_, ?_⟩
+        · have dr : rawReward d (.split a) = 1 := by
+            simp [rawReward, splitReward, agree (a + 1) (by omega), h₁, dtwo]
+          simpa [dr] using RawPath.cons across rest
+        · ext i
+          have eq := congrArg (fun q : RawDigits => q i) balance
+          dsimp [z, s, y, r] at eq
+          simp only [Finsupp.add_apply, Finsupp.tsub_apply, Finsupp.single_apply] at eq ⊢
+          by_cases h : i = a + 2
+          · subst i; simp only [two, dtwo] at eq ⊢; omega
+          · simp only [Ne.symm h, if_false, Nat.sub_zero] at eq; omega
+  have gap_exists : ∃ m, c (k + 2 + m) = 0 := by
+    refine ⟨c.support.sup id + 1, ?_⟩
+    apply Finsupp.notMem_support_iff.mp
+    intro mem
+    have := Finset.le_sup (f := id) mem
+    simp only [id_eq] at this
+    omega
+  let m := Nat.find gap_exists
+  have gap : c (k + 2 + m) = 0 := Nat.find_spec gap_exists
+  exact bounded m c k positive zero hole next_hole front high (by rw [gap]; omega)
 
 /-- Erasing all ordered switches preserves the complete accumulated reward
 and maps every remaining move to a labelled instance of the existing carries. -/
