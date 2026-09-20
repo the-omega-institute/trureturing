@@ -488,3 +488,303 @@ all affine tests can be realized. It is a proof-script candidate pending
 actual elaboration. The state-count, stationary-law, entropy and topology
 results above are complete ordinary proofs and are not additional
 kernel-certified declarations. No source or conclusion assumes h_p=1.
+
+## 8. Probability-state completion: terminal rank and two-read tomography
+
+Section7 classified individual deterministic states. It did not assert
+that mixtures on those distinct states have different future laws. This
+section computes the additional probability kernel and proves that a family
+of TWO successive arithmetic readings removes it. The number of readings
+per specified experiment is separated from the number of experiments,
+word lengths, and statistical samples needed to learn their probabilities.
+
+### 8.1 The exact terminal response and its closed input update
+
+Fix M=p^s with p prime and s>=1, and a known incoming digit boundary.
+Let D_s be the projective Fibonacci orbit: the distinct unit-scaling
+classes of rows (F_(k+2),F_(k+3)) modulo M. Choose a unimodular representative
+v_d=(u_d,v_d) for each d, scaling the accumulated residue at the same time.
+Write R_s=rho(p^s). By ZP2-ZP3, |D_s|=R_s and the fixed-boundary live
+quotient states are (d,r), d in D_s and r in Z/M. There are M R_s of them.
+Only in formulas where it is unambiguous, v_d denotes the entire row.
+
+Let mu(d,r) be a real signed mass, with total S. For probabilities S=1.
+Define its one-terminal response table
+
+$$f_\mu(A,B)=\sum_{d\in D_s}\mu(d,-A u_d-B v_d). \tag{PT1}$$
+
+This is the probability that the actual residue is zero after a word with
+coefficient pair (A,B). Every such pair is implemented by the guarded legal
+words of ZP1, and every legal word has some pair. Thus equality of PT1 is
+EXACTLY equality of all single-terminal acceptance predictions at this
+fixed boundary. For the specified golden Markov input source, equality is
+also equality of the joint word-and-terminal-answer laws: each legal word
+has the same known positive input probability for both initial mixtures.
+This statement includes no intermediate divisibility measurement.
+
+**Theorem PT1.** After consuming an allowed bit b in {0,1}, the response
+of the pushed-forward mass satisfies
+
+$$\boxed{f_{\mu^+}(A,B)=f_\mu(b+B,A+B).} \tag{PT2}$$
+
+The new boundary is b, and the terminal acceptance probability is
+f_mu(0,0). The response table is therefore a closed predictive state for
+this single-terminal task, with an explicitly invertible affine pullback.
+
+**Proof.** The actual update sends (r,u,v) to (r+b u,v,u+v). Substituting
+in the next test gives r+(b+B)u+(A+B)v. Summing its indicator against the
+original mass proves PT2. Selecting other projective representatives only
+scales the whole equality by a unit and does not change its zero set.
+Illegal input is handled by the known boundary and the rejecting state.
+No hidden-state reconstruction is assumed in this update.
+
+### 8.2 All prime-power probability blind directions
+
+For a row mass write its unnormalized finite Fourier transform as
+
+$$\widehat\mu_d(t)=\sum_{r\bmod M}\mu(d,r)e_M(tr),\qquad
+ e_M(x)=\exp(2\pi i x/M).$$
+
+Use the normalized two-dimensional transform
+
+$$\widehat f(\xi)=M^{-2}\sum_{A,B\bmod M}f(A,B)e_M(-\xi\cdot(A,B)).$$
+
+**Theorem PT2.** The full terminal kernel has the exact description
+
+$$\boxed{\widehat f_\mu(\xi)=\frac1M
+ \sum_{\substack{d\in D_s,\ t\bmod M\\t v_d=\xi}}\widehat\mu_d(t).} \tag{PT3}$$
+
+Its real linear rank is
+
+$$\boxed{L_s=1+\sum_{j=1}^s(p-1)p^{j-1}\rho(p^j).} \tag{PT4}$$
+
+Consequently the invisible signed subspace has dimension M R_s-L_s.
+The image of the probability simplex has affine dimension L_s-1.
+This is a linear/affine dimension, not a number of classical states or a
+lower bound on arbitrary discontinuous encodings into real numbers.
+
+**Proof.** Fourier inversion of each row mass at -v_d dot (A,B) gives
+M^(-1) sum_t muhat_d(t)e_M(t v_d dot (A,B)). Character orthogonality gives
+PT3. At frequency zero, t=0 for every unimodular row, so fhat(0)=S/M.
+
+A nonzero frequency of additive order p^j has the unique form
+p^(s-j) eta, with eta primitive modulo p^j. It lies on a row's Fourier
+line exactly when that row reduces to the projective class of eta modulo
+p^j. The actual projective orbit reduces ONTO D_j. To see its size and
+fibres directly, the determinant of two clock rows with index difference
+a is plus or minus F_a. Vanishing modulo p^j is therefore equivalent to
+rho(p^j)|a. Its reduction fibres have size R_s/rho(p^j). Each direction
+in D_j contains exactly (p-1)p^(j-1) primitive vector representatives,
+and these representatives are disjoint for distinct directions. Counting
+by j, together with zero, gives PT4.
+
+Each coordinate muhat_d(t) occurs in exactly one output sum in PT3.
+Every output frequency in the counted set has a nonempty preimage.
+The map is therefore onto all these Fourier coordinates over C, with
+one independent equation per coordinate for its kernel. Its original
+matrix has real entries, so real and complex ranks agree. Conjugate
+symmetry gives the same real dimension directly. The total mass is
+recovered from fhat(0), and the positive simplex has nonempty relative
+interior in its mass-one hyperplane. Its image consequently has affine
+dimension L_s-1, as stated. The probability constraint does not remove
+the linear blind directions near a strictly positive prior.
+
+PT3 retains every sum over coincident low-conductor directions. Replacing
+it by separate equations muhat_d(t)=0 would incorrectly discard those
+cancellations when different directions coincide modulo a lower p-power.
+
+### 8.3 At prime precision: a constructive inverse and a stability identity
+
+For M=p let m_d=sum_r mu(d,r). Distinct projective directions have
+nonzero determinant over F_p. Put
+
+$$\mathcal L_{d,r}=\{(A,B):A u_d+B v_d=-r\}.$$
+
+**Theorem PT3.** The centered row probabilities are reconstructed by
+
+$$\boxed{\mu(d,r)-m_d/p=
+ \frac1p\sum_{(A,B)\in\mathcal L_{d,r}} f_\mu(A,B)-S/p.} \tag{PT5}$$
+
+In particular, two probability laws mu,nu have all the same one-terminal
+responses if and only if mu(d,r)-nu(d,r) is constant in r for every d,
+and these row constants have zero total mass across d. At prime precision
+L_1=1+rho(p)(p-1), and the blind dimension is rho(p)-1.
+
+**Proof.** On the indicated line, the d-th summand is constantly mu(d,r).
+For every other direction e, its linear form is bijective from that line
+to F_p, because the determinant is nonzero. Summing that term along the
+line therefore gives m_e. The entire line sum is
+p mu(d,r)+S-m_d, proving PT5 and the kernel assertion.
+
+For equal-total-mass signed mu,nu, let
+
+$$b_d(r)=\mu(d,r)-\nu(d,r)-(m_d^\mu-m_d^\nu)/p.$$
+
+Their centered rows have zero sums. Uniform (A,B) makes linear readings
+in two distinct directions independent and uniform, so cross terms vanish.
+Expanding the square yields the exact stability identity
+
+$$\boxed{\frac1{p^2}\sum_{A,B}|f_\mu-f_\nu|^2
+ =\frac1p\sum_{d,r}|b_d(r)|^2.} \tag{PT6}$$
+
+This controls the observable centered component. It supplies no recovery
+of the invisible row totals. It is a finite linear-algebra statement;
+physical measurement noise and how the response table is estimated must
+be specified separately.
+
+### 8.4 Two same-trajectory reads recover the entire probability law
+
+We now ENLARGE the task by permitting two exact, non-destructive tests of
+whether the current residue is zero, on the same arithmetic run. Between
+them the reader consumes a chosen guarded word. Returning the weight clock
+by a word of length divisible by T is not a reset of the accumulated residue
+or of the hidden initial state. The two tests are correlated observations.
+
+**Theorem PT4.** For every modulus M>=2 and each fixed-boundary quotient
+state (d,r), there is a specified pair of legal clock-restoring probes whose
+joint success indicator is exactly the point indicator of (d,r). Hence the
+FAMILY of these two-read experiments determines every mass mu(d,r), including
+for composite M. The span of their joint-success functions is the entire
+function space on the M rho(M) fixed-boundary states.
+
+**Proof.** Choose e,f with eu_d+fv_d=1, and set
+
+$$x=(-re,-rf),\qquad y=(v_d,-u_d). \tag{PT7}$$
+
+Implement x by ZP1, read Y_1, implement y by ZP1 from the returned clock,
+and read Y_2. For a candidate state (d',r'), joint success means
+
+$$r'+x\cdot v_{d'}=0,\qquad r'+(x+y)\cdot v_{d'}=0.$$
+
+Subtracting gives v_d u_(d')-u_d v_(d')=0. Two unimodular rows with zero
+determinant over Z/M are unit-proportional: with a=e u_(d')+f v_(d'),
+the Bezout relation gives v_(d')=a v_d, and a has an inverse because the
+second row is unimodular. Thus d'=d as projective classes. With the chosen
+representative fixed, the first equation then says r'=r. Conversely the
+target clearly makes both equations zero. Therefore
+
+$$\boxed{\Pr_\mu(Y_1=1,Y_2=1\mid x,y)=\mu(d,r).} \tag{PT8}$$
+
+Both guarded words are explicit finite legal words from ZP1. Each has
+length at most4T(M-1); adding0^T when necessary ensures positive separation
+between reads and boundary zero while leaving residue and clock unchanged.
+Thus no unimplemented arbitrary affine oracle is being introduced.
+Their point indicators prove the asserted full span and injectivity.
+This is not a claim that two observed bits reveal an arbitrary distribution:
+there is one designed experiment for each target, and its probability
+requires repeated samples or other specified statistical information.
+
+**Corollary.** The one-terminal response state PT1 is generally NOT closed
+under conditioning on an intermediate divisibility answer. Input-update
+closure PT2 and Bayesian posterior closure are distinct requirements.
+
+**Proof by actual probability laws.** Fix two different projective directions
+d,e, and take a uniform residue r in each, with known boundary zero. Both
+laws give f(A,B)=1/M for every terminal query. Conditional on the initial
+zero test succeeding, they instead become the distinct point states (d,0)
+and (e,0). A subsequent tangent probe from PT7 distinguishes them. Thus no
+posterior updater using only the common response table and the observed
+zero answer can produce all the correct subsequent predictions. This does
+not contradict ZP4, whose equivalence concerns individual initial states,
+or the general predictive-state representation theory with its FULL joint
+experiment family.
+
+At M=7, the actual initial clock rows have projective representatives
+(1,2) and (1,5). Use the two tests with x=(0,0), y=(2,-1). Under the first
+uniform-residue law, the joint distribution has masses1/7 at11 and6/7 at00.
+Under the second, it has masses1/7 at10 and01 and5/7 at00. Both individual
+read marginals are Bernoulli(1/7), but the joint laws differ.
+
+### 8.5 The observation budget is not the algebraic rank
+
+For the preceding two-direction uniform-residue example at M>=3, the
+joint total-variation distance is exactly2/M, where total variation has
+its one-half-L1 convention. With equal prior odds and n INDEPENDENT
+repetitions of this specified two-read experiment, the optimal Bayes
+error is
+
+$$\boxed{\frac12(1-2/M)^n.} \tag{PT9}$$
+
+**Proof.** Choose a tangent to the first direction, which is not a tangent
+to the second. The first law only produces11 or00; the second only10,01,
+or00. Every record containing a non-00 trial identifies its law. The sole
+common n-trial record is all00, whose masses are (1-1/M)^n and (1-2/M)^n.
+The binary Bayes overlap formula gives PT9. The common-record calculation
+also gives distance2/M when n=1. Fixed small Bayes error therefore requires
+order M repetitions for this pair, despite having only two reads per run.
+This is the exact risk for this specified experiment, not a minimax claim
+over all adaptive protocols or arbitrary preparations.
+
+If the input words are generated passively by the golden Markov source,
+the same identifying words have positive probability but can be rare.
+Dividing their joint event probability by their known word probability
+recovers PT8 in principle; no uniform sample-efficiency claim follows.
+Neither an independent-copy assumption nor a reset operation is silently
+added to the repository's single-nonresettable-trajectory observation model.
+
+### 8.6 Original WSS depth in linear probability dimension
+
+For p>5 write R=rho(p), h=h_p and let L_0=1. Applying the classical
+rank-depth formula of Section7 to PT4 gives
+
+$$\boxed{L_s=1+R(p-1)\sum_{j=1}^s
+ p^{j-1+\max(0,j-h)}.} \tag{PT10}$$
+
+For s<=h this is1+R(p^s-1). For s>h it is
+
+$$1+R(p^h-1)+\frac{R p^{h+1}(p^{2(s-h)}-1)}{p+1}.$$
+
+The increments obey
+
+$$\boxed{\frac{L_{s+1}-L_s}{L_s-L_{s-1}}=
+\begin{cases}p,&s<h,\\p^2,&s\ge h.\end{cases}} \tag{PT11}$$
+
+At the decisive square scale,
+
+$$L_2=\begin{cases}
+1+R(p-1)(1+p^2),&h=1,\\
+1+R(p^2-1),&h\ge2.
+\end{cases}$$
+
+Thus the single-terminal probability rank and the deterministic state
+count are different arithmetic invariants, although both retain the same
+initial-depth breakpoint. For p=7, the fixed-boundary state counts at7 and49
+are56 and2744, but the terminal ranks are49 and2401; the invisible signed
+dimensions are7 and343. For p=11 the prime-level counts are110 and101,
+respectively. These are dimensions of a response matrix, not numbers of
+samples and not quantum Hilbert-space dimensions.
+
+PT10 is an exact reformulation, not a new bound on h_p. Neither the rank
+calculation nor the two-read identity forces a prime with h_p>=2. Tests on
+composite prime powers do not create WSS examples. New arithmetic progress
+would require independent control of the actual response rank or its
+correlated point probabilities as p varies, without assuming the unknown
+rank-lifting breakpoint. No new WSS occurrence or unbounded exclusion
+family is concluded here.
+
+### 8.7 Research and formalization scope
+
+This continues the current spacetime work on task-relative state,
+probability, joint observations and finite-word Zeckendorf arithmetic.
+It adds an explicit response operator, the complete conductor-layer kernel,
+a prime-level stable inverse, and a two-read family recovering all masses.
+It does not identify positional digit generation with the arithmetic
+successor or its binomial mixing law. The abstract future-quotient theorem
+alone does not compute this probability kernel or guarantee Bayesian closure.
+
+Primary source roles are recorded in
+`Library/notes/singh2004zeckendorfprobability.md`: Singh-James-Rudary,
+UAI2004, arXiv:1207.4167, for predictive-state/system-dynamics-matrix scope;
+Kingston, Signal Processing86(2006),2040-2050,
+DOI10.1016/j.sigpro.2005.09.024, for established prime-power Radon/Fourier
+redundancy; and Ben-Ari-Miller, arXiv:1405.2379, for conditioned finite-word
+probability models. The exact arithmetic proofs above are supplied here.
+The inspected abstracts do not establish priority for our combined result.
+
+The formal companion `ZeckendorfTwoReadTomography` certifies the explicit
+modular two-test separating event and its finite-mass reconstruction. The
+literal word implementation is justified by the earlier guarded compiler
+and the ordinary composition proof in PT4. The Fourier rank, affine image
+dimension, prime inverse, sampling risk and WSS formulas remain ordinary
+proofs rather than additional claims of kernel certification. No new
+external open problem is marked resolved and no new problem entry is opened.
