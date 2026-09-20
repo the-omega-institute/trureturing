@@ -2,13 +2,48 @@
 
 **A library for discovering truth.**
 
-[Examples](#three-places-to-look) · [First run](#first-run) ·
+[Start your journey](#start-your-journey) · [Examples](#three-places-to-look) · [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing pursues truth by turning questions into knowledge others can check
 and build on. The name reflects the project's intent: **true · return · Turing**
 — truth, return, and Turing computation.
+
+**If machine learning is a black box of logic, trureturing is a white box.**
+Our guiding conviction is that **all logic can be formalized**. Pursuing it
+means making definitions and assumptions explicit, with proof steps and
+dependencies open to inspection.
+
+Logic reaches beyond mathematics into philosophical and conceptual inquiry.
+What do we mean by a concept? Which assumptions carry an argument? What follows
+from them, and what would count as a counterexample? These questions belong
+here too; a formal result answers only the precise statement it proves.
+
+## Start your journey
+
+Bring a question that matters to you. In an installed **Claude Code or Codex**
+with a local workspace and Git, paste this one sentence:
+
+```text
+Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
+```
+
+The [agent and skills guide](docs/CONTRIBUTING.md#use-claude-code-or-codex)
+explains how to begin with either client and turn an exploration into a
+contribution.
+
+This homepage is the tip of an iceberg. The examples offer a glimpse; the
+larger shape is yours to explore, following definitions, assumptions and
+connections with your own questions. What you find can change how you look.
+An epigraph for that exploration:
+
+> And if thou gaze long into an abyss, the abyss will also gaze into thee.
+
+— Friedrich Nietzsche, *Beyond Good and Evil*,
+[§146](https://www.gutenberg.org/files/4363/4363-h/4363-h.htm).
+
+## From questions to knowledge
 
 Ask a precise question. Use computation and tests to distinguish hypotheses.
 Look for a proof, a counterexample, or the information still missing. Keep the

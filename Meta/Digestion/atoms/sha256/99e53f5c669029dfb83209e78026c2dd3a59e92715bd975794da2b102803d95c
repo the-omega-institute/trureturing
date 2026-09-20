@@ -1,0 +1,16 @@
+**第二步：Hankel、递推和根。** 计算
+$$
+\mathcal D=D_0D_2-\operatorname{sq}(D_1),\qquad
+\mathcal S=\frac{D_0D_3-D_1D_2}{\mathcal D},\qquad
+\mathcal P=\frac{D_1D_3-\operatorname{sq}(D_2)}{\mathcal D}.
+\tag{20.166}
+$$
+先要求𝒟⁻>0才做两个除法。然后计算
+$$
+\mathcal B=\operatorname{sq}(\mathcal S)-4\mathcal P,
+\quad G=\sqrt{\mathcal B},\quad
+X=(\mathcal S+G)/2,\quad Z=(\mathcal S-G)/2.
+\tag{20.167}
+$$
+要求𝒝⁻>0、G⁻>0、Z⁻>0、X⁺<1。数值平方根的向外包络下端可能为零，即使𝒝⁻>0也须单独检查G⁻>0；未取得时可提高根包络精度后再检查，不能先用G作分母。于是实际根满足0<z<x<1，且x−z≥G⁻>0。X和Z两个外包区间不相交是更强的充分检查，不是这里必须的条件；实际根差由同一判别式G控制。
+

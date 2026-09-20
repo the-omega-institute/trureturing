@@ -1,0 +1,22 @@
+**命题 23.6（校准素数热坐标与未知尺度纤维）。** 使用 `PrimeZeckendorfFrequencyBridge.first_excited_prime_frequency` 的既有 $\lambda_p=\varphi^2\log p$（第一激发层），以及 `PrimeGoldenComplexMode.first_golden_complex_mode_euler` 和模长公式。这里不重证一般素数对数独立性；读数也不恢复该频率所忽略的层坐标。
+
+令 $\varphi=(1+\sqrt5)/2$ 为黄金比，$c=\varphi^2>0$、$\lambda_p=c\log p$，其中p为素数，故λ_p>0。定义
+$$
+A_p(\sigma)=e^{-\sigma\lambda_p},\qquad
+M_p(\sigma,t)=e^{-\sigma\lambda_p}e^{it\lambda_p}.
+$$
+若σ>0已知，精确合法幅度A=A_p(σ)唯一确定
+$$
+\boxed{p=\exp\!\left(\frac{-\log A}{c\sigma}\right).}
+\tag{23.111}
+$$
+所以完整复读数也确定p，而无需先解相位绕数。若σ作为未知参数可取任意正数，则对任意两个素数p,q，置
+$$
+\sigma_q=\sigma_p\frac{\log p}{\log q}>0
+$$
+就有A_q(σ_q)=A_p(σ_p)。联合观测(p,σ)↦A因此不单射。
+
+**证明。** 取实对数给−log A=cσlog p，除以正cσ并取指数得到(23.111)；这等价于 `PrimeZeckendorfTemporalization.first_excited_heat_multiplier_injective` 的正热坐标单射性。碰撞直接由σ_q log q=σ_p log p得到。对于复读数，进一步取 $t_q=t_p\log p/\log q$ 即保证完整 $M$ 也相同；固定已知t时，不可仅凭幅度碰撞断言复读数相同。□
+
+(23.111)以数据确属所声明素数模态类为前提；任意带噪A代入后得到的正实数不能自动取整为认证素数。精确单射也不提供整个无界素数集合上的统一绝对误差间隔，因为A_p(σ)随p→∞趋零。
+
