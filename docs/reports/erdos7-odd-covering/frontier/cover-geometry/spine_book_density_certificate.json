@@ -1,0 +1,151 @@
+{
+  "schema": "spine-book-full-density-v2",
+  "scope": "One shared spine {3,5}; disjoint nonempty private pages of at most two primes; arbitrary original finite heights and residues.",
+  "auxiliary_laws": [
+    {
+      "prime_proxy": 3,
+      "tail_cap": "2",
+      "moments": [
+        "2",
+        "5",
+        "31/2"
+      ]
+    },
+    {
+      "prime_proxy": 5,
+      "tail_cap": "4/3",
+      "moments": [
+        "4/3",
+        "13/6",
+        "107/24"
+      ]
+    },
+    {
+      "prime_proxy": 7,
+      "tail_cap": "12/5",
+      "moments": [
+        "7/5",
+        "7/3",
+        "14/3"
+      ]
+    }
+  ],
+  "early_fee_rows": [
+    {
+      "prime": 7,
+      "factors": 2,
+      "exact_fee": "8804/50625",
+      "strict_upper": "87/500",
+      "finite_complement_terms": 5
+    },
+    {
+      "prime": 11,
+      "factors": 3,
+      "exact_fee": "253372547128/1722980109375",
+      "strict_upper": "37/250",
+      "finite_complement_terms": 16
+    },
+    {
+      "prime": 13,
+      "factors": 3,
+      "exact_fee": "20308223629688/221115780703125",
+      "strict_upper": "23/250",
+      "finite_complement_terms": 25
+    },
+    {
+      "prime": 17,
+      "factors": 3,
+      "exact_fee": "136411109660162408/3324274748525390625",
+      "strict_upper": "21/500",
+      "finite_complement_terms": 38
+    },
+    {
+      "prime": 19,
+      "factors": 3,
+      "exact_fee": "11754933674680560568/395588695074521484375",
+      "strict_upper": "3/100",
+      "finite_complement_terms": 44
+    },
+    {
+      "prime": 23,
+      "factors": 3,
+      "exact_fee": "83105772374919137960488/5387568978066387451171875",
+      "strict_upper": "2/125",
+      "finite_complement_terms": 56
+    }
+  ],
+  "finite_exact_fee_sum": "502710735739233945275011756/1007475398898414453369140625",
+  "strict_finite_fee_upper": "251/500",
+  "third_moment_product_minus_one": "92467/360",
+  "cubic_tail_factor": "369868/1215",
+  "odd_integer_tail_upper": "31/78732",
+  "prime_tail_upper": "2866477/23914845",
+  "strict_total_private_fee_upper": "311/500",
+  "mixed_spine_fee_upper": "1/3",
+  "strict_normalized_survivor_lower": "67/1500",
+  "spine_joint_density_cap": "8/3",
+  "full_haar_density_bound": {
+    "prefactor": "67/4000",
+    "per_page_factor": "3/16",
+    "formula": "prefactor * per_page_factor^N",
+    "N": "number of nonempty private pages"
+  },
+  "zero_fibre_counterexample": {
+    "classes": [
+      {
+        "modulus": 3,
+        "residue": 1
+      },
+      {
+        "modulus": 5,
+        "residue": 1
+      },
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 21,
+        "residue": 15
+      },
+      {
+        "modulus": 63,
+        "residue": 9
+      },
+      {
+        "modulus": 189,
+        "residue": 108
+      },
+      {
+        "modulus": 35,
+        "residue": 25
+      },
+      {
+        "modulus": 105,
+        "residue": 75
+      },
+      {
+        "modulus": 315,
+        "residue": 90
+      },
+      {
+        "modulus": 1155,
+        "residue": 2
+      }
+    ],
+    "period": 10395,
+    "zero_fibre_cylinder_size": 77,
+    "forbidden_seven_residues": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "uncovered_count": 3841,
+    "full_support_nonredundancy_witness": 2
+  },
+  "verification": "Exact rational fee and moment calculations with a finite arithmetic counterexample. Conditional comparison, kernel construction and arbitrary-height reduction are ordinary proof obligations; no new Lean verification."
+}
