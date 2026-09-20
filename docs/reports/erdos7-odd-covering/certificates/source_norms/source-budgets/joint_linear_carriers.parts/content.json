@@ -1,0 +1,236 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-joint-linear-carriers-v1"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "3946916608483833183492317042103258625981367/9441199622876024461016506793257934121600"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "85384373808161620601/581553711777853386"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "2873884370396495734788444926897322493/30972486365132609061662761799310375"
+  },
+  "combined": {
+    "kind": "inline",
+    "value": "939255932492828564979463271311817433032375077/1841033926460824769898218824685297153712000"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "40511716507/80223412500"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "4652232190052517660023488517363196489192390693091/835636218215298084798437579416497775394055000000",
+      "Gamma13": "20770889584359949927705303/4760635031720493933632625",
+      "T13_81": "27222559915600676688618129311742406379/550357257718894822557238305818515125",
+      "combined": "593874047963020451656142336240607859701016234720183/10863270836798875102379688532414471080122715000000",
+      "rho": "3420152243/80223412500"
+    }
+  },
+  "selected_mass_endpoints": {
+    "kind": "inline",
+    "value": {
+      "bound": "D_c",
+      "Gamma13": "D_c",
+      "T13_81": "D_c",
+      "combined": "D_c",
+      "rho": "D_c"
+    }
+  },
+  "minimum_margins": {
+    "kind": "inline",
+    "value": {
+      "bound": "0",
+      "Gamma13": "0",
+      "T13_81": "0",
+      "combined": "0",
+      "rho": "0"
+    }
+  },
+  "combined_target_gain": {
+    "kind": "inline",
+    "value": "4985704837879492171019067773471867524773452839/7528491522847050886604046528313986840623160750"
+  },
+  "controllers": {
+    "path": "content/010-controllers.json",
+    "sha256": "1720678523cbb97404181d5911e2feed3c20069cb8992436e0dba72617ef180b",
+    "kind": "value"
+  },
+  "maximizers": {
+    "path": "content/011-maximizers.json",
+    "sha256": "de145e0bcdcd0e81ba3012fabf6dcb5272650bc8e3d33ef3b68b61f211cca3b8",
+    "kind": "value"
+  },
+  "rho_minimizers": {
+    "kind": "inline",
+    "value": [
+      402,
+      404,
+      406,
+      414,
+      416,
+      418,
+      426,
+      428,
+      430,
+      618,
+      620,
+      622,
+      630,
+      632,
+      634,
+      642,
+      644,
+      646
+    ]
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "85384373808161620601/581553711777853386",
+      "rho13": "40511716507/80223412500",
+      "D13": "99018612000000/2147120974871"
+    }
+  },
+  "fallbacks": {
+    "path": "content/014-fallbacks.json",
+    "sha256": "bffb0affcf4b8373176a67f11a3b1f0c341461609efdddf02313932c0c2e0802",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/015-core_errors.json",
+    "sha256": "a6a3765038b4631dcab686c4e29666cfa6a09b67e5238fda5501bce2a807e3fe",
+    "kind": "value"
+  },
+  "consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "consumer_carrier_checks": {
+    "kind": "inline",
+    "value": 23328
+  },
+  "consumer_denominator_checks": {
+    "kind": "inline",
+    "value": 46656
+  },
+  "consumer_target_margin_checks": {
+    "kind": "inline",
+    "value": 116640
+  },
+  "consumer_endpoint_margin_checks": {
+    "kind": "inline",
+    "value": 233280
+  },
+  "fallback_checks": {
+    "kind": "inline",
+    "value": 8
+  },
+  "complete_core_checks": {
+    "kind": "inline",
+    "value": 2
+  },
+  "consumer_margin_sha256": {
+    "kind": "inline",
+    "value": "6b42476097d0c4168d6386760039ceb2f608652cb02055179018f078f9b61cd2"
+  },
+  "q_effective": {
+    "kind": "inline",
+    "value": "23/42"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "31623610525587809/470050192111500"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "178944068667597492407421033833838271159/1145945873146913361035424153742500000"
+  },
+  "cG": {
+    "kind": "inline",
+    "value": "23559508993421/769588792096410"
+  },
+  "A81": {
+    "kind": "inline",
+    "value": "3302895385270708541/2448027743712364814"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "102715/2916"
+  },
+  "source_comparison_barrier": {
+    "kind": "inline",
+    "value": "45"
+  },
+  "gain_from46": {
+    "kind": "inline",
+    "value": {
+      "bound": "2524726721358129485646687383636473/4335334380684686616094742425591050",
+      "combined": "2524726721358129485646687383636473/4335334380684686616094742425591050"
+    }
+  },
+  "independent_gain_from46": {
+    "kind": "inline",
+    "value": {
+      "bound": "127700651802281448924012000/842135215398244244066236933",
+      "combined": "127700651802281448924012000/842135215398244244066236933"
+    }
+  },
+  "additional_common_carrier_gain": {
+    "kind": "inline",
+    "value": {
+      "bound": "31744446554666426945307835524420041/73700684471639672473610621235047850",
+      "combined": "31744446554666426945307835524420041/73700684471639672473610621235047850"
+    }
+  },
+  "independent_six": {
+    "path": "content/034-independent_six.json",
+    "sha256": "1aefb258806146e1398eb62f9918f2fd378ba474654405e946670e8a8a074a0f",
+    "kind": "value"
+  },
+  "independent_six_endpoint_checks": {
+    "kind": "inline",
+    "value": 233280
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Six original linear tests share one forbidden-carrier mixture with the three survival hinges and actual mass. Independent-six refinement and additional common-carrier gain are accounted separately. Ordinary proof and exact arithmetic; unrestricted Erdos7 remains open."
+  },
+  "six_linear": {
+    "path": "content/037-six_linear.json",
+    "sha256": "1c3efc6507c778fe3c1fe0418f6214272533615195ce152b2ee953769362b695",
+    "kind": "object"
+  },
+  "predecessor_source_profile_sha256": {
+    "kind": "inline",
+    "value": "06820efd31fb6fa50e72a95f52aef3c586f8355e5909dc1bdd1a93179ed7da25"
+  },
+  "predecessor_survival_conditional_sha256": {
+    "kind": "inline",
+    "value": "27bfac501fe2a9ad0c4b9b9a5b6a980dfbafb51f962c5524af9c19ac6e29c1b8"
+  },
+  "source_sha256": {
+    "path": "content/040-source_sha256.json",
+    "sha256": "027d874a00c6022898a849ac92ed721bc5af03e2ffe0b2eab8a42c68a2f93ff2",
+    "kind": "value"
+  },
+  "helper_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+      "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "a6c19378ba3b6588e7ff0fd89862bc78ab5bbff5db6298dc575f058776588c0c"
+  }
+}
