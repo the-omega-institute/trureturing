@@ -6,20 +6,9 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrum_kernel_equal; instance=D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrumRealization
    digest: Shadow registration regression checks preserve canonical arenas, primitive kernels and statements, with sensitivity witnesses and sealed query evidence. -/
 
-/- Ten canonical golds use one reused template (separation) and eight helpers.
-The twoStep helper preserves the two-step binary protocol and Nat.find minima.
-Accounting uses inclusive physical spans; source theorem proofs are excluded.
-A/ = InformationEscapeArenas/, R/ = InformationEscapeRealizations/,
-I/ = InformationEscape/, all below D5/S3/ConceptDynamics/.
-Library, instance, and validation are separate authored scopes.
-| Gold | Hand spans | Library | Instance | Validation |
-| two_step_adaptive_residue_identification | A/FirstThreeArenas.lean:88-140 + R/FirstThreeRealizations.lean:86-171 + I/InformationRoot.lean:83-87 (144) | I/RegistrationTemplates.lean:336-392 (57) | I/TemplateShadow.lean:396-401,416-417 (8) | I/TemplateShadow.lean:402-415,418-427,444,471-472 (27) |
-Hand includes the arena/realization sections and InformationRoot registration.
-Authored instance means realization, bridge, and registration; the remaining
-per-gold checks, enumeration, axiom prints, and census entry are validation.
-Residue scaffolding is I/TemplateShadow.lean:393-395,428 (4); shared seal/query is separate.
-Counts describe this regression pack and make no throughput claim.
--/
+/- Pure shadow realizations and kernel comparisons remain at this mathematical
+owner. Reg.Catalogs.TemplateShadow imports the precise registration variants
+and owns their seal and census checks. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations

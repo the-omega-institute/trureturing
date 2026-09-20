@@ -42,7 +42,7 @@ internal sealed class SharedArenaPeersDocument : IScribeDocumentDefinition
                 "The actual realization satisfies the law and a constant realization of the same signature fails it."),
             Node("observation-sensitive", "observation_law_sensitive", "Observation law sensitivity",
                 "The actual realization satisfies the law and a constant realization of the same signature fails it."),
-            Paragraph(Text("The maximal seal succeeds on both complete catalogs with a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.")))));
+            Paragraph(Text("Reg.Catalogs.SharedArenaPeers imports the genuine registration leaves and owns both complete catalogs and their maximal seal. The seal reports a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.")))));
 
     private static DocumentBlock.Describe Node(
         string id, string declaration, string title, string explanation,

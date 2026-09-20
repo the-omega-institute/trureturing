@@ -13,7 +13,7 @@ internal sealed class TemplateShadowDocument : IScribeDocumentDefinition
         "Ten shadow registrations compare generated realizations with their hand registrations on canonical arenas.",
         H("Registration Shadows"),
         Blocks(
-            Paragraph(Text("Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. The module seals the ten registrations and checks their finite-occurrence census queries.")),
+            Paragraph(Text("Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. Reg.Catalogs.TemplateShadow seals the ten registrations and checks their finite-occurrence census queries; this D5 module retains the pure realizations and mathematical witnesses.")),
             DeclarationNode("spectrum-realization", "spectrumRealization", "Spectrum shadow",
                 "The bijection helper uses SpectrumAtom.index on the canonical spectrum arena."),
             Describe.Lean(
