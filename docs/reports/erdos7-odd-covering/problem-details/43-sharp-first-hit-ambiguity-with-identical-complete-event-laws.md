@@ -340,6 +340,47 @@ mass \(1/2\). Every single clipped step from that fixed preceding
 \(\nu_3\otimes\nu_5\) and fixed \(\nu_7\) has joint distance at least
 \(1/525\) from either displayed source.
 
+There is a stronger arithmetic conclusion on these two small carriers.
+Suppose a fixed set \(T\) has positive reference mass and is disjoint
+from every \(B_x\). Formula (FA12) then gives
+
+\[
+ \widetilde\mu(T)=\nu_r(T)\,
+ \mathbb E_{\nu_{<r}}
+ \frac1{1-\min(\alpha_x,\delta_x)}.
+ \tag{FA15}
+\]
+
+Every integrand is at least one. If the last-coordinate marginal remains
+\(\nu_r\), equality forces \(\min(\alpha_x,\delta_x)=0\) almost
+surely. Since every \(\delta_x>0\), this means \(\alpha_x=0\) almost
+surely, so \(K_r(x,\cdot)=\nu_r\). The resulting joint source is
+exactly \(\nu_{<r}\otimes\nu_r\). The same conclusion holds when only
+the mass of this fixed \(T\) is preserved.
+
+In Chapter 42's complete carrier \(\mathbb Z/9\times\mathbb Z/5
+\times\mathbb Z/7\), keep the stated pure exclusions and bases. Every
+possible original mixed class owned by seven has modulus in
+\(\{21,35,63,105,315\}\). Numerical distinctness allows at most five
+such labels, each using one fixed seven-residue. The six surviving
+seven-residues therefore include a residue unused by all these classes;
+it supplies \(T\), regardless of their old residues or which classes
+are present. Consequently any arithmetic clipped step of this form that
+preserves the stated full seven-coordinate marginal produces only the
+product source \(\nu\). With the next eleven-stage labels and threshold
+kept as in Chapter 42, its cost is exactly \(133/7920\).
+
+For the four-coordinate case of this chapter, the last old prime is
+eleven. There are only \(2^3-1=7\) possible nonunit old squarefree
+cofactors on \(\{3,5,7\}\), hence at most seven mixed eleven-ending
+labels on the complete declared carrier. The ten pure-survivor
+eleven-residues again supply an unused \(T\). Preserving their uniform
+marginal forces the product source, whose subsequent seventeen-stage
+cost is \(b/P=11/8160\). Both conclusions allow history-dependent
+positive thresholds; neither permits additional coordinate heights or
+duplicate original moduli. The counting argument is not asserted for
+\(r\ge5\), where these counts no longer supply an unused residue.
+
 These bounds concern the declared complete carriers and base laws.
 Marginalizing additional hidden prime-power digits, mixing different
 operations, changing the base, or changing the preceding joint marginal
