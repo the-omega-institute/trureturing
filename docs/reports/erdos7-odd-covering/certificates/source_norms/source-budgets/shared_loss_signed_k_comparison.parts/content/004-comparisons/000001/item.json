@@ -1,0 +1,95 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "complete": {
+    "kind": "inline",
+    "value": false
+  },
+  "heavy": {
+    "path": "content/004-comparisons/000001/item/003-heavy.json",
+    "sha256": "e89985a4e0fd94ab777ba68b847bbe9d2122c39d60bc17d220d8c7a28d8e3281",
+    "kind": "object"
+  },
+  "original_scalar_numerator": {
+    "kind": "inline",
+    "value": "426671564012186193959091958354806026957441191467318229/11413483022753096928919939610839496963358000000000000"
+  },
+  "old_heavy_excess": {
+    "kind": "inline",
+    "value": "327012233119198153120572490382676608421556367893/173647197887553203032496646951671996156250000000"
+  },
+  "replacement_G_error": {
+    "kind": "inline",
+    "value": "539118067433914915406741203118258538930590173/601976952676851103845988376099129586675000000"
+  },
+  "unit_mass_saving": {
+    "kind": "inline",
+    "value": "4016925362880242903768471/915601334443277676480000000"
+  },
+  "signed_endpoint": {
+    "kind": "inline",
+    "value": "369199386035265828468934740732535318296822363197963/10145318242447197270151057431857330634096000000000"
+  },
+  "denominator_lower": {
+    "kind": "inline",
+    "value": "3274101544705110126479/43643277148115799000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_value": {
+    "kind": "inline",
+    "value": "51154819260557544869982821139144255789403107475520062513/100960383984828678896399267154719167778289151707216000"
+  },
+  "remaining_S_coefficient": {
+    "kind": "inline",
+    "value": "39142605190055673429666908194688586711134964841713201065707109321/94038703197287680677505689024417415351426989190778087580000000"
+  },
+  "raw_s_coefficient": {
+    "kind": "inline",
+    "value": "9842264924061537171771956384088145223/143243234143364170129428019217812500"
+  },
+  "mass_floor": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "raw_mass_floor": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "509"
+  },
+  "below_target": {
+    "kind": "inline",
+    "value": true
+  },
+  "meaning": {
+    "kind": "inline",
+    "value": "Optimistic incomplete envelope only; the named omitted positive increments remain unpaid"
+  },
+  "omitted_nonnegative_envelope_excesses": {
+    "kind": "inline",
+    "value": [
+      "mean11",
+      "H2_single",
+      "joint_quadratic9"
+    ]
+  },
+  "still_proves_fixed_envelope_failure": {
+    "kind": "inline",
+    "value": false
+  },
+  "input_certificate": {
+    "kind": "inline",
+    "value": "certificates/source_norms/endpoint-bounds/k_neighborhood_radius_obstruction_1_27.json"
+  }
+}

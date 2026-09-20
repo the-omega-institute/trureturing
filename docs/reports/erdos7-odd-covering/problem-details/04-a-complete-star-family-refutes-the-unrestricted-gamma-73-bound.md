@@ -590,7 +590,7 @@ active classes d·13 forbid at most one first 13-digit, for d|315. Then the
 family cannot cover. All twelve possible d·143 classes may have arbitrary
 residues, and the later prime heights and interactions are unrestricted.
 
-The [degree-weighted grid proof](../profile-notes/03-arbitrary-height-transfer-for-matching-kernels.md#arbitrary-point-holes-and-a-common-diagonal)
+The [degree-weighted grid proof](../profile-notes/001-064/03-arbitrary-height-transfer-for-matching-kernels.md#arbitrary-point-holes-and-a-common-diagonal)
 allows arbitrary point-hole patterns in each available 10-by-12 rectangle,
 including a whole row deleted by cross classes. The number of actual holes
 has mean at most 271/86. Retaining its correlation with old complete test

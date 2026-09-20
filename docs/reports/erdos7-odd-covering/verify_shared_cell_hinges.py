@@ -13,7 +13,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -28,7 +28,7 @@ import json
 
 Q=F
 BASE=Path(__file__).resolve().parent
-PINNED_PR_SHA256='b1ba6c871d993fd43152351c2b823a7955d93ce4500fbe29f9420c38f7f72196'
+PINNED_PR_SHA256='045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a'
 
 ROOTS=(0,0,1,1,1)
 CHOICES=list(product(range(2),range(5)))
