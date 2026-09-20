@@ -18,7 +18,9 @@ private def rejects (root : Name) (rows : Array ExpectedOccurrence)
 
 run_cmd do
   for root in #[frozenInformationRootId, designatedInformationRootId] do
-    let rows := fixedSnapshotOccurrences root
+    let some contract := RootCatalogs.find? (← getEnv) root
+      | throwError "ROOT-B-baseline-subset: missing root contract"
+    let rows := snapshotExpectations root contract.source
     validateFrozenBaselineInSnapshot root rows
     let baselineRow := rows.find? (·.registrationModuleName == frozenInformationRootId)
     let some baselineRow := baselineRow

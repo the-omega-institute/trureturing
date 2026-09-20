@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Reifier
+import LeanInformationAudit.RootContract
 
 namespace LeanInformationAudit
 
@@ -193,22 +194,16 @@ def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
 
 end ExpectedOccurrenceManifest
 
-def frozenInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-
-/-- Companions of imported objects belong to this compilation, not the object's module.
-Lean's private names preserve local source resolution while separating compiled roots.
-The frozen root retains its public declarations: they are part of its frozen statement
-identity and are consumed by SharedInformationRoot and SealBaseline. -/
+/-- The root contract selects published companion ownership. Without an explicit
+prefix, imported objects receive private names local to this compilation. -/
 def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
   let name := owner.str suffix
-  if env.header.mainModule == frozenInformationRootId || !env.isImportedConst owner then name
-  else mkPrivateName env name
+  if !env.isImportedConst owner then name
+  else match (RootCatalogs.find? env env.header.mainModule).bind (·.companionPrefix) with
+    | some companionPrefix => companionPrefix ++ name
+    | none => mkPrivateName env name
 
-def designatedInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-
-private def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
+def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
   rows.map fun row => {
     rootId
@@ -218,23 +213,12 @@ private def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrenc
     registrationModuleName := row.registrationModuleName
   }
 
-/-- Read-only expectations captured by SnapshotEnumerator, independently of the root. -/
-def fixedSnapshotOccurrences (rootId : Name) : Array ExpectedOccurrence :=
-  snapshotExpectations rootId fixedInformationSourceSnapshot.occurrences
-
-/-- The historical frozen root is independent of future source snapshot generation. -/
-def frozenBaselineOccurrences (rootId : Name) : Array ExpectedOccurrence :=
-  snapshotExpectations rootId frozenInformationRootBaseline
-
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  if rootId == frozenInformationRootId then
-    frozenBaselineOccurrences rootId
-  else if rootId == designatedInformationRootId then
-    fixedSnapshotOccurrences rootId
-  else
-    ExpectedOccurrenceManifest.declaredEntries env rootId
+  match RootCatalogs.find? env rootId with
+  | some contract => snapshotExpectations rootId contract.expected
+  | none => ExpectedOccurrenceManifest.declaredEntries env rootId
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
