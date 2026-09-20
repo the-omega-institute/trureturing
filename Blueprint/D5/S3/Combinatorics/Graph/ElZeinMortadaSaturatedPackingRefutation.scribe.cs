@@ -59,11 +59,16 @@ internal sealed class ElZeinMortadaSaturatedPackingRefutationDocument
                     + "five-cycles 0-1-6-5-4-0, 1-2-3-5-6-1, or 0-1-2-3-4-0. The remaining "
                     + "six vertices therefore cannot be split between the two independent "
                     + "radius-one classes.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo())),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "elzein-mortada-saturated-packing-conjecture-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
@@ -71,7 +76,8 @@ internal sealed class ElZeinMortadaSaturatedPackingRefutationDocument
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula SubcubicFormula()
     {

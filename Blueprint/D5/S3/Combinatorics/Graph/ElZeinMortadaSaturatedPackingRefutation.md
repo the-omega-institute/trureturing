@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ElZeinMortadaSaturatedPackingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/elzein-mortada-saturated-packing-conjecture-refutation` (refuted) by `D5/S3/Combinatorics/Graph/ElZeinMortadaSaturatedPackingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"elzein-mortada-saturated-packing-conjecture-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/ElZeinMortadaSaturatedPackingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
