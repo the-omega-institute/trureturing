@@ -97,7 +97,7 @@ class NativeInvalidationTests:
         self.assertEqual(published, fresh)
 
     def test_native_invalidation(self):
-        self.build()
+        self.build(targets=['Audit'])
         rows, original_report, original_materials = self.report()
         self.assertEqual(len(rows), 4)
         self.assertTrue(rows[-1]['utility_refutation']['is_closed_negation'])
@@ -107,14 +107,14 @@ class NativeInvalidationTests:
         self.assertTrue((self.root / '.lake/build/lib/lean/D5/B.olean.private').is_file())
         self.check_census_modes(rows)
         before = self.stamps()
-        self.build()
+        self.build(targets=['Audit'])
         self.assertEqual(before, self.stamps(), 'unchanged build extracted rows')
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(self.report()[1:], (original_report, original_materials))
 
         def changed(expected):
             nonlocal before
-            self.build()
+            self.build(targets=['Audit'])
             after = self.stamps()
             actual = {name for name in after if after[name] != before.get(name)}
             self.assertEqual(actual, set(expected))

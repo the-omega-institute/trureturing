@@ -307,9 +307,9 @@ root = "Cache"
         elif success is False:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
-    def build(self, success=True):
+    def build(self, success=True, *, targets=()):
         self.write('activity.jsonl', '')
-        return self.run_lake('build', ':report', success=success)
+        return self.run_lake('build', ':report', *targets, success=success)
     def stamps(self):
         return {p.stem: (p.stat().st_mtime_ns, publication.digest(p)) for p in (self.root / '.lake/build/lean-inspector/modules').glob('*.zip')}
     def report(self):
