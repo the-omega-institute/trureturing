@@ -2,11 +2,23 @@
 
 ## Abstract
 
-Every finite legal ordered path is bounded by its carry reward and initial inversions.
+Ordered paths erase with identical carry reward and satisfy the inversion potential bound.
 
 A state is one list of natural-number raw W indices. Decode maps each index through successor to the positive paper indices; n zeros thus represent n ones. Multiplicities are obtained through Multiset.toFinsupp. Move records the position of its adjacent window and one of five actions: an inversion switch, combining ones, splitting twos, a general split, or a consecutive merge. No predecessor map is used.
 
-**Theorem 1.1 (The path potential bound).**
+**Theorem 1.1 (Erasure preserves the complete reward).**
+
+$$Path\left(s, t, length, weight\right) \Rightarrow RawPath\left(rawCounts\left(s\right), rawCounts\left(t\right), weight\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Carry/OrderedGame.path_raw_erasure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every finite legal ordered path erases to a labelled raw path with exactly the same accumulated reward. Switches preserve multiplicities and contribute zero reward. Each remaining label retains its actual CarryStep and its consumed and produced digits in the same spectator context. Labels are explicit and are not reconstructed from an unlabelled proposition. The theorem neither assumes terminality nor asserts optimality.
+
+**Theorem 1.2 (The path potential bound).**
 
 $$Path\left(s, t, length, weight\right) \Rightarrow length + inv\left(decode\left(t\right)\right) \le inv\left(decode\left(s\right)\right) + weight$$
 
@@ -23,5 +35,7 @@ LGSPath keeps every permitted inversion-switch choice. Its priority restarts aft
 ## References
 
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.path_potential`
+- Truth anchor: `D5/S1/Digit/Carry/OrderedGame.path_raw_erasure`
 - Dependency: [D5/S1/Digit/Carry/ListInversions](ListInversions.md)
+- Dependency: [D5/S1/Digit/Carry/SplitStabilization](SplitStabilization.md)
 - Dependency: [D5/S1/Digit/Raw](../Raw.md)

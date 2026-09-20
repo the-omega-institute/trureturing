@@ -8,6 +8,7 @@
 
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry.ListInversions
+import D5.S1.Digit.Carry.SplitStabilization
 
 namespace D5.S1.Digit.Carry.OrderedGame
 
@@ -54,6 +55,104 @@ inductive Path : List ℕ → List ℕ → ℕ → ℕ → Prop where
   | cons {position a s t u length weight} (move : Move position a s t)
       (tail : Path t u length weight) :
       Path s u (length + 1) (reward s a + weight)
+
+/-- The consumed raw digits of a carry label. Switches are excluded by RawMove. -/
+noncomputable def rawInput : Action → RawDigits
+  | .switch => 0
+  | .ones => Finsupp.single 0 2
+  | .twos => Finsupp.single 1 2
+  | .split i => Finsupp.single (i + 2) 2
+  | .merge a => Finsupp.single a 1 + Finsupp.single (a + 1) 1
+
+/-- The produced raw digits of a carry label. -/
+noncomputable def rawOutput : Action → RawDigits
+  | .switch => 0
+  | .ones => splitOutput 0
+  | .twos => splitOutput 1
+  | .split i => splitOutput (i + 2)
+  | .merge a => Finsupp.single (a + 2) 1
+
+/-- A label together with the actual existing carry relation and its context. -/
+def RawMove (a : Action) (c d : RawDigits) : Prop :=
+  CarryStep c d ∧ ∃ rest, c = rest + rawInput a ∧
+    d = rest + rawOutput a ∧ a ≠ .switch
+
+/-- Full raw carry reward, sharing the split reward used in stabilization. -/
+def rawReward (c : RawDigits) : Action → ℕ
+  | .switch => 0
+  | .ones => splitReward c 0
+  | .twos => splitReward c 1
+  | .split i => splitReward c (i + 2)
+  | .merge a => c (a + 1)
+
+/-- Labelled weighted raw paths. Carry labels are explicit data; no data is
+recovered by eliminating a proof of the unlabelled CarryStep proposition. -/
+inductive RawPath : RawDigits → RawDigits → ℕ → Prop where
+  | nil (c) : RawPath c c 0
+  | cons {a c d e w} (move : RawMove a c d) (tail : RawPath d e w) :
+      RawPath c e (rawReward c a + w)
+
+/-- Erasing all ordered switches preserves the complete accumulated reward
+and maps every remaining move to a labelled instance of the existing carries. -/
+theorem path_raw_erasure {s t : List ℕ} {length weight : ℕ}
+    (path : Path s t length weight) : RawPath (rawCounts s) (rawCounts t) weight := by
+  classical
+  have context (P M S : List ℕ) :
+      rawCounts (P ++ M ++ S) = rawCounts (P ++ S) + rawCounts M := by
+    ext k
+    simp [rawCounts, Multiset.toFinsupp_apply, List.count_append]
+    omega
+  have erase_move {p a s t} (step : Move p a s t) :
+      (a = .switch ∧ rawCounts s = rawCounts t) ∨ RawMove a (rawCounts s) (rawCounts t) := by
+    cases step with
+    | switch P S i j h =>
+      left
+      refine ⟨rfl, ?_⟩
+      ext k
+      simp [rawCounts, Multiset.toFinsupp_apply, List.count_append, List.count_cons]
+      omega
+    | ones P S | twos P S | split P S i | merge P S i =>
+      right
+      rw [context, context]
+      have inputs : ∀ (i : ℕ), rawCounts [i, i] = Finsupp.single i 2 := by
+        intro i; ext k
+        simp only [rawCounts, Multiset.toFinsupp_apply, Multiset.coe_count,
+          Finsupp.single_apply, List.count_cons, List.count_nil, beq_iff_eq]
+        split_ifs <;> omega
+      have outputs : ∀ (i : ℕ), rawCounts [i] = Finsupp.single i 1 := by
+        intro i; ext k
+        simp [rawCounts, Finsupp.single_apply]
+      have pair : ∀ (i j : ℕ), rawCounts [i, j] =
+          Finsupp.single i 1 + Finsupp.single j 1 := by
+        intro i j; ext k
+        simp only [rawCounts, Multiset.toFinsupp_apply, Multiset.coe_count,
+          Finsupp.add_apply, Finsupp.single_apply, List.count_cons, List.count_nil, beq_iff_eq]
+        split_ifs <;> omega
+      first
+      | refine ⟨?_, rawCounts (P ++ S), ?_, ?_, by intro h; cases h⟩
+        · simpa [inputs, outputs, add_assoc] using CarryStep.double_zero (rawCounts (P ++ S))
+        · simp [rawInput, inputs]
+        · simp [rawOutput, splitOutput, outputs]
+      | refine ⟨?_, rawCounts (P ++ S), ?_, ?_, by intro h; cases h⟩
+        · simpa [inputs, pair, add_assoc] using CarryStep.double_one (rawCounts (P ++ S))
+        · simp [rawInput, inputs]
+        · simp [rawOutput, splitOutput, pair]
+      | refine ⟨?_, rawCounts (P ++ S), ?_, ?_, by intro h; cases h⟩
+        · simpa [inputs, pair, add_assoc] using CarryStep.double_succ (rawCounts (P ++ S)) i
+        · simp [rawInput, inputs]
+        · simp [rawOutput, splitOutput, pair]
+      | refine ⟨?_, rawCounts (P ++ S), ?_, ?_, by intro h; cases h⟩
+        · simpa [pair, outputs, add_assoc] using CarryStep.adjacent (rawCounts (P ++ S)) i
+        · simp [rawInput, pair]
+        · simp [rawOutput, outputs]
+  induction path with
+  | nil => exact .nil _
+  | cons step tail ih =>
+    rcases erase_move step with ⟨rfl, same⟩ | carry
+    · simpa [reward, same] using ih
+    · have h := RawPath.cons carry ih
+      convert h using 1
+      cases step <;> rfl
 
 /-- A natural-number telescope bounds every legal ordered path, including
 arbitrary switch choices, by its raw carry reward and initial inversions. -/

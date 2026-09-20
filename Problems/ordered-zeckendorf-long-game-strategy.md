@@ -74,9 +74,10 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 
 ## Gap
 
-- `OrderedGame` now defines ordered legality and the switch move. Erasure into
-  a weighted raw path, exact sorted attainment and length optimality remain
-  to be proved; the potential inequality alone does not supply them.
+- `OrderedGame` defines ordered legality and the switch move, and
+  `path_raw_erasure` proves erasure into a labelled raw path with identical
+  accumulated reward. Exact sorted attainment and length optimality remain
+  to be proved; erasure and the potential inequality do not supply them.
 - Newman confluence and normal-form uniqueness say nothing about longest paths.
 - LGS contains a tie phrase "switch moves (in any order)".
   `ASSUMED-UNVERIFIED`: an uncommitted exhaustive search over `n <= 16` found
@@ -136,7 +137,8 @@ remain unproved.
    their full carry rewards, legal paths, relational LGS and `Conjecture17`.
 2. `OrderedGame.path_potential` proves, for every legal finite path,
    `length + inv(decode end) ≤ inv(decode start) + reward`. It reuses the four
-   frozen inversion bounds. This is an upper bound, not an attainment theorem.
+   frozen inversion bounds. `path_raw_erasure` preserves the exact reward in
+   the labelled raw carrier. The upper bound still needs an attainment theorem.
 3. `Carry/SplitStabilization` proves exact site balance, the first-overfire
    least-action bound, unique complete split counts and endpoint, and existence
    of complete split phases. Weighted preferred-split promotion and maximal

@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Carry;
 internal sealed class OrderedGameDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every finite legal ordered path is bounded by its carry reward and initial inversions.",
+        "Ordered paths erase with identical carry reward and satisfy the inversion potential bound.",
         H("Ordered Zeckendorf Paths and the Inversion Potential"),
         Blocks(
             Paragraph(Text("A state is one list of natural-number raw W indices. Decode maps "
@@ -16,6 +16,22 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
                 + "Move records the position of its adjacent window and one of five actions: "
                 + "an inversion switch, combining ones, splitting twos, a general split, or "
                 + "a consecutive merge. No predecessor map is used.")),
+            Describe.Lean(DescribeId.Create("ordered-game-path-raw-erasure"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.path_raw_erasure"),
+                H("Erasure preserves the complete reward"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Call("Path", F.Id("s"), F.Id("t"), F.Id("length"), F.Id("weight")),
+                    Sp, Rightarrow, Sp,
+                    Call("RawPath", Call("rawCounts", F.Id("s")),
+                        Call("rawCounts", F.Id("t")), F.Id("weight"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite legal ordered path erases to a labelled raw "
+                    + "path with exactly the same accumulated reward. Switches preserve multiplicities "
+                    + "and contribute zero reward. Each remaining label retains its actual CarryStep "
+                    + "and its consumed and produced digits in the same spectator context. Labels "
+                    + "are explicit and are not reconstructed from an unlabelled proposition. "
+                    + "The theorem neither assumes terminality nor asserts optimality."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ordered-game-path-potential"),
                 DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.path_potential"),
                 H("The path potential bound"),

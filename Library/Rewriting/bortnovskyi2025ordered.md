@@ -51,6 +51,9 @@ for every finite legal ordered path, using the existing local inversion bounds.
 Its position-aware LGS relation retains all switch choices and restarts priority
 after every move. `Conjecture17` is the full, still unproved target, including
 existence of a complete LGS run for every positive n.
+`path_raw_erasure` now maps every ordered path to a labelled raw path with
+identical accumulated reward, removing switches and retaining the existing
+`CarryStep` relation for each labelled carry and its spectator context.
 
 `D5/S1/Digit/Carry/SplitStabilization` proves complete split-phase existence,
 exact site balance, a first-overfire least-action bound, and uniqueness of both
