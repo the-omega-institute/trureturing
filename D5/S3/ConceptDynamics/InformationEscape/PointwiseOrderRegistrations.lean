@@ -141,3 +141,5 @@ run_meta do
         logWarning diagnostic
 
 end D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations
+
+-- probe: byte change that keeps this module's forbidden imports unchanged
