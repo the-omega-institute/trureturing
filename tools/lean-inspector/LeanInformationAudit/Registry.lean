@@ -228,7 +228,7 @@ def assessJoined : MetaM (Array BindingRecord) := do
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do
   -- Empty inventories still execute this judge. Validate its compiled source
-  -- before collecting records or binding current source hashes to the export.
+  -- before collecting records.
   TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.Registry]
   let selected ← assessJoined
   let originals ← (inventory (← getEnv)).mapM fun event => do
@@ -259,10 +259,10 @@ private def isRecordedModule (name : Name) : Bool :=
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :
-    CoreM (Array TemplateAudit.SourceInput × Nat) := do
+    CoreM (Array TemplateAudit.SourceInput) := do
   let mut seen : NameSet := {}
   let mut pending := [root]
-  let mut paths := TemplateAudit.policyPaths
+  let mut paths : Array String := #[]
   while let name :: rest := pending do
     pending := rest
     if seen.contains name then continue
@@ -276,55 +276,14 @@ private def moduleSourceInputs (env : Environment) (root : Name) :
         pure env.header.moduleData[index.toNat]!.imports
       else throwError "incomplete_closure:dtr.module_imports:{name}"
     pending := imports.toList.map (·.module) ++ pending
-  TemplateAudit.readVersionedSourceInputs (paths.qsort (· < ·))
+  TemplateAudit.readSourceInputs (paths.qsort (· < ·))
 
-/-- Complete source inputs for an independently requested module. Batch reports
-use the same source walk inside their union's native-validation boundaries. -/
+/-- Source inputs for census evidence and compile-time coherence fixtures.
+Module report rows do not serialize these raw source hashes. -/
 def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
   TemplateAudit.NativeCoherence.validate (#[root] ++
     (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
-  return (← moduleSourceInputs env root).1
-
-/-- Content touches follow actual constant dependencies, including complete
-arena/realization types, while theorem proof implementations are never entered. -/
-private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.SourceInput) := do
-  let env ← getEnv
-  let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
-    record.occurrence.realizationName, record.occurrence.key.objectArena]
-  pending := (← TemplateAudit.inspectionRoots record.occurrence).toList ++ pending
-  if let some origin := record.escape.fromObject then pending := origin.name :: pending
-  if let some residual := record.escape.continuation then
-    pending := residual.declarationName.toList ++ residual.chainName.toList ++ pending
-  if let some descriptor := record.descriptor then
-    let erased ← TemplateAudit.eraseProofs descriptor
-    pending := (erased.1.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
-  let mut seen : NameSet := {}
-  let mut paths := #[record.occurrence.registrationSource]
-  if let some owner := record.bindingOwner then paths := paths.push (sourcePath owner)
-  let mut remaining := 524288
-  while let name :: rest := pending do
-    pending := rest
-    if seen.contains name then continue
-    if remaining == 0 then throwError "incomplete_closure:dtr.content_inputs"
-    remaining := remaining - 1
-    seen := seen.insert name
-    let info ← getConstInfo name
-    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
-    if isRepositoryModule owner then
-      let path := sourcePath owner
-      unless paths.contains path || path.startsWith "tools/" do paths := paths.push path
-    let (type, work) ← TemplateAudit.eraseProofs info.type remaining
-    remaining := remaining - work
-    pending := (type.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
-    if !info.isTheorem then
-      if let some value := info.value? then
-        let (value, work) ← TemplateAudit.eraseProofs value remaining
-        remaining := remaining - work
-        pending := (value.getUsedConstants.filter (· != ``lcProof)).toList ++ pending
-  (paths.toList.eraseDups.toArray.qsort (· < ·)).mapM fun path => TemplateAudit.readSourceInput path
-
-private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
-  ("path", toJson input.path), ("sha256", toJson input.sha256)]
+  moduleSourceInputs env root
 
 private def escapeFromJson (origin : EscapeFromIdentity) : Json := Json.mkObj [
   ("name", toJson origin.name.toString), ("type_identity", toJson origin.typeIdentity),
@@ -351,7 +310,6 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("escape_from", record.escape.fromObject.map escapeFromJson |>.getD Json.null),
     ("escape_continues", record.escape.continuation.map escapeContinuationJson |>.getD Json.null),
     ("bridge_kind", toJson record.escape.bridgeKind),
-    ("content_inputs", Json.arr ((← contentInputs record).map inputJson)),
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
 
@@ -367,13 +325,12 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
       | throwError "incomplete_closure:dtr.final_record"
     recordJson (if selected.bindingOwner == some moduleName then selected else row)
-  let (inputs, version) ← moduleSourceInputs env moduleName
+  let version ← TemplateAudit.readReportCacheReleaseVersion
   return Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
-    ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
-    ("inputs", Json.arr (inputs.map inputJson))]
+    ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows)]
 
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed
@@ -387,8 +344,7 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
   TemplateAudit.NativeCoherence.validate roots
   let snapshot ← exportSnapshot
   let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
-  -- Compare the original snapshots after all source hashes and records have
-  -- been read. A replacement during this transaction cannot renew them.
+  -- Compare the original snapshots after all records have been read. A replacement during this transaction cannot renew them.
   TemplateAudit.NativeCoherence.validate roots
   return rows
 

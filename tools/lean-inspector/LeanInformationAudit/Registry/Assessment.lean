@@ -464,7 +464,6 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     | .ok plan => pure plan
     | .error reason => throwError reason
   let env ← getEnv
-  validateSourceInputs plan.sourceInputs
   unless env.contains name do throwError "incomplete_closure:dtr.template_owner"
   let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
@@ -596,7 +595,6 @@ private structure CachedAssessment where
   planName : Name
   planIdentity : String
   constants : Array (Name × ConstantInfo × Name × CacheSemantics)
-  inputs : Array SourceInput
 
 private initialize assessmentCache : EnvExtension (Std.HashMap TemplateOccurrenceKey CachedAssessment) ←
   registerEnvExtension (pure {})
@@ -636,7 +634,6 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
         (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule == owner do
       return false
   try
-    validateSourceInputs cached.inputs
     NativeCoherence.validate (#[claim.owner, event.key.registrationModule] ++
       cached.constants.map (fun (_, _, owner, _) => owner))
     return true
@@ -659,25 +656,18 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   for name in #[plan.name, record.occurrence.key.theoremName, record.occurrence.unitName,
       record.occurrence.realizationName, record.occurrence.key.objectArena] do
     names := names.insert name
-  let mut paths := plan.sourceInputs.map (·.path)
-  for path in #[record.occurrence.registrationSource, TemplateAudit.sourcePath claim.owner] do
-    unless paths.contains path do paths := paths.push path
   let mut constants := #[]
   for name in names do
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
     constants := constants.push (name, info, owner, cacheSemantics env name)
-    if owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit." then
-      let path := TemplateAudit.sourcePath owner
-      unless paths.contains path do paths := paths.push path
-  let inputs ← (paths.qsort (· < ·)).mapM fun path => readSourceInput path
   let cached : CachedAssessment := {
-    record, claim, constants, inputs, options := ← getOptions,
+    record, claim, constants, options := ← getOptions,
     registry := InformationRegistry.entries env, planName := name, planIdentity := plan.planIdentity }
   modifyEnv fun env => assessmentCache.modifyState env (·.insert record.occurrence.key cached)
 
 /-- Every caller uses the same assessment. A hit requires exact occurrence,
-claim, selected plan, options, native dependencies and current source bytes.
+claim, selected plan, options and native dependencies.
 The authoritative caller still validates the complete native join first. -/
 def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   if let some claim := claim then

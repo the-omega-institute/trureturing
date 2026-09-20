@@ -1,0 +1,78 @@
+**定理 12.2（允许像空间转动的白化稳定界）。** 在定义12.1下，式(12.3)是主卷定理137.2规范商实现的一份等距坐标表达，并满足
+$$
+uP\preceq T\preceq vP,\quad T=PTP,\quad PJ=J,
+\qquad M_k=J^*T^kJ\quad(0\le k\le2r+1),
+\tag{12.4}
+$$
+另一份数据同理。置
+$$
+d_P=\frac{\delta_H}{\gamma},\qquad
+d_J=\frac{\delta_H}{\sqrt\gamma},\qquad
+d_T=\frac{\delta_S}{\gamma}
+       +\frac{2v\sqrt R}{\gamma^{3/2}}\delta_H.
+\tag{12.5}
+$$
+则
+$$
+\|P-P'\|_F\le d_P,\qquad
+\|J-J'\|_F\le d_J,\qquad
+\|T-T'\|_F\le d_T.
+\tag{12.6}
+$$
+这些上界也分别控制对应算子范数，但没有将数据侧的 Frobenius 误差无条件替换为算子范数误差。
+
+**证明。** 主卷定理137.2的商内积为 $\langle[x],[y]\rangle=\langle x,Hy\rangle$。映射
+$$
+[x]\longmapsto H^{1/2}x
+$$
+保内积且满射到 $P\mathcal P$。式(12.1)使 $S$ 消灭 $\ker H$；在上述识别下，其演化配对由
+$$
+H^{1/2}TH^{1/2}=PSP=S
+$$
+承担，零次输入变为 $J$。故式(12.4)是该规范实现及主卷定理137.5的谱区间结论。
+
+为估计非交换矩阵函数，取 $H$ 的正交特征基 $(x_i)$ 与 $H'$ 的正交特征基 $(y_j)$，相应特征值为 $\lambda_i,\mu_j$。对谱集合上的任意实函数 $f$，
+$$
+\langle x_i,(f(H)-f(H'))y_j\rangle
+=(f(\lambda_i)-f(\mu_j))\langle x_i,y_j\rangle,
+$$
+而
+$$
+\langle x_i,(H-H')y_j\rangle
+=(\lambda_i-\mu_j)\langle x_i,y_j\rangle.
+$$
+若 $|f(s)-f(t)|\le L|s-t|$ 对两个谱中的每一对 $s,t$ 成立，逐项平方求和便给
+$$
+\|f(H)-f(H')\|_F\le L\|H-H'\|_F.
+\tag{12.7}
+$$
+这里左右分别使用两组正交基，Frobenius 范数仍保持不变。
+
+在 $\{0\}\cup[\gamma,R]$ 上，函数
+$$
+\mathbf1_{\{x>0\}},\qquad \sqrt x,\qquad
+f_-(x)=
+\begin{cases}x^{-1/2},&x>0,\\0,&x=0\end{cases}
+$$
+的 Lipschitz 常数可分别取 $\gamma^{-1}$、$\gamma^{-1/2}$、$\gamma^{-3/2}$。正参数之间，平方根之差除以参数之差为 $1/(\sqrt s+\sqrt t)$；逆平方根相应比值为 $1/(\sqrt s\sqrt t(\sqrt s+\sqrt t))$。一端为零时，两个比值分别为 $s^{-1/2}$ 与 $s^{-3/2}$。因此式(12.7)给
+$$
+\|P-P'\|_F\le d_P,\quad
+\|H^{1/2}-H'^{1/2}\|_F\le d_J,\quad
+\|H^{\dagger/2}-H'^{\dagger/2}\|_F
+\le\frac{\delta_H}{\gamma^{3/2}}.
+\tag{12.8}
+$$
+由 $\|E_0\|_{\rm op}\le1$ 得输入界。
+
+记 $F=H^{\dagger/2}$、$F'=H'^{\dagger/2}$。有
+$$
+\|F\|_{\rm op},\|F'\|_{\rm op}\le\gamma^{-1/2},
+\qquad
+\|SF\|_{\rm op},\|F'S'\|_{\rm op}\le v\sqrt R,
+$$
+因为 $S=H^{1/2}TH^{1/2}$，所以 $SF=H^{1/2}T$；另一份同理。展开
+$$
+T-T'=(F-F')SF+F'(S-S')F+F'S'(F-F').
+$$
+逐项使用 $\|AXB\|_F\le\|A\|_{\rm op}\|X\|_F\|B\|_{\rm op}$ 与式(12.8)，便得到 $d_T$。最后 $\|A\|_{\rm op}\le\|A\|_F$ 给算子范数结论。$\square$
+

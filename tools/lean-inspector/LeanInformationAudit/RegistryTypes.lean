@@ -268,11 +268,9 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 7
+  compatibilityVersion : Nat := 9
   compiler : String
   toolchain : String
-  policyIdentity : String
-  sourceInputs : Array SourceInput
   name : Name
   definitionOwner : Name
   enrollmentOwner : Name
@@ -521,11 +519,10 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v5"
-  for version in #[1, 1, 1, 7] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v6"
+  for version in #[1, 1, 1, 9] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
-  let policyIdentity ← digest
   let templateName ← name
   let definitionOwner ← name
   let enrollmentOwner ← name
@@ -549,10 +546,6 @@ private def payload : M TemplatePlanData := do
         bodyIdentity.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f'))) do fail
     return { name := n, owner, typeIdentity, bodyIdentity : DependencyIdentity }
   let constructorTypes ← sequence 4096 name
-  let sourceInputs ← sequence 4096 do
-    let path ← token
-    let sha256 ← digest
-    return { path, sha256 : SourceInput }
   let rules ← sequence 4096 token
   let work ← token false
   let some chargedWork := work.toNat? | fail
@@ -560,7 +553,7 @@ private def payload : M TemplatePlanData := do
   let typePlan ← plan
   let bodyPlan ← plan
   return {
-    compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
+    compiler, toolchain, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
     dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 

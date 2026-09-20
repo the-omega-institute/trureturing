@@ -1,0 +1,9 @@
+**定义 10.3（整份前缀的误差几何）。** 固定正权重 $\omega_j>0$，在 $\operatorname{Sym}(U)^{N+1}$ 上取
+$$
+\langle Z,W\rangle_\omega
+=\sum_{j=0}^{N}\omega_j\operatorname{Tr}(Z_jW_j),\qquad
+\|Z\|_\omega^2=\sum_{j=0}^{N}\omega_j\|Z_j\|_F^2.
+\tag{10.6}
+$$
+$\|\cdot\|_F$ 是 Frobenius 范数。原始读数记为 $Y$，真实但未知的合法前缀为 $M\in\mathcal Q_{r,u,v}$，共同确定误差条件为 $\|Y-M\|_\omega\le\epsilon$，$\epsilon\ge0$。它没有假设各时刻误差独立。若仪器先给非对称实矩阵，可先取 $(Y_j+Y_j^*)/2$；这是矩阵 Hilbert 空间到自伴子空间的正交投影，对真实自伴 $M_j$ 不增加 Frobenius 误差。
+

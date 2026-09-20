@@ -1,0 +1,2 @@
+**证明。** 式(14.20)保证 $2t_n\le\zeta-2b_0-\nu_0$，所以 $s_n\le\zeta$。式(14.19)给 $I_K\le\kappa_0$ 与 $\varepsilon_f\le\varphi_0$，结合式(14.18)即可。它是充分的取得预算，不是最优样本复杂度。$\square$
+
