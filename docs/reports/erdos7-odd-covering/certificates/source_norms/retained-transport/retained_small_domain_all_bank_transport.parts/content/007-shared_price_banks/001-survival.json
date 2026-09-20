@@ -1,0 +1,23 @@
+{
+  "dual_count": {
+    "kind": "inline",
+    "value": 2792
+  },
+  "positive_raw_mass_prices": {
+    "kind": "inline",
+    "value": 2767
+  },
+  "zero_raw_mass_prices": {
+    "kind": "inline",
+    "value": 25
+  },
+  "complete_price_records_sha256": {
+    "kind": "inline",
+    "value": "5cd476c2a7da06e79bd205c073a435d2e30d22dd6be22bc101d7ecc55be0b00f"
+  },
+  "encoded_price_bank": {
+    "path": "content/007-shared_price_banks/001-survival/004-encoded_price_bank.json",
+    "sha256": "6c9a874ed3f39a034b087a75a6840d5fcc42f1dd8a7d2674bfcf30cb86ffcc19",
+    "kind": "object"
+  }
+}

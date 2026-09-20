@@ -1,0 +1,137 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-extended-source-bridge-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "1cc9604b08e476c6527c62c75f44df3d2b335de471dfe8755b9db6abc255765d",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/12",
+      "rho": "1/3000",
+      "rbar": "1/600",
+      "h1min": "71/216",
+      "v0": "43/1650",
+      "v1": "2171/78100",
+      "gap": "53/2700",
+      "tbar": "13/4",
+      "Cbar": "370/81",
+      "kbar": "71/34",
+      "budget_increments": [
+        "37/9504",
+        "1/432",
+        "1/132"
+      ],
+      "c": [
+        "173/240",
+        "89/216",
+        "49/180",
+        "49/540"
+      ],
+      "H": [
+        "49/360",
+        "763/6480",
+        "41/540",
+        "259/10368"
+      ],
+      "positive7": "3161/50400"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/12",
+      "residual_radius": "1/3000",
+      "actual_r_upper": "1/600",
+      "joint_source_Delta_upper": "1/44",
+      "source_z_upper": "37/48",
+      "availability_upper": "3/136",
+      "h1_lower": "71/216",
+      "first_beta_eta_lower": "23/216",
+      "h_upper": "109/216",
+      "five_actual_gap_lowers": [
+        "59/600",
+        "173/2700",
+        "53/2700",
+        "16367/734400",
+        "161/5400"
+      ],
+      "minimum_actual_gap": "53/2700",
+      "common_wrong_slot_gap": "53/2700",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "2/3",
+        "shallow_C_minus_1_t": "103/72",
+        "shallow_C_minus_k": "6013/144",
+        "pure3_maximizing_cell": "53/48",
+        "root0_below_root1_reference": "203/144",
+        "first_cell_below_reference": "57/16",
+        "other_cells_below_reference": "131/144"
+      },
+      "heavy_residual_price_coefficient": "65/9",
+      "heavy_slot_movement_coefficient": "13/9",
+      "independent_r_cutoff": null,
+      "domain_proof": "106 applies for sigma<1/2. General153/156 replaces the obsolete coarse Delta<=3delta/4 cutoff by Delta<=delta/(4(1-delta)). General117 guards and162 zero-r slab then hold. Every additional134/152/157/158 source-ratio, reference and domination polynomial is positive throughout[0,1/12]. Full original cap, selected-operator, mean, factorial and infinite-tail derivations apply with these source bounds."
+    }
+  },
+  "heavy_extension": {
+    "kind": "inline",
+    "value": {
+      "heavy_bounds": [
+        {
+          "index": 0,
+          "barrier": "630053335920064561120723361434337/15632787748921114278012443437500",
+          "weight": "1",
+          "margin_lower": "1193878489939499612/259995953549870913375",
+          "max_derivative": "2498381/1145144",
+          "slot_movement_price": "2498381/792792",
+          "original_marker_price_upper": "1361617645/121385264",
+          "one_residual_price": "12491905/792792"
+        },
+        {
+          "index": 16,
+          "barrier": "113030172417388488839521339535147647/3510863581945200248270294588671875",
+          "weight": "15/17",
+          "margin_lower": "1088704788427803234124/300295326350100904948125",
+          "max_derivative": "3639413/2108106",
+          "slot_movement_price": "3639413/1459458",
+          "original_marker_price_upper": "1983480085/223459236",
+          "one_residual_price": "18197065/1459458"
+        }
+      ],
+      "positive_r_proof": "The162 r=0 fixed-support floors apply to the new source slab. General85/91 first-label and packing guards are independently re-established. The fixed correction loses at most(13/9)vmax*r. The original marker costs at mostmax(1,hbar/(5G))vmax per epsilon=rho-(r+r1)/5. Taking P=(65/9)vmax pays both with one rho; no old positive-r wrapper is invoked."
+    }
+  },
+  "complete_H1": {
+    "path": "content/005-complete_H1.json",
+    "sha256": "d40c4dae49526204464a9669273e41b6318d61ebcd63d9bd2a1ea2465b47efb0",
+    "kind": "object"
+  },
+  "complete_square": {
+    "path": "content/006-complete_square.json",
+    "sha256": "614c30dbfd597ab136ce7fee0eda4aadb6ec1296f14ed4082eb586e1137d97f8",
+    "kind": "value"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/007-joint_pure_five_transport.json",
+    "sha256": "905bcd6eaf55eae8b8ec960c5850b9f925c24eb9dd399170fb11fe9402dc16d6",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/008-complete_heads.json",
+    "sha256": "808c1cf688875a49b360cb15af91d742744bd49db5178beae91504ed4d85bc12",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/009-comparison.json",
+    "sha256": "9fa232ee26297b4b62f43ac0f71c7f4072d74675bb735cc9aad5fed5c17456d6",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete actual-source comparison in both K orientations for sigma<=1/12 and rho<=1/3000, with full actual r<=5rho. An independent enlarged-domain proof re-establishes all source/gap/heavy/reference/tail and six-loss price conditions; no radius-limited predecessor wrapper is modified or invoked beyond its domain. Every one of9.75 million original heads is newly evaluated with312 independent rational LP checks; all52 independent costs, five denominator objectives, actual mass and every infinite tail remain. No global complementary-region join, actual-family attainment, Lean verification or unrestricted Erdos7 resolution is asserted."
+  }
+}
