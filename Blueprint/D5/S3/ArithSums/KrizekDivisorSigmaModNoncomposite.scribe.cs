@@ -42,7 +42,11 @@ internal sealed class KrizekDivisorSigmaModNoncompositeDocument
                     + "sum to zero. At one and at a prime, the divisor set evaluates "
                     + "directly.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a300657-krizek-divisor-sigma-mod-noncomposite"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
@@ -50,14 +54,16 @@ internal sealed class KrizekDivisorSigmaModNoncompositeDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a300657-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
         StatementSource.FromAuthor(formula),
         provenance,
         Blocks(Paragraph(Text(prose))),
-        role);
+        role,
+        claim);
 
     private static Formula DefinitionFormula()
     {

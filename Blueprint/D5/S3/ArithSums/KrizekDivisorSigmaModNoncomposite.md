@@ -24,6 +24,10 @@ $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow ((\operatorname{a300657}\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/KrizekDivisorSigmaModNoncomposite.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a300657-krizek-divisor-sigma-mod-noncomposite` (proved) by `D5/S3/ArithSums/KrizekDivisorSigmaModNoncomposite.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a300657-krizek-divisor-sigma-mod-noncomposite","declaration_gid":"D5/S3/ArithSums/KrizekDivisorSigmaModNoncomposite.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jaroslav Krizek (2018). *OEIS A300657, sum of divisor-sum residues*. URL: <https://oeis.org/A300657>.
