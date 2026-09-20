@@ -210,6 +210,62 @@ theorem greedy_attainment (c : RawDigits) :
 termination_by (tokenCount c, indexWeight c)
 decreasing_by exact carryStep_measure_decreases legal.1
 
+/-- Every complete path obeying the raw priorities has exactly the concrete
+greedy reward. Completeness is essential: a greedy prefix may stop early. -/
+theorem complete_greedy_reward {c e : RawDigits} {w : ℕ}
+    (path : RawGreedyPath c e w) (complete : CanonicalRaw e) : w = G c := by
+  have enabled {a : Action} {x y : RawDigits} (move : RawMove a x y) :
+      match a with
+      | .switch => False
+      | .ones => 2 ≤ x 0
+      | .twos => 2 ≤ x 1
+      | .split i => 2 ≤ x (i + 2)
+      | .merge i => 0 < x i ∧ 0 < x (i + 1) := by
+    obtain ⟨_, r, rfl, _, hn⟩ := move
+    cases a <;> try exact hn rfl
+    all_goals simp_all [rawInput, Finsupp.single_apply]
+  have impossible {a : Action} {x y : RawDigits} (canonical : CanonicalRaw x)
+      (move : RawMove a x y) : False := by
+    have he := enabled move
+    obtain ⟨binary, separate⟩ := canonical
+    cases a with
+    | switch => exact he
+    | ones => have := binary 0; omega
+    | twos => have := binary 1; omega
+    | split i => have := binary (i + 2); omega
+    | merge i =>
+      have hi := binary i
+      have := separate i (by omega)
+      omega
+  have unique {a b : Action} {x y z : RawDigits}
+      (ma : RawMove a x y) (pa : RawPreferred x a)
+      (mb : RawMove b x z) (pb : RawPreferred x b) : a = b ∧ y = z := by
+    have ha := enabled ma
+    have hb := enabled mb
+    have same : a = b := by
+      cases a <;> cases b <;> simp_all only [RawPreferred]
+      all_goals grind
+    subst b
+    obtain ⟨_, r, hr, hy, _⟩ := ma
+    obtain ⟨_, s, hs, hz, _⟩ := mb
+    have rs : r = s := add_right_cancel (hr.symm.trans hs)
+    exact ⟨rfl, by simpa [rs, hy, hz]⟩
+  induction path with
+  | nil c =>
+    rw [G]
+    generalize hd : greedyDecision c = decision
+    cases decision with
+    | terminal _ => rfl
+    | step a d legal _ => exact (impossible complete legal).elim
+  | @cons a c d e w legal preferred tail ih =>
+    rw [G]
+    generalize hd : greedyDecision c = decision
+    cases decision with
+    | terminal canonical => exact (impossible canonical legal).elim
+    | step b d' legal' preferred' =>
+      obtain ⟨rfl, rfl⟩ := unique legal preferred legal' preferred'
+      rw [ih complete]
+
 /-- Exact additional full reward in the five shared-input merge detours. -/
 def sharedMergeGain (c : RawDigits) (a : ℕ) : ℕ :=
   if 2 ≤ c a then

@@ -68,6 +68,10 @@ This comparison excludes merges and does not yet establish full-game optimality.
 
 `OrderedGame.greedy_attainment` now constructs a complete raw greedy path to
 binary nonadjacent digits whose full reward is the concrete recursive `G`.
+`complete_greedy_reward` establishes the converse quantifier: every complete
+`RawGreedyPath c e w` with canonical endpoint has `w = G c`. Its proof identifies
+the unique legal preferred successor and follows the recursive reward along
+the path. This equality supplies no upper bound for arbitrary legal competitors.
 `greedyDecision` selects zero first, otherwise the highest duplicate, otherwise
 the least consecutive pair; every decision retains a labelled legal carry and
 its actual priority. The recursion uses the strict carry measure, not a maximum.
@@ -95,8 +99,15 @@ the competing index. Otherwise b≥a+3 and its high cascade commutes with C_a.
 At b=a+3 the lower merge changes c_(b-1), so legal replay must allow that boundary
 change. Each replacement must have a legal common endpoint; its tail need not
 be greedy. Induction applies after a strict first successor, never at the state
-whose optimality is being proved. These merge exchanges, exact sorted
-attainment and all-switch completion remain unproved in Lean.
+whose optimality is being proved. These merge exchanges remain unproved in Lean.
+
+`OrderedGame/Attainment` proves exact ordered accounting: each actual LGS move
+satisfies `1 + inv(decode t) = inv(decode s) + reward s a`, and every LGS path
+satisfies the corresponding telescoping equality. It also proves that every
+switch phase can finish and that all maximal legal zero-reward paths have the
+same sorted endpoint and the inversion count as their exact length. These
+results retain every allowed switch choice. Complete ordered LGS existence,
+ordered/raw priority correspondence and global domination remain unproved.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2
 and Lemmas 2.1–2.3 concern unordered maximal move counts; the lemmas explicitly

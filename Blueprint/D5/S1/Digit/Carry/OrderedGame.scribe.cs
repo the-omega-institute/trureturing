@@ -33,6 +33,23 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
                     + "This establishes raw attainment, not the comparison with competitors or "
                     + "ordered LGS completion."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-game-complete-greedy-reward"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.complete_greedy_reward"),
+                H("Every complete raw greedy path has the same reward"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Call("RawGreedyPath", F.Id("c"), F.Id("e"), F.Id("w")),
+                    Sp, Land, Sp, Call("CanonicalRaw", F.Id("e")),
+                    Sp, Rightarrow, Sp, Eq(F.Id("w"), Call("G", F.Id("c")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every complete raw path obeying the stated priorities "
+                    + "has reward G at its initial state. Legality and priority determine the "
+                    + "first action and successor uniquely: ones exclude every other preferred "
+                    + "action, otherwise the highest duplicate fixes the split, and a binary "
+                    + "state fixes the least consecutive merge. Induction along the actual path "
+                    + "then agrees with the recursive continuation. A canonical endpoint admits "
+                    + "no carry. This equality covers all complete RawGreedyPath witnesses; "
+                    + "it does not compare an arbitrary legal competitor with G."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ordered-game-shared-input-merge-repair"),
                 DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.shared_input_merge_repair"),
                 H("All five shared-input merge repairs"),
@@ -116,4 +133,7 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
 
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+
+    private static Formula Eq(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 }

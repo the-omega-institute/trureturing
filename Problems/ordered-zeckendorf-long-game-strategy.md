@@ -78,6 +78,9 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   continuation, recursively using the strict carry measure, and attains its
   reward `G` at a binary nonadjacent endpoint. This is raw completion, not yet
   ordered completion or domination of all competitors.
+- `complete_greedy_reward` proves `w = G c` for every complete
+  `RawGreedyPath c e w` with `CanonicalRaw e`. Legal preferred successors are
+  unique, so path induction agrees with the recursive concrete continuation.
 - `shared_input_merge_repair` proves all five shared-input detours with
   unrestricted spectators, exact endpoints, and exact full reward gains.
   `ones_terminal_promotion` proves ones-first promotion against arbitrary
@@ -87,14 +90,18 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   still require proof.
 - `OrderedGame` defines ordered legality and the switch move, and
   `path_raw_erasure` proves erasure into a labelled raw path with identical
-  accumulated reward. Exact sorted attainment and length optimality remain
-  to be proved; erasure and the potential inequality do not supply them.
+  accumulated reward. `OrderedGame/Attainment.lgs_move_potential` and
+  `lgs_path_potential` prove exact attainment of the inversion potential by
+  actual ordered LGS moves and paths. Length optimality remains unproved.
 - Newman confluence and normal-form uniqueness say nothing about longest paths.
 - LGS contains a tie phrase "switch moves (in any order)".
   `ASSUMED-UNVERIFIED`: an uncommitted exhaustive search over `n <= 16` found
   equal minimum and maximum LGS lengths across all priority-one switch choices.
   If correct, that supports omitting a switch tie-breaker within that range; the
-  all-`n` Lean statement still requires a proof of switch-order independence.
+  unrestricted switch-phase independence is now proved by
+  `OrderedGame/Attainment.switch_normalization`: all maximal legal zero-reward
+  paths share their sorted endpoint and exact inversion length. Complete LGS
+  existence and the ordered/raw priority bridge remain open.
 - The inversion count now exists here. `D5/S1/Digit/Carry/ListInversions` is
   frozen and supplies `inv : List Nat -> Nat`, its append law, a three-block
   window decomposition, and four local replacement bounds, one per non-switch
@@ -140,8 +147,9 @@ decrease full reward; first-overfire supplies the selected split's occurrence.
 The comparison covers all complete split phases from arbitrary raw digits,
 with ones priority and highest-duplicate priority restarted after every step.
 It does not cover paths containing merges. Full weighted raw-game domination,
-ordered attainment, arbitrary switch completion and complete Conjecture 1.7
-remain unproved.
+ordered/raw priority correspondence, complete ordered LGS existence and complete
+Conjecture 1.7 remain unproved. Exact ordered potential attainment and arbitrary
+switch-phase completion are supplied by `OrderedGame/Attainment`.
 
 1. Use one raw ordered `List Nat`, decoded by `Nat.succ`; multiplicities use
    `Multiset.toFinsupp`. `Carry/OrderedGame` defines all five positional moves,
@@ -149,7 +157,8 @@ remain unproved.
 2. `OrderedGame.path_potential` proves, for every legal finite path,
    `length + inv(decode end) ≤ inv(decode start) + reward`. It reuses the four
    frozen inversion bounds. `path_raw_erasure` preserves the exact reward in
-   the labelled raw carrier. The upper bound still needs an attainment theorem.
+   the labelled raw carrier. `Attainment` proves equality for actual LGS paths;
+   comparison still needs the raw weighted upper bound and priority bridge.
 3. `Carry/SplitStabilization` proves exact site balance, the first-overfire
    least-action bound, unique complete split counts and endpoint, and existence
    of complete split phases. Weighted preferred-split promotion and maximal
@@ -165,8 +174,8 @@ remain unproved.
    a split at j=a-1 changes the lower boundary, as does a merge at b=a+3.
    The replay needs unchanged high inputs and reward coordinates, not the old
    binary-tail hypothesis. Replacement tails need only be legal and terminal.
-6. Prove sorted attainment, all-switch independence and nonvacuous complete LGS
-   existence, including n=1. Compare every complete LGS run with every terminal
+6. Use exact potential attainment and switch-phase independence to prove
+   complete LGS existence, including n=1. Compare every complete LGS run with every terminal
    competitor. No global maximum or unproved Bellman premise is required.
 
 The following older maximum-value proof **sketch** is historical mathematical context; its claims remain

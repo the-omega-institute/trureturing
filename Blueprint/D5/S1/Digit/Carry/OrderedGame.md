@@ -18,7 +18,19 @@ $$\forall c, \exists d, RawGreedyPath\left(c, d, G\left(c\right)\right) \land Ca
 
 For every finite raw multiplicity state, the concrete continuation G is attained by a finite RawGreedyPath to binary nonadjacent digits. Each decision combines ones first, otherwise splits the highest duplicate, otherwise merges the least occupied consecutive pair. Priority is recomputed after every move. G recurses on the existing strict carry measure and is not defined as a maximum over paths. Labels remain data. This establishes raw attainment, not the comparison with competitors or ordered LGS completion.
 
-**Theorem 1.2 (All five shared-input merge repairs).**
+**Theorem 1.2 (Every complete raw greedy path has the same reward).**
+
+$$RawGreedyPath\left(c, e, w\right) \land CanonicalRaw\left(e\right) \Rightarrow w = G\left(c\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Carry/OrderedGame.complete_greedy_reward` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complete raw path obeying the stated priorities has reward G at its initial state. Legality and priority determine the first action and successor uniquely: ones exclude every other preferred action, otherwise the highest duplicate fixes the split, and a binary state fixes the least consecutive merge. Induction along the actual path then agrees with the recursive continuation. A canonical endpoint admits no carry. This equality covers all complete RawGreedyPath witnesses; it does not compare an arbitrary legal competitor with G.
+
+**Theorem 1.3 (All five shared-input merge repairs).**
 
 Lean statement: `D5/S1/Digit/Carry/OrderedGame.shared_input_merge_repair`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S1/Digit/Carry/OrderedGame.shared_input_merge_repair`
 
 With unrestricted spectators, a legal merge sharing an input with an enabled split has a split-first legal path to the exact merge endpoint. If the lower input is duplicated it is split first; otherwise the upper input is split. In positive paper indices the lower-input detours are S1;S2, S2;S3;S1, and Sa;S(a+1);C(a-2), with gains c1-1, 2c2+c1-2, and 2c(a-1)+2ca-2. The upper-input detours are S2;S1 at a=1, gaining zero, and S(a+1);C(a-1) at a>=2, gaining one. The theorem gives exact reward equality with a natural-number gain. Replacement tails are legal; no greedy-tail assertion is made.
 
-**Theorem 1.3 (Ones first against arbitrary interleaved terminal paths).**
+**Theorem 1.4 (Ones first against arbitrary interleaved terminal paths).**
 
 $$RawPath\left(c, e, w\right) \land CanonicalRaw\left(e\right) \land SplitStep\left(0, c, cPrime\right) \Rightarrow \exists v, RawPath\left(cPrime, e, v\right) \land w \le splitReward\left(c, 0\right) + v$$
 
@@ -42,7 +54,7 @@ $$RawPath\left(c, e, w\right) \land CanonicalRaw\left(e\right) \land SplitStep\l
 
 If combining ones is enabled, every raw path to binary nonadjacent digits can be replaced by one beginning with that split, retaining its endpoint and at least its full reward. The competing path may interleave merges and splits arbitrarily. The proof promotes ones through split steps, repairs a merge consuming a one, and commutes past higher merges. This closes the ones-first promotion branch; highest nonzero splits and least binary merges still require their own proofs.
 
-**Theorem 1.4 (Erasure preserves the complete reward).**
+**Theorem 1.5 (Erasure preserves the complete reward).**
 
 $$Path\left(s, t, length, weight\right) \Rightarrow RawPath\left(rawCounts\left(s\right), rawCounts\left(t\right), weight\right)$$
 
@@ -54,7 +66,7 @@ $$Path\left(s, t, length, weight\right) \Rightarrow RawPath\left(rawCounts\left(
 
 Every finite legal ordered path erases to a labelled raw path with exactly the same accumulated reward. Switches preserve multiplicities and contribute zero reward. Each remaining label retains its actual CarryStep and its consumed and produced digits in the same spectator context. Labels are explicit and are not reconstructed from an unlabelled proposition. The theorem neither assumes terminality nor asserts optimality.
 
-**Theorem 1.5 (The path potential bound).**
+**Theorem 1.6 (The path potential bound).**
 
 $$Path\left(s, t, length, weight\right) \Rightarrow length + inv\left(decode\left(t\right)\right) \le inv\left(decode\left(s\right)\right) + weight$$
 
@@ -70,6 +82,7 @@ LGSPath keeps every permitted inversion-switch choice. Its priority restarts aft
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Carry/OrderedGame.complete_greedy_reward`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.greedy_attainment`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.ones_terminal_promotion`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.path_potential`
