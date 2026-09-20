@@ -289,7 +289,7 @@ an arbitrary cofactor-universal A_(3u), the three first-root argument
 survives, but TI2 does not follow: a 3-free original carrying an
 ancestor residue may have private points outside the u-cylinder.
 Here u must be prime: the divisor ideal and root count in
-[364, SI4 and SI8](../364-singleton-cofactor-ideal-and-forced-colors.md)
+[364, SI4 and SI8](../321-384/364-singleton-cofactor-ideal-and-forced-colors.md)
 give tau(u)<=2. This corrects 372 section 2's statement that u may
 be composite under its q=3 hypotheses; that section's implication
 and proof remain valid.
