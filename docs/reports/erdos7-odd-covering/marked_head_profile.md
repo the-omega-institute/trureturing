@@ -841,3 +841,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Saturated prime fibres yield joint caps and a mixed-tail dichotomy](profile-notes/arithmetic/378-saturated-prime-fibres-and-mixed-tail-incidence.md)
 - [Root forests and literal residue costs extend the joint covering bounds](profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
 - [Small-prime survivors and divisor capacities bound the original Haar cost](profile-notes/arithmetic/380-small-prime-survivors-and-original-haar-costs.md)
+- [Repeated composites or exposed prime squares in missing fibres](profile-notes/arithmetic/381-repeated-prime-exposure-in-missing-fibres.md)
