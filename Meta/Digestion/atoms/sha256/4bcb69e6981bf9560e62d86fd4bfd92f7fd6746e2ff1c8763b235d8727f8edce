@@ -1,0 +1,13 @@
+**定理 3.3（相同实验语言下的等距运输）。** 给两套定义1.1的实现 $X_s,\widetilde X_s$，使用同一个有类型生成箭头图、同一组基础读数标签、同一读数值域与度量，以及相同的增益。设映射 $r_s:\widetilde X_s\to X_s$ 满足
+$$
+r_t\widetilde h=h r_s,\qquad \widetilde f=f r_s
+\tag{3.2}
+$$
+对全部生成箭头和基础读数成立，且两套实验都恰由这些生成数据形成。则
+$$
+\widetilde D_s(\widetilde x,\widetilde y)
+=D_s(r_s\widetilde x,r_s\widetilde y).
+\tag{3.3}
+$$
+这不要求 $r_s$ 单射或满射。若各 $r_s$ 满射，则两套实际行为商通过 $\widetilde\beta_s(\widetilde x)\mapsto\beta_s(r_s\widetilde x)$ 等距同构。
+

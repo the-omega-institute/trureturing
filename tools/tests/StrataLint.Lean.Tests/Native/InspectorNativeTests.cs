@@ -5,7 +5,7 @@ namespace StrataLint.Lean.Tests;
 
 public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
-    // Publication and packaging use this class's private compiler stage.
+    // Publication, coordinates and verification use this class's private compiler stage.
     [Theory]
     [InlineData("test_native.NativeTests.test_native_facet_supplies_toolchain_environment")]
     [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
@@ -21,15 +21,6 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_native.NativeTests.test_aggregation_validates_each_row_once_and_preserves_rejection_statuses")]
     [InlineData("test_native.NativeTests.test_native_publication_rejects_incoming_damage_before_normalization")]
     [InlineData("test_native.NativeTests.test_publication_snapshot_integrity_and_replace_failure")]
-    [InlineData("test_native.NativeTests.test_native_producer_inputs")]
-    [InlineData("test_native.NativeTests.test_native_compiler_seed_is_private")]
-    [InlineData("test_native.NativeTests.test_native_semantic_version_and_config")]
-    [InlineData("test_native.NativeTests.test_native_invalid_semantic_versions")]
-    [InlineData("test_native.NativeTests.test_native_pack_unpack_reuses_complete_rows")]
-    [InlineData("test_native.NativeTests.test_native_clonefile_seed_reuses_rows_and_keeps_donor_private")]
-    [InlineData("test_native.NativeTests.test_snapshot_generation_preserves_mathlib_partition")]
-    [InlineData("test_native.NativeTests.test_release_publisher_legacy_seed_current_pack_restore_and_unchanged")]
-    [InlineData("test_native.NativeTests.test_release_partition_preserves_semantic_and_selection_changes")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 }
 

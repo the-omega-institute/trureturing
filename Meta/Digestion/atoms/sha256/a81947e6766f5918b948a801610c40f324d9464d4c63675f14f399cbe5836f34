@@ -1,0 +1,11 @@
+**定义 12.1（同一任务的通道接口）。** 设 $X,B,A$ 为有限维复 Hilbert 空间，所有通道均完全正且保迹。固定边界编码 $\mathcal E:X\to B$、目标读出 $\mathcal Q:X\to A$、边界解码 $\mathcal S:B\to A$，以及完整操作 $\mathcal T_j:X\to X$ 和边界操作 $\overline{\mathcal T}_j:B\to B$。这里箭头表示相应矩阵代数间的通道。采用第10节包含外部参考的半 diamond 距离，记
+$$
+\kappa=d_\diamond(\mathcal S\mathcal E,\mathcal Q),\qquad
+\varepsilon_j=d_\diamond(\mathcal E\mathcal T_j,
+\overline{\mathcal T}_j\mathcal E).
+\tag{12.1}
+$$
+这些是对同一通道族的统一界，不是对每个输入分别选择解码器后取得的最小值。取 $A=X,\mathcal Q=\operatorname{id}_X,\mathcal S=\mathcal R$，得到恢复完整输入的特例；一般 $\mathcal Q$ 则只指定任务需要的输出。空间类型包含会在后续再次操作的记录和物理记忆；始终不被操作的外部系统才作为惰性参考。
+
+本卷第6节已经给出局部缺陷的路径传播，[量子卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md) §72给出保留完整历史和活动记忆的通道望远镜界，§52给出无外部参考的末端预测界。以下将统一解码误差接到该既有传播结构，不把一般望远镜法视作新的原理。完全有界迹范数的成熟性质见 Watrous，[*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§3.3，Proposition 3.48及式（3.306）。
+

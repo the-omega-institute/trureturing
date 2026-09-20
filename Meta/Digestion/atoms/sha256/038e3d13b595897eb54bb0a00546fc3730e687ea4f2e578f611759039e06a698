@@ -1,0 +1,1 @@
+| [Mathlib DiscreteGronwall](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/ODE/DiscreteGronwall.lean)，discrete_gronwall_prod_general | 在递推前提成立后，式(6.3)为非负实数增益下的直接参数代入。 

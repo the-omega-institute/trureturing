@@ -60,7 +60,7 @@ def capture(repository, lake):
     # Report bytes are a function of the Lean sources Lake compiles (every report
     # module, its registered Lean dependencies and the inspector), the build configuration and the execution
     # environment. Producer programs (C#, scripts, build properties) are never
-    # hashed here: their compatibility is the explicit report_semantic_version,
+    # hashed here: their compatibility is the explicit report_cache_release_semantic_version,
     # bumped by the change that alters report semantics. Addition/deletion of a
     # Lean source changes the exact map.
     paths = sorted(set(inputs.dependency_sources() + inputs.expand('inspector_sources')
@@ -69,7 +69,7 @@ def capture(repository, lake):
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, semantic_version=inputs.data['report_semantic_version'], files=files,
+    return dict(eligible=True, semantic_version=inputs.data['report_cache_release_semantic_version'], files=files,
         execution=dict(tools=versions, platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
 

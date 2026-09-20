@@ -1,0 +1,8 @@
+**证明。** 谱分解给 $w_\lambda=\operatorname{tr}(J_S^*\Pi_\lambda J_S)=\|\Pi_\lambda J_S\|_{\rm HS}^2\ge0$，且 $\sum_\lambda w_\lambda=\|J_S\|_{\rm HS}^2>0$。于是
+$$
+f(t)=\sum_\lambda w_\lambda e^{-\lambda t}>0,\qquad
+f'(t)=-\sum_\lambda\lambda w_\lambda e^{-\lambda t}<0,\qquad
+\lim_{t\to\infty}f(t)=0.
+$$
+有限和可逐项微分，连续性、严格单调性及极限给所述实际像。$f$ 的单射性使 $F_A(\tau)=F_B(\sigma)$ 等价于 $\phi_A(\tau)=\phi_B(\sigma)$，证明式（15.17）及唯一性。严格单调函数在区间上的逆在对应点连续；若该点导数非零，用逆函数的差商得到逆的导数为原导数的倒数。对 $F_B^{-1}\circ F_A$ 用此结论及链式法则，约去共同的非零 $f'$，得到式（15.18）。共享谱系数等于 $D_\lambda$，给式（15.19）。此证明只使用主卷第126.5节的正谱表示。多钟覆盖同一区间时的 $h_{CB}\circ h_{BA}=h_{CA}$ 及逆关系直接由主卷命题133.1的唯一相容转换承担。$\square$
+

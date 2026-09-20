@@ -182,6 +182,14 @@ internal static partial class RepositoryRules
     internal static bool IsDirectoryCapacityExcluded(string path) =>
         IsCapacityExcluded(path) || ProblemPoolPaths.IsCanonicalPath(path);
 
+    // Data formats have no line budget: record count and serialization layout do not
+    // measure source complexity. This exemption does not change directory occupancy.
+    internal static bool IsArtifactLineCapacityExcluded(string path) =>
+        IsCapacityExcluded(path)
+        || Path.GetExtension(path).ToLowerInvariant() is
+            ".json" or ".jsonl" or ".ndjson" or ".json5" or ".jsonc"
+            or ".yaml" or ".yml" or ".toml" or ".csv" or ".tsv" or ".xml" or ".trx" or ".b64";
+
     // The canonical artifact line count: newline-delimited lines, not counting a
     // trailing terminator. Shared with RepositoryCapacityAudit so both tiers agree exactly.
     internal static int CountArtifactLines(string text) =>

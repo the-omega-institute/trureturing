@@ -1,0 +1,15 @@
+**命题 14.8（反链、链与分支割的具体分组）。** 若 $E$ 为反链，则 $K_J=D_J$。若 $E=\{e_1<\cdots<e_n\}$ 为链，令 $I_k=\{e_1,\ldots,e_k\}$，则
+$$
+K_{I_k}=P_{I_k}-P_{I_{k-1}}\quad(1\le k\le n).
+\tag{14.15}
+$$
+链中的这些 $K$ 在任意依赖下已是正交投影。若 $E=\{a,b,c\}$，仅有 $a<b,a<c$，则非空合法割为 $a,ab,ac,abc$，下标用连写表示子集，有
+$$
+\begin{aligned}
+K_a&=D_a,\qquad K_{ab}=D_b+D_{ab}=P_{ab}-P_a,\\
+K_{ac}&=D_c+D_{ac}=P_{ac}-P_a,\\
+K_{abc}&=D_{bc}+D_{abc}=P_{abc}-P_{ab}-P_{ac}+P_a.
+\end{aligned}
+\tag{14.16}
+$$
+

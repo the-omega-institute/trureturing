@@ -117,7 +117,7 @@ root = "Cache"
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),

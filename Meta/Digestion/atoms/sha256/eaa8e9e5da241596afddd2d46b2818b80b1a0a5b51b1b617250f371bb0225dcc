@@ -1,0 +1,47 @@
+**推论 13.7（有限窗、全部未来及幂基噪声）。** 在定理13.6下，设 $0<u<v\le1$、$r\ge1$，取第11节式（11.8）的 Bernstein 多项式 $p_{r,t}(x)=\sum_{j=0}^r c_j(t)x^j$，逼近 $f_t(x)=x^{t/h}$。对 $g_0(t)=J^*T^{t/h}h_0$ 及对应的 $\widehat g_0$，有限窗满足
+$$
+\sup_{0\le t\le T_0}\|g_0(t)-\widehat g_0(t)\|
+\le\frac{A_{\mathrm f}(v-u)T_0}{2hu\sqrt r}
++\sup_{0\le t\le T_0}\sum_{j=0}^r|c_j(t)|\delta_j.
+\tag{13.16}
+$$
+若共同 $a>0$，即 $v=e^{-ha}<1$，则
+$$
+\sup_{t\ge0}\|g_0(t)-\widehat g_0(t)\|
+\le\frac{A_{\mathrm f}(v-u)}{2e\,uha\sqrt r}
++\sup_{t\ge0}\sum_{j=0}^r|c_j(t)|\delta_j.
+\tag{13.17}
+$$
+特别地，若 $\delta_j\le\delta$，令 $R=(2+u+v)/(v-u)$，则还有保留时间衰减的点态界
+$$
+\boxed{
+\|g_0(t)-\widehat g_0(t)\|
+\le e^{-at}\left(
+\frac{A_{\mathrm f}(v-u)t}{2hu\sqrt r}+\delta R^r
+\right).
+}
+\tag{13.17a}
+$$
+式（13.17）的噪声项因而至多为 $\delta R^r$。在共同预算下，其第一项至多为
+$$
+\frac{\sqrt{m_*}E_*(v-u)}{e\,uha\sqrt r}.
+\tag{13.18}
+$$
+固定非零读数误差时，增加 $r$ 不能据此保证总界下降。
+
+**证明。** 把定理11.4的 Bernstein 逼近界以次数 $r$ 代入式（13.14），便得到式（13.16）、（13.17）。保留其证明中的 $v^{t/h}$ 因子，有
+$$
+\|f_t-p_{r,t}\|_\infty
+\le\frac{(v-u)t}{2hu\sqrt r}v^{t/h}.
+$$
+Bernstein 节点值均不超过 $v^{t/h}$；在推论11.5的幂基展开证明中保留该因子，便得到 $\sum_j|c_j(t)|\le v^{t/h}R^r$。因 $v^{t/h}=e^{-at}$，代入式（13.14）得到式（13.17a）。最后代入共同预算的 $A_{\mathrm f}$ 上界。本条复用第11节及其钉版 Mathlib `bernstein.probability`、`bernstein.variance` 所承载的成熟 Bernstein 结构；未另声称这些充分界的最优性。证毕。
+
+若 $u=v$，共同演化必为 $T=uI$，自由响应已经是 $u^{t/h}z_0$，无须用 $R$。若 $r=0$ 且 $u<v$，使用定理13.6的常数多项式证书，不套用含 $1/\sqrt r$ 的式子。若 $r\ge1$、$a>0$ 且 $\delta_j\le\delta$，直接积分式（13.17a）得到
+$$
+\int_0^\infty\|g_0(t)-\widehat g_0(t)\|dt
+\le\frac{A_{\mathrm f}(v-u)}{2hu a^2\sqrt r}
++\frac{\delta R^r}{a}.
+\tag{13.19}
+$$
+这里只用 $\int_0^\infty te^{-at}dt=a^{-2}$ 和 $\int_0^\infty e^{-at}dt=a^{-1}$。强迫差范数积分与强迫积分之差的范数仍是不同对象。
+

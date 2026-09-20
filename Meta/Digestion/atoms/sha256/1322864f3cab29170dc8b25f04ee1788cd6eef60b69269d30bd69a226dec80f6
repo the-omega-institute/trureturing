@@ -1,0 +1,31 @@
+**推论 13.7（有限窗、全部未来及幂基噪声）。** 在定理13.6下，设 $0<u<v\le1$、$r\ge1$，取第11节式（11.8）的 Bernstein 多项式 $p_{r,t}(x)=\sum_{j=0}^r c_j(t)x^j$，逼近 $f_t(x)=x^{t/h}$。对 $g_0(t)=J^*T^{t/h}h_0$ 及对应的 $\widehat g_0$，有限窗满足
+$$
+\sup_{0\le t\le T_0}\|g_0(t)-\widehat g_0(t)\|
+\le\frac{A_{\mathrm f}(v-u)T_0}{2hu\sqrt r}
++\sup_{0\le t\le T_0}\sum_{j=0}^r|c_j(t)|\delta_j.
+\tag{13.16}
+$$
+若共同 $a>0$，即 $v=e^{-ha}<1$，则
+$$
+\sup_{t\ge0}\|g_0(t)-\widehat g_0(t)\|
+\le\frac{A_{\mathrm f}(v-u)}{2e\,uha\sqrt r}
++\sup_{t\ge0}\sum_{j=0}^r|c_j(t)|\delta_j.
+\tag{13.17}
+$$
+特别地，若 $\delta_j\le\delta$，令 $R=(2+u+v)/(v-u)$，则还有保留时间衰减的点态界
+$$
+\boxed{
+\|g_0(t)-\widehat g_0(t)\|
+\le e^{-at}\left(
+\frac{A_{\mathrm f}(v-u)t}{2hu\sqrt r}+\delta R^r
+\right).
+}
+\tag{13.17a}
+$$
+式（13.17）的噪声项因而至多为 $\delta R^r$。在共同预算下，其第一项至多为
+$$
+\frac{\sqrt{m_*}E_*(v-u)}{e\,uha\sqrt r}.
+\tag{13.18}
+$$
+固定非零读数误差时，增加 $r$ 不能据此保证总界下降。
+
