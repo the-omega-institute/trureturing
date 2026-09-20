@@ -7,7 +7,7 @@
    digest: Existential witness registration uses one ADMIT slot over complete witness states with checked slot sensitivity. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import LeanInformationAudit.Syntax
 
 set_option autoImplicit false

@@ -1,3 +1,11 @@
+/- GID: D5/S3/ConceptDynamics/RegistrationWitnesses
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/RegistrationWitnesses
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Law variation and exact slot sensitivity for a primitive law arena. -/
+
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 
 namespace LeanInformationAudit
