@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e99714d7cf85c075d538a3c648bc51f759fda673e0c7d4646e648fae8b1cb8b5
+  normalized_sha256: sha256:e99714d7cf85c075d538a3c648bc51f759fda673e0c7d4646e648fae8b1cb8b5
+cas_ref: sha256:e99714d7cf85c075d538a3c648bc51f759fda673e0c7d4646e648fae8b1cb8b5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.result
+    target_statement_id: sha256:a242784383db6225ff37de5a3917b085bbecd1dc4a8222214730d3cc33fd100e
+receipts:
+  unresolved_subitems: []
