@@ -183,7 +183,7 @@ Only after Step 6 passes, run:
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make cover ATOM_ID=<id> GID=<gid>
-make preflight   # early feedback only; NOT a gate (CLAUDE.md 器律②)
+make preflight MODE=push BASE="$(git rev-parse origin/dev^{commit})"   # early feedback only; NOT a gate (CLAUDE.md 器律②)
 ```
 
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
