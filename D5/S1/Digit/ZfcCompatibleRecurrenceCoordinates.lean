@@ -7,6 +7,7 @@
    digest: Every Fibonacci recurrence observation has two integer coordinates, with an explicit reconstruction formula. -/
 
 import Mathlib.Tactic
+import LeanInformationAudit.Syntax
 
 set_option autoImplicit false
 
