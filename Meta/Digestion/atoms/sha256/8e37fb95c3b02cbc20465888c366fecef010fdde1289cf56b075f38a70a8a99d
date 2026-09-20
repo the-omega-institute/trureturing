@@ -1,0 +1,18 @@
+**命题 10.10（逐态存在不允许交换量词：擦除反例）。** 令 $X=\mathbb C^2$、$Y=\mathbb C$，取擦除通道
+$$
+\mathcal E(H)=\operatorname{Tr}H,\qquad
+\rho_0=|0\rangle\langle0|,\qquad
+\rho_1=|1\rangle\langle1|.
+$$
+分别定义制备通道 $\mathcal R_i(z)=z\rho_i$。则
+$$
+\forall i\in\{0,1\}\ \exists\mathcal R_i,\quad
+\mathcal R_i\mathcal E(\rho_i)=\rho_i,
+$$
+但任何共用恢复器 $\mathcal R$ 都满足
+$$
+\max_{i\in\{0,1\}}d_1(\rho_i,\mathcal R\mathcal E(\rho_i))
+\ge\frac12.
+\tag{10.17}
+$$
+

@@ -1,0 +1,22 @@
+**定理 10.2（Fawzi–Renner 恢复界）。** 对每个 $\rho_{ABC}$，存在 CPTP 映射 $\mathcal R:B\to BC$，使
+$$
+F(\rho_{ABC},\widehat\rho_{ABC})
+\ge \exp\!\left[-\frac12 I(A:C\mid B)_\rho\right].
+\tag{10.4}
+$$
+同一个恢复映射满足
+$$
+d_1(\rho_{ABC},\widehat\rho_{ABC})
+\le \sqrt{1-\exp[-I(A:C\mid B)_\rho]}
+\le \sqrt{I(A:C\mid B)_\rho}.
+\tag{10.5}
+$$
+
+这里的结论是 $\rho$ 接近某个从其自身 $AB$ 边缘恢复的态 $\widehat\rho$。定理没有断言 $I(A:C\mid B)_{\widehat\rho}=0$，也没有给出到全部精确 Markov 态集合的同一距离界；这一差别见下引 Fawzi–Renner 论文第1节对近似 Markov 性的讨论。
+
+**证明。** 式(10.4)是 Omar Fawzi、Renato Renner，[*Quantum conditional mutual information and approximate Markov chains*](https://arxiv.org/abs/1410.0664v3)，Theorem 5.1，式(102)的有限维版本。原文熵以二为底，因 $I_{\mathrm{nat}}=(\ln2)I_{\mathrm{bits}}$，其 $2^{-I_{\mathrm{bits}}/2}$ 正好成为式(10.4)。式(10.5)由同文 Lemma B.1 在归一化态上的不等式
+$$
+d_1(\rho,\sigma)^2\le 1-F(\rho,\sigma)^2
+$$
+以及 $1-e^{-x}\le x$（$x\ge0$）直接得到。非负性 $I(A:C\mid B)_\rho\ge0$ 是强次可加性。$\square$
+
