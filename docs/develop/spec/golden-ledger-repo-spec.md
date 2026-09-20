@@ -448,10 +448,12 @@ project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,�
 
 | 场景 | 必须观察到的结果 |
 |---|---|
-| 无父提交、无 remote、无 BASE 的本地/初始 push | 按完整显式登记输入执行所需 engineering/current 或结构化 no-resource,current 不读基线、无 delta。 |
-| 多提交/非祖先 push、删除/重命名、缺失对象或事件端点 | 固定 P→H 完整端点规划并绑定候选;初始全零 P 单独覆盖当前树,坏普通范围失败,删除事件不冒领 current 成功。 |
+| 已有根提交(无父提交)、无 remote、无 BASE 的本地 `MODE=full` | 按完整当前树的显式登记输入执行所需 engineering/current 或结构化 no-resource,current 不读基线、无 delta。 |
+| 本地 `MODE=push` 未提供 BASE | 作为输入错误以 exit 2 在规划/构建前拒绝;不猜父提交或 remote,不回退全树范围。 |
+| 原生 CI 初始 push,显式 `event.before` 为 40 个 0,`event.after` 为实际已检出的 HEAD | 覆盖当前树完整登记输入,执行所需 engineering/current 或结构化 no-resource,current 不读基线、无 delta;缺失事件端点不得当作初始输入。 |
+| 本地 `MODE=push BASE=<40-hex-commit-sha>` / 原生 CI push 的多提交、非祖先范围、删除/重命名、缺失对象或事件端点 | 本地固定 BASE→实际有效工作树(含暂存、未暂存、未跟踪),原生 CI 固定 P→H,均按完整端点规划并绑定候选;坏普通范围失败,删除事件不冒领 current 成功。 |
 | no-resource、必需资源、漏登或冲突 | 无工作不启动多余 SDK/缓存;必需资源真实结算,漏登/冲突具名失败,不退回全量或动态推断。 |
-| PR 合法分叉/快进;脏树、非法 base、冲突 | 合法候选按 clean merge-tree 判,无祖先门;坏输入阻断并清理临时候选。 |
+| 本地 `MODE=pr` 合法分叉/快进;脏树、缺失或非法 BASE、冲突 | 合法候选按 clean merge-tree 判,无祖先门;坏输入阻断并清理临时候选。 |
 | 相同候选输入/完整范围/base/工具链的 CI 与 preflight 共享检查模式(push/pr/full,不含 fast) | 检查义务及判词一致,共享工作不重复;PR job 的 M 一致,delta 的 B=M^1。 |
 | 混分区、非法首次冻结、棘轮违规、base 测试项目无候选接受的成功覆盖 | delta 阻断,合法例放行,delta-only 存量作用域不变。 |
 | 登记输入/material/mode/环境变更;无关变更 | 前者只使受影响登记项目/检查失效,后者可复用有效原证据;每轮重新验证候选及来源,无裸历史成功。 |
