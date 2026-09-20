@@ -1,0 +1,22 @@
+#### 134.7.2 工具串接的实际合同
+
+可以用关系 $R\subseteq X\times Y$ 表示第一工具的允许执行，用 $S\subseteq Y\times Z$ 表示第二工具。给前提集合 $P\subseteq X$、中间保证 $Q\subseteq Y$、最终保证 $W\subseteq Z$，假定
+
+$$
+\forall x\in P,\ \exists y,\ xRy;
+\qquad x\in P,\ xRy\Longrightarrow y\in Q;
+$$
+
+$$
+\forall y\in Q,\ \exists z,\ ySz;
+\qquad y\in Q,\ ySz\Longrightarrow z\in W.
+$$
+
+则复合关系 $S\circ R$ 在 $P$ 上总能执行，且每个实际复合结果属于 $W$。证明为：第一工具给出一个满足 $Q$ 的共同中间值 $y$，再由第二工具取得结果；对任意复合见证 $y$ 逐次应用两份保证即可。不能把第一工具的一个结果与第二工具在另一个不相容输入上的成功拼成同一次执行。
+
+若同一执行的两步成本已定义为 $c_1(x,y)$、$c_2(y,z)$，且总成本按二者之和计费，则统一上界 $c_1\le C_1$、$c_2\le C_2$ 给出 $C_1+C_2$。分别在不同输入或中间见证上取得的最小值，不因此成为同一次复合可达的总成本。编码、译码、准备、验证和调用次数只有被明确纳入成本语义，才参与比较。
+
+这说明箭头、自然变换与闭合提供结构相容的语言；可执行性、共同来源与资源界仍是各自的数学义务。新的探针若恰好切开旧盲区，可能解决新的恢复问题，但必须把取得该探针的能力和代价明列，不能声称原实验接口已因此变强。
+
+范畴论背景为箭头范畴、Yoneda 引理、稠密函子与自然变换；对应 Mathlib `CategoryTheory.Arrow`、`yonedaEquiv`、`Functor.IsDense`。仓内 `EffectiveImageNaturality`、`DefinitionKernelGalois`、`IndexedObservationClosureLaws` 与 `TheoryIsConsequenceFixedPoint` 给出实际像及闭合接口。
+

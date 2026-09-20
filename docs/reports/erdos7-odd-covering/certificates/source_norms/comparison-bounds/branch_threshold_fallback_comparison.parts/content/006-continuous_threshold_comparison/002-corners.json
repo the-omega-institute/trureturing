@@ -1,0 +1,23 @@
+{
+  "length": 120,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 88,
+      "part": {
+        "path": "content/006-continuous_threshold_comparison/002-corners/000000-000088.json",
+        "sha256": "97527178c508d1d84d23f75805c8e8f56b505505f6f50a4a2e9eb23300544a4d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 88,
+      "stop": 120,
+      "part": {
+        "path": "content/006-continuous_threshold_comparison/002-corners/000088-000120.json",
+        "sha256": "ced71690955dd0dae8b979c3729afe06e53f2fd55d87047d0446c145014c1b0c",
+        "kind": "value"
+      }
+    }
+  ]
+}

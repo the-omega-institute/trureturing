@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/036-complete_neighborhood_transport/000-shells/000000-000001.json",
+        "sha256": "b3845c8552164c8b82f4b564d3453f7a979eb9a27b2af54c0e10965e1e4adfc3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/036-complete_neighborhood_transport/000-shells/000001/single.json",
+        "sha256": "cd991e53bc9c10c847d56e0b4e834c38ec4e84ffe341467b76416285c492516b",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+**事件模型的精确特化。** 在命题 122.9 中取 $Q=M_{1_A}$，即乘以事件指标。$Q$ 是尖锐正交投影。以
+$$
+e_b=1_{X_b}/\sqrt{p_b}
+$$
+作为 $U$ 的正交归一基，直接有 $Ee_b=a_be_b$，故
+$$
+\operatorname{Tr}_U(E-E^2)=\sum_ba_b(1-a_b),
+$$
+而
+$$
+\mathcal B_q(A)=\sum_bp_ba_b(1-a_b)
+=\langle1,(E-E^2)1\rangle_\mu=\|C1\|_\mu^2.
+$$

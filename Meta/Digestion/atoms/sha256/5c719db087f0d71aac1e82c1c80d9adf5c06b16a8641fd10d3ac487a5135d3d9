@@ -1,0 +1,36 @@
+**命题 115.2（主信息可用时仍成立的构造性反例）。** 定义 115.1 的全部模型满足第 113 节的相容性条件，传感器核严格正、平稳律均为 \(18\) 态均匀律，未除以二的原始签名共同下界实际为 \(3/256\)。
+
+对任意上述共同规则族，若每个固定 \(M\in\mathcal M^\star\) 都有 \(1\le C_M<\infty\)，使
+\[
+\Pr^M_{d,k}(\Phi_{n,k}\ne d)\le C_M/N
+\qquad(n\ge0,\ k\ge2,\ d=0,1),
+\tag{115.2a}
+\]
+则同一个固定模型 \(C^\star\) 满足
+\[
+\frac{\mathbb E^{C^\star}_{0,2n}T_{n,2n}}
+     {\log(n+1)}
+\longrightarrow+\infty,
+\qquad
+\frac{\sup_{k\ge2}\mathbb E^{C^\star}_{0,k}T_{n,k}}
+     {\log(n+1)}
+\longrightarrow+\infty.
+\tag{115.2b}
+\]
+第一式按 \(n\ge1\) 理解。更明确地，对每个固定 \(s\in(0,1/2]\)，令
+\[
+\beta_s=-\log(1-s),\qquad
+D_s=C_{C^\star}+C_{B_s^\star},\qquad
+w_{k,n}=\alpha_\delta^n.
+\]
+则全部 \(n\ge0,k\ge2\) 均有扩展实数意义的有限长度界
+\[
+\boxed{
+\mathbb E^{C^\star}_{0,k}T_{n,k}
+\ge
+\frac{w_{k,n}}{\beta_s}
+\log\frac{Nw_{k,n}}{2D_s}.}
+\tag{115.2c}
+\]
+因此不存在同时适用于整个第 113 节相容类的共同规则，在保持每模型统一 \(n,k,d\) 的 \(O_M(1/N)\) 风险时，还使每个固定模型都具有统一 \(k,d\) 的 \(O_M(\log(eN))\) 期望参考成本；即使停止可用完整主前缀和 \(k\)，并已知上述状态数与正签名下界，也不成立。
+

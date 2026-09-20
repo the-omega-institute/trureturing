@@ -1,4 +1,5 @@
 using StrataLint.Engine;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -8,6 +9,47 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
+    internal sealed record PreparedTests(string Candidate, CommonStageRecord Build,
+        IReadOnlyDictionary<string, RegisteredTestInput> Inputs, IReadOnlyDictionary<string, string> Assemblies);
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static PreparedTests PrepareRegisteredTests(string root, CommonStageRecord? started = null, string? round = null)
+    {
+        var validation = ValidationScope.Create(root);
+        var candidate = Candidate(root, validation.Snapshot);
+        CommonStageRecord build;
+        if (started is null) build = ValidateBuild(root, candidate, round, validation);
+        else
+        {
+            ValidateStartedBuild(root, started, candidate, validation);
+            build = started;
+        }
+        var inputs = TestInputs(root, validation.Snapshot);
+        return new(candidate, build, inputs, ValidateTestBuild(root, build, inputs));
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static int FinishRegisteredTests(string root, PreparedTests prepared, TextWriter output)
+    {
+        // Test callbacks and seed copies invalidate the entire earlier read phase.
+        var validation = ValidationScope.Create(root);
+        var candidate = Candidate(root, validation.Snapshot);
+        if (candidate != prepared.Candidate) throw new InvalidDataException("candidate changed during test execution");
+        ValidateStartedBuild(root, prepared.Build, candidate, validation);
+        try
+        {
+            var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate,
+                validation.Snapshot, validation: validation);
+            if (tests.Round != prepared.Build.Round) throw new InvalidDataException("tests belong to a different build round");
+        }
+        catch (Exception exception)
+        {
+            output.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
+            return 1;
+        }
+        return 0;
+    }
+
     internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot)
     {
         var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();

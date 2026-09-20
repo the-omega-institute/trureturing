@@ -1,0 +1,37 @@
+#### 134.1.2 集合上的实际读数像与方向条件
+
+现在取集合与总函数。把观察限制到实际像
+
+$$
+q_0:X\twoheadrightarrow Q=q[X],\qquad
+q'_0:X'\twoheadrightarrow Q'=q'[X'].
+$$
+
+给定 $\alpha:X\to X'$，存在唯一 $\beta_0:Q\to Q'$ 满足
+
+$$
+q'_0\alpha=\beta_0q_0
+\tag{134.2}
+$$
+
+当且仅当
+
+$$
+q(x)=q(y)\quad\Longrightarrow\quad
+q'(\alpha x)=q'(\alpha y).
+\tag{134.3}
+$$
+
+证明是令 $\beta_0(q(x))=q'(\alpha x)$；(134.3) 正好是该定义不依赖代表元的条件，实际像给出存在性和唯一性。反方向由 (134.2) 直接得到。
+
+映射 $\beta_0$ 为单射，当且仅当反向条件也成立：
+
+$$
+q'(\alpha x)=q'(\alpha y)\quad\Longrightarrow\quad q(x)=q(y).
+\tag{134.4}
+$$
+
+证明分别把 $q(x),q(y)$ 代入单射定义即可。若 $\alpha$ 满射，$\beta_0$ 也满射：任意 $q'(x')$ 可取 $x'=\alpha(x)$。反之，$\beta_0$ 满射不要求 $\alpha$ 命中每个状态，只要求命中每个目标读数纤维。
+
+若原来已经给定整个 $B$ 上的 $\beta$，交换方块保证它将 $q[X]$ 映入 $q'[X']$，因此可限制到 $\beta_0$。但方块不约束 $B\setminus q[X]$ 上的取值。实际像上的唯一分解不能被扩报为整个环境陪域上的唯一映射。
+

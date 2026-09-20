@@ -1,0 +1,754 @@
+[
+  {
+    "index": 0,
+    "name": "R17",
+    "tuple": [
+      0,
+      0
+    ],
+    "weight": "1",
+    "barrier": "630053335920064561120723361434337/15632787748921114278012443437500",
+    "vmin": "298469622484874903/2311075142665519230",
+    "vmax": "2498381/1145144",
+    "root0_cases": [
+      {
+        "low_increment": "298469622484874903/2311075142665519230",
+        "high_increment": "309295315/210542904",
+        "high_cell_barrier": "628034400156502520369488618965587/15632787748921114278012443437500",
+        "threshold_offset": "26563796401153866367/415993525679793461400",
+        "shift_gap_cap": "12386341040791428463/46221502853310384600",
+        "onset_imbalance": "1996503143966906965109911996875/1256068800313005040738977237931174",
+        "ratio_peak_imbalance": "5187493126741231029726578559375/628034400156502520369488618965587",
+        "unbounded_capacity_coefficient": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000",
+        "chi_upper": null,
+        "capacity_coefficient": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000"
+      },
+      {
+        "low_increment": "309295315/210542904",
+        "high_increment": "2498381/1145144",
+        "high_cell_barrier": "1210138513238303183764791527384299/31265575497842228556024886875000",
+        "threshold_offset": "5505456607/7579544544",
+        "shift_gap_cap": "525174571/3684500820",
+        "onset_imbalance": "90839901103299228237833960859375/4840554052953212735059166109537196",
+        "ratio_peak_imbalance": "108665800459888220727290721984375/4840554052953212735059166109537196",
+        "unbounded_capacity_coefficient": "635533974540503695301608555298483979460729/100094807725103631594510915382455428671875",
+        "chi_upper": null,
+        "capacity_coefficient": "635533974540503695301608555298483979460729/100094807725103631594510915382455428671875"
+      }
+    ],
+    "root0_capacity_penalty": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000",
+    "missing_mass_penalty": "22485429/35785750",
+    "root1_penalty": "18974576223206873593/6419653174070886750",
+    "deep_capacity_penalty": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000",
+    "marked_base_penalty": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000",
+    "g": "2238223699014076897597/4548889203308541500409000",
+    "P": "7779048265687313890943020594058023175594407169302781/239773728359197818612385504988749464592395185625000",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 1,
+    "name": "R17",
+    "tuple": [
+      0,
+      1
+    ],
+    "weight": "1",
+    "barrier": "60483842677693804423/5124190753280473875",
+    "vmin": "2191066581337/17538837986670",
+    "vmax": "39159/26026",
+    "root0_cases": [
+      {
+        "low_increment": "2191066581337/17538837986670",
+        "high_increment": "4466185/3721718",
+        "high_cell_barrier": "119687390375247866321/10248381506560947750",
+        "threshold_offset": "195004925738993/3156990837600600",
+        "shift_gap_cap": "9428060266594/43847094966675",
+        "onset_imbalance": "2532138960720824105/478749561500991465284",
+        "ratio_peak_imbalance": "493331350659342895/20815198326130063708",
+        "unbounded_capacity_coefficient": "196246944279860790999164684170552/21631146582398253293917423024125",
+        "chi_upper": null,
+        "capacity_coefficient": "196246944279860790999164684170552/21631146582398253293917423024125"
+      },
+      {
+        "low_increment": "4466185/3721718",
+        "high_increment": "39159/26026",
+        "high_cell_barrier": "53694496382276522848/5124190753280473875",
+        "threshold_offset": "79498093/133981848",
+        "shift_gap_cap": "80968/1329185",
+        "onset_imbalance": "24323497496707534125/429555971058212182784",
+        "ratio_peak_imbalance": "26820639591519698925/429555971058212182784",
+        "unbounded_capacity_coefficient": "34780287864641324015654912/35649591835454111015626125",
+        "chi_upper": null,
+        "capacity_coefficient": "34780287864641324015654912/35649591835454111015626125"
+      }
+    ],
+    "root0_capacity_penalty": "196246944279860790999164684170552/21631146582398253293917423024125",
+    "missing_mass_penalty": "704862/1626625",
+    "root1_penalty": "145188348084408/73078491611125",
+    "deep_capacity_penalty": "196246944279860790999164684170552/21631146582398253293917423024125",
+    "marked_base_penalty": "196246944279860790999164684170552/21631146582398253293917423024125",
+    "g": "16430808293446163/34521694809162561000",
+    "P": "196246944279860790999164684170552/21631146582398253293917423024125",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 2,
+    "name": "R17",
+    "tuple": [
+      0,
+      2
+    ],
+    "weight": "1",
+    "barrier": "2932260428807/1594439816970",
+    "vmin": "93430123067/1594439816970",
+    "vmax": "93/182",
+    "root0_cases": [
+      {
+        "low_increment": "93430123067/1594439816970",
+        "high_increment": "83735/338338",
+        "high_cell_barrier": "301198/169169",
+        "threshold_offset": "8315280952963/286999167054600",
+        "shift_gap_cap": "150588253604/3986099542425",
+        "onset_imbalance": "8315280952963/510989455033200",
+        "ratio_peak_imbalance": "19157635212451/510989455033200",
+        "unbounded_capacity_coefficient": "3265695418249266624/3240877991255123219",
+        "chi_upper": null,
+        "capacity_coefficient": "3265695418249266624/3240877991255123219"
+      },
+      {
+        "low_increment": "83735/338338",
+        "high_increment": "93/182",
+        "high_cell_barrier": "279/182",
+        "threshold_offset": "1490483/12180168",
+        "shift_gap_cap": "6368/120835",
+        "onset_imbalance": "1490483/18671796",
+        "ratio_peak_imbalance": "10661887/93358980",
+        "unbounded_capacity_coefficient": "63960192/138604531",
+        "chi_upper": null,
+        "capacity_coefficient": "63960192/138604531"
+      }
+    ],
+    "root0_capacity_penalty": "3265695418249266624/3240877991255123219",
+    "missing_mass_penalty": "1674/11375",
+    "root1_penalty": "4327866612528/6643499237375",
+    "deep_capacity_penalty": "3265695418249266624/3240877991255123219",
+    "marked_base_penalty": "3265695418249266624/3240877991255123219",
+    "g": "700632492879433/3138335891742051000",
+    "P": "3265695418249266624/3240877991255123219",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 3,
+    "name": "R17",
+    "tuple": [
+      0,
+      3
+    ],
+    "weight": "1",
+    "barrier": "262352443907/1594439816970",
+    "vmin": "11662836167/1594439816970",
+    "vmax": "93/2366",
+    "root0_cases": [
+      {
+        "low_increment": "11662836167/1594439816970",
+        "high_increment": "93/2366",
+        "high_cell_barrier": "186/1183",
+        "threshold_offset": "1037992418863/286999167054600",
+        "shift_gap_cap": "3643540412/569442791775",
+        "onset_imbalance": "1037992418863/45124129393200",
+        "ratio_peak_imbalance": "2874336786511/45124129393200",
+        "unbounded_capacity_coefficient": "48794293197504/485762916920359",
+        "chi_upper": null,
+        "capacity_coefficient": "48794293197504/485762916920359"
+      },
+      {
+        "low_increment": "93/2366",
+        "high_increment": "93/2366",
+        "high_cell_barrier": "279/2366",
+        "threshold_offset": "2759/141960",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "48794293197504/485762916920359",
+    "missing_mass_penalty": "1674/147875",
+    "root1_penalty": "43722484944/949071319625",
+    "deep_capacity_penalty": "48794293197504/485762916920359",
+    "marked_base_penalty": "48794293197504/485762916920359",
+    "g": "87459608416333/3138335891742051000",
+    "P": "48794293197504/485762916920359",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 4,
+    "name": "R17",
+    "tuple": [
+      0,
+      4
+    ],
+    "weight": "1",
+    "barrier": "21766048247/1594439816970",
+    "vmin": "2482232267/1594439816970",
+    "vmax": "93/30758",
+    "root0_cases": [
+      {
+        "low_increment": "2482232267/1594439816970",
+        "high_increment": "93/30758",
+        "high_cell_barrier": "186/15379",
+        "threshold_offset": "220918671763/286999167054600",
+        "shift_gap_cap": "167051552/569442791775",
+        "onset_imbalance": "220918671763/3471086876400",
+        "ratio_peak_imbalance": "305112653971/3471086876400",
+        "unbounded_capacity_coefficient": "2237154384384/670332500774287",
+        "chi_upper": null,
+        "capacity_coefficient": "2237154384384/670332500774287"
+      },
+      {
+        "low_increment": "93/30758",
+        "high_increment": "93/30758",
+        "high_cell_barrier": "279/30758",
+        "threshold_offset": "2759/1845480",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "2237154384384/670332500774287",
+    "missing_mass_penalty": "1674/1922375",
+    "root1_penalty": "2004618624/949071319625",
+    "deep_capacity_penalty": "2237154384384/670332500774287",
+    "marked_base_penalty": "2237154384384/670332500774287",
+    "g": "18614259770233/3138335891742051000",
+    "P": "268081084836/30658215865277",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 5,
+    "name": "R17",
+    "tuple": [
+      0,
+      5
+    ],
+    "weight": "1",
+    "barrier": "31917269/28989814854",
+    "vmin": "4946897/28989814854",
+    "vmax": "93/399854",
+    "root0_cases": [
+      {
+        "low_increment": "4946897/28989814854",
+        "high_increment": "93/399854",
+        "high_cell_barrier": "186/199927",
+        "threshold_offset": "440273833/5218166673720",
+        "shift_gap_cap": "128264/10353505305",
+        "onset_imbalance": "440273833/4854666960",
+        "ratio_peak_imbalance": "504918889/4854666960",
+        "unbounded_capacity_coefficient": "1717711488/14420988388729",
+        "chi_upper": null,
+        "capacity_coefficient": "1717711488/14420988388729"
+      },
+      {
+        "low_increment": "93/399854",
+        "high_increment": "93/399854",
+        "high_cell_barrier": "279/399854",
+        "threshold_offset": "2759/23991240",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "1717711488/14420988388729",
+    "missing_mass_penalty": "1674/24990875",
+    "root1_penalty": "1539168/17255842175",
+    "deep_capacity_penalty": "1717711488/14420988388729",
+    "marked_base_penalty": "93/399854",
+    "g": "37096780603/57060652577128200",
+    "P": "2671324380/2787110533207",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 6,
+    "name": "R17",
+    "tuple": [
+      0,
+      6
+    ],
+    "weight": "1",
+    "barrier": "2536073/28989814854",
+    "vmin": "461429/28989814854",
+    "vmax": "93/5198102",
+    "root0_cases": [
+      {
+        "low_increment": "461429/28989814854",
+        "high_increment": "93/5198102",
+        "high_cell_barrier": "186/2599051",
+        "threshold_offset": "41067181/5218166673720",
+        "shift_gap_cap": "4088/10353505305",
+        "onset_imbalance": "41067181/373435920",
+        "ratio_peak_imbalance": "43127533/373435920",
+        "unbounded_capacity_coefficient": "54746496/16012951110169",
+        "chi_upper": null,
+        "capacity_coefficient": "54746496/16012951110169"
+      },
+      {
+        "low_increment": "93/5198102",
+        "high_increment": "93/5198102",
+        "high_cell_barrier": "279/5198102",
+        "threshold_offset": "2759/311886120",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "54746496/16012951110169",
+    "missing_mass_penalty": "1674/324881375",
+    "root1_penalty": "49056/17255842175",
+    "deep_capacity_penalty": "1674/324881375",
+    "marked_base_penalty": "93/5198102",
+    "g": "3460256071/57060652577128200",
+    "P": "249171660/2787110533207",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 7,
+    "name": "R17",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "1",
+    "barrier": "355939493543309768327/26477876486582981460",
+    "vmin": "2048574445495/16183432951686",
+    "vmax": "148305/88088",
+    "root0_cases": [
+      {
+        "low_increment": "2048574445495/16183432951686",
+        "high_increment": "1589035/1245816",
+        "high_cell_barrier": "352587800407290943877/26477876486582981460",
+        "threshold_offset": "36464625129811/582603586260696",
+        "shift_gap_cap": "14874681050167/64733731806744",
+        "onset_imbalance": "3314452101174170845/705175600814581887754",
+        "ratio_peak_imbalance": "7741379653834268015/352587800407290943877",
+        "unbounded_capacity_coefficient": "5244631073238395047391843018477459/501128394325492211717786680493160",
+        "chi_upper": null,
+        "capacity_coefficient": "5244631073238395047391843018477459/501128394325492211717786680493160"
+      },
+      {
+        "low_increment": "1589035/1245816",
+        "high_increment": "148305/88088",
+        "high_cell_barrier": "637630678510072412929/52955752973165962920",
+        "threshold_offset": "28284823/44849376",
+        "shift_gap_cap": "355895/4360356",
+        "onset_imbalance": "133588846335585405765/2550522714040289651716",
+        "ratio_peak_imbalance": "150877973832867646365/2550522714040289651716",
+        "unbounded_capacity_coefficient": "856338001239027250563647/620643092896214565125949",
+        "chi_upper": null,
+        "capacity_coefficient": "856338001239027250563647/620643092896214565125949"
+      }
+    ],
+    "root0_capacity_penalty": "5244631073238395047391843018477459/501128394325492211717786680493160",
+    "missing_mass_penalty": "266949/550550",
+    "root1_penalty": "20158288966897/8990796084270",
+    "deep_capacity_penalty": "5244631073238395047391843018477459/501128394325492211717786680493160",
+    "marked_base_penalty": "5244631073238395047391843018477459/501128394325492211717786680493160",
+    "g": "3072451953353401/6370770215760710760",
+    "P": "5244631073238395047391843018477459/501128394325492211717786680493160",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 8,
+    "name": "R17",
+    "tuple": [
+      1,
+      1
+    ],
+    "weight": "1",
+    "barrier": "169828375/40938898",
+    "vmin": "5009435/40938898",
+    "vmax": "155/154",
+    "root0_cases": [
+      {
+        "low_increment": "5009435/40938898",
+        "high_increment": "155/154",
+        "high_cell_barrier": "310/77",
+        "threshold_offset": "89167943/1473800328",
+        "shift_gap_cap": "3619530/20469449",
+        "onset_imbalance": "89167943/5933481840",
+        "ratio_peak_imbalance": "349774103/5933481840",
+        "unbounded_capacity_coefficient": "80787909600/26932605931",
+        "chi_upper": null,
+        "capacity_coefficient": "80787909600/26932605931"
+      },
+      {
+        "low_increment": "155/154",
+        "high_increment": "155/154",
+        "high_cell_barrier": "465/154",
+        "threshold_offset": "2759/5544",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "80787909600/26932605931",
+    "missing_mass_penalty": "558/1925",
+    "root1_penalty": "26060616/20469449",
+    "deep_capacity_penalty": "80787909600/26932605931",
+    "marked_base_penalty": "80787909600/26932605931",
+    "g": "7513150613/16116006586680",
+    "P": "80787909600/26932605931",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 9,
+    "name": "R17",
+    "tuple": [
+      1,
+      2
+    ],
+    "weight": "1",
+    "barrier": "1361125/3721718",
+    "vmin": "208545/3721718",
+    "vmax": "155/2002",
+    "root0_cases": [
+      {
+        "low_increment": "208545/3721718",
+        "high_increment": "155/2002",
+        "high_cell_barrier": "310/1001",
+        "threshold_offset": "1237367/44660616",
+        "shift_gap_cap": "7960/1860859",
+        "onset_imbalance": "1237367/13830960",
+        "ratio_peak_imbalance": "1428407/13830960",
+        "unbounded_capacity_coefficient": "59222400/1429835407",
+        "chi_upper": null,
+        "capacity_coefficient": "59222400/1429835407"
+      },
+      {
+        "low_increment": "155/2002",
+        "high_increment": "155/2002",
+        "high_cell_barrier": "465/2002",
+        "threshold_offset": "2759/72072",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "59222400/1429835407",
+    "missing_mass_penalty": "558/25025",
+    "root1_penalty": "57312/1860859",
+    "deep_capacity_penalty": "59222400/1429835407",
+    "marked_base_penalty": "155/2002",
+    "g": "104258597/488363835960",
+    "P": "337842900/1073429357",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 10,
+    "name": "R17",
+    "tuple": [
+      2,
+      0
+    ],
+    "weight": "1",
+    "barrier": "1547000386235/622439728911",
+    "vmin": "87693892465/1244879457822",
+    "vmax": "2015/2904",
+    "root0_cases": [
+      {
+        "low_increment": "87693892465/1244879457822",
+        "high_increment": "2906845/8720712",
+        "high_cell_barrier": "5264995/2180178",
+        "threshold_offset": "1560951285877/44815660481592",
+        "shift_gap_cap": "261806003659/4979517831288",
+        "onset_imbalance": "1560951285877/108227047680180",
+        "ratio_peak_imbalance": "979301329702/27056761920045",
+        "unbounded_capacity_coefficient": "1378407300234616705/948911650838687536",
+        "chi_upper": null,
+        "capacity_coefficient": "1378407300234616705/948911650838687536"
+      },
+      {
+        "low_increment": "2906845/8720712",
+        "high_increment": "2015/2904",
+        "high_cell_barrier": "2015/968",
+        "threshold_offset": "51741841/313945632",
+        "shift_gap_cap": "78605/1090089",
+        "onset_imbalance": "51741841/653512860",
+        "ratio_peak_imbalance": "74380081/653512860",
+        "unbounded_capacity_coefficient": "5702006700/8999989801",
+        "chi_upper": null,
+        "capacity_coefficient": "5702006700/8999989801"
+      }
+    ],
+    "root0_capacity_penalty": "1378407300234616705/948911650838687536",
+    "missing_mass_penalty": "1209/6050",
+    "root1_penalty": "620873014819/691599698790",
+    "deep_capacity_penalty": "1378407300234616705/948911650838687536",
+    "marked_base_penalty": "1378407300234616705/948911650838687536",
+    "g": "131523299919007/490059247366208520",
+    "P": "1378407300234616705/948911650838687536",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 11,
+    "name": "R17",
+    "tuple": [
+      2,
+      1
+    ],
+    "weight": "1",
+    "barrier": "1361125/3149146",
+    "vmin": "208545/3149146",
+    "vmax": "155/1694",
+    "root0_cases": [
+      {
+        "low_increment": "208545/3149146",
+        "high_increment": "155/1694",
+        "high_cell_barrier": "310/847",
+        "threshold_offset": "1237367/37789752",
+        "shift_gap_cap": "7960/1574573",
+        "onset_imbalance": "1237367/13830960",
+        "ratio_peak_imbalance": "1428407/13830960",
+        "unbounded_capacity_coefficient": "59222400/1209860729",
+        "chi_upper": null,
+        "capacity_coefficient": "59222400/1209860729"
+      },
+      {
+        "low_increment": "155/1694",
+        "high_increment": "155/1694",
+        "high_cell_barrier": "465/1694",
+        "threshold_offset": "2759/60984",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "59222400/1209860729",
+    "missing_mass_penalty": "558/21175",
+    "root1_penalty": "57312/1574573",
+    "deep_capacity_penalty": "59222400/1209860729",
+    "marked_base_penalty": "155/1694",
+    "g": "104258597/413230938120",
+    "P": "337842900/908286379",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 12,
+    "name": "R17",
+    "tuple": [
+      3,
+      0
+    ],
+    "weight": "1",
+    "barrier": "12602421170/47879979147",
+    "vmin": "1043019655/95759958294",
+    "vmax": "2015/31944",
+    "root0_cases": [
+      {
+        "low_increment": "1043019655/95759958294",
+        "high_increment": "2015/31944",
+        "high_cell_barrier": "2015/7986",
+        "threshold_offset": "18565749859/3447358498584",
+        "shift_gap_cap": "3997948813/383039833176",
+        "onset_imbalance": "18565749859/869825616660",
+        "ratio_peak_imbalance": "13636822294/217456404165",
+        "unbounded_capacity_coefficient": "24167600574585/145204883786512",
+        "chi_upper": null,
+        "capacity_coefficient": "24167600574585/145204883786512"
+      },
+      {
+        "low_increment": "2015/31944",
+        "high_increment": "2015/31944",
+        "high_cell_barrier": "2015/10648",
+        "threshold_offset": "35867/1149984",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "24167600574585/145204883786512",
+    "missing_mass_penalty": "1209/66550",
+    "root1_penalty": "3997948813/53199976830",
+    "deep_capacity_penalty": "24167600574585/145204883786512",
+    "marked_base_penalty": "24167600574585/145204883786512",
+    "g": "1564320878569/37696865182016040",
+    "P": "24167600574585/145204883786512",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 13,
+    "name": "R17",
+    "tuple": [
+      4,
+      0
+    ],
+    "weight": "1",
+    "barrier": "9900365635/383039833176",
+    "vmin": "1114248295/383039833176",
+    "vmax": "2015/351384",
+    "root0_cases": [
+      {
+        "low_increment": "1114248295/383039833176",
+        "high_increment": "2015/351384",
+        "high_cell_barrier": "2015/87846",
+        "threshold_offset": "19833619651/13789433994336",
+        "shift_gap_cap": "27057026/47879979147",
+        "onset_imbalance": "19833619651/316300224240",
+        "ratio_peak_imbalance": "27626043139/316300224240",
+        "unbounded_capacity_coefficient": "2616955554720/404472897598099",
+        "chi_upper": null,
+        "capacity_coefficient": "2616955554720/404472897598099"
+      },
+      {
+        "low_increment": "2015/351384",
+        "high_increment": "2015/351384",
+        "high_cell_barrier": "2015/117128",
+        "threshold_offset": "35867/12649824",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "2616955554720/404472897598099",
+    "missing_mass_penalty": "1209/732050",
+    "root1_penalty": "108228104/26599988415",
+    "deep_capacity_penalty": "2616955554720/404472897598099",
+    "marked_base_penalty": "2616955554720/404472897598099",
+    "g": "1671149592841/150787460728064160",
+    "P": "16713724425/1022940067303",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 14,
+    "name": "R17",
+    "tuple": [
+      5,
+      0
+    ],
+    "weight": "1",
+    "barrier": "944524675/383039833176",
+    "vmin": "145786735/383039833176",
+    "vmax": "2015/3865224",
+    "root0_cases": [
+      {
+        "low_increment": "145786735/383039833176",
+        "high_increment": "2015/3865224",
+        "high_cell_barrier": "2015/966306",
+        "threshold_offset": "2595003883/13789433994336",
+        "shift_gap_cap": "5389775/191519916588",
+        "onset_imbalance": "2595003883/28754565840",
+        "ratio_peak_imbalance": "2983067683/28754565840",
+        "unbounded_capacity_coefficient": "130324759500/480426033414833",
+        "chi_upper": null,
+        "capacity_coefficient": "130324759500/480426033414833"
+      },
+      {
+        "low_increment": "2015/3865224",
+        "high_increment": "2015/3865224",
+        "high_cell_barrier": "2015/1288408",
+        "threshold_offset": "35867/139148064",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "130324759500/480426033414833",
+    "missing_mass_penalty": "1209/8052550",
+    "root1_penalty": "1077955/5319997683",
+    "deep_capacity_penalty": "130324759500/480426033414833",
+    "marked_base_penalty": "2015/3865224",
+    "g": "218650945153/150787460728064160",
+    "P": "2186801025/1022940067303",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  },
+  {
+    "index": 15,
+    "name": "R17",
+    "tuple": [
+      6,
+      0
+    ],
+    "weight": "1",
+    "barrier": "12678175/54719976168",
+    "vmin": "2304955/54719976168",
+    "vmax": "2015/42517464",
+    "root0_cases": [
+      {
+        "low_increment": "2304955/54719976168",
+        "high_increment": "2015/42517464",
+        "high_cell_barrier": "2015/10629366",
+        "threshold_offset": "41028199/1969919142048",
+        "shift_gap_cap": "28835/27359988084",
+        "onset_imbalance": "41028199/373435920",
+        "ratio_peak_imbalance": "43104319/373435920",
+        "unbounded_capacity_coefficient": "697230300/76361930471959",
+        "chi_upper": null,
+        "capacity_coefficient": "697230300/76361930471959"
+      },
+      {
+        "low_increment": "2015/42517464",
+        "high_increment": "2015/42517464",
+        "high_cell_barrier": "2015/14172488",
+        "threshold_offset": "35867/1530628704",
+        "shift_gap_cap": "0",
+        "onset_imbalance": "89/540",
+        "ratio_peak_imbalance": "89/540",
+        "unbounded_capacity_coefficient": "0",
+        "chi_upper": null,
+        "capacity_coefficient": "0"
+      }
+    ],
+    "root0_capacity_penalty": "697230300/76361930471959",
+    "missing_mass_penalty": "1209/88578050",
+    "root1_penalty": "5767/759999669",
+    "deep_capacity_penalty": "1209/88578050",
+    "marked_base_penalty": "2015/42517464",
+    "g": "3456971509/21541065818294880",
+    "P": "34574325/146134295329",
+    "Q": "0",
+    "escape_charge_coefficient": "0"
+  }
+]

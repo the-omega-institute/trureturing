@@ -1,0 +1,113 @@
+### 129.9 精确线性密度族的局部 KL 公式及显式余项
+
+取 $f\in\mathbb R^\Omega$，要求
+
+$$
+\mathbb E_\nu f=0,
+\qquad M=\max_x|f(x)|.
+\tag{129.34}
+$$
+
+定义**线性**概率路径
+
+$$
+d_\varepsilon(x)=\nu(x)(1+\varepsilon f(x)),
+\qquad
+\mathscr E_\nu d_\varepsilon(x)=\nu(x)(1+\varepsilon Pf(x)).
+\tag{129.35}
+$$
+
+它没有指数族的归一化常数。中心化使两式总质量均为一；条件平均使 $|Pf|\le M$，故 $|\varepsilon|M<1$ 保证两份质量都严格正。若 $M=0$，则 $f=0$，两式对全部实 $\varepsilon$ 均等于 $\nu$，KL 恒零。
+
+设 $M>0$，固定 $0<\theta<1$，将参数限制为 $|\varepsilon|M\le\theta$。令
+
+$$
+h(s)=(1+s)\log(1+s),\qquad -1<s<\infty.
+\tag{129.36}
+$$
+
+因为 $\log(1+\varepsilon Pf)$ 在各纤维上常值，式（129.27）的条件平均关系给
+
+$$
+\begin{aligned}
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)
+&=\mathbb E_\nu\left[(1+\varepsilon f)
+\log\frac{1+\varepsilon f}{1+\varepsilon Pf}\right]\\
+&=\mathbb E_\nu[h(\varepsilon f)]
+-\mathbb E_\nu[h(\varepsilon Pf)].
+\end{aligned}
+\tag{129.37}
+$$
+
+这是精确恒等式，而不是只在零点成立的展开。
+
+求导得
+
+$$
+h(0)=0,\qquad h'(0)=1,\qquad h''(0)=1,
+\qquad h'''(s)=-\frac1{(1+s)^2}.
+\tag{129.38}
+$$
+
+连续三次积分，或已有 Taylor 积分／Lagrange 余项定理，给
+
+$$
+h(s)=s+\frac{s^2}{2}
++\frac{s^3}{2}\int_0^1(1-u)^2h'''(us)\,du.
+\tag{129.39}
+$$
+
+它对正负 $s$ 都成立。若 $|s|\le\theta$，则 $|h'''(us)|\le(1-\theta)^{-2}$，从而
+
+$$
+\left|h(s)-s-\frac{s^2}{2}\right|
+\le\frac{|s|^3}{6(1-\theta)^2}.
+\tag{129.40}
+$$
+
+将式（129.39）代入式（129.37），线性项由 $\mathbb E_\nu f=\mathbb E_\nu Pf=0$ 消失。正交投影恒等式给
+
+$$
+\mathbb E_\nu f^2-\mathbb E_\nu(Pf)^2
+=\|f-Pf\|_\nu^2.
+\tag{129.41}
+$$
+
+于是存在实数余项 $R_\varepsilon$，使
+
+$$
+\boxed{
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)
+=\frac{\varepsilon^2}{2}\|f-Pf\|_\nu^2+R_\varepsilon,
+}
+\tag{129.42}
+$$
+
+而且逐点应用式（129.40）并求期望给显式界
+
+$$
+\boxed{
+|R_\varepsilon|
+\le\frac{|\varepsilon|^3}{6(1-\theta)^2}
+\left(\mathbb E_\nu|f|^3+\mathbb E_\nu|Pf|^3\right)
+\le\frac{M^3}{3(1-\theta)^2}|\varepsilon|^3.
+}
+\tag{129.43}
+$$
+
+所有常数相对于固定的 $\nu,r,f,\theta$；若这些模型资料也随参数改变，不能直接声称同一个统一余项界。式（129.42）比较的是概率质量，不是 $D(f\|Pf)$。
+
+由式（129.16），同一个结果也可写成共同 Clifford 陪域中的等式
+
+$$
+\boxed{
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)1_{\rm Cl}
+=\frac{\varepsilon^2}{2}
+\bigl[\mathcal E_P(\iota_Q(f)^2)-\mathcal E_P(\iota_Q(f))^2\bigr]
++R_\varepsilon1_{\rm Cl}.
+}
+\tag{129.44}
+$$
+
+这给出一条精确连接：局部信息恢复缺陷的二阶系数，等于该方向几何平方的观察缺陷。它没有在 Clifford 代数内部定义对数概率，也没有把全部熵等同于某个几何分量。
+

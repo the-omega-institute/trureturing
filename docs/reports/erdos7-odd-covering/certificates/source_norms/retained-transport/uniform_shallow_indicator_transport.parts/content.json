@@ -1,0 +1,53 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-shallow-indicator-transport-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/comparison-bounds/uniform_k_neighborhood_cost.py": "365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b",
+      "frontier/moments-survival/uniform_ap_survival_denominator.py": "181a1793bd15059074d2998eb820322a3b9c2158bac5edfcb3bc057b7e78f180",
+      "frontier/cover-geometry/uniform_square_and_raw81_neighborhood.py": "3d47bd0d7ff5f5c4f8114d02538073de8bc87e455265817e9e9d80ca4bc5a62c",
+      "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+      "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498",
+      "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
+      "frontier/cover-geometry/quantitative_forced27.py": "23551c4ae4b01624be33175524899b97f34464ea4b6383dda56ecc408128a947",
+      "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/source-budgets/shared_budget_affine_tail.py": "bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd",
+      "frontier/source-budgets/actual_five_slot_source_modulus.py": "4dd89f4919d2150fa27ba405e586f6bfe74f76b6037b934441ca7ff5357afa86",
+      "frontier/comparison-bounds/uniform_mean_cost_portfolio.py": "ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238",
+      "certificates/source_norms/moments-survival/whole_block_mean_survival.json": "cbccfcf1f81cf5d2185494f1a3a46674148a9d574ab3abebba0f6f0f3ba7eabd",
+      "certificates/source_norms/endpoint-bounds/endpoint_k_face_forced27.json": "59202ce65324295b32b028f6b67f90e4a7b8bbba5f62608a43f9bc4979dc8e79",
+      "certificates/source_norms/moments-survival/uniform_ap_survival_denominator.json": "080ecc953d56c722d9026fcc8517fa08dbd67ae7381a5af581c3afc20d48db3a",
+      "frontier/moments-survival/uniform_quadratic_cost_portfolio.py": "5e0d7a5e1c8412c999739c288dce17a7d9221c0b4944dff6b5e18cb4fe3d55e1",
+      "frontier/endpoint-bounds/k_face_complete_ratio.py": "00b86477e4f9fc369058ae64f28bcd9f52da726d74e9969854b32b39c652d160",
+      "certificates/source_norms/endpoint-bounds/k_face_complete_ratio.json": "2a6a7736b0efe02a7ae9b84c071f7293c77d1f7bac59a2d9da723923c964a97a",
+      "certificates/source_norms/moments-survival/whole_quadratic_same_head.json": "c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f",
+      "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3"
+    }
+  },
+  "face_audit": {
+    "path": "content/002-face_audit.json",
+    "sha256": "b56454211efed3674d6b32749474cff58510da0253543869ea5b28f412d92c13",
+    "kind": "object"
+  },
+  "actual_source_checks": {
+    "path": "content/003-actual_source_checks.json",
+    "sha256": "0d2c2b729a055a855cab09ecf7422b06a90f3a13e177f76fa68a5cc6ba724571",
+    "kind": "value"
+  },
+  "radius_results": {
+    "path": "content/004-radius_results.json",
+    "sha256": "698419fe0a0081f8e44fd804d98866b0133768c112eed67214c27f274f4d9b23",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary independent-cylinder transport using the actual simultaneous DP14 identities, frozen source-only capacity duals and one actual residual. All47 independent shallow layouts and3 first-beta cells; complete H1 and positive weighted LCM tails. No new global K, actual relaxation attainment, Lean or unrestricted Erdos7 claim."
+  }
+}

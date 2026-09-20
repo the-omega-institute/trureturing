@@ -1,0 +1,186 @@
+[
+  {
+    "modulus": 3,
+    "transported_upper": "5468540507/58799517975",
+    "raw_haar_cap": "1/3",
+    "upper": "5468540507/58799517975",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 9,
+    "transported_upper": "31665493/528816600",
+    "raw_haar_cap": "1/9",
+    "upper": "31665493/528816600",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 5,
+    "transported_upper": "16415851/227448000",
+    "raw_haar_cap": "1/5",
+    "upper": "16415851/227448000",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 15,
+    "transported_upper": "3227257/75816000",
+    "raw_haar_cap": "1/15",
+    "upper": "3227257/75816000",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 45,
+    "transported_upper": "57443/3159000",
+    "raw_haar_cap": "1/45",
+    "upper": "57443/3159000",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          45,
+          3,
+          2
+        ]
+      },
+      {
+        "first_beta": 2,
+        "label": [
+          45,
+          4,
+          2
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          45,
+          2,
+          2
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          45,
+          4,
+          2
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          45,
+          2,
+          2
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          45,
+          3,
+          2
+        ]
+      }
+    ]
+  }
+]

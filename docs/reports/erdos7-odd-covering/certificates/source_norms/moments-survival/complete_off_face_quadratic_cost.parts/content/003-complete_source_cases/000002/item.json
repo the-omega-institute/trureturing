@@ -1,0 +1,58 @@
+{
+  "source_height": {
+    "kind": "inline",
+    "value": 8
+  },
+  "sigma": {
+    "kind": "inline",
+    "value": "659452620260006457917837171/239627773873507976531982421875"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "1813706264603609/12312129125390625"
+  },
+  "one_actual_defect_vector": {
+    "kind": "inline",
+    "value": {
+      "E5": "3281/945571484025",
+      "E15": "1/432360075",
+      "E3": "80434345981/7035502113281250",
+      "E5d": "766825477/11819643550312500",
+      "E15d": "233717/5404500937500",
+      "omega": "10122177423616/2839078971767240015625",
+      "rho": "14558107035244757293/946359657255746671875000"
+    }
+  },
+  "E27": {
+    "kind": "inline",
+    "value": "292969/304003177734375"
+  },
+  "complete_hinge_tail_data": {
+    "path": "content/003-complete_source_cases/000002/item/005-complete_hinge_tail_data.json",
+    "sha256": "315f04a89f2ee26020bf1dccf88e6ed711a328650d8986dce9cc3adb57829ac8",
+    "kind": "value"
+  },
+  "complete_factorial_pair_data": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "11157313881578492984353286839/83784059535823020101109375000",
+      "old_positive7": "3445719479/20503125000",
+      "positive7_positive7_distinct": "82868800301/205031250000",
+      "tail_distinct_pairs": "118202919502138467035885872979/167568119071646040202218750000",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "162974016404787117117637051/4189202976791151005055468750",
+        "pure5": "28978876556294646971473/2839078971767240015625000",
+        "root5": "420612714156243446359/9012949116721396875000",
+        "cell5": "5468113145189690118763/189271931451149334375000"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_old_linear_cap": "3132817603/4100625000",
+      "raw_old_square_cap": "24633222079/6834375000"
+    }
+  },
+  "quadratic_costs": {
+    "path": "content/003-complete_source_cases/000002/item/007-quadratic_costs.json",
+    "sha256": "87265661b0a843173c8f3054b5f598b350a662a2a8c3fa31696e62b8f18b9f0e",
+    "kind": "value"
+  }
+}

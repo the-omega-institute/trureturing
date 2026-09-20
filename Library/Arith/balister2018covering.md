@@ -24,3 +24,20 @@ block before applying the cap. Conditioning on pure-prime survivors alone
 does not remove old mixed classes; conditioning on all old survivors changes
 normalized cylinder costs. This proposed extension is not a quoted theorem
 of these papers and has no local Lean proof.
+
+The primary v1 text was also read for the labelled-modulus application in
+[report 348](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md).
+Lemma 3.6 (pages 11–12) bounds moments by sums over congruence tuples;
+Lemma 3.7 bounds their divisor sums. Section 6 (pages 17–19) explicitly
+indexes all primes and accepts any constant kappa satisfying its
+second-moment hypothesis (20), then supplies the recurrence in Lemma 6.2
+and the unrestricted continuation criterion in Theorem 6.1.
+
+For at most two labels per numerical modulus, the tuple argument gains
+a single factor 4 in the second moment. The report proves this extension
+under the same distorted laws, and uses kappa=4 when the period is coprime
+to 210. An exact rational continuation reaches Theorem 6.1 at prime 167,
+proving noncoverage in that scope. This labelled extension is an ordinary
+deduction, not a literal statement of the paper's distinct-modulus
+Theorem 7.1. The rational program checks the finite endpoint; it does not
+machine-verify the measure argument or replace the analytic tail proof.

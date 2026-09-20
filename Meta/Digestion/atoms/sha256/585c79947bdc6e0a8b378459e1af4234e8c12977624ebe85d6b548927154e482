@@ -1,0 +1,19 @@
+**定义 4.1（共同方向字典）。** 设 $\mathcal D$ 是有限非空模型或方向集合，每个 $d\in\mathcal D$ 对应有限维实向量空间 $W_d$。同一可调用原语索引 $i\in\{1,\ldots,m\}$ 在方向 $d$ 的向量为 $a_{i,d}\in W_d$，目标为 $t_d\in W_d$。取一组对全部方向共同适用的正价格 $w_i$，定义
+
+$$
+\Gamma_{\mathrm{com}}(t)=
+\inf\left\{
+\sum_iw_i|c_i|:
+\sum_i c_i a_{i,d}=t_d\ \text{对每个 }d\in\mathcal D
+\right\}.
+\tag{4.1}
+$$
+
+可行系数只有一组 $c$，不能随未知方向改变。每个方向分别求得的成本记为
+
+$$
+\Gamma_d(t_d)=
+\inf\left\{\sum_iw_i|c_i|:\sum_i c_i a_{i,d}=t_d\right\}.
+\tag{4.2}
+$$
+

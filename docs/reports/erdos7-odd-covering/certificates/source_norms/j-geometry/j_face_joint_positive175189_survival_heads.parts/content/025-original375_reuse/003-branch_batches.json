@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000000/single.json",
+        "sha256": "9bbe9c574fe28f42c2d48bfce01c92973e0f183135843c3bcb7463cb949a783c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/025-original375_reuse/003-branch_batches/000001-000002.json",
+        "sha256": "d9742cb40e61e64250dc06955ca8d7757092922dd021a9f3104391fc040e0925",
+        "kind": "value"
+      }
+    }
+  ]
+}

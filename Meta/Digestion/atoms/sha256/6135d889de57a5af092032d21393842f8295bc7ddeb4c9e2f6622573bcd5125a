@@ -1,0 +1,16 @@
+### 130.5 Gaussian 共享未知基线
+
+固定非负整数 $n,m$，给定独立样本
+
+$$
+X_i\sim N(\theta+b,1)\ (1\le i\le n),\qquad
+V_j\sim N(b,1)\ (1\le j\le m).
+$$
+
+$\theta$ 是目标，$b$ 是未知共享基线。空和按零处理。设
+
+$$
+S_X=\sum_{i=1}^n(X_i-\theta-b),\qquad
+S_V=\sum_{j=1}^m(V_j-b).
+$$
+

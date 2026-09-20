@@ -1,0 +1,106 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-expanded-source-complete-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "0d0ec967b6e87a48343184353c58c873d00cd166f3f7de5c7095a0213333e975",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/22",
+      "rho": "1/20000",
+      "rbar": "1/4000",
+      "h1min": "131/396",
+      "v0": "521/42000",
+      "v1": "34829/2751000",
+      "gap": "92797/4356000",
+      "tbar": "23/9",
+      "Cbar": "670/161",
+      "kbar": "131/64",
+      "budget_increments": [
+        "67/33264",
+        "1/792",
+        "1/252"
+      ],
+      "c": [
+        "313/440",
+        "161/396",
+        "89/330",
+        "89/990"
+      ],
+      "H": [
+        "471/4840",
+        "199/1815",
+        "71/990",
+        "827/34848"
+      ],
+      "positive7": "17273/277200"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/22",
+      "residual_radius": "1/20000",
+      "actual_r_upper": "1/4000",
+      "joint_source_Delta_upper": "1/84",
+      "source_z_upper": "67/88",
+      "availability_upper": "3/256",
+      "five_actual_gap_lowers": [
+        "399/4000",
+        "26101/396000",
+        "8501/396000",
+        "363739/12672000",
+        "12701/396000"
+      ],
+      "minimum_actual_gap": "8501/396000",
+      "common_wrong_slot_gap": "92797/4356000",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "9/11",
+        "shallow_C_minus_1_t": "439/121",
+        "shallow_C_minus_k": "20293/484",
+        "pure3_maximizing_cell": "949/484",
+        "root0_below_root1_reference": "813/484"
+      },
+      "fixed_support_slab_r_cutoff": "1/2500"
+    }
+  },
+  "complete_H1": {
+    "path": "content/004-complete_H1.json",
+    "sha256": "f55e651541c0487786273e1180f0aabad3df8e06d5a6dcf78ff47b1b081f0458",
+    "kind": "object"
+  },
+  "joint_pure_five_transport": {
+    "path": "content/005-joint_pure_five_transport.json",
+    "sha256": "ad3f330044fc8614986cb6f135c7a6dd94dbce642b451b00171125018f08f797",
+    "kind": "value"
+  },
+  "complete_square": {
+    "path": "content/006-complete_square.json",
+    "sha256": "faf22ca8b4d557183888f957766baa7d9809dee98bc23e70f6e223ed847b8122",
+    "kind": "value"
+  },
+  "complete_heads": {
+    "path": "content/007-complete_heads.json",
+    "sha256": "d60ae2a97835ad55e9146b6a3d331bf7aa54b6dc8112f69284d1a57cd1340d7a",
+    "kind": "object"
+  },
+  "comparison": {
+    "path": "content/008-comparison.json",
+    "sha256": "ad6b386ccf7355b20e61d4c996c5655f1a3a245491d39e7927cd2728706df54a",
+    "kind": "value"
+  },
+  "expanded_residual_comparison": {
+    "path": "content/009-expanded_residual_comparison.json",
+    "sha256": "9bf5cb85e39d1b8ad4d03c6ae0d9802ee7bb8df48cebe0cbd69e62d3309b2a8e",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary complete actual-source bounds for both orientations, sigma<=1/22, rho<=1/15000, r<=1/3000. All52 independent original tests, actual S coefficient, five denominator objectives and every infinite tail remain. New source guards and9.75 million new original-head evaluations at rho1/20000, with312 independent rational LP checks; the wider residual uses proved coefficient/cap transport with3120 complete finite-branch checks. No unrestricted or full-global K claim, Lean verification or realization of relaxation maxima."
+  }
+}
