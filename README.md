@@ -10,6 +10,11 @@ trureturing pursues truth by turning questions into knowledge others can check
 and build on. The name reflects the project's intent: **true · return · Turing**
 — truth, return, and Turing computation.
 
+**If machine learning is a black box of logic, trureturing is a white box.**
+Our guiding conviction is that **all logic can be formalized**. Pursuing it
+means making definitions and assumptions explicit, with proof steps and
+dependencies open to inspection.
+
 Logic reaches beyond mathematics into philosophical and conceptual inquiry.
 What do we mean by a concept? Which assumptions carry an argument? What follows
 from them, and what would count as a counterexample? These questions belong
