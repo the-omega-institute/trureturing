@@ -16,11 +16,11 @@ import publication
 import native
 
 
-def manifest_fixture(root, version=8):
+def manifest_fixture(root, version=9):
     path = root / 'lean-report-inputs.json'
     if not path.exists():
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        path.write_text(json.dumps(dict(schema_version=1, report_semantic_version=version,
+        path.write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=version,
             report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
                 'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -29,27 +29,27 @@ def manifest_fixture(root, version=8):
 
 def evidence_fixture(manifest):
     return dict(schema_version=1,
-        compatibility_version=json.loads(manifest.read_text())['report_semantic_version'],
-        inventory=[], registered=[], records=[], inputs=[])
+        compatibility_version=json.loads(manifest.read_text())['report_cache_release_semantic_version'],
+        inventory=[], registered=[], records=[])
 
 
 class ManifestVersionTests(unittest.TestCase):
-    def test_manifest_only_bump_accepts_eight_and_rejects_seven(self):
+    def test_manifest_only_bump_accepts_nine_and_rejects_eight(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = manifest_fixture(root, 8)
+            manifest = manifest_fixture(root, 9)
             evidence = evidence_fixture(manifest)
-            self.assertEqual(evidence['compatibility_version'], 8)
+            self.assertEqual(evidence['compatibility_version'], 9)
             try:
                 materials.validate_template_evidence(evidence, manifest)
             except Exception as error:
-                self.fail('[FAIL] manifest_only_bump_accepts_eight: ' + str(error))
+                self.fail('[FAIL] manifest_only_bump_accepts_nine: ' + str(error))
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
-                materials.validate_template_evidence(dict(evidence, compatibility_version=7), manifest)
+                materials.validate_template_evidence(dict(evidence, compatibility_version=8), manifest)
 
     def test_absent_evidence_version_uses_named_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 8)
+            manifest = manifest_fixture(Path(directory), 9)
             evidence = evidence_fixture(manifest)
             del evidence['compatibility_version']
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
@@ -58,8 +58,8 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_malformed_evidence_version_uses_named_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 8)
-            for version in [None, True, '8', 0, -1, 8.0, 8.5]:
+            manifest = manifest_fixture(Path(directory), 9)
+            for version in [None, True, '9', 0, -1, 9.0, 9.5]:
                 with self.subTest(version=version):
                     evidence = dict(evidence_fixture(manifest), compatibility_version=version)
                     with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
@@ -68,7 +68,7 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_unrelated_malformed_evidence_keeps_structural_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 8)
+            manifest = manifest_fixture(Path(directory), 9)
             valid = evidence_fixture(manifest)
             missing_inventory = dict(valid)
             del missing_inventory['inventory']
@@ -81,10 +81,10 @@ class ManifestVersionTests(unittest.TestCase):
                         materials.validate_template_evidence(evidence, manifest)
 
     def test_missing_or_malformed_manifest_version_rejected(self):
-        for text in [None, '{}', '{', '[]', '{"report_semantic_version":null}',
-                     '{"report_semantic_version":"8"}', '{"report_semantic_version":true}',
-                     '{"report_semantic_version":0}', '{"report_semantic_version":-1}',
-                     '{"report_semantic_version":6.5}']:
+        for text in [None, '{}', '{', '[]', '{"report_cache_release_semantic_version":null}',
+                     '{"report_cache_release_semantic_version":"8"}', '{"report_cache_release_semantic_version":true}',
+                     '{"report_cache_release_semantic_version":0}', '{"report_cache_release_semantic_version":-1}',
+                     '{"report_cache_release_semantic_version":6.5}']:
             with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 manifest = manifest_fixture(root)
@@ -100,7 +100,7 @@ class ManifestVersionTests(unittest.TestCase):
     def test_compact_cli_uses_explicit_manifest(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = manifest_fixture(root, 8)
+            manifest = manifest_fixture(root, 9)
             spool = root / 'spool'
             spool.mkdir()
             source, output = root / 'spool.json', root / 'report.json'
@@ -111,7 +111,7 @@ class ManifestVersionTests(unittest.TestCase):
                 str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
             self.assertEqual(result.returncode, 0, '[FAIL] compact_explicit_manifest: ' + result.stderr.decode())
             rows = publication.validate_rows(output, publication.member(output, '.materials.zip'), manifest=manifest)
-            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 8)
+            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 9)
             row['information_templates']['compatibility_version'] = 7
             source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
             result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
@@ -241,7 +241,7 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
                 report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -256,13 +256,12 @@ class PublicationTests(unittest.TestCase):
                 utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
                 rows[name] = [dict(module=name, source_path=source.name,
                     source_sha256='sha256:' + publication.digest(source),
-                    information_templates=dict(evidence_fixture(manifest_fixture(root)),
-                        inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
+                    information_templates=evidence_fixture(manifest_fixture(root)))]
                 requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
             request, result = root / 'request.json', root / 'result.json'
             request.write_text(json.dumps(requests))
             # Isolate the source-binding boundary from ZIP decoding. The batch
-            # loop and each row's real path/hash validator still execute.
+            # loop and each row's path/version validator still execute.
             def validate(kind, owner, name, utility, artifact, **kwargs):
                 native.row_binding(rows[name], owner, name, utility,
                     **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
@@ -293,12 +292,12 @@ class PublicationTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'declared-template evidence'):
                         publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
 
-    def test_binding_source_revalidation_rejects_stale_and_missing_inputs(self):
+    def test_binding_structure_accepts_retained_hashes_without_source_reads(self):
         import zipfile
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -308,8 +307,7 @@ class PublicationTests(unittest.TestCase):
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
             utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
-            evidence = dict(evidence_fixture(manifest_fixture(root)),
-                inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
+            evidence = evidence_fixture(manifest_fixture(root))
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 imports=[], declarations=[], information_templates=evidence)]
             inputs = publication.selection.Selection(root)
@@ -325,7 +323,7 @@ class PublicationTests(unittest.TestCase):
                 sources='c' * 64, config='d' * 64, input=pair)
             origins = {'X': dict(module='X', report_sha256=publication.digest(report),
                 compatibility_sha256=compatibility, producer_sources_sha256='e' * 64,
-                inspector_executable_sha256='f' * 64, input_sources={'X.lean': publication.digest(source)})}
+                inspector_executable_sha256='f' * 64)}
             publication.write_sidecars(report, coordinates, origins)
             validators = [lambda: native.row_binding(rows, root, 'X', utility),
                           lambda: native.row_binding(rows, root, 'X', utility, template_inputs=inputs),
@@ -337,12 +335,11 @@ class PublicationTests(unittest.TestCase):
                 validate()
             policy.write_text('def driver := 2\n')
             for index, validate in enumerate(validators):
-                with self.subTest(validator=index, damage='changed'), self.assertRaisesRegex(
-                        ValueError, 'stale declared-template input', msg='[FAIL] native_binding_input_freshness'):
+                with self.subTest(validator=index, damage='changed'):
                     validate()
             policy.unlink()
             for index, validate in enumerate(validators):
-                with self.subTest(validator=index, damage='missing'), self.assertRaises((ValueError, OSError)):
+                with self.subTest(validator=index, damage='missing'):
                     validate()
 
     def test_shared_validation_rechecks_bytes_and_complete_declaration_identity(self):
@@ -378,7 +375,7 @@ class PublicationTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'material address mismatch'):
                     publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
 
-    def test_source_membership_and_claim_bindings_use_current_registered_sources(self):
+    def test_source_membership_and_paths_remain_required_without_byte_revalidation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / 'X.lean'
@@ -386,7 +383,7 @@ class PublicationTests(unittest.TestCase):
             claim = root / 'Claim.lean'
             claim.write_text('def claim : Prop := False\n')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -400,12 +397,10 @@ class PublicationTests(unittest.TestCase):
                 publication.validate_sources([row], root)
             row['source_path'] = 'X.lean'
             claim.write_text('def claim : Prop := True\n')
-            with self.assertRaisesRegex(ValueError, 'claim source'):
-                publication.validate_sources([row], root)
+            publication.validate_sources([row], root)
             row.pop('utility_refutation')
             source.write_text('def x : Nat := 2\n')
-            with self.assertRaisesRegex(ValueError, 'source binding'):
-                publication.validate_sources([row], root)
+            publication.validate_sources([row], root)
 
     def test_rejected_complete_bundle_never_replaces_published_bytes(self):
         import subprocess
@@ -432,8 +427,7 @@ class PublicationTests(unittest.TestCase):
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
                 origins = {'X': dict(module='X', report_sha256=publication.digest(report),
-                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64,
-                    input_sources={'X.lean': 'a'*64})}
+                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64)}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
                 publication.publish(report, live, coordinates, manifest=manifest_fixture(directory))
@@ -502,7 +496,7 @@ class EntryPointTests(unittest.TestCase):
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
@@ -555,7 +549,7 @@ class EntryPointTests(unittest.TestCase):
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_semantic_version=1,
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                     report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                     producer_scopes={'lean-report': paths('lean-report-inputs.json',
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
