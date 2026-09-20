@@ -17,7 +17,8 @@ run_meta do
       expected.all (fun name => snapshot.selected.any (·.occurrence.key.theoremName == name)) do
     throwError "setup: export inventory differs from the five independent occurrences"
   let modules := #[`LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings,
-      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural].map fun moduleName =>
+      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural,
+      (← getEnv).header.mainModule].map fun moduleName =>
     (moduleName, snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
       |>.map (·.occurrence.key))
   let wires ← reportJson modules
@@ -26,6 +27,9 @@ run_meta do
     let .ok rows := wire.getObjValAs? (Array Json) "records"
       | throwError "setup: missing record wire"
     unless rows.size == registered.size do throwError "setup: export partition lost a row"
+    unless (wire.getObjVal? "inputs").toOption.isNone && rows.all
+        (fun row => (row.getObjVal? "content_inputs").toOption.isNone) do
+      throwError "[FAIL] report_omits_untraced_source_hashes"
   logInfo "[PASS] complete_producer_loader_wire"
   IO.FS.createDirAll ".lake/build"
   IO.FS.writeFile ".lake/build/declared-template-evidence.json" ((Json.arr wires).compress ++ "\n")
@@ -34,17 +38,19 @@ run_meta do
     let original ← IO.FS.readFile manifestPath
     let .ok manifest := Json.parse original | throwError "setup: invalid manifest"
     let .ok fields := manifest.getObj? | throwError "setup: manifest is not an object"
-    let .ok version := manifest.getObjValAs? Nat "report_semantic_version"
+    let .ok version := manifest.getObjValAs? Nat "report_cache_release_semantic_version"
       | throwError "setup: missing semantic version"
     IO.FS.writeFile manifestPath ((Json.mkObj (fields.toList.map fun (key, value) =>
-      (key, if key == "report_semantic_version" then toJson (version + 1) else value))).compress)
+      (key, if key == "report_cache_release_semantic_version" then toJson (version + 1) else value))).compress)
     let bumped ← reportJson modules
-    let accepted := bumped.all fun wire => wire.getObjValAs? Nat "compatibility_version" == .ok (version + 1)
+    let accepted := bumped.size == wires.size && !bumped.isEmpty && (bumped.zip wires).all fun (wire, prior) =>
+      wire.getObjValAs? Nat "compatibility_version" == .ok (version + 1) &&
+      (wire.getObjVal? "records").map Json.compress == (prior.getObjVal? "records").map Json.compress
     (if accepted then logInfo else logError)
       m!"[{if accepted then "PASS" else "FAIL"}] manifest_only_bump_emits_next_version"
-    for (label, text) in #[("missing", "{}"), ("string", "{\"report_semantic_version\":\"8\"}"),
-        ("zero", "{\"report_semantic_version\":0}"), ("negative", "{\"report_semantic_version\":-1}"),
-        ("boolean", "{\"report_semantic_version\":true}"), ("fraction", "{\"report_semantic_version\":6.5}"),
+    for (label, text) in #[("missing", "{}"), ("string", "{\"report_cache_release_semantic_version\":\"8\"}"),
+        ("zero", "{\"report_cache_release_semantic_version\":0}"), ("negative", "{\"report_cache_release_semantic_version\":-1}"),
+        ("boolean", "{\"report_cache_release_semantic_version\":true}"), ("fraction", "{\"report_cache_release_semantic_version\":6.5}"),
         ("json", "{"), ("absent", "")] do
       if label == "absent" then IO.FS.removeFile manifestPath else IO.FS.writeFile manifestPath text
       let rejected ← try

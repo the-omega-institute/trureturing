@@ -95,7 +95,7 @@ class Selection:
                                    object_pairs_hook=unique_object)
         except (OSError, UnicodeError, ValueError) as error:
             fail('declaration', str(error))
-        keys = {'schema_version', 'report_semantic_version', 'report_modules', 'inspector_sources',
+        keys = {'schema_version', 'report_cache_release_semantic_version', 'report_modules', 'inspector_sources',
                 'config_inputs', 'producer_scopes'}
         if 'dependency_sources' in self.data:
             keys.add('dependency_sources')
@@ -104,8 +104,8 @@ class Selection:
         fields(self.data, keys, 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
-        if type(self.data['report_semantic_version']) is not int or self.data['report_semantic_version'] <= 0:
-            fail('report_semantic_version', 'must be a positive integer')
+        if type(self.data['report_cache_release_semantic_version']) is not int or self.data['report_cache_release_semantic_version'] <= 0:
+            fail('report_cache_release_semantic_version', 'must be a positive integer')
         for name in ('report_modules', 'inspector_sources', 'config_inputs'):
             path_set(self.data[name], name)
         if 'dependency_sources' in self.data:
@@ -130,7 +130,7 @@ class Selection:
 
     def compatibility(self):
         return hashlib.sha256(
-            f"schema=stratalint-lean-report-compatibility\nversion={self.data['report_semantic_version']}\n".encode('ascii')
+            f"schema=stratalint-lean-report-compatibility\nversion={self.data['report_cache_release_semantic_version']}\n".encode('ascii')
         ).hexdigest()
 
     def safe_file(self, relative):

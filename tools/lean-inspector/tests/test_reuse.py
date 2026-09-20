@@ -29,7 +29,7 @@ class ReuseTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         paths = lambda *values: dict(include=[dict(pattern=v, optional=False) for v in values], exclude=[])
-        self.policy = dict(schema_version=1, report_semantic_version=1,
+        self.policy = dict(schema_version=1, report_cache_release_semantic_version=1,
             report_modules=paths('D5/**/*.lean'), inspector_sources=paths('Inspector.lean'),
             dependency_sources=paths('Audit.lean'), config_inputs=paths('lean-toolchain', 'lakefile.toml'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
@@ -79,8 +79,7 @@ class ReuseTests(unittest.TestCase):
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
             compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
-            inspector_executable_sha256='b' * 64,
-            input_sources={row['source_path']: row['source_sha256'][7:]}) for row in rows}
+            inspector_executable_sha256='b' * 64) for row in rows}
         publication.write_sidecars(self.report, publication.coordinates(self.root), origins)
 
     def receipt(self):
@@ -200,7 +199,7 @@ class ReuseTests(unittest.TestCase):
                                  '[FAIL] producer_program_change_keeps_receipt')
                 source.write_bytes(original)
                 source.chmod(mode)
-        self.policy['report_semantic_version'] += 1
+        self.policy['report_cache_release_semantic_version'] += 1
         self.write_policy()
         result = api.probe(self.root, self.report, self.lake)
         self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',

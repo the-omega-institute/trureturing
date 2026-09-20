@@ -122,13 +122,7 @@ def write_origin(report, name, origin):
 
 def check_origin(origin, row, compatibility):
     materials.require_keys(origin, {'module', 'report_sha256', 'compatibility_sha256',
-        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}, 'module production origin')
-    bindings = origin['input_sources']
-    if (not isinstance(bindings, dict) or bindings.get(row['source_path']) != row['source_sha256'][7:]
-            or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
-        raise ValueError('module dependency source binding mismatch')
-    for path in bindings:
-        selection.validate_pattern(path, 'dependency source binding')
+        'producer_sources_sha256', 'inspector_executable_sha256'}, 'module production origin')
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
@@ -235,17 +229,11 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
     return root['modules']
 
 
-class _SourceValidation:
-    """Source reads shared only within one read-only validation invocation."""
+class _SourceStructure:
+    """Registered membership and artifact structure; Lake owns freshness."""
 
     def __init__(self, repository):
         self.inputs = selection.Selection(repository)
-        self.digests = {}
-
-    def digest(self, path):
-        if path not in self.digests:
-            self.digests[path] = digest(self.inputs.safe_file(path))
-        return self.digests[path]
 
     def validate_sources(self, rows):
         modules = self.inputs.modules()
@@ -253,77 +241,43 @@ class _SourceValidation:
             raise ValueError('report source membership mismatch')
         for row in rows:
             path = modules[row['module']]
-            if row['source_path'] != path or row['source_sha256'] != 'sha256:' + self.digest(path):
+            if row['source_path'] != path:
                 raise ValueError('report source binding mismatch')
-            evidence = row.get('utility_refutation')
-            if evidence and evidence['claim_source_sha256'] != 'sha256:' + self.digest(evidence['claim_source_path']):
-                raise ValueError('report claim source binding mismatch')
         validate_template_sources(rows, self.inputs.root, inputs=self.inputs)
-
-    def validate_dependency_sources(self, origins):
-        allowed = set(self.inputs.dependency_sources())
-        for origin in origins.values():
-            for path, sha in origin['input_sources'].items():
-                if path not in allowed:
-                    raise ValueError('unregistered dependency source binding: ' + path)
-                if self.digest(path) != sha:
-                    raise ValueError('stale dependency source binding: ' + path)
 
 
 def validate_sources(rows, repository):
-    _SourceValidation(repository).validate_sources(rows)
+    _SourceStructure(repository).validate_sources(rows)
 
 
 def validate_template_sources(rows, repository, *, inputs=None):
-    """Reject stale binding inputs before native reuse or final publication.
+    """Check evidence structure and the explicit report cache version.
 
-    Their paths are emitted by the checked driver. This checks byte binding;
-    the strict C# consumer still checks the complete evidence semantics.
+    Lake traces own input freshness; evidence contains no raw source hashes.
     """
-    # Selection expands the report scope. A native batch shares that immutable
-    # scope description; path checks and byte digests remain fresh per call.
     manifest = Path(repository) / 'lean-report-inputs.json'
     materials.read_manifest_version(manifest)
     if inputs is None:
         inputs = selection.Selection(repository)
     elif inputs.root != Path(repository).resolve():
         raise ValueError('declared-template input owner mismatch')
-    observed = {}
     for row in rows:
         evidence = row.get('information_templates')
         if evidence is None:
             continue
         materials.validate_template_evidence(evidence, manifest)
-        previous = None
-        for source in evidence['inputs']:
-            materials.require_keys(source, {'path', 'sha256'}, 'declared-template input')
-            path, sha = source['path'], source['sha256']
-            if (not isinstance(path, str) or not path or previous is not None and path <= previous
-                    or not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{64}', sha)):
-                raise ValueError('malformed declared-template input binding')
-            previous = path
-            if path not in observed:
-                observed[path] = digest(inputs.safe_file(path))
-            if observed[path] != sha:
-                raise ValueError('stale declared-template input binding: ' + path)
-
-
-def validate_dependency_sources(origins, repository):
-    _SourceValidation(repository).validate_dependency_sources(origins)
-
 
 def verify_inputs(report, repository):
-    """Input-only verification; the full material validator remains separate."""
+    """Check input membership and origin integrity without source-byte replay."""
     rows = read_json(Path(report).read_bytes())['modules']
     provenance = read_json(member(report, '.provenance.json').read_bytes())
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
-    sources = _SourceValidation(repository)
+    sources = _SourceStructure(repository)
     compatibility = sources.inputs.compatibility()
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
     sources.validate_sources(rows)
-    sources.validate_dependency_sources(origins)
 
 
 def _require_bundle_files(report):
@@ -372,9 +326,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     for row in rows:
         check_origin(origins[row['module']], row, provenance['producer_sha256'])
     if repository is not None:
-        sources = _SourceValidation(repository)
+        sources = _SourceStructure(repository)
         sources.validate_sources(rows)
-        sources.validate_dependency_sources(origins)
     return rows
 
 
