@@ -34,7 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
-- [A book of N four-prime pages has a uniform full Haar-density lower bound, supplying a computable cutoff for arbitrary large-prime constraints that join any number of head pages](../docs/reports/erdos7-odd-covering/problem-details/37-full-density-and-large-prime-continuation-for-spine-books.md)
+- [A book of N four-prime pages has full Haar density greater than (67/4000)(3/16)^N, supplying a computable cutoff for arbitrary large-prime constraints joining head pages](../docs/reports/erdos7-odd-covering/problem-details/37-full-density-and-large-prime-continuation-for-spine-books.md)
 - [Arbitrarily many four-prime pages sharing the spine {3,5} are noncovering, with a uniform positive measure of common boundary configurations admitting all page extensions](../docs/reports/erdos7-odd-covering/problem-details/36-common-spine-books-of-four-prime-pages.md)
 - [One actual block on the first eight odd primes admits arbitrarily many seven-vertex attachments; extendible core configurations have Haar density greater than 1/1200000](../docs/reports/erdos7-odd-covering/problem-details/35-eight-prime-core-with-seven-vertex-attachments.md)
 - [Fixed prime graphs with blocks of at most seven vertices have a uniform head-density bound and a computable cutoff for unrestricted large-prime tails, including tail classes joining the whole head](../docs/reports/erdos7-odd-covering/problem-details/34-uniform-head-density-from-thick-block-domains.md)

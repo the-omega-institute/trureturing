@@ -2,242 +2,306 @@
 
 # Full density and large-prime continuation for common-spine books
 
-**Full-density theorem.** Let a finite family have distinct odd moduli
-greater than one. Suppose its primes other than 3 and 5 have a partition
-into \(N\) nonempty private pages, each containing at most two primes,
-such that every modulus is supported on the common spine \(\{3,5\}\)
-and at most one page. Classes supported only on the spine are included
-once. Then the full original Haar survivor proportion is greater than
+**Full-density theorem.** Let a finite family have pairwise distinct odd
+moduli greater than one. Suppose its primes other than 3 and 5 have a
+partition into \(N\) nonempty private pages, each containing at most two
+primes, such that every modulus is supported on the spine \(\{3,5\}\)
+and at most one page. The full original Haar survivor proportion satisfies
 \[
- \varepsilon_N=
- \frac{968925187}{30375000000000}
- \left(\frac{45539483789}{1528808537470752}\right)^N>0.
+ H(U)>\varepsilon_N:=\frac{67}{4000}\left(\frac3{16}\right)^N>0.
  \tag{BD1}
 \]
-This bound is uniform in the prime labels, original finite heights,
-residues, and number of moduli. The integer \(N\) counts the chosen
-nonempty private pages, not moduli, exponents, or auxiliary coordinates.
-For a spine-only family use \(N=0\).
-
-**Large-prime continuation.** Fix the head prime set \(P\) and its
-permitted page partition. A computable cutoff
-\(B_0(P,N)\ge\max(\{286\}\cup P)\) allows any finite collection of
-additional primes greater than \(B_0\), with arbitrary finite powers,
-residues, and support sizes, without producing a cover. Only the
-head-only classes must satisfy the book condition. Tail-touching classes
-may join any number of head pages.
-
-The density statement strengthens
-[Chapter 36](36-common-spine-books-of-four-prime-pages.md), which bounds
-the proportion of extendible spine words. Its proof also needs volume
-inside the core and pointwise private-page fibres. The continuation uses
-the existing bridge of
-[Chapter 33](33-seven-small-primes-with-an-unrestricted-large-prime-tail.md)
-in the same way as
-[Chapter 34](34-uniform-head-density-from-thick-block-domains.md).
-These are ordinary mathematical deductions with exact rational
-constants and the same inherited source and analytic premises. No new
-Lean verification or solution of unrestricted Erdős #7 is claimed.
-
-## 1. Thicken the actual page fibres in one common law
-
-Retain Chapter 36's actual core choice. It has zero, one, or two private
-pages: it includes every page containing 7 or 11. Thus every remaining
-page has real smaller prime \(q\ge13\) and larger prime \(r\ge17\),
-after the dummy padding described below when necessary.
-
-For one remaining page, use its actual pure-avoiding domains \(V_q,V_r\)
-and product law
+There is no restriction on original finite heights, residues, page count,
+or the number of classes. For two-prime pages \(q_i<r_i\), the stronger
+bound is
 \[
- \nu=H_q(\cdot\mid V_q)\otimes H_r(\cdot\mid V_r).
-\]
-At each complete original spine word \(x\), let \(R_x\) avoid the
-actual shallow classes at that page's chosen rectangle, and put
-\(\nu_x=\nu(\cdot\mid R_x)\). Chapter 36 gives
-\(\nu(R_x)\ge Z>0\) for every \(x\).
-
-For original labels outside that rectangle define the actual conditional
-load
-\[
- u(x)=\sum_{\ell\text{ deep}}
-  \mathbf1_{\{x\text{ matches the spine part of }\ell\}}
-                         \nu_x(C_\ell).
+ H(U)>\frac{67}{4000}
+ \prod_i\frac{(q_i-2)(r_i-2)}{4(q_i-1)(r_i-1)}.
  \tag{BD2}
 \]
-The proof of (BK5), before using the indicator of total blockage, yields
+For singleton pages the same expression holds after the free-coordinate
+padding described below. In (BD1), \(N\) counts original nonempty pages;
+a spine-only family has \(N=0\).
+
+**Large-prime continuation.** Fix the head prime set \(P\) and a permitted
+page partition. A computable cutoff \(B_0(P,N)\ge\max(\{286\}\cup P)\)
+allows arbitrary further primes greater than \(B_0\), without coverage.
+Only head-only classes must satisfy the book condition. Tail-touching
+classes may join arbitrarily many head pages and tail primes.
+
+The full-density proof uses the ordinary normalized kernels and labelled
+conditional convex comparison of
+[Schroeder's three-prime paper](../../../../Library/Arith/schroeder2026noncoverage.md),
+version 1.0, revised 15 September 2026, Sections 2--3. The comparison
+proposition itself has no three-prime-support hypothesis. The new
+book-specific charge allocation gives a full-volume strengthening of
+[Chapter 36](36-common-spine-books-of-four-prime-pages.md), without using
+its anchor geometry. The continuation reuses
+[Chapter 33](33-seven-small-primes-with-an-unrestricted-large-prime-tail.md).
+These are ordinary deductions with exact rational calculations; no new
+Lean verification, literature-priority claim, or solution of unrestricted
+Erdős #7 is asserted.
+
+## 1. One common spine law
+
+Use the full prime-power CRT coordinates resolving every original height.
+Write \(H_p\) for uniform probability on the \(p\)-coordinate. Let \(V_p\)
+avoid all original pure classes \(p^e\), and put
 \[
- \int u(x)\,dH_{35}(x)\le g(q).
+ H_p(V_p)\ge1-\sum_{e\ge1}p^{-e}=\frac{p-2}{p-1},\qquad
+ \nu_p=H_p(\cdot\mid V_p),\quad c_p=\frac{p-1}{p-2}.
  \tag{BD3}
 \]
-Indeed, (BK4) bounds each actual query under the same \(\nu_x\), and
-integration of its original spine cylinder gives (BK6). Both zero
-exponent axes are retained. This bounds the actual averaged load, not
-only the measure of words with no extension.
+Numerical distinctness permits at most one pure class per exponent. Thus
+\(\nu_p\le c_pH_p\), and each original prefix of depth \(e\) has
+\(\nu_p\)-probability at most \(c_pp^{-e}\).
 
-Write
+Fix \(\nu=\nu_3\otimes\nu_5\). If \(B_S\) is the union of mixed
+spine-only classes, each full label \(3^a5^b\), \(a,b\ge1\), occurs
+at most once, so
 \[
- \delta=\frac{968925187}{2025000000000},\qquad S=\frac{21}{200},
- \qquad
- \eta=\frac{\delta}{2S+\delta}
-       =\frac{968925187}{426218925187}.
+ \nu(B_S)\le\sum_{a,b\ge1}2\,3^{-a}\frac43\,5^{-b}=\frac13.
  \tag{BD4}
 \]
-Remove the stronger bad-spine set
-\(W=\{x:u(x)>1-\eta\}\). Markov's inequality gives
+We do not condition \(\nu\) on avoiding \(B_S\). All pages share this
+same product law, and the mixed-spine fee is paid once. In particular the
+original spine Haar reserve is at least
+\((1/2)(3/4)(2/3)=1/4\). A normalized safe-head interface requiring
+probability-one root survival is not applied to \(\nu\).
+
+## 2. Actual normalized kernels, including zero-survival fibres
+
+For each private pair \(q<r\), assign every nonpure page class containing
+\(r\) to the \(r\)-stage; assign every other nonpure page class to the
+\(q\)-stage. Spine-only classes were already assigned at the root.
+
+At stage \(p\), let \(B_p(x)\) be the actual forbidden coordinate union
+at the complete earlier word \(x\), and set
+\(\alpha_p(x)=\nu_p(B_p(x))\). Use the density relative to \(\nu_p\)
 \[
- H_{35}(W)\le\frac{g(q)}{1-\eta}.
+ k_p(x,y)=
+ \begin{cases}
+ (1-\min\{\alpha_p(x),1/2\})^{-1},&y\notin B_p(x),\\
+ 2(\alpha_p(x)-1/2)_+/\alpha_p(x),&y\in B_p(x).
+ \end{cases}
  \tag{BD5}
 \]
-For every \(x\notin W\), the union of all matching deep labels has
-\(\nu_x\)-mass at most \(1-\eta\). Hence the actual full private
-survivor fibre has original Haar proportion at least
+The second expression is zero when \(\alpha_p=0\). Direct integration
+at every history proves normalization, \(0\le k_p\le2\), and
 \[
- H_q(V_q)H_r(V_r)\,\nu(R_x)\eta.
+ K_p(x,B_p(x))=2(\alpha_p(x)-1/2)_+.
  \tag{BD6}
 \]
-This is a pointwise statement at the same spine word, using the same
-actual shallow conditional law as the cost estimate.
+At \(\alpha_p=1\), \(K_p=\nu_p\): the completely forbidden fibre
+is retained and charged one. No history is removed to make the kernel
+well-defined.
 
-The minimum \(Z\) among the 29 finite rows of Chapter 36 is
-\(94/6165\), attained at the row with smaller prime 137. Its analytic
-tail has \(Z\ge1/2\). The selected dominating caps therefore give
-\(\nu(R_x)\ge94/6165\) for every remaining page. Also
+Construct the single full law
 \[
- H_q(V_q)H_r(V_r)
- \ge\frac{11}{12}\frac{15}{16}=\frac{55}{64}.
-\]
-Consequently (BD6) has the uniform lower bound
-\[
- a:=\eta\frac{94}{6165}\frac{55}{64}
-   =\frac{45539483789}{1528808537470752},\qquad 0<a<1.
+ \mathbb P(ds,dy)=\nu(ds)\prod_i
+              K_{q_i}(s,dy_{q_i})K_{r_i}(s,y_{q_i},dy_{r_i}).
  \tag{BD7}
 \]
-The numerical value is approximately \(2.979\times10^{-5}\).
+Every factor is normalized. Later pages preserve earlier joint marginals,
+and the spine marginal is exactly \(\nu\).
 
-## 2. The same core pays the stronger bad sets
-
-Let \(\mu\) be the actual core submeasure in the applicable case of
-Chapter 36, and let \(m\) be its certified lower mass. It avoids all
-original core classes and has joint spine marginal at most \(H_{35}\).
-Let \(G\) be the sum of the safe fees \(g(q)\) of its actual remaining
-pages. Their minimum primes are distinct and exclude the actual core's
-private primes. Chapter 36's same case split and fee discounts give
+Define the page fee at a full spine word by
 \[
- G<S,\qquad m-G>\delta.
+ e_i(s)=2(\alpha_q(s)-1/2)_+
+       +2\int(\alpha_r(s,y_q)-1/2)_+K_q(s,dy_q).
  \tag{BD8}
 \]
-For each of the 13 split-core ranges this is the corresponding source
-mass minus the remaining fee sum; the strict total fee bound makes it
-strict even for the row whose displayed margin equals \(\delta\).
-The anchor-only and one-page cores have larger margins.
-
-Delete every \(W_i\) from this same core measure, according to its
-spine coordinates. The whole deletion costs at most \(G/(1-\eta)\).
-Since
+Let \(W_i(s)\) be its original private Haar probability of avoiding all
+page-owned classes, including its pure classes. Under the page kernel,
+the union bound gives avoidance probability at least \((1-e_i(s))_+\).
+Its density relative to \(H_q\otimes H_r\) is at most \(4c_qc_r\),
+hence
 \[
- \frac{\eta}{1-\eta}S=\frac\delta2,
-\]
-the remaining core submeasure has mass greater than
-\[
- m-G-\frac{\eta}{1-\eta}G>\frac\delta2.
+ W_i(s)\ge\frac{(1-e_i(s))_+}{4c_qc_r},\qquad
+ \mathbf1_{\{W_i(s)=0\}}\le e_i(s).
  \tag{BD9}
 \]
-All remaining pages simultaneously have the pointwise fibre bound
-\(a\) at each spine word supporting this restricted measure. No core
-or page survivor measure is renormalized.
+This retains the same joint spine word throughout; it neither multiplies
+marginal probability caps nor chooses different good words for different
+pages.
 
-## 3. A full joint density bound for the core
+## 3. Compare original labelled loads before completing exponents
 
-A bound for the joint spine marginal alone would not control the
-volume in private core coordinates. Here the actual source construction
-supplies the additional bound
+The source Proposition 3.2 compares nonnegative rectangle loads under
+full-history conditional caps. Specifically, if
+\(\Pr(X_j\in A_{\ell,j}\mid X_1,\ldots,X_{j-1})\le b_{\ell,j}\)
+with deterministic caps, then, for nonnegative weights and increasing
+convex \(h\),
 \[
- \mu\le D_*H_{\mathrm{core}},\qquad D_*:=\frac{15}{2}.
+ \mathbb E h\!\left(\sum_\ell w_\ell\prod_j
+                      \mathbf1_{A_{\ell,j}}(X_j)\right)
+ \le\mathbb E h\!\left(\sum_\ell w_\ell\prod_j
+                      \mathbf1_{\{U_j\le b_{\ell,j}\}}\right),
  \tag{BD10}
 \]
-The initial anchor measure is an unnormalized Haar restriction, with
-density at most one. Each normalized private-coordinate kernel has
-its stated pointwise conditional density cap, and deletions only
-decrease the density. Multiplying these **conditional** caps gives a
-full joint bound; this is not multiplication of separate marginal caps.
+where the \(U_j\) are independent uniforms. Each coordinate uses the
+same uniform for every original label. The elementary proof replaces
+the last coordinate by nested indicators: convexity makes the set
+function of active labels supermodular, and its increasing increments
+are bounded using the conditional caps. Backward induction completes
+the replacement. Actual labels need not have compatible residues.
 
-The anchor-only core has cap one. The source four-prime core has cap
-\((3/2)(5/3)=5/2\). For the actual six-prime core
-\((3,5,7,11,u,v)\), where \(u\ge13,v\ge17\), the thresholds
-\((2,4,4,8)\) give
+Use independent integer variables \(N_p=1+K_p^{\rm aux}\), with
 \[
- D(u,v)=\frac32\frac53\frac{u-1}{u-5}\frac{v-1}{v-9}
- \le\frac32\frac53\frac32\,2=\frac{15}{2}.
+ \Pr(K_3^{\rm aux}\ge e)=2\,3^{-e},\quad
+ \Pr(K_5^{\rm aux}\ge e)=\frac43\,5^{-e},\quad
+ \Pr(K_*^{\rm aux}\ge e)=\frac{12}{5}\,7^{-e}\quad(e\ge1).
+\]
+The star denotes an auxiliary law, not an additional actual prime.
+For every actual \(q\ge7\), (BD5) gives full-history prefix caps
+\(2c_qq^{-e}\le(12/5)7^{-e}\); this follows since both \(c_q\)
+and \(q^{-e}\) decrease with \(q\).
+
+Put \(Y_0=N_3N_5-1\) and \(Y=N_3N_5N_*-1\), and define
+\[
+ F_0(p)=\frac2{p-2}\mathbb E(Y_0-(p-2)/2)_+,\qquad
+ F(p)=\frac2{p-2}\mathbb E(Y-(p-2)/2)_+.
  \tag{BD11}
 \]
-Haar-preserving coordinate normalizations and projection from source
-heights to the complete original finite heights preserve these bounds.
+At the first stage the original labels are \(3^a5^bq^e\), with
+\(e\ge1\) and \(a+b>0\). First bound the actual forbidden union by
+the sum of \(c_qq^{-e}\) times each label's actual spine indicator;
+then apply (BD10) to this finite labelled sum with
+\(h(u)=2(u-1/2)_+\). Only afterwards complete exponent tuples.
+There is at most one original class per full tuple, and
+\(\sum_{e\ge1}c_qq^{-e}=1/(q-2)\), giving comparison load
+\(Y_0/(q-2)\). The resulting stage fee is at most \(F_0(q)\).
 
-When the four-prime core is transported to a larger actual private
-pair, use Chapter 36's **averaged** private prefix injections, which
-fix the full spine. For each such injection \(F\), construct the
-source measure \(\mu_F\) and apply its full bound before averaging:
+At the second stage the original labels are \(3^a5^bq^cr^e\), with
+\(e\ge1\) and \(a+b+c>0\). The actual predecessor law is
+\(\nu_3\nu_5K_q\). It satisfies exactly the conditional caps in
+(BD10). The same labelled comparison followed by completion gives load
+\((N_3N_5(1+K_q^{\rm aux})-1)/(r-2)\), dominated by
+\(Y/(r-2)\). Thus
 \[
- \mathbb E_F(F_*\mu_F)(A)
- \le\frac52\mathbb E_F H_{\mathrm{source}}(F^{-1}A)
- =\frac52 H_{\mathrm{target}}(A).
+ \int e_i\,d\nu\le F_0(q_i)+F(r_i),\qquad
+ \sum_i\int e_i\,d\nu\le F_0(7)+\sum_{p\ge11\ {\rm prime}}F(p).
  \tag{BD12}
 \]
-For each fixed source private word its image is uniform on the target
-private coordinates, while the spine retains its original Haar law.
-The source measure may depend on \(F\); the inequality applies
-separately for every \(F\) before taking the average. Mass and original
-avoidance are retained. A single fixed injection is not asserted to
-preserve this full Haar bound.
+For the last inequality, \(Y\ge Y_0\), actual private primes belong
+to exactly one page, and 7 can only occur as a first stage. Adding absent
+primes only enlarges this nonnegative bound. Full geometric sums cover
+all heights; monotone convergence justifies the comparison completion.
+No uniqueness of products of different modulus labels is assumed.
 
-Let \(C\) be the set of core tuples avoiding its original classes and
-all the stronger outside-page bad-spine sets. By (BD9)--(BD10),
+## 4. Six exact fees and an analytic remainder
+
+The masses of \(N_3,N_5,N_*\) at 1 are respectively
+\(1/3,11/15,23/35\). At \(n\ge2\) they are
 \[
- H_{\mathrm{core}}(C)>\frac{\delta/2}{15/2}
- =\frac\delta{15}.
+ u_n=4/3^n,\qquad v_n=16/(3\cdot5^n),\qquad
+ w_n=72/(5\cdot7^n).
+\]
+Their product has mean \(56/15\). Using
+\(\mathbb E(Z-a)_+=\mathbb EZ-a+\mathbb E(a-Z)_+\) gives the finite
+exact formula
+\[
+ F(p)=\frac2{p-2}\left[\frac{56}{15}-\frac p2+
+     \sum_{abc\le(p-1)/2}(p/2-abc)u_av_bw_c\right].
+\]
+For \(F_0\), omit the third factor and use mean \(8/3\). This yields
+\(F_0(7)=8804/50625\) and
+\(F(11)=253372547128/1722980109375\), with strict bounds:
+
+| Charge | Strict upper bound |
+|---|---:|
+| \(F_0(7)\) | \(174/1000\) |
+| \(F(11)\) | \(148/1000\) |
+| \(F(13)\) | \(92/1000\) |
+| \(F(17)\) | \(42/1000\) |
+| \(F(19)\) | \(30/1000\) |
+| \(F(23)\) | \(16/1000\) |
+
+Their sum is less than \(251/500\). The first three full moments are
+
+| Variable | \(\mathbb EN\) | \(\mathbb EN^2\) | \(\mathbb EN^3\) |
+|---|---:|---:|---:|
+| \(N_3\) | \(2\) | \(5\) | \(31/2\) |
+| \(N_5\) | \(4/3\) | \(13/6\) | \(107/24\) |
+| \(N_*\) | \(7/5\) | \(7/3\) | \(14/3\) |
+
+Consequently \(\mathbb EY^3=92467/360\). For \(u\ge0,t>0\),
+\((u-t)_+\le4u^3/(27t^2)\): for \(u\ge t\) this is the
+nonnegative identity \((2u-3t)^2(u+3t)=4u^3-27t^2(u-t)\), and
+for \(u<t\) it is immediate. Hence
+\[
+ \sum_{p\ge29\ {\rm prime}}F(p)
+ \le\frac{32}{27}\frac{92467}{360}
+          \sum_{j\ge0}(27+2j)^{-3}
+ \le\frac{32}{27}\frac{92467}{360}
+       \left(\frac1{27^3}+\frac1{4\cdot27^2}\right)
+ =\frac{2866477}{23914845}<\frac3{25}.
+\]
+The second bound is the first term plus the integral of
+\((27+2x)^{-3}\) over \([0,\infty)\). Thus
+\[
+ \sum_i\int e_i\,d\nu<\frac{251}{500}+\frac3{25}
+ =\frac{311}{500}.
  \tag{BD13}
 \]
-This concerns full core tuples, not just the projection of those tuples
-onto the spine.
+The split at 29 is a calculation, not a restriction on permitted primes.
 
-## 4. Integrate the private fibres and remove padding
+## 5. Full Haar density and removal of free coordinates
 
-Suppose \(M\) pages remain outside the chosen core. For every tuple
-in \(C\), each of those pages has original private Haar fibre at least
-\(a\), at precisely that tuple's spine word. The page coordinate sets
-are disjoint, so their conditional product fibre has measure at least
-\(a^M\). Integrating over \(C\) gives full survivor proportion
+Under (BD7), all pure classes have probability zero. The mixed-spine
+union costs at most \(1/3\), and every remaining class belongs to one
+page stage. Therefore
 \[
- H(U)>\frac\delta{15}a^M
-       \ge\frac\delta{15}a^N=\varepsilon_N,
+ \mathbb P(U)>1-\frac13-\frac{311}{500}=\frac{67}{1500}.
+\]
+The pointwise conditional kernel densities give the full joint bound
+\[
+ \frac{d\mathbb P}{dH}\le\frac83\prod_i4c_{q_i}c_{r_i}.
+\]
+Combining these two inequalities proves (BD2). Because \(q_i\ge7\)
+and \(r_i\ge11\),
+\[
+ \frac1{4c_{q_i}c_{r_i}}\ge
+ \frac{(7-2)(11-2)}{4(7-1)(11-1)}=\frac3{16},
  \tag{BD14}
 \]
-because \(M\le N\) and \(0<a<1\). No independent choice of
-separately optimal spine words or core tuples is used.
+which proves (BD1). This uses full joint density domination, not a
+product of separately obtained marginal caps. The finite CRT then
+supplies an uncovered integer.
 
-For a page with one real private prime, adjoin one fresh dummy prime
-larger than every original prime and 149. Give it a full coordinate
-domain and exponent zero in every original label. All dummy primes are
-different. This adds a coordinate to the same page, not a new page.
-In the remaining pages the minimum prime stays real and at least 13;
-the dummy pure-domain density is one, so the same lower bound
-\(55/64\) remains valid.
+For a singleton page add a distinct unused dummy prime larger than all
+original primes, with a free coordinate and exponent zero in every
+original modulus. Its avoiding set is independent of this coordinate,
+so projection preserves original Haar volume exactly. The number of
+pages does not change, and (BD14) applies to every padded pair. Missing
+spine coordinates may likewise be adjoined freely and removed. Finite
+coordinate heights always resolve all original classes, including those
+assigned to later stages; no exponent layer is discarded.
 
-Original avoiding sets are independent of every dummy coordinate.
-Their augmented Haar proportions are therefore exactly their original
-Haar proportions, globally and in each fixed real fibre. Projecting
-away the dummies preserves (BD14), even if the auxiliary source measure
-used to prove it was not itself independent of them. Absent spine
-coordinates can likewise be added without original constraints and
-then removed. All source constructions use heights resolving the
-whole original family, with the harmless source-anchor height padding
-of Chapter 33 when required.
+## 6. Some surviving spine words have no page extension
 
-Thus (BD1) is a bound for the original complete Haar volume, uniform
-over prime labels, heights, and residues. Its decay with \(N\) is
-explicit; no lower bound independent of the number of pages is claimed.
+The integrated bound must not be replaced by universal pointwise
+extension. Take root classes \(1\bmod3\) and \(1\bmod5\), with
+page classes
+\[
+ (m,a)=(7,0),(21,15),(63,9),(189,108),
+        (35,25),(105,75),(315,90).
+\]
+On the spine cylinder \(x_3=0\bmod27,\ x_5=0\bmod5\), these
+forbid respectively every residue \(0,1,\ldots,6\bmod7\), although
+the root classes are avoided. After deleting the pure class \(0\bmod7\),
+all remaining private words are forbidden: \(\alpha_7=1\),
+\(K_7=\nu_7\), and its fee is one. This is precisely the zero-fibre
+case retained in (BD5).
 
-## 5. Fixed-head continuation to unrestricted large primes
+Adding \(2\bmod1155\), where \(1155=3\cdot5\cdot7\cdot11\),
+makes the actual prime interaction graph a full four-vertex clique.
+It is nonredundant because the integer 2 avoids all preceding classes.
+The moduli are distinct. This refutes universal extension at every
+spine word, not the noncoverage theorem.
+
+## 7. Fixed-head continuation to unrestricted large primes
+
 
 Fix the actual head prime set \(P\) and a partition of its private
 primes into \(N\) pages. Only classes supported entirely on \(P\)
@@ -299,22 +363,28 @@ for continuation, not a statement that an arbitrary family already
 has no primes in the gap. The argument inherits Chapter 33's stated
 analytic prime-product premise and verification boundary.
 
-## 6. Exact constants and retained proof obligations
+## 8. Verification and scope
 
-The program
+The self-contained program
 [`spine_book_density_certificate.py`](../frontier/cover-geometry/spine_book_density_certificate.py)
-reads the existing Chapter 36 certificate and checks its SHA-256,
-the common margin \(\delta\), minimum shallow residual, threshold
-inflation, pure-domain product, core kernel-cap products, and (BD1)'s
-two rational factors. Its
+checks the six exact complementary-tail sums, complete geometric moments,
+cubic remainder constant, density factors and the actual zero-fibre
+counterexample. Its
 [`output`](../frontier/cover-geometry/spine_book_density_certificate.json)
-records the exact constants. It does not rerun geometry or assert
-machine verification of the conditional-law or full-density proofs.
+records the rational values. It does not claim machine verification of
+(BD10), the arbitrary-height reduction, or the full-density proof.
 
-The additional mathematical steps are (BD3)'s actual load estimate,
-the simultaneous threshold change in the same core measure, the full
-joint bound including averaged private transport, and integration of
-pointwise private fibres. These supply volume information absent from
-a bare existential extension statement. The tail step then uses the
-already stated bridge, with every original modulus, residue, and
-height retained.
+The source comparison and normalized kernel interfaces are already
+recorded in the linked library entry, with their hypotheses and source
+identity. The three-prime noncoverage endpoint is not used: these pages
+can contain four-prime moduli, and the union of pages can have arbitrarily
+many primes in one biconnected block. For example, the four private pairs
+\((7,11),(13,17),(19,23),(29,31)\), each with a full four-prime class,
+give a ten-vertex block sharing the spine.
+
+The fixed three-factor auxiliary product works because the second private
+stage has only one private predecessor. Arbitrary overlapping supports
+need not admit this page partition. For them (BD12)'s fee bound has not
+been established. The independent large-prime continuation still requires
+its declared gap and inherits Chapter 33's analytic premise. Unrestricted
+Erdős #7 remains open.
