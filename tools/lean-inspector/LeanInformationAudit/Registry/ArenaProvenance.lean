@@ -57,19 +57,6 @@ private partial def lambdaCount (stx : Syntax) : Nat := Id.run do
     return stx[1][0].getArgs.foldl (fun n b => n + binderCount b) 0 + lambdaCount stx[1][3]
   return 0
 
-/-- Class instances cannot be any of the three (non-class) arena structures.
-Lean zeta-inlines `letI`; a class value can reach an arena only through a
-projection/recursor, where the forwarding resolver already stops. -/
-private def classLet? (decl : Syntax) : MetaM Bool := withoutModifyingState do
-  unless decl[0].isOfKind ``Parser.Term.letIdDecl do return false
-  let type := decl[0][2][0][1]
-  if type.isMissing then return false
-  try
-    let type ← Elab.Term.TermElabM.run' <| Elab.Term.elabType type
-    if arenaType (← whnfR type) then return false
-    return (← isClass? type).isSome
-  catch _ => return false
-
 /-- Straight-line tactic spelling of a term. No tactics are executed during
 recovery; all other tactic programs remain explicitly unsupported. -/
 private def tacticTerm? (stx : Syntax) : MetaM (Option Syntax) := do
@@ -87,8 +74,8 @@ private def tacticTerm? (stx : Syntax) : MetaM (Option Syntax) := do
     match tac with
     | `(tactic| let $c:letConfig $d:letDecl) =>
       body ← `(term| let $c:letConfig $d:letDecl; $body)
-    | `(tactic| letI $_c:letConfig $d:letDecl) =>
-      unless ← classLet? d do return none
+    | `(tactic| letI $c:letConfig $d:letDecl) =>
+      body ← `(term| letI $c:letConfig $d:letDecl; $body)
     | _ => return none
   return some body.raw
 
@@ -105,7 +92,13 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
     if arenaType type then
       return mkAnnotation construction value
     return value
-  if stx.isIdent then return value
+  if stx.isIdent then
+    -- Even a bare identifier can elaborate to an application (defaults and
+    -- inferred arguments). No source subterm justifies those argument values.
+    -- Mark each argument, not the application: only a live argument can fail.
+    let fn := value.getAppFn
+    unless fn.isConst || fn.isFVar || fn.isBVar do return reject stx value
+    return mkAppN fn (value.getAppArgs.map (reject stx))
   if (stx.isOfKind ``termIfThenElse && value.isAppOf ``ite) ||
       (stx.isOfKind ``termDepIfThenElse && value.isAppOf ``dite) then return value
   if stx.isOfKind ``Parser.Term.fun && stx[1].isOfKind ``Parser.Term.basicFun then
@@ -131,19 +124,36 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
       if grouped && names.contains name then
         if namedBinders.contains name then return reject stx value
         namedBinders := namedBinders.insert name
-      let mut annotated := arg
+      let mut annotated := reject stx arg
       if let some next := named.find? (·[1].getId == name) then
         annotated ← recover next[3] arg
         named := named.filter (·[1].getId != name)
       else if bi.isExplicit || explicit then
-        let next :: rest := args | return reject stx value
-        annotated ← recover next arg
-        args := rest
+        if let next :: rest := args then
+          annotated ← recover next arg
+          args := rest
       result := mkApp result annotated
       type := body.instantiate1 arg
     if !args.isEmpty || !named.isEmpty then return reject stx value
     return result
-  if (stx.isOfKind ``Parser.Term.let || stx.isOfKind ``Parser.Term.letI) &&
+  if stx.isOfKind ``Parser.Term.letI && stx[2][0].isOfKind ``Parser.Term.letIdDecl then
+    -- Lean inlines letI. Its source type cannot be classified in the consumer's
+    -- namespace/open context. A direct return aligns the RHS with the original
+    -- compiled value; inferType in recover then uses the actual local context.
+    -- An unused source name can be dropped: any inserted instance/default
+    -- arguments are independently guarded above. Other uses lack an alignment.
+    unless stx[1][0].getArgs.isEmpty do return reject stx value
+    let decl := Elab.Term.mkLetIdDeclView stx[2][0]
+    let body := unwrap stx[4]
+    let name := decl.id.getId.eraseMacroScopes
+    if decl.id.isIdent && body.isIdent && body.getId.eraseMacroScopes == name then
+      unless decl.binders.isEmpty do return reject stx value
+      return ← recover decl.value value
+    if decl.id.isIdent && (body.find? fun node =>
+        node.isIdent && node.getId.eraseMacroScopes == name).isSome then
+      return reject stx value
+    return ← recover body value
+  if stx.isOfKind ``Parser.Term.let &&
       stx[2][0].isOfKind ``Parser.Term.letIdDecl then
     let .letE name type rhs body nondep := value | return reject stx value
     let rhs ← recover stx[2][0][4] rhs
