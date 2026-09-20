@@ -2185,3 +2185,163 @@ Latin construction attains n^2 in the height-one, history-dependent
 threshold class. In particular n=6 requires and admits 36 mixed labels
 (plus the three separate pure labels in that arithmetic construction).
 This is not an attainment statement for constant thresholds.
+
+## 13. Full current heights retain an original-label overlap budget
+
+This is an application of the finite rectangular defect theorem, not a
+claim of a new matrix theorem, a Lean certificate, or a resolution of
+unrestricted Erdos #7. Expanding a current prefix into fine leaves is an
+auxiliary counting operation. The original arithmetic moduli and residues
+remain unchanged, and each original label is charged exactly once with
+the weight specified below.
+
+### 13.1. Finite interface with literal current subsets
+
+Let X,Y,Z be finite nonempty sets, with |Z|=n and uniform law nu on Z.
+The incoming old law rho on X x Y is any probability, including correlated
+laws and laws with zero-mass holes. The current coordinate is fresh and
+independent, with incoming joint law rho x nu.
+
+Each original label i specifies
+
+    A_i x B_i x J_i,  A_i subset X, B_i subset Y, J_i subset Z.
+
+There is no assumption that the J_i form a partition or are disjoint.
+Empty old rectangles or empty J_i can be omitted. The bad current set at
+an old history, its current mass, and its geometric maximum are
+
+    B(x,y) = union_{i : x in A_i, y in B_i} J_i,
+    alpha(x,y) = nu(B(x,y)),
+    alpha_* = max_{(x,y) in X x Y} alpha(x,y).
+
+The maximum includes zero-rho cells. Define the original-label cost
+
+\[
+ S=\sum_{\text{original labels }i}\nu(J_i).
+ \tag{FA87}
+\]
+
+It counts labels separately even when their current subsets coincide.
+It is not the probability of the full arithmetic union: old-coordinate
+conditions have not been integrated into S.
+
+Let delta(x,y) lie in (0,1). Set
+
+    u = min(alpha,delta)/(1-min(alpha,delta)),
+
+and set u/alpha=0 when alpha=0. The actual clipped joint law is
+
+    mu(x,y,c) = rho(x,y)/n
+                [1+u(x,y)-(u(x,y)/alpha(x,y))1_{B(x,y)}(c)].
+
+Its old marginal is rho. Put T=E_rho[u] and define the full-coordinate
+pair defects
+
+    e_X = TV(mu_XZ, rho_X x nu),
+    e_Y = TV(mu_YZ, rho_Y x nu).
+
+Then
+
+\[
+ e_X+e_Y\ge T\left(1-\sqrt{\alpha_*S}\right)_+.
+ \tag{FA88}
+\]
+
+In particular, exact balance of both pairs and T>0 require
+
+\[
+ \alpha_*S\ge1.
+ \tag{FA89}
+\]
+
+### 13.2. Proof by a counted expansion, without changing the actual source
+
+For every original label i and every c in J_i, make one auxiliary
+rectangular label A_i x B_i of color c. The resulting union U_c is
+exactly {(x,y): c in B(x,y)}. If L_exp is the number of auxiliary labels
+and K_exp their geometric color multiplicity, then
+
+\[
+ \begin{aligned}
+ L_{\mathrm{exp}}&=\sum_i|J_i|=nS,\\
+ K_{\mathrm{exp}}&=\max_{x,y}|B(x,y)|=n\alpha_*.
+ \end{aligned}
+ \tag{FA90}
+\]
+
+The actual bad mass is k(x,y)/n=alpha(x,y), exactly as in the finite
+defect theorem. Its weight is
+
+    W(x,y) = rho(x,y) u(x,y)/k(x,y)
+           = rho(x,y) u(x,y)/(n alpha(x,y))
+
+when alpha>0, and zero otherwise. Thus sum_c W 1_{U_c}=rho u and its
+activity mass is the same T. No alternative incoming measure or clipping
+history is introduced. Applying the finite theorem and substituting (FA90)
+gives sqrt(K_exp L_exp)/n=sqrt(alpha_* S), proving (FA88). If T=0, the
+actual law equals its incoming product and (FA88) reads 0>=0; (FA89) does not
+follow. If T>0 and both defects vanish, (FA88) gives (FA89).
+
+### 13.3. Arbitrary finite prime-power heights and old-coordinate blocks
+
+For a fresh full p-coordinate Z=Z/p^H Z with Haar law, an original
+current congruence c=b_i modulo p^(a_i), 1<=a_i<=H, has mass
+
+\[
+ \nu(J_i)=p^{-a_i},\qquad S=\sum_i p^{-a_i}.
+ \tag{FA91}
+\]
+
+Thus the finite ambient height cancels from (FA88). The statement holds for
+every finite H, with all digits retained. No bound on the number of
+different heights, no current-height-one restriction, and no replacement
+of a literal current prefix by an independent color are needed.
+
+If the declared incoming current base is instead uniform on the pure
+survivors {z : z is nonzero modulo p}, its size is
+n=(p-1)p^(H-1). A nonempty original prefix with a_i>=1 has nonzero first
+digit and
+
+\[
+ \nu(J_i)=\frac{p^{1-a_i}}{p-1}.
+ \tag{FA92}
+\]
+
+Prefixes with zero first digit have empty intersection with this base.
+This alternative requires that pure-survivor base as an actual incoming
+contract. It does not justify replacing the incoming law of an arbitrary
+whole process by a newly conditioned law.
+
+For more than two old prime coordinates, partition them into two groups.
+Let X and Y be the respective complete Cartesian blocks. By the original
+prime-power coordinate representation, each old cofactor condition is
+a product A_i x B_i, including unrestricted factors when the modulus
+does not involve a coordinate. Its original residue is retained. The
+same inequality applies with rho equal to the same actual old block law.
+
+The measured pairs here are (the entire X block, current Z) and (the
+entire Y block, current Z). Separate pairwise independence between Z and
+each individual old prime does not imply either block independence.
+Changing the grouping changes which full joint marginals must be
+controlled. The theorem does not supply that stronger observation from
+weaker single-coordinate data.
+
+### 13.4. What the arithmetic application does and does not supply
+
+S is a sum over the original numerical labels, with the literal current
+prefix mass as its weight. Distinctness of original numerical moduli is
+compatible with, but is not used by, the matrix inequality. Expansion can
+produce repeated auxiliary shapes and does not assert that these are
+additional distinct original moduli.
+
+The result supplies an all-height necessary condition for exact pair
+balance and a same-source quantitative pair-defect certificate. The right
+side is positive only if alpha_* S<1 and T>0. Without a bound on old
+cofactor diversity, S can be arbitrarily large, so no uniform positive
+defect for unrestricted families follows. Small thresholds can also make
+T arbitrarily small.
+
+Neither T nor S is identified with first-hit loss. This inequality does
+not itself convert a pair defect into uncovered mass, a future-loss
+saving, or a telescoping budget along the whole prime sequence. Those
+remain separate mathematical obligations, including all tail primes.
