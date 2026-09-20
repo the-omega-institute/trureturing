@@ -69,7 +69,7 @@ cumulative profiling times:
 
 The pinned Lean profiler calls the kernel addition phase `type checking`, not `checked`: `Lean/AddDecl.lean:184` wraps `Environment.addDeclAux` in that timer. The primary run therefore measures kernel checking at 0.0748 seconds. Wall time includes Lake and imports; the primary import phase was 4.36 seconds.
 
-An instrumented diagnostic run of the same source with threshold 0 also exited 0: wall 22.34 seconds, cumulative kernel `type checking` 0.0998 seconds, peak RSS 1997275136 bytes. It emitted 217076 lines of trace, so it is not used as the normal wall-cost reading. Its relevant declaration measurements are:
+An instrumented diagnostic run of the same source with threshold 0 also exited 0: wall 22.34 seconds, cumulative kernel `type checking` 0.0998 seconds, peak RSS 1997275136 bytes. Threshold 0 emits detailed tracing; this run is not used as the normal wall-cost reading. Its relevant declaration measurements are:
 
 ```text
 [Kernel] [0.001612] ✅️ typechecking declarations [AyadProbe.property_coprime]
