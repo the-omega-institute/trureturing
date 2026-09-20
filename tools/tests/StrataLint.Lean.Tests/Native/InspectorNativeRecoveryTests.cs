@@ -13,6 +13,8 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     [InlineData("test_native.NativeTests.test_interface_only_reports_missing_handler")]
     [InlineData("test_native.NativeTests.test_interface_grammar_has_single_owner")]
     [InlineData("test_native.NativeTests.test_interface_registered_build_inputs")]
+    [InlineData("test_native.NativeTests.test_interface_records_have_single_owner")]
+    [InlineData("test_native.NativeTests.test_interface_store_cross_module_persistence")]
     [InlineData("test_native.NativeTests.test_native_config_options_rebuild_and_fail_closed")]
     [InlineData("test_native.NativeTests.test_reported_module_proof_axioms_invalidate_public_trace")]
     [InlineData("test_native.NativeTests.test_private_transitive_definition_invalidates_utility")]
