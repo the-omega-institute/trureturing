@@ -135,3 +135,21 @@ Final sorry inventory: empty. The initial whole-witness placeholder was fully di
 Cost: primary profiled compile exit 0, wall 8.60 s, cumulative kernel type checking 0.0748 s, maximum resident set size 1730183168 bytes. `checked_seconds` refers to this kernel timer; Lean 4.33.0 uses the label `type checking`. Source hash, both measured invocations, all axiom readings, and detailed per-declaration kernel timings are in `probe/PROFILE.md`. No full-project or required-CI claim follows from this scoped probe.
 
 Complete supplied GoalArtifact is retained in `probe/GoalArtifact.json`; it is part of visible_inputs. This seat's extra directly inspected inputs are the source PDF, pinned Mathlib, the named repository neighbors and utility headers, the repository instructions and formal-answer skill, and the Lean profiler implementation. No other seat output was read.
+
+## Step 6: declaration-level judgement
+
+This is a semantic proof-shape prediction, not a machine classification. No project D5 declaration is imported, so the direct frozen prerequisite list is empty for every declaration; there are no project GID/statement_id pairs to report. Pinned Mathlib primitives remain upstream dependencies, not new project mathematical content.
+
+| Declaration | Predicted proof_shape | Escape/content and delivery treatment |
+|---|---|---|
+| `reverseBase` | not applicable: definition | Exact preregistered map; retain its target definition. |
+| `HasReverseMultipleProperty` | not applicable: definition | Exact preregistered quantified property; retain its target definition. |
+| `sparseWord` | not applicable: definition | Symbolic construction of the sparse list; implementation can make it local to `result`. |
+| `property_coprime` | bind-only under the strict normalization audit | All atomic digit facts are supplied by digitsAppend/digits_ofDigits, standard remainder/power inequalities, and an instance of the assumed property; gcd divisibility is then normalized. It is useful probe scaffolding, but must not be delivered as a new standalone D5 theorem. Inline this argument into the content proof. |
+| `sparse_spec` | content | Induction establishes the new uniform modular relation between an unbounded family of actual canonical digit lists and their reversals. The induction step propagates the new modular invariant; there is no upstream theorem directly supplying it. |
+| `witness` | content | After inlining same-probe helpers, the sparse-list induction remains on the live route to the reversal counterexample. Its hforward proves divisibility and its hreverse contradicts B² ≠ 1. |
+| `result` | content | After inlining all probe helpers, it still contains the new sparse construction and induction; it is not just an upstream theorem specialization. |
+
+Intended `escape_witness`: `∀ B n, 2 ≤ B → 0 < n → ¬ n ∣ B²−1 → ∃ m > 0, n ∣ m ∧ ¬ n ∣ reverseBase B m`, exactly `AyadProbe.witness`. It is used by the necessary direction of `result`. The intended content basis is `admission_basis: escape-witness`; issue #8990 also supplies the external-open-problem preregistration for the alternate `open-problem-resolution` basis if independent semantic review reclassifies the mathematics. No such fallback is needed by this probe's prediction.
+
+The production public surface remains the two definitions plus one `result`; the probe helpers are not an authorization to add bind-only companion declarations. The full theorem, rather than the Python enumeration, is the mathematical deliverable candidate.
