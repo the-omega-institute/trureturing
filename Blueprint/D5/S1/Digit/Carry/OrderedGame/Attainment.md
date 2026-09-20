@@ -54,7 +54,7 @@ $$\forall s \exists t LGSPath\left(s, t, inv\left(decode\left(s\right)\right), 0
 
 For every start there exists a sorted permutation reached by an LGS path of zero reward and exactly the initial inversion count moves. Every legal zero-reward path with no remaining switch has that same endpoint and length and preserves all raw multiplicities. Every carry has positive reward, so zero-reward paths are precisely switch phases. Strong induction on inversions constructs completion; the proof retains all allowed switch orders.
 
-These are attainment components, not a proof of Conjecture 1.7. Global weighted domination and complete LGS existence remain separate obligations. No resolution credit or worldwide priority is claimed.
+These attainment components feed the full Conjecture 1.7 proof in OrderedGame/Completion.result. Raw weighted domination is supplied by OrderedGame/Optimality, and Completion supplies priority correspondence and finite ordered completion. Independent review and first-freeze admission remain pending; no worldwide priority is claimed.
 
 ## References
 

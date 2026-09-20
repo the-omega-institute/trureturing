@@ -102,7 +102,7 @@ $$Path\left(s, t, length, weight\right) \Rightarrow length + inv\left(decode\lef
 
 For every finite legal path, actual move count plus final inversions is at most initial inversions plus summed carry reward. Switch reward is zero. In positive indices the other rewards are c1-1, c2-1, c(i-1)+ci-1 for a split at i greater than two, and c(a+1) for a merge at a. Thus rewards include the carry itself. The proof telescopes the existing four local inversion bounds; a switch removes exactly one inversion. There is no terminality or strategy assumption.
 
-LGSPath keeps every permitted inversion-switch choice. Its priority restarts after every move: switches, leftmost ones, rightmost split, then leftmost consecutive merge. Conjecture17 records nonvacuous complete LGS existence for every positive n and the comparison of every complete LGS run with every legal terminal competitor. That proposition is defined but not proved. The path bound alone does not establish attainment or weighted greedy optimality.
+LGSPath keeps every permitted inversion-switch choice. Its priority restarts after every move: switches, leftmost ones, rightmost split, then leftmost consecutive merge. Conjecture17 records nonvacuous complete LGS existence for every positive n and the comparison of every complete LGS run with every legal terminal competitor. Its proof is OrderedGame/Completion.result, which combines these path bounds with ordered attainment, raw greedy optimality and finite completion.
 
 ## References
 

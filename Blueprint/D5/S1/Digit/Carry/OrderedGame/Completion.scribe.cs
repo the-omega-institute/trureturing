@@ -55,12 +55,11 @@ internal sealed class CompletionDocument : IScribeDocumentDefinition
                     + "these weight statements into the length comparison. Terminal inversion "
                     + "zero follows from the actual absence of switches, not from raw counts. "
                     + "No Bellman premise, deterministic-switch restriction or finite cutoff "
-                    + "is added."))), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("ordered-zeckendorf-long-game-strategy"),
-                    ResolutionKind.Proved)),
+                    + "is added."))), DescribeRole.Theorem),
             Paragraph(Text("Source-fidelity and first-freeze admission remain subject to "
                 + "independent review. Attribution remains with Bortnovskyi et al., Cusenza "
                 + "et al., and the suppliers contributed in PRs 7495, 7575, 7643 and 7651. "
+                + "The structured problem-resolution claim requires the future frozen "
+                + "declaration and is deferred until that admission. "
                 + "This formal result makes no worldwide-priority claim.")))));
 }

@@ -72,7 +72,7 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   value-preserving paths from `[F_1,...,F_1]` to the sorted normal form, LGS
   should maximize length.
 
-## Formal result and suppliers
+## Gap
 
 `D5/S1/Digit/Carry/OrderedGame/Completion.result : Conjecture17` proves the exact
 source target with its definitions unchanged. For every positive n, including
