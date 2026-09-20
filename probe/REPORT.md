@@ -117,3 +117,21 @@ The worktree initially had no `.lake`. Ran `make lean-cache-ensure` with the exa
 ```text
 LEAN_CACHE {"status":"seeded","worktree":"/Users/auric/trureturing-op-ayad-reverse","donor":"/Users/auric/trureturing","method":"clonefile","reason":null,"stamp_miss":null,"pin_sha256":"sha256:1499ba00eb44d4b760a213127fc10c82158b7595723ae155179378723cf14db3","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":1,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
 ```
+
+## Step 5: Lean feasibility boundary
+
+`probe/AyadProbe.lean` is experimental source, not a proposed D5 delivery. The exact two target definitions, the exact unbounded witness, and the complete preregistered `result` all compile with no sorry, no admit, no private axiom, and no warnings. All four theorem declarations have axiom closure `[propext, Classical.choice, Quot.sound]`. No mathematical obligation remains in this probe. Repository admission, independent review, Scribe, and integration remain outside this seat's scope.
+
+Closed components:
+
+- `property_coprime`: explicit padded digits for r+B^n, where r=n−(B^n mod n), establish a leading-one multiple. The gcd divides its reversal and B, so it divides 1. This differs from the ceiling witness only when B^n is already divisible by n; choosing the next multiple preserves the same strict leading-digit bound.
+- `sparseWord T c`: symbolic recursive list with occupied positions 0, 1, T, …, (c+1)T. The Lean parameter c is one less than the positive coefficient used in the brief.
+- `sparse_spec`: by induction, establishes length, digit bounds, canonical reconstruction through `Nat.digits_ofDigits`, positivity, forward residue 1+B+(c+1), and B times reverse residue 1+B+(c+1)B. Digit-list generation is cheap: recursion and `List.replicate` remain symbolic, without a finite-case expansion.
+- `witness`: argues by contradiction from the absence of a counterexample, obtains coprimality, takes `orderOf` of a unit in `(ZMod n)ˣ`, eliminates order 1, and uses c = val(−(2+B)) so c+1 is the required positive coefficient. Both the forward multiple and contradictory reverse residue are checked. The type is exactly the requested existential witness for all B ≥ 2 and n > 0, including n = 1 by contradiction with the nondivisor premise.
+- `result`: derives the reverse implication from the witness and proves the published forward implication by list induction. The identity B·reverse(L) = B^length(L)·value(L) modulo n under B² = 1 handles arbitrary digits and trailing zeros.
+
+Final sorry inventory: empty. The initial whole-witness placeholder was fully discharged. Explicit casts through ℕ are required when applying natural `ofDigits` lemmas before casting to ZMod; otherwise Lean can infer semiring-valued `ofDigits` directly. This is an implementation typing detail, not a discrepancy in the target statement.
+
+Cost: primary profiled compile exit 0, wall 8.60 s, cumulative kernel type checking 0.0748 s, maximum resident set size 1730183168 bytes. `checked_seconds` refers to this kernel timer; Lean 4.33.0 uses the label `type checking`. Source hash, both measured invocations, all axiom readings, and detailed per-declaration kernel timings are in `probe/PROFILE.md`. No full-project or required-CI claim follows from this scoped probe.
+
+Complete supplied GoalArtifact is retained in `probe/GoalArtifact.json`; it is part of visible_inputs. This seat's extra directly inspected inputs are the source PDF, pinned Mathlib, the named repository neighbors and utility headers, the repository instructions and formal-answer skill, and the Lean profiler implementation. No other seat output was read.
