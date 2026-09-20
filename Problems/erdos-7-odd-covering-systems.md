@@ -34,6 +34,9 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [A shared first-root profile gives a fee for one exceptional 3,5,7,11,13 block, with arbitrary established block descendants](../docs/reports/erdos7-odd-covering/problem-details/21-coupled-first-root-profiles-and-an-exceptional-five-prime-block.md)
+- [Original AP three-color intersections can exceed the proposed residual threshold: a complete 510-label control](../docs/reports/erdos7-odd-covering/problem-details/20-original-ap-three-color-intersections-can-exceed-the-residual-threshold.md)
+- [Five-prime parent envelopes and the limits of scalar prefix budgets](../docs/reports/erdos7-odd-covering/problem-details/19-five-prime-parent-envelopes-and-the-cofactor-allocation-barrier.md)
 - [Five-prime cores with singly attached trees or specified cactus graphs: all-height noncoverage and exact weighted extension bounds](../docs/reports/erdos7-odd-covering/problem-details/18-five-prime-cores-with-tree-and-cactus-attachments.md)
 - [Two-prime separator kernels: exact gluing, a common-law sufficient criterion, and original-AP probes that recover the joint extension counts](../docs/reports/erdos7-odd-covering/problem-details/17-two-prime-separator-interfaces-and-exact-count-probes.md)
 - [Four-vertex blocks and arbitrary cycle blocks: noncoverage from a common descendant budget, retaining all four-prime labels and heights](../docs/reports/erdos7-odd-covering/problem-details/06c-four-vertex-blocks-and-cycle-breaking-vertices.md#four-vertex-blocks-with-a-common-descendant-budget)
