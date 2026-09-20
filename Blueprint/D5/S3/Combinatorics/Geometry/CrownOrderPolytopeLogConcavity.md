@@ -4,13 +4,17 @@
 
 Every positive crown has a log-concave full geometric face vector.
 
-Conjecture 3.7 concerns the full geometric face vector, including the empty face and the whole polytope. The published face-count formula supplies the starting coefficients; the auxiliary Chebyshev factorization and corrected Newton inequalities establish their log-concavity.
+Conjecture 3.7 concerns the full geometric face vector, including the empty face and the whole polytope. For natural j with j < 2n+2, write F(n,j) for entry j of crownGeometricFVector n, whose index type is Fin (2*n+2). Thus F(n,0)=1 counts the empty face, and F(n,j) for j>0 counts the actual nonempty exposed faces of affine dimension j-1; entry 2n+1 counts the whole polytope. The published face-count formula is proved from this geometry. The auxiliary Chebyshev factorization and corrected Newton inequalities establish log-concavity.
 
 **Theorem 1.1 (Conjecture 3.7 for every positive n).**
 
-Lean statement: `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeLogConcavity.crownGeometricFVector_log_concave`
+$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left(0 < n \land 0 < k < 2 \cdot n + 1\right) \Rightarrow \operatorname{F}\left(n, k - 1\right) \cdot \operatorname{F}\left(n, k + 1\right) \le \operatorname{F}\left(n, k\right)^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeLogConcavity.crownGeometricFVector_log_concave` (`✓ std3`). ∎
+
+*Resolves.* `Problems/crown-order-polytope-log-concavity` (proved) by `D5/S3/Combinatorics/Geometry/CrownOrderPolytopeLogConcavity.crownGeometricFVector_log_concave`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crown-order-polytope-log-concavity","declaration_gid":"D5/S3/Combinatorics/Geometry/CrownOrderPolytopeLogConcavity.crownGeometricFVector_log_concave","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

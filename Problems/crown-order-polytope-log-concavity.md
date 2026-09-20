@@ -95,8 +95,12 @@ It is applied to the negated roots at reversed index `degree-k-2`, with
 out-of-degree coefficients handled by vanishing. Its license and retirement
 condition are in `Library/Combinatorics/tao2026newton.md`.
 The Library note supplies the inspected primary-source SHA-256 values
-and the source-to-module correspondence. The matching Scribe documents
-describe the mathematical results without a final typed settlement claim.
+and the source-to-module correspondence. The 19-module Crown/Newton chain
+is canonically frozen. The final Scribe `Describe.Lean` binds exactly one
+`OpenProblemResolutionClaim` of kind `Proved` to this problem and the
+public conclusion above. Its handwritten Formula AST states the same
+natural-number quantifiers, three bounds and geometric-vector inequality
+as the compiled Lean type; it is not an automatic statement projection.
 
 ## Triage
 
@@ -107,19 +111,16 @@ as the preregistration and
 as the publication context; this lane does not independently certify
 their chronology or remote state.
 
-For the final log-concavity theorem, the proposed `proof_shape` is
+For the final log-concavity theorem, the reviewed `proof_shape` is
 `content`: the live proof constructs real splitting with multiplicities
 and derives the three corrected coefficient comparisons for the
-geometric vector. The proposed `admission_basis` is `escape-witness`,
-subject to independent declaration-by-declaration review of the entire
-unfrozen prerequisite chain. These descriptions are author assessments,
-not admission or frozen membership. If a reviewer instead uses
-`open-problem-resolution` for the exact external conclusion, its
-preregistration, literature, and restricted public-delivery conditions
-must be checked separately; that exception cannot admit companion
-bind-only declarations throughout the prerequisite chain.
+geometric vector. Its `admission_basis` is `escape-witness`; the full
+prerequisite chain passed independent pre-freeze declaration review.
+The typed `Proved` claim records the exact external conjecture resolved
+by this conclusion. It does not change that admission basis or grant
+an exception for bind-only companion declarations.
 
-The proposed `utility.kind` is `none`: these are symbolic geometric
+The reviewed `utility.kind` is `none`: these are symbolic geometric
 correspondences, unbounded counting formulas and polynomial inequalities,
 not bounded enumeration, reflection infrastructure, an undischarged
 numeric reduction, or a certified positive finite instance. The finite
@@ -142,19 +143,20 @@ the port and the in-proof coefficient adaptation preserve the current pins.
 
 ## ASSUMED-UNVERIFIED
 
-Source fidelity and every public/private declaration's proof shape still
-require independent review. The fresh arXiv read identifies v3 as current;
+The full native pre-freeze source-fidelity, declaration and test reviews
+are approved. The fresh arXiv read identifies v3 as current;
 the bounded public searches found no exact Crown resolution, but do not
 establish exhaustive absence or priority. In particular, a citing paper
 was found outside OpenAlex's zero-count citation list. The upstream Newton
 source cannot be admitted as a direct dependency at the current pins.
-The licensed port and its exact coefficient application require source
-admission review together with the remaining Crown declarations.
+The licensed port and its exact coefficient application were included
+in the approved full-scope source-admission review.
 The kernel checks the formal objects, not their correspondence to
 natural-language sources or external priority.
 
-Canonical Freeze-last, a final typed resolution binding, required CI,
-and any integration lifecycle remain separate caller-owned obligations.
-No frozen membership or admitted settlement is asserted here. Information
+Final artifact reviews, required CI for this new increment, dev merge,
+main publication and the publication audit remain pending. Freezing the
+prerequisites or porting classical Newton does not earn a separate
+open-problem resolution or KPI. Information
 registration, sidecars, templates and DTR judge work belong to owner
 issue 5214 under the supplied current policy, not to this content lane.

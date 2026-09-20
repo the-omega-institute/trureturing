@@ -75,6 +75,16 @@ The target quantifies `n,k : Nat`, `0<n`, `0<k`, `k<2*n+1` and asserts
 the full vector. There is no assumed face formula, real-rootedness,
 asymptotic qualification, or finite cutoff in the target's hypotheses.
 
+The 19-module formal chain is canonically frozen. Its final declaration,
+`CrownOrderPolytopeLogConcavity.crownGeometricFVector_log_concave`,
+has a typed `Proved` claim in the matching Scribe document bound to
+`Problems/crown-order-polytope-log-concavity.md`. The displayed formula
+is a handwritten presentation of that compiled declaration with `F`
+defined as the full geometric vector. Only the full named conjecture is
+the resolution target; the prerequisite freeze count is not a KPI.
+Final artifact reviews, required CI for this increment and dev merge
+remain pending.
+
 ## Published prerequisites and formal correspondence
 
 | Source | Formal content and scope |
@@ -203,6 +213,7 @@ were not all read in full, and worldwide priority remains unverified.
 The metadata searches do not rule out an unindexed proof or a resolution
 inside a work with a different title. The caller identifies issue 8670
 as preregistration and PR 8714 as publication context; their remote contents
-and chronology were not reverified in this artifact-only lane. Independent
-review of prior-resolution eligibility and source admission
-remains required before final resolution admission.
+and chronology were not reverified in this artifact-only lane. Full
+pre-freeze native reviews, including source fidelity and the Newton
+license, are approved. Their bounded literature findings do not establish
+worldwide priority; final artifact review and publication remain pending.

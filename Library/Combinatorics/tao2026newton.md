@@ -36,6 +36,13 @@ and adapt imports and one natural-binomial cast to the current pin. The
 coefficient conversion belongs to the substantive Crown proof, with all
 out-of-degree cases treated there.
 
+The licensed port is canonically frozen as a prerequisite of the Crown
+log-concavity theorem. The typed `Proved` claim belongs only to that full
+geometric Crown conclusion and its problem dossier. This classical Newton
+port is not a new open-problem resolution and earns no separate KPI.
+Final artifact review, required CI for this increment and dev merge
+remain pending; the license and retirement condition below continue to apply.
+
 The following additional source files at the same immutable revision supply
 only the prerequisites needed by Newton:
 
