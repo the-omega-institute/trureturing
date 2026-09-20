@@ -32,13 +32,16 @@ private partial def unwrap (stx : Syntax) : Syntax :=
   else if stx.isOfKind ``Parser.Term.typeAscription then unwrap stx[1]
   else stx
 
-/-- Parentheses can split the source application spine that Expr stores flat. -/
-private partial def application (input : Syntax) : Syntax × Array Syntax :=
+/-- Keep each source application as a separate argument frame. Lean elaborates a
+parenthesized function before the outer call, inserting defaults at that boundary.
+The Expr spine alone has erased these boundaries and cannot recover them. -/
+private partial def application (input : Syntax) : Syntax × Array (Array Syntax) :=
   let stx := unwrap input
   if stx.isOfKind ``Parser.Term.app then
-    let (fn, args) := application stx[0]
-    (fn, args ++ stx[1].getArgs)
-  else (stx, #[])
+    let (fn, frames) := application stx[0]
+    (fn, frames.push stx[1].getArgs)
+  else (stx, if input.isOfKind ``Parser.Term.paren ||
+      input.isOfKind ``Parser.Term.typeAscription then #[#[]] else #[])
 
 private partial def binderCount (input : Syntax) : Nat := Id.run do
   let stx := unwrap input
@@ -114,36 +117,57 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
     if count == 0 then return reject stx value
     return ← recoverLambdas count stx[1][3] value
   if stx.isOfKind ``Parser.Term.app then
-    let (sourceFn, sourceArgs) := application stx
+    let (sourceFn, frames) := application stx
     let explicit := sourceFn.isOfKind ``Parser.Term.explicit
-    let mut args := sourceArgs.toList.filter (! ·.isOfKind ``Parser.Term.namedArgument)
-    let mut named := sourceArgs.toList.filter (·.isOfKind ``Parser.Term.namedArgument)
-    -- Repeated binder names in separate partial applications need their original
-    -- application boundaries; never silently attach one argument's evidence twice.
-    let names := named.map (·[1].getId)
+    -- Retain the supported-subset boundary for shadowed named binders.
+    let names := (frames.toList.flatMap Array.toList).filterMap fun arg =>
+      if arg.isOfKind ``Parser.Term.namedArgument then some arg[1].getId else none
     if names.eraseDups.length != names.length then return reject stx value
-    let grouped := sourceArgs.size != stx[1].getArgs.size
     let mut namedBinders : NameSet := {}
     let fn := value.getAppFn
     let mut result ← recover (if explicit then sourceFn[1] else sourceFn) fn
     let mut type ← inferType fn
-    for arg in value.getAppArgs do
-      let .forallE name _ body bi ← whnf type | return reject stx value
-      if grouped && names.contains name then
-        if namedBinders.contains name then return reject stx value
-        namedBinders := namedBinders.insert name
-      let mut annotated := reject stx arg
-      if let some next := named.find? (·[1].getId == name) then
-        annotated ← recover next[3] arg
-        named := named.filter (·[1].getId != name)
-      else if bi.isExplicit || explicit then
-        if let next :: rest := args then
-          annotated ← recover next arg
-          args := rest
-      result := mkApp result annotated
-      type := body.instantiate1 arg
-    if !args.isEmpty || !named.isEmpty then return reject stx value
-    return result
+    let compiledArgs := value.getAppArgs
+    let mut index := 0
+    for frameIndex in [:frames.size] do
+      let frame := frames[frameIndex]!
+      let mut args := frame.toList.filter (! ·.isOfKind ``Parser.Term.namedArgument)
+      let mut named := frame.toList.filter (·.isOfKind ``Parser.Term.namedArgument)
+      -- `@` belongs only to its own call, never to a subsequent outer call.
+      let explicit := explicit && frameIndex == 0
+      while index < compiledArgs.size do
+        let .forallE name domain body bi ← whnf type | return reject stx value
+        let nextNamed := named.find? (·[1].getId == name)
+        -- A frame ends at the first unsupplied ordinary explicit binder (or
+        -- strict implicit binder). Defaults/implicits consumed before that point
+        -- have NO source argument. In particular the next frame's literal must
+        -- never annotate an optParam inserted by this frame.
+        if nextNamed.isNone then
+          if bi.isExplicit || explicit then
+            if args.isEmpty && (explicit ||
+                (!domain.isOptParam && !domain.isAutoParam)) then break
+          else if bi == .strictImplicit && args.isEmpty && named.isEmpty then break
+        if frames.size > 1 && names.contains name then
+          if namedBinders.contains name then return reject stx value
+          namedBinders := namedBinders.insert name
+        let arg := compiledArgs[index]!
+        let mut annotated := reject stx arg
+        if let some next := nextNamed then
+          annotated ← recover next[3] arg
+          named := named.filter (·[1].getId != name)
+        else if bi.isExplicit || explicit then
+          if let next :: rest := args then
+            annotated ← recover next arg
+            args := rest
+        result := mkApp result annotated
+        -- Always instantiate with the ORIGINAL compiled argument. An annotation
+        -- is evidence only; it must not change the context used for alignment.
+        type := body.instantiate1 arg
+        index := index + 1
+      if !args.isEmpty || !named.isEmpty then return reject stx value
+    -- Expected-type elaboration can supply arguments beyond the last frame.
+    -- Keep unsupported evidence on those actual arguments, allowing dead ones.
+    return mkAppN result ((compiledArgs.extract index compiledArgs.size).map (reject stx))
   if stx.isOfKind ``Parser.Term.letI && stx[2][0].isOfKind ``Parser.Term.letIdDecl then
     -- Lean inlines letI. Its source type cannot be classified in the consumer's
     -- namespace/open context. A direct return aligns the RHS with the original

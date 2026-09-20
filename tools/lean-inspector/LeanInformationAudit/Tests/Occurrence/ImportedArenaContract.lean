@@ -56,6 +56,47 @@ run_cmd do
       setEnv original
   logInfo "contract expected-only/source-only/baseline-only aliases and copies acquired"
 
+-- Each input route must reject both directions of grouped/default misalignment
+-- before publishing a contract. Run before registration, resetting each attempt.
+run_cmd do
+  unless (InformationRegistry.entries (← getEnv)).isEmpty do
+    throwError "grouped contract fixture has incidental registrations"
+  let original ← getEnv
+  for (aliasName, copy, role) in #[
+      (``expectedGroupedAlias, ``expectedGroupedCopy, "expected"),
+      (``sourceGroupedAlias, ``sourceGroupedCopy, "source"),
+      (``baselineGroupedAlias, ``baselineGroupedCopy, "baseline")] do
+    for name in #[aliasName, copy] do
+      try
+        let rows := #[← row name]
+        let diagnostic ← try
+          RootCatalogs.declare {
+            rootId := original.header.mainModule
+            expected := if role == "expected" then rows else #[]
+            source := if role == "source" then rows else #[]
+            baseline := if role == "baseline" then rows else #[] }
+          pure "accepted"
+        catch ex => ex.toMessageData.toString
+        unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+          throwError "[FAIL] grouped {role} input {name}: {diagnostic}"
+        unless (RootCatalogs.find? (← getEnv) original.header.mainModule).isNone do
+          throwError "[FAIL] grouped {role} input published a contract"
+      finally
+        setEnv original
+  -- Explicit evidence acquisition also transports each deferred rejection to a
+  -- second native import; no expected owner is obtained from a registration.
+  for name in #[``expectedGroupedAlias, ``expectedGroupedCopy,
+      ``sourceGroupedAlias, ``sourceGroupedCopy, ``baselineGroupedAlias, ``baselineGroupedCopy] do
+    let .defnInfo info ← getConstInfo name | throwError "expected grouped definition"
+    discard <| liftTermElabM <| ArenaProvenance.declarationValue info
+    -- Also acquire the live forwarding helper before hitting the deferred input.
+    let diagnostic ← liftTermElabM do
+      try return s!"accepted owner={← resolveCanonicalArenaName name}"
+      catch ex => ex.toMessageData.toString
+    unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+      throwError "[FAIL] grouped contract evidence acquisition: {diagnostic}"
+  logInfo "[PASS] Q3 independent expected/source/baseline dual rejection; no contract published"
+
 -- The actual native producer retains six distinct source spellings. In particular,
 -- neither source-only nor baseline rows is incidentally acquired by registration.
 run_cmd do

@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.Occurrence.ImportedArenaSource
+import LeanInformationAudit.Tests.Occurrence.ImportedArenaAlignmentSource
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -26,6 +26,20 @@ def expectationCopy : Arena where
   State := arena.State
   stateFintype := arena.stateFintype
   stateDecidableEq := arena.stateDecidableEq
+
+-- Independently authored contract inputs, never registration-derived.
+def expectedGroupedAlias : Arena := (QualityGrouped.hold ()) {
+  State := arena.State, stateFintype := arena.stateFintype,
+  stateDecidableEq := arena.stateDecidableEq }
+def expectedGroupedCopy : Arena := (QualityGrouped.holdCopy ()) arena
+def sourceGroupedAlias : Arena := (QualityGrouped.hold ()) {
+  State := arena.State, stateFintype := arena.stateFintype,
+  stateDecidableEq := arena.stateDecidableEq }
+def sourceGroupedCopy : Arena := (QualityGrouped.holdCopy ()) arena
+def baselineGroupedAlias : Arena := (QualityGrouped.hold ()) {
+  State := arena.State, stateFintype := arena.stateFintype,
+  stateDecidableEq := arena.stateDecidableEq }
+def baselineGroupedCopy : Arena := (QualityGrouped.holdCopy ()) arena
 
 def missingEvidence : Arena := arena
 

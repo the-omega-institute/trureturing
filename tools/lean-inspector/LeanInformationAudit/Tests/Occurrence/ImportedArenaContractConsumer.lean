@@ -14,6 +14,16 @@ run_cmd do
     | throwError "native contract import lost independent input"
   RootCatalogs.declare { contract with rootId := (← getEnv).header.mainModule }
 
+run_cmd do
+  for name in #[``expectedGroupedAlias, ``expectedGroupedCopy,
+      ``sourceGroupedAlias, ``sourceGroupedCopy, ``baselineGroupedAlias, ``baselineGroupedCopy] do
+    let diagnostic ← liftTermElabM do
+      try return s!"accepted owner={← resolveCanonicalArenaNameFromEvidence name}"
+      catch ex => ex.toMessageData.toString
+    unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+      throwError "[FAIL] grouped contract native evidence {name}: {diagnostic}"
+  logInfo "[PASS] Q3 contract inputs retain dual rejection after native import"
+
 /-- error: IE-C003 ArenaSourceUnavailable declaration=ImportedContractProbe.missingEvidence reason=provenance -/
 #guard_msgs (error) in
 run_cmd do

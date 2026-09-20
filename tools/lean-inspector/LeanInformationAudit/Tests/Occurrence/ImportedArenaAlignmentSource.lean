@@ -110,3 +110,37 @@ def unresolved : Arena := by
   exact id localArena
 
 end QualityContext
+
+
+namespace QualityGrouped
+
+def hold (_u : Unit) (a : Arena.{0} := ProvenanceProbe.arena)
+    (_ignored : Arena.{0}) : Arena.{0} := a
+def shifted : Arena.{0} :=
+  (hold ()) {
+    State := ProvenanceProbe.arena.State
+    stateFintype := ProvenanceProbe.arena.stateFintype
+    stateDecidableEq := ProvenanceProbe.arena.stateDecidableEq }
+
+def holdCopy (_u : Unit) (a : Arena.{0} := {
+    State := ProvenanceProbe.arena.State
+    stateFintype := ProvenanceProbe.arena.stateFintype
+    stateDecidableEq := ProvenanceProbe.arena.stateDecidableEq })
+    (_ignored : Arena.{0}) : Arena.{0} := a
+def shiftedCopy : Arena.{0} := (holdCopy ()) ProvenanceProbe.arena
+
+-- The same inserted argument is harmless when the function discards it.
+def discardDefault (_u : Unit) (_a : Arena := {
+    State := arena.State, stateFintype := arena.stateFintype,
+    stateDecidableEq := arena.stateDecidableEq }) (result : Arena) : Arena := result
+def deadInserted : Arena := (discardDefault ()) arena
+def liveOuter : Arena := (discardDefault ()) {
+    State := arena.State, stateFintype := arena.stateFintype,
+    stateDecidableEq := arena.stateDecidableEq }
+def explicitInner : Arena := (hold () arena) arena
+def namedInner : Arena := (hold () (a := arena)) arena
+-- An inner @ does not change implicit argument insertion in an outer call.
+def returnsImplicit (_u : Unit) : {a : Arena} → a = arena → Arena := fun {_} _ => arena
+def groupedExplicit : Arena := (@returnsImplicit ()) rfl
+
+end QualityGrouped
