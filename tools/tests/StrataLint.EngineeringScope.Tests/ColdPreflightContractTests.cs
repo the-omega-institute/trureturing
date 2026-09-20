@@ -79,7 +79,7 @@ public sealed class ColdPreflightContractTests
             mapping["resources"]!.AsArray().Add(new JsonObject {
                 ["id"] = "engineering", ["projects"] = new JsonArray(ResourceRouteTests.ResourceFixture.Foo),
                 ["checks"] = new JsonArray(CommonExecutionEvidence.EngineeringCheckIds.Order(StringComparer.Ordinal).Select(s => (JsonNode?)JsonValue.Create(s)).ToArray()),
-                ["steps"] = new JsonArray("tests") });
+                ["steps"] = new JsonArray() });
             fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
         }
         fixture.CommitPlan();
@@ -142,8 +142,8 @@ public sealed class ColdPreflightContractTests
             Assert.True(File.Exists(Path.Combine(root, CommonExecutionEvidence.CliPath)));
             if (resource == "engineering")
             {
-                // Stop at the actual engineering test executor: this fixture registers
-                // no CI tests. It verifies build ownership without faking test/proof green.
+                // This guard-only fixture registers no CI tests. Its CLI rejects
+                // selftest, so the real guard executor must fail after the build.
                 Assert.Contains("STAGE_PROCESS", result.Text, StringComparison.Ordinal);
                 Assert.Equal("failed", Read(root, "engineering-result.json")["status"]!.ToString());
                 Assert.DoesNotContain("filemap", events);
