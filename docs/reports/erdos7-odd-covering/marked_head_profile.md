@@ -833,3 +833,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Integrated source budgets survive a one-edge rank loss](profile-notes/321-384/370-integrated-source-budgets-with-one-rank-loss.md)
 - [Private top fans and original ancestor cuts at every height](profile-notes/arithmetic/371-private-top-fans-and-ancestor-cuts.md)
 - [Original ancestor complements, lower ladders and prime support](profile-notes/arithmetic/372-height-two-ancestor-complements-and-prime-support.md)
+- [Original binary first ancestors force a joint cutoff-one cylinder](profile-notes/arithmetic/373-binary-first-ancestors-and-cutoff-one.md)
+- [Extremal prime-coordinate projections and a complete-cover descent](profile-notes/arithmetic/374-extremal-prime-projections-and-cardinality-descent.md)
+- [Deep prime-prefix projections and complete tree contraction](profile-notes/arithmetic/375-deep-prime-prefix-projections-and-tree-contraction.md)
+- [Complete prime-chain transport and one common prefix law](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
+- [Ternary shadow covers retain distinct labels but lose original prime arity](profile-notes/arithmetic/377-ternary-shadow-covers-and-original-prime-arity.md)
