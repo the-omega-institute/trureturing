@@ -1,0 +1,13 @@
+**命题 15.7（连通非零重叠与旧档案的区别）。** 在 $H=\mathbb R^3$ 上取 $C=I$，三个端口均为 $\mathbb R$，标准正交基为 $e_0,e_1,e_2$，并令
+$$
+J_S1=e_0,\qquad J_A1=e_0+e_1,\qquad
+J_B1=e_0+\cos\theta\,e_1+\sin\theta\,e_2.
+\tag{15.16}
+$$
+全部 $\theta$ 给出相同两局部响应
+$$
+K^{AS}(t)=e^{-t}\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+K^{SB}(t)=e^{-t}\begin{pmatrix}1&1\\1&2\end{pmatrix},
+$$
+而 $K_{AB}(t)=e^{-t}(1+\cos\theta)$、$d_0^2(1,1)=2-2\cos\theta$。所以非零共享端口及连通的 $A$—$S$—$B$ 重叠仍给两响应平方距离范围 $[0,4]$。但是若完整档案保留同源旧记录 $K_{AB}(0)=3/2$，完整观察者的这个平方距离范围就是单点 $\{1\}$。
+

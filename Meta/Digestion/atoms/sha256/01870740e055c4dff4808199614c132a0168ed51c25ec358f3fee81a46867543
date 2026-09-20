@@ -1,0 +1,22 @@
+**定理 15.5（单个交叉任务与响应内积距离的精确区间）。** 固定 $a\in U_A,b\in U_B,t\ge0$，令
+$$
+c_t=\sum_\lambda e^{-\lambda t}\langle a,X^0_\lambda b\rangle,\qquad
+R_t=\sum_\lambda e^{-\lambda t}
+\sqrt{\langle a,P_\lambda a\rangle\langle b,Q_\lambda b\rangle}.
+\tag{15.14}
+$$
+在 $\mathcal M_2$ 上，$\langle a,K_{AB}(t)b\rangle$ 的值集恰为 $[c_t-R_t,c_t+R_t]$。定义响应内积距离
+$$
+d_t^2(a,b)=\|e^{-tC/2}(J_Aa-J_Bb)\|^2,
+$$
+以及仅由局部数据给出的
+$$
+D_t=\langle a,K_{AA}(t)a\rangle+\langle b,K_{BB}(t)b\rangle-2c_t.
+$$
+则其平方距离的值集恰为
+$$
+\boxed{[D_t-2R_t,D_t+2R_t],\qquad D_t-2R_t\ge0.}
+\tag{15.15}
+$$
+$t=0$ 时，这是耦合向量的原始内积距离；将它认作观察位置之间的物理Euclidean距离另需识别合同，参见[机器学习伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)命题5.4的任务几何与物理度量边界。
+

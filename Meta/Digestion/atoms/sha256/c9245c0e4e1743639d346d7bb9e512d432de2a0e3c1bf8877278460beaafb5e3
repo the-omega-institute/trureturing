@@ -1,0 +1,57 @@
+**证明。** 分六步。
+
+1. 固定一层并省略 $\lambda$。若 $d\in\ker D$，$AS$ 的正二次型在 $(a,sd)$ 上对每个 $s\in\mathbb R$ 非负，其线性项 $2s\langle a,Ed\rangle$ 必为零，故 $Ed=0$。$SB$ 同理给 $F^*\ker D=0$，由自伴 $D$ 的 $\operatorname{ran}D=(\ker D)^\perp$ 得到式（15.7）的范围条件，亦有 $\operatorname{ran}E^*\subseteq\operatorname{ran}D$。在两个局部二次型中分别取共享向量 $-D^\dagger E^*a$、$-D^\dagger Fb$，得 $\langle a,Pa\rangle\ge0$、$\langle b,Qb\rangle\ge0$。几何上，这是本卷命题13.3的奇异Gram正交投影：投到共同耦合的像后，两侧剩余向量的Gram算子为 $P,Q$。
+
+2. 对候选交叉块 $X:U_B\to U_A$，令
+$$
+W=\begin{pmatrix}A&E&X\\E^*&D&F\\X^*&F^*&B\end{pmatrix},\qquad
+Z=X-ED^\dagger F.
+$$
+利用 $DD^\dagger E^*=E^*$、$DD^\dagger F=F$，其在 $(a,s,b)$ 上的二次型精确等于
+$$
+\|D^{1/2}(s+D^\dagger E^*a+D^\dagger Fb)\|^2
++\langle a,Pa\rangle+2\langle a,Zb\rangle+\langle b,Qb\rangle.
+\tag{15.10}
+$$
+若残差块 $\begin{pmatrix}P&Z\\Z^*&Q\end{pmatrix}$ 半正定，上式非负；反向取 $s=-D^\dagger E^*a-D^\dagger Fb$ 消去平方项，得到残差块半正定。因此两种正性等价，未要求 $D$ 可逆。
+
+3. 给出有限实矩形情形的收缩因子化。残差块半正定时，对 $(ra,sb)$ 的二次型判别式给
+$$
+|\langle a,Zb\rangle|^2\le\langle a,Pa\rangle\langle b,Qb\rangle.
+\tag{15.11}
+$$
+故在 $\operatorname{ran}P^{1/2}\times\operatorname{ran}Q^{1/2}$ 上，
+$$
+\beta(P^{1/2}a,Q^{1/2}b)=\langle a,Zb\rangle
+$$
+良定义且 $|\beta(u,w)|\le\|u\|\|w\|$：改变任一代表元的差在相应平方根的核中，式（15.11）使变化为零。对每个 $w$，有限维Riesz表示给唯一 $Tw\in\operatorname{ran}P^{1/2}$，满足 $\langle u,Tw\rangle=\beta(u,w)$；唯一性给 $T$ 的线性，范数界给 $\|Tw\|\le\|w\|$。在 $\operatorname{ran}Q^{1/2}$ 的正交补上令 $T=0$，便得 $T:U_B\to U_A$、$\|T\|\le1$ 及 $Z=P^{1/2}TQ^{1/2}$。反过来，此因子化给
+$$
+\langle a,Pa\rangle+2\langle a,Zb\rangle+\langle b,Qb\rangle
+\ge(\|P^{1/2}a\|-\|Q^{1/2}b\|)^2\ge0.
+$$
+这也覆盖任一像空间为零、奇异矩阵及两端口维数不同的情形。
+
+4. 对任意 $M\in\mathcal M_2$，写 $C=\sum_\mu\mu\Pi_\mu$，令 $J(a,s,b)=J_Aa+J_Ss+J_Bb$，则 $W_\mu=J^*\Pi_\mu J\succeq0$。引理15.2迫使可见局部系数等于给定值。若 $\mu\notin\Lambda$，$W_\mu$ 的三个对角块均为零，所以 $\|\Pi_\mu J_i u\|^2=0$ 对各 $i,u$ 成立；于是所有交叉块也为零。故额外不可见率不能只贡献 $AB$ 项。对 $\lambda\in\Lambda$，前面三步给式（15.8）的必要性。
+
+5. 反向，对任意 $T\in\mathbb B$，前面三步使对应的每个 $W_\lambda\succeq0$。取
+$$
+H_\lambda=\operatorname{ran}W_\lambda^{1/2},\qquad
+H=\bigoplus_{\lambda\in\Lambda}H_\lambda,\qquad
+C|_{H_\lambda}=\lambda I,
+$$
+并令 $J:U_A\oplus U_S\oplus U_B\to H$ 的第 $\lambda$ 分量为 $W_\lambda^{1/2}$，陪域限制在其像。于是 $C=C^*>0$ 且
+$$
+J^*e^{-tC}J=\sum_\lambda e^{-\lambda t}W_\lambda.
+\tag{15.12}
+$$
+将 $J$ 限制到三个端口即实现全部给定局部块及所选交叉块。这证明每个收缩元组都可实现，并给 $\mathcal M_2\ne\varnothing$。空谱时取 $H=\{0\},J=0$，正定条件对非零向量为空条件。也可直和任意与 $J$ 正交的不耦合正块；它不改变响应。
+
+6. 若某层 $P=0$ 或 $Q=0$，其残差 $Z$ 必为零。若两者均非零，选 $a,b$ 使 $u=P^{1/2}a\ne0,w=Q^{1/2}b\ne0$，秩一收缩
+$$
+T^\pm x=\pm\frac{u}{\|u\|}\left\langle\frac{w}{\|w\|},x\right\rangle
+\tag{15.13}
+$$
+给 $\langle a,P^{1/2}T^\pm Q^{1/2}b\rangle=\pm\|u\|\|w\|$，故产生不同系数。其余层固定，引理15.2保证完整响应不同。这证明式（15.9）。$\square$
+
+主卷第126.1–126.5节已经确定：选定整个核后，有效实现具有保持边界耦合的正交唯一性，额外不可见状态仍不确定。这里的自由度是整个核尚未确定的交叉块，与主卷第137.7–137.9节的有限矩前缀扩张问题、以及本卷定理13.4在固定完整核下的初态纤维问题不同。若固定隐藏维数、局部性或稀疏结构，步骤5构造的模型未必满足这些附加限制；式（15.8）的全乘积须再与相应限制求交。上述范围说明均是本定理量词的一部分。
+
