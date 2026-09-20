@@ -1,0 +1,22 @@
+**定义 28.1（固定空间标架与实际初始参考）。** 沿用定义25.1、27.1的归一化 $2\pi$ 环面、Fourier 符号、分量方向和无外力方程。以 $a_{\rm cal}>0$ 表示独立已知的物理幅度 $|\alpha|$，它不是（25.102）的向量场 $a_0$。取 $\alpha\in\{a_{\rm cal},-a_{\rm cal}\}$、$\beta\in\mathbb R$、$\nu>0$，空间平移 $q\in\mathbb T^2$ 在整条轨迹上固定。置
+$$
+a=(1,0),\qquad b=(-1,1),\qquad c=(0,1)=a+b,
+\qquad \chi_k(q)=e^{ik\cdot q}.
+\tag{28.101}
+$$
+非平移实际解记为 $u_{\alpha,\beta,\nu}$；其准备及平移准备为
+$$
+u_{\alpha,\beta,\nu}(0,X)
+ =(\beta\cos(X_2-X_1),\alpha\cos X_1+\beta\cos(X_2-X_1)),
+\qquad u_0^q(X)=u_{\alpha,\beta,\nu}(0,X+q).
+\tag{28.102}
+$$
+相应实际解记为 $u^q$。两端口是完整相干正交分量构成的复数 Fourier 积分
+$$
+A^q(t)=\widehat{u_2^q}(a,t),\qquad
+C^q(t)=\widehat{u_1^q}(c,t),\qquad
+A_0=A^q(0)=\frac\alpha2\chi_a(q),\quad |A_0|=a_{\rm cal}/2>0.
+\tag{28.103}
+$$
+两端口与初始参考的复校准及共同 Fourier 标架固定；它们是全空间 Fourier 积分，不暗含局部点探测器。使用 $A_0$ 的恢复命题要求这个初始复值已实际取得并保留，知道它的模不等于取得它的相位。允许时钟、同源取得和全部旧记录由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义33.1另行规定。
+
