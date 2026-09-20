@@ -2,7 +2,8 @@
 
 **A library for discovering truth.**
 
-[Start your journey](#start-your-journey) · [Examples](#three-places-to-look) · [First run](#first-run) ·
+[Start your journey](#start-your-journey) · [Information escape](#information-escape) ·
+[Examples](#three-places-to-look) · [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
@@ -14,6 +15,9 @@ and build on. The name reflects the project's intent: **true · return · Turing
 Our guiding conviction is that **all logic can be formalized**. Pursuing it
 means making definitions and assumptions explicit, with proof steps and
 dependencies open to inspection.
+
+Explore [information escape](#information-escape): what a result reveals,
+and what remains beyond its observations.
 
 Logic reaches beyond mathematics into philosophical and conceptual inquiry.
 What do we mean by a concept? Which assumptions carry an argument? What follows
@@ -63,6 +67,51 @@ and Zeckendorf representations are one research thread; the examples below
 also reach into conjecture refutation and the limits of local observations.
 The ambition is to make more of this discovery process automatic. Choosing
 the next fruitful question remains an open part of that ambition.
+
+## Information escape
+
+We are developing an **information-escape judge** around four questions:
+
+- **Where did information escape?** Name the objects, assumptions and
+  observations under which distinct states remain indistinguishable.
+- **How is that escape addressed?** Describe the added readout or relation,
+  and show how a proof connects it to those objects and assumptions.
+- **What new information emerges?** Identify the distinction now justified
+  by the result and its verified connection to the readout.
+- **Where does information continue to escape?** Exhibit a remaining
+  indistinguishable pair, prove none remain within the stated scope, or mark
+  the boundary open.
+
+A **readout** is a way of observing a state; several readouts can observe
+the same states. Fix one current catalog of registered theorem occurrences
+and one shared state space, then remove just one occurrence. Pairs of distinct
+states that the full catalog distinguished but the remaining readouts cannot
+distinguish are that occurrence's **unique captures**. The
+[EscapePairs definitions and proofs](D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean)
+formalize this comparison.
+
+For a **finite arena with at least two states**,
+[StructuralNovelty](D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean)
+connects a strict reduction in indistinguishability to a strict decrease in
+the escape rate: the fraction of ordered distinct-state pairs left
+indistinguishable. A unique capture witnesses that reduction. Zero unique
+capture does not mean worthlessness: another occurrence can carry the same
+distinction. Information here is contextual; this supplies neither a universal
+value score nor a historical novelty judgment.
+
+The judge is **under development**. Its current **declared-template findings
+are Observe warnings and do not block admission**, as specified in
+[A5.5 of the repository specification](docs/develop/spec/golden-ledger-repo-spec.md)
+and implemented in the
+[rule source](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs).
+Other admission checks retain their own effects. The rule's delta selection
+determines which modules to inspect; it is separate from the mathematical
+comparison within one current catalog above. The wider design is described
+in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
+its proposed system is not a claim of completed implementation.
+
+Bring your own question to the [journey route](#start-your-journey), and use
+these four questions to follow what becomes distinguishable and what stays open.
 
 ## Three places to look
 
