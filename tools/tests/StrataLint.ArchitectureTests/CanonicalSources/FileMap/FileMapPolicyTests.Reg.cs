@@ -1,4 +1,5 @@
 using StrataLint.Engine;
+using StrataLint.Cli;
 using StrataLint.Scribe;
 using System.Text.Json;
 
@@ -6,6 +7,51 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
+    [Fact]
+    public void EmptyRegPackagePassesRepositoryFileMapConformance()
+    {
+        Assert.Empty(FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot()));
+    }
+
+    [Theory]
+    [InlineData(null, 0)]
+    [InlineData("Reg/lakefile.toml", 3)]
+    [InlineData("Reg/lake-manifest.json", 3)]
+    public void EmptyRegFamiliesRequireBothRegisteredPackageFiles(string? missing, int expected)
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+        string[] configs = [RegManifestAgreement.LakefilePath, RegManifestAgreement.ManifestPath];
+        var findings = FileMapPolicy.InspectPatternPopulation(manifest, configs.Where(path => path != missing));
+        Assert.Equal(expected, findings.Count(finding =>
+            finding.Path.StartsWith("Reg/", StringComparison.Ordinal) && finding.Path.EndsWith(".lean", StringComparison.Ordinal)));
+    }
+
+    [Theory]
+    [InlineData("Reg/**/*.lean")]
+    [InlineData("Reg/Unknown/**/*.lean")]
+    public void OtherEmptyRegPatternsRemainRejected(string pattern)
+    {
+        var manifest = Parse(Entry(pattern, "data", "none", "Lean", "lean-build"));
+        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest,
+            [RegManifestAgreement.LakefilePath, RegManifestAgreement.ManifestPath]));
+        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
+    }
+
+    [Theory]
+    [InlineData("lean-build", "tools/scripts/worktree/lean-cache-run.sh")]
+    [InlineData("lean-inspector", "tools/lean-inspector/inspect.sh")]
+    public void RegLeanVerifiersRequireTheirRegisteredImplementation(string verifier, string implementation)
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+        Assert.Contains(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
+            new HashSet<string>(StringComparer.Ordinal) { implementation }));
+        Assert.DoesNotContain(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
+            new HashSet<string>(StringComparer.Ordinal)));
+        var dataOnly = Parse(Entry("Reg/D5/**/*.lean", "data", "none", "Lean", verifier));
+        Assert.DoesNotContain(verifier, FileMapPolicy.AvailableDataVerifiers(dataOnly,
+            new HashSet<string>(StringComparer.Ordinal) { implementation }));
+    }
+
     [Theory]
     [InlineData("SL-015", "Reg/lake-manifest.json", false)]
     [InlineData("SL-015", "Reg/lakefile.toml", false)]

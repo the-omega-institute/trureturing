@@ -8,7 +8,7 @@ namespace StrataLint.Cli;
 
 internal sealed record FileMapFinding(string Code, string Path, string Message);
 
-internal static class FileMapPolicy
+internal static partial class FileMapPolicy
 {
     private const string RunLocalTrackedMessage =
         "run-local artifact must be removed from the Git index; "
@@ -62,6 +62,8 @@ internal static class FileMapPolicy
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
+            ["lean-build"] = "tools/scripts/worktree/lean-cache-run.sh",
+            ["lean-inspector"] = "tools/lean-inspector/inspect.sh",
             ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
@@ -557,6 +559,7 @@ internal static class FileMapPolicy
             // A report pattern is therefore a reservation, including between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern))
+            .Where(entry => !IsRegFamilyReservation(entry, manifest, trackedPaths))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
