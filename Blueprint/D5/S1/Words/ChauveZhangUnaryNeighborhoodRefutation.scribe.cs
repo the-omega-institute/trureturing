@@ -134,7 +134,7 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(),
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("chauve-zhang-unary-neighborhood-minimality"),
+                    ProblemSlugRef.Create("chauve-zhang-condensed-neighborhood-unary-minimality"),
                     ResolutionKind.Refuted)),
             Node(
                 "super-condensed-unary-minimality-claim",
@@ -153,7 +153,10 @@ internal sealed class ChauveZhangUnaryNeighborhoodRefutationDocument
                     + "SCN(0011,1) is {001, 011}. Their cardinalities are three and two, "
                     + "so 0000 does not minimize the super condensed neighborhood.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()))));
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chauve-zhang-super-condensed-neighborhood-unary-minimality"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,

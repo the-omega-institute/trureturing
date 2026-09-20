@@ -154,9 +154,9 @@ $$\neg claimCondensed$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed` (`✓ std3`). ∎
 
-*Resolves.* `Problems/chauve-zhang-unary-neighborhood-minimality` (refuted) by `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed`.
+*Resolves.* `Problems/chauve-zhang-condensed-neighborhood-unary-minimality` (refuted) by `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chauve-zhang-unary-neighborhood-minimality","declaration_gid":"D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chauve-zhang-condensed-neighborhood-unary-minimality","declaration_gid":"D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultCondensed","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -181,6 +181,10 @@ The closing question reads: "It was also shown in [6] that unary words have the 
 $$\neg claimSuperCondensed$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultSuperCondensed` (`✓ std3`). ∎
+
+*Resolves.* `Problems/chauve-zhang-super-condensed-neighborhood-unary-minimality` (refuted) by `D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultSuperCondensed`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chauve-zhang-super-condensed-neighborhood-unary-minimality","declaration_gid":"D5/S1/Words/ChauveZhangUnaryNeighborhoodRefutation.resultSuperCondensed","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
