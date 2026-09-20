@@ -1,10 +1,10 @@
 {
   "certificate_format": "erdos7-semantic-certificate-v1",
-  "logical_sha256": "d2809e41a8eceb269f0fb4a20237f71fcb817a2545ad26f9d16907b60745c821",
+  "logical_sha256": "0619302a3df3f44818eca9301b91fd0f8ea65cd923489118304154bfb1bb0108",
   "parts_directory": "pg1_scalar_schedule_certificate.parts",
   "root": {
     "path": "content.json",
-    "sha256": "d1cd2b1062176be15af3c3484091053af99fbcf9ade291bac7c477c68dfb7689",
+    "sha256": "10133e23eb2d52d59945d60b2e6960f2e0fde91d1b835759fdf0b8fba398bbb6",
     "kind": "object"
   }
 }

@@ -7,9 +7,11 @@ internal sealed record LeanSourceToken(string Text, int Line, int Column);
 
 internal static class LeanSourceTokenizer
 {
-    internal static ImmutableArray<LeanSourceToken> Tokenize(string source)
+    internal static ImmutableArray<LeanSourceToken> Tokenize(string source) =>
+        ReadTokens(source).ToImmutableArray();
+
+    internal static IEnumerable<LeanSourceToken> ReadTokens(string source, bool importHeader = false)
     {
-        var result = ImmutableArray.CreateBuilder<LeanSourceToken>();
         var brackets = new Stack<char>();
         var index = 0;
         var line = 1;
@@ -94,19 +96,28 @@ internal static class LeanSourceTokenizer
                     throw new LeanSourceExtractionException("Lean string literal is unterminated.");
                 }
 
-                result.Add(new LeanSourceToken(source[start..index], tokenLine, tokenColumn));
+                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn);
                 continue;
             }
 
-            if (IsIdentifierStart(source[index]))
+            if (IsIdentifierStart(source[index]) || importHeader && source[index] == '«')
             {
                 var start = index;
-                while (index < source.Length && IsIdentifierPart(source[index]))
+                while (index < source.Length)
                 {
-                    Advance(source[index++]);
+                    if (importHeader && source[index] == '«')
+                    {
+                        Advance(source[index++]);
+                        while (index < source.Length && source[index] != '»') Advance(source[index++]);
+                        if (index == source.Length)
+                            throw new LeanSourceExtractionException("Lean quoted identifier is unterminated.");
+                        Advance(source[index++]);
+                    }
+                    else if (IsIdentifierPart(source[index])) Advance(source[index++]);
+                    else break;
                 }
 
-                result.Add(new LeanSourceToken(source[start..index], tokenLine, tokenColumn));
+                yield return new LeanSourceToken(source[start..index], tokenLine, tokenColumn);
                 continue;
             }
 
@@ -133,15 +144,13 @@ internal static class LeanSourceTokenizer
                 }
             }
 
-            result.Add(new LeanSourceToken(symbol, tokenLine, tokenColumn));
+            yield return new LeanSourceToken(symbol, tokenLine, tokenColumn);
         }
 
         if (brackets.Count != 0)
         {
             throw new LeanSourceExtractionException("Lean delimiters are unbalanced.");
         }
-
-        return result.ToImmutable();
 
         void Advance(char value)
         {

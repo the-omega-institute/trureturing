@@ -11,7 +11,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -23,8 +23,8 @@ import argparse, json
 
 HERE = Path(__file__).resolve().parent
 SOURCE_PINS = {
-    'certificates/actual_zero_block_certificate.json': 'a2793e67cac77cd7db19e024cc4f446d32a8695ed3fa070991473e692db169de',
-    'verify_actual_zero_block.py': 'edd6284c0cbaee2e32903d3f20b27ef9e5880834c5e0c47c8d6e9b9fc10685fe',
+    'certificates/actual_zero_block_certificate.json': 'c6cb9ea79f78fdc40ad3da66d7dffa96b952195fbb57848792fdbccf7a04b0ce',
+    'verify_actual_zero_block.py': '48023c2fd67f7b385c9f0e8c62decc146a91ea3f52d74e014e464db43ee785b5',
 }
 
 def need(ok, message):

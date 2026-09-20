@@ -76,6 +76,65 @@ public sealed partial class CurrentExecutionContractTests
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
+    [Theory]
+    [InlineData("source", "candidate changed during test execution")]
+    [InlineData("source-mode", "candidate changed during test execution")]
+    [InlineData("runtime", "artifact integrity mismatch: build/ci/fixture-bin/First.dll")]
+    [InlineData("inventory", "artifact integrity mismatch: " + CommonBuildOutputs.TestsPath)]
+    public void TestCompletionRereadsSourceAndBuildMaterials(string mutation, string expected)
+    {
+        if (mutation == "source-mode" && OperatingSystem.IsWindows()) return;
+        using var fixture = new CandidateFixture();
+        var calls = 0;
+        var error = Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, results) =>
+        {
+            fixture.WriteTrx(results, "Passed");
+            if (++calls == 1)
+            {
+                var path = Path.Combine(fixture.Root, mutation switch
+                {
+                    "runtime" => "build/ci/fixture-bin/First.dll",
+                    "inventory" => CommonBuildOutputs.TestsPath,
+                    _ => CandidateFixture.First,
+                });
+                if (mutation == "source-mode" && !OperatingSystem.IsWindows()) File.SetUnixFileMode(path, File.GetUnixFileMode(path) | UnixFileMode.UserExecute);
+                else TemporaryFileSystem.File.AppendAllText(path, "\n");
+            }
+            return 0;
+        }, TextWriter.Null));
+
+        Assert.Equal(2, calls);
+        Assert.Equal(expected, error.Message);
+    }
+
+    [Fact]
+    public void TestCompletionRecomputesDeclaredExecutionEnvironment()
+    {
+        using var fixture = new CandidateFixture();
+        const string name = "CONTRACT_TEST_COMPLETION_ENVIRONMENT";
+        var original = Environment.GetEnvironmentVariable(name);
+        try
+        {
+            EditRegistration(fixture, projects => projects[0]!["execution_environment"] = new System.Text.Json.Nodes.JsonArray(name));
+            Environment.SetEnvironmentVariable(name, "before");
+            fixture.Build();
+            using var output = new StringWriter();
+            var calls = 0;
+            var exit = Program.RunCurrentTests(fixture.Root, (_, results) =>
+            {
+                ++calls;
+                fixture.WriteTrx(results, "Passed");
+                Environment.SetEnvironmentVariable(name, "after");
+                return 0;
+            }, output);
+
+            Assert.Equal(2, calls);
+            Assert.Equal(1, exit);
+            Assert.Contains("test input identity mismatch: " + CandidateFixture.First, output.ToString(), StringComparison.Ordinal);
+        }
+        finally { Environment.SetEnvironmentVariable(name, original); }
+    }
+
     [Fact]
     public void EvidenceSurvivesTransportToIdenticalCheckout()
     {

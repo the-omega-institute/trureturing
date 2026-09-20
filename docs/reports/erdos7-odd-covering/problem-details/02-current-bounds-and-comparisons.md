@@ -2,7 +2,7 @@
 
 # Current bounds and comparisons
 
-A [joint-mask stability theorem](../profile-notes/17-higher-moments-retain-the-full-old-inventory-in-a-law-changing-perturbation.md#joint-mask-stability-permits-arbitrary-high-old-and-current-residues)
+A [joint-mask stability theorem](../profile-notes/001-064/17-higher-moments-retain-the-full-old-inventory-in-a-law-changing-perturbation.md#joint-mask-stability-permits-arbitrary-high-old-and-current-residues)
 replaces the small old-event condition by small average joint changes.
 For the full original six-prime inventory, keep the specified reference
 residues only on labels whose exponents are all at most65. Every remaining
@@ -19,7 +19,7 @@ mathematics with exact arithmetic checks, not Lean. The finite core and
 prime support remain specified; no improved unrestricted continuation
 constant or resolution of #7 is asserted.
 
-A [complete original-low-test estimate](../profile-notes/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
+A [complete original-low-test estimate](../profile-notes/001-064/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
 primes and every finite higher exponent range; a finite depth box has
@@ -32,7 +32,7 @@ The inexpensive union relaxation at reference33 fails to dominate the
 existing head bound on an actual aligned68 low test; this concerns the
 relaxation, not the actual moment.
 
-An [exact signed CRT digit optimizer](../profile-notes/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#exact-signed-digit-optimization-with-the-old-load-fixed)
+An [exact signed CRT digit optimizer](../profile-notes/001-064/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#exact-signed-digit-optimization-with-the-old-load-fixed)
 now maximizes arbitrary rational score tables over all six original
 seven-label residues for a fixed old load and fixed auxiliary profile.
 It retains empty cylinders and every digit, including zero. On the
@@ -41,7 +41,7 @@ actual PG1 law, a joint-square/weighted-charge fixture with coefficients
 `223040367109/3000000021`, strictly exceeding the common-digit maximum
 by `9728472/1000000007`. Thus the common-digit shortcut for positive
 square estimates cannot be imposed on that signed joint objective.
-The [complete twelve-label optimizer](../profile-notes/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#exact-optimization-of-arbitrary-point-scores-over-all-twelve-low-labels)
+The [complete twelve-label optimizer](../profile-notes/001-064/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#exact-optimization-of-arbitrary-point-scores-over-all-twelve-low-labels)
 also eliminates all11808 realizable old-load vectors for any supplied
 signed point-score table. For that same fixed auxiliary fixture, its
 exact all-low-test maximum is `80520608091/1000000007`, equal to the
@@ -50,7 +50,7 @@ gap remains valid. All moment/charge auxiliary profiles and their full
 tails still need a complete upper bound; neither finite fixture supplies
 a global continuation bound.
 
-The [reference-optimal boundary](../profile-notes/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#a-reference-optimal-boundary-for-the-old-pg1-anchored-functional)
+The [reference-optimal boundary](../profile-notes/001-064/12-complete-original-low-test-anchoring-at-arbitrary-prime-power-heights.md#a-reference-optimal-boundary-for-the-old-pg1-anchored-functional)
 for the aligned47 low test is exactly
 `853585952201/26129684197=32.66728927014747...`, minimizing over every
 real reference. This rules out certifying a uniform head bound32 using
@@ -58,14 +58,14 @@ the fixed AF1 estimate, fixed old grouped deletion operator and independent
 survival interval alone. It is not an actual-moment lower bound. A
 probability-capped deletion operator and one-event joint-cost formula
 retain additional constraints, without claiming a numerical improvement.
-At the fixed reference33, a [finite exact dual certificate](../profile-notes/13-probability-capped-deletion-and-a-joint-observation-beyond-this-boundary.md#a-finite-dual-obstruction-to-the-reference33-price-family)
+At the fixed reference33, a [finite exact dual certificate](../profile-notes/001-064/13-probability-capped-deletion-and-a-joint-observation-beyond-this-boundary.md#a-finite-dual-obstruction-to-the-reference33-price-family)
 also excludes every nonnegative price choice in the termwise max-plus
 majorant: its value is at least `34.3705112470`, whereas improving the
 existing head bound would require a value below `33.388656338`.
 This excludes that fixed-reference majorant family, not other references
 or an improvement of the actual moment.
 
-A [complete uniform 86-point profile](../profile-notes/10-separating-an-original-saturated-test-from-its-higher-labels.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
+A [complete uniform 86-point profile](../profile-notes/001-064/10-separating-an-original-saturated-test-from-its-higher-labels.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
 has **Gamma≤35** on each of its six actual mask states, in three
 inclusion-minimal orbits, at arbitrary original3/5/7 heights.
 An untouched seven digit makes the square relaxation and cylinder
@@ -83,7 +83,7 @@ explicit original-label witnesses attain the formula. Thus their
 deletion bounds can be recovered from the row profile, even though
 that profile does not reconstruct the actual carrier.
 
-A [full deletion-profile box](../profile-notes/10-separating-an-original-saturated-test-from-its-higher-labels.md#uniform35-bounds-on-a-full-deletion-profile-box)
+A [full deletion-profile box](../profile-notes/001-064/10-separating-an-original-saturated-test-from-its-higher-labels.md#uniform35-bounds-on-a-full-deletion-profile-box)
 extends Gamma≤35 to every actual carrier with `0≤b≤b*` for this
 source profile or its allowed old-coordinate image. Multiplying the
 same-law signed criteria by the carrier size makes their slacks
@@ -96,7 +96,7 @@ support-inclusion orbits. Its minimum survival lower bound is
 Together with the disjoint preceding384 orbits, this uniform-box result
 certifies946 carrier orbits and10 minimal orbits at Gamma≤35.
 
-A [positive row law on an actual77-point carrier](../profile-notes/11-original9-higher-hinges-and-a-fixed-1113-continuation.md#a-shared-row-probability-crosses-a-uniform-profile-separation)
+A [positive row law on an actual77-point carrier](../profile-notes/001-064/11-original9-higher-hinges-and-a-fixed-1113-continuation.md#a-shared-row-probability-crosses-a-uniform-profile-separation)
 adds515 carrier orbits and one minimal orbit, raising the total to
 **1461 carrier orbits and11 minimal orbits at Gamma≤35**. An exact
 affine separator places this carrier outside the convex hull of every
@@ -106,7 +106,7 @@ margins greater than0.910533 and0.563828, on one actual law at all
 original3/5/7 heights. The source law has full support; containing
 carriers inherit its transported supported law. This does not assert
 that their uniform laws fail the actual moment bound.
-The [bounded-loss PG1 transfer](../profile-notes/13-probability-capped-deletion-and-a-joint-observation-beyond-this-boundary.md#transfer-of-the-pg1-law-after-a-bounded-loss-of-low-mass)
+The [bounded-loss PG1 transfer](../profile-notes/001-064/13-probability-capped-deletion-and-a-joint-observation-beyond-this-boundary.md#transfer-of-the-pg1-law-after-a-bounded-loss-of-low-mass)
 further enlarges the combined region to **2401 carrier orbits and63
 minimal orbits at Gamma≤35**. Restricting the mapped PG1 probability
 to the target carrier, with lost mass `t`, gives the same-law bound
@@ -127,7 +127,7 @@ No new complete carrier count is asserted for that enlarged budget.
 The exact depth100 improvement raises the scalar integer loss threshold
 again to21150724, without inferring a new coverage count from it.
 
-The [joint low/high deletion transfer](../profile-notes/14-joint-observation-guidance-from-the-polynomial-closed-graphs.md#joint-low-and-high-deletion-enlarges-the-transported-support-domain)
+The [joint low/high deletion transfer](../profile-notes/001-064/14-joint-observation-guidance-from-the-polynomial-closed-graphs.md#joint-low-and-high-deletion-enlarges-the-transported-support-domain)
 enlarges the combined region to **2643 carrier orbits and72 minimal
 orbits at Gamma≤35**, containing16153 normalized states. Four retained
 supports of72 or73 points pass every original3/original9 root criterion
@@ -141,7 +141,7 @@ remain56894 minimal orbits outside this certified region. All original
 labels and complete tails are preserved; arbitrary-prime continuation
 and unrestricted#7 remain unresolved.
 
-The [complete actual-carrier classification](../profile-notes/08-all-integer-schedules-through23-for-the-fixed-scalar-feature-map.md#complete-low315-carrier-classification-for-actual-digit-bounds)
+The [complete actual-carrier classification](../profile-notes/001-064/08-all-integer-schedules-through23-for-the-fixed-scalar-feature-map.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
 On the six canonical old45 shapes, the 161375 deletion vectors lift to
 965595 digit-union carriers and 170569 orbits under common CRT root
@@ -151,7 +151,7 @@ same deletion vector but inequivalent carriers. The standalone exact
 classifier rebuilds every state and orbit. This establishes the domain
 and its allowed identifications, not a moment bound on all its members.
 
-The [support-inclusion reduction](../profile-notes/09-fixed-convex-potentials-for-the-actual-cap-charge.md#support-dominance-reduces-the-complete-actual315-carrier-task)
+The [support-inclusion reduction](../profile-notes/001-064/09-fixed-convex-potentials-for-the-actual-cap-charge.md#support-dominance-reduces-the-complete-actual315-carrier-task)
 further reduces those 170569 orbits to 56966 inclusion-minimal orbits.
 A five-label resource recurrence exactly maximizes deletions among actual
 carriers contained in each target. It preserves each original modulus
@@ -162,7 +162,7 @@ family is pulled back through the same coordinate map before applying
 the universal PG1 estimate. Numerical bounds for the remaining minimal
 carriers and a general prime-tail continuation remain open.
 
-On that same77-point law, the [convex extension](../profile-notes/07-a-common-weighted-low-layout-and-a-nonnegative-tail-correction.md#convex-costs-on-the-same-arbitrary-height-probability)
+On that same77-point law, the [convex extension](../profile-notes/001-064/07-a-common-weighted-low-layout-and-a-nonnegative-tail-correction.md#convex-costs-on-the-same-arbitrary-height-probability)
 (SH19)--(SH25) adds simultaneous mean `<4.948866` and eight hinge
 bounds, including threshold-six `<0.808228`, with arbitrary original
 3/5/7 heights. Eliminating two singleton45 choices reduces each
@@ -185,7 +185,7 @@ by (SH30). Its810 exact whole-cost observations and complete tails
 have a separate certificate; the final positive margin sharpens the
 bound without changing the cost parameter or requiring a new law.
 
-A [fixed convex-potential envelope](../profile-notes/09-fixed-convex-potentials-for-the-actual-cap-charge.md#fixed-convex-potentials-for-the-actual-cap-charge)
+A [fixed convex-potential envelope](../profile-notes/001-064/09-fixed-convex-potentials-for-the-actual-cap-charge.md#fixed-convex-potentials-for-the-actual-cap-charge)
 bounds the actual-cap energy and assigned charge by two scalar whole costs.
 It retains a single potential before conditional comparison, with a complete
 auxiliary tail whose cutoff is determined by that potential. A separate
@@ -196,7 +196,7 @@ the explicit potential `(0,56,128,512)/315` at prime11, threshold4 and
 contribution by `>0.069949731`. Its exact replay uses no quantization.
 This one-step improvement does not close the five-prime continuation.
 
-The [fixed scalar schedule obstruction](../profile-notes/08-all-integer-schedules-through23-for-the-fixed-scalar-feature-map.md#all-integer-schedules-through23-for-the-fixed-scalar-feature-map)
+The [fixed scalar schedule obstruction](../profile-notes/001-064/08-all-integer-schedules-through23-for-the-fixed-scalar-feature-map.md#all-integer-schedules-through23-for-the-fixed-scalar-feature-map)
 excludes every one of the530145 integer threshold schedules through
 11,13,17,19,23 for the specified (SH24) feature certificate. Its
 combined criterion misses by more than `101+0.03W` for every `W>0`.
@@ -356,6 +356,8 @@ Existing frozen declarations provide the following reusable ingredients:
 |---|---|
 | [FiniteDivisorEulerProduct.divisor_sum_eq_euler_product](../../../../D5/S3/Arith/DivisorGibbs/FiniteDivisorEulerProduct.lean) | Factor a finite divisor sum into local prime-power geometric sums. |
 | [GoldenResourceOptimalInteger.golden_resource_sigma_identity](../../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean) | Identify the project's divisor objective with `log(σ(N)/N)−λ log N`. |
+| [GoldenResourceObjectiveFactorization.golden_resource_objective_factorization](../../../../D5/S3/Arith/GoldenResourceObjectiveFactorization.lean) | Separate the fixed dyadic contribution from every positive odd integer. |
+| [GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval](../../../../D5/S3/Arith/GoldenResource5040PriceInterval.lean) | Supply an open price interval on which 5040 is the unique full-domain optimum. |
 | [RobinExponentSwap.reciprocal_geom_sum_swap_strict](../../../../D5/S3/Arith/RobinExponentSwap.lean) | Compare reciprocal-divisor products when prime exponents are reassigned. |
 | [RobinRationalBasis.log_expansion_remainder_bound](../../../../D5/S3/Arith/GoldenResource/RobinRationalBasis.lean) | Bound the remainder of the same positive `atanh` logarithm expansion used by the finite continuation verifier. |
 | [GoldenDivisorLanguage.golden_fiber_5040](../../../../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean) | The six integers with golden observation 5040 have exactly the two odd parts 315 and 945. |
@@ -366,6 +368,48 @@ wrapper is introduced. The new mathematical arguments in this dossier are
 not thereby Lean-verified. For the logarithm calculation, the public remainder
 bound treats `1≤y<2` after binary range reduction; the endpoint `log 2`
 uses pinned Mathlib's `Real.sum_range_le_log_div` at parameter `1/3`.
+
+The fixed dyadic contribution can be cancelled to obtain an optimum on
+**all positive odd integers**. Write
+\(J_\lambda(n)=\log(\sigma(n)/n)-\lambda\log n\).
+For positive odd \(n\), coprimality of \(16\) and \(n\), together with
+the factorization above, gives
+
+\[
+ J_\lambda(16n)=J_\lambda(16)+J_\lambda(n).
+\]
+
+Apply the existing
+[golden_resource_unique_optimum](../../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean)
+at \(16n\) with price \(1/25\), use \(5040=16\cdot315\), and subtract
+the common term \(J_{1/25}(16)\). This gives
+
+\[
+ J_{1/25}(n)\le J_{1/25}(315),\qquad
+ J_{1/25}(n)=J_{1/25}(315)\ \Longleftrightarrow\ n=315.
+\]
+
+Indeed, equality in the original theorem is equivalent to
+\(16n=5040\). The same cancellation using the price-interval theorem
+gives the identical odd-domain uniqueness statement for every
+
+\[
+ \frac{\log(12/11)}{\log11}<\lambda
+ <\frac{\log(31/30)}{\log2}.
+\]
+
+These odd-domain conclusions are ordinary deductions from the cited Lean
+declarations, not new Lean theorems. At price \(1/25\), exponentiating
+the objective bound gives precisely
+
+\[
+ \frac{\sigma(n)}n\le
+ \frac{208}{105}\left(\frac n{315}\right)^{1/25}
+ \qquad(n>0\text{ odd}).
+\]
+
+The right side still grows with the period; it is not the constant
+\(208/105\).
 
 The odd part 315 lies just below a simple covering obstruction. For any
 family of distinct nonunit divisors of `N`, the union bound on a full period
@@ -382,7 +426,10 @@ shows that covering would require `σ(N)/N≥2`. At the two adjacent heights,
 Thus moduli dividing `315=3²·5·7` leave at least `2/105=6/315` uncovered,
 for every residue assignment. Raising only the 3-exponent to obtain
 `945=3³·5·7` already makes this reciprocal-sum bound insufficient. It does
-not prove coverage at 945. The finite-height CRT criterion (FC1)--(FC2)
+not prove coverage at 945. Although \(J_{1/25}(945)<J_{1/25}(315)\), its
+unpenalized divisor ratio is larger, as the displayed values show.
+Thus a smaller objective value need not give a smaller raw reciprocal
+covering budget. The finite-height CRT criterion (FC1)--(FC2)
 gives the stronger bounds:
 
 | Period \(N\) | Mixed budget \(M_N\) | Guaranteed uncovered residues |
@@ -522,8 +569,13 @@ second-moment weights; replacing them by the divisor-sum weights would
 change the quantity being bounded. The same argument works for any new
 prime. It does not require a new Lean declaration.
 
-The existing unique optimum at 5040 concerns the objective
-`log(σ(N)/N)−(1/25)log N`, not an optimization over survivor probabilities.
+The odd-domain optimum above controls the priced divisor objective.
+A comparison with actual covering costs still needs a separate proof:
+for example, [the literal root costs in report 379](../profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
+retain assigned residues and, when `5` divides `m`, weights
+`3^(1−e)g(m)` for originals `3^e m`, rather than their reciprocal
+weights `1/(3^e m)`. The optimum alone supplies no upper bound for
+those costs below their required budget.
 Similarly, [robin_seven_smooth](../../../../D5/S3/Arith/Robin/SevenSmooth.lean) bounds
 `σ(N)/N` for `N=2^a3^b5^c7^d>5040` by Robin's logarithmic right-hand side.
 Neither statement controls arbitrary forbidden residues or their conditioned

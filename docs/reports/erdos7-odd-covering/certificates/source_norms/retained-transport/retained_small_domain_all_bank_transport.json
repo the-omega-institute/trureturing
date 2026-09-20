@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "38e92bee43030dcaf0a69a01fac5463e9ffc7da9304d6282b1985dff92c746e2",
+  "parts_directory": "retained_small_domain_all_bank_transport.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "c97ad1fa2d4053d495095baa5132a4dd8ff48141cf75f9428e8ac871aae3f9b2",
+    "kind": "object"
+  }
+}

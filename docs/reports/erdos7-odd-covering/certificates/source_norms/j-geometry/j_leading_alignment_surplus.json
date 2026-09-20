@@ -1,0 +1,259 @@
+{
+  "schema": "erdos7-imperfect-j-leading-alignment-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "profile-notes/001-064/48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md": "b4c9a60a2c4a13147177e747d24dfb16a29e42eb2278f5948f22d49c0001563e",
+    "profile-notes/001-064/50-sharp-source-survival-endpoints.md": "c483501c02a1b97e00b0eaee9890ee206c6377f37542eae4377a6b4ef68fdd69",
+    "profile-notes/065-128/71-global-j-k-control-faces-and-exact-escape-gaps.md": "cc9c9dd0fd64d90d18a658617e7048f2244469ce1c65839e6524fdbdb63874c1",
+    "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
+    "profile-notes/129-192/136-a-whole-j-source-neighborhood-has-a-complete-labelwise-bound.md": "845d9a84f41391240f05f8c5be35cf074d6614abf1dfc493046e8619521f3945",
+    "profile-notes/257-320/301-three-missing-source-pairs-clear-the-complete-core-comparisons.md": "87a657138aaf281ad788f5d1c13e395af64f5766bb87ae76a6d0a1ad5c904d3d",
+    "profile-notes/257-320/305-ineffective-leading-pairs-retain-the-complete-core-bounds.md": "5104c3c78a09ae694f1a3853fee92db46507816b7b36eb569eee4e690e79bb27",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "9450bd7aa5ea8353a0b9b07bf13536aa3fac4fdba73ce0f4558331405a37b36b"
+  },
+  "helper_sha256": "c334de5907fc7987d1e7f8aa32fea4a70b4dc4bc6d83b78d03f8fea10f492cfc",
+  "delta_max": "1/1000",
+  "uniform_alignment_rho_floor": "299/108000",
+  "other_slot_loss_minimum": "5999/450000",
+  "aligned_sector_limiting_raw_cell_masses": [
+    "1/24",
+    "1/12",
+    "7/270",
+    "1/20",
+    "53/1080"
+  ],
+  "aligned_sector_limiting_survivor_mass": "413/2700",
+  "aligned_sector_limiting_rho": "2/675",
+  "old53_J403_signed_mass_coefficient": "-1084633310562408667108430507811834753021649/405362309383496544679226798448256980000000",
+  "examples": [
+    {
+      "height": 3,
+      "original_label_count": 63,
+      "source_beta": [
+        "0",
+        "0",
+        "1/5",
+        "6/125",
+        "0"
+      ],
+      "source_late": [
+        "0",
+        "0",
+        "1/135",
+        "0",
+        "2/1125"
+      ],
+      "raw_source_mass": "913/3375",
+      "actual_survivor_mass": "168037/965250",
+      "D": "22501/135000",
+      "S0": "7723859/46305000",
+      "rho": "48221983/6621615000",
+      "qJ": "35936049152/83740234375",
+      "delta": "47804185223/83740234375",
+      "lambda": "127/27000",
+      "mixed7_old_carrier_category_masses": [
+        "94/375",
+        "409/3375",
+        "254/3375",
+        "31/1125",
+        "31/3375"
+      ],
+      "mixed7_old_carrier_total": "1633/3375",
+      "rho_lower_from_leading_alignment": null,
+      "old48_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "old50_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "leading_residues": {
+        "5": 1,
+        "3": 2,
+        "15": 7,
+        "9": 6,
+        "45": 28,
+        "27": 9,
+        "135": 64
+      },
+      "original_family_sha256": "de514f1e555b3fb311d7f8b69e9409711dc3e9b4233376906c02bc5004686ea0",
+      "independent_full_CRT_period": 1157625,
+      "independent_full_CRT_survivors": 168037
+    },
+    {
+      "height": 4,
+      "original_label_count": 124,
+      "source_beta": [
+        "0",
+        "0",
+        "1/5",
+        "31/625",
+        "0"
+      ],
+      "source_late": [
+        "0",
+        "0",
+        "1/135",
+        "0",
+        "83/16875"
+      ],
+      "raw_source_mass": "12989/50625",
+      "actual_survivor_mass": "1796821/11255625",
+      "D": "6989/45000",
+      "S0": "107887543/694575000",
+      "rho": "1996161179/463281525000",
+      "qJ": "11500177588224/14654541015625",
+      "delta": "3154363427401/14654541015625",
+      "lambda": "211/135000",
+      "mixed7_old_carrier_category_masses": [
+        "469/1875",
+        "223/1875",
+        "1279/16875",
+        "52/1875",
+        "208/16875"
+      ],
+      "mixed7_old_carrier_total": "8183/16875",
+      "rho_lower_from_leading_alignment": null,
+      "old48_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "old50_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "leading_residues": {
+        "5": 1,
+        "3": 2,
+        "15": 7,
+        "9": 6,
+        "45": 28,
+        "27": 9,
+        "135": 64
+      },
+      "original_family_sha256": "288bdd2b04eec8470820c5f827c138be0de0ae622e137129c60242b441b84681",
+      "independent_full_CRT_period": null,
+      "independent_full_CRT_survivors": null
+    },
+    {
+      "height": 10,
+      "original_label_count": 1330,
+      "source_beta": [
+        "0",
+        "0",
+        "1/5",
+        "488281/9765625",
+        "0"
+      ],
+      "source_late": [
+        "0",
+        "0",
+        "1/135",
+        "0",
+        "249088487/38443359375"
+      ],
+      "raw_source_mass": "144167495231/576650390625",
+      "actual_survivor_mass": "6921510814184914501/45247072998076171875",
+      "D": "128150338699/854296875000",
+      "S0": "139625867066263008919/930796929587109375000",
+      "rho": "216524980144523615984774387/73035304066587103836328125000",
+      "qJ": "18198759704874274917979533651484432400384/18204316051052228431217372417449951171875",
+      "delta": "5556346177953513237838765965518771491/18204316051052228431217372417449951171875",
+      "lambda": "651479/307546875000",
+      "mixed7_old_carrier_category_masses": [
+        "7324219/29296875",
+        "904147037/7688671875",
+        "20019529/263671875",
+        "813802/29296875",
+        "533854112/38443359375"
+      ],
+      "mixed7_old_carrier_total": "127929683/263671875",
+      "rho_lower_from_leading_alignment": "271842755552366158094997385157528103509/93622196833982889074832201004028320312500",
+      "old48_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "old50_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "leading_residues": {
+        "5": 1,
+        "3": 2,
+        "15": 7,
+        "9": 6,
+        "45": 28,
+        "27": 9,
+        "135": 64
+      },
+      "original_family_sha256": "73fa566a4a910cbe3767227b333831478f402562aabf9e43349733a8b62e1b0f",
+      "independent_full_CRT_period": null,
+      "independent_full_CRT_survivors": null
+    },
+    {
+      "height": 12,
+      "original_label_count": 2196,
+      "source_beta": [
+        "0",
+        "0",
+        "1/5",
+        "12207031/244140625",
+        "0"
+      ],
+      "source_late": [
+        "0",
+        "0",
+        "1/135",
+        "0",
+        "93435329041/14416259765625"
+      ],
+      "raw_source_mass": "32436706675829/129746337890625",
+      "actual_survivor_mass": "228917663664673649343029/1496546938373398681640625",
+      "D": "51898795903591/345990234375000",
+      "S0": "1539313156075932100397623/10262036148697880859375000",
+      "rho": "350737827509062818040147675646257/118366491336019765320358037109375000",
+      "qJ": "48372925099189405605283846925264530700238848/48374564336342018577852286398410797119140625",
+      "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "lambda": "27133297/115330078125000",
+      "mixed7_old_carrier_category_masses": [
+        "183105469/732421875",
+        "1695248744789/14416259765625",
+        "500488279/6591796875",
+        "6781684/244140625",
+        "200222438416/14416259765625"
+      ],
+      "mixed7_old_carrier_total": "3198242183/6591796875",
+      "rho_lower_from_leading_alignment": "735496981305932072427404891019993346723223/248783473729758952686097472906112670898437500",
+      "old48_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "old50_corrections": [
+        "0",
+        "0",
+        "0"
+      ],
+      "leading_residues": {
+        "5": 1,
+        "3": 2,
+        "15": 7,
+        "9": 6,
+        "45": 28,
+        "27": 9,
+        "135": 64
+      },
+      "original_family_sha256": "aa3f0b78842ab51847824a514988559a1628de1d633a88d88cf25eb11c346783",
+      "independent_full_CRT_period": null,
+      "independent_full_CRT_survivors": null
+    }
+  ],
+  "scope": "Exact local arithmetic and actual finite original-label constructions. The universal all-height inequality is proved in the companion note. No old scan, LP, price inventory or Lean theorem is produced; no J<403, Gamma19<403 or unrestricted result is asserted."
+}
