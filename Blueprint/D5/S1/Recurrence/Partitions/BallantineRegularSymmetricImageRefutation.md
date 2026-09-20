@@ -84,6 +84,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/BallantineRegularSymmetricImageRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ballantine-regular-symmetric-image-conjecture-refutation` (refuted) by `D5/S1/Recurrence/Partitions/BallantineRegularSymmetricImageRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ballantine-regular-symmetric-image-conjecture-refutation","declaration_gid":"D5/S1/Recurrence/Partitions/BallantineRegularSymmetricImageRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

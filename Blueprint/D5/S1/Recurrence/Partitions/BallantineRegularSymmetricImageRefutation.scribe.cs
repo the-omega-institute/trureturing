@@ -68,14 +68,19 @@ internal sealed class BallantineRegularSymmetricImageRefutationDocument
                     + "images are 5-regular, so the two cardinalities are 4 and 2. Their "
                     + "integer difference is 2, whereas the residue-four entry in the d=5 "
                     + "column is 3 natDiv(4,10) + 1 = 1.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "ballantine-regular-symmetric-image-conjecture-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, string prose, string declaration,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula PreFormula()
     {
